@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.92 on Mon Jul 23 17:12:49 2012.
+** Generated automatically by tolua++-1.0.92 on 08/10/12 17:57:04.
 */
 
 #include <vector>
@@ -34,9 +34,9 @@ static int tolua_collect_ccV3F_C4B_T2F_Quad (lua_State* tolua_S)
 	return 0;
 }
 
-static int tolua_collect_CCAnimation (lua_State* tolua_S)
+static int tolua_collect_ccQuad3 (lua_State* tolua_S)
 {
- CCAnimation* self = (CCAnimation*) tolua_tousertype(tolua_S,1,0);
+ ccQuad3* self = (ccQuad3*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
@@ -62,9 +62,9 @@ static int tolua_collect_CCSize (lua_State* tolua_S)
 	return 0;
 }
 
-static int tolua_collect_CCFloat (lua_State* tolua_S)
+static int tolua_collect_ccVertex2F (lua_State* tolua_S)
 {
- CCFloat* self = (CCFloat*) tolua_tousertype(tolua_S,1,0);
+ ccVertex2F* self = (ccVertex2F*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
@@ -90,6 +90,13 @@ static int tolua_collect_CCAffineTransform (lua_State* tolua_S)
 	return 0;
 }
 
+static int tolua_collect_ccGLServerState (lua_State* tolua_S)
+{
+ ccGLServerState* self = (ccGLServerState*) tolua_tousertype(tolua_S,1,0);
+	Mtolua_delete(self);
+	return 0;
+}
+
 static int tolua_collect_ccBlendFunc (lua_State* tolua_S)
 {
  ccBlendFunc* self = (ccBlendFunc*) tolua_tousertype(tolua_S,1,0);
@@ -97,9 +104,9 @@ static int tolua_collect_ccBlendFunc (lua_State* tolua_S)
 	return 0;
 }
 
-static int tolua_collect_ccVertex2F (lua_State* tolua_S)
+static int tolua_collect_CCAnimation (lua_State* tolua_S)
 {
- ccVertex2F* self = (ccVertex2F*) tolua_tousertype(tolua_S,1,0);
+ CCAnimation* self = (CCAnimation*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
@@ -149,7 +156,7 @@ static void tolua_reg_types (lua_State* tolua_S)
  tolua_usertype(tolua_S,"CCShaky3D");
  tolua_usertype(tolua_S,"CCTransitionTurnOffTiles");
  tolua_usertype(tolua_S,"CCTransitionShrinkGrow");
- tolua_usertype(tolua_S,"CCFadeOutBLTiles");
+ tolua_usertype(tolua_S,"CCGridBase");
  tolua_usertype(tolua_S,"ccQuad3");
  tolua_usertype(tolua_S,"CCProgressFromTo");
  tolua_usertype(tolua_S,"ccVertex2F");
@@ -163,7 +170,7 @@ static void tolua_reg_types (lua_State* tolua_S)
  tolua_usertype(tolua_S,"CCFadeTo");
  tolua_usertype(tolua_S,"CCMenuItemLabel");
  tolua_usertype(tolua_S,"CCTouchDispatcher");
- tolua_usertype(tolua_S,"CCEaseElasticOut");
+ tolua_usertype(tolua_S,"CCTargetedAction");
  tolua_usertype(tolua_S,"CCGrid3DAction");
  tolua_usertype(tolua_S,"CCString");
  tolua_usertype(tolua_S,"CCAccelDeccelAmplitude");
@@ -171,15 +178,16 @@ static void tolua_reg_types (lua_State* tolua_S)
  tolua_usertype(tolua_S,"CCTransitionFade");
  tolua_usertype(tolua_S,"CCTransitionSlideInB");
  tolua_usertype(tolua_S,"CCKeypadDispatcher");
- tolua_usertype(tolua_S,"CCSkewBy");
+ tolua_usertype(tolua_S,"CCDelayTime");
  tolua_usertype(tolua_S,"CCFlipX");
- tolua_usertype(tolua_S,"CCOrbitCamera");
+ tolua_usertype(tolua_S,"CCActionManager");
  tolua_usertype(tolua_S,"CCTransitionSlideInT");
  tolua_usertype(tolua_S,"CCLabelTTF");
  tolua_usertype(tolua_S,"GLshort");
+ tolua_usertype(tolua_S,"CCCatmullRomTo");
  tolua_usertype(tolua_S,"CCEaseBounceIn");
  tolua_usertype(tolua_S,"sImageTGA");
- tolua_usertype(tolua_S,"CCAnimationCache");
+ tolua_usertype(tolua_S,"CCMoveTo");
  tolua_usertype(tolua_S,"CCPlace");
  tolua_usertype(tolua_S,"CCSprite");
  tolua_usertype(tolua_S,"CCEaseIn");
@@ -190,179 +198,724 @@ static void tolua_reg_types (lua_State* tolua_S)
  tolua_usertype(tolua_S,"CCBezierBy");
  tolua_usertype(tolua_S,"CCStopGrid");
  tolua_usertype(tolua_S,"CCToggleVisibility");
+ tolua_usertype(tolua_S,"SimpleAudioEngine");
+ tolua_usertype(tolua_S,"CCUserDefault");
  tolua_usertype(tolua_S,"CCTMXMapInfo");
+ tolua_usertype(tolua_S,"ccAnimationFrameData");
  tolua_usertype(tolua_S,"CCTMXTilesetInfo");
+ tolua_usertype(tolua_S,"ccT2F_Quad");
+ tolua_usertype(tolua_S,"GLenum");
  tolua_usertype(tolua_S,"CCLayerColor");
  tolua_usertype(tolua_S,"CCShuffleTiles");
  tolua_usertype(tolua_S,"CCTransitionFadeUp");
+ tolua_usertype(tolua_S,"ccBlendFunc");
+ tolua_usertype(tolua_S,"CCDirector");
  tolua_usertype(tolua_S,"CCMenuItemAtlasFont");
+ tolua_usertype(tolua_S,"CCEaseSineInOut");
  tolua_usertype(tolua_S,"CCAccelerometer");
- tolua_usertype(tolua_S,"SimpleAudioEngine");
- tolua_usertype(tolua_S,"CCUserDefault");
+ tolua_usertype(tolua_S,"tCCParticle");
+ tolua_usertype(tolua_S,"CCSet");
+ tolua_usertype(tolua_S,"ccV2F_C4F_T2F");
+ tolua_usertype(tolua_S,"ccV2F_C4B_T2F");
  tolua_usertype(tolua_S,"CCFadeIn");
  tolua_usertype(tolua_S,"CCTransitionFadeDown");
  tolua_usertype(tolua_S,"CCActionInstant");
- tolua_usertype(tolua_S,"GLenum");
- tolua_usertype(tolua_S,"CCTurnOffTiles");
- tolua_usertype(tolua_S,"ccBlendFunc");
- tolua_usertype(tolua_S,"CCSequence");
- tolua_usertype(tolua_S,"CCMenuItemImage");
- tolua_usertype(tolua_S,"CCWavesTiles3D");
- tolua_usertype(tolua_S,"ccTMXTileFlags");
- tolua_usertype(tolua_S,"CCFadeOutDownTiles");
- tolua_usertype(tolua_S,"CCTransitionFadeBL");
- tolua_usertype(tolua_S,"CCTimer");
- tolua_usertype(tolua_S,"CCTMXTiledMap");
- tolua_usertype(tolua_S,"ccTexParams");
- tolua_usertype(tolua_S,"CCEaseSineOut");
- tolua_usertype(tolua_S,"CCTransitionZoomFlipAngular");
- tolua_usertype(tolua_S,"CCFlipY");
- tolua_usertype(tolua_S,"CCMenuItemToggle");
- tolua_usertype(tolua_S,"CCTransitionPageTurn");
- tolua_usertype(tolua_S,"ccV2F_C4F_T2F");
- tolua_usertype(tolua_S,"CCProgressTo");
- tolua_usertype(tolua_S,"CCReuseGrid");
- tolua_usertype(tolua_S,"ccV2F_C4B_T2F");
  tolua_usertype(tolua_S,"ccGridSize");
+ tolua_usertype(tolua_S,"CCTurnOffTiles");
  tolua_usertype(tolua_S,"ccQuad2");
  tolua_usertype(tolua_S,"ccPointSprite");
- tolua_usertype(tolua_S,"CCShow");
+ tolua_usertype(tolua_S,"CCMenuItemImage");
+ tolua_usertype(tolua_S,"CCWavesTiles3D");
  tolua_usertype(tolua_S,"ccTex2F");
- tolua_usertype(tolua_S,"CCTintTo");
+ tolua_usertype(tolua_S,"CCFadeOutDownTiles");
  tolua_usertype(tolua_S,"ccVertex3F");
  tolua_usertype(tolua_S,"ccColor4F");
+ tolua_usertype(tolua_S,"CCTMXTiledMap");
+ tolua_usertype(tolua_S,"ccTexParams");
+ tolua_usertype(tolua_S,"CCCardinalSplineBy");
+ tolua_usertype(tolua_S,"CCTransitionZoomFlipAngular");
+ tolua_usertype(tolua_S,"CCFlipY");
  tolua_usertype(tolua_S,"ccColor4B");
- tolua_usertype(tolua_S,"CCSkewTo");
+ tolua_usertype(tolua_S,"CCTransitionPageTurn");
+ tolua_usertype(tolua_S,"CCTextureCache");
+ tolua_usertype(tolua_S,"CCSpawn");
+ tolua_usertype(tolua_S,"CCReuseGrid");
+ tolua_usertype(tolua_S,"CCTransitionFadeBL");
+ tolua_usertype(tolua_S,"CCTransitionSplitRows");
+ tolua_usertype(tolua_S,"CCTransitionSplitCols");
+ tolua_usertype(tolua_S,"CCTransitionSlideInR");
+ tolua_usertype(tolua_S,"CCShow");
+ tolua_usertype(tolua_S,"CCTransitionZoomFlipY");
+ tolua_usertype(tolua_S,"CCTintTo");
+ tolua_usertype(tolua_S,"CCTransitionZoomFlipX");
+ tolua_usertype(tolua_S,"CCTransitionFlipAngular");
+ tolua_usertype(tolua_S,"CCTransitionFlipY");
+ tolua_usertype(tolua_S,"CCTransitionFlipX");
  tolua_usertype(tolua_S,"CCTransitionCrossFade");
  tolua_usertype(tolua_S,"CCEaseRateAction");
  tolua_usertype(tolua_S,"CCEaseBackIn");
  tolua_usertype(tolua_S,"ccV3F_C4B_T2F_Quad");
- tolua_usertype(tolua_S,"CCTransitionSplitRows");
+ tolua_usertype(tolua_S,"CCTransitionMoveInB");
  tolua_usertype(tolua_S,"CCActionEase");
- tolua_usertype(tolua_S,"CCTransitionSplitCols");
+ tolua_usertype(tolua_S,"CCTransitionMoveInT");
  tolua_usertype(tolua_S,"CCGridAction");
  tolua_usertype(tolua_S,"CCRotateTo");
  tolua_usertype(tolua_S,"CCFiniteTimeAction");
  tolua_usertype(tolua_S,"CCSpriteFrameCache");
  tolua_usertype(tolua_S,"CCMotionStreak");
  tolua_usertype(tolua_S,"CCShakyTiles3D");
- tolua_usertype(tolua_S,"CCTransitionZoomFlipY");
+ tolua_usertype(tolua_S,"CCTransitionMoveInR");
  tolua_usertype(tolua_S,"CCNode");
- tolua_usertype(tolua_S,"CCTransitionZoomFlipX");
+ tolua_usertype(tolua_S,"CCSkewBy");
  tolua_usertype(tolua_S,"CCAnimate");
  tolua_usertype(tolua_S,"CCTiledGrid3DAction");
  tolua_usertype(tolua_S,"CCBezierTo");
  tolua_usertype(tolua_S,"CCDeccelAmplitude");
- tolua_usertype(tolua_S,"CCTransitionFlipAngular");
- tolua_usertype(tolua_S,"CCTransitionFlipY");
- tolua_usertype(tolua_S,"CCTransitionFlipX");
- tolua_usertype(tolua_S,"CCTransitionSlideInR");
- tolua_usertype(tolua_S,"CCMenu");
- tolua_usertype(tolua_S,"CCTransitionMoveInB");
- tolua_usertype(tolua_S,"CCTransitionMoveInT");
- tolua_usertype(tolua_S,"CCTransitionMoveInR");
- tolua_usertype(tolua_S,"ccColor3B");
  tolua_usertype(tolua_S,"CCTransitionJumpZoom");
- tolua_usertype(tolua_S,"CCMoveBy");
  tolua_usertype(tolua_S,"CCTransitionRotoZoom");
+ tolua_usertype(tolua_S,"CCPointArray");
+ tolua_usertype(tolua_S,"CCTransitionSceneOriented");
+ tolua_usertype(tolua_S,"CCRect");
+ tolua_usertype(tolua_S,"CCLabelAtlas");
+ tolua_usertype(tolua_S,"CCTMXObjectGroup");
+ tolua_usertype(tolua_S,"CCTimer");
+ tolua_usertype(tolua_S,"ccColor3B");
+ tolua_usertype(tolua_S,"CCTextureAtlas");
+ tolua_usertype(tolua_S,"CCMoveBy");
+ tolua_usertype(tolua_S,"CCTexture2D");
  tolua_usertype(tolua_S,"CCCamera");
  tolua_usertype(tolua_S,"CCFlipX3D");
- tolua_usertype(tolua_S,"CCTransitionSceneOriented");
- tolua_usertype(tolua_S,"CCAction");
- tolua_usertype(tolua_S,"CCLabelAtlas");
+ tolua_usertype(tolua_S,"CCEaseOut");
+ tolua_usertype(tolua_S,"CCSpriteFrame");
+ tolua_usertype(tolua_S,"CCScheduler");
  tolua_usertype(tolua_S,"CCHide");
  tolua_usertype(tolua_S,"CCFadeOutTRTiles");
  tolua_usertype(tolua_S,"CCJumpTiles3D");
  tolua_usertype(tolua_S,"CCMenuItemSprite");
  tolua_usertype(tolua_S,"CCTMXLayer");
- tolua_usertype(tolua_S,"CCTMXObjectGroup");
+ tolua_usertype(tolua_S,"CCScene");
  tolua_usertype(tolua_S,"CCTextureProtocol");
- tolua_usertype(tolua_S,"CCTextureCache");
+ tolua_usertype(tolua_S,"CCImage");
  tolua_usertype(tolua_S,"CCEaseExponentialInOut");
- tolua_usertype(tolua_S,"CCTextureAtlas");
- tolua_usertype(tolua_S,"CCTexture2D");
- tolua_usertype(tolua_S,"CCSplitCols");
+ tolua_usertype(tolua_S,"CCRenderTexture");
+ tolua_usertype(tolua_S,"CCEGLView");
+ tolua_usertype(tolua_S,"CCAction");
  tolua_usertype(tolua_S,"CCFadeOutUpTiles");
- tolua_usertype(tolua_S,"CCSpriteFrame");
+ tolua_usertype(tolua_S,"CCParticleBatchNode");
  tolua_usertype(tolua_S,"CCWaves3D");
  tolua_usertype(tolua_S,"CCAffineTransform");
- tolua_usertype(tolua_S,"CCScheduler");
+ tolua_usertype(tolua_S,"ccGLServerState");
  tolua_usertype(tolua_S,"ccV2F_C4B_T2F_Quad");
  tolua_usertype(tolua_S,"CCJumpTo");
- tolua_usertype(tolua_S,"CCScene");
+ tolua_usertype(tolua_S,"CCParallaxNode");
  tolua_usertype(tolua_S,"CCLens3D");
- tolua_usertype(tolua_S,"CCImage");
+ tolua_usertype(tolua_S,"_ccArray");
  tolua_usertype(tolua_S,"CCReverseTime");
- tolua_usertype(tolua_S,"CCRenderTexture");
+ tolua_usertype(tolua_S,"CCScaleTo");
  tolua_usertype(tolua_S,"CCTintBy");
+ tolua_usertype(tolua_S,"CCGLProgram");
  tolua_usertype(tolua_S,"CCDictionary");
- tolua_usertype(tolua_S,"CCParticleBatchNode");
- tolua_usertype(tolua_S,"tCCParticle");
+ tolua_usertype(tolua_S,"CCMenuItemToggle");
  tolua_usertype(tolua_S,"CCScaleBy");
  tolua_usertype(tolua_S,"CCFileUtils");
  tolua_usertype(tolua_S,"CCLayer");
- tolua_usertype(tolua_S,"CCParallaxNode");
+ tolua_usertype(tolua_S,"CCMenuItemFont");
  tolua_usertype(tolua_S,"CCPageTurn3D");
  tolua_usertype(tolua_S,"CCEaseElasticIn");
- tolua_usertype(tolua_S,"_ccArray");
+ tolua_usertype(tolua_S,"CCAnimationFrame");
  tolua_usertype(tolua_S,"CCEaseElastic");
  tolua_usertype(tolua_S,"CCEaseSineIn");
- tolua_usertype(tolua_S,"CCEaseOut");
- tolua_usertype(tolua_S,"CCAnimationFrame");
- tolua_usertype(tolua_S,"CCFloat");
+ tolua_usertype(tolua_S,"CCCardinalSplineTo");
+ tolua_usertype(tolua_S,"va_list");
+ tolua_usertype(tolua_S,"CCMenu");
  tolua_usertype(tolua_S,"CCEaseInOut");
  tolua_usertype(tolua_S,"CCProgressTimer");
  tolua_usertype(tolua_S,"CCWaves");
  tolua_usertype(tolua_S,"ccV3F_C4B_T2F");
- tolua_usertype(tolua_S,"CCMenuItemFont");
+ tolua_usertype(tolua_S,"CCCatmullRomBy");
  tolua_usertype(tolua_S,"CCTMXLayerInfo");
  tolua_usertype(tolua_S,"CCEvent");
- tolua_usertype(tolua_S,"va_list");
+ tolua_usertype(tolua_S,"ccBezierConfig");
  tolua_usertype(tolua_S,"CCTransitionSlideInL");
  tolua_usertype(tolua_S,"CCRipple3D");
  tolua_usertype(tolua_S,"CCRepeat");
- tolua_usertype(tolua_S,"ccBezierConfig");
- tolua_usertype(tolua_S,"CCEaseSineInOut");
- tolua_usertype(tolua_S,"CCAnimation");
+ tolua_usertype(tolua_S,"CCEaseSineOut");
+ tolua_usertype(tolua_S,"CCPoint");
+ tolua_usertype(tolua_S,"CCEaseElasticOut");
  tolua_usertype(tolua_S,"CCActionInterval");
  tolua_usertype(tolua_S,"CCEaseBounceInOut");
  tolua_usertype(tolua_S,"CCLabelBMFont");
  tolua_usertype(tolua_S,"CCObject");
- tolua_usertype(tolua_S,"CCActionManager");
+ tolua_usertype(tolua_S,"CCAnimation");
  tolua_usertype(tolua_S,"CCEaseBackInOut");
- tolua_usertype(tolua_S,"CCScaleTo");
+ tolua_usertype(tolua_S,"CCSequence");
  tolua_usertype(tolua_S,"ccV2F_C4F_T2F_Quad");
  tolua_usertype(tolua_S,"CCAtlasNode");
  tolua_usertype(tolua_S,"CCAccelAmplitude");
- tolua_usertype(tolua_S,"CCRect");
- tolua_usertype(tolua_S,"CCPoint");
+ tolua_usertype(tolua_S,"CCEaseExponentialOut");
+ tolua_usertype(tolua_S,"CCAnimationCache");
  tolua_usertype(tolua_S,"CCFadeOut");
  tolua_usertype(tolua_S,"CCLayerMultiplex");
  tolua_usertype(tolua_S,"CCEaseBackOut");
- tolua_usertype(tolua_S,"CCShatteredTiles3D");
+ tolua_usertype(tolua_S,"CCOrbitCamera");
  tolua_usertype(tolua_S,"CCSize");
  tolua_usertype(tolua_S,"CCMenuItem");
  tolua_usertype(tolua_S,"CCRotateBy");
- tolua_usertype(tolua_S,"CCDelayTime");
+ tolua_usertype(tolua_S,"CCSplitCols");
  tolua_usertype(tolua_S,"CCSplitRows");
  tolua_usertype(tolua_S,"CCArray");
- tolua_usertype(tolua_S,"CCDirector");
- tolua_usertype(tolua_S,"CCEaseExponentialOut");
+ tolua_usertype(tolua_S,"CCEaseBounce");
+ tolua_usertype(tolua_S,"CCSkewTo");
  tolua_usertype(tolua_S,"CCLiquid");
  tolua_usertype(tolua_S,"Tile");
- tolua_usertype(tolua_S,"CCMoveTo");
- tolua_usertype(tolua_S,"CCRepeatForever");
  tolua_usertype(tolua_S,"CCFollow");
+ tolua_usertype(tolua_S,"CCRepeatForever");
+ tolua_usertype(tolua_S,"CCFadeOutBLTiles");
  tolua_usertype(tolua_S,"CCSpeed");
  tolua_usertype(tolua_S,"CCTextFieldTTF");
- tolua_usertype(tolua_S,"CCGridBase");
- tolua_usertype(tolua_S,"CCEaseBounce");
+ tolua_usertype(tolua_S,"CCShatteredTiles3D");
+ tolua_usertype(tolua_S,"CCProgressTo");
  tolua_usertype(tolua_S,"CCEaseElasticInOut");
  tolua_usertype(tolua_S,"CCTransitionMoveInL");
  tolua_usertype(tolua_S,"CCEaseBounceOut");
  tolua_usertype(tolua_S,"CCJumpBy");
- tolua_usertype(tolua_S,"CCSpawn");
+ tolua_usertype(tolua_S,"CCZone");
 }
+
+/* method: isDone of class  CCAction */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCAction_isDone00
+static int tolua_Cocos2d_CCAction_isDone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCAction",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCAction* self = (CCAction*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isDone'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->isDone();
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'isDone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getTarget of class  CCAction */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCAction_getTarget00
+static int tolua_Cocos2d_CCAction_getTarget00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCAction",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCAction* self = (CCAction*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getTarget'", NULL);
+#endif
+  {
+   CCNode* tolua_ret = (CCNode*)  self->getTarget();
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCNode");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getTarget'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getOriginalTarget of class  CCAction */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCAction_getOriginalTarget00
+static int tolua_Cocos2d_CCAction_getOriginalTarget00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCAction",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCAction* self = (CCAction*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getOriginalTarget'", NULL);
+#endif
+  {
+   CCNode* tolua_ret = (CCNode*)  self->getOriginalTarget();
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCNode");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getOriginalTarget'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getTag of class  CCAction */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCAction_getTag00
+static int tolua_Cocos2d_CCAction_getTag00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCAction",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCAction* self = (CCAction*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getTag'", NULL);
+#endif
+  {
+   int tolua_ret = (int)  self->getTag();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getTag'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setTag of class  CCAction */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCAction_setTag00
+static int tolua_Cocos2d_CCAction_setTag00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCAction",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCAction* self = (CCAction*)  tolua_tousertype(tolua_S,1,0);
+  int nTag = ((int)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setTag'", NULL);
+#endif
+  {
+   self->setTag(nTag);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setTag'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: copyWithZone of class  CCAction */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCAction_copyWithZone00
+static int tolua_Cocos2d_CCAction_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCAction",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCAction* self = (CCAction*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getElapsed of class  CCActionInterval */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCActionInterval_getElapsed00
+static int tolua_Cocos2d_CCActionInterval_getElapsed00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCActionInterval",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCActionInterval* self = (CCActionInterval*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getElapsed'", NULL);
+#endif
+  {
+   float tolua_ret = (float)  self->getElapsed();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getElapsed'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: isDone of class  CCActionInterval */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCActionInterval_isDone00
+static int tolua_Cocos2d_CCActionInterval_isDone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCActionInterval",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCActionInterval* self = (CCActionInterval*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isDone'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->isDone();
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'isDone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setAmplitudeRate of class  CCActionInterval */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCActionInterval_setAmplitudeRate00
+static int tolua_Cocos2d_CCActionInterval_setAmplitudeRate00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCActionInterval",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCActionInterval* self = (CCActionInterval*)  tolua_tousertype(tolua_S,1,0);
+  float amp = ((float)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setAmplitudeRate'", NULL);
+#endif
+  {
+   self->setAmplitudeRate(amp);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setAmplitudeRate'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getAmplitudeRate of class  CCActionInterval */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCActionInterval_getAmplitudeRate00
+static int tolua_Cocos2d_CCActionInterval_getAmplitudeRate00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCActionInterval",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCActionInterval* self = (CCActionInterval*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getAmplitudeRate'", NULL);
+#endif
+  {
+   float tolua_ret = (float)  self->getAmplitudeRate();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getAmplitudeRate'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: copyWithZone of class  CCActionInterval */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCActionInterval_copyWithZone00
+static int tolua_Cocos2d_CCActionInterval_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCActionInterval",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCActionInterval* self = (CCActionInterval*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: reverse of class  CCActionInterval */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCActionInterval_reverse00
+static int tolua_Cocos2d_CCActionInterval_reverse00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCActionInterval",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCActionInterval* self = (CCActionInterval*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reverse'", NULL);
+#endif
+  {
+   CCActionInterval* tolua_ret = (CCActionInterval*)  self->reverse();
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCActionInterval");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'reverse'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: create of class  CCActionInterval */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCActionInterval_create00
+static int tolua_Cocos2d_CCActionInterval_create00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCActionInterval",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCActionInterval* self = (CCActionInterval*)  tolua_tousertype(tolua_S,1,0);
+  float d = ((float)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'create'", NULL);
+#endif
+  {
+   CCActionInterval* tolua_ret = (CCActionInterval*)  self->create(d);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCActionInterval");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getDuration of class  CCFiniteTimeAction */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCFiniteTimeAction_getDuration00
+static int tolua_Cocos2d_CCFiniteTimeAction_getDuration00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCFiniteTimeAction",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCFiniteTimeAction* self = (CCFiniteTimeAction*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getDuration'", NULL);
+#endif
+  {
+   float tolua_ret = (float)  self->getDuration();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getDuration'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setDuration of class  CCFiniteTimeAction */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCFiniteTimeAction_setDuration00
+static int tolua_Cocos2d_CCFiniteTimeAction_setDuration00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCFiniteTimeAction",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCFiniteTimeAction* self = (CCFiniteTimeAction*)  tolua_tousertype(tolua_S,1,0);
+  float duration = ((float)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setDuration'", NULL);
+#endif
+  {
+   self->setDuration(duration);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setDuration'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: reverse of class  CCFiniteTimeAction */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCFiniteTimeAction_reverse00
+static int tolua_Cocos2d_CCFiniteTimeAction_reverse00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCFiniteTimeAction",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCFiniteTimeAction* self = (CCFiniteTimeAction*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reverse'", NULL);
+#endif
+  {
+   CCFiniteTimeAction* tolua_ret = (CCFiniteTimeAction*)  self->reverse();
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCFiniteTimeAction");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'reverse'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
 
 /* method: getSpeed of class  CCSpeed */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSpeed_getSpeed00
@@ -448,16 +1001,84 @@ static int tolua_Cocos2d_CCSpeed_reverse00(lua_State* tolua_S)
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reverse'", NULL);
 #endif
   {
-   CCAction* tolua_ret = (CCAction*)  self->reverse();
+   CCActionInterval* tolua_ret = (CCActionInterval*)  self->reverse();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCAction");
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCActionInterval");
   }
  }
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'reverse'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: isDone of class  CCSpeed */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSpeed_isDone00
+static int tolua_Cocos2d_CCSpeed_isDone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCSpeed",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCSpeed* self = (CCSpeed*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isDone'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->isDone();
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'isDone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: copyWithZone of class  CCSpeed */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSpeed_copyWithZone00
+static int tolua_Cocos2d_CCSpeed_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCSpeed",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCSpeed* self = (CCSpeed*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
  return 0;
 #endif
 }
@@ -560,6 +1181,74 @@ static int tolua_Cocos2d_CCFollow_setBoudarySet00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: isDone of class  CCFollow */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCFollow_isDone00
+static int tolua_Cocos2d_CCFollow_isDone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCFollow",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCFollow* self = (CCFollow*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isDone'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->isDone();
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'isDone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: copyWithZone of class  CCFollow */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCFollow_copyWithZone00
+static int tolua_Cocos2d_CCFollow_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCFollow",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCFollow* self = (CCFollow*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: create of class  CCFollow */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCFollow_create00
 static int tolua_Cocos2d_CCFollow_create00(lua_State* tolua_S)
@@ -617,9 +1306,79 @@ tolua_lerror:
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: create of class  CCSequence */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSequence_create00
-static int tolua_Cocos2d_CCSequence_create00(lua_State* tolua_S)
+/* method: copyWithZone of class  CCSequence */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSequence_copyWithZone00
+static int tolua_Cocos2d_CCSequence_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCSequence",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCSequence* self = (CCSequence*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: reverse of class  CCSequence */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSequence_reverse00
+static int tolua_Cocos2d_CCSequence_reverse00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCSequence",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCSequence* self = (CCSequence*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reverse'", NULL);
+#endif
+  {
+   CCActionInterval* tolua_ret = (CCActionInterval*)  self->reverse();
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCActionInterval");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'reverse'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: createWithTwoActions of class  CCSequence */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSequence_createWithTwoActions00
+static int tolua_Cocos2d_CCSequence_createWithTwoActions00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -645,16 +1404,17 @@ static int tolua_Cocos2d_CCSequence_create00(lua_State* tolua_S)
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'createWithTwoActions'.",&tolua_err);
  return 0;
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
 /* method: create of class  CCSequence */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSequence_create01
-static int tolua_Cocos2d_CCSequence_create01(lua_State* tolua_S)
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSequence_create00
+static int tolua_Cocos2d_CCSequence_create00(lua_State* tolua_S)
 {
+#ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
      !tolua_isusertable(tolua_S,1,"CCSequence",0,&tolua_err) ||
@@ -663,6 +1423,7 @@ static int tolua_Cocos2d_CCSequence_create01(lua_State* tolua_S)
  )
   goto tolua_lerror;
  else
+#endif
  {
   CCArray* actions = ((CCArray*)  tolua_tousertype(tolua_S,2,0));
   {
@@ -673,8 +1434,113 @@ static int tolua_Cocos2d_CCSequence_create01(lua_State* tolua_S)
   }
  }
  return 1;
-tolua_lerror:
- return tolua_Cocos2d_CCSequence_create00(tolua_S);
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: copyWithZone of class  CCRepeat */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCRepeat_copyWithZone00
+static int tolua_Cocos2d_CCRepeat_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCRepeat",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCRepeat* self = (CCRepeat*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: isDone of class  CCRepeat */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCRepeat_isDone00
+static int tolua_Cocos2d_CCRepeat_isDone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCRepeat",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCRepeat* self = (CCRepeat*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isDone'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->isDone();
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'isDone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: reverse of class  CCRepeat */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCRepeat_reverse00
+static int tolua_Cocos2d_CCRepeat_reverse00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCRepeat",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCRepeat* self = (CCRepeat*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reverse'", NULL);
+#endif
+  {
+   CCActionInterval* tolua_ret = (CCActionInterval*)  self->reverse();
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCActionInterval");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'reverse'.",&tolua_err);
+ return 0;
+#endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
@@ -712,6 +1578,108 @@ static int tolua_Cocos2d_CCRepeat_create00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: copyWithZone of class  CCRepeatForever */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCRepeatForever_copyWithZone00
+static int tolua_Cocos2d_CCRepeatForever_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCRepeatForever",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCRepeatForever* self = (CCRepeatForever*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: isDone of class  CCRepeatForever */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCRepeatForever_isDone00
+static int tolua_Cocos2d_CCRepeatForever_isDone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCRepeatForever",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCRepeatForever* self = (CCRepeatForever*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isDone'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->isDone();
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'isDone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: reverse of class  CCRepeatForever */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCRepeatForever_reverse00
+static int tolua_Cocos2d_CCRepeatForever_reverse00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCRepeatForever",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCRepeatForever* self = (CCRepeatForever*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reverse'", NULL);
+#endif
+  {
+   CCActionInterval* tolua_ret = (CCActionInterval*)  self->reverse();
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCActionInterval");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'reverse'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: create of class  CCRepeatForever */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCRepeatForever_create00
 static int tolua_Cocos2d_CCRepeatForever_create00(lua_State* tolua_S)
@@ -739,6 +1707,76 @@ static int tolua_Cocos2d_CCRepeatForever_create00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: copyWithZone of class  CCSpawn */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSpawn_copyWithZone00
+static int tolua_Cocos2d_CCSpawn_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCSpawn",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCSpawn* self = (CCSpawn*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: reverse of class  CCSpawn */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSpawn_reverse00
+static int tolua_Cocos2d_CCSpawn_reverse00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCSpawn",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCSpawn* self = (CCSpawn*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reverse'", NULL);
+#endif
+  {
+   CCActionInterval* tolua_ret = (CCActionInterval*)  self->reverse();
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCActionInterval");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'reverse'.",&tolua_err);
  return 0;
 #endif
 }
@@ -793,15 +1831,51 @@ static int tolua_Cocos2d_CCSpawn_create01(lua_State* tolua_S)
   CCFiniteTimeAction* pAction1 = ((CCFiniteTimeAction*)  tolua_tousertype(tolua_S,2,0));
   CCFiniteTimeAction* pAction2 = ((CCFiniteTimeAction*)  tolua_tousertype(tolua_S,3,0));
   {
-   CCSpawn* tolua_ret = (CCSpawn*)  CCSpawn::createWithTwoActions(pAction1,pAction2);
+   CCFiniteTimeAction* tolua_ret = (CCFiniteTimeAction*)  CCSpawn::create(pAction1,pAction2);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSpawn");
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCFiniteTimeAction");
   }
  }
  return 1;
 tolua_lerror:
  return tolua_Cocos2d_CCSpawn_create00(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: copyWithZone of class  CCRotateTo */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCRotateTo_copyWithZone00
+static int tolua_Cocos2d_CCRotateTo_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCRotateTo",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCRotateTo* self = (CCRotateTo*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
+ return 0;
+#endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
@@ -834,6 +1908,76 @@ static int tolua_Cocos2d_CCRotateTo_create00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: copyWithZone of class  CCRotateBy */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCRotateBy_copyWithZone00
+static int tolua_Cocos2d_CCRotateBy_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCRotateBy",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCRotateBy* self = (CCRotateBy*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: reverse of class  CCRotateBy */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCRotateBy_reverse00
+static int tolua_Cocos2d_CCRotateBy_reverse00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCRotateBy",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCRotateBy* self = (CCRotateBy*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reverse'", NULL);
+#endif
+  {
+   CCActionInterval* tolua_ret = (CCActionInterval*)  self->reverse();
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCActionInterval");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'reverse'.",&tolua_err);
  return 0;
 #endif
 }
@@ -873,6 +2017,42 @@ static int tolua_Cocos2d_CCRotateBy_create00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: copyWithZone of class  CCMoveTo */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMoveTo_copyWithZone00
+static int tolua_Cocos2d_CCMoveTo_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCMoveTo",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCMoveTo* self = (CCMoveTo*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: create of class  CCMoveTo */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMoveTo_create00
 static int tolua_Cocos2d_CCMoveTo_create00(lua_State* tolua_S)
@@ -907,6 +2087,76 @@ static int tolua_Cocos2d_CCMoveTo_create00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: copyWithZone of class  CCMoveBy */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMoveBy_copyWithZone00
+static int tolua_Cocos2d_CCMoveBy_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCMoveBy",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCMoveBy* self = (CCMoveBy*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: reverse of class  CCMoveBy */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMoveBy_reverse00
+static int tolua_Cocos2d_CCMoveBy_reverse00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCMoveBy",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCMoveBy* self = (CCMoveBy*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reverse'", NULL);
+#endif
+  {
+   CCActionInterval* tolua_ret = (CCActionInterval*)  self->reverse();
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCActionInterval");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'reverse'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: create of class  CCMoveBy */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMoveBy_create00
 static int tolua_Cocos2d_CCMoveBy_create00(lua_State* tolua_S)
@@ -936,6 +2186,42 @@ static int tolua_Cocos2d_CCMoveBy_create00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: copyWithZone of class  CCSkewTo */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSkewTo_copyWithZone00
+static int tolua_Cocos2d_CCSkewTo_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCSkewTo",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCSkewTo* self = (CCSkewTo*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
  return 0;
 #endif
 }
@@ -977,6 +2263,76 @@ static int tolua_Cocos2d_CCSkewTo_create00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: copyWithZone of class  CCSkewBy */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSkewBy_copyWithZone00
+static int tolua_Cocos2d_CCSkewBy_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCSkewBy",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCSkewBy* self = (CCSkewBy*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: reverse of class  CCSkewBy */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSkewBy_reverse00
+static int tolua_Cocos2d_CCSkewBy_reverse00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCSkewBy",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCSkewBy* self = (CCSkewBy*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reverse'", NULL);
+#endif
+  {
+   CCActionInterval* tolua_ret = (CCActionInterval*)  self->reverse();
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCActionInterval");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'reverse'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: create of class  CCSkewBy */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSkewBy_create00
 static int tolua_Cocos2d_CCSkewBy_create00(lua_State* tolua_S)
@@ -1008,6 +2364,76 @@ static int tolua_Cocos2d_CCSkewBy_create00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: copyWithZone of class  CCJumpBy */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCJumpBy_copyWithZone00
+static int tolua_Cocos2d_CCJumpBy_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCJumpBy",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCJumpBy* self = (CCJumpBy*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: reverse of class  CCJumpBy */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCJumpBy_reverse00
+static int tolua_Cocos2d_CCJumpBy_reverse00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCJumpBy",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCJumpBy* self = (CCJumpBy*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reverse'", NULL);
+#endif
+  {
+   CCActionInterval* tolua_ret = (CCActionInterval*)  self->reverse();
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCActionInterval");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'reverse'.",&tolua_err);
  return 0;
 #endif
 }
@@ -1046,6 +2472,42 @@ static int tolua_Cocos2d_CCJumpBy_create00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: copyWithZone of class  CCJumpTo */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCJumpTo_copyWithZone00
+static int tolua_Cocos2d_CCJumpTo_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCJumpTo",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCJumpTo* self = (CCJumpTo*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
  return 0;
 #endif
 }
@@ -1179,6 +2641,76 @@ static int tolua_set_ccBezierConfig_controlPoint_2(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: copyWithZone of class  CCBezierBy */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCBezierBy_copyWithZone00
+static int tolua_Cocos2d_CCBezierBy_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCBezierBy",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCBezierBy* self = (CCBezierBy*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: reverse of class  CCBezierBy */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCBezierBy_reverse00
+static int tolua_Cocos2d_CCBezierBy_reverse00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCBezierBy",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCBezierBy* self = (CCBezierBy*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reverse'", NULL);
+#endif
+  {
+   CCActionInterval* tolua_ret = (CCActionInterval*)  self->reverse();
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCActionInterval");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'reverse'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: create of class  CCBezierBy */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCBezierBy_create00
 static int tolua_Cocos2d_CCBezierBy_create00(lua_State* tolua_S)
@@ -1213,6 +2745,42 @@ static int tolua_Cocos2d_CCBezierBy_create00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: copyWithZone of class  CCBezierTo */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCBezierTo_copyWithZone00
+static int tolua_Cocos2d_CCBezierTo_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCBezierTo",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCBezierTo* self = (CCBezierTo*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: create of class  CCBezierTo */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCBezierTo_create00
 static int tolua_Cocos2d_CCBezierTo_create00(lua_State* tolua_S)
@@ -1242,6 +2810,42 @@ static int tolua_Cocos2d_CCBezierTo_create00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: copyWithZone of class  CCScaleTo */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCScaleTo_copyWithZone00
+static int tolua_Cocos2d_CCScaleTo_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCScaleTo",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCScaleTo* self = (CCScaleTo*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
  return 0;
 #endif
 }
@@ -1312,6 +2916,76 @@ tolua_lerror:
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: copyWithZone of class  CCScaleBy */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCScaleBy_copyWithZone00
+static int tolua_Cocos2d_CCScaleBy_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCScaleBy",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCScaleBy* self = (CCScaleBy*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: reverse of class  CCScaleBy */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCScaleBy_reverse00
+static int tolua_Cocos2d_CCScaleBy_reverse00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCScaleBy",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCScaleBy* self = (CCScaleBy*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reverse'", NULL);
+#endif
+  {
+   CCActionInterval* tolua_ret = (CCActionInterval*)  self->reverse();
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCActionInterval");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'reverse'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: create of class  CCScaleBy */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCScaleBy_create00
 static int tolua_Cocos2d_CCScaleBy_create00(lua_State* tolua_S)
@@ -1377,6 +3051,76 @@ tolua_lerror:
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: copyWithZone of class  CCBlink */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCBlink_copyWithZone00
+static int tolua_Cocos2d_CCBlink_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCBlink",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCBlink* self = (CCBlink*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: reverse of class  CCBlink */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCBlink_reverse00
+static int tolua_Cocos2d_CCBlink_reverse00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCBlink",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCBlink* self = (CCBlink*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reverse'", NULL);
+#endif
+  {
+   CCActionInterval* tolua_ret = (CCActionInterval*)  self->reverse();
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCActionInterval");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'reverse'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: create of class  CCBlink */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCBlink_create00
 static int tolua_Cocos2d_CCBlink_create00(lua_State* tolua_S)
@@ -1406,6 +3150,76 @@ static int tolua_Cocos2d_CCBlink_create00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: copyWithZone of class  CCFadeIn */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCFadeIn_copyWithZone00
+static int tolua_Cocos2d_CCFadeIn_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCFadeIn",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCFadeIn* self = (CCFadeIn*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: reverse of class  CCFadeIn */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCFadeIn_reverse00
+static int tolua_Cocos2d_CCFadeIn_reverse00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCFadeIn",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCFadeIn* self = (CCFadeIn*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reverse'", NULL);
+#endif
+  {
+   CCActionInterval* tolua_ret = (CCActionInterval*)  self->reverse();
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCActionInterval");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'reverse'.",&tolua_err);
  return 0;
 #endif
 }
@@ -1443,6 +3257,76 @@ static int tolua_Cocos2d_CCFadeIn_create00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: copyWithZone of class  CCFadeOut */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCFadeOut_copyWithZone00
+static int tolua_Cocos2d_CCFadeOut_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCFadeOut",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCFadeOut* self = (CCFadeOut*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: reverse of class  CCFadeOut */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCFadeOut_reverse00
+static int tolua_Cocos2d_CCFadeOut_reverse00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCFadeOut",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCFadeOut* self = (CCFadeOut*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reverse'", NULL);
+#endif
+  {
+   CCActionInterval* tolua_ret = (CCActionInterval*)  self->reverse();
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCActionInterval");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'reverse'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: create of class  CCFadeOut */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCFadeOut_create00
 static int tolua_Cocos2d_CCFadeOut_create00(lua_State* tolua_S)
@@ -1470,6 +3354,42 @@ static int tolua_Cocos2d_CCFadeOut_create00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: copyWithZone of class  CCFadeTo */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCFadeTo_copyWithZone00
+static int tolua_Cocos2d_CCFadeTo_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCFadeTo",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCFadeTo* self = (CCFadeTo*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
  return 0;
 #endif
 }
@@ -1504,6 +3424,42 @@ static int tolua_Cocos2d_CCFadeTo_create00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: copyWithZone of class  CCTintTo */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTintTo_copyWithZone00
+static int tolua_Cocos2d_CCTintTo_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCTintTo",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCTintTo* self = (CCTintTo*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
  return 0;
 #endif
 }
@@ -1547,6 +3503,76 @@ static int tolua_Cocos2d_CCTintTo_create00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: copyWithZone of class  CCTintBy */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTintBy_copyWithZone00
+static int tolua_Cocos2d_CCTintBy_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCTintBy",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCTintBy* self = (CCTintBy*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: reverse of class  CCTintBy */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTintBy_reverse00
+static int tolua_Cocos2d_CCTintBy_reverse00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCTintBy",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCTintBy* self = (CCTintBy*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reverse'", NULL);
+#endif
+  {
+   CCActionInterval* tolua_ret = (CCActionInterval*)  self->reverse();
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCActionInterval");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'reverse'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: create of class  CCTintBy */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTintBy_create00
 static int tolua_Cocos2d_CCTintBy_create00(lua_State* tolua_S)
@@ -1585,6 +3611,76 @@ static int tolua_Cocos2d_CCTintBy_create00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: copyWithZone of class  CCDelayTime */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCDelayTime_copyWithZone00
+static int tolua_Cocos2d_CCDelayTime_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCDelayTime",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCDelayTime* self = (CCDelayTime*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: reverse of class  CCDelayTime */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCDelayTime_reverse00
+static int tolua_Cocos2d_CCDelayTime_reverse00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCDelayTime",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCDelayTime* self = (CCDelayTime*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reverse'", NULL);
+#endif
+  {
+   CCActionInterval* tolua_ret = (CCActionInterval*)  self->reverse();
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCActionInterval");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'reverse'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: create of class  CCDelayTime */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCDelayTime_create00
 static int tolua_Cocos2d_CCDelayTime_create00(lua_State* tolua_S)
@@ -1617,6 +3713,76 @@ static int tolua_Cocos2d_CCDelayTime_create00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: copyWithZone of class  CCReverseTime */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCReverseTime_copyWithZone00
+static int tolua_Cocos2d_CCReverseTime_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCReverseTime",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCReverseTime* self = (CCReverseTime*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: reverse of class  CCReverseTime */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCReverseTime_reverse00
+static int tolua_Cocos2d_CCReverseTime_reverse00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCReverseTime",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCReverseTime* self = (CCReverseTime*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reverse'", NULL);
+#endif
+  {
+   CCActionInterval* tolua_ret = (CCActionInterval*)  self->reverse();
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCActionInterval");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'reverse'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: create of class  CCReverseTime */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCReverseTime_create00
 static int tolua_Cocos2d_CCReverseTime_create00(lua_State* tolua_S)
@@ -1644,6 +3810,76 @@ static int tolua_Cocos2d_CCReverseTime_create00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: copyWithZone of class  CCAnimate */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCAnimate_copyWithZone00
+static int tolua_Cocos2d_CCAnimate_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCAnimate",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCAnimate* self = (CCAnimate*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: reverse of class  CCAnimate */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCAnimate_reverse00
+static int tolua_Cocos2d_CCAnimate_reverse00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCAnimate",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCAnimate* self = (CCAnimate*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reverse'", NULL);
+#endif
+  {
+   CCActionInterval* tolua_ret = (CCActionInterval*)  self->reverse();
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCActionInterval");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'reverse'.",&tolua_err);
  return 0;
 #endif
 }
@@ -1733,10 +3969,10 @@ static int tolua_Cocos2d_CCAnimate_create00(lua_State* tolua_S)
  {
   CCAnimation* pAnimation = ((CCAnimation*)  tolua_tousertype(tolua_S,2,0));
   {
-   CCAction* tolua_ret = (CCAction*)  CCAnimate::create(pAnimation);
+   CCAnimate* tolua_ret = (CCAnimate*)  CCAnimate::create(pAnimation);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCAction");
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCAnimate");
   }
  }
  return 1;
@@ -1748,29 +3984,130 @@ static int tolua_Cocos2d_CCAnimate_create00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: create of class  CCProgressTo */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCProgressTo_create00
-static int tolua_Cocos2d_CCProgressTo_create00(lua_State* tolua_S)
+/* method: copyWithZone of class  CCTargetedAction */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTargetedAction_copyWithZone00
+static int tolua_Cocos2d_CCTargetedAction_copyWithZone00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
-     !tolua_isusertable(tolua_S,1,"CCProgressTo",0,&tolua_err) ||
-     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
-     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"CCTargetedAction",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCTargetedAction* self = (CCTargetedAction*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getForcedTarget of class  CCTargetedAction */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTargetedAction_getForcedTarget00
+static int tolua_Cocos2d_CCTargetedAction_getForcedTarget00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCTargetedAction",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCTargetedAction* self = (CCTargetedAction*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getForcedTarget'", NULL);
+#endif
+  {
+   CCNode* tolua_ret = (CCNode*)  self->getForcedTarget();
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCNode");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getForcedTarget'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setForcedTarget of class  CCTargetedAction */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTargetedAction_setForcedTarget00
+static int tolua_Cocos2d_CCTargetedAction_setForcedTarget00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCTargetedAction",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCNode",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCTargetedAction* self = (CCTargetedAction*)  tolua_tousertype(tolua_S,1,0);
+  CCNode* target = ((CCNode*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setForcedTarget'", NULL);
+#endif
+  {
+   self->setForcedTarget(target);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setForcedTarget'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: create of class  CCTargetedAction */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTargetedAction_create00
+static int tolua_Cocos2d_CCTargetedAction_create00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"CCTargetedAction",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCNode",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,3,"CCFiniteTimeAction",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,4,&tolua_err)
  )
   goto tolua_lerror;
  else
 #endif
  {
-  float duration = ((float)  tolua_tonumber(tolua_S,2,0));
-  float fPercent = ((float)  tolua_tonumber(tolua_S,3,0));
+  CCNode* pTarget = ((CCNode*)  tolua_tousertype(tolua_S,2,0));
+  CCFiniteTimeAction* pAction = ((CCFiniteTimeAction*)  tolua_tousertype(tolua_S,3,0));
   {
-   CCAction* tolua_ret = (CCAction*)  CCProgressTo::create(duration,fPercent);
-    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCAction");
+   CCTargetedAction* tolua_ret = (CCTargetedAction*)  CCTargetedAction::create(pTarget,pAction);
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCTargetedAction");
   }
  }
  return 1;
@@ -1782,99 +4119,175 @@ static int tolua_Cocos2d_CCProgressTo_create00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: create of class  CCProgressTo */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCProgressTo_create01
-static int tolua_Cocos2d_CCProgressTo_create01(lua_State* tolua_S)
-{
- tolua_Error tolua_err;
- if (
-     !tolua_isusertable(tolua_S,1,"CCProgressTo",0,&tolua_err) ||
-     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
-     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,4,&tolua_err)
- )
-  goto tolua_lerror;
- else
- {
-  float duration = ((float)  tolua_tonumber(tolua_S,2,0));
-  float fPercent = ((float)  tolua_tonumber(tolua_S,3,0));
-  {
-   CCProgressTo* tolua_ret = (CCProgressTo*)  CCProgressTo::create(duration,fPercent);
-    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCProgressTo");
-  }
- }
- return 1;
-tolua_lerror:
- return tolua_Cocos2d_CCProgressTo_create00(tolua_S);
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: create of class  CCProgressFromTo */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCProgressFromTo_create00
-static int tolua_Cocos2d_CCProgressFromTo_create00(lua_State* tolua_S)
+/* method: copyWithZone of class  CCActionInstant */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCActionInstant_copyWithZone00
+static int tolua_Cocos2d_CCActionInstant_copyWithZone00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
-     !tolua_isusertable(tolua_S,1,"CCProgressFromTo",0,&tolua_err) ||
-     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
-     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
-     !tolua_isnumber(tolua_S,4,0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,5,&tolua_err)
+     !tolua_isusertype(tolua_S,1,"CCActionInstant",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
   goto tolua_lerror;
  else
 #endif
  {
-  float duration = ((float)  tolua_tonumber(tolua_S,2,0));
-  float fFromPercentage = ((float)  tolua_tonumber(tolua_S,3,0));
-  float fToPercentage = ((float)  tolua_tonumber(tolua_S,4,0));
+  CCActionInstant* self = (CCActionInstant*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
   {
-   CCAction* tolua_ret = (CCAction*)  CCProgressFromTo::create(duration,fFromPercentage,fToPercentage);
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCAction");
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
   }
  }
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
  return 0;
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: create of class  CCProgressFromTo */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCProgressFromTo_create01
-static int tolua_Cocos2d_CCProgressFromTo_create01(lua_State* tolua_S)
+/* method: reverse of class  CCActionInstant */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCActionInstant_reverse00
+static int tolua_Cocos2d_CCActionInstant_reverse00(lua_State* tolua_S)
 {
+#ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
-     !tolua_isusertable(tolua_S,1,"CCProgressFromTo",0,&tolua_err) ||
-     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
-     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
-     !tolua_isnumber(tolua_S,4,0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,5,&tolua_err)
+     !tolua_isusertype(tolua_S,1,"CCActionInstant",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
  else
+#endif
  {
-  float duration = ((float)  tolua_tonumber(tolua_S,2,0));
-  float fFromPercentage = ((float)  tolua_tonumber(tolua_S,3,0));
-  float fToPercentage = ((float)  tolua_tonumber(tolua_S,4,0));
+  CCActionInstant* self = (CCActionInstant*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reverse'", NULL);
+#endif
   {
-   CCProgressFromTo* tolua_ret = (CCProgressFromTo*)  CCProgressFromTo::create(duration,fFromPercentage,fToPercentage);
+   CCFiniteTimeAction* tolua_ret = (CCFiniteTimeAction*)  self->reverse();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCProgressFromTo");
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCFiniteTimeAction");
   }
  }
  return 1;
-tolua_lerror:
- return tolua_Cocos2d_CCProgressFromTo_create00(tolua_S);
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'reverse'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: isDone of class  CCActionInstant */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCActionInstant_isDone00
+static int tolua_Cocos2d_CCActionInstant_isDone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCActionInstant",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCActionInstant* self = (CCActionInstant*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isDone'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->isDone();
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'isDone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: copyWithZone of class  CCShow */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCShow_copyWithZone00
+static int tolua_Cocos2d_CCShow_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCShow",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCShow* self = (CCShow*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: reverse of class  CCShow */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCShow_reverse00
+static int tolua_Cocos2d_CCShow_reverse00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCShow",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCShow* self = (CCShow*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reverse'", NULL);
+#endif
+  {
+   CCFiniteTimeAction* tolua_ret = (CCFiniteTimeAction*)  self->reverse();
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCFiniteTimeAction");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'reverse'.",&tolua_err);
+ return 0;
+#endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
@@ -1893,16 +4306,86 @@ static int tolua_Cocos2d_CCShow_create00(lua_State* tolua_S)
 #endif
  {
   {
-   CCAction* tolua_ret = (CCAction*)  CCShow::create();
+   CCShow* tolua_ret = (CCShow*)  CCShow::create();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCAction");
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCShow");
   }
  }
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: copyWithZone of class  CCHide */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCHide_copyWithZone00
+static int tolua_Cocos2d_CCHide_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCHide",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCHide* self = (CCHide*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: reverse of class  CCHide */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCHide_reverse00
+static int tolua_Cocos2d_CCHide_reverse00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCHide",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCHide* self = (CCHide*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reverse'", NULL);
+#endif
+  {
+   CCFiniteTimeAction* tolua_ret = (CCFiniteTimeAction*)  self->reverse();
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCFiniteTimeAction");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'reverse'.",&tolua_err);
  return 0;
 #endif
 }
@@ -1923,16 +4406,52 @@ static int tolua_Cocos2d_CCHide_create00(lua_State* tolua_S)
 #endif
  {
   {
-   CCAction* tolua_ret = (CCAction*)  CCHide::create();
+   CCHide* tolua_ret = (CCHide*)  CCHide::create();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCAction");
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCHide");
   }
  }
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: copyWithZone of class  CCToggleVisibility */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCToggleVisibility_copyWithZone00
+static int tolua_Cocos2d_CCToggleVisibility_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCToggleVisibility",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCToggleVisibility* self = (CCToggleVisibility*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
  return 0;
 #endif
 }
@@ -1953,16 +4472,86 @@ static int tolua_Cocos2d_CCToggleVisibility_create00(lua_State* tolua_S)
 #endif
  {
   {
-   CCAction* tolua_ret = (CCAction*)  CCToggleVisibility::create();
+   CCToggleVisibility* tolua_ret = (CCToggleVisibility*)  CCToggleVisibility::create();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCAction");
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCToggleVisibility");
   }
  }
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: copyWithZone of class  CCFlipX */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCFlipX_copyWithZone00
+static int tolua_Cocos2d_CCFlipX_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCFlipX",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCFlipX* self = (CCFlipX*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: reverse of class  CCFlipX */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCFlipX_reverse00
+static int tolua_Cocos2d_CCFlipX_reverse00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCFlipX",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCFlipX* self = (CCFlipX*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reverse'", NULL);
+#endif
+  {
+   CCFiniteTimeAction* tolua_ret = (CCFiniteTimeAction*)  self->reverse();
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCFiniteTimeAction");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'reverse'.",&tolua_err);
  return 0;
 #endif
 }
@@ -1985,16 +4574,86 @@ static int tolua_Cocos2d_CCFlipX_create00(lua_State* tolua_S)
  {
   bool x = ((bool)  tolua_toboolean(tolua_S,2,0));
   {
-   CCAction* tolua_ret = (CCAction*)  CCFlipX::create(x);
+   CCFlipX* tolua_ret = (CCFlipX*)  CCFlipX::create(x);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCAction");
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCFlipX");
   }
  }
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: copyWithZone of class  CCFlipY */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCFlipY_copyWithZone00
+static int tolua_Cocos2d_CCFlipY_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCFlipY",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCFlipY* self = (CCFlipY*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: reverse of class  CCFlipY */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCFlipY_reverse00
+static int tolua_Cocos2d_CCFlipY_reverse00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCFlipY",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCFlipY* self = (CCFlipY*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reverse'", NULL);
+#endif
+  {
+   CCFiniteTimeAction* tolua_ret = (CCFiniteTimeAction*)  self->reverse();
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCFiniteTimeAction");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'reverse'.",&tolua_err);
  return 0;
 #endif
 }
@@ -2017,16 +4676,52 @@ static int tolua_Cocos2d_CCFlipY_create00(lua_State* tolua_S)
  {
   bool y = ((bool)  tolua_toboolean(tolua_S,2,0));
   {
-   CCAction* tolua_ret = (CCAction*)  CCFlipY::create(y);
+   CCFlipY* tolua_ret = (CCFlipY*)  CCFlipY::create(y);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCAction");
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCFlipY");
   }
  }
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: copyWithZone of class  CCPlace */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCPlace_copyWithZone00
+static int tolua_Cocos2d_CCPlace_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCPlace",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCPlace* self = (CCPlace*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
  return 0;
 #endif
 }
@@ -2049,10 +4744,10 @@ static int tolua_Cocos2d_CCPlace_create00(lua_State* tolua_S)
  {
   CCPoint pos = *((CCPoint*)  tolua_tousertype(tolua_S,2,0));
   {
-   CCAction* tolua_ret = (CCAction*)  CCPlace::create(pos);
+   CCPlace* tolua_ret = (CCPlace*)  CCPlace::create(pos);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCAction");
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCPlace");
   }
  }
  return 1;
@@ -2092,6 +4787,76 @@ static int tolua_Cocos2d_CCActionCamera_startWithTarget00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'startWithTarget'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: reverse of class  CCActionCamera */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCActionCamera_reverse00
+static int tolua_Cocos2d_CCActionCamera_reverse00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCActionCamera",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCActionCamera* self = (CCActionCamera*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reverse'", NULL);
+#endif
+  {
+   CCActionInterval* tolua_ret = (CCActionInterval*)  self->reverse();
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCActionInterval");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'reverse'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: copyWithZone of class  CCOrbitCamera */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCOrbitCamera_copyWithZone00
+static int tolua_Cocos2d_CCOrbitCamera_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCOrbitCamera",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCOrbitCamera* self = (CCOrbitCamera*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
  return 0;
 #endif
 }
@@ -2181,6 +4946,827 @@ static int tolua_Cocos2d_CCOrbitCamera_create00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: initWithCapacity of class  CCPointArray */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCPointArray_initWithCapacity00
+static int tolua_Cocos2d_CCPointArray_initWithCapacity00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCPointArray",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCPointArray* self = (CCPointArray*)  tolua_tousertype(tolua_S,1,0);
+  unsigned int capacity = ((unsigned int)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'initWithCapacity'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->initWithCapacity(capacity);
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'initWithCapacity'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: addControlPoint of class  CCPointArray */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCPointArray_addControlPoint00
+static int tolua_Cocos2d_CCPointArray_addControlPoint00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCPointArray",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"CCPoint",0,&tolua_err)) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCPointArray* self = (CCPointArray*)  tolua_tousertype(tolua_S,1,0);
+  CCPoint controlPoint = *((CCPoint*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'addControlPoint'", NULL);
+#endif
+  {
+   self->addControlPoint(controlPoint);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'addControlPoint'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: insertControlPoint of class  CCPointArray */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCPointArray_insertControlPoint00
+static int tolua_Cocos2d_CCPointArray_insertControlPoint00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCPointArray",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"CCPoint",0,&tolua_err)) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCPointArray* self = (CCPointArray*)  tolua_tousertype(tolua_S,1,0);
+  CCPoint* controlPoint = ((CCPoint*)  tolua_tousertype(tolua_S,2,0));
+  unsigned int index = ((unsigned int)  tolua_tonumber(tolua_S,3,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'insertControlPoint'", NULL);
+#endif
+  {
+   self->insertControlPoint(*controlPoint,index);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'insertControlPoint'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: replaceControlPoint of class  CCPointArray */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCPointArray_replaceControlPoint00
+static int tolua_Cocos2d_CCPointArray_replaceControlPoint00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCPointArray",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"CCPoint",0,&tolua_err)) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCPointArray* self = (CCPointArray*)  tolua_tousertype(tolua_S,1,0);
+  CCPoint* controlPoint = ((CCPoint*)  tolua_tousertype(tolua_S,2,0));
+  unsigned int index = ((unsigned int)  tolua_tonumber(tolua_S,3,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'replaceControlPoint'", NULL);
+#endif
+  {
+   self->replaceControlPoint(*controlPoint,index);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'replaceControlPoint'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getControlPointAtIndex of class  CCPointArray */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCPointArray_getControlPointAtIndex00
+static int tolua_Cocos2d_CCPointArray_getControlPointAtIndex00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCPointArray",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCPointArray* self = (CCPointArray*)  tolua_tousertype(tolua_S,1,0);
+  unsigned int index = ((unsigned int)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getControlPointAtIndex'", NULL);
+#endif
+  {
+   CCPoint tolua_ret = (CCPoint)  self->getControlPointAtIndex(index);
+   {
+#ifdef __cplusplus
+    void* tolua_obj = Mtolua_new((CCPoint)(tolua_ret));
+     tolua_pushusertype(tolua_S,tolua_obj,"CCPoint");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#else
+    void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(CCPoint));
+     tolua_pushusertype(tolua_S,tolua_obj,"CCPoint");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#endif
+   }
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getControlPointAtIndex'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: removeControlPointAtIndex of class  CCPointArray */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCPointArray_removeControlPointAtIndex00
+static int tolua_Cocos2d_CCPointArray_removeControlPointAtIndex00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCPointArray",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCPointArray* self = (CCPointArray*)  tolua_tousertype(tolua_S,1,0);
+  unsigned int index = ((unsigned int)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'removeControlPointAtIndex'", NULL);
+#endif
+  {
+   self->removeControlPointAtIndex(index);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'removeControlPointAtIndex'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: count of class  CCPointArray */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCPointArray_count00
+static int tolua_Cocos2d_CCPointArray_count00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCPointArray",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCPointArray* self = (CCPointArray*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'count'", NULL);
+#endif
+  {
+   unsigned int tolua_ret = (unsigned int)  self->count();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'count'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: reverse of class  CCPointArray */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCPointArray_reverse00
+static int tolua_Cocos2d_CCPointArray_reverse00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCPointArray",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCPointArray* self = (CCPointArray*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reverse'", NULL);
+#endif
+  {
+   CCPointArray* tolua_ret = (CCPointArray*)  self->reverse();
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCPointArray");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'reverse'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: reverseInline of class  CCPointArray */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCPointArray_reverseInline00
+static int tolua_Cocos2d_CCPointArray_reverseInline00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCPointArray",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCPointArray* self = (CCPointArray*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reverseInline'", NULL);
+#endif
+  {
+   self->reverseInline();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'reverseInline'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: copyWithZone of class  CCPointArray */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCPointArray_copyWithZone00
+static int tolua_Cocos2d_CCPointArray_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCPointArray",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCPointArray* self = (CCPointArray*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* zone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(zone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getControlPoints of class  CCPointArray */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCPointArray_getControlPoints00
+static int tolua_Cocos2d_CCPointArray_getControlPoints00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCPointArray",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCPointArray* self = (CCPointArray*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getControlPoints'", NULL);
+#endif
+  {
+   CCArray* tolua_ret = (CCArray*)  self->getControlPoints();
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCArray");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getControlPoints'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setControlPoints of class  CCPointArray */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCPointArray_setControlPoints00
+static int tolua_Cocos2d_CCPointArray_setControlPoints00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCPointArray",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCArray",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCPointArray* self = (CCPointArray*)  tolua_tousertype(tolua_S,1,0);
+  CCArray* controlPoints = ((CCArray*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setControlPoints'", NULL);
+#endif
+  {
+   self->setControlPoints(controlPoints);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setControlPoints'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: create of class  CCPointArray */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCPointArray_create00
+static int tolua_Cocos2d_CCPointArray_create00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"CCPointArray",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  unsigned int capacity = ((unsigned int)  tolua_tonumber(tolua_S,2,0));
+  {
+   CCPointArray* tolua_ret = (CCPointArray*)  CCPointArray::create(capacity);
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCPointArray");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: copyWithZone of class  CCCardinalSplineTo */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCCardinalSplineTo_copyWithZone00
+static int tolua_Cocos2d_CCCardinalSplineTo_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCCardinalSplineTo",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCCardinalSplineTo* self = (CCCardinalSplineTo*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCCardinalSplineTo* tolua_ret = (CCCardinalSplineTo*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCCardinalSplineTo");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: reverse of class  CCCardinalSplineTo */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCCardinalSplineTo_reverse00
+static int tolua_Cocos2d_CCCardinalSplineTo_reverse00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCCardinalSplineTo",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCCardinalSplineTo* self = (CCCardinalSplineTo*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reverse'", NULL);
+#endif
+  {
+   CCActionInterval* tolua_ret = (CCActionInterval*)  self->reverse();
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCActionInterval");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'reverse'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getPoints of class  CCCardinalSplineTo */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCCardinalSplineTo_getPoints00
+static int tolua_Cocos2d_CCCardinalSplineTo_getPoints00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCCardinalSplineTo",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCCardinalSplineTo* self = (CCCardinalSplineTo*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getPoints'", NULL);
+#endif
+  {
+   CCPointArray* tolua_ret = (CCPointArray*)  self->getPoints();
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCPointArray");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getPoints'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setPoints of class  CCCardinalSplineTo */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCCardinalSplineTo_setPoints00
+static int tolua_Cocos2d_CCCardinalSplineTo_setPoints00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCCardinalSplineTo",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCPointArray",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCCardinalSplineTo* self = (CCCardinalSplineTo*)  tolua_tousertype(tolua_S,1,0);
+  CCPointArray* points = ((CCPointArray*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setPoints'", NULL);
+#endif
+  {
+   self->setPoints(points);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setPoints'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: create of class  CCCardinalSplineTo */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCCardinalSplineTo_create00
+static int tolua_Cocos2d_CCCardinalSplineTo_create00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"CCCardinalSplineTo",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,3,"CCPointArray",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,4,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,5,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  float duration = ((float)  tolua_tonumber(tolua_S,2,0));
+  CCPointArray* points = ((CCPointArray*)  tolua_tousertype(tolua_S,3,0));
+  float tension = ((float)  tolua_tonumber(tolua_S,4,0));
+  {
+   CCCardinalSplineTo* tolua_ret = (CCCardinalSplineTo*)  CCCardinalSplineTo::create(duration,points,tension);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCCardinalSplineTo");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: reverse of class  CCCardinalSplineBy */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCCardinalSplineBy_reverse00
+static int tolua_Cocos2d_CCCardinalSplineBy_reverse00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCCardinalSplineBy",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCCardinalSplineBy* self = (CCCardinalSplineBy*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reverse'", NULL);
+#endif
+  {
+   CCActionInterval* tolua_ret = (CCActionInterval*)  self->reverse();
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCActionInterval");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'reverse'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: create of class  CCCardinalSplineBy */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCCardinalSplineBy_create00
+static int tolua_Cocos2d_CCCardinalSplineBy_create00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"CCCardinalSplineBy",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,3,"CCPointArray",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,4,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,5,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  float duration = ((float)  tolua_tonumber(tolua_S,2,0));
+  CCPointArray* points = ((CCPointArray*)  tolua_tousertype(tolua_S,3,0));
+  float tension = ((float)  tolua_tonumber(tolua_S,4,0));
+  {
+   CCCardinalSplineBy* tolua_ret = (CCCardinalSplineBy*)  CCCardinalSplineBy::create(duration,points,tension);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCCardinalSplineBy");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: create of class  CCCatmullRomTo */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCCatmullRomTo_create00
+static int tolua_Cocos2d_CCCatmullRomTo_create00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"CCCatmullRomTo",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,3,"CCPointArray",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  float dt = ((float)  tolua_tonumber(tolua_S,2,0));
+  CCPointArray* points = ((CCPointArray*)  tolua_tousertype(tolua_S,3,0));
+  {
+   CCCatmullRomTo* tolua_ret = (CCCatmullRomTo*)  CCCatmullRomTo::create(dt,points);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCCatmullRomTo");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: create of class  CCCatmullRomBy */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCCatmullRomBy_create00
+static int tolua_Cocos2d_CCCatmullRomBy_create00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"CCCatmullRomBy",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,3,"CCPointArray",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  float dt = ((float)  tolua_tonumber(tolua_S,2,0));
+  CCPointArray* points = ((CCPointArray*)  tolua_tousertype(tolua_S,3,0));
+  {
+   CCCatmullRomBy* tolua_ret = (CCCatmullRomBy*)  CCCatmullRomBy::create(dt,points);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCCatmullRomBy");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: copyWithZone of class  CCActionEase */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCActionEase_copyWithZone00
+static int tolua_Cocos2d_CCActionEase_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCActionEase",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCActionEase* self = (CCActionEase*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: reverse of class  CCActionEase */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCActionEase_reverse00
+static int tolua_Cocos2d_CCActionEase_reverse00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCActionEase",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCActionEase* self = (CCActionEase*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reverse'", NULL);
+#endif
+  {
+   CCActionInterval* tolua_ret = (CCActionInterval*)  self->reverse();
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCActionInterval");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'reverse'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: create of class  CCActionEase */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCActionEase_create00
 static int tolua_Cocos2d_CCActionEase_create00(lua_State* tolua_S)
@@ -2198,7 +5784,77 @@ static int tolua_Cocos2d_CCActionEase_create00(lua_State* tolua_S)
  {
   CCActionInterval* pAction = ((CCActionInterval*)  tolua_tousertype(tolua_S,2,0));
   {
-   CCActionInterval* tolua_ret = (CCActionInterval*)  CCActionEase::create(pAction);
+   CCActionEase* tolua_ret = (CCActionEase*)  CCActionEase::create(pAction);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCActionEase");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: copyWithZone of class  CCEaseRateAction */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEaseRateAction_copyWithZone00
+static int tolua_Cocos2d_CCEaseRateAction_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCEaseRateAction",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCEaseRateAction* self = (CCEaseRateAction*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: reverse of class  CCEaseRateAction */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEaseRateAction_reverse00
+static int tolua_Cocos2d_CCEaseRateAction_reverse00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCEaseRateAction",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCEaseRateAction* self = (CCEaseRateAction*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reverse'", NULL);
+#endif
+  {
+   CCActionInterval* tolua_ret = (CCActionInterval*)  self->reverse();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCActionInterval");
@@ -2207,7 +5863,7 @@ static int tolua_Cocos2d_CCActionEase_create00(lua_State* tolua_S)
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'reverse'.",&tolua_err);
  return 0;
 #endif
 }
@@ -2232,7 +5888,77 @@ static int tolua_Cocos2d_CCEaseRateAction_create00(lua_State* tolua_S)
   CCActionInterval* pAction = ((CCActionInterval*)  tolua_tousertype(tolua_S,2,0));
   float fRate = ((float)  tolua_tonumber(tolua_S,3,0));
   {
-   CCActionInterval* tolua_ret = (CCActionInterval*)  CCEaseRateAction::create(pAction,fRate);
+   CCEaseRateAction* tolua_ret = (CCEaseRateAction*)  CCEaseRateAction::create(pAction,fRate);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCEaseRateAction");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: copyWithZone of class  CCEaseIn */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEaseIn_copyWithZone00
+static int tolua_Cocos2d_CCEaseIn_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCEaseIn",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCEaseIn* self = (CCEaseIn*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: reverse of class  CCEaseIn */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEaseIn_reverse00
+static int tolua_Cocos2d_CCEaseIn_reverse00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCEaseIn",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCEaseIn* self = (CCEaseIn*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reverse'", NULL);
+#endif
+  {
+   CCActionInterval* tolua_ret = (CCActionInterval*)  self->reverse();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCActionInterval");
@@ -2241,7 +5967,7 @@ static int tolua_Cocos2d_CCEaseRateAction_create00(lua_State* tolua_S)
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'reverse'.",&tolua_err);
  return 0;
 #endif
 }
@@ -2266,7 +5992,75 @@ static int tolua_Cocos2d_CCEaseIn_create00(lua_State* tolua_S)
   CCActionInterval* pAction = ((CCActionInterval*)  tolua_tousertype(tolua_S,2,0));
   float fRate = ((float)  tolua_tonumber(tolua_S,3,0));
   {
-   CCActionInterval* tolua_ret = (CCActionInterval*)  CCEaseIn::create(pAction,fRate);
+   CCEaseIn* tolua_ret = (CCEaseIn*)  CCEaseIn::create(pAction,fRate);
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCEaseIn");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: copyWithZone of class  CCEaseOut */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEaseOut_copyWithZone00
+static int tolua_Cocos2d_CCEaseOut_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCEaseOut",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCEaseOut* self = (CCEaseOut*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: reverse of class  CCEaseOut */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEaseOut_reverse00
+static int tolua_Cocos2d_CCEaseOut_reverse00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCEaseOut",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCEaseOut* self = (CCEaseOut*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reverse'", NULL);
+#endif
+  {
+   CCActionInterval* tolua_ret = (CCActionInterval*)  self->reverse();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCActionInterval");
@@ -2275,7 +6069,7 @@ static int tolua_Cocos2d_CCEaseIn_create00(lua_State* tolua_S)
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'reverse'.",&tolua_err);
  return 0;
 #endif
 }
@@ -2300,7 +6094,75 @@ static int tolua_Cocos2d_CCEaseOut_create00(lua_State* tolua_S)
   CCActionInterval* pAction = ((CCActionInterval*)  tolua_tousertype(tolua_S,2,0));
   float fRate = ((float)  tolua_tonumber(tolua_S,3,0));
   {
-   CCActionInterval* tolua_ret = (CCActionInterval*)  CCEaseOut::create(pAction,fRate);
+   CCEaseOut* tolua_ret = (CCEaseOut*)  CCEaseOut::create(pAction,fRate);
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCEaseOut");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: copyWithZone of class  CCEaseInOut */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEaseInOut_copyWithZone00
+static int tolua_Cocos2d_CCEaseInOut_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCEaseInOut",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCEaseInOut* self = (CCEaseInOut*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: reverse of class  CCEaseInOut */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEaseInOut_reverse00
+static int tolua_Cocos2d_CCEaseInOut_reverse00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCEaseInOut",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCEaseInOut* self = (CCEaseInOut*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reverse'", NULL);
+#endif
+  {
+   CCActionInterval* tolua_ret = (CCActionInterval*)  self->reverse();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCActionInterval");
@@ -2309,7 +6171,7 @@ static int tolua_Cocos2d_CCEaseOut_create00(lua_State* tolua_S)
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'reverse'.",&tolua_err);
  return 0;
 #endif
 }
@@ -2334,7 +6196,75 @@ static int tolua_Cocos2d_CCEaseInOut_create00(lua_State* tolua_S)
   CCActionInterval* pAction = ((CCActionInterval*)  tolua_tousertype(tolua_S,2,0));
   float fRate = ((float)  tolua_tonumber(tolua_S,3,0));
   {
-   CCActionInterval* tolua_ret = (CCActionInterval*)  CCEaseInOut::create(pAction,fRate);
+   CCEaseInOut* tolua_ret = (CCEaseInOut*)  CCEaseInOut::create(pAction,fRate);
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCEaseInOut");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: copyWithZone of class  CCEaseExponentialIn */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEaseExponentialIn_copyWithZone00
+static int tolua_Cocos2d_CCEaseExponentialIn_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCEaseExponentialIn",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCEaseExponentialIn* self = (CCEaseExponentialIn*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: reverse of class  CCEaseExponentialIn */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEaseExponentialIn_reverse00
+static int tolua_Cocos2d_CCEaseExponentialIn_reverse00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCEaseExponentialIn",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCEaseExponentialIn* self = (CCEaseExponentialIn*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reverse'", NULL);
+#endif
+  {
+   CCActionInterval* tolua_ret = (CCActionInterval*)  self->reverse();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCActionInterval");
@@ -2343,7 +6273,7 @@ static int tolua_Cocos2d_CCEaseInOut_create00(lua_State* tolua_S)
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'reverse'.",&tolua_err);
  return 0;
 #endif
 }
@@ -2366,7 +6296,77 @@ static int tolua_Cocos2d_CCEaseExponentialIn_create00(lua_State* tolua_S)
  {
   CCActionInterval* pAction = ((CCActionInterval*)  tolua_tousertype(tolua_S,2,0));
   {
-   CCActionInterval* tolua_ret = (CCActionInterval*)  CCEaseExponentialIn::create(pAction);
+   CCEaseExponentialIn* tolua_ret = (CCEaseExponentialIn*)  CCEaseExponentialIn::create(pAction);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCEaseExponentialIn");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: copyWithZone of class  CCEaseExponentialOut */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEaseExponentialOut_copyWithZone00
+static int tolua_Cocos2d_CCEaseExponentialOut_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCEaseExponentialOut",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCEaseExponentialOut* self = (CCEaseExponentialOut*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: reverse of class  CCEaseExponentialOut */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEaseExponentialOut_reverse00
+static int tolua_Cocos2d_CCEaseExponentialOut_reverse00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCEaseExponentialOut",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCEaseExponentialOut* self = (CCEaseExponentialOut*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reverse'", NULL);
+#endif
+  {
+   CCActionInterval* tolua_ret = (CCActionInterval*)  self->reverse();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCActionInterval");
@@ -2375,7 +6375,7 @@ static int tolua_Cocos2d_CCEaseExponentialIn_create00(lua_State* tolua_S)
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'reverse'.",&tolua_err);
  return 0;
 #endif
 }
@@ -2398,7 +6398,77 @@ static int tolua_Cocos2d_CCEaseExponentialOut_create00(lua_State* tolua_S)
  {
   CCActionInterval* pAction = ((CCActionInterval*)  tolua_tousertype(tolua_S,2,0));
   {
-   CCActionInterval* tolua_ret = (CCActionInterval*)  CCEaseExponentialOut::create(pAction);
+   CCEaseExponentialOut* tolua_ret = (CCEaseExponentialOut*)  CCEaseExponentialOut::create(pAction);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCEaseExponentialOut");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: copyWithZone of class  CCEaseExponentialInOut */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEaseExponentialInOut_copyWithZone00
+static int tolua_Cocos2d_CCEaseExponentialInOut_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCEaseExponentialInOut",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCEaseExponentialInOut* self = (CCEaseExponentialInOut*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: reverse of class  CCEaseExponentialInOut */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEaseExponentialInOut_reverse00
+static int tolua_Cocos2d_CCEaseExponentialInOut_reverse00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCEaseExponentialInOut",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCEaseExponentialInOut* self = (CCEaseExponentialInOut*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reverse'", NULL);
+#endif
+  {
+   CCActionInterval* tolua_ret = (CCActionInterval*)  self->reverse();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCActionInterval");
@@ -2407,7 +6477,7 @@ static int tolua_Cocos2d_CCEaseExponentialOut_create00(lua_State* tolua_S)
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'reverse'.",&tolua_err);
  return 0;
 #endif
 }
@@ -2430,7 +6500,77 @@ static int tolua_Cocos2d_CCEaseExponentialInOut_create00(lua_State* tolua_S)
  {
   CCActionInterval* pAction = ((CCActionInterval*)  tolua_tousertype(tolua_S,2,0));
   {
-   CCActionInterval* tolua_ret = (CCActionInterval*)  CCEaseExponentialInOut::create(pAction);
+   CCEaseExponentialInOut* tolua_ret = (CCEaseExponentialInOut*)  CCEaseExponentialInOut::create(pAction);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCEaseExponentialInOut");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: copyWithZone of class  CCEaseSineIn */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEaseSineIn_copyWithZone00
+static int tolua_Cocos2d_CCEaseSineIn_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCEaseSineIn",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCEaseSineIn* self = (CCEaseSineIn*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: reverse of class  CCEaseSineIn */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEaseSineIn_reverse00
+static int tolua_Cocos2d_CCEaseSineIn_reverse00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCEaseSineIn",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCEaseSineIn* self = (CCEaseSineIn*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reverse'", NULL);
+#endif
+  {
+   CCActionInterval* tolua_ret = (CCActionInterval*)  self->reverse();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCActionInterval");
@@ -2439,7 +6579,7 @@ static int tolua_Cocos2d_CCEaseExponentialInOut_create00(lua_State* tolua_S)
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'reverse'.",&tolua_err);
  return 0;
 #endif
 }
@@ -2462,7 +6602,77 @@ static int tolua_Cocos2d_CCEaseSineIn_create00(lua_State* tolua_S)
  {
   CCActionInterval* pAction = ((CCActionInterval*)  tolua_tousertype(tolua_S,2,0));
   {
-   CCActionInterval* tolua_ret = (CCActionInterval*)  CCEaseSineIn::create(pAction);
+   CCEaseSineIn* tolua_ret = (CCEaseSineIn*)  CCEaseSineIn::create(pAction);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCEaseSineIn");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: copyWithZone of class  CCEaseSineOut */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEaseSineOut_copyWithZone00
+static int tolua_Cocos2d_CCEaseSineOut_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCEaseSineOut",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCEaseSineOut* self = (CCEaseSineOut*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: reverse of class  CCEaseSineOut */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEaseSineOut_reverse00
+static int tolua_Cocos2d_CCEaseSineOut_reverse00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCEaseSineOut",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCEaseSineOut* self = (CCEaseSineOut*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reverse'", NULL);
+#endif
+  {
+   CCActionInterval* tolua_ret = (CCActionInterval*)  self->reverse();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCActionInterval");
@@ -2471,7 +6681,7 @@ static int tolua_Cocos2d_CCEaseSineIn_create00(lua_State* tolua_S)
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'reverse'.",&tolua_err);
  return 0;
 #endif
 }
@@ -2494,7 +6704,77 @@ static int tolua_Cocos2d_CCEaseSineOut_create00(lua_State* tolua_S)
  {
   CCActionInterval* pAction = ((CCActionInterval*)  tolua_tousertype(tolua_S,2,0));
   {
-   CCActionInterval* tolua_ret = (CCActionInterval*)  CCEaseSineOut::create(pAction);
+   CCEaseSineOut* tolua_ret = (CCEaseSineOut*)  CCEaseSineOut::create(pAction);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCEaseSineOut");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: copyWithZone of class  CCEaseSineInOut */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEaseSineInOut_copyWithZone00
+static int tolua_Cocos2d_CCEaseSineInOut_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCEaseSineInOut",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCEaseSineInOut* self = (CCEaseSineInOut*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: reverse of class  CCEaseSineInOut */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEaseSineInOut_reverse00
+static int tolua_Cocos2d_CCEaseSineInOut_reverse00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCEaseSineInOut",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCEaseSineInOut* self = (CCEaseSineInOut*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reverse'", NULL);
+#endif
+  {
+   CCActionInterval* tolua_ret = (CCActionInterval*)  self->reverse();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCActionInterval");
@@ -2503,7 +6783,7 @@ static int tolua_Cocos2d_CCEaseSineOut_create00(lua_State* tolua_S)
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'reverse'.",&tolua_err);
  return 0;
 #endif
 }
@@ -2526,7 +6806,77 @@ static int tolua_Cocos2d_CCEaseSineInOut_create00(lua_State* tolua_S)
  {
   CCActionInterval* pAction = ((CCActionInterval*)  tolua_tousertype(tolua_S,2,0));
   {
-   CCActionInterval* tolua_ret = (CCActionInterval*)  CCEaseSineInOut::create(pAction);
+   CCEaseSineInOut* tolua_ret = (CCEaseSineInOut*)  CCEaseSineInOut::create(pAction);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCEaseSineInOut");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: copyWithZone of class  CCEaseElastic */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEaseElastic_copyWithZone00
+static int tolua_Cocos2d_CCEaseElastic_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCEaseElastic",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCEaseElastic* self = (CCEaseElastic*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: reverse of class  CCEaseElastic */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEaseElastic_reverse00
+static int tolua_Cocos2d_CCEaseElastic_reverse00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCEaseElastic",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCEaseElastic* self = (CCEaseElastic*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reverse'", NULL);
+#endif
+  {
+   CCActionInterval* tolua_ret = (CCActionInterval*)  self->reverse();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCActionInterval");
@@ -2535,7 +6885,72 @@ static int tolua_Cocos2d_CCEaseSineInOut_create00(lua_State* tolua_S)
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'reverse'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getPeriod of class  CCEaseElastic */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEaseElastic_getPeriod00
+static int tolua_Cocos2d_CCEaseElastic_getPeriod00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCEaseElastic",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCEaseElastic* self = (CCEaseElastic*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getPeriod'", NULL);
+#endif
+  {
+   float tolua_ret = (float)  self->getPeriod();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getPeriod'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setPeriod of class  CCEaseElastic */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEaseElastic_setPeriod00
+static int tolua_Cocos2d_CCEaseElastic_setPeriod00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCEaseElastic",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCEaseElastic* self = (CCEaseElastic*)  tolua_tousertype(tolua_S,1,0);
+  float fPeriod = ((float)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setPeriod'", NULL);
+#endif
+  {
+   self->setPeriod(fPeriod);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setPeriod'.",&tolua_err);
  return 0;
 #endif
 }
@@ -2558,10 +6973,10 @@ static int tolua_Cocos2d_CCEaseElastic_create00(lua_State* tolua_S)
  {
   CCActionInterval* pAction = ((CCActionInterval*)  tolua_tousertype(tolua_S,2,0));
   {
-   CCActionInterval* tolua_ret = (CCActionInterval*)  CCEaseElastic::create(pAction);
+   CCEaseElastic* tolua_ret = (CCEaseElastic*)  CCEaseElastic::create(pAction);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCActionInterval");
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCEaseElastic");
   }
  }
  return 1;
@@ -2590,15 +7005,85 @@ static int tolua_Cocos2d_CCEaseElastic_create01(lua_State* tolua_S)
   CCActionInterval* pAction = ((CCActionInterval*)  tolua_tousertype(tolua_S,2,0));
   float fPeriod = ((float)  tolua_tonumber(tolua_S,3,0));
   {
-   CCActionInterval* tolua_ret = (CCActionInterval*)  CCEaseElastic::create(pAction,fPeriod);
+   CCEaseElastic* tolua_ret = (CCEaseElastic*)  CCEaseElastic::create(pAction,fPeriod);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCEaseElastic");
+  }
+ }
+ return 1;
+tolua_lerror:
+ return tolua_Cocos2d_CCEaseElastic_create00(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: copyWithZone of class  CCEaseElasticIn */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEaseElasticIn_copyWithZone00
+static int tolua_Cocos2d_CCEaseElasticIn_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCEaseElasticIn",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCEaseElasticIn* self = (CCEaseElasticIn*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: reverse of class  CCEaseElasticIn */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEaseElasticIn_reverse00
+static int tolua_Cocos2d_CCEaseElasticIn_reverse00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCEaseElasticIn",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCEaseElasticIn* self = (CCEaseElasticIn*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reverse'", NULL);
+#endif
+  {
+   CCActionInterval* tolua_ret = (CCActionInterval*)  self->reverse();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCActionInterval");
   }
  }
  return 1;
-tolua_lerror:
- return tolua_Cocos2d_CCEaseElastic_create00(tolua_S);
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'reverse'.",&tolua_err);
+ return 0;
+#endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
@@ -2619,10 +7104,8 @@ static int tolua_Cocos2d_CCEaseElasticIn_create00(lua_State* tolua_S)
  {
   CCActionInterval* pAction = ((CCActionInterval*)  tolua_tousertype(tolua_S,2,0));
   {
-   CCActionInterval* tolua_ret = (CCActionInterval*)  CCEaseElasticIn::create(pAction);
-    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCActionInterval");
+   CCEaseElasticIn* tolua_ret = (CCEaseElasticIn*)  CCEaseElasticIn::create(pAction);
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCEaseElasticIn");
   }
  }
  return 1;
@@ -2651,15 +7134,83 @@ static int tolua_Cocos2d_CCEaseElasticIn_create01(lua_State* tolua_S)
   CCActionInterval* pAction = ((CCActionInterval*)  tolua_tousertype(tolua_S,2,0));
   float fPeriod = ((float)  tolua_tonumber(tolua_S,3,0));
   {
-   CCActionInterval* tolua_ret = (CCActionInterval*)  CCEaseElasticIn::create(pAction,fPeriod);
+   CCEaseElasticIn* tolua_ret = (CCEaseElasticIn*)  CCEaseElasticIn::create(pAction,fPeriod);
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCEaseElasticIn");
+  }
+ }
+ return 1;
+tolua_lerror:
+ return tolua_Cocos2d_CCEaseElasticIn_create00(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: copyWithZone of class  CCEaseElasticOut */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEaseElasticOut_copyWithZone00
+static int tolua_Cocos2d_CCEaseElasticOut_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCEaseElasticOut",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCEaseElasticOut* self = (CCEaseElasticOut*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: reverse of class  CCEaseElasticOut */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEaseElasticOut_reverse00
+static int tolua_Cocos2d_CCEaseElasticOut_reverse00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCEaseElasticOut",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCEaseElasticOut* self = (CCEaseElasticOut*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reverse'", NULL);
+#endif
+  {
+   CCActionInterval* tolua_ret = (CCActionInterval*)  self->reverse();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCActionInterval");
   }
  }
  return 1;
-tolua_lerror:
- return tolua_Cocos2d_CCEaseElasticIn_create00(tolua_S);
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'reverse'.",&tolua_err);
+ return 0;
+#endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
@@ -2680,10 +7231,8 @@ static int tolua_Cocos2d_CCEaseElasticOut_create00(lua_State* tolua_S)
  {
   CCActionInterval* pAction = ((CCActionInterval*)  tolua_tousertype(tolua_S,2,0));
   {
-   CCActionInterval* tolua_ret = (CCActionInterval*)  CCEaseElasticOut::create(pAction);
-    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCActionInterval");
+   CCEaseElasticOut* tolua_ret = (CCEaseElasticOut*)  CCEaseElasticOut::create(pAction);
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCEaseElasticOut");
   }
  }
  return 1;
@@ -2712,15 +7261,83 @@ static int tolua_Cocos2d_CCEaseElasticOut_create01(lua_State* tolua_S)
   CCActionInterval* pAction = ((CCActionInterval*)  tolua_tousertype(tolua_S,2,0));
   float fPeriod = ((float)  tolua_tonumber(tolua_S,3,0));
   {
-   CCActionInterval* tolua_ret = (CCActionInterval*)  CCEaseElasticOut::create(pAction,fPeriod);
+   CCEaseElasticOut* tolua_ret = (CCEaseElasticOut*)  CCEaseElasticOut::create(pAction,fPeriod);
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCEaseElasticOut");
+  }
+ }
+ return 1;
+tolua_lerror:
+ return tolua_Cocos2d_CCEaseElasticOut_create00(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: copyWithZone of class  CCEaseElasticInOut */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEaseElasticInOut_copyWithZone00
+static int tolua_Cocos2d_CCEaseElasticInOut_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCEaseElasticInOut",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCEaseElasticInOut* self = (CCEaseElasticInOut*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: reverse of class  CCEaseElasticInOut */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEaseElasticInOut_reverse00
+static int tolua_Cocos2d_CCEaseElasticInOut_reverse00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCEaseElasticInOut",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCEaseElasticInOut* self = (CCEaseElasticInOut*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reverse'", NULL);
+#endif
+  {
+   CCActionInterval* tolua_ret = (CCActionInterval*)  self->reverse();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCActionInterval");
   }
  }
  return 1;
-tolua_lerror:
- return tolua_Cocos2d_CCEaseElasticOut_create00(tolua_S);
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'reverse'.",&tolua_err);
+ return 0;
+#endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
@@ -2741,10 +7358,8 @@ static int tolua_Cocos2d_CCEaseElasticInOut_create00(lua_State* tolua_S)
  {
   CCActionInterval* pAction = ((CCActionInterval*)  tolua_tousertype(tolua_S,2,0));
   {
-   CCActionInterval* tolua_ret = (CCActionInterval*)  CCEaseElasticInOut::create(pAction);
-    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCActionInterval");
+   CCEaseElasticInOut* tolua_ret = (CCEaseElasticInOut*)  CCEaseElasticInOut::create(pAction);
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCEaseElasticInOut");
   }
  }
  return 1;
@@ -2773,15 +7388,83 @@ static int tolua_Cocos2d_CCEaseElasticInOut_create01(lua_State* tolua_S)
   CCActionInterval* pAction = ((CCActionInterval*)  tolua_tousertype(tolua_S,2,0));
   float fPeriod = ((float)  tolua_tonumber(tolua_S,3,0));
   {
-   CCActionInterval* tolua_ret = (CCActionInterval*)  CCEaseElasticInOut::create(pAction,fPeriod);
+   CCEaseElasticInOut* tolua_ret = (CCEaseElasticInOut*)  CCEaseElasticInOut::create(pAction,fPeriod);
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCEaseElasticInOut");
+  }
+ }
+ return 1;
+tolua_lerror:
+ return tolua_Cocos2d_CCEaseElasticInOut_create00(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: copyWithZone of class  CCEaseBounce */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEaseBounce_copyWithZone00
+static int tolua_Cocos2d_CCEaseBounce_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCEaseBounce",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCEaseBounce* self = (CCEaseBounce*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: reverse of class  CCEaseBounce */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEaseBounce_reverse00
+static int tolua_Cocos2d_CCEaseBounce_reverse00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCEaseBounce",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCEaseBounce* self = (CCEaseBounce*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reverse'", NULL);
+#endif
+  {
+   CCActionInterval* tolua_ret = (CCActionInterval*)  self->reverse();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCActionInterval");
   }
  }
  return 1;
-tolua_lerror:
- return tolua_Cocos2d_CCEaseElasticInOut_create00(tolua_S);
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'reverse'.",&tolua_err);
+ return 0;
+#endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
@@ -2802,7 +7485,77 @@ static int tolua_Cocos2d_CCEaseBounce_create00(lua_State* tolua_S)
  {
   CCActionInterval* pAction = ((CCActionInterval*)  tolua_tousertype(tolua_S,2,0));
   {
-   CCActionInterval* tolua_ret = (CCActionInterval*)  CCEaseBounce::create(pAction);
+   CCEaseBounce* tolua_ret = (CCEaseBounce*)  CCEaseBounce::create(pAction);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCEaseBounce");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: copyWithZone of class  CCEaseBounceIn */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEaseBounceIn_copyWithZone00
+static int tolua_Cocos2d_CCEaseBounceIn_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCEaseBounceIn",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCEaseBounceIn* self = (CCEaseBounceIn*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: reverse of class  CCEaseBounceIn */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEaseBounceIn_reverse00
+static int tolua_Cocos2d_CCEaseBounceIn_reverse00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCEaseBounceIn",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCEaseBounceIn* self = (CCEaseBounceIn*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reverse'", NULL);
+#endif
+  {
+   CCActionInterval* tolua_ret = (CCActionInterval*)  self->reverse();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCActionInterval");
@@ -2811,7 +7564,7 @@ static int tolua_Cocos2d_CCEaseBounce_create00(lua_State* tolua_S)
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'reverse'.",&tolua_err);
  return 0;
 #endif
 }
@@ -2834,7 +7587,75 @@ static int tolua_Cocos2d_CCEaseBounceIn_create00(lua_State* tolua_S)
  {
   CCActionInterval* pAction = ((CCActionInterval*)  tolua_tousertype(tolua_S,2,0));
   {
-   CCActionInterval* tolua_ret = (CCActionInterval*)  CCEaseBounceIn::create(pAction);
+   CCEaseBounceIn* tolua_ret = (CCEaseBounceIn*)  CCEaseBounceIn::create(pAction);
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCEaseBounceIn");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: copyWithZone of class  CCEaseBounceOut */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEaseBounceOut_copyWithZone00
+static int tolua_Cocos2d_CCEaseBounceOut_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCEaseBounceOut",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCEaseBounceOut* self = (CCEaseBounceOut*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: reverse of class  CCEaseBounceOut */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEaseBounceOut_reverse00
+static int tolua_Cocos2d_CCEaseBounceOut_reverse00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCEaseBounceOut",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCEaseBounceOut* self = (CCEaseBounceOut*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reverse'", NULL);
+#endif
+  {
+   CCActionInterval* tolua_ret = (CCActionInterval*)  self->reverse();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCActionInterval");
@@ -2843,7 +7664,7 @@ static int tolua_Cocos2d_CCEaseBounceIn_create00(lua_State* tolua_S)
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'reverse'.",&tolua_err);
  return 0;
 #endif
 }
@@ -2866,7 +7687,75 @@ static int tolua_Cocos2d_CCEaseBounceOut_create00(lua_State* tolua_S)
  {
   CCActionInterval* pAction = ((CCActionInterval*)  tolua_tousertype(tolua_S,2,0));
   {
-   CCActionInterval* tolua_ret = (CCActionInterval*)  CCEaseBounceOut::create(pAction);
+   CCEaseBounceOut* tolua_ret = (CCEaseBounceOut*)  CCEaseBounceOut::create(pAction);
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCEaseBounceOut");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: copyWithZone of class  CCEaseBounceInOut */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEaseBounceInOut_copyWithZone00
+static int tolua_Cocos2d_CCEaseBounceInOut_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCEaseBounceInOut",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCEaseBounceInOut* self = (CCEaseBounceInOut*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: reverse of class  CCEaseBounceInOut */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEaseBounceInOut_reverse00
+static int tolua_Cocos2d_CCEaseBounceInOut_reverse00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCEaseBounceInOut",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCEaseBounceInOut* self = (CCEaseBounceInOut*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reverse'", NULL);
+#endif
+  {
+   CCActionInterval* tolua_ret = (CCActionInterval*)  self->reverse();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCActionInterval");
@@ -2875,7 +7764,7 @@ static int tolua_Cocos2d_CCEaseBounceOut_create00(lua_State* tolua_S)
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'reverse'.",&tolua_err);
  return 0;
 #endif
 }
@@ -2898,7 +7787,75 @@ static int tolua_Cocos2d_CCEaseBounceInOut_create00(lua_State* tolua_S)
  {
   CCActionInterval* pAction = ((CCActionInterval*)  tolua_tousertype(tolua_S,2,0));
   {
-   CCActionInterval* tolua_ret = (CCActionInterval*)  CCEaseBounceInOut::create(pAction);
+   CCEaseBounceInOut* tolua_ret = (CCEaseBounceInOut*)  CCEaseBounceInOut::create(pAction);
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCEaseBounceInOut");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: copyWithZone of class  CCEaseBackIn */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEaseBackIn_copyWithZone00
+static int tolua_Cocos2d_CCEaseBackIn_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCEaseBackIn",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCEaseBackIn* self = (CCEaseBackIn*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: reverse of class  CCEaseBackIn */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEaseBackIn_reverse00
+static int tolua_Cocos2d_CCEaseBackIn_reverse00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCEaseBackIn",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCEaseBackIn* self = (CCEaseBackIn*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reverse'", NULL);
+#endif
+  {
+   CCActionInterval* tolua_ret = (CCActionInterval*)  self->reverse();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCActionInterval");
@@ -2907,7 +7864,7 @@ static int tolua_Cocos2d_CCEaseBounceInOut_create00(lua_State* tolua_S)
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'reverse'.",&tolua_err);
  return 0;
 #endif
 }
@@ -2930,7 +7887,77 @@ static int tolua_Cocos2d_CCEaseBackIn_create00(lua_State* tolua_S)
  {
   CCActionInterval* pAction = ((CCActionInterval*)  tolua_tousertype(tolua_S,2,0));
   {
-   CCActionInterval* tolua_ret = (CCActionInterval*)  CCEaseBackIn::create(pAction);
+   CCEaseBackIn* tolua_ret = (CCEaseBackIn*)  CCEaseBackIn::create(pAction);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCEaseBackIn");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: copyWithZone of class  CCEaseBackOut */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEaseBackOut_copyWithZone00
+static int tolua_Cocos2d_CCEaseBackOut_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCEaseBackOut",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCEaseBackOut* self = (CCEaseBackOut*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: reverse of class  CCEaseBackOut */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEaseBackOut_reverse00
+static int tolua_Cocos2d_CCEaseBackOut_reverse00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCEaseBackOut",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCEaseBackOut* self = (CCEaseBackOut*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reverse'", NULL);
+#endif
+  {
+   CCActionInterval* tolua_ret = (CCActionInterval*)  self->reverse();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCActionInterval");
@@ -2939,7 +7966,7 @@ static int tolua_Cocos2d_CCEaseBackIn_create00(lua_State* tolua_S)
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'reverse'.",&tolua_err);
  return 0;
 #endif
 }
@@ -2962,7 +7989,77 @@ static int tolua_Cocos2d_CCEaseBackOut_create00(lua_State* tolua_S)
  {
   CCActionInterval* pAction = ((CCActionInterval*)  tolua_tousertype(tolua_S,2,0));
   {
-   CCActionInterval* tolua_ret = (CCActionInterval*)  CCEaseBackOut::create(pAction);
+   CCEaseBackOut* tolua_ret = (CCEaseBackOut*)  CCEaseBackOut::create(pAction);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCEaseBackOut");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: copyWithZone of class  CCEaseBackInOut */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEaseBackInOut_copyWithZone00
+static int tolua_Cocos2d_CCEaseBackInOut_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCEaseBackInOut",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCEaseBackInOut* self = (CCEaseBackInOut*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: reverse of class  CCEaseBackInOut */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEaseBackInOut_reverse00
+static int tolua_Cocos2d_CCEaseBackInOut_reverse00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCEaseBackInOut",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCEaseBackInOut* self = (CCEaseBackInOut*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reverse'", NULL);
+#endif
+  {
+   CCActionInterval* tolua_ret = (CCActionInterval*)  self->reverse();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCActionInterval");
@@ -2971,7 +8068,7 @@ static int tolua_Cocos2d_CCEaseBackOut_create00(lua_State* tolua_S)
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'reverse'.",&tolua_err);
  return 0;
 #endif
 }
@@ -2994,7 +8091,77 @@ static int tolua_Cocos2d_CCEaseBackInOut_create00(lua_State* tolua_S)
  {
   CCActionInterval* pAction = ((CCActionInterval*)  tolua_tousertype(tolua_S,2,0));
   {
-   CCActionInterval* tolua_ret = (CCActionInterval*)  CCEaseBackInOut::create(pAction);
+   CCEaseBackInOut* tolua_ret = (CCEaseBackInOut*)  CCEaseBackInOut::create(pAction);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCEaseBackInOut");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: copyWithZone of class  CCGridAction */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCGridAction_copyWithZone00
+static int tolua_Cocos2d_CCGridAction_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCGridAction",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCGridAction* self = (CCGridAction*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: reverse of class  CCGridAction */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCGridAction_reverse00
+static int tolua_Cocos2d_CCGridAction_reverse00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCGridAction",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCGridAction* self = (CCGridAction*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reverse'", NULL);
+#endif
+  {
+   CCActionInterval* tolua_ret = (CCActionInterval*)  self->reverse();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCActionInterval");
@@ -3003,7 +8170,7 @@ static int tolua_Cocos2d_CCEaseBackInOut_create00(lua_State* tolua_S)
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'reverse'.",&tolua_err);
  return 0;
 #endif
 }
@@ -3070,6 +8237,40 @@ static int tolua_Cocos2d_CCGridAction_create00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: reverse of class  CCAccelDeccelAmplitude */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCAccelDeccelAmplitude_reverse00
+static int tolua_Cocos2d_CCAccelDeccelAmplitude_reverse00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCAccelDeccelAmplitude",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCAccelDeccelAmplitude* self = (CCAccelDeccelAmplitude*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reverse'", NULL);
+#endif
+  {
+   CCActionInterval* tolua_ret = (CCActionInterval*)  self->reverse();
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCActionInterval");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'reverse'.",&tolua_err);
  return 0;
 #endif
 }
@@ -3174,6 +8375,350 @@ static int tolua_Cocos2d_CCAccelDeccelAmplitude_create00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: getGrid of class  CCGrid3DAction */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCGrid3DAction_getGrid00
+static int tolua_Cocos2d_CCGrid3DAction_getGrid00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCGrid3DAction",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCGrid3DAction* self = (CCGrid3DAction*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getGrid'", NULL);
+#endif
+  {
+   CCGridBase* tolua_ret = (CCGridBase*)  self->getGrid();
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCGridBase");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getGrid'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: vertex of class  CCGrid3DAction */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCGrid3DAction_vertex00
+static int tolua_Cocos2d_CCGrid3DAction_vertex00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCGrid3DAction",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const ccGridSize",0,&tolua_err)) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCGrid3DAction* self = (CCGrid3DAction*)  tolua_tousertype(tolua_S,1,0);
+  const ccGridSize* pos = ((const ccGridSize*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'vertex'", NULL);
+#endif
+  {
+   ccVertex3F tolua_ret = (ccVertex3F)  self->vertex(*pos);
+   {
+#ifdef __cplusplus
+    void* tolua_obj = Mtolua_new((ccVertex3F)(tolua_ret));
+     tolua_pushusertype(tolua_S,tolua_obj,"ccVertex3F");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#else
+    void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(ccVertex3F));
+     tolua_pushusertype(tolua_S,tolua_obj,"ccVertex3F");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#endif
+   }
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'vertex'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: originalVertex of class  CCGrid3DAction */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCGrid3DAction_originalVertex00
+static int tolua_Cocos2d_CCGrid3DAction_originalVertex00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCGrid3DAction",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const ccGridSize",0,&tolua_err)) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCGrid3DAction* self = (CCGrid3DAction*)  tolua_tousertype(tolua_S,1,0);
+  const ccGridSize* pos = ((const ccGridSize*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'originalVertex'", NULL);
+#endif
+  {
+   ccVertex3F tolua_ret = (ccVertex3F)  self->originalVertex(*pos);
+   {
+#ifdef __cplusplus
+    void* tolua_obj = Mtolua_new((ccVertex3F)(tolua_ret));
+     tolua_pushusertype(tolua_S,tolua_obj,"ccVertex3F");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#else
+    void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(ccVertex3F));
+     tolua_pushusertype(tolua_S,tolua_obj,"ccVertex3F");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#endif
+   }
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'originalVertex'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setVertex of class  CCGrid3DAction */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCGrid3DAction_setVertex00
+static int tolua_Cocos2d_CCGrid3DAction_setVertex00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCGrid3DAction",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const ccGridSize",0,&tolua_err)) ||
+     (tolua_isvaluenil(tolua_S,3,&tolua_err) || !tolua_isusertype(tolua_S,3,"const ccVertex3F",0,&tolua_err)) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCGrid3DAction* self = (CCGrid3DAction*)  tolua_tousertype(tolua_S,1,0);
+  const ccGridSize* pos = ((const ccGridSize*)  tolua_tousertype(tolua_S,2,0));
+  const ccVertex3F* vertex = ((const ccVertex3F*)  tolua_tousertype(tolua_S,3,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setVertex'", NULL);
+#endif
+  {
+   self->setVertex(*pos,*vertex);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setVertex'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: tile of class  CCTiledGrid3DAction */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTiledGrid3DAction_tile00
+static int tolua_Cocos2d_CCTiledGrid3DAction_tile00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCTiledGrid3DAction",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"ccGridSize",0,&tolua_err)) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCTiledGrid3DAction* self = (CCTiledGrid3DAction*)  tolua_tousertype(tolua_S,1,0);
+  ccGridSize pos = *((ccGridSize*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'tile'", NULL);
+#endif
+  {
+   ccQuad3 tolua_ret = (ccQuad3)  self->tile(pos);
+   {
+#ifdef __cplusplus
+    void* tolua_obj = Mtolua_new((ccQuad3)(tolua_ret));
+     tolua_pushusertype(tolua_S,tolua_obj,"ccQuad3");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#else
+    void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(ccQuad3));
+     tolua_pushusertype(tolua_S,tolua_obj,"ccQuad3");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#endif
+   }
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'tile'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: originalTile of class  CCTiledGrid3DAction */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTiledGrid3DAction_originalTile00
+static int tolua_Cocos2d_CCTiledGrid3DAction_originalTile00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCTiledGrid3DAction",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"ccGridSize",0,&tolua_err)) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCTiledGrid3DAction* self = (CCTiledGrid3DAction*)  tolua_tousertype(tolua_S,1,0);
+  ccGridSize pos = *((ccGridSize*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'originalTile'", NULL);
+#endif
+  {
+   ccQuad3 tolua_ret = (ccQuad3)  self->originalTile(pos);
+   {
+#ifdef __cplusplus
+    void* tolua_obj = Mtolua_new((ccQuad3)(tolua_ret));
+     tolua_pushusertype(tolua_S,tolua_obj,"ccQuad3");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#else
+    void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(ccQuad3));
+     tolua_pushusertype(tolua_S,tolua_obj,"ccQuad3");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#endif
+   }
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'originalTile'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setTile of class  CCTiledGrid3DAction */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTiledGrid3DAction_setTile00
+static int tolua_Cocos2d_CCTiledGrid3DAction_setTile00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCTiledGrid3DAction",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"ccGridSize",0,&tolua_err)) ||
+     (tolua_isvaluenil(tolua_S,3,&tolua_err) || !tolua_isusertype(tolua_S,3,"ccQuad3",0,&tolua_err)) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCTiledGrid3DAction* self = (CCTiledGrid3DAction*)  tolua_tousertype(tolua_S,1,0);
+  ccGridSize pos = *((ccGridSize*)  tolua_tousertype(tolua_S,2,0));
+  ccQuad3 coords = *((ccQuad3*)  tolua_tousertype(tolua_S,3,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setTile'", NULL);
+#endif
+  {
+   self->setTile(pos,coords);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setTile'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getGrid of class  CCTiledGrid3DAction */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTiledGrid3DAction_getGrid00
+static int tolua_Cocos2d_CCTiledGrid3DAction_getGrid00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCTiledGrid3DAction",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCTiledGrid3DAction* self = (CCTiledGrid3DAction*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getGrid'", NULL);
+#endif
+  {
+   CCGridBase* tolua_ret = (CCGridBase*)  self->getGrid();
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCGridBase");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getGrid'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: reverse of class  CCAccelAmplitude */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCAccelAmplitude_reverse00
+static int tolua_Cocos2d_CCAccelAmplitude_reverse00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCAccelAmplitude",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCAccelAmplitude* self = (CCAccelAmplitude*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reverse'", NULL);
+#endif
+  {
+   CCActionInterval* tolua_ret = (CCActionInterval*)  self->reverse();
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCActionInterval");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'reverse'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: getRate of class  CCAccelAmplitude */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCAccelAmplitude_getRate00
 static int tolua_Cocos2d_CCAccelAmplitude_getRate00(lua_State* tolua_S)
@@ -3268,6 +8813,40 @@ static int tolua_Cocos2d_CCAccelAmplitude_create00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: reverse of class  CCDeccelAmplitude */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCDeccelAmplitude_reverse00
+static int tolua_Cocos2d_CCDeccelAmplitude_reverse00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCDeccelAmplitude",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCDeccelAmplitude* self = (CCDeccelAmplitude*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reverse'", NULL);
+#endif
+  {
+   CCActionInterval* tolua_ret = (CCActionInterval*)  self->reverse();
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCActionInterval");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'reverse'.",&tolua_err);
  return 0;
 #endif
 }
@@ -3429,6 +9008,42 @@ static int tolua_Cocos2d_CCReuseGrid_create00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: copyWithZone of class  CCWaves3D */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCWaves3D_copyWithZone00
+static int tolua_Cocos2d_CCWaves3D_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCWaves3D",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCWaves3D* self = (CCWaves3D*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
  return 0;
 #endif
 }
@@ -3600,6 +9215,42 @@ static int tolua_Cocos2d_CCWaves3D_create00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: copyWithZone of class  CCFlipX3D */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCFlipX3D_copyWithZone00
+static int tolua_Cocos2d_CCFlipX3D_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCFlipX3D",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCFlipX3D* self = (CCFlipX3D*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: create of class  CCFlipX3D */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCFlipX3D_create00
 static int tolua_Cocos2d_CCFlipX3D_create00(lua_State* tolua_S)
@@ -3630,6 +9281,42 @@ static int tolua_Cocos2d_CCFlipX3D_create00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: copyWithZone of class  CCFlipY3D */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCFlipY3D_copyWithZone00
+static int tolua_Cocos2d_CCFlipY3D_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCFlipY3D",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCFlipY3D* self = (CCFlipY3D*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: create of class  CCFlipY3D */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCFlipY3D_create00
 static int tolua_Cocos2d_CCFlipY3D_create00(lua_State* tolua_S)
@@ -3655,6 +9342,42 @@ static int tolua_Cocos2d_CCFlipY3D_create00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: copyWithZone of class  CCLens3D */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCLens3D_copyWithZone00
+static int tolua_Cocos2d_CCLens3D_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCLens3D",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCLens3D* self = (CCLens3D*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
  return 0;
 #endif
 }
@@ -3831,6 +9554,42 @@ static int tolua_Cocos2d_CCLens3D_create00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: copyWithZone of class  CCRipple3D */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCRipple3D_copyWithZone00
+static int tolua_Cocos2d_CCRipple3D_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCRipple3D",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCRipple3D* self = (CCRipple3D*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
  return 0;
 #endif
 }
@@ -4081,6 +9840,42 @@ static int tolua_Cocos2d_CCRipple3D_create00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: copyWithZone of class  CCShaky3D */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCShaky3D_copyWithZone00
+static int tolua_Cocos2d_CCShaky3D_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCShaky3D",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCShaky3D* self = (CCShaky3D*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: create of class  CCShaky3D */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCShaky3D_create00
 static int tolua_Cocos2d_CCShaky3D_create00(lua_State* tolua_S)
@@ -4112,6 +9907,42 @@ static int tolua_Cocos2d_CCShaky3D_create00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: copyWithZone of class  CCLiquid */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCLiquid_copyWithZone00
+static int tolua_Cocos2d_CCLiquid_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCLiquid",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCLiquid* self = (CCLiquid*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
  return 0;
 #endif
 }
@@ -4283,6 +10114,42 @@ static int tolua_Cocos2d_CCLiquid_create00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: copyWithZone of class  CCWaves */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCWaves_copyWithZone00
+static int tolua_Cocos2d_CCWaves_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCWaves",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCWaves* self = (CCWaves*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: getAmplitude of class  CCWaves */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCWaves_getAmplitude00
 static int tolua_Cocos2d_CCWaves_getAmplitude00(lua_State* tolua_S)
@@ -4448,6 +10315,42 @@ static int tolua_Cocos2d_CCWaves_create00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: copyWithZone of class  CCTwirl */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTwirl_copyWithZone00
+static int tolua_Cocos2d_CCTwirl_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCTwirl",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCTwirl* self = (CCTwirl*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
  return 0;
 #endif
 }
@@ -5003,6 +10906,73 @@ static int tolua_Cocos2d_CCActionManager_resumeTarget00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: pauseAllRunningActions of class  CCActionManager */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCActionManager_pauseAllRunningActions00
+static int tolua_Cocos2d_CCActionManager_pauseAllRunningActions00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCActionManager",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCActionManager* self = (CCActionManager*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'pauseAllRunningActions'", NULL);
+#endif
+  {
+   CCSet* tolua_ret = (CCSet*)  self->pauseAllRunningActions();
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSet");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'pauseAllRunningActions'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: resumeTargets of class  CCActionManager */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCActionManager_resumeTargets00
+static int tolua_Cocos2d_CCActionManager_resumeTargets00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCActionManager",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCSet",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCActionManager* self = (CCActionManager*)  tolua_tousertype(tolua_S,1,0);
+  CCSet* targetsToResume = ((CCSet*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'resumeTargets'", NULL);
+#endif
+  {
+   self->resumeTargets(targetsToResume);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'resumeTargets'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: create of class  CCPageTurn3D */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCPageTurn3D_create00
 static int tolua_Cocos2d_CCPageTurn3D_create00(lua_State* tolua_S)
@@ -5030,6 +11000,184 @@ static int tolua_Cocos2d_CCPageTurn3D_create00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: copyWithZone of class  CCProgressTo */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCProgressTo_copyWithZone00
+static int tolua_Cocos2d_CCProgressTo_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCProgressTo",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCProgressTo* self = (CCProgressTo*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: create of class  CCProgressTo */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCProgressTo_create00
+static int tolua_Cocos2d_CCProgressTo_create00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"CCProgressTo",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  float duration = ((float)  tolua_tonumber(tolua_S,2,0));
+  float fPercent = ((float)  tolua_tonumber(tolua_S,3,0));
+  {
+   CCProgressTo* tolua_ret = (CCProgressTo*)  CCProgressTo::create(duration,fPercent);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCProgressTo");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: copyWithZone of class  CCProgressFromTo */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCProgressFromTo_copyWithZone00
+static int tolua_Cocos2d_CCProgressFromTo_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCProgressFromTo",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCProgressFromTo* self = (CCProgressFromTo*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: create of class  CCProgressFromTo */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCProgressFromTo_create00
+static int tolua_Cocos2d_CCProgressFromTo_create00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"CCProgressFromTo",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,4,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,5,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  float duration = ((float)  tolua_tonumber(tolua_S,2,0));
+  float fFromPercentage = ((float)  tolua_tonumber(tolua_S,3,0));
+  float fToPercentage = ((float)  tolua_tonumber(tolua_S,4,0));
+  {
+   CCProgressFromTo* tolua_ret = (CCProgressFromTo*)  CCProgressFromTo::create(duration,fFromPercentage,fToPercentage);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCProgressFromTo");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: copyWithZone of class  CCShakyTiles3D */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCShakyTiles3D_copyWithZone00
+static int tolua_Cocos2d_CCShakyTiles3D_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCShakyTiles3D",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCShakyTiles3D* self = (CCShakyTiles3D*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
  return 0;
 #endif
 }
@@ -5071,6 +11219,42 @@ static int tolua_Cocos2d_CCShakyTiles3D_create00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: copyWithZone of class  CCShatteredTiles3D */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCShatteredTiles3D_copyWithZone00
+static int tolua_Cocos2d_CCShatteredTiles3D_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCShatteredTiles3D",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCShatteredTiles3D* self = (CCShatteredTiles3D*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: create of class  CCShatteredTiles3D */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCShatteredTiles3D_create00
 static int tolua_Cocos2d_CCShatteredTiles3D_create00(lua_State* tolua_S)
@@ -5102,6 +11286,42 @@ static int tolua_Cocos2d_CCShatteredTiles3D_create00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: copyWithZone of class  CCShuffleTiles */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCShuffleTiles_copyWithZone00
+static int tolua_Cocos2d_CCShuffleTiles_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCShuffleTiles",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCShuffleTiles* self = (CCShuffleTiles*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
  return 0;
 #endif
 }
@@ -5421,6 +11641,41 @@ static int tolua_Cocos2d_CCFadeOutBLTiles_create00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: transformTile of class  CCFadeOutUpTiles */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCFadeOutUpTiles_transformTile00
+static int tolua_Cocos2d_CCFadeOutUpTiles_transformTile00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCFadeOutUpTiles",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"ccGridSize",0,&tolua_err)) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCFadeOutUpTiles* self = (CCFadeOutUpTiles*)  tolua_tousertype(tolua_S,1,0);
+  ccGridSize pos = *((ccGridSize*)  tolua_tousertype(tolua_S,2,0));
+  float distance = ((float)  tolua_tonumber(tolua_S,3,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'transformTile'", NULL);
+#endif
+  {
+   self->transformTile(pos,distance);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'transformTile'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: create of class  CCFadeOutUpTiles */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCFadeOutUpTiles_create00
 static int tolua_Cocos2d_CCFadeOutUpTiles_create00(lua_State* tolua_S)
@@ -5480,6 +11735,42 @@ static int tolua_Cocos2d_CCFadeOutDownTiles_create00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: copyWithZone of class  CCTurnOffTiles */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTurnOffTiles_copyWithZone00
+static int tolua_Cocos2d_CCTurnOffTiles_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCTurnOffTiles",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCTurnOffTiles* self = (CCTurnOffTiles*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
  return 0;
 #endif
 }
@@ -5648,6 +11939,42 @@ tolua_lerror:
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: copyWithZone of class  CCWavesTiles3D */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCWavesTiles3D_copyWithZone00
+static int tolua_Cocos2d_CCWavesTiles3D_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCWavesTiles3D",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCWavesTiles3D* self = (CCWavesTiles3D*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: getAmplitude of class  CCWavesTiles3D */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCWavesTiles3D_getAmplitude00
 static int tolua_Cocos2d_CCWavesTiles3D_getAmplitude00(lua_State* tolua_S)
@@ -5809,6 +12136,42 @@ static int tolua_Cocos2d_CCWavesTiles3D_create00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: copyWithZone of class  CCJumpTiles3D */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCJumpTiles3D_copyWithZone00
+static int tolua_Cocos2d_CCJumpTiles3D_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCJumpTiles3D",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCJumpTiles3D* self = (CCJumpTiles3D*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
  return 0;
 #endif
 }
@@ -5980,6 +12343,42 @@ static int tolua_Cocos2d_CCJumpTiles3D_create00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: copyWithZone of class  CCSplitRows */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSplitRows_copyWithZone00
+static int tolua_Cocos2d_CCSplitRows_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCSplitRows",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCSplitRows* self = (CCSplitRows*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: create of class  CCSplitRows */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSplitRows_create00
 static int tolua_Cocos2d_CCSplitRows_create00(lua_State* tolua_S)
@@ -6007,6 +12406,42 @@ static int tolua_Cocos2d_CCSplitRows_create00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: copyWithZone of class  CCSplitCols */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSplitCols_copyWithZone00
+static int tolua_Cocos2d_CCSplitCols_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCSplitCols",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCSplitCols* self = (CCSplitCols*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
  return 0;
 #endif
 }
@@ -6052,7 +12487,7 @@ static int tolua_get_CCAffineTransform_a(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'a'",NULL);
 #endif
-   tolua_pushusertype(tolua_S,(void*)&self->a,"CCFloat");
+  tolua_pushnumber(tolua_S,(lua_Number)self->a);
  return 1;
 }
 #endif //#ifndef TOLUA_DISABLE
@@ -6065,10 +12500,10 @@ static int tolua_set_CCAffineTransform_a(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
   tolua_Error tolua_err;
   if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'a'",NULL);
-  if ((tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"CCFloat",0,&tolua_err)))
+  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
    tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
 #endif
-  self->a = *((CCFloat*)  tolua_tousertype(tolua_S,2,0))
+  self->a = ((float)  tolua_tonumber(tolua_S,2,0))
 ;
  return 0;
 }
@@ -6082,7 +12517,7 @@ static int tolua_get_CCAffineTransform_b(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'b'",NULL);
 #endif
-   tolua_pushusertype(tolua_S,(void*)&self->b,"CCFloat");
+  tolua_pushnumber(tolua_S,(lua_Number)self->b);
  return 1;
 }
 #endif //#ifndef TOLUA_DISABLE
@@ -6095,10 +12530,10 @@ static int tolua_set_CCAffineTransform_b(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
   tolua_Error tolua_err;
   if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'b'",NULL);
-  if ((tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"CCFloat",0,&tolua_err)))
+  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
    tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
 #endif
-  self->b = *((CCFloat*)  tolua_tousertype(tolua_S,2,0))
+  self->b = ((float)  tolua_tonumber(tolua_S,2,0))
 ;
  return 0;
 }
@@ -6112,7 +12547,7 @@ static int tolua_get_CCAffineTransform_c(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'c'",NULL);
 #endif
-   tolua_pushusertype(tolua_S,(void*)&self->c,"CCFloat");
+  tolua_pushnumber(tolua_S,(lua_Number)self->c);
  return 1;
 }
 #endif //#ifndef TOLUA_DISABLE
@@ -6125,10 +12560,10 @@ static int tolua_set_CCAffineTransform_c(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
   tolua_Error tolua_err;
   if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'c'",NULL);
-  if ((tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"CCFloat",0,&tolua_err)))
+  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
    tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
 #endif
-  self->c = *((CCFloat*)  tolua_tousertype(tolua_S,2,0))
+  self->c = ((float)  tolua_tonumber(tolua_S,2,0))
 ;
  return 0;
 }
@@ -6142,7 +12577,7 @@ static int tolua_get_CCAffineTransform_d(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'd'",NULL);
 #endif
-   tolua_pushusertype(tolua_S,(void*)&self->d,"CCFloat");
+  tolua_pushnumber(tolua_S,(lua_Number)self->d);
  return 1;
 }
 #endif //#ifndef TOLUA_DISABLE
@@ -6155,10 +12590,10 @@ static int tolua_set_CCAffineTransform_d(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
   tolua_Error tolua_err;
   if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'd'",NULL);
-  if ((tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"CCFloat",0,&tolua_err)))
+  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
    tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
 #endif
-  self->d = *((CCFloat*)  tolua_tousertype(tolua_S,2,0))
+  self->d = ((float)  tolua_tonumber(tolua_S,2,0))
 ;
  return 0;
 }
@@ -6172,7 +12607,7 @@ static int tolua_get_CCAffineTransform_tx(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'tx'",NULL);
 #endif
-   tolua_pushusertype(tolua_S,(void*)&self->tx,"CCFloat");
+  tolua_pushnumber(tolua_S,(lua_Number)self->tx);
  return 1;
 }
 #endif //#ifndef TOLUA_DISABLE
@@ -6185,10 +12620,10 @@ static int tolua_set_CCAffineTransform_tx(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
   tolua_Error tolua_err;
   if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'tx'",NULL);
-  if ((tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"CCFloat",0,&tolua_err)))
+  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
    tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
 #endif
-  self->tx = *((CCFloat*)  tolua_tousertype(tolua_S,2,0))
+  self->tx = ((float)  tolua_tonumber(tolua_S,2,0))
 ;
  return 0;
 }
@@ -6202,7 +12637,7 @@ static int tolua_get_CCAffineTransform_ty(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'ty'",NULL);
 #endif
-   tolua_pushusertype(tolua_S,(void*)&self->ty,"CCFloat");
+  tolua_pushnumber(tolua_S,(lua_Number)self->ty);
  return 1;
 }
 #endif //#ifndef TOLUA_DISABLE
@@ -6215,10 +12650,10 @@ static int tolua_set_CCAffineTransform_ty(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
   tolua_Error tolua_err;
   if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'ty'",NULL);
-  if ((tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"CCFloat",0,&tolua_err)))
+  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
    tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
 #endif
-  self->ty = *((CCFloat*)  tolua_tousertype(tolua_S,2,0))
+  self->ty = ((float)  tolua_tonumber(tolua_S,2,0))
 ;
  return 0;
 }
@@ -6231,24 +12666,24 @@ static int tolua_Cocos2d___CCAffineTransformMake00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
-     (tolua_isvaluenil(tolua_S,1,&tolua_err) || !tolua_isusertype(tolua_S,1,"CCFloat",0,&tolua_err)) ||
-     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"CCFloat",0,&tolua_err)) ||
-     (tolua_isvaluenil(tolua_S,3,&tolua_err) || !tolua_isusertype(tolua_S,3,"CCFloat",0,&tolua_err)) ||
-     (tolua_isvaluenil(tolua_S,4,&tolua_err) || !tolua_isusertype(tolua_S,4,"CCFloat",0,&tolua_err)) ||
-     (tolua_isvaluenil(tolua_S,5,&tolua_err) || !tolua_isusertype(tolua_S,5,"CCFloat",0,&tolua_err)) ||
-     (tolua_isvaluenil(tolua_S,6,&tolua_err) || !tolua_isusertype(tolua_S,6,"CCFloat",0,&tolua_err)) ||
+     !tolua_isnumber(tolua_S,1,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,4,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,5,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,6,0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,7,&tolua_err)
  )
   goto tolua_lerror;
  else
 #endif
  {
-  CCFloat a = *((CCFloat*)  tolua_tousertype(tolua_S,1,0));
-  CCFloat b = *((CCFloat*)  tolua_tousertype(tolua_S,2,0));
-  CCFloat c = *((CCFloat*)  tolua_tousertype(tolua_S,3,0));
-  CCFloat d = *((CCFloat*)  tolua_tousertype(tolua_S,4,0));
-  CCFloat tx = *((CCFloat*)  tolua_tousertype(tolua_S,5,0));
-  CCFloat ty = *((CCFloat*)  tolua_tousertype(tolua_S,6,0));
+  float a = ((float)  tolua_tonumber(tolua_S,1,0));
+  float b = ((float)  tolua_tonumber(tolua_S,2,0));
+  float c = ((float)  tolua_tonumber(tolua_S,3,0));
+  float d = ((float)  tolua_tonumber(tolua_S,4,0));
+  float tx = ((float)  tolua_tonumber(tolua_S,5,0));
+  float ty = ((float)  tolua_tonumber(tolua_S,6,0));
   {
    CCAffineTransform tolua_ret = (CCAffineTransform)  __CCAffineTransformMake(a,b,c,d,tx,ty);
    {
@@ -6280,24 +12715,24 @@ static int tolua_Cocos2d_CCAffineTransformMake00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
-     (tolua_isvaluenil(tolua_S,1,&tolua_err) || !tolua_isusertype(tolua_S,1,"CCFloat",0,&tolua_err)) ||
-     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"CCFloat",0,&tolua_err)) ||
-     (tolua_isvaluenil(tolua_S,3,&tolua_err) || !tolua_isusertype(tolua_S,3,"CCFloat",0,&tolua_err)) ||
-     (tolua_isvaluenil(tolua_S,4,&tolua_err) || !tolua_isusertype(tolua_S,4,"CCFloat",0,&tolua_err)) ||
-     (tolua_isvaluenil(tolua_S,5,&tolua_err) || !tolua_isusertype(tolua_S,5,"CCFloat",0,&tolua_err)) ||
-     (tolua_isvaluenil(tolua_S,6,&tolua_err) || !tolua_isusertype(tolua_S,6,"CCFloat",0,&tolua_err)) ||
+     !tolua_isnumber(tolua_S,1,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,4,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,5,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,6,0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,7,&tolua_err)
  )
   goto tolua_lerror;
  else
 #endif
  {
-  CCFloat a = *((CCFloat*)  tolua_tousertype(tolua_S,1,0));
-  CCFloat b = *((CCFloat*)  tolua_tousertype(tolua_S,2,0));
-  CCFloat c = *((CCFloat*)  tolua_tousertype(tolua_S,3,0));
-  CCFloat d = *((CCFloat*)  tolua_tousertype(tolua_S,4,0));
-  CCFloat tx = *((CCFloat*)  tolua_tousertype(tolua_S,5,0));
-  CCFloat ty = *((CCFloat*)  tolua_tousertype(tolua_S,6,0));
+  float a = ((float)  tolua_tonumber(tolua_S,1,0));
+  float b = ((float)  tolua_tonumber(tolua_S,2,0));
+  float c = ((float)  tolua_tonumber(tolua_S,3,0));
+  float d = ((float)  tolua_tonumber(tolua_S,4,0));
+  float tx = ((float)  tolua_tonumber(tolua_S,5,0));
+  float ty = ((float)  tolua_tonumber(tolua_S,6,0));
   {
    CCAffineTransform tolua_ret = (CCAffineTransform)  CCAffineTransformMake(a,b,c,d,tx,ty);
    {
@@ -6615,7 +13050,7 @@ static int tolua_Cocos2d_CCAffineTransformRotate00(lua_State* tolua_S)
  tolua_Error tolua_err;
  if (
      (tolua_isvaluenil(tolua_S,1,&tolua_err) || !tolua_isusertype(tolua_S,1,"CCAffineTransform",0,&tolua_err)) ||
-     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"CCFloat",0,&tolua_err)) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
   goto tolua_lerror;
@@ -6623,7 +13058,7 @@ static int tolua_Cocos2d_CCAffineTransformRotate00(lua_State* tolua_S)
 #endif
  {
   CCAffineTransform aTransform = *((CCAffineTransform*)  tolua_tousertype(tolua_S,1,0));
-  CCFloat anAngle = *((CCFloat*)  tolua_tousertype(tolua_S,2,0));
+  float anAngle = ((float)  tolua_tonumber(tolua_S,2,0));
   {
    CCAffineTransform tolua_ret = (CCAffineTransform)  CCAffineTransformRotate(aTransform,anAngle);
    {
@@ -6656,8 +13091,8 @@ static int tolua_Cocos2d_CCAffineTransformScale00(lua_State* tolua_S)
  tolua_Error tolua_err;
  if (
      (tolua_isvaluenil(tolua_S,1,&tolua_err) || !tolua_isusertype(tolua_S,1,"CCAffineTransform",0,&tolua_err)) ||
-     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"CCFloat",0,&tolua_err)) ||
-     (tolua_isvaluenil(tolua_S,3,&tolua_err) || !tolua_isusertype(tolua_S,3,"CCFloat",0,&tolua_err)) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,4,&tolua_err)
  )
   goto tolua_lerror;
@@ -6665,8 +13100,8 @@ static int tolua_Cocos2d_CCAffineTransformScale00(lua_State* tolua_S)
 #endif
  {
   CCAffineTransform t = *((CCAffineTransform*)  tolua_tousertype(tolua_S,1,0));
-  CCFloat sx = *((CCFloat*)  tolua_tousertype(tolua_S,2,0));
-  CCFloat sy = *((CCFloat*)  tolua_tousertype(tolua_S,3,0));
+  float sx = ((float)  tolua_tonumber(tolua_S,2,0));
+  float sy = ((float)  tolua_tonumber(tolua_S,3,0));
   {
    CCAffineTransform tolua_ret = (CCAffineTransform)  CCAffineTransformScale(t,sx,sy);
    {
@@ -6883,6 +13318,42 @@ static int tolua_Cocos2d_CCAnimationFrame_delete00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'delete'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: copyWithZone of class  CCAnimationFrame */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCAnimationFrame_copyWithZone00
+static int tolua_Cocos2d_CCAnimationFrame_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCAnimationFrame",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCAnimationFrame* self = (CCAnimationFrame*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
  return 0;
 #endif
 }
@@ -7215,6 +13686,42 @@ static int tolua_Cocos2d_CCAnimation_delete00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: copyWithZone of class  CCAnimation */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCAnimation_copyWithZone00
+static int tolua_Cocos2d_CCAnimation_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCAnimation",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCAnimation* self = (CCAnimation*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: create of class  CCAnimation */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCAnimation_create00
 static int tolua_Cocos2d_CCAnimation_create00(lua_State* tolua_S)
@@ -7245,10 +13752,11 @@ static int tolua_Cocos2d_CCAnimation_create00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: create of class  CCAnimation */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCAnimation_create01
-static int tolua_Cocos2d_CCAnimation_create01(lua_State* tolua_S)
+/* method: createWithSpriteFrames of class  CCAnimation */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCAnimation_createWithSpriteFrames00
+static int tolua_Cocos2d_CCAnimation_createWithSpriteFrames00(lua_State* tolua_S)
 {
+#ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
      !tolua_isusertable(tolua_S,1,"CCAnimation",0,&tolua_err) ||
@@ -7257,6 +13765,7 @@ static int tolua_Cocos2d_CCAnimation_create01(lua_State* tolua_S)
  )
   goto tolua_lerror;
  else
+#endif
  {
   CCArray* arrayOfSpriteFrameNames = ((CCArray*)  tolua_tousertype(tolua_S,2,0));
   {
@@ -7267,14 +13776,17 @@ static int tolua_Cocos2d_CCAnimation_create01(lua_State* tolua_S)
   }
  }
  return 1;
-tolua_lerror:
- return tolua_Cocos2d_CCAnimation_create00(tolua_S);
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'createWithSpriteFrames'.",&tolua_err);
+ return 0;
+#endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: create of class  CCAnimation */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCAnimation_create02
-static int tolua_Cocos2d_CCAnimation_create02(lua_State* tolua_S)
+/* method: createWithSpriteFrames of class  CCAnimation */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCAnimation_createWithSpriteFrames01
+static int tolua_Cocos2d_CCAnimation_createWithSpriteFrames01(lua_State* tolua_S)
 {
  tolua_Error tolua_err;
  if (
@@ -7297,13 +13809,13 @@ static int tolua_Cocos2d_CCAnimation_create02(lua_State* tolua_S)
  }
  return 1;
 tolua_lerror:
- return tolua_Cocos2d_CCAnimation_create01(tolua_S);
+ return tolua_Cocos2d_CCAnimation_createWithSpriteFrames00(tolua_S);
 }
 #endif //#ifndef TOLUA_DISABLE
 
 /* method: create of class  CCAnimation */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCAnimation_create03
-static int tolua_Cocos2d_CCAnimation_create03(lua_State* tolua_S)
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCAnimation_create01
+static int tolua_Cocos2d_CCAnimation_create01(lua_State* tolua_S)
 {
  tolua_Error tolua_err;
  if (
@@ -7328,7 +13840,7 @@ static int tolua_Cocos2d_CCAnimation_create03(lua_State* tolua_S)
  }
  return 1;
 tolua_lerror:
- return tolua_Cocos2d_CCAnimation_create02(tolua_S);
+ return tolua_Cocos2d_CCAnimation_create00(tolua_S);
 }
 #endif //#ifndef TOLUA_DISABLE
 
@@ -7920,6 +14432,72 @@ static int tolua_Cocos2d_CCAnimationCache_purgeSharedAnimationCache00(lua_State*
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: addAnimationsWithDictionary of class  CCAnimationCache */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCAnimationCache_addAnimationsWithDictionary00
+static int tolua_Cocos2d_CCAnimationCache_addAnimationsWithDictionary00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCAnimationCache",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCDictionary",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCAnimationCache* self = (CCAnimationCache*)  tolua_tousertype(tolua_S,1,0);
+  CCDictionary* dictionary = ((CCDictionary*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'addAnimationsWithDictionary'", NULL);
+#endif
+  {
+   self->addAnimationsWithDictionary(dictionary);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'addAnimationsWithDictionary'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: addAnimationsWithFile of class  CCAnimationCache */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCAnimationCache_addAnimationsWithFile00
+static int tolua_Cocos2d_CCAnimationCache_addAnimationsWithFile00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCAnimationCache",0,&tolua_err) ||
+     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCAnimationCache* self = (CCAnimationCache*)  tolua_tousertype(tolua_S,1,0);
+  const char* plist = ((const char*)  tolua_tostring(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'addAnimationsWithFile'", NULL);
+#endif
+  {
+   self->addAnimationsWithFile(plist);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'addAnimationsWithFile'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: sharedApplication of class  CCApplication */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCApplication_sharedApplication00
 static int tolua_Cocos2d_CCApplication_sharedApplication00(lua_State* tolua_S)
@@ -7975,6 +14553,42 @@ static int tolua_Cocos2d_CCApplication_getCurrentLanguage00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'getCurrentLanguage'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: copyWithZone of class  CCArray */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCArray_copyWithZone00
+static int tolua_Cocos2d_CCArray_copyWithZone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCArray",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCZone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCArray* self = (CCArray*)  tolua_tousertype(tolua_S,1,0);
+  CCZone* pZone = ((CCZone*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copyWithZone'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copyWithZone(pZone);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copyWithZone'.",&tolua_err);
  return 0;
 #endif
 }
@@ -8042,37 +14656,43 @@ static int tolua_Cocos2d_CCArray_createWithObject00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: create of class  CCArray */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCArray_create01
-static int tolua_Cocos2d_CCArray_create01(lua_State* tolua_S)
+/* method: createWithArray of class  CCArray */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCArray_createWithArray00
+static int tolua_Cocos2d_CCArray_createWithArray00(lua_State* tolua_S)
 {
+#ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
      !tolua_isusertable(tolua_S,1,"CCArray",0,&tolua_err) ||
-     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCArray",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
   goto tolua_lerror;
  else
+#endif
  {
-  const char* pFileName = ((const char*)  tolua_tostring(tolua_S,2,0));
+  CCArray* otherArray = ((CCArray*)  tolua_tousertype(tolua_S,2,0));
   {
-   CCArray* tolua_ret = (CCArray*)  CCArray::createWithContentsOfFile(pFileName);
+   CCArray* tolua_ret = (CCArray*)  CCArray::createWithArray(otherArray);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCArray");
   }
  }
  return 1;
-tolua_lerror:
- return tolua_Cocos2d_CCArray_create00(tolua_S);
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'createWithArray'.",&tolua_err);
+ return 0;
+#endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: create of class  CCArray */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCArray_create02
-static int tolua_Cocos2d_CCArray_create02(lua_State* tolua_S)
+/* method: createWithCapacity of class  CCArray */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCArray_createWithCapacity00
+static int tolua_Cocos2d_CCArray_createWithCapacity00(lua_State* tolua_S)
 {
+#ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
      !tolua_isusertable(tolua_S,1,"CCArray",0,&tolua_err) ||
@@ -8081,6 +14701,7 @@ static int tolua_Cocos2d_CCArray_create02(lua_State* tolua_S)
  )
   goto tolua_lerror;
  else
+#endif
  {
   unsigned int capacity = ((unsigned int)  tolua_tonumber(tolua_S,2,0));
   {
@@ -8091,35 +14712,43 @@ static int tolua_Cocos2d_CCArray_create02(lua_State* tolua_S)
   }
  }
  return 1;
-tolua_lerror:
- return tolua_Cocos2d_CCArray_create01(tolua_S);
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'createWithCapacity'.",&tolua_err);
+ return 0;
+#endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: create of class  CCArray */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCArray_create03
-static int tolua_Cocos2d_CCArray_create03(lua_State* tolua_S)
+/* method: createWithContentsOfFile of class  CCArray */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCArray_createWithContentsOfFile00
+static int tolua_Cocos2d_CCArray_createWithContentsOfFile00(lua_State* tolua_S)
 {
+#ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
      !tolua_isusertable(tolua_S,1,"CCArray",0,&tolua_err) ||
-     !tolua_isusertype(tolua_S,2,"CCArray",0,&tolua_err) ||
+     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
   goto tolua_lerror;
  else
+#endif
  {
-  CCArray* otherArray = ((CCArray*)  tolua_tousertype(tolua_S,2,0));
+  const char* pFileName = ((const char*)  tolua_tostring(tolua_S,2,0));
   {
-   CCArray* tolua_ret = (CCArray*)  CCArray::create(otherArray);
+   CCArray* tolua_ret = (CCArray*)  CCArray::createWithContentsOfFile(pFileName);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCArray");
   }
  }
  return 1;
-tolua_lerror:
- return tolua_Cocos2d_CCArray_create02(tolua_S);
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'createWithContentsOfFile'.",&tolua_err);
+ return 0;
+#endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
@@ -8320,6 +14949,40 @@ static int tolua_Cocos2d_CCArray_randomObject00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'randomObject'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: isEqualToArray of class  CCArray */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCArray_isEqualToArray00
+static int tolua_Cocos2d_CCArray_isEqualToArray00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCArray",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCArray",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCArray* self = (CCArray*)  tolua_tousertype(tolua_S,1,0);
+  CCArray* pOtherArray = ((CCArray*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isEqualToArray'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->isEqualToArray(pOtherArray);
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'isEqualToArray'.",&tolua_err);
  return 0;
 #endif
 }
@@ -8862,9 +15525,9 @@ static int tolua_Cocos2d_CCArray_replaceObjectAtIndex00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: updateAtlasValues of class  CCAtlasNode */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCAtlasNode_updateAtlasValues00
-static int tolua_Cocos2d_CCAtlasNode_updateAtlasValues00(lua_State* tolua_S)
+/* method: getTextureAtlas of class  CCAtlasNode */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCAtlasNode_getTextureAtlas00
+static int tolua_Cocos2d_CCAtlasNode_getTextureAtlas00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -8878,16 +15541,52 @@ static int tolua_Cocos2d_CCAtlasNode_updateAtlasValues00(lua_State* tolua_S)
  {
   CCAtlasNode* self = (CCAtlasNode*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'updateAtlasValues'", NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getTextureAtlas'", NULL);
 #endif
   {
-   self->updateAtlasValues();
+   CCTextureAtlas* tolua_ret = (CCTextureAtlas*)  self->getTextureAtlas();
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTextureAtlas");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getTextureAtlas'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setTextureAtlas of class  CCAtlasNode */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCAtlasNode_setTextureAtlas00
+static int tolua_Cocos2d_CCAtlasNode_setTextureAtlas00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCAtlasNode",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCTextureAtlas",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCAtlasNode* self = (CCAtlasNode*)  tolua_tousertype(tolua_S,1,0);
+  CCTextureAtlas* atlas = ((CCTextureAtlas*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setTextureAtlas'", NULL);
+#endif
+  {
+   self->setTextureAtlas(atlas);
   }
  }
  return 0;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'updateAtlasValues'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'setTextureAtlas'.",&tolua_err);
  return 0;
 #endif
 }
@@ -8955,6 +15654,307 @@ static int tolua_Cocos2d_CCAtlasNode_setTexture00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'setTexture'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getColor of class  CCAtlasNode */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCAtlasNode_getColor00
+static int tolua_Cocos2d_CCAtlasNode_getColor00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCAtlasNode",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCAtlasNode* self = (CCAtlasNode*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getColor'", NULL);
+#endif
+  {
+   ccColor3B tolua_ret = (ccColor3B)  self->getColor();
+   {
+#ifdef __cplusplus
+    void* tolua_obj = Mtolua_new((ccColor3B)(tolua_ret));
+     tolua_pushusertype(tolua_S,tolua_obj,"ccColor3B");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#else
+    void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(ccColor3B));
+     tolua_pushusertype(tolua_S,tolua_obj,"ccColor3B");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#endif
+   }
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getColor'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setColor of class  CCAtlasNode */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCAtlasNode_setColor00
+static int tolua_Cocos2d_CCAtlasNode_setColor00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCAtlasNode",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"ccColor3B",0,&tolua_err)) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCAtlasNode* self = (CCAtlasNode*)  tolua_tousertype(tolua_S,1,0);
+  ccColor3B color = *((ccColor3B*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setColor'", NULL);
+#endif
+  {
+   self->setColor(color);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setColor'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getQuadsToDraw of class  CCAtlasNode */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCAtlasNode_getQuadsToDraw00
+static int tolua_Cocos2d_CCAtlasNode_getQuadsToDraw00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCAtlasNode",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCAtlasNode* self = (CCAtlasNode*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getQuadsToDraw'", NULL);
+#endif
+  {
+   unsigned int tolua_ret = (unsigned int)  self->getQuadsToDraw();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getQuadsToDraw'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setQuadsToDraw of class  CCAtlasNode */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCAtlasNode_setQuadsToDraw00
+static int tolua_Cocos2d_CCAtlasNode_setQuadsToDraw00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCAtlasNode",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCAtlasNode* self = (CCAtlasNode*)  tolua_tousertype(tolua_S,1,0);
+  unsigned int quadsToDraw = ((unsigned int)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setQuadsToDraw'", NULL);
+#endif
+  {
+   self->setQuadsToDraw(quadsToDraw);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setQuadsToDraw'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getOpacity of class  CCAtlasNode */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCAtlasNode_getOpacity00
+static int tolua_Cocos2d_CCAtlasNode_getOpacity00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCAtlasNode",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCAtlasNode* self = (CCAtlasNode*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getOpacity'", NULL);
+#endif
+  {
+   GLubyte tolua_ret = (GLubyte)  self->getOpacity();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getOpacity'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setOpacity of class  CCAtlasNode */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCAtlasNode_setOpacity00
+static int tolua_Cocos2d_CCAtlasNode_setOpacity00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCAtlasNode",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCAtlasNode* self = (CCAtlasNode*)  tolua_tousertype(tolua_S,1,0);
+  GLubyte opacity = ((GLubyte)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setOpacity'", NULL);
+#endif
+  {
+   self->setOpacity(opacity);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setOpacity'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: updateAtlasValues of class  CCAtlasNode */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCAtlasNode_updateAtlasValues00
+static int tolua_Cocos2d_CCAtlasNode_updateAtlasValues00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCAtlasNode",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCAtlasNode* self = (CCAtlasNode*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'updateAtlasValues'", NULL);
+#endif
+  {
+   self->updateAtlasValues();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'updateAtlasValues'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: isOpacityModifyRGB of class  CCAtlasNode */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCAtlasNode_isOpacityModifyRGB00
+static int tolua_Cocos2d_CCAtlasNode_isOpacityModifyRGB00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCAtlasNode",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCAtlasNode* self = (CCAtlasNode*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isOpacityModifyRGB'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->isOpacityModifyRGB();
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'isOpacityModifyRGB'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setOpacityModifyRGB of class  CCAtlasNode */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCAtlasNode_setOpacityModifyRGB00
+static int tolua_Cocos2d_CCAtlasNode_setOpacityModifyRGB00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCAtlasNode",0,&tolua_err) ||
+     !tolua_isboolean(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCAtlasNode* self = (CCAtlasNode*)  tolua_tousertype(tolua_S,1,0);
+  bool isOpacityModifyRGB = ((bool)  tolua_toboolean(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setOpacityModifyRGB'", NULL);
+#endif
+  {
+   self->setOpacityModifyRGB(isOpacityModifyRGB);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setOpacityModifyRGB'.",&tolua_err);
  return 0;
 #endif
 }
@@ -9761,6 +16761,72 @@ static int tolua_Cocos2d_CCDirector_getTotalFrames00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: getOpenGLView of class  CCDirector */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCDirector_getOpenGLView00
+static int tolua_Cocos2d_CCDirector_getOpenGLView00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCDirector",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCDirector* self = (CCDirector*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getOpenGLView'", NULL);
+#endif
+  {
+   CCEGLView* tolua_ret = (CCEGLView*)  self->getOpenGLView();
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCEGLView");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getOpenGLView'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: enableRetinaDisplay of class  CCDirector */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCDirector_enableRetinaDisplay00
+static int tolua_Cocos2d_CCDirector_enableRetinaDisplay00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCDirector",0,&tolua_err) ||
+     !tolua_isboolean(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCDirector* self = (CCDirector*)  tolua_tousertype(tolua_S,1,0);
+  bool bEnableRetina = ((bool)  tolua_toboolean(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'enableRetinaDisplay'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->enableRetinaDisplay(bEnableRetina);
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'enableRetinaDisplay'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: getWinSize of class  CCDirector */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCDirector_getWinSize00
 static int tolua_Cocos2d_CCDirector_getWinSize00(lua_State* tolua_S)
@@ -9933,6 +16999,99 @@ static int tolua_Cocos2d_CCDirector_convertToUI00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: pause of class  CCDirector */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCDirector_pause00
+static int tolua_Cocos2d_CCDirector_pause00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCDirector",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCDirector* self = (CCDirector*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'pause'", NULL);
+#endif
+  {
+   self->pause();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'pause'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: resume of class  CCDirector */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCDirector_resume00
+static int tolua_Cocos2d_CCDirector_resume00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCDirector",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCDirector* self = (CCDirector*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'resume'", NULL);
+#endif
+  {
+   self->resume();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'resume'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: purgeCachedData of class  CCDirector */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCDirector_purgeCachedData00
+static int tolua_Cocos2d_CCDirector_purgeCachedData00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCDirector",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCDirector* self = (CCDirector*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'purgeCachedData'", NULL);
+#endif
+  {
+   self->purgeCachedData();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'purgeCachedData'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: runWithScene of class  CCDirector */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCDirector_runWithScene00
 static int tolua_Cocos2d_CCDirector_runWithScene00(lua_State* tolua_S)
@@ -10063,6 +17222,37 @@ static int tolua_Cocos2d_CCDirector_replaceScene00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: endToLua of class  CCDirector */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCDirector_endToLua00
+static int tolua_Cocos2d_CCDirector_endToLua00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCDirector",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCDirector* self = (CCDirector*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'endToLua'", NULL);
+#endif
+  {
+   self->endToLua();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'endToLua'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: getContentScaleFactor of class  CCDirector */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCDirector_getContentScaleFactor00
 static int tolua_Cocos2d_CCDirector_getContentScaleFactor00(lua_State* tolua_S)
@@ -10082,18 +17272,8 @@ static int tolua_Cocos2d_CCDirector_getContentScaleFactor00(lua_State* tolua_S)
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getContentScaleFactor'", NULL);
 #endif
   {
-   CCFloat tolua_ret = (CCFloat)  self->getContentScaleFactor();
-   {
-#ifdef __cplusplus
-    void* tolua_obj = Mtolua_new((CCFloat)(tolua_ret));
-     tolua_pushusertype(tolua_S,tolua_obj,"CCFloat");
-    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
-#else
-    void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(CCFloat));
-     tolua_pushusertype(tolua_S,tolua_obj,"CCFloat");
-    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
-#endif
-   }
+   float tolua_ret = (float)  self->getContentScaleFactor();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
   }
  }
  return 1;
@@ -10391,6 +17571,68 @@ static int tolua_Cocos2d_ccDrawLine00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* function: ccDrawRect */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_ccDrawRect00
+static int tolua_Cocos2d_ccDrawRect00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     (tolua_isvaluenil(tolua_S,1,&tolua_err) || !tolua_isusertype(tolua_S,1,"CCPoint",0,&tolua_err)) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"CCPoint",0,&tolua_err)) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCPoint origin = *((CCPoint*)  tolua_tousertype(tolua_S,1,0));
+  CCPoint destination = *((CCPoint*)  tolua_tousertype(tolua_S,2,0));
+  {
+   ccDrawRect(origin,destination);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'ccDrawRect'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* function: ccDrawSolidRect */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_ccDrawSolidRect00
+static int tolua_Cocos2d_ccDrawSolidRect00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     (tolua_isvaluenil(tolua_S,1,&tolua_err) || !tolua_isusertype(tolua_S,1,"CCPoint",0,&tolua_err)) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"CCPoint",0,&tolua_err)) ||
+     (tolua_isvaluenil(tolua_S,3,&tolua_err) || !tolua_isusertype(tolua_S,3,"ccColor4F",0,&tolua_err)) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCPoint origin = *((CCPoint*)  tolua_tousertype(tolua_S,1,0));
+  CCPoint destination = *((CCPoint*)  tolua_tousertype(tolua_S,2,0));
+  ccColor4F color = *((ccColor4F*)  tolua_tousertype(tolua_S,3,0));
+  {
+   ccDrawSolidRect(origin,destination,color);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'ccDrawSolidRect'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* function: ccDrawPoly */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_ccDrawPoly00
 static int tolua_Cocos2d_ccDrawPoly00(lua_State* tolua_S)
@@ -10408,7 +17650,7 @@ static int tolua_Cocos2d_ccDrawPoly00(lua_State* tolua_S)
 #endif
  {
   const CCPoint* vertices = ((const CCPoint*)  tolua_tousertype(tolua_S,1,0));
-  int numOfVertices = ((int)  tolua_tonumber(tolua_S,2,0));
+  unsigned int numOfVertices = ((unsigned int)  tolua_tonumber(tolua_S,2,0));
   bool closePolygon = ((bool)  tolua_toboolean(tolua_S,3,0));
   {
    ccDrawPoly(vertices,numOfVertices,closePolygon);
@@ -10418,6 +17660,38 @@ static int tolua_Cocos2d_ccDrawPoly00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'ccDrawPoly'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* function: ccDrawSolidPoly */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_ccDrawSolidPoly00
+static int tolua_Cocos2d_ccDrawSolidPoly00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const CCPoint",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,3,&tolua_err) || !tolua_isusertype(tolua_S,3,"ccColor4F",0,&tolua_err)) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const CCPoint* poli = ((const CCPoint*)  tolua_tousertype(tolua_S,1,0));
+  unsigned int numberOfPoints = ((unsigned int)  tolua_tonumber(tolua_S,2,0));
+  ccColor4F color = *((ccColor4F*)  tolua_tousertype(tolua_S,3,0));
+  {
+   ccDrawSolidPoly(poli,numberOfPoints,color);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'ccDrawSolidPoly'.",&tolua_err);
  return 0;
 #endif
 }
@@ -10529,6 +17803,164 @@ static int tolua_Cocos2d_ccDrawCubicBezier00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* function: ccDrawCatmullRom */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_ccDrawCatmullRom00
+static int tolua_Cocos2d_ccDrawCatmullRom00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCPointArray",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCPointArray* arrayOfControlPoints = ((CCPointArray*)  tolua_tousertype(tolua_S,1,0));
+  unsigned int segments = ((unsigned int)  tolua_tonumber(tolua_S,2,0));
+  {
+   ccDrawCatmullRom(arrayOfControlPoints,segments);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'ccDrawCatmullRom'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* function: ccDrawCardinalSpline */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_ccDrawCardinalSpline00
+static int tolua_Cocos2d_ccDrawCardinalSpline00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCPointArray",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCPointArray* config = ((CCPointArray*)  tolua_tousertype(tolua_S,1,0));
+  float tension = ((float)  tolua_tonumber(tolua_S,2,0));
+  unsigned int segments = ((unsigned int)  tolua_tonumber(tolua_S,3,0));
+  {
+   ccDrawCardinalSpline(config,tension,segments);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'ccDrawCardinalSpline'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* function: ccDrawColor4B */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_ccDrawColor4B00
+static int tolua_Cocos2d_ccDrawColor4B00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isnumber(tolua_S,1,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,4,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,5,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  GLubyte r = ((GLubyte)  tolua_tonumber(tolua_S,1,0));
+  GLubyte g = ((GLubyte)  tolua_tonumber(tolua_S,2,0));
+  GLubyte b = ((GLubyte)  tolua_tonumber(tolua_S,3,0));
+  GLubyte a = ((GLubyte)  tolua_tonumber(tolua_S,4,0));
+  {
+   ccDrawColor4B(r,g,b,a);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'ccDrawColor4B'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* function: ccDrawColor4F */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_ccDrawColor4F00
+static int tolua_Cocos2d_ccDrawColor4F00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isnumber(tolua_S,1,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,4,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,5,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  GLubyte r = ((GLubyte)  tolua_tonumber(tolua_S,1,0));
+  GLubyte g = ((GLubyte)  tolua_tonumber(tolua_S,2,0));
+  GLubyte b = ((GLubyte)  tolua_tonumber(tolua_S,3,0));
+  GLubyte a = ((GLubyte)  tolua_tonumber(tolua_S,4,0));
+  {
+   ccDrawColor4F(r,g,b,a);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'ccDrawColor4F'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* function: ccPointSize */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_ccPointSize00
+static int tolua_Cocos2d_ccPointSize00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isnumber(tolua_S,1,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  GLfloat pointSize = ((GLfloat)  tolua_tonumber(tolua_S,1,0));
+  {
+   ccPointSize(pointSize);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'ccPointSize'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: sharedFileUtils of class  CCFileUtils */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCFileUtils_sharedFileUtils00
 static int tolua_Cocos2d_CCFileUtils_sharedFileUtils00(lua_State* tolua_S)
@@ -10586,6 +18018,107 @@ static int tolua_Cocos2d_CCFileUtils_getWriteablePath00(lua_State* tolua_S)
  tolua_error(tolua_S,"#ferror in function 'getWriteablePath'.",&tolua_err);
  return 0;
 #endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: fullPathFromRelativePath of class  CCFileUtils */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCFileUtils_fullPathFromRelativePath00
+static int tolua_Cocos2d_CCFileUtils_fullPathFromRelativePath00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCFileUtils",0,&tolua_err) ||
+     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCFileUtils* self = (CCFileUtils*)  tolua_tousertype(tolua_S,1,0);
+  const char* pszRelativePath = ((const char*)  tolua_tostring(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'fullPathFromRelativePath'", NULL);
+#endif
+  {
+   const char* tolua_ret = (const char*)  self->fullPathFromRelativePath(pszRelativePath);
+   tolua_pushstring(tolua_S,(const char*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'fullPathFromRelativePath'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: fullPathFromRelativeFile of class  CCFileUtils */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCFileUtils_fullPathFromRelativeFile00
+static int tolua_Cocos2d_CCFileUtils_fullPathFromRelativeFile00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCFileUtils",0,&tolua_err) ||
+     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isstring(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCFileUtils* self = (CCFileUtils*)  tolua_tousertype(tolua_S,1,0);
+  const char* pszFilename = ((const char*)  tolua_tostring(tolua_S,2,0));
+  const char* pszRelativeFile = ((const char*)  tolua_tostring(tolua_S,3,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'fullPathFromRelativeFile'", NULL);
+#endif
+  {
+   const char* tolua_ret = (const char*)  self->fullPathFromRelativeFile(pszFilename,pszRelativeFile);
+   tolua_pushstring(tolua_S,(const char*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'fullPathFromRelativeFile'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: fullPathFromRelativeFile of class  CCFileUtils */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCFileUtils_fullPathFromRelativeFile01
+static int tolua_Cocos2d_CCFileUtils_fullPathFromRelativeFile01(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCFileUtils",0,&tolua_err) ||
+     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isstring(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  CCFileUtils* self = (CCFileUtils*)  tolua_tousertype(tolua_S,1,0);
+  const char* pszFilename = ((const char*)  tolua_tostring(tolua_S,2,0));
+  const char* pszRelativeFile = ((const char*)  tolua_tostring(tolua_S,3,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'fullPathFromRelativeFile'", NULL);
+#endif
+  {
+   const char* tolua_ret = (const char*)  self->fullPathFromRelativeFile(pszFilename,pszRelativeFile);
+   tolua_pushstring(tolua_S,(const char*)tolua_ret);
+  }
+ }
+ return 1;
+tolua_lerror:
+ return tolua_Cocos2d_CCFileUtils_fullPathFromRelativeFile00(tolua_S);
 }
 #endif //#ifndef TOLUA_DISABLE
 
@@ -10761,33 +18294,35 @@ tolua_lerror:
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: CCPointEqualToPoint of class  CCPoint */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCPoint_CCPointEqualToPoint00
-static int tolua_Cocos2d_CCPoint_CCPointEqualToPoint00(lua_State* tolua_S)
+/* method: equals of class  CCPoint */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCPoint_equals00
+static int tolua_Cocos2d_CCPoint_equals00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
-     !tolua_isusertable(tolua_S,1,"CCPoint",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"const CCPoint",0,&tolua_err) ||
      (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const CCPoint",0,&tolua_err)) ||
-     (tolua_isvaluenil(tolua_S,3,&tolua_err) || !tolua_isusertype(tolua_S,3,"const CCPoint",0,&tolua_err)) ||
-     !tolua_isnoobj(tolua_S,4,&tolua_err)
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
   goto tolua_lerror;
  else
 #endif
  {
-  const CCPoint* point1 = ((const CCPoint*)  tolua_tousertype(tolua_S,2,0));
-  const CCPoint* point2 = ((const CCPoint*)  tolua_tousertype(tolua_S,3,0));
+  const CCPoint* self = (const CCPoint*)  tolua_tousertype(tolua_S,1,0);
+  const CCPoint* target = ((const CCPoint*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'equals'", NULL);
+#endif
   {
-   bool tolua_ret = (bool)  CCPoint::CCPointEqualToPoint(*point1,*point2);
+   bool tolua_ret = (bool)  self->equals(*target);
    tolua_pushboolean(tolua_S,(bool)tolua_ret);
   }
  }
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'CCPointEqualToPoint'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'equals'.",&tolua_err);
  return 0;
 #endif
 }
@@ -10965,33 +18500,35 @@ tolua_lerror:
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: CCSizeEqualToSize of class  CCSize */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSize_CCSizeEqualToSize00
-static int tolua_Cocos2d_CCSize_CCSizeEqualToSize00(lua_State* tolua_S)
+/* method: equals of class  CCSize */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSize_equals00
+static int tolua_Cocos2d_CCSize_equals00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
-     !tolua_isusertable(tolua_S,1,"CCSize",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"const CCSize",0,&tolua_err) ||
      (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const CCSize",0,&tolua_err)) ||
-     (tolua_isvaluenil(tolua_S,3,&tolua_err) || !tolua_isusertype(tolua_S,3,"const CCSize",0,&tolua_err)) ||
-     !tolua_isnoobj(tolua_S,4,&tolua_err)
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
   goto tolua_lerror;
  else
 #endif
  {
-  const CCSize* size1 = ((const CCSize*)  tolua_tousertype(tolua_S,2,0));
-  const CCSize* size2 = ((const CCSize*)  tolua_tousertype(tolua_S,3,0));
+  const CCSize* self = (const CCSize*)  tolua_tousertype(tolua_S,1,0);
+  const CCSize* target = ((const CCSize*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'equals'", NULL);
+#endif
   {
-   bool tolua_ret = (bool)  CCSize::CCSizeEqualToSize(*size1,*size2);
+   bool tolua_ret = (bool)  self->equals(*target);
    tolua_pushboolean(tolua_S,(bool)tolua_ret);
   }
  }
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'CCSizeEqualToSize'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'equals'.",&tolua_err);
  return 0;
 #endif
 }
@@ -11177,14 +18714,206 @@ tolua_lerror:
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: CCRectGetMinX of class  CCRect */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCRect_CCRectGetMinX00
-static int tolua_Cocos2d_CCRect_CCRectGetMinX00(lua_State* tolua_S)
+/* method: getMinX of class  CCRect */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCRect_getMinX00
+static int tolua_Cocos2d_CCRect_getMinX00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
-     !tolua_isusertable(tolua_S,1,"CCRect",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"CCRect",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCRect* self = (CCRect*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getMinX'", NULL);
+#endif
+  {
+   float tolua_ret = (float)  self->getMinX();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getMinX'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getMidX of class  CCRect */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCRect_getMidX00
+static int tolua_Cocos2d_CCRect_getMidX00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCRect",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCRect* self = (CCRect*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getMidX'", NULL);
+#endif
+  {
+   float tolua_ret = (float)  self->getMidX();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getMidX'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getMaxX of class  CCRect */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCRect_getMaxX00
+static int tolua_Cocos2d_CCRect_getMaxX00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCRect",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCRect* self = (CCRect*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getMaxX'", NULL);
+#endif
+  {
+   float tolua_ret = (float)  self->getMaxX();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getMaxX'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getMinY of class  CCRect */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCRect_getMinY00
+static int tolua_Cocos2d_CCRect_getMinY00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCRect",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCRect* self = (CCRect*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getMinY'", NULL);
+#endif
+  {
+   float tolua_ret = (float)  self->getMinY();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getMinY'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getMidY of class  CCRect */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCRect_getMidY00
+static int tolua_Cocos2d_CCRect_getMidY00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCRect",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCRect* self = (CCRect*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getMidY'", NULL);
+#endif
+  {
+   float tolua_ret = (float)  self->getMidY();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getMidY'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getMaxY of class  CCRect */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCRect_getMaxY00
+static int tolua_Cocos2d_CCRect_getMaxY00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCRect",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCRect* self = (CCRect*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getMaxY'", NULL);
+#endif
+  {
+   float tolua_ret = (float)  self->getMaxY();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getMaxY'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: equals of class  CCRect */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCRect_equals00
+static int tolua_Cocos2d_CCRect_equals00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const CCRect",0,&tolua_err) ||
      (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const CCRect",0,&tolua_err)) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
@@ -11192,262 +18921,88 @@ static int tolua_Cocos2d_CCRect_CCRectGetMinX00(lua_State* tolua_S)
  else
 #endif
  {
+  const CCRect* self = (const CCRect*)  tolua_tousertype(tolua_S,1,0);
   const CCRect* rect = ((const CCRect*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'equals'", NULL);
+#endif
   {
-   float tolua_ret = (float)  CCRect::CCRectGetMinX(*rect);
-   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
-  }
- }
- return 1;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'CCRectGetMinX'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: CCRectGetMaxX of class  CCRect */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCRect_CCRectGetMaxX00
-static int tolua_Cocos2d_CCRect_CCRectGetMaxX00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertable(tolua_S,1,"CCRect",0,&tolua_err) ||
-     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const CCRect",0,&tolua_err)) ||
-     !tolua_isnoobj(tolua_S,3,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  const CCRect* rect = ((const CCRect*)  tolua_tousertype(tolua_S,2,0));
-  {
-   float tolua_ret = (float)  CCRect::CCRectGetMaxX(*rect);
-   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
-  }
- }
- return 1;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'CCRectGetMaxX'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: CCRectGetMidX of class  CCRect */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCRect_CCRectGetMidX00
-static int tolua_Cocos2d_CCRect_CCRectGetMidX00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertable(tolua_S,1,"CCRect",0,&tolua_err) ||
-     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const CCRect",0,&tolua_err)) ||
-     !tolua_isnoobj(tolua_S,3,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  const CCRect* rect = ((const CCRect*)  tolua_tousertype(tolua_S,2,0));
-  {
-   float tolua_ret = (float)  CCRect::CCRectGetMidX(*rect);
-   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
-  }
- }
- return 1;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'CCRectGetMidX'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: CCRectGetMinY of class  CCRect */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCRect_CCRectGetMinY00
-static int tolua_Cocos2d_CCRect_CCRectGetMinY00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertable(tolua_S,1,"CCRect",0,&tolua_err) ||
-     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const CCRect",0,&tolua_err)) ||
-     !tolua_isnoobj(tolua_S,3,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  const CCRect* rect = ((const CCRect*)  tolua_tousertype(tolua_S,2,0));
-  {
-   float tolua_ret = (float)  CCRect::CCRectGetMinY(*rect);
-   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
-  }
- }
- return 1;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'CCRectGetMinY'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: CCRectGetMaxY of class  CCRect */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCRect_CCRectGetMaxY00
-static int tolua_Cocos2d_CCRect_CCRectGetMaxY00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertable(tolua_S,1,"CCRect",0,&tolua_err) ||
-     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const CCRect",0,&tolua_err)) ||
-     !tolua_isnoobj(tolua_S,3,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  const CCRect* rect = ((const CCRect*)  tolua_tousertype(tolua_S,2,0));
-  {
-   float tolua_ret = (float)  CCRect::CCRectGetMaxY(*rect);
-   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
-  }
- }
- return 1;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'CCRectGetMaxY'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: CCRectGetMidY of class  CCRect */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCRect_CCRectGetMidY00
-static int tolua_Cocos2d_CCRect_CCRectGetMidY00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertable(tolua_S,1,"CCRect",0,&tolua_err) ||
-     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const CCRect",0,&tolua_err)) ||
-     !tolua_isnoobj(tolua_S,3,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  const CCRect* rect = ((const CCRect*)  tolua_tousertype(tolua_S,2,0));
-  {
-   float tolua_ret = (float)  CCRect::CCRectGetMidY(*rect);
-   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
-  }
- }
- return 1;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'CCRectGetMidY'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: CCRectEqualToRect of class  CCRect */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCRect_CCRectEqualToRect00
-static int tolua_Cocos2d_CCRect_CCRectEqualToRect00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertable(tolua_S,1,"CCRect",0,&tolua_err) ||
-     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const CCRect",0,&tolua_err)) ||
-     (tolua_isvaluenil(tolua_S,3,&tolua_err) || !tolua_isusertype(tolua_S,3,"const CCRect",0,&tolua_err)) ||
-     !tolua_isnoobj(tolua_S,4,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  const CCRect* rect1 = ((const CCRect*)  tolua_tousertype(tolua_S,2,0));
-  const CCRect* rect2 = ((const CCRect*)  tolua_tousertype(tolua_S,3,0));
-  {
-   bool tolua_ret = (bool)  CCRect::CCRectEqualToRect(*rect1,*rect2);
+   bool tolua_ret = (bool)  self->equals(*rect);
    tolua_pushboolean(tolua_S,(bool)tolua_ret);
   }
  }
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'CCRectEqualToRect'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'equals'.",&tolua_err);
  return 0;
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: CCRectContainsPoint of class  CCRect */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCRect_CCRectContainsPoint00
-static int tolua_Cocos2d_CCRect_CCRectContainsPoint00(lua_State* tolua_S)
+/* method: containsPoint of class  CCRect */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCRect_containsPoint00
+static int tolua_Cocos2d_CCRect_containsPoint00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
-     !tolua_isusertable(tolua_S,1,"CCRect",0,&tolua_err) ||
-     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const CCRect",0,&tolua_err)) ||
-     (tolua_isvaluenil(tolua_S,3,&tolua_err) || !tolua_isusertype(tolua_S,3,"const CCPoint",0,&tolua_err)) ||
-     !tolua_isnoobj(tolua_S,4,&tolua_err)
+     !tolua_isusertype(tolua_S,1,"const CCRect",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const CCPoint",0,&tolua_err)) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
   goto tolua_lerror;
  else
 #endif
  {
+  const CCRect* self = (const CCRect*)  tolua_tousertype(tolua_S,1,0);
+  const CCPoint* point = ((const CCPoint*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'containsPoint'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->containsPoint(*point);
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'containsPoint'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: intersectsRect of class  CCRect */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCRect_intersectsRect00
+static int tolua_Cocos2d_CCRect_intersectsRect00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const CCRect",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const CCRect",0,&tolua_err)) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const CCRect* self = (const CCRect*)  tolua_tousertype(tolua_S,1,0);
   const CCRect* rect = ((const CCRect*)  tolua_tousertype(tolua_S,2,0));
-  const CCPoint* point = ((const CCPoint*)  tolua_tousertype(tolua_S,3,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'intersectsRect'", NULL);
+#endif
   {
-   bool tolua_ret = (bool)  CCRect::CCRectContainsPoint(*rect,*point);
+   bool tolua_ret = (bool)  self->intersectsRect(*rect);
    tolua_pushboolean(tolua_S,(bool)tolua_ret);
   }
  }
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'CCRectContainsPoint'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: CCRectIntersectsRect of class  CCRect */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCRect_CCRectIntersectsRect00
-static int tolua_Cocos2d_CCRect_CCRectIntersectsRect00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertable(tolua_S,1,"CCRect",0,&tolua_err) ||
-     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const CCRect",0,&tolua_err)) ||
-     (tolua_isvaluenil(tolua_S,3,&tolua_err) || !tolua_isusertype(tolua_S,3,"const CCRect",0,&tolua_err)) ||
-     !tolua_isnoobj(tolua_S,4,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  const CCRect* rectA = ((const CCRect*)  tolua_tousertype(tolua_S,2,0));
-  const CCRect* rectB = ((const CCRect*)  tolua_tousertype(tolua_S,3,0));
-  {
-   bool tolua_ret = (bool)  CCRect::CCRectIntersectsRect(*rectA,*rectB);
-   tolua_pushboolean(tolua_S,(bool)tolua_ret);
-  }
- }
- return 1;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'CCRectIntersectsRect'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'intersectsRect'.",&tolua_err);
  return 0;
 #endif
 }
@@ -11845,6 +19400,69 @@ static int tolua_Cocos2d_CCLabelBMFont_setString00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: setString of class  CCLabelBMFont */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCLabelBMFont_setString01
+static int tolua_Cocos2d_CCLabelBMFont_setString01(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCLabelBMFont",0,&tolua_err) ||
+     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isboolean(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  CCLabelBMFont* self = (CCLabelBMFont*)  tolua_tousertype(tolua_S,1,0);
+  const char* label = ((const char*)  tolua_tostring(tolua_S,2,0));
+  bool fromUpdate = ((bool)  tolua_toboolean(tolua_S,3,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setString'", NULL);
+#endif
+  {
+   self->setString(label,fromUpdate);
+  }
+ }
+ return 0;
+tolua_lerror:
+ return tolua_Cocos2d_CCLabelBMFont_setString00(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setCString of class  CCLabelBMFont */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCLabelBMFont_setCString00
+static int tolua_Cocos2d_CCLabelBMFont_setCString00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCLabelBMFont",0,&tolua_err) ||
+     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCLabelBMFont* self = (CCLabelBMFont*)  tolua_tousertype(tolua_S,1,0);
+  const char* label = ((const char*)  tolua_tostring(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setCString'", NULL);
+#endif
+  {
+   self->setCString(label);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setCString'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: getString of class  CCLabelBMFont */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCLabelBMFont_getString00
 static int tolua_Cocos2d_CCLabelBMFont_getString00(lua_State* tolua_S)
@@ -11872,6 +19490,335 @@ static int tolua_Cocos2d_CCLabelBMFont_getString00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'getString'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: updateString of class  CCLabelBMFont */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCLabelBMFont_updateString00
+static int tolua_Cocos2d_CCLabelBMFont_updateString00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCLabelBMFont",0,&tolua_err) ||
+     !tolua_isboolean(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCLabelBMFont* self = (CCLabelBMFont*)  tolua_tousertype(tolua_S,1,0);
+  bool fromUpdate = ((bool)  tolua_toboolean(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'updateString'", NULL);
+#endif
+  {
+   self->updateString(fromUpdate);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'updateString'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setAnchorPoint of class  CCLabelBMFont */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCLabelBMFont_setAnchorPoint00
+static int tolua_Cocos2d_CCLabelBMFont_setAnchorPoint00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCLabelBMFont",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const CCPoint",0,&tolua_err)) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCLabelBMFont* self = (CCLabelBMFont*)  tolua_tousertype(tolua_S,1,0);
+  const CCPoint* var = ((const CCPoint*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setAnchorPoint'", NULL);
+#endif
+  {
+   self->setAnchorPoint(*var);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setAnchorPoint'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setAlignment of class  CCLabelBMFont */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCLabelBMFont_setAlignment00
+static int tolua_Cocos2d_CCLabelBMFont_setAlignment00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCLabelBMFont",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCLabelBMFont* self = (CCLabelBMFont*)  tolua_tousertype(tolua_S,1,0);
+  CCTextAlignment alignment = ((CCTextAlignment) (int)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setAlignment'", NULL);
+#endif
+  {
+   self->setAlignment(alignment);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setAlignment'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setWidth of class  CCLabelBMFont */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCLabelBMFont_setWidth00
+static int tolua_Cocos2d_CCLabelBMFont_setWidth00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCLabelBMFont",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCLabelBMFont* self = (CCLabelBMFont*)  tolua_tousertype(tolua_S,1,0);
+  float width = ((float)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setWidth'", NULL);
+#endif
+  {
+   self->setWidth(width);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setWidth'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setLineBreakWithoutSpace of class  CCLabelBMFont */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCLabelBMFont_setLineBreakWithoutSpace00
+static int tolua_Cocos2d_CCLabelBMFont_setLineBreakWithoutSpace00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCLabelBMFont",0,&tolua_err) ||
+     !tolua_isboolean(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCLabelBMFont* self = (CCLabelBMFont*)  tolua_tousertype(tolua_S,1,0);
+  bool breakWithoutSpace = ((bool)  tolua_toboolean(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setLineBreakWithoutSpace'", NULL);
+#endif
+  {
+   self->setLineBreakWithoutSpace(breakWithoutSpace);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setLineBreakWithoutSpace'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setScale of class  CCLabelBMFont */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCLabelBMFont_setScale00
+static int tolua_Cocos2d_CCLabelBMFont_setScale00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCLabelBMFont",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCLabelBMFont* self = (CCLabelBMFont*)  tolua_tousertype(tolua_S,1,0);
+  float scale = ((float)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setScale'", NULL);
+#endif
+  {
+   self->setScale(scale);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setScale'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setScaleX of class  CCLabelBMFont */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCLabelBMFont_setScaleX00
+static int tolua_Cocos2d_CCLabelBMFont_setScaleX00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCLabelBMFont",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCLabelBMFont* self = (CCLabelBMFont*)  tolua_tousertype(tolua_S,1,0);
+  float scaleX = ((float)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setScaleX'", NULL);
+#endif
+  {
+   self->setScaleX(scaleX);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setScaleX'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setScaleY of class  CCLabelBMFont */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCLabelBMFont_setScaleY00
+static int tolua_Cocos2d_CCLabelBMFont_setScaleY00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCLabelBMFont",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCLabelBMFont* self = (CCLabelBMFont*)  tolua_tousertype(tolua_S,1,0);
+  float scaleY = ((float)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setScaleY'", NULL);
+#endif
+  {
+   self->setScaleY(scaleY);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setScaleY'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setFntFile of class  CCLabelBMFont */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCLabelBMFont_setFntFile00
+static int tolua_Cocos2d_CCLabelBMFont_setFntFile00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCLabelBMFont",0,&tolua_err) ||
+     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCLabelBMFont* self = (CCLabelBMFont*)  tolua_tousertype(tolua_S,1,0);
+  const char* fntFile = ((const char*)  tolua_tostring(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setFntFile'", NULL);
+#endif
+  {
+   self->setFntFile(fntFile);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setFntFile'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getFntFile of class  CCLabelBMFont */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCLabelBMFont_getFntFile00
+static int tolua_Cocos2d_CCLabelBMFont_getFntFile00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCLabelBMFont",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCLabelBMFont* self = (CCLabelBMFont*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getFntFile'", NULL);
+#endif
+  {
+   const char* tolua_ret = (const char*)  self->getFntFile();
+   tolua_pushstring(tolua_S,(const char*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getFntFile'.",&tolua_err);
  return 0;
 #endif
 }
@@ -12007,6 +19954,71 @@ static int tolua_Cocos2d_CCLabelBMFont_setOpacity00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: isOpacityModifyRGB of class  CCLabelBMFont */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCLabelBMFont_isOpacityModifyRGB00
+static int tolua_Cocos2d_CCLabelBMFont_isOpacityModifyRGB00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCLabelBMFont",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCLabelBMFont* self = (CCLabelBMFont*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isOpacityModifyRGB'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->isOpacityModifyRGB();
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'isOpacityModifyRGB'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setOpacityModifyRGB of class  CCLabelBMFont */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCLabelBMFont_setOpacityModifyRGB00
+static int tolua_Cocos2d_CCLabelBMFont_setOpacityModifyRGB00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCLabelBMFont",0,&tolua_err) ||
+     !tolua_isboolean(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCLabelBMFont* self = (CCLabelBMFont*)  tolua_tousertype(tolua_S,1,0);
+  bool isOpacityModifyRGB = ((bool)  tolua_toboolean(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setOpacityModifyRGB'", NULL);
+#endif
+  {
+   self->setOpacityModifyRGB(isOpacityModifyRGB);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setOpacityModifyRGB'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* get function: opacity of class  CCLabelBMFont */
 #ifndef TOLUA_DISABLE_tolua_get_CCLabelBMFont_opacity
 static int tolua_get_CCLabelBMFont_opacity(lua_State* tolua_S)
@@ -12073,18 +20085,14 @@ static int tolua_Cocos2d_CCLabelBMFont_create00(lua_State* tolua_S)
  tolua_Error tolua_err;
  if (
      !tolua_isusertable(tolua_S,1,"CCLabelBMFont",0,&tolua_err) ||
-     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
-     !tolua_isstring(tolua_S,3,0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,4,&tolua_err)
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
  else
 #endif
  {
-  const char* str = ((const char*)  tolua_tostring(tolua_S,2,0));
-  const char* fntFile = ((const char*)  tolua_tostring(tolua_S,3,0));
   {
-   CCLabelBMFont* tolua_ret = (CCLabelBMFont*)  CCLabelBMFont::create(str,fntFile);
+   CCLabelBMFont* tolua_ret = (CCLabelBMFont*)  CCLabelBMFont::create();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCLabelBMFont");
@@ -12096,6 +20104,74 @@ static int tolua_Cocos2d_CCLabelBMFont_create00(lua_State* tolua_S)
  tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
  return 0;
 #endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: create of class  CCLabelBMFont */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCLabelBMFont_create01
+static int tolua_Cocos2d_CCLabelBMFont_create01(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"CCLabelBMFont",0,&tolua_err) ||
+     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isstring(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,4,1,&tolua_err) ||
+     !tolua_isnumber(tolua_S,5,1,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,6,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  const char* str = ((const char*)  tolua_tostring(tolua_S,2,0));
+  const char* fntFile = ((const char*)  tolua_tostring(tolua_S,3,0));
+  float width = ((float)  tolua_tonumber(tolua_S,4,kCCLabelAutomaticWidth));
+  CCTextAlignment alignment = ((CCTextAlignment) (int)  tolua_tonumber(tolua_S,5,kCCTextAlignmentLeft));
+  {
+   CCLabelBMFont* tolua_ret = (CCLabelBMFont*)  CCLabelBMFont::create(str,fntFile,width,alignment);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCLabelBMFont");
+  }
+ }
+ return 1;
+tolua_lerror:
+ return tolua_Cocos2d_CCLabelBMFont_create00(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: create of class  CCLabelBMFont */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCLabelBMFont_create02
+static int tolua_Cocos2d_CCLabelBMFont_create02(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"CCLabelBMFont",0,&tolua_err) ||
+     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isstring(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,4,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,5,0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,6,&tolua_err) || !tolua_isusertype(tolua_S,6,"CCPoint",0,&tolua_err)) ||
+     !tolua_isnoobj(tolua_S,7,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  const char* str = ((const char*)  tolua_tostring(tolua_S,2,0));
+  const char* fntFile = ((const char*)  tolua_tostring(tolua_S,3,0));
+  float width = ((float)  tolua_tonumber(tolua_S,4,0));
+  CCTextAlignment alignment = ((CCTextAlignment) (int)  tolua_tonumber(tolua_S,5,0));
+  CCPoint imageOffset = *((CCPoint*)  tolua_tousertype(tolua_S,6,0));
+  {
+   CCLabelBMFont* tolua_ret = (CCLabelBMFont*)  CCLabelBMFont::create(str,fntFile,width,alignment,imageOffset);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCLabelBMFont");
+  }
+ }
+ return 1;
+tolua_lerror:
+ return tolua_Cocos2d_CCLabelBMFont_create01(tolua_S);
 }
 #endif //#ifndef TOLUA_DISABLE
 
@@ -12164,6 +20240,341 @@ static int tolua_Cocos2d_CCLabelTTF_getString00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: getHorizontalAlignment of class  CCLabelTTF */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCLabelTTF_getHorizontalAlignment00
+static int tolua_Cocos2d_CCLabelTTF_getHorizontalAlignment00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCLabelTTF",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCLabelTTF* self = (CCLabelTTF*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getHorizontalAlignment'", NULL);
+#endif
+  {
+   CCTextAlignment tolua_ret = (CCTextAlignment)  self->getHorizontalAlignment();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getHorizontalAlignment'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setHorizontalAlignment of class  CCLabelTTF */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCLabelTTF_setHorizontalAlignment00
+static int tolua_Cocos2d_CCLabelTTF_setHorizontalAlignment00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCLabelTTF",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCLabelTTF* self = (CCLabelTTF*)  tolua_tousertype(tolua_S,1,0);
+  CCTextAlignment alignment = ((CCTextAlignment) (int)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setHorizontalAlignment'", NULL);
+#endif
+  {
+   self->setHorizontalAlignment(alignment);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setHorizontalAlignment'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getVerticalAlignment of class  CCLabelTTF */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCLabelTTF_getVerticalAlignment00
+static int tolua_Cocos2d_CCLabelTTF_getVerticalAlignment00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCLabelTTF",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCLabelTTF* self = (CCLabelTTF*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getVerticalAlignment'", NULL);
+#endif
+  {
+   CCVerticalTextAlignment tolua_ret = (CCVerticalTextAlignment)  self->getVerticalAlignment();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getVerticalAlignment'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setVerticalAlignment of class  CCLabelTTF */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCLabelTTF_setVerticalAlignment00
+static int tolua_Cocos2d_CCLabelTTF_setVerticalAlignment00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCLabelTTF",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCLabelTTF* self = (CCLabelTTF*)  tolua_tousertype(tolua_S,1,0);
+  CCVerticalTextAlignment verticalAlignment = ((CCVerticalTextAlignment) (int)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setVerticalAlignment'", NULL);
+#endif
+  {
+   self->setVerticalAlignment(verticalAlignment);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setVerticalAlignment'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getDimensions of class  CCLabelTTF */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCLabelTTF_getDimensions00
+static int tolua_Cocos2d_CCLabelTTF_getDimensions00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCLabelTTF",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCLabelTTF* self = (CCLabelTTF*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getDimensions'", NULL);
+#endif
+  {
+   CCSize tolua_ret = (CCSize)  self->getDimensions();
+   {
+#ifdef __cplusplus
+    void* tolua_obj = Mtolua_new((CCSize)(tolua_ret));
+     tolua_pushusertype(tolua_S,tolua_obj,"CCSize");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#else
+    void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(CCSize));
+     tolua_pushusertype(tolua_S,tolua_obj,"CCSize");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#endif
+   }
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getDimensions'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setDimensions of class  CCLabelTTF */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCLabelTTF_setDimensions00
+static int tolua_Cocos2d_CCLabelTTF_setDimensions00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCLabelTTF",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"CCSize",0,&tolua_err)) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCLabelTTF* self = (CCLabelTTF*)  tolua_tousertype(tolua_S,1,0);
+  CCSize* dim = ((CCSize*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setDimensions'", NULL);
+#endif
+  {
+   self->setDimensions(*dim);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setDimensions'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getFontSize of class  CCLabelTTF */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCLabelTTF_getFontSize00
+static int tolua_Cocos2d_CCLabelTTF_getFontSize00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCLabelTTF",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCLabelTTF* self = (CCLabelTTF*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getFontSize'", NULL);
+#endif
+  {
+   float tolua_ret = (float)  self->getFontSize();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getFontSize'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setFontSize of class  CCLabelTTF */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCLabelTTF_setFontSize00
+static int tolua_Cocos2d_CCLabelTTF_setFontSize00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCLabelTTF",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCLabelTTF* self = (CCLabelTTF*)  tolua_tousertype(tolua_S,1,0);
+  float fontSize = ((float)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setFontSize'", NULL);
+#endif
+  {
+   self->setFontSize(fontSize);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setFontSize'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getFontName of class  CCLabelTTF */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCLabelTTF_getFontName00
+static int tolua_Cocos2d_CCLabelTTF_getFontName00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCLabelTTF",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCLabelTTF* self = (CCLabelTTF*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getFontName'", NULL);
+#endif
+  {
+   const char* tolua_ret = (const char*)  self->getFontName();
+   tolua_pushstring(tolua_S,(const char*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getFontName'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setFontName of class  CCLabelTTF */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCLabelTTF_setFontName00
+static int tolua_Cocos2d_CCLabelTTF_setFontName00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCLabelTTF",0,&tolua_err) ||
+     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCLabelTTF* self = (CCLabelTTF*)  tolua_tousertype(tolua_S,1,0);
+  const char* fontName = ((const char*)  tolua_tostring(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setFontName'", NULL);
+#endif
+  {
+   self->setFontName(fontName);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setFontName'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: create of class  CCLabelTTF */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCLabelTTF_create00
 static int tolua_Cocos2d_CCLabelTTF_create00(lua_State* tolua_S)
@@ -12172,26 +20583,14 @@ static int tolua_Cocos2d_CCLabelTTF_create00(lua_State* tolua_S)
  tolua_Error tolua_err;
  if (
      !tolua_isusertable(tolua_S,1,"CCLabelTTF",0,&tolua_err) ||
-     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
-     (tolua_isvaluenil(tolua_S,3,&tolua_err) || !tolua_isusertype(tolua_S,3,"CCSize",0,&tolua_err)) ||
-     !tolua_isnumber(tolua_S,4,0,&tolua_err) ||
-     !tolua_isnumber(tolua_S,5,0,&tolua_err) ||
-     !tolua_isstring(tolua_S,6,0,&tolua_err) ||
-     !tolua_isnumber(tolua_S,7,0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,8,&tolua_err)
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
  else
 #endif
  {
-  const char* label = ((const char*)  tolua_tostring(tolua_S,2,0));
-  CCSize dimensions = *((CCSize*)  tolua_tousertype(tolua_S,3,0));
-  CCTextAlignment hAlignment = ((CCTextAlignment) (int)  tolua_tonumber(tolua_S,4,0));
-  CCVerticalTextAlignment vAlignment = ((CCVerticalTextAlignment) (int)  tolua_tonumber(tolua_S,5,0));
-  const char* fontName = ((const char*)  tolua_tostring(tolua_S,6,0));
-  float fontSize = ((float)  tolua_tonumber(tolua_S,7,0));
   {
-   CCLabelTTF* tolua_ret = (CCLabelTTF*)  CCLabelTTF::create(label,dimensions,hAlignment,vAlignment,fontName,fontSize);
+   CCLabelTTF* tolua_ret = (CCLabelTTF*)  CCLabelTTF::create();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCLabelTTF");
@@ -12214,22 +20613,18 @@ static int tolua_Cocos2d_CCLabelTTF_create01(lua_State* tolua_S)
  if (
      !tolua_isusertable(tolua_S,1,"CCLabelTTF",0,&tolua_err) ||
      !tolua_isstring(tolua_S,2,0,&tolua_err) ||
-     (tolua_isvaluenil(tolua_S,3,&tolua_err) || !tolua_isusertype(tolua_S,3,"CCSize",0,&tolua_err)) ||
+     !tolua_isstring(tolua_S,3,0,&tolua_err) ||
      !tolua_isnumber(tolua_S,4,0,&tolua_err) ||
-     !tolua_isstring(tolua_S,5,0,&tolua_err) ||
-     !tolua_isnumber(tolua_S,6,0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,7,&tolua_err)
+     !tolua_isnoobj(tolua_S,5,&tolua_err)
  )
   goto tolua_lerror;
  else
  {
-  const char* label = ((const char*)  tolua_tostring(tolua_S,2,0));
-  CCSize dimensions = *((CCSize*)  tolua_tousertype(tolua_S,3,0));
-  CCTextAlignment alignment = ((CCTextAlignment) (int)  tolua_tonumber(tolua_S,4,0));
-  const char* fontName = ((const char*)  tolua_tostring(tolua_S,5,0));
-  float fontSize = ((float)  tolua_tonumber(tolua_S,6,0));
+  const char* str = ((const char*)  tolua_tostring(tolua_S,2,0));
+  const char* fontName = ((const char*)  tolua_tostring(tolua_S,3,0));
+  float fontSize = ((float)  tolua_tonumber(tolua_S,4,0));
   {
-   CCLabelTTF* tolua_ret = (CCLabelTTF*)  CCLabelTTF::create(label,dimensions,alignment,fontName,fontSize);
+   CCLabelTTF* tolua_ret = (CCLabelTTF*)  CCLabelTTF::create(str,fontName,fontSize);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCLabelTTF");
@@ -12251,16 +20646,20 @@ static int tolua_Cocos2d_CCLabelTTF_create02(lua_State* tolua_S)
      !tolua_isstring(tolua_S,2,0,&tolua_err) ||
      !tolua_isstring(tolua_S,3,0,&tolua_err) ||
      !tolua_isnumber(tolua_S,4,0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,5,&tolua_err)
+     (tolua_isvaluenil(tolua_S,5,&tolua_err) || !tolua_isusertype(tolua_S,5,"const CCSize",0,&tolua_err)) ||
+     !tolua_isnumber(tolua_S,6,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,7,&tolua_err)
  )
   goto tolua_lerror;
  else
  {
-  const char* label = ((const char*)  tolua_tostring(tolua_S,2,0));
+  const char* str = ((const char*)  tolua_tostring(tolua_S,2,0));
   const char* fontName = ((const char*)  tolua_tostring(tolua_S,3,0));
   float fontSize = ((float)  tolua_tonumber(tolua_S,4,0));
+  const CCSize* dimensions = ((const CCSize*)  tolua_tousertype(tolua_S,5,0));
+  CCTextAlignment hAlignment = ((CCTextAlignment) (int)  tolua_tonumber(tolua_S,6,0));
   {
-   CCLabelTTF* tolua_ret = (CCLabelTTF*)  CCLabelTTF::create(label,fontName,fontSize);
+   CCLabelTTF* tolua_ret = (CCLabelTTF*)  CCLabelTTF::create(str,fontName,fontSize,*dimensions,hAlignment);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCLabelTTF");
@@ -12269,6 +20668,43 @@ static int tolua_Cocos2d_CCLabelTTF_create02(lua_State* tolua_S)
  return 1;
 tolua_lerror:
  return tolua_Cocos2d_CCLabelTTF_create01(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: create of class  CCLabelTTF */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCLabelTTF_create03
+static int tolua_Cocos2d_CCLabelTTF_create03(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"CCLabelTTF",0,&tolua_err) ||
+     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isstring(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,4,0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,5,&tolua_err) || !tolua_isusertype(tolua_S,5,"const CCSize",0,&tolua_err)) ||
+     !tolua_isnumber(tolua_S,6,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,7,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,8,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  const char* str = ((const char*)  tolua_tostring(tolua_S,2,0));
+  const char* fontName = ((const char*)  tolua_tostring(tolua_S,3,0));
+  float fontSize = ((float)  tolua_tonumber(tolua_S,4,0));
+  const CCSize* dimensions = ((const CCSize*)  tolua_tousertype(tolua_S,5,0));
+  CCTextAlignment hAlignment = ((CCTextAlignment) (int)  tolua_tonumber(tolua_S,6,0));
+  CCVerticalTextAlignment vAlignment = ((CCVerticalTextAlignment) (int)  tolua_tonumber(tolua_S,7,0));
+  {
+   CCLabelTTF* tolua_ret = (CCLabelTTF*)  CCLabelTTF::create(str,fontName,fontSize,*dimensions,hAlignment,vAlignment);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCLabelTTF");
+  }
+ }
+ return 1;
+tolua_lerror:
+ return tolua_Cocos2d_CCLabelTTF_create02(tolua_S);
 }
 #endif //#ifndef TOLUA_DISABLE
 
@@ -12668,6 +21104,39 @@ static int tolua_Cocos2d_CCLayerColor_changeWidthAndHeight00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: setContentSize of class  CCLayerColor */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCLayerColor_setContentSize00
+static int tolua_Cocos2d_CCLayerColor_setContentSize00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCLayerColor",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const CCSize",0,&tolua_err)) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCLayerColor* self = (CCLayerColor*)  tolua_tousertype(tolua_S,1,0);
+  const CCSize* var = ((const CCSize*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setContentSize'", NULL);
+#endif
+  {
+   self->setContentSize(*var);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setContentSize'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: setOpacity of class  CCLayerColor */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCLayerColor_setOpacity00
 static int tolua_Cocos2d_CCLayerColor_setOpacity00(lua_State* tolua_S)
@@ -12878,6 +21347,71 @@ static int tolua_Cocos2d_CCLayerColor_getBlendFunc00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'getBlendFunc'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setOpacityModifyRGB of class  CCLayerColor */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCLayerColor_setOpacityModifyRGB00
+static int tolua_Cocos2d_CCLayerColor_setOpacityModifyRGB00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCLayerColor",0,&tolua_err) ||
+     !tolua_isboolean(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCLayerColor* self = (CCLayerColor*)  tolua_tousertype(tolua_S,1,0);
+  bool bValue = ((bool)  tolua_toboolean(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setOpacityModifyRGB'", NULL);
+#endif
+  {
+   self->setOpacityModifyRGB(bValue);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setOpacityModifyRGB'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: isOpacityModifyRGB of class  CCLayerColor */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCLayerColor_isOpacityModifyRGB00
+static int tolua_Cocos2d_CCLayerColor_isOpacityModifyRGB00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCLayerColor",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCLayerColor* self = (CCLayerColor*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isOpacityModifyRGB'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->isOpacityModifyRGB();
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'isOpacityModifyRGB'.",&tolua_err);
  return 0;
 #endif
 }
@@ -13530,6 +22064,38 @@ static int tolua_Cocos2d_CCLayerMultiplex_switchToAndReleaseMe00(lua_State* tolu
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: create of class  CCLayerMultiplex */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCLayerMultiplex_create00
+static int tolua_Cocos2d_CCLayerMultiplex_create00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"CCLayerMultiplex",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCLayer",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCLayer* layer = ((CCLayer*)  tolua_tousertype(tolua_S,2,0));
+  {
+   CCLayerMultiplex* tolua_ret = (CCLayerMultiplex*)  CCLayerMultiplex::create(layer);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCLayerMultiplex");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: createWithLayer of class  CCLayerMultiplex */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCLayerMultiplex_createWithLayer00
 static int tolua_Cocos2d_CCLayerMultiplex_createWithLayer00(lua_State* tolua_S)
@@ -13760,6 +22326,39 @@ static int tolua_Cocos2d_CCMenu_alignItemsInRows00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: setHandlerPriority of class  CCMenu */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMenu_setHandlerPriority00
+static int tolua_Cocos2d_CCMenu_setHandlerPriority00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCMenu",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCMenu* self = (CCMenu*)  tolua_tousertype(tolua_S,1,0);
+  int newPriority = ((int)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setHandlerPriority'", NULL);
+#endif
+  {
+   self->setHandlerPriority(newPriority);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setHandlerPriority'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: addChild of class  CCMenu */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMenu_addChild00
 static int tolua_Cocos2d_CCMenu_addChild00(lua_State* tolua_S)
@@ -13937,6 +22536,136 @@ static int tolua_Cocos2d_CCMenu_getColor00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: setOpacityModifyRGB of class  CCMenu */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMenu_setOpacityModifyRGB00
+static int tolua_Cocos2d_CCMenu_setOpacityModifyRGB00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCMenu",0,&tolua_err) ||
+     !tolua_isboolean(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCMenu* self = (CCMenu*)  tolua_tousertype(tolua_S,1,0);
+  bool bValue = ((bool)  tolua_toboolean(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setOpacityModifyRGB'", NULL);
+#endif
+  {
+   self->setOpacityModifyRGB(bValue);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setOpacityModifyRGB'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: isOpacityModifyRGB of class  CCMenu */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMenu_isOpacityModifyRGB00
+static int tolua_Cocos2d_CCMenu_isOpacityModifyRGB00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCMenu",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCMenu* self = (CCMenu*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isOpacityModifyRGB'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->isOpacityModifyRGB();
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'isOpacityModifyRGB'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: isEnabled of class  CCMenu */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMenu_isEnabled00
+static int tolua_Cocos2d_CCMenu_isEnabled00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCMenu",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCMenu* self = (CCMenu*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isEnabled'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->isEnabled();
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'isEnabled'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setEnabled of class  CCMenu */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMenu_setEnabled00
+static int tolua_Cocos2d_CCMenu_setEnabled00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCMenu",0,&tolua_err) ||
+     !tolua_isboolean(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCMenu* self = (CCMenu*)  tolua_tousertype(tolua_S,1,0);
+  bool value = ((bool)  tolua_toboolean(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setEnabled'", NULL);
+#endif
+  {
+   self->setEnabled(value);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setEnabled'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: create of class  CCMenu */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMenu_create00
 static int tolua_Cocos2d_CCMenu_create00(lua_State* tolua_S)
@@ -13994,6 +22723,38 @@ static int tolua_Cocos2d_CCMenu_createWithItem00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'createWithItem'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: createWithArray of class  CCMenu */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMenu_createWithArray00
+static int tolua_Cocos2d_CCMenu_createWithArray00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"CCMenu",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCArray",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCArray* pArrayOfItems = ((CCArray*)  tolua_tousertype(tolua_S,2,0));
+  {
+   CCMenu* tolua_ret = (CCMenu*)  CCMenu::createWithArray(pArrayOfItems);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCMenu");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'createWithArray'.",&tolua_err);
  return 0;
 #endif
 }
@@ -14468,6 +23229,329 @@ static int tolua_Cocos2d_CCMenuItemLabel_getColor00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: setDisabledColor of class  CCMenuItemLabel */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMenuItemLabel_setDisabledColor00
+static int tolua_Cocos2d_CCMenuItemLabel_setDisabledColor00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCMenuItemLabel",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const ccColor3B",0,&tolua_err)) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCMenuItemLabel* self = (CCMenuItemLabel*)  tolua_tousertype(tolua_S,1,0);
+  const ccColor3B* color = ((const ccColor3B*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setDisabledColor'", NULL);
+#endif
+  {
+   self->setDisabledColor(*color);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setDisabledColor'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getDisabledColor of class  CCMenuItemLabel */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMenuItemLabel_getDisabledColor00
+static int tolua_Cocos2d_CCMenuItemLabel_getDisabledColor00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCMenuItemLabel",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCMenuItemLabel* self = (CCMenuItemLabel*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getDisabledColor'", NULL);
+#endif
+  {
+   const ccColor3B& tolua_ret = (const ccColor3B&)  self->getDisabledColor();
+    tolua_pushusertype(tolua_S,(void*)&tolua_ret,"const ccColor3B");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getDisabledColor'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setLabel of class  CCMenuItemLabel */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMenuItemLabel_setLabel00
+static int tolua_Cocos2d_CCMenuItemLabel_setLabel00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCMenuItemLabel",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCNode",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCMenuItemLabel* self = (CCMenuItemLabel*)  tolua_tousertype(tolua_S,1,0);
+  CCNode* pLabel = ((CCNode*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setLabel'", NULL);
+#endif
+  {
+   self->setLabel(pLabel);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setLabel'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getLabel of class  CCMenuItemLabel */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMenuItemLabel_getLabel00
+static int tolua_Cocos2d_CCMenuItemLabel_getLabel00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCMenuItemLabel",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCMenuItemLabel* self = (CCMenuItemLabel*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getLabel'", NULL);
+#endif
+  {
+   CCNode* tolua_ret = (CCNode*)  self->getLabel();
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCNode");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getLabel'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: activate of class  CCMenuItemLabel */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMenuItemLabel_activate00
+static int tolua_Cocos2d_CCMenuItemLabel_activate00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCMenuItemLabel",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCMenuItemLabel* self = (CCMenuItemLabel*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'activate'", NULL);
+#endif
+  {
+   self->activate();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'activate'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: selected of class  CCMenuItemLabel */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMenuItemLabel_selected00
+static int tolua_Cocos2d_CCMenuItemLabel_selected00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCMenuItemLabel",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCMenuItemLabel* self = (CCMenuItemLabel*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'selected'", NULL);
+#endif
+  {
+   self->selected();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'selected'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: unselected of class  CCMenuItemLabel */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMenuItemLabel_unselected00
+static int tolua_Cocos2d_CCMenuItemLabel_unselected00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCMenuItemLabel",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCMenuItemLabel* self = (CCMenuItemLabel*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'unselected'", NULL);
+#endif
+  {
+   self->unselected();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'unselected'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setEnabled of class  CCMenuItemLabel */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMenuItemLabel_setEnabled00
+static int tolua_Cocos2d_CCMenuItemLabel_setEnabled00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCMenuItemLabel",0,&tolua_err) ||
+     !tolua_isboolean(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCMenuItemLabel* self = (CCMenuItemLabel*)  tolua_tousertype(tolua_S,1,0);
+  bool enabled = ((bool)  tolua_toboolean(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setEnabled'", NULL);
+#endif
+  {
+   self->setEnabled(enabled);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setEnabled'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setOpacityModifyRGB of class  CCMenuItemLabel */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMenuItemLabel_setOpacityModifyRGB00
+static int tolua_Cocos2d_CCMenuItemLabel_setOpacityModifyRGB00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCMenuItemLabel",0,&tolua_err) ||
+     !tolua_isboolean(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCMenuItemLabel* self = (CCMenuItemLabel*)  tolua_tousertype(tolua_S,1,0);
+  bool bValue = ((bool)  tolua_toboolean(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setOpacityModifyRGB'", NULL);
+#endif
+  {
+   self->setOpacityModifyRGB(bValue);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setOpacityModifyRGB'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: isOpacityModifyRGB of class  CCMenuItemLabel */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMenuItemLabel_isOpacityModifyRGB00
+static int tolua_Cocos2d_CCMenuItemLabel_isOpacityModifyRGB00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCMenuItemLabel",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCMenuItemLabel* self = (CCMenuItemLabel*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isOpacityModifyRGB'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->isOpacityModifyRGB();
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'isOpacityModifyRGB'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: create of class  CCMenuItemLabel */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMenuItemLabel_create00
 static int tolua_Cocos2d_CCMenuItemLabel_create00(lua_State* tolua_S)
@@ -14584,7 +23668,7 @@ static int tolua_Cocos2d_CCMenuItemFont_fontSize00(lua_State* tolua_S)
 #endif
  {
   {
-   int tolua_ret = (int)  CCMenuItemFont::fontSize();
+   unsigned int tolua_ret = (unsigned int)  CCMenuItemFont::fontSize();
    tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
   }
  }
@@ -14649,6 +23733,136 @@ static int tolua_Cocos2d_CCMenuItemFont_fontName00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'fontName'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setFontSizeObj of class  CCMenuItemFont */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMenuItemFont_setFontSizeObj00
+static int tolua_Cocos2d_CCMenuItemFont_setFontSizeObj00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCMenuItemFont",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCMenuItemFont* self = (CCMenuItemFont*)  tolua_tousertype(tolua_S,1,0);
+  unsigned int s = ((unsigned int)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setFontSizeObj'", NULL);
+#endif
+  {
+   self->setFontSizeObj(s);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setFontSizeObj'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: fontSizeObj of class  CCMenuItemFont */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMenuItemFont_fontSizeObj00
+static int tolua_Cocos2d_CCMenuItemFont_fontSizeObj00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCMenuItemFont",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCMenuItemFont* self = (CCMenuItemFont*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'fontSizeObj'", NULL);
+#endif
+  {
+   unsigned int tolua_ret = (unsigned int)  self->fontSizeObj();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'fontSizeObj'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setFontNameObj of class  CCMenuItemFont */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMenuItemFont_setFontNameObj00
+static int tolua_Cocos2d_CCMenuItemFont_setFontNameObj00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCMenuItemFont",0,&tolua_err) ||
+     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCMenuItemFont* self = (CCMenuItemFont*)  tolua_tousertype(tolua_S,1,0);
+  const char* name = ((const char*)  tolua_tostring(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setFontNameObj'", NULL);
+#endif
+  {
+   self->setFontNameObj(name);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setFontNameObj'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: fontNameObj of class  CCMenuItemFont */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMenuItemFont_fontNameObj00
+static int tolua_Cocos2d_CCMenuItemFont_fontNameObj00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCMenuItemFont",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCMenuItemFont* self = (CCMenuItemFont*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'fontNameObj'", NULL);
+#endif
+  {
+   const char* tolua_ret = (const char*)  self->fontNameObj();
+   tolua_pushstring(tolua_S,(const char*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'fontNameObj'.",&tolua_err);
  return 0;
 #endif
 }
@@ -14821,6 +24035,367 @@ static int tolua_Cocos2d_CCMenuItemSprite_getOpacity00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'getOpacity'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setNormalImage of class  CCMenuItemSprite */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMenuItemSprite_setNormalImage00
+static int tolua_Cocos2d_CCMenuItemSprite_setNormalImage00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCMenuItemSprite",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCNode",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCMenuItemSprite* self = (CCMenuItemSprite*)  tolua_tousertype(tolua_S,1,0);
+  CCNode* pImage = ((CCNode*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setNormalImage'", NULL);
+#endif
+  {
+   self->setNormalImage(pImage);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setNormalImage'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getNormalImage of class  CCMenuItemSprite */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMenuItemSprite_getNormalImage00
+static int tolua_Cocos2d_CCMenuItemSprite_getNormalImage00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCMenuItemSprite",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCMenuItemSprite* self = (CCMenuItemSprite*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getNormalImage'", NULL);
+#endif
+  {
+   CCNode* tolua_ret = (CCNode*)  self->getNormalImage();
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCNode");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getNormalImage'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setSelectedImage of class  CCMenuItemSprite */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMenuItemSprite_setSelectedImage00
+static int tolua_Cocos2d_CCMenuItemSprite_setSelectedImage00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCMenuItemSprite",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCNode",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCMenuItemSprite* self = (CCMenuItemSprite*)  tolua_tousertype(tolua_S,1,0);
+  CCNode* pImage = ((CCNode*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setSelectedImage'", NULL);
+#endif
+  {
+   self->setSelectedImage(pImage);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setSelectedImage'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getSelectedImage of class  CCMenuItemSprite */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMenuItemSprite_getSelectedImage00
+static int tolua_Cocos2d_CCMenuItemSprite_getSelectedImage00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCMenuItemSprite",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCMenuItemSprite* self = (CCMenuItemSprite*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getSelectedImage'", NULL);
+#endif
+  {
+   CCNode* tolua_ret = (CCNode*)  self->getSelectedImage();
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCNode");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getSelectedImage'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setDisabledImage of class  CCMenuItemSprite */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMenuItemSprite_setDisabledImage00
+static int tolua_Cocos2d_CCMenuItemSprite_setDisabledImage00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCMenuItemSprite",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCNode",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCMenuItemSprite* self = (CCMenuItemSprite*)  tolua_tousertype(tolua_S,1,0);
+  CCNode* pImage = ((CCNode*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setDisabledImage'", NULL);
+#endif
+  {
+   self->setDisabledImage(pImage);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setDisabledImage'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getDisabledImage of class  CCMenuItemSprite */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMenuItemSprite_getDisabledImage00
+static int tolua_Cocos2d_CCMenuItemSprite_getDisabledImage00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCMenuItemSprite",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCMenuItemSprite* self = (CCMenuItemSprite*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getDisabledImage'", NULL);
+#endif
+  {
+   CCNode* tolua_ret = (CCNode*)  self->getDisabledImage();
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCNode");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getDisabledImage'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: selected of class  CCMenuItemSprite */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMenuItemSprite_selected00
+static int tolua_Cocos2d_CCMenuItemSprite_selected00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCMenuItemSprite",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCMenuItemSprite* self = (CCMenuItemSprite*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'selected'", NULL);
+#endif
+  {
+   self->selected();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'selected'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: unselected of class  CCMenuItemSprite */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMenuItemSprite_unselected00
+static int tolua_Cocos2d_CCMenuItemSprite_unselected00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCMenuItemSprite",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCMenuItemSprite* self = (CCMenuItemSprite*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'unselected'", NULL);
+#endif
+  {
+   self->unselected();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'unselected'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setEnabled of class  CCMenuItemSprite */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMenuItemSprite_setEnabled00
+static int tolua_Cocos2d_CCMenuItemSprite_setEnabled00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCMenuItemSprite",0,&tolua_err) ||
+     !tolua_isboolean(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCMenuItemSprite* self = (CCMenuItemSprite*)  tolua_tousertype(tolua_S,1,0);
+  bool bEnabled = ((bool)  tolua_toboolean(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setEnabled'", NULL);
+#endif
+  {
+   self->setEnabled(bEnabled);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setEnabled'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setOpacityModifyRGB of class  CCMenuItemSprite */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMenuItemSprite_setOpacityModifyRGB00
+static int tolua_Cocos2d_CCMenuItemSprite_setOpacityModifyRGB00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCMenuItemSprite",0,&tolua_err) ||
+     !tolua_isboolean(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCMenuItemSprite* self = (CCMenuItemSprite*)  tolua_tousertype(tolua_S,1,0);
+  bool bValue = ((bool)  tolua_toboolean(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setOpacityModifyRGB'", NULL);
+#endif
+  {
+   self->setOpacityModifyRGB(bValue);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setOpacityModifyRGB'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: isOpacityModifyRGB of class  CCMenuItemSprite */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMenuItemSprite_isOpacityModifyRGB00
+static int tolua_Cocos2d_CCMenuItemSprite_isOpacityModifyRGB00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCMenuItemSprite",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCMenuItemSprite* self = (CCMenuItemSprite*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isOpacityModifyRGB'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->isOpacityModifyRGB();
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'isOpacityModifyRGB'.",&tolua_err);
  return 0;
 #endif
 }
@@ -15031,6 +24606,105 @@ static int tolua_Cocos2d_CCMenuItemImage_getOpacity00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: setNormalSpriteFrame of class  CCMenuItemImage */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMenuItemImage_setNormalSpriteFrame00
+static int tolua_Cocos2d_CCMenuItemImage_setNormalSpriteFrame00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCMenuItemImage",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCSpriteFrame",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCMenuItemImage* self = (CCMenuItemImage*)  tolua_tousertype(tolua_S,1,0);
+  CCSpriteFrame* frame = ((CCSpriteFrame*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setNormalSpriteFrame'", NULL);
+#endif
+  {
+   self->setNormalSpriteFrame(frame);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setNormalSpriteFrame'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setSelectedSpriteFrame of class  CCMenuItemImage */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMenuItemImage_setSelectedSpriteFrame00
+static int tolua_Cocos2d_CCMenuItemImage_setSelectedSpriteFrame00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCMenuItemImage",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCSpriteFrame",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCMenuItemImage* self = (CCMenuItemImage*)  tolua_tousertype(tolua_S,1,0);
+  CCSpriteFrame* frame = ((CCSpriteFrame*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setSelectedSpriteFrame'", NULL);
+#endif
+  {
+   self->setSelectedSpriteFrame(frame);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setSelectedSpriteFrame'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setDisabledSpriteFrame of class  CCMenuItemImage */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMenuItemImage_setDisabledSpriteFrame00
+static int tolua_Cocos2d_CCMenuItemImage_setDisabledSpriteFrame00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCMenuItemImage",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCSpriteFrame",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCMenuItemImage* self = (CCMenuItemImage*)  tolua_tousertype(tolua_S,1,0);
+  CCSpriteFrame* frame = ((CCSpriteFrame*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setDisabledSpriteFrame'", NULL);
+#endif
+  {
+   self->setDisabledSpriteFrame(frame);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setDisabledSpriteFrame'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: create of class  CCMenuItemImage */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMenuItemImage_create00
 static int tolua_Cocos2d_CCMenuItemImage_create00(lua_State* tolua_S)
@@ -15039,18 +24713,14 @@ static int tolua_Cocos2d_CCMenuItemImage_create00(lua_State* tolua_S)
  tolua_Error tolua_err;
  if (
      !tolua_isusertable(tolua_S,1,"CCMenuItemImage",0,&tolua_err) ||
-     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
-     !tolua_isstring(tolua_S,3,0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,4,&tolua_err)
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
  else
 #endif
  {
-  const char* normalImage = ((const char*)  tolua_tostring(tolua_S,2,0));
-  const char* selectedImage = ((const char*)  tolua_tostring(tolua_S,3,0));
   {
-   CCMenuItemImage* tolua_ret = (CCMenuItemImage*)  CCMenuItemImage::create(normalImage,selectedImage);
+   CCMenuItemImage* tolua_ret = (CCMenuItemImage*)  CCMenuItemImage::create();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCMenuItemImage");
@@ -15068,6 +24738,35 @@ static int tolua_Cocos2d_CCMenuItemImage_create00(lua_State* tolua_S)
 /* method: create of class  CCMenuItemImage */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMenuItemImage_create01
 static int tolua_Cocos2d_CCMenuItemImage_create01(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"CCMenuItemImage",0,&tolua_err) ||
+     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isstring(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  const char* normalImage = ((const char*)  tolua_tostring(tolua_S,2,0));
+  const char* selectedImage = ((const char*)  tolua_tostring(tolua_S,3,0));
+  {
+   CCMenuItemImage* tolua_ret = (CCMenuItemImage*)  CCMenuItemImage::create(normalImage,selectedImage);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCMenuItemImage");
+  }
+ }
+ return 1;
+tolua_lerror:
+ return tolua_Cocos2d_CCMenuItemImage_create00(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: create of class  CCMenuItemImage */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMenuItemImage_create02
+static int tolua_Cocos2d_CCMenuItemImage_create02(lua_State* tolua_S)
 {
  tolua_Error tolua_err;
  if (
@@ -15092,7 +24791,279 @@ static int tolua_Cocos2d_CCMenuItemImage_create01(lua_State* tolua_S)
  }
  return 1;
 tolua_lerror:
- return tolua_Cocos2d_CCMenuItemImage_create00(tolua_S);
+ return tolua_Cocos2d_CCMenuItemImage_create01(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setColor of class  CCMenuItemToggle */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMenuItemToggle_setColor00
+static int tolua_Cocos2d_CCMenuItemToggle_setColor00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCMenuItemToggle",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"ccColor3B",0,&tolua_err)) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCMenuItemToggle* self = (CCMenuItemToggle*)  tolua_tousertype(tolua_S,1,0);
+  ccColor3B color = *((ccColor3B*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setColor'", NULL);
+#endif
+  {
+   self->setColor(color);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setColor'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getColor of class  CCMenuItemToggle */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMenuItemToggle_getColor00
+static int tolua_Cocos2d_CCMenuItemToggle_getColor00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCMenuItemToggle",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCMenuItemToggle* self = (CCMenuItemToggle*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getColor'", NULL);
+#endif
+  {
+   ccColor3B tolua_ret = (ccColor3B)  self->getColor();
+   {
+#ifdef __cplusplus
+    void* tolua_obj = Mtolua_new((ccColor3B)(tolua_ret));
+     tolua_pushusertype(tolua_S,tolua_obj,"ccColor3B");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#else
+    void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(ccColor3B));
+     tolua_pushusertype(tolua_S,tolua_obj,"ccColor3B");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#endif
+   }
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getColor'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setOpacity of class  CCMenuItemToggle */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMenuItemToggle_setOpacity00
+static int tolua_Cocos2d_CCMenuItemToggle_setOpacity00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCMenuItemToggle",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCMenuItemToggle* self = (CCMenuItemToggle*)  tolua_tousertype(tolua_S,1,0);
+  GLubyte opacity = ((GLubyte)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setOpacity'", NULL);
+#endif
+  {
+   self->setOpacity(opacity);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setOpacity'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getOpacity of class  CCMenuItemToggle */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMenuItemToggle_getOpacity00
+static int tolua_Cocos2d_CCMenuItemToggle_getOpacity00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCMenuItemToggle",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCMenuItemToggle* self = (CCMenuItemToggle*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getOpacity'", NULL);
+#endif
+  {
+   GLubyte tolua_ret = (GLubyte)  self->getOpacity();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getOpacity'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setSelectedIndex of class  CCMenuItemToggle */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMenuItemToggle_setSelectedIndex00
+static int tolua_Cocos2d_CCMenuItemToggle_setSelectedIndex00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCMenuItemToggle",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCMenuItemToggle* self = (CCMenuItemToggle*)  tolua_tousertype(tolua_S,1,0);
+  unsigned int index = ((unsigned int)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setSelectedIndex'", NULL);
+#endif
+  {
+   self->setSelectedIndex(index);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setSelectedIndex'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getSelectedIndex of class  CCMenuItemToggle */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMenuItemToggle_getSelectedIndex00
+static int tolua_Cocos2d_CCMenuItemToggle_getSelectedIndex00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCMenuItemToggle",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCMenuItemToggle* self = (CCMenuItemToggle*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getSelectedIndex'", NULL);
+#endif
+  {
+   unsigned int tolua_ret = (unsigned int)  self->getSelectedIndex();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getSelectedIndex'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setSubItems of class  CCMenuItemToggle */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMenuItemToggle_setSubItems00
+static int tolua_Cocos2d_CCMenuItemToggle_setSubItems00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCMenuItemToggle",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCArray",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCMenuItemToggle* self = (CCMenuItemToggle*)  tolua_tousertype(tolua_S,1,0);
+  CCArray* pArrayOfItems = ((CCArray*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setSubItems'", NULL);
+#endif
+  {
+   self->setSubItems(pArrayOfItems);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setSubItems'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getSubItems of class  CCMenuItemToggle */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMenuItemToggle_getSubItems00
+static int tolua_Cocos2d_CCMenuItemToggle_getSubItems00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCMenuItemToggle",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCMenuItemToggle* self = (CCMenuItemToggle*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getSubItems'", NULL);
+#endif
+  {
+   CCArray* tolua_ret = (CCArray*)  self->getSubItems();
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCArray");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getSubItems'.",&tolua_err);
+ return 0;
+#endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
@@ -15158,6 +25129,197 @@ static int tolua_Cocos2d_CCMenuItemToggle_selectedItem00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'selectedItem'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: activate of class  CCMenuItemToggle */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMenuItemToggle_activate00
+static int tolua_Cocos2d_CCMenuItemToggle_activate00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCMenuItemToggle",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCMenuItemToggle* self = (CCMenuItemToggle*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'activate'", NULL);
+#endif
+  {
+   self->activate();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'activate'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: selected of class  CCMenuItemToggle */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMenuItemToggle_selected00
+static int tolua_Cocos2d_CCMenuItemToggle_selected00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCMenuItemToggle",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCMenuItemToggle* self = (CCMenuItemToggle*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'selected'", NULL);
+#endif
+  {
+   self->selected();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'selected'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: unselected of class  CCMenuItemToggle */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMenuItemToggle_unselected00
+static int tolua_Cocos2d_CCMenuItemToggle_unselected00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCMenuItemToggle",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCMenuItemToggle* self = (CCMenuItemToggle*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'unselected'", NULL);
+#endif
+  {
+   self->unselected();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'unselected'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setEnabled of class  CCMenuItemToggle */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMenuItemToggle_setEnabled00
+static int tolua_Cocos2d_CCMenuItemToggle_setEnabled00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCMenuItemToggle",0,&tolua_err) ||
+     !tolua_isboolean(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCMenuItemToggle* self = (CCMenuItemToggle*)  tolua_tousertype(tolua_S,1,0);
+  bool var = ((bool)  tolua_toboolean(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setEnabled'", NULL);
+#endif
+  {
+   self->setEnabled(var);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setEnabled'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setOpacityModifyRGB of class  CCMenuItemToggle */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMenuItemToggle_setOpacityModifyRGB00
+static int tolua_Cocos2d_CCMenuItemToggle_setOpacityModifyRGB00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCMenuItemToggle",0,&tolua_err) ||
+     !tolua_isboolean(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCMenuItemToggle* self = (CCMenuItemToggle*)  tolua_tousertype(tolua_S,1,0);
+  bool bValue = ((bool)  tolua_toboolean(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setOpacityModifyRGB'", NULL);
+#endif
+  {
+   self->setOpacityModifyRGB(bValue);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setOpacityModifyRGB'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: isOpacityModifyRGB of class  CCMenuItemToggle */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCMenuItemToggle_isOpacityModifyRGB00
+static int tolua_Cocos2d_CCMenuItemToggle_isOpacityModifyRGB00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCMenuItemToggle",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCMenuItemToggle* self = (CCMenuItemToggle*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isOpacityModifyRGB'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->isOpacityModifyRGB();
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'isOpacityModifyRGB'.",&tolua_err);
  return 0;
 #endif
 }
@@ -16290,10 +26452,11 @@ static int tolua_Cocos2d_CCDictionary_create00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: create of class  CCDictionary */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCDictionary_create01
-static int tolua_Cocos2d_CCDictionary_create01(lua_State* tolua_S)
+/* method: createWithDictionary of class  CCDictionary */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCDictionary_createWithDictionary00
+static int tolua_Cocos2d_CCDictionary_createWithDictionary00(lua_State* tolua_S)
 {
+#ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
      !tolua_isusertable(tolua_S,1,"CCDictionary",0,&tolua_err) ||
@@ -16302,6 +26465,7 @@ static int tolua_Cocos2d_CCDictionary_create01(lua_State* tolua_S)
  )
   goto tolua_lerror;
  else
+#endif
  {
   CCDictionary* srcDict = ((CCDictionary*)  tolua_tousertype(tolua_S,2,0));
   {
@@ -16312,15 +26476,19 @@ static int tolua_Cocos2d_CCDictionary_create01(lua_State* tolua_S)
   }
  }
  return 1;
-tolua_lerror:
- return tolua_Cocos2d_CCDictionary_create00(tolua_S);
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'createWithDictionary'.",&tolua_err);
+ return 0;
+#endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: create of class  CCDictionary */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCDictionary_create02
-static int tolua_Cocos2d_CCDictionary_create02(lua_State* tolua_S)
+/* method: createWithContentsOfFile of class  CCDictionary */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCDictionary_createWithContentsOfFile00
+static int tolua_Cocos2d_CCDictionary_createWithContentsOfFile00(lua_State* tolua_S)
 {
+#ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
      !tolua_isusertable(tolua_S,1,"CCDictionary",0,&tolua_err) ||
@@ -16329,6 +26497,7 @@ static int tolua_Cocos2d_CCDictionary_create02(lua_State* tolua_S)
  )
   goto tolua_lerror;
  else
+#endif
  {
   const char* pFileName = ((const char*)  tolua_tostring(tolua_S,2,0));
   {
@@ -16339,8 +26508,11 @@ static int tolua_Cocos2d_CCDictionary_create02(lua_State* tolua_S)
   }
  }
  return 1;
-tolua_lerror:
- return tolua_Cocos2d_CCDictionary_create01(tolua_S);
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'createWithContentsOfFile'.",&tolua_err);
+ return 0;
+#endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
@@ -16879,6 +27051,34 @@ static int tolua_Cocos2d_CCNode_setPosition00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: setPosition of class  CCNode */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCNode_setPosition01
+static int tolua_Cocos2d_CCNode_setPosition01(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCNode",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"CCPoint",0,&tolua_err)) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  CCNode* self = (CCNode*)  tolua_tousertype(tolua_S,1,0);
+  CCPoint pos = *((CCPoint*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setPosition'", NULL);
+#endif
+  {
+   self->setPosition(pos);
+  }
+ }
+ return 0;
+tolua_lerror:
+ return tolua_Cocos2d_CCNode_setPosition00(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: setPositionX of class  CCNode */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCNode_setPositionX00
 static int tolua_Cocos2d_CCNode_setPositionX00(lua_State* tolua_S)
@@ -17265,7 +27465,7 @@ static int tolua_Cocos2d_CCNode_setContentSize00(lua_State* tolua_S)
  tolua_Error tolua_err;
  if (
      !tolua_isusertype(tolua_S,1,"CCNode",0,&tolua_err) ||
-     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"CCSize",0,&tolua_err)) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const CCSize",0,&tolua_err)) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
   goto tolua_lerror;
@@ -17273,12 +27473,12 @@ static int tolua_Cocos2d_CCNode_setContentSize00(lua_State* tolua_S)
 #endif
  {
   CCNode* self = (CCNode*)  tolua_tousertype(tolua_S,1,0);
-  CCSize size = *((CCSize*)  tolua_tousertype(tolua_S,2,0));
+  const CCSize* size = ((const CCSize*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setContentSize'", NULL);
 #endif
   {
-   self->setContentSize(size);
+   self->setContentSize(*size);
   }
  }
  return 0;
@@ -17874,6 +28074,48 @@ static int tolua_Cocos2d_CCNode_setGrid00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: getAnchorPointInPoints of class  CCNode */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCNode_getAnchorPointInPoints00
+static int tolua_Cocos2d_CCNode_getAnchorPointInPoints00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCNode",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCNode* self = (CCNode*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getAnchorPointInPoints'", NULL);
+#endif
+  {
+   CCPoint tolua_ret = (CCPoint)  self->getAnchorPointInPoints();
+   {
+#ifdef __cplusplus
+    void* tolua_obj = Mtolua_new((CCPoint)(tolua_ret));
+     tolua_pushusertype(tolua_S,tolua_obj,"CCPoint");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#else
+    void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(CCPoint));
+     tolua_pushusertype(tolua_S,tolua_obj,"CCPoint");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#endif
+   }
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getAnchorPointInPoints'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: isRunning of class  CCNode */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCNode_isRunning00
 static int tolua_Cocos2d_CCNode_isRunning00(lua_State* tolua_S)
@@ -18098,6 +28340,412 @@ static int tolua_Cocos2d_CCNode_setUserData00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'setUserData'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getUserObject of class  CCNode */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCNode_getUserObject00
+static int tolua_Cocos2d_CCNode_getUserObject00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCNode",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCNode* self = (CCNode*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getUserObject'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->getUserObject();
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getUserObject'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setUserObject of class  CCNode */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCNode_setUserObject00
+static int tolua_Cocos2d_CCNode_setUserObject00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCNode",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCObject",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCNode* self = (CCNode*)  tolua_tousertype(tolua_S,1,0);
+  CCObject* pObject = ((CCObject*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setUserObject'", NULL);
+#endif
+  {
+   self->setUserObject(pObject);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setUserObject'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getShaderProgram of class  CCNode */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCNode_getShaderProgram00
+static int tolua_Cocos2d_CCNode_getShaderProgram00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCNode",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCNode* self = (CCNode*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getShaderProgram'", NULL);
+#endif
+  {
+   CCGLProgram* tolua_ret = (CCGLProgram*)  self->getShaderProgram();
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCGLProgram");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getShaderProgram'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setShaderProgram of class  CCNode */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCNode_setShaderProgram00
+static int tolua_Cocos2d_CCNode_setShaderProgram00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCNode",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCGLProgram",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCNode* self = (CCNode*)  tolua_tousertype(tolua_S,1,0);
+  CCGLProgram* pShaderProgram = ((CCGLProgram*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setShaderProgram'", NULL);
+#endif
+  {
+   self->setShaderProgram(pShaderProgram);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setShaderProgram'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getOrderOfArrival of class  CCNode */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCNode_getOrderOfArrival00
+static int tolua_Cocos2d_CCNode_getOrderOfArrival00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCNode",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCNode* self = (CCNode*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getOrderOfArrival'", NULL);
+#endif
+  {
+   int tolua_ret = (int)  self->getOrderOfArrival();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getOrderOfArrival'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setOrderOfArrival of class  CCNode */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCNode_setOrderOfArrival00
+static int tolua_Cocos2d_CCNode_setOrderOfArrival00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCNode",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCNode* self = (CCNode*)  tolua_tousertype(tolua_S,1,0);
+  int order = ((int)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setOrderOfArrival'", NULL);
+#endif
+  {
+   self->setOrderOfArrival(order);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setOrderOfArrival'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getGLServerState of class  CCNode */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCNode_getGLServerState00
+static int tolua_Cocos2d_CCNode_getGLServerState00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCNode",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCNode* self = (CCNode*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getGLServerState'", NULL);
+#endif
+  {
+   ccGLServerState tolua_ret = (ccGLServerState)  self->getGLServerState();
+   {
+#ifdef __cplusplus
+    void* tolua_obj = Mtolua_new((ccGLServerState)(tolua_ret));
+     tolua_pushusertype(tolua_S,tolua_obj,"ccGLServerState");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#else
+    void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(ccGLServerState));
+     tolua_pushusertype(tolua_S,tolua_obj,"ccGLServerState");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#endif
+   }
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getGLServerState'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setGLServerState of class  CCNode */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCNode_setGLServerState00
+static int tolua_Cocos2d_CCNode_setGLServerState00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCNode",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"ccGLServerState",0,&tolua_err)) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCNode* self = (CCNode*)  tolua_tousertype(tolua_S,1,0);
+  ccGLServerState state = *((ccGLServerState*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setGLServerState'", NULL);
+#endif
+  {
+   self->setGLServerState(state);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setGLServerState'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getActionManager of class  CCNode */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCNode_getActionManager00
+static int tolua_Cocos2d_CCNode_getActionManager00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCNode",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCNode* self = (CCNode*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getActionManager'", NULL);
+#endif
+  {
+   CCActionManager* tolua_ret = (CCActionManager*)  self->getActionManager();
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCActionManager");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getActionManager'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setActionManager of class  CCNode */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCNode_setActionManager00
+static int tolua_Cocos2d_CCNode_setActionManager00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCNode",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCActionManager",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCNode* self = (CCNode*)  tolua_tousertype(tolua_S,1,0);
+  CCActionManager* pActionMgr = ((CCActionManager*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setActionManager'", NULL);
+#endif
+  {
+   self->setActionManager(pActionMgr);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setActionManager'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getScheduler of class  CCNode */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCNode_getScheduler00
+static int tolua_Cocos2d_CCNode_getScheduler00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCNode",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCNode* self = (CCNode*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getScheduler'", NULL);
+#endif
+  {
+   CCScheduler* tolua_ret = (CCScheduler*)  self->getScheduler();
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCScheduler");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getScheduler'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setScheduler of class  CCNode */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCNode_setScheduler00
+static int tolua_Cocos2d_CCNode_setScheduler00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCNode",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCScheduler",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCNode* self = (CCNode*)  tolua_tousertype(tolua_S,1,0);
+  CCScheduler* pScheduler = ((CCScheduler*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setScheduler'", NULL);
+#endif
+  {
+   self->setScheduler(pScheduler);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setScheduler'.",&tolua_err);
  return 0;
 #endif
 }
@@ -19706,6 +30354,74 @@ static int tolua_Cocos2d_CCObject_isEqual00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: copy of class  CCObject */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCObject_copy00
+static int tolua_Cocos2d_CCObject_copy00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCObject",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCObject* self = (CCObject*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copy'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copy();
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copy'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: autorelease of class  CCObject */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCObject_autorelease00
+static int tolua_Cocos2d_CCObject_autorelease00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCObject",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCObject* self = (CCObject*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'autorelease'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->autorelease();
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'autorelease'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: getParallaxArray of class  CCParallaxNode */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCParallaxNode_getParallaxArray00
 static int tolua_Cocos2d_CCParallaxNode_getParallaxArray00(lua_State* tolua_S)
@@ -21096,6 +31812,584 @@ static int tolua_Cocos2d_CCParticleSystem_postStep00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: getStartSize of class  CCParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCParticleSystem_getStartSize00
+static int tolua_Cocos2d_CCParticleSystem_getStartSize00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCParticleSystem",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCParticleSystem* self = (CCParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getStartSize'", NULL);
+#endif
+  {
+   float tolua_ret = (float)  self->getStartSize();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getStartSize'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getStartSizeVar of class  CCParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCParticleSystem_getStartSizeVar00
+static int tolua_Cocos2d_CCParticleSystem_getStartSizeVar00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCParticleSystem",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCParticleSystem* self = (CCParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getStartSizeVar'", NULL);
+#endif
+  {
+   float tolua_ret = (float)  self->getStartSizeVar();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getStartSizeVar'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getEndSize of class  CCParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCParticleSystem_getEndSize00
+static int tolua_Cocos2d_CCParticleSystem_getEndSize00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCParticleSystem",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCParticleSystem* self = (CCParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getEndSize'", NULL);
+#endif
+  {
+   float tolua_ret = (float)  self->getEndSize();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getEndSize'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getEndSizeVar of class  CCParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCParticleSystem_getEndSizeVar00
+static int tolua_Cocos2d_CCParticleSystem_getEndSizeVar00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCParticleSystem",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCParticleSystem* self = (CCParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getEndSizeVar'", NULL);
+#endif
+  {
+   float tolua_ret = (float)  self->getEndSizeVar();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getEndSizeVar'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getStartColor of class  CCParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCParticleSystem_getStartColor00
+static int tolua_Cocos2d_CCParticleSystem_getStartColor00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCParticleSystem",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCParticleSystem* self = (CCParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getStartColor'", NULL);
+#endif
+  {
+   const ccColor4F& tolua_ret = (const ccColor4F&)  self->getStartColor();
+    tolua_pushusertype(tolua_S,(void*)&tolua_ret,"const ccColor4F");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getStartColor'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getStartColorVar of class  CCParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCParticleSystem_getStartColorVar00
+static int tolua_Cocos2d_CCParticleSystem_getStartColorVar00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCParticleSystem",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCParticleSystem* self = (CCParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getStartColorVar'", NULL);
+#endif
+  {
+   const ccColor4F& tolua_ret = (const ccColor4F&)  self->getStartColorVar();
+    tolua_pushusertype(tolua_S,(void*)&tolua_ret,"const ccColor4F");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getStartColorVar'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getEndColor of class  CCParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCParticleSystem_getEndColor00
+static int tolua_Cocos2d_CCParticleSystem_getEndColor00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCParticleSystem",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCParticleSystem* self = (CCParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getEndColor'", NULL);
+#endif
+  {
+   const ccColor4F& tolua_ret = (const ccColor4F&)  self->getEndColor();
+    tolua_pushusertype(tolua_S,(void*)&tolua_ret,"const ccColor4F");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getEndColor'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getEndColorVar of class  CCParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCParticleSystem_getEndColorVar00
+static int tolua_Cocos2d_CCParticleSystem_getEndColorVar00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCParticleSystem",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCParticleSystem* self = (CCParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getEndColorVar'", NULL);
+#endif
+  {
+   const ccColor4F& tolua_ret = (const ccColor4F&)  self->getEndColorVar();
+    tolua_pushusertype(tolua_S,(void*)&tolua_ret,"const ccColor4F");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getEndColorVar'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getStartSpin of class  CCParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCParticleSystem_getStartSpin00
+static int tolua_Cocos2d_CCParticleSystem_getStartSpin00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCParticleSystem",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCParticleSystem* self = (CCParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getStartSpin'", NULL);
+#endif
+  {
+   float tolua_ret = (float)  self->getStartSpin();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getStartSpin'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getStartSpinVar of class  CCParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCParticleSystem_getStartSpinVar00
+static int tolua_Cocos2d_CCParticleSystem_getStartSpinVar00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCParticleSystem",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCParticleSystem* self = (CCParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getStartSpinVar'", NULL);
+#endif
+  {
+   float tolua_ret = (float)  self->getStartSpinVar();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getStartSpinVar'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getEndSpin of class  CCParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCParticleSystem_getEndSpin00
+static int tolua_Cocos2d_CCParticleSystem_getEndSpin00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCParticleSystem",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCParticleSystem* self = (CCParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getEndSpin'", NULL);
+#endif
+  {
+   float tolua_ret = (float)  self->getEndSpin();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getEndSpin'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getEndSpinVar of class  CCParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCParticleSystem_getEndSpinVar00
+static int tolua_Cocos2d_CCParticleSystem_getEndSpinVar00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCParticleSystem",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCParticleSystem* self = (CCParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getEndSpinVar'", NULL);
+#endif
+  {
+   float tolua_ret = (float)  self->getEndSpinVar();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getEndSpinVar'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getEmissionRate of class  CCParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCParticleSystem_getEmissionRate00
+static int tolua_Cocos2d_CCParticleSystem_getEmissionRate00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCParticleSystem",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCParticleSystem* self = (CCParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getEmissionRate'", NULL);
+#endif
+  {
+   float tolua_ret = (float)  self->getEmissionRate();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getEmissionRate'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getTotalParticles of class  CCParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCParticleSystem_getTotalParticles00
+static int tolua_Cocos2d_CCParticleSystem_getTotalParticles00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCParticleSystem",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCParticleSystem* self = (CCParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getTotalParticles'", NULL);
+#endif
+  {
+   unsigned int tolua_ret = (unsigned int)  self->getTotalParticles();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getTotalParticles'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: isAutoRemoveOnFinish of class  CCParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCParticleSystem_isAutoRemoveOnFinish00
+static int tolua_Cocos2d_CCParticleSystem_isAutoRemoveOnFinish00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCParticleSystem",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCParticleSystem* self = (CCParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isAutoRemoveOnFinish'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->isAutoRemoveOnFinish();
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'isAutoRemoveOnFinish'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setAutoRemoveOnFinish of class  CCParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCParticleSystem_setAutoRemoveOnFinish00
+static int tolua_Cocos2d_CCParticleSystem_setAutoRemoveOnFinish00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCParticleSystem",0,&tolua_err) ||
+     !tolua_isboolean(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCParticleSystem* self = (CCParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+  bool var = ((bool)  tolua_toboolean(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setAutoRemoveOnFinish'", NULL);
+#endif
+  {
+   self->setAutoRemoveOnFinish(var);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setAutoRemoveOnFinish'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getEmitterMode of class  CCParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCParticleSystem_getEmitterMode00
+static int tolua_Cocos2d_CCParticleSystem_getEmitterMode00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCParticleSystem",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCParticleSystem* self = (CCParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getEmitterMode'", NULL);
+#endif
+  {
+   int tolua_ret = (int)  self->getEmitterMode();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getEmitterMode'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setEmitterMode of class  CCParticleSystem */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCParticleSystem_setEmitterMode00
+static int tolua_Cocos2d_CCParticleSystem_setEmitterMode00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCParticleSystem",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCParticleSystem* self = (CCParticleSystem*)  tolua_tousertype(tolua_S,1,0);
+  int mode = ((int)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setEmitterMode'", NULL);
+#endif
+  {
+   self->setEmitterMode(mode);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setEmitterMode'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: getTexture of class  CCParticleSystem */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCParticleSystem_getTexture00
 static int tolua_Cocos2d_CCParticleSystem_getTexture00(lua_State* tolua_S)
@@ -21499,6 +32793,293 @@ static int tolua_Cocos2d_CCParticleSystem_create00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: postStep of class  CCParticleSystemQuad */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCParticleSystemQuad_postStep00
+static int tolua_Cocos2d_CCParticleSystemQuad_postStep00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCParticleSystemQuad",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCParticleSystemQuad* self = (CCParticleSystemQuad*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'postStep'", NULL);
+#endif
+  {
+   self->postStep();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'postStep'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setDisplayFrame of class  CCParticleSystemQuad */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCParticleSystemQuad_setDisplayFrame00
+static int tolua_Cocos2d_CCParticleSystemQuad_setDisplayFrame00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCParticleSystemQuad",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCSpriteFrame",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCParticleSystemQuad* self = (CCParticleSystemQuad*)  tolua_tousertype(tolua_S,1,0);
+  CCSpriteFrame* spriteFrame = ((CCSpriteFrame*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setDisplayFrame'", NULL);
+#endif
+  {
+   self->setDisplayFrame(spriteFrame);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setDisplayFrame'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setTexture of class  CCParticleSystemQuad */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCParticleSystemQuad_setTexture00
+static int tolua_Cocos2d_CCParticleSystemQuad_setTexture00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCParticleSystemQuad",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCTexture2D",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCParticleSystemQuad* self = (CCParticleSystemQuad*)  tolua_tousertype(tolua_S,1,0);
+  CCTexture2D* texture = ((CCTexture2D*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setTexture'", NULL);
+#endif
+  {
+   self->setTexture(texture);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setTexture'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setTextureWithRect of class  CCParticleSystemQuad */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCParticleSystemQuad_setTextureWithRect00
+static int tolua_Cocos2d_CCParticleSystemQuad_setTextureWithRect00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCParticleSystemQuad",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCTexture2D",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,3,&tolua_err) || !tolua_isusertype(tolua_S,3,"const CCRect",0,&tolua_err)) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCParticleSystemQuad* self = (CCParticleSystemQuad*)  tolua_tousertype(tolua_S,1,0);
+  CCTexture2D* texture = ((CCTexture2D*)  tolua_tousertype(tolua_S,2,0));
+  const CCRect* rect = ((const CCRect*)  tolua_tousertype(tolua_S,3,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setTextureWithRect'", NULL);
+#endif
+  {
+   self->setTextureWithRect(texture,*rect);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setTextureWithRect'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setBatchNode of class  CCParticleSystemQuad */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCParticleSystemQuad_setBatchNode00
+static int tolua_Cocos2d_CCParticleSystemQuad_setBatchNode00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCParticleSystemQuad",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCParticleBatchNode",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCParticleSystemQuad* self = (CCParticleSystemQuad*)  tolua_tousertype(tolua_S,1,0);
+  CCParticleBatchNode* batchNode = ((CCParticleBatchNode*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setBatchNode'", NULL);
+#endif
+  {
+   self->setBatchNode(batchNode);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setBatchNode'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setTotalParticles of class  CCParticleSystemQuad */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCParticleSystemQuad_setTotalParticles00
+static int tolua_Cocos2d_CCParticleSystemQuad_setTotalParticles00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCParticleSystemQuad",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCParticleSystemQuad* self = (CCParticleSystemQuad*)  tolua_tousertype(tolua_S,1,0);
+  unsigned int tp = ((unsigned int)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setTotalParticles'", NULL);
+#endif
+  {
+   self->setTotalParticles(tp);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setTotalParticles'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: updateQuadWithParticle of class  CCParticleSystemQuad */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCParticleSystemQuad_updateQuadWithParticle00
+static int tolua_Cocos2d_CCParticleSystemQuad_updateQuadWithParticle00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCParticleSystemQuad",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"tCCParticle",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,3,&tolua_err) || !tolua_isusertype(tolua_S,3,"const CCPoint",0,&tolua_err)) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCParticleSystemQuad* self = (CCParticleSystemQuad*)  tolua_tousertype(tolua_S,1,0);
+  tCCParticle* particle = ((tCCParticle*)  tolua_tousertype(tolua_S,2,0));
+  const CCPoint* newPosition = ((const CCPoint*)  tolua_tousertype(tolua_S,3,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'updateQuadWithParticle'", NULL);
+#endif
+  {
+   self->updateQuadWithParticle(particle,*newPosition);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'updateQuadWithParticle'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: postStep of class  CCParticleSystemQuad */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCParticleSystemQuad_postStep01
+static int tolua_Cocos2d_CCParticleSystemQuad_postStep01(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCParticleSystemQuad",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  CCParticleSystemQuad* self = (CCParticleSystemQuad*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'postStep'", NULL);
+#endif
+  {
+   self->postStep();
+  }
+ }
+ return 0;
+tolua_lerror:
+ return tolua_Cocos2d_CCParticleSystemQuad_postStep00(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setTotalParticles of class  CCParticleSystemQuad */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCParticleSystemQuad_setTotalParticles01
+static int tolua_Cocos2d_CCParticleSystemQuad_setTotalParticles01(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCParticleSystemQuad",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  CCParticleSystemQuad* self = (CCParticleSystemQuad*)  tolua_tousertype(tolua_S,1,0);
+  unsigned int tp = ((unsigned int)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setTotalParticles'", NULL);
+#endif
+  {
+   self->setTotalParticles(tp);
+  }
+ }
+ return 0;
+tolua_lerror:
+ return tolua_Cocos2d_CCParticleSystemQuad_setTotalParticles00(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: create of class  CCParticleSystemQuad */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCParticleSystemQuad_create00
 static int tolua_Cocos2d_CCParticleSystemQuad_create00(lua_State* tolua_S)
@@ -21507,16 +33088,14 @@ static int tolua_Cocos2d_CCParticleSystemQuad_create00(lua_State* tolua_S)
  tolua_Error tolua_err;
  if (
      !tolua_isusertable(tolua_S,1,"CCParticleSystemQuad",0,&tolua_err) ||
-     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,3,&tolua_err)
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
  else
 #endif
  {
-  const char* plistFile = ((const char*)  tolua_tostring(tolua_S,2,0));
   {
-   CCParticleSystemQuad* tolua_ret = (CCParticleSystemQuad*)  CCParticleSystemQuad::create(plistFile);
+   CCParticleSystemQuad* tolua_ret = (CCParticleSystemQuad*)  CCParticleSystemQuad::create();
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCParticleSystemQuad");
@@ -21531,9 +33110,36 @@ static int tolua_Cocos2d_CCParticleSystemQuad_create00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: create of class  CCParticleBatchNode */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCParticleBatchNode_create00
-static int tolua_Cocos2d_CCParticleBatchNode_create00(lua_State* tolua_S)
+/* method: create of class  CCParticleSystemQuad */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCParticleSystemQuad_create01
+static int tolua_Cocos2d_CCParticleSystemQuad_create01(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"CCParticleSystemQuad",0,&tolua_err) ||
+     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  const char* plistFile = ((const char*)  tolua_tostring(tolua_S,2,0));
+  {
+   CCParticleSystemQuad* tolua_ret = (CCParticleSystemQuad*)  CCParticleSystemQuad::create(plistFile);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCParticleSystemQuad");
+  }
+ }
+ return 1;
+tolua_lerror:
+ return tolua_Cocos2d_CCParticleSystemQuad_create00(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: createWithTexture of class  CCParticleBatchNode */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCParticleBatchNode_createWithTexture00
+static int tolua_Cocos2d_CCParticleBatchNode_createWithTexture00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -21559,16 +33165,17 @@ static int tolua_Cocos2d_CCParticleBatchNode_create00(lua_State* tolua_S)
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'createWithTexture'.",&tolua_err);
  return 0;
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
 /* method: create of class  CCParticleBatchNode */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCParticleBatchNode_create01
-static int tolua_Cocos2d_CCParticleBatchNode_create01(lua_State* tolua_S)
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCParticleBatchNode_create00
+static int tolua_Cocos2d_CCParticleBatchNode_create00(lua_State* tolua_S)
 {
+#ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
      !tolua_isusertable(tolua_S,1,"CCParticleBatchNode",0,&tolua_err) ||
@@ -21578,6 +33185,7 @@ static int tolua_Cocos2d_CCParticleBatchNode_create01(lua_State* tolua_S)
  )
   goto tolua_lerror;
  else
+#endif
  {
   const char* fileImage = ((const char*)  tolua_tostring(tolua_S,2,0));
   unsigned int capacity = ((unsigned int)  tolua_tonumber(tolua_S,3,kCCParticleDefaultCapacity));
@@ -21589,8 +33197,11 @@ static int tolua_Cocos2d_CCParticleBatchNode_create01(lua_State* tolua_S)
   }
  }
  return 1;
-tolua_lerror:
- return tolua_Cocos2d_CCParticleBatchNode_create00(tolua_S);
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ return 0;
+#endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
@@ -22544,6 +34155,37 @@ static int tolua_Cocos2d_ccpLengthSQ00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'ccpLengthSQ'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* function: ccpDistanceSQ */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_ccpDistanceSQ00
+static int tolua_Cocos2d_ccpDistanceSQ00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     (tolua_isvaluenil(tolua_S,1,&tolua_err) || !tolua_isusertype(tolua_S,1,"const CCPoint",0,&tolua_err)) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const CCPoint",0,&tolua_err)) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const CCPoint p1 = *((const CCPoint*)  tolua_tousertype(tolua_S,1,0));
+  const CCPoint p2 = *((const CCPoint*)  tolua_tousertype(tolua_S,2,0));
+  {
+   float tolua_ret = (float)  ccpDistanceSQ(p1,p2);
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'ccpDistanceSQ'.",&tolua_err);
  return 0;
 #endif
 }
@@ -24549,6 +36191,40 @@ static int tolua_Cocos2d_CCTimer_update00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: timerWithScriptHandler of class  CCTimer */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTimer_timerWithScriptHandler00
+static int tolua_Cocos2d_CCTimer_timerWithScriptHandler00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"CCTimer",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isfunction(tolua_S,2,&tolua_err)) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  int funcID = (tolua_ref_function(tolua_S,2,0));
+  float fSeconds = ((float)  tolua_tonumber(tolua_S,3,0));
+  {
+   CCTimer* tolua_ret = (CCTimer*)  CCTimer::timerWithScriptHandler(funcID,fSeconds);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTimer");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'timerWithScriptHandler'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: getTimeScale of class  CCScheduler */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCScheduler_getTimeScale00
 static int tolua_Cocos2d_CCScheduler_getTimeScale00(lua_State* tolua_S)
@@ -24814,6 +36490,39 @@ static int tolua_Cocos2d_CCScheduler_unscheduleAllSelectors00(lua_State* tolua_S
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'unscheduleAllSelectors'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: unscheduleAllSelectorsWithMinPriority of class  CCScheduler */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCScheduler_unscheduleAllSelectorsWithMinPriority00
+static int tolua_Cocos2d_CCScheduler_unscheduleAllSelectorsWithMinPriority00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCScheduler",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCScheduler* self = (CCScheduler*)  tolua_tousertype(tolua_S,1,0);
+  int nMinPriority = ((int)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'unscheduleAllSelectorsWithMinPriority'", NULL);
+#endif
+  {
+   self->unscheduleAllSelectorsWithMinPriority(nMinPriority);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'unscheduleAllSelectorsWithMinPriority'.",&tolua_err);
  return 0;
 #endif
 }
@@ -25307,6 +37016,48 @@ static int tolua_Cocos2d_CCSprite_getBlendFunc00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: getOffsetPosition of class  CCSprite */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSprite_getOffsetPosition00
+static int tolua_Cocos2d_CCSprite_getOffsetPosition00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCSprite",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCSprite* self = (CCSprite*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getOffsetPosition'", NULL);
+#endif
+  {
+   CCPoint tolua_ret = (CCPoint)  self->getOffsetPosition();
+   {
+#ifdef __cplusplus
+    void* tolua_obj = Mtolua_new((CCPoint)(tolua_ret));
+     tolua_pushusertype(tolua_S,tolua_obj,"CCPoint");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#else
+    void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(CCPoint));
+     tolua_pushusertype(tolua_S,tolua_obj,"CCPoint");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#endif
+   }
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getOffsetPosition'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: setDirtyRecursively of class  CCSprite */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSprite_setDirtyRecursively00
 static int tolua_Cocos2d_CCSprite_setDirtyRecursively00(lua_State* tolua_S)
@@ -25529,6 +37280,532 @@ static int tolua_Cocos2d_CCSprite_updateColor00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'updateColor'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: removeChild of class  CCSprite */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSprite_removeChild00
+static int tolua_Cocos2d_CCSprite_removeChild00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCSprite",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCNode",0,&tolua_err) ||
+     !tolua_isboolean(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCSprite* self = (CCSprite*)  tolua_tousertype(tolua_S,1,0);
+  CCNode* pChild = ((CCNode*)  tolua_tousertype(tolua_S,2,0));
+  bool bCleanUp = ((bool)  tolua_toboolean(tolua_S,3,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'removeChild'", NULL);
+#endif
+  {
+   self->removeChild(pChild,bCleanUp);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'removeChild'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: removeAllChildrenWithCleanup of class  CCSprite */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSprite_removeAllChildrenWithCleanup00
+static int tolua_Cocos2d_CCSprite_removeAllChildrenWithCleanup00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCSprite",0,&tolua_err) ||
+     !tolua_isboolean(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCSprite* self = (CCSprite*)  tolua_tousertype(tolua_S,1,0);
+  bool bCleanup = ((bool)  tolua_toboolean(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'removeAllChildrenWithCleanup'", NULL);
+#endif
+  {
+   self->removeAllChildrenWithCleanup(bCleanup);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'removeAllChildrenWithCleanup'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: reorderChild of class  CCSprite */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSprite_reorderChild00
+static int tolua_Cocos2d_CCSprite_reorderChild00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCSprite",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCNode",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCSprite* self = (CCSprite*)  tolua_tousertype(tolua_S,1,0);
+  CCNode* pChild = ((CCNode*)  tolua_tousertype(tolua_S,2,0));
+  int zOrder = ((int)  tolua_tonumber(tolua_S,3,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reorderChild'", NULL);
+#endif
+  {
+   self->reorderChild(pChild,zOrder);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'reorderChild'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: addChild of class  CCSprite */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSprite_addChild00
+static int tolua_Cocos2d_CCSprite_addChild00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCSprite",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCNode",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCSprite* self = (CCSprite*)  tolua_tousertype(tolua_S,1,0);
+  CCNode* pChild = ((CCNode*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'addChild'", NULL);
+#endif
+  {
+   self->addChild(pChild);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'addChild'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: addChild of class  CCSprite */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSprite_addChild01
+static int tolua_Cocos2d_CCSprite_addChild01(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCSprite",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCNode",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  CCSprite* self = (CCSprite*)  tolua_tousertype(tolua_S,1,0);
+  CCNode* pChild = ((CCNode*)  tolua_tousertype(tolua_S,2,0));
+  int zOrder = ((int)  tolua_tonumber(tolua_S,3,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'addChild'", NULL);
+#endif
+  {
+   self->addChild(pChild,zOrder);
+  }
+ }
+ return 0;
+tolua_lerror:
+ return tolua_Cocos2d_CCSprite_addChild00(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: addChild of class  CCSprite */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSprite_addChild02
+static int tolua_Cocos2d_CCSprite_addChild02(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCSprite",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCNode",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,4,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,5,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  CCSprite* self = (CCSprite*)  tolua_tousertype(tolua_S,1,0);
+  CCNode* pChild = ((CCNode*)  tolua_tousertype(tolua_S,2,0));
+  int zOrder = ((int)  tolua_tonumber(tolua_S,3,0));
+  int tag = ((int)  tolua_tonumber(tolua_S,4,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'addChild'", NULL);
+#endif
+  {
+   self->addChild(pChild,zOrder,tag);
+  }
+ }
+ return 0;
+tolua_lerror:
+ return tolua_Cocos2d_CCSprite_addChild01(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: sortAllChildren of class  CCSprite */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSprite_sortAllChildren00
+static int tolua_Cocos2d_CCSprite_sortAllChildren00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCSprite",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCSprite* self = (CCSprite*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'sortAllChildren'", NULL);
+#endif
+  {
+   self->sortAllChildren();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'sortAllChildren'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setRotation of class  CCSprite */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSprite_setRotation00
+static int tolua_Cocos2d_CCSprite_setRotation00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCSprite",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCSprite* self = (CCSprite*)  tolua_tousertype(tolua_S,1,0);
+  float rotation = ((float)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setRotation'", NULL);
+#endif
+  {
+   self->setRotation(rotation);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setRotation'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setSkewX of class  CCSprite */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSprite_setSkewX00
+static int tolua_Cocos2d_CCSprite_setSkewX00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCSprite",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCSprite* self = (CCSprite*)  tolua_tousertype(tolua_S,1,0);
+  float sx = ((float)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setSkewX'", NULL);
+#endif
+  {
+   self->setSkewX(sx);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setSkewX'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setSkewY of class  CCSprite */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSprite_setSkewY00
+static int tolua_Cocos2d_CCSprite_setSkewY00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCSprite",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCSprite* self = (CCSprite*)  tolua_tousertype(tolua_S,1,0);
+  float sy = ((float)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setSkewY'", NULL);
+#endif
+  {
+   self->setSkewY(sy);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setSkewY'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setScale of class  CCSprite */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSprite_setScale00
+static int tolua_Cocos2d_CCSprite_setScale00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCSprite",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCSprite* self = (CCSprite*)  tolua_tousertype(tolua_S,1,0);
+  float fScale = ((float)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setScale'", NULL);
+#endif
+  {
+   self->setScale(fScale);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setScale'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setScaleX of class  CCSprite */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSprite_setScaleX00
+static int tolua_Cocos2d_CCSprite_setScaleX00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCSprite",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCSprite* self = (CCSprite*)  tolua_tousertype(tolua_S,1,0);
+  float fScaleX = ((float)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setScaleX'", NULL);
+#endif
+  {
+   self->setScaleX(fScaleX);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setScaleX'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setScaleY of class  CCSprite */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSprite_setScaleY00
+static int tolua_Cocos2d_CCSprite_setScaleY00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCSprite",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCSprite* self = (CCSprite*)  tolua_tousertype(tolua_S,1,0);
+  float fScaleY = ((float)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setScaleY'", NULL);
+#endif
+  {
+   self->setScaleY(fScaleY);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setScaleY'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setVertexZ of class  CCSprite */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSprite_setVertexZ00
+static int tolua_Cocos2d_CCSprite_setVertexZ00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCSprite",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCSprite* self = (CCSprite*)  tolua_tousertype(tolua_S,1,0);
+  float fVertexZ = ((float)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setVertexZ'", NULL);
+#endif
+  {
+   self->setVertexZ(fVertexZ);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setVertexZ'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setAnchorPoint of class  CCSprite */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSprite_setAnchorPoint00
+static int tolua_Cocos2d_CCSprite_setAnchorPoint00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCSprite",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const CCPoint",0,&tolua_err)) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCSprite* self = (CCSprite*)  tolua_tousertype(tolua_S,1,0);
+  const CCPoint* anchor = ((const CCPoint*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setAnchorPoint'", NULL);
+#endif
+  {
+   self->setAnchorPoint(*anchor);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setAnchorPoint'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setVisible of class  CCSprite */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSprite_setVisible00
+static int tolua_Cocos2d_CCSprite_setVisible00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCSprite",0,&tolua_err) ||
+     !tolua_isboolean(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCSprite* self = (CCSprite*)  tolua_tousertype(tolua_S,1,0);
+  bool bVisible = ((bool)  tolua_toboolean(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setVisible'", NULL);
+#endif
+  {
+   self->setVisible(bVisible);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setVisible'.",&tolua_err);
  return 0;
 #endif
 }
@@ -25901,6 +38178,71 @@ static int tolua_Cocos2d_CCSprite_setTextureRect00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: setTextureRect of class  CCSprite */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSprite_setTextureRect01
+static int tolua_Cocos2d_CCSprite_setTextureRect01(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCSprite",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"CCRect",0,&tolua_err)) ||
+     !tolua_isboolean(tolua_S,3,0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,4,&tolua_err) || !tolua_isusertype(tolua_S,4,"CCSize",0,&tolua_err)) ||
+     !tolua_isnoobj(tolua_S,5,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  CCSprite* self = (CCSprite*)  tolua_tousertype(tolua_S,1,0);
+  CCRect rect = *((CCRect*)  tolua_tousertype(tolua_S,2,0));
+  bool rotated = ((bool)  tolua_toboolean(tolua_S,3,0));
+  CCSize size = *((CCSize*)  tolua_tousertype(tolua_S,4,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setTextureRect'", NULL);
+#endif
+  {
+   self->setTextureRect(rect,rotated,size);
+  }
+ }
+ return 0;
+tolua_lerror:
+ return tolua_Cocos2d_CCSprite_setTextureRect00(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setVertexRect of class  CCSprite */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSprite_setVertexRect00
+static int tolua_Cocos2d_CCSprite_setVertexRect00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCSprite",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"CCRect",0,&tolua_err)) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCSprite* self = (CCSprite*)  tolua_tousertype(tolua_S,1,0);
+  CCRect rect = *((CCRect*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setVertexRect'", NULL);
+#endif
+  {
+   self->setVertexRect(rect);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setVertexRect'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: setDisplayFrame of class  CCSprite */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSprite_setDisplayFrame00
 static int tolua_Cocos2d_CCSprite_setDisplayFrame00(lua_State* tolua_S)
@@ -25968,6 +38310,107 @@ static int tolua_Cocos2d_CCSprite_isFrameDisplayed00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: displayFrame of class  CCSprite */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSprite_displayFrame00
+static int tolua_Cocos2d_CCSprite_displayFrame00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCSprite",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCSprite* self = (CCSprite*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'displayFrame'", NULL);
+#endif
+  {
+   CCSpriteFrame* tolua_ret = (CCSpriteFrame*)  self->displayFrame();
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSpriteFrame");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'displayFrame'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setBatchNode of class  CCSprite */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSprite_setBatchNode00
+static int tolua_Cocos2d_CCSprite_setBatchNode00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCSprite",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCSpriteBatchNode",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCSprite* self = (CCSprite*)  tolua_tousertype(tolua_S,1,0);
+  CCSpriteBatchNode* pBatchNode = ((CCSpriteBatchNode*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setBatchNode'", NULL);
+#endif
+  {
+   self->setBatchNode(pBatchNode);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setBatchNode'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getBatchNode of class  CCSprite */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSprite_getBatchNode00
+static int tolua_Cocos2d_CCSprite_getBatchNode00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCSprite",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCSprite* self = (CCSprite*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getBatchNode'", NULL);
+#endif
+  {
+   CCSpriteBatchNode* tolua_ret = (CCSpriteBatchNode*)  self->getBatchNode();
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSpriteBatchNode");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getBatchNode'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: setDisplayFrameWithAnimationName of class  CCSprite */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSprite_setDisplayFrameWithAnimationName00
 static int tolua_Cocos2d_CCSprite_setDisplayFrameWithAnimationName00(lua_State* tolua_S)
@@ -26003,9 +38446,9 @@ static int tolua_Cocos2d_CCSprite_setDisplayFrameWithAnimationName00(lua_State* 
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: create of class  CCSprite */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSprite_create00
-static int tolua_Cocos2d_CCSprite_create00(lua_State* tolua_S)
+/* method: createWithTexture of class  CCSprite */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSprite_createWithTexture00
+static int tolua_Cocos2d_CCSprite_createWithTexture00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -26029,15 +38472,15 @@ static int tolua_Cocos2d_CCSprite_create00(lua_State* tolua_S)
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'createWithTexture'.",&tolua_err);
  return 0;
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: create of class  CCSprite */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSprite_create01
-static int tolua_Cocos2d_CCSprite_create01(lua_State* tolua_S)
+/* method: createWithTexture of class  CCSprite */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSprite_createWithTexture01
+static int tolua_Cocos2d_CCSprite_createWithTexture01(lua_State* tolua_S)
 {
  tolua_Error tolua_err;
  if (
@@ -26060,14 +38503,15 @@ static int tolua_Cocos2d_CCSprite_create01(lua_State* tolua_S)
  }
  return 1;
 tolua_lerror:
- return tolua_Cocos2d_CCSprite_create00(tolua_S);
+ return tolua_Cocos2d_CCSprite_createWithTexture00(tolua_S);
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: create of class  CCSprite */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSprite_create02
-static int tolua_Cocos2d_CCSprite_create02(lua_State* tolua_S)
+/* method: createWithSpriteFrame of class  CCSprite */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSprite_createWithSpriteFrame00
+static int tolua_Cocos2d_CCSprite_createWithSpriteFrame00(lua_State* tolua_S)
 {
+#ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
      !tolua_isusertable(tolua_S,1,"CCSprite",0,&tolua_err) ||
@@ -26076,6 +38520,7 @@ static int tolua_Cocos2d_CCSprite_create02(lua_State* tolua_S)
  )
   goto tolua_lerror;
  else
+#endif
  {
   CCSpriteFrame* pSpriteFrame = ((CCSpriteFrame*)  tolua_tousertype(tolua_S,2,0));
   {
@@ -26086,8 +38531,11 @@ static int tolua_Cocos2d_CCSprite_create02(lua_State* tolua_S)
   }
  }
  return 1;
-tolua_lerror:
- return tolua_Cocos2d_CCSprite_create01(tolua_S);
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'createWithSpriteFrame'.",&tolua_err);
+ return 0;
+#endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
@@ -26124,8 +38572,38 @@ static int tolua_Cocos2d_CCSprite_createWithSpriteFrameName00(lua_State* tolua_S
 #endif //#ifndef TOLUA_DISABLE
 
 /* method: create of class  CCSprite */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSprite_create03
-static int tolua_Cocos2d_CCSprite_create03(lua_State* tolua_S)
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSprite_create00
+static int tolua_Cocos2d_CCSprite_create00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"CCSprite",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  {
+   CCSprite* tolua_ret = (CCSprite*)  CCSprite::create();
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSprite");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: create of class  CCSprite */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSprite_create01
+static int tolua_Cocos2d_CCSprite_create01(lua_State* tolua_S)
 {
  tolua_Error tolua_err;
  if (
@@ -26146,13 +38624,13 @@ static int tolua_Cocos2d_CCSprite_create03(lua_State* tolua_S)
  }
  return 1;
 tolua_lerror:
- return tolua_Cocos2d_CCSprite_create02(tolua_S);
+ return tolua_Cocos2d_CCSprite_create00(tolua_S);
 }
 #endif //#ifndef TOLUA_DISABLE
 
 /* method: create of class  CCSprite */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSprite_create04
-static int tolua_Cocos2d_CCSprite_create04(lua_State* tolua_S)
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSprite_create02
+static int tolua_Cocos2d_CCSprite_create02(lua_State* tolua_S)
 {
  tolua_Error tolua_err;
  if (
@@ -26175,7 +38653,7 @@ static int tolua_Cocos2d_CCSprite_create04(lua_State* tolua_S)
  }
  return 1;
 tolua_lerror:
- return tolua_Cocos2d_CCSprite_create03(tolua_S);
+ return tolua_Cocos2d_CCSprite_create01(tolua_S);
 }
 #endif //#ifndef TOLUA_DISABLE
 
@@ -26381,6 +38859,39 @@ static int tolua_Cocos2d_CCSpriteBatchNode_insertChild00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: appendChild of class  CCSpriteBatchNode */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSpriteBatchNode_appendChild00
+static int tolua_Cocos2d_CCSpriteBatchNode_appendChild00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCSpriteBatchNode",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCSprite",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCSpriteBatchNode* self = (CCSpriteBatchNode*)  tolua_tousertype(tolua_S,1,0);
+  CCSprite* child = ((CCSprite*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'appendChild'", NULL);
+#endif
+  {
+   self->appendChild(child);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'appendChild'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: removeSpriteFromAtlas of class  CCSpriteBatchNode */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSpriteBatchNode_removeSpriteFromAtlas00
 static int tolua_Cocos2d_CCSpriteBatchNode_removeSpriteFromAtlas00(lua_State* tolua_S)
@@ -26554,6 +39065,39 @@ static int tolua_Cocos2d_CCSpriteBatchNode_atlasIndexForChild00(lua_State* tolua
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: reorderBatch of class  CCSpriteBatchNode */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSpriteBatchNode_reorderBatch00
+static int tolua_Cocos2d_CCSpriteBatchNode_reorderBatch00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCSpriteBatchNode",0,&tolua_err) ||
+     !tolua_isboolean(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCSpriteBatchNode* self = (CCSpriteBatchNode*)  tolua_tousertype(tolua_S,1,0);
+  bool reorder = ((bool)  tolua_toboolean(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reorderBatch'", NULL);
+#endif
+  {
+   self->reorderBatch(reorder);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'reorderBatch'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: setTexture of class  CCSpriteBatchNode */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSpriteBatchNode_setTexture00
 static int tolua_Cocos2d_CCSpriteBatchNode_setTexture00(lua_State* tolua_S)
@@ -26696,9 +39240,238 @@ static int tolua_Cocos2d_CCSpriteBatchNode_getBlendFunc00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: create of class  CCSpriteBatchNode */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSpriteBatchNode_create00
-static int tolua_Cocos2d_CCSpriteBatchNode_create00(lua_State* tolua_S)
+/* method: addChild of class  CCSpriteBatchNode */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSpriteBatchNode_addChild00
+static int tolua_Cocos2d_CCSpriteBatchNode_addChild00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCSpriteBatchNode",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCNode",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCSpriteBatchNode* self = (CCSpriteBatchNode*)  tolua_tousertype(tolua_S,1,0);
+  CCNode* child = ((CCNode*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'addChild'", NULL);
+#endif
+  {
+   self->addChild(child);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'addChild'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: addChild of class  CCSpriteBatchNode */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSpriteBatchNode_addChild01
+static int tolua_Cocos2d_CCSpriteBatchNode_addChild01(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCSpriteBatchNode",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCNode",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  CCSpriteBatchNode* self = (CCSpriteBatchNode*)  tolua_tousertype(tolua_S,1,0);
+  CCNode* child = ((CCNode*)  tolua_tousertype(tolua_S,2,0));
+  int zOrder = ((int)  tolua_tonumber(tolua_S,3,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'addChild'", NULL);
+#endif
+  {
+   self->addChild(child,zOrder);
+  }
+ }
+ return 0;
+tolua_lerror:
+ return tolua_Cocos2d_CCSpriteBatchNode_addChild00(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: addChild of class  CCSpriteBatchNode */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSpriteBatchNode_addChild02
+static int tolua_Cocos2d_CCSpriteBatchNode_addChild02(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCSpriteBatchNode",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCNode",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,4,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,5,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  CCSpriteBatchNode* self = (CCSpriteBatchNode*)  tolua_tousertype(tolua_S,1,0);
+  CCNode* child = ((CCNode*)  tolua_tousertype(tolua_S,2,0));
+  int zOrder = ((int)  tolua_tonumber(tolua_S,3,0));
+  int tag = ((int)  tolua_tonumber(tolua_S,4,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'addChild'", NULL);
+#endif
+  {
+   self->addChild(child,zOrder,tag);
+  }
+ }
+ return 0;
+tolua_lerror:
+ return tolua_Cocos2d_CCSpriteBatchNode_addChild01(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: reorderChild of class  CCSpriteBatchNode */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSpriteBatchNode_reorderChild00
+static int tolua_Cocos2d_CCSpriteBatchNode_reorderChild00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCSpriteBatchNode",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCNode",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCSpriteBatchNode* self = (CCSpriteBatchNode*)  tolua_tousertype(tolua_S,1,0);
+  CCNode* child = ((CCNode*)  tolua_tousertype(tolua_S,2,0));
+  int zOrder = ((int)  tolua_tonumber(tolua_S,3,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reorderChild'", NULL);
+#endif
+  {
+   self->reorderChild(child,zOrder);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'reorderChild'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: removeChild of class  CCSpriteBatchNode */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSpriteBatchNode_removeChild00
+static int tolua_Cocos2d_CCSpriteBatchNode_removeChild00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCSpriteBatchNode",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCNode",0,&tolua_err) ||
+     !tolua_isboolean(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCSpriteBatchNode* self = (CCSpriteBatchNode*)  tolua_tousertype(tolua_S,1,0);
+  CCNode* child = ((CCNode*)  tolua_tousertype(tolua_S,2,0));
+  bool cleanup = ((bool)  tolua_toboolean(tolua_S,3,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'removeChild'", NULL);
+#endif
+  {
+   self->removeChild(child,cleanup);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'removeChild'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: removeAllChildrenWithCleanup of class  CCSpriteBatchNode */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSpriteBatchNode_removeAllChildrenWithCleanup00
+static int tolua_Cocos2d_CCSpriteBatchNode_removeAllChildrenWithCleanup00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCSpriteBatchNode",0,&tolua_err) ||
+     !tolua_isboolean(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCSpriteBatchNode* self = (CCSpriteBatchNode*)  tolua_tousertype(tolua_S,1,0);
+  bool cleanup = ((bool)  tolua_toboolean(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'removeAllChildrenWithCleanup'", NULL);
+#endif
+  {
+   self->removeAllChildrenWithCleanup(cleanup);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'removeAllChildrenWithCleanup'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: sortAllChildren of class  CCSpriteBatchNode */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSpriteBatchNode_sortAllChildren00
+static int tolua_Cocos2d_CCSpriteBatchNode_sortAllChildren00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCSpriteBatchNode",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCSpriteBatchNode* self = (CCSpriteBatchNode*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'sortAllChildren'", NULL);
+#endif
+  {
+   self->sortAllChildren();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'sortAllChildren'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: createWithTexture of class  CCSpriteBatchNode */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSpriteBatchNode_createWithTexture00
+static int tolua_Cocos2d_CCSpriteBatchNode_createWithTexture00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -26722,15 +39495,15 @@ static int tolua_Cocos2d_CCSpriteBatchNode_create00(lua_State* tolua_S)
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'createWithTexture'.",&tolua_err);
  return 0;
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: create of class  CCSpriteBatchNode */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSpriteBatchNode_create01
-static int tolua_Cocos2d_CCSpriteBatchNode_create01(lua_State* tolua_S)
+/* method: createWithTexture of class  CCSpriteBatchNode */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSpriteBatchNode_createWithTexture01
+static int tolua_Cocos2d_CCSpriteBatchNode_createWithTexture01(lua_State* tolua_S)
 {
  tolua_Error tolua_err;
  if (
@@ -26753,14 +39526,15 @@ static int tolua_Cocos2d_CCSpriteBatchNode_create01(lua_State* tolua_S)
  }
  return 1;
 tolua_lerror:
- return tolua_Cocos2d_CCSpriteBatchNode_create00(tolua_S);
+ return tolua_Cocos2d_CCSpriteBatchNode_createWithTexture00(tolua_S);
 }
 #endif //#ifndef TOLUA_DISABLE
 
 /* method: create of class  CCSpriteBatchNode */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSpriteBatchNode_create02
-static int tolua_Cocos2d_CCSpriteBatchNode_create02(lua_State* tolua_S)
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSpriteBatchNode_create00
+static int tolua_Cocos2d_CCSpriteBatchNode_create00(lua_State* tolua_S)
 {
+#ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
      !tolua_isusertable(tolua_S,1,"CCSpriteBatchNode",0,&tolua_err) ||
@@ -26769,6 +39543,7 @@ static int tolua_Cocos2d_CCSpriteBatchNode_create02(lua_State* tolua_S)
  )
   goto tolua_lerror;
  else
+#endif
  {
   const char* fileImage = ((const char*)  tolua_tostring(tolua_S,2,0));
   {
@@ -26779,14 +39554,17 @@ static int tolua_Cocos2d_CCSpriteBatchNode_create02(lua_State* tolua_S)
   }
  }
  return 1;
-tolua_lerror:
- return tolua_Cocos2d_CCSpriteBatchNode_create01(tolua_S);
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ return 0;
+#endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
 /* method: create of class  CCSpriteBatchNode */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSpriteBatchNode_create03
-static int tolua_Cocos2d_CCSpriteBatchNode_create03(lua_State* tolua_S)
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSpriteBatchNode_create01
+static int tolua_Cocos2d_CCSpriteBatchNode_create01(lua_State* tolua_S)
 {
  tolua_Error tolua_err;
  if (
@@ -26809,7 +39587,7 @@ static int tolua_Cocos2d_CCSpriteBatchNode_create03(lua_State* tolua_S)
  }
  return 1;
 tolua_lerror:
- return tolua_Cocos2d_CCSpriteBatchNode_create02(tolua_S);
+ return tolua_Cocos2d_CCSpriteBatchNode_create00(tolua_S);
 }
 #endif //#ifndef TOLUA_DISABLE
 
@@ -27178,6 +39956,71 @@ static int tolua_Cocos2d_CCSpriteFrame_setOriginalSizeInPixels00(lua_State* tolu
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: getOriginalSize of class  CCSpriteFrame */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSpriteFrame_getOriginalSize00
+static int tolua_Cocos2d_CCSpriteFrame_getOriginalSize00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCSpriteFrame",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCSpriteFrame* self = (CCSpriteFrame*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getOriginalSize'", NULL);
+#endif
+  {
+   const CCSize& tolua_ret = (const CCSize&)  self->getOriginalSize();
+    tolua_pushusertype(tolua_S,(void*)&tolua_ret,"const CCSize");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getOriginalSize'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setOriginalSize of class  CCSpriteFrame */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSpriteFrame_setOriginalSize00
+static int tolua_Cocos2d_CCSpriteFrame_setOriginalSize00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCSpriteFrame",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const CCSize",0,&tolua_err)) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCSpriteFrame* self = (CCSpriteFrame*)  tolua_tousertype(tolua_S,1,0);
+  const CCSize* size = ((const CCSize*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setOriginalSize'", NULL);
+#endif
+  {
+   self->setOriginalSize(*size);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setOriginalSize'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: getTexture of class  CCSpriteFrame */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSpriteFrame_getTexture00
 static int tolua_Cocos2d_CCSpriteFrame_getTexture00(lua_State* tolua_S)
@@ -27245,6 +40088,71 @@ static int tolua_Cocos2d_CCSpriteFrame_setTexture00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: getOffset of class  CCSpriteFrame */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSpriteFrame_getOffset00
+static int tolua_Cocos2d_CCSpriteFrame_getOffset00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCSpriteFrame",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCSpriteFrame* self = (CCSpriteFrame*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getOffset'", NULL);
+#endif
+  {
+   const CCPoint& tolua_ret = (const CCPoint&)  self->getOffset();
+    tolua_pushusertype(tolua_S,(void*)&tolua_ret,"const CCPoint");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getOffset'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setOffset of class  CCSpriteFrame */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSpriteFrame_setOffset00
+static int tolua_Cocos2d_CCSpriteFrame_setOffset00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCSpriteFrame",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const CCPoint",0,&tolua_err)) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCSpriteFrame* self = (CCSpriteFrame*)  tolua_tousertype(tolua_S,1,0);
+  const CCPoint* offsets = ((const CCPoint*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setOffset'", NULL);
+#endif
+  {
+   self->setOffset(*offsets);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setOffset'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: create of class  CCSpriteFrame */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSpriteFrame_create00
 static int tolua_Cocos2d_CCSpriteFrame_create00(lua_State* tolua_S)
@@ -27253,7 +40161,7 @@ static int tolua_Cocos2d_CCSpriteFrame_create00(lua_State* tolua_S)
  tolua_Error tolua_err;
  if (
      !tolua_isusertable(tolua_S,1,"CCSpriteFrame",0,&tolua_err) ||
-     !tolua_isusertype(tolua_S,2,"CCTexture2D",0,&tolua_err) ||
+     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
      (tolua_isvaluenil(tolua_S,3,&tolua_err) || !tolua_isusertype(tolua_S,3,"CCRect",0,&tolua_err)) ||
      !tolua_isnoobj(tolua_S,4,&tolua_err)
  )
@@ -27261,10 +40169,10 @@ static int tolua_Cocos2d_CCSpriteFrame_create00(lua_State* tolua_S)
  else
 #endif
  {
-  CCTexture2D* pobTexture = ((CCTexture2D*)  tolua_tousertype(tolua_S,2,0));
+  const char* filename = ((const char*)  tolua_tostring(tolua_S,2,0));
   CCRect rect = *((CCRect*)  tolua_tousertype(tolua_S,3,0));
   {
-   CCSpriteFrame* tolua_ret = (CCSpriteFrame*)  CCSpriteFrame::createWithTexture(pobTexture,rect);
+   CCSpriteFrame* tolua_ret = (CCSpriteFrame*)  CCSpriteFrame::create(filename,rect);
     int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSpriteFrame");
@@ -27282,70 +40190,6 @@ static int tolua_Cocos2d_CCSpriteFrame_create00(lua_State* tolua_S)
 /* method: create of class  CCSpriteFrame */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSpriteFrame_create01
 static int tolua_Cocos2d_CCSpriteFrame_create01(lua_State* tolua_S)
-{
- tolua_Error tolua_err;
- if (
-     !tolua_isusertable(tolua_S,1,"CCSpriteFrame",0,&tolua_err) ||
-     !tolua_isusertype(tolua_S,2,"CCTexture2D",0,&tolua_err) ||
-     (tolua_isvaluenil(tolua_S,3,&tolua_err) || !tolua_isusertype(tolua_S,3,"CCRect",0,&tolua_err)) ||
-     !tolua_isboolean(tolua_S,4,0,&tolua_err) ||
-     (tolua_isvaluenil(tolua_S,5,&tolua_err) || !tolua_isusertype(tolua_S,5,"CCPoint",0,&tolua_err)) ||
-     (tolua_isvaluenil(tolua_S,6,&tolua_err) || !tolua_isusertype(tolua_S,6,"CCSize",0,&tolua_err)) ||
-     !tolua_isnoobj(tolua_S,7,&tolua_err)
- )
-  goto tolua_lerror;
- else
- {
-  CCTexture2D* pobTexture = ((CCTexture2D*)  tolua_tousertype(tolua_S,2,0));
-  CCRect rect = *((CCRect*)  tolua_tousertype(tolua_S,3,0));
-  bool rotated = ((bool)  tolua_toboolean(tolua_S,4,0));
-  CCPoint offset = *((CCPoint*)  tolua_tousertype(tolua_S,5,0));
-  CCSize originalSize = *((CCSize*)  tolua_tousertype(tolua_S,6,0));
-  {
-   CCSpriteFrame* tolua_ret = (CCSpriteFrame*)  CCSpriteFrame::createWithTexture(pobTexture,rect,rotated,offset,originalSize);
-    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSpriteFrame");
-  }
- }
- return 1;
-tolua_lerror:
- return tolua_Cocos2d_CCSpriteFrame_create00(tolua_S);
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: create of class  CCSpriteFrame */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSpriteFrame_create02
-static int tolua_Cocos2d_CCSpriteFrame_create02(lua_State* tolua_S)
-{
- tolua_Error tolua_err;
- if (
-     !tolua_isusertable(tolua_S,1,"CCSpriteFrame",0,&tolua_err) ||
-     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
-     (tolua_isvaluenil(tolua_S,3,&tolua_err) || !tolua_isusertype(tolua_S,3,"CCRect",0,&tolua_err)) ||
-     !tolua_isnoobj(tolua_S,4,&tolua_err)
- )
-  goto tolua_lerror;
- else
- {
-  const char* filename = ((const char*)  tolua_tostring(tolua_S,2,0));
-  CCRect rect = *((CCRect*)  tolua_tousertype(tolua_S,3,0));
-  {
-   CCSpriteFrame* tolua_ret = (CCSpriteFrame*)  CCSpriteFrame::create(filename,rect);
-    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSpriteFrame");
-  }
- }
- return 1;
-tolua_lerror:
- return tolua_Cocos2d_CCSpriteFrame_create01(tolua_S);
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: create of class  CCSpriteFrame */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSpriteFrame_create03
-static int tolua_Cocos2d_CCSpriteFrame_create03(lua_State* tolua_S)
 {
  tolua_Error tolua_err;
  if (
@@ -27374,7 +40218,76 @@ static int tolua_Cocos2d_CCSpriteFrame_create03(lua_State* tolua_S)
  }
  return 1;
 tolua_lerror:
- return tolua_Cocos2d_CCSpriteFrame_create02(tolua_S);
+ return tolua_Cocos2d_CCSpriteFrame_create00(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: createWithTexture of class  CCSpriteFrame */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSpriteFrame_createWithTexture00
+static int tolua_Cocos2d_CCSpriteFrame_createWithTexture00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"CCSpriteFrame",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCTexture2D",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,3,&tolua_err) || !tolua_isusertype(tolua_S,3,"CCRect",0,&tolua_err)) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCTexture2D* pobTexture = ((CCTexture2D*)  tolua_tousertype(tolua_S,2,0));
+  CCRect rect = *((CCRect*)  tolua_tousertype(tolua_S,3,0));
+  {
+   CCSpriteFrame* tolua_ret = (CCSpriteFrame*)  CCSpriteFrame::createWithTexture(pobTexture,rect);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSpriteFrame");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'createWithTexture'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: createWithTexture of class  CCSpriteFrame */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSpriteFrame_createWithTexture01
+static int tolua_Cocos2d_CCSpriteFrame_createWithTexture01(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"CCSpriteFrame",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCTexture2D",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,3,&tolua_err) || !tolua_isusertype(tolua_S,3,"CCRect",0,&tolua_err)) ||
+     !tolua_isboolean(tolua_S,4,0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,5,&tolua_err) || !tolua_isusertype(tolua_S,5,"CCPoint",0,&tolua_err)) ||
+     (tolua_isvaluenil(tolua_S,6,&tolua_err) || !tolua_isusertype(tolua_S,6,"CCSize",0,&tolua_err)) ||
+     !tolua_isnoobj(tolua_S,7,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  CCTexture2D* pobTexture = ((CCTexture2D*)  tolua_tousertype(tolua_S,2,0));
+  CCRect rect = *((CCRect*)  tolua_tousertype(tolua_S,3,0));
+  bool rotated = ((bool)  tolua_toboolean(tolua_S,4,0));
+  CCPoint offset = *((CCPoint*)  tolua_tousertype(tolua_S,5,0));
+  CCSize originalSize = *((CCSize*)  tolua_tousertype(tolua_S,6,0));
+  {
+   CCSpriteFrame* tolua_ret = (CCSpriteFrame*)  CCSpriteFrame::createWithTexture(pobTexture,rect,rotated,offset,originalSize);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSpriteFrame");
+  }
+ }
+ return 1;
+tolua_lerror:
+ return tolua_Cocos2d_CCSpriteFrame_createWithTexture00(tolua_S);
 }
 #endif //#ifndef TOLUA_DISABLE
 
@@ -27984,6 +40897,40 @@ static int tolua_Cocos2d_CCString_length00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: compare of class  CCString */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCString_compare00
+static int tolua_Cocos2d_CCString_compare00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const CCString",0,&tolua_err) ||
+     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const CCString* self = (const CCString*)  tolua_tousertype(tolua_S,1,0);
+  const char* str = ((const char*)  tolua_tostring(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'compare'", NULL);
+#endif
+  {
+   int tolua_ret = (int)  self->compare(str);
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'compare'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: isEqual of class  CCString */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCString_isEqual00
 static int tolua_Cocos2d_CCString_isEqual00(lua_State* tolua_S)
@@ -28050,10 +40997,11 @@ static int tolua_Cocos2d_CCString_create00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: create of class  CCString */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCString_create01
-static int tolua_Cocos2d_CCString_create01(lua_State* tolua_S)
+/* method: createWithData of class  CCString */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCString_createWithData00
+static int tolua_Cocos2d_CCString_createWithData00(lua_State* tolua_S)
 {
+#ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
      !tolua_isusertable(tolua_S,1,"CCString",0,&tolua_err) ||
@@ -28063,6 +41011,7 @@ static int tolua_Cocos2d_CCString_create01(lua_State* tolua_S)
  )
   goto tolua_lerror;
  else
+#endif
  {
   unsigned char* pData = ((unsigned char*)  tolua_tostring(tolua_S,2,0));
   unsigned long nLen = ((unsigned long)  tolua_tonumber(tolua_S,3,0));
@@ -28074,8 +41023,11 @@ static int tolua_Cocos2d_CCString_create01(lua_State* tolua_S)
   }
  }
  return 1;
-tolua_lerror:
- return tolua_Cocos2d_CCString_create00(tolua_S);
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'createWithData'.",&tolua_err);
+ return 0;
+#endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
@@ -28480,6 +41432,75 @@ static int tolua_Cocos2d_CCTextFieldTTF_textFieldWithPlaceHolder01(lua_State* to
  return 1;
 tolua_lerror:
  return tolua_Cocos2d_CCTextFieldTTF_textFieldWithPlaceHolder00(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: releaseData of class  CCTexture2D */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTexture2D_releaseData00
+static int tolua_Cocos2d_CCTexture2D_releaseData00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCTexture2D",0,&tolua_err) ||
+     !tolua_isuserdata(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCTexture2D* self = (CCTexture2D*)  tolua_tousertype(tolua_S,1,0);
+  void* data = ((void*)  tolua_touserdata(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'releaseData'", NULL);
+#endif
+  {
+   self->releaseData(data);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'releaseData'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: keepData of class  CCTexture2D */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTexture2D_keepData00
+static int tolua_Cocos2d_CCTexture2D_keepData00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCTexture2D",0,&tolua_err) ||
+     !tolua_isuserdata(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCTexture2D* self = (CCTexture2D*)  tolua_tousertype(tolua_S,1,0);
+  void* data = ((void*)  tolua_touserdata(tolua_S,2,0));
+  unsigned int length = ((unsigned int)  tolua_tonumber(tolua_S,3,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'keepData'", NULL);
+#endif
+  {
+   void* tolua_ret = (void*)  self->keepData(data,length);
+   tolua_pushuserdata(tolua_S,(void*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'keepData'.",&tolua_err);
+ return 0;
+#endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
@@ -29081,6 +42102,38 @@ static int tolua_Cocos2d_CCTexture2D_generateMipmap00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: stringForFormat of class  CCTexture2D */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTexture2D_stringForFormat00
+static int tolua_Cocos2d_CCTexture2D_stringForFormat00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCTexture2D",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCTexture2D* self = (CCTexture2D*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'stringForFormat'", NULL);
+#endif
+  {
+   const char* tolua_ret = (const char*)  self->stringForFormat();
+   tolua_pushstring(tolua_S,(const char*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'stringForFormat'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: bitsPerPixelForFormat of class  CCTexture2D */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTexture2D_bitsPerPixelForFormat00
 static int tolua_Cocos2d_CCTexture2D_bitsPerPixelForFormat00(lua_State* tolua_S)
@@ -29100,7 +42153,7 @@ static int tolua_Cocos2d_CCTexture2D_bitsPerPixelForFormat00(lua_State* tolua_S)
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'bitsPerPixelForFormat'", NULL);
 #endif
   {
-   int tolua_ret = (int)  self->bitsPerPixelForFormat();
+   unsigned int tolua_ret = (unsigned int)  self->bitsPerPixelForFormat();
    tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
   }
  }
@@ -29110,6 +42163,35 @@ static int tolua_Cocos2d_CCTexture2D_bitsPerPixelForFormat00(lua_State* tolua_S)
  tolua_error(tolua_S,"#ferror in function 'bitsPerPixelForFormat'.",&tolua_err);
  return 0;
 #endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: bitsPerPixelForFormat of class  CCTexture2D */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTexture2D_bitsPerPixelForFormat01
+static int tolua_Cocos2d_CCTexture2D_bitsPerPixelForFormat01(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCTexture2D",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  CCTexture2D* self = (CCTexture2D*)  tolua_tousertype(tolua_S,1,0);
+  CCTexture2DPixelFormat format = ((CCTexture2DPixelFormat) (int)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'bitsPerPixelForFormat'", NULL);
+#endif
+  {
+   unsigned int tolua_ret = (unsigned int)  self->bitsPerPixelForFormat(format);
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+tolua_lerror:
+ return tolua_Cocos2d_CCTexture2D_bitsPerPixelForFormat00(tolua_S);
 }
 #endif //#ifndef TOLUA_DISABLE
 
@@ -29632,6 +42714,141 @@ tolua_lerror:
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: increaseTotalQuadsWith of class  CCTextureAtlas */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTextureAtlas_increaseTotalQuadsWith00
+static int tolua_Cocos2d_CCTextureAtlas_increaseTotalQuadsWith00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCTextureAtlas",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCTextureAtlas* self = (CCTextureAtlas*)  tolua_tousertype(tolua_S,1,0);
+  unsigned int amount = ((unsigned int)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'increaseTotalQuadsWith'", NULL);
+#endif
+  {
+   self->increaseTotalQuadsWith(amount);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'increaseTotalQuadsWith'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: moveQuadsFromIndex of class  CCTextureAtlas */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTextureAtlas_moveQuadsFromIndex00
+static int tolua_Cocos2d_CCTextureAtlas_moveQuadsFromIndex00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCTextureAtlas",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,4,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,5,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCTextureAtlas* self = (CCTextureAtlas*)  tolua_tousertype(tolua_S,1,0);
+  unsigned int oldIndex = ((unsigned int)  tolua_tonumber(tolua_S,2,0));
+  unsigned int amount = ((unsigned int)  tolua_tonumber(tolua_S,3,0));
+  unsigned int newIndex = ((unsigned int)  tolua_tonumber(tolua_S,4,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'moveQuadsFromIndex'", NULL);
+#endif
+  {
+   self->moveQuadsFromIndex(oldIndex,amount,newIndex);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'moveQuadsFromIndex'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: moveQuadsFromIndex of class  CCTextureAtlas */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTextureAtlas_moveQuadsFromIndex01
+static int tolua_Cocos2d_CCTextureAtlas_moveQuadsFromIndex01(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCTextureAtlas",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  CCTextureAtlas* self = (CCTextureAtlas*)  tolua_tousertype(tolua_S,1,0);
+  unsigned int index = ((unsigned int)  tolua_tonumber(tolua_S,2,0));
+  unsigned int newIndex = ((unsigned int)  tolua_tonumber(tolua_S,3,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'moveQuadsFromIndex'", NULL);
+#endif
+  {
+   self->moveQuadsFromIndex(index,newIndex);
+  }
+ }
+ return 0;
+tolua_lerror:
+ return tolua_Cocos2d_CCTextureAtlas_moveQuadsFromIndex00(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: fillWithEmptyQuadsFromIndex of class  CCTextureAtlas */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTextureAtlas_fillWithEmptyQuadsFromIndex00
+static int tolua_Cocos2d_CCTextureAtlas_fillWithEmptyQuadsFromIndex00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCTextureAtlas",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCTextureAtlas* self = (CCTextureAtlas*)  tolua_tousertype(tolua_S,1,0);
+  unsigned int index = ((unsigned int)  tolua_tonumber(tolua_S,2,0));
+  unsigned int amount = ((unsigned int)  tolua_tonumber(tolua_S,3,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'fillWithEmptyQuadsFromIndex'", NULL);
+#endif
+  {
+   self->fillWithEmptyQuadsFromIndex(index,amount);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'fillWithEmptyQuadsFromIndex'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: drawQuads of class  CCTextureAtlas */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTextureAtlas_drawQuads00
 static int tolua_Cocos2d_CCTextureAtlas_drawQuads00(lua_State* tolua_S)
@@ -29697,10 +42914,11 @@ static int tolua_Cocos2d_CCTextureAtlas_create00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: create of class  CCTextureAtlas */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTextureAtlas_create01
-static int tolua_Cocos2d_CCTextureAtlas_create01(lua_State* tolua_S)
+/* method: createWithTexture of class  CCTextureAtlas */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTextureAtlas_createWithTexture00
+static int tolua_Cocos2d_CCTextureAtlas_createWithTexture00(lua_State* tolua_S)
 {
+#ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
      !tolua_isusertable(tolua_S,1,"CCTextureAtlas",0,&tolua_err) ||
@@ -29710,6 +42928,7 @@ static int tolua_Cocos2d_CCTextureAtlas_create01(lua_State* tolua_S)
  )
   goto tolua_lerror;
  else
+#endif
  {
   CCTexture2D* texture = ((CCTexture2D*)  tolua_tousertype(tolua_S,2,0));
   unsigned int capacity = ((unsigned int)  tolua_tonumber(tolua_S,3,0));
@@ -29721,8 +42940,11 @@ static int tolua_Cocos2d_CCTextureAtlas_create01(lua_State* tolua_S)
   }
  }
  return 1;
-tolua_lerror:
- return tolua_Cocos2d_CCTextureAtlas_create00(tolua_S);
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'createWithTexture'.",&tolua_err);
+ return 0;
+#endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
@@ -29831,6 +43053,42 @@ static int tolua_Cocos2d_CCTextureCache_textureForKey00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'textureForKey'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: addPVRImage of class  CCTextureCache */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTextureCache_addPVRImage00
+static int tolua_Cocos2d_CCTextureCache_addPVRImage00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCTextureCache",0,&tolua_err) ||
+     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCTextureCache* self = (CCTextureCache*)  tolua_tousertype(tolua_S,1,0);
+  const char* filename = ((const char*)  tolua_tostring(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'addPVRImage'", NULL);
+#endif
+  {
+   CCTexture2D* tolua_ret = (CCTexture2D*)  self->addPVRImage(filename);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTexture2D");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'addPVRImage'.",&tolua_err);
  return 0;
 #endif
 }
@@ -30205,6 +43463,50 @@ static int tolua_Cocos2d_CCTileMapAtlas_releaseMap00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'releaseMap'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: tileAt of class  CCTileMapAtlas */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTileMapAtlas_tileAt00
+static int tolua_Cocos2d_CCTileMapAtlas_tileAt00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCTileMapAtlas",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const ccGridSize",0,&tolua_err)) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCTileMapAtlas* self = (CCTileMapAtlas*)  tolua_tousertype(tolua_S,1,0);
+  const ccGridSize* pos = ((const ccGridSize*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'tileAt'", NULL);
+#endif
+  {
+   ccColor3B tolua_ret = (ccColor3B)  self->tileAt(*pos);
+   {
+#ifdef __cplusplus
+    void* tolua_obj = Mtolua_new((ccColor3B)(tolua_ret));
+     tolua_pushusertype(tolua_S,tolua_obj,"ccColor3B");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#else
+    void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(ccColor3B));
+     tolua_pushusertype(tolua_S,tolua_obj,"ccColor3B");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#endif
+   }
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'tileAt'.",&tolua_err);
  return 0;
 #endif
 }
@@ -30738,7 +44040,7 @@ static int tolua_Cocos2d_CCTMXLayer_tileGIDAt00(lua_State* tolua_S)
  tolua_Error tolua_err;
  if (
      !tolua_isusertype(tolua_S,1,"CCTMXLayer",0,&tolua_err) ||
-     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"CCPoint",0,&tolua_err)) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const CCPoint",0,&tolua_err)) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
   goto tolua_lerror;
@@ -30746,12 +44048,12 @@ static int tolua_Cocos2d_CCTMXLayer_tileGIDAt00(lua_State* tolua_S)
 #endif
  {
   CCTMXLayer* self = (CCTMXLayer*)  tolua_tousertype(tolua_S,1,0);
-  CCPoint tileCoordinate = *((CCPoint*)  tolua_tousertype(tolua_S,2,0));
+  const CCPoint* tileCoordinate = ((const CCPoint*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'tileGIDAt'", NULL);
 #endif
   {
-   unsigned int tolua_ret = (unsigned int)  self->tileGIDAt(tileCoordinate);
+   unsigned int tolua_ret = (unsigned int)  self->tileGIDAt(*tileCoordinate);
    tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
   }
  }
@@ -30764,37 +44066,6 @@ static int tolua_Cocos2d_CCTMXLayer_tileGIDAt00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: tileGIDAt of class  CCTMXLayer */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTMXLayer_tileGIDAt01
-static int tolua_Cocos2d_CCTMXLayer_tileGIDAt01(lua_State* tolua_S)
-{
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"CCTMXLayer",0,&tolua_err) ||
-     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"CCPoint",0,&tolua_err)) ||
-     !tolua_isusertype(tolua_S,3,"ccTMXTileFlags",0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,4,&tolua_err)
- )
-  goto tolua_lerror;
- else
- {
-  CCTMXLayer* self = (CCTMXLayer*)  tolua_tousertype(tolua_S,1,0);
-  CCPoint tileCoordinate = *((CCPoint*)  tolua_tousertype(tolua_S,2,0));
-  ccTMXTileFlags* flags = ((ccTMXTileFlags*)  tolua_tousertype(tolua_S,3,0));
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'tileGIDAt'", NULL);
-#endif
-  {
-   unsigned int tolua_ret = (unsigned int)  self->tileGIDAt(tileCoordinate,flags);
-   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
-  }
- }
- return 1;
-tolua_lerror:
- return tolua_Cocos2d_CCTMXLayer_tileGIDAt00(tolua_S);
-}
-#endif //#ifndef TOLUA_DISABLE
-
 /* method: setTileGID of class  CCTMXLayer */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTMXLayer_setTileGID00
 static int tolua_Cocos2d_CCTMXLayer_setTileGID00(lua_State* tolua_S)
@@ -30804,7 +44075,7 @@ static int tolua_Cocos2d_CCTMXLayer_setTileGID00(lua_State* tolua_S)
  if (
      !tolua_isusertype(tolua_S,1,"CCTMXLayer",0,&tolua_err) ||
      !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
-     (tolua_isvaluenil(tolua_S,3,&tolua_err) || !tolua_isusertype(tolua_S,3,"CCPoint",0,&tolua_err)) ||
+     (tolua_isvaluenil(tolua_S,3,&tolua_err) || !tolua_isusertype(tolua_S,3,"const CCPoint",0,&tolua_err)) ||
      !tolua_isnoobj(tolua_S,4,&tolua_err)
  )
   goto tolua_lerror;
@@ -30813,12 +44084,12 @@ static int tolua_Cocos2d_CCTMXLayer_setTileGID00(lua_State* tolua_S)
  {
   CCTMXLayer* self = (CCTMXLayer*)  tolua_tousertype(tolua_S,1,0);
   unsigned int gid = ((unsigned int)  tolua_tonumber(tolua_S,2,0));
-  CCPoint tileCoordinate = *((CCPoint*)  tolua_tousertype(tolua_S,3,0));
+  const CCPoint* tileCoordinate = ((const CCPoint*)  tolua_tousertype(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setTileGID'", NULL);
 #endif
   {
-   self->setTileGID(gid,tileCoordinate);
+   self->setTileGID(gid,*tileCoordinate);
   }
  }
  return 0;
@@ -30838,8 +44109,8 @@ static int tolua_Cocos2d_CCTMXLayer_setTileGID01(lua_State* tolua_S)
  if (
      !tolua_isusertype(tolua_S,1,"CCTMXLayer",0,&tolua_err) ||
      !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
-     (tolua_isvaluenil(tolua_S,3,&tolua_err) || !tolua_isusertype(tolua_S,3,"CCPoint",0,&tolua_err)) ||
-     (tolua_isvaluenil(tolua_S,4,&tolua_err) || !tolua_isusertype(tolua_S,4,"ccTMXTileFlags",0,&tolua_err)) ||
+     (tolua_isvaluenil(tolua_S,3,&tolua_err) || !tolua_isusertype(tolua_S,3,"const CCPoint",0,&tolua_err)) ||
+     !tolua_isnumber(tolua_S,4,0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,5,&tolua_err)
  )
   goto tolua_lerror;
@@ -30847,13 +44118,13 @@ static int tolua_Cocos2d_CCTMXLayer_setTileGID01(lua_State* tolua_S)
  {
   CCTMXLayer* self = (CCTMXLayer*)  tolua_tousertype(tolua_S,1,0);
   unsigned int gid = ((unsigned int)  tolua_tonumber(tolua_S,2,0));
-  CCPoint tileCoordinate = *((CCPoint*)  tolua_tousertype(tolua_S,3,0));
-  ccTMXTileFlags flags = *((ccTMXTileFlags*)  tolua_tousertype(tolua_S,4,0));
+  const CCPoint* tileCoordinate = ((const CCPoint*)  tolua_tousertype(tolua_S,3,0));
+  ccTMXTileFlags flags = ((ccTMXTileFlags) (int)  tolua_tonumber(tolua_S,4,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setTileGID'", NULL);
 #endif
   {
-   self->setTileGID(gid,tileCoordinate,flags);
+   self->setTileGID(gid,*tileCoordinate,flags);
   }
  }
  return 0;
@@ -31973,6 +45244,40 @@ static int tolua_Cocos2d_CCTMXTiledMap_create00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: createWithXML of class  CCTMXTiledMap */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTMXTiledMap_createWithXML00
+static int tolua_Cocos2d_CCTMXTiledMap_createWithXML00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"CCTMXTiledMap",0,&tolua_err) ||
+     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isstring(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const char* tmxString = ((const char*)  tolua_tostring(tolua_S,2,0));
+  const char* resourcePath = ((const char*)  tolua_tostring(tolua_S,3,0));
+  {
+   CCTMXTiledMap* tolua_ret = (CCTMXTiledMap*)  CCTMXTiledMap::createWithXML(tmxString,resourcePath);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTMXTiledMap");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'createWithXML'.",&tolua_err);
  return 0;
 #endif
 }
@@ -33173,6 +46478,40 @@ static int tolua_Cocos2d_CCTMXMapInfo_parseXMLFile00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: parseXMLString of class  CCTMXMapInfo */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTMXMapInfo_parseXMLString00
+static int tolua_Cocos2d_CCTMXMapInfo_parseXMLString00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCTMXMapInfo",0,&tolua_err) ||
+     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCTMXMapInfo* self = (CCTMXMapInfo*)  tolua_tousertype(tolua_S,1,0);
+  const char* xmlString = ((const char*)  tolua_tostring(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'parseXMLString'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->parseXMLString(xmlString);
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'parseXMLString'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: formatWithTMXFile of class  CCTMXMapInfo */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTMXMapInfo_formatWithTMXFile00
 static int tolua_Cocos2d_CCTMXMapInfo_formatWithTMXFile00(lua_State* tolua_S)
@@ -33205,68 +46544,60 @@ static int tolua_Cocos2d_CCTMXMapInfo_formatWithTMXFile00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: locationInView of class  CCTouch */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTouch_locationInView00
-static int tolua_Cocos2d_CCTouch_locationInView00(lua_State* tolua_S)
+/* method: formatWithXML of class  CCTMXMapInfo */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTMXMapInfo_formatWithXML00
+static int tolua_Cocos2d_CCTMXMapInfo_formatWithXML00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"CCTouch",0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,2,&tolua_err)
+     !tolua_isusertable(tolua_S,1,"CCTMXMapInfo",0,&tolua_err) ||
+     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isstring(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
  )
   goto tolua_lerror;
  else
 #endif
  {
-  CCTouch* self = (CCTouch*)  tolua_tousertype(tolua_S,1,0);
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'locationInView'", NULL);
-#endif
+  const char* tmxString = ((const char*)  tolua_tostring(tolua_S,2,0));
+  const char* resourcePath = ((const char*)  tolua_tostring(tolua_S,3,0));
   {
-   CCPoint tolua_ret = (CCPoint)  self->locationInView();
-   {
-#ifdef __cplusplus
-    void* tolua_obj = Mtolua_new((CCPoint)(tolua_ret));
-     tolua_pushusertype(tolua_S,tolua_obj,"CCPoint");
-    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
-#else
-    void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(CCPoint));
-     tolua_pushusertype(tolua_S,tolua_obj,"CCPoint");
-    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
-#endif
-   }
+   CCTMXMapInfo* tolua_ret = (CCTMXMapInfo*)  CCTMXMapInfo::formatWithXML(tmxString,resourcePath);
+    int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTMXMapInfo");
   }
  }
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'locationInView'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'formatWithXML'.",&tolua_err);
  return 0;
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: previousLocationInView of class  CCTouch */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTouch_previousLocationInView00
-static int tolua_Cocos2d_CCTouch_previousLocationInView00(lua_State* tolua_S)
+/* method: getLocation of class  CCTouch */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTouch_getLocation00
+static int tolua_Cocos2d_CCTouch_getLocation00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"CCTouch",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"const CCTouch",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
  else
 #endif
  {
-  CCTouch* self = (CCTouch*)  tolua_tousertype(tolua_S,1,0);
+  const CCTouch* self = (const CCTouch*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'previousLocationInView'", NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getLocation'", NULL);
 #endif
   {
-   CCPoint tolua_ret = (CCPoint)  self->previousLocationInView();
+   CCPoint tolua_ret = (CCPoint)  self->getLocation();
    {
 #ifdef __cplusplus
     void* tolua_obj = Mtolua_new((CCPoint)(tolua_ret));
@@ -33283,7 +46614,212 @@ static int tolua_Cocos2d_CCTouch_previousLocationInView00(lua_State* tolua_S)
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'previousLocationInView'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'getLocation'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getPreviousLocation of class  CCTouch */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTouch_getPreviousLocation00
+static int tolua_Cocos2d_CCTouch_getPreviousLocation00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const CCTouch",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const CCTouch* self = (const CCTouch*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getPreviousLocation'", NULL);
+#endif
+  {
+   CCPoint tolua_ret = (CCPoint)  self->getPreviousLocation();
+   {
+#ifdef __cplusplus
+    void* tolua_obj = Mtolua_new((CCPoint)(tolua_ret));
+     tolua_pushusertype(tolua_S,tolua_obj,"CCPoint");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#else
+    void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(CCPoint));
+     tolua_pushusertype(tolua_S,tolua_obj,"CCPoint");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#endif
+   }
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getPreviousLocation'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getDelta of class  CCTouch */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTouch_getDelta00
+static int tolua_Cocos2d_CCTouch_getDelta00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const CCTouch",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const CCTouch* self = (const CCTouch*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getDelta'", NULL);
+#endif
+  {
+   CCPoint tolua_ret = (CCPoint)  self->getDelta();
+   {
+#ifdef __cplusplus
+    void* tolua_obj = Mtolua_new((CCPoint)(tolua_ret));
+     tolua_pushusertype(tolua_S,tolua_obj,"CCPoint");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#else
+    void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(CCPoint));
+     tolua_pushusertype(tolua_S,tolua_obj,"CCPoint");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#endif
+   }
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getDelta'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getLocationInView of class  CCTouch */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTouch_getLocationInView00
+static int tolua_Cocos2d_CCTouch_getLocationInView00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const CCTouch",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const CCTouch* self = (const CCTouch*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getLocationInView'", NULL);
+#endif
+  {
+   CCPoint tolua_ret = (CCPoint)  self->getLocationInView();
+   {
+#ifdef __cplusplus
+    void* tolua_obj = Mtolua_new((CCPoint)(tolua_ret));
+     tolua_pushusertype(tolua_S,tolua_obj,"CCPoint");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#else
+    void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(CCPoint));
+     tolua_pushusertype(tolua_S,tolua_obj,"CCPoint");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#endif
+   }
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getLocationInView'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getPreviousLocationInView of class  CCTouch */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTouch_getPreviousLocationInView00
+static int tolua_Cocos2d_CCTouch_getPreviousLocationInView00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const CCTouch",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const CCTouch* self = (const CCTouch*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getPreviousLocationInView'", NULL);
+#endif
+  {
+   CCPoint tolua_ret = (CCPoint)  self->getPreviousLocationInView();
+   {
+#ifdef __cplusplus
+    void* tolua_obj = Mtolua_new((CCPoint)(tolua_ret));
+     tolua_pushusertype(tolua_S,tolua_obj,"CCPoint");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#else
+    void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(CCPoint));
+     tolua_pushusertype(tolua_S,tolua_obj,"CCPoint");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#endif
+   }
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getPreviousLocationInView'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setTouchInfo of class  CCTouch */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTouch_setTouchInfo00
+static int tolua_Cocos2d_CCTouch_setTouchInfo00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCTouch",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,4,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,5,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCTouch* self = (CCTouch*)  tolua_tousertype(tolua_S,1,0);
+  int id = ((int)  tolua_tonumber(tolua_S,2,0));
+  float x = ((float)  tolua_tonumber(tolua_S,3,0));
+  float y = ((float)  tolua_tonumber(tolua_S,4,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setTouchInfo'", NULL);
+#endif
+  {
+   self->setTouchInfo(id,x,y);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setTouchInfo'.",&tolua_err);
  return 0;
 #endif
 }
@@ -34780,6 +48316,51 @@ static int tolua_Cocos2d_ccc4FFromccc3B00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'ccc4FFromccc3B'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* function: ccc4f */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_ccc4f00
+static int tolua_Cocos2d_ccc4f00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isnumber(tolua_S,1,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,4,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,5,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const float r = ((const float)  tolua_tonumber(tolua_S,1,0));
+  const float g = ((const float)  tolua_tonumber(tolua_S,2,0));
+  const float b = ((const float)  tolua_tonumber(tolua_S,3,0));
+  const float a = ((const float)  tolua_tonumber(tolua_S,4,0));
+  {
+   ccColor4F tolua_ret = (ccColor4F)  ccc4f(r,g,b,a);
+   {
+#ifdef __cplusplus
+    void* tolua_obj = Mtolua_new((ccColor4F)(tolua_ret));
+     tolua_pushusertype(tolua_S,tolua_obj,"ccColor4F");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#else
+    void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(ccColor4F));
+     tolua_pushusertype(tolua_S,tolua_obj,"ccColor4F");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#endif
+   }
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'ccc4f'.",&tolua_err);
  return 0;
 #endif
 }
@@ -36311,6 +49892,216 @@ static int tolua_set_ccBlendFunc_dst(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* get function: bl of class  ccT2F_Quad */
+#ifndef TOLUA_DISABLE_tolua_get_ccT2F_Quad_bl
+static int tolua_get_ccT2F_Quad_bl(lua_State* tolua_S)
+{
+  ccT2F_Quad* self = (ccT2F_Quad*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'bl'",NULL);
+#endif
+   tolua_pushusertype(tolua_S,(void*)&self->bl,"ccTex2F");
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: bl of class  ccT2F_Quad */
+#ifndef TOLUA_DISABLE_tolua_set_ccT2F_Quad_bl
+static int tolua_set_ccT2F_Quad_bl(lua_State* tolua_S)
+{
+  ccT2F_Quad* self = (ccT2F_Quad*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'bl'",NULL);
+  if ((tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"ccTex2F",0,&tolua_err)))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->bl = *((ccTex2F*)  tolua_tousertype(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: br of class  ccT2F_Quad */
+#ifndef TOLUA_DISABLE_tolua_get_ccT2F_Quad_br
+static int tolua_get_ccT2F_Quad_br(lua_State* tolua_S)
+{
+  ccT2F_Quad* self = (ccT2F_Quad*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'br'",NULL);
+#endif
+   tolua_pushusertype(tolua_S,(void*)&self->br,"ccTex2F");
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: br of class  ccT2F_Quad */
+#ifndef TOLUA_DISABLE_tolua_set_ccT2F_Quad_br
+static int tolua_set_ccT2F_Quad_br(lua_State* tolua_S)
+{
+  ccT2F_Quad* self = (ccT2F_Quad*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'br'",NULL);
+  if ((tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"ccTex2F",0,&tolua_err)))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->br = *((ccTex2F*)  tolua_tousertype(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: tl of class  ccT2F_Quad */
+#ifndef TOLUA_DISABLE_tolua_get_ccT2F_Quad_tl
+static int tolua_get_ccT2F_Quad_tl(lua_State* tolua_S)
+{
+  ccT2F_Quad* self = (ccT2F_Quad*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'tl'",NULL);
+#endif
+   tolua_pushusertype(tolua_S,(void*)&self->tl,"ccTex2F");
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: tl of class  ccT2F_Quad */
+#ifndef TOLUA_DISABLE_tolua_set_ccT2F_Quad_tl
+static int tolua_set_ccT2F_Quad_tl(lua_State* tolua_S)
+{
+  ccT2F_Quad* self = (ccT2F_Quad*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'tl'",NULL);
+  if ((tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"ccTex2F",0,&tolua_err)))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->tl = *((ccTex2F*)  tolua_tousertype(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: tr of class  ccT2F_Quad */
+#ifndef TOLUA_DISABLE_tolua_get_ccT2F_Quad_tr
+static int tolua_get_ccT2F_Quad_tr(lua_State* tolua_S)
+{
+  ccT2F_Quad* self = (ccT2F_Quad*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'tr'",NULL);
+#endif
+   tolua_pushusertype(tolua_S,(void*)&self->tr,"ccTex2F");
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: tr of class  ccT2F_Quad */
+#ifndef TOLUA_DISABLE_tolua_set_ccT2F_Quad_tr
+static int tolua_set_ccT2F_Quad_tr(lua_State* tolua_S)
+{
+  ccT2F_Quad* self = (ccT2F_Quad*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'tr'",NULL);
+  if ((tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"ccTex2F",0,&tolua_err)))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->tr = *((ccTex2F*)  tolua_tousertype(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: texCoords of class  ccAnimationFrameData */
+#ifndef TOLUA_DISABLE_tolua_get_ccAnimationFrameData_texCoords
+static int tolua_get_ccAnimationFrameData_texCoords(lua_State* tolua_S)
+{
+  ccAnimationFrameData* self = (ccAnimationFrameData*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'texCoords'",NULL);
+#endif
+   tolua_pushusertype(tolua_S,(void*)&self->texCoords,"ccT2F_Quad");
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: texCoords of class  ccAnimationFrameData */
+#ifndef TOLUA_DISABLE_tolua_set_ccAnimationFrameData_texCoords
+static int tolua_set_ccAnimationFrameData_texCoords(lua_State* tolua_S)
+{
+  ccAnimationFrameData* self = (ccAnimationFrameData*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'texCoords'",NULL);
+  if ((tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"ccT2F_Quad",0,&tolua_err)))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->texCoords = *((ccT2F_Quad*)  tolua_tousertype(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: delay of class  ccAnimationFrameData */
+#ifndef TOLUA_DISABLE_tolua_get_ccAnimationFrameData_delay
+static int tolua_get_ccAnimationFrameData_delay(lua_State* tolua_S)
+{
+  ccAnimationFrameData* self = (ccAnimationFrameData*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'delay'",NULL);
+#endif
+  tolua_pushnumber(tolua_S,(lua_Number)self->delay);
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: delay of class  ccAnimationFrameData */
+#ifndef TOLUA_DISABLE_tolua_set_ccAnimationFrameData_delay
+static int tolua_set_ccAnimationFrameData_delay(lua_State* tolua_S)
+{
+  ccAnimationFrameData* self = (ccAnimationFrameData*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'delay'",NULL);
+  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->delay = ((float)  tolua_tonumber(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: size of class  ccAnimationFrameData */
+#ifndef TOLUA_DISABLE_tolua_get_ccAnimationFrameData_size
+static int tolua_get_ccAnimationFrameData_size(lua_State* tolua_S)
+{
+  ccAnimationFrameData* self = (ccAnimationFrameData*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'size'",NULL);
+#endif
+   tolua_pushusertype(tolua_S,(void*)&self->size,"CCSize");
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: size of class  ccAnimationFrameData */
+#ifndef TOLUA_DISABLE_tolua_set_ccAnimationFrameData_size
+static int tolua_set_ccAnimationFrameData_size(lua_State* tolua_S)
+{
+  ccAnimationFrameData* self = (ccAnimationFrameData*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'size'",NULL);
+  if ((tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"CCSize",0,&tolua_err)))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->size = *((CCSize*)  tolua_tousertype(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: getBoolForKey of class  CCUserDefault */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCUserDefault_getBoolForKey00
 static int tolua_Cocos2d_CCUserDefault_getBoolForKey00(lua_State* tolua_S)
@@ -36651,6 +50442,37 @@ static int tolua_Cocos2d_CCUserDefault_setStringForKey00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'setStringForKey'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: flush of class  CCUserDefault */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCUserDefault_flush00
+static int tolua_Cocos2d_CCUserDefault_flush00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCUserDefault",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCUserDefault* self = (CCUserDefault*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'flush'", NULL);
+#endif
+  {
+   self->flush();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'flush'.",&tolua_err);
  return 0;
 #endif
 }
@@ -37300,75 +51122,117 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
   tolua_constant(tolua_S,"kCCActionTagInvalid",kCCActionTagInvalid);
   tolua_cclass(tolua_S,"CCAction","CCAction","CCObject",NULL);
   tolua_beginmodule(tolua_S,"CCAction");
+   tolua_function(tolua_S,"isDone",tolua_Cocos2d_CCAction_isDone00);
+   tolua_function(tolua_S,"getTarget",tolua_Cocos2d_CCAction_getTarget00);
+   tolua_function(tolua_S,"getOriginalTarget",tolua_Cocos2d_CCAction_getOriginalTarget00);
+   tolua_function(tolua_S,"getTag",tolua_Cocos2d_CCAction_getTag00);
+   tolua_function(tolua_S,"setTag",tolua_Cocos2d_CCAction_setTag00);
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCAction_copyWithZone00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCActionInterval","CCActionInterval","CCAction",NULL);
   tolua_beginmodule(tolua_S,"CCActionInterval");
+   tolua_function(tolua_S,"getElapsed",tolua_Cocos2d_CCActionInterval_getElapsed00);
+   tolua_function(tolua_S,"isDone",tolua_Cocos2d_CCActionInterval_isDone00);
+   tolua_function(tolua_S,"setAmplitudeRate",tolua_Cocos2d_CCActionInterval_setAmplitudeRate00);
+   tolua_function(tolua_S,"getAmplitudeRate",tolua_Cocos2d_CCActionInterval_getAmplitudeRate00);
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCActionInterval_copyWithZone00);
+   tolua_function(tolua_S,"reverse",tolua_Cocos2d_CCActionInterval_reverse00);
+   tolua_function(tolua_S,"create",tolua_Cocos2d_CCActionInterval_create00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCFiniteTimeAction","CCFiniteTimeAction","CCActionInterval",NULL);
   tolua_beginmodule(tolua_S,"CCFiniteTimeAction");
+   tolua_function(tolua_S,"getDuration",tolua_Cocos2d_CCFiniteTimeAction_getDuration00);
+   tolua_function(tolua_S,"setDuration",tolua_Cocos2d_CCFiniteTimeAction_setDuration00);
+   tolua_function(tolua_S,"reverse",tolua_Cocos2d_CCFiniteTimeAction_reverse00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCSpeed","CCSpeed","CCAction",NULL);
   tolua_beginmodule(tolua_S,"CCSpeed");
    tolua_function(tolua_S,"getSpeed",tolua_Cocos2d_CCSpeed_getSpeed00);
    tolua_function(tolua_S,"setSpeed",tolua_Cocos2d_CCSpeed_setSpeed00);
    tolua_function(tolua_S,"reverse",tolua_Cocos2d_CCSpeed_reverse00);
+   tolua_function(tolua_S,"isDone",tolua_Cocos2d_CCSpeed_isDone00);
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCSpeed_copyWithZone00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCSpeed_create00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCFollow","CCFollow","CCAction",NULL);
   tolua_beginmodule(tolua_S,"CCFollow");
    tolua_function(tolua_S,"isBoundarySet",tolua_Cocos2d_CCFollow_isBoundarySet00);
    tolua_function(tolua_S,"setBoudarySet",tolua_Cocos2d_CCFollow_setBoudarySet00);
+   tolua_function(tolua_S,"isDone",tolua_Cocos2d_CCFollow_isDone00);
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCFollow_copyWithZone00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCFollow_create00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCFollow_create01);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCSequence","CCSequence","CCActionInterval",NULL);
   tolua_beginmodule(tolua_S,"CCSequence");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCSequence_copyWithZone00);
+   tolua_function(tolua_S,"reverse",tolua_Cocos2d_CCSequence_reverse00);
+   tolua_function(tolua_S,"createWithTwoActions",tolua_Cocos2d_CCSequence_createWithTwoActions00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCSequence_create00);
-   tolua_function(tolua_S,"create",tolua_Cocos2d_CCSequence_create01);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCRepeat","CCRepeat","CCActionInterval",NULL);
   tolua_beginmodule(tolua_S,"CCRepeat");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCRepeat_copyWithZone00);
+   tolua_function(tolua_S,"isDone",tolua_Cocos2d_CCRepeat_isDone00);
+   tolua_function(tolua_S,"reverse",tolua_Cocos2d_CCRepeat_reverse00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCRepeat_create00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCRepeatForever","CCRepeatForever","CCActionInterval",NULL);
   tolua_beginmodule(tolua_S,"CCRepeatForever");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCRepeatForever_copyWithZone00);
+   tolua_function(tolua_S,"isDone",tolua_Cocos2d_CCRepeatForever_isDone00);
+   tolua_function(tolua_S,"reverse",tolua_Cocos2d_CCRepeatForever_reverse00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCRepeatForever_create00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCSpawn","CCSpawn","CCActionInterval",NULL);
   tolua_beginmodule(tolua_S,"CCSpawn");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCSpawn_copyWithZone00);
+   tolua_function(tolua_S,"reverse",tolua_Cocos2d_CCSpawn_reverse00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCSpawn_create00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCSpawn_create01);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCRotateTo","CCRotateTo","CCActionInterval",NULL);
   tolua_beginmodule(tolua_S,"CCRotateTo");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCRotateTo_copyWithZone00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCRotateTo_create00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCRotateBy","CCRotateBy","CCActionInterval",NULL);
   tolua_beginmodule(tolua_S,"CCRotateBy");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCRotateBy_copyWithZone00);
+   tolua_function(tolua_S,"reverse",tolua_Cocos2d_CCRotateBy_reverse00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCRotateBy_create00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCMoveTo","CCMoveTo","CCActionInterval",NULL);
   tolua_beginmodule(tolua_S,"CCMoveTo");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCMoveTo_copyWithZone00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCMoveTo_create00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCMoveBy","CCMoveBy","CCActionInterval",NULL);
   tolua_beginmodule(tolua_S,"CCMoveBy");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCMoveBy_copyWithZone00);
+   tolua_function(tolua_S,"reverse",tolua_Cocos2d_CCMoveBy_reverse00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCMoveBy_create00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCSkewTo","CCSkewTo","CCActionInterval",NULL);
   tolua_beginmodule(tolua_S,"CCSkewTo");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCSkewTo_copyWithZone00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCSkewTo_create00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCSkewBy","CCSkewBy","CCActionInterval",NULL);
   tolua_beginmodule(tolua_S,"CCSkewBy");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCSkewBy_copyWithZone00);
+   tolua_function(tolua_S,"reverse",tolua_Cocos2d_CCSkewBy_reverse00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCSkewBy_create00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCJumpBy","CCJumpBy","CCActionInterval",NULL);
   tolua_beginmodule(tolua_S,"CCJumpBy");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCJumpBy_copyWithZone00);
+   tolua_function(tolua_S,"reverse",tolua_Cocos2d_CCJumpBy_reverse00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCJumpBy_create00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCJumpTo","CCJumpTo","CCActionInterval",NULL);
   tolua_beginmodule(tolua_S,"CCJumpTo");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCJumpTo_copyWithZone00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCJumpTo_create00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"ccBezierConfig","ccBezierConfig","",NULL);
@@ -37379,214 +51243,353 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCBezierBy","CCBezierBy","CCActionInterval",NULL);
   tolua_beginmodule(tolua_S,"CCBezierBy");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCBezierBy_copyWithZone00);
+   tolua_function(tolua_S,"reverse",tolua_Cocos2d_CCBezierBy_reverse00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCBezierBy_create00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCBezierTo","CCBezierTo","CCActionInterval",NULL);
   tolua_beginmodule(tolua_S,"CCBezierTo");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCBezierTo_copyWithZone00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCBezierTo_create00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCScaleTo","CCScaleTo","CCActionInterval",NULL);
   tolua_beginmodule(tolua_S,"CCScaleTo");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCScaleTo_copyWithZone00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCScaleTo_create00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCScaleTo_create01);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCScaleBy","CCScaleBy","CCActionInterval",NULL);
   tolua_beginmodule(tolua_S,"CCScaleBy");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCScaleBy_copyWithZone00);
+   tolua_function(tolua_S,"reverse",tolua_Cocos2d_CCScaleBy_reverse00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCScaleBy_create00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCScaleBy_create01);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCBlink","CCBlink","CCActionInterval",NULL);
   tolua_beginmodule(tolua_S,"CCBlink");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCBlink_copyWithZone00);
+   tolua_function(tolua_S,"reverse",tolua_Cocos2d_CCBlink_reverse00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCBlink_create00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCFadeIn","CCFadeIn","CCActionInterval",NULL);
   tolua_beginmodule(tolua_S,"CCFadeIn");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCFadeIn_copyWithZone00);
+   tolua_function(tolua_S,"reverse",tolua_Cocos2d_CCFadeIn_reverse00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCFadeIn_create00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCFadeOut","CCFadeOut","CCActionInterval",NULL);
   tolua_beginmodule(tolua_S,"CCFadeOut");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCFadeOut_copyWithZone00);
+   tolua_function(tolua_S,"reverse",tolua_Cocos2d_CCFadeOut_reverse00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCFadeOut_create00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCFadeTo","CCFadeTo","CCActionInterval",NULL);
   tolua_beginmodule(tolua_S,"CCFadeTo");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCFadeTo_copyWithZone00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCFadeTo_create00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCTintTo","CCTintTo","CCActionInterval",NULL);
   tolua_beginmodule(tolua_S,"CCTintTo");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCTintTo_copyWithZone00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCTintTo_create00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCTintBy","CCTintBy","CCActionInterval",NULL);
   tolua_beginmodule(tolua_S,"CCTintBy");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCTintBy_copyWithZone00);
+   tolua_function(tolua_S,"reverse",tolua_Cocos2d_CCTintBy_reverse00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCTintBy_create00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCDelayTime","CCDelayTime","CCActionInterval",NULL);
   tolua_beginmodule(tolua_S,"CCDelayTime");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCDelayTime_copyWithZone00);
+   tolua_function(tolua_S,"reverse",tolua_Cocos2d_CCDelayTime_reverse00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCDelayTime_create00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCReverseTime","CCReverseTime","CCActionInterval",NULL);
   tolua_beginmodule(tolua_S,"CCReverseTime");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCReverseTime_copyWithZone00);
+   tolua_function(tolua_S,"reverse",tolua_Cocos2d_CCReverseTime_reverse00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCReverseTime_create00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCAnimate","CCAnimate","CCActionInterval",NULL);
   tolua_beginmodule(tolua_S,"CCAnimate");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCAnimate_copyWithZone00);
+   tolua_function(tolua_S,"reverse",tolua_Cocos2d_CCAnimate_reverse00);
    tolua_function(tolua_S,"getAnimation",tolua_Cocos2d_CCAnimate_getAnimation00);
    tolua_function(tolua_S,"setAnimation",tolua_Cocos2d_CCAnimate_setAnimation00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCAnimate_create00);
   tolua_endmodule(tolua_S);
-  tolua_cclass(tolua_S,"CCProgressTo","CCProgressTo","CCAction",NULL);
-  tolua_beginmodule(tolua_S,"CCProgressTo");
-   tolua_function(tolua_S,"create",tolua_Cocos2d_CCProgressTo_create00);
-   tolua_function(tolua_S,"create",tolua_Cocos2d_CCProgressTo_create01);
+  tolua_cclass(tolua_S,"CCTargetedAction","CCTargetedAction","CCActionInterval",NULL);
+  tolua_beginmodule(tolua_S,"CCTargetedAction");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCTargetedAction_copyWithZone00);
+   tolua_function(tolua_S,"getForcedTarget",tolua_Cocos2d_CCTargetedAction_getForcedTarget00);
+   tolua_function(tolua_S,"setForcedTarget",tolua_Cocos2d_CCTargetedAction_setForcedTarget00);
+   tolua_function(tolua_S,"create",tolua_Cocos2d_CCTargetedAction_create00);
   tolua_endmodule(tolua_S);
-  tolua_cclass(tolua_S,"CCProgressFromTo","CCProgressFromTo","CCAction",NULL);
-  tolua_beginmodule(tolua_S,"CCProgressFromTo");
-   tolua_function(tolua_S,"create",tolua_Cocos2d_CCProgressFromTo_create00);
-   tolua_function(tolua_S,"create",tolua_Cocos2d_CCProgressFromTo_create01);
+  tolua_cclass(tolua_S,"CCActionInstant","CCActionInstant","CCFiniteTimeAction",NULL);
+  tolua_beginmodule(tolua_S,"CCActionInstant");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCActionInstant_copyWithZone00);
+   tolua_function(tolua_S,"reverse",tolua_Cocos2d_CCActionInstant_reverse00);
+   tolua_function(tolua_S,"isDone",tolua_Cocos2d_CCActionInstant_isDone00);
   tolua_endmodule(tolua_S);
-  tolua_cclass(tolua_S,"CCShow","CCShow","CCAction",NULL);
+  tolua_cclass(tolua_S,"CCShow","CCShow","CCActionInstant",NULL);
   tolua_beginmodule(tolua_S,"CCShow");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCShow_copyWithZone00);
+   tolua_function(tolua_S,"reverse",tolua_Cocos2d_CCShow_reverse00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCShow_create00);
   tolua_endmodule(tolua_S);
-  tolua_cclass(tolua_S,"CCHide","CCHide","CCAction",NULL);
+  tolua_cclass(tolua_S,"CCHide","CCHide","CCActionInstant",NULL);
   tolua_beginmodule(tolua_S,"CCHide");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCHide_copyWithZone00);
+   tolua_function(tolua_S,"reverse",tolua_Cocos2d_CCHide_reverse00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCHide_create00);
   tolua_endmodule(tolua_S);
-  tolua_cclass(tolua_S,"CCToggleVisibility","CCToggleVisibility","CCAction",NULL);
+  tolua_cclass(tolua_S,"CCToggleVisibility","CCToggleVisibility","CCActionInstant",NULL);
   tolua_beginmodule(tolua_S,"CCToggleVisibility");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCToggleVisibility_copyWithZone00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCToggleVisibility_create00);
   tolua_endmodule(tolua_S);
-  tolua_cclass(tolua_S,"CCFlipX","CCFlipX","CCAction",NULL);
+  tolua_cclass(tolua_S,"CCFlipX","CCFlipX","CCActionInstant",NULL);
   tolua_beginmodule(tolua_S,"CCFlipX");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCFlipX_copyWithZone00);
+   tolua_function(tolua_S,"reverse",tolua_Cocos2d_CCFlipX_reverse00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCFlipX_create00);
   tolua_endmodule(tolua_S);
-  tolua_cclass(tolua_S,"CCFlipY","CCFlipY","CCAction",NULL);
+  tolua_cclass(tolua_S,"CCFlipY","CCFlipY","CCActionInstant",NULL);
   tolua_beginmodule(tolua_S,"CCFlipY");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCFlipY_copyWithZone00);
+   tolua_function(tolua_S,"reverse",tolua_Cocos2d_CCFlipY_reverse00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCFlipY_create00);
   tolua_endmodule(tolua_S);
-  tolua_cclass(tolua_S,"CCPlace","CCPlace","CCAction",NULL);
+  tolua_cclass(tolua_S,"CCPlace","CCPlace","CCActionInstant",NULL);
   tolua_beginmodule(tolua_S,"CCPlace");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCPlace_copyWithZone00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCPlace_create00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCActionCamera","CCActionCamera","CCActionInterval",NULL);
   tolua_beginmodule(tolua_S,"CCActionCamera");
    tolua_function(tolua_S,"startWithTarget",tolua_Cocos2d_CCActionCamera_startWithTarget00);
+   tolua_function(tolua_S,"reverse",tolua_Cocos2d_CCActionCamera_reverse00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCOrbitCamera","CCOrbitCamera","CCActionCamera",NULL);
   tolua_beginmodule(tolua_S,"CCOrbitCamera");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCOrbitCamera_copyWithZone00);
    tolua_function(tolua_S,"sphericalRadius",tolua_Cocos2d_CCOrbitCamera_sphericalRadius00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCOrbitCamera_create00);
   tolua_endmodule(tolua_S);
+  tolua_cclass(tolua_S,"CCPointArray","CCPointArray","CCNode",NULL);
+  tolua_beginmodule(tolua_S,"CCPointArray");
+   tolua_function(tolua_S,"initWithCapacity",tolua_Cocos2d_CCPointArray_initWithCapacity00);
+   tolua_function(tolua_S,"addControlPoint",tolua_Cocos2d_CCPointArray_addControlPoint00);
+   tolua_function(tolua_S,"insertControlPoint",tolua_Cocos2d_CCPointArray_insertControlPoint00);
+   tolua_function(tolua_S,"replaceControlPoint",tolua_Cocos2d_CCPointArray_replaceControlPoint00);
+   tolua_function(tolua_S,"getControlPointAtIndex",tolua_Cocos2d_CCPointArray_getControlPointAtIndex00);
+   tolua_function(tolua_S,"removeControlPointAtIndex",tolua_Cocos2d_CCPointArray_removeControlPointAtIndex00);
+   tolua_function(tolua_S,"count",tolua_Cocos2d_CCPointArray_count00);
+   tolua_function(tolua_S,"reverse",tolua_Cocos2d_CCPointArray_reverse00);
+   tolua_function(tolua_S,"reverseInline",tolua_Cocos2d_CCPointArray_reverseInline00);
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCPointArray_copyWithZone00);
+   tolua_function(tolua_S,"getControlPoints",tolua_Cocos2d_CCPointArray_getControlPoints00);
+   tolua_function(tolua_S,"setControlPoints",tolua_Cocos2d_CCPointArray_setControlPoints00);
+   tolua_function(tolua_S,"create",tolua_Cocos2d_CCPointArray_create00);
+  tolua_endmodule(tolua_S);
+  tolua_cclass(tolua_S,"CCCardinalSplineTo","CCCardinalSplineTo","CCActionInterval",NULL);
+  tolua_beginmodule(tolua_S,"CCCardinalSplineTo");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCCardinalSplineTo_copyWithZone00);
+   tolua_function(tolua_S,"reverse",tolua_Cocos2d_CCCardinalSplineTo_reverse00);
+   tolua_function(tolua_S,"getPoints",tolua_Cocos2d_CCCardinalSplineTo_getPoints00);
+   tolua_function(tolua_S,"setPoints",tolua_Cocos2d_CCCardinalSplineTo_setPoints00);
+   tolua_function(tolua_S,"create",tolua_Cocos2d_CCCardinalSplineTo_create00);
+  tolua_endmodule(tolua_S);
+  tolua_cclass(tolua_S,"CCCardinalSplineBy","CCCardinalSplineBy","CCCardinalSplineTo",NULL);
+  tolua_beginmodule(tolua_S,"CCCardinalSplineBy");
+   tolua_function(tolua_S,"reverse",tolua_Cocos2d_CCCardinalSplineBy_reverse00);
+   tolua_function(tolua_S,"create",tolua_Cocos2d_CCCardinalSplineBy_create00);
+  tolua_endmodule(tolua_S);
+  tolua_cclass(tolua_S,"CCCatmullRomTo","CCCatmullRomTo","CCCardinalSplineTo",NULL);
+  tolua_beginmodule(tolua_S,"CCCatmullRomTo");
+   tolua_function(tolua_S,"create",tolua_Cocos2d_CCCatmullRomTo_create00);
+  tolua_endmodule(tolua_S);
+  tolua_cclass(tolua_S,"CCCatmullRomBy","CCCatmullRomBy","CCCardinalSplineBy",NULL);
+  tolua_beginmodule(tolua_S,"CCCatmullRomBy");
+   tolua_function(tolua_S,"create",tolua_Cocos2d_CCCatmullRomBy_create00);
+  tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCActionEase","CCActionEase","CCActionInterval",NULL);
   tolua_beginmodule(tolua_S,"CCActionEase");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCActionEase_copyWithZone00);
+   tolua_function(tolua_S,"reverse",tolua_Cocos2d_CCActionEase_reverse00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCActionEase_create00);
   tolua_endmodule(tolua_S);
-  tolua_cclass(tolua_S,"CCEaseRateAction","CCEaseRateAction","CCActionInterval",NULL);
+  tolua_cclass(tolua_S,"CCEaseRateAction","CCEaseRateAction","CCActionEase",NULL);
   tolua_beginmodule(tolua_S,"CCEaseRateAction");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCEaseRateAction_copyWithZone00);
+   tolua_function(tolua_S,"reverse",tolua_Cocos2d_CCEaseRateAction_reverse00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCEaseRateAction_create00);
   tolua_endmodule(tolua_S);
-  tolua_cclass(tolua_S,"CCEaseIn","CCEaseIn","CCActionInterval",NULL);
+  tolua_cclass(tolua_S,"CCEaseIn","CCEaseIn","CCEaseRateAction",NULL);
   tolua_beginmodule(tolua_S,"CCEaseIn");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCEaseIn_copyWithZone00);
+   tolua_function(tolua_S,"reverse",tolua_Cocos2d_CCEaseIn_reverse00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCEaseIn_create00);
   tolua_endmodule(tolua_S);
-  tolua_cclass(tolua_S,"CCEaseOut","CCEaseOut","CCActionInterval",NULL);
+  tolua_cclass(tolua_S,"CCEaseOut","CCEaseOut","CCEaseRateAction",NULL);
   tolua_beginmodule(tolua_S,"CCEaseOut");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCEaseOut_copyWithZone00);
+   tolua_function(tolua_S,"reverse",tolua_Cocos2d_CCEaseOut_reverse00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCEaseOut_create00);
   tolua_endmodule(tolua_S);
-  tolua_cclass(tolua_S,"CCEaseInOut","CCEaseInOut","CCActionInterval",NULL);
+  tolua_cclass(tolua_S,"CCEaseInOut","CCEaseInOut","CCEaseRateAction",NULL);
   tolua_beginmodule(tolua_S,"CCEaseInOut");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCEaseInOut_copyWithZone00);
+   tolua_function(tolua_S,"reverse",tolua_Cocos2d_CCEaseInOut_reverse00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCEaseInOut_create00);
   tolua_endmodule(tolua_S);
-  tolua_cclass(tolua_S,"CCEaseExponentialIn","CCEaseExponentialIn","CCActionInterval",NULL);
+  tolua_cclass(tolua_S,"CCEaseExponentialIn","CCEaseExponentialIn","CCActionEase",NULL);
   tolua_beginmodule(tolua_S,"CCEaseExponentialIn");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCEaseExponentialIn_copyWithZone00);
+   tolua_function(tolua_S,"reverse",tolua_Cocos2d_CCEaseExponentialIn_reverse00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCEaseExponentialIn_create00);
   tolua_endmodule(tolua_S);
-  tolua_cclass(tolua_S,"CCEaseExponentialOut","CCEaseExponentialOut","CCActionInterval",NULL);
+  tolua_cclass(tolua_S,"CCEaseExponentialOut","CCEaseExponentialOut","CCActionEase",NULL);
   tolua_beginmodule(tolua_S,"CCEaseExponentialOut");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCEaseExponentialOut_copyWithZone00);
+   tolua_function(tolua_S,"reverse",tolua_Cocos2d_CCEaseExponentialOut_reverse00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCEaseExponentialOut_create00);
   tolua_endmodule(tolua_S);
-  tolua_cclass(tolua_S,"CCEaseExponentialInOut","CCEaseExponentialInOut","CCActionInterval",NULL);
+  tolua_cclass(tolua_S,"CCEaseExponentialInOut","CCEaseExponentialInOut","CCActionEase",NULL);
   tolua_beginmodule(tolua_S,"CCEaseExponentialInOut");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCEaseExponentialInOut_copyWithZone00);
+   tolua_function(tolua_S,"reverse",tolua_Cocos2d_CCEaseExponentialInOut_reverse00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCEaseExponentialInOut_create00);
   tolua_endmodule(tolua_S);
-  tolua_cclass(tolua_S,"CCEaseSineIn","CCEaseSineIn","CCActionInterval",NULL);
+  tolua_cclass(tolua_S,"CCEaseSineIn","CCEaseSineIn","CCActionEase",NULL);
   tolua_beginmodule(tolua_S,"CCEaseSineIn");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCEaseSineIn_copyWithZone00);
+   tolua_function(tolua_S,"reverse",tolua_Cocos2d_CCEaseSineIn_reverse00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCEaseSineIn_create00);
   tolua_endmodule(tolua_S);
-  tolua_cclass(tolua_S,"CCEaseSineOut","CCEaseSineOut","CCActionInterval",NULL);
+  tolua_cclass(tolua_S,"CCEaseSineOut","CCEaseSineOut","CCActionEase",NULL);
   tolua_beginmodule(tolua_S,"CCEaseSineOut");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCEaseSineOut_copyWithZone00);
+   tolua_function(tolua_S,"reverse",tolua_Cocos2d_CCEaseSineOut_reverse00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCEaseSineOut_create00);
   tolua_endmodule(tolua_S);
-  tolua_cclass(tolua_S,"CCEaseSineInOut","CCEaseSineInOut","CCActionInterval",NULL);
+  tolua_cclass(tolua_S,"CCEaseSineInOut","CCEaseSineInOut","CCActionEase",NULL);
   tolua_beginmodule(tolua_S,"CCEaseSineInOut");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCEaseSineInOut_copyWithZone00);
+   tolua_function(tolua_S,"reverse",tolua_Cocos2d_CCEaseSineInOut_reverse00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCEaseSineInOut_create00);
   tolua_endmodule(tolua_S);
-  tolua_cclass(tolua_S,"CCEaseElastic","CCEaseElastic","CCActionInterval",NULL);
+  tolua_cclass(tolua_S,"CCEaseElastic","CCEaseElastic","CCActionEase",NULL);
   tolua_beginmodule(tolua_S,"CCEaseElastic");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCEaseElastic_copyWithZone00);
+   tolua_function(tolua_S,"reverse",tolua_Cocos2d_CCEaseElastic_reverse00);
+   tolua_function(tolua_S,"getPeriod",tolua_Cocos2d_CCEaseElastic_getPeriod00);
+   tolua_function(tolua_S,"setPeriod",tolua_Cocos2d_CCEaseElastic_setPeriod00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCEaseElastic_create00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCEaseElastic_create01);
   tolua_endmodule(tolua_S);
-  tolua_cclass(tolua_S,"CCEaseElasticIn","CCEaseElasticIn","CCActionInterval",NULL);
+  tolua_cclass(tolua_S,"CCEaseElasticIn","CCEaseElasticIn","CCEaseElastic",NULL);
   tolua_beginmodule(tolua_S,"CCEaseElasticIn");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCEaseElasticIn_copyWithZone00);
+   tolua_function(tolua_S,"reverse",tolua_Cocos2d_CCEaseElasticIn_reverse00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCEaseElasticIn_create00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCEaseElasticIn_create01);
   tolua_endmodule(tolua_S);
-  tolua_cclass(tolua_S,"CCEaseElasticOut","CCEaseElasticOut","CCActionInterval",NULL);
+  tolua_cclass(tolua_S,"CCEaseElasticOut","CCEaseElasticOut","CCEaseElastic",NULL);
   tolua_beginmodule(tolua_S,"CCEaseElasticOut");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCEaseElasticOut_copyWithZone00);
+   tolua_function(tolua_S,"reverse",tolua_Cocos2d_CCEaseElasticOut_reverse00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCEaseElasticOut_create00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCEaseElasticOut_create01);
   tolua_endmodule(tolua_S);
-  tolua_cclass(tolua_S,"CCEaseElasticInOut","CCEaseElasticInOut","CCActionInterval",NULL);
+  tolua_cclass(tolua_S,"CCEaseElasticInOut","CCEaseElasticInOut","CCEaseElastic",NULL);
   tolua_beginmodule(tolua_S,"CCEaseElasticInOut");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCEaseElasticInOut_copyWithZone00);
+   tolua_function(tolua_S,"reverse",tolua_Cocos2d_CCEaseElasticInOut_reverse00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCEaseElasticInOut_create00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCEaseElasticInOut_create01);
   tolua_endmodule(tolua_S);
-  tolua_cclass(tolua_S,"CCEaseBounce","CCEaseBounce","CCActionInterval",NULL);
+  tolua_cclass(tolua_S,"CCEaseBounce","CCEaseBounce","CCActionEase",NULL);
   tolua_beginmodule(tolua_S,"CCEaseBounce");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCEaseBounce_copyWithZone00);
+   tolua_function(tolua_S,"reverse",tolua_Cocos2d_CCEaseBounce_reverse00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCEaseBounce_create00);
   tolua_endmodule(tolua_S);
-  tolua_cclass(tolua_S,"CCEaseBounceIn","CCEaseBounceIn","CCActionInterval",NULL);
+  tolua_cclass(tolua_S,"CCEaseBounceIn","CCEaseBounceIn","CCEaseBounce",NULL);
   tolua_beginmodule(tolua_S,"CCEaseBounceIn");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCEaseBounceIn_copyWithZone00);
+   tolua_function(tolua_S,"reverse",tolua_Cocos2d_CCEaseBounceIn_reverse00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCEaseBounceIn_create00);
   tolua_endmodule(tolua_S);
-  tolua_cclass(tolua_S,"CCEaseBounceOut","CCEaseBounceOut","CCActionInterval",NULL);
+  tolua_cclass(tolua_S,"CCEaseBounceOut","CCEaseBounceOut","CCEaseBounce",NULL);
   tolua_beginmodule(tolua_S,"CCEaseBounceOut");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCEaseBounceOut_copyWithZone00);
+   tolua_function(tolua_S,"reverse",tolua_Cocos2d_CCEaseBounceOut_reverse00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCEaseBounceOut_create00);
   tolua_endmodule(tolua_S);
-  tolua_cclass(tolua_S,"CCEaseBounceInOut","CCEaseBounceInOut","CCActionInterval",NULL);
+  tolua_cclass(tolua_S,"CCEaseBounceInOut","CCEaseBounceInOut","CCEaseBounce",NULL);
   tolua_beginmodule(tolua_S,"CCEaseBounceInOut");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCEaseBounceInOut_copyWithZone00);
+   tolua_function(tolua_S,"reverse",tolua_Cocos2d_CCEaseBounceInOut_reverse00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCEaseBounceInOut_create00);
   tolua_endmodule(tolua_S);
-  tolua_cclass(tolua_S,"CCEaseBackIn","CCEaseBackIn","CCActionInterval",NULL);
+  tolua_cclass(tolua_S,"CCEaseBackIn","CCEaseBackIn","CCActionEase",NULL);
   tolua_beginmodule(tolua_S,"CCEaseBackIn");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCEaseBackIn_copyWithZone00);
+   tolua_function(tolua_S,"reverse",tolua_Cocos2d_CCEaseBackIn_reverse00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCEaseBackIn_create00);
   tolua_endmodule(tolua_S);
-  tolua_cclass(tolua_S,"CCEaseBackOut","CCEaseBackOut","CCActionInterval",NULL);
+  tolua_cclass(tolua_S,"CCEaseBackOut","CCEaseBackOut","CCActionEase",NULL);
   tolua_beginmodule(tolua_S,"CCEaseBackOut");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCEaseBackOut_copyWithZone00);
+   tolua_function(tolua_S,"reverse",tolua_Cocos2d_CCEaseBackOut_reverse00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCEaseBackOut_create00);
   tolua_endmodule(tolua_S);
-  tolua_cclass(tolua_S,"CCEaseBackInOut","CCEaseBackInOut","CCActionInterval",NULL);
+  tolua_cclass(tolua_S,"CCEaseBackInOut","CCEaseBackInOut","CCActionEase",NULL);
   tolua_beginmodule(tolua_S,"CCEaseBackInOut");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCEaseBackInOut_copyWithZone00);
+   tolua_function(tolua_S,"reverse",tolua_Cocos2d_CCEaseBackInOut_reverse00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCEaseBackInOut_create00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCGridAction","CCGridAction","CCActionInterval",NULL);
   tolua_beginmodule(tolua_S,"CCGridAction");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCGridAction_copyWithZone00);
+   tolua_function(tolua_S,"reverse",tolua_Cocos2d_CCGridAction_reverse00);
    tolua_function(tolua_S,"getGrid",tolua_Cocos2d_CCGridAction_getGrid00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCGridAction_create00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCAccelDeccelAmplitude","CCAccelDeccelAmplitude","CCActionInterval",NULL);
   tolua_beginmodule(tolua_S,"CCAccelDeccelAmplitude");
+   tolua_function(tolua_S,"reverse",tolua_Cocos2d_CCAccelDeccelAmplitude_reverse00);
    tolua_function(tolua_S,"getRate",tolua_Cocos2d_CCAccelDeccelAmplitude_getRate00);
    tolua_function(tolua_S,"setRate",tolua_Cocos2d_CCAccelDeccelAmplitude_setRate00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCAccelDeccelAmplitude_create00);
   tolua_endmodule(tolua_S);
+  tolua_cclass(tolua_S,"CCGrid3DAction","CCGrid3DAction","CCGridAction",NULL);
+  tolua_beginmodule(tolua_S,"CCGrid3DAction");
+   tolua_function(tolua_S,"getGrid",tolua_Cocos2d_CCGrid3DAction_getGrid00);
+   tolua_function(tolua_S,"vertex",tolua_Cocos2d_CCGrid3DAction_vertex00);
+   tolua_function(tolua_S,"originalVertex",tolua_Cocos2d_CCGrid3DAction_originalVertex00);
+   tolua_function(tolua_S,"setVertex",tolua_Cocos2d_CCGrid3DAction_setVertex00);
+  tolua_endmodule(tolua_S);
+  tolua_cclass(tolua_S,"CCTiledGrid3DAction","CCTiledGrid3DAction","CCGridAction",NULL);
+  tolua_beginmodule(tolua_S,"CCTiledGrid3DAction");
+   tolua_function(tolua_S,"tile",tolua_Cocos2d_CCTiledGrid3DAction_tile00);
+   tolua_function(tolua_S,"originalTile",tolua_Cocos2d_CCTiledGrid3DAction_originalTile00);
+   tolua_function(tolua_S,"setTile",tolua_Cocos2d_CCTiledGrid3DAction_setTile00);
+   tolua_function(tolua_S,"getGrid",tolua_Cocos2d_CCTiledGrid3DAction_getGrid00);
+  tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCAccelAmplitude","CCAccelAmplitude","CCActionInterval",NULL);
   tolua_beginmodule(tolua_S,"CCAccelAmplitude");
+   tolua_function(tolua_S,"reverse",tolua_Cocos2d_CCAccelAmplitude_reverse00);
    tolua_function(tolua_S,"getRate",tolua_Cocos2d_CCAccelAmplitude_getRate00);
    tolua_function(tolua_S,"setRate",tolua_Cocos2d_CCAccelAmplitude_setRate00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCAccelAmplitude_create00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCDeccelAmplitude","CCDeccelAmplitude","CCActionInterval",NULL);
   tolua_beginmodule(tolua_S,"CCDeccelAmplitude");
+   tolua_function(tolua_S,"reverse",tolua_Cocos2d_CCDeccelAmplitude_reverse00);
    tolua_function(tolua_S,"getRate",tolua_Cocos2d_CCDeccelAmplitude_getRate00);
    tolua_function(tolua_S,"setRate",tolua_Cocos2d_CCDeccelAmplitude_setRate00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCDeccelAmplitude_create00);
@@ -37601,6 +51604,7 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCWaves3D","CCWaves3D","CCGrid3DAction",NULL);
   tolua_beginmodule(tolua_S,"CCWaves3D");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCWaves3D_copyWithZone00);
    tolua_function(tolua_S,"getAmplitude",tolua_Cocos2d_CCWaves3D_getAmplitude00);
    tolua_function(tolua_S,"setAmplitude",tolua_Cocos2d_CCWaves3D_setAmplitude00);
    tolua_function(tolua_S,"getAmplitudeRate",tolua_Cocos2d_CCWaves3D_getAmplitudeRate00);
@@ -37609,14 +51613,17 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCFlipX3D","CCFlipX3D","CCGrid3DAction",NULL);
   tolua_beginmodule(tolua_S,"CCFlipX3D");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCFlipX3D_copyWithZone00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCFlipX3D_create00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCFlipY3D","CCFlipY3D","CCFlipX3D",NULL);
   tolua_beginmodule(tolua_S,"CCFlipY3D");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCFlipY3D_copyWithZone00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCFlipY3D_create00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCLens3D","CCLens3D","CCGrid3DAction",NULL);
   tolua_beginmodule(tolua_S,"CCLens3D");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCLens3D_copyWithZone00);
    tolua_function(tolua_S,"getLensEffect",tolua_Cocos2d_CCLens3D_getLensEffect00);
    tolua_function(tolua_S,"setLensEffect",tolua_Cocos2d_CCLens3D_setLensEffect00);
    tolua_function(tolua_S,"getPosition",tolua_Cocos2d_CCLens3D_getPosition00);
@@ -37625,6 +51632,7 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCRipple3D","CCRipple3D","CCGrid3DAction",NULL);
   tolua_beginmodule(tolua_S,"CCRipple3D");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCRipple3D_copyWithZone00);
    tolua_function(tolua_S,"getPosition",tolua_Cocos2d_CCRipple3D_getPosition00);
    tolua_function(tolua_S,"setPosition",tolua_Cocos2d_CCRipple3D_setPosition00);
    tolua_function(tolua_S,"getAmplitude",tolua_Cocos2d_CCRipple3D_getAmplitude00);
@@ -37635,10 +51643,12 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCShaky3D","CCShaky3D","CCGrid3DAction",NULL);
   tolua_beginmodule(tolua_S,"CCShaky3D");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCShaky3D_copyWithZone00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCShaky3D_create00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCLiquid","CCLiquid","CCGrid3DAction",NULL);
   tolua_beginmodule(tolua_S,"CCLiquid");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCLiquid_copyWithZone00);
    tolua_function(tolua_S,"getAmplitude",tolua_Cocos2d_CCLiquid_getAmplitude00);
    tolua_function(tolua_S,"setAmplitude",tolua_Cocos2d_CCLiquid_setAmplitude00);
    tolua_function(tolua_S,"getAmplitudeRate",tolua_Cocos2d_CCLiquid_getAmplitudeRate00);
@@ -37647,6 +51657,7 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCWaves","CCWaves","CCGrid3DAction",NULL);
   tolua_beginmodule(tolua_S,"CCWaves");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCWaves_copyWithZone00);
    tolua_function(tolua_S,"getAmplitude",tolua_Cocos2d_CCWaves_getAmplitude00);
    tolua_function(tolua_S,"setAmplitude",tolua_Cocos2d_CCWaves_setAmplitude00);
    tolua_function(tolua_S,"getAmplitudeRate",tolua_Cocos2d_CCWaves_getAmplitudeRate00);
@@ -37655,6 +51666,7 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCTwirl","CCTwirl","CCGrid3DAction",NULL);
   tolua_beginmodule(tolua_S,"CCTwirl");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCTwirl_copyWithZone00);
    tolua_function(tolua_S,"getPosition",tolua_Cocos2d_CCTwirl_getPosition00);
    tolua_function(tolua_S,"setPosition",tolua_Cocos2d_CCTwirl_setPosition00);
    tolua_function(tolua_S,"getAmplitude",tolua_Cocos2d_CCTwirl_getAmplitude00);
@@ -37674,21 +51686,36 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"numberOfRunningActionsInTarget",tolua_Cocos2d_CCActionManager_numberOfRunningActionsInTarget00);
    tolua_function(tolua_S,"pauseTarget",tolua_Cocos2d_CCActionManager_pauseTarget00);
    tolua_function(tolua_S,"resumeTarget",tolua_Cocos2d_CCActionManager_resumeTarget00);
+   tolua_function(tolua_S,"pauseAllRunningActions",tolua_Cocos2d_CCActionManager_pauseAllRunningActions00);
+   tolua_function(tolua_S,"resumeTargets",tolua_Cocos2d_CCActionManager_resumeTargets00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCPageTurn3D","CCPageTurn3D","CCGrid3DAction",NULL);
   tolua_beginmodule(tolua_S,"CCPageTurn3D");
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCPageTurn3D_create00);
   tolua_endmodule(tolua_S);
+  tolua_cclass(tolua_S,"CCProgressTo","CCProgressTo","CCActionInterval",NULL);
+  tolua_beginmodule(tolua_S,"CCProgressTo");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCProgressTo_copyWithZone00);
+   tolua_function(tolua_S,"create",tolua_Cocos2d_CCProgressTo_create00);
+  tolua_endmodule(tolua_S);
+  tolua_cclass(tolua_S,"CCProgressFromTo","CCProgressFromTo","CCActionInterval",NULL);
+  tolua_beginmodule(tolua_S,"CCProgressFromTo");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCProgressFromTo_copyWithZone00);
+   tolua_function(tolua_S,"create",tolua_Cocos2d_CCProgressFromTo_create00);
+  tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCShakyTiles3D","CCShakyTiles3D","CCTiledGrid3DAction",NULL);
   tolua_beginmodule(tolua_S,"CCShakyTiles3D");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCShakyTiles3D_copyWithZone00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCShakyTiles3D_create00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCShatteredTiles3D","CCShatteredTiles3D","CCTiledGrid3DAction",NULL);
   tolua_beginmodule(tolua_S,"CCShatteredTiles3D");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCShatteredTiles3D_copyWithZone00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCShatteredTiles3D_create00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCShuffleTiles","CCShuffleTiles","CCTiledGrid3DAction",NULL);
   tolua_beginmodule(tolua_S,"CCShuffleTiles");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCShuffleTiles_copyWithZone00);
    tolua_function(tolua_S,"shuffle",tolua_Cocos2d_CCShuffleTiles_shuffle00);
    tolua_function(tolua_S,"getDelta",tolua_Cocos2d_CCShuffleTiles_getDelta00);
    tolua_function(tolua_S,"placeTile",tolua_Cocos2d_CCShuffleTiles_placeTile00);
@@ -37707,6 +51734,7 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCFadeOutUpTiles","CCFadeOutUpTiles","CCFadeOutTRTiles",NULL);
   tolua_beginmodule(tolua_S,"CCFadeOutUpTiles");
+   tolua_function(tolua_S,"transformTile",tolua_Cocos2d_CCFadeOutUpTiles_transformTile00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCFadeOutUpTiles_create00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCFadeOutDownTiles","CCFadeOutDownTiles","CCFadeOutUpTiles",NULL);
@@ -37715,6 +51743,7 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCTurnOffTiles","CCTurnOffTiles","CCTiledGrid3DAction",NULL);
   tolua_beginmodule(tolua_S,"CCTurnOffTiles");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCTurnOffTiles_copyWithZone00);
    tolua_function(tolua_S,"shuffle",tolua_Cocos2d_CCTurnOffTiles_shuffle00);
    tolua_function(tolua_S,"turnOnTile",tolua_Cocos2d_CCTurnOffTiles_turnOnTile00);
    tolua_function(tolua_S,"turnOffTile",tolua_Cocos2d_CCTurnOffTiles_turnOffTile00);
@@ -37723,6 +51752,7 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCWavesTiles3D","CCWavesTiles3D","CCTiledGrid3DAction",NULL);
   tolua_beginmodule(tolua_S,"CCWavesTiles3D");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCWavesTiles3D_copyWithZone00);
    tolua_function(tolua_S,"getAmplitude",tolua_Cocos2d_CCWavesTiles3D_getAmplitude00);
    tolua_function(tolua_S,"setAmplitude",tolua_Cocos2d_CCWavesTiles3D_setAmplitude00);
    tolua_function(tolua_S,"getAmplitudeRate",tolua_Cocos2d_CCWavesTiles3D_getAmplitudeRate00);
@@ -37731,6 +51761,7 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCJumpTiles3D","CCJumpTiles3D","CCTiledGrid3DAction",NULL);
   tolua_beginmodule(tolua_S,"CCJumpTiles3D");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCJumpTiles3D_copyWithZone00);
    tolua_function(tolua_S,"getAmplitude",tolua_Cocos2d_CCJumpTiles3D_getAmplitude00);
    tolua_function(tolua_S,"setAmplitude",tolua_Cocos2d_CCJumpTiles3D_setAmplitude00);
    tolua_function(tolua_S,"getAmplitudeRate",tolua_Cocos2d_CCJumpTiles3D_getAmplitudeRate00);
@@ -37739,10 +51770,12 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCSplitRows","CCSplitRows","CCTiledGrid3DAction",NULL);
   tolua_beginmodule(tolua_S,"CCSplitRows");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCSplitRows_copyWithZone00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCSplitRows_create00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCSplitCols","CCSplitCols","CCTiledGrid3DAction",NULL);
   tolua_beginmodule(tolua_S,"CCSplitCols");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCSplitCols_copyWithZone00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCSplitCols_create00);
   tolua_endmodule(tolua_S);
   #ifdef __cplusplus
@@ -37782,6 +51815,7 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"new_local",tolua_Cocos2d_CCAnimationFrame_new00_local);
    tolua_function(tolua_S,".call",tolua_Cocos2d_CCAnimationFrame_new00_local);
    tolua_function(tolua_S,"delete",tolua_Cocos2d_CCAnimationFrame_delete00);
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCAnimationFrame_copyWithZone00);
    tolua_function(tolua_S,"initWithSpriteFrame",tolua_Cocos2d_CCAnimationFrame_initWithSpriteFrame00);
    tolua_function(tolua_S,"getSpriteFrame",tolua_Cocos2d_CCAnimationFrame_getSpriteFrame00);
    tolua_function(tolua_S,"setSpriteFrame",tolua_Cocos2d_CCAnimationFrame_setSpriteFrame00);
@@ -37800,10 +51834,11 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"new_local",tolua_Cocos2d_CCAnimation_new00_local);
    tolua_function(tolua_S,".call",tolua_Cocos2d_CCAnimation_new00_local);
    tolua_function(tolua_S,"delete",tolua_Cocos2d_CCAnimation_delete00);
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCAnimation_copyWithZone00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCAnimation_create00);
+   tolua_function(tolua_S,"createWithSpriteFrames",tolua_Cocos2d_CCAnimation_createWithSpriteFrames00);
+   tolua_function(tolua_S,"createWithSpriteFrames",tolua_Cocos2d_CCAnimation_createWithSpriteFrames01);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCAnimation_create01);
-   tolua_function(tolua_S,"create",tolua_Cocos2d_CCAnimation_create02);
-   tolua_function(tolua_S,"create",tolua_Cocos2d_CCAnimation_create03);
    tolua_function(tolua_S,"addSpriteFrame",tolua_Cocos2d_CCAnimation_addSpriteFrame00);
    tolua_function(tolua_S,"addSpriteFrameWithFileName",tolua_Cocos2d_CCAnimation_addSpriteFrameWithFileName00);
    tolua_function(tolua_S,"addSpriteFrameWithTexture",tolua_Cocos2d_CCAnimation_addSpriteFrameWithTexture00);
@@ -37825,6 +51860,8 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"animationByName",tolua_Cocos2d_CCAnimationCache_animationByName00);
    tolua_function(tolua_S,"sharedAnimationCache",tolua_Cocos2d_CCAnimationCache_sharedAnimationCache00);
    tolua_function(tolua_S,"purgeSharedAnimationCache",tolua_Cocos2d_CCAnimationCache_purgeSharedAnimationCache00);
+   tolua_function(tolua_S,"addAnimationsWithDictionary",tolua_Cocos2d_CCAnimationCache_addAnimationsWithDictionary00);
+   tolua_function(tolua_S,"addAnimationsWithFile",tolua_Cocos2d_CCAnimationCache_addAnimationsWithFile00);
   tolua_endmodule(tolua_S);
   tolua_constant(tolua_S,"kLanguageEnglish",kLanguageEnglish);
   tolua_constant(tolua_S,"kLanguageChinese",kLanguageChinese);
@@ -37840,17 +51877,19 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCArray","CCArray","CCObject",NULL);
   tolua_beginmodule(tolua_S,"CCArray");
+   tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCArray_copyWithZone00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCArray_create00);
    tolua_function(tolua_S,"createWithObject",tolua_Cocos2d_CCArray_createWithObject00);
-   tolua_function(tolua_S,"create",tolua_Cocos2d_CCArray_create01);
-   tolua_function(tolua_S,"create",tolua_Cocos2d_CCArray_create02);
-   tolua_function(tolua_S,"create",tolua_Cocos2d_CCArray_create03);
+   tolua_function(tolua_S,"createWithArray",tolua_Cocos2d_CCArray_createWithArray00);
+   tolua_function(tolua_S,"createWithCapacity",tolua_Cocos2d_CCArray_createWithCapacity00);
+   tolua_function(tolua_S,"createWithContentsOfFile",tolua_Cocos2d_CCArray_createWithContentsOfFile00);
    tolua_function(tolua_S,"count",tolua_Cocos2d_CCArray_count00);
    tolua_function(tolua_S,"capacity",tolua_Cocos2d_CCArray_capacity00);
    tolua_function(tolua_S,"indexOfObject",tolua_Cocos2d_CCArray_indexOfObject00);
    tolua_function(tolua_S,"objectAtIndex",tolua_Cocos2d_CCArray_objectAtIndex00);
    tolua_function(tolua_S,"lastObject",tolua_Cocos2d_CCArray_lastObject00);
    tolua_function(tolua_S,"randomObject",tolua_Cocos2d_CCArray_randomObject00);
+   tolua_function(tolua_S,"isEqualToArray",tolua_Cocos2d_CCArray_isEqualToArray00);
    tolua_function(tolua_S,"containsObject",tolua_Cocos2d_CCArray_containsObject00);
    tolua_function(tolua_S,"addObject",tolua_Cocos2d_CCArray_addObject00);
    tolua_function(tolua_S,"addObjectsFromArray",tolua_Cocos2d_CCArray_addObjectsFromArray00);
@@ -37870,9 +51909,19 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCAtlasNode","CCAtlasNode","CCNode",NULL);
   tolua_beginmodule(tolua_S,"CCAtlasNode");
-   tolua_function(tolua_S,"updateAtlasValues",tolua_Cocos2d_CCAtlasNode_updateAtlasValues00);
+   tolua_function(tolua_S,"getTextureAtlas",tolua_Cocos2d_CCAtlasNode_getTextureAtlas00);
+   tolua_function(tolua_S,"setTextureAtlas",tolua_Cocos2d_CCAtlasNode_setTextureAtlas00);
    tolua_function(tolua_S,"getTexture",tolua_Cocos2d_CCAtlasNode_getTexture00);
    tolua_function(tolua_S,"setTexture",tolua_Cocos2d_CCAtlasNode_setTexture00);
+   tolua_function(tolua_S,"getColor",tolua_Cocos2d_CCAtlasNode_getColor00);
+   tolua_function(tolua_S,"setColor",tolua_Cocos2d_CCAtlasNode_setColor00);
+   tolua_function(tolua_S,"getQuadsToDraw",tolua_Cocos2d_CCAtlasNode_getQuadsToDraw00);
+   tolua_function(tolua_S,"setQuadsToDraw",tolua_Cocos2d_CCAtlasNode_setQuadsToDraw00);
+   tolua_function(tolua_S,"getOpacity",tolua_Cocos2d_CCAtlasNode_getOpacity00);
+   tolua_function(tolua_S,"setOpacity",tolua_Cocos2d_CCAtlasNode_setOpacity00);
+   tolua_function(tolua_S,"updateAtlasValues",tolua_Cocos2d_CCAtlasNode_updateAtlasValues00);
+   tolua_function(tolua_S,"isOpacityModifyRGB",tolua_Cocos2d_CCAtlasNode_isOpacityModifyRGB00);
+   tolua_function(tolua_S,"setOpacityModifyRGB",tolua_Cocos2d_CCAtlasNode_setOpacityModifyRGB00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCAtlasNode_create00);
   tolua_endmodule(tolua_S);
   #ifdef __cplusplus
@@ -37898,6 +51947,13 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"getUpXYZ",tolua_Cocos2d_CCCamera_getUpXYZ00);
    tolua_function(tolua_S,"getZEye",tolua_Cocos2d_CCCamera_getZEye00);
   tolua_endmodule(tolua_S);
+  tolua_constant(tolua_S,"kLanguageEnglish",kLanguageEnglish);
+  tolua_constant(tolua_S,"kLanguageChinese",kLanguageChinese);
+  tolua_constant(tolua_S,"kLanguageFrench",kLanguageFrench);
+  tolua_constant(tolua_S,"kLanguageItalian",kLanguageItalian);
+  tolua_constant(tolua_S,"kLanguageGerman",kLanguageGerman);
+  tolua_constant(tolua_S,"kLanguageSpanish",kLanguageSpanish);
+  tolua_constant(tolua_S,"kLanguageRussian",kLanguageRussian);
   tolua_function(tolua_S,"CCLuaLog",tolua_Cocos2d_CCLuaLog00);
   tolua_function(tolua_S,"CCMessageBox",tolua_Cocos2d_CCMessageBox00);
   tolua_cclass(tolua_S,"CCDirector","CCDirector","CCObject",NULL);
@@ -37908,14 +51964,20 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"setDisplayStats",tolua_Cocos2d_CCDirector_setDisplayStats00);
    tolua_function(tolua_S,"isPaused",tolua_Cocos2d_CCDirector_isPaused00);
    tolua_function(tolua_S,"getTotalFrames",tolua_Cocos2d_CCDirector_getTotalFrames00);
+   tolua_function(tolua_S,"getOpenGLView",tolua_Cocos2d_CCDirector_getOpenGLView00);
+   tolua_function(tolua_S,"enableRetinaDisplay",tolua_Cocos2d_CCDirector_enableRetinaDisplay00);
    tolua_function(tolua_S,"getWinSize",tolua_Cocos2d_CCDirector_getWinSize00);
    tolua_function(tolua_S,"getWinSizeInPixels",tolua_Cocos2d_CCDirector_getWinSizeInPixels00);
    tolua_function(tolua_S,"convertToGL",tolua_Cocos2d_CCDirector_convertToGL00);
    tolua_function(tolua_S,"convertToUI",tolua_Cocos2d_CCDirector_convertToUI00);
+   tolua_function(tolua_S,"pause",tolua_Cocos2d_CCDirector_pause00);
+   tolua_function(tolua_S,"resume",tolua_Cocos2d_CCDirector_resume00);
+   tolua_function(tolua_S,"purgeCachedData",tolua_Cocos2d_CCDirector_purgeCachedData00);
    tolua_function(tolua_S,"runWithScene",tolua_Cocos2d_CCDirector_runWithScene00);
    tolua_function(tolua_S,"pushScene",tolua_Cocos2d_CCDirector_pushScene00);
    tolua_function(tolua_S,"popScene",tolua_Cocos2d_CCDirector_popScene00);
    tolua_function(tolua_S,"replaceScene",tolua_Cocos2d_CCDirector_replaceScene00);
+   tolua_function(tolua_S,"endToLua",tolua_Cocos2d_CCDirector_endToLua00);
    tolua_function(tolua_S,"getContentScaleFactor",tolua_Cocos2d_CCDirector_getContentScaleFactor00);
    tolua_function(tolua_S,"getScheduler",tolua_Cocos2d_CCDirector_getScheduler00);
    tolua_function(tolua_S,"getActionManager",tolua_Cocos2d_CCDirector_getActionManager00);
@@ -37927,14 +51989,25 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
   tolua_function(tolua_S,"ccDrawPoint",tolua_Cocos2d_ccDrawPoint00);
   tolua_function(tolua_S,"ccDrawPoints",tolua_Cocos2d_ccDrawPoints00);
   tolua_function(tolua_S,"ccDrawLine",tolua_Cocos2d_ccDrawLine00);
+  tolua_function(tolua_S,"ccDrawRect",tolua_Cocos2d_ccDrawRect00);
+  tolua_function(tolua_S,"ccDrawSolidRect",tolua_Cocos2d_ccDrawSolidRect00);
   tolua_function(tolua_S,"ccDrawPoly",tolua_Cocos2d_ccDrawPoly00);
+  tolua_function(tolua_S,"ccDrawSolidPoly",tolua_Cocos2d_ccDrawSolidPoly00);
   tolua_function(tolua_S,"ccDrawCircle",tolua_Cocos2d_ccDrawCircle00);
   tolua_function(tolua_S,"ccDrawQuadBezier",tolua_Cocos2d_ccDrawQuadBezier00);
   tolua_function(tolua_S,"ccDrawCubicBezier",tolua_Cocos2d_ccDrawCubicBezier00);
+  tolua_function(tolua_S,"ccDrawCatmullRom",tolua_Cocos2d_ccDrawCatmullRom00);
+  tolua_function(tolua_S,"ccDrawCardinalSpline",tolua_Cocos2d_ccDrawCardinalSpline00);
+  tolua_function(tolua_S,"ccDrawColor4B",tolua_Cocos2d_ccDrawColor4B00);
+  tolua_function(tolua_S,"ccDrawColor4F",tolua_Cocos2d_ccDrawColor4F00);
+  tolua_function(tolua_S,"ccPointSize",tolua_Cocos2d_ccPointSize00);
   tolua_cclass(tolua_S,"CCFileUtils","CCFileUtils","",NULL);
   tolua_beginmodule(tolua_S,"CCFileUtils");
    tolua_function(tolua_S,"sharedFileUtils",tolua_Cocos2d_CCFileUtils_sharedFileUtils00);
    tolua_function(tolua_S,"getWriteablePath",tolua_Cocos2d_CCFileUtils_getWriteablePath00);
+   tolua_function(tolua_S,"fullPathFromRelativePath",tolua_Cocos2d_CCFileUtils_fullPathFromRelativePath00);
+   tolua_function(tolua_S,"fullPathFromRelativeFile",tolua_Cocos2d_CCFileUtils_fullPathFromRelativeFile00);
+   tolua_function(tolua_S,"fullPathFromRelativeFile",tolua_Cocos2d_CCFileUtils_fullPathFromRelativeFile01);
   tolua_endmodule(tolua_S);
   #ifdef __cplusplus
   tolua_cclass(tolua_S,"CCPoint","CCPoint","",tolua_collect_CCPoint);
@@ -37950,7 +52023,7 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"new",tolua_Cocos2d_CCPoint_new01);
    tolua_function(tolua_S,"new_local",tolua_Cocos2d_CCPoint_new01_local);
    tolua_function(tolua_S,".call",tolua_Cocos2d_CCPoint_new01_local);
-   tolua_function(tolua_S,"CCPointEqualToPoint",tolua_Cocos2d_CCPoint_CCPointEqualToPoint00);
+   tolua_function(tolua_S,"equals",tolua_Cocos2d_CCPoint_equals00);
   tolua_endmodule(tolua_S);
   #ifdef __cplusplus
   tolua_cclass(tolua_S,"CCSize","CCSize","",tolua_collect_CCSize);
@@ -37966,7 +52039,7 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"new",tolua_Cocos2d_CCSize_new01);
    tolua_function(tolua_S,"new_local",tolua_Cocos2d_CCSize_new01_local);
    tolua_function(tolua_S,".call",tolua_Cocos2d_CCSize_new01_local);
-   tolua_function(tolua_S,"CCSizeEqualToSize",tolua_Cocos2d_CCSize_CCSizeEqualToSize00);
+   tolua_function(tolua_S,"equals",tolua_Cocos2d_CCSize_equals00);
   tolua_endmodule(tolua_S);
   #ifdef __cplusplus
   tolua_cclass(tolua_S,"CCRect","CCRect","",tolua_collect_CCRect);
@@ -37982,15 +52055,15 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"new",tolua_Cocos2d_CCRect_new01);
    tolua_function(tolua_S,"new_local",tolua_Cocos2d_CCRect_new01_local);
    tolua_function(tolua_S,".call",tolua_Cocos2d_CCRect_new01_local);
-   tolua_function(tolua_S,"CCRectGetMinX",tolua_Cocos2d_CCRect_CCRectGetMinX00);
-   tolua_function(tolua_S,"CCRectGetMaxX",tolua_Cocos2d_CCRect_CCRectGetMaxX00);
-   tolua_function(tolua_S,"CCRectGetMidX",tolua_Cocos2d_CCRect_CCRectGetMidX00);
-   tolua_function(tolua_S,"CCRectGetMinY",tolua_Cocos2d_CCRect_CCRectGetMinY00);
-   tolua_function(tolua_S,"CCRectGetMaxY",tolua_Cocos2d_CCRect_CCRectGetMaxY00);
-   tolua_function(tolua_S,"CCRectGetMidY",tolua_Cocos2d_CCRect_CCRectGetMidY00);
-   tolua_function(tolua_S,"CCRectEqualToRect",tolua_Cocos2d_CCRect_CCRectEqualToRect00);
-   tolua_function(tolua_S,"CCRectContainsPoint",tolua_Cocos2d_CCRect_CCRectContainsPoint00);
-   tolua_function(tolua_S,"CCRectIntersectsRect",tolua_Cocos2d_CCRect_CCRectIntersectsRect00);
+   tolua_function(tolua_S,"getMinX",tolua_Cocos2d_CCRect_getMinX00);
+   tolua_function(tolua_S,"getMidX",tolua_Cocos2d_CCRect_getMidX00);
+   tolua_function(tolua_S,"getMaxX",tolua_Cocos2d_CCRect_getMaxX00);
+   tolua_function(tolua_S,"getMinY",tolua_Cocos2d_CCRect_getMinY00);
+   tolua_function(tolua_S,"getMidY",tolua_Cocos2d_CCRect_getMidY00);
+   tolua_function(tolua_S,"getMaxY",tolua_Cocos2d_CCRect_getMaxY00);
+   tolua_function(tolua_S,"equals",tolua_Cocos2d_CCRect_equals00);
+   tolua_function(tolua_S,"containsPoint",tolua_Cocos2d_CCRect_containsPoint00);
+   tolua_function(tolua_S,"intersectsRect",tolua_Cocos2d_CCRect_intersectsRect00);
   tolua_endmodule(tolua_S);
   tolua_function(tolua_S,"CCPointMake",tolua_Cocos2d_CCPointMake00);
   tolua_function(tolua_S,"CCSizeMake",tolua_Cocos2d_CCSizeMake00);
@@ -38008,22 +52081,49 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
   tolua_cclass(tolua_S,"CCLabelBMFont","CCLabelBMFont","CCNode",NULL);
   tolua_beginmodule(tolua_S,"CCLabelBMFont");
    tolua_function(tolua_S,"setString",tolua_Cocos2d_CCLabelBMFont_setString00);
+   tolua_function(tolua_S,"setString",tolua_Cocos2d_CCLabelBMFont_setString01);
+   tolua_function(tolua_S,"setCString",tolua_Cocos2d_CCLabelBMFont_setCString00);
    tolua_function(tolua_S,"getString",tolua_Cocos2d_CCLabelBMFont_getString00);
+   tolua_function(tolua_S,"updateString",tolua_Cocos2d_CCLabelBMFont_updateString00);
+   tolua_function(tolua_S,"setAnchorPoint",tolua_Cocos2d_CCLabelBMFont_setAnchorPoint00);
+   tolua_function(tolua_S,"setAlignment",tolua_Cocos2d_CCLabelBMFont_setAlignment00);
+   tolua_function(tolua_S,"setWidth",tolua_Cocos2d_CCLabelBMFont_setWidth00);
+   tolua_function(tolua_S,"setLineBreakWithoutSpace",tolua_Cocos2d_CCLabelBMFont_setLineBreakWithoutSpace00);
+   tolua_function(tolua_S,"setScale",tolua_Cocos2d_CCLabelBMFont_setScale00);
+   tolua_function(tolua_S,"setScaleX",tolua_Cocos2d_CCLabelBMFont_setScaleX00);
+   tolua_function(tolua_S,"setScaleY",tolua_Cocos2d_CCLabelBMFont_setScaleY00);
+   tolua_function(tolua_S,"setFntFile",tolua_Cocos2d_CCLabelBMFont_setFntFile00);
+   tolua_function(tolua_S,"getFntFile",tolua_Cocos2d_CCLabelBMFont_getFntFile00);
    tolua_function(tolua_S,"setColor",tolua_Cocos2d_CCLabelBMFont_setColor00);
    tolua_function(tolua_S,"getColor",tolua_Cocos2d_CCLabelBMFont_getColor00);
    tolua_function(tolua_S,"getOpacity",tolua_Cocos2d_CCLabelBMFont_getOpacity00);
    tolua_function(tolua_S,"setOpacity",tolua_Cocos2d_CCLabelBMFont_setOpacity00);
+   tolua_function(tolua_S,"isOpacityModifyRGB",tolua_Cocos2d_CCLabelBMFont_isOpacityModifyRGB00);
+   tolua_function(tolua_S,"setOpacityModifyRGB",tolua_Cocos2d_CCLabelBMFont_setOpacityModifyRGB00);
    tolua_variable(tolua_S,"opacity",tolua_get_CCLabelBMFont_opacity,tolua_set_CCLabelBMFont_opacity);
    tolua_function(tolua_S,"purgeCachedData",tolua_Cocos2d_CCLabelBMFont_purgeCachedData00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCLabelBMFont_create00);
+   tolua_function(tolua_S,"create",tolua_Cocos2d_CCLabelBMFont_create01);
+   tolua_function(tolua_S,"create",tolua_Cocos2d_CCLabelBMFont_create02);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCLabelTTF","CCLabelTTF","CCSprite",NULL);
   tolua_beginmodule(tolua_S,"CCLabelTTF");
    tolua_function(tolua_S,"setString",tolua_Cocos2d_CCLabelTTF_setString00);
    tolua_function(tolua_S,"getString",tolua_Cocos2d_CCLabelTTF_getString00);
+   tolua_function(tolua_S,"getHorizontalAlignment",tolua_Cocos2d_CCLabelTTF_getHorizontalAlignment00);
+   tolua_function(tolua_S,"setHorizontalAlignment",tolua_Cocos2d_CCLabelTTF_setHorizontalAlignment00);
+   tolua_function(tolua_S,"getVerticalAlignment",tolua_Cocos2d_CCLabelTTF_getVerticalAlignment00);
+   tolua_function(tolua_S,"setVerticalAlignment",tolua_Cocos2d_CCLabelTTF_setVerticalAlignment00);
+   tolua_function(tolua_S,"getDimensions",tolua_Cocos2d_CCLabelTTF_getDimensions00);
+   tolua_function(tolua_S,"setDimensions",tolua_Cocos2d_CCLabelTTF_setDimensions00);
+   tolua_function(tolua_S,"getFontSize",tolua_Cocos2d_CCLabelTTF_getFontSize00);
+   tolua_function(tolua_S,"setFontSize",tolua_Cocos2d_CCLabelTTF_setFontSize00);
+   tolua_function(tolua_S,"getFontName",tolua_Cocos2d_CCLabelTTF_getFontName00);
+   tolua_function(tolua_S,"setFontName",tolua_Cocos2d_CCLabelTTF_setFontName00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCLabelTTF_create00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCLabelTTF_create01);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCLabelTTF_create02);
+   tolua_function(tolua_S,"create",tolua_Cocos2d_CCLabelTTF_create03);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCLayer","CCLayer","CCNode",NULL);
   tolua_beginmodule(tolua_S,"CCLayer");
@@ -38042,12 +52142,15 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"changeWidth",tolua_Cocos2d_CCLayerColor_changeWidth00);
    tolua_function(tolua_S,"changeHeight",tolua_Cocos2d_CCLayerColor_changeHeight00);
    tolua_function(tolua_S,"changeWidthAndHeight",tolua_Cocos2d_CCLayerColor_changeWidthAndHeight00);
+   tolua_function(tolua_S,"setContentSize",tolua_Cocos2d_CCLayerColor_setContentSize00);
    tolua_function(tolua_S,"setOpacity",tolua_Cocos2d_CCLayerColor_setOpacity00);
    tolua_function(tolua_S,"getOpacity",tolua_Cocos2d_CCLayerColor_getOpacity00);
    tolua_function(tolua_S,"setColor",tolua_Cocos2d_CCLayerColor_setColor00);
    tolua_function(tolua_S,"getColor",tolua_Cocos2d_CCLayerColor_getColor00);
    tolua_function(tolua_S,"setBlendFunc",tolua_Cocos2d_CCLayerColor_setBlendFunc00);
    tolua_function(tolua_S,"getBlendFunc",tolua_Cocos2d_CCLayerColor_getBlendFunc00);
+   tolua_function(tolua_S,"setOpacityModifyRGB",tolua_Cocos2d_CCLayerColor_setOpacityModifyRGB00);
+   tolua_function(tolua_S,"isOpacityModifyRGB",tolua_Cocos2d_CCLayerColor_isOpacityModifyRGB00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCLayerColor_create00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCLayerColor_create01);
   tolua_endmodule(tolua_S);
@@ -38073,6 +52176,7 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"addLayer",tolua_Cocos2d_CCLayerMultiplex_addLayer00);
    tolua_function(tolua_S,"switchTo",tolua_Cocos2d_CCLayerMultiplex_switchTo00);
    tolua_function(tolua_S,"switchToAndReleaseMe",tolua_Cocos2d_CCLayerMultiplex_switchToAndReleaseMe00);
+   tolua_function(tolua_S,"create",tolua_Cocos2d_CCLayerMultiplex_create00);
    tolua_function(tolua_S,"createWithLayer",tolua_Cocos2d_CCLayerMultiplex_createWithLayer00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCMenu","CCMenu","CCLayer",NULL);
@@ -38083,13 +52187,19 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"alignItemsHorizontallyWithPadding",tolua_Cocos2d_CCMenu_alignItemsHorizontallyWithPadding00);
    tolua_function(tolua_S,"alignItemsInColumns",tolua_Cocos2d_CCMenu_alignItemsInColumns00);
    tolua_function(tolua_S,"alignItemsInRows",tolua_Cocos2d_CCMenu_alignItemsInRows00);
+   tolua_function(tolua_S,"setHandlerPriority",tolua_Cocos2d_CCMenu_setHandlerPriority00);
    tolua_function(tolua_S,"addChild",tolua_Cocos2d_CCMenu_addChild00);
    tolua_function(tolua_S,"setOpacity",tolua_Cocos2d_CCMenu_setOpacity00);
    tolua_function(tolua_S,"getOpacity",tolua_Cocos2d_CCMenu_getOpacity00);
    tolua_function(tolua_S,"setColor",tolua_Cocos2d_CCMenu_setColor00);
    tolua_function(tolua_S,"getColor",tolua_Cocos2d_CCMenu_getColor00);
+   tolua_function(tolua_S,"setOpacityModifyRGB",tolua_Cocos2d_CCMenu_setOpacityModifyRGB00);
+   tolua_function(tolua_S,"isOpacityModifyRGB",tolua_Cocos2d_CCMenu_isOpacityModifyRGB00);
+   tolua_function(tolua_S,"isEnabled",tolua_Cocos2d_CCMenu_isEnabled00);
+   tolua_function(tolua_S,"setEnabled",tolua_Cocos2d_CCMenu_setEnabled00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCMenu_create00);
    tolua_function(tolua_S,"createWithItem",tolua_Cocos2d_CCMenu_createWithItem00);
+   tolua_function(tolua_S,"createWithArray",tolua_Cocos2d_CCMenu_createWithArray00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCMenuItem","CCMenuItem","CCNode",NULL);
   tolua_beginmodule(tolua_S,"CCMenuItem");
@@ -38110,6 +52220,16 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"getOpacity",tolua_Cocos2d_CCMenuItemLabel_getOpacity00);
    tolua_function(tolua_S,"setColor",tolua_Cocos2d_CCMenuItemLabel_setColor00);
    tolua_function(tolua_S,"getColor",tolua_Cocos2d_CCMenuItemLabel_getColor00);
+   tolua_function(tolua_S,"setDisabledColor",tolua_Cocos2d_CCMenuItemLabel_setDisabledColor00);
+   tolua_function(tolua_S,"getDisabledColor",tolua_Cocos2d_CCMenuItemLabel_getDisabledColor00);
+   tolua_function(tolua_S,"setLabel",tolua_Cocos2d_CCMenuItemLabel_setLabel00);
+   tolua_function(tolua_S,"getLabel",tolua_Cocos2d_CCMenuItemLabel_getLabel00);
+   tolua_function(tolua_S,"activate",tolua_Cocos2d_CCMenuItemLabel_activate00);
+   tolua_function(tolua_S,"selected",tolua_Cocos2d_CCMenuItemLabel_selected00);
+   tolua_function(tolua_S,"unselected",tolua_Cocos2d_CCMenuItemLabel_unselected00);
+   tolua_function(tolua_S,"setEnabled",tolua_Cocos2d_CCMenuItemLabel_setEnabled00);
+   tolua_function(tolua_S,"setOpacityModifyRGB",tolua_Cocos2d_CCMenuItemLabel_setOpacityModifyRGB00);
+   tolua_function(tolua_S,"isOpacityModifyRGB",tolua_Cocos2d_CCMenuItemLabel_isOpacityModifyRGB00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCMenuItemLabel_create00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCMenuItemAtlasFont","CCMenuItemAtlasFont","CCMenuItem",NULL);
@@ -38122,6 +52242,10 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"fontSize",tolua_Cocos2d_CCMenuItemFont_fontSize00);
    tolua_function(tolua_S,"setFontName",tolua_Cocos2d_CCMenuItemFont_setFontName00);
    tolua_function(tolua_S,"fontName",tolua_Cocos2d_CCMenuItemFont_fontName00);
+   tolua_function(tolua_S,"setFontSizeObj",tolua_Cocos2d_CCMenuItemFont_setFontSizeObj00);
+   tolua_function(tolua_S,"fontSizeObj",tolua_Cocos2d_CCMenuItemFont_fontSizeObj00);
+   tolua_function(tolua_S,"setFontNameObj",tolua_Cocos2d_CCMenuItemFont_setFontNameObj00);
+   tolua_function(tolua_S,"fontNameObj",tolua_Cocos2d_CCMenuItemFont_fontNameObj00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCMenuItemFont_create00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCMenuItemSprite","CCMenuItemSprite","CCMenuItem",NULL);
@@ -38130,6 +52254,17 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"getColor",tolua_Cocos2d_CCMenuItemSprite_getColor00);
    tolua_function(tolua_S,"setOpacity",tolua_Cocos2d_CCMenuItemSprite_setOpacity00);
    tolua_function(tolua_S,"getOpacity",tolua_Cocos2d_CCMenuItemSprite_getOpacity00);
+   tolua_function(tolua_S,"setNormalImage",tolua_Cocos2d_CCMenuItemSprite_setNormalImage00);
+   tolua_function(tolua_S,"getNormalImage",tolua_Cocos2d_CCMenuItemSprite_getNormalImage00);
+   tolua_function(tolua_S,"setSelectedImage",tolua_Cocos2d_CCMenuItemSprite_setSelectedImage00);
+   tolua_function(tolua_S,"getSelectedImage",tolua_Cocos2d_CCMenuItemSprite_getSelectedImage00);
+   tolua_function(tolua_S,"setDisabledImage",tolua_Cocos2d_CCMenuItemSprite_setDisabledImage00);
+   tolua_function(tolua_S,"getDisabledImage",tolua_Cocos2d_CCMenuItemSprite_getDisabledImage00);
+   tolua_function(tolua_S,"selected",tolua_Cocos2d_CCMenuItemSprite_selected00);
+   tolua_function(tolua_S,"unselected",tolua_Cocos2d_CCMenuItemSprite_unselected00);
+   tolua_function(tolua_S,"setEnabled",tolua_Cocos2d_CCMenuItemSprite_setEnabled00);
+   tolua_function(tolua_S,"setOpacityModifyRGB",tolua_Cocos2d_CCMenuItemSprite_setOpacityModifyRGB00);
+   tolua_function(tolua_S,"isOpacityModifyRGB",tolua_Cocos2d_CCMenuItemSprite_isOpacityModifyRGB00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCMenuItemSprite_create00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCMenuItemSprite_create01);
   tolua_endmodule(tolua_S);
@@ -38139,13 +52274,31 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"getColor",tolua_Cocos2d_CCMenuItemImage_getColor00);
    tolua_function(tolua_S,"setOpacity",tolua_Cocos2d_CCMenuItemImage_setOpacity00);
    tolua_function(tolua_S,"getOpacity",tolua_Cocos2d_CCMenuItemImage_getOpacity00);
+   tolua_function(tolua_S,"setNormalSpriteFrame",tolua_Cocos2d_CCMenuItemImage_setNormalSpriteFrame00);
+   tolua_function(tolua_S,"setSelectedSpriteFrame",tolua_Cocos2d_CCMenuItemImage_setSelectedSpriteFrame00);
+   tolua_function(tolua_S,"setDisabledSpriteFrame",tolua_Cocos2d_CCMenuItemImage_setDisabledSpriteFrame00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCMenuItemImage_create00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCMenuItemImage_create01);
+   tolua_function(tolua_S,"create",tolua_Cocos2d_CCMenuItemImage_create02);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCMenuItemToggle","CCMenuItemToggle","CCMenuItem",NULL);
   tolua_beginmodule(tolua_S,"CCMenuItemToggle");
+   tolua_function(tolua_S,"setColor",tolua_Cocos2d_CCMenuItemToggle_setColor00);
+   tolua_function(tolua_S,"getColor",tolua_Cocos2d_CCMenuItemToggle_getColor00);
+   tolua_function(tolua_S,"setOpacity",tolua_Cocos2d_CCMenuItemToggle_setOpacity00);
+   tolua_function(tolua_S,"getOpacity",tolua_Cocos2d_CCMenuItemToggle_getOpacity00);
+   tolua_function(tolua_S,"setSelectedIndex",tolua_Cocos2d_CCMenuItemToggle_setSelectedIndex00);
+   tolua_function(tolua_S,"getSelectedIndex",tolua_Cocos2d_CCMenuItemToggle_getSelectedIndex00);
+   tolua_function(tolua_S,"setSubItems",tolua_Cocos2d_CCMenuItemToggle_setSubItems00);
+   tolua_function(tolua_S,"getSubItems",tolua_Cocos2d_CCMenuItemToggle_getSubItems00);
    tolua_function(tolua_S,"addSubItem",tolua_Cocos2d_CCMenuItemToggle_addSubItem00);
    tolua_function(tolua_S,"selectedItem",tolua_Cocos2d_CCMenuItemToggle_selectedItem00);
+   tolua_function(tolua_S,"activate",tolua_Cocos2d_CCMenuItemToggle_activate00);
+   tolua_function(tolua_S,"selected",tolua_Cocos2d_CCMenuItemToggle_selected00);
+   tolua_function(tolua_S,"unselected",tolua_Cocos2d_CCMenuItemToggle_unselected00);
+   tolua_function(tolua_S,"setEnabled",tolua_Cocos2d_CCMenuItemToggle_setEnabled00);
+   tolua_function(tolua_S,"setOpacityModifyRGB",tolua_Cocos2d_CCMenuItemToggle_setOpacityModifyRGB00);
+   tolua_function(tolua_S,"isOpacityModifyRGB",tolua_Cocos2d_CCMenuItemToggle_isOpacityModifyRGB00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCMenuItemToggle_create00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCMotionStreak","CCMotionStreak","CCNode",NULL);
@@ -38186,9 +52339,10 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"removeObjectsForKeys",tolua_Cocos2d_CCDictionary_removeObjectsForKeys00);
    tolua_function(tolua_S,"removeAllObjects",tolua_Cocos2d_CCDictionary_removeAllObjects00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCDictionary_create00);
-   tolua_function(tolua_S,"create",tolua_Cocos2d_CCDictionary_create01);
-   tolua_function(tolua_S,"create",tolua_Cocos2d_CCDictionary_create02);
+   tolua_function(tolua_S,"createWithDictionary",tolua_Cocos2d_CCDictionary_createWithDictionary00);
+   tolua_function(tolua_S,"createWithContentsOfFile",tolua_Cocos2d_CCDictionary_createWithContentsOfFile00);
   tolua_endmodule(tolua_S);
+  tolua_constant(tolua_S,"kCCNodeTagInvalid",kCCNodeTagInvalid);
   tolua_constant(tolua_S,"kCCNodeOnEnter",kCCNodeOnEnter);
   tolua_constant(tolua_S,"kCCNodeOnExit",kCCNodeOnExit);
   tolua_cclass(tolua_S,"CCNode","CCNode","CCObject",NULL);
@@ -38209,6 +52363,7 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"getPositionX",tolua_Cocos2d_CCNode_getPositionX00);
    tolua_function(tolua_S,"getPositionY",tolua_Cocos2d_CCNode_getPositionY00);
    tolua_function(tolua_S,"setPosition",tolua_Cocos2d_CCNode_setPosition00);
+   tolua_function(tolua_S,"setPosition",tolua_Cocos2d_CCNode_setPosition01);
    tolua_function(tolua_S,"setPositionX",tolua_Cocos2d_CCNode_setPositionX00);
    tolua_function(tolua_S,"setPositionY",tolua_Cocos2d_CCNode_setPositionY00);
    tolua_function(tolua_S,"getSkewX",tolua_Cocos2d_CCNode_getSkewX00);
@@ -38240,6 +52395,7 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"getCamera",tolua_Cocos2d_CCNode_getCamera00);
    tolua_function(tolua_S,"getGrid",tolua_Cocos2d_CCNode_getGrid00);
    tolua_function(tolua_S,"setGrid",tolua_Cocos2d_CCNode_setGrid00);
+   tolua_function(tolua_S,"getAnchorPointInPoints",tolua_Cocos2d_CCNode_getAnchorPointInPoints00);
    tolua_function(tolua_S,"isRunning",tolua_Cocos2d_CCNode_isRunning00);
    tolua_function(tolua_S,"getParent",tolua_Cocos2d_CCNode_getParent00);
    tolua_function(tolua_S,"setParent",tolua_Cocos2d_CCNode_setParent00);
@@ -38247,6 +52403,18 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"ignoreAnchorPointForPosition",tolua_Cocos2d_CCNode_ignoreAnchorPointForPosition00);
    tolua_function(tolua_S,"getUserData",tolua_Cocos2d_CCNode_getUserData00);
    tolua_function(tolua_S,"setUserData",tolua_Cocos2d_CCNode_setUserData00);
+   tolua_function(tolua_S,"getUserObject",tolua_Cocos2d_CCNode_getUserObject00);
+   tolua_function(tolua_S,"setUserObject",tolua_Cocos2d_CCNode_setUserObject00);
+   tolua_function(tolua_S,"getShaderProgram",tolua_Cocos2d_CCNode_getShaderProgram00);
+   tolua_function(tolua_S,"setShaderProgram",tolua_Cocos2d_CCNode_setShaderProgram00);
+   tolua_function(tolua_S,"getOrderOfArrival",tolua_Cocos2d_CCNode_getOrderOfArrival00);
+   tolua_function(tolua_S,"setOrderOfArrival",tolua_Cocos2d_CCNode_setOrderOfArrival00);
+   tolua_function(tolua_S,"getGLServerState",tolua_Cocos2d_CCNode_getGLServerState00);
+   tolua_function(tolua_S,"setGLServerState",tolua_Cocos2d_CCNode_setGLServerState00);
+   tolua_function(tolua_S,"getActionManager",tolua_Cocos2d_CCNode_getActionManager00);
+   tolua_function(tolua_S,"setActionManager",tolua_Cocos2d_CCNode_setActionManager00);
+   tolua_function(tolua_S,"getScheduler",tolua_Cocos2d_CCNode_getScheduler00);
+   tolua_function(tolua_S,"setScheduler",tolua_Cocos2d_CCNode_setScheduler00);
    tolua_function(tolua_S,"addChild",tolua_Cocos2d_CCNode_addChild00);
    tolua_function(tolua_S,"addChild",tolua_Cocos2d_CCNode_addChild01);
    tolua_function(tolua_S,"addChild",tolua_Cocos2d_CCNode_addChild02);
@@ -38296,6 +52464,8 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"isSingleReference",tolua_Cocos2d_CCObject_isSingleReference00);
    tolua_function(tolua_S,"retainCount",tolua_Cocos2d_CCObject_retainCount00);
    tolua_function(tolua_S,"isEqual",tolua_Cocos2d_CCObject_isEqual00);
+   tolua_function(tolua_S,"copy",tolua_Cocos2d_CCObject_copy00);
+   tolua_function(tolua_S,"autorelease",tolua_Cocos2d_CCObject_autorelease00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"_ccArray","_ccArray","",NULL);
   tolua_beginmodule(tolua_S,"_ccArray");
@@ -38313,6 +52483,18 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"setParallaxArray",tolua_Cocos2d_CCParallaxNode_setParallaxArray01);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCParallaxNode_create00);
   tolua_endmodule(tolua_S);
+  tolua_constant(tolua_S,"kCCParticleDurationInfinity",kCCParticleDurationInfinity);
+  tolua_constant(tolua_S,"kCCParticleStartSizeEqualToEndSize",kCCParticleStartSizeEqualToEndSize);
+  tolua_constant(tolua_S,"kCCParticleStartRadiusEqualToEndRadius",kCCParticleStartRadiusEqualToEndRadius);
+  tolua_constant(tolua_S,"kParticleStartSizeEqualToEndSize",kParticleStartSizeEqualToEndSize);
+  tolua_constant(tolua_S,"kParticleDurationInfinity",kParticleDurationInfinity);
+  tolua_constant(tolua_S,"kCCParticleModeGravity",kCCParticleModeGravity);
+  tolua_constant(tolua_S,"kCCParticleModeRadius",kCCParticleModeRadius);
+  tolua_constant(tolua_S,"kCCPositionTypeFree",kCCPositionTypeFree);
+  tolua_constant(tolua_S,"kCCPositionTypeRelative",kCCPositionTypeRelative);
+  tolua_constant(tolua_S,"kCCPositionTypeGrouped",kCCPositionTypeGrouped);
+  tolua_constant(tolua_S,"kPositionTypeFree",kPositionTypeFree);
+  tolua_constant(tolua_S,"kPositionTypeGrouped",kPositionTypeGrouped);
   tolua_cclass(tolua_S,"CCParticleSystem","CCParticleSystem","CCNode",NULL);
   tolua_beginmodule(tolua_S,"CCParticleSystem");
    tolua_function(tolua_S,"getGravity",tolua_Cocos2d_CCParticleSystem_getGravity00);
@@ -38348,6 +52530,24 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"isFull",tolua_Cocos2d_CCParticleSystem_isFull00);
    tolua_function(tolua_S,"updateQuadWithParticle",tolua_Cocos2d_CCParticleSystem_updateQuadWithParticle00);
    tolua_function(tolua_S,"postStep",tolua_Cocos2d_CCParticleSystem_postStep00);
+   tolua_function(tolua_S,"getStartSize",tolua_Cocos2d_CCParticleSystem_getStartSize00);
+   tolua_function(tolua_S,"getStartSizeVar",tolua_Cocos2d_CCParticleSystem_getStartSizeVar00);
+   tolua_function(tolua_S,"getEndSize",tolua_Cocos2d_CCParticleSystem_getEndSize00);
+   tolua_function(tolua_S,"getEndSizeVar",tolua_Cocos2d_CCParticleSystem_getEndSizeVar00);
+   tolua_function(tolua_S,"getStartColor",tolua_Cocos2d_CCParticleSystem_getStartColor00);
+   tolua_function(tolua_S,"getStartColorVar",tolua_Cocos2d_CCParticleSystem_getStartColorVar00);
+   tolua_function(tolua_S,"getEndColor",tolua_Cocos2d_CCParticleSystem_getEndColor00);
+   tolua_function(tolua_S,"getEndColorVar",tolua_Cocos2d_CCParticleSystem_getEndColorVar00);
+   tolua_function(tolua_S,"getStartSpin",tolua_Cocos2d_CCParticleSystem_getStartSpin00);
+   tolua_function(tolua_S,"getStartSpinVar",tolua_Cocos2d_CCParticleSystem_getStartSpinVar00);
+   tolua_function(tolua_S,"getEndSpin",tolua_Cocos2d_CCParticleSystem_getEndSpin00);
+   tolua_function(tolua_S,"getEndSpinVar",tolua_Cocos2d_CCParticleSystem_getEndSpinVar00);
+   tolua_function(tolua_S,"getEmissionRate",tolua_Cocos2d_CCParticleSystem_getEmissionRate00);
+   tolua_function(tolua_S,"getTotalParticles",tolua_Cocos2d_CCParticleSystem_getTotalParticles00);
+   tolua_function(tolua_S,"isAutoRemoveOnFinish",tolua_Cocos2d_CCParticleSystem_isAutoRemoveOnFinish00);
+   tolua_function(tolua_S,"setAutoRemoveOnFinish",tolua_Cocos2d_CCParticleSystem_setAutoRemoveOnFinish00);
+   tolua_function(tolua_S,"getEmitterMode",tolua_Cocos2d_CCParticleSystem_getEmitterMode00);
+   tolua_function(tolua_S,"setEmitterMode",tolua_Cocos2d_CCParticleSystem_setEmitterMode00);
    tolua_function(tolua_S,"getTexture",tolua_Cocos2d_CCParticleSystem_getTexture00);
    tolua_function(tolua_S,"setTexture",tolua_Cocos2d_CCParticleSystem_setTexture00);
    tolua_function(tolua_S,"getBlendFunc",tolua_Cocos2d_CCParticleSystem_getBlendFunc00);
@@ -38363,12 +52563,22 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCParticleSystemQuad","CCParticleSystemQuad","CCParticleSystem",NULL);
   tolua_beginmodule(tolua_S,"CCParticleSystemQuad");
+   tolua_function(tolua_S,"postStep",tolua_Cocos2d_CCParticleSystemQuad_postStep00);
+   tolua_function(tolua_S,"setDisplayFrame",tolua_Cocos2d_CCParticleSystemQuad_setDisplayFrame00);
+   tolua_function(tolua_S,"setTexture",tolua_Cocos2d_CCParticleSystemQuad_setTexture00);
+   tolua_function(tolua_S,"setTextureWithRect",tolua_Cocos2d_CCParticleSystemQuad_setTextureWithRect00);
+   tolua_function(tolua_S,"setBatchNode",tolua_Cocos2d_CCParticleSystemQuad_setBatchNode00);
+   tolua_function(tolua_S,"setTotalParticles",tolua_Cocos2d_CCParticleSystemQuad_setTotalParticles00);
+   tolua_function(tolua_S,"updateQuadWithParticle",tolua_Cocos2d_CCParticleSystemQuad_updateQuadWithParticle00);
+   tolua_function(tolua_S,"postStep",tolua_Cocos2d_CCParticleSystemQuad_postStep01);
+   tolua_function(tolua_S,"setTotalParticles",tolua_Cocos2d_CCParticleSystemQuad_setTotalParticles01);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCParticleSystemQuad_create00);
+   tolua_function(tolua_S,"create",tolua_Cocos2d_CCParticleSystemQuad_create01);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCParticleBatchNode","CCParticleBatchNode","CCNode",NULL);
   tolua_beginmodule(tolua_S,"CCParticleBatchNode");
+   tolua_function(tolua_S,"createWithTexture",tolua_Cocos2d_CCParticleBatchNode_createWithTexture00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCParticleBatchNode_create00);
-   tolua_function(tolua_S,"create",tolua_Cocos2d_CCParticleBatchNode_create01);
    tolua_function(tolua_S,"addChild",tolua_Cocos2d_CCParticleBatchNode_addChild00);
    tolua_function(tolua_S,"addChild",tolua_Cocos2d_CCParticleBatchNode_addChild01);
    tolua_function(tolua_S,"addChild",tolua_Cocos2d_CCParticleBatchNode_addChild02);
@@ -38397,6 +52607,7 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
   tolua_function(tolua_S,"ccpRotate",tolua_Cocos2d_ccpRotate00);
   tolua_function(tolua_S,"ccpUnrotate",tolua_Cocos2d_ccpUnrotate00);
   tolua_function(tolua_S,"ccpLengthSQ",tolua_Cocos2d_ccpLengthSQ00);
+  tolua_function(tolua_S,"ccpDistanceSQ",tolua_Cocos2d_ccpDistanceSQ00);
   tolua_function(tolua_S,"ccpLength",tolua_Cocos2d_ccpLength00);
   tolua_function(tolua_S,"ccpDistance",tolua_Cocos2d_ccpDistance00);
   tolua_function(tolua_S,"ccpNormalize",tolua_Cocos2d_ccpNormalize00);
@@ -38470,6 +52681,7 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"getInterval",tolua_Cocos2d_CCTimer_getInterval00);
    tolua_function(tolua_S,"setInterval",tolua_Cocos2d_CCTimer_setInterval00);
    tolua_function(tolua_S,"update",tolua_Cocos2d_CCTimer_update00);
+   tolua_function(tolua_S,"timerWithScriptHandler",tolua_Cocos2d_CCTimer_timerWithScriptHandler00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCScheduler","CCScheduler","CCObject",NULL);
   tolua_beginmodule(tolua_S,"CCScheduler");
@@ -38481,6 +52693,7 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"unscheduleUpdateForTarget",tolua_Cocos2d_CCScheduler_unscheduleUpdateForTarget00);
    tolua_function(tolua_S,"unscheduleAllSelectorsForTarget",tolua_Cocos2d_CCScheduler_unscheduleAllSelectorsForTarget00);
    tolua_function(tolua_S,"unscheduleAllSelectors",tolua_Cocos2d_CCScheduler_unscheduleAllSelectors00);
+   tolua_function(tolua_S,"unscheduleAllSelectorsWithMinPriority",tolua_Cocos2d_CCScheduler_unscheduleAllSelectorsWithMinPriority00);
    tolua_function(tolua_S,"pauseTarget",tolua_Cocos2d_CCScheduler_pauseTarget00);
    tolua_function(tolua_S,"resumeTarget",tolua_Cocos2d_CCScheduler_resumeTarget00);
    tolua_function(tolua_S,"isTargetPaused",tolua_Cocos2d_CCScheduler_isTargetPaused00);
@@ -38498,6 +52711,7 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"getTextureAtlas",tolua_Cocos2d_CCSprite_getTextureAtlas00);
    tolua_function(tolua_S,"setBlendFunc",tolua_Cocos2d_CCSprite_setBlendFunc00);
    tolua_function(tolua_S,"getBlendFunc",tolua_Cocos2d_CCSprite_getBlendFunc00);
+   tolua_function(tolua_S,"getOffsetPosition",tolua_Cocos2d_CCSprite_getOffsetPosition00);
    tolua_function(tolua_S,"setDirtyRecursively",tolua_Cocos2d_CCSprite_setDirtyRecursively00);
    tolua_function(tolua_S,"ignoreAnchorPointForPosition",tolua_Cocos2d_CCSprite_ignoreAnchorPointForPosition00);
    tolua_function(tolua_S,"setFlipX",tolua_Cocos2d_CCSprite_setFlipX00);
@@ -38505,6 +52719,22 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"isFlipX",tolua_Cocos2d_CCSprite_isFlipX00);
    tolua_function(tolua_S,"isFlipY",tolua_Cocos2d_CCSprite_isFlipY00);
    tolua_function(tolua_S,"updateColor",tolua_Cocos2d_CCSprite_updateColor00);
+   tolua_function(tolua_S,"removeChild",tolua_Cocos2d_CCSprite_removeChild00);
+   tolua_function(tolua_S,"removeAllChildrenWithCleanup",tolua_Cocos2d_CCSprite_removeAllChildrenWithCleanup00);
+   tolua_function(tolua_S,"reorderChild",tolua_Cocos2d_CCSprite_reorderChild00);
+   tolua_function(tolua_S,"addChild",tolua_Cocos2d_CCSprite_addChild00);
+   tolua_function(tolua_S,"addChild",tolua_Cocos2d_CCSprite_addChild01);
+   tolua_function(tolua_S,"addChild",tolua_Cocos2d_CCSprite_addChild02);
+   tolua_function(tolua_S,"sortAllChildren",tolua_Cocos2d_CCSprite_sortAllChildren00);
+   tolua_function(tolua_S,"setRotation",tolua_Cocos2d_CCSprite_setRotation00);
+   tolua_function(tolua_S,"setSkewX",tolua_Cocos2d_CCSprite_setSkewX00);
+   tolua_function(tolua_S,"setSkewY",tolua_Cocos2d_CCSprite_setSkewY00);
+   tolua_function(tolua_S,"setScale",tolua_Cocos2d_CCSprite_setScale00);
+   tolua_function(tolua_S,"setScaleX",tolua_Cocos2d_CCSprite_setScaleX00);
+   tolua_function(tolua_S,"setScaleY",tolua_Cocos2d_CCSprite_setScaleY00);
+   tolua_function(tolua_S,"setVertexZ",tolua_Cocos2d_CCSprite_setVertexZ00);
+   tolua_function(tolua_S,"setAnchorPoint",tolua_Cocos2d_CCSprite_setAnchorPoint00);
+   tolua_function(tolua_S,"setVisible",tolua_Cocos2d_CCSprite_setVisible00);
    tolua_function(tolua_S,"setOpacity",tolua_Cocos2d_CCSprite_setOpacity00);
    tolua_function(tolua_S,"getOpacity",tolua_Cocos2d_CCSprite_getOpacity00);
    tolua_variable(tolua_S,"opacity",tolua_get_CCSprite_opacity,tolua_set_CCSprite_opacity);
@@ -38516,15 +52746,21 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"getTexture",tolua_Cocos2d_CCSprite_getTexture00);
    tolua_function(tolua_S,"updateTransform",tolua_Cocos2d_CCSprite_updateTransform00);
    tolua_function(tolua_S,"setTextureRect",tolua_Cocos2d_CCSprite_setTextureRect00);
+   tolua_function(tolua_S,"setTextureRect",tolua_Cocos2d_CCSprite_setTextureRect01);
+   tolua_function(tolua_S,"setVertexRect",tolua_Cocos2d_CCSprite_setVertexRect00);
    tolua_function(tolua_S,"setDisplayFrame",tolua_Cocos2d_CCSprite_setDisplayFrame00);
    tolua_function(tolua_S,"isFrameDisplayed",tolua_Cocos2d_CCSprite_isFrameDisplayed00);
+   tolua_function(tolua_S,"displayFrame",tolua_Cocos2d_CCSprite_displayFrame00);
+   tolua_function(tolua_S,"setBatchNode",tolua_Cocos2d_CCSprite_setBatchNode00);
+   tolua_function(tolua_S,"getBatchNode",tolua_Cocos2d_CCSprite_getBatchNode00);
    tolua_function(tolua_S,"setDisplayFrameWithAnimationName",tolua_Cocos2d_CCSprite_setDisplayFrameWithAnimationName00);
+   tolua_function(tolua_S,"createWithTexture",tolua_Cocos2d_CCSprite_createWithTexture00);
+   tolua_function(tolua_S,"createWithTexture",tolua_Cocos2d_CCSprite_createWithTexture01);
+   tolua_function(tolua_S,"createWithSpriteFrame",tolua_Cocos2d_CCSprite_createWithSpriteFrame00);
+   tolua_function(tolua_S,"createWithSpriteFrameName",tolua_Cocos2d_CCSprite_createWithSpriteFrameName00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCSprite_create00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCSprite_create01);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCSprite_create02);
-   tolua_function(tolua_S,"createWithSpriteFrameName",tolua_Cocos2d_CCSprite_createWithSpriteFrameName00);
-   tolua_function(tolua_S,"create",tolua_Cocos2d_CCSprite_create03);
-   tolua_function(tolua_S,"create",tolua_Cocos2d_CCSprite_create04);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCSpriteBatchNode","CCSpriteBatchNode","CCNode",NULL);
   tolua_beginmodule(tolua_S,"CCSpriteBatchNode");
@@ -38534,19 +52770,28 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"increaseAtlasCapacity",tolua_Cocos2d_CCSpriteBatchNode_increaseAtlasCapacity00);
    tolua_function(tolua_S,"removeChildAtIndex",tolua_Cocos2d_CCSpriteBatchNode_removeChildAtIndex00);
    tolua_function(tolua_S,"insertChild",tolua_Cocos2d_CCSpriteBatchNode_insertChild00);
+   tolua_function(tolua_S,"appendChild",tolua_Cocos2d_CCSpriteBatchNode_appendChild00);
    tolua_function(tolua_S,"removeSpriteFromAtlas",tolua_Cocos2d_CCSpriteBatchNode_removeSpriteFromAtlas00);
    tolua_function(tolua_S,"rebuildIndexInOrder",tolua_Cocos2d_CCSpriteBatchNode_rebuildIndexInOrder00);
    tolua_function(tolua_S,"highestAtlasIndexInChild",tolua_Cocos2d_CCSpriteBatchNode_highestAtlasIndexInChild00);
    tolua_function(tolua_S,"lowestAtlasIndexInChild",tolua_Cocos2d_CCSpriteBatchNode_lowestAtlasIndexInChild00);
    tolua_function(tolua_S,"atlasIndexForChild",tolua_Cocos2d_CCSpriteBatchNode_atlasIndexForChild00);
+   tolua_function(tolua_S,"reorderBatch",tolua_Cocos2d_CCSpriteBatchNode_reorderBatch00);
    tolua_function(tolua_S,"setTexture",tolua_Cocos2d_CCSpriteBatchNode_setTexture00);
    tolua_function(tolua_S,"getTexture",tolua_Cocos2d_CCSpriteBatchNode_getTexture00);
    tolua_function(tolua_S,"setBlendFunc",tolua_Cocos2d_CCSpriteBatchNode_setBlendFunc00);
    tolua_function(tolua_S,"getBlendFunc",tolua_Cocos2d_CCSpriteBatchNode_getBlendFunc00);
+   tolua_function(tolua_S,"addChild",tolua_Cocos2d_CCSpriteBatchNode_addChild00);
+   tolua_function(tolua_S,"addChild",tolua_Cocos2d_CCSpriteBatchNode_addChild01);
+   tolua_function(tolua_S,"addChild",tolua_Cocos2d_CCSpriteBatchNode_addChild02);
+   tolua_function(tolua_S,"reorderChild",tolua_Cocos2d_CCSpriteBatchNode_reorderChild00);
+   tolua_function(tolua_S,"removeChild",tolua_Cocos2d_CCSpriteBatchNode_removeChild00);
+   tolua_function(tolua_S,"removeAllChildrenWithCleanup",tolua_Cocos2d_CCSpriteBatchNode_removeAllChildrenWithCleanup00);
+   tolua_function(tolua_S,"sortAllChildren",tolua_Cocos2d_CCSpriteBatchNode_sortAllChildren00);
+   tolua_function(tolua_S,"createWithTexture",tolua_Cocos2d_CCSpriteBatchNode_createWithTexture00);
+   tolua_function(tolua_S,"createWithTexture",tolua_Cocos2d_CCSpriteBatchNode_createWithTexture01);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCSpriteBatchNode_create00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCSpriteBatchNode_create01);
-   tolua_function(tolua_S,"create",tolua_Cocos2d_CCSpriteBatchNode_create02);
-   tolua_function(tolua_S,"create",tolua_Cocos2d_CCSpriteBatchNode_create03);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCSpriteFrame","CCSpriteFrame","CCObject",NULL);
   tolua_beginmodule(tolua_S,"CCSpriteFrame");
@@ -38560,12 +52805,16 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"setOffsetInPixels",tolua_Cocos2d_CCSpriteFrame_setOffsetInPixels00);
    tolua_function(tolua_S,"getOriginalSizeInPixels",tolua_Cocos2d_CCSpriteFrame_getOriginalSizeInPixels00);
    tolua_function(tolua_S,"setOriginalSizeInPixels",tolua_Cocos2d_CCSpriteFrame_setOriginalSizeInPixels00);
+   tolua_function(tolua_S,"getOriginalSize",tolua_Cocos2d_CCSpriteFrame_getOriginalSize00);
+   tolua_function(tolua_S,"setOriginalSize",tolua_Cocos2d_CCSpriteFrame_setOriginalSize00);
    tolua_function(tolua_S,"getTexture",tolua_Cocos2d_CCSpriteFrame_getTexture00);
    tolua_function(tolua_S,"setTexture",tolua_Cocos2d_CCSpriteFrame_setTexture00);
+   tolua_function(tolua_S,"getOffset",tolua_Cocos2d_CCSpriteFrame_getOffset00);
+   tolua_function(tolua_S,"setOffset",tolua_Cocos2d_CCSpriteFrame_setOffset00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCSpriteFrame_create00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCSpriteFrame_create01);
-   tolua_function(tolua_S,"create",tolua_Cocos2d_CCSpriteFrame_create02);
-   tolua_function(tolua_S,"create",tolua_Cocos2d_CCSpriteFrame_create03);
+   tolua_function(tolua_S,"createWithTexture",tolua_Cocos2d_CCSpriteFrame_createWithTexture00);
+   tolua_function(tolua_S,"createWithTexture",tolua_Cocos2d_CCSpriteFrame_createWithTexture01);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCSpriteFrameCache","CCSpriteFrameCache","CCObject",NULL);
   tolua_beginmodule(tolua_S,"CCSpriteFrameCache");
@@ -38591,9 +52840,10 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"boolValue",tolua_Cocos2d_CCString_boolValue00);
    tolua_function(tolua_S,"getCString",tolua_Cocos2d_CCString_getCString00);
    tolua_function(tolua_S,"length",tolua_Cocos2d_CCString_length00);
+   tolua_function(tolua_S,"compare",tolua_Cocos2d_CCString_compare00);
    tolua_function(tolua_S,"isEqual",tolua_Cocos2d_CCString_isEqual00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCString_create00);
-   tolua_function(tolua_S,"create",tolua_Cocos2d_CCString_create01);
+   tolua_function(tolua_S,"createWithData",tolua_Cocos2d_CCString_createWithData00);
    tolua_function(tolua_S,"createWithContentsOfFile",tolua_Cocos2d_CCString_createWithContentsOfFile00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCTextFieldTTF","CCTextFieldTTF","CCLabelTTF",NULL);
@@ -38630,6 +52880,8 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
   tolua_constant(tolua_S,"kTexture2DPixelFormat_Default",kTexture2DPixelFormat_Default);
   tolua_cclass(tolua_S,"CCTexture2D","CCTexture2D","CCObject",NULL);
   tolua_beginmodule(tolua_S,"CCTexture2D");
+   tolua_function(tolua_S,"releaseData",tolua_Cocos2d_CCTexture2D_releaseData00);
+   tolua_function(tolua_S,"keepData",tolua_Cocos2d_CCTexture2D_keepData00);
    tolua_function(tolua_S,"getPixelFormat",tolua_Cocos2d_CCTexture2D_getPixelFormat00);
    tolua_function(tolua_S,"getPixelsWide",tolua_Cocos2d_CCTexture2D_getPixelsWide00);
    tolua_function(tolua_S,"getPixelsHigh",tolua_Cocos2d_CCTexture2D_getPixelsHigh00);
@@ -38648,7 +52900,9 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"setAntiAliasTexParameters",tolua_Cocos2d_CCTexture2D_setAntiAliasTexParameters00);
    tolua_function(tolua_S,"setAliasTexParameters",tolua_Cocos2d_CCTexture2D_setAliasTexParameters00);
    tolua_function(tolua_S,"generateMipmap",tolua_Cocos2d_CCTexture2D_generateMipmap00);
+   tolua_function(tolua_S,"stringForFormat",tolua_Cocos2d_CCTexture2D_stringForFormat00);
    tolua_function(tolua_S,"bitsPerPixelForFormat",tolua_Cocos2d_CCTexture2D_bitsPerPixelForFormat00);
+   tolua_function(tolua_S,"bitsPerPixelForFormat",tolua_Cocos2d_CCTexture2D_bitsPerPixelForFormat01);
    tolua_function(tolua_S,"setDefaultAlphaPixelFormat",tolua_Cocos2d_CCTexture2D_setDefaultAlphaPixelFormat00);
    tolua_function(tolua_S,"defaultAlphaPixelFormat",tolua_Cocos2d_CCTexture2D_defaultAlphaPixelFormat00);
   tolua_endmodule(tolua_S);
@@ -38668,15 +52922,20 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"resizeCapacity",tolua_Cocos2d_CCTextureAtlas_resizeCapacity00);
    tolua_function(tolua_S,"drawNumberOfQuads",tolua_Cocos2d_CCTextureAtlas_drawNumberOfQuads00);
    tolua_function(tolua_S,"drawNumberOfQuads",tolua_Cocos2d_CCTextureAtlas_drawNumberOfQuads01);
+   tolua_function(tolua_S,"increaseTotalQuadsWith",tolua_Cocos2d_CCTextureAtlas_increaseTotalQuadsWith00);
+   tolua_function(tolua_S,"moveQuadsFromIndex",tolua_Cocos2d_CCTextureAtlas_moveQuadsFromIndex00);
+   tolua_function(tolua_S,"moveQuadsFromIndex",tolua_Cocos2d_CCTextureAtlas_moveQuadsFromIndex01);
+   tolua_function(tolua_S,"fillWithEmptyQuadsFromIndex",tolua_Cocos2d_CCTextureAtlas_fillWithEmptyQuadsFromIndex00);
    tolua_function(tolua_S,"drawQuads",tolua_Cocos2d_CCTextureAtlas_drawQuads00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCTextureAtlas_create00);
-   tolua_function(tolua_S,"create",tolua_Cocos2d_CCTextureAtlas_create01);
+   tolua_function(tolua_S,"createWithTexture",tolua_Cocos2d_CCTextureAtlas_createWithTexture00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCTextureCache","CCTextureCache","CCObject",NULL);
   tolua_beginmodule(tolua_S,"CCTextureCache");
    tolua_function(tolua_S,"addImage",tolua_Cocos2d_CCTextureCache_addImage00);
    tolua_function(tolua_S,"addUIImage",tolua_Cocos2d_CCTextureCache_addUIImage00);
    tolua_function(tolua_S,"textureForKey",tolua_Cocos2d_CCTextureCache_textureForKey00);
+   tolua_function(tolua_S,"addPVRImage",tolua_Cocos2d_CCTextureCache_addPVRImage00);
    tolua_function(tolua_S,"removeAllTextures",tolua_Cocos2d_CCTextureCache_removeAllTextures00);
    tolua_function(tolua_S,"removeUnusedTextures",tolua_Cocos2d_CCTextureCache_removeUnusedTextures00);
    tolua_function(tolua_S,"removeTexture",tolua_Cocos2d_CCTextureCache_removeTexture00);
@@ -38695,6 +52954,7 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"setTGAInfo",tolua_Cocos2d_CCTileMapAtlas_setTGAInfo00);
    tolua_function(tolua_S,"setTile",tolua_Cocos2d_CCTileMapAtlas_setTile00);
    tolua_function(tolua_S,"releaseMap",tolua_Cocos2d_CCTileMapAtlas_releaseMap00);
+   tolua_function(tolua_S,"tileAt",tolua_Cocos2d_CCTileMapAtlas_tileAt00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCTileMapAtlas_create00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCTMXLayer","CCTMXLayer","CCSpriteBatchNode",NULL);
@@ -38714,7 +52974,6 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"releaseMap",tolua_Cocos2d_CCTMXLayer_releaseMap00);
    tolua_function(tolua_S,"tileAt",tolua_Cocos2d_CCTMXLayer_tileAt00);
    tolua_function(tolua_S,"tileGIDAt",tolua_Cocos2d_CCTMXLayer_tileGIDAt00);
-   tolua_function(tolua_S,"tileGIDAt",tolua_Cocos2d_CCTMXLayer_tileGIDAt01);
    tolua_function(tolua_S,"setTileGID",tolua_Cocos2d_CCTMXLayer_setTileGID00);
    tolua_function(tolua_S,"setTileGID",tolua_Cocos2d_CCTMXLayer_setTileGID01);
    tolua_function(tolua_S,"removeTileAt",tolua_Cocos2d_CCTMXLayer_removeTileAt00);
@@ -38758,6 +53017,7 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"propertyNamed",tolua_Cocos2d_CCTMXTiledMap_propertyNamed00);
    tolua_function(tolua_S,"propertiesForGID",tolua_Cocos2d_CCTMXTiledMap_propertiesForGID00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCTMXTiledMap_create00);
+   tolua_function(tolua_S,"createWithXML",tolua_Cocos2d_CCTMXTiledMap_createWithXML00);
   tolua_endmodule(tolua_S);
   tolua_constant(tolua_S,"TMXLayerAttribNone",TMXLayerAttribNone);
   tolua_constant(tolua_S,"TMXLayerAttribBase64",TMXLayerAttribBase64);
@@ -38769,6 +53029,11 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
   tolua_constant(tolua_S,"TMXPropertyObjectGroup",TMXPropertyObjectGroup);
   tolua_constant(tolua_S,"TMXPropertyObject",TMXPropertyObject);
   tolua_constant(tolua_S,"TMXPropertyTile",TMXPropertyTile);
+  tolua_constant(tolua_S,"kCCTMXTileHorizontalFlag",kCCTMXTileHorizontalFlag);
+  tolua_constant(tolua_S,"kCCTMXTileVerticalFlag",kCCTMXTileVerticalFlag);
+  tolua_constant(tolua_S,"kCCTMXTileDiagonalFlag",kCCTMXTileDiagonalFlag);
+  tolua_constant(tolua_S,"kCCFlipedAll",kCCFlipedAll);
+  tolua_constant(tolua_S,"kCCFlippedMask",kCCFlippedMask);
   tolua_cclass(tolua_S,"CCTMXLayerInfo","CCTMXLayerInfo","CCObject",NULL);
   tolua_beginmodule(tolua_S,"CCTMXLayerInfo");
    tolua_function(tolua_S,"getProperties",tolua_Cocos2d_CCTMXLayerInfo_getProperties00);
@@ -38812,7 +53077,9 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"endElement",tolua_Cocos2d_CCTMXMapInfo_endElement00);
    tolua_function(tolua_S,"textHandler",tolua_Cocos2d_CCTMXMapInfo_textHandler00);
    tolua_function(tolua_S,"parseXMLFile",tolua_Cocos2d_CCTMXMapInfo_parseXMLFile00);
+   tolua_function(tolua_S,"parseXMLString",tolua_Cocos2d_CCTMXMapInfo_parseXMLString00);
    tolua_function(tolua_S,"formatWithTMXFile",tolua_Cocos2d_CCTMXMapInfo_formatWithTMXFile00);
+   tolua_function(tolua_S,"formatWithXML",tolua_Cocos2d_CCTMXMapInfo_formatWithXML00);
   tolua_endmodule(tolua_S);
   tolua_constant(tolua_S,"CCTOUCHBEGAN",CCTOUCHBEGAN);
   tolua_constant(tolua_S,"CCTOUCHMOVED",CCTOUCHMOVED);
@@ -38820,8 +53087,12 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
   tolua_constant(tolua_S,"CCTOUCHCANCELLED",CCTOUCHCANCELLED);
   tolua_cclass(tolua_S,"CCTouch","CCTouch","CCObject",NULL);
   tolua_beginmodule(tolua_S,"CCTouch");
-   tolua_function(tolua_S,"locationInView",tolua_Cocos2d_CCTouch_locationInView00);
-   tolua_function(tolua_S,"previousLocationInView",tolua_Cocos2d_CCTouch_previousLocationInView00);
+   tolua_function(tolua_S,"getLocation",tolua_Cocos2d_CCTouch_getLocation00);
+   tolua_function(tolua_S,"getPreviousLocation",tolua_Cocos2d_CCTouch_getPreviousLocation00);
+   tolua_function(tolua_S,"getDelta",tolua_Cocos2d_CCTouch_getDelta00);
+   tolua_function(tolua_S,"getLocationInView",tolua_Cocos2d_CCTouch_getLocationInView00);
+   tolua_function(tolua_S,"getPreviousLocationInView",tolua_Cocos2d_CCTouch_getPreviousLocationInView00);
+   tolua_function(tolua_S,"setTouchInfo",tolua_Cocos2d_CCTouch_setTouchInfo00);
    tolua_function(tolua_S,"getID",tolua_Cocos2d_CCTouch_getID00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCEvent","CCEvent","CCObject",NULL);
@@ -38979,6 +53250,7 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_variable(tolua_S,"a",tolua_get_ccColor4F_a,tolua_set_ccColor4F_a);
   tolua_endmodule(tolua_S);
   tolua_function(tolua_S,"ccc4FFromccc3B",tolua_Cocos2d_ccc4FFromccc3B00);
+  tolua_function(tolua_S,"ccc4f",tolua_Cocos2d_ccc4f00);
   tolua_function(tolua_S,"ccc4FFromccc4B",tolua_Cocos2d_ccc4FFromccc4B00);
   tolua_function(tolua_S,"ccc4FEqual",tolua_Cocos2d_ccc4FEqual00);
   #ifdef __cplusplus
@@ -39025,7 +53297,11 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_variable(tolua_S,"bl",tolua_get_ccQuad2_bl,tolua_set_ccQuad2_bl);
    tolua_variable(tolua_S,"br",tolua_get_ccQuad2_br,tolua_set_ccQuad2_br);
   tolua_endmodule(tolua_S);
+  #ifdef __cplusplus
+  tolua_cclass(tolua_S,"ccQuad3","ccQuad3","",tolua_collect_ccQuad3);
+  #else
   tolua_cclass(tolua_S,"ccQuad3","ccQuad3","",NULL);
+  #endif
   tolua_beginmodule(tolua_S,"ccQuad3");
    tolua_variable(tolua_S,"bl",tolua_get_ccQuad3_bl,tolua_set_ccQuad3_bl);
    tolua_variable(tolua_S,"br",tolua_get_ccQuad3_br,tolua_set_ccQuad3_br);
@@ -39100,6 +53376,19 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
   tolua_constant(tolua_S,"kCCTextAlignmentLeft",kCCTextAlignmentLeft);
   tolua_constant(tolua_S,"kCCTextAlignmentCenter",kCCTextAlignmentCenter);
   tolua_constant(tolua_S,"kCCTextAlignmentRight",kCCTextAlignmentRight);
+  tolua_cclass(tolua_S,"ccT2F_Quad","ccT2F_Quad","",NULL);
+  tolua_beginmodule(tolua_S,"ccT2F_Quad");
+   tolua_variable(tolua_S,"bl",tolua_get_ccT2F_Quad_bl,tolua_set_ccT2F_Quad_bl);
+   tolua_variable(tolua_S,"br",tolua_get_ccT2F_Quad_br,tolua_set_ccT2F_Quad_br);
+   tolua_variable(tolua_S,"tl",tolua_get_ccT2F_Quad_tl,tolua_set_ccT2F_Quad_tl);
+   tolua_variable(tolua_S,"tr",tolua_get_ccT2F_Quad_tr,tolua_set_ccT2F_Quad_tr);
+  tolua_endmodule(tolua_S);
+  tolua_cclass(tolua_S,"ccAnimationFrameData","ccAnimationFrameData","",NULL);
+  tolua_beginmodule(tolua_S,"ccAnimationFrameData");
+   tolua_variable(tolua_S,"texCoords",tolua_get_ccAnimationFrameData_texCoords,tolua_set_ccAnimationFrameData_texCoords);
+   tolua_variable(tolua_S,"delay",tolua_get_ccAnimationFrameData_delay,tolua_set_ccAnimationFrameData_delay);
+   tolua_variable(tolua_S,"size",tolua_get_ccAnimationFrameData_size,tolua_set_ccAnimationFrameData_size);
+  tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCUserDefault","CCUserDefault","",NULL);
   tolua_beginmodule(tolua_S,"CCUserDefault");
    tolua_function(tolua_S,"getBoolForKey",tolua_Cocos2d_CCUserDefault_getBoolForKey00);
@@ -39112,6 +53401,7 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"setFloatForKey",tolua_Cocos2d_CCUserDefault_setFloatForKey00);
    tolua_function(tolua_S,"setDoubleForKey",tolua_Cocos2d_CCUserDefault_setDoubleForKey00);
    tolua_function(tolua_S,"setStringForKey",tolua_Cocos2d_CCUserDefault_setStringForKey00);
+   tolua_function(tolua_S,"flush",tolua_Cocos2d_CCUserDefault_flush00);
    tolua_function(tolua_S,"sharedUserDefault",tolua_Cocos2d_CCUserDefault_sharedUserDefault00);
    tolua_function(tolua_S,"purgeSharedUserDefault",tolua_Cocos2d_CCUserDefault_purgeSharedUserDefault00);
    tolua_function(tolua_S,"getXMLFilePath",tolua_Cocos2d_CCUserDefault_getXMLFilePath00);
