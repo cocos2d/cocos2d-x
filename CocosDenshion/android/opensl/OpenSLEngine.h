@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <ctype.h>
 #include <map>
+#include <vector>
 #include <SLES/OpenSLES.h>
 #include <SLES/OpenSLES_Android.h>
 #include <sys/types.h>
@@ -42,11 +43,16 @@ public:
 	int getBackgroundVolume();
 
 
+
+	bool recreatePlayer(const char* filename);
+
 	unsigned int preloadEffect(const char * filename);
 
 	void unloadEffect(const char * filename);
 
-	void setEffectState(unsigned int effectID, int state);
+	int getEffectState(unsigned int effectID);
+
+	void setEffectState(unsigned int effectID, int state, bool isClear = false);
 
 	void setAllEffectState(int state);
 
@@ -56,9 +62,9 @@ public:
 
 	void setEffectLooping(unsigned int effectID, bool isLooping);
 
-	void setEffectsVolume(int volume);
+	void setEffectsVolume(float volume);
 
-	int getEffectsVolume();
+	float getEffectsVolume();
 
 private:
 	SLmillibel m_musicVolume;

@@ -438,7 +438,7 @@ std::string ShaderPlasma::subtitle()
 class SpriteBlur : public CCSprite
 {
 public:
-    void setBlurSize(CCFloat f);
+    void setBlurSize(float f);
     bool initWithTexture(CCTexture2D* texture, const CCRect&  rect);
     void draw();
 
@@ -544,7 +544,7 @@ void SpriteBlur::draw()
     CC_INCREMENT_GL_DRAWS(1);
 }
 
-void SpriteBlur::setBlurSize(CCFloat f)
+void SpriteBlur::setBlurSize(float f)
 {
     CCSize s = getTexture()->getContentSizeInPixels();
 

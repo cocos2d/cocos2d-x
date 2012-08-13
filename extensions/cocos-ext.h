@@ -25,8 +25,12 @@
 #include "CCBReader/CCScrollViewLoader.h"
 #include "CCBReader/CCSpriteLoader.h"
 
-#include "UI/CCControlExtension/CCControlExtensions.h"
-#include "UI/CCScrollView/CCScrollView.h"
+#include "GUI/CCControlExtension/CCControlExtensions.h"
+#include "GUI/CCScrollView/CCScrollView.h"
+
+#include "network/HttpRequest.h"
+#include "network/HttpResponse.h"
+#include "network/HttpClient.h"
 
 #endif /* __COCOS2D_EXT_H__ */
 

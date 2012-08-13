@@ -155,4 +155,9 @@ bool CCApplication::isIpad()
     return false;
 }
 
+bool CCApplication::isIos()
+{
+    return true;
+}
+
 NS_CC_END

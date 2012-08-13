@@ -176,13 +176,13 @@ void KeyboardNotificationLayer::keyboardWillShow(CCIMEKeyboardNotificationInfo& 
         rectTracked.origin.x, rectTracked.origin.y, rectTracked.size.width, rectTracked.size.height);
 
     // if the keyboard area doesn't intersect with the tracking node area, nothing need to do.
-    if (! CCRect::CCRectIntersectsRect(rectTracked, info.end))
+    if (! rectTracked.intersectsRect(info.end))
     {
         return;
     }
 
     // assume keyboard at the bottom of screen, calculate the vertical adjustment.
-    float adjustVert = CCRect::CCRectGetMaxY(info.end) - CCRect::CCRectGetMinY(rectTracked);
+    float adjustVert = info.end.getMaxY() - rectTracked.getMinY();
     CCLOG("TextInputTest:needAdjustVerticalPosition(%f)", adjustVert);
 
     // move all the children node of KeyboardNotificationLayer
@@ -204,8 +204,7 @@ void KeyboardNotificationLayer::keyboardWillShow(CCIMEKeyboardNotificationInfo& 
 bool KeyboardNotificationLayer::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 {
     CCLOG("++++++++++++++++++++++++++++++++++++++++++++");
-    m_beginPos = pTouch->locationInView();    
-    m_beginPos = CCDirector::sharedDirector()->convertToGL(m_beginPos);
+    m_beginPos = pTouch->getLocation();    
     return true;
 }
 
@@ -216,8 +215,7 @@ void KeyboardNotificationLayer::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
         return;
     }
     
-    CCPoint endPos = pTouch->locationInView();    
-    endPos = CCDirector::sharedDirector()->convertToGL(endPos);
+    CCPoint endPos = pTouch->getLocation();    
 
     float delta = 5.0f;
     if (::abs(endPos.x - m_beginPos.x) > delta
@@ -237,7 +235,7 @@ void KeyboardNotificationLayer::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
     CCLOG("KeyboardNotificationLayer:TrackNode at(origin:%f,%f, size:%f,%f)",
         rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
 
-    this->onClickTrackNode(CCRect::CCRectContainsPoint(rect, point));
+    this->onClickTrackNode(rect.containsPoint(point));
     CCLOG("----------------------------------");
 }
 

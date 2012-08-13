@@ -74,6 +74,8 @@ private:
     screen_event_t 	 m_screenEvent;
     screen_window_t  m_screenWindow;
     screen_context_t m_screenContext;
+    int				 m_screenWidth;
+    int				 m_screenHeight;
     char 			 m_windowGroupID[16];
 };
 

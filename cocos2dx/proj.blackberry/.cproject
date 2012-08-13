@@ -42,6 +42,7 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/blackberry"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/kazmath/include"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/blackberry/include/grskia"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/blackberry/include/libtiff"/>
 								</option>
 								<option id="com.qnx.qcc.option.compiler.ccoptions.1020837365" name="Compiler Options (-Wc,)" superClass="com.qnx.qcc.option.compiler.ccoptions" valueType="stringList">
 									<listOptionValue builtIn="false" value="-mfpu=neon"/>
@@ -143,7 +144,9 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/include"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/blackberry"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/kazmath/include"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/blackberry/include/grskia"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/blackberry/include/libtiff"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.compiler.686663849" superClass="com.qnx.qcc.inputType.compiler"/>
 							</tool>
@@ -241,7 +244,9 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/include"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/blackberry"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/kazmath/include"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/blackberry/include/grskia"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/blackberry/include/libtiff"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.compiler.60228339" superClass="com.qnx.qcc.inputType.compiler"/>
 							</tool>
@@ -342,7 +347,9 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/include"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/blackberry"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/kazmath/include"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/blackberry/include/grskia"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/blackberry/include/libtiff"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.compiler.1193350404" superClass="com.qnx.qcc.inputType.compiler"/>
 							</tool>
@@ -441,7 +448,9 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/include"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/blackberry"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/kazmath/include"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/blackberry/include/grskia"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/blackberry/include/libtiff"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.compiler.353833674" superClass="com.qnx.qcc.inputType.compiler"/>
 							</tool>
@@ -542,7 +551,9 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/include"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/blackberry"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/kazmath/include"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/blackberry/include/grskia"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/blackberry/include/libtiff"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.compiler.1783715221" superClass="com.qnx.qcc.inputType.compiler"/>
 							</tool>
@@ -642,7 +653,9 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/include"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/blackberry"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/kazmath/include"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/blackberry/include/grskia"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/blackberry/include/libtiff"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.compiler.2131157600" superClass="com.qnx.qcc.inputType.compiler"/>
 							</tool>

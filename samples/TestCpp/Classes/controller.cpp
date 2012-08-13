@@ -197,8 +197,7 @@ void TestController::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
     CCSetIterator it = pTouches->begin();
     CCTouch* touch = (CCTouch*)(*it);
 
-    m_tBeginPos = touch->locationInView();    
-    m_tBeginPos = CCDirector::sharedDirector()->convertToGL( m_tBeginPos );
+    m_tBeginPos = touch->getLocation();    
 }
 
 void TestController::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
@@ -206,8 +205,7 @@ void TestController::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
     CCSetIterator it = pTouches->begin();
     CCTouch* touch = (CCTouch*)(*it);
 
-    CCPoint touchLocation = touch->locationInView();    
-    touchLocation = CCDirector::sharedDirector()->convertToGL( touchLocation );
+    CCPoint touchLocation = touch->getLocation();    
     float nMoveY = touchLocation.y - m_tBeginPos.y;
 
     CCPoint curPos  = m_pItemMenu->getPosition();

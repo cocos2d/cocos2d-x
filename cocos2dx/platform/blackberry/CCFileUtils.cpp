@@ -58,6 +58,7 @@ void CCFileUtils::purgeCachedEntries()
 
 }
 
+#if 0
 void CCFileUtils::setResourcePath(const char *pszResourcePath)
 {
     CCAssert(pszResourcePath != NULL, "[FileUtils setResourcePath] -- wrong resource path");
@@ -75,7 +76,7 @@ void CCFileUtils::setResourcePath(const char *pszResourcePath)
 	}
 }
 
-const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath, ccResolutionType *pResolutionType)
+const char* CCFileUtils::full_pathFromRelativePath(const char *pszRelativePath, ccResolutionType *pResolutionType)
 {
 	// It works like this: if the relative path already includes the resource path
 	// it will be returned as it is
@@ -92,6 +93,12 @@ const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath, c
 		return pszRelativePath;
 	}
 }
+#endif
+
+const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
+{
+    return pszRelativePath;
+}
 
 const char *CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const char *pszRelativeFile)
 {
@@ -105,50 +112,41 @@ const char *CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const
 
 unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize)
 {	
-	unsigned char * buffer = NULL;
+	unsigned char *buffer = 0;
+	std::string full_path(pszFileName);
 
-	std::string full_path = pszFileName;
-
-	// If it is not inside resource path
-	if (full_path.find(s_strResourcePath) == std::string::npos) 
-    {
-			full_path = s_strResourcePath + pszFileName;
+	if (!pszFileName || !pszMode)
+	{
+		return 0;
 	}
 
-	// if specify the zip file,load from it first
-	if (s_pszZipFilePath[0] != 0)
-	{
-		buffer = getFileDataFromZip(s_pszZipFilePath.c_str(), full_path.c_str(), pSize);
-	}
+	full_path.insert(0, m_obDirectory.c_str());
 
-	// if that failed then let's try and load the file ourselves
-	if (!buffer)
+	do
 	{
-		// read the file from hardware
+		// read from other path than user set it
 		FILE *fp = fopen(full_path.c_str(), pszMode);
-		if (fp)
-		{
-			fseek(fp, 0, SEEK_END);
-			*pSize = ftell(fp);
-			fseek(fp, 0, SEEK_SET);
-			buffer = new unsigned char[*pSize];
-			*pSize = fread(buffer, sizeof(unsigned char), *pSize, fp);
-			fclose(fp);
-		}
-	}
+		CC_BREAK_IF(!fp);
 
-	// we couldn't find the file
+		unsigned long size;
+		fseek(fp,0,SEEK_END);
+		size = ftell(fp);
+		fseek(fp,0,SEEK_SET);
+		buffer = new unsigned char[size];
+		size = fread(buffer, sizeof(unsigned char), size, fp);
+		fclose(fp);
+
+		if (pSize)
+		{
+			*pSize = size;
+		}
+	} while (0);
+
 	if (!buffer && isPopupNotify())
 	{
 		std::string title = "Notification";
 		std::string msg = "Get data from file(";
-		msg.append(full_path);
-		if (s_pszZipFilePath[0] != 0)
-		{
-			msg.append(") in zip archive(").append(s_pszZipFilePath);
-		}
-		msg.append(") failed!");
-
+		msg.append(full_path.c_str()).append(") failed!");
 		CCMessageBox(msg.c_str(), title.c_str());
 	}
 

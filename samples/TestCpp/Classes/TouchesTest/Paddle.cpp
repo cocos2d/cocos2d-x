@@ -49,7 +49,7 @@ void Paddle::onExit()
 
 bool Paddle::containsTouchLocation(CCTouch* touch)
 {
-    return CCRect::CCRectContainsPoint(rect(), convertTouchToNodeSpaceAR(touch));
+    return rect().containsPoint(convertTouchToNodeSpaceAR(touch));
 }
 
 bool Paddle::ccTouchBegan(CCTouch* touch, CCEvent* event)
@@ -72,8 +72,7 @@ void Paddle::ccTouchMoved(CCTouch* touch, CCEvent* event)
     
     CCAssert(m_state == kPaddleStateGrabbed, L"Paddle - Unexpected state!");    
     
-    CCPoint touchPoint = touch->locationInView();
-    touchPoint = CCDirector::sharedDirector()->convertToGL( touchPoint );
+    CCPoint touchPoint = touch->getLocation();
     
     setPosition( CCPointMake(touchPoint.x, getPosition().y) );
 }

@@ -279,9 +279,7 @@ void Sprite1::ccTouchesEnded(CCSet* touches, CCEvent* event)
         if(!touch)
             break;
 
-        CCPoint location = touch->locationInView();
-        
-        location = CCDirector::sharedDirector()->convertToGL(location);
+        CCPoint location = touch->getLocation();
     
         addNewSpriteWithCoords( location );
     }
@@ -355,10 +353,8 @@ void SpriteBatchNode1::ccTouchesEnded(CCSet* touches, CCEvent* event)
         if(!touch)
             break;
 
-        CCPoint location = touch->locationInView();
-        
-        location = CCDirector::sharedDirector()->convertToGL(location);
-    
+        CCPoint location = touch->getLocation();
+            
         addNewSpriteWithCoords( location );
     }
 
@@ -3358,11 +3354,6 @@ bool DoubleSprite::initWithTexture(CCTexture2D* texture, CCRect rect)
 {
     if( CCSprite::initWithTexture(texture, rect)) 
     {
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-        ccResolutionType resolutionType = texture->getResolutionType();
-        m_bHD = ( resolutionType == kCCResolutioniPhoneRetinaDisplay || resolutionType == kCCResolutioniPadRetinaDisplay );
-#endif
         return true;
     }
 

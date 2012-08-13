@@ -37,7 +37,7 @@
 									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform"/>
 									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/blackberry"/>
 								</option>
-								<option id="com.qnx.qcc.option.compiler.qccoptions.1299872702" name="QCC Options" superClass="com.qnx.qcc.option.compiler.qccoptions" valueType="stringList"/>
+								<option id="com.qnx.qcc.option.compiler.qccoptions.1299872702" name="QCC Options" superClass="com.qnx.qcc.option.compiler.qccoptions"/>
 								<inputType id="com.qnx.qcc.inputType.compiler.1174705489" superClass="com.qnx.qcc.inputType.compiler"/>
 							</tool>
 							<tool id="com.qnx.qcc.tool.assembler.298372204" name="QCC Assembler" superClass="com.qnx.qcc.tool.assembler">
@@ -48,6 +48,7 @@
 								<option id="com.qnx.qcc.option.linker.debug.2017324338" name="Debug (-g)" superClass="com.qnx.qcc.option.linker.debug" value="true" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.linker.langcpp.670245200" name="C++ (-lang-c++)" superClass="com.qnx.qcc.option.linker.langcpp" value="true" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.linker.libraries.1760958269" name="Libraries (-l)" superClass="com.qnx.qcc.option.linker.libraries" valueType="libs">
+									<listOptionValue builtIn="false" value="tiff"/>
 									<listOptionValue builtIn="false" value="EGL"/>
 									<listOptionValue builtIn="false" value="GLESv2"/>
 									<listOptionValue builtIn="false" value="bps"/>
@@ -63,6 +64,7 @@
 								<option id="com.qnx.qcc.option.linker.security.1794064552" name="Enhanced Security (-Wl,-z,relro -Wl,-z,now)" superClass="com.qnx.qcc.option.linker.security" value="true" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.linker.libraryPaths.1757627798" name="Library Paths (-L)" superClass="com.qnx.qcc.option.linker.libraryPaths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/lib"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/libtiff/Device-Debug}&quot;"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/usr/lib"/>
 									<listOptionValue builtIn="false" value="../../../../cocos2dx/proj.blackberry/${ConfigName}"/>
 									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/blackberry/libraries/${CPUVARDIR}"/>
@@ -70,7 +72,7 @@
 								<option id="com.qnx.qcc.option.linker.ldoptions.1363839882" name="Linker Options (-Wl,)" superClass="com.qnx.qcc.option.linker.ldoptions" valueType="stringList">
 									<listOptionValue builtIn="false" value="../../../../cocos2dx/proj.blackberry/${ConfigName}/libcocos2dx.a"/>
 								</option>
-								<option id="com.qnx.qcc.option.linker.qccoptions.1444329036" name="QCC Options" superClass="com.qnx.qcc.option.linker.qccoptions" valueType="stringList"/>
+								<option id="com.qnx.qcc.option.linker.qccoptions.1444329036" name="QCC Options" superClass="com.qnx.qcc.option.linker.qccoptions"/>
 								<inputType id="com.qnx.qcc.inputType.linker.697035559" superClass="com.qnx.qcc.inputType.linker">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>

@@ -80,6 +80,8 @@ CCEGLView::CCEGLView()
 	m_eglSurface = EGL_NO_SURFACE;
     m_screenEvent = 0;
     m_screenWindow = 0;
+    m_screenWidth = 0;
+    m_screenHeight = 0;
 
     strcpy(m_windowGroupID, "");
     snprintf(m_windowGroupID, sizeof(m_windowGroupID), "%d", getpid());
@@ -176,7 +178,7 @@ void CCEGLView::initEGLFunctions()
 
 bool CCEGLView::isOpenGLReady()
 {
-	return (m_isGLInitialized && m_sSizeInPixel.width != 0 && m_sSizeInPixel.height != 0);
+	return (m_isGLInitialized && m_screenWidth != 0 && m_screenHeight != 0);
 }
 
 void CCEGLView::end()
@@ -209,8 +211,8 @@ void CCEGLView::showKeyboard()
 	float factor = m_fScreenScaleFactor / CC_CONTENT_SCALE_FACTOR();
 	height = (float)height / factor;
 
-	CCRect rect_begin(0, 0 - height, m_sSizeInPixel.width / factor, height);
-	CCRect rect_end(0, 0, m_sSizeInPixel.width / factor, height);
+	CCRect rect_begin(0, 0 - height, m_screenWidth / factor, height);
+	CCRect rect_end(0, 0, m_screenWidth / factor, height);
 
     CCIMEKeyboardNotificationInfo info;
     info.begin = rect_begin;
@@ -535,8 +537,8 @@ bool CCEGLView::initGL()
 	eglQuerySurface(m_eglDisplay, m_eglSurface, EGL_WIDTH, &width);
     eglQuerySurface(m_eglDisplay, m_eglSurface, EGL_HEIGHT, &height);
 
-	m_sSizeInPixel.width = width;
-	m_sSizeInPixel.height = height;
+	m_screenWidth = width;
+	m_screenHeight = height;
 
     // Set vsync.
 //    eglSwapInterval(m_eglDisplay, screenSwapInterval);

@@ -86,7 +86,7 @@ void FontTest::showFont(const char *pFont)
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
     CCSize blockSize = CCSizeMake(s.width/3, 200);
-    CCFloat fontSize = 26;
+    float fontSize = 26;
 
     removeChildByTag(kTagLabel1, true);
     removeChildByTag(kTagLabel2, true);
@@ -94,9 +94,12 @@ void FontTest::showFont(const char *pFont)
     removeChildByTag(kTagLabel4, true);
 
     CCLabelTTF *top = CCLabelTTF::create(pFont, pFont, 24);
-    CCLabelTTF *left = CCLabelTTF::create("alignment left", blockSize, kCCTextAlignmentLeft, verticalAlignment[vAlignIdx], pFont, fontSize);
-    CCLabelTTF *center = CCLabelTTF::create("alignment center", blockSize, kCCTextAlignmentCenter, verticalAlignment[vAlignIdx], pFont, fontSize);
-    CCLabelTTF *right = CCLabelTTF::create("alignment right", blockSize, kCCTextAlignmentRight, verticalAlignment[vAlignIdx], pFont, fontSize);
+    CCLabelTTF *left = CCLabelTTF::create("alignment left", pFont, fontSize,
+                                          blockSize, kCCTextAlignmentLeft, verticalAlignment[vAlignIdx]);
+    CCLabelTTF *center = CCLabelTTF::create("alignment center", pFont, fontSize,
+                                            blockSize, kCCTextAlignmentCenter, verticalAlignment[vAlignIdx]);
+    CCLabelTTF *right = CCLabelTTF::create("alignment right", pFont, fontSize,
+                                           blockSize, kCCTextAlignmentRight, verticalAlignment[vAlignIdx]);
 
     CCLayerColor *leftColor = CCLayerColor::create(ccc4(100, 100, 100, 255), blockSize.width, blockSize.height);
     CCLayerColor *centerColor = CCLayerColor::create(ccc4(200, 100, 100, 255), blockSize.width, blockSize.height);

@@ -32,9 +32,7 @@ THE SOFTWARE.
 #include "CCFileUtils.h"
 #include "png.h"
 #include "jpeglib.h"
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_BLACKBERRY)
 #include "tiffio.h"
-#endif
 #include <string>
 #include <ctype.h>
 
@@ -142,13 +140,11 @@ bool CCImage::initWithImageData(void * pData,
             bRet = _initWithJpgData(pData, nDataLen);
             break;
         }
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_BLACKBERRY)
         else if (kFmtTiff == eFmt)
         {
             bRet = _initWithTiffData(pData, nDataLen);
             break;
         }
-#endif
         else if (kFmtRawData == eFmt)
         {
             bRet = _initWithRawData(pData, nDataLen, nWidth, nHeight, nBitsPerComponent);
@@ -173,7 +169,7 @@ bool CCImage::initWithImageData(void * pData,
                     break;
                 }
             }
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_BLACKBERRY)
+
             // if it is a tiff file buffer.
             if (nDataLen > 2)
             {
@@ -186,7 +182,7 @@ bool CCImage::initWithImageData(void * pData,
                     break;
                 }
             }
-#endif
+
             // if it is a jpeg file buffer.
             if (nDataLen > 2)
             {
@@ -402,7 +398,6 @@ bool CCImage::_initWithPngData(void * pData, int nDatalen)
     return bRet;
 }
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_BLACKBERRY)
 static tmsize_t _tiffReadProc(thandle_t fd, void* buf, tmsize_t size)
 {
     tImageSource* isource = (tImageSource*)fd;
@@ -513,6 +508,7 @@ static void _tiffUnmapProc(thandle_t fd, void* base, toff_t size)
 bool CCImage::_initWithTiffData(void* pData, int nDataLen)
 {
     bool bRet = false;
+#if 0
     do 
     {
         // set the read call back function
@@ -577,9 +573,9 @@ bool CCImage::_initWithTiffData(void* pData, int nDataLen)
 
         bRet = true;
     } while (0);
+#endif
     return bRet;
 }
-#endif
 
 bool CCImage::_initWithRawData(void * pData, int nDatalen, int nWidth, int nHeight, int nBitsPerComponent)
 {

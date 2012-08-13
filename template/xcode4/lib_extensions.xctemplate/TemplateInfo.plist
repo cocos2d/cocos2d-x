@@ -496,355 +496,355 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>libs/extensions/UI/CCControlExtension/CCControl.cpp</key>
+		<key>libs/extensions/GUI/CCControlExtension/CCControl.cpp</key>
 		<dict>
 			<key>Group</key>
 			<array>
 				<string>libs</string>
 				<string>extensions</string>
-				<string>UI</string>
+				<string>GUI</string>
 				<string>CCControlExtension</string>
 			</array>
 			<key>Path</key>
-			<string>libs/extensions/UI/CCControlExtension/CCControl.cpp</string>
+			<string>libs/extensions/GUI/CCControlExtension/CCControl.cpp</string>
 		</dict>
-		<key>libs/extensions/UI/CCControlExtension/CCControl.h</key>
+		<key>libs/extensions/GUI/CCControlExtension/CCControl.h</key>
 		<dict>
 			<key>Group</key>
 			<array>
 				<string>libs</string>
 				<string>extensions</string>
-				<string>UI</string>
+				<string>GUI</string>
 				<string>CCControlExtension</string>
 			</array>
 			<key>Path</key>
-			<string>libs/extensions/UI/CCControlExtension/CCControl.h</string>
+			<string>libs/extensions/GUI/CCControlExtension/CCControl.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>libs/extensions/UI/CCControlExtension/CCControlButton.cpp</key>
+		<key>libs/extensions/GUI/CCControlExtension/CCControlButton.cpp</key>
 		<dict>
 			<key>Group</key>
 			<array>
 				<string>libs</string>
 				<string>extensions</string>
-				<string>UI</string>
+				<string>GUI</string>
 				<string>CCControlExtension</string>
 			</array>
 			<key>Path</key>
-			<string>libs/extensions/UI/CCControlExtension/CCControlButton.cpp</string>
+			<string>libs/extensions/GUI/CCControlExtension/CCControlButton.cpp</string>
 		</dict>
-		<key>libs/extensions/UI/CCControlExtension/CCControlButton.h</key>
+		<key>libs/extensions/GUI/CCControlExtension/CCControlButton.h</key>
 		<dict>
 			<key>Group</key>
 			<array>
 				<string>libs</string>
 				<string>extensions</string>
-				<string>UI</string>
+				<string>GUI</string>
 				<string>CCControlExtension</string>
 			</array>
 			<key>Path</key>
-			<string>libs/extensions/UI/CCControlExtension/CCControlButton.h</string>
+			<string>libs/extensions/GUI/CCControlExtension/CCControlButton.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>libs/extensions/UI/CCControlExtension/CCControlColourPicker.cpp</key>
+		<key>libs/extensions/GUI/CCControlExtension/CCControlColourPicker.cpp</key>
 		<dict>
 			<key>Group</key>
 			<array>
 				<string>libs</string>
 				<string>extensions</string>
-				<string>UI</string>
+				<string>GUI</string>
 				<string>CCControlExtension</string>
 			</array>
 			<key>Path</key>
-			<string>libs/extensions/UI/CCControlExtension/CCControlColourPicker.cpp</string>
+			<string>libs/extensions/GUI/CCControlExtension/CCControlColourPicker.cpp</string>
 		</dict>
-		<key>libs/extensions/UI/CCControlExtension/CCControlColourPicker.h</key>
+		<key>libs/extensions/GUI/CCControlExtension/CCControlColourPicker.h</key>
 		<dict>
 			<key>Group</key>
 			<array>
 				<string>libs</string>
 				<string>extensions</string>
-				<string>UI</string>
+				<string>GUI</string>
 				<string>CCControlExtension</string>
 			</array>
 			<key>Path</key>
-			<string>libs/extensions/UI/CCControlExtension/CCControlColourPicker.h</string>
+			<string>libs/extensions/GUI/CCControlExtension/CCControlColourPicker.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>libs/extensions/UI/CCControlExtension/CCControlExtensions.h</key>
+		<key>libs/extensions/GUI/CCControlExtension/CCControlExtensions.h</key>
 		<dict>
 			<key>Group</key>
 			<array>
 				<string>libs</string>
 				<string>extensions</string>
-				<string>UI</string>
+				<string>GUI</string>
 				<string>CCControlExtension</string>
 			</array>
 			<key>Path</key>
-			<string>libs/extensions/UI/CCControlExtension/CCControlExtensions.h</string>
+			<string>libs/extensions/GUI/CCControlExtension/CCControlExtensions.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>libs/extensions/UI/CCControlExtension/CCControlHuePicker.cpp</key>
+		<key>libs/extensions/GUI/CCControlExtension/CCControlHuePicker.cpp</key>
 		<dict>
 			<key>Group</key>
 			<array>
 				<string>libs</string>
 				<string>extensions</string>
-				<string>UI</string>
+				<string>GUI</string>
 				<string>CCControlExtension</string>
 			</array>
 			<key>Path</key>
-			<string>libs/extensions/UI/CCControlExtension/CCControlHuePicker.cpp</string>
+			<string>libs/extensions/GUI/CCControlExtension/CCControlHuePicker.cpp</string>
 		</dict>
-		<key>libs/extensions/UI/CCControlExtension/CCControlHuePicker.h</key>
+		<key>libs/extensions/GUI/CCControlExtension/CCControlHuePicker.h</key>
 		<dict>
 			<key>Group</key>
 			<array>
 				<string>libs</string>
 				<string>extensions</string>
-				<string>UI</string>
+				<string>GUI</string>
 				<string>CCControlExtension</string>
 			</array>
 			<key>Path</key>
-			<string>libs/extensions/UI/CCControlExtension/CCControlHuePicker.h</string>
+			<string>libs/extensions/GUI/CCControlExtension/CCControlHuePicker.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>libs/extensions/UI/CCControlExtension/CCControlSaturationBrightnessPicker.cpp</key>
+		<key>libs/extensions/GUI/CCControlExtension/CCControlSaturationBrightnessPicker.cpp</key>
 		<dict>
 			<key>Group</key>
 			<array>
 				<string>libs</string>
 				<string>extensions</string>
-				<string>UI</string>
+				<string>GUI</string>
 				<string>CCControlExtension</string>
 			</array>
 			<key>Path</key>
-			<string>libs/extensions/UI/CCControlExtension/CCControlSaturationBrightnessPicker.cpp</string>
+			<string>libs/extensions/GUI/CCControlExtension/CCControlSaturationBrightnessPicker.cpp</string>
 		</dict>
-		<key>libs/extensions/UI/CCControlExtension/CCControlSaturationBrightnessPicker.h</key>
+		<key>libs/extensions/GUI/CCControlExtension/CCControlSaturationBrightnessPicker.h</key>
 		<dict>
 			<key>Group</key>
 			<array>
 				<string>libs</string>
 				<string>extensions</string>
-				<string>UI</string>
+				<string>GUI</string>
 				<string>CCControlExtension</string>
 			</array>
 			<key>Path</key>
-			<string>libs/extensions/UI/CCControlExtension/CCControlSaturationBrightnessPicker.h</string>
+			<string>libs/extensions/GUI/CCControlExtension/CCControlSaturationBrightnessPicker.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>libs/extensions/UI/CCControlExtension/CCControlSlider.cpp</key>
+		<key>libs/extensions/GUI/CCControlExtension/CCControlSlider.cpp</key>
 		<dict>
 			<key>Group</key>
 			<array>
 				<string>libs</string>
 				<string>extensions</string>
-				<string>UI</string>
+				<string>GUI</string>
 				<string>CCControlExtension</string>
 			</array>
 			<key>Path</key>
-			<string>libs/extensions/UI/CCControlExtension/CCControlSlider.cpp</string>
+			<string>libs/extensions/GUI/CCControlExtension/CCControlSlider.cpp</string>
 		</dict>
-		<key>libs/extensions/UI/CCControlExtension/CCControlSlider.h</key>
+		<key>libs/extensions/GUI/CCControlExtension/CCControlSlider.h</key>
 		<dict>
 			<key>Group</key>
 			<array>
 				<string>libs</string>
 				<string>extensions</string>
-				<string>UI</string>
+				<string>GUI</string>
 				<string>CCControlExtension</string>
 			</array>
 			<key>Path</key>
-			<string>libs/extensions/UI/CCControlExtension/CCControlSlider.h</string>
+			<string>libs/extensions/GUI/CCControlExtension/CCControlSlider.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>libs/extensions/UI/CCControlExtension/CCControlSwitch.cpp</key>
+		<key>libs/extensions/GUI/CCControlExtension/CCControlSwitch.cpp</key>
 		<dict>
 			<key>Group</key>
 			<array>
 				<string>libs</string>
 				<string>extensions</string>
-				<string>UI</string>
+				<string>GUI</string>
 				<string>CCControlExtension</string>
 			</array>
 			<key>Path</key>
-			<string>libs/extensions/UI/CCControlExtension/CCControlSwitch.cpp</string>
+			<string>libs/extensions/GUI/CCControlExtension/CCControlSwitch.cpp</string>
 		</dict>
-		<key>libs/extensions/UI/CCControlExtension/CCControlSwitch.h</key>
+		<key>libs/extensions/GUI/CCControlExtension/CCControlSwitch.h</key>
 		<dict>
 			<key>Group</key>
 			<array>
 				<string>libs</string>
 				<string>extensions</string>
-				<string>UI</string>
+				<string>GUI</string>
 				<string>CCControlExtension</string>
 			</array>
 			<key>Path</key>
-			<string>libs/extensions/UI/CCControlExtension/CCControlSwitch.h</string>
+			<string>libs/extensions/GUI/CCControlExtension/CCControlSwitch.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>libs/extensions/UI/CCControlExtension/CCControlUtils.cpp</key>
+		<key>libs/extensions/GUI/CCControlExtension/CCControlUtils.cpp</key>
 		<dict>
 			<key>Group</key>
 			<array>
 				<string>libs</string>
 				<string>extensions</string>
-				<string>UI</string>
+				<string>GUI</string>
 				<string>CCControlExtension</string>
 			</array>
 			<key>Path</key>
-			<string>libs/extensions/UI/CCControlExtension/CCControlUtils.cpp</string>
+			<string>libs/extensions/GUI/CCControlExtension/CCControlUtils.cpp</string>
 		</dict>
-		<key>libs/extensions/UI/CCControlExtension/CCControlUtils.h</key>
+		<key>libs/extensions/GUI/CCControlExtension/CCControlUtils.h</key>
 		<dict>
 			<key>Group</key>
 			<array>
 				<string>libs</string>
 				<string>extensions</string>
-				<string>UI</string>
+				<string>GUI</string>
 				<string>CCControlExtension</string>
 			</array>
 			<key>Path</key>
-			<string>libs/extensions/UI/CCControlExtension/CCControlUtils.h</string>
+			<string>libs/extensions/GUI/CCControlExtension/CCControlUtils.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>libs/extensions/UI/CCControlExtension/CCInvocation.cpp</key>
+		<key>libs/extensions/GUI/CCControlExtension/CCInvocation.cpp</key>
 		<dict>
 			<key>Group</key>
 			<array>
 				<string>libs</string>
 				<string>extensions</string>
-				<string>UI</string>
+				<string>GUI</string>
 				<string>CCControlExtension</string>
 			</array>
 			<key>Path</key>
-			<string>libs/extensions/UI/CCControlExtension/CCInvocation.cpp</string>
+			<string>libs/extensions/GUI/CCControlExtension/CCInvocation.cpp</string>
 		</dict>
-		<key>libs/extensions/UI/CCControlExtension/CCInvocation.h</key>
+		<key>libs/extensions/GUI/CCControlExtension/CCInvocation.h</key>
 		<dict>
 			<key>Group</key>
 			<array>
 				<string>libs</string>
 				<string>extensions</string>
-				<string>UI</string>
+				<string>GUI</string>
 				<string>CCControlExtension</string>
 			</array>
 			<key>Path</key>
-			<string>libs/extensions/UI/CCControlExtension/CCInvocation.h</string>
+			<string>libs/extensions/GUI/CCControlExtension/CCInvocation.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>libs/extensions/UI/CCControlExtension/CCMenuPassive.cpp</key>
+		<key>libs/extensions/GUI/CCControlExtension/CCMenuPassive.cpp</key>
 		<dict>
 			<key>Group</key>
 			<array>
 				<string>libs</string>
 				<string>extensions</string>
-				<string>UI</string>
+				<string>GUI</string>
 				<string>CCControlExtension</string>
 			</array>
 			<key>Path</key>
-			<string>libs/extensions/UI/CCControlExtension/CCMenuPassive.cpp</string>
+			<string>libs/extensions/GUI/CCControlExtension/CCMenuPassive.cpp</string>
 		</dict>
-		<key>libs/extensions/UI/CCControlExtension/CCMenuPassive.h</key>
+		<key>libs/extensions/GUI/CCControlExtension/CCMenuPassive.h</key>
 		<dict>
 			<key>Group</key>
 			<array>
 				<string>libs</string>
 				<string>extensions</string>
-				<string>UI</string>
+				<string>GUI</string>
 				<string>CCControlExtension</string>
 			</array>
 			<key>Path</key>
-			<string>libs/extensions/UI/CCControlExtension/CCMenuPassive.h</string>
+			<string>libs/extensions/GUI/CCControlExtension/CCMenuPassive.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>libs/extensions/UI/CCControlExtension/CCScale9Sprite.cpp</key>
+		<key>libs/extensions/GUI/CCControlExtension/CCScale9Sprite.cpp</key>
 		<dict>
 			<key>Group</key>
 			<array>
 				<string>libs</string>
 				<string>extensions</string>
-				<string>UI</string>
+				<string>GUI</string>
 				<string>CCControlExtension</string>
 			</array>
 			<key>Path</key>
-			<string>libs/extensions/UI/CCControlExtension/CCScale9Sprite.cpp</string>
+			<string>libs/extensions/GUI/CCControlExtension/CCScale9Sprite.cpp</string>
 		</dict>
-		<key>libs/extensions/UI/CCControlExtension/CCScale9Sprite.h</key>
+		<key>libs/extensions/GUI/CCControlExtension/CCScale9Sprite.h</key>
 		<dict>
 			<key>Group</key>
 			<array>
 				<string>libs</string>
 				<string>extensions</string>
-				<string>UI</string>
+				<string>GUI</string>
 				<string>CCControlExtension</string>
 			</array>
 			<key>Path</key>
-			<string>libs/extensions/UI/CCControlExtension/CCScale9Sprite.h</string>
+			<string>libs/extensions/GUI/CCControlExtension/CCScale9Sprite.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>libs/extensions/UI/CCControlExtension/CCSpacer.cpp</key>
+		<key>libs/extensions/GUI/CCControlExtension/CCSpacer.cpp</key>
 		<dict>
 			<key>Group</key>
 			<array>
 				<string>libs</string>
 				<string>extensions</string>
-				<string>UI</string>
+				<string>GUI</string>
 				<string>CCControlExtension</string>
 			</array>
 			<key>Path</key>
-			<string>libs/extensions/UI/CCControlExtension/CCSpacer.cpp</string>
+			<string>libs/extensions/GUI/CCControlExtension/CCSpacer.cpp</string>
 		</dict>
-		<key>libs/extensions/UI/CCControlExtension/CCSpacer.h</key>
+		<key>libs/extensions/GUI/CCControlExtension/CCSpacer.h</key>
 		<dict>
 			<key>Group</key>
 			<array>
 				<string>libs</string>
 				<string>extensions</string>
-				<string>UI</string>
+				<string>GUI</string>
 				<string>CCControlExtension</string>
 			</array>
 			<key>Path</key>
-			<string>libs/extensions/UI/CCControlExtension/CCSpacer.h</string>
+			<string>libs/extensions/GUI/CCControlExtension/CCSpacer.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>libs/extensions/UI/CCScrollView/CCScrollView.cpp</key>
+		<key>libs/extensions/GUI/CCScrollView/CCScrollView.cpp</key>
 		<dict>
 			<key>Group</key>
 			<array>
 				<string>libs</string>
 				<string>extensions</string>
-				<string>UI</string>
+				<string>GUI</string>
 				<string>CCScrollView</string>
 			</array>
 			<key>Path</key>
-			<string>libs/extensions/UI/CCScrollView/CCScrollView.cpp</string>
+			<string>libs/extensions/GUI/CCScrollView/CCScrollView.cpp</string>
 		</dict>
-		<key>libs/extensions/UI/CCScrollView/CCScrollView.h</key>
+		<key>libs/extensions/GUI/CCScrollView/CCScrollView.h</key>
 		<dict>
 			<key>Group</key>
 			<array>
 				<string>libs</string>
 				<string>extensions</string>
-				<string>UI</string>
+				<string>GUI</string>
 				<string>CCScrollView</string>
 			</array>
 			<key>Path</key>
-			<string>libs/extensions/UI/CCScrollView/CCScrollView.h</string>
+			<string>libs/extensions/GUI/CCScrollView/CCScrollView.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
@@ -891,33 +891,33 @@
 		<string>libs/extensions/CCBReader/CCSpriteLoader.h</string>
 		<string>libs/extensions/cocos-ext.h</string>
 		<string>libs/extensions/ExtensionMacros.h</string>
-		<string>libs/extensions/UI/CCControlExtension/CCControl.cpp</string>
-		<string>libs/extensions/UI/CCControlExtension/CCControl.h</string>
-		<string>libs/extensions/UI/CCControlExtension/CCControlButton.cpp</string>
-		<string>libs/extensions/UI/CCControlExtension/CCControlButton.h</string>
-		<string>libs/extensions/UI/CCControlExtension/CCControlColourPicker.cpp</string>
-		<string>libs/extensions/UI/CCControlExtension/CCControlColourPicker.h</string>
-		<string>libs/extensions/UI/CCControlExtension/CCControlExtensions.h</string>
-		<string>libs/extensions/UI/CCControlExtension/CCControlHuePicker.cpp</string>
-		<string>libs/extensions/UI/CCControlExtension/CCControlHuePicker.h</string>
-		<string>libs/extensions/UI/CCControlExtension/CCControlSaturationBrightnessPicker.cpp</string>
-		<string>libs/extensions/UI/CCControlExtension/CCControlSaturationBrightnessPicker.h</string>
-		<string>libs/extensions/UI/CCControlExtension/CCControlSlider.cpp</string>
-		<string>libs/extensions/UI/CCControlExtension/CCControlSlider.h</string>
-		<string>libs/extensions/UI/CCControlExtension/CCControlSwitch.cpp</string>
-		<string>libs/extensions/UI/CCControlExtension/CCControlSwitch.h</string>
-		<string>libs/extensions/UI/CCControlExtension/CCControlUtils.cpp</string>
-		<string>libs/extensions/UI/CCControlExtension/CCControlUtils.h</string>
-		<string>libs/extensions/UI/CCControlExtension/CCInvocation.cpp</string>
-		<string>libs/extensions/UI/CCControlExtension/CCInvocation.h</string>
-		<string>libs/extensions/UI/CCControlExtension/CCMenuPassive.cpp</string>
-		<string>libs/extensions/UI/CCControlExtension/CCMenuPassive.h</string>
-		<string>libs/extensions/UI/CCControlExtension/CCScale9Sprite.cpp</string>
-		<string>libs/extensions/UI/CCControlExtension/CCScale9Sprite.h</string>
-		<string>libs/extensions/UI/CCControlExtension/CCSpacer.cpp</string>
-		<string>libs/extensions/UI/CCControlExtension/CCSpacer.h</string>
-		<string>libs/extensions/UI/CCScrollView/CCScrollView.cpp</string>
-		<string>libs/extensions/UI/CCScrollView/CCScrollView.h</string>
+		<string>libs/extensions/GUI/CCControlExtension/CCControl.cpp</string>
+		<string>libs/extensions/GUI/CCControlExtension/CCControl.h</string>
+		<string>libs/extensions/GUI/CCControlExtension/CCControlButton.cpp</string>
+		<string>libs/extensions/GUI/CCControlExtension/CCControlButton.h</string>
+		<string>libs/extensions/GUI/CCControlExtension/CCControlColourPicker.cpp</string>
+		<string>libs/extensions/GUI/CCControlExtension/CCControlColourPicker.h</string>
+		<string>libs/extensions/GUI/CCControlExtension/CCControlExtensions.h</string>
+		<string>libs/extensions/GUI/CCControlExtension/CCControlHuePicker.cpp</string>
+		<string>libs/extensions/GUI/CCControlExtension/CCControlHuePicker.h</string>
+		<string>libs/extensions/GUI/CCControlExtension/CCControlSaturationBrightnessPicker.cpp</string>
+		<string>libs/extensions/GUI/CCControlExtension/CCControlSaturationBrightnessPicker.h</string>
+		<string>libs/extensions/GUI/CCControlExtension/CCControlSlider.cpp</string>
+		<string>libs/extensions/GUI/CCControlExtension/CCControlSlider.h</string>
+		<string>libs/extensions/GUI/CCControlExtension/CCControlSwitch.cpp</string>
+		<string>libs/extensions/GUI/CCControlExtension/CCControlSwitch.h</string>
+		<string>libs/extensions/GUI/CCControlExtension/CCControlUtils.cpp</string>
+		<string>libs/extensions/GUI/CCControlExtension/CCControlUtils.h</string>
+		<string>libs/extensions/GUI/CCControlExtension/CCInvocation.cpp</string>
+		<string>libs/extensions/GUI/CCControlExtension/CCInvocation.h</string>
+		<string>libs/extensions/GUI/CCControlExtension/CCMenuPassive.cpp</string>
+		<string>libs/extensions/GUI/CCControlExtension/CCMenuPassive.h</string>
+		<string>libs/extensions/GUI/CCControlExtension/CCScale9Sprite.cpp</string>
+		<string>libs/extensions/GUI/CCControlExtension/CCScale9Sprite.h</string>
+		<string>libs/extensions/GUI/CCControlExtension/CCSpacer.cpp</string>
+		<string>libs/extensions/GUI/CCControlExtension/CCSpacer.h</string>
+		<string>libs/extensions/GUI/CCScrollView/CCScrollView.cpp</string>
+		<string>libs/extensions/GUI/CCScrollView/CCScrollView.h</string>
 	</array>
 </dict>
 </plist>

@@ -44,7 +44,7 @@ CCAffineTransform PhysicsSprite::nodeToParentTransform(void)
     float c = cosf(radians);
     float s = sinf(radians);
 
-    if( ! CCPoint::CCPointEqualToPoint(m_tAnchorPointInPoints, CCPointZero) ){
+    if( ! m_tAnchorPointInPoints.equals(CCPointZero) ){
         x += c*-m_tAnchorPointInPoints.x + -s*-m_tAnchorPointInPoints.y;
         y += s*-m_tAnchorPointInPoints.x + c*-m_tAnchorPointInPoints.y;
     }
@@ -265,9 +265,7 @@ void Box2DTestLayer::ccTouchesEnded(CCSet* touches, CCEvent* event)
         if(!touch)
             break;
 
-        CCPoint location = touch->locationInView();
-        
-        location = CCDirector::sharedDirector()->convertToGL(location);
+        CCPoint location = touch->getLocation();
     
         addNewSpriteAtPosition( location );
     }

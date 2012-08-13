@@ -138,14 +138,7 @@ bool MenuLayer::ccTouchBegan(CCTouch* touch, CCEvent* event)
 
 void MenuLayer::ccTouchMoved(CCTouch* touch, CCEvent* event)
 {
-    CCPoint touchLocation = touch->locationInView();    
-    CCPoint prevLocation = touch->previousLocationInView();    
-    
-    touchLocation = CCDirector::sharedDirector()->convertToGL( touchLocation );
-    prevLocation = CCDirector::sharedDirector()->convertToGL( prevLocation );
-    
-    CCPoint diff = ccpSub(touchLocation,prevLocation);
-    
+    CCPoint diff = touch->getDelta();    
     CCNode *node = getChildByTag( kTagBox2DNode );
     CCPoint currentPos = node->getPosition();
     node->setPosition( ccpAdd(currentPos, diff) );
@@ -221,8 +214,7 @@ void Box2DView::registerWithTouchDispatcher()
 
 bool Box2DView::ccTouchBegan(CCTouch* touch, CCEvent* event)
 {
-    CCPoint touchLocation = touch->locationInView();    
-    touchLocation = CCDirector::sharedDirector()->convertToGL( touchLocation );
+    CCPoint touchLocation = touch->getLocation();    
 
     CCPoint nodePosition = convertToNodeSpace( touchLocation );
 //    NSLog(@"pos: %f,%f -> %f,%f", touchLocation.x, touchLocation.y, nodePosition.x, nodePosition.y);
@@ -232,8 +224,7 @@ bool Box2DView::ccTouchBegan(CCTouch* touch, CCEvent* event)
 
 void Box2DView::ccTouchMoved(CCTouch* touch, CCEvent* event)
 {
-    CCPoint touchLocation = touch->locationInView();    
-    touchLocation = CCDirector::sharedDirector()->convertToGL( touchLocation );
+    CCPoint touchLocation = touch->getLocation();    
     CCPoint nodePosition = convertToNodeSpace( touchLocation );
     
     m_test->MouseMove(b2Vec2(nodePosition.x,nodePosition.y));        
@@ -241,8 +232,7 @@ void Box2DView::ccTouchMoved(CCTouch* touch, CCEvent* event)
 
 void Box2DView::ccTouchEnded(CCTouch* touch, CCEvent* event)
 {
-    CCPoint touchLocation = touch->locationInView();    
-    touchLocation = CCDirector::sharedDirector()->convertToGL( touchLocation );
+    CCPoint touchLocation = touch->getLocation();    
     CCPoint nodePosition = convertToNodeSpace( touchLocation );
     
     m_test->MouseUp(b2Vec2(nodePosition.x,nodePosition.y));

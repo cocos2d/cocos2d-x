@@ -244,7 +244,7 @@ bool CCFollow::initWithTarget(CCNode *pFollowedNode, const CCRect& rect/* = CCRe
  
     pFollowedNode->retain();
     m_pobFollowedNode = pFollowedNode;
-    if (CCRect::CCRectEqualToRect(rect, CCRectZero))
+    if (rect.equals(CCRectZero))
     {
         m_bBoundarySet = false;
     }

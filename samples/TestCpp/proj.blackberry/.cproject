@@ -50,6 +50,7 @@
 								<option id="com.qnx.qcc.option.linker.debug.792220405" name="Debug (-g)" superClass="com.qnx.qcc.option.linker.debug" value="true" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.linker.langcpp.2142556069" name="C++ (-lang-c++)" superClass="com.qnx.qcc.option.linker.langcpp" value="true" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.linker.libraries.1795123296" name="Libraries (-l)" superClass="com.qnx.qcc.option.linker.libraries" valueType="libs">
+									<listOptionValue builtIn="false" value="tiff"/>
 									<listOptionValue builtIn="false" value="CocosDenshion"/>
 									<listOptionValue builtIn="false" value="EGL"/>
 									<listOptionValue builtIn="false" value="GLESv2"/>
@@ -70,6 +71,7 @@
 								<option id="com.qnx.qcc.option.linker.libraryPaths.1640397005" name="Library Paths (-L)" superClass="com.qnx.qcc.option.linker.libraryPaths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/lib"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/usr/lib"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/libtiff/Device-Release}&quot;"/>
 									<listOptionValue builtIn="false" value="../../../../cocos2dx/proj.blackberry/${ConfigName}"/>
 									<listOptionValue builtIn="false" value="../../../../CocosDenshion/proj.blackberry/${ConfigName}"/>
 									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/blackberry/libraries/${CPUVARDIR}"/>
@@ -153,6 +155,7 @@
 									<listOptionValue builtIn="false" value="alut"/>
 									<listOptionValue builtIn="false" value="asound"/>
 									<listOptionValue builtIn="false" value="xml2"/>
+									<listOptionValue builtIn="false" value="tiff"/>
 									<listOptionValue builtIn="false" value="jpeg"/>
 									<listOptionValue builtIn="false" value="png"/>
 									<listOptionValue builtIn="false" value="screen"/>
@@ -248,6 +251,7 @@
 									<listOptionValue builtIn="false" value="alut"/>
 									<listOptionValue builtIn="false" value="asound"/>
 									<listOptionValue builtIn="false" value="xml2"/>
+									<listOptionValue builtIn="false" value="tiff"/>
 									<listOptionValue builtIn="false" value="jpeg"/>
 									<listOptionValue builtIn="false" value="png"/>
 									<listOptionValue builtIn="false" value="screen"/>
@@ -342,6 +346,7 @@
 									<listOptionValue builtIn="false" value="alut"/>
 									<listOptionValue builtIn="false" value="asound"/>
 									<listOptionValue builtIn="false" value="xml2"/>
+									<listOptionValue builtIn="false" value="tiff"/>
 									<listOptionValue builtIn="false" value="jpeg"/>
 									<listOptionValue builtIn="false" value="png"/>
 									<listOptionValue builtIn="false" value="screen"/>
@@ -434,6 +439,7 @@
 									<listOptionValue builtIn="false" value="alut"/>
 									<listOptionValue builtIn="false" value="asound"/>
 									<listOptionValue builtIn="false" value="xml2"/>
+									<listOptionValue builtIn="false" value="tiff"/>
 									<listOptionValue builtIn="false" value="jpeg"/>
 									<listOptionValue builtIn="false" value="png"/>
 									<listOptionValue builtIn="false" value="screen"/>
@@ -527,6 +533,7 @@
 									<listOptionValue builtIn="false" value="alut"/>
 									<listOptionValue builtIn="false" value="asound"/>
 									<listOptionValue builtIn="false" value="xml2"/>
+									<listOptionValue builtIn="false" value="tiff"/>
 									<listOptionValue builtIn="false" value="jpeg"/>
 									<listOptionValue builtIn="false" value="png"/>
 									<listOptionValue builtIn="false" value="screen"/>
@@ -620,6 +627,7 @@
 									<listOptionValue builtIn="false" value="alut"/>
 									<listOptionValue builtIn="false" value="asound"/>
 									<listOptionValue builtIn="false" value="xml2"/>
+									<listOptionValue builtIn="false" value="tiff"/>
 									<listOptionValue builtIn="false" value="jpeg"/>
 									<listOptionValue builtIn="false" value="png"/>
 									<listOptionValue builtIn="false" value="screen"/>

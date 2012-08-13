@@ -645,8 +645,7 @@ const ccColor3B& CCMenu::getColor(void)
 
 CCMenuItem* CCMenu::itemForTouch(CCTouch *touch)
 {
-    CCPoint touchLocation = touch->locationInView();
-    touchLocation = CCDirector::sharedDirector()->convertToGL(touchLocation);
+    CCPoint touchLocation = touch->getLocation();
 
     if (m_pChildren && m_pChildren->count() > 0)
     {
@@ -660,7 +659,7 @@ CCMenuItem* CCMenu::itemForTouch(CCTouch *touch)
                 CCRect r = ((CCMenuItem*)pChild)->rect();
                 r.origin = CCPointZero;
 
-                if (CCRect::CCRectContainsPoint(r, local))
+                if (r.containsPoint(local))
                 {
                     return (CCMenuItem*)pChild;
                 }
