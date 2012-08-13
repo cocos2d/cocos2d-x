@@ -32,6 +32,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.AssetManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -80,6 +81,9 @@ public class Cocos2dxActivity extends Activity{
         };
     }
     
+    public static String getDeviceModel(){
+    	return Build.MODEL;
+    }
     
     public static AssetManager getAssetManager() {
     	return assetManager;
