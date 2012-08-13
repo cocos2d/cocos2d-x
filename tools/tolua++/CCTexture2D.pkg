@@ -38,6 +38,9 @@ typedef enum {
 
 class CCTexture2D : public CCObject
 {
+	void releaseData(void* data);
+	void* keepData(void* data, unsigned int length);
+
     CCTexture2DPixelFormat getPixelFormat();
 
     unsigned int getPixelsWide();
@@ -66,7 +69,9 @@ class CCTexture2D : public CCObject
     void setAliasTexParameters();
     void generateMipmap();
 
-    int bitsPerPixelForFormat();
+	const char* stringForFormat();
+    unsigned int bitsPerPixelForFormat();
+	unsigned int bitsPerPixelForFormat(CCTexture2DPixelFormat format);
 
     static void setDefaultAlphaPixelFormat(CCTexture2DPixelFormat format);
     static CCTexture2DPixelFormat defaultAlphaPixelFormat();

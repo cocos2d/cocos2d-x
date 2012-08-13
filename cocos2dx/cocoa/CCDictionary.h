@@ -141,23 +141,24 @@ public:
     virtual CCObject* copyWithZone(CCZone* pZone);
 
     /* static functions */
-    //@deprecated: This interface will be deprecated sooner or later.
+    //@deprecated: Please use create() instead. This interface will be deprecated sooner or later.
     CC_DEPRECATED_ATTRIBUTE static CCDictionary* dictionary();
 
-    //@deprecated: This interface will be deprecated sooner or later.
+    //@deprecated: Please use createWithDictionary(CCDictionary*) instead. This interface will be deprecated sooner or later.
     CC_DEPRECATED_ATTRIBUTE static CCDictionary* dictionaryWithDictionary(CCDictionary* srcDict);
+    
     /**
     @brief   Generate a CCDictionary pointer by file
     @param   pFileName  The file name of *.plist file
     @return  The CCDictionary pointer generated from the file
-    @deprecated: This interface will be deprecated sooner or later.
+    @deprecated: Please use createWithContentsOfFile(const char*) instead. This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCDictionary* dictionaryWithContentsOfFile(const char *pFileName);
 
     /*
     @brief The same meaning as dictionaryWithContentsOfFile(), but it doesn't call autorelease, so the
            invoker should call release().
-    @deprecated: This interface will be deprecated sooner or later.
+    @deprecated: Please use createWithContentsOfFileThreadSafe(const char*) instead. This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCDictionary* dictionaryWithContentsOfFileThreadSafe(const char *pFileName);
 

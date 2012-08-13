@@ -1,16 +1,22 @@
 
 class CCShakyTiles3D : public CCTiledGrid3DAction
 {
+	CCObject* copyWithZone(CCZone* pZone);
+
     static CCShakyTiles3D* create(int nRange, bool bShakeZ, ccGridSize gridSize, float duration);
 };
 
 class CCShatteredTiles3D : public CCTiledGrid3DAction
 {
+	CCObject* copyWithZone(CCZone* pZone);
+
     static CCShatteredTiles3D* create(int nRange, bool bShatterZ, ccGridSize gridSize, float duration);
 };
 
 class CCShuffleTiles : public CCTiledGrid3DAction
 {
+	CCObject* copyWithZone(CCZone* pZone);
+
     void shuffle(int *pArray, int nLen);
     ccGridSize getDelta(ccGridSize pos);
     void placeTile(ccGridSize pos, Tile *t);
@@ -34,6 +40,8 @@ class CCFadeOutBLTiles : public CCFadeOutTRTiles
 
 class CCFadeOutUpTiles : public CCFadeOutTRTiles
 {
+	void transformTile(ccGridSize pos, float distance);
+
     static CCFadeOutUpTiles* create(ccGridSize gridSize, float time);
 };
 
@@ -44,6 +52,8 @@ class CCFadeOutDownTiles : public CCFadeOutUpTiles
 
 class CCTurnOffTiles : public CCTiledGrid3DAction
 {
+	CCObject* copyWithZone(CCZone* pZone);
+
     void shuffle(int *pArray, int nLen);
     void turnOnTile(ccGridSize pos);
     void turnOffTile(ccGridSize pos);
@@ -54,6 +64,8 @@ class CCTurnOffTiles : public CCTiledGrid3DAction
 
 class CCWavesTiles3D : public CCTiledGrid3DAction
 {
+	CCObject* copyWithZone(CCZone* pZone);
+
     float getAmplitude(void);
     void setAmplitude(float fAmplitude);
     float getAmplitudeRate(void);
@@ -64,6 +76,8 @@ class CCWavesTiles3D : public CCTiledGrid3DAction
 
 class CCJumpTiles3D : public CCTiledGrid3DAction
 {
+	CCObject* copyWithZone(CCZone* pZone);
+
     float getAmplitude(void);
     void setAmplitude(float fAmplitude);
     float getAmplitudeRate(void);
@@ -74,10 +88,14 @@ class CCJumpTiles3D : public CCTiledGrid3DAction
 
 class CCSplitRows : public CCTiledGrid3DAction
 {
+	CCObject* copyWithZone(CCZone* pZone);
+
     static CCSplitRows* create(int nRows, float duration);
 };
 
 class CCSplitCols : public CCTiledGrid3DAction
 {
+	CCObject* copyWithZone(CCZone* pZone);
+
     static CCSplitCols* create(int nCols, float duration);
 };

@@ -60,6 +60,7 @@ public:
 
         oTempLine.iLineWidth = iCurXCursor - SHIFT6((face->glyph->metrics.horiAdvance + face->glyph->metrics.horiBearingX - face->glyph->metrics.width))/*-iInterval*/;//TODO interval
 		iMaxLineWidth = MAX(iMaxLineWidth, oTempLine.iLineWidth);
+
 		ss.clear();
 		ss.str("");
 		vLines.push_back(oTempLine);
@@ -68,13 +69,14 @@ public:
 	bool divideString(FT_Face face, const char* sText, int iMaxWidth, int iMaxHeight) {
 		const char* pText = sText;
 		int iError = 0;
-		int iCurXCursor;
+		int iCurXCursor, iCurYCursor;
 		iError = FT_Load_Glyph(face, FT_Get_Char_Index(face, *pText),
 				FT_LOAD_DEFAULT);
 		if (iError) {
 			return false;
 		}
 		iCurXCursor = -SHIFT6(face->glyph->metrics.horiBearingX);
+
 		//init stringstream
 		stringstream ss;
 
@@ -109,7 +111,6 @@ public:
 				buildLine(ss, face , iCurXCursor, cLastCh);
 
 				iCurXCursor = -SHIFT6(face->glyph->metrics.horiBearingX);
-
 			}
 
 			cLastCh = *pText;
@@ -157,6 +158,25 @@ public:
 		return iRet;
 	}
 
+	int computeLineStartY( FT_Face face, CCImage::ETextAlign eAlignMask, int txtHeight, int borderHeight ){
+		int iRet;
+		if (eAlignMask == CCImage::kAlignCenter || eAlignMask == CCImage::kAlignLeft ||
+			eAlignMask == CCImage::kAlignRight ) {
+			//vertical center
+			iRet = (borderHeight - txtHeight)/2 + SHIFT6(face->size->metrics.ascender);
+
+		} else if (eAlignMask == CCImage::kAlignBottomRight || 
+				   eAlignMask == CCImage::kAlignBottom || 
+				   eAlignMask == CCImage::kAlignBottomLeft ) {
+			//vertical bottom
+			iRet = borderHeight - txtHeight + SHIFT6(face->size->metrics.ascender);
+		} else {
+			// left or other situation
+			iRet = SHIFT6(face->size->metrics.ascender);
+		}
+		return iRet;
+	}
+
 	bool getBitmap(const char *text, int nWidth, int nHeight, CCImage::ETextAlign eAlignMask, const char * pFontName, float fontSize) {
 		FT_Face face;
 		FT_Error iError;
@@ -198,10 +218,13 @@ public:
 			- (face->size->metrics.descender >> 6);
 			iMaxLineHeight *= vLines.size();
 
+			int txtHeight = iMaxLineHeight;
+
 			//compute the final line height
 			iMaxLineHeight = MAX(iMaxLineHeight, nHeight);
 			m_pData = new unsigned char[iMaxLineWidth * iMaxLineHeight*4];
-			iCurYCursor = SHIFT6(face->size->metrics.ascender);
+//			iCurYCursor = SHIFT6(face->size->metrics.ascender);
+			iCurYCursor = computeLineStartY( face, eAlignMask, txtHeight, iMaxLineHeight );
 
 			memset(m_pData,0, iMaxLineWidth * iMaxLineHeight*4);
 

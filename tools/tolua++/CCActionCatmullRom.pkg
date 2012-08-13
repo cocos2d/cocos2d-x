@@ -1,0 +1,46 @@
+
+class CCPointArray : public CCNode
+{
+    bool initWithCapacity(unsigned int capacity);
+    void addControlPoint(CCPoint controlPoint);
+    void insertControlPoint(CCPoint &controlPoint, unsigned int index);
+    void replaceControlPoint(CCPoint &controlPoint, unsigned int index);
+    CCPoint getControlPointAtIndex(unsigned int index);
+    void removeControlPointAtIndex(unsigned int index);
+    unsigned int count();
+    CCPointArray* reverse();
+    void reverseInline();
+    CCObject* copyWithZone(CCZone *zone);
+    CCArray* getControlPoints();
+    void setControlPoints(CCArray *controlPoints);
+
+	static CCPointArray* create(unsigned int capacity);
+};
+
+class CCCardinalSplineTo : public CCActionInterval
+{
+	CCCardinalSplineTo* copyWithZone(CCZone* pZone);
+    CCActionInterval* reverse();
+    CCPointArray* getPoints();
+    void  setPoints(CCPointArray* points);
+
+	static CCCardinalSplineTo* create(float duration, CCPointArray* points, float tension);
+};
+
+
+class CCCardinalSplineBy : public CCCardinalSplineTo
+{
+    CCActionInterval* reverse();
+
+	static CCCardinalSplineBy* create(float duration, CCPointArray* points, float tension);
+};
+
+class CCCatmullRomTo : public CCCardinalSplineTo
+{
+	static CCCatmullRomTo* create(float dt, CCPointArray* points);
+};
+
+class CCCatmullRomBy : public CCCardinalSplineBy
+{
+    static CCCatmullRomBy* create(float dt, CCPointArray* points);
+};

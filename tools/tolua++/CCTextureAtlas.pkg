@@ -19,8 +19,12 @@ class CCTextureAtlas : public CCObject
     void drawNumberOfQuads(unsigned int n);
     void drawNumberOfQuads(unsigned int n, unsigned int start);
 
+	void increaseTotalQuadsWith(unsigned int amount);
+    void moveQuadsFromIndex(unsigned int oldIndex, unsigned int amount, unsigned int newIndex);
+    void moveQuadsFromIndex(unsigned int index, unsigned int newIndex);
+    void fillWithEmptyQuadsFromIndex(unsigned int index, unsigned int amount);
     void drawQuads();
 
     static CCTextureAtlas* create(const char* file , unsigned int capacity);
-    static CCTextureAtlas* create(CCTexture2D *texture, unsigned int capacity);
+    static CCTextureAtlas* createWithTexture(CCTexture2D *texture, unsigned int capacity);
 };

@@ -15,6 +15,14 @@ enum {
     TMXPropertyTile
 };
 
+typedef enum ccTMXTileFlags_ {
+    kCCTMXTileHorizontalFlag        = 0x80000000,
+    kCCTMXTileVerticalFlag            = 0x40000000,
+    kCCTMXTileDiagonalFlag            = 0x20000000,
+    kCCFlipedAll                    = (kCCTMXTileHorizontalFlag|kCCTMXTileVerticalFlag|kCCTMXTileDiagonalFlag),
+    kCCFlippedMask                    = ~(kCCFlipedAll)
+} ccTMXTileFlags;
+
 class CCTMXLayerInfo : public CCObject
 {
     CCDictionary* getProperties();
@@ -61,6 +69,8 @@ class CCTMXMapInfo : public CCObject
     void endElement(void *ctx, const char *name);
     void textHandler(void *ctx, const char *ch, int len);
     bool parseXMLFile(const char *xmlFilename);
+	bool parseXMLString(const char *xmlString);
 
     static CCTMXMapInfo * formatWithTMXFile(const char *tmxFile);
+	static CCTMXMapInfo * formatWithXML(const char *tmxString, const char* resourcePath);
 };
