@@ -25,6 +25,7 @@ THE SOFTWARE.
 #include "SimpleAudioEngine.h"
 #include "jni/SimpleAudioEngineJni.h"
 
+#include <cstring>
 #include <android/log.h>
 #include <jni/JniHelper.h>
 #include <jni.h>
@@ -34,7 +35,7 @@ THE SOFTWARE.
 #endif
 
 #define  I9100_MODEL "GT-I9100"
-#define  LOG_TAG    "Device Model"
+#define  LOG_TAG     "Device Model"
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
 
 static bool s_bI9100 = false;
@@ -163,8 +164,9 @@ SimpleAudioEngine::SimpleAudioEngine()
 
 	LOGD(deviceModel);
 
-	if (I9100_MODEL == deviceModel)
+	if (strcmp(I9100_MODEL, deviceModel) == 0)
 	{
+		LOGD("i9100 model");
 		s_bI9100 = true;
 	}
 #endif
