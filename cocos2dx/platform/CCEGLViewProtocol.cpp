@@ -43,11 +43,13 @@ static void removeUsedIndexBit(int index)
 }
 
 CCEGLViewProtocol::CCEGLViewProtocol()
-  : m_bNeedScale(false)
-  , m_pDelegate(NULL)
-  , m_fScreenScaleFactor(1.0f)
+: m_pDelegate(NULL)
+, m_fScreenScaleFactor(1.0f)
+, m_fYScale(1.0f)
+, m_fXScale(1.0f)
+, m_bIsRetinaEnabled(false)
+, m_eResolutionPolicy(kResolutionUnKnown)
 {
-    strncpy(m_szViewName, "Cocos2d-x Game", sizeof(m_szViewName));
 }
 
 CCEGLViewProtocol::~CCEGLViewProtocol()
@@ -55,57 +57,85 @@ CCEGLViewProtocol::~CCEGLViewProtocol()
 
 }
 
-void CCEGLViewProtocol::setFrameSize(float width, float height)
+void CCEGLViewProtocol::setDesignResolutionSize(float width, float height, ResolutionPolicy resolutionPolicy)
 {
-    m_sSizeInPixel.setSize(width, height);
-    m_rcViewPort.size.setSize(width, height);
-}
-
-CCSize CCEGLViewProtocol::getFrameSize()
-{
-    return m_sSizeInPixel;
-}
-
-void CCEGLViewProtocol::setDesignResolutionSize(float width, float height)
-{
+    CCAssert(m_bIsRetinaEnabled == false, "can not enable retina while set design resolution size!");
+    CCAssert(resolutionPolicy != kResolutionUnKnown, "should set resolutionPolicy");
+    
     if (width == 0.0f || height == 0.0f)
     {
         return;
     }
 
-    m_sSizeInPoint.setSize(width, height);
+    m_obDesignResolutionSize.setSize(width, height);
+    
+    m_fXScale = (float)m_obScreenSize.width / m_obDesignResolutionSize.width;
+    m_fYScale = (float)m_obScreenSize.height / m_obDesignResolutionSize.height;
+    
+    if (resolutionPolicy == kCCResolutionNoBorder)
+    {
+        m_fXScale = m_fYScale = MAX(m_fXScale, m_fYScale);
+    }
+    
+    if (resolutionPolicy == kCCResolutionShowAll)
+    {
+        m_fXScale = m_fYScale = MIN(m_fXScale, m_fYScale);
+    }
 
-    // calculate the factor and the rect of viewport    
-    m_fScreenScaleFactor =  MIN((float)m_sSizeInPixel.width / m_sSizeInPoint.width, 
-        (float)m_sSizeInPixel.height / m_sSizeInPoint.height);
-    float viewPortW = m_sSizeInPoint.width * m_fScreenScaleFactor;
-    float viewPortH = m_sSizeInPoint.height * m_fScreenScaleFactor;
+    // calculate the rect of viewport    
+    float viewPortW = m_obDesignResolutionSize.width * m_fXScale;
+    float viewPortH = m_obDesignResolutionSize.height * m_fYScale;
 
-    m_rcViewPort.setRect((m_sSizeInPixel.width - viewPortW) / 2, (m_sSizeInPixel.height - viewPortH) / 2, viewPortW, viewPortH);
+    m_obViewPortRect.setRect((m_obScreenSize.width - viewPortW) / 2, (m_obScreenSize.height - viewPortH) / 2, viewPortW, viewPortH);
+    
+    m_eResolutionPolicy = resolutionPolicy;
+    
+    //setViewPortInPoints(0, 0,m_obScreenSize.width, m_obScreenSize.height);
+    
+    // reset director's member vaviables to fit visible rect
+    CCDirector::sharedDirector()->createStatsLabel();
+    CCDirector::sharedDirector()->m_obWinSizeInPoints = CCDirector::sharedDirector()->m_obWinSizeInPixels = getSize(); 
+    CCDirector::sharedDirector()->setGLDefaultValues();
+}
 
-    CCLOG("m_fScreenScaleFactor = %f", m_fScreenScaleFactor);
-    m_bNeedScale = true;  
+bool CCEGLViewProtocol::enableRetina()
+{
+    return false;
 }
 
 CCSize CCEGLViewProtocol::getSize()
 {
-    CCSize size;
-    if (m_bNeedScale)
-    {
-        // retina and scale mode can't be opened at the same time
-        CCAssert(CC_CONTENT_SCALE_FACTOR() == 1.0f, "retina and scale mode can't be opened at the same time!");
-        size.setSize(m_sSizeInPoint.width, m_sSizeInPoint.height);      
-    }
-    else
-    {
-        size.setSize(m_sSizeInPixel.width, m_sSizeInPixel.height);
-    }
-    return size;
+    return m_obDesignResolutionSize;
 }
 
-CCRect CCEGLViewProtocol::getViewPort()
+void CCEGLViewProtocol::setSize(float width, float height)
 {
-    return m_rcViewPort;
+    m_obDesignResolutionSize = m_obScreenSize = CCSizeMake(width, height);
+}
+
+CCSize  CCEGLViewProtocol::getVisibleSize()
+{
+    if (m_eResolutionPolicy == kCCResolutionNoBorder)
+    {
+        return CCSizeMake(m_obScreenSize.width/m_fXScale, m_obScreenSize.height/m_fYScale);
+    }
+    else 
+    {
+        return m_obDesignResolutionSize;
+    }
+}
+
+CCPoint CCEGLViewProtocol::getVisibleOrigin()
+{
+    if (m_eResolutionPolicy == kCCResolutionNoBorder)
+    {
+        return CCPointMake((m_obDesignResolutionSize.width - m_obScreenSize.width/m_fXScale)/2, 
+                           (m_obDesignResolutionSize.height - m_obScreenSize.height/m_fYScale)/2);
+    }
+    else 
+    {
+        return CCPointZero;
+    }
 }
 
 void CCEGLViewProtocol::setTouchDelegate(EGLTouchDelegate * pDelegate)
@@ -118,74 +148,25 @@ float CCEGLViewProtocol::getScreenScaleFactor()
     return m_fScreenScaleFactor;
 }
 
-bool CCEGLViewProtocol::canSetContentScaleFactor()
+bool CCEGLViewProtocol::setContentScaleFactor(float contentScaleFactor)
 {
     return false;
 }
 
-void CCEGLViewProtocol::setContentScaleFactor(float contentScaleFactor)
-{
-    m_fScreenScaleFactor = contentScaleFactor;
-}
-
 void CCEGLViewProtocol::setViewPortInPoints(float x , float y , float w , float h)
 {
-    if (m_bNeedScale)
-    {
-        CCAssert(CC_CONTENT_SCALE_FACTOR() == 1.0f, "retina and scale mode can't be opened at the same time!");
-        float factor = m_fScreenScaleFactor / CC_CONTENT_SCALE_FACTOR();
-        glViewport((GLint)(x * factor + m_rcViewPort.origin.x),
-            (GLint)(y * factor + m_rcViewPort.origin.y),
-            (GLsizei)(w * factor),
-            (GLsizei)(h * factor));
-    }
-    else
-    {
-        glViewport(
-            (GLint)(x*CC_CONTENT_SCALE_FACTOR()),
-            (GLint)(y*CC_CONTENT_SCALE_FACTOR()),
-            (GLsizei)(w*CC_CONTENT_SCALE_FACTOR()),
-            (GLsizei)(h*CC_CONTENT_SCALE_FACTOR()));
-    }
+    glViewport((GLint)(x * m_fXScale + m_obViewPortRect.origin.x),
+               (GLint)(y * m_fYScale + m_obViewPortRect.origin.y),
+               (GLsizei)(w * m_fXScale),
+               (GLsizei)(h * m_fYScale));
 }
 
 void CCEGLViewProtocol::setScissorInPoints(float x , float y , float w , float h)
 {
-    if (m_bNeedScale)
-    {
-        CCAssert(CC_CONTENT_SCALE_FACTOR() == 1.0f, "retina and scale mode can't be opened at the same time!");
-        float factor = m_fScreenScaleFactor / CC_CONTENT_SCALE_FACTOR();
-        glScissor((GLint)(x * factor + m_rcViewPort.origin.x),
-            (GLint)(y * factor + m_rcViewPort.origin.y),
-            (GLsizei)(w * factor),
-            (GLsizei)(h * factor));
-    }
-    else
-    {
-        glScissor(
-            (GLint)(x * CC_CONTENT_SCALE_FACTOR()), 
-            (GLint)(y * CC_CONTENT_SCALE_FACTOR()),
-            (GLsizei)(w * CC_CONTENT_SCALE_FACTOR()),
-            (GLsizei)(h * CC_CONTENT_SCALE_FACTOR()));
-    }
-}
-
-float CCEGLViewProtocol::getMainScreenScale()
-{
-    return -1.0f;
-}
-
-void CCEGLViewProtocol::setViewName(const char* pszViewName)
-{
-    if (pszViewName != NULL && strlen(pszViewName) > 0)
-    {
-        strncpy(m_szViewName, pszViewName, sizeof(m_szViewName));
-    }
-}
-
-const char* CCEGLViewProtocol::getViewName()
-{
-    return m_szViewName;
+    glScissor((GLint)(x * m_fXScale + m_obViewPortRect.origin.x),
+              (GLint)(y * m_fYScale + m_obViewPortRect.origin.y),
+              (GLsizei)(w * m_fXScale),
+              (GLsizei)(h * m_fYScale));
 }
 
 void CCEGLViewProtocol::handleTouchesBegin(int num, int ids[], float xs[], float ys[])
@@ -212,15 +193,21 @@ void CCEGLViewProtocol::handleTouchesBegin(int num, int ids[], float xs[], float
             }
 
             CCTouch* pTouch = s_pTouches[nUnusedIndex] = new CCTouch();
-            if (m_bNeedScale)
+            if (m_bIsRetinaEnabled)
             {
-                pTouch->setTouchInfo(nUnusedIndex, (x - m_rcViewPort.origin.x) / m_fScreenScaleFactor, 
-                    (y - m_rcViewPort.origin.y) / m_fScreenScaleFactor);
+                // on iOS, though retina is enabled, the value got from os is also 
+                // relative to its original size
+                pTouch->setTouchInfo(nUnusedIndex, (x - m_obViewPortRect.origin.x), 
+                                     (y - m_obViewPortRect.origin.y));
             }
-            else
+            else 
             {
-                pTouch->setTouchInfo(nUnusedIndex, x, y);
+                pTouch->setTouchInfo(nUnusedIndex, (x - m_obViewPortRect.origin.x) / m_fXScale, 
+                                     (y - m_obViewPortRect.origin.y) / m_fYScale);
             }
+            
+            CCLOG("x = %f y = %f", pTouch->getLocationInView().x, pTouch->getLocationInView().y);
+            
             CCInteger* pInterObj = new CCInteger(nUnusedIndex);
             s_TouchesIntergerDict.setObject(pInterObj, id);
             set.addObject(pTouch);
@@ -256,15 +243,17 @@ void CCEGLViewProtocol::handleTouchesMove(int num, int ids[], float xs[], float 
         CCTouch* pTouch = s_pTouches[pIndex->getValue()];
         if (pTouch)
         {
-            if (m_bNeedScale)
+            if (m_bIsRetinaEnabled)
             {
-                pTouch->setTouchInfo(pIndex->getValue(), (x - m_rcViewPort.origin.x) / m_fScreenScaleFactor, 
-                    (y - m_rcViewPort.origin.y) / m_fScreenScaleFactor);
+                pTouch->setTouchInfo(pIndex->getValue(), (x - m_obViewPortRect.origin.x), 
+                                     (y - m_obViewPortRect.origin.y));
             }
-            else
+            else 
             {
-                pTouch->setTouchInfo(pIndex->getValue(), x, y);
+                pTouch->setTouchInfo(pIndex->getValue(), (x - m_obViewPortRect.origin.x) / m_fXScale, 
+                                     (y - m_obViewPortRect.origin.y) / m_fYScale);
             }
+            
             set.addObject(pTouch);
         }
         else
@@ -303,17 +292,18 @@ void CCEGLViewProtocol::getSetOfTouchesEndOrCancel(CCSet& set, int num, int ids[
         if (pTouch)
         {
             CCLOGINFO("Ending touches with id: %d, x=%f, y=%f", id, x, y);
-
-            if (m_bNeedScale)
-            {
-                pTouch->setTouchInfo(pIndex->getValue(), (x - m_rcViewPort.origin.x) / m_fScreenScaleFactor,
-                    (y - m_rcViewPort.origin.y) / m_fScreenScaleFactor);
-            }
-            else
-            {
-                pTouch->setTouchInfo(pIndex->getValue(), x, y);
-            }
             
+            if (m_bIsRetinaEnabled)
+            {
+                pTouch->setTouchInfo(pIndex->getValue(), (x - m_obViewPortRect.origin.x), 
+                                     (y - m_obViewPortRect.origin.y));
+            }
+            else 
+            {
+                pTouch->setTouchInfo(pIndex->getValue(), (x - m_obViewPortRect.origin.x) / m_fXScale, 
+                                     (y - m_obViewPortRect.origin.y) / m_fYScale);
+            }
+
             set.addObject(pTouch);
 
             // release the object

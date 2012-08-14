@@ -257,7 +257,6 @@ void CCTextureCache::addImageAsync(const char *path, CCObject *target, SEL_CallF
     // optimization
 
     std::string pathKey = path;
-    CCFileUtils::sharedFileUtils()->removeSuffixFromFile(pathKey);
 
     pathKey = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(pathKey.c_str());
     texture = (CCTexture2D*)m_pTextures->objectForKey(pathKey.c_str());
@@ -400,8 +399,6 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
 
     // remove possible -HD suffix to prevent caching the same image twice (issue #1040)
     std::string pathKey = path;
-    ccResolutionType resolution = kCCResolutionUnknown;
-    CCFileUtils::sharedFileUtils()->removeSuffixFromFile(pathKey);
 
     pathKey = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(pathKey.c_str());
     texture = (CCTexture2D*)m_pTextures->objectForKey(pathKey.c_str());
@@ -444,9 +441,9 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
                 CC_SAFE_DELETE_ARRAY(pBuffer);
 
                 texture = new CCTexture2D();
-                texture->initWithImage(&image, resolution);
-
-                if( texture )
+                
+                if( texture &&
+                    texture->initWithImage(&image) )
                 {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
                     // cache the texture file name
@@ -477,7 +474,6 @@ CCTexture2D* CCTextureCache::addPVRTCImage(const char* path, int bpp, bool hasAl
     CCTexture2D * texture;
 
     std::string temp(path);
-    CCFileUtils::sharedFileUtils()->removeSuffixFromFile(temp);
     
     if ( (texture = (CCTexture2D*)m_pTextures->objectForKey(temp.c_str())) )
     {
@@ -512,35 +508,33 @@ CCTexture2D * CCTextureCache::addPVRImage(const char* path)
 {
     CCAssert(path != NULL, "TextureCache: fileimage MUST not be nill");
 
-    CCTexture2D* tex = NULL;
+    CCTexture2D* texture = NULL;
     std::string key(path);
-    // remove possible -HD suffix to prevent caching the same image twice (issue #1040)
-    CCFileUtils::sharedFileUtils()->removeSuffixFromFile(key);
     
-    if( (tex = (CCTexture2D*)m_pTextures->objectForKey(key.c_str())) ) 
+    if( (texture = (CCTexture2D*)m_pTextures->objectForKey(key.c_str())) ) 
     {
-        return tex;
+        return texture;
     }
 
     // Split up directory and filename
     std::string fullpath = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(key.c_str());
-    tex = new CCTexture2D();
-    if(tex != NULL && tex->initWithPVRFile(fullpath.c_str()) )
+    texture = new CCTexture2D();
+    if(texture != NULL && texture->initWithPVRFile(fullpath.c_str()) )
     {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
         // cache the texture file name
-        VolatileTexture::addImageTexture(tex, fullpath.c_str(), CCImage::kFmtRawData);
+        VolatileTexture::addImageTexture(texture, fullpath.c_str(), CCImage::kFmtRawData);
 #endif
-        m_pTextures->setObject(tex, key.c_str());
-        tex->autorelease();
+        m_pTextures->setObject(texture, key.c_str());
+        texture->autorelease();
     }
     else
     {
         CCLOG("cocos2d: Couldn't add PVRImage:%s in CCTextureCache",key.c_str());
-        CC_SAFE_DELETE(tex);
+        CC_SAFE_DELETE(texture);
     }
 
-    return tex;
+    return texture;
 }
 
 CCTexture2D* CCTextureCache::addUIImage(CCImage *image, const char *key)
@@ -568,7 +562,7 @@ CCTexture2D* CCTextureCache::addUIImage(CCImage *image, const char *key)
 
         // prevents overloading the autorelease pool
         texture = new CCTexture2D();
-        texture->initWithImage(image, kCCResolutionUnknown);
+        texture->initWithImage(image);
 
         if(key && texture)
         {
@@ -890,8 +884,7 @@ void VolatileTexture::reloadAllTextures()
             break;
         case kImage:
             {
-                vt->texture->initWithImage(vt->uiImage,
-                                           kCCResolutionUnknown);
+                vt->texture->initWithImage(vt->uiImage);
             }
             break;
         default:

@@ -34,7 +34,7 @@ NS_CC_BEGIN
  * @{
  */
 
-class CCActionTweenDelegate
+class CC_DLL CCActionTweenDelegate
 {
 public:
     virtual ~CCActionTweenDelegate() {}
@@ -59,7 +59,7 @@ public:
 
  @since v0.99.2
  */
-class CCActionTween : public CCActionInterval
+class CC_DLL CCActionTween : public CCActionInterval
 {
 public:
     /** creates an initializes the action with the property name (key), and the from and to parameters. 

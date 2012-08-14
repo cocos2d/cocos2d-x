@@ -31,6 +31,7 @@ NS_CC_BEGIN
 
 #include "platform/CCCommon.h"
 #include "jni/SystemInfoJni.h"
+#include "jni/MessageJni.h"
 
 // record the resource path
 static string s_strResourcePath = "";
@@ -42,6 +43,7 @@ CCFileUtils* CCFileUtils::sharedFileUtils()
     if (s_pFileUtils == NULL)
     {
         s_pFileUtils = new CCFileUtils();
+        s_strResourcePath = getApkPath();
     }
     return s_pFileUtils;
 }
@@ -61,25 +63,7 @@ void CCFileUtils::purgeCachedEntries()
 
 }
 
-/*
- * This function is implemented for jni to set apk path.
- */
-void CCFileUtils::setResourcePath(const char* pszResourcePath)
-{
-    CCAssert(pszResourcePath != NULL, "[FileUtils setRelativePath] -- wrong relative path");
-    
-    string tmp(pszResourcePath);
-
-    if ((! pszResourcePath) || tmp.find(".apk") == string::npos)
-    {
-        return;
-    }
-
-    s_strResourcePath = pszResourcePath;
-}
-
-const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath,
-                                                  ccResolutionType *pResolutionType)
+const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
 {
     return pszRelativePath;
 }
@@ -107,8 +91,18 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
     if (pszFileName[0] != '/')
     {
         // read from apk
+        string pathWithoutDirectory = fullPath;
+        
+        fullPath.insert(0, m_obDirectory.c_str());
         fullPath.insert(0, "assets/");
         pData =  CCFileUtils::getFileDataFromZip(s_strResourcePath.c_str(), fullPath.c_str(), pSize);
+        
+        if (! pData && m_obDirectory.size() > 0)
+        {
+            // search from root
+            pathWithoutDirectory.insert(0, "assets/");
+            pData =  CCFileUtils::getFileDataFromZip(s_strResourcePath.c_str(), pathWithoutDirectory.c_str(), pSize);
+        }
     }
     else
     {

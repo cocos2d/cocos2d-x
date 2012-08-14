@@ -31,13 +31,16 @@ THE SOFTWARE.
 #include "ccMacros.h"
 #include "touch_dispatcher/CCTouchDispatcher.h"
 #include "support/CCPointExtension.h"
+#include "support/CCNotificationCenter.h"
 #include "layers_scenes_transitions_nodes/CCTransition.h"
 #include "textures/CCTextureCache.h"
 #include "sprite_nodes/CCSpriteFrameCache.h"
 #include "cocoa/CCAutoreleasePool.h"
 #include "platform/platform.h"
+#include "platform/CCFileUtils.h"
 #include "CCApplication.h"
 #include "label_nodes/CCLabelBMFont.h"
+#include "label_nodes/CCLabelAtlas.h"
 #include "actions/CCActionManager.h"
 #include "CCConfiguration.h"
 #include "keypad_dispatcher/CCKeypadDispatcher.h"
@@ -51,10 +54,16 @@ THE SOFTWARE.
 #include "kazmath/GL/matrix.h"
 #include "support/CCProfiling.h"
 #include "CCEGLView.h"
-#include "extensions/CCNotificationCenter/CCNotificationCenter.h"
-#include "extensions/CCTextureWatcher/CCTextureWatcher.h"
-#include "extensions/CCBReader/CCNodeLoaderLibrary.h"
 #include <string>
+
+/**
+ Position of the FPS
+ 
+ Default: 0,0 (bottom-left corner)
+ */
+#ifndef CC_DIRECTOR_STATS_POSITION
+#define CC_DIRECTOR_STATS_POSITION CCDirector::sharedDirector()->getVisibleOrigin()
+#endif
 
 using namespace std;
 
@@ -465,6 +474,30 @@ CCSize CCDirector::getWinSizeInPixels()
     return m_obWinSizeInPixels;
 }
 
+CCSize CCDirector::getVisibleSize()
+{
+    if (m_pobOpenGLView)
+    {
+        return m_pobOpenGLView->getVisibleSize();
+    }
+    else 
+    {
+        return CCSizeZero;
+    }
+}
+
+CCPoint CCDirector::getVisibleOrigin()
+{
+    if (m_pobOpenGLView)
+    {
+        return m_pobOpenGLView->getVisibleOrigin();
+    }
+    else 
+    {
+        return CCPointZero;
+    }
+}
+
 void CCDirector::reshapeProjection(const CCSize& newWindowSize)
 {
     CC_UNUSED_PARAM(newWindowSize);
@@ -606,9 +639,7 @@ void CCDirector::purgeDirector()
 
     // cocos2d-x specific data structures
     CCUserDefault::purgeSharedUserDefault();
-    extension::CCNotificationCenter::purgeNotificationCenter();
-    extension::CCTextureWatcher::purgeTextureWatcher();
-    extension::CCNodeLoaderLibrary::purgeSharedCCNodeLoaderLibrary();
+    CCNotificationCenter::purgeNotificationCenter();
 
     ccGLInvalidateStateCache();
     
@@ -735,16 +766,17 @@ void CCDirector::createStatsLabel()
 {
     if( m_pFPSLabel && m_pSPFLabel ) 
     {
-        CCTexture2D *texture = m_pFPSLabel->getTexture();
+        //CCTexture2D *texture = m_pFPSLabel->getTexture();
 
         CC_SAFE_RELEASE_NULL(m_pFPSLabel);
         CC_SAFE_RELEASE_NULL(m_pSPFLabel);
         CC_SAFE_RELEASE_NULL(m_pDrawsLabel);
-        CCTextureCache::sharedTextureCache()->removeTexture(texture);
+       // CCTextureCache::sharedTextureCache()->removeTexture(texture);
 
         CCFileUtils::sharedFileUtils()->purgeCachedEntries();
     }
 
+    /*
     CCTexture2DPixelFormat currentFormat = CCTexture2D::defaultAlphaPixelFormat();
     CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA4444);
     m_pFPSLabel = new CCLabelAtlas();
@@ -753,12 +785,23 @@ void CCDirector::createStatsLabel()
     m_pSPFLabel->initWithString("0.000", "fps_images.png", 12, 32, '.');
     m_pDrawsLabel = new CCLabelAtlas();
     m_pDrawsLabel->initWithString("000", "fps_images.png", 12, 32, '.');
+     */
+    m_pFPSLabel = CCLabelTTF::create("00.0", "Arial", 24);
+    m_pFPSLabel->retain();
+    m_pSPFLabel = CCLabelTTF::create("0.000", "Arial", 24);
+    m_pSPFLabel->retain();
+    m_pDrawsLabel = CCLabelTTF::create("000", "Arial", 24);
+    m_pDrawsLabel->retain();
 
-    CCTexture2D::setDefaultAlphaPixelFormat(currentFormat);
+    //CCTexture2D::setDefaultAlphaPixelFormat(currentFormat);
 
-    m_pDrawsLabel->setPosition( ccpAdd( ccp(0,34), CC_DIRECTOR_STATS_POSITION ) );
-    m_pSPFLabel->setPosition( ccpAdd( ccp(0,17), CC_DIRECTOR_STATS_POSITION ) );
-    m_pFPSLabel->setPosition( CC_DIRECTOR_STATS_POSITION );
+
+    CCSize contentSize = m_pDrawsLabel->getContentSize();
+    m_pDrawsLabel->setPosition(ccpAdd(ccp(contentSize.width/2, contentSize.height/2 + 40), CC_DIRECTOR_STATS_POSITION));
+    contentSize = m_pSPFLabel->getContentSize();
+    m_pSPFLabel->setPosition(ccpAdd(ccp(contentSize.width/2, contentSize.height/2 + 20), CC_DIRECTOR_STATS_POSITION));
+    contentSize = m_pFPSLabel->getContentSize();
+    m_pFPSLabel->setPosition(ccpAdd(ccp(contentSize.width/2, contentSize.height/2), CC_DIRECTOR_STATS_POSITION));
 }
 
 
@@ -768,16 +811,7 @@ void CCDirector::createStatsLabel()
 
 void CCDirector::updateContentScaleFactor()
 {
-    // [openGLView responseToSelector:@selector(setContentScaleFactor)]
-    if (m_pobOpenGLView->canSetContentScaleFactor())
-    {
-        m_pobOpenGLView->setContentScaleFactor(m_fContentScaleFactor);
-        m_bIsContentScaleSupported = true;
-    }
-    else
-    {
-        CCLOG("cocos2d: setContentScaleFactor:'is not supported on this device");
-    }
+    m_bIsContentScaleSupported = m_pobOpenGLView->setContentScaleFactor(m_fContentScaleFactor);
 }
 
 bool CCDirector::enableRetinaDisplay(bool enabled)
@@ -793,15 +827,8 @@ bool CCDirector::enableRetinaDisplay(bool enabled)
     {
         return false;
     }
-
-    // setContentScaleFactor is not supported
-    if (! m_pobOpenGLView->canSetContentScaleFactor())
-    {
-        return false;
-    }
-
-    // SD device
-    if (m_pobOpenGLView->getMainScreenScale() == 1.0)
+    
+    if (! m_pobOpenGLView->enableRetina())
     {
         return false;
     }
@@ -814,12 +841,12 @@ bool CCDirector::enableRetinaDisplay(bool enabled)
     return true;
 }
 
-CCFloat CCDirector::getContentScaleFactor(void)
+float CCDirector::getContentScaleFactor(void)
 {
     return m_fContentScaleFactor;
 }
 
-void CCDirector::setContentScaleFactor(CCFloat scaleFactor)
+void CCDirector::setContentScaleFactor(float scaleFactor)
 {
     if (scaleFactor != m_fContentScaleFactor)
     {

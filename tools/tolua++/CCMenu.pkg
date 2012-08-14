@@ -1,5 +1,5 @@
 /*
-typedef enum  
+typedef enum
 {
     kCCMenuStateWaiting,
     kCCMenuStateTrackingTouch
@@ -19,6 +19,8 @@ class CCMenu : public CCLayer
     void alignItemsInColumns(unsigned int columns, va_list args);
     void alignItemsInRows(unsigned int rows, va_list args);
 
+	setHandlerPriority(int newPriority);
+
     void addChild(CCMenuItem* child, int zOrder = 0, int tag = -1);
 
     void setOpacity(GLubyte opacity);
@@ -26,6 +28,13 @@ class CCMenu : public CCLayer
     void setColor(ccColor3B color);
     ccColor3B getColor(void);
 
+	void setOpacityModifyRGB(bool bValue);
+    bool isOpacityModifyRGB(void);
+
+    bool isEnabled();
+    void setEnabled(bool value);
+
     static CCMenu* create();
     static CCMenu* createWithItem(CCMenuItem* item);
+	static CCMenu* createWithArray(CCArray* pArrayOfItems);
 };

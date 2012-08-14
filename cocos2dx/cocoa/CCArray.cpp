@@ -136,10 +136,10 @@ CCArray* CCArray::create(CCObject* pObject, ...)
 
 CCArray* CCArray::arrayWithCapacity(unsigned int capacity)
 {
-    return CCArray::create(capacity);
+    return CCArray::createWithCapacity(capacity);
 }
 
-CCArray* CCArray::create(unsigned int capacity)
+CCArray* CCArray::createWithCapacity(unsigned int capacity)
 {
     CCArray* pArray = new CCArray();
 
@@ -157,10 +157,10 @@ CCArray* CCArray::create(unsigned int capacity)
 
 CCArray* CCArray::arrayWithArray(CCArray* otherArray)
 {
-    return CCArray::create(otherArray);
+    return CCArray::createWithArray(otherArray);
 }
 
-CCArray* CCArray::create(CCArray* otherArray)
+CCArray* CCArray::createWithArray(CCArray* otherArray)
 {
     CCArray* pRet = (CCArray*)otherArray->copy();
     pRet->autorelease();
@@ -169,10 +169,10 @@ CCArray* CCArray::create(CCArray* otherArray)
 
 CCArray* CCArray::arrayWithContentsOfFile(const char* pFileName)
 {
-    return CCArray::create(pFileName);
+    return CCArray::createWithContentsOfFile(pFileName);
 }
 
-CCArray* CCArray::create(const char* pFileName)
+CCArray* CCArray::createWithContentsOfFile(const char* pFileName)
 {
     CCArray* pRet = CCArray::createWithContentsOfFileThreadSafe(pFileName);
     if (pRet != NULL)
@@ -299,9 +299,19 @@ CCObject* CCArray::lastObject()
 
 CCObject* CCArray::randomObject()
 {
-    if(data->num==0) return NULL;
+    if (data->num==0)
+    {
+        return NULL;
+    }
 
-    return data->arr[(int)(data->num*CCRANDOM_0_1())];
+    float r = CCRANDOM_0_1();
+    
+    if (r == 1) // to prevent from accessing data-arr[data->num], out of range.
+    {
+        r = 0;
+    }
+    
+    return data->arr[(int)(data->num * r)];
 }
 
 bool CCArray::containsObject(CCObject* object)

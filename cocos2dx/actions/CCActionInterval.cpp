@@ -120,14 +120,14 @@ void CCActionInterval::step(float dt)
                  );
 }
 
-void CCActionInterval::setAmplitudeRate(CCFloat amp)
+void CCActionInterval::setAmplitudeRate(float amp)
 {
     CC_UNUSED_PARAM(amp);
     // Abstract class needs implementation
     CCAssert(0, "");
 }
 
-CCFloat CCActionInterval::getAmplitudeRate(void)
+float CCActionInterval::getAmplitudeRate(void)
 {
     // Abstract class needs implementation
     CCAssert(0, "");
@@ -153,13 +153,13 @@ CCActionInterval* CCActionInterval::reverse(void)
 //
 CCSequence* CCSequence::actionOneTwo(CCFiniteTimeAction *pActionOne, CCFiniteTimeAction *pActionTwo)
 {
-    return CCSequence::create(pActionOne, pActionTwo);
+    return CCSequence::createWithTwoActions(pActionOne, pActionTwo);
 }
 
-CCSequence* CCSequence::create(CCFiniteTimeAction *pActionOne, CCFiniteTimeAction *pActionTwo)
+CCSequence* CCSequence::createWithTwoActions(CCFiniteTimeAction *pActionOne, CCFiniteTimeAction *pActionTwo)
 {
     CCSequence *pSequence = new CCSequence();
-    pSequence->initOneTwo(pActionOne, pActionTwo);
+    pSequence->initWithTwoActions(pActionOne, pActionTwo);
     pSequence->autorelease();
 
     return pSequence;
@@ -178,7 +178,7 @@ CCFiniteTimeAction* CCSequence::actions(CCFiniteTimeAction *pAction1, ...)
         pNow = va_arg(params, CCFiniteTimeAction*);
         if (pNow)
         {
-            pPrev = CCSequence::create(pPrev, pNow);
+            pPrev = CCSequence::createWithTwoActions(pPrev, pNow);
         }
         else
         {
@@ -203,7 +203,7 @@ CCFiniteTimeAction* CCSequence::create(CCFiniteTimeAction *pAction1, ...)
         pNow = va_arg(params, CCFiniteTimeAction*);
         if (pNow)
         {
-            pPrev = create(pPrev, pNow);
+            pPrev = createWithTwoActions(pPrev, pNow);
         }
         else
         {
@@ -226,13 +226,13 @@ CCFiniteTimeAction* CCSequence::create(CCArray* arrayOfActions)
 
     for (unsigned int i = 1; i < arrayOfActions->count(); ++i)
     {
-        prev = create(prev, (CCFiniteTimeAction*)arrayOfActions->objectAtIndex(i));
+        prev = createWithTwoActions(prev, (CCFiniteTimeAction*)arrayOfActions->objectAtIndex(i));
     }
 
     return prev;
 }
 
-bool CCSequence::initOneTwo(CCFiniteTimeAction *pActionOne, CCFiniteTimeAction *pActionTwo)
+bool CCSequence::initWithTwoActions(CCFiniteTimeAction *pActionOne, CCFiniteTimeAction *pActionTwo)
 {
     CCAssert(pActionOne != NULL, "");
     CCAssert(pActionTwo != NULL, "");
@@ -266,7 +266,7 @@ CCObject* CCSequence::copyWithZone(CCZone *pZone)
 
     CCActionInterval::copyWithZone(pZone);
 
-    pCopy->initOneTwo((CCFiniteTimeAction*)(m_pActions[0]->copy()->autorelease()), 
+    pCopy->initWithTwoActions((CCFiniteTimeAction*)(m_pActions[0]->copy()->autorelease()), 
                 (CCFiniteTimeAction*)(m_pActions[1]->copy()->autorelease()));
 
     CC_SAFE_DELETE(pNewZone);
@@ -347,7 +347,7 @@ void CCSequence::update(float t)
 
 CCActionInterval* CCSequence::reverse(void)
 {
-    return CCSequence::create(m_pActions[1]->reverse(), m_pActions[0]->reverse());
+    return CCSequence::createWithTwoActions(m_pActions[1]->reverse(), m_pActions[0]->reverse());
 }
 
 //
@@ -585,7 +585,7 @@ CCFiniteTimeAction* CCSpawn::actions(CCFiniteTimeAction *pAction1, ...)
         pNow = va_arg(params, CCFiniteTimeAction*);
         if (pNow)
         {
-            pPrev = CCSpawn::create(pPrev, pNow);
+            pPrev = CCSpawn::createWithTwoActions(pPrev, pNow);
         }
         else
         {
@@ -610,7 +610,7 @@ CCFiniteTimeAction* CCSpawn::create(CCFiniteTimeAction *pAction1, ...)
         pNow = va_arg(params, CCFiniteTimeAction*);
         if (pNow)
         {
-            pPrev = create(pPrev, pNow);
+            pPrev = createWithTwoActions(pPrev, pNow);
         }
         else
         {
@@ -633,7 +633,7 @@ CCFiniteTimeAction* CCSpawn::create(CCArray *arrayOfActions)
 
     for (unsigned int i = 1; i < arrayOfActions->count(); ++i)
     {
-        prev = create(prev, (CCFiniteTimeAction*)arrayOfActions->objectAtIndex(i));
+        prev = createWithTwoActions(prev, (CCFiniteTimeAction*)arrayOfActions->objectAtIndex(i));
     }
 
     return prev;
@@ -641,19 +641,19 @@ CCFiniteTimeAction* CCSpawn::create(CCArray *arrayOfActions)
 
 CCSpawn* CCSpawn::actionOneTwo(CCFiniteTimeAction *pAction1, CCFiniteTimeAction *pAction2)
 {
-    return CCSpawn::create(pAction1, pAction2);
+    return CCSpawn::createWithTwoActions(pAction1, pAction2);
 }
 
-CCSpawn* CCSpawn::create(CCFiniteTimeAction *pAction1, CCFiniteTimeAction *pAction2)
+CCSpawn* CCSpawn::createWithTwoActions(CCFiniteTimeAction *pAction1, CCFiniteTimeAction *pAction2)
 {
     CCSpawn *pSpawn = new CCSpawn();
-    pSpawn->initOneTwo(pAction1, pAction2);
+    pSpawn->initWithTwoActions(pAction1, pAction2);
     pSpawn->autorelease();
 
     return pSpawn;
 }
 
-bool CCSpawn:: initOneTwo(CCFiniteTimeAction *pAction1, CCFiniteTimeAction *pAction2)
+bool CCSpawn:: initWithTwoActions(CCFiniteTimeAction *pAction1, CCFiniteTimeAction *pAction2)
 {
     CCAssert(pAction1 != NULL, "");
     CCAssert(pAction2 != NULL, "");
@@ -705,7 +705,7 @@ CCObject* CCSpawn::copyWithZone(CCZone *pZone)
 
     CCActionInterval::copyWithZone(pZone);
 
-    pCopy->initOneTwo((CCFiniteTimeAction*)(m_pOne->copy()->autorelease()), 
+    pCopy->initWithTwoActions((CCFiniteTimeAction*)(m_pOne->copy()->autorelease()), 
                     (CCFiniteTimeAction*)(m_pTwo->copy()->autorelease()));
 
     CC_SAFE_DELETE(pNewZone);
@@ -746,7 +746,7 @@ void CCSpawn::update(float time)
 
 CCActionInterval* CCSpawn::reverse(void)
 {
-    return CCSpawn::create(m_pOne->reverse(), m_pTwo->reverse());
+    return CCSpawn::createWithTwoActions(m_pOne->reverse(), m_pTwo->reverse());
 }
 
 //
@@ -2380,7 +2380,7 @@ void CCAnimate::update(float t)
 CCActionInterval* CCAnimate::reverse(void)
 {
     CCArray* pOldArray = m_pAnimation->getFrames();
-    CCArray* pNewArray = CCArray::create(pOldArray->count());
+    CCArray* pNewArray = CCArray::createWithCapacity(pOldArray->count());
    
     CCARRAY_VERIFY_TYPE(pOldArray, CCAnimationFrame*);
 

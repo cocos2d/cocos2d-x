@@ -1,6 +1,8 @@
 
 class CCWaves3D : public CCGrid3DAction
 {
+	CCObject* copyWithZone(CCZone* pZone);
+
     float getAmplitude(void);
     void setAmplitude(float fAmplitude);
     float getAmplitudeRate(void);
@@ -11,16 +13,22 @@ class CCWaves3D : public CCGrid3DAction
 
 class CCFlipX3D : public CCGrid3DAction
 {
+	CCObject* copyWithZone(CCZone* pZone);
+
     static CCFlipX3D* create(float duration);
 };
 
 class CCFlipY3D : public CCFlipX3D
 {
+	CCObject* copyWithZone(CCZone* pZone);
+
     static CCFlipY3D* create(float duration);
 };
 
 class CCLens3D : public CCGrid3DAction
 {
+	CCObject* copyWithZone(CCZone* pZone);
+
     float getLensEffect(void);
     void setLensEffect(float fLensEffect);
     CCPoint getPosition(void);
@@ -31,6 +39,8 @@ class CCLens3D : public CCGrid3DAction
 
 class CCRipple3D : public CCGrid3DAction
 {
+	CCObject* copyWithZone(CCZone* pZone);
+
     CCPoint getPosition(void);
     void setPosition(CCPoint position);
     float getAmplitude(void);
@@ -43,11 +53,15 @@ class CCRipple3D : public CCGrid3DAction
 
 class CCShaky3D : public CCGrid3DAction
 {
+	CCObject* copyWithZone(CCZone* pZone);
+
     static CCShaky3D* create(int range, bool shakeZ, ccGridSize gridSize, float duration);
 };
 
 class CCLiquid : public CCGrid3DAction
 {
+	CCObject* copyWithZone(CCZone* pZone);
+
     float getAmplitude(void);
     void setAmplitude(float fAmplitude);
     float getAmplitudeRate(void);
@@ -58,6 +72,8 @@ class CCLiquid : public CCGrid3DAction
 
 class CCWaves : public CCGrid3DAction
 {
+	CCObject* copyWithZone(CCZone* pZone);
+
     float getAmplitude(void);
     void setAmplitude(float fAmplitude);
     float getAmplitudeRate(void);
@@ -68,6 +84,8 @@ class CCWaves : public CCGrid3DAction
 
 class CCTwirl : public CCGrid3DAction
 {
+	CCObject* copyWithZone(CCZone* pZone);
+
     CCPoint getPosition(void);
     void setPosition(CCPoint position);
     float getAmplitude(void);

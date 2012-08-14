@@ -94,7 +94,7 @@ ccpSub(const CCPoint& v1, const CCPoint& v2)
  @since v0.7.2
  */
 static inline CCPoint
-ccpMult(const CCPoint& v, const CCFloat s)
+ccpMult(const CCPoint& v, const float s)
 {
     return ccp(v.x*s, v.y*s);
 }
@@ -110,20 +110,20 @@ ccpMidpoint(const CCPoint& v1, const CCPoint& v2)
 }
 
 /** Calculates dot product of two points.
- @return CCFloat
+ @return float
  @since v0.7.2
  */
-static inline CCFloat
+static inline float
 ccpDot(const CCPoint& v1, const CCPoint& v2)
 {
     return v1.x*v2.x + v1.y*v2.y;
 }
 
 /** Calculates cross product of two points.
- @return CCFloat
+ @return float
  @since v0.7.2
  */
-static inline CCFloat
+static inline float
 ccpCross(const CCPoint& v1, const CCPoint& v2)
 {
     return v1.x*v2.y - v1.y*v2.x;
@@ -180,10 +180,10 @@ ccpUnrotate(const CCPoint& v1, const CCPoint& v2)
 }
 
 /** Calculates the square length of a CCPoint (not calling sqrt() )
- @return CCFloat
+ @return float
  @since v0.7.2
  */
-static inline CCFloat
+static inline float
 ccpLengthSQ(const CCPoint& v)
 {
     return ccpDot(v, v);
@@ -191,10 +191,10 @@ ccpLengthSQ(const CCPoint& v)
 
 
 /** Calculates the square distance between two points (not calling sqrt() )
- @return CCFloat
+ @return float
  @since v1.1
 */
-static inline CCFloat
+static inline float
 ccpDistanceSQ(const CCPoint p1, const CCPoint p2)
 {
     return ccpLengthSQ(ccpSub(p1, p2));
@@ -202,16 +202,16 @@ ccpDistanceSQ(const CCPoint p1, const CCPoint p2)
 
 
 /** Calculates distance between point an origin
- @return CCFloat
+ @return float
  @since v0.7.2
  */
-CCFloat CC_DLL ccpLength(const CCPoint& v);
+float CC_DLL ccpLength(const CCPoint& v);
 
 /** Calculates the distance between two points
- @return CCFloat
+ @return float
  @since v0.7.2
  */
-CCFloat CC_DLL ccpDistance(const CCPoint& v1, const CCPoint& v2);
+float CC_DLL ccpDistance(const CCPoint& v1, const CCPoint& v2);
 
 /** Returns point multiplied to a length of 1.
  @return CCPoint
@@ -223,13 +223,13 @@ CCPoint CC_DLL ccpNormalize(const CCPoint& v);
  @return CCPoint
  @since v0.7.2
  */
-CCPoint CC_DLL ccpForAngle(const CCFloat a);
+CCPoint CC_DLL ccpForAngle(const float a);
 
 /** Converts a vector to radians.
- @return CCFloat
+ @return float
  @since v0.7.2
  */
-CCFloat CC_DLL ccpToAngle(const CCPoint& v);
+float CC_DLL ccpToAngle(const CCPoint& v);
 
 
 /** Clamp a value between from and to.
