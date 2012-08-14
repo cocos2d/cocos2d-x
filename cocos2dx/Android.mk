@@ -40,40 +40,6 @@ cocos2d.cpp \
 CCDirector.cpp \
 effects/CCGrabber.cpp \
 effects/CCGrid.cpp \
-extensions/CCNotificationCenter/CCNotificationCenter.cpp \
-extensions/CCControlExtension/CCControl.cpp \
-extensions/CCControlExtension/CCControlButton.cpp \
-extensions/CCControlExtension/CCControlColourPicker.cpp \
-extensions/CCControlExtension/CCControlHuePicker.cpp \
-extensions/CCControlExtension/CCControlSaturationBrightnessPicker.cpp \
-extensions/CCControlExtension/CCControlSlider.cpp \
-extensions/CCControlExtension/CCControlSwitch.cpp \
-extensions/CCControlExtension/CCControlUtils.cpp \
-extensions/CCControlExtension/CCInvocation.cpp \
-extensions/CCControlExtension/CCMenuPassive.cpp \
-extensions/CCControlExtension/CCScale9Sprite.cpp \
-extensions/CCControlExtension/CCSpacer.cpp \
-extensions/CCListView/CCListView.cpp \
-extensions/CCListView/CCListViewCell.cpp \
-extensions/CCTextureWatcher/CCTextureWatcher.cpp \
-extensions/CCBReader/CCBFileLoader.cpp \
-extensions/CCBReader/CCBReader.cpp \
-extensions/CCBReader/CCNodeLoaderLibrary.cpp \
-extensions/CCBReader/CCNodeLoader.cpp \
-extensions/CCBReader/CCControlButtonLoader.cpp \
-extensions/CCBReader/CCControlLoader.cpp \
-extensions/CCBReader/CCLabelBMFontLoader.cpp \
-extensions/CCBReader/CCLabelTTFLoader.cpp \
-extensions/CCBReader/CCLayerLoader.cpp \
-extensions/CCBReader/CCLayerColorLoader.cpp \
-extensions/CCBReader/CCLayerGradientLoader.cpp \
-extensions/CCBReader/CCMenuItemLoader.cpp \
-extensions/CCBReader/CCMenuItemImageLoader.cpp \
-extensions/CCBReader/CCSpriteLoader.cpp \
-extensions/CCBReader/CCScale9SpriteLoader.cpp \
-extensions/CCBReader/CCScrollViewLoader.cpp \
-extensions/CCBReader/CCParticleSystemQuadLoader.cpp \
-extensions/CCScrollView/CCScrollView.cpp \
 kazmath/src/aabb.c \
 kazmath/src/mat3.c \
 kazmath/src/mat4.c \
@@ -133,6 +99,7 @@ sprite_nodes/CCSprite.cpp \
 sprite_nodes/CCSpriteBatchNode.cpp \
 sprite_nodes/CCSpriteFrame.cpp \
 sprite_nodes/CCSpriteFrameCache.cpp \
+support/CCNotificationCenter.cpp \
 support/CCProfiling.cpp \
 support/CCPointExtension.cpp \
 support/TransformUtils.cpp \
@@ -151,14 +118,15 @@ textures/CCTexture2D.cpp \
 textures/CCTextureAtlas.cpp \
 textures/CCTextureCache.cpp \
 textures/CCTexturePVR.cpp \
-tileMap_parallax_nodes/CCParallaxNode.cpp \
-tileMap_parallax_nodes/CCTMXLayer.cpp \
-tileMap_parallax_nodes/CCTMXObjectGroup.cpp \
-tileMap_parallax_nodes/CCTMXTiledMap.cpp \
-tileMap_parallax_nodes/CCTMXXMLParser.cpp \
-tileMap_parallax_nodes/CCTileMapAtlas.cpp \
+tilemap_parallax_nodes/CCParallaxNode.cpp \
+tilemap_parallax_nodes/CCTMXLayer.cpp \
+tilemap_parallax_nodes/CCTMXObjectGroup.cpp \
+tilemap_parallax_nodes/CCTMXTiledMap.cpp \
+tilemap_parallax_nodes/CCTMXXMLParser.cpp \
+tilemap_parallax_nodes/CCTileMapAtlas.cpp \
 touch_dispatcher/CCTouchDispatcher.cpp \
-touch_dispatcher/CCTouchHandler.cpp 
+touch_dispatcher/CCTouchHandler.cpp \
+touch_dispatcher/CCTouch.cpp
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/include \
@@ -186,7 +154,6 @@ LOCAL_WHOLE_STATIC_LIBRARIES += cocos_jpeg_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_libxml2_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_libtiff_static
 
-
 # define the macro to compile through support/zip_support/ioapi.c                
 LOCAL_CFLAGS := -DUSE_FILE32API
 
@@ -196,4 +163,3 @@ $(call import-module,libjpeg)
 $(call import-module,libpng)
 $(call import-module,libxml2)
 $(call import-module,libtiff)
-

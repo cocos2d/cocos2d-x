@@ -41,15 +41,15 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 //CCLabelAtlas - Creation & Init
-CCLabelAtlas* CCLabelAtlas::labelWithString(const char *label, const char *charMapFile, unsigned int itemWidth, int unsigned itemHeight, unsigned int startCharMap)
+CCLabelAtlas* CCLabelAtlas::labelWithString(const char *string, const char *charMapFile, unsigned int itemWidth, int unsigned itemHeight, unsigned int startCharMap)
 {
-    return CCLabelAtlas::create(label, charMapFile, itemWidth, itemHeight, startCharMap);
+    return CCLabelAtlas::create(string, charMapFile, itemWidth, itemHeight, startCharMap);
 }
 
-CCLabelAtlas* CCLabelAtlas::create(const char *label, const char *charMapFile, unsigned int itemWidth, int unsigned itemHeight, unsigned int startCharMap)
+CCLabelAtlas* CCLabelAtlas::create(const char *string, const char *charMapFile, unsigned int itemWidth, int unsigned itemHeight, unsigned int startCharMap)
 {
     CCLabelAtlas *pRet = new CCLabelAtlas();
-    if(pRet && pRet->initWithString(label, charMapFile, itemWidth, itemHeight, startCharMap))
+    if(pRet && pRet->initWithString(string, charMapFile, itemWidth, itemHeight, startCharMap))
     {
         pRet->autorelease();
         return pRet;
@@ -58,13 +58,13 @@ CCLabelAtlas* CCLabelAtlas::create(const char *label, const char *charMapFile, u
     return NULL;
 }
 
-bool CCLabelAtlas::initWithString(const char *label, const char *charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap)
+bool CCLabelAtlas::initWithString(const char *string, const char *charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap)
 {
-    CCAssert(label != NULL, "");
-    if (CCAtlasNode::initWithTileFile(charMapFile, itemWidth, itemHeight, strlen(label)))
+    CCAssert(string != NULL, "");
+    if (CCAtlasNode::initWithTileFile(charMapFile, itemWidth, itemHeight, strlen(string)))
     {
         m_uMapStartChar = startCharMap;
-        this->setString(label);
+        this->setString(string);
         return true;
     }
     return false;
@@ -95,7 +95,7 @@ CCLabelAtlas* CCLabelAtlas::create(const char *string, const char *fntFile)
 
 bool CCLabelAtlas::initWithString(const char *theString, const char *fntFile)
 {
-    CCDictionary *dict = CCDictionary::create(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(fntFile));
+    CCDictionary *dict = CCDictionary::createWithContentsOfFile(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(fntFile));
 	
     CCAssert(((CCString*)dict->objectForKey("version"))->intValue() == 1, "Unsupported version. Upgrade cocos2d version");
     

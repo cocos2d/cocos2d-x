@@ -109,7 +109,7 @@ public:
     * with an initial capacity for n Quads. 
     * The TextureAtlas capacity can be increased in runtime.
     */
-    static CCTextureAtlas* create(CCTexture2D *texture, unsigned int capacity);
+    static CCTextureAtlas* createWithTexture(CCTexture2D *texture, unsigned int capacity);
 
 
     /** initializes a TextureAtlas with a previously initialized Texture2D object, and

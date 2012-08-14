@@ -112,7 +112,7 @@ bool CCTextFieldTTF::initWithPlaceHolder(const char *placeholder, const CCSize& 
         CC_SAFE_DELETE(m_pPlaceHolder);
         m_pPlaceHolder = new std::string(placeholder);
     }
-    return CCLabelTTF::initWithString(m_pPlaceHolder->c_str(), dimensions, alignment, fontName, fontSize);
+    return CCLabelTTF::initWithString(m_pPlaceHolder->c_str(), fontName, fontSize, dimensions, alignment);
 }
 bool CCTextFieldTTF::initWithPlaceHolder(const char *placeholder, const char *fontName, float fontSize)
 {

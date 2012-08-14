@@ -500,7 +500,7 @@ bool CCLayerColor::initWithColor(const ccColor4B& color)
 }
 
 /// override contentSize
-void CCLayerColor::setContentSize(const CCSize& size)
+void CCLayerColor::setContentSize(const CCSize & size)
 {
     m_pSquareVertices[1].x = size.width;
     m_pSquareVertices[2].y = size.height;
@@ -797,7 +797,7 @@ void CCLayerMultiplex::addLayer(CCLayer* layer)
 
 bool CCLayerMultiplex::initWithLayers(CCLayer *layer, va_list params)
 {
-    m_pLayers = CCArray::create(5);
+    m_pLayers = CCArray::createWithCapacity(5);
     m_pLayers->retain();
 
     m_pLayers->addObject(layer);

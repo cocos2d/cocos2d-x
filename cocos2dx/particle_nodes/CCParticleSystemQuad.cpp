@@ -35,7 +35,7 @@ THE SOFTWARE.
 #include "shaders/ccGLStateCache.h"
 #include "shaders/CCGLProgram.h"
 #include "support/TransformUtils.h"
-#include "extensions/CCNotificationCenter/CCNotificationCenter.h"
+#include "support/CCNotificationCenter.h"
 #include "CCEventType.h"
 
 // extern
@@ -67,7 +67,7 @@ bool CCParticleSystemQuad::initWithTotalParticles(unsigned int numberOfParticles
         
         
         // Need to listen the event only when not use batchnode, because it will use VBO
-        extension::CCNotificationCenter::sharedNotificationCenter()->addObserver(this,
+        CCNotificationCenter::sharedNotificationCenter()->addObserver(this,
                                                                       callfuncO_selector(CCParticleSystemQuad::listenBackToForeground),
                                                                       EVNET_COME_TO_FOREGROUND,
                                                                       NULL);
@@ -99,7 +99,7 @@ CCParticleSystemQuad::~CCParticleSystemQuad()
 #endif
     }
     
-    extension::CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, EVNET_COME_TO_FOREGROUND);
+    CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, EVNET_COME_TO_FOREGROUND);
 }
 
 // implementation CCParticleSystemQuad
@@ -203,7 +203,8 @@ void CCParticleSystemQuad::setTexture(CCTexture2D* texture)
 }
 void CCParticleSystemQuad::setDisplayFrame(CCSpriteFrame *spriteFrame)
 {
-    CCAssert( CCPoint::CCPointEqualToPoint( spriteFrame->getOffsetInPixels() , CCPointZero ), "QuadParticle only supports SpriteFrames with no offsets");
+    CCAssert(spriteFrame->getOffsetInPixels().equals(CCPointZero), 
+             "QuadParticle only supports SpriteFrames with no offsets");
 
     // update texture before updating texture rect
     if ( !m_pTexture || spriteFrame->getTexture()->getName() != m_pTexture->getName())

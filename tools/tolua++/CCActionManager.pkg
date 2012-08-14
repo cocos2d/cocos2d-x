@@ -18,4 +18,8 @@ class CCActionManager : public CCObject
     void pauseTarget(CCObject *pTarget);
 
     void resumeTarget(CCObject *pTarget);
+
+	CCSet* pauseAllRunningActions();
+
+	void resumeTargets(CCSet* targetsToResume);
 };

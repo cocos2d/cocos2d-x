@@ -1,3 +1,13 @@
+typedef enum LanguageType
+{
+    kLanguageEnglish = 0,
+    kLanguageChinese,
+    kLanguageFrench,
+    kLanguageItalian,
+    kLanguageGerman,
+    kLanguageSpanish,
+    kLanguageRussian
+} ccLanguageType;
 
 void CCLuaLog(const char * pszFormat);
 void CCMessageBox(const char * pszMsg, const char * pszTitle);

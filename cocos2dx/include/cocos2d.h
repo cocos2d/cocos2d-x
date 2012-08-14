@@ -79,7 +79,6 @@ THE SOFTWARE.
 #include "ccConfig.h"
 #include "ccMacros.h"
 #include "ccTypes.h"
-#include "cocos2dExt.h"
 
 // kazmath
 #include "kazmath/include/kazmath/kazmath.h"
@@ -141,15 +140,31 @@ THE SOFTWARE.
     #include "platform/android/CCEGLView.h"
     #include "platform/android/CCGL.h"
     #include "platform/android/CCStdC.h"
-#endif // CC_TARGET_PLATFROM == CC_PLATFORM_ANDROID
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-#include "platform/win32/CCAccelerometer.h"
-#include "platform/win32/CCApplication.h"
-#include "platform/win32/CCEGLView.h"
-#include "platform/win32/CCGL.h"
-#include "platform/win32/CCStdC.h"
-#endif // CC_TARGET_PLATFROM == CC_PLATFORM_WIN32
+	#include "platform/win32/CCAccelerometer.h"
+	#include "platform/win32/CCApplication.h"
+	#include "platform/win32/CCEGLView.h"
+	#include "platform/win32/CCGL.h"
+	#include "platform/win32/CCStdC.h"
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+	#include "platform/mac/CCAccelerometer.h"
+	#include "platform/mac/CCApplication.h"
+	#include "platform/mac/CCEGLView.h"
+	#include "platform/mac/CCGL.h"
+	#include "platform/mac/CCStdC.h"
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_MAC
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
+	#include "platform/linux/CCAccelerometer.h"
+	#include "platform/linux/CCApplication.h"
+	#include "platform/linux/CCEGLView.h"
+	#include "platform/linux/CCGL.h"
+	#include "platform/linux/CCStdC.h"
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
 
 
 // script_support
@@ -170,6 +185,7 @@ THE SOFTWARE.
 #include "sprite_nodes/CCSpriteFrameCache.h"
 
 // support
+#include "support/CCNotificationCenter.h"
 #include "support/CCPointExtension.h"
 #include "support/CCProfiling.h"
 #include "support/CCUserDefault.h"
@@ -186,13 +202,13 @@ THE SOFTWARE.
 #include "textures/CCTextureCache.h"
 #include "textures/CCTexturePVR.h"
 
-// tileMap_parallax_nodes
-#include "tileMap_parallax_nodes/CCParallaxNode.h"
-#include "tileMap_parallax_nodes/CCTMXLayer.h"
-#include "tileMap_parallax_nodes/CCTMXObjectGroup.h"
-#include "tileMap_parallax_nodes/CCTMXTiledMap.h"
-#include "tileMap_parallax_nodes/CCTMXXMLParser.h"
-#include "tileMap_parallax_nodes/CCTileMapAtlas.h"
+// tilemap_parallax_nodes
+#include "tilemap_parallax_nodes/CCParallaxNode.h"
+#include "tilemap_parallax_nodes/CCTMXLayer.h"
+#include "tilemap_parallax_nodes/CCTMXObjectGroup.h"
+#include "tilemap_parallax_nodes/CCTMXTiledMap.h"
+#include "tilemap_parallax_nodes/CCTMXXMLParser.h"
+#include "tilemap_parallax_nodes/CCTileMapAtlas.h"
 
 // touch_dispatcher
 #include "touch_dispatcher/CCTouch.h"

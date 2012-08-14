@@ -1,7 +1,7 @@
 class CCParticleBatchNode : public CCNode, public CCTextureProtocol
 {
 public:
-    static CCParticleBatchNode* create(CCTexture2D *tex, unsigned int capacity = kCCParticleDefaultCapacity);
+    static CCParticleBatchNode* createWithTexture(CCTexture2D *tex, unsigned int capacity = kCCParticleDefaultCapacity);
     static CCParticleBatchNode* create(const char* fileImage, unsigned int capacity = kCCParticleDefaultCapacity);
 
     virtual void addChild(CCNode * child);

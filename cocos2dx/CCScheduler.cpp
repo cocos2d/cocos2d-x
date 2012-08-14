@@ -608,7 +608,7 @@ unsigned int CCScheduler::scheduleScriptFunc(unsigned int nHandler, float fInter
     CCSchedulerScriptHandlerEntry* pEntry = CCSchedulerScriptHandlerEntry::entryWithHandler(nHandler, fInterval, bPaused);
     if (!m_pScriptHandlerEntries)
     {
-        m_pScriptHandlerEntries = CCArray::create(20);
+        m_pScriptHandlerEntries = CCArray::createWithCapacity(20);
         m_pScriptHandlerEntries->retain();
     }
     m_pScriptHandlerEntries->addObject(pEntry);

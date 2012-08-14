@@ -24,6 +24,7 @@ THE SOFTWARE.
 #ifndef __CCSTRING_H__
 #define __CCSTRING_H__
 
+#include <stdarg.h>
 #include <string>
 #include <functional>
 #include "CCObject.h"
@@ -132,7 +133,7 @@ public:
      *  @return A CCString pointer which is an autorelease object pointer,
      *          it means that you needn't do a release operation unless you retain it.
      */
-    static CCString* create(const unsigned char* pData, unsigned long nLen);
+    static CCString* createWithData(const unsigned char* pData, unsigned long nLen);
 
     /** create a string with a file, 
      *  @return A CCString pointer which is an autorelease object pointer,
