@@ -40,6 +40,38 @@ End If
 Err.Clear
 On Error goto 0
 
+Function common_test(a,b,c)
+   For i = a To b
+		Window("Hello Tests").Click 338,291
+		Wait c
+   Next
+End Function
+
+Function random_click(a,b,c)
+	Dim touch_x,touch_y
+	Randomize
+	For  Response = a To b
+		touch_x = Int((400 * Rnd + 0))
+		touch_y = Int((250 * Rnd + 0))
+		Window("Hello Tests").Click touch_x,touch_y
+		Wait c
+	Next
+End Function
+
+Function random_drag(a,b,c)
+	Dim drag_x,drag_y,drop_x,drop_y
+	Randomize
+	For  Response = a To b
+		drag_x = Int((400 * Rnd + 0))
+		drag_y = Int((250 * Rnd + 0))
+		drop_x = Int((400 * Rnd + 0))
+		drop_y = Int((250 * Rnd + 0))
+		Window("Hello Tests").Drag drag_x,drag_y
+		Window("Hello Tests").Drop drop_x,drop_y
+		Wait c
+	Next
+End Function
+
 Function CaseFunctionName()
    'SystemUtil.BlockInput
 	Window("Hello Tests").Activate
@@ -49,22 +81,14 @@ Function CaseFunctionName()
 	Window("Hello Tests").Click 241,43
 	Wait 2
 	
-	Dim ActionsTest_i
-	For ActionsTest_i = 1 To 27
-		Window("Hello Tests").Click 338,291
-		Wait 1
-	Next
+	Call common_test(1,27,1)
 	
 	Window("Hello Tests").Click 338,291
 	Wait 5
 	Window("Hello Tests").Click 338,291
 	Wait 2
 	
-	Dim ActionsTest_j
-	For ActionsTest_j = 1 To 5
-		Window("Hello Tests").Click 338,291
-		Wait 1
-	Next
+	Call common_test(1,5,1)
 	'MainMenu
 	Window("Hello Tests").Click 441,296
 	Wait 2
@@ -73,13 +97,9 @@ Function CaseFunctionName()
 	'TransitionsTest
 	''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 	Window("Hello Tests").Click 236,77
-	Wait 5
+	Wait 2
 	
-	Dim Transitions_i
-	For Transitions_i = 1 To 26
-		Window("Hello Tests").Click 338,291
-		Wait 1
-	Next
+	Call common_test(1,26,1)
 	Wait 1
 	'MainMenu
 	Window("Hello Tests").Click 441,296
@@ -90,11 +110,7 @@ Function CaseFunctionName()
 	Window("Hello Tests").Click 287,113
 	Wait 2
 	
-	Dim ActionsProgress_i
-	For ActionsProgress_i = 1 To 7
-		Window("Hello Tests").Click 338,291
-		Wait 2
-	Next
+	Call common_test(1,7,2)
 	'MainMenu
 	Window("Hello Tests").Click 441,296
 	Wait 2
@@ -104,11 +120,7 @@ Function CaseFunctionName()
 	Window("Hello Tests").Click 236,163
 	Wait 3
 	
-	Dim Effects_i
-	For Effects_i = 1 To 21
-		Window("Hello Tests").Click 338,291
-		Wait 4
-	Next
+	Call common_test(1,21,4)
 	'MainMenu
 	Window("Hello Tests").Click 441,296
 	Wait 2
@@ -118,20 +130,9 @@ Function CaseFunctionName()
 	Window("Hello Tests").Click 228,199
 	Wait 3
 
-	Dim touch_x,touch_y
-	Randomize
-	For  Response = 0 To 10
-		touch_x = Int((400 * Rnd + 0))
-		touch_y = Int((250 * Rnd + 0))
-		Window("Hello Tests").Click touch_x,touch_y
-		Wait 2
-	Next
+	Call random_click(1,10,2)
 	
-	For Response = 0 To 100
-		touch_x = Int((400 * Rnd + 0))
-		touch_y = Int((250 * Rnd + 0))
-		Window("Hello Tests").Click touch_x,touch_y
-	Next
+	Call random_click(1,100,0)
 	'MainMenu
 	Window("Hello Tests").Click 441,296
 	Wait 2
@@ -149,12 +150,8 @@ Function CaseFunctionName()
 	Window("Hello Tests").Click 236,276
 	Wait 3
 	
-	Dim Particle_i
-	For Particle_i = 1 To 42
-		Window("Hello Tests").Click 338,291
-		Wait 2
-	Next
-	MainMenu
+	Call common_test(1,42,2)
+	'MainMenu
 	Window("Hello Tests").Click 441,296
 	Wait 2
 	''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
@@ -166,11 +163,7 @@ Function CaseFunctionName()
 	Window("Hello Tests").Click 237,19
 	Wait 2
 	
-	Dim ActionEase_i
-	For ActionEase_i = 1 To 13
-		Window("Hello Tests").Click 338,291
-		Wait 2
-	Next
+	Call common_test(1,13,2)
 	'MainMenu
 	Window("Hello Tests").Click 441,296
 	Wait 2
@@ -183,26 +176,9 @@ Function CaseFunctionName()
 	Window("Hello Tests").Click 230,239
 	Window("Hello Tests").Click 338,291
 	
-	Dim drag_x,drag_y,drop_x,drop_y
-	Randomize
-	For  Response = 0 To 10
-		drag_x = Int((400 * Rnd + 0))
-		drag_y = Int((250 * Rnd + 0))
-		drop_x = Int((400 * Rnd + 0))
-		drop_y = Int((250 * Rnd + 0))
-		Window("Hello Tests").Drag drag_x,drag_y
-		Window("Hello Tests").Drop drop_x,drop_y
-	Next
+	Call random_drag(1,10,0)
 	Window("Hello Tests").Click 230,239
-	Randomize
-	For  Response = 0 To 10
-		drag_x = Int((400 * Rnd + 0))
-		drag_y = Int((250 * Rnd + 0))
-		drop_x = Int((400 * Rnd + 0))
-		drop_y = Int((250 * Rnd + 0))
-		Window("Hello Tests").Drag drag_x,drag_y
-		Window("Hello Tests").Drop drop_x,drop_y
-	Next
+	Call random_drag(1,10,0)
 	
 	Window("Hello Tests").Click 338,291
 	Wait 2
@@ -222,11 +198,7 @@ Function CaseFunctionName()
 	Window("Hello Tests").Click 237,139
 	Wait 1
 	
-	Dim DrawPrimitives_i
-	For DrawPrimitives_i = 1 To 13
-		Window("Hello Tests").Click 338,291
-		Wait 1
-	Next
+	Call common_test(1,13,1)
 	'MainMenu
 	Window("Hello Tests").Click 441,296
 	''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
@@ -262,11 +234,7 @@ Function CaseFunctionName()
 	''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 	Window("Hello Tests").Click 234,261
 	
-	Dim ActionManager_i
-	For ActionManager_i = 1 To 4
-		Window("Hello Tests").Click 338,291
-		Wait 3
-	Next
+	Call common_test(1,4,3)
 	'MainMenu
 	Window("Hello Tests").Click 441,296
 	''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
@@ -274,29 +242,13 @@ Function CaseFunctionName()
 	''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 	Window("Hello Tests").Click 240,302
 
-	Randomize
-	For  Response = 0 To 10
-		drag_x = Int((400 * Rnd + 0))
-		drag_y = Int((250 * Rnd + 0))
-		drop_x = Int((400 * Rnd + 0))
-		drop_y = Int((250 * Rnd + 0))
-		Window("Hello Tests").Drag drag_x,drag_y
-		Window("Hello Tests").Drop drop_x,drop_y
-	Next
+	Call random_drag(1,10,0)
 	Window("Hello Tests").Click 338,291
 	Wait 2
 	Window("Hello Tests").Click 338,291
 	Wait 2
 	Window("Hello Tests").Click 338,291
-	Randomize
-	For  Response = 0 To 10
-		drag_x = Int((400 * Rnd + 0))
-		drag_y = Int((250 * Rnd + 0))
-		drop_x = Int((400 * Rnd + 0))
-		drop_y = Int((250 * Rnd + 0))
-		Window("Hello Tests").Drag drag_x,drag_y
-		Window("Hello Tests").Drop drop_x,drop_y
-	Next
+	Call random_drag(1,10,0)
 	Window("Hello Tests").Click 338,291
 	Wait 1
 	Window("Hello Tests").Click 242,164
@@ -334,15 +286,7 @@ Function CaseFunctionName()
 	Wait 5
 	Window("Hello Tests").Click 338,291
 
-	Randomize
-	For  Response = 0 To 10
-		drag_x = Int((400 * Rnd + 0))
-		drag_y = Int((250 * Rnd + 0))
-		drop_x = Int((400 * Rnd + 0))
-		drop_y = Int((250 * Rnd + 0))
-		Window("Hello Tests").Drag drag_x,drag_y
-		Window("Hello Tests").Drop drop_x,drop_y
-	Next
+	Call random_drag(1,10,0)
 	'MainMenu
 	Window("Hello Tests").Click 441,296
 	''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
@@ -353,15 +297,7 @@ Function CaseFunctionName()
 	Window("Hello Tests").Click 338,291
 	Wait 2
 
-	Randomize
-	For  Response = 0 To 10
-		drag_x = Int((400 * Rnd + 0))
-		drag_y = Int((250 * Rnd + 0))
-		drop_x = Int((400 * Rnd + 0))
-		drop_y = Int((250 * Rnd + 0))
-		Window("Hello Tests").Drag drag_x,drag_y
-		Window("Hello Tests").Drop drop_x,drop_y
-	Next
+	Call random_drag(1,10,0)
 	'MainMenu
 	Window("Hello Tests").Click 441,296
 	''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
@@ -381,13 +317,7 @@ Function CaseFunctionName()
 	''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 	Window("Hello Tests").Click 235,178
 
-	Randomize
-	For  Response = 0 To 20
-		touch_x = Int((400 * Rnd + 0))
-		touch_y = Int((250 * Rnd + 0))
-		Window("Hello Tests").Click touch_x,touch_y
-	Next
-	Wait 2
+	Call random_click(1,20,2)
 	'MainMenu
 	Window("Hello Tests").Click 441,296
 	''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
@@ -395,11 +325,7 @@ Function CaseFunctionName()
 	''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 	Window("Hello Tests").Click 239,216
 	Wait 3
-	Dim LabelTest_i
-	For LabelTest_i = 1 To 25
-		Window("Hello Tests").Click 338,291
-		Wait 0.5
-	Next
+	Call common_test(1,25,0.5)
 	'MainMenu
 	Window("Hello Tests").Click 441,296
 	''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
@@ -429,28 +355,11 @@ Function CaseFunctionName()
 	''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 	Window("Hello Tests").Click 238,294
 	
-	Dim Sprite_Response
-	Randomize
-	For  Sprite_Response = 0 To 10
-		touch_x = Int((400 * Rnd + 0))
-		touch_y = Int((250 * Rnd + 0))
-		Window("Hello Tests").Click touch_x,touch_y
-	Next
-	Wait 2
+	Call random_click(1,10,2)
 	Window("Hello Tests").Click 338,291
-	Randomize
-	For  Sprite_Response = 0 To 10
-		touch_x = Int((400 * Rnd + 0))
-		touch_y = Int((250 * Rnd + 0))
-		Window("Hello Tests").Click touch_x,touch_y
-	Next
-	Wait 2
+	Call random_click(1,10,2)
 	Window("Hello Tests").Click 338,291
-	Dim SpiteTest_i
-	For SpriteTest_i = 1 To 108
-		Window("Hello Tests").Click 338,291
-		Wait 0.5
-	Next
+	Call common_test(1,108,0.5)
 	'MainMenu
 	Window("Hello Tests").Click 441,296
 	''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
@@ -508,15 +417,7 @@ Function CaseFunctionName()
 	Window("Hello Tests").Click 240,59
 	'Save Image
 
-	Randomize
-	For  Response = 0 To 10
-		drag_x = Int((400 * Rnd + 0))
-		drag_y = Int((250 * Rnd + 0))
-		drop_x = Int((400 * Rnd + 0))
-		drop_y = Int((250 * Rnd + 0))
-		Window("Hello Tests").Drag drag_x,drag_y
-		Window("Hello Tests").Drop drop_x,drop_y
-	Next
+	Call random_drag(1,10,0)
 	Window("Hello Tests").Click 388,17
 	Window("Hello Tests").Click 398,41
 	Wait 1
@@ -524,13 +425,7 @@ Function CaseFunctionName()
 	'Testing issue #937
 	Window("Hello Tests").Click 338,291
 	'Testing Z Buffer in Render Texture
-	Dim Render_Response
-	Randomize
-	For  Render_Response = 0 To 10
-		touch_x = Int((400 * Rnd + 0))
-		touch_y = Int((250 * Rnd + 0))
-		Window("Hello Tests").Click touch_x,touch_y
-	Next
+	Call random_click(1,10,0)
 	Window("Hello Tests").Click 338,291
 	'Testing depthStencil attachment
 	MainMenu
@@ -539,47 +434,28 @@ Function CaseFunctionName()
 	'Texture2DTest
 	''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 	Window("Hello Tests").Click 234,97
-	Dim Texture2D_i
-	For Texture2D_i = 1 To 35
-		Window("Hello Tests").Click 338,291
-		Wait 0.5
-	Next
+	Call common_test(1,35,0.5)
 	MainMenu
 	Window("Hello Tests").Click 441,296
 	''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 	'Box2dTest
 	''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 	Window("Hello Tests").Click 235,134
-	Dim Box2d_Response
-	Randomize
-	For  Box2d_Response = 0 To 30
-		touch_x = Int((400 * Rnd + 0))
-		touch_y = Int((250 * Rnd + 0))
-		Window("Hello Tests").Click touch_x,touch_y
-	Next
-	Wait 2
+	Call random_click(1,30,2)
 	'MainMenu
 	Window("Hello Tests").Click 441,296
 	''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 	'Box2dTestBed
 	''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 	Window("Hello Tests").Click 236,176
-	Dim Box2D_i
-	For Box2D_i = 1 To 35
-		Window("Hello Tests").Click 338,291
-		Wait 2
-	Next
+	Call common_test(1,35,2)
 	'MainMenu
 	Window("Hello Tests").Click 441,296
 	''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 	'EffectAdvancedTest
 	''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 	Window("Hello Tests").Click 237,217
-	Dim Effect_i
-	For Effect_i = 1 To 5
-		Window("Hello Tests").Click 338,291
-		Wait 1
-	Next
+	Call common_test(1,5,1)
 	'MainMenu
 	Window("Hello Tests").Click 441,296
 	''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
@@ -597,269 +473,229 @@ Function CaseFunctionName()
 	''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 	'CocosDenshionTest
 	''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-	Window("Hello Tests").Drag 377,314 @@ hightlight id_;_920298_;_script infofile_;_ZIP::ssf411.xml_;_
-	Window("Hello Tests").Drop 377,0 @@ hightlight id_;_920298_;_script infofile_;_ZIP::ssf412.xml_;_
+	Window("Hello Tests").Drag 377,314
+	Window("Hello Tests").Drop 377,0
 	Wait 1
-	Window("Hello Tests").Click 243,20 @@ hightlight id_;_920298_;_script infofile_;_ZIP::ssf413.xml_;_
+	Window("Hello Tests").Click 243,20
 	
-	Window("Hello Tests").Click 248,38 @@ hightlight id_;_920298_;_script infofile_;_ZIP::ssf415.xml_;_
+	Window("Hello Tests").Click 248,38
+	Wait 1 
+	Window("Hello Tests").Click 248,78
 	Wait 1
-	Window("Hello Tests").Click 248,78 @@ hightlight id_;_920298_;_script infofile_;_ZIP::ssf416.xml_;_
+	Window("Hello Tests").Click 247,121
 	Wait 1
-	Window("Hello Tests").Click 247,121 @@ hightlight id_;_920298_;_script infofile_;_ZIP::ssf417.xml_;_
+	Window("Hello Tests").Click 246,158
 	Wait 1
-	Window("Hello Tests").Click 246,158 @@ hightlight id_;_920298_;_script infofile_;_ZIP::ssf418.xml_;_
+	Window("Hello Tests").Click 251,202
 	Wait 1
-	Window("Hello Tests").Click 251,202 @@ hightlight id_;_920298_;_script infofile_;_ZIP::ssf419.xml_;_
+	Window("Hello Tests").Click 246,238
 	Wait 1
-	Window("Hello Tests").Click 246,238 @@ hightlight id_;_920298_;_script infofile_;_ZIP::ssf420.xml_;_
+	Window("Hello Tests").Click 241,282
 	Wait 1
-	Window("Hello Tests").Click 241,282 @@ hightlight id_;_920298_;_script infofile_;_ZIP::ssf421.xml_;_
+	Window("Hello Tests").Drag 427,260
+	Window("Hello Tests").Drop 427,6
+	Window("Hello Tests").Click 232,18
 	Wait 1
-	Window("Hello Tests").Drag 427,260 @@ hightlight id_;_920298_;_script infofile_;_ZIP::ssf422.xml_;_
-	Window("Hello Tests").Drop 427,6 @@ hightlight id_;_920298_;_script infofile_;_ZIP::ssf423.xml_;_
-	Window("Hello Tests").Click 232,18 @@ hightlight id_;_920298_;_script infofile_;_ZIP::ssf424.xml_;_
+	Window("Hello Tests").Click 245,56
 	Wait 1
-	Window("Hello Tests").Click 245,56 @@ hightlight id_;_920298_;_script infofile_;_ZIP::ssf425.xml_;_
+	Window("Hello Tests").Click 242,109
 	Wait 1
-	Window("Hello Tests").Click 242,109 @@ hightlight id_;_920298_;_script infofile_;_ZIP::ssf426.xml_;_
+	Window("Hello Tests").Click 242,144
 	Wait 1
-	Window("Hello Tests").Click 242,144 @@ hightlight id_;_920298_;_script infofile_;_ZIP::ssf427.xml_;_
+	Window("Hello Tests").Click 243,189
 	Wait 1
-	Window("Hello Tests").Click 243,189 @@ hightlight id_;_920298_;_script infofile_;_ZIP::ssf428.xml_;_
+	Window("Hello Tests").Click 243,230
 	Wait 1
-	Window("Hello Tests").Click 243,230 @@ hightlight id_;_920298_;_script infofile_;_ZIP::ssf429.xml_;_
+	Window("Hello Tests").Click 254,275
 	Wait 1
-	Window("Hello Tests").Click 254,275 @@ hightlight id_;_920298_;_script infofile_;_ZIP::ssf430.xml_;_
+	Window("Hello Tests").Click 248,304
 	Wait 1
-	Window("Hello Tests").Click 248,304 @@ hightlight id_;_920298_;_script infofile_;_ZIP::ssf431.xml_;_
+	Window("Hello Tests").Drag 412,272
+	Window("Hello Tests").Drop 412,-13
+	Window("Hello Tests").Click 235,124
 	Wait 1
-	Window("Hello Tests").Drag 412,272 @@ hightlight id_;_920298_;_script infofile_;_ZIP::ssf432.xml_;_
-	Window("Hello Tests").Drop 412,-13 @@ hightlight id_;_920298_;_script infofile_;_ZIP::ssf433.xml_;_
-	Window("Hello Tests").Click 235,124 @@ hightlight id_;_920298_;_script infofile_;_ZIP::ssf434.xml_;_
+	Window("Hello Tests").Click 238,158
 	Wait 1
-	Window("Hello Tests").Click 238,158 @@ hightlight id_;_920298_;_script infofile_;_ZIP::ssf435.xml_;_
+	Window("Hello Tests").Click 229,200
 	Wait 1
-	Window("Hello Tests").Click 229,200 @@ hightlight id_;_920298_;_script infofile_;_ZIP::ssf436.xml_;_
+	Window("Hello Tests").Click 239,243
 	Wait 1
-	Window("Hello Tests").Click 239,243 @@ hightlight id_;_920298_;_script infofile_;_ZIP::ssf437.xml_;_
-	Wait 1
-	Window("Hello Tests").Click 246,277 @@ hightlight id_;_920298_;_script infofile_;_ZIP::ssf438.xml_;_
+	Window("Hello Tests").Click 246,277
 	Wait 1
 	'MainMenu
 	Window("Hello Tests").Click 441,296
 	'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 	'PerformanceTest
-	''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-	Window("Hello Tests").Click 237,64 @@ hightlight id_;_920298_;_script infofile_;_ZIP::ssf440.xml_;_
-	Window("Hello Tests").Click 238,37 @@ hightlight id_;_920298_;_script infofile_;_ZIP::ssf441.xml_;_
+	'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+	Window("Hello Tests").Click 237,64
+	Window("Hello Tests").Click 238,37
 
-	'PerformanceNodeChildrenTest @@ hightlight id_;_920298_;_script infofile_;_ZIP::ssf442.xml_;_
-	Window("Hello Tests").Click 238,38 @@ hightlight id_;_920298_;_script infofile_;_ZIP::ssf458.xml_;_
+	'PerformanceNodeChildrenTest
+	Window("Hello Tests").Click 238,38
 	Dim Performance_i
 	For Performance_i = 1 To 4
-		Window("Hello Tests").Click 273,145 @@ hightlight id_;_920298_;_script infofile_;_ZIP::ssf470.xml_;_
+		Window("Hello Tests").Click 273,145
 		Window("Hello Tests").Click 338,291
 		Wait 1
 	Next
 	Back
-	Window("Hello Tests").Click 427,290 @@ hightlight id_;_920298_;_script infofile_;_ZIP::ssf472.xml_;_
+	Window("Hello Tests").Click 427,290
 
 	'PerformanceParticeTest
-	Window("Hello Tests").Click 237,78 @@ hightlight id_;_920298_;_script infofile_;_ZIP::ssf473.xml_;_
+	Window("Hello Tests").Click 237,78
 
 	For Performance_j = 1 To 4
-		Window("Hello Tests").Click 273,145 @@ hightlight id_;_920298_;_script infofile_;_ZIP::ssf470.xml_;_
+		Window("Hello Tests").Click 273,145
 		Window("Hello Tests").Click 338,291
 		Wait 1
 	Next
-	'Back @@ hightlight id_;_920298_;_script infofile_;_ZIP::ssf474.xml_;_
-	Window("Hello Tests").Click 427,290 @@ hightlight id_;_920298_;_script infofile_;_ZIP::ssf472.xml_;_
-
-	'PerformanceSpriteTest @@ hightlight id_;_920298_;_script infofile_;_ZIP::ssf479.xml_;_
-	Window("Hello Tests").Click 233,120 @@ hightlight id_;_920298_;_script infofile_;_ZIP::ssf480.xml_;_
-	Dim Performance_k @@ hightlight id_;_920298_;_script infofile_;_ZIP::ssf481.xml_;_
+	'Back
+	Window("Hello Tests").Click 427,290
+	'PerformanceSpriteTest
+	Window("Hello Tests").Click 233,120
+	Dim Performance_k
 	For Performance_k = 1 To 5
-		Window("Hello Tests").Click 271,64 @@ hightlight id_;_920298_;_script infofile_;_ZIP::ssf470.xml_;_
+		Window("Hello Tests").Click 271,64
 		Window("Hello Tests").Click 338,291
 		Wait 1
 	Next
-	'Back @@ hightlight id_;_920298_;_script infofile_;_ZIP::ssf474.xml_;_
-	Window("Hello Tests").Click 427,290 @@ hightlight id_;_920298_;_script infofile_;_ZIP::ssf472.xml_;_
+	'Back
+	Window("Hello Tests").Click 427,290
 
 	'PerformanceTextureTest
-	Window("Hello Tests").Click 229,159 @@ hightlight id_;_4064864_;_script infofile_;_ZIP::ssf499.xml_;_
-	'Back @@ hightlight id_;_920298_;_script infofile_;_ZIP::ssf474.xml_;_
-	Window("Hello Tests").Click 427,290 @@ hightlight id_;_920298_;_script infofile_;_ZIP::ssf472.xml_;_
+	Window("Hello Tests").Click 229,159
+	'Back
+	Window("Hello Tests").Click 427,290
 
 	'PerformanceTouchesTest
-	Window("Hello Tests").Click 234,200 @@ hightlight id_;_4064864_;_script infofile_;_ZIP::ssf506.xml_;_
-	Randomize @@ hightlight id_;_4064864_;_script infofile_;_ZIP::ssf507.xml_;_
-	For  Response = 0 To 10
-		drag_x = Int((400 * Rnd + 0))
-		drag_y = Int((250 * Rnd + 0))
-		drop_x = Int((400 * Rnd + 0))
-		drop_y = Int((250 * Rnd + 0))
-		Window("Hello Tests").Drag drag_x,drag_y
-		Window("Hello Tests").Drop drop_x,drop_y
-	Next
+	Window("Hello Tests").Click 234,200
+	Call random_drag(1,10,0)
 	Window("Hello Tests").Click 338,291
-	Randomize @@ hightlight id_;_4064864_;_script infofile_;_ZIP::ssf507.xml_;_
-	For  Response = 0 To 10
-		drag_x = Int((400 * Rnd + 0))
-		drag_y = Int((250 * Rnd + 0))
-		drop_x = Int((400 * Rnd + 0))
-		drop_y = Int((250 * Rnd + 0))
-		Window("Hello Tests").Drag drag_x,drag_y
-		Window("Hello Tests").Drop drop_x,drop_y
-	Next
-	'Back @@ hightlight id_;_920298_;_script infofile_;_ZIP::ssf474.xml_;_
-	Window("Hello Tests").Click 427,290 @@ hightlight id_;_920298_;_script infofile_;_ZIP::ssf472.xml_;_
+	Call random_drag(1,10,0)
+	'Back
+	Window("Hello Tests").Click 427,290
 	'MainMenu
 	Window("Hello Tests").Click 441,296
 	'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 	'ZwoptexTest
 	''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-	Window("Hello Tests").Click 233,104 @@ hightlight id_;_1116094_;_script infofile_;_ZIP::ssf511.xml_;_
-	Wait 1 @@ hightlight id_;_1116094_;_script infofile_;_ZIP::ssf512.xml_;_
+	Window("Hello Tests").Click 233,104
+	Wait 1
 	'MainMenu
 	Window("Hello Tests").Click 441,296
 	''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 	'CurlTest
 	''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 	Window("Hello Tests").Click 239,141
-	Window("Hello Tests").Click 242,160 @@ hightlight id_;_1116094_;_script infofile_;_ZIP::ssf521.xml_;_
-	'MainMenu @@ hightlight id_;_1116094_;_script infofile_;_ZIP::ssf522.xml_;_
+	Window("Hello Tests").Click 242,160
+	'MainMenu
 	Window("Hello Tests").Click 441,296
 	''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 	'UserDefaultTest
 	''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-	Window("Hello Tests").Click 238,184 @@ hightlight id_;_1116094_;_script infofile_;_ZIP::ssf528.xml_;_
-	'MainMenu @@ hightlight id_;_1116094_;_script infofile_;_ZIP::ssf529.xml_;_
+	Window("Hello Tests").Click 238,184
+	'MainMenu
 	Window("Hello Tests").Click 441,296
 	''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 	'BugsTest
 	''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 	Window("Hello Tests").Click 240,222
-	'MainMenu @@ hightlight id_;_1116094_;_script infofile_;_ZIP::ssf529.xml_;_
+	'MainMenu
 	Window("Hello Tests").Click 441,296
 	'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 	'FontTest
 	''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-	Window("Hello Tests").Click 237,261 @@ hightlight id_;_1116094_;_script infofile_;_ZIP::ssf559.xml_;_
-	Dim Font_i
-	For Font_i = 1 To 4
-		Wait 0.5
-		Window("Hello Tests").Click 338,291
-	Next
-	'MainMenu @@ hightlight id_;_1116094_;_script infofile_;_ZIP::ssf529.xml_;_
+	Window("Hello Tests").Click 237,261
+	Call common_test(1,4,0.5)
+	'MainMenu
 	Window("Hello Tests").Click 441,296
 	'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 	'CurrentLanguageTest
 	''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-	Window("Hello Tests").Click 244,301 @@ hightlight id_;_1116094_;_script infofile_;_ZIP::ssf562.xml_;_
-	'MainMenu @@ hightlight id_;_1116094_;_script infofile_;_ZIP::ssf529.xml_;_
+	Window("Hello Tests").Click 244,301
+	'MainMenu
 	Window("Hello Tests").Click 441,296
 	''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 	'TextureCacheTest
 	''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-	Window("Hello Tests").Drag 385,309 @@ hightlight id_;_1116094_;_script infofile_;_ZIP::ssf563.xml_;_
-	Window("Hello Tests").Drop 385,33 @@ hightlight id_;_1116094_;_script infofile_;_ZIP::ssf564.xml_;_
+	Window("Hello Tests").Drag 385,309
+	Window("Hello Tests").Drop 385,33
 	Wait 1
-	Window("Hello Tests").Click 241,159 @@ hightlight id_;_1116094_;_script infofile_;_ZIP::ssf565.xml_;_
-	'MainMenu @@ hightlight id_;_1116094_;_script infofile_;_ZIP::ssf579.xml_;_
+	Window("Hello Tests").Click 241,159
+	'MainMenu
 	Window("Hello Tests").Click 441,296
 	''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 	'ExtensionsTest
 	''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-	Window("Hello Tests").Click 241,197 @@ hightlight id_;_1116094_;_script infofile_;_ZIP::ssf567.xml_;_
+	Window("Hello Tests").Click 241,197
 	Wait 1
 	'NotificationCenterTest
-	Window("Hello Tests").Click 235,41 @@ hightlight id_;_1116094_;_script infofile_;_ZIP::ssf568.xml_;_
-	Window("Hello Tests").Click 339,166 @@ hightlight id_;_1116094_;_script infofile_;_ZIP::ssf595.xml_;_
-	Window("Hello Tests").Click 339,166 @@ hightlight id_;_1116094_;_script infofile_;_ZIP::ssf596.xml_;_
-	Window("Hello Tests").Click 113,189 @@ hightlight id_;_1116094_;_script infofile_;_ZIP::ssf598.xml_;_
+	Window("Hello Tests").Click 235,41
+	Window("Hello Tests").Click 339,166
+	Window("Hello Tests").Click 339,166
+	Window("Hello Tests").Click 113,189
 	'Back
-	Window("Hello Tests").Click 429,289 @@ hightlight id_;_1116094_;_script infofile_;_ZIP::ssf569.xml_;_
-	Wait 1 @@ hightlight id_;_1116094_;_script infofile_;_ZIP::ssf599.xml_;_
+	Window("Hello Tests").Click 429,289
+	Wait 1
 	'CCControlButtonTest
-	Window("Hello Tests").Click 238,79 @@ hightlight id_;_1116094_;_script infofile_;_ZIP::ssf570.xml_;_
-	Window("Hello Tests").Drag 118,181 @@ hightlight id_;_1116094_;_script infofile_;_ZIP::ssf601.xml_;_
-	Window("Hello Tests").Drop 374,189 @@ hightlight id_;_1116094_;_script infofile_;_ZIP::ssf602.xml_;_
+	Window("Hello Tests").Click 238,79
+	Window("Hello Tests").Drag 118,181
+	Window("Hello Tests").Drop 374,189
 	Wait 1
-	Window("Hello Tests").Drag 367,179 @@ hightlight id_;_1116094_;_script infofile_;_ZIP::ssf603.xml_;_
-	Window("Hello Tests").Drop 76,183 @@ hightlight id_;_1116094_;_script infofile_;_ZIP::ssf604.xml_;_
+	Window("Hello Tests").Drag 367,179
+	Window("Hello Tests").Drop 76,183
 	Wait 1
 	'Back
-	Window("Hello Tests").Click 422,293 @@ hightlight id_;_1116094_;_script infofile_;_ZIP::ssf571.xml_;_
+	Window("Hello Tests").Click 422,293
 	'CocosBuilderTest
-	Window("Hello Tests").Click 237,119 @@ hightlight id_;_1116094_;_script infofile_;_ZIP::ssf572.xml_;_
-		'Menus_Items @@ hightlight id_;_1116094_;_script infofile_;_ZIP::ssf608.xml_;_
-		Window("Hello Tests").Click 137,158 @@ hightlight id_;_1116094_;_script infofile_;_ZIP::ssf609.xml_;_
-		Window("Hello Tests").Click 242,157 @@ hightlight id_;_1116094_;_script infofile_;_ZIP::ssf610.xml_;_
-		Window("Hello Tests").Click 113,147 @@ hightlight id_;_1116094_;_script infofile_;_ZIP::ssf611.xml_;_
-		Window("Hello Tests").Click 23,20 @@ hightlight id_;_1116094_;_script infofile_;_ZIP::ssf612.xml_;_
+	Window("Hello Tests").Click 237,119
+		'Menus_Items
+		Window("Hello Tests").Click 137,158
+		Window("Hello Tests").Click 242,157
+		Window("Hello Tests").Click 113,147
+		Window("Hello Tests").Click 23,20
 		'Button
-		Window("Hello Tests").Click 132,209 @@ hightlight id_;_1116094_;_script infofile_;_ZIP::ssf613.xml_;_
-		Window("Hello Tests").Click 240,149 @@ hightlight id_;_1116094_;_script infofile_;_ZIP::ssf614.xml_;_
-		Window("Hello Tests").Drag 255,150 @@ hightlight id_;_1116094_;_script infofile_;_ZIP::ssf615.xml_;_
-		Window("Hello Tests").Drop 259,233 @@ hightlight id_;_1116094_;_script infofile_;_ZIP::ssf616.xml_;_
-		Window("Hello Tests").Click 23,20 @@ hightlight id_;_1116094_;_script infofile_;_ZIP::ssf612.xml_;_
+		Window("Hello Tests").Click 132,209
+		Window("Hello Tests").Click 240,149
+		Window("Hello Tests").Drag 255,150
+		Window("Hello Tests").Drop 259,233
+		Window("Hello Tests").Click 23,20
 		'Particle Systems
-		Window("Hello Tests").Click 131,261 @@ hightlight id_;_1116094_;_script infofile_;_ZIP::ssf618.xml_;_
-		Window("Hello Tests").Click 23,20 @@ hightlight id_;_1116094_;_script infofile_;_ZIP::ssf612.xml_;_
-		'Sprites_9 Slice @@ hightlight id_;_1116094_;_script infofile_;_ZIP::ssf621.xml_;_
-		Window("Hello Tests").Click 341,161 @@ hightlight id_;_1116094_;_script infofile_;_ZIP::ssf622.xml_;_
-		Window("Hello Tests").Click 23,20 @@ hightlight id_;_1116094_;_script infofile_;_ZIP::ssf612.xml_;_
+		Window("Hello Tests").Click 131,261
+		Window("Hello Tests").Click 23,20
+		'Sprites_9 Slice
+		Window("Hello Tests").Click 341,161
+		Window("Hello Tests").Click 23,20
 		'Labels
-		Window("Hello Tests").Click 345,210 @@ hightlight id_;_1116094_;_script infofile_;_ZIP::ssf626.xml_;_
-		Window("Hello Tests").Click 23,20 @@ hightlight id_;_1116094_;_script infofile_;_ZIP::ssf612.xml_;_
+		Window("Hello Tests").Click 345,210
+		Window("Hello Tests").Click 23,20
 		'ScrollViewTest
-		Window("Hello Tests").Click 347,259 @@ hightlight id_;_1116094_;_script infofile_;_ZIP::ssf628.xml_;_
-		Randomize @@ hightlight id_;_1116094_;_script infofile_;_ZIP::ssf629.xml_;_
-		For  Response = 0 To 10
-			drag_x = Int((400 * Rnd + 0))
-			drag_y = Int((250 * Rnd + 0))
-			drop_x = Int((400 * Rnd + 0))
-			drop_y = Int((250 * Rnd + 0))
-			Window("Hello Tests").Drag drag_x,drag_y
-			Window("Hello Tests").Drop drop_x,drop_y
-		Next @@ hightlight id_;_1116094_;_script infofile_;_ZIP::ssf579.xml_;_
-	Window("Hello Tests").Click 23,20 @@ hightlight id_;_1116094_;_script infofile_;_ZIP::ssf612.xml_;_
- @@ hightlight id_;_1116094_;_script infofile_;_ZIP::ssf588.xml_;_
-	'MainMenu @@ hightlight id_;_1116094_;_script infofile_;_ZIP::ssf579.xml_;_
+		Window("Hello Tests").Click 347,259
+		Call random_drag(1,10,0)
+	Window("Hello Tests").Click 23,20
+
+	'MainMenu
 	Window("Hello Tests").Click 441,296
 	''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 	'SharderTest
 	''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-	Window("Hello Tests").Click 242,239 @@ hightlight id_;_1116094_;_script infofile_;_ZIP::ssf579.xml_;_
-	Dim Sharder_i @@ hightlight id_;_3804062_;_script infofile_;_ZIP::ssf580.xml_;_
-	For Sharder_i = 1 To 6
-		Wait 0.5
-		Window("Hello Tests").Click 338,291
-	Next	
-	Window("Hello Tests").Drag 197,235 @@ hightlight id_;_1116094_;_script infofile_;_ZIP::ssf582.xml_;_
-	Window("Hello Tests").Drop 358,236 @@ hightlight id_;_1116094_;_script infofile_;_ZIP::ssf583.xml_;_
+	Window("Hello Tests").Click 242,239
+	Dim Sharder_i
+	Call common_test(1,6,0.5)
+	Window("Hello Tests").Drag 197,235
+	Window("Hello Tests").Drop 358,236
 	Wait 1
-	Window("Hello Tests").Drag 358,236 @@ hightlight id_;_1116094_;_script infofile_;_ZIP::ssf584.xml_;_
-	Window("Hello Tests").Drop 78,221 @@ hightlight id_;_1116094_;_script infofile_;_ZIP::ssf585.xml_;_
+	Window("Hello Tests").Drag 358,236
+	Window("Hello Tests").Drop 78,221
 
 	Window("Hello Tests").Click 338,291
 	'MainMenu
 	Window("Hello Tests").Click 441,296
 	''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 	'MutiTouchTest
-	'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''' @@ hightlight id_;_1116094_;_script infofile_;_ZIP::ssf576.xml_;_
-	Window("Hello Tests").Click 240,279 @@ hightlight id_;_4064864_;_script infofile_;_ZIP::ssf507.xml_;_
-	Randomize
-	For  Response = 0 To 5
-		drag_x = Int((400 * Rnd + 0))
-		drag_y = Int((250 * Rnd + 0))
-		drop_x = Int((400 * Rnd + 0))
-		drop_y = Int((250 * Rnd + 0))
-		Window("Hello Tests").Drag drag_x,drag_y
-		Window("Hello Tests").Drop drop_x,drop_y
-	Next @@ hightlight id_;_1116094_;_script infofile_;_ZIP::ssf579.xml_;_
+	'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+	Window("Hello Tests").Click 240,279
+	Call random_drag(1,5,0)
 	'MainMenu
 	Window("Hello Tests").Click 441,296
 	''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
@@ -867,8 +703,4 @@ Function CaseFunctionName()
 	''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 	Window("Hello Tests").Click 461,22
 	'SystemUtil.UnblockInput
-end function
-
-
-
-
+End function
