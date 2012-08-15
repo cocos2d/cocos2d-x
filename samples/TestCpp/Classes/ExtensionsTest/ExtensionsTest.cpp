@@ -4,6 +4,9 @@
 #include "ControlExtensionTest/CCControlSceneManager.h"
 #include "CocosBuilderTest/CocosBuilderTest.h"
 #include "NetworkTest/HttpClientTest.h"
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#include "EditBoxTest/EditBoxTest.h"
+#endif
 
 enum
 {
@@ -17,6 +20,9 @@ enum
     TEST_CCCONTROLBUTTON,
     TEST_COCOSBUILDER,
     TEST_HTTPCLIENT,
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    TEST_EDITBOX,
+#endif
     TEST_MAX_COUNT,
 };
 
@@ -26,6 +32,9 @@ static const std::string testsName[TEST_MAX_COUNT] =
     "CCControlButtonTest",
     "CocosBuilderTest",
     "HttpClientTest",
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    "EditBoxTest"
+#endif
 };
 
 ////////////////////////////////////////////////////////
@@ -87,6 +96,14 @@ void ExtensionsMainLayer::menuCallback(CCObject* pSender)
         {
             runHttpClientTest();
         }
+        break;
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    case TEST_EDITBOX:
+        {
+            runEditBoxTest();
+        }
+        break;
+#endif
     default:
         break;
     }
