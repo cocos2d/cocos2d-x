@@ -161,6 +161,7 @@ unsigned int _Hash(const char *key)
 	return (hash);
 }
 
+// @mark
 int getFileDescriptor(const char * filename, off_t & start, off_t & length)
 {
 	JniMethodInfo methodInfo;
