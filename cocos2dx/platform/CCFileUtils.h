@@ -77,13 +77,13 @@ public:
     /// @endcond
 
     /**
-    @brief  Set the ResourcePath,we will find resource relative to this path
-    @param pszResourcePath  Relative path to root
+    @brief  Set the resource directory,we will find resource relative to this directory
+    @param pszDirectoryName  Relative path to root
     */
     void setResourceDirectory(const char *pszDirectoryName);
 
     /**
-    @brief  Get the ResourcePath
+    @brief  Get the resource directory
     */
     const char* getResourceDirectory();
 
