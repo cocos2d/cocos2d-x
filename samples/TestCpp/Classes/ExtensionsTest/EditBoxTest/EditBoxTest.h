@@ -1,0 +1,28 @@
+//
+//  CCEditBoxTest.h
+//  TestCpp
+//
+//  Created by James on 8/14/12.
+//
+//
+
+#ifndef __TestCpp__CCEditBoxTest__
+#define __TestCpp__CCEditBoxTest__
+
+#include "cocos2d.h"
+#include "cocos-ext.h"
+
+class EditBoxTest : public cocos2d::CCLayer
+{
+public:
+    EditBoxTest();
+    virtual ~EditBoxTest();
+    void toExtensionsMainLayer(cocos2d::CCObject *sender);
+    
+private:
+
+};
+
+void runEditBoxTest();
+
+#endif /* defined(__TestCpp__CCEditBoxTest__) */
