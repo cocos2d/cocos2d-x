@@ -279,6 +279,7 @@ void CCLabelTTF::updateTexture()
 {
     CCTexture2D *tex;
     
+    // let system compute label's width or height when its value is 0
     // refer to cocos2d-x issue #1430
     tex = new CCTexture2D();
     tex->initWithString(m_string.c_str(),
