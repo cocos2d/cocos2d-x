@@ -141,7 +141,7 @@ Function CaseFunctionName()
 	''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 	Window("Cocos2dxWin32").Click 237,235
 	Wait 3.5
-	''MainMenu
+	'MainMenu
 	Window("Cocos2dxWin32").Click 441,296
 	Wait 2
 	''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
@@ -428,14 +428,14 @@ Function CaseFunctionName()
 	Call random_click(1,10,0)
 	Window("Cocos2dxWin32").Click 338,291
 	'Testing depthStencil attachment
-	MainMenu
+	'MainMenu
 	Window("Cocos2dxWin32").Click 441,296
 	''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 	'Texture2DTest
 	''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 	Window("Cocos2dxWin32").Click 234,97
 	Call common_test(1,35,0.5)
-	MainMenu
+	'MainMenu
 	Window("Cocos2dxWin32").Click 441,296
 	''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 	'Box2dTest
