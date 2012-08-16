@@ -7,9 +7,9 @@
 			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="cdt.managedbuild.config.gnu.exe.debug.1982681102" moduleId="org.eclipse.cdt.core.settings" name="Debug">
 				<externalSettings>
 					<externalSetting>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/CocosDenshion"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/CocosDenshion/Debug"/>
-						<entry flags="RESOLVED" kind="libraryFile" name="cocosdenshion"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/libCocosDenshion"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/libCocosDenshion/Debug"/>
+						<entry flags="RESOLVED" kind="libraryFile" name="cocosdenshion" srcPrefixMapping="" srcRootPath=""/>
 					</externalSetting>
 				</externalSettings>
 				<extensions>
@@ -26,7 +26,7 @@
 					<folderInfo id="cdt.managedbuild.config.gnu.exe.debug.1982681102." name="/" resourcePath="">
 						<toolChain id="cdt.managedbuild.toolchain.gnu.exe.debug.1290289406" name="Linux GCC" superClass="cdt.managedbuild.toolchain.gnu.exe.debug">
 							<targetPlatform id="cdt.managedbuild.target.gnu.platform.exe.debug.1343594495" name="Debug Platform" superClass="cdt.managedbuild.target.gnu.platform.exe.debug"/>
-							<builder buildPath="${workspace_loc:/CocosDenshion/Debug}" id="cdt.managedbuild.target.gnu.builder.exe.debug.2041927999" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Gnu Make Builder" superClass="cdt.managedbuild.target.gnu.builder.exe.debug"/>
+							<builder buildPath="${workspace_loc:/libCocosDenshion/Debug}" id="cdt.managedbuild.target.gnu.builder.exe.debug.2041927999" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Gnu Make Builder" superClass="cdt.managedbuild.target.gnu.builder.exe.debug"/>
 							<tool id="cdt.managedbuild.tool.gnu.archiver.base.1293331295" name="GCC Archiver" superClass="cdt.managedbuild.tool.gnu.archiver.base"/>
 							<tool command="g++" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS}" id="cdt.managedbuild.tool.gnu.cpp.compiler.exe.debug.2092876171" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.exe.debug">
 								<option id="gnu.cpp.compiler.exe.debug.option.optimization.level.2020537008" name="Optimization Level" superClass="gnu.cpp.compiler.exe.debug.option.optimization.level" value="gnu.cpp.compiler.optimization.level.none" valueType="enumerated"/>
@@ -68,8 +68,8 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Linux"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="include"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="linux"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="third_party"/>
 					</sourceEntries>
 				</configuration>
@@ -81,9 +81,9 @@
 			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="cdt.managedbuild.config.gnu.exe.release.509246766" moduleId="org.eclipse.cdt.core.settings" name="Release">
 				<externalSettings>
 					<externalSetting>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/CocosDenshion"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/CocosDenshion/Release"/>
-						<entry flags="RESOLVED" kind="libraryFile" name="cocosdenshion"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/libCocosDenshion"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/libCocosDenshion/Release"/>
+						<entry flags="RESOLVED" kind="libraryFile" name="cocosdenshion" srcPrefixMapping="" srcRootPath=""/>
 					</externalSetting>
 				</externalSettings>
 				<extensions>
@@ -100,7 +100,7 @@
 					<folderInfo id="cdt.managedbuild.config.gnu.exe.release.509246766." name="/" resourcePath="">
 						<toolChain id="cdt.managedbuild.toolchain.gnu.exe.release.305868874" name="Linux GCC" superClass="cdt.managedbuild.toolchain.gnu.exe.release">
 							<targetPlatform id="cdt.managedbuild.target.gnu.platform.exe.release.506287391" name="Debug Platform" superClass="cdt.managedbuild.target.gnu.platform.exe.release"/>
-							<builder buildPath="${workspace_loc:/CocosDenshion/Release}" id="cdt.managedbuild.target.gnu.builder.exe.release.1316417033" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Gnu Make Builder" superClass="cdt.managedbuild.target.gnu.builder.exe.release"/>
+							<builder buildPath="${workspace_loc:/libCocosDenshion/Release}" id="cdt.managedbuild.target.gnu.builder.exe.release.1316417033" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Gnu Make Builder" superClass="cdt.managedbuild.target.gnu.builder.exe.release"/>
 							<tool id="cdt.managedbuild.tool.gnu.archiver.base.1125358518" name="GCC Archiver" superClass="cdt.managedbuild.tool.gnu.archiver.base"/>
 							<tool id="cdt.managedbuild.tool.gnu.cpp.compiler.exe.release.222121229" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.exe.release">
 								<option id="gnu.cpp.compiler.exe.release.option.optimization.level.1962013303" name="Optimization Level" superClass="gnu.cpp.compiler.exe.release.option.optimization.level" value="gnu.cpp.compiler.optimization.level.most" valueType="enumerated"/>
@@ -142,7 +142,6 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Linux"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="include"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="third_party"/>
 					</sourceEntries>
@@ -153,7 +152,7 @@
 		</cconfiguration>
 	</storageModule>
 	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-		<project id="CocosDenshion.cdt.managedbuild.target.gnu.exe.346390339" name="Executable" projectType="cdt.managedbuild.target.gnu.exe"/>
+		<project id="libCocosDenshion.cdt.managedbuild.target.gnu.exe.346390339" name="Executable" projectType="cdt.managedbuild.target.gnu.exe"/>
 	</storageModule>
 	<storageModule moduleId="scannerConfiguration">
 		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
@@ -171,4 +170,5 @@
 		</scannerConfigBuildInfo>
 	</storageModule>
 	<storageModule moduleId="refreshScope"/>
+	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
 </cproject>

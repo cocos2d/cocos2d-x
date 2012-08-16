@@ -4,13 +4,15 @@
 #include <string>
 #include <sstream>
 
-#include "CCFileUtils.h"
+#include "platform/CCFileUtils.h"
+#include "platform/CCPlatformMacros.h"
+#define __CC_PLATFORM_IMAGE_CPP__
+#include "platform/CCImageCommon_cpp.h"
+#include "platform/CCImage.h"
 
-#include "CCPlatformMacros.h"
-#include "CCImage.h"
 #include "ft2build.h"
 #include "CCStdC.h"
-#include "platform/CCImageCommon_cpp.h"
+
 #include FT_FREETYPE_H
 
 #define szFont_kenning 2
