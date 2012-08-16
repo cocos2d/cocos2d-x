@@ -663,17 +663,17 @@ void CCBMFontConfiguration::parseCharacterDefinition(std::string line, ccBMFontD
     index = line.find("xoffset=");
     index2 = line.find(' ', index);
     value = line.substr(index, index2-index);
-    sscanf(value.c_str(), "xoffset=%d", &characterDefinition->xOffset);
+    sscanf(value.c_str(), "xoffset=%hd", &characterDefinition->xOffset);
     // Character yoffset
     index = line.find("yoffset=");
     index2 = line.find(' ', index);
     value = line.substr(index, index2-index);
-    sscanf(value.c_str(), "yoffset=%d", &characterDefinition->yOffset);
+    sscanf(value.c_str(), "yoffset=%hd", &characterDefinition->yOffset);
     // Character xadvance
     index = line.find("xadvance=");
     index2 = line.find(' ', index);
     value = line.substr(index, index2-index);
-    sscanf(value.c_str(), "xadvance=%d", &characterDefinition->xAdvance);
+    sscanf(value.c_str(), "xadvance=%hd", &characterDefinition->xAdvance);
 }
 
 void CCBMFontConfiguration::parseKerningEntry(std::string line)

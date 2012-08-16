@@ -4,12 +4,13 @@
  *  Created on: Aug 9, 2011
  *      Author: laschweinski
  */
-#include "CCCommon.h"
+#include "platform/CCCommon.h"
 #include "ccMacros.h"
+#define __CC_PLATFORM_FILEUTILS_CPP__
 #include "platform/CCFileUtilsCommon_cpp.h"
-#include "CCFileUtils.h"
+#include "platform/CCFileUtils.h"
 #include "CCApplication.h"
-#include "CCString.h"
+#include "cocoa/CCString.h"
 #include <unistd.h>
 
 using namespace std;
