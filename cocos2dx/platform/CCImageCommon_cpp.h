@@ -508,6 +508,7 @@ static void _tiffUnmapProc(thandle_t fd, void* base, toff_t size)
 bool CCImage::_initWithTiffData(void* pData, int nDataLen)
 {
     bool bRet = false;
+#if 0
     do 
     {
         // set the read call back function
@@ -572,6 +573,7 @@ bool CCImage::_initWithTiffData(void* pData, int nDataLen)
 
         bRet = true;
     } while (0);
+#endif
     return bRet;
 }
 

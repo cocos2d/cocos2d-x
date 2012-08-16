@@ -45,7 +45,6 @@ bool AppDelegate::applicationDidFinishLaunching() {
             else 
             {
                 // android or other platform, use hd resource
-                
                 CCFileUtils::sharedFileUtils()->setResourceDirectory("iphonehd");
                 CCEGLView::sharedOpenGLView().setDesignResolutionSize(960, 640, kCCResolutionNoBorder);
             }

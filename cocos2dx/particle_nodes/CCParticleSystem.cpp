@@ -107,8 +107,8 @@ CCParticleSystem::CCParticleSystem()
     ,m_bIsBlendAdditive(false)
     ,m_ePositionType(kCCPositionTypeFree)
     ,m_bIsAutoRemoveOnFinish(false)
+	,m_pBatchNode(NULL)
     ,m_nEmitterMode(kCCParticleModeGravity)
-    ,m_pBatchNode(NULL)
     ,m_uAtlasIndex(0)
     ,m_bTransformSystemDirty(false)
     ,m_uAllocatedParticles(0)
@@ -155,6 +155,7 @@ bool CCParticleSystem::init()
 bool CCParticleSystem::initWithFile(const char *plistFile)
 {
     bool bRet = false;
+
     m_sPlistFile = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(plistFile);
     CCDictionary *dict = CCDictionary::createWithContentsOfFileThreadSafe(m_sPlistFile.c_str());
 
