@@ -25,9 +25,9 @@
 #import "AppController.h"
 #import "AppDelegate.h"
 
-@implementation AppController
+static AppDelegate s_sharedApplication;
 
-	static AppDelegate s_sharedApplication;
+@implementation AppController
 
 	@synthesize window, glView;
 

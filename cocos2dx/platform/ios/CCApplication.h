@@ -39,31 +39,6 @@ public:
     virtual ~CCApplication();
         
     /**
-    @brief    Callback by CCDirector for limit FPS.
-    @interval       The time, which expressed in second in second, between current frame and next. 
-    */
-    void setAnimationInterval(double interval);
-        
-    typedef enum
-    {
-        /// Device oriented vertically, home button on the bottom
-        kOrientationPortrait = 0,
-                        /// Device oriented vertically, home button on the top
-        kOrientationPortraitUpsideDown = 1,
-        /// Device oriented horizontally, home button on the right
-        kOrientationLandscapeLeft = 2,
-        /// Device oriented horizontally, home button on the left
-        kOrientationLandscapeRight = 3,
-    } Orientation;
-        
-    /**
-    @brief    Callback by CCDirector for change device orientation.
-    @orientation    The defination of orientation which CCDirector want change to.
-    @return         The actual orientation of the application.
-    */
-    Orientation setOrientation(Orientation orientation);
-        
-    /**
     @brief    Run the message loop.
     */
     int run();
@@ -73,6 +48,12 @@ public:
     @return Current application instance pointer.
     */
     static CCApplication& sharedApplication();
+    
+    /**
+     @brief    Callback by CCDirector for limit FPS.
+     @interval       The time, which expressed in second in second, between current frame and next. 
+     */
+    virtual void setAnimationInterval(double interval);
 
     /**
     @brief Get current language config
@@ -80,8 +61,10 @@ public:
     */
     virtual ccLanguageType getCurrentLanguage();
     
-    virtual bool isIpad();
-    virtual bool isIos();
+    /**
+     @brief Get target platform
+     */
+    virtual TargetPlatform getTargetPlatform();
 
 protected:
     static CCApplication * sm_pSharedApplication;
