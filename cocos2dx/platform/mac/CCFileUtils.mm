@@ -46,11 +46,6 @@ static void static_addItemToCCArray(id item, CCArray* pArray);
 
 static NSFileManager *__localFileManager= [[NSFileManager alloc] init];
 
-static bool isIPad()
-{
-	return CCApplication::sharedApplication().isIpad();
-}
-
 static void static_addItemToCCArray(id item, CCArray *pArray)
 {
     // add string value into array
@@ -181,6 +176,10 @@ void CCFileUtils::purgeCachedEntries()
 void CCFileUtils::setResourceDirectory(const char *pszDirectoryName)
 {
     m_obDirectory = pszDirectoryName;
+    if (m_obDirectory.size() > 0 && m_obDirectory[m_obDirectory.size() - 1] != '/')
+    {
+        m_obDirectory.append("/");
+    }
 }
 
 const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)

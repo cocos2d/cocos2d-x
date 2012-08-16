@@ -40,11 +40,6 @@ CCEGLView::~CCEGLView()
 {
 }
 
-bool CCEGLView::isIpad()
-{
-	return false;
-}
-
 bool CCEGLView::isOpenGLReady()
 {
     return [EAGLView sharedEGLView] != NULL;
