@@ -6,7 +6,7 @@ echo.
 set qtpproj=%cd%
 cd ..\..\..\..\
 
-"%VS90COMNTOOLS%..\IDE\devenv.com" "%WORKSPACE%\cocos2d-win32.vc2008.sln" /Build "Release|Win32"
+"%VS90COMNTOOLS%..\IDE\devenv.com" "%cd%\cocos2d-win32.vc2008.sln" /Build "Release|Win32"
 
 set CC_TEST_BIN=TestCpp.exe
 
