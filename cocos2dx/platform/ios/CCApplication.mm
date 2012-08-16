@@ -59,43 +59,6 @@ void CCApplication::setAnimationInterval(double interval)
     [[CCDirectorCaller sharedDirectorCaller] setAnimationInterval: interval ];
 }
 
-CCApplication::Orientation CCApplication::setOrientation(Orientation eOritation)
-{
-    UIApplication * app = [UIApplication sharedApplication];
-    UIInterfaceOrientation newOrientation;
-    switch (eOritation)
-    {
-    case kOrientationPortrait:
-        newOrientation = UIInterfaceOrientationPortrait;
-        break;
-    case kOrientationPortraitUpsideDown:
-        newOrientation = UIInterfaceOrientationPortraitUpsideDown;
-        break;
-    case kOrientationLandscapeLeft:
-        newOrientation = UIInterfaceOrientationLandscapeRight;
-        break;
-    case kOrientationLandscapeRight:
-        newOrientation = UIInterfaceOrientationLandscapeLeft;
-        break;
-    default:
-        newOrientation = UIInterfaceOrientationPortrait;
-        break;
-    }
-    if (newOrientation != [app statusBarOrientation])
-    {
-        [app setStatusBarOrientation: newOrientation];
-    }
-    return eOritation;
-}
-
-//void CCApplication::statusBarFrame(cocos2d::CCRect * rect)
-//{
-//    rect->origin.x = [[UIApplication sharedApplication] statusBarFrame].origin.x;
-//    rect->origin.y = [[UIApplication sharedApplication] statusBarFrame].origin.y;
-//    rect->size.width = [[UIApplication sharedApplication] statusBarFrame].size.width;
-//    rect->size.height = [[UIApplication sharedApplication] statusBarFrame].size.height;
-//}
-
 /////////////////////////////////////////////////////////////////////////////////////////////////
 // static member function
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -145,19 +108,16 @@ ccLanguageType CCApplication::getCurrentLanguage()
     return ret;
 }
 
-bool CCApplication::isIpad()
+TargetPlatform CCApplication::getTargetPlatform()
 {
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
     {
-        return true;
+        return kTargetIpad;
     }
-    
-    return false;
-}
-
-bool CCApplication::isIos()
-{
-    return true;
+    else 
+    {
+        return kTargetIphone;
+    }
 }
 
 NS_CC_END

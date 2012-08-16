@@ -40,7 +40,6 @@ public:
     virtual ~CCEGLView();
 
     bool    isOpenGLReady();
-    bool    isIpad();
     virtual bool setContentScaleFactor(float contentScaleFactor);
     void    end();
     void    swapBuffers();
