@@ -42,8 +42,14 @@ public:
 
 	/* set the Resource root path */
 	void setResourceRootPath(const char* pszRootResDir);
+    
 	/* get the Resource root path */
 	const char* getResourceRootPath(void);
+    
+    /**
+     @brief Get target platform
+     */
+    virtual TargetPlatform getTargetPlatform();
 protected:
     long       m_nAnimationInterval;  //micro second
 

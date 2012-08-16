@@ -41,11 +41,6 @@ CCEGLView::~CCEGLView()
 
 }
 
-bool CCEGLView::isIpad()
-{
-    return UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad;
-}
-
 bool CCEGLView::isOpenGLReady()
 {
     return [EAGLView sharedEGLView] != NULL;
