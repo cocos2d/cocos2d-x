@@ -137,6 +137,11 @@ ccLanguageType CCApplication::getCurrentLanguage()
     return ret;
 }
 
+TargetPlatform CCApplication::getTargetPlatform()
+{
+    return kTargetWindows;
+}
+
 NS_CC_END
 
 //////////////////////////////////////////////////////////////////////////

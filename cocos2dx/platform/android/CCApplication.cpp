@@ -112,4 +112,9 @@ ccLanguageType CCApplication::getCurrentLanguage()
     return ret;
 }
 
+TargetPlatform CCApplication::getTargetPlatform()
+{
+    return kTargetAndroid;
+}
+
 NS_CC_END
