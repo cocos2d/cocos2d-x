@@ -29,6 +29,11 @@ public:
     /* override functions */
     virtual void setAnimationInterval(double interval);
     virtual ccLanguageType getCurrentLanguage();
+    
+    /**
+     @brief Get target platform
+     */
+    virtual TargetPlatform getTargetPlatform() = 0;
 
 protected:
     HINSTANCE           m_hInstance;

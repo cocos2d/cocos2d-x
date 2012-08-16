@@ -17,7 +17,9 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     pDirector->setOpenGLView(&CCEGLView::sharedOpenGLView());
     
-    if (isIpad())
+    TargetPlatform target = getTargetPlatform();
+    
+    if (target == kTargetIpad)
     {
         // ipad
         
@@ -26,9 +28,9 @@ bool AppDelegate::applicationDidFinishLaunching() {
         // don't enable retina because we don't have ipad hd resource
         CCEGLView::sharedOpenGLView().setDesignResolutionSize(960, 640, kCCResolutionNoBorder);
     }
-    else 
+    else if (target == kTargetIphone)
     {
-        // iphone or other platforms
+        // iphone
         
         if (pDirector->enableRetinaDisplay(true))
         {
@@ -37,19 +39,15 @@ bool AppDelegate::applicationDidFinishLaunching() {
         }
         else 
         {
-            if (isIos())
-            {
-                // iphone
-                CCFileUtils::sharedFileUtils()->setResourceDirectory("iphone");
-            }
-            else 
-            {
-                // android or other platform, use hd resource
-                
-                CCFileUtils::sharedFileUtils()->setResourceDirectory("iphonehd");
-                CCEGLView::sharedOpenGLView().setDesignResolutionSize(960, 640, kCCResolutionNoBorder);
-            }
+            CCFileUtils::sharedFileUtils()->setResourceDirectory("iphone");
         }
+    }
+    else 
+    {
+        // android, windows, linux or mac
+        // use 960*640 resources as design resolution size
+        CCFileUtils::sharedFileUtils()->setResourceDirectory("iphonehd");
+        CCEGLView::sharedOpenGLView().setDesignResolutionSize(960, 640, kCCResolutionNoBorder);
     }
 
     // turn on display FPS
