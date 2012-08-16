@@ -1,6 +1,6 @@
 CC      = gcc
 CXX     = g++
-TARGET	= cocos2dx-test
+TARGET	= TestCpp
 CCFLAGS = -Wall -g #-O2 
 CXXFLAGS = -Wall -g #-O2 
 VISIBILITY = 

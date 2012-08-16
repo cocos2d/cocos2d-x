@@ -8,7 +8,7 @@
 #ifndef CCAPLICATION_H_
 #define CCAPLICATION_H_
 
-#include "CCCommon.h"
+#include "platform/CCCommon.h"
 #include "platform/CCApplicationProtocol.h"
 
 NS_CC_BEGIN
