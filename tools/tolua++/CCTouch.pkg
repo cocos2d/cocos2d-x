@@ -8,8 +8,13 @@ enum {
 
 class CCTouch : public CCObject
 {
-    CCPoint locationInView();
-    CCPoint previousLocationInView();
+	CCPoint getLocation() const;
+    CCPoint getPreviousLocation() const;
+    CCPoint getDelta() const;
+    CCPoint getLocationInView() const;
+    CCPoint getPreviousLocationInView() const;
+
+	void setTouchInfo(int id, float x, float y);
     int getID();
 };
 

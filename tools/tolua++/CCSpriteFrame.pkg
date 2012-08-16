@@ -16,11 +16,17 @@ class CCSpriteFrame : public CCObject
     CCSize getOriginalSizeInPixels(void);
     void setOriginalSizeInPixels(CCSize sizeInPixels);
 
-    CCTexture2D* getTexture(void);
+	const CCSize & getOriginalSize();
+	void setOriginalSize(const CCSize & size);
+
+	CCTexture2D* getTexture(void);
     void setTexture(CCTexture2D* pobTexture);
 
-    static CCSpriteFrame* create(CCTexture2D* pobTexture, CCRect rect);
-    static CCSpriteFrame* create(CCTexture2D* pobTexture, CCRect rect, bool rotated, CCPoint offset, CCSize originalSize);
-    static CCSpriteFrame* create(const char* filename, CCRect rect);
+	const CCPoint & getOffset();
+	void setOffset(const CCPoint & offsets);
+
+	static CCSpriteFrame* create(const char* filename, CCRect rect);
     static CCSpriteFrame* create(const char* filename, CCRect rect, bool rotated, CCPoint offset, CCSize originalSize);
+    static CCSpriteFrame* createWithTexture(CCTexture2D* pobTexture, CCRect rect);
+    static CCSpriteFrame* createWithTexture(CCTexture2D* pobTexture, CCRect rect, bool rotated, CCPoint offset, CCSize originalSize);
 };

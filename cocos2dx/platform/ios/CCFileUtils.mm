@@ -171,6 +171,15 @@ void CCFileUtils::purgeCachedEntries()
 void CCFileUtils::setResourceDirectory(const char *pszDirectoryName)
 {
     m_obDirectory = pszDirectoryName;
+    if (m_obDirectory.size() > 0 && m_obDirectory[m_obDirectory.size() - 1] != '/')
+    {
+        m_obDirectory.append("/");
+    }
+}
+
+const char* CCFileUtils::getResourceDirectory()
+{
+    return m_obDirectory.c_str();
 }
 
 const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)

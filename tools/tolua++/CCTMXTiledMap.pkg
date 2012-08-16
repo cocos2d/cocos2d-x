@@ -32,4 +32,5 @@ class CCTMXTiledMap : public CCNode
     CCDictionary *propertiesForGID(int GID);
 
     static CCTMXTiledMap * create(const char *tmxFile);
+	static CCTMXTiledMap* createWithXML(const char* tmxString, const char* resourcePath);
 };
