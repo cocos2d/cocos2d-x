@@ -8,7 +8,7 @@
 #ifndef CCEGLVIEW_H_
 #define CCEGLVIEW_H_
 
-#include "CCCommon.h"
+#include "platform/CCCommon.h"
 #include "cocoa/CCGeometry.h"
 #include "platform/CCEGLViewProtocol.h"
 
