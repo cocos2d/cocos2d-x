@@ -40,7 +40,8 @@ bool HelloWorld::init()
                                         "CloseSelected.png",
                                         this,
                                         menu_selector(HelloWorld::menuCloseCallback));
-    if (CCApplication::sharedApplication().isIos() && !CCApplication::sharedApplication().isIpad())
+    
+    if (CCApplication::sharedApplication().getTargetPlatform() == kTargetIphone)
     {
         pCloseItem->setPosition(ccp(visibleSize.width - 20 + origin.x, 20 + origin.y));
     }

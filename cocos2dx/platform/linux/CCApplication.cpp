@@ -83,6 +83,12 @@ const char* CCApplication::getResourceRootPath(void)
 {
   return s_strRootResPath.c_str();
 }
+
+TargetPlatform CCApplication::getTargetPlatform()
+{
+    return kTargetLinux;
+}
+
 //////////////////////////////////////////////////////////////////////////
 // static member function
 //////////////////////////////////////////////////////////////////////////

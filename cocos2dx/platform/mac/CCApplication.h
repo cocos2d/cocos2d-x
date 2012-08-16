@@ -34,42 +34,43 @@ NS_CC_BEGIN;
 class CC_DLL CCApplication : public CCApplicationProtocol
 {
 public:
-        CCApplication();
-        virtual ~CCApplication();
+    CCApplication();
+    virtual ~CCApplication();
         
-        /**
-         @brief	Callback by CCDirector for limit FPS.
-         @interval       The time, which expressed in second in second, between current frame and next. 
-         */
-        void setAnimationInterval(double interval);
+    /**
+    @brief	Callback by CCDirector for limit FPS.
+    @interval       The time, which expressed in second in second, between current frame and next. 
+    */
+    virtual void setAnimationInterval(double interval);
         
-        /**
-         @brief	Get status bar rectangle in EGLView window.
-         */
-        //void    statusBarFrame(CCRect * rect);
+    /**
+    @brief	Get status bar rectangle in EGLView window.
+    */
         
-        /**
-         @brief	Run the message loop.
-         */
-        int run();
+    /**
+    @brief	Run the message loop.
+    */
+    int run();
         
-        /**
-         @brief	Get current applicaiton instance.
-         @return Current application instance pointer.
-         */
-        static CCApplication& sharedApplication();
+    /**
+    @brief	Get current applicaiton instance.
+    @return Current application instance pointer.
+    */
+    static CCApplication& sharedApplication();
 
-        /**
-        @brief Get current language config
-        @return Current language config
-        */
-        virtual ccLanguageType getCurrentLanguage();
+    /**
+    @brief Get current language config
+    @return Current language config
+    */
+    virtual ccLanguageType getCurrentLanguage();
 		
-	    virtual bool isIpad();
-        virtual bool isIos();
+    /**
+     @brief Get target platform
+     */
+    virtual TargetPlatform getTargetPlatform();
 
 protected:
-        static CCApplication * sm_pSharedApplication;
+    static CCApplication * sm_pSharedApplication;
 };
 
 NS_CC_END;

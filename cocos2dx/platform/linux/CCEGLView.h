@@ -31,7 +31,7 @@ public:
 	 * iWidth ,height: the point size, which may scale.
 	 * iDepth is not the buffer depth of opengl, it indicate how may bits for a pixel
 	 */
-	virtual void setSize(float width, float height);
+	virtual void setFrameSize(float width, float height);
 	virtual bool isOpenGLReady();
 	virtual void end();
 	virtual void swapBuffers();
