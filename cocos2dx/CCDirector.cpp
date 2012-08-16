@@ -139,9 +139,6 @@ bool CCDirector::init(void)
     m_fContentScaleFactor = 1;    
     m_bIsContentScaleSupported = false;
 
-    m_pWatcherFun = NULL;
-    m_pWatcherSender = NULL;
-
     // scheduler
     m_pScheduler = new CCScheduler();
     // action manager
@@ -241,11 +238,6 @@ void CCDirector::drawScene(void)
     if (m_bDisplayStats)
     {
         showStats();
-    }
-
-    if (m_pWatcherFun && m_pWatcherSender)
-    {
-        (*m_pWatcherFun)(m_pWatcherSender);
     }
 
     kmGLPopMatrix();
@@ -994,13 +986,6 @@ void CCDisplayLinkDirector::setAnimationInterval(double dValue)
         startAnimation();
     }    
 }
-
-void CCDirector::setWatcherCallbackFun(void *pSender, WatcherCallbackFun fun)
-{
-    m_pWatcherFun = fun;
-    m_pWatcherSender = pSender;
-}
-
 
 NS_CC_END
 
