@@ -119,7 +119,7 @@ public:
     void setVerticalAlignment(CCVerticalTextAlignment verticalAlignment);
     
     CCSize getDimensions();
-    void setDimensions(CCSize &dim);
+    void setDimensions(const CCSize &dim);
     
     float getFontSize();
     void setFontSize(float fontSize);
