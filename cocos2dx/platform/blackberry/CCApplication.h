@@ -58,6 +58,12 @@ public:
 	virtual ccLanguageType getCurrentLanguage();
 
 
+	/* set the Resource root path */
+	void setResourceRootPath(const char *pszRootResDir);
+
+	/* get the Resource root path */
+	const char *getResourceRootPath(void);
+
 
 
 protected:

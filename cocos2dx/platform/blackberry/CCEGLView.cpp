@@ -80,8 +80,6 @@ CCEGLView::CCEGLView()
 	m_eglSurface = EGL_NO_SURFACE;
     m_screenEvent = 0;
     m_screenWindow = 0;
-    m_screenWidth = 0;
-    m_screenHeight = 0;
 
     strcpy(m_windowGroupID, "");
     snprintf(m_windowGroupID, sizeof(m_windowGroupID), "%d", getpid());
@@ -90,7 +88,6 @@ CCEGLView::CCEGLView()
 
     static const int SENSOR_RATE = 25000;
     sensor_set_rate(SENSOR_TYPE_ACCELEROMETER, SENSOR_RATE);
-//    sensor_set_skip_duplicates(SENSOR_TYPE_ACCELEROMETER, true);
     sensor_request_events(SENSOR_TYPE_ACCELEROMETER);
 
     navigator_rotation_lock(true);
@@ -178,7 +175,8 @@ void CCEGLView::initEGLFunctions()
 
 bool CCEGLView::isOpenGLReady()
 {
-	return (m_isGLInitialized && m_screenWidth != 0 && m_screenHeight != 0);
+//	return (m_isGLInitialized && m_screenWidth != 0 && m_screenHeight != 0);
+	return (m_isGLInitialized && m_obScreenSize.height != 0 && m_obScreenSize.width != 0);
 }
 
 void CCEGLView::end()
@@ -211,8 +209,8 @@ void CCEGLView::showKeyboard()
 	float factor = m_fScreenScaleFactor / CC_CONTENT_SCALE_FACTOR();
 	height = (float)height / factor;
 
-	CCRect rect_begin(0, 0 - height, m_screenWidth / factor, height);
-	CCRect rect_end(0, 0, m_screenWidth / factor, height);
+	CCRect rect_begin(0, 0 - height, m_obScreenSize.width / factor, height);
+	CCRect rect_end(0, 0, m_obScreenSize.width / factor, height);
 
     CCIMEKeyboardNotificationInfo info;
     info.begin = rect_begin;
@@ -537,8 +535,8 @@ bool CCEGLView::initGL()
 	eglQuerySurface(m_eglDisplay, m_eglSurface, EGL_WIDTH, &width);
     eglQuerySurface(m_eglDisplay, m_eglSurface, EGL_HEIGHT, &height);
 
-	m_screenWidth = width;
-	m_screenHeight = height;
+    m_obScreenSize.width = width;
+    m_obScreenSize.height = height;
 
     // Set vsync.
 //    eglSwapInterval(m_eglDisplay, screenSwapInterval);

@@ -24,14 +24,11 @@ THE SOFTWARE.
 
 #define __CC_PLATFORM_FILEUTILS_CPP__
 #include "platform/CCFileUtilsCommon_cpp.h"
+#include "CCApplication.h"
 
 NS_CC_BEGIN;
 
 #define  MAX_PATH 256
-
-// record the resource path
-static std::string s_strResourcePath = "";
-static std::string s_pszZipFilePath  = "";
 
 static CCFileUtils *theFileUtils = 0;
 
@@ -58,46 +55,24 @@ void CCFileUtils::purgeCachedEntries()
 
 }
 
-#if 0
-void CCFileUtils::setResourcePath(const char *pszResourcePath)
-{
-    CCAssert(pszResourcePath != NULL, "[FileUtils setResourcePath] -- wrong resource path");
-    CCAssert(strlen(pszResourcePath) <= MAX_PATH, "[FileUtils setResourcePath] -- resource path too long");
-
-    if (!pszResourcePath)
-    	return;
-
-    s_strResourcePath = pszResourcePath;
-
-	// if the path is not ended with '/', append it
-	if (s_strResourcePath.find("/") != (strlen(s_strResourcePath.c_str()) - 1))
-	{
-		s_strResourcePath += "/";
-	}
-}
-
-const char* CCFileUtils::full_pathFromRelativePath(const char *pszRelativePath, ccResolutionType *pResolutionType)
-{
-	// It works like this: if the relative path already includes the resource path
-	// it will be returned as it is
-	const std::string relPath = pszRelativePath;
-	if (relPath.find(s_strResourcePath) == std::string::npos) 
-    {
-		CCString *pRet = new CCString();
-		pRet->autorelease();
-		pRet->m_sString = s_strResourcePath + pszRelativePath;
-		return pRet->m_sString.c_str();
-	}
-	else 
-    {
-		return pszRelativePath;
-	}
-}
-#endif
-
 const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
 {
-    return pszRelativePath;
+    const char* pszRootPath = CCApplication::sharedApplication().getResourceRootPath();
+
+    CCString* pRet = CCString::create(pszRootPath);
+    const char* resDir = CCFileUtils::sharedFileUtils()->getResourceDirectory();
+
+    if (resDir != NULL)
+    {
+        pRet->m_sString += resDir;
+    }
+
+    if (pszRelativePath != NULL)
+    {
+        pRet->m_sString += pszRelativePath;
+    }
+
+    return pRet->getCString();
 }
 
 const char *CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const char *pszRelativeFile)
@@ -119,8 +94,6 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
 	{
 		return 0;
 	}
-
-	full_path.insert(0, m_obDirectory.c_str());
 
 	do
 	{

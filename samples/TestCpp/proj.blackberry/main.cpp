@@ -23,13 +23,10 @@ int main(int argc, char **argv)
 		height = 600;
 	}
 
-	CCFileUtils::sharedFileUtils()->setResourceDirectory("app/native/Resources");
+	CCApplication::sharedApplication().setResourceRootPath("app/native/Resources/");
 
     CCEGLView& eglView = CCEGLView::sharedOpenGLView();
     eglView.setSize(width, height);
-//    CCEGLView::sharedOpenGLView().setDesignResolutionSize(width/2, height/2, kCCResolutionNoBorder);
-    // set the design resolution screen size, if you want to use Design Resolution scaled to current screen, please uncomment next line.
-    eglView.setDesignResolutionSize(width/2, height/2, kCCResolutionNoBorder);
 
     return CCApplication::sharedApplication().run();
 }

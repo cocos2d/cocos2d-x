@@ -38,6 +38,10 @@ bool AppDelegate::applicationDidFinishLaunching()
     pScene->addChild(pLayer);
     pDirector->runWithScene(pScene);
 
+    // set the design resolution screen size, if you want to use Design Resolution scaled to current screen, please uncomment next line.
+//    CCSize size = CCEGLView::sharedOpenGLView().getSize();
+//    CCEGLView::sharedOpenGLView().setDesignResolutionSize(size.width/2, size.height/2, kCCResolutionShowAll);
+
     return true;
 }
 

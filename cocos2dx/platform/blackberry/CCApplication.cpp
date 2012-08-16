@@ -14,6 +14,7 @@ NS_CC_BEGIN;
 // sharedApplication pointer
 CCApplication * CCApplication::sm_pSharedApplication = 0;
 long CCApplication::m_animationInterval = 1000;
+static std::string s_strRootResPath = "";
 
 // convert the timespec into milliseconds
 static long time2millis(struct timespec *times)
@@ -78,6 +79,23 @@ void CCApplication::setAnimationInterval(double interval)
 CCApplication::Orientation CCApplication::setOrientation(Orientation orientation)
 {
     return orientation;
+}
+
+void CCApplication::setResourceRootPath(const char *pszRootResDir)
+{
+	if (pszRootResDir)
+	{
+		s_strRootResPath = pszRootResDir;
+		if (s_strRootResPath[s_strRootResPath.length() - 1] != '/')
+		{
+			s_strRootResPath += '/';
+		}
+	}
+}
+
+const char *CCApplication::getResourceRootPath(void)
+{
+    return s_strRootResPath.c_str();
 }
 
 //////////////////////////////////////////////////////////////////////////
