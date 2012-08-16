@@ -60,35 +60,9 @@ void CCApplication::setAnimationInterval(double interval)
     [[CCDirectorCaller sharedDirectorCaller] setAnimationInterval: interval ];
 }
 
-/*
-void CCApplication::statusBarFrame(cocos2d::CCRect * rect)
+TargetPlatform CCApplication::getTargetPlatform()
 {
-#if 0
-    rect->origin.x = [[NSApplication sharedApplication] statusBarFrame].origin.x;
-    rect->origin.y = [[NSApplication sharedApplication] statusBarFrame].origin.y;
-    rect->size.width = [[NSApplication sharedApplication] statusBarFrame].size.width;
-    rect->size.height = [[NSApplication sharedApplication] statusBarFrame].size.height;
-#endif
-}
-*/
-
-bool CCApplication::isIpad()
-{
-	// save whether to load iPad resources so if the window is resized, we are consistent
-	static bool isSet = false;
-	static bool isIPad = false;
-	if( !isSet )
-	{
-		CCSize winSize = CCDirector::sharedDirector()->getWinSize();
-		isIPad = (winSize.width >= 1024 && winSize.height >= 768);
-		isSet = true;
-	}
-	return isIPad;
-}
-
-bool CCApplication::isIos()
-{
-    return false;
+    return kTargetMacOS;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
