@@ -3,4 +3,7 @@ class CCFileUtils
 {
     static CCFileUtils* sharedFileUtils();
     std::string getWriteablePath();
+	const char* fullPathFromRelativePath(const char *pszRelativePath);
+	const char* fullPathFromRelativeFile(const char *pszFilename, const char *pszRelativeFile);
+	const char* fullPathFromRelativeFile(const char *pszFilename, const char *pszRelativeFile);
 };

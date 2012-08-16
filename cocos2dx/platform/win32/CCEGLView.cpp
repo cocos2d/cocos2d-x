@@ -397,10 +397,10 @@ void CCEGLView::resize(int width, int height)
         rcClient.bottom - rcClient.top, SWP_NOCOPYBITS | SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 }
 
-void CCEGLView::setSize(float width, float height)
+void CCEGLView::setFrameSize(float width, float height)
 {
     Create((LPCTSTR)m_szViewName, (int)width, (int)height);
-    CCEGLViewProtocol::setSize(width, height);
+    CCEGLViewProtocol::setFrameSize(width, height);
 }
 
 void CCEGLView::centerWindow()

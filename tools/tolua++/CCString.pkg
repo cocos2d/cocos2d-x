@@ -9,10 +9,11 @@ class CCString : public CCObject
     const char* getCString() const;
     unsigned int length() const;
 
+	int compare(const char* str) const;
     bool isEqual(const CCObject* pObject);
 
     static CCString* create(const char* pStr);
-    static CCString* create(unsigned char* pData, unsigned long nLen);
+    static CCString* createWithData(unsigned char* pData, unsigned long nLen);
     static CCString* createWithContentsOfFile(const char* pszFileName);
 };
 

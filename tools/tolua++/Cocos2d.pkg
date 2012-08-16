@@ -3,6 +3,7 @@ $#include "LuaCocos2d.h"
 
 $pfile "CCAction.pkg"
 $pfile "CCActionCamera.pkg"
+$pfile "CCActionCatmullRom.pkg"
 $pfile "CCActionEase.pkg"
 $pfile "CCActionGrid.pkg"
 $pfile "CCActionGrid3D.pkg"
