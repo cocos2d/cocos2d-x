@@ -49,7 +49,7 @@ public:
     /**
      @brief Get target platform
      */
-    virtual TargetPlatform getTargetPlatform() = 0;
+    virtual TargetPlatform getTargetPlatform();
 protected:
     long       m_nAnimationInterval;  //micro second
 
