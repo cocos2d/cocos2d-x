@@ -670,11 +670,11 @@ bool CCSpawn:: initWithTwoActions(CCFiniteTimeAction *pAction1, CCFiniteTimeActi
 
         if (d1 > d2)
         {
-            m_pTwo = CCSequence::create(pAction2, CCDelayTime::create(d1 - d2));
-        } else
-        if (d1 < d2)
+            m_pTwo = CCSequence::createWithTwoActions(pAction2, CCDelayTime::create(d1 - d2));
+        } 
+        else if (d1 < d2)
         {
-            m_pOne = CCSequence::create(pAction1, CCDelayTime::create(d2 - d1));
+            m_pOne = CCSequence::createWithTwoActions(pAction1, CCDelayTime::create(d2 - d1));
         }
 
         m_pOne->retain();
