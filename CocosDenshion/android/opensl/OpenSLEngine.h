@@ -8,8 +8,9 @@
 #include <ctype.h>
 #include <map>
 #include <vector>
-#include <SLES/OpenSLES.h>
-#include <SLES/OpenSLES_Android.h>
+#include <dlfcn.h>
+#include "SLES/OpenSLES.h"
+#include "SLES/OpenSLES_Android.h"
 #include <sys/types.h>
 #include <android/asset_manager.h>
 #include <android/asset_manager_jni.h>
@@ -23,7 +24,7 @@ public:
 	OpenSLEngine();
 	~OpenSLEngine();
 
-	void createEngine();
+	void createEngine(void * pHandle);
 
 	void closeEngine();
 
@@ -69,7 +70,6 @@ public:
 private:
 	SLmillibel m_musicVolume;
 	SLmillibel m_effectVolume;
-
 };
 
 #endif
