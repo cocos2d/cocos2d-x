@@ -166,6 +166,7 @@ int getFileDescriptor(const char * filename, off_t & start, off_t & length)
 	JniMethodInfo methodInfo;
 	if (! getStaticMethodInfo(methodInfo, ASSET_MANAGER_GETTER, "()Landroid/content/res/AssetManager;"))
 	{
+		methodInfo.env->DeleteLocalRef(methodInfo.classID);
 		return FILE_NOT_FOUND;
 	}
 	jobject assetManager = methodInfo.env->CallStaticObjectMethod(methodInfo.classID, methodInfo.methodID);
@@ -265,6 +266,7 @@ void destroyAudioPlayer(AudioPlayer * player)
 
 void OpenSLEngine::createEngine()
 {
+	LOGD("create engine");
 	SLresult result;
 	if (s_pEngineObject == NULL)
 	{
@@ -684,6 +686,5 @@ void OpenSLEngine::setEffectsVolume(float volume)
 float OpenSLEngine::getEffectsVolume()
 {
 	float volume = (m_effectVolume - MIN_VOLUME_MILLIBEL) / (1.0f * RANGE_VOLUME_MILLIBEL);
-	LOGD("effect volume: %f", volume);
 	return volume;
 }
