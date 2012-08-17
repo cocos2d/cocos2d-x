@@ -1,18 +1,18 @@
 /****************************************************************************
  Copyright (c) 2010 cocos2d-x.org
- 
+
  http://www.cocos2d-x.org
- 
+
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
- 
+
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
- 
+
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -47,7 +47,7 @@ CCApplication::~CCApplication()
 
 int CCApplication::run()
 {
-    if (initInstance() && applicationDidFinishLaunching()) 
+    if (initInstance() && applicationDidFinishLaunching())
     {
         [[CCDirectorCaller sharedDirectorCaller] startMainLoop];
     }
@@ -143,6 +143,19 @@ ccLanguageType CCApplication::getCurrentLanguage()
     }
 
     return ret;
+}
+
+std::string CCApplication::getCurrentLanguageCode()
+{
+	// get the current language and country config
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	NSArray *languages = [defaults objectForKey:@"AppleLanguages"];
+	NSString *currentLanguage = [languages objectAtIndex:0];
+
+	// get the current language code.(such as English is "en", Chinese is "zh" and so on)
+	NSDictionary *temp = [NSLocale componentsFromLocaleIdentifier:currentLanguage];
+	NSString *languageCode = [temp objectForKey:NSLocaleLanguageCode];
+	return std::string([languageCode UTF8String]);
 }
 
 NS_CC_END;
