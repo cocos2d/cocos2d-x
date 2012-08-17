@@ -39,6 +39,7 @@ NS_CC_BEGIN
 class CC_DLL CCFileUtils
 {
 public:
+    virtual ~CCFileUtils() {}
     static CCFileUtils* sharedFileUtils();
     static void purgeFileUtils();
 
@@ -70,35 +71,35 @@ public:
     If you have not set the ResourcePath,the function add "/NEWPLUS/TDA_DATA/UserData/" as default.
     You can set ResourcePath by function void setResourcePath(const char *pszResourcePath);
     */
-    const char* fullPathFromRelativePath(const char *pszRelativePath);
+	virtual const char* fullPathFromRelativePath(const char *pszRelativePath);
 
     /// @cond
-    const char* fullPathFromRelativeFile(const char *pszFilename, const char *pszRelativeFile);
+    virtual const char* fullPathFromRelativeFile(const char *pszFilename, const char *pszRelativeFile);
     /// @endcond
 
     /**
     @brief  Set the resource directory,we will find resource relative to this directory
     @param pszDirectoryName  Relative path to root
     */
-    void setResourceDirectory(const char *pszDirectoryName);
+    virtual void setResourceDirectory(const char *pszDirectoryName);
 
     /**
     @brief  Get the resource directory
     */
-    const char* getResourceDirectory();
+    virtual const char* getResourceDirectory();	
 
     /**
     @brief   Get the writeable path
     @return  The path that can write/read file
     */
-    std::string getWriteablePath();
+    virtual std::string getWriteablePath();
 
     /**
     @brief Set/Get whether pop-up a message box when the image load failed
     */
-    void setPopupNotify(bool bNotify);
-    bool isPopupNotify();
-    
+    virtual void setPopupNotify(bool bNotify);
+    virtual bool isPopupNotify();
+
 protected:
     std::string m_obDirectory;
 };

@@ -21,15 +21,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef __CC_PLATFORM_FILEUTILS_CPP__
-#error "CCFileUtilsCommon_cpp.h can only be included for CCFileUtils.cpp in platform/win32(android,...)"
-#endif /* __CC_PLATFORM_FILEUTILS_CPP__ */
 
 #include "CCFileUtils.h"
 #include "CCDirector.h"
 #include "cocoa/CCDictionary.h"
-
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS && CC_TARGET_PLATFORM != CC_PLATFORM_MAC)
 
 #include "cocoa/CCString.h"
 #include "CCSAXParser.h"
@@ -402,5 +397,3 @@ bool CCFileUtils::isPopupNotify()
 }
 
 NS_CC_END
-
-#endif // (CC_TARGET_PLATFORM != CC_PLATFORM_IOS && CC_TARGET_PLATFORM != CC_PLATFORM_MAC)

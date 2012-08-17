@@ -22,17 +22,18 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#define __CC_PLATFORM_FILEUTILS_CPP__
-#include "platform/CCFileUtilsCommon_cpp.h"
+#include "platform/CCFileUtils.h"
 
 using namespace std;
 
-NS_CC_BEGIN
+
 
 #include "platform/CCCommon.h"
 #include "jni/SystemInfoJni.h"
 #include "jni/MessageJni.h"
+#include "cocoa/CCString.h"
 
+NS_CC_BEGIN
 // record the resource path
 static string s_strResourcePath = "";
     
