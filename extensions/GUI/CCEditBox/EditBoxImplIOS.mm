@@ -135,18 +135,32 @@
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)sender        // return NO to disallow editing.
 {
+    CCLOG("textFieldShouldBeginEditing...");
     editState_ = YES;
     id eglView = [EAGLView sharedEGLView];
     if ([eglView isKeyboardShown])
     {
         [self performSelector:@selector(animationSelector) withObject:nil afterDelay:0.0f];
     }
+    cocos2d::extension::CCEditBoxDelegate* pDelegate = getEditBoxImplIOS()->getDelegate();
+    if (pDelegate != NULL)
+    {
+        pDelegate->editBoxEditingDidBegin(getEditBoxImplIOS()->getCCEditBox());
+    }
     return YES;
 }
 
 - (BOOL)textFieldShouldEndEditing:(UITextField *)sender
 {
+    CCLOG("textFieldShouldEndEditing...");
     editState_ = NO;
+    
+    cocos2d::extension::CCEditBoxDelegate* pDelegate = getEditBoxImplIOS()->getDelegate();
+    if (pDelegate != NULL)
+    {
+        pDelegate->editBoxEditingDidEnd(getEditBoxImplIOS()->getCCEditBox());
+        pDelegate->editBoxReturn(getEditBoxImplIOS()->getCCEditBox());
+    }
     return YES;
 }
 
@@ -178,7 +192,7 @@
  */
 - (void) textChanged
 {
-    NSLog(@"text is %@", self.textField.text);
+    // NSLog(@"text is %@", self.textField.text);
     cocos2d::extension::CCEditBoxDelegate* pDelegate = getEditBoxImplIOS()->getDelegate();
     if (pDelegate != NULL)
     {
