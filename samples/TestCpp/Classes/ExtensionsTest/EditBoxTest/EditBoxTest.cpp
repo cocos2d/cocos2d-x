@@ -22,6 +22,10 @@ EditBoxTest::EditBoxTest()
     pBg->setPosition(ccp(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/2));
     addChild(pBg);
     
+    m_pTTFShowEditReturn = CCLabelTTF::create("No edit control return!", "", 30);
+    m_pTTFShowEditReturn->setPosition(ccp(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y + visibleSize.height - 50));
+    addChild(m_pTTFShowEditReturn);
+    
     // Back Menu
     CCMenuItemFont *itemBack = CCMenuItemFont::create("Back", this, menu_selector(EditBoxTest::toExtensionsMainLayer));
     itemBack->setPosition(ccp(visibleOrigin.x+visibleSize.width - 50, visibleOrigin.y+25));
@@ -30,19 +34,35 @@ EditBoxTest::EditBoxTest()
     addChild(menuBack);
     
     CCSize editBoxSize = CCSizeMake(visibleSize.width/3, visibleSize.height/8);
-    CCEditBox* pEdit = NULL;
+
     // top
-    pEdit = CCEditBox::create(editBoxSize);
-    pEdit->setPosition(ccp(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/4));
-    addChild(pEdit);
+    m_pEditName = CCEditBox::create(editBoxSize, CCScale9Sprite::create("extensions/green_edit.png"));
+    m_pEditName->setPosition(ccp(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height*3/4));
+    m_pEditName->setFontColor(ccRED);
+    m_pEditName->setPlaceHolder("Name:");
+    m_pEditName->setMaxLength(8);
+    m_pEditName->setReturnType(kKeyboardReturnTypeDone);
+    m_pEditName->setDelegate(this);
+    addChild(m_pEditName);
+    
     // middle
-    pEdit = CCEditBox::create(editBoxSize);
-    pEdit->setPosition(ccp(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/2));
-    addChild(pEdit);
+    m_pEditPassword = CCEditBox::create(editBoxSize, CCScale9Sprite::create("extensions/orange_edit.png"));
+    m_pEditPassword->setPosition(ccp(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/2));
+    m_pEditPassword->setFontColor(ccGREEN);
+    m_pEditPassword->setPlaceHolder("Password:");
+    m_pEditPassword->setMaxLength(6);
+    m_pEditPassword->setInputFlag(kEditBoxInputFlagPassword);
+    m_pEditPassword->setInputMode(kEditBoxInputModeSingleLine);
+    m_pEditPassword->setDelegate(this);
+    addChild(m_pEditPassword);
+    
     // bottom
-    pEdit = CCEditBox::create(editBoxSize);
-    pEdit->setPosition(ccp(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height*3/4));
-    addChild(pEdit);
+    m_pEditEmail = CCEditBox::create(editBoxSize, CCScale9Sprite::create("extensions/yellow_edit.png"));
+    m_pEditEmail->setPosition(ccp(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/4));
+    m_pEditEmail->setPlaceHolder("Email:");
+    m_pEditEmail->setInputMode(kEditBoxInputModeEmailAddr);
+    m_pEditEmail->setDelegate(this);
+    addChild(m_pEditEmail);
 }
 
 EditBoxTest::~EditBoxTest()
@@ -57,6 +77,38 @@ void EditBoxTest::toExtensionsMainLayer(cocos2d::CCObject *sender)
     pScene->release();
 }
 
+void EditBoxTest::editBoxEditingDidBegin(cocos2d::extension::CCEditBox* editBox)
+{
+    CCLog("editBox %p DidBegin !", editBox);
+}
+
+void EditBoxTest::editBoxEditingDidEnd(cocos2d::extension::CCEditBox* editBox)
+{
+    CCLog("editBox %p DidEnd !", editBox);
+}
+
+void EditBoxTest::editBoxTextChanged(cocos2d::extension::CCEditBox* editBox, const std::string& text)
+{
+    CCLog("editBox %p TextChanged, text: %s ", editBox, text.c_str());
+}
+
+void EditBoxTest::editBoxReturn(CCEditBox* editBox)
+{
+    CCLog("editBox %p was returned !");
+    
+    if (m_pEditName == editBox)
+    {
+        m_pTTFShowEditReturn->setString("Name EditBox return !");
+    }
+    else if (m_pEditPassword == editBox)
+    {
+        m_pTTFShowEditReturn->setString("Password EditBox return !"); 
+    }
+    else if (m_pEditEmail == editBox)
+    {
+        m_pTTFShowEditReturn->setString("Email EditBox return !");
+    }
+}
 
 void runEditBoxTest()
 {
