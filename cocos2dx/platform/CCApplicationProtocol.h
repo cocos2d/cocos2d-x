@@ -3,6 +3,16 @@
 
 NS_CC_BEGIN
 
+enum TargetPlatform
+{
+    kTargetWindows,
+    kTargetLinux,
+    kTargetMacOS,
+    kTargetAndroid,
+    kTargetIphone,
+    kTargetIpad,
+};
+
 /**
  * @addtogroup platform
  * @{
@@ -45,9 +55,10 @@ public:
     */
     virtual ccLanguageType getCurrentLanguage() = 0;
     
-    virtual bool isIpad() { return false; }
-    virtual bool isIos() { return false; }
-
+    /**
+     @brief Get target platform
+     */
+    virtual TargetPlatform getTargetPlatform() = 0;
 };
 
 // end of platform group

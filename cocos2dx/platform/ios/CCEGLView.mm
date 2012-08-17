@@ -41,11 +41,6 @@ CCEGLView::~CCEGLView()
 
 }
 
-bool CCEGLView::isIpad()
-{
-    return UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad;
-}
-
 bool CCEGLView::isOpenGLReady()
 {
     return [EAGLView sharedEGLView] != NULL;
@@ -62,7 +57,7 @@ bool CCEGLView::setContentScaleFactor(float contentScaleFactor)
         view.contentScaleFactor = contentScaleFactor;
         [view setNeedsLayout];
         
-        m_fXScale = m_fYScale = contentScaleFactor;
+        m_fScaleX = m_fScaleY = contentScaleFactor;
         m_bIsRetinaEnabled = true;
         
         return true;

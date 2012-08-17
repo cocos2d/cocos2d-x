@@ -24,13 +24,120 @@ THE SOFTWARE.
 
 #include "SimpleAudioEngine.h"
 #include "jni/SimpleAudioEngineJni.h"
-
-/* 
- *  for OpenSLES on Android 2.3 and above
- */
-#ifdef ENABLE_OPENSL
 #include "opensl/SimpleAudioEngineOpenSL.h"
-#endif
+
+#include <cstring>
+#include <android/log.h>
+#include <jni/JniHelper.h>
+#include <jni.h>
+
+#define  I9100_MODEL "GT-I9100"
+#define  LOG_TAG     "Device Model"
+#define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
+
+static bool s_bI9100 = false;
+
+/**********************************************************************************
+ *   jni
+ **********************************************************************************/
+#define  CLASS_NAME   "org/cocos2dx/lib/Cocos2dxActivity"
+#define  METHOD_NAME  "getDeviceModel"
+
+typedef struct JniMethodInfo_
+{
+	JNIEnv *    env;
+	jclass      classID;
+	jmethodID   methodID;
+} JniMethodInfo;
+
+extern "C" {
+	static JNIEnv* getJNIEnv(void)
+	{
+
+		JavaVM* jvm = cocos2d::JniHelper::getJavaVM();
+		if (NULL == jvm) {
+			LOGD("Failed to get JNIEnv. JniHelper::getJavaVM() is NULL");
+			return NULL;
+		}
+
+		JNIEnv *env = NULL;
+		// get jni environment
+		jint ret = jvm->GetEnv((void**)&env, JNI_VERSION_1_4);
+
+		switch (ret) {
+		case JNI_OK :
+			// Success!
+			return env;
+
+		case JNI_EDETACHED :
+			// Thread not attached
+
+			// TODO : If calling AttachCurrentThread() on a native thread
+			// must call DetachCurrentThread() in future.
+			// see: http://developer.android.com/guide/practices/design/jni.html
+
+			if (jvm->AttachCurrentThread(&env, NULL) < 0)
+			{
+				LOGD("Failed to get the environment using AttachCurrentThread()");
+				return NULL;
+			} else {
+				// Success : Attached and obtained JNIEnv!
+				return env;
+			}
+
+		case JNI_EVERSION :
+			// Cannot recover from this error
+			LOGD("JNI interface version 1.4 not supported");
+		default :
+			LOGD("Failed to get the environment using GetEnv()");
+			return NULL;
+		}
+	}
+
+	static jclass getClassID(JNIEnv *pEnv)
+	{
+		jclass ret = pEnv->FindClass(CLASS_NAME);
+		if (! ret)
+		{
+			LOGD("Failed to find class of %s", CLASS_NAME);
+		}
+
+		return ret;
+	}
+
+	static bool getStaticMethodInfo(JniMethodInfo &methodinfo, const char *methodName, const char *paramCode)
+	{
+		jmethodID methodID = 0;
+		JNIEnv *pEnv = 0;
+		bool bRet = false;
+
+		do 
+		{
+			pEnv = getJNIEnv();
+			if (! pEnv)
+			{
+				break;
+			}
+
+			jclass classID = getClassID(pEnv);
+
+			methodID = pEnv->GetStaticMethodID(classID, methodName, paramCode);
+			if (! methodID)
+			{
+				LOGD("Failed to find static method id of %s", methodName);
+				break;
+			}
+
+			methodinfo.classID = classID;
+			methodinfo.env = pEnv;
+			methodinfo.methodID = methodID;
+
+			bRet = true;
+		} while (0);
+
+		return bRet;
+	}
+};
 
 
 namespace CocosDenshion {
@@ -39,13 +146,33 @@ static SimpleAudioEngine *s_pEngine = 0;
 
 SimpleAudioEngine::SimpleAudioEngine()
 {
+	JniMethodInfo methodInfo;
+	jstring jstr;
+	if (getStaticMethodInfo(methodInfo, METHOD_NAME, "()Ljava/lang/String;"))
+	{
+		jstr = (jstring)methodInfo.env->CallStaticObjectMethod(methodInfo.classID, methodInfo.methodID);
+	}
+	methodInfo.env->DeleteLocalRef(methodInfo.classID);
+	
+	const char* deviceModel = methodInfo.env->GetStringUTFChars(jstr, NULL);
+	methodInfo.env->ReleaseStringUTFChars(jstr, deviceModel);
+	methodInfo.env->DeleteLocalRef(jstr);
+
+	LOGD(deviceModel);
+
+	if (strcmp(I9100_MODEL, deviceModel) == 0)
+	{
+		LOGD("i9100 model\nSwitch to OpenSLES");
+		s_bI9100 = true;
+	}
 }
 
 SimpleAudioEngine::~SimpleAudioEngine()
 {
-#ifdef ENABLE_OPENSL
-	SimpleAudioEngineOpenSL::sharedEngine()->end();
-#endif
+	if (s_bI9100)
+	{
+		SimpleAudioEngineOpenSL::sharedEngine()->end();
+	}
 }
 
 SimpleAudioEngine* SimpleAudioEngine::sharedEngine()
@@ -60,11 +187,14 @@ SimpleAudioEngine* SimpleAudioEngine::sharedEngine()
 
 void SimpleAudioEngine::end()
 {
-    endJNI();
-
-#ifdef ENABLE_OPENSL
-	SimpleAudioEngineOpenSL::sharedEngine()->end();
-#endif
+	if (s_bI9100)
+	{
+		SimpleAudioEngineOpenSL::sharedEngine()->end();
+	}
+	else
+	{
+		endJNI();
+	}
 }
 
 void SimpleAudioEngine::preloadBackgroundMusic(const char* pszFilePath)
@@ -119,103 +249,134 @@ void SimpleAudioEngine::setBackgroundMusicVolume(float volume)
 
 float SimpleAudioEngine::getEffectsVolume()
 {
-#ifdef ENABLE_OPENSL
-	return SimpleAudioEngineOpenSL::sharedEngine()->getEffectsVolume();
-#else
-	return getEffectsVolumeJNI();
-#endif
+	if (s_bI9100)
+	{
+		return SimpleAudioEngineOpenSL::sharedEngine()->getEffectsVolume();
+	}
+	else
+	{
+		return getEffectsVolumeJNI();
+	}
 }
 
 void SimpleAudioEngine::setEffectsVolume(float volume)
 {
-#ifdef ENABLE_OPENSL
-	// @TO-DO 
-	// Here may crash, fixing.
-	SimpleAudioEngineOpenSL::sharedEngine()->setEffectsVolume(volume);
-#else
-	setEffectsVolumeJNI(volume);
-#endif
+	if (s_bI9100)
+	{
+		SimpleAudioEngineOpenSL::sharedEngine()->setEffectsVolume(volume);
+	}
+	else
+	{
+		setEffectsVolumeJNI(volume);
+	}
 }
 
 unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop)
 {
-#ifdef ENABLE_OPENSL
-	return SimpleAudioEngineOpenSL::sharedEngine()->playEffect(pszFilePath, bLoop);
-#else
-	return playEffectJNI(pszFilePath, bLoop);
-#endif
+	if (s_bI9100)
+	{
+		return SimpleAudioEngineOpenSL::sharedEngine()->playEffect(pszFilePath, bLoop);
+	}
+	else 
+	{
+		return playEffectJNI(pszFilePath, bLoop);
+	}
 }
 
 void SimpleAudioEngine::stopEffect(unsigned int nSoundId)
 {
-#ifdef ENABLE_OPENSL
-	SimpleAudioEngineOpenSL::sharedEngine()->stopEffect(nSoundId);
-#else
-	stopEffectJNI(nSoundId);
-#endif
+	if (s_bI9100)
+	{
+		SimpleAudioEngineOpenSL::sharedEngine()->stopEffect(nSoundId);
+	}
+	else
+	{
+		stopEffectJNI(nSoundId);
+	}
 }
 
 void SimpleAudioEngine::preloadEffect(const char* pszFilePath)
 {
-#ifdef ENABLE_OPENSL
-	SimpleAudioEngineOpenSL::sharedEngine()->preloadEffect(pszFilePath);
-#else
-	preloadEffectJNI(pszFilePath);
-#endif
+	if (s_bI9100)
+	{
+		SimpleAudioEngineOpenSL::sharedEngine()->preloadEffect(pszFilePath);
+	}
+	else
+	{
+		preloadEffectJNI(pszFilePath);
+	}
 }
 
 void SimpleAudioEngine::unloadEffect(const char* pszFilePath)
 {
-#ifdef ENABLE_OPENSL
-	SimpleAudioEngineOpenSL::sharedEngine()->unloadEffect(pszFilePath);
-#else
-	unloadEffectJNI(pszFilePath);
-#endif
+	if (s_bI9100)
+	{
+		SimpleAudioEngineOpenSL::sharedEngine()->unloadEffect(pszFilePath);
+	}
+	else
+	{
+		unloadEffectJNI(pszFilePath);
+	}
 }
 
 void SimpleAudioEngine::pauseEffect(unsigned int nSoundId)
 {
-#ifdef ENABLE_OPENSL
-	SimpleAudioEngineOpenSL::sharedEngine()->pauseEffect(nSoundId);
-#else
-	pauseEffectJNI(nSoundId);
-#endif
+	if (s_bI9100)
+	{
+		SimpleAudioEngineOpenSL::sharedEngine()->pauseEffect(nSoundId);
+	}
+	else
+	{
+		pauseEffectJNI(nSoundId);
+	}
 }
 
 void SimpleAudioEngine::pauseAllEffects()
 {
-#ifdef ENABLE_OPENSL
-	SimpleAudioEngineOpenSL::sharedEngine()->pauseAllEffects();
-#else
-	pauseAllEffectsJNI();
-#endif
+	if (s_bI9100)
+	{
+		SimpleAudioEngineOpenSL::sharedEngine()->pauseAllEffects();
+	}
+	else
+	{
+		pauseAllEffectsJNI();
+	}
 }
 
 void SimpleAudioEngine::resumeEffect(unsigned int nSoundId)
 {
-#ifdef ENABLE_OPENSL
-	SimpleAudioEngineOpenSL::sharedEngine()->resumeEffect(nSoundId);
-#else
-	resumeEffectJNI(nSoundId);
-#endif
+	if (s_bI9100)
+	{
+		SimpleAudioEngineOpenSL::sharedEngine()->resumeEffect(nSoundId);
+	}
+	else
+	{
+		resumeEffectJNI(nSoundId);
+	}
 }
 
 void SimpleAudioEngine::resumeAllEffects()
 {
-#ifdef ENABLE_OPENSL
-	SimpleAudioEngineOpenSL::sharedEngine()->resumeAllEffects();
-#else
-	resumeAllEffectsJNI();
-#endif
+	if (s_bI9100)
+	{
+		SimpleAudioEngineOpenSL::sharedEngine()->resumeAllEffects();
+	}
+	else
+	{
+		resumeAllEffectsJNI();
+	}
 }
 
 void SimpleAudioEngine::stopAllEffects()
 {
-#ifdef ENABLE_OPENSL
-	SimpleAudioEngineOpenSL::sharedEngine()->stopAllEffects();
-#else
-	stopAllEffectsJNI();
-#endif
+	if (s_bI9100)
+	{
+		SimpleAudioEngineOpenSL::sharedEngine()->stopAllEffects();
+	}
+	else
+	{
+		stopAllEffectsJNI();
+	}
 }
 
 }

@@ -187,6 +187,10 @@
 		15AA9F3C15B7EF960033D6C2 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15AA9F3A15B7EF960033D6C2 /* AppDelegate.cpp */; };
 		15AA9F4915B7F3A60033D6C2 /* libcocos2dx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15AA9C3515B7EBDF0033D6C2 /* libcocos2dx.a */; };
 		15DD6D8F156DD2E6003E7567 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 15DD6D8D156DD2E6003E7567 /* fps_images.png */; };
+		1A14ADF515DA49A50064E300 /* CCEditBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A14ADEC15DA49A50064E300 /* CCEditBox.cpp */; };
+		1A14ADF715DA49A50064E300 /* CCEditBoxImplIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A14ADF115DA49A50064E300 /* CCEditBoxImplIOS.mm */; };
+		1A14ADF915DA49A50064E300 /* EditBoxImplIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A14ADF415DA49A50064E300 /* EditBoxImplIOS.mm */; };
+		1A14AE0615DA5E780064E300 /* EditBoxTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A14AE0415DA5E780064E300 /* EditBoxTest.cpp */; };
 		1D3623260D0F684500981E51 /* testsAppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* testsAppDelegate.mm */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
@@ -672,6 +676,15 @@
 		15AA9F3A15B7EF960033D6C2 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		15AA9F3B15B7EF960033D6C2 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		15DD6D8D156DD2E6003E7567 /* fps_images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fps_images.png; sourceTree = "<group>"; };
+		1A14ADEC15DA49A50064E300 /* CCEditBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCEditBox.cpp; sourceTree = "<group>"; };
+		1A14ADED15DA49A50064E300 /* CCEditBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEditBox.h; sourceTree = "<group>"; };
+		1A14ADEE15DA49A50064E300 /* CCEditBoxImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEditBoxImpl.h; sourceTree = "<group>"; };
+		1A14ADF015DA49A50064E300 /* CCEditBoxImplIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEditBoxImplIOS.h; sourceTree = "<group>"; };
+		1A14ADF115DA49A50064E300 /* CCEditBoxImplIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCEditBoxImplIOS.mm; sourceTree = "<group>"; };
+		1A14ADF315DA49A50064E300 /* EditBoxImplIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditBoxImplIOS.h; sourceTree = "<group>"; };
+		1A14ADF415DA49A50064E300 /* EditBoxImplIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = EditBoxImplIOS.mm; sourceTree = "<group>"; };
+		1A14AE0415DA5E780064E300 /* EditBoxTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EditBoxTest.cpp; sourceTree = "<group>"; };
+		1A14AE0515DA5E780064E300 /* EditBoxTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditBoxTest.h; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D3623240D0F684500981E51 /* testsAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = testsAppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* testsAppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = testsAppDelegate.mm; sourceTree = "<group>"; };
@@ -1086,6 +1099,7 @@
 		15AA9CBB15B7EC460033D6C2 /* ExtensionsTest */ = {
 			isa = PBXGroup;
 			children = (
+				1A14AE0315DA5E780064E300 /* EditBoxTest */,
 				D4144C0C15D23C9C00F4FD92 /* NetworkTest */,
 				15AA9CBC15B7EC460033D6C2 /* CocosBuilderTest */,
 				15AA9CDB15B7EC460033D6C2 /* ControlExtensionTest */,
@@ -1858,6 +1872,30 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		1A14ADEB15DA49A50064E300 /* CCEditBox */ = {
+			isa = PBXGroup;
+			children = (
+				1A14ADEC15DA49A50064E300 /* CCEditBox.cpp */,
+				1A14ADED15DA49A50064E300 /* CCEditBox.h */,
+				1A14ADEE15DA49A50064E300 /* CCEditBoxImpl.h */,
+				1A14ADF015DA49A50064E300 /* CCEditBoxImplIOS.h */,
+				1A14ADF115DA49A50064E300 /* CCEditBoxImplIOS.mm */,
+				1A14ADF315DA49A50064E300 /* EditBoxImplIOS.h */,
+				1A14ADF415DA49A50064E300 /* EditBoxImplIOS.mm */,
+			);
+			path = CCEditBox;
+			sourceTree = "<group>";
+		};
+		1A14AE0315DA5E780064E300 /* EditBoxTest */ = {
+			isa = PBXGroup;
+			children = (
+				1A14AE0415DA5E780064E300 /* EditBoxTest.cpp */,
+				1A14AE0515DA5E780064E300 /* EditBoxTest.h */,
+			);
+			name = EditBoxTest;
+			path = ../../Classes/ExtensionsTest/EditBoxTest;
+			sourceTree = "<group>";
+		};
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
@@ -1949,6 +1987,7 @@
 		D4BF200315C6D23700692205 /* GUI */ = {
 			isa = PBXGroup;
 			children = (
+				1A14ADEB15DA49A50064E300 /* CCEditBox */,
 				D4BF200415C6D23700692205 /* CCControlExtension */,
 				D4BF201E15C6D23700692205 /* CCScrollView */,
 			);
@@ -2292,6 +2331,10 @@
 				D4BF202D15C6D23700692205 /* CCScrollView.cpp in Sources */,
 				D49E9D6915CFAD7300B5A0D6 /* HttpClient.cpp in Sources */,
 				D4144C0F15D23C9C00F4FD92 /* HttpClientTest.cpp in Sources */,
+				1A14ADF515DA49A50064E300 /* CCEditBox.cpp in Sources */,
+				1A14ADF715DA49A50064E300 /* CCEditBoxImplIOS.mm in Sources */,
+				1A14ADF915DA49A50064E300 /* EditBoxImplIOS.mm in Sources */,
+				1A14AE0615DA5E780064E300 /* EditBoxTest.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
