@@ -142,7 +142,7 @@ void mousePosEventHandle(int iPosX,int iPosY) {
 	}
 }
 
-void CCEGLView::setSize(float width, float height)
+void CCEGLView::setFrameSize(float width, float height)
 {
 	bool eResult = false;
 	int u32GLFWFlags = GLFW_WINDOW;
@@ -200,7 +200,7 @@ void CCEGLView::setSize(float width, float height)
 		/* Updates actual size */
 	  //		glfwGetWindowSize(&width, &height);
 
-		CCEGLViewProtocol::setSize(width, height);		
+		CCEGLViewProtocol::setFrameSize(width, height);		
 
 		/* Updates its title */
 		glfwSetWindowTitle("Cocos2dx-Linux");

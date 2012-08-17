@@ -294,9 +294,6 @@ public:
     void setContentScaleFactor(float scaleFactor);
     float getContentScaleFactor(void);
 
-    typedef void(*WatcherCallbackFun)(void *pSender);
-    void setWatcherCallbackFun(void *pSender, WatcherCallbackFun fun);
-
 public:
     /** CCScheduler associated with this director
      @since v2.0
@@ -412,9 +409,6 @@ protected:
 
     /* contentScaleFactor could be simulated */
     bool m_bIsContentScaleSupported;
-
-    WatcherCallbackFun m_pWatcherFun;
-    void *m_pWatcherSender;
     
     // CCEGLViewProtocol will recreate stats labels to fit visible rect
     friend class CCEGLViewProtocol;

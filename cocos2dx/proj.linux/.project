@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>cocos2dx-base</name>
+	<name>libcocos2d</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -142,6 +142,11 @@
 			<locationURI>PARENT-1-PROJECT_LOC/include</locationURI>
 		</link>
 		<link>
+			<name>kazmath</name>
+			<type>2</type>
+			<locationURI>PARENT-1-PROJECT_LOC/kazmath</locationURI>
+		</link>
+		<link>
 			<name>keypad_dispatcher</name>
 			<type>2</type>
 			<locationURI>PARENT-1-PROJECT_LOC/keypad_dispatcher</locationURI>
@@ -182,6 +187,11 @@
 			<locationURI>PARENT-1-PROJECT_LOC/script_support</locationURI>
 		</link>
 		<link>
+			<name>shaders</name>
+			<type>2</type>
+			<locationURI>PARENT-1-PROJECT_LOC/shaders</locationURI>
+		</link>
+		<link>
 			<name>sprite_nodes</name>
 			<type>2</type>
 			<locationURI>PARENT-1-PROJECT_LOC/sprite_nodes</locationURI>
@@ -202,9 +212,9 @@
 			<locationURI>PARENT-1-PROJECT_LOC/textures</locationURI>
 		</link>
 		<link>
-			<name>tileMap_parallax_nodes</name>
+			<name>tilemap_parallax_nodes</name>
 			<type>2</type>
-			<locationURI>PARENT-1-PROJECT_LOC/tileMap_parallax_nodes</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/tilemap_parallax_nodes</locationURI>
 		</link>
 		<link>
 			<name>touch_dispatcher</name>
@@ -212,4 +222,15 @@
 			<locationURI>PARENT-1-PROJECT_LOC/touch_dispatcher</locationURI>
 		</link>
 	</linkedResources>
+	<filteredResources>
+		<filter>
+			<id>1345102407743</id>
+			<name>platform</name>
+			<type>9</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-true-false-linux</arguments>
+			</matcher>
+		</filter>
+	</filteredResources>
 </projectDescription>
