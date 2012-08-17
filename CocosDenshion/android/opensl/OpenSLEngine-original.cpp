@@ -1,6 +1,6 @@
 #include "OpenSLEngine.h"
 
-#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG,"OPENSL_ENGINE.CPP", __VA_ARGS__)
+#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG,"OPENSL_ENGINE", __VA_ARGS__)
 
 using namespace std;
 
@@ -141,8 +141,6 @@ struct AudioPlayer
 typedef map<unsigned int, vector<AudioPlayer*>* > EffectList;
 typedef pair<unsigned int, vector<AudioPlayer*>* > Effect;
 
-void* s_pHandle = NULL;
-
 static EffectList& sharedList()
 {
 	static EffectList s_List;
@@ -163,40 +161,11 @@ unsigned int _Hash(const char *key)
 	return (hash);
 }
 
-SLInterfaceID getInterfaceID(const char *value)
-{
-	// clear the error stack
-	dlerror();
-	SLInterfaceID* IID = (SLInterfaceID*)dlsym(s_pHandle, value);
-	const char* errorInfo = dlerror();
-	if (errorInfo)
-	{
-		LOGD("Get interface id: %s from OpenSL failed", errorInfo);
-		IID = NULL;
-	}
-	return *IID;
-}
-
-void* getFuncPtr(const char *value)
-{
-	// clear the error stack
-	dlerror();
-	void* funcPtr = dlsym(s_pHandle, value);
-	const char* errorInfo = dlerror();
-	if (errorInfo)
-	{
-		LOGD("Get function from OpenSL failed: %s", errorInfo);
-		funcPtr = NULL;
-	}
-	return funcPtr;
-}
-
 int getFileDescriptor(const char * filename, off_t & start, off_t & length)
 {
 	JniMethodInfo methodInfo;
 	if (! getStaticMethodInfo(methodInfo, ASSET_MANAGER_GETTER, "()Landroid/content/res/AssetManager;"))
 	{
-		methodInfo.env->DeleteLocalRef(methodInfo.classID);
 		return FILE_NOT_FOUND;
 	}
 	jobject assetManager = methodInfo.env->CallStaticObjectMethod(methodInfo.classID, methodInfo.methodID);
@@ -235,8 +204,7 @@ bool createAudioPlayerBySource(AudioPlayer* player)
 	SLDataSink audioSnk = {&loc_outmix, NULL};
 
 	// create audio player
-	const SLInterfaceID ids[3] = {
-		getInterfaceID("SL_IID_SEEK"), getInterfaceID("SL_IID_MUTESOLO"), getInterfaceID("SL_IID_VOLUME")};
+	const SLInterfaceID ids[3] = {SL_IID_SEEK, SL_IID_MUTESOLO, SL_IID_VOLUME};
 	const SLboolean req[3] = {SL_BOOLEAN_TRUE, SL_BOOLEAN_TRUE, SL_BOOLEAN_TRUE};
 	SLresult result = (*s_pEngineEngine)->CreateAudioPlayer(s_pEngineEngine, &(player->fdPlayerObject), &(player->audioSrc), &audioSnk, 3, ids, req);
 	if (SL_RESULT_MEMORY_FAILURE == result)
@@ -249,15 +217,15 @@ bool createAudioPlayerBySource(AudioPlayer* player)
 	assert(SL_RESULT_SUCCESS == result);
 
 	// get the play interface
-	result = (*(player->fdPlayerObject))->GetInterface(player->fdPlayerObject, getInterfaceID("SL_IID_PLAY"), &(player->fdPlayerPlay));
+	result = (*(player->fdPlayerObject))->GetInterface(player->fdPlayerObject, SL_IID_PLAY, &(player->fdPlayerPlay));
 	assert(SL_RESULT_SUCCESS == result);
 
 	// get the volume interface
-	result = (*(player->fdPlayerObject))->GetInterface(player->fdPlayerObject, getInterfaceID("SL_IID_VOLUME"), &(player->fdPlayerVolume));
+	result = (*(player->fdPlayerObject))->GetInterface(player->fdPlayerObject, SL_IID_VOLUME, &(player->fdPlayerVolume));
 	assert(SL_RESULT_SUCCESS == result);
 
 	// get the seek interface
-	result = (*(player->fdPlayerObject))->GetInterface(player->fdPlayerObject, getInterfaceID("SL_IID_SEEK"), &(player->fdPlayerSeek));
+	result = (*(player->fdPlayerObject))->GetInterface(player->fdPlayerObject, SL_IID_SEEK, &(player->fdPlayerSeek));
 	assert(SL_RESULT_SUCCESS == result);
 
 	return true;
@@ -295,16 +263,12 @@ void destroyAudioPlayer(AudioPlayer * player)
 	}
 }
 
-void OpenSLEngine::createEngine(void* pHandle)
+void OpenSLEngine::createEngine()
 {
-	s_pHandle = pHandle;
 	SLresult result;
 	if (s_pEngineObject == NULL)
 	{
 		// create engine
-		SLresult (*slCreateEngine)(SLObjectItf *pEngine, SLuint32 numOptions, const SLEngineOption *pEngineOptions, SLuint32 numInterfaces, const SLInterfaceID *pInterfaceIds, const SLboolean * pInterfaceRequired );
-		slCreateEngine = (SLresult (*)(SLObjectItf *pEngine, SLuint32 numOptions, const SLEngineOption *pEngineOptions, SLuint32 numInterfaces, const SLInterfaceID *pInterfaceIds, const SLboolean * pInterfaceRequired ))
-			getFuncPtr("slCreateEngine");
 		result = slCreateEngine(&s_pEngineObject, 0, NULL, 0, NULL, NULL);
 		assert(SL_RESULT_SUCCESS == result);
 
@@ -313,11 +277,11 @@ void OpenSLEngine::createEngine(void* pHandle)
 		assert(SL_RESULT_SUCCESS == result);
 
 		// get the engine interface, which is needed in order to create other objects
-		result = (*s_pEngineObject)->GetInterface(s_pEngineObject, getInterfaceID("SL_IID_ENGINE"), &s_pEngineEngine);
+		result = (*s_pEngineObject)->GetInterface(s_pEngineObject, SL_IID_ENGINE, &s_pEngineEngine);
 		assert(SL_RESULT_SUCCESS == result);
 
 		// create output mix
-		const SLInterfaceID ids[1] = {getInterfaceID("SL_IID_ENVIRONMENTALREVERB")};
+		const SLInterfaceID ids[1] = {SL_IID_ENVIRONMENTALREVERB};
 		const SLboolean req[1] = {SL_BOOLEAN_FALSE};
 		result = (*s_pEngineEngine)->CreateOutputMix(s_pEngineEngine, &s_pOutputMixObject, 1, ids, req);
 		assert(SL_RESULT_SUCCESS == result);
@@ -364,6 +328,82 @@ void OpenSLEngine::closeEngine()
 	}
 
 	LOGD("engine destory");
+}
+
+
+/**********************************************************************************
+ *   background music
+ **********************************************************************************/
+bool OpenSLEngine::preloadBackgroundMusic(const char * filename)
+{
+	if (musicPlayer.fdPlayerPlay != NULL)
+	{
+		SLresult result = (*(musicPlayer.fdPlayerPlay))->SetPlayState(musicPlayer.fdPlayerPlay, SL_PLAYSTATE_STOPPED);
+		assert(SL_RESULT_SUCCESS == result);
+	}
+
+	return initAudioPlayer(&musicPlayer, filename);
+}
+
+void OpenSLEngine::setBackgroundMusicState(int state)
+{
+	SLresult result;
+	if (NULL != musicPlayer.fdPlayerPlay)
+	{
+		result = (*(musicPlayer.fdPlayerPlay))->SetPlayState(musicPlayer.fdPlayerPlay, state);
+		assert(SL_RESULT_SUCCESS == result);
+	}
+}
+
+int OpenSLEngine::getBackgroundMusicState()
+{
+	SLresult result;
+	SLuint32 state;
+	if (musicPlayer.fdPlayerPlay != NULL)
+	{
+		result = (*(musicPlayer.fdPlayerPlay))->GetPlayState(musicPlayer.fdPlayerPlay, &state);
+		assert(result == SL_RESULT_SUCCESS);
+	}
+
+	return (int)state;
+}
+
+void OpenSLEngine::rewindBackgroundMusic()
+{
+	SLresult result;
+
+	result = (*(musicPlayer.fdPlayerSeek))->SetPosition(musicPlayer.fdPlayerSeek, 0, SL_SEEKMODE_FAST);
+	assert(SL_RESULT_SUCCESS == result);
+
+	result = (*(musicPlayer.fdPlayerPlay))->SetPlayState(musicPlayer.fdPlayerPlay, SL_PLAYSTATE_PLAYING);
+	assert(SL_RESULT_SUCCESS == result);
+}
+
+void OpenSLEngine::setBackgroundMusicLooping(bool isLooping)
+{
+    SLresult result;
+    if (NULL != musicPlayer.fdPlayerSeek) 
+	{
+        result = (*(musicPlayer.fdPlayerSeek))->SetLoop(musicPlayer.fdPlayerSeek, (SLboolean) isLooping, 0, SL_TIME_UNKNOWN);
+        assert(SL_RESULT_SUCCESS == result);
+    }
+}
+
+void OpenSLEngine::setBackgroundVolume(int volume)
+{
+	m_musicVolume = volume;
+
+    SLresult result;
+    if (NULL != musicPlayer.fdPlayerVolume)
+	{
+        result = (*(musicPlayer.fdPlayerVolume))->SetVolumeLevel(musicPlayer.fdPlayerVolume, m_musicVolume);
+        assert(SL_RESULT_SUCCESS == result);
+    }
+}
+
+int OpenSLEngine::getBackgroundVolume()
+{
+	return m_musicVolume;
 }
 
 
@@ -644,5 +684,6 @@ void OpenSLEngine::setEffectsVolume(float volume)
 float OpenSLEngine::getEffectsVolume()
 {
 	float volume = (m_effectVolume - MIN_VOLUME_MILLIBEL) / (1.0f * RANGE_VOLUME_MILLIBEL);
+	LOGD("effect volume: %f", volume);
 	return volume;
 }
