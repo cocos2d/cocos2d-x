@@ -1,4 +1,10 @@
 #include "SimpleAudioEngineOpenSL.h"
+#include <dlfcn.h>
+#include <android/log.h>
+
+#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG,"SIMPLEAUDIOENGINE_OPENSL", __VA_ARGS__)
+
+#define  LIBOPENSLES "libOpenSLES.so"
 
 #define  PLAYSTATE_UNKNOWN 0
 #define  PLAYSTATE_STOPPED 1
@@ -6,6 +12,7 @@
 #define  PLAYSTATE_PLAYING 3
 #define  FILE_NOT_FOUND	   -1
 
+static void * s_pHandle = 0;
 static OpenSLEngine * s_pOpenSL = 0;
 static SimpleAudioEngineOpenSL * s_pEngine = 0;
 
@@ -15,25 +22,32 @@ SimpleAudioEngineOpenSL::SimpleAudioEngineOpenSL()
 
 SimpleAudioEngineOpenSL::~SimpleAudioEngineOpenSL()
 {
-	if (s_pOpenSL)
-	{
-		s_pOpenSL->closeEngine();
-
-		delete s_pOpenSL;
-		s_pOpenSL = 0;
-	}
+	end();
 }
 
 bool SimpleAudioEngineOpenSL::initEngine()
 {
 	bool bRet = false;
-	if (s_pOpenSL == NULL)
+	do 
 	{
-		s_pOpenSL = new OpenSLEngine();
-		s_pOpenSL->createEngine();
+		if (s_pOpenSL == NULL)
+		{
+			// clear the error stack
+			dlerror();
+			s_pHandle = dlopen(LIBOPENSLES, RTLD_LAZY);
+			const char* errorInfo = dlerror();
+			if (errorInfo)
+			{
+				LOGD(errorInfo);
+				bRet = false;
+				break;
+			}
+			s_pOpenSL = new OpenSLEngine();
+			s_pOpenSL->createEngine(s_pHandle);
 
-		bRet = true;
-	}
+			bRet = true;
+		}
+	} while (0);
 	return bRet;
 }
 
@@ -54,6 +68,9 @@ void SimpleAudioEngineOpenSL::end()
 		s_pOpenSL->closeEngine();
 		delete s_pOpenSL;
 		s_pOpenSL = NULL;
+
+		dlclose(s_pHandle);
+		s_pHandle = NULL;
 	}
 }
 

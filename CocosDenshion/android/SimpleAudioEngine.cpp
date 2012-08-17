@@ -24,15 +24,12 @@ THE SOFTWARE.
 
 #include "SimpleAudioEngine.h"
 #include "jni/SimpleAudioEngineJni.h"
+#include "opensl/SimpleAudioEngineOpenSL.h"
 
 #include <cstring>
 #include <android/log.h>
 #include <jni/JniHelper.h>
 #include <jni.h>
-
-#ifdef ENABLE_OPENSL
-#include "opensl/SimpleAudioEngineOpenSL.h"
-#endif
 
 #define  I9100_MODEL "GT-I9100"
 #define  LOG_TAG     "Device Model"
@@ -149,7 +146,6 @@ static SimpleAudioEngine *s_pEngine = 0;
 
 SimpleAudioEngine::SimpleAudioEngine()
 {
-#ifdef ENABLE_OPENSL
 	JniMethodInfo methodInfo;
 	jstring jstr;
 	if (getStaticMethodInfo(methodInfo, METHOD_NAME, "()Ljava/lang/String;"))
@@ -166,10 +162,9 @@ SimpleAudioEngine::SimpleAudioEngine()
 
 	if (strcmp(I9100_MODEL, deviceModel) == 0)
 	{
-		LOGD("i9100 model");
+		LOGD("i9100 model\nSwitch to OpenSLES");
 		s_bI9100 = true;
 	}
-#endif
 }
 
 SimpleAudioEngine::~SimpleAudioEngine()
