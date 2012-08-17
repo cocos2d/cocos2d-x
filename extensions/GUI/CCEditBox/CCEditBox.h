@@ -219,6 +219,7 @@ public:
     
     /**
      * Set the font color of the placeholder text when the edit box is empty.
+     * Not supported on IOS.
      */
     void setPlaceholderFontColor(const ccColor3B& color);
     
