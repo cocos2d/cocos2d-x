@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="base_nodes">
@@ -249,9 +249,6 @@
     <ClCompile Include="..\platform\win32\CCEGLView.cpp">
       <Filter>platform\win32</Filter>
     </ClCompile>
-    <ClCompile Include="..\platform\win32\CCFileUtils.cpp">
-      <Filter>platform\win32</Filter>
-    </ClCompile>
     <ClCompile Include="..\platform\win32\CCImage.cpp">
       <Filter>platform\win32</Filter>
     </ClCompile>
@@ -426,6 +423,12 @@
     <ClCompile Include="..\CCDrawingPrimitives.cpp" />
     <ClCompile Include="..\CCScheduler.cpp" />
     <ClCompile Include="..\cocos2d.cpp" />
+    <ClCompile Include="..\platform\CCFileUtils.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\win32\CCFileUtilsWin32.cpp">
+      <Filter>platform\win32</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\base_nodes\CCAtlasNode.h">
@@ -594,9 +597,6 @@
       <Filter>platform</Filter>
     </ClInclude>
     <ClInclude Include="..\platform\CCFileUtils.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="..\platform\CCFileUtilsCommon_cpp.h">
       <Filter>platform</Filter>
     </ClInclude>
     <ClInclude Include="..\platform\CCImage.h">
@@ -862,5 +862,8 @@
     <ClInclude Include="..\CCDirector.h" />
     <ClInclude Include="..\CCDrawingPrimitives.h" />
     <ClInclude Include="..\CCScheduler.h" />
+    <ClInclude Include="..\platform\win32\CCFileUtilsWin32.h">
+      <Filter>platform\win32</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

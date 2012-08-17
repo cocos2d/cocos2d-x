@@ -6,8 +6,6 @@
  */
 #include "platform/CCCommon.h"
 #include "ccMacros.h"
-#define __CC_PLATFORM_FILEUTILS_CPP__
-#include "platform/CCFileUtilsCommon_cpp.h"
 #include "platform/CCFileUtils.h"
 #include "CCApplication.h"
 #include "cocoa/CCString.h"
@@ -40,7 +38,6 @@ void CCFileUtils::purgeFileUtils()
 
 void CCFileUtils::purgeCachedEntries()
 {
-
 }
 
 const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
@@ -61,7 +58,6 @@ const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
 
     return pRet->getCString();
 }
-
 
 const char *CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const char *pszRelativeFile) {
 	std::string relativeFile = pszRelativeFile;

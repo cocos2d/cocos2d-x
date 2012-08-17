@@ -173,7 +173,6 @@
 		1551A733158F2ADE00E66CFE /* CCES2Renderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A487158F2ADE00E66CFE /* CCES2Renderer.h */; };
 		1551A734158F2ADE00E66CFE /* CCES2Renderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1551A488158F2ADE00E66CFE /* CCES2Renderer.m */; };
 		1551A735158F2ADE00E66CFE /* CCESRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A489158F2ADE00E66CFE /* CCESRenderer.h */; };
-		1551A736158F2ADE00E66CFE /* CCFileUtils.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1551A48A158F2ADE00E66CFE /* CCFileUtils.mm */; };
 		1551A737158F2ADE00E66CFE /* CCGL.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A48B158F2ADE00E66CFE /* CCGL.h */; };
 		1551A738158F2ADE00E66CFE /* CCImage.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1551A48C158F2ADE00E66CFE /* CCImage.mm */; };
 		1551A739158F2ADE00E66CFE /* CCLock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1551A48D158F2ADE00E66CFE /* CCLock.cpp */; };
@@ -294,6 +293,7 @@
 		1551A872158F2ADF00E66CFE /* CCTouchHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A627158F2ADE00E66CFE /* CCTouchHandler.h */; };
 		1551A874158F2B4700E66CFE /* cocos2dx-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 1551A873158F2B4700E66CFE /* cocos2dx-Prefix.pch */; };
 		D43F7F8A15C7D8BA00D713FC /* CCTouch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D43F7F8915C7D8BA00D713FC /* CCTouch.cpp */; };
+		D78F5C6515DB4F2200598713 /* CCFileUtils.mm in Sources */ = {isa = PBXBuildFile; fileRef = D78F5C6415DB4F2200598713 /* CCFileUtils.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -466,7 +466,6 @@
 		1551A487158F2ADE00E66CFE /* CCES2Renderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCES2Renderer.h; sourceTree = "<group>"; };
 		1551A488158F2ADE00E66CFE /* CCES2Renderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCES2Renderer.m; sourceTree = "<group>"; };
 		1551A489158F2ADE00E66CFE /* CCESRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCESRenderer.h; sourceTree = "<group>"; };
-		1551A48A158F2ADE00E66CFE /* CCFileUtils.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCFileUtils.mm; sourceTree = "<group>"; };
 		1551A48B158F2ADE00E66CFE /* CCGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGL.h; sourceTree = "<group>"; };
 		1551A48C158F2ADE00E66CFE /* CCImage.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCImage.mm; sourceTree = "<group>"; };
 		1551A48D158F2ADE00E66CFE /* CCLock.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLock.cpp; sourceTree = "<group>"; };
@@ -587,6 +586,7 @@
 		1551A627158F2ADE00E66CFE /* CCTouchHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTouchHandler.h; sourceTree = "<group>"; };
 		1551A873158F2B4700E66CFE /* cocos2dx-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "cocos2dx-Prefix.pch"; sourceTree = "<group>"; };
 		D43F7F8915C7D8BA00D713FC /* CCTouch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTouch.cpp; sourceTree = "<group>"; };
+		D78F5C6415DB4F2200598713 /* CCFileUtils.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCFileUtils.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -944,6 +944,7 @@
 		1551A47B158F2ADE00E66CFE /* ios */ = {
 			isa = PBXGroup;
 			children = (
+				D78F5C6415DB4F2200598713 /* CCFileUtils.mm */,
 				1551A47C158F2ADE00E66CFE /* AccelerometerDelegateWrapper.h */,
 				1551A47D158F2ADE00E66CFE /* AccelerometerDelegateWrapper.mm */,
 				1551A47E158F2ADE00E66CFE /* CCAccelerometer.h */,
@@ -958,7 +959,6 @@
 				1551A487158F2ADE00E66CFE /* CCES2Renderer.h */,
 				1551A488158F2ADE00E66CFE /* CCES2Renderer.m */,
 				1551A489158F2ADE00E66CFE /* CCESRenderer.h */,
-				1551A48A158F2ADE00E66CFE /* CCFileUtils.mm */,
 				1551A48B158F2ADE00E66CFE /* CCGL.h */,
 				1551A48C158F2ADE00E66CFE /* CCImage.mm */,
 				1551A48D158F2ADE00E66CFE /* CCLock.cpp */,
@@ -1474,7 +1474,6 @@
 				1551A730158F2ADE00E66CFE /* CCDirectorCaller.mm in Sources */,
 				1551A732158F2ADE00E66CFE /* CCEGLView.mm in Sources */,
 				1551A734158F2ADE00E66CFE /* CCES2Renderer.m in Sources */,
-				1551A736158F2ADE00E66CFE /* CCFileUtils.mm in Sources */,
 				1551A738158F2ADE00E66CFE /* CCImage.mm in Sources */,
 				1551A739158F2ADE00E66CFE /* CCLock.cpp in Sources */,
 				1551A73D158F2ADE00E66CFE /* CCThread.mm in Sources */,
@@ -1525,6 +1524,7 @@
 				1551A871158F2ADF00E66CFE /* CCTouchHandler.cpp in Sources */,
 				154269DC15B5653000712A7F /* CCNotificationCenter.cpp in Sources */,
 				D43F7F8A15C7D8BA00D713FC /* CCTouch.cpp in Sources */,
+				D78F5C6515DB4F2200598713 /* CCFileUtils.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

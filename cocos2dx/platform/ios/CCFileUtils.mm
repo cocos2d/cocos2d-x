@@ -182,6 +182,11 @@ const char* CCFileUtils::getResourceDirectory()
     return m_obDirectory.c_str();
 }
 
+const char* CCFileUtils::getResourceDirectory()
+{
+    return m_obDirectory.c_str();
+}
+
 const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
 {
     CCAssert(pszRelativePath != NULL, "CCFileUtils: Invalid path");
@@ -355,6 +360,8 @@ unsigned char* CCFileUtils::getFileDataFromZip(const char* pszZipFilePath, const
 
             return pBuffer;
 }
+
+
 
 NS_CC_END
 
