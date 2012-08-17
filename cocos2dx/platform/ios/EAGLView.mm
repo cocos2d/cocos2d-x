@@ -841,7 +841,7 @@ static EAGLView *view = 0;
 	[UIView setAnimationDuration:duration];
 	[UIView setAnimationBeginsFromCurrentState:YES];
     
-    NSLog(@"[animation] dis = %f\n", dis);
+    // NSLog(@"[animation] dis = %f\n", dis);
     
     if (dis < 0.0f) dis = 0.0f;
 

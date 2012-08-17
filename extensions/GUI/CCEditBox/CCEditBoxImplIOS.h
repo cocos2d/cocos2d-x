@@ -48,6 +48,7 @@ public:
     virtual void setMaxLength(int maxLength);
     virtual int  getMaxLength();
     virtual void setReturnType(KeyboardReturnType returnType);
+    virtual bool isEditing();
     
     virtual void setText(const char* pText);
     virtual const char* getText(void);

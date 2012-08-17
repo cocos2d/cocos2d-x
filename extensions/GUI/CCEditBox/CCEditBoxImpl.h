@@ -47,6 +47,7 @@ public:
     virtual void setMaxLength(int maxLength) = 0;
     virtual int  getMaxLength() = 0;
     virtual void setReturnType(KeyboardReturnType returnType) = 0;
+    virtual bool isEditing() = 0;
     
     virtual void setText(const char* pText) = 0;
     virtual const char* getText(void) = 0;
@@ -60,6 +61,7 @@ public:
     virtual void setContentSize(const CCSize& size) = 0;
     virtual void visit(void) = 0;
     
+    
     void setDelegate(CCEditBoxDelegate* pDelegate) { m_pDelegate = pDelegate; };
     CCEditBoxDelegate* getDelegate() { return m_pDelegate; };
     CCEditBox* getCCEditBox() { return m_pEditBox; };
@@ -67,6 +69,9 @@ protected:
     CCEditBoxDelegate* m_pDelegate;
     CCEditBox* m_pEditBox;
 };
+
+// This method must be implemented at each subclass of CCEditBoxImpl.
+extern CCEditBoxImpl* __createSystemEditBox(CCEditBox* pEditBox);
 
 
 NS_CC_EXT_END
