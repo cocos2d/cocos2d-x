@@ -57,7 +57,7 @@ EditBoxTest::EditBoxTest()
     addChild(m_pEditPassword);
     
     // bottom
-    m_pEditEmail = CCEditBox::create(editBoxSize, CCScale9Sprite::create("extensions/yellow_edit.png"));
+    m_pEditEmail = CCEditBox::create(CCSizeMake(editBoxSize.width+100, editBoxSize.height), CCScale9Sprite::create("extensions/yellow_edit.png"));
     m_pEditEmail->setPosition(ccp(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/4));
     m_pEditEmail->setPlaceHolder("Email:");
     m_pEditEmail->setInputMode(kEditBoxInputModeEmailAddr);
