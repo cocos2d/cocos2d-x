@@ -355,9 +355,9 @@ Function CaseFunctionName()
 	''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 	Window("Cocos2dxWin32").Click 238,294
 	
-	Call random_click(1,10,2)
+	Call random_click(1,15,0.2)
 	Window("Cocos2dxWin32").Click 338,291
-	Call random_click(1,10,2)
+	Call random_click(1,15,0.2)
 	Window("Cocos2dxWin32").Click 338,291
 	Call common_test(1,108,0.5)
 	'MainMenu
@@ -459,7 +459,7 @@ Function CaseFunctionName()
 	'MainMenu
 	Window("Cocos2dxWin32").Click 441,296
 	''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-	AccelerometerTest
+	'AccelerometerTest
 	''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 	Window("Cocos2dxWin32").Click 244,255
 	'MainMenu
@@ -538,7 +538,7 @@ Function CaseFunctionName()
 		Window("Cocos2dxWin32").Click 338,291
 		Wait 1
 	Next
-	Back
+	'Back
 	Window("Cocos2dxWin32").Click 427,290
 
 	'PerformanceParticeTest
