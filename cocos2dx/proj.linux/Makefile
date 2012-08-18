@@ -81,6 +81,7 @@ OBJECTS = ../actions/CCAction.o \
 					../platform/CCSAXParser.o \
 					../platform/CCThread.o \
 					../platform/platform.o \
+					../platform/CCFileUtils.o \
 					../platform/CCEGLViewProtocol.o \
 					../platform/linux/CCStdC.o \
 					../platform/linux/CCFileUtils.o \
