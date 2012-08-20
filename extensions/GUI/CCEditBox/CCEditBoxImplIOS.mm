@@ -30,6 +30,11 @@
 
 NS_CC_EXT_BEGIN
 
+CCEditBoxImpl* __createSystemEditBox(CCEditBox* pEditBox)
+{
+    return new CCEditBoxImplIOS(pEditBox);
+}
+
 #define GET_IMPL ((EditBoxImplIOS*)m_pSysEdit)
 
 CCEditBoxImplIOS::CCEditBoxImplIOS(CCEditBox* pEditText)
@@ -153,21 +158,26 @@ void CCEditBoxImplIOS::setReturnType(KeyboardReturnType returnType)
             GET_IMPL.textField.returnKeyType = UIReturnKeyDefault;
             break;
         case kKeyboardReturnTypeDone:
-            GET_IMPL.textField.returnKeyType = UIReturnKeyGo;
+            GET_IMPL.textField.returnKeyType = UIReturnKeyDone;
             break;
         case kKeyboardReturnTypeSend:
-            GET_IMPL.textField.returnKeyType = UIReturnKeyDone;
+            GET_IMPL.textField.returnKeyType = UIReturnKeySend;
             break;
         case kKeyboardReturnTypeSearch:
             GET_IMPL.textField.returnKeyType = UIReturnKeySearch;
             break;
         case kKeyboardReturnTypeGo:
-            GET_IMPL.textField.returnKeyType = UIReturnKeySend;
+            GET_IMPL.textField.returnKeyType = UIReturnKeyGo;
             break;
         default:
             GET_IMPL.textField.returnKeyType = UIReturnKeyDefault;
             break;
     }
+}
+
+bool CCEditBoxImplIOS::isEditing()
+{
+    return [GET_IMPL isEditState] ? true : false;
 }
 
 void CCEditBoxImplIOS::setText(const char* pText)
@@ -213,7 +223,7 @@ void CCEditBoxImplIOS::setPosition(const CCPoint& pos)
 void CCEditBoxImplIOS::setContentSize(const CCSize& size)
 {
     m_tContentSize = size;
-    CCLog("[Edit text] content size = (%f, %f)", size.width, size.height);
+    CCLOG("[Edit text] content size = (%f, %f)", size.width, size.height);
 }
 
 void CCEditBoxImplIOS::visit(void)
