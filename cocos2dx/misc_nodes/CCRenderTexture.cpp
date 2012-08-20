@@ -194,11 +194,13 @@ bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CCTexture2DPixelForma
         m_ePixelFormat = eFormat;
 
         m_pTexture = new CCTexture2D();
-        CC_BREAK_IF(! m_pTexture);
-
-        m_pTexture->initWithData(data, (CCTexture2DPixelFormat)m_ePixelFormat, powW, powH, CCSizeMake((float)w, (float)h));
-        free( data );
-
+        if (m_pTexture) {
+                m_pTexture->initWithData(data, (CCTexture2DPixelFormat)m_ePixelFormat, powW, powH, CCSizeMake((float)w, (float)h));
+                free( data );
+        } else {
+                free( data );  // ScopeGuard (a simulated Finally clause) would be more elegant.
+                break;
+        }
         GLint oldRBO;
         glGetIntegerv(GL_RENDERBUFFER_BINDING, &oldRBO);
 
