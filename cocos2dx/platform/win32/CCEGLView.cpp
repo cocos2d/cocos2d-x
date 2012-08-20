@@ -30,6 +30,7 @@ THE SOFTWARE.
 #include "touch_dispatcher/CCTouchDispatcher.h"
 #include "text_input_node/CCIMEDispatcher.h"
 #include "keypad_dispatcher/CCKeypadDispatcher.h"
+#include "support/CCPointExtension.h"
 #include "CCApplication.h"
 
 NS_CC_BEGIN
@@ -210,7 +211,8 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
         {
             POINT point = {(short)LOWORD(lParam), (short)HIWORD(lParam)};
             CCPoint pt(point.x/CC_CONTENT_SCALE_FACTOR(), point.y/CC_CONTENT_SCALE_FACTOR());
-            //if (CCRect::CCRectContainsPoint(m_obViewPortRect, pt))
+            CCPoint tmp = ccp(pt.x, m_obScreenSize.height - pt.y);
+            if (m_obViewPortRect.containsPoint(tmp))
             {
                 m_bCaptured = true;
                 SetCapture(m_hWnd);
