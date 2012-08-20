@@ -97,7 +97,8 @@ static bool _initWithImage(CGImageRef cgImage, tImageInfo *pImageinfo)
     CGContextDrawImage(context, CGRectMake(0, 0, pImageinfo->width, pImageinfo->height), cgImage);
     
     CGContextRelease(context);
-    
+    CFRelease(colorSpace);
+  
     return true;
 }
 
