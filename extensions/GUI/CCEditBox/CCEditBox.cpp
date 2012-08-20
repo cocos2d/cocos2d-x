@@ -79,6 +79,7 @@ CCEditBox* CCEditBox::create(const CCSize& size, CCScale9Sprite* pNormal9SpriteB
 
 bool CCEditBox::initWithSizeAndBackgroundSprite(const CCSize& size, CCScale9Sprite* pPressed9SpriteBg)
 {
+#if 0
     if (CCControlButton::initWithBackgroundSprite(pPressed9SpriteBg))
     {
         m_pEditBoxImpl = __createSystemEditBox(this);
@@ -90,6 +91,7 @@ bool CCEditBox::initWithSizeAndBackgroundSprite(const CCSize& size, CCScale9Spri
         
         return true;
     }
+#endif
     return false;
 }
 

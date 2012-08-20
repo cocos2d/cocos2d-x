@@ -33,6 +33,7 @@ THE SOFTWARE.
 #include "platform/CCFileUtils.h"
 #include "support/zip_support/ZipUtils.h"
 #include "shaders/ccGLStateCache.h"
+#include <ctype.h>
 #include <cctype>
 
 NS_CC_BEGIN
