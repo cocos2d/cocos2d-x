@@ -182,11 +182,6 @@ const char* CCFileUtils::getResourceDirectory()
     return m_obDirectory.c_str();
 }
 
-const char* CCFileUtils::getResourceDirectory()
-{
-    return m_obDirectory.c_str();
-}
-
 const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
 {
     CCAssert(pszRelativePath != NULL, "CCFileUtils: Invalid path");
