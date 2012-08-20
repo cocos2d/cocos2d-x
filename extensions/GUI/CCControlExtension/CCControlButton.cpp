@@ -71,8 +71,6 @@ bool CCControlButton::initWithLabelAndBackgroundSprite(CCNode* node, CCScale9Spr
         m_zoomOnTouchDown = true;
         m_nState=CCControlStateInitial;
         m_currentTitle=NULL;
-        m_backgroundSprite=NULL;
-        m_titleLabel=NULL;
 
         // Adjust the background image by default
         m_adjustBackgroundImage=true;
@@ -85,8 +83,8 @@ bool CCControlButton::initWithLabelAndBackgroundSprite(CCNode* node, CCScale9Spr
         setAnchorPoint(ccp(0.5f, 0.5f));
         
         // Set the nodes
-        m_titleLabel=(node);
-        m_backgroundSprite=(backgroundSprite);
+        m_titleLabel = node;
+        m_backgroundSprite = backgroundSprite;
         
          
         // Initialize the button state tables

@@ -24,17 +24,14 @@
  ****************************************************************************/
 
 #include "CCEditBox.h"
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-#include "CCEditBoxImplIOS.h"
-#endif
+#include "CCEditBoxImpl.h"
 
 NS_CC_EXT_BEGIN
 
 CCEditBox::CCEditBox(void)
 : m_pEditBoxImpl(NULL)
 , m_pDelegate(NULL)
-, m_eEditBoxInputMode(kEditBoxInputModeAny)
+, m_eEditBoxInputMode(kEditBoxInputModeSingleLine)
 , m_eEditBoxInputFlag(kEditBoxInputFlagInitialCapsAllCharacters)
 , m_eKeyboardReturnType(kKeyboardReturnTypeDefault)
 , m_colText(ccWHITE)
@@ -55,12 +52,21 @@ void CCEditBox::touchDownAction(CCObject *sender, CCControlEvent controlEvent)
     m_pEditBoxImpl->openKeyboard();
 }
 
-CCEditBox* CCEditBox::create(const CCSize& size)
+CCEditBox* CCEditBox::create(const CCSize& size, CCScale9Sprite* pNormal9SpriteBg, CCScale9Sprite* pPressed9SpriteBg/* = NULL*/, CCScale9Sprite* pDisabled9SpriteBg/* = NULL*/)
 {
     CCEditBox* pRet = new CCEditBox();
     
-    if (pRet != NULL && pRet->initWithSize(size))
+    if (pRet != NULL && pRet->initWithSizeAndBackgroundSprite(size, pNormal9SpriteBg))
     {
+        if (pPressed9SpriteBg != NULL)
+        {
+            pRet->setBackgroundSpriteForState(pPressed9SpriteBg, CCControlStateHighlighted);
+        }
+        
+        if (pDisabled9SpriteBg != NULL)
+        {
+            pRet->setBackgroundSpriteForState(pDisabled9SpriteBg, CCControlStateDisabled);
+        }
         pRet->autorelease();
     }
     else
@@ -71,23 +77,13 @@ CCEditBox* CCEditBox::create(const CCSize& size)
     return pRet;
 }
 
-bool CCEditBox::initWithSize(const CCSize& size)
+bool CCEditBox::initWithSizeAndBackgroundSprite(const CCSize& size, CCScale9Sprite* pPressed9SpriteBg)
 {
-    if (CCControlButton::init())
+    if (CCControlButton::initWithBackgroundSprite(pPressed9SpriteBg))
     {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-        m_pEditBoxImpl = new CCEditBoxImplIOS(this);
-#endif
+        m_pEditBoxImpl = __createSystemEditBox(this);
         m_pEditBoxImpl->initWithSize(size);
         
-        
-        CCScale9Sprite* pNormal9Sprite = CCScale9Sprite::create("extensions/button.png");
-        CCScale9Sprite* pPressed9Sprite = CCScale9Sprite::create("extensions/buttonHighlighted.png");
-        CCScale9Sprite* pDisabled9Sprite = CCScale9Sprite::create("extensions/button.png");
-        setBackgroundSpriteForState(pNormal9Sprite, CCControlStateNormal);
-        setBackgroundSpriteForState(pPressed9Sprite, CCControlStateHighlighted);
-        setBackgroundSpriteForState(pDisabled9Sprite, CCControlStateDisabled);
-         
         this->setPreferredSize(size);
         this->setPosition(ccp(0, 0));
         this->addTargetWithActionForControlEvent(this, cccontrol_selector(CCEditBox::touchDownAction), CCControlEventTouchDown);
@@ -254,25 +250,19 @@ static CCRect getRect(CCNode * pNode)
 
 void CCEditBox::keyboardWillShow(CCIMEKeyboardNotificationInfo& info)
 {
-    //CCLOG("TextInputTest:keyboardWillShowAt(origin:%f,%f, size:%f,%f)",
-    //      info.end.origin.x, info.end.origin.y, info.end.size.width, info.end.size.height);
-    
+    // CCLOG("CCEditBox::keyboardWillShow");
     CCRect rectTracked = getRect(this);
-    //CCLOG("TextInputTest:trackingNodeAt(origin:%f,%f, size:%f,%f)",
-    //      rectTracked.origin.x, rectTracked.origin.y, rectTracked.size.width, rectTracked.size.height);
     
-    // if the keyboard area doesn't intersect with the tracking node area, nothing need to do.
-    if (! rectTracked.intersectsRect(info.end))
+    // if the keyboard area doesn't intersect with the tracking node area, nothing needs to be done.
+    if (!rectTracked.intersectsRect(info.end))
     {
-        CCLog("info end x = %f, y = %f; width = %f, height = %f", info.end.origin.x, info.end.origin.y, info.end.size.width, info.end.size.height);
-        CCLog("rectTracked end x = %f, y = %f; width = %f, height = %f", rectTracked.origin.x, rectTracked.origin.y, rectTracked.size.width, rectTracked.size.height);
-        CCLog("needn't to adjust view layout.");
+        CCLOG("needn't to adjust view layout.");
         return;
     }
     
     // assume keyboard at the bottom of screen, calculate the vertical adjustment.
     m_fAdjustHeight = info.end.getMaxY() - rectTracked.getMinY();
-    CCLOG("CCEditBox:needAdjustVerticalPosition(%f)", m_fAdjustHeight);
+    // CCLOG("CCEditBox:needAdjustVerticalPosition(%f)", m_fAdjustHeight);
     
     if (m_pEditBoxImpl != NULL)
     {
@@ -282,28 +272,21 @@ void CCEditBox::keyboardWillShow(CCIMEKeyboardNotificationInfo& info)
 
 void CCEditBox::keyboardDidShow(CCIMEKeyboardNotificationInfo& info)
 {
-    if (m_pDelegate != NULL)
-    {
-        m_pDelegate->editBoxEditingDidBegin(this);
-    }
+
 }
 
 void CCEditBox::keyboardWillHide(CCIMEKeyboardNotificationInfo& info)
 {
+    // CCLOG("CCEditBox::keyboardWillHide");
     if (m_pEditBoxImpl != NULL)
     {
         m_pEditBoxImpl->doAnimationWhenKeyboardMove(info.duration, -m_fAdjustHeight);
     }
-    
 }
 
 void CCEditBox::keyboardDidHide(CCIMEKeyboardNotificationInfo& info)
 {
-    if (m_pDelegate != NULL)
-    {
-        m_pDelegate->editBoxEditingDidEnd(this);
-        m_pDelegate->editBoxReturn(this);
-    }
+
 }
 
 
