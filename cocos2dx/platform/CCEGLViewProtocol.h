@@ -7,13 +7,13 @@ enum ResolutionPolicy
 {
     // The entire application is visible in the specified area without trying to preserve the original aspect ratio. 
     // Distortion can occur, and the application may appear stretched or compressed.
-    kCCResolutionExactFit,
+    kResolutionExactFit,
     // The entire application fills the specified area, without distortion but possibly with some cropping, 
     // while maintaining the original aspect ratio of the application.
-    kCCResolutionNoBorder,
+    kResolutionNoBorder,
     // The entire application is visible in the specified area without distortion while maintaining the original 
     // aspect ratio of the application. Borders can appear on two sides of the application.
-    kCCResolutionShowAll,
+    kResolutionShowAll,
     
     kResolutionUnKnown,
 };
