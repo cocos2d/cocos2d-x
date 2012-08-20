@@ -842,7 +842,7 @@ void CCLabelBMFont::createFontChars()
 {
     int nextFontPositionX = 0;
     int nextFontPositionY = 0;
-    unsigned short prev = -1;
+    //unsigned short prev = -1;
     int kerningAmount = 0;
 
     CCSize tmpSize = CCSizeZero;
@@ -924,7 +924,7 @@ void CCLabelBMFont::createFontChars()
 
         // update kerning
         nextFontPositionX += fontDef.xAdvance + kerningAmount;
-        prev = c;
+        //prev = c;
 
         // Apply label properties
         fontChar->setOpacityModifyRGB(m_bIsOpacityModifyRGB);
