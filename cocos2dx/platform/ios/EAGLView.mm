@@ -73,6 +73,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "CCEGLView.h"
 //CLASS IMPLEMENTATIONS:
 
+#define IOS_MAX_TOUCHES_COUNT     10
 
 static EAGLView *view = 0;
 
@@ -393,9 +394,9 @@ static EAGLView *view = 0;
         return;
     }
     
-    int ids[CC_MAX_TOUCHES] = {0};
-    float xs[CC_MAX_TOUCHES] = {0.0f};
-    float ys[CC_MAX_TOUCHES] = {0.0f};
+    int ids[IOS_MAX_TOUCHES_COUNT] = {0};
+    float xs[IOS_MAX_TOUCHES_COUNT] = {0.0f};
+    float ys[IOS_MAX_TOUCHES_COUNT] = {0.0f};
     
     int i = 0;
     for (UITouch *touch in touches) {
@@ -413,9 +414,9 @@ static EAGLView *view = 0;
     {
         return;
     }
-    int ids[CC_MAX_TOUCHES] = {0};
-    float xs[CC_MAX_TOUCHES] = {0.0f};
-    float ys[CC_MAX_TOUCHES] = {0.0f};
+    int ids[IOS_MAX_TOUCHES_COUNT] = {0};
+    float xs[IOS_MAX_TOUCHES_COUNT] = {0.0f};
+    float ys[IOS_MAX_TOUCHES_COUNT] = {0.0f};
     
     int i = 0;
     for (UITouch *touch in touches) {
@@ -434,9 +435,9 @@ static EAGLView *view = 0;
         return;
     }
     
-    int ids[CC_MAX_TOUCHES] = {0};
-    float xs[CC_MAX_TOUCHES] = {0.0f};
-    float ys[CC_MAX_TOUCHES] = {0.0f};
+    int ids[IOS_MAX_TOUCHES_COUNT] = {0};
+    float xs[IOS_MAX_TOUCHES_COUNT] = {0.0f};
+    float ys[IOS_MAX_TOUCHES_COUNT] = {0.0f};
     
     int i = 0;
     for (UITouch *touch in touches) {
@@ -455,9 +456,9 @@ static EAGLView *view = 0;
         return;
     }
     
-    int ids[CC_MAX_TOUCHES] = {0};
-    float xs[CC_MAX_TOUCHES] = {0.0f};
-    float ys[CC_MAX_TOUCHES] = {0.0f};
+    int ids[IOS_MAX_TOUCHES_COUNT] = {0};
+    float xs[IOS_MAX_TOUCHES_COUNT] = {0.0f};
+    float ys[IOS_MAX_TOUCHES_COUNT] = {0.0f};
     
     int i = 0;
     for (UITouch *touch in touches) {
