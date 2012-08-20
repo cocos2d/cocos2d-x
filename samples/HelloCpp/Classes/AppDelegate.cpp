@@ -44,7 +44,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     }
     else 
     {
-        // android, windows, linux or mac
+        // android, windows, blackberry, linux or mac
         // use 960*640 resources as design resolution size
         CCFileUtils::sharedFileUtils()->setResourceDirectory("iphonehd");
         CCEGLView::sharedOpenGLView().setDesignResolutionSize(960, 640, kCCResolutionNoBorder);
