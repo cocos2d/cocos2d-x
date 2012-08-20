@@ -212,7 +212,7 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
             POINT point = {(short)LOWORD(lParam), (short)HIWORD(lParam)};
             CCPoint pt(point.x/CC_CONTENT_SCALE_FACTOR(), point.y/CC_CONTENT_SCALE_FACTOR());
             CCPoint tmp = ccp(pt.x, m_obScreenSize.height - pt.y);
-            if (m_obViewPortRect.containsPoint(tmp))
+            if (m_obViewPortRect.equals(CCRectZero) || m_obViewPortRect.containsPoint(tmp))
             {
                 m_bCaptured = true;
                 SetCapture(m_hWnd);
