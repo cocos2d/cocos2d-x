@@ -76,7 +76,7 @@ CCObject* CCAction::copyWithZone(CCZone *pZone)
     else
     {
         pRet = new CCAction();
-        pZone = pNewZone = new CCZone(pRet);
+        pNewZone = new CCZone(pRet);
     }
     //copy member data
     pRet->m_nTag = m_nTag;
