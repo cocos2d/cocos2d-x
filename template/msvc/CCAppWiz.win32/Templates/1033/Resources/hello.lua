@@ -22,11 +22,11 @@ local function creatDog()
     -- create dog animate
     local textureDog = CCTextureCache:sharedTextureCache():addImage("dog.png")
     local rect = CCRectMake(0, 0, frameWidth, frameHeight)
-    local frame0 = CCSpriteFrame:create(textureDog, rect)
+    local frame0 = CCSpriteFrame:createWithTexture(textureDog, rect)
     rect = CCRectMake(frameWidth, 0, frameWidth, frameHeight)
-    local frame1 = CCSpriteFrame:create(textureDog, rect)
+    local frame1 = CCSpriteFrame:createWithTexture(textureDog, rect)
 
-    local spriteDog = CCSprite:create(frame0)
+    local spriteDog = CCSprite:createWithSpriteFrame(frame0)
     spriteDog.isPaused = false
     spriteDog:setPosition(0, winSize.height / 4 * 3)
 
