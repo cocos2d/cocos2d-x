@@ -38,12 +38,14 @@
 @end
 
 @implementation UIAccelerometer (Simulation)
-
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wobjc-protocol-method-implementation"
 // override the static method and return our simulated version instead
 + (UIAccelerometer *)sharedAccelerometer
 {
     return [AccelerometerSimulation getAccelerometer];
 }
+#pragma clang diagnostic pop
 @end
 /*
  // callback that never got called with CFSocket UDP...
