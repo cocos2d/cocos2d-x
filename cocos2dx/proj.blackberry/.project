@@ -131,11 +131,6 @@
 			<locationURI>PARENT-1-PROJECT_LOC/effects</locationURI>
 		</link>
 		<link>
-			<name>extensions</name>
-			<type>2</type>
-			<locationURI>PARENT-1-PROJECT_LOC/extensions</locationURI>
-		</link>
-		<link>
 			<name>include</name>
 			<type>2</type>
 			<locationURI>PARENT-1-PROJECT_LOC/include</locationURI>
@@ -211,7 +206,7 @@
 			<locationURI>PARENT-1-PROJECT_LOC/textures</locationURI>
 		</link>
 		<link>
-			<name>tileMap_parallax_nodes</name>
+			<name>tilemap_parallax_nodes</name>
 			<type>2</type>
 			<locationURI>PARENT-1-PROJECT_LOC/tileMap_parallax_nodes</locationURI>
 		</link>

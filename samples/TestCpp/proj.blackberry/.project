@@ -7,6 +7,7 @@
 		<project>chipmunk</project>
 		<project>cocos2dx</project>
 		<project>CocosDenshion</project>
+		<project>extensions</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
@@ -90,4 +91,15 @@
 			<locationURI>PARENT-1-PROJECT_LOC/Resources</locationURI>
 		</link>
 	</linkedResources>
+	<filteredResources>
+		<filter>
+			<id>1345434891844</id>
+			<name>Classes/ExtensionsTest</name>
+			<type>10</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-true-false-EditBoxTest</arguments>
+			</matcher>
+		</filter>
+	</filteredResources>
 </projectDescription>
