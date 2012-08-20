@@ -55,23 +55,37 @@ void CCFileUtils::purgeCachedEntries()
 
 }
 
-const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
+static std::string fullPathFromRelativePathThreadSafe(const char* pszRelativePath)
 {
+	std::string ret("");
     const char* pszRootPath = CCApplication::sharedApplication().getResourceRootPath();
+    CCAssert(pszRootPath != NULL, "The resource root path must be set in the main.cpp");
 
-    CCString* pRet = CCString::create(pszRootPath);
+    std::string pstrRelativePath = pszRelativePath;
+    if (pstrRelativePath.find(pszRootPath) == std::string::npos)
+    {
+    	ret += pszRootPath;
+    }
+
     const char* resDir = CCFileUtils::sharedFileUtils()->getResourceDirectory();
 
     if (resDir != NULL)
     {
-        pRet->m_sString += resDir;
+    	ret += resDir;
     }
 
     if (pszRelativePath != NULL)
     {
-        pRet->m_sString += pszRelativePath;
+    	ret += pszRelativePath;
     }
+	return ret;
+}
 
+const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
+{
+	CCString* pRet = CCString::create("");
+	std::string strFullPath = fullPathFromRelativePathThreadSafe(pszRelativePath);
+	pRet->m_sString = strFullPath;
     return pRet->getCString();
 }
 
@@ -97,6 +111,7 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
 
 	do
 	{
+		full_path = fullPathFromRelativePathThreadSafe(full_path.c_str());
 		// read from other path than user set it
 		FILE *fp = fopen(full_path.c_str(), pszMode);
 		CC_BREAK_IF(!fp);
