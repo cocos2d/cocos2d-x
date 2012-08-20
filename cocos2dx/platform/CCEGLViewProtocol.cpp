@@ -188,7 +188,7 @@ void CCEGLViewProtocol::handleTouchesBegin(int num, int ids[], float xs[], float
             // The touches is more than MAX_TOUCHES ?
             if (nUnusedIndex == -1) {
                 CCLOG("The touches is more than MAX_TOUCHES, nUnusedIndex = %d", nUnusedIndex);
-                return;
+                continue;
             }
 
             CCTouch* pTouch = s_pTouches[nUnusedIndex] = new CCTouch();
@@ -235,7 +235,7 @@ void CCEGLViewProtocol::handleTouchesMove(int num, int ids[], float xs[], float 
         CCInteger* pIndex = (CCInteger*)s_TouchesIntergerDict.objectForKey(id);
         if (pIndex == NULL) {
             CCLOG("if the index doesn't exist, it is an error");
-            return;
+            continue;
         }
 
         CCLOGINFO("Moving touches with id: %d, x=%f, y=%f", id, x, y);
@@ -284,7 +284,7 @@ void CCEGLViewProtocol::getSetOfTouchesEndOrCancel(CCSet& set, int num, int ids[
         if (pIndex == NULL)
         {
             CCLOG("if the index doesn't exist, it is an error");
-            return;
+            continue;
         }
         /* Add to the set to send to the director */
         CCTouch* pTouch = s_pTouches[pIndex->getValue()];        
