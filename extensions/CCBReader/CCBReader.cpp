@@ -113,7 +113,7 @@ CCNode * CCBReader::readNodeGraphFromFile(CCString * pCCBRootPath, CCString * pC
     this->mCurrentBit = 0;
 
     this->mOwner = pOwner;
-    this->mOwner->retain();
+    CC_SAFE_RETAIN(this->mOwner);
     this->mRootContainerSize = pRootContainerSize;
 
     CCNode * node = NULL;
