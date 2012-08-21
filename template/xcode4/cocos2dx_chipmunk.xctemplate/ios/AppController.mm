@@ -46,7 +46,7 @@ static AppDelegate s_sharedApplication;
 
     [[UIApplication sharedApplication] setStatusBarHidden: YES];
 
-    cocos2d::CCApplication::sharedApplication().run();
+    cocos2d::CCApplication::sharedApplication()->run();
     return YES;
 }
 
@@ -71,14 +71,14 @@ static AppDelegate s_sharedApplication;
      Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
      If your application supports background execution, called instead of applicationWillTerminate: when the user quits.
      */
-    cocos2d::CCApplication::sharedApplication().applicationDidEnterBackground();
+    cocos2d::CCApplication::sharedApplication()->applicationDidEnterBackground();
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     /*
      Called as part of  transition from the background to the inactive state: here you can undo many of the changes made on entering the background.
      */
-    cocos2d::CCApplication::sharedApplication().applicationWillEnterForeground();
+    cocos2d::CCApplication::sharedApplication()->applicationWillEnterForeground();
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {

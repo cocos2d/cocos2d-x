@@ -48,7 +48,7 @@ public:
 
 	void setMultiTouchMask(bool mask);
 
-    static CCEGLView& sharedOpenGLView();
+    static CCEGLView* sharedOpenGLView();
         
 };
 
