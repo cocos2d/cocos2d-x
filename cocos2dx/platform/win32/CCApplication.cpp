@@ -48,9 +48,9 @@ int CCApplication::run()
         return 0;
     }
 
-    CCEGLView& mainWnd = CCEGLView::sharedOpenGLView();
-    mainWnd.centerWindow();
-    ShowWindow(mainWnd.getHWnd(), SW_SHOW);
+    CCEGLView* pMainWnd = CCEGLView::sharedOpenGLView();
+    pMainWnd->centerWindow();
+    ShowWindow(pMainWnd->getHWnd(), SW_SHOW);
 
     while (1)
     {

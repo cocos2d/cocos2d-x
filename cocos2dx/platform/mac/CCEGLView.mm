@@ -83,10 +83,10 @@ void CCEGLView::setMultiTouchMask(bool mask)
 	//glView.multipleTouchEnabled = mask ? YES : NO;
 }
 
-CCEGLView& CCEGLView::sharedOpenGLView()
+CCEGLView* CCEGLView::sharedOpenGLView()
 {
     static CCEGLView instance;
-    return instance;
+    return &instance;
 }
 
 } // end of namespace cocos2d;
