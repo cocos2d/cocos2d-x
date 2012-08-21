@@ -24,7 +24,7 @@ public:
     @brief    Get current applicaiton instance.
     @return Current application instance pointer.
     */
-    static CCApplication& sharedApplication();
+    static CCApplication* sharedApplication();
 
     /* override functions */
     virtual void setAnimationInterval(double interval);
