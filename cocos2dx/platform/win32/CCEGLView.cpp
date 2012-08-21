@@ -248,10 +248,10 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
         switch (wParam)
         {
         case SIZE_RESTORED:
-            CCApplication::sharedApplication().applicationWillEnterForeground();
+            CCApplication::sharedApplication()->applicationWillEnterForeground();
             break;
         case SIZE_MINIMIZED:
-            CCApplication::sharedApplication().applicationDidEnterBackground();
+            CCApplication::sharedApplication()->applicationDidEnterBackground();
             break;
         }
         break;
