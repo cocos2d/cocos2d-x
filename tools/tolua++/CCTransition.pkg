@@ -10,6 +10,11 @@ typedef enum {
     kOrientationDownOver = 1,
 } tOrientation;
 
+class CCTransitionScene : public CCScene
+{
+	static CCTransitionScene* create(float t, CCScene* scene);
+};
+
 class CCTransitionSceneOriented : public CCScene
 {
     static CCTransitionSceneOriented* create(float t, CCScene* scene, tOrientation o);

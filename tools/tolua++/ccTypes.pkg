@@ -8,6 +8,7 @@ typedef unsigned char	 GLubyte;
 typedef unsigned short   GLushort;
 typedef unsigned int     GLuint;
 typedef float			 GLfloat;
+typedef short			 GLshort;
 
 typedef struct _ccColor3B
 {
