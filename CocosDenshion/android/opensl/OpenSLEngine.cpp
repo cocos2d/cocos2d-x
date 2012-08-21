@@ -124,6 +124,7 @@ extern "C" {
 #define FILE_NOT_FOUND -1
 
 #define ASSET_MANAGER_GETTER "getAssetManager"
+#define LIBANDROID "libandroid.so"
 
 #define MIN_VOLUME_MILLIBEL -4000
 #define MAX_VOLUME_MILLIBEL 0
@@ -141,7 +142,8 @@ struct AudioPlayer
 typedef map<unsigned int, vector<AudioPlayer*>* > EffectList;
 typedef pair<unsigned int, vector<AudioPlayer*>* > Effect;
 
-void* s_pHandle = NULL;
+void* s_pAndroidHandle  = NULL;
+void* s_pOpenSLESHandle = NULL;
 
 static EffectList& sharedList()
 {
@@ -167,7 +169,7 @@ SLInterfaceID getInterfaceID(const char *value)
 {
 	// clear the error stack
 	dlerror();
-	SLInterfaceID* IID = (SLInterfaceID*)dlsym(s_pHandle, value);
+	SLInterfaceID* IID = (SLInterfaceID*)dlsym(s_pOpenSLESHandle, value);
 	const char* errorInfo = dlerror();
 	if (errorInfo)
 	{
@@ -181,7 +183,7 @@ void* getFuncPtr(const char *value)
 {
 	// clear the error stack
 	dlerror();
-	void* funcPtr = dlsym(s_pHandle, value);
+	void* funcPtr = dlsym(s_pOpenSLESHandle, value);
 	const char* errorInfo = dlerror();
 	if (errorInfo)
 	{
@@ -202,9 +204,15 @@ int getFileDescriptor(const char * filename, off_t & start, off_t & length)
 	jobject assetManager = methodInfo.env->CallStaticObjectMethod(methodInfo.classID, methodInfo.methodID);
 	methodInfo.env->DeleteLocalRef(methodInfo.classID);
 
+	AAssetManager* (*AAssetManager_fromJava)(JNIEnv* env, jobject assetManager);
+	AAssetManager_fromJava = (AAssetManager* (*)(JNIEnv* env, jobject assetManager))
+		dlsym(s_pAndroidHandle, "AAssetManager_fromJava");
 	AAssetManager* mgr = AAssetManager_fromJava(methodInfo.env, assetManager);
 	assert(NULL != mgr);
 
+	AAsset* (*AAssetManager_open)(AAssetManager* mgr, const char* filename, int mode);
+	AAssetManager_open = (AAsset* (*)(AAssetManager* mgr, const char* filename, int mode))
+		dlsym(s_pAndroidHandle, "AAssetManager_open");
 	AAsset* Asset = AAssetManager_open(mgr, filename, AASSET_MODE_UNKNOWN);
 	if (NULL == Asset)
 	{
@@ -213,8 +221,15 @@ int getFileDescriptor(const char * filename, off_t & start, off_t & length)
 	}
 
 	// open asset as file descriptor
+	int (*AAsset_openFileDescriptor)(AAsset* asset, off_t* outStart, off_t* outLength);
+	AAsset_openFileDescriptor = (int (*)(AAsset* asset, off_t* outStart, off_t* outLength))
+		dlsym(s_pAndroidHandle, "AAsset_openFileDescriptor");
 	int fd = AAsset_openFileDescriptor(Asset, &start, &length);
 	assert(0 <= fd);
+
+	void (*AAsset_close)(AAsset* asset);
+	AAsset_close = (void (*)(AAsset* asset))
+		dlsym(s_pAndroidHandle, "AAsset_close");
 	AAsset_close(Asset);
 
 	return fd;
@@ -297,7 +312,19 @@ void destroyAudioPlayer(AudioPlayer * player)
 
 void OpenSLEngine::createEngine(void* pHandle)
 {
-	s_pHandle = pHandle;
+	assert(pHandle != NULL);
+	s_pOpenSLESHandle = pHandle;
+
+	// clear the error stack
+	dlerror();
+	s_pAndroidHandle = dlopen(LIBANDROID, RTLD_LAZY);
+	const char* errorInfo = dlerror();
+	if (errorInfo)
+	{
+		LOGD(errorInfo);
+		return;
+	}
+
 	SLresult result;
 	if (s_pEngineObject == NULL)
 	{

@@ -10,9 +10,6 @@ LOCAL_SRC_FILES := SimpleAudioEngine.cpp \
 		   opensl/OpenSLEngine.cpp \
 		   opensl/SimpleAudioEngineOpenSL.cpp
 
-LOCAL_EXPORT_LDLIBS := -landroid 
-
-
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../include
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../include \

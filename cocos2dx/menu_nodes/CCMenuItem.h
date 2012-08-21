@@ -56,8 +56,9 @@ protected:
     /** whether or not the item is selected
      @since v0.8.2
      */
-    bool m_bIsEnabled;
     bool m_bIsSelected;
+    bool m_bIsEnabled;
+
 public:
     CCMenuItem()
     : m_bIsSelected(false)

@@ -8,6 +8,8 @@
 #include "CCBMemberVariableAssigner.h"
 #include "CCBSelectorResolver.h"
 
+#include <ctype.h>
+
 #ifdef __CC_PLATFORM_IOS
 #include <UIKit/UIDevice.h>
 #endif
