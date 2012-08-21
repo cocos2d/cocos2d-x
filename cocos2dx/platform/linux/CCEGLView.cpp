@@ -122,10 +122,10 @@ void mouseButtonEventHandle(int iMouseID,int iMouseState) {
 		*/
 		int id = 0;
 		if (iMouseState == GLFW_PRESS) {
-			CCEGLView::sharedOpenGLView().handleTouchesBegin(1, &id, &oPoint.x, &oPoint.y);
+			CCEGLView::sharedOpenGLView()->handleTouchesBegin(1, &id, &oPoint.x, &oPoint.y);
 
 		} else if (iMouseState == GLFW_RELEASE) {
-			CCEGLView::sharedOpenGLView().handleTouchesEnd(1, &id, &oPoint.x, &oPoint.y);
+			CCEGLView::sharedOpenGLView()->handleTouchesEnd(1, &id, &oPoint.x, &oPoint.y);
 		}
 	}
 }
@@ -138,7 +138,7 @@ void mousePosEventHandle(int iPosX,int iPosY) {
 	      int id = 0;
 	      float x = (float)iPosX;
 	      float y = (float)iPosY;
-	      CCEGLView::sharedOpenGLView().handleTouchesMove(1, &id, &x, &y);
+	      CCEGLView::sharedOpenGLView()->handleTouchesMove(1, &id, &x, &y);
 	}
 }
 
@@ -292,14 +292,14 @@ void CCEGLView::destroyGL()
 	*/
 }
 
-CCEGLView& CCEGLView::sharedOpenGLView()
+CCEGLView* CCEGLView::sharedOpenGLView()
 {
     static CCEGLView* s_pEglView = NULL;
     if (s_pEglView == NULL)
     {
         s_pEglView = new CCEGLView();
     }
-    return *s_pEglView;
+    return s_pEglView;
 }
 
 NS_CC_END

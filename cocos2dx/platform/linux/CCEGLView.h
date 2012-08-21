@@ -40,7 +40,7 @@ public:
 	/**
 	 @brief	get the shared main open gl window
 	 */
-	static CCEGLView& sharedOpenGLView();
+	static CCEGLView* sharedOpenGLView();
 private:
     bool initGL();
     void destroyGL();
