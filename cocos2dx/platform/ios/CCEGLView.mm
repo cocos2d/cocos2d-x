@@ -106,10 +106,10 @@ void CCEGLView::setIMEKeyboardState(bool bOpen)
     }
 }
 
-CCEGLView& CCEGLView::sharedOpenGLView()
+CCEGLView* CCEGLView::sharedOpenGLView()
 {
     static CCEGLView instance;
-    return instance;
+    return &instance;
 }
 
 NS_CC_END
