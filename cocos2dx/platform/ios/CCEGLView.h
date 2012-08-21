@@ -48,7 +48,7 @@ public:
     
     virtual void setIMEKeyboardState(bool bOpen);
     
-    static CCEGLView& sharedOpenGLView();
+    static CCEGLView* sharedOpenGLView();
 
 };
 
