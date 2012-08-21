@@ -243,7 +243,7 @@ static EAGLView *view = 0;
 - (void) dealloc
 {
     [renderer_ release];
-    [self.keyboardShowNotification release];
+    self.keyboardShowNotification = NULL; // implicit release
     [super dealloc];
 }
 
@@ -825,7 +825,7 @@ static EAGLView *view = 0;
     cocos2d::CCIMEDispatcher* dispatcher = cocos2d::CCIMEDispatcher::sharedDispatcher();
     if (UIKeyboardWillShowNotification == type) 
     {
-        self.keyboardShowNotification = [notif copy];
+        self.keyboardShowNotification = notif; // implicit copy
         dispatcher->dispatchKeyboardWillShow(notiInfo);
     }
     else if (UIKeyboardDidShowNotification == type)
