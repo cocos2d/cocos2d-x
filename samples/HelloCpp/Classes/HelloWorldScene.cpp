@@ -41,7 +41,7 @@ bool HelloWorld::init()
                                         this,
                                         menu_selector(HelloWorld::menuCloseCallback));
     
-    if (CCApplication::sharedApplication().getTargetPlatform() == kTargetIphone)
+    if (CCApplication::sharedApplication()->getTargetPlatform() == kTargetIphone)
     {
         pCloseItem->setPosition(ccp(visibleSize.width - 20 + origin.x, 20 + origin.y));
     }
