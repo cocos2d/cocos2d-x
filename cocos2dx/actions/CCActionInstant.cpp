@@ -27,6 +27,7 @@
 #include "CCActionInstant.h"
 #include "base_nodes/CCNode.h"
 #include "sprite_nodes/CCSprite.h"
+#include "script_support/CCScriptSupport.h"
 #include "cocoa/CCZone.h"
 
 NS_CC_BEGIN
@@ -376,6 +377,20 @@ CCCallFunc * CCCallFunc::create(CCObject* pSelectorTarget, SEL_CallFunc selector
     return NULL;
 }
 
+CCCallFunc * CCCallFunc::create(int nHandler)
+{
+	CCCallFunc *pRet = new CCCallFunc();
+
+	if (pRet) {
+		pRet->m_nScriptHandler = nHandler;
+		pRet->autorelease();
+		return pRet;
+	}
+
+	CC_SAFE_DELETE(pRet);
+	return NULL;
+}
+
 bool CCCallFunc::initWithTarget(CCObject* pSelectorTarget) {
     if (pSelectorTarget) 
     {
@@ -419,6 +434,9 @@ void CCCallFunc::execute() {
     if (m_pCallFunc) {
         (m_pSelectorTarget->*m_pCallFunc)();
     }
+	if (m_nScriptHandler) {
+		CCScriptEngineManager::sharedManager()->getScriptEngine()->executeFunctionByHandler(m_nScriptHandler);
+	}
 }
 
 //
@@ -428,6 +446,9 @@ void CCCallFuncN::execute() {
     if (m_pCallFuncN) {
         (m_pSelectorTarget->*m_pCallFuncN)(m_pTarget);
     }
+	if (m_nScriptHandler) {
+		CCScriptEngineManager::sharedManager()->getScriptEngine()->executeFunctionWithCCObject(m_nScriptHandler, m_pTarget, "CCNode");
+	}
 }
 
 CCCallFuncN * CCCallFuncN::actionWithTarget(CCObject* pSelectorTarget, SEL_CallFuncN selector)
@@ -447,6 +468,20 @@ CCCallFuncN * CCCallFuncN::create(CCObject* pSelectorTarget, SEL_CallFuncN selec
 
     CC_SAFE_DELETE(pRet);
     return NULL;
+}
+
+CCCallFuncN * CCCallFuncN::create(int nHandler)
+{
+	CCCallFuncN *pRet = new CCCallFuncN();
+
+	if (pRet) {
+		pRet->m_nScriptHandler = nHandler;
+		pRet->autorelease();
+		return pRet;
+	}
+
+	CC_SAFE_DELETE(pRet);
+	return NULL;
 }
 
 bool CCCallFuncN::initWithTarget(CCObject* pSelectorTarget,
