@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.92 on 08/10/12 17:57:04.
+** Generated automatically by tolua++-1.0.92 on Tue Aug 21 15:07:38 2012.
 */
 
 #include <vector>
@@ -14513,8 +14513,8 @@ static int tolua_Cocos2d_CCApplication_sharedApplication00(lua_State* tolua_S)
 #endif
  {
   {
-   CCApplication& tolua_ret = (CCApplication&)  CCApplication::sharedApplication();
-    tolua_pushusertype(tolua_S,(void*)&tolua_ret,"CCApplication");
+   CCApplication* tolua_ret = (CCApplication*)  CCApplication::sharedApplication();
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCApplication");
   }
  }
  return 1;
