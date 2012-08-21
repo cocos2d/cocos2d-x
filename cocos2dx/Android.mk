@@ -81,7 +81,7 @@ platform/android/CCEGLView.cpp \
 platform/android/CCAccelerometer.cpp \
 platform/android/CCApplication.cpp \
 platform/android/CCCommon.cpp \
-platform/android/CCFileUtilsAndroid.cpp \
+platform/android/CCFileUtils.cpp \
 platform/android/CCImage.cpp \
 platform/android/jni/JniHelper.cpp \
 platform/android/jni/IMEJni.cpp \
