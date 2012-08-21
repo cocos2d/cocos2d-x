@@ -62,16 +62,16 @@ bool CCEditBoxImplIOS::initWithSize(const CCSize& size)
 {
     do 
     {
-        CCEGLViewProtocol& eglView = CCEGLView::sharedOpenGLView();
+        CCEGLViewProtocol* eglView = CCEGLView::sharedOpenGLView();
 
         CGRect rect;
-        if (eglView.isRetinaEnabled())
+        if (eglView->isRetinaEnabled())
         {
             rect = CGRectMake(0, 0, size.width,size.height);
         }
         else
         {
-            rect = CGRectMake(0, 0, size.width * eglView.getScaleX(),size.height * eglView.getScaleY());
+            rect = CGRectMake(0, 0, size.width * eglView->getScaleX(),size.height * eglView->getScaleY());
         }
         m_pSysEdit = [[EditBoxImplIOS alloc] initWithFrame:rect editBox:this];
         if (!m_pSysEdit) break;
@@ -198,18 +198,18 @@ void CCEditBoxImplIOS::setPlaceHolder(const char* pText)
 static CGPoint convertDesignCoordToScreenCoord(const CCPoint& designCoord)
 {
     float viewH = (float)[[EAGLView sharedEGLView] getHeight];
-    CCEGLViewProtocol& eglView = CCEGLView::sharedOpenGLView();
+    CCEGLViewProtocol* eglView = CCEGLView::sharedOpenGLView();
     CCPoint visiblePos;
-    if (eglView.isRetinaEnabled())
+    if (eglView->isRetinaEnabled())
     {
         visiblePos = ccp(designCoord.x, designCoord.y);
     }
     else
     {
-        visiblePos = ccp(designCoord.x * eglView.getScaleX(), designCoord.y * eglView.getScaleY());
+        visiblePos = ccp(designCoord.x * eglView->getScaleX(), designCoord.y * eglView->getScaleY());
     }
 
-    CCPoint screenGLPos = ccpAdd(visiblePos, eglView.getViewPortRect().origin);
+    CCPoint screenGLPos = ccpAdd(visiblePos, eglView->getViewPortRect().origin);
     CGPoint screenPos = CGPointMake(screenGLPos.x, viewH - screenGLPos.y);
     return screenPos;
 }

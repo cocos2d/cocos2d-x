@@ -189,7 +189,7 @@ void CCEGLView::swapBuffers()
 	eglSwapBuffers(m_eglDisplay, m_eglSurface);
 }
 
-CCEGLView& CCEGLView::sharedOpenGLView()
+CCEGLView* CCEGLView::sharedOpenGLView()
 {
 	if (!s_pInstance)
 	{
@@ -197,7 +197,7 @@ CCEGLView& CCEGLView::sharedOpenGLView()
 	}
 
 	CCAssert(s_pInstance != NULL, "CCEGLView wasn't constructed yet");
-	return *s_pInstance;
+	return s_pInstance;
 }
 
 void CCEGLView::showKeyboard()
