@@ -18,13 +18,11 @@ convert_package_path_to_dir(){
     PACKAGE_PATH_DIR=`echo $1 | sed -e "s/\./\//g"`
 }
 
-copy_cpp_h_from_helloworld(){
+copy_cpp_h(){
     mkdir $APP_DIR/Classes
-    for file in `ls $HELLOWORLD_ROOT/Classes/* | grep -E '.*\.(cpp|h|mk)' `
+    for file in $COCOS2DX_ROOT/template/android/Classes/*
     do
-        if [ -f $file ];then
-            cp $file $APP_DIR/Classes
-        fi
+        cp $file $APP_DIR/Classes
     done
 }
 
@@ -32,7 +30,7 @@ copy_cpp_h_from_helloworld(){
 copy_resouces(){
     mkdir $APP_DIR/Resources
     
-    for file in $HELLOWORLD_ROOT/Resources/*
+    for file in $HELLOWORLD_ROOT/Resources/iphone/*
     do
         cp -rf $file $APP_DIR/Resources
     done
@@ -88,7 +86,7 @@ copy_icon(){
     fi
 }
 
-copy_cpp_h_from_helloworld
+copy_cpp_h
 copy_resouces
 copy_src_and_jni
 copy_library_src
