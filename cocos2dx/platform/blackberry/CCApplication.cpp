@@ -51,7 +51,7 @@ int CCApplication::run()
 
 	while (1) // or device wants to quit
 	{
-		CCEGLView::sharedOpenGLView().handleEvents();
+		CCEGLView::sharedOpenGLView()->handleEvents();
 
 		clock_gettime(CLOCK_REALTIME, &time_struct);
 		current_time = time2millis(&time_struct);
