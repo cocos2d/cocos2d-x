@@ -953,7 +953,7 @@ void CCDisplayLinkDirector::startAnimation(void)
     }
 
     m_bInvalid = false;
-    CCApplication::sharedApplication().setAnimationInterval(m_dAnimationInterval);
+    CCApplication::sharedApplication()->setAnimationInterval(m_dAnimationInterval);
 }
 
 void CCDisplayLinkDirector::mainLoop(void)
