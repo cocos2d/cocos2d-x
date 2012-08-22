@@ -52,7 +52,13 @@ move ant1.properties ant.properties
 ::Android ant build(release,API level:8).
 call ant release
 set result8=%ERRORLEVEL%
+if "%_PROJECTNAME%" NEQ "TestCpp" goto API_10
+if %result8% NEQ 0 goto API_10
+cd bin
+ren Tests-release.apk Tests-release-8.apk
+cd ..
 
+:API_10
 ::Change API level.(API level:10)
 for /f "delims=" %%a in (ant.properties) do (
 if "%%a"=="target=android-8" (echo/target=android-10)else echo/%%a 
@@ -65,7 +71,13 @@ move ant1.properties ant.properties
 ::Android ant build(release,API level:10).
 call ant release
 set result10=%ERRORLEVEL%
+if "%_PROJECTNAME%" NEQ "TestCpp" goto API_11
+if %result10% NEQ 0 goto API_11
+cd bin
+ren Tests-release.apk Tests-release-10.apk
+cd ..
 
+:API_11
 ::Change API level.(API level:11)
 for /f "delims=" %%a in (ant.properties) do (
 if "%%a"=="target=android-10" (echo/target=android-11)else echo/%%a 
@@ -78,7 +90,13 @@ move ant1.properties ant.properties
 ::Android ant build(release,API level:11).
 call ant release
 set result11=%ERRORLEVEL%
+if "%_PROJECTNAME%" NEQ "TestCpp" goto API_12
+if %result11% NEQ 0 goto API_12
+cd bin
+ren Tests-release.apk Tests-release-11.apk
+cd ..
 
+:API_12
 ::Change API level.(API level:12)
 for /f "delims=" %%a in (ant.properties) do (
 if "%%a"=="target=android-11" (echo/target=android-12)else echo/%%a 
@@ -91,7 +109,13 @@ move ant1.properties ant.properties
 ::Android ant build(release,API level:12).
 call ant release
 set result12=%ERRORLEVEL%
+if "%_PROJECTNAME%" NEQ "TestCpp" goto API_13
+if %result12% NEQ 0 goto API_13
+cd bin
+ren Tests-release.apk Tests-release-12.apk
+cd ..
 
+:API_13
 ::Change API level.(API level:13)
 for /f "delims=" %%a in (ant.properties) do (
 if "%%a"=="target=android-12" (echo/target=android-13)else echo/%%a 
@@ -104,7 +128,13 @@ move ant1.properties ant.properties
 ::Android ant build(release,API level:13).
 call ant release
 set result13=%ERRORLEVEL%
+if "%_PROJECTNAME%" NEQ "TestCpp" goto NEXTPROJ
+if %result13% NEQ 0 goto NEXTPROJ
+cd bin
+ren Tests-release.apk Tests-release-13.apk
+cd ..
 
+:NEXTPROJ
 ::After all test versions completed,changed current API level to the original.(API level:8) 
 for /f "delims=" %%a in (ant.properties) do (
 if "%%a"=="target=android-13" (echo/target=android-8)else echo/%%a 
@@ -132,18 +162,14 @@ goto :eof
 
 :error
 echo Error.
-git checkout -f
-git clean -df -x
-pause
+::git checkout -f
+::git clean -df -x
 exit 1
-goto end
 
 :success
 echo Success.
-git checkout -f
-git clean -df -x
-pause
+::git checkout -f
+::git clean -df -x
 exit 0
-goto end
 
 ::End.
