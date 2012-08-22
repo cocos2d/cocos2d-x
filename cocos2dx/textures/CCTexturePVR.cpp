@@ -267,7 +267,7 @@ bool CCTexturePVR::unpackPVRData(unsigned char* data, unsigned int len)
                 }
 
                 dataSize = widthBlocks * heightBlocks * ((blockSize  * bpp) / 8);
-                float packetLength = (dataLength - dataOffset);
+                unsigned int packetLength = (dataLength - dataOffset);
                 packetLength = packetLength > dataSize ? dataSize : packetLength;
                 
                 //Make record to the mipmaps array and increment coutner
