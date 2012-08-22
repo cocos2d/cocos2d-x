@@ -31,7 +31,7 @@
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/usr/include/freetype2"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
 									<listOptionValue builtIn="false" value="../../Classes"/>
-									<listOptionValue builtIn="false" value="../../cocos2dx_support"/>
+									<listOptionValue builtIn="false" value="../../../../scripting/lua/cocos2dx_support"/>
 									<listOptionValue builtIn="false" value="../../../../"/>
 									<listOptionValue builtIn="false" value="../../../../cocos2dx"/>
 									<listOptionValue builtIn="false" value="../../../../cocos2dx/include"/>
@@ -76,7 +76,7 @@
 								</option>
 								<option id="com.qnx.qcc.option.linker.security.1794064552" name="Enhanced Security (-Wl,-z,relro -Wl,-z,now)" superClass="com.qnx.qcc.option.linker.security" value="true" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.linker.libraryPaths.1757627798" name="Library Paths (-L)" superClass="com.qnx.qcc.option.linker.libraryPaths" valueType="libPaths">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx/Device-Release}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx/Device-Debug}&quot;"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/lib"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/usr/lib"/>
 									<listOptionValue builtIn="false" value="../../../../cocos2dx/proj.blackberry/${ConfigName}"/>
@@ -108,7 +108,7 @@
 				<externalSettings containerId="cocos2dx;" factoryId="org.eclipse.cdt.core.cfg.export.settings.sipplier">
 					<externalSetting>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/cocos2dx"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/cocos2dx/Device-Release"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/cocos2dx/Device-Debug"/>
 						<entry flags="RESOLVED" kind="libraryFile" name="cocos2dx"/>
 					</externalSetting>
 				</externalSettings>
@@ -143,7 +143,7 @@
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/usr/include/freetype2"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
 									<listOptionValue builtIn="false" value="../../Classes"/>
-									<listOptionValue builtIn="false" value="../../cocos2dx_support"/>
+									<listOptionValue builtIn="false" value="../../../../scripting/lua/cocos2dx_support"/>
 									<listOptionValue builtIn="false" value="../../../../"/>
 									<listOptionValue builtIn="false" value="../../../../cocos2dx"/>
 									<listOptionValue builtIn="false" value="../../../../cocos2dx/include"/>
@@ -240,7 +240,7 @@
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/usr/include/freetype2"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
 									<listOptionValue builtIn="false" value="../../Classes"/>
-									<listOptionValue builtIn="false" value="../../cocos2dx_support"/>
+									<listOptionValue builtIn="false" value="../../../../scripting/lua/cocos2dx_support"/>
 									<listOptionValue builtIn="false" value="../../../../"/>
 									<listOptionValue builtIn="false" value="../../../../cocos2dx"/>
 									<listOptionValue builtIn="false" value="../../../../cocos2dx/include"/>
@@ -339,7 +339,7 @@
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/usr/include/freetype2"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
 									<listOptionValue builtIn="false" value="../../Classes"/>
-									<listOptionValue builtIn="false" value="../../cocos2dx_support"/>
+									<listOptionValue builtIn="false" value="../../../../scripting/lua/cocos2dx_support"/>
 									<listOptionValue builtIn="false" value="../../../../"/>
 									<listOptionValue builtIn="false" value="../../../../cocos2dx"/>
 									<listOptionValue builtIn="false" value="../../../../cocos2dx/include"/>
@@ -358,7 +358,7 @@
 							</tool>
 							<tool id="com.qnx.qcc.tool.linker.1367226426" name="QCC Linker" superClass="com.qnx.qcc.tool.linker">
 								<option id="com.qnx.qcc.option.linker.debug.1276383563" name="Debug (-g)" superClass="com.qnx.qcc.option.linker.debug" value="true" valueType="boolean"/>
-								<option id="com.qnx.qcc.option.linker.coverage.390406687" name="Build for Code Coverage (-ftest-coverage -fprofile-arcs)" superClass="com.qnx.qcc.option.linker.coverage" value="true" valueType="boolean"/>
+								<option id="com.qnx.qcc.option.linker.coverage.390406687" name="Build for Code Coverage (-ftest-coverage -fprofile-arcs -p)" superClass="com.qnx.qcc.option.linker.coverage" value="true" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.linker.langcpp.1160718760" name="C++ (-lang-c++)" superClass="com.qnx.qcc.option.linker.langcpp" value="true" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.linker.libraries.1736864271" name="Libraries (-l)" superClass="com.qnx.qcc.option.linker.libraries" valueType="libs">
 									<listOptionValue builtIn="false" value="CocosDenshion"/>
@@ -436,7 +436,7 @@
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/usr/include/freetype2"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
 									<listOptionValue builtIn="false" value="../../Classes"/>
-									<listOptionValue builtIn="false" value="../../cocos2dx_support"/>
+									<listOptionValue builtIn="false" value="../../../../scripting/lua/cocos2dx_support"/>
 									<listOptionValue builtIn="false" value="../../../../"/>
 									<listOptionValue builtIn="false" value="../../../../cocos2dx"/>
 									<listOptionValue builtIn="false" value="../../../../cocos2dx/include"/>
@@ -534,7 +534,7 @@
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/usr/include/freetype2"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
 									<listOptionValue builtIn="false" value="../../Classes"/>
-									<listOptionValue builtIn="false" value="../../cocos2dx_support"/>
+									<listOptionValue builtIn="false" value="../../../../scripting/lua/cocos2dx_support"/>
 									<listOptionValue builtIn="false" value="../../../../"/>
 									<listOptionValue builtIn="false" value="../../../../cocos2dx"/>
 									<listOptionValue builtIn="false" value="../../../../cocos2dx/include"/>
@@ -632,7 +632,7 @@
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/usr/include/freetype2"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
 									<listOptionValue builtIn="false" value="../../Classes"/>
-									<listOptionValue builtIn="false" value="../../cocos2dx_support"/>
+									<listOptionValue builtIn="false" value="../../../../scripting/lua/cocos2dx_support"/>
 									<listOptionValue builtIn="false" value="../../../../"/>
 									<listOptionValue builtIn="false" value="../../../../cocos2dx"/>
 									<listOptionValue builtIn="false" value="../../../../cocos2dx/include"/>
@@ -651,7 +651,7 @@
 							</tool>
 							<tool id="com.qnx.qcc.tool.linker.35285082" name="QCC Linker" superClass="com.qnx.qcc.tool.linker">
 								<option id="com.qnx.qcc.option.linker.debug.1514682747" name="Debug (-g)" superClass="com.qnx.qcc.option.linker.debug" value="true" valueType="boolean"/>
-								<option id="com.qnx.qcc.option.linker.coverage.1881413807" name="Build for Code Coverage (-ftest-coverage -fprofile-arcs)" superClass="com.qnx.qcc.option.linker.coverage" value="true" valueType="boolean"/>
+								<option id="com.qnx.qcc.option.linker.coverage.1881413807" name="Build for Code Coverage (-ftest-coverage -fprofile-arcs -p)" superClass="com.qnx.qcc.option.linker.coverage" value="true" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.linker.langcpp.769428310" name="C++ (-lang-c++)" superClass="com.qnx.qcc.option.linker.langcpp" value="true" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.linker.libraries.1325336223" name="Libraries (-l)" superClass="com.qnx.qcc.option.linker.libraries" valueType="libs">
 									<listOptionValue builtIn="false" value="CocosDenshion"/>
