@@ -4,7 +4,7 @@
 #include "ControlExtensionTest/CCControlSceneManager.h"
 #include "CocosBuilderTest/CocosBuilderTest.h"
 #include "NetworkTest/HttpClientTest.h"
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include "EditBoxTest/EditBoxTest.h"
 #endif
 
@@ -20,7 +20,7 @@ enum
     TEST_CCCONTROLBUTTON,
     TEST_COCOSBUILDER,
     TEST_HTTPCLIENT,
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     TEST_EDITBOX,
 #endif
     TEST_MAX_COUNT,
@@ -32,7 +32,7 @@ static const std::string testsName[TEST_MAX_COUNT] =
     "CCControlButtonTest",
     "CocosBuilderTest",
     "HttpClientTest",
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     "EditBoxTest"
 #endif
 };
@@ -97,7 +97,7 @@ void ExtensionsMainLayer::menuCallback(CCObject* pSender)
             runHttpClientTest();
         }
         break;
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     case TEST_EDITBOX:
         {
             runEditBoxTest();

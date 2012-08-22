@@ -28,6 +28,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -40,6 +41,8 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 
 public class Cocos2dxActivity extends Activity{
+
+	protected Cocos2dxGLSurfaceView mGLView;
     private static Cocos2dxMusic backgroundMusicPlayer;
     private static Cocos2dxSound soundPlayer;
     private static Cocos2dxAccelerometer accelerometer;
@@ -47,11 +50,18 @@ public class Cocos2dxActivity extends Activity{
     private static boolean accelerometerEnabled = false;
     private static Handler handler;
     private final static int HANDLER_SHOW_DIALOG = 1;
+    private final static int HANDLER_SHOW_EDITBOX_ACTIVITY = 2;
+    private final static int ID_EDITBOX_ACTIVITY = 101;
     private static String packageName;
-
+    
     private static native void nativeSetPaths(String apkPath);
+    private static native void nativeSetEditboxText(byte[] text);
+    
+	public Cocos2dxGLSurfaceView getGLView() {
+		return mGLView;
+	}
 
-    @Override
+	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
@@ -75,6 +85,9 @@ public class Cocos2dxActivity extends Activity{
         		switch(msg.what){
         		case HANDLER_SHOW_DIALOG:
         			showDialog(((DialogMessage)msg.obj).title, ((DialogMessage)msg.obj).message);
+        			break;
+        		case HANDLER_SHOW_EDITBOX_ACTIVITY:
+        			onShowEditBoxActivity((EditBoxMessage)msg.obj);
         			break;
         		}
         	}
@@ -254,6 +267,68 @@ public class Cocos2dxActivity extends Activity{
 
 	    dialog.show();
     }
+
+    private static void showEditBoxActivity(String title, String content, int inputMode, int inputFlag, int returnType, int maxLength)
+    {   
+    	Message msg = new Message();
+    	msg.what = HANDLER_SHOW_EDITBOX_ACTIVITY;
+    	msg.obj = new EditBoxMessage(title, content, inputMode, inputFlag, returnType, maxLength);
+    	handler.sendMessage(msg);
+    }
+    
+    private void onShowEditBoxActivity(EditBoxMessage msg)
+    {	
+		Intent intent = new Intent();
+		intent.setClass(this, Cocos2dxEditBoxActivity.class);
+		Bundle bundle = new  Bundle();
+		bundle.putString("editbox_title", msg.title);
+		bundle.putString("editbox_content", msg.content);
+		bundle.putInt("editbox_input_mode", msg.inputMode);
+		bundle.putInt("editbox_input_flag", msg.inputFlag);
+		bundle.putInt("editbox_return_type", msg.returnType);
+		bundle.putInt("editbox_max_length", msg.maxLength);
+		intent.putExtras(bundle);
+		//intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+		this.startActivityForResult(intent, ID_EDITBOX_ACTIVITY);
+    }
+    
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+    	// TODO Auto-generated method stub
+    	super.onActivityResult(requestCode, resultCode, data);
+    	switch (requestCode) {
+    	case ID_EDITBOX_ACTIVITY:
+    		{
+    			// process only user clicked ok button.
+    			if (resultCode == Cocos2dxEditBoxActivity.ID_EDITBOX_RESULT_OK) {
+    				Bundle b = data.getExtras();
+    				String str = b.getString("editbox_content");
+    				Log.i("editbox_content", str);
+    			
+    		        try
+    		        {
+    		        	final byte[] bytesUTF8 = str.getBytes("UTF8");
+    		            // pass utf8 string from editbox activity to native.
+    		        	// Should invoke native method in GL thread.
+    		        	mGLView.queueEvent(new Runnable() {
+    		                @Override
+    		                public void run() {
+    		                	nativeSetEditboxText(bytesUTF8);
+    		                }
+    		            });
+    		        }
+    		        catch (java.io.UnsupportedEncodingException e)
+    		        {
+    		            e.printStackTrace();
+    		        } 
+    			}
+    		}
+            break;
+    	default:
+            break;
+    	}
+    }
 }
 
 class DialogMessage {
@@ -263,5 +338,23 @@ class DialogMessage {
 	public DialogMessage(String title, String message){
 		this.message = message;
 		this.title = title;
+	}
+}
+
+class EditBoxMessage {
+	public String title;
+	public String content;
+	public int inputMode;
+	public int inputFlag;
+	public int returnType;
+	public int maxLength;
+	
+	public EditBoxMessage(String title, String content, int inputMode, int inputFlag, int returnType, int maxLength){
+		this.content = content;
+		this.title = title;
+		this.inputMode = inputMode;
+		this.inputFlag = inputFlag;
+		this.returnType = returnType;
+		this.maxLength = maxLength;
 	}
 }
