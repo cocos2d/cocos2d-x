@@ -157,7 +157,9 @@ void CCTileMapAtlas::setTile(const ccColor3B& tile, const ccGridSize& position)
 
         // XXX: this method consumes a lot of memory
         // XXX: a tree of something like that shall be impolemented
-        CCInteger *num = (CCInteger*)m_pPosToAtlasIndex->objectForKey(CCString::createWithFormat("%d,%d", position.x, position.y)->getCString());
+        CCInteger *num = (CCInteger*)m_pPosToAtlasIndex->objectForKey(CCString::createWithFormat("%ld,%ld", 
+                                                                                                 (long)position.x, 
+                                                                                                 (long)position.y)->getCString());
         this->updateAtlasValueAt(position, tile, num->getValue());
     }    
 }
