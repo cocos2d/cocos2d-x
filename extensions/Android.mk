@@ -35,6 +35,8 @@ GUI/CCControlExtension/CCMenuPassive.cpp \
 GUI/CCControlExtension/CCScale9Sprite.cpp \
 GUI/CCControlExtension/CCSpacer.cpp \
 GUI/CCScrollView/CCScrollView.cpp \
+GUI/CCEditBox/CCEditBox.cpp \
+GUI/CCEditBox/CCEditBoxImplAndroid.cpp \
 network/HttpClient.cpp
 
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dx_static

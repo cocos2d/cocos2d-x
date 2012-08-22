@@ -50,6 +50,7 @@ Classes/ExtensionsTest/CocosBuilderTest/TestHeader/TestHeaderLayer.cpp \
 Classes/ExtensionsTest/CocosBuilderTest/ButtonTest/ButtonTestLayer.cpp \
 Classes/ExtensionsTest/CocosBuilderTest/MenuTest/MenuTestLayer.cpp \
 Classes/ExtensionsTest/NetworkTest/HttpClientTest.cpp \
+Classes/ExtensionsTest/EditBoxTest/EditBoxTest.cpp \
 Classes/FontTest/FontTest.cpp \
 Classes/IntervalTest/IntervalTest.cpp \
 Classes/KeypadTest/KeypadTest.cpp \

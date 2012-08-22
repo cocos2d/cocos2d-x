@@ -27,6 +27,7 @@ THE SOFTWARE.
 #include "ccMacros.h"
 #include "touch_dispatcher/CCTouchDispatcher.h"
 #include "jni/IMEJni.h"
+#include "jni/EditBoxJni.h"
 #include "jni/MessageJni.h"
 #include "CCGL.h"
 
@@ -84,7 +85,6 @@ CCEGLView& CCEGLView::sharedOpenGLView()
 
 void CCEGLView::setIMEKeyboardState(bool bOpen)
 {
-
     setKeyboardStateJNI((int)bOpen);
 }
 
