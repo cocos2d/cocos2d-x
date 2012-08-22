@@ -234,7 +234,7 @@ public:
     */
     static CCCallFunc * create(CCObject* pSelectorTarget, SEL_CallFunc selector);
 
-	// for lua
+	/** creates the action with the handler script function */
 	static CCCallFunc * create(int nHandler);
 
 	/** initializes the action with the callback 
@@ -299,6 +299,7 @@ public:
     */
     static CCCallFuncN * create(CCObject* pSelectorTarget, SEL_CallFuncN selector);
 
+	/** creates the action with the handler script function */
 	static CCCallFuncN * create(int nHandler);
 
     /** initializes the action with the callback 
