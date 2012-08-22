@@ -8,6 +8,8 @@
 #include "CCBMemberVariableAssigner.h"
 #include "CCBSelectorResolver.h"
 
+#include <ctype.h>
+
 #ifdef __CC_PLATFORM_IOS
 #include <UIKit/UIDevice.h>
 #endif
@@ -111,7 +113,7 @@ CCNode * CCBReader::readNodeGraphFromFile(CCString * pCCBRootPath, CCString * pC
     this->mCurrentBit = 0;
 
     this->mOwner = pOwner;
-    this->mOwner->retain();
+    CC_SAFE_RETAIN(this->mOwner);
     this->mRootContainerSize = pRootContainerSize;
 
     CCNode * node = NULL;

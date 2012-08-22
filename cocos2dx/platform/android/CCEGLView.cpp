@@ -76,10 +76,10 @@ void CCEGLView::swapBuffers()
 {
 }
 
-CCEGLView& CCEGLView::sharedOpenGLView()
+CCEGLView* CCEGLView::sharedOpenGLView()
 {
     static CCEGLView instance;
-    return instance;
+    return &instance;
 }
 
 void CCEGLView::setIMEKeyboardState(bool bOpen)
