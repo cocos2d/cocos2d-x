@@ -73,6 +73,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "CCEGLView.h"
 //CLASS IMPLEMENTATIONS:
 
+#define IOS_MAX_TOUCHES_COUNT     10
 
 static EAGLView *view = 0;
 
@@ -393,9 +394,9 @@ static EAGLView *view = 0;
         return;
     }
     
-    int ids[CC_MAX_TOUCHES] = {0};
-    float xs[CC_MAX_TOUCHES] = {0.0f};
-    float ys[CC_MAX_TOUCHES] = {0.0f};
+    int ids[IOS_MAX_TOUCHES_COUNT] = {0};
+    float xs[IOS_MAX_TOUCHES_COUNT] = {0.0f};
+    float ys[IOS_MAX_TOUCHES_COUNT] = {0.0f};
     
     int i = 0;
     for (UITouch *touch in touches) {
@@ -404,7 +405,7 @@ static EAGLView *view = 0;
         ys[i] = [touch locationInView: [touch view]].y;
         ++i;
     }
-    cocos2d::CCEGLView::sharedOpenGLView().handleTouchesBegin(i, ids, xs, ys);
+    cocos2d::CCEGLView::sharedOpenGLView()->handleTouchesBegin(i, ids, xs, ys);
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
@@ -413,9 +414,9 @@ static EAGLView *view = 0;
     {
         return;
     }
-    int ids[CC_MAX_TOUCHES] = {0};
-    float xs[CC_MAX_TOUCHES] = {0.0f};
-    float ys[CC_MAX_TOUCHES] = {0.0f};
+    int ids[IOS_MAX_TOUCHES_COUNT] = {0};
+    float xs[IOS_MAX_TOUCHES_COUNT] = {0.0f};
+    float ys[IOS_MAX_TOUCHES_COUNT] = {0.0f};
     
     int i = 0;
     for (UITouch *touch in touches) {
@@ -424,7 +425,7 @@ static EAGLView *view = 0;
         ys[i] = [touch locationInView: [touch view]].y;
         ++i;
     }
-    cocos2d::CCEGLView::sharedOpenGLView().handleTouchesMove(i, ids, xs, ys);
+    cocos2d::CCEGLView::sharedOpenGLView()->handleTouchesMove(i, ids, xs, ys);
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
@@ -434,9 +435,9 @@ static EAGLView *view = 0;
         return;
     }
     
-    int ids[CC_MAX_TOUCHES] = {0};
-    float xs[CC_MAX_TOUCHES] = {0.0f};
-    float ys[CC_MAX_TOUCHES] = {0.0f};
+    int ids[IOS_MAX_TOUCHES_COUNT] = {0};
+    float xs[IOS_MAX_TOUCHES_COUNT] = {0.0f};
+    float ys[IOS_MAX_TOUCHES_COUNT] = {0.0f};
     
     int i = 0;
     for (UITouch *touch in touches) {
@@ -445,7 +446,7 @@ static EAGLView *view = 0;
         ys[i] = [touch locationInView: [touch view]].y;
         ++i;
     }
-    cocos2d::CCEGLView::sharedOpenGLView().handleTouchesEnd(i, ids, xs, ys);
+    cocos2d::CCEGLView::sharedOpenGLView()->handleTouchesEnd(i, ids, xs, ys);
 }
     
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
@@ -455,9 +456,9 @@ static EAGLView *view = 0;
         return;
     }
     
-    int ids[CC_MAX_TOUCHES] = {0};
-    float xs[CC_MAX_TOUCHES] = {0.0f};
-    float ys[CC_MAX_TOUCHES] = {0.0f};
+    int ids[IOS_MAX_TOUCHES_COUNT] = {0};
+    float xs[IOS_MAX_TOUCHES_COUNT] = {0.0f};
+    float ys[IOS_MAX_TOUCHES_COUNT] = {0.0f};
     
     int i = 0;
     for (UITouch *touch in touches) {
@@ -466,7 +467,7 @@ static EAGLView *view = 0;
         ys[i] = [touch locationInView: [touch view]].y;
         ++i;
     }
-    cocos2d::CCEGLView::sharedOpenGLView().handleTouchesCancel(i, ids, xs, ys);
+    cocos2d::CCEGLView::sharedOpenGLView()->handleTouchesCancel(i, ids, xs, ys);
 }
 
 #pragma mark -
@@ -796,7 +797,7 @@ static EAGLView *view = 0;
                                    end.size.height);
     notiInfo.duration = (float)aniDuration;
     
-    float offestY = cocos2d::CCEGLView::sharedOpenGLView().getViewPortRect().origin.y;
+    float offestY = cocos2d::CCEGLView::sharedOpenGLView()->getViewPortRect().origin.y;
     
     if (offestY > 0.0f)
     {
@@ -805,10 +806,10 @@ static EAGLView *view = 0;
         notiInfo.end.size.height -= offestY;
     }
     
-    if (!cocos2d::CCEGLView::sharedOpenGLView().isRetinaEnabled())
+    if (!cocos2d::CCEGLView::sharedOpenGLView()->isRetinaEnabled())
     {
-        float scaleX = cocos2d::CCEGLView::sharedOpenGLView().getScaleX();
-        float scaleY = cocos2d::CCEGLView::sharedOpenGLView().getScaleY();
+        float scaleX = cocos2d::CCEGLView::sharedOpenGLView()->getScaleX();
+        float scaleY = cocos2d::CCEGLView::sharedOpenGLView()->getScaleY();
         
         notiInfo.begin.origin.x /= scaleX;
         notiInfo.begin.origin.y /= scaleY;
@@ -859,9 +860,9 @@ static EAGLView *view = 0;
     
     if (dis < 0.0f) dis = 0.0f;
 
-    if (!cocos2d::CCEGLView::sharedOpenGLView().isRetinaEnabled())
+    if (!cocos2d::CCEGLView::sharedOpenGLView()->isRetinaEnabled())
     {
-        dis *= cocos2d::CCEGLView::sharedOpenGLView().getScaleY();
+        dis *= cocos2d::CCEGLView::sharedOpenGLView()->getScaleY();
     }
     
     switch ([[UIApplication sharedApplication] statusBarOrientation])

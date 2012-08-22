@@ -48,9 +48,9 @@ int CCApplication::run()
         return 0;
     }
 
-    CCEGLView& mainWnd = CCEGLView::sharedOpenGLView();
-    mainWnd.centerWindow();
-    ShowWindow(mainWnd.getHWnd(), SW_SHOW);
+    CCEGLView* pMainWnd = CCEGLView::sharedOpenGLView();
+    pMainWnd->centerWindow();
+    ShowWindow(pMainWnd->getHWnd(), SW_SHOW);
 
     while (1)
     {
@@ -99,10 +99,10 @@ void CCApplication::setAnimationInterval(double interval)
 //////////////////////////////////////////////////////////////////////////
 // static member function
 //////////////////////////////////////////////////////////////////////////
-CCApplication& CCApplication::sharedApplication()
+CCApplication* CCApplication::sharedApplication()
 {
     CC_ASSERT(sm_pSharedApplication);
-    return *sm_pSharedApplication;
+    return sm_pSharedApplication;
 }
 
 ccLanguageType CCApplication::getCurrentLanguage()

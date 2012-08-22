@@ -24,6 +24,10 @@ THE SOFTWARE.
 #ifndef __CCSTRING_H__
 #define __CCSTRING_H__
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY)
+#include <string.h>
+#endif
+
 #include <stdarg.h>
 #include <string>
 #include <functional>

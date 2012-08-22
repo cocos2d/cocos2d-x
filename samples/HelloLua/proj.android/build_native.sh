@@ -30,23 +30,16 @@ done
 
 # paths
 
-if [ -z "${NDK_ROOT+aaa}" ]; then
-# ... if NDK_ROOT is not set, use "$HOME/bin/android-ndk"
-    NDK_ROOT="$HOME/bin/android-ndk"
+if [ -z "${NDK_ROOT+aaa}" ];then
+echo "please define NDK_ROOT"
+exit 1
 fi
 
-if [ -z "${COCOS2DX_ROOT+aaa}" ]; then
-# ... if COCOS2DX_ROOT is not set
-# ... find current working directory
-    DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # ... use paths relative to current directory
-    COCOS2DX_ROOT="$DIR/../../.."
-    APP_ROOT="$DIR/.."
-    APP_ANDROID_ROOT="$DIR"
-else
-    APP_ROOT="$COCOS2DX_ROOT"/samples/"$APPNAME"
-    APP_ANDROID_ROOT="$COCOS2DX_ROOT"/samples/"$APPNAME"/proj.android
-fi
+COCOS2DX_ROOT="$DIR/../../.."
+APP_ROOT="$DIR/.."
+APP_ANDROID_ROOT="$DIR"
 
 echo "NDK_ROOT = $NDK_ROOT"
 echo "COCOS2DX_ROOT = $COCOS2DX_ROOT"

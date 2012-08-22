@@ -54,8 +54,7 @@ static AppDelegate s_sharedApplication;
 		[window makeKeyAndOrderFront:self];
 		[window setAcceptsMouseMovedEvents:NO];
 
-		// set cocos2d-x's opengl view
-		cocos2d::CCApplication::sharedApplication().run();
+		cocos2d::CCApplication::sharedApplication()->run();
 	}
 
 	-(BOOL) applicationShouldTerminateAfterLastWindowClosed:(NSApplication*)theApplication

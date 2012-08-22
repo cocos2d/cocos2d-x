@@ -71,12 +71,12 @@ void CCEGLViewProtocol::setDesignResolutionSize(float width, float height, Resol
     m_fScaleX = (float)m_obScreenSize.width / m_obDesignResolutionSize.width;
     m_fScaleY = (float)m_obScreenSize.height / m_obDesignResolutionSize.height;
     
-    if (resolutionPolicy == kCCResolutionNoBorder)
+    if (resolutionPolicy == kResolutionNoBorder)
     {
         m_fScaleX = m_fScaleY = MAX(m_fScaleX, m_fScaleY);
     }
     
-    if (resolutionPolicy == kCCResolutionShowAll)
+    if (resolutionPolicy == kResolutionShowAll)
     {
         m_fScaleX = m_fScaleY = MIN(m_fScaleX, m_fScaleY);
     }
@@ -119,7 +119,7 @@ void CCEGLViewProtocol::setFrameSize(float width, float height)
 
 CCSize  CCEGLViewProtocol::getVisibleSize() const
 {
-    if (m_eResolutionPolicy == kCCResolutionNoBorder)
+    if (m_eResolutionPolicy == kResolutionNoBorder)
     {
         return CCSizeMake(m_obScreenSize.width/m_fScaleX, m_obScreenSize.height/m_fScaleY);
     }
@@ -131,7 +131,7 @@ CCSize  CCEGLViewProtocol::getVisibleSize() const
 
 CCPoint CCEGLViewProtocol::getVisibleOrigin() const
 {
-    if (m_eResolutionPolicy == kCCResolutionNoBorder)
+    if (m_eResolutionPolicy == kResolutionNoBorder)
     {
         return CCPointMake((m_obDesignResolutionSize.width - m_obScreenSize.width/m_fScaleX)/2, 
                            (m_obDesignResolutionSize.height - m_obScreenSize.height/m_fScaleY)/2);
@@ -188,7 +188,7 @@ void CCEGLViewProtocol::handleTouchesBegin(int num, int ids[], float xs[], float
             // The touches is more than MAX_TOUCHES ?
             if (nUnusedIndex == -1) {
                 CCLOG("The touches is more than MAX_TOUCHES, nUnusedIndex = %d", nUnusedIndex);
-                return;
+                continue;
             }
 
             CCTouch* pTouch = s_pTouches[nUnusedIndex] = new CCTouch();
@@ -235,7 +235,7 @@ void CCEGLViewProtocol::handleTouchesMove(int num, int ids[], float xs[], float 
         CCInteger* pIndex = (CCInteger*)s_TouchesIntergerDict.objectForKey(id);
         if (pIndex == NULL) {
             CCLOG("if the index doesn't exist, it is an error");
-            return;
+            continue;
         }
 
         CCLOGINFO("Moving touches with id: %d, x=%f, y=%f", id, x, y);
@@ -284,7 +284,7 @@ void CCEGLViewProtocol::getSetOfTouchesEndOrCancel(CCSet& set, int num, int ids[
         if (pIndex == NULL)
         {
             CCLOG("if the index doesn't exist, it is an error");
-            return;
+            continue;
         }
         /* Add to the set to send to the director */
         CCTouch* pTouch = s_pTouches[pIndex->getValue()];        
