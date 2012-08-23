@@ -67,6 +67,14 @@ static AccelerometerSimulation *sharedAccelerometer = NULL;
 
 @implementation AccelerometerSimulation
 
+- (void) dealloc {
+    if (sharedAccelerometer) {
+        [sharedAccelerometer release];
+        sharedAccelerometer = NULL;
+    }
+    [super dealloc];
+}
+
 // this is straight from developer guide example for multi-threaded notifications
 - (void) setUpThreadingSupport {
     if ( notifications ) return;
@@ -126,7 +134,7 @@ static AccelerometerSimulation *sharedAccelerometer = NULL;
     };
     [notificationLock unlock];
 }
-
+#ifndef __clang_analyzer__
 + (AccelerometerSimulation *)getAccelerometer
 {
     if( sharedAccelerometer == NULL )
@@ -134,7 +142,7 @@ static AccelerometerSimulation *sharedAccelerometer = NULL;
     
     return sharedAccelerometer;
 }
-
+#endif
 - (void)threadLoop:(id)object
 {
     char buffer[1024];
