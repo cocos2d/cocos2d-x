@@ -27,6 +27,12 @@
 #include "CCEditBox.h"
 #include "jni/EditBoxJni.h"
 
+// This function is implemented in CCLabelBMFont.cpp
+
+NS_CC_BEGIN
+extern long cc_utf8_strlen (const char * p, int max);
+NS_CC_END
+
 NS_CC_EXT_BEGIN
 
 CCEditBoxImpl* __createSystemEditBox(CCEditBox* pEditBox)
@@ -37,6 +43,7 @@ CCEditBoxImpl* __createSystemEditBox(CCEditBox* pEditBox)
 CCEditBoxImplAndroid::CCEditBoxImplAndroid(CCEditBox* pEditText)
 : CCEditBoxImpl(pEditText)
 , m_pLabel(NULL)
+, m_pLabelPlaceHolder(NULL)
 , m_eEditBoxInputMode(kEditBoxInputModeSingleLine)
 , m_eEditBoxInputFlag(kEditBoxInputFlagInitialCapsAllCharacters)
 , m_eKeyboardReturnType(kKeyboardReturnTypeDefault)
@@ -59,11 +66,21 @@ void CCEditBoxImplAndroid::doAnimationWhenKeyboardMove(float duration, float dis
 
 bool CCEditBoxImplAndroid::initWithSize(const CCSize& size)
 {
-    m_pLabel = CCLabelTTF::create("", "", size.height-10);
+    int fontSize = getFontSizeAccordingHeightJni(size.height-12);
+    m_pLabel = CCLabelTTF::create("", "", size.height-12);
     m_pLabel->setAnchorPoint(ccp(0, 0));
-    m_pLabel->setPosition(ccp(5, 5));
+    m_pLabel->setPosition(ccp(5, 2));
+    m_pLabel->setColor(m_colText);
     m_pEditBox->addChild(m_pLabel);
 
+    m_pLabelPlaceHolder = CCLabelTTF::create("", "", size.height-12);
+    m_pLabelPlaceHolder->setAnchorPoint(ccp(0, 0));
+    m_pLabelPlaceHolder->setPosition(ccp(5, 2));
+    m_pLabelPlaceHolder->setVisible(false);
+    m_pLabelPlaceHolder->setColor(m_colPlaceHolder);
+    m_pEditBox->addChild(m_pLabelPlaceHolder);
+    
+    m_EditSize = size;
     return true;
 }
 
@@ -76,6 +93,7 @@ void CCEditBoxImplAndroid::setFontColor(const ccColor3B& color)
 void CCEditBoxImplAndroid::setPlaceholderFontColor(const ccColor3B& color)
 {
     m_colPlaceHolder = color;
+    m_pLabelPlaceHolder->setColor(color);
 }
 
 void CCEditBoxImplAndroid::setInputMode(EditBoxInputMode inputMode)
@@ -113,7 +131,35 @@ void CCEditBoxImplAndroid::setText(const char* pText)
     if (pText != NULL)
     {
         m_strText = pText;
-        m_pLabel->setString(pText);
+
+        if (m_strText.length() > 0)
+        {
+            m_pLabelPlaceHolder->setVisible(false);
+
+            std::string strToShow;
+
+            if (kEditBoxInputFlagPassword == m_eEditBoxInputFlag)
+            {
+                long length = cc_utf8_strlen(m_strText.c_str(), -1);
+                for (long i = 0; i < length; i++)
+                {
+                    strToShow.append("*");
+                }
+            }
+            else
+            {
+                strToShow = m_strText;
+            }
+
+            std::string strWithEllipsis = getStringWithEllipsisJni(strToShow.c_str(), m_EditSize.width, m_EditSize.height-12);
+            m_pLabel->setString(strWithEllipsis.c_str());
+        }
+        else
+        {
+            m_pLabelPlaceHolder->setVisible(true);
+            m_pLabel->setString("");
+        }
+
     }
 }
 
@@ -127,6 +173,12 @@ void CCEditBoxImplAndroid::setPlaceHolder(const char* pText)
     if (pText != NULL)
     {
         m_strPlaceHolder = pText;
+        if (m_strPlaceHolder.length() > 0 && m_strText.length() == 0)
+        {
+            m_pLabelPlaceHolder->setVisible(true);
+        }
+
+        m_pLabelPlaceHolder->setString(m_strPlaceHolder.c_str());
     }
 }
 
