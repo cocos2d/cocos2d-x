@@ -3,9 +3,10 @@
 ::You should add %ANDROID_HOME%\tools and %ANDROID_HOME%\platform-tools to Path
 
 ::Copy monkeyrunner python script to tools directory.
+cd ..\..
 copy %cd%\Monkeyrunner_TestsCpp.py %ANDROID_HOME%\tools
 
-cd ..\..\..\..
+cd ..\..
 cd samples\TestCpp\proj.android\bin
 
 ::Copy test apk to tools directory.
