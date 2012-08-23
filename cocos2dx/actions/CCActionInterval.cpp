@@ -335,6 +335,12 @@ void CCSequence::update(float t)
         }
     }
 
+    // Last action found and it is done.
+    if( found == m_last && m_pActions[found]->isDone() )
+    {
+        return;
+    }
+
     // New action. Start it.
     if( found != m_last )
     {
