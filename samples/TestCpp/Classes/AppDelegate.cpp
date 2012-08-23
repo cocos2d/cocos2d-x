@@ -22,8 +22,32 @@ bool AppDelegate::applicationDidFinishLaunching()
     CCDirector *pDirector = CCDirector::sharedDirector();
     pDirector->setOpenGLView(CCEGLView::sharedOpenGLView());
 
-    // enable High Resource Mode(2x, such as iphone4) and maintains low resource on other devices.
-    // pDirector->enableRetinaDisplay(true);
+    TargetPlatform target = getTargetPlatform();
+    
+    if (target == kTargetIpad)
+    {
+        // ipad
+
+        if (pDirector->enableRetinaDisplay(true))
+        {
+            // ipad hd
+            CCFileUtils::sharedFileUtils()->setResourceDirectory("ipadhd");
+        }
+        else 
+        {
+            CCFileUtils::sharedFileUtils()->setResourceDirectory("ipad");
+        }
+    }
+    else if (target == kTargetIphone)
+    {
+        // iphone
+        
+        if (pDirector->enableRetinaDisplay(true))
+        {
+            // iphone hd
+            CCFileUtils::sharedFileUtils()->setResourceDirectory("hd");
+        }
+    }
 
     // turn on display FPS
     pDirector->setDisplayStats(true);
