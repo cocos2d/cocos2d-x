@@ -22,11 +22,11 @@ local function creatDog()
     -- create dog animate
     local textureDog = CCTextureCache:sharedTextureCache():addImage("dog.png")
     local rect = CCRectMake(0, 0, frameWidth, frameHeight)
-    local frame0 = CCSpriteFrame:create(textureDog, rect)
+    local frame0 = CCSpriteFrame:createWithTexture(textureDog, rect)
     rect = CCRectMake(frameWidth, 0, frameWidth, frameHeight)
-    local frame1 = CCSpriteFrame:create(textureDog, rect)
+    local frame1 = CCSpriteFrame:createWithTexture(textureDog, rect)
 
-    local spriteDog = CCSprite:create(frame0)
+    local spriteDog = CCSprite:createWithSpriteFrame(frame0)
     spriteDog.isPaused = false
     spriteDog:setPosition(0, winSize.height / 4 * 3)
 
@@ -58,7 +58,7 @@ local function creatDog()
 end
 
 -- create farm
-local function createLayerFram()
+local function createLayerFarm()
     local layerFarm = CCLayer:create()
 
     -- add in farm background
@@ -79,7 +79,7 @@ local function createLayerFram()
     local frameCrop = CCSpriteFrame:create("crop.png", CCRectMake(0, 0, 105, 95))
     for i = 0, 3 do
         for j = 0, 1 do
-            local spriteCrop = CCSprite:create(frameCrop);
+            local spriteCrop = CCSprite:createWithSpriteFrame(frameCrop);
             spriteCrop:setPosition(10 + 200 + j * 180 - i % 2 * 90, 30 + 10 + i * 95 / 2)
             layerFarm:addChild(spriteCrop)
         end
@@ -177,6 +177,6 @@ SimpleAudioEngine:sharedEngine():preloadEffect("effect1.wav");
 
 -- run
 local sceneGame = CCScene:create()
-sceneGame:addChild(createLayerFram())
+sceneGame:addChild(createLayerFarm())
 sceneGame:addChild(createLayerMenu())
 CCDirector:sharedDirector():runWithScene(sceneGame)
