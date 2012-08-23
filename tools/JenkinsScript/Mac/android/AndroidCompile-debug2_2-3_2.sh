@@ -15,13 +15,25 @@ antcompile()
 	ant debug
 	#If build failed,make sure the Jenkins could get the errorlevel.
 	compileresult=$[$compileresult+$?]
-
+        if [ $IsTestCpp == 1 ] && [ $? == 0 ]
+        then
+            cd bin
+            mv TestCpp-debug.apk TestCpp-debug-8.apk
+            cd ..
+        fi
+        
 	#Change API level.(API level:10)
 	sed '/target=/s/=.*$/=android-10/' ant.properties > anttmp.properties
 	cp anttmp.properties ant.properties
 	rm anttmp.properties
 	ant debug
 	compileresult=$[$compileresult+$?]
+        if [ $IsTestCpp == 1 ] && [ $? == 0 ]
+        then
+            cd bin
+            mv TestCpp-debug.apk TestCpp-debug-10.apk
+            cd ..
+        fi
 
 	#Change API level.(API level:11)
 	sed '/target=/s/=.*$/=android-11/' ant.properties > anttmp.properties
@@ -29,6 +41,12 @@ antcompile()
 	rm anttmp.properties
 	ant debug
 	compileresult=$[$compileresult+$?]
+        if [ $IsTestCpp == 1 ] && [ $? == 0 ]
+        then
+            cd bin
+            mv TestCpp-debug.apk TestCpp-debug-11.apk
+            cd ..
+        fi
 
 	#Change API level.(API level:12)
 	sed '/target=/s/=.*$/=android-12/' ant.properties > anttmp.properties
@@ -36,6 +54,12 @@ antcompile()
 	rm anttmp.properties
 	ant debug
 	compileresult=$[$compileresult+$?]
+        if [ $IsTestCpp == 1 ] && [ $? == 0 ]
+        then
+            cd bin
+            mv TestCpp-debug.apk TestCpp-debug-12.apk
+            cd ..
+        fi
 
 	#Change API level.(API level:13)
 	sed '/target=/s/=.*$/=android-13/' ant.properties > anttmp.properties
@@ -43,6 +67,12 @@ antcompile()
 	rm anttmp.properties
 	ant debug
 	compileresult=$[$compileresult+$?]
+        if [ $IsTestCpp == 1 ] && [ $? == 0 ]
+        then
+            cd bin
+            mv TestCpp-debug.apk TestCpp-debug-13.apk
+            cd ..
+        fi
 
 	#After all test versions completed,changed current API level to the original.(API level:8)
 	sed '/target=/s/=.*$/=android-8/' ant.properties > anttmp.properties
@@ -55,11 +85,12 @@ compileresult=0
 CUR=$(pwd)
 cd ../../../..
 ROOT=$(pwd)
+IsTestCpp=1
 
 #copy configuration files to target.
 cp $ROOT/tools/JenkinsScript/ant.properties $ROOT/samples/TestCpp/proj.android
 cp $ROOT/tools/JenkinsScript/build.xml $ROOT/samples/TestCpp/proj.android
-cp $$ROOT/tools/JenkinsScript/Mac/rootconfig-Mac.sh $ROOT/samples/TestCpp/proj.android 
+cp $ROOT/tools/JenkinsScript/Mac/rootconfig-Mac.sh $ROOT/samples/TestCpp/proj.android 
 cd samples/TestCpp/proj.android
 sh rootconfig-Mac.sh TestCpp
 sh build_native.sh
@@ -70,9 +101,11 @@ android update project -p proj.android
 cd proj.android
 antcompile
 
+IsTestCpp=0
+
 cp $ROOT/tools/JenkinsScript/ant.properties $ROOT/samples/HelloCpp/proj.android
 cp $ROOT/tools/JenkinsScript/build.xml $ROOT/samples/HelloCpp/proj.android
-cp $$ROOT/tools/JenkinsScript/Mac/rootconfig-Mac.sh $ROOT/samples/HelloCpp/proj.android 
+cp $ROOT/tools/JenkinsScript/Mac/rootconfig-Mac.sh $ROOT/samples/HelloCpp/proj.android 
 cd ../../HelloCpp/proj.android
 sh rootconfig-Mac.sh HelloCpp
 sh build_native.sh
@@ -83,7 +116,7 @@ antcompile
 
 cp $ROOT/tools/JenkinsScript/ant.properties $ROOT/samples/HelloLua/proj.android
 cp $ROOT/tools/JenkinsScript/build.xml $ROOT/samples/HelloLua/proj.android
-cp $$ROOT/tools/JenkinsScript/Mac/rootconfig-Mac.sh $ROOT/samples/HelloLua/proj.android 
+cp $ROOT/tools/JenkinsScript/Mac/rootconfig-Mac.sh $ROOT/samples/HelloLua/proj.android 
 cd ../../HelloLua/proj.android
 sh rootconfig-Mac.sh HelloLua
 sh build_native.sh
@@ -95,10 +128,10 @@ antcompile
 #return the compileresult.
 cd ../../..
 if [ $compileresult != 0 ]; then
-    git checkout -f
-    git clean -df -x
+#    git checkout -f
+#    git clean -df -x
     exit 1
 else
-    git checkout -f
-    git clean -df -x
+#    git checkout -f
+#    git clean -df -x
 fi
