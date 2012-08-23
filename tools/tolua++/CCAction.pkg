@@ -154,11 +154,17 @@ class CCJumpTo : public CCActionInterval
     static CCJumpTo* create(float duration, CCPoint position, float height, int jumps);
 };
 
-typedef struct _ccBezierConfig {
+/*
+ There's a bug in tolua++
+ Can't use struct in lua after binding struct
+ So use class instead.
+*/
+class ccBezierConfig {
+	ccBezierConfig(void);
     CCPoint endPosition;
     CCPoint controlPoint_1;
     CCPoint controlPoint_2;
-} ccBezierConfig;
+};
 
 class CCBezierBy : public CCActionInterval
 {
