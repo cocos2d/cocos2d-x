@@ -49,7 +49,7 @@ extern "C"
 
 
 
-void showEditBoxActivityJni(const char* pszTitle,
+void showEditBoxDialogJni(const char* pszTitle,
                             const char* pszContent,
                             int nInputMode,
                             int nInputFlag,
@@ -58,7 +58,7 @@ void showEditBoxActivityJni(const char* pszTitle,
                             EditBoxCallback pfEditBoxCB,
                             void* ctx)
 {
-    LOGD("showEditBoxActivityJni...");
+    LOGD("showEditBoxDialogJni...");
 
     if (pszContent == NULL) {
         return;
@@ -70,7 +70,7 @@ void showEditBoxActivityJni(const char* pszTitle,
     JniMethodInfo t;
     if (JniHelper::getStaticMethodInfo(t
         , "org/cocos2dx/lib/Cocos2dxActivity"
-        , "showEditBoxActivity"
+        , "showEditBoxDialog"
         , "(Ljava/lang/String;Ljava/lang/String;IIII)V"))
     {
         jstring stringArg1;

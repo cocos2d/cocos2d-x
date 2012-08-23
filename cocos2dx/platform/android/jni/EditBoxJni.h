@@ -30,7 +30,7 @@ typedef void (*EditBoxCallback)(const char* pText, void* ctx);
 
 extern "C"
 {
-void showEditBoxActivityJni(const char* pszTitle,
+void showEditBoxDialogJni(const char* pszTitle,
                             const char* pszContent,
                             int nInputMode,
                             int nInputFlag,
