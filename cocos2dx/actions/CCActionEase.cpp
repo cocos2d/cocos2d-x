@@ -179,7 +179,7 @@ CCObject* CCEaseRateAction::copyWithZone(CCZone *pZone)
     else
     {
         pCopy = new CCEaseRateAction();
-        pZone = pNewZone = new CCZone(pCopy);
+        pNewZone = new CCZone(pCopy);
     }
 
     pCopy->initWithAction((CCActionInterval*)(m_pOther->copy()->autorelease()), m_fRate);
@@ -235,7 +235,7 @@ CCObject* CCEaseIn::copyWithZone(CCZone *pZone)
     else
     {
         pCopy = new CCEaseIn();
-        pZone = pNewZone = new CCZone(pCopy);
+        pNewZone = new CCZone(pCopy);
     }
 
     pCopy->initWithAction((CCActionInterval*)(m_pOther->copy()->autorelease()), m_fRate);
@@ -292,7 +292,7 @@ CCObject* CCEaseOut::copyWithZone(CCZone *pZone)
     else
     {
         pCopy = new CCEaseOut();
-        pZone = pNewZone = new CCZone(pCopy);
+        pNewZone = new CCZone(pCopy);
     }
 
     pCopy->initWithAction((CCActionInterval*)(m_pOther->copy()->autorelease()), m_fRate);
@@ -349,7 +349,7 @@ CCObject* CCEaseInOut::copyWithZone(CCZone *pZone)
     else
     {
         pCopy = new CCEaseInOut();
-        pZone = pNewZone = new CCZone(pCopy);
+        pNewZone = new CCZone(pCopy);
     }
 
     pCopy->initWithAction((CCActionInterval*)(m_pOther->copy()->autorelease()), m_fRate);
@@ -415,7 +415,7 @@ CCObject* CCEaseExponentialIn::copyWithZone(CCZone *pZone)
     else
     {
         pCopy = new CCEaseExponentialIn();
-        pZone = pNewZone = new CCZone(pCopy);
+        pNewZone = new CCZone(pCopy);
     }
 
     pCopy->initWithAction((CCActionInterval *)(m_pOther->copy()->autorelease()));
@@ -472,7 +472,7 @@ CCObject* CCEaseExponentialOut::copyWithZone(CCZone *pZone)
     else
     {
         pCopy = new CCEaseExponentialOut();
-        pZone = pNewZone = new CCZone(pCopy);
+        pNewZone = new CCZone(pCopy);
     }
 
     pCopy->initWithAction((CCActionInterval *)(m_pOther->copy()->autorelease()));
@@ -529,7 +529,7 @@ CCObject* CCEaseExponentialInOut::copyWithZone(CCZone *pZone)
     else
     {
         pCopy = new CCEaseExponentialInOut();
-        pZone = pNewZone = new CCZone(pCopy);
+        pNewZone = new CCZone(pCopy);
     }
 
     pCopy->initWithAction((CCActionInterval *)(m_pOther->copy()->autorelease()));
@@ -596,7 +596,7 @@ CCObject* CCEaseSineIn::copyWithZone(CCZone *pZone)
     else
     {
         pCopy = new CCEaseSineIn();
-        pZone = pNewZone = new CCZone(pCopy);
+        pNewZone = new CCZone(pCopy);
     }
 
     pCopy->initWithAction((CCActionInterval *)(m_pOther->copy()->autorelease()));
@@ -653,7 +653,7 @@ CCObject* CCEaseSineOut::copyWithZone(CCZone *pZone)
     else
     {
         pCopy = new CCEaseSineOut();
-        pZone = pNewZone = new CCZone(pCopy);
+        pNewZone = new CCZone(pCopy);
     }
 
     pCopy->initWithAction((CCActionInterval *)(m_pOther->copy()->autorelease()));
@@ -710,7 +710,7 @@ CCObject* CCEaseSineInOut::copyWithZone(CCZone *pZone)
     else
     {
         pCopy = new CCEaseSineInOut();
-        pZone = pNewZone = new CCZone(pCopy);
+        pNewZone = new CCZone(pCopy);
     }
 
     pCopy->initWithAction((CCActionInterval *)(m_pOther->copy()->autorelease()));
@@ -779,7 +779,7 @@ CCObject* CCEaseElastic::copyWithZone(CCZone *pZone)
     else
     {
         pCopy = new CCEaseElastic();
-        pZone = pNewZone = new CCZone(pCopy);
+        pNewZone = new CCZone(pCopy);
     }
 
     pCopy->initWithAction((CCActionInterval *)(m_pOther->copy()->autorelease()), m_fPeriod);
@@ -833,7 +833,7 @@ CCObject* CCEaseElasticIn::copyWithZone(CCZone *pZone)
     else
     {
         pCopy = new CCEaseElasticIn();
-        pZone = pNewZone = new CCZone(pCopy);
+        pNewZone = new CCZone(pCopy);
     }
 
     pCopy->initWithAction((CCActionInterval *)(m_pOther->copy()->autorelease()), m_fPeriod);
@@ -903,7 +903,7 @@ CCObject *CCEaseElasticOut::copyWithZone(CCZone *pZone)
     else
     {
         pCopy = new CCEaseElasticOut();
-        pZone = pNewZone = new CCZone(pCopy);
+        pNewZone = new CCZone(pCopy);
     }
 
     pCopy->initWithAction((CCActionInterval *)(m_pOther->copy()->autorelease()), m_fPeriod);
@@ -972,7 +972,7 @@ CCObject* CCEaseElasticInOut::copyWithZone(CCZone *pZone)
     else
     {
         pCopy = new CCEaseElasticInOut();
-        pZone = pNewZone = new CCZone(pCopy);
+        pNewZone = new CCZone(pCopy);
     }
 
     pCopy->initWithAction((CCActionInterval *)(m_pOther->copy()->autorelease()), m_fPeriod);
@@ -1056,7 +1056,7 @@ CCObject* CCEaseBounce::copyWithZone(CCZone *pZone)
     else
     {
         pCopy = new CCEaseBounce();
-        pZone = pNewZone = new CCZone(pCopy);
+        pNewZone = new CCZone(pCopy);
     }
 
     pCopy->initWithAction((CCActionInterval *)(m_pOther->copy()->autorelease()));
@@ -1129,7 +1129,7 @@ CCObject* CCEaseBounceIn::copyWithZone(CCZone *pZone)
     else
     {
         pCopy = new CCEaseBounceIn();
-        pZone = pNewZone = new CCZone(pCopy);
+        pNewZone = new CCZone(pCopy);
     }
 
     pCopy->initWithAction((CCActionInterval *)(m_pOther->copy()->autorelease()));
@@ -1187,7 +1187,7 @@ CCObject* CCEaseBounceOut::copyWithZone(CCZone *pZone)
     else
     {
         pCopy = new CCEaseBounceOut();
-        pZone = pNewZone = new CCZone(pCopy);
+        pNewZone = new CCZone(pCopy);
     }
 
     pCopy->initWithAction((CCActionInterval *)(m_pOther->copy()->autorelease()));
@@ -1245,7 +1245,7 @@ CCObject* CCEaseBounceInOut::copyWithZone(CCZone *pZone)
     else
     {
         pCopy = new CCEaseBounceInOut();
-        pZone = pNewZone = new CCZone(pCopy);
+        pNewZone = new CCZone(pCopy);
     }
 
     pCopy->initWithAction((CCActionInterval *)(m_pOther->copy()->autorelease()));
@@ -1313,7 +1313,7 @@ CCObject* CCEaseBackIn::copyWithZone(CCZone *pZone)
     else
     {
         pCopy = new CCEaseBackIn();
-        pZone = pNewZone = new CCZone(pCopy);
+        pNewZone = new CCZone(pCopy);
     }
 
     pCopy->initWithAction((CCActionInterval *)(m_pOther->copy()->autorelease()));
@@ -1371,7 +1371,7 @@ CCObject* CCEaseBackOut::copyWithZone(CCZone *pZone)
     else
     {
         pCopy = new CCEaseBackOut();
-        pZone = pNewZone = new CCZone(pCopy);
+        pNewZone = new CCZone(pCopy);
     }
 
     pCopy->initWithAction((CCActionInterval *)(m_pOther->copy()->autorelease()));
@@ -1431,7 +1431,7 @@ CCObject* CCEaseBackInOut::copyWithZone(CCZone *pZone)
     else
     {
         pCopy = new CCEaseBackInOut();
-        pZone = pNewZone = new CCZone(pCopy);
+        pNewZone = new CCZone(pCopy);
     }
 
     pCopy->initWithAction((CCActionInterval *)(m_pOther->copy()->autorelease()));
