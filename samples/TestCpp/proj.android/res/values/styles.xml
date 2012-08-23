@@ -1,76 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2007 The Android Open Source Project
-
-     Licensed under the Apache License, Version 2.0 (the "License");
-     you may not use this file except in compliance with the License.
-     You may obtain a copy of the License at
-  
-          http://www.apache.org/licenses/LICENSE-2.0
-  
-     Unless required by applicable law or agreed to in writing, software
-     distributed under the License is distributed on an "AS IS" BASIS,
-     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-     See the License for the specific language governing permissions and
-     limitations under the License.
--->
 
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- A custom theme that is a variation on the light them with a different
-         background color. -->
-
-    <!-- This is a theme that will adjust itself depending on the API version.
-         The default definition is the safe one, using a theme that has always
-         been defined.  Look at values-11/styles.xml for a variation that is
-         selected when the holographic theme is available. -->
-
-    <!-- This is a theme that will adjust itself depending on the API version.
-         The default definition is the safe one, using a theme that has always
-         been defined.  Look at values-11/styles.xml for a variation that is
-         selected when the holographic theme is available. -->
-
-    <!-- Base application theme is the default theme. -->
+    
     <style name="Theme" parent="android:Theme">
     </style>
-    <!-- Base application theme is the default theme. -->
 
-    <!-- Variation on our application theme that forces a plain
-        text style. -->
-
-    <!-- Variation on our application theme that has a black
-         background. -->
-
-    <!-- A theme for a custom dialog appearance.  Here we use an ugly
-         custom frame. -->
-
-    <!-- A theme that has a wallpaper background.  Here we explicitly specify
-         that this theme is to inherit from the system's wallpaper theme,
-         which sets up various attributes correctly. -->
-
-    <!-- A theme that has a translucent background.  Here we explicitly specify
-         that this theme is to inherit from the system's translucent theme,
-         which sets up various attributes correctly. -->
     <style name="Theme.Translucent" parent="android:style/Theme.Translucent">
         <item name="android:windowBackground">@drawable/translucent_background</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:colorForeground">#fff</item>
     </style>
-
-    <!-- Variation on our application theme that has a transparent
-         background; this example completely removes the background,
-         allowing the activity to decide how to composite.  Also here we
-         force the translucency ourself rather than making use of the built-in
-         translucent theme. -->
-    <style name="Theme.Transparent">
-        <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowAnimationStyle">@null</item>
-        <item name="android:windowBackground">@drawable/transparent_background</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:colorForeground">#fff</item>
-    </style>
     
-    <!-- Older platforms don't have Theme.Holo.DialogWhenLarge; we will define
-         our own wrapper theme that uses it only when running on the appropriate
-         platform version.  On older platforms, we always use the generic
-         fullscreen theme, because they don't support some feature that help
-         in correctly laying out an activity as a dialog. -->
 </resources>

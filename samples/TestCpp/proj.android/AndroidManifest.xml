@@ -20,16 +20,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<!-- android:theme="@style/Theme.Translucent" -->
-        <activity android:name="org.cocos2dx.lib.Cocos2dxEditBoxActivity"
-                  android:label="@string/app_name"
-                  android:windowSoftInputMode="stateVisible"
-                  >
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
     </application>
     <supports-screens android:largeScreens="true"
                       android:smallScreens="true"

@@ -4,7 +4,7 @@
   android:orientation= "vertical"
   android:layout_width="fill_parent" 
   android:layout_height="fill_parent">
- <!-- android:layout_gravity="left" -->
+
   <TextView 
   	android:id="@+id/title"
   	android:layout_width="wrap_content" 
@@ -17,7 +17,8 @@
   <EditText android:id="@+id/editbox"
   	android:layout_width="fill_parent"
   	android:layout_height="wrap_content" 
-  	android:layout_margin="10dip"
+  	android:layout_marginLeft="10dip"
+  	android:layout_marginRight="10dip"
   	android:inputType="text"
   />
 </LinearLayout>

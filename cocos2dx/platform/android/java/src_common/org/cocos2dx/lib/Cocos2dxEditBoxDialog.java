@@ -2,30 +2,23 @@ package org.cocos2dx.lib;
 
 import org.cocos2dx.testcpp.R;
 
-import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.InputFilter;
 import android.text.InputType;
-import android.text.Layout;
+import android.util.Log;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.View.OnKeyListener;
-import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
-public class Cocos2dxEditBoxActivity extends Activity {
+public class Cocos2dxEditBoxDialog extends Dialog {
 
 	public static final int ID_EDITBOX_RESULT_OK     = 101;
 	public static final int ID_EDITBOX_RESULT_CANCEL = 102;
@@ -114,30 +107,38 @@ public class Cocos2dxEditBoxActivity extends Activity {
 	private int mInputFlagConstraints = 0x00000;
 	private int mInputModeContraints = 0x00000;
 	private boolean mIsMultiline = false;
+	private Cocos2dxActivity mParentActivity = null;
+	private EditBoxMessage mMsg = null;
+	
+	public Cocos2dxEditBoxDialog(Context context, EditBoxMessage msg) {
+		super(context, R.style.Theme_Translucent);
+		// TODO Auto-generated constructor stub
+		mParentActivity = (Cocos2dxActivity)context;
+		mMsg = msg;
+	}
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		
-		getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+		//getWindow().requestFeature(Window.FEATURE_NO_TITLE);
 
-		View view = View.inflate(this, R.layout.keyboard, null);
+		View view = View.inflate(mParentActivity, R.layout.keyboard, null);
 		setContentView(view);
 
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         
-		Bundle bundle = this.getIntent().getExtras();
-		mInputMode = bundle.getInt("editbox_input_mode");
-		mInputFlag = bundle.getInt("editbox_input_flag");
-		mReturnType = bundle.getInt("editbox_return_type");
-		mMaxLength = bundle.getInt("editbox_max_length");
+		mInputMode = mMsg.inputMode;
+		mInputFlag = mMsg.inputFlag;
+		mReturnType = mMsg.returnType;
+		mMaxLength = mMsg.maxLength;
 
 		mTextViewTitle = (TextView) findViewById(R.id.title);
-		mTextViewTitle.setText(bundle.getString("editbox_title"));
+		mTextViewTitle.setText(mMsg.title);
 
 		mInputEditText = (EditText) findViewById(R.id.editbox);
-		mInputEditText.setText(bundle.getString("editbox_content"));
+		mInputEditText.setText(mMsg.content);
 		
 		int oldImeOptions = mInputEditText.getImeOptions();
 		mInputEditText.setImeOptions(oldImeOptions | EditorInfo.IME_FLAG_NO_EXTRACT_UI);
@@ -244,76 +245,47 @@ public class Cocos2dxEditBoxActivity extends Activity {
 			public void run() {
 				mInputEditText.requestFocus();
 				mInputEditText.setSelection(mInputEditText.length());
-				InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-				imm.showSoftInput(mInputEditText,InputMethodManager.SHOW_FORCED);
+				openKeyboard();
 			}
 		}, 200);
 		 
 		mInputEditText.setOnEditorActionListener(new OnEditorActionListener() {
 		     @Override
 		     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-		         boolean handled = false;
-
-	             if (   actionId == EditorInfo.IME_ACTION_SEND
-	        		 || actionId == EditorInfo.IME_ACTION_NONE
-	        		 || actionId == EditorInfo.IME_NULL
-	        		 || actionId == EditorInfo.IME_ACTION_GO
-	        		 || actionId == EditorInfo.IME_ACTION_SEARCH
-	        		 || actionId == EditorInfo.IME_ACTION_DONE    ) {
-		             // Send the user message
-					Intent intent = new Intent();
-					intent.setClass(Cocos2dxEditBoxActivity.this,
-							Cocos2dxEditBoxActivity.class);
-					Bundle bundle = new Bundle();
-					bundle.putString("editbox_content", mInputEditText.getText().toString());
-					intent.putExtras(bundle);
-					setResult(ID_EDITBOX_RESULT_OK, intent);
-					closeKeyboard();
-					finish();
-					handled = true;
-		         }
-		         return handled;
+	        	 // if user didn't set keyboard type,
+	        	 // this callback will be invoked twice with 'KeyEvent.ACTION_DOWN' and 'KeyEvent.ACTION_UP'
+	        	 if (actionId != EditorInfo.IME_NULL
+	        			 || (actionId == EditorInfo.IME_NULL
+	        			 	&& event != null
+	        			 	&& event.getAction() == KeyEvent.ACTION_DOWN))
+	        	 {
+	        		 //Log.d("EditBox", "actionId: "+actionId +",event: "+event);
+	            	 mParentActivity.setEditBoxResult(mInputEditText.getText().toString());
+	            	 closeKeyboard();
+	            	 dismiss();
+					 return true;
+	        	 }
+		         return false;
 		     }
 		 });
-		/*
-		final Button buttonFinish = (Button) findViewById(R.id.button_finish);
-		buttonFinish.setOnClickListener(new Button.OnClickListener() {
-			public void onClick(View v) {
-				Intent intent = new Intent();
-				intent.setClass(Cocos2dxEditBoxActivity.this,
-						Cocos2dxEditBoxActivity.class);
-				Bundle bundle = new Bundle();
-				bundle.putString("editbox_content", mInputEditText.getText().toString());
-				intent.putExtras(bundle);
-				setResult(ID_EDITBOX_RESULT_OK, intent);
-				closeKeyboard();
-				finish();
-			}
-		});
-
-		final Button buttonCancel = (Button) findViewById(R.id.button_cancel);
-		buttonCancel.setOnClickListener(new Button.OnClickListener() {
-			public void onClick(View v) {
-				Intent intent = new Intent();
-				intent.setClass(Cocos2dxEditBoxActivity.this,
-						Cocos2dxEditBoxActivity.class);
-				setResult(ID_EDITBOX_RESULT_CANCEL, intent);
-				closeKeyboard();
-				finish();
-			}
-		});
-*/
 	}
 
+	private void openKeyboard() {
+		InputMethodManager imm = (InputMethodManager) mParentActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
+		imm.showSoftInput(mInputEditText, 0);
+        Log.d("Cocos2dxEditBox", "openKeyboard");	
+	}
+	
 	private void closeKeyboard() {
-		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+		InputMethodManager imm = (InputMethodManager) mParentActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
 		imm.hideSoftInputFromWindow(mInputEditText.getWindowToken(), 0);
+		Log.d("Cocos2dxEditBox", "closeKeyboard");
 	}
 
 	@Override
-	protected void onDestroy() {
+	protected void onStop() {
 		// TODO Auto-generated method stub
-		super.onDestroy();
+		super.onStop();
+		Log.d("EditBox", "onStop...");
 	}
-
 }
