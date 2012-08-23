@@ -20,8 +20,6 @@ import android.widget.TextView.OnEditorActionListener;
 
 public class Cocos2dxEditBoxDialog extends Dialog {
 
-	public static final int ID_EDITBOX_RESULT_OK     = 101;
-	public static final int ID_EDITBOX_RESULT_CANCEL = 102;
     /**
      * The user is allowed to enter any text, including line breaks.
      */
