@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.92 on 08/22/12 12:02:34.
+** Generated automatically by tolua++-1.0.92 on 08/22/12 14:46:45.
 */
 
 #include <vector>
@@ -34,9 +34,9 @@ static int tolua_collect_ccV3F_C4B_T2F_Quad (lua_State* tolua_S)
 	return 0;
 }
 
-static int tolua_collect_ccQuad3 (lua_State* tolua_S)
+static int tolua_collect_CCAnimation (lua_State* tolua_S)
 {
- ccQuad3* self = (ccQuad3*) tolua_tousertype(tolua_S,1,0);
+ CCAnimation* self = (CCAnimation*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
@@ -83,6 +83,13 @@ static int tolua_collect_ccTex2F (lua_State* tolua_S)
 	return 0;
 }
 
+static int tolua_collect_ccBezierConfig (lua_State* tolua_S)
+{
+ ccBezierConfig* self = (ccBezierConfig*) tolua_tousertype(tolua_S,1,0);
+	Mtolua_delete(self);
+	return 0;
+}
+
 static int tolua_collect_CCAffineTransform (lua_State* tolua_S)
 {
  CCAffineTransform* self = (CCAffineTransform*) tolua_tousertype(tolua_S,1,0);
@@ -104,9 +111,9 @@ static int tolua_collect_ccBlendFunc (lua_State* tolua_S)
 	return 0;
 }
 
-static int tolua_collect_CCAnimation (lua_State* tolua_S)
+static int tolua_collect_ccQuad3 (lua_State* tolua_S)
 {
- CCAnimation* self = (CCAnimation*) tolua_tousertype(tolua_S,1,0);
+ ccQuad3* self = (ccQuad3*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
@@ -2562,6 +2569,63 @@ static int tolua_Cocos2d_CCJumpTo_create00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: new of class  ccBezierConfig */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_ccBezierConfig_new00
+static int tolua_Cocos2d_ccBezierConfig_new00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"ccBezierConfig",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  {
+   ccBezierConfig* tolua_ret = (ccBezierConfig*)  Mtolua_new((ccBezierConfig)());
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"ccBezierConfig");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'new'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: new_local of class  ccBezierConfig */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_ccBezierConfig_new00_local
+static int tolua_Cocos2d_ccBezierConfig_new00_local(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"ccBezierConfig",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  {
+   ccBezierConfig* tolua_ret = (ccBezierConfig*)  Mtolua_new((ccBezierConfig)());
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"ccBezierConfig");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'new'.",&tolua_err);
  return 0;
 #endif
 }
@@ -51755,8 +51819,15 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"copyWithZone",tolua_Cocos2d_CCJumpTo_copyWithZone00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCJumpTo_create00);
   tolua_endmodule(tolua_S);
+  #ifdef __cplusplus
+  tolua_cclass(tolua_S,"ccBezierConfig","ccBezierConfig","",tolua_collect_ccBezierConfig);
+  #else
   tolua_cclass(tolua_S,"ccBezierConfig","ccBezierConfig","",NULL);
+  #endif
   tolua_beginmodule(tolua_S,"ccBezierConfig");
+   tolua_function(tolua_S,"new",tolua_Cocos2d_ccBezierConfig_new00);
+   tolua_function(tolua_S,"new_local",tolua_Cocos2d_ccBezierConfig_new00_local);
+   tolua_function(tolua_S,".call",tolua_Cocos2d_ccBezierConfig_new00_local);
    tolua_variable(tolua_S,"endPosition",tolua_get_ccBezierConfig_endPosition,tolua_set_ccBezierConfig_endPosition);
    tolua_variable(tolua_S,"controlPoint_1",tolua_get_ccBezierConfig_controlPoint_1,tolua_set_ccBezierConfig_controlPoint_1);
    tolua_variable(tolua_S,"controlPoint_2",tolua_get_ccBezierConfig_controlPoint_2,tolua_set_ccBezierConfig_controlPoint_2);
