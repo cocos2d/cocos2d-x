@@ -101,13 +101,13 @@
 		<key>format</key>
 		<integer>2</integer>
 		<key>realTextureFileName</key>
-		<string>CCControlColourPickerSpriteSheet-ipad.png</string>
+		<string>CCControlColourPickerSpriteSheet.png</string>
 		<key>size</key>
 		<string>{1024,1024}</string>
 		<key>smartupdate</key>
 		<string>$TexturePacker:SmartUpdate:b0f145802397a74846afb8535dc6c069$</string>
 		<key>textureFileName</key>
-		<string>CCControlColourPickerSpriteSheet-ipad.png</string>
+		<string>CCControlColourPickerSpriteSheet.png</string>
 	</dict>
 </dict>
 </plist>
