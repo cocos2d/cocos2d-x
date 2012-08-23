@@ -47,7 +47,7 @@ public:
     @brief    Get current applicaiton instance.
     @return Current application instance pointer.
     */
-    static CCApplication& sharedApplication();
+    static CCApplication* sharedApplication();
     
     /**
      @brief    Callback by CCDirector for limit FPS.

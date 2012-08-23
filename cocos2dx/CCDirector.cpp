@@ -733,7 +733,7 @@ void CCDirector::showStats(void)
                 sprintf(m_pszFPS, "%.1f", m_fFrameRate);
                 m_pFPSLabel->setString(m_pszFPS);
                 
-                sprintf(m_pszFPS, "%4d", g_uNumberOfDraws);
+                sprintf(m_pszFPS, "%4lu", (unsigned long)g_uNumberOfDraws);
                 m_pDrawsLabel->setString(m_pszFPS);
             }
             
@@ -953,7 +953,7 @@ void CCDisplayLinkDirector::startAnimation(void)
     }
 
     m_bInvalid = false;
-    CCApplication::sharedApplication().setAnimationInterval(m_dAnimationInterval);
+    CCApplication::sharedApplication()->setAnimationInterval(m_dAnimationInterval);
 }
 
 void CCDisplayLinkDirector::mainLoop(void)

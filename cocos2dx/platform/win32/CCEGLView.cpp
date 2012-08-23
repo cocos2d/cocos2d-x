@@ -248,10 +248,10 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
         switch (wParam)
         {
         case SIZE_RESTORED:
-            CCApplication::sharedApplication().applicationWillEnterForeground();
+            CCApplication::sharedApplication()->applicationWillEnterForeground();
             break;
         case SIZE_MINIMIZED:
-            CCApplication::sharedApplication().applicationDidEnterBackground();
+            CCApplication::sharedApplication()->applicationDidEnterBackground();
             break;
         }
         break;
@@ -446,14 +446,14 @@ bool CCEGLView::setContentScaleFactor(float contentScaleFactor)
     return true;
 }
 
-CCEGLView& CCEGLView::sharedOpenGLView()
+CCEGLView* CCEGLView::sharedOpenGLView()
 {
     static CCEGLView* s_pEglView = NULL;
     if (s_pEglView == NULL)
     {
         s_pEglView = new CCEGLView();
     }
-    return *s_pEglView;
+    return s_pEglView;
 }
 
 NS_CC_END

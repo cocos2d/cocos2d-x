@@ -189,7 +189,7 @@ void CCEGLView::swapBuffers()
 	eglSwapBuffers(m_eglDisplay, m_eglSurface);
 }
 
-CCEGLView& CCEGLView::sharedOpenGLView()
+CCEGLView* CCEGLView::sharedOpenGLView()
 {
 	if (!s_pInstance)
 	{
@@ -197,7 +197,7 @@ CCEGLView& CCEGLView::sharedOpenGLView()
 	}
 
 	CCAssert(s_pInstance != NULL, "CCEGLView wasn't constructed yet");
-	return *s_pInstance;
+	return s_pInstance;
 }
 
 void CCEGLView::showKeyboard()
@@ -587,7 +587,7 @@ bool CCEGLView::handleEvents()
 				case NAVIGATOR_WINDOW_INACTIVE:
 					if (m_isWindowActive)
 					{
-						CCApplication::sharedApplication().applicationDidEnterBackground();
+						CCApplication::sharedApplication()->applicationDidEnterBackground();
 						m_isWindowActive = false;
 					}
 					break;
@@ -595,7 +595,7 @@ bool CCEGLView::handleEvents()
 				case NAVIGATOR_WINDOW_ACTIVE:
 					if (!m_isWindowActive)
 					{
-						CCApplication::sharedApplication().applicationWillEnterForeground();
+						CCApplication::sharedApplication()->applicationWillEnterForeground();
 						m_isWindowActive = true;
 					}
 					break;
@@ -607,14 +607,14 @@ bool CCEGLView::handleEvents()
 						case NAVIGATOR_WINDOW_FULLSCREEN:
 							if (!m_isWindowActive)
 							{
-								CCApplication::sharedApplication().applicationWillEnterForeground();
+								CCApplication::sharedApplication()->applicationWillEnterForeground();
 								m_isWindowActive = true;
 							}
 							break;
 						case NAVIGATOR_WINDOW_THUMBNAIL:
 							if (m_isWindowActive)
 							{
-								CCApplication::sharedApplication().applicationDidEnterBackground();
+								CCApplication::sharedApplication()->applicationDidEnterBackground();
 								m_isWindowActive = false;
 							}
 							break;

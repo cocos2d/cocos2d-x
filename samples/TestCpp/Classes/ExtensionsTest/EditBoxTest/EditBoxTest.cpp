@@ -15,8 +15,8 @@ USING_NS_CC_EXT;
 
 EditBoxTest::EditBoxTest()
 {
-    CCPoint visibleOrigin = CCEGLView::sharedOpenGLView().getVisibleOrigin();
-    CCSize visibleSize = CCEGLView::sharedOpenGLView().getVisibleSize();
+    CCPoint visibleOrigin = CCEGLView::sharedOpenGLView()->getVisibleOrigin();
+    CCSize visibleSize = CCEGLView::sharedOpenGLView()->getVisibleSize();
     
     CCSprite* pBg = CCSprite::create("Images/HelloWorld.png");
     pBg->setPosition(ccp(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/2));
