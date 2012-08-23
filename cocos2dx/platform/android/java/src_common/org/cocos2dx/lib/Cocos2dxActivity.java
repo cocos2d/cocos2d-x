@@ -52,6 +52,8 @@ public class Cocos2dxActivity extends Activity{
     private final static int HANDLER_SHOW_DIALOG = 1;
     private final static int HANDLER_SHOW_EDITBOX_ACTIVITY = 2;
     private final static int ID_EDITBOX_ACTIVITY = 101;
+    private static final int DIALOG_EDITBOX = 7;
+    
     private static String packageName;
     
     private static native void nativeSetPaths(String apkPath);
@@ -94,6 +96,28 @@ public class Cocos2dxActivity extends Activity{
         };
     }
     
+    protected Dialog onCreateDialog(int id) {
+        switch (id) {
+        case DIALOG_EDITBOX:
+//            LayoutInflater factory = LayoutInflater.from(this);
+//            final View textEntryView = factory.inflate(org.cocos2dx.testcpp.R.layout.keyboard, null);
+//            return new AlertDialog.Builder(this)
+//                .setTitle("Text Entry Dialog")
+//                .setView(textEntryView)
+//                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                        public void onClick(DialogInterface dialog, int whichButton) {
+//                            /* User clicked OK so do some stuff */
+//                        }
+//                    })
+//                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+//                        public void onClick(DialogInterface dialog, int whichButton) {
+//                            /* User clicked cancel so do some stuff */
+//                        }
+//                    })
+//                .create();
+        }
+        return null;
+    };
     public static String getDeviceModel(){
     	return Build.MODEL;
     }
@@ -278,8 +302,9 @@ public class Cocos2dxActivity extends Activity{
     
     private void onShowEditBoxActivity(EditBoxMessage msg)
     {	
+    	/*
 		Intent intent = new Intent();
-		intent.setClass(this, Cocos2dxEditBoxActivity.class);
+		intent.setClass(this, Cocos2dxEditBoxDialog.class);
 		Bundle bundle = new  Bundle();
 		bundle.putString("editbox_title", msg.title);
 		bundle.putString("editbox_content", msg.content);
@@ -288,8 +313,35 @@ public class Cocos2dxActivity extends Activity{
 		bundle.putInt("editbox_return_type", msg.returnType);
 		bundle.putInt("editbox_max_length", msg.maxLength);
 		intent.putExtras(bundle);
+		*/
 		//intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-		this.startActivityForResult(intent, ID_EDITBOX_ACTIVITY);
+		// use dialog instead
+		//this.startActivityForResult(intent, ID_EDITBOX_ACTIVITY);
+		Dialog dialog = new Cocos2dxEditBoxDialog(this, msg);
+		dialog.show();
+		//showDialog(DIALOG_EDITBOX);
+    }
+    
+    public void setEditBoxResult(String editResult)
+    {
+		Log.i("editbox_content", editResult);
+	
+        try
+        {
+        	final byte[] bytesUTF8 = editResult.getBytes("UTF8");
+            // pass utf8 string from editbox activity to native.
+        	// Should invoke native method in GL thread.
+        	mGLView.queueEvent(new Runnable() {
+                @Override
+                public void run() {
+                	nativeSetEditboxText(bytesUTF8);
+                }
+            });
+        }
+        catch (java.io.UnsupportedEncodingException e)
+        {
+            e.printStackTrace();
+        } 
     }
     
     @Override
@@ -301,7 +353,7 @@ public class Cocos2dxActivity extends Activity{
     	case ID_EDITBOX_ACTIVITY:
     		{
     			// process only user clicked ok button.
-    			if (resultCode == Cocos2dxEditBoxActivity.ID_EDITBOX_RESULT_OK) {
+    			if (resultCode == Cocos2dxEditBoxDialog.ID_EDITBOX_RESULT_OK) {
     				Bundle b = data.getExtras();
     				String str = b.getString("editbox_content");
     				Log.i("editbox_content", str);
