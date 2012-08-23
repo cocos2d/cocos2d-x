@@ -384,11 +384,11 @@ CCCallFunc * CCCallFunc::create(int nHandler)
 	if (pRet) {
 		pRet->m_nScriptHandler = nHandler;
 		pRet->autorelease();
-		return pRet;
 	}
-
-	CC_SAFE_DELETE(pRet);
-	return NULL;
+	else{
+		CC_SAFE_DELETE(pRet);
+	}
+	return pRet;
 }
 
 bool CCCallFunc::initWithTarget(CCObject* pSelectorTarget) {
@@ -477,11 +477,11 @@ CCCallFuncN * CCCallFuncN::create(int nHandler)
 	if (pRet) {
 		pRet->m_nScriptHandler = nHandler;
 		pRet->autorelease();
-		return pRet;
 	}
-
-	CC_SAFE_DELETE(pRet);
-	return NULL;
+	else{
+		CC_SAFE_DELETE(pRet);
+	}
+	return pRet;
 }
 
 bool CCCallFuncN::initWithTarget(CCObject* pSelectorTarget,
