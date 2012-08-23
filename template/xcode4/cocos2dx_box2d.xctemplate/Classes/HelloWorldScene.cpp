@@ -253,7 +253,7 @@ void HelloWorld::ccTouchesEnded(CCSet* touches, CCEvent* event)
         if(!touch)
             break;
         
-        CCPoint location = touch->locationInView();
+        CCPoint location = touch->getLocationInView();
         
         location = CCDirector::sharedDirector()->convertToGL(location);
         

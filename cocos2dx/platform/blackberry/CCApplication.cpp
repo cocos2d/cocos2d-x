@@ -51,7 +51,7 @@ int CCApplication::run()
 
 	while (1) // or device wants to quit
 	{
-		CCEGLView::sharedOpenGLView().handleEvents();
+		CCEGLView::sharedOpenGLView()->handleEvents();
 
 		clock_gettime(CLOCK_REALTIME, &time_struct);
 		current_time = time2millis(&time_struct);
@@ -106,10 +106,10 @@ TargetPlatform CCApplication::getTargetPlatform()
 //////////////////////////////////////////////////////////////////////////
 // static member function
 //////////////////////////////////////////////////////////////////////////
-CCApplication& CCApplication::sharedApplication()
+CCApplication* CCApplication::sharedApplication()
 {
     CC_ASSERT(sm_pSharedApplication);
-    return *sm_pSharedApplication;
+    return sm_pSharedApplication;
 }
 
 ccLanguageType CCApplication::getCurrentLanguage()

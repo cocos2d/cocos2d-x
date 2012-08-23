@@ -6,9 +6,9 @@ USING_NS_CC;
 int main(int argc, char **argv) {
     // create the application instance
     AppDelegate app;
-    CCApplication::sharedApplication().setResourceRootPath("../Resources/");
-    CCEGLView& eglView = CCEGLView::sharedOpenGLView();
-    eglView.setFrameSize(480, 320);
+    CCApplication::sharedApplication()->setResourceRootPath("../Resources/");
+    CCEGLView* eglView = CCEGLView::sharedOpenGLView();
+    eglView->setFrameSize(480, 320);
 
-    return CCApplication::sharedApplication().run();
+    return CCApplication::sharedApplication()->run();
 }
