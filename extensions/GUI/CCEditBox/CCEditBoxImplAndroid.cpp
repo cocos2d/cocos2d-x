@@ -217,14 +217,14 @@ void CCEditBoxImplAndroid::openKeyboard()
         m_pDelegate->editBoxEditingDidBegin(m_pEditBox);
     }
 
-    showEditBoxActivityJni( m_strPlaceHolder.c_str(),
+    showEditBoxDialogJni(   m_strPlaceHolder.c_str(),
                             m_strText.c_str(),
                             m_eEditBoxInputMode,
                             m_eEditBoxInputFlag,
                             m_eKeyboardReturnType,
                             m_nMaxLength,
                             editBoxCallbackFunc,
-                            (void*)this);
+                            (void*)this  );
 
 }
 

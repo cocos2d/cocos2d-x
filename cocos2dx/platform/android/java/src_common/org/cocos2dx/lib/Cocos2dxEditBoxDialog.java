@@ -1,20 +1,25 @@
 package org.cocos2dx.lib;
 
-import org.cocos2dx.testcpp.R;
-
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.ColorFilter;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
@@ -109,10 +114,18 @@ public class Cocos2dxEditBoxDialog extends Dialog {
 	private EditBoxMessage mMsg = null;
 	
 	public Cocos2dxEditBoxDialog(Context context, EditBoxMessage msg) {
-		super(context, R.style.Theme_Translucent);
+		//super(context, R.style.Theme_Translucent);
+		super(context, android.R.style.Theme_Translucent_NoTitleBar_Fullscreen);
 		// TODO Auto-generated constructor stub
 		mParentActivity = (Cocos2dxActivity)context;
 		mMsg = msg;
+	}
+	
+	// Converting dips to pixels
+	private int convertDipsToPixels(float dips)
+	{
+		float scale = getContext().getResources().getDisplayMetrics().density;
+		return Math.round(dips * scale);
 	}
 	
 	@Override
@@ -120,11 +133,30 @@ public class Cocos2dxEditBoxDialog extends Dialog {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		
-		//getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+		getWindow().setBackgroundDrawable(new ColorDrawable(0x80000000));
 
-		View view = View.inflate(mParentActivity, R.layout.keyboard, null);
-		setContentView(view);
+		LinearLayout layout = new LinearLayout(mParentActivity);
+		layout.setOrientation(LinearLayout.VERTICAL);
+		
+		LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.
+        		LayoutParams.FILL_PARENT,ViewGroup.LayoutParams.FILL_PARENT);
+		
+		mTextViewTitle = new TextView(mParentActivity);
+		LinearLayout.LayoutParams textviewParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+		      ViewGroup.LayoutParams.WRAP_CONTENT);
+		textviewParams.leftMargin = textviewParams.rightMargin = convertDipsToPixels(10);
+		mTextViewTitle.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
+		layout.addView(mTextViewTitle, textviewParams);
 
+		mInputEditText = new EditText(mParentActivity);
+		LinearLayout.LayoutParams editTextParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,
+		      ViewGroup.LayoutParams.WRAP_CONTENT);
+		editTextParams.leftMargin = editTextParams.rightMargin = convertDipsToPixels(10);
+		
+		layout.addView(mInputEditText, editTextParams);
+		
+		setContentView(layout, layoutParams);
+		
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         
 		mInputMode = mMsg.inputMode;
@@ -132,10 +164,7 @@ public class Cocos2dxEditBoxDialog extends Dialog {
 		mReturnType = mMsg.returnType;
 		mMaxLength = mMsg.maxLength;
 
-		mTextViewTitle = (TextView) findViewById(R.id.title);
 		mTextViewTitle.setText(mMsg.title);
-
-		mInputEditText = (EditText) findViewById(R.id.editbox);
 		mInputEditText.setText(mMsg.content);
 		
 		int oldImeOptions = mInputEditText.getImeOptions();
