@@ -215,6 +215,7 @@ public:
     CCCallFunc()
         : m_pSelectorTarget(NULL)
         , m_pCallFunc(NULL)
+		, m_nScriptHandler(0)
     {
     }
     virtual ~CCCallFunc()
@@ -233,7 +234,10 @@ public:
     */
     static CCCallFunc * create(CCObject* pSelectorTarget, SEL_CallFunc selector);
 
-    /** initializes the action with the callback 
+	/** creates the action with the handler script function */
+	static CCCallFunc * create(int nHandler);
+
+	/** initializes the action with the callback 
     
     typedef void (CCObject::*SEL_CallFunc)();
     */
@@ -262,6 +266,8 @@ public:
 protected:
     /** Target that will be called */
     CCObject*   m_pSelectorTarget;
+
+	int m_nScriptHandler;
 
     union
     {
@@ -292,6 +298,10 @@ public:
     typedef void (CCObject::*SEL_CallFuncN)(CCNode*);
     */
     static CCCallFuncN * create(CCObject* pSelectorTarget, SEL_CallFuncN selector);
+
+	/** creates the action with the handler script function */
+	static CCCallFuncN * create(int nHandler);
+
     /** initializes the action with the callback 
 
     typedef void (CCObject::*SEL_CallFuncN)(CCNode*);
