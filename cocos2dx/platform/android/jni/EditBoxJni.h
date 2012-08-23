@@ -24,18 +24,24 @@ THE SOFTWARE.
 #ifndef __EDITBOX_JNI_H__
 #define __EDITBOX_JNI_H__
 
+#include <string>
+
 typedef void (*EditBoxCallback)(const char* pText, void* ctx);
 
 extern "C"
 {
-    void showEditBoxActivityJni(const char* pszTitle,
-	                            const char* pszContent,
-	                            int nInputMode,
-	                            int nInputFlag,
-	                            int nReturnType,
-	                            int nMaxLength,
-	                            EditBoxCallback pfEditBoxCB,
-	                            void* ctx);
-}
+void showEditBoxActivityJni(const char* pszTitle,
+                            const char* pszContent,
+                            int nInputMode,
+                            int nInputFlag,
+                            int nReturnType,
+                            int nMaxLength,
+                            EditBoxCallback pfEditBoxCB,
+                            void* ctx);
+
+int getFontSizeAccordingHeightJni(int height);
+std::string getStringWithEllipsisJni(const char* pszText, float width, float fontSize);
+
+} // end of extern "C"
 
 #endif // __EDITBOX_JNI_H__

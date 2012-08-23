@@ -62,6 +62,7 @@ public:
     
 private:
     CCLabelTTF* m_pLabel;
+    CCLabelTTF* m_pLabelPlaceHolder;
     EditBoxInputMode    m_eEditBoxInputMode;
     EditBoxInputFlag    m_eEditBoxInputFlag;
     KeyboardReturnType  m_eKeyboardReturnType;
@@ -73,6 +74,7 @@ private:
     ccColor3B m_colPlaceHolder;
 
     int   m_nMaxLength;
+    CCSize m_EditSize;
 };
 
 

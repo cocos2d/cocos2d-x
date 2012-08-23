@@ -20,25 +20,4 @@
   	android:layout_margin="10dip"
   	android:inputType="text"
   />
-  	
-  <LinearLayout
-    android:id="@+id/LinearLayout01"
-    android:orientation= "horizontal"
-    android:layout_width="wrap_content" 
-    android:layout_height="wrap_content" 
-    android:layout_gravity="center_horizontal" 
-    android:layout_margin="10dip">
-	  <Button 
-	  	android:id="@+id/button_finish"
-	  	android:layout_width="130dip"
-	  	android:layout_height="wrap_content"
-	  	android:text="@string/editbox_ok"
-	  />
-	  <Button 
-	  	android:id="@+id/button_cancel" 
-	  	android:layout_width="130dip"
-	  	android:layout_height="wrap_content" 
-	  	android:text="@string/editbox_cancel"
-	  />
-  </LinearLayout>
 </LinearLayout>

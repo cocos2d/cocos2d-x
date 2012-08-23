@@ -23,6 +23,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 
 public class Cocos2dxEditBoxActivity extends Activity {
 
@@ -110,6 +111,10 @@ public class Cocos2dxEditBoxActivity extends Activity {
 	private int mReturnType = 0;
 	private int mMaxLength = -1;
 	
+	private int mInputFlagConstraints = 0x00000;
+	private int mInputModeContraints = 0x00000;
+	private boolean mIsMultiline = false;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -121,7 +126,7 @@ public class Cocos2dxEditBoxActivity extends Activity {
 		setContentView(view);
 
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		
+        
 		Bundle bundle = this.getIntent().getExtras();
 		mInputMode = bundle.getInt("editbox_input_mode");
 		mInputFlag = bundle.getInt("editbox_input_flag");
@@ -133,81 +138,107 @@ public class Cocos2dxEditBoxActivity extends Activity {
 
 		mInputEditText = (EditText) findViewById(R.id.editbox);
 		mInputEditText.setText(bundle.getString("editbox_content"));
-		mInputEditText.setImeOptions(EditorInfo.IME_FLAG_NO_EXTRACT_UI);
-		int inputType = InputType.TYPE_CLASS_TEXT;
+		
+		int oldImeOptions = mInputEditText.getImeOptions();
+		mInputEditText.setImeOptions(oldImeOptions | EditorInfo.IME_FLAG_NO_EXTRACT_UI);
+		oldImeOptions = mInputEditText.getImeOptions();
 		
 	    switch (mInputMode)
 	    {
+	    	case kEditBoxInputModeAny:
+	    		mInputModeContraints =
+				InputType.TYPE_CLASS_TEXT |
+				InputType.TYPE_TEXT_FLAG_MULTI_LINE;
+	    		break;
 	        case kEditBoxInputModeEmailAddr:
-	            
+	        	mInputModeContraints =
+				InputType.TYPE_CLASS_TEXT |
+				InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS;
 	            break;
 	        case kEditBoxInputModeNumeric:
-
+	        	mInputModeContraints =
+				InputType.TYPE_CLASS_NUMBER |
+				InputType.TYPE_NUMBER_FLAG_SIGNED;
 	            break;
 	        case kEditBoxInputModePhoneNumber:
-
+	        	mInputModeContraints = InputType.TYPE_CLASS_PHONE;
 	            break;
 	        case kEditBoxInputModeUrl:
-
+	        	mInputModeContraints =
+				InputType.TYPE_CLASS_TEXT |
+				InputType.TYPE_TEXT_VARIATION_URI;
 	            break;
 	        case kEditBoxInputModeDecimal:
-
+	        	mInputModeContraints =
+				InputType.TYPE_CLASS_NUMBER |
+				InputType.TYPE_NUMBER_FLAG_DECIMAL |
+				InputType.TYPE_NUMBER_FLAG_SIGNED;
 	            break;
 	        case kEditBoxInputModeSingleLine:
-
+	        	mInputModeContraints = InputType.TYPE_CLASS_TEXT;
 	            break;
 	        default:
 
 	            break;
 	    }
 	    
-		mInputEditText.setInputType(inputType);
+	    if ( mIsMultiline ) {
+			mInputModeContraints |= InputType.TYPE_TEXT_FLAG_MULTI_LINE;
+	    }
+	    
+	    mInputEditText.setInputType(mInputModeContraints | mInputFlagConstraints);
 		
 	    switch (mInputFlag)
 	    {
 	        case kEditBoxInputFlagPassword:
-
+	        	mInputFlagConstraints = InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD;
 	            break;
+	        case kEditBoxInputFlagSensitive:
+	        	mInputFlagConstraints = InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS;
+	        	break;
 	        case kEditBoxInputFlagInitialCapsWord:
-
+	        	mInputFlagConstraints = InputType.TYPE_TEXT_FLAG_CAP_WORDS;
 	            break;
 	        case kEditBoxInputFlagInitialCapsSentence:
-
+	        	mInputFlagConstraints = InputType.TYPE_TEXT_FLAG_CAP_SENTENCES;
 	            break;
 	        case kEditBoxInputFlagInitialCapsAllCharacters:
-
+	        	mInputFlagConstraints = InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS;
 	            break;
 	        default:
 	            break;
 	    }
-	    
+	    mInputEditText.setInputType(mInputFlagConstraints | mInputModeContraints);
 	    
 	    switch (mReturnType) {
 	        case kKeyboardReturnTypeDefault:
-
+	        	mInputEditText.setImeOptions(oldImeOptions | EditorInfo.IME_ACTION_NONE);
 	            break;
 	        case kKeyboardReturnTypeDone:
-
+	        	mInputEditText.setImeOptions(oldImeOptions | EditorInfo.IME_ACTION_DONE);
 	            break;
 	        case kKeyboardReturnTypeSend:
-
+	        	mInputEditText.setImeOptions(oldImeOptions | EditorInfo.IME_ACTION_SEND);
 	            break;
 	        case kKeyboardReturnTypeSearch:
-
+	        	mInputEditText.setImeOptions(oldImeOptions | EditorInfo.IME_ACTION_SEARCH);
 	            break;
 	        case kKeyboardReturnTypeGo:
-
+	        	mInputEditText.setImeOptions(oldImeOptions | EditorInfo.IME_ACTION_GO);
 	            break;
 	        default:
-
+	        	mInputEditText.setImeOptions(oldImeOptions | EditorInfo.IME_ACTION_NONE);
 	            break;
     	}
-//		mInputEditText.setFilters(
-//				new InputFilter[] {
-//						new InputFilter.LengthFilter(mLimit)
-//						}
-//				);
-/*
+	    
+	    if (mMaxLength > 0) {
+			mInputEditText.setFilters(
+					new InputFilter[] {
+							new InputFilter.LengthFilter(mMaxLength)
+							}
+					);
+	    }
+	    
 		Handler initHandler = new Handler();
 		initHandler.postDelayed(new Runnable() {
 			public void run() {
@@ -217,7 +248,34 @@ public class Cocos2dxEditBoxActivity extends Activity {
 				imm.showSoftInput(mInputEditText,InputMethodManager.SHOW_FORCED);
 			}
 		}, 200);
-*/
+		 
+		mInputEditText.setOnEditorActionListener(new OnEditorActionListener() {
+		     @Override
+		     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+		         boolean handled = false;
+
+	             if (   actionId == EditorInfo.IME_ACTION_SEND
+	        		 || actionId == EditorInfo.IME_ACTION_NONE
+	        		 || actionId == EditorInfo.IME_NULL
+	        		 || actionId == EditorInfo.IME_ACTION_GO
+	        		 || actionId == EditorInfo.IME_ACTION_SEARCH
+	        		 || actionId == EditorInfo.IME_ACTION_DONE    ) {
+		             // Send the user message
+					Intent intent = new Intent();
+					intent.setClass(Cocos2dxEditBoxActivity.this,
+							Cocos2dxEditBoxActivity.class);
+					Bundle bundle = new Bundle();
+					bundle.putString("editbox_content", mInputEditText.getText().toString());
+					intent.putExtras(bundle);
+					setResult(ID_EDITBOX_RESULT_OK, intent);
+					closeKeyboard();
+					finish();
+					handled = true;
+		         }
+		         return handled;
+		     }
+		 });
+		/*
 		final Button buttonFinish = (Button) findViewById(R.id.button_finish);
 		buttonFinish.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View v) {
@@ -244,7 +302,7 @@ public class Cocos2dxEditBoxActivity extends Activity {
 				finish();
 			}
 		});
-
+*/
 	}
 
 	private void closeKeyboard() {

@@ -43,80 +43,128 @@ static void* s_ctx = NULL;
 
 extern "C"
 {
-    //////////////////////////////////////////////////////////////////////////
-    // handle EditBox message
-    //////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
+// handle EditBox message
+//////////////////////////////////////////////////////////////////////////
 
 
 
-    void showEditBoxActivityJni(const char* pszTitle,
-                                const char* pszContent,
-                                int nInputMode,
-                                int nInputFlag,
-                                int nReturnType,
-                                int nMaxLength,
-                                EditBoxCallback pfEditBoxCB,
-                                void* ctx)
-    {
-        LOGD("showEditBoxActivityJni...");
+void showEditBoxActivityJni(const char* pszTitle,
+                            const char* pszContent,
+                            int nInputMode,
+                            int nInputFlag,
+                            int nReturnType,
+                            int nMaxLength,
+                            EditBoxCallback pfEditBoxCB,
+                            void* ctx)
+{
+    LOGD("showEditBoxActivityJni...");
 
-        if (pszContent == NULL) {
-            return;
-        }
-
-        s_pfEditBoxCB = pfEditBoxCB;
-        s_ctx = ctx;
-
-        JniMethodInfo t;
-        if (JniHelper::getStaticMethodInfo(t
-            , "org/cocos2dx/lib/Cocos2dxActivity"
-            , "showEditBoxActivity"
-            , "(Ljava/lang/String;Ljava/lang/String;IIII)V"))
-        {
-            jstring stringArg1;
-
-            if (!pszTitle)
-            {
-                stringArg1 = t.env->NewStringUTF("");
-            }
-            else
-            {
-                stringArg1 = t.env->NewStringUTF(pszTitle);
-            }
-
-            jstring stringArg2 = t.env->NewStringUTF(pszContent);
-
-            t.env->CallStaticVoidMethod(t.classID, t.methodID, stringArg1, stringArg2, nInputMode, nInputFlag, nReturnType, nMaxLength);
-
-            t.env->DeleteLocalRef(stringArg1);
-            t.env->DeleteLocalRef(stringArg2);
-            t.env->DeleteLocalRef(t.classID);
-        }
+    if (pszContent == NULL) {
+        return;
     }
 
-    void JNICALL Java_org_cocos2dx_lib_Cocos2dxActivity_nativeSetEditboxText(JNIEnv * env, jobject obj, jbyteArray text)
-    {
-        jsize  size = env->GetArrayLength(text);
+    s_pfEditBoxCB = pfEditBoxCB;
+    s_ctx = ctx;
 
-        if (size > 0)
+    JniMethodInfo t;
+    if (JniHelper::getStaticMethodInfo(t
+        , "org/cocos2dx/lib/Cocos2dxActivity"
+        , "showEditBoxActivity"
+        , "(Ljava/lang/String;Ljava/lang/String;IIII)V"))
+    {
+        jstring stringArg1;
+
+        if (!pszTitle)
         {
-            jbyte * data = (jbyte*)env->GetByteArrayElements(text, 0);
-            char* pBuf = (char*)malloc(size+1);
-            if (pBuf != NULL)
-            {
-                memcpy(pBuf, data, size);
-                pBuf[size] = '\0';
-                // pass data to editbox's delegate
-                if (s_pfEditBoxCB) s_pfEditBoxCB(pBuf, s_ctx);
-                free(pBuf);
-            }
-            env->ReleaseByteArrayElements(text, data, 0);
+            stringArg1 = t.env->NewStringUTF("");
         }
         else
         {
-            if (s_pfEditBoxCB) s_pfEditBoxCB("", s_ctx);
+            stringArg1 = t.env->NewStringUTF(pszTitle);
         }
+
+        jstring stringArg2 = t.env->NewStringUTF(pszContent);
+
+        t.env->CallStaticVoidMethod(t.classID, t.methodID, stringArg1, stringArg2, nInputMode, nInputFlag, nReturnType, nMaxLength);
+
+        t.env->DeleteLocalRef(stringArg1);
+        t.env->DeleteLocalRef(stringArg2);
+        t.env->DeleteLocalRef(t.classID);
+    }
+}
+
+void JNICALL Java_org_cocos2dx_lib_Cocos2dxActivity_nativeSetEditboxText(JNIEnv * env, jobject obj, jbyteArray text)
+{
+    jsize  size = env->GetArrayLength(text);
+
+    if (size > 0)
+    {
+        jbyte * data = (jbyte*)env->GetByteArrayElements(text, 0);
+        char* pBuf = (char*)malloc(size+1);
+        if (pBuf != NULL)
+        {
+            memcpy(pBuf, data, size);
+            pBuf[size] = '\0';
+            // pass data to editbox's delegate
+            if (s_pfEditBoxCB) s_pfEditBoxCB(pBuf, s_ctx);
+            free(pBuf);
+        }
+        env->ReleaseByteArrayElements(text, data, 0);
+    }
+    else
+    {
+        if (s_pfEditBoxCB) s_pfEditBoxCB("", s_ctx);
+    }
+}
+
+int getFontSizeAccordingHeightJni(int height)
+{
+    int ret = 0;
+    JniMethodInfo t;
+    if (JniHelper::getStaticMethodInfo(t
+        , "org/cocos2dx/lib/Cocos2dxBitmap"
+        , "getFontSizeAccordingHeight"
+        , "(I)I"))
+    {
+        ret = t.env->CallStaticIntMethod(t.classID, t.methodID, height);
+        t.env->DeleteLocalRef(t.classID);
     }
 
-
+    return ret;
 }
+
+std::string getStringWithEllipsisJni(const char* pszText, float width, float fontSize)
+{
+    std::string ret;
+    JniMethodInfo t;
+
+    if (JniHelper::getStaticMethodInfo(t
+        , "org/cocos2dx/lib/Cocos2dxBitmap"
+        , "getStringWithEllipsis"
+        , "(Ljava/lang/String;FF)Ljava/lang/String;"))
+    {
+        jstring stringArg1;
+
+        if (!pszText)
+        {
+            stringArg1 = t.env->NewStringUTF("");
+        }
+        else
+        {
+            stringArg1 = t.env->NewStringUTF(pszText);
+        }
+
+        jstring retFromJava = (jstring)t.env->CallStaticObjectMethod(t.classID, t.methodID, stringArg1, width, fontSize);
+        const char* str = t.env->GetStringUTFChars(retFromJava, 0);
+        ret = str;
+
+        t.env->ReleaseStringUTFChars(retFromJava, str);
+        t.env->DeleteLocalRef(stringArg1);
+        t.env->DeleteLocalRef(t.classID);
+    }
+    LOGD("getStringWithEllipsisJni 07");
+    return ret;
+}
+
+} // end of extern "C"
