@@ -59,7 +59,7 @@ extern "C"
     
     void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeOnPause()
     {
-        CCApplication::sharedApplication().applicationDidEnterBackground();
+        CCApplication::sharedApplication()->applicationDidEnterBackground();
         
         CCNotificationCenter::sharedNotificationCenter()->postNotification(EVENT_COME_TO_BACKGROUND, NULL);
     }
@@ -69,7 +69,7 @@ extern "C"
         // Shared OpenGL View instance doesn't exist yet when Activity.onResume is first called
         if (CCDirector::sharedDirector()->getOpenGLView())
         {
-            CCApplication::sharedApplication().applicationWillEnterForeground();
+            CCApplication::sharedApplication()->applicationWillEnterForeground();
         }
     }
 
