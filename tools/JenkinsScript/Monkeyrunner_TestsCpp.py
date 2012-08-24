@@ -16,11 +16,11 @@ else:
 
 # Installs the Android package. Notice that this method returns a boolean, so you can test
 # to see if the installation worked.
-#if device.installPackage('Tests-debug.apk'):
-#    print "Install success!"
-#else:
-#    print "Install failed,please make sure you have put apk in the right places"
-#    sys.exit(1)
+if device.installPackage(sys.argv[1]):
+    print "Install success!"
+else:
+    print "Install failed,please make sure you have put apk in the right places"
+    sys.exit(1)
 
 # sets a variable with the package's internal name
 package = 'org.cocos2dx.testcpp'
