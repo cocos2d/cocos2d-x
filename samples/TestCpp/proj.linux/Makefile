@@ -153,7 +153,7 @@ SHAREDLIBS += -Wl,-rpath,../../../cocos2dx/platform/third_party/linux/glew-1.7.0
 SHAREDLIBS += -L../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib -lGLEW
 
 SHAREDLIBS += -Wl,-rpath,$(STATICLIBS_DIR)
-SHAREDLIBS += -L$(STATICLIBS_DIR) -lcurl
+SHAREDLIBS += -lcurl
 
 
 ####### Build rules
