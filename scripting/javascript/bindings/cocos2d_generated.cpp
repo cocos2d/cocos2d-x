@@ -721,13 +721,13 @@ JSBool S_CCLayer::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool s
 	if (!cobj) return JS_FALSE;
 	switch(propId) {
 	case kIsTouchEnabled:
-		do { JSBool tmp; JS_ValueToBoolean(cx, *val, &tmp); cobj->setTouchEnabled(tmp); } while (0);
+		do { JSBool tmp; JS_ValueToBoolean(cx, *val, &tmp); cobj->setTouchEnabled(tmp!=0); } while (0);
 		break;
 	case kIsAccelerometerEnabled:
-		do { JSBool tmp; JS_ValueToBoolean(cx, *val, &tmp); cobj->setAccelerometerEnabled(tmp); } while (0);
+		do { JSBool tmp; JS_ValueToBoolean(cx, *val, &tmp); cobj->setAccelerometerEnabled(tmp!=0); } while (0);
 		break;
 	case kIsKeypadEnabled:
-		do { JSBool tmp; JS_ValueToBoolean(cx, *val, &tmp); cobj->setKeypadEnabled(tmp); } while (0);
+		do { JSBool tmp; JS_ValueToBoolean(cx, *val, &tmp); cobj->setKeypadEnabled(tmp!=0); } while (0);
 		break;
 	default:
 		break;
@@ -837,7 +837,7 @@ bool S_CCLayer::ccTouchBegan(CCTouch* pTouch, CCEvent* pEvent) {
 			JS_CallFunctionValue(cx, m_jsobj, fval, 1, &arg, &rval);
 			JSBool ret = false;
 			JS_ValueToBoolean(cx, rval, &ret);
-			return ret;
+			return ret!=0;
 		}
 	}
 	return false;
@@ -1053,7 +1053,7 @@ JSBool S_CCLayer::jsregisterScriptTouchHandler(JSContext *cx, uint32_t argc, jsv
 		int arg2;
 		JSBool arg3;
 		JS_ConvertArguments(cx, 4, JS_ARGV(cx, vp), "ibib", &arg0, &arg1, &arg2, &arg3);
-		self->registerScriptTouchHandler(arg0, arg1, arg2, arg3);
+		self->registerScriptTouchHandler(arg0, arg1!=0, arg2, arg3!=0);
 		
 		JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 		return JS_TRUE;
@@ -1837,7 +1837,7 @@ JSBool S_CCLabelBMFont::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JS
 		} while (0);
 		break;
 	case kIsOpacityModifyRGB:
-		do { JSBool tmp; JS_ValueToBoolean(cx, *val, &tmp); cobj->setOpacityModifyRGB(tmp); } while (0);
+		do { JSBool tmp; JS_ValueToBoolean(cx, *val, &tmp); cobj->setOpacityModifyRGB(tmp!=0); } while (0);
 		break;
 	case kString:
 				// don't know what this is (js ~> c)
@@ -2367,7 +2367,7 @@ JSBool S_CCCamera::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool 
 	if (!cobj) return JS_FALSE;
 	switch(propId) {
 	case kDirty:
-		do { JSBool tmp; JS_ValueToBoolean(cx, *val, &tmp); cobj->setDirty(tmp); } while (0);
+		do { JSBool tmp; JS_ValueToBoolean(cx, *val, &tmp); cobj->setDirty(tmp!=0); } while (0);
 		break;
 	default:
 		break;
@@ -4205,7 +4205,7 @@ JSBool S_CCParallaxNode::jsremoveChild(JSContext *cx, uint32_t argc, jsval *vp) 
 		JSBool arg1;
 		JS_ConvertArguments(cx, 2, JS_ARGV(cx, vp), "ob", &arg0, &arg1);
 		CCNode* narg0; JSGET_PTRSHELL(CCNode, narg0, arg0);
-		self->removeChild(narg0, arg1);
+		self->removeChild(narg0, arg1!=0);
 		
 		JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 		return JS_TRUE;
@@ -4220,7 +4220,7 @@ JSBool S_CCParallaxNode::jsremoveAllChildrenWithCleanup(JSContext *cx, uint32_t 
 	if (argc == 1) {
 		JSBool arg0;
 		JS_ConvertArguments(cx, 1, JS_ARGV(cx, vp), "b", &arg0);
-		self->removeAllChildrenWithCleanup(arg0);
+		self->removeAllChildrenWithCleanup(arg0!=0);
 		
 		JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 		return JS_TRUE;
@@ -5374,7 +5374,7 @@ JSBool S_CCTexture2D::jsPVRImagesHavePremultipliedAlpha(JSContext *cx, uint32_t 
 	if (argc == 1) {
 		JSBool arg0;
 		JS_ConvertArguments(cx, 1, JS_ARGV(cx, vp), "b", &arg0);
-		CCTexture2D::PVRImagesHavePremultipliedAlpha(arg0);
+		CCTexture2D::PVRImagesHavePremultipliedAlpha(arg0!=0);
 		
 		JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 		return JS_TRUE;
@@ -5485,7 +5485,7 @@ JSBool S_CCSpriteFrame::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JS
 		} while (0);
 		break;
 	case kRotated:
-		do { JSBool tmp; JS_ValueToBoolean(cx, *val, &tmp); cobj->setRotated(tmp); } while (0);
+		do { JSBool tmp; JS_ValueToBoolean(cx, *val, &tmp); cobj->setRotated(tmp!=0); } while (0);
 		break;
 	case kRect:
 		do {
@@ -6971,10 +6971,10 @@ JSBool S_CCParticleSystem::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id,
 				// don't know what this is (js ~> c)
 		break;
 	case kIsBlendAdditive:
-		do { JSBool tmp; JS_ValueToBoolean(cx, *val, &tmp); cobj->setBlendAdditive(tmp); } while (0);
+		do { JSBool tmp; JS_ValueToBoolean(cx, *val, &tmp); cobj->setBlendAdditive(tmp!=0); } while (0);
 		break;
 	case kIsAutoRemoveOnFinish:
-		do { JSBool tmp; JS_ValueToBoolean(cx, *val, &tmp); cobj->setAutoRemoveOnFinish(tmp); } while (0);
+		do { JSBool tmp; JS_ValueToBoolean(cx, *val, &tmp); cobj->setAutoRemoveOnFinish(tmp!=0); } while (0);
 		break;
 	case kEmitterMode:
 		do { uint32_t tmp; JS_ValueToECMAUint32(cx, *val, &tmp); cobj->setEmitterMode(tmp); } while (0);
@@ -10322,7 +10322,7 @@ JSBool S_CCShakyTiles3D::jsinitWithRange(JSContext *cx, uint32_t argc, jsval *vp
 		double arg3;
 		JS_ConvertArguments(cx, 4, JS_ARGV(cx, vp), "ibod", &arg0, &arg1, &arg2, &arg3);
 		ccGridSize* narg2; JSGET_PTRSHELL(ccGridSize, narg2, arg2);
-		bool ret = self->initWithRange(arg0, arg1, *narg2, arg3);
+		bool ret = self->initWithRange(arg0, arg1!=0, *narg2, arg3);
 		JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret));
 		
 		return JS_TRUE;
@@ -10353,7 +10353,7 @@ JSBool S_CCShakyTiles3D::jsactionWithRange(JSContext *cx, uint32_t argc, jsval *
 		double arg3;
 		JS_ConvertArguments(cx, 4, JS_ARGV(cx, vp), "ibod", &arg0, &arg1, &arg2, &arg3);
 		ccGridSize* narg2; JSGET_PTRSHELL(ccGridSize, narg2, arg2);
-		CCShakyTiles3D* ret = CCShakyTiles3D::actionWithRange(arg0, arg1, *narg2, arg3);
+		CCShakyTiles3D* ret = CCShakyTiles3D::actionWithRange(arg0, arg1!=0, *narg2, arg3);
 		if (ret == NULL) {
 			JS_SET_RVAL(cx, vp, JSVAL_NULL);
 			return JS_TRUE;
@@ -10824,7 +10824,7 @@ JSBool S_CCAtlasNode::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBo
 		} while (0);
 		break;
 	case kIsOpacityModifyRGB:
-		do { JSBool tmp; JS_ValueToBoolean(cx, *val, &tmp); cobj->setOpacityModifyRGB(tmp); } while (0);
+		do { JSBool tmp; JS_ValueToBoolean(cx, *val, &tmp); cobj->setOpacityModifyRGB(tmp!=0); } while (0);
 		break;
 	case kBlendFunc:
 				// don't know what this is (js ~> c)
@@ -11090,7 +11090,7 @@ JSBool S_CCWaves::jsinitWithWaves(JSContext *cx, uint32_t argc, jsval *vp) {
 		double arg5;
 		JS_ConvertArguments(cx, 6, JS_ARGV(cx, vp), "idbbod", &arg0, &arg1, &arg2, &arg3, &arg4, &arg5);
 		ccGridSize* narg4; JSGET_PTRSHELL(ccGridSize, narg4, arg4);
-		bool ret = self->initWithWaves(arg0, arg1, arg2, arg3, *narg4, arg5);
+		bool ret = self->initWithWaves(arg0, arg1, arg2!=0, arg3!=0, *narg4, arg5);
 		JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret));
 		
 		return JS_TRUE;
@@ -11123,7 +11123,7 @@ JSBool S_CCWaves::jsactionWithWaves(JSContext *cx, uint32_t argc, jsval *vp) {
 		double arg5;
 		JS_ConvertArguments(cx, 6, JS_ARGV(cx, vp), "idbbod", &arg0, &arg1, &arg2, &arg3, &arg4, &arg5);
 		ccGridSize* narg4; JSGET_PTRSHELL(ccGridSize, narg4, arg4);
-		CCWaves* ret = CCWaves::actionWithWaves(arg0, arg1, arg2, arg3, *narg4, arg5);
+		CCWaves* ret = CCWaves::actionWithWaves(arg0, arg1, arg2!=0, arg3!=0, *narg4, arg5);
 		if (ret == NULL) {
 			JS_SET_RVAL(cx, vp, JSVAL_NULL);
 			return JS_TRUE;
@@ -11971,7 +11971,7 @@ JSBool S_CCShatteredTiles3D::jsinitWithRange(JSContext *cx, uint32_t argc, jsval
 		double arg3;
 		JS_ConvertArguments(cx, 4, JS_ARGV(cx, vp), "ibod", &arg0, &arg1, &arg2, &arg3);
 		ccGridSize* narg2; JSGET_PTRSHELL(ccGridSize, narg2, arg2);
-		bool ret = self->initWithRange(arg0, arg1, *narg2, arg3);
+		bool ret = self->initWithRange(arg0, arg1!=0, *narg2, arg3);
 		JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret));
 		
 		return JS_TRUE;
@@ -12002,7 +12002,7 @@ JSBool S_CCShatteredTiles3D::jsactionWithRange(JSContext *cx, uint32_t argc, jsv
 		double arg3;
 		JS_ConvertArguments(cx, 4, JS_ARGV(cx, vp), "ibod", &arg0, &arg1, &arg2, &arg3);
 		ccGridSize* narg2; JSGET_PTRSHELL(ccGridSize, narg2, arg2);
-		CCShatteredTiles3D* ret = CCShatteredTiles3D::actionWithRange(arg0, arg1, *narg2, arg3);
+		CCShatteredTiles3D* ret = CCShatteredTiles3D::actionWithRange(arg0, arg1!=0, *narg2, arg3);
 		if (ret == NULL) {
 			JS_SET_RVAL(cx, vp, JSVAL_NULL);
 			return JS_TRUE;
@@ -13154,7 +13154,7 @@ JSBool S_CCLayerGradient::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, 
 		} while (0);
 		break;
 	case kIsCompressedInterpolation:
-		do { JSBool tmp; JS_ValueToBoolean(cx, *val, &tmp); cobj->setCompressedInterpolation(tmp); } while (0);
+		do { JSBool tmp; JS_ValueToBoolean(cx, *val, &tmp); cobj->setCompressedInterpolation(tmp!=0); } while (0);
 		break;
 	default:
 		break;
@@ -13326,7 +13326,7 @@ JSBool S_CCFlipX::jsactionWithFlipX(JSContext *cx, uint32_t argc, jsval *vp) {
 	if (argc == 1) {
 		JSBool arg0;
 		JS_ConvertArguments(cx, 1, JS_ARGV(cx, vp), "b", &arg0);
-		CCFlipX* ret = CCFlipX::actionWithFlipX(arg0);
+		CCFlipX* ret = CCFlipX::actionWithFlipX(arg0!=0);
 		if (ret == NULL) {
 			JS_SET_RVAL(cx, vp, JSVAL_NULL);
 			return JS_TRUE;
@@ -13352,7 +13352,7 @@ JSBool S_CCFlipX::jsinitWithFlipX(JSContext *cx, uint32_t argc, jsval *vp) {
 	if (argc == 1) {
 		JSBool arg0;
 		JS_ConvertArguments(cx, 1, JS_ARGV(cx, vp), "b", &arg0);
-		bool ret = self->initWithFlipX(arg0);
+		bool ret = self->initWithFlipX(arg0!=0);
 		JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret));
 		
 		return JS_TRUE;
@@ -13813,7 +13813,7 @@ JSBool S_CCFlipY::jsactionWithFlipY(JSContext *cx, uint32_t argc, jsval *vp) {
 	if (argc == 1) {
 		JSBool arg0;
 		JS_ConvertArguments(cx, 1, JS_ARGV(cx, vp), "b", &arg0);
-		CCFlipY* ret = CCFlipY::actionWithFlipY(arg0);
+		CCFlipY* ret = CCFlipY::actionWithFlipY(arg0!=0);
 		if (ret == NULL) {
 			JS_SET_RVAL(cx, vp, JSVAL_NULL);
 			return JS_TRUE;
@@ -13839,7 +13839,7 @@ JSBool S_CCFlipY::jsinitWithFlipY(JSContext *cx, uint32_t argc, jsval *vp) {
 	if (argc == 1) {
 		JSBool arg0;
 		JS_ConvertArguments(cx, 1, JS_ARGV(cx, vp), "b", &arg0);
-		bool ret = self->initWithFlipY(arg0);
+		bool ret = self->initWithFlipY(arg0!=0);
 		JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret));
 		
 		return JS_TRUE;
@@ -15864,7 +15864,7 @@ JSBool S_CCNode::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool st
 		do { double tmp; JS_ValueToNumber(cx, *val, &tmp); cobj->setSkewY(tmp); } while (0);
 		break;
 	case kIsVisible:
-		do { JSBool tmp; JS_ValueToBoolean(cx, *val, &tmp); cobj->setVisible(tmp); } while (0);
+		do { JSBool tmp; JS_ValueToBoolean(cx, *val, &tmp); cobj->setVisible(tmp!=0); } while (0);
 		break;
 	case kAnchorPoint:
 		do {
@@ -15885,7 +15885,7 @@ JSBool S_CCNode::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool st
 		} while (0);
 		break;
 	case kIsIgnoreAnchorPointForPosition:
-		do { JSBool tmp; JS_ValueToBoolean(cx, *val, &tmp); cobj->ignoreAnchorPointForPosition(tmp); } while (0);
+		do { JSBool tmp; JS_ValueToBoolean(cx, *val, &tmp); cobj->ignoreAnchorPointForPosition(tmp!=0); } while (0);
 		break;
 	case kTag:
 		do { uint32_t tmp; JS_ValueToECMAUint32(cx, *val, &tmp); cobj->setTag(tmp); } while (0);
@@ -16071,7 +16071,7 @@ JSBool S_CCNode::jsremoveFromParentAndCleanup(JSContext *cx, uint32_t argc, jsva
 	if (argc == 1) {
 		JSBool arg0;
 		JS_ConvertArguments(cx, 1, JS_ARGV(cx, vp), "b", &arg0);
-		self->removeFromParentAndCleanup(arg0);
+		self->removeFromParentAndCleanup(arg0!=0);
 		
 		JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 		return JS_TRUE;
@@ -16088,7 +16088,7 @@ JSBool S_CCNode::jsremoveChild(JSContext *cx, uint32_t argc, jsval *vp) {
 		JSBool arg1;
 		JS_ConvertArguments(cx, 2, JS_ARGV(cx, vp), "ob", &arg0, &arg1);
 		CCNode* narg0; JSGET_PTRSHELL(CCNode, narg0, arg0);
-		self->removeChild(narg0, arg1);
+		self->removeChild(narg0, arg1!=0);
 		
 		JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 		return JS_TRUE;
@@ -16104,7 +16104,7 @@ JSBool S_CCNode::jsremoveChildByTag(JSContext *cx, uint32_t argc, jsval *vp) {
 		int arg0;
 		JSBool arg1;
 		JS_ConvertArguments(cx, 2, JS_ARGV(cx, vp), "ib", &arg0, &arg1);
-		self->removeChildByTag(arg0, arg1);
+		self->removeChildByTag(arg0, arg1!=0);
 		
 		JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 		return JS_TRUE;
@@ -16119,7 +16119,7 @@ JSBool S_CCNode::jsremoveAllChildrenWithCleanup(JSContext *cx, uint32_t argc, js
 	if (argc == 1) {
 		JSBool arg0;
 		JS_ConvertArguments(cx, 1, JS_ARGV(cx, vp), "b", &arg0);
-		self->removeAllChildrenWithCleanup(arg0);
+		self->removeAllChildrenWithCleanup(arg0!=0);
 		
 		JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 		return JS_TRUE;
@@ -17361,7 +17361,7 @@ JSBool S_CCTransitionPageTurn::jstransitionWithDuration(JSContext *cx, uint32_t 
 		JSBool arg2;
 		JS_ConvertArguments(cx, 3, JS_ARGV(cx, vp), "dob", &arg0, &arg1, &arg2);
 		CCScene* narg1; JSGET_PTRSHELL(CCScene, narg1, arg1);
-		CCTransitionPageTurn* ret = CCTransitionPageTurn::transitionWithDuration(arg0, narg1, arg2);
+		CCTransitionPageTurn* ret = CCTransitionPageTurn::transitionWithDuration(arg0, narg1, arg2!=0);
 		if (ret == NULL) {
 			JS_SET_RVAL(cx, vp, JSVAL_NULL);
 			return JS_TRUE;
@@ -17390,7 +17390,7 @@ JSBool S_CCTransitionPageTurn::jsinitWithDuration(JSContext *cx, uint32_t argc, 
 		JSBool arg2;
 		JS_ConvertArguments(cx, 3, JS_ARGV(cx, vp), "dob", &arg0, &arg1, &arg2);
 		CCScene* narg1; JSGET_PTRSHELL(CCScene, narg1, arg1);
-		bool ret = self->initWithDuration(arg0, narg1, arg2);
+		bool ret = self->initWithDuration(arg0, narg1, arg2!=0);
 		JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret));
 		
 		return JS_TRUE;
@@ -17904,10 +17904,10 @@ JSBool S_CCDirector::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBoo
 	if (!cobj) return JS_FALSE;
 	switch(propId) {
 	case kDisplayStats:
-		do { JSBool tmp; JS_ValueToBoolean(cx, *val, &tmp); cobj->setDisplayStats(tmp); } while (0);
+		do { JSBool tmp; JS_ValueToBoolean(cx, *val, &tmp); cobj->setDisplayStats(tmp!=0); } while (0);
 		break;
 	case kNextDeltaTimeZero:
-		do { JSBool tmp; JS_ValueToBoolean(cx, *val, &tmp); cobj->setNextDeltaTimeZero(tmp); } while (0);
+		do { JSBool tmp; JS_ValueToBoolean(cx, *val, &tmp); cobj->setNextDeltaTimeZero(tmp!=0); } while (0);
 		break;
 	case kContentScaleFactor:
 		do { double tmp; JS_ValueToNumber(cx, *val, &tmp); cobj->setContentScaleFactor(tmp); } while (0);
@@ -18329,7 +18329,7 @@ JSBool S_CCDirector::jsenableRetinaDisplay(JSContext *cx, uint32_t argc, jsval *
 	if (argc == 1) {
 		JSBool arg0;
 		JS_ConvertArguments(cx, 1, JS_ARGV(cx, vp), "b", &arg0);
-		bool ret = self->enableRetinaDisplay(arg0);
+		bool ret = self->enableRetinaDisplay(arg0!=0);
 		JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret));
 		
 		return JS_TRUE;
@@ -20011,7 +20011,7 @@ JSBool S_CCMenuItem::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBoo
 	if (!cobj) return JS_FALSE;
 	switch(propId) {
 	case kIsEnabled:
-		do { JSBool tmp; JS_ValueToBoolean(cx, *val, &tmp); cobj->setEnabled(tmp); } while (0);
+		do { JSBool tmp; JS_ValueToBoolean(cx, *val, &tmp); cobj->setEnabled(tmp!=0); } while (0);
 		break;
 	default:
 		break;
@@ -21337,7 +21337,7 @@ JSBool S_CCShaky3D::jsinitWithRange(JSContext *cx, uint32_t argc, jsval *vp) {
 		double arg3;
 		JS_ConvertArguments(cx, 4, JS_ARGV(cx, vp), "ibod", &arg0, &arg1, &arg2, &arg3);
 		ccGridSize* narg2; JSGET_PTRSHELL(ccGridSize, narg2, arg2);
-		bool ret = self->initWithRange(arg0, arg1, *narg2, arg3);
+		bool ret = self->initWithRange(arg0, arg1!=0, *narg2, arg3);
 		JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret));
 		
 		return JS_TRUE;
@@ -21368,7 +21368,7 @@ JSBool S_CCShaky3D::jsactionWithRange(JSContext *cx, uint32_t argc, jsval *vp) {
 		double arg3;
 		JS_ConvertArguments(cx, 4, JS_ARGV(cx, vp), "ibod", &arg0, &arg1, &arg2, &arg3);
 		ccGridSize* narg2; JSGET_PTRSHELL(ccGridSize, narg2, arg2);
-		CCShaky3D* ret = CCShaky3D::actionWithRange(arg0, arg1, *narg2, arg3);
+		CCShaky3D* ret = CCShaky3D::actionWithRange(arg0, arg1!=0, *narg2, arg3);
 		if (ret == NULL) {
 			JS_SET_RVAL(cx, vp, JSVAL_NULL);
 			return JS_TRUE;
@@ -24952,7 +24952,7 @@ JSBool S_CCUserDefault::jsgetBoolForKey(JSContext *cx, uint32_t argc, jsval *vp)
 		JSBool arg1;
 		JS_ConvertArguments(cx, 2, JS_ARGV(cx, vp), "Sb", &arg0, &arg1);
 		char *narg0 = JS_EncodeString(cx, arg0);
-		bool ret = self->getBoolForKey(narg0, arg1);
+		bool ret = self->getBoolForKey(narg0, arg1!=0);
 		JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret));
 		
 		return JS_TRUE;
@@ -25020,7 +25020,7 @@ JSBool S_CCUserDefault::jssetBoolForKey(JSContext *cx, uint32_t argc, jsval *vp)
 		JSBool arg1;
 		JS_ConvertArguments(cx, 2, JS_ARGV(cx, vp), "Sb", &arg0, &arg1);
 		char *narg0 = JS_EncodeString(cx, arg0);
-		self->setBoolForKey(narg0, arg1);
+		self->setBoolForKey(narg0, arg1!=0);
 		
 		JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 		return JS_TRUE;
@@ -26066,7 +26066,7 @@ JSBool S_CCSprite::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool 
 		do { uint32_t tmp; JS_ValueToECMAUint32(cx, *val, &tmp); cobj->setAtlasIndex(tmp); } while (0);
 		break;
 	case kDirty:
-		do { JSBool tmp; JS_ValueToBoolean(cx, *val, &tmp); cobj->setDirty(tmp); } while (0);
+		do { JSBool tmp; JS_ValueToBoolean(cx, *val, &tmp); cobj->setDirty(tmp!=0); } while (0);
 		break;
 	case kBlendFunc:
 				// don't know what this is (js ~> c)
@@ -26078,10 +26078,10 @@ JSBool S_CCSprite::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool 
 		} while (0);
 		break;
 	case kFlipX:
-		do { JSBool tmp; JS_ValueToBoolean(cx, *val, &tmp); cobj->setFlipX(tmp); } while (0);
+		do { JSBool tmp; JS_ValueToBoolean(cx, *val, &tmp); cobj->setFlipX(tmp!=0); } while (0);
 		break;
 	case kFlipY:
-		do { JSBool tmp; JS_ValueToBoolean(cx, *val, &tmp); cobj->setFlipY(tmp); } while (0);
+		do { JSBool tmp; JS_ValueToBoolean(cx, *val, &tmp); cobj->setFlipY(tmp!=0); } while (0);
 		break;
 	case kHonorParentTransform:
 				// don't know what this is (js ~> c)
@@ -26321,7 +26321,7 @@ JSBool S_CCSprite::jsremoveChild(JSContext *cx, uint32_t argc, jsval *vp) {
 		JSBool arg1;
 		JS_ConvertArguments(cx, 2, JS_ARGV(cx, vp), "ob", &arg0, &arg1);
 		CCNode* narg0; JSGET_PTRSHELL(CCNode, narg0, arg0);
-		self->removeChild(narg0, arg1);
+		self->removeChild(narg0, arg1!=0);
 		
 		JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 		return JS_TRUE;
@@ -26336,7 +26336,7 @@ JSBool S_CCSprite::jsremoveAllChildrenWithCleanup(JSContext *cx, uint32_t argc, 
 	if (argc == 1) {
 		JSBool arg0;
 		JS_ConvertArguments(cx, 1, JS_ARGV(cx, vp), "b", &arg0);
-		self->removeAllChildrenWithCleanup(arg0);
+		self->removeAllChildrenWithCleanup(arg0!=0);
 		
 		JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 		return JS_TRUE;
@@ -27086,7 +27086,7 @@ JSBool S_CCSpriteBatchNode::jsremoveChildAtIndex(JSContext *cx, uint32_t argc, j
 		unsigned int arg0;
 		JSBool arg1;
 		JS_ConvertArguments(cx, 2, JS_ARGV(cx, vp), "ib", &arg0, &arg1);
-		self->removeChildAtIndex(arg0, arg1);
+		self->removeChildAtIndex(arg0, arg1!=0);
 		
 		JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 		return JS_TRUE;
@@ -27232,7 +27232,7 @@ JSBool S_CCSpriteBatchNode::jsremoveChild(JSContext *cx, uint32_t argc, jsval *v
 		JSBool arg1;
 		JS_ConvertArguments(cx, 2, JS_ARGV(cx, vp), "ob", &arg0, &arg1);
 		CCNode* narg0; JSGET_PTRSHELL(CCNode, narg0, arg0);
-		self->removeChild(narg0, arg1);
+		self->removeChild(narg0, arg1!=0);
 		
 		JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 		return JS_TRUE;
@@ -27247,7 +27247,7 @@ JSBool S_CCSpriteBatchNode::jsremoveAllChildrenWithCleanup(JSContext *cx, uint32
 	if (argc == 1) {
 		JSBool arg0;
 		JS_ConvertArguments(cx, 1, JS_ARGV(cx, vp), "b", &arg0);
-		self->removeAllChildrenWithCleanup(arg0);
+		self->removeAllChildrenWithCleanup(arg0!=0);
 		
 		JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 		return JS_TRUE;
