@@ -35,7 +35,6 @@ STATICLIBS_DIR = ../../../cocos2dx/platform/third_party/linux/libraries
 endif
 STATICLIBS = 
 STATICLIBS = $(STATICLIBS_DIR)/libfreetype.a \
-				$(STATICLIBS_DIR)/libcurl.a \
 				$(STATICLIBS_DIR)/libxml2.a \
 				$(STATICLIBS_DIR)/libpng.a \
 				$(STATICLIBS_DIR)/libjpeg.a \
@@ -44,7 +43,7 @@ STATICLIBS = $(STATICLIBS_DIR)/libfreetype.a \
 
 
 SHAREDLIBS = -L../../../lib/linux/Debug -lcocos2d -lrt -lz -lcocosdenshion -Wl,-rpath,../../../lib/linux/Debug/ 
-SHAREDLIBS += -lglfw
+SHAREDLIBS += -lglfw -lcurl
 SHAREDLIBS += -Wl,-rpath,../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib
 SHAREDLIBS += -L../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib -lGLEW
 
