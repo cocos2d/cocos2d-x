@@ -88,7 +88,7 @@
     </Midl>
     <PreBuildEvent>
       <Command>xcopy $(SolutionDir)samples\TestCpp\Resources $(SolutionDir)samples\TestLua\Resources /e /Y</Command>
-      <Message>copy files from TestCpp to TestLua</Message>
+      <Message>copy rescources files from TestCpp to TestLua</Message>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
