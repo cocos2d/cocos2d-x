@@ -54,9 +54,9 @@ function ConfigureProject()
     dim szSrcClass, szSrcQnx, szSrcResource
     dim szDesClass, szDesQnx, szDesResource
     
-    szSrcClass = "samples\HelloCpp\Classes"
-    szSrcQnx = "samples\HelloCpp\proj.blackberry"
-    szSrcResource = "samples\HelloCpp\Resources"
+    szSrcClass = "template\blackberry\Classes"
+    szSrcQnx = "template\blackberry\proj.blackberry"
+    szSrcResource = "template\blackberry\Resources"
     
     szDesClass = szProjectName+"\Classes"
     szDesQnx = szProjectName+"\proj.blackberry"
@@ -66,9 +66,12 @@ function ConfigureProject()
     call CopyFolder(szSrcQnx, szDesQnx)
     call CopyFolder(szSrcResource, szDesResource)
     
-    call ReplaceFileContent(szProjectName+"\proj.blackberry\bar-descriptor.xml", "HelloCpp", szProjectName)
-    call ReplaceFileContent(szProjectName+"\proj.blackberry\.project", "HelloCpp", szProjectName)
-    call ReplaceFileContent(szProjectName+"\proj.blackberry\.cproject", "HelloCpp", szProjectName)
+    call ReplaceFileContent(szProjectName+"\proj.blackberry\bar-descriptor.xml", "BBTemplateProject", szProjectName)
+    call ReplaceFileContent(szProjectName+"\proj.blackberry\bar-descriptor.xml", "../../../..", "../../..")
+    call ReplaceFileContent(szProjectName+"\proj.blackberry\.project", "BBTemplateProject", szProjectName)
+    call ReplaceFileContent(szProjectName+"\proj.blackberry\.cproject", "BBTemplateProject", szProjectName)
+    call ReplaceFileContent(szProjectName+"\proj.blackberry\.cproject", "../../../..", "../../..")
+   
 
     call msgbox("Congratulations, the '"+szProjectName+"' project have been created successfully, please use QNX IDE to import the project!", 0, szPrompt)
 
