@@ -16,17 +16,4 @@ class CCScheduler : public CCObject
 
     unsigned int scheduleScriptFunc(LUA_FUNCTION funcID, float fInterval, bool bPaused);
     void unscheduleScriptEntry(unsigned int uScheduleScriptEntryID);
-
-    void scheduleUpdateForTarget(CCObject *pTarget, int nPriority, bool bPaused);
-    void unscheduleUpdateForTarget(CCObject *pTarget);
-
-    void unscheduleAllSelectorsForTarget(CCObject *pTarget);
-    void unscheduleAllSelectors(void);
-
-	void unscheduleAllSelectorsWithMinPriority(int nMinPriority);
-
-    void pauseTarget(CCObject *pTarget);
-    void resumeTarget(CCObject *pTarget);
-    bool isTargetPaused(CCObject *pTarget);
-
 };

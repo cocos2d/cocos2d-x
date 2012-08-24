@@ -109,7 +109,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 @property(readwrite, copy) UITextRange *selectedTextRange;
 @property(nonatomic, readonly) id<UITextInputTokenizer> tokenizer;
 @property(nonatomic, readonly, getter = isKeyboardShown) BOOL isKeyboardShown;
-@property(nonatomic, retain) NSNotification* keyboardShowNotification;
+@property(nonatomic, copy) NSNotification* keyboardShowNotification;
 /** creates an initializes an EAGLView with a frame and 0-bit depth buffer, and a RGB565 color buffer */
 + (id) viewWithFrame:(CGRect)frame;
 /** creates an initializes an EAGLView with a frame, a color buffer format, and 0-bit depth buffer */
