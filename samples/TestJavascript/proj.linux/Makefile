@@ -56,8 +56,8 @@ SHAREDLIBS = -L$(SHAREDLIBS_DIR) -lfmodex
 endif
 
 SHAREDLIBS += -L../../../lib/linux/Debug -lcocos2d -lrt -lz -lcocosdenshion -Wl,-rpath,../../../lib/linux/Debug/ 
-SHAREDLIBS += -lglfw
-#SHAREDLIBS += -lGLEW
+SHAREDLIBS += -lglfw -lcurl
+#SHAREDLIBS += -lGLEW 
 SHAREDLIBS += -Wl,-rpath,$(SHAREDLIBS_DIR)
 SHAREDLIBS += -Wl,-rpath,../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib 
 SHAREDLIBS += -L../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib -lGLEW
