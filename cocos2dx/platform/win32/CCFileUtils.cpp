@@ -37,17 +37,11 @@ static void _CheckPath()
 {
     if (! s_pszResourcePath[0])
     {
-        WCHAR  wszPath[MAX_PATH];
+        WCHAR  wszPath[MAX_PATH] = {0};
         int nNum = WideCharToMultiByte(CP_ACP, 0, wszPath, 
             GetCurrentDirectoryW(sizeof(wszPath), wszPath), 
             s_pszResourcePath, MAX_PATH, NULL, NULL);
-        s_pszResourcePath[nNum] = '\\';
-        const char* resDir = CCFileUtils::sharedFileUtils()->getResourceDirectory();
-        if (resDir != NULL)
-        {
-            strcat(s_pszResourcePath, resDir);
-        }
-        
+        s_pszResourcePath[nNum] = '\\'; 
     }
 }
 
@@ -58,6 +52,7 @@ CCFileUtils* CCFileUtils::sharedFileUtils()
     if (s_pFileUtils == NULL)
     {
         s_pFileUtils = new CCFileUtils();
+        _CheckPath();
     }
     return s_pFileUtils;
 }
@@ -79,10 +74,10 @@ void CCFileUtils::purgeCachedEntries()
 
 const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
 {
-    _CheckPath();
+    bool bFileExist = true;
+    const char* resDir = CCFileUtils::sharedFileUtils()->getResourceDirectory();
+    CCString* pRet = CCString::create("");
 
-    CCString * pRet = new CCString();
-    pRet->autorelease();
     if ((strlen(pszRelativePath) > 1 && pszRelativePath[1] == ':'))
     {
         // path start with "x:", is absolute path
@@ -99,19 +94,35 @@ const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
     else
     {
         pRet->m_sString = s_pszResourcePath;
+        pRet->m_sString += resDir;
         pRet->m_sString += pszRelativePath;
     }
 
+    // If file or directory doesn't exist, try to find it in the root path.
+    if (GetFileAttributesA(pRet->m_sString.c_str()) == -1)
+    {
+        pRet->m_sString = s_pszResourcePath;
+        pRet->m_sString += pszRelativePath;
+
+        if (GetFileAttributesA(pRet->m_sString.c_str()) == -1)
+        {
+            bFileExist = false;
+        }
+    }
+
+    if (!bFileExist)
+    { // Can't find the file, return the relative path.
+        pRet->m_sString = pszRelativePath;
+    }
+   
     return pRet->m_sString.c_str();
 }
 
 const char *CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const char *pszRelativeFile)
 {
-    _CheckPath();
     // std::string relativeFile = fullPathFromRelativePath(pszRelativeFile);
     std::string relativeFile = pszRelativeFile;
-    CCString *pRet = new CCString();
-    pRet->autorelease();
+    CCString *pRet = CCString::create("");
     pRet->m_sString = relativeFile.substr(0, relativeFile.find_last_of("/\\") + 1);
     pRet->m_sString += pszFilename;
     return pRet->m_sString.c_str();

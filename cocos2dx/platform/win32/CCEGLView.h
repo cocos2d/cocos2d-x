@@ -47,7 +47,7 @@ public:
     virtual bool setContentScaleFactor(float contentScaleFactor);
     virtual void setFrameSize(float width, float height);
     virtual void setIMEKeyboardState(bool bOpen);
-
+    virtual bool enableRetina();
 private:
     virtual bool Create(LPCTSTR pTitle, int w, int h);
     bool initGL();

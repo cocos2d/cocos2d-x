@@ -149,6 +149,7 @@ void CCEGLViewProtocol::setTouchDelegate(EGLTouchDelegate * pDelegate)
 
 bool CCEGLViewProtocol::setContentScaleFactor(float contentScaleFactor)
 {
+    m_fScaleX = m_fScaleY = contentScaleFactor;
     return false;
 }
 
