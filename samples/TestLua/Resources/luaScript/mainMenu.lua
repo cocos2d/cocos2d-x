@@ -1,6 +1,6 @@
-require "tests"
-require "helper"
-require "testResource"
+require "luaScript/tests"
+require "luaScript/helper"
+require "luaScript/testResource"
 ------------------------
 
 
