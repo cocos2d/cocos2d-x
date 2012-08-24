@@ -75,6 +75,7 @@ particle_nodes/CCParticleSystemQuad.cpp \
 platform/CCSAXParser.cpp \
 platform/CCThread.cpp \
 platform/platform.cpp \
+platform/CCFileUtils.cpp \
 platform/CCEGLViewProtocol.cpp \
 platform/android/CCEGLView.cpp \
 platform/android/CCAccelerometer.cpp \

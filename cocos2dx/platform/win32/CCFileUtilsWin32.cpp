@@ -21,35 +21,14 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#define __CC_PLATFORM_FILEUTILS_CPP__
-#include "platform/CCFileUtilsCommon_cpp.h"
-#include <windows.h>
-#include "CCDirector.h"
+#include "CCFileUtilsWin32.h"
+#include "cocos2d.h"
 
 using namespace std;
 
 NS_CC_BEGIN
 
 // record the resource path
-static char s_pszResourcePath[MAX_PATH] = {0};
-
-static void _CheckPath()
-{
-    if (! s_pszResourcePath[0])
-    {
-        WCHAR  wszPath[MAX_PATH];
-        int nNum = WideCharToMultiByte(CP_ACP, 0, wszPath, 
-            GetCurrentDirectoryW(sizeof(wszPath), wszPath), 
-            s_pszResourcePath, MAX_PATH, NULL, NULL);
-        s_pszResourcePath[nNum] = '\\';
-        const char* resDir = CCFileUtils::sharedFileUtils()->getResourceDirectory();
-        if (resDir != NULL)
-        {
-            strcat(s_pszResourcePath, resDir);
-        }
-        
-    }
-}
 
 static CCFileUtils* s_pFileUtils = NULL;
 
@@ -57,7 +36,7 @@ CCFileUtils* CCFileUtils::sharedFileUtils()
 {
     if (s_pFileUtils == NULL)
     {
-        s_pFileUtils = new CCFileUtils();
+        s_pFileUtils = new CCFileUtilsWin32();
     }
     return s_pFileUtils;
 }
@@ -79,8 +58,23 @@ void CCFileUtils::purgeCachedEntries()
 
 const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
 {
-    _CheckPath();
+	return pszRelativePath;
+}
 
+CCFileUtilsWin32::CCFileUtilsWin32()
+{
+    WCHAR  wszPath[MAX_PATH];
+	char pszResourcePath[MAX_PATH];
+    int nNum = WideCharToMultiByte(CP_ACP, 0, wszPath, 
+                 GetCurrentDirectoryW(sizeof(wszPath), wszPath), 
+                 pszResourcePath, MAX_PATH, NULL, NULL);
+
+	m_strResourcePath = std::string(pszResourcePath, nNum);
+	m_strResourcePath.append("\\");
+}
+
+const char* CCFileUtilsWin32::fullPathFromRelativePath(const char *pszRelativePath)
+{
     CCString * pRet = new CCString();
     pRet->autorelease();
     if ((strlen(pszRelativePath) > 1 && pszRelativePath[1] == ':'))
@@ -92,13 +86,13 @@ const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
         && ('/' == pszRelativePath[0] || '\\' == pszRelativePath[0]))
     {
         // path start with '/' or '\', is absolute path without driver name
-        char szDriver[3] = {s_pszResourcePath[0], s_pszResourcePath[1], 0};
+        char szDriver[3] = {m_strResourcePath[0], m_strResourcePath[1], 0};
         pRet->m_sString = szDriver;
         pRet->m_sString += pszRelativePath;
     }
     else
     {
-        pRet->m_sString = s_pszResourcePath;
+        pRet->m_sString = m_strResourcePath + m_obDirectory;
         pRet->m_sString += pszRelativePath;
     }
 
@@ -107,7 +101,6 @@ const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
 
 const char *CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const char *pszRelativeFile)
 {
-    _CheckPath();
     // std::string relativeFile = fullPathFromRelativePath(pszRelativeFile);
     std::string relativeFile = pszRelativeFile;
     CCString *pRet = new CCString();
@@ -160,6 +153,16 @@ string CCFileUtils::getWriteablePath()
     ret =  ret.substr(0, ret.rfind("\\") + 1);
 
     return ret;
+}
+
+void CCFileUtilsWin32::setResourcePath(const char *pszDirectoryName)
+{
+	m_strResourcePath = pszDirectoryName;
+}
+
+const char* CCFileUtilsWin32::getResourcePath()
+{
+	return m_strResourcePath.c_str();
 }
 
 NS_CC_END
