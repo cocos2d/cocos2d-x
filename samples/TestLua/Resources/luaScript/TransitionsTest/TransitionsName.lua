@@ -1,4 +1,4 @@
-require "../helper"
+require "luaScript/helper"
 
 Transition_Table =
 {
