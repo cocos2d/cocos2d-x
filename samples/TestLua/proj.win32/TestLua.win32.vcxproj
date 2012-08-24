@@ -128,6 +128,10 @@
       <DllDataFileName>
       </DllDataFileName>
     </Midl>
+    <PreBuildEvent>
+      <Command>xcopy $(SolutionDir)samples\TestCpp\Resources $(SolutionDir)samples\TestLua\Resources /e /Y</Command>
+      <Message>copy files from TestCpp to TestLua</Message>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\scripting\lua\cocos2dx_support\CCLuaEngine.h" />
