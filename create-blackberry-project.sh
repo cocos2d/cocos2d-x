@@ -76,7 +76,7 @@ create_qnx_project(){
     modify_file_content .cproject BBTemplateProject $PROJECT_NAME
     modify_file_content bar-descriptor.xml BBTemplateProject $PROJECT_NAME
     modify_file_content .cproject ../../../.. ../../..
-    modify_file_content bar-descriptor.xml ../../../.. ../../..
+    modify_file_content bar-descriptor.xml empty/../../../.. empty/../../..
     copy_cpp_h_from_helloworld
     copy_resouces
     echo "Congratulations, the '$PROJECT_NAME' project have been created successfully, please use QNX IDE to import the project!"
