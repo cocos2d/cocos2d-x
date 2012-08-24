@@ -196,10 +196,10 @@ int CCBReader::readInt(bool pSigned) {
     long long current = 0;
     for(int a = numBits - 1; a >= 0; a--) {
         if(this->getBit()) {
-            current |= 1 << a;
+            current |= 1LL << a;
         }
     }
-    current |= 1 << numBits;
+    current |= 1LL << numBits;
     
     int num;
     if(pSigned) {
