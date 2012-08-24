@@ -167,9 +167,9 @@
 								<option id="com.qnx.qcc.option.linker.libraryPaths.1976822869" name="Library Paths (-L)" superClass="com.qnx.qcc.option.linker.libraryPaths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/lib"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/usr/lib"/>
-									<listOptionValue builtIn="false" value="../../../cocos2dx/proj.blackberry/${ConfigName}"/>
-									<listOptionValue builtIn="false" value="../../../CocosDenshion/proj.blackberry/${ConfigName}"/>
-									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/blackberry/libraries/${CPUVARDIR}"/>
+									<listOptionValue builtIn="false" value="../../../../cocos2dx/proj.blackberry/${ConfigName}"/>
+									<listOptionValue builtIn="false" value="../../../../CocosDenshion/proj.blackberry/${ConfigName}"/>
+									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/blackberry/libraries/${CPUVARDIR}"/>
 								</option>
 								<option id="com.qnx.qcc.option.linker.ldoptions.597387014" name="Linker Options (-Wl,)" superClass="com.qnx.qcc.option.linker.ldoptions" valueType="stringList">
 									<listOptionValue builtIn="false" value="../../../../extensions/proj.blackberry/${ConfigName}/libextensions.a"/>
@@ -264,9 +264,9 @@
 								<option id="com.qnx.qcc.option.linker.libraryPaths.1615583479" name="Library Paths (-L)" superClass="com.qnx.qcc.option.linker.libraryPaths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/lib"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/usr/lib"/>
-									<listOptionValue builtIn="false" value="../../../cocos2dx/proj.blackberry/${ConfigName}"/>
-									<listOptionValue builtIn="false" value="../../../CocosDenshion/proj.blackberry/${ConfigName}"/>
-									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/blackberry/libraries/${CPUVARDIR}"/>
+									<listOptionValue builtIn="false" value="../../../../cocos2dx/proj.blackberry/${ConfigName}"/>
+									<listOptionValue builtIn="false" value="../../../../CocosDenshion/proj.blackberry/${ConfigName}"/>
+									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/blackberry/libraries/${CPUVARDIR}"/>
 								</option>
 								<option id="com.qnx.qcc.option.linker.ldoptions.1434184051" name="Linker Options (-Wl,)" superClass="com.qnx.qcc.option.linker.ldoptions" valueType="stringList">
 									<listOptionValue builtIn="false" value="../../../../extensions/proj.blackberry/${ConfigName}/libextensions.a"/>
@@ -361,9 +361,9 @@
 								<option id="com.qnx.qcc.option.linker.libraryPaths.172097509" name="Library Paths (-L)" superClass="com.qnx.qcc.option.linker.libraryPaths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/lib"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/usr/lib"/>
-									<listOptionValue builtIn="false" value="../../../cocos2dx/proj.blackberry/${ConfigName}"/>
-									<listOptionValue builtIn="false" value="../../../CocosDenshion/proj.blackberry/${ConfigName}"/>
-									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/blackberry/libraries/${CPUVARDIR}"/>
+									<listOptionValue builtIn="false" value="../../../../cocos2dx/proj.blackberry/${ConfigName}"/>
+									<listOptionValue builtIn="false" value="../../../../CocosDenshion/proj.blackberry/${ConfigName}"/>
+									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/blackberry/libraries/${CPUVARDIR}"/>
 								</option>
 								<option id="com.qnx.qcc.option.linker.ldoptions.1287776919" name="Linker Options (-Wl,)" superClass="com.qnx.qcc.option.linker.ldoptions" valueType="stringList">
 									<listOptionValue builtIn="false" value="../../../../extensions/proj.blackberry/${ConfigName}/libextensions.a"/>
@@ -456,9 +456,9 @@
 								<option id="com.qnx.qcc.option.linker.libraryPaths.880489672" name="Library Paths (-L)" superClass="com.qnx.qcc.option.linker.libraryPaths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/lib"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/usr/lib"/>
-									<listOptionValue builtIn="false" value="../../../cocos2dx/proj.blackberry/${ConfigName}"/>
-									<listOptionValue builtIn="false" value="../../../CocosDenshion/proj.blackberry/${ConfigName}"/>
-									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/blackberry/libraries/${CPUVARDIR}"/>
+									<listOptionValue builtIn="false" value="../../../../cocos2dx/proj.blackberry/${ConfigName}"/>
+									<listOptionValue builtIn="false" value="../../../../CocosDenshion/proj.blackberry/${ConfigName}"/>
+									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/blackberry/libraries/${CPUVARDIR}"/>
 								</option>
 								<option id="com.qnx.qcc.option.linker.ldoptions.1867792515" name="Linker Options (-Wl,)" superClass="com.qnx.qcc.option.linker.ldoptions" valueType="stringList">
 									<listOptionValue builtIn="false" value="../../../../extensions/proj.blackberry/${ConfigName}/libextensions.a"/>
@@ -552,9 +552,9 @@
 								<option id="com.qnx.qcc.option.linker.libraryPaths.1204179500" name="Library Paths (-L)" superClass="com.qnx.qcc.option.linker.libraryPaths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/lib"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/usr/lib"/>
-									<listOptionValue builtIn="false" value="../../../cocos2dx/proj.blackberry/${ConfigName}"/>
-									<listOptionValue builtIn="false" value="../../../CocosDenshion/proj.blackberry/${ConfigName}"/>
-									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/blackberry/libraries/${CPUVARDIR}"/>
+									<listOptionValue builtIn="false" value="../../../../cocos2dx/proj.blackberry/${ConfigName}"/>
+									<listOptionValue builtIn="false" value="../../../../CocosDenshion/proj.blackberry/${ConfigName}"/>
+									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/blackberry/libraries/${CPUVARDIR}"/>
 								</option>
 								<option id="com.qnx.qcc.option.linker.ldoptions.653674459" name="Linker Options (-Wl,)" superClass="com.qnx.qcc.option.linker.ldoptions" valueType="stringList">
 									<listOptionValue builtIn="false" value="../../../../extensions/proj.blackberry/${ConfigName}/libextensions.a"/>
@@ -648,9 +648,9 @@
 								<option id="com.qnx.qcc.option.linker.libraryPaths.1949291872" name="Library Paths (-L)" superClass="com.qnx.qcc.option.linker.libraryPaths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/lib"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/usr/lib"/>
-									<listOptionValue builtIn="false" value="../../../cocos2dx/proj.blackberry/${ConfigName}"/>
-									<listOptionValue builtIn="false" value="../../../CocosDenshion/proj.blackberry/${ConfigName}"/>
-									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/blackberry/libraries/${CPUVARDIR}"/>
+									<listOptionValue builtIn="false" value="../../../../cocos2dx/proj.blackberry/${ConfigName}"/>
+									<listOptionValue builtIn="false" value="../../../../CocosDenshion/proj.blackberry/${ConfigName}"/>
+									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/blackberry/libraries/${CPUVARDIR}"/>
 								</option>
 								<option id="com.qnx.qcc.option.linker.ldoptions.2020635567" name="Linker Options (-Wl,)" superClass="com.qnx.qcc.option.linker.ldoptions" valueType="stringList">
 									<listOptionValue builtIn="false" value="../../../../extensions/proj.blackberry/${ConfigName}/libextensions.a"/>

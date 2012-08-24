@@ -147,7 +147,8 @@ local function createLayerMenu()
 
     local function menuCallbackOpenPopup()
         -- loop test sound effect
-        effectID = SimpleAudioEngine:sharedEngine():playEffect(CCFileUtils:fullPathFromRelativePath("effect1.wav"))
+        local effectPath = CCFileUtils:sharedFileUtils():fullPathFromRelativePath("effect1.wav")
+        effectID = SimpleAudioEngine:sharedEngine():playEffect(effectPath)
         menuPopup:setVisible(true)
     end
 
@@ -172,10 +173,13 @@ local function createLayerMenu()
 end
 
 -- play background music, preload effect
+
 -- uncomment below for the BlackBerry version
--- SimpleAudioEngine:sharedEngine():playBackgroundMusic(CCFileUtils:fullPathFromRelativePath("background.ogg"), true)
-SimpleAudioEngine:sharedEngine():playBackgroundMusic(CCFileUtils:fullPathFromRelativePath("background.mp3"), true)
-SimpleAudioEngine:sharedEngine():preloadEffect(CCFileUtils:fullPathFromRelativePath("effect1.wav"))
+-- local bgMusicPath = CCFileUtils:sharedFileUtils():fullPathFromRelativePath("background.ogg")
+local bgMusicPath = CCFileUtils:sharedFileUtils():fullPathFromRelativePath("background.mp3")
+SimpleAudioEngine:sharedEngine():playBackgroundMusic(bgMusicPath, true)
+local effectPath = CCFileUtils:sharedFileUtils():fullPathFromRelativePath("effect1.wav") 
+SimpleAudioEngine:sharedEngine():preloadEffect(effectPath)
 
 -- run
 local sceneGame = CCScene:create()
