@@ -1,4 +1,4 @@
-require "ActionsTest/ActionsName"
+require "luaScript/ActionsTest/ActionsName"
 
 
 local ActionIdx = -1
@@ -998,17 +998,17 @@ end
 --------------------------------------
 local pausedTargets = nil
 
-local function ActionPause(dt)
+local function ActionPause()
 	cclog("Pausing")
 	local director = CCDirector:sharedDirector()
     pausedTargets = director:getActionManager():pauseAllRunningActions()
 end
 
-local function ActionResume(dt)
+local function ActionResume()
 	cclog("Resuming")
 	local director = CCDirector:sharedDirector()
 	if pausedTargets ~= nil then
-	--	director:getActionManager():resumeTargets(pausedTargets)
+		director:getActionManager():resumeTargets(pausedTargets)
 	end
 end
 
@@ -1021,9 +1021,8 @@ local function PauseResumeActions()
     tamara:runAction(CCRepeatForever:create(CCRotateBy:create(3, 360)))
     kathia:runAction(CCRepeatForever:create(CCRotateBy:create(3, 360)))
 
-    local scheduler = CCDirector:sharedDirector():getScheduler()
-	--scheduler:scheduleScriptFunc(ActionPause, 3, false)
-	--scheduler:scheduleScriptFunc(ActionResume, 5, false)
+	layer:scheduleScriptFunc(ActionPause, 3, false)
+	layer:scheduleScriptFunc(ActionResume, 5, false)
 
 	titleLabel:setString("PauseResumeActions")
 	subtitleLabel:setString("All actions pause at 3s and resume at 5s")
