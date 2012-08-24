@@ -1,11 +1,11 @@
-require "helper"
+require "luaScript/helper"
 
-require "ActionsTest/ActionsTest"
-require "TransitionsTest/TransitionsTest"
-require "ActionsProgressTest/ActionsProgressTest"
-require "EffectsTest/EffectsTest"
-require "ClickAndMoveTest/ClickAndMoveTest"
-require "RotateWorldTest/RotateWorldTest"
+require "luaScript/ActionsTest/ActionsTest"
+require "luaScript/TransitionsTest/TransitionsTest"
+require "luaScript/ActionsProgressTest/ActionsProgressTest"
+require "luaScript/EffectsTest/EffectsTest"
+require "luaScript/ClickAndMoveTest/ClickAndMoveTest"
+require "luaScript/RotateWorldTest/RotateWorldTest"
 
 
 ----------------------------------------------------
