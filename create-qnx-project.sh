@@ -54,7 +54,7 @@ copy_resouces(){
 # replace string
 modify_file_content(){
     # here should use # instead of /, why??
-    sed "s#$2#$3#" $PROJECT_DIR/proj.blackberry/$1 > $PROJECT_DIR/proj.blackberry/tmp.txt
+    sed "s#$2#$3#g" $PROJECT_DIR/proj.blackberry/$1 > $PROJECT_DIR/proj.blackberry/tmp.txt
     rm $PROJECT_DIR/proj.blackberry/$1
     mv $PROJECT_DIR/proj.blackberry/tmp.txt $PROJECT_DIR/proj.blackberry/$1
 }
