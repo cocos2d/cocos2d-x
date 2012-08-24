@@ -28,10 +28,7 @@ JSBool S_CCTransitionMoveInL::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTransitionMoveInL *cobj; JSGET_PTRSHELL(S_CCTransitionMoveInL, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -40,10 +37,7 @@ JSBool S_CCTransitionMoveInL::jsPropertySet(JSContext *cx, JSObject *obj, jsid _
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTransitionMoveInL *cobj; JSGET_PTRSHELL(S_CCTransitionMoveInL, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -417,10 +411,7 @@ JSBool S_CCFadeOutBLTiles::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id,
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCFadeOutBLTiles *cobj; JSGET_PTRSHELL(S_CCFadeOutBLTiles, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -429,10 +420,7 @@ JSBool S_CCFadeOutBLTiles::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id,
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCFadeOutBLTiles *cobj; JSGET_PTRSHELL(S_CCFadeOutBLTiles, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -537,10 +525,7 @@ JSBool S_CCProgressFromTo::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id,
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCProgressFromTo *cobj; JSGET_PTRSHELL(S_CCProgressFromTo, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -549,10 +534,7 @@ JSBool S_CCProgressFromTo::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id,
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCProgressFromTo *cobj; JSGET_PTRSHELL(S_CCProgressFromTo, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -1133,10 +1115,7 @@ JSBool S_CCEaseBackInOut::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, 
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCEaseBackInOut *cobj; JSGET_PTRSHELL(S_CCEaseBackInOut, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -1145,10 +1124,7 @@ JSBool S_CCEaseBackInOut::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, 
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCEaseBackInOut *cobj; JSGET_PTRSHELL(S_CCEaseBackInOut, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -1249,10 +1225,7 @@ JSBool S_CCFadeOutUpTiles::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id,
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCFadeOutUpTiles *cobj; JSGET_PTRSHELL(S_CCFadeOutUpTiles, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -1261,10 +1234,7 @@ JSBool S_CCFadeOutUpTiles::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id,
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCFadeOutUpTiles *cobj; JSGET_PTRSHELL(S_CCFadeOutUpTiles, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -1381,10 +1351,7 @@ JSBool S_CCAnimationCache::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id,
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCAnimationCache *cobj; JSGET_PTRSHELL(S_CCAnimationCache, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -1393,10 +1360,7 @@ JSBool S_CCAnimationCache::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id,
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCAnimationCache *cobj; JSGET_PTRSHELL(S_CCAnimationCache, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -1569,10 +1533,7 @@ JSBool S_CCPlace::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *v
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCPlace *cobj; JSGET_PTRSHELL(S_CCPlace, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -1581,10 +1542,7 @@ JSBool S_CCPlace::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool s
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCPlace *cobj; JSGET_PTRSHELL(S_CCPlace, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -1705,10 +1663,7 @@ JSBool S_CCEaseBackOut::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, js
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCEaseBackOut *cobj; JSGET_PTRSHELL(S_CCEaseBackOut, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -1717,10 +1672,7 @@ JSBool S_CCEaseBackOut::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JS
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCEaseBackOut *cobj; JSGET_PTRSHELL(S_CCEaseBackOut, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -2033,10 +1985,7 @@ JSBool S_CCReverseTime::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, js
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCReverseTime *cobj; JSGET_PTRSHELL(S_CCReverseTime, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -2045,10 +1994,7 @@ JSBool S_CCReverseTime::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JS
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCReverseTime *cobj; JSGET_PTRSHELL(S_CCReverseTime, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -2223,10 +2169,7 @@ JSBool S_CCFadeOutTRTiles::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id,
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCFadeOutTRTiles *cobj; JSGET_PTRSHELL(S_CCFadeOutTRTiles, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -2235,10 +2178,7 @@ JSBool S_CCFadeOutTRTiles::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id,
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCFadeOutTRTiles *cobj; JSGET_PTRSHELL(S_CCFadeOutTRTiles, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -3560,10 +3500,7 @@ JSBool S_CCProgressTo::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsv
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCProgressTo *cobj; JSGET_PTRSHELL(S_CCProgressTo, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -3572,10 +3509,7 @@ JSBool S_CCProgressTo::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSB
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCProgressTo *cobj; JSGET_PTRSHELL(S_CCProgressTo, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -3712,10 +3646,7 @@ JSBool S_CCDelayTime::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsva
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCDelayTime *cobj; JSGET_PTRSHELL(S_CCDelayTime, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -3724,10 +3655,7 @@ JSBool S_CCDelayTime::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBo
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCDelayTime *cobj; JSGET_PTRSHELL(S_CCDelayTime, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -3852,10 +3780,7 @@ JSBool S_CCSequence::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCSequence *cobj; JSGET_PTRSHELL(S_CCSequence, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -3864,10 +3789,7 @@ JSBool S_CCSequence::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBoo
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCSequence *cobj; JSGET_PTRSHELL(S_CCSequence, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -4228,10 +4150,7 @@ JSBool S_CCParallaxNode::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, j
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCParallaxNode *cobj; JSGET_PTRSHELL(S_CCParallaxNode, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -4240,10 +4159,7 @@ JSBool S_CCParallaxNode::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, J
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCParallaxNode *cobj; JSGET_PTRSHELL(S_CCParallaxNode, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -4366,10 +4282,7 @@ JSBool S_CCTransitionSplitRows::jsPropertyGet(JSContext *cx, JSObject *obj, jsid
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTransitionSplitRows *cobj; JSGET_PTRSHELL(S_CCTransitionSplitRows, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -4378,10 +4291,7 @@ JSBool S_CCTransitionSplitRows::jsPropertySet(JSContext *cx, JSObject *obj, jsid
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTransitionSplitRows *cobj; JSGET_PTRSHELL(S_CCTransitionSplitRows, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -4493,10 +4403,7 @@ JSBool S_CCTintBy::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTintBy *cobj; JSGET_PTRSHELL(S_CCTintBy, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -4505,10 +4412,7 @@ JSBool S_CCTintBy::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool 
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTintBy *cobj; JSGET_PTRSHELL(S_CCTintBy, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -4865,10 +4769,7 @@ JSBool S_CCTransitionProgressRadialCCW::jsPropertyGet(JSContext *cx, JSObject *o
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTransitionProgressRadialCCW *cobj; JSGET_PTRSHELL(S_CCTransitionProgressRadialCCW, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -4877,10 +4778,7 @@ JSBool S_CCTransitionProgressRadialCCW::jsPropertySet(JSContext *cx, JSObject *o
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTransitionProgressRadialCCW *cobj; JSGET_PTRSHELL(S_CCTransitionProgressRadialCCW, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -5958,10 +5856,7 @@ JSBool S_CCTransitionFadeBL::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _i
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTransitionFadeBL *cobj; JSGET_PTRSHELL(S_CCTransitionFadeBL, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -5970,10 +5865,7 @@ JSBool S_CCTransitionFadeBL::jsPropertySet(JSContext *cx, JSObject *obj, jsid _i
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTransitionFadeBL *cobj; JSGET_PTRSHELL(S_CCTransitionFadeBL, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -6088,10 +5980,7 @@ JSBool S_CCFadeOutDownTiles::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _i
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCFadeOutDownTiles *cobj; JSGET_PTRSHELL(S_CCFadeOutDownTiles, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -6100,10 +5989,7 @@ JSBool S_CCFadeOutDownTiles::jsPropertySet(JSContext *cx, JSObject *obj, jsid _i
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCFadeOutDownTiles *cobj; JSGET_PTRSHELL(S_CCFadeOutDownTiles, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -6208,10 +6094,7 @@ JSBool S_CCTurnOffTiles::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, j
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTurnOffTiles *cobj; JSGET_PTRSHELL(S_CCTurnOffTiles, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -6220,10 +6103,7 @@ JSBool S_CCTurnOffTiles::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, J
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTurnOffTiles *cobj; JSGET_PTRSHELL(S_CCTurnOffTiles, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -6425,10 +6305,7 @@ JSBool S_CCTransitionFadeUp::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _i
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTransitionFadeUp *cobj; JSGET_PTRSHELL(S_CCTransitionFadeUp, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -6437,10 +6314,7 @@ JSBool S_CCTransitionFadeUp::jsPropertySet(JSContext *cx, JSObject *obj, jsid _i
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTransitionFadeUp *cobj; JSGET_PTRSHELL(S_CCTransitionFadeUp, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -6555,10 +6429,7 @@ JSBool S_CCMenuItemImage::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, 
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCMenuItemImage *cobj; JSGET_PTRSHELL(S_CCMenuItemImage, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -6567,10 +6438,7 @@ JSBool S_CCMenuItemImage::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, 
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCMenuItemImage *cobj; JSGET_PTRSHELL(S_CCMenuItemImage, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -6660,10 +6528,7 @@ JSBool S_CCTintTo::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTintTo *cobj; JSGET_PTRSHELL(S_CCTintTo, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -6672,10 +6537,7 @@ JSBool S_CCTintTo::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool 
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTintTo *cobj; JSGET_PTRSHELL(S_CCTintTo, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -7399,10 +7261,7 @@ JSBool S_CCTransitionFade::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id,
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTransitionFade *cobj; JSGET_PTRSHELL(S_CCTransitionFade, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -7411,10 +7270,7 @@ JSBool S_CCTransitionFade::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id,
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTransitionFade *cobj; JSGET_PTRSHELL(S_CCTransitionFade, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -7733,10 +7589,7 @@ JSBool S_CCEaseElasticIn::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, 
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCEaseElasticIn *cobj; JSGET_PTRSHELL(S_CCEaseElasticIn, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -7745,10 +7598,7 @@ JSBool S_CCEaseElasticIn::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, 
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCEaseElasticIn *cobj; JSGET_PTRSHELL(S_CCEaseElasticIn, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -8051,10 +7901,7 @@ JSBool S_CCRotateBy::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCRotateBy *cobj; JSGET_PTRSHELL(S_CCRotateBy, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -8063,10 +7910,7 @@ JSBool S_CCRotateBy::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBoo
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCRotateBy *cobj; JSGET_PTRSHELL(S_CCRotateBy, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -8334,10 +8178,7 @@ JSBool S_CCTransitionTurnOffTiles::jsPropertyGet(JSContext *cx, JSObject *obj, j
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTransitionTurnOffTiles *cobj; JSGET_PTRSHELL(S_CCTransitionTurnOffTiles, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -8346,10 +8187,7 @@ JSBool S_CCTransitionTurnOffTiles::jsPropertySet(JSContext *cx, JSObject *obj, j
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTransitionTurnOffTiles *cobj; JSGET_PTRSHELL(S_CCTransitionTurnOffTiles, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -8476,10 +8314,7 @@ JSBool S_CCActionInstant::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, 
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCActionInstant *cobj; JSGET_PTRSHELL(S_CCActionInstant, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -8488,10 +8323,7 @@ JSBool S_CCActionInstant::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, 
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCActionInstant *cobj; JSGET_PTRSHELL(S_CCActionInstant, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -8622,10 +8454,7 @@ JSBool S_CCTransitionZoomFlipAngular::jsPropertyGet(JSContext *cx, JSObject *obj
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTransitionZoomFlipAngular *cobj; JSGET_PTRSHELL(S_CCTransitionZoomFlipAngular, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -8634,10 +8463,7 @@ JSBool S_CCTransitionZoomFlipAngular::jsPropertySet(JSContext *cx, JSObject *obj
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTransitionZoomFlipAngular *cobj; JSGET_PTRSHELL(S_CCTransitionZoomFlipAngular, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -8737,10 +8563,7 @@ JSBool S_CCReuseGrid::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsva
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCReuseGrid *cobj; JSGET_PTRSHELL(S_CCReuseGrid, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -8749,10 +8572,7 @@ JSBool S_CCReuseGrid::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBo
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCReuseGrid *cobj; JSGET_PTRSHELL(S_CCReuseGrid, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -9022,10 +8842,7 @@ JSBool S_CCTransitionFadeDown::jsPropertyGet(JSContext *cx, JSObject *obj, jsid 
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTransitionFadeDown *cobj; JSGET_PTRSHELL(S_CCTransitionFadeDown, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -9034,10 +8851,7 @@ JSBool S_CCTransitionFadeDown::jsPropertySet(JSContext *cx, JSObject *obj, jsid 
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTransitionFadeDown *cobj; JSGET_PTRSHELL(S_CCTransitionFadeDown, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -9152,10 +8966,7 @@ JSBool S_CCTransitionFlipY::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTransitionFlipY *cobj; JSGET_PTRSHELL(S_CCTransitionFlipY, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -9164,10 +8975,7 @@ JSBool S_CCTransitionFlipY::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTransitionFlipY *cobj; JSGET_PTRSHELL(S_CCTransitionFlipY, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -9267,10 +9075,7 @@ JSBool S_CCStopGrid::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCStopGrid *cobj; JSGET_PTRSHELL(S_CCStopGrid, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -9279,10 +9084,7 @@ JSBool S_CCStopGrid::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBoo
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCStopGrid *cobj; JSGET_PTRSHELL(S_CCStopGrid, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -9665,10 +9467,7 @@ JSBool S_CCMoveTo::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCMoveTo *cobj; JSGET_PTRSHELL(S_CCMoveTo, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -9677,10 +9476,7 @@ JSBool S_CCMoveTo::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool 
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCMoveTo *cobj; JSGET_PTRSHELL(S_CCMoveTo, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -9820,10 +9616,7 @@ JSBool S_CCTransitionFlipX::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTransitionFlipX *cobj; JSGET_PTRSHELL(S_CCTransitionFlipX, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -9832,10 +9625,7 @@ JSBool S_CCTransitionFlipX::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTransitionFlipX *cobj; JSGET_PTRSHELL(S_CCTransitionFlipX, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -10179,10 +9969,7 @@ JSBool S_CCTransitionShrinkGrow::jsPropertyGet(JSContext *cx, JSObject *obj, jsi
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTransitionShrinkGrow *cobj; JSGET_PTRSHELL(S_CCTransitionShrinkGrow, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -10191,10 +9978,7 @@ JSBool S_CCTransitionShrinkGrow::jsPropertySet(JSContext *cx, JSObject *obj, jsi
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTransitionShrinkGrow *cobj; JSGET_PTRSHELL(S_CCTransitionShrinkGrow, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -10321,10 +10105,7 @@ JSBool S_CCTransitionSplitCols::jsPropertyGet(JSContext *cx, JSObject *obj, jsid
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTransitionSplitCols *cobj; JSGET_PTRSHELL(S_CCTransitionSplitCols, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -10333,10 +10114,7 @@ JSBool S_CCTransitionSplitCols::jsPropertySet(JSContext *cx, JSObject *obj, jsid
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTransitionSplitCols *cobj; JSGET_PTRSHELL(S_CCTransitionSplitCols, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -10488,10 +10266,7 @@ JSBool S_CCShakyTiles3D::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, j
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCShakyTiles3D *cobj; JSGET_PTRSHELL(S_CCShakyTiles3D, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -10500,10 +10275,7 @@ JSBool S_CCShakyTiles3D::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, J
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCShakyTiles3D *cobj; JSGET_PTRSHELL(S_CCShakyTiles3D, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -10629,10 +10401,7 @@ JSBool S_CCEaseElasticOut::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id,
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCEaseElasticOut *cobj; JSGET_PTRSHELL(S_CCEaseElasticOut, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -10641,10 +10410,7 @@ JSBool S_CCEaseElasticOut::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id,
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCEaseElasticOut *cobj; JSGET_PTRSHELL(S_CCEaseElasticOut, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -10770,10 +10536,7 @@ JSBool S_CCRotateTo::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCRotateTo *cobj; JSGET_PTRSHELL(S_CCRotateTo, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -10782,10 +10545,7 @@ JSBool S_CCRotateTo::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBoo
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCRotateTo *cobj; JSGET_PTRSHELL(S_CCRotateTo, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -10923,10 +10683,7 @@ JSBool S_CCTransitionProgressRadialCW::jsPropertyGet(JSContext *cx, JSObject *ob
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTransitionProgressRadialCW *cobj; JSGET_PTRSHELL(S_CCTransitionProgressRadialCW, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -10935,10 +10692,7 @@ JSBool S_CCTransitionProgressRadialCW::jsPropertySet(JSContext *cx, JSObject *ob
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTransitionProgressRadialCW *cobj; JSGET_PTRSHELL(S_CCTransitionProgressRadialCW, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -11417,10 +11171,7 @@ JSBool S_CCShow::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *va
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCShow *cobj; JSGET_PTRSHELL(S_CCShow, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -11429,10 +11180,7 @@ JSBool S_CCShow::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool st
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCShow *cobj; JSGET_PTRSHELL(S_CCShow, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -11557,10 +11305,7 @@ JSBool S_CCEaseElasticInOut::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _i
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCEaseElasticInOut *cobj; JSGET_PTRSHELL(S_CCEaseElasticInOut, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -11569,10 +11314,7 @@ JSBool S_CCEaseElasticInOut::jsPropertySet(JSContext *cx, JSObject *obj, jsid _i
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCEaseElasticInOut *cobj; JSGET_PTRSHELL(S_CCEaseElasticInOut, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -11698,10 +11440,7 @@ JSBool S_CCOrbitCamera::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, js
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCOrbitCamera *cobj; JSGET_PTRSHELL(S_CCOrbitCamera, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -11710,10 +11449,7 @@ JSBool S_CCOrbitCamera::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JS
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCOrbitCamera *cobj; JSGET_PTRSHELL(S_CCOrbitCamera, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -11868,10 +11604,7 @@ JSBool S_CCTransitionSlideInL::jsPropertyGet(JSContext *cx, JSObject *obj, jsid 
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTransitionSlideInL *cobj; JSGET_PTRSHELL(S_CCTransitionSlideInL, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -11880,10 +11613,7 @@ JSBool S_CCTransitionSlideInL::jsPropertySet(JSContext *cx, JSObject *obj, jsid 
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTransitionSlideInL *cobj; JSGET_PTRSHELL(S_CCTransitionSlideInL, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -12049,10 +11779,7 @@ JSBool S_CCEaseBounceIn::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, j
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCEaseBounceIn *cobj; JSGET_PTRSHELL(S_CCEaseBounceIn, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -12061,10 +11788,7 @@ JSBool S_CCEaseBounceIn::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, J
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCEaseBounceIn *cobj; JSGET_PTRSHELL(S_CCEaseBounceIn, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -12190,10 +11914,7 @@ JSBool S_CCShatteredTiles3D::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _i
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCShatteredTiles3D *cobj; JSGET_PTRSHELL(S_CCShatteredTiles3D, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -12202,10 +11923,7 @@ JSBool S_CCShatteredTiles3D::jsPropertySet(JSContext *cx, JSObject *obj, jsid _i
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCShatteredTiles3D *cobj; JSGET_PTRSHELL(S_CCShatteredTiles3D, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -12332,10 +12050,7 @@ JSBool S_CCHide::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *va
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCHide *cobj; JSGET_PTRSHELL(S_CCHide, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -12344,10 +12059,7 @@ JSBool S_CCHide::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool st
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCHide *cobj; JSGET_PTRSHELL(S_CCHide, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -12472,10 +12184,7 @@ JSBool S_CCTransitionSlideInR::jsPropertyGet(JSContext *cx, JSObject *obj, jsid 
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTransitionSlideInR *cobj; JSGET_PTRSHELL(S_CCTransitionSlideInR, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -12484,10 +12193,7 @@ JSBool S_CCTransitionSlideInR::jsPropertySet(JSContext *cx, JSObject *obj, jsid 
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTransitionSlideInR *cobj; JSGET_PTRSHELL(S_CCTransitionSlideInR, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -12613,10 +12319,7 @@ JSBool S_CCToggleVisibility::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _i
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCToggleVisibility *cobj; JSGET_PTRSHELL(S_CCToggleVisibility, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -12625,10 +12328,7 @@ JSBool S_CCToggleVisibility::jsPropertySet(JSContext *cx, JSObject *obj, jsid _i
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCToggleVisibility *cobj; JSGET_PTRSHELL(S_CCToggleVisibility, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -12728,10 +12428,7 @@ JSBool S_CCActionCamera::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, j
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCActionCamera *cobj; JSGET_PTRSHELL(S_CCActionCamera, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -12740,10 +12437,7 @@ JSBool S_CCActionCamera::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, J
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCActionCamera *cobj; JSGET_PTRSHELL(S_CCActionCamera, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -12849,10 +12543,7 @@ JSBool S_CCSpriteFrameCache::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _i
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCSpriteFrameCache *cobj; JSGET_PTRSHELL(S_CCSpriteFrameCache, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -12861,10 +12552,7 @@ JSBool S_CCSpriteFrameCache::jsPropertySet(JSContext *cx, JSObject *obj, jsid _i
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCSpriteFrameCache *cobj; JSGET_PTRSHELL(S_CCSpriteFrameCache, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -13117,10 +12805,7 @@ JSBool S_CCShuffleTiles::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, j
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCShuffleTiles *cobj; JSGET_PTRSHELL(S_CCShuffleTiles, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -13129,10 +12814,7 @@ JSBool S_CCShuffleTiles::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, J
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCShuffleTiles *cobj; JSGET_PTRSHELL(S_CCShuffleTiles, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -13275,10 +12957,7 @@ JSBool S_CCEaseBounce::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsv
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCEaseBounce *cobj; JSGET_PTRSHELL(S_CCEaseBounce, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -13287,10 +12966,7 @@ JSBool S_CCEaseBounce::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSB
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCEaseBounce *cobj; JSGET_PTRSHELL(S_CCEaseBounce, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -13600,10 +13276,7 @@ JSBool S_CCFlipX::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *v
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCFlipX *cobj; JSGET_PTRSHELL(S_CCFlipX, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -13612,10 +13285,7 @@ JSBool S_CCFlipX::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool s
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCFlipX *cobj; JSGET_PTRSHELL(S_CCFlipX, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -13759,10 +13429,7 @@ JSBool S_CCEaseBounceInOut::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCEaseBounceInOut *cobj; JSGET_PTRSHELL(S_CCEaseBounceInOut, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -13771,10 +13438,7 @@ JSBool S_CCEaseBounceInOut::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCEaseBounceInOut *cobj; JSGET_PTRSHELL(S_CCEaseBounceInOut, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -14099,10 +13763,7 @@ JSBool S_CCFlipY::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *v
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCFlipY *cobj; JSGET_PTRSHELL(S_CCFlipY, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -14111,10 +13772,7 @@ JSBool S_CCFlipY::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool s
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCFlipY *cobj; JSGET_PTRSHELL(S_CCFlipY, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -14258,10 +13916,7 @@ JSBool S_CCEaseBackIn::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsv
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCEaseBackIn *cobj; JSGET_PTRSHELL(S_CCEaseBackIn, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -14270,10 +13925,7 @@ JSBool S_CCEaseBackIn::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSB
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCEaseBackIn *cobj; JSGET_PTRSHELL(S_CCEaseBackIn, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -14399,10 +14051,7 @@ JSBool S_CCTransitionMoveInT::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTransitionMoveInT *cobj; JSGET_PTRSHELL(S_CCTransitionMoveInT, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -14411,10 +14060,7 @@ JSBool S_CCTransitionMoveInT::jsPropertySet(JSContext *cx, JSObject *obj, jsid _
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTransitionMoveInT *cobj; JSGET_PTRSHELL(S_CCTransitionMoveInT, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -14515,10 +14161,7 @@ JSBool S_CCEaseBounceOut::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, 
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCEaseBounceOut *cobj; JSGET_PTRSHELL(S_CCEaseBounceOut, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -14527,10 +14170,7 @@ JSBool S_CCEaseBounceOut::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, 
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCEaseBounceOut *cobj; JSGET_PTRSHELL(S_CCEaseBounceOut, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -14656,10 +14296,7 @@ JSBool S_CCTransitionMoveInR::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTransitionMoveInR *cobj; JSGET_PTRSHELL(S_CCTransitionMoveInR, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -14668,10 +14305,7 @@ JSBool S_CCTransitionMoveInR::jsPropertySet(JSContext *cx, JSObject *obj, jsid _
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTransitionMoveInR *cobj; JSGET_PTRSHELL(S_CCTransitionMoveInR, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -14772,10 +14406,7 @@ JSBool S_CCTransitionMoveInB::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTransitionMoveInB *cobj; JSGET_PTRSHELL(S_CCTransitionMoveInB, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -14784,10 +14415,7 @@ JSBool S_CCTransitionMoveInB::jsPropertySet(JSContext *cx, JSObject *obj, jsid _
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTransitionMoveInB *cobj; JSGET_PTRSHELL(S_CCTransitionMoveInB, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -14888,10 +14516,7 @@ JSBool S_CCBezierBy::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCBezierBy *cobj; JSGET_PTRSHELL(S_CCBezierBy, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -14900,10 +14525,7 @@ JSBool S_CCBezierBy::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBoo
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCBezierBy *cobj; JSGET_PTRSHELL(S_CCBezierBy, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -15067,10 +14689,7 @@ JSBool S_CCEaseIn::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCEaseIn *cobj; JSGET_PTRSHELL(S_CCEaseIn, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -15079,10 +14698,7 @@ JSBool S_CCEaseIn::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool 
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCEaseIn *cobj; JSGET_PTRSHELL(S_CCEaseIn, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -15292,10 +14908,7 @@ JSBool S_CCPageTurn3D::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsv
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCPageTurn3D *cobj; JSGET_PTRSHELL(S_CCPageTurn3D, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -15304,10 +14917,7 @@ JSBool S_CCPageTurn3D::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSB
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCPageTurn3D *cobj; JSGET_PTRSHELL(S_CCPageTurn3D, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -15409,10 +15019,7 @@ JSBool S_CCTransitionFadeTR::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _i
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTransitionFadeTR *cobj; JSGET_PTRSHELL(S_CCTransitionFadeTR, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -15421,10 +15028,7 @@ JSBool S_CCTransitionFadeTR::jsPropertySet(JSContext *cx, JSObject *obj, jsid _i
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTransitionFadeTR *cobj; JSGET_PTRSHELL(S_CCTransitionFadeTR, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -15922,10 +15526,7 @@ JSBool S_CCApplication::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, js
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCApplication *cobj; JSGET_PTRSHELL(S_CCApplication, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -15934,10 +15535,7 @@ JSBool S_CCApplication::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JS
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCApplication *cobj; JSGET_PTRSHELL(S_CCApplication, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -16015,10 +15613,7 @@ JSBool S_CCEaseOut::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval 
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCEaseOut *cobj; JSGET_PTRSHELL(S_CCEaseOut, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -16027,10 +15622,7 @@ JSBool S_CCEaseOut::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCEaseOut *cobj; JSGET_PTRSHELL(S_CCEaseOut, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -16980,10 +16572,7 @@ JSBool S_CCEaseExponentialIn::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCEaseExponentialIn *cobj; JSGET_PTRSHELL(S_CCEaseExponentialIn, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -16992,10 +16581,7 @@ JSBool S_CCEaseExponentialIn::jsPropertySet(JSContext *cx, JSObject *obj, jsid _
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCEaseExponentialIn *cobj; JSGET_PTRSHELL(S_CCEaseExponentialIn, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -17121,10 +16707,7 @@ JSBool S_CCFileUtils::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsva
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCFileUtils *cobj; JSGET_PTRSHELL(S_CCFileUtils, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -17133,10 +16716,7 @@ JSBool S_CCFileUtils::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBo
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCFileUtils *cobj; JSGET_PTRSHELL(S_CCFileUtils, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -17200,10 +16780,7 @@ JSBool S_CCFlipX3D::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval 
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCFlipX3D *cobj; JSGET_PTRSHELL(S_CCFlipX3D, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -17212,10 +16789,7 @@ JSBool S_CCFlipX3D::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCFlipX3D *cobj; JSGET_PTRSHELL(S_CCFlipX3D, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -17349,10 +16923,7 @@ JSBool S_CCEaseInOut::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsva
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCEaseInOut *cobj; JSGET_PTRSHELL(S_CCEaseInOut, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -17361,10 +16932,7 @@ JSBool S_CCEaseInOut::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBo
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCEaseInOut *cobj; JSGET_PTRSHELL(S_CCEaseInOut, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -17491,10 +17059,7 @@ JSBool S_CCEaseExponentialOut::jsPropertyGet(JSContext *cx, JSObject *obj, jsid 
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCEaseExponentialOut *cobj; JSGET_PTRSHELL(S_CCEaseExponentialOut, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -17503,10 +17068,7 @@ JSBool S_CCEaseExponentialOut::jsPropertySet(JSContext *cx, JSObject *obj, jsid 
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCEaseExponentialOut *cobj; JSGET_PTRSHELL(S_CCEaseExponentialOut, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -17632,10 +17194,7 @@ JSBool S_CCJumpTo::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCJumpTo *cobj; JSGET_PTRSHELL(S_CCJumpTo, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -17644,10 +17203,7 @@ JSBool S_CCJumpTo::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool 
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCJumpTo *cobj; JSGET_PTRSHELL(S_CCJumpTo, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -17753,10 +17309,7 @@ JSBool S_CCTransitionPageTurn::jsPropertyGet(JSContext *cx, JSObject *obj, jsid 
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTransitionPageTurn *cobj; JSGET_PTRSHELL(S_CCTransitionPageTurn, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -17765,10 +17318,7 @@ JSBool S_CCTransitionPageTurn::jsPropertySet(JSContext *cx, JSObject *obj, jsid 
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTransitionPageTurn *cobj; JSGET_PTRSHELL(S_CCTransitionPageTurn, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -17916,10 +17466,7 @@ JSBool S_CCParticleSystemQuad::jsPropertyGet(JSContext *cx, JSObject *obj, jsid 
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCParticleSystemQuad *cobj; JSGET_PTRSHELL(S_CCParticleSystemQuad, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -17928,10 +17475,7 @@ JSBool S_CCParticleSystemQuad::jsPropertySet(JSContext *cx, JSObject *obj, jsid 
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCParticleSystemQuad *cobj; JSGET_PTRSHELL(S_CCParticleSystemQuad, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -18114,10 +17658,7 @@ JSBool S_CCLabelTTF::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCLabelTTF *cobj; JSGET_PTRSHELL(S_CCLabelTTF, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -18126,10 +17667,7 @@ JSBool S_CCLabelTTF::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBoo
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCLabelTTF *cobj; JSGET_PTRSHELL(S_CCLabelTTF, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -18197,10 +17735,7 @@ JSBool S_CCScene::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *v
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCScene *cobj; JSGET_PTRSHELL(S_CCScene, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -18209,10 +17744,7 @@ JSBool S_CCScene::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool s
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCScene *cobj; JSGET_PTRSHELL(S_CCScene, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -18855,10 +18387,7 @@ JSBool S_CCFlipY3D::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval 
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCFlipY3D *cobj; JSGET_PTRSHELL(S_CCFlipY3D, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -18867,10 +18396,7 @@ JSBool S_CCFlipY3D::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCFlipY3D *cobj; JSGET_PTRSHELL(S_CCFlipY3D, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -19124,10 +18650,7 @@ JSBool S_CCEaseExponentialInOut::jsPropertyGet(JSContext *cx, JSObject *obj, jsi
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCEaseExponentialInOut *cobj; JSGET_PTRSHELL(S_CCEaseExponentialInOut, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -19136,10 +18659,7 @@ JSBool S_CCEaseExponentialInOut::jsPropertySet(JSContext *cx, JSObject *obj, jsi
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCEaseExponentialInOut *cobj; JSGET_PTRSHELL(S_CCEaseExponentialInOut, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -19240,10 +18760,7 @@ JSBool S_CCTiledGrid3DAction::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTiledGrid3DAction *cobj; JSGET_PTRSHELL(S_CCTiledGrid3DAction, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -19252,10 +18769,7 @@ JSBool S_CCTiledGrid3DAction::jsPropertySet(JSContext *cx, JSObject *obj, jsid _
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTiledGrid3DAction *cobj; JSGET_PTRSHELL(S_CCTiledGrid3DAction, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -19348,10 +18862,7 @@ JSBool S_CCParticleSystemPoint::jsPropertyGet(JSContext *cx, JSObject *obj, jsid
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCParticleSystemPoint *cobj; JSGET_PTRSHELL(S_CCParticleSystemPoint, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -19360,10 +18871,7 @@ JSBool S_CCParticleSystemPoint::jsPropertySet(JSContext *cx, JSObject *obj, jsid
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCParticleSystemPoint *cobj; JSGET_PTRSHELL(S_CCParticleSystemPoint, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -19515,10 +19023,7 @@ JSBool S_CCJumpBy::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCJumpBy *cobj; JSGET_PTRSHELL(S_CCJumpBy, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -19527,10 +19032,7 @@ JSBool S_CCJumpBy::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool 
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCJumpBy *cobj; JSGET_PTRSHELL(S_CCJumpBy, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -19700,10 +19202,7 @@ JSBool S_CCFollow::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCFollow *cobj; JSGET_PTRSHELL(S_CCFollow, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -19712,10 +19211,7 @@ JSBool S_CCFollow::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool 
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCFollow *cobj; JSGET_PTRSHELL(S_CCFollow, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -19869,10 +19365,7 @@ JSBool S_CCSkewBy::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCSkewBy *cobj; JSGET_PTRSHELL(S_CCSkewBy, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -19881,10 +19374,7 @@ JSBool S_CCSkewBy::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool 
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCSkewBy *cobj; JSGET_PTRSHELL(S_CCSkewBy, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -20216,10 +19706,7 @@ JSBool S_CCEaseSineIn::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsv
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCEaseSineIn *cobj; JSGET_PTRSHELL(S_CCEaseSineIn, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -20228,10 +19715,7 @@ JSBool S_CCEaseSineIn::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSB
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCEaseSineIn *cobj; JSGET_PTRSHELL(S_CCEaseSineIn, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -20704,10 +20188,7 @@ JSBool S_CCMoveBy::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCMoveBy *cobj; JSGET_PTRSHELL(S_CCMoveBy, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -20716,10 +20197,7 @@ JSBool S_CCMoveBy::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool 
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCMoveBy *cobj; JSGET_PTRSHELL(S_CCMoveBy, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -20866,10 +20344,7 @@ JSBool S_CCEaseSineOut::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, js
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCEaseSineOut *cobj; JSGET_PTRSHELL(S_CCEaseSineOut, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -20878,10 +20353,7 @@ JSBool S_CCEaseSineOut::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JS
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCEaseSineOut *cobj; JSGET_PTRSHELL(S_CCEaseSineOut, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -21655,10 +21127,7 @@ JSBool S_CCSkewTo::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCSkewTo *cobj; JSGET_PTRSHELL(S_CCSkewTo, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -21667,10 +21136,7 @@ JSBool S_CCSkewTo::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool 
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCSkewTo *cobj; JSGET_PTRSHELL(S_CCSkewTo, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -21815,10 +21281,7 @@ JSBool S_CCShaky3D::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval 
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCShaky3D *cobj; JSGET_PTRSHELL(S_CCShaky3D, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -21827,10 +21290,7 @@ JSBool S_CCShaky3D::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCShaky3D *cobj; JSGET_PTRSHELL(S_CCShaky3D, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -21974,10 +21434,7 @@ JSBool S_CCActionInterval::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id,
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCActionInterval *cobj; JSGET_PTRSHELL(S_CCActionInterval, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -22153,10 +21610,7 @@ JSBool S_CCTransitionZoomFlipY::jsPropertyGet(JSContext *cx, JSObject *obj, jsid
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTransitionZoomFlipY *cobj; JSGET_PTRSHELL(S_CCTransitionZoomFlipY, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -22165,10 +21619,7 @@ JSBool S_CCTransitionZoomFlipY::jsPropertySet(JSContext *cx, JSObject *obj, jsid
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTransitionZoomFlipY *cobj; JSGET_PTRSHELL(S_CCTransitionZoomFlipY, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -22262,10 +21713,7 @@ JSBool S_CCTextureCache::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, j
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTextureCache *cobj; JSGET_PTRSHELL(S_CCTextureCache, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -22274,10 +21722,7 @@ JSBool S_CCTextureCache::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, J
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTextureCache *cobj; JSGET_PTRSHELL(S_CCTextureCache, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -23029,10 +22474,7 @@ JSBool S_CCTransitionZoomFlipX::jsPropertyGet(JSContext *cx, JSObject *obj, jsid
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTransitionZoomFlipX *cobj; JSGET_PTRSHELL(S_CCTransitionZoomFlipX, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -23041,10 +22483,7 @@ JSBool S_CCTransitionZoomFlipX::jsPropertySet(JSContext *cx, JSObject *obj, jsid
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTransitionZoomFlipX *cobj; JSGET_PTRSHELL(S_CCTransitionZoomFlipX, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -23144,10 +22583,7 @@ JSBool S_CCEaseSineInOut::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, 
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCEaseSineInOut *cobj; JSGET_PTRSHELL(S_CCEaseSineInOut, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -23156,10 +22592,7 @@ JSBool S_CCEaseSineInOut::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, 
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCEaseSineInOut *cobj; JSGET_PTRSHELL(S_CCEaseSineInOut, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -23260,10 +22693,7 @@ JSBool S_CCSplitCols::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsva
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCSplitCols *cobj; JSGET_PTRSHELL(S_CCSplitCols, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -23272,10 +22702,7 @@ JSBool S_CCSplitCols::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBo
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCSplitCols *cobj; JSGET_PTRSHELL(S_CCSplitCols, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -23412,10 +22839,7 @@ JSBool S_CCFadeOut::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval 
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCFadeOut *cobj; JSGET_PTRSHELL(S_CCFadeOut, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -23424,10 +22848,7 @@ JSBool S_CCFadeOut::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCFadeOut *cobj; JSGET_PTRSHELL(S_CCFadeOut, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -23552,10 +22973,7 @@ JSBool S_CCTileMapAtlas::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, j
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTileMapAtlas *cobj; JSGET_PTRSHELL(S_CCTileMapAtlas, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -23564,10 +22982,7 @@ JSBool S_CCTileMapAtlas::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, J
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTileMapAtlas *cobj; JSGET_PTRSHELL(S_CCTileMapAtlas, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -23919,10 +23334,7 @@ JSBool S_CCTransitionCrossFade::jsPropertyGet(JSContext *cx, JSObject *obj, jsid
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTransitionCrossFade *cobj; JSGET_PTRSHELL(S_CCTransitionCrossFade, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -23931,10 +23343,7 @@ JSBool S_CCTransitionCrossFade::jsPropertySet(JSContext *cx, JSObject *obj, jsid
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTransitionCrossFade *cobj; JSGET_PTRSHELL(S_CCTransitionCrossFade, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -24213,10 +23622,7 @@ JSBool S_CCActionEase::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsv
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCActionEase *cobj; JSGET_PTRSHELL(S_CCActionEase, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -24225,10 +23631,7 @@ JSBool S_CCActionEase::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSB
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCActionEase *cobj; JSGET_PTRSHELL(S_CCActionEase, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -24403,10 +23806,7 @@ JSBool S_CCFadeTo::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCFadeTo *cobj; JSGET_PTRSHELL(S_CCFadeTo, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -24415,10 +23815,7 @@ JSBool S_CCFadeTo::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool 
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCFadeTo *cobj; JSGET_PTRSHELL(S_CCFadeTo, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -24732,10 +24129,7 @@ JSBool S_CCTransitionJumpZoom::jsPropertyGet(JSContext *cx, JSObject *obj, jsid 
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTransitionJumpZoom *cobj; JSGET_PTRSHELL(S_CCTransitionJumpZoom, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -24744,10 +24138,7 @@ JSBool S_CCTransitionJumpZoom::jsPropertySet(JSContext *cx, JSObject *obj, jsid 
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTransitionJumpZoom *cobj; JSGET_PTRSHELL(S_CCTransitionJumpZoom, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -24846,10 +24237,7 @@ JSBool S_CCBlink::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *v
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCBlink *cobj; JSGET_PTRSHELL(S_CCBlink, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -24858,10 +24246,7 @@ JSBool S_CCBlink::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool s
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCBlink *cobj; JSGET_PTRSHELL(S_CCBlink, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -25005,10 +24390,7 @@ JSBool S_CCTransitionFlipAngular::jsPropertyGet(JSContext *cx, JSObject *obj, js
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTransitionFlipAngular *cobj; JSGET_PTRSHELL(S_CCTransitionFlipAngular, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -25017,10 +24399,7 @@ JSBool S_CCTransitionFlipAngular::jsPropertySet(JSContext *cx, JSObject *obj, js
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTransitionFlipAngular *cobj; JSGET_PTRSHELL(S_CCTransitionFlipAngular, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -25120,10 +24499,7 @@ JSBool S_CCTransitionRotoZoom::jsPropertyGet(JSContext *cx, JSObject *obj, jsid 
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTransitionRotoZoom *cobj; JSGET_PTRSHELL(S_CCTransitionRotoZoom, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -25132,10 +24508,7 @@ JSBool S_CCTransitionRotoZoom::jsPropertySet(JSContext *cx, JSObject *obj, jsid 
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTransitionRotoZoom *cobj; JSGET_PTRSHELL(S_CCTransitionRotoZoom, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -25388,10 +24761,7 @@ JSBool S_CCFadeIn::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCFadeIn *cobj; JSGET_PTRSHELL(S_CCFadeIn, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -25400,10 +24770,7 @@ JSBool S_CCFadeIn::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool 
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCFadeIn *cobj; JSGET_PTRSHELL(S_CCFadeIn, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -25522,10 +24889,7 @@ JSBool S_CCUserDefault::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, js
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCUserDefault *cobj; JSGET_PTRSHELL(S_CCUserDefault, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -25534,10 +24898,7 @@ JSBool S_CCUserDefault::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JS
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCUserDefault *cobj; JSGET_PTRSHELL(S_CCUserDefault, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -25791,10 +25152,7 @@ JSBool S_CCSplitRows::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsva
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCSplitRows *cobj; JSGET_PTRSHELL(S_CCSplitRows, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -25803,10 +25161,7 @@ JSBool S_CCSplitRows::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBo
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCSplitRows *cobj; JSGET_PTRSHELL(S_CCSplitRows, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -25943,10 +25298,7 @@ JSBool S_CCTransitionSlideInB::jsPropertyGet(JSContext *cx, JSObject *obj, jsid 
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTransitionSlideInB *cobj; JSGET_PTRSHELL(S_CCTransitionSlideInB, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -25955,10 +25307,7 @@ JSBool S_CCTransitionSlideInB::jsPropertySet(JSContext *cx, JSObject *obj, jsid 
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTransitionSlideInB *cobj; JSGET_PTRSHELL(S_CCTransitionSlideInB, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -26084,10 +25433,7 @@ JSBool S_CCTransitionSceneOriented::jsPropertyGet(JSContext *cx, JSObject *obj, 
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTransitionSceneOriented *cobj; JSGET_PTRSHELL(S_CCTransitionSceneOriented, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -26096,10 +25442,7 @@ JSBool S_CCTransitionSceneOriented::jsPropertySet(JSContext *cx, JSObject *obj, 
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTransitionSceneOriented *cobj; JSGET_PTRSHELL(S_CCTransitionSceneOriented, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -26207,10 +25550,7 @@ JSBool S_CCSet::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *val
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCSet *cobj; JSGET_PTRSHELL(S_CCSet, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -26219,10 +25559,7 @@ JSBool S_CCSet::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool str
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCSet *cobj; JSGET_PTRSHELL(S_CCSet, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -26398,10 +25735,7 @@ JSBool S_CCTouch::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval *v
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTouch *cobj; JSGET_PTRSHELL(S_CCTouch, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -26410,10 +25744,7 @@ JSBool S_CCTouch::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool s
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTouch *cobj; JSGET_PTRSHELL(S_CCTouch, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -26536,10 +25867,7 @@ JSBool S_CCTransitionSlideInT::jsPropertyGet(JSContext *cx, JSObject *obj, jsid 
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTransitionSlideInT *cobj; JSGET_PTRSHELL(S_CCTransitionSlideInT, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -26548,10 +25876,7 @@ JSBool S_CCTransitionSlideInT::jsPropertySet(JSContext *cx, JSObject *obj, jsid 
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTransitionSlideInT *cobj; JSGET_PTRSHELL(S_CCTransitionSlideInT, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -27233,10 +26558,7 @@ JSBool S_CCTransitionScene::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTransitionScene *cobj; JSGET_PTRSHELL(S_CCTransitionScene, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -27245,10 +26567,7 @@ JSBool S_CCTransitionScene::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCTransitionScene *cobj; JSGET_PTRSHELL(S_CCTransitionScene, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -27438,10 +26757,7 @@ JSBool S_CCScaleBy::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval 
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCScaleBy *cobj; JSGET_PTRSHELL(S_CCScaleBy, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -27450,10 +26766,7 @@ JSBool S_CCScaleBy::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCScaleBy *cobj; JSGET_PTRSHELL(S_CCScaleBy, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -27996,10 +27309,7 @@ JSBool S_CCGridAction::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsv
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCGridAction *cobj; JSGET_PTRSHELL(S_CCGridAction, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -28008,10 +27318,7 @@ JSBool S_CCGridAction::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSB
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCGridAction *cobj; JSGET_PTRSHELL(S_CCGridAction, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -28160,10 +27467,7 @@ JSBool S_CCScaleTo::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval 
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCScaleTo *cobj; JSGET_PTRSHELL(S_CCScaleTo, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -28172,10 +27476,7 @@ JSBool S_CCScaleTo::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBool
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCScaleTo *cobj; JSGET_PTRSHELL(S_CCScaleTo, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -28470,10 +27771,7 @@ JSBool S_CCGrid3DAction::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, j
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCGrid3DAction *cobj; JSGET_PTRSHELL(S_CCGrid3DAction, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -28482,10 +27780,7 @@ JSBool S_CCGrid3DAction::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, J
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCGrid3DAction *cobj; JSGET_PTRSHELL(S_CCGrid3DAction, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -28577,10 +27872,7 @@ JSBool S_CCBezierTo::jsPropertyGet(JSContext *cx, JSObject *obj, jsid _id, jsval
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCBezierTo *cobj; JSGET_PTRSHELL(S_CCBezierTo, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
@@ -28589,10 +27881,7 @@ JSBool S_CCBezierTo::jsPropertySet(JSContext *cx, JSObject *obj, jsid _id, JSBoo
 	int32_t propId = JSID_TO_INT(_id);
 	S_CCBezierTo *cobj; JSGET_PTRSHELL(S_CCBezierTo, cobj, obj);
 	if (!cobj) return JS_FALSE;
-	switch(propId) {
-	default:
-		break;
-	}
+
 	return JS_TRUE;
 }
 
