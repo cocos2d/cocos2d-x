@@ -349,20 +349,17 @@ void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         std::string externalTilesetFilename = valueForKey("source", attributeDict);
         if (externalTilesetFilename != "")
         {
-            if (m_sTMXFileName.length() == 0)
+            if (m_sTMXFileName.find_last_of("/") != string::npos)
             {
-                string pszFullPath = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(m_sResources.c_str());
-                if (pszFullPath.find_last_of("/\\") != pszFullPath.length()-1)
-                {
-                    pszFullPath.append("/");
-                }
-                
-                externalTilesetFilename = CCFileUtils::sharedFileUtils()->fullPathFromRelativeFile(externalTilesetFilename.c_str(), pszFullPath.c_str()  );
+                string dir = m_sTMXFileName.substr(0, m_sTMXFileName.find_last_of("/") + 1);
+                externalTilesetFilename = dir + externalTilesetFilename;
             }
-            else
+            else 
             {
-                externalTilesetFilename = CCFileUtils::sharedFileUtils()->fullPathFromRelativeFile(externalTilesetFilename.c_str(), pTMXMapInfo->getTMXFileName());
+                externalTilesetFilename = m_sResources + "/" + externalTilesetFilename;
             }
+            externalTilesetFilename = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(externalTilesetFilename.c_str());
+            
             pTMXMapInfo->parseXMLFile(externalTilesetFilename.c_str());
         }
         else
@@ -448,19 +445,15 @@ void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
 
         // build full path
         std::string imagename = valueForKey("source", attributeDict);
-        if (m_sTMXFileName.length() == 0)
-        {
-            string pszFullPath = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(m_sResources.c_str());
-            if (pszFullPath.find_last_of("/\\") != pszFullPath.length()-1)
-            {
-                pszFullPath.append("/");
-            }
 
-            tileset->m_sSourceImage = CCFileUtils::sharedFileUtils()->fullPathFromRelativeFile(imagename.c_str(), pszFullPath.c_str()  );
-        }
-        else
+        if (m_sTMXFileName.find_last_of("/") != string::npos)
         {
-            tileset->m_sSourceImage = CCFileUtils::sharedFileUtils()->fullPathFromRelativeFile(imagename.c_str(), pTMXMapInfo->getTMXFileName());
+            string dir = m_sTMXFileName.substr(0, m_sTMXFileName.find_last_of("/") + 1);
+            tileset->m_sSourceImage = dir + imagename;
+        }
+        else 
+        {
+            tileset->m_sSourceImage = m_sResources + "/" + imagename;
         }
     } 
     else if(elementName == "data")

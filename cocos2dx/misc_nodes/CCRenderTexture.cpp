@@ -194,11 +194,13 @@ bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CCTexture2DPixelForma
         m_ePixelFormat = eFormat;
 
         m_pTexture = new CCTexture2D();
-        CC_BREAK_IF(! m_pTexture);
-
-        m_pTexture->initWithData(data, (CCTexture2DPixelFormat)m_ePixelFormat, powW, powH, CCSizeMake((float)w, (float)h));
-        free( data );
-
+        if (m_pTexture) {
+                m_pTexture->initWithData(data, (CCTexture2DPixelFormat)m_ePixelFormat, powW, powH, CCSizeMake((float)w, (float)h));
+                free( data );
+        } else {
+                free( data );  // ScopeGuard (a simulated Finally clause) would be more elegant.
+                break;
+        }
         GLint oldRBO;
         glGetIntegerv(GL_RENDERBUFFER_BINDING, &oldRBO);
 
@@ -214,7 +216,7 @@ bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CCTexture2DPixelForma
             //create and attach depth buffer
             glGenRenderbuffers(1, &m_uDepthRenderBufffer);
             glBindRenderbuffer(GL_RENDERBUFFER, m_uDepthRenderBufffer);
-            glRenderbufferStorage(GL_RENDERBUFFER, uDepthStencilFormat, powW, powH);
+            glRenderbufferStorage(GL_RENDERBUFFER, uDepthStencilFormat, (GLsizei)powW, (GLsizei)powH);
             glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, m_uDepthRenderBufffer);
 
             // if depth format is the one with stencil part, bind same render buffer as stencil attachment

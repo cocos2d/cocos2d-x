@@ -61,7 +61,6 @@ public:
     virtual void closeKeyboard();
     
 private:
-    CCEditBox* m_pEditBox;
     CCSize     m_tContentSize;
     void*      m_pSysEdit;
     int        m_nMaxTextLength;

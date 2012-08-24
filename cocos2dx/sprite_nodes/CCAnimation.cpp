@@ -69,7 +69,7 @@ CCObject* CCAnimationFrame::copyWithZone(CCZone* pZone)
     else
     {
         pCopy = new CCAnimationFrame();
-        pZone = pNewZone = new CCZone(pCopy);
+        pNewZone = new CCZone(pCopy);
     }
 
     pCopy->initWithSpriteFrame((CCSpriteFrame*)m_pSpriteFrame->copy()->autorelease(),
@@ -232,7 +232,7 @@ CCObject* CCAnimation::copyWithZone(CCZone* pZone)
     else
     {
         pCopy = new CCAnimation();
-        pZone = pNewZone = new CCZone(pCopy);
+        pNewZone = new CCZone(pCopy);
     }
 
     pCopy->initWithAnimationFrames(m_pFrames, m_fDelayPerUnit, m_uLoops);

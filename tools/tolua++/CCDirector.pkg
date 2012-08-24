@@ -38,5 +38,7 @@ class CCDirector : public CCObject
     CCKeypadDispatcher* getKeypadDispatcher();
     CCAccelerometer* getAccelerometer();
 
+	void setDepthTest(bool var);
+
     static CCDirector* sharedDirector(void);
 };

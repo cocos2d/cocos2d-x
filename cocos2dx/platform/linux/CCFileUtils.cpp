@@ -45,7 +45,7 @@ void CCFileUtils::purgeCachedEntries()
 
 const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
 {
-    const char* pszRootPath = CCApplication::sharedApplication().getResourceRootPath();
+    const char* pszRootPath = CCApplication::sharedApplication()->getResourceRootPath();
 
     CCString* pRet = CCString::create(pszRootPath);
     const char* resDir = CCFileUtils::sharedFileUtils()->getResourceDirectory();
@@ -104,7 +104,7 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
 
 string CCFileUtils::getWriteablePath() {
 	//return current resource path
-  return CCApplication::sharedApplication().getResourceRootPath();
+  return CCApplication::sharedApplication()->getResourceRootPath();
 }
 
 NS_CC_END
