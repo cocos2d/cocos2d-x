@@ -32,9 +32,15 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.Paint.Align;
 import android.graphics.Paint.FontMetricsInt;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.TextPaint;
+import android.text.TextUtils;
+import android.text.style.StyleSpan;
 import android.util.Log;
 
 public class Cocos2dxBitmap{
@@ -410,4 +416,43 @@ public class Cocos2dxBitmap{
     }
     
     private static native void nativeInitBitmapDC(int width, int height, byte[] pixels);
+    
+    private static int getFontSizeAccordingHeight(int height)
+    {
+    	Paint paint = new Paint();
+    	Rect bounds = new Rect();
+
+    	paint.setTypeface(Typeface.DEFAULT);
+    	int incr_text_size = 1;
+    	boolean found_desired_size = false;
+
+    	while (!found_desired_size) {
+    		
+    	    paint.setTextSize(incr_text_size);
+    	    String text = "SghMNy";
+    	    paint.getTextBounds(text, 0, text.length(), bounds);
+
+    	    incr_text_size++;
+
+	    	if (height - bounds.height() <= 2) {
+	    		found_desired_size = true;
+	    	}
+	    	Log.d("font size", "incr size:" + incr_text_size);
+    	}
+    	return incr_text_size;
+    }
+    
+    private static String getStringWithEllipsis(String originalText, float width, float fontSize){  
+        if(TextUtils.isEmpty(originalText)){  
+            return "";  
+        }
+        
+        TextPaint paint = new TextPaint();
+    	paint.setTypeface(Typeface.DEFAULT);
+    	paint.setTextSize(fontSize);
+    	
+        return TextUtils.ellipsize(originalText, paint, width,   
+                TextUtils.TruncateAt.valueOf("END")).toString();  
+    }  
+ 
 }

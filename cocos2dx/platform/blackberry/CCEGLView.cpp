@@ -587,7 +587,7 @@ bool CCEGLView::handleEvents()
 				case NAVIGATOR_WINDOW_INACTIVE:
 					if (m_isWindowActive)
 					{
-						CCApplication::sharedApplication().applicationDidEnterBackground();
+						CCApplication::sharedApplication()->applicationDidEnterBackground();
 						m_isWindowActive = false;
 					}
 					break;
@@ -595,7 +595,7 @@ bool CCEGLView::handleEvents()
 				case NAVIGATOR_WINDOW_ACTIVE:
 					if (!m_isWindowActive)
 					{
-						CCApplication::sharedApplication().applicationWillEnterForeground();
+						CCApplication::sharedApplication()->applicationWillEnterForeground();
 						m_isWindowActive = true;
 					}
 					break;
@@ -607,14 +607,14 @@ bool CCEGLView::handleEvents()
 						case NAVIGATOR_WINDOW_FULLSCREEN:
 							if (!m_isWindowActive)
 							{
-								CCApplication::sharedApplication().applicationWillEnterForeground();
+								CCApplication::sharedApplication()->applicationWillEnterForeground();
 								m_isWindowActive = true;
 							}
 							break;
 						case NAVIGATOR_WINDOW_THUMBNAIL:
 							if (m_isWindowActive)
 							{
-								CCApplication::sharedApplication().applicationDidEnterBackground();
+								CCApplication::sharedApplication()->applicationDidEnterBackground();
 								m_isWindowActive = false;
 							}
 							break;
@@ -673,96 +673,36 @@ bool CCEGLView::handleEvents()
 
 				case SCREEN_EVENT_POINTER:
 					{
-						int buttons;
-						int pair[2];
+						int buttons = 0;
+						int pair_[2] = {0};
+						float pair[2] = {0.0f};
 						static bool mouse_pressed = false;
 
 						// this is a mouse move event, it is applicable to a device with a usb mouse or simulator
 						screen_get_event_property_iv(m_screenEvent, SCREEN_PROPERTY_BUTTONS, &buttons);
-						screen_get_event_property_iv(m_screenEvent, SCREEN_PROPERTY_SOURCE_POSITION, pair);
-
+						screen_get_event_property_iv(m_screenEvent, SCREEN_PROPERTY_SOURCE_POSITION, pair_);
+						pair[0] = (float)pair_[0];
+						pair[1] = (float)pair_[1];
 						if (buttons & SCREEN_LEFT_MOUSE_BUTTON)
 						{
 							if (mouse_pressed)
 							{
-								handleTouchesMove(1, &touch_id, (float *)&pair[0], (float *)&pair[1]);
-
-								/*
-								// Left mouse button was released
-								if (m_pDelegate && touch_id < MAX_TOUCHES)
-								{
-									CCTouch* touch = s_pTouches[touch_id];
-									if (touch)
-									{
-										CCSet set;
-										touch->SetTouchInfo(((float)(pair[0]) - m_rcViewPort.origin.x) / m_fScreenScaleFactor,
-															   ((float)(pair[1]) - m_rcViewPort.origin.y) / m_fScreenScaleFactor);
-										set.addObject(touch);
-										m_pDelegate->touchesMoved(&set, NULL);
-									}
-								}
-								*/
+								handleTouchesMove(1, &touch_id, &pair[0], &pair[1]);
 							}
 							else
 							{
 								// Left mouse button is pressed
 								mouse_pressed = true;
 
-								handleTouchesBegin(1, &touch_id, (float *)&pair[0], (float *)&pair[1]);
-
-								/*
-								if (m_pDelegate && touch_id < MAX_TOUCHES)
-								{
-									CCTouch* touch = s_pTouches[touch_id];
-									if (!touch)
-										touch = new CCTouch;
-
-									touch->SetTouchInfo(((float)(pair[0]) - m_rcViewPort.origin.x) / m_fScreenScaleFactor,
-														   ((float)(pair[1]) - m_rcViewPort.origin.y) / m_fScreenScaleFactor);
-									s_pTouches[touch_id] = touch;
-
-									CCSet set;
-									set.addObject(touch);
-									m_pDelegate->touchesBegan(&set, NULL);
-								}
-								*/
+								handleTouchesBegin(1, &touch_id, &pair[0], &pair[1]);
 							}
 						}
 						else
 						{
 							if (mouse_pressed)
 							{
-								handleTouchesEnd(1, &touch_id, (float *)&pair[0], (float *)&pair[1]);
-
-								/*
-								if (m_pDelegate && touch_id < MAX_TOUCHES)
-								{
-									mouse_pressed = false;
-
-									CCTouch* touch = s_pTouches[touch_id];
-									if (touch)
-									{
-										CCSet set;
-										touch->SetTouchInfo(((float)(pair[0]) - m_rcViewPort.origin.x) / m_fScreenScaleFactor,
-															   ((float)(pair[1]) - m_rcViewPort.origin.y) / m_fScreenScaleFactor);
-										set.addObject(touch);
-										m_pDelegate->touchesEnded(&set, NULL);
-
-										touch->release();
-										for (int i = touch_id; i < MAX_TOUCHES; i++)
-										{
-											if (i != (MAX_TOUCHES - 1))
-											{
-												s_pTouches[i] = s_pTouches[i + 1];
-											}
-											else
-											{
-												s_pTouches[i] = NULL;
-											}
-										}
-									}
-								}
-								*/
+								mouse_pressed = false;
+								handleTouchesEnd(1, &touch_id, &pair[0], &pair[1]);
 							}
 						}
 					}

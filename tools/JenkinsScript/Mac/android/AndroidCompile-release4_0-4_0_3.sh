@@ -12,6 +12,12 @@ antcompile()
 	rm anttmp.properties
 	ant release
 	compileresult=$[$compileresult+$?]
+        if [ $IsTestCpp == 1 ] && [ $? == 0 ]
+        then
+            cd bin
+            mv TestCpp-release.apk TestCpp-release-14.apk
+            cd ..
+        fi
 
 	#Change API level.(API level:15)
 	sed '/target=/s/=.*$/=android-15/' ant.properties > anttmp.properties
@@ -19,6 +25,12 @@ antcompile()
 	rm anttmp.properties
 	ant release
 	compileresult=$[$compileresult+$?]
+        if [ $IsTestCpp == 1 ] && [ $? == 0 ]
+        then
+            cd bin
+            mv TestCpp-release.apk TestCpp-release-15.apk
+            cd ..
+        fi
 
 	#After all test versions completed,changed current API level to the original.(API level:8)
 	sed '/target=/s/=.*$/=android-8/' ant.properties > anttmp.properties
@@ -31,6 +43,7 @@ compileresult=0
 CUR=$(pwd)
 cd ../../../..
 ROOT=$(pwd)
+IsTestCpp=1
 
 #copy configuration files to target.
 sed -i  '' '14d' $CUR/ant.properties
@@ -49,6 +62,8 @@ cd ..
 android update project -p proj.android
 cd proj.android
 antcompile
+
+IsTestCpp=0
 
 cp $ROOT/tools/JenkinsScript/ant.properties $ROOT/samples/HelloCpp/proj.android
 cp $ROOT/tools/JenkinsScript/build.xml $ROOT/samples/HelloCpp/proj.android
@@ -75,10 +90,10 @@ antcompile
 #return the compileresult.
 cd ../../..
 if [ $compileresult != 0 ]; then
-    git checkout -f
-    git clean -df -x
+#    git checkout -f
+#    git clean -df -x
     exit 1
 else
-    git checkout -f
-    git clean -df -x
+#    git checkout -f
+#    git clean -df -x
 fi

@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		15527950157C64F9007CC855 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = 1552794F157C64F9007CC855 /* Shaders */; };
-		15A9C128159B03D200BF103F /* fps_images-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 15A9C126159B03D200BF103F /* fps_images-hd.png */; };
-		15A9C129159B03D200BF103F /* fps_images-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = 15A9C127159B03D200BF103F /* fps_images-ipadhd.png */; };
 		15AA9D5115B7EC460033D6C2 /* AccelerometerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15AA9C4215B7EC450033D6C2 /* AccelerometerTest.cpp */; };
 		15AA9D5215B7EC460033D6C2 /* ActionManagerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15AA9C4515B7EC450033D6C2 /* ActionManagerTest.cpp */; };
 		15AA9D5315B7EC460033D6C2 /* ActionsEaseTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15AA9C4815B7EC450033D6C2 /* ActionsEaseTest.cpp */; };
@@ -186,7 +184,10 @@
 		15AA9F2C15B7EDCB0033D6C2 /* CCSpriteLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15AA9EFC15B7EDCB0033D6C2 /* CCSpriteLoader.cpp */; };
 		15AA9F3C15B7EF960033D6C2 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15AA9F3A15B7EF960033D6C2 /* AppDelegate.cpp */; };
 		15AA9F4915B7F3A60033D6C2 /* libcocos2dx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15AA9C3515B7EBDF0033D6C2 /* libcocos2dx.a */; };
-		15DD6D8F156DD2E6003E7567 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 15DD6D8D156DD2E6003E7567 /* fps_images.png */; };
+		15BA623115E4EAC3002BC3A5 /* hd in Resources */ = {isa = PBXBuildFile; fileRef = 15BA623015E4EAC3002BC3A5 /* hd */; };
+		15BA623515E4EAD7002BC3A5 /* ipadhd in Resources */ = {isa = PBXBuildFile; fileRef = 15BA623415E4EAD7002BC3A5 /* ipadhd */; };
+		15D2551A15E5FD6B000D5E89 /* ipad in Resources */ = {isa = PBXBuildFile; fileRef = 15D2551915E5FD6B000D5E89 /* ipad */; };
+		15D255A315E61F01000D5E89 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 15D255A215E61F01000D5E89 /* fps_images.png */; };
 		1A14ADF515DA49A50064E300 /* CCEditBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A14ADEC15DA49A50064E300 /* CCEditBox.cpp */; };
 		1A14ADF715DA49A50064E300 /* CCEditBoxImplIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A14ADF115DA49A50064E300 /* CCEditBoxImplIOS.mm */; };
 		1A14ADF915DA49A50064E300 /* EditBoxImplIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A14ADF415DA49A50064E300 /* EditBoxImplIOS.mm */; };
@@ -261,8 +262,6 @@
 
 /* Begin PBXFileReference section */
 		1552794F157C64F9007CC855 /* Shaders */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Shaders; sourceTree = "<group>"; };
-		15A9C126159B03D200BF103F /* fps_images-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fps_images-hd.png"; sourceTree = "<group>"; };
-		15A9C127159B03D200BF103F /* fps_images-ipadhd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fps_images-ipadhd.png"; sourceTree = "<group>"; };
 		15AA9C2D15B7EBDF0033D6C2 /* cocos2dx.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2dx.xcodeproj; path = ../../../cocos2dx/proj.ios/cocos2dx.xcodeproj; sourceTree = "<group>"; };
 		15AA9C4215B7EC450033D6C2 /* AccelerometerTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AccelerometerTest.cpp; sourceTree = "<group>"; };
 		15AA9C4315B7EC450033D6C2 /* AccelerometerTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccelerometerTest.h; sourceTree = "<group>"; };
@@ -675,7 +674,10 @@
 		15AA9EFD15B7EDCB0033D6C2 /* CCSpriteLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSpriteLoader.h; sourceTree = "<group>"; };
 		15AA9F3A15B7EF960033D6C2 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		15AA9F3B15B7EF960033D6C2 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		15DD6D8D156DD2E6003E7567 /* fps_images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fps_images.png; sourceTree = "<group>"; };
+		15BA623015E4EAC3002BC3A5 /* hd */ = {isa = PBXFileReference; lastKnownFileType = folder; path = hd; sourceTree = "<group>"; };
+		15BA623415E4EAD7002BC3A5 /* ipadhd */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ipadhd; sourceTree = "<group>"; };
+		15D2551915E5FD6B000D5E89 /* ipad */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ipad; sourceTree = "<group>"; };
+		15D255A215E61F01000D5E89 /* fps_images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fps_images.png; sourceTree = "<group>"; };
 		1A14ADEC15DA49A50064E300 /* CCEditBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCEditBox.cpp; sourceTree = "<group>"; };
 		1A14ADED15DA49A50064E300 /* CCEditBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEditBox.h; sourceTree = "<group>"; };
 		1A14ADEE15DA49A50064E300 /* CCEditBoxImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEditBoxImpl.h; sourceTree = "<group>"; };
@@ -1934,12 +1936,14 @@
 		78C7DDAA14EBA5050085D0C2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				15D255A215E61F01000D5E89 /* fps_images.png */,
+				15D2551915E5FD6B000D5E89 /* ipad */,
+				15BA623415E4EAD7002BC3A5 /* ipadhd */,
+				15BA623015E4EAC3002BC3A5 /* hd */,
 				D4EF949F15BD2D9800D803EB /* Icon-144.png */,
 				D4EF949D15BD2D9600D803EB /* Icon-72.png */,
 				D4EF949B15BD2D8E00D803EB /* Icon-114.png */,
 				D4EF949915BD2D8B00D803EB /* Icon-57.png */,
-				15A9C126159B03D200BF103F /* fps_images-hd.png */,
-				15A9C127159B03D200BF103F /* fps_images-ipadhd.png */,
 				4A2188021586CCE10069114E /* ccb */,
 				1552794F157C64F9007CC855 /* Shaders */,
 				789B560C15197BE00038CD1E /* animations */,
@@ -1951,7 +1955,6 @@
 				78C7DDC214EBA5050085D0C2 /* effect2.ogg */,
 				78ED2F84153D5BC500330E29 /* extensions */,
 				789B560E15197BF30038CD1E /* fonts */,
-				15DD6D8D156DD2E6003E7567 /* fps_images.png */,
 				78C7DDEB14EBA5050085D0C2 /* Hello.png */,
 				789B561015197BFB0038CD1E /* Images */,
 				78C7DEBD14EBA5060085D0C2 /* music.mid */,
@@ -2118,17 +2121,18 @@
 				789B561515197C040038CD1E /* zwoptex in Resources */,
 				78ED2F85153D5BC500330E29 /* extensions in Resources */,
 				7855E0E1153FEF240059DD9A /* Default.png in Resources */,
-				15DD6D8F156DD2E6003E7567 /* fps_images.png in Resources */,
 				78CAE769156F8124002A7A68 /* Particles in Resources */,
 				15527950157C64F9007CC855 /* Shaders in Resources */,
 				4A2188031586CCE10069114E /* ccb in Resources */,
-				15A9C128159B03D200BF103F /* fps_images-hd.png in Resources */,
-				15A9C129159B03D200BF103F /* fps_images-ipadhd.png in Resources */,
 				15AA9EB915B7ECB00033D6C2 /* CMakeLists.txt in Resources */,
 				D4EF949A15BD2D8B00D803EB /* Icon-57.png in Resources */,
 				D4EF949C15BD2D8E00D803EB /* Icon-114.png in Resources */,
 				D4EF949E15BD2D9600D803EB /* Icon-72.png in Resources */,
 				D4EF94A015BD2D9800D803EB /* Icon-144.png in Resources */,
+				15BA623115E4EAC3002BC3A5 /* hd in Resources */,
+				15BA623515E4EAD7002BC3A5 /* ipadhd in Resources */,
+				15D2551A15E5FD6B000D5E89 /* ipad in Resources */,
+				15D255A315E61F01000D5E89 /* fps_images.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
