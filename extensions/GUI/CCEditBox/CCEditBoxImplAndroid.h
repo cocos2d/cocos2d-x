@@ -23,8 +23,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __CCEditBoxIMPLIOS_H__
-#define __CCEditBoxIMPLIOS_H__
+#ifndef __CCEDITBOXIMPLANDROID_H__
+#define __CCEDITBOXIMPLANDROID_H__
 
 #include "cocos2d.h"
 #include "ExtensionMacros.h"
@@ -34,11 +34,11 @@ NS_CC_EXT_BEGIN
 
 class CCEditBox;
 
-class CCEditBoxImplIOS : public CCEditBoxImpl
+class CCEditBoxImplAndroid : public CCEditBoxImpl
 {
 public:
-    CCEditBoxImplIOS(CCEditBox* pEditText);
-    virtual ~CCEditBoxImplIOS();
+    CCEditBoxImplAndroid(CCEditBox* pEditText);
+    virtual ~CCEditBoxImplAndroid();
     
     virtual bool initWithSize(const CCSize& size);
     virtual void setFontColor(const ccColor3B& color);
@@ -61,13 +61,24 @@ public:
     virtual void closeKeyboard();
     
 private:
-    CCSize     m_tContentSize;
-    void*      m_pSysEdit;
-    int        m_nMaxTextLength;
+    CCLabelTTF* m_pLabel;
+    CCLabelTTF* m_pLabelPlaceHolder;
+    EditBoxInputMode    m_eEditBoxInputMode;
+    EditBoxInputFlag    m_eEditBoxInputFlag;
+    KeyboardReturnType  m_eKeyboardReturnType;
+    
+    std::string m_strText;
+    std::string m_strPlaceHolder;
+    
+    ccColor3B m_colText;
+    ccColor3B m_colPlaceHolder;
+
+    int   m_nMaxLength;
+    CCSize m_EditSize;
 };
 
 
 NS_CC_EXT_END
 
-#endif /* __CCEditBoxIMPLIOS_H__ */
+#endif /* __CCEDITBOXIMPLANDROID_H__ */
 
