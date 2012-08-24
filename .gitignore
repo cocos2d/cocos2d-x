@@ -27,6 +27,7 @@ obj/
 [Rr]elease*/
 _ReSharper*/
 [Tt]est[Rr]esult*
+ipch/
 
 # Ignore files build by ndk and eclipse
 libs/
