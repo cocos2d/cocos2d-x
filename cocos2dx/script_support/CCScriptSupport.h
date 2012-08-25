@@ -28,10 +28,17 @@ THE SOFTWARE.
 #include "platform/CCCommon.h"
 #include "touch_dispatcher/CCTouch.h"
 #include "cocoa/CCSet.h"
+#include <map>
+#include <string>
+#include <list>
 
 typedef struct lua_State lua_State;
 
 NS_CC_BEGIN
+
+typedef int LUA_FUNCTION;
+typedef int LUA_TABLE;
+typedef int LUA_STRING;
 
 class CCTimer;
 
@@ -113,6 +120,106 @@ private:
     bool    m_bSwallowsTouches;
 };
 
+#pragma mark -
+#pragma mark LuaValue
+
+class LuaValue;
+
+typedef std::map<std::string, LuaValue> LuaDict;
+typedef LuaDict::const_iterator         LuaDictIterator;
+typedef std::list<LuaValue>             LuaArray;
+typedef LuaArray::const_iterator        LuaArrayIterator;
+
+typedef enum {
+    LuaValueTypeInt,
+    LuaValueTypeFloat,
+    LuaValueTypeBoolean,
+    LuaValueTypeString,
+    LuaValueTypeDict,
+    LuaValueTypeArray,
+    LuaValueTypeCCObject
+} LuaValueType;
+
+typedef union {
+    int             intValue;
+    float           floatValue;
+    bool            booleanValue;
+    std::string*    stringValue;
+    LuaDict*        dictValue;
+    LuaArray*       arrayValue;
+    CCObject*       ccobjectValue;
+} LuaValueField;
+
+class CC_DLL LuaValue
+{
+public:
+    static const LuaValue intValue(const int intValue);
+    static const LuaValue floatValue(const float floatValue);
+    static const LuaValue booleanValue(const bool booleanValue);
+    static const LuaValue stringValue(const char* stringValue);
+    static const LuaValue stringValue(const std::string& stringValue);
+    static const LuaValue dictValue(const LuaDict& dictValue);
+    static const LuaValue arrayValue(const LuaArray& arrayValue);
+    static const LuaValue ccobjectValue(CCObject* ccobjectValue, const char* objectTypename);
+    static const LuaValue ccobjectValue(CCObject* ccobjectValue, const std::string& objectTypename);
+    
+    LuaValue(void)
+    : m_type(LuaValueTypeInt)
+    , m_ccobjectType(NULL)
+    {
+        memset(&m_field, 0, sizeof(m_field));
+    }
+    LuaValue(const LuaValue& rhs);
+    LuaValue& operator=(const LuaValue& rhs);
+    ~LuaValue(void);
+    
+    const LuaValueType getType(void) const {
+        return m_type;
+    }
+    
+    const std::string& getCCObjectTypename(void) const {
+        return *m_ccobjectType;
+    }
+    
+    int intValue(void) const {
+        return m_field.intValue;
+    }
+    
+    float floatValue(void) const {
+        return m_field.floatValue;
+    }
+    
+    bool booleanValue(void) const {
+        return m_field.booleanValue;
+    }
+    
+    const std::string& stringValue(void) const {
+        return *m_field.stringValue;
+    }
+    
+    const LuaDict& dictValue(void) const {
+        return *m_field.dictValue;
+    }
+    
+    const LuaArray& arrayValue(void) const {
+        return *m_field.arrayValue;
+    }
+    
+    CCObject* ccobjectValue(void) const {
+        return m_field.ccobjectValue;
+    }
+    
+private:
+    LuaValueField   m_field;
+    LuaValueType    m_type;
+    std::string*    m_ccobjectType;
+    
+    void copy(const LuaValue& rhs);
+};
+
+
+#pragma mark -
+#pragma mark CCScriptEngineProtocol
 
 class CC_DLL CCScriptEngineProtocol : public CCObject
 {
@@ -168,15 +275,20 @@ public:
      @param Number of parameters
      @return The integer value returned from the script function.
      */
-    virtual int executeFunctionByHandler(int nHandler, int numArgs = 0) = 0;
-    virtual int executeFunctionWithIntegerData(int nHandler, int data) = 0;
-    virtual int executeFunctionWithFloatData(int nHandler, float data) = 0;
-    virtual int executeFunctionWithBooleanData(int nHandler, bool data) = 0;
+    virtual int executeFunction(int nHandler, int numArgs) = 0;
+    virtual int executeFunctionWithInt(int nHandler, int data) = 0;
+    virtual int executeFunctionWithFloat(int nHandler, float data) = 0;
+    virtual int executeFunctionWithBool(int nHandler, bool data) = 0;
     virtual int executeFunctionWithCCObject(int nHandler, CCObject* pObject, const char* typeName) = 0;    
-    virtual int pushIntegerToLuaStack(int data) = 0;
-    virtual int pushFloatToLuaStack(int data) = 0;
-    virtual int pushBooleanToLuaStack(int data) = 0;
-    virtual int pushCCObjectToLuaStack(CCObject* pObject, const char* typeName) = 0;
+    virtual int pushInt(int data) = 0;
+    virtual int pushFloat(float data) = 0;
+    virtual int pushBool(bool data) = 0;
+    virtual int pushString(const char* data) = 0;
+    virtual int pushCCObject(CCObject* pObject, const char* typeName) = 0;
+    virtual int pushLuaValue(const LuaValue& value) = 0;
+    virtual int pushLuaDict(const LuaDict& dict) = 0;
+    virtual int pushLuaArray(const LuaArray& array) = 0;
+    virtual void cleanStack(void) = 0;
     
     // functions for excute touch event
     virtual int executeTouchEvent(int nHandler, int eventType, CCTouch *pTouch) = 0;

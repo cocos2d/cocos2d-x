@@ -798,7 +798,7 @@ void CCNode::onEnter()
 
     if (m_nScriptHandler)
     {
-        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeFunctionWithIntegerData(m_nScriptHandler, kCCNodeOnEnter);
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeFunctionWithInt(m_nScriptHandler, kCCNodeOnEnter);
     }
 }
 
@@ -820,7 +820,7 @@ void CCNode::onExit()
 
     if (m_nScriptHandler)
     {
-        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeFunctionWithIntegerData(m_nScriptHandler, kCCNodeOnExit);
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeFunctionWithInt(m_nScriptHandler, kCCNodeOnExit);
     }
 
     arrayMakeObjectsPerformSelector(m_pChildren, onExit, CCNode*);
