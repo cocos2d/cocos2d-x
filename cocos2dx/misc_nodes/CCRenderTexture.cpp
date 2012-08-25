@@ -216,7 +216,7 @@ bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CCTexture2DPixelForma
             //create and attach depth buffer
             glGenRenderbuffers(1, &m_uDepthRenderBufffer);
             glBindRenderbuffer(GL_RENDERBUFFER, m_uDepthRenderBufffer);
-            glRenderbufferStorage(GL_RENDERBUFFER, uDepthStencilFormat, powW, powH);
+            glRenderbufferStorage(GL_RENDERBUFFER, uDepthStencilFormat, (GLsizei)powW, (GLsizei)powH);
             glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, m_uDepthRenderBufffer);
 
             // if depth format is the one with stencil part, bind same render buffer as stencil attachment

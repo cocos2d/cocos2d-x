@@ -1025,7 +1025,7 @@ CCSpriteFrame* CCSprite::displayFrame(void)
     return CCSpriteFrame::createWithTexture(m_pobTexture,
                                            CC_RECT_POINTS_TO_PIXELS(m_obRect),
                                            m_bRectRotated,
-                                           m_obUnflippedOffsetPositionFromCenter,
+                                           CC_POINT_POINTS_TO_PIXELS(m_obUnflippedOffsetPositionFromCenter),
                                            CC_SIZE_POINTS_TO_PIXELS(m_tContentSize));
 }
 

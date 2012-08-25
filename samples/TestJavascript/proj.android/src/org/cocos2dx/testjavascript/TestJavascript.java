@@ -37,7 +37,6 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 public class TestJavascript extends Cocos2dxActivity{
-	private Cocos2dxGLSurfaceView mGLView;
 	
 	protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);

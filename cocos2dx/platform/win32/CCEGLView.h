@@ -47,7 +47,7 @@ public:
     virtual bool setContentScaleFactor(float contentScaleFactor);
     virtual void setFrameSize(float width, float height);
     virtual void setIMEKeyboardState(bool bOpen);
-
+    virtual bool enableRetina();
 private:
     virtual bool Create(LPCTSTR pTitle, int w, int h);
     bool initGL();
@@ -67,7 +67,7 @@ public:
     /**
     @brief    get the shared main open gl window
     */
-    static CCEGLView& sharedOpenGLView();
+    static CCEGLView* sharedOpenGLView();
 
 protected:
 
