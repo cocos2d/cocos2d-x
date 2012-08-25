@@ -462,21 +462,19 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
 		NSUInteger textureSize = POTWide*POTHigh*4;
 		
 		unsigned char* dataNew = new unsigned char[textureSize];
-		CC_BREAK_IF(!dataNew);
-		memcpy(dataNew, data, textureSize);
-		
+		if (dataNew) {
+			memcpy(dataNew, data, textureSize);
+			// output params
+			pInfo->width = POTWide;
+			pInfo->height = POTHigh;
+			pInfo->data = dataNew;
+			pInfo->hasAlpha = true;
+			pInfo->isPremultipliedAlpha = true;
+			pInfo->bitsPerComponent = 8;
+			bRet = true;
+		}
 		[bitmap release];
-		[image release]; 
-		
-		// output params
-		pInfo->width = POTWide;
-		pInfo->height = POTHigh;
-		pInfo->data = dataNew;
-		pInfo->hasAlpha = true;
-		pInfo->isPremultipliedAlpha = true;
-		pInfo->bitsPerComponent = 8;
-		
-		bRet = true;
+		[image release];
 	} while (0);
     return bRet;
 }
