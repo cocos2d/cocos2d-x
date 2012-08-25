@@ -798,7 +798,11 @@ void CCNode::onEnter()
 
     if (m_nScriptHandler)
     {
-        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeFunctionWithInt(m_nScriptHandler, kCCNodeOnEnter);
+        CCScriptEngineProtocol* pEngine = CCScriptEngineManager::sharedManager()->getScriptEngine();
+        LuaDict dict;
+        dict["name"] = LuaValue::stringValue("enter");
+        pEngine->pushLuaDict(dict);
+        pEngine->executeFunction(m_nScriptHandler, 1);
     }
 }
 
@@ -820,7 +824,11 @@ void CCNode::onExit()
 
     if (m_nScriptHandler)
     {
-        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeFunctionWithInt(m_nScriptHandler, kCCNodeOnExit);
+        CCScriptEngineProtocol* pEngine = CCScriptEngineManager::sharedManager()->getScriptEngine();
+        LuaDict dict;
+        dict["name"] = LuaValue::stringValue("exit");
+        pEngine->pushLuaDict(dict);
+        pEngine->executeFunction(m_nScriptHandler, 1);
     }
 
     arrayMakeObjectsPerformSelector(m_pChildren, onExit, CCNode*);
