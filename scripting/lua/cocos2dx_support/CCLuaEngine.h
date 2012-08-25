@@ -97,15 +97,20 @@ public:
      @param Number of parameters
      @return The integer value returned from the script function.
      */
-    virtual int executeFunctionByHandler(int nHandler, int numArgs = 0);
-    virtual int executeFunctionWithIntegerData(int nHandler, int data);
-    virtual int executeFunctionWithFloatData(int nHandler, float data);
-    virtual int executeFunctionWithBooleanData(int nHandler, bool data);
+    virtual int executeFunction(int nHandler, int numArgs);
+    virtual int executeFunctionWithInt(int nHandler, int data);
+    virtual int executeFunctionWithFloat(int nHandler, float data);
+    virtual int executeFunctionWithBool(int nHandler, bool data);
     virtual int executeFunctionWithCCObject(int nHandler, CCObject* pObject, const char* typeName);    
-    virtual int pushIntegerToLuaStack(int data);
-    virtual int pushFloatToLuaStack(int data);
-    virtual int pushBooleanToLuaStack(int data);
-    virtual int pushCCObjectToLuaStack(CCObject* pObject, const char* typeName);
+    virtual int pushInt(int data);
+    virtual int pushFloat(float data);
+    virtual int pushBool(bool data);
+    virtual int pushString(const char* data);
+    virtual int pushCCObject(CCObject* pObject, const char* typeName);
+    virtual int pushLuaValue(const LuaValue& value);
+    virtual int pushLuaDict(const LuaDict& dict);
+    virtual int pushLuaArray(const LuaArray& array);
+    virtual void cleanStack(void);
     
     // functions for excute touch event
     virtual int executeTouchEvent(int nHandler, int eventType, cocos2d::CCTouch *pTouch);
@@ -126,7 +131,7 @@ private:
     }
     
     bool init(void);
-    bool pushFunctionByHandler(int nHandler);
+    bool pushFunction(int nHandler);
     
     lua_State* m_state;
 };
