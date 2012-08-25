@@ -54,7 +54,13 @@ move anttmp.properties ant.properties
 ::Android ant build(debug,API level:14).
 call ant debug
 set result14=%ERRORLEVEL%
+if "%_PROJECTNAME%" NEQ "TestCpp" goto API_15
+if %result14% NEQ 0 goto API_15
+cd bin
+ren Tests-debug.apk Tests-debug-14.apk
+cd ..
 
+:API_15
 ::Change API level.(API level:15)
 for /f "delims=" %%a in (ant.properties) do (
 if "%%a"=="target=android-14" (echo/target=android-15)else echo/%%a 
@@ -64,7 +70,13 @@ move anttmp.properties ant.properties
 ::Android ant build(debug,API level:15).
 call ant debug
 set result15=%ERRORLEVEL%
+if "%_PROJECTNAME%" NEQ "TestCpp" goto NEXTPROJ
+if %result15% NEQ 0 goto NEXTPROJ
+cd bin
+ren Tests-debug.apk Tests-debug-15.apk
+cd ..
 
+:NEXTPROJ
 ::After all test versions completed,changed current API level to the original.(API level:8) 
 for /f "delims=" %%a in (ant.properties) do (
 if "%%a"=="target=android-15" (echo/target=android-8)else echo/%%a 
@@ -83,18 +95,14 @@ goto success
 
 :error
 echo Error.
-git checkout -f
-git clean -df -x
-pause
+::git checkout -f
+::git clean -df -x
 exit 1
-goto end
 
 :success
 echo Success.
-git checkout -f
-git clean -df -x
-pause
+::git checkout -f
+::git clean -df -x
 exit 0
-goto end
 
 ::End.

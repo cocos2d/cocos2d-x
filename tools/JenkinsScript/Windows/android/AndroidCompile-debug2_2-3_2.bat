@@ -48,8 +48,14 @@ move anttmp.properties ant.properties
 
 ::Android ant build(debug,API level:8).
 call ant debug
-set result8=%ERROELEVEL%
+set result8=%ERRORLEVEL%
+if "%_PROJECTNAME%" NEQ "TestCpp" goto API_10
+if %result8% NEQ 0 goto API_10
+cd bin
+ren Tests-debug.apk Tests-debug-8.apk
+cd ..
 
+:API_10
 ::Change API level.(API level:10)
 for /f "delims=" %%a in (ant.properties) do (
 if "%%a"=="target=android-8" (echo/target=android-10)else echo/%%a 
@@ -59,7 +65,13 @@ move anttmp.properties ant.properties
 ::Android ant build(debug,API level:10).
 call ant debug
 set result10=%ERRORLEVEL%
+if "%_PROJECTNAME%" NEQ "TestCpp" goto API_11
+if %result10% NEQ 0 goto API_11
+cd bin
+ren Tests-debug.apk Tests-debug-10.apk
+cd ..
 
+:API_11
 ::Change API level.(API level:11)
 for /f "delims=" %%a in (ant.properties) do (
 if "%%a"=="target=android-10" (echo/target=android-11)else echo/%%a 
@@ -69,7 +81,13 @@ move anttmp.properties ant.properties
 ::Android ant build(debug,API level:11).
 call ant debug
 set result11=%ERRORlEVEL%
+if "%_PROJECTNAME%" NEQ "TestCpp" goto API_12
+if %result11% NEQ 0 goto API_12
+cd bin
+ren Tests-debug.apk Tests-debug-11.apk
+cd ..
 
+:API_12
 ::Change API level.(API level:12)
 for /f "delims=" %%a in (ant.properties) do (
 if "%%a"=="target=android-11" (echo/target=android-12)else echo/%%a 
@@ -79,7 +97,13 @@ move anttmp.properties ant.properties
 ::Android ant build(debug,API level:12).
 call ant debug
 set result12=%ERRORLEVEL%
+if "%_PROJECTNAME%" NEQ "TestCpp" goto API_13
+if %result12% NEQ 0 goto API_13
+cd bin
+ren Tests-debug.apk Tests-debug-12.apk
+cd ..
 
+:API_13
 ::Change API level.(API level:13)
 for /f "delims=" %%a in (ant.properties) do (
 if "%%a"=="target=android-12" (echo/target=android-13)else echo/%%a 
@@ -89,7 +113,13 @@ move anttmp.properties ant.properties
 ::Android ant build(debug,API level:13).
 call ant debug
 set result13=%ERRORLEVEL%
+if "%_PROJECTNAME%" NEQ "TestCpp" goto NEXTPROJ
+if %result13% NEQ 0 goto NEXTPROJ
+cd bin
+ren Tests-debug.apk Tests-debug-13.apk
+cd ..
 
+:NEXTPROJ
 ::After all test versions completed,changed current API level to the original.(API level:8) 
 for /f "delims=" %%a in (ant.properties) do (
 if "%%a"=="target=android-13" (echo/target=android-8)else echo/%%a 
@@ -98,28 +128,24 @@ move anttmp.properties ant.properties
 
 ::Calculate the errorlevel and change build target.
 cd ..\..\..
-IF "%_PROJECTNAME%"=="TestCpp" set /a testresult1=(result8+result10+result11+result12+result13) && set _PROJECTNAME=HelloCpp&& goto project
-IF "%_PROJECTNAME%"=="HelloCpp" set /a testresult2=(result8+result10+result11+result12+result13) && set _PROJECTNAME=HelloLua&& goto project
-IF "%_PROJECTNAME%"=="HelloLua" set /a testresult3=(result8+result10+result11+result12+result13)
+if "%_PROJECTNAME%"=="TestCpp" set /a testresult1=(result8+result10+result11+result12+result13) && set _PROJECTNAME=HelloCpp&& goto project
+if "%_PROJECTNAME%"=="HelloCpp" set /a testresult2=(result8+result10+result11+result12+result13) && set _PROJECTNAME=HelloLua&& goto project
+if "%_PROJECTNAME%"=="HelloLua" set /a testresult3=(result8+result10+result11+result12+result13)
 set /a testresult=(testresult1+testresult2+testresult3)
-IF %testresult% NEQ 0 goto error
+if %testresult% NEQ 0 goto error
 
 goto success
 
 :error
 echo Error.
-git checkout -f
-git clean -df -x
-pause
+::git checkout -f
+::git clean -df -x
 exit 1
-goto end
 
 :success
 echo Success.
-git checkout -f
-git clean -df -x
-pause
+::git checkout -f
+::git clean -df -x
 exit 0
-goto end
 
 ::End.

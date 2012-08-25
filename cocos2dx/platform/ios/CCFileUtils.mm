@@ -193,20 +193,20 @@ const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
     if( ! [relPath isAbsolutePath] ) {
         
         // pathForResource also searches in .lproj directories. issue #1230
-        NSString *file = [relPath lastPathComponent];
+        NSString *lastPathComponent = [relPath lastPathComponent];
         
-        NSMutableString *imageDirectory = [NSMutableString stringWithUTF8String:m_obDirectory.c_str()];
-        NSMutableString *imageDirectoryWithDirectory = imageDirectory;
-        [imageDirectoryWithDirectory appendString:[relPath stringByDeletingLastPathComponent]];
+        NSString *imageDirectory = [relPath stringByDeletingLastPathComponent];
+        NSMutableString *imageDirectoryByAppendDirectory = [NSMutableString stringWithUTF8String:m_obDirectory.c_str()];
+        [imageDirectoryByAppendDirectory appendString:imageDirectory];
         
         // search path from directory set by setResourceDirectory
-        fullpath = [[NSBundle mainBundle] pathForResource:file
+        fullpath = [[NSBundle mainBundle] pathForResource:lastPathComponent
                                                    ofType:nil
-                                              inDirectory:imageDirectoryWithDirectory];
+                                              inDirectory:imageDirectoryByAppendDirectory];
         if (fullpath == nil)
         {
             // search from root directory
-            fullpath = [[NSBundle mainBundle] pathForResource:file
+            fullpath = [[NSBundle mainBundle] pathForResource:lastPathComponent
                                                        ofType:nil
                                                   inDirectory:imageDirectory];
         }

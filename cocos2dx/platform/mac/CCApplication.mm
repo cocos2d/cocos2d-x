@@ -69,10 +69,10 @@ TargetPlatform CCApplication::getTargetPlatform()
 // static member function
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
-CCApplication& CCApplication::sharedApplication()
+CCApplication* CCApplication::sharedApplication()
 {
     CC_ASSERT(sm_pSharedApplication);
-    return *sm_pSharedApplication;
+    return sm_pSharedApplication;
 }
 
 ccLanguageType CCApplication::getCurrentLanguage()

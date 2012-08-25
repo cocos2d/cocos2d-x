@@ -15,8 +15,8 @@ USING_NS_CC_EXT;
 
 EditBoxTest::EditBoxTest()
 {
-    CCPoint visibleOrigin = CCEGLView::sharedOpenGLView().getVisibleOrigin();
-    CCSize visibleSize = CCEGLView::sharedOpenGLView().getVisibleSize();
+    CCPoint visibleOrigin = CCEGLView::sharedOpenGLView()->getVisibleOrigin();
+    CCSize visibleSize = CCEGLView::sharedOpenGLView()->getVisibleSize();
     
     CCSprite* pBg = CCSprite::create("Images/HelloWorld.png");
     pBg->setPosition(ccp(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/2));
@@ -33,7 +33,7 @@ EditBoxTest::EditBoxTest()
     menuBack->setPosition(CCPointZero);
     addChild(menuBack);
     
-    CCSize editBoxSize = CCSizeMake(visibleSize.width/3, visibleSize.height/8);
+    CCSize editBoxSize = CCSizeMake(visibleSize.width - 100, 60);
 
     // top
     m_pEditName = CCEditBox::create(editBoxSize, CCScale9Sprite::create("extensions/green_edit.png"));
@@ -57,7 +57,7 @@ EditBoxTest::EditBoxTest()
     addChild(m_pEditPassword);
     
     // bottom
-    m_pEditEmail = CCEditBox::create(CCSizeMake(editBoxSize.width+100, editBoxSize.height), CCScale9Sprite::create("extensions/yellow_edit.png"));
+    m_pEditEmail = CCEditBox::create(CCSizeMake(editBoxSize.width, editBoxSize.height), CCScale9Sprite::create("extensions/yellow_edit.png"));
     m_pEditEmail->setPosition(ccp(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/4));
     m_pEditEmail->setPlaceHolder("Email:");
     m_pEditEmail->setInputMode(kEditBoxInputModeEmailAddr);

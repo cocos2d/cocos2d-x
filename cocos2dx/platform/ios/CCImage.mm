@@ -228,32 +228,32 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
         font = [UIFont fontWithName:fntName size:nSize];  
         if (font)
         {
-                dim = _calculateStringSizeWithFontOrZFont(str, font, &constrainSize, false);
+            dim = _calculateStringSizeWithFontOrZFont(str, font, &constrainSize, false);
         }      
         
         if (! font)
         {
-                font = [[FontManager sharedManager] zFontWithName:fntName pointSize:nSize];
-                if (font)
-                {
-                    dim =_calculateStringSizeWithFontOrZFont(str, font, &constrainSize, true);
-                }  
+            font = [[FontManager sharedManager] zFontWithName:fntName pointSize:nSize];
+            if (font)
+            {
+                dim =_calculateStringSizeWithFontOrZFont(str, font, &constrainSize, true);
+            }  
         }
 
         if (! font)
         {
-                fntName = _isValidFontName(pFontName) ? fntName : @"MarkerFelt-Wide";
-                font = [UIFont fontWithName:fntName size:nSize];
+            fntName = _isValidFontName(pFontName) ? fntName : @"MarkerFelt-Wide";
+            font = [UIFont fontWithName:fntName size:nSize];
                 
-                if (! font) 
-                {
-                        font = [UIFont systemFontOfSize:nSize];
-                }
+            if (! font) 
+            {
+                font = [UIFont systemFontOfSize:nSize];
+            }
                 
-                if (font)
-                {
-                    dim = _calculateStringSizeWithFontOrZFont(str, font, &constrainSize, false);
-                }  
+            if (font)
+            {
+                dim = _calculateStringSizeWithFontOrZFont(str, font, &constrainSize, false);
+            }  
         }
 
         CC_BREAK_IF(! font);

@@ -210,7 +210,7 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
         if (m_pDelegate && MK_LBUTTON == wParam)
         {
             POINT point = {(short)LOWORD(lParam), (short)HIWORD(lParam)};
-            CCPoint pt(point.x/CC_CONTENT_SCALE_FACTOR(), point.y/CC_CONTENT_SCALE_FACTOR());
+            CCPoint pt(point.x, point.y);
             CCPoint tmp = ccp(pt.x, m_obScreenSize.height - pt.y);
             if (m_obViewPortRect.equals(CCRectZero) || m_obViewPortRect.containsPoint(tmp))
             {
@@ -226,7 +226,7 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
         if (MK_LBUTTON == wParam && m_bCaptured)
         {
             POINT point = {(short)LOWORD(lParam), (short)HIWORD(lParam)};
-            CCPoint pt(point.x/CC_CONTENT_SCALE_FACTOR(), point.y/CC_CONTENT_SCALE_FACTOR());
+            CCPoint pt(point.x, point.y);
             int id = 0;
             handleTouchesMove(1, &id, &pt.x, &pt.y);
         }
@@ -236,7 +236,7 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
         if (m_bCaptured)
         {
             POINT point = {(short)LOWORD(lParam), (short)HIWORD(lParam)};
-            CCPoint pt(point.x/CC_CONTENT_SCALE_FACTOR(), point.y/CC_CONTENT_SCALE_FACTOR());
+            CCPoint pt(point.x, point.y);
             int id = 0;
             handleTouchesEnd(1, &id, &pt.x, &pt.y);
 
@@ -248,10 +248,10 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
         switch (wParam)
         {
         case SIZE_RESTORED:
-            CCApplication::sharedApplication().applicationWillEnterForeground();
+            CCApplication::sharedApplication()->applicationWillEnterForeground();
             break;
         case SIZE_MINIMIZED:
-            CCApplication::sharedApplication().applicationDidEnterBackground();
+            CCApplication::sharedApplication()->applicationDidEnterBackground();
             break;
         }
         break;
@@ -370,6 +370,11 @@ void CCEGLView::setIMEKeyboardState(bool /*bOpen*/)
 
 }
 
+bool CCEGLView::enableRetina()
+{
+    return true;
+}
+
 HWND CCEGLView::getHWnd()
 {
     return m_hWnd;
@@ -446,14 +451,14 @@ bool CCEGLView::setContentScaleFactor(float contentScaleFactor)
     return true;
 }
 
-CCEGLView& CCEGLView::sharedOpenGLView()
+CCEGLView* CCEGLView::sharedOpenGLView()
 {
     static CCEGLView* s_pEglView = NULL;
     if (s_pEglView == NULL)
     {
         s_pEglView = new CCEGLView();
     }
-    return *s_pEglView;
+    return s_pEglView;
 }
 
 NS_CC_END

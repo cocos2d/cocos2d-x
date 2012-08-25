@@ -101,8 +101,6 @@ public class HelloLua extends Cocos2dxActivity{
 	     ConfigurationInfo info = am.getDeviceConfigurationInfo();
 	     return (info.reqGlEsVersion >= 0x20000);
 	 }
-	 
-	 private LuaGLSurfaceView mGLView;
 
 	
      static {

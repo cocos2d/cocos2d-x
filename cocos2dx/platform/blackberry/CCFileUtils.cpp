@@ -58,10 +58,11 @@ void CCFileUtils::purgeCachedEntries()
 static std::string fullPathFromRelativePathThreadSafe(const char* pszRelativePath)
 {
 	std::string ret("");
-    const char* pszRootPath = CCApplication::sharedApplication().getResourceRootPath();
+    const char* pszRootPath = CCApplication::sharedApplication()->getResourceRootPath();
     CCAssert(pszRootPath != NULL, "The resource root path must be set in the main.cpp");
 
     std::string pstrRelativePath = pszRelativePath;
+    // if the relative path contains root path, skip it.
     if (pstrRelativePath.find(pszRootPath) == std::string::npos)
     {
     	ret += pszRootPath;
@@ -71,7 +72,13 @@ static std::string fullPathFromRelativePathThreadSafe(const char* pszRelativePat
 
     if (resDir != NULL)
     {
-    	ret += resDir;
+    	std::string pstrRootPath = pszRootPath;
+    	std::string pstrResourceFullPath = pstrRootPath + resDir;
+    	// if the relative path contains root path and resource directory, skip it.
+    	if (pstrRelativePath.find(pstrResourceFullPath.c_str()) == std::string::npos)
+    	{
+    		ret += resDir;
+    	}
     }
 
     if (pszRelativePath != NULL)
