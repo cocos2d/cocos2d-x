@@ -42,7 +42,8 @@ NS_CC_BEGIN
 class CCLuaEngine : public CCScriptEngineProtocol
 {
 public:
-    ~CCLuaEngine();
+    static CCLuaEngine* create(void);
+    ~CCLuaEngine(void);
     
     /**
      @brief Method used to get a pointer to the lua_State that the script module is attached to.
@@ -121,8 +122,6 @@ public:
     
     // Add lua loader, now it is used on android
     virtual void addLuaLoader(lua_CFunction func);
-    
-    static CCLuaEngine* engine();
     
 private:
     CCLuaEngine(void)

@@ -42,7 +42,15 @@ extern "C" {
 
 NS_CC_BEGIN
 
-CCLuaEngine::~CCLuaEngine()
+CCLuaEngine* CCLuaEngine::create(void)
+{
+    CCLuaEngine* pEngine = new CCLuaEngine();
+    pEngine->init();
+    pEngine->autorelease();
+    return pEngine;
+}
+
+CCLuaEngine::~CCLuaEngine(void)
 {
     lua_close(m_state);
 }
@@ -57,14 +65,6 @@ bool CCLuaEngine::init(void)
     addLuaLoader(loader_Android);
 #endif
     return true;
-}
-
-CCLuaEngine* CCLuaEngine::engine()
-{
-    CCLuaEngine* pEngine = new CCLuaEngine();
-    pEngine->init();
-    pEngine->autorelease();
-    return pEngine;
 }
 
 void CCLuaEngine::removeCCObjectByID(int nLuaID)
