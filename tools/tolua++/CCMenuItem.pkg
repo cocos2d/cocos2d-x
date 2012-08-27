@@ -37,7 +37,7 @@ class CCMenuItemLabel : public CCMenuItem
     static CCMenuItemLabel* create(CCNode* label);
 };
 
-class CCMenuItemAtlasFont : public CCMenuItem
+class CCMenuItemAtlasFont : public CCMenuItemLabel
 {
     static CCMenuItemAtlasFont* create(const char* value,
                                                const char* charMapFile,
@@ -46,7 +46,7 @@ class CCMenuItemAtlasFont : public CCMenuItem
                                                char startCharMap);
 };
 
-class CCMenuItemFont : public CCMenuItem
+class CCMenuItemFont : public CCMenuItemLabel
 {
     static void setFontSize(int s);
     static unsigned int fontSize();
@@ -88,7 +88,7 @@ class CCMenuItemSprite : public CCMenuItem
                                                    CCNode* disabledSprite);
 };
 
-class CCMenuItemImage : public CCMenuItem
+class CCMenuItemImage : public CCMenuItemSprite
 {
     void setColor(ccColor3B color);
     ccColor3B getColor();
