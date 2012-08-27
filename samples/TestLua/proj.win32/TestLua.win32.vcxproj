@@ -1,4 +1,3 @@
-
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
@@ -88,8 +87,10 @@
       </DllDataFileName>
     </Midl>
     <PreBuildEvent>
-      <Command>xcopy $(SolutionDir)samples\TestCpp\Resources $(SolutionDir)samples\TestLua\Resources /e /Y</Command>
-      <Message>copy files from TestCpp to TestLua</Message>
+      <Command>
+      </Command>
+      <Message>
+      </Message>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -130,8 +131,10 @@
       </DllDataFileName>
     </Midl>
     <PreBuildEvent>
-      <Command>xcopy $(SolutionDir)samples\TestCpp\Resources $(SolutionDir)samples\TestLua\Resources /e /Y</Command>
-      <Message>copy files from TestCpp to TestLua</Message>
+      <Command>
+      </Command>
+      <Message>
+      </Message>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -153,5 +156,4 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
->>>>>>> 4a6b1625fe12d91e4af3d737ba3c06fd9f40dd0d
 </Project>
