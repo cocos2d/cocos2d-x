@@ -3,14 +3,59 @@ local SceneIdx = -1
 local MAX_LAYER = 7
 local s = CCDirector:sharedDirector():getWinSize()
 
+local function nextAction()
+	SceneIdx = SceneIdx + 1
+    SceneIdx = math.mod(SceneIdx, MAX_LAYER)
+    return CreateActionProgressLayer(SceneIdx)
+end
+
+local function restartAction()
+	return CreateActionProgressLayer(SceneIdx)
+end
+
+local function backAction()
+	SceneIdx = SceneIdx - 1
+    if SceneIdx < 0 then
+		SceneIdx = SceneIdx + MAX_LAYER
+	end
+    return CreateActionProgressLayer(SceneIdx)
+end
+
+local function nextCallback(sender)
+	local scene = CCScene:create()
+
+	scene:addChild(CreateBackMenuItem())
+	scene:addChild(nextAction())
+
+	CCDirector:sharedDirector():replaceScene(scene)
+end
+
+local function restartCallback(sender)
+	local scene = CCScene:create()
+
+	scene:addChild(CreateBackMenuItem())
+	scene:addChild(restartAction())
+
+	CCDirector:sharedDirector():replaceScene(scene)
+end
+
+local function backCallback(sender)
+	local scene = CCScene:create()
+
+	scene:addChild(backAction())
+	scene:addChild(CreateBackMenuItem())
+
+	CCDirector:sharedDirector():replaceScene(scene)
+end
+
 local function initWithLayer(layer)
 	titleLabel = CCLabelTTF:create("ActionsProgressTest", "Arial", 18)
     layer:addChild(titleLabel, 1)
-    titleLabel:setPosition(CCPointMake(s.width / 2, s.height - 50))
+    titleLabel:setPosition(s.width / 2, s.height - 50)
 
     subtitleLabel = CCLabelTTF:create("", "Thonburi", 22)
 	layer:addChild(subtitleLabel, 1)
-	subtitleLabel:setPosition( CCPointMake(s.width / 2, s.height - 80))
+	subtitleLabel:setPosition(s.width / 2, s.height - 80)
 
 	-- menu
     local item1 = CCMenuItemImage:create(s_pPathB1, s_pPathB2)
@@ -32,51 +77,6 @@ local function initWithLayer(layer)
 
     local background = CCLayerColor:create(ccc4(255,0,0,255))
     layer:addChild(background, -10)
-end
-
-local function nextAction()
-	SceneIdx = SceneIdx + 1
-    SceneIdx = math.mod(SceneIdx, MAX_LAYER)
-    return CreateActionProgressLayer(SceneIdx)
-end
-
-local function restartAction()
-	return CreateActionProgressLayer(SceneIdx)
-end
-
-local function backAction()
-	SceneIdx = SceneIdx - 1
-    if SceneIdx < 0 then
-		SceneIdx = SceneIdx + MAX_LAYER
-	end
-    return CreateActionProgressLayer(SceneIdx)
-end
-
-local function nextCallback()
-	local scene = CCScene:create()
-
-	scene:addChild(CreateBackMenuItem())
-	scene:addChild(nextAction())
-
-	CCDirector:sharedDirector():replaceScene(scene)
-end
-
-local function restartCallback()
-	local scene = CCScene:create()
-
-	scene:addChild(CreateBackMenuItem())
-	scene:addChild(restartAction())
-
-	CCDirector:sharedDirector():replaceScene(scene)
-end
-
-local function backCallback()
-	local scene = CCScene:create()
-
-	scene:addChild(CreateBackMenuItem())
-	scene:addChild(backAction())
-
-	CCDirector:sharedDirector():replaceScene(scene)
 end
 
 ------------------------------------
@@ -390,8 +390,8 @@ function ProgressActionsTest()
 	cclog("ProgressActionsTest")
 	local scene = CCScene:create()
 
-	scene:addChild(CreateBackMenuItem())
 	scene:addChild(nextAction())
+	scene:addChild(CreateBackMenuItem())
 
 	CCDirector:sharedDirector():replaceScene(scene)
 end

@@ -236,8 +236,8 @@ function generateTranScene(sceneType)
 		layer = createLayer2()
 	end
 
-	scene:addChild(CreateBackMenuItem())
     scene:addChild(layer)
+	scene:addChild(CreateBackMenuItem())
 
     local tranScene = createTransition(SceneIdx, TRANSITION_DURATION, scene)
     if tranScene ~= nil then
@@ -249,8 +249,8 @@ function TransitionsTest()
 	cclog("TransitionsTest")
 	local scene = CCScene:create()
 
-	scene:addChild(CreateBackMenuItem())
 	scene:addChild(createLayer1())
+	scene:addChild(CreateBackMenuItem())
 
 	return scene
 end
