@@ -235,7 +235,7 @@ static bool _initPremultipliedATextureWithImage(CGImageRef image, NSUInteger POT
     CGContextRelease(context);
     return true;
 }
-
+// TODO: rename _initWithImage, it also makes a draw call.
 static bool _initWithImage(CGImageRef CGImage, tImageInfo *pImageinfo, double scaleX, double scaleY)
 {
     NSUInteger POTWide, POTHigh;
@@ -258,10 +258,8 @@ static bool _initWithImage(CGImageRef CGImage, tImageInfo *pImageinfo, double sc
 	}
 
     
-    // always load premultiplied images
-    _initPremultipliedATextureWithImage(CGImage, POTWide, POTHigh, pImageinfo);
-    
-    return true;
+    // load and draw image
+    return _initPremultipliedATextureWithImage(CGImage, POTWide, POTHigh, pImageinfo);
 }
 
 static bool _initWithFile(const char* path, tImageInfo *pImageinfo)
@@ -277,17 +275,19 @@ static bool _initWithFile(const char* path, tImageInfo *pImageinfo)
     jpg = [[NSImage alloc] initWithContentsOfFile: fullPath];
     //png = [[NSImage alloc] initWithData:UIImagePNGRepresentation(jpg)];
     CGImageSourceRef source = CGImageSourceCreateWithData((CFDataRef)[jpg TIFFRepresentation], NULL);
-	CGImage =  CGImageSourceCreateImageAtIndex(source, 0, NULL);
+    CGImage = CGImageSourceCreateImageAtIndex(source, 0, NULL);
     
     ret = _initWithImage(CGImage, pImageinfo, 1.0, 1.0);
     
     //[png release];
     [jpg release];
-    
+    if (CGImage) CFRelease(CGImage);
+    if (source) CFRelease(source);
+  
     return ret;
 }
 
-
+// TODO: rename _initWithData, it also makes a draw call.
 static bool _initWithData(void * pBuffer, int length, tImageInfo *pImageinfo, double scaleX, double scaleY)
 {
     bool ret = false;
@@ -302,8 +302,9 @@ static bool _initWithData(void * pBuffer, int length, tImageInfo *pImageinfo, do
         CGImage = CGImageSourceCreateImageAtIndex(source, 0, NULL);
         
         ret = _initWithImage(CGImage, pImageinfo, scaleX, scaleY);
+        if (CGImage) CFRelease(CGImage);
+        if (source) CFRelease(source);
     }
-    
     return ret;
 }
 
@@ -462,21 +463,19 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
 		NSUInteger textureSize = POTWide*POTHigh*4;
 		
 		unsigned char* dataNew = new unsigned char[textureSize];
-		CC_BREAK_IF(!dataNew);
-		memcpy(dataNew, data, textureSize);
-		
+		if (dataNew) {
+			memcpy(dataNew, data, textureSize);
+			// output params
+			pInfo->width = POTWide;
+			pInfo->height = POTHigh;
+			pInfo->data = dataNew;
+			pInfo->hasAlpha = true;
+			pInfo->isPremultipliedAlpha = true;
+			pInfo->bitsPerComponent = 8;
+			bRet = true;
+		}
 		[bitmap release];
-		[image release]; 
-		
-		// output params
-		pInfo->width = POTWide;
-		pInfo->height = POTHigh;
-		pInfo->data = dataNew;
-		pInfo->hasAlpha = true;
-		pInfo->isPremultipliedAlpha = true;
-		pInfo->bitsPerComponent = 8;
-		
-		bRet = true;
+		[image release];
 	} while (0);
     return bRet;
 }
