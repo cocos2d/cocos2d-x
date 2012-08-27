@@ -76,7 +76,7 @@ move ant1.properties ant.properties
 ::Android ant build(release,API level:15).
 call ant release
 set result15=%ERRORLEVEL%
-if "%_PROJECTNAME%" NEQ "TestCpp" goto NEXTRPOJ
+if "%_PROJECTNAME%" NEQ "TestCpp" goto NEXTPROJ
 if %result15% NEQ 0 goto NEXTPROJ
 cd bin
 ren TestCpp-release.apk TestCpp-release-15.apk
