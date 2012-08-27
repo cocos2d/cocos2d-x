@@ -84,7 +84,8 @@ const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
 }
 
 
-const char *CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const char *pszRelativeFile) {
+const char *CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const char *pszRelativeFile)
+{
 	std::string relativeFile = pszRelativeFile;
 	CCString *pRet = new CCString();
 	pRet->autorelease();
@@ -93,15 +94,21 @@ const char *CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const
 	return pRet->m_sString.c_str();
 }
 
-unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize) {
-
+unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize)
+{
 	string fullPath = pszFileName;
 	unsigned char * pData = 0;
 
+	if (!pszFileName || !pszMode)
+	{
+		return 0;
+	}
+
 	do
 	{
+		fullPath = fullPathFromRelativePath(fullPath.c_str());
 		// read rrom other path than user set it
-		FILE *fp = fopen(pszFileName, pszMode);
+		FILE *fp = fopen(fullPath.c_str(), pszMode);
 		CC_BREAK_IF(!fp);
 
 		fseek(fp,0,SEEK_END);
@@ -123,7 +130,8 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
 
 }
 
-string CCFileUtils::getWriteablePath() {
+string CCFileUtils::getWriteablePath()
+{
 	//return current resource path
   return CCApplication::sharedApplication()->getResourceRootPath();
 }
