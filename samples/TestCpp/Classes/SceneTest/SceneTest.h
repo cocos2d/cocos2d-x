@@ -44,7 +44,7 @@ public:
     void item0Clicked(CCObject* pSender);
     void item1Clicked(CCObject* pSender);
     void item2Clicked(CCObject* pSender);
-    LAYER_CREATE_FUNC(SceneTestLayer3)
+    CREATE_FUNC(SceneTestLayer3)
 } ;
 
 class SceneTestScene : public TestScene
