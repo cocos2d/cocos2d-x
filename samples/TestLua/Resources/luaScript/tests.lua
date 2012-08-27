@@ -6,7 +6,7 @@ require "luaScript/ActionsProgressTest/ActionsProgressTest"
 require "luaScript/EffectsTest/EffectsTest"
 require "luaScript/ClickAndMoveTest/ClickAndMoveTest"
 require "luaScript/RotateWorldTest/RotateWorldTest"
-
+require "luaScript/PerformanceTest/PerformanceTest"
 
 ----------------------------------------------------
 
