@@ -10,11 +10,11 @@ cd ..\..
 cd samples\TestCpp\proj.android\bin
 
 ::Copy test apk to tools directory.
-copy %cd%\Tests-debug-8.apk %ANDROID_HOME%\tools
-copy %cd%\Tests-debug-10.apk %ANDROID_HOME%\tools
-copy %cd%\Tests-debug-11.apk %ANDROID_HOME%\tools
-copy %cd%\Tests-debug-12.apk %ANDROID_HOME%\tools
-copy %cd%\Tests-debug-13.apk %ANDROID_HOME%\tools
+copy %cd%\TestCpp-debug-8.apk %ANDROID_HOME%\tools
+copy %cd%\TestCpp-debug-10.apk %ANDROID_HOME%\tools
+copy %cd%\TestCpp-debug-11.apk %ANDROID_HOME%\tools
+copy %cd%\TestCpp-debug-12.apk %ANDROID_HOME%\tools
+copy %cd%\TestCpp-debug-13.apk %ANDROID_HOME%\tools
 
 ::Enter tools directory.
 set ANDROID_ROOT=%ANDROID_HOME:~0,2%
@@ -24,29 +24,29 @@ cd %ANDROID_HOME%\tools
 ::If monkeyrunner test failed,it automatically exit and make ERRORLEVEL nonzero.
 
 ::Running monkeyrunner test(debug,API level:8).
-ren Tests-debug-8.apk Tests-debug.apk
-monkeyrunner Monkeyrunner_TestsCpp.py
-rm Tests-debug.apk
+ren TestCpp-debug-8.apk TestCpp-debug.apk
+monkeyrunner Monkeyrunner_TestsCpp.py TestCpp-debug.apk
+rm TestCpp-debug.apk
 
 ::Running monkeyrunner test(debug,API level:10).
-ren Tests-debug-10.apk Tests-debug.apk
-monkeyrunner Monkeyrunner_TestCpp.py
-rm Tests-debug.apk
+ren TestCpp-debug-10.apk TestCpp-debug.apk
+monkeyrunner Monkeyrunner_TestCpp.py TestCpp-debug.apk
+rm TestCpp-debug.apk
 
 ::Running monkeyrunner test(debug,API level:11).
-ren Tests-debug-11.apk Tests-debug.apk
-monkeyrunner Monkeyrunner_TestCpp.py
-rm Tests-debug.apk
+ren TestCpp-debug-11.apk TestCpp-debug.apk
+monkeyrunner Monkeyrunner_TestCpp.py TestCpp-debug.apk
+rm TestCpp-debug.apk
 
 ::Running monkeyrunner test(debug,API level:12).
-ren Tests-debug-12.apk Tests-debug.apk
-monkeyrunner Monkeyrunner_TestCpp.py
-rm Tests-debug.apk
+ren TestCpp-debug-12.apk TestCpp-debug.apk
+monkeyrunner Monkeyrunner_TestCpp.py TestCpp-debug.apk
+rm TestCpp-debug.apk
 
 ::Running monkeyrunner test(debug,API level:13).
-ren Tests-debug-13.apk Tests-debug.apk
-monkeyrunner Monkeyrunner_TestCpp.py
-rm Tests-debug.apk
+ren TestCpp-debug-13.apk TestCpp-debug.apk
+monkeyrunner Monkeyrunner_TestCpp.py TestCpp-debug.apk
+rm TestCpp-debug.apk
 
 rm Monkeyrunner_TestCpp.py
 
