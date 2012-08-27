@@ -7,7 +7,13 @@ LOCAL_MODULE := scriptingcore-spidermonkey
 LOCAL_MODULE_FILENAME := libscriptingcore-spidermonkey
 
 LOCAL_SRC_FILES := ScriptingCore.cpp \
-                   cocos2d_specifics.cpp
+                   cocos2d_specifics.cpp \
+                   CCPhysicsSprite.cpp \
+                   js_bindings_chipmunk_functions.cpp \
+                   js_bindings_chipmunk_manual.cpp \
+                   cocos2dx.cpp \
+                   js_manual_conversions.cpp
+
 
 LOCAL_CFLAGS := -DCOCOS2D_JAVASCRIPT
 
@@ -25,5 +31,5 @@ LOCAL_LDLIBS += -llog
 
 include $(BUILD_STATIC_LIBRARY)
 
-$(call import-module,spidermonkey/android)
+$(call import-module,scripting/javascript/spidermonkey-android/android)
 $(call import-module,cocos2dx)
