@@ -17,7 +17,6 @@
 
 #ifdef ANDROID
 #include <android/log.h>
-#include <android/asset_manager.h>
 #include <jni/JniHelper.h>
 #endif
 
@@ -223,7 +222,7 @@ void ScriptingCore::createGlobalContext() {
 }
 
 
-#ifdef ANDROID
+#if 0
 
 static unsigned long
 fileutils_read_into_new_memory(const char* relativepath,
@@ -322,22 +321,9 @@ static size_t readFileInMemory(const char *path, unsigned char **buff) {
 JSBool ScriptingCore::runScript(const char *path)
 {
     cocos2d::CCFileUtils *futil = cocos2d::CCFileUtils::sharedFileUtils();
-#ifdef DEBUG
-    /**
-     * dpath should point to the parent directory of the "JS" folder. If this is
-     * set to "" (as it is now) then it will take the scripts from the app bundle.
-     * By setting the absolute path you can iterate the development only by
-     * modifying those scripts and reloading from the simulator (no recompiling/
-     * relaunching)
-     */
-//  std::string dpath("/Users/rabarca/Desktop/testjs/testjs/");
-    std::string dpath("");
-    dpath += path;
-    const char *realPath = futil->fullPathFromRelativePath(dpath.c_str());
-#else
+
     const char *realPath = NULL;
     futil->fullPathFromRelativePath(path);
-#endif
 
     if (!realPath) {
         return JS_FALSE;
@@ -346,12 +332,13 @@ JSBool ScriptingCore::runScript(const char *path)
     unsigned char *content = NULL;
     unsigned long contentSize = 0;
 
-    contentSize = readFileInMemory(realPath, &content);
+    content = (unsigned char*)CCString::createWithContentsOfFile(realPath)->getCString();
+    contentSize = strlen((char*)content);
+
     JSBool ret = JS_FALSE;
     if (content && contentSize) {
         jsval rval;
         ret = this->evalString((const char *)content, &rval, path);
-        free(content);
     }
     return ret;
 }
