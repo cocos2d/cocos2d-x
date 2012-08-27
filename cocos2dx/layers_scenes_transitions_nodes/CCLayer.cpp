@@ -142,7 +142,7 @@ int CCLayer::excuteScriptTouchHandler(int nEventType, CCTouch *pTouch)
 
 int CCLayer::excuteScriptTouchHandler(int nEventType, CCSet *pTouches)
 {
-    return CCScriptEngineManager::sharedManager()->getScriptEngine()->executeTouchesEvent(m_pScriptHandlerEntry->getHandler(), nEventType, pTouches);
+    return CCScriptEngineManager::sharedManager()->getScriptEngine()->executeTouchesEvent(m_pScriptHandlerEntry->getHandler(), nEventType, pTouches, (CCNode *)this);
 }
 
 /// isTouchEnabled getter
