@@ -25,7 +25,6 @@
 
 using namespace cocos2d;
 
-
 static CCPoint cpVect_to_ccPoint(cpVect p) {
     return CCPoint(p.x, p.y);
 }
@@ -63,8 +62,8 @@ void CCPhysicsSprite::setRotation(float rotation) {
 
 cocos2d::CCAffineTransform CCPhysicsSprite::nodeToParentTransform() {
     cpVect rot = (_ignoreBodyRotation ? cpvforangle(-CC_DEGREES_TO_RADIANS(m_fRotation)) : _body->rot);
-    CGFloat x = _body->p.x + rot.x*-m_tAnchorPointInPoints.x - rot.y*-m_tAnchorPointInPoints.y;
-    CGFloat y = _body->p.y + rot.y*-m_tAnchorPointInPoints.x + rot.x*-m_tAnchorPointInPoints.y;
+    float x = _body->p.x + rot.x*-m_tAnchorPointInPoints.x - rot.y*-m_tAnchorPointInPoints.y;
+    float y = _body->p.y + rot.y*-m_tAnchorPointInPoints.x + rot.x*-m_tAnchorPointInPoints.y;
     
     if(m_bIgnoreAnchorPointForPosition){
         x += m_tAnchorPointInPoints.x;
@@ -73,52 +72,3 @@ cocos2d::CCAffineTransform CCPhysicsSprite::nodeToParentTransform() {
     
     return (m_tTransform = cocos2d::__CCAffineTransformMake(rot.x, rot.y, -rot.y, rot.x, x,	y));
 }
-
-
-//
-
-//-(BOOL) dirty
-//{
-//	return YES;
-//}
-//// Override the setters and getters to always reflect the body's properties.
-//-(CGPoint)position
-//{
-//	return cpBodyGetPos(_body);
-//}
-//
-//-(void)setPosition:(CGPoint)position
-//{
-//	cpBodySetPos(_body, position);
-//}
-//
-//-(float)rotation
-//{
-//	return (_ignoreBodyRotation ? super.rotation : -CC_RADIANS_TO_DEGREES(cpBodyGetAngle(_body)));
-//}
-//
-//-(void)setRotation:(float)rotation
-//{
-//	if(_ignoreBodyRotation){
-//		super.rotation = rotation;
-//	} else {
-//		cpBodySetAngle(_body, -CC_DEGREES_TO_RADIANS(rotation));
-//	}
-//}
-//
-//// returns the transform matrix according the Chipmunk Body values
-//-(CGAffineTransform) nodeToParentTransform
-//{	
-//	cpVect rot = (_ignoreBodyRotation ? cpvforangle(-CC_DEGREES_TO_RADIANS(rotationX_)) : _body->rot);
-//	CGFloat x = _body->p.x + rot.x*-anchorPointInPoints_.x - rot.y*-anchorPointInPoints_.y;
-//	CGFloat y = _body->p.y + rot.y*-anchorPointInPoints_.x + rot.x*-anchorPointInPoints_.y;
-//	
-//	if(ignoreAnchorPointForPosition_){
-//		x += anchorPointInPoints_.x;
-//		y += anchorPointInPoints_.y;
-//	}
-//	
-//	return (transform_ = CGAffineTransformMake(rot.x, rot.y, -rot.y,	rot.x, x,	y));
-//}
-//
-//@end
