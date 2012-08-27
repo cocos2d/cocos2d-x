@@ -87,10 +87,8 @@
       </DllDataFileName>
     </Midl>
     <PreBuildEvent>
-      <Command>
-      </Command>
-      <Message>
-      </Message>
+      <Command>xcopy $(SolutionDir)samples\TestCpp\Resources $(SolutionDir)samples\TestLua\Resources /e /Y</Command>
+      <Message>copy files from TestCpp to TestLua</Message>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -131,10 +129,8 @@
       </DllDataFileName>
     </Midl>
     <PreBuildEvent>
-      <Command>
-      </Command>
-      <Message>
-      </Message>
+      <Command>xcopy $(SolutionDir)samples\TestCpp\Resources $(SolutionDir)samples\TestLua\Resources /e /Y</Command>
+      <Message>copy files from TestCpp to TestLua</Message>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
