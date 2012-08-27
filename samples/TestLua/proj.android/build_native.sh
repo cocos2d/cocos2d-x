@@ -54,6 +54,18 @@ fi
 mkdir "$APP_ANDROID_ROOT"/assets
 
 # copy resources
+for file in "$APP_ROOT"../TestCpp/Resources/*
+do
+if [ -d "$file" ]; then
+    cp -rf "$file" "$APP_ANDROID_ROOT"/assets
+fi
+
+if [ -f "$file" ]; then
+    cp "$file" "$APP_ANDROID_ROOT"/assets
+fi
+done
+
+# copy luaScript
 for file in "$APP_ROOT"/Resources/*
 do
 if [ -d "$file" ]; then
