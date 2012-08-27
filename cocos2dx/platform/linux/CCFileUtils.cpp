@@ -12,6 +12,9 @@
 #include "CCApplication.h"
 #include "cocoa/CCString.h"
 #include <unistd.h>
+#include <sys/stat.h>
+#include <stdio.h>
+#include <errno.h>
 
 using namespace std;
 
@@ -45,18 +48,36 @@ void CCFileUtils::purgeCachedEntries()
 
 const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
 {
+    if (pszRelativePath && pszRelativePath[0] == '/')
+    {
+        return pszRelativePath;
+    }
+
     const char* pszRootPath = CCApplication::sharedApplication()->getResourceRootPath();
 
     CCString* pRet = CCString::create(pszRootPath);
-    const char* resDir = CCFileUtils::sharedFileUtils()->getResourceDirectory();
-    if (resDir != NULL)
+    if (m_obDirectory.size() > 0)
     {
-        pRet->m_sString += resDir;
+        pRet->m_sString += m_obDirectory.c_str();
     }
 
     if (pszRelativePath != NULL)
     {
         pRet->m_sString += pszRelativePath;
+    }
+
+    // check if file or path exist
+    struct stat sts;
+    if (stat(pRet->getCString(), &sts) == -1 && errno == ENOENT)
+    {
+        // find from "Resources/"
+        pRet->m_sString.clear();
+        pRet->m_sString = CCApplication::sharedApplication()->getResourceRootPath();
+        pRet->m_sString += pszRelativePath;
+        if (stat(pRet->getCString(), &sts) == -1 && errno == ENOENT)
+        {
+            return pszRelativePath;
+        }
     }
 
     return pRet->getCString();

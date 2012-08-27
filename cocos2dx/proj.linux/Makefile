@@ -189,14 +189,13 @@ STATICLIBS_DIR = ../platform/third_party/linux/libraries
 endif
 STATICLIBS = 
 STATICLIBS = $(STATICLIBS_DIR)/libfreetype.a \
-				$(STATICLIBS_DIR)/libcurl.a \
 				$(STATICLIBS_DIR)/libxml2.a \
 				$(STATICLIBS_DIR)/libpng.a \
 				$(STATICLIBS_DIR)/libjpeg.a \
 				$(STATICLIBS_DIR)/libtiff.a \
 
 SHAREDLIBS = 
-SHAREDLIBS += -lglfw -lGL
+SHAREDLIBS += -lglfw -lGL -lcurl
 SHAREDLIBS += -Wl,-rpath,../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib
 SHAREDLIBS += -L../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib -lGLEW
 
