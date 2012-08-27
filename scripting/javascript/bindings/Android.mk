@@ -8,12 +8,7 @@ LOCAL_MODULE_FILENAME := libscriptingcore-spidermonkey
 
 LOCAL_SRC_FILES := ScriptingCore.cpp \
                    cocos2d_specifics.cpp \
-                   CCPhysicsSprite.cpp \
-                   js_bindings_chipmunk_functions.cpp \
-                   js_bindings_chipmunk_manual.cpp \
-                   cocos2dx.cpp \
-                   js_manual_conversions.cpp
-
+                   cocos2dx.cpp
 
 LOCAL_CFLAGS := -DCOCOS2D_JAVASCRIPT
 
