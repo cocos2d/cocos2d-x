@@ -876,7 +876,7 @@ std::string ActionCallFuncND::subtitle()
 
 void ActionCallFuncND::removeFromParentAndCleanup(CCNode* pSender, void* data)
 {
-    bool bCleanUp = (bool)data;
+    bool bCleanUp = data != NULL;
     m_grossini->removeFromParentAndCleanup(bCleanUp);
 }
 
