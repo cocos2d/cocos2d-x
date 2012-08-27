@@ -31,6 +31,48 @@
 #include "CCPlatformConfig.h"
 #include "CCPlatformDefine.h"
 
+/**
+ * define a create function for a specific type, such as CCLayer
+ * @__TYPE__ class type to add create(), such as CCLayer
+ */
+#define CREATE_FUNC(__TYPE__) \
+static __TYPE__* create() \
+{ \
+    __TYPE__ *pRet = new __TYPE__(); \
+    if (pRet && pRet->init()) \
+    { \
+        pRet->autorelease(); \
+        return pRet; \
+    } \
+    else \
+    { \
+        delete pRet; \
+        pRet = NULL; \
+        return NULL; \
+    } \
+}
+
+/**
+ * define a node function for a specific type, such as CCLayer
+ * @__TYPE__ class type to add node(), such as CCLayer
+ * @deprecated: This interface will be deprecated sooner or later.
+ */
+#define NODE_FUNC(__TYPE__) \
+CC_DEPRECATED_ATTRIBUTE static __TYPE__* node() \
+{ \
+    __TYPE__ *pRet = new __TYPE__(); \
+    if (pRet && pRet->init()) \
+    { \
+        pRet->autorelease(); \
+        return pRet; \
+    } \
+    else \
+    { \
+        delete pRet; \
+        pRet = NULL; \
+        return NULL; \
+    } \
+}
 
 /** @def CC_ENABLE_CACHE_TEXTURE_DATA
 Enable it if you want to cache the texture data.

@@ -21,7 +21,7 @@ public:
     void backCallback(CCObject* pSender);
     virtual std::string title();
 
-    LAYER_CREATE_FUNC(FontTest);
+    CREATE_FUNC(FontTest);
 };
 
 #endif // _FONT_TEST_H_
