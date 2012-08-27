@@ -1,4 +1,4 @@
-APPNAME="TestCpp"
+APPNAME="TestLua"
 
 # options
 
