@@ -168,7 +168,7 @@ void HttpClientTest::onHttpRequestCompleted(cocos2d::CCNode *sender, void *data)
     // dump data
     std::vector<char> *buffer = response->getResponseData();
     printf("Http Test, dump data: ");
-    for (int i = 0; i < buffer->size(); i++)
+    for (unsigned int i = 0; i < buffer->size(); i++)
     {
         printf("%c", (*buffer)[i]);
     }
