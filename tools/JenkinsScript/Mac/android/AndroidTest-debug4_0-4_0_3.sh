@@ -13,8 +13,8 @@ cd samples/TestCpp/proj.android/bin
 
 #Copy test apk to tools directory.
 CUR=$(pwd)
-cp $CUR/Tests-debug-14.apk $ANDROID_HOME/tools
-cp $CUR/Tests-debug-15.apk $ANDROID_HOME/tools
+cp $CUR/TestCpp-debug-14.apk $ANDROID_HOME/tools
+cp $CUR/TestCpp-debug-15.apk $ANDROID_HOME/tools
 
 #Enter tools directory.
 cd $ANDROID_HOME
@@ -22,14 +22,14 @@ cd $ANDROID_HOME
 #If monkeyrunner test failed,it automatically exit and make ERRORLEVEL nonzero.
 
 #Running monkeyrunner test(debug,API level:14)
-mv Tests-debug-14.apk Tests-debug.apk
+mv TestCpp-debug-14.apk TestCpp-debug.apk
 monkeyrunner Monkeyrunner_TestsCpp.py
-rm Tests-debug.apk
+rm TestCpp-debug.apk
 
 #Running monkeyrunner test(debug,API level:15)
-mv Tests-debug-15.apk Tests-debug.apk
+mv TestCpp-debug-15.apk TestCpp-debug.apk
 monkeyrunner Monkeyrunner_TestsCpp.py
-rm Tests-debug.apk
+rm TestCpp-debug.apk
 
 rm Monkeyrunner_TestsCpp.py
 

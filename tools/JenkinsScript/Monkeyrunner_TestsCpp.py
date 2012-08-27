@@ -66,8 +66,8 @@ def random_drag(a,b,c):
         device.drag((drag_x,drag_y),(drop_x,drop_y))
 
 def check_activity(a):
-    subprocess.call("adb shell ps > running_activities.txt")
-    subprocess.call("adb pull running_activities.txt")
+    subprocess.call("adb shell ps > running_activities.txt",shell=True)
+    subprocess.call("adb pull running_activities.txt",shell=True)
 
     f1 = open('running_activities.txt')
     while True:
