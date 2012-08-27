@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.92 on 08/23/12 17:57:33.
+** Generated automatically by tolua++-1.0.92 on 08/27/12 11:20:15.
 */
 
 #include <vector>
@@ -29631,7 +29631,7 @@ static int tolua_Cocos2d_CCNode_scheduleScriptFunc00(lua_State* tolua_S)
  tolua_Error tolua_err;
  if (
      !tolua_isusertype(tolua_S,1,"CCNode",0,&tolua_err) ||
-     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isfunction(tolua_S,2,&tolua_err)) ||
      !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
      !tolua_isboolean(tolua_S,4,0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,5,&tolua_err)
@@ -29641,14 +29641,14 @@ static int tolua_Cocos2d_CCNode_scheduleScriptFunc00(lua_State* tolua_S)
 #endif
  {
   CCNode* self = (CCNode*)  tolua_tousertype(tolua_S,1,0);
-  unsigned int nHandler = ((unsigned int)  tolua_tonumber(tolua_S,2,0));
+  int funcID = (tolua_ref_function(tolua_S,2,0));
   float fInterval = ((float)  tolua_tonumber(tolua_S,3,0));
   bool bPaused = ((bool)  tolua_toboolean(tolua_S,4,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'scheduleScriptFunc'", NULL);
 #endif
   {
-   unsigned int tolua_ret = (unsigned int)  self->scheduleScriptFunc(nHandler,fInterval,bPaused);
+   unsigned int tolua_ret = (unsigned int)  self->scheduleScriptFunc(funcID,fInterval,bPaused);
    tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
   }
  }
@@ -52716,11 +52716,11 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"isOpacityModifyRGB",tolua_Cocos2d_CCMenuItemLabel_isOpacityModifyRGB00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCMenuItemLabel_create00);
   tolua_endmodule(tolua_S);
-  tolua_cclass(tolua_S,"CCMenuItemAtlasFont","CCMenuItemAtlasFont","CCMenuItem",NULL);
+  tolua_cclass(tolua_S,"CCMenuItemAtlasFont","CCMenuItemAtlasFont","CCMenuItemLabel",NULL);
   tolua_beginmodule(tolua_S,"CCMenuItemAtlasFont");
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCMenuItemAtlasFont_create00);
   tolua_endmodule(tolua_S);
-  tolua_cclass(tolua_S,"CCMenuItemFont","CCMenuItemFont","CCMenuItem",NULL);
+  tolua_cclass(tolua_S,"CCMenuItemFont","CCMenuItemFont","CCMenuItemLabel",NULL);
   tolua_beginmodule(tolua_S,"CCMenuItemFont");
    tolua_function(tolua_S,"setFontSize",tolua_Cocos2d_CCMenuItemFont_setFontSize00);
    tolua_function(tolua_S,"fontSize",tolua_Cocos2d_CCMenuItemFont_fontSize00);
@@ -52752,7 +52752,7 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCMenuItemSprite_create00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCMenuItemSprite_create01);
   tolua_endmodule(tolua_S);
-  tolua_cclass(tolua_S,"CCMenuItemImage","CCMenuItemImage","CCMenuItem",NULL);
+  tolua_cclass(tolua_S,"CCMenuItemImage","CCMenuItemImage","CCMenuItemSprite",NULL);
   tolua_beginmodule(tolua_S,"CCMenuItemImage");
    tolua_function(tolua_S,"setColor",tolua_Cocos2d_CCMenuItemImage_setColor00);
    tolua_function(tolua_S,"getColor",tolua_Cocos2d_CCMenuItemImage_getColor00);
