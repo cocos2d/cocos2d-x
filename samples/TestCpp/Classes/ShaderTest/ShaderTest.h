@@ -19,7 +19,7 @@ public:
     void nextCallback(CCObject* pSender);
     void backCallback(CCObject* pSender);
 
-    LAYER_CREATE_FUNC(ShaderTestDemo);
+    CREATE_FUNC(ShaderTestDemo);
 };
 
 class ShaderMonjori : public ShaderTestDemo
