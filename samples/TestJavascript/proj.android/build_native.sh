@@ -65,6 +65,11 @@ if [ -f "$file" ]; then
 fi
 done
 
+# copy js
+if [ -d "$APP_ROOT/js" ]; then
+    cp -rf "$APP_ROOT/js" "$APP_ANDROID_ROOT"/assets
+fi
+
 if [[ "$buildexternalsfromsource" ]]; then
     echo "Building external dependencies from source"
     "$NDK_ROOT"/ndk-build -C "$APP_ANDROID_ROOT" $* \
