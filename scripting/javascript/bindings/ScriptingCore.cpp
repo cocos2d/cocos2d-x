@@ -89,11 +89,7 @@ void js_log(const char *format, ...) {
     int len = vsnprintf(_js_log_buf, 256, format, vl);
     va_end(vl);
     if (len) {
-#ifdef ANDROID
-        __android_log_print(ANDROID_LOG_DEBUG, "js_log", _js_log_buf);
-#else
-        fprintf(stderr, "JS: %s\n", _js_log_buf);
-#endif
+        CCLOG("JS: %s\n", _js_log_buf);
     }
 }
 
