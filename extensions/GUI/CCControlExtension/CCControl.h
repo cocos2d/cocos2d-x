@@ -220,7 +220,7 @@ public:
     void addTargetWithActionForControlEvent(CCObject* target, SEL_CCControlHandler action, CCControlEvent controlEvent);
     void removeTargetWithActionForControlEvent(CCObject* target, SEL_CCControlHandler action, CCControlEvent controlEvent);
 
-    LAYER_CREATE_FUNC(CCControl);
+    CREATE_FUNC(CCControl);
 
 };
 
