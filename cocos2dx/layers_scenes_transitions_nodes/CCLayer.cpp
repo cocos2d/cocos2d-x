@@ -1,3 +1,4 @@
+
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
@@ -140,7 +141,11 @@ int CCLayer::excuteScriptTouchHandler(int nEventType, CCTouch *pTouch)
 
 int CCLayer::excuteScriptTouchHandler(int nEventType, CCSet *pTouches)
 {
+#ifdef COCOS2D_JAVASCRIPT
     return CCScriptEngineManager::sharedManager()->getScriptEngine()->executeTouchesEvent(m_pScriptHandlerEntry->getHandler(), nEventType, pTouches, (CCNode *)this);
+#else
+    return CCScriptEngineManager::sharedManager()->getScriptEngine()->executeTouchesEvent(m_pScriptHandlerEntry->getHandler(), nEventType, pTouches);
+#endif
 }
 
 /// isTouchEnabled getter

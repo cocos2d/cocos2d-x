@@ -161,10 +161,14 @@ void CCTimer::update(float dt)
                 {
                     (m_pTarget->*m_pfnSelector)(m_fElapsed);
                 }
+#ifdef COCOS2D_JAVASCRIPT
+                CCScriptEngineManager::sharedManager()->getScriptEngine()->executeSchedule(m_nScriptHandler, m_fElapsed, (CCNode *)this);
+#else
                 if (m_nScriptHandler)
                 {
                     CCScriptEngineManager::sharedManager()->getScriptEngine()->executeSchedule(m_nScriptHandler, m_fElapsed);
                 }
+#endif
                 m_fElapsed = 0;
             }
         }    
@@ -179,10 +183,14 @@ void CCTimer::update(float dt)
                     {
                         (m_pTarget->*m_pfnSelector)(m_fElapsed);
                     }
+#ifdef COCOS2D_JAVASCRIPT
+                    CCScriptEngineManager::sharedManager()->getScriptEngine()->executeSchedule(m_nScriptHandler, m_fElapsed, (CCNode *)this);
+#else
                     if (m_nScriptHandler)
                     {
                         CCScriptEngineManager::sharedManager()->getScriptEngine()->executeSchedule(m_nScriptHandler, m_fElapsed);
                     }
+#endif
                     m_fElapsed = m_fElapsed - m_fDelay;
                     m_nTimesExecuted+=1;
                     m_bUseDelay = false;
@@ -196,10 +204,14 @@ void CCTimer::update(float dt)
                     {
                         (m_pTarget->*m_pfnSelector)(m_fElapsed);
                     }
+#ifdef COCOS2D_JAVASCRIPT
+                    CCScriptEngineManager::sharedManager()->getScriptEngine()->executeSchedule(m_nScriptHandler, m_fElapsed, (CCNode *)this);
+#else
                     if (m_nScriptHandler)
                     {
                         CCScriptEngineManager::sharedManager()->getScriptEngine()->executeSchedule(m_nScriptHandler, m_fElapsed);
                     }
+#endif
                     m_fElapsed = 0;
                     m_nTimesExecuted += 1;
 

@@ -169,8 +169,25 @@ public:
      @return The integer value returned from the script function.
      */
     virtual int executeFunctionByHandler(int nHandler, int numArgs = 0) = 0;
+    
+#ifdef COCOS2D_JAVASCRIPT
+    
     virtual int executeFunctionWithIntegerData(int nHandler, int data, CCNode *self) = 0;
+    virtual int executeTouchesEvent(int nHandler, int eventType, CCSet *pTouches, CCNode *self) = 0;
+    virtual int executeFunctionWithFloatData(int nHandler, float data, CCNode *self) = 0;
+    
+    // execute a schedule function
+    virtual int executeSchedule(int nHandler, float dt, CCNode *self) = 0;
+    
+#else
+    virtual int executeFunctionWithIntegerData(int nHandler, int data) = 0;
+    virtual int executeTouchesEvent(int nHandler, int eventType, CCSet *pTouches) = 0;
     virtual int executeFunctionWithFloatData(int nHandler, float data) = 0;
+    
+    // execute a schedule function
+    virtual int executeSchedule(int nHandler, float dt) = 0;
+#endif    
+    
     virtual int executeFunctionWithBooleanData(int nHandler, bool data) = 0;
     virtual int executeFunctionWithCCObject(int nHandler, CCObject* pObject, const char* typeName) = 0;    
     virtual int pushIntegerToLuaStack(int data) = 0;
@@ -180,10 +197,6 @@ public:
     
     // functions for excute touch event
     virtual int executeTouchEvent(int nHandler, int eventType, CCTouch *pTouch) = 0;
-    virtual int executeTouchesEvent(int nHandler, int eventType, CCSet *pTouches, CCNode *self) = 0;
-    
-    // execute a schedule function
-    virtual int executeSchedule(int nHandler, float dt) = 0;
 };
 
 /**
