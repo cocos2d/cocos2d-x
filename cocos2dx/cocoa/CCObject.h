@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 #include "platform/CCPlatformMacros.h"
 #ifdef COCOS2D_JAVASCRIPT
-#include "ScriptingCore.h"
+#include "spidermonkey_specifics.h"
 #else
 #ifndef ADD_OBJECT_TYPE
 #define ADD_OBJECT_TYPE(x)

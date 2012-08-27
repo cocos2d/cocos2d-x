@@ -123,7 +123,7 @@ void CCMenuItem::activate()
         
         if (m_nScriptHandler)
         {
-            CCScriptEngineManager::sharedManager()->getScriptEngine()->executeFunctionWithIntegerData(m_nScriptHandler, getTag());
+            CCScriptEngineManager::sharedManager()->getScriptEngine()->executeFunctionWithIntegerData(m_nScriptHandler, kCCMenuItemActivated, (CCNode *)this);
         }
     }
 }

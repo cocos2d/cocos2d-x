@@ -27,6 +27,9 @@ THE SOFTWARE.
 #include "CCAutoreleasePool.h"
 #include "ccMacros.h"
 #include "script_support/CCScriptSupport.h"
+#ifdef COCOS2D_JAVASCRIPT
+#include "ScriptingCore.h"
+#endif
 
 NS_CC_BEGIN
 
@@ -68,7 +71,7 @@ CCObject::~CCObject(void)
     void *ptr = this;
     JS_GET_PROXY(p, ptr);
     if (p) {
-        JSContext *cx = ScriptingCore::getInstance().getGlobalContext();
+        JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
         JS_SetPrivate(p->obj, NULL);
         JS_RemoveObjectRoot(cx, &p->obj);
     }
