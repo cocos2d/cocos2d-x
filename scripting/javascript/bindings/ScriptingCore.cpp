@@ -320,12 +320,14 @@ static size_t readFileInMemory(const char *path, unsigned char **buff) {
 
 JSBool ScriptingCore::runScript(const char *path)
 {
+    CCLOG("ScriptingCore::runScript(%s)", path);
+
     cocos2d::CCFileUtils *futil = cocos2d::CCFileUtils::sharedFileUtils();
 
-    const char *realPath = NULL;
-    futil->fullPathFromRelativePath(path);
+    const char *realPath = futil->fullPathFromRelativePath(path);
 
     if (!realPath) {
+        CCLOG("!realPath. returning JS_FALSE");
         return JS_FALSE;
     }
 
@@ -339,7 +341,10 @@ JSBool ScriptingCore::runScript(const char *path)
     if (content && contentSize) {
         jsval rval;
         ret = this->evalString((const char *)content, &rval, path);
+    } else {
+        CCLOG("!(content && contentSize)");
     }
+
     return ret;
 }
 
