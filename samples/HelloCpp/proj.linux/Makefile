@@ -42,15 +42,19 @@ STATICLIBS = $(STATICLIBS_DIR)/libfreetype.a \
 #				$(STATICLIBS_DIR)/libGLEW.a \
 
 
-SHAREDLIBS = -L../../../lib/linux/Debug -lcocos2d -lrt -lz -lcocosdenshion -Wl,-rpath,../../../lib/linux/Debug/ 
+SHAREDLIBS = -L../../../lib/linux/Debug -lcocos2d -lrt -lz -lcocosdenshion -Wl,-rpath,../../../../lib/linux/Debug/ 
 SHAREDLIBS += -lglfw -lcurl
-SHAREDLIBS += -Wl,-rpath,../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib
+SHAREDLIBS += -Wl,-rpath,../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib
 SHAREDLIBS += -L../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib -lGLEW
 
 #$(shell ../../build-linux.sh $<)
+
+BIN_DIR=bin
+
 ####### Build rules
 $(TARGET): $(OBJECTS) 
-	$(CXX) $(CXXFLAGS) $(INCLUDES) $(DEFINES) $(OBJECTS) -o $(TARGET) $(SHAREDLIBS) $(STATICLIBS)
+	test -d $(BIN_DIR) || mkdir $(BIN_DIR)
+	$(CXX) $(CXXFLAGS) $(INCLUDES) $(DEFINES) $(OBJECTS) -o $(BIN_DIR)/$(TARGET) $(SHAREDLIBS) $(STATICLIBS)
 	
 ####### Compile
 %.o: %.cpp
@@ -61,3 +65,4 @@ $(TARGET): $(OBJECTS)
 		
 clean: 
 	rm -f $(OBJECTS) $(TARGET) core
+	rm -r $(BIN_DIR)

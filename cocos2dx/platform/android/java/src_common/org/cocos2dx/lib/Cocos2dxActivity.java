@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 
 http://www.cocos2d-x.org
 
@@ -24,11 +24,12 @@ THE SOFTWARE.
 
 package org.cocos2dx.lib;
 
+import java.lang.ref.WeakReference;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -57,6 +58,28 @@ public class Cocos2dxActivity extends Activity{
     private static native void nativeSetPaths(String apkPath);
     private static native void nativeSetEditboxText(byte[] text);
     
+    
+    static class ShowDialogHandler extends Handler {
+        WeakReference<Cocos2dxActivity> mActivity;
+
+        ShowDialogHandler(Cocos2dxActivity activity) {
+            mActivity = new WeakReference<Cocos2dxActivity>(activity);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+        	Cocos2dxActivity theActivity = mActivity.get();
+    		switch(msg.what) {
+    		case HANDLER_SHOW_DIALOG:
+    			theActivity.showDialog(((DialogMessage)msg.obj).title, ((DialogMessage)msg.obj).message);
+    			break;
+    		case HANDLER_SHOW_EDITBOX_DIALOG:
+    			theActivity.onShowEditBoxDialog((EditBoxMessage)msg.obj);
+    			break;
+    		}
+        }
+    };
+
 	public Cocos2dxGLSurfaceView getGLView() {
 		return mGLView;
 	}
@@ -80,18 +103,7 @@ public class Cocos2dxActivity extends Activity{
         // init bitmap context
         Cocos2dxBitmap.setContext(this);
         
-        handler = new Handler(){
-        	public void handleMessage(Message msg){
-        		switch(msg.what){
-        		case HANDLER_SHOW_DIALOG:
-        			showDialog(((DialogMessage)msg.obj).title, ((DialogMessage)msg.obj).message);
-        			break;
-        		case HANDLER_SHOW_EDITBOX_DIALOG:
-        			onShowEditBoxDialog((EditBoxMessage)msg.obj);
-        			break;
-        		}
-        	}
-        };
+        handler = new ShowDialogHandler(this);
     }
     
     public static String getDeviceModel(){
