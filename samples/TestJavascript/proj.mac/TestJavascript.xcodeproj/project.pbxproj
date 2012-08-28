@@ -198,7 +198,7 @@
 		E8FBDCDC15ECA72F00A8B10A /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Small@2x.png"; path = "../Resources/Icon-Small@2x.png"; sourceTree = "<group>"; };
 		E8FBDCDD15ECA72F00A8B10A /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = ../Resources/Icon.png; sourceTree = "<group>"; };
 		E8FBDCDE15ECA72F00A8B10A /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "../Resources/Icon@2x.png"; sourceTree = "<group>"; };
-		E8FBDCDF15ECA72F00A8B10A /* iTunesArtwork */ = {isa = PBXFileReference; lastKnownFileType = file; name = iTunesArtwork; path = ../Resources/iTunesArtwork; sourceTree = "<group>"; };
+		E8FBDCDF15ECA72F00A8B10A /* iTunesArtwork */ = {isa = PBXFileReference; lastKnownFileType = text; name = iTunesArtwork; path = ../Resources/iTunesArtwork; sourceTree = "<group>"; };
 		E8FBDCF015ECA72F00A8B10A /* LavaFlow.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = LavaFlow.plist; path = ../Resources/LavaFlow.plist; sourceTree = "<group>"; };
 		E8FBDCF115ECA72F00A8B10A /* Phoenix.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Phoenix.plist; path = ../Resources/Phoenix.plist; sourceTree = "<group>"; };
 		E8FBDCF215ECA72F00A8B10A /* r1-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "r1-hd.png"; path = "../Resources/r1-hd.png"; sourceTree = "<group>"; };
