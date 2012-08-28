@@ -26,6 +26,20 @@ pushd scripting
 python ../tools/xcode4_template_generator/template_generator.py --directory lua --identifier liblua --prefix libs --append ../tools/xcode4_template_generator/template_lua_patch.txt --exclude "android win32 Makefile CMakeFiles" > ../template/xcode4/lib_lua.xctemplate/TemplateInfo.plist
 popd
 
+
+echo "generating libjs"
+mkdir -p template/xcode4/lib_js.xctemplate
+pushd scripting
+python ../tools/xcode4_template_generator/template_generator.py --directory javascript/bindings --identifier libjs --prefix libs --append ../tools/xcode4_template_generator/template_js_patch.txt --exclude "Android.mk helper.js sample.js"  > ../template/xcode4/lib_js.xctemplate/TemplateInfo.plist
+popd
+
+echo "generating libspidermonkey"
+mkdir -p template/xcode4/lib_spidermonkey.xctemplate
+pushd scripting
+python ../tools/xcode4_template_generator/template_generator.py --directory javascript/spidermonkey-ios --identifier libspidermonkey --exclude "bin host" --prefix libs  > ../template/xcode4/lib_spidermonkey.xctemplate/TemplateInfo.plist
+popd
+
+
 echo "generating libextensions"
 python ./tools/xcode4_template_generator/template_generator.py --directory extensions --identifier libextensions --prefix libs --exclude "proj.win32 Android.mk" > ./template/xcode4/lib_extensions.xctemplate/TemplateInfo.plist
 
