@@ -75,7 +75,7 @@ JSBool S_CCSequence::jsactions(JSContext *cx, uint32_t argc, jsval *vp) {
         // get first element
         S_CCSequence* prev;
         JSGET_PTRSHELL(S_CCSequence, prev, JSVAL_TO_OBJECT(argv[0]));
-        for (int i=1; i < argc; i++) {
+        for (unsigned int i=1; i < argc; i++) {
             CCFiniteTimeAction *next; JSGET_PTRSHELL(CCFiniteTimeAction, next, JSVAL_TO_OBJECT(argv[i]));
             prev = (S_CCSequence *)CCSequence::actionOneTwo(prev, next);
         }

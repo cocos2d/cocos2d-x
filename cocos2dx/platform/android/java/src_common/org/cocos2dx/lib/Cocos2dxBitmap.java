@@ -36,11 +36,8 @@ import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.Paint.Align;
 import android.graphics.Paint.FontMetricsInt;
-import android.text.Spannable;
-import android.text.SpannableString;
 import android.text.TextPaint;
 import android.text.TextUtils;
-import android.text.style.StyleSpan;
 import android.util.Log;
 
 public class Cocos2dxBitmap{

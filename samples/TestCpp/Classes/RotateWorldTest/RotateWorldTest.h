@@ -13,7 +13,7 @@ class SpriteLayer : public CCLayer
 {
 public:
     virtual void onEnter();
-    LAYER_CREATE_FUNC(SpriteLayer)
+    CREATE_FUNC(SpriteLayer)
 };
 
 class TestLayer : public CCLayer
@@ -21,7 +21,7 @@ class TestLayer : public CCLayer
 public:
     virtual void onEnter();
 
-    LAYER_CREATE_FUNC(TestLayer)
+    CREATE_FUNC(TestLayer)
 };
 
 class RotateWorldMainLayer : public CCLayer
@@ -29,7 +29,7 @@ class RotateWorldMainLayer : public CCLayer
 public:
     virtual void onEnter();
 
-    LAYER_CREATE_FUNC(RotateWorldMainLayer)
+    CREATE_FUNC(RotateWorldMainLayer)
 };
 
 #endif

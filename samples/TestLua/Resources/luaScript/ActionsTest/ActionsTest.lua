@@ -27,7 +27,7 @@ local function NextAction()
 	return CreateActionTestLayer(ActionIdx)
 end
 
-local function backCallback()
+local function backCallback(sender)
 	local scene = CCScene:create()
 	scene:addChild(CreateBackMenuItem())
 	scene:addChild(BackAction())
@@ -35,7 +35,7 @@ local function backCallback()
 	CCDirector:sharedDirector():replaceScene(scene)
 end
 
-local function restartCallback()
+local function restartCallback(sender)
 	local scene = CCScene:create()
 	scene:addChild(CreateBackMenuItem())
 	scene:addChild(RestartAction())
@@ -43,7 +43,7 @@ local function restartCallback()
 	CCDirector:sharedDirector():replaceScene(scene)
 end
 
-local function nextCallback()
+local function nextCallback(sender)
 	local scene = CCScene:create()
 	scene:addChild(CreateBackMenuItem())
 	scene:addChild(NextAction())
@@ -998,18 +998,20 @@ end
 --------------------------------------
 local pausedTargets = nil
 
-local function ActionPause()
+local function ActionPause(dt)
 	cclog("Pausing")
 	local director = CCDirector:sharedDirector()
     pausedTargets = director:getActionManager():pauseAllRunningActions()
+	pausedTargets:retain()
 end
 
-local function ActionResume()
+local function ActionResume(dt)
 	cclog("Resuming")
 	local director = CCDirector:sharedDirector()
 	if pausedTargets ~= nil then
-		director:getActionManager():resumeTargets(pausedTargets)
+	--	director:getActionManager():resumeTargets(pausedTargets)
 	end
+	pausedTargets:release()
 end
 
 local function PauseResumeActions()

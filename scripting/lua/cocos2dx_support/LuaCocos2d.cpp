@@ -1,6 +1,6 @@
 /*
 ** Lua binding: LuaCocos2d
-** Generated automatically by tolua++-1.0.92 on Sat Aug 25 18:09:45 2012.
+** Generated automatically by tolua++-1.0.92 on Tue Aug 28 12:21:51 2012.
 */
 
 /****************************************************************************
@@ -53928,11 +53928,11 @@ TOLUA_API int tolua_LuaCocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"isOpacityModifyRGB",tolua_LuaCocos2d_CCMenuItemLabel_isOpacityModifyRGB00);
    tolua_function(tolua_S,"create",tolua_LuaCocos2d_CCMenuItemLabel_create00);
   tolua_endmodule(tolua_S);
-  tolua_cclass(tolua_S,"CCMenuItemAtlasFont","CCMenuItemAtlasFont","CCMenuItem",NULL);
+  tolua_cclass(tolua_S,"CCMenuItemAtlasFont","CCMenuItemAtlasFont","CCMenuItemLabel",NULL);
   tolua_beginmodule(tolua_S,"CCMenuItemAtlasFont");
    tolua_function(tolua_S,"create",tolua_LuaCocos2d_CCMenuItemAtlasFont_create00);
   tolua_endmodule(tolua_S);
-  tolua_cclass(tolua_S,"CCMenuItemFont","CCMenuItemFont","CCMenuItem",NULL);
+  tolua_cclass(tolua_S,"CCMenuItemFont","CCMenuItemFont","CCMenuItemLabel",NULL);
   tolua_beginmodule(tolua_S,"CCMenuItemFont");
    tolua_function(tolua_S,"setFontSize",tolua_LuaCocos2d_CCMenuItemFont_setFontSize00);
    tolua_function(tolua_S,"fontSize",tolua_LuaCocos2d_CCMenuItemFont_fontSize00);
@@ -53964,7 +53964,7 @@ TOLUA_API int tolua_LuaCocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"create",tolua_LuaCocos2d_CCMenuItemSprite_create00);
    tolua_function(tolua_S,"create",tolua_LuaCocos2d_CCMenuItemSprite_create01);
   tolua_endmodule(tolua_S);
-  tolua_cclass(tolua_S,"CCMenuItemImage","CCMenuItemImage","CCMenuItem",NULL);
+  tolua_cclass(tolua_S,"CCMenuItemImage","CCMenuItemImage","CCMenuItemSprite",NULL);
   tolua_beginmodule(tolua_S,"CCMenuItemImage");
    tolua_function(tolua_S,"setColor",tolua_LuaCocos2d_CCMenuItemImage_setColor00);
    tolua_function(tolua_S,"getColor",tolua_LuaCocos2d_CCMenuItemImage_getColor00);

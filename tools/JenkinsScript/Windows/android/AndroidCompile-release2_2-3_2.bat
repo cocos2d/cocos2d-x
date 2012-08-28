@@ -55,7 +55,7 @@ set result8=%ERRORLEVEL%
 if "%_PROJECTNAME%" NEQ "TestCpp" goto API_10
 if %result8% NEQ 0 goto API_10
 cd bin
-ren Tests-release.apk Tests-release-8.apk
+ren TestCpp-release.apk TestCpp-release-8.apk
 cd ..
 
 :API_10
@@ -74,7 +74,7 @@ set result10=%ERRORLEVEL%
 if "%_PROJECTNAME%" NEQ "TestCpp" goto API_11
 if %result10% NEQ 0 goto API_11
 cd bin
-ren Tests-release.apk Tests-release-10.apk
+ren TestCpp-release.apk TestCpp-release-10.apk
 cd ..
 
 :API_11
@@ -93,7 +93,7 @@ set result11=%ERRORLEVEL%
 if "%_PROJECTNAME%" NEQ "TestCpp" goto API_12
 if %result11% NEQ 0 goto API_12
 cd bin
-ren Tests-release.apk Tests-release-11.apk
+ren TestCpp-release.apk TestCpp-release-11.apk
 cd ..
 
 :API_12
@@ -112,7 +112,7 @@ set result12=%ERRORLEVEL%
 if "%_PROJECTNAME%" NEQ "TestCpp" goto API_13
 if %result12% NEQ 0 goto API_13
 cd bin
-ren Tests-release.apk Tests-release-12.apk
+ren TestCpp-release.apk TestCpp-release-12.apk
 cd ..
 
 :API_13
@@ -131,7 +131,7 @@ set result13=%ERRORLEVEL%
 if "%_PROJECTNAME%" NEQ "TestCpp" goto NEXTPROJ
 if %result13% NEQ 0 goto NEXTPROJ
 cd bin
-ren Tests-release.apk Tests-release-13.apk
+ren TestCpp-release.apk TestCpp-release-13.apk
 cd ..
 
 :NEXTPROJ

@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2012 cocos2d-x.org
 
 http://www.cocos2d-x.org
 
@@ -25,6 +25,7 @@ THE SOFTWARE.
 #define __CC_PLATFORM_FILEUTILS_CPP__
 #include "platform/CCFileUtilsCommon_cpp.h"
 #include "CCApplication.h"
+#include <unistd.h>
 
 NS_CC_BEGIN;
 
@@ -57,9 +58,12 @@ void CCFileUtils::purgeCachedEntries()
 
 static std::string fullPathFromRelativePathThreadSafe(const char* pszRelativePath)
 {
+	bool bFileExist = true;
 	std::string ret("");
+	std::string strPathWithoutResDir("");
     const char* pszRootPath = CCApplication::sharedApplication()->getResourceRootPath();
     CCAssert(pszRootPath != NULL, "The resource root path must be set in the main.cpp");
+    CCAssert(pszRelativePath != NULL, "Parameter can't be NULL!");
 
     std::string pstrRelativePath = pszRelativePath;
     // if the relative path contains root path, skip it.
@@ -67,6 +71,8 @@ static std::string fullPathFromRelativePathThreadSafe(const char* pszRelativePat
     {
     	ret += pszRootPath;
     }
+
+    strPathWithoutResDir = ret + pszRelativePath;
 
     const char* resDir = CCFileUtils::sharedFileUtils()->getResourceDirectory();
 
@@ -81,10 +87,35 @@ static std::string fullPathFromRelativePathThreadSafe(const char* pszRelativePat
     	}
     }
 
-    if (pszRelativePath != NULL)
+    ret += pszRelativePath;
+
+    // If file or directory doesn't exist, try to find it in the root path.
+    if (access(ret.c_str(), F_OK) == -1)
     {
-    	ret += pszRelativePath;
+    	//CCLOG("file or directory(%s) in Resource Directory doesn't exist.", ret.c_str());
+    	ret = strPathWithoutResDir;
+
+        if (access(ret.c_str(), F_OK) == -1)
+        {
+        	//CCLOG("file or directory(%s) in Root Directory also doesn't exist.", ret.c_str());
+            bFileExist = false;
+        }
+        else
+        {
+        	//CCLOG("(%s) in Root Directory exist.", ret.c_str());
+        }
     }
+    else
+    {
+    	//CCLOG("(%s) in Resource Directory exist.", ret.c_str());
+    }
+
+    if (!bFileExist)
+    { // Can't find the file, return the relative path.
+    	ret = pszRelativePath;
+    	//CCLOG("Can't find the file, return the relative path(%s).", ret.c_str());
+    }
+
 	return ret;
 }
 

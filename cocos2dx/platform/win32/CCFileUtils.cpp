@@ -75,7 +75,7 @@ void CCFileUtils::purgeCachedEntries()
 const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
 {
     bool bFileExist = true;
-    const char* resDir = CCFileUtils::sharedFileUtils()->getResourceDirectory();
+    const char* resDir = m_obDirectory.c_str();
     CCString* pRet = CCString::create("");
 
     if ((strlen(pszRelativePath) > 1 && pszRelativePath[1] == ':'))
