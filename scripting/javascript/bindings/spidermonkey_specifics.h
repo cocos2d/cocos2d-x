@@ -45,11 +45,6 @@ class TypeTest
 	}
 };
 
-class TypeInfo
-{
-public:
-	virtual long getClassTypeInfo() = 0;
-};
 
 #define JS_NEW_PROXY(p, native_obj, js_obj) \
 do { \

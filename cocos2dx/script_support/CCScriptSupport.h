@@ -128,6 +128,8 @@ public:
      @param object to remove
      */
     virtual void removeCCObjectByID(int nLuaID) = 0;
+    virtual void removeJSObjectByCCObject(void * cobj) = 0;
+
     
     /**
      @brief Remove Lua function handler

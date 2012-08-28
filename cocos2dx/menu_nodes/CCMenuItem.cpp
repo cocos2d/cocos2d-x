@@ -125,8 +125,6 @@ void CCMenuItem::activate()
         // Lua
         CCScriptEngineManager::sharedManager()->getScriptEngine()->executeFunctionWithIntegerData(m_nScriptHandler, kCCMenuItemActivated);
 #endif
-
-
     }
 }
 

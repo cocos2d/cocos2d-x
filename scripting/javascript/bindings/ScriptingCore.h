@@ -45,8 +45,9 @@ public:
      @brief Remove CCObject from lua state
      @param object to remove
      */
-	virtual void removeCCObjectByID(int nLuaID) {}
-    
+	virtual void removeCCObjectByID(int n) {}
+    virtual void removeJSObjectByCCObject(void * cobj);
+
     /**
      @brief Remove Lua function handler
      */
