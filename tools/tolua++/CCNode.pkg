@@ -109,9 +109,6 @@ class CCNode : public CCObject
 
     unsigned int numberOfRunningActions(void);
 
-    unsigned int scheduleScriptFunc(LUA_FUNCTION funcID, float fInterval, bool bPaused);
-	void unscheduleScriptEntry(unsigned int uScheduleScriptEntryID);
-
     CCAffineTransform nodeToParentTransform(void);
     CCAffineTransform parentToNodeTransform(void);
     CCAffineTransform nodeToWorldTransform(void);
