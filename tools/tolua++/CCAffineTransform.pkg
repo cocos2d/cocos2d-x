@@ -1,5 +1,5 @@
 
-struct CCAffineTransform {
+class CCAffineTransform {
     float a, b, c, d;
     float tx, ty;
 };

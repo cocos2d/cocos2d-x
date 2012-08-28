@@ -11,7 +11,7 @@ class CCDirector : public CCObject
     bool isPaused(void);
     unsigned int getTotalFrames(void);
 
-	CCEGLView* getOpenGLView(void);
+	CCEGLViewProtocol* getOpenGLView(void);
 	bool enableRetinaDisplay(bool bEnableRetina);
 
     CCSize getWinSize(void);
