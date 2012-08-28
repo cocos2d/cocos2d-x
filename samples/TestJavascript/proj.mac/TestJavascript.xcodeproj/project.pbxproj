@@ -117,7 +117,7 @@
 
 /* Begin PBXFileReference section */
 		41BC70AC15BF7CCE006A0A6C /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = "<group>"; };
-		41CD6C5115BF748C005E6F29 /* HelloCpp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloCpp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		41CD6C5115BF748C005E6F29 /* TestJavascript.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestJavascript.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		41CD6C5415BF74E5005E6F29 /* cocos2dx.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2dx.xcodeproj; path = ../../../cocos2dx/proj.mac/cocos2dx.xcodeproj; sourceTree = "<group>"; };
 		41CD6C6215BF7574005E6F29 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
 		41CD6C6315BF7574005E6F29 /* AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppController.mm; sourceTree = "<group>"; };
@@ -384,7 +384,7 @@
 		41EFC1BB15BF7AC30083EA95 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				41CD6C5115BF748C005E6F29 /* HelloCpp.app */,
+				41CD6C5115BF748C005E6F29 /* TestJavascript.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -442,7 +442,7 @@
 			);
 			name = TestJavascript;
 			productName = Paralaxer;
-			productReference = 41CD6C5115BF748C005E6F29 /* HelloCpp.app */;
+			productReference = 41CD6C5115BF748C005E6F29 /* TestJavascript.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -692,7 +692,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
 				OTHER_LDFLAGS = "";
-				PRODUCT_NAME = HelloCpp;
+				PRODUCT_NAME = TestJavascript;
 				SDKROOT = "";
 				WRAPPER_EXTENSION = app;
 			};
@@ -732,7 +732,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
 				OTHER_LDFLAGS = "";
-				PRODUCT_NAME = HelloCpp;
+				PRODUCT_NAME = TestJavascript;
 				SDKROOT = "";
 				WRAPPER_EXTENSION = app;
 			};
