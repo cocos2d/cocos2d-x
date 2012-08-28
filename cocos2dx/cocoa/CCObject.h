@@ -26,9 +26,6 @@ THE SOFTWARE.
 #define __CCOBJECT_H__
 
 #include "platform/CCPlatformMacros.h"
-#ifdef COCOS2D_JAVASCRIPT
-#include "spidermonkey_specifics.h"
-#endif
 
 NS_CC_BEGIN
 

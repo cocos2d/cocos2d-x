@@ -28,9 +28,7 @@ THE SOFTWARE.
 
 #include <stddef.h>
 #include "Export.h"
-#ifdef COCOS2D_JAVASCRIPT
-#include "spidermonkey_specifics.h"
-#endif
+#include "ccTypeInfo.h"
 
 namespace CocosDenshion {
 
@@ -39,7 +37,7 @@ namespace CocosDenshion {
 @brief          offer a VERY simple interface to play background music & sound effect
 */
 #ifdef COCOS2D_JAVASCRIPT
-class EXPORT_DLL SimpleAudioEngine : public TypeInfo
+    class EXPORT_DLL SimpleAudioEngine : public cocos2d::TypeInfo
 #else
 class EXPORT_DLL SimpleAudioEngine
 #endif

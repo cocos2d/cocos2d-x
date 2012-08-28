@@ -395,6 +395,22 @@ JSBool ScriptingCore::log(JSContext* cx, uint32_t argc, jsval *vp)
 	return JS_TRUE;
 }
 
+
+void ScriptingCore::removeJSObjectByCCObject(void* cobj) {
+
+    js_proxy_t* nproxy;
+    js_proxy_t* jsproxy;
+    void *ptr = cobj;
+    JS_GET_PROXY(nproxy, ptr);
+    if (nproxy) {
+        JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
+        JS_RemoveObjectRoot(cx, &nproxy->obj);
+        JS_GET_NATIVE_PROXY(jsproxy, nproxy->obj);
+        JS_REMOVE_PROXY(nproxy, jsproxy);
+    }
+}
+
+
 JSBool ScriptingCore::setReservedSpot(uint32_t i, JSObject *obj, jsval value) {
 	JS_SetReservedSlot(obj, i, value);
 	return JS_TRUE;
@@ -481,11 +497,7 @@ int ScriptingCore::executeFunctionWithIntegerData(int nHandler, int data, CCNode
     } else if(data == kCCMenuItemActivated) {
         dataVal = (proxy ? OBJECT_TO_JSVAL(proxy->obj) : JSVAL_NULL);
         executeJSFunctionFromReservedSpot(this->cx, p->obj, dataVal, retval);
-    } else if(data == kCCNodeOnEnterTransitionDidFinish) {
-        executeJSFunctionWithName(this->cx, p->obj, "onEnterTransitionDidFinish", dataVal, retval);
-    } else if(data == kCCNodeOnExitTransitionDidStart) { executeJSFunctionWithName(this->cx, p->obj, "onExitTransitionDidStart", dataVal, retval);
-    }
-    
+    }     
     
     
     return 1;

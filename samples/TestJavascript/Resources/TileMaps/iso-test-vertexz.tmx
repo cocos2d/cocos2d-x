@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE map SYSTEM "http://mapeditor.org/dtd/1.0/map.dtd">
+<map version="1.0" orientation="isometric" width="30" height="30" tilewidth="64" tileheight="32">
+ <tileset firstgid="1" name="iso-test" tilewidth="64" tileheight="115" spacing="2" margin="2">
+  <image source="iso-test.png"/>
+ </tileset>
+ <layer name="Grass" width="30" height="30">
+  <properties>
+   <property name="cc_vertexz" value="-1000"/>
+  </properties>
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+3VwQkAAAgCQNt/6ZaIgjjBr/e0ktRRt8PlcrlcLnduZ/v3uVwu97t70QaXptU4EA4AAA==
+  </data>
+ </layer>
+ <layer name="Trees" width="30" height="30">
+  <properties>
+   <property name="cc_vertexz" value="automatic"/>
+  </properties>
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+3NoQ0AMAwDwYB0/5XbAUodkjvJktlXAQDktOZIc6q/vZnsa+b6mv9/3i74MMBTEA4AAA==
+  </data>
+ </layer>
+</map>
