@@ -605,14 +605,14 @@ void CCScheduler::unscheduleAllSelectorsForTarget(CCObject *pTarget)
 
 unsigned int CCScheduler::scheduleScriptFunc(unsigned int nHandler, float fInterval, bool bPaused)
 {
-    CCSchedulerScriptHandlerEntry* pEntry = CCSchedulerScriptHandlerEntry::entryWithHandler(nHandler, fInterval, bPaused);
+    CCSchedulerScriptHandlerEntry* pEntry = CCSchedulerScriptHandlerEntry::create(nHandler, fInterval, bPaused);
     if (!m_pScriptHandlerEntries)
     {
         m_pScriptHandlerEntries = CCArray::createWithCapacity(20);
         m_pScriptHandlerEntries->retain();
     }
     m_pScriptHandlerEntries->addObject(pEntry);
-    return pEntry->getEntryID();
+    return pEntry->getEntryId();
 }
 
 void CCScheduler::unscheduleScriptEntry(unsigned int uScheduleScriptEntryID)
@@ -620,7 +620,7 @@ void CCScheduler::unscheduleScriptEntry(unsigned int uScheduleScriptEntryID)
     for (int i = m_pScriptHandlerEntries->count() - 1; i >= 0; i--)
     {
         CCSchedulerScriptHandlerEntry* pEntry = static_cast<CCSchedulerScriptHandlerEntry*>(m_pScriptHandlerEntries->objectAtIndex(i));
-        if (pEntry->getEntryID() == uScheduleScriptEntryID)
+        if (pEntry->getEntryId() == uScheduleScriptEntryID)
         {
             pEntry->markedForDeletion();
             break;

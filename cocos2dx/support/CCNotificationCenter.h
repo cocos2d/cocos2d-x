@@ -46,6 +46,9 @@ public:
     
     void removeObserver(CCObject *target,const char *name);
     
+    void registerScriptObserver(int handler);
+    void unregisterScriptObserver(void);
+    
     void postNotification(const char *name);
     void postNotification(const char *name, CCObject *object);
     
@@ -59,6 +62,7 @@ private:
     // variables
     //
     CCArray *m_observers;
+    int     m_scriptHandler;
 };
 
 class CC_DLL CCNotificationObserver : public CCObject

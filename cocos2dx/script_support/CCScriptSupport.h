@@ -40,81 +40,112 @@ typedef int LUA_FUNCTION;
 typedef int LUA_TABLE;
 typedef int LUA_STRING;
 
+#pragma mark -
+#pragma mark CCScriptHandlerEntry
+
+class CCScriptHandlerEntry : public CCObject
+{
+public:
+    static CCScriptHandlerEntry* create(int nHandler);
+    ~CCScriptHandlerEntry(void);
+    
+    int getHandler(void) {
+        return m_nHandler;
+    }
+    
+    int getEntryId(void) {
+        return m_nEntryId;
+    }
+    
+protected:
+    CCScriptHandlerEntry(int nHandler)
+    : m_nHandler(nHandler)
+    {
+        static int newEntryId = 0;
+        newEntryId++;
+        m_nEntryId = newEntryId;
+    }
+    
+    int m_nHandler;
+    int m_nEntryId;
+};
+
+
+#pragma mark -
+#pragma mark CCSchedulerScriptHandlerEntry
+
 class CCTimer;
 
-/**
- * @addtogroup script_support
- * @{
- */
-
-// Lua support for CCScheduler
-class CCSchedulerScriptHandlerEntry : public CCObject
+class CCSchedulerScriptHandlerEntry : public CCScriptHandlerEntry
 {
 public:
     // nHandler return by tolua_ref_function(), called from LuaCocos2d.cpp
-    static CCSchedulerScriptHandlerEntry* entryWithHandler(int nHandler, float fInterval, bool bPaused);
+    static CCSchedulerScriptHandlerEntry* create(int nHandler, float fInterval, bool bPaused);
     ~CCSchedulerScriptHandlerEntry(void);
     
-    inline cocos2d::CCTimer* getTimer(void) {
+    cocos2d::CCTimer* getTimer(void) {
         return m_pTimer;
     }
     
-    inline bool isPaused(void) {
+    bool isPaused(void) {
         return m_bPaused;
     }
     
-    inline int getEntryID(void) {
-        return m_nEntryID;
-    }
-    
-    inline void markedForDeletion(void) {
+    void markedForDeletion(void) {
         m_bMarkedForDeletion = true;
     }
     
-    inline bool isMarkedForDeletion(void) {
+    bool isMarkedForDeletion(void) {
         return m_bMarkedForDeletion;
     }
     
 private:
-    CCSchedulerScriptHandlerEntry(void);
-    bool initWithHandler(int nHandler, float fInterval, bool bPaused);
+    CCSchedulerScriptHandlerEntry(int nHandler)
+    : CCScriptHandlerEntry(nHandler)
+    , m_pTimer(NULL)
+    , m_bPaused(false)
+    , m_bMarkedForDeletion(false)
+    {
+    }
+    bool init(float fInterval, bool bPaused);
     
     cocos2d::CCTimer*   m_pTimer;
     bool                m_bPaused;
     bool                m_bMarkedForDeletion;
-    int                 m_nHandler;
-    int                 m_nEntryID;
 };
 
 
-// Lua support for touch events
-class CCTouchScriptHandlerEntry : public CCObject
+#pragma mark -
+#pragma mark CCTouchScriptHandlerEntry
+
+class CCTouchScriptHandlerEntry : public CCScriptHandlerEntry
 {
 public:
-    static CCTouchScriptHandlerEntry* entryWithHandler(int nHandler, bool bIsMultiTouches, int nPriority, bool bSwallowsTouches);
+    static CCTouchScriptHandlerEntry* create(int nHandler, bool bIsMultiTouches, int nPriority, bool bSwallowsTouches);
     ~CCTouchScriptHandlerEntry(void);
     
-    inline int getHandler(void) {
-        return m_nHandler;
-    }
-    
-    inline bool isMultiTouches(void) {
+    bool isMultiTouches(void) {
         return m_bIsMultiTouches;
     }
     
-    inline int getPriority(void) {
+    int getPriority(void) {
         return m_nPriority;
     }
     
-    inline bool getSwallowsTouches(void) {
+    bool getSwallowsTouches(void) {
         return m_bSwallowsTouches;
     }
     
 private:
-    CCTouchScriptHandlerEntry(void);
-    bool initWithHandler(int nHandler, bool bIsMultiTouches, int nPriority, bool bSwallowsTouches);
+    CCTouchScriptHandlerEntry(int nHandler)
+    : CCScriptHandlerEntry(nHandler)
+    , m_bIsMultiTouches(false)
+    , m_nPriority(0)
+    , m_bSwallowsTouches(false)
+    {
+    }
+    bool init(bool bIsMultiTouches, int nPriority, bool bSwallowsTouches);
     
-    int     m_nHandler;
     bool    m_bIsMultiTouches;
     int     m_nPriority;
     bool    m_bSwallowsTouches;
