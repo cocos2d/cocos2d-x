@@ -1,6 +1,6 @@
 /*
 ** Lua binding: LuaCocos2d
-** Generated automatically by tolua++-1.0.92 on Tue Aug 28 12:21:51 2012.
+** Generated automatically by tolua++-1.0.92 on Tue Aug 28 14:23:06 2012.
 */
 
 /****************************************************************************
@@ -4230,6 +4230,47 @@ static int tolua_LuaCocos2d_CCPointMake00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'CCPointMake'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* function: CCPointMake */
+#ifndef TOLUA_DISABLE_tolua_LuaCocos2d_ccp00
+static int tolua_LuaCocos2d_ccp00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isnumber(tolua_S,1,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  float x = ((float)  tolua_tonumber(tolua_S,1,0));
+  float y = ((float)  tolua_tonumber(tolua_S,2,0));
+  {
+   CCPoint tolua_ret = (CCPoint)  CCPointMake(x,y);
+   {
+#ifdef __cplusplus
+    void* tolua_obj = Mtolua_new((CCPoint)(tolua_ret));
+     tolua_pushusertype(tolua_S,tolua_obj,"CCPoint");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#else
+    void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(CCPoint));
+     tolua_pushusertype(tolua_S,tolua_obj,"CCPoint");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#endif
+   }
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'ccp'.",&tolua_err);
  return 0;
 #endif
 }
@@ -52217,6 +52258,7 @@ TOLUA_API int tolua_LuaCocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"intersectsRect",tolua_LuaCocos2d_CCRect_intersectsRect00);
   tolua_endmodule(tolua_S);
   tolua_function(tolua_S,"CCPointMake",tolua_LuaCocos2d_CCPointMake00);
+  tolua_function(tolua_S,"ccp",tolua_LuaCocos2d_ccp00);
   tolua_function(tolua_S,"CCSizeMake",tolua_LuaCocos2d_CCSizeMake00);
   tolua_function(tolua_S,"CCRectMake",tolua_LuaCocos2d_CCRectMake00);
   tolua_cclass(tolua_S,"CCArray","CCArray","CCObject",NULL);

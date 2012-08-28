@@ -85,9 +85,9 @@ class CCNode : public CCObject
 	void    setActionManager(CCActionManager* pActionMgr);
 	CCScheduler* getScheduler();
 	void    setScheduler(CCScheduler* pScheduler);
-    void    addChild(CCNode * child);
-    void    addChild(CCNode * child, int zOrder);
     void    addChild(CCNode * child, int zOrder, int tag);
+	void    addChild(CCNode * child, int zOrder);
+	void    addChild(CCNode * child);
     void    removeChild(CCNode* child, bool cleanup);
     void    removeAllChildrenWithCleanup(bool cleanup);
     void    reorderChild(CCNode * child, int zOrder);
@@ -108,9 +108,6 @@ class CCNode : public CCObject
     CCNode* getChildByTag(int tag);
 
     unsigned int numberOfRunningActions(void);
-
-    unsigned int scheduleScriptFunc(LUA_FUNCTION funcID, float fInterval, bool bPaused);
-	void unscheduleScriptEntry(unsigned int uScheduleScriptEntryID);
 
     CCAffineTransform nodeToParentTransform(void);
     CCAffineTransform parentToNodeTransform(void);
