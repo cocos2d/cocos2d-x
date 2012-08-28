@@ -1,7 +1,6 @@
 #ifndef __SPIDERMONKEY_SPECIFICS_H__
 #define __SPIDERMONKEY_SPECIFICS_H__
 
-#include <typeinfo>
 #include "jsapi.h"
 #include "uthash.h"
 

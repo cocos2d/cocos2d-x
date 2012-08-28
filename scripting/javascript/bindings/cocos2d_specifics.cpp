@@ -43,8 +43,7 @@ JSObject* bind_menu_item(JSContext *cx, T* nativeObj, jsval callback, jsval this
 		// bind nativeObj <-> JSObject
 		js_proxy_t *proxy;
 		JS_NEW_PROXY(proxy, nativeObj, tmp);
-		JS_AddNamedObjectRoot(cx, &p->obj, "MenuItem");
-        
+		JS_AddNamedObjectRoot(cx, &proxy->obj, "MenuItem");        
 		addCallBackAndThis(tmp, callback, thisObj);
 
 		return tmp;
