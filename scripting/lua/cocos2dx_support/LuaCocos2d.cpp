@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.92 on 08/28/12 12:19:07.
+** Generated automatically by tolua++-1.0.92 on 08/28/12 14:19:02.
 */
 
 #include <vector>
@@ -17400,7 +17400,7 @@ static int tolua_Cocos2d_CCDirector_replaceScene00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: endToLua of class  CCDirector */
+/* method: end of class  CCDirector */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCDirector_endToLua00
 static int tolua_Cocos2d_CCDirector_endToLua00(lua_State* tolua_S)
 {
@@ -17416,10 +17416,10 @@ static int tolua_Cocos2d_CCDirector_endToLua00(lua_State* tolua_S)
  {
   CCDirector* self = (CCDirector*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'endToLua'", NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'end'", NULL);
 #endif
   {
-   self->endToLua();
+   self->end();
   }
  }
  return 0;

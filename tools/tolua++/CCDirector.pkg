@@ -28,7 +28,7 @@ class CCDirector : public CCObject
     void pushScene(CCScene *pScene);
     void popScene(void);
     void replaceScene(CCScene *pScene);
-	void endToLua();
+	void end @ endToLua();
 
     float getContentScaleFactor(void);
 
