@@ -497,7 +497,11 @@ int ScriptingCore::executeFunctionWithIntegerData(int nHandler, int data, CCNode
     } else if(data == kCCMenuItemActivated) {
         dataVal = (proxy ? OBJECT_TO_JSVAL(proxy->obj) : JSVAL_NULL);
         executeJSFunctionFromReservedSpot(this->cx, p->obj, dataVal, retval);
-    }     
+    } else if(data == kCCNodeOnEnterTransitionDidFinish) {
+        executeJSFunctionWithName(this->cx, p->obj, "onEnterTransitionDidFinish", dataVal, retval);
+    } else if(data == kCCNodeOnExitTransitionDidStart) { executeJSFunctionWithName(this->cx, p->obj, "onExitTransitionDidStart", dataVal, retval);
+    }
+    
     
     
     return 1;
@@ -533,14 +537,6 @@ int ScriptingCore::executeFunctionWithFloatData(int nHandler, float data, CCNode
     std::string funcName = "";
     
     executeJSFunctionWithName(this->cx, p->obj, "update", dataVal, retval);
-    
-    //    if(data == kCCNodeOnEnter) {
-    //        executeJSFunctionWithName(this->cx, p, "onEnter", dataVal, retval);
-    //    } else if(data == kCCNodeOnExit) {
-    //        executeJSFunctionWithName(this->cx, p, "onExit", dataVal, retval);
-    //    } else if(data == kCCMenuItemActivated) {
-    //        executeJSFunctionFromReservedSpot(this->cx, p, dataVal, retval);
-    //    }
     
     return 1;
 }

@@ -88,6 +88,7 @@ JSBool js_cocos2dx_CCNode_addChild(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_cocos2dx_CCNode_convertToWorldSpaceAR(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_cocos2dx_CCNode_isIgnoreAnchorPointForPosition(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_cocos2dx_CCNode_setRotation(JSContext *cx, uint32_t argc, jsval *vp);
+JSBool js_cocos2dx_CCNode_scheduleScriptFunc(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_cocos2dx_CCNode_setScaleY(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_cocos2dx_CCNode_setScaleX(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_cocos2dx_CCNode_scheduleUpdateWithPriority(JSContext *cx, uint32_t argc, jsval *vp);
@@ -158,6 +159,7 @@ JSBool js_cocos2dx_CCNode_registerScriptHandler(JSContext *cx, uint32_t argc, js
 JSBool js_cocos2dx_CCNode_convertTouchToNodeSpaceAR(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_cocos2dx_CCNode_isVisible(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_cocos2dx_CCNode_sortAllChildren(JSContext *cx, uint32_t argc, jsval *vp);
+JSBool js_cocos2dx_CCNode_unscheduleScriptEntry(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_cocos2dx_CCNode_convertToNodeSpace(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_cocos2dx_CCNode_getScale(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_cocos2dx_CCNode_setTag(JSContext *cx, uint32_t argc, jsval *vp);
