@@ -19,7 +19,6 @@ JSBool jsval_to_longlong( JSContext *cx, jsval vp, long long *out);
 JSBool jsval_to_CGPoint( JSContext *cx, jsval vp, cpVect *out );
 
 jsval CGPoint_to_jsval( JSContext *cx, cpVect p );
-JSBool jsval_to_CCPoint( JSContext *cx, jsval vp, CCPoint *ret );
 
 jsval int_to_jsval( JSContext *cx, int l);
 jsval long_to_jsval( JSContext *cx, long l);

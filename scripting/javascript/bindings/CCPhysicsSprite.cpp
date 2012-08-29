@@ -43,7 +43,6 @@ const cocos2d::CCPoint& CCPhysicsSprite::getPosition() {
 
 void CCPhysicsSprite::setPosition(const cocos2d::CCPoint &pos) {
     cpBodySetPos(_body, ccPoint_to_cpVect(getPosition()));
-   // CCNode::setPosition(pos);
 }
 
 
