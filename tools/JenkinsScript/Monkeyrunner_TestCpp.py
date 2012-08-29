@@ -2,47 +2,10 @@
 import sys
 import subprocess
 import random
+import os
 from com.android.monkeyrunner import MonkeyRunner as mr
 from com.android.monkeyrunner import MonkeyDevice as md
 from com.android.monkeyrunner import MonkeyImage as  mi
-
-# Connects to the current device, returning a MonkeyDevice object
-device = mr.waitForConnection()
-if not device:
-    print >> sys.stderr,"fail"
-    sys.exit(1)
-else:
-    print "Start......"
-
-# Installs the Android package. Notice that this method returns a boolean, so you can test
-# to see if the installation worked.
-if device.installPackage(sys.argv[1]):
-    print "Install success!"
-else:
-    print "Install failed,please make sure you have put apk in the right places"
-    sys.exit(1)
-
-# sets a variable with the package's internal name
-package = 'org.cocos2dx.testcpp'
-print "Package name: "+ package
-
-# sets a variable with the name of an Activity in the package
-activity = 'org.cocos2dx.testcpp.TestCpp'
-print "Activity name: " + activity
-
-# sets the name of the component to start
-runComponent = package + '/' + activity
-
-# Runs the component
-device.startActivity(component=runComponent)
-print "Running activity......"
-
-#Set Screen's Length and Width
-s_length = 800
-s_width = 480
-
-#Set boolean variable of Acticity_IsRunning
-Acticity_IsRunning = 1
 
 #Define test functions.
 def common_test(a,b,c):
@@ -75,16 +38,56 @@ def check_activity(a):
         if not line.find('org.cocos2dx.testcpp') == -1:
             break;
         if len(line) == 0:
-            str = "TestCpp wasn't running,maybe it has crashes,please checkout:"
-            f2 = file('monkeyrunner_log.txt','w')
+            str = "Monkeyunner Test Failed! Please checkout "
+            f2 = file('monkeyrunner_Error.log','w')
             f2.write(str)
             f2.write(a)
             f2.close()
-            sys.exit(1)
+            os._exit(1)
     print "subprocess has finished!"
     f1.close()
 
-############ActionsTest########
+# Connects to the current device, returning a MonkeyDevice object
+device = mr.waitForConnection()
+if not device:
+    print >> sys.stderr,"fail"
+    check_activity("is there a device connect to the testing machine.")
+    sys.exit(1)
+else:
+    print "Start......"
+
+# Installs the Android package. Notice that this method returns a boolean, so you can test
+# to see if the installation worked.
+if device.installPackage(sys.argv[1]):
+    print "Install success!"
+else:
+    print "Install failed,please make sure you have put apk in the right place"
+    check_activity("you have put apk in the right place")
+    sys.exit(1)
+
+# sets a variable with the package's internal name
+package = 'org.cocos2dx.testcpp'
+print "Package name: "+ package
+
+# sets a variable with the name of an Activity in the package
+activity = 'org.cocos2dx.testcpp.TestCpp'
+print "Activity name: " + activity
+
+# sets the name of the component to start
+runComponent = package + '/' + activity
+
+# Runs the component
+device.startActivity(component=runComponent)
+print "Running activity......"
+
+#Set Screen's Length and Width
+s_length = 800
+s_width = 480
+
+#Set boolean variable of Acticity_IsRunning
+Acticity_IsRunning = 1
+
+#----------------ActionsTest----------------
 print "Run ActionsTest"
 mr.sleep(2.0)
 device.touch(s_length/2,s_width/48*5,'DOWN_AND_UP')
@@ -101,7 +104,7 @@ print "ActionsTest finished!"
 device.touch(s_length/40*39,s_width/96*91,'DOWN_AND_UP')
 check_activity("ActionsTest")
 
-############TransitionsTest####
+#----------------TransitionsTest----------------
 print "Run TransitionsTest"
 mr.sleep(1.0)
 device.touch(s_length/2,s_width/6,'DOWN_AND_UP')
@@ -112,7 +115,7 @@ print "TransitionsTest finished!"
 device.touch(s_length/40*39,s_width/96*91,'DOWN_AND_UP')
 check_activity("TransitionsTest")
 
-##########ActionsProgressTest##
+#----------------ActionsProgressTest----------------
 print "Run ActionsProgressTest"
 mr.sleep(1.0)
 device.touch(s_length/2,s_width/48*11,'DOWN_AND_UP')
@@ -123,7 +126,7 @@ print "ActionsProgressTest finished!"
 device.touch(s_length/40*39,s_width/96*91,'DOWN_AND_UP')
 check_activity("ActionsProgressTest")
 
-#############EffectsTest#######
+#----------------EffectsTest----------------
 mr.sleep(1.0)
 print "Run EffectsTest"
 device.touch(s_length/2,s_width/3,'DOWN_AND_UP')
@@ -134,7 +137,7 @@ print "EffectsTest finished!"
 device.touch(s_length/40*39,s_width/96*91,'DOWN_AND_UP')
 check_activity("EffectsTest")
 
-##########ClickAndMoveTest#####
+#----------------ClickAndMoveTest----------------
 print "Run ClickAndMoveTest"
 mr.sleep(5.0)
 device.touch(s_length/2,s_width/12*5,'DOWN_AND_UP')
@@ -148,7 +151,7 @@ print "ClickAndMoveTest finished!"
 device.touch(s_length/40*39,s_width/96*91,'DOWN_AND_UP')
 check_activity("ClickAndMoveTest")
 
-##########RotateWorldTest######
+#----------------RotateWorldTest----------------
 print "Run RotateWorldTest"
 mr.sleep(1.0)
 device.touch(s_length/2,s_width/2,'DOWN_AND_UP')
@@ -159,7 +162,7 @@ mr.sleep(3.0)
 device.touch(s_length/40*39,s_width/96*91,'DOWN_AND_UP')
 check_activity("RotateWorldTest")
 
-##########ParticleTest#########
+#----------------ParticleTest----------------
 print "Run ParticleTest"
 mr.sleep(1.0)
 device.touch(s_length/2,s_width/12*7,'DOWN_AND_UP')
@@ -170,7 +173,7 @@ mr.sleep(2.0)
 device.touch(s_length/40*39,s_width/96*91,'DOWN_AND_UP')
 check_activity("ParticleTest")
 
-##########ActionsEaseTest######
+#----------------ActionsEaseTest----------------
 print "Run ActionsEaseTest"
 mr.sleep(1.0)
 device.touch(s_length/2,s_width/3*2,'DOWN_AND_UP')
@@ -182,7 +185,7 @@ mr.sleep(1.0)
 device.touch(s_length/40*39,s_width/96*91,'DOWN_AND_UP')
 check_activity("ActionsEaseTest")
 
-##########MotionStreakTest#####
+#----------------MotionStreakTest----------------
 print "Run MontionStreakTest"
 mr.sleep(1.0)
 device.touch(s_length/2,s_width/4*3,'DOWN_AND_UP')
@@ -200,7 +203,7 @@ mr.sleep(1.0)
 device.touch(s_length/40*39,s_width/96*91,'DOWN_AND_UP')
 check_activity("MontionStreakTest")
 
-##########DrawPrimitivesTest###
+#----------------DrawPrimitivesTest----------------
 print "Run DrawprimitivesTest"
 mr.sleep(1.0)
 device.touch(s_length/2,s_width/6*5,'DOWN_AND_UP')
@@ -210,7 +213,7 @@ print "DrawPrimitivesTest finished!"
 device.touch(s_length/40*39,s_width/96*91,'DOWN_AND_UP')
 check_activity("DrawPrimitivesTest")
 
-##############NodeTest#########
+#----------------NodeTest----------------
 print "Run NodeTest"
 mr.sleep(1.0)
 device.touch(s_length/2,s_width/12*11,'DOWN_AND_UP')
@@ -224,7 +227,7 @@ check_activity("NodeTest")
 mr.sleep(1.0)
 device.drag((s_length/4*3,s_width/16*15),(s_length/4*3,0))
 
-##########TouchesTest##########
+#----------------TouchesTest----------------
 print "Run TouchesTest"
 mr.sleep(1.0)
 device.touch(s_length/2,s_width/12,'DOWN_AND_UP')
@@ -234,7 +237,7 @@ mr.sleep(1.0)
 device.touch(s_length/40*39,s_width/96*91,'DOWN_AND_UP')
 check_activity("TouchesTest")
 
-##########MenuTest#############
+#----------------MenuTest----------------
 print "Run MenuTest"
 mr.sleep(1.0)
 device.touch(s_length/2,s_width/6,'DOWN_AND_UP')
@@ -258,7 +261,7 @@ mr.sleep(1.0)
 device.touch(s_length/40*39,s_width/96*91,'DOWN_AND_UP')
 check_activity("MenuTest")
 
-##########ActionManagerTest####
+#----------------ActionManagerTest----------------
 print "Run ActionManagerTest"
 mr.sleep(1.0)
 device.touch(s_length/2,s_width/48*11,'DOWN_AND_UP')
@@ -269,7 +272,7 @@ mr.sleep(1.0)
 device.touch(s_length/40*39,s_width/96*91,'DOWN_AND_UP')
 check_activity("ActionManagerTest")
 
-##########LayerTest############
+#----------------LayerTest----------------
 print "Run LayerTest"
 mr.sleep(1.0)
 device.touch(s_length/2,s_width/3,'DOWN_AND_UP')
@@ -289,7 +292,7 @@ print "LayerTest finished!"
 device.touch(s_length/40*39,s_width/96*91,'DOWN_AND_UP')
 check_activity("LayerTest")
 
-##########SceneTest############
+#----------------SceneTest----------------
 print "Run SceneTest"
 mr.sleep(1.0)
 device.touch(s_length/2,s_width/12*5,'DOWN_AND_UP')
@@ -313,7 +316,7 @@ mr.sleep(1.0)
 device.touch(s_length/40*39,s_width/96*91,'DOWN_AND_UP')
 check_activity("SceneTest")
 
-##########ParallaxTest##########
+#----------------ParallaxTest----------------
 print "Run ParallaxTest"
 mr.sleep(1.0)
 device.touch(s_length/2,s_width/2,'DOWN_AND_UP')
@@ -327,24 +330,24 @@ mr.sleep(1.0)
 device.touch(s_length/40*39,s_width/96*91,'DOWN_AND_UP')
 check_activity("ParallaxTest")
 
-##########TileMapTest##########
+#----------------TileMapTest----------------
 print "Run TileMapTest"
-#mr.sleep(1.0)
-#device.touch(s_length/2,s_width/12*7,'DOWN_AND_UP')
-#mr.sleep(2.0)
-#for TileMap_i in range(1,20):
-#    random_drag(1,5,2.0)
-#    #Next Test
-#    device.touch(s_length/8*5,s_width/16*15,'DOWN_AND_UP')
+mr.sleep(1.0)
+device.touch(s_length/2,s_width/12*7,'DOWN_AND_UP')
+mr.sleep(2.0)
+for TileMap_i in range(1,20):
+    random_drag(1,5,2.0)
+    #Next Test
+    device.touch(s_length/8*5,s_width/16*15,'DOWN_AND_UP')
     
-#mr.sleep(2.0)
+mr.sleep(2.0)
 print "TileMapTest finished!"
-#mr.sleep(1.0)
+mr.sleep(1.0)
 #MainMenu
-#device.touch(s_length/40*39,s_width/96*91,'DOWN_AND_UP')
+device.touch(s_length/40*39,s_width/96*91,'DOWN_AND_UP')
 check_activity("TileMapTest")
 
-#########IntervalTest###########
+#----------------IntervalTest----------------
 print "Run IntervalTest"
 mr.sleep(1.0)
 device.touch(s_length/2,s_width/3*2,'DOWN_AND_UP')
@@ -358,7 +361,7 @@ mr.sleep(1.0)
 device.touch(s_length/40*39,s_width/96*91,'DOWN_AND_UP')
 check_activity("IntervalTest")
 
-######ChipmunkAccelTouchTest####
+#----------------ChipmunkAccelTouchTest----------------
 print "Run ChipmunkAccelTouchTest"
 mr.sleep(1.0)
 device.touch(s_length/2,s_width/4*3,'DOWN_AND_UP')
@@ -369,7 +372,7 @@ mr.sleep(2.0)
 device.touch(s_length/40*39,s_width/96*91,'DOWN_AND_UP')
 check_activity("ChipmunkAccelTouchTest")
 
-##########LabelTest#############
+#----------------LabelTest----------------
 print "Run LabelTest"
 mr.sleep(1.0)
 device.touch(s_length/2,s_width/6*5,'DOWN_AND_UP')
@@ -381,7 +384,7 @@ print "LableTest finished!"
 device.touch(s_length/40*39,s_width/96*91,'DOWN_AND_UP')
 check_activity("LabelTest")
 
-##########TestInputTest#########
+#----------------TestInputTest----------------
 print "Run TestInputTest"
 mr.sleep(1.0)
 device.touch(s_length/2,s_width/12*11,'DOWN_AND_UP')
@@ -393,7 +396,7 @@ check_activity("TestInputTest")
 mr.sleep(1.0)
 device.drag((s_length/4*3,s_width/16*15),(s_length/4*3,0))
 
-############SpriteTest##########
+#----------------SpriteTest----------------
 print "Run SpriteTest"
 mr.sleep(1.0)
 device.touch(s_length/2,s_width/16,'DOWN_AND_UP')
@@ -414,7 +417,7 @@ mr.sleep(1.0)
 device.touch(s_length/40*39,s_width/96*91,'DOWN_AND_UP')
 check_activity("SpriteTest")
 
-######SchdulerTest##############
+#----------------SchdulerTest----------------
 print "Run SchdulerTest"
 mr.sleep(2.0)
 device.touch(s_length/2,s_width/48*7,'DOWN_AND_UP')
@@ -438,32 +441,32 @@ mr.sleep(1.0)
 device.touch(s_length/40*39,s_width/96*91,'DOWN_AND_UP')
 check_activity("SchdulerTest")
 
-##########RenderTextureTest#####
+#----------------RenderTextureTest----------------
 print "Run RenderTextureTest"
-#mr.sleep(1.0)
-#device.touch(s_length/2,s_width/48*11,'DOWN_AND_UP')
-#mr.sleep(1.0)
-#random_drag(1,11,0.5)
-#mr.sleep(1.0)
-#device.touch(s_length/8*7,s_width/24,'DOWN_AND_UP')
-#mr.sleep(1.0)
+mr.sleep(1.0)
+device.touch(s_length/2,s_width/48*11,'DOWN_AND_UP')
+mr.sleep(1.0)
+random_drag(1,11,0.5)
+mr.sleep(1.0)
+device.touch(s_length/8*7,s_width/24,'DOWN_AND_UP')
+mr.sleep(1.0)
 #Next Test
-#device.touch(s_length/8*5,s_width/16*15,'DOWN_AND_UP')
-#mr.sleep(1.0)
-#device.touch(s_length/8*5,s_width/16*15,'DOWN_AND_UP')
-#mr.sleep(1.0)
+device.touch(s_length/8*5,s_width/16*15,'DOWN_AND_UP')
+mr.sleep(1.0)
+device.touch(s_length/8*5,s_width/16*15,'DOWN_AND_UP')
+mr.sleep(1.0)
 #Testing Z Buffer in Render Texture
-#random_click(1,11,0.1)
-#mr.sleep(1.0)
+random_click(1,11,0.1)
+mr.sleep(1.0)
 #Next Test
-#device.touch(s_length/8*5,s_width/16*15,'DOWN_AND_UP')
+device.touch(s_length/8*5,s_width/16*15,'DOWN_AND_UP')
 print "RenderTextureTest finished!"
-#mr.sleep(1.0)
+mr.sleep(1.0)
 #MainMenu
-#device.touch(s_length/40*39,s_width/96*91,'DOWN_AND_UP')
+device.touch(s_length/40*39,s_width/96*91,'DOWN_AND_UP')
 check_activity("RenderTextureTest")
 
-#########Testure2DTest##########
+#----------------Testure2DTest----------------
 print "Run Testure2DTest"
 mr.sleep(1.0)
 device.touch(s_length/2,s_width/16*5,'DOWN_AND_UP')
@@ -474,7 +477,7 @@ mr.sleep(1.0)
 device.touch(s_length/40*39,s_width/96*91,'DOWN_AND_UP')
 check_activity("Testure2DTest")
 
-###########Box2dTest############
+#----------------Box2dTest----------------
 print "Run Box2dTest"
 mr.sleep(1.0)
 device.touch(s_length/2,s_width/48*19,'DOWN_AND_UP')
@@ -485,7 +488,7 @@ mr.sleep(1.0)
 device.touch(s_length/40*39,s_width/96*91,'DOWN_AND_UP')
 check_activity("Box2dTest")
 
-###########Box2dTestBed#########
+#----------------Box2dTestBed----------------
 print "Run Box2dTestBed"
 mr.sleep(1.0)
 device.touch(s_length/2,s_width/48*23,'DOWN_AND_UP')
@@ -496,7 +499,7 @@ mr.sleep(1.0)
 device.touch(s_length/40*39,s_width/96*91,'DOWN_AND_UP')
 check_activity("Box2dTestBed")
 
-##########EffectAdvancedTest####
+#----------------EffectAdvancedTest----------------
 print "Run EffectAdvancedTest"
 mr.sleep(1.0)
 device.touch(s_length/2,s_width/16*9,'DOWN_AND_UP')
@@ -507,7 +510,7 @@ mr.sleep(1.0)
 device.touch(s_length/40*39,s_width/96*91,'DOWN_AND_UP')
 check_activity("EffectAdvancedTest")
 
-##########Accelerometer#########
+#----------------Accelerometer----------------
 print "Run Accelerometer"
 mr.sleep(5.0)
 device.touch(s_length/2,s_width/48*31,'DOWN_AND_UP')
@@ -518,7 +521,7 @@ device.touch(s_length/40*39,s_width/96*91,'DOWN_AND_UP')
 mr.sleep(3.0)
 check_activity("Accelerometer")
 
-#############KeypadTest#########
+#----------------KeypadTest----------------
 print "Run KeypadTest"
 mr.sleep(3.0)
 device.touch(s_length/2,s_width/48*35,'DOWN_AND_UP')
@@ -530,7 +533,7 @@ mr.sleep(1.0)
 device.touch(s_length/40*39,s_width/96*91,'DOWN_AND_UP')
 check_activity("KeypadTest")
 
-########CocosDenshionTest#######
+#----------------CocosDenshionTest----------------
 print "Run CocosDenshionTest"
 mr.sleep(1.0)
 device.touch(s_length/2,s_width/48*39,'DOWN_AND_UP')
@@ -542,7 +545,7 @@ mr.sleep(1.0)
 device.touch(s_length/40*39,s_width/96*91,'DOWN_AND_UP')
 check_activity("CocosDenshionTest")
 
-##########PerformanceTest########
+#----------------PerformanceTest----------------
 print "Run PerformanceTest"
 mr.sleep(1.0)
 device.touch(s_length/2,s_width/48*43,'DOWN_AND_UP')
@@ -604,7 +607,7 @@ mr.sleep(1.0)
 device.touch(s_length/40*39,s_width/96*91,'DOWN_AND_UP')
 check_activity("PerformanceTest")
 
-#########ZwoptexTest############
+#----------------ZwoptexTest----------------
 print "Run ZwoptexTest"
 mr.sleep(1.0)
 device.touch(s_length/2,s_width/48*47,'DOWN_AND_UP')
@@ -616,7 +619,7 @@ check_activity("ZwoptexTest")
 mr.sleep(1.0)
 device.drag((s_length/4*3,s_width/16*15),(s_length/4*3,0))
 
-##########CurlTest##############
+#----------------CurlTest----------------
 print "Run CurlTest"
 mr.sleep(1.0)
 device.touch(s_length/2,s_width/4,'DOWN_AND_UP')
@@ -630,7 +633,7 @@ check_activity("CurlTest")
 mr.sleep(1.0)
 device.drag((s_length/4*3,s_width/16*15),(s_length/4*3,0))
 
-##########UserDefaultTest#######
+#----------------UserDefaultTest----------------
 print "Run UserDefaultTest"
 mr.sleep(1.0)
 device.touch(s_length/2,s_width/3,'DOWN_AND_UP')
@@ -642,7 +645,7 @@ check_activity("UserDefaultTest")
 mr.sleep(1.0)
 device.drag((s_length/4*3,s_width/16*15),(s_length/4*3,0))
 
-###########BugsTest#############
+#----------------BugsTest----------------
 print "Run BugsTest"
 mr.sleep(1.0)
 device.touch(s_length/2,s_width/12*5,'DOWN_AND_UP')
@@ -654,7 +657,7 @@ check_activity("BugsTest")
 mr.sleep(1.0)
 device.drag((s_length/4*3,s_width/16*15),(s_length/4*3,0))
 
-###########FontTest#############
+#----------------FontTest----------------
 print "Run FontTest"
 mr.sleep(1.0)
 device.touch(s_length/2,s_width/2,'DOWN_AND_UP')
@@ -668,7 +671,7 @@ check_activity("FontTest")
 mr.sleep(1.0)
 device.drag((s_length/4*3,s_width/16*15),(s_length/4*3,0))
 
-#########CurrentLanguageTest####
+#----------------CurrentLanguageTest----------------
 print "Run CurrentLanguageTest"
 mr.sleep(1.0)
 device.touch(s_length/2,s_width/12*7,'DOWN_AND_UP')
@@ -680,7 +683,7 @@ check_activity("CurrentLanguageTest")
 mr.sleep(1.0)
 device.drag((s_length/4*3,s_width/16*15),(s_length/4*3,0))
 
-##########TextureCacheTest######
+#----------------TextureCacheTest----------------
 print "Run TextureCacheTest"
 mr.sleep(1.0)
 device.touch(s_length/2,s_width/3*2,'DOWN_AND_UP')
@@ -692,7 +695,7 @@ check_activity("TextureCacheTest")
 mr.sleep(1.0)
 device.drag((s_length/4*3,s_width/16*15),(s_length/4*3,0))
 
-#########ExtensionsTest#########
+#----------------ExtensionsTest----------------
 print "Run ExtensionsTest"
 mr.sleep(1.0)
 device.touch(s_length/2,s_width/4*3,'DOWN_AND_UP')
@@ -797,7 +800,7 @@ check_activity("ExtensionsTest")
 mr.sleep(1.0)
 device.drag((s_length/4*3,s_width/16*15),(s_length/4*3,0))
 
-###########ShaderTest###########
+#----------------ShaderTest----------------
 print "Run ShaderTest"
 mr.sleep(1.0)
 device.touch(s_length/2,s_width/6*5,'DOWN_AND_UP')
@@ -818,7 +821,7 @@ check_activity("ShaderTest")
 mr.sleep(1.0)
 device.drag((s_length/4*3,s_width/16*15),(s_length/4*3,0))
 
-###########MutiTouchTest########
+#----------------MutiTouchTest----------------
 print "Run MutiTouchTest"
 mr.sleep(3.0)
 device.touch(s_length/2,s_width/12*11,'DOWN_AND_UP')
@@ -830,6 +833,6 @@ mr.sleep(1.0)
 device.touch(s_length/40*39,s_width/96*91,'DOWN_AND_UP')
 check_activity("MutiTouchTest")
 
-############Quit################
+#----------------Quit----------------
 mr.sleep(1.0)
 device.touch(s_length/80*77,s_width/12,'DOWN_AND_UP')
