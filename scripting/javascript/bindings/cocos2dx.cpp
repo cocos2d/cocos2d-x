@@ -42278,10 +42278,11 @@ JSBool js_cocos2dx_CCTextureCache_addPVRTCImage(JSContext *cx, uint32_t argc, js
 		JS_ValueToInt32(cx, argv[1], (int32_t *)&arg1);
 		JS_ValueToBoolean(cx, argv[2], &arg2);
 		JS_ValueToInt32(cx, argv[3], (int32_t *)&arg3);
-#ifdef ANDROID
-		cocos2d::CCTexture2D* ret = NULL;
-#else
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 		cocos2d::CCTexture2D* ret = cobj->addPVRTCImage(arg0, arg1, arg2, arg3);
+#else
+        cocos2d::CCTexture2D* ret = NULL;
 #endif
 		jsval jsret;
 		do {

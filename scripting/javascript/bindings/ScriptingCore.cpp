@@ -136,6 +136,9 @@ static JSClass global_class = {
 #endif
 
 ScriptingCore::ScriptingCore()
+: rt(NULL)
+, cx(NULL)
+, global(NULL)
 {
     // set utf8 strings internally (we don't need utf16)
     JS_SetCStringsAreUTF8();
@@ -219,22 +222,6 @@ void ScriptingCore::createGlobalContext() {
         sc_register_sth callback = *it;
         callback(this->cx, this->global);
     }
-}
-
-static size_t readFileInMemory(const char *path, unsigned char **buff) {
-    struct stat buf;
-    int file = open(path, O_RDONLY);
-    long readBytes = -1;
-    if (file) {
-        if (fstat(file, &buf) == 0) {
-            *buff = (unsigned char *)calloc(buf.st_size + 1, 1);
-            if (*buff) {
-                readBytes = read(file, *buff, buf.st_size);
-            }
-        }
-    }
-    close(file);
-    return readBytes;
 }
 
 JSBool ScriptingCore::runScript(const char *path)

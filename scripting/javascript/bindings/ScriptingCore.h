@@ -35,11 +35,14 @@ public:
 	~ScriptingCore();
 	
 	static ScriptingCore *getInstance() {
-		static ScriptingCore instance;
-		return &instance;
+		static ScriptingCore* pInstance = NULL;
+        if (pInstance == NULL) {
+            pInstance = new ScriptingCore();
+        }
+		return pInstance;
 	};
 
-	lua_State* getLuaState(void) {}
+	lua_State* getLuaState(void) { return NULL; }
     
     /**
      @brief Remove CCObject from lua state
@@ -65,13 +68,13 @@ public:
      @return 0 if the string is excuted correctly.
      @return other if the string is excuted wrongly.
      */
-	virtual int executeString(const char* codes) {}
+	virtual int executeString(const char* codes) { return 0; }
     
     /**
      @brief Execute a script file.
      @param filename String object holding the filename of the script file that is to be executed
      */
-    virtual  int executeScriptFile(const char* filename) {}
+    virtual  int executeScriptFile(const char* filename) { return 0; }
     
     /**
      @brief Execute a scripted global function.
@@ -79,7 +82,7 @@ public:
      @param functionName String object holding the name of the function, in the global script environment, that is to be executed.
      @return The integer value returned from the script function.
      */
-	virtual int executeGlobalFunction(const char* functionName) {}
+	virtual int executeGlobalFunction(const char* functionName) { return 0; }
     
     /**
      @brief Execute a function by handler
@@ -87,19 +90,19 @@ public:
      @param Number of parameters
      @return The integer value returned from the script function.
      */
-	virtual int executeFunctionByHandler(int nHandler, int numArgs = 0) {}
+	virtual int executeFunctionByHandler(int nHandler, int numArgs = 0) { return 0; }
     virtual int executeFunctionWithIntegerData(int nHandler, int data, CCNode *self);
     int executeFunctionWithObjectData(int nHandler, const char *name, JSObject *obj, CCNode *self);
     virtual int executeFunctionWithFloatData(int nHandler, float data, CCNode *self);
-    virtual int executeFunctionWithBooleanData(int nHandler, bool data) {}
-    virtual int executeFunctionWithCCObject(int nHandler, CCObject* pObject, const char* typeName) {}    
-    virtual int pushIntegerToLuaStack(int data) {}
-    virtual int pushFloatToLuaStack(int data) {}
-    virtual int pushBooleanToLuaStack(int data) {}
-    virtual int pushCCObjectToLuaStack(CCObject* pObject, const char* typeName) {}
+    virtual int executeFunctionWithBooleanData(int nHandler, bool data) { return 0; }
+    virtual int executeFunctionWithCCObject(int nHandler, CCObject* pObject, const char* typeName) { return 0; }    
+    virtual int pushIntegerToLuaStack(int data) { return 0; }
+    virtual int pushFloatToLuaStack(int data) { return 0; }
+    virtual int pushBooleanToLuaStack(int data) { return 0; }
+    virtual int pushCCObjectToLuaStack(CCObject* pObject, const char* typeName) { return 0; }
     
     // functions for excute touch event
-	virtual int executeTouchEvent(int nHandler, int eventType, CCTouch *pTouch) {}
+	virtual int executeTouchEvent(int nHandler, int eventType, CCTouch *pTouch) { return 0; }
     virtual int executeTouchesEvent(int nHandler, int eventType, CCSet *pTouches, CCNode *self);
     
     // execute a schedule function

@@ -289,7 +289,8 @@ public:
     CCCallFuncN(){}
     virtual ~CCCallFuncN(){}
     virtual long getClassTypeInfo() {
-        return reinterpret_cast<long>(typeid(cocos2d::CCCallFunc).name());
+		static const long id = cocos2d::getHashCodeByString(typeid(cocos2d::CCCallFunc).name());
+		return id;
     }
 
     /** creates the action with the callback 
@@ -322,11 +323,12 @@ public:
 @brief Calls a 'callback' with the node as the first argument and the 2nd argument is data
 * ND means: Node and Data. Data is void *, so it could be anything.
 */
-class CC_DLL CCCallFuncND : public CCCallFuncN, public TypeInfo
+class CC_DLL CCCallFuncND : public CCCallFuncN
 {
 public:
     virtual long getClassTypeInfo() {
-        return reinterpret_cast<long>(typeid(cocos2d::CCCallFunc).name());
+        static const long id = cocos2d::getHashCodeByString(typeid(cocos2d::CCCallFunc).name());
+		return id;
     }
 
     /** creates the action with the callback and the data to pass as an argument 
@@ -364,7 +366,8 @@ public:
     virtual ~CCCallFuncO();
 #ifdef COCOS2D_JAVASCRIPT
     virtual long getClassTypeInfo() {
-        return reinterpret_cast<long>(typeid(cocos2d::CCCallFunc).name());
+	    static const long id = cocos2d::getHashCodeByString(typeid(cocos2d::CCCallFunc).name());
+		return id;
     }
 #endif
     /** creates the action with the callback 
