@@ -16,7 +16,7 @@ public:
     void menuCloseCallback(CCObject* pSender);
 
     // implement the "static node()" method manually
-    LAYER_CREATE_FUNC(HelloWorld);
+    CREATE_FUNC(HelloWorld);
 };
 
 #endif // __HELLOWORLD_SCENE_H__
