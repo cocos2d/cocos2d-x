@@ -13,7 +13,6 @@
 		15426FE815B5743C00712A7F /* CocosDenshion.m in Sources */ = {isa = PBXBuildFile; fileRef = 15426FD515B5743C00712A7F /* CocosDenshion.m */; };
 		15426FE915B5743C00712A7F /* SimpleAudioEngine.mm in Sources */ = {isa = PBXBuildFile; fileRef = 15426FD615B5743C00712A7F /* SimpleAudioEngine.mm */; };
 		15426FEA15B5743C00712A7F /* SimpleAudioEngine_objc.m in Sources */ = {isa = PBXBuildFile; fileRef = 15426FD815B5743C00712A7F /* SimpleAudioEngine_objc.m */; };
-		1554941A15737858009041F8 /* JS in Resources */ = {isa = PBXBuildFile; fileRef = 1554941915737858009041F8 /* JS */; };
 		15DD7076156F2C6A003E7567 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 15DD7074156F2C6A003E7567 /* fps_images.png */; };
 		15F99096159C0C7200848A44 /* fps_images-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 15F99094159C0C7200848A44 /* fps_images-hd.png */; };
 		15F99097159C0C7200848A44 /* fps_images-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = 15F99095159C0C7200848A44 /* fps_images-ipadhd.png */; };
@@ -72,20 +71,6 @@
 		262829FA15EC720D002C4240 /* js in Resources */ = {isa = PBXBuildFile; fileRef = 262829F915EC720D002C4240 /* js */; };
 		26282BB415EC7277002C4240 /* Official-cocos2d-Icon-Happy.png in Resources */ = {isa = PBXBuildFile; fileRef = 26282A3515EC7276002C4240 /* Official-cocos2d-Icon-Happy.png */; };
 		26282BB515EC7277002C4240 /* Official-cocos2d-Icon-Angry.png in Resources */ = {isa = PBXBuildFile; fileRef = 26282A3615EC7276002C4240 /* Official-cocos2d-Icon-Angry.png */; };
-		26282BB615EC7277002C4240 /* menu.js in Sources */ = {isa = PBXBuildFile; fileRef = 26282A3915EC7276002C4240 /* menu.js */; };
-		26282BB715EC7277002C4240 /* test_actions.js in Sources */ = {isa = PBXBuildFile; fileRef = 26282A3A15EC7276002C4240 /* test_actions.js */; };
-		26282BB815EC7277002C4240 /* test_bindings.js in Sources */ = {isa = PBXBuildFile; fileRef = 26282A3B15EC7276002C4240 /* test_bindings.js */; };
-		26282BB915EC7277002C4240 /* test_ease_actions.js in Sources */ = {isa = PBXBuildFile; fileRef = 26282A3C15EC7276002C4240 /* test_ease_actions.js */; };
-		26282BBA15EC7277002C4240 /* test_layer.js in Sources */ = {isa = PBXBuildFile; fileRef = 26282A3D15EC7276002C4240 /* test_layer.js */; };
-		26282BBB15EC7277002C4240 /* test_particles.js in Sources */ = {isa = PBXBuildFile; fileRef = 26282A3E15EC7276002C4240 /* test_particles.js */; };
-		26282BBC15EC7277002C4240 /* test_require.js in Sources */ = {isa = PBXBuildFile; fileRef = 26282A3F15EC7276002C4240 /* test_require.js */; };
-		26282BBD15EC7277002C4240 /* test_require_second.js in Sources */ = {isa = PBXBuildFile; fileRef = 26282A4015EC7276002C4240 /* test_require_second.js */; };
-		26282BBE15EC7277002C4240 /* test_sound.js in Sources */ = {isa = PBXBuildFile; fileRef = 26282A4115EC7276002C4240 /* test_sound.js */; };
-		26282BBF15EC7277002C4240 /* test_transitions.js in Sources */ = {isa = PBXBuildFile; fileRef = 26282A4215EC7276002C4240 /* test_transitions.js */; };
-		26282BC015EC7277002C4240 /* jorendb.js in Sources */ = {isa = PBXBuildFile; fileRef = 26282A4315EC7276002C4240 /* jorendb.js */; };
-		26282BC115EC7277002C4240 /* main.js in Sources */ = {isa = PBXBuildFile; fileRef = 26282A4415EC7276002C4240 /* main.js */; };
-		26282BC215EC7277002C4240 /* oa-benchmark.js in Sources */ = {isa = PBXBuildFile; fileRef = 26282A4515EC7276002C4240 /* oa-benchmark.js */; };
-		26282BC315EC7277002C4240 /* test-nodes.js in Sources */ = {isa = PBXBuildFile; fileRef = 26282A4615EC7276002C4240 /* test-nodes.js */; };
 		26282BC415EC7277002C4240 /* arrows-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 26282A4815EC7276002C4240 /* arrows-hd.png */; };
 		26282BC515EC7277002C4240 /* arrows.png in Resources */ = {isa = PBXBuildFile; fileRef = 26282A4915EC7276002C4240 /* arrows.png */; };
 		26282BC615EC7277002C4240 /* arrowsBar-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 26282A4A15EC7276002C4240 /* arrowsBar-hd.png */; };
@@ -464,7 +449,6 @@
 		15426FD615B5743C00712A7F /* SimpleAudioEngine.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SimpleAudioEngine.mm; sourceTree = "<group>"; };
 		15426FD715B5743C00712A7F /* SimpleAudioEngine_objc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleAudioEngine_objc.h; sourceTree = "<group>"; };
 		15426FD815B5743C00712A7F /* SimpleAudioEngine_objc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleAudioEngine_objc.m; sourceTree = "<group>"; };
-		1554941915737858009041F8 /* JS */ = {isa = PBXFileReference; lastKnownFileType = folder; path = JS; sourceTree = "<group>"; };
 		15DD7074156F2C6A003E7567 /* fps_images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fps_images.png; sourceTree = "<group>"; };
 		15F99094159C0C7200848A44 /* fps_images-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fps_images-hd.png"; sourceTree = "<group>"; };
 		15F99095159C0C7200848A44 /* fps_images-ipadhd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fps_images-ipadhd.png"; sourceTree = "<group>"; };
@@ -559,20 +543,6 @@
 		262829F915EC720D002C4240 /* js */ = {isa = PBXFileReference; lastKnownFileType = folder; name = js; path = ../js; sourceTree = "<group>"; };
 		26282A3515EC7276002C4240 /* Official-cocos2d-Icon-Happy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Official-cocos2d-Icon-Happy.png"; sourceTree = "<group>"; };
 		26282A3615EC7276002C4240 /* Official-cocos2d-Icon-Angry.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Official-cocos2d-Icon-Angry.png"; sourceTree = "<group>"; };
-		26282A3915EC7276002C4240 /* menu.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = menu.js; sourceTree = "<group>"; };
-		26282A3A15EC7276002C4240 /* test_actions.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = test_actions.js; sourceTree = "<group>"; };
-		26282A3B15EC7276002C4240 /* test_bindings.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = test_bindings.js; sourceTree = "<group>"; };
-		26282A3C15EC7276002C4240 /* test_ease_actions.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = test_ease_actions.js; sourceTree = "<group>"; };
-		26282A3D15EC7276002C4240 /* test_layer.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = test_layer.js; sourceTree = "<group>"; };
-		26282A3E15EC7276002C4240 /* test_particles.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = test_particles.js; sourceTree = "<group>"; };
-		26282A3F15EC7276002C4240 /* test_require.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = test_require.js; sourceTree = "<group>"; };
-		26282A4015EC7276002C4240 /* test_require_second.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = test_require_second.js; sourceTree = "<group>"; };
-		26282A4115EC7276002C4240 /* test_sound.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = test_sound.js; sourceTree = "<group>"; };
-		26282A4215EC7276002C4240 /* test_transitions.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = test_transitions.js; sourceTree = "<group>"; };
-		26282A4315EC7276002C4240 /* jorendb.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jorendb.js; sourceTree = "<group>"; };
-		26282A4415EC7276002C4240 /* main.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = main.js; sourceTree = "<group>"; };
-		26282A4515EC7276002C4240 /* oa-benchmark.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "oa-benchmark.js"; sourceTree = "<group>"; };
-		26282A4615EC7276002C4240 /* test-nodes.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "test-nodes.js"; sourceTree = "<group>"; };
 		26282A4815EC7276002C4240 /* arrows-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrows-hd.png"; sourceTree = "<group>"; };
 		26282A4915EC7276002C4240 /* arrows.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrows.png; sourceTree = "<group>"; };
 		26282A4A15EC7276002C4240 /* arrowsBar-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrowsBar-hd.png"; sourceTree = "<group>"; };
@@ -1137,35 +1107,6 @@
 			path = constraints;
 			sourceTree = "<group>";
 		};
-		26282A3715EC7276002C4240 /* JS */ = {
-			isa = PBXGroup;
-			children = (
-				26282A3815EC7276002C4240 /* 1to1 */,
-				26282A4315EC7276002C4240 /* jorendb.js */,
-				26282A4415EC7276002C4240 /* main.js */,
-				26282A4515EC7276002C4240 /* oa-benchmark.js */,
-				26282A4615EC7276002C4240 /* test-nodes.js */,
-			);
-			path = JS;
-			sourceTree = "<group>";
-		};
-		26282A3815EC7276002C4240 /* 1to1 */ = {
-			isa = PBXGroup;
-			children = (
-				26282A3915EC7276002C4240 /* menu.js */,
-				26282A3A15EC7276002C4240 /* test_actions.js */,
-				26282A3B15EC7276002C4240 /* test_bindings.js */,
-				26282A3C15EC7276002C4240 /* test_ease_actions.js */,
-				26282A3D15EC7276002C4240 /* test_layer.js */,
-				26282A3E15EC7276002C4240 /* test_particles.js */,
-				26282A3F15EC7276002C4240 /* test_require.js */,
-				26282A4015EC7276002C4240 /* test_require_second.js */,
-				26282A4115EC7276002C4240 /* test_sound.js */,
-				26282A4215EC7276002C4240 /* test_transitions.js */,
-			);
-			path = 1to1;
-			sourceTree = "<group>";
-		};
 		26282A4715EC7276002C4240 /* Images */ = {
 			isa = PBXGroup;
 			children = (
@@ -1535,7 +1476,6 @@
 				26282CF615EC7298002C4240 /* animations */,
 				26282A3515EC7276002C4240 /* Official-cocos2d-Icon-Happy.png */,
 				26282A3615EC7276002C4240 /* Official-cocos2d-Icon-Angry.png */,
-				26282A3715EC7276002C4240 /* JS */,
 				26282A4715EC7276002C4240 /* Images */,
 				26282B2715EC7277002C4240 /* fps_images.plist */,
 				26282B2815EC7277002C4240 /* fps_images-hd.plist */,
@@ -1555,7 +1495,6 @@
 				D4EF94B315BD2FE900D803EB /* Icon-57.png */,
 				15F99094159C0C7200848A44 /* fps_images-hd.png */,
 				15F99095159C0C7200848A44 /* fps_images-ipadhd.png */,
-				1554941915737858009041F8 /* JS */,
 				15DD7074156F2C6A003E7567 /* fps_images.png */,
 				D45446D9156DE7F300887EB5 /* b1-hd.png */,
 				D45446DA156DE7F300887EB5 /* b1-ipad.png */,
@@ -1741,7 +1680,6 @@
 				D4544744156DE7F300887EB5 /* tank.tps in Resources */,
 				D4544745156DE7F300887EB5 /* tank1.png in Resources */,
 				15DD7076156F2C6A003E7567 /* fps_images.png in Resources */,
-				1554941A15737858009041F8 /* JS in Resources */,
 				15F99096159C0C7200848A44 /* fps_images-hd.png in Resources */,
 				15F99097159C0C7200848A44 /* fps_images-ipadhd.png in Resources */,
 				D4EF94B415BD2FE900D803EB /* Icon-57.png in Resources */,
@@ -2112,20 +2050,6 @@
 				262829F615EC7196002C4240 /* cpSpatialIndex.c in Sources */,
 				262829F715EC7196002C4240 /* cpSweep1D.c in Sources */,
 				262829F815EC7196002C4240 /* cpVect.c in Sources */,
-				26282BB615EC7277002C4240 /* menu.js in Sources */,
-				26282BB715EC7277002C4240 /* test_actions.js in Sources */,
-				26282BB815EC7277002C4240 /* test_bindings.js in Sources */,
-				26282BB915EC7277002C4240 /* test_ease_actions.js in Sources */,
-				26282BBA15EC7277002C4240 /* test_layer.js in Sources */,
-				26282BBB15EC7277002C4240 /* test_particles.js in Sources */,
-				26282BBC15EC7277002C4240 /* test_require.js in Sources */,
-				26282BBD15EC7277002C4240 /* test_require_second.js in Sources */,
-				26282BBE15EC7277002C4240 /* test_sound.js in Sources */,
-				26282BBF15EC7277002C4240 /* test_transitions.js in Sources */,
-				26282BC015EC7277002C4240 /* jorendb.js in Sources */,
-				26282BC115EC7277002C4240 /* main.js in Sources */,
-				26282BC215EC7277002C4240 /* oa-benchmark.js in Sources */,
-				26282BC315EC7277002C4240 /* test-nodes.js in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
