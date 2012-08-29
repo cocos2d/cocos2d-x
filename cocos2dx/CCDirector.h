@@ -35,6 +35,8 @@ THE SOFTWARE.
 #include "CCGL.h"
 #include "kazmath/mat4.h"
 #include "label_nodes/CCLabelTTF.h"
+#include "ccTypeInfo.h"
+
 
 NS_CC_BEGIN
 

@@ -133,14 +133,14 @@ public:
      * but will never return false for items that are actually in the
      * filter.
      */
-    bool mayContain(const T* t) const;
+    bool mightContain(const T* t) const;
 
     /*
      * Methods for add/remove/contain when we already have a hash computed
      */
     void add(uint32_t hash);
     void remove(uint32_t hash);
-    bool mayContain(uint32_t hash) const;
+    bool mightContain(uint32_t hash) const;
 
 private:
     static const size_t arraySize = (1 << KeySize);
@@ -213,7 +213,7 @@ BloomFilter<KeySize, T>::remove(const T* t)
 
 template<unsigned KeySize, class T>
 MOZ_ALWAYS_INLINE bool
-BloomFilter<KeySize, T>::mayContain(uint32_t hash) const
+BloomFilter<KeySize, T>::mightContain(uint32_t hash) const
 {
     // Check that all the slots for this hash contain something
     return firstSlot(hash) && secondSlot(hash);
@@ -221,10 +221,10 @@ BloomFilter<KeySize, T>::mayContain(uint32_t hash) const
 
 template<unsigned KeySize, class T>
 MOZ_ALWAYS_INLINE bool
-BloomFilter<KeySize, T>::mayContain(const T* t) const
+BloomFilter<KeySize, T>::mightContain(const T* t) const
 {
     uint32_t hash = t->hash();
-    return mayContain(hash);
+    return mightContain(hash);
 }
 
 } // namespace mozilla

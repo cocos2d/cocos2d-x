@@ -1,4 +1,4 @@
-/* -*- Mode: C; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 4 -*-
+/* -*- Mode: C++; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 4 -*-
  *
  * ***** BEGIN LICENSE BLOCK *****
  * Version: MPL 1.1/GPL 2.0/LGPL 2.1
@@ -226,7 +226,6 @@ typedef struct JSStructuredCloneCallbacks   JSStructuredCloneCallbacks;
 typedef struct JSStructuredCloneReader      JSStructuredCloneReader;
 typedef struct JSStructuredCloneWriter      JSStructuredCloneWriter;
 typedef struct JSTracer                     JSTracer;
-typedef struct JSXDRState                   JSXDRState;
 
 #ifdef __cplusplus
 class                                       JSFlatString;
@@ -234,7 +233,7 @@ class                                       JSString;
 #else
 typedef struct JSFlatString                 JSFlatString;
 typedef struct JSString                     JSString;
-#endif
+#endif /* !__cplusplus */
 
 #ifdef JS_THREADSAFE
 typedef struct PRCallOnceType    JSCallOnceType;
@@ -244,5 +243,68 @@ typedef JSBool                   JSCallOnceType;
 typedef JSBool                 (*JSInitCallback)(void);
 
 JS_END_EXTERN_C
+
+#ifdef __cplusplus
+
+namespace JS {
+
+template <typename T>
+class Root;
+
+class SkipRoot;
+
+enum ThingRootKind
+{
+    THING_ROOT_OBJECT,
+    THING_ROOT_SHAPE,
+    THING_ROOT_BASE_SHAPE,
+    THING_ROOT_TYPE_OBJECT,
+    THING_ROOT_STRING,
+    THING_ROOT_SCRIPT,
+    THING_ROOT_ID,
+    THING_ROOT_VALUE,
+    THING_ROOT_LIMIT
+};
+
+struct ContextFriendFields {
+    JSRuntime *const    runtime;
+
+    ContextFriendFields(JSRuntime *rt)
+      : runtime(rt) { }
+
+    static const ContextFriendFields *get(const JSContext *cx) {
+        return reinterpret_cast<const ContextFriendFields *>(cx);
+    }
+
+    static ContextFriendFields *get(JSContext *cx) {
+        return reinterpret_cast<ContextFriendFields *>(cx);
+    }
+
+#ifdef JSGC_ROOT_ANALYSIS
+
+    /*
+     * Stack allocated GC roots for stack GC heap pointers, which may be
+     * overwritten if moved during a GC.
+     */
+    Root<void*> *thingGCRooters[THING_ROOT_LIMIT];
+
+#ifdef DEBUG
+    /*
+     * Stack allocated list of stack locations which hold non-relocatable
+     * GC heap pointers (where the target is rooted somewhere else) or integer
+     * values which may be confused for GC heap pointers. These are used to
+     * suppress false positives which occur when a rooting analysis treats the
+     * location as holding a relocatable pointer, but have no other effect on
+     * GC behavior.
+     */
+    SkipRoot *skipGCRooters;
+#endif
+
+#endif /* JSGC_ROOT_ANALYSIS */
+};
+
+} /* namespace JS */
+
+#endif /* __cplusplus */
 
 #endif /* jspubtd_h___ */

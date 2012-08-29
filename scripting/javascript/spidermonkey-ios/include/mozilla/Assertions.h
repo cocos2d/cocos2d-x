@@ -1,4 +1,4 @@
-/* -*- Mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*-
+/* -*- Mode: C++; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*-
  * vim: set ts=8 sw=4 et tw=99 ft=cpp:
  *
  * ***** BEGIN LICENSE BLOCK *****
@@ -45,6 +45,15 @@
 
 #include "mozilla/Attributes.h"
 #include "mozilla/Types.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#ifndef WIN32
+#  include <signal.h>
+#endif
+#ifdef ANDROID
+#  include <android/log.h>
+#endif
 
 /*
  * MOZ_STATIC_ASSERT may be used to assert a condition *at compile time*.  This
@@ -131,11 +140,67 @@
 extern "C" {
 #endif
 
-extern MFBT_API(void)
-MOZ_Crash(void);
+#if defined(WIN32)
+   /*
+    * We used to call DebugBreak() on Windows, but amazingly, it causes
+    * the MSVS 2010 debugger not to be able to recover a call stack.
+    */
+#  define MOZ_CRASH() \
+     do { \
+       *((volatile int *) NULL) = 123; \
+       exit(3); \
+     } while (0)
+#elif defined(ANDROID)
+   /*
+    * On Android, raise(SIGABRT) is handled asynchronously. Seg fault now
+    * so we crash immediately and capture the current call stack. We need
+    * to specifically use the global namespace in the C++ case.
+    */
+#  ifdef __cplusplus
+#    define MOZ_CRASH() \
+       do { \
+         *((volatile int *) NULL) = 123; \
+         ::abort(); \
+       } while (0)
+#  else
+#    define MOZ_CRASH() \
+       do { \
+         *((volatile int *) NULL) = 123; \
+         abort(); \
+       } while (0)
+#  endif
+#elif defined(__APPLE__)
+   /*
+    * On Mac OS X, Breakpad ignores signals. Only real Mach exceptions are
+    * trapped.
+    */
+#  define MOZ_CRASH() \
+     do { \
+       *((volatile int *) NULL) = 123; \
+       raise(SIGABRT);  /* In case above statement gets nixed by the optimizer. */ \
+     } while (0)
+#else
+#  define MOZ_CRASH() \
+     do { \
+       raise(SIGABRT);  /* To continue from here in GDB: "signal 0". */ \
+     } while (0)
+#endif
+
 
 extern MFBT_API(void)
 MOZ_Assert(const char* s, const char* file, int ln);
+
+static MOZ_ALWAYS_INLINE void
+MOZ_OutputAssertMessage(const char* s, const char *file, int ln)
+{
+#ifdef ANDROID
+  __android_log_print(ANDROID_LOG_FATAL, "MOZ_Assert",
+                      "Assertion failure: %s, at %s:%d\n", s, file, ln);
+#else
+  fprintf(stderr, "Assertion failure: %s, at %s:%d\n", s, file, ln);
+  fflush(stderr);
+#endif
+}
 
 #ifdef __cplusplus
 } /* extern "C" */
@@ -176,10 +241,20 @@ MOZ_Assert(const char* s, const char* file, int ln);
 #ifdef DEBUG
    /* First the single-argument form. */
 #  define MOZ_ASSERT_HELPER1(expr) \
-     ((expr) ? ((void)0) : MOZ_Assert(#expr, __FILE__, __LINE__))
+     do { \
+       if (!(expr)) { \
+         MOZ_OutputAssertMessage(#expr, __FILE__, __LINE__); \
+         MOZ_CRASH(); \
+       } \
+     } while (0)
    /* Now the two-argument form. */
 #  define MOZ_ASSERT_HELPER2(expr, explain) \
-     ((expr) ? ((void)0) : MOZ_Assert(#expr " (" explain ")", __FILE__, __LINE__))
+     do { \
+       if (!(expr)) { \
+         MOZ_OutputAssertMessage(#expr " (" explain ")", __FILE__, __LINE__); \
+         MOZ_CRASH(); \
+       } \
+     } while (0)
    /* And now, helper macrology up the wazoo. */
    /*
     * Count the number of arguments passed to MOZ_ASSERT, very carefully
@@ -205,7 +280,7 @@ MOZ_Assert(const char* s, const char* file, int ln);
      MOZ_ASSERT_GLUE(MOZ_ASSERT_CHOOSE_HELPER(MOZ_COUNT_ASSERT_ARGS(__VA_ARGS__)), \
                      (__VA_ARGS__))
 #else
-#  define MOZ_ASSERT(...) ((void)0)
+#  define MOZ_ASSERT(...) do { } while(0)
 #endif /* DEBUG */
 
 /*
@@ -218,9 +293,13 @@ MOZ_Assert(const char* s, const char* file, int ln);
  * designed to catch bugs during debugging, not "in the field".
  */
 #ifdef DEBUG
-#  define MOZ_ASSERT_IF(cond, expr)  ((cond) ? MOZ_ASSERT(expr) : ((void)0))
+#  define MOZ_ASSERT_IF(cond, expr) \
+     do { \
+       if (cond) \
+         MOZ_ASSERT(expr); \
+     } while (0)
 #else
-#  define MOZ_ASSERT_IF(cond, expr)  ((void)0)
+#  define MOZ_ASSERT_IF(cond, expr)  do { } while (0)
 #endif
 
 /* MOZ_NOT_REACHED_MARKER() expands (in compilers which support it) to an

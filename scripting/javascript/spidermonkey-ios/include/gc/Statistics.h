@@ -52,19 +52,28 @@ namespace js {
 namespace gcstats {
 
 enum Phase {
+    PHASE_GC_BEGIN,
+    PHASE_WAIT_BACKGROUND_THREAD,
+    PHASE_PURGE,
     PHASE_MARK,
     PHASE_MARK_ROOTS,
     PHASE_MARK_DELAYED,
     PHASE_MARK_OTHER,
+    PHASE_FINALIZE_START,
     PHASE_SWEEP,
+    PHASE_SWEEP_COMPARTMENTS,
     PHASE_SWEEP_OBJECT,
     PHASE_SWEEP_STRING,
     PHASE_SWEEP_SCRIPT,
     PHASE_SWEEP_SHAPE,
     PHASE_DISCARD_CODE,
     PHASE_DISCARD_ANALYSIS,
-    PHASE_XPCONNECT,
+    PHASE_DISCARD_TI,
+    PHASE_SWEEP_TYPES,
+    PHASE_CLEAR_SCRIPT_ANALYSIS,
+    PHASE_FINALIZE_END,
     PHASE_DESTROY,
+    PHASE_GC_END,
 
     PHASE_LIMIT
 };
@@ -76,7 +85,7 @@ enum Stat {
     STAT_LIMIT
 };
 
-static const size_t BUFFER_SIZE = 8192;
+class StatisticsSerializer;
 
 struct Statistics {
     Statistics(JSRuntime *rt);
@@ -85,7 +94,7 @@ struct Statistics {
     void beginPhase(Phase phase);
     void endPhase(Phase phase);
 
-    void beginSlice(JSCompartment *comp, gcreason::Reason reason);
+    void beginSlice(int collectedCount, int compartmentCount, gcreason::Reason reason);
     void endSlice();
 
     void reset(const char *reason) { slices.back().resetReason = reason; }
@@ -96,6 +105,9 @@ struct Statistics {
         counts[s]++;
     }
 
+    jschar *formatMessage();
+    jschar *formatJSON(uint64_t timestamp);
+
   private:
     JSRuntime *runtime;
 
@@ -104,7 +116,8 @@ struct Statistics {
     FILE *fp;
     bool fullFormat;
 
-    JSCompartment *compartment;
+    int collectedCount;
+    int compartmentCount;
     const char *nonincrementalReason;
 
     struct SliceData {
@@ -136,27 +149,27 @@ struct Statistics {
     /* Number of events of this type for this GC. */
     unsigned int counts[STAT_LIMIT];
 
-    char buffer[BUFFER_SIZE];
-    bool needComma;
+    /* Allocated space before the GC started. */
+    size_t preBytes;
 
     void beginGC();
     void endGC();
 
     int64_t gcDuration();
-    double t(int64_t t);
     void printStats();
-    void fmt(const char *f, ...);
-    void fmtIfNonzero(const char *name, double t);
-    void formatPhases(int64_t *times);
-    const char *formatData();
+    bool formatData(StatisticsSerializer &ss, uint64_t timestamp);
 
     double computeMMU(int64_t resolution);
 };
 
 struct AutoGCSlice {
-    AutoGCSlice(Statistics &stats, JSCompartment *comp, gcreason::Reason reason
+    AutoGCSlice(Statistics &stats, int collectedCount, int compartmentCount, gcreason::Reason reason
                 JS_GUARD_OBJECT_NOTIFIER_PARAM)
-      : stats(stats) { JS_GUARD_OBJECT_NOTIFIER_INIT; stats.beginSlice(comp, reason); }
+      : stats(stats)
+    {
+        JS_GUARD_OBJECT_NOTIFIER_INIT;
+        stats.beginSlice(collectedCount, compartmentCount, reason);
+    }
     ~AutoGCSlice() { stats.endSlice(); }
 
     Statistics &stats;

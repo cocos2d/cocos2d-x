@@ -79,17 +79,14 @@
     JS_VERSION == JS_VERSION_ECMA_3_TEST
 
 #define JS_HAS_STR_HTML_HELPERS 0       /* has str.anchor, str.bold, etc. */
-#define JS_HAS_PERL_SUBSTR      0       /* has str.substr */
 #if JS_VERSION == JS_VERSION_ECMA_3_TEST
 #define JS_HAS_OBJ_PROTO_PROP   1       /* has o.__proto__ etc. */
 #else
 #define JS_HAS_OBJ_PROTO_PROP   0       /* has o.__proto__ etc. */
 #endif
 #define JS_HAS_OBJ_WATCHPOINT   0       /* has o.watch and o.unwatch */
-#define JS_HAS_XDR              0       /* has XDR API and internal support */
 #define JS_HAS_TOSOURCE         0       /* has Object/Array toSource method */
 #define JS_HAS_CATCH_GUARD      0       /* has exception handling catch guard */
-#define JS_HAS_SPARSE_ARRAYS    0       /* array methods preserve empty elems */
 #define JS_HAS_UNEVAL           0       /* has uneval() top-level function */
 #define JS_HAS_CONST            0       /* has JS2 const as alternative var */
 #define JS_HAS_FUN_EXPR_STMT    0       /* has function expression statement */
@@ -108,13 +105,10 @@
 #elif JS_VERSION == 150
 
 #define JS_HAS_STR_HTML_HELPERS 1       /* has str.anchor, str.bold, etc. */
-#define JS_HAS_PERL_SUBSTR      1       /* has str.substr */
 #define JS_HAS_OBJ_PROTO_PROP   1       /* has o.__proto__ etc. */
 #define JS_HAS_OBJ_WATCHPOINT   1       /* has o.watch and o.unwatch */
-#define JS_HAS_XDR              1       /* has XDR API and internal support */
 #define JS_HAS_TOSOURCE         1       /* has Object/Array toSource method */
 #define JS_HAS_CATCH_GUARD      1       /* has exception handling catch guard */
-#define JS_HAS_SPARSE_ARRAYS    0       /* array methods preserve empty elems */
 #define JS_HAS_UNEVAL           1       /* has uneval() top-level function */
 #define JS_HAS_CONST            1       /* has JS2 const as alternative var */
 #define JS_HAS_FUN_EXPR_STMT    1       /* has function expression statement */
@@ -129,13 +123,10 @@
 #elif JS_VERSION == 160
 
 #define JS_HAS_STR_HTML_HELPERS 1       /* has str.anchor, str.bold, etc. */
-#define JS_HAS_PERL_SUBSTR      1       /* has str.substr */
 #define JS_HAS_OBJ_PROTO_PROP   1       /* has o.__proto__ etc. */
 #define JS_HAS_OBJ_WATCHPOINT   1       /* has o.watch and o.unwatch */
-#define JS_HAS_XDR              1       /* has XDR API and internal support */
 #define JS_HAS_TOSOURCE         1       /* has Object/Array toSource method */
 #define JS_HAS_CATCH_GUARD      1       /* has exception handling catch guard */
-#define JS_HAS_SPARSE_ARRAYS    0       /* array methods preserve empty elems */
 #define JS_HAS_UNEVAL           1       /* has uneval() top-level function */
 #define JS_HAS_CONST            1       /* has JS2 const as alternative var */
 #define JS_HAS_FUN_EXPR_STMT    1       /* has function expression statement */
@@ -150,13 +141,10 @@
 #elif JS_VERSION == 170
 
 #define JS_HAS_STR_HTML_HELPERS 1       /* has str.anchor, str.bold, etc. */
-#define JS_HAS_PERL_SUBSTR      1       /* has str.substr */
 #define JS_HAS_OBJ_PROTO_PROP   1       /* has o.__proto__ etc. */
 #define JS_HAS_OBJ_WATCHPOINT   1       /* has o.watch and o.unwatch */
-#define JS_HAS_XDR              1       /* has XDR API and internal support */
 #define JS_HAS_TOSOURCE         1       /* has Object/Array toSource method */
 #define JS_HAS_CATCH_GUARD      1       /* has exception handling catch guard */
-#define JS_HAS_SPARSE_ARRAYS    0       /* array methods preserve empty elems */
 #define JS_HAS_UNEVAL           1       /* has uneval() top-level function */
 #define JS_HAS_CONST            1       /* has JS2 const as alternative var */
 #define JS_HAS_FUN_EXPR_STMT    1       /* has function expression statement */
@@ -171,13 +159,10 @@
 #elif 180 <= JS_VERSION && JS_VERSION <= 185
 
 #define JS_HAS_STR_HTML_HELPERS 1       /* has str.anchor, str.bold, etc. */
-#define JS_HAS_PERL_SUBSTR      1       /* has str.substr */
 #define JS_HAS_OBJ_PROTO_PROP   1       /* has o.__proto__ etc. */
 #define JS_HAS_OBJ_WATCHPOINT   1       /* has o.watch and o.unwatch */
-#define JS_HAS_XDR              1       /* has XDR API and internal support */
 #define JS_HAS_TOSOURCE         1       /* has Object/Array toSource method */
 #define JS_HAS_CATCH_GUARD      1       /* has exception handling catch guard */
-#define JS_HAS_SPARSE_ARRAYS    0       /* array methods preserve empty elems */
 #define JS_HAS_UNEVAL           1       /* has uneval() top-level function */
 #define JS_HAS_CONST            1       /* has JS2 const as alternative var */
 #define JS_HAS_FUN_EXPR_STMT    1       /* has function expression statement */
@@ -209,3 +194,13 @@
  * support likely to be made opt-in at some future time.
  */
 #define OLD_GETTER_SETTER_METHODS       1
+
+/* A kill-switch for bug 586842.  Embedders shouldn't touch this! */
+#define USE_NEW_OBJECT_REPRESENTATION 0
+
+#if USE_NEW_OBJECT_REPRESENTATION
+#  define NEW_OBJECT_REPRESENTATION_ONLY() ((void)0)
+#else
+#  define NEW_OBJECT_REPRESENTATION_ONLY() \
+     MOZ_NOT_REACHED("don't call this!  to be used in the new object representation")
+#endif

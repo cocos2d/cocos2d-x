@@ -808,11 +808,17 @@ void CCNode::onEnter()
 void CCNode::onEnterTransitionDidFinish()
 {
     arrayMakeObjectsPerformSelector(m_pChildren, onEnterTransitionDidFinish, CCNode*);
+#ifdef COCOS2D_JAVASCRIPT
+    CCScriptEngineManager::sharedManager()->getScriptEngine()->executeFunctionWithIntegerData(m_nScriptHandler, kCCNodeOnEnterTransitionDidFinish, this);
+#endif
 }
 
 void CCNode::onExitTransitionDidStart()
 {
     arrayMakeObjectsPerformSelector(m_pChildren, onExitTransitionDidStart, CCNode*);
+#ifdef COCOS2D_JAVASCRIPT
+    CCScriptEngineManager::sharedManager()->getScriptEngine()->executeFunctionWithIntegerData(m_nScriptHandler, kCCNodeOnExitTransitionDidStart, this);
+#endif
 }
 
 void CCNode::onExit()

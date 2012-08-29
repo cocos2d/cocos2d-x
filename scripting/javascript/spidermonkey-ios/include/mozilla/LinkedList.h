@@ -356,6 +356,18 @@ public:
     }
 
     /*
+     * Remove all the elements from the list.
+     *
+     * This runs in time linear to the list's length, because we have to mark
+     * each element as not in the list.
+     */
+    void clear()
+    {
+        while (popFirst())
+            continue;
+    }
+
+    /*
      * In a debug build, make sure that the list is sane (no cycles, consistent
      * next/prev pointers, only one sentinel).  Has no effect in release builds.
      */
