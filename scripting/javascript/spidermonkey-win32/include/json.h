@@ -1,6 +1,4 @@
-/* -*- Mode: C; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 4 -*-
- *
- ***** BEGIN LICENSE BLOCK *****
+/* ***** BEGIN LICENSE BLOCK *****
  * Version: MPL 1.1/GPL 2.0/LGPL 2.1
  *
  * The contents of this file are subject to the Mozilla Public License Version
@@ -13,15 +11,15 @@
  * for the specific language governing rights and limitations under the
  * License.
  *
- * The Original Code is Mozilla Communicator client code, released
- * March 31, 1998.
+ * The Original Code is SpiderMonkey JSON.
  *
  * The Initial Developer of the Original Code is
- * Netscape Communications Corporation.
+ * Mozilla Corporation.
  * Portions created by the Initial Developer are Copyright (C) 1998-1999
  * the Initial Developer. All Rights Reserved.
  *
  * Contributor(s):
+ *   Robert Sayre <sayrer@gmail.com>
  *
  * Alternatively, the contents of this file may be used under the terms of
  * either of the GNU General Public License Version 2 or later (the "GPL"),
@@ -37,19 +35,39 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-#ifndef jscompat_h___
-#define jscompat_h___
-/*
- * Compatibility glue for various NSPR versions.  We must always define int8,
- * int16, jsword, and so on to minimize differences with js/ref, no matter what
- * the NSPR typedef names may be.
- */
-#include "jstypes.h"
-#include "jslong.h"
+#ifndef json_h___
+#define json_h___
 
-typedef JSIntn intN;
-typedef JSUintn uintN;
-typedef JSUword jsuword;
-typedef JSWord jsword;
-typedef float float32;
-#endif /* jscompat_h___ */
+#include "jsprvtd.h"
+#include "jspubtd.h"
+
+#include "js/Vector.h"
+
+#define JSON_MAX_DEPTH  2048
+#define JSON_PARSER_BUFSIZE 1024
+
+extern JSObject *
+js_InitJSONClass(JSContext *cx, JSObject *obj);
+
+extern JSBool
+js_Stringify(JSContext *cx, js::Value *vp, JSObject *replacer, js::Value space,
+             js::StringBuffer &sb);
+
+/*
+ * The type of JSON decoding to perform.  Strict decoding is to-the-spec;
+ * legacy decoding accepts a few non-JSON syntaxes historically accepted by the
+ * implementation.  (Full description of these deviations is deliberately
+ * omitted.)  New users should use strict decoding rather than legacy decoding,
+ * as legacy decoding might be removed at a future time.
+ */
+enum DecodingMode { STRICT, LEGACY };
+
+namespace js {
+
+extern JS_FRIEND_API(JSBool)
+ParseJSONWithReviver(JSContext *cx, const jschar *chars, size_t length, const Value &filter,
+                     Value *vp, DecodingMode decodingMode = STRICT);
+
+} /* namespace js */
+
+#endif /* json_h___ */
