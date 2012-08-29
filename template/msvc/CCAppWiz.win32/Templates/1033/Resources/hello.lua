@@ -58,7 +58,7 @@ local function creatDog()
 end
 
 -- create farm
-local function createLayerFram()
+local function createLayerFarm()
     local layerFarm = CCLayer:create()
 
     -- add in farm background
@@ -79,7 +79,7 @@ local function createLayerFram()
     local frameCrop = CCSpriteFrame:create("crop.png", CCRectMake(0, 0, 105, 95))
     for i = 0, 3 do
         for j = 0, 1 do
-            local spriteCrop = CCSprite:create(frameCrop);
+            local spriteCrop = CCSprite:createWithSpriteFrame(frameCrop);
             spriteCrop:setPosition(10 + 200 + j * 180 - i % 2 * 90, 30 + 10 + i * 95 / 2)
             layerFarm:addChild(spriteCrop)
         end
@@ -147,7 +147,8 @@ local function createLayerMenu()
 
     local function menuCallbackOpenPopup()
         -- loop test sound effect
-        effectID = SimpleAudioEngine:sharedEngine():playEffect("effect1.wav")
+        local effectPath = CCFileUtils:sharedFileUtils():fullPathFromRelativePath("effect1.wav")
+        effectID = SimpleAudioEngine:sharedEngine():playEffect(effectPath)
         menuPopup:setVisible(true)
     end
 
@@ -172,11 +173,16 @@ local function createLayerMenu()
 end
 
 -- play background music, preload effect
-SimpleAudioEngine:sharedEngine():playBackgroundMusic("background.mp3", true);
-SimpleAudioEngine:sharedEngine():preloadEffect("effect1.wav");
+
+-- uncomment below for the BlackBerry version
+-- local bgMusicPath = CCFileUtils:sharedFileUtils():fullPathFromRelativePath("background.ogg")
+local bgMusicPath = CCFileUtils:sharedFileUtils():fullPathFromRelativePath("background.mp3")
+SimpleAudioEngine:sharedEngine():playBackgroundMusic(bgMusicPath, true)
+local effectPath = CCFileUtils:sharedFileUtils():fullPathFromRelativePath("effect1.wav") 
+SimpleAudioEngine:sharedEngine():preloadEffect(effectPath)
 
 -- run
 local sceneGame = CCScene:create()
-sceneGame:addChild(createLayerFram())
+sceneGame:addChild(createLayerFarm())
 sceneGame:addChild(createLayerMenu())
 CCDirector:sharedDirector():runWithScene(sceneGame)
