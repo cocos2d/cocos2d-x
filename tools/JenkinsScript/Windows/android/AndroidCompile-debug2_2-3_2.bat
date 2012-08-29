@@ -1,14 +1,14 @@
-::This script is used to finish a android automated compiler.
-::You should make sure have finished the environment setting.
-::Here are the environment variables you should set.
-::%ANT_HOME% %ANDROID_HOME% %JAVA_HOME% %CYGWIN% %GITBIN% %ANDROID_NDK% 
+::This script is used to accomplish a android automated compile.
+::You should make sure have accomplished the environment settings.
 :: Don't change it until you know what you do.
 
-if not exist "%CYGWIN%" echo Couldn't find Cygwin at "%CYGWIN%" and you should set like this "C:\cygwin"& pause & exit 1
-if not exist "%GITBIN%" echo Couldn't find Gitbin at "%GITBIN%" and you should set like this "F:\Git\bin"& pause & exit 2
-if not exist "%ANDROID_HOME%" echo Couldn't find ANDROID_HOME at "%ANDROID_HOME%" and you should set like this "D:\Windows7\android-sdk-windows"& pause & exit 3
-if not exist "%ANDROID_NDK%" echo Couldn't find Cygwin at "%ANDROID_NDK%" and you should set like this "D:\Windows7\android-ndk-r8"& pause & exit 4
-if not exist "%JAVA_HOME%" echo Couldn't find Cygwin at "%JAVA_HOME%" and you should set like this "C:\Program Files\Java\jdk1.7.0_05"& pause & exit 5
+::Here are the environment variables you should set.
+::%ANT_HOME% %ANDROID_HOME% %JAVA_HOME% %CYGWIN% %ANDROID_NDK% 
+if not exist "%CYGWIN%" echo Couldn't find Cygwin at "%CYGWIN%" and you should set it like this "C:\cygwin"& pause & exit 1
+if not exist "%ANDROID_HOME%" echo Couldn't find ANDROID_HOME at "%ANDROID_HOME%" and you should set it like this "D:\xx\android-sdk-windows"& pause & exit 2
+if not exist "%ANDROID_NDK%" echo Couldn't find Cygwin at "%ANDROID_NDK%" and you should set it like this "D:\xx\android-ndk-r8"& pause & exit 3
+if not exist "%JAVA_HOME%" echo Couldn't find Cygwin at "%JAVA_HOME%" and you should set it like it this "C:\xx\jdk1.7.0_05"& pause & exit 4
+if not exist "%ANT_HOME%" echo Couldn't find Ant at "%ANT_HOME%" and you should set it like this "D:\xx\apache-ant-1.8.4" $ pause $ exit 5
 
 set _PROJECTNAME=TestCpp
 cd ..\..\..\..
@@ -128,22 +128,24 @@ move anttmp.properties ant.properties
 
 ::Calculate the errorlevel and change build target.
 cd ..\..\..
-if "%_PROJECTNAME%"=="TestCpp" set /a testresult1=(result8+result10+result11+result12+result13) && set _PROJECTNAME=HelloCpp&& goto project
-if "%_PROJECTNAME%"=="HelloCpp" set /a testresult2=(result8+result10+result11+result12+result13) && set _PROJECTNAME=HelloLua&& goto project
-if "%_PROJECTNAME%"=="HelloLua" set /a testresult3=(result8+result10+result11+result12+result13)
-set /a testresult=(testresult1+testresult2+testresult3)
-if %testresult% NEQ 0 goto error
+if "%_PROJECTNAME%"=="TestCpp" set /a TestCpp_Result=(result8+result10+result11+result12+result13) && set _PROJECTNAME=HelloCpp&& goto project
+if "%_PROJECTNAME%"=="HelloCpp" set /a HelloCpp_Result=(result8+result10+result11+result12+result13) && set _PROJECTNAME=HelloLua&& goto project
+if "%_PROJECTNAME%"=="HelloLua" set /a HelloLua_Result=(result8+result10+result11+result12+result13)
+set /a Compile_Result=(TestCpp_Result+HelloCpp_Result+HelloLua_Result)
+if %Compile_Result% NEQ 0 goto error
 
 goto success
 
 :error
-echo Error.
+echo Compile Error!
+echo %Compile_Result%
 ::git checkout -f
 ::git clean -df -x
 exit 1
 
 :success
-echo Success.
+echo Compile Success!
+echo %Compile_Result%
 ::git checkout -f
 ::git clean -df -x
 exit 0
