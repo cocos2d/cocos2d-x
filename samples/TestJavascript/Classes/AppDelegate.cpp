@@ -5,6 +5,7 @@
 #include "ScriptingCore.h"
 #include "cocos2dx.hpp"
 #include "cocos2d_specifics.hpp"
+#include "js_bindings_chipmunk_manual.hpp"
 
 USING_NS_CC;
 using namespace CocosDenshion;
@@ -38,6 +39,8 @@ bool AppDelegate::applicationDidFinishLaunching()
     ScriptingCore* sc = ScriptingCore::getInstance();
     sc->addRegisterCallback(register_all_cocos2dx);
     sc->addRegisterCallback(register_cocos2dx_js_extensions);
+    sc->addRegisterCallback(register_chipmunk_manual);
+    sc->addRegisterCallback(register_CCPhysicsSprite);
     
     sc->start();
     

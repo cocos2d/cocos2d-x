@@ -52,7 +52,7 @@ JSBool jsval_to_CCPoint( JSContext *cx, jsval vp, CCPoint *ret )
 	
 	JSB_PRECONDITION( tmp_arg && JS_IsTypedArrayObject( tmp_arg, cx ), "Not a TypedArray object");
 	
-	JSB_PRECONDITION( JS_GetTypedArrayByteLength( tmp_arg, cx ) == sizeof(CGPoint), "Invalid length");
+	JSB_PRECONDITION( JS_GetTypedArrayByteLength( tmp_arg, cx ) == sizeof(cpVect), "Invalid length");
 	
 	*ret = *(CCPoint*)JS_GetArrayBufferViewData( tmp_arg, cx );
 	
@@ -61,7 +61,7 @@ JSBool jsval_to_CCPoint( JSContext *cx, jsval vp, CCPoint *ret )
 }
 
 
-JSBool jsval_to_CGPoint( JSContext *cx, jsval vp, CGPoint *ret )
+JSBool jsval_to_CGPoint( JSContext *cx, jsval vp, cpVect *ret )
 {
 #ifdef JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
     
@@ -99,16 +99,16 @@ JSBool jsval_to_CGPoint( JSContext *cx, jsval vp, CGPoint *ret )
 	
 	JSB_PRECONDITION( tmp_arg && JS_IsTypedArrayObject( tmp_arg, cx ), "Not a TypedArray object");
 	
-	JSB_PRECONDITION( JS_GetTypedArrayByteLength( tmp_arg, cx ) == sizeof(CGPoint), "Invalid length");
+	JSB_PRECONDITION( JS_GetTypedArrayByteLength( tmp_arg, cx ) == sizeof(cpVect), "Invalid length");
 	
-	*ret = *(CGPoint*)JS_GetArrayBufferViewData( tmp_arg, cx );
+	*ret = *(cpVect*)JS_GetArrayBufferViewData( tmp_arg, cx );
 	
 	return JS_TRUE;
 #endif // #! JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
 }
 
 
-jsval CGPoint_to_jsval( JSContext *cx, CGPoint p)
+jsval CGPoint_to_jsval( JSContext *cx, cpVect p)
 {
 	
 #ifdef JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
@@ -131,7 +131,7 @@ jsval CGPoint_to_jsval( JSContext *cx, CGPoint p)
 	JSObject *typedArray = JS_NewFloat32Array( cx, 2 );
 #endif
     
-	CGPoint *buffer = (CGPoint*)JS_GetArrayBufferViewData(typedArray, cx );
+	cpVect *buffer = (cpVect*)JS_GetArrayBufferViewData(typedArray, cx );
 	*buffer = p;
 	return OBJECT_TO_JSVAL(typedArray);
 #endif // ! JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
