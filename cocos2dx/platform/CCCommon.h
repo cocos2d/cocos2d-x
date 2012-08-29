@@ -45,10 +45,7 @@ void CC_DLL CCLog(const char * pszFormat, ...);
 /**
  * lua can not deal with ...
  */
-static void CC_DLL CCLuaLog(const char * pszFormat)
-{
-	CCLog(pszFormat);
-}
+void CC_DLL CCLuaLog(const char * pszFormat);
 
 /**
 @brief Pop out a message box
