@@ -101,7 +101,8 @@ public:
     virtual ~CCDirector(void);
     virtual bool init(void);
     virtual long getClassTypeInfo() {
-        return reinterpret_cast<long>(typeid(cocos2d::CCDirector).name());
+		static const long id = cocos2d::getHashCodeByString(typeid(cocos2d::CCDirector).name());
+		return id;
     }
 
     // attribute

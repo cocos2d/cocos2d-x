@@ -58,11 +58,11 @@
 
 /* Define to 1 if the <endian.h> header is present and
    useable.  See jscpucfg.h.  */
-#define JS_HAVE_ENDIAN_H 1
+/* #undef JS_HAVE_ENDIAN_H */
 
 /* Define to 1 if the <machine/endian.h> header is present and
    useable.  See jscpucfg.h.  */
-#define JS_HAVE_MACHINE_ENDIAN_H 1
+/* #undef JS_HAVE_MACHINE_ENDIAN_H */
 
 /* Define to 1 if the <sys/isa_defs.h> header is present and
    useable.  See jscpucfg.h.  */
@@ -73,11 +73,11 @@
 
 /* Define to 1 if the N-byte __intN types are defined by the
    compiler.  */
-/* #undef JS_HAVE___INTN */
+#define JS_HAVE___INTN 1
 
 /* Define to 1 if #including <stddef.h> provides definitions for
    intptr_t and uintptr_t.  */
-/* #undef JS_STDDEF_H_HAS_INTPTR_T */
+#define JS_STDDEF_H_HAS_INTPTR_T 1
 
 /* Define to 1 if #including <crtdefs.h> provides definitions for
    intptr_t and uintptr_t.  */
@@ -90,7 +90,7 @@
 /* #undef JS_INT32_TYPE */
 /* #undef JS_INT64_TYPE */
 /* #undef JS_INTPTR_TYPE */
-//#define JS_BYTES_PER_WORD 4
+/* #undef JS_BYTES_PER_WORD */
 
 /* Some mozilla code uses JS-friend APIs that depend on JS_METHODJIT being
    correct. */

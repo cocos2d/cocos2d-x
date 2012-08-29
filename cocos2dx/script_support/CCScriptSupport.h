@@ -113,10 +113,13 @@ private:
     bool    m_bSwallowsTouches;
 };
 
-
-class CC_DLL CCScriptEngineProtocol : public CCObject
+// Don't make CCScriptEngineProtocol inherits from CCObject since setScriptEngine is invoked only once in AppDelegate.cpp,
+// It will affect the lifecycle of ScriptCore instance, the autorelease pool will be destroyed before destructing ScriptCore.
+// So a crash will appear on Win32 if you click the close button.
+class CC_DLL CCScriptEngineProtocol// : public CCObject
 {
 public:
+    virtual ~CCScriptEngineProtocol() {};
     /**
      @brief Method used to get a pointer to the lua_State that the script module is attached to.
      @return A pointer to the lua_State that the script module is attached to.

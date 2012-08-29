@@ -15,6 +15,7 @@ AppDelegate::AppDelegate()
 
 AppDelegate::~AppDelegate()
 {
+    CCScriptEngineManager::sharedManager()->purgeSharedManager();
 }
 
 bool AppDelegate::applicationDidFinishLaunching()
