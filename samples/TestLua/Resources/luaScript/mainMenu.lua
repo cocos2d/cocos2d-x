@@ -90,7 +90,7 @@ local function CreateTestScene(nIdx)
     elseif nIdx == Test_Table.TEST_COCOSDENSHION then
 
     elseif nIdx == Test_Table.TEST_PERFORMANCE then
-
+		scene = PerformanceTest()
     elseif nIdx == Test_Table.TEST_ZWOPTEX then
 
 --#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
@@ -130,9 +130,8 @@ function CreateTestMenu()
 		CCDirector:sharedDirector():endToLua()
 	end
 
-	local function menuCallback(menuTag)
-		cclog(menuTag)
-		local Idx = 0 -- menuTag - 10000
+	local function menuCallback(tag)
+		local Idx = tag - 10000
 		local testScene = CreateTestScene(Idx)
 		if testScene then
 			CCDirector:sharedDirector():replaceScene(testScene)
@@ -143,23 +142,24 @@ function CreateTestMenu()
 	local s = CCDirector:sharedDirector():getWinSize()
 	local CloseItem = CCMenuItemImage:create(s_pPathClose, s_pPathClose)
 	CloseItem:registerScriptHandler(closeCallback)
-	CloseItem:setPosition(s.width - 30, s.height - 30)
+	CloseItem:setPosition(ccp(s.width - 30, s.height - 30))
 
     local CloseMenu = CCMenu:create()
     CloseMenu:setPosition(0, 0)
 	CloseMenu:addChild(CloseItem)
 	menuLayer:addChild(CloseMenu)
 
+	cclog("start")
+
 	-- add menu items for tests
     local MainMenu = CCMenu:create()
     for index, labelName in pairs(Test_Name) do
 		local testLabel = CCLabelTTF:create(labelName, "Arial", 24)
         local testMenuItem = CCMenuItemLabel:create(testLabel)
-		testMenuItem:setTag(index + 10000)
-		testMenuItem:registerScriptHandler(menuCallback)
-		testMenuItem:setPosition(s.width / 2, (s.height - (index + 1) * LINE_SPACE))
 
-        MainMenu:addChild(testMenuItem, index + 10000)
+		testMenuItem:registerScriptHandler(menuCallback)
+		testMenuItem:setPosition(ccp(s.width / 2, (s.height - (index + 1) * LINE_SPACE)))
+        MainMenu:addChild(testMenuItem, index + 10000, index + 10000)
     end
 
     MainMenu:setContentSize(CCSizeMake(s.width, (Test_Table.TESTS_COUNT + 1) * (LINE_SPACE)))
