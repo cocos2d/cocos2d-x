@@ -8,9 +8,7 @@
 #include "ScriptingCore.h"
 #include "js_bindings_config.h"
 #include "js_manual_conversions.h"
-//#include "android/log.h"
 
-#define APPNAME "jstest"
 #define JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
 
 //#include "js_bindings_NS_manual.h"
@@ -263,8 +261,6 @@ jsval long_to_jsval( JSContext *cx, long number )
 #endif
 }
 
-//#ifdef JSB_USE_CHIPMUNK
-
 JSBool jsval_to_cpBB( JSContext *cx, jsval vp, cpBB *ret )
 {
 	JSObject *tmp_arg;
@@ -292,8 +288,6 @@ jsval cpBB_to_jsval(JSContext *cx, cpBB bb )
 	*buffer = bb;
 	return OBJECT_TO_JSVAL(typedArray);
 }
-
-//#endif
 
 jsval longlong_to_jsval( JSContext *cx, long long number )
 {
