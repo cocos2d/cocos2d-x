@@ -134,4 +134,5 @@ if [ $compileresult != 0 ]; then
 else
 #    git checkout -f
 #    git clean -df -x
+    exit 0
 fi

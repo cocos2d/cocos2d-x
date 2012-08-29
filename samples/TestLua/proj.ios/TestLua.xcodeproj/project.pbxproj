@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		158B579B15EC9D86009FCBB4 /* Icon-57.png in Resources */ = {isa = PBXBuildFile; fileRef = 158B579715EC9D86009FCBB4 /* Icon-57.png */; };
+		158B579C15EC9D86009FCBB4 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 158B579815EC9D86009FCBB4 /* Icon-72.png */; };
+		158B579D15EC9D86009FCBB4 /* Icon-114.png in Resources */ = {isa = PBXBuildFile; fileRef = 158B579915EC9D86009FCBB4 /* Icon-114.png */; };
+		158B579E15EC9D86009FCBB4 /* Icon-144.png in Resources */ = {isa = PBXBuildFile; fileRef = 158B579A15EC9D86009FCBB4 /* Icon-144.png */; };
 		F293B3CD15EB7BE500256477 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F293B3CC15EB7BE500256477 /* QuartzCore.framework */; };
 		F293B3CF15EB7BE500256477 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F293B3CE15EB7BE500256477 /* OpenGLES.framework */; };
 		F293B3D115EB7BE500256477 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F293B3D015EB7BE500256477 /* OpenAL.framework */; };
@@ -122,6 +126,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		158B579715EC9D86009FCBB4 /* Icon-57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-57.png"; sourceTree = SOURCE_ROOT; };
+		158B579815EC9D86009FCBB4 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = SOURCE_ROOT; };
+		158B579915EC9D86009FCBB4 /* Icon-114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-114.png"; sourceTree = SOURCE_ROOT; };
+		158B579A15EC9D86009FCBB4 /* Icon-144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-144.png"; sourceTree = SOURCE_ROOT; };
 		F293B3C815EB7BE500256477 /* TestLua.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestLua.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F293B3CC15EB7BE500256477 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		F293B3CE15EB7BE500256477 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -488,6 +496,10 @@
 		F293BC4615EB859D00256477 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				158B579715EC9D86009FCBB4 /* Icon-57.png */,
+				158B579815EC9D86009FCBB4 /* Icon-72.png */,
+				158B579915EC9D86009FCBB4 /* Icon-114.png */,
+				158B579A15EC9D86009FCBB4 /* Icon-144.png */,
 				F2D83AA015EC980D004C508F /* animations */,
 				F2D83AA115EC980D004C508F /* background.mp3 */,
 				F2D83AA215EC980D004C508F /* background.ogg */,
@@ -694,6 +706,10 @@
 				F2D83AC515EC980D004C508F /* Shaders in Resources */,
 				F2D83AC615EC980D004C508F /* TileMaps in Resources */,
 				F2D83AC715EC980D004C508F /* zwoptex in Resources */,
+				158B579B15EC9D86009FCBB4 /* Icon-57.png in Resources */,
+				158B579C15EC9D86009FCBB4 /* Icon-72.png in Resources */,
+				158B579D15EC9D86009FCBB4 /* Icon-114.png in Resources */,
+				158B579E15EC9D86009FCBB4 /* Icon-144.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -421,7 +421,7 @@ void performanceActions(CCSprite* pSprite)
 
     float growDuration = 0.5f + (rand() % 1000) / 500.0f;
     CCActionInterval *grow = CCScaleBy::create(growDuration, 0.5f, 0.5f);
-    CCAction *permanentScaleLoop = CCRepeatForever::create((CCActionInterval *)CCSequence::create(grow, grow->reverse()));
+    CCAction *permanentScaleLoop = CCRepeatForever::create((CCActionInterval *)CCSequence::create(grow, grow->reverse(), NULL));
     pSprite->runAction(permanentScaleLoop);
 }
 

@@ -2,7 +2,7 @@
 #This script is used to finish a mac automated compiler.
 
 compileresult=0
-cd ../../samples
+cd ../../../../samples
 #List simulator sdks
 xcodebuild -showsdks > tmp.txt
 
@@ -19,8 +19,8 @@ do
     a=$(sed -n '1p' tmp.txt)
     echo $a
     
-#Build debug version
-    xcodebuild -configuration Debug $a
+#Build release version
+    xcodebuild -configuration Release $a
     compileresult=$[$compileresult+$?]
     sed -i '' '1d' tmp.txt
 done
@@ -34,8 +34,8 @@ do
     a=$(sed -n '1p' tmp.txt)
     echo $a
     
-#Build debug version
-    xcodebuild -configuration Debug $a
+#Build release version
+    xcodebuild -configuration Release $a
     compileresult=$[$compileresult+$?]
     sed -i '' '1d' tmp.txt
 done
@@ -45,12 +45,12 @@ cd ../../..
 if [ $compileresult != 0 ]; then
     echo Error.
     echo $compilesult
-    git checkout -f
-    git clean -df -x
+#    git checkout -f
+#    git clean -df -x
     exit 1
 else
     echo Success.
     echo $compileresult
-    git checkout -f
-    git clean -df -x
+#    git checkout -f
+#    git clean -df -x
 fi
