@@ -33,7 +33,7 @@ public:
     ~HelloWorld();
     bool init();
     static cocos2d::CCScene* scene();
-    LAYER_CREATE_FUNC(HelloWorld);
+    CREATE_FUNC(HelloWorld);
     
     void initPhysics();
     void addNewSpriteAtPosition(cocos2d::CCPoint p);
