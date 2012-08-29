@@ -31,7 +31,13 @@ class TypeTest
 	{
 		// return id unique for DERIVED
 		// NOT SURE IT WILL BE REALLY UNIQUE FOR EACH CLASS!!
-		static const long id = reinterpret_cast<long>(typeid( DERIVED ).name());
+		/* Commented by James Chen
+		Using 'getHashCodeByString(typeid(*native_obj).name())' instead of 'reinterpret_cast<long>(typeid(*native_obj).name());'.
+		Since on win32 platform, 'reinterpret_cast<long>(typeid(*native_obj).name());' invoking in cocos2d.dll and outside cocos2d.dll(in TestJavascript.exe) will return different address.
+		But the return string from typeid(*native_obj).name() is the same string, so we must convert the string to hash id to make sure we can get unique id.
+		*/
+		// static const long id = reinterpret_cast<long>(typeid( DERIVED ).name());
+        static const long id = cocos2d::getHashCodeByString(typeid( DERIVED ).name());
 		return id;
 	}
 
