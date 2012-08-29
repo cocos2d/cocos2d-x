@@ -149,8 +149,6 @@ function CreateTestMenu()
 	CloseMenu:addChild(CloseItem)
 	menuLayer:addChild(CloseMenu)
 
-	cclog("start")
-
 	-- add menu items for tests
     local MainMenu = CCMenu:create()
     for index, labelName in pairs(Test_Name) do
