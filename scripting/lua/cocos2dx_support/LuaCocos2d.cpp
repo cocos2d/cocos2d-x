@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.92 on Wed Aug 29 17:32:08 2012.
+** Generated automatically by tolua++-1.0.92 on Wed Aug 29 17:49:08 2012.
 */
 
 /****************************************************************************
@@ -12247,7 +12247,7 @@ static int tolua_get_CCNode_isVisible(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'isVisible'",NULL);
 #endif
-  tolua_pushboolean(tolua_S,(bool)self->getIsVisible());
+  tolua_pushboolean(tolua_S,(bool)self->isVisible());
  return 1;
 }
 #endif //#ifndef TOLUA_DISABLE
@@ -12263,7 +12263,7 @@ static int tolua_set_CCNode_isVisible(lua_State* tolua_S)
   if (!tolua_isboolean(tolua_S,2,0,&tolua_err))
    tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
 #endif
-  self->setIsVisible(((bool)  tolua_toboolean(tolua_S,2,0))
+  self->setVisible(((bool)  tolua_toboolean(tolua_S,2,0))
 )
 ;
  return 0;
