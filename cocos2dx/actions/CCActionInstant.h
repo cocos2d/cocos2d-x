@@ -28,7 +28,7 @@ THE SOFTWARE.
 #define __CCINSTANT_ACTION_H__
 
 #include <string>
-#include <typeinfo>
+#include "ccTypeInfo.h"
 #include "CCAction.h"
 
 NS_CC_BEGIN

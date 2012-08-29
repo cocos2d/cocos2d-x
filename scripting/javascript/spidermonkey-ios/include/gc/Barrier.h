@@ -152,25 +152,6 @@ struct JSXML;
 
 namespace js {
 
-/*
- * Ideally, we would like to make the argument to functions like MarkShape be a
- * HeapPtr<const js::Shape>. That would ensure that we don't forget to
- * barrier any fields that we mark through. However, that would prohibit us from
- * passing in a derived class like HeapPtr<js::EmptyShape>.
- *
- * To overcome the problem, we make the argument to MarkShape be a
- * MarkablePtr<const js::Shape>. And we allow conversions from HeapPtr<T>
- * to MarkablePtr<U> as long as T can be converted to U.
- */
-template<class T>
-class MarkablePtr
-{
-  public:
-    T *value;
-
-    explicit MarkablePtr(T *value) : value(value) {}
-};
-
 template<class T, typename Unioned = uintptr_t>
 class HeapPtr
 {
@@ -232,13 +213,6 @@ class HeapPtr
 
     operator T*() const { return value; }
 
-    /*
-     * This coerces to MarkablePtr<U> as long as T can coerce to U. See the
-     * comment for MarkablePtr above.
-     */
-    template<class U>
-    operator MarkablePtr<U>() const { return MarkablePtr<U>(value); }
-
   private:
     void pre() { T::writeBarrierPre(value); }
     void post() { T::writeBarrierPost(value, (void *)&value); }
@@ -275,6 +249,7 @@ struct Shape;
 class BaseShape;
 namespace types { struct TypeObject; }
 
+typedef HeapPtr<JSAtom> HeapPtrAtom;
 typedef HeapPtr<JSObject> HeapPtrObject;
 typedef HeapPtr<JSFunction> HeapPtrFunction;
 typedef HeapPtr<JSString> HeapPtrString;
@@ -420,6 +395,17 @@ class HeapSlot : public EncapsulatedValue
     inline void post(JSCompartment *comp, JSObject *owner, uint32_t slot);
 };
 
+/*
+ * NOTE: This is a placeholder for bug 619558.
+ *
+ * Run a post write barrier that encompasses multiple contiguous slots in a
+ * single step.
+ */
+static inline void
+SlotRangeWriteBarrierPost(JSCompartment *comp, JSObject *obj, uint32_t start, uint32_t count)
+{
+}
+
 static inline const Value *
 Valueify(const EncapsulatedValue *array)
 {
@@ -507,9 +493,6 @@ class ReadBarriered
     void set(T *v) { value = v; }
 
     operator bool() { return !!value; }
-
-    template<class U>
-    operator MarkablePtr<U>() const { return MarkablePtr<U>(value); }
 };
 
 class ReadBarrieredValue
@@ -526,6 +509,15 @@ class ReadBarrieredValue
     inline JSObject &toObject() const;
 };
 
-}
+namespace tl {
+
+template <class T> struct IsPostBarrieredType<HeapPtr<T> > {
+                                                    static const bool result = true; };
+template <> struct IsPostBarrieredType<HeapSlot>  { static const bool result = true; };
+template <> struct IsPostBarrieredType<HeapValue> { static const bool result = true; };
+template <> struct IsPostBarrieredType<HeapId>    { static const bool result = true; };
+
+} /* namespace tl */
+} /* namespace js */
 
 #endif /* jsgc_barrier_h___ */

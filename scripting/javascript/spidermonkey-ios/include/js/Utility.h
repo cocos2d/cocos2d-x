@@ -158,9 +158,20 @@ PrintBacktrace()
         } \
     } while (0)
 
+#  define JS_OOM_POSSIBLY_FAIL_REPORT(cx) \
+    do \
+    { \
+        if (++OOM_counter > OOM_maxAllocations) { \
+            JS_OOM_EMIT_BACKTRACE();\
+            js_ReportOutOfMemory(cx);\
+            return NULL; \
+        } \
+    } while (0)
+
 # else
 #  define JS_OOM_POSSIBLY_FAIL() do {} while(0)
-# endif
+#  define JS_OOM_POSSIBLY_FAIL_REPORT(cx) do {} while(0)
+# endif /* DEBUG */
 
 /*
  * SpiderMonkey code should not be calling these allocation functions directly.
@@ -332,22 +343,6 @@ __BitScanReverse64(unsigned __int64 val)
     JS_END_MACRO
 #endif
 
-/*
- * Internal function.
- * Compute the log of the least power of 2 greater than or equal to n. This is
- * a version of JS_CeilingLog2 that operates on unsigned integers with
- * CPU-dependant size.
- */
-#define JS_CEILING_LOG2W(n) ((n) <= 1 ? 0 : 1 + JS_FLOOR_LOG2W((n) - 1))
-
-/*
- * Internal function.
- * Compute the log of the greatest power of 2 less than or equal to n.
- * This is a version of JS_FloorLog2 that operates on unsigned integers with
- * CPU-dependant size and requires that n != 0.
- */
-#define JS_FLOOR_LOG2W(n) (JS_ASSERT((n) != 0), js_FloorLog2wImpl(n))
-
 #if JS_BYTES_PER_WORD == 4
 # ifdef JS_HAS_BUILTIN_BITSCAN32
 #  define js_FloorLog2wImpl(n)                                                \
@@ -365,6 +360,27 @@ JS_PUBLIC_API(size_t) js_FloorLog2wImpl(size_t n);
 #else
 # error "NOT SUPPORTED"
 #endif
+
+/*
+ * Internal function.
+ * Compute the log of the least power of 2 greater than or equal to n. This is
+ * a version of JS_CeilingLog2 that operates on unsigned integers with
+ * CPU-dependant size.
+ */
+#define JS_CEILING_LOG2W(n) ((n) <= 1 ? 0 : 1 + JS_FLOOR_LOG2W((n) - 1))
+
+/*
+ * Internal function.
+ * Compute the log of the greatest power of 2 less than or equal to n.
+ * This is a version of JS_FloorLog2 that operates on unsigned integers with
+ * CPU-dependant size and requires that n != 0.
+ */
+static MOZ_ALWAYS_INLINE size_t
+JS_FLOOR_LOG2W(size_t n)
+{
+    JS_ASSERT(n != 0);
+    return js_FloorLog2wImpl(n);
+}
 
 JS_END_EXTERN_C
 
@@ -898,6 +914,40 @@ RoundUpPow2(size_t x)
 }
 
 } /* namespace js */
+
+namespace JS {
+
+/*
+ * Methods for poisoning GC heap pointer words and checking for poisoned words.
+ * These are in this file for use in Value methods and so forth.
+ *
+ * If the moving GC hazard analysis is in use and detects a non-rooted stack
+ * pointer to a GC thing, one byte of that pointer is poisoned to refer to an
+ * invalid location. For both 32 bit and 64 bit systems, the fourth byte of the
+ * pointer is overwritten, to reduce the likelihood of accidentally changing
+ * a live integer value.
+ */
+
+inline void PoisonPtr(uintptr_t *v)
+{
+#if defined(JSGC_ROOT_ANALYSIS) && defined(DEBUG)
+    uint8_t *ptr = (uint8_t *) v + 3;
+    *ptr = JS_FREE_PATTERN;
+#endif
+}
+
+template <typename T>
+inline bool IsPoisonedPtr(T *v)
+{
+#if defined(JSGC_ROOT_ANALYSIS) && defined(DEBUG)
+    uint32_t mask = uintptr_t(v) & 0xff000000;
+    return mask == uint32_t(JS_FREE_PATTERN << 24);
+#else
+    return false;
+#endif
+}
+
+}
 
 #endif /* defined(__cplusplus) */
 

@@ -129,6 +129,7 @@ class RegExpObjectBuilder;
 class RegExpShared;
 class RegExpStatics;
 class MatchPairs;
+class PropertyName;
 
 namespace detail { class RegExpCode; }
 
@@ -249,72 +250,33 @@ struct TypeCompartment;
 
 } /* namespace types */
 
-enum ThingRootKind
-{
-    THING_ROOT_OBJECT,
-    THING_ROOT_SHAPE,
-    THING_ROOT_BASE_SHAPE,
-    THING_ROOT_TYPE_OBJECT,
-    THING_ROOT_STRING,
-    THING_ROOT_SCRIPT,
-    THING_ROOT_ID,
-    THING_ROOT_VALUE,
-    THING_ROOT_LIMIT
+typedef JS::Handle<Shape*>             HandleShape;
+typedef JS::Handle<BaseShape*>         HandleBaseShape;
+typedef JS::Handle<types::TypeObject*> HandleTypeObject;
+typedef JS::Handle<JSAtom*>            HandleAtom;
+typedef JS::Handle<PropertyName*>      HandlePropertyName;
+
+typedef JS::Root<Shape*>             RootShape;
+typedef JS::Root<BaseShape*>         RootBaseShape;
+typedef JS::Root<types::TypeObject*> RootTypeObject;
+typedef JS::Root<JSAtom*>            RootAtom;
+typedef JS::Root<PropertyName*>      RootPropertyName;
+
+typedef JS::RootedVar<Shape*>             RootedVarShape;
+typedef JS::RootedVar<BaseShape*>         RootedVarBaseShape;
+typedef JS::RootedVar<types::TypeObject*> RootedVarTypeObject;
+typedef JS::RootedVar<JSAtom*>            RootedVarAtom;
+typedef JS::RootedVar<PropertyName*>      RootedVarPropertyName;
+
+enum XDRMode {
+    XDR_ENCODE,
+    XDR_DECODE
 };
 
-template <typename T> class Root;
-template <typename T> class RootedVar;
+template <XDRMode mode>
+class XDRState;
 
-template <typename T>
-struct RootMethods { };
-
-/*
- * Reference to a stack location rooted for GC. See "Moving GC Stack Rooting"
- * comment in jscntxt.h.
- */
-template <typename T>
-class Handle
-{
-  public:
-    /* Copy handles of different types, with implicit coercion. */
-    template <typename S> Handle(Handle<S> handle) {
-        testAssign<S>();
-        ptr = reinterpret_cast<const T *>(handle.address());
-    }
-
-    /* Get a handle from a rooted stack location, with implicit coercion. */
-    template <typename S> inline Handle(const Root<S> &root);
-    template <typename S> inline Handle(const RootedVar<S> &root);
-
-    const T *address() { return ptr; }
-
-    operator T () { return value(); }
-    T operator ->() { return value(); }
-
-  private:
-    const T *ptr;
-    T value() { return *ptr; }
-
-    template <typename S>
-    void testAssign() {
-#ifdef DEBUG
-        T a = RootMethods<T>::initial();
-        S b = RootMethods<S>::initial();
-        a = b;
-        (void)a;
-#endif
-    }
-};
-
-typedef Handle<JSObject*>          HandleObject;
-typedef Handle<JSFunction*>        HandleFunction;
-typedef Handle<Shape*>             HandleShape;
-typedef Handle<BaseShape*>         HandleBaseShape;
-typedef Handle<types::TypeObject*> HandleTypeObject;
-typedef Handle<JSString*>          HandleString;
-typedef Handle<JSAtom*>            HandleAtom;
-typedef Handle<jsid>               HandleId;
-typedef Handle<Value>              HandleValue;
+class FreeOp;
 
 } /* namespace js */
 
@@ -378,7 +340,7 @@ typedef void
 
 /* called just before script destruction */
 typedef void
-(* JSDestroyScriptHook)(JSContext *cx,
+(* JSDestroyScriptHook)(JSFreeOp *fop,
                         JSScript  *script,
                         void      *callerdata);
 

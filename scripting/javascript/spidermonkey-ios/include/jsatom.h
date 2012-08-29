@@ -283,100 +283,13 @@ struct JSAtomState
     js::PropertyName    *classAtoms[JSProto_LIMIT];
 
     /* Various built-in or commonly-used atoms, pinned on first context. */
-    js::PropertyName    *anonymousAtom;
-    js::PropertyName    *applyAtom;
-    js::PropertyName    *argumentsAtom;
-    js::PropertyName    *arityAtom;
-    js::PropertyName    *BYTES_PER_ELEMENTAtom;
-    js::PropertyName    *callAtom;
-    js::PropertyName    *calleeAtom;
-    js::PropertyName    *callerAtom;
-    js::PropertyName    *classPrototypeAtom;
-    js::PropertyName    *constructorAtom;
-    js::PropertyName    *eachAtom;
-    js::PropertyName    *evalAtom;
-    js::PropertyName    *fileNameAtom;
-    js::PropertyName    *getAtom;
-    js::PropertyName    *globalAtom;
-    js::PropertyName    *ignoreCaseAtom;
-    js::PropertyName    *indexAtom;
-    js::PropertyName    *inputAtom;
-    js::PropertyName    *toISOStringAtom;
-    js::PropertyName    *iteratorAtom;
-    js::PropertyName    *joinAtom;
-    js::PropertyName    *lastIndexAtom;
-    js::PropertyName    *lengthAtom;
-    js::PropertyName    *lineNumberAtom;
-    js::PropertyName    *messageAtom;
-    js::PropertyName    *multilineAtom;
-    js::PropertyName    *nameAtom;
-    js::PropertyName    *nextAtom;
-    js::PropertyName    *noSuchMethodAtom;
-    js::PropertyName    *objectNullAtom;
-    js::PropertyName    *objectUndefinedAtom;
-    js::PropertyName    *ofAtom;
-    js::PropertyName    *protoAtom;
-    js::PropertyName    *setAtom;
-    js::PropertyName    *sourceAtom;
-    js::PropertyName    *stackAtom;
-    js::PropertyName    *stickyAtom;
-    js::PropertyName    *toGMTStringAtom;
-    js::PropertyName    *toLocaleStringAtom;
-    js::PropertyName    *toSourceAtom;
-    js::PropertyName    *toStringAtom;
-    js::PropertyName    *toUTCStringAtom;
-    js::PropertyName    *valueOfAtom;
-    js::PropertyName    *toJSONAtom;
-    js::PropertyName    *void0Atom;
-    js::PropertyName    *enumerableAtom;
-    js::PropertyName    *configurableAtom;
-    js::PropertyName    *writableAtom;
-    js::PropertyName    *valueAtom;
-    js::PropertyName    *testAtom;
-    js::PropertyName    *useStrictAtom;
-    js::PropertyName    *locAtom;
-    js::PropertyName    *lineAtom;
-    js::PropertyName    *InfinityAtom;
-    js::PropertyName    *NaNAtom;
-    js::PropertyName    *builderAtom;
-
-#if JS_HAS_XML_SUPPORT
-    js::PropertyName    *etagoAtom;
-    js::PropertyName    *namespaceAtom;
-    js::PropertyName    *ptagcAtom;
-    js::PropertyName    *qualifierAtom;
-    js::PropertyName    *spaceAtom;
-    js::PropertyName    *stagoAtom;
-    js::PropertyName    *starAtom;
-    js::PropertyName    *starQualifierAtom;
-    js::PropertyName    *tagcAtom;
-    js::PropertyName    *xmlAtom;
-
-    /* Represents an invalid URI, for internal use only. */
-    js::PropertyName    *functionNamespaceURIAtom;
-#endif
-
-    js::PropertyName    *ProxyAtom;
-
-    js::PropertyName    *getOwnPropertyDescriptorAtom;
-    js::PropertyName    *getPropertyDescriptorAtom;
-    js::PropertyName    *definePropertyAtom;
-    js::PropertyName    *deleteAtom;
-    js::PropertyName    *getOwnPropertyNamesAtom;
-    js::PropertyName    *enumerateAtom;
-    js::PropertyName    *fixAtom;
-
-    js::PropertyName    *hasAtom;
-    js::PropertyName    *hasOwnAtom;
-    js::PropertyName    *keysAtom;
-    js::PropertyName    *iterateAtom;
-
-    js::PropertyName    *WeakMapAtom;
-
-    js::PropertyName    *byteLengthAtom;
-
-    js::PropertyName    *returnAtom;
-    js::PropertyName    *throwAtom;
+#define DEFINE_ATOM(id, text)          js::PropertyName *id##Atom;
+#define DEFINE_PROTOTYPE_ATOM(id)      js::PropertyName *id##Atom;
+#define DEFINE_KEYWORD_ATOM(id)        js::PropertyName *id##Atom;
+#include "jsatom.tbl"
+#undef DEFINE_ATOM
+#undef DEFINE_PROTOTYPE_ATOM
+#undef DEFINE_KEYWORD_ATOM
 
     /* Less frequently used atoms, pinned lazily by JS_ResolveStandardClass. */
     struct {
@@ -450,73 +363,31 @@ extern const size_t      js_common_atom_count;
 #define JS_BOOLEAN_STR(type) (js_common_atom_names[1 + (type)])
 #define JS_TYPE_STR(type)    (js_common_atom_names[1 + 2 + (type)])
 
+/* Type names. */
+extern const char   js_object_str[];
+extern const char   js_undefined_str[];
+
 /* Well-known predefined C strings. */
 #define JS_PROTO(name,code,init) extern const char js_##name##_str[];
 #include "jsproto.tbl"
 #undef JS_PROTO
 
-extern const char   js_anonymous_str[];
-extern const char   js_apply_str[];
-extern const char   js_arguments_str[];
-extern const char   js_arity_str[];
-extern const char   js_BYTES_PER_ELEMENT_str[];
-extern const char   js_call_str[];
-extern const char   js_callee_str[];
-extern const char   js_caller_str[];
-extern const char   js_class_prototype_str[];
+#define DEFINE_ATOM(id, text)  extern const char js_##id##_str[];
+#define DEFINE_PROTOTYPE_ATOM(id)
+#define DEFINE_KEYWORD_ATOM(id)
+#include "jsatom.tbl"
+#undef DEFINE_ATOM
+#undef DEFINE_PROTOTYPE_ATOM
+#undef DEFINE_KEYWORD_ATOM
+
+#if JS_HAS_GENERATORS
 extern const char   js_close_str[];
-extern const char   js_constructor_str[];
-extern const char   js_count_str[];
-extern const char   js_etago_str[];
-extern const char   js_each_str[];
-extern const char   js_eval_str[];
-extern const char   js_fileName_str[];
-extern const char   js_get_str[];
-extern const char   js_getter_str[];
-extern const char   js_global_str[];
-extern const char   js_ignoreCase_str[];
-extern const char   js_index_str[];
-extern const char   js_input_str[];
-extern const char   js_iterator_str[];
-extern const char   js_join_str[];
-extern const char   js_lastIndex_str[];
-extern const char   js_length_str[];
-extern const char   js_lineNumber_str[];
-extern const char   js_message_str[];
-extern const char   js_multiline_str[];
-extern const char   js_name_str[];
-extern const char   js_namespace_str[];
-extern const char   js_next_str[];
-extern const char   js_noSuchMethod_str[];
-extern const char   js_object_str[];
-extern const char   js_proto_str[];
-extern const char   js_ptagc_str[];
-extern const char   js_qualifier_str[];
 extern const char   js_send_str[];
+#endif
+
+/* Constant strings that are not atomized. */
+extern const char   js_getter_str[];
 extern const char   js_setter_str[];
-extern const char   js_set_str[];
-extern const char   js_source_str[];
-extern const char   js_space_str[];
-extern const char   js_stack_str[];
-extern const char   js_sticky_str[];
-extern const char   js_stago_str[];
-extern const char   js_star_str[];
-extern const char   js_starQualifier_str[];
-extern const char   js_tagc_str[];
-extern const char   js_toGMTString_str[];
-extern const char   js_toLocaleString_str[];
-extern const char   js_toSource_str[];
-extern const char   js_toString_str[];
-extern const char   js_toUTCString_str[];
-extern const char   js_undefined_str[];
-extern const char   js_valueOf_str[];
-extern const char   js_toJSON_str[];
-extern const char   js_xml_str[];
-extern const char   js_enumerable_str[];
-extern const char   js_configurable_str[];
-extern const char   js_writable_str[];
-extern const char   js_value_str[];
-extern const char   js_test_str[];
 
 /*
  * Initialize atom state. Return true on success, false on failure to allocate
@@ -537,19 +408,19 @@ js_FinishAtomState(JSRuntime *rt);
  * Atom tracing and garbage collection hooks.
  */
 
-extern void
-js_TraceAtomState(JSTracer *trc);
+namespace js {
 
 extern void
-js_SweepAtomState(JSRuntime *rt);
+MarkAtomState(JSTracer *trc, bool markAll);
+
+extern void
+SweepAtomState(JSRuntime *rt);
 
 extern bool
-js_InitCommonAtoms(JSContext *cx);
+InitCommonAtoms(JSContext *cx);
 
 extern void
-js_FinishCommonAtoms(JSContext *cx);
-
-namespace js {
+FinishCommonAtoms(JSRuntime *rt);
 
 /* N.B. must correspond to boolean tagging behavior. */
 enum InternBehavior
@@ -599,12 +470,20 @@ inline bool
 js_InternNonIntElementId(JSContext *cx, JSObject *obj, const js::Value &idval,
                          jsid *idp, js::Value *vp);
 
+namespace js {
+
 /*
  * For all unmapped atoms recorded in al, add a mapping from the atom's index
  * to its address. map->length must already be set to the number of atoms in
  * the list and map->vector must point to pre-allocated memory.
  */
 extern void
-js_InitAtomMap(JSContext *cx, js::AtomIndexMap *indices, JSAtom **atoms);
+InitAtomMap(JSContext *cx, AtomIndexMap *indices, HeapPtrAtom *atoms);
+
+template<XDRMode mode>
+bool
+XDRAtom(XDRState<mode> *xdr, JSAtom **atomp);
+
+} /* namespace js */
 
 #endif /* jsatom_h___ */

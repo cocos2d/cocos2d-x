@@ -1,4 +1,4 @@
-/* -*- Mode: C; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*-
+/* -*- Mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*-
  * vim: set ts=4 sw=4 et tw=79 ft=cpp:
  *
  * ***** BEGIN LICENSE BLOCK *****
@@ -248,7 +248,9 @@ typedef JSBool
 typedef JSObject *
 (* ObjectOp)(JSContext *cx, JSObject *obj);
 typedef void
-(* FinalizeOp)(JSContext *cx, JSObject *obj);
+(* FinalizeOp)(FreeOp *fop, JSObject *obj);
+typedef void
+(* ClearOp)(JSContext *cx, JSObject *obj);
 
 #define JS_CLASS_MEMBERS                                                      \
     const char          *name;                                                \
@@ -262,7 +264,7 @@ typedef void
     JSEnumerateOp       enumerate;                                            \
     JSResolveOp         resolve;                                              \
     JSConvertOp         convert;                                              \
-    JSFinalizeOp        finalize;                                             \
+    FinalizeOp          finalize;                                             \
                                                                               \
     /* Optionally non-null members start here. */                             \
     JSCheckAccessOp     checkAccess;                                          \
@@ -332,7 +334,7 @@ struct ObjectOps
     TypeOfOp            typeOf;
     FixOp               fix;
     ObjectOp            thisObject;
-    FinalizeOp          clear;
+    ClearOp             clear;
 };
 
 #define JS_NULL_OBJECT_OPS                                                    \

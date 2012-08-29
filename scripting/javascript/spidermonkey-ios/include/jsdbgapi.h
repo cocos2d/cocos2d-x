@@ -91,6 +91,7 @@ JS_FRIEND_API(void) js_DumpValue(const js::Value &val);
 JS_FRIEND_API(void) js_DumpId(jsid id);
 JS_FRIEND_API(void) js_DumpStackFrame(JSContext *cx, js::StackFrame *start = NULL);
 #endif
+JS_FRIEND_API(void) js_DumpBacktrace(JSContext *cx);
 
 JS_BEGIN_EXTERN_C
 #endif
@@ -220,10 +221,10 @@ extern JS_PUBLIC_API(JSNative)
 JS_GetFunctionNative(JSContext *cx, JSFunction *fun);
 
 extern JS_PUBLIC_API(JSPrincipals *)
-JS_GetScriptPrincipals(JSContext *cx, JSScript *script);
+JS_GetScriptPrincipals(JSScript *script);
 
 extern JS_PUBLIC_API(JSPrincipals *)
-JS_GetScriptOriginPrincipals(JSContext *cx, JSScript *script);
+JS_GetScriptOriginPrincipals(JSScript *script);
 
 /*
  * Stack Frame Iterator
@@ -240,12 +241,6 @@ JS_GetFrameScript(JSContext *cx, JSStackFrame *fp);
 
 extern JS_PUBLIC_API(jsbytecode *)
 JS_GetFramePC(JSContext *cx, JSStackFrame *fp);
-
-/*
- * Get the closest scripted frame below fp.  If fp is null, start from cx->fp.
- */
-extern JS_PUBLIC_API(JSStackFrame *)
-JS_GetScriptedCaller(JSContext *cx, JSStackFrame *fp);
 
 extern JS_PUBLIC_API(void *)
 JS_GetFrameAnnotation(JSContext *cx, JSStackFrame *fp);
@@ -298,38 +293,9 @@ JS_SetFrameReturnValue(JSContext *cx, JSStackFrame *fp, jsval rval);
  * Return fp's callee function object (fp->callee) if it has one. Note that
  * this API cannot fail. A null return means "no callee": fp is a global or
  * eval-from-global frame, not a call frame.
- *
- * This API began life as an infallible getter, but now it can return either:
- *
- * 1. An optimized closure that was compiled assuming the function could not
- *    escape and be called from sites the compiler could not see.
- *
- * 2. A "joined function object", an optimization whereby SpiderMonkey avoids
- *    creating fresh function objects for every evaluation of a function
- *    expression that is used only once by a consumer that either promises to
- *    clone later when asked for the value or that cannot leak the value.
- *
- * Because Mozilla's Gecko embedding of SpiderMonkey (and no doubt other
- * embeddings) calls this API in potentially performance-sensitive ways (e.g.
- * in nsContentUtils::GetDocumentFromCaller), we are leaving this API alone. It
- * may now return an unwrapped non-escaping optimized closure, or a joined
- * function object. Such optimized objects may work well if called from the
- * correct context, never mutated or compared for identity, etc.
- *
- * However, if you really need to get the same callee object that JS code would
- * see, which means undoing the optimizations, where an undo attempt can fail,
- * then use JS_GetValidFrameCalleeObject.
  */
 extern JS_PUBLIC_API(JSObject *)
 JS_GetFrameCalleeObject(JSContext *cx, JSStackFrame *fp);
-
-/**
- * Return fp's callee function object after running the deferred closure
- * cloning "method read barrier". This API can fail! If the frame has no
- * callee, this API returns true with JSVAL_IS_VOID(*vp).
- */
-extern JS_PUBLIC_API(JSBool)
-JS_GetValidFrameCalleeObject(JSContext *cx, JSStackFrame *fp, jsval *vp);
 
 /************************************************************************/
 
@@ -580,6 +546,10 @@ JS_DumpCompartmentPCCounts(JSContext *cx);
 
 extern JS_PUBLIC_API(JSObject *)
 JS_UnwrapObject(JSObject *obj);
+
+/* Call the context debug handler on the topmost scripted frame. */
+extern JS_FRIEND_API(JSBool)
+js_CallContextDebugHandler(JSContext *cx);
 
 JS_END_EXTERN_C
 
