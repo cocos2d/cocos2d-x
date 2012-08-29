@@ -553,21 +553,6 @@ JSBool js_forceGC(JSContext *cx, uint32_t argc, jsval *vp) {
     return JS_TRUE;
 }
 
-#ifndef ANDROID
-JSBool js_break(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	JSObject *obj = NULL;
-	if (argc == 1) {
-		jsval *argv = JS_ARGV(cx, vp);
-		if (argv[0].isObject()) {
-			JS_ValueToObject(cx, argv[0], &obj);
-		}
-	}
-	__builtin_trap();
-	return JS_TRUE;
-}
-#endif
-
 JSBool js_cocos2dx_retain(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	JSObject *thisObj = JS_THIS_OBJECT(cx, vp);
@@ -644,9 +629,6 @@ void register_cocos2dx_js_extensions(JSContext* cx, JSObject* global)
 
 	JS_DefineFunction(cx, global, "__associateObjWithNative", js_cocos2dx_swap_native_object, 2, JSPROP_READONLY | JSPROP_PERMANENT);
 	JS_DefineFunction(cx, global, "__getPlatform", js_platform, 0, JSPROP_READONLY | JSPROP_PERMANENT);
-#ifndef ANDROID
-	JS_DefineFunction(cx, global, "__break", js_break, 0, JSPROP_READONLY | JSPROP_PERMANENT);
-#endif
 
 	JSObject *tmpObj;
 	JS_DefineFunction(cx, js_cocos2dx_CCNode_prototype, "getChildren", js_cocos2dx_CCNode_getChildren, 1, JSPROP_READONLY | JSPROP_PERMANENT);

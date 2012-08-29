@@ -1,0 +1,125 @@
+/* -*- Mode: C; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+/* vim: set sw=4 ts=8 et tw=80 ft=c: */
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this file,
+ * You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+/*
+ * Declare pre-interned atoms for easy use by SpiderMonkey's C++ code.
+ * These entries define two things, where <id> is the macros' first
+ * argument:
+ *
+ *   - js::PropertyName *<id>Atom: a member of JSAtomState pointing to the
+ *     atom itself. Usually accessed as cx->runtime->atomState.<id>Atom.
+ *
+ *   - const char js_<id>_str[]: a global within SpiderMonkey, holding the
+ *     atom's name. Some macros skip this, because it's already defined
+ *     elsewhere.
+ *
+ * DEFINE_ATOM(id, name)
+ *   Define an atom whose JavaScript string's value is |name|.
+ * 
+ * DEFINE_PROTOTYPE_ATOM(id)
+ *   Define an atom whose name is the same as one of those defined in
+ *   jsproto.tbl. The code that processes that has already declared and
+ *   defined the js_<id>_str global, so this defines only the JSAtomState
+ *   member.
+ *
+ * DEFINE_KEYWORD_ATOM(id)
+ *   Define an atom whose name is the same as one of those defined in
+ *   jskeyword.tbl. The code that processes that has already declared and
+ *   defined the js_<id>_str global, so this defines only the JSAtomState
+ *   member.
+ */ 
+
+
+
+DEFINE_ATOM(anonymous, "anonymous")
+DEFINE_ATOM(apply, "apply")
+DEFINE_ATOM(arguments, "arguments")
+DEFINE_ATOM(arity, "arity")
+DEFINE_ATOM(BYTES_PER_ELEMENT, "BYTES_PER_ELEMENT")
+DEFINE_ATOM(call, "call")
+DEFINE_ATOM(callee, "callee")
+DEFINE_ATOM(caller, "caller")
+DEFINE_ATOM(classPrototype, "prototype")
+DEFINE_ATOM(constructor, "constructor")
+DEFINE_ATOM(each, "each")
+DEFINE_ATOM(eval, "eval")
+DEFINE_ATOM(fileName, "fileName")
+DEFINE_ATOM(get, "get")
+DEFINE_ATOM(global, "global")
+DEFINE_ATOM(ignoreCase, "ignoreCase")
+DEFINE_ATOM(index, "index")
+DEFINE_ATOM(input, "input")
+DEFINE_ATOM(toISOString, "toISOString")
+DEFINE_ATOM(iterator, "__iterator__")
+DEFINE_ATOM(join, "join")
+DEFINE_ATOM(lastIndex, "lastIndex")
+DEFINE_ATOM(length, "length")
+DEFINE_ATOM(lineNumber, "lineNumber")
+DEFINE_ATOM(message, "message")
+DEFINE_ATOM(multiline, "multiline")
+DEFINE_ATOM(name, "name")
+DEFINE_ATOM(next, "next")
+DEFINE_ATOM(noSuchMethod, "__noSuchMethod__")
+DEFINE_ATOM(objectNull, "[object Null]")
+DEFINE_ATOM(objectUndefined, "[object Undefined]")
+DEFINE_ATOM(of, "of")
+DEFINE_ATOM(proto, "__proto__")
+DEFINE_ATOM(set, "set")
+DEFINE_ATOM(source, "source")
+DEFINE_ATOM(stack, "stack")
+DEFINE_ATOM(sticky, "sticky")
+DEFINE_ATOM(toGMTString, "toGMTString")
+DEFINE_ATOM(toLocaleString, "toLocaleString")
+DEFINE_ATOM(toSource, "toSource")
+DEFINE_ATOM(toString, "toString")
+DEFINE_ATOM(toUTCString, "toUTCString")
+DEFINE_ATOM(valueOf, "valueOf")
+DEFINE_ATOM(toJSON, "toJSON")
+DEFINE_ATOM(void0, "(void 0)")
+DEFINE_ATOM(enumerable, "enumerable")
+DEFINE_ATOM(configurable, "configurable")
+DEFINE_ATOM(writable, "writable")
+DEFINE_ATOM(value, "value")
+DEFINE_ATOM(test, "test")
+DEFINE_ATOM(useStrict, "use strict")
+DEFINE_ATOM(loc, "loc")
+DEFINE_ATOM(line, "line")
+DEFINE_ATOM(Infinity, "Infinity")
+DEFINE_ATOM(NaN, "NaN")
+DEFINE_ATOM(builder, "builder")
+
+#if JS_HAS_XML_SUPPORT
+DEFINE_ATOM(etago, "</")
+DEFINE_ATOM(namespace, "namespace")
+DEFINE_ATOM(ptagc, "/>")
+DEFINE_ATOM(qualifier, "::")
+DEFINE_ATOM(space, " ")
+DEFINE_ATOM(stago, "<")
+DEFINE_ATOM(star, "*")
+DEFINE_ATOM(starQualifier, "*::")
+DEFINE_ATOM(tagc, ">")
+DEFINE_ATOM(xml, "xml")
+DEFINE_ATOM(functionNamespaceURI, "@mozilla.org/js/function")
+#endif
+
+DEFINE_PROTOTYPE_ATOM(Proxy)
+DEFINE_ATOM(getOwnPropertyDescriptor, "getOwnPropertyDescriptor")
+DEFINE_ATOM(getPropertyDescriptor, "getPropertyDescriptor")
+DEFINE_ATOM(defineProperty, "defineProperty")
+DEFINE_KEYWORD_ATOM(delete)
+DEFINE_ATOM(getOwnPropertyNames, "getOwnPropertyNames")
+DEFINE_ATOM(enumerate, "enumerate")
+DEFINE_ATOM(fix, "fix")
+DEFINE_ATOM(has, "has")
+DEFINE_ATOM(hasOwn, "hasOwn")
+DEFINE_ATOM(keys, "keys")
+DEFINE_ATOM(iterate, "iterate")
+DEFINE_PROTOTYPE_ATOM(WeakMap)
+DEFINE_ATOM(byteLength, "byteLength")
+DEFINE_KEYWORD_ATOM(return)
+DEFINE_KEYWORD_ATOM(throw)
+DEFINE_ATOM(url, "url")
+DEFINE_ATOM(innermost, "innermost")

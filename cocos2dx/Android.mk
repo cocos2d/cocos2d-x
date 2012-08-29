@@ -153,11 +153,10 @@ LOCAL_WHOLE_STATIC_LIBRARIES := cocos_libpng_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_jpeg_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_libxml2_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_libtiff_static
-LOCAL_WHOLE_STATIC_LIBRARIES += scriptingcore-spidermonkey
 
 # define the macro to compile through support/zip_support/ioapi.c                
-LOCAL_CFLAGS := -DUSE_FILE32API -DCOCOS2D_JAVASCRIPT
-LOCAL_EXPORT_CFLAGS := -DUSE_FILE32API -DCOCOS2D_JAVASCRIPT
+LOCAL_CFLAGS := -DUSE_FILE32API
+LOCAL_EXPORT_CFLAGS := -DUSE_FILE32API
 
 include $(BUILD_STATIC_LIBRARY)
 
@@ -165,4 +164,3 @@ $(call import-module,libjpeg)
 $(call import-module,libpng)
 $(call import-module,libxml2)
 $(call import-module,libtiff)
-$(call import-module,targets/spidermonkey/common)

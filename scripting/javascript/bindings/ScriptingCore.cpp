@@ -17,7 +17,6 @@
 
 #ifdef ANDROID
 #include <android/log.h>
-#include <android/asset_manager.h>
 #include <jni/JniHelper.h>
 #endif
 
@@ -89,11 +88,7 @@ void js_log(const char *format, ...) {
     int len = vsnprintf(_js_log_buf, 256, format, vl);
     va_end(vl);
     if (len) {
-#ifdef ANDROID
-        __android_log_print(ANDROID_LOG_DEBUG, "js_log", _js_log_buf);
-#else
-        fprintf(stderr, "JS: %s\n", _js_log_buf);
-#endif
+        CCLOG("JS: %s\n", _js_log_buf);
     }
 }
 
@@ -226,87 +221,6 @@ void ScriptingCore::createGlobalContext() {
     }
 }
 
-
-#ifdef ANDROID
-
-static unsigned long
-fileutils_read_into_new_memory(const char* relativepath,
-                               unsigned char** content) {
-    *content = NULL;
-
-    AAssetManager* assetmanager =
-        JniHelper::getAssetManager();
-    if (NULL == assetmanager) {
-        LOGD("assetmanager : is NULL");
-        return 0;
-    }
-
-    // read asset data
-    AAsset* asset =
-        AAssetManager_open(assetmanager,
-                           relativepath,
-                           AASSET_MODE_UNKNOWN);
-    if (NULL == asset) {
-        LOGD("asset : is NULL");
-        return 0; 
-    }
-
-    off_t size = AAsset_getLength(asset);
-    LOGD("size = %d ", size);
-
-    unsigned char* buf =
-        (unsigned char*) malloc((sizeof(unsigned char)) * (size+1));
-    if (NULL == buf) {
-        LOGD("memory allocation failed");
-        AAsset_close(asset);
-        return 0;
-    }
-
-    int bytesread = AAsset_read(asset, buf, size);
-    LOGD("bytesread = %d ", bytesread);
-    buf[bytesread] = '\0';
-
-    AAsset_close(asset);
-
-    *content = (unsigned char*) buf;
-    return bytesread;
-}
-
-JSBool ScriptingCore::runScript(const char *path)
-{
-    LOGD("ScriptingCore::runScript(%s)", path);
-
-    if (NULL == path) {
-        return JS_FALSE;
-    }
-
-    unsigned char* content = NULL;
-    unsigned long contentsize = 0;
-
-    contentsize = fileutils_read_into_new_memory(path, &content);
-
-    if (NULL == content) {
-        LOGD("(NULL == content)");
-        return JS_FALSE;
-    }
-
-    if (contentsize <= 0) {
-        LOGD("(contentsize <= 0)");
-        free(content);
-        return JS_FALSE;
-    }
-
-    jsval rval;
-    JSBool ret = this->evalString((const char *)content, &rval, path);
-    free(content);
-
-    LOGD("... ScriptingCore::runScript(%s) done successfully.", path);
-
-    return ret;
-}
-
-#else
-
 static size_t readFileInMemory(const char *path, unsigned char **buff) {
     struct stat buf;
     int file = open(path, O_RDONLY);
@@ -325,42 +239,33 @@ static size_t readFileInMemory(const char *path, unsigned char **buff) {
 
 JSBool ScriptingCore::runScript(const char *path)
 {
+    CCLOG("ScriptingCore::runScript(%s)", path);
+
     cocos2d::CCFileUtils *futil = cocos2d::CCFileUtils::sharedFileUtils();
-#ifdef DEBUG
-    /**
-     * dpath should point to the parent directory of the "JS" folder. If this is
-     * set to "" (as it is now) then it will take the scripts from the app bundle.
-     * By setting the absolute path you can iterate the development only by
-     * modifying those scripts and reloading from the simulator (no recompiling/
-     * relaunching)
-     */
-//  std::string dpath("/Users/rabarca/Desktop/testjs/testjs/");
-    std::string dpath("");
-    dpath += path;
-    const char *realPath = futil->fullPathFromRelativePath(dpath.c_str());
-#else
-    const char *realPath = NULL;
-    futil->fullPathFromRelativePath(path);
-#endif
+
+    const char *realPath = futil->fullPathFromRelativePath(path);
 
     if (!realPath) {
+        CCLOG("!realPath. returning JS_FALSE");
         return JS_FALSE;
     }
 
     unsigned char *content = NULL;
     unsigned long contentSize = 0;
 
-    contentSize = readFileInMemory(realPath, &content);
+    content = (unsigned char*)CCString::createWithContentsOfFile(realPath)->getCString();
+    contentSize = strlen((char*)content);
+
     JSBool ret = JS_FALSE;
     if (content && contentSize) {
         jsval rval;
         ret = this->evalString((const char *)content, &rval, path);
-        free(content);
+    } else {
+        CCLOG("!(content && contentSize)");
     }
+
     return ret;
 }
-
-#endif
 
 ScriptingCore::~ScriptingCore()
 {
