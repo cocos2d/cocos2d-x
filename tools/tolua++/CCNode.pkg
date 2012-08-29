@@ -124,6 +124,9 @@ class CCNode : public CCObject
     void removeFromParentAndCleanup(bool cleanup);
     void removeChildByTag(int tag, bool cleanup);
 
+	void scheduleUpdate(void);
+	void unscheduleUpdate(void);
+
     void registerScriptHandler(LUA_FUNCTION funcID);
     void unregisterScriptHandler(void);
 
