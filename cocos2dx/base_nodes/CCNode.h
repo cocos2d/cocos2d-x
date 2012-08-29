@@ -28,6 +28,7 @@
 #ifndef __PLATFOMR_CCNODE_H__
 #define __PLATFOMR_CCNODE_H__
 
+#include <stdint.h>
 #include "ccMacros.h"
 #include "cocoa/CCAffineTransform.h"
 #include "cocoa/CCArray.h"
@@ -59,7 +60,10 @@ enum {
 
 enum {
     kCCNodeOnEnter,
-    kCCNodeOnExit
+    kCCNodeOnExit,
+    kCCMenuItemActivated,
+    kCCNodeOnEnterTransitionDidFinish,
+    kCCNodeOnExitTransitionDidStart
 };
 
 /** @brief CCNode is the main element. Anything thats gets drawn or contains things that get drawn is a CCNode.

@@ -65,6 +65,34 @@ if [ -f "$file" ]; then
 fi
 done
 
+# extra magic to deal with Images and Fonts for android
+for file in "$APP_ROOT"/Resources/Images/*
+do
+if [ -d "$file" ]; then
+    cp -rf "$file" "$APP_ANDROID_ROOT"/assets
+fi
+
+if [ -f "$file" ]; then
+    cp "$file" "$APP_ANDROID_ROOT"/assets
+fi
+done
+
+for file in "$APP_ROOT"/Resources/Fonts/*
+do
+if [ -d "$file" ]; then
+    cp -rf "$file" "$APP_ANDROID_ROOT"/assets
+fi
+
+if [ -f "$file" ]; then
+    cp "$file" "$APP_ANDROID_ROOT"/assets
+fi
+done
+
+# copy js
+if [ -d "$APP_ROOT/js" ]; then
+    cp -rf "$APP_ROOT/js" "$APP_ANDROID_ROOT"/assets
+fi
+
 if [[ "$buildexternalsfromsource" ]]; then
     echo "Building external dependencies from source"
     "$NDK_ROOT"/ndk-build -C "$APP_ANDROID_ROOT" $* \
