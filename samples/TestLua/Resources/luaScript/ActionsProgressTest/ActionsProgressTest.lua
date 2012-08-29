@@ -24,8 +24,8 @@ end
 local function nextCallback(sender)
 	local scene = CCScene:create()
 
-	scene:addChild(CreateBackMenuItem())
 	scene:addChild(nextAction())
+	scene:addChild(CreateBackMenuItem())
 
 	CCDirector:sharedDirector():replaceScene(scene)
 end
@@ -33,8 +33,8 @@ end
 local function restartCallback(sender)
 	local scene = CCScene:create()
 
-	scene:addChild(CreateBackMenuItem())
 	scene:addChild(restartAction())
+	scene:addChild(CreateBackMenuItem())
 
 	CCDirector:sharedDirector():replaceScene(scene)
 end
