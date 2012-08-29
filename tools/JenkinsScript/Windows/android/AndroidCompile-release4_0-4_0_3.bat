@@ -60,7 +60,7 @@ set result14=%ERRORLEVEL%
 if "%_PROJECTNAME%" NEQ "TestCpp" goto API_15
 if %result14% NEQ 0 goto API_15
 cd bin
-ren Tests-release.apk Tests-release-14.apk
+ren TestCpp-release.apk TestCpp-release-14.apk
 cd ..
 
 :API_15
@@ -79,7 +79,7 @@ set result15=%ERRORLEVEL%
 if "%_PROJECTNAME%" NEQ "TestCpp" goto NEXTPROJ
 if %result15% NEQ 0 goto NEXTPROJ
 cd bin
-ren Tests-release.apk Tests-release-15.apk
+ren TestCpp-release.apk TestCpp-release-15.apk
 cd ..
 
 :NEXTPROJ

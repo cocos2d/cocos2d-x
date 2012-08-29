@@ -230,7 +230,7 @@ bool ScriptingCore::evalString(const char *string, jsval *outVal)
         CCLog("error evaluating script:\n%s", string);
     }
     str = JS_ValueToString(cx, rval);
-    return ok;
+    return ok!=0;
 }
 
 void ScriptingCore::runScript(const char *path)

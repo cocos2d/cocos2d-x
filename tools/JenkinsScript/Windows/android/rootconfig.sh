@@ -25,7 +25,7 @@ sed -i '13d' $CUR/project.properties
 #Modify the project name
 if [ $1 = TestCpp ]; then
 	sed -i '2d' $CUR/build.xml
-	sed -i '2 i\<project name="Tests" default="help">' $CUR/build.xml
+	sed -i '2 i\<project name="TestCpp" default="help">' $CUR/build.xml
 elif [ $1 = HelloCpp ]; then
 	sed -i '2d' $CUR/build.xml
 	sed -i '2 i\<project name="HelloCpp" default="help">' $CUR/build.xml

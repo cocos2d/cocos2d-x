@@ -160,7 +160,7 @@ JSBool S_SimpleAudioEngine::jsplayBackgroundMusic(JSContext *cx, uint32_t argc, 
 		JSBool arg1;
 		JS_ConvertArguments(cx, 2, JS_ARGV(cx, vp), "Sb", &arg0, &arg1);
 		char *narg0 = JS_EncodeString(cx, arg0);
-		self->playBackgroundMusic(narg0, arg1);
+		self->playBackgroundMusic(narg0, arg1!=0);
 		
 		JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 		return JS_TRUE;
@@ -175,7 +175,7 @@ JSBool S_SimpleAudioEngine::jsstopBackgroundMusic(JSContext *cx, uint32_t argc, 
 	if (argc == 1) {
 		JSBool arg0;
 		JS_ConvertArguments(cx, 1, JS_ARGV(cx, vp), "b", &arg0);
-		self->stopBackgroundMusic(arg0);
+		self->stopBackgroundMusic(arg0!=0);
 		
 		JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 		return JS_TRUE;
@@ -262,7 +262,7 @@ JSBool S_SimpleAudioEngine::jsplayEffect(JSContext *cx, uint32_t argc, jsval *vp
 		JSBool arg1;
 		JS_ConvertArguments(cx, 2, JS_ARGV(cx, vp), "Sb", &arg0, &arg1);
 		char *narg0 = JS_EncodeString(cx, arg0);
-		unsigned int ret = self->playEffect(narg0, arg1);
+		unsigned int ret = self->playEffect(narg0, arg1!=0);
 		do { jsval tmp; JS_NewNumberValue(cx, ret, &tmp); JS_SET_RVAL(cx, vp, tmp); } while (0);
 		
 		return JS_TRUE;
