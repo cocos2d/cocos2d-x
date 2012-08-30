@@ -63,7 +63,7 @@ CCLuaEngine* CCLuaEngine::engine()
 {
     CCLuaEngine* pEngine = new CCLuaEngine();
     pEngine->init();
-    pEngine->autorelease();
+//    pEngine->autorelease();
     return pEngine;
 }
 
