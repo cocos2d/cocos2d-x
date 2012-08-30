@@ -1,33 +1,59 @@
 require "luaScript/TransitionsTest/TransitionsName"
 
 
-local SceneIdx = 0
+local SceneIdx = -1
+local CurSceneNo = 2
 local TRANSITION_DURATION = 1.2
 local s = CCDirector:sharedDirector():getWinSize()
+
+local function switchSceneTypeNo()
+	if CurSceneNo == 1 then
+		CurSceneNo = 2
+	else
+		CurSceneNo = 1
+	end
+end
+
+local function backAction()
+	SceneIdx = SceneIdx - 1
+    if SceneIdx < 0 then
+        SceneIdx = SceneIdx + Transition_Table.MAX_LAYER
+    end
+
+	switchSceneTypeNo()
+    return generateTranScene()
+end
+
+local function restartAction()
+	return generateTranScene()
+end
+
+local function nextAction()
+	SceneIdx = SceneIdx + 1
+    SceneIdx = math.mod(SceneIdx, Transition_Table.MAX_LAYER)
+
+    switchSceneTypeNo()
+    return generateTranScene()
+end
+
+local function backCallback(sender)
+	local scene = backAction()
+	CCDirector:sharedDirector():replaceScene(scene)
+end
+
+local function restartCallback(sender)
+	local scene = restartAction()
+	CCDirector:sharedDirector():replaceScene(scene)
+end
+
+local function nextCallback(sender)
+	local scene = nextAction()
+	CCDirector:sharedDirector():replaceScene(scene)
+end
 
 -----------------------------
 -- TestLayer1
 -----------------------------
-local function layer1BackCallback()
-	SceneIdx = SceneIdx - 1
-    if SceneIdx < 0 then
-        SceneIdx = SceneIdx + Transition_Table.MAX_LAYER
-	end
-
-	generateTranScene(2)
-end
-
-local function layer1RestartCallback()
-	generateTranScene(2);
-end
-
-local function layer1NextCallback()
-	SceneIdx = SceneIdx + 1
-    SceneIdx = math.mod(SceneIdx, Transition_Table.MAX_LAYER)
-
-    generateTranScene(2)
-end
-
 local function createLayer1()
 	local layer = CCLayer:create()
 	local x, y = s.width, s.height
@@ -50,9 +76,9 @@ local function createLayer1()
     local item1 = CCMenuItemImage:create(s_pPathB1, s_pPathB2)
     local item2 = CCMenuItemImage:create(s_pPathR1, s_pPathR2)
     local item3 = CCMenuItemImage:create(s_pPathF1, s_pPathF2)
-	item1:registerScriptHandler(layer1BackCallback)
-	item2:registerScriptHandler(layer1RestartCallback)
-	item3:registerScriptHandler(layer1NextCallback)
+	item1:registerScriptHandler(backCallback)
+	item2:registerScriptHandler(restartCallback)
+	item3:registerScriptHandler(nextCallback)
 
     local menu = CCMenu:create()
 	menu:addChild(item1)
@@ -71,26 +97,6 @@ end
 -----------------------------
 -- TestLayer2
 -----------------------------
-local function layer2BackCallback()
-	SceneIdx = SceneIdx - 1
-    if SceneIdx < 0 then
-        SceneIdx = SceneIdx + Transition_Table.MAX_LAYER
-	end
-
-	generateTranScene(1)
-end
-
-local function layer2RestartCallback()
-	generateTranScene(1);
-end
-
-local function layer2NextCallback()
-	SceneIdx = SceneIdx + 1
-    SceneIdx = math.mod(SceneIdx, Transition_Table.MAX_LAYER)
-
-    generateTranScene(1)
-end
-
 local function createLayer2()
 	local layer = CCLayer:create()
 	local x, y = s.width, s.height
@@ -113,9 +119,9 @@ local function createLayer2()
     local item1 = CCMenuItemImage:create(s_pPathB1, s_pPathB2)
     local item2 = CCMenuItemImage:create(s_pPathR1, s_pPathR2)
     local item3 = CCMenuItemImage:create(s_pPathF1, s_pPathF2)
-	item1:registerScriptHandler(layer2BackCallback)
-	item2:registerScriptHandler(layer2RestartCallback)
-	item3:registerScriptHandler(layer2NextCallback)
+	item1:registerScriptHandler(backCallback)
+	item2:registerScriptHandler(restartCallback)
+	item3:registerScriptHandler(nextCallback)
 
     local menu = CCMenu:create()
 	menu:addChild(item1)
@@ -136,6 +142,11 @@ end
 -----------------------------
 local function createTransition(index, t, scene)
 	CCDirector:sharedDirector():setDepthTest(false)
+
+	if firstEnter == true then
+		firstEnter = false
+		return scene
+	end
 
 	if index == Transition_Table.CCTransitionJumpZoom then
 		scene = CCTransitionJumpZoom:create(t, scene)
@@ -226,31 +237,29 @@ local function createTransition(index, t, scene)
 	return scene
 end
 
-function generateTranScene(sceneType)
+function generateTranScene()
 	local scene = CCScene:create()
     local layer = nil
 
-	if sceneType == 1 then
+	if CurSceneNo == 1 then
 		layer = createLayer1()
-	elseif sceneType == 2 then
+	elseif CurSceneNo == 2 then
 		layer = createLayer2()
 	end
 
     scene:addChild(layer)
 	scene:addChild(CreateBackMenuItem())
 
-    local tranScene = createTransition(SceneIdx, TRANSITION_DURATION, scene)
-    if tranScene ~= nil then
-        CCDirector:sharedDirector():replaceScene(tranScene)
-	end
+    return createTransition(SceneIdx, TRANSITION_DURATION, scene)
 end
 
 function TransitionsTest()
 	cclog("TransitionsTest")
 	local scene = CCScene:create()
 
-	scene:addChild(createLayer1())
-	scene:addChild(CreateBackMenuItem())
+	SceneIdx = -1
+	CurSceneNo = 2
+	firstEnter = true
 
-	return scene
+	return nextAction()
 end
