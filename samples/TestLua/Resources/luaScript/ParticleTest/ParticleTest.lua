@@ -2,33 +2,15 @@
 local SceneIdx  = -1
 local MAX_LAYER = 42
 
-local s = CCDirector:sharedDirector():getWinSize()
-local kTagParticleCount = 1
-
-local IDC_NEXT    = 100
-local IDC_BACK    = 101
-local IDC_RESTART = 102
-local IDC_TOGGLE  = 103
-
 local emitter = nil
 local background = nil
 
 local labelAtlas = nil
 local titleLabel = nil
 local subtitleLabel = nil
+local baseLayer_entry = nil
 
-local function update()
-	if emitter ~= nil then
-		local str = "" .. emitter:getParticleCount()
-		labelAtlas:setString(str)
-    end
-end
-
-local function setEmitterPosition()
-    if emitter ~= nil then
-		emitter:setPosition(s.width / 2, s.height / 2)
-	end
-end
+local s = CCDirector:sharedDirector():getWinSize()
 
 local function backAction()
 	SceneIdx = SceneIdx - 1
@@ -89,6 +71,28 @@ local function toggleCallback(sender)
     end
 end
 
+local function setEmitterPosition()
+    if emitter ~= nil then
+		emitter:setPosition(s.width / 2, s.height / 2)
+	end
+end
+
+local function update(dt)
+	if emitter ~= nil then
+		local str = "" .. emitter:getParticleCount()
+		labelAtlas:setString("" .. str)
+    end
+end
+
+local function baseLayer_onEnterOrExit(tag)
+	local scheduler = CCDirector:sharedDirector():getScheduler()
+	if tag == 0 then
+		baseLayer_entry = scheduler:scheduleScriptFunc(update, 0, false)
+	elseif tag == 1 then
+		scheduler:unscheduleScriptEntry(baseLayer_entry)
+	end
+end
+
 local function getBaseLayer()
 	local layer = CCLayerColor:create(ccc4(127,127,127,255))
 
@@ -130,8 +134,8 @@ local function getBaseLayer()
     layer:addChild(menu, 100)
 
     labelAtlas = CCLabelAtlas:create("0000", "fps_images.png", 12, 32, '.')
-    layer:addChild(labelAtlas, 100, kTagParticleCount)
-    labelAtlas:setPosition(s.width - 66, 50)
+    layer:addChild(labelAtlas, 100)
+    labelAtlas:setPosition(ccp(s.width - 66, 50))
 
     -- moving background
     background = CCSprite:create(s_back3)
@@ -145,10 +149,6 @@ local function getBaseLayer()
 
     layer:scheduleUpdate()
 
-	local function onTouchBegan(x, y)
-        return true
-    end
-
 	local function onTouchEnded(x, y)
 		local pos = CCPointMake(0, 0)
 		if background ~= nil then
@@ -156,13 +156,14 @@ local function getBaseLayer()
 		end
 
 		if emitter ~= nil then
-			emitter:setPosition(ccpSub(CCPointMake(x, y), pos))
+			local newPos = ccpSub(CCPointMake(x, y), pos)
+			emitter:setPosition(newPos.x, newPos.y)
 		end
 	end
 
     local function onTouch(eventType, x, y)
         if eventType == CCTOUCHBEGAN then
-            return onTouchBegan(x, y)
+            return true
         else
             return onTouchEnded(x, y)
         end
@@ -170,6 +171,7 @@ local function getBaseLayer()
 
 	layer:setTouchEnabled(true)
     layer:registerScriptTouchHandler(onTouch)
+	layer:registerScriptHandler(baseLayer_onEnterOrExit)
 
 	return layer
 end
@@ -182,6 +184,8 @@ local ParticleReorder_entry = nil
 local ParticleReorder_layer = nil
 
 local function reorderParticles(dt)
+	update(dt)
+
 	for i = 0, 1 do
         local parent = ParticleReorder_layer:getChildByTag(1000 + i)
         local child1 = parent:getChildByTag(1)
@@ -281,6 +285,8 @@ local ParticleBatchHybrid_parent1 = nil
 local ParticleBatchHybrid_parent2 = nil
 
 local function switchRender(dt)
+	update(dt)
+
 	local cond = (emitter:getBatchNode() ~= nil)
 	emitter:removeFromParentAndCleanup(false)
 	local str = "Particle: Using new parent: "
@@ -1115,6 +1121,8 @@ local Issue870_index = nil
 local Issue870_entry = nil
 
 local function updateQuads(dt)
+	update(dt)
+
 	Issue870_index = math.mod(Issue870_index + 1, 4)
     local rect = CCRectMake(Issue870_index * 32, 0, 32, 32)
     emitter:setTextureWithRect(emitter:getTexture(), rect)
@@ -1211,6 +1219,8 @@ local AddAndDeleteParticleSystems_entry = nil
 local AddAndDeleteParticleSystems_batchNode = nil
 
 local function removeSystem(dt)
+	update(dt)
+
 	local ChildrenCount = AddAndDeleteParticleSystems_batchNode:getChildren():count()
     if ChildrenCount > 0 then
         cclog("remove random system")
@@ -1280,9 +1290,11 @@ local ReorderParticleSystems_entry = nil
 local ReorderParticleSystems_batchNode = nil
 
 local function reorderSystem(dt)
+	update(dt)
+
 	local child = ReorderParticleSystems_batchNode:getChildren():randomObject()
 	-- problem: there's no getZOrder() for CCObject
-	--ReorderParticleSystems_batchNode:reorderChild(child, child:getZOrder() - 1)
+	-- ReorderParticleSystems_batchNode:reorderChild(child, child:getZOrder() - 1)
 	ReorderParticleSystems_batchNode:reorderChild(child, math.random(0, 99999))
 end
 
