@@ -7,6 +7,8 @@ require "luaScript/EffectsTest/EffectsTest"
 require "luaScript/ClickAndMoveTest/ClickAndMoveTest"
 require "luaScript/RotateWorldTest/RotateWorldTest"
 require "luaScript/ParticleTest/ParticleTest"
+require "luaScript/ActionsEaseTest/ActionsEaseTest"
+require "luaScript/MotionStreakTest/MotionStreakTest"
 
 require "luaScript/PerformanceTest/PerformanceTest"
 
