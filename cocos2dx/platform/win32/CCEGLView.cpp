@@ -210,7 +210,7 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
         if (m_pDelegate && MK_LBUTTON == wParam)
         {
             POINT point = {(short)LOWORD(lParam), (short)HIWORD(lParam)};
-            CCPoint pt(point.x, point.y);
+            CCPoint pt(point.x/CC_CONTENT_SCALE_FACTOR(), point.y/CC_CONTENT_SCALE_FACTOR());
             CCPoint tmp = ccp(pt.x, m_obScreenSize.height - pt.y);
             if (m_obViewPortRect.equals(CCRectZero) || m_obViewPortRect.containsPoint(tmp))
             {
@@ -226,7 +226,7 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
         if (MK_LBUTTON == wParam && m_bCaptured)
         {
             POINT point = {(short)LOWORD(lParam), (short)HIWORD(lParam)};
-            CCPoint pt(point.x, point.y);
+            CCPoint pt(point.x/CC_CONTENT_SCALE_FACTOR(), point.y/CC_CONTENT_SCALE_FACTOR());
             int id = 0;
             handleTouchesMove(1, &id, &pt.x, &pt.y);
         }
@@ -236,7 +236,7 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
         if (m_bCaptured)
         {
             POINT point = {(short)LOWORD(lParam), (short)HIWORD(lParam)};
-            CCPoint pt(point.x, point.y);
+            CCPoint pt(point.x/CC_CONTENT_SCALE_FACTOR(), point.y/CC_CONTENT_SCALE_FACTOR());
             int id = 0;
             handleTouchesEnd(1, &id, &pt.x, &pt.y);
 
@@ -372,6 +372,7 @@ void CCEGLView::setIMEKeyboardState(bool /*bOpen*/)
 
 bool CCEGLView::enableRetina()
 {
+    m_bIsRetinaEnabled = true;
     return true;
 }
 

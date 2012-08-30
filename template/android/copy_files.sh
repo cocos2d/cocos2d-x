@@ -41,7 +41,7 @@ copy_src_and_jni(){
     cp -rf $HELLOWORLD_ROOT/proj.android/jni $APP_DIR/proj.android
     cp -rf $HELLOWORLD_ROOT/proj.android/src $APP_DIR/proj.android
     
-    # repalce Android.mk
+    # replace Android.mk
     sh $COCOS2DX_ROOT/template/android/gamemk.sh $APP_DIR/proj.android/jni/Android.mk $NEED_BOX2D $NEED_CHIPMUNK $NEED_LUA
 }
 
@@ -54,6 +54,12 @@ copy_build_native(){
     # here should use # instead of /, why??
     sed "s#__cocos2dxroot__#$COCOS2DX_ROOT#;s#__ndkroot__#$NDK_ROOT#;s#__projectname__#$APP_NAME#" $COCOS2DX_ROOT/template/android/build_native.sh > $APP_DIR/proj.android/build_native.sh
     chmod u+x $APP_DIR/proj.android/build_native.sh
+}
+
+# copy .project and .classpath and replace project name
+modify_project_classpath(){
+    sed "s/HelloCpp/$APP_NAME/" $COCOS2DX_ROOT/template/android/.project > $APP_DIR/proj.android/.project
+    cp -f $COCOS2DX_ROOT/template/android/.classpath $APP_DIR/proj.android
 }
 
 # replace AndroidManifext.xml and change the activity name
@@ -91,6 +97,7 @@ copy_resouces
 copy_src_and_jni
 copy_library_src
 copy_build_native
+modify_project_classpath
 modify_androidmanifest
 modify_applicationdemo
 modify_layout

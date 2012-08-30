@@ -546,16 +546,6 @@ public:
     /** unschedules a custom selector.*/
     void unschedule(SEL_SCHEDULE selector);
 
-	/** The scheduled script callback will be called every 'interval' seconds.
-     If paused is YES, then it won't be called until it is resumed.
-     If 'interval' is 0, it will be called every frame.
-     return schedule script entry ID, used for unscheduleScriptFunc().
-     */
-	unsigned int scheduleScriptFunc(unsigned int nHandler, float fInterval, bool bPaused);
-
-	/** Unschedule a script entry. */
-	void unscheduleScriptEntry(unsigned int uScheduleScriptEntryID);
-
     /** unschedule all scheduled selectors: custom selectors, and the 'update' selector.
      Actions are not affected by this method.
      @since v0.99.3
