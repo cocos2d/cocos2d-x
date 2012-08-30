@@ -132,7 +132,6 @@ function CreateTestMenu()
 
 	local function menuCallback(tag)
 		local Idx = tag - 10000
-		cclog("tag: " .. tag)
 		local testScene = CreateTestScene(Idx)
 		if testScene then
 			CCDirector:sharedDirector():replaceScene(testScene)
@@ -143,7 +142,7 @@ function CreateTestMenu()
 	local s = CCDirector:sharedDirector():getWinSize()
 	local CloseItem = CCMenuItemImage:create(s_pPathClose, s_pPathClose)
 	CloseItem:registerScriptHandler(closeCallback)
-	CloseItem:setPosition(s.width - 30, s.height - 30)
+	CloseItem:setPosition(ccp(s.width - 30, s.height - 30))
 
     local CloseMenu = CCMenu:create()
     CloseMenu:setPosition(0, 0)
@@ -155,10 +154,9 @@ function CreateTestMenu()
     for index, labelName in pairs(Test_Name) do
 		local testLabel = CCLabelTTF:create(labelName, "Arial", 24)
         local testMenuItem = CCMenuItemLabel:create(testLabel)
-		--testMenuItem:setTag(index + 10000)
-		testMenuItem:registerScriptHandler(menuCallback)
-		testMenuItem:setPosition(s.width / 2, (s.height - (index + 1) * LINE_SPACE))
 
+		testMenuItem:registerScriptHandler(menuCallback)
+		testMenuItem:setPosition(ccp(s.width / 2, (s.height - (index + 1) * LINE_SPACE)))
         MainMenu:addChild(testMenuItem, index + 10000, index + 10000)
     end
 

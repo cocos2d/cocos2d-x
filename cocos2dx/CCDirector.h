@@ -237,10 +237,6 @@ public:
     /** Ends the execution, releases the running scene.
      It doesn't remove the OpenGL view from its parent. You have to do it manually.
      */
-
-    /* end is key word of lua, use other name to export to lua. */
-    inline void endToLua(void){end();}
-
     void end(void);
 
     /** Pauses the running scene.

@@ -1,4 +1,6 @@
 #!/bin/bash
+#This script is used to modify parameters in profile,so it will be convenient for ant to build different project.
+
 #Change the path expression of current path to cygwin path.
 #NDK_ROOT=$($CYGWIN/bin/cygpath.exe $ANDROID_NDK)
 #echo $NDK_ROOT

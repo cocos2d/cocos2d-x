@@ -975,16 +975,6 @@ void CCNode::unscheduleAllSelectors()
     m_pScheduler->unscheduleAllSelectorsForTarget(this);
 }
 
-unsigned int CCNode::scheduleScriptFunc(unsigned int nHandler, float fInterval, bool bPaused)
-{
-	return m_pScheduler->scheduleScriptFunc(nHandler, fInterval, bPaused);
-}
-
-void CCNode::unscheduleScriptEntry(unsigned int uScheduleScriptEntryID)
-{
-	m_pScheduler->unscheduleScriptEntry(uScheduleScriptEntryID);
-}
-
 void CCNode::resumeSchedulerAndActions()
 {
     m_pScheduler->resumeTarget(this);
