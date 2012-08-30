@@ -713,6 +713,10 @@ VolatileTexture::VolatileTexture(CCTexture2D *t)
 , m_fFontSize(0.0f)
 {
     m_size = CCSizeMake(0, 0);
+    m_texParams.minFilter = GL_LINEAR;
+    m_texParams.magFilter = GL_LINEAR;
+    m_texParams.wrapS = GL_CLAMP_TO_EDGE;
+    m_texParams.wrapT = GL_CLAMP_TO_EDGE;
     textures.push_back(this);
 }
 
@@ -799,6 +803,20 @@ void VolatileTexture::addStringTexture(CCTexture2D *tt, const char* text, const 
     vt->m_vAlignment  = vAlignment;
     vt->m_fFontSize   = fontSize;
     vt->m_strText     = text;
+}
+
+void VolatileTexture::setTexParameters(CCTexture2D *t, ccTexParams *texParams) 
+{
+    VolatileTexture *vt = findVolotileTexture(t);
+
+    if (texParams->minFilter != GL_NONE)
+        vt->m_texParams.minFilter = texParams->minFilter;
+    if (texParams->magFilter != GL_NONE)
+        vt->m_texParams.magFilter = texParams->magFilter;
+    if (texParams->wrapS != GL_NONE)
+        vt->m_texParams.wrapS = texParams->wrapS;
+    if (texParams->wrapT != GL_NONE)
+        vt->m_texParams.wrapT = texParams->wrapT;
 }
 
 void VolatileTexture::removeTexture(CCTexture2D *t) 
@@ -890,6 +908,7 @@ void VolatileTexture::reloadAllTextures()
         default:
             break;
         }
+        vt->texture->setTexParameters(&vt->m_texParams);
     }
 
     isReloading = false;
