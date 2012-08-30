@@ -207,7 +207,19 @@ public:
     */
     CC_DEPRECATED_ATTRIBUTE static CCLabelBMFont * labelWithString(const char *str, const char *fntFile, float width = kCCLabelAutomaticWidth, CCTextAlignment alignment = kCCTextAlignmentLeft, CCPoint imageOffset = CCPointZero);
     /** creates a bitmap font altas with an initial string and the FNT file */
-    static CCLabelBMFont * create(const char *str, const char *fntFile, float width = kCCLabelAutomaticWidth, CCTextAlignment alignment = kCCTextAlignmentLeft, CCPoint imageOffset = CCPointZero);
+    static CCLabelBMFont * create(const char *str, const char *fntFile, float width, CCTextAlignment alignment, CCPoint imageOffset);
+    
+	static CCLabelBMFont * create(const char *str, const char *fntFile, float width, CCTextAlignment alignment) {
+		return CCLabelBMFont::create(str, fntFile, width, alignment, CCPointZero);
+	}
+
+	static CCLabelBMFont * create(const char *str, const char *fntFile, float width) {
+		return CCLabelBMFont::create(str, fntFile, width, kCCTextAlignmentLeft, CCPointZero);
+	}
+
+	static CCLabelBMFont * create(const char *str, const char *fntFile) {
+        return CCLabelBMFont::create(str, fntFile, kCCLabelAutomaticWidth, kCCTextAlignmentLeft, CCPointZero);
+    }
 
     /** Creates an label.
     @deprecated: This interface will be deprecated sooner or later.

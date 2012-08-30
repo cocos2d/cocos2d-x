@@ -121,7 +121,6 @@ CCNode::~CCNode(void)
 
     // children
     CC_SAFE_RELEASE(m_pChildren);
-
 }
 
 float CCNode::getSkewX()
@@ -796,20 +795,30 @@ void CCNode::onEnter()
 
     m_bIsRunning = true;
 
-    if (m_nScriptHandler)
-    {
+#ifdef COCOS2D_JAVASCRIPT
+    CCScriptEngineManager::sharedManager()->getScriptEngine()->executeFunctionWithIntegerData(m_nScriptHandler, kCCNodeOnEnter, this);
+#else
+    if(m_nScriptHandler) {
         CCScriptEngineManager::sharedManager()->getScriptEngine()->executeFunctionWithIntegerData(m_nScriptHandler, kCCNodeOnEnter);
     }
+#endif
+    
 }
 
 void CCNode::onEnterTransitionDidFinish()
 {
     arrayMakeObjectsPerformSelector(m_pChildren, onEnterTransitionDidFinish, CCNode*);
+#ifdef COCOS2D_JAVASCRIPT
+    CCScriptEngineManager::sharedManager()->getScriptEngine()->executeFunctionWithIntegerData(m_nScriptHandler, kCCNodeOnEnterTransitionDidFinish, this);
+#endif
 }
 
 void CCNode::onExitTransitionDidStart()
 {
     arrayMakeObjectsPerformSelector(m_pChildren, onExitTransitionDidStart, CCNode*);
+#ifdef COCOS2D_JAVASCRIPT
+    CCScriptEngineManager::sharedManager()->getScriptEngine()->executeFunctionWithIntegerData(m_nScriptHandler, kCCNodeOnExitTransitionDidStart, this);
+#endif
 }
 
 void CCNode::onExit()
@@ -818,10 +827,15 @@ void CCNode::onExit()
 
     m_bIsRunning = false;
 
+#ifdef COCOS2D_JAVASCRIPT
+    CCScriptEngineManager::sharedManager()->getScriptEngine()->executeFunctionWithIntegerData(m_nScriptHandler, kCCNodeOnExit, this);
+#else
+    
     if (m_nScriptHandler)
     {
         CCScriptEngineManager::sharedManager()->getScriptEngine()->executeFunctionWithIntegerData(m_nScriptHandler, kCCNodeOnExit);
     }
+#endif
 
     arrayMakeObjectsPerformSelector(m_pChildren, onExit, CCNode*);
 }

@@ -113,10 +113,13 @@ private:
     bool    m_bSwallowsTouches;
 };
 
-
-class CC_DLL CCScriptEngineProtocol : public CCObject
+// Don't make CCScriptEngineProtocol inherits from CCObject since setScriptEngine is invoked only once in AppDelegate.cpp,
+// It will affect the lifecycle of ScriptCore instance, the autorelease pool will be destroyed before destructing ScriptCore.
+// So a crash will appear on Win32 if you click the close button.
+class CC_DLL CCScriptEngineProtocol// : public CCObject
 {
 public:
+    virtual ~CCScriptEngineProtocol() {};
     /**
      @brief Method used to get a pointer to the lua_State that the script module is attached to.
      @return A pointer to the lua_State that the script module is attached to.
@@ -128,6 +131,8 @@ public:
      @param object to remove
      */
     virtual void removeCCObjectByID(int nLuaID) = 0;
+    virtual void removeJSObjectByCCObject(void * cobj) = 0;
+
     
     /**
      @brief Remove Lua function handler
@@ -169,8 +174,25 @@ public:
      @return The integer value returned from the script function.
      */
     virtual int executeFunctionByHandler(int nHandler, int numArgs = 0) = 0;
+    
+#ifdef COCOS2D_JAVASCRIPT
+    
+    virtual int executeFunctionWithIntegerData(int nHandler, int data, CCNode *self) = 0;
+    virtual int executeTouchesEvent(int nHandler, int eventType, CCSet *pTouches, CCNode *self) = 0;
+    virtual int executeFunctionWithFloatData(int nHandler, float data, CCNode *self) = 0;
+    
+    // execute a schedule function
+    virtual int executeSchedule(int nHandler, float dt, CCNode *self) = 0;
+    
+#else
     virtual int executeFunctionWithIntegerData(int nHandler, int data) = 0;
+    virtual int executeTouchesEvent(int nHandler, int eventType, CCSet *pTouches) = 0;
     virtual int executeFunctionWithFloatData(int nHandler, float data) = 0;
+    
+    // execute a schedule function
+    virtual int executeSchedule(int nHandler, float dt) = 0;
+#endif    
+    
     virtual int executeFunctionWithBooleanData(int nHandler, bool data) = 0;
     virtual int executeFunctionWithCCObject(int nHandler, CCObject* pObject, const char* typeName) = 0;    
     virtual int pushIntegerToLuaStack(int data) = 0;
@@ -180,10 +202,6 @@ public:
     
     // functions for excute touch event
     virtual int executeTouchEvent(int nHandler, int eventType, CCTouch *pTouch) = 0;
-    virtual int executeTouchesEvent(int nHandler, int eventType, CCSet *pTouches) = 0;
-    
-    // execute a schedule function
-    virtual int executeSchedule(int nHandler, float dt) = 0;
 };
 
 /**
