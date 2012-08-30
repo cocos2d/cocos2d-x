@@ -1,5 +1,5 @@
 
-local SceneIdx  = 0
+local SceneIdx  = -1
 local MAX_LAYER = 42
 
 local s = CCDirector:sharedDirector():getWinSize()
@@ -30,24 +30,51 @@ local function setEmitterPosition()
 	end
 end
 
-local function backCallback(sender)
+local function backAction()
 	SceneIdx = SceneIdx - 1
     if SceneIdx < 0 then
         SceneIdx = SceneIdx + MAX_LAYER
     end
 
-    CCDirector:sharedDirector():replaceScene(ParticleTest())
+    return CreateParticleLayer()
 end
 
-local function restartCallback(sender)
-	CCDirector:sharedDirector():replaceScene(ParticleTest())
+local function restartAction()
+	return CreateParticleLayer()
 end
 
-local function nextCallback(sender)
+local function nextAction()
 	SceneIdx = SceneIdx + 1
     SceneIdx = math.mod(SceneIdx, MAX_LAYER)
 
-    CCDirector:sharedDirector():replaceScene(ParticleTest())
+    return CreateParticleLayer()
+end
+
+local function backCallback(sender)
+	local scene = CCScene:create()
+
+	scene:addChild(backAction())
+	scene:addChild(CreateBackMenuItem())
+
+	CCDirector:sharedDirector():replaceScene(scene)
+end
+
+local function restartCallback(sender)
+	local scene = CCScene:create()
+
+	scene:addChild(restartAction())
+	scene:addChild(CreateBackMenuItem())
+
+	CCDirector:sharedDirector():replaceScene(scene)
+end
+
+local function nextCallback(sender)
+	local scene = CCScene:create()
+
+	scene:addChild(nextAction())
+	scene:addChild(CreateBackMenuItem())
+
+	CCDirector:sharedDirector():replaceScene(scene)
 end
 
 local function toggleCallback(sender)
@@ -1414,58 +1441,60 @@ end
 ---------------------------------
 --  Particle Test
 ---------------------------------
-function CreateParticleLayer(idx)
-	if idx == 0 then return ParticleReorder()
-	elseif idx == 1  then return ParticleBatchHybrid()
-	elseif idx == 2  then return ParticleBatchMultipleEmitters()
-	elseif idx == 3  then return DemoFlower()
-	elseif idx == 4  then return DemoGalaxy()
-	elseif idx == 5  then return DemoFirework()
-	elseif idx == 6  then return DemoSpiral()
-	elseif idx == 7  then return DemoSun()
-	elseif idx == 8  then return DemoMeteor()
-	elseif idx == 9  then return DemoFire()
-	elseif idx == 10 then return DemoSmoke()
-	elseif idx == 11 then return DemoExplosion()
-	elseif idx == 12 then return DemoSnow()
-	elseif idx == 13 then return DemoRain()
-	elseif idx == 14 then return DemoBigFlower()
-	elseif idx == 15 then return DemoRotFlower()
-	elseif idx == 16 then return DemoModernArt()
-	elseif idx == 17 then return DemoRing()
-	elseif idx == 18 then return ParallaxParticle()
-	elseif idx == 19 then return DemoParticleFromFile("BoilingFoam")
-	elseif idx == 20 then return DemoParticleFromFile("BurstPipe")
-	elseif idx == 21 then return DemoParticleFromFile("Comet")
-	elseif idx == 22 then return DemoParticleFromFile("debian")
-	elseif idx == 23 then return DemoParticleFromFile("ExplodingRing")
-	elseif idx == 24 then return DemoParticleFromFile("LavaFlow")
-	elseif idx == 25 then return DemoParticleFromFile("SpinningPeas")
-	elseif idx == 26 then return DemoParticleFromFile("SpookyPeas")
-	elseif idx == 27 then return DemoParticleFromFile("Upsidedown")
-	elseif idx == 28 then return DemoParticleFromFile("Flower")
-	elseif idx == 29 then return DemoParticleFromFile("Spiral")
-	elseif idx == 30 then return DemoParticleFromFile("Galaxy")
-	elseif idx == 31 then return DemoParticleFromFile("Phoenix")
-	elseif idx == 32 then return RadiusMode1()
-	elseif idx == 33 then return RadiusMode2()
-	elseif idx == 34 then return Issue704()
-	elseif idx == 35 then return Issue870()
-	--elseif idx == 36 then return Issue1201()
+function CreateParticleLayer()
+	if SceneIdx == 0 then return ParticleReorder()
+	elseif SceneIdx == 1  then return ParticleBatchHybrid()
+	elseif SceneIdx == 2  then return ParticleBatchMultipleEmitters()
+	elseif SceneIdx == 3  then return DemoFlower()
+	elseif SceneIdx == 4  then return DemoGalaxy()
+	elseif SceneIdx == 5  then return DemoFirework()
+	elseif SceneIdx == 6  then return DemoSpiral()
+	elseif SceneIdx == 7  then return DemoSun()
+	elseif SceneIdx == 8  then return DemoMeteor()
+	elseif SceneIdx == 9  then return DemoFire()
+	elseif SceneIdx == 10 then return DemoSmoke()
+	elseif SceneIdx == 11 then return DemoExplosion()
+	elseif SceneIdx == 12 then return DemoSnow()
+	elseif SceneIdx == 13 then return DemoRain()
+	elseif SceneIdx == 14 then return DemoBigFlower()
+	elseif SceneIdx == 15 then return DemoRotFlower()
+	elseif SceneIdx == 16 then return DemoModernArt()
+	elseif SceneIdx == 17 then return DemoRing()
+	elseif SceneIdx == 18 then return ParallaxParticle()
+	elseif SceneIdx == 19 then return DemoParticleFromFile("BoilingFoam")
+	elseif SceneIdx == 20 then return DemoParticleFromFile("BurstPipe")
+	elseif SceneIdx == 21 then return DemoParticleFromFile("Comet")
+	elseif SceneIdx == 22 then return DemoParticleFromFile("debian")
+	elseif SceneIdx == 23 then return DemoParticleFromFile("ExplodingRing")
+	elseif SceneIdx == 24 then return DemoParticleFromFile("LavaFlow")
+	elseif SceneIdx == 25 then return DemoParticleFromFile("SpinningPeas")
+	elseif SceneIdx == 26 then return DemoParticleFromFile("SpookyPeas")
+	elseif SceneIdx == 27 then return DemoParticleFromFile("Upsidedown")
+	elseif SceneIdx == 28 then return DemoParticleFromFile("Flower")
+	elseif SceneIdx == 29 then return DemoParticleFromFile("Spiral")
+	elseif SceneIdx == 30 then return DemoParticleFromFile("Galaxy")
+	elseif SceneIdx == 31 then return DemoParticleFromFile("Phoenix")
+	elseif SceneIdx == 32 then return RadiusMode1()
+	elseif SceneIdx == 33 then return RadiusMode2()
+	elseif SceneIdx == 34 then return Issue704()
+	elseif SceneIdx == 35 then return Issue870()
+	--elseif SceneIdx == 36 then return Issue1201()
 	-- v1.1 tests
-	elseif idx == 36 then return MultipleParticleSystems()
-	elseif idx == 37 then return MultipleParticleSystemsBatched()
-	elseif idx == 38 then return AddAndDeleteParticleSystems()
-	elseif idx == 39 then return ReorderParticleSystems()
-	elseif idx == 40 then return PremultipliedAlphaTest()
-	elseif idx == 41 then return PremultipliedAlphaTest2()
+	elseif SceneIdx == 36 then return MultipleParticleSystems()
+	elseif SceneIdx == 37 then return MultipleParticleSystemsBatched()
+	elseif SceneIdx == 38 then return AddAndDeleteParticleSystems()
+	elseif SceneIdx == 39 then return ReorderParticleSystems()
+	elseif SceneIdx == 40 then return PremultipliedAlphaTest()
+	elseif SceneIdx == 41 then return PremultipliedAlphaTest2()
 	end
 end
 
 function ParticleTest()
+	cclog("ParticleTest")
 	local scene = CCScene:create()
 
-	scene:addChild(CreateParticleLayer(SceneIdx))
+	SceneIdx = -1
+	scene:addChild(nextAction())
 	scene:addChild(CreateBackMenuItem())
 
 	return scene
