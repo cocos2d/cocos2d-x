@@ -6,11 +6,11 @@ local s = CCDirector:sharedDirector():getWinSize()
 local function nextAction()
 	SceneIdx = SceneIdx + 1
     SceneIdx = math.mod(SceneIdx, MAX_LAYER)
-    return CreateActionProgressLayer(SceneIdx)
+    return CreateActionProgressLayer()
 end
 
 local function restartAction()
-	return CreateActionProgressLayer(SceneIdx)
+	return CreateActionProgressLayer()
 end
 
 local function backAction()
@@ -18,7 +18,7 @@ local function backAction()
     if SceneIdx < 0 then
 		SceneIdx = SceneIdx + MAX_LAYER
 	end
-    return CreateActionProgressLayer(SceneIdx)
+    return CreateActionProgressLayer()
 end
 
 local function nextCallback(sender)
@@ -364,22 +364,22 @@ end
 ------------------------------------
 -- Entrance
 ------------------------------------
-function CreateActionProgressLayer(index)
+function CreateActionProgressLayer()
 	local layer = nil
 
-	if index == 0 then
+	if SceneIdx == 0 then
 		layer = SpriteProgressToRadial()
-	elseif index == 1 then
+	elseif SceneIdx == 1 then
 		layer = SpriteProgressToHorizontal()
-	elseif index == 2 then
+	elseif SceneIdx == 2 then
 		layer = SpriteProgressToVertical()
-	elseif index == 3 then
+	elseif SceneIdx == 3 then
 		layer = SpriteProgressToRadialMidpointChanged()
-	elseif index == 4 then
+	elseif SceneIdx == 4 then
 		layer = SpriteProgressBarVarious()
-	elseif index == 5 then
+	elseif SceneIdx == 5 then
 		layer = SpriteProgressBarTintAndFade()
-	elseif index == 6 then
+	elseif SceneIdx == 6 then
 		layer = SpriteProgressWithSpriteFrame()
 	end
 
@@ -390,6 +390,7 @@ function ProgressActionsTest()
 	cclog("ProgressActionsTest")
 	local scene = CCScene:create()
 
+	SceneIdx = -1
 	scene:addChild(nextAction())
 	scene:addChild(CreateBackMenuItem())
 
