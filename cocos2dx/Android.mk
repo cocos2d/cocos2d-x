@@ -144,7 +144,6 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/kazmath/include \
                     $(LOCAL_PATH)/platform/android
 
-
 LOCAL_LDLIBS := -lGLESv2 \
                 -lEGL \
                 -llog \
@@ -157,6 +156,7 @@ LOCAL_WHOLE_STATIC_LIBRARIES += cocos_libtiff_static
 
 # define the macro to compile through support/zip_support/ioapi.c                
 LOCAL_CFLAGS := -DUSE_FILE32API
+LOCAL_EXPORT_CFLAGS := -DUSE_FILE32API
 
 include $(BUILD_STATIC_LIBRARY)
 

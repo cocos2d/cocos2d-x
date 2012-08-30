@@ -1,0 +1,3 @@
+[submodule "tools/cxx-generator"]
+	path = tools/cxx-generator
+	url = git://github.com/funkaster/cxx-generator.git

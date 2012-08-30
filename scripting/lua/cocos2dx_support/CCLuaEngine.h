@@ -51,7 +51,7 @@ public:
     virtual lua_State* getLuaState(void) {
         return m_state;
     }
-    
+	virtual void removeJSObjectByCCObject(void * cobj) {};
     /**
      @brief Remove CCObject from lua state
      @param object to remove
