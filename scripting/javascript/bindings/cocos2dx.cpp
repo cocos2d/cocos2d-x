@@ -1277,9 +1277,9 @@ JSBool js_cocos2dx_CCNode_scheduleScriptFunc(JSContext *cx, uint32_t argc, jsval
 		JS_ValueToECMAUint32(cx, argv[0], &arg0);
 		JS_ValueToNumber(cx, argv[1], &arg1);
 		JS_ValueToBoolean(cx, argv[2], &arg2);
-		unsigned int ret = cobj->scheduleScriptFunc(arg0, arg1, arg2);
+		//unsigned int ret = cobj->scheduleScriptFunc(arg0, arg1, arg2);
 		jsval jsret;
-		JS_NewNumberValue(cx, ret, &jsret);
+		//JS_NewNumberValue(cx, ret, &jsret);
 		JS_SET_RVAL(cx, vp, jsret);
 		return JS_TRUE;
 	}
@@ -2597,7 +2597,7 @@ JSBool js_cocos2dx_CCNode_unscheduleScriptEntry(JSContext *cx, uint32_t argc, js
 	if (argc == 1) {
 		unsigned int arg0;
 		JS_ValueToECMAUint32(cx, argv[0], &arg0);
-		cobj->unscheduleScriptEntry(arg0);
+//		cobj->unscheduleScriptEntry(arg0);
 		return JS_TRUE;
 	}
 	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
@@ -22605,7 +22605,7 @@ JSBool js_cocos2dx_CCDirector_endToLua(JSContext *cx, uint32_t argc, jsval *vp)
 	TEST_NATIVE_OBJECT(cx, cobj)
 
 	if (argc == 0) {
-		cobj->endToLua();
+		//cobj->endToLua();
 		return JS_TRUE;
 	}
 	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 0);

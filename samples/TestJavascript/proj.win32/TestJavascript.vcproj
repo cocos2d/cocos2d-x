@@ -49,7 +49,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories=".;..\Classes;&quot;$(SolutionDir)scripting\javascript\spidermonkey-win32\include&quot;;&quot;$(SolutionDir)scripting\javascript\bindings&quot;;&quot;$(SolutionDir)cocos2dx&quot;;&quot;$(SolutionDir)cocos2dx\include&quot;;&quot;$(SolutionDir)cocos2dx\kazmath\include&quot;;&quot;$(SolutionDir)cocos2dx\platform\win32&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\OGLES&quot;;&quot;$(SolutionDir)CocosDenshion\include&quot;"
+				AdditionalIncludeDirectories=".;..\Classes;&quot;$(SolutionDir)scripting\javascript\spidermonkey-win32\include&quot;;&quot;$(SolutionDir)scripting\javascript\bindings&quot;;&quot;$(SolutionDir)external\chipmunk\include\chipmunk&quot;;&quot;$(SolutionDir)cocos2dx&quot;;&quot;$(SolutionDir)cocos2dx\include&quot;;&quot;$(SolutionDir)cocos2dx\kazmath\include&quot;;&quot;$(SolutionDir)cocos2dx\platform\win32&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\OGLES&quot;;&quot;$(SolutionDir)CocosDenshion\include&quot;"
 				PreprocessorDefinitions="WIN32;_WINDOWS;STRICT;DEBUG;_DEBUG;TRACING;XP_WIN;JS_HAVE___INTN;JS_INTPTR_TYPE=int;COCOS2D_DEBUG=1;COCOS2D_JAVASCRIPT;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -74,7 +74,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libcocos2d.lib libCocosDenshion.lib mozjs.lib"
+				AdditionalDependencies="libcocos2d.lib libCocosDenshion.lib libchipmunk.lib mozjs.lib"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="&quot;$(OutDir)&quot;"
 				GenerateDebugInformation="true"
@@ -196,6 +196,14 @@
 			Name="bindings"
 			>
 			<File
+				RelativePath="..\..\..\scripting\javascript\bindings\CCPhysicsSprite.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\scripting\javascript\bindings\CCPhysicsSprite.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\scripting\javascript\bindings\cocos2d_specifics.cpp"
 				>
 			</File>
@@ -212,11 +220,31 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\scripting\javascript\bindings\sae.cpp"
+				RelativePath="..\..\..\scripting\javascript\bindings\js_bindings_chipmunk_functions.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\scripting\javascript\bindings\sae.hpp"
+				RelativePath="..\..\..\scripting\javascript\bindings\js_bindings_chipmunk_functions.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\scripting\javascript\bindings\js_bindings_chipmunk_manual.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\scripting\javascript\bindings\js_bindings_chipmunk_manual.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\scripting\javascript\bindings\js_bindings_config.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\scripting\javascript\bindings\js_manual_conversions.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\scripting\javascript\bindings\js_manual_conversions.h"
 				>
 			</File>
 			<File
