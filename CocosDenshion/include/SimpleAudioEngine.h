@@ -28,52 +28,46 @@ THE SOFTWARE.
 
 #include <stddef.h>
 #include "Export.h"
-#ifdef COCOS2D_JAVASCRIPT
 #include <typeinfo>
 #include <ctype.h>
 #include <string.h>
-#endif
 
 namespace CocosDenshion {
-#ifdef COCOS2D_JAVASCRIPT
-    class TypeInfo
-    {
-    public:
-        virtual long getClassTypeInfo() = 0;
-    };
-	static unsigned int getHashCodeByString(const char *key)
-	{
-		unsigned int len = strlen(key);
-		const char *end=key+len;
-		unsigned int hash;
 
-		for (hash = 0; key < end; key++)
-		{
-			hash *= 16777619;
-			hash ^= (unsigned int) (unsigned char) toupper(*key);
-		}
-		return (hash);
+class TypeInfo
+{
+public:
+    virtual long getClassTypeInfo() = 0;
+};
+
+static unsigned int getHashCodeByString(const char *key)
+{
+	unsigned int len = strlen(key);
+	const char *end=key+len;
+	unsigned int hash;
+
+	for (hash = 0; key < end; key++)
+	{
+		hash *= 16777619;
+		hash ^= (unsigned int) (unsigned char) toupper(*key);
 	}
-#endif
+	return (hash);
+}
+
 /**
 @class          SimpleAudioEngine
 @brief          offer a VERY simple interface to play background music & sound effect
 */
-#ifdef COCOS2D_JAVASCRIPT
+
 class EXPORT_DLL SimpleAudioEngine : public TypeInfo
-#else
-class EXPORT_DLL SimpleAudioEngine
-#endif
 {
 public:
     SimpleAudioEngine();
     ~SimpleAudioEngine();
 
-#ifdef COCOS2D_JAVASCRIPT
     virtual long getClassTypeInfo() {
         return getHashCodeByString(typeid(CocosDenshion::SimpleAudioEngine).name());
     }
-#endif
 
     /**
     @brief Get the shared Engine object,it will new one when first time be called

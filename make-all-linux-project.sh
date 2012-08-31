@@ -78,9 +78,6 @@ check_make_result
 make -C $COCOS2DX20_TRUNK/samples/HelloCpp/proj.linux clean
 make -C $COCOS2DX20_TRUNK/samples/HelloCpp/proj.linux
 check_make_result
-make -C $COCOS2DX20_TRUNK/samples/TestJavascript/proj.linux clean
-make -C $COCOS2DX20_TRUNK/samples/TestJavascript/proj.linux
-check_make_result
 
 #cd $COCOS2DX20_TRUNK/tests/proj.linux
 #./cocos2dx-test

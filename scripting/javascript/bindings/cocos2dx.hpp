@@ -77,6 +77,39 @@ JSBool js_cocos2dx_CCFollow_create(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_cocos2dx_CCFollow_actionWithTarget(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_cocos2dx_CCFollow_CCFollow(JSContext *cx, uint32_t argc, jsval *vp);
 
+extern JSClass  *js_cocos2dx_CCTouch_class;
+extern JSObject *js_cocos2dx_CCTouch_prototype;
+
+JSBool js_cocos2dx_CCTouch_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_CCTouch_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_CCTouch(JSContext *cx, JSObject *global);
+void register_all_cocos2dx(JSContext* cx, JSObject* obj);
+JSBool js_cocos2dx_CCTouch_getPreviousLocationInView(JSContext *cx, uint32_t argc, jsval *vp);
+JSBool js_cocos2dx_CCTouch_getLocation(JSContext *cx, uint32_t argc, jsval *vp);
+JSBool js_cocos2dx_CCTouch_getDelta(JSContext *cx, uint32_t argc, jsval *vp);
+JSBool js_cocos2dx_CCTouch_setTouchInfo(JSContext *cx, uint32_t argc, jsval *vp);
+JSBool js_cocos2dx_CCTouch_getID(JSContext *cx, uint32_t argc, jsval *vp);
+JSBool js_cocos2dx_CCTouch_getLocationInView(JSContext *cx, uint32_t argc, jsval *vp);
+JSBool js_cocos2dx_CCTouch_locationInView(JSContext *cx, uint32_t argc, jsval *vp);
+JSBool js_cocos2dx_CCTouch_previousLocationInView(JSContext *cx, uint32_t argc, jsval *vp);
+JSBool js_cocos2dx_CCTouch_getPreviousLocation(JSContext *cx, uint32_t argc, jsval *vp);
+JSBool js_cocos2dx_CCTouch_CCTouch(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *js_cocos2dx_CCSet_class;
+extern JSObject *js_cocos2dx_CCSet_prototype;
+
+JSBool js_cocos2dx_CCSet_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_CCSet_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_CCSet(JSContext *cx, JSObject *global);
+void register_all_cocos2dx(JSContext* cx, JSObject* obj);
+JSBool js_cocos2dx_CCSet_count(JSContext *cx, uint32_t argc, jsval *vp);
+JSBool js_cocos2dx_CCSet_addObject(JSContext *cx, uint32_t argc, jsval *vp);
+JSBool js_cocos2dx_CCSet_mutableCopy(JSContext *cx, uint32_t argc, jsval *vp);
+JSBool js_cocos2dx_CCSet_anyObject(JSContext *cx, uint32_t argc, jsval *vp);
+JSBool js_cocos2dx_CCSet_removeObject(JSContext *cx, uint32_t argc, jsval *vp);
+JSBool js_cocos2dx_CCSet_copy(JSContext *cx, uint32_t argc, jsval *vp);
+JSBool js_cocos2dx_CCSet_containsObject(JSContext *cx, uint32_t argc, jsval *vp);
+
 extern JSClass  *js_cocos2dx_CCNode_class;
 extern JSObject *js_cocos2dx_CCNode_prototype;
 
@@ -88,7 +121,6 @@ JSBool js_cocos2dx_CCNode_addChild(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_cocos2dx_CCNode_convertToWorldSpaceAR(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_cocos2dx_CCNode_isIgnoreAnchorPointForPosition(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_cocos2dx_CCNode_setRotation(JSContext *cx, uint32_t argc, jsval *vp);
-JSBool js_cocos2dx_CCNode_scheduleScriptFunc(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_cocos2dx_CCNode_setScaleY(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_cocos2dx_CCNode_setScaleX(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_cocos2dx_CCNode_scheduleUpdateWithPriority(JSContext *cx, uint32_t argc, jsval *vp);
@@ -159,7 +191,6 @@ JSBool js_cocos2dx_CCNode_registerScriptHandler(JSContext *cx, uint32_t argc, js
 JSBool js_cocos2dx_CCNode_convertTouchToNodeSpaceAR(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_cocos2dx_CCNode_isVisible(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_cocos2dx_CCNode_sortAllChildren(JSContext *cx, uint32_t argc, jsval *vp);
-JSBool js_cocos2dx_CCNode_unscheduleScriptEntry(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_cocos2dx_CCNode_convertToNodeSpace(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_cocos2dx_CCNode_getScale(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_cocos2dx_CCNode_setTag(JSContext *cx, uint32_t argc, jsval *vp);
@@ -275,9 +306,9 @@ JSBool js_cocos2dx_CCAnimation_getDelayPerUnit(JSContext *cx, uint32_t argc, jsv
 JSBool js_cocos2dx_CCAnimation_getRestoreOriginalFrame(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_cocos2dx_CCAnimation_getDuration(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_cocos2dx_CCAnimation_addSpriteFrameWithTexture(JSContext *cx, uint32_t argc, jsval *vp);
-JSBool js_cocos2dx_CCAnimation_createWithSpriteFrames(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_cocos2dx_CCAnimation_animationWithSpriteFrames(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_cocos2dx_CCAnimation_animation(JSContext *cx, uint32_t argc, jsval *vp);
+JSBool js_cocos2dx_CCAnimation_createWithSpriteFrames(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_cocos2dx_CCAnimation_animationWithAnimationFrames(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_cocos2dx_CCAnimation_CCAnimation(JSContext *cx, uint32_t argc, jsval *vp);
 
@@ -1325,21 +1356,6 @@ JSBool js_cocos2dx_CCAtlasNode_create(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_cocos2dx_CCAtlasNode_atlasWithTileFile(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_cocos2dx_CCAtlasNode_CCAtlasNode(JSContext *cx, uint32_t argc, jsval *vp);
 
-extern JSClass  *js_cocos2dx_CCSet_class;
-extern JSObject *js_cocos2dx_CCSet_prototype;
-
-JSBool js_cocos2dx_CCSet_constructor(JSContext *cx, uint32_t argc, jsval *vp);
-void js_cocos2dx_CCSet_finalize(JSContext *cx, JSObject *obj);
-void js_register_cocos2dx_CCSet(JSContext *cx, JSObject *global);
-void register_all_cocos2dx(JSContext* cx, JSObject* obj);
-JSBool js_cocos2dx_CCSet_count(JSContext *cx, uint32_t argc, jsval *vp);
-JSBool js_cocos2dx_CCSet_addObject(JSContext *cx, uint32_t argc, jsval *vp);
-JSBool js_cocos2dx_CCSet_mutableCopy(JSContext *cx, uint32_t argc, jsval *vp);
-JSBool js_cocos2dx_CCSet_anyObject(JSContext *cx, uint32_t argc, jsval *vp);
-JSBool js_cocos2dx_CCSet_removeObject(JSContext *cx, uint32_t argc, jsval *vp);
-JSBool js_cocos2dx_CCSet_copy(JSContext *cx, uint32_t argc, jsval *vp);
-JSBool js_cocos2dx_CCSet_containsObject(JSContext *cx, uint32_t argc, jsval *vp);
-
 extern JSClass  *js_cocos2dx_CCSprite_class;
 extern JSObject *js_cocos2dx_CCSprite_prototype;
 
@@ -1472,7 +1488,6 @@ JSBool js_cocos2dx_CCDirector_setGLDefaultValues(JSContext *cx, uint32_t argc, j
 JSBool js_cocos2dx_CCDirector_resume(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_cocos2dx_CCDirector_setTouchDispatcher(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_cocos2dx_CCDirector_isNextDeltaTimeZero(JSContext *cx, uint32_t argc, jsval *vp);
-JSBool js_cocos2dx_CCDirector_endToLua(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_cocos2dx_CCDirector_setOpenGLView(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_cocos2dx_CCDirector_convertToGL(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_cocos2dx_CCDirector_purgeCachedData(JSContext *cx, uint32_t argc, jsval *vp);
@@ -2238,7 +2253,7 @@ void js_register_cocos2dx_CCMenuItemToggle(JSContext *cx, JSObject *global);
 void register_all_cocos2dx(JSContext* cx, JSObject* obj);
 JSBool js_cocos2dx_CCMenuItemToggle_setSubItems(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_cocos2dx_CCMenuItemToggle_initWithItem(JSContext *cx, uint32_t argc, jsval *vp);
-JSBool js_cocos2dx_CCMenuItemToggle_setSelectedIndex(JSContext *cx, uint32_t argc, jsval *vp);
+JSBool js_cocos2dx_CCMenuItemToggle_setColor(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_cocos2dx_CCMenuItemToggle_setEnabled(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_cocos2dx_CCMenuItemToggle_getSelectedIndex(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_cocos2dx_CCMenuItemToggle_addSubItem(JSContext *cx, uint32_t argc, jsval *vp);
@@ -2249,7 +2264,7 @@ JSBool js_cocos2dx_CCMenuItemToggle_getColor(JSContext *cx, uint32_t argc, jsval
 JSBool js_cocos2dx_CCMenuItemToggle_getOpacity(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_cocos2dx_CCMenuItemToggle_unselected(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_cocos2dx_CCMenuItemToggle_selectedItem(JSContext *cx, uint32_t argc, jsval *vp);
-JSBool js_cocos2dx_CCMenuItemToggle_setColor(JSContext *cx, uint32_t argc, jsval *vp);
+JSBool js_cocos2dx_CCMenuItemToggle_setSelectedIndex(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_cocos2dx_CCMenuItemToggle_itemWithItem(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_cocos2dx_CCMenuItemToggle_CCMenuItemToggle(JSContext *cx, uint32_t argc, jsval *vp);
 
@@ -2480,6 +2495,7 @@ JSBool js_cocos2dx_CCParticleSystem_getEndRadiusVar(JSContext *cx, uint32_t argc
 JSBool js_cocos2dx_CCParticleSystem_getStartColorVar(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_cocos2dx_CCParticleSystem_particleWithFile(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_cocos2dx_CCParticleSystem_create(JSContext *cx, uint32_t argc, jsval *vp);
+JSBool js_cocos2dx_CCParticleSystem_createWithTotalParticles(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_cocos2dx_CCParticleSystem_CCParticleSystem(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *js_cocos2dx_CCParticleSystemQuad_class;
@@ -2648,24 +2664,6 @@ JSBool js_cocos2dx_CCParticleRain_initWithTotalParticles(JSContext *cx, uint32_t
 JSBool js_cocos2dx_CCParticleRain_node(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_cocos2dx_CCParticleRain_create(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_cocos2dx_CCParticleRain_CCParticleRain(JSContext *cx, uint32_t argc, jsval *vp);
-
-extern JSClass  *js_cocos2dx_CCTouch_class;
-extern JSObject *js_cocos2dx_CCTouch_prototype;
-
-JSBool js_cocos2dx_CCTouch_constructor(JSContext *cx, uint32_t argc, jsval *vp);
-void js_cocos2dx_CCTouch_finalize(JSContext *cx, JSObject *obj);
-void js_register_cocos2dx_CCTouch(JSContext *cx, JSObject *global);
-void register_all_cocos2dx(JSContext* cx, JSObject* obj);
-JSBool js_cocos2dx_CCTouch_getPreviousLocationInView(JSContext *cx, uint32_t argc, jsval *vp);
-JSBool js_cocos2dx_CCTouch_getLocation(JSContext *cx, uint32_t argc, jsval *vp);
-JSBool js_cocos2dx_CCTouch_getDelta(JSContext *cx, uint32_t argc, jsval *vp);
-JSBool js_cocos2dx_CCTouch_setTouchInfo(JSContext *cx, uint32_t argc, jsval *vp);
-JSBool js_cocos2dx_CCTouch_getID(JSContext *cx, uint32_t argc, jsval *vp);
-JSBool js_cocos2dx_CCTouch_getLocationInView(JSContext *cx, uint32_t argc, jsval *vp);
-JSBool js_cocos2dx_CCTouch_locationInView(JSContext *cx, uint32_t argc, jsval *vp);
-JSBool js_cocos2dx_CCTouch_previousLocationInView(JSContext *cx, uint32_t argc, jsval *vp);
-JSBool js_cocos2dx_CCTouch_getPreviousLocation(JSContext *cx, uint32_t argc, jsval *vp);
-JSBool js_cocos2dx_CCTouch_CCTouch(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *js_cocos2dx_CCAnimationCache_class;
 extern JSObject *js_cocos2dx_CCAnimationCache_prototype;
