@@ -273,7 +273,7 @@ var SpriteFrameTest = function() {
 		var sprite1 = cc.Sprite.createWithSpriteFrameName("grossini_dance_01.png");
 		sprite1.setPosition( cc.p( winSize.width/2-80, winSize.height/2) );
 
-		var spritebatch = cc.SpriteBatchNode.create("animations/grossini.pvr.gz");
+		var spritebatch = cc.SpriteBatchNode.create("animations/grossini.pvr");
 		spritebatch.addChild(sprite1);
 		this.addChild( spritebatch );
 
@@ -529,7 +529,7 @@ var SpriteBatchOffsetAnchorFlip = function() {
 		cache.addSpriteFrames("animations/grossini.plist");
 		cache.addSpriteFrames("animations/grossini_gray.plist", "animations/grossini_gray.png");
 
-		var batch = cc.SpriteBatchNode.create("animations/grossini.pvr.gz");
+		var batch = cc.SpriteBatchNode.create("animations/grossini.pvr");
 
 		for(var i=0;i<3;i++) {
 			var sprite = cc.Sprite.createWithSpriteFrameName("grossini_dance_01.png");
