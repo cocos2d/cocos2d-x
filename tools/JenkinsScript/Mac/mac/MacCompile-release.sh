@@ -14,6 +14,7 @@ sed 's/Mac OS X 10.[0-9]//' tmp1.txt> tmp.txt
 #Use a for circulation to build each version of sdks
 cp tmp.txt $(pwd)/TestCpp/proj.mac
 cd TestCpp/proj.mac
+echo $sdk_num > sdk_num.txt
 for((i=1;i<=$sdk_num;i++))
 do
     a=$(sed -n '1p' tmp.txt)
@@ -22,6 +23,13 @@ do
 #Build release version
     xcodebuild -configuration Release $a
     compileresult=$[$compileresult+$?]
+    if [ $? == 0 ]; then
+        var1=build/Debug
+        var2=${a:(-4):4}
+        var3=${var1}${var2}
+        echo 'Debug'${var2} >> directory_name.txt
+        mv build/Debug $var3
+    fi
     sed -i '' '1d' tmp.txt
 done
 
