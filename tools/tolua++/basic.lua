@@ -178,6 +178,17 @@ local CCObjectTypes = {
     "CCTouch",
     "CCTouchDispatcher",
     "CCTouchHandler",
+	"CCParticleFire",
+	"CCParticleFireworks",
+	"CCParticleSun",
+	"CCParticleGalaxy",
+	"CCParticleFlower",
+	"CCParticleMeteor",
+	"CCParticleSpiral",
+	"CCParticleExplosion",
+	"CCParticleSmoke",
+	"CCParticleSnow",
+	"CCParticleRain",
 }
 
 -- register CCObject types

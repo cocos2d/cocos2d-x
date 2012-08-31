@@ -317,7 +317,7 @@ bool CCImage::_initWithPngData(void * pData, int nDatalen)
         m_nBitsPerComponent = png_get_bit_depth(png_ptr, info_ptr);
         png_uint_32 color_type = png_get_color_type(png_ptr, info_ptr);
 
-        CCLOG("color type %u", color_type);
+        //CCLOG("color type %u", color_type);
         
         // force palette images to be expanded to 24-bit RGB
         // it may include alpha channel
