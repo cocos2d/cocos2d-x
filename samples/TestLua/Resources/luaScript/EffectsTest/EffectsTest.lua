@@ -114,6 +114,8 @@ local function createTestLayer()
 
     testLayer:addChild(menu, 1)
 
+	testLayer:registerScriptHandler(onEnterOrExit)
+
 	return testLayer
 end
 

@@ -62,18 +62,48 @@ class CCParticleSystem : public CCNode
     void updateQuadWithParticle(tCCParticle* particle, const CCPoint& newPosition);
     void postStep();
 
+	unsigned int getParticleCount();
+	float getDuration();
+	void  setDuration(float d);
+	CCPoint getSourcePosition();
+	void  setSourcePosition(CCPoint pos);
+	CCPoint getPosVar();
+	void  setPosVar(CCPoint pos);
+	float getLife();
+	void  setLife(float life);
+	float getLifeVar();
+	void  setLifeVar(float lifeVar);
+	float getAngle();
+	void  setAngle(float angle);
+	float getAngleVar();
+	void  setAngleVar(float angle);
+
 	float getStartSize();
+	void  setStartSize(float size);
     float getStartSizeVar();
+	void  setStartSizeVar(float size);
     float getEndSize();
+	void  setEndSize(float size);
     float getEndSizeVar();
+	void  setEndSizeVar(float size);
+
+	void  setStartColor(ccColor4F var);
     const ccColor4F & getStartColor();
+	void  setStartColorVar(ccColor4F var);
     const ccColor4F & getStartColorVar();
+	void  setEndColor(ccColor4F var);
     const ccColor4F & getEndColor();
+	void  setEndColorVar(ccColor4F var);
     const ccColor4F & getEndColorVar();
+	void  setStartSpin(float var);
     float getStartSpin();
+	void  setStartSpinVar(float var);
     float getStartSpinVar();
+	void  setEndSpin(float var);
     float getEndSpin();
+	void  setEndSpinVar(float var);
     float getEndSpinVar();
+	void  setEmissionRate(float rate);
     float getEmissionRate();
     unsigned int getTotalParticles();
 
@@ -97,11 +127,20 @@ class CCParticleSystem : public CCNode
     bool isBlendAdditive();
     void setBlendAdditive(bool value);
 
+	CCParticleBatchNode* getBatchNode(void);
+	void setBatchNode(CCParticleBatchNode* node);
+	tCCPositionType getPositionType(void);
+	void setPositionType(tCCPositionType type);
+
+	bool initWithFile(const char* plistFile);
+	bool initWithTotalParticles(unsigned int number);
+
     static CCParticleSystem * create(const char *plistFile);
 };
 
 class CCParticleSystemQuad : public CCParticleSystem
 {
+	CCParticleSystemQuad(void);
 	void postStep();
 	void setDisplayFrame(CCSpriteFrame* spriteFrame);
 	void setTexture(CCTexture2D* texture);

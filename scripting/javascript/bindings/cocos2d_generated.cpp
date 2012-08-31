@@ -18210,7 +18210,7 @@ JSBool S_CCDirector::jsendToLua(JSContext *cx, uint32_t argc, jsval *vp) {
 	S_CCDirector* self = NULL; JSGET_PTRSHELL(S_CCDirector, self, obj);
 	if (self == NULL) return JS_FALSE;
 	if (argc == 0) {
-		self->endToLua();
+//		self->endToLua();
 		
 		JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 		return JS_TRUE;
