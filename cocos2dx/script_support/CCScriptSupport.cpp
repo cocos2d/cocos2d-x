@@ -114,14 +114,15 @@ void CCScriptEngineManager::setScriptEngine(CCScriptEngineProtocol *pScriptEngin
 {
     removeScriptEngine();
     m_pScriptEngine = pScriptEngine;
-    m_pScriptEngine->retain();
+//    m_pScriptEngine->retain();
 }
 
 void CCScriptEngineManager::removeScriptEngine(void)
 {
     if (m_pScriptEngine)
     {
-        m_pScriptEngine->release();
+        delete m_pScriptEngine;
+//        m_pScriptEngine->release();
         m_pScriptEngine = NULL;
     }
 }

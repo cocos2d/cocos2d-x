@@ -50,20 +50,14 @@
 # define XMLFILTER_INIT                 js_InitNullClass
 #endif
 
-#if JS_HAS_GENERATORS
-# define GENERATOR_INIT                 js_InitIteratorClasses
-#else
-# define GENERATOR_INIT                 js_InitNullClass
-#endif
-
 /*
  * Enumerator codes in the second column must not change -- they are part of
  * the JS XDR API.  Client modules including jsproto.tbl should consider
  * wrapping the inclusion with JS_BEGIN_EXTERN_C and JS_END_EXTERN_C.
  */
 JS_PROTO(Null,                   0,     js_InitNullClass)
-JS_PROTO(Object,                 1,     js_InitFunctionAndObjectClasses)
-JS_PROTO(Function,               2,     js_InitFunctionAndObjectClasses)
+JS_PROTO(Object,                 1,     js_InitObjectClass)
+JS_PROTO(Function,               2,     js_InitFunctionClass)
 JS_PROTO(Array,                  3,     js_InitArrayClass)
 JS_PROTO(Boolean,                4,     js_InitBooleanClass)
 JS_PROTO(JSON,                   5,     js_InitJSONClass)
@@ -75,33 +69,32 @@ JS_PROTO(RegExp,                10,     js_InitRegExpClass)
 JS_PROTO(XML,                   11,     XML_INIT)
 JS_PROTO(Namespace,             12,     NAMESPACE_INIT)
 JS_PROTO(QName,                 13,     QNAME_INIT)
-JS_PROTO(Reflect,               14,     js_InitReflectClass)
-JS_PROTO(ASTNode,               15,     js_InitReflectClass)
-JS_PROTO(Error,                 16,     js_InitExceptionClasses)
-JS_PROTO(InternalError,         17,     js_InitExceptionClasses)
-JS_PROTO(EvalError,             18,     js_InitExceptionClasses)
-JS_PROTO(RangeError,            19,     js_InitExceptionClasses)
-JS_PROTO(ReferenceError,        20,     js_InitExceptionClasses)
-JS_PROTO(SyntaxError,           21,     js_InitExceptionClasses)
-JS_PROTO(TypeError,             22,     js_InitExceptionClasses)
-JS_PROTO(URIError,              23,     js_InitExceptionClasses)
-JS_PROTO(Generator,             24,     GENERATOR_INIT)
-JS_PROTO(Iterator,              25,     js_InitIteratorClasses)
-JS_PROTO(StopIteration,         26,     js_InitIteratorClasses)
-JS_PROTO(ArrayBuffer,           27,     js_InitTypedArrayClasses)
-JS_PROTO(Int8Array,             28,     js_InitTypedArrayClasses)
-JS_PROTO(Uint8Array,            29,     js_InitTypedArrayClasses)
-JS_PROTO(Int16Array,            30,     js_InitTypedArrayClasses)
-JS_PROTO(Uint16Array,           31,     js_InitTypedArrayClasses)
-JS_PROTO(Int32Array,            32,     js_InitTypedArrayClasses)
-JS_PROTO(Uint32Array,           33,     js_InitTypedArrayClasses)
-JS_PROTO(Float32Array,          34,     js_InitTypedArrayClasses)
-JS_PROTO(Float64Array,          35,     js_InitTypedArrayClasses)
-JS_PROTO(Uint8ClampedArray,     36,     js_InitTypedArrayClasses)
-JS_PROTO(Proxy,                 37,     js_InitProxyClass)
-JS_PROTO(AnyName,               38,     js_InitNullClass)
+JS_PROTO(Error,                 14,     js_InitExceptionClasses)
+JS_PROTO(InternalError,         15,     js_InitExceptionClasses)
+JS_PROTO(EvalError,             16,     js_InitExceptionClasses)
+JS_PROTO(RangeError,            17,     js_InitExceptionClasses)
+JS_PROTO(ReferenceError,        18,     js_InitExceptionClasses)
+JS_PROTO(SyntaxError,           19,     js_InitExceptionClasses)
+JS_PROTO(TypeError,             20,     js_InitExceptionClasses)
+JS_PROTO(URIError,              21,     js_InitExceptionClasses)
+JS_PROTO(Iterator,              22,     js_InitIteratorClasses)
+JS_PROTO(StopIteration,         23,     js_InitIteratorClasses)
+JS_PROTO(ArrayBuffer,           24,     js_InitTypedArrayClasses)
+JS_PROTO(Int8Array,             25,     js_InitTypedArrayClasses)
+JS_PROTO(Uint8Array,            26,     js_InitTypedArrayClasses)
+JS_PROTO(Int16Array,            27,     js_InitTypedArrayClasses)
+JS_PROTO(Uint16Array,           28,     js_InitTypedArrayClasses)
+JS_PROTO(Int32Array,            29,     js_InitTypedArrayClasses)
+JS_PROTO(Uint32Array,           30,     js_InitTypedArrayClasses)
+JS_PROTO(Float32Array,          31,     js_InitTypedArrayClasses)
+JS_PROTO(Float64Array,          32,     js_InitTypedArrayClasses)
+JS_PROTO(Uint8ClampedArray,     33,     js_InitTypedArrayClasses)
+JS_PROTO(Proxy,                 34,     js_InitProxyClass)
+JS_PROTO(AnyName,               35,     js_InitNullClass)
+JS_PROTO(WeakMap,               36,     js_InitWeakMapClass)
+JS_PROTO(Map,                   37,     js_InitMapClass)
+JS_PROTO(Set,                   38,     js_InitSetClass)
 
 #undef XML_INIT
 #undef NAMESPACE_INIT
 #undef QNAME_INIT
-#undef GENERATOR_INIT
