@@ -83,6 +83,8 @@ class CCNode : public CCObject
 	void    setGLServerState(ccGLServerState state);
 	CCActionManager* getActionManager();
 	void    setActionManager(CCActionManager* pActionMgr);
+	ccGLServerState getGLServerState(void);
+	void    setGLServerState(ccGLServerState state);
 	CCScheduler* getScheduler();
 	void    setScheduler(CCScheduler* pScheduler);
     void    addChild(CCNode * child, int zOrder, int tag);

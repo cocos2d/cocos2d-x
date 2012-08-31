@@ -1,4 +1,11 @@
 
+typedef enum {
+    kCCDirectorProjection2D,
+    kCCDirectorProjection3D,
+    kCCDirectorProjectionCustom,
+    kCCDirectorProjectionDefault = kCCDirectorProjection3D,
+} ccDirectorProjection;
+
 class CCDirector : public CCObject
 {
     CCScene* getRunningScene(void);
@@ -39,6 +46,15 @@ class CCDirector : public CCObject
     CCAccelerometer* getAccelerometer();
 
 	void setDepthTest(bool var);
+	void setProjection(ccDirectorProjection kProjection);
+	ccDirectorProjection getProjection(void);
+
+	CCNode* getNotificationNode();
+    void setNotificationNode(CCNode *node);
+
+	float getZEye(void);
+	CCSize getVisibleSize();
+    CCPoint getVisibleOrigin();
 
     static CCDirector* sharedDirector(void);
 };
