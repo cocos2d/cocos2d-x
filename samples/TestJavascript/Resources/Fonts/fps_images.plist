@@ -5,7 +5,7 @@
 	<key>version</key>
 	<integer>1</integer>
 	<key>textureFilename</key>
-	<string>fps_images.png</string>
+	<string>Fonts/fps_images.png</string>
 	<key>itemWidth</key>
 	<integer>12</integer>
 	<key>itemHeight</key>

@@ -43,7 +43,7 @@ class CCLuaEngine : public CCScriptEngineProtocol
 {
 public:
     ~CCLuaEngine();
-    
+    virtual ccScriptType getScriptType() { return kScriptTypeLua; };
     /**
      @brief Method used to get a pointer to the lua_State that the script module is attached to.
      @return A pointer to the lua_State that the script module is attached to.
@@ -98,8 +98,8 @@ public:
      @return The integer value returned from the script function.
      */
     virtual int executeFunctionByHandler(int nHandler, int numArgs = 0);
-    virtual int executeFunctionWithIntegerData(int nHandler, int data);
-    virtual int executeFunctionWithFloatData(int nHandler, float data);
+    virtual int executeFunctionWithIntegerData(int nHandler, int data, cocos2d::CCNode *self);
+    virtual int executeFunctionWithFloatData(int nHandler, float data, cocos2d::CCNode *self);
     virtual int executeFunctionWithBooleanData(int nHandler, bool data);
     virtual int executeFunctionWithCCObject(int nHandler, CCObject* pObject, const char* typeName);    
     virtual int pushIntegerToLuaStack(int data);
@@ -109,10 +109,10 @@ public:
     
     // functions for excute touch event
     virtual int executeTouchEvent(int nHandler, int eventType, cocos2d::CCTouch *pTouch);
-    virtual int executeTouchesEvent(int nHandler, int eventType, cocos2d::CCSet *pTouches);
+    virtual int executeTouchesEvent(int nHandler, int eventType, cocos2d::CCSet *pTouches, cocos2d::CCNode *self);
     
     // execute a schedule function
-    virtual int executeSchedule(int nHandler, float dt);
+    virtual int executeSchedule(int nHandler, float dt, cocos2d::CCNode *self);
     
     // Add lua loader, now it is used on android
     virtual void addLuaLoader(lua_CFunction func);
