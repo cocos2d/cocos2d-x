@@ -1,3 +1,4 @@
+
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
@@ -97,7 +98,15 @@ CCLayer *CCLayer::create()
 
 void CCLayer::registerWithTouchDispatcher()
 {
+    
+//#ifdef COCOS2D_JAVASCRIPT
+//    this->registerScriptTouchHandler(1, true, 1, true);
+//#endif
+    
     CCDirector* pDirector = CCDirector::sharedDirector();
+#ifdef COCOS2D_JAVASCRIPT
+    pDirector->getTouchDispatcher()->addStandardDelegate(this, 0);
+#else
     if (m_pScriptHandlerEntry)
     {
         if (m_pScriptHandlerEntry->isMultiTouches())
@@ -108,13 +117,15 @@ void CCLayer::registerWithTouchDispatcher()
         else
         {
             pDirector->getTouchDispatcher()->addTargetedDelegate(this,
-                                                                       m_pScriptHandlerEntry->getPriority(),
-                                                                       m_pScriptHandlerEntry->getSwallowsTouches());
+								 m_pScriptHandlerEntry->getPriority(),
+								 m_pScriptHandlerEntry->getSwallowsTouches());
             LUALOG("[LUA] Add touch event handler: %d", m_pScriptHandlerEntry->getHandler());
         }
         return;
     }
-    pDirector->getTouchDispatcher()->addStandardDelegate(this,0);
+
+#endif
+       
 }
 
 void CCLayer::registerScriptTouchHandler(int nHandler, bool bIsMultiTouches, int nPriority, bool bSwallowsTouches)
@@ -140,7 +151,11 @@ int CCLayer::excuteScriptTouchHandler(int nEventType, CCTouch *pTouch)
 
 int CCLayer::excuteScriptTouchHandler(int nEventType, CCSet *pTouches)
 {
+#ifdef COCOS2D_JAVASCRIPT
+    return CCScriptEngineManager::sharedManager()->getScriptEngine()->executeTouchesEvent(1, nEventType, pTouches, (CCNode *)this);
+#else
     return CCScriptEngineManager::sharedManager()->getScriptEngine()->executeTouchesEvent(m_pScriptHandlerEntry->getHandler(), nEventType, pTouches);
+#endif
 }
 
 /// isTouchEnabled getter
@@ -288,10 +303,14 @@ void CCLayer::onEnterTransitionDidFinish()
 
 bool CCLayer::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 {
+#ifdef COCOS2D_JAVASCRIPT
+    return excuteScriptTouchHandler(CCTOUCHBEGAN, pTouch) == 0 ? false : true;
+#else
     if (m_pScriptHandlerEntry)
     {
         return excuteScriptTouchHandler(CCTOUCHBEGAN, pTouch) == 0 ? false : true;
     }
+#endif
     CC_UNUSED_PARAM(pTouch);
     CC_UNUSED_PARAM(pEvent);
     CCAssert(false, "Layer#ccTouchBegan override me");
@@ -299,81 +318,118 @@ bool CCLayer::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 }
 
 void CCLayer::ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent) {
+#ifdef COCOS2D_JAVASCRIPT
+    excuteScriptTouchHandler(CCTOUCHMOVED, pTouch);
+    return;
+#else
     if (m_pScriptHandlerEntry)
     {
         excuteScriptTouchHandler(CCTOUCHMOVED, pTouch);
         return;
     }
+#endif
     CC_UNUSED_PARAM(pTouch);
     CC_UNUSED_PARAM(pEvent);
 }
     
 void CCLayer::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent) {
+#ifdef COCOS2D_JAVASCRIPT
+    excuteScriptTouchHandler(CCTOUCHENDED, pTouch);
+    return;
+#else
     if (m_pScriptHandlerEntry)
     {
         excuteScriptTouchHandler(CCTOUCHENDED, pTouch);
         return;
     }
+#endif
     CC_UNUSED_PARAM(pTouch);
     CC_UNUSED_PARAM(pEvent);
 }
 
 void CCLayer::ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent) {
+#ifdef COCOS2D_JAVASCRIPT
+    excuteScriptTouchHandler(CCTOUCHCANCELLED, pTouch);
+    return;
+#else   
     if (m_pScriptHandlerEntry)
     {
         excuteScriptTouchHandler(CCTOUCHCANCELLED, pTouch);
         return;
     }
+#endif
     CC_UNUSED_PARAM(pTouch);
     CC_UNUSED_PARAM(pEvent);
 }    
 
 void CCLayer::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
 {
+ 
+    
+#ifdef COCOS2D_JAVASCRIPT
+    excuteScriptTouchHandler(CCTOUCHBEGAN, pTouches);
+    return;
+#else
     if (m_pScriptHandlerEntry)
     {
         excuteScriptTouchHandler(CCTOUCHBEGAN, pTouches);
         return;
     }
+#endif
+    
     CC_UNUSED_PARAM(pTouches);
     CC_UNUSED_PARAM(pEvent);
 }
 
 void CCLayer::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
 {
+#ifdef COCOS2D_JAVASCRIPT
+    excuteScriptTouchHandler(CCTOUCHMOVED, pTouches);
+    return;
+#else 
     if (m_pScriptHandlerEntry)
     {
         excuteScriptTouchHandler(CCTOUCHMOVED, pTouches);
         return;
     }
+#endif
     CC_UNUSED_PARAM(pTouches);
     CC_UNUSED_PARAM(pEvent);
 }
 
 void CCLayer::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
 {
+#ifdef COCOS2D_JAVASCRIPT
+    excuteScriptTouchHandler(CCTOUCHENDED, pTouches);
+    return;
+#else
     if (m_pScriptHandlerEntry)
     {
         excuteScriptTouchHandler(CCTOUCHENDED, pTouches);
         return;
     }
+#endif
     CC_UNUSED_PARAM(pTouches);
     CC_UNUSED_PARAM(pEvent);
 }
 
 void CCLayer::ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent)
 {
+#ifdef COCOS2D_JAVASCRIPT
+    excuteScriptTouchHandler(CCTOUCHCANCELLED, pTouches);
+    return;
+#else
     if (m_pScriptHandlerEntry)
     {
         excuteScriptTouchHandler(CCTOUCHCANCELLED, pTouches);
         return;
     }
+#endif
     CC_UNUSED_PARAM(pTouches);
     CC_UNUSED_PARAM(pEvent);
 }
 
 /// ColorLayer
-
 
 CCLayerColor::CCLayerColor()
 : m_cOpacity(0)
@@ -558,6 +614,7 @@ void CCLayerColor::draw()
 //
 // CCLayerGradient
 // 
+
 CCLayerGradient* CCLayerGradient::layerWithColor(const ccColor4B& start, const ccColor4B& end)
 {
     return CCLayerGradient::create(start, end);

@@ -310,7 +310,10 @@ public:
     */
     CC_DEPRECATED_ATTRIBUTE static CCEaseElastic* actionWithAction(CCActionInterval *pAction, float fPeriod = 0.3f);
     /** Creates the action with the inner action and the period in radians (default is 0.3) */
-    static CCEaseElastic* create(CCActionInterval *pAction, float fPeriod = 0.3f);
+    static CCEaseElastic* create(CCActionInterval *pAction, float fPeriod);
+    static CCEaseElastic* create(CCActionInterval *pAction) {
+        return CCEaseElastic::create(pAction, 0.3f);
+    }
 protected:
     float m_fPeriod;
 };
@@ -334,7 +337,10 @@ public:
     */
     CC_DEPRECATED_ATTRIBUTE static CCEaseElasticIn* actionWithAction(CCActionInterval *pAction, float fPeriod = 0.3f);
     /** Creates the action with the inner action and the period in radians (default is 0.3) */
-    static CCEaseElasticIn* create(CCActionInterval *pAction, float fPeriod = 0.3f);
+    static CCEaseElasticIn* create(CCActionInterval *pAction, float fPeriod);
+    static CCEaseElasticIn* create(CCActionInterval *pAction) {
+        return CCEaseElasticIn::create(pAction, 0.3f);
+    }
 };
 
 /** 
@@ -357,7 +363,10 @@ public:
     CC_DEPRECATED_ATTRIBUTE static CCEaseElasticOut* actionWithAction(CCActionInterval *pAction, float fPeriod = 0.3f);
 
     /** Creates the action with the inner action and the period in radians (default is 0.3) */
-    static CCEaseElasticOut* create(CCActionInterval *pAction, float fPeriod = 0.3f);
+    static CCEaseElasticOut* create(CCActionInterval *pAction, float fPeriod);
+    static CCEaseElasticOut* create(CCActionInterval *pAction) {
+        return CCEaseElasticOut::create(pAction, 0.3f);
+    }
 };
 
 /** 
@@ -380,7 +389,10 @@ public:
     CC_DEPRECATED_ATTRIBUTE static CCEaseElasticInOut* actionWithAction(CCActionInterval *pAction, float fPeriod = 0.3f);
 
     /** Creates the action with the inner action and the period in radians (default is 0.3) */
-    static CCEaseElasticInOut* create(CCActionInterval *pAction, float fPeriod = 0.3f);
+    static CCEaseElasticInOut* create(CCActionInterval *pAction, float fPeriod);
+    static CCEaseElasticInOut* create(CCActionInterval *pAction) {
+        return CCEaseElasticInOut::create(pAction, 0.3f);
+    }
 };
 
 /** 
