@@ -796,10 +796,13 @@ void CCNode::onEnter()
     m_bIsRunning = true;
 
 #ifdef COCOS2D_JAVASCRIPT
-    CCScriptEngineManager::sharedManager()->getScriptEngine()->executeFunctionWithIntegerData(m_nScriptHandler, kCCNodeOnEnter, this);
+    if (CCScriptEngineManager::sharedManager()->getScriptEngine())
+    {
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeFunctionWithIntegerData(m_nScriptHandler, kCCNodeOnEnter, this);
+    }    
 #else
     if(m_nScriptHandler) {
-        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeFunctionWithIntegerData(m_nScriptHandler, kCCNodeOnEnter);
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeFunctionWithIntegerData(m_nScriptHandler, kCCNodeOnEnter, this);
     }
 #endif
     
@@ -809,7 +812,10 @@ void CCNode::onEnterTransitionDidFinish()
 {
     arrayMakeObjectsPerformSelector(m_pChildren, onEnterTransitionDidFinish, CCNode*);
 #ifdef COCOS2D_JAVASCRIPT
-    CCScriptEngineManager::sharedManager()->getScriptEngine()->executeFunctionWithIntegerData(m_nScriptHandler, kCCNodeOnEnterTransitionDidFinish, this);
+    if (CCScriptEngineManager::sharedManager()->getScriptEngine())
+    {
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeFunctionWithIntegerData(m_nScriptHandler, kCCNodeOnEnterTransitionDidFinish, this);
+    }
 #endif
 }
 
@@ -817,7 +823,11 @@ void CCNode::onExitTransitionDidStart()
 {
     arrayMakeObjectsPerformSelector(m_pChildren, onExitTransitionDidStart, CCNode*);
 #ifdef COCOS2D_JAVASCRIPT
-    CCScriptEngineManager::sharedManager()->getScriptEngine()->executeFunctionWithIntegerData(m_nScriptHandler, kCCNodeOnExitTransitionDidStart, this);
+    if (CCScriptEngineManager::sharedManager()->getScriptEngine())
+    {
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeFunctionWithIntegerData(m_nScriptHandler, kCCNodeOnExitTransitionDidStart, this);
+    }
+    
 #endif
 }
 
@@ -828,12 +838,14 @@ void CCNode::onExit()
     m_bIsRunning = false;
 
 #ifdef COCOS2D_JAVASCRIPT
-    CCScriptEngineManager::sharedManager()->getScriptEngine()->executeFunctionWithIntegerData(m_nScriptHandler, kCCNodeOnExit, this);
+    if (CCScriptEngineManager::sharedManager()->getScriptEngine())
+    {
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeFunctionWithIntegerData(m_nScriptHandler, kCCNodeOnExit, this);
+    }
 #else
-    
     if (m_nScriptHandler)
     {
-        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeFunctionWithIntegerData(m_nScriptHandler, kCCNodeOnExit);
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeFunctionWithIntegerData(m_nScriptHandler, kCCNodeOnExit, this);
     }
 #endif
 
