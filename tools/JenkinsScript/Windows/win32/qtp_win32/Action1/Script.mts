@@ -18,6 +18,12 @@ If Err.Number <> 0 Then
 		Dialog("TestCpp.exe").WinObject("DirectUIHWND").Click 21,235
 		Wait 1
 	End If
+
+	 If DIalog("Microsoft Visual C++ Runtime").Exist(3) Then
+		 Dialog("Microsoft Visual C++ Runtime").Activate
+		 Dialog("Microsoft Visual C++ Runtime").Move 872,177
+		 Wait 1
+	 End If
 	
     WriteLog Err.Number
     WriteLog Err.Description
@@ -34,6 +40,10 @@ If Err.Number <> 0 Then
 	
 	If Dialog("TestCpp.exe").Exist(3) Then
 		Dialog("TestCpp.exe").WinObject("关闭程序").Click
+	End If
+
+	If Dialog("Microsoft Visual C++ Runtime").Exist(3) Then
+		Dialog("Microsoft Visual C++ Runtime").WinButton("中止(A)").Click
 	End If
 	
 End If
