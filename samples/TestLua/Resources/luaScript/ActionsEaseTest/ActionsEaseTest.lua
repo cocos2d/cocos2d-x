@@ -16,18 +16,18 @@ local function backAction()
         SceneIdx = SceneIdx + MAX_LAYER
     end
 
-    return CreateActionsEaseleLayer()
+    return CreateActionsEaseLayer()
 end
 
 local function restartAction()
-	return CreateActionsEaseleLayer()
+	return CreateActionsEaseLayer()
 end
 
 local function nextAction()
 	SceneIdx = SceneIdx + 1
     SceneIdx = math.mod(SceneIdx, MAX_LAYER)
 
-    return CreateActionsEaseleLayer()
+    return CreateActionsEaseLayer()
 end
 
 local function backCallback(sender)
@@ -700,7 +700,7 @@ end
 -----------------------------------
 --  Actions Ease Test
 -----------------------------------
-function CreateActionsEaseleLayer()
+function CreateActionsEaseLayer()
 	if SceneIdx == 0 then
 		return SpriteEase()
 	elseif SceneIdx == 1  then
