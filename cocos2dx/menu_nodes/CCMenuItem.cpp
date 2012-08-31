@@ -119,18 +119,11 @@ void CCMenuItem::activate()
             (m_pListener->*m_pfnSelector)(this);
         }
         
-#ifdef COCOS2D_JAVASCRIPT
-        if (CCScriptEngineManager::sharedManager()->getScriptEngine())
+        if (  kScriptTypeJavascript == m_eScriptType ||
+            ( kScriptTypeLua == m_eScriptType && m_nScriptHandler != 0) )
         {
             CCScriptEngineManager::sharedManager()->getScriptEngine()->executeFunctionWithIntegerData(m_nScriptHandler, kCCMenuItemActivated, (CCNode *)this);
         }
-#else
-        // Lua
-        if (m_nScriptHandler)
-        {
-            CCScriptEngineManager::sharedManager()->getScriptEngine()->executeFunctionWithIntegerData(m_nScriptHandler, kCCMenuItemActivated, this);
-        }
-#endif
     }
 }
 

@@ -63,14 +63,14 @@ CCObject::~CCObject(void)
     {
         CCScriptEngineManager::sharedManager()->getScriptEngine()->removeCCObjectByID(m_nLuaID);
     }
-
-#ifdef COCOS2D_JAVASCRIPT
-    CCScriptEngineProtocol *engine = CCScriptEngineManager::sharedManager()->getScriptEngine();
-    if(engine != NULL) {
-        engine->removeJSObjectByCCObject(this); //cjh
+    else
+    {
+        CCScriptEngineProtocol* pEngine = CCScriptEngineManager::sharedManager()->getScriptEngine();
+        if (pEngine != NULL && pEngine->getScriptType() == kScriptTypeJavascript)
+        {
+            pEngine->removeJSObjectByCCObject(this);
+        }
     }
-#endif
-
 }
 
 CCObject* CCObject::copy()

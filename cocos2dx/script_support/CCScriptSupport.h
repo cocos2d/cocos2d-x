@@ -35,6 +35,12 @@ NS_CC_BEGIN
 
 class CCTimer;
 
+enum ccScriptType {
+    kScriptTypeNone = 0,
+    kScriptTypeLua,
+    kScriptTypeJavascript
+};
+
 /**
  * @addtogroup script_support
  * @{
@@ -120,6 +126,8 @@ class CC_DLL CCScriptEngineProtocol// : public CCObject
 {
 public:
     virtual ~CCScriptEngineProtocol() {};
+
+    virtual ccScriptType getScriptType() { return kScriptTypeNone; };
     /**
      @brief Method used to get a pointer to the lua_State that the script module is attached to.
      @return A pointer to the lua_State that the script module is attached to.

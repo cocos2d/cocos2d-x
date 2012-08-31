@@ -43,7 +43,7 @@ class CCLuaEngine : public CCScriptEngineProtocol
 {
 public:
     ~CCLuaEngine();
-    
+    virtual ccScriptType getScriptType() { return kScriptTypeLua; };
     /**
      @brief Method used to get a pointer to the lua_State that the script module is attached to.
      @return A pointer to the lua_State that the script module is attached to.
