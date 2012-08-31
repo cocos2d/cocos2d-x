@@ -301,11 +301,7 @@ void CCLayer::onEnterTransitionDidFinish()
 
 bool CCLayer::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 {
-    if (kScriptTypeJavascript == m_eScriptType)
-    {
-        return excuteScriptTouchHandler(CCTOUCHBEGAN, pTouch) == 0 ? false : true;
-    }
-    else if (kScriptTypeLua == m_eScriptType && m_pScriptHandlerEntry)
+    if (kScriptTypeJavascript == m_eScriptType || (kScriptTypeLua == m_eScriptType && m_pScriptHandlerEntry))
     {
         return excuteScriptTouchHandler(CCTOUCHBEGAN, pTouch) == 0 ? false : true;
     }
@@ -318,12 +314,7 @@ bool CCLayer::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 
 void CCLayer::ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
 {
-    if (kScriptTypeJavascript == m_eScriptType)
-    {
-        excuteScriptTouchHandler(CCTOUCHMOVED, pTouch);
-        return;
-    }
-    else if (kScriptTypeLua == m_eScriptType && m_pScriptHandlerEntry)
+    if (kScriptTypeJavascript == m_eScriptType || (kScriptTypeLua == m_eScriptType && m_pScriptHandlerEntry))
     {
         excuteScriptTouchHandler(CCTOUCHMOVED, pTouch);
         return;
@@ -335,12 +326,7 @@ void CCLayer::ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
     
 void CCLayer::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
 {
-    if (kScriptTypeJavascript == m_eScriptType)
-    {
-        excuteScriptTouchHandler(CCTOUCHENDED, pTouch);
-        return;
-    }
-    else if (kScriptTypeLua == m_eScriptType && m_pScriptHandlerEntry)
+    if (kScriptTypeJavascript == m_eScriptType || (kScriptTypeLua == m_eScriptType && m_pScriptHandlerEntry))
     {
         excuteScriptTouchHandler(CCTOUCHENDED, pTouch);
         return;
@@ -352,12 +338,7 @@ void CCLayer::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
 
 void CCLayer::ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent)
 {
-    if (kScriptTypeJavascript == m_eScriptType)
-    {
-        excuteScriptTouchHandler(CCTOUCHCANCELLED, pTouch);
-        return;
-    }
-    else if (kScriptTypeLua == m_eScriptType && m_pScriptHandlerEntry)
+    if (kScriptTypeJavascript == m_eScriptType || (kScriptTypeLua == m_eScriptType && m_pScriptHandlerEntry))
     {
         excuteScriptTouchHandler(CCTOUCHCANCELLED, pTouch);
         return;
@@ -369,12 +350,7 @@ void CCLayer::ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent)
 
 void CCLayer::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
 {
-    if (kScriptTypeJavascript == m_eScriptType)
-    {
-        excuteScriptTouchHandler(CCTOUCHBEGAN, pTouches);
-        return;
-    }
-    else if (kScriptTypeLua == m_eScriptType && m_pScriptHandlerEntry)
+    if (kScriptTypeJavascript == m_eScriptType || (kScriptTypeLua == m_eScriptType && m_pScriptHandlerEntry))
     {
         excuteScriptTouchHandler(CCTOUCHBEGAN, pTouches);
         return;
@@ -386,12 +362,7 @@ void CCLayer::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
 
 void CCLayer::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
 {
-    if (kScriptTypeJavascript == m_eScriptType)
-    {
-        excuteScriptTouchHandler(CCTOUCHMOVED, pTouches);
-        return;
-    }
-    else if (kScriptTypeLua == m_eScriptType && m_pScriptHandlerEntry)
+    if (kScriptTypeJavascript == m_eScriptType || (kScriptTypeLua == m_eScriptType && m_pScriptHandlerEntry))
     {
         excuteScriptTouchHandler(CCTOUCHMOVED, pTouches);
         return;
@@ -403,12 +374,7 @@ void CCLayer::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
 
 void CCLayer::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
 {
-    if (kScriptTypeJavascript == m_eScriptType)
-    {
-        excuteScriptTouchHandler(CCTOUCHENDED, pTouches);
-        return;
-    }
-    else if (kScriptTypeLua == m_eScriptType && m_pScriptHandlerEntry)
+    if (kScriptTypeJavascript == m_eScriptType || (kScriptTypeLua == m_eScriptType && m_pScriptHandlerEntry))
     {
         excuteScriptTouchHandler(CCTOUCHENDED, pTouches);
         return;
@@ -420,12 +386,7 @@ void CCLayer::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
 
 void CCLayer::ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent)
 {
-    if (kScriptTypeJavascript == m_eScriptType)
-    {
-        excuteScriptTouchHandler(CCTOUCHCANCELLED, pTouches);
-        return;
-    }
-    else if (kScriptTypeLua == m_eScriptType && m_pScriptHandlerEntry)
+    if (kScriptTypeJavascript == m_eScriptType || (kScriptTypeLua == m_eScriptType && m_pScriptHandlerEntry))
     {
         excuteScriptTouchHandler(CCTOUCHCANCELLED, pTouches);
         return;

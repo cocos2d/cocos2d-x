@@ -119,10 +119,13 @@ void CCMenuItem::activate()
             (m_pListener->*m_pfnSelector)(this);
         }
         
-        if (  kScriptTypeJavascript == m_eScriptType ||
-            ( kScriptTypeLua == m_eScriptType && m_nScriptHandler != 0) )
+        if (kScriptTypeJavascript == m_eScriptType)
         {
-            CCScriptEngineManager::sharedManager()->getScriptEngine()->executeFunctionWithIntegerData(m_nScriptHandler, kCCMenuItemActivated, (CCNode *)this);
+            CCScriptEngineManager::sharedManager()->getScriptEngine()->executeFunctionWithIntegerData(m_nScriptHandler, kCCMenuItemActivated, this);
+        }
+        else if( kScriptTypeLua == m_eScriptType && m_nScriptHandler != 0)
+        {
+            CCScriptEngineManager::sharedManager()->getScriptEngine()->executeFunctionWithIntegerData(m_nScriptHandler, getTag(), this);
         }
     }
 }
