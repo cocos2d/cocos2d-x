@@ -124,6 +124,7 @@ void CCLayer::registerWithTouchDispatcher()
         return;
     }
 
+    pDirector->getTouchDispatcher()->addStandardDelegate(this, 0);
 #endif
        
 }
@@ -154,7 +155,7 @@ int CCLayer::excuteScriptTouchHandler(int nEventType, CCSet *pTouches)
 #ifdef COCOS2D_JAVASCRIPT
     return CCScriptEngineManager::sharedManager()->getScriptEngine()->executeTouchesEvent(1, nEventType, pTouches, (CCNode *)this);
 #else
-    return CCScriptEngineManager::sharedManager()->getScriptEngine()->executeTouchesEvent(m_pScriptHandlerEntry->getHandler(), nEventType, pTouches);
+    return CCScriptEngineManager::sharedManager()->getScriptEngine()->executeTouchesEvent(m_pScriptHandlerEntry->getHandler(), nEventType, pTouches, this);
 #endif
 }
 

@@ -53,40 +53,59 @@ fi
 
 mkdir "$APP_ANDROID_ROOT"/assets
 
+copy_resources_into_assets(){
+for file in $1/*; do
+if [ -d "$file" ]; then
+copy_resources_into_assets "$file"
+else
+cp -f "$file" "$APP_ANDROID_ROOT"/assets
+fi
+done
+}
+
 # copy resources
 for file in "$APP_ROOT"/Resources/*
 do
 if [ -d "$file" ]; then
-    cp -rf "$file" "$APP_ANDROID_ROOT"/assets
+cp -rf "$file" "$APP_ANDROID_ROOT"/assets
 fi
+
 
 if [ -f "$file" ]; then
     cp "$file" "$APP_ANDROID_ROOT"/assets
 fi
 done
 
-# extra magic to deal with Images and Fonts for android
-for file in "$APP_ROOT"/Resources/Images/*
-do
-if [ -d "$file" ]; then
-    cp -rf "$file" "$APP_ANDROID_ROOT"/assets
+for file in "$APP_ANDROID_ROOT"/assets/Images/*; do
+if [ -d "$file" ];then
+copy_resources_into_assets "$file"
+else 
+cp -f "$file" "$APP_ANDROID_ROOT"/assets
 fi
 
-if [ -f "$file" ]; then
-    cp "$file" "$APP_ANDROID_ROOT"/assets
-fi
 done
+rm -rf "$APP_ANDROID_ROOT"/assets/Images
 
-for file in "$APP_ROOT"/Resources/Fonts/*
-do
-if [ -d "$file" ]; then
-    cp -rf "$file" "$APP_ANDROID_ROOT"/assets
+for file in "$APP_ANDROID_ROOT"/assets/Fonts/*; do
+if [ -d "$file" ];then
+copy_resources_into_assets "$file"
+else 
+cp -f "$file" "$APP_ANDROID_ROOT"/assets
 fi
 
-if [ -f "$file" ]; then
-    cp "$file" "$APP_ANDROID_ROOT"/assets
-fi
 done
+rm -rf "$APP_ANDROID_ROOT"/assets/Fonts
+
+rm -f "$APP_ANDROID_ROOT"/assets/landscape-1024x1024-rgba8888.pvr.gz
+rm -f "$APP_ANDROID_ROOT"/assets/test_image_rgba4444.pvr.gz
+rm -f "$APP_ANDROID_ROOT"/assets/test_1021x1024_a8.pvr.gz
+rm -f "$APP_ANDROID_ROOT"/assets/test_1021x1024_rgb888.pvr.gz
+rm -f "$APP_ANDROID_ROOT"/assets/test_1021x1024_rgba4444.pvr.gz
+rm -f "$APP_ANDROID_ROOT"/assets/test_1021x1024_rgba8888.pvr.gz
+rm -f "$APP_ANDROID_ROOT"/assets/test_image_rgba4444.pvr.gz
+rm -f "$APP_ANDROID_ROOT"/assets/texture1024x1024_rgba4444.pvr.gz
+rm -f "$APP_ANDROID_ROOT"/assets/PlanetCute-1024x1024-rgba4444.pvr.gz
+
 
 # copy js
 if [ -d "$APP_ROOT/js" ]; then
