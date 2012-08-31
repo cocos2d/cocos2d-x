@@ -35,6 +35,12 @@ NS_CC_BEGIN
 
 class CCTimer;
 
+enum ccScriptType {
+    kScriptTypeNone = 0,
+    kScriptTypeLua,
+    kScriptTypeJavascript
+};
+
 /**
  * @addtogroup script_support
  * @{
@@ -120,6 +126,8 @@ class CC_DLL CCScriptEngineProtocol// : public CCObject
 {
 public:
     virtual ~CCScriptEngineProtocol() {};
+
+    virtual ccScriptType getScriptType() { return kScriptTypeNone; };
     /**
      @brief Method used to get a pointer to the lua_State that the script module is attached to.
      @return A pointer to the lua_State that the script module is attached to.
@@ -175,23 +183,12 @@ public:
      */
     virtual int executeFunctionByHandler(int nHandler, int numArgs = 0) = 0;
     
-#ifdef COCOS2D_JAVASCRIPT
-    
     virtual int executeFunctionWithIntegerData(int nHandler, int data, CCNode *self) = 0;
     virtual int executeTouchesEvent(int nHandler, int eventType, CCSet *pTouches, CCNode *self) = 0;
     virtual int executeFunctionWithFloatData(int nHandler, float data, CCNode *self) = 0;
     
     // execute a schedule function
     virtual int executeSchedule(int nHandler, float dt, CCNode *self) = 0;
-    
-#else
-    virtual int executeFunctionWithIntegerData(int nHandler, int data) = 0;
-    virtual int executeTouchesEvent(int nHandler, int eventType, CCSet *pTouches) = 0;
-    virtual int executeFunctionWithFloatData(int nHandler, float data) = 0;
-    
-    // execute a schedule function
-    virtual int executeSchedule(int nHandler, float dt) = 0;
-#endif    
     
     virtual int executeFunctionWithBooleanData(int nHandler, bool data) = 0;
     virtual int executeFunctionWithCCObject(int nHandler, CCObject* pObject, const char* typeName) = 0;    

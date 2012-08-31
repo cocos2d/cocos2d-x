@@ -355,21 +355,18 @@ protected:
 O means Object.
 @since v0.99.5
 */
-#ifdef COCOS2D_JAVASCRIPT
+
 class CC_DLL CCCallFuncO : public CCCallFunc, public TypeInfo
-#else
-class CC_DLL CCCallFuncO : public CCCallFunc
-#endif
 {
 public:
     CCCallFuncO();
     virtual ~CCCallFuncO();
-#ifdef COCOS2D_JAVASCRIPT
+
     virtual long getClassTypeInfo() {
 	    static const long id = cocos2d::getHashCodeByString(typeid(cocos2d::CCCallFunc).name());
 		return id;
     }
-#endif
+
     /** creates the action with the callback 
     @deprecated: This interface will be deprecated sooner or later.
     typedef void (CCObject::*SEL_CallFuncO)(CCObject*);
