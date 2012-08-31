@@ -290,7 +290,7 @@ var SpriteFrameTest = function() {
 			frames.push( frame );
 		}
 
-		var animation = cc.Animation.create( frames, 0.3 );
+		var animation = cc.Animation.createWithSpriteFrames( frames, 0.3 );
 		// 14 frames * 1sec = 14 seconds
 		sprite1.runAction( cc.RepeatForever.create( cc.Animate.create( animation ) ) );
 
@@ -321,7 +321,7 @@ var SpriteFrameTest = function() {
 
 
 		moreFrames.concat( frames );
-		var animMixed = cc.Animation.create( moreFrames, 0.3 );
+		var animMixed = cc.Animation.createWithSpriteFrames( moreFrames, 0.3 );
 
 		// 32 frames * 1 seconds = 32 seconds
 		sprite2.runAction( cc.RepeatForever.create( cc.Animate.create( animMixed ) ) );
@@ -489,7 +489,7 @@ var SpriteOffsetAnchorFlip = function() {
 				frames.push( frame );
 			}
 
-			var animation = cc.Animation.create( frames, 0.3 );
+			var animation = cc.Animation.createWithSpriteFrames( frames, 0.3 );
 			sprite.runAction( cc.RepeatForever.create( cc.Animate.create( animation ) ) );
 
 			var flip = cc.FlipY.create( true );
@@ -563,7 +563,7 @@ var SpriteBatchOffsetAnchorFlip = function() {
 				frames.push( frame );
 			}
 
-			var animation = cc.Animation.create( frames, 0.3 );
+			var animation = cc.Animation.createWithSpriteFrames( frames, 0.3 );
 			sprite.runAction( cc.RepeatForever.create( cc.Animate.create( animation ) ) );
 
 			var flip = cc.FlipY.create( true );

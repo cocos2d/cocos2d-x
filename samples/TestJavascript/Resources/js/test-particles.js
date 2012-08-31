@@ -131,7 +131,7 @@ var BaseLayer = cc.LayerGradient.extend({
 
 
         //TODO
-        var labelAtlas = cc.LabelAtlas.create("0000", "fps_images.plist");
+        var labelAtlas = cc.LabelAtlas.create("0000", "Fonts/fps_images.plist");
         this.addChild(labelAtlas, 100, TAG_LABEL_ATLAS);
         labelAtlas.setPosition( cc.p( winSize.width - 66, 50));
 
