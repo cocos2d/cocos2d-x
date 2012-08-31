@@ -4,15 +4,15 @@
 compileresult=0
 
 cd ..
-cp -r iOS_SikuliTest.sikuli ../../../samples/TestCpp/proj.mac
-cd ../../../samples/TestCpp/proj.mac
+cp -r iOS_SikuliTest.sikuli ../../../samples/TestCpp/proj.ios
+cd ../../../samples/TestCpp/proj.ios
 sdk_num=$(sed -n '1p' sdk_num.txt)
 
 for((i=1;i<=$sdk_num;i++))
 do
     a=$(sed -n '1p' directory_name.txt)
     echo $a
-    $(pwd)/build/${a}/TestCpp.app/Contents/MacOS/TestCpp &
+    ./iphonesim launch $(pwd)/build/${a}/TestCpp.app &
     $SIKULI_HOME/sikuli-ide.sh -r $(pwd)/iOS_SikuliTest.sikuli     
 done
 

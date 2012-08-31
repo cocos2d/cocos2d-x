@@ -2,6 +2,7 @@
 #This script is used to finish a ios automated compiler.
 
 compileresult=0
+cp iphonesim ../../../../samples/TestCpp/proj.ios
 cd ../../../../samples
 #List simulator sdks
 xcodebuild -showsdks > tmp.txt
@@ -14,6 +15,7 @@ sed 's/Simulator - iOS [4-5].[0-9]//' tmp1.txt> tmp.txt
 #Use a for circulation to build each version of sdks
 cp tmp.txt $(pwd)/TestCpp/proj.ios
 cd TestCpp/proj.ios
+echo $sdk_num > sdk_num.txt
 for((i=1;i<=$sdk_num;i++))
 do
     a=$(sed -n '1p' tmp.txt)
@@ -22,6 +24,13 @@ do
 #Build debug version
     xcodebuild -configuration Debug $a
     compileresult=$[$compileresult+$?]
+    if [ $? == 0 ]; then
+        var1=build/Debug-iphonesimulator
+        var2=${a:(-3):3}
+        var3=${var1}${var2}
+        echo 'Debug-iphonesimulator'${var2} >> directory_name.txt
+        mv build/Debug-iphonesimulator $var3
+    fi
     sed -i '' '1d' tmp.txt
 done
 
