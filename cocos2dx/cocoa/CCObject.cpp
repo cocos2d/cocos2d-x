@@ -59,11 +59,11 @@ CCObject::~CCObject(void)
     }
 
     // if the object is referenced by Lua engine, remove it
-//    if (m_nLuaID)
-//    {
-//        CCScriptEngineManager::sharedManager()->getScriptEngine()->removeCCObjectByID(m_nLuaID);
-//    }
-//
+    if (m_nLuaID)
+    {
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->removeCCObjectByID(m_nLuaID);
+    }
+
 #ifdef COCOS2D_JAVASCRIPT
     CCScriptEngineProtocol *engine = CCScriptEngineManager::sharedManager()->getScriptEngine();
     if(engine != NULL) {

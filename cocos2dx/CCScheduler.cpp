@@ -161,12 +161,12 @@ void CCTimer::update(float dt)
                 {
                     (m_pTarget->*m_pfnSelector)(m_fElapsed);
                 }
-#ifndef COCOS2D_JAVASCRIPT
+//#ifndef COCOS2D_JAVASCRIPT
                 if (m_nScriptHandler)
                 {
-                    CCScriptEngineManager::sharedManager()->getScriptEngine()->executeSchedule(m_nScriptHandler, m_fElapsed);
+                    CCScriptEngineManager::sharedManager()->getScriptEngine()->executeSchedule(m_nScriptHandler, m_fElapsed, NULL);
                 }
-#endif
+//#endif
                 m_fElapsed = 0;
             }
         }    
@@ -181,12 +181,12 @@ void CCTimer::update(float dt)
                     {
                         (m_pTarget->*m_pfnSelector)(m_fElapsed);
                     }
-#ifndef COCOS2D_JAVASCRIPT
+//#ifndef COCOS2D_JAVASCRIPT
                     if (m_nScriptHandler)
                     {
-                        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeSchedule(m_nScriptHandler, m_fElapsed);
+                        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeSchedule(m_nScriptHandler, m_fElapsed, NULL);
                     }
-#endif
+//#endif
                     m_fElapsed = m_fElapsed - m_fDelay;
                     m_nTimesExecuted+=1;
                     m_bUseDelay = false;
@@ -200,12 +200,12 @@ void CCTimer::update(float dt)
                     {
                         (m_pTarget->*m_pfnSelector)(m_fElapsed);
                     }
-#ifndef COCOS2D_JAVASCRIPT
+//#ifndef COCOS2D_JAVASCRIPT
                     if (m_nScriptHandler)
                     {
-                        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeSchedule(m_nScriptHandler, m_fElapsed);
+                        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeSchedule(m_nScriptHandler, m_fElapsed, NULL);
                     }
-#endif
+//#endif
                     m_fElapsed = 0;
                     m_nTimesExecuted += 1;
 
