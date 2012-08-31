@@ -67,21 +67,6 @@ if [ -f "$file" ]; then
 fi
 done
 
-for file in "$APP_ANDROID_ROOT"/assets/Images/*; do
-if [ -d "$file" ];then
-	cp -rf "$file" "$APP_ANDROID_ROOT"/assets
-fi
-
-done
-
-
-for file in "$APP_ANDROID_ROOT"/assets/Fonts/*; do
-if [ -d "$file" ];then
-	cp -f "$file" "$APP_ANDROID_ROOT"/assets
-fi
-
-done
-rm -rf "$APP_ANDROID_ROOT"/assets/Fonts
 
 rm -f "$APP_ANDROID_ROOT"/assets/Images/landscape-1024x1024-rgba8888.pvr.gz
 rm -f "$APP_ANDROID_ROOT"/assets/Images/test_image_rgba4444.pvr.gz
