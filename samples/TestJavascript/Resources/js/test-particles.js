@@ -161,7 +161,7 @@ var BaseLayer = cc.LayerGradient.extend({
     onEnter:function () {
         // don't call super_.this()
         var pLabel = this.getChildByTag(1000);
-        //cjh pLabel.setString(this.title());
+        pLabel.setString(this.title());
     },
     title:function () {
         return "No title";
@@ -240,7 +240,7 @@ var BaseLayer = cc.LayerGradient.extend({
 
 var DemoFirework = BaseLayer.extend({
     onEnter:function () {
-        this._super();
+        //this._super();
 
         this._emitter = cc.ParticleFireworks.create();
         this._background.addChild(this._emitter, 10);
@@ -255,7 +255,7 @@ var DemoFirework = BaseLayer.extend({
 
 var DemoFire = BaseLayer.extend({
     onEnter:function () {
-        this._super();
+        //this._super();
 
         this._emitter = cc.ParticleFire.create();
         this._background.addChild(this._emitter, 10);
@@ -273,7 +273,7 @@ var DemoFire = BaseLayer.extend({
 
 var DemoSun = BaseLayer.extend({
     onEnter:function () {
-        this._super();
+        //this._super();
 
         this._emitter = cc.ParticleSun.create();
         this._background.addChild(this._emitter, 10);
@@ -288,7 +288,7 @@ var DemoSun = BaseLayer.extend({
 
 var DemoGalaxy = BaseLayer.extend({
     onEnter:function () {
-        this._super();
+        //this._super();
 
         this._emitter = cc.ParticleGalaxy.create();
         this._background.addChild(this._emitter, 10);
@@ -306,7 +306,7 @@ var DemoFlower = BaseLayer.extend({
         this._super();
     },
     onEnter:function () {
-        this._super();
+        //this._super();
 
         this._emitter = cc.ParticleFlower.create();
         this._background.addChild(this._emitter, 10);
@@ -322,7 +322,7 @@ var DemoFlower = BaseLayer.extend({
 
 var DemoBigFlower = BaseLayer.extend({
     onEnter:function () {
-        this._super();
+        //this._super();
 
         this._emitter = cc.ParticleSystem.createWithTotalParticles(50);
         //this._emitter.autorelease();
@@ -397,7 +397,7 @@ var DemoBigFlower = BaseLayer.extend({
 
 var DemoRotFlower = BaseLayer.extend({
     onEnter:function () {
-        this._super();
+        //this._super();
 
         this._emitter = cc.ParticleSystem.createWithTotalParticles( 150 );
 
@@ -471,7 +471,7 @@ var DemoRotFlower = BaseLayer.extend({
 
 var DemoMeteor = BaseLayer.extend({
     onEnter:function () {
-        this._super();
+        //this._super();
 
         this._emitter = cc.ParticleMeteor.create();
         this._background.addChild(this._emitter, 10);
@@ -486,7 +486,7 @@ var DemoMeteor = BaseLayer.extend({
 
 var DemoSpiral = BaseLayer.extend({
     onEnter:function () {
-        this._super();
+        //this._super();
 
         this._emitter = cc.ParticleSpiral.create();
         this._background.addChild(this._emitter, 10);
@@ -501,7 +501,7 @@ var DemoSpiral = BaseLayer.extend({
 
 var DemoExplosion = BaseLayer.extend({
     onEnter:function () {
-        this._super();
+        //this._super();
 
         this._emitter = cc.ParticleExplosion.create();
         this._background.addChild(this._emitter, 10);
@@ -518,7 +518,7 @@ var DemoExplosion = BaseLayer.extend({
 
 var DemoSmoke = BaseLayer.extend({
     onEnter:function () {
-        this._super();
+        //this._super();
 
         this._emitter = cc.ParticleSmoke.create();
         this._background.addChild(this._emitter, 10);
@@ -536,7 +536,7 @@ var DemoSmoke = BaseLayer.extend({
 
 var DemoSnow = BaseLayer.extend({
     onEnter:function () {
-        this._super();
+        //this._super();
 
         this._emitter = cc.ParticleSnow.create();
         this._background.addChild(this._emitter, 10);
@@ -577,7 +577,7 @@ var DemoSnow = BaseLayer.extend({
 
 var DemoRain = BaseLayer.extend({
     onEnter:function () {
-        this._super();
+        //this._super();
 
         this._emitter = cc.ParticleRain.create();
         this._background.addChild(this._emitter, 10);
@@ -596,7 +596,7 @@ var DemoRain = BaseLayer.extend({
 
 var DemoModernArt = BaseLayer.extend({
     onEnter:function () {
-        this._super();
+        //this._super();
 
         this._emitter = cc.ParticleSystem.createWithTotalParticles( 200 );
 
@@ -668,7 +668,7 @@ var DemoModernArt = BaseLayer.extend({
 
 var DemoRing = BaseLayer.extend({
     onEnter:function () {
-        this._super();
+        //this._super();
 
         this._emitter = cc.ParticleFlower.create();
 
@@ -691,7 +691,7 @@ var DemoRing = BaseLayer.extend({
 
 var ParallaxParticle = BaseLayer.extend({
     onEnter:function () {
-        this._super();
+        //this._super();
 
         this._background.getParent().removeChild(this._background, true);
         this._background = null;
@@ -729,17 +729,17 @@ var ParallaxParticle = BaseLayer.extend({
 var DemoFileParticle = BaseLayer.extend({
     _title:"",
     ctor:function (filename) {
-        this._super();
         this._title = filename;
+        this._super();
     },
     onEnter:function () {
-        this._super();
+        //this._super();
 
         this.removeChild(this._background, true);
         this._background = null;
 
         var filename = "Particles/" + this._title + ".plist";
-        this._emitter = cc.ParticleSystem.create( filename );
+        this._emitter = cc.ParticleSystemQuad.create( filename );
         this.addChild(this._emitter, 10);
 
         this.setEmitterPosition();
@@ -829,7 +829,7 @@ var DemoFileGalaxy= DemoFileParticle.extend({
 
 var RadiusMode1 = BaseLayer.extend({
     onEnter:function () {
-        this._super();
+        //this._super();
 
         this.removeChild(this._background, true);
         this._background = null;
@@ -904,7 +904,7 @@ var RadiusMode1 = BaseLayer.extend({
 
 var RadiusMode2 = BaseLayer.extend({
     onEnter:function () {
-        this._super();
+        //this._super();
 
         this.removeChild(this._background, true);
         this._background = null;
@@ -979,7 +979,7 @@ var RadiusMode2 = BaseLayer.extend({
 
 var Issue704 = BaseLayer.extend({
     onEnter:function () {
-        this._super();
+        //this._super();
 
         this.removeChild(this._background, true);
         this._background = null;
@@ -1062,12 +1062,12 @@ var Issue870 = BaseLayer.extend({
     _index:0,
     _elapsedTime:0,
     onEnter:function () {
-        this._super();
+        //this._super();
 
         this.removeChild(this._background, true);
         this._background = null;
 
-        var system = cc.ParticleSystem.create( "Particles/SpinningPeas.plist" );
+        var system = cc.ParticleSystemQuad.create( "Particles/SpinningPeas.plist" );
         system.setTextureWithRect(cc.TextureCache.getInstance().addImage("Images/particles.png"), cc.rect(0, 0, 32, 32));
         this.addChild(system, 10);
         this._emitter = system;
