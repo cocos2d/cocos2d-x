@@ -11,7 +11,7 @@ from email import Encoders
 from email.header import Header  
 import smtplib,email,os,sys
 
-if os.path.exists(os.getcwd()+'\\Monkeyrunner_Error.log'):
+if os.path.exists(os.getcwd()+'\\monkeyrunner_Error.log') or os.path.exists(os.getcwd()+'/monkeyrunner_Error.log'):
     print "Sending Monkeyrunner Test Report..."
     mail_from = 'redmine@cocos2d-x.org' #where the mail from
     mail_to  = ['739657621@qq.com','yangguangzaidongji@hotmail.com','yangguangzaidongji@gmail.com']
