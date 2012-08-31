@@ -133,11 +133,11 @@ var BaseLayer = cc.Layer.extend({
         }
 
         // Menu
-        var item1 = cc.MenuItemImage.create("b1.png", "b2.png", this, this.backCallback);
-        var item2 = cc.MenuItemImage.create("r1.png", "r2.png", this, this.restartCallback);
-        var item3 = cc.MenuItemImage.create("f1.png", "f2.png", this, this.nextCallback);
+        var item1 = cc.MenuItemImage.create("Images/b1.png", "Images/b2.png", this, this.backCallback);
+        var item2 = cc.MenuItemImage.create("Images/r1.png", "Images/r2.png", this, this.restartCallback);
+        var item3 = cc.MenuItemImage.create("Images/f1.png", "Images/f2.png", this, this.nextCallback);
         var item4 = cc.MenuItemFont.create("back", this, function() { require("js/main.js"); } );
-        item4.setFontSize( 22 );
+        cc.MenuItemFont.setFontSize( 22 );
 
         var menu = cc.Menu.create(item1, item2, item3, item4 );
 
@@ -815,7 +815,7 @@ var TMXIsoZorder = BaseLayer.extend({
         var s = map.getContentSize();
         map.setPosition(cc.p(-s.width / 2, 0));
 
-        this.tamara = cc.Sprite.create("grossinis_sister1.png");
+        this.tamara = cc.Sprite.create("Images/grossinis_sister1.png");
         map.addChild(this.tamara, map.getChildren().length);
 
         // move map to the center of the screen
@@ -875,7 +875,7 @@ var TMXOrthoZorder = BaseLayer.extend({
 
         var s = map.getContentSize();
 
-        this.tamara = cc.Sprite.create("grossinis_sister1.png");
+        this.tamara = cc.Sprite.create("Images/grossinis_sister1.png");
         map.addChild(this.tamara, map.getChildren().length, TAG_TILE_MAP);
         this.tamara.setAnchorPoint(cc.p(0.5, 0));
 

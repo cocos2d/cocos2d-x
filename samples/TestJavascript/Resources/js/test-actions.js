@@ -51,7 +51,9 @@ var loadScene = function (sceneIdx)
 //	scene.walkSceneGraph(0);
 
 	director.replaceScene( scene );
-   }
+    __jsc__.dumpRoot();
+    __jsc__.garbageCollect();
+}
 
 
 //
@@ -162,9 +164,9 @@ var BaseLayer = cc.LayerGradient.extend({
         }
 
         // Menu
-        var item1 = cc.MenuItemImage.create("b1.png", "b2.png", this, this.backCallback);
-        var item2 = cc.MenuItemImage.create("r1.png", "r2.png", this, this.restartCallback);
-        var item3 = cc.MenuItemImage.create("f1.png", "f2.png", this, this.nextCallback);
+        var item1 = cc.MenuItemImage.create("Images/b1.png", "Images/b2.png", this, this.backCallback);
+        var item2 = cc.MenuItemImage.create("Images/r1.png", "Images/r2.png", this, this.restartCallback);
+        var item3 = cc.MenuItemImage.create("Images/f1.png", "Images/f2.png", this, this.nextCallback);
         var item4 = cc.MenuItemFont.create("back", this, function() { require("js/main.js"); } );
         item4.setFontSize( 22 );
 
@@ -179,9 +181,9 @@ var BaseLayer = cc.LayerGradient.extend({
         this.addChild(menu, 1);
 
         // Setup Sprites for this:w
-        this._grossini = cc.Sprite.create("grossini.png");
-        this._tamara = cc.Sprite.create("grossinis_sister1.png");
-        this._kathia = cc.Sprite.create("grossinis_sister2.png");
+        this._grossini = cc.Sprite.create("Images/grossini.png");
+        this._tamara = cc.Sprite.create("Images/grossinis_sister1.png");
+        this._kathia = cc.Sprite.create("Images/grossinis_sister2.png");
         this.addChild(this._grossini, 1);
         this.addChild(this._tamara, 2);
         this.addChild(this._kathia, 3);
@@ -579,7 +581,7 @@ var ActionAnimate = BaseLayer.extend({
         //
         var animation = cc.Animation.create();
         for (var i = 1; i < 15; i++) {
-            var frameName = "grossini_dance_" + ((i < 10) ? ("0" + i) : i) + ".png";
+            var frameName = "Images/grossini_dance_" + ((i < 10) ? ("0" + i) : i) + ".png";
             animation.addSpriteFrameWithFilename(frameName);
         }
         animation.setDelayPerUnit(2.8 / 14);
@@ -1295,7 +1297,7 @@ var Issue1305 = BaseLayer.extend({
         this._super();
         this.centerSprites(0);
 
-        this._spriteTmp = cc.Sprite.create("grossini.png");
+        this._spriteTmp = cc.Sprite.create("Images/grossini.png");
         /* c++ can't support block, so we use CCCallFuncN instead.
          [spriteTmp_ runAction:[CCCallBlockN actionWithBlock:^(CCNode* node) {
          NSLog(@"This message SHALL ONLY appear when the sprite is added to the scene, NOT BEFORE");
@@ -1335,7 +1337,7 @@ var Issue1305_2 = BaseLayer.extend({
         this._super();
         this.centerSprites(0);
 
-        var spr = cc.Sprite.create("grossini.png");
+        var spr = cc.Sprite.create("Images/grossini.png");
         spr.setPosition(cc.p(200,200));
         this.addChild(spr);
 
@@ -1379,7 +1381,7 @@ var Issue1288 = BaseLayer.extend({
         this._super();
         this.centerSprites(0);
 
-        var spr = cc.Sprite.create("grossini.png");
+        var spr = cc.Sprite.create("Images/grossini.png");
         spr.setPosition(cc.p(100, 100));
         this.addChild(spr);
 
@@ -1403,7 +1405,7 @@ var Issue1288_2 = BaseLayer.extend({
         this._super();
         this.centerSprites(0);
 
-        var spr = cc.Sprite.create("grossini.png");
+        var spr = cc.Sprite.create("Images/grossini.png");
         spr.setPosition(cc.p(100, 100));
         this.addChild(spr);
 
@@ -1423,7 +1425,7 @@ var Issue1327 = BaseLayer.extend({
         this._super();
         this.centerSprites(0);
 
-        var spr = cc.Sprite.create("grossini.png");
+        var spr = cc.Sprite.create("Images/grossini.png");
         spr.setPosition(cc.p(100, 100));
         this.addChild(spr);
 

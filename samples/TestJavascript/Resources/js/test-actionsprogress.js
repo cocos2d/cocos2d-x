@@ -55,9 +55,9 @@ var loadScene = function (sceneIdx)
 //    __jsc__.garbageCollect();
 }
 
-var s_pathSister1 = "grossinis_sister1.png";
-var s_pathSister2 = "grossinis_sister2.png";
-var s_pathBlock = "blocks.png";
+var s_pathSister1 = "Images/grossinis_sister1.png";
+var s_pathSister2 = "Images/grossinis_sister2.png";
+var s_pathBlock = "Images/blocks.png";
 var s_grossiniPlist = "animations/grossini.plist";
 
 //
@@ -126,9 +126,9 @@ var BaseLayer = cc.LayerGradient.extend({
         }
 
         // Menu
-        var item1 = cc.MenuItemImage.create("b1.png", "b2.png", this, this.backCallback);
-        var item2 = cc.MenuItemImage.create("r1.png", "r2.png", this, this.restartCallback);
-        var item3 = cc.MenuItemImage.create("f1.png", "f2.png", this, this.nextCallback);
+        var item1 = cc.MenuItemImage.create("Images/b1.png", "Images/b2.png", this, this.backCallback);
+        var item2 = cc.MenuItemImage.create("Images/r1.png", "Images/r2.png", this, this.restartCallback);
+        var item3 = cc.MenuItemImage.create("Images/f1.png", "Images/f2.png", this, this.nextCallback);
         var item4 = cc.MenuItemFont.create("back", this, function() { require("js/main.js"); } );
         item4.setFontSize( 22 );
 

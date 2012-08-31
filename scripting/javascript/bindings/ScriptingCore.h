@@ -42,6 +42,8 @@ public:
 		return pInstance;
 	};
 
+    virtual ccScriptType getScriptType() { return kScriptTypeJavascript; };
+
 	lua_State* getLuaState(void) { return NULL; }
     
     /**

@@ -126,9 +126,9 @@ var BaseLayer = cc.LayerGradient.extend({
             this.addChild( labelbg,9);
         }
         // Menu
-        var item1 = cc.MenuItemImage.create("b1.png", "b2.png", this, this.backCallback);
-        var item2 = cc.MenuItemImage.create("r1.png", "r2.png", this, this.restartCallback);
-        var item3 = cc.MenuItemImage.create("f1.png", "f2.png", this, this.nextCallback);
+        var item1 = cc.MenuItemImage.create("Images/b1.png", "Images/b2.png", this, this.backCallback);
+        var item2 = cc.MenuItemImage.create("Images/r1.png", "Images/r2.png", this, this.restartCallback);
+        var item3 = cc.MenuItemImage.create("Images/f1.png", "Images/f2.png", this, this.nextCallback);
         var item4 = cc.MenuItemFont.create("back", this, function() { require("js/main.js"); } );
         item4.setFontSize( 22 );
 
@@ -144,9 +144,9 @@ var BaseLayer = cc.LayerGradient.extend({
         this.addChild(menu, 1);
 
         // Setup Sprites for this:w
-        this._grossini = cc.Sprite.create("grossini.png");
-        this._tamara = cc.Sprite.create("grossinis_sister1.png");
-        this._kathia = cc.Sprite.create("grossinis_sister2.png");
+        this._grossini = cc.Sprite.create("Images/grossini.png");
+        this._tamara = cc.Sprite.create("Images/grossinis_sister1.png");
+        this._kathia = cc.Sprite.create("Images/grossinis_sister2.png");
         this.addChild(this._grossini, 1);
         this.addChild(this._tamara, 2);
         this.addChild(this._kathia, 3);

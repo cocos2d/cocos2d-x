@@ -93,9 +93,9 @@ BaseLayer.prototype.onEnter = function() {
 	}
 
     // Menu
-    var item1 = cc.MenuItemImage.create("b1.png", "b2.png", this, this.backCallback);
-    var item2 = cc.MenuItemImage.create("r1.png", "r2.png", this, this.restartCallback);
-    var item3 = cc.MenuItemImage.create("f1.png", "f2.png", this, this.nextCallback);
+    var item1 = cc.MenuItemImage.create("Images/b1.png", "Images/b2.png", this, this.backCallback);
+    var item2 = cc.MenuItemImage.create("Images/r1.png", "Images/r2.png", this, this.restartCallback);
+    var item3 = cc.MenuItemImage.create("Images/f1.png", "Images/f2.png", this, this.nextCallback);
     var item4 = cc.MenuItemFont.create("back", this, function() { require("js/main.js"); } );
     item4.setFontSize( 22 );
 
@@ -188,7 +188,7 @@ ChipmunkSpriteTest.prototype.createPhysicsSprite = function( pos ) {
 	cp.shapeSetFriction( shape, 0.5 );
 	cp.spaceAddShape( this.space, shape );
 
-	var sprite = cc.PhysicsSprite.create("grossini.png");
+	var sprite = cc.PhysicsSprite.create("Images/grossini.png");
 	sprite.setBody( body );
 	return sprite;
 }
@@ -235,7 +235,7 @@ var ChipmunkSpriteBatchTest = function() {
 	goog.base(this);
 
 	// batch node
-	this.batch = cc.SpriteBatchNode.create('grossini.png', 50 );
+	this.batch = cc.SpriteBatchNode.create('Images/grossini.png', 50 );
 	this.addChild( this.batch );
 
 	this.addSprite = function( pos ) {
@@ -315,8 +315,8 @@ var ChipmunkCollisionTest = function() {
         this.initPhysics();
 		this.scheduleUpdate();
 
-		var sprite1 = this.createPhysicsSprite( cc.p(winSize.width/2, winSize.height-20), "grossini.png", 1);
-		var sprite2 = this.createPhysicsSprite( cc.p(winSize.width/2, 50), "grossinis_sister1.png", 2);
+		var sprite1 = this.createPhysicsSprite( cc.p(winSize.width/2, winSize.height-20), "Images/grossini.png", 1);
+		var sprite2 = this.createPhysicsSprite( cc.p(winSize.width/2, 50), "Images/grossinis_sister1.png", 2);
 
 		this.addChild( sprite1 );
 		this.addChild( sprite2 );
@@ -336,7 +336,7 @@ var ChipmunkCollisionTest = function() {
 	this.collisionBegin = function ( arbiter, space ) {
 
 		if( ! this.messageDisplayed ) {
-			var label = cc.LabelBMFont.create("Collision Detected", "bitmapFontTest5.fnt");
+			var label = cc.LabelBMFont.create("Collision Detected", "Fonts/bitmapFontTest5.fnt");
 			this.addChild( label );
 			label.setPosition( centerPos );
 			this.messageDisplayed = true;

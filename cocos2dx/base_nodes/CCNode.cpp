@@ -91,6 +91,9 @@ CCNode::CCNode(void)
     m_pActionManager->retain();
     m_pScheduler = director->getScheduler();
     m_pScheduler->retain();
+
+    CCScriptEngineProtocol* pEngine = CCScriptEngineManager::sharedManager()->getScriptEngine();
+    m_eScriptType = pEngine != NULL ? pEngine->getScriptType() : kScriptTypeNone;
 }
 
 CCNode::~CCNode(void)
@@ -795,30 +798,31 @@ void CCNode::onEnter()
 
     m_bIsRunning = true;
 
-#ifdef COCOS2D_JAVASCRIPT
-    CCScriptEngineManager::sharedManager()->getScriptEngine()->executeFunctionWithIntegerData(m_nScriptHandler, kCCNodeOnEnter, this);
-#else
-    if(m_nScriptHandler) {
-        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeFunctionWithIntegerData(m_nScriptHandler, kCCNodeOnEnter);
-    }
-#endif
-    
+    if (   (m_eScriptType == kScriptTypeLua && m_nScriptHandler != 0)
+        ||  m_eScriptType == kScriptTypeJavascript   )
+    {
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeFunctionWithIntegerData(m_nScriptHandler, kCCNodeOnEnter, this);
+    }    
 }
 
 void CCNode::onEnterTransitionDidFinish()
 {
     arrayMakeObjectsPerformSelector(m_pChildren, onEnterTransitionDidFinish, CCNode*);
-#ifdef COCOS2D_JAVASCRIPT
-    CCScriptEngineManager::sharedManager()->getScriptEngine()->executeFunctionWithIntegerData(m_nScriptHandler, kCCNodeOnEnterTransitionDidFinish, this);
-#endif
+
+    if (m_eScriptType == kScriptTypeJavascript)
+    {
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeFunctionWithIntegerData(m_nScriptHandler, kCCNodeOnEnterTransitionDidFinish, this);
+    }
 }
 
 void CCNode::onExitTransitionDidStart()
 {
     arrayMakeObjectsPerformSelector(m_pChildren, onExitTransitionDidStart, CCNode*);
-#ifdef COCOS2D_JAVASCRIPT
-    CCScriptEngineManager::sharedManager()->getScriptEngine()->executeFunctionWithIntegerData(m_nScriptHandler, kCCNodeOnExitTransitionDidStart, this);
-#endif
+
+    if (m_eScriptType == kScriptTypeJavascript)
+    {
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeFunctionWithIntegerData(m_nScriptHandler, kCCNodeOnExitTransitionDidStart, this);
+    }
 }
 
 void CCNode::onExit()
@@ -827,15 +831,11 @@ void CCNode::onExit()
 
     m_bIsRunning = false;
 
-#ifdef COCOS2D_JAVASCRIPT
-    CCScriptEngineManager::sharedManager()->getScriptEngine()->executeFunctionWithIntegerData(m_nScriptHandler, kCCNodeOnExit, this);
-#else
-    
-    if (m_nScriptHandler)
+    if (   (m_eScriptType == kScriptTypeLua && m_nScriptHandler != 0)
+        ||  m_eScriptType == kScriptTypeJavascript   )
     {
-        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeFunctionWithIntegerData(m_nScriptHandler, kCCNodeOnExit);
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeFunctionWithIntegerData(m_nScriptHandler, kCCNodeOnExit, this); 
     }
-#endif
 
     arrayMakeObjectsPerformSelector(m_pChildren, onExit, CCNode*);
 }

@@ -122,9 +122,9 @@ var BaseLayer = cc.LayerGradient.extend({
         }
 
         // Menu
-        var item1 = cc.MenuItemImage.create("b1.png", "b2.png", this, this.backCallback);
-        var item2 = cc.MenuItemImage.create("r1.png", "r2.png", this, this.restartCallback);
-        var item3 = cc.MenuItemImage.create("f1.png", "f2.png", this, this.nextCallback);
+        var item1 = cc.MenuItemImage.create("Images/b1.png", "Images/b2.png", this, this.backCallback);
+        var item2 = cc.MenuItemImage.create("Images/r1.png", "Images/r2.png", this, this.restartCallback);
+        var item3 = cc.MenuItemImage.create("Images/f1.png", "Images/f2.png", this, this.nextCallback);
         var item4 = cc.MenuItemFont.create("back", this, function() { require("js/main.js"); } );
         item4.setFontSize( 22 );
 
@@ -211,9 +211,9 @@ var MenuItemImageTest = BaseLayer.extend({
     onEnter:function () {
         this._super();
   
-        var item1 = cc.MenuItemImage.create("btn-play-normal.png", "btn-play-selected.png" );
-        var item2 = cc.MenuItemImage.create("btn-highscores-normal.png", "btn-highscores-selected.png", this, this.item_cb  );
-        var item3 = cc.MenuItemImage.create("btn-about-normal.png", "btn-about-selected.png", this, this.item_cb  );
+        var item1 = cc.MenuItemImage.create("Images/btn-play-normal.png", "Images/btn-play-selected.png" );
+        var item2 = cc.MenuItemImage.create("Images/btn-highscores-normal.png", "Images/btn-highscores-selected.png", this, this.item_cb  );
+        var item3 = cc.MenuItemImage.create("Images/btn-about-normal.png", "Images/btn-about-selected.png", this, this.item_cb  );
         
         // callback function can be modified in runtime
         item1.setCallback( this, this.item_cb );
@@ -237,7 +237,7 @@ var MenuItemImageTest = BaseLayer.extend({
         return "3 items. 3rd should be disabled.";
     },
     code:function () {
-        return "item = cc.MenuItemImage.create('normal.png', 'selected.png' , 'disabled.png', this, this.cb )";
+        return "item = cc.MenuItemImage.create('Images/normal.png', 'Images/selected.png' , 'Images/disabled.png', this, this.cb )";
     },
 
     // callback
@@ -269,14 +269,14 @@ var MenuItemSpriteTest = BaseLayer.extend({
    
         // Sprites can't be reused since they are children of MenuItem
         // If you want to reuse them, use "MenuItemImage" instead
-        var sprite1_1 = cc.Sprite.create("menuitemsprite.png", cc.rect(0, 23*2, 115, 23) );
-        var sprite2_1 = cc.Sprite.create("menuitemsprite.png", cc.rect(0, 23*1, 115, 23) );
-        var sprite1_2 = cc.Sprite.create("menuitemsprite.png", cc.rect(0, 23*2, 115, 23) );
-        var sprite2_2 = cc.Sprite.create("menuitemsprite.png", cc.rect(0, 23*1, 115, 23) );
-        var sprite3_2 = cc.Sprite.create("menuitemsprite.png", cc.rect(0, 23*0, 115, 23) );
-        var sprite1_3 = cc.Sprite.create("menuitemsprite.png", cc.rect(0, 23*2, 115, 23) );
-        var sprite2_3 = cc.Sprite.create("menuitemsprite.png", cc.rect(0, 23*1, 115, 23) );
-        var sprite3_3 = cc.Sprite.create("menuitemsprite.png", cc.rect(0, 23*0, 115, 23) );
+        var sprite1_1 = cc.Sprite.create("Images/menuitemsprite.png", cc.rect(0, 23*2, 115, 23) );
+        var sprite2_1 = cc.Sprite.create("Images/menuitemsprite.png", cc.rect(0, 23*1, 115, 23) );
+        var sprite1_2 = cc.Sprite.create("Images/menuitemsprite.png", cc.rect(0, 23*2, 115, 23) );
+        var sprite2_2 = cc.Sprite.create("Images/menuitemsprite.png", cc.rect(0, 23*1, 115, 23) );
+        var sprite3_2 = cc.Sprite.create("Images/menuitemsprite.png", cc.rect(0, 23*0, 115, 23) );
+        var sprite1_3 = cc.Sprite.create("Images/menuitemsprite.png", cc.rect(0, 23*2, 115, 23) );
+        var sprite2_3 = cc.Sprite.create("Images/menuitemsprite.png", cc.rect(0, 23*1, 115, 23) );
+        var sprite3_3 = cc.Sprite.create("Images/menuitemsprite.png", cc.rect(0, 23*0, 115, 23) );
 
         var item1 = cc.MenuItemSprite.create(sprite1_1, sprite2_1);
         var item2 = cc.MenuItemSprite.create(sprite1_2, sprite2_2, sprite3_2, this, this.item_cb);
@@ -335,7 +335,7 @@ var MenuItemLabelTest = BaseLayer.extend({
         this._super();
    
         var label1 = cc.LabelTTF.create("This is a LabelTTF item", "Arial", 24 );
-        var label2 = cc.LabelBMFont.create("And this is a LabelBMFont item", "futura-48.fnt" );
+        var label2 = cc.LabelBMFont.create("And this is a LabelBMFont item", "Fonts/futura-48.fnt" );
         var label3 = cc.LabelTTF.create("Disabled Item", "Arial", 24 );
 
         var item1 = cc.MenuItemLabel.create(label1);
@@ -393,9 +393,9 @@ var MenuItemToggleTest = BaseLayer.extend({
     onEnter:function () {
         this._super();
    
-        var label1 = cc.LabelBMFont.create("Volume Off", "futura-48.fnt" );
+        var label1 = cc.LabelBMFont.create("Volume Off", "Fonts/futura-48.fnt" );
         var item1 = cc.MenuItemLabel.create(label1);
-        var label2 = cc.LabelBMFont.create("Volume On", "futura-48.fnt" );
+        var label2 = cc.LabelBMFont.create("Volume On", "Fonts/futura-48.fnt" );
         var item2 = cc.MenuItemLabel.create(label2);
 
         var itema = cc.MenuItemFont.create("Sound Off");

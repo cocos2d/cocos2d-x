@@ -93,11 +93,11 @@ BaseLayer.prototype.onEnter = function() {
 	}
 
     // Menu
-    var item1 = cc.MenuItemImage.create("b1.png", "b2.png", this, this.backCallback);
-    var item2 = cc.MenuItemImage.create("r1.png", "r2.png", this, this.restartCallback);
-    var item3 = cc.MenuItemImage.create("f1.png", "f2.png", this, this.nextCallback);
+    var item1 = cc.MenuItemImage.create("Images/b1.png", "Images/b2.png", this, this.backCallback);
+    var item2 = cc.MenuItemImage.create("Images/r1.png", "Images/r2.png", this, this.restartCallback);
+    var item3 = cc.MenuItemImage.create("Images/f1.png", "Images/f2.png", this, this.nextCallback);
     var item4 = cc.MenuItemFont.create("back", this, function() { require("js/main.js"); } );
-    item4.setFontSize( 22 );
+    cc.MenuItemFont.setFontSize( 22 );
 
     var menu = cc.Menu.create(item1, item2, item3, item4 );
 
@@ -178,7 +178,7 @@ SpriteTouchTest.prototype.createSprite = function( pos ) {
 	var x = Math.floor(idx%5) * 85;
 	var y = Math.floor(idx/5) * 121;
 
-	var sprite  = cc.Sprite.create("grossini_dance_atlas.png", cc.rect(x,y,85,121) );
+	var sprite  = cc.Sprite.create("Images/grossini_dance_atlas.png", cc.rect(x,y,85,121) );
 	sprite.setPosition( pos );
 
 	var rand = Math.random();
@@ -213,7 +213,7 @@ var SpriteBatchTouchTest = function() {
 	goog.base(this);
 
 	this.initialize = function() {
-		this.batch = cc.SpriteBatchNode.create("grossini_dance_atlas.png", 50 );
+		this.batch = cc.SpriteBatchNode.create("Images/grossini_dance_atlas.png", 50 );
 		this.addChild( this.batch );
 
 		var platform = __getPlatform();
@@ -290,7 +290,7 @@ var SpriteFrameTest = function() {
 			frames.push( frame );
 		}
 
-		var animation = cc.Animation.create( frames, 0.3 );
+		var animation = cc.Animation.createWithSpriteFrames( frames, 0.3 );
 		// 14 frames * 1sec = 14 seconds
 		sprite1.runAction( cc.RepeatForever.create( cc.Animate.create( animation ) ) );
 
@@ -321,7 +321,7 @@ var SpriteFrameTest = function() {
 
 
 		moreFrames.concat( frames );
-		var animMixed = cc.Animation.create( moreFrames, 0.3 );
+		var animMixed = cc.Animation.createWithSpriteFrames( moreFrames, 0.3 );
 
 		// 32 frames * 1 seconds = 32 seconds
 		sprite2.runAction( cc.RepeatForever.create( cc.Animate.create( animMixed ) ) );
@@ -354,10 +354,10 @@ var SpriteAnchorPoint = function() {
 
 	this.initialize = function() {
 		for(var i=0;i<3;i++) {
-			var sprite = cc.Sprite.create("grossini_dance_atlas.png", cc.rect(85*i, 121*1, 85, 121) );
+			var sprite = cc.Sprite.create("Images/grossini_dance_atlas.png", cc.rect(85*i, 121*1, 85, 121) );
 			sprite.setPosition( cc.p( winSize.width/4*(i+1), winSize.height/2) );
 
-			var point = cc.Sprite.create( "r1.png" );
+			var point = cc.Sprite.create( "Images/r1.png" );
 			point.setScale( 0.25 );
 			point.setPosition( sprite.getPosition() );
 			this.addChild( point, 10 );
@@ -402,12 +402,12 @@ var SpriteBatchAnchorPoint = function() {
 	goog.base(this);
 
 	this.initialize = function() {
-		var batch = cc.SpriteBatchNode.create( "grossini_dance_atlas.png" );
+		var batch = cc.SpriteBatchNode.create( "Images/grossini_dance_atlas.png" );
 		for(var i=0;i<3;i++) {
-			var sprite = cc.Sprite.create("grossini_dance_atlas.png", cc.rect(85*i, 121*1, 85, 121) );
+			var sprite = cc.Sprite.create("Images/grossini_dance_atlas.png", cc.rect(85*i, 121*1, 85, 121) );
 			sprite.setPosition( cc.p( winSize.width/4*(i+1), winSize.height/2) );
 
-			var point = cc.Sprite.create( "r1.png" );
+			var point = cc.Sprite.create( "Images/r1.png" );
 			point.setScale( 0.25 );
 			point.setPosition( sprite.getPosition() );
 			this.addChild( point, 10 );
@@ -458,10 +458,10 @@ var SpriteOffsetAnchorFlip = function() {
 		cache.addSpriteFrames("animations/grossini_gray.plist", "animations/grossini_gray.png");
 
 		for(var i=0;i<3;i++) {
-			var sprite = cc.Sprite.create("grossini_dance_atlas.png", cc.rect(85*i, 121*1, 85, 121) );
+			var sprite = cc.Sprite.create("Images/grossini_dance_atlas.png", cc.rect(85*i, 121*1, 85, 121) );
 			sprite.setPosition( cc.p( winSize.width/4*(i+1), winSize.height/2) );
 
-			var point = cc.Sprite.create( "r1.png" );
+			var point = cc.Sprite.create( "Images/r1.png" );
 			point.setScale( 0.25 );
 			point.setPosition( sprite.getPosition() );
 			this.addChild( point, 10 );
@@ -489,7 +489,7 @@ var SpriteOffsetAnchorFlip = function() {
 				frames.push( frame );
 			}
 
-			var animation = cc.Animation.create( frames, 0.3 );
+			var animation = cc.Animation.createWithSpriteFrames( frames, 0.3 );
 			sprite.runAction( cc.RepeatForever.create( cc.Animate.create( animation ) ) );
 
 			var flip = cc.FlipY.create( true );
@@ -535,7 +535,7 @@ var SpriteBatchOffsetAnchorFlip = function() {
 			var sprite = cc.Sprite.createWithSpriteFrameName("grossini_dance_01.png");
 			sprite.setPosition( cc.p( winSize.width/4*(i+1), winSize.height/2) );
 
-			var point = cc.Sprite.create( "r1.png" );
+			var point = cc.Sprite.create( "Images/r1.png" );
 			point.setScale( 0.25 );
 			point.setPosition( sprite.getPosition() );
 			this.addChild( point, 10 );
@@ -563,7 +563,7 @@ var SpriteBatchOffsetAnchorFlip = function() {
 				frames.push( frame );
 			}
 
-			var animation = cc.Animation.create( frames, 0.3 );
+			var animation = cc.Animation.createWithSpriteFrames( frames, 0.3 );
 			sprite.runAction( cc.RepeatForever.create( cc.Animate.create( animation ) ) );
 
 			var flip = cc.FlipY.create( true );
@@ -601,14 +601,14 @@ var SpriteColorOpacity = function() {
 	goog.base(this);
 
 	this.initialize = function() {
-		var sprite1 = cc.Sprite.create('grossini_dance_atlas.png', cc.rect(85 * 0, 121 * 1, 85, 121));
-		var sprite2 = cc.Sprite.create('grossini_dance_atlas.png', cc.rect(85 * 1, 121 * 1, 85, 121));
-		var sprite3 = cc.Sprite.create('grossini_dance_atlas.png', cc.rect(85 * 2, 121 * 1, 85, 121));
-		var sprite4 = cc.Sprite.create('grossini_dance_atlas.png', cc.rect(85 * 3, 121 * 1, 85, 121));
-		var sprite5 = cc.Sprite.create('grossini_dance_atlas.png', cc.rect(85 * 0, 121 * 1, 85, 121));
-		var sprite6 = cc.Sprite.create('grossini_dance_atlas.png', cc.rect(85 * 1, 121 * 1, 85, 121));
-		var sprite7 = cc.Sprite.create('grossini_dance_atlas.png', cc.rect(85 * 2, 121 * 1, 85, 121));
-		var sprite8 = cc.Sprite.create('grossini_dance_atlas.png', cc.rect(85 * 3, 121 * 1, 85, 121));
+		var sprite1 = cc.Sprite.create('Images/grossini_dance_atlas.png', cc.rect(85 * 0, 121 * 1, 85, 121));
+		var sprite2 = cc.Sprite.create('Images/grossini_dance_atlas.png', cc.rect(85 * 1, 121 * 1, 85, 121));
+		var sprite3 = cc.Sprite.create('Images/grossini_dance_atlas.png', cc.rect(85 * 2, 121 * 1, 85, 121));
+		var sprite4 = cc.Sprite.create('Images/grossini_dance_atlas.png', cc.rect(85 * 3, 121 * 1, 85, 121));
+		var sprite5 = cc.Sprite.create('Images/grossini_dance_atlas.png', cc.rect(85 * 0, 121 * 1, 85, 121));
+		var sprite6 = cc.Sprite.create('Images/grossini_dance_atlas.png', cc.rect(85 * 1, 121 * 1, 85, 121));
+		var sprite7 = cc.Sprite.create('Images/grossini_dance_atlas.png', cc.rect(85 * 2, 121 * 1, 85, 121));
+		var sprite8 = cc.Sprite.create('Images/grossini_dance_atlas.png', cc.rect(85 * 3, 121 * 1, 85, 121));
 
 		sprite1.setPosition(cc.p((winSize.width / 5) * 1, (winSize.height / 3) * 1));
 		sprite2.setPosition(cc.p((winSize.width / 5) * 2, (winSize.height / 3) * 1));
@@ -677,15 +677,15 @@ var SpriteBatchColorOpacity = function() {
 	goog.base(this);
 
 	this.initialize = function() {
-		var batch = cc.SpriteBatchNode.create('grossini_dance_atlas.png', 10);
-		var sprite1 = cc.Sprite.create('grossini_dance_atlas.png', cc.rect(85 * 0, 121 * 1, 85, 121));
-		var sprite2 = cc.Sprite.create('grossini_dance_atlas.png', cc.rect(85 * 1, 121 * 1, 85, 121));
-		var sprite3 = cc.Sprite.create('grossini_dance_atlas.png', cc.rect(85 * 2, 121 * 1, 85, 121));
-		var sprite4 = cc.Sprite.create('grossini_dance_atlas.png', cc.rect(85 * 3, 121 * 1, 85, 121));
-		var sprite5 = cc.Sprite.create('grossini_dance_atlas.png', cc.rect(85 * 0, 121 * 1, 85, 121));
-		var sprite6 = cc.Sprite.create('grossini_dance_atlas.png', cc.rect(85 * 1, 121 * 1, 85, 121));
-		var sprite7 = cc.Sprite.create('grossini_dance_atlas.png', cc.rect(85 * 2, 121 * 1, 85, 121));
-		var sprite8 = cc.Sprite.create('grossini_dance_atlas.png', cc.rect(85 * 3, 121 * 1, 85, 121));
+		var batch = cc.SpriteBatchNode.create('Images/grossini_dance_atlas.png', 10);
+		var sprite1 = cc.Sprite.create('Images/grossini_dance_atlas.png', cc.rect(85 * 0, 121 * 1, 85, 121));
+		var sprite2 = cc.Sprite.create('Images/grossini_dance_atlas.png', cc.rect(85 * 1, 121 * 1, 85, 121));
+		var sprite3 = cc.Sprite.create('Images/grossini_dance_atlas.png', cc.rect(85 * 2, 121 * 1, 85, 121));
+		var sprite4 = cc.Sprite.create('Images/grossini_dance_atlas.png', cc.rect(85 * 3, 121 * 1, 85, 121));
+		var sprite5 = cc.Sprite.create('Images/grossini_dance_atlas.png', cc.rect(85 * 0, 121 * 1, 85, 121));
+		var sprite6 = cc.Sprite.create('Images/grossini_dance_atlas.png', cc.rect(85 * 1, 121 * 1, 85, 121));
+		var sprite7 = cc.Sprite.create('Images/grossini_dance_atlas.png', cc.rect(85 * 2, 121 * 1, 85, 121));
+		var sprite8 = cc.Sprite.create('Images/grossini_dance_atlas.png', cc.rect(85 * 3, 121 * 1, 85, 121));
 
 		sprite1.setPosition(cc.p((winSize.width / 5) * 1, (winSize.height / 3) * 1));
 		sprite2.setPosition(cc.p((winSize.width / 5) * 2, (winSize.height / 3) * 1));

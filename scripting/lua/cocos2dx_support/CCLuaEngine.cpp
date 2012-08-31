@@ -201,13 +201,13 @@ int CCLuaEngine::executeFunctionByHandler(int nHandler, int numArgs)
     }
 }
 
-int CCLuaEngine::executeFunctionWithIntegerData(int nHandler, int data)
+int CCLuaEngine::executeFunctionWithIntegerData(int nHandler, int data, CCNode *self)
 {
     lua_pushinteger(m_state, data);
     return executeFunctionByHandler(nHandler, 1);
 }
 
-int CCLuaEngine::executeFunctionWithFloatData(int nHandler, float data)
+int CCLuaEngine::executeFunctionWithFloatData(int nHandler, float data, CCNode *self)
 {
     lua_pushnumber(m_state, data);
     return executeFunctionByHandler(nHandler, 1);
@@ -259,7 +259,7 @@ int CCLuaEngine::executeTouchEvent(int nHandler, int eventType, CCTouch *pTouch)
     return executeFunctionByHandler(nHandler, 3);
 }
 
-int CCLuaEngine::executeTouchesEvent(int nHandler, int eventType, CCSet *pTouches)
+int CCLuaEngine::executeTouchesEvent(int nHandler, int eventType, CCSet *pTouches, CCNode *self)
 {
     lua_pushinteger(m_state, eventType);
     lua_newtable(m_state);
@@ -282,9 +282,9 @@ int CCLuaEngine::executeTouchesEvent(int nHandler, int eventType, CCSet *pTouche
     return executeFunctionByHandler(nHandler, 2);
 }
 
-int CCLuaEngine::executeSchedule(int nHandler, float dt)
+int CCLuaEngine::executeSchedule(int nHandler, float dt, CCNode *self)
 {
-    return executeFunctionWithFloatData(nHandler, dt);
+    return executeFunctionWithFloatData(nHandler, dt, self);
 }
 
 void CCLuaEngine::addLuaLoader(lua_CFunction func)

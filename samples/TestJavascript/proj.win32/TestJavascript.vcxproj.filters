@@ -16,35 +16,35 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\scripting\javascript\bindings\cocos2d_generated.cpp">
-      <Filter>bindings</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\scripting\javascript\bindings\cocos2d_manual_bindings.cpp">
-      <Filter>bindings</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\scripting\javascript\bindings\cocos_denshion_generated.cpp">
-      <Filter>bindings</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\scripting\javascript\bindings\ScriptingCore.cpp">
-      <Filter>bindings</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>win32</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\AppDelegate.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\scripting\javascript\bindings\CCPhysicsSprite.cpp">
+      <Filter>bindings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\scripting\javascript\bindings\cocos2d_specifics.cpp">
+      <Filter>bindings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\scripting\javascript\bindings\cocos2dx.cpp">
+      <Filter>bindings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\scripting\javascript\bindings\js_bindings_chipmunk_functions.cpp">
+      <Filter>bindings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\scripting\javascript\bindings\js_bindings_chipmunk_manual.cpp">
+      <Filter>bindings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\scripting\javascript\bindings\js_manual_conversions.cpp">
+      <Filter>bindings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\scripting\javascript\bindings\ScriptingCore.cpp">
+      <Filter>bindings</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\scripting\javascript\bindings\cocos2d_generated.hpp">
-      <Filter>bindings</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\scripting\javascript\bindings\cocos_denshion_generated.hpp">
-      <Filter>bindings</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\scripting\javascript\bindings\ScriptingCore.h">
-      <Filter>bindings</Filter>
-    </ClInclude>
     <ClInclude Include="main.h">
       <Filter>win32</Filter>
     </ClInclude>
@@ -54,17 +54,35 @@
     <ClInclude Include="..\Classes\AppDelegate.h">
       <Filter>Classes</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\scripting\javascript\bindings\CCPhysicsSprite.h">
+      <Filter>bindings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\scripting\javascript\bindings\cocos2d_specifics.hpp">
+      <Filter>bindings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\scripting\javascript\bindings\cocos2dx.hpp">
+      <Filter>bindings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\scripting\javascript\bindings\js_bindings_chipmunk_functions.hpp">
+      <Filter>bindings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\scripting\javascript\bindings\js_bindings_chipmunk_manual.hpp">
+      <Filter>bindings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\scripting\javascript\bindings\js_bindings_config.h">
+      <Filter>bindings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\scripting\javascript\bindings\js_manual_conversions.h">
+      <Filter>bindings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\scripting\javascript\bindings\ScriptingCore.h">
+      <Filter>bindings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\scripting\javascript\bindings\spidermonkey_specifics.h">
+      <Filter>bindings</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Resources\CloseNormal.png">
-      <Filter>resource</Filter>
-    </None>
-    <None Include="..\Resources\CloseSelected.png">
-      <Filter>resource</Filter>
-    </None>
-    <None Include="..\Resources\HelloWorld.png">
-      <Filter>resource</Filter>
-    </None>
     <None Include="res\testjs.ico">
       <Filter>resource</Filter>
     </None>

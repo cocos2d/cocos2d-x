@@ -93,11 +93,11 @@ BaseLayer.prototype.onEnter = function() {
 	}
 
     // Menu
-    var item1 = cc.MenuItemImage.create("b1.png", "b2.png", this, this.backCallback);
-    var item2 = cc.MenuItemImage.create("r1.png", "r2.png", this, this.restartCallback);
-    var item3 = cc.MenuItemImage.create("f1.png", "f2.png", this, this.nextCallback);
+    var item1 = cc.MenuItemImage.create("Images/b1.png", "Images/b2.png", this, this.backCallback);
+    var item2 = cc.MenuItemImage.create("Images/r1.png", "Images/r2.png", this, this.restartCallback);
+    var item3 = cc.MenuItemImage.create("Images/f1.png", "Images/f2.png", this, this.nextCallback);
     var item4 = cc.MenuItemFont.create("back", this, function() { require("js/main.js"); } );
-    item4.setFontSize( 22 );
+    cc.MenuItemFont.setFontSize( 22 );
 
     var menu = cc.Menu.create(item1, item2, item3, item4 );
 
@@ -136,12 +136,12 @@ var LabelAtlasTest = function(file) {
 
 	this.initialize = function() {
 
-		this.label1 = cc.LabelAtlas.create("123 Test", "tuffy_bold_italic-charmap.plist");
+		this.label1 = cc.LabelAtlas.create("123 Test", "Fonts/tuffy_bold_italic-charmap.plist");
 		this.addChild( this.label1 );
 		this.label1.setPosition( cc.p(10,100) );
 		this.label1.setOpacity( 200 );
 
-		this.label2 = cc.LabelAtlas.create( "0123456789", "tuffy_bold_italic-charmap.plist" );
+		this.label2 = cc.LabelAtlas.create( "0123456789", "Fonts/tuffy_bold_italic-charmap.plist" );
 		this.addChild( this.label2 );
 		this.label2.setPosition( cc.p(10,200) );
 		this.label2.setOpacity( 32 );
@@ -185,19 +185,19 @@ var BMFontColorTest = function(file) {
 
 	this.initialize = function() {
 
-		var label = cc.LabelBMFont.create("Blue", "bitmapFontTest5.fnt");
+		var label = cc.LabelBMFont.create("Blue", "Fonts/bitmapFontTest5.fnt");
 		this.addChild( label );
 		label.setColor( cc.c3b(0,0,255) );
 		label.setPosition( cc.p( winSize.width/2, 1*winSize.height/4) );
 		label.setAnchorPoint( cc.p(0.5, 0.5) );
 
-		label = cc.LabelBMFont.create("Red", "bitmapFontTest5.fnt");
+		label = cc.LabelBMFont.create("Red", "Fonts/bitmapFontTest5.fnt");
 		this.addChild( label );
 		label.setColor( cc.c3b(255,0,0) );
 		label.setPosition( cc.p( winSize.width/2, 2*winSize.height/4) );
 		label.setAnchorPoint( cc.p(0.5, 0.5) );
 
-		label = cc.LabelBMFont.create("Red", "bitmapFontTest5.fnt");
+		label = cc.LabelBMFont.create("Red", "Fonts/bitmapFontTest5.fnt");
 		this.addChild( label );
 		label.setColor( cc.c3b(0,255,0) );
 		label.setPosition( cc.p( winSize.width/2, 3*winSize.height/4) );
