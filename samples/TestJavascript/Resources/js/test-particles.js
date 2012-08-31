@@ -60,12 +60,12 @@ var loadScene = function (sceneIdx)
 //
 var TAG_LABEL_ATLAS = 100;
 
-var s_stars1 = 'stars.png';
-var s_stars2 = 'stars2.png';
-var s_starsGrayscale = 'stars-grayscale.png';
-var s_fire = 'fire.png';
-var s_smoke = 'smoke.png';
-var s_snow = 'snow.png';
+var s_stars1 = 'Images/stars.png';
+var s_stars2 = 'Images/stars2.png';
+var s_starsGrayscale = 'Images/stars-grayscale.png';
+var s_fire = 'Images/fire.png';
+var s_smoke = 'Images/smoke.png';
+var s_snow = 'Images/snow.png';
 
 //
 // Base Layer
@@ -113,11 +113,11 @@ var BaseLayer = cc.LayerGradient.extend({
         this.addChild(menu, 1);
 
         // Menu
-        var item1 = cc.MenuItemImage.create("b1.png", "b2.png", this, this.backCallback);
-        var item2 = cc.MenuItemImage.create("r1.png", "r2.png", this, this.restartCallback);
-        var item3 = cc.MenuItemImage.create("f1.png", "f2.png", this, this.nextCallback);
+        var item1 = cc.MenuItemImage.create("Images/b1.png", "Images/b2.png", this, this.backCallback);
+        var item2 = cc.MenuItemImage.create("Images/r1.png", "Images/r2.png", this, this.restartCallback);
+        var item3 = cc.MenuItemImage.create("Images/f1.png", "Images/f2.png", this, this.nextCallback);
         var item4 = cc.MenuItemFont.create("back", this, function() { require("js/main.js"); } );
-        item4.setFontSize( 22 );
+        cc.MenuItemFont.setFontSize( 22 );
 
         var menu = cc.Menu.create(item1, item2, item3, item4 );
 
@@ -127,7 +127,7 @@ var BaseLayer = cc.LayerGradient.extend({
         item3.setPosition( cc.p(winSize.width / 2 + 100, 30));
         item4.setPosition( cc.p(winSize.width - 60, winSize.height - 30 ) );
 
-        this.addChild(menu, 1);
+        this.addChild(menu, 10);
 
 
         //TODO
@@ -136,7 +136,7 @@ var BaseLayer = cc.LayerGradient.extend({
         labelAtlas.setPosition( cc.p( winSize.width - 66, 50));
 
         // moving background
-        this._background = cc.Sprite.create("background3.png");
+        this._background = cc.Sprite.create("Images/background3.png");
         this.addChild(this._background, 5);
         this._background.setPosition(cc.p(winSize.width / 2, winSize.height - 180));
 
@@ -161,7 +161,7 @@ var BaseLayer = cc.LayerGradient.extend({
     onEnter:function () {
         // don't call super_.this()
         var pLabel = this.getChildByTag(1000);
-        pLabel.setString(this.title());
+        //cjh pLabel.setString(this.title());
     },
     title:function () {
         return "No title";
@@ -202,7 +202,9 @@ var BaseLayer = cc.LayerGradient.extend({
         var pos = cc.p( 0, 0 );
         if (this._background)
             pos = this._background.convertToWorldSpace( cc.p(0,0) );
-        this._emitter.setPosition(cc.pSub(location, pos));
+        if (this._emitter) {
+            this._emitter.setPosition(cc.pSub(location, pos));
+        }
     },
 
     onMouseDown : function( event ) {
@@ -698,8 +700,8 @@ var ParallaxParticle = BaseLayer.extend({
         var p = cc.ParallaxNode.create();
         this.addChild(p, 5);
 
-        var p1 = cc.Sprite.create("background3.png");
-        var p2 = cc.Sprite.create("background3.png");
+        var p1 = cc.Sprite.create("Images/background3.png");
+        var p2 = cc.Sprite.create("Images/background3.png");
 
         p.addChild(p1, 1, cc.p(0.5, 1), cc.p(0, 250));
         p.addChild(p2, 2, cc.p(1.5, 1), cc.p(0, 50));
@@ -1066,7 +1068,7 @@ var Issue870 = BaseLayer.extend({
         this._background = null;
 
         var system = cc.ParticleSystem.create( "Particles/SpinningPeas.plist" );
-        system.setTextureWithRect(cc.TextureCache.getInstance().addImage("particles.png"), cc.rect(0, 0, 32, 32));
+        system.setTextureWithRect(cc.TextureCache.getInstance().addImage("Images/particles.png"), cc.rect(0, 0, 32, 32));
         this.addChild(system, 10);
         this._emitter = system;
 

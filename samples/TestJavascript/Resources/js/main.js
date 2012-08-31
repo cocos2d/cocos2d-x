@@ -151,7 +151,7 @@ MainTest = BaseLayer.extend({
         var item12 = cc.MenuItemFont.create("Tilemap Tests", this, function() { require("js/test-tilemap.js"); } );
         var item13 = cc.MenuItemFont.create("CocosDenshion Tests", this, function() { require("js/test-cocosdenshion.js"); } );
         var item14 = cc.MenuItemFont.create("cocos2d presentation", this, function() { require("js/test-cocos2djs.js"); } );
-        var item14 = cc.MenuItemFont.create("Performance test", this, function() { require("js/test-performance.js"); } );
+        var item14 = cc.MenuItemFont.create("Performance test", this, function() { require("js/PerformanceTest/PerformanceTest.js"); } );
 
 
         this._menu = cc.Menu.create( item1, item2, item3, item4, item5, item6, item7, item8, item9, item10, item11, item12, item13, item14 );

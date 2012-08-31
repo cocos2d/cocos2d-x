@@ -188,7 +188,7 @@ ChipmunkSpriteTest.prototype.createPhysicsSprite = function( pos ) {
 	cp.shapeSetFriction( shape, 0.5 );
 	cp.spaceAddShape( this.space, shape );
 
-	var sprite = cc.PhysicsSprite.create("grossini.png");
+	var sprite = cc.ChipmunkSprite.create("grossini.png");
 	sprite.setBody( body );
 	return sprite;
 }
@@ -304,7 +304,7 @@ var ChipmunkCollisionTest = function() {
 		cp.shapeSetCollisionType( shape, collision_type );
 		cp.spaceAddShape( this.space, shape );
 
-		var sprite = cc.PhysicsSprite.create(file);
+		var sprite = cc.ChipmunkSprite.create(file);
 		sprite.setBody( body );
 		return sprite;
 	}

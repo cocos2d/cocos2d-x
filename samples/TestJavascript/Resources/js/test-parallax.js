@@ -123,9 +123,9 @@ var BaseLayer = cc.LayerGradient.extend({
         }
 
         // Menu
-        var item1 = cc.MenuItemImage.create("b1.png", "b2.png", this, this.backCallback);
-        var item2 = cc.MenuItemImage.create("r1.png", "r2.png", this, this.restartCallback);
-        var item3 = cc.MenuItemImage.create("f1.png", "f2.png", this, this.nextCallback);
+        var item1 = cc.MenuItemImage.create("Images/b1.png", "Images/b2.png", this, this.backCallback);
+        var item2 = cc.MenuItemImage.create("Images/r1.png", "Images/r2.png", this, this.restartCallback);
+        var item3 = cc.MenuItemImage.create("Images/f1.png", "Images/f2.png", this, this.nextCallback);
         var item4 = cc.MenuItemFont.create("back", this, function() { require("js/main.js"); } );
         item4.setFontSize( 22 );
 
@@ -158,7 +158,7 @@ ParallaxTest1 = BaseLayer.extend({
         this._super();
 
         // Top Layer, a simple image
-        var cocosImage = cc.Sprite.create("powered.png");
+        var cocosImage = cc.Sprite.create("Images/powered.png");
         // scale the image (optional)
         cocosImage.setScale(1.5);
         // change the transform anchor point to 0,0 (optional)
@@ -175,7 +175,7 @@ ParallaxTest1 = BaseLayer.extend({
         tilemap.getTexture().setAntiAliasTexParameters();
 
         // background layer: another image
-        var background = cc.Sprite.create("background.png");
+        var background = cc.Sprite.create("Images/background.png");
         // scale the image (optional)
         background.setScale(1.5);
         // change the transform anchor point (optional)
@@ -236,7 +236,7 @@ ParallaxTest2 = BaseLayer.extend({
             this.setTouchEnabled( true );
 
         // Top Layer, a simple image
-        var cocosImage = cc.Sprite.create("powered.png");
+        var cocosImage = cc.Sprite.create("Images/powered.png");
         // scale the image (optional)
         cocosImage.setScale(1.5);
         // change the transform anchor point to 0,0 (optional)
@@ -254,7 +254,7 @@ ParallaxTest2 = BaseLayer.extend({
 
 
         // background layer: another image
-        var background = cc.Sprite.create("background.png");
+        var background = cc.Sprite.create("Images/background.png");
         // scale the image (optional)
         background.setScale(1.5);
         // change the transform anchor point (optional)

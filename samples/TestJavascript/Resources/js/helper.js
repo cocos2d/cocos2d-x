@@ -127,22 +127,43 @@ cc._g = function( x, y )
 //
 // Color
 //
-cc._c3 = function( r, g, b )
+//
+// Color 3B
+//
+cc.c3b = function( r, g, b )
 {
-    cc._reuse_color3b[0] = r;
-    cc._reuse_color3b[1] = g;
-    cc._reuse_color3b[2] = b;
+    return {r:r, g:g, b:b };
+};
+cc._c3b = function( r, g, b )
+{
+    cc._reuse_color3b.r = r;
+    cc._reuse_color3b.g = g;
+    cc._reuse_color3b.b = b;
     return cc._reuse_color3b;
-}
+};
+// compatibility
+cc.c3 = cc.c3b;
+cc._c3 = cc._c3b;
 
-cc._c4 = function( r, g, b, a )
+//
+// Color 4B
+//
+cc.c4b = function( r, g, b, a )
 {
-    cc._reuse_color4b[0] = r;
-    cc._reuse_color4b[1] = g;
-    cc._reuse_color4b[2] = b;
-    cc._reuse_color4b[3] = a;
+    return {r:r, g:g, b:b, a:a };
+};
+cc._c4b = function( r, g, b, a )
+{
+    cc._reuse_color4b.r = r;
+    cc._reuse_color4b.g = g;
+    cc._reuse_color4b.b = b;
+    cc._reuse_color4b.a = a;
     return cc._reuse_color4b;
-}
+};
+// compatibility
+cc.c4 = cc.c4b;
+cc._c4 = cc._c4b;
+
 
 //
 // Size
@@ -203,6 +224,54 @@ cc.pSub = cc.pSub || function (p1, p2) {
 cc.pMult = cc.pMult || function (p1, s) {
     return {x: p1.x * s, y: p1.y * s};
 };
+
+/**
+ * Calculates dot product of two points.
+ * @param {cc.Point} v1
+ * @param {cc.Point} v2
+ * @return {Number}
+ */
+cc.pDot = function (v1, v2) {
+    return v1.x * v2.x + v1.y * v2.y;
+};
+
+/**
+ * Calculates the square length of a cc.Point (not calling sqrt() )
+ * @param  {cc.Point} v
+ *@return {cc.pDot}
+ */
+cc.pLengthSQ = function (v) {
+    return cc.pDot(v, v);
+};
+
+/**
+ * Calculates distance between point an origin
+ * @param  {cc.Point} v
+ * @return {Number}
+ */
+cc.pLength = function (v) {
+    return Math.sqrt(cc.pLengthSQ(v));
+};
+
+/**
+ * Calculates the distance between two points
+ * @param {cc.Point} v1
+ * @param {cc.Point} v2
+ * @return {cc.pLength}
+ */
+cc.pDistance = function (v1, v2) {
+    return cc.pLength(cc.pSub(v1, v2));
+};
+
+/**
+ * returns a random float between 0 and 1
+ * @return {Number}
+ * @function
+ */
+cc.RANDOM_0_1 = function () {
+    return Math.random();
+};
+
 
 //
 // Array: for cocos2d-hmtl5 compatibility
@@ -329,6 +398,7 @@ cc.Class.extend = function (prop) {
 };
 
 cc.Layer.extend = cc.Class.extend;
+cc.Scene.extend = cc.Class.extend;
 cc.LayerGradient.extend = cc.Class.extend;
 cc.Sprite.extend = cc.Class.extend;
 cc.MenuItemFont.extend = cc.Class.extend;
