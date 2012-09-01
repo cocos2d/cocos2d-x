@@ -89,6 +89,8 @@ CCEGLView::CCEGLView()
 , m_hDC(NULL)
 , m_hRC(NULL)
 , m_lpfnAccelerometerKeyHook(NULL)
+, m_menu(NULL)
+, m_wndproc(NULL)
 {
     strcpy(m_szViewName, "Cocos2dxWin32");
 }
@@ -162,7 +164,7 @@ bool CCEGLView::Create(LPCTSTR pTitle, int w, int h)
         wc.hIcon          = LoadIcon( NULL, IDI_WINLOGO );    // Load The Default Icon
         wc.hCursor        = LoadCursor( NULL, IDC_ARROW );    // Load The Arrow Pointer
         wc.hbrBackground  = NULL;                           // No Background Required For GL
-        wc.lpszMenuName   = NULL;                           // We Don't Want A Menu
+        wc.lpszMenuName   = m_menu;                         // 
         wc.lpszClassName  = kWindowClassName;               // Set The Class Name
 
         CC_BREAK_IF(! RegisterClass(&wc) && 1410 != GetLastError());        
@@ -204,6 +206,8 @@ bool CCEGLView::Create(LPCTSTR pTitle, int w, int h)
 
 LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 {
+    BOOL bProcessed = FALSE;
+
     switch (message)
     {
     case WM_LBUTTONDOWN:
@@ -292,7 +296,7 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
                 else if (VK_ESCAPE == wParam)
                 {
                     // ESC input
-                    CCDirector::sharedDirector()->end();
+                    //CCDirector::sharedDirector()->end();
                 }
             }
             else if (wParam < 128)
@@ -328,7 +332,18 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
         break;
 
     default:
+        if (m_wndproc)
+        {
+            
+            m_wndproc(message, wParam, lParam, &bProcessed);
+            if (bProcessed) break;
+        }
         return DefWindowProc(m_hWnd, message, wParam, lParam);
+    }
+
+    if (m_wndproc && !bProcessed)
+    {
+        m_wndproc(message, wParam, lParam, &bProcessed);
     }
     return 0;
 }
@@ -374,6 +389,16 @@ bool CCEGLView::enableRetina()
 {
     m_bIsRetinaEnabled = true;
     return true;
+}
+
+void CCEGLView::setMenuResource(LPCWSTR menu)
+{
+    m_menu = menu;
+}
+
+void CCEGLView::setWndProc(CUSTOM_WND_PROC proc)
+{
+    m_wndproc = proc;
 }
 
 HWND CCEGLView::getHWnd()
