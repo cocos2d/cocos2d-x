@@ -53,17 +53,31 @@ fi
 
 mkdir "$APP_ANDROID_ROOT"/assets
 
+
 # copy resources
 for file in "$APP_ROOT"/Resources/*
 do
 if [ -d "$file" ]; then
-    cp -rf "$file" "$APP_ANDROID_ROOT"/assets
+	cp -rf "$file" "$APP_ANDROID_ROOT"/assets
 fi
+
 
 if [ -f "$file" ]; then
     cp "$file" "$APP_ANDROID_ROOT"/assets
 fi
 done
+
+
+rm -f "$APP_ANDROID_ROOT"/assets/Images/landscape-1024x1024-rgba8888.pvr.gz
+rm -f "$APP_ANDROID_ROOT"/assets/Images/test_image_rgba4444.pvr.gz
+rm -f "$APP_ANDROID_ROOT"/assets/Images/test_1021x1024_a8.pvr.gz
+rm -f "$APP_ANDROID_ROOT"/assets/Images/test_1021x1024_rgb888.pvr.gz
+rm -f "$APP_ANDROID_ROOT"/assets/Images/test_1021x1024_rgba4444.pvr.gz
+rm -f "$APP_ANDROID_ROOT"/assets/Images/test_1021x1024_rgba8888.pvr.gz
+rm -f "$APP_ANDROID_ROOT"/assets/Images/test_image_rgba4444.pvr.gz
+rm -f "$APP_ANDROID_ROOT"/assets/Images/texture1024x1024_rgba4444.pvr.gz
+rm -f "$APP_ANDROID_ROOT"/assets/Images/PlanetCute-1024x1024-rgba4444.pvr.gz
+
 
 if [[ "$buildexternalsfromsource" ]]; then
     echo "Building external dependencies from source"

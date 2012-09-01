@@ -435,7 +435,7 @@ void CCCallFunc::execute() {
         (m_pSelectorTarget->*m_pCallFunc)();
     }
 	if (m_nScriptHandler) {
-		CCScriptEngineManager::sharedManager()->getScriptEngine()->executeFunction(m_nScriptHandler, 0);
+		CCScriptEngineManager::sharedManager()->getScriptEngine()->executeFunctionByHandler(m_nScriptHandler);
 	}
 }
 

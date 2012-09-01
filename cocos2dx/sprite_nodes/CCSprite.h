@@ -387,6 +387,7 @@ protected:
     bool m_bFlipY;
 };
 
+
 // end of sprite_nodes group
 /// @}
 

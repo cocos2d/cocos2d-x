@@ -1,26 +1,26 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
-
-http://www.cocos2d-x.org
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-****************************************************************************/
+ Copyright (c) 2010-2011 cocos2d-x.org
+ 
+ http://www.cocos2d-x.org
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
 
 #ifndef __SCRIPT_SUPPORT_H__
 #define __SCRIPT_SUPPORT_H__
@@ -35,6 +35,12 @@ THE SOFTWARE.
 typedef struct lua_State lua_State;
 
 NS_CC_BEGIN
+
+enum ccScriptType {
+    kScriptTypeNone = 0,
+    kScriptTypeLua,
+    kScriptTypeJavascript
+};
 
 typedef int LUA_FUNCTION;
 typedef int LUA_TABLE;
@@ -70,6 +76,10 @@ protected:
     int m_nEntryId;
 };
 
+/**
+ * @addtogroup script_support
+ * @{
+ */
 
 #pragma mark -
 #pragma mark CCSchedulerScriptHandlerEntry
@@ -152,59 +162,59 @@ private:
 };
 
 #pragma mark -
-#pragma mark LuaValue
+#pragma mark CCScriptValue
 
-class LuaValue;
+class CCScriptValue;
 
-typedef std::map<std::string, LuaValue> LuaDict;
-typedef LuaDict::const_iterator         LuaDictIterator;
-typedef std::list<LuaValue>             LuaArray;
-typedef LuaArray::const_iterator        LuaArrayIterator;
+typedef std::map<std::string, CCScriptValue>    CCScriptValueDict;
+typedef CCScriptValueDict::const_iterator       CCScriptValueDictIterator;
+typedef std::list<CCScriptValue>                CCScriptValueArray;
+typedef CCScriptValueArray::const_iterator      CCScriptValueArrayIterator;
 
 typedef enum {
-    LuaValueTypeInt,
-    LuaValueTypeFloat,
-    LuaValueTypeBoolean,
-    LuaValueTypeString,
-    LuaValueTypeDict,
-    LuaValueTypeArray,
-    LuaValueTypeCCObject
-} LuaValueType;
+    CCScriptValueTypeInt,
+    CCScriptValueTypeFloat,
+    CCScriptValueTypeBoolean,
+    CCScriptValueTypeString,
+    CCScriptValueTypeDict,
+    CCScriptValueTypeArray,
+    CCScriptValueTypeCCObject
+} CCScriptValueType;
 
 typedef union {
-    int             intValue;
-    float           floatValue;
-    bool            booleanValue;
-    std::string*    stringValue;
-    LuaDict*        dictValue;
-    LuaArray*       arrayValue;
-    CCObject*       ccobjectValue;
-} LuaValueField;
+    int                 intValue;
+    float               floatValue;
+    bool                booleanValue;
+    std::string*        stringValue;
+    CCScriptValueDict*  dictValue;
+    CCScriptValueArray* arrayValue;
+    CCObject*           ccobjectValue;
+} CCScriptValueField;
 
-class CC_DLL LuaValue
+class CC_DLL CCScriptValue
 {
 public:
-    static const LuaValue intValue(const int intValue);
-    static const LuaValue floatValue(const float floatValue);
-    static const LuaValue booleanValue(const bool booleanValue);
-    static const LuaValue stringValue(const char* stringValue);
-    static const LuaValue stringValue(const std::string& stringValue);
-    static const LuaValue dictValue(const LuaDict& dictValue);
-    static const LuaValue arrayValue(const LuaArray& arrayValue);
-    static const LuaValue ccobjectValue(CCObject* ccobjectValue, const char* objectTypename);
-    static const LuaValue ccobjectValue(CCObject* ccobjectValue, const std::string& objectTypename);
+    static const CCScriptValue intValue(const int intValue);
+    static const CCScriptValue floatValue(const float floatValue);
+    static const CCScriptValue booleanValue(const bool booleanValue);
+    static const CCScriptValue stringValue(const char* stringValue);
+    static const CCScriptValue stringValue(const std::string& stringValue);
+    static const CCScriptValue dictValue(const CCScriptValueDict& dictValue);
+    static const CCScriptValue arrayValue(const CCScriptValueArray& arrayValue);
+    static const CCScriptValue ccobjectValue(CCObject* ccobjectValue, const char* objectTypename);
+    static const CCScriptValue ccobjectValue(CCObject* ccobjectValue, const std::string& objectTypename);
     
-    LuaValue(void)
-    : m_type(LuaValueTypeInt)
+    CCScriptValue(void)
+    : m_type(CCScriptValueTypeInt)
     , m_ccobjectType(NULL)
     {
         memset(&m_field, 0, sizeof(m_field));
     }
-    LuaValue(const LuaValue& rhs);
-    LuaValue& operator=(const LuaValue& rhs);
-    ~LuaValue(void);
+    CCScriptValue(const CCScriptValue& rhs);
+    CCScriptValue& operator=(const CCScriptValue& rhs);
+    ~CCScriptValue(void);
     
-    const LuaValueType getType(void) const {
+    const CCScriptValueType getType(void) const {
         return m_type;
     }
     
@@ -228,11 +238,11 @@ public:
         return *m_field.stringValue;
     }
     
-    const LuaDict& dictValue(void) const {
+    const CCScriptValueDict& dictValue(void) const {
         return *m_field.dictValue;
     }
     
-    const LuaArray& arrayValue(void) const {
+    const CCScriptValueArray& arrayValue(void) const {
         return *m_field.arrayValue;
     }
     
@@ -241,20 +251,26 @@ public:
     }
     
 private:
-    LuaValueField   m_field;
-    LuaValueType    m_type;
-    std::string*    m_ccobjectType;
+    CCScriptValueField  m_field;
+    CCScriptValueType   m_type;
+    std::string*        m_ccobjectType;
     
-    void copy(const LuaValue& rhs);
+    void copy(const CCScriptValue& rhs);
 };
 
 
 #pragma mark -
 #pragma mark CCScriptEngineProtocol
 
-class CC_DLL CCScriptEngineProtocol : public CCObject
+// Don't make CCScriptEngineProtocol inherits from CCObject since setScriptEngine is invoked only once in AppDelegate.cpp,
+// It will affect the lifecycle of ScriptCore instance, the autorelease pool will be destroyed before destructing ScriptCore.
+// So a crash will appear on Win32 if you click the close button.
+class CC_DLL CCScriptEngineProtocol
 {
 public:
+    virtual ~CCScriptEngineProtocol() {};
+    
+    virtual ccScriptType getScriptType() { return kScriptTypeNone; };
     /**
      @brief Method used to get a pointer to the lua_State that the script module is attached to.
      @return A pointer to the lua_State that the script module is attached to.
@@ -266,6 +282,8 @@ public:
      @param object to remove
      */
     virtual void removeCCObjectByID(int nLuaID) = 0;
+    virtual void removeJSObjectByCCObject(void * cobj) = 0;
+    
     
     /**
      @brief Remove Lua function handler
@@ -306,27 +324,29 @@ public:
      @param Number of parameters
      @return The integer value returned from the script function.
      */
-    virtual int executeFunction(int nHandler, int numArgs) = 0;
-    virtual int executeFunctionWithInt(int nHandler, int data) = 0;
-    virtual int executeFunctionWithFloat(int nHandler, float data) = 0;
-    virtual int executeFunctionWithBool(int nHandler, bool data) = 0;
-    virtual int executeFunctionWithCCObject(int nHandler, CCObject* pObject, const char* typeName) = 0;    
-    virtual int pushInt(int data) = 0;
-    virtual int pushFloat(float data) = 0;
-    virtual int pushBool(bool data) = 0;
-    virtual int pushString(const char* data) = 0;
+    virtual int executeFunctionByHandler(int nHandler, int numArgs = 0) = 0;
+    virtual int executeFunctionWithIntegerData(int nHandler, int data, CCNode *self = NULL) = 0;
+    virtual int executeFunctionWithFloatData(int nHandler, float data, CCNode *self = NULL) = 0;
+    virtual int executeFunctionWithBooleanData(int nHandler, bool data) = 0;
+    virtual int executeFunctionWithCCObject(int nHandler, CCObject* pObject, const char* typeName) = 0;
+    virtual int executeFunctionWithStringData(int nHandler, const char* data) = 0;
+    
+    virtual int pushIntegerData(int data) = 0;
+    virtual int pushFloatData(float data) = 0;
+    virtual int pushBooleanData(bool data) = 0;
+    virtual int pushStringData(const char* data) = 0;
     virtual int pushCCObject(CCObject* pObject, const char* typeName) = 0;
-    virtual int pushLuaValue(const LuaValue& value) = 0;
-    virtual int pushLuaDict(const LuaDict& dict) = 0;
-    virtual int pushLuaArray(const LuaArray& array) = 0;
+    virtual int pushCCScriptValue(const CCScriptValue& value) = 0;
+    virtual int pushCCScriptValueDict(const CCScriptValueDict& dict) = 0;
+    virtual int pushCCScriptValueArray(const CCScriptValueArray& array) = 0;
     virtual void cleanStack(void) = 0;
     
-    // functions for excute touch event
-    virtual int executeTouchEvent(int nHandler, int eventType, CCTouch *pTouch) = 0;
-    virtual int executeTouchesEvent(int nHandler, int eventType, CCSet *pTouches) = 0;
-    
     // execute a schedule function
-    virtual int executeSchedule(int nHandler, float dt) = 0;
+    virtual int executeSchedule(int nHandler, float dt, CCNode *self = NULL) = 0;
+    
+    // functions for excute touch event
+    virtual int executeTouchesEvent(int nHandler, int eventType, CCSet *pTouches, CCNode *self) = 0;
+    virtual int executeTouchEvent(int nHandler, int eventType, CCTouch *pTouch) = 0;
 };
 
 /**
@@ -344,10 +364,10 @@ public:
     }
     void setScriptEngine(CCScriptEngineProtocol *pScriptEngine);
     void removeScriptEngine(void);
-
+    
     static CCScriptEngineManager* sharedManager(void);
     static void purgeSharedManager(void);
-
+    
 private:
     CCScriptEngineManager(void)
     : m_pScriptEngine(NULL)

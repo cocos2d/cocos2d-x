@@ -94,6 +94,7 @@ protected:
     float m_fDelay;
 
     int m_nScriptHandler;
+    
 };
 
 //

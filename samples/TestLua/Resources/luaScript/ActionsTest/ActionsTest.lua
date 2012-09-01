@@ -13,40 +13,43 @@ local function BackAction()
 		ActionIdx = ActionIdx + Action_Table.ACTION_LAYER_COUNT
 	end
 
-	return CreateActionTestLayer(ActionIdx)
+	return CreateActionTestLayer()
 end
 
 local function RestartAction()
-	return CreateActionTestLayer(ActionIdx)
+	return CreateActionTestLayer()
 end
 
 local function NextAction()
 	ActionIdx = ActionIdx + 1
 	ActionIdx = math.mod(ActionIdx, Action_Table.ACTION_LAYER_COUNT)
 
-	return CreateActionTestLayer(ActionIdx)
+	return CreateActionTestLayer()
 end
 
 local function backCallback(sender)
 	local scene = CCScene:create()
-	scene:addChild(CreateBackMenuItem())
+
 	scene:addChild(BackAction())
+	scene:addChild(CreateBackMenuItem())
 
 	CCDirector:sharedDirector():replaceScene(scene)
 end
 
 local function restartCallback(sender)
 	local scene = CCScene:create()
-	scene:addChild(CreateBackMenuItem())
+
 	scene:addChild(RestartAction())
+	scene:addChild(CreateBackMenuItem())
 
 	CCDirector:sharedDirector():replaceScene(scene)
 end
 
 local function nextCallback(sender)
 	local scene = CCScene:create()
-	scene:addChild(CreateBackMenuItem())
+
 	scene:addChild(NextAction())
+	scene:addChild(CreateBackMenuItem())
 
 	CCDirector:sharedDirector():replaceScene(scene)
 end
@@ -1207,79 +1210,79 @@ end
 -------------------------------------
 -- Create Action Test
 -------------------------------------
-function CreateActionTestLayer(Idx)
+function CreateActionTestLayer()
 	local layer = nil
-	if Idx == Action_Table.ACTION_MANUAL_LAYER then
+	if ActionIdx == Action_Table.ACTION_MANUAL_LAYER then
 		layer = ActionManual()
-	elseif Idx == Action_Table.ACTION_MOVE_LAYER then
+	elseif ActionIdx == Action_Table.ACTION_MOVE_LAYER then
 		layer = ActionMove()
-	elseif Idx == Action_Table.ACTION_SCALE_LAYER then
+	elseif ActionIdx == Action_Table.ACTION_SCALE_LAYER then
 		layer = ActionScale()
-	elseif Idx == Action_Table.ACTION_ROTATE_LAYER then
+	elseif ActionIdx == Action_Table.ACTION_ROTATE_LAYER then
 		layer = ActionRotate()
-	elseif Idx == Action_Table.ACTION_SKEW_LAYER then
+	elseif ActionIdx == Action_Table.ACTION_SKEW_LAYER then
 		layer = ActionSkew()
-	elseif Idx == Action_Table.ACTION_SKEWROTATE_LAYER then
+	elseif ActionIdx == Action_Table.ACTION_SKEWROTATE_LAYER then
 		layer = ActionSkewRotate()
-	elseif Idx == Action_Table.ACTION_JUMP_LAYER then
+	elseif ActionIdx == Action_Table.ACTION_JUMP_LAYER then
 		layer = ActionJump()
-	elseif Idx == Action_Table.ACTION_CARDINALSPLINE_LAYER then
+	elseif ActionIdx == Action_Table.ACTION_CARDINALSPLINE_LAYER then
 		layer = ActionCardinalSpline()
-    elseif Idx == Action_Table.ACTION_CATMULLROM_LAYER then
+    elseif ActionIdx == Action_Table.ACTION_CATMULLROM_LAYER then
 		layer = ActionCatmullRom()
-	elseif Idx == Action_Table.ACTION_BEZIER_LAYER then
+	elseif ActionIdx == Action_Table.ACTION_BEZIER_LAYER then
 		layer = ActionBezier()
-	elseif Idx == Action_Table.ACTION_BLINK_LAYER then
+	elseif ActionIdx == Action_Table.ACTION_BLINK_LAYER then
 		layer = ActionBlink()
-	elseif Idx == Action_Table.ACTION_FADE_LAYER then
+	elseif ActionIdx == Action_Table.ACTION_FADE_LAYER then
 		layer = ActionFade()
-	elseif Idx == Action_Table.ACTION_TINT_LAYER then
+	elseif ActionIdx == Action_Table.ACTION_TINT_LAYER then
 		layer = ActionTint()
-	elseif Idx == Action_Table.ACTION_ANIMATE_LAYER then
+	elseif ActionIdx == Action_Table.ACTION_ANIMATE_LAYER then
 		layer = ActionAnimate()
-	elseif Idx == Action_Table.ACTION_SEQUENCE_LAYER then
+	elseif ActionIdx == Action_Table.ACTION_SEQUENCE_LAYER then
 		layer = ActionSequence()
-	elseif Idx == Action_Table.ACTION_SEQUENCE2_LAYER then
+	elseif ActionIdx == Action_Table.ACTION_SEQUENCE2_LAYER then
 		layer = ActionSequence2()
-	elseif Idx == Action_Table.ACTION_SPAWN_LAYER then
+	elseif ActionIdx == Action_Table.ACTION_SPAWN_LAYER then
 		layer = ActionSpawn()
-	elseif Idx == Action_Table.ACTION_REVERSE then
+	elseif ActionIdx == Action_Table.ACTION_REVERSE then
 		layer = ActionReverse()
-	elseif Idx == Action_Table.ACTION_DELAYTIME_LAYER then
+	elseif ActionIdx == Action_Table.ACTION_DELAYTIME_LAYER then
 		layer = ActionDelaytime()
-	elseif Idx == Action_Table.ACTION_REPEAT_LAYER then
+	elseif ActionIdx == Action_Table.ACTION_REPEAT_LAYER then
 		layer = ActionRepeat()
-	elseif Idx == Action_Table.ACTION_REPEATEFOREVER_LAYER then
+	elseif ActionIdx == Action_Table.ACTION_REPEATEFOREVER_LAYER then
 		layer = ActionRepeatForever()
-    elseif Idx == Action_Table.ACTION_ROTATETOREPEATE_LAYER then
+    elseif ActionIdx == Action_Table.ACTION_ROTATETOREPEATE_LAYER then
 		layer = ActionRotateToRepeat()
-    elseif Idx == Action_Table.ACTION_ROTATEJERK_LAYER then
+    elseif ActionIdx == Action_Table.ACTION_ROTATEJERK_LAYER then
 		layer = ActionRotateJerk()
-    elseif Idx == Action_Table.ACTION_CALLFUNC_LAYER then
+    elseif ActionIdx == Action_Table.ACTION_CALLFUNC_LAYER then
 		layer = ActionCallFunc()
-    elseif Idx == Action_Table.ACTION_CALLFUNCND_LAYER then
+    elseif ActionIdx == Action_Table.ACTION_CALLFUNCND_LAYER then
 		layer = ActionCallFuncND()
-    elseif Idx == Action_Table.ACTION_REVERSESEQUENCE_LAYER then
+    elseif ActionIdx == Action_Table.ACTION_REVERSESEQUENCE_LAYER then
 		layer = ActionReverseSequence()
-    elseif Idx == Action_Table.ACTION_REVERSESEQUENCE2_LAYER then
+    elseif ActionIdx == Action_Table.ACTION_REVERSESEQUENCE2_LAYER then
 		layer = ActionReverseSequence2()
-    elseif Idx == Action_Table.ACTION_ORBIT_LAYER then
+    elseif ActionIdx == Action_Table.ACTION_ORBIT_LAYER then
 		layer = ActionOrbit()
-    elseif Idx == Action_Table.ACTION_FOLLOW_LAYER then
+    elseif ActionIdx == Action_Table.ACTION_FOLLOW_LAYER then
 		layer = ActionFollow()
-    elseif Idx == Action_Table.ACTION_TARGETED_LAYER then
+    elseif ActionIdx == Action_Table.ACTION_TARGETED_LAYER then
 		layer = ActionTargeted()
-	elseif Idx == Action_Table.PAUSERESUMEACTIONS_LAYER then
+	elseif ActionIdx == Action_Table.PAUSERESUMEACTIONS_LAYER then
 		layer = PauseResumeActions()
-    elseif Idx == Action_Table.ACTION_ISSUE1305_LAYER then
+    elseif ActionIdx == Action_Table.ACTION_ISSUE1305_LAYER then
 		layer = ActionIssue1305()
-    elseif Idx == Action_Table.ACTION_ISSUE1305_2_LAYER then
+    elseif ActionIdx == Action_Table.ACTION_ISSUE1305_2_LAYER then
 		layer = ActionIssue1305_2()
-    elseif Idx == Action_Table.ACTION_ISSUE1288_LAYER then
+    elseif ActionIdx == Action_Table.ACTION_ISSUE1288_LAYER then
 		layer = ActionIssue1288()
-    elseif Idx == Action_Table.ACTION_ISSUE1288_2_LAYER then
+    elseif ActionIdx == Action_Table.ACTION_ISSUE1288_2_LAYER then
 		layer = ActionIssue1288_2()
-    elseif Idx == Action_Table.ACTION_ISSUE1327_LAYER then
+    elseif ActionIdx == Action_Table.ACTION_ISSUE1327_LAYER then
 		layer = ActionIssue1327()
 	end
 
@@ -1289,10 +1292,10 @@ end
 function ActionsTest()
 	cclog("ActionsTest")
 	local scene = CCScene:create()
-	scene:addChild(CreateBackMenuItem())
 
 	ActionIdx = -1
 	scene:addChild(NextAction())
+	scene:addChild(CreateBackMenuItem())
 
 	return scene
 end

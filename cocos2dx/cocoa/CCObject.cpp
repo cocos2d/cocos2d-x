@@ -63,6 +63,14 @@ CCObject::~CCObject(void)
     {
         CCScriptEngineManager::sharedManager()->getScriptEngine()->removeCCObjectByID(m_nLuaID);
     }
+    else
+    {
+        CCScriptEngineProtocol* pEngine = CCScriptEngineManager::sharedManager()->getScriptEngine();
+        if (pEngine != NULL && pEngine->getScriptType() == kScriptTypeJavascript)
+        {
+            pEngine->removeJSObjectByCCObject(this);
+        }
+    }
 }
 
 CCObject* CCObject::copy()

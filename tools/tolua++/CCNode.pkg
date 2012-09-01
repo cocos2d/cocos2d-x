@@ -98,7 +98,7 @@ class CCNode : public CCObject
     void    transformAncestors(void);
     CCRect  boundingBox(void);
 
-    void    runAction(CCAction* action);
+    CCAction* runAction(CCAction* action);
     void    stopAllActions(void);
     void    stopAction(CCAction* action);
 

@@ -91,6 +91,9 @@ CCNode::CCNode(void)
     m_pActionManager->retain();
     m_pScheduler = director->getScheduler();
     m_pScheduler->retain();
+
+    CCScriptEngineProtocol* pEngine = CCScriptEngineManager::sharedManager()->getScriptEngine();
+    m_eScriptType = pEngine != NULL ? pEngine->getScriptType() : kScriptTypeNone;
 }
 
 CCNode::~CCNode(void)
@@ -121,7 +124,6 @@ CCNode::~CCNode(void)
 
     // children
     CC_SAFE_RELEASE(m_pChildren);
-
 }
 
 float CCNode::getSkewX()
@@ -796,24 +798,35 @@ void CCNode::onEnter()
 
     m_bIsRunning = true;
 
-    if (m_nScriptHandler)
+    if (   (m_eScriptType == kScriptTypeLua && m_nScriptHandler != 0)
+        ||  m_eScriptType == kScriptTypeJavascript   )
     {
         CCScriptEngineProtocol* pEngine = CCScriptEngineManager::sharedManager()->getScriptEngine();
-        LuaDict dict;
-        dict["name"] = LuaValue::stringValue("enter");
-        pEngine->pushLuaDict(dict);
-        pEngine->executeFunction(m_nScriptHandler, 1);
+        CCScriptValueDict dict;
+        dict["name"] = CCScriptValue::stringValue("enter");
+        pEngine->pushCCScriptValueDict(dict);
+        pEngine->executeFunctionByHandler(m_nScriptHandler, 1);
     }
 }
 
 void CCNode::onEnterTransitionDidFinish()
 {
     arrayMakeObjectsPerformSelector(m_pChildren, onEnterTransitionDidFinish, CCNode*);
+
+    if (m_eScriptType == kScriptTypeJavascript)
+    {
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeFunctionWithIntegerData(m_nScriptHandler, kCCNodeOnEnterTransitionDidFinish, this);
+    }
 }
 
 void CCNode::onExitTransitionDidStart()
 {
     arrayMakeObjectsPerformSelector(m_pChildren, onExitTransitionDidStart, CCNode*);
+
+    if (m_eScriptType == kScriptTypeJavascript)
+    {
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeFunctionWithIntegerData(m_nScriptHandler, kCCNodeOnExitTransitionDidStart, this);
+    }
 }
 
 void CCNode::onExit()
@@ -822,13 +835,14 @@ void CCNode::onExit()
 
     m_bIsRunning = false;
 
-    if (m_nScriptHandler)
+    if (   (m_eScriptType == kScriptTypeLua && m_nScriptHandler != 0)
+        ||  m_eScriptType == kScriptTypeJavascript   )
     {
         CCScriptEngineProtocol* pEngine = CCScriptEngineManager::sharedManager()->getScriptEngine();
-        LuaDict dict;
-        dict["name"] = LuaValue::stringValue("exit");
-        pEngine->pushLuaDict(dict);
-        pEngine->executeFunction(m_nScriptHandler, 1);
+        CCScriptValueDict dict;
+        dict["name"] = CCScriptValue::stringValue("exit");
+        pEngine->pushCCScriptValueDict(dict);
+        pEngine->executeFunctionByHandler(m_nScriptHandler, 1);
     }
 
     arrayMakeObjectsPerformSelector(m_pChildren, onExit, CCNode*);

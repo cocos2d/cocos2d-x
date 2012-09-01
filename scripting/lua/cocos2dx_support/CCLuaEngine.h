@@ -45,6 +45,8 @@ public:
     static CCLuaEngine* create(void);
     ~CCLuaEngine(void);
     
+    virtual ccScriptType getScriptType() { return kScriptTypeLua; };
+    
     /**
      @brief Method used to get a pointer to the lua_State that the script module is attached to.
      @return A pointer to the lua_State that the script module is attached to.
@@ -52,7 +54,7 @@ public:
     virtual lua_State* getLuaState(void) {
         return m_state;
     }
-    
+	virtual void removeJSObjectByCCObject(void * cobj) {};
     /**
      @brief Remove CCObject from lua state
      @param object to remove
@@ -93,32 +95,34 @@ public:
     virtual int executeGlobalFunction(const char* functionName);
     
     /**
-     @brief Execute a function by ref id
-     @param The function ref id
+     @brief Execute a function by handler
+     @param The function handler
      @param Number of parameters
      @return The integer value returned from the script function.
      */
-    virtual int executeFunction(int nHandler, int numArgs);
-    virtual int executeFunctionWithInt(int nHandler, int data);
-    virtual int executeFunctionWithFloat(int nHandler, float data);
-    virtual int executeFunctionWithBool(int nHandler, bool data);
-    virtual int executeFunctionWithCCObject(int nHandler, CCObject* pObject, const char* typeName);    
-    virtual int pushInt(int data);
-    virtual int pushFloat(float data);
-    virtual int pushBool(bool data);
-    virtual int pushString(const char* data);
+    virtual int executeFunctionByHandler(int nHandler, int numArgs = 0);
+    virtual int executeFunctionWithIntegerData(int nHandler, int data, CCNode *self = NULL);
+    virtual int executeFunctionWithFloatData(int nHandler, float data, CCNode *self = NULL);
+    virtual int executeFunctionWithBooleanData(int nHandler, bool data);
+    virtual int executeFunctionWithCCObject(int nHandler, CCObject* pObject, const char* typeName);
+    virtual int executeFunctionWithStringData(int nHandler, const char* data);
+    
+    virtual int pushIntegerData(int data);
+    virtual int pushFloatData(float data);
+    virtual int pushBooleanData(bool data);
+    virtual int pushStringData(const char* data);
     virtual int pushCCObject(CCObject* pObject, const char* typeName);
-    virtual int pushLuaValue(const LuaValue& value);
-    virtual int pushLuaDict(const LuaDict& dict);
-    virtual int pushLuaArray(const LuaArray& array);
+    virtual int pushCCScriptValue(const CCScriptValue& value);
+    virtual int pushCCScriptValueDict(const CCScriptValueDict& dict);
+    virtual int pushCCScriptValueArray(const CCScriptValueArray& array);
     virtual void cleanStack(void);
     
-    // functions for excute touch event
-    virtual int executeTouchEvent(int nHandler, int eventType, cocos2d::CCTouch *pTouch);
-    virtual int executeTouchesEvent(int nHandler, int eventType, cocos2d::CCSet *pTouches);
-    
     // execute a schedule function
-    virtual int executeSchedule(int nHandler, float dt);
+    virtual int executeSchedule(int nHandler, float dt, CCNode *self = NULL);
+    
+    // functions for excute touch event
+    virtual int executeTouchesEvent(int nHandler, int eventType, CCSet *pTouches, CCNode *self);
+    virtual int executeTouchEvent(int nHandler, int eventType, CCTouch *pTouch);
     
     // Add lua loader, now it is used on android
     virtual void addLuaLoader(lua_CFunction func);
@@ -134,7 +138,7 @@ private:
     
     lua_State* m_state;
 };
-    
+
 NS_CC_END
 
 #endif // __CC_LUA_ENGINE_H__

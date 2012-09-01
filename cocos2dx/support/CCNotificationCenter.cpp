@@ -145,8 +145,8 @@ void CCNotificationCenter::postNotification(const char *name, CCObject *object)
     if (m_scriptHandler)
     {
         CCScriptEngineProtocol* engine = CCScriptEngineManager::sharedManager()->getScriptEngine();
-        engine->pushString(name);
-        engine->executeFunction(m_scriptHandler, 1);
+        engine->pushStringData(name);
+        engine->executeFunctionByHandler(m_scriptHandler, 1);
     }
 }
 
