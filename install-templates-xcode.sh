@@ -94,6 +94,7 @@ copy_base_files(){
 	echo ...copying cocos2dx files
 	copy_files cocos2dx "$LIBS_DIR"
 
+
 	echo ...copying CocosDenshion files
 	copy_files CocosDenshion "$LIBS_DIR"
 }
@@ -101,7 +102,7 @@ copy_base_files(){
 copy_cocos2d_files(){
 	echo ...copying cocos2d files
 	copy_files cocos2dx "$LIBS_DIR"
-    copy_files licenses/LICENSE_cocos2d-x.txt "$LIBS_DIR"
+	copy_files licenses/LICENSE_cocos2d-x.txt "$LIBS_DIR"
 }
 
 copy_cocosdenshion_files(){
@@ -186,27 +187,47 @@ copy_xcode4_project_templates(){
 
 
 	LIBS_DIR="$DST_DIR""lib_box2d.xctemplate/libs/"
-    mkdir -p "$LIBS_DIR"
+	mkdir -p "$LIBS_DIR"
 
 	echo ...copying Box2D files
 	copy_files external/Box2D "$LIBS_DIR"
-    copy_files licenses/LICENSE_box2d.txt "$LIBS_DIR"
+	copy_files licenses/LICENSE_box2d.txt "$LIBS_DIR"
 
 	echo done!
 
 
-    print_template_banner "Installing Xcode 4 lua iOS template"
+	print_template_banner "Installing Xcode 4 lua iOS template"
+	
+	
+	LIBS_DIR="$DST_DIR""lib_lua.xctemplate/libs/"
+	mkdir -p "$LIBS_DIR"
+	
+	echo ...copying lua files
+	copy_files scripting/lua "$LIBS_DIR"
+	copy_files licenses/LICENSE_lua.txt "$LIBS_DIR"
+	copy_files licenses/LICENSE_tolua++.txt "$LIBS_DIR"
+	
+	echo done!
+	
+	print_template_banner "Installing Xcode 4 JS iOS template"
+	
+	LIBS_DIR="$DST_DIR""lib_js.xctemplate/libs/javascript"
+	mkdir -p "$LIBS_DIR"
+	
+	echo ...copying js files
+	copy_files scripting/javascript/bindings "$LIBS_DIR"
+	copy_files licenses/LICENSE_js.txt "$LIBS_DIR"
+
+	echo done!
 
 
-    LIBS_DIR="$DST_DIR""lib_lua.xctemplate/libs/"
-    mkdir -p "$LIBS_DIR"
+	echo ...copying spidermonkey files
 
-    echo ...copying lua files
-    copy_files scripting/lua "$LIBS_DIR"
-    copy_files licenses/LICENSE_lua.txt "$LIBS_DIR"
-    copy_files licenses/LICENSE_tolua++.txt "$LIBS_DIR"
+	LIBS_DIR="$DST_DIR""lib_spidermonkey.xctemplate/libs/javascript"
+	mkdir -p "$LIBS_DIR"
+	copy_files scripting/javascript/spidermonkey-ios "$LIBS_DIR"
 
-    echo done!
+	echo done!
 
     # Move File Templates to correct position
 	# DST_DIR="$HOME/Library/Developer/Xcode/Templates/File Templates/cocos2d/"
