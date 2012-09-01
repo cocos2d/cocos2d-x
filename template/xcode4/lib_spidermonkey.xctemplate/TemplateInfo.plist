@@ -773,18 +773,6 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>libs/javascript/spidermonkey-ios/include/semantic.cache</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>javascript</string>
-				<string>spidermonkey-ios</string>
-				<string>include</string>
-			</array>
-			<key>Path</key>
-			<string>libs/javascript/spidermonkey-ios/include/semantic.cache</string>
-		</dict>
 		<key>libs/javascript/spidermonkey-ios/lib/libjs_static.a</key>
 		<dict>
 			<key>Group</key>
@@ -865,7 +853,6 @@
 		<string>libs/javascript/spidermonkey-ios/include/mozilla/StandardInteger.h</string>
 		<string>libs/javascript/spidermonkey-ios/include/mozilla/Types.h</string>
 		<string>libs/javascript/spidermonkey-ios/include/mozilla/Util.h</string>
-		<string>libs/javascript/spidermonkey-ios/include/semantic.cache</string>
 		<string>libs/javascript/spidermonkey-ios/lib/libjs_static.a</string>
 		<string>libs/javascript/spidermonkey-ios/lib/libjs_static.a.desc</string>
 	</array>

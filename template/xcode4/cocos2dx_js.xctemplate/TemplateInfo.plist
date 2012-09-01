@@ -8,7 +8,6 @@
 		<string>org.cocos2d-x.iosbase</string>
 		<string>org.cocos2d-x.libcocos2dx</string>
 		<string>org.cocos2d-x.libcocosdenshion</string>
-		<string>org.cocos2d-x.libextensions</string>
 		<string>org.cocos2d-x.libjs</string>
 		<string>org.cocos2d-x.libspidermonkey</string>
 		<string>org.cocos2d-x.libchipmunk</string>
