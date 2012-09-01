@@ -1000,21 +1000,41 @@ end
 --   problem: schedule feature is constructing
 --------------------------------------
 local pausedTargets = nil
+local PauseResumeActions_pauseEntry = nil
+local PauseResumeActions_resumeEntry = nil
 
 local function ActionPause(dt)
 	cclog("Pausing")
+
+	local scheduler = CCDirector:sharedDirector():getScheduler()
+	scheduler:unscheduleScriptEntry(PauseResumeActions_pauseEntry)
+
 	local director = CCDirector:sharedDirector()
     pausedTargets = director:getActionManager():pauseAllRunningActions()
-	pausedTargets:retain()
 end
 
 local function ActionResume(dt)
 	cclog("Resuming")
+
+	local scheduler = CCDirector:sharedDirector():getScheduler()
+	scheduler:unscheduleScriptEntry(PauseResumeActions_resumeEntry)
+
 	local director = CCDirector:sharedDirector()
 	if pausedTargets ~= nil then
-	--	director:getActionManager():resumeTargets(pausedTargets)
+		-- problem: will crash here. Try fixing me!
+		director:getActionManager():resumeTargets(pausedTargets)
 	end
-	pausedTargets:release()
+end
+
+local function PauseResumeActions_onEnterOrExit(tag)
+	local scheduler = CCDirector:sharedDirector():getScheduler()
+	if tag == 0 then
+		PauseResumeActions_pauseEntry = scheduler:scheduleScriptFunc(ActionPause, 3, false)
+		PauseResumeActions_resumeEntry = scheduler:scheduleScriptFunc(ActionResume, 5, false)
+	elseif tag == 1 then
+		scheduler:unscheduleScriptEntry(PauseResumeActions_pauseEntry)
+		scheduler:unscheduleScriptEntry(PauseResumeActions_resumeEntry)
+	end
 end
 
 local function PauseResumeActions()
@@ -1026,8 +1046,7 @@ local function PauseResumeActions()
     tamara:runAction(CCRepeatForever:create(CCRotateBy:create(3, 360)))
     kathia:runAction(CCRepeatForever:create(CCRotateBy:create(3, 360)))
 
-	layer:scheduleScriptFunc(ActionPause, 3, false)
-	layer:scheduleScriptFunc(ActionResume, 5, false)
+	layer:registerScriptHandler(PauseResumeActions_onEnterOrExit)
 
 	titleLabel:setString("PauseResumeActions")
 	subtitleLabel:setString("All actions pause at 3s and resume at 5s")
@@ -1035,30 +1054,47 @@ local function PauseResumeActions()
 end
 
 --------------------------------------
--- ActionIssue1305 *
---  problem: schedule feature is constructing
+-- ActionIssue1305
 --------------------------------------
 local spriteTmp = nil
+local Issue1305_entry = nil
+local Issue1305_layer = nil
 
-local function Issue1305_log()
+local function Issue1305_log(sender)
+	cclog("This message SHALL ONLY appear when the sprite is added to the scene, NOT BEFORE")
+end
 
+local function addSprite(dt)
+	local scheduler = CCDirector:sharedDirector():getScheduler()
+	scheduler:unscheduleScriptEntry(Issue1305_entry)
+
+	spriteTmp:setPosition(ccp(250, 150))
+    Issue1305_layer:addChild(spriteTmp)
+end
+
+local function Issue1305_onEnterOrExit(tag)
+	local scheduler = CCDirector:sharedDirector():getScheduler()
+	if tag == 0 then
+		Issue1305_entry = scheduler:scheduleScriptFunc(addSprite, 2, false)
+	elseif tag == 1 then
+		scheduler:unscheduleScriptEntry(Issue1305_entry)
+	end
 end
 
 local function ActionIssue1305()
-	local layer = CCLayer:create()
-	initWithLayer(layer)
+	Issue1305_layer = CCLayer:create()
+	initWithLayer(Issue1305_layer)
 
 	centerSprites(0)
 
     spriteTmp = CCSprite:create("Images/grossini.png")
-
     spriteTmp:runAction(CCCallFuncN:create(Issue1305_log))
 
-    --scheduleOnce(schedule_selector(Issue1305:addSprite), 2)
+    Issue1305_layer:registerScriptHandler(Issue1305_onEnterOrExit)
 
-	titleLabel:setString("")
-	subtitleLabel:setString("")
-	return layer
+	titleLabel:setString("Issue 1305")
+	subtitleLabel:setString("In two seconds you should see a message on the console. NOT BEFORE.")
+	return Issue1305_layer
 end
 
 --------------------------------------
