@@ -34,9 +34,9 @@ Action_Table =
     "ACTION_ORBIT_LAYER",
     "ACTION_FOLLOW_LAYER",
     "ACTION_TARGETED_LAYER",
---   problem: schedule feature hasn't implement on lua yet
+--   problem: crash
 --    "PAUSERESUMEACTIONS_LAYER",
---    "ACTION_ISSUE1305_LAYER",
+    "ACTION_ISSUE1305_LAYER",
     "ACTION_ISSUE1305_2_LAYER",
     "ACTION_ISSUE1288_LAYER",
     "ACTION_ISSUE1288_2_LAYER",
