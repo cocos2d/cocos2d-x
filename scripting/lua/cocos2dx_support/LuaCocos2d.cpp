@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.92 on Sun Sep  2 00:56:03 2012.
+** Generated automatically by tolua++-1.0.92 on Sun Sep  2 01:18:05 2012.
 */
 
 /****************************************************************************
@@ -9707,34 +9707,6 @@ static int tolua_Cocos2d_ccPointSize00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'ccPointSize'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* function: glLineWidth */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_glLineWidth00
-static int tolua_Cocos2d_glLineWidth00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isnumber(tolua_S,1,0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,2,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-   float width = ((  float)  tolua_tonumber(tolua_S,1,0));
-  {
-   glLineWidth(width);
-  }
- }
- return 0;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'glLineWidth'.",&tolua_err);
  return 0;
 #endif
 }
@@ -55465,7 +55437,6 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
   tolua_function(tolua_S,"ccDrawColor4B",tolua_Cocos2d_ccDrawColor4B00);
   tolua_function(tolua_S,"ccDrawColor4F",tolua_Cocos2d_ccDrawColor4F00);
   tolua_function(tolua_S,"ccPointSize",tolua_Cocos2d_ccPointSize00);
-  tolua_function(tolua_S,"glLineWidth",tolua_Cocos2d_glLineWidth00);
   #ifdef __cplusplus
   tolua_cclass(tolua_S,"CCAffineTransform","CCAffineTransform","",tolua_collect_CCAffineTransform);
   #else
