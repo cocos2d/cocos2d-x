@@ -1,14 +1,6 @@
 
-local SceneIdx  = 0
+local SceneIdx  = -1
 local MAX_LAYER = 42
-
-local s = CCDirector:sharedDirector():getWinSize()
-local kTagParticleCount = 1
-
-local IDC_NEXT    = 100
-local IDC_BACK    = 101
-local IDC_RESTART = 102
-local IDC_TOGGLE  = 103
 
 local emitter = nil
 local background = nil
@@ -16,38 +8,55 @@ local background = nil
 local labelAtlas = nil
 local titleLabel = nil
 local subtitleLabel = nil
+local baseLayer_entry = nil
 
-local function update()
-	if emitter ~= nil then
-		local str = "" .. emitter:getParticleCount()
-		labelAtlas:setString(str)
-    end
-end
+local s = CCDirector:sharedDirector():getWinSize()
 
-local function setEmitterPosition()
-    if emitter ~= nil then
-		emitter:setPosition(s.width / 2, s.height / 2)
-	end
-end
-
-local function backCallback(sender)
+local function backAction()
 	SceneIdx = SceneIdx - 1
     if SceneIdx < 0 then
         SceneIdx = SceneIdx + MAX_LAYER
     end
 
-    CCDirector:sharedDirector():replaceScene(ParticleTest())
+    return CreateParticleLayer()
 end
 
-local function restartCallback(sender)
-	CCDirector:sharedDirector():replaceScene(ParticleTest())
+local function restartAction()
+	return CreateParticleLayer()
 end
 
-local function nextCallback(sender)
+local function nextAction()
 	SceneIdx = SceneIdx + 1
     SceneIdx = math.mod(SceneIdx, MAX_LAYER)
 
-    CCDirector:sharedDirector():replaceScene(ParticleTest())
+    return CreateParticleLayer()
+end
+
+local function backCallback(sender)
+	local scene = CCScene:create()
+
+	scene:addChild(backAction())
+	scene:addChild(CreateBackMenuItem())
+
+	CCDirector:sharedDirector():replaceScene(scene)
+end
+
+local function restartCallback(sender)
+	local scene = CCScene:create()
+
+	scene:addChild(restartAction())
+	scene:addChild(CreateBackMenuItem())
+
+	CCDirector:sharedDirector():replaceScene(scene)
+end
+
+local function nextCallback(sender)
+	local scene = CCScene:create()
+
+	scene:addChild(nextAction())
+	scene:addChild(CreateBackMenuItem())
+
+	CCDirector:sharedDirector():replaceScene(scene)
 end
 
 local function toggleCallback(sender)
@@ -60,6 +69,28 @@ local function toggleCallback(sender)
             emitter:setPositionType(kCCPositionTypeGrouped)
 		end
     end
+end
+
+local function setEmitterPosition()
+    if emitter ~= nil then
+		emitter:setPosition(s.width / 2, s.height / 2)
+	end
+end
+
+local function update(dt)
+	if emitter ~= nil then
+		local str = "" .. emitter:getParticleCount()
+		labelAtlas:setString("" .. str)
+    end
+end
+
+local function baseLayer_onEnterOrExit(tag)
+	local scheduler = CCDirector:sharedDirector():getScheduler()
+	if tag == 0 then
+		baseLayer_entry = scheduler:scheduleScriptFunc(update, 0, false)
+	elseif tag == 1 then
+		scheduler:unscheduleScriptEntry(baseLayer_entry)
+	end
 end
 
 local function getBaseLayer()
@@ -103,8 +134,8 @@ local function getBaseLayer()
     layer:addChild(menu, 100)
 
     labelAtlas = CCLabelAtlas:create("0000", "fps_images.png", 12, 32, '.')
-    layer:addChild(labelAtlas, 100, kTagParticleCount)
-    labelAtlas:setPosition(s.width - 66, 50)
+    layer:addChild(labelAtlas, 100)
+    labelAtlas:setPosition(ccp(s.width - 66, 50))
 
     -- moving background
     background = CCSprite:create(s_back3)
@@ -118,10 +149,6 @@ local function getBaseLayer()
 
     layer:scheduleUpdate()
 
-	local function onTouchBegan(x, y)
-        return true
-    end
-
 	local function onTouchEnded(x, y)
 		local pos = CCPointMake(0, 0)
 		if background ~= nil then
@@ -129,13 +156,14 @@ local function getBaseLayer()
 		end
 
 		if emitter ~= nil then
-			emitter:setPosition(ccpSub(CCPointMake(x, y), pos))
+			local newPos = ccpSub(CCPointMake(x, y), pos)
+			emitter:setPosition(newPos.x, newPos.y)
 		end
 	end
 
     local function onTouch(eventType, x, y)
         if eventType == CCTOUCHBEGAN then
-            return onTouchBegan(x, y)
+            return true
         else
             return onTouchEnded(x, y)
         end
@@ -143,6 +171,7 @@ local function getBaseLayer()
 
 	layer:setTouchEnabled(true)
     layer:registerScriptTouchHandler(onTouch)
+	layer:registerScriptHandler(baseLayer_onEnterOrExit)
 
 	return layer
 end
@@ -155,6 +184,8 @@ local ParticleReorder_entry = nil
 local ParticleReorder_layer = nil
 
 local function reorderParticles(dt)
+	update(dt)
+
 	for i = 0, 1 do
         local parent = ParticleReorder_layer:getChildByTag(1000 + i)
         local child1 = parent:getChildByTag(1)
@@ -254,6 +285,8 @@ local ParticleBatchHybrid_parent1 = nil
 local ParticleBatchHybrid_parent2 = nil
 
 local function switchRender(dt)
+	update(dt)
+
 	local cond = (emitter:getBatchNode() ~= nil)
 	emitter:removeFromParentAndCleanup(false)
 	local str = "Particle: Using new parent: "
@@ -1088,6 +1121,8 @@ local Issue870_index = nil
 local Issue870_entry = nil
 
 local function updateQuads(dt)
+	update(dt)
+
 	Issue870_index = math.mod(Issue870_index + 1, 4)
     local rect = CCRectMake(Issue870_index * 32, 0, 32, 32)
     emitter:setTextureWithRect(emitter:getTexture(), rect)
@@ -1184,6 +1219,8 @@ local AddAndDeleteParticleSystems_entry = nil
 local AddAndDeleteParticleSystems_batchNode = nil
 
 local function removeSystem(dt)
+	update(dt)
+
 	local ChildrenCount = AddAndDeleteParticleSystems_batchNode:getChildren():count()
     if ChildrenCount > 0 then
         cclog("remove random system")
@@ -1253,9 +1290,11 @@ local ReorderParticleSystems_entry = nil
 local ReorderParticleSystems_batchNode = nil
 
 local function reorderSystem(dt)
+	update(dt)
+
 	local child = ReorderParticleSystems_batchNode:getChildren():randomObject()
 	-- problem: there's no getZOrder() for CCObject
-	--ReorderParticleSystems_batchNode:reorderChild(child, child:getZOrder() - 1)
+	-- ReorderParticleSystems_batchNode:reorderChild(child, child:getZOrder() - 1)
 	ReorderParticleSystems_batchNode:reorderChild(child, math.random(0, 99999))
 end
 
@@ -1414,58 +1453,60 @@ end
 ---------------------------------
 --  Particle Test
 ---------------------------------
-function CreateParticleLayer(idx)
-	if idx == 0 then return ParticleReorder()
-	elseif idx == 1  then return ParticleBatchHybrid()
-	elseif idx == 2  then return ParticleBatchMultipleEmitters()
-	elseif idx == 3  then return DemoFlower()
-	elseif idx == 4  then return DemoGalaxy()
-	elseif idx == 5  then return DemoFirework()
-	elseif idx == 6  then return DemoSpiral()
-	elseif idx == 7  then return DemoSun()
-	elseif idx == 8  then return DemoMeteor()
-	elseif idx == 9  then return DemoFire()
-	elseif idx == 10 then return DemoSmoke()
-	elseif idx == 11 then return DemoExplosion()
-	elseif idx == 12 then return DemoSnow()
-	elseif idx == 13 then return DemoRain()
-	elseif idx == 14 then return DemoBigFlower()
-	elseif idx == 15 then return DemoRotFlower()
-	elseif idx == 16 then return DemoModernArt()
-	elseif idx == 17 then return DemoRing()
-	elseif idx == 18 then return ParallaxParticle()
-	elseif idx == 19 then return DemoParticleFromFile("BoilingFoam")
-	elseif idx == 20 then return DemoParticleFromFile("BurstPipe")
-	elseif idx == 21 then return DemoParticleFromFile("Comet")
-	elseif idx == 22 then return DemoParticleFromFile("debian")
-	elseif idx == 23 then return DemoParticleFromFile("ExplodingRing")
-	elseif idx == 24 then return DemoParticleFromFile("LavaFlow")
-	elseif idx == 25 then return DemoParticleFromFile("SpinningPeas")
-	elseif idx == 26 then return DemoParticleFromFile("SpookyPeas")
-	elseif idx == 27 then return DemoParticleFromFile("Upsidedown")
-	elseif idx == 28 then return DemoParticleFromFile("Flower")
-	elseif idx == 29 then return DemoParticleFromFile("Spiral")
-	elseif idx == 30 then return DemoParticleFromFile("Galaxy")
-	elseif idx == 31 then return DemoParticleFromFile("Phoenix")
-	elseif idx == 32 then return RadiusMode1()
-	elseif idx == 33 then return RadiusMode2()
-	elseif idx == 34 then return Issue704()
-	elseif idx == 35 then return Issue870()
-	--elseif idx == 36 then return Issue1201()
+function CreateParticleLayer()
+	if SceneIdx == 0 then return ParticleReorder()
+	elseif SceneIdx == 1  then return ParticleBatchHybrid()
+	elseif SceneIdx == 2  then return ParticleBatchMultipleEmitters()
+	elseif SceneIdx == 3  then return DemoFlower()
+	elseif SceneIdx == 4  then return DemoGalaxy()
+	elseif SceneIdx == 5  then return DemoFirework()
+	elseif SceneIdx == 6  then return DemoSpiral()
+	elseif SceneIdx == 7  then return DemoSun()
+	elseif SceneIdx == 8  then return DemoMeteor()
+	elseif SceneIdx == 9  then return DemoFire()
+	elseif SceneIdx == 10 then return DemoSmoke()
+	elseif SceneIdx == 11 then return DemoExplosion()
+	elseif SceneIdx == 12 then return DemoSnow()
+	elseif SceneIdx == 13 then return DemoRain()
+	elseif SceneIdx == 14 then return DemoBigFlower()
+	elseif SceneIdx == 15 then return DemoRotFlower()
+	elseif SceneIdx == 16 then return DemoModernArt()
+	elseif SceneIdx == 17 then return DemoRing()
+	elseif SceneIdx == 18 then return ParallaxParticle()
+	elseif SceneIdx == 19 then return DemoParticleFromFile("BoilingFoam")
+	elseif SceneIdx == 20 then return DemoParticleFromFile("BurstPipe")
+	elseif SceneIdx == 21 then return DemoParticleFromFile("Comet")
+	elseif SceneIdx == 22 then return DemoParticleFromFile("debian")
+	elseif SceneIdx == 23 then return DemoParticleFromFile("ExplodingRing")
+	elseif SceneIdx == 24 then return DemoParticleFromFile("LavaFlow")
+	elseif SceneIdx == 25 then return DemoParticleFromFile("SpinningPeas")
+	elseif SceneIdx == 26 then return DemoParticleFromFile("SpookyPeas")
+	elseif SceneIdx == 27 then return DemoParticleFromFile("Upsidedown")
+	elseif SceneIdx == 28 then return DemoParticleFromFile("Flower")
+	elseif SceneIdx == 29 then return DemoParticleFromFile("Spiral")
+	elseif SceneIdx == 30 then return DemoParticleFromFile("Galaxy")
+	elseif SceneIdx == 31 then return DemoParticleFromFile("Phoenix")
+	elseif SceneIdx == 32 then return RadiusMode1()
+	elseif SceneIdx == 33 then return RadiusMode2()
+	elseif SceneIdx == 34 then return Issue704()
+	elseif SceneIdx == 35 then return Issue870()
+	--elseif SceneIdx == 36 then return Issue1201()
 	-- v1.1 tests
-	elseif idx == 36 then return MultipleParticleSystems()
-	elseif idx == 37 then return MultipleParticleSystemsBatched()
-	elseif idx == 38 then return AddAndDeleteParticleSystems()
-	elseif idx == 39 then return ReorderParticleSystems()
-	elseif idx == 40 then return PremultipliedAlphaTest()
-	elseif idx == 41 then return PremultipliedAlphaTest2()
+	elseif SceneIdx == 36 then return MultipleParticleSystems()
+	elseif SceneIdx == 37 then return MultipleParticleSystemsBatched()
+	elseif SceneIdx == 38 then return AddAndDeleteParticleSystems()
+	elseif SceneIdx == 39 then return ReorderParticleSystems()
+	elseif SceneIdx == 40 then return PremultipliedAlphaTest()
+	elseif SceneIdx == 41 then return PremultipliedAlphaTest2()
 	end
 end
 
 function ParticleTest()
+	cclog("ParticleTest")
 	local scene = CCScene:create()
 
-	scene:addChild(CreateParticleLayer(SceneIdx))
+	SceneIdx = -1
+	scene:addChild(nextAction())
 	scene:addChild(CreateBackMenuItem())
 
 	return scene

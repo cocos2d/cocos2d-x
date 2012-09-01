@@ -845,6 +845,19 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
+		<key>libs/cocos2dx/include/ccTypeInfo.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>include</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/include/ccTypeInfo.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
 		<key>libs/cocos2dx/include/ccTypes.h</key>
 		<dict>
 			<key>Group</key>
@@ -3663,6 +3676,7 @@
 		<string>libs/cocos2dx/include/CCEventType.h</string>
 		<string>libs/cocos2dx/include/ccMacros.h</string>
 		<string>libs/cocos2dx/include/CCProtocols.h</string>
+		<string>libs/cocos2dx/include/ccTypeInfo.h</string>
 		<string>libs/cocos2dx/include/ccTypes.h</string>
 		<string>libs/cocos2dx/include/cocos2d.h</string>
 		<string>libs/cocos2dx/kazmath/include/kazmath/aabb.h</string>

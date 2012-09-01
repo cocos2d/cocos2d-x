@@ -1,0 +1,573 @@
+
+<html>
+   <head>
+      <style type="text/css">
+         .sikuli-code {
+            font-size: 20px;
+            font-family: "Osaka-mono", Monospace;
+            line-height: 1.5em;
+            display:table-cell;
+            white-space: pre-wrap;       /* css-3 */
+            white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
+            white-space: -pre-wrap;      /* Opera 4-6 */
+            white-space: -o-pre-wrap;    /* Opera 7 */
+            word-wrap: break-word;       /* Internet Explorer 5.5+ */
+            width: 99%;   /* remove horizontal scroll-bar when viewing in IE7 */
+         }
+         .sikuli-code img {
+            vertical-align: middle;
+            margin: 2px;
+            border: 1px solid #ccc;
+            padding: 2px;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            -moz-box-shadow: 1px 1px 1px gray;
+            -webkit-box-shadow: 1px 1px 2px gray;
+         }
+         .kw {
+            color: blue;
+         }
+         .skw {
+            color: rgb(63, 127, 127);
+         }
+
+         .str {
+            color: rgb(128, 0, 0);
+         }
+
+         .dig {
+            color: rgb(128, 64, 0);
+         }
+
+         .cmt {
+            color: rgb(200, 0, 200);
+         }
+
+         h2 {
+            display: inline;
+            font-weight: normal;
+         }  
+         
+         .info {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+            margin-bottom: 20px;
+            display: none;
+         }
+
+         a {
+            color: #9D2900;
+         }
+
+         body {
+            font-family: "Trebuchet MS", Arial, Sans-Serif;
+         }
+
+      </style>
+   </head>
+<body>
+<div class="info">
+<h2>iOS_SikuliTest.sikuli</h2> <a href="iOS_SikuliTest.zip">(Download this script)</a>
+</div>
+<pre class="sikuli-code">
+setAutoWaitTimeout(<span class="dig">10000</span>)
+
+val = getFindFailedResponse()
+<span class="kw">if</span> val == ABORT:
+    <span class="kw">print</span> <span class="str">"Abort"</span>
+<span class="kw">if</span> val == SKIP:
+    <span class="kw">print</span> <span class="str">"SKIP"</span>
+<span class="kw">if</span> val == PROMPT:
+    <span class="kw">print</span> <span class="str">"PROMPT"</span>
+<span class="kw">if</span> val == RETRY:
+    <span class="kw">print</span> <span class="str">"RETRY"</span>
+
+<span class="kw">def</span> common_test(a,b,c):
+    <span class="kw">for</span> i <span class="kw">in</span> range(a,b):
+        <span class="skw">wait</span>(c)
+        <span class="kw">if</span> exists(<img src="Next.png" />):
+            <span class="skw">click</span>(<img src="Next.png" />)
+
+<span class="cmt">#ActionTest
+</span><span class="skw">click</span>(<img src="ActionsTest.png" />)
+<span class="kw">print</span>(<span class="str">"Run ActionsTest"</span>)
+common_test(<span class="dig">1</span>,<span class="dig">28</span>,<span class="dig">1.0</span>)
+<span class="skw">click</span>(Pattern(<img src="MainMenu_Common.png" />).targetOffset(-<span class="dig">93</span>,<span class="dig">0</span>))
+common_test(<span class="dig">1</span>,<span class="dig">3</span>,<span class="dig">3.0</span>)
+common_test(<span class="dig">1</span>,<span class="dig">6</span>,<span class="dig">1.0</span>)
+<span class="kw">print</span>(<span class="str">"ActionsTest finished!"</span>)
+<span class="skw">click</span>(<img src="MainMenu_Common.png" />)
+
+<span class="cmt">#TransitionsTest
+</span><span class="skw">click</span>(<img src="TransitionsTest.png" />)
+<span class="kw">print</span>(<span class="str">"Run TransitionsTest"</span>)
+common_test(<span class="dig">1</span>,<span class="dig">27</span>,<span class="dig">1.0</span>)
+<span class="kw">print</span>(<span class="str">"TransitionsTest finished!"</span>)
+<span class="skw">click</span>(Pattern(<img src="1346297215212.png" />).targetOffset(<span class="dig">49</span>,<span class="dig">0</span>))
+
+<span class="cmt">#ActionsProgressTest
+</span><span class="skw">click</span>(<img src="ActionsProgressTest.png" />)
+<span class="kw">print</span>(<span class="str">"Run ActionsProgressTest"</span>)
+common_test(<span class="dig">1</span>,<span class="dig">8</span>,<span class="dig">1.0</span>)
+<span class="kw">print</span>(<span class="str">"ActionsProgressTest finished!"</span>)
+<span class="skw">click</span>(<img src="MainMenu_ActionsProgress.png" />)
+
+
+<span class="cmt">#EffectsTest
+</span><span class="skw">click</span>(<img src="EffectsTest.png" />)
+<span class="kw">print</span>(<span class="str">"Run EffectsTest"</span>)
+common_test(<span class="dig">1</span>,<span class="dig">22</span>,<span class="dig">3.0</span>)
+<span class="kw">print</span>(<span class="str">"Effects finished!"</span>)
+<span class="skw">click</span>(<img src="MainMenu_Effects.png" />)
+
+<span class="cmt">#ClickAndMoveTest
+</span><span class="kw">print</span>(<span class="str">"Run ClickAndMoveTest"</span>)
+<span class="skw">click</span>(<img src="CickAndMoveTest.png" />)
+<span class="skw">wait</span>(<span class="dig">4</span>)
+<span class="skw">click</span>(<img src="ClickAndMove_Click.png" />)
+<span class="skw">click</span>(Pattern(<img src="ClickAndMove_Click.png" />).targetOffset(<span class="dig">200</span>,-<span class="dig">3</span>))
+<span class="skw">click</span>(<img src="MainMenu_ClickAndMove.png" />)
+
+<span class="kw">print</span>(<span class="str">"ClickAndMoveTest finished!"</span>)
+
+<span class="cmt">#RotateWorldTest
+</span><span class="kw">print</span>(<span class="str">"Run RotateWorldTest"</span>)
+<span class="skw">click</span>(<img src="RotateWorldTest.png" />)
+<span class="skw">wait</span>(<span class="dig">4</span>)
+<span class="skw">click</span>(<img src="MainMenu_ActionsProgress.png" />)
+<span class="kw">print</span>(<span class="str">"RotateWorldTest finished!"</span>)
+
+<span class="cmt">#ParticleTest
+</span><span class="kw">print</span>(<span class="str">"Run ParticleTest"</span>)
+<span class="skw">click</span>(<img src="ParticleTest.png" />)
+common_test(<span class="dig">1</span>,<span class="dig">43</span>,<span class="dig">2.0</span>)
+<span class="kw">print</span>(<span class="str">"ParticleTest finished!"</span>)
+<span class="skw">click</span>(<img src="MainMenu_Common.png" />)
+
+<span class="skw">dragDrop</span>(Pattern(<img src="ParticleTest-1.png" />).targetOffset(<span class="dig">91</span>,<span class="dig">17</span>), Pattern(<img src="Acti0nsTest.png" />).targetOffset(<span class="dig">93</span>,-<span class="dig">19</span>))
+
+<span class="cmt">#ActionEaseTest
+</span><span class="kw">print</span>(<span class="str">"Run ActionEaseTest"</span>)
+<span class="skw">click</span>(<img src="ActionsEaseTest.png" />)
+common_test(<span class="dig">1</span>,<span class="dig">14</span>,<span class="dig">2.0</span>)
+<span class="skw">click</span>(<img src="MainMenu_Common.png" />)
+<span class="kw">print</span>(<span class="str">"ActionEaseTest finished!"</span>)
+
+<span class="cmt">#MotionStreakTest
+</span><span class="kw">print</span>(<span class="str">"Run MotionStreakTest"</span>)
+<span class="skw">click</span>(<img src="MotionStreakTest.png" />)
+<span class="skw">wait</span>(<span class="dig">1.0</span>)
+<span class="skw">click</span>(Pattern(<img src="MotionStreak_ChangeFastMode.png" />).targetOffset(<span class="dig">20</span>,<span class="dig">0</span>))
+<span class="skw">wait</span>(<span class="dig">1.0</span>)
+<span class="skw">click</span>(<img src="Next.png" />)
+<span class="skw">dragDrop</span>(<img src="Motion_Drag1.png" />, <img src="Motion_Drag2.png" />)
+<span class="skw">click</span>(Pattern(<img src="MotionStreak_ChangeFastMode.png" />).targetOffset(<span class="dig">20</span>,<span class="dig">0</span>))
+<span class="skw">dragDrop</span>(<img src="Motion_Drag1.png" />, <img src="Motion_Drag2.png" />)
+<span class="skw">click</span>(<img src="Next.png" />)
+<span class="skw">click</span>(Pattern(<img src="MotionStreak_ChangeFastMode.png" />).targetOffset(<span class="dig">20</span>,<span class="dig">0</span>))
+<span class="skw">wait</span>(<span class="dig">1.0</span>)
+<span class="skw">click</span>(<img src="MainMenu_Common.png" />)
+<span class="kw">print</span>(<span class="str">"MotionStreakTest finished!"</span>)
+
+<span class="cmt">#DrawPimitivesTest
+</span><span class="kw">print</span>(<span class="str">"Run DrawPimitivesTest"</span>)
+<span class="skw">click</span>(<img src="DrawPrimitivesTest.png" />)
+<span class="kw">if</span> exists(<img src="DrawPrimitives.png" />):
+    <span class="kw">print</span>(<span class="str">"DrawPrimitivesTest success!"</span>)
+<span class="kw">print</span>(<span class="str">"DrawPimitivesTest finished!"</span>)
+<span class="skw">click</span>(<img src="MainMenu_DrawPimitives.png" />)
+
+<span class="cmt">#NodeTest
+</span><span class="kw">print</span>(<span class="str">"Run NodeTest"</span>)
+<span class="skw">click</span>(<img src="NodeTest.png" />)
+common_test(<span class="dig">1</span>,<span class="dig">14</span>,<span class="dig">1.0</span>)
+<span class="skw">click</span>(<img src="MainMenu_Common.png" />)
+<span class="kw">print</span>(<span class="str">"NodeTest finished!"</span>)
+
+<span class="cmt">#TouchesTest
+</span><span class="kw">print</span>(<span class="str">"Run TouchesTest"</span>)
+<span class="skw">click</span>(<img src="TouchesTest.png" />)
+<span class="skw">wait</span>(<span class="dig">1.0</span>)
+<span class="skw">click</span>(<img src="MainMenu_Common.png" />)
+<span class="kw">print</span>(<span class="str">"TouchesTest finished!"</span>)
+
+<span class="cmt">#MenuTest
+</span><span class="kw">print</span>(<span class="str">"Run MenuTest"</span>)
+<span class="skw">click</span>(<img src="MenuTest.png" />)
+<span class="skw">click</span>(<img src="MenuTest_AtlasSprite.png" />)
+<span class="skw">click</span>(<img src="MenuTest_HighScores.png" />)
+<span class="skw">click</span>(<img src="MenuTest_Play.png" />)
+<span class="skw">click</span>(<img src="MenuTest_Eitems.png" />)
+<span class="skw">click</span>(<img src="MenuTest_Config.png" />)
+<span class="skw">click</span>(<img src="MenuTest_Back.png" />)
+<span class="skw">click</span>(<img src="MenuTest_Quit.png" />)
+<span class="skw">click</span>(<img src="MainMenu_Common.png" />)
+<span class="kw">print</span>(<span class="str">"MenuTest finished!"</span>)
+
+<span class="cmt">#ActionManagerTest
+</span><span class="kw">print</span>(<span class="str">"Run ActionManagerTest"</span>)
+<span class="skw">click</span>(<img src="ActionManaerTest.png" />)
+common_test(<span class="dig">1</span>,<span class="dig">5</span>,<span class="dig">3.0</span>)
+<span class="skw">click</span>(<img src="MainMenu_Common.png" />)
+<span class="kw">print</span>(<span class="str">"ActionManagerTest finished!"</span>)
+
+<span class="cmt">#LayerTest
+</span><span class="kw">print</span>(<span class="str">"Run LayerTest"</span>)
+<span class="skw">click</span>(<img src="LayerTest.png" />)
+<span class="skw">dragDrop</span>(<img src="Layer_Drag1.png" />, <img src="Layer_Drag2.png" />)
+<span class="skw">click</span>(<img src="Next.png" />)
+<span class="skw">wait</span>(<span class="dig">1.0</span>)
+<span class="skw">click</span>(<img src="Next.png" />)
+<span class="skw">wait</span>(<span class="dig">1.0</span>)
+<span class="skw">click</span>(<img src="Next.png" />)
+<span class="skw">dragDrop</span>(<img src="Layer_Drag3.png" />, <img src="Layer_Drag4.png" />)
+common_test(<span class="dig">1</span>,<span class="dig">3</span>,<span class="dig">1.0</span>)
+<span class="skw">click</span>(<img src="MainMenu_Common.png" />)
+<span class="kw">print</span>(<span class="str">"LayerTest finished!"</span>)
+
+<span class="skw">dragDrop</span>(Pattern(<img src="LaverTest-1.png" />).targetOffset(<span class="dig">98</span>,<span class="dig">6</span>), Pattern(<img src="Acti0nsEaseT.png" />).targetOffset(<span class="dig">106</span>,-<span class="dig">11</span>))
+
+<span class="cmt">#SceneTest
+</span><span class="kw">print</span>(<span class="str">"Run SceneTest"</span>)
+<span class="skw">click</span>(<img src="SceneTest.png" />)
+<span class="skw">click</span>(<img src="Scene_pushScene.png" />)
+<span class="skw">click</span>(<img src="Scene_relaceScene.png" />)
+<span class="skw">click</span>(<img src="Scene_popToRoot.png" />)
+<span class="skw">click</span>(<img src="Scene_Quit.png" />)
+<span class="skw">click</span>(<img src="MainMenu_Common.png" />)
+<span class="kw">print</span>(<span class="str">"SceneTest finished!"</span>)
+
+<span class="cmt">#ParallaxTest
+</span><span class="kw">print</span>(<span class="str">"Run ParallaxTest"</span>)
+<span class="skw">click</span>(<img src="ParaIIaxTest.png" />)
+<span class="skw">wait</span>(<span class="dig">3.0</span>)
+<span class="skw">click</span>(<img src="Next.png" />)
+<span class="skw">dragDrop</span>(<img src="Parallax_Drag1.png" />, <img src="Parallax_Drag2.png" />)
+<span class="skw">click</span>(<img src="MainMenu_Parallax.png" />)
+<span class="kw">print</span>(<span class="str">"ParallaxTest finished!"</span>)
+
+<span class="cmt">#TileMapTest
+</span><span class="kw">print</span>(<span class="str">"Run TileMapTest"</span>)
+<span class="skw">click</span>(<img src="TileMapTest.png" />)
+common_test(<span class="dig">1</span>,<span class="dig">21</span>,<span class="dig">2.0</span>)
+<span class="skw">click</span>(<img src="MainMenu_TileMap.png" />)
+<span class="kw">print</span>(<span class="str">"TileMapTest finished!"</span>)
+
+<span class="cmt">#IntervalTest
+</span><span class="kw">print</span>(<span class="str">"Run IntervalTest"</span>)
+<span class="skw">click</span>(<img src="IntervaITest.png" />)
+<span class="skw">wait</span>(<span class="dig">2.0</span>)
+<span class="skw">click</span>(<img src="Interval_pause.png" />)
+<span class="skw">wait</span>(<span class="dig">1.0</span>)
+<span class="skw">click</span>(<img src="Interval_pause.png" />)
+<span class="skw">click</span>(<img src="MainMenu_Common.png" />)
+<span class="kw">print</span>(<span class="str">"IntervalTest finished!"</span>)
+
+<span class="cmt">#ChipmunkAccelTouchTest
+</span><span class="kw">print</span>(<span class="str">"Run ChipmunkAccelTouchTest"</span>)
+<span class="skw">click</span>(<img src="ChipmunkAccelTouchTest.png" />)
+<span class="kw">for</span> i <span class="kw">in</span> range(<span class="dig">1</span>,<span class="dig">3</span>):
+    <span class="skw">click</span>(<img src="ChipmunkAccelTouchTest_Click.png" />)
+<span class="kw">for</span> i <span class="kw">in</span> range(<span class="dig">1</span>,<span class="dig">3</span>):
+    <span class="skw">click</span>(<img src="it.png" />)
+<span class="skw">wait</span>(<span class="dig">3.0</span>)
+<span class="skw">click</span>(<img src="MainMenu_Common.png" />)
+<span class="kw">print</span>(<span class="str">"ChipmunkAccelTouchTest finished!"</span>)
+
+<span class="cmt">#LabelTest
+</span><span class="kw">print</span>(<span class="str">"Run LabelTest"</span>)
+<span class="skw">click</span>(<img src="LabeITest.png" />)
+<span class="skw">wait</span>(<span class="dig">1.0</span>)
+common_test(<span class="dig">1</span>,<span class="dig">26</span>,<span class="dig">0.5</span>)
+<span class="skw">click</span>(<img src="MainMenu_Common.png" />)
+<span class="kw">print</span>(<span class="str">"LabelTest finished!"</span>)
+
+<span class="cmt">#TextInputTest
+</span><span class="kw">print</span>(<span class="str">"Run TextInputTest"</span>)
+<span class="skw">click</span>(<img src="TextInputTest.png" />)
+<span class="skw">type</span>(<img src="TextInput_herefor.png" />, <span class="str">"1q~&lt;?;\@"</span>)
+<span class="skw">click</span>(<img src="TextInput_return.png" />)
+<span class="skw">click</span>(<img src="Next.png" />)
+<span class="skw">type</span>(<img src="TextInput_herefor.png" />, <span class="str">"1q~&lt;?;\@"</span>)
+<span class="skw">click</span>(<img src="TextInput_return.png" />)
+<span class="skw">click</span>(<img src="MainMenu_Common.png" />)
+<span class="kw">print</span>(<span class="str">"TextInputTest finished!"</span>)
+
+<span class="skw">dragDrop</span>(Pattern(<img src=".png" />).targetOffset(<span class="dig">100</span>,<span class="dig">14</span>), Pattern(<img src="I_yUIICDI.png" />).targetOffset(<span class="dig">75</span>,-<span class="dig">8</span>))
+
+<span class="cmt">#SpriteTest
+</span><span class="kw">print</span>(<span class="str">"Run SpriteTest"</span>)
+<span class="skw">click</span>(<img src="SpriteTest.png" />)
+<span class="kw">for</span> i <span class="kw">in</span> range(<span class="dig">1</span>,<span class="dig">3</span>):
+    <span class="skw">click</span>(<img src="SpriteTest_SpriteClick1.png" />)
+<span class="kw">for</span> j <span class="kw">in</span> range(<span class="dig">1</span>,<span class="dig">3</span>):
+    <span class="skw">click</span>(<img src="SpriteTest_SpriteClick2.png" />)
+<span class="skw">click</span>(<img src="Next.png" />)
+<span class="kw">for</span> i <span class="kw">in</span> range(<span class="dig">1</span>,<span class="dig">3</span>):
+    <span class="skw">click</span>(<img src="SpriteTest_SpriteClick1.png" />)
+<span class="kw">for</span> j <span class="kw">in</span> range(<span class="dig">1</span>,<span class="dig">3</span>):
+    <span class="skw">click</span>(<img src="SpriteTest_SpriteClick2.png" />)
+common_test(<span class="dig">1</span>,<span class="dig">100</span>,<span class="dig">0.5</span>)
+<span class="skw">click</span>(<img src="MainMenu_Common.png" />)
+<span class="kw">print</span>(<span class="str">"SpriteTest finished!"</span>)
+
+<span class="cmt">#SchdulerTest
+</span><span class="kw">print</span>(<span class="str">"Run SchdulerTest"</span>)
+<span class="skw">click</span>(<img src="SchduIerTest.png" />)
+<span class="skw">wait</span>(<span class="dig">1.0</span>)
+<span class="skw">click</span>(<img src="Next.png" />)
+<span class="skw">dragDrop</span>(Pattern(<img src="SchdulerTest_timeScale.png" />).targetOffset(<span class="dig">23</span>,<span class="dig">0</span>),Pattern(<img src="SchdulerTest_timeScale.png" />).targetOffset(-<span class="dig">50</span>,<span class="dig">0</span>))
+<span class="skw">click</span>(<img src="Next.png" />)
+<span class="skw">dragDrop</span>(<img src="Schduler_custom.png" />,Pattern(<img src="Schduler_custom.png" />).targetOffset(<span class="dig">58</span>,<span class="dig">0</span>))
+common_test(<span class="dig">1</span>,<span class="dig">11</span>,<span class="dig">1</span>)
+<span class="skw">click</span>(<img src="MainMenu_Common.png" />)
+<span class="kw">print</span>(<span class="str">"SchdulerTest finished!"</span>)
+
+<span class="cmt">#RenderTextureTest
+</span><span class="kw">print</span>(<span class="str">"Run RenderTextureTest"</span>)
+<span class="skw">click</span>(<img src="RenderTextureTest.png" />)
+<span class="skw">dragDrop</span>(<img src="RenderTexture_Drag1.png" />, <img src="RenderTexture_Drag2.png" />)
+<span class="skw">dragDrop</span>(<img src="RenderTexture_Drag3.png" />, <img src="RenderTexture_Drag4.png" />)
+<span class="skw">click</span>(<img src="SaveImage.png" />)
+<span class="skw">click</span>(<img src="Clear.png" />)
+<span class="skw">click</span>(<img src="Next.png" />)
+<span class="skw">wait</span>(<span class="dig">1.0</span>)
+<span class="skw">click</span>(<img src="Next.png" />)
+<span class="skw">click</span>(<img src="RenderTexture_vertexZclick1.png" />)
+<span class="skw">click</span>(<img src="RenderTexture_vertexZclick2.png" />)
+<span class="skw">click</span>(<img src="RenderTexture_vertexZclick3.png" />)
+<span class="skw">click</span>(<img src="Next.png" />)
+<span class="skw">wait</span>(<span class="dig">1.0</span>)
+<span class="skw">click</span>(<img src="MainMenu_Common.png" />)
+<span class="kw">print</span>(<span class="str">"RenderTextureTest finished!"</span>)
+
+<span class="cmt">#Texture2DTest
+</span><span class="kw">print</span>(<span class="str">"Run Texture2DTest"</span>)
+<span class="skw">click</span>(<img src="Texture2DTest.png" />)
+common_test(<span class="dig">1</span>,<span class="dig">36</span>,<span class="dig">0.5</span>)
+<span class="skw">click</span>(<img src="MainMenu_Common.png" />)
+<span class="kw">print</span>(<span class="str">"Texture2DTest finished!"</span>)
+
+<span class="cmt">#Box2dTest
+</span><span class="kw">print</span>(<span class="str">"Run Box2dTest"</span>)
+<span class="skw">click</span>(<img src="Box2dTest.png" />)
+<span class="kw">for</span> i <span class="kw">in</span> range(<span class="dig">1</span>,<span class="dig">6</span>):
+    <span class="skw">click</span>(<img src="Box2dTest_Click1.png" />)
+<span class="kw">for</span> i <span class="kw">in</span> range(<span class="dig">1</span>,<span class="dig">6</span>):
+    <span class="skw">click</span>(<img src="Box2dTest_Click2.png" />)
+<span class="skw">click</span>(<img src="MainMenu_Common.png" />)
+<span class="kw">print</span>(<span class="str">"Box2dTest finished!"</span>)
+
+<span class="cmt">#Box2dTestBed
+</span><span class="kw">print</span>(<span class="str">"Run Box2dTestBed"</span>)
+<span class="skw">click</span>(<img src="Box2dTestBed.png" />)
+common_test(<span class="dig">1</span>,<span class="dig">36</span>,<span class="dig">2.0</span>)
+<span class="skw">click</span>(<img src="MainMenu_Common.png" />)
+<span class="kw">print</span>(<span class="str">"Box2dTestBed finished!"</span>)
+
+<span class="cmt">#EffectAdvancedTest
+</span><span class="kw">print</span>(<span class="str">"Run EffectAdvancedTest"</span>)
+<span class="skw">click</span>(<img src="EffectAdvancedTest.png" />)
+common_test(<span class="dig">1</span>,<span class="dig">6</span>,<span class="dig">1.0</span>)
+<span class="skw">click</span>(<img src="MainMenu_Common.png" />)
+<span class="kw">print</span>(<span class="str">"EffectAdvancedTest finished!"</span>)
+
+<span class="cmt">#Accelerometer
+</span><span class="kw">print</span>(<span class="str">"Run Accelerometer"</span>)
+<span class="skw">click</span>(<img src="Accelerometer.png" />)
+<span class="skw">click</span>(<img src="MainMenu_Common.png" />)
+<span class="kw">print</span>(<span class="str">"Accelerometer finished!"</span>)
+
+<span class="skw">dragDrop</span>(Pattern(<img src="AccalaromeLI.png" />).targetOffset(<span class="dig">120</span>,<span class="dig">2</span>), Pattern(<img src="SmiteTest.png" />).targetOffset(<span class="dig">130</span>,-<span class="dig">9</span>))
+
+<span class="cmt">#KeypadTest
+</span><span class="kw">print</span>(<span class="str">"Run KeypadTest"</span>)
+<span class="skw">click</span>(<img src="KeypadTest.png" />)
+<span class="skw">click</span>(<img src="MainMenu_Common.png" />)
+<span class="kw">print</span>(<span class="str">"KeypadTest finished!"</span>)
+
+<span class="cmt">#CocosDenshionTest
+</span><span class="kw">print</span>(<span class="str">"Run CocosDenshionTest"</span>)
+<span class="skw">click</span>(<img src="CocosDenshionTest.png" />)
+<span class="skw">click</span>(<img src="CocosDenshionTest_play.png" />)
+<span class="skw">click</span>(<img src="CocosDenshionTest_stop.png" />)
+<span class="skw">click</span>(<img src="CocosDenshionTest_pause.png" />)
+<span class="skw">click</span>(<img src="CocosDenshionTest_resume.png" />)
+<span class="skw">click</span>(<img src="CocosDenshionTest_rewind.png" />)
+<span class="skw">click</span>(<img src="CocosDenshionTest_is.png" />)
+<span class="skw">click</span>(<img src="CocosDenshionTest_playeffect.png" />)
+<span class="skw">dragDrop</span>(Pattern(<img src="playeffectrr.png" />).targetOffset(-<span class="dig">130</span>,<span class="dig">15</span>), Pattern(<img src="Dlavbackqrou.png" />).targetOffset(-<span class="dig">140</span>,-<span class="dig">15</span>))
+<span class="skw">click</span>(<img src="CocosDenshionTest_playeffect.png" />)
+<span class="skw">click</span>(<img src="CocosDenshionTest_stop.png" />)
+<span class="skw">click</span>(<img src="CocosDenshionTest_unload.png" />)
+<span class="skw">click</span>(<img src="CocosDenshionTest_addback.png" />)
+<span class="skw">click</span>(<img src="CocosDenshionTest_subback.png" />)
+<span class="skw">click</span>(<img src="CocosDenshionTest_addeff.png" />)
+<span class="skw">click</span>(<img src="CocosDenshionTest_subeff.png" />)
+<span class="skw">click</span>(<img src="CocosDenshionTest_pause.png" />)
+<span class="skw">dragDrop</span>(Pattern(<img src="pauseeffect.png" />).targetOffset(-<span class="dig">120</span>,<span class="dig">6</span>), Pattern(<img src="playeffectre.png" />).targetOffset(-<span class="dig">130</span>,-<span class="dig">9</span>))
+<span class="skw">click</span>(<img src="CocosDenshionTest_addeff.png" />)
+<span class="skw">click</span>(<img src="CocosDenshionTest_subeff.png" />)
+<span class="skw">click</span>(<img src="CocosDenshionTest_pauseeffect.png" />)
+<span class="skw">click</span>(<img src="CocosDenshionTest_resumeff.png" />)
+<span class="skw">click</span>(<img src="CocosDenshionTest_pauseall.png" />)
+<span class="skw">click</span>(<img src="CocosDenshionTest_resumeall.png" />)
+<span class="skw">click</span>(<img src="CocosDenshionTest_stop.png" />)
+<span class="skw">click</span>(<img src="MainMenu_Common.png" />)
+<span class="kw">print</span>(<span class="str">"CocosDenshionTest finished!"</span>)
+
+<span class="cmt">#PerformanceTest
+</span><span class="kw">print</span>(<span class="str">"Run PerformanceTest"</span>)
+<span class="skw">click</span>(<img src="PerformanceTest.png" />)
+<span class="skw">click</span>(<img src="Performance_NodeChiIdren.png" />)
+<span class="skw">click</span>(<img src="Performance_Add.png" />)
+common_test(<span class="dig">1</span>,<span class="dig">6</span>,<span class="dig">0.5</span>)
+<span class="skw">click</span>(<img src="Common_Back.png" />)
+<span class="skw">click</span>(<img src="Performance_Particle.png" />)
+<span class="skw">click</span>(<img src="Performance_Add.png" />)
+common_test(<span class="dig">1</span>,<span class="dig">5</span>,<span class="dig">0.5</span>)
+<span class="skw">click</span>(<img src="Common_Back.png" />)
+<span class="skw">click</span>(<img src="Performance_Sprite.png" />)
+common_test(<span class="dig">1</span>,<span class="dig">5</span>,<span class="dig">0.5</span>)
+<span class="skw">click</span>(<img src="nf.png" />)
+<span class="skw">click</span>(<img src="Performance_Texture.png" />)
+<span class="skw">click</span>(<img src="Common_Back.png" />)
+<span class="skw">click</span>(<img src="Touches.png" />)
+<span class="skw">click</span>(<img src="T.png" />)
+<span class="skw">click</span>(<img src="Performance_Click2.png" />)
+<span class="skw">click</span>(<img src="Next.png" />)
+<span class="skw">click</span>(<img src="Performance_Click3.png" />)
+<span class="skw">click</span>(<img src="Performance_Click2.png" />)
+<span class="skw">click</span>(<img src="Common_Back.png" />)
+<span class="skw">click</span>(<img src="MainMenu_Common.png" />)
+<span class="kw">print</span>(<span class="str">"PerformanceTest finished!"</span>)
+
+<span class="cmt">#ZwoptexTest
+</span><span class="kw">print</span>(<span class="str">"Run ZwoptexTest"</span>)
+<span class="skw">click</span>(<img src="ZwoptexTest.png" />)
+<span class="skw">click</span>(<img src="MainMenu_Common.png" />)
+<span class="kw">print</span>(<span class="str">"ZwoptexTest finished!"</span>)
+
+<span class="cmt">#CurlTest
+</span><span class="kw">print</span>(<span class="str">"Run CurlTest"</span>)
+<span class="skw">click</span>(<img src="CurlTest.png" />)
+<span class="skw">click</span>(<img src="SCFGSFI.png" />)
+<span class="skw">click</span>(<img src="MainMenu_Common.png" />)
+<span class="kw">print</span>(<span class="str">"CurlTest finished!"</span>)
+
+<span class="cmt">#UserDefaultTest
+</span><span class="kw">print</span>(<span class="str">"Run UserDefaultTest"</span>)
+<span class="skw">click</span>(<img src="UserDefaultTest.png" />)
+<span class="skw">click</span>(<img src="MainMenu_Common.png" />)
+<span class="kw">print</span>(<span class="str">"UserDefaultTest finished!"</span>)
+
+<span class="cmt">#BugsTest
+</span><span class="kw">print</span>(<span class="str">"Run BugsTest"</span>)
+<span class="skw">click</span>(<img src="BugsTest-1.png" />)
+<span class="skw">click</span>(<img src="Bug350.png" />)
+<span class="skw">click</span>(<img src="Back.png" />)
+<span class="skw">click</span>(<img src="Buci422.png" />)
+<span class="skw">click</span>(<img src="One.png" />)
+<span class="skw">click</span>(<img src="1345694015019.png" />)
+<span class="skw">click</span>(<img src="Common_Back.png" />)
+<span class="skw">click</span>(<img src="Bug-458.png" />)
+<span class="skw">click</span>(<img src="Common_Back.png" />)
+<span class="skw">click</span>(<img src="Bug-624.png" />)
+<span class="skw">click</span>(<img src="Common_Back.png" />)
+<span class="skw">click</span>(<img src="Bug-886.png" />)
+<span class="skw">click</span>(<img src="Bugs_back_1.png" />)
+<span class="skw">click</span>(<img src="Bug-899.png" />)
+<span class="skw">click</span>(<img src="Bugs_back_4.png" />)
+<span class="skw">click</span>(<img src="Bug914.png" />)
+<span class="skw">click</span>(<img src="Bugs_back_2.png" />)
+<span class="skw">dragDrop</span>(Pattern(<img src="Bug914-2.png" />).targetOffset(-<span class="dig">103</span>,<span class="dig">16</span>), Pattern(<img src="Bug350-1.png" />).targetOffset(-<span class="dig">100</span>,-<span class="dig">19</span>))
+<span class="skw">click</span>(<img src="Bug1159.png" />)
+<span class="skw">click</span>(<img src="Bugs_back_5.png" />)
+<span class="skw">click</span>(<img src="Bug1174.png" />)
+<span class="skw">wait</span>(<span class="dig">0.5</span>)
+<span class="skw">click</span>(<img src="Common_Back.png" />)
+<span class="skw">click</span>(<img src="MainMenu_Common.png" />)
+<span class="kw">print</span>(<span class="str">"BugsTest finished!"</span>)
+
+<span class="skw">dragDrop</span>(Pattern(<img src="BugsTest-2.png" />).targetOffset(-<span class="dig">110</span>,<span class="dig">17</span>), Pattern(<img src="HUUBIUIUlIIU.png" />).targetOffset(-<span class="dig">120</span>,-<span class="dig">9</span>))
+
+<span class="cmt">#FontTest
+</span><span class="kw">print</span>(<span class="str">"Run FontTest"</span>)
+<span class="skw">click</span>(<img src="FontTest.png" />)
+common_test(<span class="dig">1</span>,<span class="dig">6</span>,<span class="dig">0.5</span>)
+<span class="skw">click</span>(<img src="MainMenu_Common.png" />)
+<span class="kw">print</span>(<span class="str">"FontTest finished!"</span>)
+
+<span class="cmt">#CurrentLauguageTest
+</span><span class="kw">print</span>(<span class="str">"Run CurrentLauguageTest"</span>)
+<span class="skw">click</span>(<img src="CurrentLanguageTest.png" />)
+<span class="skw">click</span>(<img src="MainMenu_Common.png" />)
+<span class="kw">print</span>(<span class="str">"CurrentLauguageTest finished!"</span>)
+
+<span class="cmt">#TextureCacheTest
+</span><span class="kw">print</span>(<span class="str">"Run TextureCacheTest"</span>)
+<span class="skw">click</span>(<img src="TextureCacheTest.png" />)
+<span class="skw">click</span>(<img src="MainMenu_TextureCache.png" />)
+<span class="kw">print</span>(<span class="str">"TextureCacheTest finished!"</span>)
+
+<span class="cmt">#ExtensionsTest
+</span><span class="kw">print</span>(<span class="str">"Run ExtensionsTest"</span>)
+<span class="skw">click</span>(<img src="ExtensionsTest.png" />)
+<span class="skw">click</span>(<img src="NotificationCenterTest.png" />)
+<span class="skw">click</span>(<img src="Notification_switchon.png" />)
+<span class="skw">click</span>(<img src="Common_Back.png" />)
+<span class="skw">click</span>(<img src="Extensions_CCControlButton.png" />)
+<span class="skw">wait</span>(<span class="dig">0.5</span>)
+<span class="skw">dragDrop</span>(Pattern(<img src="D.png" />).targetOffset(-<span class="dig">120</span>,<span class="dig">0</span>),Pattern(<img src="D.png" />).targetOffset(<span class="dig">120</span>,<span class="dig">0</span>))
+<span class="skw">click</span>(<img src="Next.png" />)
+<span class="skw">click</span>(<img src="ControlColourPickerTest.png" />)
+<span class="skw">click</span>(<img src="Next.png" />)
+<span class="skw">click</span>(Pattern(<img src="ControlSwitch.png" />).targetOffset(-<span class="dig">19</span>,<span class="dig">0</span>))
+<span class="skw">click</span>(<img src="Next.png" />)
+<span class="skw">click</span>(<img src="ControlButton_Variable.png" />)
+<span class="skw">click</span>(<img src="Next.png" />)
+<span class="skw">click</span>(<img src="ControlButton_Event.png" />)
+<span class="skw">click</span>(<img src="Next.png" />)
+<span class="skw">click</span>(<img src="ControlButton_Styling.png" />)
+<span class="skw">click</span>(<img src="Back_ControlButton.png" />)
+<span class="skw">click</span>(<img src="CocosBuilder.png" />)
+<span class="skw">click</span>(<img src="CocosBuilder_MenusItems.png" />)
+<span class="skw">click</span>(<img src="CocosBuilder_back.png" />)
+<span class="skw">click</span>(<img src="CocosBuilder_Sprite.png" />)
+<span class="skw">click</span>(<img src="CocosBuilder_back.png" />)
+<span class="skw">click</span>(<img src="CocosBuilder_Button.png" />)
+<span class="skw">click</span>(<img src="CocosBuilder_back.png" />)
+<span class="skw">click</span>(<img src="CocosBuilder_Labels.png" />)
+<span class="skw">click</span>(<img src="CocosBuilder_back.png" />)
+<span class="skw">click</span>(<img src="CocosBuilder_ParticleSystems.png" />)
+<span class="skw">click</span>(<img src="CocosBuilder_back.png" />)
+<span class="skw">click</span>(<img src="CocosBuilder_ScrollWews.png" />)
+<span class="skw">click</span>(<img src="CocosBuilder_back.png" />)
+<span class="skw">click</span>(<img src="MainMenu_Extensions.png" />)
+<span class="kw">print</span>(<span class="str">"ExtensionsTest finished!"</span>)
+
+<span class="cmt">#ShaderTest
+</span><span class="kw">print</span>(<span class="str">"Run ShaderTest"</span>)
+<span class="skw">click</span>(<img src="ShaderTest.png" />)
+common_test(<span class="dig">1</span>,<span class="dig">7</span>,<span class="dig">0.5</span>)
+<span class="skw">wait</span>(<span class="dig">0.5</span>)
+<span class="skw">dragDrop</span>(Pattern(<img src="1345698378832.png" />).targetOffset(-<span class="dig">44</span>,<span class="dig">0</span>),Pattern(<img src="1345698378832.png" />).targetOffset(<span class="dig">80</span>,<span class="dig">0</span>))
+<span class="skw">click</span>(<img src="Next.png" />)
+<span class="skw">click</span>(<img src="MainMenu_Common.png" />)
+<span class="kw">print</span>(<span class="str">"ShaderTest finished!"</span>)
+
+<span class="cmt">#MutiTouchTest
+</span><span class="kw">print</span>(<span class="str">"Run MutiTouchTest"</span>)
+<span class="skw">click</span>(<img src="MutiTouchTest.png" />)
+<span class="kw">for</span> i <span class="kw">in</span> range(<span class="dig">1</span>,<span class="dig">3</span>):
+    <span class="skw">dragDrop</span>(<img src="i.png" />, <img src="Maintvienu.png" />)
+    <span class="skw">dragDrop</span>(<img src="1346311259004.png" />, Pattern(<img src="C.png" />).targetOffset(-<span class="dig">50</span>,<span class="dig">0</span>))
+<span class="skw">click</span>(<img src="MainMenu_Common.png" />)
+<span class="kw">print</span>(<span class="str">"MutiTouchTest finished!"</span>)
+
+<span class="cmt">#Quit
+</span><span class="kw">print</span>(<span class="str">"Quit"</span>)
+<span class="skw">click</span>(<img src="1346315512087.png" />)
+</pre>
+</body>
+</html>

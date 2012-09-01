@@ -1,26 +1,26 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
-
-http://www.cocos2d-x.org
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-****************************************************************************/
+ Copyright (c) 2010-2011 cocos2d-x.org
+ 
+ http://www.cocos2d-x.org
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
 
 #include "CCScriptSupport.h"
 #include "CCScheduler.h"
@@ -41,10 +41,6 @@ CCScriptHandlerEntry::~CCScriptHandlerEntry(void)
 {
     CCScriptEngineManager::sharedManager()->getScriptEngine()->removeLuaHandler(m_nHandler);
 }
-
-#pragma mark -
-#pragma mark CCNotificationObserverHandlerEntry
-
 
 #pragma mark -
 #pragma mark CCSchedulerScriptHandlerEntry
@@ -106,128 +102,128 @@ bool CCTouchScriptHandlerEntry::init(bool bIsMultiTouches, int nPriority, bool b
 
 
 #pragma mark -
-#pragma mark LuaValue
+#pragma mark CCScriptValue
 
-const LuaValue LuaValue::intValue(const int intValue)
+const CCScriptValue CCScriptValue::intValue(const int intValue)
 {
-    LuaValue value;
-    value.m_type = LuaValueTypeInt;
+    CCScriptValue value;
+    value.m_type = CCScriptValueTypeInt;
     value.m_field.intValue = intValue;
     return value;
 }
 
-const LuaValue LuaValue::floatValue(const float floatValue)
+const CCScriptValue CCScriptValue::floatValue(const float floatValue)
 {
-    LuaValue value;
-    value.m_type = LuaValueTypeFloat;
+    CCScriptValue value;
+    value.m_type = CCScriptValueTypeFloat;
     value.m_field.floatValue = floatValue;
     return value;
 }
 
-const LuaValue LuaValue::booleanValue(const bool booleanValue)
+const CCScriptValue CCScriptValue::booleanValue(const bool booleanValue)
 {
-    LuaValue value;
-    value.m_type = LuaValueTypeBoolean;
+    CCScriptValue value;
+    value.m_type = CCScriptValueTypeBoolean;
     value.m_field.booleanValue = booleanValue;
     return value;
 }
 
-const LuaValue LuaValue::stringValue(const char* stringValue)
+const CCScriptValue CCScriptValue::stringValue(const char* stringValue)
 {
-    LuaValue value;
-    value.m_type = LuaValueTypeString;
+    CCScriptValue value;
+    value.m_type = CCScriptValueTypeString;
     value.m_field.stringValue = new std::string(stringValue);
     return value;
 }
 
-const LuaValue LuaValue::stringValue(const std::string& stringValue)
+const CCScriptValue CCScriptValue::stringValue(const std::string& stringValue)
 {
-    LuaValue value;
-    value.m_type = LuaValueTypeString;
+    CCScriptValue value;
+    value.m_type = CCScriptValueTypeString;
     value.m_field.stringValue = new std::string(stringValue);
     return value;
 }
 
-const LuaValue LuaValue::dictValue(const LuaDict& dictValue)
+const CCScriptValue CCScriptValue::dictValue(const CCScriptValueDict& dictValue)
 {
-    LuaValue value;
-    value.m_type = LuaValueTypeDict;
-    value.m_field.dictValue = new LuaDict(dictValue);
+    CCScriptValue value;
+    value.m_type = CCScriptValueTypeDict;
+    value.m_field.dictValue = new CCScriptValueDict(dictValue);
     return value;
 }
 
-const LuaValue LuaValue::arrayValue(const LuaArray& arrayValue)
+const CCScriptValue CCScriptValue::arrayValue(const CCScriptValueArray& arrayValue)
 {
-    LuaValue value;
-    value.m_type = LuaValueTypeArray;
-    value.m_field.arrayValue = new LuaArray(arrayValue);
+    CCScriptValue value;
+    value.m_type = CCScriptValueTypeArray;
+    value.m_field.arrayValue = new CCScriptValueArray(arrayValue);
     return value;
 }
 
-const LuaValue LuaValue::ccobjectValue(CCObject* ccobjectValue, const char* objectTypename)
+const CCScriptValue CCScriptValue::ccobjectValue(CCObject* ccobjectValue, const char* objectTypename)
 {
-    LuaValue value;
-    value.m_type = LuaValueTypeCCObject;
+    CCScriptValue value;
+    value.m_type = CCScriptValueTypeCCObject;
     value.m_field.ccobjectValue = ccobjectValue;
     ccobjectValue->retain();
     value.m_ccobjectType = new std::string(objectTypename);
     return value;
 }
 
-const LuaValue LuaValue::ccobjectValue(CCObject* ccobjectValue, const std::string& objectTypename)
+const CCScriptValue CCScriptValue::ccobjectValue(CCObject* ccobjectValue, const std::string& objectTypename)
 {
-    return LuaValue::ccobjectValue(ccobjectValue, objectTypename.c_str());
+    return CCScriptValue::ccobjectValue(ccobjectValue, objectTypename.c_str());
 }
 
-LuaValue::LuaValue(const LuaValue& rhs)
+CCScriptValue::CCScriptValue(const CCScriptValue& rhs)
 {
     copy(rhs);
 }
 
-LuaValue& LuaValue::operator=(const LuaValue& rhs)
+CCScriptValue& CCScriptValue::operator=(const CCScriptValue& rhs)
 {
     if (this != &rhs) copy(rhs);
     return *this;
 }
 
-LuaValue::~LuaValue(void)
+CCScriptValue::~CCScriptValue(void)
 {
-    if (m_type == LuaValueTypeString)
+    if (m_type == CCScriptValueTypeString)
     {
         delete m_field.stringValue;
     }
-    else if (m_type == LuaValueTypeDict)
+    else if (m_type == CCScriptValueTypeDict)
     {
         delete m_field.dictValue;
     }
-    else if (m_type == LuaValueTypeArray)
+    else if (m_type == CCScriptValueTypeArray)
     {
         delete m_field.arrayValue;
     }
-    else if (m_type == LuaValueTypeCCObject)
+    else if (m_type == CCScriptValueTypeCCObject)
     {
         m_field.ccobjectValue->release();
         delete m_ccobjectType;
     }
 }
 
-void LuaValue::copy(const LuaValue& rhs)
+void CCScriptValue::copy(const CCScriptValue& rhs)
 {
     memcpy(&m_field, &rhs.m_field, sizeof(m_field));
     m_type = rhs.m_type;
-    if (m_type == LuaValueTypeString)
+    if (m_type == CCScriptValueTypeString)
     {
         m_field.stringValue = new std::string(*rhs.m_field.stringValue);
     }
-    else if (m_type == LuaValueTypeDict)
+    else if (m_type == CCScriptValueTypeDict)
     {
-        m_field.dictValue = new LuaDict(*rhs.m_field.dictValue);
+        m_field.dictValue = new CCScriptValueDict(*rhs.m_field.dictValue);
     }
-    else if (m_type == LuaValueTypeArray)
+    else if (m_type == CCScriptValueTypeArray)
     {
-        m_field.arrayValue = new LuaArray(*rhs.m_field.arrayValue);
+        m_field.arrayValue = new CCScriptValueArray(*rhs.m_field.arrayValue);
     }
-    else if (m_type == LuaValueTypeCCObject)
+    else if (m_type == CCScriptValueTypeCCObject)
     {
         m_field.ccobjectValue = rhs.m_field.ccobjectValue;
         m_field.ccobjectValue->retain();
@@ -251,14 +247,13 @@ void CCScriptEngineManager::setScriptEngine(CCScriptEngineProtocol *pScriptEngin
 {
     removeScriptEngine();
     m_pScriptEngine = pScriptEngine;
-    m_pScriptEngine->retain();
 }
 
 void CCScriptEngineManager::removeScriptEngine(void)
 {
     if (m_pScriptEngine)
     {
-        m_pScriptEngine->release();
+        delete m_pScriptEngine;
         m_pScriptEngine = NULL;
     }
 }

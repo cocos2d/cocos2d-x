@@ -147,6 +147,18 @@ CCParticleSystem * CCParticleSystem::create(const char *plistFile)
     return pRet;
 }
 
+CCParticleSystem* CCParticleSystem::createWithTotalParticles(unsigned int numberOfParticles)
+{
+    CCParticleSystem *pRet = new CCParticleSystem();
+    if (pRet && pRet->initWithTotalParticles(numberOfParticles))
+    {
+        pRet->autorelease();
+        return pRet;
+    }
+    CC_SAFE_DELETE(pRet);
+    return pRet;
+}
+
 bool CCParticleSystem::init()
 {
     return initWithTotalParticles(150);
