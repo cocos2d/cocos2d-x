@@ -14,3 +14,6 @@ void  ccDrawCardinalSpline(CCPointArray* config, float tension, unsigned int seg
 void  ccDrawColor4B(GLubyte r, GLubyte g, GLubyte b, GLubyte a);
 void  ccDrawColor4F(GLubyte r, GLubyte g, GLubyte b, GLubyte a);
 void  ccPointSize(GLfloat pointSize);
+
+// glew.h API:
+void  glLineWidth(GLfloat width);
