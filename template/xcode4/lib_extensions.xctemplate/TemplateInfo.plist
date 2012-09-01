@@ -822,6 +822,98 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
+		<key>libs/extensions/GUI/CCEditBox/CCEditBox.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>GUI</string>
+				<string>CCEditBox</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/GUI/CCEditBox/CCEditBox.cpp</string>
+		</dict>
+		<key>libs/extensions/GUI/CCEditBox/CCEditBox.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>GUI</string>
+				<string>CCEditBox</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/GUI/CCEditBox/CCEditBox.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/extensions/GUI/CCEditBox/CCEditBoxImpl.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>GUI</string>
+				<string>CCEditBox</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/GUI/CCEditBox/CCEditBoxImpl.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/extensions/GUI/CCEditBox/CCEditBoxImplIOS.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>GUI</string>
+				<string>CCEditBox</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/GUI/CCEditBox/CCEditBoxImplIOS.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/extensions/GUI/CCEditBox/CCEditBoxImplIOS.mm</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>GUI</string>
+				<string>CCEditBox</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/GUI/CCEditBox/CCEditBoxImplIOS.mm</string>
+		</dict>
+		<key>libs/extensions/GUI/CCEditBox/EditBoxImplIOS.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>GUI</string>
+				<string>CCEditBox</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/GUI/CCEditBox/EditBoxImplIOS.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/extensions/GUI/CCEditBox/EditBoxImplIOS.mm</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>GUI</string>
+				<string>CCEditBox</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/GUI/CCEditBox/EditBoxImplIOS.mm</string>
+		</dict>
 		<key>libs/extensions/GUI/CCScrollView/CCScrollView.cpp</key>
 		<dict>
 			<key>Group</key>
@@ -845,6 +937,56 @@
 			</array>
 			<key>Path</key>
 			<string>libs/extensions/GUI/CCScrollView/CCScrollView.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/extensions/network/HttpClient.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>network</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/network/HttpClient.cpp</string>
+		</dict>
+		<key>libs/extensions/network/HttpClient.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>network</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/network/HttpClient.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/extensions/network/HttpRequest.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>network</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/network/HttpRequest.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/extensions/network/HttpResponse.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>network</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/network/HttpResponse.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
@@ -916,8 +1058,19 @@
 		<string>libs/extensions/GUI/CCControlExtension/CCScale9Sprite.h</string>
 		<string>libs/extensions/GUI/CCControlExtension/CCSpacer.cpp</string>
 		<string>libs/extensions/GUI/CCControlExtension/CCSpacer.h</string>
+		<string>libs/extensions/GUI/CCEditBox/CCEditBox.cpp</string>
+		<string>libs/extensions/GUI/CCEditBox/CCEditBox.h</string>
+		<string>libs/extensions/GUI/CCEditBox/CCEditBoxImpl.h</string>
+		<string>libs/extensions/GUI/CCEditBox/CCEditBoxImplIOS.h</string>
+		<string>libs/extensions/GUI/CCEditBox/CCEditBoxImplIOS.mm</string>
+		<string>libs/extensions/GUI/CCEditBox/EditBoxImplIOS.h</string>
+		<string>libs/extensions/GUI/CCEditBox/EditBoxImplIOS.mm</string>
 		<string>libs/extensions/GUI/CCScrollView/CCScrollView.cpp</string>
 		<string>libs/extensions/GUI/CCScrollView/CCScrollView.h</string>
+		<string>libs/extensions/network/HttpClient.cpp</string>
+		<string>libs/extensions/network/HttpClient.h</string>
+		<string>libs/extensions/network/HttpRequest.h</string>
+		<string>libs/extensions/network/HttpResponse.h</string>
 	</array>
 </dict>
 </plist>
