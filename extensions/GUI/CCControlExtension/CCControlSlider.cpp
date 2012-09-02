@@ -161,6 +161,16 @@ CCControlSlider* CCControlSlider::create(CCSprite * backgroundSprite, CCSprite* 
         m_minimumValue   = m_maximumValue - 1.0f;
      setValue(m_value);
  }
+ 
+  void CCControlSlider::setMinimumAllowedValue(float minimumAllowedValue)
+ {
+     m_minimumAllowedValue = minimumAllowedValue;
+ }
+
+  void CCControlSlider::setMaximumAllowedValue(float maximumAllowedValue)
+ {
+     m_maximumAllowedValue = maximumAllowedValue;
+ }
 
   //this is the same as CCControl::getTouchLocation, but it returns the position relative to the position of this control
   CCPoint CCControlSlider::getTouchLocationInControl(CCTouch* touch)
@@ -224,7 +234,7 @@ void CCControlSlider::sliderEnded(CCPoint location)
 float CCControlSlider::valueForLocation(CCPoint location)
 {
     float percent = (location.x-SLIDER_MARGIN_H)/ m_backgroundSprite->getContentSize().width;
-    return m_minimumValue + percent * (m_maximumValue - m_minimumValue);
+    return max(min(m_minimumValue + percent * (m_maximumValue - m_minimumValue), m_maximumAllowedValue), m_minimumAllowedValue);
 }
 
 NS_CC_EXT_END
