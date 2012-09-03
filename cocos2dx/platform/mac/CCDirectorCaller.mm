@@ -59,12 +59,9 @@ static id s_sharedDirectorCaller;
 -(void) dealloc
 {
     s_sharedDirectorCaller = nil;
-    NSLog(@"~~ delete CCDirectorCaller");
+    NSLog(@"cocos2d: deallocing CCDirectorCaller %@", self);
 	if (displayLink) {
 		CVDisplayLinkRelease(displayLink);
-	}
-	if (renderTimer) {
-		[renderTimer release];
 	}
 	[super dealloc];
 }
