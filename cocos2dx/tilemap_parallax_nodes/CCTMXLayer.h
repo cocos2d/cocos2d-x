@@ -158,11 +158,6 @@ public:
     virtual void addChild(CCNode * child, int zOrder, int tag);
     // super method
     void removeChild(CCNode* child, bool cleanup);
-    
-    /** listen the event to invoke CCTexture2D::setAliasTexParameters() after
-     comming to foreground on android
-     */
-    void listenBackToForeground(CCObject *sender);
 
     inline const char* getLayerName(){ return m_sLayerName.c_str(); }
     inline void setLayerName(const char *layerName){ m_sLayerName = layerName; }
