@@ -622,6 +622,10 @@ void CCTexture2D::setTexParameters(ccTexParams *texParams)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, texParams->magFilter );
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, texParams->wrapS );
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, texParams->wrapT );
+
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    VolatileTexture::setTexParameters(this, texParams);
+#endif
 }
 
 void CCTexture2D::setAliasTexParameters()
@@ -638,6 +642,10 @@ void CCTexture2D::setAliasTexParameters()
     }
 
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    ccTexParams texParams = {m_bHasMipmaps?GL_NEAREST_MIPMAP_NEAREST:GL_NEAREST,GL_NEAREST,GL_NONE,GL_NONE};
+    VolatileTexture::setTexParameters(this, &texParams);
+#endif
 }
 
 void CCTexture2D::setAntiAliasTexParameters()
@@ -654,6 +662,10 @@ void CCTexture2D::setAntiAliasTexParameters()
     }
 
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    ccTexParams texParams = {m_bHasMipmaps?GL_LINEAR_MIPMAP_NEAREST:GL_LINEAR,GL_LINEAR,GL_NONE,GL_NONE};
+    VolatileTexture::setTexParameters(this, &texParams);
+#endif
 }
 
 const char* CCTexture2D::stringForFormat()
