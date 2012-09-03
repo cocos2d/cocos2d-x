@@ -45,24 +45,21 @@ static id s_sharedDirectorCaller;
 {
 	if (s_sharedDirectorCaller == nil)
 	{
-		s_sharedDirectorCaller = [CCDirectorCaller new];
+		s_sharedDirectorCaller = [[CCDirectorCaller alloc] init];
 	}
 	
 	return s_sharedDirectorCaller;
 }
 
-+(void) destroy
-{
-	[s_sharedDirectorCaller release];
-}
-
 -(void) alloc
 {
-        interval = 1;
+    interval = 1;
 }
 
 -(void) dealloc
 {
+    s_sharedDirectorCaller = nil;
+    NSLog(@"~~ delete CCDirectorCaller");
 	if (displayLink) {
 		CVDisplayLinkRelease(displayLink);
 	}
@@ -77,7 +74,7 @@ static id s_sharedDirectorCaller;
 #if CC_DIRECTOR_MAC_USE_DISPLAY_LINK_THREAD
 	//if( ! runningThread_ )
 	//runningThread_ = [NSThread currentThread];
-
+    
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	
 	cocos2d::CCDirector::sharedDirector()->drawScene();
@@ -99,84 +96,94 @@ static id s_sharedDirectorCaller;
 // This is the renderer output callback function
 static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeStamp* now, const CVTimeStamp* outputTime, CVOptionFlags flagsIn, CVOptionFlags* flagsOut, void* displayLinkContext)
 {
-//    CVReturn result = [(CCDirectorCaller*)displayLinkContext getFrameForTime:outputTime];
-//    return result;
+    //    CVReturn result = [(CCDirectorCaller*)displayLinkContext getFrameForTime:outputTime];
+    //    return result;
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	cocos2d::CCDirector::sharedDirector()->mainLoop();
 	[pool release];
-
+    
 	return kCVReturnSuccess;
 }
 
 - (void)timerFired:(id)sender
 {
     // It is good practice in a Cocoa application to allow the system to send the -drawRect:
-    // message when it needs to draw, and not to invoke it directly from the timer. 
+    // message when it needs to draw, and not to invoke it directly from the timer.
     // All we do here is tell the display it needs a refresh
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-
+    
 	// get the opengl view
 	EAGLView *openGLView = [EAGLView sharedEGLView];
 	[openGLView lockOpenGLContext];
-
+    
 	// run the main cocos2d loop
 	cocos2d::CCDirector::sharedDirector()->mainLoop();
-
+    
 	// flush buffer (this line is very important!)
-	[[openGLView openGLContext] flushBuffer];	
+	[[openGLView openGLContext] flushBuffer];
 	
 	[openGLView unlockOpenGLContext];
-
+    
 	// send any queued events
 	[[CCEventDispatcher sharedDispatcher] dispatchQueuedEvents];
-
+    
 	[pool release];
 }
 
 -(void) startMainLoop
 {
-        // CCDirector::setAnimationInterval() is called, we should invalide it first
-//        [displayLink invalidate];
-//        displayLink = nil;
-//        
-//        displayLink = [NSClassFromString(@"CADisplayLink") displayLinkWithTarget:self selector:@selector(doCaller:)];
-//        [displayLink setFrameInterval: self.interval];
-//        [displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+    // CCDirector::setAnimationInterval() is called, we should invalide it first
+    //        [displayLink invalidate];
+    //        displayLink = nil;
+    //
+    //        displayLink = [NSClassFromString(@"CADisplayLink") displayLinkWithTarget:self selector:@selector(doCaller:)];
+    //        [displayLink setFrameInterval: self.interval];
+    //        [displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
 #if ! CC_DIRECTOR_MAC_USE_DISPLAY_LINK_THREAD
 	NSThread* thread = [[NSThread alloc] initWithTarget:self selector:@selector(mainLoop) object:nil];
-	[thread start];	
+	[thread start];
 #endif
 	// NSTimer
+	[renderTimer invalidate];
+	renderTimer = nil;
+    
 	renderTimer = [NSTimer timerWithTimeInterval:self.interval/60.0f   //a 1ms time interval
-										   target:self
-										 selector:@selector(timerFired:)
-										 userInfo:nil
-										  repeats:YES];
-				   
-   [[NSRunLoop currentRunLoop] addTimer:renderTimer 
-								forMode:NSDefaultRunLoopMode];
-   [[NSRunLoop currentRunLoop] addTimer:renderTimer 
-								forMode:NSEventTrackingRunLoopMode]; //Ensure timer fires during resize
-   
-/*	
-	// CVDisplayLink
-	//cocos2d::CCDirector::sharedDirector()->gettimeofday();
-	
-	// Create a display link capable of being used with all active displays
-	CVDisplayLinkCreateWithActiveCGDisplays(&displayLink);
-	
-	// Set the renderer output callback function
-	CVDisplayLinkSetOutputCallback(displayLink, &MyDisplayLinkCallback, self);
-	
-	// Set the display link for the current renderer
-	EAGLView *openGLView_ = (EAGLView*)[EAGLView sharedEGLView];
-	CGLContextObj cglContext = (CGLContextObj)[[openGLView_ openGLContext] CGLContextObj];
-	CGLPixelFormatObj cglPixelFormat = (CGLPixelFormatObj)[[openGLView_ pixelFormat] CGLPixelFormatObj];
-	CVDisplayLinkSetCurrentCGDisplayFromOpenGLContext(displayLink, cglContext, cglPixelFormat);
-	
-	// Activate the display link
-	CVDisplayLinkStart(displayLink);
-*/
+                                          target:self
+                                        selector:@selector(timerFired:)
+                                        userInfo:nil
+                                         repeats:YES];
+    
+    [[NSRunLoop currentRunLoop] addTimer:renderTimer
+                                 forMode:NSDefaultRunLoopMode];
+    [[NSRunLoop currentRunLoop] addTimer:renderTimer
+                                 forMode:NSEventTrackingRunLoopMode]; //Ensure timer fires during resize
+    
+    /*
+     // CVDisplayLink
+     //cocos2d::CCDirector::sharedDirector()->gettimeofday();
+     
+     // Create a display link capable of being used with all active displays
+     CVDisplayLinkCreateWithActiveCGDisplays(&displayLink);
+     
+     // Set the renderer output callback function
+     CVDisplayLinkSetOutputCallback(displayLink, &MyDisplayLinkCallback, self);
+     
+     // Set the display link for the current renderer
+     EAGLView *openGLView_ = (EAGLView*)[EAGLView sharedEGLView];
+     CGLContextObj cglContext = (CGLContextObj)[[openGLView_ openGLContext] CGLContextObj];
+     CGLPixelFormatObj cglPixelFormat = (CGLPixelFormatObj)[[openGLView_ pixelFormat] CGLPixelFormatObj];
+     CVDisplayLinkSetCurrentCGDisplayFromOpenGLContext(displayLink, cglContext, cglPixelFormat);
+     
+     // Activate the display link
+     CVDisplayLinkStart(displayLink);
+     */
+}
+
+-(void) end
+{
+    [renderTimer invalidate];
+	renderTimer = nil;
+    [self release];
 }
 
 -(void) setAnimationInterval:(double)intervalNew
@@ -195,7 +202,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 	[[NSRunLoop currentRunLoop] addTimer:renderTimer 
 								 forMode:NSEventTrackingRunLoopMode];
 }
-					  
+
 -(void) doCaller: (id) sender
 {
 	cocos2d::CCDirector::sharedDirector()->mainLoop();
