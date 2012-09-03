@@ -173,13 +173,14 @@ void CCFileUtils::purgeCachedEntries()
 
 }
 
-void CCFileUtils::setResourceDirectory(const char *pszDirectoryName)
+void CCFileUtils::setResourceDirectory(const char *pszDirectoryName, bool isWorkingDir)
 {
     m_obDirectory = pszDirectoryName;
     if (m_obDirectory.size() > 0 && m_obDirectory[m_obDirectory.size() - 1] != '/')
     {
         m_obDirectory.append("/");
     }
+    m_isWorkingDirectory = isWorkingDir;
 }
 
 const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
@@ -191,7 +192,6 @@ const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
     
     // only if it is not an absolute path
     if( ! [relPath isAbsolutePath] ) {
-        
         // pathForResource also searches in .lproj directories. issue #1230
         NSString *lastPathComponent = [relPath lastPathComponent];
         
@@ -199,16 +199,24 @@ const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
         NSMutableString *imageDirectoryByAppendDirectory = [NSMutableString stringWithUTF8String:m_obDirectory.c_str()];
         [imageDirectoryByAppendDirectory appendString:imageDirectory];
         
-        // search path from directory set by setResourceDirectory
-        fullpath = [[NSBundle mainBundle] pathForResource:lastPathComponent
-                                                   ofType:nil
-                                              inDirectory:imageDirectoryByAppendDirectory];
-        if (fullpath == nil)
+        
+        if (!m_isWorkingDirectory)
         {
-            // search from root directory
+            // search path from directory set by setResourceDirectory
             fullpath = [[NSBundle mainBundle] pathForResource:lastPathComponent
                                                        ofType:nil
-                                                  inDirectory:imageDirectory];
+                                                  inDirectory:imageDirectoryByAppendDirectory];
+            if (fullpath == nil)
+            {
+                // search from root directory
+                fullpath = [[NSBundle mainBundle] pathForResource:lastPathComponent
+                                                           ofType:nil
+                                                      inDirectory:imageDirectory];
+            }
+        }
+        else
+        {
+            fullpath = [NSString stringWithFormat:@"%s%@", m_obDirectory.c_str(), relPath];
         }
     }
     
