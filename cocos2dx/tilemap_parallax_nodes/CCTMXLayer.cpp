@@ -32,8 +32,6 @@ THE SOFTWARE.
 #include "shaders/CCGLProgram.h"
 #include "support/CCPointExtension.h"
 #include "support/data_support/ccCArray.h"
-#include "support/CCNotificationCenter.h"
-#include "CCEventType.h"
 #include "CCDirector.h"
 
 NS_CC_BEGIN
@@ -99,24 +97,9 @@ bool CCTMXLayer::initWithTilesetInfo(CCTMXTilesetInfo *tilesetInfo, CCTMXLayerIn
         m_bUseAutomaticVertexZ = false;
         m_nVertexZvalue = 0;
         
-        
-        // listen the event of "EVNET_COME_TO_FOREGROUND", this event only trigged on android
-        CCNotificationCenter::sharedNotificationCenter()->addObserver(this,
-                                                                      callfuncO_selector(CCTMXLayer::listenBackToForeground),
-                                                                      EVNET_COME_TO_FOREGROUND,
-                                                                      NULL);
-        
         return true;
     }
     return false;
-}
-
-void CCTMXLayer::listenBackToForeground(CCObject *sender)
-{
-    if (m_pobTextureAtlas)
-    {
-        m_pobTextureAtlas->getTexture()->setAliasTexParameters();
-    }
 }
 
 CCTMXLayer::CCTMXLayer()
@@ -143,8 +126,6 @@ CCTMXLayer::~CCTMXLayer()
     }
 
     CC_SAFE_DELETE_ARRAY(m_pTiles);
-    
-    CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, EVNET_COME_TO_FOREGROUND);
 }
 
 CCTMXTilesetInfo * CCTMXLayer::getTileSet()
