@@ -236,7 +236,7 @@ void CCControlSlider::sliderEnded(CCPoint location)
 float CCControlSlider::valueForLocation(CCPoint location)
 {
     float percent = (location.x-SLIDER_MARGIN_H)/ m_backgroundSprite->getContentSize().width;
-    return max(min(m_minimumValue + percent * (m_maximumValue - m_minimumValue), m_maximumAllowedValue), m_minimumAllowedValue);
+    return MAX(MIN(m_minimumValue + percent * (m_maximumValue - m_minimumValue), m_maximumAllowedValue), m_minimumAllowedValue);
 }
 
 NS_CC_EXT_END
