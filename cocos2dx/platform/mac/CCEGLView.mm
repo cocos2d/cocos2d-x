@@ -52,12 +52,12 @@ bool CCEGLView::setContentScaleFactor(float contentScaleFactor)
 
 void CCEGLView::end()
 {
-    [CCDirectorCaller destroy];
+    [[CCDirectorCaller sharedDirectorCaller] end];
     
     // destroy EAGLView
     [[EAGLView sharedEGLView] removeFromSuperview];
 
-	_exit(0);
+//	_exit(0);
 }
 
 void CCEGLView::swapBuffers()

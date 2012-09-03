@@ -44,7 +44,7 @@ USING_NS_CC;
 static void static_addValueToCCDict(id key, id value, CCDictionary* pDict);
 static void static_addItemToCCArray(id item, CCArray* pArray);
 
-static NSFileManager *__localFileManager= [[NSFileManager alloc] init];
+static NSFileManager *__localFileManager= [NSFileManager defaultManager];
 
 static void static_addItemToCCArray(id item, CCArray *pArray)
 {
@@ -198,7 +198,6 @@ const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
         NSString *imageDirectory = [relPath stringByDeletingLastPathComponent];
         NSMutableString *imageDirectoryByAppendDirectory = [NSMutableString stringWithUTF8String:m_obDirectory.c_str()];
         [imageDirectoryByAppendDirectory appendString:imageDirectory];
-        
         
         if (!m_isWorkingDirectory)
         {
