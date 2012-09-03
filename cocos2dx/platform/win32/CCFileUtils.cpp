@@ -91,6 +91,11 @@ const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
         pRet->m_sString = szDriver;
         pRet->m_sString += pszRelativePath;
     }
+    else if (m_isWorkingDirectory)
+    {
+        pRet->m_sString = m_obDirectory;
+        pRet->m_sString += pszRelativePath;
+    }
     else
     {
         pRet->m_sString = s_pszResourcePath;
