@@ -104,7 +104,7 @@ int CCLuaEngine::executeString(const char *codes)
 int CCLuaEngine::executeScriptFile(const char* filename)
 {
     int nRet = luaL_dofile(m_state, filename);
-//    lua_gc(m_state, LUA_GCCOLLECT, 0);
+    // lua_gc(m_state, LUA_GCCOLLECT, 0);
 
     if (nRet != 0)
     {
@@ -115,7 +115,7 @@ int CCLuaEngine::executeScriptFile(const char* filename)
     return 0;
 }
 
-int    CCLuaEngine::executeGlobalFunction(const char* functionName)
+int CCLuaEngine::executeGlobalFunction(const char* functionName)
 {
     lua_getglobal(m_state, functionName);       /* query function by name, stack: function */
     if (!lua_isfunction(m_state, -1))
@@ -126,7 +126,7 @@ int    CCLuaEngine::executeGlobalFunction(const char* functionName)
     }
 
     int error = lua_pcall(m_state, 0, 1, 0);             /* call function, stack: ret */
-//    lua_gc(m_state, LUA_GCCOLLECT, 0);
+    // lua_gc(m_state, LUA_GCCOLLECT, 0);
 
     if (error)
     {
