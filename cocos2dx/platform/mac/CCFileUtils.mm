@@ -1,27 +1,27 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
-Copyright (c) 2011      Zynga Inc.
-
-http://www.cocos2d-x.org
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-****************************************************************************/
+ Copyright (c) 2010-2011 cocos2d-x.org
+ Copyright (c) 2011      Zynga Inc.
+ 
+ http://www.cocos2d-x.org
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
 #import <Foundation/Foundation.h>
 
 #include <string>
@@ -56,7 +56,7 @@ static void static_addItemToCCArray(id item, CCArray *pArray)
         pValue->release();
         return;
     }
-
+    
     // add number value into array(such as int, float, bool and so on)
     if ([item isKindOfClass:[NSNumber class]]) {
         NSString* pStr = [item stringValue];
@@ -97,7 +97,7 @@ static void static_addValueToCCDict(id key, id value, CCDictionary* pDict)
     // the key must be a string
     CCAssert([key isKindOfClass:[NSString class]], "The key should be a string!");
     std::string pKey = [key UTF8String];
-
+    
     // the value is a new dictionary
     if ([value isKindOfClass:[NSDictionary class]]) {
         CCDictionary* pSubDict = new CCDictionary();
@@ -109,16 +109,16 @@ static void static_addValueToCCDict(id key, id value, CCDictionary* pDict)
         pSubDict->release();
         return;
     }
-
+    
     // the value is a string
     if ([value isKindOfClass:[NSString class]]) {
         CCString* pValue = new CCString([value UTF8String]);
-
+        
         pDict->setObject(pValue, pKey.c_str());
         pValue->release();
         return;
     }
-
+    
     // the value is a number
     if ([value isKindOfClass:[NSNumber class]]) {
         NSString* pStr = [value stringValue];
@@ -128,7 +128,7 @@ static void static_addValueToCCDict(id key, id value, CCDictionary* pDict)
         pValue->release();
         return;
     }
-
+    
     // the value is a array
     if ([value isKindOfClass:[NSArray class]]) {
         CCArray *pArray = new CCArray();
@@ -164,13 +164,13 @@ void CCFileUtils::purgeFileUtils()
     {
         s_pFileUtils->purgeCachedEntries();
     }
-
+    
     CC_SAFE_DELETE(s_pFileUtils);
 }
 
 void CCFileUtils::purgeCachedEntries()
 {
-
+    
 }
 
 void CCFileUtils::setResourceDirectory(const char *pszDirectoryName, bool isWorkingDir)
@@ -264,7 +264,7 @@ CCArray* ccFileUtils_arrayWithContentsOfFileThreadSafe(const char* pFileName)
     for (id value in pArray) {
         static_addItemToCCArray(value, pRet);
     }
-
+    
     return pRet;
 }
 
@@ -273,12 +273,12 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
     unsigned char * pBuffer = NULL;
     CCAssert(pszFileName != NULL && pSize != NULL && pszMode != NULL, "Invaild parameters.");
     *pSize = 0;
-    do 
+    do
     {
         // read the file from hardware
         FILE *fp = fopen(pszFileName, pszMode);
         CC_BREAK_IF(!fp);
-
+        
         fseek(fp,0,SEEK_END);
         *pSize = ftell(fp);
         fseek(fp,0,SEEK_SET);
@@ -286,13 +286,13 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
         *pSize = fread(pBuffer,sizeof(unsigned char), *pSize,fp);
         fclose(fp);
     } while (0);
-
-    if (! pBuffer && isPopupNotify()) 
+    
+    if (! pBuffer && isPopupNotify())
     {
         std::string title = "Notification";
         std::string msg = "Get data from file(";
         msg.append(pszFileName).append(") failed!");
-
+        
         CCMessageBox(msg.c_str(), title.c_str());
     }
     return pBuffer;
@@ -323,44 +323,44 @@ std::string CCFileUtils::getWriteablePath()
 
 unsigned char* CCFileUtils::getFileDataFromZip(const char* pszZipFilePath, const char* pszFileName, unsigned long * pSize)
 {
-        unsigned char * pBuffer = NULL;
-        unzFile pFile = NULL;
-        *pSize = 0;
+    unsigned char * pBuffer = NULL;
+    unzFile pFile = NULL;
+    *pSize = 0;
     
-        do 
-        {
-            CC_BREAK_IF(!pszZipFilePath || !pszFileName);
-            CC_BREAK_IF(strlen(pszZipFilePath) == 0);
+    do
+    {
+        CC_BREAK_IF(!pszZipFilePath || !pszFileName);
+        CC_BREAK_IF(strlen(pszZipFilePath) == 0);
+        
+        pFile = unzOpen(pszZipFilePath);
+        CC_BREAK_IF(!pFile);
+        
+        int nRet = unzLocateFile(pFile, pszFileName, 1);
+        CC_BREAK_IF(UNZ_OK != nRet);
+        
+        char szFilePathA[260];
+        unz_file_info FileInfo;
+        nRet = unzGetCurrentFileInfo(pFile, &FileInfo, szFilePathA, sizeof(szFilePathA), NULL, 0, NULL, 0);
+        CC_BREAK_IF(UNZ_OK != nRet);
+        
+        nRet = unzOpenCurrentFile(pFile);
+        CC_BREAK_IF(UNZ_OK != nRet);
+        
+        pBuffer = new unsigned char[FileInfo.uncompressed_size];
+        int nSize = 0;
+        nSize = unzReadCurrentFile(pFile, pBuffer, FileInfo.uncompressed_size);
+        CCAssert(nSize == 0 || nSize == (int)FileInfo.uncompressed_size, "the file size is wrong");
+        
+        *pSize = FileInfo.uncompressed_size;
+        unzCloseCurrentFile(pFile);
+    } while (0);
     
-            pFile = unzOpen(pszZipFilePath);
-            CC_BREAK_IF(!pFile);
+    if (pFile)
+    {
+        unzClose(pFile);
+    }
     
-            int nRet = unzLocateFile(pFile, pszFileName, 1);
-            CC_BREAK_IF(UNZ_OK != nRet);
-    
-            char szFilePathA[260];
-            unz_file_info FileInfo;
-            nRet = unzGetCurrentFileInfo(pFile, &FileInfo, szFilePathA, sizeof(szFilePathA), NULL, 0, NULL, 0);
-            CC_BREAK_IF(UNZ_OK != nRet);
-    
-            nRet = unzOpenCurrentFile(pFile);
-            CC_BREAK_IF(UNZ_OK != nRet);
-    
-            pBuffer = new unsigned char[FileInfo.uncompressed_size];
-            int nSize = 0;
-            nSize = unzReadCurrentFile(pFile, pBuffer, FileInfo.uncompressed_size);
-            CCAssert(nSize == 0 || nSize == (int)FileInfo.uncompressed_size, "the file size is wrong");
-    
-            *pSize = FileInfo.uncompressed_size;
-            unzCloseCurrentFile(pFile);
-        } while (0);
-    
-        if (pFile)
-        {
-            unzClose(pFile);
-        }
-
-            return pBuffer;
+    return pBuffer;
 }
 
 NS_CC_END
