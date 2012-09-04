@@ -26,6 +26,21 @@ struct TextLine {
     wchar_t* text;
 };
 
+struct FontTableItem {
+    char* family_name;
+    char* style_name;
+    char* filename;
+};
+
+const int fontTableItems = 4;
+const char* fontPath = "/usr/share/fonts/truetype/";
+FontTableItem fontsTable[fontTableItems] = {
+    { "Serif",               "Medium",  "freefont/FreeSerif.ttf" },
+    { "Sans",                "Medium",  "freefont/FreeSans.ttf" }, 
+    { "WenQuanYi Micro Hei", "Regular", "wqy/wqy-microhei.ttc" },  
+    { "WenQuanYi Zen Hei",   "Regular", "wqy/wqy-zenhei.ttc" }, 
+};
+
 NS_CC_BEGIN
 class BitmapDC
 {
@@ -223,6 +238,29 @@ public:
 		return iRet;
 	}
 
+    char* getFontFile(const char* family_name) {
+        char* ret = NULL;
+        for (int i=0; i<fontTableItems; ++i) {
+            FontTableItem* item = &fontsTable[i];
+            if (strcmp(item->family_name, family_name) == 0) {
+                size_t len = strlen(fontPath) + strlen(item->filename) + 1;
+                ret = (char*) malloc(len);
+                snprintf(ret, len, "%s%s", fontPath, item->filename);
+                break;
+            }
+        }
+
+        // Return a default font , if font is not found 
+        if (ret == NULL) {
+            FontTableItem* item = &fontsTable[0];
+            size_t len = strlen(fontPath) + strlen(item->filename) + 1;
+            ret = (char*) malloc(len);
+            snprintf(ret, len, "%s%s", fontPath, item->filename);
+        }
+
+        return ret;
+    }
+
 	bool getBitmap(const char *text, int nWidth, int nHeight, CCImage::ETextAlign eAlignMask, const char * pFontName, float fontSize) {
 		FT_Face face;
 		FT_Error iError;
@@ -238,9 +276,9 @@ public:
 			return false;
 		}
 		do {
-			//iError = FT_New_Face( library, pFontName, 0, &face );
-            //TODO: Create font name array???
-            iError = FT_New_Face( library, "/usr/share/fonts/truetype/wqy/wqy-microhei.ttc", 0, &face );
+            char* fontfile = getFontFile(pFontName);
+			iError = FT_New_Face( library, fontfile, 0, &face );
+            free(fontfile);
 
 			if (iError) {
 				//no valid font found use default
@@ -384,9 +422,9 @@ bool CCImage::initWithString(
 
 		BitmapDC &dc = sharedBitmapDC();
 
-		const char* pFullFontName = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(pFontName);
+		//const char* pFullFontName = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(pFontName);
 
-		CC_BREAK_IF(! dc.getBitmap(pText, nWidth, nHeight, eAlignMask, pFullFontName, nSize));
+		CC_BREAK_IF(! dc.getBitmap(pText, nWidth, nHeight, eAlignMask, pFontName, nSize));
 
 		// assign the dc.m_pData to m_pData in order to save time
 		m_pData = dc.m_pData;
