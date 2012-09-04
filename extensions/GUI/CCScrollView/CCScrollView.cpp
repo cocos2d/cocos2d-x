@@ -490,7 +490,8 @@ void CCScrollView::beforeDraw()
     if (m_bClippingToBounds) 
     {
 		// TODO: This scrollview should respect parents' positions
-		CCPoint screenPos = this->convertToWorldSpace(this->getParent()->getPosition());
+		//CCPoint screenPos = this->convertToWorldSpace(this->getParent()->getPosition());
+        CCPoint screenPos = convertToWorldSpace(ccp(0,0));
 
         glEnable(GL_SCISSOR_TEST);
         float s = this->getScale();
@@ -594,7 +595,7 @@ bool CCScrollView::ccTouchBegan(CCTouch* touch, CCEvent* event)
     //dispatcher does not know about clipping. reject touches outside visible bounds.
     if (m_pTouches->count() > 2 ||
         m_bTouchMoved          ||
-        !frame.containsPoint(m_pContainer->convertToWorldSpace(m_pContainer->convertTouchToNodeSpace(touch))))
+        !frame.containsPoint(convertTouchToNodeSpace(touch)))
     {
         return false;
     }
@@ -644,7 +645,7 @@ void CCScrollView::ccTouchMoved(CCTouch* touch, CCEvent* event)
             moveDistance = ccpSub(newPoint, m_tTouchPoint);
             m_tTouchPoint  = newPoint;
             
-            if (frame.containsPoint(this->convertToWorldSpace(newPoint)))
+            if (frame.containsPoint(newPoint))
             {
                 switch (m_eDirection)
                 {
