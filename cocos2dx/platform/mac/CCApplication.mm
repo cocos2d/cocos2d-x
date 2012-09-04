@@ -36,13 +36,13 @@ CCApplication* CCApplication::sm_pSharedApplication = 0;
 
 CCApplication::CCApplication()
 {
-    CC_ASSERT(! sm_pSharedApplication);
+    CCAssert(! sm_pSharedApplication, "sm_pSharedApplication already exist");
     sm_pSharedApplication = this;
 }
 
 CCApplication::~CCApplication()
 {
-    CC_ASSERT(this == sm_pSharedApplication);
+    CCAssert(this == sm_pSharedApplication, "sm_pSharedApplication != this");
     sm_pSharedApplication = 0;
 }
 
@@ -71,7 +71,7 @@ TargetPlatform CCApplication::getTargetPlatform()
 
 CCApplication* CCApplication::sharedApplication()
 {
-    CC_ASSERT(sm_pSharedApplication);
+    CCAssert(sm_pSharedApplication, "sm_pSharedApplication not set");
     return sm_pSharedApplication;
 }
 

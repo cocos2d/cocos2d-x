@@ -340,8 +340,8 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
 {
     bool bRet = false;
 
-	CCAssert( pText, @"Invalid pText");
-	CCAssert( pInfo, @"Invalid pInfo");
+	CCAssert(pText, "Invalid pText");
+	CCAssert(pInfo, "Invalid pInfo");
 	
 	do {
 		NSString * string  = [NSString stringWithUTF8String:pText];
