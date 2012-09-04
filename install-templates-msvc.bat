@@ -12,6 +12,7 @@ cscript "%SCRIPT_DIR%InstallWizardForVC2008Express.js" /quiet
 cscript "%SCRIPT_DIR%InstallWizardForVC2010Express.js" /quiet
 cscript "%SCRIPT_DIR%InstallWizardForVS2008.js" /quiet
 cscript "%SCRIPT_DIR%InstallWizardForVS2010.js" /quiet
+cscript "%SCRIPT_DIR%InstallWizardForVS2012.js" /quiet
 if exist %SCRIPT_LOG% more %SCRIPT_LOG%
 if exist %SCRIPT_LOG% del /Q %SCRIPT_LOG%
 
