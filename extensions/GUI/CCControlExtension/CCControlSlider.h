@@ -55,6 +55,10 @@ class CCControlSlider: public CCControl
     virtual void setMinimumValue(float val);
     CC_SYNTHESIZE_READONLY(float, m_maximumValue, MaximumValue);
     virtual void setMaximumValue(float val);
+    
+    CC_SYNTHESIZE(float, m_minimumAllowedValue, MinimumAllowedValue);
+    CC_SYNTHESIZE(float, m_maximumAllowedValue, MaximumAllowedValue);
+    
 
     //interval to snap to
     CC_SYNTHESIZE(float, m_snappingInterval, SnappingInterval);
