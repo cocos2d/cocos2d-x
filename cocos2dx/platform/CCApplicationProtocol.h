@@ -1,8 +1,6 @@
 #ifndef __CC_APPLICATION_PROTOCOL_H__
 #define __CC_APPLICATION_PROTOCOL_H__
 
-#include <string>
-
 NS_CC_BEGIN
 
 enum TargetPlatform
@@ -62,20 +60,6 @@ public:
      @brief Get target platform
      */
     virtual TargetPlatform getTargetPlatform() = 0;
-    
-    /**
-     @brief Set startup script filename
-     */
-    virtual void setStartupScriptFilename(const char* filename) {
-        m_startupScriptFilename = filename;
-    }
-    
-    virtual const char* getStartupScriptFilename(void) {
-        return m_startupScriptFilename.c_str();
-    }
-
-protected:
-    std::string m_startupScriptFilename;
 };
 
 // end of platform group

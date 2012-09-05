@@ -80,7 +80,7 @@ public:
     @brief  Set the resource directory,we will find resource relative to this directory
     @param pszDirectoryName  Relative path to root
     */
-    void setResourceDirectory(const char *pszDirectoryName, bool isWorkingDir = false);
+    void setResourceDirectory(const char *pszDirectoryName);
 
     /**
     @brief  Get the resource directory
@@ -101,12 +101,10 @@ public:
     
 protected:
     CCFileUtils(void)
-    : m_isWorkingDirectory(false)
     {
     }
     
     std::string m_obDirectory;
-    bool        m_isWorkingDirectory;
 };
 
 // end of platform group
