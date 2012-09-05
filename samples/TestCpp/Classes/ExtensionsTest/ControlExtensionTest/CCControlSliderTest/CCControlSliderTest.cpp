@@ -70,6 +70,9 @@ bool CCControlSliderTest::init()
         restrictSlider->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f - 24));
 		restrictSlider->setTag(2);
 
+	//same with restricted
+		restrictSlider->addTargetWithActionForControlEvents(this, cccontrol_selector(CCControlSliderTest::valueChanged), CCControlEventValueChanged);
+
         addChild(slider);    
 		addChild(restrictSlider);
         return true;
