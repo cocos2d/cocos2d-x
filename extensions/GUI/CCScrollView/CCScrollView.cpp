@@ -498,7 +498,7 @@ void CCScrollView::beforeDraw()
         CCDirector *director = CCDirector::sharedDirector();
         s *= director->getContentScaleFactor();
 
-        glScissor((GLint)screenPos.x, (GLint)screenPos.y, (GLsizei)(m_tViewSize.width*s), (GLsizei)(m_tViewSize.height*s));
+        glScissor((GLint)screenPos.x*s, (GLint)screenPos.y*s, (GLsizei)(m_tViewSize.width*s), (GLsizei)(m_tViewSize.height*s));
 		
     }
 }
