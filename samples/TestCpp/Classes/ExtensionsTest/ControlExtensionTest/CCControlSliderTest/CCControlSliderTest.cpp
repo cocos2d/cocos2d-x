@@ -55,11 +55,12 @@ bool CCControlSliderTest::init()
         slider->setMinimumValue(0.0f); // Sets the min value of range
         slider->setMaximumValue(5.0f); // Sets the max value of range
         slider->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f + 16));
+		slider->setTag(1);
 
         // When the value of the slider will change, the given selector will be call
         slider->addTargetWithActionForControlEvents(this, cccontrol_selector(CCControlSliderTest::valueChanged), CCControlEventValueChanged);
 
- 	CCControlSlider *restrictSlider = CCControlSlider::create("extensions/sliderTrack.png","extensions/sliderProgress.png" ,"extensions/sliderThumb.png");
+		CCControlSlider *restrictSlider = CCControlSlider::create("extensions/sliderTrack.png","extensions/sliderProgress.png" ,"extensions/sliderThumb.png");
         restrictSlider->setAnchorPoint(ccp(0.5f, 1.0f));
         restrictSlider->setMinimumValue(0.0f); // Sets the min value of range
         restrictSlider->setMaximumValue(5.0f); // Sets the max value of range
@@ -67,6 +68,7 @@ bool CCControlSliderTest::init()
 		restrictSlider->setMinimumAllowedValue(1.5f);
 		restrictSlider->setValue(3.0f);
         restrictSlider->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f - 24));
+		restrictSlider->setTag(2);
 
         addChild(slider);    
 		addChild(restrictSlider);
@@ -79,6 +81,9 @@ void CCControlSliderTest::valueChanged(CCObject *sender, CCControlEvent controlE
 {
     CCControlSlider* pSlider = (CCControlSlider*)sender;
     // Change value of label.
-    m_pDisplayValueLabel->setString(CCString::createWithFormat("Upper slider value = %.02f", pSlider->getValue())->getCString());    
+	if(pSlider->getTag() == 1)
+		m_pDisplayValueLabel->setString(CCString::createWithFormat("Upper slider value = %.02f", pSlider->getValue())->getCString());  
+	if(pSlider->getTag() == 2)
+		m_pDisplayValueLabel->setString(CCString::createWithFormat("Lower slider value = %.02f", pSlider->getValue())->getCString());  
 }
 
