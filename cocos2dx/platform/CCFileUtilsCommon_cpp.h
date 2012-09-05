@@ -372,14 +372,13 @@ unsigned char* CCFileUtils::getFileDataFromZip(const char* pszZipFilePath, const
     return pBuffer;
 }
 
-void CCFileUtils::setResourceDirectory(const char* pszResourceDirectory, bool isWorkingDir)
+void CCFileUtils::setResourceDirectory(const char* pszResourceDirectory)
 {
     m_obDirectory = pszResourceDirectory;
     if (m_obDirectory.size() > 0 && m_obDirectory[m_obDirectory.size() - 1] != '/')
     {
         m_obDirectory.append("/");
     }
-    m_isWorkingDirectory = isWorkingDir;
 }
 
 const char* CCFileUtils::getResourceDirectory()
