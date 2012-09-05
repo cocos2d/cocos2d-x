@@ -22,14 +22,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#pragma once
 #ifndef __CC_APPLICATION_MAC_H__
 #define __CC_APPLICATION_MAC_H__
 
 #include "platform/CCCommon.h"
 #include "platform/CCApplicationProtocol.h"
+#include <string>
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 class CC_DLL CCApplication : public CCApplicationProtocol
 {
@@ -69,10 +69,23 @@ public:
      */
     virtual TargetPlatform getTargetPlatform();
 
+    /* set the Resource root path */
+    void setResourceRootPath(const std::string& rootResDir);
+    
+    /* get the Resource root path */
+    const std::string& getResourceRootPath(void);
+    
+    void setStartupScriptFilename(const std::string& startupScriptFile);
+    
+    const std::string& getStartupScriptFilename(void);
+    
 protected:
     static CCApplication * sm_pSharedApplication;
+    
+    std::string m_resourceRootPath;
+    std::string m_startupScriptFilename;
 };
 
-NS_CC_END;
+NS_CC_END
 
-#endif	// end of __CC_APPLICATION_MAC_H__
+#endif	// end of __CC_APPLICATION_MAC_H__;
