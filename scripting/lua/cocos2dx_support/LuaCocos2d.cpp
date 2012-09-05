@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.92 on Sun Sep  2 01:18:05 2012.
+** Generated automatically by tolua++-1.0.92 on Wed Sep  5 13:34:19 2012.
 */
 
 /****************************************************************************
@@ -55236,9 +55236,9 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
   tolua_function(tolua_S,"CCLuaLog",tolua_Cocos2d_CCLuaLog00);
   tolua_function(tolua_S,"CCMessageBox",tolua_Cocos2d_CCMessageBox00);
   #ifdef __cplusplus
-  tolua_cclass(tolua_S,"CCPoint","CCPoint","",tolua_collect_CCPoint);
+  tolua_cclass(tolua_S,"CCPoint","CCPoint","CCObject",tolua_collect_CCPoint);
   #else
-  tolua_cclass(tolua_S,"CCPoint","CCPoint","",NULL);
+  tolua_cclass(tolua_S,"CCPoint","CCPoint","CCObject",NULL);
   #endif
   tolua_beginmodule(tolua_S,"CCPoint");
    tolua_variable(tolua_S,"x",tolua_get_CCPoint_x,tolua_set_CCPoint_x);
@@ -55252,9 +55252,9 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"equals",tolua_Cocos2d_CCPoint_equals00);
   tolua_endmodule(tolua_S);
   #ifdef __cplusplus
-  tolua_cclass(tolua_S,"CCSize","CCSize","",tolua_collect_CCSize);
+  tolua_cclass(tolua_S,"CCSize","CCSize","CCObject",tolua_collect_CCSize);
   #else
-  tolua_cclass(tolua_S,"CCSize","CCSize","",NULL);
+  tolua_cclass(tolua_S,"CCSize","CCSize","CCObject",NULL);
   #endif
   tolua_beginmodule(tolua_S,"CCSize");
    tolua_variable(tolua_S,"width",tolua_get_CCSize_width,tolua_set_CCSize_width);
@@ -55268,9 +55268,9 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"equals",tolua_Cocos2d_CCSize_equals00);
   tolua_endmodule(tolua_S);
   #ifdef __cplusplus
-  tolua_cclass(tolua_S,"CCRect","CCRect","",tolua_collect_CCRect);
+  tolua_cclass(tolua_S,"CCRect","CCRect","CCObject",tolua_collect_CCRect);
   #else
-  tolua_cclass(tolua_S,"CCRect","CCRect","",NULL);
+  tolua_cclass(tolua_S,"CCRect","CCRect","CCObject",NULL);
   #endif
   tolua_beginmodule(tolua_S,"CCRect");
    tolua_variable(tolua_S,"origin",tolua_get_CCRect_origin,tolua_set_CCRect_origin);
