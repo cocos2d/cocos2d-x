@@ -173,14 +173,13 @@ void CCFileUtils::purgeCachedEntries()
     
 }
 
-void CCFileUtils::setResourceDirectory(const char *pszDirectoryName, bool isWorkingDir)
+void CCFileUtils::setResourceDirectory(const char *pszDirectoryName)
 {
     m_obDirectory = pszDirectoryName;
     if (m_obDirectory.size() > 0 && m_obDirectory[m_obDirectory.size() - 1] != '/')
     {
         m_obDirectory.append("/");
     }
-    m_isWorkingDirectory = isWorkingDir;
 }
 
 const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
@@ -199,7 +198,8 @@ const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
         NSMutableString *imageDirectoryByAppendDirectory = [NSMutableString stringWithUTF8String:m_obDirectory.c_str()];
         [imageDirectoryByAppendDirectory appendString:imageDirectory];
         
-        if (!m_isWorkingDirectory)
+        const std::string& resourceRootPath = CCApplication::sharedApplication()->getResourceRootPath();
+        if (resourceRootPath.length() == 0)
         {
             // search path from directory set by setResourceDirectory
             fullpath = [[NSBundle mainBundle] pathForResource:lastPathComponent
@@ -215,7 +215,7 @@ const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
         }
         else
         {
-            fullpath = [NSString stringWithFormat:@"%s%@", m_obDirectory.c_str(), relPath];
+            fullpath = [NSString stringWithFormat:@"%s%@", resourceRootPath.c_str(), relPath];
         }
     }
     

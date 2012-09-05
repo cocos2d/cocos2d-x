@@ -23,14 +23,14 @@
  ****************************************************************************/
 
 #import "CCApplication.h"
-
 #import <Cocoa/Cocoa.h>
+#include <algorithm>
 
-#import "CCGeometry.h"
+#include "CCGeometry.h"
 #include "CCDirector.h"
 #import "CCDirectorCaller.h"
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 CCApplication* CCApplication::sm_pSharedApplication = 0;
 
@@ -99,4 +99,30 @@ ccLanguageType CCApplication::getCurrentLanguage()
     return ret;
 }
 
-NS_CC_END;
+void CCApplication::setResourceRootPath(const std::string& rootResDir)
+{
+    m_resourceRootPath = rootResDir;
+    std::replace(m_resourceRootPath.begin(), m_resourceRootPath.end(), '\\', '/');
+    if (m_resourceRootPath[m_resourceRootPath.length() - 1] != '/')
+    {
+        m_resourceRootPath += '/';
+    }
+}
+
+const std::string& CCApplication::getResourceRootPath(void)
+{
+    return m_resourceRootPath;
+}
+
+void CCApplication::setStartupScriptFilename(const std::string& startupScriptFile)
+{
+    m_startupScriptFilename = startupScriptFile;
+    std::replace(m_startupScriptFilename.begin(), m_startupScriptFilename.end(), '\\', '/');
+}
+
+const std::string& CCApplication::getStartupScriptFilename(void)
+{
+    return m_startupScriptFilename;
+}
+
+NS_CC_END
