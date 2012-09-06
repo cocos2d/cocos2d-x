@@ -149,6 +149,7 @@ CCControlSlider* CCControlSlider::create(CCSprite * backgroundSprite, CCSprite* 
  void CCControlSlider::setMinimumValue(float minimumValue)
  {
      m_minimumValue=minimumValue;
+     m_minimumAllowedValue = minimumValue;
      if (m_minimumValue >= m_maximumValue)    
         m_maximumValue   = m_minimumValue + 1.0f;
      setValue(m_value);
@@ -157,6 +158,7 @@ CCControlSlider* CCControlSlider::create(CCSprite * backgroundSprite, CCSprite* 
   void CCControlSlider::setMaximumValue(float maximumValue)
  {
      m_maximumValue=maximumValue;
+     m_maximumAllowedValue = maximumValue;
      if (m_maximumValue <= m_minimumValue)    
         m_minimumValue   = m_maximumValue - 1.0f;
      setValue(m_value);
@@ -224,7 +226,7 @@ void CCControlSlider::sliderEnded(CCPoint location)
 float CCControlSlider::valueForLocation(CCPoint location)
 {
     float percent = (location.x-SLIDER_MARGIN_H)/ m_backgroundSprite->getContentSize().width;
-    return m_minimumValue + percent * (m_maximumValue - m_minimumValue);
+    return MAX(MIN(m_minimumValue + percent * (m_maximumValue - m_minimumValue), m_maximumAllowedValue), m_minimumAllowedValue);
 }
 
 NS_CC_EXT_END
