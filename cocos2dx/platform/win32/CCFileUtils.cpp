@@ -96,6 +96,7 @@ const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
     else if (resourceRootPath.length() > 0)
     {
         pRet->m_sString = resourceRootPath.c_str();
+        pRet->m_sString += m_obDirectory.c_str();
         pRet->m_sString += pszRelativePath;
     }
     else
