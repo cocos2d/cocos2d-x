@@ -146,7 +146,6 @@ bool CCGridBase::initWithSize(const ccGridSize& gridSize)
     if (! pTexture)
     {
         CCLOG("cocos2d: CCGrid: error creating texture");
-        delete this;
         return false;
     }
 
