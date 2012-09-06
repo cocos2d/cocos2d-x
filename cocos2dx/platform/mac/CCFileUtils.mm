@@ -215,7 +215,7 @@ const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
         }
         else
         {
-            fullpath = [NSString stringWithFormat:@"%s%@", resourceRootPath.c_str(), relPath];
+            fullpath = [NSString stringWithFormat:@"%s%s%@", resourceRootPath.c_str(), m_obDirectory.c_str(), relPath];
         }
     }
     
