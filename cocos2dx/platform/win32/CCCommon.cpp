@@ -52,9 +52,9 @@ void CCMessageBox(const char * pszMsg, const char * pszTitle)
     MessageBoxA(NULL, pszMsg, pszTitle, MB_OK);
 }
 
-void CCLuaLog(const char * pszFormat)
+void CCLuaLog(const char * pszMsg)
 {
-    CCLog(pszFormat);
+    CCLog("%s", pszMsg);
 }
 
 NS_CC_END
