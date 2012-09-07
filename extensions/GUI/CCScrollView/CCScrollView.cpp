@@ -590,7 +590,7 @@ bool CCScrollView::ccTouchBegan(CCTouch* touch, CCEvent* event)
         return false;
     }
     CCRect frame;
-    frame = CCRectMake(this->getPosition().x, this->getPosition().y, m_tViewSize.width, m_tViewSize.height);
+    frame = CCRectMake(0, 0, m_tViewSize.width, m_tViewSize.height);
     
     //dispatcher does not know about clipping. reject touches outside visible bounds.
     if (m_pTouches->count() > 2 ||
@@ -640,7 +640,7 @@ void CCScrollView::ccTouchMoved(CCTouch* touch, CCEvent* event)
             float newX, newY;
             
             m_bTouchMoved  = true;
-            frame        = CCRectMake(this->getPosition().x, this->getPosition().y, m_tViewSize.width, m_tViewSize.height);
+            frame        = CCRectMake(0, 0, m_tViewSize.width, m_tViewSize.height);
             newPoint     = this->convertTouchToNodeSpace((CCTouch*)m_pTouches->objectAtIndex(0));
             moveDistance = ccpSub(newPoint, m_tTouchPoint);
             m_tTouchPoint  = newPoint;
