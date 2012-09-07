@@ -54,11 +54,14 @@ bool CCEGLView::setContentScaleFactor(float contentScaleFactor)
     if ([[EAGLView sharedEGLView] respondsToSelector:@selector(setContentScaleFactor:)])
     {
         UIView * view = [EAGLView sharedEGLView];
-        view.contentScaleFactor = contentScaleFactor;
-        [view setNeedsLayout];
-        
+
+        if (m_bIsRetinaEnabled)
+        {
+            view.contentScaleFactor = contentScaleFactor;
+            [view setNeedsLayout];
+        }
+
         m_fScaleX = m_fScaleY = contentScaleFactor;
-        m_bIsRetinaEnabled = true;
         
         return true;
     }
@@ -77,6 +80,8 @@ bool CCEGLView::enableRetina()
     // SD device?
     ret &= ([[UIScreen mainScreen] scale] != 1.0f);
     
+    m_bIsRetinaEnabled = ret;
+
     return ret;
 }
 

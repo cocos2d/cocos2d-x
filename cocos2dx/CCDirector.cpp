@@ -412,7 +412,8 @@ float CCDirector::getZEye(void)
     float zeye = m_obWinSizeInPixels.height / 1.1566f;
     if (m_pobOpenGLView->isRetinaEnabled())
         zeye /= CC_CONTENT_SCALE_FACTOR();
-       return zeye;    
+
+    return zeye;    
 }
 
 void CCDirector::setAlphaBlending(bool bOn)

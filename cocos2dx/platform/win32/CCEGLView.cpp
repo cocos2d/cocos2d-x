@@ -214,7 +214,7 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
             if (m_bIsRetinaEnabled)
             {
                 pt.x /= CC_CONTENT_SCALE_FACTOR();
-			    pt.y /= CC_CONTENT_SCALE_FACTOR();
+                pt.y /= CC_CONTENT_SCALE_FACTOR();
             }
             CCPoint tmp = ccp(pt.x, m_obScreenSize.height - pt.y);
             if (m_obViewPortRect.equals(CCRectZero) || m_obViewPortRect.containsPoint(tmp))
