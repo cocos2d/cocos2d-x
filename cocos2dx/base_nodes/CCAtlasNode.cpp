@@ -101,7 +101,6 @@ bool CCAtlasNode::initWithTileFile(const char *tile, unsigned int tileWidth, uns
     if (! m_pTextureAtlas)
     {
         CCLOG("cocos2d: Could not initialize CCAtlasNode. Invalid Texture.");
-        delete this;
         return false;
     }
 

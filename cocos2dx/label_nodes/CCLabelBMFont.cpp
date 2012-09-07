@@ -1260,6 +1260,12 @@ void CCLabelBMFont::updateLabel()
             {
                 float lineWidth = 0.0f;
                 unsigned int line_length = last_line.size();
+				// if last line is empty we must just increase lineNumber and work with next line
+                if (line_length == 0)
+                {
+                    lineNumber++;
+                    continue;
+                }
                 int index = i + line_length - 1 + lineNumber;
                 if (index < 0) continue;
 
