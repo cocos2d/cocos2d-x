@@ -52,9 +52,18 @@ void CCMessageBox(const char * pszMsg, const char * pszTitle)
     MessageBoxA(NULL, pszMsg, pszTitle, MB_OK);
 }
 
-void CCLuaLog(const char * pszMsg)
+void CCLuaLog(const char *pszMsg)
 {
-    CCLog("%s", pszMsg);
+    int bufflen = MultiByteToWideChar(CP_UTF8, 0, pszMsg, -1, NULL, 0);
+    ++bufflen;
+    WCHAR* buff = new WCHAR[bufflen];
+    memset(buff, 0, sizeof(WCHAR) * bufflen);
+    MultiByteToWideChar(CP_UTF8, 0, pszMsg, -1, buff, bufflen - 1);
+
+    OutputDebugStringW(buff);
+    OutputDebugStringA("\n");
+
+    puts(pszMsg);
 }
 
 NS_CC_END
