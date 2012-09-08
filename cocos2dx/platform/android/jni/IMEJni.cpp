@@ -29,56 +29,32 @@ THE SOFTWARE.
 #include <string.h>
 #include <jni.h>
 
-#if 0
-#define  LOG_TAG    "IMEJni"
-#define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
-#else
-#define  LOGD(...) 
-#endif
-
 using namespace cocos2d;
 
-extern "C"
-{
-    //////////////////////////////////////////////////////////////////////////
-    // handle IME message
-    //////////////////////////////////////////////////////////////////////////
+extern "C" {
+    void setKeyboardStateJNI(int bOpen) {
+        if (bOpen) {
+            openKeyboardJNI();
+        } else {
+            closeKeyboardJNI();
+        }
+    }
 
-    void setKeyboardStateJNI(int bOpen)
-    {
+    void openKeyboardJNI() {
         JniMethodInfo t;
 
-        if (JniHelper::getStaticMethodInfo(t, 
-            "org/cocos2dx/lib/Cocos2dxGLSurfaceView",
-            (bOpen) ? "openIMEKeyboard" : "closeIMEKeyboard",
-            "()V"))
-        {
+        if (JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/Cocos2dxGLSurfaceView", "openIMEKeyboard", "()V")) {
             t.env->CallStaticVoidMethod(t.classID, t.methodID);
             t.env->DeleteLocalRef(t.classID);
         }
     }
 
-    void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeInsertText(JNIEnv* env, jobject thiz, jstring text)
-    {
-        const char* pszText = env->GetStringUTFChars(text, NULL);
-        cocos2d::CCIMEDispatcher::sharedDispatcher()->dispatchInsertText(pszText, strlen(pszText));
-        env->ReleaseStringUTFChars(text, pszText);
-    }
+    void closeKeyboardJNI() {
+        JniMethodInfo t;
 
-    void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeDeleteBackward(JNIEnv* env, jobject thiz)
-    {
-        cocos2d::CCIMEDispatcher::sharedDispatcher()->dispatchDeleteBackward();
-    }
-
-    jstring Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeGetContentText()
-    {
-        JNIEnv * env = 0;
-
-        if (JniHelper::getJavaVM()->GetEnv((void**)&env, JNI_VERSION_1_4) != JNI_OK || ! env)
-        {
-            return 0;
+        if (JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/Cocos2dxGLSurfaceView", "closeIMEKeyboard", "()V")) {
+            t.env->CallStaticVoidMethod(t.classID, t.methodID);
+            t.env->DeleteLocalRef(t.classID);
         }
-        const char * pszText = cocos2d::CCIMEDispatcher::sharedDispatcher()->getContentText();
-        return env->NewStringUTF(pszText);
     }
 }
