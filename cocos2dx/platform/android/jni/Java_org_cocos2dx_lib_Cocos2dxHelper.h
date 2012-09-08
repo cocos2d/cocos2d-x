@@ -21,15 +21,22 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef __ANDROID_MESSAGE_JNI_H__
-#define __ANDROID_MESSAGE_JNI_H__
+#ifndef __Java_org_cocos2dx_lib_Cocos2dxHelper_H__
+#define __Java_org_cocos2dx_lib_Cocos2dxHelper_H__
 
-extern "C"
+#include <string>
 
-{
-    extern void showMessageBoxJNI(const char * pszMsg, const char * pszTitle);
+typedef void (*EditTextCallback)(const char* pText, void* ctx);
+
+extern "C" {
+    extern const char * getApkPath();
+    extern void showDialogJNI(const char * pszMsg, const char * pszTitle);
+    extern void showEditTextDialogJNI(const char* pszTitle, const char* pszContent, int nInputMode, int nInputFlag, int nReturnType, int nMaxLength, EditTextCallback pfEditTextCallback, void* ctx);
     extern void terminateProcessJNI();
-    extern char* getApkPath();
+    extern const char * getCurrentLanguageJNI();
+    extern const char * getPackageNameJNI();
+    extern void enableAccelerometerJNI();
+    extern void disableAccelerometerJNI();
 }
 
-#endif // __ANDROID_MESSAGE_JNI_H__
+#endif
