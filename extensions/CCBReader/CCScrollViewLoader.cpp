@@ -31,7 +31,6 @@ void CCScrollViewLoader::onHandlePropTypeCheck(CCNode * pNode, CCNode * pParent,
 void CCScrollViewLoader::onHandlePropTypeCCBFile(CCNode * pNode, CCNode * pParent, CCString * pPropertyName, CCNode * pCCBFileNode, CCBReader * pCCBReader) {
     if(pPropertyName->compare(PROPERTY_CONTAINER) == 0) {
         ((CCScrollView *)pNode)->setContainer(pCCBFileNode);
-		((CCScrollView *)pNode)->setViewSize(CCSizeMake(240, 320));
     } else {
         CCNodeLoader::onHandlePropTypeCCBFile(pNode, pParent, pPropertyName, pCCBFileNode, pCCBReader);
     }
