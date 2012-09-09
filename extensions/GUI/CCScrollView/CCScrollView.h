@@ -211,6 +211,7 @@ public:
     virtual void setContentSize(const CCSize & size);
     virtual const CCSize & getContentSize();
 
+	void updateInset();
     /**
      * Determines whether it clips its children or not.
      */
