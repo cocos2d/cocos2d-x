@@ -76,6 +76,9 @@ size_t writeData(void *ptr, size_t size, size_t nmemb, void *stream)
     size_t sizes = size * nmemb;
 
     recvBuffer->clear();
+    // someone reported a bug of losting data potentially here
+    // use recvBuffer->insert(recvBuffer->end(), (char*)ptr, (char*)ptr+sizes); can resolve.
+    
     recvBuffer->assign((char*)ptr, (char*)ptr + sizes);
     
     return sizes;
