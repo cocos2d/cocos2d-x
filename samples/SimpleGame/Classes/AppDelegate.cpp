@@ -45,8 +45,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
     {
         // android, windows, blackberry, linux or mac
         // use 960*640 resources as design resolution size
-        CCFileUtils::sharedFileUtils()->setResourceDirectory("hd");
-        CCEGLView::sharedOpenGLView()->setDesignResolutionSize(960, 640, kResolutionNoBorder);
+        CCFileUtils::sharedFileUtils()->setResourceDirectory("sd");
+        CCEGLView::sharedOpenGLView()->setDesignResolutionSize(480, 320, kResolutionNoBorder);
     }
 
     // turn on display FPS
