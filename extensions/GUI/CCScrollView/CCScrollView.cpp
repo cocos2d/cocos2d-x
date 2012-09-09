@@ -118,6 +118,8 @@ bool CCScrollView::initWithViewSize(CCSize size, CCNode *container/* = NULL*/)
         if (!this->m_pContainer)
         {
             m_pContainer = CCLayer::create();
+            this->m_pContainer->ignoreAnchorPointForPosition(false);
+            this->m_pContainer->setAnchorPoint(ccp(0.0f, 0.0f));
         }
 
         this->setViewSize(size);
@@ -309,17 +311,6 @@ void CCScrollView::setZoomScaleInDuration(float s, float dt)
 void CCScrollView::setViewSize(CCSize size)
 {
     m_tViewSize = size;
-
-    if (this->m_pContainer != NULL)
-    {
-        m_fMaxInset = this->maxContainerOffset();
-        m_fMaxInset = ccp(m_fMaxInset.x + m_tViewSize.width * INSET_RATIO,
-        m_fMaxInset.y + m_tViewSize.height * INSET_RATIO);
-        m_fMinInset = this->minContainerOffset();
-        m_fMinInset = ccp(m_fMinInset.x - m_tViewSize.width * INSET_RATIO,
-        m_fMinInset.y - m_tViewSize.height * INSET_RATIO);
-    }
-
     CCLayer::setContentSize(size);
 }
 
@@ -456,7 +447,18 @@ const CCSize & CCScrollView::getContentSize()
 
 void CCScrollView::setContentSize(const CCSize & size)
 {
-    this->setViewSize(size);
+ //   this->setViewSize(size);
+    if (this->getContainer() != NULL)
+    {
+        this->getContainer()->setContentSize(size);
+
+		m_fMaxInset = this->maxContainerOffset();
+		m_fMaxInset = ccp(m_fMaxInset.x + m_tViewSize.width * INSET_RATIO,
+			m_fMaxInset.y + m_tViewSize.height * INSET_RATIO);
+		m_fMinInset = this->minContainerOffset();
+		m_fMinInset = ccp(m_fMinInset.x - m_tViewSize.width * INSET_RATIO,
+			m_fMinInset.y - m_tViewSize.height * INSET_RATIO);
+    }
 }
 /**
  * make sure all children go to the container

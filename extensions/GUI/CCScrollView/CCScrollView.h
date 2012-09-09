@@ -42,6 +42,7 @@ NS_CC_EXT_BEGIN
  */
 
 typedef enum {
+	CCScrollViewDirectionNone = -1,
     CCScrollViewDirectionHorizontal = 0,
     CCScrollViewDirectionVertical,
     CCScrollViewDirectionBoth
@@ -195,7 +196,7 @@ public:
      * direction allowed to scroll. CCScrollViewDirectionBoth by default.
      */
     CCScrollViewDirection getDirection() { return m_eDirection; }
-    void setDirection(CCScrollViewDirection eDirection) { m_eDirection = eDirection; }
+    virtual void setDirection(CCScrollViewDirection eDirection) { m_eDirection = eDirection; }
 
     CCScrollViewDelegate* getDelegate() { return m_pDelegate; }
     void setDelegate(CCScrollViewDelegate* pDelegate) { m_pDelegate = pDelegate; }

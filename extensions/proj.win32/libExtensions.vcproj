@@ -421,6 +421,30 @@
 					RelativePath="..\GUI\CCScrollView\CCScrollView.h"
 					>
 				</File>
+				<File
+					RelativePath="..\GUI\CCScrollView\CCSorting.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\GUI\CCScrollView\CCSorting.h"
+					>
+				</File>
+				<File
+					RelativePath="..\GUI\CCScrollView\CCTableView.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\GUI\CCScrollView\CCTableView.h"
+					>
+				</File>
+				<File
+					RelativePath="..\GUI\CCScrollView\CCTableViewCell.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\GUI\CCScrollView\CCTableViewCell.h"
+					>
+				</File>
 			</Filter>
 		</Filter>
 		<Filter
