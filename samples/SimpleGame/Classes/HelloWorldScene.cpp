@@ -77,7 +77,8 @@ bool HelloWorld::init()
 		CC_BREAK_IF(! pCloseItem);
 
 		// Place the menu item bottom-right conner.
-		pCloseItem->setPosition(ccp(CCDirector::sharedDirector()->getWinSize().width - 20, 20));
+		pCloseItem->setPosition(ccp(CCDirector::sharedDirector()->getVisibleSize().width - 20,
+                                    CCDirector::sharedDirector()->getVisibleOrigin().y + 20));
 
 		// Create a menu with the "close" menu item, it's an auto release object.
 		CCMenu* pMenu = CCMenu::create(pCloseItem, NULL);
@@ -90,7 +91,7 @@ bool HelloWorld::init()
 		/////////////////////////////
 		// 2. add your codes below...
 
-		CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+		CCSize winSize = CCDirector::sharedDirector()->getVisibleSize();
 		CCSprite *player = CCSprite::create("Player.png", CCRectMake(0, 0, 27, 40) );
 		player->setPosition( ccp(player->getContentSize().width/2, winSize.height/2) );
 		this->addChild(player);
@@ -126,7 +127,7 @@ void HelloWorld::addTarget()
 	CCSprite *target = CCSprite::create("Target.png", CCRectMake(0,0,27,40) );
 
 	// Determine where to spawn the target along the Y axis
-	CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+	CCSize winSize = CCDirector::sharedDirector()->getVisibleSize();
 	float minY = target->getContentSize().height/2;
 	float maxY = winSize.height -  target->getContentSize().height/2;
 	int rangeY = (int)(maxY - minY);
@@ -137,7 +138,7 @@ void HelloWorld::addTarget()
 	// and along a random position along the Y axis as calculated
 	target->setPosition( 
 		ccp(winSize.width + (target->getContentSize().width/2), 
-		actualY) );
+            CCDirector::sharedDirector()->getVisibleOrigin().y + actualY) );
 	this->addChild(target);
 
 	// Determine speed of the target
@@ -194,7 +195,7 @@ void HelloWorld::ccTouchesEnded(CCSet* touches, CCEvent* event)
 	CCLog("++++++++after  x:%f, y:%f", location.x, location.y);
 
 	// Set up initial location of projectile
-	CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+	CCSize winSize = CCDirector::sharedDirector()->getVisibleSize();
 	CCSprite *projectile = CCSprite::create("Projectile.png", CCRectMake(0, 0, 20, 20));
 	projectile->setPosition( ccp(20, winSize.height/2) );
 
