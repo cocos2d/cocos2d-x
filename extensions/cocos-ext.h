@@ -27,6 +27,7 @@
 
 #include "GUI/CCControlExtension/CCControlExtensions.h"
 #include "GUI/CCScrollView/CCScrollView.h"
+#include "GUI/CCScrollView/CCTableView.h"
 #include "GUI/CCEditBox/CCEditBox.h"
 
 #include "network/HttpRequest.h"
