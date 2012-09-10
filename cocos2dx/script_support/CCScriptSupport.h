@@ -46,8 +46,8 @@ typedef int LUA_FUNCTION;
 typedef int LUA_TABLE;
 typedef int LUA_STRING;
 
-#pragma mark -
-#pragma mark CCScriptHandlerEntry
+// #pragma mark -
+// #pragma mark CCScriptHandlerEntry
 
 class CCScriptHandlerEntry : public CCObject
 {
@@ -81,8 +81,8 @@ protected:
  * @{
  */
 
-#pragma mark -
-#pragma mark CCSchedulerScriptHandlerEntry
+// #pragma mark -
+// #pragma mark CCSchedulerScriptHandlerEntry
 
 class CCTimer;
 
@@ -125,8 +125,8 @@ private:
 };
 
 
-#pragma mark -
-#pragma mark CCTouchScriptHandlerEntry
+// #pragma mark -
+// #pragma mark CCTouchScriptHandlerEntry
 
 class CCTouchScriptHandlerEntry : public CCScriptHandlerEntry
 {
@@ -161,8 +161,8 @@ private:
     bool    m_bSwallowsTouches;
 };
 
-#pragma mark -
-#pragma mark CCScriptValue
+// #pragma mark -
+// #pragma mark CCScriptValue
 
 class CCScriptValue;
 
@@ -259,8 +259,8 @@ private:
 };
 
 
-#pragma mark -
-#pragma mark CCScriptEngineProtocol
+// #pragma mark -
+// #pragma mark CCScriptEngineProtocol
 
 // Don't make CCScriptEngineProtocol inherits from CCObject since setScriptEngine is invoked only once in AppDelegate.cpp,
 // It will affect the lifecycle of ScriptCore instance, the autorelease pool will be destroyed before destructing ScriptCore.
@@ -271,30 +271,19 @@ public:
     virtual ~CCScriptEngineProtocol() {};
     
     virtual ccScriptType getScriptType() { return kScriptTypeNone; };
+
     /**
-     @brief Method used to get a pointer to the lua_State that the script module is attached to.
-     @return A pointer to the lua_State that the script module is attached to.
+     @brief Remove scripte object.
+     @param object to remove, 
+        in LuaBinding, it's m_nLuaID in CCObject,
+        in JSBinding it means current CCObject pointer.
      */
-    virtual lua_State* getLuaState(void) = 0;
-    
-    /**
-     @brief Remove CCObject from lua state
-     @param object to remove
-     */
-    virtual void removeCCObjectByID(int nLuaID) = 0;
-    virtual void removeJSObjectByCCObject(void * cobj) = 0;
-    
+    virtual void removeScriptObjectByID(int nId) = 0;
     
     /**
      @brief Remove Lua function handler
      */
     virtual void removeLuaHandler(int nHandler) = 0;
-    
-    /**
-     @brief Add a path to find lua files in
-     @param path to be added to the Lua path
-     */
-    virtual void addSearchPath(const char* path) = 0;
     
     /**
      @brief Execute script code contained in the given string.
@@ -330,16 +319,6 @@ public:
     virtual int executeFunctionWithBooleanData(int nHandler, bool data) = 0;
     virtual int executeFunctionWithCCObject(int nHandler, CCObject* pObject, const char* typeName) = 0;
     virtual int executeFunctionWithStringData(int nHandler, const char* data) = 0;
-    
-    virtual int pushIntegerData(int data) = 0;
-    virtual int pushFloatData(float data) = 0;
-    virtual int pushBooleanData(bool data) = 0;
-    virtual int pushStringData(const char* data) = 0;
-    virtual int pushCCObject(CCObject* pObject, const char* typeName) = 0;
-    virtual int pushCCScriptValue(const CCScriptValue& value) = 0;
-    virtual int pushCCScriptValueDict(const CCScriptValueDict& dict) = 0;
-    virtual int pushCCScriptValueArray(const CCScriptValueArray& array) = 0;
-    virtual void cleanStack(void) = 0;
     
     // execute a schedule function
     virtual int executeSchedule(int nHandler, float dt, CCNode *self = NULL) = 0;
