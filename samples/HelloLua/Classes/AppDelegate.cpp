@@ -38,7 +38,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     pDirector->setAnimationInterval(1.0 / 60);
 
     // register lua engine
-    CCScriptEngineProtocol* pEngine = CCLuaEngine::engine();
+    CCScriptEngineProtocol* pEngine = CCLuaEngine::create();
     CCScriptEngineManager::sharedManager()->setScriptEngine(pEngine);
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
