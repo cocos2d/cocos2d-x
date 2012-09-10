@@ -88,8 +88,8 @@ public:
     virtual void unselected();
     
     /** Register menu handler script function */
-    virtual void registerScriptHandler(int nHandler);
-    virtual void unregisterScriptHandler(void);
+    virtual void registerScriptTapHandler(int nHandler);
+    virtual void unregisterScriptTapHandler(void);
     
     virtual bool isEnabled();
     //@note: It's 'setIsEnable' in cocos2d-iphone. 

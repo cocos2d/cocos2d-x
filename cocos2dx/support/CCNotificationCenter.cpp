@@ -24,6 +24,7 @@ THE SOFTWARE.
 
 #include "CCNotificationCenter.h"
 #include "cocoa/CCArray.h"
+#include "script_support/CCScriptSupport.h"
 #include <string>
 
 using namespace std;
@@ -33,6 +34,7 @@ NS_CC_BEGIN;
 static CCNotificationCenter *s_sharedNotifCenter = NULL;
 
 CCNotificationCenter::CCNotificationCenter()
+: m_scriptHandler(0)
 {
     m_observers = CCArray::createWithCapacity(3);
     m_observers->retain();
@@ -40,6 +42,7 @@ CCNotificationCenter::CCNotificationCenter()
 
 CCNotificationCenter::~CCNotificationCenter()
 {
+    unregisterScriptObserver();
     m_observers->release();
 }
 
@@ -111,6 +114,21 @@ void CCNotificationCenter::removeObserver(CCObject *target,const char *name)
     }
 }
 
+void CCNotificationCenter::registerScriptObserver(int handler)
+{
+    unregisterScriptObserver();
+    m_scriptHandler = handler;
+}
+
+void CCNotificationCenter::unregisterScriptObserver(void)
+{
+    if (m_scriptHandler)
+    {
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->removeLuaHandler(m_scriptHandler);
+    }
+    m_scriptHandler = 0;
+}
+
 void CCNotificationCenter::postNotification(const char *name, CCObject *object)
 {
     CCObject* obj = NULL;
@@ -122,6 +140,13 @@ void CCNotificationCenter::postNotification(const char *name, CCObject *object)
         
         if (!strcmp(name,observer->getName()))
             observer->performSelector(object);
+    }
+
+    if (m_scriptHandler)
+    {
+        CCScriptEngineProtocol* engine = CCScriptEngineManager::sharedManager()->getScriptEngine();
+        engine->pushStringData(name);
+        engine->executeFunctionByHandler(m_scriptHandler, 1);
     }
 }
 

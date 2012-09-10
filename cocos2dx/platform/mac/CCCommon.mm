@@ -30,7 +30,7 @@
 #import "EAGLView.h"
 
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 void CCLog(const char * pszFormat, ...)
 {
@@ -43,6 +43,11 @@ void CCLog(const char * pszFormat, ...)
     va_end(ap);
     printf("%s", szBuf);
     printf("\n");
+}
+
+void CCLuaLog(const char * pszFormat)
+{
+    CCLog(pszFormat);
 }
 
 // ios no MessageBox, use CCLog instead
@@ -64,4 +69,4 @@ void CCMessageBox(const char * pszMsg, const char * pszTitle)
 						contextInfo:nil];
 }
 
-NS_CC_END;
+NS_CC_END

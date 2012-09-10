@@ -9,8 +9,8 @@ class CCMenuItem : public CCNode
     bool isEnabled();
     bool isSelected();
 
-    void registerScriptHandler(LUA_FUNCTION funcID);
-    void unregisterScriptHandler(void);
+    void registerScriptTapHandler(LUA_FUNCTION funcID);
+    void unregisterScriptTapHandler(void);
 };
 
 class CCMenuItemLabel : public CCMenuItem

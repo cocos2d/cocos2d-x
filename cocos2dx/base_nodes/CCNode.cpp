@@ -801,8 +801,12 @@ void CCNode::onEnter()
     if (   (m_eScriptType == kScriptTypeLua && m_nScriptHandler != 0)
         ||  m_eScriptType == kScriptTypeJavascript   )
     {
-        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeFunctionWithIntegerData(m_nScriptHandler, kCCNodeOnEnter, this);
-    }    
+        CCScriptEngineProtocol* pEngine = CCScriptEngineManager::sharedManager()->getScriptEngine();
+        CCScriptValueDict dict;
+        dict["name"] = CCScriptValue::stringValue("enter");
+        pEngine->pushCCScriptValueDict(dict);
+        pEngine->executeFunctionByHandler(m_nScriptHandler, 1);
+    }
 }
 
 void CCNode::onEnterTransitionDidFinish()
@@ -834,7 +838,11 @@ void CCNode::onExit()
     if (   (m_eScriptType == kScriptTypeLua && m_nScriptHandler != 0)
         ||  m_eScriptType == kScriptTypeJavascript   )
     {
-        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeFunctionWithIntegerData(m_nScriptHandler, kCCNodeOnExit, this); 
+        CCScriptEngineProtocol* pEngine = CCScriptEngineManager::sharedManager()->getScriptEngine();
+        CCScriptValueDict dict;
+        dict["name"] = CCScriptValue::stringValue("exit");
+        pEngine->pushCCScriptValueDict(dict);
+        pEngine->executeFunctionByHandler(m_nScriptHandler, 1);
     }
 
     arrayMakeObjectsPerformSelector(m_pChildren, onExit, CCNode*);

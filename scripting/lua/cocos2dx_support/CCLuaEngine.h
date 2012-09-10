@@ -42,8 +42,11 @@ NS_CC_BEGIN
 class CCLuaEngine : public CCScriptEngineProtocol
 {
 public:
-    ~CCLuaEngine();
+    static CCLuaEngine* create(void);
+    ~CCLuaEngine(void);
+    
     virtual ccScriptType getScriptType() { return kScriptTypeLua; };
+    
     /**
      @brief Method used to get a pointer to the lua_State that the script module is attached to.
      @return A pointer to the lua_State that the script module is attached to.
@@ -92,32 +95,37 @@ public:
     virtual int executeGlobalFunction(const char* functionName);
     
     /**
-     @brief Execute a function by ref id
-     @param The function ref id
+     @brief Execute a function by handler
+     @param The function handler
      @param Number of parameters
      @return The integer value returned from the script function.
      */
     virtual int executeFunctionByHandler(int nHandler, int numArgs = 0);
-    virtual int executeFunctionWithIntegerData(int nHandler, int data, cocos2d::CCNode *self);
-    virtual int executeFunctionWithFloatData(int nHandler, float data, cocos2d::CCNode *self);
+    virtual int executeFunctionWithIntegerData(int nHandler, int data, CCNode *self = NULL);
+    virtual int executeFunctionWithFloatData(int nHandler, float data, CCNode *self = NULL);
     virtual int executeFunctionWithBooleanData(int nHandler, bool data);
-    virtual int executeFunctionWithCCObject(int nHandler, CCObject* pObject, const char* typeName);    
-    virtual int pushIntegerToLuaStack(int data);
-    virtual int pushFloatToLuaStack(int data);
-    virtual int pushBooleanToLuaStack(int data);
-    virtual int pushCCObjectToLuaStack(CCObject* pObject, const char* typeName);
+    virtual int executeFunctionWithCCObject(int nHandler, CCObject* pObject, const char* typeName);
+    virtual int executeFunctionWithStringData(int nHandler, const char* data);
     
-    // functions for excute touch event
-    virtual int executeTouchEvent(int nHandler, int eventType, cocos2d::CCTouch *pTouch);
-    virtual int executeTouchesEvent(int nHandler, int eventType, cocos2d::CCSet *pTouches, cocos2d::CCNode *self);
+    virtual int pushIntegerData(int data);
+    virtual int pushFloatData(float data);
+    virtual int pushBooleanData(bool data);
+    virtual int pushStringData(const char* data);
+    virtual int pushCCObject(CCObject* pObject, const char* typeName);
+    virtual int pushCCScriptValue(const CCScriptValue& value);
+    virtual int pushCCScriptValueDict(const CCScriptValueDict& dict);
+    virtual int pushCCScriptValueArray(const CCScriptValueArray& array);
+    virtual void cleanStack(void);
     
     // execute a schedule function
-    virtual int executeSchedule(int nHandler, float dt, cocos2d::CCNode *self);
+    virtual int executeSchedule(int nHandler, float dt, CCNode *self = NULL);
+    
+    // functions for excute touch event
+    virtual int executeTouchesEvent(int nHandler, int eventType, CCSet *pTouches, CCNode *self);
+    virtual int executeTouchEvent(int nHandler, int eventType, CCTouch *pTouch);
     
     // Add lua loader, now it is used on android
     virtual void addLuaLoader(lua_CFunction func);
-    
-    static CCLuaEngine* engine();
     
 private:
     CCLuaEngine(void)
@@ -126,11 +134,11 @@ private:
     }
     
     bool init(void);
-    bool pushFunctionByHandler(int nHandler);
+    bool pushFunction(int nHandler);
     
     lua_State* m_state;
 };
-    
+
 NS_CC_END
 
 #endif // __CC_LUA_ENGINE_H__

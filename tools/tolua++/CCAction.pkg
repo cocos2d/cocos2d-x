@@ -335,7 +335,7 @@ class CCPlace : public CCActionInstant //<NSCopying>
     static CCPlace* create(CCPoint pos);
 };
 
-class CCCallFunc : public CCActioninstant
+class CCCallFunc : public CCActionInstant
 {
 	static CCCallFunc* create(LUA_FUNCTION funcID);
 };
