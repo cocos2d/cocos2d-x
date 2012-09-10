@@ -148,9 +148,7 @@ bool CCTextureAtlas::initWithFile(const char * file, unsigned int capacity)
     else
     {
         CCLOG("cocos2d: Could not open file: %s", file);
-        delete this;
-
-        return NULL;
+        return false;
     }
 }
 
