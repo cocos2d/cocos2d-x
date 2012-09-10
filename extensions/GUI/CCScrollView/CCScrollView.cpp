@@ -1,31 +1,27 @@
-//
-//  SWScrollView.m
-//  SWGameLib
-//
-//  Copyright (c) 2010-2012  cocos2d-x.org
-//  Copyright (c) 2010 Sangwoo Im
-//
-//  Permission is hereby granted, free of charge, to any person obtaining a copy
-//  of this software and associated documentation files (the "Software"), to deal
-//  in the Software without restriction, including without limitation the rights
-//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-//  copies of the Software, and to permit persons to whom the Software is
-//  furnished to do so, subject to the following conditions:
-//
-//  The above copyright notice and this permission notice shall be included in
-//  all copies or substantial portions of the Software.
-//
-//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN false EVENT SHALL THE
-//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-//  THE SOFTWARE.
-//  
-//  Created by Sangwoo Im on 6/3/10.
-//  Copyright 2010 Sangwoo Im. All rights reserved.
-//
+/****************************************************************************
+ Copyright (c) 2012 cocos2d-x.org
+ Copyright (c) 2010 Sangwoo Im
+ 
+ http://www.cocos2d-x.org
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
 
 #include "CCScrollView.h"
 #include "actions/CCActionInterval.h"
@@ -37,6 +33,7 @@
 #include "CCDirector.h"
 #include "kazmath/GL/matrix.h"
 #include "touch_dispatcher/CCTouch.h"
+#include "CCEGLView.h"
 
 NS_CC_EXT_BEGIN
 
@@ -53,7 +50,7 @@ CCScrollView::CCScrollView()
 , m_pDelegate(NULL)
 , m_bDragging(false)
 , m_bBounceable(false)
-, m_eDirection(CCScrollViewDirectionBoth)
+, m_eDirection(kCCScrollViewDirectionBoth)
 , m_bClippingToBounds(false)
 , m_pContainer(NULL)
 , m_bTouchMoved(false)
@@ -118,6 +115,8 @@ bool CCScrollView::initWithViewSize(CCSize size, CCNode *container/* = NULL*/)
         if (!this->m_pContainer)
         {
             m_pContainer = CCLayer::create();
+            this->m_pContainer->ignoreAnchorPointForPosition(false);
+            this->m_pContainer->setAnchorPoint(ccp(0.0f, 0.0f));
         }
 
         this->setViewSize(size);
@@ -128,7 +127,7 @@ bool CCScrollView::initWithViewSize(CCSize size, CCNode *container/* = NULL*/)
         m_bBounceable = true;
         m_bClippingToBounds = true;
         //m_pContainer->setContentSize(CCSizeZero);
-        m_eDirection  = CCScrollViewDirectionBoth;
+        m_eDirection  = kCCScrollViewDirectionBoth;
         m_pContainer->setPosition(ccp(0.0f, 0.0f));
         m_fTouchLength = 0.0f;
         
@@ -309,17 +308,6 @@ void CCScrollView::setZoomScaleInDuration(float s, float dt)
 void CCScrollView::setViewSize(CCSize size)
 {
     m_tViewSize = size;
-
-    if (this->m_pContainer != NULL)
-    {
-        m_fMaxInset = this->maxContainerOffset();
-        m_fMaxInset = ccp(m_fMaxInset.x + m_tViewSize.width * INSET_RATIO,
-        m_fMaxInset.y + m_tViewSize.height * INSET_RATIO);
-        m_fMinInset = this->minContainerOffset();
-        m_fMinInset = ccp(m_fMinInset.x - m_tViewSize.width * INSET_RATIO,
-        m_fMinInset.y - m_tViewSize.height * INSET_RATIO);
-    }
-
     CCLayer::setContentSize(size);
 }
 
@@ -356,13 +344,13 @@ void CCScrollView::relocateContainer(bool animated)
 
     newX     = oldPoint.x;
     newY     = oldPoint.y;
-    if (m_eDirection == CCScrollViewDirectionBoth || m_eDirection == CCScrollViewDirectionHorizontal)
+    if (m_eDirection == kCCScrollViewDirectionBoth || m_eDirection == kCCScrollViewDirectionHorizontal)
     {
         newX     = MIN(newX, max.x);
         newX     = MAX(newX, min.x);
     }
 
-    if (m_eDirection == CCScrollViewDirectionBoth || m_eDirection == CCScrollViewDirectionVertical)
+    if (m_eDirection == kCCScrollViewDirectionBoth || m_eDirection == kCCScrollViewDirectionVertical)
     {
         newY     = MIN(newY, max.y);
         newY     = MAX(newY, min.y);
@@ -456,8 +444,26 @@ const CCSize & CCScrollView::getContentSize()
 
 void CCScrollView::setContentSize(const CCSize & size)
 {
-    this->setViewSize(size);
+    if (this->getContainer() != NULL)
+    {
+        this->getContainer()->setContentSize(size);
+		this->updateInset();
+    }
 }
+
+void CCScrollView::updateInset()
+{
+	if (this->getContainer() != NULL)
+	{
+		m_fMaxInset = this->maxContainerOffset();
+		m_fMaxInset = ccp(m_fMaxInset.x + m_tViewSize.width * INSET_RATIO,
+			m_fMaxInset.y + m_tViewSize.height * INSET_RATIO);
+		m_fMinInset = this->minContainerOffset();
+		m_fMinInset = ccp(m_fMinInset.x - m_tViewSize.width * INSET_RATIO,
+			m_fMinInset.y - m_tViewSize.height * INSET_RATIO);
+	}
+}
+
 /**
  * make sure all children go to the container
  */
@@ -495,10 +501,10 @@ void CCScrollView::beforeDraw()
         glEnable(GL_SCISSOR_TEST);
         float s = this->getScale();
 
-        CCDirector *director = CCDirector::sharedDirector();
-        s *= director->getContentScaleFactor();
-
-        glScissor((GLint)screenPos.x, (GLint)screenPos.y, (GLsizei)(m_tViewSize.width*s), (GLsizei)(m_tViewSize.height*s));
+//        CCDirector *director = CCDirector::sharedDirector();
+//        s *= director->getContentScaleFactor();
+        CCEGLView::sharedOpenGLView()->setScissorInPoints(screenPos.x*s, screenPos.y*s, m_tViewSize.width*s, m_tViewSize.height*s);
+        //glScissor((GLint)screenPos.x, (GLint)screenPos.y, (GLsizei)(m_tViewSize.width*s), (GLsizei)(m_tViewSize.height*s));
 		
     }
 }
@@ -648,10 +654,10 @@ void CCScrollView::ccTouchMoved(CCTouch* touch, CCEvent* event)
             {
                 switch (m_eDirection)
                 {
-                    case CCScrollViewDirectionVertical:
+                    case kCCScrollViewDirectionVertical:
                         moveDistance = ccp(0.0f, moveDistance.y);
                         break;
-                    case CCScrollViewDirectionHorizontal:
+                    case kCCScrollViewDirectionHorizontal:
                         moveDistance = ccp(moveDistance.x, 0.0f);
                         break;
                     default:
