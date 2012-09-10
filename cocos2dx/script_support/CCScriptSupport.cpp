@@ -27,8 +27,8 @@
 
 NS_CC_BEGIN
 
-#pragma mark -
-#pragma mark CCScriptHandlerEntry
+// #pragma mark -
+// #pragma mark CCScriptHandlerEntry
 
 CCScriptHandlerEntry* CCScriptHandlerEntry::create(int nHandler)
 {
@@ -42,8 +42,8 @@ CCScriptHandlerEntry::~CCScriptHandlerEntry(void)
     CCScriptEngineManager::sharedManager()->getScriptEngine()->removeLuaHandler(m_nHandler);
 }
 
-#pragma mark -
-#pragma mark CCSchedulerScriptHandlerEntry
+// #pragma mark -
+// #pragma mark CCSchedulerScriptHandlerEntry
 
 CCSchedulerScriptHandlerEntry* CCSchedulerScriptHandlerEntry::create(int nHandler, float fInterval, bool bPaused)
 {
@@ -71,8 +71,8 @@ CCSchedulerScriptHandlerEntry::~CCSchedulerScriptHandlerEntry(void)
 }
 
 
-#pragma mark -
-#pragma mark CCTouchScriptHandlerEntry
+// #pragma mark -
+// #pragma mark CCTouchScriptHandlerEntry
 
 CCTouchScriptHandlerEntry* CCTouchScriptHandlerEntry::create(int nHandler,
                                                              bool bIsMultiTouches,
@@ -101,8 +101,8 @@ bool CCTouchScriptHandlerEntry::init(bool bIsMultiTouches, int nPriority, bool b
 }
 
 
-#pragma mark -
-#pragma mark CCScriptValue
+// #pragma mark -
+// #pragma mark CCScriptValue
 
 const CCScriptValue CCScriptValue::intValue(const int intValue)
 {
@@ -232,8 +232,8 @@ void CCScriptValue::copy(const CCScriptValue& rhs)
 }
 
 
-#pragma mark -
-#pragma mark CCScriptEngineManager
+// #pragma mark -
+// #pragma mark CCScriptEngineManager
 
 static CCScriptEngineManager* s_pSharedScriptEngineManager = NULL;
 
