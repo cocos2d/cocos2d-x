@@ -41,19 +41,8 @@ STATICLIBS = $(STATICLIBS_DIR)/libfreetype.a \
 				$(STATICLIBS_DIR)/libtiff.a \
 #				$(STATICLIBS_DIR)/libGLEW.a \
 
-SHAREDLIBS = 
-ifeq ($(LBITS),64)
-SHAREDLIBS_DIR = ../../../CocosDenshion/third_party/fmod/lib64/api/lib
-SHAREDLIBS = -L$(SHAREDLIBS_DIR) -lfmodex64
-else
-SHAREDLIBS_DIR = ../../../CocosDenshion/third_party/fmod/api/lib
-SHAREDLIBS = -L$(SHAREDLIBS_DIR) -lfmodex
-endif
-
-SHAREDLIBS += -lglfw -lGL
-#SHAREDLIBS += -L../../../lib/linux/Debug -lcocos2d -lrt -lz -lcocosdenshion -Wl,-rpath,../../../../lib/linux/Debug/ 
-SHAREDLIBS += -Wl,-rpath,../../$(SHAREDLIBS_DIR)
-#SHAREDLIBS += -Wl,-rpath,../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib
+SHAREDLIBS += -lglfw -lcurl -lXrandr
+SHAREDLIBS += -Wl,-rpath,../../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib
 SHAREDLIBS += -L../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib -lGLEW
 SHAREDLIBS += -Wl,-rpath,../../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib
 
@@ -65,7 +54,7 @@ BIN_DIR = $(BIN_DIR_ROOT)
 debug: BIN_DIR = $(BIN_DIR_ROOT)/debug
 debug: CCFLAGS += -g3 -O0
 debug: CXXFLAGS += -g3 -O0
-debug: SHAREDLIBS += -L../../../lib/linux/Debug -lcocos2d -lrt -lz -lcocosdenshion
+debug: SHAREDLIBS += -L../../../lib/linux/Debug -lcocos2d -lrt -lz
 debug: SHAREDLIBS += -Wl,-rpath,../../../../../lib/linux/Debug/
 debug: DEFINES += -DDEBUG
 debug: $(TARGET)
@@ -73,7 +62,7 @@ debug: $(TARGET)
 release: BIN_DIR = $(BIN_DIR_ROOT)/release
 release: CCFLAGS += -O3
 release: CXXFLAGS += -O3
-release: SHAREDLIBS += -L../../../lib/linux/Release -lcocos2d -lrt -lz -lcocosdenshion
+release: SHAREDLIBS += -L../../../lib/linux/Release -lcocos2d -lrt -lz
 release: SHAREDLIBS += -Wl,-rpath,../../../../../lib/linux/Release/
 release: DEFINES += -DNDEBUG
 release: $(TARGET)
