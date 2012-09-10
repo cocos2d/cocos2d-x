@@ -37,6 +37,7 @@
 #include "CCDirector.h"
 #include "kazmath/GL/matrix.h"
 #include "touch_dispatcher/CCTouch.h"
+#include "CCEGLView.h"
 
 NS_CC_EXT_BEGIN
 
@@ -53,7 +54,7 @@ CCScrollView::CCScrollView()
 , m_pDelegate(NULL)
 , m_bDragging(false)
 , m_bBounceable(false)
-, m_eDirection(CCScrollViewDirectionBoth)
+, m_eDirection(kCCScrollViewDirectionBoth)
 , m_bClippingToBounds(false)
 , m_pContainer(NULL)
 , m_bTouchMoved(false)
@@ -130,7 +131,7 @@ bool CCScrollView::initWithViewSize(CCSize size, CCNode *container/* = NULL*/)
         m_bBounceable = true;
         m_bClippingToBounds = true;
         //m_pContainer->setContentSize(CCSizeZero);
-        m_eDirection  = CCScrollViewDirectionBoth;
+        m_eDirection  = kCCScrollViewDirectionBoth;
         m_pContainer->setPosition(ccp(0.0f, 0.0f));
         m_fTouchLength = 0.0f;
         
@@ -347,13 +348,13 @@ void CCScrollView::relocateContainer(bool animated)
 
     newX     = oldPoint.x;
     newY     = oldPoint.y;
-    if (m_eDirection == CCScrollViewDirectionBoth || m_eDirection == CCScrollViewDirectionHorizontal)
+    if (m_eDirection == kCCScrollViewDirectionBoth || m_eDirection == kCCScrollViewDirectionHorizontal)
     {
         newX     = MIN(newX, max.x);
         newX     = MAX(newX, min.x);
     }
 
-    if (m_eDirection == CCScrollViewDirectionBoth || m_eDirection == CCScrollViewDirectionVertical)
+    if (m_eDirection == kCCScrollViewDirectionBoth || m_eDirection == kCCScrollViewDirectionVertical)
     {
         newY     = MIN(newY, max.y);
         newY     = MAX(newY, min.y);
@@ -504,10 +505,10 @@ void CCScrollView::beforeDraw()
         glEnable(GL_SCISSOR_TEST);
         float s = this->getScale();
 
-        CCDirector *director = CCDirector::sharedDirector();
-        s *= director->getContentScaleFactor();
-
-        glScissor((GLint)screenPos.x, (GLint)screenPos.y, (GLsizei)(m_tViewSize.width*s), (GLsizei)(m_tViewSize.height*s));
+//        CCDirector *director = CCDirector::sharedDirector();
+//        s *= director->getContentScaleFactor();
+        CCEGLView::sharedOpenGLView()->setScissorInPoints(screenPos.x*s, screenPos.y*s, m_tViewSize.width*s, m_tViewSize.height*s);
+        //glScissor((GLint)screenPos.x, (GLint)screenPos.y, (GLsizei)(m_tViewSize.width*s), (GLsizei)(m_tViewSize.height*s));
 		
     }
 }
@@ -657,10 +658,10 @@ void CCScrollView::ccTouchMoved(CCTouch* touch, CCEvent* event)
             {
                 switch (m_eDirection)
                 {
-                    case CCScrollViewDirectionVertical:
+                    case kCCScrollViewDirectionVertical:
                         moveDistance = ccp(0.0f, moveDistance.y);
                         break;
-                    case CCScrollViewDirectionHorizontal:
+                    case kCCScrollViewDirectionHorizontal:
                         moveDistance = ccp(moveDistance.x, 0.0f);
                         break;
                     default:

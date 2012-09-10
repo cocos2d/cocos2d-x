@@ -145,6 +145,9 @@ OBJECTS = ../actions/CCAction.o \
 					../../extensions/CCBReader/CCSpriteLoader.o \
 					../../extensions/CCBReader/CCLayerLoader.o \
 					../../extensions/GUI/CCScrollView/CCScrollView.o \
+					../../extensions/GUI/CCScrollView/CCSorting.o \
+					../../extensions/GUI/CCScrollView/CCTableView.o \
+					../../extensions/GUI/CCScrollView/CCTableViewCell.o \
 					../../extensions/GUI/CCControlExtension/CCControlButton.o \
 					../../extensions/GUI/CCControlExtension/CCControlColourPicker.o \
 					../../extensions/GUI/CCControlExtension/CCControl.o \
