@@ -41,14 +41,6 @@ CCEGLView* CCEGLView::sharedOpenGLView(void)
     return s_sharedView;
 }
 
-void CCEGLView::purgeSharedOpenGLView(void)
-{
-    if (s_sharedView)
-    {
-        delete s_sharedView;
-    }
-}
-
 CCEGLView::CCEGLView(void)
 {
     m_obScreenSize.width = m_obDesignResolutionSize.width = [[EAGLView sharedEGLView] getWidth];
@@ -78,7 +70,7 @@ void CCEGLView::end(void)
     // destroy EAGLView
     [[EAGLView sharedEGLView] removeFromSuperview];
     
-    purgeSharedOpenGLView();
+    delete this;
 }
 
 void CCEGLView::swapBuffers()

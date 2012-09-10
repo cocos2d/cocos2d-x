@@ -38,7 +38,6 @@ class CC_DLL CCEGLView : public CCEGLViewProtocol
 {
 public:
     static CCEGLView* sharedOpenGLView(void);
-    static void purgeSharedOpenGLView(void);
     
     virtual ~CCEGLView(void);
     
