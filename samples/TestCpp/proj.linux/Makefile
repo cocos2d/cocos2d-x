@@ -77,6 +77,8 @@ OBJECTS = ../Classes/AccelerometerTest/AccelerometerTest.o \
 			../Classes/ExtensionsTest/ControlExtensionTest/CCControlSceneManager.o \
 			../Classes/ExtensionsTest/ControlExtensionTest/CCControlSliderTest/CCControlSliderTest.o \
 			../Classes/ExtensionsTest/ControlExtensionTest/CCControlSwitchTest/CCControlSwitchTest.o \
+			../Classes/ExtensionsTest/TableViewTest/TableViewTestScene.o \
+			../Classes/ExtensionsTest/TableViewTest/CustomTableViewCell.o \
 			../Classes/ExtensionsTest/ExtensionsTest.o \
 			../Classes/ExtensionsTest/NotificationCenterTest/NotificationCenterTest.o \
 			../Classes/ExtensionsTest/NetworkTest/HttpClientTest.o \
