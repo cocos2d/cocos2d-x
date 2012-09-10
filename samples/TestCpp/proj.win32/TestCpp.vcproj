@@ -1023,6 +1023,26 @@
 						>
 					</File>
 				</Filter>
+				<Filter
+					Name="TableViewTest"
+					>
+					<File
+						RelativePath="..\Classes\ExtensionsTest\TableViewTest\CustomTableViewCell.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\Classes\ExtensionsTest\TableViewTest\CustomTableViewCell.h"
+						>
+					</File>
+					<File
+						RelativePath="..\Classes\ExtensionsTest\TableViewTest\TableViewTestScene.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\Classes\ExtensionsTest\TableViewTest\TableViewTestScene.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="NodeTest"
