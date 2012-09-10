@@ -35,6 +35,9 @@ GUI/CCControlExtension/CCMenuPassive.cpp \
 GUI/CCControlExtension/CCScale9Sprite.cpp \
 GUI/CCControlExtension/CCSpacer.cpp \
 GUI/CCScrollView/CCScrollView.cpp \
+GUI/CCScrollView/CCTableView.cpp \
+GUI/CCScrollView/CCTableViewCell.cpp \
+GUI/CCScrollView/CCSorting.cpp \
 GUI/CCEditBox/CCEditBox.cpp \
 GUI/CCEditBox/CCEditBoxImplAndroid.cpp \
 network/HttpClient.cpp

@@ -2,18 +2,6 @@
 #include "CCBSelectorResolver.h"
 #include "CCBMemberVariableAssigner.h"
 
-#define PROPERTY_POSITION "position"
-#define PROPERTY_CONTENTSIZE "contentSize"
-#define PROPERTY_ANCHORPOINT "anchorPoint"
-#define PROPERTY_SCALE "scale"
-#define PROPERTY_ROTATION "rotation"
-#define PROPERTY_TAG "tag"
-#define PROPERTY_IGNOREANCHORPOINTFORPOSITION "ignoreAnchorPointForPosition"
-#define PROPERTY_VISIBLE "visible"
-
-#define ASSERT_FAIL_UNEXPECTED_PROPERTY(PROPERTY) CCLog("Unexpected property: '%s'!\n", PROPERTY->getCString()); assert(false)
-#define ASSERT_FAIL_UNEXPECTED_PROPERTYTYPE(PROPERTYTYPE) CCLog("Unexpected property type: '%d'!\n", PROPERTYTYPE); assert(false)
-
 USING_NS_CC;
 
 NS_CC_EXT_BEGIN

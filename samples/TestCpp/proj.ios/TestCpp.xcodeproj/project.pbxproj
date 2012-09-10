@@ -192,6 +192,11 @@
 		1A14ADF715DA49A50064E300 /* CCEditBoxImplIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A14ADF115DA49A50064E300 /* CCEditBoxImplIOS.mm */; };
 		1A14ADF915DA49A50064E300 /* EditBoxImplIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A14ADF415DA49A50064E300 /* EditBoxImplIOS.mm */; };
 		1A14AE0615DA5E780064E300 /* EditBoxTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A14AE0415DA5E780064E300 /* EditBoxTest.cpp */; };
+		1A4D4A1E15FD7DD900F61EEB /* CCSorting.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A4D4A1815FD7DD900F61EEB /* CCSorting.cpp */; };
+		1A4D4A1F15FD7DD900F61EEB /* CCTableView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A4D4A1A15FD7DD900F61EEB /* CCTableView.cpp */; };
+		1A4D4A2015FD7DD900F61EEB /* CCTableViewCell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A4D4A1C15FD7DD900F61EEB /* CCTableViewCell.cpp */; };
+		1A4D4A2615FD7E2200F61EEB /* CustomTableViewCell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A4D4A2215FD7E2200F61EEB /* CustomTableViewCell.cpp */; };
+		1A4D4A2715FD7E2200F61EEB /* TableViewTestScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A4D4A2415FD7E2200F61EEB /* TableViewTestScene.cpp */; };
 		1D3623260D0F684500981E51 /* testsAppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* testsAppDelegate.mm */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
@@ -687,6 +692,16 @@
 		1A14ADF415DA49A50064E300 /* EditBoxImplIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = EditBoxImplIOS.mm; sourceTree = "<group>"; };
 		1A14AE0415DA5E780064E300 /* EditBoxTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EditBoxTest.cpp; sourceTree = "<group>"; };
 		1A14AE0515DA5E780064E300 /* EditBoxTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditBoxTest.h; sourceTree = "<group>"; };
+		1A4D4A1815FD7DD900F61EEB /* CCSorting.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSorting.cpp; sourceTree = "<group>"; };
+		1A4D4A1915FD7DD900F61EEB /* CCSorting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSorting.h; sourceTree = "<group>"; };
+		1A4D4A1A15FD7DD900F61EEB /* CCTableView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTableView.cpp; sourceTree = "<group>"; };
+		1A4D4A1B15FD7DD900F61EEB /* CCTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTableView.h; sourceTree = "<group>"; };
+		1A4D4A1C15FD7DD900F61EEB /* CCTableViewCell.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTableViewCell.cpp; sourceTree = "<group>"; };
+		1A4D4A1D15FD7DD900F61EEB /* CCTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTableViewCell.h; sourceTree = "<group>"; };
+		1A4D4A2215FD7E2200F61EEB /* CustomTableViewCell.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CustomTableViewCell.cpp; sourceTree = "<group>"; };
+		1A4D4A2315FD7E2200F61EEB /* CustomTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTableViewCell.h; sourceTree = "<group>"; };
+		1A4D4A2415FD7E2200F61EEB /* TableViewTestScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TableViewTestScene.cpp; sourceTree = "<group>"; };
+		1A4D4A2515FD7E2200F61EEB /* TableViewTestScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewTestScene.h; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D3623240D0F684500981E51 /* testsAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = testsAppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* testsAppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = testsAppDelegate.mm; sourceTree = "<group>"; };
@@ -1101,6 +1116,7 @@
 		15AA9CBB15B7EC460033D6C2 /* ExtensionsTest */ = {
 			isa = PBXGroup;
 			children = (
+				1A4D4A2115FD7E2200F61EEB /* TableViewTest */,
 				1A14AE0315DA5E780064E300 /* EditBoxTest */,
 				D4144C0C15D23C9C00F4FD92 /* NetworkTest */,
 				15AA9CBC15B7EC460033D6C2 /* CocosBuilderTest */,
@@ -1898,6 +1914,18 @@
 			path = ../../Classes/ExtensionsTest/EditBoxTest;
 			sourceTree = "<group>";
 		};
+		1A4D4A2115FD7E2200F61EEB /* TableViewTest */ = {
+			isa = PBXGroup;
+			children = (
+				1A4D4A2215FD7E2200F61EEB /* CustomTableViewCell.cpp */,
+				1A4D4A2315FD7E2200F61EEB /* CustomTableViewCell.h */,
+				1A4D4A2415FD7E2200F61EEB /* TableViewTestScene.cpp */,
+				1A4D4A2515FD7E2200F61EEB /* TableViewTestScene.h */,
+			);
+			name = TableViewTest;
+			path = ../../Classes/ExtensionsTest/TableViewTest;
+			sourceTree = "<group>";
+		};
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
@@ -2034,6 +2062,12 @@
 			children = (
 				D4BF201F15C6D23700692205 /* CCScrollView.cpp */,
 				D4BF202015C6D23700692205 /* CCScrollView.h */,
+				1A4D4A1815FD7DD900F61EEB /* CCSorting.cpp */,
+				1A4D4A1915FD7DD900F61EEB /* CCSorting.h */,
+				1A4D4A1A15FD7DD900F61EEB /* CCTableView.cpp */,
+				1A4D4A1B15FD7DD900F61EEB /* CCTableView.h */,
+				1A4D4A1C15FD7DD900F61EEB /* CCTableViewCell.cpp */,
+				1A4D4A1D15FD7DD900F61EEB /* CCTableViewCell.h */,
 			);
 			path = CCScrollView;
 			sourceTree = "<group>";
@@ -2339,6 +2373,11 @@
 				1A14ADF715DA49A50064E300 /* CCEditBoxImplIOS.mm in Sources */,
 				1A14ADF915DA49A50064E300 /* EditBoxImplIOS.mm in Sources */,
 				1A14AE0615DA5E780064E300 /* EditBoxTest.cpp in Sources */,
+				1A4D4A1E15FD7DD900F61EEB /* CCSorting.cpp in Sources */,
+				1A4D4A1F15FD7DD900F61EEB /* CCTableView.cpp in Sources */,
+				1A4D4A2015FD7DD900F61EEB /* CCTableViewCell.cpp in Sources */,
+				1A4D4A2615FD7E2200F61EEB /* CustomTableViewCell.cpp in Sources */,
+				1A4D4A2715FD7E2200F61EEB /* TableViewTestScene.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
