@@ -37,12 +37,12 @@
 
 NS_CC_EXT_BEGIN
 
-CCTableView* CCTableView::viewWithDataSource(CCTableViewDataSource* dataSource, CCSize size)
+CCTableView* CCTableView::create(CCTableViewDataSource* dataSource, CCSize size)
 {
-    return CCTableView::viewWithDataSource(dataSource, size, NULL);
+    return CCTableView::create(dataSource, size, NULL);
 }
 
-CCTableView* CCTableView::viewWithDataSource(CCTableViewDataSource* dataSource, CCSize size, CCNode *container)
+CCTableView* CCTableView::create(CCTableViewDataSource* dataSource, CCSize size, CCNode *container)
 {
     CCTableView *table = new CCTableView();
     table->initWithViewSize(size, container);
@@ -57,12 +57,12 @@ bool CCTableView::initWithViewSize(CCSize size, CCNode* container/* = NULL*/)
 {
     if (CCScrollView::initWithViewSize(size,container))
     {
-        cellsUsed_      = new CCArrayForObjectSorting();
-        cellsFreed_     = new CCArrayForObjectSorting();
-        indices_        = new std::set<unsigned int>();
-        tDelegate_      = NULL;
-        vordering_      = CCTableViewFillBottomUp;
-        this->setDirection(CCScrollViewDirectionVertical);
+        m_pCellsUsed      = new CCArrayForObjectSorting();
+        m_pCellsFreed     = new CCArrayForObjectSorting();
+        m_pIndices        = new std::set<unsigned int>();
+        m_pTableViewDelegate = NULL;
+        m_eVordering      = kCCTableViewFillBottomUp;
+        this->setDirection(kCCScrollViewDirectionVertical);
         
         CCScrollView::setDelegate(this);
         return true;
@@ -71,28 +71,28 @@ bool CCTableView::initWithViewSize(CCSize size, CCNode* container/* = NULL*/)
 }
 
 CCTableView::CCTableView()
-: indices_(NULL)
-, cellsUsed_(NULL)
-, cellsFreed_(NULL)
-, dataSource_(NULL)
-, tDelegate_(NULL)
-, m_eOldDirection(CCScrollViewDirectionNone)
+: m_pIndices(NULL)
+, m_pCellsUsed(NULL)
+, m_pCellsFreed(NULL)
+, m_pDataSource(NULL)
+, m_pTableViewDelegate(NULL)
+, m_eOldDirection(kCCScrollViewDirectionNone)
 {
 
 }
 
 CCTableView::~CCTableView()
 {
-    CC_SAFE_DELETE(indices_);
-    CC_SAFE_RELEASE(cellsUsed_);
-    CC_SAFE_RELEASE(cellsFreed_);
+    CC_SAFE_DELETE(m_pIndices);
+    CC_SAFE_RELEASE(m_pCellsUsed);
+    CC_SAFE_RELEASE(m_pCellsFreed);
 }
 
 void CCTableView::setVerticalFillOrder(CCTableViewVerticalFillOrder fillOrder)
 {
-    if (vordering_ != fillOrder) {
-        vordering_ = fillOrder;
-        if (cellsUsed_->count() > 0) {
+    if (m_eVordering != fillOrder) {
+        m_eVordering = fillOrder;
+        if (m_pCellsUsed->count() > 0) {
             this->reloadData();
         }
     }
@@ -100,16 +100,16 @@ void CCTableView::setVerticalFillOrder(CCTableViewVerticalFillOrder fillOrder)
 
 CCTableViewVerticalFillOrder CCTableView::getVerticalFillOrder()
 {
-    return vordering_;
+    return m_eVordering;
 }
 
 void CCTableView::reloadData()
 {
     CCObject* pObj = NULL;
-    CCARRAY_FOREACH(cellsUsed_, pObj)
+    CCARRAY_FOREACH(m_pCellsUsed, pObj)
     {
         CCTableViewCell* cell = (CCTableViewCell*)pObj;
-        cellsFreed_->addObject(cell);
+        m_pCellsFreed->addObject(cell);
         cell->reset();
         if (cell->getParent() == this->getContainer())
         {
@@ -117,12 +117,12 @@ void CCTableView::reloadData()
         }
     }
 
-    indices_->clear();
-    cellsUsed_->release();
-    cellsUsed_ = new CCArrayForObjectSorting();
+    m_pIndices->clear();
+    m_pCellsUsed->release();
+    m_pCellsUsed = new CCArrayForObjectSorting();
     
     this->_updateContentSize();
-    if (dataSource_->numberOfCellsInTableView(this) > 0)
+    if (m_pDataSource->numberOfCellsInTableView(this) > 0)
     {
         this->scrollViewDidScroll(this);
     }
@@ -135,7 +135,7 @@ CCTableViewCell *CCTableView::cellAtIndex(unsigned int idx)
 
 void CCTableView::updateCellAtIndex(unsigned int idx)
 {
-    if (idx == CC_INVALID_INDEX || idx > dataSource_->numberOfCellsInTableView(this)-1)
+    if (idx == CC_INVALID_INDEX || idx > m_pDataSource->numberOfCellsInTableView(this)-1)
     {
         return;
     }
@@ -146,34 +146,34 @@ void CCTableView::updateCellAtIndex(unsigned int idx)
     if (cell) {
         this->_moveCellOutOfSight(cell);
     } 
-    cell = dataSource_->tableCellAtIndex(this, idx);
+    cell = m_pDataSource->tableCellAtIndex(this, idx);
     this->_setIndexForCell(idx, cell);
     this->_addCellIfNecessary(cell);
 }
 
 void CCTableView::insertCellAtIndex(unsigned  int idx)
 {
-    if (idx == CC_INVALID_INDEX || idx > dataSource_->numberOfCellsInTableView(this)-1) {
+    if (idx == CC_INVALID_INDEX || idx > m_pDataSource->numberOfCellsInTableView(this)-1) {
         return;
     }
     CCTableViewCell *cell;
     int newIdx;
     
-    cell = (CCTableViewCell*)cellsUsed_->objectWithObjectID(idx);
+    cell = (CCTableViewCell*)m_pCellsUsed->objectWithObjectID(idx);
     if (cell) 
     {
-        newIdx = cellsUsed_->indexOfSortedObject(cell);
-        for (unsigned int i=newIdx; i<cellsUsed_->count(); i++)
+        newIdx = m_pCellsUsed->indexOfSortedObject(cell);
+        for (unsigned int i=newIdx; i<m_pCellsUsed->count(); i++)
         {
-            cell = (CCTableViewCell*)cellsUsed_->objectAtIndex(i);
+            cell = (CCTableViewCell*)m_pCellsUsed->objectAtIndex(i);
             this->_setIndexForCell(cell->getIdx()+1, cell);
         }
     }
     
- //   [indices_ shiftIndexesStartingAtIndex:idx by:1];
+ //   [m_pIndices shiftIndexesStartingAtIndex:idx by:1];
     
     //insert a new cell
-    cell = dataSource_->tableCellAtIndex(this, idx);
+    cell = m_pDataSource->tableCellAtIndex(this, idx);
     this->_setIndexForCell(idx, cell);
     this->_addCellIfNecessary(cell);
     
@@ -182,7 +182,7 @@ void CCTableView::insertCellAtIndex(unsigned  int idx)
 
 void CCTableView::removeCellAtIndex(unsigned int idx)
 {
-    if (idx == CC_INVALID_INDEX || idx > dataSource_->numberOfCellsInTableView(this)-1) {
+    if (idx == CC_INVALID_INDEX || idx > m_pDataSource->numberOfCellsInTableView(this)-1) {
         return;
     }
     
@@ -194,15 +194,15 @@ void CCTableView::removeCellAtIndex(unsigned int idx)
         return;
     }
     
-    newIdx = cellsUsed_->indexOfSortedObject(cell);
+    newIdx = m_pCellsUsed->indexOfSortedObject(cell);
     
     //remove first
     this->_moveCellOutOfSight(cell);
     
-    indices_->erase(idx);
-//    [indices_ shiftIndexesStartingAtIndex:idx+1 by:-1];
-    for (unsigned int i=cellsUsed_->count()-1; i > newIdx; i--) {
-        cell = (CCTableViewCell*)cellsUsed_->objectAtIndex(i);
+    m_pIndices->erase(idx);
+//    [m_pIndices shiftIndexesStartingAtIndex:idx+1 by:-1];
+    for (unsigned int i=m_pCellsUsed->count()-1; i > newIdx; i--) {
+        cell = (CCTableViewCell*)m_pCellsUsed->objectAtIndex(i);
         this->_setIndexForCell(cell->getIdx()-1, cell);
     }
 }
@@ -211,12 +211,12 @@ CCTableViewCell *CCTableView::dequeueCell()
 {
     CCTableViewCell *cell;
     
-    if (cellsFreed_->count() == 0) {
+    if (m_pCellsFreed->count() == 0) {
         cell = NULL;
     } else {
-        cell = (CCTableViewCell*)cellsFreed_->objectAtIndex(0);
+        cell = (CCTableViewCell*)m_pCellsFreed->objectAtIndex(0);
         cell->retain();
-        cellsFreed_->removeObjectAtIndex(0);
+        m_pCellsFreed->removeObjectAtIndex(0);
         cell->autorelease();
     }
     return cell;
@@ -228,9 +228,9 @@ void CCTableView::_addCellIfNecessary(CCTableViewCell * cell)
     {
         this->getContainer()->addChild(cell);
     }
-    cellsUsed_->insertSortedObject(cell);
-    indices_->insert(cell->getIdx());
-    // [indices_ addIndex:cell.idx];
+    m_pCellsUsed->insertSortedObject(cell);
+    m_pIndices->insert(cell->getIdx());
+    // [m_pIndices addIndex:cell.idx];
 }
 
 void CCTableView::_updateContentSize()
@@ -238,12 +238,12 @@ void CCTableView::_updateContentSize()
     CCSize     size, cellSize;
     unsigned int cellCount;
 
-    cellSize  = dataSource_->cellSizeForTable(this);
-    cellCount = dataSource_->numberOfCellsInTableView(this);
+    cellSize  = m_pDataSource->cellSizeForTable(this);
+    cellCount = m_pDataSource->numberOfCellsInTableView(this);
     
     switch (this->getDirection())
     {
-        case CCScrollViewDirectionHorizontal:
+        case kCCScrollViewDirectionHorizontal:
             size = CCSizeMake(cellCount * cellSize.width, cellSize.height);
             break;
         default:
@@ -254,7 +254,7 @@ void CCTableView::_updateContentSize()
 
 	if (m_eOldDirection != m_eDirection)
 	{
-		if (m_eDirection == CCScrollViewDirectionHorizontal)
+		if (m_eDirection == kCCScrollViewDirectionHorizontal)
 		{
 			this->setContentOffset(ccp(0,0));
 		}
@@ -271,8 +271,8 @@ CCPoint CCTableView::_offsetFromIndex(unsigned int index)
 {
     CCPoint offset = this->__offsetFromIndex(index);
     
-    const CCSize cellSize = dataSource_->cellSizeForTable(this);
-    if (vordering_ == CCTableViewFillTopDown) {
+    const CCSize cellSize = m_pDataSource->cellSizeForTable(this);
+    if (m_eVordering == kCCTableViewFillTopDown) {
         offset.y = this->getContainer()->getContentSize().height - offset.y - cellSize.height;
     }
     return offset;
@@ -283,9 +283,9 @@ CCPoint CCTableView::__offsetFromIndex(unsigned int index)
     CCPoint offset;
     CCSize  cellSize;
     
-    cellSize = dataSource_->cellSizeForTable(this);
+    cellSize = m_pDataSource->cellSizeForTable(this);
     switch (this->getDirection()) {
-        case CCScrollViewDirectionHorizontal:
+        case kCCScrollViewDirectionHorizontal:
             offset = ccp(cellSize.width * index, 0.0f);
             break;
         default:
@@ -299,10 +299,10 @@ CCPoint CCTableView::__offsetFromIndex(unsigned int index)
 unsigned int CCTableView::_indexFromOffset(CCPoint offset)
 {
     int index = 0;
-    const int maxIdx = dataSource_->numberOfCellsInTableView(this)-1;
+    const int maxIdx = m_pDataSource->numberOfCellsInTableView(this)-1;
 
-    const CCSize cellSize = dataSource_->cellSizeForTable(this);
-    if (vordering_ == CCTableViewFillTopDown) {
+    const CCSize cellSize = m_pDataSource->cellSizeForTable(this);
+    if (m_eVordering == kCCTableViewFillTopDown) {
         offset.y = this->getContainer()->getContentSize().height - offset.y - cellSize.height;
     }
     index = MAX(0, this->__indexFromOffset(offset));
@@ -316,10 +316,10 @@ int CCTableView::__indexFromOffset(CCPoint offset)
     int  index = 0;
     CCSize     cellSize;
     
-    cellSize = dataSource_->cellSizeForTable(this);
+    cellSize = m_pDataSource->cellSizeForTable(this);
     
     switch (this->getDirection()) {
-        case CCScrollViewDirectionHorizontal:
+        case kCCScrollViewDirectionHorizontal:
             index = offset.x/cellSize.width;
             break;
         default:
@@ -336,10 +336,10 @@ CCTableViewCell* CCTableView::_cellWithIndex(unsigned int cellIndex)
     
     found = NULL;
     
-//     if ([indices_ containsIndex:cellIndex])
-    if (indices_->find(cellIndex) != indices_->end())
+//     if ([m_pIndices containsIndex:cellIndex])
+    if (m_pIndices->find(cellIndex) != m_pIndices->end())
     {
-        found = (CCTableViewCell *)cellsUsed_->objectWithObjectID(cellIndex);
+        found = (CCTableViewCell *)m_pCellsUsed->objectWithObjectID(cellIndex);
     }
     
     return found;
@@ -347,10 +347,10 @@ CCTableViewCell* CCTableView::_cellWithIndex(unsigned int cellIndex)
 
 void CCTableView::_moveCellOutOfSight(CCTableViewCell *cell)
 {
-    cellsFreed_->addObject(cell);
-    cellsUsed_->removeSortedObject(cell);
-    indices_->erase(cell->getIdx());
-    // [indices_ removeIndex:cell.idx];
+    m_pCellsFreed->addObject(cell);
+    m_pCellsUsed->removeSortedObject(cell);
+    m_pIndices->erase(cell->getIdx());
+    // [m_pIndices removeIndex:cell.idx];
     cell->reset();
     if (cell->getParent() == this->getContainer()) {
         this->getContainer()->removeChild(cell, true);;
@@ -366,21 +366,20 @@ void CCTableView::_setIndexForCell(unsigned int index, CCTableViewCell *cell)
 
 void CCTableView::scrollViewDidScroll(CCScrollView* view)
 {
-	CCLOG("container pos x = %f, y = %f", getContainer()->getPosition().x, getContainer()->getPosition().y);
     unsigned int startIdx = 0, endIdx = 0, idx = 0, maxIdx = 0;
     CCPoint offset;
 
     offset   = ccpMult(this->getContentOffset(), -1);
-    maxIdx   = MAX(dataSource_->numberOfCellsInTableView(this)-1, 0);
+    maxIdx   = MAX(m_pDataSource->numberOfCellsInTableView(this)-1, 0);
     
-    const CCSize cellSize = dataSource_->cellSizeForTable(this);
+    const CCSize cellSize = m_pDataSource->cellSizeForTable(this);
     
-    if (vordering_ == CCTableViewFillTopDown) {
+    if (m_eVordering == kCCTableViewFillTopDown) {
         offset.y = offset.y + m_tViewSize.height/this->getContainer()->getScaleY() - cellSize.height;
     }
     startIdx = this->_indexFromOffset(offset);
     
-    if (vordering_ == CCTableViewFillTopDown)
+    if (m_eVordering == kCCTableViewFillTopDown)
     {
         offset.y -= m_tViewSize.height/this->getContainer()->getScaleY();
     }
@@ -392,9 +391,10 @@ void CCTableView::scrollViewDidScroll(CCScrollView* view)
     
     endIdx   = this->_indexFromOffset(offset);   
     
+#if 0 // For Testing.
     CCObject* pObj;
     int i = 0;
-    CCARRAY_FOREACH(cellsUsed_, pObj)
+    CCARRAY_FOREACH(m_pCellsUsed, pObj)
     {
         CCTableViewCell* pCell = (CCTableViewCell*)pObj;
         CCLog("cells Used index %d, value = %d", i, pCell->getIdx());
@@ -402,54 +402,59 @@ void CCTableView::scrollViewDidScroll(CCScrollView* view)
     }
     CCLog("---------------------------------------");
     i = 0;
-    CCARRAY_FOREACH(cellsFreed_, pObj)
+    CCARRAY_FOREACH(m_pCellsFreed, pObj)
     {
         CCTableViewCell* pCell = (CCTableViewCell*)pObj;
         CCLog("cells freed index %d, value = %d", i, pCell->getIdx());
         i++;
     }
     CCLog("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-    if (cellsUsed_->count() > 0)
+#endif
+    
+    if (m_pCellsUsed->count() > 0)
     {
-        CCTableViewCell* cell = (CCTableViewCell*)cellsUsed_->objectAtIndex(0);
+        CCTableViewCell* cell = (CCTableViewCell*)m_pCellsUsed->objectAtIndex(0);
 
         idx = cell->getIdx();
         while(idx <startIdx)
         {
             this->_moveCellOutOfSight(cell);
-            if (cellsUsed_->count() > 0) {
-                cell = (CCTableViewCell*)cellsUsed_->objectAtIndex(0);
+            if (m_pCellsUsed->count() > 0)
+            {
+                cell = (CCTableViewCell*)m_pCellsUsed->objectAtIndex(0);
                 idx = cell->getIdx();    
-            } else {
+            }
+            else
+            {
                 break;
             }
-            CCLog("idx 0 = %d", idx);
         }
     }
-    if (cellsUsed_->count() > 0)
+    if (m_pCellsUsed->count() > 0)
     {
-        CCTableViewCell *cell = (CCTableViewCell*)cellsUsed_->lastObject();
+        CCTableViewCell *cell = (CCTableViewCell*)m_pCellsUsed->lastObject();
         idx = cell->getIdx();
 
         while(idx <= maxIdx && idx > endIdx)
         {
             this->_moveCellOutOfSight(cell);
-            if (cellsUsed_->count() > 0)
+            if (m_pCellsUsed->count() > 0)
             {
-                cell = (CCTableViewCell*)cellsUsed_->lastObject();
+                cell = (CCTableViewCell*)m_pCellsUsed->lastObject();
                 idx = cell->getIdx();
                 
-            } else {
+            }
+            else
+            {
                 break;
             }
-            CCLog("idx 1 = %d, maxIdx = %d, endIdx = %d", idx, maxIdx, endIdx);
         }
     }
     
     for (unsigned int i=startIdx; i <= endIdx; i++)
     {
-        //if ([indices_ containsIndex:i])
-        if (indices_->find(i) != indices_->end())
+        //if ([m_pIndices containsIndex:i])
+        if (m_pIndices->find(i) != m_pIndices->end())
         {
             continue;
         }
@@ -468,15 +473,15 @@ void CCTableView::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
         CCPoint           point;
         
         point = this->getContainer()->convertTouchToNodeSpace(pTouch);
-        if (vordering_ == CCTableViewFillTopDown) {
-            CCSize cellSize = dataSource_->cellSizeForTable(this);
+        if (m_eVordering == kCCTableViewFillTopDown) {
+            CCSize cellSize = m_pDataSource->cellSizeForTable(this);
             point.y -= cellSize.height;
         }
         index = this->_indexFromOffset(point);
         cell  = this->_cellWithIndex(index);
         
         if (cell) {
-            tDelegate_->table_cellTouched(this, cell);   
+            m_pTableViewDelegate->tableCellTouched(this, cell);
         }
     }
     CCScrollView::ccTouchEnded(pTouch, pEvent);

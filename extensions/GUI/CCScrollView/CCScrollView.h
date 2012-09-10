@@ -42,10 +42,10 @@ NS_CC_EXT_BEGIN
  */
 
 typedef enum {
-	CCScrollViewDirectionNone = -1,
-    CCScrollViewDirectionHorizontal = 0,
-    CCScrollViewDirectionVertical,
-    CCScrollViewDirectionBoth
+	kCCScrollViewDirectionNone = -1,
+    kCCScrollViewDirectionHorizontal = 0,
+    kCCScrollViewDirectionVertical,
+    kCCScrollViewDirectionBoth
 } CCScrollViewDirection;
 
 class CCScrollView;

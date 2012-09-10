@@ -42,8 +42,8 @@ class CCTableView;
 class CCArrayForObjectSorting;
 
 typedef enum {
-    CCTableViewFillTopDown,
-    CCTableViewFillBottomUp
+    kCCTableViewFillTopDown,
+    kCCTableViewFillBottomUp
 } CCTableViewVerticalFillOrder;
 
 /**
@@ -58,7 +58,7 @@ public:
      * @param table table contains the given cell
      * @param cell  cell that is touched
      */
-    virtual void table_cellTouched(CCTableView* table, CCTableViewCell* cell) = 0;
+    virtual void tableCellTouched(CCTableView* table, CCTableViewCell* cell) = 0;
 };
 
 
@@ -103,27 +103,6 @@ class CCTableView : public CCScrollView, public CCScrollViewDelegate
 public:
     CCTableView();
     virtual ~CCTableView();
-    /**
-     * vertical direction of cell filling
-     */
-    CCTableViewVerticalFillOrder      vordering_;
-
-    /**
-     * data source
-     */
-    CCTableViewDataSource* getDataSource() { return dataSource_; }
-    void setDataSource(CCTableViewDataSource* source) { dataSource_ = source; }
-    /**
-     * delegate
-     */
-    CCTableViewDelegate*   getDelegate() { return tDelegate_; } 
-    void setDelegate(CCTableViewDelegate* pDelegate) { tDelegate_ = pDelegate; }
-
-    /**
-     * determines how cell is ordered and filled in the view.
-     */
-    void setVerticalFillOrder(CCTableViewVerticalFillOrder order);
-    CCTableViewVerticalFillOrder getVerticalFillOrder();
 
     /**
      * An intialized table view object
@@ -132,7 +111,7 @@ public:
      * @param size view size
      * @return table view
      */
-    static CCTableView* viewWithDataSource(CCTableViewDataSource* dataSource, CCSize size);
+    static CCTableView* create(CCTableViewDataSource* dataSource, CCSize size);
     /**
      * An initialized table view object
      *
@@ -141,7 +120,25 @@ public:
      * @param container parent object for cells
      * @return table view
      */
-    static CCTableView* viewWithDataSource(CCTableViewDataSource* dataSource, CCSize size, CCNode *container);
+    static CCTableView* create(CCTableViewDataSource* dataSource, CCSize size, CCNode *container);
+    
+    /**
+     * data source
+     */
+    CCTableViewDataSource* getDataSource() { return m_pDataSource; }
+    void setDataSource(CCTableViewDataSource* source) { m_pDataSource = source; }
+    /**
+     * delegate
+     */
+    CCTableViewDelegate* getDelegate() { return m_pTableViewDelegate; } 
+    void setDelegate(CCTableViewDelegate* pDelegate) { m_pTableViewDelegate = pDelegate; }
+
+    /**
+     * determines how cell is ordered and filled in the view.
+     */
+    void setVerticalFillOrder(CCTableViewVerticalFillOrder order);
+    CCTableViewVerticalFillOrder getVerticalFillOrder();
+
 
     bool initWithViewSize(CCSize size, CCNode* container = NULL);
     /**
@@ -187,27 +184,33 @@ public:
     virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
 
 protected:
+    
+    /**
+     * vertical direction of cell filling
+     */
+    CCTableViewVerticalFillOrder m_eVordering;
+    
     /**
      * index set to query the indexes of the cells used.
      */
-    std::set<unsigned int>* indices_;
+    std::set<unsigned int>* m_pIndices;
     //NSMutableIndexSet *indices_;
     /**
      * cells that are currently in the table
      */
-    CCArrayForObjectSorting *cellsUsed_;
+    CCArrayForObjectSorting* m_pCellsUsed;
     /**
      * free list of cells
      */
-    CCArrayForObjectSorting *cellsFreed_;
+    CCArrayForObjectSorting* m_pCellsFreed;
     /**
      * weak link to the data source object
      */
-    CCTableViewDataSource* dataSource_;
+    CCTableViewDataSource* m_pDataSource;
     /**
      * weak link to the delegate object
      */
-    CCTableViewDelegate*   tDelegate_;
+    CCTableViewDelegate* m_pTableViewDelegate;
 
 	CCScrollViewDirection m_eOldDirection;
 
@@ -217,7 +220,7 @@ protected:
     CCPoint _offsetFromIndex(unsigned int index);
     void _updateContentSize();
 
-    CCTableViewCell *_cellWithIndex(unsigned int cellIndex);
+    CCTableViewCell* _cellWithIndex(unsigned int cellIndex);
     void _moveCellOutOfSight(CCTableViewCell *cell);
     void _setIndexForCell(unsigned int index, CCTableViewCell *cell);
     void _addCellIfNecessary(CCTableViewCell * cell);

@@ -23,18 +23,18 @@ bool TableViewTestLayer::init()
 
 	CCSize winSize = CCDirector::sharedDirector()->getWinSize();
 
-    CCTableView* tableView = CCTableView::viewWithDataSource(this, CCSizeMake(250, 60));
-    tableView->setDirection(CCScrollViewDirectionHorizontal);
+    CCTableView* tableView = CCTableView::create(this, CCSizeMake(250, 60));
+    tableView->setDirection(kCCScrollViewDirectionHorizontal);
     tableView->setPosition(ccp(20,winSize.height/2-30));
     tableView->setDelegate(this);
     this->addChild(tableView);
     tableView->reloadData();
 
-	tableView = CCTableView::viewWithDataSource(this, CCSizeMake(60, 280));
-	tableView->setDirection(CCScrollViewDirectionVertical);
+	tableView = CCTableView::create(this, CCSizeMake(60, 280));
+	tableView->setDirection(kCCScrollViewDirectionVertical);
 	tableView->setPosition(ccp(winSize.width-150,winSize.height/2-120));
 	tableView->setDelegate(this);
-	tableView->setVerticalFillOrder(CCTableViewFillTopDown);
+	tableView->setVerticalFillOrder(kCCTableViewFillTopDown);
 	this->addChild(tableView);
 	tableView->reloadData();
 
@@ -55,7 +55,7 @@ void TableViewTestLayer::toExtensionsMainLayer(cocos2d::CCObject *sender)
 	pScene->release();
 }
 
-void TableViewTestLayer::table_cellTouched(CCTableView* table, CCTableViewCell* cell)
+void TableViewTestLayer::tableCellTouched(CCTableView* table, CCTableViewCell* cell)
 {
     CCLOG("cell touched at index: %i", cell->getIdx());
 }

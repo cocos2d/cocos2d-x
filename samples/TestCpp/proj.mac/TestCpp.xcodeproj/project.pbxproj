@@ -197,6 +197,11 @@
 		15D2554915E60029000D5E89 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = 15D2553515E60029000D5E89 /* Shaders */; };
 		15D2554A15E60029000D5E89 /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = 15D2553615E60029000D5E89 /* TileMaps */; };
 		15D2554B15E60029000D5E89 /* zwoptex in Resources */ = {isa = PBXBuildFile; fileRef = 15D2553715E60029000D5E89 /* zwoptex */; };
+		1A20135C15FD900F0013D092 /* CCSorting.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A20135615FD900F0013D092 /* CCSorting.cpp */; };
+		1A20135D15FD900F0013D092 /* CCTableView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A20135815FD900F0013D092 /* CCTableView.cpp */; };
+		1A20135E15FD900F0013D092 /* CCTableViewCell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A20135A15FD900F0013D092 /* CCTableViewCell.cpp */; };
+		1A20136415FD90240013D092 /* CustomTableViewCell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A20136015FD90240013D092 /* CustomTableViewCell.cpp */; };
+		1A20136515FD90240013D092 /* TableViewTestScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A20136215FD90240013D092 /* TableViewTestScene.cpp */; };
 		41BC70E415BF81A5006A0A6C /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 41BC70DA15BF81A5006A0A6C /* AppController.mm */; };
 		41BC70E515BF81A5006A0A6C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 41BC70DC15BF81A5006A0A6C /* InfoPlist.strings */; };
 		41BC70E615BF81A5006A0A6C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41BC70DE15BF81A5006A0A6C /* MainMenu.xib */; };
@@ -676,6 +681,16 @@
 		15D2553515E60029000D5E89 /* Shaders */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Shaders; sourceTree = "<group>"; };
 		15D2553615E60029000D5E89 /* TileMaps */ = {isa = PBXFileReference; lastKnownFileType = folder; path = TileMaps; sourceTree = "<group>"; };
 		15D2553715E60029000D5E89 /* zwoptex */ = {isa = PBXFileReference; lastKnownFileType = folder; path = zwoptex; sourceTree = "<group>"; };
+		1A20135615FD900F0013D092 /* CCSorting.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSorting.cpp; sourceTree = "<group>"; };
+		1A20135715FD900F0013D092 /* CCSorting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSorting.h; sourceTree = "<group>"; };
+		1A20135815FD900F0013D092 /* CCTableView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTableView.cpp; sourceTree = "<group>"; };
+		1A20135915FD900F0013D092 /* CCTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTableView.h; sourceTree = "<group>"; };
+		1A20135A15FD900F0013D092 /* CCTableViewCell.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTableViewCell.cpp; sourceTree = "<group>"; };
+		1A20135B15FD900F0013D092 /* CCTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTableViewCell.h; sourceTree = "<group>"; };
+		1A20136015FD90240013D092 /* CustomTableViewCell.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CustomTableViewCell.cpp; sourceTree = "<group>"; };
+		1A20136115FD90240013D092 /* CustomTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTableViewCell.h; sourceTree = "<group>"; };
+		1A20136215FD90240013D092 /* TableViewTestScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TableViewTestScene.cpp; sourceTree = "<group>"; };
+		1A20136315FD90240013D092 /* TableViewTestScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewTestScene.h; sourceTree = "<group>"; };
 		1D6058910D05DD3D006BFB54 /* TestCpp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestCpp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		41BC70CA15BF8048006A0A6C /* cocos2dx.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2dx.xcodeproj; path = ../../../cocos2dx/proj.mac/cocos2dx.xcodeproj; sourceTree = "<group>"; };
 		41BC70D915BF81A5006A0A6C /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = SOURCE_ROOT; };
@@ -1061,6 +1076,7 @@
 		15AA9CBB15B7EC460033D6C2 /* ExtensionsTest */ = {
 			isa = PBXGroup;
 			children = (
+				1A20135F15FD90240013D092 /* TableViewTest */,
 				D4EFE03415D27336002D3DA0 /* NetworkTest */,
 				15AA9CBC15B7EC460033D6C2 /* CocosBuilderTest */,
 				15AA9CDB15B7EC460033D6C2 /* ControlExtensionTest */,
@@ -1816,6 +1832,18 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		1A20135F15FD90240013D092 /* TableViewTest */ = {
+			isa = PBXGroup;
+			children = (
+				1A20136015FD90240013D092 /* CustomTableViewCell.cpp */,
+				1A20136115FD90240013D092 /* CustomTableViewCell.h */,
+				1A20136215FD90240013D092 /* TableViewTestScene.cpp */,
+				1A20136315FD90240013D092 /* TableViewTestScene.h */,
+			);
+			name = TableViewTest;
+			path = ../../Classes/ExtensionsTest/TableViewTest;
+			sourceTree = "<group>";
+		};
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
@@ -1974,6 +2002,12 @@
 		D4BF205215C6D32E00692205 /* CCScrollView */ = {
 			isa = PBXGroup;
 			children = (
+				1A20135615FD900F0013D092 /* CCSorting.cpp */,
+				1A20135715FD900F0013D092 /* CCSorting.h */,
+				1A20135815FD900F0013D092 /* CCTableView.cpp */,
+				1A20135915FD900F0013D092 /* CCTableView.h */,
+				1A20135A15FD900F0013D092 /* CCTableViewCell.cpp */,
+				1A20135B15FD900F0013D092 /* CCTableViewCell.h */,
 				D4BF205315C6D32E00692205 /* CCScrollView.cpp */,
 				D4BF205415C6D32E00692205 /* CCScrollView.h */,
 			);
@@ -2297,6 +2331,11 @@
 				D4BF206115C6D32E00692205 /* CCScrollView.cpp in Sources */,
 				D4EFE03315D272A0002D3DA0 /* HttpClient.cpp in Sources */,
 				D4EFE03715D27336002D3DA0 /* HttpClientTest.cpp in Sources */,
+				1A20135C15FD900F0013D092 /* CCSorting.cpp in Sources */,
+				1A20135D15FD900F0013D092 /* CCTableView.cpp in Sources */,
+				1A20135E15FD900F0013D092 /* CCTableViewCell.cpp in Sources */,
+				1A20136415FD90240013D092 /* CustomTableViewCell.cpp in Sources */,
+				1A20136515FD90240013D092 /* TableViewTestScene.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
