@@ -48,10 +48,6 @@ enum ccScriptType {
     kScriptTypeJavascript
 };
 
-typedef int LUA_FUNCTION;
-typedef int LUA_TABLE;
-typedef int LUA_STRING;
-
 // #pragma mark -
 // #pragma mark CCScriptHandlerEntry
 
