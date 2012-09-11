@@ -38,60 +38,61 @@ extern "C" {
 
 NS_CC_BEGIN
 
-// #pragma mark -
-// #pragma mark CCScriptValue
+typedef int LUA_FUNCTION;
+typedef int LUA_TABLE;
+typedef int LUA_STRING;
 
-class CCScriptValue;
+class CCLuaValue;
 
-typedef std::map<std::string, CCScriptValue>    CCScriptValueDict;
-typedef CCScriptValueDict::const_iterator       CCScriptValueDictIterator;
-typedef std::list<CCScriptValue>                CCScriptValueArray;
-typedef CCScriptValueArray::const_iterator      CCScriptValueArrayIterator;
+typedef std::map<std::string, CCLuaValue>   CCLuaValueDict;
+typedef CCLuaValueDict::const_iterator      CCLuaValueDictIterator;
+typedef std::list<CCLuaValue>               CCLuaValueArray;
+typedef CCLuaValueArray::const_iterator     CCLuaValueArrayIterator;
 
 typedef enum {
-    CCScriptValueTypeInt,
-    CCScriptValueTypeFloat,
-    CCScriptValueTypeBoolean,
-    CCScriptValueTypeString,
-    CCScriptValueTypeDict,
-    CCScriptValueTypeArray,
-    CCScriptValueTypeCCObject
-} CCScriptValueType;
+    CCLuaValueTypeInt,
+    CCLuaValueTypeFloat,
+    CCLuaValueTypeBoolean,
+    CCLuaValueTypeString,
+    CCLuaValueTypeDict,
+    CCLuaValueTypeArray,
+    CCLuaValueTypeCCObject
+} CCLuaValueType;
 
 typedef union {
     int                 intValue;
     float               floatValue;
     bool                booleanValue;
     std::string*        stringValue;
-    CCScriptValueDict*  dictValue;
-    CCScriptValueArray* arrayValue;
+    CCLuaValueDict*     dictValue;
+    CCLuaValueArray*    arrayValue;
     CCObject*           ccobjectValue;
-} CCScriptValueField;
+} CCLuaValueField;
 
-class CCScriptValue
+class CCLuaValue
 {
 public:
-    static const CCScriptValue intValue(const int intValue);
-    static const CCScriptValue floatValue(const float floatValue);
-    static const CCScriptValue booleanValue(const bool booleanValue);
-    static const CCScriptValue stringValue(const char* stringValue);
-    static const CCScriptValue stringValue(const std::string& stringValue);
-    static const CCScriptValue dictValue(const CCScriptValueDict& dictValue);
-    static const CCScriptValue arrayValue(const CCScriptValueArray& arrayValue);
-    static const CCScriptValue ccobjectValue(CCObject* ccobjectValue, const char* objectTypename);
-    static const CCScriptValue ccobjectValue(CCObject* ccobjectValue, const std::string& objectTypename);
+    static const CCLuaValue intValue(const int intValue);
+    static const CCLuaValue floatValue(const float floatValue);
+    static const CCLuaValue booleanValue(const bool booleanValue);
+    static const CCLuaValue stringValue(const char* stringValue);
+    static const CCLuaValue stringValue(const std::string& stringValue);
+    static const CCLuaValue dictValue(const CCLuaValueDict& dictValue);
+    static const CCLuaValue arrayValue(const CCLuaValueArray& arrayValue);
+    static const CCLuaValue ccobjectValue(CCObject* ccobjectValue, const char* objectTypename);
+    static const CCLuaValue ccobjectValue(CCObject* ccobjectValue, const std::string& objectTypename);
 
-    CCScriptValue(void)
-        : m_type(CCScriptValueTypeInt)
+    CCLuaValue(void)
+        : m_type(CCLuaValueTypeInt)
         , m_ccobjectType(NULL)
     {
         memset(&m_field, 0, sizeof(m_field));
     }
-    CCScriptValue(const CCScriptValue& rhs);
-    CCScriptValue& operator=(const CCScriptValue& rhs);
-    ~CCScriptValue(void);
+    CCLuaValue(const CCLuaValue& rhs);
+    CCLuaValue& operator=(const CCLuaValue& rhs);
+    ~CCLuaValue(void);
 
-    const CCScriptValueType getType(void) const {
+    const CCLuaValueType getType(void) const {
         return m_type;
     }
 
@@ -115,11 +116,11 @@ public:
         return *m_field.stringValue;
     }
 
-    const CCScriptValueDict& dictValue(void) const {
+    const CCLuaValueDict& dictValue(void) const {
         return *m_field.dictValue;
     }
 
-    const CCScriptValueArray& arrayValue(void) const {
+    const CCLuaValueArray& arrayValue(void) const {
         return *m_field.arrayValue;
     }
 
@@ -128,11 +129,11 @@ public:
     }
 
 private:
-    CCScriptValueField  m_field;
-    CCScriptValueType   m_type;
-    std::string*        m_ccobjectType;
+    CCLuaValueField m_field;
+    CCLuaValueType  m_type;
+    std::string*    m_ccobjectType;
 
-    void copy(const CCScriptValue& rhs);
+    void copy(const CCLuaValue& rhs);
 };
 
 
@@ -140,18 +141,13 @@ private:
 class CCLuaEngine : public CCScriptEngineProtocol
 {
 public:
+    static CCLuaEngine* defaultEngine(void);    
     static CCLuaEngine* create(void);
-    ~CCLuaEngine(void);
+    virtual ~CCLuaEngine(void);
     
-    virtual ccScriptType getScriptType() { return kScriptTypeLua; };
-    
-    /**
-     @brief Method used to get a pointer to the lua_State that the script module is attached to.
-     @return A pointer to the lua_State that the script module is attached to.
-     */
-    virtual lua_State* getLuaState(void) {
-        return m_state;
-    }
+    virtual ccScriptType getScriptType() {
+        return kScriptTypeLua;
+    };
 
     /**
      @brief Remove CCObject from lua state
@@ -199,20 +195,30 @@ public:
     virtual int executeSchedule(CCTimer* pTimer, float dt, CCNode* pNode = NULL);
     virtual int executeLayerTouchesEvent(CCLayer* pLayer, int eventType, CCSet *pTouches);
     virtual int executeLayerTouchEvent(CCLayer* pLayer, int eventType, CCTouch *pTouch);
+    
+    /**
+     @brief Method used to get a pointer to the lua_State that the script module is attached to.
+     @return A pointer to the lua_State that the script module is attached to.
+     */
+    lua_State* getLuaState(void) {
+        return m_state;
+    }
 
-    virtual int pushIntegerData(int data);
-    virtual int pushFloatData(float data);
-    virtual int pushBooleanData(bool data);
-    virtual int pushStringData(const char* data);
-    virtual int pushCCObject(CCObject* pObject, const char* typeName);
-    virtual int pushCCScriptValue(const CCScriptValue& value);
-    virtual int pushCCScriptValueDict(const CCScriptValueDict& dict);
-    virtual int pushCCScriptValueArray(const CCScriptValueArray& array);
+    int pushInt(int data);
+    int pushFloat(float data);
+    int pushBoolean(bool data);
+    int pushString(const char* data);
+    int pushString(const char* data, int length);
+    int pushNil(void);
+    int pushCCObject(CCObject* pObject, const char* typeName);
+    int pushCCLuaValue(const CCLuaValue& value);
+    int pushCCLuaValueDict(const CCLuaValueDict& dict);
+    int pushCCLuaValueArray(const CCLuaValueArray& array);
     int executeFunctionByHandler(int nHandler, int numArgs);
-    virtual void cleanStack(void);
+    void cleanStack(void);
     
     // Add lua loader, now it is used on android
-    virtual void addLuaLoader(lua_CFunction func);
+    void addLuaLoader(lua_CFunction func);
     
 private:
     CCLuaEngine(void)
@@ -224,6 +230,7 @@ private:
     bool pushFunction(int nHandler);
     
     lua_State* m_state;
+    static CCLuaEngine* m_defaultEngine;
 };
 
 NS_CC_END
