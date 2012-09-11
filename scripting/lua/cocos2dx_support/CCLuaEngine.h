@@ -38,6 +38,104 @@ extern "C" {
 
 NS_CC_BEGIN
 
+// #pragma mark -
+// #pragma mark CCScriptValue
+
+class CCScriptValue;
+
+typedef std::map<std::string, CCScriptValue>    CCScriptValueDict;
+typedef CCScriptValueDict::const_iterator       CCScriptValueDictIterator;
+typedef std::list<CCScriptValue>                CCScriptValueArray;
+typedef CCScriptValueArray::const_iterator      CCScriptValueArrayIterator;
+
+typedef enum {
+    CCScriptValueTypeInt,
+    CCScriptValueTypeFloat,
+    CCScriptValueTypeBoolean,
+    CCScriptValueTypeString,
+    CCScriptValueTypeDict,
+    CCScriptValueTypeArray,
+    CCScriptValueTypeCCObject
+} CCScriptValueType;
+
+typedef union {
+    int                 intValue;
+    float               floatValue;
+    bool                booleanValue;
+    std::string*        stringValue;
+    CCScriptValueDict*  dictValue;
+    CCScriptValueArray* arrayValue;
+    CCObject*           ccobjectValue;
+} CCScriptValueField;
+
+class CCScriptValue
+{
+public:
+    static const CCScriptValue intValue(const int intValue);
+    static const CCScriptValue floatValue(const float floatValue);
+    static const CCScriptValue booleanValue(const bool booleanValue);
+    static const CCScriptValue stringValue(const char* stringValue);
+    static const CCScriptValue stringValue(const std::string& stringValue);
+    static const CCScriptValue dictValue(const CCScriptValueDict& dictValue);
+    static const CCScriptValue arrayValue(const CCScriptValueArray& arrayValue);
+    static const CCScriptValue ccobjectValue(CCObject* ccobjectValue, const char* objectTypename);
+    static const CCScriptValue ccobjectValue(CCObject* ccobjectValue, const std::string& objectTypename);
+
+    CCScriptValue(void)
+        : m_type(CCScriptValueTypeInt)
+        , m_ccobjectType(NULL)
+    {
+        memset(&m_field, 0, sizeof(m_field));
+    }
+    CCScriptValue(const CCScriptValue& rhs);
+    CCScriptValue& operator=(const CCScriptValue& rhs);
+    ~CCScriptValue(void);
+
+    const CCScriptValueType getType(void) const {
+        return m_type;
+    }
+
+    const std::string& getCCObjectTypename(void) const {
+        return *m_ccobjectType;
+    }
+
+    int intValue(void) const {
+        return m_field.intValue;
+    }
+
+    float floatValue(void) const {
+        return m_field.floatValue;
+    }
+
+    bool booleanValue(void) const {
+        return m_field.booleanValue;
+    }
+
+    const std::string& stringValue(void) const {
+        return *m_field.stringValue;
+    }
+
+    const CCScriptValueDict& dictValue(void) const {
+        return *m_field.dictValue;
+    }
+
+    const CCScriptValueArray& arrayValue(void) const {
+        return *m_field.arrayValue;
+    }
+
+    CCObject* ccobjectValue(void) const {
+        return m_field.ccobjectValue;
+    }
+
+private:
+    CCScriptValueField  m_field;
+    CCScriptValueType   m_type;
+    std::string*        m_ccobjectType;
+
+    void copy(const CCScriptValue& rhs);
+};
+
+
 // Lua support for cocos2d-x
 class CCLuaEngine : public CCScriptEngineProtocol
 {
@@ -54,17 +152,17 @@ public:
     virtual lua_State* getLuaState(void) {
         return m_state;
     }
-	virtual void removeJSObjectByCCObject(void * cobj) {};
+
     /**
      @brief Remove CCObject from lua state
      @param object to remove
      */
-    virtual void removeCCObjectByID(int nLuaID);
+    virtual void removeScriptObjectByCCObject(CCObject* pObj);
     
     /**
      @brief Remove Lua function reference
      */
-    virtual void removeLuaHandler(int nHandler);
+    virtual void removeScriptHandler(int nHandler);
     
     /**
      @brief Add a path to find lua files in
@@ -93,20 +191,15 @@ public:
      @return The integer value returned from the script function.
      */
     virtual int executeGlobalFunction(const char* functionName);
-    
-    /**
-     @brief Execute a function by handler
-     @param The function handler
-     @param Number of parameters
-     @return The integer value returned from the script function.
-     */
-    virtual int executeFunctionByHandler(int nHandler, int numArgs = 0);
-    virtual int executeFunctionWithIntegerData(int nHandler, int data, CCNode *self = NULL);
-    virtual int executeFunctionWithFloatData(int nHandler, float data, CCNode *self = NULL);
-    virtual int executeFunctionWithBooleanData(int nHandler, bool data);
-    virtual int executeFunctionWithCCObject(int nHandler, CCObject* pObject, const char* typeName);
-    virtual int executeFunctionWithStringData(int nHandler, const char* data);
-    
+
+    virtual int executeNodeEvent(CCNode* pNode, int nAction);
+    virtual int executeMenuItemEvent(CCMenuItem* pMenuItem);
+    virtual int executeNotificationEvent(CCNotificationCenter* pNotificationCenter, const char* pszName);
+    virtual int executeCallFuncActionEvent(CCCallFunc* pAction, CCObject* pTarget = NULL);
+    virtual int executeSchedule(CCTimer* pTimer, float dt, CCNode* pNode = NULL);
+    virtual int executeLayerTouchesEvent(CCLayer* pLayer, int eventType, CCSet *pTouches);
+    virtual int executeLayerTouchEvent(CCLayer* pLayer, int eventType, CCTouch *pTouch);
+
     virtual int pushIntegerData(int data);
     virtual int pushFloatData(float data);
     virtual int pushBooleanData(bool data);
@@ -115,14 +208,8 @@ public:
     virtual int pushCCScriptValue(const CCScriptValue& value);
     virtual int pushCCScriptValueDict(const CCScriptValueDict& dict);
     virtual int pushCCScriptValueArray(const CCScriptValueArray& array);
+    int executeFunctionByHandler(int nHandler, int numArgs);
     virtual void cleanStack(void);
-    
-    // execute a schedule function
-    virtual int executeSchedule(int nHandler, float dt, CCNode *self = NULL);
-    
-    // functions for excute touch event
-    virtual int executeTouchesEvent(int nHandler, int eventType, CCSet *pTouches, CCNode *self);
-    virtual int executeTouchEvent(int nHandler, int eventType, CCTouch *pTouch);
     
     // Add lua loader, now it is used on android
     virtual void addLuaLoader(lua_CFunction func);

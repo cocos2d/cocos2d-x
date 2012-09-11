@@ -124,7 +124,7 @@ void CCNotificationCenter::unregisterScriptObserver(void)
 {
     if (m_scriptHandler)
     {
-        CCScriptEngineManager::sharedManager()->getScriptEngine()->removeLuaHandler(m_scriptHandler);
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_scriptHandler);
     }
     m_scriptHandler = 0;
 }
@@ -145,8 +145,7 @@ void CCNotificationCenter::postNotification(const char *name, CCObject *object)
     if (m_scriptHandler)
     {
         CCScriptEngineProtocol* engine = CCScriptEngineManager::sharedManager()->getScriptEngine();
-        engine->pushStringData(name);
-        engine->executeFunctionByHandler(m_scriptHandler, 1);
+        engine->executeNotificationEvent(this, name);
     }
 }
 

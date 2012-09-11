@@ -65,7 +65,7 @@ public:
     , m_bIsEnabled(false)            
     , m_pListener(NULL)            
     , m_pfnSelector(NULL)
-    , m_nScriptHandler(0)
+    , m_nScriptTapHandler(0)
     {}
     virtual ~CCMenuItem();
     /** Creates a CCMenuItem with a target/selector 
@@ -90,7 +90,8 @@ public:
     /** Register menu handler script function */
     virtual void registerScriptTapHandler(int nHandler);
     virtual void unregisterScriptTapHandler(void);
-    
+    int getScriptTapHandler() { return m_nScriptTapHandler; };
+
     virtual bool isEnabled();
     //@note: It's 'setIsEnable' in cocos2d-iphone. 
     virtual void setEnabled(bool value);
@@ -98,10 +99,11 @@ public:
     
     /** set the target/selector of the menu item*/
     void setTarget(CCObject *rec, SEL_MenuHandler selector);
+
 protected:
     CCObject*       m_pListener;
     SEL_MenuHandler    m_pfnSelector;
-    int             m_nScriptHandler;
+    int             m_nScriptTapHandler;
 };
 
 /** @brief An abstract class for "label" CCMenuItemLabel items 
