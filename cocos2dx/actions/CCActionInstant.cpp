@@ -435,7 +435,7 @@ void CCCallFunc::execute() {
         (m_pSelectorTarget->*m_pCallFunc)();
     }
 	if (m_nScriptHandler) {
-		CCScriptEngineManager::sharedManager()->getScriptEngine()->executeFunctionByHandler(m_nScriptHandler);
+		CCScriptEngineManager::sharedManager()->getScriptEngine()->executeCallFuncActionEvent(this);
 	}
 }
 
@@ -447,7 +447,7 @@ void CCCallFuncN::execute() {
         (m_pSelectorTarget->*m_pCallFuncN)(m_pTarget);
     }
 	if (m_nScriptHandler) {
-		CCScriptEngineManager::sharedManager()->getScriptEngine()->executeFunctionWithCCObject(m_nScriptHandler, m_pTarget, "CCNode");
+		CCScriptEngineManager::sharedManager()->getScriptEngine()->executeCallFuncActionEvent(this, m_pTarget);
 	}
 }
 
