@@ -31,6 +31,6 @@ LOCAL_LDLIBS += -llog
 
 include $(BUILD_STATIC_LIBRARY)
 
-$(call import-module,scripting/javascript/spidermonkey-android/android)
+$(call import-module,scripting/javascript/spidermonkey-android)
 $(call import-module,cocos2dx)
 $(call import-module,external/chipmunk)
