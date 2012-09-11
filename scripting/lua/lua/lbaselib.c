@@ -479,10 +479,10 @@ static const luaL_Reg base_funcs[] = {
 ** =======================================================
 */
 
-#define CO_RUN    0    /* running */
-#define CO_SUS    1    /* suspended */
-#define CO_NOR    2    /* 'normal' (it resumed another coroutine) */
-#define CO_DEAD    3
+#define CO_RUN	0	/* running */
+#define CO_SUS	1	/* suspended */
+#define CO_NOR	2	/* 'normal' (it resumed another coroutine) */
+#define CO_DEAD	3
 
 static const char *const statnames[] =
     {"running", "suspended", "normal", "dead"};
@@ -631,7 +631,7 @@ static void base_open (lua_State *L) {
   luaL_register(L, "_G", base_funcs);
   lua_pushliteral(L, LUA_VERSION);
   lua_setglobal(L, "_VERSION");  /* set global _VERSION */
-  /* `ipairs' and `pairs' need auxliliary functions as upvalues */
+  /* `ipairs' and `pairs' need auxiliary functions as upvalues */
   auxopen(L, "ipairs", luaB_ipairs, ipairsaux);
   auxopen(L, "pairs", luaB_pairs, luaB_next);
   /* `newproxy' needs a weaktable as upvalue */
