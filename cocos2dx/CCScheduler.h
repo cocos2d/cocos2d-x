@@ -80,6 +80,8 @@ public:
     /** Allocates a timer with a script callback function and an interval in seconds. */
     static CCTimer* timerWithScriptHandler(int nHandler, float fSeconds);
 
+    inline int getScriptHandler() { return m_nScriptHandler; };
+
 public:
     SEL_SCHEDULE m_pfnSelector;
     float m_fInterval;

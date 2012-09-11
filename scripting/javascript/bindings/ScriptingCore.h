@@ -43,27 +43,13 @@ public:
 	};
 
     virtual ccScriptType getScriptType() { return kScriptTypeJavascript; };
-
-	lua_State* getLuaState(void) { return NULL; }
     
     /**
      @brief Remove CCObject from lua state
      @param object to remove
      */
-	virtual void removeCCObjectByID(int n) {}
-    virtual void removeJSObjectByCCObject(void * cobj);
+    virtual void removeScriptObjectByCCObject(CCObject* pObj);
 
-    /**
-     @brief Remove Lua function handler
-     */
-	virtual void removeLuaHandler(int nHandler) {}
-    
-    /**
-     @brief Add a path to find lua files in
-     @param path to be added to the Lua path
-     */
-	virtual void addSearchPath(const char* path) {}
-    
     /**
      @brief Execute script code contained in the given string.
      @param codes holding the valid script code that should be executed.
@@ -85,30 +71,16 @@ public:
      @return The integer value returned from the script function.
      */
 	virtual int executeGlobalFunction(const char* functionName) { return 0; }
-    
-    /**
-     @brief Execute a function by handler
-     @param The function handler
-     @param Number of parameters
-     @return The integer value returned from the script function.
-     */
-	virtual int executeFunctionByHandler(int nHandler, int numArgs = 0) { return 0; }
-    virtual int executeFunctionWithIntegerData(int nHandler, int data, CCNode *self);
-    int executeFunctionWithObjectData(int nHandler, const char *name, JSObject *obj, CCNode *self);
-    virtual int executeFunctionWithFloatData(int nHandler, float data, CCNode *self);
-    virtual int executeFunctionWithBooleanData(int nHandler, bool data) { return 0; }
-    virtual int executeFunctionWithCCObject(int nHandler, CCObject* pObject, const char* typeName) { return 0; }    
-    virtual int pushIntegerToLuaStack(int data) { return 0; }
-    virtual int pushFloatToLuaStack(int data) { return 0; }
-    virtual int pushBooleanToLuaStack(int data) { return 0; }
-    virtual int pushCCObjectToLuaStack(CCObject* pObject, const char* typeName) { return 0; }
-    
-    // functions for excute touch event
-	virtual int executeTouchEvent(int nHandler, int eventType, CCTouch *pTouch) { return 0; }
-    virtual int executeTouchesEvent(int nHandler, int eventType, CCSet *pTouches, CCNode *self);
-    
-    // execute a schedule function
-    virtual int executeSchedule(int nHandler, float dt, CCNode *self);
+
+    virtual int executeNodeEvent(CCNode* pNode, int nAction);
+    virtual int executeMenuItemEvent(CCMenuItem* pMenuItem);
+    virtual int executeNotificationEvent(CCNotificationCenter* pNotificationCenter, const char* pszName);
+    virtual int executeCallFuncActionEvent(CCCallFunc* pAction, CCObject* pTarget = NULL);
+    virtual int executeSchedule(CCTimer* pTimer, float dt, CCNode* pNode = NULL);
+    virtual int executeLayerTouchesEvent(CCLayer* pLayer, int eventType, CCSet *pTouches);
+    virtual int executeLayerTouchEvent(CCLayer* pLayer, int eventType, CCTouch *pTouch);
+
+    int executeFunctionWithObjectData(CCNode *self, const char *name, JSObject *obj);
     
     void executeJSFunctionWithThisObj(jsval thisObj, jsval callback, jsval data);
 

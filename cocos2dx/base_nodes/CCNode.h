@@ -61,7 +61,6 @@ enum {
 enum {
     kCCNodeOnEnter,
     kCCNodeOnExit,
-    kCCMenuItemActivated,
     kCCNodeOnEnterTransitionDidFinish,
     kCCNodeOnExitTransitionDidStart
 };
@@ -278,6 +277,8 @@ public:
      @since v2.0
      */
     CC_PROPERTY(CCScheduler*, m_pScheduler, Scheduler);
+
+    inline int getScriptHandler() { return m_nScriptHandler; };
 
 protected:
 

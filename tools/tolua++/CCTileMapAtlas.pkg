@@ -1,11 +1,11 @@
 
 
-struct sImageTGA;
+// struct sImageTGA;
 
 class CCTileMapAtlas : public CCAtlasNode
 {
-    struct sImageTGA* getTGAInfo();
-    void setTGAInfo(struct sImageTGA* val);
+    // struct sImageTGA* getTGAInfo();
+    // void setTGAInfo(struct sImageTGA* val);
 
     void setTile(ccColor3B tile, ccGridSize position);
     void releaseMap();

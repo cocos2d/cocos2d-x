@@ -51,6 +51,78 @@ static void executeJSFunctionFromReservedSpot(JSContext *cx, JSObject *obj,
     //  }
 }
 
+static void getTouchesFuncName(int eventType, std::string &funcName) {
+    switch(eventType) {
+        case CCTOUCHBEGAN:
+            funcName = "onTouchesBegan";
+            break;
+        case CCTOUCHENDED:
+            funcName = "onTouchesEnded";
+            break;
+        case CCTOUCHMOVED:
+            funcName = "onTouchesMoved";
+            break;
+        case CCTOUCHCANCELLED:
+            funcName = "onTouchesCancelled";
+            break;
+    }
+
+}
+
+static void getTouchFuncName(int eventType, std::string &funcName) {
+    switch(eventType) {
+        case CCTOUCHBEGAN:
+            funcName = "onTouchBegan";
+            break;
+        case CCTOUCHENDED:
+            funcName = "onTouchEnded";
+            break;
+        case CCTOUCHMOVED:
+            funcName = "onTouchMoved";
+            break;
+        case CCTOUCHCANCELLED:
+            funcName = "onTouchCancelled";
+            break;
+    }
+
+}
+
+static void rootObject(JSContext *cx, JSObject *obj) {
+    JS_AddNamedObjectRoot(cx, &obj, "unnamed");
+}
+
+
+static void unRootObject(JSContext *cx, JSObject *obj) {
+    JS_RemoveObjectRoot(cx, &obj);
+}
+
+static void getJSTouchObject(JSContext *cx, CCTouch *x, jsval &jsret) {    
+    js_type_class_t *classType;
+    TypeTest<cocos2d::CCTouch> t;
+    uint32_t typeId = t.s_id();
+    HASH_FIND_INT(_js_global_type_ht, &typeId, classType);
+    assert(classType);
+    JSObject *_tmp = JS_NewObject(cx, classType->jsclass, classType->proto, classType->parentProto);
+    js_proxy_t *proxy, *nproxy;
+    JS_NEW_PROXY(proxy, x, _tmp);
+    void *ptr = x;
+    JS_GET_PROXY(nproxy, ptr);
+    JS_AddNamedObjectRoot(cx, &nproxy->obj, "CCTouch");
+    jsret = OBJECT_TO_JSVAL(_tmp);
+}
+
+static void removeJSTouchObject(JSContext *cx, CCTouch *x, jsval &jsret) {
+    js_proxy_t* nproxy;
+    js_proxy_t* jsproxy;
+    void *ptr = x;
+    JS_GET_PROXY(nproxy, ptr);
+    if (nproxy) {
+        JS_RemoveObjectRoot(cx, &nproxy->obj);
+        JS_GET_NATIVE_PROXY(jsproxy, nproxy->obj);
+        JS_REMOVE_PROXY(nproxy, jsproxy);
+    }
+}
+
 void ScriptingCore::executeJSFunctionWithThisObj(jsval thisObj, jsval callback,
                                                  jsval data) {
     jsval retval;
@@ -288,11 +360,11 @@ JSBool ScriptingCore::log(JSContext* cx, uint32_t argc, jsval *vp)
 }
 
 
-void ScriptingCore::removeJSObjectByCCObject(void* cobj) {
-
+void ScriptingCore::removeScriptObjectByCCObject(CCObject* pObj)
+{
     js_proxy_t* nproxy;
     js_proxy_t* jsproxy;
-    void *ptr = cobj;
+    void *ptr = (void*)pObj;
     JS_GET_PROXY(nproxy, ptr);
     if (nproxy) {
         JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
@@ -370,37 +442,116 @@ JSBool ScriptingCore::removeRootJS(JSContext *cx, uint32_t argc, jsval *vp)
     return JS_FALSE;
 }
 
-int ScriptingCore::executeFunctionWithIntegerData(int nHandler, int data, CCNode *self) {
+int ScriptingCore::executeNodeEvent(CCNode* pNode, int nAction)
+{
     js_proxy_t * p;
-    JS_GET_PROXY(p, self);
-    
+    JS_GET_PROXY(p, pNode);
+
     if (!p) return 0;
-    
+
     jsval retval;
     jsval dataVal = INT_TO_JSVAL(1);
     js_proxy_t *proxy;
-    JS_GET_PROXY(proxy, self);
-    
-    std::string funcName = "";
-    if(data == kCCNodeOnEnter) {
+    JS_GET_PROXY(proxy, pNode);
+
+    if(nAction == kCCNodeOnEnter)
+    {
         executeJSFunctionWithName(this->cx, p->obj, "onEnter", dataVal, retval);
-    } else if(data == kCCNodeOnExit) {
+    } 
+    else if(nAction == kCCNodeOnExit)
+    {
         executeJSFunctionWithName(this->cx, p->obj, "onExit", dataVal, retval);
-    } else if(data == kCCMenuItemActivated) {
-        dataVal = (proxy ? OBJECT_TO_JSVAL(proxy->obj) : JSVAL_NULL);
-        executeJSFunctionFromReservedSpot(this->cx, p->obj, dataVal, retval);
-    } else if(data == kCCNodeOnEnterTransitionDidFinish) {
-        executeJSFunctionWithName(this->cx, p->obj, "onEnterTransitionDidFinish", dataVal, retval);
-    } else if(data == kCCNodeOnExitTransitionDidStart) { executeJSFunctionWithName(this->cx, p->obj, "onExitTransitionDidStart", dataVal, retval);
     }
-    
-    
-    
+    else if(nAction == kCCNodeOnEnterTransitionDidFinish)
+    {
+        executeJSFunctionWithName(this->cx, p->obj, "onEnterTransitionDidFinish", dataVal, retval);
+    }
+    else if(nAction == kCCNodeOnExitTransitionDidStart)
+    {
+        executeJSFunctionWithName(this->cx, p->obj, "onExitTransitionDidStart", dataVal, retval);
+    }
+
     return 1;
 }
 
+int ScriptingCore::executeMenuItemEvent(CCMenuItem* pMenuItem)
+{
+    js_proxy_t * p;
+    JS_GET_PROXY(p, pMenuItem);
 
-int ScriptingCore::executeFunctionWithObjectData(int nHandler, const char *name, JSObject *obj, CCNode *self) {
+    if (!p) return 0;
+
+    jsval retval;
+    jsval dataVal;
+    js_proxy_t *proxy;
+    JS_GET_PROXY(proxy, pMenuItem);
+    dataVal = (proxy ? OBJECT_TO_JSVAL(proxy->obj) : JSVAL_NULL);
+
+    executeJSFunctionFromReservedSpot(this->cx, p->obj, dataVal, retval);
+
+    return 1;
+}
+
+int ScriptingCore::executeNotificationEvent(CCNotificationCenter* pNotificationCenter, const char* pszName)
+{
+    return 1;
+}
+
+int ScriptingCore::executeCallFuncActionEvent(CCCallFunc* pAction, CCObject* pTarget/* = NULL*/)
+{
+    return 1;
+}
+
+int ScriptingCore::executeSchedule(CCTimer* pTimer, float dt, CCNode* pNode/* = NULL*/)
+{
+    js_proxy_t * p;
+    JS_GET_PROXY(p, pNode);
+
+    if (!p) return 0;
+
+    jsval retval;
+    jsval dataVal = DOUBLE_TO_JSVAL(dt);
+
+    executeJSFunctionWithName(this->cx, p->obj, "update", dataVal, retval);
+
+    return 1;
+}
+
+int ScriptingCore::executeLayerTouchesEvent(CCLayer* pLayer, int eventType, CCSet *pTouches)
+{
+    std::string funcName = "";
+    getTouchesFuncName(eventType, funcName);
+
+    JSObject *jsretArr = JS_NewArrayObject(this->cx, 0, NULL);
+
+    JS_AddNamedObjectRoot(this->cx, &jsretArr, "touchArray");
+    int count = 0;
+    for(CCSetIterator it = pTouches->begin(); it != pTouches->end(); ++it, ++count) {
+        jsval jsret;
+        getJSTouchObject(this->cx, (CCTouch *) *it, jsret);
+        if(!JS_SetElement(this->cx, jsretArr, count, &jsret)) {
+            break;
+        }
+    }
+
+    executeFunctionWithObjectData(pLayer,  funcName.c_str(), jsretArr);
+
+    JS_RemoveObjectRoot(this->cx, &jsretArr);
+
+    for(CCSetIterator it = pTouches->begin(); it != pTouches->end(); ++it, ++count) {
+        jsval jsret;
+        removeJSTouchObject(this->cx, (CCTouch *) *it, jsret);
+    }
+
+    return 1;
+}
+
+int ScriptingCore::executeLayerTouchEvent(CCLayer* pLayer, int eventType, CCTouch *pTouch)
+{
+    return 0;
+}
+
+int ScriptingCore::executeFunctionWithObjectData(CCNode *self, const char *name, JSObject *obj) {
     
     js_proxy_t * p;
     JS_GET_PROXY(p, self);
@@ -414,136 +565,9 @@ int ScriptingCore::executeFunctionWithObjectData(int nHandler, const char *name,
     return 1;
 }
 
-
-int ScriptingCore::executeFunctionWithFloatData(int nHandler, float data, CCNode *self) {
-    
-    
-    js_proxy_t * p;
-    JS_GET_PROXY(p, self);
-    
-    if (!p) return 0;
-    
-    jsval retval;
-    jsval dataVal = DOUBLE_TO_JSVAL(data);
-    
-    std::string funcName = "";
-    
-    executeJSFunctionWithName(this->cx, p->obj, "update", dataVal, retval);
-    
-    return 1;
-}
-
-static void getTouchesFuncName(int eventType, std::string &funcName) {
-    switch(eventType) {
-        case CCTOUCHBEGAN:
-            funcName = "onTouchesBegan";
-            break;
-        case CCTOUCHENDED:
-            funcName = "onTouchesEnded";
-            break;
-        case CCTOUCHMOVED:
-            funcName = "onTouchesMoved";
-            break;
-        case CCTOUCHCANCELLED:
-            funcName = "onTouchesCancelled";
-            break;
-    }
-    
-}
-
-static void getTouchFuncName(int eventType, std::string &funcName) {
-    switch(eventType) {
-        case CCTOUCHBEGAN:
-            funcName = "onTouchBegan";
-            break;
-        case CCTOUCHENDED:
-            funcName = "onTouchEnded";
-            break;
-        case CCTOUCHMOVED:
-            funcName = "onTouchMoved";
-            break;
-        case CCTOUCHCANCELLED:
-            funcName = "onTouchCancelled";
-            break;
-    }
-    
-}
-
-static void rootObject(JSContext *cx, JSObject *obj) {
-    JS_AddNamedObjectRoot(cx, &obj, "unnamed");
-}
-
-
-static void unRootObject(JSContext *cx, JSObject *obj) {
-    JS_RemoveObjectRoot(cx, &obj);
-}
-
-
-
-
-static void getJSTouchObject(JSContext *cx, CCTouch *x, jsval &jsret) {    
-    js_type_class_t *classType;
-    TypeTest<cocos2d::CCTouch> t;
-    uint32_t typeId = t.s_id();
-    HASH_FIND_INT(_js_global_type_ht, &typeId, classType);
-    assert(classType);
-    JSObject *_tmp = JS_NewObject(cx, classType->jsclass, classType->proto, classType->parentProto);
-    js_proxy_t *proxy, *nproxy;
-    JS_NEW_PROXY(proxy, x, _tmp);
-    void *ptr = x;
-    JS_GET_PROXY(nproxy, ptr);
-    JS_AddNamedObjectRoot(cx, &nproxy->obj, "CCTouch");
-    jsret = OBJECT_TO_JSVAL(_tmp);
-}
-
-
-static void removeJSTouchObject(JSContext *cx, CCTouch *x, jsval &jsret) {
-    js_proxy_t* nproxy;
-    js_proxy_t* jsproxy;
-    void *ptr = x;
-    JS_GET_PROXY(nproxy, ptr);
-    if (nproxy) {
-        JS_RemoveObjectRoot(cx, &nproxy->obj);
-        JS_GET_NATIVE_PROXY(jsproxy, nproxy->obj);
-        JS_REMOVE_PROXY(nproxy, jsproxy);
-    }
-}
-
-
-int ScriptingCore::executeTouchesEvent(int nHandler, int eventType, 
-                                       CCSet *pTouches, CCNode *self) {
-    
-    std::string funcName = "";
-    getTouchesFuncName(eventType, funcName);
-        
-    JSObject *jsretArr = JS_NewArrayObject(this->cx, 0, NULL);
-    
-    JS_AddNamedObjectRoot(this->cx, &jsretArr, "touchArray");
-    int count = 0;
-    for(CCSetIterator it = pTouches->begin(); it != pTouches->end(); ++it, ++count) {
-        jsval jsret;
-        getJSTouchObject(this->cx, (CCTouch *) *it, jsret);
-        if(!JS_SetElement(this->cx, jsretArr, count, &jsret)) {
-            break;
-        }
-    }
-    
-    executeFunctionWithObjectData(1,  funcName.c_str(), jsretArr, self);
-    
-    JS_RemoveObjectRoot(this->cx, &jsretArr);
-    
-    for(CCSetIterator it = pTouches->begin(); it != pTouches->end(); ++it, ++count) {
-        jsval jsret;
-        removeJSTouchObject(this->cx, (CCTouch *) *it, jsret);
-    }
-    
-    return 1;
-}
-
 int ScriptingCore::executeCustomTouchesEvent(int eventType, 
                                        CCSet *pTouches, JSObject *obj)
 {
-    
     jsval retval;
     std::string funcName;
     getTouchesFuncName(eventType, funcName);
@@ -601,13 +625,6 @@ int ScriptingCore::executeCustomTouchEvent(int eventType,
     return 1;
     
 }  
-
-
-int ScriptingCore::executeSchedule(int nHandler, float dt, CCNode *self) {
-    
-    executeFunctionWithFloatData(nHandler, dt, self);
-    return 1;
-}
 
 long long jsval_to_long_long(JSContext *cx, jsval v) {
     JSObject *tmp = JSVAL_TO_OBJECT(v);

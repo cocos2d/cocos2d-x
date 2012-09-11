@@ -5,8 +5,11 @@
 
 #define CC_DLL 
 
+#if CC_DISABLE_ASSERT > 0
+#define CC_ASSERT(cond)
+#else
 #define CC_ASSERT(cond) assert(cond)
-
+#endif
 
 #define CC_UNUSED_PARAM(unusedparam) (void)unusedparam
 
