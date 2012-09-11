@@ -38,6 +38,10 @@ extern "C" {
 
 NS_CC_BEGIN
 
+typedef int LUA_FUNCTION;
+typedef int LUA_TABLE;
+typedef int LUA_STRING;
+
 class CCLuaValue;
 
 typedef std::map<std::string, CCLuaValue>   CCLuaValueDict;
