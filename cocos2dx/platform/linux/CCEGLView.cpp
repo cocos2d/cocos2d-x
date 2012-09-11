@@ -142,6 +142,11 @@ void mousePosEventHandle(int iPosX,int iPosY) {
 	}
 }
 
+int closeEventHandle() {
+	CCDirector::sharedDirector()->end();
+	return GL_TRUE;
+}
+
 void CCEGLView::setFrameSize(float width, float height)
 {
 	bool eResult = false;
@@ -216,6 +221,8 @@ void CCEGLView::setFrameSize(float width, float height)
 		glfwSetMouseButtonCallback(mouseButtonEventHandle);
 		//register the glfw mouse pos event
 		glfwSetMousePosCallback(mousePosEventHandle);
+
+		glfwSetWindowCloseCallback(closeEventHandle);
 
 		//Inits extensions
 		eResult = initExtensions();
