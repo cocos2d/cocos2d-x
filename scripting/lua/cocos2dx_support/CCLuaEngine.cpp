@@ -307,14 +307,14 @@ int CCLuaEngine::executeNodeEvent(CCNode* pNode, int nAction)
         if (nAction == kCCNodeOnEnter)
         {
             dict["name"] = CCLuaValue::stringValue("enter");
-            this->pushCCLuaValueDict(dict);
-            ret = this->executeFunctionByHandler(nScriptHandler, 1);
+            pushCCLuaValueDict(dict);
+            ret = executeFunctionByHandler(nScriptHandler, 1);
         }
         else if (nAction == kCCNodeOnExit)
         {
             dict["name"] = CCLuaValue::stringValue("exit");
-            this->pushCCLuaValueDict(dict);
-            ret = this->executeFunctionByHandler(nScriptHandler, 1);
+            pushCCLuaValueDict(dict);
+            ret = executeFunctionByHandler(nScriptHandler, 1);
         }
     } while (0);
     return ret;
@@ -327,8 +327,8 @@ int CCLuaEngine::executeMenuItemEvent(CCMenuItem* pMenuItem)
     {
         int nScriptHandler = pMenuItem->getScriptTapHandler();
         CC_BREAK_IF(0 == nScriptHandler);
-        ret = this->pushInt(pMenuItem->getTag());
-        ret = this->executeFunctionByHandler(nScriptHandler, 1);
+        ret = pushInt(pMenuItem->getTag());
+        ret = executeFunctionByHandler(nScriptHandler, 1);
     } while (0);
     return ret;
 }
@@ -340,8 +340,8 @@ int CCLuaEngine::executeNotificationEvent(CCNotificationCenter* pNotificationCen
     {
         int nScriptHandler = pNotificationCenter->getScriptHandler();
         CC_BREAK_IF(0 == nScriptHandler);
-        ret = this->pushString(pszName);
-        ret = this->executeFunctionByHandler(nScriptHandler, 1);
+        ret = pushString(pszName);
+        ret = executeFunctionByHandler(nScriptHandler, 1);
     } while (0);
     return ret;
 }
@@ -355,9 +355,9 @@ int CCLuaEngine::executeCallFuncActionEvent(CCCallFunc* pAction, CCObject* pTarg
         CC_BREAK_IF(0 == nScriptHandler);
         if (pTarget != NULL)
         {
-            ret = this->pushCCObject(pTarget, "CCNode");
+            ret = pushCCObject(pTarget, "CCNode");
         }
-        ret = this->executeFunctionByHandler(nScriptHandler, 1);
+        ret = executeFunctionByHandler(nScriptHandler, 1);
     } while (0);
     return ret;
 }
@@ -369,8 +369,8 @@ int CCLuaEngine::executeSchedule(CCTimer* pTimer, float dt, CCNode* pNode/* = NU
     {
         int nScriptHandler = pTimer->getScriptHandler();
         CC_BREAK_IF(0 == nScriptHandler);
-        ret = this->pushFloat(dt);
-        ret = this->executeFunctionByHandler(nScriptHandler, 1);
+        ret = pushFloat(dt);
+        ret = executeFunctionByHandler(nScriptHandler, 1);
     } while (0);
     return ret;
 }
