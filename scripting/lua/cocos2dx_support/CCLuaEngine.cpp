@@ -43,132 +43,156 @@ extern "C" {
 NS_CC_BEGIN
 
 // #pragma mark -
-// #pragma mark CCScriptValue
+// #pragma mark CCLuaValue
 
-const CCScriptValue CCScriptValue::intValue(const int intValue)
+const CCLuaValue CCLuaValue::intValue(const int intValue)
 {
-    CCScriptValue value;
-    value.m_type = CCScriptValueTypeInt;
+    CCLuaValue value;
+    value.m_type = CCLuaValueTypeInt;
     value.m_field.intValue = intValue;
     return value;
 }
 
-const CCScriptValue CCScriptValue::floatValue(const float floatValue)
+const CCLuaValue CCLuaValue::floatValue(const float floatValue)
 {
-    CCScriptValue value;
-    value.m_type = CCScriptValueTypeFloat;
+    CCLuaValue value;
+    value.m_type = CCLuaValueTypeFloat;
     value.m_field.floatValue = floatValue;
     return value;
 }
 
-const CCScriptValue CCScriptValue::booleanValue(const bool booleanValue)
+const CCLuaValue CCLuaValue::booleanValue(const bool booleanValue)
 {
-    CCScriptValue value;
-    value.m_type = CCScriptValueTypeBoolean;
+    CCLuaValue value;
+    value.m_type = CCLuaValueTypeBoolean;
     value.m_field.booleanValue = booleanValue;
     return value;
 }
 
-const CCScriptValue CCScriptValue::stringValue(const char* stringValue)
+const CCLuaValue CCLuaValue::stringValue(const char* stringValue)
 {
-    CCScriptValue value;
-    value.m_type = CCScriptValueTypeString;
+    CCLuaValue value;
+    value.m_type = CCLuaValueTypeString;
     value.m_field.stringValue = new std::string(stringValue);
     return value;
 }
 
-const CCScriptValue CCScriptValue::stringValue(const std::string& stringValue)
+const CCLuaValue CCLuaValue::stringValue(const std::string& stringValue)
 {
-    CCScriptValue value;
-    value.m_type = CCScriptValueTypeString;
+    CCLuaValue value;
+    value.m_type = CCLuaValueTypeString;
     value.m_field.stringValue = new std::string(stringValue);
     return value;
 }
 
-const CCScriptValue CCScriptValue::dictValue(const CCScriptValueDict& dictValue)
+const CCLuaValue CCLuaValue::dictValue(const CCLuaValueDict& dictValue)
 {
-    CCScriptValue value;
-    value.m_type = CCScriptValueTypeDict;
-    value.m_field.dictValue = new CCScriptValueDict(dictValue);
+    CCLuaValue value;
+    value.m_type = CCLuaValueTypeDict;
+    value.m_field.dictValue = new CCLuaValueDict(dictValue);
     return value;
 }
 
-const CCScriptValue CCScriptValue::arrayValue(const CCScriptValueArray& arrayValue)
+const CCLuaValue CCLuaValue::arrayValue(const CCLuaValueArray& arrayValue)
 {
-    CCScriptValue value;
-    value.m_type = CCScriptValueTypeArray;
-    value.m_field.arrayValue = new CCScriptValueArray(arrayValue);
+    CCLuaValue value;
+    value.m_type = CCLuaValueTypeArray;
+    value.m_field.arrayValue = new CCLuaValueArray(arrayValue);
     return value;
 }
 
-const CCScriptValue CCScriptValue::ccobjectValue(CCObject* ccobjectValue, const char* objectTypename)
+const CCLuaValue CCLuaValue::ccobjectValue(CCObject* ccobjectValue, const char* objectTypename)
 {
-    CCScriptValue value;
-    value.m_type = CCScriptValueTypeCCObject;
+    CCLuaValue value;
+    value.m_type = CCLuaValueTypeCCObject;
     value.m_field.ccobjectValue = ccobjectValue;
     ccobjectValue->retain();
     value.m_ccobjectType = new std::string(objectTypename);
     return value;
 }
 
-const CCScriptValue CCScriptValue::ccobjectValue(CCObject* ccobjectValue, const std::string& objectTypename)
+const CCLuaValue CCLuaValue::ccobjectValue(CCObject* ccobjectValue, const std::string& objectTypename)
 {
-    return CCScriptValue::ccobjectValue(ccobjectValue, objectTypename.c_str());
+    return CCLuaValue::ccobjectValue(ccobjectValue, objectTypename.c_str());
 }
 
-CCScriptValue::CCScriptValue(const CCScriptValue& rhs)
+CCLuaValue::CCLuaValue(const CCLuaValue& rhs)
 {
     copy(rhs);
 }
 
-CCScriptValue& CCScriptValue::operator=(const CCScriptValue& rhs)
+CCLuaValue& CCLuaValue::operator=(const CCLuaValue& rhs)
 {
     if (this != &rhs) copy(rhs);
     return *this;
 }
 
-CCScriptValue::~CCScriptValue(void)
+CCLuaValue::~CCLuaValue(void)
 {
-    if (m_type == CCScriptValueTypeString)
+    if (m_type == CCLuaValueTypeString)
     {
         delete m_field.stringValue;
     }
-    else if (m_type == CCScriptValueTypeDict)
+    else if (m_type == CCLuaValueTypeDict)
     {
         delete m_field.dictValue;
     }
-    else if (m_type == CCScriptValueTypeArray)
+    else if (m_type == CCLuaValueTypeArray)
     {
         delete m_field.arrayValue;
     }
-    else if (m_type == CCScriptValueTypeCCObject)
+    else if (m_type == CCLuaValueTypeCCObject)
     {
         m_field.ccobjectValue->release();
         delete m_ccobjectType;
     }
 }
 
-void CCScriptValue::copy(const CCScriptValue& rhs)
+void CCLuaValue::copy(const CCLuaValue& rhs)
 {
     memcpy(&m_field, &rhs.m_field, sizeof(m_field));
     m_type = rhs.m_type;
-    if (m_type == CCScriptValueTypeString)
+    if (m_type == CCLuaValueTypeString)
     {
         m_field.stringValue = new std::string(*rhs.m_field.stringValue);
     }
-    else if (m_type == CCScriptValueTypeDict)
+    else if (m_type == CCLuaValueTypeDict)
     {
-        m_field.dictValue = new CCScriptValueDict(*rhs.m_field.dictValue);
+        m_field.dictValue = new CCLuaValueDict(*rhs.m_field.dictValue);
     }
-    else if (m_type == CCScriptValueTypeArray)
+    else if (m_type == CCLuaValueTypeArray)
     {
-        m_field.arrayValue = new CCScriptValueArray(*rhs.m_field.arrayValue);
+        m_field.arrayValue = new CCLuaValueArray(*rhs.m_field.arrayValue);
     }
-    else if (m_type == CCScriptValueTypeCCObject)
+    else if (m_type == CCLuaValueTypeCCObject)
     {
         m_field.ccobjectValue = rhs.m_field.ccobjectValue;
         m_field.ccobjectValue->retain();
         m_ccobjectType = new std::string(*rhs.m_ccobjectType);
+    }
+}
+
+
+#pragma mark -
+#pragma mark CCLuaEngine
+
+CCLuaEngine* CCLuaEngine::m_defaultEngine = NULL;
+
+CCLuaEngine* CCLuaEngine::defaultEngine(void)
+{
+    if (!m_defaultEngine)
+    {
+        m_defaultEngine = CCLuaEngine::create();
+    }
+    return m_defaultEngine;
+}
+
+void CCLuaEngine::purgeDefaultEngine(void)
+{
+    if (m_defaultEngine)
+    {
+        delete m_defaultEngine;
+        m_defaultEngine = NULL;
     }
 }
 
@@ -182,6 +206,10 @@ CCLuaEngine* CCLuaEngine::create(void)
 CCLuaEngine::~CCLuaEngine(void)
 {
     lua_close(m_state);
+    if (this == m_defaultEngine)
+    {
+        m_defaultEngine = NULL;
+    }
 }
 
 bool CCLuaEngine::init(void)
@@ -284,17 +312,17 @@ int CCLuaEngine::executeNodeEvent(CCNode* pNode, int nAction)
     {
         int nScriptHandler = pNode->getScriptHandler();
         CC_BREAK_IF(0 == nScriptHandler);
-        CCScriptValueDict dict;
+        CCLuaValueDict dict;
         if (nAction == kCCNodeOnEnter)
         {
-            dict["name"] = CCScriptValue::stringValue("enter");
-            this->pushCCScriptValueDict(dict);
+            dict["name"] = CCLuaValue::stringValue("enter");
+            this->pushCCLuaValueDict(dict);
             ret = this->executeFunctionByHandler(nScriptHandler, 1);
         }
         else if (nAction == kCCNodeOnExit)
         {
-            dict["name"] = CCScriptValue::stringValue("exit");
-            this->pushCCScriptValueDict(dict);
+            dict["name"] = CCLuaValue::stringValue("exit");
+            this->pushCCLuaValueDict(dict);
             ret = this->executeFunctionByHandler(nScriptHandler, 1);
         }
     } while (0);
@@ -308,7 +336,7 @@ int CCLuaEngine::executeMenuItemEvent(CCMenuItem* pMenuItem)
     {
         int nScriptHandler = pMenuItem->getScriptTapHandler();
         CC_BREAK_IF(0 == nScriptHandler);
-        ret = this->pushIntegerData(pMenuItem->getTag());
+        ret = this->pushInt(pMenuItem->getTag());
         ret = this->executeFunctionByHandler(nScriptHandler, 1);
     } while (0);
     return ret;
@@ -321,7 +349,7 @@ int CCLuaEngine::executeNotificationEvent(CCNotificationCenter* pNotificationCen
     {
         int nScriptHandler = pNotificationCenter->getScriptHandler();
         CC_BREAK_IF(0 == nScriptHandler);
-        ret = this->pushStringData(pszName);
+        ret = this->pushString(pszName);
         ret = this->executeFunctionByHandler(nScriptHandler, 1);
     } while (0);
     return ret;
@@ -350,7 +378,7 @@ int CCLuaEngine::executeSchedule(CCTimer* pTimer, float dt, CCNode* pNode/* = NU
     {
         int nScriptHandler = pTimer->getScriptHandler();
         CC_BREAK_IF(0 == nScriptHandler);
-        ret = this->pushFloatData(dt);
+        ret = this->pushFloat(dt);
         ret = this->executeFunctionByHandler(nScriptHandler, 1);
     } while (0);
     return ret;
@@ -462,27 +490,39 @@ int CCLuaEngine::executeFunctionByHandler(int nHandler, int numArgs)
     }
 }
 
-int CCLuaEngine::pushIntegerData(int data)
+int CCLuaEngine::pushInt(int data)
 {
     lua_pushinteger(m_state, data);
     return lua_gettop(m_state);
 }
 
-int CCLuaEngine::pushFloatData(float data)
+int CCLuaEngine::pushFloat(float data)
 {
     lua_pushnumber(m_state, data);
     return lua_gettop(m_state);
 }
 
-int CCLuaEngine::pushBooleanData(bool data)
+int CCLuaEngine::pushBoolean(bool data)
 {
     lua_pushboolean(m_state, data);
     return lua_gettop(m_state);
 }
 
-int CCLuaEngine::pushStringData(const char* data)
+int CCLuaEngine::pushString(const char* data)
 {
     lua_pushstring(m_state, data);
+    return lua_gettop(m_state);
+}
+
+int CCLuaEngine::pushString(const char* data, int length)
+{
+    lua_pushlstring(m_state, data, length);
+    return lua_gettop(m_state);
+}
+
+int CCLuaEngine::pushNil(void)
+{
+    lua_pushnil(m_state);
     return lua_gettop(m_state);
 }
 
@@ -492,34 +532,34 @@ int CCLuaEngine::pushCCObject(CCObject* pObject, const char* typeName)
     return lua_gettop(m_state);
 }
 
-int CCLuaEngine::pushCCScriptValue(const CCScriptValue& value)
+int CCLuaEngine::pushCCLuaValue(const CCLuaValue& value)
 {
-    const CCScriptValueType type = value.getType();
-    if (type == CCScriptValueTypeInt)
+    const CCLuaValueType type = value.getType();
+    if (type == CCLuaValueTypeInt)
     {
-        return pushIntegerData(value.intValue());
+        return pushInt(value.intValue());
     }
-    else if (type == CCScriptValueTypeFloat)
+    else if (type == CCLuaValueTypeFloat)
     {
-        return pushFloatData(value.floatValue());
+        return pushFloat(value.floatValue());
     }
-    else if (type == CCScriptValueTypeBoolean)
+    else if (type == CCLuaValueTypeBoolean)
     {
-        return pushBooleanData(value.booleanValue());
+        return pushBoolean(value.booleanValue());
     }
-    else if (type == CCScriptValueTypeString)
+    else if (type == CCLuaValueTypeString)
     {
-        return pushStringData(value.stringValue().c_str());
+        return pushString(value.stringValue().c_str());
     }
-    else if (type == CCScriptValueTypeDict)
+    else if (type == CCLuaValueTypeDict)
     {
-        pushCCScriptValueDict(value.dictValue());
+        pushCCLuaValueDict(value.dictValue());
     }
-    else if (type == CCScriptValueTypeArray)
+    else if (type == CCLuaValueTypeArray)
     {
-        pushCCScriptValueArray(value.arrayValue());
+        pushCCLuaValueArray(value.arrayValue());
     }
-    else if (type == CCScriptValueTypeCCObject)
+    else if (type == CCLuaValueTypeCCObject)
     {
         pushCCObject(value.ccobjectValue(), value.getCCObjectTypename().c_str());
     }
@@ -527,26 +567,26 @@ int CCLuaEngine::pushCCScriptValue(const CCScriptValue& value)
     return lua_gettop(m_state);
 }
 
-int CCLuaEngine::pushCCScriptValueDict(const CCScriptValueDict& dict)
+int CCLuaEngine::pushCCLuaValueDict(const CCLuaValueDict& dict)
 {
     lua_newtable(m_state);                                      /* stack: table */
-    for (CCScriptValueDictIterator it = dict.begin(); it != dict.end(); ++it)
+    for (CCLuaValueDictIterator it = dict.begin(); it != dict.end(); ++it)
     {
         lua_pushstring(m_state, it->first.c_str());             /* stack: table key */
-        pushCCScriptValue(it->second);                   /* stack: table key value */
+        pushCCLuaValue(it->second);                   /* stack: table key value */
         lua_rawset(m_state, -3);             /* table.key = value, stack: table */
     }
     
     return lua_gettop(m_state);
 }
 
-int CCLuaEngine::pushCCScriptValueArray(const CCScriptValueArray& array)
+int CCLuaEngine::pushCCLuaValueArray(const CCLuaValueArray& array)
 {
     lua_newtable(m_state);                                      /* stack: table */
     int index = 1;
-    for (CCScriptValueArrayIterator it = array.begin(); it != array.end(); ++it)
+    for (CCLuaValueArrayIterator it = array.begin(); it != array.end(); ++it)
     {
-        pushCCScriptValue(*it);                          /* stack: table value */
+        pushCCLuaValue(*it);                          /* stack: table value */
         lua_rawseti(m_state, -2, index);  /* table[index] = value, stack: table */
         ++index;
     }
