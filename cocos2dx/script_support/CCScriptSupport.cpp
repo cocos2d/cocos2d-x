@@ -39,7 +39,7 @@ CCScriptHandlerEntry* CCScriptHandlerEntry::create(int nHandler)
 
 CCScriptHandlerEntry::~CCScriptHandlerEntry(void)
 {
-    CCScriptEngineManager::sharedManager()->getScriptEngine()->removeLuaHandler(m_nHandler);
+    CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_nHandler);
 }
 
 // #pragma mark -
@@ -87,7 +87,7 @@ CCTouchScriptHandlerEntry* CCTouchScriptHandlerEntry::create(int nHandler,
 
 CCTouchScriptHandlerEntry::~CCTouchScriptHandlerEntry(void)
 {
-    CCScriptEngineManager::sharedManager()->getScriptEngine()->removeLuaHandler(m_nHandler);
+    CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_nHandler);
     LUALOG("[LUA] Remove touch event handler: %d", m_nHandler);
 }
 
@@ -99,138 +99,6 @@ bool CCTouchScriptHandlerEntry::init(bool bIsMultiTouches, int nPriority, bool b
     
     return true;
 }
-
-
-// #pragma mark -
-// #pragma mark CCScriptValue
-
-const CCScriptValue CCScriptValue::intValue(const int intValue)
-{
-    CCScriptValue value;
-    value.m_type = CCScriptValueTypeInt;
-    value.m_field.intValue = intValue;
-    return value;
-}
-
-const CCScriptValue CCScriptValue::floatValue(const float floatValue)
-{
-    CCScriptValue value;
-    value.m_type = CCScriptValueTypeFloat;
-    value.m_field.floatValue = floatValue;
-    return value;
-}
-
-const CCScriptValue CCScriptValue::booleanValue(const bool booleanValue)
-{
-    CCScriptValue value;
-    value.m_type = CCScriptValueTypeBoolean;
-    value.m_field.booleanValue = booleanValue;
-    return value;
-}
-
-const CCScriptValue CCScriptValue::stringValue(const char* stringValue)
-{
-    CCScriptValue value;
-    value.m_type = CCScriptValueTypeString;
-    value.m_field.stringValue = new std::string(stringValue);
-    return value;
-}
-
-const CCScriptValue CCScriptValue::stringValue(const std::string& stringValue)
-{
-    CCScriptValue value;
-    value.m_type = CCScriptValueTypeString;
-    value.m_field.stringValue = new std::string(stringValue);
-    return value;
-}
-
-const CCScriptValue CCScriptValue::dictValue(const CCScriptValueDict& dictValue)
-{
-    CCScriptValue value;
-    value.m_type = CCScriptValueTypeDict;
-    value.m_field.dictValue = new CCScriptValueDict(dictValue);
-    return value;
-}
-
-const CCScriptValue CCScriptValue::arrayValue(const CCScriptValueArray& arrayValue)
-{
-    CCScriptValue value;
-    value.m_type = CCScriptValueTypeArray;
-    value.m_field.arrayValue = new CCScriptValueArray(arrayValue);
-    return value;
-}
-
-const CCScriptValue CCScriptValue::ccobjectValue(CCObject* ccobjectValue, const char* objectTypename)
-{
-    CCScriptValue value;
-    value.m_type = CCScriptValueTypeCCObject;
-    value.m_field.ccobjectValue = ccobjectValue;
-    ccobjectValue->retain();
-    value.m_ccobjectType = new std::string(objectTypename);
-    return value;
-}
-
-const CCScriptValue CCScriptValue::ccobjectValue(CCObject* ccobjectValue, const std::string& objectTypename)
-{
-    return CCScriptValue::ccobjectValue(ccobjectValue, objectTypename.c_str());
-}
-
-CCScriptValue::CCScriptValue(const CCScriptValue& rhs)
-{
-    copy(rhs);
-}
-
-CCScriptValue& CCScriptValue::operator=(const CCScriptValue& rhs)
-{
-    if (this != &rhs) copy(rhs);
-    return *this;
-}
-
-CCScriptValue::~CCScriptValue(void)
-{
-    if (m_type == CCScriptValueTypeString)
-    {
-        delete m_field.stringValue;
-    }
-    else if (m_type == CCScriptValueTypeDict)
-    {
-        delete m_field.dictValue;
-    }
-    else if (m_type == CCScriptValueTypeArray)
-    {
-        delete m_field.arrayValue;
-    }
-    else if (m_type == CCScriptValueTypeCCObject)
-    {
-        m_field.ccobjectValue->release();
-        delete m_ccobjectType;
-    }
-}
-
-void CCScriptValue::copy(const CCScriptValue& rhs)
-{
-    memcpy(&m_field, &rhs.m_field, sizeof(m_field));
-    m_type = rhs.m_type;
-    if (m_type == CCScriptValueTypeString)
-    {
-        m_field.stringValue = new std::string(*rhs.m_field.stringValue);
-    }
-    else if (m_type == CCScriptValueTypeDict)
-    {
-        m_field.dictValue = new CCScriptValueDict(*rhs.m_field.dictValue);
-    }
-    else if (m_type == CCScriptValueTypeArray)
-    {
-        m_field.arrayValue = new CCScriptValueArray(*rhs.m_field.arrayValue);
-    }
-    else if (m_type == CCScriptValueTypeCCObject)
-    {
-        m_field.ccobjectValue = rhs.m_field.ccobjectValue;
-        m_field.ccobjectValue->retain();
-        m_ccobjectType = new std::string(*rhs.m_ccobjectType);
-    }
-}
-
 
 // #pragma mark -
 // #pragma mark CCScriptEngineManager

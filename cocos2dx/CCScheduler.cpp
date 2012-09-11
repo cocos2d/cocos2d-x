@@ -164,7 +164,7 @@ void CCTimer::update(float dt)
 
                 if (m_nScriptHandler)
                 {
-                    CCScriptEngineManager::sharedManager()->getScriptEngine()->executeSchedule(m_nScriptHandler, m_fElapsed, NULL);
+                    CCScriptEngineManager::sharedManager()->getScriptEngine()->executeSchedule(this, m_fElapsed);
                 }
                 m_fElapsed = 0;
             }
@@ -183,7 +183,7 @@ void CCTimer::update(float dt)
 
                     if (m_nScriptHandler)
                     {
-                        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeSchedule(m_nScriptHandler, m_fElapsed, NULL);
+                        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeSchedule(this, m_fElapsed);
                     }
 
                     m_fElapsed = m_fElapsed - m_fDelay;
@@ -202,7 +202,7 @@ void CCTimer::update(float dt)
 
                     if (m_nScriptHandler)
                     {
-                        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeSchedule(m_nScriptHandler, m_fElapsed, NULL);
+                        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeSchedule(this, m_fElapsed);
                     }
 
                     m_fElapsed = 0;
@@ -783,7 +783,7 @@ void CCScheduler::update(float dt)
             CCScriptEngineProtocol* pEngine = CCScriptEngineManager::sharedManager()->getScriptEngine();
             if (pEngine != NULL && kScriptTypeJavascript == pEngine->getScriptType())
             {
-                CCScriptEngineManager::sharedManager()->getScriptEngine()->executeSchedule(1, dt, (CCNode *)pEntry->target);
+                CCScriptEngineManager::sharedManager()->getScriptEngine()->executeSchedule(NULL, dt, (CCNode *)pEntry->target);
             }
             
             pEntry->target->update(dt);            

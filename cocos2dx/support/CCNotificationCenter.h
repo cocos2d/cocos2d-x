@@ -52,6 +52,7 @@ public:
     void postNotification(const char *name);
     void postNotification(const char *name, CCObject *object);
     
+    inline int getScriptHandler() { return m_scriptHandler; };
 private:
     //
     // internal functions

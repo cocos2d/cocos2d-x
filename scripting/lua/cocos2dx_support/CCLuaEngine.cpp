@@ -42,6 +42,136 @@ extern "C" {
 
 NS_CC_BEGIN
 
+// #pragma mark -
+// #pragma mark CCScriptValue
+
+const CCScriptValue CCScriptValue::intValue(const int intValue)
+{
+    CCScriptValue value;
+    value.m_type = CCScriptValueTypeInt;
+    value.m_field.intValue = intValue;
+    return value;
+}
+
+const CCScriptValue CCScriptValue::floatValue(const float floatValue)
+{
+    CCScriptValue value;
+    value.m_type = CCScriptValueTypeFloat;
+    value.m_field.floatValue = floatValue;
+    return value;
+}
+
+const CCScriptValue CCScriptValue::booleanValue(const bool booleanValue)
+{
+    CCScriptValue value;
+    value.m_type = CCScriptValueTypeBoolean;
+    value.m_field.booleanValue = booleanValue;
+    return value;
+}
+
+const CCScriptValue CCScriptValue::stringValue(const char* stringValue)
+{
+    CCScriptValue value;
+    value.m_type = CCScriptValueTypeString;
+    value.m_field.stringValue = new std::string(stringValue);
+    return value;
+}
+
+const CCScriptValue CCScriptValue::stringValue(const std::string& stringValue)
+{
+    CCScriptValue value;
+    value.m_type = CCScriptValueTypeString;
+    value.m_field.stringValue = new std::string(stringValue);
+    return value;
+}
+
+const CCScriptValue CCScriptValue::dictValue(const CCScriptValueDict& dictValue)
+{
+    CCScriptValue value;
+    value.m_type = CCScriptValueTypeDict;
+    value.m_field.dictValue = new CCScriptValueDict(dictValue);
+    return value;
+}
+
+const CCScriptValue CCScriptValue::arrayValue(const CCScriptValueArray& arrayValue)
+{
+    CCScriptValue value;
+    value.m_type = CCScriptValueTypeArray;
+    value.m_field.arrayValue = new CCScriptValueArray(arrayValue);
+    return value;
+}
+
+const CCScriptValue CCScriptValue::ccobjectValue(CCObject* ccobjectValue, const char* objectTypename)
+{
+    CCScriptValue value;
+    value.m_type = CCScriptValueTypeCCObject;
+    value.m_field.ccobjectValue = ccobjectValue;
+    ccobjectValue->retain();
+    value.m_ccobjectType = new std::string(objectTypename);
+    return value;
+}
+
+const CCScriptValue CCScriptValue::ccobjectValue(CCObject* ccobjectValue, const std::string& objectTypename)
+{
+    return CCScriptValue::ccobjectValue(ccobjectValue, objectTypename.c_str());
+}
+
+CCScriptValue::CCScriptValue(const CCScriptValue& rhs)
+{
+    copy(rhs);
+}
+
+CCScriptValue& CCScriptValue::operator=(const CCScriptValue& rhs)
+{
+    if (this != &rhs) copy(rhs);
+    return *this;
+}
+
+CCScriptValue::~CCScriptValue(void)
+{
+    if (m_type == CCScriptValueTypeString)
+    {
+        delete m_field.stringValue;
+    }
+    else if (m_type == CCScriptValueTypeDict)
+    {
+        delete m_field.dictValue;
+    }
+    else if (m_type == CCScriptValueTypeArray)
+    {
+        delete m_field.arrayValue;
+    }
+    else if (m_type == CCScriptValueTypeCCObject)
+    {
+        m_field.ccobjectValue->release();
+        delete m_ccobjectType;
+    }
+}
+
+void CCScriptValue::copy(const CCScriptValue& rhs)
+{
+    memcpy(&m_field, &rhs.m_field, sizeof(m_field));
+    m_type = rhs.m_type;
+    if (m_type == CCScriptValueTypeString)
+    {
+        m_field.stringValue = new std::string(*rhs.m_field.stringValue);
+    }
+    else if (m_type == CCScriptValueTypeDict)
+    {
+        m_field.dictValue = new CCScriptValueDict(*rhs.m_field.dictValue);
+    }
+    else if (m_type == CCScriptValueTypeArray)
+    {
+        m_field.arrayValue = new CCScriptValueArray(*rhs.m_field.arrayValue);
+    }
+    else if (m_type == CCScriptValueTypeCCObject)
+    {
+        m_field.ccobjectValue = rhs.m_field.ccobjectValue;
+        m_field.ccobjectValue->retain();
+        m_ccobjectType = new std::string(*rhs.m_ccobjectType);
+    }
+}
+
 CCLuaEngine* CCLuaEngine::create(void)
 {
     CCLuaEngine* pEngine = new CCLuaEngine();
@@ -66,12 +196,12 @@ bool CCLuaEngine::init(void)
     return true;
 }
 
-void CCLuaEngine::removeCCObjectByID(int nLuaID)
+void CCLuaEngine::removeScriptObjectByCCObject(CCObject* pObj)
 {
-    toluafix_remove_ccobject_by_refid(m_state, nLuaID);
+    toluafix_remove_ccobject_by_refid(m_state, pObj->m_nLuaID);
 }
 
-void CCLuaEngine::removeLuaHandler(int nHandler)
+void CCLuaEngine::removeScriptHandler(int nHandler)
 {
     toluafix_remove_function_by_refid(m_state, nHandler);
 }
@@ -147,6 +277,137 @@ int CCLuaEngine::executeGlobalFunction(const char* functionName)
     return ret;
 }
 
+int CCLuaEngine::executeNodeEvent(CCNode* pNode, int nAction)
+{
+    int ret = 0;
+    do 
+    {
+        int nScriptHandler = pNode->getScriptHandler();
+        CC_BREAK_IF(0 == nScriptHandler);
+        CCScriptValueDict dict;
+        if (nAction == kCCNodeOnEnter)
+        {
+            dict["name"] = CCScriptValue::stringValue("enter");
+            this->pushCCScriptValueDict(dict);
+            ret = this->executeFunctionByHandler(nScriptHandler, 1);
+        }
+        else if (nAction == kCCNodeOnExit)
+        {
+            dict["name"] = CCScriptValue::stringValue("exit");
+            this->pushCCScriptValueDict(dict);
+            ret = this->executeFunctionByHandler(nScriptHandler, 1);
+        }
+    } while (0);
+    return ret;
+}
+
+int CCLuaEngine::executeMenuItemEvent(CCMenuItem* pMenuItem)
+{
+    int ret = 0;
+    do 
+    {
+        int nScriptHandler = pMenuItem->getScriptTapHandler();
+        CC_BREAK_IF(0 == nScriptHandler);
+        ret = this->pushIntegerData(pMenuItem->getTag());
+        ret = this->executeFunctionByHandler(nScriptHandler, 1);
+    } while (0);
+    return ret;
+}
+
+int CCLuaEngine::executeNotificationEvent(CCNotificationCenter* pNotificationCenter, const char* pszName)
+{
+    int ret = 0;
+    do 
+    {
+        int nScriptHandler = pNotificationCenter->getScriptHandler();
+        CC_BREAK_IF(0 == nScriptHandler);
+        ret = this->pushStringData(pszName);
+        ret = this->executeFunctionByHandler(nScriptHandler, 1);
+    } while (0);
+    return ret;
+}
+
+int CCLuaEngine::executeCallFuncActionEvent(CCCallFunc* pAction, CCObject* pTarget/* = NULL*/)
+{
+    int ret = 0;
+    do 
+    {
+        int nScriptHandler = pAction->getScriptHandler();
+        CC_BREAK_IF(0 == nScriptHandler);
+        if (pTarget != NULL)
+        {
+            ret = this->pushCCObject(pTarget, "CCNode");
+        }
+        ret = this->executeFunctionByHandler(nScriptHandler, 1);
+    } while (0);
+    return ret;
+}
+
+int CCLuaEngine::executeSchedule(CCTimer* pTimer, float dt, CCNode* pNode/* = NULL*/)
+{
+    int ret = 0;
+    do 
+    {
+        int nScriptHandler = pTimer->getScriptHandler();
+        CC_BREAK_IF(0 == nScriptHandler);
+        ret = this->pushFloatData(dt);
+        ret = this->executeFunctionByHandler(nScriptHandler, 1);
+    } while (0);
+    return ret;
+}
+
+// functions for excute touch event
+int CCLuaEngine::executeLayerTouchEvent(CCLayer* pLayer, int eventType, CCTouch *pTouch)
+{
+    int ret = 0;
+    do 
+    {
+        CCTouchScriptHandlerEntry* pScriptHandlerEntry = pLayer->getScriptHandlerEntry();
+        CC_BREAK_IF(NULL == pScriptHandlerEntry);
+        int nScriptHandler = pScriptHandlerEntry->getHandler();
+        CC_BREAK_IF(0 == nScriptHandler);
+        CCPoint pt = CCDirector::sharedDirector()->convertToGL(pTouch->getLocationInView());
+        lua_pushinteger(m_state, eventType);
+        lua_pushnumber(m_state, pt.x);
+        lua_pushnumber(m_state, pt.y);
+        ret = executeFunctionByHandler(nScriptHandler, 3);
+    } while (0);
+    return ret;
+}
+
+int CCLuaEngine::executeLayerTouchesEvent(CCLayer* pLayer, int eventType, CCSet *pTouches)
+{
+    int ret = 0;
+    do 
+    {
+        CCTouchScriptHandlerEntry* pScriptHandlerEntry = pLayer->getScriptHandlerEntry();
+        CC_BREAK_IF(NULL == pScriptHandlerEntry);
+        int nScriptHandler = pScriptHandlerEntry->getHandler();
+        CC_BREAK_IF(0 == nScriptHandler);
+        lua_pushinteger(m_state, eventType);
+        lua_newtable(m_state);
+
+        CCDirector* pDirector = CCDirector::sharedDirector();
+        CCSetIterator it = pTouches->begin();
+        CCTouch* pTouch;
+        int n = 1;
+        while (it != pTouches->end())
+        {
+            pTouch = (CCTouch*)*it;
+            CCPoint pt = pDirector->convertToGL(pTouch->getLocationInView());
+            lua_pushnumber(m_state, pt.x);
+            lua_rawseti(m_state, -2, n++);
+            lua_pushnumber(m_state, pt.y);
+            lua_rawseti(m_state, -2, n++);
+            ++it;
+        }
+
+        ret = executeFunctionByHandler(nScriptHandler, 2);
+    } while (0);
+
+    return ret;
+}
+
 int CCLuaEngine::executeFunctionByHandler(int nHandler, int numArgs)
 {
     if (pushFunction(nHandler))                                         /* stack: ... arg1 arg2 ... func */
@@ -199,36 +460,6 @@ int CCLuaEngine::executeFunctionByHandler(int nHandler, int numArgs)
         lua_pop(m_state, numArgs); // remove args from stack
         return 0;
     }
-}
-
-int CCLuaEngine::executeFunctionWithIntegerData(int nHandler, int data, CCNode *self)
-{
-    lua_pushinteger(m_state, data);
-    return executeFunctionByHandler(nHandler, 1);
-}
-
-int CCLuaEngine::executeFunctionWithFloatData(int nHandler, float data, CCNode *self)
-{
-    lua_pushnumber(m_state, data);
-    return executeFunctionByHandler(nHandler, 1);
-}
-
-int CCLuaEngine::executeFunctionWithBooleanData(int nHandler, bool data)
-{
-    lua_pushboolean(m_state, data);
-    return executeFunctionByHandler(nHandler, 1);
-}
-
-int CCLuaEngine::executeFunctionWithCCObject(int nHandler, CCObject* pObject, const char* typeName)
-{
-    toluafix_pushusertype_ccobject(m_state, pObject->m_uID, &pObject->m_nLuaID, pObject, typeName);
-    return executeFunctionByHandler(nHandler, 1);
-}
-
-int CCLuaEngine::executeFunctionWithStringData(int nHandler, const char* data)
-{
-    lua_pushstring(m_state, data);
-    return executeFunctionByHandler(nHandler, 1);
 }
 
 int CCLuaEngine::pushIntegerData(int data)
@@ -326,44 +557,6 @@ int CCLuaEngine::pushCCScriptValueArray(const CCScriptValueArray& array)
 void CCLuaEngine::cleanStack(void)
 {
     lua_settop(m_state, 0);
-}
-
-// functions for excute touch event
-int CCLuaEngine::executeTouchEvent(int nHandler, int eventType, CCTouch *pTouch)
-{
-    CCPoint pt = CCDirector::sharedDirector()->convertToGL(pTouch->getLocationInView());
-    lua_pushinteger(m_state, eventType);
-    lua_pushnumber(m_state, pt.x);
-    lua_pushnumber(m_state, pt.y);
-    return executeFunctionByHandler(nHandler, 3);
-}
-
-int CCLuaEngine::executeTouchesEvent(int nHandler, int eventType, CCSet *pTouches, CCNode *self)
-{
-    lua_pushinteger(m_state, eventType);
-    lua_newtable(m_state);
-
-    CCDirector* pDirector = CCDirector::sharedDirector();
-    CCSetIterator it = pTouches->begin();
-    CCTouch* pTouch;
-    int n = 1;
-    while (it != pTouches->end())
-    {
-        pTouch = (CCTouch*)*it;
-        CCPoint pt = pDirector->convertToGL(pTouch->getLocationInView());
-        lua_pushnumber(m_state, pt.x);
-        lua_rawseti(m_state, -2, n++);
-        lua_pushnumber(m_state, pt.y);
-        lua_rawseti(m_state, -2, n++);
-        ++it;
-    }
-
-    return executeFunctionByHandler(nHandler, 2);
-}
-
-int CCLuaEngine::executeSchedule(int nHandler, float dt, CCNode *self)
-{
-    return executeFunctionWithFloatData(nHandler, dt, self);
 }
 
 void CCLuaEngine::addLuaLoader(lua_CFunction func)

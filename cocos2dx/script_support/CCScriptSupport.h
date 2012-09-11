@@ -36,6 +36,12 @@ typedef struct lua_State lua_State;
 
 NS_CC_BEGIN
 
+class CCTimer;
+class CCLayer;
+class CCMenuItem;
+class CCNotificationCenter;
+class CCCallFunc;
+
 enum ccScriptType {
     kScriptTypeNone = 0,
     kScriptTypeLua,
@@ -83,8 +89,6 @@ protected:
 
 // #pragma mark -
 // #pragma mark CCSchedulerScriptHandlerEntry
-
-class CCTimer;
 
 class CCSchedulerScriptHandlerEntry : public CCScriptHandlerEntry
 {
@@ -162,104 +166,6 @@ private:
 };
 
 // #pragma mark -
-// #pragma mark CCScriptValue
-
-class CCScriptValue;
-
-typedef std::map<std::string, CCScriptValue>    CCScriptValueDict;
-typedef CCScriptValueDict::const_iterator       CCScriptValueDictIterator;
-typedef std::list<CCScriptValue>                CCScriptValueArray;
-typedef CCScriptValueArray::const_iterator      CCScriptValueArrayIterator;
-
-typedef enum {
-    CCScriptValueTypeInt,
-    CCScriptValueTypeFloat,
-    CCScriptValueTypeBoolean,
-    CCScriptValueTypeString,
-    CCScriptValueTypeDict,
-    CCScriptValueTypeArray,
-    CCScriptValueTypeCCObject
-} CCScriptValueType;
-
-typedef union {
-    int                 intValue;
-    float               floatValue;
-    bool                booleanValue;
-    std::string*        stringValue;
-    CCScriptValueDict*  dictValue;
-    CCScriptValueArray* arrayValue;
-    CCObject*           ccobjectValue;
-} CCScriptValueField;
-
-class CC_DLL CCScriptValue
-{
-public:
-    static const CCScriptValue intValue(const int intValue);
-    static const CCScriptValue floatValue(const float floatValue);
-    static const CCScriptValue booleanValue(const bool booleanValue);
-    static const CCScriptValue stringValue(const char* stringValue);
-    static const CCScriptValue stringValue(const std::string& stringValue);
-    static const CCScriptValue dictValue(const CCScriptValueDict& dictValue);
-    static const CCScriptValue arrayValue(const CCScriptValueArray& arrayValue);
-    static const CCScriptValue ccobjectValue(CCObject* ccobjectValue, const char* objectTypename);
-    static const CCScriptValue ccobjectValue(CCObject* ccobjectValue, const std::string& objectTypename);
-    
-    CCScriptValue(void)
-    : m_type(CCScriptValueTypeInt)
-    , m_ccobjectType(NULL)
-    {
-        memset(&m_field, 0, sizeof(m_field));
-    }
-    CCScriptValue(const CCScriptValue& rhs);
-    CCScriptValue& operator=(const CCScriptValue& rhs);
-    ~CCScriptValue(void);
-    
-    const CCScriptValueType getType(void) const {
-        return m_type;
-    }
-    
-    const std::string& getCCObjectTypename(void) const {
-        return *m_ccobjectType;
-    }
-    
-    int intValue(void) const {
-        return m_field.intValue;
-    }
-    
-    float floatValue(void) const {
-        return m_field.floatValue;
-    }
-    
-    bool booleanValue(void) const {
-        return m_field.booleanValue;
-    }
-    
-    const std::string& stringValue(void) const {
-        return *m_field.stringValue;
-    }
-    
-    const CCScriptValueDict& dictValue(void) const {
-        return *m_field.dictValue;
-    }
-    
-    const CCScriptValueArray& arrayValue(void) const {
-        return *m_field.arrayValue;
-    }
-    
-    CCObject* ccobjectValue(void) const {
-        return m_field.ccobjectValue;
-    }
-    
-private:
-    CCScriptValueField  m_field;
-    CCScriptValueType   m_type;
-    std::string*        m_ccobjectType;
-    
-    void copy(const CCScriptValue& rhs);
-};
-
-
-// #pragma mark -
 // #pragma mark CCScriptEngineProtocol
 
 // Don't make CCScriptEngineProtocol inherits from CCObject since setScriptEngine is invoked only once in AppDelegate.cpp,
@@ -270,20 +176,14 @@ class CC_DLL CCScriptEngineProtocol
 public:
     virtual ~CCScriptEngineProtocol() {};
     
+    /** Get script type */
     virtual ccScriptType getScriptType() { return kScriptTypeNone; };
 
-    /**
-     @brief Remove scripte object.
-     @param object to remove, 
-        in LuaBinding, it's m_nLuaID in CCObject,
-        in JSBinding it means current CCObject pointer.
-     */
-    virtual void removeScriptObjectByID(int nId) = 0;
+    /** Remove script object. */
+    virtual void removeScriptObjectByCCObject(CCObject* pObj) = 0;
     
-    /**
-     @brief Remove Lua function handler
-     */
-    virtual void removeLuaHandler(int nHandler) = 0;
+    /** Remove script function handler, only CCLuaEngine class need to implement this function. */
+    virtual void removeScriptHandler(int nHandler) {};
     
     /**
      @brief Execute script code contained in the given string.
@@ -308,24 +208,25 @@ public:
     virtual int executeGlobalFunction(const char* functionName) = 0;
     
     /**
-     @brief Execute a function by handler
-     @param The function handler
-     @param Number of parameters
+     @brief Execute a node event function
+     @param pNode which node produce this event
+     @param nAction kCCNodeOnEnter,kCCNodeOnExit,kCCMenuItemActivated,kCCNodeOnEnterTransitionDidFinish,kCCNodeOnExitTransitionDidStart
      @return The integer value returned from the script function.
      */
-    virtual int executeFunctionByHandler(int nHandler, int numArgs = 0) = 0;
-    virtual int executeFunctionWithIntegerData(int nHandler, int data, CCNode *self = NULL) = 0;
-    virtual int executeFunctionWithFloatData(int nHandler, float data, CCNode *self = NULL) = 0;
-    virtual int executeFunctionWithBooleanData(int nHandler, bool data) = 0;
-    virtual int executeFunctionWithCCObject(int nHandler, CCObject* pObject, const char* typeName) = 0;
-    virtual int executeFunctionWithStringData(int nHandler, const char* data) = 0;
+    virtual int executeNodeEvent(CCNode* pNode, int nAction) = 0;
     
-    // execute a schedule function
-    virtual int executeSchedule(int nHandler, float dt, CCNode *self = NULL) = 0;
+    virtual int executeMenuItemEvent(CCMenuItem* pMenuItem) = 0;
+    /** Execute a notification event function */
+    virtual int executeNotificationEvent(CCNotificationCenter* pNotificationCenter, const char* pszName) = 0;
     
-    // functions for excute touch event
-    virtual int executeTouchesEvent(int nHandler, int eventType, CCSet *pTouches, CCNode *self) = 0;
-    virtual int executeTouchEvent(int nHandler, int eventType, CCTouch *pTouch) = 0;
+    /** execute a callfun event */
+    virtual int executeCallFuncActionEvent(CCCallFunc* pAction, CCObject* pTarget = NULL) = 0;
+    /** execute a schedule function */
+    virtual int executeSchedule(CCTimer* pTimer, float dt, CCNode* pNode = NULL) = 0;
+    
+    /** functions for excute touch event */
+    virtual int executeLayerTouchesEvent(CCLayer* pLayer, int eventType, CCSet *pTouches) = 0;
+    virtual int executeLayerTouchEvent(CCLayer* pLayer, int eventType, CCTouch *pTouch) = 0;
 };
 
 /**
