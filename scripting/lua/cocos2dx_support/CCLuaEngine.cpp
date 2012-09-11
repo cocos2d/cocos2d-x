@@ -187,15 +187,6 @@ CCLuaEngine* CCLuaEngine::defaultEngine(void)
     return m_defaultEngine;
 }
 
-void CCLuaEngine::purgeDefaultEngine(void)
-{
-    if (m_defaultEngine)
-    {
-        delete m_defaultEngine;
-        m_defaultEngine = NULL;
-    }
-}
-
 CCLuaEngine* CCLuaEngine::create(void)
 {
     CCLuaEngine* pEngine = new CCLuaEngine();

@@ -141,9 +141,7 @@ private:
 class CCLuaEngine : public CCScriptEngineProtocol
 {
 public:
-    static CCLuaEngine* defaultEngine(void);
-    static void purgeDefaultEngine(void);
-    
+    static CCLuaEngine* defaultEngine(void);    
     static CCLuaEngine* create(void);
     virtual ~CCLuaEngine(void);
     
