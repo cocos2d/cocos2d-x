@@ -1,8 +1,9 @@
+
 typedef unsigned int kmGLEnum;
 
-typedef struct kmMat4 {
+class kmMat4 {
     float mat[16];
-} kmMat4;
+};
 
 void kmGLFreeAll(void);
 void kmGLPushMatrix(void);

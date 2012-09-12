@@ -798,11 +798,10 @@ void CCNode::onEnter()
 
     m_bIsRunning = true;
 
-    if (   (m_eScriptType == kScriptTypeLua && m_nScriptHandler != 0)
-        ||  m_eScriptType == kScriptTypeJavascript   )
+    if (m_eScriptType != kScriptTypeNone)
     {
-        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeFunctionWithIntegerData(m_nScriptHandler, kCCNodeOnEnter, this);
-    }    
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeNodeEvent(this, kCCNodeOnEnter);
+    }
 }
 
 void CCNode::onEnterTransitionDidFinish()
@@ -811,7 +810,7 @@ void CCNode::onEnterTransitionDidFinish()
 
     if (m_eScriptType == kScriptTypeJavascript)
     {
-        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeFunctionWithIntegerData(m_nScriptHandler, kCCNodeOnEnterTransitionDidFinish, this);
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeNodeEvent(this, kCCNodeOnEnterTransitionDidFinish);
     }
 }
 
@@ -821,7 +820,7 @@ void CCNode::onExitTransitionDidStart()
 
     if (m_eScriptType == kScriptTypeJavascript)
     {
-        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeFunctionWithIntegerData(m_nScriptHandler, kCCNodeOnExitTransitionDidStart, this);
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeNodeEvent(this, kCCNodeOnExitTransitionDidStart);
     }
 }
 
@@ -831,10 +830,9 @@ void CCNode::onExit()
 
     m_bIsRunning = false;
 
-    if (   (m_eScriptType == kScriptTypeLua && m_nScriptHandler != 0)
-        ||  m_eScriptType == kScriptTypeJavascript   )
+    if ( m_eScriptType != kScriptTypeNone)
     {
-        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeFunctionWithIntegerData(m_nScriptHandler, kCCNodeOnExit, this); 
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeNodeEvent(this, kCCNodeOnExit);
     }
 
     arrayMakeObjectsPerformSelector(m_pChildren, onExit, CCNode*);
@@ -851,7 +849,7 @@ void CCNode::unregisterScriptHandler(void)
 {
     if (m_nScriptHandler)
     {
-        CCScriptEngineManager::sharedManager()->getScriptEngine()->removeLuaHandler(m_nScriptHandler);
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_nScriptHandler);
         LUALOG("[LUA] Remove CCNode event handler: %d", m_nScriptHandler);
         m_nScriptHandler = 0;
     }

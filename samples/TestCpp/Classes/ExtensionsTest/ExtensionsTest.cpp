@@ -4,6 +4,8 @@
 #include "ControlExtensionTest/CCControlSceneManager.h"
 #include "CocosBuilderTest/CocosBuilderTest.h"
 #include "NetworkTest/HttpClientTest.h"
+#include "TableViewTest/TableViewTestScene.h"
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include "EditBoxTest/EditBoxTest.h"
 #endif
@@ -23,6 +25,7 @@ enum
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     TEST_EDITBOX,
 #endif
+	TEST_TABLEVIEW,
     TEST_MAX_COUNT,
 };
 
@@ -33,8 +36,9 @@ static const std::string testsName[TEST_MAX_COUNT] =
     "CocosBuilderTest",
     "HttpClientTest",
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    "EditBoxTest"
+    "EditBoxTest",
 #endif
+	"TableViewTest"
 };
 
 ////////////////////////////////////////////////////////
@@ -104,6 +108,11 @@ void ExtensionsMainLayer::menuCallback(CCObject* pSender)
         }
         break;
 #endif
+	case TEST_TABLEVIEW:
+		{
+			runTableViewTest();
+		}
+		break;
     default:
         break;
     }

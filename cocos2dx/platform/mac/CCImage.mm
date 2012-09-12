@@ -340,8 +340,8 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
 {
     bool bRet = false;
 
-	CCAssert( pText, @"Invalid pText");
-	CCAssert( pInfo, @"Invalid pInfo");
+	CCAssert(pText, "Invalid pText");
+	CCAssert(pInfo, "Invalid pInfo");
 	
 	do {
 		NSString * string  = [NSString stringWithUTF8String:pText];
@@ -480,7 +480,7 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
     return bRet;
 }
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 static bool m_bEnabledScale = true;
 
@@ -876,5 +876,5 @@ bool CCImage::saveToFile(const char *pszFilePath, bool bIsToRGB)
 
 
 
-NS_CC_END;
+NS_CC_END
 

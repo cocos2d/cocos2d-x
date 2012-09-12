@@ -25,6 +25,7 @@ THE SOFTWARE.
 #include "platform/CCFileUtilsCommon_cpp.h"
 #include <windows.h>
 #include "CCDirector.h"
+#include "CCApplication.h"
 
 using namespace std;
 
@@ -78,6 +79,7 @@ const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
     const char* resDir = m_obDirectory.c_str();
     CCString* pRet = CCString::create("");
 
+    const std::string& resourceRootPath = CCApplication::sharedApplication()->getResourceRootPath();
     if ((strlen(pszRelativePath) > 1 && pszRelativePath[1] == ':'))
     {
         // path start with "x:", is absolute path
@@ -89,6 +91,12 @@ const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
         // path start with '/' or '\', is absolute path without driver name
         char szDriver[3] = {s_pszResourcePath[0], s_pszResourcePath[1], 0};
         pRet->m_sString = szDriver;
+        pRet->m_sString += pszRelativePath;
+    }
+    else if (resourceRootPath.length() > 0)
+    {
+        pRet->m_sString = resourceRootPath.c_str();
+        pRet->m_sString += m_obDirectory.c_str();
         pRet->m_sString += pszRelativePath;
     }
     else

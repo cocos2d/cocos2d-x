@@ -16,4 +16,4 @@ void  ccDrawColor4F(GLubyte r, GLubyte g, GLubyte b, GLubyte a);
 void  ccPointSize(GLfloat pointSize);
 
 // glew.h API:
-void  glLineWidth(GLfloat width);
+// void  glLineWidth(GLfloat width);

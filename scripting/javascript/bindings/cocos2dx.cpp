@@ -44259,7 +44259,7 @@ JSBool js_cocos2dx_CCTMXLayer_listenBackToForeground(JSContext *cx, uint32_t arg
 			arg0 = (cocos2d::CCObject*)(proxy ? proxy->ptr : NULL);
 			TEST_NATIVE_OBJECT(cx, arg0)
 		} while (0);
-		cobj->listenBackToForeground(arg0);
+		//cobj->listenBackToForeground(arg0);
 		return JS_TRUE;
 	}
 	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
