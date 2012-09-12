@@ -18,7 +18,7 @@ class CCDirector : public CCObject
     bool isPaused(void);
     unsigned int getTotalFrames(void);
 
-	CCEGLView* getOpenGLView(void);
+	CCEGLViewProtocol* getOpenGLView(void);
 	bool enableRetinaDisplay(bool bEnableRetina);
 
     CCSize getWinSize(void);
@@ -35,7 +35,7 @@ class CCDirector : public CCObject
     void pushScene(CCScene *pScene);
     void popScene(void);
     void replaceScene(CCScene *pScene);
-	void end @ endToLua();
+    void end @ endToLua ();
 
     float getContentScaleFactor(void);
 

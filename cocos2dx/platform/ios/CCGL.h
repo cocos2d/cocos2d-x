@@ -32,7 +32,7 @@ THE SOFTWARE.
 #define CC_GL_DEPTH24_STENCIL8      GL_DEPTH24_STENCIL8_OES
 
 #include <OpenGLES/ES2/gl.h>
-#include <OPenGLES/ES2/glext.h>
+#include <OpenGLES/ES2/glext.h>
 
 
 #endif // __CCGL_H__
