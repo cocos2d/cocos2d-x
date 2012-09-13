@@ -47,7 +47,7 @@ void CCLog(const char * pszFormat, ...)
 
 void CCLuaLog(const char * pszFormat)
 {
-    CCLog(pszFormat);
+    CCLog("%s", pszFormat);
 }
 
 // ios no MessageBox, use CCLog instead
