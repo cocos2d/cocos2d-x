@@ -21,7 +21,7 @@ using namespace cocos2d;
 extern "C" {
     const char * g_pApkPath;
     
-    void Java_org_cocos2dx_lib_Cocos2dxHelper_nativeSetApkPath(JNIEnv*  env, jobject thiz, jstring apkPath) {
+    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxHelper_nativeSetApkPath(JNIEnv*  env, jobject thiz, jstring apkPath) {
         g_pApkPath = env->GetStringUTFChars(apkPath, NULL);
     }
 
@@ -29,7 +29,7 @@ extern "C" {
         return g_pApkPath;
     }
 
-    void Java_org_cocos2dx_lib_Cocos2dxHelper_nativeSetAssetManager(JNIEnv* env, jobject thiz, jobject java_assetmanager) {
+    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxHelper_nativeSetAssetManager(JNIEnv* env, jobject thiz, jobject java_assetmanager) {
         AAssetManager* assetmanager = AAssetManager_fromJava(env, java_assetmanager);
         if (assetmanager == NULL) {
             LOGD("ERROR: assetmanager == NULL");
@@ -39,7 +39,7 @@ extern "C" {
         cocos2d::JniHelper::setAssetManager(assetmanager);
     }
 
-    void Java_org_cocos2dx_lib_Cocos2dxHelper_nativeSetExternalAssetPath(JNIEnv*  env, jobject thiz, jstring externalAssetPath) {
+    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxHelper_nativeSetExternalAssetPath(JNIEnv*  env, jobject thiz, jstring externalAssetPath) {
         const char* externalAssetPathChars = env->GetStringUTFChars(externalAssetPath, NULL);
         cocos2d::JniHelper::setExternalAssetPath(externalAssetPathChars);
         env->ReleaseStringUTFChars(externalAssetPath, externalAssetPathChars);
@@ -97,7 +97,7 @@ extern "C" {
         }
     }
 
-    void JNICALL Java_org_cocos2dx_lib_Cocos2dxHelper_nativeSetEditTextDialogResult(JNIEnv * env, jobject obj, jbyteArray text) {
+    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxHelper_nativeSetEditTextDialogResult(JNIEnv * env, jobject obj, jbyteArray text) {
         jsize  size = env->GetArrayLength(text);
 
         if (size > 0) {
