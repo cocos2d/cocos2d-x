@@ -40,7 +40,7 @@ static void SetupPixelFormat(HDC hDC)
     int pixelFormat;
 
     PIXELFORMATDESCRIPTOR pfd =
-    {   
+    {
         sizeof(PIXELFORMATDESCRIPTOR),  // size
         1,                          // version
         PFD_SUPPORT_OPENGL |        // OpenGL window
@@ -63,6 +63,68 @@ static void SetupPixelFormat(HDC hDC)
 
     pixelFormat = ChoosePixelFormat(hDC, &pfd);
     SetPixelFormat(hDC, pixelFormat, &pfd);
+}
+
+void glew_dynamic_binding()
+{
+	const char *gl_extensions = (const char*)glGetString(GL_EXTENSIONS);
+
+	/* If the current opengl driver don't have framebuffers methods,
+	 * Check if an extension exist
+	 */
+	if (glGenFramebuffers == NULL)
+	{
+		CCLog("OpenGL: glGenFramebuffers is NULL, try to detect an extension\n");
+		if (strstr(gl_extensions, "ARB_framebuffer_object"))
+		{
+			CCLog("OpenGL: ARB_framebuffer_object is supported\n");
+
+			glIsRenderbuffer = (PFNGLISRENDERBUFFERPROC) wglGetProcAddress("glIsRenderbuffer");
+			glBindRenderbuffer = (PFNGLBINDRENDERBUFFERPROC) wglGetProcAddress("glBindRenderbuffer");
+			glDeleteRenderbuffers = (PFNGLDELETERENDERBUFFERSPROC) wglGetProcAddress("glDeleteRenderbuffers");
+			glGenRenderbuffers = (PFNGLGENRENDERBUFFERSPROC) wglGetProcAddress("glGenRenderbuffers");
+			glRenderbufferStorage = (PFNGLRENDERBUFFERSTORAGEPROC) wglGetProcAddress("glRenderbufferStorage");
+			glGetRenderbufferParameteriv = (PFNGLGETRENDERBUFFERPARAMETERIVPROC) wglGetProcAddress("glGetRenderbufferParameteriv");
+			glIsFramebuffer = (PFNGLISFRAMEBUFFERPROC) wglGetProcAddress("glIsFramebuffer");
+			glBindFramebuffer = (PFNGLBINDFRAMEBUFFERPROC) wglGetProcAddress("glBindFramebuffer");
+			glDeleteFramebuffers = (PFNGLDELETEFRAMEBUFFERSPROC) wglGetProcAddress("glDeleteFramebuffers");
+			glGenFramebuffers = (PFNGLGENFRAMEBUFFERSPROC) wglGetProcAddress("glGenFramebuffers");
+			glCheckFramebufferStatus = (PFNGLCHECKFRAMEBUFFERSTATUSPROC) wglGetProcAddress("glCheckFramebufferStatus");
+			glFramebufferTexture1D = (PFNGLFRAMEBUFFERTEXTURE1DPROC) wglGetProcAddress("glFramebufferTexture1D");
+			glFramebufferTexture2D = (PFNGLFRAMEBUFFERTEXTURE2DPROC) wglGetProcAddress("glFramebufferTexture2D");
+			glFramebufferTexture3D = (PFNGLFRAMEBUFFERTEXTURE3DPROC) wglGetProcAddress("glFramebufferTexture3D");
+			glFramebufferRenderbuffer = (PFNGLFRAMEBUFFERRENDERBUFFERPROC) wglGetProcAddress("glFramebufferRenderbuffer");
+			glGetFramebufferAttachmentParameteriv = (PFNGLGETFRAMEBUFFERATTACHMENTPARAMETERIVPROC) wglGetProcAddress("glGetFramebufferAttachmentParameteriv");
+			glGenerateMipmap = (PFNGLGENERATEMIPMAPPROC) wglGetProcAddress("glGenerateMipmap");
+		}
+		else
+		if (strstr(gl_extensions, "EXT_framebuffer_object"))
+		{
+			CCLog("GL: EXT_framebuffer_object is supported\n");
+			glIsRenderbuffer = (PFNGLISRENDERBUFFERPROC) wglGetProcAddress("glIsRenderbufferEXT");
+			glBindRenderbuffer = (PFNGLBINDRENDERBUFFERPROC) wglGetProcAddress("glBindRenderbufferEXT");
+			glDeleteRenderbuffers = (PFNGLDELETERENDERBUFFERSPROC) wglGetProcAddress("glDeleteRenderbuffersEXT");
+			glGenRenderbuffers = (PFNGLGENRENDERBUFFERSPROC) wglGetProcAddress("glGenRenderbuffersEXT");
+			glRenderbufferStorage = (PFNGLRENDERBUFFERSTORAGEPROC) wglGetProcAddress("glRenderbufferStorageEXT");
+			glGetRenderbufferParameteriv = (PFNGLGETRENDERBUFFERPARAMETERIVPROC) wglGetProcAddress("glGetRenderbufferParameterivEXT");
+			glIsFramebuffer = (PFNGLISFRAMEBUFFERPROC) wglGetProcAddress("glIsFramebufferEXT");
+			glBindFramebuffer = (PFNGLBINDFRAMEBUFFERPROC) wglGetProcAddress("glBindFramebufferEXT");
+			glDeleteFramebuffers = (PFNGLDELETEFRAMEBUFFERSPROC) wglGetProcAddress("glDeleteFramebuffersEXT");
+			glGenFramebuffers = (PFNGLGENFRAMEBUFFERSPROC) wglGetProcAddress("glGenFramebuffersEXT");
+			glCheckFramebufferStatus = (PFNGLCHECKFRAMEBUFFERSTATUSPROC) wglGetProcAddress("glCheckFramebufferStatusEXT");
+			glFramebufferTexture1D = (PFNGLFRAMEBUFFERTEXTURE1DPROC) wglGetProcAddress("glFramebufferTexture1DEXT");
+			glFramebufferTexture2D = (PFNGLFRAMEBUFFERTEXTURE2DPROC) wglGetProcAddress("glFramebufferTexture2DEXT");
+			glFramebufferTexture3D = (PFNGLFRAMEBUFFERTEXTURE3DPROC) wglGetProcAddress("glFramebufferTexture3DEXT");
+			glFramebufferRenderbuffer = (PFNGLFRAMEBUFFERRENDERBUFFERPROC) wglGetProcAddress("glFramebufferRenderbufferEXT");
+			glGetFramebufferAttachmentParameteriv = (PFNGLGETFRAMEBUFFERATTACHMENTPARAMETERIVPROC) wglGetProcAddress("glGetFramebufferAttachmentParameterivEXT");
+			glGenerateMipmap = (PFNGLGENERATEMIPMAPPROC) wglGetProcAddress("glGenerateMipmapEXT");
+		}
+		else
+		{
+			CCLog("OpenGL: No framebuffers extension is supported\n");
+			CCLog("OpenGL: Any call to Fbo will crash!\n");
+		}
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -119,14 +181,14 @@ bool CCEGLView::initGL()
     if ( atof((const char*)glVersion) < 1.5 )
     {
         char strComplain[256] = {0};
-        sprintf(strComplain, 
-		"Your OpenGL version is %s, but Cocos2d-x requires OpenGL 1.5 or higher on Windows. Please upgrade the driver of your video card", 
+        sprintf(strComplain,
+		"Your OpenGL version is %s, but Cocos2d-x requires OpenGL 1.5 or higher on Windows. Please upgrade the driver of your video card",
 		glVersion);
 	CCMessageBox(strComplain, "OpenGL version tooooooooooold");
     }
 
     GLenum GlewInitResult = glewInit();
-    if (GLEW_OK != GlewInitResult) 
+    if (GLEW_OK != GlewInitResult)
     {
         fprintf(stderr,"ERROR: %s\n",glewGetErrorString(GlewInitResult));
         return false;
@@ -136,7 +198,7 @@ bool CCEGLView::initGL()
     {
         CCLog("Ready for GLSL");
     }
-    else 
+    else
     {
         CCLog("Not totally ready :(");
     }
@@ -149,6 +211,9 @@ bool CCEGLView::initGL()
     {
         CCLog("OpenGL 2.0 not supported");
     }
+
+    glew_dynamic_binding();
+
     return true;
 }
 
@@ -165,7 +230,7 @@ void CCEGLView::destroyGL()
 bool CCEGLView::Create(LPCTSTR pTitle, int w, int h)
 {
     bool bRet = false;
-    do 
+    do
     {
         CC_BREAK_IF(m_hWnd);
 
@@ -173,7 +238,7 @@ bool CCEGLView::Create(LPCTSTR pTitle, int w, int h)
         WNDCLASS  wc;        // Windows Class Structure
 
         // Redraw On Size, And Own DC For Window.
-        wc.style          = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;  
+        wc.style          = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;
         wc.lpfnWndProc    = _WindowProc;                    // WndProc Handles Messages
         wc.cbClsExtra     = 0;                              // No Extra Window Data
         wc.cbWndExtra     = 0;                                // No Extra Window Data
@@ -181,10 +246,10 @@ bool CCEGLView::Create(LPCTSTR pTitle, int w, int h)
         wc.hIcon          = LoadIcon( NULL, IDI_WINLOGO );    // Load The Default Icon
         wc.hCursor        = LoadCursor( NULL, IDC_ARROW );    // Load The Arrow Pointer
         wc.hbrBackground  = NULL;                           // No Background Required For GL
-        wc.lpszMenuName   = m_menu;                         // 
+        wc.lpszMenuName   = m_menu;                         //
         wc.lpszClassName  = kWindowClassName;               // Set The Class Name
 
-        CC_BREAK_IF(! RegisterClass(&wc) && 1410 != GetLastError());        
+        CC_BREAK_IF(! RegisterClass(&wc) && 1410 != GetLastError());
 
         // center window position
         RECT rcDesktop;
@@ -213,7 +278,7 @@ bool CCEGLView::Create(LPCTSTR pTitle, int w, int h)
 
         bRet = initGL();
         CC_BREAK_IF(!bRet);
-        
+
         s_pMainWindow = this;
         bRet = true;
     } while (0);
@@ -357,7 +422,7 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
     default:
         if (m_wndproc)
         {
-            
+
             m_wndproc(message, wParam, lParam, &bProcessed);
             if (bProcessed) break;
         }
@@ -463,7 +528,7 @@ void CCEGLView::resize(int width, int height)
                    kWindowClassName, frameSize.width, frameSize.height, 1.0f / m_windowTouchScaleX);
         SetWindowText(m_hWnd, buff);
     }
-        
+
     AdjustWindowRectEx(&rcClient, GetWindowLong(m_hWnd, GWL_STYLE), false, GetWindowLong(m_hWnd, GWL_EXSTYLE));
 
     // change width and height
@@ -517,7 +582,7 @@ bool CCEGLView::setContentScaleFactor(float contentScaleFactor)
     CCEGLViewProtocol::setContentScaleFactor(contentScaleFactor);
     resize((int)(m_obScreenSize.width * contentScaleFactor), (int)(m_obScreenSize.height * contentScaleFactor));
     centerWindow();
-    
+
     return true;
 }
 
