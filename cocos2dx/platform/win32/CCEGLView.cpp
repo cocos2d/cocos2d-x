@@ -113,17 +113,17 @@ bool CCEGLView::initGL()
     wglMakeCurrent(m_hDC, m_hRC);
 
     // check OpenGL version at first
-	const GLubyte* glVersion = glGetString(GL_VERSION);
-	CCLOG("OpenGL version = %s", glVersion);
+    const GLubyte* glVersion = glGetString(GL_VERSION);
+    CCLOG("OpenGL version = %s", glVersion);
 
-	if ( atof((const char*)glVersion) < 1.5 )
-	{
-		char strComplain[256] = {0};
-		sprintf(strComplain, 
-				"Your OpenGL version is %s, but Cocos2d-x requires OpenGL 1.5 or higher on Windows. Please upgrade the driver of your video card", 
-				glVersion);
-		CCMessageBox(strComplain, "OpenGL version tooooooooooold");
-	}
+    if ( atof((const char*)glVersion) < 1.5 )
+    {
+        char strComplain[256] = {0};
+        sprintf(strComplain, 
+		"Your OpenGL version is %s, but Cocos2d-x requires OpenGL 1.5 or higher on Windows. Please upgrade the driver of your video card", 
+		glVersion);
+	CCMessageBox(strComplain, "OpenGL version tooooooooooold");
+    }
 
     GLenum GlewInitResult = glewInit();
     if (GLEW_OK != GlewInitResult) 
