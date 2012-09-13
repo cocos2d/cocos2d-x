@@ -55,6 +55,7 @@ public:
     /**
      * Add a get request to task queue
      * @param request a CCHttpRequest object, which includes url, response callback etc.
+                      please make sure request->_requestData is clear before calling "send" here.
      * @return NULL
      */
     void send(CCHttpRequest* request);

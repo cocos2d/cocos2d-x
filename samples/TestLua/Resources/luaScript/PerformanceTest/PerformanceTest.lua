@@ -47,7 +47,7 @@ local function PerformanceMainLayer()
     CCMenuItemFont:setFontSize(24)
     for i = 0, MAX_COUNT - 1 do
 		local item = CCMenuItemFont:create(testsName[i])
-        item:registerScriptHandler(menuCallback)
+        item:registerScriptTapHandler(menuCallback)
         item:setPosition(s.width / 2, s.height - (i + 1) * LINE_SPACE)
         menu:addChild(item, kItemTagBasic + i, kItemTagBasic + i)
 	end
