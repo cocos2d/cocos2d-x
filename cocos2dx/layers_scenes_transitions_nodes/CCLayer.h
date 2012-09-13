@@ -119,6 +119,7 @@ public:
     bool isKeypadEnabled();
     void setKeypadEnabled(bool value);
     
+    inline CCTouchScriptHandlerEntry* getScriptHandlerEntry() { return m_pScriptHandlerEntry; };
 protected:   
     bool m_bIsTouchEnabled;
     bool m_bIsAccelerometerEnabled;

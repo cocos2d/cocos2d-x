@@ -1,6 +1,7 @@
 #include "CCApplication.h"
 #include "CCEGLView.h"
 #include "CCDirector.h"
+#include <algorithm>
 
 /**
 @brief    This function change the PVRFrame show/hide setting in register.
@@ -140,6 +141,22 @@ ccLanguageType CCApplication::getCurrentLanguage()
 TargetPlatform CCApplication::getTargetPlatform()
 {
     return kTargetWindows;
+}
+
+void CCApplication::setResourceRootPath(const std::string& rootResDir)
+{
+    m_resourceRootPath = rootResDir;
+    std::replace(m_resourceRootPath.begin(), m_resourceRootPath.end(), '\\', '/');
+    if (m_resourceRootPath[m_resourceRootPath.length() - 1] != '/')
+    {
+        m_resourceRootPath += '/';
+    }
+}
+
+void CCApplication::setStartupScriptFilename(const std::string& startupScriptFile)
+{
+    m_startupScriptFilename = startupScriptFile;
+    std::replace(m_startupScriptFilename.begin(), m_startupScriptFilename.end(), '\\', '/');
 }
 
 NS_CC_END
