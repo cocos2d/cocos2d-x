@@ -10,33 +10,33 @@
 using namespace cocos2d;
 
 extern "C" {
-    void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeRender(JNIEnv* env) {
+    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeRender(JNIEnv* env) {
         cocos2d::CCDirector::sharedDirector()->mainLoop();
     }
 
-    void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeOnPause() {
+    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeOnPause() {
         CCApplication::sharedApplication()->applicationDidEnterBackground();
 
         CCNotificationCenter::sharedNotificationCenter()->postNotification(EVENT_COME_TO_BACKGROUND, NULL);
     }
 
-    void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeOnResume() {
+    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeOnResume() {
         if (CCDirector::sharedDirector()->getOpenGLView()) {
             CCApplication::sharedApplication()->applicationWillEnterForeground();
         }
     }
 
-    void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeInsertText(JNIEnv* env, jobject thiz, jstring text) {
+    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeInsertText(JNIEnv* env, jobject thiz, jstring text) {
         const char* pszText = env->GetStringUTFChars(text, NULL);
         cocos2d::CCIMEDispatcher::sharedDispatcher()->dispatchInsertText(pszText, strlen(pszText));
         env->ReleaseStringUTFChars(text, pszText);
     }
 
-    void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeDeleteBackward(JNIEnv* env, jobject thiz) {
+    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeDeleteBackward(JNIEnv* env, jobject thiz) {
         cocos2d::CCIMEDispatcher::sharedDispatcher()->dispatchDeleteBackward();
     }
 
-    jstring Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeGetContentText() {
+    JNIEXPORT jstring JNICALL Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeGetContentText() {
         JNIEnv * env = 0;
 
         if (JniHelper::getJavaVM()->GetEnv((void**)&env, JNI_VERSION_1_4) != JNI_OK || ! env) {
