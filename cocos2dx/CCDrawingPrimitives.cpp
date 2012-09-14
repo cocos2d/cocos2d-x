@@ -247,7 +247,7 @@ void ccDrawSolidPoly( const CCPoint *poli, unsigned int numberOfPoints, ccColor4
     CC_INCREMENT_GL_DRAWS(1);
 }
 
-void ccDrawCircle( const CCPoint& center, float radius, float angle, unsigned int segments, bool drawLineToCenter)
+void ccDrawCircle( const CCPoint& center, float radius, float angle, unsigned int segments, bool drawLineToCenter, float scaleX, float scaleY)
 {
     lazy_init();
 
@@ -263,8 +263,8 @@ void ccDrawCircle( const CCPoint& center, float radius, float angle, unsigned in
 
     for(unsigned int i = 0;i <= segments; i++) {
         float rads = i*coef;
-        GLfloat j = radius * cosf(rads + angle) + center.x;
-        GLfloat k = radius * sinf(rads + angle) + center.y;
+        GLfloat j = radius * cosf(rads + angle) * scaleX + center.x;
+        GLfloat k = radius * sinf(rads + angle) * scaleY + center.y;
 
         vertices[i*2] = j;
         vertices[i*2+1] = k;
