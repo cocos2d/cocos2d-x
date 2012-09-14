@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.92 on Tue Sep 11 15:23:24 2012.
+** Generated automatically by tolua++-1.0.92 on Fri Sep 14 17:59:47 2012.
 */
 
 /****************************************************************************
@@ -9454,24 +9454,28 @@ static int tolua_Cocos2d_ccDrawCircle00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
-     (tolua_isvaluenil(tolua_S,1,&tolua_err) || !tolua_isusertype(tolua_S,1,"CCPoint",0,&tolua_err)) ||
+     (tolua_isvaluenil(tolua_S,1,&tolua_err) || !tolua_isusertype(tolua_S,1,"const CCPoint",0,&tolua_err)) ||
      !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
      !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
      !tolua_isnumber(tolua_S,4,0,&tolua_err) ||
      !tolua_isboolean(tolua_S,5,0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,6,&tolua_err)
+     !tolua_isnumber(tolua_S,6,1,&tolua_err) ||
+     !tolua_isnumber(tolua_S,7,1,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,8,&tolua_err)
  )
   goto tolua_lerror;
  else
 #endif
  {
-  CCPoint center = *((CCPoint*)  tolua_tousertype(tolua_S,1,0));
+  const CCPoint* center = ((const CCPoint*)  tolua_tousertype(tolua_S,1,0));
   float radius = ((float)  tolua_tonumber(tolua_S,2,0));
   float angle = ((float)  tolua_tonumber(tolua_S,3,0));
   unsigned int segments = ((unsigned int)  tolua_tonumber(tolua_S,4,0));
   bool drawLineToCenter = ((bool)  tolua_toboolean(tolua_S,5,0));
+  float xScale = ((float)  tolua_tonumber(tolua_S,6,1.0f));
+  float yScale = ((float)  tolua_tonumber(tolua_S,7,1.0f));
   {
-   ccDrawCircle(center,radius,angle,segments,drawLineToCenter);
+   ccDrawCircle(*center,radius,angle,segments,drawLineToCenter,xScale,yScale);
   }
  }
  return 0;
