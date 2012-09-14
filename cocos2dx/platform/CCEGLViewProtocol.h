@@ -93,7 +93,7 @@ public:
     
     /**
      * Set content scale factor.
-     * @return If the return value is true, the plaform supports retina display mode.
+     * @return If the return value is true, the platform supports retina display mode.
      */
     virtual bool setContentScaleFactor(float contentScaleFactor);
     
