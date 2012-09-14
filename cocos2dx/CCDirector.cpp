@@ -136,7 +136,7 @@ bool CCDirector::init(void)
 
     m_pobOpenGLView = NULL;
 
-    m_fContentScaleFactor = 1;    
+    m_fContentScaleFactor = 1.0f;
     m_bIsContentScaleSupported = false;
 
     // scheduler
@@ -200,7 +200,7 @@ void CCDirector::setGLDefaultValues(void)
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 }
 
-// Draw the SCene
+// Draw the Scene
 void CCDirector::drawScene(void)
 {
     // calculate "global" dt
@@ -290,16 +290,13 @@ void CCDirector::calculateDeltaTime(void)
     *m_pLastUpdate = now;
 }
 
-
-// m_pobOpenGLView
-
 void CCDirector::setOpenGLView(CCEGLView *pobOpenGLView)
 {
     CCAssert(pobOpenGLView, "opengl view should not be null");
 
     if (m_pobOpenGLView != pobOpenGLView)
     {
-        // because EAGLView is not kind of CCObject
+        // EAGLView is not a CCObject
         delete m_pobOpenGLView; // [openGLView_ release]
         m_pobOpenGLView = pobOpenGLView;
 
@@ -942,7 +939,7 @@ CCAccelerometer* CCDirector::getAccelerometer()
 * implementation of DisplayLinkDirector
 **************************************************/
 
-// should we afford 4 types of director ??
+// should we implement 4 types of director ??
 // I think DisplayLinkDirector is enough
 // so we now only support DisplayLinkDirector
 void CCDisplayLinkDirector::startAnimation(void)

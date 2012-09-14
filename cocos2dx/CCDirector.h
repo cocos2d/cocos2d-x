@@ -83,7 +83,7 @@ and when to execute the Scenes.
   - setting the OpenGL pixel format (default on is RGB565)
   - setting the OpenGL buffer depth (default one is 0-bit)
   - setting the projection (default one is 3D)
-  - setting the orientation (default one is Protrait)
+  - setting the orientation (default one is Portrait)
  
  Since the CCDirector is a singleton, the standard way to use it is by calling:
   _ CCDirector::sharedDirector()->methodName();
