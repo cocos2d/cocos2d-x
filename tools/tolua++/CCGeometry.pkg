@@ -1,7 +1,7 @@
 
 typedef float CGFloat;
 
-class CCPoint
+class CCPoint : public CCObject
 {
     float x;
     float y;
@@ -11,7 +11,7 @@ class CCPoint
     bool equals(const CCPoint & target) const ;
 };
 
-class CCSize
+class CCSize : public CCObject
 {
     float width;
     float height;
@@ -21,7 +21,7 @@ class CCSize
     bool equals(const CCSize & target) const;
 };
 
-class CCRect
+class CCRect : public CCObject
 {
     CCPoint origin;
     CCSize  size;

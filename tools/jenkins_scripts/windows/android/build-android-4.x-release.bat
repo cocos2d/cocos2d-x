@@ -15,9 +15,9 @@ cd ..\..\..\..
 
 :project
 ::Copy build Configuration files to target directory
-copy %cd%\tools\JenkinsScript\ant.properties %cd%\samples\%_PROJECTNAME%\proj.android
-copy %cd%\tools\JenkinsScript\build.xml %cd%\samples\%_PROJECTNAME%\proj.android
-copy %cd%\tools\JenkinsScript\Windows\android\rootconfig.sh %cd%\samples\%_PROJECTNAME%\proj.android
+copy %cd%\tools\jenkins_scripts\ant.properties %cd%\samples\%_PROJECTNAME%\proj.android
+copy %cd%\tools\jenkins_scripts\build.xml %cd%\samples\%_PROJECTNAME%\proj.android
+copy %cd%\tools\jenkins_scripts\windows\android\rootconfig.sh %cd%\samples\%_PROJECTNAME%\proj.android
 
 ::Modify the configuration files
 cd samples\%_PROJECTNAME%\proj.android

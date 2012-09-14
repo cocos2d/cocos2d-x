@@ -100,6 +100,10 @@ public:
     bool isPopupNotify();
     
 protected:
+    CCFileUtils(void)
+    {
+    }
+    
     std::string m_obDirectory;
 };
 
