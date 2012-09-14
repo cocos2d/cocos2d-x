@@ -48,8 +48,7 @@ bool CCEGLView::isOpenGLReady()
     
 bool CCEGLView::setContentScaleFactor(float contentScaleFactor)
 {
-    // can not enable retina because have used resolution policy
-    assert(m_eResolutionPolicy == kResolutionUnKnown);
+    assert(m_eResolutionPolicy == kResolutionUnKnown); // cannot enable retina mode
     
     if ([[EAGLView sharedEGLView] respondsToSelector:@selector(setContentScaleFactor:)])
     {
