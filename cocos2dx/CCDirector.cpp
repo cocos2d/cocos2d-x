@@ -588,6 +588,9 @@ void CCDirector::end()
 
 void CCDirector::purgeDirector()
 {
+    // cleanup scheduler
+    getScheduler()->unscheduleAllSelectors();
+    
     // don't release the event handlers
     // They are needed in case the director is run again
     m_pTouchDispatcher->removeAllDelegates();

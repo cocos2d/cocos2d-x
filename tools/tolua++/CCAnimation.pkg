@@ -20,14 +20,10 @@ class CCAnimationFrame : public CCObject
 
 class CCAnimation : public CCObject
 {
-    CCAnimation();
-    ~CCAnimation(void);
-	CCObject* copyWithZone(CCZone* pZone);
-
+    static CCAnimation* create(CCArray *arrayOfAnimationFrameNames, float delayPerUnit, unsigned int loops);
     static CCAnimation* create(void);
     static CCAnimation* createWithSpriteFrames(CCArray* arrayOfSpriteFrameNames);
     static CCAnimation* createWithSpriteFrames(CCArray* arrayOfSpriteFrameNames, float delay);
-    static CCAnimation* create(CCArray *arrayOfAnimationFrameNames, float delayPerUnit, unsigned int loops);
 
     void addSpriteFrame(CCSpriteFrame *pFrame);
     void addSpriteFrameWithFileName(const char *pszFileName);
