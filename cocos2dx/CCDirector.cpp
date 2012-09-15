@@ -44,6 +44,7 @@ THE SOFTWARE.
 #include "actions/CCActionManager.h"
 #include "CCConfiguration.h"
 #include "keypad_dispatcher/CCKeypadDispatcher.h"
+#include "keyboard_dispatcher/CCKeyboardDispatcher.h"
 #include "CCAccelerometer.h"
 #include "sprite_nodes/CCAnimationCache.h"
 #include "touch_dispatcher/CCTouch.h"
@@ -151,6 +152,9 @@ bool CCDirector::init(void)
     // KeypadDispatcher
     m_pKeypadDispatcher = new CCKeypadDispatcher();
 
+    m_pKeyboardDispatcher = new CCKeyboardDispatcher();
+    m_pKeyboardDispatcher->init();
+
     // Accelerometer
     m_pAccelerometer = new CCAccelerometer();
 
@@ -174,6 +178,7 @@ CCDirector::~CCDirector(void)
     CC_SAFE_RELEASE(m_pScheduler);
     CC_SAFE_RELEASE(m_pActionManager);
     CC_SAFE_RELEASE(m_pTouchDispatcher);
+    CC_SAFE_RELEASE(m_pKeyboardDispatcher);
     CC_SAFE_RELEASE(m_pKeypadDispatcher);
     CC_SAFE_DELETE(m_pAccelerometer);
 
@@ -319,7 +324,11 @@ void CCDirector::setOpenGLView(CCEGLView *pobOpenGLView)
         }
 
          m_pobOpenGLView->setTouchDelegate(m_pTouchDispatcher);
+        m_pobOpenGLView->setTouchDelegate(m_pTouchDispatcher);
         m_pTouchDispatcher->setDispatchEvents(true);
+
+        m_pobOpenGLView->setKeyboardDelegate(m_pKeyboardDispatcher);
+        m_pKeyboardDispatcher->setDispatchEvents(true);
     }
 }
 
@@ -910,6 +919,21 @@ void CCDirector::setTouchDispatcher(CCTouchDispatcher* pTouchDispatcher)
 CCTouchDispatcher* CCDirector::getTouchDispatcher()
 {
     return m_pTouchDispatcher;
+}
+
+void CCDirector::setKeyboardDispatcher(CCKeyboardDispatcher* pKeyboardDispatcher)
+{
+    if (m_pKeyboardDispatcher != pKeyboardDispatcher)
+    {
+        CC_SAFE_RETAIN(pKeyboardDispatcher);
+        CC_SAFE_RELEASE(m_pKeyboardDispatcher);
+        m_pKeyboardDispatcher = pKeyboardDispatcher;
+    }
+}
+
+CCKeyboardDispatcher* CCDirector::getKeyboardDispatcher()
+{
+    return m_pKeyboardDispatcher;
 }
 
 void CCDirector::setKeypadDispatcher(CCKeypadDispatcher* pKeypadDispatcher)

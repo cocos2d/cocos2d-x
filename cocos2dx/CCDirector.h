@@ -73,6 +73,7 @@ class CCActionManager;
 class CCTouchDispatcher;
 class CCKeypadDispatcher;
 class CCAccelerometer;
+class CCKeyboardDispatcher;
 
 /**
 @brief Class that creates and handle the main Window and manages how
@@ -317,6 +318,11 @@ public:
      */
     CC_PROPERTY(CCKeypadDispatcher*, m_pKeypadDispatcher, KeypadDispatcher);
 
+    /** CCKeyboardDispatcher associated with this director
+     @since v2.0
+     */
+    CC_PROPERTY(CCKeyboardDispatcher*, m_pKeyboardDispatcher, KeyboardDispatcher);
+    
     /** CCAccelerometer associated with this director
      @since v2.0
      */

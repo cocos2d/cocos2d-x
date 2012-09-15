@@ -404,23 +404,55 @@ static EAGLView *view;
 
 - (void)keyDown:(NSEvent *)theEvent
 {
-	DISPATCH_EVENT(theEvent, _cmd);
-	
-	// pass the event along to the next responder (like your NSWindow subclass)
-	[super keyDown:theEvent];
+    UInt16 keyCode = [theEvent keyCode];
+    const char* charsNoMod = [[theEvent charactersIgnoringModifiers] UTF8String];
+
+    NSUInteger modFlags = [theEvent modifierFlags];
+    
+    bool shiftKeyPressed = modFlags & NSShiftKeyMask;
+    bool controlKeyPressed = modFlags & NSControlKeyMask;
+    bool altKeyPressed = modFlags & NSAlternateKeyMask;
+    bool commandKeyPressed = modFlags & NSCommandKeyMask;
+    
+    cocos2d::CCDirector::sharedDirector()->getOpenGLView()->keyDown(keyCode, charsNoMod, modFlags, shiftKeyPressed, controlKeyPressed, altKeyPressed, commandKeyPressed);
+    
+	// We don't pass the event along to the next responder (like your NSWindow subclass)
+    // because the cocos2d-x app will handle it. Otherwise the OS issues a audio
+    // tone saying key not recognized.
+    //	[super keyDown:theEvent];
 }
 
 - (void)keyUp:(NSEvent *)theEvent
 {
-	DISPATCH_EVENT(theEvent, _cmd);
-
-	// pass the event along to the next responder (like your NSWindow subclass)
-	[super keyUp:theEvent];
+    UInt16 keyCode = [theEvent keyCode];
+    const char* charsNoMod = [[theEvent charactersIgnoringModifiers] UTF8String];
+    
+    NSUInteger modFlags = [theEvent modifierFlags];
+    
+    bool shiftKeyPressed = modFlags & NSShiftKeyMask;
+    bool controlKeyPressed = modFlags & NSControlKeyMask;
+    bool altKeyPressed = modFlags & NSAlternateKeyMask;
+    bool commandKeyPressed = modFlags & NSCommandKeyMask;
+    
+    cocos2d::CCDirector::sharedDirector()->getOpenGLView()->keyUp(keyCode, charsNoMod, modFlags, shiftKeyPressed, controlKeyPressed, altKeyPressed, commandKeyPressed);
+	
+    // We don't pass the event along to the next responder (like your NSWindow subclass)
+    // because the cocos2d-x app will handle it. Otherwise the OS issues a audio
+    // tone saying key not recognized.
+    //	[super keyUp:theEvent];
 }
 
 - (void)flagsChanged:(NSEvent *)theEvent
 {
-	DISPATCH_EVENT(theEvent, _cmd);
+    UInt16 keyCode = [theEvent keyCode];
+    NSUInteger modFlags = [theEvent modifierFlags];
+    
+    bool shiftKeyPressed = modFlags & NSShiftKeyMask;
+    bool controlKeyPressed = modFlags & NSControlKeyMask;
+    bool altKeyPressed = modFlags & NSAlternateKeyMask;
+    bool commandKeyPressed = modFlags & NSCommandKeyMask;
+    
+    cocos2d::CCDirector::sharedDirector()->getOpenGLView()->flagsChanged(keyCode, modFlags, shiftKeyPressed, controlKeyPressed, altKeyPressed, commandKeyPressed);
 }
 
 #pragma mark EAGLView - Touch events
