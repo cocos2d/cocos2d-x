@@ -71,7 +71,7 @@ public:
     bool initWithImageFile(const char * strPath, EImageFormat imageType = kFmtPng);
 
     /*
-     @brief The same meaning as initWithImageFile, but it is thread safe. It is casued by
+     @brief The same result as with initWithImageFile, but thread safe. It is caused by
             loadImage() in CCTextureCache.cpp.
      @param fullpath  full path of the file.
      @param imageType the type of image, currently only supporting two types.
@@ -120,7 +120,7 @@ public:
 
     /**
     @brief    Save CCImage data to the specified file, with specified format.
-    @param    pszFilePath        the file's absolute path, including file subfix.
+    @param    pszFilePath        the file's absolute path, including file suffix.
     @param    bIsToRGB        whether the image is saved as RGB format.
     */
     bool saveToFile(const char *pszFilePath, bool bIsToRGB = true);

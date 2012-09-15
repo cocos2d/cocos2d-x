@@ -264,7 +264,7 @@ CCArray* ccFileUtils_arrayWithContentsOfFileThreadSafe(const char* pFileName)
 unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize)
 {
     unsigned char * pBuffer = NULL;
-    CCAssert(pszFileName != NULL && pSize != NULL && pszMode != NULL, "Invaild parameters.");
+    CCAssert(pszFileName != NULL && pSize != NULL && pszMode != NULL, "Invalid parameters.");
     *pSize = 0;
     do 
     {
