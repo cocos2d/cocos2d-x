@@ -681,7 +681,7 @@ void CCNode::sortAllChildren()
  {
      //CCAssert(0);
      // override me
-     // Only use- this function to draw your staff.
+     // Only use- this function to draw your stuff.
      // DON'T draw your stuff outside this method
  }
 
