@@ -23,6 +23,7 @@ NS_CC_BEGIN
 #define CC_MAX_TOUCHES  5
 
 class EGLTouchDelegate;
+class EGLKeyboardDelegate;
 class CCSet;
 
 /**
@@ -143,10 +144,11 @@ private:
     
 protected:
     EGLTouchDelegate* m_pDelegate;
+    EGLKeyboardDelegate* m_pKeyboardDelegate;
 
-    // real screen size
+    // real size of screen
     CCSize m_obScreenSize;
-    // resolution size, it is the size appropriate for the app resources.
+    // resolution size, it is the size the app resources designed for
     CCSize m_obDesignResolutionSize;
     // the view port size
     CCRect m_obViewPortRect;
