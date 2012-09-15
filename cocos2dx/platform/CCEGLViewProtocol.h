@@ -36,7 +36,7 @@ public:
     CCEGLViewProtocol();
     virtual ~CCEGLViewProtocol();
 
-    /** Force destorying EGL view, subclass must implement this method. */
+    /** Force destroying EGL view, subclass must implement this method. */
     virtual void    end() = 0;
     
     /** Get whether opengl render system is ready, subclass must implement this method. */

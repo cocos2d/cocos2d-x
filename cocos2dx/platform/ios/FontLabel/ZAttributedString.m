@@ -113,7 +113,7 @@
 
 - (ZAttributedString *)attributedSubstringFromRange:(NSRange)aRange {
     if (NSMaxRange(aRange) > [_buffer length]) {
-        @throw [NSException exceptionWithName:NSRangeException reason:@"range was outisde of the attributed string" userInfo:nil];
+        @throw [NSException exceptionWithName:NSRangeException reason:@"range was outside of the attributed string" userInfo:nil];
     }
     ZMutableAttributedString *newStr = [self mutableCopy];
     if (aRange.location > 0) {
