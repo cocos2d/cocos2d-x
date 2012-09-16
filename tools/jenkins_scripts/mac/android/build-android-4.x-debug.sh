@@ -10,7 +10,7 @@ antcompile()
 	sed '/target=/s/=.*$/=android-14/' ant.properties > anttmp.properties
 	cp anttmp.properties ant.properties
 	rm anttmp.properties
-	ant release
+	ant debug
 	compileresult=$[$compileresult+$?]
         if [ $IsTestCpp == 1 ] && [ $? == 0 ]
         then
@@ -23,7 +23,7 @@ antcompile()
 	sed '/target=/s/=.*$/=android-15/' ant.properties > anttmp.properties
 	cp anttmp.properties ant.properties
 	rm anttmp.properties
-	ant release
+	ant debug
 	compileresult=$[$compileresult+$?]
         if [ $IsTestCpp == 1 ] && [ $? == 0 ]
         then
