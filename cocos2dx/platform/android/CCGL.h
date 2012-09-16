@@ -41,7 +41,7 @@ THE SOFTWARE.
 // normal process
 #include <GLES2/gl2.h>
 #include <GLES2/gl2ext.h>
-// gl2.h don't define GLchar on Android
+// gl2.h doesn't define GLchar on Android
 typedef char GLchar;
 
 //declare here while define in CCEGLView_android.cpp
