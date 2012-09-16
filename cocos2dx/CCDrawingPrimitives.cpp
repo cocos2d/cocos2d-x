@@ -67,7 +67,7 @@ static void lazy_init( void )
     }
 }
 
-// When back to foreground on android, we want to it to initialize again
+// When switching from backround to foreground on android, we want the params to be initialized again
 void ccDrawInit()
 {
     s_bInitialized = false;
