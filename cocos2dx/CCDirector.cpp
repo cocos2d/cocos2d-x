@@ -70,7 +70,7 @@ using namespace std;
 unsigned int g_uNumberOfDraws = 0;
 
 NS_CC_BEGIN
-// XXX it shoul be a Director ivar. Move it there once support for multiple directors is added
+// XXX it should be a Director ivar. Move it there once support for multiple directors is added
 
 // singleton stuff
 static CCDisplayLinkDirector s_SharedDirector;
@@ -814,7 +814,7 @@ bool CCDirector::enableRetinaDisplay(bool enabled)
         return true;
     }
 
-    // Already diabled?
+    // Already disabled?
     if (!enabled && m_fContentScaleFactor == 1)
     {
         return false;
