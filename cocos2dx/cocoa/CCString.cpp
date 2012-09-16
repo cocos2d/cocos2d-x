@@ -219,7 +219,7 @@ CCString* CCString::createWithFormat(const char* format, ...)
 
 CCString* CCString::stringWithContentsOfFile(const char* pszFileName)
 {
-    return CCString::create(pszFileName);
+    return CCString::createWithContentsOfFile(pszFileName);
 }
 
 CCString* CCString::createWithContentsOfFile(const char* pszFileName)
