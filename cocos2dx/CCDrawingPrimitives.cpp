@@ -54,7 +54,7 @@ static void lazy_init( void )
     if( ! s_bInitialized ) {
 
         //
-        // Position and 1 color passed as a uniform (to similate glColor4ub )
+        // Position and 1 color passed as a uniform (to simulate glColor4ub )
         //
         s_pShader = CCShaderCache::sharedShaderCache()->programForKey(kCCShader_Position_uColor);
 
@@ -67,7 +67,7 @@ static void lazy_init( void )
     }
 }
 
-// When back to foreground on android, we want to it to inilialize again
+// When switching from backround to foreground on android, we want the params to be initialized again
 void ccDrawInit()
 {
     s_bInitialized = false;

@@ -112,6 +112,19 @@ bool CCEGLView::initGL()
     m_hRC = wglCreateContext(m_hDC);
     wglMakeCurrent(m_hDC, m_hRC);
 
+    // check OpenGL version at first
+    const GLubyte* glVersion = glGetString(GL_VERSION);
+    CCLOG("OpenGL version = %s", glVersion);
+
+    if ( atof((const char*)glVersion) < 1.5 )
+    {
+        char strComplain[256] = {0};
+        sprintf(strComplain, 
+		"Your OpenGL version is %s, but Cocos2d-x requires OpenGL 1.5 or higher on Windows. Please upgrade the driver of your video card", 
+		glVersion);
+	CCMessageBox(strComplain, "OpenGL version tooooooooooold");
+    }
+
     GLenum GlewInitResult = glewInit();
     if (GLEW_OK != GlewInitResult) 
     {
@@ -121,20 +134,20 @@ bool CCEGLView::initGL()
 
     if (GLEW_ARB_vertex_shader && GLEW_ARB_fragment_shader)
     {
-        CCLog("Ready for GLSL\n");
+        CCLog("Ready for GLSL");
     }
     else 
     {
-        CCLog("Not totally ready :( \n");
+        CCLog("Not totally ready :(");
     }
 
     if (glewIsSupported("GL_VERSION_2_0"))
     {
-        CCLog("Ready for OpenGL 2.0\n");
+        CCLog("Ready for OpenGL 2.0");
     }
     else
     {
-        CCLog("OpenGL 2.0 not supported\n");
+        CCLog("OpenGL 2.0 not supported");
     }
     return true;
 }

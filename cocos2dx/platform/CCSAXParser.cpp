@@ -49,7 +49,7 @@ bool CCSAXParser::init(const char *pszEncoding)
 bool CCSAXParser::parse(const char* pXMLData, unsigned int uDataLength)
 {
     /*
-     * this initialize the library and check potential ABI mismatches
+     * this initializes the library and checks potential ABI mismatches
      * between the version it was compiled for and the actual shared
      * library used.
      */
