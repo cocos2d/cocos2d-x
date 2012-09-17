@@ -44,7 +44,7 @@ CCObject::CCObject(void)
     m_uID = ++uObjectCount;
     m_nLuaID = 0;
 
-    // when the object is created, the refrence count of it is 1
+    // when the object is created, the reference count of it is 1
     m_uReference = 1;
     m_bManaged = false;
 }

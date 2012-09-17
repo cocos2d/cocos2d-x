@@ -67,7 +67,7 @@ public:
     /**  how many units of time the frame takes */
     CC_SYNTHESIZE(float, m_fDelayUnits, DelayUnits)
 
-    /**  A CCAnimationFrameDisplayedNotification notification will be broadcasted when the frame is displayed with this dictionary as UserInfo. If UserInfo is nil, then no notification will be broadcasted. */
+    /**  A CCAnimationFrameDisplayedNotification notification will be broadcast when the frame is displayed with this dictionary as UserInfo. If UserInfo is nil, then no notification will be broadcast. */
     CC_SYNTHESIZE_RETAIN(CCDictionary*, m_pUserInfo, UserInfo)
 };
 

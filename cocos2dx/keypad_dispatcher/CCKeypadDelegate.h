@@ -41,7 +41,7 @@ public:
     // The back key clicked
     virtual void keyBackClicked() {}
 
-    // The menu key clicked. only avialble on wophone & android
+    // The menu key clicked. only available on wophone & android
     virtual void keyMenuClicked() {};
 };
 

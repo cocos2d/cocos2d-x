@@ -43,7 +43,7 @@ using namespace std;
     #include <libxml/parser.h>
     #include <libxml/tree.h>
     #include <libxml/xmlmemory.h>
-#endf
+#endif
 */
 
 NS_CC_BEGIN
@@ -652,7 +652,7 @@ void CCTMXMapInfo::endElement(void *ctx, const char *name)
             int inflatedLen = ZipUtils::ccInflateMemoryWithHint(buffer, len, &deflated, sizeHint);
             CCAssert(inflatedLen == sizeHint, "");
 
-            inflatedLen = (size_t)&inflatedLen; // XXX: to avoid warings in compiler
+            inflatedLen = (size_t)&inflatedLen; // XXX: to avoid warnings in compiler
             
             delete [] buffer;
             buffer = NULL;
