@@ -272,7 +272,7 @@ CCPoint CC_DLL ccpLerp(const CCPoint& a, const CCPoint& b, float alpha);
 bool CC_DLL ccpFuzzyEqual(const CCPoint& a, const CCPoint& b, float variance);
 
 
-/** Multiplies a nd b components, a.x*b.x, a.y*b.y
+/** Multiplies a and b components, a.x*b.x, a.y*b.y
  @returns a component-wise multiplication
  @since v0.99.1
  */

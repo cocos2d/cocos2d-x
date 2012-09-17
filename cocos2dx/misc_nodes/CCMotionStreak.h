@@ -87,7 +87,7 @@ public:
     virtual void setOpacityModifyRGB(bool bValue);
     virtual bool isOpacityModifyRGB(void);
 
-    /** When fast mode is enbled, new points are added faster but with lower precision */
+    /** When fast mode is enabled, new points are added faster but with lower precision */
     inline bool isFastMode() { return m_bFastMode; }
     inline void setFastMode(bool bFastMode) { m_bFastMode = bFastMode; }
 
