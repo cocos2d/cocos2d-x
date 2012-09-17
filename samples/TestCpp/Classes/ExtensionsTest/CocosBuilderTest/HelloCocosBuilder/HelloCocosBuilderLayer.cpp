@@ -26,7 +26,7 @@ void HelloCocosBuilderLayer::openTest(const char * pCCBFileName, const char * pC
     /* Create an autorelease CCNodeLoaderLibrary. */
     CCNodeLoaderLibrary * ccNodeLoaderLibrary = CCNodeLoaderLibrary::newDefaultCCNodeLoaderLibrary();
 
-    ccNodeLoaderLibrary->registerCCNodeLoader("TestHeaderLayer", TestHeaderLayerLoader::loader());
+    ccNodeLoaderLibrary->registerCCNodeLoader("TestHeader", TestHeaderLayerLoader::loader());
     if(pCCNodeName != NULL && pCCNodeLoader != NULL) {
         ccNodeLoaderLibrary->registerCCNodeLoader(pCCNodeName, pCCNodeLoader);
     }
@@ -40,7 +40,7 @@ void HelloCocosBuilderLayer::openTest(const char * pCCBFileName, const char * pC
     // the owner will cause lblTestTitle to be set by the CCBReader.
     // lblTestTitle is in the TestHeader.ccbi, which is referenced
     // from each of the test scenes.
-    CCNode * node = ccbReader->readNodeGraphFromFile("ccb/official/pub/", pCCBFileName, this);
+    CCNode * node = ccbReader->readNodeGraphFromFile(pCCBFileName, this);
 
     this->mTestTitleLabelTTF->setString(pCCBFileName);
 
@@ -60,7 +60,7 @@ void HelloCocosBuilderLayer::openTest(const char * pCCBFileName, const char * pC
 
 
 void HelloCocosBuilderLayer::onNodeLoaded(cocos2d::CCNode * pNode,  cocos2d::extension::CCNodeLoader * pNodeLoader) {
-    CCRotateBy * ccRotateBy = CCRotateBy::create(0.5f, 10);
+    CCRotateBy * ccRotateBy = CCRotateBy::create(20.0f, 360);
     CCRepeatForever * ccRepeatForever = CCRepeatForever::create(ccRotateBy);
     this->mBurstSprite->runAction(ccRepeatForever);
 }
@@ -74,7 +74,7 @@ SEL_CCControlHandler HelloCocosBuilderLayer::onResolveCCBCCControlSelector(CCObj
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onMenuTestClicked", HelloCocosBuilderLayer::onMenuTestClicked);
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onSpriteTestClicked", HelloCocosBuilderLayer::onSpriteTestClicked);
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onButtonTestClicked", HelloCocosBuilderLayer::onButtonTestClicked);
-    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onLabelTestClicked", HelloCocosBuilderLayer::onLabelTestClicked);
+    //CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onLabelTestClicked", HelloCocosBuilderLayer::onLabelTestClicked);
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onParticleSystemTestClicked", HelloCocosBuilderLayer::onParticleSystemTestClicked);
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onScrollViewTestClicked", HelloCocosBuilderLayer::onScrollViewTestClicked);
 
@@ -90,25 +90,25 @@ bool HelloCocosBuilderLayer::onAssignCCBMemberVariable(CCObject * pTarget, CCStr
 
 
 void HelloCocosBuilderLayer::onMenuTestClicked(CCObject * pSender, cocos2d::extension::CCControlEvent pCCControlEvent) {
-    this->openTest("ccb/MenuTest.ccbi", "MenuTestLayer", MenuTestLayerLoader::loader());
+    this->openTest("TestMenus.ccbi", "TestMenus", MenuTestLayerLoader::loader());
 }
 
 void HelloCocosBuilderLayer::onSpriteTestClicked(CCObject * pSender, cocos2d::extension::CCControlEvent pCCControlEvent) {
-    this->openTest("ccb/SpriteTest.ccbi", "SpriteTestLayer", SpriteTestLayerLoader::loader());
+    this->openTest("TestSprites.ccbi", "TestSprites", SpriteTestLayerLoader::loader());
 }
 
 void HelloCocosBuilderLayer::onButtonTestClicked(CCObject * pSender, cocos2d::extension::CCControlEvent pCCControlEvent) {
-    this->openTest("ccb/ButtonTest.ccbi", "ButtonTestLayer", ButtonTestLayerLoader::loader());
+    this->openTest("TestButtons.ccbi", "TestButtons", ButtonTestLayerLoader::loader());
 }
 
 void HelloCocosBuilderLayer::onLabelTestClicked(CCObject * pSender, cocos2d::extension::CCControlEvent pCCControlEvent) {
-    this->openTest("ccb/LabelTest.ccbi", "LabelTestLayer", LabelTestLayerLoader::loader());
+    this->openTest("TestLabels.ccbi", "TestLabels", LabelTestLayerLoader::loader());
 }
 
 void HelloCocosBuilderLayer::onParticleSystemTestClicked(CCObject * pSender, cocos2d::extension::CCControlEvent pCCControlEvent) {
-    this->openTest("ccb/ParticleSystemTest.ccbi", "ParticleSystemTestLayer", ParticleSystemTestLayerLoader::loader());
+    this->openTest("TestParticleSystems.ccbi", "TestParticleSystems", ParticleSystemTestLayerLoader::loader());
 }
 
 void HelloCocosBuilderLayer::onScrollViewTestClicked(CCObject * pSender, cocos2d::extension::CCControlEvent pCCControlEvent) {
-    this->openTest("ccb/ScrollViewTest.ccbi", "ScrollViewTestLayer", ScrollViewTestLayerLoader::loader());
+    this->openTest("TestScrollViews.ccbi", "TestScrollViews", ScrollViewTestLayerLoader::loader());
 }

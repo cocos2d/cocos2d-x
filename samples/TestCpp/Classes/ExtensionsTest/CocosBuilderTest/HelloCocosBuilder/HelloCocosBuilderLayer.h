@@ -15,10 +15,10 @@
  * http://www.cocoabuilder.com/archive/xcode/265549-crash-in-virtual-method-call.html
  */
 class HelloCocosBuilderLayer
-    : public cocos2d::CCLayer
-    , public cocos2d::extension::CCBSelectorResolver
+: public cocos2d::CCLayer
+, public cocos2d::extension::CCBSelectorResolver
 , public cocos2d::extension::CCBMemberVariableAssigner
-    , public cocos2d::extension::CCNodeLoaderListener
+, public cocos2d::extension::CCNodeLoaderListener
 {
     public:
         CCB_STATIC_NEW_AUTORELEASE_OBJECT_WITH_INIT_METHOD(HelloCocosBuilderLayer, create);
