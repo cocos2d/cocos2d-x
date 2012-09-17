@@ -359,9 +359,7 @@ public:
 //							m_pData[(iY * iMaxLineWidth + iX) * 4 + 0] =
 //							bitmap.buffer[i * bitmap.width + j];//B
 
-							int iTemp = 0;
-							iTemp |= (cTemp ? 0xff : 0)<<24;
-							iTemp |= cTemp << 16 | cTemp << 8 | cTemp;
+							int iTemp = cTemp << 24 | cTemp << 16 | cTemp << 8 | cTemp;
 							*(int*) &m_pData[(iY * iMaxLineWidth + iX) * 4 + 0] = iTemp;
 						}
 					}
