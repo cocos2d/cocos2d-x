@@ -22,8 +22,8 @@ class CCAnimation : public CCObject
 {
     static CCAnimation* create(CCArray *arrayOfAnimationFrameNames, float delayPerUnit, unsigned int loops);
     static CCAnimation* create(void);
-    static CCAnimation* createWithSpriteFrames(CCArray* arrayOfSpriteFrameNames);
     static CCAnimation* createWithSpriteFrames(CCArray* arrayOfSpriteFrameNames, float delay);
+    static CCAnimation* createWithSpriteFrames(CCArray* arrayOfSpriteFrameNames);
 
     void addSpriteFrame(CCSpriteFrame *pFrame);
     void addSpriteFrameWithFileName(const char *pszFileName);

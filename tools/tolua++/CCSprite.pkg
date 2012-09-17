@@ -95,7 +95,7 @@ class CCSprite : public CCNode
 	static CCSprite* createWithTexture(CCTexture2D *pTexture, CCRect rect);
 	static CCSprite* createWithSpriteFrame(CCSpriteFrame *pSpriteFrame);
 	static CCSprite* createWithSpriteFrameName(const char *pszSpriteFrameName);
-	static CCSprite* create();
-	static CCSprite* create(const char *pszFileName);
 	static CCSprite* create(const char *pszFileName, CCRect rect);
+	static CCSprite* create(const char *pszFileName);
+	static CCSprite* create();
 };
