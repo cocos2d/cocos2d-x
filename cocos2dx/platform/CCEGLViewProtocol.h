@@ -78,23 +78,26 @@ public:
     virtual CCPoint getVisibleOrigin() const;
     
     /** 
-     * Set the design resolution size.
-     * Behavior undefined when enableRetina == true.
+     * Set the design resolutin size.
+     * You can't use it with enableRetina together.
      * @param width Design resolution width.
      * @param height Design resolution height.
-     * @param resolutionPolicy The resolution policy desired, you may choose:
-     *                         [1] kCCResolutionExactFit Fill screen by stretch-to-fit: if the design resolution ratio of width to height is different from the screen resolution ratio, your game view will be stretched.
-     *                         [2] kCCResolutionNoBorder Full screen without black border: if the design resolution ratio of width to height is different from the screen resolution ratio, two areas of your game view will be cut.
-     *                         [3] kCCResolutionShowAll  Full screen with black border: if the design resolution ratio of width to height is different from the screen resolution ratio, two black borders will be shown.
+     * @param resolutionPolicy The resolution policy you need, there are:
+     *                         [1] kCCResolutionExactFit Fill screen, if the design resolution ratio of width and height is different from the screen resolution ratio, your game view will be stretched.
+     *                         [2] kCCResolutionNoBorder Full screen without black border, if the design resolution ratio of width and height is different from the screen resolution ratio, two areas of your game view will be cut.
+     *                         [3] kCCResolutionShowAll  Full screen with black border, if the design resolution ratio of width and height is different from the screen resolution ratio, two black border will be shown on the screen;
      */
     virtual void setDesignResolutionSize(float width, float height, ResolutionPolicy resolutionPolicy);
     
     /** Set touch delegate */
     virtual void setTouchDelegate(EGLTouchDelegate * pDelegate);
     
+    /** Set keyboard delegate */
+    virtual void setKeyboardDelegate(EGLKeyboardDelegate * pDelegate);
+    
     /**
      * Set content scale factor.
-     * @return If the return value is true, the platform supports retina display mode.
+     * @return If return true, it means the plaform supports retina display.
      */
     virtual bool setContentScaleFactor(float contentScaleFactor);
     
@@ -114,29 +117,38 @@ public:
      */
     virtual bool enableRetina();
 
-    /** Touch events are handled by default; if you want to customize your handlers, please override these functions: */
+    /** handle touch events by default, if you want to custom your handles, please override these functions */
     virtual void handleTouchesBegin(int num, int ids[], float xs[], float ys[]);
     virtual void handleTouchesMove(int num, int ids[], float xs[], float ys[]);
     virtual void handleTouchesEnd(int num, int ids[], float xs[], float ys[]);
     virtual void handleTouchesCancel(int num, int ids[], float xs[], float ys[]);
 
+    /** handle keyboard events by default. Note charSequence is typically 1 char */
+    virtual void keyUp(unsigned int keyCode, const char* charSequence, unsigned int modifiers, bool shiftKeyPressed, bool controlKeyPressed, bool altKeyPressed, bool commandKeyPressed);
+    virtual void keyDown(unsigned int keyCode, const char* charSequence, unsigned int modifiers, bool shiftKeyPressed, bool controlKeyPressed, bool altKeyPressed, bool commandKeyPressed);
     /**
-     * Get the opengl view port rectangle.
+     The flagsChanged: method can be useful for detecting the pressing of modifier keys without any other key being pressed simultaneously. For example, if the user presses the Option key by itself, your responder object can detect this in its implementation of flagsChanged:.
+     */
+    virtual void flagsChanged(unsigned int keyCode, unsigned int modifiers, bool shiftKeyPressed, bool controlKeyPressed, bool altKeyPressed, bool commandKeyPressed);
+
+    /**
+     * Get opengl view port rectangle.
      */
     const CCRect& getViewPortRect() const;
     
     /**
-     * Get scale factor of the horizontal direction.
+     * Get the scale factor of horizontal direction.
+     * 
      */
     float getScaleX() const;
     
     /**
-     * Get scale factor of the vertical direction.
+     * Get the scale factor of vertical direction.
      */
     float getScaleY() const;
     
     /**
-     * Get retina mode status (on if true).
+     * Get whether the retina mode is enabled.
      */
     bool isRetinaEnabled() const;
 private:

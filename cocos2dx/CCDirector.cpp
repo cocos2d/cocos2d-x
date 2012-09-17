@@ -323,7 +323,6 @@ void CCDirector::setOpenGLView(CCEGLView *pobOpenGLView)
             updateContentScaleFactor();
         }
 
-         m_pobOpenGLView->setTouchDelegate(m_pTouchDispatcher);
         m_pobOpenGLView->setTouchDelegate(m_pTouchDispatcher);
         m_pTouchDispatcher->setDispatchEvents(true);
 

@@ -87,6 +87,8 @@ static TestScene* CreateTestScene(int nIdx)
     case TEST_KEYPAD:
         pScene = new KeypadTestScene(); break;
 #endif
+    case TEST_KEYBOARD:
+        pScene = new KeyboardTestScene(); break;
     case TEST_COCOSDENSHION:
         pScene = new CocosDenshionTestScene(); break;
     case TEST_PERFORMANCE:
