@@ -50,7 +50,7 @@ static inline void split(std::string src, const char* token, strArray& vect)
 }
 
 // first, judge whether the form of the string like this: {x,y}
-// if the form is right,the string will be splited into the parameter strs;
+// if the form is right,the string will be split into the parameter strs;
 // or the parameter strs will be empty.
 // if the form is right return true,else return false.
 static bool splitWithForm(const char* pStr, strArray& strs)

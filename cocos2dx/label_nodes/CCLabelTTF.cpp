@@ -227,7 +227,7 @@ void CCLabelTTF::setDimensions(const CCSize &dim)
     {
         m_tDimensions = dim;
         
-        // Force udpate
+        // Force update
         if (m_string.size() > 0)
         {
             this->updateTexture();

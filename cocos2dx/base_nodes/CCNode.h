@@ -25,8 +25,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __PLATFOMR_CCNODE_H__
-#define __PLATFOMR_CCNODE_H__
+#ifndef __PLATFORM_CCNODE_H__
+#define __PLATFORM_CCNODE_H__
 
 #include "ccMacros.h"
 #include "cocoa/CCAffineTransform.h"
@@ -65,7 +65,7 @@ enum {
     kCCNodeOnExitTransitionDidStart
 };
 
-/** @brief CCNode is the main element. Anything thats gets drawn or contains things that get drawn is a CCNode.
+/** @brief CCNode is the main element. Anything that gets drawn or contains things that get drawn is a CCNode.
  The most popular CCNodes are: CCScene, CCLayer, CCSprite, CCMenu.
 
  The main features of a CCNode are:
@@ -239,7 +239,7 @@ public:
     /** A weak reference to the parent */
     CC_PROPERTY(CCNode *, m_pParent, Parent)
 
-    // If ture, the Anchor Point will be (0,0) when you position the CCNode.
+    // If true, the Anchor Point will be (0,0) when you position the CCNode.
 	// Used by CCLayer and CCScene
     bool m_bIgnoreAnchorPointForPosition;
     bool isIgnoreAnchorPointForPosition();
@@ -325,7 +325,7 @@ public:
      */
     static CCNode * create(void);
 
-    //scene managment
+    //scene management
 
     /** callback that is called every time the CCNode enters the 'stage'.
      If the CCNode enters the 'stage' with a transition, this callback is called when the transition starts.
@@ -577,7 +577,7 @@ public:
      */
     virtual CCAffineTransform parentToNodeTransform(void);
 
-    /** Retrusn the world affine transform matrix. The matrix is in Pixels.
+    /** Returns the world affine transform matrix. The matrix is in Pixels.
      @since v0.7.1
      */
     virtual CCAffineTransform nodeToWorldTransform(void);
@@ -611,7 +611,7 @@ public:
      */
     CCPoint convertTouchToNodeSpace(CCTouch * touch);
 
-    /** converts a CCTouch (world coordinates) into a local coordiante. This method is AR (Anchor Relative).
+    /** converts a CCTouch (world coordinates) into a local coordinate. This method is AR (Anchor Relative).
      @since v0.7.1
      */
     CCPoint convertTouchToNodeSpaceAR(CCTouch * touch);
@@ -622,7 +622,7 @@ public:
 
 NS_CC_END
 
-#endif // __PLATFOMR_CCNODE_H__
+#endif // __PLATFORM_CCNODE_H__
 
 
 
