@@ -58,8 +58,8 @@ class CCTurnOffTiles : public CCTiledGrid3DAction
     void turnOnTile(ccGridSize pos);
     void turnOffTile(ccGridSize pos);
 
-    static CCTurnOffTiles* create(ccGridSize size, float d);
     static CCTurnOffTiles* create(int s, ccGridSize gridSize, float duration);
+    static CCTurnOffTiles* create(ccGridSize size, float d);
 };
 
 class CCWavesTiles3D : public CCTiledGrid3DAction
