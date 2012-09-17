@@ -199,7 +199,7 @@ public:
             }
             else if (preState == SAX_ARRAY)
             {
-                CCAssert(! m_tArrayStack.empty(), "The state is worng!");
+                CCAssert(! m_tArrayStack.empty(), "The state is wrong!");
                 CCArray* pPreArray = m_tArrayStack.top();
                 pPreArray->addObject(m_pArray);
             }
@@ -305,7 +305,7 @@ public:
             {
                 if (curState == SAX_DICT)
                 {
-                    CCAssert(!m_sCurKey.empty(), "not found key : <integet/real>");
+                    CCAssert(!m_sCurKey.empty(), "key not found : <integer/real>");
                 }
                 
                 m_sCurValue.append(pText->getCString());

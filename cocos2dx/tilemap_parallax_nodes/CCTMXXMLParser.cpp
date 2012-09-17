@@ -453,7 +453,7 @@ void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         }
         else 
         {
-            tileset->m_sSourceImage = m_sResources + "/" + imagename;
+            tileset->m_sSourceImage = m_sResources + (m_sResources.size() ? "/" : "") + imagename;
         }
     } 
     else if(elementName == "data")
