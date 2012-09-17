@@ -534,9 +534,6 @@ CCSpriteFrame * CCNodeLoader::parsePropTypeSpriteFrame(CCNode * pNode, CCNode * 
     CCString * spriteSheet = pCCBReader->readCachedString();
     CCString * spriteFile = pCCBReader->readCachedString();
     
-    CCLog("sprite file %s", spriteFile->getCString());
-    CCLog("sprite sheet %s", spriteSheet->getCString());
-    
     CCSpriteFrame *spriteFrame = NULL;
     if (spriteFile->length() != 0)
     {
@@ -697,7 +694,7 @@ CCString * CCNodeLoader::parsePropTypeFontTTF(CCNode * pNode, CCNode * pParent, 
 
     // CCString * ttfEnding = CCString::create(".ttf");
 
-    // Fix me if it is wrong
+    // TODO Fix me if it is wrong
     /* If the fontTTF comes with the ".ttf" extension, prepend the absolute path. 
      * System fonts come without the ".ttf" extension and do not need the path prepended. */
     /*

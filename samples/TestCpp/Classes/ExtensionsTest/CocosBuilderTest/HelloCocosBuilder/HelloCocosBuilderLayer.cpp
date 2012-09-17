@@ -7,6 +7,7 @@
 #include "../MenuTest/MenuTestLayerLoader.h"
 #include "../ParticleSystemTest/ParticleSystemTestLayerLoader.h"
 #include "../ScrollViewTest/ScrollViewTestLayerLoader.h"
+#include "../AnimationsTest/AnimationsLayerLoader.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
@@ -74,7 +75,7 @@ SEL_CCControlHandler HelloCocosBuilderLayer::onResolveCCBCCControlSelector(CCObj
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onMenuTestClicked", HelloCocosBuilderLayer::onMenuTestClicked);
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onSpriteTestClicked", HelloCocosBuilderLayer::onSpriteTestClicked);
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onButtonTestClicked", HelloCocosBuilderLayer::onButtonTestClicked);
-    //CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onLabelTestClicked", HelloCocosBuilderLayer::onLabelTestClicked);
+    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onAnimationsTestClicked", HelloCocosBuilderLayer::onAnimationsTestClicked);
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onParticleSystemTestClicked", HelloCocosBuilderLayer::onParticleSystemTestClicked);
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onScrollViewTestClicked", HelloCocosBuilderLayer::onScrollViewTestClicked);
 
@@ -101,8 +102,46 @@ void HelloCocosBuilderLayer::onButtonTestClicked(CCObject * pSender, cocos2d::ex
     this->openTest("TestButtons.ccbi", "TestButtonsLayer", ButtonTestLayerLoader::loader());
 }
 
-void HelloCocosBuilderLayer::onLabelTestClicked(CCObject * pSender, cocos2d::extension::CCControlEvent pCCControlEvent) {
-    this->openTest("TestLabels.ccbi", "TestLabelsLayer", LabelTestLayerLoader::loader());
+void HelloCocosBuilderLayer::onAnimationsTestClicked(CCObject * pSender, cocos2d::extension::CCControlEvent pCCControlEvent) {
+    // Load node graph (TestAnimations is a sub class of CCLayer) and retrieve the ccb action manager
+    CCBAnimationManager *actionManager = NULL;
+    
+    /* Create an autorelease CCNodeLoaderLibrary. */
+    CCNodeLoaderLibrary * ccNodeLoaderLibrary = CCNodeLoaderLibrary::newDefaultCCNodeLoaderLibrary();
+    
+    ccNodeLoaderLibrary->registerCCNodeLoader("TestHeaderLayer", TestHeaderLayerLoader::loader());
+    ccNodeLoaderLibrary->registerCCNodeLoader("TestAnimationsLayer", AnimationsTestLayerLoader::loader());
+
+    
+    /* Create an autorelease CCBReader. */
+    cocos2d::extension::CCBReader * ccbReader = new cocos2d::extension::CCBReader(ccNodeLoaderLibrary);
+    ccbReader->autorelease();
+    
+    /* Read a ccbi file. */
+    // Load the scene from the ccbi-file, setting this class as
+    // the owner will cause lblTestTitle to be set by the CCBReader.
+    // lblTestTitle is in the TestHeader.ccbi, which is referenced
+    // from each of the test scenes.
+    CCNode *animationsTest = ccbReader->readNodeGraphFromFile("TestAnimations.ccbi", this, &actionManager);
+    ((AnimationsTestLayer*)animationsTest)->setAnimationManager(actionManager);
+    
+    this->mTestTitleLabelTTF->setString("TestAnimations.ccbi");
+    
+    CCScene * scene = CCScene::create();
+    if(animationsTest != NULL) {
+        scene->addChild(animationsTest);
+    }
+    
+    /* Push the new scene with a fancy transition. */
+    ccColor3B transitionColor;
+    transitionColor.r = 0;
+    transitionColor.g = 0;
+    transitionColor.b = 0;
+    
+    CCDirector::sharedDirector()->pushScene(CCTransitionFade::create(0.5f, scene, transitionColor));
+    
+    
+    //this->openTest("TestAnimations.ccbi", "TestAnimationsLayer", AnimationsTestLayerLoader::loader());
 }
 
 void HelloCocosBuilderLayer::onParticleSystemTestClicked(CCObject * pSender, cocos2d::extension::CCControlEvent pCCControlEvent) {

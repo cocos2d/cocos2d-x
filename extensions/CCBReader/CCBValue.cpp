@@ -95,7 +95,6 @@ CCBValue* CCBValue::create(const void *pPointer)
 
 int CCBValue::getIntValue()
 {
-    CCLog("type is %d", mType);
     assert(mType == kIntValue);
     
     return mValue.nValue;
