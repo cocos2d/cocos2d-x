@@ -979,7 +979,7 @@
 			</dict>
 		</array>
 		<key>customClass</key>
-		<string>TestParticlesLayer</string>
+		<string>TestParticleSystemsLayer</string>
 		<key>displayName</key>
 		<string>CCLayer</string>
 		<key>memberVarAssignmentName</key>

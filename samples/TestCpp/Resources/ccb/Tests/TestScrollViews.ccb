@@ -400,7 +400,7 @@
 			</dict>
 		</array>
 		<key>customClass</key>
-		<string>TestScrollViewsLayers</string>
+		<string>TestScrollViewsLayer</string>
 		<key>displayName</key>
 		<string>TestScrollViews</string>
 		<key>memberVarAssignmentName</key>
