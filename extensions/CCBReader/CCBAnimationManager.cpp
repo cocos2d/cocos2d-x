@@ -184,7 +184,7 @@ CCBSequence* CCBAnimationManager::getSequence(int nSequenceId)
 // Refer to CCBReader::readKeyframe() for the real type of value
 CCActionInterval* CCBAnimationManager::getAction(CCBKeyframe *pKeyframe0, CCBKeyframe *pKeyframe1, const char *pPropName, CCNode *pNode)
 {
-    float duration = pKeyframe1->getTime() - pKeyframe0->getTime();
+    float duration = pKeyframe1->getTime() - (pKeyframe0 ? pKeyframe0->getTime() : 0);
     
     if (strcmp(pPropName, "rotation") == 0)
     {
@@ -325,8 +325,18 @@ void CCBAnimationManager::setAnimatedProperty(const char *pPropName, CCNode *pNo
                 int opacity = ((CCBValue*)pValue)->getByteValue();
                 (dynamic_cast<CCRGBAProtocol*>(pNode))->setOpacity(opacity);
             }
+            else if (strcmp(pPropName, "displayFrame") == 0)
+            {
+                ((CCSprite*)pNode)->setDisplayFrame((CCSpriteFrame*)pValue);
+            }
+            else if (strcmp(pPropName, "color") == 0)
+            {
+                ccColor3BWapper *color = (ccColor3BWapper*)pValue;
+                ((CCSprite*)pNode)->setColor(color->getColor());
+            }
             else 
             {
+                CCLog("unsupported property name is %s", pPropName);
                 CCAssert(false, "unsupported property now");
             }
         }
@@ -489,7 +499,6 @@ void CCBAnimationManager::runAnimations(int nSeqId, float fTweenDuration)
         if (nodeBaseValues)
         {
             CCDictElement* pElement2 = NULL;
-            //CCLog("nodeBaseValues get value for key %d", pElement->getIntKey());
             CCDICT_FOREACH(nodeBaseValues, pElement2)
             {
                 if (seqNodePropNames.find(pElement2->getStrKey()) != seqNodePropNames.end())

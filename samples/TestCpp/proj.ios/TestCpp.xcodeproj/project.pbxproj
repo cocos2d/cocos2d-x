@@ -73,6 +73,7 @@
 		159DFBB51606C7F500555A2F /* TestScrollViewsContentA.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = 159DFB791606C7F500555A2F /* TestScrollViewsContentA.ccbi */; };
 		159DFBB61606C7F500555A2F /* TestSprites.ccb in Resources */ = {isa = PBXBuildFile; fileRef = 159DFB7A1606C7F500555A2F /* TestSprites.ccb */; };
 		159DFBB71606C7F500555A2F /* TestSprites.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = 159DFB7B1606C7F500555A2F /* TestSprites.ccbi */; };
+		159DFBC516070BB300555A2F /* AnimationsTestLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 159DFBC316070BB300555A2F /* AnimationsTestLayer.cpp */; };
 		15AA9D5115B7EC460033D6C2 /* AccelerometerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15AA9C4215B7EC450033D6C2 /* AccelerometerTest.cpp */; };
 		15AA9D5215B7EC460033D6C2 /* ActionManagerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15AA9C4515B7EC450033D6C2 /* ActionManagerTest.cpp */; };
 		15AA9D5315B7EC460033D6C2 /* ActionsEaseTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15AA9C4815B7EC450033D6C2 /* ActionsEaseTest.cpp */; };
@@ -403,6 +404,9 @@
 		159DFB791606C7F500555A2F /* TestScrollViewsContentA.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; path = TestScrollViewsContentA.ccbi; sourceTree = "<group>"; };
 		159DFB7A1606C7F500555A2F /* TestSprites.ccb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = TestSprites.ccb; sourceTree = "<group>"; };
 		159DFB7B1606C7F500555A2F /* TestSprites.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; path = TestSprites.ccbi; sourceTree = "<group>"; };
+		159DFBC216070BB300555A2F /* AnimationsLayerLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationsLayerLoader.h; sourceTree = "<group>"; };
+		159DFBC316070BB300555A2F /* AnimationsTestLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimationsTestLayer.cpp; sourceTree = "<group>"; };
+		159DFBC416070BB300555A2F /* AnimationsTestLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationsTestLayer.h; sourceTree = "<group>"; };
 		15AA9C2D15B7EBDF0033D6C2 /* cocos2dx.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2dx.xcodeproj; path = ../../../cocos2dx/proj.ios/cocos2dx.xcodeproj; sourceTree = "<group>"; };
 		15AA9C4215B7EC450033D6C2 /* AccelerometerTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AccelerometerTest.cpp; sourceTree = "<group>"; };
 		15AA9C4315B7EC450033D6C2 /* AccelerometerTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccelerometerTest.h; sourceTree = "<group>"; };
@@ -1024,6 +1028,17 @@
 			path = Tests;
 			sourceTree = "<group>";
 		};
+		159DFBC116070BB300555A2F /* AnimationsTest */ = {
+			isa = PBXGroup;
+			children = (
+				159DFBC216070BB300555A2F /* AnimationsLayerLoader.h */,
+				159DFBC316070BB300555A2F /* AnimationsTestLayer.cpp */,
+				159DFBC416070BB300555A2F /* AnimationsTestLayer.h */,
+			);
+			name = AnimationsTest;
+			path = ../../../Classes/ExtensionsTest/CocosBuilderTest/AnimationsTest;
+			sourceTree = "<group>";
+		};
 		15AA9C2E15B7EBDF0033D6C2 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -1339,6 +1354,7 @@
 		15AA9CBC15B7EC460033D6C2 /* CocosBuilderTest */ = {
 			isa = PBXGroup;
 			children = (
+				159DFBC116070BB300555A2F /* AnimationsTest */,
 				15AA9CBD15B7EC460033D6C2 /* ButtonTest */,
 				15AA9CC115B7EC460033D6C2 /* CocosBuilderTest.cpp */,
 				15AA9CC215B7EC460033D6C2 /* CocosBuilderTest.h */,
@@ -2664,6 +2680,7 @@
 				155DFCF215FF2CA30014D83E /* CCBKeyframe.cpp in Sources */,
 				155DFCF515FF39570014D83E /* CCBValue.cpp in Sources */,
 				1544C6A616008727003B5127 /* CCNode+CCBRelativePositioning.cpp in Sources */,
+				159DFBC516070BB300555A2F /* AnimationsTestLayer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
