@@ -275,14 +275,14 @@ tImageTGA * tgaLoad(const char *pszFilename)
     return info;
 }
 
-// converts RGB to greyscale
+// converts RGB to grayscale
 void tgaRGBtogreyscale(tImageTGA *psInfo) {
     
     int mode,i,j;
     
     unsigned char *newImageData;
     
-    // if the image is already greyscale do nothing
+    // if the image is already grayscale do nothing
     if (psInfo->pixelDepth == 8)
         return;
     
@@ -296,7 +296,7 @@ void tgaRGBtogreyscale(tImageTGA *psInfo) {
         return;
     }
     
-    // convert pixels: greyscale = o.30 * R + 0.59 * G + 0.11 * B
+    // convert pixels: grayscale = o.30 * R + 0.59 * G + 0.11 * B
     for (i = 0,j = 0; j < psInfo->width * psInfo->height; i +=mode, j++)
         newImageData[j] =    
         (unsigned char)(0.30 * psInfo->imageData[i] + 
@@ -310,7 +310,7 @@ void tgaRGBtogreyscale(tImageTGA *psInfo) {
     // reassign pixelDepth and type according to the new image type
     psInfo->pixelDepth = 8;
     psInfo->type = 3;
-    // reassing imageData to the new array.
+    // reassigning imageData to the new array.
     psInfo->imageData = newImageData;
 }
 
