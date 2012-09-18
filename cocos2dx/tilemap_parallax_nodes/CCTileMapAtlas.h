@@ -93,7 +93,7 @@ private:
     void updateAtlasValues();
 
 protected:
-    //! x,y to altas dicctionary
+    //! x,y to atlas dictionary
     CCDictionary* m_pPosToAtlasIndex;
     //! numbers of tiles to render
     int m_nItemsToRender;

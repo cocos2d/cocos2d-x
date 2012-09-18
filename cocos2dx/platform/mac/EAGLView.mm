@@ -158,8 +158,7 @@ static EAGLView *view;
 
 - (void) dealloc
 {
-	CCLOGINFO(@"cocos2d: deallocing %@", self);
-
+	CCLOGINFO(@"cocos2d: deallocing EAGLView %@", self);
 	[super dealloc];
 }
 	

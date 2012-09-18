@@ -263,7 +263,8 @@ public:
             m_pSelectorTarget = pSel; 
         }
     }
-
+    
+    inline int getScriptHandler() { return m_nScriptHandler; };
 protected:
     /** Target that will be called */
     CCObject*   m_pSelectorTarget;

@@ -2,7 +2,7 @@
 #include "tolua_fix.h"
 #include <stdlib.h>
 
-TOLUA_API void tolua_prepare_ccobject_table(lua_State* L)
+TOLUA_API void toluafix_open(lua_State* L)
 {
     lua_pushstring(L, TOLUA_REFID_PTR_MAPPING);
     lua_newtable(L);
@@ -13,11 +13,11 @@ TOLUA_API void tolua_prepare_ccobject_table(lua_State* L)
     lua_rawset(L, LUA_REGISTRYINDEX);
 }
 
-TOLUA_API int tolua_pushusertype_ccobject(lua_State* L,
-                                          int refid,
-                                          int* p_refid,
-                                          void* ptr,
-                                          const char* type)
+TOLUA_API int toluafix_pushusertype_ccobject(lua_State* L,
+                                             int refid,
+                                             int* p_refid,
+                                             void* ptr,
+                                             const char* type)
 {
     if (ptr == NULL || p_refid == NULL)
     {
@@ -51,9 +51,9 @@ TOLUA_API int tolua_pushusertype_ccobject(lua_State* L,
     return 0;
 }
 
-TOLUA_API int tolua_remove_ccobject_by_refid(lua_State* L, int refid)
+TOLUA_API int toluafix_remove_ccobject_by_refid(lua_State* L, int refid)
 {
-    void* ptr = NULL;
+	void* ptr = NULL;
     const char* type = NULL;
     void** ud = NULL;
     if (refid == 0) return -1;
@@ -144,20 +144,20 @@ TOLUA_API int tolua_remove_ccobject_by_refid(lua_State* L, int refid)
     return 0;
 }
 
-TOLUA_API int tolua_ref_function(lua_State* L, int lo, int def)
+TOLUA_API int toluafix_ref_function(lua_State* L, int lo, int def)
 {    
     if (!lua_isfunction(L, lo)) return 0;
     lua_pushvalue(L, lo);                                           /* stack: ... func */
     return luaL_ref(L, LUA_REGISTRYINDEX);
 }
 
-TOLUA_API void tolua_remove_function_by_refid(lua_State* L, int refid)
+TOLUA_API void toluafix_remove_function_by_refid(lua_State* L, int refid)
 {
     luaL_unref(L, LUA_REGISTRYINDEX, refid);
 }
 
 // check lua value is funciton
-TOLUA_API int tolua_isfunction(lua_State* L, int lo, tolua_Error* err)
+TOLUA_API int toluafix_isfunction(lua_State* L, int lo, const char* type, int def, tolua_Error* err)
 {
     if (lua_gettop(L) >= abs(lo) && lua_isfunction(L, lo))
     {
@@ -169,7 +169,17 @@ TOLUA_API int tolua_isfunction(lua_State* L, int lo, tolua_Error* err)
     return 0;
 }
 
-TOLUA_API void tolua_stack_dump(lua_State* L, const char* label)
+TOLUA_API int toluafix_totable(lua_State* L, int lo, int def)
+{
+    return lo;
+}
+
+TOLUA_API int toluafix_istable(lua_State* L, int lo, const char* type, int def, tolua_Error* err)
+{
+    return tolua_istable(L, lo, def, err);
+}
+
+TOLUA_API void toluafix_stack_dump(lua_State* L, const char* label)
 {
     int i;
     int top = lua_gettop(L);

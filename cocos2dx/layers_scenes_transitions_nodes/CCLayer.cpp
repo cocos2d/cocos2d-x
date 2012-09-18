@@ -123,7 +123,7 @@ void CCLayer::registerWithTouchDispatcher()
 void CCLayer::registerScriptTouchHandler(int nHandler, bool bIsMultiTouches, int nPriority, bool bSwallowsTouches)
 {
     unregisterScriptTouchHandler();
-    m_pScriptHandlerEntry = CCTouchScriptHandlerEntry::entryWithHandler(nHandler, bIsMultiTouches, nPriority, bSwallowsTouches);
+    m_pScriptHandlerEntry = CCTouchScriptHandlerEntry::create(nHandler, bIsMultiTouches, nPriority, bSwallowsTouches);
     m_pScriptHandlerEntry->retain();
 }
 
@@ -138,22 +138,12 @@ void CCLayer::unregisterScriptTouchHandler(void)
 
 int CCLayer::excuteScriptTouchHandler(int nEventType, CCTouch *pTouch)
 {
-    return CCScriptEngineManager::sharedManager()->getScriptEngine()->executeTouchEvent(m_pScriptHandlerEntry->getHandler(), nEventType, pTouch);
+    return CCScriptEngineManager::sharedManager()->getScriptEngine()->executeLayerTouchEvent(this, nEventType, pTouch);
 }
 
 int CCLayer::excuteScriptTouchHandler(int nEventType, CCSet *pTouches)
 {
-    int ret = 0;
-    if (kScriptTypeJavascript == m_eScriptType)
-    {
-        ret = CCScriptEngineManager::sharedManager()->getScriptEngine()->executeTouchesEvent(1, nEventType, pTouches, this);
-    }
-    else if (kScriptTypeLua == m_eScriptType)
-    {
-        ret = CCScriptEngineManager::sharedManager()->getScriptEngine()->executeTouchesEvent(m_pScriptHandlerEntry->getHandler(), nEventType, pTouches, this);
-    }
-    
-    return ret;
+    return CCScriptEngineManager::sharedManager()->getScriptEngine()->executeLayerTouchesEvent(this, nEventType, pTouches);
 }
 
 /// isTouchEnabled getter
@@ -257,7 +247,7 @@ void CCLayer::onEnter()
         pDirector->getAccelerometer()->setDelegate(this);
     }
 
-    // add this layer to concern the kaypad msg
+    // add this layer to concern the keypad msg
     if (m_bIsKeypadEnabled)
     {
         pDirector->getKeypadDispatcher()->addDelegate(this);
@@ -279,7 +269,7 @@ void CCLayer::onExit()
         pDirector->getAccelerometer()->setDelegate(NULL);
     }
 
-    // remove this layer from the delegates who concern the kaypad msg
+    // remove this layer from the delegates who concern the keypad msg
     if (m_bIsKeypadEnabled)
     {
         pDirector->getKeypadDispatcher()->removeDelegate(this);
@@ -301,7 +291,7 @@ void CCLayer::onEnterTransitionDidFinish()
 
 bool CCLayer::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 {
-    if (kScriptTypeJavascript == m_eScriptType || (kScriptTypeLua == m_eScriptType && m_pScriptHandlerEntry))
+    if (kScriptTypeNone != m_eScriptType)
     {
         return excuteScriptTouchHandler(CCTOUCHBEGAN, pTouch) == 0 ? false : true;
     }
@@ -314,7 +304,7 @@ bool CCLayer::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 
 void CCLayer::ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
 {
-    if (kScriptTypeJavascript == m_eScriptType || (kScriptTypeLua == m_eScriptType && m_pScriptHandlerEntry))
+    if (kScriptTypeNone != m_eScriptType)
     {
         excuteScriptTouchHandler(CCTOUCHMOVED, pTouch);
         return;
@@ -326,7 +316,7 @@ void CCLayer::ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
     
 void CCLayer::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
 {
-    if (kScriptTypeJavascript == m_eScriptType || (kScriptTypeLua == m_eScriptType && m_pScriptHandlerEntry))
+    if (kScriptTypeNone != m_eScriptType)
     {
         excuteScriptTouchHandler(CCTOUCHENDED, pTouch);
         return;
@@ -338,7 +328,7 @@ void CCLayer::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
 
 void CCLayer::ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent)
 {
-    if (kScriptTypeJavascript == m_eScriptType || (kScriptTypeLua == m_eScriptType && m_pScriptHandlerEntry))
+    if (kScriptTypeNone != m_eScriptType)
     {
         excuteScriptTouchHandler(CCTOUCHCANCELLED, pTouch);
         return;
@@ -350,7 +340,7 @@ void CCLayer::ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent)
 
 void CCLayer::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
 {
-    if (kScriptTypeJavascript == m_eScriptType || (kScriptTypeLua == m_eScriptType && m_pScriptHandlerEntry))
+    if (kScriptTypeNone != m_eScriptType)
     {
         excuteScriptTouchHandler(CCTOUCHBEGAN, pTouches);
         return;
@@ -362,7 +352,7 @@ void CCLayer::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
 
 void CCLayer::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
 {
-    if (kScriptTypeJavascript == m_eScriptType || (kScriptTypeLua == m_eScriptType && m_pScriptHandlerEntry))
+    if (kScriptTypeNone != m_eScriptType)
     {
         excuteScriptTouchHandler(CCTOUCHMOVED, pTouches);
         return;
@@ -374,7 +364,7 @@ void CCLayer::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
 
 void CCLayer::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
 {
-    if (kScriptTypeJavascript == m_eScriptType || (kScriptTypeLua == m_eScriptType && m_pScriptHandlerEntry))
+    if (kScriptTypeNone != m_eScriptType)
     {
         excuteScriptTouchHandler(CCTOUCHENDED, pTouches);
         return;
@@ -386,7 +376,7 @@ void CCLayer::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
 
 void CCLayer::ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent)
 {
-    if (kScriptTypeJavascript == m_eScriptType || (kScriptTypeLua == m_eScriptType && m_pScriptHandlerEntry))
+    if (kScriptTypeNone != m_eScriptType)
     {
         excuteScriptTouchHandler(CCTOUCHCANCELLED, pTouches);
         return;

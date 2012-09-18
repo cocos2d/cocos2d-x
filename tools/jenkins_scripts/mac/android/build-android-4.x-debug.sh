@@ -10,7 +10,7 @@ antcompile()
 	sed '/target=/s/=.*$/=android-14/' ant.properties > anttmp.properties
 	cp anttmp.properties ant.properties
 	rm anttmp.properties
-	ant release
+	ant debug
 	compileresult=$[$compileresult+$?]
         if [ $IsTestCpp == 1 ] && [ $? == 0 ]
         then
@@ -23,7 +23,7 @@ antcompile()
 	sed '/target=/s/=.*$/=android-15/' ant.properties > anttmp.properties
 	cp anttmp.properties ant.properties
 	rm anttmp.properties
-	ant release
+	ant debug
 	compileresult=$[$compileresult+$?]
         if [ $IsTestCpp == 1 ] && [ $? == 0 ]
         then
@@ -46,11 +46,11 @@ ROOT=$(pwd)
 IsTestCpp=1
 
 #copy configuration files to target.
-cp $ROOT/tools/JenkinsScript/ant.properties $ROOT/samples/TestCpp/proj.android
-cp $ROOT/tools/JenkinsScript/build.xml $ROOT/samples/TestCpp/proj.android
-cp $ROOT/tools/JenkinsScript/Mac/rootconfig-Mac.sh $ROOT/samples/TestCpp/proj.android
+cp $ROOT/tools/jenkins_scripts/ant.properties $ROOT/samples/TestCpp/proj.android
+cp $ROOT/tools/jenkins_scripts/build.xml $ROOT/samples/TestCpp/proj.android
+cp $ROOT/tools/jenkins_scripts/mac/rootconfig-mac.sh $ROOT/samples/TestCpp/proj.android
 cd samples/TestCpp/proj.android
-sh rootconfig-Mac.sh TestCpp
+sh rootconfig-mac.sh TestCpp
 sh build_native.sh
 
 #update android project configuration files
@@ -61,22 +61,22 @@ antcompile
 
 IsTestCpp=0
 
-cp $ROOT/tools/JenkinsScript/ant.properties $ROOT/samples/HelloCpp/proj.android
-cp $ROOT/tools/JenkinsScript/build.xml $ROOT/samples/HelloCpp/proj.android
-cp $ROOT/tools/JenkinsScript/Mac/rootconfig-Mac.sh $ROOT/samples/HelloCpp/proj.android 
+cp $ROOT/tools/jenkins_scripts/ant.properties $ROOT/samples/HelloCpp/proj.android
+cp $ROOT/tools/jenkins_scripts/build.xml $ROOT/samples/HelloCpp/proj.android
+cp $ROOT/tools/jenkins_scripts/mac/rootconfig-mac.sh $ROOT/samples/HelloCpp/proj.android 
 cd ../../HelloCpp/proj.android
-sh rootconfig-Mac.sh HelloCpp
+sh rootconfig-mac.sh HelloCpp
 sh build_native.sh
 cd ..
 android update project -p proj.android
 cd proj.android
 antcompile
 
-cp $ROOT/tools/JenkinsScript/ant.properties $ROOT/samples/HelloLua/proj.android
-cp $ROOT/tools/JenkinsScript/build.xml $ROOT/samples/HelloLua/proj.android
-cp $ROOT/tools/JenkinsScript/Mac/rootconfig-Mac.sh $ROOT/samples/HelloLua/proj.android  
+cp $ROOT/tools/jenkins_scripts/ant.properties $ROOT/samples/HelloLua/proj.android
+cp $ROOT/tools/jenkins_scripts/build.xml $ROOT/samples/HelloLua/proj.android
+cp $ROOT/tools/jenkins_scripts/mac/rootconfig-mac.sh $ROOT/samples/HelloLua/proj.android  
 cd ../../HelloLua/proj.android
-sh rootconfig-Mac.sh HelloLua
+sh rootconfig-mac.sh HelloLua
 sh build_native.sh
 cd ..
 android update project -p proj.android

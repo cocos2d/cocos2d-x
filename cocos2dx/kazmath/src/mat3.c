@@ -55,7 +55,7 @@ const kmScalar kmMat3Determinant(const kmMat3* pIn)
     m = | 1  4  7 | 1  4 |
         | 2  5  8 | 2  5 |
     now sum up the products of the diagonals going to the right (i.e. 0,4,8)
-    and substract the products of the other diagonals (i.e. 2,4,6)
+    and subtract the products of the other diagonals (i.e. 2,4,6)
     */
 
     output = pIn->mat[0] * pIn->mat[4] * pIn->mat[8] + pIn->mat[1] * pIn->mat[5] * pIn->mat[6] + pIn->mat[2] * pIn->mat[3] * pIn->mat[7];

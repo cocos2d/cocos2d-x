@@ -44,7 +44,7 @@ CCObject::CCObject(void)
     m_uID = ++uObjectCount;
     m_nLuaID = 0;
 
-    // when the object is created, the refrence count of it is 1
+    // when the object is created, the reference count of it is 1
     m_uReference = 1;
     m_bManaged = false;
 }
@@ -61,14 +61,14 @@ CCObject::~CCObject(void)
     // if the object is referenced by Lua engine, remove it
     if (m_nLuaID)
     {
-        CCScriptEngineManager::sharedManager()->getScriptEngine()->removeCCObjectByID(m_nLuaID);
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptObjectByCCObject(this);
     }
     else
     {
         CCScriptEngineProtocol* pEngine = CCScriptEngineManager::sharedManager()->getScriptEngine();
         if (pEngine != NULL && pEngine->getScriptType() == kScriptTypeJavascript)
         {
-            pEngine->removeJSObjectByCCObject(this);
+            pEngine->removeScriptObjectByCCObject(this);
         }
     }
 }
