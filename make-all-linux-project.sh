@@ -6,6 +6,7 @@ TXTCOLOR_GREEN="\033[0;32m"
 
 COCOS2DX20_TRUNK=`pwd`
 OUTPUT_DEBUG=$COCOS2DX20_TRUNK/lib/linux/Debug/
+OUTPUT_RELEASE=$COCOS2DX20_TRUNK/lib/linux/Release/
 
 check_make_result()
 {
@@ -55,30 +56,51 @@ if ! test -d $OUTPUT_DEBUG; then
 	mkdir $OUTPUT_DEBUG -p
 fi
 
-make -C $COCOS2DX20_TRUNK/external/Box2D/proj.linux
+make -C $COCOS2DX20_TRUNK/external/Box2D/proj.linux clean
+make -C $COCOS2DX20_TRUNK/external/Box2D/proj.linux debug
 check_make_result
 cp $COCOS2DX20_TRUNK/external/Box2D/proj.linux/libbox2d.a $OUTPUT_DEBUG
 
-make -C $COCOS2DX20_TRUNK/external/chipmunk/proj.linux
+make -C $COCOS2DX20_TRUNK/external/Box2D/proj.linux clean
+make -C $COCOS2DX20_TRUNK/external/Box2D/proj.linux release
+check_make_result
+cp $COCOS2DX20_TRUNK/external/Box2D/proj.linux/libbox2d.a $OUTPUT_RELEASE
+
+make -C $COCOS2DX20_TRUNK/external/chipmunk/proj.linux clean
+make -C $COCOS2DX20_TRUNK/external/chipmunk/proj.linux debug
 check_make_result
 cp $COCOS2DX20_TRUNK/external/chipmunk/proj.linux/libchipmunk.a $OUTPUT_DEBUG
 
-make -C $COCOS2DX20_TRUNK/cocos2dx/proj.linux
+make -C $COCOS2DX20_TRUNK/external/chipmunk/proj.linux clean
+make -C $COCOS2DX20_TRUNK/external/chipmunk/proj.linux release
+check_make_result
+cp $COCOS2DX20_TRUNK/external/chipmunk/proj.linux/libchipmunk.a $OUTPUT_RELEASE
+
+make -C $COCOS2DX20_TRUNK/cocos2dx/proj.linux clean
+make -C $COCOS2DX20_TRUNK/cocos2dx/proj.linux debug
 check_make_result
 cp $COCOS2DX20_TRUNK/cocos2dx/proj.linux/libcocos2d.so $OUTPUT_DEBUG
+rm $COCOS2DX20_TRUNK/cocos2dx/proj.linux/libcocos2d.so
 
-make -C $COCOS2DX20_TRUNK/CocosDenshion/proj.linux
+make -C $COCOS2DX20_TRUNK/cocos2dx/proj.linux clean
+make -C $COCOS2DX20_TRUNK/cocos2dx/proj.linux release
+check_make_result
+cp $COCOS2DX20_TRUNK/cocos2dx/proj.linux/libcocos2d.so $OUTPUT_RELEASE
+rm $COCOS2DX20_TRUNK/cocos2dx/proj.linux/libcocos2d.so
+
+make -C $COCOS2DX20_TRUNK/CocosDenshion/proj.linux clean
+make -C $COCOS2DX20_TRUNK/CocosDenshion/proj.linux debug
 check_make_result
 cp $COCOS2DX20_TRUNK/CocosDenshion/proj.linux/libcocosdenshion.so $OUTPUT_DEBUG
 
-
-make -C $COCOS2DX20_TRUNK/samples/TestCpp/proj.linux clean
-make -C $COCOS2DX20_TRUNK/samples/TestCpp/proj.linux
+make -C $COCOS2DX20_TRUNK/CocosDenshion/proj.linux clean
+make -C $COCOS2DX20_TRUNK/CocosDenshion/proj.linux release
 check_make_result
-make -C $COCOS2DX20_TRUNK/samples/HelloCpp/proj.linux clean
-make -C $COCOS2DX20_TRUNK/samples/HelloCpp/proj.linux
-check_make_result
+cp $COCOS2DX20_TRUNK/CocosDenshion/proj.linux/libcocosdenshion.so $OUTPUT_RELEASE
 
-#cd $COCOS2DX20_TRUNK/tests/proj.linux
-#./cocos2dx-test
-#cd -
+#make -C $COCOS2DX20_TRUNK/samples/TestCpp/proj.linux clean
+#make -C $COCOS2DX20_TRUNK/samples/TestCpp/proj.linux
+#check_make_result
+#make -C $COCOS2DX20_TRUNK/samples/HelloCpp/proj.linux clean
+#make -C $COCOS2DX20_TRUNK/samples/HelloCpp/proj.linux
+#check_make_result
