@@ -152,7 +152,10 @@ public:
 						pwszBuffer = NULL;
 					}
 				}
-				fontPath.size()>0?(m_curFontPath = fontPath):(m_curFontPath.clear());
+				if (fontPath.size() > 0)
+					m_curFontPath = fontPath;
+				else
+					m_curFontPath.clear();
 				// register temp font
 				if (m_curFontPath.size() > 0)
 				{
