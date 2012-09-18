@@ -22,22 +22,31 @@ if [ -z "${PYTHON_BIN+aaa}" ]; then
     PYTHON_BIN="/usr/bin/python2.7"
 fi
 
+# find current dir
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
 # paths with defaults hardcoded to relative paths
 
-if [ -z "${CXX_GENERATOR_ROOT+aaa}" ]; then
-    CXX_GENERATOR_ROOT="$PWD/submodules/cxx-generator"
-fi
-
 if [ -z "${COCOS2DX_ROOT+aaa}" ]; then
-    COCOS2DX_ROOT="$PWD/submodules/cocos2d-x"
+    COCOS2DX_ROOT="$DIR/../../"
 fi
 
-echo "CLANG_ROOT: $CLANG_ROOT"
-echo "CXX_GENERATOR_ROOT: $CXX_GENERATOR_ROOT"
-echo "COCOS2DX_ROOT: $COCOS2DX_ROOT"
-echo "PYTHON_BIN: $PYTHON_BIN"
+if [ -z "${CXX_GENERATOR_ROOT+aaa}" ]; then
+    CXX_GENERATOR_ROOT="$COCOS2DX_ROOT/tools/cxx-generator"
+fi
 
-# Generate bindings for cocos2dx again
-echo "Generating bindings for cocos2dx again..."
+if [ -z "${TOJS_ROOT+aaa}" ]; then
+    TO_JS_ROOT="$COCOS2DX_ROOT/tools/tojs"
+fi
+
+echo "Paths"
+echo "    CLANG_ROOT: $CLANG_ROOT"
+echo "    PYTHON_BIN: $PYTHON_BIN"
+echo "    COCOS2DX_ROOT: $COCOS2DX_ROOT"
+echo "    CXX_GENERATOR_ROOT: $CXX_GENERATOR_ROOT"
+echo "    TO_JS_ROOT: $TO_JS_ROOT"
+
+# Generate bindings for cocos2dx
+echo "Generating bindings for cocos2dx..."
 set -x
-LD_LIBRARY_PATH=${CLANG_ROOT}/lib $PYTHON_BIN ${CXX_GENERATOR_ROOT}/generator.py ${APP_ANDROID_ROOT}/cocos2dx.ini -s cocos2d-x -o ${COCOS2DX_ROOT}/scripting/javascript/bindings/generated
+LD_LIBRARY_PATH=${CLANG_ROOT}/lib $PYTHON_BIN ${CXX_GENERATOR_ROOT}/generator.py ${TO_JS_ROOT}/cocos2dx.ini -s cocos2d-x -o ${COCOS2DX_ROOT}/scripting/javascript/bindings/generated
