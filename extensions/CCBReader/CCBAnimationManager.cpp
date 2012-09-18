@@ -398,11 +398,11 @@ CCActionInterval* CCBAnimationManager::getEaseAction(CCActionInterval *pAction, 
     }
     else if (nEasingType == kCCBKeyframeEasingBounceOut)
     {
-        return CCEaseBackOut::create(pAction);
+        return CCEaseBounceOut::create(pAction);
     }
     else if (nEasingType == kCCBKeyframeEasingBounceInOut)
     {
-        return CCEaseBackInOut::create(pAction);
+        return CCEaseBounceInOut::create(pAction);
     }
     else if (nEasingType == kCCBKeyframeEasingElasticIn)
     {
@@ -677,7 +677,8 @@ void CCBRotateTo::startWithTarget(CCNode *pNode)
 
 void CCBRotateTo::update(float time)
 {
-    m_pTarget->setRotation(mStartAngle + mDstAngle * time);
+    m_pTarget->setRotation(mStartAngle + (mDiffAngle * time))
+    ;
 }
 
 NS_CC_EXT_END
