@@ -410,15 +410,7 @@ float * CCNodeLoader::parsePropTypeScaleLock(CCNode * pNode, CCNode * pParent, C
     
     int type = pCCBReader->readInt(false);
     
-    if (type == kCCBScaleTypeMultiplyResolution) 
-    {
-        x *= pCCBReader->getResolutionScale();
-        y *= pCCBReader->getResolutionScale();
-    }
-    
-    float * scaleLock = new float[2];
-    scaleLock[0] = x;
-    scaleLock[1] = y;
+    setRelativeScale(pNode, x, y, type, pPropertyName);
     
     if (pCCBReader->getAnimatedProperties()->find(pPropertyName) != pCCBReader->getAnimatedProperties()->end())
     {
@@ -428,6 +420,16 @@ float * CCNodeLoader::parsePropTypeScaleLock(CCNode * pNode, CCNode * pParent, C
                                              NULL);
         pCCBReader->getAnimationManager()->setBaseValue(baseValue, pNode, pPropertyName);
     }
+    
+    if (type == kCCBScaleTypeMultiplyResolution) 
+    {
+        x *= pCCBReader->getResolutionScale();
+        y *= pCCBReader->getResolutionScale();
+    }
+    
+    float * scaleLock = new float[2];
+    scaleLock[0] = x;
+    scaleLock[1] = y;
 
     return scaleLock;
 }
