@@ -53,7 +53,7 @@ void CCGrabber::grab(CCTexture2D *pTexture)
     GLuint status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
     if (status != GL_FRAMEBUFFER_COMPLETE)
     {
-        CCAssert(0, "Frame Grabber: could not attach texture to frmaebuffer");
+        CCAssert(0, "Frame Grabber: could not attach texture to framebuffer");
     }
 
     glBindFramebuffer(GL_FRAMEBUFFER, m_oldFBO);
