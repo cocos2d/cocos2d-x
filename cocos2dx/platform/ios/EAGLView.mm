@@ -577,7 +577,7 @@ static EAGLView *view = 0;
 /* If text can be selected, it can be marked. Marked text represents provisionally
  * inserted text that has yet to be confirmed by the user.  It requires unique visual
  * treatment in its display.  If there is any marked text, the selection, whether a
- * caret or an extended range, always resides witihin.
+ * caret or an extended range, always resides within.
  *
  * Setting marked text either replaces the existing marked text or, if none is present,
  * inserts it from the current selection. */ 

@@ -130,7 +130,7 @@ public:
     /** called after the transition finishes */
     void finish(void);
 
-    /** used by some transitions to hide the outter scene */
+    /** used by some transitions to hide the outer scene */
     void hideOutShowIn(void);
 
 protected:
@@ -266,7 +266,7 @@ public:
 
     /** initializes the scenes */
     virtual void initScenes(void);
-    /** returns the action that will be performed by the incomming and outgoing scene */
+    /** returns the action that will be performed by the incoming and outgoing scene */
     virtual CCActionInterval* action(void);
 
     virtual void onEnter();
@@ -290,7 +290,7 @@ public:
 
     /** initializes the scenes */
     virtual void initScenes(void);
-    /** returns the action that will be performed by the incomming and outgoing scene */
+    /** returns the action that will be performed by the incoming and outgoing scene */
     virtual CCActionInterval* action(void);
 
     TRANSITION_CREATE_FUNC(CCTransitionSlideInR);
@@ -310,7 +310,7 @@ public:
 
     /** initializes the scenes */
     virtual void initScenes(void);
-    /** returns the action that will be performed by the incomming and outgoing scene */
+    /** returns the action that will be performed by the incoming and outgoing scene */
     virtual CCActionInterval* action(void);
 
     TRANSITION_CREATE_FUNC(CCTransitionSlideInB);
@@ -330,7 +330,7 @@ public:
 
     /** initializes the scenes */
     virtual void initScenes(void);
-    /** returns the action that will be performed by the incomming and outgoing scene */
+    /** returns the action that will be performed by the incoming and outgoing scene */
     virtual CCActionInterval* action(void);
 
     TRANSITION_CREATE_FUNC(CCTransitionSlideInT);

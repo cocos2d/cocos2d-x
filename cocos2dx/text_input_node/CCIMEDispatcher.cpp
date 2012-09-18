@@ -160,7 +160,7 @@ bool CCIMEDispatcher::attachDelegateWithIME(CCIMEDelegate * pDelegate)
             break;
         }
 
-        // havn't delegate attached with IME yet
+        // delegate hasn't attached to IME yet
         CC_BREAK_IF(! pDelegate->canAttachWithIME());
 
         m_pImpl->m_DelegateWithIme = *iter;
@@ -177,7 +177,7 @@ bool CCIMEDispatcher::detachDelegateWithIME(CCIMEDelegate * pDelegate)
     {
         CC_BREAK_IF(! m_pImpl || ! pDelegate);
 
-        // if pDelegate is not the current delegate attached with ime, return
+        // if pDelegate is not the current delegate attached to IME, return
         CC_BREAK_IF(m_pImpl->m_DelegateWithIme != pDelegate);
 
         CC_BREAK_IF(! pDelegate->canDetachWithIME());
@@ -219,7 +219,7 @@ void CCIMEDispatcher::dispatchInsertText(const char * pText, int nLen)
     {
         CC_BREAK_IF(! m_pImpl || ! pText || nLen <= 0);
 
-        // there is no delegate attach with ime
+        // there is no delegate attached to IME
         CC_BREAK_IF(! m_pImpl->m_DelegateWithIme);
 
         m_pImpl->m_DelegateWithIme->insertText(pText, nLen);
@@ -232,7 +232,7 @@ void CCIMEDispatcher::dispatchDeleteBackward()
     {
         CC_BREAK_IF(! m_pImpl);
 
-        // there is no delegate attach with ime
+        // there is no delegate attached to IME
         CC_BREAK_IF(! m_pImpl->m_DelegateWithIme);
 
         m_pImpl->m_DelegateWithIme->deleteBackward();

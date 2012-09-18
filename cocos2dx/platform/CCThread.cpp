@@ -24,8 +24,8 @@ THE SOFTWARE.
 
 #include "CCThread.h"
 
-// iOS already has a CCThread.mm
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS)
+// iOS and Mac already has a CCThread.mm
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS && CC_TARGET_PLATFORM != CC_PLATFORM_MAC)
 
 NS_CC_BEGIN
 
