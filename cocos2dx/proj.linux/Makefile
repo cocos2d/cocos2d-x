@@ -1,8 +1,8 @@
 CC      = gcc
 CXX     = g++
 TARGET	= libcocos2d.so
-CCFLAGS = -Wall -g -fPIC #-O2 
-CXXFLAGS = -Wall -g -fPIC #-O2 
+CCFLAGS = -Wall -fPIC
+CXXFLAGS = -Wall -fPIC
 VISIBILITY = 
 
 LIBS = 
@@ -202,17 +202,26 @@ SHAREDLIBS += -lglfw -lGL -lcurl
 SHAREDLIBS += -Wl,-rpath,../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib
 SHAREDLIBS += -L../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib -lGLEW
 
+debug: CCFLAGS += -g3 -O0
+debug: CXXFLAGS += -g3 -O0
+debug: DEFINES += -DDEBUG
+debug: $(TARGET)
+
+release: CCFLAGS += -O3
+release: CXXFLAGS += -O3
+release: DEFINES += -DNDEBUG
+release: $(TARGET)
 
 ####### Build rules
 $(TARGET): $(OBJECTS) 
 	$(CXX) $(CXXFLAGS) $(INCLUDES) $(DEFINES) $(OBJECTS) -shared -o $(TARGET) $(SHAREDLIBS) $(STATICLIBS) $(LIBS)
-	
+
 ####### Compile
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) $(INCLUDES) $(DEFINES) $(VISIBILITY) -c $< -o $@
 
 %.o: %.c
 	$(CC) $(CCFLAGS) $(INCLUDES) $(DEFINES) $(VISIBILITY) -c $< -o $@
-		
+
 clean: 
 	rm -f $(OBJECTS) $(TARGET) core
