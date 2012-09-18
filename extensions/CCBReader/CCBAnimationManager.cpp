@@ -299,7 +299,7 @@ void CCBAnimationManager::setAnimatedProperty(const char *pPropName, CCNode *pNo
         }
         else if (strcmp(pPropName, "scale") == 0)
         {
-            // Get position type
+            // Get scale type
             CCArray *array = (CCArray*)getBaseValue(pNode, pPropName);
             int type = ((CCBValue*)array->objectAtIndex(2))->getIntValue();
             
@@ -314,7 +314,7 @@ void CCBAnimationManager::setAnimatedProperty(const char *pPropName, CCNode *pNo
         {
             // [node setValue:value forKey:name];
 
-            // TODO only handle rotation, opacity, 
+            // TODO only handle rotation, opacity, displayFrame, color
             if (strcmp(pPropName, "rotation") == 0)
             {
                 float rotate = ((CCBValue*)pValue)->getFloatValue();
@@ -374,7 +374,7 @@ CCActionInterval* CCBAnimationManager::getEaseAction(CCActionInterval *pAction, 
     }
     else if (nEasingType == kCCBKeyframeEasingCubicOut)
     {
-        return CCEaseInOut::create(pAction, fEasingOpt);
+        return CCEaseOut::create(pAction, fEasingOpt);
     }
     else if (nEasingType == kCCBKeyframeEasingCubicInOut)
     {
@@ -485,9 +485,9 @@ void CCBAnimationManager::runAnimations(int nSeqId, float fTweenDuration)
             CCDictElement* pElement1 = NULL;
             CCDICT_FOREACH(seqNodeProps, pElement1)
             {
-                const char *propNmae = pElement1->getStrKey();
-                CCBSequenceProperty *seqProp = (CCBSequenceProperty*)seqNodeProps->objectForKey(propNmae);
-                seqNodePropNames.insert(propNmae);
+                const char *propName = pElement1->getStrKey();
+                CCBSequenceProperty *seqProp = (CCBSequenceProperty*)seqNodeProps->objectForKey(propName);
+                seqNodePropNames.insert(propName);
                 
                 setFirstFrame(node, seqProp, fTweenDuration);
                 runAction(node, seqProp, fTweenDuration);
@@ -501,13 +501,13 @@ void CCBAnimationManager::runAnimations(int nSeqId, float fTweenDuration)
             CCDictElement* pElement2 = NULL;
             CCDICT_FOREACH(nodeBaseValues, pElement2)
             {
-                if (seqNodePropNames.find(pElement2->getStrKey()) != seqNodePropNames.end())
+                if (seqNodePropNames.find(pElement2->getStrKey()) == seqNodePropNames.end())
                 {
                     CCObject *value = pElement2->getObject();
                     
                     if (value)
                     {
-                        setAnimatedProperty(pElement2->getStrKey(), node, value, fTweenDuration);
+                       setAnimatedProperty(pElement2->getStrKey(), node, value, fTweenDuration);
                     }
                 }
             }

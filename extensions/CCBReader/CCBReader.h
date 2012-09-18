@@ -177,7 +177,7 @@ private:
     CCObject *mOwner;
     
     CCBAnimationManager *mActionManager;
-    std::set<std::string> mAnimatedProps;
+    std::set<std::string> *mAnimatedProps;
 
     CCNodeLoaderLibrary *mCCNodeLoaderLibrary;
     CCNodeLoaderListener *mCCNodeLoaderListener;
@@ -214,7 +214,7 @@ public:
     void setAnimationManager(CCBAnimationManager *pAnimationManager);
     
     // Used in CCNodeLoader::parseProperties()
-    std::set<std::string>& getAnimatedProperties();
+    std::set<std::string>* getAnimatedProperties();
     std::set<std::string>& getLoadedSpriteSheet();
     CCObject* getOwner();
 

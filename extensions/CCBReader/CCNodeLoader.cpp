@@ -3,6 +3,7 @@
 #include "CCBMemberVariableAssigner.h"
 #include "CCBAnimationManager.h"
 #include "CCData.h"
+#include "CCNode+CCBRelativePositioning.h"
 
 using namespace std;
 
@@ -322,43 +323,10 @@ CCPoint CCNodeLoader::parsePropTypePosition(CCNode * pNode, CCNode * pParent, CC
     
     CCSize containerSize = pCCBReader->getAnimationManager()->getContainerSize(pParent);
     
-    switch (type) 
-    {
-        case kCCBPositionTypeRelativeBottomLeft: 
-        {
-            /* Nothing. */
-            break;
-        }
-        case kCCBPositionTypeRelativeTopLeft: 
-        {
-            y = containerSize.height - y;
-            break;
-        }
-        case kCCBPositionTypeRelativeTopRight: 
-        {
-            x = containerSize.width - x;
-            y = containerSize.height - y;
-            break;
-        }
-        case kCCBPositionTypeRelativeBottomRight: 
-        {
-            x = containerSize.width - x;
-            break;
-        }
-        case kCCBPositionTypePercent: 
-        {
-            x = (int)(containerSize.width * x / 100.0f);
-            y = (int)(containerSize.height * y / 100.0f);
-            break;
-        }
-        case kCCBPositionTypeMultiplyResolution:
-        {
-            x *= CCBReader::getResolutionScale();
-            y *= CCBReader::getResolutionScale();
-        }
-    }
+    CCPoint pt = getAbsolutePosition(ccp(x,y), type, containerSize, pPropertyName);
+    pNode->setPosition(getAbsolutePosition(pt, type, containerSize, pPropertyName));;
     
-    if (pCCBReader->getAnimatedProperties().find(pPropertyName) != pCCBReader->getAnimatedProperties().end())
+    if (pCCBReader->getAnimatedProperties()->find(pPropertyName) != pCCBReader->getAnimatedProperties()->end())
     {
         CCArray *baseValue = CCArray::create(CCBValue::create(x),
                                              CCBValue::create(y),
@@ -367,7 +335,7 @@ CCPoint CCNodeLoader::parsePropTypePosition(CCNode * pNode, CCNode * pParent, CC
         pCCBReader->getAnimationManager()->setBaseValue(baseValue, pNode, pPropertyName);
     }
 
-    return CCPoint(x, y);
+    return pt;
 }
 
 CCPoint CCNodeLoader::parsePropTypePoint(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader) 
@@ -452,7 +420,7 @@ float * CCNodeLoader::parsePropTypeScaleLock(CCNode * pNode, CCNode * pParent, C
     scaleLock[0] = x;
     scaleLock[1] = y;
     
-    if (pCCBReader->getAnimatedProperties().find(pPropertyName) != pCCBReader->getAnimatedProperties().end())
+    if (pCCBReader->getAnimatedProperties()->find(pPropertyName) != pCCBReader->getAnimatedProperties()->end())
     {
         CCArray *baseValue = CCArray::create(CCBValue::create(x),
                                              CCBValue::create(y),
@@ -470,7 +438,7 @@ float CCNodeLoader::parsePropTypeFloat(CCNode * pNode, CCNode * pParent, CCBRead
 
 float CCNodeLoader::parsePropTypeDegrees(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader, const char *pPropertyName) {
     float ret = pCCBReader->readFloat();
-    if (pCCBReader->getAnimatedProperties().find(pPropertyName) != pCCBReader->getAnimatedProperties().end())
+    if (pCCBReader->getAnimatedProperties()->find(pPropertyName) != pCCBReader->getAnimatedProperties()->end())
     {
         CCBValue *value = CCBValue::create(ret);
         pCCBReader->getAnimationManager()->setBaseValue(value, pNode, pPropertyName);
@@ -519,7 +487,7 @@ bool CCNodeLoader::parsePropTypeCheck(CCNode * pNode, CCNode * pParent, CCBReade
 {
     bool ret = pCCBReader->readBool();
     
-    if (pCCBReader->getAnimatedProperties().find(pPropertyName) != pCCBReader->getAnimatedProperties().end())
+    if (pCCBReader->getAnimatedProperties()->find(pPropertyName) != pCCBReader->getAnimatedProperties()->end())
     {
         CCBValue *value = CCBValue::create(ret);
         pCCBReader->getAnimationManager()->setBaseValue(value, pNode, pPropertyName);
@@ -557,7 +525,7 @@ CCSpriteFrame * CCNodeLoader::parsePropTypeSpriteFrame(CCNode * pNode, CCNode * 
             spriteFrame = frameCache->spriteFrameByName(spriteFile->getCString());
         }
         
-        if (pCCBReader->getAnimatedProperties().find(pPropertyName) != pCCBReader->getAnimatedProperties().end())
+        if (pCCBReader->getAnimatedProperties()->find(pPropertyName) != pCCBReader->getAnimatedProperties()->end())
         {
             pCCBReader->getAnimationManager()->setBaseValue(spriteFrame, pNode, pPropertyName);
         }
@@ -607,7 +575,7 @@ unsigned char CCNodeLoader::parsePropTypeByte(CCNode * pNode, CCNode * pParent, 
 {
     unsigned char ret = pCCBReader->readByte();
     
-    if (pCCBReader->getAnimatedProperties().find(pPropertyName) != pCCBReader->getAnimatedProperties().end())
+    if (pCCBReader->getAnimatedProperties()->find(pPropertyName) != pCCBReader->getAnimatedProperties()->end())
     {
         pCCBReader->getAnimationManager()->setBaseValue(CCBValue::create(ret), pNode, pPropertyName);
     }
@@ -621,7 +589,7 @@ ccColor3B CCNodeLoader::parsePropTypeColor3(CCNode * pNode, CCNode * pParent, CC
     unsigned char blue = pCCBReader->readByte();
     
     ccColor3B color = { red, green, blue };
-    if (pCCBReader->getAnimatedProperties().find(pPropertyName) != pCCBReader->getAnimatedProperties().end())
+    if (pCCBReader->getAnimatedProperties()->find(pPropertyName) != pCCBReader->getAnimatedProperties()->end())
     {
         ccColor3BWapper *value = ccColor3BWapper::create(color);
         pCCBReader->getAnimationManager()->setBaseValue(value, pNode, pPropertyName);

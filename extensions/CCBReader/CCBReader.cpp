@@ -64,6 +64,7 @@ CCBReader::CCBReader(CCNodeLoaderLibrary * pCCNodeLoaderLibrary, CCBMemberVariab
 , mCurrentBit(-1)
 , mOwner(NULL)
 , mActionManager(NULL)
+, mAnimatedProps(NULL)
 {
     this->mCCNodeLoaderLibrary = pCCNodeLoaderLibrary;
     this->mCCNodeLoaderLibrary->retain();
@@ -79,6 +80,7 @@ CCBReader::CCBReader(CCBReader * pCCBReader)
 , mCurrentBit(-1)
 , mOwner(NULL)
 , mActionManager(NULL)
+, mAnimatedProps(NULL)
 {
     this->mLoadedSpriteSheets = pCCBReader->mLoadedSpriteSheets;
     this->mCCNodeLoaderLibrary = pCCBReader->mCCNodeLoaderLibrary;
@@ -100,6 +102,7 @@ CCBReader::CCBReader()
 , mCCNodeLoaderListener(NULL)
 , mCCBMemberVariableAssigner(NULL)
 , mCCBSelectorResolver(NULL)
+, mAnimatedProps(NULL)
 {}
 
 CCBReader::~CCBReader() {
@@ -161,7 +164,7 @@ CCBSelectorResolver * CCBReader::getCCBSelectorResolver() {
     return this->mCCBSelectorResolver;
 }
 
-set<string>& CCBReader::getAnimatedProperties()
+set<string>* CCBReader::getAnimatedProperties()
 {
     return mAnimatedProps;
 }
@@ -477,6 +480,7 @@ CCNode * CCBReader::readNodeGraph(CCNode * pParent) {
     
     // Read animated properties
     CCDictionary *seqs = CCDictionary::create();
+    mAnimatedProps = new set<string>();
     
     int numSequence = readInt(false);
     for (int i = 0; i < numSequence; ++i)
@@ -493,7 +497,7 @@ CCNode * CCBReader::readNodeGraph(CCNode * pParent) {
             
             seqProp->setName(readCachedString()->getCString());
             seqProp->setType(readInt(false));
-            mAnimatedProps.insert(seqProp->getName());
+            mAnimatedProps->insert(seqProp->getName());
             
             int numKeyframes = readInt(false);
             
@@ -569,6 +573,9 @@ CCNode * CCBReader::readNodeGraph(CCNode * pParent) {
         }
     }
 #endif // CCB_ENABLE_JAVASCRIPT
+    
+    delete mAnimatedProps;
+    mAnimatedProps = NULL;
 
     /* Read and add children. */
     int numChildren = this->readInt(false);
