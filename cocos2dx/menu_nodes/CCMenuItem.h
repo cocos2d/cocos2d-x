@@ -65,7 +65,7 @@ public:
     , m_bIsEnabled(false)            
     , m_pListener(NULL)            
     , m_pfnSelector(NULL)
-    , m_nScriptHandler(0)
+    , m_nScriptTapHandler(0)
     {}
     virtual ~CCMenuItem();
     /** Creates a CCMenuItem with a target/selector 
@@ -88,9 +88,10 @@ public:
     virtual void unselected();
     
     /** Register menu handler script function */
-    virtual void registerScriptHandler(int nHandler);
-    virtual void unregisterScriptHandler(void);
-    
+    virtual void registerScriptTapHandler(int nHandler);
+    virtual void unregisterScriptTapHandler(void);
+    int getScriptTapHandler() { return m_nScriptTapHandler; };
+
     virtual bool isEnabled();
     //@note: It's 'setIsEnable' in cocos2d-iphone. 
     virtual void setEnabled(bool value);
@@ -98,10 +99,11 @@ public:
     
     /** set the target/selector of the menu item*/
     void setTarget(CCObject *rec, SEL_MenuHandler selector);
+
 protected:
     CCObject*       m_pListener;
     SEL_MenuHandler    m_pfnSelector;
-    int             m_nScriptHandler;
+    int             m_nScriptTapHandler;
 };
 
 /** @brief An abstract class for "label" CCMenuItemLabel items 
@@ -127,14 +129,14 @@ public:
     @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCMenuItemLabel * itemWithLabel(CCNode*label, CCObject* target, SEL_MenuHandler selector);
-    /** creates a CCMenuItemLabel with a Label. Target and selector will be nill 
+    /** creates a CCMenuItemLabel with a Label. Target and selector will be nil 
     @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCMenuItemLabel* itemWithLabel(CCNode *label);
 
     /** creates a CCMenuItemLabel with a Label, target and selector */
     static CCMenuItemLabel * create(CCNode*label, CCObject* target, SEL_MenuHandler selector);
-    /** creates a CCMenuItemLabel with a Label. Target and selector will be nill */
+    /** creates a CCMenuItemLabel with a Label. Target and selector will be nil */
     static CCMenuItemLabel* create(CCNode *label);
 
     /** initializes a CCMenuItemLabel with a Label, target and selector */
@@ -371,7 +373,7 @@ public:
 
 /** @brief A CCMenuItemToggle
  A simple container class that "toggles" it's inner items
- The inner itmes can be any MenuItem
+ The inner items can be any MenuItem
  */
 class CC_DLL CCMenuItemToggle : public CCMenuItem, public CCRGBAProtocol
 {

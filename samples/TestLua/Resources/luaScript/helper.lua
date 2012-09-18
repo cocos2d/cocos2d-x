@@ -25,7 +25,7 @@ end
 function CreateBackMenuItem()
     local label = CCLabelTTF:create("MainMenu", "Arial", 20)
 	local MenuItem = CCMenuItemLabel:create(label)
-	MenuItem:registerScriptHandler(MainMenuCallback)
+	MenuItem:registerScriptTapHandler(MainMenuCallback)
 
     local s = CCDirector:sharedDirector():getWinSize()
 	local Menu = CCMenu:create()

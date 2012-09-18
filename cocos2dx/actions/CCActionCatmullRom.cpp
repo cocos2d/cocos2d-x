@@ -26,7 +26,7 @@
  * THE SOFTWARE.
  *
  *
- * Orignal code by Radu Gruian: http://www.codeproject.com/Articles/30838/Overhauser-Catmull-Rom-Splines-for-Camera-Animatio.So
+ * Original code by Radu Gruian: http://www.codeproject.com/Articles/30838/Overhauser-Catmull-Rom-Splines-for-Camera-Animatio.So
  *
  * Adapted to cocos2d-x by Vit Valentin
  *
@@ -96,12 +96,12 @@ CCPointArray::CCPointArray() :m_pControlPoints(NULL){}
 
 void CCPointArray::addControlPoint(CCPoint controlPoint)
 {
-    // should create a new object of CCPoint
-    // because developer always use this function like this
+    // should create a new object: CCPoint
+    // because developers are accustomed to using
     // addControlPoint(ccp(x, y))
-    // passing controlPoint is a temple object
-    // and CCArray::addObject() will retain the passing object, so it 
-    // should be an object created in heap
+    // which assumes controlPoint is a temporary struct
+    // but CCArray::addObject() will retain the passed object, so temp
+    // should be an object created in the heap.
     CCPoint *temp = new CCPoint(controlPoint.x, controlPoint.y);
     m_pControlPoints->addObject(temp);
     temp->release();
@@ -109,12 +109,12 @@ void CCPointArray::addControlPoint(CCPoint controlPoint)
 
 void CCPointArray::insertControlPoint(CCPoint &controlPoint, unsigned int index)
 {
-    // should create a new object of CCPoint
-    // because developer always use this function like this
+    // should create a new object: CCPoint
+    // because developers are accustomed to using
     // insertControlPoint(ccp(x, y))
-    // passing controlPoint is a temple object
-    // and CCArray::insertObject() will retain the passing object, so it 
-    // should be an object created in heap
+    // which assumes controlPoint is a temporary struct
+    // but CCArray::insertObject() will retain the passed object, so temp
+    // should be an object created in the heap.
     CCPoint *temp = new CCPoint(controlPoint.x, controlPoint.y);
     m_pControlPoints->insertObject(temp, index);
     temp->release();
@@ -130,12 +130,12 @@ CCPoint CCPointArray::getControlPointAtIndex(unsigned int index)
 
 void CCPointArray::replaceControlPoint(cocos2d::CCPoint &controlPoint, unsigned int index)
 {
-    // should create a new object of CCPoint
-    // because developer always use this function like this
+    // should create a new object: CCPoint
+    // because developers are accustomed to using
     // replaceControlPoint(ccp(x, y))
-    // passing controlPoint is a temple object
-    // and CCArray::insertObject() will retain the passing object, so it 
-    // should be an object created in heap
+    // which assumes controlPoint is a temporary struct
+    // but CCArray::insertObject() will retain the passed object, so temp
+    // should be an object created in the heap.
     CCPoint *temp = new CCPoint(controlPoint.x, controlPoint.y);
     m_pControlPoints->replaceObjectAtIndex(index, temp);
     temp->release();

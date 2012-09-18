@@ -31,8 +31,9 @@
 }
 @property (readwrite) int interval;
 -(void) startMainLoop;
+-(void) end;
 -(void) doCaller: (id) sender;
 -(void) setAnimationInterval:(double)interval;
+
 +(id) sharedDirectorCaller;
-+(void) destroy;
 @end

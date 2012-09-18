@@ -119,6 +119,7 @@ public:
     bool isKeypadEnabled();
     void setKeypadEnabled(bool value);
     
+    inline CCTouchScriptHandlerEntry* getScriptHandlerEntry() { return m_pScriptHandlerEntry; };
 protected:   
     bool m_bIsTouchEnabled;
     bool m_bIsAccelerometerEnabled;
@@ -292,7 +293,7 @@ public:
 
     /**
      * lua script can not init with undetermined number of variables
-     * so add these functinons to be used with lua.
+     * so add these functions to be used with lua.
      @deprecated: This interface will be deprecated sooner or later.
      */
     CC_DEPRECATED_ATTRIBUTE static CCLayerMultiplex * layerWithLayer(CCLayer* layer);
@@ -302,7 +303,7 @@ public:
 
     /**
      * lua script can not init with undetermined number of variables
-     * so add these functinons to be used with lua.
+     * so add these functions to be used with lua.
      */
     static CCLayerMultiplex * createWithLayer(CCLayer* layer);
 

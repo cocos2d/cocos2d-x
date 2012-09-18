@@ -26,10 +26,7 @@ THE SOFTWARE.
 #define __CC_PLATFORM_CONFIG_H__
 
 /**
-Config of cocos2d-x project.
-
-There are config below:
-build for which target platform
+Config of cocos2d-x project, per target platform.
 */
 
 //////////////////////////////////////////////////////////////////////////
@@ -47,7 +44,7 @@ build for which target platform
 #define CC_PLATFORM_BLACKBERRY         7
 #define CC_PLATFORM_MAC                8
 
-// Determine tartet platform by compile environment macro.
+// Determine target platform by compile environment macro.
 #define CC_TARGET_PLATFORM             CC_PLATFORM_UNKNOWN
 
 // iphone
@@ -106,10 +103,9 @@ build for which target platform
 
 // check user set platform
 #if ! CC_TARGET_PLATFORM
-    #error  "Can not recognize the target platform, compling under a unsupported platform?"
+    #error  "Cannot recognize the target platform; are you targeting an unsupported platform?"
 #endif 
 
-// Check the supportive of platform
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #pragma warning (disable:4127)  
 #endif  // CC_PLATFORM_WIN32

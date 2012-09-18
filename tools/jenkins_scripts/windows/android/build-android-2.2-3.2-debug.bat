@@ -4,6 +4,7 @@
 
 ::Here are the environment variables you should set.
 ::%ANT_HOME% %ANDROID_HOME% %JAVA_HOME% %CYGWIN% %ANDROID_NDK% 
+echo off
 if not exist "%CYGWIN%" echo Couldn't find Cygwin at "%CYGWIN%" and you should set it like this "C:\cygwin"& pause & exit 1
 if not exist "%ANDROID_HOME%" echo Couldn't find ANDROID_HOME at "%ANDROID_HOME%" and you should set it like this "D:\xx\android-sdk-windows"& pause & exit 2
 if not exist "%ANDROID_NDK%" echo Couldn't find Cygwin at "%ANDROID_NDK%" and you should set it like this "D:\xx\android-ndk-r8"& pause & exit 3
@@ -15,9 +16,9 @@ cd ..\..\..\..
 
 :project
 ::Copy build Configuration files to target directory
-copy %cd%\tools\JenkinsScript\ant.properties %cd%\samples\%_PROJECTNAME%\proj.android
-copy %cd%\tools\JenkinsScript\build.xml %cd%\samples\%_PROJECTNAME%\proj.android
-copy %cd%\tools\JenkinsScript\Windows\android\rootconfig.sh %cd%\samples\%_PROJECTNAME%\proj.android
+copy %cd%\tools\jenkins_scripts\ant.properties %cd%\samples\%_PROJECTNAME%\proj.android /Y
+copy %cd%\tools\jenkins_scripts\build.xml %cd%\samples\%_PROJECTNAME%\proj.android /Y
+copy %cd%\tools\jenkins_scripts\windows\android\rootconfig.sh %cd%\samples\%_PROJECTNAME%\proj.android /Y
 
 ::Modify the configuration files
 cd samples\%_PROJECTNAME%\proj.android

@@ -97,7 +97,7 @@ void ccArrayShrink(ccArray *arr)
 	}
 }
 
-/** Returns index of first occurence of object, CC_INVALID_INDEX if object not found. */
+/** Returns index of first occurrence of object, CC_INVALID_INDEX if object not found. */
 unsigned int ccArrayGetIndexOfObject(ccArray *arr, CCObject* object)
 {
 	for(unsigned int i = 0; i < arr->num; i++)
@@ -114,7 +114,7 @@ bool ccArrayContainsObject(ccArray *arr, CCObject* object)
 	return ccArrayGetIndexOfObject(arr, object) != CC_INVALID_INDEX;
 }
 
-/** Appends an object. Bahaviour undefined if array doesn't have enough capacity. */
+/** Appends an object. Behavior undefined if array doesn't have enough capacity. */
 void ccArrayAppendObject(ccArray *arr, CCObject* object)
 {
     CCAssert(object != NULL, "Invalid parameter!");
@@ -130,7 +130,7 @@ void ccArrayAppendObjectWithResize(ccArray *arr, CCObject* object)
 	ccArrayAppendObject(arr, object);
 }
 
-/** Appends objects from plusArr to arr. Behaviour undefined if arr doesn't have
+/** Appends objects from plusArr to arr. Behavior undefined if arr doesn't have
  enough capacity. */
 void ccArrayAppendArray(ccArray *arr, ccArray *plusArr)
 {
@@ -188,7 +188,7 @@ void ccArrayRemoveAllObjects(ccArray *arr)
 }
 
 /** Removes object at specified index and pushes back all subsequent objects.
- Behaviour undefined if index outside [0, num-1]. */
+ Behavior undefined if index outside [0, num-1]. */
 void ccArrayRemoveObjectAtIndex(ccArray *arr, unsigned int index, bool bReleaseObj/* = true*/)
 {
     CCAssert(arr && arr->num > 0 && index < arr->num, "Invalid index. Out of bounds");
@@ -208,7 +208,7 @@ void ccArrayRemoveObjectAtIndex(ccArray *arr, unsigned int index, bool bReleaseO
 
 /** Removes object at specified index and fills the gap with the last object,
  thereby avoiding the need to push back subsequent objects.
- Behaviour undefined if index outside [0, num-1]. */
+ Behavior undefined if index outside [0, num-1]. */
 void ccArrayFastRemoveObjectAtIndex(ccArray *arr, unsigned int index)
 {
 	CC_SAFE_RELEASE(arr->arr[index]);
@@ -225,7 +225,7 @@ void ccArrayFastRemoveObject(ccArray *arr, CCObject* object)
     }
 }
 
-/** Searches for the first occurance of object and removes it. If object is not
+/** Searches for the first occurrence of object and removes it. If object is not
  found the function has no effect. */
 void ccArrayRemoveObject(ccArray *arr, CCObject* object, bool bReleaseObj/* = true*/)
 {
@@ -313,7 +313,7 @@ void ccCArrayEnsureExtraCapacity(ccCArray *arr, unsigned int extra)
     ccArrayEnsureExtraCapacity((ccArray*)arr,extra);
 }
 
-/** Returns index of first occurence of value, CC_INVALID_INDEX if value not found. */
+/** Returns index of first occurrence of value, CC_INVALID_INDEX if value not found. */
 unsigned int ccCArrayGetIndexOfValue(ccCArray *arr, void* value)
 {
 	unsigned int i;
@@ -331,7 +331,7 @@ bool ccCArrayContainsValue(ccCArray *arr, void* value)
 	return ccCArrayGetIndexOfValue(arr, value) != CC_INVALID_INDEX;
 }
 
-/** Inserts a value at a certain position. Behaviour undefined if aray doesn't have enough capacity */
+/** Inserts a value at a certain position. Behavior undefined if array doesn't have enough capacity */
 void ccCArrayInsertValueAtIndex( ccCArray *arr, void* value, unsigned int index)
 {
 	CCAssert( index < arr->max, "ccCArrayInsertValueAtIndex: invalid index");
@@ -352,7 +352,7 @@ void ccCArrayInsertValueAtIndex( ccCArray *arr, void* value, unsigned int index)
 	arr->arr[index] = value;
 }
 
-/** Appends an value. Bahaviour undefined if array doesn't have enough capacity. */
+/** Appends an value. Behavior undefined if array doesn't have enough capacity. */
 void ccCArrayAppendValue(ccCArray *arr, void* value)
 {
 	arr->arr[arr->num] = value;
@@ -373,7 +373,7 @@ void ccCArrayAppendValueWithResize(ccCArray *arr, void* value)
 }
 
 
-/** Appends values from plusArr to arr. Behaviour undefined if arr doesn't have
+/** Appends values from plusArr to arr. Behavior undefined if arr doesn't have
  enough capacity. */
 void ccCArrayAppendArray(ccCArray *arr, ccCArray *plusArr)
 {
@@ -399,7 +399,7 @@ void ccCArrayRemoveAllValues(ccCArray *arr)
 }
 
 /** Removes value at specified index and pushes back all subsequent values.
- Behaviour undefined if index outside [0, num-1].
+ Behavior undefined if index outside [0, num-1].
  @since v0.99.4
  */
 void ccCArrayRemoveValueAtIndex(ccCArray *arr, unsigned int index)
@@ -414,7 +414,7 @@ void ccCArrayRemoveValueAtIndex(ccCArray *arr, unsigned int index)
 
 /** Removes value at specified index and fills the gap with the last value,
  thereby avoiding the need to push back subsequent values.
- Behaviour undefined if index outside [0, num-1].
+ Behavior undefined if index outside [0, num-1].
  @since v0.99.4
  */
 void ccCArrayFastRemoveValueAtIndex(ccCArray *arr, unsigned int index)
@@ -423,7 +423,7 @@ void ccCArrayFastRemoveValueAtIndex(ccCArray *arr, unsigned int index)
 	arr->arr[index] = arr->arr[last];
 }
 
-/** Searches for the first occurance of value and removes it. If value is not found the function has no effect.
+/** Searches for the first occurrence of value and removes it. If value is not found the function has no effect.
  @since v0.99.4
  */
 void ccCArrayRemoveValue(ccCArray *arr, void* value)

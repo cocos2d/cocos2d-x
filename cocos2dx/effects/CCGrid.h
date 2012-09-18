@@ -51,7 +51,7 @@ class CC_DLL CCGridBase : public CCObject
 public:
     virtual ~CCGridBase(void);
 
-    /** wheter or not the grid is active */
+    /** whether or not the grid is active */
     inline bool isActive(void) { return m_bActive; }
     void setActive(bool bActive);
 

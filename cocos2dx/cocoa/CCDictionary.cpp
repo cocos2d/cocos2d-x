@@ -264,7 +264,7 @@ void CCDictionary::removeAllObjects()
 
 CCObject* CCDictionary::copyWithZone(CCZone* pZone)
 {
-    CCAssert(pZone == NULL, "CCDirctionary should not be inherited.");
+    CCAssert(pZone == NULL, "CCDictionary should not be inherited.");
     CCDictionary* pNewDict = new CCDictionary();
 
     CCDictElement* pElement = NULL;
