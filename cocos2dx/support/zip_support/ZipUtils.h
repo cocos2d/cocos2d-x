@@ -33,7 +33,7 @@ namespace cocos2d
         unsigned char            sig[4];                // signature. Should be 'CCZ!' 4 bytes
         unsigned short            compression_type;    // should 0
         unsigned short            version;            // should be 2 (although version type==1 is also supported)
-        unsigned int             reserved;            // Reserverd for users.
+        unsigned int             reserved;            // Reserved for users.
         unsigned int            len;                // size of the uncompressed file
     };
 
@@ -51,7 +51,7 @@ namespace cocos2d
         * Inflates either zlib or gzip deflated memory. The inflated memory is
         * expected to be freed by the caller.
         *
-        * It will allocate 256k for the destination buffer. If it is not enought it will multiply the previous buffer size per 2, until there is enough memory.
+        * It will allocate 256k for the destination buffer. If it is not enough it will multiply the previous buffer size per 2, until there is enough memory.
         * @returns the length of the deflated buffer
         *
         @since v0.8.1

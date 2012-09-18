@@ -414,7 +414,7 @@ void CCArray::reverseObjects()
 {
     if (data->num > 1)
     {
-        //floor it since in case of a oneven number the number of swaps stays the same
+        // floorf(), since in the case of an even number, the number of swaps stays the same
         int count = (int) floorf(data->num/2.f); 
         unsigned int maxIndex = data->num - 1;
 

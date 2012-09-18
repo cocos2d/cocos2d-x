@@ -247,7 +247,7 @@ void CCLayer::onEnter()
         pDirector->getAccelerometer()->setDelegate(this);
     }
 
-    // add this layer to concern the kaypad msg
+    // add this layer to concern the keypad msg
     if (m_bIsKeypadEnabled)
     {
         pDirector->getKeypadDispatcher()->addDelegate(this);
@@ -269,7 +269,7 @@ void CCLayer::onExit()
         pDirector->getAccelerometer()->setDelegate(NULL);
     }
 
-    // remove this layer from the delegates who concern the kaypad msg
+    // remove this layer from the delegates who concern the keypad msg
     if (m_bIsKeypadEnabled)
     {
         pDirector->getKeypadDispatcher()->removeDelegate(this);

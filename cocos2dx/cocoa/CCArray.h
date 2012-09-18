@@ -33,7 +33,7 @@ THE SOFTWARE.
  */
 
 /** @def CCARRAY_FOREACH
-A convience macro to iterate over a CCArray using. It is faster than the "fast enumeration" interface.
+A convenience macro to iterate over a CCArray using. It is faster than the "fast enumeration" interface.
 @since v0.99.4
 */
 
@@ -139,7 +139,7 @@ public:
      @brief   Generate a CCArray pointer by file
      @param   pFileName  The file name of *.plist file
      @return  The CCArray pointer generated from the file
-     @deprecated: Please use createWithContentsOfFile(const char*) intead. This interface will be deprecated sooner or later.
+     @deprecated: Please use createWithContentsOfFile(const char*) instead. This interface will be deprecated sooner or later.
      */
      CC_DEPRECATED_ATTRIBUTE static CCArray* arrayWithContentsOfFile(const char* pFileName);
     

@@ -163,7 +163,7 @@ void CCTexture2D::releaseData(void *data)
 void* CCTexture2D::keepData(void *data, unsigned int length)
 {
     CC_UNUSED_PARAM(length);
-    //The texture data mustn't be saved becuase it isn't a mutable texture.
+    //The texture data mustn't be saved because it isn't a mutable texture.
     return data;
 }
 
@@ -600,7 +600,7 @@ void CCTexture2D::PVRImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied)
 
 void CCTexture2D::generateMipmap()
 {
-    CCAssert( m_uPixelsWide == ccNextPOT(m_uPixelsWide) && m_uPixelsHigh == ccNextPOT(m_uPixelsHigh), "Mimpap texture only works in POT textures");
+    CCAssert( m_uPixelsWide == ccNextPOT(m_uPixelsWide) && m_uPixelsHigh == ccNextPOT(m_uPixelsHigh), "Mipmap texture only works in POT textures");
     ccGLBindTexture2D( m_uName );
     glGenerateMipmap(GL_TEXTURE_2D);
     m_bHasMipmaps = true;
@@ -703,7 +703,7 @@ const char* CCTexture2D::stringForFormat()
 			return  "PVRTC2";
 
 		default:
-			CCAssert(false , "unrecognised pixel format");
+			CCAssert(false , "unrecognized pixel format");
 			CCLOG("stringForFormat: %ld, cannot give useful result", (long)m_ePixelFormat);
 			break;
 	}
@@ -766,7 +766,7 @@ unsigned int CCTexture2D::bitsPerPixelForFormat(CCTexture2DPixelFormat format)
 			break;
 		default:
 			ret = -1;
-			CCAssert(false , "unrecognised pixel format");
+			CCAssert(false , "unrecognized pixel format");
 			CCLOG("bitsPerPixelForFormat: %ld, cannot give useful result", (long)format);
 			break;
 	}

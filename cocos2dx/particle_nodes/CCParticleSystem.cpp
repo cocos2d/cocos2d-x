@@ -37,7 +37,7 @@ THE SOFTWARE.
 //        http://particledesigner.71squared.com/
 //
 // IMPORTANT: Particle Designer is supported by cocos2d, but
-// 'Radius Mode' in Particle Designer uses a fixed emit rate of 30 hz. Since that can't be guarateed in cocos2d,
+// 'Radius Mode' in Particle Designer uses a fixed emit rate of 30 hz. Since that can't be guaranteed in cocos2d,
 //  cocos2d uses a another approach, but the results are almost identical. 
 //
 
@@ -73,7 +73,7 @@ NS_CC_BEGIN
 //        http://particledesigner.71squared.com/
 //
 // IMPORTANT: Particle Designer is supported by cocos2d, but
-// 'Radius Mode' in Particle Designer uses a fixed emit rate of 30 hz. Since that can't be guarateed in cocos2d,
+// 'Radius Mode' in Particle Designer uses a fixed emit rate of 30 hz. Since that can't be guaranteed in cocos2d,
 //  cocos2d uses a another approach, but the results are almost identical. 
 //
 
@@ -392,12 +392,12 @@ bool CCParticleSystem::initWithTotalParticles(unsigned int numberOfParticles)
 
     m_bIsAutoRemoveOnFinish = false;
 
-    // Optimization: compile udpateParticle method
+    // Optimization: compile updateParticle method
     //updateParticleSel = @selector(updateQuadWithParticle:newPosition:);
     //updateParticleImp = (CC_UPDATE_PARTICLE_IMP) [self methodForSelector:updateParticleSel];
     //for batchNode
     m_bTransformSystemDirty = false;
-    // udpate after action in run!
+    // update after action in run!
     this->scheduleUpdateWithPriority(1);
 
     return true;
@@ -734,12 +734,12 @@ void CCParticleSystem::updateQuadWithParticle(tCCParticle* particle, const CCPoi
 {
     CC_UNUSED_PARAM(particle);
     CC_UNUSED_PARAM(newPosition);
-    // should be overriden
+    // should be overridden
 }
 
 void CCParticleSystem::postStep()
 {
-    // should be overriden
+    // should be overridden
 }
 
 // ParticleSystem - CCTexture protocol

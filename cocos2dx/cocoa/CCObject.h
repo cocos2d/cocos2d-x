@@ -53,7 +53,7 @@ public:
     // Lua reference id
     int                 m_nLuaID;
 protected:
-    // count of refrence
+    // count of references
     unsigned int        m_uReference;
     // is the object autoreleased
     bool        m_bManaged;        
