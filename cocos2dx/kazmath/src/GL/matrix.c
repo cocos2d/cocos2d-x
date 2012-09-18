@@ -100,7 +100,7 @@ void kmGLPushMatrix(void)
 void kmGLPopMatrix(void)
 {
     assert(initialized && "Cannot Pop empty matrix stack");
-    //No need to lazy initialize, you shouldnt be popping first anyway!
+    //No need to lazy initialize, you shouldn't be popping first anyway!
     km_mat4_stack_pop(current_stack, NULL);
 }
 

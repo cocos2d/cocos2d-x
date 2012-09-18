@@ -151,7 +151,7 @@ static void* loadImage(void* data)
         CCImage::EImageFormat imageType = computeImageFormatType(pAsyncStruct->filename);
         if (imageType == CCImage::kFmtUnKnown)
         {
-            CCLOG("unsupportted format %s",filename);
+            CCLOG("unsupported format %s",filename);
             delete pAsyncStruct;
             
             continue;
@@ -475,7 +475,7 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
 #ifdef CC_SUPPORT_PVRTC
 CCTexture2D* CCTextureCache::addPVRTCImage(const char* path, int bpp, bool hasAlpha, int width)
 {
-    CCAssert(path != NULL, "TextureCache: fileimage MUST not be nill");
+    CCAssert(path != NULL, "TextureCache: fileimage MUST not be nil");
     CCAssert( bpp==2 || bpp==4, "TextureCache: bpp must be either 2 or 4");
 
     CCTexture2D * texture;
@@ -513,7 +513,7 @@ CCTexture2D* CCTextureCache::addPVRTCImage(const char* path, int bpp, bool hasAl
 
 CCTexture2D * CCTextureCache::addPVRImage(const char* path)
 {
-    CCAssert(path != NULL, "TextureCache: fileimage MUST not be nill");
+    CCAssert(path != NULL, "TextureCache: fileimage MUST not be nil");
 
     CCTexture2D* texture = NULL;
     std::string key(path);
@@ -546,7 +546,7 @@ CCTexture2D * CCTextureCache::addPVRImage(const char* path)
 
 CCTexture2D* CCTextureCache::addUIImage(CCImage *image, const char *key)
 {
-    CCAssert(image != NULL, "TextureCache: image MUST not be nill");
+    CCAssert(image != NULL, "TextureCache: image MUST not be nil");
 
     CCTexture2D * texture = NULL;
     // textureForKey() use full path,so the key should be full path

@@ -50,7 +50,7 @@ public:
     [target runAction:modifyWidth];
 
 
- Another example: CCScaleTo action could be rewriten using CCPropertyAction:
+ Another example: CCScaleTo action could be rewritten using CCPropertyAction:
 
     // scaleA and scaleB are equivalents
     id scaleA = [CCScaleTo actionWithDuration:2 scale:3];

@@ -61,7 +61,7 @@ bool tgaLoadImageData(unsigned char *Buffer, unsigned long bufSize, tImageTGA *p
 /// this is the function to call when we want to load an image
 tImageTGA * tgaLoad(const char *pszFilename);
 
-// /converts RGB to greyscale
+// /converts RGB to grayscale
 void tgaRGBtogreyscale(tImageTGA *psInfo);
 
 /// releases the memory used for the image
