@@ -144,6 +144,13 @@ OBJECTS = ../actions/CCAction.o \
 					../../extensions/CCBReader/CCLayerGradientLoader.o \
 					../../extensions/CCBReader/CCSpriteLoader.o \
 					../../extensions/CCBReader/CCLayerLoader.o \
+                                        ../../extensions/CCBReader/CCBAnimationManager.o \
+                                        ../../extensions/CCBReader/CCBKeyframe.o \
+                                        ../../extensions/CCBReader/CCBSequence.o \
+                                        ../../extensions/CCBReader/CCBSequenceProperty.o \
+                                        ../../extensions/CCBReader/CCBValue.o \
+                                        ../../extensions/CCBReader/CCData.o \
+                                        ../../extensions/CCBReader/CCNode+CCBRelativePositioning.o \
 					../../extensions/GUI/CCScrollView/CCScrollView.o \
 					../../extensions/GUI/CCScrollView/CCSorting.o \
 					../../extensions/GUI/CCScrollView/CCTableView.o \
