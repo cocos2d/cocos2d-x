@@ -81,6 +81,28 @@
 			<key>Path</key>
 			<string>libs/javascript/bindings/cocos2d_specifics.hpp</string>
 		</dict>
+		<key>libs/javascript/bindings/js_bindings_ccbreader.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>javascript</string>
+				<string>bindings</string>
+			</array>
+			<key>Path</key>
+			<string>libs/javascript/bindings/js_bindings_ccbreader.cpp</string>
+		</dict>
+		<key>libs/javascript/bindings/js_bindings_ccbreader.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>javascript</string>
+				<string>bindings</string>
+			</array>
+			<key>Path</key>
+			<string>libs/javascript/bindings/js_bindings_ccbreader.h</string>
+		</dict>
 		<key>libs/javascript/bindings/cocos2dx.cpp</key>
 		<dict>
 			<key>Group</key>
@@ -253,6 +275,8 @@
 		<string>libs/javascript/bindings/ScriptingCore.cpp</string>
 		<string>libs/javascript/bindings/ScriptingCore.h</string>
 		<string>libs/javascript/bindings/spidermonkey_specifics.h</string>
+		<string>libs/javascript/bindings/js_bindings_ccbreader.h</string>
+		<string>libs/javascript/bindings/js_bindings_ccbreader.cpp</string>
 		<string>libs/javascript/bindings/uthash.h</string>
 	</array>
 </dict>

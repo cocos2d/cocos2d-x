@@ -11,6 +11,7 @@
 		<string>org.cocos2d-x.libjs</string>
 		<string>org.cocos2d-x.libspidermonkey</string>
 		<string>org.cocos2d-x.libchipmunk</string>
+		<string>org.cocos2d-x.libextensions</string>
 	</array>
 	<key>Concrete</key>
 	<true/>
