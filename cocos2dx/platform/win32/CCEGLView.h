@@ -32,6 +32,8 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+typedef LRESULT (*CUSTOM_WND_PROC)(UINT message, WPARAM wParam, LPARAM lParam, BOOL* pProcessed);
+
 class CCEGL;
 
 class CC_DLL CCEGLView : public CCEGLViewProtocol
@@ -48,6 +50,10 @@ public:
     virtual void setFrameSize(float width, float height);
     virtual void setIMEKeyboardState(bool bOpen);
     virtual bool enableRetina();
+
+    void setMenuResource(LPCWSTR menu);
+    void setWndProc(CUSTOM_WND_PROC proc);
+
 private:
     virtual bool Create(LPCTSTR pTitle, int w, int h);
     bool initGL();
@@ -77,6 +83,14 @@ private:
     HDC  m_hDC;
     HGLRC m_hRC;
     LPFN_ACCELEROMETER_KEYHOOK m_lpfnAccelerometerKeyHook;
+
+    LPCWSTR m_menu;
+    CUSTOM_WND_PROC m_wndproc;
+
+    int m_windowWidth;
+    int m_windowHeight;
+    float m_windowTouchScaleX;
+    float m_windowTouchScaleY;
 };
 
 NS_CC_END

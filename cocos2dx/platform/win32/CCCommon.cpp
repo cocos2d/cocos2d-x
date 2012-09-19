@@ -42,6 +42,9 @@ void CCLog(const char * pszFormat, ...)
     MultiByteToWideChar(CP_UTF8, 0, szBuf, -1, wszBuf, sizeof(wszBuf));
     OutputDebugStringW(wszBuf);
     OutputDebugStringA("\n");
+
+    WideCharToMultiByte(CP_ACP, 0, wszBuf, sizeof(wszBuf), szBuf, sizeof(szBuf), NULL, FALSE);
+    printf("%s\n", szBuf);
 }
 
 void CCMessageBox(const char * pszMsg, const char * pszTitle)
@@ -49,9 +52,18 @@ void CCMessageBox(const char * pszMsg, const char * pszTitle)
     MessageBoxA(NULL, pszMsg, pszTitle, MB_OK);
 }
 
-void CCLuaLog(const char * pszFormat)
+void CCLuaLog(const char *pszMsg)
 {
-    CCLog(pszFormat);
+    int bufflen = MultiByteToWideChar(CP_UTF8, 0, pszMsg, -1, NULL, 0);
+    ++bufflen;
+    WCHAR* buff = new WCHAR[bufflen];
+    memset(buff, 0, sizeof(WCHAR) * bufflen);
+    MultiByteToWideChar(CP_UTF8, 0, pszMsg, -1, buff, bufflen - 1);
+
+    OutputDebugStringW(buff);
+    OutputDebugStringA("\n");
+
+    puts(pszMsg);
 }
 
 NS_CC_END

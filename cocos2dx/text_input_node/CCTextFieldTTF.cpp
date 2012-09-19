@@ -184,7 +184,7 @@ void CCTextFieldTTF::insertText(const char * text, int len)
     {
         if (m_pDelegate && m_pDelegate->onTextFieldInsertText(this, sInsert.c_str(), len))
         {
-            // delegate doesn't want insert text
+            // delegate doesn't want to insert text
             return;
         }
         
@@ -198,13 +198,13 @@ void CCTextFieldTTF::insertText(const char * text, int len)
         return;
     }
     
-    // '\n' has inserted,  let delegate process first
+    // '\n' inserted, let delegate process first
     if (m_pDelegate && m_pDelegate->onTextFieldInsertText(this, "\n", 1))
     {
         return;
     }
     
-    // if delegate hasn't process, detach with ime as default
+    // if delegate hasn't processed, detach from IME by default
     detachWithIME();
 }
 
@@ -227,11 +227,11 @@ void CCTextFieldTTF::deleteBackward()
 
     if (m_pDelegate && m_pDelegate->onTextFieldDeleteBackward(this, m_pInputText->c_str() + nStrLen - nDeleteLen, nDeleteLen))
     {
-        // delegate don't wan't delete backward
+        // delegate doesn't wan't to delete backwards
         return;
     }
 
-    // if delete all text, show space holder string
+    // if all text deleted, show placeholder string
     if (nStrLen <= nDeleteLen)
     {
         CC_SAFE_DELETE(m_pInputText);
