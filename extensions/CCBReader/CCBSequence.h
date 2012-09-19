@@ -1,8 +1,9 @@
 #ifndef __CCB_CCSEQUENCE_H__
 #define __CCB_CCSEQUENCE_H__
 
-#include "cocos-ext.h"
 #include <string>
+#include "cocos2d.h"
+#include "ExtensionMacros.h"
 
 NS_CC_EXT_BEGIN
 
