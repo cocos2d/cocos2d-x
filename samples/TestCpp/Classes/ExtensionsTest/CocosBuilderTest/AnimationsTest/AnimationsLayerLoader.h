@@ -2,7 +2,6 @@
 #define _ANIMATIONSTESTLAYERLOADER_H_
 
 #include "AnimationsTestLayer.h"
-#include "CCNodeLoader.h"
 
 /* Forward declaration. */
 class CCBReader;
