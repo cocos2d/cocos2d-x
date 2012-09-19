@@ -686,6 +686,17 @@ BlockData * CCNodeLoader::parsePropTypeBlock(CCNode * pNode, CCNode * pParent, C
             target = pCCBReader->getAnimationManager()->getRootNode();
         } else if(selectorTarget == kCCBTargetTypeOwner) {
             target = pCCBReader->getOwner();
+            
+            /* Scripting specific code because selector function is common for all callbacks.
+             * So if we had 1 target and 1 selector function, the context (callback function name)
+             * would get lost. Hence the need for a new target for each callback.
+             */
+            if(pCCBReader->hasScriptingOwner) {
+                CCBScriptOwnerProtocol *proxy = dynamic_cast<CCBScriptOwnerProtocol *>(pCCBReader->getOwner());
+                if(proxy) {
+                    target = dynamic_cast<CCObject *>(proxy->createNew());
+                }
+            }
         }
 
         if(target != NULL) {
