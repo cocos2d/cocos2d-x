@@ -14,6 +14,7 @@
 #include <vector>
 #include "ScriptingCore.h"
 #include "cocos2d.h"
+#include "cocos2d_specifics.hpp"
 
 #ifdef ANDROID
 #include <android/log.h>
@@ -275,8 +276,19 @@ void ScriptingCore::addRegisterCallback(sc_register_sth callback) {
     registrationList.push_back(callback);
 }
 
+void ScriptingCore::removeAllRoots(JSContext *cx) {
+    js_proxy_t *current, *tmp;
+    HASH_ITER(hh, _js_native_global_ht, current, tmp) {
+        JS_RemoveObjectRoot(cx, &current->obj);
+    }
+    HASH_CLEAR(hh, _js_native_global_ht);
+    HASH_CLEAR(hh, _native_js_global_ht);
+    HASH_CLEAR(hh, _js_global_type_ht);
+}
+
 void ScriptingCore::createGlobalContext() {
-    if (this->cx && this->rt) {
+    if (this->cx && this->rt) {        
+        ScriptingCore::removeAllRoots(this->cx);
         JS_DestroyContext(this->cx);
         JS_DestroyRuntime(this->rt);
         this->cx = NULL;
@@ -368,8 +380,8 @@ void ScriptingCore::removeScriptObjectByCCObject(CCObject* pObj)
     JS_GET_PROXY(nproxy, ptr);
     if (nproxy) {
         JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
-        JS_RemoveObjectRoot(cx, &nproxy->obj);
         JS_GET_NATIVE_PROXY(jsproxy, nproxy->obj);
+        JS_RemoveObjectRoot(cx, &jsproxy->obj);
         JS_REMOVE_PROXY(nproxy, jsproxy);
     }
 }
@@ -784,7 +796,23 @@ CCArray* jsval_to_ccarray(JSContext* cx, jsval v) {
     return NULL;
 }
 
-// from native
+
+jsval ccarray_to_jsval(JSContext* cx, CCArray *arr) {
+    
+  JSObject *jsretArr = JS_NewArrayObject(cx, 0, NULL);
+
+  for(int i = 0; i < arr->count(); ++i) {
+
+    CCObject *obj = arr->objectAtIndex(i);
+    js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::CCObject>(cx, obj);
+    jsval arrElement = OBJECT_TO_JSVAL(proxy->obj);
+
+    if(!JS_SetElement(cx, jsretArr, i, &arrElement)) {
+      break;
+    }
+  }
+  return OBJECT_TO_JSVAL(jsretArr);
+}
 
 jsval long_long_to_jsval(JSContext* cx, long long v) {
     JSObject *tmp = JS_NewUint32Array(cx, 2);
