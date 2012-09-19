@@ -91,15 +91,15 @@ bool HelloCocosBuilderLayer::onAssignCCBMemberVariable(CCObject * pTarget, CCStr
 
 
 void HelloCocosBuilderLayer::onMenuTestClicked(CCObject * pSender, cocos2d::extension::CCControlEvent pCCControlEvent) {
-    this->openTest("TestMenus.ccbi", "TestMenusLayer", MenuTestLayerLoader::loader());
+    this->openTest("ccb/ccb/TestMenus.ccbi", "TestMenusLayer", MenuTestLayerLoader::loader());
 }
 
 void HelloCocosBuilderLayer::onSpriteTestClicked(CCObject * pSender, cocos2d::extension::CCControlEvent pCCControlEvent) {
-    this->openTest("TestSprites.ccbi", "TestSpritesLayer", SpriteTestLayerLoader::loader());
+    this->openTest("ccb/ccb/TestSprites.ccbi", "TestSpritesLayer", SpriteTestLayerLoader::loader());
 }
 
 void HelloCocosBuilderLayer::onButtonTestClicked(CCObject * pSender, cocos2d::extension::CCControlEvent pCCControlEvent) {
-    this->openTest("TestButtons.ccbi", "TestButtonsLayer", ButtonTestLayerLoader::loader());
+    this->openTest("ccb/ccb/TestButtons.ccbi", "TestButtonsLayer", ButtonTestLayerLoader::loader());
 }
 
 void HelloCocosBuilderLayer::onAnimationsTestClicked(CCObject * pSender, cocos2d::extension::CCControlEvent pCCControlEvent) {
@@ -122,7 +122,7 @@ void HelloCocosBuilderLayer::onAnimationsTestClicked(CCObject * pSender, cocos2d
     // the owner will cause lblTestTitle to be set by the CCBReader.
     // lblTestTitle is in the TestHeader.ccbi, which is referenced
     // from each of the test scenes.
-    CCNode *animationsTest = ccbReader->readNodeGraphFromFile("TestAnimations.ccbi", this, &actionManager);
+    CCNode *animationsTest = ccbReader->readNodeGraphFromFile("ccb/ccb/TestAnimations.ccbi", this, &actionManager);
     ((AnimationsTestLayer*)animationsTest)->setAnimationManager(actionManager);
     
     this->mTestTitleLabelTTF->setString("TestAnimations.ccbi");
@@ -145,9 +145,10 @@ void HelloCocosBuilderLayer::onAnimationsTestClicked(CCObject * pSender, cocos2d
 }
 
 void HelloCocosBuilderLayer::onParticleSystemTestClicked(CCObject * pSender, cocos2d::extension::CCControlEvent pCCControlEvent) {
-    this->openTest("TestParticleSystems.ccbi", "TestParticleSystemsLayer", ParticleSystemTestLayerLoader::loader());
+    this->openTest("ccb/ccb/TestParticleSystems.ccbi", "TestParticleSystemsLayer", ParticleSystemTestLayerLoader::loader());
 }
 
-void HelloCocosBuilderLayer::onScrollViewTestClicked(CCObject * pSender, cocos2d::extension::CCControlEvent pCCControlEvent) {
-    this->openTest("TestScrollViews.ccbi", "TestScrollViewsLayer", ScrollViewTestLayerLoader::loader());
+void HelloCocosBuilderLayer::onScrollViewTestClicked(CCObject * pSender, cocos2d::extension::CCControlEvent pCCControlEvent)
+{
+    this->openTest("ccb/ccb/TestScrollViews.ccbi", "TestScrollViewsLayer", ScrollViewTestLayerLoader::loader());
 }

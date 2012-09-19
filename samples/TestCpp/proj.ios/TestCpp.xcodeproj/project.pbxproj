@@ -15,7 +15,6 @@
 		155DFCEF15FF0BF60014D83E /* CCBSequenceProperty.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 155DFCEE15FF0BF50014D83E /* CCBSequenceProperty.cpp */; };
 		155DFCF215FF2CA30014D83E /* CCBKeyframe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 155DFCF115FF2CA30014D83E /* CCBKeyframe.cpp */; };
 		155DFCF515FF39570014D83E /* CCBValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 155DFCF415FF39570014D83E /* CCBValue.cpp */; };
-		159A8537160958E000FA4E9D /* CocosBuilderExample.ccbproj in Resources */ = {isa = PBXBuildFile; fileRef = 159A8536160958E000FA4E9D /* CocosBuilderExample.ccbproj */; };
 		159DFBC516070BB300555A2F /* AnimationsTestLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 159DFBC316070BB300555A2F /* AnimationsTestLayer.cpp */; };
 		15AA9D5115B7EC460033D6C2 /* AccelerometerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15AA9C4215B7EC450033D6C2 /* AccelerometerTest.cpp */; };
 		15AA9D5215B7EC460033D6C2 /* ActionManagerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15AA9C4515B7EC450033D6C2 /* ActionManagerTest.cpp */; };
@@ -196,7 +195,7 @@
 		15BA623115E4EAC3002BC3A5 /* hd in Resources */ = {isa = PBXBuildFile; fileRef = 15BA623015E4EAC3002BC3A5 /* hd */; };
 		15BA623515E4EAD7002BC3A5 /* ipadhd in Resources */ = {isa = PBXBuildFile; fileRef = 15BA623415E4EAD7002BC3A5 /* ipadhd */; };
 		15D2551A15E5FD6B000D5E89 /* ipad in Resources */ = {isa = PBXBuildFile; fileRef = 15D2551915E5FD6B000D5E89 /* ipad */; };
-		15D255A315E61F01000D5E89 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 15D255A215E61F01000D5E89 /* fps_images.png */; };
+		15FC61A816095C2B00AE81F8 /* ccb in Resources */ = {isa = PBXBuildFile; fileRef = 15FC61A716095C2B00AE81F8 /* ccb */; };
 		1A14ADF515DA49A50064E300 /* CCEditBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A14ADEC15DA49A50064E300 /* CCEditBox.cpp */; };
 		1A14ADF715DA49A50064E300 /* CCEditBoxImplIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A14ADF115DA49A50064E300 /* CCEditBoxImplIOS.mm */; };
 		1A14ADF915DA49A50064E300 /* EditBoxImplIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A14ADF415DA49A50064E300 /* EditBoxImplIOS.mm */; };
@@ -289,7 +288,6 @@
 		155DFCF115FF2CA30014D83E /* CCBKeyframe.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCBKeyframe.cpp; sourceTree = "<group>"; };
 		155DFCF315FF38550014D83E /* CCBValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBValue.h; sourceTree = "<group>"; };
 		155DFCF415FF39570014D83E /* CCBValue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCBValue.cpp; sourceTree = "<group>"; };
-		159A8536160958E000FA4E9D /* CocosBuilderExample.ccbproj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = CocosBuilderExample.ccbproj; sourceTree = "<group>"; };
 		159DFBC216070BB300555A2F /* AnimationsLayerLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationsLayerLoader.h; sourceTree = "<group>"; };
 		159DFBC316070BB300555A2F /* AnimationsTestLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimationsTestLayer.cpp; sourceTree = "<group>"; };
 		159DFBC416070BB300555A2F /* AnimationsTestLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationsTestLayer.h; sourceTree = "<group>"; };
@@ -708,7 +706,7 @@
 		15BA623015E4EAC3002BC3A5 /* hd */ = {isa = PBXFileReference; lastKnownFileType = folder; path = hd; sourceTree = "<group>"; };
 		15BA623415E4EAD7002BC3A5 /* ipadhd */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ipadhd; sourceTree = "<group>"; };
 		15D2551915E5FD6B000D5E89 /* ipad */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ipad; sourceTree = "<group>"; };
-		15D255A215E61F01000D5E89 /* fps_images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fps_images.png; sourceTree = "<group>"; };
+		15FC61A716095C2B00AE81F8 /* ccb */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ccb; sourceTree = "<group>"; };
 		1A14ADEC15DA49A50064E300 /* CCEditBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCEditBox.cpp; sourceTree = "<group>"; };
 		1A14ADED15DA49A50064E300 /* CCEditBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEditBox.h; sourceTree = "<group>"; };
 		1A14ADEE15DA49A50064E300 /* CCEditBoxImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEditBoxImpl.h; sourceTree = "<group>"; };
@@ -2015,8 +2013,7 @@
 		78C7DDAA14EBA5050085D0C2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				159A8536160958E000FA4E9D /* CocosBuilderExample.ccbproj */,
-				15D255A215E61F01000D5E89 /* fps_images.png */,
+				15FC61A716095C2B00AE81F8 /* ccb */,
 				15D2551915E5FD6B000D5E89 /* ipad */,
 				15BA623415E4EAD7002BC3A5 /* ipadhd */,
 				15BA623015E4EAC3002BC3A5 /* hd */,
@@ -2216,8 +2213,7 @@
 				15BA623115E4EAC3002BC3A5 /* hd in Resources */,
 				15BA623515E4EAD7002BC3A5 /* ipadhd in Resources */,
 				15D2551A15E5FD6B000D5E89 /* ipad in Resources */,
-				15D255A315E61F01000D5E89 /* fps_images.png in Resources */,
-				159A8537160958E000FA4E9D /* CocosBuilderExample.ccbproj in Resources */,
+				15FC61A816095C2B00AE81F8 /* ccb in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -7,7 +7,7 @@
 	<key>currentResolution</key>
 	<integer>0</integer>
 	<key>currentSequenceId</key>
-	<integer>0</integer>
+	<integer>1</integer>
 	<key>fileType</key>
 	<string>CocosBuilder</string>
 	<key>fileVersion</key>
@@ -1258,7 +1258,7 @@
 											<key>name</key>
 											<string>rotation</string>
 											<key>time</key>
-											<real>2</real>
+											<real>1.9666666984558105</real>
 											<key>type</key>
 											<integer>2</integer>
 											<key>value</key>
@@ -1410,6 +1410,8 @@
 								</array>
 							</dict>
 						</array>
+						<key>seqExpanded</key>
+						<true/>
 					</dict>
 					<dict>
 						<key>animatedProperties</key>
@@ -1594,6 +1596,8 @@
 								</array>
 							</dict>
 						</array>
+						<key>seqExpanded</key>
+						<true/>
 					</dict>
 					<dict>
 						<key>animatedProperties</key>
@@ -2597,7 +2601,7 @@
 													<key>value</key>
 													<array>
 														<string>grossini-eyes-0.png</string>
-														<string>animated-grossini.plist</string>
+														<string>ccb/animated-grossini.plist</string>
 													</array>
 												</dict>
 												<dict>
@@ -2615,7 +2619,7 @@
 													<key>value</key>
 													<array>
 														<string>grossini-eyes-1.png</string>
-														<string>animated-grossini.plist</string>
+														<string>ccb/animated-grossini.plist</string>
 													</array>
 												</dict>
 												<dict>
@@ -2633,7 +2637,7 @@
 													<key>value</key>
 													<array>
 														<string>grossini-eyes-2.png</string>
-														<string>animated-grossini.plist</string>
+														<string>ccb/animated-grossini.plist</string>
 													</array>
 												</dict>
 												<dict>
@@ -2651,7 +2655,7 @@
 													<key>value</key>
 													<array>
 														<string>grossini-eyes-1.png</string>
-														<string>animated-grossini.plist</string>
+														<string>ccb/animated-grossini.plist</string>
 													</array>
 												</dict>
 												<dict>
@@ -2669,7 +2673,7 @@
 													<key>value</key>
 													<array>
 														<string>grossini-eyes-0.png</string>
-														<string>animated-grossini.plist</string>
+														<string>ccb/animated-grossini.plist</string>
 													</array>
 												</dict>
 												<dict>
@@ -2687,7 +2691,7 @@
 													<key>value</key>
 													<array>
 														<string>grossini-eyes-0.png</string>
-														<string>animated-grossini.plist</string>
+														<string>ccb/animated-grossini.plist</string>
 													</array>
 												</dict>
 												<dict>
@@ -2705,7 +2709,7 @@
 													<key>value</key>
 													<array>
 														<string>grossini-eyes-1.png</string>
-														<string>animated-grossini.plist</string>
+														<string>ccb/animated-grossini.plist</string>
 													</array>
 												</dict>
 												<dict>
@@ -2723,7 +2727,7 @@
 													<key>value</key>
 													<array>
 														<string>grossini-eyes-2.png</string>
-														<string>animated-grossini.plist</string>
+														<string>ccb/animated-grossini.plist</string>
 													</array>
 												</dict>
 												<dict>
@@ -2741,7 +2745,7 @@
 													<key>value</key>
 													<array>
 														<string>grossini-eyes-1.png</string>
-														<string>animated-grossini.plist</string>
+														<string>ccb/animated-grossini.plist</string>
 													</array>
 												</dict>
 												<dict>
@@ -2759,7 +2763,7 @@
 													<key>value</key>
 													<array>
 														<string>grossini-eyes-0.png</string>
-														<string>animated-grossini.plist</string>
+														<string>ccb/animated-grossini.plist</string>
 													</array>
 												</dict>
 											</array>
@@ -3102,6 +3106,10 @@
 										</array>
 									</dict>
 								</array>
+								<key>selected</key>
+								<true/>
+								<key>seqExpanded</key>
+								<true/>
 							</dict>
 						</array>
 						<key>customClass</key>
@@ -3241,6 +3249,8 @@
 						<true/>
 					</dict>
 				</array>
+				<key>seqExpanded</key>
+				<true/>
 			</dict>
 		</array>
 		<key>customClass</key>
@@ -3383,7 +3393,7 @@
 			<key>offset</key>
 			<real>0.0</real>
 			<key>position</key>
-			<real>2</real>
+			<real>1.7000000476837158</real>
 			<key>resolution</key>
 			<real>30</real>
 			<key>scale</key>
@@ -3401,9 +3411,9 @@
 			<key>name</key>
 			<string>Idle</string>
 			<key>offset</key>
-			<real>0.0</real>
+			<real>6.2734375</real>
 			<key>position</key>
-			<real>10</real>
+			<real>6.9000000953674316</real>
 			<key>resolution</key>
 			<real>30</real>
 			<key>scale</key>
