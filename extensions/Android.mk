@@ -22,6 +22,13 @@ CCBReader/CCParticleSystemQuadLoader.cpp \
 CCBReader/CCScale9SpriteLoader.cpp \
 CCBReader/CCScrollViewLoader.cpp \
 CCBReader/CCSpriteLoader.cpp \
+CCBReader/CCBAnimationManager.cpp \
+CCBReader/CCBKeyframe.cpp \
+CCBReader/CCBSequence.cpp \
+CCBReader/CCBSequenceProperty.cpp \
+CCBReader/CCBValue.cpp \
+CCBReader/CCData.cpp \
+CCBReader/CCNode+CCBRelativePositioning.cpp \
 GUI/CCControlExtension/CCControl.cpp \
 GUI/CCControlExtension/CCControlButton.cpp \
 GUI/CCControlExtension/CCControlColourPicker.cpp \
