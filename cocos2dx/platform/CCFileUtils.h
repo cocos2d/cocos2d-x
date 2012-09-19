@@ -45,20 +45,20 @@ public:
     void purgeCachedEntries();
     /**
     @brief Get resource file data
-    @param[in]  pszFileName The resource file name which contain the path
-    @param[in]  pszMode The read mode of the file
-    @param[out] pSize If get the file data succeed the it will be the data size,or it will be 0
-    @return if success,the pointer of data will be returned,or NULL is returned
-    @warning If you get the file data succeed,you must delete[] it after used.
+    @param[in]  pszFileName The resource file name which contains the path.
+    @param[in]  pszMode The read mode of the file.
+    @param[out] pSize If the file read operation succeeds, it will be the data size, otherwise 0.
+    @return Upon success, a pointer to the data is returned, otherwise NULL.
+    @warning Recall: you are responsible for calling delete[] on any Non-NULL pointer returned.
     */
     unsigned char* getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize);
 
     /**
-    @brief Get resource file data from zip file
-    @param[in]  pszFileName The resource file name which contain the relative path of zip file
-    @param[out] pSize If get the file data succeed the it will be the data size,or it will be 0
-    @return if success,the pointer of data will be returned,or NULL is returned
-    @warning If you get the file data succeed,you must delete[] it after used.
+    @brief Get resource file data from a zip file.
+    @param[in]  pszFileName The resource file name which contains the relative path of the zip file.
+    @param[out] pSize If the file read operation succeeds, it will be the data size, otherwise 0.
+    @return Upon success, a pointer to the data is returned, otherwise NULL.
+    @warning Recall: you are responsible for calling delete[] on any Non-NULL pointer returned.
     */
     unsigned char* getFileDataFromZip(const char* pszZipFilePath, const char* pszFileName, unsigned long * pSize);
 
@@ -67,8 +67,8 @@ public:
     @param   pszRelativePath     The relative path of the file.
     @return  The absolute path of the file.
     @warning We only add the ResourcePath before the relative path of the file.
-    If you have not set the ResourcePath,the function add "/NEWPLUS/TDA_DATA/UserData/" as default.
-    You can set ResourcePath by function void setResourcePath(const char *pszResourcePath);
+    If you have not set the ResourcePath, the function appends "/NEWPLUS/TDA_DATA/UserData/" by default.
+    You can set ResourcePath with void setResourcePath(const char *pszResourcePath);
     */
     const char* fullPathFromRelativePath(const char *pszRelativePath);
 
@@ -77,8 +77,8 @@ public:
     /// @endcond
 
     /**
-    @brief  Set the resource directory,we will find resource relative to this directory
-    @param pszDirectoryName  Relative path to root
+    @brief  Set the resource directory; we will find resources relative to this directory.
+    @param pszDirectoryName  Relative path to root.
     */
     void setResourceDirectory(const char *pszDirectoryName);
 
@@ -100,6 +100,10 @@ public:
     bool isPopupNotify();
     
 protected:
+    CCFileUtils(void)
+    {
+    }
+    
     std::string m_obDirectory;
 };
 

@@ -11,7 +11,7 @@ class CCRenderTexture : public CCNode
     void setSprite(CCSprite* psprite);
 
     void begin();
-    void endToLua();
+    void end @ endToLua ();
     void beginWithClear(float r, float g, float b, float a);
     void beginWithClear(float r, float g, float b, float a, float depthValue);
     void beginWithClear(float r, float g, float b, float a, float depthValue, int stencilValue);
@@ -19,9 +19,9 @@ class CCRenderTexture : public CCNode
     void clear(float r, float g, float b, float a);
     void clearDepth(float depthValue);
     void clearStencil(int stencilValue);
- 
+
     CCImage* newCCImage();
- 
+
     bool saveToFile(const char *szFilePath);
     bool saveToFile(const char *name, tCCImageFormat format);
 

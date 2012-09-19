@@ -45,7 +45,7 @@ typedef enum {
 } CCProgressTimerType;
 
 /**
- @brief CCProgresstimer is a subclass of CCNode.
+ @brief CCProgressTimer is a subclass of CCNode.
  It renders the inner sprite according to the percentage.
  The progress can be Radial, Horizontal or vertical.
  @since v0.99.1

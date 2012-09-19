@@ -69,7 +69,7 @@ public:
          * this method call Cococs2dx.createBitmap()(java code) to create the bitmap, the java code
          * will call Java_org_cocos2dx_lib_Cocos2dxBitmap_nativeInitBitmapDC() to init the width, height
          * and data.
-         * use this appoach to decrease the jni call number
+         * use this approach to decrease the jni call number
         */
         jstring jstrText = methodInfo.env->NewStringUTF(text);
         jstring jstrFont = methodInfo.env->NewStringUTF(pFontName);

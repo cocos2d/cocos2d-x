@@ -24,7 +24,7 @@
 
 @end
 
-// override UIAccelerometer behaviour
+// override UIAccelerometer behavior
 @interface UIAccelerometer (Simulation)
 + (UIAccelerometer *)sharedAccelerometer;
 @end

@@ -44,14 +44,14 @@ public:
     int run();
         
     /**
-    @brief    Get current applicaiton instance.
+    @brief    Get the current application instance.
     @return Current application instance pointer.
     */
     static CCApplication* sharedApplication();
     
     /**
      @brief    Callback by CCDirector for limit FPS.
-     @interval       The time, which expressed in second in second, between current frame and next. 
+     @interval       The time, expressed in seconds, between current frame and next. 
      */
     virtual void setAnimationInterval(double interval);
 

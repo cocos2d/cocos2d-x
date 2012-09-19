@@ -167,7 +167,7 @@ static AccelerometerSimulation *sharedAccelerometer = NULL;
     accObject = [UIAccelerationSimulation alloc];
     isExiting = false;
     
-    // couldn't get the CFSocket version to work with UDP and runloop, so used Berkely sockets and a thread instead
+    // couldn't get the CFSocket version to work with UDP and runloop, so used Berkeley sockets and a thread instead
     
     udpSocket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
     struct sockaddr_in sin;

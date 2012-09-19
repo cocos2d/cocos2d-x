@@ -135,7 +135,7 @@ CCSprite* CCSprite::spriteWithSpriteFrame(CCSpriteFrame *pSpriteFrame)
 CCSprite* CCSprite::createWithSpriteFrame(CCSpriteFrame *pSpriteFrame)
 {
     CCSprite *pobSprite = new CCSprite();
-    if (pobSprite && pobSprite->initWithSpriteFrame(pSpriteFrame))
+    if (pSpriteFrame && pobSprite && pobSprite->initWithSpriteFrame(pSpriteFrame))
     {
         pobSprite->autorelease();
         return pobSprite;
@@ -152,10 +152,13 @@ CCSprite* CCSprite::spriteWithSpriteFrameName(const char *pszSpriteFrameName)
 CCSprite* CCSprite::createWithSpriteFrameName(const char *pszSpriteFrameName)
 {
     CCSpriteFrame *pFrame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(pszSpriteFrameName);
-
+    
+#if COCOS2D_DEBUG > 0
     char msg[256] = {0};
     sprintf(msg, "Invalid spriteFrameName: %s", pszSpriteFrameName);
     CCAssert(pFrame != NULL, msg);
+#endif
+    
     return createWithSpriteFrame(pFrame);
 }
 
@@ -301,7 +304,7 @@ bool CCSprite::initWithSpriteFrameName(const char *pszSpriteFrameName)
 CCSprite* CCSprite::initWithCGImage(CGImageRef pImage)
 {
     // todo
-    // because it is deprecated, so we do not impelment it
+    // because it is deprecated, so we do not implement it
 
     return NULL;
 }
@@ -479,7 +482,7 @@ void CCSprite::updateTransform(void)
 {
     CCAssert(m_pobBatchNode, "updateTransform is only valid when CCSprite is being rendered using an CCSpriteBatchNode");
 
-    // recaculate matrix only if it is dirty
+    // recalculate matrix only if it is dirty
     if( isDirty() ) {
 
         // If it is not visible, or one of its ancestors is not visible, then do nothing:

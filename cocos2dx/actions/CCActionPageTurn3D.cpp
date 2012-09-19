@@ -96,7 +96,7 @@ void CCPageTurn3D::update(float time)
             p.y = ( R + ay - ( r * (1 - cosBeta) * sinTheta));
 
             // We scale z here to avoid the animation being
-            // too much bigger than the screen due to perspectve transform
+            // too much bigger than the screen due to perspective transform
             p.z = (r * ( 1 - cosBeta ) * cosTheta) / 7;// "100" didn't work for
 
             //    Stop z coord from dropping beneath underlying page in a transition
