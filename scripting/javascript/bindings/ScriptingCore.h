@@ -81,6 +81,7 @@ public:
     virtual int executeLayerTouchEvent(CCLayer* pLayer, int eventType, CCTouch *pTouch);
 
     int executeFunctionWithObjectData(CCNode *self, const char *name, JSObject *obj);
+    int executeFunctionWithOwner(jsval owner, const char *name, jsval data);
     
     void executeJSFunctionWithThisObj(jsval thisObj, jsval callback, jsval data);
 

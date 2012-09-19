@@ -565,6 +565,14 @@ int ScriptingCore::executeFunctionWithObjectData(CCNode *self, const char *name,
     return 1;
 }
 
+int ScriptingCore::executeFunctionWithOwner(jsval owner, const char *name, jsval data) {
+    jsval retval;
+
+    executeJSFunctionWithName(this->cx, JSVAL_TO_OBJECT(owner), name, data, retval);
+
+    return 1;
+}
+
 int ScriptingCore::executeCustomTouchesEvent(int eventType, 
                                        CCSet *pTouches, JSObject *obj)
 {
