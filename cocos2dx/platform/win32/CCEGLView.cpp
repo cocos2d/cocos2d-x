@@ -65,7 +65,7 @@ static void SetupPixelFormat(HDC hDC)
     SetPixelFormat(hDC, pixelFormat, &pfd);
 }
 
-void glew_dynamic_binding()
+bool glew_dynamic_binding()
 {
 	const char *gl_extensions = (const char*)glGetString(GL_EXTENSIONS);
 
@@ -100,7 +100,7 @@ void glew_dynamic_binding()
 		else
 		if (strstr(gl_extensions, "EXT_framebuffer_object"))
 		{
-			CCLog("GL: EXT_framebuffer_object is supported\n");
+			CCLog("OpenGL: EXT_framebuffer_object is supported\n");
 			glIsRenderbuffer = (PFNGLISRENDERBUFFERPROC) wglGetProcAddress("glIsRenderbufferEXT");
 			glBindRenderbuffer = (PFNGLBINDRENDERBUFFERPROC) wglGetProcAddress("glBindRenderbufferEXT");
 			glDeleteRenderbuffers = (PFNGLDELETERENDERBUFFERSPROC) wglGetProcAddress("glDeleteRenderbuffersEXT");
@@ -123,8 +123,10 @@ void glew_dynamic_binding()
 		{
 			CCLog("OpenGL: No framebuffers extension is supported\n");
 			CCLog("OpenGL: Any call to Fbo will crash!\n");
+			return false;
 		}
 	}
+	return true;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -182,15 +184,16 @@ bool CCEGLView::initGL()
     {
         char strComplain[256] = {0};
         sprintf(strComplain,
-		"Your OpenGL version is %s, but Cocos2d-x requires OpenGL 1.5 or higher on Windows. Please upgrade the driver of your video card",
+		"OpenGL 1.5 or higher is required (your version is %s). Please upgrade the driver of your video card.",
 		glVersion);
-	CCMessageBox(strComplain, "OpenGL version tooooooooooold");
+		CCMessageBox(strComplain, "OpenGL version too old");
+		return false;
     }
 
     GLenum GlewInitResult = glewInit();
     if (GLEW_OK != GlewInitResult)
     {
-        fprintf(stderr,"ERROR: %s\n",glewGetErrorString(GlewInitResult));
+		CCMessageBox((char *)glewGetErrorString(GlewInitResult), "OpenGL error");
         return false;
     }
 
@@ -212,7 +215,11 @@ bool CCEGLView::initGL()
         CCLog("OpenGL 2.0 not supported");
     }
 
-    glew_dynamic_binding();
+    if(glew_dynamic_binding() == false)
+	{
+		CCMessageBox("No OpenGL framebuffer support. Please upgrade the driver of your video card.", "OpenGL error");
+		return false;
+	}
 
     return true;
 }
@@ -277,6 +284,7 @@ bool CCEGLView::Create(LPCTSTR pTitle, int w, int h)
         resize(w, h);
 
         bRet = initGL();
+		if(!bRet) destroyGL();
         CC_BREAK_IF(!bRet);
 
         s_pMainWindow = this;
@@ -536,13 +544,19 @@ void CCEGLView::resize(int width, int height)
                  SWP_NOCOPYBITS | SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 }
 
-void CCEGLView::setFrameSize(float width, float height)
+bool CCEGLView::setFrameSize(float width, float height)
 {
-    Create((LPCTSTR)m_szViewName, (int)width, (int)height);
+    if(!Create((LPCTSTR)m_szViewName, (int)width, (int)height)) 
+	{
+		PostQuitMessage(-1);
+		return false;
+	}
     CCEGLViewProtocol::setFrameSize(width, height);
 
     resize(width, height); // adjust window size for menubar
     centerWindow();
+
+	return true;
 }
 
 void CCEGLView::centerWindow()
