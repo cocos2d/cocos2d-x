@@ -14,6 +14,16 @@ btn-test-2.png
 burst-hd.png
 burst-ipad.png
 burst.png
+TestAnimations.ccbi
+TestAnimationsSub.ccbi
+TestButtons.ccbi
+TestHeader.ccbi
+TestLabels.ccbi
+TestMenus.ccbi
+TestParticleSystems.ccbi
+TestScrollViews.ccbi
+TestScrollViewsContentA.ccbi
+TestSprites.ccbi
 comic andy.ttf
 flower.jpg
 fps_images-hd.png
@@ -35,13 +45,3 @@ particle-smoke.png
 particle-snow.png
 particle-stars.png
 scale-9-demo.png
-TestAnimations.ccbi
-TestAnimationsSub.ccbi
-TestButtons.ccbi
-TestHeader.ccbi
-TestLabels.ccbi
-TestMenus.ccbi
-TestParticleSystems.ccbi
-TestScrollViews.ccbi
-TestScrollViewsContentA.ccbi
-TestSprites.ccbi

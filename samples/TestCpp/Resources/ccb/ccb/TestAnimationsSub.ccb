@@ -211,7 +211,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>burst.png</string>
+							<string>ccb/burst.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -247,8 +247,8 @@
 						<string>Blendmode</string>
 						<key>value</key>
 						<array>
-							<integer>1</integer>
-							<integer>1</integer>
+							<integer>770</integer>
+							<integer>771</integer>
 						</array>
 					</dict>
 				</array>

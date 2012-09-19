@@ -218,7 +218,7 @@
 						<key>type</key>
 						<string>CCBFile</string>
 						<key>value</key>
-						<string>Tests/TestAnimationsSub.ccb</string>
+						<string>ccb/ccb/TestAnimationsSub.ccb</string>
 					</dict>
 				</array>
 			</dict>
@@ -276,7 +276,7 @@
 						<key>type</key>
 						<string>CCBFile</string>
 						<key>value</key>
-						<string>Tests/TestHeader.ccb</string>
+						<string>ccb/ccb/TestHeader.ccb</string>
 					</dict>
 				</array>
 			</dict>
@@ -419,7 +419,7 @@
 								<key>value</key>
 								<array>
 									<string></string>
-									<string>btn-test-0.png</string>
+									<string>ccb/btn-test-0.png</string>
 								</array>
 							</dict>
 							<dict>
@@ -442,7 +442,7 @@
 								<key>value</key>
 								<array>
 									<string></string>
-									<string>btn-test-1.png</string>
+									<string>ccb/btn-test-1.png</string>
 								</array>
 							</dict>
 							<dict>
@@ -481,8 +481,6 @@
 								</array>
 							</dict>
 						</array>
-						<key>selected</key>
-						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>
@@ -618,7 +616,7 @@
 								<key>value</key>
 								<array>
 									<string></string>
-									<string>btn-test-0.png</string>
+									<string>ccb/btn-test-0.png</string>
 								</array>
 							</dict>
 							<dict>
@@ -641,7 +639,7 @@
 								<key>value</key>
 								<array>
 									<string></string>
-									<string>btn-test-1.png</string>
+									<string>ccb/btn-test-1.png</string>
 								</array>
 							</dict>
 							<dict>
@@ -815,7 +813,7 @@
 								<key>value</key>
 								<array>
 									<string></string>
-									<string>btn-test-0.png</string>
+									<string>ccb/btn-test-0.png</string>
 								</array>
 							</dict>
 							<dict>
@@ -838,7 +836,7 @@
 								<key>value</key>
 								<array>
 									<string></string>
-									<string>btn-test-1.png</string>
+									<string>ccb/btn-test-1.png</string>
 								</array>
 							</dict>
 							<dict>
@@ -1012,7 +1010,7 @@
 								<key>value</key>
 								<array>
 									<string></string>
-									<string>btn-test-0.png</string>
+									<string>ccb/btn-test-0.png</string>
 								</array>
 							</dict>
 							<dict>
@@ -1035,7 +1033,7 @@
 								<key>value</key>
 								<array>
 									<string></string>
-									<string>btn-test-1.png</string>
+									<string>ccb/btn-test-1.png</string>
 								</array>
 							</dict>
 							<dict>
@@ -1407,7 +1405,7 @@
 								<string>SpriteFrame</string>
 								<key>value</key>
 								<array>
-									<string>animated-grossini.plist</string>
+									<string>ccb/animated-grossini.plist</string>
 									<string>grossini-leg-r.png</string>
 								</array>
 							</dict>
@@ -1591,7 +1589,7 @@
 								<string>SpriteFrame</string>
 								<key>value</key>
 								<array>
-									<string>animated-grossini.plist</string>
+									<string>ccb/animated-grossini.plist</string>
 									<string>grossini-leg-l.png</string>
 								</array>
 							</dict>
@@ -1956,7 +1954,7 @@
 								<string>SpriteFrame</string>
 								<key>value</key>
 								<array>
-									<string>animated-grossini.plist</string>
+									<string>ccb/animated-grossini.plist</string>
 									<string>grossini-arm-r.png</string>
 								</array>
 							</dict>
@@ -2284,7 +2282,7 @@
 								<string>SpriteFrame</string>
 								<key>value</key>
 								<array>
-									<string>animated-grossini.plist</string>
+									<string>ccb/animated-grossini.plist</string>
 									<string>grossini-arm-l.png</string>
 								</array>
 							</dict>
@@ -2493,7 +2491,7 @@
 								<string>SpriteFrame</string>
 								<key>value</key>
 								<array>
-									<string>animated-grossini.plist</string>
+									<string>ccb/animated-grossini.plist</string>
 									<string>grossini-body.png</string>
 								</array>
 							</dict>
@@ -3073,7 +3071,7 @@
 										<key>baseValue</key>
 										<array>
 											<string>grossini-eyes-0.png</string>
-											<string>animated-grossini.plist</string>
+											<string>ccb/animated-grossini.plist</string>
 										</array>
 										<key>name</key>
 										<string>displayFrame</string>
@@ -3081,7 +3079,7 @@
 										<string>SpriteFrame</string>
 										<key>value</key>
 										<array>
-											<string>animated-grossini.plist</string>
+											<string>ccb/animated-grossini.plist</string>
 											<string>grossini-eyes-0.png</string>
 										</array>
 									</dict>
@@ -3166,7 +3164,7 @@
 								<string>SpriteFrame</string>
 								<key>value</key>
 								<array>
-									<string>animated-grossini.plist</string>
+									<string>ccb/animated-grossini.plist</string>
 									<string>grossini-head.png</string>
 								</array>
 							</dict>

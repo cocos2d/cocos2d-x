@@ -216,7 +216,7 @@
 										<key>value</key>
 										<array>
 											<string></string>
-											<string>btn-back-0.png</string>
+											<string>ccb/btn-back-0.png</string>
 										</array>
 									</dict>
 									<dict>
@@ -227,7 +227,7 @@
 										<key>value</key>
 										<array>
 											<string></string>
-											<string>btn-back-1.png</string>
+											<string>ccb/btn-back-1.png</string>
 										</array>
 									</dict>
 									<dict>
@@ -589,6 +589,8 @@
 				<false/>
 			</dict>
 		</array>
+		<key>selected</key>
+		<true/>
 	</dict>
 	<key>notes</key>
 	<array/>

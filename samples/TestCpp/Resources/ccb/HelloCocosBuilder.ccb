@@ -89,7 +89,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>burst.png</string>
+							<string>ccb/burst.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -99,11 +99,13 @@
 						<string>Blendmode</string>
 						<key>value</key>
 						<array>
-							<integer>1</integer>
-							<integer>1</integer>
+							<integer>770</integer>
+							<integer>771</integer>
 						</array>
 					</dict>
 				</array>
+				<key>selected</key>
+				<true/>
 			</dict>
 			<dict>
 				<key>baseClass</key>
@@ -520,7 +522,7 @@
 						<key>type</key>
 						<string>Texture</string>
 						<key>value</key>
-						<string>particle-snow.png</string>
+						<string>ccb/particle-snow.png</string>
 					</dict>
 				</array>
 			</dict>
@@ -639,7 +641,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>logo-icon.png</string>
+							<string>ccb/logo-icon.png</string>
 						</array>
 					</dict>
 				</array>
@@ -807,7 +809,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>logo.png</string>
+							<string>ccb/logo.png</string>
 						</array>
 					</dict>
 				</array>
@@ -923,7 +925,7 @@
 						<key>type</key>
 						<string>FntFile</string>
 						<key>value</key>
-						<string>markerfelt24shadow.fnt</string>
+						<string>ccb/markerfelt24shadow.fnt</string>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -1232,7 +1234,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>btn-test-0.png</string>
+							<string>ccb/btn-test-0.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -1255,7 +1257,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>btn-test-1.png</string>
+							<string>ccb/btn-test-1.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -1571,7 +1573,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>btn-test-0.png</string>
+							<string>ccb/btn-test-0.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -1594,7 +1596,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>btn-test-1.png</string>
+							<string>ccb/btn-test-1.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -1910,7 +1912,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>btn-test-0.png</string>
+							<string>ccb/btn-test-0.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -1933,7 +1935,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>btn-test-1.png</string>
+							<string>ccb/btn-test-1.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -2309,7 +2311,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>btn-test-0.png</string>
+							<string>ccb/btn-test-0.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -2332,7 +2334,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>btn-test-1.png</string>
+							<string>ccb/btn-test-1.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -2648,7 +2650,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>btn-test-0.png</string>
+							<string>ccb/btn-test-0.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -2671,7 +2673,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>btn-test-1.png</string>
+							<string>ccb/btn-test-1.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -2987,7 +2989,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>btn-test-0.png</string>
+							<string>ccb/btn-test-0.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -3010,7 +3012,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>btn-test-1.png</string>
+							<string>ccb/btn-test-1.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -3266,7 +3268,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>jungle-right.png</string>
+							<string>ccb/jungle-right.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -3499,7 +3501,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>jungle-left.png</string>
+							<string>ccb/jungle-left.png</string>
 						</array>
 					</dict>
 					<dict>

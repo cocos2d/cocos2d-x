@@ -215,7 +215,7 @@
 						<key>type</key>
 						<string>CCBFile</string>
 						<key>value</key>
-						<string>Tests/TestScrollViewsContentA.ccb</string>
+						<string>ccb/ccb/TestScrollViewsContentA.ccb</string>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -312,7 +312,7 @@
 						<key>type</key>
 						<string>CCBFile</string>
 						<key>value</key>
-						<string>Tests/TestScrollViewsContentA.ccb</string>
+						<string>ccb/ccb/TestScrollViewsContentA.ccb</string>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -394,7 +394,7 @@
 						<key>type</key>
 						<string>CCBFile</string>
 						<key>value</key>
-						<string>Tests/TestHeader.ccb</string>
+						<string>ccb/ccb/TestHeader.ccb</string>
 					</dict>
 				</array>
 			</dict>

@@ -297,7 +297,7 @@
 								<key>value</key>
 								<array>
 									<string></string>
-									<string>btn-test-0.png</string>
+									<string>ccb/btn-test-0.png</string>
 								</array>
 							</dict>
 							<dict>
@@ -320,7 +320,7 @@
 								<key>value</key>
 								<array>
 									<string></string>
-									<string>btn-test-1.png</string>
+									<string>ccb/btn-test-1.png</string>
 								</array>
 							</dict>
 							<dict>
@@ -414,7 +414,7 @@
 								<key>type</key>
 								<string>FntFile</string>
 								<key>value</key>
-								<string>markerfelt24shadow.fnt</string>
+								<string>ccb/markerfelt24shadow.fnt</string>
 							</dict>
 							<dict>
 								<key>name</key>
@@ -548,7 +548,7 @@
 						<key>type</key>
 						<string>CCBFile</string>
 						<key>value</key>
-						<string>Tests/TestHeader.ccb</string>
+						<string>ccb/ccb/TestHeader.ccb</string>
 					</dict>
 				</array>
 			</dict>
