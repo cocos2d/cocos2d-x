@@ -151,11 +151,27 @@
 			Name="CCBReader"
 			>
 			<File
+				RelativePath="..\CCBReader\CCBAnimationManager.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\CCBReader\CCBAnimationManager.h"
+				>
+			</File>
+			<File
 				RelativePath="..\CCBReader\CCBFileLoader.cpp"
 				>
 			</File>
 			<File
 				RelativePath="..\CCBReader\CCBFileLoader.h"
+				>
+			</File>
+			<File
+				RelativePath="..\CCBReader\CCBKeyframe.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\CCBReader\CCBKeyframe.h"
 				>
 			</File>
 			<File
@@ -175,6 +191,30 @@
 				>
 			</File>
 			<File
+				RelativePath="..\CCBReader\CCBSequence.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\CCBReader\CCBSequence.h"
+				>
+			</File>
+			<File
+				RelativePath="..\CCBReader\CCBSequenceProperty.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\CCBReader\CCBSequenceProperty.h"
+				>
+			</File>
+			<File
+				RelativePath="..\CCBReader\CCBValue.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\CCBReader\CCBValue.h"
+				>
+			</File>
+			<File
 				RelativePath="..\CCBReader\CCControlButtonLoader.cpp"
 				>
 			</File>
@@ -188,6 +228,14 @@
 			</File>
 			<File
 				RelativePath="..\CCBReader\CCControlLoader.h"
+				>
+			</File>
+			<File
+				RelativePath="..\CCBReader\CCData.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\CCBReader\CCData.h"
 				>
 			</File>
 			<File
@@ -248,6 +296,14 @@
 			</File>
 			<File
 				RelativePath="..\CCBReader\CCMenuLoader.h"
+				>
+			</File>
+			<File
+				RelativePath="..\CCBReader\CCNode+CCBRelativePositioning.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\CCBReader\CCNode+CCBRelativePositioning.h"
 				>
 			</File>
 			<File

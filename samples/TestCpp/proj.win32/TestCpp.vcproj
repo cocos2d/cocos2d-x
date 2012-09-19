@@ -1010,6 +1010,22 @@
 							>
 						</File>
 					</Filter>
+					<Filter
+						Name="AnimationsTest"
+						>
+						<File
+							RelativePath="..\Classes\ExtensionsTest\CocosBuilderTest\AnimationsTest\AnimationsLayerLoader.h"
+							>
+						</File>
+						<File
+							RelativePath="..\Classes\ExtensionsTest\CocosBuilderTest\AnimationsTest\AnimationsTestLayer.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\Classes\ExtensionsTest\CocosBuilderTest\AnimationsTest\AnimationsTestLayer.h"
+							>
+						</File>
+					</Filter>
 				</Filter>
 				<Filter
 					Name="NetworkTest"
