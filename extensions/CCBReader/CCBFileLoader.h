@@ -2,6 +2,7 @@
 #define _CCB_CCBFILELOADER_H_
 
 #include "CCNodeLoader.h"
+#include "CCBReader.h"
 
 NS_CC_EXT_BEGIN
 
@@ -14,7 +15,7 @@ class CCBFileLoader : public CCNodeLoader {
         CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(CCBFileLoader, loader);
 
     protected:
-        CCB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(CCNode);
+        CCB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(CCBFile);
 
         virtual void onHandlePropTypeCCBFile(CCNode * pNode, CCNode * pParent, CCString * pPropertyName, CCNode * pCCBFileNode, CCBReader * pCCBReader);
 };

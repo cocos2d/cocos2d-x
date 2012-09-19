@@ -15,10 +15,10 @@
  * http://www.cocoabuilder.com/archive/xcode/265549-crash-in-virtual-method-call.html
  */
 class HelloCocosBuilderLayer
-    : public cocos2d::CCLayer
-    , public cocos2d::extension::CCBSelectorResolver
+: public cocos2d::CCLayer
+, public cocos2d::extension::CCBSelectorResolver
 , public cocos2d::extension::CCBMemberVariableAssigner
-    , public cocos2d::extension::CCNodeLoaderListener
+, public cocos2d::extension::CCNodeLoaderListener
 {
     public:
         CCB_STATIC_NEW_AUTORELEASE_OBJECT_WITH_INIT_METHOD(HelloCocosBuilderLayer, create);
@@ -36,7 +36,7 @@ class HelloCocosBuilderLayer
         void onMenuTestClicked(cocos2d::CCObject * pSender, cocos2d::extension::CCControlEvent pCCControlEvent);
         void onSpriteTestClicked(cocos2d::CCObject * pSender, cocos2d::extension::CCControlEvent pCCControlEvent);
         void onButtonTestClicked(cocos2d::CCObject * pSender, cocos2d::extension::CCControlEvent pCCControlEvent);
-        void onLabelTestClicked(cocos2d::CCObject * pSender, cocos2d::extension::CCControlEvent pCCControlEvent);
+        void onAnimationsTestClicked(cocos2d::CCObject * pSender, cocos2d::extension::CCControlEvent pCCControlEvent);
         void onParticleSystemTestClicked(cocos2d::CCObject * pSender, cocos2d::extension::CCControlEvent pCCControlEvent);
         void onScrollViewTestClicked(cocos2d::CCObject * pSender, cocos2d::extension::CCControlEvent pCCControlEvent);
 
