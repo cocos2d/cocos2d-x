@@ -138,7 +138,7 @@ void CCNotificationCenter::postNotification(const char *name, CCObject *object)
         if (!observer)
             continue;
         
-        if (!strcmp(name,observer->getName()))
+        if (!strcmp(name,observer->getName()) && (observer->getObject() == object || observer->getObject() == NULL || object == NULL))
             observer->performSelector(object);
     }
 
