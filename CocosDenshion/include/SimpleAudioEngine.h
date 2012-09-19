@@ -26,48 +26,20 @@ THE SOFTWARE.
 #ifndef _SIMPLE_AUDIO_ENGINE_H_
 #define _SIMPLE_AUDIO_ENGINE_H_
 
-#include <stddef.h>
 #include "Export.h"
-#include <typeinfo>
-#include <ctype.h>
-#include <string.h>
+#include <stddef.h>
 
 namespace CocosDenshion {
-
-class TypeInfo
-{
-public:
-    virtual long getClassTypeInfo() = 0;
-};
-
-static unsigned int getHashCodeByString(const char *key)
-{
-	unsigned int len = strlen(key);
-	const char *end=key+len;
-	unsigned int hash;
-
-	for (hash = 0; key < end; key++)
-	{
-		hash *= 16777619;
-		hash ^= (unsigned int) (unsigned char) toupper(*key);
-	}
-	return (hash);
-}
 
 /**
 @class          SimpleAudioEngine
 @brief          offer a VERY simple interface to play background music & sound effect
 */
-
-class EXPORT_DLL SimpleAudioEngine : public TypeInfo
+class EXPORT_DLL SimpleAudioEngine
 {
 public:
     SimpleAudioEngine();
     ~SimpleAudioEngine();
-
-    virtual long getClassTypeInfo() {
-        return getHashCodeByString(typeid(CocosDenshion::SimpleAudioEngine).name());
-    }
 
     /**
     @brief Get the shared Engine object,it will new one when first time be called
@@ -91,19 +63,13 @@ public:
     @param pszFilePath The path of the background music file,or the FileName of T_SoundResInfo
     @param bLoop Whether the background music loop or not
     */
-    void playBackgroundMusic(const char* pszFilePath, bool bLoop);
-    void playBackgroundMusic(const char* pszFilePath) {
-    	this->playBackgroundMusic(pszFilePath, false);
-    }
+    void playBackgroundMusic(const char* pszFilePath, bool bLoop = false);
 
     /**
     @brief Stop playing background music
     @param bReleaseData If release the background music data or not.As default value is false
     */
-    void stopBackgroundMusic(bool bReleaseData);
-    void stopBackgroundMusic() {
-    	this->stopBackgroundMusic(false);
-    }
+    void stopBackgroundMusic(bool bReleaseData = false);
 
     /**
     @brief Pause playing background music
@@ -157,10 +123,7 @@ public:
     @param pszFilePath The path of the effect file,or the FileName of T_SoundResInfo
     @bLoop Whether to loop the effect playing, default value is false
     */
-    unsigned int playEffect(const char* pszFilePath, bool bLoop);
-    unsigned int playEffect(const char* pszFilePath) {
-    	return this->playEffect(pszFilePath, false);
-    }
+    unsigned int playEffect(const char* pszFilePath, bool bLoop = false);
 
     /**
     @brief Pause playing sound effect
@@ -209,9 +172,19 @@ public:
     @param[in]        pszFilePath        The path of the effect file,or the FileName of T_SoundResInfo
     */
     void unloadEffect(const char* pszFilePath);
+	
+	/**
+	 @brief			set all effects and background music to mute.
+	 @param[in]		If YES then audio is silenced but not stopped, calls to start new audio will proceed but silently.
+	 */
+	void setMute(bool muteValue);
+	
+	/**
+	 @brief			Is audio mute.
+	 */
+	bool isMuted();
 };
 
 } // end of namespace CocosDenshion
 
 #endif // _SIMPLE_AUDIO_ENGINE_H_
-
