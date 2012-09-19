@@ -106,6 +106,10 @@ public:
      * Set Scissor rectangle with points.
      */
     virtual void setScissorInPoints(float x , float y , float w , float h);
+
+	virtual void setViewName(const char* pszViewName);
+
+	const char* getViewName();
     
     /** 
      * Enable retina mode.
