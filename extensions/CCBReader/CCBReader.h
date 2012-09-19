@@ -235,7 +235,8 @@ public:
     static float getResolutionScale();
     
     CCNode* readFileWithCleanUp(bool bCleanUp);
-    
+    bool hasScriptingOwner = false;    
+
 private:
     void cleanUpNodeGraph(CCNode *pNode);
     bool readSequences();
@@ -250,6 +251,7 @@ private:
     bool getBit();
     void alignBits();
     CCString* readUTF8();
+
 };
 
 // end of effects group
