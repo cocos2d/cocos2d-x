@@ -24,6 +24,13 @@
 #include "CCBReader/CCScale9SpriteLoader.h"
 #include "CCBReader/CCScrollViewLoader.h"
 #include "CCBReader/CCSpriteLoader.h"
+#include "CCBReader/CCBAnimationManager.h"
+#include "CCBReader/CCBKeyframe.h"
+#include "CCBReader/CCBSequence.h"
+#include "CCBReader/CCBSequenceProperty.h"
+#include "CCBReader/CCBValue.h"
+#include "CCBReader/CCData.h"
+#include "CCBReader/CCNode+CCBRelativePositioning.h"
 
 #include "GUI/CCControlExtension/CCControlExtensions.h"
 #include "GUI/CCScrollView/CCScrollView.h"

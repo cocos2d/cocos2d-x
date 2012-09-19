@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		154AE0AF1609CB780098D8D8 /* CCBAnimationManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 154AE0A11609CB780098D8D8 /* CCBAnimationManager.cpp */; };
+		154AE0B01609CB780098D8D8 /* CCBKeyframe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 154AE0A31609CB780098D8D8 /* CCBKeyframe.cpp */; };
+		154AE0B11609CB780098D8D8 /* CCBSequence.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 154AE0A51609CB780098D8D8 /* CCBSequence.cpp */; };
+		154AE0B21609CB780098D8D8 /* CCBSequenceProperty.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 154AE0A71609CB780098D8D8 /* CCBSequenceProperty.cpp */; };
+		154AE0B31609CB780098D8D8 /* CCBValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 154AE0A91609CB780098D8D8 /* CCBValue.cpp */; };
+		154AE0B41609CB780098D8D8 /* CCData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 154AE0AB1609CB780098D8D8 /* CCData.cpp */; };
+		154AE0B51609CB780098D8D8 /* CCNode+CCBRelativePositioning.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 154AE0AD1609CB780098D8D8 /* CCNode+CCBRelativePositioning.cpp */; };
+		154AE0BA1609CBBE0098D8D8 /* AnimationsTestLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 154AE0B81609CBBE0098D8D8 /* AnimationsTestLayer.cpp */; };
 		15AA9D5115B7EC460033D6C2 /* AccelerometerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15AA9C4215B7EC450033D6C2 /* AccelerometerTest.cpp */; };
 		15AA9D5215B7EC460033D6C2 /* ActionManagerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15AA9C4515B7EC450033D6C2 /* ActionManagerTest.cpp */; };
 		15AA9D5315B7EC460033D6C2 /* ActionsEaseTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15AA9C4815B7EC450033D6C2 /* ActionsEaseTest.cpp */; };
@@ -260,6 +268,23 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		154AE0A11609CB780098D8D8 /* CCBAnimationManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCBAnimationManager.cpp; sourceTree = "<group>"; };
+		154AE0A21609CB780098D8D8 /* CCBAnimationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBAnimationManager.h; sourceTree = "<group>"; };
+		154AE0A31609CB780098D8D8 /* CCBKeyframe.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCBKeyframe.cpp; sourceTree = "<group>"; };
+		154AE0A41609CB780098D8D8 /* CCBKeyframe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBKeyframe.h; sourceTree = "<group>"; };
+		154AE0A51609CB780098D8D8 /* CCBSequence.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCBSequence.cpp; sourceTree = "<group>"; };
+		154AE0A61609CB780098D8D8 /* CCBSequence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBSequence.h; sourceTree = "<group>"; };
+		154AE0A71609CB780098D8D8 /* CCBSequenceProperty.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCBSequenceProperty.cpp; sourceTree = "<group>"; };
+		154AE0A81609CB780098D8D8 /* CCBSequenceProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBSequenceProperty.h; sourceTree = "<group>"; };
+		154AE0A91609CB780098D8D8 /* CCBValue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCBValue.cpp; sourceTree = "<group>"; };
+		154AE0AA1609CB780098D8D8 /* CCBValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBValue.h; sourceTree = "<group>"; };
+		154AE0AB1609CB780098D8D8 /* CCData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCData.cpp; sourceTree = "<group>"; };
+		154AE0AC1609CB780098D8D8 /* CCData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCData.h; sourceTree = "<group>"; };
+		154AE0AD1609CB780098D8D8 /* CCNode+CCBRelativePositioning.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "CCNode+CCBRelativePositioning.cpp"; sourceTree = "<group>"; };
+		154AE0AE1609CB780098D8D8 /* CCNode+CCBRelativePositioning.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CCNode+CCBRelativePositioning.h"; sourceTree = "<group>"; };
+		154AE0B71609CBBE0098D8D8 /* AnimationsLayerLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationsLayerLoader.h; sourceTree = "<group>"; };
+		154AE0B81609CBBE0098D8D8 /* AnimationsTestLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimationsTestLayer.cpp; sourceTree = "<group>"; };
+		154AE0B91609CBBE0098D8D8 /* AnimationsTestLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationsTestLayer.h; sourceTree = "<group>"; };
 		15AA9C4215B7EC450033D6C2 /* AccelerometerTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AccelerometerTest.cpp; sourceTree = "<group>"; };
 		15AA9C4315B7EC450033D6C2 /* AccelerometerTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccelerometerTest.h; sourceTree = "<group>"; };
 		15AA9C4515B7EC450033D6C2 /* ActionManagerTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ActionManagerTest.cpp; sourceTree = "<group>"; };
@@ -784,6 +809,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		154AE0B61609CBBE0098D8D8 /* AnimationsTest */ = {
+			isa = PBXGroup;
+			children = (
+				154AE0B71609CBBE0098D8D8 /* AnimationsLayerLoader.h */,
+				154AE0B81609CBBE0098D8D8 /* AnimationsTestLayer.cpp */,
+				154AE0B91609CBBE0098D8D8 /* AnimationsTestLayer.h */,
+			);
+			name = AnimationsTest;
+			path = ../../../Classes/ExtensionsTest/CocosBuilderTest/AnimationsTest;
+			sourceTree = "<group>";
+		};
 		15AA9C4015B7EC450033D6C2 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
@@ -1090,6 +1126,7 @@
 		15AA9CBC15B7EC460033D6C2 /* CocosBuilderTest */ = {
 			isa = PBXGroup;
 			children = (
+				154AE0B61609CBBE0098D8D8 /* AnimationsTest */,
 				15AA9CBD15B7EC460033D6C2 /* ButtonTest */,
 				15AA9CC115B7EC460033D6C2 /* CocosBuilderTest.cpp */,
 				15AA9CC215B7EC460033D6C2 /* CocosBuilderTest.h */,
@@ -1782,6 +1819,20 @@
 		15AA9ED715B7EDCB0033D6C2 /* CCBReader */ = {
 			isa = PBXGroup;
 			children = (
+				154AE0A11609CB780098D8D8 /* CCBAnimationManager.cpp */,
+				154AE0A21609CB780098D8D8 /* CCBAnimationManager.h */,
+				154AE0A31609CB780098D8D8 /* CCBKeyframe.cpp */,
+				154AE0A41609CB780098D8D8 /* CCBKeyframe.h */,
+				154AE0A51609CB780098D8D8 /* CCBSequence.cpp */,
+				154AE0A61609CB780098D8D8 /* CCBSequence.h */,
+				154AE0A71609CB780098D8D8 /* CCBSequenceProperty.cpp */,
+				154AE0A81609CB780098D8D8 /* CCBSequenceProperty.h */,
+				154AE0A91609CB780098D8D8 /* CCBValue.cpp */,
+				154AE0AA1609CB780098D8D8 /* CCBValue.h */,
+				154AE0AB1609CB780098D8D8 /* CCData.cpp */,
+				154AE0AC1609CB780098D8D8 /* CCData.h */,
+				154AE0AD1609CB780098D8D8 /* CCNode+CCBRelativePositioning.cpp */,
+				154AE0AE1609CB780098D8D8 /* CCNode+CCBRelativePositioning.h */,
 				15AA9ED815B7EDCB0033D6C2 /* CCBFileLoader.cpp */,
 				15AA9ED915B7EDCB0033D6C2 /* CCBFileLoader.h */,
 				15AA9EDA15B7EDCB0033D6C2 /* CCBMemberVariableAssigner.h */,
@@ -2336,6 +2387,14 @@
 				1A20135E15FD900F0013D092 /* CCTableViewCell.cpp in Sources */,
 				1A20136415FD90240013D092 /* CustomTableViewCell.cpp in Sources */,
 				1A20136515FD90240013D092 /* TableViewTestScene.cpp in Sources */,
+				154AE0AF1609CB780098D8D8 /* CCBAnimationManager.cpp in Sources */,
+				154AE0B01609CB780098D8D8 /* CCBKeyframe.cpp in Sources */,
+				154AE0B11609CB780098D8D8 /* CCBSequence.cpp in Sources */,
+				154AE0B21609CB780098D8D8 /* CCBSequenceProperty.cpp in Sources */,
+				154AE0B31609CB780098D8D8 /* CCBValue.cpp in Sources */,
+				154AE0B41609CB780098D8D8 /* CCData.cpp in Sources */,
+				154AE0B51609CB780098D8D8 /* CCNode+CCBRelativePositioning.cpp in Sources */,
+				154AE0BA1609CBBE0098D8D8 /* AnimationsTestLayer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
