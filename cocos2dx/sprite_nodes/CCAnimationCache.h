@@ -52,7 +52,7 @@ class CC_DLL CCAnimationCache : public CCObject
 public:
     CCAnimationCache();
     ~CCAnimationCache();
-    /** Retruns ths shared instance of the Animation cache */
+    /** Returns the shared instance of the Animation cache */
     static CCAnimationCache* sharedAnimationCache(void);
 
     /** Purges the cache. It releases all the CCAnimation objects and the shared instance.
