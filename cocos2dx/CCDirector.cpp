@@ -73,21 +73,20 @@ NS_CC_BEGIN
 // XXX it should be a Director ivar. Move it there once support for multiple directors is added
 
 // singleton stuff
-static CCDisplayLinkDirector s_SharedDirector;
+static CCDisplayLinkDirector *s_SharedDirector = NULL;
 
 #define kDefaultFPS        60  // 60 frames per second
 extern const char* cocos2dVersion(void);
 
 CCDirector* CCDirector::sharedDirector(void)
 {
-    static bool s_bFirstUseDirector = true;
-    if (s_bFirstUseDirector)
+    if (!s_SharedDirector)
     {
-        s_bFirstUseDirector = false;
-        s_SharedDirector.init();
+        s_SharedDirector = new CCDisplayLinkDirector();
+        s_SharedDirector->init();
     }
 
-    return &s_SharedDirector;
+    return s_SharedDirector;
 }
 
 CCDirector::CCDirector(void)
@@ -162,7 +161,7 @@ bool CCDirector::init(void)
     
 CCDirector::~CCDirector(void)
 {
-    CCLOG("cocos2d: deallocing %p", this);
+    CCLOG("cocos2d: deallocing CCDirector %p", this);
 
     CC_SAFE_RELEASE(m_pFPSLabel);
     CC_SAFE_RELEASE(m_pSPFLabel);
@@ -185,6 +184,8 @@ CCDirector::~CCDirector(void)
     CC_SAFE_DELETE(m_pLastUpdate);
     // delete fps string
     delete []m_pszFPS;
+
+    s_SharedDirector = NULL;
 }
 
 void CCDirector::setGLDefaultValues(void)
@@ -640,6 +641,9 @@ void CCDirector::purgeDirector()
     // OpenGL view
     m_pobOpenGLView->end();
     m_pobOpenGLView = NULL;
+
+    // delete CCDirector
+    release();
 }
 
 void CCDirector::setNextScene(void)
