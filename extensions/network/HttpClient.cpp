@@ -251,6 +251,12 @@ int processGetTask(CCHttpRequest *request, write_callback callback, void *stream
             break;
         }
         
+        code = curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, request->getUrl());
+        if (code != CURLE_OK)
+        {
+            break;
+        }
+
         code = curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, callback);
         if (code != CURLE_OK) 
         {
