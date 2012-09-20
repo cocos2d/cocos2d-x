@@ -98,7 +98,7 @@ public:
     bool initWithTileFile(const char* tile, unsigned int tileWidth, unsigned int tileHeight, unsigned int itemsToRender);
 
     /** updates the Atlas (indexed vertex array).
-    * Shall be overriden in subclasses
+    * Shall be overridden in subclasses
     */
     virtual void updateAtlasValues();
 

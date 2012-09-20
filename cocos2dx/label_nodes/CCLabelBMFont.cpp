@@ -931,7 +931,7 @@ void CCLabelBMFont::createFontChars()
         // Color MUST be set before opacity, since opacity might change color if OpacityModifyRGB is on
         fontChar->setColor(m_tColor);
 
-        // only apply opaccity if it is different than 255 )
+        // only apply opacity if it is different than 255 )
         // to prevent modifying the color too (issue #610)
         if( m_cOpacity != 255 )
         {

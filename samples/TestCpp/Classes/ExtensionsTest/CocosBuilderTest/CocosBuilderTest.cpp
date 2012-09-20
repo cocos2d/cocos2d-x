@@ -37,10 +37,11 @@ void CocosBuilderTestScene::runThisTest() {
 
     /* Create an autorelease CCBReader. */
     cocos2d::extension::CCBReader * ccbReader = new cocos2d::extension::CCBReader(ccNodeLoaderLibrary);
-    ccbReader->autorelease();
     
     /* Read a ccbi file. */
-    CCNode * node = ccbReader->readNodeGraphFromFile("ccb/official/pub/", "ccb/HelloCocosBuilder.ccbi", this);
+    CCNode * node = ccbReader->readNodeGraphFromFile("ccb/HelloCocosBuilder.ccbi", this);
+    
+    ccbReader->release();
 
     if(node != NULL) {
         this->addChild(node);

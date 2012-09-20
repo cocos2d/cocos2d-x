@@ -299,7 +299,7 @@ void CCMotionStreak::update(float delta)
         m_pPointVertexes[m_uNuPoints] = m_tPositionR;
         m_pPointState[m_uNuPoints] = 1.0f;
 
-        // Color asignation
+        // Color assignment
         const unsigned int offset = m_uNuPoints*8;
         *((ccColor3B*)(m_pColorPointer + offset)) = m_tColor;
         *((ccColor3B*)(m_pColorPointer + offset+4)) = m_tColor;
