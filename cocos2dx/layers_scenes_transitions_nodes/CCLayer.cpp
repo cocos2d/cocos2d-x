@@ -1,4 +1,3 @@
-
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
@@ -260,7 +259,7 @@ void CCLayer::onExit()
     if( m_bIsTouchEnabled )
     {
         pDirector->getTouchDispatcher()->removeDelegate(this);
-        // fix: CCLayer re-added to the scene after the loss of scripting touch events
+        // [lua]:don't unregister script touch handler, or the handler will be destroyed
         // unregisterScriptTouchHandler();
     }
 
