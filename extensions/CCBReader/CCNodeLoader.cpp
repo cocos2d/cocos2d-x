@@ -705,7 +705,7 @@ BlockData * CCNodeLoader::parsePropTypeBlock(CCNode * pNode, CCNode * pParent, C
                 }
 
                 if(selMenuHandler == 0) {
-                    CCLOG("Skipping selector '%s' since no CCBSelectorResolver is present.", selectorName);
+                    CCLOG("Skipping selector '%s' since no CCBSelectorResolver is present.", selectorName->getCString());
                 } else {
                     BlockData * blockData = new BlockData();
                     blockData->mSELMenuHandler = selMenuHandler;
@@ -755,7 +755,7 @@ BlockCCControlData * CCNodeLoader::parsePropTypeBlockCCControl(CCNode * pNode, C
                 }
 
                 if(selCCControlHandler == 0) {
-                    CCLOG("Skipping selector '%s' since no CCBSelectorResolver is present.", selectorName);
+                    CCLOG("Skipping selector '%s' since no CCBSelectorResolver is present.", selectorName->getCString());
                 } else {
                     BlockCCControlData * blockCCControlData = new BlockCCControlData();
                     blockCCControlData->mSELCCControlHandler = selCCControlHandler;
