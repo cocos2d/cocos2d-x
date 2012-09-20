@@ -260,6 +260,8 @@ void CCLayer::onExit()
     if( m_bIsTouchEnabled )
     {
         pDirector->getTouchDispatcher()->removeDelegate(this);
+        // fix: CCLayer re-added to the scene after the loss of scripting touch events
+        // unregisterScriptTouchHandler();
     }
 
     // remove this layer from the delegates who concern Accelerometer Sensor
