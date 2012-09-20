@@ -82,10 +82,10 @@ class CCMenuItemSprite : public CCMenuItem
     bool isOpacityModifyRGB(void);
 
     static CCMenuItemSprite * create(CCNode* normalSprite,
-                                                   CCNode* selectedSprite);
-    static CCMenuItemSprite * create(CCNode* normalSprite,
                                                    CCNode* selectedSprite,
                                                    CCNode* disabledSprite);
+    static CCMenuItemSprite * create(CCNode* normalSprite,
+                                                   CCNode* selectedSprite);
 };
 
 class CCMenuItemImage : public CCMenuItemSprite
@@ -99,12 +99,12 @@ class CCMenuItemImage : public CCMenuItemSprite
     void setSelectedSpriteFrame(CCSpriteFrame* frame);
     void setDisabledSpriteFrame(CCSpriteFrame* frame);
 
-	static CCMenuItemImage* create();
-    static CCMenuItemImage* create(const char* normalImage,
-                                                const char* selectedImage);
     static CCMenuItemImage* create(const char* normalImage,
                                                 const char* selectedImage,
                                                 const char* disabledImage);
+    static CCMenuItemImage* create(const char* normalImage,
+                                                const char* selectedImage);
+    static CCMenuItemImage* create();
 };
 
 class CCMenuItemToggle : public CCMenuItem
