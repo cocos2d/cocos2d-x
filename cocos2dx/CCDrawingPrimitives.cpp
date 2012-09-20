@@ -291,6 +291,11 @@ void ccDrawCircle( const CCPoint& center, float radius, float angle, unsigned in
     CC_INCREMENT_GL_DRAWS(1);
 }
 
+void CC_DLL ccDrawCircle( const CCPoint& center, float radius, float angle, unsigned int segments, bool drawLineToCenter)
+{
+    ccDrawCircle(center, radius, angle, segments, drawLineToCenter, 1.0f, 1.0f);
+}
+
 void ccDrawQuadBezier(const CCPoint& origin, const CCPoint& control, const CCPoint& destination, unsigned int segments)
 {
     lazy_init();
