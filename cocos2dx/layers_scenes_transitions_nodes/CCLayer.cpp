@@ -257,7 +257,10 @@ void CCLayer::onEnter()
 void CCLayer::onExit()
 {
     CCDirector* pDirector = CCDirector::sharedDirector();
-    pDirector->getTouchDispatcher()->removeDelegate(this);
+    if( m_bIsTouchEnabled )
+    {
+        pDirector->getTouchDispatcher()->removeDelegate(this);
+    }
 
     // remove this layer from the delegates who concern Accelerometer Sensor
     if (m_bIsAccelerometerEnabled)
