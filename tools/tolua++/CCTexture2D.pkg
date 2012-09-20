@@ -36,6 +36,14 @@ typedef enum {
     kTexture2DPixelFormat_Default = kCCTexture2DPixelFormat_Default
 } CCTexture2DPixelFormat;
 
+class ccTexParams {
+    ccTexParams(void);
+    GLuint minFilter;
+    GLuint magFilter;
+    GLuint wrapS;
+    GLuint wrapT;
+};
+
 class CCTexture2D : public CCObject
 {
 	void releaseData(void* data);
