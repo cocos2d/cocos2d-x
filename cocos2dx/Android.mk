@@ -82,12 +82,12 @@ platform/android/CCApplication.cpp \
 platform/android/CCCommon.cpp \
 platform/android/CCFileUtils.cpp \
 platform/android/CCImage.cpp \
-platform/android/jni/EditBoxJni.cpp \
+platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxBitmap.cpp \
+platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxHelper.cpp \
+platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxRenderer.cpp \
+platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxAccelerometer.cpp \
 platform/android/jni/JniHelper.cpp \
 platform/android/jni/IMEJni.cpp \
-platform/android/jni/MessageJni.cpp \
-platform/android/jni/SensorJni.cpp \
-platform/android/jni/SystemInfoJni.cpp \
 platform/android/jni/TouchesJni.cpp \
 script_support/CCScriptSupport.cpp \
 shaders/ccShaders.cpp \
