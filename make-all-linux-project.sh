@@ -51,10 +51,12 @@ if ! test -d $DIR_GLEW170/glew-1.7.0/; then
 	fi
 fi
 
-OUTPUT_DEBUG=$COCOS2DX20_TRUNK/lib/linux/Debug/
-if ! test -d $OUTPUT_DEBUG; then
-	mkdir $OUTPUT_DEBUG -p
-fi
+#OUTPUT_DEBUG=$COCOS2DX20_TRUNK/lib/linux/Debug/
+#if ! test -d $OUTPUT_DEBUG; then
+#	mkdir $OUTPUT_DEBUG -p
+#fi
+mkdir -p $OUTPUT_DEBUG
+mkdir -p $OUTPUT_RELEASE
 
 make -C $COCOS2DX20_TRUNK/external/Box2D/proj.linux clean
 make -C $COCOS2DX20_TRUNK/external/Box2D/proj.linux debug
@@ -98,9 +100,13 @@ make -C $COCOS2DX20_TRUNK/CocosDenshion/proj.linux release
 check_make_result
 cp $COCOS2DX20_TRUNK/CocosDenshion/proj.linux/libcocosdenshion.so $OUTPUT_RELEASE
 
-#make -C $COCOS2DX20_TRUNK/samples/TestCpp/proj.linux clean
-#make -C $COCOS2DX20_TRUNK/samples/TestCpp/proj.linux
-#check_make_result
+make -C $COCOS2DX20_TRUNK/samples/TestCpp/proj.linux clean
+make -C $COCOS2DX20_TRUNK/samples/TestCpp/proj.linux debug
+check_make_result
+make -C $COCOS2DX20_TRUNK/samples/TestCpp/proj.linux clean
+make -C $COCOS2DX20_TRUNK/samples/TestCpp/proj.linux release
+check_make_result
+
 #make -C $COCOS2DX20_TRUNK/samples/HelloCpp/proj.linux clean
 #make -C $COCOS2DX20_TRUNK/samples/HelloCpp/proj.linux
 #check_make_result
