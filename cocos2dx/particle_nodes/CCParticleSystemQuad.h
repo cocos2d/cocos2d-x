@@ -110,6 +110,7 @@ public:
     CC_DEPRECATED_ATTRIBUTE static CCParticleSystemQuad * node();
 
     static CCParticleSystemQuad * create();
+    static CCParticleSystemQuad * createWithTotalParticles(unsigned int numberOfParticles);
 private:
 #if CC_TEXTURE_ATLAS_USE_VAO
     void setupVBOandVAO();
