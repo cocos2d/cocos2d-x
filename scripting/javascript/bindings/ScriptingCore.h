@@ -81,6 +81,7 @@ public:
     virtual int executeLayerTouchEvent(CCLayer* pLayer, int eventType, CCTouch *pTouch);
 
     int executeFunctionWithObjectData(CCNode *self, const char *name, JSObject *obj);
+    int executeFunctionWithOwner(jsval owner, const char *name, jsval data);
     
     void executeJSFunctionWithThisObj(jsval thisObj, jsval callback, jsval data);
 
@@ -114,6 +115,8 @@ public:
 	 * and create a new one.
 	 */
 	void createGlobalContext();
+    
+    static void removeAllRoots(JSContext *cx);
 	
     
     int executeCustomTouchEvent(int eventType, 
@@ -180,6 +183,7 @@ ccColor4B jsval_to_cccolor4b(JSContext *cx, jsval v);
 ccColor4F jsval_to_cccolor4f(JSContext *cx, jsval v);
 ccColor3B jsval_to_cccolor3b(JSContext *cx, jsval v);
 CCArray* jsval_to_ccarray(JSContext* cx, jsval v);
+jsval ccarray_to_jsval(JSContext* cx, CCArray *arr);
 // from native
 jsval long_long_to_jsval(JSContext* cx, long long v);
 jsval std_string_to_jsval(JSContext* cx, std::string& v);
