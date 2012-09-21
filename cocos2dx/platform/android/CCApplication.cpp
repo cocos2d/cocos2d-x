@@ -1,5 +1,5 @@
 #include "jni/JniHelper.h"
-#include "jni/SystemInfoJni.h"
+#include "jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
 #include "CCApplication.h"
 #include "CCDirector.h"
 #include "CCEGLView.h"
