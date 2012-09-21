@@ -314,7 +314,15 @@ JSBool ScriptingCore::runScript(const char *path)
 
     cocos2d::CCFileUtils *futil = cocos2d::CCFileUtils::sharedFileUtils();
 
+#ifdef ANDROID_SCRIPTINGCORE_LOAD_SCRIPTS_FROM_EXTERNAL_ASSET_DIRECTORY
+    const char * externalAssetPath = cocos2d::JniHelper::getExternalAssetPath();
+
+    std::string fullPath = std::string(externalAssetPath) + std::string(path);
+
+    const char *realPath = fullPath.c_str();
+#else
     const char *realPath = futil->fullPathFromRelativePath(path);
+#endif
 
     if (!realPath) {
         CCLOG("!realPath. returning JS_FALSE");
