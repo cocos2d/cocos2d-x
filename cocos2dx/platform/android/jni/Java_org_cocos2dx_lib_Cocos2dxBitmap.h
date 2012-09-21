@@ -21,45 +21,27 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
+#ifndef __EDITBOX_JNI_H__
+#define __EDITBOX_JNI_H__
 
-package org.cocos2dx.lib;
+#include <string>
 
-import android.content.Context;
-import android.util.AttributeSet;
-import android.view.KeyEvent;
-import android.widget.EditText;
+typedef void (*EditBoxCallback)(const char* pText, void* ctx);
 
-public class Cocos2dxEditText extends EditText {
-	
-	private Cocos2dxGLSurfaceView mView;
+extern "C"
+{
+void showEditBoxDialogJni(const char* pszTitle,
+                            const char* pszContent,
+                            int nInputMode,
+                            int nInputFlag,
+                            int nReturnType,
+                            int nMaxLength,
+                            EditBoxCallback pfEditBoxCB,
+                            void* ctx);
 
-	public Cocos2dxEditText(Context context) {
-		super(context);
-		// TODO Auto-generated constructor stub
-	}
-	
-	public Cocos2dxEditText(Context context, AttributeSet attrs) {
-		super(context, attrs);
-	}
-	
-	public Cocos2dxEditText(Context context, AttributeSet attrs, int defStyle) {
-		super(context, attrs, defStyle);
-	}
-	
-	public void setMainView(Cocos2dxGLSurfaceView glSurfaceView) {
-		mView = glSurfaceView;
-	}
-	
-	/*
-	 * Let GlSurfaceView get focus if back key is input
-	 */
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		super.onKeyDown(keyCode, event);
-		
-		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			mView.requestFocus();
-		}
-		
-		return true;
-	}
-}
+int getFontSizeAccordingHeightJni(int height);
+std::string getStringWithEllipsisJni(const char* pszText, float width, float fontSize);
+
+} // end of extern "C"
+
+#endif // __EDITBOX_JNI_H__
