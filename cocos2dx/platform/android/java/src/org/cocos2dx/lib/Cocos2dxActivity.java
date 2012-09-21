@@ -28,6 +28,9 @@ import org.cocos2dx.lib.Cocos2dxHelper.Cocos2dxHelperListener;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.os.Bundle;
+import android.os.Message;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelperListener {
 	// ===========================================================
@@ -39,6 +42,9 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 	// ===========================================================
 	// Fields
 	// ===========================================================
+	
+	private Cocos2dxGLSurfaceView mGLSurefaceView;
+	private Cocos2dxHandler mHandler;
 
 	// ===========================================================
 	// Constructors
@@ -47,6 +53,8 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 	@Override
 	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		this.init();
 
 		Cocos2dxHelper.init(this, this);
 	}
@@ -64,6 +72,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 		super.onResume();
 
 		Cocos2dxHelper.onResume();
+		this.mGLSurefaceView.onResume();
 	}
 
 	@Override
@@ -71,21 +80,71 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 		super.onPause();
 
 		Cocos2dxHelper.onPause();
+		this.mGLSurefaceView.onPause();
 	}
 
 	@Override
 	public void showDialog(final String pTitle, final String pMessage) {
-		new AlertDialog.Builder(this).setTitle(pTitle).setMessage(pMessage).setPositiveButton("OK", null).create().show(); // TODO Dialog will not survive configuration changes
+		Message msg = new Message();
+		msg.what = Cocos2dxHandler.HANDLER_SHOW_DIALOG;
+		msg.obj = new Cocos2dxHandler.DialogMessage(pTitle, pMessage);
+		this.mHandler.sendMessage(msg);
 	}
 
 	@Override
-	public void showEditTextDialog(final String pTitle, final String pContent, final int pInputMode, final int pInputFlag, final int pReturnType, final int pMaxLength) { // TODO Dialog will not survive configuration changes
-		new Cocos2dxEditBoxDialog(this, pTitle, pContent, pInputMode, pInputFlag, pReturnType, pMaxLength).show();
+	public void showEditTextDialog(final String pTitle, final String pContent, final int pInputMode, final int pInputFlag, final int pReturnType, final int pMaxLength) { 
+		Message msg = new Message();
+		msg.what = Cocos2dxHandler.HANDLER_SHOW_EDITBOX_DIALOG;
+		msg.obj = new Cocos2dxHandler.EditBoxMessage(pTitle, pContent, pInputMode, pInputFlag, pReturnType, pMaxLength);
+		this.mHandler.sendMessage(msg);
+	}
+	
+	@Override
+	public void runOnGLThread(final Runnable pRunnable) {
+		this.mGLSurefaceView.queueEvent(pRunnable);
 	}
 
 	// ===========================================================
 	// Methods
 	// ===========================================================
+	
+    public void init() {
+    	// Init handler
+    	this.mHandler = new Cocos2dxHandler(this);
+    			
+    	// FrameLayout
+        ViewGroup.LayoutParams framelayout_params =
+            new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,
+                                       ViewGroup.LayoutParams.FILL_PARENT);
+        FrameLayout framelayout = new FrameLayout(this);
+        framelayout.setLayoutParams(framelayout_params);
+
+        // Cocos2dxEditText layout
+        ViewGroup.LayoutParams edittext_layout_params =
+            new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,
+                                       ViewGroup.LayoutParams.WRAP_CONTENT);
+        Cocos2dxEditText edittext = new Cocos2dxEditText(this);
+        edittext.setLayoutParams(edittext_layout_params);
+
+        // ...add to FrameLayout
+        framelayout.addView(edittext);
+
+        // Cocos2dxGLSurfaceView
+        this.mGLSurefaceView = this.onCreateGLSurfaceView();
+
+        // ...add to FrameLayout
+        framelayout.addView(mGLSurefaceView);
+
+        mGLSurefaceView.setCocos2dxRenderer(new Cocos2dxRenderer());
+        mGLSurefaceView.setCocos2dxEditText(edittext);
+
+        // Set framelayout as the content view
+		setContentView(framelayout);
+    }
+    
+    public Cocos2dxGLSurfaceView onCreateGLSurfaceView() {
+    	return new Cocos2dxGLSurfaceView(this);
+    }
 
 	// ===========================================================
 	// Inner and Anonymous Classes

@@ -1,8 +1,7 @@
 #include <stdlib.h>
 #include <jni.h>
 #include <android/log.h>
-#include <android/asset_manager.h>
-#include <android/asset_manager_jni.h>
+#include <string>
 #include "JniHelper.h"
 #include "cocoa/CCString.h"
 #include "Java_org_cocos2dx_lib_Cocos2dxHelper.h"
@@ -17,29 +16,20 @@ static EditTextCallback s_pfEditTextCallback = NULL;
 static void* s_ctx = NULL;
 
 using namespace cocos2d;
+using namespace std;
 
 extern "C" {
-    const char * g_pApkPath;
+    string g_apkPath;
     
-    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxHelper_nativeSetApkPath(JNIEnv*  env, jobject thiz, jstring apkPath) {
-        g_pApkPath = env->GetStringUTFChars(apkPath, NULL);
+    void Java_org_cocos2dx_lib_Cocos2dxHelper_nativeSetApkPath(JNIEnv*  env, jobject thiz, jstring apkPath) {
+        g_apkPath = JniHelper::jstring2string(apkPath);
     }
 
     const char * getApkPath() {
-        return g_pApkPath;
+        return g_apkPath.c_str();
     }
 
-    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxHelper_nativeSetAssetManager(JNIEnv* env, jobject thiz, jobject java_assetmanager) {
-        AAssetManager* assetmanager = AAssetManager_fromJava(env, java_assetmanager);
-        if (assetmanager == NULL) {
-            LOGD("ERROR: assetmanager == NULL");
-            return;
-        }
-
-        cocos2d::JniHelper::setAssetManager(assetmanager);
-    }
-
-    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxHelper_nativeSetExternalAssetPath(JNIEnv*  env, jobject thiz, jstring externalAssetPath) {
+    void Java_org_cocos2dx_lib_Cocos2dxHelper_nativeSetExternalAssetPath(JNIEnv*  env, jobject thiz, jstring externalAssetPath) {
         const char* externalAssetPathChars = env->GetStringUTFChars(externalAssetPath, NULL);
         cocos2d::JniHelper::setExternalAssetPath(externalAssetPathChars);
         env->ReleaseStringUTFChars(externalAssetPath, externalAssetPathChars);
@@ -97,7 +87,7 @@ extern "C" {
         }
     }
 
-    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxHelper_nativeSetEditTextDialogResult(JNIEnv * env, jobject obj, jbyteArray text) {
+    void Java_org_cocos2dx_lib_Cocos2dxHelper_nativeSetEditTextDialogResult(JNIEnv * env, jobject obj, jbyteArray text) {
         jsize  size = env->GetArrayLength(text);
 
         if (size > 0) {

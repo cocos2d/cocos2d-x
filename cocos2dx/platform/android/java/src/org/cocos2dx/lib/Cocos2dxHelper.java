@@ -29,6 +29,7 @@ import java.util.Locale;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.res.AssetManager;
+import android.os.Build;
 import android.os.Environment;
 
 public class Cocos2dxHelper {
@@ -61,7 +62,6 @@ public class Cocos2dxHelper {
 		Cocos2dxHelper.sPackageName = applicationInfo.packageName;
 		Cocos2dxHelper.nativeSetApkPath(applicationInfo.sourceDir);
 		Cocos2dxHelper.nativeSetExternalAssetPath(Cocos2dxHelper.getAbsolutePathOnExternalStorage(applicationInfo, "assets/"));
-		Cocos2dxHelper.nativeSetAssetManager(pContext.getAssets());
 
 		Cocos2dxHelper.sCocos2dxAccelerometer = new Cocos2dxAccelerometer(pContext);
 		Cocos2dxHelper.sCocos2dMusic = new Cocos2dxMusic(pContext);
@@ -86,8 +86,6 @@ public class Cocos2dxHelper {
 
 	private static native void nativeSetExternalAssetPath(final String pExternalAssetPath);
 
-	private static native void nativeSetAssetManager(final AssetManager pAssetManager);
-
 	private static native void nativeSetEditTextDialogResult(final byte[] pBytes);
 
 	public static String getCocos2dxPackageName() {
@@ -97,6 +95,10 @@ public class Cocos2dxHelper {
 	public static String getCurrentLanguage() {
 		return Locale.getDefault().getLanguage();
 	}
+	
+	public static String getDeviceModel(){
+		return Build.MODEL;
+    }
 
 	public static AssetManager getAssetManager() {
 		return Cocos2dxHelper.sAssetManager;
