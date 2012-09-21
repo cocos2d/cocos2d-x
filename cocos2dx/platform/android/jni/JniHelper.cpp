@@ -193,6 +193,16 @@ void JniHelper::setJavaVM(JavaVM *javaVM)
     m_psJavaVM = javaVM;
 }
 
+string JniHelper::m_externalAssetPath;
+
+const char* JniHelper::getExternalAssetPath() {
+    return m_externalAssetPath.c_str();
+}
+
+void JniHelper::setExternalAssetPath(const char * externalAssetPath) {
+    m_externalAssetPath = externalAssetPath;
+}
+
 jclass JniHelper::getClassID(const char *className, JNIEnv *env)
 {
     return getClassID_(className, env);

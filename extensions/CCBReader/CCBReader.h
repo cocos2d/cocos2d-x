@@ -235,7 +235,7 @@ public:
     static float getResolutionScale();
     
     CCNode* readFileWithCleanUp(bool bCleanUp);
-    bool hasScriptingOwner = false;    
+    bool hasScriptingOwner;    
 
 private:
     void cleanUpNodeGraph(CCNode *pNode);
