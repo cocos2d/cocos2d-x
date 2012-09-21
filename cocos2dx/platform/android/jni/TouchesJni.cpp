@@ -31,79 +31,60 @@ THE SOFTWARE.
 #include <android/log.h>
 #include <jni.h>
 
-#if 0
-#define  LOG_TAG    "NativeTouchesJni"
-#define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
-#else
-#define  LOGD(...) 
-#endif
-
 using namespace cocos2d;
 
-extern "C"
-{
+extern "C" {
+    void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeTouchesBegin(JNIEnv * env, jobject thiz, jint id, jfloat x, jfloat y) {
+        cocos2d::CCDirector::sharedDirector()->getOpenGLView()->handleTouchesBegin(1, &id, &x, &y);
+    }
 
-// handle touch event    
-void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeTouchesBegin(JNIEnv*  env, jobject thiz, jint id, jfloat x, jfloat y)
-{
-    cocos2d::CCDirector::sharedDirector()->getOpenGLView()->handleTouchesBegin(1, &id, &x, &y);
-}
+    void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeTouchesEnd(JNIEnv * env, jobject thiz, jint id, jfloat x, jfloat y) {
+        cocos2d::CCDirector::sharedDirector()->getOpenGLView()->handleTouchesEnd(1, &id, &x, &y);
+    }
 
-void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeTouchesEnd(JNIEnv*  env, jobject thiz, jint id, jfloat x, jfloat y)
-{
-    cocos2d::CCDirector::sharedDirector()->getOpenGLView()->handleTouchesEnd(1, &id, &x, &y);
-}
+    void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeTouchesMove(JNIEnv * env, jobject thiz, jintArray ids, jfloatArray xs, jfloatArray ys) {
+        int size = env->GetArrayLength(ids);
+        jint id[size];
+        jfloat x[size];
+        jfloat y[size];
 
-void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeTouchesMove(JNIEnv*  env, jobject thiz, jintArray ids, jfloatArray xs, jfloatArray ys)
-{
-    int size = env->GetArrayLength(ids);
-    jint id[size];
-    jfloat x[size];
-    jfloat y[size];
+        env->GetIntArrayRegion(ids, 0, size, id);
+        env->GetFloatArrayRegion(xs, 0, size, x);
+        env->GetFloatArrayRegion(ys, 0, size, y);
 
-    env->GetIntArrayRegion(ids, 0, size, id);
-    env->GetFloatArrayRegion(xs, 0, size, x);
-    env->GetFloatArrayRegion(ys, 0, size, y);
+        cocos2d::CCDirector::sharedDirector()->getOpenGLView()->handleTouchesMove(size, id, x, y);
+    }
 
-    cocos2d::CCDirector::sharedDirector()->getOpenGLView()->handleTouchesMove(size, id, x, y);
-}
+    void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeTouchesCancel(JNIEnv * env, jobject thiz, jintArray ids, jfloatArray xs, jfloatArray ys) {
+        int size = env->GetArrayLength(ids);
+        jint id[size];
+        jfloat x[size];
+        jfloat y[size];
 
-void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeTouchesCancel(JNIEnv*  env, jobject thiz, jintArray ids, jfloatArray xs, jfloatArray ys)
-{
-    int size = env->GetArrayLength(ids);
-    jint id[size];
-    jfloat x[size];
-    jfloat y[size];
+        env->GetIntArrayRegion(ids, 0, size, id);
+        env->GetFloatArrayRegion(xs, 0, size, x);
+        env->GetFloatArrayRegion(ys, 0, size, y);
 
-    env->GetIntArrayRegion(ids, 0, size, id);
-    env->GetFloatArrayRegion(xs, 0, size, x);
-    env->GetFloatArrayRegion(ys, 0, size, y);
+        cocos2d::CCDirector::sharedDirector()->getOpenGLView()->handleTouchesCancel(size, id, x, y);
+    }
 
-    cocos2d::CCDirector::sharedDirector()->getOpenGLView()->handleTouchesCancel(size, id, x, y);
-}
+    #define KEYCODE_BACK 0x04
+    #define KEYCODE_MENU 0x52
 
-#define KEYCODE_BACK 0x04
-#define KEYCODE_MENU 0x52
-
-// handle keydown event
-
-jboolean Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeKeyDown(JNIEnv*  env, jobject thiz, jint keyCode)
-{
-    CCDirector* pDirector = CCDirector::sharedDirector();
-    switch (keyCode)
-    {
-    case KEYCODE_BACK:
-        if (pDirector->getKeypadDispatcher()->dispatchKeypadMSG(kTypeBackClicked))
-            return JNI_TRUE;
-        break;
-    case KEYCODE_MENU:
-        if (pDirector->getKeypadDispatcher()->dispatchKeypadMSG(kTypeMenuClicked))
-            return JNI_TRUE;
-        break;
-    default:
+    jboolean Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeKeyDown(JNIEnv * env, jobject thiz, jint keyCode) {
+        CCDirector* pDirector = CCDirector::sharedDirector();
+        switch (keyCode) {
+            case KEYCODE_BACK:
+                  if (pDirector->getKeypadDispatcher()->dispatchKeypadMSG(kTypeBackClicked))
+                    return JNI_TRUE;
+                break;
+            case KEYCODE_MENU:
+                if (pDirector->getKeypadDispatcher()->dispatchKeypadMSG(kTypeMenuClicked))
+                    return JNI_TRUE;
+                break;
+            default:
+                return JNI_FALSE;
+        }
         return JNI_FALSE;
     }
-    return JNI_FALSE;
-}
-
 }
