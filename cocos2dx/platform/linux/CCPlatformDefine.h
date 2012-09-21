@@ -4,9 +4,9 @@
 #include <string.h>
 
 #if defined(_USRDLL)
-    #define CC_DLL
+#define CC_DLL __attribute__ ((visibility ("default")))
 #else         /* use a DLL library */
-    #define CC_DLL
+#define CC_DLL __attribute__ ((visibility ("default")))
 #endif
 
 #include <assert.h>
