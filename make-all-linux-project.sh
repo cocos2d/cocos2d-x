@@ -107,6 +107,9 @@ make -C $COCOS2DX20_TRUNK/samples/TestCpp/proj.linux clean
 make -C $COCOS2DX20_TRUNK/samples/TestCpp/proj.linux release
 check_make_result
 
-#make -C $COCOS2DX20_TRUNK/samples/HelloCpp/proj.linux clean
-#make -C $COCOS2DX20_TRUNK/samples/HelloCpp/proj.linux
-#check_make_result
+make -C $COCOS2DX20_TRUNK/samples/HelloCpp/proj.linux clean
+make -C $COCOS2DX20_TRUNK/samples/HelloCpp/proj.linux debug
+check_make_result
+make -C $COCOS2DX20_TRUNK/samples/HelloCpp/proj.linux clean
+make -C $COCOS2DX20_TRUNK/samples/HelloCpp/proj.linux release
+check_make_result
