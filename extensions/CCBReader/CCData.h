@@ -3,7 +3,7 @@
 #define __CCB_CCDATA_H__
 
 #include "cocos2d.h"
-#include "cocos-ext.h"
+#include "ExtensionMacros.h""
 
 NS_CC_EXT_BEGIN
 
