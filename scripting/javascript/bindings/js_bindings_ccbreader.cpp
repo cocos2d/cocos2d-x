@@ -13,10 +13,19 @@
 USING_NS_CC;
 USING_NS_CC_EXT;
 
+static void removeSelector(std::string &str) {
+    size_t found;
+    found = str.find(":");
+    while (found!=std::string::npos){
+        str.replace(found, found+1, "");
+        found = str.find(":");
+    }
+}
 
 SEL_MenuHandler CCBScriptCallbackProxy::onResolveCCBCCMenuItemSelector(cocos2d::CCObject * pTarget,
                                                                        cocos2d::CCString * pSelectorName) {
     this->callBackProp = pSelectorName->getCString();
+    removeSelector(this->callBackProp);
     return menu_selector(CCBScriptCallbackProxy::menuItemCallback);
 }
 
@@ -24,12 +33,14 @@ SEL_CCControlHandler CCBScriptCallbackProxy::onResolveCCBCCControlSelector(CCObj
                                                                            CCString * pSelectorName) {
     
     this->callBackProp = pSelectorName->getCString();
+    removeSelector(this->callBackProp);
     return cccontrol_selector(CCBScriptCallbackProxy::controlCallback);
 }
 
 bool CCBScriptCallbackProxy::onAssignCCBMemberVariable(CCObject * pTarget,
                                                        CCString * pMemberVariableName,
                                                        CCNode * pNode) {
+    return true;
 }
 
 void CCBScriptCallbackProxy::onNodeLoaded(CCNode * pNode,
@@ -81,11 +92,8 @@ static CCNode* loadReader(const char *file, jsval owner) {
     //ccbReader->setOwner(dynamic_cast<CCObject *>(ccBCallbackProxy));
     
     CCBSelectorResolver * targetAsCCBSelectorResolver = dynamic_cast<CCBSelectorResolver *>(ccBCallbackProxy);
-    if(targetAsCCBSelectorResolver != NULL) {
-        js_log("NOT NULL");
-    }
     
-    CCNode * node = ccbReader->readNodeGraphFromFile("./", file, dynamic_cast<CCObject *>(ccBCallbackProxy));
+    CCNode * node = ccbReader->readNodeGraphFromFile(file, dynamic_cast<CCObject *>(ccBCallbackProxy));
     
     return node;
 }
