@@ -1,8 +1,8 @@
 CC      = gcc
 CXX     = g++
 TARGET	= libcocosdenshion.so
-CCFLAGS = -Wall -g -O2 -fPIC
-CXXFLAGS = -Wall -g -O2 -fPIC
+CCFLAGS = -Wall -fPIC
+CXXFLAGS = -Wall -fPIC
 VISIBILITY = 
 
 LBITS := $(shell getconf LONG_BIT)
@@ -32,17 +32,26 @@ SHAREDLIBS_DIR = ../third_party/fmod/api/lib
 SHAREDLIBS = -L$(SHAREDLIBS_DIR) -lfmodex
 endif
 
+debug: CCFLAGS += -g3 -O0
+debug: CXXFLAGS += -g3 -O0
+debug: DEFINES += -DDEBUG
+debug: $(TARGET)
+
+release: CCFLAGS += -O3
+release: CXXFLAGS += -O3
+release: DEFINES += -DNDEBUG
+release: $(TARGET)
 
 ####### Build rules
 $(TARGET): $(OBJECTS) 
 	$(CXX) $(CXXFLAGS) $(INCLUDES) $(DEFINES) $(OBJECTS) -shared -o $(TARGET) $(SHAREDLIBS) $(STATICLIBS)
-	
+
 ####### Compile
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) $(INCLUDES) $(DEFINES) $(VISIBILITY) -c $< -o $@
 
 %.o: %.c
 	$(CC) $(CCFLAGS) $(INCLUDES) $(DEFINES) $(VISIBILITY) -c $< -o $@
-		
+
 clean: 
 	rm -f $(OBJECTS) $(TARGET) core
