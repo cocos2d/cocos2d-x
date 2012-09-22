@@ -26,7 +26,7 @@
  * THE SOFTWARE.
  *
  *
- * Orignal code by Radu Gruian: http://www.codeproject.com/Articles/30838/Overhauser-Catmull-Rom-Splines-for-Camera-Animatio.So
+ * Original code by Radu Gruian: http://www.codeproject.com/Articles/30838/Overhauser-Catmull-Rom-Splines-for-Camera-Animatio.So
  *
  * Adapted to cocos2d-x by Vit Valentin
  *

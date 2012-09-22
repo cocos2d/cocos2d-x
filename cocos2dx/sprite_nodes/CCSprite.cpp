@@ -304,7 +304,7 @@ bool CCSprite::initWithSpriteFrameName(const char *pszSpriteFrameName)
 CCSprite* CCSprite::initWithCGImage(CGImageRef pImage)
 {
     // todo
-    // because it is deprecated, so we do not impelment it
+    // because it is deprecated, so we do not implement it
 
     return NULL;
 }
@@ -482,7 +482,7 @@ void CCSprite::updateTransform(void)
 {
     CCAssert(m_pobBatchNode, "updateTransform is only valid when CCSprite is being rendered using an CCSpriteBatchNode");
 
-    // recaculate matrix only if it is dirty
+    // recalculate matrix only if it is dirty
     if( isDirty() ) {
 
         // If it is not visible, or one of its ancestors is not visible, then do nothing:

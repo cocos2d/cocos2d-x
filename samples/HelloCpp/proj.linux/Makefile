@@ -1,8 +1,8 @@
 CC      = gcc
 CXX     = g++
 TARGET	= HelloCpp
-CCFLAGS = -Wall -g -O2 
-CXXFLAGS = -Wall -g -O2 
+CCFLAGS = -Wall
+CXXFLAGS = -Wall
 VISIBILITY = 
 
 COCOS2DX_PATH = ../../../cocos2dx
@@ -41,28 +41,42 @@ STATICLIBS = $(STATICLIBS_DIR)/libfreetype.a \
 				$(STATICLIBS_DIR)/libtiff.a \
 #				$(STATICLIBS_DIR)/libGLEW.a \
 
-
-SHAREDLIBS = -L../../../lib/linux/Debug -lcocos2d -lrt -lz -lcocosdenshion -Wl,-rpath,../../../../lib/linux/Debug/ 
-SHAREDLIBS += -lglfw -lcurl
-SHAREDLIBS += -Wl,-rpath,../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib
+SHAREDLIBS = -lglfw -lcurl
+SHAREDLIBS += -Wl,-rpath,../../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib
 SHAREDLIBS += -L../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib -lGLEW
 
 #$(shell ../../build-linux.sh $<)
 
-BIN_DIR=bin
+BIN_DIR_ROOT=bin
+BIN_DIR = $(BIN_DIR_ROOT)
+
+debug: BIN_DIR = $(BIN_DIR_ROOT)/debug
+debug: CCFLAGS += -g3 -O0
+debug: CXXFLAGS += -g3 -O0
+debug: SHAREDLIBS += -L../../../lib/linux/Debug -lcocos2d -lrt -lz -lcocosdenshion
+debug: SHAREDLIBS += -Wl,-rpath,../../../../../lib/linux/Debug/
+debug: DEFINES += -DDEBUG
+debug: $(TARGET)
+
+release: BIN_DIR = $(BIN_DIR_ROOT)/release
+release: CCFLAGS += -O3
+release: CXXFLAGS += -O3
+release: SHAREDLIBS += -L../../../lib/linux/Release -lcocos2d -lrt -lz -lcocosdenshion
+release: SHAREDLIBS += -Wl,-rpath,../../../../../lib/linux/Release/
+release: DEFINES += -DNDEBUG
+release: $(TARGET)
 
 ####### Build rules
 $(TARGET): $(OBJECTS) 
-	test -d $(BIN_DIR) || mkdir $(BIN_DIR)
+	mkdir -p $(BIN_DIR)
 	$(CXX) $(CXXFLAGS) $(INCLUDES) $(DEFINES) $(OBJECTS) -o $(BIN_DIR)/$(TARGET) $(SHAREDLIBS) $(STATICLIBS)
-	
+
 ####### Compile
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) $(INCLUDES) $(DEFINES) $(VISIBILITY) -c $< -o $@
 
 %.o: %.c
 	$(CC) $(CCFLAGS) $(INCLUDES) $(DEFINES) $(VISIBILITY) -c $< -o $@
-		
+
 clean: 
 	rm -f $(OBJECTS) $(TARGET) core
-	rm -r $(BIN_DIR)

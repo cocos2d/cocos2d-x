@@ -1,4 +1,8 @@
 
+enum {
+    kCCLabelAutomaticWidth = -1,
+};
+
 class CCLabelBMFont : public CCNode
 {
     void setString(const char *label);
@@ -30,6 +34,6 @@ class CCLabelBMFont : public CCNode
     tolua_property__CCOpacity   GLubyte opacity;
 
     static void purgeCachedData();
+    static CCLabelBMFont * create(const char *str, const char *fntFile, float width = kCCLabelAutomaticWidth, CCTextAlignment alignment = kCCTextAlignmentLeft, CCPoint imageOffset = CCPointMake(0, 0));
 	static CCLabelBMFont * create();
-	static CCLabelBMFont * create(const char *str, const char *fntFile, float width = kCCLabelAutomaticWidth, CCTextAlignment alignment = kCCTextAlignmentLeft, CCPoint imageOffset = CCPointMake(0, 0));
 };

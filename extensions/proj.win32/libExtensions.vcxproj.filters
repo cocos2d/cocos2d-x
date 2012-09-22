@@ -18,57 +18,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\CCBReader\CCBFileLoader.cpp">
-      <Filter>CCBReader</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CCBReader\CCBReader.cpp">
-      <Filter>CCBReader</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CCBReader\CCControlButtonLoader.cpp">
-      <Filter>CCBReader</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CCBReader\CCControlLoader.cpp">
-      <Filter>CCBReader</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CCBReader\CCLabelBMFontLoader.cpp">
-      <Filter>CCBReader</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CCBReader\CCLabelTTFLoader.cpp">
-      <Filter>CCBReader</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CCBReader\CCLayerColorLoader.cpp">
-      <Filter>CCBReader</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CCBReader\CCLayerGradientLoader.cpp">
-      <Filter>CCBReader</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CCBReader\CCLayerLoader.cpp">
-      <Filter>CCBReader</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CCBReader\CCMenuItemImageLoader.cpp">
-      <Filter>CCBReader</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CCBReader\CCMenuItemLoader.cpp">
-      <Filter>CCBReader</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CCBReader\CCNodeLoader.cpp">
-      <Filter>CCBReader</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CCBReader\CCNodeLoaderLibrary.cpp">
-      <Filter>CCBReader</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CCBReader\CCParticleSystemQuadLoader.cpp">
-      <Filter>CCBReader</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CCBReader\CCScale9SpriteLoader.cpp">
-      <Filter>CCBReader</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CCBReader\CCScrollViewLoader.cpp">
-      <Filter>CCBReader</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CCBReader\CCSpriteLoader.cpp">
-      <Filter>CCBReader</Filter>
-    </ClCompile>
     <ClCompile Include="..\GUI\CCControlExtension\CCControl.cpp">
       <Filter>GUI\CCControlExtension</Filter>
     </ClCompile>
@@ -120,71 +69,80 @@
     <ClCompile Include="..\GUI\CCScrollView\CCTableViewCell.cpp">
       <Filter>GUI\CCScrollView</Filter>
     </ClCompile>
+    <ClCompile Include="..\CCBReader\CCBAnimationManager.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCBReader\CCBFileLoader.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCBReader\CCBKeyframe.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCBReader\CCBReader.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCBReader\CCBSequence.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCBReader\CCBSequenceProperty.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCBReader\CCBValue.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCBReader\CCControlButtonLoader.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCBReader\CCControlLoader.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCBReader\CCData.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCBReader\CCLabelBMFontLoader.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCBReader\CCLabelTTFLoader.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCBReader\CCLayerColorLoader.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCBReader\CCLayerGradientLoader.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCBReader\CCLayerLoader.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCBReader\CCMenuItemImageLoader.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCBReader\CCMenuItemLoader.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCBReader\CCNode+CCBRelativePositioning.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCBReader\CCNodeLoader.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCBReader\CCNodeLoaderLibrary.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCBReader\CCParticleSystemQuadLoader.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCBReader\CCScale9SpriteLoader.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCBReader\CCScrollViewLoader.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCBReader\CCSpriteLoader.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\CCBReader\CCBFileLoader.h">
-      <Filter>CCBReader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CCBReader\CCBMemberVariableAssigner.h">
-      <Filter>CCBReader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CCBReader\CCBReader.h">
-      <Filter>CCBReader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CCBReader\CCBSelectorResolver.h">
-      <Filter>CCBReader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CCBReader\CCControlButtonLoader.h">
-      <Filter>CCBReader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CCBReader\CCControlLoader.h">
-      <Filter>CCBReader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CCBReader\CCLabelBMFontLoader.h">
-      <Filter>CCBReader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CCBReader\CCLabelTTFLoader.h">
-      <Filter>CCBReader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CCBReader\CCLayerColorLoader.h">
-      <Filter>CCBReader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CCBReader\CCLayerGradientLoader.h">
-      <Filter>CCBReader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CCBReader\CCLayerLoader.h">
-      <Filter>CCBReader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CCBReader\CCMenuItemImageLoader.h">
-      <Filter>CCBReader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CCBReader\CCMenuItemLoader.h">
-      <Filter>CCBReader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CCBReader\CCMenuLoader.h">
-      <Filter>CCBReader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CCBReader\CCNodeLoader.h">
-      <Filter>CCBReader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CCBReader\CCNodeLoaderLibrary.h">
-      <Filter>CCBReader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CCBReader\CCNodeLoaderListener.h">
-      <Filter>CCBReader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CCBReader\CCParticleSystemQuadLoader.h">
-      <Filter>CCBReader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CCBReader\CCScale9SpriteLoader.h">
-      <Filter>CCBReader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CCBReader\CCScrollViewLoader.h">
-      <Filter>CCBReader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CCBReader\CCSpriteLoader.h">
-      <Filter>CCBReader</Filter>
-    </ClInclude>
     <ClInclude Include="..\GUI\CCControlExtension\CCControl.h">
       <Filter>GUI\CCControlExtension</Filter>
     </ClInclude>
@@ -246,6 +204,90 @@
     </ClInclude>
     <ClInclude Include="..\GUI\CCScrollView\CCTableViewCell.h">
       <Filter>GUI\CCScrollView</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCBReader\CCBAnimationManager.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCBReader\CCBFileLoader.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCBReader\CCBKeyframe.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCBReader\CCBMemberVariableAssigner.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCBReader\CCBReader.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCBReader\CCBSelectorResolver.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCBReader\CCBSequence.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCBReader\CCBSequenceProperty.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCBReader\CCBValue.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCBReader\CCControlButtonLoader.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCBReader\CCControlLoader.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCBReader\CCData.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCBReader\CCLabelBMFontLoader.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCBReader\CCLabelTTFLoader.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCBReader\CCLayerColorLoader.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCBReader\CCLayerGradientLoader.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCBReader\CCLayerLoader.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCBReader\CCMenuItemImageLoader.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCBReader\CCMenuItemLoader.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCBReader\CCMenuLoader.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCBReader\CCNode+CCBRelativePositioning.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCBReader\CCNodeLoader.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCBReader\CCNodeLoaderLibrary.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCBReader\CCNodeLoaderListener.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCBReader\CCParticleSystemQuadLoader.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCBReader\CCScale9SpriteLoader.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCBReader\CCScrollViewLoader.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCBReader\CCSpriteLoader.h">
+      <Filter>CCBReader</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

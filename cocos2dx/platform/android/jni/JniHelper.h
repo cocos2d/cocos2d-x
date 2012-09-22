@@ -42,6 +42,8 @@ class CC_DLL JniHelper
 public:
     static JavaVM* getJavaVM();
     static void setJavaVM(JavaVM *javaVM);
+    static const char* getExternalAssetPath();
+    static void setExternalAssetPath(const char* externalAssetPath);
     static jclass getClassID(const char *className, JNIEnv *env=0);
     static bool getStaticMethodInfo(JniMethodInfo &methodinfo, const char *className, const char *methodName, const char *paramCode);
     static bool getMethodInfo(JniMethodInfo &methodinfo, const char *className, const char *methodName, const char *paramCode);
@@ -49,6 +51,7 @@ public:
 
 private:
     static JavaVM *m_psJavaVM;
+    static std::string m_externalAssetPath;
 };
 
 NS_CC_END
