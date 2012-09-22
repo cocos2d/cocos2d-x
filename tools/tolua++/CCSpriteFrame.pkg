@@ -25,8 +25,8 @@ class CCSpriteFrame : public CCObject
 	const CCPoint & getOffset();
 	void setOffset(const CCPoint & offsets);
 
-	static CCSpriteFrame* create(const char* filename, CCRect rect);
     static CCSpriteFrame* create(const char* filename, CCRect rect, bool rotated, CCPoint offset, CCSize originalSize);
-    static CCSpriteFrame* createWithTexture(CCTexture2D* pobTexture, CCRect rect);
+	static CCSpriteFrame* create(const char* filename, CCRect rect);
     static CCSpriteFrame* createWithTexture(CCTexture2D* pobTexture, CCRect rect, bool rotated, CCPoint offset, CCSize originalSize);
+    static CCSpriteFrame* createWithTexture(CCTexture2D* pobTexture, CCRect rect);
 };

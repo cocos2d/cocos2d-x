@@ -10,8 +10,6 @@ LOCAL_SRC_FILES := testcpp/main.cpp
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes
 
-LOCAL_STATIC_LIBRARIES := curl_static_prebuilt
-
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos_testcpp_common
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos2dx_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocosdenshion_static

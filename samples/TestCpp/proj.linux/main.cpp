@@ -24,7 +24,7 @@ int main(int argc, char **argv)
 
     std::string resourcePath = fullpath;
     resourcePath = resourcePath.substr(0, resourcePath.find_last_of("/"));
-    resourcePath += "/../../Resources/";
+    resourcePath += "/../../../Resources/";
     
     // create the application instance
     AppDelegate app;

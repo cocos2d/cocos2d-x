@@ -431,7 +431,7 @@ CCImage* CCRenderTexture::newCCImage()
     const CCSize& s = m_pTexture->getContentSizeInPixels();
 
     // to get the image size to save
-    //        if the saving image domain exeeds the buffer texture domain,
+    //        if the saving image domain exceeds the buffer texture domain,
     //        it should be cut
     int nSavedBufferWidth = (int)s.width;
     int nSavedBufferHeight = (int)s.height;
@@ -458,7 +458,7 @@ CCImage* CCRenderTexture::newCCImage()
         this->end();
 
         // to get the actual texture data 
-        // #640 the image read from rendertexture is upseted
+        // #640 the image read from rendertexture is dirty
         for (int i = 0; i < nSavedBufferHeight; ++i)
         {
             memcpy(&pBuffer[i * nSavedBufferWidth * 4], 

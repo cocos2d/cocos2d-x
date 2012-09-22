@@ -1,4 +1,3 @@
-
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
@@ -247,7 +246,7 @@ void CCLayer::onEnter()
         pDirector->getAccelerometer()->setDelegate(this);
     }
 
-    // add this layer to concern the kaypad msg
+    // add this layer to concern the keypad msg
     if (m_bIsKeypadEnabled)
     {
         pDirector->getKeypadDispatcher()->addDelegate(this);
@@ -260,7 +259,8 @@ void CCLayer::onExit()
     if( m_bIsTouchEnabled )
     {
         pDirector->getTouchDispatcher()->removeDelegate(this);
-        unregisterScriptTouchHandler();
+        // [lua]:don't unregister script touch handler, or the handler will be destroyed
+        // unregisterScriptTouchHandler();
     }
 
     // remove this layer from the delegates who concern Accelerometer Sensor
@@ -269,7 +269,7 @@ void CCLayer::onExit()
         pDirector->getAccelerometer()->setDelegate(NULL);
     }
 
-    // remove this layer from the delegates who concern the kaypad msg
+    // remove this layer from the delegates who concern the keypad msg
     if (m_bIsKeypadEnabled)
     {
         pDirector->getKeypadDispatcher()->removeDelegate(this);

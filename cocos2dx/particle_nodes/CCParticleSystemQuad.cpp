@@ -120,6 +120,18 @@ CCParticleSystemQuad * CCParticleSystemQuad::create(const char *plistFile)
     return pRet;
 }
 
+CCParticleSystemQuad * CCParticleSystemQuad::createWithTotalParticles(unsigned int numberOfParticles) {
+    CCParticleSystemQuad *pRet = new CCParticleSystemQuad();
+    if (pRet && pRet->initWithTotalParticles(numberOfParticles))
+    {
+        pRet->autorelease();
+        return pRet;
+    }
+    CC_SAFE_DELETE(pRet);
+    return pRet;
+}
+
+
 // pointRect should be in Texture coordinates, not pixel coordinates
 void CCParticleSystemQuad::initTexCoordsWithRect(const CCRect& pointRect)
 {
@@ -381,7 +393,7 @@ void CCParticleSystemQuad::draw()
 
 void CCParticleSystemQuad::setTotalParticles(unsigned int tp)
 {
-    // If we are setting the total numer of particles to a number higher
+    // If we are setting the total number of particles to a number higher
     // than what is allocated, we need to allocate new arrays
     if( tp > m_uAllocatedParticles )
     {

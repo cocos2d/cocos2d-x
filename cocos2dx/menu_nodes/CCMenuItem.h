@@ -129,14 +129,14 @@ public:
     @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCMenuItemLabel * itemWithLabel(CCNode*label, CCObject* target, SEL_MenuHandler selector);
-    /** creates a CCMenuItemLabel with a Label. Target and selector will be nill 
+    /** creates a CCMenuItemLabel with a Label. Target and selector will be nil 
     @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCMenuItemLabel* itemWithLabel(CCNode *label);
 
     /** creates a CCMenuItemLabel with a Label, target and selector */
     static CCMenuItemLabel * create(CCNode*label, CCObject* target, SEL_MenuHandler selector);
-    /** creates a CCMenuItemLabel with a Label. Target and selector will be nill */
+    /** creates a CCMenuItemLabel with a Label. Target and selector will be nil */
     static CCMenuItemLabel* create(CCNode *label);
 
     /** initializes a CCMenuItemLabel with a Label, target and selector */
@@ -373,7 +373,7 @@ public:
 
 /** @brief A CCMenuItemToggle
  A simple container class that "toggles" it's inner items
- The inner itmes can be any MenuItem
+ The inner items can be any MenuItem
  */
 class CC_DLL CCMenuItemToggle : public CCMenuItem, public CCRGBAProtocol
 {

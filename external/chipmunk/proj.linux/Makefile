@@ -2,8 +2,8 @@ CC      = gcc
 CXX     = g++
 AR      = ar
 TARGET	= libchipmunk.a
-CCFLAGS = -Wall -g -O2 -std=gnu99
-CXXFLAGS = -Wall -g -O2 
+CCFLAGS = -Wall -std=gnu99
+CXXFLAGS = -Wall 
 ARFLAGS = cr
 
 INCLUDES = -I../include/chipmunk
@@ -40,17 +40,26 @@ OBJECTS = ../src/chipmunk.o \
 			../src/constraints/cpSlideJoint.o \
 			../src/constraints/cpPinJoint.o \
 
+debug: CCFLAGS += -g3 -O0
+debug: CXXFLAGS += -g3 -O0
+debug: DEFINES += -DDEBUG
+debug: $(TARGET)
+
+release: CCFLAGS += -O3
+release: CXXFLAGS += -O3
+release: DEFINES += -DNDEBIG
+release: $(TARGET)
 
 ####### Build rules
 $(TARGET): $(OBJECTS) 
 	$(AR) $(ARFLAGS) $(TARGET) $(OBJECTS)  
-	
+
 ####### Compile
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) $(INCLUDES) $(DEFINES) -c $< -o $@
 
 %.o: %.c
 	$(CC) $(CCFLAGS) $(INCLUDES) $(DEFINES) -c $< -o $@
-		
+
 clean: 
 	rm -f $(OBJECTS) $(TARGET) core

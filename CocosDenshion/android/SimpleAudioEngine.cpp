@@ -40,7 +40,7 @@ static bool s_bI9100 = false;
 /**********************************************************************************
  *   jni
  **********************************************************************************/
-#define  CLASS_NAME   "org/cocos2dx/lib/Cocos2dxActivity"
+#define  CLASS_NAME   "org/cocos2dx/lib/Cocos2dxHelper"
 #define  METHOD_NAME  "getDeviceModel"
 
 typedef struct JniMethodInfo_

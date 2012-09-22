@@ -51,7 +51,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(SolutionDir)cocos2dx;$(SolutionDir)cocos2dx\include;$(SolutionDir)cocos2dx\kazmath\include;$(SolutionDir)cocos2dx\platform\win32;$(SolutionDir)cocos2dx\platform\third_party\win32;$(SolutionDir)cocos2dx\platform\third_party\win32\pthread;$(SolutionDir)cocos2dx\platform\third_party\win32\OGLES;..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\cocos2dx;$(ProjectDir)..\..\cocos2dx\include;$(ProjectDir)..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\cocos2dx\platform\win32;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32\pthread;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32\OGLES;..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;_LIB;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -79,10 +79,16 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\CCBReader\CCBAnimationManager.cpp" />
     <ClCompile Include="..\CCBReader\CCBFileLoader.cpp" />
+    <ClCompile Include="..\CCBReader\CCBKeyframe.cpp" />
     <ClCompile Include="..\CCBReader\CCBReader.cpp" />
+    <ClCompile Include="..\CCBReader\CCBSequence.cpp" />
+    <ClCompile Include="..\CCBReader\CCBSequenceProperty.cpp" />
+    <ClCompile Include="..\CCBReader\CCBValue.cpp" />
     <ClCompile Include="..\CCBReader\CCControlButtonLoader.cpp" />
     <ClCompile Include="..\CCBReader\CCControlLoader.cpp" />
+    <ClCompile Include="..\CCBReader\CCData.cpp" />
     <ClCompile Include="..\CCBReader\CCLabelBMFontLoader.cpp" />
     <ClCompile Include="..\CCBReader\CCLabelTTFLoader.cpp" />
     <ClCompile Include="..\CCBReader\CCLayerColorLoader.cpp" />
@@ -90,6 +96,7 @@
     <ClCompile Include="..\CCBReader\CCLayerLoader.cpp" />
     <ClCompile Include="..\CCBReader\CCMenuItemImageLoader.cpp" />
     <ClCompile Include="..\CCBReader\CCMenuItemLoader.cpp" />
+    <ClCompile Include="..\CCBReader\CCNode+CCBRelativePositioning.cpp" />
     <ClCompile Include="..\CCBReader\CCNodeLoader.cpp" />
     <ClCompile Include="..\CCBReader\CCNodeLoaderLibrary.cpp" />
     <ClCompile Include="..\CCBReader\CCParticleSystemQuadLoader.cpp" />
@@ -115,12 +122,18 @@
     <ClCompile Include="..\network\HttpClient.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\CCBReader\CCBAnimationManager.h" />
     <ClInclude Include="..\CCBReader\CCBFileLoader.h" />
+    <ClInclude Include="..\CCBReader\CCBKeyframe.h" />
     <ClInclude Include="..\CCBReader\CCBMemberVariableAssigner.h" />
     <ClInclude Include="..\CCBReader\CCBReader.h" />
     <ClInclude Include="..\CCBReader\CCBSelectorResolver.h" />
+    <ClInclude Include="..\CCBReader\CCBSequence.h" />
+    <ClInclude Include="..\CCBReader\CCBSequenceProperty.h" />
+    <ClInclude Include="..\CCBReader\CCBValue.h" />
     <ClInclude Include="..\CCBReader\CCControlButtonLoader.h" />
     <ClInclude Include="..\CCBReader\CCControlLoader.h" />
+    <ClInclude Include="..\CCBReader\CCData.h" />
     <ClInclude Include="..\CCBReader\CCLabelBMFontLoader.h" />
     <ClInclude Include="..\CCBReader\CCLabelTTFLoader.h" />
     <ClInclude Include="..\CCBReader\CCLayerColorLoader.h" />
@@ -129,6 +142,7 @@
     <ClInclude Include="..\CCBReader\CCMenuItemImageLoader.h" />
     <ClInclude Include="..\CCBReader\CCMenuItemLoader.h" />
     <ClInclude Include="..\CCBReader\CCMenuLoader.h" />
+    <ClInclude Include="..\CCBReader\CCNode+CCBRelativePositioning.h" />
     <ClInclude Include="..\CCBReader\CCNodeLoader.h" />
     <ClInclude Include="..\CCBReader\CCNodeLoaderLibrary.h" />
     <ClInclude Include="..\CCBReader\CCNodeLoaderListener.h" />
