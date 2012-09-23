@@ -127,6 +127,9 @@
                 case UITextAlignmentRight:
                     point.x += origSize.width - size.width;
                     break;
+                default:
+                    // NSTextAlignmentJustified and NSTextAlignmentNatural are not handled here
+                    break;
             }
             [self.text drawAtPoint:point forWidth:size.width withZFont:actualFont lineBreakMode:self.lineBreakMode];
         } else {
