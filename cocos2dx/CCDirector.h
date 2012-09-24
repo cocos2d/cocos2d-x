@@ -159,8 +159,6 @@ public:
      */
     CCNode* getNotificationNode();
     void setNotificationNode(CCNode *node);
-    
-    bool enableRetinaDisplay(bool bEnabelRetina);
 
     // window size
 
