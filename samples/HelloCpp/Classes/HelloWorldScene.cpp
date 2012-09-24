@@ -72,6 +72,9 @@ bool HelloWorld::init()
     // add the sprite as a child to this layer
     this->addChild(pSprite, 0);
     
+    // enable standard touch
+    this->setTouchEnabled(true);
+    
     return true;
 }
 
@@ -82,4 +85,12 @@ void HelloWorld::menuCloseCallback(CCObject* pSender)
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     exit(0);
 #endif
+}
+
+void HelloWorld::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
+{
+    CCTouch* touch = (CCTouch*)(* pTouches->begin());
+    CCPoint pos = touch->getLocation();
+    
+    CCLog("touch, x = %f, y = %f", pos.x, pos.y);
 }
