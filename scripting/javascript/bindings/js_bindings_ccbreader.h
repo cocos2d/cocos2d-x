@@ -5,6 +5,9 @@
 //  Created by Rohan Kuruvilla on 14/08/2012.
 //
 //
+#ifndef __JS_BINDINGS_CCBREADER_H__
+#define __JS_BINDINGS_CCBREADER_H__
+
 #include "jsapi.h"
 #include "cocos-ext.h"
 #include "cocos2d_specifics.hpp"
@@ -54,3 +57,6 @@ protected:
 
 void register_CCBuilderReader(JSContext *cx, JSObject *global);
 JSBool js_CocosBuilder_Run(JSContext *cx, uint32_t argc, jsval *vp);
+
+#endif /* __JS_BINDINGS_CCBREADER_H__ */
+

@@ -20,7 +20,7 @@
 #endif
 
 using namespace std;
-USING_NS_CC;
+
 NS_CC_EXT_BEGIN;
 
 /*************************************************************************

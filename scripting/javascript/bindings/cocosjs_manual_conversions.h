@@ -1,3 +1,6 @@
+#ifndef __COCOSJS_MANUAL_CONVERSIONS_H__
+#define __COCOSJS_MANUAL_CONVERSIONS_H__
+
 #include "chipmunk.h"
 #include "cocos2d.h"
 #include "js_manual_conversions.h"
@@ -17,3 +20,6 @@ jsval cpBB_to_jsval(JSContext *cx, cpBB bb );
 
 #define cpVect_to_jsval CGPoint_to_jsval
 #define jsval_to_cpVect jsval_to_CGPoint
+
+#endif /* __COCOSJS_MANUAL_CONVERSIONS_H__ */
+

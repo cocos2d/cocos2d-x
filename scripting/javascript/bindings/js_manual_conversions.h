@@ -2,6 +2,8 @@
 //  Created by Rohan Kuruvilla
 //  Copyright (c) 2012 Zynga Inc. All rights reserved.
 //
+#ifndef __JS_MANUAL_CONVERSIONS_H__
+#define __JS_MANUAL_CONVERSIONS_H__
 
 #include "jsapi.h"
 
@@ -21,3 +23,6 @@ jsval opaque_to_jsval( JSContext *cx, void* opaque);
 #ifdef __cplusplus
 }
 #endif
+
+#endif /* __JS_MANUAL_CONVERSIONS_H__ */
+
