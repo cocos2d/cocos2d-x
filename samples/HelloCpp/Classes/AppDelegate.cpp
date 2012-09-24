@@ -32,10 +32,13 @@ bool AppDelegate::applicationDidFinishLaunching() {
     {
         // iphone
         
-        if (pDirector->enableRetinaDisplay(true))
+        // try to enable retina on device
+        // notice: passby CCDirecor::enableRetinaDisplay(), call CCEGLView::enableRetina() directly
+        if (true == CCEGLView::sharedOpenGLView()->enableRetina())
         {
             // iphone hd
             CCFileUtils::sharedFileUtils()->setResourceDirectory("iphonehd");
+            CCEGLView::sharedOpenGLView()->setDesignResolutionSize(960, 640, kResolutionNoBorder);
         }
         else 
         {
