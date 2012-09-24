@@ -4,6 +4,8 @@
 
 using namespace cocos2d;
 
+extern float g_scaleRatio;
+
 HelloWorld::~HelloWorld()
 {
 	if (_targets)
@@ -26,7 +28,18 @@ HelloWorld::HelloWorld()
 :_targets(NULL)
 ,_projectiles(NULL)
 ,_projectilesDestroyed(0)
+,_scaleRatio(1.0)
 {
+    if ( 0 == strcmp(CCFileUtils::sharedFileUtils()->getResourceDirectory(), "hd/") )
+    {
+        // AppDelegate.cpp used hd resource & 960x640 design resolution
+        _scaleRatio = 2.0;
+    }
+    else
+    {
+        // sd
+        _scaleRatio = 1.0;
+    }
 }
 
 CCScene* HelloWorld::scene()
@@ -75,10 +88,13 @@ bool HelloWorld::init()
 			this,
 			menu_selector(HelloWorld::menuCloseCallback));
 		CC_BREAK_IF(! pCloseItem);
-
+        
 		// Place the menu item bottom-right conner.
-		pCloseItem->setPosition(ccp(CCDirector::sharedDirector()->getVisibleSize().width - 20,
-                                    CCDirector::sharedDirector()->getVisibleOrigin().y + 20));
+        CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
+        CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
+        
+		pCloseItem->setPosition(ccp(origin.x + visibleSize.width - pCloseItem->getContentSize().width/2,
+                                    origin.y + pCloseItem->getContentSize().height/2));
 
 		// Create a menu with the "close" menu item, it's an auto release object.
 		CCMenu* pMenu = CCMenu::create(pCloseItem, NULL);
@@ -90,10 +106,10 @@ bool HelloWorld::init()
 
 		/////////////////////////////
 		// 2. add your codes below...
-
-		CCSize winSize = CCDirector::sharedDirector()->getVisibleSize();
-		CCSprite *player = CCSprite::create("Player.png", CCRectMake(0, 0, 27, 40) );
-		player->setPosition( ccp(player->getContentSize().width/2, winSize.height/2) );
+		CCSprite *player = CCSprite::create("Player.png", CCRectMake(0, 0, 27*_scaleRatio, 40*_scaleRatio) );
+        
+		player->setPosition( ccp(origin.x + player->getContentSize().width/2,
+                                 origin.y + visibleSize.height/2) );
 		this->addChild(player);
 
 		this->schedule( schedule_selector(HelloWorld::gameLogic), 1.0 );
@@ -124,8 +140,8 @@ void HelloWorld::menuCloseCallback(CCObject* pSender)
 // cpp with cocos2d-x
 void HelloWorld::addTarget()
 {
-	CCSprite *target = CCSprite::create("Target.png", CCRectMake(0,0,27,40) );
-
+	CCSprite *target = CCSprite::create("Target.png", CCRectMake(0,0,27*_scaleRatio,40*_scaleRatio) );
+    
 	// Determine where to spawn the target along the Y axis
 	CCSize winSize = CCDirector::sharedDirector()->getVisibleSize();
 	float minY = target->getContentSize().height/2;
@@ -196,7 +212,7 @@ void HelloWorld::ccTouchesEnded(CCSet* touches, CCEvent* event)
 
 	// Set up initial location of projectile
 	CCSize winSize = CCDirector::sharedDirector()->getVisibleSize();
-	CCSprite *projectile = CCSprite::create("Projectile.png", CCRectMake(0, 0, 20, 20));
+	CCSprite *projectile = CCSprite::create("Projectile.png", CCRectMake(0, 0, 20*_scaleRatio, 20*_scaleRatio));
 	projectile->setPosition( ccp(20, winSize.height/2) );
 
 	// Determinie offset of location to projectile
