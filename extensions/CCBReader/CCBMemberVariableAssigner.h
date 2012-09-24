@@ -21,7 +21,7 @@ class CCBMemberVariableAssigner {
     public:
         virtual ~CCBMemberVariableAssigner() {};
 
-        virtual bool onAssignCCBMemberVariable(CCObject * pTarget, cocos2d::CCString * pMemberVariableName, CCNode * pNode) = 0;
+        virtual bool onAssignCCBMemberVariable(CCObject * pTarget, CCString * pMemberVariableName, CCNode * pNode) = 0;
 };
 
 NS_CC_EXT_END

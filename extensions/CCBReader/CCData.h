@@ -7,7 +7,7 @@
 
 NS_CC_EXT_BEGIN
 
-class CCData : public cocos2d::CCObject
+class CCData : public CCObject
 {
 public:
     CCData(unsigned char *pBytes, const unsigned long nSize);

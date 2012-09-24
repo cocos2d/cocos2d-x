@@ -1,6 +1,6 @@
 #include "CCControlButtonLoader.h"
 
-USING_NS_CC;
+
 NS_CC_EXT_BEGIN;
 
 #define PROPERTY_ZOOMONTOUCHDOWN "zoomOnTouchDown"
