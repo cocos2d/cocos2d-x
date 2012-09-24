@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2011        Jirka Fajfr for cocos2d-x
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008      Apple Inc. All Rights Reserved.
 
 http://www.cocos2d-x.org
