@@ -6,13 +6,7 @@
 //
 //
 #include "jsapi.h"
-#include "CCBReader.h"
-#include "CCBSelectorResolver.h"
-#include "CCBMemberVariableAssigner.h"
-#include "CCInvocation.h"
-#include "ExtensionMacros.h"
-#include "CCLayerLoader.h"
-
+#include "cocos-ext.h"
 #include "cocos2d_specifics.hpp"
 
 
