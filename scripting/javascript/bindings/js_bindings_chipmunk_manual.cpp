@@ -6,7 +6,7 @@
 
 #include "js_bindings_chipmunk_manual.hpp"
 #include "jsapi.h"
-#include "js_manual_conversions.h"
+#include "cocosjs_manual_conversions.h"
 #include "uthash.h"
 #include "ccConfig.h"
 #include "ScriptingCore.h"
