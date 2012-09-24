@@ -51,7 +51,7 @@ static AppDelegate s_sharedApplication;
     }
     else
     {
-        // use this mehod on ios6
+        // use this method on ios6
         [window setRootViewController:viewController];
     }
     
