@@ -1,11 +1,10 @@
 #include "cocos2d.h"
 #include "AppDelegate.h"
 #include "SimpleAudioEngine.h"
-#include "CCScriptSupport.h"
+#include "script_support/CCScriptSupport.h"
 #include "CCLuaEngine.h"
 
 USING_NS_CC;
-using namespace std;
 using namespace CocosDenshion;
 
 AppDelegate::AppDelegate()
@@ -18,7 +17,7 @@ AppDelegate::~AppDelegate()
 {
     // end simple audio engine here, or it may crashed on win32
     SimpleAudioEngine::sharedEngine()->end();
-    CCScriptEngineManager::purgeSharedManager();
+    //CCScriptEngineManager::purgeSharedManager();
 }
 
 bool AppDelegate::applicationDidFinishLaunching()
@@ -26,6 +25,8 @@ bool AppDelegate::applicationDidFinishLaunching()
     // initialize director
     CCDirector *pDirector = CCDirector::sharedDirector();
     pDirector->setOpenGLView(CCEGLView::sharedOpenGLView());
+    
+    CCEGLView::sharedOpenGLView()->setDesignResolutionSize(480, 320, kResolutionShowAll);
 
     // enable High Resource Mode(2x, such as iphone4) and maintains low resource on other devices.
     // pDirector->enableRetinaDisplay(true);
@@ -37,7 +38,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     pDirector->setAnimationInterval(1.0 / 60);
 
     // register lua engine
-    CCScriptEngineProtocol* pEngine = CCLuaEngine::engine();
+    CCLuaEngine* pEngine = CCLuaEngine::defaultEngine();
     CCScriptEngineManager::sharedManager()->setScriptEngine(pEngine);
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
@@ -47,7 +48,7 @@ bool AppDelegate::applicationDidFinishLaunching()
         pEngine->executeString(pstrFileContent->getCString());
     }
 #else
-    string path = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath("hello.lua");
+    std::string path = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath("hello.lua");
     pEngine->addSearchPath(path.substr(0, path.find_last_of("/")).c_str());
     pEngine->executeScriptFile(path.c_str());
 #endif 
@@ -59,16 +60,12 @@ bool AppDelegate::applicationDidFinishLaunching()
 void AppDelegate::applicationDidEnterBackground()
 {
     CCDirector::sharedDirector()->stopAnimation();
-
-    // if you use SimpleAudioEngine, it must be pause
-    // SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
+    SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
 }
 
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground()
 {
     CCDirector::sharedDirector()->startAnimation();
-    
-    // if you use SimpleAudioEngine, it must resume here
-    // SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
+    SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
 }
