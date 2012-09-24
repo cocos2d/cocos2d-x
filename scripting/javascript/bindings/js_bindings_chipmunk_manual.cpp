@@ -400,7 +400,7 @@ template <class T>
 js_type_class_t *js_get_type_from_native(T* native_obj) {
 	js_type_class_t *typeProxy;
 	uint32_t typeId = reinterpret_cast<int>(typeid(*native_obj).name());
-    const char *nam = typeid(*native_obj).name();
+    //const char *nam = typeid(*native_obj).name();
 	HASH_FIND_INT(_js_global_type_ht, &typeId, typeProxy);
 	if (!typeProxy) {
 		TypeInfo *typeInfo = dynamic_cast<TypeInfo *>(native_obj);
