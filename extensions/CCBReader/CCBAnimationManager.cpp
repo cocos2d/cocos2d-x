@@ -129,16 +129,16 @@ void CCBAnimationManager::addNode(CCNode *pNode, CCDictionary *pSeq)
 {
     pNode->retain();
     
-    mNodeSequences->setObject(pSeq, (int)pNode);
+    mNodeSequences->setObject(pSeq, (intptr_t)pNode);
 }
 
 void CCBAnimationManager::setBaseValue(CCObject *pValue, CCNode *pNode, const char *pPropName)
 {
-    CCDictionary *props = (CCDictionary*)mBaseValues->objectForKey((int)pNode);
+    CCDictionary *props = (CCDictionary*)mBaseValues->objectForKey((intptr_t)pNode);
     if (! props)
     {
         props = CCDictionary::create();
-        mBaseValues->setObject(props, (int)pNode);
+        mBaseValues->setObject(props, (intptr_t)pNode);
         pNode->retain();
     }
     
@@ -147,7 +147,7 @@ void CCBAnimationManager::setBaseValue(CCObject *pValue, CCNode *pNode, const ch
 
 CCObject* CCBAnimationManager::getBaseValue(CCNode *pNode, const char* pPropName)
 {
-    CCDictionary *props = (CCDictionary*)mBaseValues->objectForKey((int)pNode);
+    CCDictionary *props = (CCDictionary*)mBaseValues->objectForKey((intptr_t)pNode);
     
     return props->objectForKey(pPropName);
 }
