@@ -33,7 +33,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
         // iphone
         
         // try to enable retina on device
-        // notice: passby CCDirecor::enableRetinaDisplay() 
+        // notice: passby CCDirecor::enableRetinaDisplay(), call CCEGLView::enableRetina() directly
         if (true == CCEGLView::sharedOpenGLView()->enableRetina())
         {
             // iphone hd
