@@ -486,9 +486,9 @@
 		A92275321517C094001B78AA = {
 			isa = PBXGroup;
 			children = (
+				15426AE915B5733200712A7F /* cocos2dx.xcodeproj */,
 				15628F5B15F0F5C2000CF24B /* Resources */,
 				2628297C15EC7196002C4240 /* chipmunk */,
-				15426AE915B5733200712A7F /* cocos2dx.xcodeproj */,
 				F2837A9C15B9639100A5707B /* bindings */,
 				D4545214156E28EF00887EB5 /* Classes */,
 				15426FC415B5743C00712A7F /* CocosDenshion */,
