@@ -1,7 +1,5 @@
 #include "CCSpriteLoader.h"
 
-USING_NS_CC;
-
 #define PROPERTY_FLIP "flip"
 #define PROPERTY_DISPLAYFRAME "displayFrame"
 #define PROPERTY_COLOR "color"

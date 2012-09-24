@@ -6,6 +6,8 @@
 
 NS_CC_EXT_BEGIN
 
+class CCNodeLoader;
+
 typedef std::map<CCString *, CCNodeLoader *, CCStringCompare> CCNodeLoaderMap;
 typedef std::pair<CCString *, CCNodeLoader *> CCNodeLoaderMapEntry;
 

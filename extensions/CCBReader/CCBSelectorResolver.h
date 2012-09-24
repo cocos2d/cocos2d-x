@@ -5,7 +5,7 @@
 #include "ExtensionMacros.h"
 #include "../GUI/CCControlExtension/CCInvocation.h"
 
-USING_NS_CC;
+
 NS_CC_EXT_BEGIN
 
 #define CCB_SELECTORRESOLVER_CCMENUITEM_GLUE(TARGET, SELECTORNAME, METHOD) if(pTarget == TARGET && pSelectorName->compare(SELECTORNAME) == 0) { \
