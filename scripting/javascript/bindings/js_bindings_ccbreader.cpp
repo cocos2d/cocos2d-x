@@ -8,7 +8,6 @@
 
 #include "js_bindings_ccbreader.h"
 #include "ScriptingCore.h"
-#include "CCNodeLoaderLibrary.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;

@@ -6,9 +6,9 @@
 
 NS_CC_EXT_BEGIN
 
-extern cocos2d::CCPoint getAbsolutePosition(const cocos2d::CCPoint &pt, int nType, const cocos2d::CCSize &containerSize, const char *pPropName);
+extern CCPoint getAbsolutePosition(const CCPoint &pt, int nType, const CCSize &containerSize, const char *pPropName);
 
-extern void setRelativeScale(cocos2d::CCNode *pNode, float fScaleX, float fScaleY, int nType, const char* pPropName);
+extern void setRelativeScale(CCNode *pNode, float fScaleX, float fScaleY, int nType, const char* pPropName);
 
 NS_CC_EXT_END
 

@@ -1,6 +1,6 @@
 #include "CCLayerLoader.h"
 
-USING_NS_CC;
+
 
 
 #define PROPERTY_TOUCH_ENABLED "isTouchEnabled"

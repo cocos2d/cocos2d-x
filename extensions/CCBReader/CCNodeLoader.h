@@ -19,11 +19,11 @@ NS_CC_EXT_BEGIN
 #define ASSERT_FAIL_UNEXPECTED_PROPERTY(PROPERTY) CCLog("Unexpected property: '%s'!\n", PROPERTY->getCString()); assert(false)
 #define ASSERT_FAIL_UNEXPECTED_PROPERTYTYPE(PROPERTYTYPE) CCLog("Unexpected property type: '%d'!\n", PROPERTYTYPE); assert(false)
 
-#define CCB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(T) virtual T * createCCNode(cocos2d::CCNode * pParent, cocos2d::extension::CCBReader * pCCBReader) { \
+#define CCB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(T) virtual T * createCCNode(CCNode * pParent, extension::CCBReader * pCCBReader) { \
     return T::create(); \
 }
 
-#define CCB_PURE_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(T) virtual T * createCCNode(cocos2d::CCNode * pParent, cocos2d::extension::CCBReader * pCCBReader) = 0
+#define CCB_PURE_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(T) virtual T * createCCNode(CCNode * pParent, extension::CCBReader * pCCBReader) = 0
 
 struct BlockData {
     SEL_MenuHandler mSELMenuHandler;
