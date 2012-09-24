@@ -21,7 +21,7 @@
 
 #include "CCPhysicsSprite.h"
 #include "ScriptingCore.h"
-#include "js_manual_conversions.h"
+#include "cocosjs_manual_conversions.h"
 
 using namespace cocos2d;
 
