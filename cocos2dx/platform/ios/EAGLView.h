@@ -87,6 +87,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
     BOOL                    preserveBackbuffer_;
 
     CGSize                    size_;
+    CGFloat                   designContentScaleFactor_;
     BOOL                    discardFramebufferSupported_;
 
     //fsaa addition
@@ -142,6 +143,9 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 @property(nonatomic,readwrite) BOOL multiSampling;
 
+/** call from AppController.mm */
+-(void) setDesignContentScaleFactor:(CGFloat)scale;
+-(CGFloat) getDesignContentScaleFactor;
 
 /** EAGLView uses double-buffer. This method swaps the buffers */
 -(void) swapBuffers;
