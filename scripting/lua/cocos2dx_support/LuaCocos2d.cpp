@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.92 on Mon Sep 17 14:39:34 2012.
+** Generated automatically by tolua++-1.0.92 on Thu Sep 20 23:37:00 2012.
 */
 
 /****************************************************************************
@@ -141,6 +141,13 @@ static int tolua_collect_ccBezierConfig (lua_State* tolua_S)
     return 0;
 }
 
+static int tolua_collect_ccV2F_C4B_T2F (lua_State* tolua_S)
+{
+ ccV2F_C4B_T2F* self = (ccV2F_C4B_T2F*) tolua_tousertype(tolua_S,1,0);
+    Mtolua_delete(self);
+    return 0;
+}
+
 static int tolua_collect_CCAffineTransform (lua_State* tolua_S)
 {
  CCAffineTransform* self = (CCAffineTransform*) tolua_tousertype(tolua_S,1,0);
@@ -162,16 +169,16 @@ static int tolua_collect_ccV2F_C4B_T2F_Quad (lua_State* tolua_S)
     return 0;
 }
 
-static int tolua_collect_ccV2F_C4B_T2F (lua_State* tolua_S)
+static int tolua_collect_ccColor3B (lua_State* tolua_S)
 {
- ccV2F_C4B_T2F* self = (ccV2F_C4B_T2F*) tolua_tousertype(tolua_S,1,0);
+ ccColor3B* self = (ccColor3B*) tolua_tousertype(tolua_S,1,0);
     Mtolua_delete(self);
     return 0;
 }
 
-static int tolua_collect_ccColor3B (lua_State* tolua_S)
+static int tolua_collect_ccTexParams (lua_State* tolua_S)
 {
- ccColor3B* self = (ccColor3B*) tolua_tousertype(tolua_S,1,0);
+ ccTexParams* self = (ccTexParams*) tolua_tousertype(tolua_S,1,0);
     Mtolua_delete(self);
     return 0;
 }
@@ -15963,6 +15970,183 @@ static int tolua_Cocos2d_CCNode_create00(lua_State* tolua_S)
  tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
  return 0;
 #endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: new of class  ccTexParams */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_ccTexParams_new00
+static int tolua_Cocos2d_ccTexParams_new00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"ccTexParams",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  {
+   ccTexParams* tolua_ret = (ccTexParams*)  Mtolua_new((ccTexParams)());
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"ccTexParams");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'new'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: new_local of class  ccTexParams */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_ccTexParams_new00_local
+static int tolua_Cocos2d_ccTexParams_new00_local(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"ccTexParams",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  {
+   ccTexParams* tolua_ret = (ccTexParams*)  Mtolua_new((ccTexParams)());
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"ccTexParams");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'new'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: minFilter of class  ccTexParams */
+#ifndef TOLUA_DISABLE_tolua_get_ccTexParams_unsigned_minFilter
+static int tolua_get_ccTexParams_unsigned_minFilter(lua_State* tolua_S)
+{
+  ccTexParams* self = (ccTexParams*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'minFilter'",NULL);
+#endif
+  tolua_pushnumber(tolua_S,(lua_Number)self->minFilter);
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: minFilter of class  ccTexParams */
+#ifndef TOLUA_DISABLE_tolua_set_ccTexParams_unsigned_minFilter
+static int tolua_set_ccTexParams_unsigned_minFilter(lua_State* tolua_S)
+{
+  ccTexParams* self = (ccTexParams*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'minFilter'",NULL);
+  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->minFilter = (( unsigned int)  tolua_tonumber(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: magFilter of class  ccTexParams */
+#ifndef TOLUA_DISABLE_tolua_get_ccTexParams_unsigned_magFilter
+static int tolua_get_ccTexParams_unsigned_magFilter(lua_State* tolua_S)
+{
+  ccTexParams* self = (ccTexParams*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'magFilter'",NULL);
+#endif
+  tolua_pushnumber(tolua_S,(lua_Number)self->magFilter);
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: magFilter of class  ccTexParams */
+#ifndef TOLUA_DISABLE_tolua_set_ccTexParams_unsigned_magFilter
+static int tolua_set_ccTexParams_unsigned_magFilter(lua_State* tolua_S)
+{
+  ccTexParams* self = (ccTexParams*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'magFilter'",NULL);
+  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->magFilter = (( unsigned int)  tolua_tonumber(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: wrapS of class  ccTexParams */
+#ifndef TOLUA_DISABLE_tolua_get_ccTexParams_unsigned_wrapS
+static int tolua_get_ccTexParams_unsigned_wrapS(lua_State* tolua_S)
+{
+  ccTexParams* self = (ccTexParams*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'wrapS'",NULL);
+#endif
+  tolua_pushnumber(tolua_S,(lua_Number)self->wrapS);
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: wrapS of class  ccTexParams */
+#ifndef TOLUA_DISABLE_tolua_set_ccTexParams_unsigned_wrapS
+static int tolua_set_ccTexParams_unsigned_wrapS(lua_State* tolua_S)
+{
+  ccTexParams* self = (ccTexParams*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'wrapS'",NULL);
+  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->wrapS = (( unsigned int)  tolua_tonumber(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: wrapT of class  ccTexParams */
+#ifndef TOLUA_DISABLE_tolua_get_ccTexParams_unsigned_wrapT
+static int tolua_get_ccTexParams_unsigned_wrapT(lua_State* tolua_S)
+{
+  ccTexParams* self = (ccTexParams*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'wrapT'",NULL);
+#endif
+  tolua_pushnumber(tolua_S,(lua_Number)self->wrapT);
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: wrapT of class  ccTexParams */
+#ifndef TOLUA_DISABLE_tolua_set_ccTexParams_unsigned_wrapT
+static int tolua_set_ccTexParams_unsigned_wrapT(lua_State* tolua_S)
+{
+  ccTexParams* self = (ccTexParams*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'wrapT'",NULL);
+  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->wrapT = (( unsigned int)  tolua_tonumber(tolua_S,2,0))
+;
+ return 0;
 }
 #endif //#ifndef TOLUA_DISABLE
 
@@ -55646,6 +55830,20 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
   tolua_constant(tolua_S,"kTexture2DPixelFormat_RGBA4444",kTexture2DPixelFormat_RGBA4444);
   tolua_constant(tolua_S,"kTexture2DPixelFormat_RGB5A1",kTexture2DPixelFormat_RGB5A1);
   tolua_constant(tolua_S,"kTexture2DPixelFormat_Default",kTexture2DPixelFormat_Default);
+  #ifdef __cplusplus
+  tolua_cclass(tolua_S,"ccTexParams","ccTexParams","",tolua_collect_ccTexParams);
+  #else
+  tolua_cclass(tolua_S,"ccTexParams","ccTexParams","",NULL);
+  #endif
+  tolua_beginmodule(tolua_S,"ccTexParams");
+   tolua_function(tolua_S,"new",tolua_Cocos2d_ccTexParams_new00);
+   tolua_function(tolua_S,"new_local",tolua_Cocos2d_ccTexParams_new00_local);
+   tolua_function(tolua_S,".call",tolua_Cocos2d_ccTexParams_new00_local);
+   tolua_variable(tolua_S,"minFilter",tolua_get_ccTexParams_unsigned_minFilter,tolua_set_ccTexParams_unsigned_minFilter);
+   tolua_variable(tolua_S,"magFilter",tolua_get_ccTexParams_unsigned_magFilter,tolua_set_ccTexParams_unsigned_magFilter);
+   tolua_variable(tolua_S,"wrapS",tolua_get_ccTexParams_unsigned_wrapS,tolua_set_ccTexParams_unsigned_wrapS);
+   tolua_variable(tolua_S,"wrapT",tolua_get_ccTexParams_unsigned_wrapT,tolua_set_ccTexParams_unsigned_wrapT);
+  tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCTexture2D","CCTexture2D","CCObject",NULL);
   tolua_beginmodule(tolua_S,"CCTexture2D");
    tolua_function(tolua_S,"releaseData",tolua_Cocos2d_CCTexture2D_releaseData00);
