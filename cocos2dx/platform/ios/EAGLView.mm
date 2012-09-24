@@ -134,7 +134,6 @@ static EAGLView *view = 0;
 {
     if((self = [super initWithFrame:frame]))
     {
-        designContentScaleFactor_ = 1.0;
         isUseUITextField = YES;
         pixelformat_ = format;
         depthFormat_ = depth;
@@ -163,7 +162,6 @@ static EAGLView *view = 0;
         
         CAEAGLLayer*            eaglLayer = (CAEAGLLayer*)[self layer];
         
-        designContentScaleFactor_ = 1.0;
         pixelformat_ = kEAGLColorFormatRGB565;
         depthFormat_ = 0; // GL_DEPTH_COMPONENT24_OES;
         multiSampling_= NO;
@@ -202,27 +200,15 @@ static EAGLView *view = 0;
 -(int) getWidth
 {
     CGSize bound = [self bounds].size;
-    return bound.width * designContentScaleFactor_;
+    return bound.width;
 }
 
 -(int) getHeight
 {
     CGSize bound = [self bounds].size;
-    return bound.height * designContentScaleFactor_;
+    return bound.height;
 }
 
--(void) setDesignContentScaleFactor:(CGFloat)scale
-{
-    if ([self respondsToSelector:@selector(setContentScaleFactor:)]) {
-        [self setContentScaleFactor:scale]; // if val == 2.0, enable retina display
-        designContentScaleFactor_ = scale;
-    }
-}
-
--(CGFloat) getDesignContentScaleFactor
-{
-    return designContentScaleFactor_;
-}
 
 -(BOOL) setupSurfaceWithSharegroup:(EAGLSharegroup*)sharegroup
 {
@@ -415,8 +401,8 @@ static EAGLView *view = 0;
     int i = 0;
     for (UITouch *touch in touches) {
         ids[i] = (int)touch;
-        xs[i] = [touch locationInView: [touch view]].x * designContentScaleFactor_;
-        ys[i] = [touch locationInView: [touch view]].y * designContentScaleFactor_;
+        xs[i] = [touch locationInView: [touch view]].x;
+        ys[i] = [touch locationInView: [touch view]].y;
         ++i;
     }
     cocos2d::CCEGLView::sharedOpenGLView()->handleTouchesBegin(i, ids, xs, ys);
@@ -435,8 +421,8 @@ static EAGLView *view = 0;
     int i = 0;
     for (UITouch *touch in touches) {
         ids[i] = (int)touch;
-        xs[i] = [touch locationInView: [touch view]].x * designContentScaleFactor_;
-        ys[i] = [touch locationInView: [touch view]].y * designContentScaleFactor_;
+        xs[i] = [touch locationInView: [touch view]].x;
+        ys[i] = [touch locationInView: [touch view]].y;
         ++i;
     }
     cocos2d::CCEGLView::sharedOpenGLView()->handleTouchesMove(i, ids, xs, ys);
@@ -456,8 +442,8 @@ static EAGLView *view = 0;
     int i = 0;
     for (UITouch *touch in touches) {
         ids[i] = (int)touch;
-        xs[i] = [touch locationInView: [touch view]].x * designContentScaleFactor_;
-        ys[i] = [touch locationInView: [touch view]].y * designContentScaleFactor_;
+        xs[i] = [touch locationInView: [touch view]].x;
+        ys[i] = [touch locationInView: [touch view]].y;
         ++i;
     }
     cocos2d::CCEGLView::sharedOpenGLView()->handleTouchesEnd(i, ids, xs, ys);
@@ -477,8 +463,8 @@ static EAGLView *view = 0;
     int i = 0;
     for (UITouch *touch in touches) {
         ids[i] = (int)touch;
-        xs[i] = [touch locationInView: [touch view]].x * designContentScaleFactor_;
-        ys[i] = [touch locationInView: [touch view]].y * designContentScaleFactor_;
+        xs[i] = [touch locationInView: [touch view]].x;
+        ys[i] = [touch locationInView: [touch view]].y;
         ++i;
     }
     cocos2d::CCEGLView::sharedOpenGLView()->handleTouchesCancel(i, ids, xs, ys);
@@ -800,15 +786,6 @@ static EAGLView *view = 0;
             break;
     }
     
-    begin.origin.x *= designContentScaleFactor_;
-    begin.origin.y *= designContentScaleFactor_;
-    begin.size.width *= designContentScaleFactor_;
-    begin.size.height *= designContentScaleFactor_;
-    end.origin.x *= designContentScaleFactor_;
-    end.origin.y *= designContentScaleFactor_;
-    end.size.width *= designContentScaleFactor_;
-    end.size.height *= designContentScaleFactor_;
-
     cocos2d::CCIMEKeyboardNotificationInfo notiInfo;
     notiInfo.begin = cocos2d::CCRect(begin.origin.x,
                                      begin.origin.y,
@@ -882,7 +859,6 @@ static EAGLView *view = 0;
     // NSLog(@"[animation] dis = %f\n", dis);
     
     if (dis < 0.0f) dis = 0.0f;
-    dis /= designContentScaleFactor_;
 
     if (!cocos2d::CCEGLView::sharedOpenGLView()->isRetinaEnabled())
     {
