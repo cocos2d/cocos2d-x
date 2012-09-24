@@ -7,7 +7,7 @@
 
 NS_CC_EXT_BEGIN
 
-class CCBSequenceProperty : public cocos2d::CCObject
+class CCBSequenceProperty : public CCObject
 {
 private:
     std::string mName;

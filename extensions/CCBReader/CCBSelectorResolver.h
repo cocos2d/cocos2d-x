@@ -19,9 +19,9 @@ NS_CC_EXT_BEGIN
 class CCBSelectorResolver {
     public:
         virtual ~CCBSelectorResolver() {};
-    virtual cocos2d::SEL_MenuHandler onResolveCCBCCMenuItemSelector(CCObject * pTarget, CCString * pSelectorName) = 0;
+    virtual SEL_MenuHandler onResolveCCBCCMenuItemSelector(CCObject * pTarget, CCString * pSelectorName) = 0;
     
-    virtual cocos2d::extension::SEL_CCControlHandler onResolveCCBCCControlSelector(CCObject * pTarget, CCString * pSelectorName) = 0;
+    virtual extension::SEL_CCControlHandler onResolveCCBCCControlSelector(CCObject * pTarget, CCString * pSelectorName) = 0;
 };
 
 

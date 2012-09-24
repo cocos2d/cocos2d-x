@@ -10,15 +10,15 @@
 
 NS_CC_EXT_BEGIN
 
-class ccColor3BWapper : public cocos2d::CCObject
+class ccColor3BWapper : public CCObject
 {
 private:
-    cocos2d::ccColor3B color;
+    ccColor3B color;
     
 public:
-    static ccColor3BWapper* create(const cocos2d::ccColor3B& color);
+    static ccColor3BWapper* create(const ccColor3B& color);
     
-    const cocos2d::ccColor3B& getColor();
+    const ccColor3B& getColor();
 };
 
 enum
@@ -30,7 +30,7 @@ enum
     kUnsignedCharValue,
 };
 
-class CCBValue : public cocos2d::CCObject
+class CCBValue : public CCObject
 {
 private:
     union 
