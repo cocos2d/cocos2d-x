@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "platform/CCCommon.h"
-#include "jni/MessageJni.h"
+#include "jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
 #include <android/log.h>
 #include <stdio.h>
 #include <jni.h>
@@ -46,7 +46,7 @@ void CCLog(const char * pszFormat, ...)
 
 void CCMessageBox(const char * pszMsg, const char * pszTitle)
 {
-    showMessageBoxJNI(pszMsg, pszTitle);
+    showDialogJNI(pszMsg, pszTitle);
 }
 
 void CCLuaLog(const char * pszFormat)

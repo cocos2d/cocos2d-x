@@ -326,26 +326,44 @@ JSBool js_cocos2dx_CCMenuItemFont_create(JSContext *cx, uint32_t argc, jsval *vp
 	return JS_FALSE;
 }
 
+
 JSBool js_cocos2dx_CCMenuItemToggle_create(JSContext *cx, uint32_t argc, jsval *vp)
 {
-	if (argc >= 1) {
-		jsval *argv = JS_ARGV(cx, vp);
-		cocos2d::CCMenuItemToggle* ret = cocos2d::CCMenuItemToggle::create();
-		JSObject *obj = bind_menu_item(cx, ret, (argc == 2 ? argv[1] : JSVAL_VOID), argv[0]);
-		for (int i=1; i < argc; i++) {
-			js_proxy_t *proxy;
-			JSObject *tmpObj = JSVAL_TO_OBJECT(argv[i]);
-			JS_GET_NATIVE_PROXY(proxy, tmpObj);
-			cocos2d::CCMenuItem* item = (cocos2d::CCMenuItem*)(proxy ? proxy->ptr : NULL);
-			TEST_NATIVE_OBJECT(cx, item)
-			ret->addSubItem(item);
-		}
-		JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
-		return JS_TRUE;
-	}
-	return JS_FALSE;
+  if (argc >= 1) {
+    jsval *argv = JS_ARGV(cx, vp);
+    cocos2d::CCMenuItemToggle* ret = cocos2d::CCMenuItemToggle::create();
+        
+        
+    for (int i=0; i < argc; i++) {
+      js_proxy_t *proxy;
+      JSObject *tmpObj = JSVAL_TO_OBJECT(argv[i]);
+      JS_GET_NATIVE_PROXY(proxy, tmpObj);
+      cocos2d::CCMenuItem* item = (cocos2d::CCMenuItem*)(proxy ? proxy->ptr : NULL);
+      TEST_NATIVE_OBJECT(cx, item)
+	if(i == 0) ret->initWithItem(item);
+	else ret->addSubItem(item);
+    }
+        
+    jsval jsret;
+    if (ret) {
+      js_proxy_t *proxy;
+      JS_GET_PROXY(proxy, ret);
+      if (proxy) {
+	jsret = OBJECT_TO_JSVAL(proxy->obj);
+      } else {
+	// create a new js obj of that class
+	proxy = js_get_or_create_proxy<cocos2d::CCMenuItemToggle>(cx, ret);
+	jsret = OBJECT_TO_JSVAL(proxy->obj);
+      }
+    } else {
+      jsret = JSVAL_NULL;
+    }
+        
+    JS_SET_RVAL(cx, vp, jsret);
+    return JS_TRUE;
+  }
+  return JS_FALSE;
 }
-
 
 JSBool js_cocos2dx_setCallback(JSContext *cx, uint32_t argc, jsval *vp) {
 
@@ -451,6 +469,8 @@ JSBool js_cocos2dx_swap_native_object(JSContext *cx, uint32_t argc, jsval *vp)
 			js_proxy_t *jsproxy;
 			JS_GET_PROXY(jsproxy, ptrTwo);
 			if (jsproxy) {
+                JS_RemoveObjectRoot(cx, &nproxy->obj);
+
 				JS_REMOVE_PROXY(jsproxy, nproxy);
 				JS_NEW_PROXY(nproxy, ptrTwo, one);
 			}
