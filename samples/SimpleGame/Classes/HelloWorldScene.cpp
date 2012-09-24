@@ -4,8 +4,6 @@
 
 using namespace cocos2d;
 
-extern float g_scaleRatio;
-
 HelloWorld::~HelloWorld()
 {
 	if (_targets)
@@ -28,18 +26,7 @@ HelloWorld::HelloWorld()
 :_targets(NULL)
 ,_projectiles(NULL)
 ,_projectilesDestroyed(0)
-,_scaleRatio(1.0)
 {
-    if ( 0 == strcmp(CCFileUtils::sharedFileUtils()->getResourceDirectory(), "hd/") )
-    {
-        // AppDelegate.cpp used hd resource & 960x640 design resolution
-        _scaleRatio = 2.0;
-    }
-    else
-    {
-        // sd
-        _scaleRatio = 1.0;
-    }
 }
 
 CCScene* HelloWorld::scene()
@@ -106,7 +93,7 @@ bool HelloWorld::init()
 
 		/////////////////////////////
 		// 2. add your codes below...
-		CCSprite *player = CCSprite::create("Player.png", CCRectMake(0, 0, 27*_scaleRatio, 40*_scaleRatio) );
+		CCSprite *player = CCSprite::create("Player.png", CCRectMake(0, 0, 27, 40) );
         
 		player->setPosition( ccp(origin.x + player->getContentSize().width/2,
                                  origin.y + visibleSize.height/2) );
@@ -140,7 +127,7 @@ void HelloWorld::menuCloseCallback(CCObject* pSender)
 // cpp with cocos2d-x
 void HelloWorld::addTarget()
 {
-	CCSprite *target = CCSprite::create("Target.png", CCRectMake(0,0,27*_scaleRatio,40*_scaleRatio) );
+	CCSprite *target = CCSprite::create("Target.png", CCRectMake(0,0,27,40) );
     
 	// Determine where to spawn the target along the Y axis
 	CCSize winSize = CCDirector::sharedDirector()->getVisibleSize();
@@ -212,7 +199,7 @@ void HelloWorld::ccTouchesEnded(CCSet* touches, CCEvent* event)
 
 	// Set up initial location of projectile
 	CCSize winSize = CCDirector::sharedDirector()->getVisibleSize();
-	CCSprite *projectile = CCSprite::create("Projectile.png", CCRectMake(0, 0, 20*_scaleRatio, 20*_scaleRatio));
+	CCSprite *projectile = CCSprite::create("Projectile.png", CCRectMake(0, 0, 20, 20));
 	projectile->setPosition( ccp(20, winSize.height/2) );
 
 	// Determinie offset of location to projectile

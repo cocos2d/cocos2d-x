@@ -31,17 +31,15 @@ bool AppDelegate::applicationDidFinishLaunching() {
     }
     else if (target == kTargetIphone)
     {        
-        if (CCEGLView::sharedOpenGLView()->enableRetina())
+        if (CCDirector::sharedDirector()->enableRetinaDisplay(true))
         {
-            // well, it's a iPhone 4 and above, with 960x480 Retina resolution
+            // well, it's a iPhone 4, iPhone 4S or iPhone 5
             CCFileUtils::sharedFileUtils()->setResourceDirectory("hd");
-            CCEGLView::sharedOpenGLView()->setDesignResolutionSize(960, 640, kResolutionNoBorder);
         }
         else
         {
             // iPhone 3GS and before, with 480x320 resolution
             CCFileUtils::sharedFileUtils()->setResourceDirectory("sd");
-            CCEGLView::sharedOpenGLView()->setDesignResolutionSize(480, 320, kResolutionNoBorder);
         }
     }
     else 
