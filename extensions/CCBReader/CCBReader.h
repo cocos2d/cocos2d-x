@@ -128,7 +128,7 @@ enum
     kCCBScaleTypeMultiplyResolution
 };
 
-USING_NS_CC;
+
 NS_CC_EXT_BEGIN
 
 /**
@@ -235,7 +235,8 @@ public:
     static float getResolutionScale();
     
     CCNode* readFileWithCleanUp(bool bCleanUp);
-    
+    bool hasScriptingOwner;    
+
 private:
     void cleanUpNodeGraph(CCNode *pNode);
     bool readSequences();
@@ -250,6 +251,7 @@ private:
     bool getBit();
     void alignBits();
     CCString* readUTF8();
+
 };
 
 // end of effects group

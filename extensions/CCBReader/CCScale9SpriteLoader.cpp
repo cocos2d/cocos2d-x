@@ -1,6 +1,6 @@
 #include "CCScale9SpriteLoader.h"
 
-USING_NS_CC;
+
 
 #define PROPERTY_CONTENTSIZE "contentSize"
 #define PROPERTY_SPRITEFRAME "spriteFrame"

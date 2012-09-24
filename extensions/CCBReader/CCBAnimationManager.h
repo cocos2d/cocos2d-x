@@ -15,15 +15,15 @@ public:
     virtual void completedAnimationSequenceNamed(const char *name) = 0;
 };
 
-class CCBAnimationManager : public cocos2d::CCObject
+class CCBAnimationManager : public CCObject
 {
 private:
-    cocos2d::CCArray *mSequences;
-    cocos2d::CCDictionary *mNodeSequences;
-    cocos2d::CCDictionary *mBaseValues;
+    CCArray *mSequences;
+    CCDictionary *mNodeSequences;
+    CCDictionary *mBaseValues;
     int mAutoPlaySequenceId;
     
-    cocos2d::CCNode *mRootNode;
+    CCNode *mRootNode;
     CCSize mRootContainerSize;
     
     CCBAnimationManagerDelegate *mDelegate;
@@ -35,26 +35,26 @@ public:
     
     virtual bool init();
     
-    cocos2d::CCArray* getSequences();
+    CCArray* getSequences();
     
     int getAutoPlaySequenceId();
     void setAutoPlaySequenceId(int autoPlaySequenceId);
     
-    cocos2d::CCNode* getRootNode();
-    void setRootNode(cocos2d::CCNode* pRootNode); // retain
+    CCNode* getRootNode();
+    void setRootNode(CCNode* pRootNode); // retain
     
-    const cocos2d::CCSize& getRootContainerSize();
-    void setRootContainerSize(const cocos2d::CCSize &rootContainerSize);
+    const CCSize& getRootContainerSize();
+    void setRootContainerSize(const CCSize &rootContainerSize);
     
     CCBAnimationManagerDelegate* getDelegate();
     void setDelegate(CCBAnimationManagerDelegate* pDelegate); // retain
     
     const char* getRunningSequenceName();
     
-    const CCSize& getContainerSize(cocos2d::CCNode* pNode);
+    const CCSize& getContainerSize(CCNode* pNode);
     
-    void addNode(cocos2d::CCNode *pNode, cocos2d::CCDictionary *pSeq);
-    void setBaseValue(cocos2d::CCObject *pValue, cocos2d::CCNode *pNode, const char *pPropName);
+    void addNode(CCNode *pNode, CCDictionary *pSeq);
+    void setBaseValue(CCObject *pValue, CCNode *pNode, const char *pPropName);
     
     void runAnimations(const char *pName, float fTweenDuration);
     void runAnimations(const char *pName);
@@ -63,33 +63,33 @@ public:
     void debug();
     
 private:
-    cocos2d::CCObject* getBaseValue(cocos2d::CCNode *pNode, const char* pPropName);
+    CCObject* getBaseValue(CCNode *pNode, const char* pPropName);
     int getSequenceId(const char* pSequenceName);
     CCBSequence* getSequence(int nSequenceId);
-    cocos2d::CCActionInterval* getAction(CCBKeyframe *pKeyframe0, CCBKeyframe *pKeyframe1, const char *pPropName, cocos2d::CCNode *pNode);
-    void setAnimatedProperty(const char *pPropName, cocos2d::CCNode *pNode, cocos2d::CCObject *pValue, float fTweenDuraion);
-    void setFirstFrame(cocos2d::CCNode *pNode, CCBSequenceProperty *pSeqProp, float fTweenDuration);
-    cocos2d::CCActionInterval* getEaseAction(cocos2d::CCActionInterval *pAction, int nEasingType, float fEasingOpt);
-    void runAction(cocos2d::CCNode *pNode, CCBSequenceProperty *pSeqProp, float fTweenDuration);
+    CCActionInterval* getAction(CCBKeyframe *pKeyframe0, CCBKeyframe *pKeyframe1, const char *pPropName, CCNode *pNode);
+    void setAnimatedProperty(const char *pPropName, CCNode *pNode, CCObject *pValue, float fTweenDuraion);
+    void setFirstFrame(CCNode *pNode, CCBSequenceProperty *pSeqProp, float fTweenDuration);
+    CCActionInterval* getEaseAction(CCActionInterval *pAction, int nEasingType, float fEasingOpt);
+    void runAction(CCNode *pNode, CCBSequenceProperty *pSeqProp, float fTweenDuration);
     void sequenceCompleted();
 };
 
-class CCBSetSpriteFrame : public cocos2d::CCActionInstant
+class CCBSetSpriteFrame : public CCActionInstant
 {
 private:
-    cocos2d::CCSpriteFrame *mSpriteFrame;
+    CCSpriteFrame *mSpriteFrame;
     
 public:
     ~CCBSetSpriteFrame();
     
     /** creates a Place action with a position */
-    static CCBSetSpriteFrame* create(cocos2d::CCSpriteFrame *pSpriteFrame);
-    bool initWithSpriteFrame(cocos2d::CCSpriteFrame *pSpriteFrame);
+    static CCBSetSpriteFrame* create(CCSpriteFrame *pSpriteFrame);
+    bool initWithSpriteFrame(CCSpriteFrame *pSpriteFrame);
     virtual void update(float time);
-    virtual cocos2d::CCObject* copyWithZone(cocos2d::CCZone *pZone);
+    virtual CCObject* copyWithZone(CCZone *pZone);
 };
 
-class CCBRotateTo : public cocos2d::CCActionInterval
+class CCBRotateTo : public CCActionInterval
 {
 private:
     float mStartAngle;
@@ -100,8 +100,8 @@ public:
     static CCBRotateTo* create(float fDuration, float fAngle);
     bool initWithDuration(float fDuration, float fAngle);
     virtual void update(float time);
-    virtual cocos2d::CCObject* copyWithZone(cocos2d::CCZone *pZone);
-    virtual void startWithTarget(cocos2d::CCNode *pNode);
+    virtual CCObject* copyWithZone(CCZone *pZone);
+    virtual void startWithTarget(CCNode *pNode);
 };
 
 NS_CC_EXT_END

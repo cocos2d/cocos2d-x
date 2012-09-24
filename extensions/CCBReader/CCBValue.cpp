@@ -6,7 +6,7 @@ NS_CC_EXT_BEGIN
 
 // Implementation of ccColor3BWapper
 
-ccColor3BWapper* ccColor3BWapper::create(const cocos2d::ccColor3B& color)
+ccColor3BWapper* ccColor3BWapper::create(const ccColor3B& color)
 {
     ccColor3BWapper *ret = new ccColor3BWapper();
     if (ret)

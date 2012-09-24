@@ -6,10 +6,10 @@
 
 NS_CC_EXT_BEGIN
 
-class CCBKeyframe : public cocos2d::CCObject
+class CCBKeyframe : public CCObject
 {
 private:
-    cocos2d::CCObject *mValue;
+    CCObject *mValue;
     float mTime;
     int mEasingType;
     float mEasingOpt;
@@ -18,8 +18,8 @@ public:
     CCBKeyframe();
     ~CCBKeyframe();
     
-    cocos2d::CCObject* getValue();
-    void setValue(cocos2d::CCObject *pValue); // retain
+    CCObject* getValue();
+    void setValue(CCObject *pValue); // retain
     
     float getTime();
     void setTime(float fTime);
