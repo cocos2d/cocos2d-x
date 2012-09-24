@@ -25,7 +25,8 @@
 
 #include "CCEditBoxImplAndroid.h"
 #include "CCEditBox.h"
-#include "jni/EditBoxJni.h"
+#include "jni/Java_org_cocos2dx_lib_Cocos2dxBitmap.h"
+#include "jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
 
 // This function is implemented in CCLabelBMFont.cpp
 
@@ -217,7 +218,7 @@ void CCEditBoxImplAndroid::openKeyboard()
         m_pDelegate->editBoxEditingDidBegin(m_pEditBox);
     }
 
-    showEditBoxDialogJni(   m_strPlaceHolder.c_str(),
+    showEditTextDialogJNI(  m_strPlaceHolder.c_str(),
                             m_strText.c_str(),
                             m_eEditBoxInputMode,
                             m_eEditBoxInputFlag,

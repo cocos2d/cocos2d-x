@@ -8,6 +8,7 @@
 #include "cocos2d_specifics.hpp"
 #include "js_bindings_chipmunk_manual.hpp"
 #include "js_bindings_chipmunk_functions.hpp"
+#include "js_bindings_ccbreader.h"
 
 USING_NS_CC;
 using namespace CocosDenshion;
@@ -43,6 +44,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(register_cocos2dx_js_extensions);
     sc->addRegisterCallback(register_chipmunk_manual);
     sc->addRegisterCallback(register_CCPhysicsSprite);
+    sc->addRegisterCallback(register_CCBuilderReader);
     
 
     
