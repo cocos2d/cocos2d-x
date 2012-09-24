@@ -32,7 +32,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
     {
         // iphone
         
-        if (pDirector->enableRetinaDisplay(true))
+        // try to enable retina on device
+        if (true == CCDirector::sharedDirector()->enableRetinaDisplay(true))
         {
             // iphone hd
             CCFileUtils::sharedFileUtils()->setResourceDirectory("iphonehd");

@@ -118,15 +118,18 @@
             }
             size.width = MIN(size.width, origSize.width);
             // adjust the point for alignment
-            switch (self.textAlignment) {
-                case UITextAlignmentLeft:
+            switch ((NSTextAlignment)self.textAlignment) {
+                case NSTextAlignmentLeft:
                     break;
-                case UITextAlignmentCenter:
+                case NSTextAlignmentCenter:
                     point.x += (origSize.width - size.width) / 2.0f;
                     break;
-                case UITextAlignmentRight:
+                case NSTextAlignmentRight:
                     point.x += origSize.width - size.width;
                     break;
+                case NSTextAlignmentJustified:
+                case NSTextAlignmentNatural:
+                default: break;
             }
             [self.text drawAtPoint:point forWidth:size.width withZFont:actualFont lineBreakMode:self.lineBreakMode];
         } else {

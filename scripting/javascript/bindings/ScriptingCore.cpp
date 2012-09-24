@@ -421,7 +421,7 @@ JSBool ScriptingCore::forceGC(JSContext *cx, uint32_t argc, jsval *vp)
 
 static void dumpNamedRoot(const char *name, void *addr,  JSGCRootType type, void *data)
 {
-    printf("Root: '%s' at %p\n", name, addr);
+    CCLOG("Root: '%s' at %p", name, addr);
 }
 
 JSBool ScriptingCore::dumpRoot(JSContext *cx, uint32_t argc, jsval *vp)

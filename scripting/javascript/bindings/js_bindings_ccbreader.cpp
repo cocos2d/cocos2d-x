@@ -8,7 +8,6 @@
 
 #include "js_bindings_ccbreader.h"
 #include "ScriptingCore.h"
-#include "CCNodeLoaderLibrary.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
@@ -91,7 +90,7 @@ static CCNode* loadReader(const char *file, jsval owner) {
     ccBCallbackProxy->setJSOwner(owner);
     //ccbReader->setOwner(dynamic_cast<CCObject *>(ccBCallbackProxy));
     
-    CCBSelectorResolver * targetAsCCBSelectorResolver = dynamic_cast<CCBSelectorResolver *>(ccBCallbackProxy);
+    //CCBSelectorResolver * targetAsCCBSelectorResolver = dynamic_cast<CCBSelectorResolver *>(ccBCallbackProxy);
     
     CCNode * node = ccbReader->readNodeGraphFromFile(file, dynamic_cast<CCObject *>(ccBCallbackProxy));
     

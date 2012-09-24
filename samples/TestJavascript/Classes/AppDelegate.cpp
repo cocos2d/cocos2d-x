@@ -3,7 +3,7 @@
 #include "cocos2d.h"
 #include "SimpleAudioEngine.h"
 #include "ScriptingCore.h"
-#include "cocos2dx.hpp"
+#include "generated/cocos2dx.hpp"
 #include "cocos2d_specifics.hpp"
 #include "js_bindings_chipmunk_manual.hpp"
 
@@ -33,8 +33,6 @@ bool AppDelegate::applicationDidFinishLaunching()
     
     // set FPS. the default value is 1.0/60 if you don't call this
     pDirector->setAnimationInterval(1.0 / 60);
-    
-    CCScene * pScene = CCScene::create();
     
     ScriptingCore* sc = ScriptingCore::getInstance();
     sc->addRegisterCallback(register_all_cocos2dx);

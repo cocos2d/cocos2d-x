@@ -1,6 +1,6 @@
 #include "CCScrollViewLoader.h"
 
-USING_NS_CC;
+
 
 #define PROPERTY_CONTAINER "container"
 #define PROPERTY_DIRECTION "direction"

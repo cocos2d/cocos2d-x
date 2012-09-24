@@ -69,7 +69,7 @@ OBJECTS = ../Classes/AccelerometerTest/AccelerometerTest.o \
 			../Classes/ExtensionsTest/CocosBuilderTest/ButtonTest/ButtonTestLayer.o \
 			../Classes/ExtensionsTest/CocosBuilderTest/CocosBuilderTest.o \
 			../Classes/ExtensionsTest/CocosBuilderTest/HelloCocosBuilder/HelloCocosBuilderLayer.o \
-                        ../Classes/ExtensionsTest/CocosBuilderTest/AnimationsTest/AnimationsLayer.o \
+                        ../Classes/ExtensionsTest/CocosBuilderTest/AnimationsTest/AnimationsTestLayer.o \
 			../Classes/ExtensionsTest/CocosBuilderTest/MenuTest/MenuTestLayer.o \
 			../Classes/ExtensionsTest/CocosBuilderTest/TestHeader/TestHeaderLayer.o \
 			../Classes/ExtensionsTest/ControlExtensionTest/CCControlButtonTest/CCControlButtonTest.o \
