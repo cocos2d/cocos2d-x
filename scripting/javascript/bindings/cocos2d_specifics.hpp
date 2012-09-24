@@ -106,7 +106,7 @@ class JSTouchDelegate: public CCTouchDelegate, public CCNode {
     void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent) {
         CC_UNUSED_PARAM(pTouch); 
         CC_UNUSED_PARAM(pEvent);
-        jsval retval; 
+        //jsval retval;
         ScriptingCore::getInstance()->executeCustomTouchEvent(CCTOUCHMOVED, 
                                                               pTouch, _mObj);
     }

@@ -3,12 +3,14 @@
 #include <vector>
 #include <string>
 #include <sstream>
+#include <fontconfig/fontconfig.h>
 
 #include "platform/CCFileUtils.h"
 #include "platform/CCPlatformMacros.h"
 #define __CC_PLATFORM_IMAGE_CPP__
 #include "platform/CCImageCommon_cpp.h"
 #include "platform/CCImage.h"
+#include "platform/linux/CCApplication.h"
 
 #include "ft2build.h"
 #include "CCStdC.h"
@@ -26,27 +28,13 @@ struct TextLine {
     wchar_t* text;
 };
 
-struct FontTableItem {
-    char* family_name;
-    char* style_name;
-    char* filename;
-};
-
-const int fontTableItems = 4;
-const char* fontPath = "/usr/share/fonts/truetype/";
-FontTableItem fontsTable[fontTableItems] = {
-    { "Serif",               "Medium",  "freefont/FreeSerif.ttf" },
-    { "Sans",                "Medium",  "freefont/FreeSans.ttf" }, 
-    { "WenQuanYi Micro Hei", "Regular", "wqy/wqy-microhei.ttc" },  
-    { "WenQuanYi Zen Hei",   "Regular", "wqy/wqy-zenhei.ttc" }, 
-};
-
 NS_CC_BEGIN
 class BitmapDC
 {
 public:
 	BitmapDC() {
 		libError = FT_Init_FreeType( &library );
+		FcInit();
 		iInterval = szFont_kenning;
 		m_pData = NULL;
 		reset();
@@ -54,6 +42,7 @@ public:
 
 	~BitmapDC() {
 		FT_Done_FreeType(library);
+		FcFini();
 		//data will be deleted by CCImage
 //		if (m_pData) {
 //			delete m_pData;
@@ -238,27 +227,42 @@ public:
 		return iRet;
 	}
 
-    char* getFontFile(const char* family_name) {
-        char* ret = NULL;
-        for (int i=0; i<fontTableItems; ++i) {
-            FontTableItem* item = &fontsTable[i];
-            if (strcmp(item->family_name, family_name) == 0) {
-                size_t len = strlen(fontPath) + strlen(item->filename) + 1;
-                ret = (char*) malloc(len);
-                snprintf(ret, len, "%s%s", fontPath, item->filename);
-                break;
-            }
-        }
+    std::string getFontFile(const char* family_name) {
+    	std::string fontPath = family_name;
 
-        // Return a default font , if font is not found 
-        if (ret == NULL) {
-            FontTableItem* item = &fontsTable[0];
-            size_t len = strlen(fontPath) + strlen(item->filename) + 1;
-            ret = (char*) malloc(len);
-            snprintf(ret, len, "%s%s", fontPath, item->filename);
-        }
+    	// check if the parameter is a font file shipped with the application
+    	if ( fontPath.find(".ttf") != std::string::npos ) {
+    		fontPath = cocos2d::CCApplication::sharedApplication()->getResourceRootPath() + std::string("/") + fontPath;
 
-        return ret;
+    		FILE *f = fopen(fontPath.c_str(), "r");
+    		if ( f ) {
+    			fclose(f);
+    			return fontPath;
+    		}
+    	}
+
+    	// use fontconfig to match the parameter against the fonts installed on the system
+    	FcPattern *pattern = FcPatternBuild (0, FC_FAMILY, FcTypeString, family_name, (char *) 0);
+    	FcConfigSubstitute(0, pattern, FcMatchPattern);
+    	FcDefaultSubstitute(pattern);
+
+    	FcResult result;
+    	FcPattern *font = FcFontMatch(0, pattern, &result);
+    	if ( font ) {
+    		FcChar8 *s = NULL;
+    		if ( FcPatternGetString(font, FC_FILE, 0, &s) == FcResultMatch ) {
+    			fontPath = (const char*)s;
+
+    			FcPatternDestroy(font);
+    			FcPatternDestroy(pattern);
+
+    			return fontPath;
+    		}
+    		FcPatternDestroy(font);
+    	}
+    	FcPatternDestroy(pattern);
+
+    	return family_name;
     }
 
 	bool getBitmap(const char *text, int nWidth, int nHeight, CCImage::ETextAlign eAlignMask, const char * pFontName, float fontSize) {
@@ -276,9 +280,8 @@ public:
 			return false;
 		}
 		do {
-            char* fontfile = getFontFile(pFontName);
-			iError = FT_New_Face( library, fontfile, 0, &face );
-            free(fontfile);
+            std::string fontfile = getFontFile(pFontName);
+			iError = FT_New_Face( library, fontfile.c_str(), 0, &face );
 
 			if (iError) {
 				//no valid font found use default
@@ -356,9 +359,7 @@ public:
 //							m_pData[(iY * iMaxLineWidth + iX) * 4 + 0] =
 //							bitmap.buffer[i * bitmap.width + j];//B
 
-							int iTemp = 0;
-							iTemp |= (cTemp ? 0xff : 0)<<24;
-							iTemp |= cTemp << 16 | cTemp << 8 | cTemp;
+							int iTemp = cTemp << 24 | cTemp << 16 | cTemp << 8 | cTemp;
 							*(int*) &m_pData[(iY * iMaxLineWidth + iX) * 4 + 0] = iTemp;
 						}
 					}
@@ -393,6 +394,7 @@ public:
 	}
 public:
 	FT_Library library;
+
 	unsigned char *m_pData;
 	int libError;
 	vector<TextLine> vLines;
