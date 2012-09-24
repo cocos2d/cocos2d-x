@@ -38,6 +38,7 @@ protected:
 	cocos2d::CCArray *_targets;
 	cocos2d::CCArray *_projectiles;
 	int _projectilesDestroyed;
+    float _scaleRatio;
 
 	void addTarget();
 

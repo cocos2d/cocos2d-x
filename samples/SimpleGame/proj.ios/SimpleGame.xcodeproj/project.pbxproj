@@ -72,7 +72,7 @@
 		BF492D4B1289302400A09262 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BF4DE6AB138BB89600CF907D /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		BF4DE6AC138BB89600CF907D /* RootViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RootViewController.mm; sourceTree = "<group>"; };
-		D41A0AC5160F14F5004552AE /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		D41A0AC5160F14F5004552AE /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../proj.ios/Default-568h@2x.png"; sourceTree = "<group>"; };
 		D4ABB4B213B4395300552E6E /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D4E6BC7B15FCB477008BF525 /* cocos2dx.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2dx.xcodeproj; path = ../../../cocos2dx/proj.ios/cocos2dx.xcodeproj; sourceTree = "<group>"; };
 		D4E6BC9015FCB5BA008BF525 /* GameOverScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameOverScene.cpp; sourceTree = "<group>"; };
@@ -132,7 +132,6 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				D41A0AC5160F14F5004552AE /* Default-568h@2x.png */,
 				D4E6BC7B15FCB477008BF525 /* cocos2dx.xcodeproj */,
 				BF23D4E2143315EB00657E08 /* Classes */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
@@ -164,6 +163,7 @@
 		784521C214EBA449009D533B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D41A0AC5160F14F5004552AE /* Default-568h@2x.png */,
 				D4E6BCC415FCB6AA008BF525 /* background-music-aac.wav */,
 				D4E6BCC515FCB6AA008BF525 /* hd */,
 				D4E6BCC615FCB6AA008BF525 /* pew-pew-lei.wav */,
