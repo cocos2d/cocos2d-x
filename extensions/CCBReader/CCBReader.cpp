@@ -20,7 +20,7 @@
 #endif
 
 using namespace std;
-USING_NS_CC;
+
 NS_CC_EXT_BEGIN;
 
 /*************************************************************************
@@ -65,6 +65,7 @@ CCBReader::CCBReader(CCNodeLoaderLibrary * pCCNodeLoaderLibrary, CCBMemberVariab
 , mOwner(NULL)
 , mActionManager(NULL)
 , mAnimatedProps(NULL)
+, hasScriptingOwner(false)
 {
     this->mCCNodeLoaderLibrary = pCCNodeLoaderLibrary;
     this->mCCNodeLoaderLibrary->retain();
@@ -81,6 +82,7 @@ CCBReader::CCBReader(CCBReader * pCCBReader)
 , mOwner(NULL)
 , mActionManager(NULL)
 , mAnimatedProps(NULL)
+, hasScriptingOwner(false)
 {
     this->mLoadedSpriteSheets = pCCBReader->mLoadedSpriteSheets;
     this->mCCNodeLoaderLibrary = pCCBReader->mCCNodeLoaderLibrary;
@@ -103,6 +105,7 @@ CCBReader::CCBReader()
 , mCCBMemberVariableAssigner(NULL)
 , mCCBSelectorResolver(NULL)
 , mAnimatedProps(NULL)
+, hasScriptingOwner(false)
 {}
 
 CCBReader::~CCBReader() {

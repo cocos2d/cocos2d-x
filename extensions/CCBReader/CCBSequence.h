@@ -7,7 +7,7 @@
 
 NS_CC_EXT_BEGIN
 
-class CCBSequence : public cocos2d::CCObject
+class CCBSequence : public CCObject
 {
 private:
     float mDuration;

@@ -10,6 +10,7 @@ LOCAL_SRC_FILES := ScriptingCore.cpp \
                    cocos2d_specifics.cpp \
                    CCPhysicsSprite.cpp \
                    js_manual_conversions.cpp \
+                   cocosjs_manual_conversions.cpp \
                    js_bindings_chipmunk_manual.cpp \
                    js_bindings_chipmunk_functions.cpp \
                    generated/cocos2dx.cpp

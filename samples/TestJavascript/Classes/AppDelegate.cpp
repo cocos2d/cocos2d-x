@@ -3,7 +3,7 @@
 #include "cocos2d.h"
 #include "SimpleAudioEngine.h"
 #include "ScriptingCore.h"
-#include "cocos2dx.hpp"
+#include "generated/cocos2dx.hpp"
 #include "cocos2d_specifics.hpp"
 #include "js_bindings_chipmunk_manual.hpp"
 
