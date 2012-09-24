@@ -49,34 +49,11 @@ bool CCEGLView::isOpenGLReady()
 bool CCEGLView::setContentScaleFactor(float contentScaleFactor)
 {
     assert(m_eResolutionPolicy == kResolutionUnKnown); // cannot enable retina mode
-    
-    if ([[EAGLView sharedEGLView] respondsToSelector:@selector(setContentScaleFactor:)])
-    {
-        UIView * view = [EAGLView sharedEGLView];
-        view.contentScaleFactor = contentScaleFactor;
-        [view setNeedsLayout];
+	
+	m_fScaleX = m_fScaleY = contentScaleFactor;
+	[[EAGLView sharedEGLView] setNeedsLayout];
         
-        m_fScaleX = m_fScaleY = contentScaleFactor;
-        m_bIsRetinaEnabled = true;
-        
-        return true;
-    }
-    else 
-    {
-        return false;
-    }
-}
-
-bool CCEGLView::enableRetina()
-{
-    bool ret = true;
-    
-    // can set content scale factor?
-    ret &= [[EAGLView sharedEGLView] respondsToSelector:@selector(setContentScaleFactor:)];
-    // SD device?
-    ret &= ([[UIScreen mainScreen] scale] != 1.0f);
-    
-    return ret;
+	return true;
 }
 
 void CCEGLView::end()
