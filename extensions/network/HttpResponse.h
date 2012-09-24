@@ -36,7 +36,7 @@ NS_CC_EXT_BEGIN
  Please refer to samples/TestCpp/Classes/ExtensionTest/NetworkTest/HttpClientTest.cpp as a sample
  @since v2.0.2
  */
-class CCHttpResponse : public cocos2d::CCObject
+class CCHttpResponse : public CCObject
 {
 public:
     /** Constructor, it's used by CCHttpClient internal, users don't need to create HttpResponse manually

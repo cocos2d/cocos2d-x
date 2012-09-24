@@ -43,7 +43,7 @@ NS_CC_EXT_BEGIN
 /** @brief Singleton that handles asynchrounous http requests
  * Once the request completed, a callback will issued in main thread when it provided during make request
  */
-class CCHttpClient : public cocos2d::CCObject
+class CCHttpClient : public CCObject
 {
 public:
     /** Return the shared instance **/
