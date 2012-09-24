@@ -97,18 +97,18 @@ CCLayer *CCLayer::create()
 
 void CCLayer::registerWithTouchDispatcher()
 {
-    CCDirector* pDirector = CCDirector::sharedDirector();
+    CCTouchDispatcher* pDispatcher = CCDirector::sharedDirector()->getTouchDispatcher();
 
     if (m_pScriptHandlerEntry)
     {
         if (m_pScriptHandlerEntry->isMultiTouches())
         {
-            pDirector->getTouchDispatcher()->addStandardDelegate(this, 0);
+            pDispatcher->addStandardDelegate(this, 0);
             LUALOG("[LUA] Add multi-touches event handler: %d", m_pScriptHandlerEntry->getHandler());
         }
         else
         {
-            pDirector->getTouchDispatcher()->addTargetedDelegate(this,
+            pDispatcher->addTargetedDelegate(this,
 								 m_pScriptHandlerEntry->getPriority(),
 								 m_pScriptHandlerEntry->getSwallowsTouches());
             LUALOG("[LUA] Add touch event handler: %d", m_pScriptHandlerEntry->getHandler());
@@ -116,7 +116,7 @@ void CCLayer::registerWithTouchDispatcher()
         return;
     }
 
-    pDirector->getTouchDispatcher()->addStandardDelegate(this, 0);
+    pDispatcher->addStandardDelegate(this, 0);
 }
 
 void CCLayer::registerScriptTouchHandler(int nHandler, bool bIsMultiTouches, int nPriority, bool bSwallowsTouches)
@@ -128,12 +128,8 @@ void CCLayer::registerScriptTouchHandler(int nHandler, bool bIsMultiTouches, int
 
 void CCLayer::unregisterScriptTouchHandler(void)
 {
-    if (m_pScriptHandlerEntry)
-    {
-        m_pScriptHandlerEntry->release();
-        m_pScriptHandlerEntry = NULL;
+    CC_SAFE_RELEASE_NULL(m_pScriptHandlerEntry);
     }
-}
 
 int CCLayer::excuteScriptTouchHandler(int nEventType, CCTouch *pTouch)
 {
@@ -165,8 +161,7 @@ void CCLayer::setTouchEnabled(bool enabled)
             else
             {
                 // have problems?
-                CCDirector* pDirector = CCDirector::sharedDirector();
-                pDirector->getTouchDispatcher()->removeDelegate(this);
+                CCDirector::sharedDirector()->getTouchDispatcher()->removeDelegate(this);
             }
         }
     }
