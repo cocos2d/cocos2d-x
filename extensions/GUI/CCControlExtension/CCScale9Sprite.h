@@ -9,29 +9,10 @@
 #ifndef __CCScale9Sprite_H__
 #define __CCScale9Sprite_H__
 
-#include "base_nodes/CCNode.h"
-#include "CCProtocols.h"
+#include "cocos2d.h"
 #include "ExtensionMacros.h"
 
-
-namespace cocos2d { class CCSprite; }
-namespace cocos2d { class CCSpriteBatchNode; }
-namespace cocos2d { class CCSpriteFrame; }
-
 NS_CC_EXT_BEGIN
-
-enum positions
-{
-    pCentre = 0,
-    pTop,
-    pLeft,
-    pRight,
-    pBottom,
-    pTopRight,
-    pTopLeft,
-    pBottomRight,
-    pBottomLeft
-};
 
 /**
  * @addtogroup GUI
@@ -48,7 +29,7 @@ public:
 
 public:
     /** Original sprite's size. */
-    CC_SYNTHESIZE(CCSize, m_originalSize, OriginalSize);
+    CC_SYNTHESIZE_READONLY(CCSize, m_originalSize, OriginalSize);
     /** Prefered sprite's size. By default the prefered size is the original size. */
 
     //if the preferredSize component is given as -1, it is ignored
@@ -58,19 +39,25 @@ public:
      * On a non-resizeable sprite, this property is set to CGRectZero; the sprite 
      * does not use end caps and the entire sprite is subject to stretching. 
      */
-    
+    CC_PROPERTY(CCRect, m_capInsets, CapInsets);
+    /** Sets the left side inset */
+    CC_PROPERTY(float, m_insetLeft, InsetLeft);
+    /** Sets the top side inset */
+    CC_PROPERTY(float, m_insetTop, InsetTop);
+    /** Sets the right side inset */
+    CC_PROPERTY(float, m_insetRight, InsetRight);
+    /** Sets the bottom side inset */
+    CC_PROPERTY(float, m_insetBottom, InsetBottom);
+
     /** Opacity: conforms to CCRGBAProtocol protocol */
     CC_PROPERTY(GLubyte, m_cOpacity, Opacity)
     /** Color: conforms to CCRGBAProtocol protocol */
     CC_PROPERTY_PASS_BY_REF(ccColor3B, m_tColor, Color)
-    CC_PROPERTY(CCRect, m_capInsets, CapInsets);
-    CC_PROPERTY(float, m_insetLeft, InsetLeft);
-    CC_PROPERTY(float, m_insetTop, InsetTop);
-    CC_PROPERTY(float, m_insetRight, InsetRight);
-    CC_PROPERTY(float, m_insetBottom, InsetBottom);
-    
+
 protected:
+    bool m_bSpritesGenerated;
     CCRect m_spriteRect;
+    bool   m_bSpriteFrameRotated;
     CCRect m_capInsetsInternal;
     bool m_positionsAreDirty;
     
@@ -99,6 +86,7 @@ public:
     
     virtual bool init();
 
+    virtual bool initWithBatchNode(CCSpriteBatchNode* batchnode, CCRect rect, bool rotated, CCRect capInsets);
     virtual bool initWithBatchNode(CCSpriteBatchNode* batchnode, CCRect rect, CCRect capInsets);
     /**
      * Initializes a 9-slice sprite with a texture file, a delimitation zone and
@@ -153,7 +141,7 @@ public:
      * @see initWithFile:rect:
      @deprecated: This interface will be deprecated sooner or later.
      */
-    static CCScale9Sprite* spriteWithFile(const char* file, CCRect rect);
+    CC_DEPRECATED_ATTRIBUTE static CCScale9Sprite* spriteWithFile(const char* file, CCRect rect);
     
      /** 
      * Creates a 9-slice sprite with a texture file and a delimitation zone. The
@@ -378,7 +366,7 @@ public:
      */
     virtual bool isOpacityModifyRGB(void);
 
-    virtual bool updateWithBatchNode(CCSpriteBatchNode* batchnode, CCRect rect, CCRect capInsets);
+    virtual bool updateWithBatchNode(CCSpriteBatchNode* batchnode, CCRect rect, bool rotated, CCRect capInsets);
 
     virtual void setSpriteFrame(CCSpriteFrame * spriteFrame);
 };

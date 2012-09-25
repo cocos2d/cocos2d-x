@@ -30,6 +30,7 @@ class CCInvocation : public CCObject
     CC_SYNTHESIZE_READONLY(CCControlEvent, m_controlEvent, ControlEvent);
     
 public:
+    static CCInvocation* create(CCObject* target, SEL_CCControlHandler action, CCControlEvent controlEvent);
     CCInvocation(CCObject* target, SEL_CCControlHandler action, CCControlEvent controlEvent);
 
     void invoke(CCObject* sender);

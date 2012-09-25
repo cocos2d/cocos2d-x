@@ -31,11 +31,6 @@
 
 #include "CCControl.h"
 #include "CCInvocation.h"
-#include "sprite_nodes/CCSprite.h"
-#include "menu_nodes/CCMenuItem.h"
-
-#define SLIDER_MARGIN_H 24
-#define SLIDER_MARGIN_V 8
 
 NS_CC_EXT_BEGIN
 
@@ -49,27 +44,31 @@ NS_CC_EXT_BEGIN
 class CCControlSlider: public CCControl
 {
     //maunally put in the setters
+    /** Contains the receiver¡¯s current value. */
     CC_SYNTHESIZE_READONLY(float, m_value, Value);
     virtual void setValue(float val);
+    /** Contains the minimum value of the receiver. 
+    * The default value of this property is 0.0. */
     CC_SYNTHESIZE_READONLY(float, m_minimumValue, MinimumValue);
     virtual void setMinimumValue(float val);
+    /** Contains the maximum value of the receiver. 
+    * The default value of this property is 1.0. */
     CC_SYNTHESIZE_READONLY(float, m_maximumValue, MaximumValue);
     virtual void setMaximumValue(float val);
-    
+    virtual void setEnabled(bool enabled);
+    virtual bool isTouchInside(CCTouch * touch);
+    CCPoint locationFromTouch(CCTouch* touch);
+
     CC_SYNTHESIZE(float, m_minimumAllowedValue, MinimumAllowedValue);
     CC_SYNTHESIZE(float, m_maximumAllowedValue, MaximumAllowedValue);
-    
-
-    //interval to snap to
-    CC_SYNTHESIZE(float, m_snappingInterval, SnappingInterval);
 
     // maybe this should be read-only
-    CC_SYNTHESIZE_READONLY(CCMenuItem*, m_thumbItem, ThumbItem);
-    CC_SYNTHESIZE_READONLY(CCSprite*, m_progressSprite, ProgressSprite);
-    CC_SYNTHESIZE_READONLY(CCSprite*, m_backgroundSprite, BackgroundSprite);
+    CC_SYNTHESIZE_RETAIN(CCSprite*, m_thumbSprite, ThumbSprite);
+    CC_SYNTHESIZE_RETAIN(CCSprite*, m_progressSprite, ProgressSprite);
+    CC_SYNTHESIZE_RETAIN(CCSprite*, m_backgroundSprite, BackgroundSprite);
 
 public:
-
+    CCControlSlider();
     virtual ~CCControlSlider();
 
     /** 
@@ -78,9 +77,9 @@ public:
     *
     * @param backgroundSprite  CCSprite, that is used as a background.
     * @param progressSprite    CCSprite, that is used as a progress bar.
-    * @param thumbItem         CCMenuItem, that is used as a thumb.
+    * @param thumbItem         CCSprite, that is used as a thumb.
     */
-    virtual bool initWithSprites(CCSprite * backgroundSprite, CCSprite* progessSprite, CCMenuItem* thumbItem);
+    virtual bool initWithSprites(CCSprite * backgroundSprite, CCSprite* progressSprite, CCSprite* thumbSprite);
 
 
     /** 
@@ -96,7 +95,7 @@ public:
     *@deprecated: This interface will be deprecated sooner or later.
     * @see initWithBackgroundSprite:progressSprite:thumbMenuItem:
     */
-    CC_DEPRECATED_ATTRIBUTE static CCControlSlider* sliderWithSprites(CCSprite * backgroundSprite, CCSprite* pogressSprite, CCMenuItem* thumbItem);
+    CC_DEPRECATED_ATTRIBUTE static CCControlSlider* sliderWithSprites(CCSprite * backgroundSprite, CCSprite* pogressSprite, CCSprite* thumbSprite);
 
 
     /** 
@@ -111,21 +110,17 @@ public:
     *
     * @see initWithBackgroundSprite:progressSprite:thumbMenuItem:
     */
-    static CCControlSlider* create(CCSprite * backgroundSprite, CCSprite* pogressSprite, CCMenuItem* thumbItem);
+    static CCControlSlider* create(CCSprite * backgroundSprite, CCSprite* pogressSprite, CCSprite* thumbSprite);
 
-
+    virtual void needsLayout();
 protected:
     void sliderBegan(CCPoint location);
     void sliderMoved(CCPoint location);
     void sliderEnded(CCPoint location);
 
-    virtual CCPoint getTouchLocationInControl(CCTouch* touch);
-
     virtual bool ccTouchBegan(CCTouch* touch, CCEvent* pEvent);
     virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
     virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
-
-
 
 /** Returns the value for the given location. */
     float valueForLocation(CCPoint location);

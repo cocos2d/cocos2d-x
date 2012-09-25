@@ -2,6 +2,16 @@
 
 NS_CC_EXT_BEGIN
 
+CCInvocation* CCInvocation::create(CCObject* target, SEL_CCControlHandler action, CCControlEvent controlEvent)
+{
+    CCInvocation* pRet = new CCInvocation(target, action, controlEvent);
+    if (pRet != NULL)
+    {
+        pRet->autorelease();
+    }
+    return pRet;
+}
+
 CCInvocation::CCInvocation(CCObject* target, SEL_CCControlHandler action, CCControlEvent controlEvent)
 {
     m_target=target;

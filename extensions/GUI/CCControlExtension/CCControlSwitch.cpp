@@ -259,6 +259,10 @@ float CCControlSwitchSprite::offSideWidth()
 // CCControlSwitch
 
 CCControlSwitch::CCControlSwitch()
+: m_pSwitchSprite(NULL)
+, m_fInitialTouchXPosition(0.0f)
+, m_bMoved(false)
+, m_bOn(false)
 {
 
 }
@@ -367,8 +371,10 @@ void CCControlSwitch::setOn(bool isOn, bool animated)
 void CCControlSwitch::setEnabled(bool enabled)
 {
     m_bEnabled = enabled;
-
-    m_pSwitchSprite->setOpacity((enabled) ? 255 : 128);
+    if (m_pSwitchSprite != NULL)
+    {
+        m_pSwitchSprite->setOpacity((enabled) ? 255 : 128);
+    } 
 }
 
 CCPoint CCControlSwitch::locationFromTouch(CCTouch* pTouch)
