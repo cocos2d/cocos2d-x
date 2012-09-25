@@ -874,6 +874,30 @@
 							>
 						</File>
 					</Filter>
+					<Filter
+						Name="CCControlPotentiometerTest"
+						>
+						<File
+							RelativePath="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlPotentiometerTest\CCControlPotentiometerTest.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlPotentiometerTest\CCControlPotentiometerTest.h"
+							>
+						</File>
+					</Filter>
+					<Filter
+						Name="CCControlStepperTest"
+						>
+						<File
+							RelativePath="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlStepperTest\CCControlStepperTest.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlStepperTest\CCControlStepperTest.h"
+							>
+						</File>
+					</Filter>
 				</Filter>
 				<Filter
 					Name="NotificationCenterTest"
