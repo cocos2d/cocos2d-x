@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.92 on Tue Sep 25 16:26:49 2012.
+** Generated automatically by tolua++-1.0.92 on Tue Sep 25 16:42:45 2012.
 */
 
 /****************************************************************************
@@ -10504,6 +10504,38 @@ static int tolua_Cocos2d_CCApplication_getCurrentLanguage00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'getCurrentLanguage'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getTargetPlatform of class  CCApplication */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCApplication_getTargetPlatform00
+static int tolua_Cocos2d_CCApplication_getTargetPlatform00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCApplication",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCApplication* self = (CCApplication*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getTargetPlatform'", NULL);
+#endif
+  {
+   TargetPlatform tolua_ret = (TargetPlatform)  self->getTargetPlatform();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getTargetPlatform'.",&tolua_err);
  return 0;
 #endif
 }
@@ -55626,10 +55658,18 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
   tolua_constant(tolua_S,"kLanguageGerman",kLanguageGerman);
   tolua_constant(tolua_S,"kLanguageSpanish",kLanguageSpanish);
   tolua_constant(tolua_S,"kLanguageRussian",kLanguageRussian);
+  tolua_constant(tolua_S,"kTargetWindows",kTargetWindows);
+  tolua_constant(tolua_S,"kTargetLinux",kTargetLinux);
+  tolua_constant(tolua_S,"kTargetMacOS",kTargetMacOS);
+  tolua_constant(tolua_S,"kTargetAndroid",kTargetAndroid);
+  tolua_constant(tolua_S,"kTargetIphone",kTargetIphone);
+  tolua_constant(tolua_S,"kTargetIpad",kTargetIpad);
+  tolua_constant(tolua_S,"kTargetBlackBerry",kTargetBlackBerry);
   tolua_cclass(tolua_S,"CCApplication","CCApplication","",NULL);
   tolua_beginmodule(tolua_S,"CCApplication");
    tolua_function(tolua_S,"sharedApplication",tolua_Cocos2d_CCApplication_sharedApplication00);
    tolua_function(tolua_S,"getCurrentLanguage",tolua_Cocos2d_CCApplication_getCurrentLanguage00);
+   tolua_function(tolua_S,"getTargetPlatform",tolua_Cocos2d_CCApplication_getTargetPlatform00);
   tolua_endmodule(tolua_S);
   tolua_constant(tolua_S,"kCCDirectorProjection2D",kCCDirectorProjection2D);
   tolua_constant(tolua_S,"kCCDirectorProjection3D",kCCDirectorProjection3D);
