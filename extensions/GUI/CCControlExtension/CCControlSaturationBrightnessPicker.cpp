@@ -1,5 +1,6 @@
 /*
- * CCControlSaturationBrightnessPicker.m
+ * Copyright (c) 2012 cocos2d-x.org
+ * http://www.cocos2d-x.org
  *
  * Copyright 2012 Stewart Hamilton-Arrandale.
  * http://creativewax.co.uk
@@ -33,9 +34,27 @@
 
 NS_CC_EXT_BEGIN
 
-CCControlSaturationBrightnessPicker::~CCControlSaturationBrightnessPicker()
+CCControlSaturationBrightnessPicker::CCControlSaturationBrightnessPicker()
+: m_saturation(0.0f)
+, m_brightness(0.0f)
+, m_background(NULL)
+, m_overlay(NULL)
+, m_shadow(NULL)
+, m_slider(NULL)
+, boxPos(0)
+, boxSize(0)
 {
 
+}
+
+CCControlSaturationBrightnessPicker::~CCControlSaturationBrightnessPicker()
+{
+    removeAllChildrenWithCleanup(true);
+
+    m_background = NULL;
+    m_overlay    = NULL;
+    m_shadow     = NULL;
+    m_slider     = NULL;
 }
     
 bool CCControlSaturationBrightnessPicker::initWithTargetAndPos(CCNode* target, CCPoint pos)
@@ -51,11 +70,13 @@ bool CCControlSaturationBrightnessPicker::initWithTargetAndPos(CCNode* target, C
                 
         m_startPos=pos; // starting position of the colour picker        
         boxPos          = 35;    // starting position of the virtual box area for picking a colour
-        boxSize         = 150;    // the size (width and height) of the virtual box for picking a colour from
+        boxSize         = m_background->getContentSize().width / 2;;    // the size (width and height) of the virtual box for picking a colour from
         return true;
     }
     else
+    {
         return false;
+    }
 }
 
 CCControlSaturationBrightnessPicker* CCControlSaturationBrightnessPicker::pickerWithTargetAndPos(CCNode* target, CCPoint pos)
@@ -71,7 +92,14 @@ CCControlSaturationBrightnessPicker* CCControlSaturationBrightnessPicker::create
     return pRet;
 }
 
-
+void CCControlSaturationBrightnessPicker::setEnabled(bool enabled)
+{
+    CCControl::setEnabled(enabled);
+    if (m_slider != NULL)
+    {
+        m_slider->setOpacity(enabled ? 255 : 128);
+    }
+}
 
 void CCControlSaturationBrightnessPicker::updateWithHSV(HSV hsv)
 {
@@ -149,7 +177,7 @@ bool CCControlSaturationBrightnessPicker::checkSliderPosition(CCPoint location)
     float dist              = sqrtf(dx*dx+dy*dy);
     
     // check that the touch location is within the bounding rectangle before sending updates
-    if (dist <= m_background->boundingBox().size.width*.5)
+    if (dist <= m_background->boundingBox().size.width*0.5f)
     {
         updateSliderPosition(location);
         sendActionsForControlEvents(CCControlEventValueChanged);
@@ -161,6 +189,11 @@ bool CCControlSaturationBrightnessPicker::checkSliderPosition(CCPoint location)
 
 bool CCControlSaturationBrightnessPicker::ccTouchBegan(CCTouch* touch, CCEvent* event)
 {
+    if (!isEnabled())
+    {
+        return false;
+    }
+    
     // Get the touch location
     CCPoint touchLocation=getTouchLocation(touch);
 
@@ -175,10 +208,10 @@ void CCControlSaturationBrightnessPicker::ccTouchMoved(CCTouch* touch, CCEvent* 
     CCPoint touchLocation=getTouchLocation(touch);
 
     //small modification: this allows changing of the colour, even if the touch leaves the bounding area
-    updateSliderPosition(touchLocation);
-    sendActionsForControlEvents(CCControlEventValueChanged);
+//     updateSliderPosition(touchLocation);
+//     sendActionsForControlEvents(CCControlEventValueChanged);
     // Check the touch position on the slider
-    //checkSliderPosition(touchLocation);
+    checkSliderPosition(touchLocation);
 }
 
 NS_CC_EXT_END

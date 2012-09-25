@@ -92,7 +92,7 @@ CCControlColourPickerTest::~CCControlColourPickerTest()
 void CCControlColourPickerTest::colourValueChanged(CCObject *sender, CCControlEvent controlEvent)
 {
     CCControlColourPicker* pPicker = (CCControlColourPicker*)sender;
-    m_pColorLabel->setString(CCString::createWithFormat("#%02X%02X%02X",pPicker->getColorValue().r, pPicker->getColorValue().g, pPicker->getColorValue().b)->getCString());
+    m_pColorLabel->setString(CCString::createWithFormat("#%02X%02X%02X",pPicker->getColor().r, pPicker->getColor().g, pPicker->getColor().b)->getCString());
 }
 
 
