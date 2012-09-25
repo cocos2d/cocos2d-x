@@ -108,9 +108,11 @@ public class Cocos2dxAccelerometer implements SensorEventListener {
 		}
 
 		Cocos2dxAccelerometer.onSensorChanged(x, y, z, pSensorEvent.timestamp);
+		/*
 		if(BuildConfig.DEBUG) {
 			Log.d(TAG, "x = " + pSensorEvent.values[0] + " y = " + pSensorEvent.values[1] + " z = " + pSensorEvent.values[2]);
 		}
+		*/
 	}
 
 	@Override
