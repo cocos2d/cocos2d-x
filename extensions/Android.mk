@@ -38,9 +38,9 @@ GUI/CCControlExtension/CCControlSlider.cpp \
 GUI/CCControlExtension/CCControlSwitch.cpp \
 GUI/CCControlExtension/CCControlUtils.cpp \
 GUI/CCControlExtension/CCInvocation.cpp \
-GUI/CCControlExtension/CCMenuPassive.cpp \
 GUI/CCControlExtension/CCScale9Sprite.cpp \
-GUI/CCControlExtension/CCSpacer.cpp \
+GUI/CCControlExtension/CCControlPotentiometer.cpp \
+GUI/CCControlExtension/CCControlStepper.cpp \
 GUI/CCScrollView/CCScrollView.cpp \
 GUI/CCScrollView/CCTableView.cpp \
 GUI/CCScrollView/CCTableViewCell.cpp \

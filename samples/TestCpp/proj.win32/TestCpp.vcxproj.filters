@@ -196,6 +196,12 @@
     <Filter Include="Classes\ExtensionsTest\AnimationsTest">
       <UniqueIdentifier>{e8752620-8414-4f43-a572-5fa82650f223}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\ExtensionsTest\ControlExtensionTest\CCControlPotentiometerTest">
+      <UniqueIdentifier>{08850f9d-e7e5-4bca-ae90-cf8df391479f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\ControlExtensionTest\CCControlStepperTest">
+      <UniqueIdentifier>{7e809230-9bb5-45bb-a26c-b5cdd1390914}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -446,6 +452,12 @@
     </ClCompile>
     <ClCompile Include="..\Classes\ExtensionsTest\CocosBuilderTest\AnimationsTest\AnimationsTestLayer.cpp">
       <Filter>Classes\ExtensionsTest\AnimationsTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlPotentiometerTest\CCControlPotentiometerTest.cpp">
+      <Filter>Classes\ExtensionsTest\ControlExtensionTest\CCControlPotentiometerTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlStepperTest\CCControlStepperTest.cpp">
+      <Filter>Classes\ExtensionsTest\ControlExtensionTest\CCControlStepperTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -874,6 +886,12 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ExtensionsTest\CocosBuilderTest\AnimationsTest\AnimationsTestLayer.h">
       <Filter>Classes\ExtensionsTest\AnimationsTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlPotentiometerTest\CCControlPotentiometerTest.h">
+      <Filter>Classes\ExtensionsTest\ControlExtensionTest\CCControlPotentiometerTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlStepperTest\CCControlStepperTest.h">
+      <Filter>Classes\ExtensionsTest\ControlExtensionTest\CCControlStepperTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
