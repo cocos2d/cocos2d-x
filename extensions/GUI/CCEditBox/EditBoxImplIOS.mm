@@ -63,7 +63,7 @@
     {
         if (self == nil) break;
         editState_ = NO;
-        textField_ = [[[CustomUITextField alloc] initWithFrame: frameRect] autorelease];
+        self.textField = [[[CustomUITextField alloc] initWithFrame: frameRect] autorelease];
         if (!textField_) break;
         [textField_ setTextColor:[UIColor whiteColor]];
         textField_.font = [UIFont systemFontOfSize:frameRect.size.height*2/3]; //TODO need to delete hard code here.
