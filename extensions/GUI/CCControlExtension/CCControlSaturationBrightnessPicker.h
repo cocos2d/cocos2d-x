@@ -46,7 +46,9 @@ NS_CC_EXT_BEGIN
 
 class CCControlSaturationBrightnessPicker : public CCControl
 {
+    /** Contains the receiver¡¯s current saturation value. */
     CC_SYNTHESIZE_READONLY(float, m_saturation, Saturation);
+    /** Contains the receiver¡¯s current brightness value. */
     CC_SYNTHESIZE_READONLY(float, m_brightness, Brightness);
 
     //not sure if these need to be there actually. I suppose someone might want to access the sprite?
@@ -61,12 +63,15 @@ protected:
     int         boxSize;
     
 public:
+    CCControlSaturationBrightnessPicker();
     virtual ~CCControlSaturationBrightnessPicker();
     virtual bool initWithTargetAndPos(CCNode* target, CCPoint pos);
 
     //@deprecated: This interface will be deprecated sooner or later.
     CC_DEPRECATED_ATTRIBUTE static CCControlSaturationBrightnessPicker* pickerWithTargetAndPos(CCNode* target, CCPoint pos);
     static CCControlSaturationBrightnessPicker* create(CCNode* target, CCPoint pos);
+
+    virtual void setEnabled(bool enabled);
     virtual void updateWithHSV(HSV hsv);
     virtual void updateDraggerWithHSV(HSV hsv);
 
