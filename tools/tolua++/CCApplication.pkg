@@ -21,9 +21,16 @@ enum TargetPlatform
     kTargetBlackBerry,
 };
 
+enum TargetEnvironment
+{
+    kTargetDevice,
+    kTargetSimulator,
+};
+
 class CCApplication
 {
     static CCApplication* sharedApplication();
     ccLanguageType getCurrentLanguage();
     TargetPlatform getTargetPlatform();
+    virtual TargetEnvironment getTargetEnvironment();
 };
