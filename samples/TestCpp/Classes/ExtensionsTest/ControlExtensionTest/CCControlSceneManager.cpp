@@ -29,6 +29,8 @@
 #include "CCControlColourPicker/CCControlColourPickerTest.h"
 #include "CCControlSliderTest/CCControlSliderTest.h"
 #include "CCControlSwitchTest/CCControlSwitchTest.h"
+#include "CCControlPotentiometerTest/CCControlPotentiometerTest.h"
+#include "CCControlStepperTest/CCControlStepperTest.h"
 
 USING_NS_CC;
 
@@ -40,6 +42,8 @@ enum
     kCCControlButtonTest_HelloVariableSize,
     kCCControlButtonTest_Event,
     kCCControlButtonTest_Styling,
+    kCCControlPotentiometerTest,
+    kCCControlStepperTest,
     kCCControlTestMax
 };
 
@@ -49,7 +53,9 @@ static const char* s_testArray[] = {
     "ControlSwitchTest",
     "ControlButtonTest_HelloVariableSize",
     "ControlButtonTest_Event",
-    "ControlButtonTest_Styling"
+    "ControlButtonTest_Styling",
+    "ControlPotentiometerTest",
+    "CCControlStepperTest"
 };
 
 static CCControlSceneManager *sharedInstance = NULL;
@@ -102,6 +108,8 @@ CCScene *CCControlSceneManager::currentControlScene()
     case kCCControlButtonTest_HelloVariableSize:return CCControlButtonTest_HelloVariableSize::sceneWithTitle(s_testArray[m_nCurrentControlSceneId]);
     case kCCControlButtonTest_Event:return CCControlButtonTest_Event::sceneWithTitle(s_testArray[m_nCurrentControlSceneId]);
     case kCCControlButtonTest_Styling:return CCControlButtonTest_Styling::sceneWithTitle(s_testArray[m_nCurrentControlSceneId]);
+    case kCCControlPotentiometerTest:return CCControlPotentiometerTest::sceneWithTitle(s_testArray[m_nCurrentControlSceneId]);
+    case kCCControlStepperTest:return CCControlStepperTest::sceneWithTitle(s_testArray[m_nCurrentControlSceneId]);
     }
     return NULL;
 }
