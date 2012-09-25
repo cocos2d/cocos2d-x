@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		15384F141611A44F0021DC07 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 15384F131611A44F0021DC07 /* fps_images.png */; };
 		1544C6A616008727003B5127 /* CCNode+CCBRelativePositioning.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1544C6A516008727003B5127 /* CCNode+CCBRelativePositioning.cpp */; };
 		1550999115FDE27F00DD9316 /* CCBAnimationManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1550999015FDE27F00DD9316 /* CCBAnimationManager.cpp */; };
 		15527950157C64F9007CC855 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = 1552794F157C64F9007CC855 /* Shaders */; };
@@ -275,6 +276,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		15384F131611A44F0021DC07 /* fps_images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fps_images.png; sourceTree = "<group>"; };
 		1544C6A4160085FD003B5127 /* CCNode+CCBRelativePositioning.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CCNode+CCBRelativePositioning.h"; sourceTree = "<group>"; };
 		1544C6A516008727003B5127 /* CCNode+CCBRelativePositioning.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "CCNode+CCBRelativePositioning.cpp"; sourceTree = "<group>"; };
 		1550998F15FDE20000DD9316 /* CCBAnimationManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCBAnimationManager.h; sourceTree = "<group>"; };
@@ -2017,6 +2019,7 @@
 		78C7DDAA14EBA5050085D0C2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				15384F131611A44F0021DC07 /* fps_images.png */,
 				15FC61A716095C2B00AE81F8 /* ccb */,
 				15D2551915E5FD6B000D5E89 /* ipad */,
 				15BA623415E4EAD7002BC3A5 /* ipadhd */,
@@ -2222,6 +2225,7 @@
 				15FC61A816095C2B00AE81F8 /* ccb in Resources */,
 				D41A0AD1160F154A004552AE /* Default-568h@2x.png in Resources */,
 				D446FD6E16102124000ADA7B /* Default@2x.png in Resources */,
+				15384F141611A44F0021DC07 /* fps_images.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
