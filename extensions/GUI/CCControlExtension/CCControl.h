@@ -129,7 +129,7 @@ protected:
      * target-actions pairs. For each CCButtonEvents a list of NSInvocation
      * (which contains the target-action pair) is linked.
      */
-    CCDictionary* m_pDispatchTable; //cjh need to be retained
+    CCDictionary* m_pDispatchTable;
 
 public:
     CCControl();
