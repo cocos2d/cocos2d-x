@@ -45,10 +45,6 @@ copy_src_and_jni(){
     sh $COCOS2DX_ROOT/template/android/gamemk.sh $APP_DIR/proj.android/jni/Android.mk $NEED_BOX2D $NEED_CHIPMUNK $NEED_LUA
 }
 
-copy_library_src(){
-    cp -rf $COCOSJAVALIB_ROOT/src_common/* $APP_DIR/proj.android/src/
-}
-
 # copy build_native.sh and replace something
 copy_build_native(){
     # here should use # instead of /, why??
@@ -95,7 +91,6 @@ copy_icon(){
 copy_cpp_h
 copy_resouces
 copy_src_and_jni
-copy_library_src
 copy_build_native
 modify_project_classpath
 modify_androidmanifest
