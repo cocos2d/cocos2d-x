@@ -99,8 +99,6 @@ CCNode::CCNode(void)
 CCNode::~CCNode(void)
 {
     CCLOGINFO( "cocos2d: deallocing" );
-    
-    unregisterScriptHandler();
 
     CC_SAFE_RELEASE(m_pActionManager);
     CC_SAFE_RELEASE(m_pScheduler);

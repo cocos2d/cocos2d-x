@@ -303,8 +303,6 @@ int CCLuaEngine::executeNodeEvent(CCNode* pNode, int nAction)
     {
         int nScriptHandler = pNode->getScriptHandler();
         CC_BREAK_IF(0 == nScriptHandler);
-
-        cleanStack();
         CCLuaValueDict dict;
         if (nAction == kCCNodeOnEnter)
         {
@@ -329,9 +327,7 @@ int CCLuaEngine::executeMenuItemEvent(CCMenuItem* pMenuItem)
     {
         int nScriptHandler = pMenuItem->getScriptTapHandler();
         CC_BREAK_IF(0 == nScriptHandler);
-        
-        cleanStack();
-        pushInt(pMenuItem->getTag());
+        ret = pushInt(pMenuItem->getTag());
         ret = executeFunctionByHandler(nScriptHandler, 1);
     } while (0);
     return ret;
@@ -344,9 +340,7 @@ int CCLuaEngine::executeNotificationEvent(CCNotificationCenter* pNotificationCen
     {
         int nScriptHandler = pNotificationCenter->getScriptHandler();
         CC_BREAK_IF(0 == nScriptHandler);
-        
-        cleanStack();
-        pushString(pszName);
+        ret = pushString(pszName);
         ret = executeFunctionByHandler(nScriptHandler, 1);
     } while (0);
     return ret;
@@ -359,15 +353,9 @@ int CCLuaEngine::executeCallFuncActionEvent(CCCallFunc* pAction, CCObject* pTarg
     {
         int nScriptHandler = pAction->getScriptHandler();
         CC_BREAK_IF(0 == nScriptHandler);
-        
-        cleanStack();
         if (pTarget != NULL)
         {
-            pushCCObject(pTarget, "CCNode");
-        }
-        else
-        {
-            pushNil();
+            ret = pushCCObject(pTarget, "CCNode");
         }
         ret = executeFunctionByHandler(nScriptHandler, 1);
     } while (0);
@@ -381,9 +369,7 @@ int CCLuaEngine::executeSchedule(CCTimer* pTimer, float dt, CCNode* pNode/* = NU
     {
         int nScriptHandler = pTimer->getScriptHandler();
         CC_BREAK_IF(0 == nScriptHandler);
-
-        cleanStack();
-        pushFloat(dt);
+        ret = pushFloat(dt);
         ret = executeFunctionByHandler(nScriptHandler, 1);
     } while (0);
     return ret;
@@ -399,8 +385,6 @@ int CCLuaEngine::executeLayerTouchEvent(CCLayer* pLayer, int eventType, CCTouch 
         CC_BREAK_IF(NULL == pScriptHandlerEntry);
         int nScriptHandler = pScriptHandlerEntry->getHandler();
         CC_BREAK_IF(0 == nScriptHandler);
-        
-        cleanStack();
         CCPoint pt = CCDirector::sharedDirector()->convertToGL(pTouch->getLocationInView());
         lua_pushinteger(m_state, eventType);
         lua_pushnumber(m_state, pt.x);
@@ -419,8 +403,6 @@ int CCLuaEngine::executeLayerTouchesEvent(CCLayer* pLayer, int eventType, CCSet 
         CC_BREAK_IF(NULL == pScriptHandlerEntry);
         int nScriptHandler = pScriptHandlerEntry->getHandler();
         CC_BREAK_IF(0 == nScriptHandler);
-        
-        cleanStack();
         lua_pushinteger(m_state, eventType);
         lua_newtable(m_state);
 
@@ -582,7 +564,7 @@ int CCLuaEngine::pushCCLuaValueDict(const CCLuaValueDict& dict)
     for (CCLuaValueDictIterator it = dict.begin(); it != dict.end(); ++it)
     {
         lua_pushstring(m_state, it->first.c_str());             /* stack: table key */
-        pushCCLuaValue(it->second);                             /* stack: table key value */
+        pushCCLuaValue(it->second);                   /* stack: table key value */
         lua_rawset(m_state, -3);             /* table.key = value, stack: table */
     }
     
@@ -595,7 +577,7 @@ int CCLuaEngine::pushCCLuaValueArray(const CCLuaValueArray& array)
     int index = 1;
     for (CCLuaValueArrayIterator it = array.begin(); it != array.end(); ++it)
     {
-        pushCCLuaValue(*it);                                    /* stack: table value */
+        pushCCLuaValue(*it);                          /* stack: table value */
         lua_rawseti(m_state, -2, index);  /* table[index] = value, stack: table */
         ++index;
     }
@@ -635,7 +617,7 @@ void CCLuaEngine::addLuaLoader(lua_CFunction func)
 
 bool CCLuaEngine::pushFunction(int nHandler)
 {
-    toluafix_get_function_by_refid(m_state, nHandler);          /* stack: ... func */
+    lua_rawgeti(m_state, LUA_REGISTRYINDEX, nHandler);  /* stack: ... func */
     if (!lua_isfunction(m_state, -1))
     {
         CCLOG("[LUA ERROR] function refid '%d' does not reference a Lua function", nHandler);
