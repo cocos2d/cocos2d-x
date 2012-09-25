@@ -1,5 +1,6 @@
 /*
- * CCControlSlider
+ * Copyright (c) 2012 cocos2d-x.org
+ * http://www.cocos2d-x.org
  *
  * Copyright 2011 Yannick Loriot. All rights reserved.
  * http://yannickloriot.com
