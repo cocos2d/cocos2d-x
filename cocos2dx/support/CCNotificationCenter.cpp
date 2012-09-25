@@ -177,6 +177,9 @@ CCNotificationObserver::CCNotificationObserver(CCObject *target,
 
 CCNotificationObserver::~CCNotificationObserver()
 {
+	CC_SAFE_RELEASE_NULL(m_object);
+	CC_SAFE_RELEASE_NULL(m_target);
+	
     if (m_name)
         delete m_name;
 }
@@ -185,7 +188,11 @@ void CCNotificationObserver::performSelector(CCObject *obj)
 {
     if (m_target)
     {
-        (m_target->*m_selector)(obj);
+		if (obj) {
+			(m_target->*m_selector)(obj);
+		} else {
+			(m_target->*m_selector)(m_object);
+		}
     }
 }
 
