@@ -144,13 +144,13 @@ OBJECTS = ../actions/CCAction.o \
 					../../extensions/CCBReader/CCLayerGradientLoader.o \
 					../../extensions/CCBReader/CCSpriteLoader.o \
 					../../extensions/CCBReader/CCLayerLoader.o \
-                                        ../../extensions/CCBReader/CCBAnimationManager.o \
-                                        ../../extensions/CCBReader/CCBKeyframe.o \
-                                        ../../extensions/CCBReader/CCBSequence.o \
-                                        ../../extensions/CCBReader/CCBSequenceProperty.o \
-                                        ../../extensions/CCBReader/CCBValue.o \
-                                        ../../extensions/CCBReader/CCData.o \
-                                        ../../extensions/CCBReader/CCNode+CCBRelativePositioning.o \
+                    ../../extensions/CCBReader/CCBAnimationManager.o \
+                    ../../extensions/CCBReader/CCBKeyframe.o \
+                    ../../extensions/CCBReader/CCBSequence.o \
+                    ../../extensions/CCBReader/CCBSequenceProperty.o \
+                    ../../extensions/CCBReader/CCBValue.o \
+                    ../../extensions/CCBReader/CCData.o \
+                    ../../extensions/CCBReader/CCNode+CCBRelativePositioning.o \
 					../../extensions/GUI/CCScrollView/CCScrollView.o \
 					../../extensions/GUI/CCScrollView/CCSorting.o \
 					../../extensions/GUI/CCScrollView/CCTableView.o \
@@ -164,9 +164,9 @@ OBJECTS = ../actions/CCAction.o \
 					../../extensions/GUI/CCControlExtension/CCControlSwitch.o \
 					../../extensions/GUI/CCControlExtension/CCControlUtils.o \
 					../../extensions/GUI/CCControlExtension/CCInvocation.o \
-					../../extensions/GUI/CCControlExtension/CCMenuPassive.o \
 					../../extensions/GUI/CCControlExtension/CCScale9Sprite.o \
-					../../extensions/GUI/CCControlExtension/CCSpacer.o \
+					../../extensions/GUI/CCControlExtension/CCControlPotentiometer.cpp \
+					../../extensions/GUI/CCControlExtension/CCControlStepper.cpp \
 					../../extensions/network/HttpClient.o \
 					../kazmath/src/aabb.o \
 					../kazmath/src/plane.o \
