@@ -3,11 +3,12 @@
 # Generate JS bindings for Cocos2D-X
 # ... using Android NDK system headers
 
-# Environment variables required
+# Dependencies (see ../../../tojs/genbindings.sh
+# ... for the defaults used if the environment is not customized)
+#
 #  * $PYTHON_BIN
 #  * $CLANG_ROOT
 #  * $NDK_ROOT
-#  * $COCOS2DX_ROOT
 
 compileresult=0
 
