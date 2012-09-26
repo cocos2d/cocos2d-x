@@ -106,6 +106,19 @@ Developers:
     Dongyang Cai(John-cdy)
         add automatically test tools
 
+    jzgenius
+        build new version of libcurl to support armv7s
+        fix some memory leak
+
+    ByungChoi
+         modify linux makefiles to fix compiling errors
+
+    edbartley
+         update MSVS and MAC projects to use project-relative path
+
+    Weeds 
+         use fontconfig to enhance font rendering on linux
+
 Retired Core Developers:
     WenSheng Yang
 	Author of windows port, CCTextField, 
