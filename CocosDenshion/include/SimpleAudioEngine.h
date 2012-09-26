@@ -40,7 +40,7 @@ public:
     virtual long getClassTypeInfo() = 0;
 };
 
-static unsigned int getHashCodeByString(const char *key)
+static inline unsigned int getHashCodeByString(const char *key)
 {
 	unsigned int len = strlen(key);
 	const char *end=key+len;
