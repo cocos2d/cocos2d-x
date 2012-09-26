@@ -165,8 +165,10 @@ CCNotificationObserver::CCNotificationObserver(CCObject *target,
                                                CCObject *obj)
 {
     m_target = target;
+	CC_SAFE_RETAIN(m_target);
     m_selector = selector;
     m_object = obj;
+	CC_SAFE_RETAIN(m_object);
     
     m_name = new char[strlen(name)+1];
     memset(m_name,0,strlen(name)+1);
@@ -177,6 +179,9 @@ CCNotificationObserver::CCNotificationObserver(CCObject *target,
 
 CCNotificationObserver::~CCNotificationObserver()
 {
+	CC_SAFE_RELEASE_NULL(m_object);
+	CC_SAFE_RELEASE_NULL(m_target);
+	
     if (m_name)
         delete m_name;
 }
@@ -185,7 +190,11 @@ void CCNotificationObserver::performSelector(CCObject *obj)
 {
     if (m_target)
     {
-        (m_target->*m_selector)(obj);
+		if (obj) {
+			(m_target->*m_selector)(obj);
+		} else {
+			(m_target->*m_selector)(m_object);
+		}
     }
 }
 
