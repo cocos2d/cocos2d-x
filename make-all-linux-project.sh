@@ -26,7 +26,8 @@ if ! test -d $DIR_GLEW170/glew-1.7.0/; then
 	DEPENDS+=' libglfw-dev'
 	DEPENDS+=' g++'
 	DEPENDS+=' libzip-dev'
-        DEPENDS+=' libcurl4-gnutls-dev'
+	DEPENDS+=' libcurl4-gnutls-dev'
+	DEPENDS+=' libfontconfig1-dev'
 	for i in $DEPENDS; do
 		echo -e $TXTCOLOR_GREEN"sudo apt-get install $i, please enter your password:"$TXTCOLOR_DEFAULT
 		sudo apt-get install $i
@@ -39,15 +40,6 @@ if ! test -d $DIR_GLEW170/glew-1.7.0/; then
 		tar -zxf glew-1.7.0.tgz
 		make -C ./glew-1.7.0/
 		cd -
-	fi
-
-	DIR_SPIDERMONKEY_LINUX=$COCOS2DX20_TRUNK/scripting/javascript/spidermonkey-linux
-	if ! test -d $DIR_SPIDERMONKEY_LINUX/js-1.8.5; then
-		cd $DIR_SPIDERMONKEY_LINUX
-		echo -e $TXTCOLOR_GREEN"building spidermonkey ..."$TXTCOLOR_DEFAULT;
-		tar -zxf js185-1.0.0.tar.gz
-		cd ./js-1.8.5/js/src
-		./configure && make
 	fi
 fi
 

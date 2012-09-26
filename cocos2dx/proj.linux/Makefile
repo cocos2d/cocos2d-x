@@ -165,8 +165,8 @@ OBJECTS = ../actions/CCAction.o \
 					../../extensions/GUI/CCControlExtension/CCControlUtils.o \
 					../../extensions/GUI/CCControlExtension/CCInvocation.o \
 					../../extensions/GUI/CCControlExtension/CCScale9Sprite.o \
-					../../extensions/GUI/CCControlExtension/CCControlPotentiometer.cpp \
-					../../extensions/GUI/CCControlExtension/CCControlStepper.cpp \
+					../../extensions/GUI/CCControlExtension/CCControlPotentiometer.o \
+					../../extensions/GUI/CCControlExtension/CCControlStepper.o \
 					../../extensions/network/HttpClient.o \
 					../kazmath/src/aabb.o \
 					../kazmath/src/plane.o \
