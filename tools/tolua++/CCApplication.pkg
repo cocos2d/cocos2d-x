@@ -10,8 +10,20 @@ typedef enum LanguageType
     kLanguageRussian
 } ccLanguageType;
 
+enum TargetPlatform
+{
+    kTargetWindows,
+    kTargetLinux,
+    kTargetMacOS,
+    kTargetAndroid,
+    kTargetIphone,
+    kTargetIpad,
+    kTargetBlackBerry,
+};
+
 class CCApplication
 {
     static CCApplication* sharedApplication();
     ccLanguageType getCurrentLanguage();
+    TargetPlatform getTargetPlatform();
 };
