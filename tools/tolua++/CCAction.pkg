@@ -16,23 +16,23 @@ class CCAction : public CCObject
 	CCObject* copyWithZone(CCZone* pZone);
 };
 
-class CCActionInterval : public CCAction
-{
-    float getElapsed(void);
-	bool isDone(void);
-    void setAmplitudeRate(float amp);
-    float getAmplitudeRate(void);
-	CCObject* copyWithZone(CCZone* pZone);
-	CCActionInterval* reverse(void);
-
-	CCActionInterval* create(float d);
-};
-
-class CCFiniteTimeAction : public CCActionInterval
+class CCFiniteTimeAction : public CCAction
 {
     float getDuration(void);
     void setDuration(float duration);
     CCFiniteTimeAction* reverse(void);
+};
+
+class CCActionInterval : public CCFiniteTimeAction
+{
+    float getElapsed(void);
+    bool isDone(void);
+    void setAmplitudeRate(float amp);
+    float getAmplitudeRate(void);
+    CCObject* copyWithZone(CCZone* pZone);
+    CCActionInterval* reverse(void);
+
+    CCActionInterval* create(float d);
 };
 
 // CCActionInterval
