@@ -65,6 +65,22 @@ THE SOFTWARE.
 #define CC_DIRECTOR_STATS_POSITION CCDirector::sharedDirector()->getVisibleOrigin()
 #endif
 
+#ifndef CC_DIRECTOR_STATS_FONT_SIZE
+#define CC_DIRECTOR_STATS_FONT_SIZE 24
+#endif
+
+#ifndef CC_DIRECTOR_STATS_FPS_PATTERN
+#define CC_DIRECTOR_STATS_FPS_PATTERN "%04.1f"
+#endif
+
+#ifndef CC_DIRECTOR_STATS_SPF_PATTERN
+#define CC_DIRECTOR_STATS_SPF_PATTERN "%0.4f"
+#endif
+
+#ifndef CC_DIRECTOR_STATS_DRAWS_PATTERN
+#define CC_DIRECTOR_STATS_DRAWS_PATTERN "%04u"
+#endif
+
 using namespace std;
 
 unsigned int g_uNumberOfDraws = 0;
@@ -123,7 +139,7 @@ bool CCDirector::init(void)
     m_pDrawsLabel = NULL;
     m_bDisplayStats = false;
     m_uTotalFrames = m_uFrames = 0;
-    m_pszFPS = new char[10];
+    m_pszFPS = new char[20];
     m_pLastUpdate = new struct cc_timeval();
 
     // paused ?
@@ -162,7 +178,7 @@ bool CCDirector::init(void)
     
 CCDirector::~CCDirector(void)
 {
-    CCLOG("cocos2d: deallocing %p", this);
+    CCLOG("cocos2d: deallocing CCDirector %p", this);
 
     CC_SAFE_RELEASE(m_pFPSLabel);
     CC_SAFE_RELEASE(m_pSPFLabel);
@@ -326,6 +342,26 @@ void CCDirector::setOpenGLView(CCEGLView *pobOpenGLView)
 void CCDirector::setNextDeltaTimeZero(bool bNextDeltaTimeZero)
 {
     m_bNextDeltaTimeZero = bNextDeltaTimeZero;
+}
+
+void CCDirector::setStatsPosition(const CCPoint& FPSPosition, const CCPoint& SPFPosition, const CCPoint& DrawsPosition)
+{
+    CCSize contentSize = m_pDrawsLabel->getContentSize();
+    m_pDrawsLabel->setPosition(ccpAdd(ccp(contentSize.width/2, contentSize.height/2), DrawsPosition));
+    contentSize = m_pSPFLabel->getContentSize();
+    m_pSPFLabel->setPosition(ccpAdd(ccp(contentSize.width/2, contentSize.height/2), SPFPosition));
+    contentSize = m_pFPSLabel->getContentSize();
+    m_pFPSLabel->setPosition(ccpAdd(ccp(contentSize.width/2, contentSize.height/2), FPSPosition));
+}
+
+void CCDirector::setStatsFont(const char* fontname, int fontsize)
+{
+    m_pDrawsLabel->setFontName(fontname);
+    m_pDrawsLabel->setFontSize(fontsize);
+    m_pSPFLabel->setFontName(fontname);
+    m_pSPFLabel->setFontSize(fontsize);
+    m_pFPSLabel->setFontName(fontname);
+    m_pFPSLabel->setFontSize(fontsize);
 }
 
 void CCDirector::setProjection(ccDirectorProjection kProjection)
@@ -723,17 +759,17 @@ void CCDirector::showStats(void)
         {
             if (m_fAccumDt > CC_DIRECTOR_STATS_INTERVAL)
             {
-                sprintf(m_pszFPS, "%.3f", m_fSecondsPerFrame);
+                sprintf(m_pszFPS, CC_DIRECTOR_STATS_SPF_PATTERN, m_fSecondsPerFrame);
                 m_pSPFLabel->setString(m_pszFPS);
                 
                 m_fFrameRate = m_uFrames / m_fAccumDt;
                 m_uFrames = 0;
                 m_fAccumDt = 0;
                 
-                sprintf(m_pszFPS, "%.1f", m_fFrameRate);
+                sprintf(m_pszFPS, CC_DIRECTOR_STATS_FPS_PATTERN, m_fFrameRate);
                 m_pFPSLabel->setString(m_pszFPS);
                 
-                sprintf(m_pszFPS, "%4lu", (unsigned long)g_uNumberOfDraws);
+                sprintf(m_pszFPS, CC_DIRECTOR_STATS_DRAWS_PATTERN, g_uNumberOfDraws);
                 m_pDrawsLabel->setString(m_pszFPS);
             }
             
@@ -778,20 +814,28 @@ void CCDirector::createStatsLabel()
     m_pDrawsLabel = new CCLabelAtlas();
     m_pDrawsLabel->initWithString("000", "fps_images.png", 12, 32, '.');
      */
-    m_pFPSLabel = CCLabelTTF::create("00.0", "Arial", 24);
+    
+    m_fFrameRate = m_uFrames / m_fAccumDt;
+    m_uFrames = 0;
+    m_fAccumDt = 0;
+    
+    sprintf(m_pszFPS, CC_DIRECTOR_STATS_FPS_PATTERN, 0.0f);
+    m_pFPSLabel = CCLabelTTF::create(m_pszFPS, "Arial", CC_DIRECTOR_STATS_FONT_SIZE);
     m_pFPSLabel->retain();
-    m_pSPFLabel = CCLabelTTF::create("0.000", "Arial", 24);
+    sprintf(m_pszFPS, CC_DIRECTOR_STATS_SPF_PATTERN, 0.0f);
+    m_pSPFLabel = CCLabelTTF::create(m_pszFPS, "Arial", CC_DIRECTOR_STATS_FONT_SIZE);
     m_pSPFLabel->retain();
-    m_pDrawsLabel = CCLabelTTF::create("000", "Arial", 24);
+    sprintf(m_pszFPS, CC_DIRECTOR_STATS_DRAWS_PATTERN, 0);
+    m_pDrawsLabel = CCLabelTTF::create(m_pszFPS, "Arial", CC_DIRECTOR_STATS_FONT_SIZE);
     m_pDrawsLabel->retain();
 
     //CCTexture2D::setDefaultAlphaPixelFormat(currentFormat);
 
 
     CCSize contentSize = m_pDrawsLabel->getContentSize();
-    m_pDrawsLabel->setPosition(ccpAdd(ccp(contentSize.width/2, contentSize.height/2 + 40), CC_DIRECTOR_STATS_POSITION));
+    m_pDrawsLabel->setPosition(ccpAdd(ccp(contentSize.width/2, contentSize.height/2 + CC_DIRECTOR_STATS_FONT_SIZE * 2), CC_DIRECTOR_STATS_POSITION));
     contentSize = m_pSPFLabel->getContentSize();
-    m_pSPFLabel->setPosition(ccpAdd(ccp(contentSize.width/2, contentSize.height/2 + 20), CC_DIRECTOR_STATS_POSITION));
+    m_pSPFLabel->setPosition(ccpAdd(ccp(contentSize.width/2, contentSize.height/2 + CC_DIRECTOR_STATS_FONT_SIZE), CC_DIRECTOR_STATS_POSITION));
     contentSize = m_pFPSLabel->getContentSize();
     m_pFPSLabel->setPosition(ccpAdd(ccp(contentSize.width/2, contentSize.height/2), CC_DIRECTOR_STATS_POSITION));
 }
