@@ -38,15 +38,13 @@ CCObject* CCCopying::copyWithZone(CCZone *pZone)
 }
 
 CCObject::CCObject(void)
+:m_bManaged(false)
+,m_uReference(1) // when the object is created, the reference count of it is 1
+,m_nLuaID(0)
 {
     static unsigned int uObjectCount = 0;
 
     m_uID = ++uObjectCount;
-    m_nLuaID = 0;
-
-    // when the object is created, the reference count of it is 1
-    m_uReference = 1;
-    m_bManaged = false;
 }
 
 CCObject::~CCObject(void)
