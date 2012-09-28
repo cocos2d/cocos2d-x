@@ -41,6 +41,8 @@ CCAutoreleasePool::~CCAutoreleasePool(void)
 
 void CCAutoreleasePool::addObject(CCObject* pObject)
 {
+    CCAssert(false == pObject->m_bManaged, "this object is already in autorelese pool");
+    
     m_pManagedObjectArray->addObject(pObject);
 
     CCAssert(pObject->m_uReference > 1, "reference count should be greater than 1");
