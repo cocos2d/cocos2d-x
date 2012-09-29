@@ -160,15 +160,20 @@ public:
     CCNode* getNotificationNode();
     void setNotificationNode(CCNode *node);
     
+    /** This function is deprecated. Because retina is enabled by default.
+     @deprecated
+     */
     bool enableRetinaDisplay(bool bEnabelRetina);
 
     // window size
 
-    /** returns the size of the OpenGL view in points.
+    /** returns the size of the OpenGL view.
     */
     CCSize getWinSize(void);
 
-    /** returns the size of the OpenGL view in pixels.
+    /** Returns the size of the OpenGL view in pixels.
+     It is the same as getWinSize().
+     @deprecated
     */
     CCSize getWinSizeInPixels(void);
     
@@ -391,11 +396,8 @@ protected:
     /* projection used */
     ccDirectorProjection m_eProjection;
 
-    /* window size in points */
-    CCSize    m_obWinSizeInPoints;
-
-    /* window size in pixels */
-    CCSize m_obWinSizeInPixels;
+    /* window size */
+    CCSize    m_obWinSize;
     
     /* content scale factor */
     float    m_fContentScaleFactor;

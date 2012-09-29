@@ -131,7 +131,7 @@ bool CCDirector::init(void)
     // purge ?
     m_bPurgeDirecotorInNextLoop = false;
 
-    m_obWinSizeInPixels = m_obWinSizeInPoints = CCSizeZero;    
+    m_obWinSize = CCSizeZero;
 
     m_pobOpenGLView = NULL;
 
@@ -302,8 +302,7 @@ void CCDirector::setOpenGLView(CCEGLView *pobOpenGLView)
         m_pobOpenGLView = pobOpenGLView;
 
         // set size
-        m_obWinSizeInPoints = m_pobOpenGLView->getSize();
-        m_obWinSizeInPixels = CCSizeMake(m_obWinSizeInPoints.width * m_fContentScaleFactor, m_obWinSizeInPoints.height * m_fContentScaleFactor);
+        m_obWinSize = m_pobOpenGLView->getSize();
         
         createStatsLabel();
         
@@ -331,12 +330,11 @@ void CCDirector::setNextDeltaTimeZero(bool bNextDeltaTimeZero)
 
 void CCDirector::setProjection(ccDirectorProjection kProjection)
 {
-    CCSize size = m_obWinSizeInPixels;
-    CCSize sizePoint = m_obWinSizeInPoints;
+    CCSize size = m_obWinSize;
 
     if (m_pobOpenGLView)
     {
-        m_pobOpenGLView->setViewPortInPoints(0, 0, sizePoint.width, sizePoint.height);
+        m_pobOpenGLView->setViewPortInPoints(0, 0, size.width, size.height);
     }
 
     switch (kProjection)
@@ -346,7 +344,7 @@ void CCDirector::setProjection(ccDirectorProjection kProjection)
             kmGLMatrixMode(KM_GL_PROJECTION);
             kmGLLoadIdentity();
             kmMat4 orthoMatrix;
-            kmMat4OrthographicProjection(&orthoMatrix, 0, size.width / CC_CONTENT_SCALE_FACTOR(), 0, size.height / CC_CONTENT_SCALE_FACTOR(), -1024, 1024 );
+            kmMat4OrthographicProjection(&orthoMatrix, 0, size.width, 0, size.height, -1024, 1024 );
             kmGLMultMatrix(&orthoMatrix);
             kmGLMatrixMode(KM_GL_MODELVIEW);
             kmGLLoadIdentity();
@@ -371,8 +369,8 @@ void CCDirector::setProjection(ccDirectorProjection kProjection)
             kmGLMatrixMode(KM_GL_MODELVIEW);
             kmGLLoadIdentity();
             kmVec3 eye, center, up;
-            kmVec3Fill( &eye, sizePoint.width/2, sizePoint.height/2, zeye );
-            kmVec3Fill( &center, sizePoint.width/2, sizePoint.height/2, 0.0f );
+            kmVec3Fill( &eye, size.width/2, size.height/2, zeye );
+            kmVec3Fill( &center, size.width/2, size.height/2, 0.0f );
             kmVec3Fill( &up, 0.0f, 1.0f, 0.0f);
             kmMat4LookAt(&matrixLookup, &eye, &center, &up);
             kmGLMultMatrix(&matrixLookup);
@@ -404,7 +402,7 @@ void CCDirector::purgeCachedData(void)
 
 float CCDirector::getZEye(void)
 {
-    return (m_obWinSizeInPixels.height / 1.1566f / CC_CONTENT_SCALE_FACTOR());    
+    return (m_obWinSize.height / 1.1566f);    
 }
 
 void CCDirector::setAlphaBlending(bool bOn)
@@ -420,6 +418,11 @@ void CCDirector::setAlphaBlending(bool bOn)
     }
 
     CHECK_GL_ERROR_DEBUG();
+}
+
+bool CCDirector::enableRetinaDisplay(bool bEnabelRetina)
+{
+    return false;
 }
 
 void CCDirector::setDepthTest(bool bOn)
@@ -440,28 +443,26 @@ void CCDirector::setDepthTest(bool bOn)
 
 CCPoint CCDirector::convertToGL(const CCPoint& uiPoint)
 {
-    CCSize s = m_obWinSizeInPoints;
-    float newY = s.height - uiPoint.y;
+    float newY = m_obWinSize.height - uiPoint.y;
     
     return ccp(uiPoint.x, newY);
 }
 
 CCPoint CCDirector::convertToUI(const CCPoint& glPoint)
 {
-    CCSize winSize = m_obWinSizeInPoints;
-    float oppositeY = winSize.height - glPoint.y;
+    float oppositeY = m_obWinSize.height - glPoint.y;
     
     return ccp(glPoint.x, oppositeY);
 }
 
 CCSize CCDirector::getWinSize(void)
 {
-    return m_obWinSizeInPoints;
+    return m_obWinSize;
 }
 
 CCSize CCDirector::getWinSizeInPixels()
 {
-    return m_obWinSizeInPixels;
+    return m_obWinSize;
 }
 
 CCSize CCDirector::getVisibleSize()
@@ -493,9 +494,7 @@ void CCDirector::reshapeProjection(const CCSize& newWindowSize)
     CC_UNUSED_PARAM(newWindowSize);
     if (m_pobOpenGLView)
     {
-       m_obWinSizeInPoints = m_pobOpenGLView->getSize();
-       m_obWinSizeInPixels = CCSizeMake(m_obWinSizeInPoints.width * m_fContentScaleFactor,
-                                     m_obWinSizeInPoints.height * m_fContentScaleFactor);
+       m_obWinSize = m_pobOpenGLView->getSize();
  
        setProjection(m_eProjection);       
     }
@@ -762,35 +761,19 @@ void CCDirector::createStatsLabel()
 {
     if( m_pFPSLabel && m_pSPFLabel ) 
     {
-        //CCTexture2D *texture = m_pFPSLabel->getTexture();
-
         CC_SAFE_RELEASE_NULL(m_pFPSLabel);
         CC_SAFE_RELEASE_NULL(m_pSPFLabel);
         CC_SAFE_RELEASE_NULL(m_pDrawsLabel);
-       // CCTextureCache::sharedTextureCache()->removeTexture(texture);
 
         CCFileUtils::sharedFileUtils()->purgeCachedEntries();
     }
 
-    /*
-    CCTexture2DPixelFormat currentFormat = CCTexture2D::defaultAlphaPixelFormat();
-    CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA4444);
-    m_pFPSLabel = new CCLabelAtlas();
-    m_pFPSLabel->initWithString("00.0", "fps_images.png", 12, 32, '.');
-    m_pSPFLabel = new CCLabelAtlas();
-    m_pSPFLabel->initWithString("0.000", "fps_images.png", 12, 32, '.');
-    m_pDrawsLabel = new CCLabelAtlas();
-    m_pDrawsLabel->initWithString("000", "fps_images.png", 12, 32, '.');
-     */
     m_pFPSLabel = CCLabelTTF::create("00.0", "Arial", 24);
     m_pFPSLabel->retain();
     m_pSPFLabel = CCLabelTTF::create("0.000", "Arial", 24);
     m_pSPFLabel->retain();
     m_pDrawsLabel = CCLabelTTF::create("000", "Arial", 24);
     m_pDrawsLabel->retain();
-
-    //CCTexture2D::setDefaultAlphaPixelFormat(currentFormat);
-
 
     CCSize contentSize = m_pDrawsLabel->getContentSize();
     m_pDrawsLabel->setPosition(ccpAdd(ccp(contentSize.width/2, contentSize.height/2 + 40), CC_DIRECTOR_STATS_POSITION));
@@ -800,7 +783,6 @@ void CCDirector::createStatsLabel()
     m_pFPSLabel->setPosition(ccpAdd(ccp(contentSize.width/2, contentSize.height/2), CC_DIRECTOR_STATS_POSITION));
 }
 
-
 /***************************************************
 * mobile platforms specific functions
 **************************************************/
@@ -808,33 +790,6 @@ void CCDirector::createStatsLabel()
 void CCDirector::updateContentScaleFactor()
 {
     m_bIsContentScaleSupported = m_pobOpenGLView->setContentScaleFactor(m_fContentScaleFactor);
-}
-
-bool CCDirector::enableRetinaDisplay(bool enabled)
-{
-    // Already enabled?
-    if (enabled && m_fContentScaleFactor == 2)
-    {
-        return true;
-    }
-
-    // Already disabled?
-    if (!enabled && m_fContentScaleFactor == 1)
-    {
-        return false;
-    }
-    
-    if (! m_pobOpenGLView->enableRetina())
-    {
-        return false;
-    }
-
-    float newScale = (float)(enabled ? 2 : 1);
-    setContentScaleFactor(newScale);
-
-    createStatsLabel();
-
-    return true;
 }
 
 float CCDirector::getContentScaleFactor(void)
@@ -847,7 +802,6 @@ void CCDirector::setContentScaleFactor(float scaleFactor)
     if (scaleFactor != m_fContentScaleFactor)
     {
         m_fContentScaleFactor = scaleFactor;
-        m_obWinSizeInPixels = CCSizeMake(m_obWinSizeInPoints.width * scaleFactor, m_obWinSizeInPoints.height * scaleFactor);
 
         if (m_pobOpenGLView)
         {
