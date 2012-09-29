@@ -90,6 +90,9 @@ void CC_DLL ccDrawSolidPoly( const CCPoint *poli, unsigned int numberOfPoints, c
 /** draws a circle given the center, radius and number of segments. */
 void CC_DLL ccDrawCircle( const CCPoint& center, float radius, float angle, unsigned int segments, bool drawLineToCenter);
 
+/** draws a solid circle given the center, radius and number of segments. */
+void CC_DLL ccDrawSolidCircle( const CCPoint& center, float radius, float angle, unsigned int segments, bool drawLineToCenter);
+
 /** draws a quad bezier path
  @warning This function could be pretty slow. Use it only for debugging purposes.
  @since v0.8

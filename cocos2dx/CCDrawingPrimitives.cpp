@@ -286,6 +286,45 @@ void ccDrawCircle( const CCPoint& center, float radius, float angle, unsigned in
     CC_INCREMENT_GL_DRAWS(1);
 }
 
+void ccDrawSolidCircle( const CCPoint& center, float radius, float angle, unsigned int segments, bool drawLineToCenter)
+{
+    lazy_init();
+
+    int additionalSegment = 1;
+    if (drawLineToCenter)
+        additionalSegment++;
+
+    const float coef = 2.0f * (float)M_PI/segments;
+
+    GLfloat *vertices = (GLfloat*)calloc( sizeof(GLfloat)*2*(segments+2), 1);
+    if( ! vertices )
+        return;
+
+    for(unsigned int i = 0;i <= segments; i++) {
+        float rads = i*coef;
+        GLfloat j = radius * cosf(rads + angle) + center.x;
+        GLfloat k = radius * sinf(rads + angle) + center.y;
+
+        vertices[i*2] = j;
+        vertices[i*2+1] = k;
+    }
+    vertices[(segments+1)*2] = center.x;
+    vertices[(segments+1)*2+1] = center.y;
+
+    s_pShader->use();
+    s_pShader->setUniformForModelViewProjectionMatrix();
+    s_pShader->setUniformLocationWith4fv(s_nColorLocation, (GLfloat*) &s_tColor.r, 1);
+
+    ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
+
+    glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);
+	glDrawArrays(GL_TRIANGLE_FAN, 0, (GLsizei) segments+additionalSegment);
+
+    free( vertices );
+
+    CC_INCREMENT_GL_DRAWS(1);
+}
+
 void ccDrawQuadBezier(const CCPoint& origin, const CCPoint& control, const CCPoint& destination, unsigned int segments)
 {
     lazy_init();
