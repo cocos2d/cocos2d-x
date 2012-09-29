@@ -12,8 +12,11 @@ Developers:
     Rolando Abarca
         Javascript Binding and testjs
 
+    Horcruxes
+        fix the bug that CCArray::createWithContentsOfFile() may not read file data on iOS
+
     Hu Kaiou
-        contribute the new version of libcurl to support both armv7 & armv7s
+        contribute the new version of libcurl to support both armv7 & armv7s on iOS
         fix some memory leak
 
     ByungChoi
