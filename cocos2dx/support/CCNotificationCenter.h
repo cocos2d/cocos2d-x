@@ -45,6 +45,7 @@ public:
                      CCObject *obj);
     
     void removeObserver(CCObject *target,const char *name);
+    void removeObserver(CCObject *target);
     
     void registerScriptObserver(int handler);
     void unregisterScriptObserver(void);

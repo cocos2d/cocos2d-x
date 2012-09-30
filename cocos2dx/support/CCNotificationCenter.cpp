@@ -114,6 +114,25 @@ void CCNotificationCenter::removeObserver(CCObject *target,const char *name)
     }
 }
 
+void CCNotificationCenter::removeObserver(CCObject *target)
+{
+    CCObject* obj = NULL;
+    CCARRAY_FOREACH(m_observers, obj)
+    {
+        CCNotificationObserver* observer = (CCNotificationObserver*) obj;
+        if (!observer)
+            continue;
+        
+        if (observer->getTarget() == target)
+        {
+            m_observers->removeObject(observer);
+			
+            return;
+        }
+    }
+}
+
+
 void CCNotificationCenter::registerScriptObserver(int handler)
 {
     unregisterScriptObserver();
