@@ -209,6 +209,17 @@ public:
     @param[in]        pszFilePath        The path of the effect file,or the FileName of T_SoundResInfo
     */
     void unloadEffect(const char* pszFilePath);
+
+    /**
+     @brief	        set all effects and background music to mute.
+     @param[in]	    If YES then audio is silenced but not stopped, calls to start new audio will proceed but silently.
+     */
+	void setMute(bool muteValue);
+
+    /**
+     @brief	        Is audio mute.
+     */
+    bool isMuted();
 };
 
 } // end of namespace CocosDenshion

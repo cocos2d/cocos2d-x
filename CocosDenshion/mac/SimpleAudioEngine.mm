@@ -137,6 +137,16 @@ static void static_stopAllEffects()
     [[SimpleAudioEngine sharedEngine] stopAllEffects];
 }
 
+static bool static_isMuted()
+{
+    return [[SimpleAudioEngine sharedEngine] mute];
+}
+
+static void static_setMute(bool muteValue)
+{
+    [[SimpleAudioEngine sharedEngine] setMute:muteValue];
+}
+
 namespace CocosDenshion {
 
 static SimpleAudioEngine *s_pEngine;
@@ -275,6 +285,16 @@ void SimpleAudioEngine::resumeAllEffects()
 void SimpleAudioEngine::stopAllEffects()
 {
     static_stopAllEffects();
+}
+
+void SimpleAudioEngine::setMute(bool muteValue)
+{
+	static_setMute(muteValue);
+}
+
+bool SimpleAudioEngine::isMuted()
+{
+	return static_isMuted();
 }
 
 } // endof namespace CocosDenshion {
