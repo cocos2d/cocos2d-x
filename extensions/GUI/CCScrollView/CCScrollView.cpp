@@ -597,6 +597,7 @@ bool CCScrollView::ccTouchBegan(CCTouch* touch, CCEvent* event)
     CCRect frame;
     frame = CCRectMake(this->getPosition().x, this->getPosition().y, m_tViewSize.width, m_tViewSize.height);
     
+    frame.origin = convertToWorldSpace(frame.origin);
     //dispatcher does not know about clipping. reject touches outside visible bounds.
     if (m_pTouches->count() > 2 ||
         m_bTouchMoved          ||
