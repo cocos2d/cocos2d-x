@@ -641,9 +641,9 @@ void CCSpriteBatchNode::removeSpriteFromAtlas(CCSprite *pobSprite)
         m_pobDescendants->removeObjectAtIndex(uIndex);
 
         // update all sprites beyond this one
-        unsigned int count = m_pobDescendants->count();
+        unsigned int count = uIndex; // we will update items from the beginning to uIndex as m_pobDescendants is in ascending order
 
-        for(; uIndex < count; ++uIndex)
+        for(uIndex = 0; uIndex < count; ++uIndex)
         {
             CCSprite* s = (CCSprite*)(m_pobDescendants->objectAtIndex(uIndex));
             s->setAtlasIndex( s->getAtlasIndex() - 1 );
