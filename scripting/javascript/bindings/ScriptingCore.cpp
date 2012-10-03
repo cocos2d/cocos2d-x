@@ -303,10 +303,10 @@ JSBool ScriptingCore::runScript(const char *path)
 {
     CCLOG("ScriptingCore::runScript(%s)", path);
 
-    cocos2d::CCFileUtils *futil = cocos2d::CCFileUtils::sharedFileUtils();
-
 	const char *realPath;
 	if (this->externalScriptPath == "") {
+		cocos2d::CCFileUtils * futil = cocos2d::CCFileUtils::sharedFileUtils();
+
 		realPath = futil->fullPathFromRelativePath(path);
 	} else {
 		std::string fullPath = this->externalScriptPath + std::string(path);
