@@ -29,6 +29,7 @@ class ScriptingCore : public CCScriptEngineProtocol
 	JSRuntime *rt;
 	JSContext *cx;
 	JSObject  *global;
+	std::string externalScriptPath;
 	
 	ScriptingCore();
 public:
@@ -41,6 +42,8 @@ public:
         }
 		return pInstance;
 	};
+
+	virtual void setExternalScriptPath(const char * externalScriptPath);
 
     virtual ccScriptType getScriptType() { return kScriptTypeJavascript; };
     
