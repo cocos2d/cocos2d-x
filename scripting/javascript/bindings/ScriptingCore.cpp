@@ -303,26 +303,25 @@ JSBool ScriptingCore::runScript(const char *path)
 {
     CCLOG("ScriptingCore::runScript(%s)", path);
 
-	const char *realPath;
+	std::string fullPath;
 	if (this->externalScriptPath == "") {
 		cocos2d::CCFileUtils * futil = cocos2d::CCFileUtils::sharedFileUtils();
 
-		realPath = futil->fullPathFromRelativePath(path);
+		const char * tmp = futil->fullPathFromRelativePath(path);
+		if (!tmp) {
+			CCLOG("!realPath. returning JS_FALSE");
+			return JS_FALSE;
+		} else {
+			fullPath = tmp;
+		}
 	} else {
-		std::string fullPath = this->externalScriptPath + std::string(path);
-
-		realPath = fullPath.c_str();
+		fullPath = this->externalScriptPath + std::string(path);
 	}
-
-    if (!realPath) {
-        CCLOG("!realPath. returning JS_FALSE");
-        return JS_FALSE;
-    }
 
     unsigned char *content = NULL;
     unsigned long contentSize = 0;
 
-    content = (unsigned char*)CCString::createWithContentsOfFile(realPath)->getCString();
+    content = (unsigned char*)CCString::createWithContentsOfFile(fullPath.c_str())->getCString();
     contentSize = strlen((char*)content);
 
     JSBool ret = JS_FALSE;
