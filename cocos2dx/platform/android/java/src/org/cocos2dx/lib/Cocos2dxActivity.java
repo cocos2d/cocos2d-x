@@ -26,7 +26,6 @@ package org.cocos2dx.lib;
 import org.cocos2dx.lib.Cocos2dxHelper.Cocos2dxHelperListener;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.os.Bundle;
 import android.os.Message;
 import android.view.ViewGroup;
@@ -43,8 +42,8 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 	// Fields
 	// ===========================================================
 	
-	private Cocos2dxGLSurfaceView mGLSurefaceView;
-	private Cocos2dxHandler mHandler;
+	public Cocos2dxGLSurfaceView mGLSurfaceView;
+	public Cocos2dxHandler mHandler;
 
 	// ===========================================================
 	// Constructors
@@ -72,7 +71,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 		super.onResume();
 
 		Cocos2dxHelper.onResume();
-		this.mGLSurefaceView.onResume();
+		this.mGLSurfaceView.onResume();
 	}
 
 	@Override
@@ -80,7 +79,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 		super.onPause();
 
 		Cocos2dxHelper.onPause();
-		this.mGLSurefaceView.onPause();
+		this.mGLSurfaceView.onPause();
 	}
 
 	@Override
@@ -101,7 +100,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 	
 	@Override
 	public void runOnGLThread(final Runnable pRunnable) {
-		this.mGLSurefaceView.queueEvent(pRunnable);
+		this.mGLSurfaceView.queueEvent(pRunnable);
 	}
 
 	// ===========================================================
@@ -130,13 +129,13 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
         framelayout.addView(edittext);
 
         // Cocos2dxGLSurfaceView
-        this.mGLSurefaceView = this.onCreateGLSurfaceView();
+        this.mGLSurfaceView = this.onCreateGLSurfaceView();
 
         // ...add to FrameLayout
-        framelayout.addView(mGLSurefaceView);
+        framelayout.addView(mGLSurfaceView);
 
-        mGLSurefaceView.setCocos2dxRenderer(new Cocos2dxRenderer());
-        mGLSurefaceView.setCocos2dxEditText(edittext);
+        mGLSurfaceView.setCocos2dxRenderer(new Cocos2dxRenderer());
+        mGLSurfaceView.setCocos2dxEditText(edittext);
 
         // Set framelayout as the content view
 		setContentView(framelayout);
