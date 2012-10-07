@@ -42,8 +42,8 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 	// Fields
 	// ===========================================================
 	
-	public Cocos2dxGLSurfaceView mGLSurfaceView;
-	public Cocos2dxHandler mHandler;
+	private Cocos2dxGLSurfaceView mGLSurfaceView;
+	private Cocos2dxHandler mHandler;
 
 	// ===========================================================
 	// Constructors
@@ -53,7 +53,9 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		this.init();
+    	this.mHandler = new Cocos2dxHandler(this);
+
+    	this.mGLSurfaceView = onCreateView();
 
 		Cocos2dxHelper.init(this, this);
 	}
@@ -107,9 +109,8 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 	// Methods
 	// ===========================================================
 	
-    public void init() {
+    public Cocos2dxGLSurfaceView onCreateView() {
     	// Init handler
-    	this.mHandler = new Cocos2dxHandler(this);
     			
     	// FrameLayout
         ViewGroup.LayoutParams framelayout_params =
@@ -129,20 +130,18 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
         framelayout.addView(edittext);
 
         // Cocos2dxGLSurfaceView
-        this.mGLSurfaceView = this.onCreateGLSurfaceView();
+        Cocos2dxGLSurfaceView gLSurfaceView = new Cocos2dxGLSurfaceView(this);
 
         // ...add to FrameLayout
-        framelayout.addView(mGLSurfaceView);
+        framelayout.addView(gLSurfaceView);
 
-        mGLSurfaceView.setCocos2dxRenderer(new Cocos2dxRenderer());
-        mGLSurfaceView.setCocos2dxEditText(edittext);
+        gLSurfaceView.setCocos2dxRenderer(new Cocos2dxRenderer());
+        gLSurfaceView.setCocos2dxEditText(edittext);
 
         // Set framelayout as the content view
 		setContentView(framelayout);
-    }
-    
-    public Cocos2dxGLSurfaceView onCreateGLSurfaceView() {
-    	return new Cocos2dxGLSurfaceView(this);
+		
+		return gLSurfaceView;
     }
 
 	// ===========================================================
