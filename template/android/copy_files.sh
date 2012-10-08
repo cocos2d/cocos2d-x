@@ -52,6 +52,12 @@ copy_build_native(){
     chmod u+x $APP_DIR/proj.android/build_native.sh
 }
 
+# copy debugger script and replace templated parameters
+copy_ndkgdb(){
+    sed "s#__projectname__#$APP_NAME#;s#__packagename__#$PACKAGE_PATH#" $COCOS2DX_ROOT/template/android/ndkgdb.sh > $APP_DIR/proj.android/ndkgdb.sh
+    chmod u+x $APP_DIR/proj.android/ndkgdb.sh
+}
+
 # copy .project and .classpath and replace project name
 modify_project_classpath(){
     sed "s/HelloCpp/$APP_NAME/" $COCOS2DX_ROOT/template/android/.project > $APP_DIR/proj.android/.project
@@ -92,6 +98,7 @@ copy_cpp_h
 copy_resouces
 copy_src_and_jni
 copy_build_native
+copy_ndkgdb
 modify_project_classpath
 modify_androidmanifest
 modify_applicationdemo
