@@ -69,9 +69,7 @@ bool glew_dynamic_binding()
 {
 	const char *gl_extensions = (const char*)glGetString(GL_EXTENSIONS);
 
-	/* If the current opengl driver don't have framebuffers methods,
-	 * Check if an extension exist
-	 */
+	// If the current opengl driver doesn't have framebuffers methods, check if an extension exists
 	if (glGenFramebuffers == NULL)
 	{
 		CCLog("OpenGL: glGenFramebuffers is NULL, try to detect an extension\n");
@@ -234,7 +232,7 @@ void CCEGLView::destroyGL()
     }
 }
 
-bool CCEGLView::Create(LPCTSTR pTitle, int w, int h)
+bool CCEGLView::Create()
 {
     bool bRet = false;
     do
@@ -280,8 +278,6 @@ bool CCEGLView::Create(LPCTSTR pTitle, int w, int h)
             NULL );
 
         CC_BREAK_IF(! m_hWnd);
-
-        resize(w, h);
 
         bRet = initGL();
 		if(!bRet) destroyGL();
@@ -546,19 +542,12 @@ void CCEGLView::resize(int width, int height)
                  SWP_NOCOPYBITS | SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 }
 
-bool CCEGLView::setFrameSize(float width, float height)
+void CCEGLView::setFrameSize(float width, float height)
 {
-    if(!Create((LPCTSTR)m_szViewName, (int)width, (int)height)) 
-	{
-		PostQuitMessage(-1);
-		return false;
-	}
     CCEGLViewProtocol::setFrameSize(width, height);
 
     resize(width, height); // adjust window size for menubar
     centerWindow();
-
-	return true;
 }
 
 void CCEGLView::centerWindow()
@@ -602,13 +591,22 @@ bool CCEGLView::setContentScaleFactor(float contentScaleFactor)
     return true;
 }
 
-CCEGLView* CCEGLView::sharedOpenGLView()
+CCEGLView* CCEGLView::sharedOpenGLView(const char* pTitle)
 {
     static CCEGLView* s_pEglView = NULL;
     if (s_pEglView == NULL)
     {
         s_pEglView = new CCEGLView();
+
+		s_pEglView->setViewName(pTitle);
+
+		if(!s_pEglView->Create())
+		{
+			delete s_pEglView;
+			s_pEglView = NULL;
+		}
     }
+
     return s_pEglView;
 }
 
