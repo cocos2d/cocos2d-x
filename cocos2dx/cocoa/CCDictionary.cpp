@@ -91,7 +91,10 @@ CCArray* CCDictionary::allKeysForObject(CCObject* object)
 
 CCObject* CCDictionary::objectForKey(const std::string& key)
 {
-    if (m_eDictType == kCCDictUnknown && m_eDictType == kCCDictUnknown) return NULL;
+    // if dictionary wasn't initialized, return NULL directly.
+    if (m_eDictType == kCCDictUnknown) return NULL;
+    // CCDictionary only supports one kind of key, string or integer.
+    // This method uses string as key, therefore we should make sure that the key type of this CCDictionary is string.
     CCAssert(m_eDictType == kCCDictStr, "this dictionary does not use string as key.");
 
     CCObject* pRetObject = NULL;
@@ -106,7 +109,10 @@ CCObject* CCDictionary::objectForKey(const std::string& key)
 
 CCObject* CCDictionary::objectForKey(int key)
 {
-    if (m_eDictType == kCCDictUnknown && m_eDictType == kCCDictUnknown) return NULL;
+    // if dictionary wasn't initialized, return NULL directly.
+    if (m_eDictType == kCCDictUnknown) return NULL;
+    // CCDictionary only supports one kind of key, string or integer.
+    // This method uses integer as key, therefore we should make sure that the key type of this CCDictionary is integer.
     CCAssert(m_eDictType == kCCDictInt, "this dictionary does not use integer as key.");
 
     CCObject* pRetObject = NULL;
