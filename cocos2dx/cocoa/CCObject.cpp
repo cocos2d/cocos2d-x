@@ -53,10 +53,7 @@ CCObject::~CCObject(void)
     // from pool manager
     if (m_uAutoReleaseCount > 0)
     {
-        for (int i = 0; i < m_uAutoReleaseCount; ++i)
-        {
-            CCPoolManager::sharedPoolManager()->removeObject(this);
-        }
+        CCPoolManager::sharedPoolManager()->removeObject(this);
     }
 
     // if the object is referenced by Lua engine, remove it
@@ -100,8 +97,6 @@ void CCObject::retain(void)
 CCObject* CCObject::autorelease(void)
 {
     CCPoolManager::sharedPoolManager()->addObject(this);
-
-    ++m_uAutoReleaseCount;
     return this;
 }
 
