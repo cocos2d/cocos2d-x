@@ -175,7 +175,20 @@ public:
     {
         return _pSelector;
     }
-        
+
+    /** Set any custom headers **/
+    inline void setHeaders(std::vector<std::string> pHeaders)
+   	{
+   		_headers=pHeaders;
+   	}
+   
+    /** Get custom headers **/
+   	inline std::vector<std::string> getHeaders()
+   	{
+   		return _headers;
+   	}
+
+
 protected:
     // properties
     HttpRequestType             _requestType;    /// kHttpRequestGet, kHttpRequestPost or other enums
@@ -185,6 +198,7 @@ protected:
     CCObject*          _pTarget;        /// callback target of pSelector function
     SEL_CallFuncND     _pSelector;      /// callback function, e.g. MyLayer::onHttpResponse(CCObject *sender, void *data)
     void*                       _pUserData;      /// You can add your customed data here 
+    std::vector<std::string>    _headers;		      /// custom http headers
 };
 
 NS_CC_EXT_END
