@@ -26,7 +26,6 @@ package org.cocos2dx.lib;
 import org.cocos2dx.lib.Cocos2dxHelper.Cocos2dxHelperListener;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.os.Bundle;
 import android.os.Message;
 import android.view.ViewGroup;
@@ -43,7 +42,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 	// Fields
 	// ===========================================================
 	
-	private Cocos2dxGLSurfaceView mGLSurefaceView;
+	private Cocos2dxGLSurfaceView mGLSurfaceView;
 	private Cocos2dxHandler mHandler;
 
 	// ===========================================================
@@ -54,7 +53,9 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		this.init();
+    	this.mHandler = new Cocos2dxHandler(this);
+
+    	this.mGLSurfaceView = onCreateView();
 
 		Cocos2dxHelper.init(this, this);
 	}
@@ -72,7 +73,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 		super.onResume();
 
 		Cocos2dxHelper.onResume();
-		this.mGLSurefaceView.onResume();
+		this.mGLSurfaceView.onResume();
 	}
 
 	@Override
@@ -80,7 +81,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 		super.onPause();
 
 		Cocos2dxHelper.onPause();
-		this.mGLSurefaceView.onPause();
+		this.mGLSurfaceView.onPause();
 	}
 
 	@Override
@@ -101,16 +102,15 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 	
 	@Override
 	public void runOnGLThread(final Runnable pRunnable) {
-		this.mGLSurefaceView.queueEvent(pRunnable);
+		this.mGLSurfaceView.queueEvent(pRunnable);
 	}
 
 	// ===========================================================
 	// Methods
 	// ===========================================================
 	
-    public void init() {
+    public Cocos2dxGLSurfaceView onCreateView() {
     	// Init handler
-    	this.mHandler = new Cocos2dxHandler(this);
     			
     	// FrameLayout
         ViewGroup.LayoutParams framelayout_params =
@@ -130,20 +130,18 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
         framelayout.addView(edittext);
 
         // Cocos2dxGLSurfaceView
-        this.mGLSurefaceView = this.onCreateGLSurfaceView();
+        Cocos2dxGLSurfaceView gLSurfaceView = new Cocos2dxGLSurfaceView(this);
 
         // ...add to FrameLayout
-        framelayout.addView(mGLSurefaceView);
+        framelayout.addView(gLSurfaceView);
 
-        mGLSurefaceView.setCocos2dxRenderer(new Cocos2dxRenderer());
-        mGLSurefaceView.setCocos2dxEditText(edittext);
+        gLSurfaceView.setCocos2dxRenderer(new Cocos2dxRenderer());
+        gLSurfaceView.setCocos2dxEditText(edittext);
 
         // Set framelayout as the content view
 		setContentView(framelayout);
-    }
-    
-    public Cocos2dxGLSurfaceView onCreateGLSurfaceView() {
-    	return new Cocos2dxGLSurfaceView(this);
+		
+		return gLSurfaceView;
     }
 
 	// ===========================================================
