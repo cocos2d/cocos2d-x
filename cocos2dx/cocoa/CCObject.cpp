@@ -38,7 +38,7 @@ CCObject* CCCopying::copyWithZone(CCZone *pZone)
 }
 
 CCObject::CCObject(void)
-:m_bManaged(false)
+:m_uAutoReleaseCount(0)
 ,m_uReference(1) // when the object is created, the reference count of it is 1
 ,m_nLuaID(0)
 {
@@ -51,7 +51,7 @@ CCObject::~CCObject(void)
 {
     // if the object is managed, we should remove it
     // from pool manager
-    if (m_bManaged)
+    if (m_uAutoReleaseCount > 0)
     {
         CCPoolManager::sharedPoolManager()->removeObject(this);
     }
@@ -97,8 +97,6 @@ void CCObject::retain(void)
 CCObject* CCObject::autorelease(void)
 {
     CCPoolManager::sharedPoolManager()->addObject(this);
-
-    m_bManaged = true;
     return this;
 }
 
