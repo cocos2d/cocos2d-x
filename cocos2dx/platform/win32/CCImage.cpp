@@ -127,7 +127,7 @@ public:
             GetObjectA(m_hFont,  sizeof(tOldFont), &tOldFont);
 
             if (tOldFont.lfHeight == tNewFont.lfHeight
-                && ! strcpy(tOldFont.lfFaceName, tNewFont.lfFaceName))
+                && 0 == strcmp(tOldFont.lfFaceName, tNewFont.lfFaceName))
             {
                 // already has the font 
                 bRet = true;
