@@ -112,11 +112,9 @@ const CCSize& CCEGLViewProtocol::getFrameSize() const
     return m_obScreenSize;
 }
 
-bool CCEGLViewProtocol::setFrameSize(float width, float height)
+void CCEGLViewProtocol::setFrameSize(float width, float height)
 {
     m_obDesignResolutionSize = m_obScreenSize = CCSizeMake(width, height);
-
-	return true;
 }
 
 CCSize  CCEGLViewProtocol::getVisibleSize() const

@@ -64,7 +64,7 @@ public:
     /**
      * Set the frame size of EGL view.
      */
-    virtual bool setFrameSize(float width, float height);
+    virtual void setFrameSize(float width, float height);
     
     /**
      * Get the visible area size of opengl viewport.
