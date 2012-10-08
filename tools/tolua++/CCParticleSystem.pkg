@@ -152,7 +152,7 @@ class CCParticleSystemQuad : public CCParticleSystem
     void postStep();
     void setTotalParticles(unsigned int tp);
 
-	static CCParticleSystemQuad * create();
     static CCParticleSystemQuad * create(const char *plistFile);
+	static CCParticleSystemQuad * create();
 };
 

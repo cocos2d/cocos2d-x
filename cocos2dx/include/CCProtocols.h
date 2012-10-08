@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
 
 http://www.cocos2d-x.org
@@ -50,7 +50,7 @@ public:
     virtual GLubyte getOpacity(void) = 0;
 
     /** sets the opacity.
-     @warning If the the texture has premultiplied alpha then, the R, G and B channels will be modifed.
+     @warning If the the texture has premultiplied alpha then, the R, G and B channels will be modified.
      Values goes from 0 to 255, where 255 means fully opaque.
      */
     virtual void setOpacity(GLubyte opacity) = 0;
@@ -59,7 +59,7 @@ public:
 
     /** sets the premultipliedAlphaOpacity property.
      If set to NO then opacity will be applied as: glColor(R,G,B,opacity);
-     If set to YES then oapcity will be applied as: glColor(opacity, opacity, opacity, opacity );
+     If set to YES then opacity will be applied as: glColor(opacity, opacity, opacity, opacity );
      Textures with premultiplied alpha will have this property by default on YES. Otherwise the default value is NO
      @since v0.8
      */
@@ -72,7 +72,7 @@ public:
 };
 
 /**
- @brief You can specify the blending fuction.
+ @brief You can specify the blending function.
  @since v0.99.0
  */
 class CC_DLL CCBlendProtocol
@@ -91,7 +91,7 @@ public:
     src=GL_ONE dst= GL_ONE_MINUS_SRC_ALPHA
  else
     src=GL_SRC_ALPHA dst= GL_ONE_MINUS_SRC_ALPHA
- But you can change the blending funtion at any time.
+ But you can change the blending function at any time.
  @since v0.8.0
  */
 class CC_DLL CCTextureProtocol : public CCBlendProtocol
@@ -119,7 +119,7 @@ public:
 class CC_DLL CCDirectorDelegate
 {
 public:
-    /** Called by CCDirector when the porjection is updated, and "custom" projection is used
+    /** Called by CCDirector when the projection is updated, and "custom" projection is used
     @since v0.99.5
     */
     virtual void updateProjection(void) = 0;

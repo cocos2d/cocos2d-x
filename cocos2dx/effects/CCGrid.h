@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2009      On-Core
  
 http://www.cocos2d-x.org
@@ -51,7 +51,7 @@ class CC_DLL CCGridBase : public CCObject
 public:
     virtual ~CCGridBase(void);
 
-    /** wheter or not the grid is active */
+    /** whether or not the grid is active */
     inline bool isActive(void) { return m_bActive; }
     void setActive(bool bActive);
 

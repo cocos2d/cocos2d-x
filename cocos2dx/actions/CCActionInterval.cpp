@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2011 Zynga Inc.
  
@@ -384,7 +384,7 @@ bool CCRepeat::initWithAction(CCFiniteTimeAction *pAction, unsigned int times)
         pAction->retain();
 
         m_bActionInstant = dynamic_cast<CCActionInstant*>(pAction) ? true : false;
-        //a instant action needs to be executed one time less in the update method since it uses startWithTarget to execute the action
+        //an instant action needs to be executed one time less in the update method since it uses startWithTarget to execute the action
         if (m_bActionInstant) 
         {
             m_uTimes -=1;
@@ -463,7 +463,7 @@ void CCRepeat::update(float dt)
             m_uTotal++;
         }
 
-        // don't set a instantaction back or update it, it has no use because it has no duration
+        // don't set an instant action back or update it, it has no use because it has no duration
         if (!m_bActionInstant)
         {
             if (m_uTotal == m_uTimes)

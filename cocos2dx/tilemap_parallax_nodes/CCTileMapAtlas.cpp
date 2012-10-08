@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2011      Zynga Inc.
 
@@ -131,7 +131,7 @@ void CCTileMapAtlas::loadTGAfile(const char *file)
 #if 1
     if( m_pTGAInfo->status != TGA_OK ) 
     {
-        CCAssert(0, "TileMapAtlasLoadTGA : TileMapAtas cannot load TGA file");
+        CCAssert(0, "TileMapAtlasLoadTGA : TileMapAtlas cannot load TGA file");
     }
 #endif
 }
@@ -156,7 +156,7 @@ void CCTileMapAtlas::setTile(const ccColor3B& tile, const ccGridSize& position)
         ptr[position.x + position.y * m_pTGAInfo->width] = tile;
 
         // XXX: this method consumes a lot of memory
-        // XXX: a tree of something like that shall be impolemented
+        // XXX: a tree of something like that shall be implemented
         CCInteger *num = (CCInteger*)m_pPosToAtlasIndex->objectForKey(CCString::createWithFormat("%ld,%ld", 
                                                                                                  (long)position.x, 
                                                                                                  (long)position.y)->getCString());

@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2011      Zynga Inc.
 
@@ -93,7 +93,7 @@ typedef struct _BMFontPadding {
 */
 class CC_DLL CCBMFontConfiguration : public CCObject
 {
-    // XXX: Creating a public interface so that the bitmapFontArray[] is accesible
+    // XXX: Creating a public interface so that the bitmapFontArray[] is accessible
 public://@public
     // BMFont definitions
     struct _FontDefHashElement* m_pFontDefDictionary;
@@ -142,7 +142,7 @@ Features:
 - scaled
 - translated
 - tinted
-- chage the opacity
+- change the opacity
 - It can be used as part of a menu item.
 - anchorPoint can be used to align the "label"
 - Supports AngelCode text format
@@ -202,11 +202,11 @@ public:
     @since v0.99.3
     */
     static void purgeCachedData();
-    /** creates a bitmap font altas with an initial string and the FNT file 
+    /** creates a bitmap font atlas with an initial string and the FNT file 
     @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCLabelBMFont * labelWithString(const char *str, const char *fntFile, float width = kCCLabelAutomaticWidth, CCTextAlignment alignment = kCCTextAlignmentLeft, CCPoint imageOffset = CCPointZero);
-    /** creates a bitmap font altas with an initial string and the FNT file */
+    /** creates a bitmap font atlas with an initial string and the FNT file */
     static CCLabelBMFont * create(const char *str, const char *fntFile, float width, CCTextAlignment alignment, CCPoint imageOffset);
     
 	static CCLabelBMFont * create(const char *str, const char *fntFile, float width, CCTextAlignment alignment) {
@@ -231,7 +231,7 @@ public:
     static CCLabelBMFont * create();
 
     bool init();
-    /** init a bitmap font altas with an initial string and the FNT file */
+    /** init a bitmap font atlas with an initial string and the FNT file */
     bool initWithString(const char *str, const char *fntFile, float width = kCCLabelAutomaticWidth, CCTextAlignment alignment = kCCTextAlignmentLeft, CCPoint imageOffset = CCPointZero);
 
     /** updates the font chars based on the string to render */

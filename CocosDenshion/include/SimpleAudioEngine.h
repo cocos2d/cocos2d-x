@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2010      Steve Oldmeadow
 
 http://www.cocos2d-x.org
@@ -40,7 +40,7 @@ public:
     virtual long getClassTypeInfo() = 0;
 };
 
-static unsigned int getHashCodeByString(const char *key)
+static inline unsigned int getHashCodeByString(const char *key)
 {
 	unsigned int len = strlen(key);
 	const char *end=key+len;

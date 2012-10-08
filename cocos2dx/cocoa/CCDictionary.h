@@ -60,7 +60,7 @@ public:
         strcpy(m_szKey, pStart);
     }
 
-    CCDictElement(int iKey, CCObject* pObject)
+    CCDictElement(intptr_t iKey, CCObject* pObject)
     {
         init();
         m_iKey = iKey;
@@ -73,7 +73,7 @@ public:
         return m_szKey;
     }
 
-    inline int getIntKey() const 
+    inline intptr_t getIntKey() const 
     {
         CCAssert(m_szKey[0] == '\0', "Should not call this function for string dictionary");
         return m_iKey;
@@ -95,7 +95,7 @@ private:
 
 private:
     char m_szKey[MAX_KEY_LEN+1];  /** hash key of string type*/
-    int  m_iKey;        /** hash key of integer type */
+    intptr_t  m_iKey;   /** hash key of integer type */
     CCObject* m_pObject;/** hash value */
 public:
     UT_hash_handle hh; /* makes this class hashable */

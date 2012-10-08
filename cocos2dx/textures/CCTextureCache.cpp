@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2011      Zynga Inc.
 
@@ -151,7 +151,7 @@ static void* loadImage(void* data)
         CCImage::EImageFormat imageType = computeImageFormatType(pAsyncStruct->filename);
         if (imageType == CCImage::kFmtUnKnown)
         {
-            CCLOG("unsupportted format %s",filename);
+            CCLOG("unsupported format %s",filename);
             delete pAsyncStruct;
             
             continue;
@@ -437,8 +437,15 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
                 CCImage image;                
                 unsigned long nSize = 0;
                 unsigned char* pBuffer = CCFileUtils::sharedFileUtils()->getFileData(fullpath.c_str(), "rb", &nSize);
-                CC_BREAK_IF(! image.initWithImageData((void*)pBuffer, nSize, eImageFormat));
-                CC_SAFE_DELETE_ARRAY(pBuffer);
+                if (! image.initWithImageData((void*)pBuffer, nSize, eImageFormat))
+                {
+                    CC_SAFE_DELETE_ARRAY(pBuffer);
+                    break;
+                }
+                else
+                {
+                    CC_SAFE_DELETE_ARRAY(pBuffer);
+                }                
 
                 texture = new CCTexture2D();
                 
@@ -468,7 +475,7 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
 #ifdef CC_SUPPORT_PVRTC
 CCTexture2D* CCTextureCache::addPVRTCImage(const char* path, int bpp, bool hasAlpha, int width)
 {
-    CCAssert(path != NULL, "TextureCache: fileimage MUST not be nill");
+    CCAssert(path != NULL, "TextureCache: fileimage MUST not be nil");
     CCAssert( bpp==2 || bpp==4, "TextureCache: bpp must be either 2 or 4");
 
     CCTexture2D * texture;
@@ -506,7 +513,7 @@ CCTexture2D* CCTextureCache::addPVRTCImage(const char* path, int bpp, bool hasAl
 
 CCTexture2D * CCTextureCache::addPVRImage(const char* path)
 {
-    CCAssert(path != NULL, "TextureCache: fileimage MUST not be nill");
+    CCAssert(path != NULL, "TextureCache: fileimage MUST not be nil");
 
     CCTexture2D* texture = NULL;
     std::string key(path);
@@ -539,7 +546,7 @@ CCTexture2D * CCTextureCache::addPVRImage(const char* path)
 
 CCTexture2D* CCTextureCache::addUIImage(CCImage *image, const char *key)
 {
-    CCAssert(image != NULL, "TextureCache: image MUST not be nill");
+    CCAssert(image != NULL, "TextureCache: image MUST not be nil");
 
     CCTexture2D * texture = NULL;
     // textureForKey() use full path,so the key should be full path

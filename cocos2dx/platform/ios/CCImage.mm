@@ -437,7 +437,7 @@ bool CCImage::_initWithRawData(void *pData, int nDatalen, int nWidth, int nHeigh
         m_nWidth    = (short)nWidth;
         m_bHasAlpha = true;
 
-        // only RGBA8888 surported
+        // only RGBA8888 supported
         int nBytesPerComponent = 4;
         int nSize = nHeight * nWidth * nBytesPerComponent;
         m_pData = new unsigned char[nSize];

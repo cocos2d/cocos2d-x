@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
 
 http://www.cocos2d-x.org
@@ -247,10 +247,13 @@ CCDictionary* ccFileUtils_dictionaryWithContentsOfFileThreadSafe(const char *pFi
 
 CCArray* ccFileUtils_arrayWithContentsOfFileThreadSafe(const char* pFileName)
 {
-    NSString* pPath = [NSString stringWithUTF8String:pFileName];
-    NSString* pathExtension= [pPath pathExtension];
-    pPath = [pPath stringByDeletingPathExtension];
-    pPath = [[NSBundle mainBundle] pathForResource:pPath ofType:pathExtension];
+//    NSString* pPath = [NSString stringWithUTF8String:pFileName];
+//    NSString* pathExtension= [pPath pathExtension];
+//    pPath = [pPath stringByDeletingPathExtension];
+//    pPath = [[NSBundle mainBundle] pathForResource:pPath ofType:pathExtension];
+//    fixing cannot read data using CCArray::createWithContentsOfFile
+    const char* pszFullPath = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(pFileName);
+    NSString* pPath = [NSString stringWithUTF8String:pszFullPath];
     NSArray* pArray = [NSArray arrayWithContentsOfFile:pPath];
     
     CCArray* pRet = new CCArray();
@@ -264,7 +267,7 @@ CCArray* ccFileUtils_arrayWithContentsOfFileThreadSafe(const char* pFileName)
 unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize)
 {
     unsigned char * pBuffer = NULL;
-    CCAssert(pszFileName != NULL && pSize != NULL && pszMode != NULL, "Invaild parameters.");
+    CCAssert(pszFileName != NULL && pSize != NULL && pszMode != NULL, "Invalid parameters.");
     *pSize = 0;
     do 
     {

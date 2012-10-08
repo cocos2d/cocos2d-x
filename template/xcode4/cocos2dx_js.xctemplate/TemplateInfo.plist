@@ -11,6 +11,7 @@
 		<string>org.cocos2d-x.libjs</string>
 		<string>org.cocos2d-x.libspidermonkey</string>
 		<string>org.cocos2d-x.libchipmunk</string>
+		<string>org.cocos2d-x.libextensions</string>
 	</array>
 	<key>Concrete</key>
 	<true/>
@@ -32,45 +33,6 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>ios/AppController.h</key>
-		<dict>
-			<key>Group</key>
-			<string>ios</string>
-			<key>Path</key>
-			<string>ios/AppController.h</string>
-			<key>TargetIndices</key>
-			<array/>
-		</dict>
-		<key>ios/AppController.mm</key>
-		<dict>
-			<key>Group</key>
-			<string>ios</string>
-			<key>Path</key>
-			<string>ios/AppController.mm</string>
-		</dict>
-		<key>ios/main.m</key>
-		<dict>
-			<key>Group</key>
-			<string>ios</string>
-			<key>Path</key>
-			<string>ios/main.m</string>
-		</dict>
-		<key>ios/RootViewController.mm</key>
-		<dict>
-			<key>Group</key>
-			<string>ios</string>
-			<key>Path</key>
-			<string>ios/RootViewController.mm</string>
-		</dict>
-		<key>ios/RootViewController.h</key>
-		<dict>
-			<key>Group</key>
-			<string>ios</string>
-			<key>Path</key>
-			<string>ios/RootViewController.h</string>
-			<key>TargetIndices</key>
-			<array/>
-		</dict>
 		<key>Prefix.pch</key>
 		<dict>
 			<key>Group</key>
@@ -80,12 +42,416 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
+		<key>Resources/CCB/Abadi40-hd.fnt</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Resources</string>
+				<string>CCB</string>
+			</array>
+			<key>Path</key>
+			<string>Resources/CCB/Abadi40-hd.fnt</string>
+		</dict>
+		<key>Resources/CCB/Abadi40-hd.png</key>
+		<dict>
+			<key>Group</key>
+			<array>
+
+				<string>Resources</string>
+				<string>CCB</string>
+			</array>
+			<key>Path</key>
+			<string>Resources/CCB/Abadi40-hd.png</string>
+		</dict>
+		<key>Resources/CCB/Abadi40-ipad.fnt</key>
+		<dict>
+			<key>Group</key>
+			<array>
+
+				<string>Resources</string>
+				<string>CCB</string>
+			</array>
+			<key>Path</key>
+			<string>Resources/CCB/Abadi40-ipad.fnt</string>
+		</dict>
+		<key>Resources/CCB/Abadi40-ipad.png</key>
+		<dict>
+			<key>Group</key>
+			<array>
+
+				<string>Resources</string>
+				<string>CCB</string>
+			</array>
+			<key>Path</key>
+			<string>Resources/CCB/Abadi40-ipad.png</string>
+		</dict>
+		<key>Resources/CCB/Abadi40.fnt</key>
+		<dict>
+			<key>Group</key>
+			<array>
+
+				<string>Resources</string>
+				<string>CCB</string>
+			</array>
+			<key>Path</key>
+			<string>Resources/CCB/Abadi40.fnt</string>
+		</dict>
+		<key>Resources/CCB/Abadi40.png</key>
+		<dict>
+			<key>Group</key>
+			<array>
+
+				<string>Resources</string>
+				<string>CCB</string>
+			</array>
+			<key>Path</key>
+			<string>Resources/CCB/Abadi40.png</string>
+		</dict>
+		<key>Resources/CCB/About.ccbi</key>
+		<dict>
+			<key>Group</key>
+			<array>
+
+				<string>Resources</string>
+				<string>CCB</string>
+			</array>
+			<key>Path</key>
+			<string>Resources/CCB/About.ccbi</string>
+		</dict>
+		<key>Resources/CCB/coins-hd.plist</key>
+		<dict>
+			<key>Group</key>
+			<array>
+
+				<string>Resources</string>
+				<string>CCB</string>
+			</array>
+			<key>Path</key>
+			<string>Resources/CCB/coins-hd.plist</string>
+		</dict>
+		<key>Resources/CCB/coins-hd.pvr.ccz</key>
+		<dict>
+			<key>Group</key>
+			<array>
+
+				<string>Resources</string>
+				<string>CCB</string>
+			</array>
+			<key>Path</key>
+			<string>Resources/CCB/coins-hd.pvr.ccz</string>
+		</dict>
+		<key>Resources/CCB/coins.plist</key>
+		<dict>
+			<key>Group</key>
+			<array>
+
+				<string>Resources</string>
+				<string>CCB</string>
+			</array>
+			<key>Path</key>
+			<string>Resources/CCB/coins.plist</string>
+		</dict>
+		<key>Resources/CCB/coins.pvr.ccz</key>
+		<dict>
+			<key>Group</key>
+			<array>
+
+				<string>Resources</string>
+				<string>CCB</string>
+			</array>
+			<key>Path</key>
+			<string>Resources/CCB/coins.pvr.ccz</string>
+		</dict>
+		<key>Resources/CCB/Gas40-hd.fnt</key>
+		<dict>
+			<key>Group</key>
+			<array>
+
+				<string>Resources</string>
+				<string>CCB</string>
+			</array>
+			<key>Path</key>
+			<string>Resources/CCB/Gas40-hd.fnt</string>
+		</dict>
+		<key>Resources/CCB/Gas40-hd.png</key>
+		<dict>
+			<key>Group</key>
+			<array>
+
+				<string>Resources</string>
+				<string>CCB</string>
+			</array>
+			<key>Path</key>
+			<string>Resources/CCB/Gas40-hd.png</string>
+		</dict>
+		<key>Resources/CCB/Gas40-ipad.fnt</key>
+		<dict>
+			<key>Group</key>
+			<array>
+
+				<string>Resources</string>
+				<string>CCB</string>
+			</array>
+			<key>Path</key>
+			<string>Resources/CCB/Gas40-ipad.fnt</string>
+		</dict>
+		<key>Resources/CCB/Gas40-ipad.png</key>
+		<dict>
+			<key>Group</key>
+			<array>
+
+				<string>Resources</string>
+				<string>CCB</string>
+			</array>
+			<key>Path</key>
+			<string>Resources/CCB/Gas40-ipad.png</string>
+		</dict>
+		<key>Resources/CCB/Gas40.fnt</key>
+		<dict>
+			<key>Group</key>
+			<array>
+
+				<string>Resources</string>
+				<string>CCB</string>
+			</array>
+			<key>Path</key>
+			<string>Resources/CCB/Gas40.fnt</string>
+		</dict>
+		<key>Resources/CCB/Gas40.png</key>
+		<dict>
+			<key>Group</key>
+			<array>
+
+				<string>Resources</string>
+				<string>CCB</string>
+			</array>
+			<key>Path</key>
+			<string>Resources/CCB/Gas40.png</string>
+		</dict>
+		<key>Resources/CCB/HUD.ccbi</key>
+		<dict>
+			<key>Group</key>
+			<array>
+
+				<string>Resources</string>
+				<string>CCB</string>
+			</array>
+			<key>Path</key>
+			<string>Resources/CCB/HUD.ccbi</string>
+		</dict>
+		<key>Resources/CCB/konqa32-hd.fnt</key>
+		<dict>
+			<key>Group</key>
+			<array>
+
+				<string>Resources</string>
+				<string>CCB</string>
+			</array>
+			<key>Path</key>
+			<string>Resources/CCB/konqa32-hd.fnt</string>
+		</dict>
+		<key>Resources/CCB/konqa32-hd.png</key>
+		<dict>
+			<key>Group</key>
+			<array>
+
+				<string>Resources</string>
+				<string>CCB</string>
+			</array>
+			<key>Path</key>
+			<string>Resources/CCB/konqa32-hd.png</string>
+		</dict>
+		<key>Resources/CCB/konqa32-ipad.fnt</key>
+		<dict>
+			<key>Group</key>
+			<array>
+
+				<string>Resources</string>
+				<string>CCB</string>
+			</array>
+			<key>Path</key>
+			<string>Resources/CCB/konqa32-ipad.fnt</string>
+		</dict>
+		<key>Resources/CCB/konqa32-ipad.png</key>
+		<dict>
+			<key>Group</key>
+			<array>
+
+				<string>Resources</string>
+				<string>CCB</string>
+			</array>
+			<key>Path</key>
+			<string>Resources/CCB/konqa32-ipad.png</string>
+		</dict>
+		<key>Resources/CCB/konqa32.fnt</key>
+		<dict>
+			<key>Group</key>
+			<array>
+
+				<string>Resources</string>
+				<string>CCB</string>
+			</array>
+			<key>Path</key>
+			<string>Resources/CCB/konqa32.fnt</string>
+		</dict>
+		<key>Resources/CCB/konqa32.png</key>
+		<dict>
+			<key>Group</key>
+			<array>
+
+				<string>Resources</string>
+				<string>CCB</string>
+			</array>
+			<key>Path</key>
+			<string>Resources/CCB/konqa32.png</string>
+		</dict>
+		<key>Resources/CCB/labels-hd.plist</key>
+		<dict>
+			<key>Group</key>
+			<array>
+
+				<string>Resources</string>
+				<string>CCB</string>
+			</array>
+			<key>Path</key>
+			<string>Resources/CCB/labels-hd.plist</string>
+		</dict>
+		<key>Resources/CCB/labels-hd.pvr.gz</key>
+		<dict>
+			<key>Group</key>
+			<array>
+
+				<string>Resources</string>
+				<string>CCB</string>
+			</array>
+			<key>Path</key>
+			<string>Resources/CCB/labels-hd.pvr.gz</string>
+		</dict>
+		<key>Resources/CCB/labels-ipad.plist</key>
+		<dict>
+			<key>Group</key>
+			<array>
+
+				<string>Resources</string>
+				<string>CCB</string>
+			</array>
+			<key>Path</key>
+			<string>Resources/CCB/labels-ipad.plist</string>
+		</dict>
+		<key>Resources/CCB/labels-ipad.pvr.gz</key>
+		<dict>
+			<key>Group</key>
+			<array>
+
+				<string>Resources</string>
+				<string>CCB</string>
+			</array>
+			<key>Path</key>
+			<string>Resources/CCB/labels-ipad.pvr.gz</string>
+		</dict>
+		<key>Resources/CCB/labels.plist</key>
+		<dict>
+			<key>Group</key>
+			<array>
+
+				<string>Resources</string>
+				<string>CCB</string>
+			</array>
+			<key>Path</key>
+			<string>Resources/CCB/labels.plist</string>
+		</dict>
+		<key>Resources/CCB/labels.pvr.gz</key>
+		<dict>
+			<key>Group</key>
+			<array>
+
+				<string>Resources</string>
+				<string>CCB</string>
+			</array>
+			<key>Path</key>
+			<string>Resources/CCB/labels.pvr.gz</string>
+		</dict>
+		<key>Resources/CCB/MainMenu.ccbi</key>
+		<dict>
+			<key>Group</key>
+			<array>
+
+				<string>Resources</string>
+				<string>CCB</string>
+			</array>
+			<key>Path</key>
+			<string>Resources/CCB/MainMenu.ccbi</string>
+		</dict>
+		<key>Resources/CCB/stars2.png</key>
+		<dict>
+			<key>Group</key>
+			<array>
+
+				<string>Resources</string>
+				<string>CCB</string>
+			</array>
+			<key>Path</key>
+			<string>Resources/CCB/stars2.png</string>
+		</dict>
+		<key>Resources/CCB/watermelon.png</key>
+		<dict>
+			<key>Group</key>
+			<array>
+
+				<string>Resources</string>
+				<string>CCB</string>
+			</array>
+			<key>Path</key>
+			<string>Resources/CCB/watermelon.png</string>
+		</dict>
+		<key>Resources/Default.png</key>
+		<dict>
+			<key>Group</key>
+			<string>Resources</string>
+			<key>Path</key>
+			<string>Resources/Default.png</string>
+		</dict>
+		<key>Resources/fps_images-hd.png</key>
+		<dict>
+			<key>Group</key>
+			<string>Resources</string>
+			<key>Path</key>
+			<string>Resources/fps_images-hd.png</string>
+		</dict>
+		<key>Resources/fps_images-ipadhd.png</key>
+		<dict>
+			<key>Group</key>
+			<string>Resources</string>
+			<key>Path</key>
+			<string>Resources/fps_images-ipadhd.png</string>
+		</dict>
+		<key>Resources/fps_images.png</key>
+		<dict>
+			<key>Group</key>
+			<string>Resources</string>
+			<key>Path</key>
+			<string>Resources/fps_images.png</string>
+		</dict>
 		<key>Resources/hello.js</key>
 		<dict>
 			<key>Group</key>
 			<string>Resources</string>
 			<key>Path</key>
 			<string>Resources/hello.js</string>
+		</dict>
+		<key>Resources/hello.js_BACK</key>
+		<dict>
+			<key>Group</key>
+			<string>Resources</string>
+			<key>Path</key>
+			<string>Resources/hello.js_BACK</string>
+		</dict>
+		<key>Resources/Icon.png</key>
+		<dict>
+			<key>Group</key>
+			<string>Resources</string>
+			<key>Path</key>
+			<string>Resources/Icon.png</string>
 		</dict>
 		<key>Resources/menu1.png</key>
 		<dict>
@@ -111,14 +477,48 @@
 	<key>Nodes</key>
 	<array>
 		<string>Prefix.pch</string>
-		<string>ios/main.m</string>
-		<string>ios/AppController.h</string>
-		<string>ios/AppController.mm</string>
-		<string>ios/RootViewController.h</string>
-		<string>ios/RootViewController.mm</string>
 		<string>Classes/AppDelegate.h</string>
 		<string>Classes/AppDelegate.cpp</string>
+		<string>Resources/CCB/Abadi40-hd.fnt</string>
+		<string>Resources/CCB/Abadi40-hd.png</string>
+		<string>Resources/CCB/Abadi40-ipad.fnt</string>
+		<string>Resources/CCB/Abadi40-ipad.png</string>
+		<string>Resources/CCB/Abadi40.fnt</string>
+		<string>Resources/CCB/Abadi40.png</string>
+		<string>Resources/CCB/About.ccbi</string>
+		<string>Resources/CCB/coins-hd.plist</string>
+		<string>Resources/CCB/coins-hd.pvr.ccz</string>
+		<string>Resources/CCB/coins.plist</string>
+		<string>Resources/CCB/coins.pvr.ccz</string>
+		<string>Resources/CCB/Gas40-hd.fnt</string>
+		<string>Resources/CCB/Gas40-hd.png</string>
+		<string>Resources/CCB/Gas40-ipad.fnt</string>
+		<string>Resources/CCB/Gas40-ipad.png</string>
+		<string>Resources/CCB/Gas40.fnt</string>
+		<string>Resources/CCB/Gas40.png</string>
+		<string>Resources/CCB/HUD.ccbi</string>
+		<string>Resources/CCB/konqa32-hd.fnt</string>
+		<string>Resources/CCB/konqa32-hd.png</string>
+		<string>Resources/CCB/konqa32-ipad.fnt</string>
+		<string>Resources/CCB/konqa32-ipad.png</string>
+		<string>Resources/CCB/konqa32.fnt</string>
+		<string>Resources/CCB/konqa32.png</string>
+		<string>Resources/CCB/labels-hd.plist</string>
+		<string>Resources/CCB/labels-hd.pvr.gz</string>
+		<string>Resources/CCB/labels-ipad.plist</string>
+		<string>Resources/CCB/labels-ipad.pvr.gz</string>
+		<string>Resources/CCB/labels.plist</string>
+		<string>Resources/CCB/labels.pvr.gz</string>
+		<string>Resources/CCB/MainMenu.ccbi</string>
+		<string>Resources/CCB/stars2.png</string>
+		<string>Resources/CCB/watermelon.png</string>
+		<string>Resources/Default.png</string>
+		<string>Resources/fps_images-hd.png</string>
+		<string>Resources/fps_images-ipadhd.png</string>
+		<string>Resources/fps_images.png</string>
 		<string>Resources/hello.js</string>
+		<string>Resources/hello.js_BACK</string>
+		<string>Resources/Icon.png</string>
 		<string>Resources/menu1.png</string>
 		<string>Resources/menu2.png</string>
 	</array>

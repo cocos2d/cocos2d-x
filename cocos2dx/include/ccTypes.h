@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2011      Zynga Inc.
 
@@ -254,7 +254,7 @@ typedef struct _ccV3F_C4B_T2F
 //    char __padding2__[4];
 
     // tex coords (2F)
-    ccTex2F            texCoords;            // 8 byts
+    ccTex2F            texCoords;            // 8 bytes
 } ccV3F_C4B_T2F;
 
 //! 4 ccVertex2FTex2FColor4B Quad
@@ -305,7 +305,7 @@ typedef struct _ccBlendFunc
     GLenum dst;
 } ccBlendFunc;
 
-// XXX: If any of these enums are edited and/or reordered, udpate CCTexture2D.m
+// XXX: If any of these enums are edited and/or reordered, update CCTexture2D.m
 //! Vertical text alignment type
 typedef enum
 {
@@ -314,7 +314,7 @@ typedef enum
     kCCVerticalTextAlignmentBottom,
 } CCVerticalTextAlignment;
 
-// XXX: If any of these enums are edited and/or reordered, udpate CCTexture2D.m
+// XXX: If any of these enums are edited and/or reordered, update CCTexture2D.m
 //! Horizontal text alignment type
 typedef enum
 {

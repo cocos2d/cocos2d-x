@@ -2,7 +2,8 @@
 //  Created by Rohan Kuruvilla
 //  Copyright (c) 2012 Zynga Inc. All rights reserved.
 //
-
+#ifndef __JS_BINDINGS_CHIPMUNK_FUNCTIONS_HPP__
+#define __JS_BINDINGS_CHIPMUNK_FUNCTIONS_HPP__
 
 JSBool JSPROXY_cpArbiterGetCount(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool JSPROXY_cpArbiterGetDepth(JSContext *cx, uint32_t argc, jsval *vp);
@@ -280,3 +281,6 @@ JSBool JSPROXY_cpvslerpconst(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool JSPROXY_cpvsub(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool JSPROXY_cpvtoangle(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool JSPROXY_cpvunrotate(JSContext *cx, uint32_t argc, jsval *vp);
+
+#endif /* __JS_BINDINGS_CHIPMUNK_FUNCTIONS_HPP__ */
+

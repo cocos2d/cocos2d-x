@@ -1,5 +1,6 @@
 /*
- * CCControlColourPicker.h
+ * Copyright (c) 2012 cocos2d-x.org
+ * http://www.cocos2d-x.org
  *
  * Copyright 2012 Stewart Hamilton-Arrandale.
  * http://creativewax.co.uk
@@ -48,15 +49,16 @@ NS_CC_EXT_BEGIN
 
 class CCControlColourPicker: public CCControl
 {
-    CC_SYNTHESIZE_READONLY_PASS_BY_REF(ccColor3B, m_colorValue, ColorValue);
-    virtual void setColorValue(const ccColor3B& colorValue);
-
+public:
+    CCControlColourPicker();
+    virtual ~CCControlColourPicker();
+    virtual void setColor(const ccColor3B& colorValue);
+    virtual void setEnabled(bool bEnabled);
 protected:
     HSV m_hsv;
-    CCControlSaturationBrightnessPicker* m_colourPicker;
-    CCControlHuePicker* m_huePicker;
-
-    CC_SYNTHESIZE_READONLY(CCSprite*, m_background, Background);   
+    CC_SYNTHESIZE_RETAIN(CCControlSaturationBrightnessPicker*, m_colourPicker, colourPicker)
+    CC_SYNTHESIZE_RETAIN(CCControlHuePicker*, m_huePicker, HuePicker)
+    CC_SYNTHESIZE_RETAIN(CCSprite*, m_background, Background)
     
 public:
     //@deprecated: This interface will be deprecated sooner or later.

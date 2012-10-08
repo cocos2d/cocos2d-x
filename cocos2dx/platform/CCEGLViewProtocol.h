@@ -36,7 +36,7 @@ public:
     CCEGLViewProtocol();
     virtual ~CCEGLViewProtocol();
 
-    /** Force destorying EGL view, subclass must implement this method. */
+    /** Force destroying EGL view, subclass must implement this method. */
     virtual void    end() = 0;
     
     /** Get whether opengl render system is ready, subclass must implement this method. */
@@ -77,14 +77,14 @@ public:
     virtual CCPoint getVisibleOrigin() const;
     
     /** 
-     * Set the design resolutin size.
-     * You can't use it with enableRetina together.
+     * Set the design resolution size.
+     * Behavior undefined when enableRetina == true.
      * @param width Design resolution width.
      * @param height Design resolution height.
-     * @param resolutionPolicy The resolution policy you need, there are:
-     *                         [1] kCCResolutionExactFit Fill screen, if the design resolution ratio of width and height is different from the screen resolution ratio, your game view will be stretched.
-     *                         [2] kCCResolutionNoBorder Full screen without black border, if the design resolution ratio of width and height is different from the screen resolution ratio, two areas of your game view will be cut.
-     *                         [3] kCCResolutionShowAll  Full screen with black border, if the design resolution ratio of width and height is different from the screen resolution ratio, two black border will be shown on the screen;
+     * @param resolutionPolicy The resolution policy desired, you may choose:
+     *                         [1] kCCResolutionExactFit Fill screen by stretch-to-fit: if the design resolution ratio of width to height is different from the screen resolution ratio, your game view will be stretched.
+     *                         [2] kCCResolutionNoBorder Full screen without black border: if the design resolution ratio of width to height is different from the screen resolution ratio, two areas of your game view will be cut.
+     *                         [3] kCCResolutionShowAll  Full screen with black border: if the design resolution ratio of width to height is different from the screen resolution ratio, two black borders will be shown.
      */
     virtual void setDesignResolutionSize(float width, float height, ResolutionPolicy resolutionPolicy);
     
@@ -93,7 +93,7 @@ public:
     
     /**
      * Set content scale factor.
-     * @return If return true, it means the plaform supports retina display.
+     * @return If the return value is true, the platform supports retina display mode.
      */
     virtual bool setContentScaleFactor(float contentScaleFactor);
     
@@ -117,30 +117,29 @@ public:
      */
     virtual bool enableRetina();
 
-    /** handle touch events by default, if you want to custom your handles, please override these functions */
+    /** Touch events are handled by default; if you want to customize your handlers, please override these functions: */
     virtual void handleTouchesBegin(int num, int ids[], float xs[], float ys[]);
     virtual void handleTouchesMove(int num, int ids[], float xs[], float ys[]);
     virtual void handleTouchesEnd(int num, int ids[], float xs[], float ys[]);
     virtual void handleTouchesCancel(int num, int ids[], float xs[], float ys[]);
 
     /**
-     * Get opengl view port rectangle.
+     * Get the opengl view port rectangle.
      */
     const CCRect& getViewPortRect() const;
     
     /**
-     * Get the scale factor of horizontal direction.
-     * 
+     * Get scale factor of the horizontal direction.
      */
     float getScaleX() const;
     
     /**
-     * Get the scale factor of vertical direction.
+     * Get scale factor of the vertical direction.
      */
     float getScaleY() const;
     
     /**
-     * Get whether the retina mode is enabled.
+     * Get retina mode status (on if true).
      */
     bool isRetinaEnabled() const;
 private:
@@ -149,9 +148,9 @@ private:
 protected:
     EGLTouchDelegate* m_pDelegate;
 
-    // real size of screen
+    // real screen size
     CCSize m_obScreenSize;
-    // resolution size, it is the size the app resources designed for
+    // resolution size, it is the size appropriate for the app resources.
     CCSize m_obDesignResolutionSize;
     // the view port size
     CCRect m_obViewPortRect;

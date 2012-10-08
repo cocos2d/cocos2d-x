@@ -1,3 +1,6 @@
+#ifndef __CCPHYSICSSPRITE_H__
+#define __CCPHYSICSSPRITE_H__
+
 #include "sprite_nodes/CCSprite.h"
 #include "chipmunk.h"
 
@@ -24,3 +27,4 @@ public:
     virtual void setRotation(float rotation);
 };
 
+#endif /* __CCPHYSICSSPRITE_H__ */

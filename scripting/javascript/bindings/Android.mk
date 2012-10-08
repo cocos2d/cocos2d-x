@@ -8,19 +8,22 @@ LOCAL_MODULE_FILENAME := libscriptingcore-spidermonkey
 
 LOCAL_SRC_FILES := ScriptingCore.cpp \
                    cocos2d_specifics.cpp \
-                   cocos2dx.cpp \
                    CCPhysicsSprite.cpp \
                    js_manual_conversions.cpp \
+                   cocosjs_manual_conversions.cpp \
                    js_bindings_chipmunk_manual.cpp \
-                   js_bindings_chipmunk_functions.cpp
+                   js_bindings_chipmunk_functions.cpp \
+                   generated/cocos2dx.cpp
 
 LOCAL_CFLAGS := -DCOCOS2D_JAVASCRIPT
 
 LOCAL_EXPORT_CFLAGS := -DCOCOS2D_JAVASCRIPT
 
-LOCAL_C_INCLUDES := $(LOCAL_PATH)
+LOCAL_C_INCLUDES := $(LOCAL_PATH) \
+                    $(LOCAL_PATH)/../../../CocosDenshion/include
 
-LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)
+LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
+                           $(LOCAL_PATH)/generated
 
 LOCAL_WHOLE_STATIC_LIBRARIES := spidermonkey_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos2dx_static

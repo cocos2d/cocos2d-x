@@ -1,8 +1,8 @@
 CC      = gcc
 CXX     = g++
 TARGET	= TestCpp
-CCFLAGS = -Wall -g #-O2 
-CXXFLAGS = -Wall -g #-O2 
+CCFLAGS = -Wall
+CXXFLAGS = -Wall
 VISIBILITY = 
 LIBS = 
 
@@ -69,6 +69,7 @@ OBJECTS = ../Classes/AccelerometerTest/AccelerometerTest.o \
 			../Classes/ExtensionsTest/CocosBuilderTest/ButtonTest/ButtonTestLayer.o \
 			../Classes/ExtensionsTest/CocosBuilderTest/CocosBuilderTest.o \
 			../Classes/ExtensionsTest/CocosBuilderTest/HelloCocosBuilder/HelloCocosBuilderLayer.o \
+                        ../Classes/ExtensionsTest/CocosBuilderTest/AnimationsTest/AnimationsTestLayer.o \
 			../Classes/ExtensionsTest/CocosBuilderTest/MenuTest/MenuTestLayer.o \
 			../Classes/ExtensionsTest/CocosBuilderTest/TestHeader/TestHeaderLayer.o \
 			../Classes/ExtensionsTest/ControlExtensionTest/CCControlButtonTest/CCControlButtonTest.o \
@@ -77,6 +78,8 @@ OBJECTS = ../Classes/AccelerometerTest/AccelerometerTest.o \
 			../Classes/ExtensionsTest/ControlExtensionTest/CCControlSceneManager.o \
 			../Classes/ExtensionsTest/ControlExtensionTest/CCControlSliderTest/CCControlSliderTest.o \
 			../Classes/ExtensionsTest/ControlExtensionTest/CCControlSwitchTest/CCControlSwitchTest.o \
+			../Classes/ExtensionsTest/ControlExtensionTest/CCControlPotentiometerTest/CCControlPotentiometerTest.o \
+			../Classes/ExtensionsTest/ControlExtensionTest/CCControlStepperTest/CCControlStepperTest.o \
 			../Classes/ExtensionsTest/TableViewTest/TableViewTestScene.o \
 			../Classes/ExtensionsTest/TableViewTest/CustomTableViewCell.o \
 			../Classes/ExtensionsTest/ExtensionsTest.o \
@@ -120,7 +123,7 @@ OBJECTS = ../Classes/AccelerometerTest/AccelerometerTest.o \
 			../Classes/AppDelegate.o \
 			./main.o 
 
-					
+
 LBITS := $(shell getconf LONG_BIT)
 ifeq ($(LBITS),64)
 STATICLIBS_DIR = ../../../cocos2dx/platform/third_party/linux/libraries/lib64
@@ -136,7 +139,6 @@ STATICLIBS = $(STATICLIBS_DIR)/libfreetype.a \
 				$(STATICLIBS_DIR)/libtiff.a \
 				../../../lib/linux/Debug/libbox2d.a \
 				../../../lib/linux/Debug/libchipmunk.a \
-#				$(STATICLIBS_DIR)/libGLEW.a \
 
 SHAREDLIBS = 
 ifeq ($(LBITS),64)
@@ -148,20 +150,36 @@ SHAREDLIBS = -L$(SHAREDLIBS_DIR) -lfmodex
 endif
 
 SHAREDLIBS += -lglfw -lGL
-#SHAREDLIBS += -lGLEW
-SHAREDLIBS += -L../../../lib/linux/Debug -lcocos2d -lrt -lz -lcocosdenshion -Wl,-rpath,../../../../lib/linux/Debug/ 
-SHAREDLIBS += -Wl,-rpath,../$(SHAREDLIBS_DIR)
-SHAREDLIBS += -Wl,-rpath,../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib
+#SHAREDLIBS += -L../../../lib/linux/Debug -lcocos2d -lrt -lz -lcocosdenshion -Wl,-rpath,../../../../lib/linux/Debug/ 
+SHAREDLIBS += -Wl,-rpath,../../$(SHAREDLIBS_DIR)
+#SHAREDLIBS += -Wl,-rpath,../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib
 SHAREDLIBS += -L../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib -lGLEW
+SHAREDLIBS += -Wl,-rpath,../../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib
+
 
 SHAREDLIBS += -Wl,-rpath,../$(STATICLIBS_DIR)
 SHAREDLIBS += -lcurl
 
-BIN_DIR=bin
+BIN_DIR_ROOT=bin
+BIN_DIR = BIN_DIR_ROOT
+
+debug: SHAREDLIBS += -L../../../lib/linux/Debug -lcocos2d -lrt -lz -lcocosdenshion -Wl,-rpath,../../../../../lib/linux/Debug
+debug: CCFLAGS += -g3 -O0
+debug: CXXFLAGS += -g3 -O0
+debug: DEFINES += -DDEBUG
+debug: BIN_DIR = $(BIN_DIR_ROOT)/debug
+debug: $(TARGET)
+
+release: SHAREDLIBS += -L../../../lib/linux/Release -lcocos2d -lrt -lz -lcocosdenshion -Wl,-rpath,../../../../../lib/linux/Release
+release: CCFLAGS += -O3
+release: CXXFLAGS += -O3
+release: DEFINES += -DNDEBUG
+release: BIN_DIR = $(BIN_DIR_ROOT)/release
+release: $(TARGET)
 
 ####### Build rules
 $(TARGET): $(OBJECTS)
-	test -d $(BIN_DIR) || mkdir $(BIN_DIR)
+	mkdir -p $(BIN_DIR)
 	$(CXX) $(CXXFLAGS) $(INCLUDES) $(DEFINES) $(OBJECTS) -o $(BIN_DIR)/$(TARGET) $(SHAREDLIBS) $(STATICLIBS) $(LIBS)
 
 
@@ -171,8 +189,7 @@ $(TARGET): $(OBJECTS)
 
 %.o: %.c
 	$(CC) $(CCFLAGS) $(INCLUDES) $(DEFINES) $(VISIBILITY) -c $< -o $@
-		
+
 
 clean: 
 	rm -f $(OBJECTS) $(TARGET) core
-	rm -r $(BIN_DIR)

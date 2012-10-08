@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 
 http://www.cocos2d-x.org
 
@@ -118,7 +118,7 @@ static void setValueForKey(const char* pKey, const char* pValue)
         if (rootNode)
         {
             // the node doesn't exist, add a new one
-            // libxml in android donesn't support xmlNewTextChild, so use this approach
+            // libxml in android doesn't support xmlNewTextChild, so use this approach
             xmlNodePtr tmpNode = xmlNewNode(NULL, BAD_CAST pKey);
             xmlNodePtr content = xmlNewText(BAD_CAST pValue);
             xmlAddChild(rootNode, tmpNode);
@@ -227,7 +227,7 @@ string CCUserDefault::getStringForKey(const char* pKey, const std::string & defa
 
 void CCUserDefault::setBoolForKey(const char* pKey, bool value)
 {
-    // save bool value as sring
+    // save bool value as string
 
     if (true == value)
     {
@@ -292,7 +292,7 @@ CCUserDefault* CCUserDefault::sharedUserDefault()
     initXMLFilePath();
 
     // only create xml file one time
-    // the file exists after the programe exit
+    // the file exists after the program exit
     if ((! isXMLFileExist()) && (! createXMLFile()))
     {
         return NULL;

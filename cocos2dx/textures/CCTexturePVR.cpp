@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2011        Jirka Fajfr for cocos2d-x
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008      Apple Inc. All Rights Reserved.
 
 http://www.cocos2d-x.org
@@ -47,7 +47,7 @@ enum {
     kPVRTextureFlagBumpmap        = (1<<10),       // has normals encoded for a bump map
     kPVRTextureFlagTiling         = (1<<11),       // is bordered for tiled pvr
     kPVRTextureFlagCubemap        = (1<<12),       // is a cubemap/skybox
-    kPVRTextureFlagFalseMipCol    = (1<<13),       // are there false coloured MIP levels
+    kPVRTextureFlagFalseMipCol    = (1<<13),       // are there false colored MIP levels
     kPVRTextureFlagVolume         = (1<<14),       // is this a volume texture
     kPVRTextureFlagAlpha          = (1<<15),       // v2.1 is there transparency info in the texture
     kPVRTextureFlagVerticalFlip   = (1<<16),       // v2.1 is the texture vertically flipped
@@ -195,7 +195,7 @@ bool CCTexturePVR::unpackPVRData(unsigned char* data, unsigned int len)
     if (! configuration->supportsNPOT() &&
         (header->width != ccNextPOT(header->width) || header->height != ccNextPOT(header->height)))
     {
-        CCLOG("cocos2d: ERROR: Loding an NPOT texture (%dx%d) but is not supported on this device", header->width, header->height);
+        CCLOG("cocos2d: ERROR: Loading an NPOT texture (%dx%d) but is not supported on this device", header->width, header->height);
         return false;
     }
 
@@ -207,7 +207,7 @@ bool CCTexturePVR::unpackPVRData(unsigned char* data, unsigned int len)
             //Reset num of mipmaps
             m_uNumberOfMipmaps = 0;
 
-            //Get size of maimap
+            //Get size of mipmap
             m_uWidth = width = CC_SWAP_INT32_LITTLE_TO_HOST(header->width);
             m_uHeight = height = CC_SWAP_INT32_LITTLE_TO_HOST(header->height);
             
@@ -270,14 +270,14 @@ bool CCTexturePVR::unpackPVRData(unsigned char* data, unsigned int len)
                 unsigned int packetLength = (dataLength - dataOffset);
                 packetLength = packetLength > dataSize ? dataSize : packetLength;
                 
-                //Make record to the mipmaps array and increment coutner
+                //Make record to the mipmaps array and increment counter
                 m_asMipmaps[m_uNumberOfMipmaps].address = bytes + dataOffset;
                 m_asMipmaps[m_uNumberOfMipmaps].len = packetLength;
                 m_uNumberOfMipmaps++;
                 
                 //Check that we didn't overflow
                 CCAssert(m_uNumberOfMipmaps < CC_PVRMIPMAP_MAX, 
-                         "TexturePVR: Maximum number of mimpaps reached. Increate the CC_PVRMIPMAP_MAX value");
+                         "TexturePVR: Maximum number of mipmaps reached. Increase the CC_PVRMIPMAP_MAX value");
                 
                 dataOffset += packetLength;
                 

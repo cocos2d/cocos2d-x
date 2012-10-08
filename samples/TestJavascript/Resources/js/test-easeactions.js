@@ -12,6 +12,8 @@ director = cc.Director.getInstance();
 winSize = director.getWinSize();
 centerPos = cc.p( winSize.width/2, winSize.height/2 );
 
+var TAG_ACTION1_EASE_ACTIONS = 1001;
+
 var scenes = []
 var currentScene = 0;
 

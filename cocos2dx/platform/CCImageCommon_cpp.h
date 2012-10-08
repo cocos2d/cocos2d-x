@@ -40,7 +40,7 @@ NS_CC_BEGIN
 
 // premultiply alpha, or the effect will wrong when want to use other pixel format in CCTexture2D,
 // such as RGB888, RGB5A1
-#define CC_RGB_PREMULTIPLY_APLHA(vr, vg, vb, va) \
+#define CC_RGB_PREMULTIPLY_ALPHA(vr, vg, vb, va) \
     (unsigned)(((unsigned)((unsigned char)(vr) * ((unsigned char)(va) + 1)) >> 8) | \
     ((unsigned)((unsigned char)(vg) * ((unsigned char)(va) + 1) >> 8) << 8) | \
     ((unsigned)((unsigned char)(vb) * ((unsigned char)(va) + 1) >> 8) << 16) | \
@@ -71,7 +71,7 @@ static void pngReadCallback(png_structp png_ptr, png_bytep data, png_size_t leng
 }
 
 //////////////////////////////////////////////////////////////////////////
-// Impliment CCImage
+// Implement CCImage
 //////////////////////////////////////////////////////////////////////////
 
 CCImage::CCImage()
@@ -325,7 +325,7 @@ bool CCImage::_initWithPngData(void * pData, int nDatalen)
         {
             png_set_palette_to_rgb(png_ptr);
         }
-        // low-bit-depth grayscale iamges are to be expanded to 8 bits
+        // low-bit-depth grayscale images are to be expanded to 8 bits
         if (color_type == PNG_COLOR_TYPE_GRAY && m_nBitsPerComponent < 8)
         {
             png_set_expand_gray_1_2_4_to_8(png_ptr);
@@ -376,7 +376,7 @@ bool CCImage::_initWithPngData(void * pData, int nDatalen)
             {
                 for(unsigned int j = 0; j < rowbytes; j += 4)
                 {
-                    *tmp++ = CC_RGB_PREMULTIPLY_APLHA( row_pointers[i][j], row_pointers[i][j + 1], 
+                    *tmp++ = CC_RGB_PREMULTIPLY_ALPHA( row_pointers[i][j], row_pointers[i][j + 1], 
                                                       row_pointers[i][j + 2], row_pointers[i][j + 3] );
                 }
             }
@@ -553,7 +553,7 @@ bool CCImage::_initWithTiffData(void* pData, int nDataLen)
                    after invoking TIFFReadRGBAImageOriented
                 for(int j = 0; j < m_nWidth * m_nHeight * 4; j += 4)
                 {
-                    *tmp++ = CC_RGB_PREMULTIPLY_APLHA( src[j], src[j + 1], 
+                    *tmp++ = CC_RGB_PREMULTIPLY_ALPHA( src[j], src[j + 1], 
                         src[j + 2], src[j + 3] );
                 }
                 */
@@ -585,7 +585,7 @@ bool CCImage::_initWithRawData(void * pData, int nDatalen, int nWidth, int nHeig
         m_nWidth    = (short)nWidth;
         m_bHasAlpha = true;
 
-        // only RGBA8888 surported
+        // only RGBA8888 supported
         int nBytesPerComponent = 4;
         int nSize = nHeight * nWidth * nBytesPerComponent;
         m_pData = new unsigned char[nSize];

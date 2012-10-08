@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2011      Zynga Inc.
  
@@ -130,7 +130,7 @@ void CCAtlasNode::calculateMaxItems()
 
 void CCAtlasNode::updateAtlasValues()
 {
-    CCAssert(false, "CCAtlasNode:Abstract updateAtlasValue not overriden");
+    CCAssert(false, "CCAtlasNode:Abstract updateAtlasValue not overridden");
 }
 
 // CCAtlasNode - draw

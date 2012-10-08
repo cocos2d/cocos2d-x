@@ -1,7 +1,5 @@
 #include "CCSpriteLoader.h"
 
-USING_NS_CC;
-
 #define PROPERTY_FLIP "flip"
 #define PROPERTY_DISPLAYFRAME "displayFrame"
 #define PROPERTY_COLOR "color"
@@ -21,7 +19,7 @@ void CCSpriteLoader::onHandlePropTypeSpriteFrame(CCNode * pNode, CCNode * pParen
 void CCSpriteLoader::onHandlePropTypeFlip(CCNode * pNode, CCNode * pParent, CCString * pPropertyName, bool * pFlip, CCBReader * pCCBReader) {
     if(pPropertyName->compare(PROPERTY_FLIP) == 0) {
         ((CCSprite *)pNode)->setFlipX(pFlip[0]);
-        ((CCSprite *)pNode)->setFlipX(pFlip[1]);
+        ((CCSprite *)pNode)->setFlipY(pFlip[1]);
     } else {
         CCNodeLoader::onHandlePropTypeFlip(pNode, pParent, pPropertyName, pFlip, pCCBReader);
     }

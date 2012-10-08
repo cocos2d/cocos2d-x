@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2011      Zynga Inc.
  
@@ -263,7 +263,7 @@ bool CCParticleGalaxy::initWithTotalParticles(unsigned int numberOfParticles)
         modeA.radialAccel = -80;
         modeA.radialAccelVar = 0;
 
-        // Gravity Mode: tagential
+        // Gravity Mode: tangential
         modeA.tangentialAccel = 80;
         modeA.tangentialAccelVar = 0;
 
@@ -337,7 +337,7 @@ bool CCParticleFlower::initWithTotalParticles(unsigned int numberOfParticles)
         modeA.radialAccel = -60;
         modeA.radialAccelVar = 0;
 
-        // Gravity Mode: tagential
+        // Gravity Mode: tangential
         modeA.tangentialAccel = 15;
         modeA.tangentialAccelVar = 0;
 
@@ -410,7 +410,7 @@ bool CCParticleMeteor::initWithTotalParticles(unsigned int numberOfParticles)
         modeA.radialAccel = 0;
         modeA.radialAccelVar = 0;
 
-        // Gravity Mode: tagential
+        // Gravity Mode: tangential
         modeA.tangentialAccel = 0;
         modeA.tangentialAccelVar = 0;
 
@@ -484,7 +484,7 @@ bool CCParticleSpiral::initWithTotalParticles(unsigned int numberOfParticles)
         modeA.radialAccel = -380;
         modeA.radialAccelVar = 0;
 
-        // Gravity Mode: tagential
+        // Gravity Mode: tangential
         modeA.tangentialAccel = 45;
         modeA.tangentialAccelVar = 0;
 
@@ -557,7 +557,7 @@ bool CCParticleExplosion::initWithTotalParticles(unsigned int numberOfParticles)
         modeA.radialAccel = 0;
         modeA.radialAccelVar = 0;
 
-        // Gravity Mode: tagential
+        // Gravity Mode: tangential
         modeA.tangentialAccel = 0;
         modeA.tangentialAccelVar = 0;
 
@@ -700,7 +700,7 @@ bool CCParticleSnow::initWithTotalParticles(unsigned int numberOfParticles)
         modeA.radialAccel = 0;
         modeA.radialAccelVar = 1;
 
-        // Gravity mode: tagential
+        // Gravity mode: tangential
         modeA.tangentialAccel = 0;
         modeA.tangentialAccelVar = 1;
 
@@ -768,7 +768,7 @@ bool CCParticleRain::initWithTotalParticles(unsigned int numberOfParticles)
         modeA.radialAccel = 0;
         modeA.radialAccelVar = 1;
 
-        // Gravity Mode: tagential
+        // Gravity Mode: tangential
         modeA.tangentialAccel = 0;
         modeA.tangentialAccelVar = 1;
 

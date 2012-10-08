@@ -1,5 +1,6 @@
 /*
- * CCControlHuePicker.h
+ * Copyright (c) 2012 cocos2d-x.org
+ * http://www.cocos2d-x.org
  *
  * Copyright 2012 Stewart Hamilton-Arrandale.
  * http://creativewax.co.uk
@@ -54,16 +55,18 @@ class CCControlHuePicker : public CCControl
 
 
     //not sure if these need to be there actually. I suppose someone might want to access the sprite?
-    CC_SYNTHESIZE_READONLY(CCSprite*, m_background, Background);
-    CC_SYNTHESIZE_READONLY(CCSprite*, m_slider, Slider);
+    CC_SYNTHESIZE_RETAIN(CCSprite*, m_background, Background);
+    CC_SYNTHESIZE_RETAIN(CCSprite*, m_slider, Slider);
     CC_SYNTHESIZE_READONLY(CCPoint, m_startPos, StartPos);
 
-public:    
+public:
+    CCControlHuePicker();
     virtual ~CCControlHuePicker();
     virtual bool initWithTargetAndPos(CCNode* target, CCPoint pos);
     //@deprecated: This interface will be deprecated sooner or later.
     CC_DEPRECATED_ATTRIBUTE static CCControlHuePicker* pickerWithTargetAndPos(CCNode* target, CCPoint pos);
     static CCControlHuePicker* create(CCNode* target, CCPoint pos);
+    virtual void setEnabled(bool enabled);
 protected:    
     void updateSliderPosition(CCPoint location);
     bool checkSliderPosition(CCPoint location);

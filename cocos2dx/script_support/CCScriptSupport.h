@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2010-2011 cocos2d-x.org
+ Copyright (c) 2010-2012 cocos2d-x.org
  
  http://www.cocos2d-x.org
  
@@ -184,8 +184,8 @@ public:
     /**
      @brief Execute script code contained in the given string.
      @param codes holding the valid script code that should be executed.
-     @return 0 if the string is excuted correctly.
-     @return other if the string is excuted wrongly.
+     @return 0 if the string is executed correctly.
+     @return other if the string is executed wrongly.
      */
     virtual int executeString(const char* codes) = 0;
     
@@ -220,7 +220,7 @@ public:
     /** execute a schedule function */
     virtual int executeSchedule(CCTimer* pTimer, float dt, CCNode* pNode = NULL) = 0;
     
-    /** functions for excute touch event */
+    /** functions for execute touch event */
     virtual int executeLayerTouchesEvent(CCLayer* pLayer, int eventType, CCSet *pTouches) = 0;
     virtual int executeLayerTouchEvent(CCLayer* pLayer, int eventType, CCTouch *pTouch) = 0;
 };

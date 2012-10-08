@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2009 Jason Booth
 
 http://www.cocos2d-x.org
@@ -320,7 +320,7 @@ protected:
 
 /** 
  @brief Ease Elastic In action.
- @warning This action doesn't use a bijective fucntion. Actions like Sequence might have an unexpected result when used with this action.
+ @warning This action doesn't use a bijective function. Actions like Sequence might have an unexpected result when used with this action.
  @since v0.8.2
  @ingroup Actions
  */
@@ -345,7 +345,7 @@ public:
 
 /** 
  @brief Ease Elastic Out action.
- @warning This action doesn't use a bijective fucntion. Actions like Sequence might have an unexpected result when used with this action.
+ @warning This action doesn't use a bijective function. Actions like Sequence might have an unexpected result when used with this action.
  @since v0.8.2
  @ingroup Actions
  */
@@ -371,7 +371,7 @@ public:
 
 /** 
  @brief Ease Elastic InOut action.
- @warning This action doesn't use a bijective fucntion. Actions like Sequence might have an unexpected result when used with this action.
+ @warning This action doesn't use a bijective function. Actions like Sequence might have an unexpected result when used with this action.
  @since v0.8.2
  @ingroup Actions
  */
@@ -440,7 +440,7 @@ public:
 
 /** 
  @brief EaseBounceOut action.
- @warning This action doesn't use a bijective fucntion. Actions like Sequence might have an unexpected result when used with this action.
+ @warning This action doesn't use a bijective function. Actions like Sequence might have an unexpected result when used with this action.
  @since v0.8.2
  @ingroup Actions
  */
@@ -462,7 +462,7 @@ public:
 
 /** 
  @brief CCEaseBounceInOut action.
- @warning This action doesn't use a bijective fucntion. Actions like Sequence might have an unexpected result when used with this action.
+ @warning This action doesn't use a bijective function. Actions like Sequence might have an unexpected result when used with this action.
  @since v0.8.2
  @ingroup Actions
  */
@@ -484,7 +484,7 @@ public:
 
 /** 
  @brief CCEaseBackIn action.
- @warning This action doesn't use a bijective fucntion. Actions like Sequence might have an unexpected result when used with this action.
+ @warning This action doesn't use a bijective function. Actions like Sequence might have an unexpected result when used with this action.
  @since v0.8.2
  @ingroup Actions
  */
@@ -506,7 +506,7 @@ public:
 
 /** 
  @brief CCEaseBackOut action.
- @warning This action doesn't use a bijective fucntion. Actions like Sequence might have an unexpected result when used with this action.
+ @warning This action doesn't use a bijective function. Actions like Sequence might have an unexpected result when used with this action.
  @since v0.8.2
  @ingroup Actions
  */
@@ -528,7 +528,7 @@ public:
 
 /** 
  @brief CCEaseBackInOut action.
- @warning This action doesn't use a bijective fucntion. Actions like Sequence might have an unexpected result when used with this action.
+ @warning This action doesn't use a bijective function. Actions like Sequence might have an unexpected result when used with this action.
  @since v0.8.2
  @ingroup Actions
  */

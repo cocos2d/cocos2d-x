@@ -234,7 +234,7 @@ public:
 public:
     /** creates the action with a set boundary,
         It will work with no boundary if @param rect is equal to CCRectZero.
-    @deprecated: Please use create(CCNode*, const CCRect&) intead. This interface will be deprecated sooner or later.
+    @deprecated: Please use create(CCNode*, const CCRect&) instead. This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCFollow* actionWithTarget(CCNode *pFollowedNode, const CCRect& rect = CCRectZero);
     /** creates the action with a set boundary,

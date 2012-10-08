@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2009 Lam Pham
 Copyright (c) 2012 Ricardo Quesada
 
@@ -59,7 +59,7 @@ protected:
 
 
 /** CCTransitionRadialCCW transition.
- A counter colock-wise radial transition to the next scene
+ A counter clock-wise radial transition to the next scene
  */
 class CC_DLL CCTransitionProgressRadialCCW : public CCTransitionProgress
 {
@@ -73,7 +73,7 @@ protected:
 
 
 /** CCTransitionRadialCW transition.
- A counter colock-wise radial transition to the next scene
+ A counter clock-wise radial transition to the next scene
 */
 class CC_DLL CCTransitionProgressRadialCW : public CCTransitionProgress
 {
@@ -86,7 +86,7 @@ protected:
 };
 
 /** CCTransitionProgressHorizontal transition.
- A  colock-wise radial transition to the next scene
+ A  clock-wise radial transition to the next scene
  */
 class CC_DLL CCTransitionProgressHorizontal : public CCTransitionProgress
 {

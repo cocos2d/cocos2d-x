@@ -56,7 +56,7 @@ NS_CC_BEGIN
 
 class CCPointArray;
 
-/** initlialize context */
+/** initialize context */
 void CC_DLL ccDrawInit();
 
 /** draws a point given x and y coordinate measured in points */
@@ -78,16 +78,17 @@ void CC_DLL ccDrawRect( CCPoint origin, CCPoint destination );
  */
 void CC_DLL ccDrawSolidRect( CCPoint origin, CCPoint destination, ccColor4F color );
 
-/** draws a poligon given a pointer to CCPoint coordiantes and the number of vertices measured in points.
+/** draws a polygon given a pointer to CCPoint coordinates and the number of vertices measured in points.
 The polygon can be closed or open
 */
 void CC_DLL ccDrawPoly( const CCPoint *vertices, unsigned int numOfVertices, bool closePolygon );
 
-/** draws a solid polygon given a pointer to CGPoint coordiantes, the number of vertices measured in points, and a color.
+/** draws a solid polygon given a pointer to CGPoint coordinates, the number of vertices measured in points, and a color.
  */
 void CC_DLL ccDrawSolidPoly( const CCPoint *poli, unsigned int numberOfPoints, ccColor4F color );
 
 /** draws a circle given the center, radius and number of segments. */
+void CC_DLL ccDrawCircle( const CCPoint& center, float radius, float angle, unsigned int segments, bool drawLineToCenter, float scaleX, float scaleY);
 void CC_DLL ccDrawCircle( const CCPoint& center, float radius, float angle, unsigned int segments, bool drawLineToCenter);
 
 /** draws a quad bezier path

@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011        Максим Аксенов 
 Copyright (c) 2009-2010 Ricardo Quesada
 Copyright (c) 2011      Zynga Inc.
@@ -43,7 +43,7 @@ using namespace std;
     #include <libxml/parser.h>
     #include <libxml/tree.h>
     #include <libxml/xmlmemory.h>
-#endf
+#endif
 */
 
 NS_CC_BEGIN
@@ -453,7 +453,7 @@ void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         }
         else 
         {
-            tileset->m_sSourceImage = m_sResources + "/" + imagename;
+            tileset->m_sSourceImage = m_sResources + (m_sResources.size() ? "/" : "") + imagename;
         }
     } 
     else if(elementName == "data")
@@ -652,7 +652,7 @@ void CCTMXMapInfo::endElement(void *ctx, const char *name)
             int inflatedLen = ZipUtils::ccInflateMemoryWithHint(buffer, len, &deflated, sizeHint);
             CCAssert(inflatedLen == sizeHint, "");
 
-            inflatedLen = (size_t)&inflatedLen; // XXX: to avoid warings in compiler
+            inflatedLen = (size_t)&inflatedLen; // XXX: to avoid warnings in compiler
             
             delete [] buffer;
             buffer = NULL;

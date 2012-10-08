@@ -19,6 +19,8 @@
 		BF23D4E8143315EB00657E08 /* HelloWorldScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF23D4E5143315EB00657E08 /* HelloWorldScene.cpp */; };
 		BF365AA812A103F70050DCF4 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = BF365AA712A103F70050DCF4 /* AppController.mm */; };
 		BF4DE6AD138BB89600CF907D /* RootViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = BF4DE6AC138BB89600CF907D /* RootViewController.mm */; };
+		D41A0AC6160F14F5004552AE /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D41A0AC5160F14F5004552AE /* Default-568h@2x.png */; };
+		D446FD47161020AC000ADA7B /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D446FD46161020AB000ADA7B /* Default@2x.png */; };
 		D4ABB4B313B4395300552E6E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D4ABB4B213B4395300552E6E /* main.m */; };
 		D4E6BC8515FCB4A4008BF525 /* libcocos2dx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D4E6BC8315FCB477008BF525 /* libcocos2dx.a */; };
 		D4E6BC9215FCB5BA008BF525 /* GameOverScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4E6BC9015FCB5BA008BF525 /* GameOverScene.cpp */; };
@@ -71,6 +73,8 @@
 		BF492D4B1289302400A09262 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BF4DE6AB138BB89600CF907D /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		BF4DE6AC138BB89600CF907D /* RootViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RootViewController.mm; sourceTree = "<group>"; };
+		D41A0AC5160F14F5004552AE /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../proj.ios/Default-568h@2x.png"; sourceTree = "<group>"; };
+		D446FD46161020AB000ADA7B /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "../proj.ios/Default@2x.png"; sourceTree = "<group>"; };
 		D4ABB4B213B4395300552E6E /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D4E6BC7B15FCB477008BF525 /* cocos2dx.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2dx.xcodeproj; path = ../../../cocos2dx/proj.ios/cocos2dx.xcodeproj; sourceTree = "<group>"; };
 		D4E6BC9015FCB5BA008BF525 /* GameOverScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameOverScene.cpp; sourceTree = "<group>"; };
@@ -170,6 +174,8 @@
 				D4EF94E915BD319500D803EB /* Icon-114.png */,
 				D4EF94E715BD319200D803EB /* Icon-57.png */,
 				782F4617153FEDF0009FC2E5 /* Default.png */,
+				D446FD46161020AB000ADA7B /* Default@2x.png */,
+				D41A0AC5160F14F5004552AE /* Default-568h@2x.png */,
 			);
 			name = Resources;
 			path = ../Resources;
@@ -320,6 +326,8 @@
 				D4E6BCC915FCB6AA008BF525 /* hd in Resources */,
 				D4E6BCCA15FCB6AA008BF525 /* pew-pew-lei.wav in Resources */,
 				D4E6BCCB15FCB6AA008BF525 /* sd in Resources */,
+				D41A0AC6160F14F5004552AE /* Default-568h@2x.png in Resources */,
+				D446FD47161020AC000ADA7B /* Default@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

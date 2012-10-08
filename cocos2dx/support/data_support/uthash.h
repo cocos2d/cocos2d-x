@@ -62,7 +62,7 @@ do {                                                                            
 } while(0)
 #endif
 
-/* uint32_t next definded will conflict with other libraries and an "error C2872: 'uint32_t' : ambiguous symbol" will appear.
+/* uint32_t next defined will conflict with other libraries and an "error C2872: 'uint32_t' : ambiguous symbol" will appear.
    so we replace all uint32_t with 'unsigned int'.
 */
 /* a number of the hash function use uint32_t which isn't defined on win32 */
