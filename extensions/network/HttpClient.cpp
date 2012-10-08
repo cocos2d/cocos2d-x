@@ -246,6 +246,25 @@ int processGetTask(CCHttpRequest *request, write_callback callback, void *stream
             break;
         }
         
+        /* handle custom header data */
+        /* create curl linked list */
+        struct curl_slist *cHeaders=NULL;
+        /* get custom header data (if set) */
+       	std::vector<std::string> headers=request->getHeaders();
+      		if(!headers.empty())
+      		{      			
+        			for(std::vector<std::string>::iterator it=headers.begin();it!=headers.end();it++)
+        			{
+              /* append custom headers one by one */
+          				cHeaders=curl_slist_append(cHeaders,it->c_str());
+        			}
+           /* set custom headers for curl */
+        			code = curl_easy_setopt(curl, CURLOPT_HTTPHEADER, cHeaders);
+        			if (code != CURLE_OK) {
+          				break;
+        			}
+      		}
+              
         code = curl_easy_setopt(curl, CURLOPT_URL, request->getUrl());
         if (code != CURLE_OK) 
         {
@@ -276,6 +295,9 @@ int processGetTask(CCHttpRequest *request, write_callback callback, void *stream
             break;
         }
         
+        /* free the linked list for header data */
+        curl_slist_free_all(cHeaders);
+
         code = curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, responseCode); 
         if (code != CURLE_OK || *responseCode != 200) 
         {
@@ -301,6 +323,25 @@ int processPostTask(CCHttpRequest *request, write_callback callback, void *strea
             break;
         }
         
+        /* handle custom header data */
+        /* create curl linked list */
+        struct curl_slist *cHeaders=NULL;
+        /* get custom header data (if set) */
+      		std::vector<std::string> headers=request->getHeaders();
+      		if(!headers.empty())
+      		{      			
+        			for(std::vector<std::string>::iterator it=headers.begin();it!=headers.end();it++)
+        			{
+              /* append custom headers one by one */
+          				cHeaders=curl_slist_append(cHeaders,it->c_str());
+        			}
+           /* set custom headers for curl */
+        			code = curl_easy_setopt(curl, CURLOPT_HTTPHEADER, cHeaders);
+        			if (code != CURLE_OK) {
+          				break;
+        			}
+      		}
+              
         code = curl_easy_setopt(curl, CURLOPT_URL, request->getUrl());
         if (code != CURLE_OK) {
             break;
@@ -330,6 +371,9 @@ int processPostTask(CCHttpRequest *request, write_callback callback, void *strea
             break;
         }
         
+        /* free the linked list for header data */
+        curl_slist_free_all(cHeaders);
+
         code = curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, responseCode); 
         if (code != CURLE_OK || *responseCode != 200) {
             code = CURLE_HTTP_RETURNED_ERROR;
