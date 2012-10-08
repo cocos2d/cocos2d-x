@@ -65,6 +65,14 @@ public:
      @brief Get target platform
      */
     virtual TargetPlatform getTargetPlatform();
+    
+    virtual TargetEnvironment getTargetEnvironment() {
+#if !(TARGET_IPHONE_SIMULATOR)
+        return kTargetSimulator;
+#else
+        return kTargetDevice;
+#endif
+    }
 
 protected:
     static CCApplication * sm_pSharedApplication;

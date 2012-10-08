@@ -14,6 +14,12 @@ enum TargetPlatform
     kTargetBlackBerry,
 };
 
+enum TargetEnvironment
+{
+    kTargetDevice,
+    kTargetSimulator,
+};
+
 /**
  * @addtogroup platform
  * @{
@@ -60,6 +66,13 @@ public:
      @brief Get target platform
      */
     virtual TargetPlatform getTargetPlatform() = 0;
+    
+    /**
+     @brief Get target environment
+     */
+    virtual TargetEnvironment getTargetEnvironment() {
+        return kTargetSimulator;
+    }
 };
 
 // end of platform group
