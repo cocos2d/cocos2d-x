@@ -91,9 +91,13 @@ CCArray* CCDictionary::allKeysForObject(CCObject* object)
 
 CCObject* CCDictionary::objectForKey(const std::string& key)
 {
-    if (m_eDictType == kCCDictUnknown && m_eDictType == kCCDictUnknown) return NULL;
-    CCAssert(m_eDictType == kCCDictStr, "this dictionary does not use string as key.");
+    if (m_eDictType != kCCDictStr)
+    {
+        return NULL;
+    }
 
+    CCAssert(m_eDictType == kCCDictStr, "this dictionary does not use string as key.");
+    
     CCObject* pRetObject = NULL;
     CCDictElement *pElement = NULL;
     HASH_FIND_STR(m_pElements, key.c_str(), pElement);
@@ -106,9 +110,13 @@ CCObject* CCDictionary::objectForKey(const std::string& key)
 
 CCObject* CCDictionary::objectForKey(int key)
 {
-    if (m_eDictType == kCCDictUnknown && m_eDictType == kCCDictUnknown) return NULL;
-    CCAssert(m_eDictType == kCCDictInt, "this dictionary does not use integer as key.");
+    if (m_eDictType != kCCDictInt)
+    {
+        return NULL;
+    }
 
+    CCAssert(m_eDictType == kCCDictInt, "this dictionary does not use integer as key.");
+    
     CCObject* pRetObject = NULL;
     CCDictElement *pElement = NULL;
     HASH_FIND_INT(m_pElements, &key, pElement);
