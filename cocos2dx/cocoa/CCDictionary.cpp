@@ -112,7 +112,7 @@ CCObject* CCDictionary::objectForKey(int key)
     // if dictionary wasn't initialized, return NULL directly.
     if (m_eDictType == kCCDictUnknown) return NULL;
     // CCDictionary only supports one kind of key, string or integer.
-    // This method uses string as key, therefore we should make sure that the key type of this CCDictionary is integer.
+    // This method uses integer as key, therefore we should make sure that the key type of this CCDictionary is integer.
     CCAssert(m_eDictType == kCCDictInt, "this dictionary does not use integer as key.");
 
     CCObject* pRetObject = NULL;
