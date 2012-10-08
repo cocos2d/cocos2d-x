@@ -119,6 +119,10 @@ public:
     inline bool isDisplayStats(void) { return m_bDisplayStats; }
     /** Display the FPS on the bottom-left corner */
     inline void setDisplayStats(bool bDisplayStats) { m_bDisplayStats = bDisplayStats; }
+    /** Set FPS labels position */
+    void setStatsPosition(const CCPoint& FPSPosition, const CCPoint& SPFPosition, const CCPoint& DrawsPosition);
+    /** Set FPS labels font name and size */
+    void setStatsFont(const char* fontname, int fontsize);
     
     /** seconds per frame */
     inline float getSecondsPerFrame() { return m_fSecondsPerFrame; }
