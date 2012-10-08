@@ -429,7 +429,7 @@ function performanceActions20(sprite) {
 
     var growDuration = 0.5 + (Math.random() * 1000) / 500.0;
     var grow = cc.ScaleBy.create(growDuration, 0.5, 0.5);
-    var permanentScaleLoop = cc.RepeatForever.create(cc.Sequence._actionOneTwo(grow, grow.reverse()));
+    var permanentScaleLoop = cc.RepeatForever.create(cc.Sequence.create(grow, grow.reverse()));
     sprite.runAction(permanentScaleLoop);
 }
 

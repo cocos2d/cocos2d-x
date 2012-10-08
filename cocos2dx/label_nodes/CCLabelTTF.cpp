@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
 
 http://www.cocos2d-x.org
@@ -227,7 +227,7 @@ void CCLabelTTF::setDimensions(const CCSize &dim)
     {
         m_tDimensions = dim;
         
-        // Force udpate
+        // Force update
         if (m_string.size() > 0)
         {
             this->updateTexture();

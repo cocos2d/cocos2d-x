@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2011      Zynga Inc.
 
@@ -54,7 +54,7 @@ static void lazy_init( void )
     if( ! s_bInitialized ) {
 
         //
-        // Position and 1 color passed as a uniform (to similate glColor4ub )
+        // Position and 1 color passed as a uniform (to simulate glColor4ub )
         //
         s_pShader = CCShaderCache::sharedShaderCache()->programForKey(kCCShader_Position_uColor);
 
@@ -67,7 +67,7 @@ static void lazy_init( void )
     }
 }
 
-// When back to foreground on android, we want to it to inilialize again
+// When switching from backround to foreground on android, we want the params to be initialized again
 void ccDrawInit()
 {
     s_bInitialized = false;
@@ -186,29 +186,34 @@ void ccDrawPoly( const CCPoint *poli, unsigned int numberOfPoints, bool closePol
 
     ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
 
-    // XXX: Mac OpenGL error. arrays can't go out of scope before draw is executed
-    ccVertex2F* newPoli = new ccVertex2F[numberOfPoints];
-
     // iPhone and 32-bit machines optimization
     if( sizeof(CCPoint) == sizeof(ccVertex2F) )
+    {
         glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, poli);
 
+        if( closePolygon )
+            glDrawArrays(GL_LINE_LOOP, 0, (GLsizei) numberOfPoints);
+        else
+            glDrawArrays(GL_LINE_STRIP, 0, (GLsizei) numberOfPoints);
+    }
     else
     {
         // Mac on 64-bit
+        // XXX: Mac OpenGL error. arrays can't go out of scope before draw is executed
+        ccVertex2F* newPoli = new ccVertex2F[numberOfPoints];
         for( unsigned int i=0; i<numberOfPoints;i++) {
             newPoli[i].x = poli[i].x;
             newPoli[i].y = poli[i].y;
         }
         glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, newPoli);
+
+        if( closePolygon )
+            glDrawArrays(GL_LINE_LOOP, 0, (GLsizei) numberOfPoints);
+        else
+            glDrawArrays(GL_LINE_STRIP, 0, (GLsizei) numberOfPoints);
+
+        CC_SAFE_DELETE_ARRAY(newPoli);
     }
-
-    if( closePolygon )
-        glDrawArrays(GL_LINE_LOOP, 0, (GLsizei) numberOfPoints);
-    else
-        glDrawArrays(GL_LINE_STRIP, 0, (GLsizei) numberOfPoints);
-
-    CC_SAFE_DELETE_ARRAY(newPoli);
 
     CC_INCREMENT_GL_DRAWS(1);
 }
@@ -247,7 +252,7 @@ void ccDrawSolidPoly( const CCPoint *poli, unsigned int numberOfPoints, ccColor4
     CC_INCREMENT_GL_DRAWS(1);
 }
 
-void ccDrawCircle( const CCPoint& center, float radius, float angle, unsigned int segments, bool drawLineToCenter)
+void ccDrawCircle( const CCPoint& center, float radius, float angle, unsigned int segments, bool drawLineToCenter, float scaleX, float scaleY)
 {
     lazy_init();
 
@@ -263,8 +268,8 @@ void ccDrawCircle( const CCPoint& center, float radius, float angle, unsigned in
 
     for(unsigned int i = 0;i <= segments; i++) {
         float rads = i*coef;
-        GLfloat j = radius * cosf(rads + angle) + center.x;
-        GLfloat k = radius * sinf(rads + angle) + center.y;
+        GLfloat j = radius * cosf(rads + angle) * scaleX + center.x;
+        GLfloat k = radius * sinf(rads + angle) * scaleY + center.y;
 
         vertices[i*2] = j;
         vertices[i*2+1] = k;
@@ -284,6 +289,11 @@ void ccDrawCircle( const CCPoint& center, float radius, float angle, unsigned in
     free( vertices );
 
     CC_INCREMENT_GL_DRAWS(1);
+}
+
+void CC_DLL ccDrawCircle( const CCPoint& center, float radius, float angle, unsigned int segments, bool drawLineToCenter)
+{
+    ccDrawCircle(center, radius, angle, segments, drawLineToCenter, 1.0f, 1.0f);
 }
 
 void ccDrawQuadBezier(const CCPoint& origin, const CCPoint& control, const CCPoint& destination, unsigned int segments)

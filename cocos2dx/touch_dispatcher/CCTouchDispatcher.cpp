@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2009      Valentin Milea
 
 http://www.cocos2d-x.org
@@ -136,7 +136,7 @@ void CCTouchDispatcher::addStandardDelegate(CCTouchDelegate *pDelegate, int nPri
     }
     else
     {
-        /* If pHandler is contained in m_pHandlersToRemove, if so remove it from m_pHandlersToRemove and retrun.
+        /* If pHandler is contained in m_pHandlersToRemove, if so remove it from m_pHandlersToRemove and return.
          * Refer issue #752(cocos2d-x)
          */
         if (ccCArrayContainsValue(m_pHandlersToRemove, pDelegate))
@@ -159,7 +159,7 @@ void CCTouchDispatcher::addTargetedDelegate(CCTouchDelegate *pDelegate, int nPri
     }
     else
     {
-        /* If pHandler is contained in m_pHandlersToRemove, if so remove it from m_pHandlersToRemove and retrun.
+        /* If pHandler is contained in m_pHandlersToRemove, if so remove it from m_pHandlersToRemove and return.
          * Refer issue #752(cocos2d-x)
          */
         if (ccCArrayContainsValue(m_pHandlersToRemove, pDelegate))
@@ -216,7 +216,7 @@ void CCTouchDispatcher::removeDelegate(CCTouchDelegate *pDelegate)
     }
     else
     {
-        /* If pHandler is contained in m_pHandlersToAdd, if so remove it from m_pHandlersToAdd and retrun.
+        /* If pHandler is contained in m_pHandlersToAdd, if so remove it from m_pHandlersToAdd and return.
          * Refer issue #752(cocos2d-x)
          */
         CCTouchHandler *pHandler = findHandler(m_pHandlersToAdd, pDelegate);
@@ -365,7 +365,7 @@ void CCTouchDispatcher::touches(CCSet *pTouches, CCEvent *pEvent, unsigned int u
                 } else
                 if (pHandler->getClaimedTouches()->containsObject(pTouch))
                 {
-                    // moved ended cancelled
+                    // moved ended canceled
                     bClaimed = true;
 
                     switch (sHelper.m_type)

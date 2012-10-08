@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2011      Zynga Inc.
 
@@ -375,7 +375,7 @@ void CCScheduler::priorityIn(tListEntry **ppList, CCObject *pTarget, int nPriori
     pListElement->next = pListElement->prev = NULL;
     pListElement->markedForDeletion = false;
 
-    // empey list ?
+    // empty list ?
     if (! *ppList)
     {
         DL_APPEND(*ppList, pListElement);
@@ -763,7 +763,7 @@ void CCScheduler::update(float dt)
         dt *= m_fTimeScale;
     }
 
-    // Iterate all over the Updates selectors
+    // Iterate over all the Updates' selectors
     tListEntry *pEntry, *pTmp;
 
     // updates with priority < 0
@@ -799,7 +799,7 @@ void CCScheduler::update(float dt)
         }
     }
 
-    // Interate all over the custom selectors
+    // Iterate over all the custom selectors
     for (tHashSelectorEntry *elt = m_pHashForSelectors; elt != NULL; )
     {
         m_pCurrentTarget = elt;
@@ -838,7 +838,7 @@ void CCScheduler::update(float dt)
         }
     }
 
-    // Interate all over the script callbacks
+    // Iterate over all the script callbacks
     if (m_pScriptHandlerEntries)
     {
         for (int i = m_pScriptHandlerEntries->count() - 1; i >= 0; i--)
@@ -855,7 +855,7 @@ void CCScheduler::update(float dt)
         }
     }
 
-    // delete all updates that are morked for deletion
+    // delete all updates that are marked for deletion
     // updates with priority < 0
     DL_FOREACH_SAFE(m_pUpdatesNegList, pEntry, pTmp)
     {

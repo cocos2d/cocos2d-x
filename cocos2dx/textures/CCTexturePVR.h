@@ -39,7 +39,7 @@ NS_CC_BEGIN
  */
 
 /**
- @brief Structure which can tell where mimap begins and how long is it
+ @brief Structure which can tell where mipmap begins and how long is it
 */
 struct CCPVRMipmap {
     unsigned char *address;
@@ -47,7 +47,7 @@ struct CCPVRMipmap {
 };
 
 /**
- @brief Detemine how many mipmaps can we have. 
+ @brief Determine how many mipmaps can we have. 
  Its same as define but it respects namespaces
 */
 enum {

@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2011      Zynga Inc.
 
@@ -36,14 +36,14 @@ THE SOFTWARE.
 
 /** @def CC_ENABLE_GL_STATE_CACHE
  If enabled, cocos2d will maintain an OpenGL state cache internally to avoid unnecessary switches.
- In order to use them, you have to use the following functions, insead of the the GL ones:
+ In order to use them, you have to use the following functions, instead of the the GL ones:
     - ccGLUseProgram() instead of glUseProgram()
     - ccGLDeleteProgram() instead of glDeleteProgram()
     - ccGLBlendFunc() instead of glBlendFunc()
 
  If this functionality is disabled, then ccGLUseProgram(), ccGLDeleteProgram(), ccGLBlendFunc() will call the GL ones, without using the cache.
 
- It is recommened to enable whenever possible to improve speed.
+ It is recommended to enable whenever possible to improve speed.
  If you are migrating your code from GL ES 1.1, then keep it disabled. Once all your code works as expected, turn it on.
 
  @since v2.0.0
@@ -77,7 +77,7 @@ To enabled set it to 1. Disabled by default.
 #endif
 
 /** @def CC_DIRECTOR_FPS_INTERVAL
- Senconds between FPS updates.
+ Seconds between FPS updates.
  0.5 seconds, means that the FPS number will be updated every 0.5 seconds.
  Having a bigger number means a more reliable FPS
  
@@ -165,9 +165,10 @@ Only valid for cocos2d-mac. Not supported on cocos2d-ios.
  
  */
 #ifndef CC_TEXTURE_ATLAS_USE_VAO
-    #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+    #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
         #define CC_TEXTURE_ATLAS_USE_VAO 1
     #else
+        /* Some Windows display adapter driver cannot support VAO. */
         /* Some android devices cannot support VAO very well, so we disable it by default for android platform. */
         /* Blackberry also doesn't support this feature. */
 		#define CC_TEXTURE_ATLAS_USE_VAO 0
@@ -190,7 +191,7 @@ Only valid for cocos2d-mac. Not supported on cocos2d-ios.
 
 /** @def CC_SPRITE_DEBUG_DRAW
  If enabled, all subclasses of CCSprite will draw a bounding box
- Useful for debugging purposes only. It is recommened to leave it disabled.
+ Useful for debugging purposes only. It is recommended to leave it disabled.
  
  To enable set it to a value different than 0. Disabled by default:
  0 -- disabled
@@ -206,7 +207,7 @@ Only valid for cocos2d-mac. Not supported on cocos2d-ios.
 
 /** @def CC_SPRITEBATCHNODE_DEBUG_DRAW
 If enabled, all subclasses of CCSprite that are rendered using an CCSpriteBatchNode draw a bounding box.
-Useful for debugging purposes only. It is recommened to leave it disabled.
+Useful for debugging purposes only. It is recommended to leave it disabled.
 
 To enable set it to a value different than 0. Disabled by default.
 */
@@ -216,7 +217,7 @@ To enable set it to a value different than 0. Disabled by default.
 
 /** @def CC_LABELBMFONT_DEBUG_DRAW
 If enabled, all subclasses of CCLabelBMFont will draw a bounding box
-Useful for debugging purposes only. It is recommened to leave it disabled.
+Useful for debugging purposes only. It is recommended to leave it disabled.
 
 To enable set it to a value different than 0. Disabled by default.
 */
@@ -226,7 +227,7 @@ To enable set it to a value different than 0. Disabled by default.
 
 /** @def CC_LABELATLAS_DEBUG_DRAW
  If enabled, all subclasses of LabeltAtlas will draw a bounding box
- Useful for debugging purposes only. It is recommened to leave it disabled.
+ Useful for debugging purposes only. It is recommended to leave it disabled.
  
  To enable set it to a value different than 0. Disabled by default.
  */
@@ -235,9 +236,9 @@ To enable set it to a value different than 0. Disabled by default.
 #endif
 
 /** @def CC_ENABLE_PROFILERS
- If enabled, will activate various profilers withing cocos2d. This statistical data will be output to the console
+ If enabled, will activate various profilers within cocos2d. This statistical data will be output to the console
  once per second showing average time (in milliseconds) required to execute the specific routine(s).
- Useful for debugging purposes only. It is recommened to leave it disabled.
+ Useful for debugging purposes only. It is recommended to leave it disabled.
  
  To enable set it to a value different than 0. Disabled by default.
  */

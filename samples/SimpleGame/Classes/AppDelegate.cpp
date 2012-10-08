@@ -3,6 +3,7 @@
 
 USING_NS_CC;
 
+
 AppDelegate::AppDelegate() {
 
 }
@@ -14,7 +15,7 @@ AppDelegate::~AppDelegate()
 bool AppDelegate::applicationDidFinishLaunching() {
     // initialize director
     CCDirector *pDirector = CCDirector::sharedDirector();
-
+    
     pDirector->setOpenGLView(CCEGLView::sharedOpenGLView());
     
     TargetPlatform target = getTargetPlatform();
@@ -30,12 +31,12 @@ bool AppDelegate::applicationDidFinishLaunching() {
     }
     else if (target == kTargetIphone)
     {        
-        if (pDirector->enableRetinaDisplay(true))
+        if (CCDirector::sharedDirector()->enableRetinaDisplay(true))
         {
-            // well, it's a iPhone 4 and above, with 960x480 Retina resolution
+            // well, it's a iPhone 4, iPhone 4S or iPhone 5
             CCFileUtils::sharedFileUtils()->setResourceDirectory("hd");
         }
-        else 
+        else
         {
             // iPhone 3GS and before, with 480x320 resolution
             CCFileUtils::sharedFileUtils()->setResourceDirectory("sd");

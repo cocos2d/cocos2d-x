@@ -70,24 +70,23 @@ using namespace std;
 unsigned int g_uNumberOfDraws = 0;
 
 NS_CC_BEGIN
-// XXX it shoul be a Director ivar. Move it there once support for multiple directors is added
+// XXX it should be a Director ivar. Move it there once support for multiple directors is added
 
 // singleton stuff
-static CCDisplayLinkDirector s_SharedDirector;
+static CCDisplayLinkDirector *s_SharedDirector = NULL;
 
 #define kDefaultFPS        60  // 60 frames per second
 extern const char* cocos2dVersion(void);
 
 CCDirector* CCDirector::sharedDirector(void)
 {
-    static bool s_bFirstUseDirector = true;
-    if (s_bFirstUseDirector)
+    if (!s_SharedDirector)
     {
-        s_bFirstUseDirector = false;
-        s_SharedDirector.init();
+        s_SharedDirector = new CCDisplayLinkDirector();
+        s_SharedDirector->init();
     }
 
-    return &s_SharedDirector;
+    return s_SharedDirector;
 }
 
 CCDirector::CCDirector(void)
@@ -136,7 +135,7 @@ bool CCDirector::init(void)
 
     m_pobOpenGLView = NULL;
 
-    m_fContentScaleFactor = 1;    
+    m_fContentScaleFactor = 1.0f;
     m_bIsContentScaleSupported = false;
 
     // scheduler
@@ -162,7 +161,7 @@ bool CCDirector::init(void)
     
 CCDirector::~CCDirector(void)
 {
-    CCLOG("cocos2d: deallocing %p", this);
+    CCLOG("cocos2d: deallocing CCDirector %p", this);
 
     CC_SAFE_RELEASE(m_pFPSLabel);
     CC_SAFE_RELEASE(m_pSPFLabel);
@@ -185,6 +184,8 @@ CCDirector::~CCDirector(void)
     CC_SAFE_DELETE(m_pLastUpdate);
     // delete fps string
     delete []m_pszFPS;
+
+    s_SharedDirector = NULL;
 }
 
 void CCDirector::setGLDefaultValues(void)
@@ -200,7 +201,7 @@ void CCDirector::setGLDefaultValues(void)
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 }
 
-// Draw the SCene
+// Draw the Scene
 void CCDirector::drawScene(void)
 {
     // calculate "global" dt
@@ -290,16 +291,13 @@ void CCDirector::calculateDeltaTime(void)
     *m_pLastUpdate = now;
 }
 
-
-// m_pobOpenGLView
-
 void CCDirector::setOpenGLView(CCEGLView *pobOpenGLView)
 {
     CCAssert(pobOpenGLView, "opengl view should not be null");
 
     if (m_pobOpenGLView != pobOpenGLView)
     {
-        // because EAGLView is not kind of CCObject
+        // EAGLView is not a CCObject
         delete m_pobOpenGLView; // [openGLView_ release]
         m_pobOpenGLView = pobOpenGLView;
 
@@ -643,6 +641,9 @@ void CCDirector::purgeDirector()
     // OpenGL view
     m_pobOpenGLView->end();
     m_pobOpenGLView = NULL;
+
+    // delete CCDirector
+    release();
 }
 
 void CCDirector::setNextScene(void)
@@ -817,7 +818,7 @@ bool CCDirector::enableRetinaDisplay(bool enabled)
         return true;
     }
 
-    // Already diabled?
+    // Already disabled?
     if (!enabled && m_fContentScaleFactor == 1)
     {
         return false;
@@ -945,7 +946,7 @@ CCAccelerometer* CCDirector::getAccelerometer()
 * implementation of DisplayLinkDirector
 **************************************************/
 
-// should we afford 4 types of director ??
+// should we implement 4 types of director ??
 // I think DisplayLinkDirector is enough
 // so we now only support DisplayLinkDirector
 void CCDisplayLinkDirector::startAnimation(void)

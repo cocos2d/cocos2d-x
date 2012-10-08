@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2010      Ricardo Quesada
 Copyright (c) 2011      Zynga Inc.
 
@@ -52,7 +52,7 @@ class CC_DLL CCAnimationCache : public CCObject
 public:
     CCAnimationCache();
     ~CCAnimationCache();
-    /** Retruns ths shared instance of the Animation cache */
+    /** Returns the shared instance of the Animation cache */
     static CCAnimationCache* sharedAnimationCache(void);
 
     /** Purges the cache. It releases all the CCAnimation objects and the shared instance.

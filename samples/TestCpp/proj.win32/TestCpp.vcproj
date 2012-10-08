@@ -874,6 +874,30 @@
 							>
 						</File>
 					</Filter>
+					<Filter
+						Name="CCControlPotentiometerTest"
+						>
+						<File
+							RelativePath="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlPotentiometerTest\CCControlPotentiometerTest.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlPotentiometerTest\CCControlPotentiometerTest.h"
+							>
+						</File>
+					</Filter>
+					<Filter
+						Name="CCControlStepperTest"
+						>
+						<File
+							RelativePath="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlStepperTest\CCControlStepperTest.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlStepperTest\CCControlStepperTest.h"
+							>
+						</File>
+					</Filter>
 				</Filter>
 				<Filter
 					Name="NotificationCenterTest"
@@ -1007,6 +1031,22 @@
 						</File>
 						<File
 							RelativePath="..\Classes\ExtensionsTest\CocosBuilderTest\ScrollViewTest\ScrollViewTestLayerLoader.h"
+							>
+						</File>
+					</Filter>
+					<Filter
+						Name="AnimationsTest"
+						>
+						<File
+							RelativePath="..\Classes\ExtensionsTest\CocosBuilderTest\AnimationsTest\AnimationsLayerLoader.h"
+							>
+						</File>
+						<File
+							RelativePath="..\Classes\ExtensionsTest\CocosBuilderTest\AnimationsTest\AnimationsTestLayer.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\Classes\ExtensionsTest\CocosBuilderTest\AnimationsTest\AnimationsTestLayer.h"
 							>
 						</File>
 					</Filter>

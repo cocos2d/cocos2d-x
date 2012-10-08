@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2011      Zynga Inc.
 
@@ -72,7 +72,7 @@ public:
 
     CCDictionary* snapshotTextures();
 
-    /** Retruns ths shared instance of the cache */
+    /** Returns the shared instance of the cache */
     static CCTextureCache * sharedTextureCache();
 
     /** purges the cache. It releases the retained instance.
@@ -83,7 +83,7 @@ public:
     /** Returns a Texture2D object given an file image
     * If the file image was not previously loaded, it will create a new CCTexture2D
     *  object and it will return it. It will use the filename as a key.
-    * Otherwise it will return a reference of a previosly loaded image.
+    * Otherwise it will return a reference of a previously loaded image.
     * Supported image extensions: .png, .bmp, .tiff, .jpeg, .pvr, .gif
     */
     CCTexture2D* addImage(const char* fileimage);
@@ -128,7 +128,7 @@ public:
 
     /** Removes unused textures
     * Textures that have a retain count of 1 will be deleted
-    * It is convinient to call this method after when starting a new Scene
+    * It is convenient to call this method after when starting a new Scene
     * @since v0.8
     */
     void removeUnusedTextures();
@@ -152,7 +152,7 @@ public:
 #ifdef CC_SUPPORT_PVRTC
     /** Returns a Texture2D object given an PVRTC RAW filename
     * If the file image was not previously loaded, it will create a new CCTexture2D
-    *  object and it will return it. Otherwise it will return a reference of a previosly loaded image
+    *  object and it will return it. Otherwise it will return a reference of a previously loaded image
     *
     * It can only load square images: width == height, and it must be a power of 2 (128,256,512...)
     * bpp can only be 2 or 4. 2 means more compression but lower quality.
@@ -163,7 +163,7 @@ public:
     
     /** Returns a Texture2D object given an PVR filename
     * If the file image was not previously loaded, it will create a new CCTexture2D
-    *  object and it will return it. Otherwise it will return a reference of a previosly loaded image
+    *  object and it will return it. Otherwise it will return a reference of a previously loaded image
     */
     CCTexture2D* addPVRImage(const char* filename);
 

@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Erawppa
 http://www.cocos2d-x.org
 
@@ -138,7 +138,7 @@ void CCNotificationCenter::postNotification(const char *name, CCObject *object)
         if (!observer)
             continue;
         
-        if (!strcmp(name,observer->getName()))
+        if (!strcmp(name,observer->getName()) && (observer->getObject() == object || observer->getObject() == NULL || object == NULL))
             observer->performSelector(object);
     }
 
@@ -177,15 +177,18 @@ CCNotificationObserver::CCNotificationObserver(CCObject *target,
 
 CCNotificationObserver::~CCNotificationObserver()
 {
-    if (m_name)
-        delete m_name;
+    CC_SAFE_DELETE_ARRAY(m_name);
 }
 
 void CCNotificationObserver::performSelector(CCObject *obj)
 {
     if (m_target)
     {
-        (m_target->*m_selector)(obj);
+		if (obj) {
+			(m_target->*m_selector)(obj);
+		} else {
+			(m_target->*m_selector)(m_object);
+		}
     }
 }
 

@@ -42,7 +42,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 
 [! if CC_USE_LUA]
     // register lua engine
-    CCScriptEngineProtocol* pEngine = CCLuaEngine::engine();
+    CCLuaEngine* pEngine = CCLuaEngine::defaultEngine();
     CCScriptEngineManager::sharedManager()->setScriptEngine(pEngine);
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)

@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2011      Zynga Inc.
 
@@ -47,7 +47,7 @@ class CCSet;
 //
 // CCTimer
 //
-/** @brief Light weight timer */
+/** @brief Light-weight timer */
 class CC_DLL CCTimer : public CCObject
 {
 public:
@@ -108,7 +108,7 @@ struct _hashUpdateEntry;
 
 class CCArray;
 
-/** @brief Scheduler is responsible of triggering the scheduled callbacks.
+/** @brief Scheduler is responsible for triggering the scheduled callbacks.
 You should not use NSTimer. Instead use this class.
 
 There are 2 different types of callbacks (selectors):
@@ -142,9 +142,9 @@ public:
 
     /** The scheduled method will be called every 'interval' seconds.
      If paused is YES, then it won't be called until it is resumed.
-     If 'interval' is 0, it will be called every frame, but if so, it recommened to use 'scheduleUpdateForTarget:' instead.
+     If 'interval' is 0, it will be called every frame, but if so, it's recommended to use 'scheduleUpdateForTarget:' instead.
      If the selector is already scheduled, then only the interval parameter will be updated without re-scheduling it again.
-     repeat let the action be repeated repeat + 1 times, use kCCRepeatForever to let the action run continiously
+     repeat let the action be repeated repeat + 1 times, use kCCRepeatForever to let the action run continuously
      delay is the amount of time the action will wait before it'll start
 
      @since v0.99.3, repeat and delay added in v1.1

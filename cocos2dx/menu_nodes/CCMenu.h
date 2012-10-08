@@ -51,7 +51,7 @@ enum {
 * 
 * Features and Limitation:
 *  - You can add MenuItem objects in runtime using addChild:
-*  - But the only accecpted children are MenuItem objects
+*  - But the only accepted children are MenuItem objects
 */
 class CC_DLL CCMenu : public CCLayer, public CCRGBAProtocol
 {

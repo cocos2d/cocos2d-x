@@ -1,6 +1,6 @@
 #include "CCLayerGradientLoader.h"
 
-USING_NS_CC;
+
 
 #define PROPERTY_STARTCOLOR "startColor"
 #define PROPERTY_ENDCOLOR "endColor"

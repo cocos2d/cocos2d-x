@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2011      Zynga Inc.
 
@@ -98,7 +98,7 @@ public:
     bool initWithTileFile(const char* tile, unsigned int tileWidth, unsigned int tileHeight, unsigned int itemsToRender);
 
     /** updates the Atlas (indexed vertex array).
-    * Shall be overriden in subclasses
+    * Shall be overridden in subclasses
     */
     virtual void updateAtlasValues();
 

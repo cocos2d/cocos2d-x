@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2011      Zynga Inc.
 
@@ -93,7 +93,7 @@ private:
     void updateAtlasValues();
 
 protected:
-    //! x,y to altas dicctionary
+    //! x,y to atlas dictionary
     CCDictionary* m_pPosToAtlasIndex;
     //! numbers of tiles to render
     int m_nItemsToRender;

@@ -79,10 +79,16 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\CCBReader\CCBAnimationManager.cpp" />
     <ClCompile Include="..\CCBReader\CCBFileLoader.cpp" />
+    <ClCompile Include="..\CCBReader\CCBKeyframe.cpp" />
     <ClCompile Include="..\CCBReader\CCBReader.cpp" />
+    <ClCompile Include="..\CCBReader\CCBSequence.cpp" />
+    <ClCompile Include="..\CCBReader\CCBSequenceProperty.cpp" />
+    <ClCompile Include="..\CCBReader\CCBValue.cpp" />
     <ClCompile Include="..\CCBReader\CCControlButtonLoader.cpp" />
     <ClCompile Include="..\CCBReader\CCControlLoader.cpp" />
+    <ClCompile Include="..\CCBReader\CCData.cpp" />
     <ClCompile Include="..\CCBReader\CCLabelBMFontLoader.cpp" />
     <ClCompile Include="..\CCBReader\CCLabelTTFLoader.cpp" />
     <ClCompile Include="..\CCBReader\CCLayerColorLoader.cpp" />
@@ -90,6 +96,7 @@
     <ClCompile Include="..\CCBReader\CCLayerLoader.cpp" />
     <ClCompile Include="..\CCBReader\CCMenuItemImageLoader.cpp" />
     <ClCompile Include="..\CCBReader\CCMenuItemLoader.cpp" />
+    <ClCompile Include="..\CCBReader\CCNode+CCBRelativePositioning.cpp" />
     <ClCompile Include="..\CCBReader\CCNodeLoader.cpp" />
     <ClCompile Include="..\CCBReader\CCNodeLoaderLibrary.cpp" />
     <ClCompile Include="..\CCBReader\CCParticleSystemQuadLoader.cpp" />
@@ -100,14 +107,14 @@
     <ClCompile Include="..\GUI\CCControlExtension\CCControlButton.cpp" />
     <ClCompile Include="..\GUI\CCControlExtension\CCControlColourPicker.cpp" />
     <ClCompile Include="..\GUI\CCControlExtension\CCControlHuePicker.cpp" />
+    <ClCompile Include="..\GUI\CCControlExtension\CCControlPotentiometer.cpp" />
     <ClCompile Include="..\GUI\CCControlExtension\CCControlSaturationBrightnessPicker.cpp" />
     <ClCompile Include="..\GUI\CCControlExtension\CCControlSlider.cpp" />
+    <ClCompile Include="..\GUI\CCControlExtension\CCControlStepper.cpp" />
     <ClCompile Include="..\GUI\CCControlExtension\CCControlSwitch.cpp" />
     <ClCompile Include="..\GUI\CCControlExtension\CCControlUtils.cpp" />
     <ClCompile Include="..\GUI\CCControlExtension\CCInvocation.cpp" />
-    <ClCompile Include="..\GUI\CCControlExtension\CCMenuPassive.cpp" />
     <ClCompile Include="..\GUI\CCControlExtension\CCScale9Sprite.cpp" />
-    <ClCompile Include="..\GUI\CCControlExtension\CCSpacer.cpp" />
     <ClCompile Include="..\GUI\CCScrollView\CCScrollView.cpp" />
     <ClCompile Include="..\GUI\CCScrollView\CCSorting.cpp" />
     <ClCompile Include="..\GUI\CCScrollView\CCTableView.cpp" />
@@ -115,12 +122,18 @@
     <ClCompile Include="..\network\HttpClient.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\CCBReader\CCBAnimationManager.h" />
     <ClInclude Include="..\CCBReader\CCBFileLoader.h" />
+    <ClInclude Include="..\CCBReader\CCBKeyframe.h" />
     <ClInclude Include="..\CCBReader\CCBMemberVariableAssigner.h" />
     <ClInclude Include="..\CCBReader\CCBReader.h" />
     <ClInclude Include="..\CCBReader\CCBSelectorResolver.h" />
+    <ClInclude Include="..\CCBReader\CCBSequence.h" />
+    <ClInclude Include="..\CCBReader\CCBSequenceProperty.h" />
+    <ClInclude Include="..\CCBReader\CCBValue.h" />
     <ClInclude Include="..\CCBReader\CCControlButtonLoader.h" />
     <ClInclude Include="..\CCBReader\CCControlLoader.h" />
+    <ClInclude Include="..\CCBReader\CCData.h" />
     <ClInclude Include="..\CCBReader\CCLabelBMFontLoader.h" />
     <ClInclude Include="..\CCBReader\CCLabelTTFLoader.h" />
     <ClInclude Include="..\CCBReader\CCLayerColorLoader.h" />
@@ -129,6 +142,7 @@
     <ClInclude Include="..\CCBReader\CCMenuItemImageLoader.h" />
     <ClInclude Include="..\CCBReader\CCMenuItemLoader.h" />
     <ClInclude Include="..\CCBReader\CCMenuLoader.h" />
+    <ClInclude Include="..\CCBReader\CCNode+CCBRelativePositioning.h" />
     <ClInclude Include="..\CCBReader\CCNodeLoader.h" />
     <ClInclude Include="..\CCBReader\CCNodeLoaderLibrary.h" />
     <ClInclude Include="..\CCBReader\CCNodeLoaderListener.h" />
@@ -141,14 +155,14 @@
     <ClInclude Include="..\GUI\CCControlExtension\CCControlColourPicker.h" />
     <ClInclude Include="..\GUI\CCControlExtension\CCControlExtensions.h" />
     <ClInclude Include="..\GUI\CCControlExtension\CCControlHuePicker.h" />
+    <ClInclude Include="..\GUI\CCControlExtension\CCControlPotentiometer.h" />
     <ClInclude Include="..\GUI\CCControlExtension\CCControlSaturationBrightnessPicker.h" />
     <ClInclude Include="..\GUI\CCControlExtension\CCControlSlider.h" />
+    <ClInclude Include="..\GUI\CCControlExtension\CCControlStepper.h" />
     <ClInclude Include="..\GUI\CCControlExtension\CCControlSwitch.h" />
     <ClInclude Include="..\GUI\CCControlExtension\CCControlUtils.h" />
     <ClInclude Include="..\GUI\CCControlExtension\CCInvocation.h" />
-    <ClInclude Include="..\GUI\CCControlExtension\CCMenuPassive.h" />
     <ClInclude Include="..\GUI\CCControlExtension\CCScale9Sprite.h" />
-    <ClInclude Include="..\GUI\CCControlExtension\CCSpacer.h" />
     <ClInclude Include="..\GUI\CCScrollView\CCScrollView.h" />
     <ClInclude Include="..\cocos-ext.h" />
     <ClInclude Include="..\ExtensionMacros.h" />

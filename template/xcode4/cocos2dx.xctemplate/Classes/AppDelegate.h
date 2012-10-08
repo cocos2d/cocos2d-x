@@ -14,7 +14,7 @@
 /**
 @brief    The cocos2d Application.
 
-The reason for implement as private inheritance is to hide some interface call by CCDirector.
+The reason to implement with private inheritance is to hide some interface details of CCDirector.
 */
 class  AppDelegate : private cocos2d::CCApplication
 {
@@ -30,14 +30,14 @@ public:
     virtual bool applicationDidFinishLaunching();
 
     /**
-    @brief  The function be called when the application enter background
-    @param  the pointer of the application
+    @brief  The function is called when the application enters the background
+    @param  the pointer of the application instance
     */
     virtual void applicationDidEnterBackground();
 
     /**
-    @brief  The function be called when the application enter foreground
-    @param  the pointer of the application
+    @brief  The function is called when the application enters the foreground
+    @param  the pointer of the application instance
     */
     virtual void applicationWillEnterForeground();
 };

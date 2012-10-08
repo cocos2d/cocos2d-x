@@ -2,8 +2,8 @@ CC      = gcc
 CXX     = g++
 AR      = ar
 TARGET	= libbox2d.a
-CCFLAGS = -Wall -g -O2 
-CXXFLAGS = -Wall -g -O2 
+CCFLAGS = -Wall 
+CXXFLAGS = -Wall
 ARFLAGS = cr
 
 INCLUDES = -I../../
@@ -56,18 +56,26 @@ OBJECTS = ../Collision/Shapes/b2ChainShape.o \
 ../Dynamics/b2WorldCallbacks.o \
 ../Rope/b2Rope.o 
 
+debug: CCFLAGS += -g3 -O0
+debug: CXXFLAGS += -g3 -O0
+debug: DEFINES += -DDEBUG
+debug: $(TARGET)
 
+release: CCFLAGS += -O3
+release: CXXFLAGS += -O3
+release: DEFINES += -DNDEBUG
+release: $(TARGET)
 
 ####### Build rules
 $(TARGET): $(OBJECTS) 
 	$(AR) $(ARFLAGS) $(TARGET) $(OBJECTS)  
-	
+
 ####### Compile
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) $(INCLUDES) $(DEFINES) -c $< -o $@
 
 %.o: %.c
 	$(CC) $(CCFLAGS) $(INCLUDES) $(DEFINES) -c $< -o $@
-		
+
 clean: 
 	rm -f $(OBJECTS) $(TARGET) core

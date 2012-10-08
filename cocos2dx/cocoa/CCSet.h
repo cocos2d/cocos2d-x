@@ -45,7 +45,7 @@ public:
     virtual ~CCSet(void);
 
     /**
-    *@brief Return a copy of the CCSet, it will copy all the elelments.
+    *@brief Return a copy of the CCSet, it will copy all the elements.
     */
     CCSet* copy();
     /**
@@ -73,7 +73,7 @@ public:
     */
     CCSetIterator begin();
     /**
-    *@brief Return the iterator that points to the poisition after the last element.
+    *@brief Return the iterator that points to the position after the last element.
     */
     CCSetIterator end();
     /**

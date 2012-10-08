@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2011 Ricardo Quesada
 Copyright (c) 2011 Zynga Inc.
 
@@ -116,7 +116,7 @@ public:
     @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCFiniteTimeAction* actions(CCFiniteTimeAction *pAction1, ...);
-    /** helper contructor to create an array of sequenceable actions given an array 
+    /** helper constructor to create an array of sequenceable actions given an array 
     @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCFiniteTimeAction* actionWithArray(CCArray *arrayOfActions);
@@ -127,7 +127,7 @@ public:
 
     /** helper constructor to create an array of sequenceable actions */
     static CCFiniteTimeAction* create(CCFiniteTimeAction *pAction1, ...);
-    /** helper contructor to create an array of sequenceable actions given an array */
+    /** helper constructor to create an array of sequenceable actions given an array */
     static CCFiniteTimeAction* create(CCArray *arrayOfActions);
     /** creates the action */
     static CCSequence* createWithTwoActions(CCFiniteTimeAction *pActionOne, CCFiniteTimeAction *pActionTwo);
@@ -257,7 +257,7 @@ public:
     */
     CC_DEPRECATED_ATTRIBUTE static CCFiniteTimeAction* actions(CCFiniteTimeAction *pAction1, ...);
 
-    /** helper contructor to create an array of spawned actions given an array 
+    /** helper constructor to create an array of spawned actions given an array 
     @deprecated: This interface will be deprecated sooner or later.
     */
     CC_DEPRECATED_ATTRIBUTE static CCFiniteTimeAction* actionWithArray(CCArray *arrayOfActions);
@@ -270,7 +270,7 @@ public:
     /** helper constructor to create an array of spawned actions */
     static CCFiniteTimeAction* create(CCFiniteTimeAction *pAction1, ...);
 
-    /** helper contructor to create an array of spawned actions given an array */
+    /** helper constructor to create an array of spawned actions given an array */
     static CCFiniteTimeAction* create(CCArray *arrayOfActions);
 
     /** creates the Spawn action */

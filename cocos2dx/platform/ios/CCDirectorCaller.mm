@@ -66,7 +66,7 @@ static id s_sharedDirectorCaller;
 
 -(void) startMainLoop
 {
-        // CCDirector::setAnimationInterval() is called, we should invalide it first
+        // CCDirector::setAnimationInterval() is called, we should invalidate it first
         [displayLink invalidate];
         displayLink = nil;
         
@@ -77,7 +77,7 @@ static id s_sharedDirectorCaller;
 
 -(void) setAnimationInterval:(double)intervalNew
 {
-        // CCDirector::setAnimationInterval() is called, we should invalide it first
+        // CCDirector::setAnimationInterval() is called, we should invalidate it first
         [displayLink invalidate];
         displayLink = nil;
         

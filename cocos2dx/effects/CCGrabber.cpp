@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2009      On-Core
  
 http://www.cocos2d-x.org
@@ -53,7 +53,7 @@ void CCGrabber::grab(CCTexture2D *pTexture)
     GLuint status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
     if (status != GL_FRAMEBUFFER_COMPLETE)
     {
-        CCAssert(0, "Frame Grabber: could not attach texture to frmaebuffer");
+        CCAssert(0, "Frame Grabber: could not attach texture to framebuffer");
     }
 
     glBindFramebuffer(GL_FRAMEBUFFER, m_oldFBO);

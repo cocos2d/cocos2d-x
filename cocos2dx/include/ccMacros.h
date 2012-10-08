@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2011      Zynga Inc.
 
@@ -163,7 +163,7 @@ CCSizeMake( (__size_in_points__).width * CC_CONTENT_SCALE_FACTOR(), (__size_in_p
             void operator=(const TypeName&)
 
 /**
-Helper marcos which converts 4-byte little/big endian 
+Helper macros which converts 4-byte little/big endian 
 integral number to the machine native number representation
  
 It should work same as apples CFSwapInt32LittleToHost(..)

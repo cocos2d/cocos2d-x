@@ -1,8 +1,7 @@
 #include "main.h"
-
 #include "../Classes/AppDelegate.h"
 #include "cocos2d.h"
-#include "CCEGLView.h"
+
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -24,7 +23,7 @@ int main(int argc, char **argv)
 
     std::string resourcePath = fullpath;
     resourcePath = resourcePath.substr(0, resourcePath.find_last_of("/"));
-    resourcePath += "/../../Resources/";
+    resourcePath += "/../../../Resources/";
     
     // create the application instance
     AppDelegate app;

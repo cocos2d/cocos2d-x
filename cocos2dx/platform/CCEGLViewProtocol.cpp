@@ -91,7 +91,7 @@ void CCEGLViewProtocol::setDesignResolutionSize(float width, float height, Resol
     
     //setViewPortInPoints(0, 0,m_obScreenSize.width, m_obScreenSize.height);
     
-    // reset director's member vaviables to fit visible rect
+    // reset director's member variables to fit visible rect
     CCDirector::sharedDirector()->createStatsLabel();
     CCDirector::sharedDirector()->m_obWinSizeInPoints = CCDirector::sharedDirector()->m_obWinSizeInPixels = getSize(); 
     CCDirector::sharedDirector()->setGLDefaultValues();

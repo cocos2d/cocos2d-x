@@ -3,6 +3,7 @@ APPNAME="TestJavascript"
 # options
 
 buildexternalsfromsource=
+PARALLEL_BUILD_FLAG=
 
 usage(){
 cat << EOF
@@ -12,14 +13,18 @@ Build C/C++ code for $APPNAME using Android NDK
 
 OPTIONS:
 -s	Build externals from source
+-p  Run make with -j8 option to take advantage of multiple processors
 -h	this help
 EOF
 }
 
-while getopts "sh" OPTION; do
+while getopts "sph" OPTION; do
 case "$OPTION" in
 s)
 buildexternalsfromsource=1
+;;
+p)
+PARALLEL_BUILD_FLAG=\-j8
 ;;
 h)
 usage
@@ -27,6 +32,9 @@ exit 0
 ;;
 esac
 done
+
+# exit this script if any commmand fails
+set -e
 
 # paths
 
@@ -41,10 +49,13 @@ COCOS2DX_ROOT="$DIR/../../.."
 APP_ROOT="$DIR/.."
 APP_ANDROID_ROOT="$DIR"
 
-echo "NDK_ROOT = $NDK_ROOT"
-echo "COCOS2DX_ROOT = $COCOS2DX_ROOT"
-echo "APP_ROOT = $APP_ROOT"
-echo "APP_ANDROID_ROOT = $APP_ANDROID_ROOT"
+echo
+echo "Paths"
+echo "    NDK_ROOT = $NDK_ROOT"
+echo "    COCOS2DX_ROOT = $COCOS2DX_ROOT"
+echo "    APP_ROOT = $APP_ROOT"
+echo "    APP_ANDROID_ROOT = $APP_ANDROID_ROOT"
+echo
 
 # make sure assets is exist
 if [ -d "$APP_ANDROID_ROOT"/assets ]; then
@@ -79,12 +90,11 @@ rm -f "$APP_ANDROID_ROOT"/assets/Images/texture1024x1024_rgba4444.pvr.gz
 rm -f "$APP_ANDROID_ROOT"/assets/Images/PlanetCute-1024x1024-rgba4444.pvr.gz
 
 
-if [[ "$buildexternalsfromsource" ]]; then
-    echo "Building external dependencies from source"
-    "$NDK_ROOT"/ndk-build -C "$APP_ANDROID_ROOT" $* \
-        "NDK_MODULE_PATH=${COCOS2DX_ROOT}:${COCOS2DX_ROOT}/cocos2dx/platform/third_party/android/source"
-else
-    echo "Using prebuilt externals"
-    "$NDK_ROOT"/ndk-build -C "$APP_ANDROID_ROOT" $* \
-        "NDK_MODULE_PATH=${COCOS2DX_ROOT}:${COCOS2DX_ROOT}/cocos2dx/platform/third_party/android/prebuilt"
-fi
+echo "Using prebuilt externals"
+echo
+
+set -x
+
+"$NDK_ROOT"/ndk-build $PARALLEL_BUILD_FLAG -C "$APP_ANDROID_ROOT" $* \
+    "NDK_MODULE_PATH=${COCOS2DX_ROOT}:${COCOS2DX_ROOT}/cocos2dx/platform/third_party/android/prebuilt" \
+    NDK_LOG=1 V=1

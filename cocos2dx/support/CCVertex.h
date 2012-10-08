@@ -39,7 +39,7 @@ NS_CC_BEGIN
 /** converts a line to a polygon */
 void CC_DLL ccVertexLineToPolygon(CCPoint *points, float stroke, ccVertex2F *vertices, unsigned int offset, unsigned int nuPoints);
 
-/** returns wheter or not the line intersects */
+/** returns whether or not the line intersects */
 bool CC_DLL ccVertexLineIntersect(float Ax, float Ay,
                              float Bx, float By,
                              float Cx, float Cy,

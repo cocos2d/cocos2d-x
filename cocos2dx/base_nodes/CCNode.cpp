@@ -99,6 +99,8 @@ CCNode::CCNode(void)
 CCNode::~CCNode(void)
 {
     CCLOGINFO( "cocos2d: deallocing" );
+    
+    unregisterScriptHandler();
 
     CC_SAFE_RELEASE(m_pActionManager);
     CC_SAFE_RELEASE(m_pScheduler);
@@ -171,7 +173,7 @@ void CCNode::setZOrder(int z)
     }
 }
 
-/// ertexZ getter
+/// vertexZ getter
 float CCNode::getVertexZ()
 {
     return m_fVertexZ;
@@ -491,7 +493,7 @@ CCNode* CCNode::getChildByTag(int aTag)
 }
 
 /* "add" logic MUST only be on this method
-* If a class want's to extend the 'addChild' behaviour it only needs
+* If a class want's to extend the 'addChild' behavior it only needs
 * to override this method
 */
 void CCNode::addChild(CCNode *child, int zOrder, int tag)
@@ -681,7 +683,7 @@ void CCNode::sortAllChildren()
  {
      //CCAssert(0);
      // override me
-     // Only use- this function to draw your staff.
+     // Only use- this function to draw your stuff.
      // DON'T draw your stuff outside this method
  }
 

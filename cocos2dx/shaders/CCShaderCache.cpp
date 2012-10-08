@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Ricardo Quesada
 Copyright (c) 2011      Zynga Inc.
 
@@ -134,7 +134,7 @@ void CCShaderCache::loadDefaultShaders()
     p->release();
 
     //
-    // Position and 1 color passed as a uniform (to similate glColor4ub )
+    // Position and 1 color passed as a uniform (to simulate glColor4ub )
     //
     p = new CCGLProgram();
     loadDefaultShader(p, kCCShaderType_Position_uColor);
@@ -186,7 +186,7 @@ void CCShaderCache::reloadDefaultShaders()
     loadDefaultShader(p, kCCShaderType_PositionTextureA8Color);
     
     //
-    // Position and 1 color passed as a uniform (to similate glColor4ub )
+    // Position and 1 color passed as a uniform (to simulate glColor4ub )
     //
     p = programForKey(kCCShader_Position_uColor);
     p->reset();
