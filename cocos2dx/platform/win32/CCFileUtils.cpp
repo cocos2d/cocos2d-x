@@ -173,33 +173,36 @@ string CCFileUtils::getWriteablePath()
 	char full_path[_MAX_PATH + 1];
 	::GetModuleFileNameA(NULL, full_path, _MAX_PATH + 1);
 
-	// Get filename of executable only, e.g. MyGame.exe
-	char *base_name = strrchr(full_path, '\\');
+	// Debug app uses executable directory; Non-debug app uses local app data directory
+	#ifndef _DEBUG
+		// Get filename of executable only, e.g. MyGame.exe
+		char *base_name = strrchr(full_path, '\\');
 
-	if(base_name)
-	{
-		char app_data_path[_MAX_PATH + 1];
-
-		// Get local app data directory, e.g. C:\Documents and Settings\username\Local Settings\Application Data
-		if (SUCCEEDED(SHGetFolderPathA(NULL, CSIDL_LOCAL_APPDATA, NULL, SHGFP_TYPE_CURRENT, app_data_path)))
+		if(base_name)
 		{
-			string ret((char*)app_data_path);
+			char app_data_path[_MAX_PATH + 1];
 
-			// Adding executable filename, e.g. C:\Documents and Settings\username\Local Settings\Application Data\MyGame.exe
-			ret += base_name;
-
-			// Remove ".exe" extension, e.g. C:\Documents and Settings\username\Local Settings\Application Data\MyGame
-			ret = ret.substr(0, ret.rfind("."));
-
-			ret += "\\";
-
-			// Create directory
-			if (SUCCEEDED(SHCreateDirectoryExA(NULL, ret.c_str(), NULL)))
+			// Get local app data directory, e.g. C:\Documents and Settings\username\Local Settings\Application Data
+			if (SUCCEEDED(SHGetFolderPathA(NULL, CSIDL_LOCAL_APPDATA, NULL, SHGFP_TYPE_CURRENT, app_data_path)))
 			{
-				return ret;
+				string ret((char*)app_data_path);
+
+				// Adding executable filename, e.g. C:\Documents and Settings\username\Local Settings\Application Data\MyGame.exe
+				ret += base_name;
+
+				// Remove ".exe" extension, e.g. C:\Documents and Settings\username\Local Settings\Application Data\MyGame
+				ret = ret.substr(0, ret.rfind("."));
+
+				ret += "\\";
+
+				// Create directory
+				if (SUCCEEDED(SHCreateDirectoryExA(NULL, ret.c_str(), NULL)))
+				{
+					return ret;
+				}
 			}
 		}
-	}
+	#endif // not defined _DEBUG
 
 	// If fetching of local app data directory fails, use the executable one
 	string ret((char*)full_path);
