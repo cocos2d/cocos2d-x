@@ -131,7 +131,7 @@ bool CCDirector::init(void)
     // purge ?
     m_bPurgeDirecotorInNextLoop = false;
 
-    m_obWinSize = CCSizeZero;
+    m_obWinSizeInPixels = m_obWinSizeInPoints = CCSizeZero;    
 
     m_pobOpenGLView = NULL;
 
@@ -302,7 +302,8 @@ void CCDirector::setOpenGLView(CCEGLView *pobOpenGLView)
         m_pobOpenGLView = pobOpenGLView;
 
         // set size
-        m_obWinSize = m_pobOpenGLView->getSize();
+        m_obWinSizeInPoints = m_pobOpenGLView->getSize();
+        m_obWinSizeInPixels = CCSizeMake(m_obWinSizeInPoints.width * m_fContentScaleFactor, m_obWinSizeInPoints.height * m_fContentScaleFactor);
         
         createStatsLabel();
         
@@ -330,7 +331,7 @@ void CCDirector::setNextDeltaTimeZero(bool bNextDeltaTimeZero)
 
 void CCDirector::setProjection(ccDirectorProjection kProjection)
 {
-    CCSize size = m_obWinSize;
+    CCSize size = m_obWinSizeInPixels;
 
     if (m_pobOpenGLView)
     {
@@ -402,7 +403,7 @@ void CCDirector::purgeCachedData(void)
 
 float CCDirector::getZEye(void)
 {
-    return (m_obWinSize.height / 1.1566f);    
+    return (m_obWinSizeInPixels.height / 1.1566f);    
 }
 
 void CCDirector::setAlphaBlending(bool bOn)
@@ -418,11 +419,6 @@ void CCDirector::setAlphaBlending(bool bOn)
     }
 
     CHECK_GL_ERROR_DEBUG();
-}
-
-bool CCDirector::enableRetinaDisplay(bool bEnabelRetina)
-{
-    return false;
 }
 
 void CCDirector::setDepthTest(bool bOn)
@@ -443,26 +439,28 @@ void CCDirector::setDepthTest(bool bOn)
 
 CCPoint CCDirector::convertToGL(const CCPoint& uiPoint)
 {
-    float newY = m_obWinSize.height - uiPoint.y;
+    CCSize s = m_obWinSizeInPoints;
+    float newY = s.height - uiPoint.y;
     
     return ccp(uiPoint.x, newY);
 }
 
 CCPoint CCDirector::convertToUI(const CCPoint& glPoint)
 {
-    float oppositeY = m_obWinSize.height - glPoint.y;
+    CCSize winSize = m_obWinSizeInPoints;
+    float oppositeY = winSize.height - glPoint.y;
     
     return ccp(glPoint.x, oppositeY);
 }
 
 CCSize CCDirector::getWinSize(void)
 {
-    return m_obWinSize;
+    return m_obWinSizeInPoints;
 }
 
 CCSize CCDirector::getWinSizeInPixels()
 {
-    return m_obWinSize;
+    return m_obWinSizeInPixels;
 }
 
 CCSize CCDirector::getVisibleSize()
@@ -494,7 +492,9 @@ void CCDirector::reshapeProjection(const CCSize& newWindowSize)
     CC_UNUSED_PARAM(newWindowSize);
     if (m_pobOpenGLView)
     {
-       m_obWinSize = m_pobOpenGLView->getSize();
+       m_obWinSizeInPoints = m_pobOpenGLView->getSize();
+       m_obWinSizeInPixels = CCSizeMake(m_obWinSizeInPoints.width * m_fContentScaleFactor,
+                                     m_obWinSizeInPoints.height * m_fContentScaleFactor);
  
        setProjection(m_eProjection);       
     }
@@ -783,6 +783,7 @@ void CCDirector::createStatsLabel()
     m_pFPSLabel->setPosition(ccpAdd(ccp(contentSize.width/2, contentSize.height/2), CC_DIRECTOR_STATS_POSITION));
 }
 
+
 /***************************************************
 * mobile platforms specific functions
 **************************************************/
@@ -802,6 +803,7 @@ void CCDirector::setContentScaleFactor(float scaleFactor)
     if (scaleFactor != m_fContentScaleFactor)
     {
         m_fContentScaleFactor = scaleFactor;
+        m_obWinSizeInPixels = CCSizeMake(m_obWinSizeInPoints.width * scaleFactor, m_obWinSizeInPoints.height * scaleFactor);
 
         if (m_pobOpenGLView)
         {

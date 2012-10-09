@@ -65,7 +65,7 @@ bool CCEditBoxImplIOS::initWithSize(const CCSize& size)
         CCEGLViewProtocol* eglView = CCEGLView::sharedOpenGLView();
 
         CGRect rect;
-        if (eglView->isRetinaEnabled())
+        if ([[EAGLView sharedEGLView] contentScaleFactor] == 2.0f)
         {
             rect = CGRectMake(0, 0, size.width,size.height);
         }
@@ -200,7 +200,7 @@ static CGPoint convertDesignCoordToScreenCoord(const CCPoint& designCoord)
     float viewH = (float)[[EAGLView sharedEGLView] getHeight];
     CCEGLViewProtocol* eglView = CCEGLView::sharedOpenGLView();
     CCPoint visiblePos;
-    if (eglView->isRetinaEnabled())
+    if ([[EAGLView sharedEGLView] contentScaleFactor] == 2.0f)
     {
         visiblePos = ccp(designCoord.x, designCoord.y);
     }
