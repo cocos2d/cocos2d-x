@@ -210,6 +210,7 @@
 		15BA623115E4EAC3002BC3A5 /* hd in Resources */ = {isa = PBXBuildFile; fileRef = 15BA623015E4EAC3002BC3A5 /* hd */; };
 		15BA623515E4EAD7002BC3A5 /* ipadhd in Resources */ = {isa = PBXBuildFile; fileRef = 15BA623415E4EAD7002BC3A5 /* ipadhd */; };
 		15D2551A15E5FD6B000D5E89 /* ipad in Resources */ = {isa = PBXBuildFile; fileRef = 15D2551915E5FD6B000D5E89 /* ipad */; };
+		15DA79E916242E8900155276 /* Utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15DA79E716242E8900155276 /* Utils.cpp */; };
 		15FC61A816095C2B00AE81F8 /* ccb in Resources */ = {isa = PBXBuildFile; fileRef = 15FC61A716095C2B00AE81F8 /* ccb */; };
 		1A14ADF515DA49A50064E300 /* CCEditBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A14ADEC15DA49A50064E300 /* CCEditBox.cpp */; };
 		1A14ADF715DA49A50064E300 /* CCEditBoxImplIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A14ADF115DA49A50064E300 /* CCEditBoxImplIOS.mm */; };
@@ -741,6 +742,8 @@
 		15BA623015E4EAC3002BC3A5 /* hd */ = {isa = PBXFileReference; lastKnownFileType = folder; path = hd; sourceTree = "<group>"; };
 		15BA623415E4EAD7002BC3A5 /* ipadhd */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ipadhd; sourceTree = "<group>"; };
 		15D2551915E5FD6B000D5E89 /* ipad */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ipad; sourceTree = "<group>"; };
+		15DA79E716242E8900155276 /* Utils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Utils.cpp; path = ../Classes/Utils.cpp; sourceTree = "<group>"; };
+		15DA79E816242E8900155276 /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Utils.h; path = ../Classes/Utils.h; sourceTree = "<group>"; };
 		15FC61A716095C2B00AE81F8 /* ccb */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ccb; sourceTree = "<group>"; };
 		1A14ADEC15DA49A50064E300 /* CCEditBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCEditBox.cpp; sourceTree = "<group>"; };
 		1A14ADED15DA49A50064E300 /* CCEditBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEditBox.h; sourceTree = "<group>"; };
@@ -925,6 +928,8 @@
 		15AA9C4015B7EC450033D6C2 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				15DA79E716242E8900155276 /* Utils.cpp */,
+				15DA79E816242E8900155276 /* Utils.h */,
 				15AA9F3A15B7EF960033D6C2 /* AppDelegate.cpp */,
 				15AA9CAA15B7EC460033D6C2 /* controller.cpp */,
 				15AA9D3115B7EC460033D6C2 /* testBasic.cpp */,
@@ -2475,6 +2480,7 @@
 				15384F5F1611B3380021DC07 /* CCScale9Sprite.cpp in Sources */,
 				15384F661611B38A0021DC07 /* CCControlPotentiometerTest.cpp in Sources */,
 				15384F671611B38A0021DC07 /* CCControlStepperTest.cpp in Sources */,
+				15DA79E916242E8900155276 /* Utils.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

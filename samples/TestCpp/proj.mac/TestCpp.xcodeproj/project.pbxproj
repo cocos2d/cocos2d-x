@@ -223,6 +223,7 @@
 		15D2554915E60029000D5E89 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = 15D2553515E60029000D5E89 /* Shaders */; };
 		15D2554A15E60029000D5E89 /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = 15D2553615E60029000D5E89 /* TileMaps */; };
 		15D2554B15E60029000D5E89 /* zwoptex in Resources */ = {isa = PBXBuildFile; fileRef = 15D2553715E60029000D5E89 /* zwoptex */; };
+		15DA79F516242F4200155276 /* Utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15DA79F316242F4200155276 /* Utils.cpp */; };
 		1A20136415FD90240013D092 /* CustomTableViewCell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A20136015FD90240013D092 /* CustomTableViewCell.cpp */; };
 		1A20136515FD90240013D092 /* TableViewTestScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A20136215FD90240013D092 /* TableViewTestScene.cpp */; };
 		41BC70E415BF81A5006A0A6C /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 41BC70DA15BF81A5006A0A6C /* AppController.mm */; };
@@ -745,6 +746,8 @@
 		15D2553515E60029000D5E89 /* Shaders */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Shaders; sourceTree = "<group>"; };
 		15D2553615E60029000D5E89 /* TileMaps */ = {isa = PBXFileReference; lastKnownFileType = folder; path = TileMaps; sourceTree = "<group>"; };
 		15D2553715E60029000D5E89 /* zwoptex */ = {isa = PBXFileReference; lastKnownFileType = folder; path = zwoptex; sourceTree = "<group>"; };
+		15DA79F316242F4200155276 /* Utils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Utils.cpp; path = ../Classes/Utils.cpp; sourceTree = "<group>"; };
+		15DA79F416242F4200155276 /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Utils.h; path = ../Classes/Utils.h; sourceTree = "<group>"; };
 		1A20136015FD90240013D092 /* CustomTableViewCell.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CustomTableViewCell.cpp; sourceTree = "<group>"; };
 		1A20136115FD90240013D092 /* CustomTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTableViewCell.h; sourceTree = "<group>"; };
 		1A20136215FD90240013D092 /* TableViewTestScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TableViewTestScene.cpp; sourceTree = "<group>"; };
@@ -829,6 +832,8 @@
 		15AA9C4015B7EC450033D6C2 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				15DA79F316242F4200155276 /* Utils.cpp */,
+				15DA79F416242F4200155276 /* Utils.h */,
 				15AA9F3A15B7EF960033D6C2 /* AppDelegate.cpp */,
 				15AA9CAA15B7EC460033D6C2 /* controller.cpp */,
 				15AA9D3115B7EC460033D6C2 /* testBasic.cpp */,
@@ -2424,6 +2429,7 @@
 				15CFD0E31612A3EE00BF2188 /* CCControlSliderTest.cpp in Sources */,
 				15CFD0E41612A3EE00BF2188 /* CCControlStepperTest.cpp in Sources */,
 				15CFD0E51612A3EE00BF2188 /* CCControlSwitchTest.cpp in Sources */,
+				15DA79F516242F4200155276 /* Utils.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
