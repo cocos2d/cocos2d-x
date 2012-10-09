@@ -891,7 +891,6 @@ void CCLabelBMFont::createFontChars()
         ccBMFontDef fontDef = element->fontDef;
 
         CCRect rect = fontDef.rect;
-        rect = CC_RECT_PIXELS_TO_POINTS(rect);
 
         rect.origin.x += m_tImageOffset.x;
         rect.origin.y += m_tImageOffset.y;
@@ -919,8 +918,8 @@ void CCLabelBMFont::createFontChars()
         // See issue 1343. cast( signed short + unsigned integer ) == unsigned integer (sign is lost!)
         int yOffset = m_pConfiguration->m_nCommonHeight - fontDef.yOffset;
         CCPoint fontPos = ccp( (float)nextFontPositionX + fontDef.xOffset + fontDef.rect.size.width*0.5f + kerningAmount,
-            (float)nextFontPositionY + yOffset - rect.size.height*0.5f * CC_CONTENT_SCALE_FACTOR() );
-        fontChar->setPosition(CC_POINT_PIXELS_TO_POINTS(fontPos));
+            (float)nextFontPositionY + yOffset - rect.size.height*0.5f );
+        fontChar->setPosition(fontPos);
 
         // update kerning
         nextFontPositionX += fontDef.xAdvance + kerningAmount;
@@ -947,7 +946,7 @@ void CCLabelBMFont::createFontChars()
     tmpSize.width  = (float) longestLine;
     tmpSize.height = (float) totalHeight;
 
-    this->setContentSize(CC_SIZE_PIXELS_TO_POINTS(tmpSize));
+    this->setContentSize(tmpSize);
     
 }
 

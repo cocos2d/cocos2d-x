@@ -416,7 +416,7 @@ void ccDrawColor4F( GLfloat r, GLfloat g, GLfloat b, GLfloat a )
 
 void ccPointSize( GLfloat pointSize )
 {
-    s_fPointSize = pointSize * CC_CONTENT_SCALE_FACTOR();
+    s_fPointSize = pointSize;
 
     //TODO :glPointSize( pointSize );
 

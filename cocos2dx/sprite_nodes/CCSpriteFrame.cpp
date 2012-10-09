@@ -89,14 +89,12 @@ CCSpriteFrame* CCSpriteFrame::create(const char* filename, const CCRect& rect, b
 
 bool CCSpriteFrame::initWithTexture(CCTexture2D* pobTexture, const CCRect& rect)
 {
-    CCRect rectInPixels = CC_RECT_POINTS_TO_PIXELS(rect);
-    return initWithTexture(pobTexture, rectInPixels, false, CCPointZero, rectInPixels.size);
+    return initWithTexture(pobTexture, rect, false, CCPointZero, rect.size);
 }
 
 bool CCSpriteFrame::initWithTextureFilename(const char* filename, const CCRect& rect)
 {
-    CCRect rectInPixels = CC_RECT_POINTS_TO_PIXELS( rect );
-    return initWithTextureFilename(filename, rectInPixels, false, CCPointZero, rectInPixels.size);
+    return initWithTextureFilename(filename, rect, false, CCPointZero, rect.size);
 }
 
 bool CCSpriteFrame::initWithTexture(CCTexture2D* pobTexture, const CCRect& rect, bool rotated, const CCPoint& offset, const CCSize& originalSize)
@@ -108,12 +106,9 @@ bool CCSpriteFrame::initWithTexture(CCTexture2D* pobTexture, const CCRect& rect,
         pobTexture->retain();
     }
 
-    m_obRectInPixels = rect;
-    m_obRect = CC_RECT_PIXELS_TO_POINTS(rect);
-    m_obOffsetInPixels = offset;
-    m_obOffset = CC_POINT_PIXELS_TO_POINTS( m_obOffsetInPixels );
-    m_obOriginalSizeInPixels = originalSize;
-    m_obOriginalSize = CC_SIZE_PIXELS_TO_POINTS( m_obOriginalSizeInPixels );
+    m_obRect = rect;
+    m_obOffset = offset;
+    m_obOriginalSize = originalSize;
     m_bRotated = rotated;
 
     return true;
@@ -123,12 +118,9 @@ bool CCSpriteFrame::initWithTextureFilename(const char* filename, const CCRect& 
 {
     m_pobTexture = NULL;
     m_strTextureFilename = filename;
-    m_obRectInPixels = rect;
-    m_obRect = CC_RECT_PIXELS_TO_POINTS( rect );
-    m_obOffsetInPixels = offset;
-    m_obOffset = CC_POINT_PIXELS_TO_POINTS( m_obOffsetInPixels );
-    m_obOriginalSizeInPixels = originalSize;
-    m_obOriginalSize = CC_SIZE_PIXELS_TO_POINTS( m_obOriginalSizeInPixels );
+    m_obRect = rect;
+    m_obOffset = offset;
+    m_obOriginalSize = originalSize;
     m_bRotated = rotated;
 
     return true;
@@ -145,7 +137,7 @@ CCObject* CCSpriteFrame::copyWithZone(CCZone *pZone)
     CC_UNUSED_PARAM(pZone);
     CCSpriteFrame *pCopy = new CCSpriteFrame();
     
-    pCopy->initWithTextureFilename(m_strTextureFilename.c_str(), m_obRectInPixels, m_bRotated, m_obOffsetInPixels, m_obOriginalSizeInPixels);
+    pCopy->initWithTextureFilename(m_strTextureFilename.c_str(), m_obRect, m_bRotated, m_obOffset, m_obOriginalSize);
     pCopy->setTexture(m_pobTexture);
     return pCopy;
 }
@@ -153,13 +145,6 @@ CCObject* CCSpriteFrame::copyWithZone(CCZone *pZone)
 void CCSpriteFrame::setRect(const CCRect& rect)
 {
     m_obRect = rect;
-    m_obRectInPixels = CC_RECT_POINTS_TO_PIXELS(m_obRect);
-}
-
-void CCSpriteFrame::setRectInPixels(const CCRect& rectInPixels)
-{
-    m_obRectInPixels = rectInPixels;
-    m_obRect = CC_RECT_PIXELS_TO_POINTS(rectInPixels);
 }
 
 const CCPoint& CCSpriteFrame::getOffset(void)
@@ -170,18 +155,6 @@ const CCPoint& CCSpriteFrame::getOffset(void)
 void CCSpriteFrame::setOffset(const CCPoint& offsets)
 {
     m_obOffset = offsets;
-    m_obOffsetInPixels = CC_POINT_POINTS_TO_PIXELS( m_obOffset );
-}
-
-const CCPoint& CCSpriteFrame::getOffsetInPixels(void)
-{
-    return m_obOffsetInPixels;
-}
-
-void CCSpriteFrame::setOffsetInPixels(const CCPoint& offsetInPixels)
-{
-    m_obOffsetInPixels = offsetInPixels;
-    m_obOffset = CC_POINT_PIXELS_TO_POINTS( m_obOffsetInPixels );
 }
 
 void CCSpriteFrame::setTexture(CCTexture2D * texture)

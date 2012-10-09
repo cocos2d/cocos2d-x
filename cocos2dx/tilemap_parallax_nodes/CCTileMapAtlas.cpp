@@ -188,8 +188,8 @@ void CCTileMapAtlas::updateAtlasValueAt(const ccGridSize& pos, const ccColor3B& 
     float textureWide = (float) (m_pTextureAtlas->getTexture()->getPixelsWide());
     float textureHigh = (float) (m_pTextureAtlas->getTexture()->getPixelsHigh());
 
-    float itemWidthInPixels = m_uItemWidth * CC_CONTENT_SCALE_FACTOR();
-    float itemHeightInPixels = m_uItemHeight * CC_CONTENT_SCALE_FACTOR();
+    float itemWidthInPixels = m_uItemWidth;
+    float itemHeightInPixels = m_uItemHeight;
 
 #if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
     float left        = (2 * row * itemWidthInPixels + 1) / (2 * textureWide);

@@ -56,10 +56,6 @@ class CC_DLL CCSpriteFrame : public CCObject
 {
 public:
     // attributes
-
-    inline const CCRect& getRectInPixels(void) { return m_obRectInPixels; }
-    void setRectInPixels(const CCRect& rectInPixels);
-
     inline bool isRotated(void) { return m_bRotated; }
     inline void setRotated(bool bRotated) { m_bRotated = bRotated; }
 
@@ -67,16 +63,6 @@ public:
     inline const CCRect& getRect(void) { return m_obRect; }
     /** set rect of the frame */
     void setRect(const CCRect& rect);
-
-    /** get offset of the frame */
-    const CCPoint& getOffsetInPixels(void);
-    /** set offset of the frame */
-    void setOffsetInPixels(const CCPoint& offsetInPixels);
-
-    /** get original size of the trimmed image */
-    inline const CCSize& getOriginalSizeInPixels(void) { return m_obOriginalSizeInPixels; }
-    /** set original size of the trimmed image */
-    inline void setOriginalSizeInPixels(const CCSize& sizeInPixels) { m_obOriginalSizeInPixels = sizeInPixels; }
 
     /** get original size of the trimmed image */
     inline const CCSize& getOriginalSize(void) { return m_obOriginalSize; }
@@ -166,11 +152,8 @@ public:
 protected:
     CCPoint m_obOffset;
     CCSize m_obOriginalSize;
-    CCRect m_obRectInPixels;
     bool   m_bRotated;
     CCRect m_obRect;
-    CCPoint m_obOffsetInPixels;
-    CCSize m_obOriginalSizeInPixels;
     CCTexture2D *m_pobTexture;
     std::string  m_strTextureFilename;
 };

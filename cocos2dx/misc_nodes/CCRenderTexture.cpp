@@ -84,7 +84,7 @@ void CCRenderTexture::listenToBackground(cocos2d::CCObject *obj)
 
     if (m_pUITextureImage)
     {
-        const CCSize& s = m_pTexture->getContentSizeInPixels();
+        const CCSize& s = m_pTexture->getContentSize();
         VolatileTexture::addDataTexture(m_pTexture, m_pUITextureImage->getData(), kTexture2DPixelFormat_RGBA8888, s);
     } 
     else
@@ -170,9 +170,6 @@ bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CCTexture2DPixelForma
     bool bRet = false;
     do 
     {
-        w *= (int)CC_CONTENT_SCALE_FACTOR();
-        h *= (int)CC_CONTENT_SCALE_FACTOR();
-
         glGetIntegerv(GL_FRAMEBUFFER_BINDING, &m_nOldFBO);
 
         // textures must be power of two squared
@@ -252,11 +249,11 @@ void CCRenderTexture::begin()
     // Save the current matrix
     kmGLPushMatrix();
 
-    const CCSize& texSize = m_pTexture->getContentSizeInPixels();
+    const CCSize& texSize = m_pTexture->getContentSize();
 
     // Calculate the adjustment ratios based on the old and new projections
     CCDirector *director = CCDirector::sharedDirector();
-    CCSize size = director->getWinSizeInPixels();
+    CCSize size = director->getWinSize();
     float widthRatio = size.width / texSize.width;
     float heightRatio = size.height / texSize.height;
 
@@ -337,16 +334,16 @@ void CCRenderTexture::end()
 
     CCDirector *director = CCDirector::sharedDirector();
 
-    CCSize size = director->getWinSizeInPixels();
+    CCSize size = director->getWinSize();
 
     // restore viewport
-    glViewport(0, 0, GLsizei(size.width * CC_CONTENT_SCALE_FACTOR()), GLsizei(size.height * CC_CONTENT_SCALE_FACTOR()));
-
-    // special viewport for 3d projection + retina display
-    if ( director->getProjection() == kCCDirectorProjection3D && CC_CONTENT_SCALE_FACTOR() != 1 )
-    {
-        glViewport((GLsizei)(-size.width/2), (GLsizei)(-size.height/2), (GLsizei)(size.width * CC_CONTENT_SCALE_FACTOR()), (GLsizei)(size.height * CC_CONTENT_SCALE_FACTOR()));
-    }
+//cjh     glViewport(0, 0, GLsizei(size.width), GLsizei(size.height));
+// 
+//     // special viewport for 3d projection + retina display
+//     if ( director->getProjection() == kCCDirectorProjection3D && CC_CONTENT_SCALE_FACTOR() != 1 )
+//     {
+//         glViewport((GLsizei)(-size.width/2), (GLsizei)(-size.height/2), (GLsizei)(size.width), (GLsizei)(size.height));
+//     }
 
     director->setProjection(director->getProjection());
 }
@@ -428,7 +425,7 @@ CCImage* CCRenderTexture::newCCImage()
         return NULL;
     }
 
-    const CCSize& s = m_pTexture->getContentSizeInPixels();
+    const CCSize& s = m_pTexture->getContentSize();
 
     // to get the image size to save
     //        if the saving image domain exceeds the buffer texture domain,
