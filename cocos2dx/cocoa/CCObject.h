@@ -55,8 +55,8 @@ public:
 protected:
     // count of references
     unsigned int        m_uReference;
-    // is the object autoreleased
-    bool        m_bManaged;        
+    // count of autorelease
+    unsigned int        m_uAutoReleaseCount;
 public:
     CCObject(void);
     virtual ~CCObject(void);
