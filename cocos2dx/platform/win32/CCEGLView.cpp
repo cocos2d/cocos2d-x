@@ -531,13 +531,14 @@ void CCEGLView::resize(int width, int height)
         m_windowTouchScaleX = frameSize.width / width;
         m_windowTouchScaleY = frameSize.height / height;
 
-/*
+		#ifdef _DEBUG
         TCHAR buff[MAX_PATH + 1];
         memset(buff, 0, sizeof(buff));
-        swprintf_s(buff, MAX_PATH, L"%s - %0.0fx%0.0f - %0.2f",
-                   kWindowClassName, frameSize.width, frameSize.height, 1.0f / m_windowTouchScaleX);
+        swprintf_s(buff, MAX_PATH, L"%S - %0.0fx%0.0f - %0.2f",
+                   m_szViewName, frameSize.width, frameSize.height, 1.0f / m_windowTouchScaleX);
+
         SetWindowText(m_hWnd, buff);
-*/
+		#endif
     }
 
     AdjustWindowRectEx(&rcClient, GetWindowLong(m_hWnd, GWL_STYLE), false, GetWindowLong(m_hWnd, GWL_EXSTYLE));
