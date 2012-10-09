@@ -1014,7 +1014,7 @@ CCObject* CCSplitRows::copyWithZone(CCZone *pZone)
 void CCSplitRows::startWithTarget(CCNode *pTarget)
 {
     CCTiledGrid3DAction::startWithTarget(pTarget);
-    m_winSize = CCDirector::sharedDirector()->getWinSizeInPixels();
+    m_winSize = CCDirector::sharedDirector()->getWinSize();
 }
 
 void CCSplitRows::update(float time)
@@ -1096,7 +1096,7 @@ CCObject* CCSplitCols::copyWithZone(CCZone *pZone)
 void CCSplitCols::startWithTarget(CCNode *pTarget)
 {
     CCTiledGrid3DAction::startWithTarget(pTarget);
-    m_winSize = CCDirector::sharedDirector()->getWinSizeInPixels();
+    m_winSize = CCDirector::sharedDirector()->getWinSize();
 }
 
 void CCSplitCols::update(float time)

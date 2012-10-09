@@ -49,7 +49,7 @@ public:
     virtual bool setContentScaleFactor(float contentScaleFactor);
     virtual void setFrameSize(float width, float height);
     virtual void setIMEKeyboardState(bool bOpen);
-    virtual bool enableRetina();
+ //   virtual bool enableRetina();
 
     void setMenuResource(LPCWSTR menu);
     void setWndProc(CUSTOM_WND_PROC proc);

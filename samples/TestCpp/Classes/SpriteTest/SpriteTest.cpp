@@ -3365,10 +3365,10 @@ void DoubleSprite::setContentSize(const CCSize& size)
 {
     CCSize s = size;
     // If Retina Display and Texture is in HD then scale the vertex rect
-    if( CC_CONTENT_SCALE_FACTOR() == 2 && ! m_bHD ) {
-        s.width *= 2;
-        s.height *= 2;
-    }
+//     if( CC_CONTENT_SCALE_FACTOR() == 2 && ! m_bHD ) {
+//         s.width *= 2;
+//         s.height *= 2;
+//     }
 
     CCSprite::setContentSize(s);
 }
@@ -3377,10 +3377,10 @@ void DoubleSprite::setContentSize(const CCSize& size)
 void DoubleSprite::setVertexRect(CCRect rect)
 {
     // If Retina Display and Texture is in HD then scale the vertex rect
-    if( CC_CONTENT_SCALE_FACTOR() == 2 && ! m_bHD ) {
-        rect.size.width *= 2;
-        rect.size.height *= 2;
-    }
+//     if( CC_CONTENT_SCALE_FACTOR() == 2 && ! m_bHD ) {
+//         rect.size.width *= 2;
+//         rect.size.height *= 2;
+//     }
 
     CCSprite::setVertexRect(rect);
 }

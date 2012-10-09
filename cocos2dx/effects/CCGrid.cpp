@@ -122,7 +122,7 @@ bool CCGridBase::initWithSize(const ccGridSize& gridSize, CCTexture2D *pTexture,
 bool CCGridBase::initWithSize(const ccGridSize& gridSize)
 {
     CCDirector *pDirector = CCDirector::sharedDirector();
-    CCSize s = pDirector->getWinSizeInPixels();
+    CCSize s = pDirector->getWinSize();
     
     unsigned long POTWide = ccNextPOT((unsigned int)s.width);
     unsigned long POTHigh = ccNextPOT((unsigned int)s.height);
@@ -190,14 +190,14 @@ void CCGridBase::set2DProjection()
 {
     CCDirector *director = CCDirector::sharedDirector();
 
-    CCSize    size = director->getWinSizeInPixels();
+    CCSize    size = director->getWinSize();
 
-    glViewport(0, 0, (GLsizei)(size.width * CC_CONTENT_SCALE_FACTOR()), (GLsizei)(size.height * CC_CONTENT_SCALE_FACTOR()) );
+    glViewport(0, 0, (GLsizei)(size.width), (GLsizei)(size.height) );
     kmGLMatrixMode(KM_GL_PROJECTION);
     kmGLLoadIdentity();
 
     kmMat4 orthoMatrix;
-    kmMat4OrthographicProjection(&orthoMatrix, 0, size.width * CC_CONTENT_SCALE_FACTOR(), 0, size.height * CC_CONTENT_SCALE_FACTOR(), -1, 1);
+    kmMat4OrthographicProjection(&orthoMatrix, 0, size.width, 0, size.height, -1, 1);
     kmGLMultMatrix( &orthoMatrix );
 
     kmGLMatrixMode(KM_GL_MODELVIEW);
@@ -357,7 +357,7 @@ void CCGrid3D::calculateVertexPoints(void)
 {
     float width = (float)m_pTexture->getPixelsWide();
     float height = (float)m_pTexture->getPixelsHigh();
-    float imageH = m_pTexture->getContentSizeInPixels().height;
+    float imageH = m_pTexture->getContentSize().height;
 
     int x, y, i;
     CC_SAFE_FREE(m_pVertices);
@@ -563,7 +563,7 @@ void CCTiledGrid3D::calculateVertexPoints(void)
 {
     float width = (float)m_pTexture->getPixelsWide();
     float height = (float)m_pTexture->getPixelsHigh();
-    float imageH = m_pTexture->getContentSizeInPixels().height;
+    float imageH = m_pTexture->getContentSize().height;
     
     int numQuads = m_sGridSize.x * m_sGridSize.y;
     CC_SAFE_FREE(m_pVertices);

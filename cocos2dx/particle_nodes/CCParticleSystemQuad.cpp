@@ -138,10 +138,11 @@ void CCParticleSystemQuad::initTexCoordsWithRect(const CCRect& pointRect)
     // convert to Tex coords
 
     CCRect rect = CCRectMake(
-        pointRect.origin.x * CC_CONTENT_SCALE_FACTOR(),
-        pointRect.origin.y * CC_CONTENT_SCALE_FACTOR(),
-        pointRect.size.width * CC_CONTENT_SCALE_FACTOR(),
-        pointRect.size.height * CC_CONTENT_SCALE_FACTOR());
+        pointRect.origin.x,
+        pointRect.origin.y,
+        pointRect.size.width,
+        pointRect.size.height
+        );
 
     GLfloat wide = (GLfloat) pointRect.size.width;
     GLfloat high = (GLfloat) pointRect.size.height;
@@ -215,7 +216,7 @@ void CCParticleSystemQuad::setTexture(CCTexture2D* texture)
 }
 void CCParticleSystemQuad::setDisplayFrame(CCSpriteFrame *spriteFrame)
 {
-    CCAssert(spriteFrame->getOffsetInPixels().equals(CCPointZero), 
+    CCAssert(spriteFrame->getOffset().equals(CCPointZero), 
              "QuadParticle only supports SpriteFrames with no offsets");
 
     // update texture before updating texture rect

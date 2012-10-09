@@ -22,7 +22,7 @@ void TestScene::onEnter()
     CCMenu* pMenu =CCMenu::create(pMenuItem, NULL);
     CCSize s = CCDirector::sharedDirector()->getWinSize();
     pMenu->setPosition( CCPointZero );
-    pMenuItem->setPosition( CCPointMake( s.width - 50, 25) );
+    pMenuItem->setPosition( CCPointMake( s.width - pMenuItem->getContentSize().width/2, pMenuItem->getContentSize().height/2) );
 
     addChild(pMenu, 1);
 }

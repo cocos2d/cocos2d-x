@@ -92,68 +92,6 @@ do { \
     } \
 } while(0)
 
-
- /** @def CC_DIRECTOR_END
-  Stops and removes the director from memory.
-  Removes the CCGLView from its parent
-
-  @since v0.99.4
-  */
-#define CC_DIRECTOR_END()                                        \
-do {                                                            \
-    CCDirector *__director = CCDirector::sharedDirector();        \
-    __director->end();                                            \
-} while(0)
-
-/** @def CC_CONTENT_SCALE_FACTOR
-On Mac it returns 1;
-On iPhone it returns 2 if RetinaDisplay is On. Otherwise it returns 1
-*/
-#define CC_CONTENT_SCALE_FACTOR() CCDirector::sharedDirector()->getContentScaleFactor()
-
-/****************************/
-/** RETINA DISPLAY ENABLED **/
-/****************************/
-
-/** @def CC_RECT_PIXELS_TO_POINTS
- Converts a rect in pixels to points
- */
-#define CC_RECT_PIXELS_TO_POINTS(__rect_in_pixels__)                                                                        \
-    CCRectMake( (__rect_in_pixels__).origin.x / CC_CONTENT_SCALE_FACTOR(), (__rect_in_pixels__).origin.y / CC_CONTENT_SCALE_FACTOR(),    \
-            (__rect_in_pixels__).size.width / CC_CONTENT_SCALE_FACTOR(), (__rect_in_pixels__).size.height / CC_CONTENT_SCALE_FACTOR() )
-
-/** @def CC_RECT_POINTS_TO_PIXELS
- Converts a rect in points to pixels
- */
-#define CC_RECT_POINTS_TO_PIXELS(__rect_in_points_points__)                                                                        \
-    CCRectMake( (__rect_in_points_points__).origin.x * CC_CONTENT_SCALE_FACTOR(), (__rect_in_points_points__).origin.y * CC_CONTENT_SCALE_FACTOR(),    \
-            (__rect_in_points_points__).size.width * CC_CONTENT_SCALE_FACTOR(), (__rect_in_points_points__).size.height * CC_CONTENT_SCALE_FACTOR() )
-
-/** @def CC_POINT_PIXELS_TO_POINTS
- Converts a rect in pixels to points
- */
-#define CC_POINT_PIXELS_TO_POINTS(__pixels__)                                                                        \
-CCPointMake( (__pixels__).x / CC_CONTENT_SCALE_FACTOR(), (__pixels__).y / CC_CONTENT_SCALE_FACTOR())
-
-/** @def CC_POINT_POINTS_TO_PIXELS
- Converts a rect in points to pixels
- */
-#define CC_POINT_POINTS_TO_PIXELS(__points__)                                                                        \
-CCPointMake( (__points__).x * CC_CONTENT_SCALE_FACTOR(), (__points__).y * CC_CONTENT_SCALE_FACTOR())
-
-/** @def CC_POINT_PIXELS_TO_POINTS
- Converts a rect in pixels to points
- */
-#define CC_SIZE_PIXELS_TO_POINTS(__size_in_pixels__)                                                                        \
-CCSizeMake( (__size_in_pixels__).width / CC_CONTENT_SCALE_FACTOR(), (__size_in_pixels__).height / CC_CONTENT_SCALE_FACTOR())
-
-/** @def CC_POINT_POINTS_TO_PIXELS
- Converts a rect in points to pixels
- */
-#define CC_SIZE_POINTS_TO_PIXELS(__size_in_points__)                                                                        \
-CCSizeMake( (__size_in_points__).width * CC_CONTENT_SCALE_FACTOR(), (__size_in_points__).height * CC_CONTENT_SCALE_FACTOR())
-
-
 #ifndef FLT_EPSILON
 #define FLT_EPSILON     1.192092896e-07F
 #endif // FLT_EPSILON

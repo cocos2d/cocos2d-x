@@ -1,5 +1,6 @@
 #include "TileMapTest.h"
 #include "../testResource.h"
+#include "../Utils.h"
 
 enum 
 {
@@ -812,7 +813,7 @@ TMXIsoZorder::TMXIsoZorder()
     map->addChild(m_tamara, map->getChildren()->count() );
     m_tamara->retain();
     int mapWidth = map->getMapSize().width * map->getTileSize().width;
-    m_tamara->setPosition(CC_POINT_PIXELS_TO_POINTS(ccp( mapWidth/2,0)));
+    m_tamara->setPosition(ccp( mapWidth/2,0));
     m_tamara->setAnchorPoint(ccp(0.5f,0));
 
     
@@ -838,7 +839,7 @@ void TMXIsoZorder::onExit()
 void TMXIsoZorder::repositionSprite(float dt)
 {
     CCPoint p = m_tamara->getPosition();
-    p = CC_POINT_POINTS_TO_PIXELS(p);
+
     CCNode *map = getChildByTag(kTagTileMap);
     
     // there are only 4 layers. (grass and 3 trees layers)
@@ -898,7 +899,7 @@ TMXOrthoZorder::~TMXOrthoZorder()
 void TMXOrthoZorder::repositionSprite(float dt)
 {
     CCPoint p = m_tamara->getPosition();
-    p = CC_POINT_POINTS_TO_PIXELS(p);
+
     CCNode* map = getChildByTag(kTagTileMap);
     
     // there are only 4 layers. (grass and 3 trees layers)
@@ -944,7 +945,7 @@ TMXIsoVertexZ::TMXIsoVertexZ()
     m_tamara = layer->tileAt( ccp(29,29) );
     m_tamara->retain();
     
-    CCActionInterval* move = CCMoveBy::create(10, ccpMult( ccp(300,250), 1/CC_CONTENT_SCALE_FACTOR() ) );
+    CCActionInterval* move = CCMoveBy::create(10, ccpMult( ccp(300,250), 1/SCALE_FACTOR() ) );
     CCActionInterval* back = move->reverse();
     CCFiniteTimeAction* seq = CCSequence::create(move, back,NULL);
     m_tamara->runAction( CCRepeatForever::create((CCActionInterval*) seq) );
@@ -963,7 +964,7 @@ void TMXIsoVertexZ::repositionSprite(float dt)
     // tile height is 64x32
     // map size: 30x30
     CCPoint p = m_tamara->getPosition();
-    p = CC_POINT_POINTS_TO_PIXELS(p);
+
     float newZ = -(p.y+32) /16;
     m_tamara->setVertexZ( newZ );
 }
@@ -1014,7 +1015,7 @@ TMXOrthoVertexZ::TMXOrthoVertexZ()
     CCLOG("%p vertexZ: %f", m_tamara, m_tamara->getVertexZ());
     m_tamara->retain();
 
-    CCActionInterval* move = CCMoveBy::create(10, ccpMult( ccp(400,450), 1/CC_CONTENT_SCALE_FACTOR()));
+    CCActionInterval* move = CCMoveBy::create(10, ccpMult( ccp(400,450), 1/SCALE_FACTOR()));
     CCActionInterval* back = move->reverse();
     CCFiniteTimeAction* seq = CCSequence::create(move, back,NULL);
     m_tamara->runAction( CCRepeatForever::create((CCActionInterval*)seq));
@@ -1033,7 +1034,7 @@ void TMXOrthoVertexZ::repositionSprite(float dt)
     // tile height is 101x81
     // map size: 12x12
     CCPoint p = m_tamara->getPosition();
-    p = CC_POINT_POINTS_TO_PIXELS(p);
+
     m_tamara->setVertexZ( -( (p.y+81) /81) );
 }
 

@@ -110,16 +110,6 @@ GLuint CCTexture2D::getName()
 
 CCSize CCTexture2D::getContentSize()
 {
-
-    CCSize ret;
-    ret.width = m_tContentSize.width / CC_CONTENT_SCALE_FACTOR();
-    ret.height = m_tContentSize.height / CC_CONTENT_SCALE_FACTOR();
-    
-    return ret;
-}
-
-const CCSize& CCTexture2D::getContentSizeInPixels()
-{
     return m_tContentSize;
 }
 

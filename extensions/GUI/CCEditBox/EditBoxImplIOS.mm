@@ -67,7 +67,7 @@
         if (!textField_) break;
         [textField_ setTextColor:[UIColor whiteColor]];
         textField_.font = [UIFont systemFontOfSize:frameRect.size.height*2/3]; //TODO need to delete hard code here.
-        textField_.backgroundColor = [UIColor clearColor];
+        textField_.backgroundColor = [UIColor colorWithRed:1.0f green:0 blue:0 alpha:0.5f];//[UIColor clearColor];
         textField_.borderStyle = UITextBorderStyleNone;
         textField_.delegate = self;
         textField_.returnKeyType = UIReturnKeyDefault;

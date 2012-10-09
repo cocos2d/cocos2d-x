@@ -76,7 +76,6 @@ bool CCTMXLayer::initWithTilesetInfo(CCTMXTilesetInfo *tilesetInfo, CCTMXLayerIn
         m_uMaxGID = layerInfo->m_uMaxGID;
         m_cOpacity = layerInfo->m_cOpacity;
         setProperties(CCDictionary::createWithDictionary(layerInfo->getProperties()));
-        m_fContentScaleFactor = CCDirector::sharedDirector()->getContentScaleFactor(); 
 
         // tilesetInfo
         m_pTileSet = tilesetInfo;
@@ -88,11 +87,11 @@ bool CCTMXLayer::initWithTilesetInfo(CCTMXTilesetInfo *tilesetInfo, CCTMXLayerIn
 
         // offset (after layer orientation is set);
         CCPoint offset = this->calculateLayerOffset(layerInfo->m_tOffset);
-        this->setPosition(CC_POINT_PIXELS_TO_POINTS(offset));
+        this->setPosition(offset);
 
         m_pAtlasIndexArray = ccCArrayNew((unsigned int)totalNumberOfTiles);
 
-        this->setContentSize(CC_SIZE_PIXELS_TO_POINTS(CCSizeMake(m_tLayerSize.width * m_tMapTileSize.width, m_tLayerSize.height * m_tMapTileSize.height)));
+        this->setContentSize(CCSizeMake(m_tLayerSize.width * m_tMapTileSize.width, m_tLayerSize.height * m_tMapTileSize.height));
 
         m_bUseAutomaticVertexZ = false;
         m_nVertexZvalue = 0;
@@ -159,7 +158,7 @@ void CCTMXLayer::releaseMap()
 void CCTMXLayer::setupTiles()
 {    
     // Optimization: quick hack that sets the image size on the tileset
-    m_pTileSet->m_tImageSize = m_pobTextureAtlas->getTexture()->getContentSizeInPixels();
+    m_pTileSet->m_tImageSize = m_pobTextureAtlas->getTexture()->getContentSize();
 
     // By default all the tiles are aliased
     // pros:
@@ -337,7 +336,6 @@ CCSprite * CCTMXLayer::tileAt(const CCPoint& pos)
         if (! tile) 
         {
             CCRect rect = m_pTileSet->rectForGID(gid);
-            rect = CC_RECT_PIXELS_TO_POINTS(rect);
 
             tile = new CCSprite();
             tile->initWithTexture(this->getTexture(), rect);
@@ -383,7 +381,6 @@ unsigned int CCTMXLayer::tileGIDAt(const CCPoint& pos, ccTMXTileFlags* flags)
 CCSprite * CCTMXLayer::insertTileForGID(unsigned int gid, const CCPoint& pos)
 {
     CCRect rect = m_pTileSet->rectForGID(gid);
-    rect = CC_RECT_PIXELS_TO_POINTS(rect);
 
     intptr_t z = (intptr_t)(pos.x + pos.y * m_tLayerSize.width);
 
@@ -423,7 +420,7 @@ CCSprite * CCTMXLayer::insertTileForGID(unsigned int gid, const CCPoint& pos)
 CCSprite * CCTMXLayer::updateTileForGID(unsigned int gid, const CCPoint& pos)    
 {
     CCRect rect = m_pTileSet->rectForGID(gid);
-    rect = CCRectMake(rect.origin.x / m_fContentScaleFactor, rect.origin.y / m_fContentScaleFactor, rect.size.width/ m_fContentScaleFactor, rect.size.height/ m_fContentScaleFactor);
+    rect = CCRectMake(rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
     int z = (int)(pos.x + pos.y * m_tLayerSize.width);
 
     CCSprite *tile = reusedTileWithRect(rect);
@@ -445,7 +442,6 @@ CCSprite * CCTMXLayer::updateTileForGID(unsigned int gid, const CCPoint& pos)
 CCSprite * CCTMXLayer::appendTileForGID(unsigned int gid, const CCPoint& pos)
 {
     CCRect rect = m_pTileSet->rectForGID(gid);
-    rect = CC_RECT_PIXELS_TO_POINTS(rect);
 
     intptr_t z = (intptr_t)(pos.x + pos.y * m_tLayerSize.width);
 
@@ -535,7 +531,6 @@ void CCTMXLayer::setTileGID(unsigned int gid, const CCPoint& pos, ccTMXTileFlags
             if (sprite)
             {
                 CCRect rect = m_pTileSet->rectForGID(gid);
-                rect = CC_RECT_PIXELS_TO_POINTS(rect);
 
                 sprite->setTextureRect(rect, false, rect.size);
                 if (flags) 
@@ -658,7 +653,6 @@ CCPoint CCTMXLayer::positionAt(const CCPoint& pos)
         ret = positionForHexAt(pos);
         break;
     }
-    ret = CC_POINT_PIXELS_TO_POINTS( ret );
     return ret;
 }
 CCPoint CCTMXLayer::positionForOrthoAt(const CCPoint& pos)

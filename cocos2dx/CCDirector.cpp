@@ -131,12 +131,9 @@ bool CCDirector::init(void)
     // purge ?
     m_bPurgeDirecotorInNextLoop = false;
 
-    m_obWinSizeInPixels = m_obWinSizeInPoints = CCSizeZero;    
+    m_obWinSize = CCSizeZero;    
 
     m_pobOpenGLView = NULL;
-
-    m_fContentScaleFactor = 1.0f;
-    m_bIsContentScaleSupported = false;
 
     // scheduler
     m_pScheduler = new CCScheduler();
@@ -302,9 +299,8 @@ void CCDirector::setOpenGLView(CCEGLView *pobOpenGLView)
         m_pobOpenGLView = pobOpenGLView;
 
         // set size
-        m_obWinSizeInPoints = m_pobOpenGLView->getSize();
-        m_obWinSizeInPixels = CCSizeMake(m_obWinSizeInPoints.width * m_fContentScaleFactor, m_obWinSizeInPoints.height * m_fContentScaleFactor);
-        
+        m_obWinSize = m_pobOpenGLView->getSize();
+
         createStatsLabel();
         
         if (m_pobOpenGLView)
@@ -314,12 +310,7 @@ void CCDirector::setOpenGLView(CCEGLView *pobOpenGLView)
         
         CHECK_GL_ERROR_DEBUG();
 
-        if (m_fContentScaleFactor != 1)
-        {
-            updateContentScaleFactor();
-        }
-
-         m_pobOpenGLView->setTouchDelegate(m_pTouchDispatcher);
+        m_pobOpenGLView->setTouchDelegate(m_pTouchDispatcher);
         m_pTouchDispatcher->setDispatchEvents(true);
     }
 }
@@ -331,7 +322,7 @@ void CCDirector::setNextDeltaTimeZero(bool bNextDeltaTimeZero)
 
 void CCDirector::setProjection(ccDirectorProjection kProjection)
 {
-    CCSize size = m_obWinSizeInPixels;
+    CCSize size = m_obWinSize;
 
     if (m_pobOpenGLView)
     {
@@ -403,7 +394,7 @@ void CCDirector::purgeCachedData(void)
 
 float CCDirector::getZEye(void)
 {
-    return (m_obWinSizeInPixels.height / 1.1566f);    
+    return (m_obWinSize.height / 1.1566f);    
 }
 
 void CCDirector::setAlphaBlending(bool bOn)
@@ -439,7 +430,7 @@ void CCDirector::setDepthTest(bool bOn)
 
 CCPoint CCDirector::convertToGL(const CCPoint& uiPoint)
 {
-    CCSize s = m_obWinSizeInPoints;
+    CCSize s = m_obWinSize;
     float newY = s.height - uiPoint.y;
     
     return ccp(uiPoint.x, newY);
@@ -447,7 +438,7 @@ CCPoint CCDirector::convertToGL(const CCPoint& uiPoint)
 
 CCPoint CCDirector::convertToUI(const CCPoint& glPoint)
 {
-    CCSize winSize = m_obWinSizeInPoints;
+    CCSize winSize = m_obWinSize;
     float oppositeY = winSize.height - glPoint.y;
     
     return ccp(glPoint.x, oppositeY);
@@ -455,12 +446,7 @@ CCPoint CCDirector::convertToUI(const CCPoint& glPoint)
 
 CCSize CCDirector::getWinSize(void)
 {
-    return m_obWinSizeInPoints;
-}
-
-CCSize CCDirector::getWinSizeInPixels()
-{
-    return m_obWinSizeInPixels;
+    return m_obWinSize;
 }
 
 CCSize CCDirector::getVisibleSize()
@@ -492,9 +478,7 @@ void CCDirector::reshapeProjection(const CCSize& newWindowSize)
     CC_UNUSED_PARAM(newWindowSize);
     if (m_pobOpenGLView)
     {
-       m_obWinSizeInPoints = m_pobOpenGLView->getSize();
-       m_obWinSizeInPixels = CCSizeMake(m_obWinSizeInPoints.width * m_fContentScaleFactor,
-                                     m_obWinSizeInPoints.height * m_fContentScaleFactor);
+       m_obWinSize = m_pobOpenGLView->getSize();
  
        setProjection(m_eProjection);       
     }
@@ -776,9 +760,9 @@ void CCDirector::createStatsLabel()
     m_pDrawsLabel->retain();
 
     CCSize contentSize = m_pDrawsLabel->getContentSize();
-    m_pDrawsLabel->setPosition(ccpAdd(ccp(contentSize.width/2, contentSize.height/2 + 40), CC_DIRECTOR_STATS_POSITION));
+    m_pDrawsLabel->setPosition(ccpAdd(ccp(contentSize.width/2, contentSize.height*5/2), CC_DIRECTOR_STATS_POSITION));
     contentSize = m_pSPFLabel->getContentSize();
-    m_pSPFLabel->setPosition(ccpAdd(ccp(contentSize.width/2, contentSize.height/2 + 20), CC_DIRECTOR_STATS_POSITION));
+    m_pSPFLabel->setPosition(ccpAdd(ccp(contentSize.width/2, contentSize.height*3/2), CC_DIRECTOR_STATS_POSITION));
     contentSize = m_pFPSLabel->getContentSize();
     m_pFPSLabel->setPosition(ccpAdd(ccp(contentSize.width/2, contentSize.height/2), CC_DIRECTOR_STATS_POSITION));
 }
@@ -787,33 +771,6 @@ void CCDirector::createStatsLabel()
 /***************************************************
 * mobile platforms specific functions
 **************************************************/
-
-void CCDirector::updateContentScaleFactor()
-{
-    m_bIsContentScaleSupported = m_pobOpenGLView->setContentScaleFactor(m_fContentScaleFactor);
-}
-
-float CCDirector::getContentScaleFactor(void)
-{
-    return m_fContentScaleFactor;
-}
-
-void CCDirector::setContentScaleFactor(float scaleFactor)
-{
-    if (scaleFactor != m_fContentScaleFactor)
-    {
-        m_fContentScaleFactor = scaleFactor;
-        m_obWinSizeInPixels = CCSizeMake(m_obWinSizeInPoints.width * scaleFactor, m_obWinSizeInPoints.height * scaleFactor);
-
-        if (m_pobOpenGLView)
-        {
-            updateContentScaleFactor();
-        }
-
-        // update projection
-        setProjection(m_eProjection);
-    }
-}
 
 CCNode* CCDirector::getNotificationNode() 
 { 

@@ -1,8 +1,9 @@
 #include "controller.h"
 #include "testResource.h"
 #include "tests.h"
+#include "Utils.h"
 
-#define LINE_SPACE          40
+#define LINE_SPACE          (40*SCALE_FACTOR())
 
 static CCPoint s_tCurPos = CCPointZero;
 
@@ -138,7 +139,7 @@ TestController::TestController()
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
     pMenu->setPosition( CCPointZero );
-    pCloseItem->setPosition(CCPointMake( s.width - 30, s.height - 30));
+    pCloseItem->setPosition(CCPointMake( s.width - pCloseItem->getContentSize().width/2, s.height - pCloseItem->getContentSize().height/2));
 
     // add menu items for tests
     m_pItemMenu = CCMenu::create();
@@ -147,7 +148,7 @@ TestController::TestController()
 // #if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
 //         CCLabelBMFont* label = CCLabelBMFont::create(g_aTestNames[i].c_str(),  "fonts/arial16.fnt");
 // #else
-        CCLabelTTF* label = CCLabelTTF::create(g_aTestNames[i].c_str(), "Arial", 24);
+        CCLabelTTF* label = CCLabelTTF::create(g_aTestNames[i].c_str(), "Arial", 24*SCALE_FACTOR());
 // #endif        
         CCMenuItemLabel* pMenuItem = CCMenuItemLabel::create(label, this, menu_selector(TestController::menuCallback));
 

@@ -91,7 +91,7 @@ void CCEGLViewProtocol::setDesignResolutionSize(float width, float height, Resol
     
     // reset director's member variables to fit visible rect
     CCDirector::sharedDirector()->createStatsLabel();
-    CCDirector::sharedDirector()->m_obWinSizeInPoints = CCDirector::sharedDirector()->m_obWinSizeInPixels = getSize();
+    CCDirector::sharedDirector()->m_obWinSize = getSize();
     CCDirector::sharedDirector()->setGLDefaultValues();
 }
 

@@ -91,6 +91,7 @@ Classes/UserDefaultTest/UserDefaultTest.cpp \
 Classes/ZwoptexTest/ZwoptexTest.cpp \
 Classes/controller.cpp \
 Classes/testBasic.cpp \
+Classes/Utils.cpp \
 Classes/AppDelegate.cpp
 
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dx_static
