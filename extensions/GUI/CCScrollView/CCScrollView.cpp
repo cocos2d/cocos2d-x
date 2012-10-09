@@ -493,10 +493,10 @@ void CCScrollView::addChild(CCNode * child)
  */
 void CCScrollView::beforeDraw()
 {
-    if (m_bClippingToBounds) 
+    if (m_bClippingToBounds)
     {
 		// TODO: This scrollview should respect parents' positions
-		CCPoint screenPos = this->convertToWorldSpace(this->getParent()->getPosition());
+		CCPoint screenPos = this->getParent()->convertToWorldSpace(this->getPosition());
 
         glEnable(GL_SCISSOR_TEST);
         float s = this->getScale();
@@ -530,8 +530,6 @@ void CCScrollView::visit()
     }
 
 	kmGLPushMatrix();
-	
-//	glPushMatrix();
 	
     if (m_pGrid && m_pGrid->isActive())
     {
@@ -584,8 +582,6 @@ void CCScrollView::visit()
     }
 
 	kmGLPopMatrix();
-	
-//	glPopMatrix();
 }
 
 bool CCScrollView::ccTouchBegan(CCTouch* touch, CCEvent* event)
@@ -595,7 +591,8 @@ bool CCScrollView::ccTouchBegan(CCTouch* touch, CCEvent* event)
         return false;
     }
     CCRect frame;
-    frame = CCRectMake(this->getPosition().x, this->getPosition().y, m_tViewSize.width, m_tViewSize.height);
+    CCPoint frameOriginal = this->getParent()->convertToWorldSpace(this->getPosition());
+    frame = CCRectMake(frameOriginal.x, frameOriginal.y, m_tViewSize.width, m_tViewSize.height);
     
     //dispatcher does not know about clipping. reject touches outside visible bounds.
     if (m_pTouches->count() > 2 ||
@@ -645,7 +642,9 @@ void CCScrollView::ccTouchMoved(CCTouch* touch, CCEvent* event)
             float newX, newY;
             
             m_bTouchMoved  = true;
-            frame        = CCRectMake(this->getPosition().x, this->getPosition().y, m_tViewSize.width, m_tViewSize.height);
+            CCPoint frameOriginal = this->getParent()->convertToWorldSpace(this->getPosition());
+            frame = CCRectMake(frameOriginal.x, frameOriginal.y, m_tViewSize.width, m_tViewSize.height);
+
             newPoint     = this->convertTouchToNodeSpace((CCTouch*)m_pTouches->objectAtIndex(0));
             moveDistance = ccpSub(newPoint, m_tTouchPoint);
             m_tTouchPoint  = newPoint;
