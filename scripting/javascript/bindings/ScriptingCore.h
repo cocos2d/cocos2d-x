@@ -57,6 +57,8 @@ public:
      @return other if the string is excuted wrongly.
      */
 	virtual int executeString(const char* codes) { return 0; }
+    void pauseSchedulesAndActions(CCNode *node);
+    void resumeSchedulesAndActions(CCNode *node);
     
     /**
      @brief Execute a script file.
