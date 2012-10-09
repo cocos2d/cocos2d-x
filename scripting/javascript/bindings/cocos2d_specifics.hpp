@@ -85,6 +85,57 @@ private:
     jsval *extraData;
 };
 
+class JSSchedule;
+
+typedef struct jsScheduleFunc_proxy {
+    void * ptr;
+    JSSchedule *obj;
+    UT_hash_handle hh;
+} schedFunc_proxy_t;
+
+typedef struct jsScheduleTarget_proxy {
+    void * ptr;
+    CCArray *obj;
+    UT_hash_handle hh;
+} schedTarget_proxy_t;
+
+
+extern schedFunc_proxy_t *_schedFunc_target_ht;
+extern schedTarget_proxy_t *_schedTarget_native_ht;
+
+class JSSchedule: public CCObject {
+    
+public:
+    JSSchedule(jsval func): jsSchedule(func) {}
+    JSSchedule() {}
+    ~JSSchedule(){}
+
+    static void setTargetForSchedule(jsval sched, JSSchedule *target);     
+    static JSSchedule * getTargetForSchedule(jsval sched);
+    static void setTargetForNativeNode(CCNode *pNode, JSSchedule *target);
+    static CCArray * getTargetForNativeNode(CCNode *pNode);
+
+    void setJSScheduleFunc(jsval obj);
+    void setJSScheduleThis(jsval thisObj);
+       
+    void pause();
+    
+    void scheduleFunc(CCNode *node) const {
+            
+        jsval retObj = JSVAL_NULL;
+        ScriptingCore::getInstance()->executeJSFunctionWithThisObj(jsThisObj,
+                                                                   jsSchedule,
+                                                                   retObj);
+
+    }
+private:
+    
+    jsval jsSchedule;
+    jsval jsThisObj;
+    
+};
+
+
 class JSTouchDelegate: public CCTouchDelegate, public CCNode {
     public:
         void setJSObject(JSObject *obj);
