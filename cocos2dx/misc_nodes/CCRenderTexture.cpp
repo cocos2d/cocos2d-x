@@ -49,6 +49,7 @@ CCRenderTexture::CCRenderTexture()
 , m_uDepthRenderBufffer(0)
 , m_nOldFBO(0)
 , m_pTexture(0)
+, m_pTextureCopy(0)
 , m_pUITextureImage(NULL)
 , m_ePixelFormat(kCCTexture2DPixelFormat_RGBA8888)
 {
@@ -62,6 +63,8 @@ CCRenderTexture::CCRenderTexture()
 
 CCRenderTexture::~CCRenderTexture()
 {
+    CC_SAFE_RELEASE(m_pTextureCopy);
+    
     glDeleteFramebuffers(1, &m_uFBO);
     if (m_uDepthRenderBufffer)
     {
@@ -168,6 +171,7 @@ bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CCTexture2DPixelForma
     CCAssert(m_ePixelFormat != kCCTexture2DPixelFormat_A8, "only RGB and RGBA formats are valid for a render texture");
 
     bool bRet = false;
+    void *data = NULL;
     do 
     {
         w *= (int)CC_CONTENT_SCALE_FACTOR();
@@ -179,30 +183,47 @@ bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CCTexture2DPixelForma
         unsigned int powW = 0;
         unsigned int powH = 0;
 
-        if( CCConfiguration::sharedConfiguration()->supportsNPOT() ) {
+        if (CCConfiguration::sharedConfiguration()->supportsNPOT())
+        {
             powW = w;
             powH = h;
-        } else {
+        }
+        else
+        {
             powW = ccNextPOT(w);
             powH = ccNextPOT(h);
         }
 
-        void *data = malloc((int)(powW * powH * 4));
+        data = malloc((int)(powW * powH * 4));
         CC_BREAK_IF(! data);
 
         memset(data, 0, (int)(powW * powH * 4));
         m_ePixelFormat = eFormat;
 
         m_pTexture = new CCTexture2D();
-        if (m_pTexture) {
-                m_pTexture->initWithData(data, (CCTexture2DPixelFormat)m_ePixelFormat, powW, powH, CCSizeMake((float)w, (float)h));
-                free( data );
-        } else {
-                free( data );  // ScopeGuard (a simulated Finally clause) would be more elegant.
-                break;
+        if (m_pTexture)
+        {
+            m_pTexture->initWithData(data, (CCTexture2DPixelFormat)m_ePixelFormat, powW, powH, CCSizeMake((float)w, (float)h));
+        }
+        else
+        {
+            break;
         }
         GLint oldRBO;
         glGetIntegerv(GL_RENDERBUFFER_BINDING, &oldRBO);
+        
+        if (CCConfiguration::sharedConfiguration()->checkForGLExtension("GL_QCOM"))
+        {
+            m_pTextureCopy = new CCTexture2D();
+            if (m_pTextureCopy)
+            {
+                m_pTextureCopy->initWithData(data, (CCTexture2DPixelFormat)m_ePixelFormat, powW, powH, CCSizeMake((float)w, (float)h));
+            }
+            else
+            {
+                break;
+            }
+        }
 
         // generate FBO
         glGenFramebuffers(1, &m_uFBO);
@@ -221,9 +242,10 @@ bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CCTexture2DPixelForma
 
             // if depth format is the one with stencil part, bind same render buffer as stencil attachment
             if (uDepthStencilFormat == CC_GL_DEPTH24_STENCIL8)
+            {
                 glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, m_uDepthRenderBufffer);
+            }
         }
-
 
         // check if it worked (probably worth doing :) )
         CCAssert(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE, "Could not attach texture to framebuffer");
@@ -243,8 +265,10 @@ bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CCTexture2DPixelForma
         glBindFramebuffer(GL_FRAMEBUFFER, m_nOldFBO);
         bRet = true;
     } while (0);
-    return bRet;
     
+    CC_SAFE_FREE(data);
+    
+    return bRet;
 }
 
 void CCRenderTexture::begin()
@@ -271,6 +295,17 @@ void CCRenderTexture::begin()
 
     glGetIntegerv(GL_FRAMEBUFFER_BINDING, &m_nOldFBO);
     glBindFramebuffer(GL_FRAMEBUFFER, m_uFBO);
+    
+    /*  Certain Qualcomm Andreno gpu's will retain data in memory after a frame buffer switch which corrupts the render to the texture. The solution is to clear the frame buffer before rendering to the texture. However, calling glClear has the unintended result of clearing the current texture. Create a temporary texture to overcome this. At the end of CCRenderTexture::begin(), switch the attached texture to the second one, call glClear, and then switch back to the original texture. This solution is unnecessary for other devices as they don't have the same issue with switching frame buffers.
+     */
+    if (CCConfiguration::sharedConfiguration()->checkForGLExtension("GL_QCOM"))
+    {
+        // -- bind a temporary texture so we can clear the render buffer without losing our texture
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_pTextureCopy->getName(), 0);
+        CHECK_GL_ERROR_DEBUG();
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_pTexture->getName(), 0);
+    }
 }
 
 void CCRenderTexture::beginWithClear(float r, float g, float b, float a)
@@ -444,7 +479,6 @@ CCImage* CCRenderTexture::newCCImage()
     {
         CC_BREAK_IF(! (pBuffer = new GLubyte[nSavedBufferWidth * nSavedBufferHeight * 4]));
 
-
         if(! (pTempData = new GLubyte[nSavedBufferWidth * nSavedBufferHeight * 4]))
         {
             delete[] pBuffer;
@@ -462,8 +496,8 @@ CCImage* CCRenderTexture::newCCImage()
         for (int i = 0; i < nSavedBufferHeight; ++i)
         {
             memcpy(&pBuffer[i * nSavedBufferWidth * 4], 
-                &pTempData[(nSavedBufferHeight - i - 1) * nSavedBufferWidth * 4], 
-                nSavedBufferWidth * 4);
+                   &pTempData[(nSavedBufferHeight - i - 1) * nSavedBufferWidth * 4], 
+                   nSavedBufferWidth * 4);
         }
 
         pImage->initWithImageData(pBuffer, nSavedBufferWidth * nSavedBufferHeight * 4, CCImage::kFmtRawData, nSavedBufferWidth, nSavedBufferHeight, 8);
