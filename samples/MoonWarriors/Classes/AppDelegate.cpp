@@ -5,7 +5,6 @@
 #include "ScriptingCore.h"
 #include "generated/cocos2dx.hpp"
 #include "cocos2d_specifics.hpp"
-#include "js_bindings_chipmunk_manual.hpp"
 
 USING_NS_CC;
 using namespace CocosDenshion;
@@ -42,7 +41,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     
     CCScriptEngineProtocol *pEngine = ScriptingCore::getInstance();
     CCScriptEngineManager::sharedManager()->setScriptEngine(pEngine);
-    ScriptingCore::getInstance()->runScript("MoonWarriors/MoonWarriors-native.js");
+    ScriptingCore::getInstance()->runScript("js/MoonWarriors-native.js");
     return true;
 }
 

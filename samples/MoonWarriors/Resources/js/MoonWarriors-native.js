@@ -26,27 +26,27 @@
 // boot code needed for cocos2d + JS bindings.
 // Not needed by cocos2d-html5
 
-require("jshelper/jsb_constants.js");
+require("js/helper/jsb_constants.js");
 
 var MW = MW || {};
 
 var appFiles = [
-	'MoonWarriors/src/Resource.js',
-    'MoonWarriors/src/config/GameConfig.js',
-	'MoonWarriors/src/config/EnemyType.js',
-	'MoonWarriors/src/config/Level.js',
-	'MoonWarriors/src/Effect.js',
-	'MoonWarriors/src/Bullet.js',
-	'MoonWarriors/src/Enemy.js',
-	'MoonWarriors/src/Explosion.js',
-	'MoonWarriors/src/Ship.js',
-	'MoonWarriors/src/LevelManager.js',
-	'MoonWarriors/src/GameControlMenu.js',
-	'MoonWarriors/src/GameLayer.js',
-	'MoonWarriors/src/GameOver.js',
-	'MoonWarriors/src/AboutLayer.js',
-	'MoonWarriors/src/SettingsLayer.js',
-	'MoonWarriors/src/SysMenu.js'
+	'js/Resource.js',
+    'js/config/GameConfig.js',
+	'js/config/EnemyType.js',
+	'js/config/Level.js',
+	'js/Effect.js',
+	'js/Bullet.js',
+	'js/Enemy.js',
+	'js/Explosion.js',
+	'js/Ship.js',
+	'js/LevelManager.js',
+	'js/GameControlMenu.js',
+	'js/GameLayer.js',
+	'js/GameOver.js',
+	'js/AboutLayer.js',
+	'js/SettingsLayer.js',
+	'js/SysMenu.js'
 ];
 
 cc.dumpConfig();
