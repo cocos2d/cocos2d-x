@@ -21,12 +21,13 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	if (pDirector->getWinSize().height > 320)
 	{
 		CCFileUtils::sharedFileUtils()->setResourceDirectory("iphonehd");
-		pDirector->setContentScaleFactor(2.0f);
+		CCEGLView::sharedOpenGLView()->setDesignResolutionSize(960, 640, kResolutionNoBorder);
 	}
 	else
+    {
 		CCFileUtils::sharedFileUtils()->setResourceDirectory("iphone");
-	
-	CCEGLView::sharedOpenGLView()->setDesignResolutionSize(480, 320, kResolutionNoBorder);
+        CCEGLView::sharedOpenGLView()->setDesignResolutionSize(480, 320, kResolutionNoBorder);
+    }
 
     // turn on display FPS
     pDirector->setDisplayStats(true);

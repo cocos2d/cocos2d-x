@@ -56,8 +56,6 @@ class CCTexture2D : public CCObject
 
     GLuint getName();
 
-    CCSize getContentSizeInPixels();
-
     void setMaxS(GLfloat val);
     GLfloat getMaxS();
 

@@ -89,9 +89,4 @@ class CCEGLViewProtocol
      * Get the scale factor of vertical direction.
      */
     float getScaleY() const;
-
-    /**
-     * Get whether the retina mode is enabled.
-     */
-    bool isRetinaEnabled() const;
 };

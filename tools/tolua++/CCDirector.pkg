@@ -19,10 +19,8 @@ class CCDirector : public CCObject
     unsigned int getTotalFrames(void);
 
 	CCEGLViewProtocol* getOpenGLView(void);
-	bool enableRetinaDisplay(bool bEnableRetina);
 
     CCSize getWinSize(void);
-    CCSize getWinSizeInPixels(void);
 
     CCPoint convertToGL(CCPoint obPoint);
     CCPoint convertToUI(CCPoint obPoint);
@@ -36,8 +34,6 @@ class CCDirector : public CCObject
     void popScene(void);
     void replaceScene(CCScene *pScene);
     void end @ endToLua ();
-
-    float getContentScaleFactor(void);
 
     CCScheduler* getScheduler();
     CCActionManager* getActionManager();

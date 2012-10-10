@@ -1,20 +1,11 @@
 
 class CCSpriteFrame : public CCObject
 {
-    CCRect getRectInPixels(void);
-    void setRectInPixels(CCRect rectInPixels);
-
     bool isRotated(void);
     void setRotated(bool bRotated);
 
     CCRect getRect(void);
     void setRect(CCRect rect);
-
-    CCPoint getOffsetInPixels(void);
-    void setOffsetInPixels(CCPoint offsetInPixels);
-
-    CCSize getOriginalSizeInPixels(void);
-    void setOriginalSizeInPixels(CCSize sizeInPixels);
 
 	const CCSize & getOriginalSize();
 	void setOriginalSize(const CCSize & size);
