@@ -2,11 +2,11 @@ LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
 
-LOCAL_MODULE := test_javascript_shared
+LOCAL_MODULE := moonwarriors_shared
 
-LOCAL_MODULE_FILENAME := libtestjavascript
+LOCAL_MODULE_FILENAME := libmoonwarriors
 
-LOCAL_SRC_FILES := testjavascript/main.cpp \
+LOCAL_SRC_FILES := moonwarriors/main.cpp \
                    ../../Classes/AppDelegate.cpp
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes

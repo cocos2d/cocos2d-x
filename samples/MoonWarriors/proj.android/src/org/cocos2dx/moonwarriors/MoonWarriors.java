@@ -21,7 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-package org.cocos2dx.testjavascript;
+package org.cocos2dx.moonwarriors;
 
 import org.cocos2dx.lib.Cocos2dxActivity;
 
@@ -34,6 +34,6 @@ public class MoonWarriors extends Cocos2dxActivity{
 	}
 	
     static {
-        System.loadLibrary("testjavascript");
+        System.loadLibrary("moonwarriors");
     }
 }
