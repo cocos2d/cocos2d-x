@@ -266,7 +266,7 @@ bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CCTexture2DPixelForma
         bRet = true;
     } while (0);
     
-    CC_SAFE_DELETE(data);
+    CC_SAFE_FREE(data);
     
     return bRet;
 }
