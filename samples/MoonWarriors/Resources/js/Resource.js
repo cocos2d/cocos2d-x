@@ -1,10 +1,15 @@
 var dirImg = "";
 var dirMusic = "";
 var musicSuffix = ".mp3";
-if( cc.config.deviceType == 'browser' || cc.config.engine == 'cocos2d-x') {
-    dirImg = "MoonWarriors/res/";
-    dirMusic = "MoonWarriors/res/Music/";
+if( cc.config.deviceType == 'browser') {
+    dirImg = "res/";
+    dirMusic = "res/Music/";
     musicSuffix = "";
+}
+else if( cc.config.engine == 'cocos2d-x') {
+    dirImg = "res/";
+    dirMusic = "res/Music/";
+    musicSuffix = ".mp3";
 }
 
 //image
