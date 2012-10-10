@@ -392,7 +392,7 @@ JSBool js_cocos2dx_CCAnimation_create(JSContext *cx, uint32_t argc, jsval *vp)
 		if (argc > 0) {
 			arg0 = jsval_to_ccarray(cx, argv[0]);
 		}
-		cocos2d::CCAnimation* ret;
+		cocos2d::CCAnimation* ret = NULL;
 		double arg1 = 0.0f;
 		if (argc > 0 && argc == 2) {
 			if (argc == 2) {
@@ -834,6 +834,72 @@ extern JSObject* js_cocos2dx_CCAnimation_prototype;
 extern JSObject* js_cocos2dx_CCMenuItem_prototype;
 extern JSObject* js_cocos2dx_CCSpriteFrame_prototype;
 extern JSObject* js_cocos2dx_CCSet_prototype;
+extern JSObject* js_cocos2dx_CCSprite_prototype;
+extern JSObject* js_cocos2dx_CCSpriteBatchNode_prototype;
+//extern JSObject* js_cocos2dx_CCMotionStreak_prototype;
+extern JSObject* js_cocos2dx_CCAtlasNode_prototype;
+extern JSObject* js_cocos2dx_CCParticleBatchNode_prototype;
+extern JSObject* js_cocos2dx_CCLayerColor_prototype;
+extern JSObject* js_cocos2dx_CCParticleSystem_prototype;
+
+// setBlendFunc
+template<class T>
+JSBool js_cocos2dx_setBlendFunc(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    JSObject *obj;
+    T* cobj;
+    obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
+    cobj = (T*)(proxy ? proxy->ptr : NULL);
+    TEST_NATIVE_OBJECT(cx, cobj)
+    if (argc == 2)
+    {
+        GLenum src, dst;
+        JS_ValueToInt32(cx, argv[0], (int32_t*)&src);
+        JS_ValueToInt32(cx, argv[1], (int32_t*)&dst);
+        ccBlendFunc blendFunc = {src, dst};
+        cobj->setBlendFunc(blendFunc);
+        return JS_TRUE;
+    }
+    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 2);
+    return JS_FALSE;
+}
+
+JSBool js_cocos2dx_CCSprite_setBlendFunc(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    return js_cocos2dx_setBlendFunc<CCSprite>(cx, argc, vp);
+}
+
+JSBool js_cocos2dx_CCSpriteBatchNode_setBlendFunc(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    return js_cocos2dx_setBlendFunc<CCSpriteBatchNode>(cx, argc, vp);
+}
+
+// JSBool js_cocos2dx_CCMotionStreak_setBlendFunc(JSContext *cx, uint32_t argc, jsval *vp)
+// {
+//     return js_cocos2dx_setBlendFunc<CCMotionStreak>(cx, argc, vp);
+// }
+
+JSBool js_cocos2dx_CCAtlasNode_setBlendFunc(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    return js_cocos2dx_setBlendFunc<CCAtlasNode>(cx, argc, vp);
+}
+
+JSBool js_cocos2dx_CCParticleBatchNode_setBlendFunc(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    return js_cocos2dx_setBlendFunc<CCParticleBatchNode>(cx, argc, vp);
+}
+
+JSBool js_cocos2dx_CCLayerColor_setBlendFunc(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    return js_cocos2dx_setBlendFunc<CCLayerColor>(cx, argc, vp);
+}
+
+JSBool js_cocos2dx_CCParticleSystem_setBlendFunc(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    return js_cocos2dx_setBlendFunc<CCParticleSystem>(cx, argc, vp);
+}
 
 void register_cocos2dx_js_extensions(JSContext* cx, JSObject* global)
 {
@@ -860,10 +926,17 @@ void register_cocos2dx_js_extensions(JSContext* cx, JSObject* global)
     JS_DefineFunction(cx, js_cocos2dx_CCNode_prototype, "schedule", js_CCNode_schedule, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, js_cocos2dx_CCNode_prototype, "scheduleOnce", js_CCNode_scheduleOnce, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, js_cocos2dx_CCNode_prototype, "unschedule", js_CCNode_unschedule, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-
-
 	JS_DefineFunction(cx, js_cocos2dx_CCNode_prototype, "retain", js_cocos2dx_retain, 0, JSPROP_READONLY | JSPROP_PERMANENT);
 	JS_DefineFunction(cx, js_cocos2dx_CCNode_prototype, "release", js_cocos2dx_release, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+    
+    JS_DefineFunction(cx, js_cocos2dx_CCSprite_prototype, "setBlendFunc", js_cocos2dx_CCSprite_setBlendFunc, 2, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, js_cocos2dx_CCSpriteBatchNode_prototype, "setBlendFunc", js_cocos2dx_CCSpriteBatchNode_setBlendFunc, 2, JSPROP_READONLY | JSPROP_PERMANENT);
+    //JS_DefineFunction(cx, js_cocos2dx_CCMotionStreak_prototype, "setBlendFunc", js_cocos2dx_CCMotionStreak_setBlendFunc, 2, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, js_cocos2dx_CCAtlasNode_prototype, "setBlendFunc", js_cocos2dx_CCAtlasNode_setBlendFunc, 2, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, js_cocos2dx_CCParticleBatchNode_prototype, "setBlendFunc", js_cocos2dx_CCParticleBatchNode_setBlendFunc, 2, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, js_cocos2dx_CCLayerColor_prototype, "setBlendFunc", js_cocos2dx_CCLayerColor_setBlendFunc, 2, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, js_cocos2dx_CCParticleSystem_prototype, "setBlendFunc", js_cocos2dx_CCParticleSystem_setBlendFunc, 2, JSPROP_READONLY | JSPROP_PERMANENT);
+
 	JS_DefineFunction(cx, js_cocos2dx_CCAction_prototype, "copy", js_cocos2dx_CCNode_copy, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 	JS_DefineFunction(cx, js_cocos2dx_CCAction_prototype, "retain", js_cocos2dx_retain, 0, JSPROP_READONLY | JSPROP_PERMANENT);
 	JS_DefineFunction(cx, js_cocos2dx_CCAction_prototype, "release", js_cocos2dx_release, 0, JSPROP_READONLY | JSPROP_PERMANENT);
