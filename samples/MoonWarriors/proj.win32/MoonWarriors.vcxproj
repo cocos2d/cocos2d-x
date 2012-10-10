@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{D0F06A44-A245-4D13-A498-0120C203B539}</ProjectGuid>
+    <ProjectGuid>{1DB7C0FC-46FF-4A1B-82E0-C6244EEEC4C2}</ProjectGuid>
     <RootNamespace>MoonWarriors</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -136,26 +136,18 @@ xcopy /Y /Q "$(SolutionDir)scripting\javascript\spidermonkey-win32\lib\*.*" "$(O
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\scripting\javascript\bindings\CCPhysicsSprite.cpp" />
     <ClCompile Include="..\..\..\scripting\javascript\bindings\cocos2d_specifics.cpp" />
     <ClCompile Include="..\..\..\scripting\javascript\bindings\cocosjs_manual_conversions.cpp" />
     <ClCompile Include="..\..\..\scripting\javascript\bindings\generated\cocos2dx.cpp" />
-    <ClCompile Include="..\..\..\scripting\javascript\bindings\js_bindings_ccbreader.cpp" />
-    <ClCompile Include="..\..\..\scripting\javascript\bindings\js_bindings_chipmunk_functions.cpp" />
-    <ClCompile Include="..\..\..\scripting\javascript\bindings\js_bindings_chipmunk_manual.cpp" />
     <ClCompile Include="..\..\..\scripting\javascript\bindings\js_manual_conversions.cpp" />
     <ClCompile Include="..\..\..\scripting\javascript\bindings\ScriptingCore.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\scripting\javascript\bindings\CCPhysicsSprite.h" />
     <ClInclude Include="..\..\..\scripting\javascript\bindings\cocos2d_specifics.hpp" />
     <ClInclude Include="..\..\..\scripting\javascript\bindings\cocosjs_manual_conversions.h" />
     <ClInclude Include="..\..\..\scripting\javascript\bindings\generated\cocos2dx.hpp" />
-    <ClInclude Include="..\..\..\scripting\javascript\bindings\js_bindings_ccbreader.h" />
-    <ClInclude Include="..\..\..\scripting\javascript\bindings\js_bindings_chipmunk_functions.hpp" />
-    <ClInclude Include="..\..\..\scripting\javascript\bindings\js_bindings_chipmunk_manual.hpp" />
     <ClInclude Include="..\..\..\scripting\javascript\bindings\js_bindings_config.h" />
     <ClInclude Include="..\..\..\scripting\javascript\bindings\js_manual_conversions.h" />
     <ClInclude Include="..\..\..\scripting\javascript\bindings\ScriptingCore.h" />
