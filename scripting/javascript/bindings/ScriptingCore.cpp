@@ -462,6 +462,29 @@ JSBool ScriptingCore::removeRootJS(JSContext *cx, uint32_t argc, jsval *vp)
     return JS_FALSE;
 }
 
+void ScriptingCore::pauseSchedulesAndActions(CCNode *node) {    
+    
+    CCArray * arr = JSSchedule::getTargetForNativeNode(node);
+    if(! arr) return;
+    for(unsigned int i = 0; i < arr->count(); ++i) {
+        if(arr->objectAtIndex(i)) {
+            node->getScheduler()->pauseTarget(arr->objectAtIndex(i));
+        }
+    }
+}
+
+
+void ScriptingCore::resumeSchedulesAndActions(CCNode *node) {
+    
+    CCArray * arr = JSSchedule::getTargetForNativeNode(node);
+    if(!arr) return;
+    for(unsigned int i = 0; i < arr->count(); ++i) {
+        if(!arr->objectAtIndex(i)) continue;
+        node->getScheduler()->resumeTarget(arr->objectAtIndex(i));
+    }
+}
+
+
 int ScriptingCore::executeNodeEvent(CCNode* pNode, int nAction)
 {
     js_proxy_t * p;
@@ -477,10 +500,12 @@ int ScriptingCore::executeNodeEvent(CCNode* pNode, int nAction)
     if(nAction == kCCNodeOnEnter)
     {
         executeJSFunctionWithName(this->cx, p->obj, "onEnter", dataVal, retval);
+        resumeSchedulesAndActions(pNode);
     } 
     else if(nAction == kCCNodeOnExit)
     {
         executeJSFunctionWithName(this->cx, p->obj, "onExit", dataVal, retval);
+        pauseSchedulesAndActions(pNode);
     }
     else if(nAction == kCCNodeOnEnterTransitionDidFinish)
     {
