@@ -159,19 +159,13 @@ public:
      */
     CCNode* getNotificationNode();
     void setNotificationNode(CCNode *node);
-    
-    bool enableRetinaDisplay(bool bEnabelRetina);
 
     // window size
 
-    /** returns the size of the OpenGL view in points.
+    /** returns the size of the OpenGL view.
     */
     CCSize getWinSize(void);
 
-    /** returns the size of the OpenGL view in pixels.
-    */
-    CCSize getWinSizeInPixels(void);
-    
     /** returns visible size of the OpenGL view in points.
      *  the value is equal to getWinSize if don't invoke
      *  CCEGLView::setDesignResolutionSize()
@@ -287,12 +281,12 @@ public:
     void setDepthTest(bool bOn);
 
     virtual void mainLoop(void) = 0;
-
+    
     /** The size in pixels of the surface. It could be different than the screen size.
-    High-res devices might have a higher surface size than the screen size.
-    Only available when compiled using SDK >= 4.0.
-    @since v0.99.4
-    */
+     High-res devices might have a higher surface size than the screen size.
+     Only available when compiled using SDK >= 4.0.
+     @since v0.99.4
+     */
     void setContentScaleFactor(float scaleFactor);
     float getContentScaleFactor(void);
 
@@ -390,15 +384,12 @@ protected:
     
     /* projection used */
     ccDirectorProjection m_eProjection;
-
-    /* window size in points */
-    CCSize    m_obWinSizeInPoints;
-
-    /* window size in pixels */
-    CCSize m_obWinSizeInPixels;
     
     /* content scale factor */
     float    m_fContentScaleFactor;
+
+    /* window size */
+    CCSize    m_obWinSize;
 
     /* store the fps string */
     char *m_pszFPS;
@@ -408,9 +399,6 @@ protected:
 
     /* Projection protocol delegate */
     CCDirectorDelegate *m_pProjectionDelegate;
-
-    /* contentScaleFactor could be simulated */
-    bool m_bIsContentScaleSupported;
     
     // CCEGLViewProtocol will recreate stats labels to fit visible rect
     friend class CCEGLViewProtocol;

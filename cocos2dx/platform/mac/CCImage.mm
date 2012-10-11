@@ -246,18 +246,9 @@ static bool _initWithImage(CGImageRef CGImage, tImageInfo *pImageinfo, double sc
     }
     
 	//if (cocos2d::CCImage::getIsScaleEnabled())
-	if( cocos2d::CCDirector::sharedDirector()->getContentScaleFactor() > 1.0f )
-	{
-		POTWide = CGImageGetWidth(CGImage) * scaleX;
-		POTHigh = CGImageGetHeight(CGImage) * scaleY;
-	}
-	else 
-	{
-		POTWide = CGImageGetWidth(CGImage);
-		POTHigh = CGImageGetHeight(CGImage);
-	}
+    POTWide = CGImageGetWidth(CGImage) * scaleX;
+    POTHigh = CGImageGetHeight(CGImage) * scaleY;
 
-    
     // load and draw image
     return _initPremultipliedATextureWithImage(CGImage, POTWide, POTHigh, pImageinfo);
 }

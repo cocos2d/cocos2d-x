@@ -120,6 +120,7 @@ OBJECTS = ../Classes/AccelerometerTest/AccelerometerTest.o \
 			../Classes/ZwoptexTest/ZwoptexTest.o \
 			../Classes/controller.o \
 			../Classes/testBasic.o \
+			../Classes/Utils.o \
 			../Classes/AppDelegate.o \
 			./main.o 
 

@@ -1,6 +1,7 @@
 #include "ShaderTest.h"
 #include "../testResource.h"
 #include "cocos2d.h"
+#include "../Utils.h"
 
 static int sceneIdx = -1; 
 
@@ -203,7 +204,7 @@ void ShaderNode::setPosition(const CCPoint &newPosition)
 {
     CCNode::setPosition(newPosition);
     CCPoint position = getPosition();
-    m_center = vertex2(position.x * CC_CONTENT_SCALE_FACTOR(), position.y * CC_CONTENT_SCALE_FACTOR());
+    m_center = vertex2(position.x * SCALE_FACTOR(), position.y * SCALE_FACTOR());
 }
 
 void ShaderNode::draw()
@@ -470,7 +471,7 @@ bool SpriteBlur::initWithTexture(CCTexture2D* texture, const CCRect& rect)
 {
     if( CCSprite::initWithTexture(texture, rect) ) 
     {
-        CCSize s = getTexture()->getContentSizeInPixels();
+        CCSize s = getTexture()->getContentSize();
 
         blur_ = ccp(1/s.width, 1/s.height);
         sub_[0] = sub_[1] = sub_[2] = sub_[3] = 0;
@@ -546,7 +547,7 @@ void SpriteBlur::draw()
 
 void SpriteBlur::setBlurSize(float f)
 {
-    CCSize s = getTexture()->getContentSizeInPixels();
+    CCSize s = getTexture()->getContentSize();
 
     blur_ = ccp(1/s.width, 1/s.height);
     blur_ = ccpMult(blur_,f);

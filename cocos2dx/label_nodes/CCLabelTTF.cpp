@@ -283,7 +283,7 @@ void CCLabelTTF::updateTexture()
     // refer to cocos2d-x issue #1430
     tex = new CCTexture2D();
     tex->initWithString(m_string.c_str(),
-                        CC_SIZE_POINTS_TO_PIXELS(m_tDimensions), 
+                        m_tDimensions,
                         m_hAlignment,
                         m_vAlignment,
                         m_pFontName->c_str(),

@@ -198,9 +198,6 @@ protected:
     //! used for optimization
     CCSprite            *m_pReusedTile;
     ccCArray            *m_pAtlasIndexArray;
-    
-    // used for retina display
-    float               m_fContentScaleFactor;
 };
 
 // end of tilemap_parallax_nodes group

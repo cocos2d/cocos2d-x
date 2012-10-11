@@ -100,8 +100,8 @@ bool CCLabelAtlas::initWithString(const char *theString, const char *fntFile)
     CCAssert(((CCString*)dict->objectForKey("version"))->intValue() == 1, "Unsupported version. Upgrade cocos2d version");
     
     CCString *textureFilename = (CCString*)dict->objectForKey("textureFilename");
-    unsigned int width = ((CCString*)dict->objectForKey("itemWidth"))->intValue() / CC_CONTENT_SCALE_FACTOR();
-    unsigned int height = ((CCString*)dict->objectForKey("itemHeight"))->intValue() / CC_CONTENT_SCALE_FACTOR();
+    unsigned int width = ((CCString*)dict->objectForKey("itemWidth"))->intValue();
+    unsigned int height = ((CCString*)dict->objectForKey("itemHeight"))->intValue();
     unsigned int startChar = ((CCString*)dict->objectForKey("firstChar"))->intValue();
 	
 
@@ -122,8 +122,8 @@ void CCLabelAtlas::updateAtlasValues()
     CCTexture2D *texture = m_pTextureAtlas->getTexture();
     float textureWide = (float) texture->getPixelsWide();
     float textureHigh = (float) texture->getPixelsHigh();
-    float itemWidthInPixels = m_uItemWidth * CC_CONTENT_SCALE_FACTOR();
-    float itemHeightInPixels = m_uItemHeight * CC_CONTENT_SCALE_FACTOR();
+    float itemWidthInPixels = m_uItemWidth;
+    float itemHeightInPixels = m_uItemHeight;
 
     for(unsigned int i = 0; i < n; i++) {
         unsigned char a = s[i] - m_uMapStartChar;
