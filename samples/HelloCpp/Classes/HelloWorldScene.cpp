@@ -27,7 +27,7 @@ bool HelloWorld::init()
         return false;
     }
     
-    CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+    CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
     CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
 
     /////////////////////////////
@@ -41,7 +41,8 @@ bool HelloWorld::init()
                                         this,
                                         menu_selector(HelloWorld::menuCloseCallback));
     
-	pCloseItem->setPosition(ccp(winSize.width - 20 + origin.x, 20 + origin.y));
+	pCloseItem->setPosition(ccp(origin.x + visibleSize.width - pCloseItem->getContentSize().width/2 ,
+                                origin.y + pCloseItem->getContentSize().height/2));
 
     // create menu, it's an autorelease object
     CCMenu* pMenu = CCMenu::create(pCloseItem, NULL);
@@ -56,7 +57,8 @@ bool HelloWorld::init()
     CCLabelTTF* pLabel = CCLabelTTF::create("Hello World", "Arial", 24);
 
     // position the label on the center of the screen
-    pLabel->setPosition(ccp(winSize.width/2 + origin.x, winSize.height - 50 + origin.y));
+    pLabel->setPosition(ccp(origin.x + visibleSize.width/2,
+                            origin.y + visibleSize.height - pLabel->getContentSize().height));
 
     // add the label as a child to this layer
     this->addChild(pLabel, 1);
@@ -65,7 +67,7 @@ bool HelloWorld::init()
     CCSprite* pSprite = CCSprite::create("HelloWorld.png");
 
     // position the sprite on the center of the screen
-    pSprite->setPosition(ccp(winSize.width/2 + origin.x, winSize.height/2 + origin.y));
+    pSprite->setPosition(ccp(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
 
     // add the sprite as a child to this layer
     this->addChild(pSprite, 0);
