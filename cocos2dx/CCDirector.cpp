@@ -134,6 +134,8 @@ bool CCDirector::init(void)
     m_obWinSize = CCSizeZero;    
 
     m_pobOpenGLView = NULL;
+    
+    m_fContentScaleFactor = 1.0f;
 
     // scheduler
     m_pScheduler = new CCScheduler();
@@ -752,17 +754,17 @@ void CCDirector::createStatsLabel()
         CCFileUtils::sharedFileUtils()->purgeCachedEntries();
     }
 
-    m_pFPSLabel = CCLabelTTF::create("00.0", "Arial", 24);
+    m_pFPSLabel = CCLabelTTF::create("00.0", "Arial", 48);
     m_pFPSLabel->retain();
-    m_pSPFLabel = CCLabelTTF::create("0.000", "Arial", 24);
+    m_pSPFLabel = CCLabelTTF::create("0.000", "Arial", 48);
     m_pSPFLabel->retain();
-    m_pDrawsLabel = CCLabelTTF::create("000", "Arial", 24);
+    m_pDrawsLabel = CCLabelTTF::create("000", "Arial", 48);
     m_pDrawsLabel->retain();
 
     CCSize contentSize = m_pDrawsLabel->getContentSize();
-    m_pDrawsLabel->setPosition(ccpAdd(ccp(contentSize.width/2, contentSize.height*5/2), CC_DIRECTOR_STATS_POSITION));
+    m_pDrawsLabel->setPosition(ccpAdd(ccp(contentSize.width/2, contentSize.height/2 + 40), CC_DIRECTOR_STATS_POSITION));
     contentSize = m_pSPFLabel->getContentSize();
-    m_pSPFLabel->setPosition(ccpAdd(ccp(contentSize.width/2, contentSize.height*3/2), CC_DIRECTOR_STATS_POSITION));
+    m_pSPFLabel->setPosition(ccpAdd(ccp(contentSize.width/2, contentSize.height/2 + 20), CC_DIRECTOR_STATS_POSITION));
     contentSize = m_pFPSLabel->getContentSize();
     m_pFPSLabel->setPosition(ccpAdd(ccp(contentSize.width/2, contentSize.height/2), CC_DIRECTOR_STATS_POSITION));
 }
@@ -771,6 +773,17 @@ void CCDirector::createStatsLabel()
 /***************************************************
 * mobile platforms specific functions
 **************************************************/
+
+float CCDirector::getContentScaleFactor(void)
+{
+    return m_fContentScaleFactor;
+}
+
+void CCDirector::setContentScaleFactor(float scaleFactor)
+{
+    m_fContentScaleFactor = scaleFactor;
+    createStatsLabel();
+}
 
 CCNode* CCDirector::getNotificationNode() 
 { 

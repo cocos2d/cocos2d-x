@@ -392,7 +392,7 @@ void CCSprite::setTextureRect(const CCRect& rect, bool rotated, const CCSize& un
 // override this method to generate "double scale" sprites
 void CCSprite::setVertexRect(const CCRect& rect)
 {
-    m_obRect = rect;
+    m_obRect = CC_RECT_PIXELS_TO_POINTS(rect);
 }
 
 void CCSprite::setTextureCoords(CCRect rect)

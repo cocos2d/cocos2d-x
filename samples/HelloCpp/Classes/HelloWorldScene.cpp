@@ -41,8 +41,8 @@ bool HelloWorld::init()
                                         this,
                                         menu_selector(HelloWorld::menuCloseCallback));
         
-    pCloseItem->setPosition(ccp(origin.x + visibleSize.width - pCloseItem->getContentSize().width/2 ,
-                                origin.y + pCloseItem->getContentSize().height/2));
+    pCloseItem->setPosition(ccp(origin.x + visibleSize.width - 40,
+                                origin.y + 40));
 
     // create menu, it's an autorelease object
     CCMenu* pMenu = CCMenu::create(pCloseItem, NULL);
@@ -54,7 +54,7 @@ bool HelloWorld::init()
 
     // add a label shows "Hello World"
     // create and initialize a label
-    CCLabelTTF* pLabel = CCLabelTTF::create("Hello World", "Arial", 24);
+    CCLabelTTF* pLabel = CCLabelTTF::create("Hello World", "Arial", 48);
 
     // position the label on the center of the screen
     pLabel->setPosition(ccp(origin.x + visibleSize.width/2,
