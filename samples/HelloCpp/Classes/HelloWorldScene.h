@@ -14,9 +14,6 @@ public:
     
     // a selector callback
     void menuCloseCallback(CCObject* pSender);
-
-    // touch callback
-    void ccTouchesBegan(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEvent);
     
     // implement the "static node()" method manually
     CREATE_FUNC(HelloWorld);
