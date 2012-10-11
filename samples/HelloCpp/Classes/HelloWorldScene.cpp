@@ -27,7 +27,7 @@ bool HelloWorld::init()
         return false;
     }
     
-    CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
+    CCSize winSize = CCDirector::sharedDirector()->getWinSize();
     CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
 
     /////////////////////////////
@@ -40,9 +40,8 @@ bool HelloWorld::init()
                                         "CloseSelected.png",
                                         this,
                                         menu_selector(HelloWorld::menuCloseCallback));
-        
-    pCloseItem->setPosition(ccp(origin.x + visibleSize.width - pCloseItem->getContentSize().width/2 ,
-                                origin.y + pCloseItem->getContentSize().height/2));
+    
+	pCloseItem->setPosition(ccp(winSize.width - 20 + origin.x, 20 + origin.y));
 
     // create menu, it's an autorelease object
     CCMenu* pMenu = CCMenu::create(pCloseItem, NULL);
@@ -57,8 +56,7 @@ bool HelloWorld::init()
     CCLabelTTF* pLabel = CCLabelTTF::create("Hello World", "Arial", 24);
 
     // position the label on the center of the screen
-    pLabel->setPosition(ccp(origin.x + visibleSize.width/2,
-                            origin.y + visibleSize.height - pLabel->getContentSize().height));
+    pLabel->setPosition(ccp(winSize.width/2 + origin.x, winSize.height - 50 + origin.y));
 
     // add the label as a child to this layer
     this->addChild(pLabel, 1);
@@ -67,13 +65,10 @@ bool HelloWorld::init()
     CCSprite* pSprite = CCSprite::create("HelloWorld.png");
 
     // position the sprite on the center of the screen
-    pSprite->setPosition(ccp(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
+    pSprite->setPosition(ccp(winSize.width/2 + origin.x, winSize.height/2 + origin.y));
 
     // add the sprite as a child to this layer
     this->addChild(pSprite, 0);
-    
-    // enable standard touch
-    this->setTouchEnabled(true);
     
     return true;
 }
@@ -85,12 +80,4 @@ void HelloWorld::menuCloseCallback(CCObject* pSender)
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     exit(0);
 #endif
-}
-
-void HelloWorld::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
-{
-    CCTouch* touch = (CCTouch*)(* pTouches->begin());
-    CCPoint pos = touch->getLocation();
-    
-    CCLog("touch, x = %f, y = %f", pos.x, pos.y);
 }
