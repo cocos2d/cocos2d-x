@@ -165,10 +165,102 @@ void js_log(const char *format, ...) {
     }
 }
 
+#define JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES 1
+
+void jsb_register_cocos2d_config( JSContext *_cx, JSObject *cocos2d)
+{
+    // Config Object
+    JSObject *ccconfig = JS_NewObject(_cx, NULL, NULL, NULL);
+    // config.os: The Operating system
+    // osx, ios, android, windows, linux, etc..
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    JSString *str = JS_InternString(_cx, "ios");
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    JSString *str = JS_InternString(_cx, "android");
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+    JSString *str = JS_InternString(_cx, "windows");
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
+    JSString *str = JS_InternString(_cx, "marmalade");
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
+    JSString *str = JS_InternString(_cx, "linux");
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_BADA)
+    JSString *str = JS_InternString(_cx, "bada");
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY)
+    JSString *str = JS_InternString(_cx, "blackberry");
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+    JSString *str = JS_InternString(_cx, "osx");
+#else
+    JSString *str = JS_InternString(_cx, "unknown");
+#endif
+    JS_DefineProperty(_cx, ccconfig, "os", STRING_TO_JSVAL(str), NULL, NULL, JSPROP_ENUMERATE | JSPROP_READONLY | JSPROP_PERMANENT);
+
+    // config.deviceType: Device Type
+    // 'mobile' for any kind of mobile devices, 'desktop' for PCs, 'browser' for Web Browsers
+// #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+//     str = JS_InternString(_cx, "desktop");
+// #else
+    str = JS_InternString(_cx, "mobile");
+// #endif
+    JS_DefineProperty(_cx, ccconfig, "deviceType", STRING_TO_JSVAL(str), NULL, NULL, JSPROP_ENUMERATE | JSPROP_READONLY | JSPROP_PERMANENT);
+
+    // config.engine: Type of renderer
+    // 'cocos2d', 'cocos2d-x', 'cocos2d-html5/canvas', 'cocos2d-html5/webgl', etc..
+    str = JS_InternString(_cx, "cocos2d-x");
+    JS_DefineProperty(_cx, ccconfig, "engine", STRING_TO_JSVAL(str), NULL, NULL, JSPROP_ENUMERATE | JSPROP_READONLY | JSPROP_PERMANENT);
+
+    // config.arch: CPU Architecture
+    // i386, ARM, x86_64, web
+#ifdef __LP64__
+    str = JS_InternString(_cx, "x86_64");
+#elif defined(__arm__) || defined(__ARM_NEON__)
+    str = JS_InternString(_cx, "arm");
+#else
+    str = JS_InternString(_cx, "i386");
+#endif
+    JS_DefineProperty(_cx, ccconfig, "arch", STRING_TO_JSVAL(str), NULL, NULL, JSPROP_ENUMERATE | JSPROP_READONLY | JSPROP_PERMANENT);
+
+    // config.version: Version of cocos2d + renderer
+    str = JS_InternString(_cx, cocos2dVersion() );
+    JS_DefineProperty(_cx, ccconfig, "version", STRING_TO_JSVAL(str), NULL, NULL, JSPROP_ENUMERATE | JSPROP_READONLY | JSPROP_PERMANENT);
+
+    // config.usesTypedArrays
+#if JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
+    JSBool b = JS_FALSE;
+#else
+    JSBool b = JS_TRUE;
+#endif
+    JS_DefineProperty(_cx, ccconfig, "usesTypedArrays", BOOLEAN_TO_JSVAL(b), NULL, NULL, JSPROP_ENUMERATE | JSPROP_READONLY | JSPROP_PERMANENT);
+
+    // config.debug: Debug build ?
+#if COCOS2D_DEBUG > 0
+    b = JS_TRUE;
+#else
+    b = JS_FALSE;
+#endif
+    JS_DefineProperty(_cx, ccconfig, "debug", BOOLEAN_TO_JSVAL(b), NULL, NULL, JSPROP_ENUMERATE | JSPROP_READONLY | JSPROP_PERMANENT);
+
+
+    // Add "config" to "cc"
+    JS_DefineProperty(_cx, cocos2d, "config", OBJECT_TO_JSVAL(ccconfig), NULL, NULL, JSPROP_ENUMERATE | JSPROP_READONLY | JSPROP_PERMANENT);
+}
+
 void registerDefaultClasses(JSContext* cx, JSObject* global) {
     if (!JS_InitStandardClasses(cx, global)) {
         js_log("error initializing the standard classes");
     }
+    // first, try to get the ns
+    jsval nsval;
+    JSObject *ns;
+    JS_GetProperty(cx, global, "cc", &nsval);
+    if (nsval == JSVAL_VOID) {
+        ns = JS_NewObject(cx, NULL, NULL, NULL);
+        nsval = OBJECT_TO_JSVAL(ns);
+        JS_SetProperty(cx, global, "cc", &nsval);
+    } else {
+        JS_ValueToObject(cx, nsval, &ns);
+    }
+
+    jsb_register_cocos2d_config(cx, ns);
 
     // 
     // Javascript controller (__jsc__)
@@ -462,6 +554,29 @@ JSBool ScriptingCore::removeRootJS(JSContext *cx, uint32_t argc, jsval *vp)
     return JS_FALSE;
 }
 
+void ScriptingCore::pauseSchedulesAndActions(CCNode *node) {    
+    
+    CCArray * arr = JSSchedule::getTargetForNativeNode(node);
+    if(! arr) return;
+    for(unsigned int i = 0; i < arr->count(); ++i) {
+        if(arr->objectAtIndex(i)) {
+            node->getScheduler()->pauseTarget(arr->objectAtIndex(i));
+        }
+    }
+}
+
+
+void ScriptingCore::resumeSchedulesAndActions(CCNode *node) {
+    
+    CCArray * arr = JSSchedule::getTargetForNativeNode(node);
+    if(!arr) return;
+    for(unsigned int i = 0; i < arr->count(); ++i) {
+        if(!arr->objectAtIndex(i)) continue;
+        node->getScheduler()->resumeTarget(arr->objectAtIndex(i));
+    }
+}
+
+
 int ScriptingCore::executeNodeEvent(CCNode* pNode, int nAction)
 {
     js_proxy_t * p;
@@ -477,10 +592,12 @@ int ScriptingCore::executeNodeEvent(CCNode* pNode, int nAction)
     if(nAction == kCCNodeOnEnter)
     {
         executeJSFunctionWithName(this->cx, p->obj, "onEnter", dataVal, retval);
+        resumeSchedulesAndActions(pNode);
     } 
     else if(nAction == kCCNodeOnExit)
     {
         executeJSFunctionWithName(this->cx, p->obj, "onExit", dataVal, retval);
+        pauseSchedulesAndActions(pNode);
     }
     else if(nAction == kCCNodeOnEnterTransitionDidFinish)
     {
