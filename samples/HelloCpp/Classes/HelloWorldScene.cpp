@@ -1,6 +1,7 @@
 #include "HelloWorldScene.h"
-
+#include "AppMacros.h"
 USING_NS_CC;
+
 
 CCScene* HelloWorld::scene()
 {
@@ -54,8 +55,9 @@ bool HelloWorld::init()
 
     // add a label shows "Hello World"
     // create and initialize a label
-    CCLabelTTF* pLabel = CCLabelTTF::create("Hello World", "Arial", 24);
-
+    
+    CCLabelTTF* pLabel = CCLabelTTF::create("Hello World", "Arial", kTitleFontSize);
+    
     // position the label on the center of the screen
     pLabel->setPosition(ccp(origin.x + visibleSize.width/2,
                             origin.y + visibleSize.height - pLabel->getContentSize().height));
@@ -74,6 +76,7 @@ bool HelloWorld::init()
     
     return true;
 }
+
 
 void HelloWorld::menuCloseCallback(CCObject* pSender)
 {
