@@ -1,5 +1,6 @@
 #include "AppDelegate.h"
 #include "HelloWorldScene.h"
+#include "AppMacros.h"
 
 USING_NS_CC;
 
@@ -17,21 +18,25 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     pDirector->setOpenGLView(CCEGLView::sharedOpenGLView());
 	//pDirector->setProjection(kCCDirectorProjection2D);
-	
-	if (pDirector->getWinSize().height > 320)
+	CCSize screenSize = CCEGLView::sharedOpenGLView()->getFrameSize();
+    
+	if (screenSize.height > 768)
 	{
-		CCFileUtils::sharedFileUtils()->setResourceDirectory("iphonehd");
-        pDirector->setContentScaleFactor(2.0f);
-		
+		CCFileUtils::sharedFileUtils()->setResourceDirectory("ipadhd");
+        pDirector->setContentScaleFactor(2048.0f/kDesignResolutionSize_width);
 	}
+    else if (screenSize.height >= 640)
+    {
+        CCFileUtils::sharedFileUtils()->setResourceDirectory("ipad");
+        pDirector->setContentScaleFactor(1024.0f/kDesignResolutionSize_width);
+    }
 	else
     {
 		CCFileUtils::sharedFileUtils()->setResourceDirectory("iphone");
-        //pDirector->setContentScaleFactor(0.5f);
+        pDirector->setContentScaleFactor(480.0f/kDesignResolutionSize_width);
     }
 	
-	//CCEGLView::sharedOpenGLView()->setDesignResolutionSize(960, 640, kResolutionShowAll);
-    CCEGLView::sharedOpenGLView()->setDesignResolutionSize(480, 320, kResolutionShowAll);
+    CCEGLView::sharedOpenGLView()->setDesignResolutionSize(kDesignResolutionSize_width, kDesignResolutionSize_height, kResolutionNoBorder);
     
     // turn on display FPS
     pDirector->setDisplayStats(true);
