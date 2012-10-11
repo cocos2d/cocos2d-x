@@ -233,7 +233,7 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-const char* cocos2dVersion();
+CC_DLL const char* cocos2dVersion();
 
 NS_CC_END
 
