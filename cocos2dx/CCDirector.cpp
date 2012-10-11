@@ -331,8 +331,7 @@ void CCDirector::setNextDeltaTimeZero(bool bNextDeltaTimeZero)
 
 void CCDirector::setProjection(ccDirectorProjection kProjection)
 {
-    CCSize size = m_obWinSizeInPixels;
-    CCSize sizePoint = m_obWinSizeInPoints;
+    CCSize size = m_obWinSizeInPoints;
 
     if (m_pobOpenGLView)
     {
@@ -404,7 +403,7 @@ void CCDirector::purgeCachedData(void)
 
 float CCDirector::getZEye(void)
 {
-    return (m_obWinSizeInPixels.height / 1.1566f);    
+    return (m_obWinSizeInPoints.height / 1.1566f);
 }
 
 void CCDirector::setAlphaBlending(bool bOn)
