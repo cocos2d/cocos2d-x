@@ -46,7 +46,6 @@ CCEGLViewProtocol::CCEGLViewProtocol()
 : m_pDelegate(NULL)
 , m_fScaleY(1.0f)
 , m_fScaleX(1.0f)
-, m_bIsRetinaEnabled(false)
 , m_eResolutionPolicy(kResolutionUnKnown)
 {
 }
@@ -58,7 +57,6 @@ CCEGLViewProtocol::~CCEGLViewProtocol()
 
 void CCEGLViewProtocol::setDesignResolutionSize(float width, float height, ResolutionPolicy resolutionPolicy)
 {
-    CCAssert(m_bIsRetinaEnabled == false, "can not enable retina while set design resolution size!");
     CCAssert(resolutionPolicy != kResolutionUnKnown, "should set resolutionPolicy");
     
     if (width == 0.0f || height == 0.0f)
@@ -95,11 +93,6 @@ void CCEGLViewProtocol::setDesignResolutionSize(float width, float height, Resol
     CCDirector::sharedDirector()->createStatsLabel();
     CCDirector::sharedDirector()->m_obWinSizeInPoints = CCDirector::sharedDirector()->m_obWinSizeInPixels = getSize(); 
     CCDirector::sharedDirector()->setGLDefaultValues();
-}
-
-bool CCEGLViewProtocol::enableRetina()
-{
-    return false;
 }
 
 const CCSize& CCEGLViewProtocol::getSize() const 
@@ -193,18 +186,8 @@ void CCEGLViewProtocol::handleTouchesBegin(int num, int ids[], float xs[], float
             }
 
             CCTouch* pTouch = s_pTouches[nUnusedIndex] = new CCTouch();
-            if (m_bIsRetinaEnabled)
-            {
-                // on iOS, though retina is enabled, the value got from os is also 
-                // relative to its original size
-                pTouch->setTouchInfo(nUnusedIndex, (x - m_obViewPortRect.origin.x), 
-                                     (y - m_obViewPortRect.origin.y));
-            }
-            else 
-            {
-                pTouch->setTouchInfo(nUnusedIndex, (x - m_obViewPortRect.origin.x) / m_fScaleX, 
+			pTouch->setTouchInfo(nUnusedIndex, (x - m_obViewPortRect.origin.x) / m_fScaleX, 
                                      (y - m_obViewPortRect.origin.y) / m_fScaleY);
-            }
             
             //CCLOG("x = %f y = %f", pTouch->getLocationInView().x, pTouch->getLocationInView().y);
             
@@ -243,16 +226,8 @@ void CCEGLViewProtocol::handleTouchesMove(int num, int ids[], float xs[], float 
         CCTouch* pTouch = s_pTouches[pIndex->getValue()];
         if (pTouch)
         {
-            if (m_bIsRetinaEnabled)
-            {
-                pTouch->setTouchInfo(pIndex->getValue(), (x - m_obViewPortRect.origin.x), 
-                                     (y - m_obViewPortRect.origin.y));
-            }
-            else 
-            {
-                pTouch->setTouchInfo(pIndex->getValue(), (x - m_obViewPortRect.origin.x) / m_fScaleX, 
-                                     (y - m_obViewPortRect.origin.y) / m_fScaleY);
-            }
+			pTouch->setTouchInfo(pIndex->getValue(), (x - m_obViewPortRect.origin.x) / m_fScaleX, 
+								(y - m_obViewPortRect.origin.y) / m_fScaleY);
             
             set.addObject(pTouch);
         }
@@ -292,17 +267,8 @@ void CCEGLViewProtocol::getSetOfTouchesEndOrCancel(CCSet& set, int num, int ids[
         if (pTouch)
         {
             CCLOGINFO("Ending touches with id: %d, x=%f, y=%f", id, x, y);
-            
-            if (m_bIsRetinaEnabled)
-            {
-                pTouch->setTouchInfo(pIndex->getValue(), (x - m_obViewPortRect.origin.x), 
-                                     (y - m_obViewPortRect.origin.y));
-            }
-            else 
-            {
-                pTouch->setTouchInfo(pIndex->getValue(), (x - m_obViewPortRect.origin.x) / m_fScaleX, 
-                                     (y - m_obViewPortRect.origin.y) / m_fScaleY);
-            }
+			pTouch->setTouchInfo(pIndex->getValue(), (x - m_obViewPortRect.origin.x) / m_fScaleX, 
+								(y - m_obViewPortRect.origin.y) / m_fScaleY);
 
             set.addObject(pTouch);
 
@@ -356,11 +322,6 @@ float CCEGLViewProtocol::getScaleX() const
 float CCEGLViewProtocol::getScaleY() const
 {
     return m_fScaleY;
-}
-
-bool CCEGLViewProtocol::isRetinaEnabled() const
-{
-    return m_bIsRetinaEnabled;
 }
 
 NS_CC_END

@@ -151,6 +151,11 @@ static EAGLView *view = 0;
         
         originalRect_ = self.frame;
         self.keyboardShowNotification = nil;
+		
+		if ([view respondsToSelector:@selector(setContentScaleFactor:)])
+		{
+			view.contentScaleFactor = [[UIScreen mainScreen] scale];
+		}
     }
         
     return self;
@@ -200,13 +205,13 @@ static EAGLView *view = 0;
 -(int) getWidth
 {
     CGSize bound = [self bounds].size;
-    return bound.width;
+    return bound.width * self.contentScaleFactor;
 }
 
 -(int) getHeight
 {
     CGSize bound = [self bounds].size;
-    return bound.height;
+    return bound.height * self.contentScaleFactor;
 }
 
 
@@ -401,8 +406,8 @@ static EAGLView *view = 0;
     int i = 0;
     for (UITouch *touch in touches) {
         ids[i] = (int)touch;
-        xs[i] = [touch locationInView: [touch view]].x;
-        ys[i] = [touch locationInView: [touch view]].y;
+        xs[i] = [touch locationInView: [touch view]].x * view.contentScaleFactor;;
+        ys[i] = [touch locationInView: [touch view]].y * view.contentScaleFactor;;
         ++i;
     }
     cocos2d::CCEGLView::sharedOpenGLView()->handleTouchesBegin(i, ids, xs, ys);
@@ -421,8 +426,8 @@ static EAGLView *view = 0;
     int i = 0;
     for (UITouch *touch in touches) {
         ids[i] = (int)touch;
-        xs[i] = [touch locationInView: [touch view]].x;
-        ys[i] = [touch locationInView: [touch view]].y;
+        xs[i] = [touch locationInView: [touch view]].x * view.contentScaleFactor;;
+        ys[i] = [touch locationInView: [touch view]].y * view.contentScaleFactor;;
         ++i;
     }
     cocos2d::CCEGLView::sharedOpenGLView()->handleTouchesMove(i, ids, xs, ys);
@@ -442,8 +447,8 @@ static EAGLView *view = 0;
     int i = 0;
     for (UITouch *touch in touches) {
         ids[i] = (int)touch;
-        xs[i] = [touch locationInView: [touch view]].x;
-        ys[i] = [touch locationInView: [touch view]].y;
+        xs[i] = [touch locationInView: [touch view]].x * view.contentScaleFactor;;
+        ys[i] = [touch locationInView: [touch view]].y * view.contentScaleFactor;;
         ++i;
     }
     cocos2d::CCEGLView::sharedOpenGLView()->handleTouchesEnd(i, ids, xs, ys);
@@ -463,8 +468,8 @@ static EAGLView *view = 0;
     int i = 0;
     for (UITouch *touch in touches) {
         ids[i] = (int)touch;
-        xs[i] = [touch locationInView: [touch view]].x;
-        ys[i] = [touch locationInView: [touch view]].y;
+        xs[i] = [touch locationInView: [touch view]].x * view.contentScaleFactor;;
+        ys[i] = [touch locationInView: [touch view]].y * view.contentScaleFactor;;
         ++i;
     }
     cocos2d::CCEGLView::sharedOpenGLView()->handleTouchesCancel(i, ids, xs, ys);
@@ -806,21 +811,18 @@ static EAGLView *view = 0;
         notiInfo.end.size.height -= offestY;
     }
     
-    if (!cocos2d::CCEGLView::sharedOpenGLView()->isRetinaEnabled())
-    {
-        float scaleX = cocos2d::CCEGLView::sharedOpenGLView()->getScaleX();
-        float scaleY = cocos2d::CCEGLView::sharedOpenGLView()->getScaleY();
+	float scaleX = cocos2d::CCEGLView::sharedOpenGLView()->getScaleX();
+	float scaleY = cocos2d::CCEGLView::sharedOpenGLView()->getScaleY();
         
-        notiInfo.begin.origin.x /= scaleX;
-        notiInfo.begin.origin.y /= scaleY;
-        notiInfo.begin.size.width /= scaleX;
-        notiInfo.begin.size.height /= scaleY;
+	notiInfo.begin.origin.x /= scaleX;
+	notiInfo.begin.origin.y /= scaleY;
+	notiInfo.begin.size.width /= scaleX;
+	notiInfo.begin.size.height /= scaleY;
         
-        notiInfo.end.origin.x /= scaleX;
-        notiInfo.end.origin.y /= scaleY;
-        notiInfo.end.size.width /= scaleX;
-        notiInfo.end.size.height /= scaleY;
-    }
+	notiInfo.end.origin.x /= scaleX;
+	notiInfo.end.origin.y /= scaleY;
+	notiInfo.end.size.width /= scaleX;
+	notiInfo.end.size.height /= scaleY;
     
     cocos2d::CCIMEDispatcher* dispatcher = cocos2d::CCIMEDispatcher::sharedDispatcher();
     if (UIKeyboardWillShowNotification == type) 
@@ -860,10 +862,7 @@ static EAGLView *view = 0;
     
     if (dis < 0.0f) dis = 0.0f;
 
-    if (!cocos2d::CCEGLView::sharedOpenGLView()->isRetinaEnabled())
-    {
-        dis *= cocos2d::CCEGLView::sharedOpenGLView()->getScaleY();
-    }
+	dis *= cocos2d::CCEGLView::sharedOpenGLView()->getScaleY();
     
     switch ([[UIApplication sharedApplication] statusBarOrientation])
     {
