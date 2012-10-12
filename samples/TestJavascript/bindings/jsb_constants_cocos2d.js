@@ -52,7 +52,7 @@ cc._reuse_p1 = {x:0, y:0};
 cc._reuse_p_index = 0;
 cc._reuse_color3b = {r:255, g:255, b:255 };
 cc._reuse_color4b = {r:255, g:255, b:255, a:255 };
-cc._reuse_grid = cc.g(0,0);
+cc._reuse_grid = {x:0, y:0};
 
 //
 // Color 3B
@@ -126,6 +126,10 @@ cc._p = function( x, y )
 //
 // Grid
 //
+cc.g = function(x, y)
+{
+    return {x:x, y:y};
+};
 cc._g = function( x, y )
 {
     cc._reuse_grid.x = x;
