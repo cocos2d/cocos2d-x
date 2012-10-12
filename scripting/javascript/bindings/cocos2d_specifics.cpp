@@ -1041,11 +1041,11 @@ JSBool js_CatmullRomActions_create(JSContext *cx, uint32_t argc, jsval *vp) {
 
 
 JSBool JSB_CCBezierBy_actionWithDuration(JSContext *cx, uint32_t argc, jsval *vp) {
-    js_BezierActions_create<cocos2d::CCBezierBy>(cx, argc, vp);
+    return js_BezierActions_create<cocos2d::CCBezierBy>(cx, argc, vp);
 }
 
 JSBool JSB_CCBezierTo_actionWithDuration(JSContext *cx, uint32_t argc, jsval *vp) {
-	js_BezierActions_create<cocos2d::CCBezierTo>(cx, argc, vp);
+	return js_BezierActions_create<cocos2d::CCBezierTo>(cx, argc, vp);
 }
 
 
