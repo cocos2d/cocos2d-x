@@ -50,7 +50,7 @@ void CCAutoreleasePool::addObject(CCObject* pObject)
 
 void CCAutoreleasePool::removeObject(CCObject* pObject)
 {
-    for (int i = 0; i < pObject->m_uAutoReleaseCount; ++i)
+    for (unsigned int i = 0; i < pObject->m_uAutoReleaseCount; ++i)
     {
         m_pManagedObjectArray->removeObject(pObject, false);
     }
