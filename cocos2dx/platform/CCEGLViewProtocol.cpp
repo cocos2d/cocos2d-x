@@ -141,12 +141,6 @@ void CCEGLViewProtocol::setTouchDelegate(EGLTouchDelegate * pDelegate)
     m_pDelegate = pDelegate;
 }
 
-bool CCEGLViewProtocol::setContentScaleFactor(float contentScaleFactor)
-{
-    m_fScaleX = m_fScaleY = contentScaleFactor;
-    return false;
-}
-
 void CCEGLViewProtocol::setViewPortInPoints(float x , float y , float w , float h)
 {
     glViewport((GLint)(x * m_fScaleX + m_obViewPortRect.origin.x),

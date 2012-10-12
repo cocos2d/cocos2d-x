@@ -92,12 +92,6 @@ public:
     virtual void setTouchDelegate(EGLTouchDelegate * pDelegate);
     
     /**
-     * Set content scale factor.
-     * @return If the return value is true, the platform supports retina display mode.
-     */
-    virtual bool setContentScaleFactor(float contentScaleFactor);
-    
-    /**
      * Set opengl view port rectangle with points.
      */
     virtual void setViewPortInPoints(float x , float y , float w , float h);
