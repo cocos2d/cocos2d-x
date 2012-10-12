@@ -25,7 +25,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 		CCFileUtils::sharedFileUtils()->setResourceDirectory("ipadhd");
         pDirector->setContentScaleFactor(2048.0f/kDesignResolutionSize_width);
 	}
-    else if (screenSize.height >= 640)
+    else if (screenSize.height > 320)
     {
         CCFileUtils::sharedFileUtils()->setResourceDirectory("ipad");
         pDirector->setContentScaleFactor(1024.0f/kDesignResolutionSize_width);
