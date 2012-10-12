@@ -23,17 +23,17 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	if (screenSize.height > 768)
 	{
 		CCFileUtils::sharedFileUtils()->setResourceDirectory("ipadhd");
-        pDirector->setContentScaleFactor(2048.0f/kDesignResolutionSize_width);
+        pDirector->setContentScaleFactor(1536.0f/kDesignResolutionSize_height);
 	}
     else if (screenSize.height > 320)
     {
         CCFileUtils::sharedFileUtils()->setResourceDirectory("ipad");
-        pDirector->setContentScaleFactor(1024.0f/kDesignResolutionSize_width);
+        pDirector->setContentScaleFactor(768.0f/kDesignResolutionSize_height);
     }
 	else
     {
 		CCFileUtils::sharedFileUtils()->setResourceDirectory("iphone");
-        pDirector->setContentScaleFactor(480.0f/kDesignResolutionSize_width);
+        pDirector->setContentScaleFactor(320.0f/kDesignResolutionSize_height);
     }
 	
     CCEGLView::sharedOpenGLView()->setDesignResolutionSize(kDesignResolutionSize_width, kDesignResolutionSize_height, kResolutionNoBorder);
