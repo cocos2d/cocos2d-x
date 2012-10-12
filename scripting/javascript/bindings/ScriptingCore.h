@@ -85,7 +85,7 @@ public:
     int executeFunctionWithObjectData(CCNode *self, const char *name, JSObject *obj);
     int executeFunctionWithOwner(jsval owner, const char *name, jsval data);
     
-    void executeJSFunctionWithThisObj(jsval thisObj, jsval callback, jsval data);
+    void executeJSFunctionWithThisObj(jsval thisObj, jsval callback, jsval *data);
 
 	/**
 	 * will eval the specified string
@@ -184,6 +184,7 @@ ccGridSize jsval_to_ccgridsize(JSContext *cx, jsval v);
 ccColor4B jsval_to_cccolor4b(JSContext *cx, jsval v);
 ccColor4F jsval_to_cccolor4f(JSContext *cx, jsval v);
 ccColor3B jsval_to_cccolor3b(JSContext *cx, jsval v);
+JSBool jsval_to_ccarray_of_CCPoint(JSContext* cx, jsval v, CCPoint **points, int *numPoints);
 CCArray* jsval_to_ccarray(JSContext* cx, jsval v);
 jsval ccarray_to_jsval(JSContext* cx, CCArray *arr);
 // from native
