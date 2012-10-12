@@ -24,7 +24,8 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
-				CommandLine="if not exist &quot;$(OutDir)&quot; mkdir &quot;$(OutDir)&quot;&#x0D;&#x0A;if not exist &quot;$(OutDir)\TestJavascriptRes&quot; mkdir &quot;$(OutDir)\TestJavascriptRes&quot;&#x0D;&#x0A;xcopy &quot;$(ProjectDir)..\cocos2d-html5-tests\res&quot; &quot;$(OutDir)\TestJavascriptRes\res\&quot; /e /Y&#x0D;&#x0A;xcopy &quot;$(ProjectDir)..\bindings\*.js&quot; &quot;$(OutDir)\TestJavascriptRes&quot; /e /Y&#x0D;&#x0A;dir &quot;$(ProjectDir)..\cocos2d-html5-tests\src\*.js&quot; /a /b /s &gt; filelist.txt&#x0D;&#x0A;for /f %%I in (filelist.txt) do (copy /Y %%I &quot;$(OutDir)\TestJavascriptRes&quot;)&#x0D;&#x0A;if exist filelist.txt del /f /q filelist.txt"
+				Description="Copy js and resource files."
+				CommandLine="if not exist &quot;$(OutDir)&quot; mkdir &quot;$(OutDir)&quot;&#x0D;&#x0A;if exist &quot;$(OutDir)\TestJavascriptRes&quot; rd /s /q &quot;$(OutDir)\TestJavascriptRes&quot;&#x0D;&#x0A;mkdir &quot;$(OutDir)\TestJavascriptRes&quot;&#x0D;&#x0A;xcopy &quot;$(ProjectDir)..\cocos2d-html5-tests\res&quot; &quot;$(OutDir)\TestJavascriptRes\res\&quot; /e /Y&#x0D;&#x0A;xcopy &quot;$(ProjectDir)..\bindings\*.js&quot; &quot;$(OutDir)\TestJavascriptRes&quot; /e /Y&#x0D;&#x0A;dir &quot;$(ProjectDir)..\cocos2d-html5-tests\src\*.js&quot; /a /b /s &gt; filelist.txt&#x0D;&#x0A;for /f %%I in (filelist.txt) do (copy /Y %%I &quot;$(OutDir)\TestJavascriptRes&quot;)&#x0D;&#x0A;if exist filelist.txt del /f /q filelist.txt&#x0D;&#x0A;"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -71,7 +72,7 @@
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
-				CommandLine="if not exist &quot;$(OutDir)&quot; mkdir &quot;$(OutDir)&quot;&#x0D;&#x0A;xcopy /Y /Q &quot;$(SolutionDir)scripting\javascript\spidermonkey-win32\lib\*.*&quot; &quot;$(OutDir)&quot;"
+				CommandLine="if not exist &quot;$(OutDir)&quot; mkdir &quot;$(OutDir)&quot;&#x0D;&#x0A;xcopy /Y /Q &quot;$(SolutionDir)scripting\javascript\spidermonkey-win32\lib\*.*&quot; &quot;$(OutDir)&quot;&#x0D;&#x0A;"
 			/>
 			<Tool
 				Name="VCLinkerTool"
