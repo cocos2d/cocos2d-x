@@ -125,10 +125,10 @@ static void removeJSTouchObject(JSContext *cx, CCTouch *x, jsval &jsret) {
 }
 
 void ScriptingCore::executeJSFunctionWithThisObj(jsval thisObj, jsval callback,
-                                                 jsval data) {
+                                                 jsval *data) {
     jsval retval;
     if(callback != JSVAL_VOID || thisObj != JSVAL_VOID) {
-        JS_CallFunctionValue(cx, JSVAL_TO_OBJECT(thisObj), callback, 1, &data, &retval);
+        JS_CallFunctionValue(cx, JSVAL_TO_OBJECT(thisObj), callback, 1, data, &retval);
     }
 }
 
@@ -372,6 +372,12 @@ void ScriptingCore::removeAllRoots(JSContext *cx) {
     js_proxy_t *current, *tmp;
     HASH_ITER(hh, _js_native_global_ht, current, tmp) {
         JS_RemoveObjectRoot(cx, &current->obj);
+        HASH_DEL(_js_native_global_ht, current);
+        free(current);
+    }
+    HASH_ITER(hh, _native_js_global_ht, current, tmp) {
+        HASH_DEL(_native_js_global_ht, current);
+        free(current);
     }
     HASH_CLEAR(hh, _js_native_global_ht);
     HASH_CLEAR(hh, _native_js_global_ht);
@@ -898,6 +904,31 @@ ccColor3B jsval_to_cccolor3b(JSContext *cx, jsval v) {
     assert(ok == JS_TRUE);
     return cocos2d::ccc3(r, g, b);
 }
+
+JSBool jsval_to_ccarray_of_CCPoint(JSContext* cx, jsval v, CCPoint **points, int *numPoints) {
+	// Parsing sequence
+	JSObject *jsobj;
+	JSBool ok = JS_ValueToObject( cx, v, &jsobj );
+	if(!jsobj || !JS_IsArrayObject( cx, jsobj)) return JS_FALSE;
+	
+	uint32_t len;
+	JS_GetArrayLength(cx, jsobj, &len);
+    
+	CCPoint *array = (CCPoint*)malloc( sizeof(CCPoint) * len);
+	
+	for( uint32_t i=0; i< len;i++ ) {
+		jsval valarg;
+		JS_GetElement(cx, jsobj, i, &valarg);
+        
+		array[i] = jsval_to_ccpoint(cx, valarg);
+	}
+    
+	*numPoints = len;
+	*points = array;
+	
+	return JS_TRUE;
+}
+
 
 CCArray* jsval_to_ccarray(JSContext* cx, jsval v) {
     JSObject *arr;
