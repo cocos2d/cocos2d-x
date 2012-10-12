@@ -372,6 +372,12 @@ void ScriptingCore::removeAllRoots(JSContext *cx) {
     js_proxy_t *current, *tmp;
     HASH_ITER(hh, _js_native_global_ht, current, tmp) {
         JS_RemoveObjectRoot(cx, &current->obj);
+        HASH_DEL(_js_native_global_ht, current);
+        free(current);
+    }
+    HASH_ITER(hh, _native_js_global_ht, current, tmp) {
+        HASH_DEL(_native_js_global_ht, current);
+        free(current);
     }
     HASH_CLEAR(hh, _js_native_global_ht);
     HASH_CLEAR(hh, _native_js_global_ht);
