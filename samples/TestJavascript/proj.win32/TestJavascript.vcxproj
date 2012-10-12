@@ -91,6 +91,20 @@ xcopy /Y /Q "$(SolutionDir)scripting\javascript\spidermonkey-win32\lib\*.*" "$(O
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
+    <PreBuildEvent>
+      <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
+if exist "$(OutDir)\TestJavascriptRes" rd /s /q "$(OutDir)\TestJavascriptRes"
+mkdir "$(OutDir)\TestJavascriptRes"
+xcopy "$(ProjectDir)..\cocos2d-html5-tests\res" "$(OutDir)\TestJavascriptRes\res\" /e /Y
+xcopy "$(ProjectDir)..\bindings\*.js" "$(OutDir)\TestJavascriptRes" /e /Y
+dir "$(ProjectDir)..\cocos2d-html5-tests\src\*.js" /a /b /s &gt; filelist.txt
+for /f %%I in (filelist.txt) do (copy /Y %%I "$(OutDir)\TestJavascriptRes")
+if exist filelist.txt del /f /q filelist.txt
+</Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>Copy js and resource files.</Message>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Midl>

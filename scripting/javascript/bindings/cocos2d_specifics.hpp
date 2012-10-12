@@ -12,14 +12,14 @@
 template <class T>
 inline js_type_class_t *js_get_type_from_native(T* native_obj) {
     js_type_class_t *typeProxy;
-    long typeId = getHashCodeByString(typeid(*native_obj).name());
+    long typeId = cocos2d::getHashCodeByString(typeid(*native_obj).name());
     HASH_FIND_INT(_js_global_type_ht, &typeId, typeProxy);
     if (!typeProxy) {
-        TypeInfo *typeInfo = dynamic_cast<TypeInfo *>(native_obj);
+        cocos2d::TypeInfo *typeInfo = dynamic_cast<cocos2d::TypeInfo *>(native_obj);
         if (typeInfo) {
             typeId = typeInfo->getClassTypeInfo();
         } else {
-            typeId = getHashCodeByString(typeid(T).name());
+            typeId = cocos2d::getHashCodeByString(typeid(T).name());
         }
         HASH_FIND_INT(_js_global_type_ht, &typeId, typeProxy);
     }
