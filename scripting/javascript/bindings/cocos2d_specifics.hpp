@@ -12,14 +12,14 @@
 template <class T>
 inline js_type_class_t *js_get_type_from_native(T* native_obj) {
     js_type_class_t *typeProxy;
-    long typeId = getHashCodeByString(typeid(*native_obj).name());
+    long typeId = cocos2d::getHashCodeByString(typeid(*native_obj).name());
     HASH_FIND_INT(_js_global_type_ht, &typeId, typeProxy);
     if (!typeProxy) {
-        TypeInfo *typeInfo = dynamic_cast<TypeInfo *>(native_obj);
+        cocos2d::TypeInfo *typeInfo = dynamic_cast<cocos2d::TypeInfo *>(native_obj);
         if (typeInfo) {
             typeId = typeInfo->getClassTypeInfo();
         } else {
-            typeId = getHashCodeByString(typeid(T).name());
+            typeId = cocos2d::getHashCodeByString(typeid(T).name());
         }
         HASH_FIND_INT(_js_global_type_ht, &typeId, typeProxy);
     }
@@ -66,18 +66,24 @@ public:
     
     void callbackFunc(CCNode *node) const {
         
-        js_proxy_t *p;
-        JS_GET_PROXY(p, node);
-        jsval retObj = OBJECT_TO_JSVAL(p->obj);
+        jsval valArr[2];
+        
+        JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
+        js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::CCNode>(cx, node);
+   
+        valArr[0] = OBJECT_TO_JSVAL(proxy->obj);
+        
         if(extraData != NULL) {
-            ScriptingCore::getInstance()->executeJSFunctionWithThisObj(jsThisObj,
-                                                                   jsCallback,
-                                                                   *extraData);
+            valArr[1] = *extraData;            
         } else {
-            ScriptingCore::getInstance()->executeJSFunctionWithThisObj(jsThisObj,
-                                                                       jsCallback,
-                                                                       retObj);
-        } 
+            valArr[1] = JSVAL_NULL;
+        }
+        
+        jsval retval;
+        if(jsCallback != JSVAL_VOID || jsThisObj != JSVAL_VOID) {
+            JS_CallFunctionValue(cx, JSVAL_TO_OBJECT(jsThisObj), jsCallback, 1, valArr, &retval);
+        }
+
     }
 private:
     jsval jsCallback;
@@ -120,14 +126,17 @@ public:
        
     void pause();
     
-    void scheduleFunc(CCNode *node) const {
-            
-        jsval retObj = JSVAL_NULL;
-        ScriptingCore::getInstance()->executeJSFunctionWithThisObj(jsThisObj,
-                                                                   jsSchedule,
-                                                                   retObj);
-
+    void scheduleFunc(float dt) const {
+        
+        jsval retval = JSVAL_NULL, data = DOUBLE_TO_JSVAL(dt);
+        JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
+        
+        if(jsSchedule != JSVAL_VOID || jsThisObj != JSVAL_VOID) {
+            JS_CallFunctionValue(cx, JSVAL_TO_OBJECT(jsThisObj), jsSchedule, 1, &data, &retval);
+        }
+        
     }
+
 private:
     
     jsval jsSchedule;

@@ -57,38 +57,25 @@ echo "    APP_ROOT = $APP_ROOT"
 echo "    APP_ANDROID_ROOT = $APP_ANDROID_ROOT"
 echo
 
+# Debug
+set -x
+
 # make sure assets is exist
 if [ -d "$APP_ANDROID_ROOT"/assets ]; then
     rm -rf "$APP_ANDROID_ROOT"/assets
 fi
 
 mkdir "$APP_ANDROID_ROOT"/assets
+mkdir "$APP_ANDROID_ROOT"/assets/res
 
+# copy "cocos2d-html5-tests/res" into "assets/res"
+cp -rf "$APP_ROOT"/cocos2d-html5-tests/res "$APP_ANDROID_ROOT"/assets
 
-# copy resources
-for file in "$APP_ROOT"/Resources/*
-do
-if [ -d "$file" ]; then
-	cp -rf "$file" "$APP_ANDROID_ROOT"/assets
-fi
+# copy src/**/*.js from cocos2d-html5-tests into assets' root
+find "$APP_ROOT"/cocos2d-html5-tests/src -type f -name '*.js' -exec cp -f {} "$APP_ANDROID_ROOT"/assets \;
 
-
-if [ -f "$file" ]; then
-    cp "$file" "$APP_ANDROID_ROOT"/assets
-fi
-done
-
-
-rm -f "$APP_ANDROID_ROOT"/assets/Images/landscape-1024x1024-rgba8888.pvr.gz
-rm -f "$APP_ANDROID_ROOT"/assets/Images/test_image_rgba4444.pvr.gz
-rm -f "$APP_ANDROID_ROOT"/assets/Images/test_1021x1024_a8.pvr.gz
-rm -f "$APP_ANDROID_ROOT"/assets/Images/test_1021x1024_rgb888.pvr.gz
-rm -f "$APP_ANDROID_ROOT"/assets/Images/test_1021x1024_rgba4444.pvr.gz
-rm -f "$APP_ANDROID_ROOT"/assets/Images/test_1021x1024_rgba8888.pvr.gz
-rm -f "$APP_ANDROID_ROOT"/assets/Images/test_image_rgba4444.pvr.gz
-rm -f "$APP_ANDROID_ROOT"/assets/Images/texture1024x1024_rgba4444.pvr.gz
-rm -f "$APP_ANDROID_ROOT"/assets/Images/PlanetCute-1024x1024-rgba4444.pvr.gz
-
+# copy bindings/*.js into assets' root
+cp -f "$APP_ROOT"/bindings/*.js "$APP_ANDROID_ROOT"/assets
 
 echo "Using prebuilt externals"
 echo

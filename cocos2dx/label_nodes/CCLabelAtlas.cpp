@@ -95,19 +95,22 @@ CCLabelAtlas* CCLabelAtlas::create(const char *string, const char *fntFile)
 
 bool CCLabelAtlas::initWithString(const char *theString, const char *fntFile)
 {
-    CCDictionary *dict = CCDictionary::createWithContentsOfFile(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(fntFile));
-	
-    CCAssert(((CCString*)dict->objectForKey("version"))->intValue() == 1, "Unsupported version. Upgrade cocos2d version");
+  std::string pathStr = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(fntFile);
+  std::string relPathStr = pathStr.substr(0, pathStr.find_last_of("/"))+"/";
+  CCDictionary *dict = CCDictionary::createWithContentsOfFile(pathStr.c_str());
+  
+  CCAssert(((CCString*)dict->objectForKey("version"))->intValue() == 1, "Unsupported version. Upgrade cocos2d version");
     
-    CCString *textureFilename = (CCString*)dict->objectForKey("textureFilename");
-    unsigned int width = ((CCString*)dict->objectForKey("itemWidth"))->intValue() / CC_CONTENT_SCALE_FACTOR();
-    unsigned int height = ((CCString*)dict->objectForKey("itemHeight"))->intValue() / CC_CONTENT_SCALE_FACTOR();
-    unsigned int startChar = ((CCString*)dict->objectForKey("firstChar"))->intValue();
-	
+  std::string texturePathStr = relPathStr + ((CCString*)dict->objectForKey("textureFilename"))->getCString();
+  CCString *textureFilename = CCString::create(texturePathStr);
+  unsigned int width = ((CCString*)dict->objectForKey("itemWidth"))->intValue() / CC_CONTENT_SCALE_FACTOR();
+  unsigned int height = ((CCString*)dict->objectForKey("itemHeight"))->intValue() / CC_CONTENT_SCALE_FACTOR();
+  unsigned int startChar = ((CCString*)dict->objectForKey("firstChar"))->intValue();
+  
 
-    this->initWithString(theString, textureFilename->getCString(), width, height, startChar);
+  this->initWithString(theString, textureFilename->getCString(), width, height, startChar);
     
-    return true;
+  return true;
 }
 
 //CCLabelAtlas - Atlas generation
