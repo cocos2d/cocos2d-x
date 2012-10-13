@@ -1,8 +1,9 @@
-// cocos2d Helper
-
 //
 // cocos2d constants
 //
+cc.DIRECTOR_PROJECTION_2D = 0;
+cc.DIRECTOR_PROJECTION_3D = 1;
+
 cc.TEXTURE_PIXELFORMAT_RGBA8888 = 0;
 cc.TEXTURE_PIXELFORMAT_RGB888 = 1;
 cc.TEXTURE_PIXELFORMAT_RGB565 = 2;
@@ -38,28 +39,66 @@ cc.PARTICLE_MODE_RADIUS = 1;
 cc.PARTICLE_START_SIZE_EQUAL_TO_END_SIZE = -1;
 cc.PARTICLE_START_RADIUS_EQUAL_TO_END_RADIUS = -1;
 
-cc.RED = cc.c3(255,0,0);
-cc.GREEN = cc.c3(0,255,0);
-cc.BLUE = cc.c3(0,0,255);
-cc.BLACK = cc.c3(0,0,0);
-cc.WHITE = cc.c3(255,255,255);
+cc.RED = {r:255, g:0, b:0};
+cc.GREEN = {r:0, g:255, b:0};
+cc.BLUE = {r:0, g:0, b:255};
+cc.BLACK = {r:0, g:0, b:0};
+cc.WHITE = {r:255, g:255, b:255};
 
 cc.POINT_ZERO = {x:0, y:0};
 
 cc._reuse_p0 = {x:0, y:0};
 cc._reuse_p1 = {x:0, y:0};
 cc._reuse_p_index = 0;
-cc._reuse_color3b = cc.c3(255, 255, 255 );
-cc._reuse_color4b = cc.c4(255, 255, 255, 255 );
-cc._reuse_grid = cc.g(0,0);
+cc._reuse_color3b = {r:255, g:255, b:255 };
+cc._reuse_color4b = {r:255, g:255, b:255, a:255 };
+cc._reuse_grid = {x:0, y:0};
 
-// dump config info, but only in debug mode
-cc.dumpConfig = function()
+//
+// Color 3B
+//
+cc.c3b = function( r, g, b )
 {
-    if( cc.config.debug ) {
-        for( i in cc.config )
-            cc.log( i + " = " + cc.config[i] );
-    }
+    return {r:r, g:g, b:b };
+};
+cc._c3b = function( r, g, b )
+{
+    cc._reuse_color3b.r = r;
+    cc._reuse_color3b.g = g;
+    cc._reuse_color3b.b = b;
+    return cc._reuse_color3b;
+};
+// compatibility
+cc.c3 = cc.c3b;
+cc._c3 = cc._c3b;
+
+//
+// Color 4B
+//
+cc.c4b = function( r, g, b, a )
+{
+    return {r:r, g:g, b:b, a:a };
+};
+cc._c4b = function( r, g, b, a )
+{
+    cc._reuse_color4b.r = r;
+    cc._reuse_color4b.g = g;
+    cc._reuse_color4b.b = b;
+    cc._reuse_color4b.a = a;
+    return cc._reuse_color4b;
+};
+// compatibility
+cc.c4 = cc.c4b;
+cc._c4 = cc._c4b;
+
+
+
+//
+// Color 4F
+//
+cc.c4f = function( r, g, b, a )
+{
+    return {r:r, g:g, b:b, a:a };
 };
 
 //
@@ -69,7 +108,6 @@ cc.p = function( x, y )
 {
     return {x:x, y:y};
 };
-
 cc._p = function( x, y )
 {
     if( cc._reuse_p_index === 0 ) {
@@ -85,71 +123,19 @@ cc._p = function( x, y )
     }
 };
 
-cc._to_p = function( point )
-{
-    return point;
-};
-
-cc._from_p = function( size )
-{
-    return size;
-};
-
-cc.c3 = function (r, g, b) {
-    var tmp = new Uint8Array(3);
-    tmp[0] = r;
-    tmp[1] = g;
-    tmp[2] = b;
-    return tmp;
-};
-
-cc.c4 = function (r, g, b, o) {
-    var tmp = new Uint8Array(4);
-    tmp[0] = r;
-    tmp[1] = g;
-    tmp[2] = b;
-    tmp[3] = o;
-    return tmp;
-};
-
-cc.c4f = function (r, g, b, o) {
-    var tmp = new Float32Array(4);
-    tmp[0] = r;
-    tmp[1] = g;
-    tmp[2] = b;
-    tmp[3] = o;
-    return tmp;
-};
-
 //
-// Grid 
+// Grid
 //
+cc.g = function(x, y)
+{
+    return {x:x, y:y};
+};
 cc._g = function( x, y )
 {
     cc._reuse_grid.x = x;
     cc._reuse_grid.y = y;
     return cc._reuse_grid;
-}
-
-//
-// Color
-//
-cc._c3 = function( r, g, b )
-{
-    cc._reuse_color3b[0] = r;
-    cc._reuse_color3b[1] = g;
-    cc._reuse_color3b[2] = b;
-    return cc._reuse_color3b;
-}
-
-cc._c4 = function( r, g, b, a )
-{
-    cc._reuse_color4b[0] = r;
-    cc._reuse_color4b[1] = g;
-    cc._reuse_color4b[2] = b;
-    cc._reuse_color4b[3] = a;
-    return cc._reuse_color4b;
-}
+};
 
 //
 // Size
@@ -157,17 +143,7 @@ cc._c4 = function( r, g, b, a )
 cc.size = function(w,h)
 {
     return {width:w, height:h};
-}
-
-cc._to_size = function( size )
-{
-    return size;
-}
-
-cc._from_size = function( size )
-{
-    return size;
-}
+};
 
 //
 // Rect
@@ -175,17 +151,52 @@ cc._from_size = function( size )
 cc.rect = function(x,y,w,h)
 {
     return {x:x, y:y, width:w, height:h};
-}
+};
 
-cc._to_rect = function( rect )
-{
-    return rect;
-}
 
-cc._from_rect = function( rect )
+// dump config info, but only in debug mode
+cc.dumpConfig = function()
 {
-    return rect;
-}
+    if( cc.config.debug ) {
+        for( var i in cc.config )
+            cc.log( i + " = " + cc.config[i] );
+    }
+};
+
+//
+// MenuItemToggle
+//
+cc.MenuItemToggle.create = function( /* var args */) {
+
+    var n = arguments.length;
+
+    if (typeof arguments[n-1] === 'function') {
+        var args = Array.prototype.slice.call(arguments);
+        var func = args.pop();
+        var obj = args.pop();
+    
+        // create it with arguments,
+        var item = cc.MenuItemToggle._create.apply(this, args);
+
+        // then set the callback
+        item.setCallback(obj, func);
+        return item;
+    } else {
+        return cc.MenuItemToggle._create.apply(this, arguments);
+    }
+};
+
+/**
+ * Associates a base class with a native superclass
+ * @function
+ * @param {object} jsobj subclass
+ * @param {object} klass superclass
+ */
+cc.associateWithNative = function( jsobj, superclass ) {
+    var native = new superclass();
+    __associateObjWithNative( jsobj, native );
+};
+
 
 // XXX Should be done in native
 cc.rectIntersectsRect = function( rectA, rectB )
@@ -196,10 +207,10 @@ cc.rectIntersectsRect = function( rectA, rectB )
                     rectA.y + rectA.height < rectB.y );
 
     return bool;
-}
+};
 
 //
-// Array: for cocos2d-hmtl5 compatibility
+// Array: for cocos2d-html5 compatibility
 //
 cc.ArrayRemoveObject = function (arr, delObj) {
     for (var i = 0; i < arr.length; i++) {
@@ -208,6 +219,7 @@ cc.ArrayRemoveObject = function (arr, delObj) {
         }
     }
 };
+
 
 //
 // Google "subclasses"
@@ -241,7 +253,7 @@ goog.base = function(me, opt_methodName, var_args) {
 	var args = Array.prototype.slice.call(arguments, 2);
 	var foundCaller = false;
 	for (var ctor = me.constructor;
-		 ctor; ctor = ctor.superClass_ && ctor.superClass_.constructor) {
+        ctor; ctor = ctor.superClass_ && ctor.superClass_.constructor) {
 		if (ctor.prototype[opt_methodName] === caller) {
 			foundCaller = true;
 		} else if (foundCaller) {
@@ -322,40 +334,10 @@ cc.Class.extend = function (prop) {
     return Class;
 };
 
+cc.Node.extend = cc.Class.extend;
 cc.Layer.extend = cc.Class.extend;
 cc.LayerGradient.extend = cc.Class.extend;
+cc.LayerColor.extend = cc.Class.extend;
 cc.Sprite.extend = cc.Class.extend;
 cc.MenuItemFont.extend = cc.Class.extend;
-
-//
-// Chipmunk helpers
-//
-//var cp = cp || {};
-
-cp.v = cc.p;
-cp._v = cc._p;
-cp.vzero  = cp.v(0,0);
-
-//
-// OpenGL Helpers
-//
-var gl = gl || {};
-gl.NEAREST                      = 0x2600;
-gl.LINEAR                       = 0x2601;
-gl.REPEAT                       = 0x2901;
-gl.CLAMP_TO_EDGE                = 0x812F;
-gl.CLAMP_TO_BORDER              = 0x812D;
-gl.LINEAR_MIPMAP_NEAREST        = 0x2701;
-gl.NEAREST_MIPMAP_NEAREST       = 0x2700;
-gl.ZERO                         = 0;
-gl.ONE                          = 1;
-gl.SRC_COLOR                    = 0x0300;
-gl.ONE_MINUS_SRC_COLOR          = 0x0301;
-gl.SRC_ALPHA                    = 0x0302;
-gl.ONE_MINUS_SRC_ALPHA          = 0x0303;
-gl.DST_ALPHA                    = 0x0304;
-gl.ONE_MINUS_DST_ALPHA          = 0x0305;
-gl.DST_COLOR                    = 0x0306;
-gl.ONE_MINUS_DST_COLOR          = 0x0307;
-gl.SRC_ALPHA_SATURATE           = 0x0308;
-
+cc.Scene.extend = cc.Class.extend;
