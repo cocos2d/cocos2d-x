@@ -50,7 +50,7 @@ public:
     CCPoint getDelta() const;
     /** returns the current touch location in screen coordinates */
     CCPoint getLocationInView() const;
-    /** returns the previous touch location in screen coordinates */
+    /** returns the current previous location in screen coordinates */
     CCPoint getPreviousLocationInView() const;
 
     /** returns the current touch location in screen coordinates
