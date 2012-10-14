@@ -164,25 +164,27 @@ void ActionsDemo::onEnter()
     addChild(m_tamara, 2);
     addChild(m_kathia, 3);
 
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
+	CCDirector* pDirector = CCDirector::sharedDirector();
+	CCPoint visibleOrigin = pDirector->getVisibleOrigin();
+	CCSize visibleSize = pDirector->getVisibleSize();
 
-    m_grossini->setPosition(CCPointMake(s.width/2, s.height/3));
-    m_tamara->setPosition(CCPointMake(s.width/2, 2*s.height/3));
-    m_kathia->setPosition(CCPointMake(s.width/2, s.height/2)); 
+    m_grossini->setPosition(ccp(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/3));
+    m_tamara->setPosition(ccp(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+2*visibleSize.height/3));
+    m_kathia->setPosition(ccp(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/2)); 
 
     // add title and subtitle
     std::string str = title();
     const char * pTitle = str.c_str();
     CCLabelTTF* label = CCLabelTTF::create(pTitle, "Arial", 18);
     addChild(label, 1);
-    label->setPosition( CCPointMake(s.width/2, s.height - 30) );
+    label->setPosition( ccp(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height - 30) );
 
     std::string strSubtitle = subtitle();
     if( ! strSubtitle.empty() ) 
     {
         CCLabelTTF* l = CCLabelTTF::create(strSubtitle.c_str(), "Thonburi", 22);
         addChild(l, 1);
-        l->setPosition( CCPointMake(s.width/2, s.height - 60) );
+        l->setPosition( ccp(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height - 60) );
     }    
 
     // add menu
@@ -193,9 +195,9 @@ void ActionsDemo::onEnter()
     CCMenu *menu = CCMenu::create(item1, item2, item3, NULL);
 
     menu->setPosition(CCPointZero);
-    item1->setPosition(CCPointMake(s.width/2 - item2->getContentSize().width*2, item2->getContentSize().height/2));
-    item2->setPosition(CCPointMake(s.width/2, item2->getContentSize().height/2));
-    item3->setPosition(CCPointMake(s.width/2 + item2->getContentSize().width*2, item2->getContentSize().height/2));
+    item1->setPosition(ccp(visibleOrigin.x+visibleSize.width/2 - item2->getContentSize().width*2, visibleOrigin.y+item2->getContentSize().height/2));
+    item2->setPosition(ccp(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+item2->getContentSize().height/2));
+    item3->setPosition(ccp(visibleOrigin.x+visibleSize.width/2 + item2->getContentSize().width*2, visibleOrigin.y+item2->getContentSize().height/2));
 
     addChild(menu, 1);
 }
