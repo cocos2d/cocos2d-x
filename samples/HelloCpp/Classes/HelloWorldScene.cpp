@@ -1,6 +1,7 @@
 #include "HelloWorldScene.h"
-
+#include "AppMacros.h"
 USING_NS_CC;
+
 
 CCScene* HelloWorld::scene()
 {
@@ -40,8 +41,8 @@ bool HelloWorld::init()
                                         "CloseSelected.png",
                                         this,
                                         menu_selector(HelloWorld::menuCloseCallback));
-        
-    pCloseItem->setPosition(ccp(origin.x + visibleSize.width - pCloseItem->getContentSize().width/2 ,
+    
+	pCloseItem->setPosition(ccp(origin.x + visibleSize.width - pCloseItem->getContentSize().width/2 ,
                                 origin.y + pCloseItem->getContentSize().height/2));
 
     // create menu, it's an autorelease object
@@ -54,8 +55,9 @@ bool HelloWorld::init()
 
     // add a label shows "Hello World"
     // create and initialize a label
-    CCLabelTTF* pLabel = CCLabelTTF::create("Hello World", "Arial", 24);
-
+    
+    CCLabelTTF* pLabel = CCLabelTTF::create("Hello World", "Arial", kTitleFontSize);
+    
     // position the label on the center of the screen
     pLabel->setPosition(ccp(origin.x + visibleSize.width/2,
                             origin.y + visibleSize.height - pLabel->getContentSize().height));
@@ -72,11 +74,9 @@ bool HelloWorld::init()
     // add the sprite as a child to this layer
     this->addChild(pSprite, 0);
     
-    // enable standard touch
-    this->setTouchEnabled(true);
-    
     return true;
 }
+
 
 void HelloWorld::menuCloseCallback(CCObject* pSender)
 {
@@ -85,12 +85,4 @@ void HelloWorld::menuCloseCallback(CCObject* pSender)
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     exit(0);
 #endif
-}
-
-void HelloWorld::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
-{
-    CCTouch* touch = (CCTouch*)(* pTouches->begin());
-    CCPoint pos = touch->getLocation();
-    
-    CCLog("touch, x = %f, y = %f", pos.x, pos.y);
 }

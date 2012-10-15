@@ -92,12 +92,6 @@ public:
     virtual void setTouchDelegate(EGLTouchDelegate * pDelegate);
     
     /**
-     * Set content scale factor.
-     * @return If the return value is true, the platform supports retina display mode.
-     */
-    virtual bool setContentScaleFactor(float contentScaleFactor);
-    
-    /**
      * Set opengl view port rectangle with points.
      */
     virtual void setViewPortInPoints(float x , float y , float w , float h);
@@ -106,12 +100,6 @@ public:
      * Set Scissor rectangle with points.
      */
     virtual void setScissorInPoints(float x , float y , float w , float h);
-    
-    /** 
-     * Enable retina mode.
-     * You can't use it with setDesignResolutionSize
-     */
-    virtual bool enableRetina();
 
     /** Touch events are handled by default; if you want to customize your handlers, please override these functions: */
     virtual void handleTouchesBegin(int num, int ids[], float xs[], float ys[]);
@@ -133,11 +121,6 @@ public:
      * Get scale factor of the vertical direction.
      */
     float getScaleY() const;
-    
-    /**
-     * Get retina mode status (on if true).
-     */
-    bool isRetinaEnabled() const;
 private:
     void getSetOfTouchesEndOrCancel(CCSet& set, int num, int ids[], float xs[], float ys[]);
     
@@ -156,7 +139,6 @@ protected:
     float  m_fScaleX;
     float  m_fScaleY;
     ResolutionPolicy m_eResolutionPolicy;
-    bool   m_bIsRetinaEnabled;
 };
 
 // end of platform group
