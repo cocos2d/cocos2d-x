@@ -83,6 +83,7 @@ private:
     HDC  m_hDC;
     HGLRC m_hRC;
     LPFN_ACCELEROMETER_KEYHOOK m_lpfnAccelerometerKeyHook;
+    bool m_Touch;
 
     LPCWSTR m_menu;
     CUSTOM_WND_PROC m_wndproc;
