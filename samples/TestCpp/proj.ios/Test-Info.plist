@@ -44,5 +44,10 @@
 		<string>fonts/Schwarzwald Regular.ttf</string>
 		<string>fonts/Scissor Cuts.ttf</string>
 	</array>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
 </dict>
 </plist>
