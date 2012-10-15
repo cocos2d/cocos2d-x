@@ -159,8 +159,6 @@ public:
      */
     CCNode* getNotificationNode();
     void setNotificationNode(CCNode *node);
-    
-    bool enableRetinaDisplay(bool bEnabelRetina);
 
     // window size
 
@@ -330,8 +328,6 @@ protected:
     void purgeDirector();
     bool m_bPurgeDirecotorInNextLoop; // this flag will be set to true in end()
     
-    void updateContentScaleFactor(void);
-
     void setNextScene(void);
     
     void showStats();
@@ -408,9 +404,6 @@ protected:
 
     /* Projection protocol delegate */
     CCDirectorDelegate *m_pProjectionDelegate;
-
-    /* contentScaleFactor could be simulated */
-    bool m_bIsContentScaleSupported;
     
     // CCEGLViewProtocol will recreate stats labels to fit visible rect
     friend class CCEGLViewProtocol;

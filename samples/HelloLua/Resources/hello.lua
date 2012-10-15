@@ -21,7 +21,8 @@ local function main()
 
     ---------------
 
-    local winSize = CCDirector:sharedDirector():getWinSize()
+    local visibleSize = CCDirector:sharedDirector():getVisibleSize()
+    local origin = CCDirector:sharedDirector():getVisibleOrigin()
 
     -- add the moving dog
     local function creatDog()
@@ -37,7 +38,7 @@ local function main()
 
         local spriteDog = CCSprite:createWithSpriteFrame(frame0)
         spriteDog.isPaused = false
-        spriteDog:setPosition(0, winSize.height / 4 * 3)
+        spriteDog:setPosition(origin.x, origin.y + visibleSize.height / 4 * 3)
 
         local animFrames = CCArray:create()
 
@@ -52,8 +53,8 @@ local function main()
         local function tick()
             if spriteDog.isPaused then return end
             local x, y = spriteDog:getPosition()
-            if x > winSize.width then
-                x = 0
+            if x > origin.x + visibleSize.width then
+                x = origin.x
             else
                 x = x + 1
             end
@@ -72,7 +73,7 @@ local function main()
 
         -- add in farm background
         local bg = CCSprite:create("farm.jpg")
-        bg:setPosition(winSize.width / 2 + 80, winSize.height / 2)
+        bg:setPosition(origin.x + visibleSize.width / 2 + 80, origin.y + visibleSize.height / 2)
         layerFarm:addChild(bg)
 
         -- add land sprite
@@ -166,7 +167,7 @@ local function main()
         menuPopupItem:setPosition(0, 0)
         menuPopupItem:registerScriptTapHandler(menuCallbackClosePopup)
         menuPopup = CCMenu:createWithItem(menuPopupItem)
-        menuPopup:setPosition(winSize.width / 2, winSize.height / 2)
+        menuPopup:setPosition(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2)
         menuPopup:setVisible(false)
         layerMenu:addChild(menuPopup)
 
@@ -175,7 +176,9 @@ local function main()
         menuToolsItem:setPosition(0, 0)
         menuToolsItem:registerScriptTapHandler(menuCallbackOpenPopup)
         menuTools = CCMenu:createWithItem(menuToolsItem)
-        menuTools:setPosition(30, 40)
+        local itemWidth = menuToolsItem:getContentSize().width
+        local itemHeight = menuToolsItem:getContentSize().height
+        menuTools:setPosition(origin.x + itemWidth/2, origin.y + itemHeight/2)
         layerMenu:addChild(menuTools)
 
         return layerMenu

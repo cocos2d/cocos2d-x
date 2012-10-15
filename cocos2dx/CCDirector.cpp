@@ -136,7 +136,6 @@ bool CCDirector::init(void)
     m_pobOpenGLView = NULL;
 
     m_fContentScaleFactor = 1.0f;
-    m_bIsContentScaleSupported = false;
 
     // scheduler
     m_pScheduler = new CCScheduler();
@@ -314,12 +313,7 @@ void CCDirector::setOpenGLView(CCEGLView *pobOpenGLView)
         
         CHECK_GL_ERROR_DEBUG();
 
-        if (m_fContentScaleFactor != 1)
-        {
-            updateContentScaleFactor();
-        }
-
-         m_pobOpenGLView->setTouchDelegate(m_pTouchDispatcher);
+        m_pobOpenGLView->setTouchDelegate(m_pTouchDispatcher);
         m_pTouchDispatcher->setDispatchEvents(true);
     }
 }
@@ -331,12 +325,11 @@ void CCDirector::setNextDeltaTimeZero(bool bNextDeltaTimeZero)
 
 void CCDirector::setProjection(ccDirectorProjection kProjection)
 {
-    CCSize size = m_obWinSizeInPixels;
-    CCSize sizePoint = m_obWinSizeInPoints;
+    CCSize size = m_obWinSizeInPoints;
 
     if (m_pobOpenGLView)
     {
-        m_pobOpenGLView->setViewPortInPoints(0, 0, sizePoint.width, sizePoint.height);
+        m_pobOpenGLView->setViewPortInPoints(0, 0, size.width, size.height);
     }
 
     switch (kProjection)
@@ -346,7 +339,7 @@ void CCDirector::setProjection(ccDirectorProjection kProjection)
             kmGLMatrixMode(KM_GL_PROJECTION);
             kmGLLoadIdentity();
             kmMat4 orthoMatrix;
-            kmMat4OrthographicProjection(&orthoMatrix, 0, size.width / CC_CONTENT_SCALE_FACTOR(), 0, size.height / CC_CONTENT_SCALE_FACTOR(), -1024, 1024 );
+            kmMat4OrthographicProjection(&orthoMatrix, 0, size.width, 0, size.height, -1024, 1024 );
             kmGLMultMatrix(&orthoMatrix);
             kmGLMatrixMode(KM_GL_MODELVIEW);
             kmGLLoadIdentity();
@@ -371,8 +364,8 @@ void CCDirector::setProjection(ccDirectorProjection kProjection)
             kmGLMatrixMode(KM_GL_MODELVIEW);
             kmGLLoadIdentity();
             kmVec3 eye, center, up;
-            kmVec3Fill( &eye, sizePoint.width/2, sizePoint.height/2, zeye );
-            kmVec3Fill( &center, sizePoint.width/2, sizePoint.height/2, 0.0f );
+            kmVec3Fill( &eye, size.width/2, size.height/2, zeye );
+            kmVec3Fill( &center, size.width/2, size.height/2, 0.0f );
             kmVec3Fill( &up, 0.0f, 1.0f, 0.0f);
             kmMat4LookAt(&matrixLookup, &eye, &center, &up);
             kmGLMultMatrix(&matrixLookup);
@@ -404,7 +397,7 @@ void CCDirector::purgeCachedData(void)
 
 float CCDirector::getZEye(void)
 {
-    return (m_obWinSizeInPixels.height / 1.1566f / CC_CONTENT_SCALE_FACTOR());    
+    return (m_obWinSizeInPoints.height / 1.1566f);
 }
 
 void CCDirector::setAlphaBlending(bool bOn)
@@ -805,38 +798,6 @@ void CCDirector::createStatsLabel()
 * mobile platforms specific functions
 **************************************************/
 
-void CCDirector::updateContentScaleFactor()
-{
-    m_bIsContentScaleSupported = m_pobOpenGLView->setContentScaleFactor(m_fContentScaleFactor);
-}
-
-bool CCDirector::enableRetinaDisplay(bool enabled)
-{
-    // Already enabled?
-    if (enabled && m_fContentScaleFactor == 2)
-    {
-        return true;
-    }
-
-    // Already disabled?
-    if (!enabled && m_fContentScaleFactor == 1)
-    {
-        return false;
-    }
-    
-    if (! m_pobOpenGLView->enableRetina())
-    {
-        return false;
-    }
-
-    float newScale = (float)(enabled ? 2 : 1);
-    setContentScaleFactor(newScale);
-
-    createStatsLabel();
-
-    return true;
-}
-
 float CCDirector::getContentScaleFactor(void)
 {
     return m_fContentScaleFactor;
@@ -847,15 +808,6 @@ void CCDirector::setContentScaleFactor(float scaleFactor)
     if (scaleFactor != m_fContentScaleFactor)
     {
         m_fContentScaleFactor = scaleFactor;
-        m_obWinSizeInPixels = CCSizeMake(m_obWinSizeInPoints.width * scaleFactor, m_obWinSizeInPoints.height * scaleFactor);
-
-        if (m_pobOpenGLView)
-        {
-            updateContentScaleFactor();
-        }
-
-        // update projection
-        setProjection(m_eProjection);
     }
 }
 

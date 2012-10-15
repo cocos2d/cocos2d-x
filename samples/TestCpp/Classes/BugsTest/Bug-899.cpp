@@ -9,7 +9,7 @@
 
 bool Bug899Layer::init()
 {
-    CCDirector::sharedDirector()->enableRetinaDisplay(true);
+//    CCDirector::sharedDirector()->enableRetinaDisplay(true);
     if (BugsTestBaseLayer::init())
     {
         CCSprite *bg = CCSprite::create("Images/bugs/RetinaDisplay.jpg");
