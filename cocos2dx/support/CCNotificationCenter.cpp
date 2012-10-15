@@ -131,22 +131,17 @@ void CCNotificationCenter::unregisterScriptObserver(void)
 
 void CCNotificationCenter::postNotification(const char *name, CCObject *object)
 {
-    CCArray* intrestedObservers = CCArray::createWithCapacity(m_observers->count());
+    CCArray* ObserversCopy = CCArray::createWithCapacity(m_observers->count());
+    ObserversCopy->addObjectsFromArray(m_observers);
     CCObject* obj = NULL;
-    CCARRAY_FOREACH(m_observers, obj)
+    CCARRAY_FOREACH(ObserversCopy, obj)
     {
         CCNotificationObserver* observer = (CCNotificationObserver*) obj;
         if (!observer)
             continue;
         
         if (!strcmp(name,observer->getName()) && (observer->getObject() == object || observer->getObject() == NULL || object == NULL))
-            intrestedObservers->addObject(observer);
-    }
-    
-    CCARRAY_FOREACH(intrestedObservers, obj)
-    {
-        CCNotificationObserver* observer = (CCNotificationObserver*) obj;
-        observer->performSelector(object);
+            observer->performSelector(object);
     }
 
     if (m_scriptHandler)
