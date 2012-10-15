@@ -18,37 +18,20 @@ bool AppDelegate::applicationDidFinishLaunching() {
     
     pDirector->setOpenGLView(CCEGLView::sharedOpenGLView());
     
-    TargetPlatform target = getTargetPlatform();
+    CCSize screenSize = CCEGLView::sharedOpenGLView()->getFrameSize();
+    CCSize designSize = CCSizeMake(480, 320);
     
-    if (target == kTargetIpad)
+    if (screenSize.height > 320)
     {
-        // ipad
-        
         CCFileUtils::sharedFileUtils()->setResourceDirectory("hd");
-        
-        // don't enable retina because we don't have ipad hd resource
-        CCEGLView::sharedOpenGLView()->setDesignResolutionSize(960, 640, kResolutionNoBorder);
+        pDirector->setContentScaleFactor(640.0f/designSize.height);
     }
-    else if (target == kTargetIphone)
-    {        
-        if (CCDirector::sharedDirector()->enableRetinaDisplay(true))
-        {
-            // well, it's a iPhone 4, iPhone 4S or iPhone 5
-            CCFileUtils::sharedFileUtils()->setResourceDirectory("hd");
-        }
-        else
-        {
-            // iPhone 3GS and before, with 480x320 resolution
-            CCFileUtils::sharedFileUtils()->setResourceDirectory("sd");
-        }
-    }
-    else 
+    else
     {
-        // android, windows, blackberry, linux or mac
-        // use 960*640 resources as design resolution size
         CCFileUtils::sharedFileUtils()->setResourceDirectory("sd");
-        CCEGLView::sharedOpenGLView()->setDesignResolutionSize(480, 320, kResolutionNoBorder);
+        pDirector->setContentScaleFactor(320.0f/designSize.height);
     }
+    CCEGLView::sharedOpenGLView()->setDesignResolutionSize(designSize.width, designSize.height, kResolutionNoBorder);
 
     // turn on display FPS
     pDirector->setDisplayStats(true);
