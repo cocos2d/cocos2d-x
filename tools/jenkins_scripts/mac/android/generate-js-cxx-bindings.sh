@@ -49,12 +49,12 @@ if [ -z "${REMOTE_AUTOGEN_BINDINGS_REPOSITORY+aaa}" ]; then
     echo Environment variable must be set REMOTE_AUTOGEN_BINDINGS_REPOSITORY
     echo This script expects to automatically push changes
     echo to this repo
+    echo example
+    echo  REMOTE_AUTOGEN_BINDINGS_REPOSITORY=\"git@github.com:folecr/cocos2dx-autogen-bindings.git\"
+    echo  REMOTE_AUTOGEN_BINDINGS_REPOSITORY=\"\$HOME/test/cocos2dx-autogen-bindings\"
     echo
     echo Exiting with failure.
     echo
-# example
-# REMOTE_AUTOGEN_BINDINGS_REPOSITORY="git@github.com:folecr/cocos2dx-autogen-bindings.git"
-# REMOTE_AUTOGEN_BINDINGS_REPOSITORY="$HOME/test/cocos2dx-autogen-bindings"
     exit 1
 fi
 
@@ -121,12 +121,12 @@ if [ -z "${REMOTE_COCOS2DX_REPOSITORY+aaa}" ]; then
     echo Environment variable is not set REMOTE_COCOS2DX_REPOSITORY
     echo This script will NOT automatically push changes
     echo unless this variable is set.
+    echo example
+    echo  REMOTE_COCOS2DX_REPOSITORY=\"git@github.com:cocos2d/cocos2d-x.git\"
+    echo  REMOTE_COCOS2DX_REPOSITORY=\"\$HOME/test/cocos2d-x\"
     echo
     echo Exiting with success.
     echo
-# example
-# REMOTE_COCOS2DX_REPOSITORY="git@github.com:cocos2d/cocos2d-x.git"
-# REMOTE_COCOS2DX_REPOSITORY="$HOME/test/cocos2d-x"
     exit 0
 fi
 
@@ -148,11 +148,12 @@ if [ -z "${COCOS2DX_PULL_BASE+aaa}" ]; then
     echo Environment variable is not set COCOS2DX_PULL_BASE
     echo This script will NOT automatically generate pull requests
     echo unless this variable is set.
+    echo example
+    echo  COCOS2DX_PULL_BASE=\"cocos2d/cocos2d-x:gles20\"
+    echo  COCOS2DX_PULL_BASE=\"username/repository:branch\"
     echo
     echo Exiting with success.
     echo
-# example
-# COCOS2DX_PULL_BASE="cocos2d/cocos2d-x:gles20"
     exit 0
 fi
 
