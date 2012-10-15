@@ -69,10 +69,10 @@ gitcmd_GEN="git --git-dir=$GENERATED_GITDIR --work-tree=$GENERATED_WORKTREE"
 ${gitcmd_GEN} status
 
 echo
-echo Diffing...
+echo Comparing with origin/master ...
 echo
 
-${gitcmd_GEN} diff --stat --exit-code
+${gitcmd_GEN} diff --stat --exit-code origin/master
 
 DIFF_RETVAL=$?
 if [ $DIFF_RETVAL -eq 0 ]
@@ -84,7 +84,7 @@ then
     exit 0
 else
     echo
-    echo "Generated files differ from the version checked in to the index. Continuing."
+    echo "Generated files differ from origin/master. Continuing."
     echo
 fi
 
