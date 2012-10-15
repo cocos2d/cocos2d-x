@@ -791,6 +791,32 @@ static EAGLView *view = 0;
             break;
     }
     
+    float scaleX = cocos2d::CCEGLView::sharedOpenGLView()->getScaleX();
+	float scaleY = cocos2d::CCEGLView::sharedOpenGLView()->getScaleY();
+    
+    
+    if (self.contentScaleFactor == 2.0f)
+    {
+        // Convert to pixel coordinate
+        
+        begin = CGRectApplyAffineTransform(begin, CGAffineTransformScale(CGAffineTransformIdentity, 2.0f, 2.0f));
+        end = CGRectApplyAffineTransform(end, CGAffineTransformScale(CGAffineTransformIdentity, 2.0f, 2.0f));
+    }
+    
+    float offestY = cocos2d::CCEGLView::sharedOpenGLView()->getViewPortRect().origin.y;
+    CCLOG("offestY = %f", offestY);
+    if (offestY < 0.0f)
+    {
+        begin.origin.y += offestY;
+        begin.size.height -= offestY;
+        end.size.height -= offestY;
+    }
+    
+    // Convert to desigin coordinate
+    begin = CGRectApplyAffineTransform(begin, CGAffineTransformScale(CGAffineTransformIdentity, 1.0f/scaleX, 1.0f/scaleY));
+    end = CGRectApplyAffineTransform(end, CGAffineTransformScale(CGAffineTransformIdentity, 1.0f/scaleX, 1.0f/scaleY));
+
+    
     cocos2d::CCIMEKeyboardNotificationInfo notiInfo;
     notiInfo.begin = cocos2d::CCRect(begin.origin.x,
                                      begin.origin.y,
@@ -801,28 +827,6 @@ static EAGLView *view = 0;
                                    end.size.width,
                                    end.size.height);
     notiInfo.duration = (float)aniDuration;
-    
-    float offestY = cocos2d::CCEGLView::sharedOpenGLView()->getViewPortRect().origin.y;
-    
-    if (offestY > 0.0f)
-    {
-        notiInfo.begin.origin.y += offestY;
-        notiInfo.begin.size.height -= offestY;
-        notiInfo.end.size.height -= offestY;
-    }
-    
-	float scaleX = cocos2d::CCEGLView::sharedOpenGLView()->getScaleX();
-	float scaleY = cocos2d::CCEGLView::sharedOpenGLView()->getScaleY();
-        
-	notiInfo.begin.origin.x /= scaleX;
-	notiInfo.begin.origin.y /= scaleY;
-	notiInfo.begin.size.width /= scaleX;
-	notiInfo.begin.size.height /= scaleY;
-        
-	notiInfo.end.origin.x /= scaleX;
-	notiInfo.end.origin.y /= scaleY;
-	notiInfo.end.size.width /= scaleX;
-	notiInfo.end.size.height /= scaleY;
     
     cocos2d::CCIMEDispatcher* dispatcher = cocos2d::CCIMEDispatcher::sharedDispatcher();
     if (UIKeyboardWillShowNotification == type) 
@@ -858,11 +862,16 @@ static EAGLView *view = 0;
 	[UIView setAnimationDuration:duration];
 	[UIView setAnimationBeginsFromCurrentState:YES];
     
-    // NSLog(@"[animation] dis = %f\n", dis);
+    //NSLog(@"[animation] dis = %f, scale = %f \n", dis, cocos2d::CCEGLView::sharedOpenGLView()->getScaleY());
     
     if (dis < 0.0f) dis = 0.0f;
 
 	dis *= cocos2d::CCEGLView::sharedOpenGLView()->getScaleY();
+    
+    if (self.contentScaleFactor == 2.0f)
+    {
+        dis /= 2.0f;
+    }
     
     switch ([[UIApplication sharedApplication] statusBarOrientation])
     {

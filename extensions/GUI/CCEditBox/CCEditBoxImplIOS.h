@@ -64,6 +64,7 @@ private:
     CCSize     m_tContentSize;
     void*      m_pSysEdit;
     int        m_nMaxTextLength;
+    bool       m_bInRetinaMode;
 };
 
 
