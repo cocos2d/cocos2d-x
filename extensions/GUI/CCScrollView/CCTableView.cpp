@@ -131,15 +131,19 @@ CCTableViewCell *CCTableView::cellAtIndex(unsigned int idx)
 
 void CCTableView::updateCellAtIndex(unsigned int idx)
 {
-    if (idx == CC_INVALID_INDEX || idx > m_pDataSource->numberOfCellsInTableView(this)-1)
+    if (idx == CC_INVALID_INDEX)
     {
         return;
     }
-    
-    CCTableViewCell *cell;
-    
-    cell = this->_cellWithIndex(idx);
-    if (cell) {
+    unsigned int uCountOfItems = m_pDataSource->numberOfCellsInTableView(this);
+    if (0 == uCountOfItems || idx > uCountOfItems-1)
+    {
+        return;
+    }
+
+    CCTableViewCell* cell = this->_cellWithIndex(idx);
+    if (cell)
+    {
         this->_moveCellOutOfSight(cell);
     } 
     cell = m_pDataSource->tableCellAtIndex(this, idx);
@@ -149,11 +153,19 @@ void CCTableView::updateCellAtIndex(unsigned int idx)
 
 void CCTableView::insertCellAtIndex(unsigned  int idx)
 {
-    if (idx == CC_INVALID_INDEX || idx > m_pDataSource->numberOfCellsInTableView(this)-1) {
+    if (idx == CC_INVALID_INDEX)
+    {
         return;
     }
-    CCTableViewCell *cell;
-    int newIdx;
+
+    unsigned int uCountOfItems = m_pDataSource->numberOfCellsInTableView(this);
+    if (0 == uCountOfItems || idx > uCountOfItems-1)
+    {
+        return;
+    }
+
+    CCTableViewCell* cell = NULL;
+    int newIdx = 0;
     
     cell = (CCTableViewCell*)m_pCellsUsed->objectWithObjectID(idx);
     if (cell) 
@@ -178,12 +190,19 @@ void CCTableView::insertCellAtIndex(unsigned  int idx)
 
 void CCTableView::removeCellAtIndex(unsigned int idx)
 {
-    if (idx == CC_INVALID_INDEX || idx > m_pDataSource->numberOfCellsInTableView(this)-1) {
+    if (idx == CC_INVALID_INDEX)
+    {
         return;
     }
     
-    CCTableViewCell   *cell;
-    unsigned int newIdx;
+    unsigned int uCountOfItems = m_pDataSource->numberOfCellsInTableView(this);
+    if (0 == uCountOfItems || idx > uCountOfItems-1)
+    {
+        return;
+    }
+
+    CCTableViewCell* cell = NULL;
+    unsigned int newIdx = 0;
     
     cell = this->_cellWithIndex(idx);
     if (!cell) {
@@ -362,15 +381,19 @@ void CCTableView::_setIndexForCell(unsigned int index, CCTableViewCell *cell)
 
 void CCTableView::scrollViewDidScroll(CCScrollView* view)
 {
-    unsigned int startIdx = 0, endIdx = 0, idx = 0, maxIdx = 0;
-    CCPoint offset;
+    unsigned int uCountOfItems = m_pDataSource->numberOfCellsInTableView(this);
+    if (0 == uCountOfItems)
+    {
+        return;
+    }
 
-    offset   = ccpMult(this->getContentOffset(), -1);
-    maxIdx   = MAX(m_pDataSource->numberOfCellsInTableView(this)-1, 0);
-    
+    unsigned int startIdx = 0, endIdx = 0, idx = 0, maxIdx = 0;
+    CCPoint offset = ccpMult(this->getContentOffset(), -1);
+    maxIdx = MAX(uCountOfItems-1, 0);
     const CCSize cellSize = m_pDataSource->cellSizeForTable(this);
     
-    if (m_eVordering == kCCTableViewFillTopDown) {
+    if (m_eVordering == kCCTableViewFillTopDown)
+    {
         offset.y = offset.y + m_tViewSize.height/this->getContainer()->getScaleY() - cellSize.height;
     }
     startIdx = this->_indexFromOffset(offset);
