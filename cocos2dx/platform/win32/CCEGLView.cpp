@@ -299,8 +299,8 @@ bool CCEGLView::Create()
             wszBuf,                                                // Window Title
             WS_CAPTION | WS_POPUPWINDOW | WS_MINIMIZEBOX,        // Defined Window Style
             0, 0,                                                // Window Position
-            0,                                                  // Window Width
-            0,                                                  // Window Height
+            480,                                                  // Window Width
+            320,                                                  // Window Height
             NULL,                                                // No Parent Window
             NULL,                                                // No Menu
             hInstance,                                            // Instance
