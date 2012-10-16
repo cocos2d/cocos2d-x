@@ -98,6 +98,10 @@ public:
     */
     void setPopupNotify(bool bNotify);
     bool isPopupNotify();
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    bool isFileExist(const char* pszFileName);
+    bool existFileDataFromZip(const char* pszZipFilePath, const char* pszFileName);
+#endif
     
 protected:
     CCFileUtils(void)
