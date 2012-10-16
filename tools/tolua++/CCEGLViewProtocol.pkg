@@ -59,12 +59,6 @@ class CCEGLViewProtocol
     void setTouchDelegate(EGLTouchDelegate * pDelegate);
 
     /**
-     * Set content scale factor.
-     * @return If return true, it means the plaform supports retina display.
-     */
-    bool setContentScaleFactor(float contentScaleFactor);
-
-    /**
      * Set opengl view port rectangle with points.
      */
     void setViewPortInPoints(float x , float y , float w , float h);
@@ -89,9 +83,4 @@ class CCEGLViewProtocol
      * Get the scale factor of vertical direction.
      */
     float getScaleY() const;
-
-    /**
-     * Get whether the retina mode is enabled.
-     */
-    bool isRetinaEnabled() const;
 };

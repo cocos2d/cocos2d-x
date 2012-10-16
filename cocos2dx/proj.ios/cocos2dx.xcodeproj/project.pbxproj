@@ -183,17 +183,6 @@
 		1551A73D158F2ADE00E66CFE /* CCThread.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1551A491158F2ADE00E66CFE /* CCThread.mm */; };
 		1551A73E158F2ADE00E66CFE /* EAGLView.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A492158F2ADE00E66CFE /* EAGLView.h */; };
 		1551A73F158F2ADE00E66CFE /* EAGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1551A493158F2ADE00E66CFE /* EAGLView.mm */; };
-		1551A740158F2ADE00E66CFE /* FontLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A495158F2ADE00E66CFE /* FontLabel.h */; };
-		1551A741158F2ADE00E66CFE /* FontLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1551A496158F2ADE00E66CFE /* FontLabel.m */; };
-		1551A742158F2ADE00E66CFE /* FontLabelStringDrawing.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A497158F2ADE00E66CFE /* FontLabelStringDrawing.h */; };
-		1551A743158F2ADE00E66CFE /* FontLabelStringDrawing.m in Sources */ = {isa = PBXBuildFile; fileRef = 1551A498158F2ADE00E66CFE /* FontLabelStringDrawing.m */; };
-		1551A744158F2ADE00E66CFE /* FontManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A499158F2ADE00E66CFE /* FontManager.h */; };
-		1551A745158F2ADE00E66CFE /* FontManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1551A49A158F2ADE00E66CFE /* FontManager.m */; };
-		1551A746158F2ADE00E66CFE /* ZAttributedString.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A49B158F2ADE00E66CFE /* ZAttributedString.h */; };
-		1551A747158F2ADE00E66CFE /* ZAttributedString.m in Sources */ = {isa = PBXBuildFile; fileRef = 1551A49C158F2ADE00E66CFE /* ZAttributedString.m */; };
-		1551A748158F2ADE00E66CFE /* ZAttributedStringPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A49D158F2ADE00E66CFE /* ZAttributedStringPrivate.h */; };
-		1551A749158F2ADE00E66CFE /* ZFont.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A49E158F2ADE00E66CFE /* ZFont.h */; };
-		1551A74A158F2ADE00E66CFE /* ZFont.m in Sources */ = {isa = PBXBuildFile; fileRef = 1551A49F158F2ADE00E66CFE /* ZFont.m */; };
 		1551A74B158F2ADE00E66CFE /* OpenGL_Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A4A0158F2ADE00E66CFE /* OpenGL_Internal.h */; };
 		1551A74C158F2ADE00E66CFE /* AccelerometerSimulation.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A4A2158F2ADE00E66CFE /* AccelerometerSimulation.h */; };
 		1551A74D158F2ADE00E66CFE /* AccelerometerSimulation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1551A4A3158F2ADE00E66CFE /* AccelerometerSimulation.m */; };
@@ -477,17 +466,6 @@
 		1551A491158F2ADE00E66CFE /* CCThread.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCThread.mm; sourceTree = "<group>"; };
 		1551A492158F2ADE00E66CFE /* EAGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EAGLView.h; sourceTree = "<group>"; };
 		1551A493158F2ADE00E66CFE /* EAGLView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = EAGLView.mm; sourceTree = "<group>"; };
-		1551A495158F2ADE00E66CFE /* FontLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FontLabel.h; sourceTree = "<group>"; };
-		1551A496158F2ADE00E66CFE /* FontLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FontLabel.m; sourceTree = "<group>"; };
-		1551A497158F2ADE00E66CFE /* FontLabelStringDrawing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FontLabelStringDrawing.h; sourceTree = "<group>"; };
-		1551A498158F2ADE00E66CFE /* FontLabelStringDrawing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FontLabelStringDrawing.m; sourceTree = "<group>"; };
-		1551A499158F2ADE00E66CFE /* FontManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FontManager.h; sourceTree = "<group>"; };
-		1551A49A158F2ADE00E66CFE /* FontManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FontManager.m; sourceTree = "<group>"; };
-		1551A49B158F2ADE00E66CFE /* ZAttributedString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZAttributedString.h; sourceTree = "<group>"; };
-		1551A49C158F2ADE00E66CFE /* ZAttributedString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZAttributedString.m; sourceTree = "<group>"; };
-		1551A49D158F2ADE00E66CFE /* ZAttributedStringPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZAttributedStringPrivate.h; sourceTree = "<group>"; };
-		1551A49E158F2ADE00E66CFE /* ZFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZFont.h; sourceTree = "<group>"; };
-		1551A49F158F2ADE00E66CFE /* ZFont.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZFont.m; sourceTree = "<group>"; };
 		1551A4A0158F2ADE00E66CFE /* OpenGL_Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGL_Internal.h; sourceTree = "<group>"; };
 		1551A4A2158F2ADE00E66CFE /* AccelerometerSimulation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccelerometerSimulation.h; sourceTree = "<group>"; };
 		1551A4A3158F2ADE00E66CFE /* AccelerometerSimulation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccelerometerSimulation.m; sourceTree = "<group>"; };
@@ -971,29 +949,10 @@
 				1551A491158F2ADE00E66CFE /* CCThread.mm */,
 				1551A492158F2ADE00E66CFE /* EAGLView.h */,
 				1551A493158F2ADE00E66CFE /* EAGLView.mm */,
-				1551A494158F2ADE00E66CFE /* FontLabel */,
 				1551A4A0158F2ADE00E66CFE /* OpenGL_Internal.h */,
 				1551A4A1158F2ADE00E66CFE /* Simulation */,
 			);
 			path = ios;
-			sourceTree = "<group>";
-		};
-		1551A494158F2ADE00E66CFE /* FontLabel */ = {
-			isa = PBXGroup;
-			children = (
-				1551A495158F2ADE00E66CFE /* FontLabel.h */,
-				1551A496158F2ADE00E66CFE /* FontLabel.m */,
-				1551A497158F2ADE00E66CFE /* FontLabelStringDrawing.h */,
-				1551A498158F2ADE00E66CFE /* FontLabelStringDrawing.m */,
-				1551A499158F2ADE00E66CFE /* FontManager.h */,
-				1551A49A158F2ADE00E66CFE /* FontManager.m */,
-				1551A49B158F2ADE00E66CFE /* ZAttributedString.h */,
-				1551A49C158F2ADE00E66CFE /* ZAttributedString.m */,
-				1551A49D158F2ADE00E66CFE /* ZAttributedStringPrivate.h */,
-				1551A49E158F2ADE00E66CFE /* ZFont.h */,
-				1551A49F158F2ADE00E66CFE /* ZFont.m */,
-			);
-			path = FontLabel;
 			sourceTree = "<group>";
 		};
 		1551A4A1158F2ADE00E66CFE /* Simulation */ = {
@@ -1282,12 +1241,6 @@
 				1551A73B158F2ADE00E66CFE /* CCPlatformDefine.h in Headers */,
 				1551A73C158F2ADE00E66CFE /* CCStdC.h in Headers */,
 				1551A73E158F2ADE00E66CFE /* EAGLView.h in Headers */,
-				1551A740158F2ADE00E66CFE /* FontLabel.h in Headers */,
-				1551A742158F2ADE00E66CFE /* FontLabelStringDrawing.h in Headers */,
-				1551A744158F2ADE00E66CFE /* FontManager.h in Headers */,
-				1551A746158F2ADE00E66CFE /* ZAttributedString.h in Headers */,
-				1551A748158F2ADE00E66CFE /* ZAttributedStringPrivate.h in Headers */,
-				1551A749158F2ADE00E66CFE /* ZFont.h in Headers */,
 				1551A74B158F2ADE00E66CFE /* OpenGL_Internal.h in Headers */,
 				1551A74C158F2ADE00E66CFE /* AccelerometerSimulation.h in Headers */,
 				1551A74F158F2ADE00E66CFE /* platform.h in Headers */,
@@ -1483,11 +1436,6 @@
 				1551A739158F2ADE00E66CFE /* CCLock.cpp in Sources */,
 				1551A73D158F2ADE00E66CFE /* CCThread.mm in Sources */,
 				1551A73F158F2ADE00E66CFE /* EAGLView.mm in Sources */,
-				1551A741158F2ADE00E66CFE /* FontLabel.m in Sources */,
-				1551A743158F2ADE00E66CFE /* FontLabelStringDrawing.m in Sources */,
-				1551A745158F2ADE00E66CFE /* FontManager.m in Sources */,
-				1551A747158F2ADE00E66CFE /* ZAttributedString.m in Sources */,
-				1551A74A158F2ADE00E66CFE /* ZFont.m in Sources */,
 				1551A74D158F2ADE00E66CFE /* AccelerometerSimulation.m in Sources */,
 				1551A74E158F2ADE00E66CFE /* platform.cpp in Sources */,
 				1551A816158F2ADF00E66CFE /* CCScriptSupport.cpp in Sources */,

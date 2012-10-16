@@ -42,7 +42,7 @@ CCEditBoxImplIOS::CCEditBoxImplIOS(CCEditBox* pEditText)
 , m_pSysEdit(NULL)
 , m_nMaxTextLength(-1)
 {
-    
+    m_bInRetinaMode = [[EAGLView sharedEGLView] contentScaleFactor] == 2.0f ? true : false;
 }
 
 CCEditBoxImplIOS::~CCEditBoxImplIOS()
@@ -64,15 +64,14 @@ bool CCEditBoxImplIOS::initWithSize(const CCSize& size)
     {
         CCEGLViewProtocol* eglView = CCEGLView::sharedOpenGLView();
 
-        CGRect rect;
-        if (eglView->isRetinaEnabled())
+        CGRect rect = CGRectMake(0, 0, size.width * eglView->getScaleX(),size.height * eglView->getScaleY());
+
+        if (m_bInRetinaMode)
         {
-            rect = CGRectMake(0, 0, size.width,size.height);
+            rect.size.width /= 2.0f;
+            rect.size.height /= 2.0f;
         }
-        else
-        {
-            rect = CGRectMake(0, 0, size.width * eglView->getScaleX(),size.height * eglView->getScaleY());
-        }
+        
         m_pSysEdit = [[EditBoxImplIOS alloc] initWithFrame:rect editBox:this];
         if (!m_pSysEdit) break;
         
@@ -195,29 +194,29 @@ void CCEditBoxImplIOS::setPlaceHolder(const char* pText)
     GET_IMPL.textField.placeholder = [NSString stringWithUTF8String:pText];
 }
 
-static CGPoint convertDesignCoordToScreenCoord(const CCPoint& designCoord)
+static CGPoint convertDesignCoordToScreenCoord(const CCPoint& designCoord, bool bInRetinaMode)
 {
-    float viewH = (float)[[EAGLView sharedEGLView] getHeight];
     CCEGLViewProtocol* eglView = CCEGLView::sharedOpenGLView();
-    CCPoint visiblePos;
-    if (eglView->isRetinaEnabled())
-    {
-        visiblePos = ccp(designCoord.x, designCoord.y);
-    }
-    else
-    {
-        visiblePos = ccp(designCoord.x * eglView->getScaleX(), designCoord.y * eglView->getScaleY());
-    }
-
+    float viewH = (float)[[EAGLView sharedEGLView] getHeight];
+    
+    CCPoint visiblePos = ccp(designCoord.x * eglView->getScaleX(), designCoord.y * eglView->getScaleY());
     CCPoint screenGLPos = ccpAdd(visiblePos, eglView->getViewPortRect().origin);
+    
     CGPoint screenPos = CGPointMake(screenGLPos.x, viewH - screenGLPos.y);
+    
+    if (bInRetinaMode)
+    {
+        screenPos.x = screenPos.x / 2.0f;
+        screenPos.y = screenPos.y / 2.0f;
+    }
+    CCLOG("[EditBox] pos x = %f, y = %f", screenGLPos.x, screenGLPos.y);
     return screenPos;
 }
 
 void CCEditBoxImplIOS::setPosition(const CCPoint& pos)
 {
     //TODO should consider anchor point, the default value is (0.5, 0,5)
-    [GET_IMPL setPosition:convertDesignCoordToScreenCoord(ccp(pos.x-m_tContentSize.width/2, pos.y+m_tContentSize.height/2))];
+    [GET_IMPL setPosition:convertDesignCoordToScreenCoord(ccp(pos.x-m_tContentSize.width/2, pos.y+m_tContentSize.height/2), m_bInRetinaMode)];
 }
 
 void CCEditBoxImplIOS::setContentSize(const CCSize& size)
