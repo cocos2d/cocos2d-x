@@ -155,4 +155,66 @@ string CCFileUtils::getWriteablePath()
     }
 }
 
+bool CCFileUtils::isFileExist(const char* pszFileName)
+{
+    bool ret = false;
+    
+    string fullPath(pszFileName);
+    
+    if ((! pszFileName))
+    {
+        return false;
+    }
+    
+    if (pszFileName[0] != '/')
+    {
+        string pathWithoutDirectory = fullPath;
+        fullPath.insert(0, m_obDirectory.c_str());
+        fullPath.insert(0, "assets/");
+        ret = CCFileUtils::existFileDataFromZip(s_strResourcePath.c_str(), fullPath.c_str());
+        if (!ret) {
+            ret = CCFileUtils::existFileDataFromZip(s_strResourcePath.c_str(), pathWithoutDirectory.c_str());
+        }
+        return ret;
+    }
+    else
+    {
+        do
+        {
+            // read rrom other path than user set it
+            FILE *fp = fopen(pszFileName, "rb");
+            if (fp != NULL)
+            {
+                fclose(fp);
+                return true;
+            }
+        }
+        while (0);
+    }
+    return false;
+}
+
+bool CCFileUtils::existFileDataFromZip(const char* pszZipFilePath, const char* pszFileName)
+{
+    unzFile pFile = NULL;
+    bool res = false;
+    do
+    {
+        CC_BREAK_IF(!pszZipFilePath || !pszFileName);
+        CC_BREAK_IF(strlen(pszZipFilePath) == 0);
+        
+        pFile = unzOpen(pszZipFilePath);
+        
+        int nRet = unzLocateFile(pFile, pszFileName, 1);
+        res = (UNZ_OK == nRet);
+        
+    } while (0);
+    
+    if (pFile)
+    {
+        unzClose(pFile);
+    }
+    return res;
+}
+
 NS_CC_END
