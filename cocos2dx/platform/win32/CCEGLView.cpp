@@ -335,7 +335,7 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
         if (m_pDelegate && MK_LBUTTON == wParam)
         {
             POINT point = {(short)LOWORD(lParam), (short)HIWORD(lParam)};
-            CCPoint pt(point.x, point.y);
+            CCPoint pt(point.x/CC_CONTENT_SCALE_FACTOR(), point.y/CC_CONTENT_SCALE_FACTOR());
             CCPoint tmp = ccp(pt.x, m_obScreenSize.height - pt.y);
             if (m_obViewPortRect.equals(CCRectZero) || m_obViewPortRect.containsPoint(tmp))
             {
@@ -356,7 +356,7 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
         if (MK_LBUTTON == wParam && m_bCaptured)
         {
             POINT point = {(short)LOWORD(lParam), (short)HIWORD(lParam)};
-            CCPoint pt(point.x, point.y);
+            CCPoint pt(point.x/CC_CONTENT_SCALE_FACTOR(), point.y/CC_CONTENT_SCALE_FACTOR());
             int id = 0;
             pt.x *= m_windowTouchScaleX;
             pt.y *= m_windowTouchScaleY;
@@ -371,7 +371,7 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
         if (m_bCaptured)
         {
             POINT point = {(short)LOWORD(lParam), (short)HIWORD(lParam)};
-            CCPoint pt(point.x, point.y);
+            CCPoint pt(point.x/CC_CONTENT_SCALE_FACTOR(), point.y/CC_CONTENT_SCALE_FACTOR());
             int id = 0;
             pt.x *= m_windowTouchScaleX;
             pt.y *= m_windowTouchScaleY;
@@ -394,18 +394,22 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
               for (UINT i=0; i < cInputs; i++)
               {
                 TOUCHINPUT ti = pInputs[i];
-                CCPoint pt(TOUCH_COORD_TO_PIXEL(ti.x)/CC_CONTENT_SCALE_FACTOR(), TOUCH_COORD_TO_PIXEL(ti.y)/CC_CONTENT_SCALE_FACTOR());
+                POINT input;
+                input.x = TOUCH_COORD_TO_PIXEL(ti.x);
+                input.y = TOUCH_COORD_TO_PIXEL(ti.y);
+                ScreenToClient(m_hWnd, &input);
+                CCPoint pt(input.x/CC_CONTENT_SCALE_FACTOR(), input.y/CC_CONTENT_SCALE_FACTOR());
                 CCPoint tmp = ccp(pt.x, m_obScreenSize.height - pt.y);
                 if (m_obViewPortRect.equals(CCRectZero) || m_obViewPortRect.containsPoint(tmp))
                 {
                   pt.x *= m_windowTouchScaleX;
                   pt.y *= m_windowTouchScaleY;
 
-                  if((ti.dwFlags & TOUCHEVENTF_DOWN)!=0)
+                  if (ti.dwFlags & TOUCHEVENTF_DOWN)
                     handleTouchesBegin(1, reinterpret_cast<int*>(&ti.dwID), &pt.x, &pt.y);
-                  else if((ti.dwFlags & TOUCHEVENTF_MOVE)!=0)
+                  else if (ti.dwFlags & TOUCHEVENTF_MOVE)
                     handleTouchesMove(1, reinterpret_cast<int*>(&ti.dwID), &pt.x, &pt.y);
-                  else if((ti.dwFlags & TOUCHEVENTF_UP)!=0)
+                  else if (ti.dwFlags & TOUCHEVENTF_UP)
                     handleTouchesEnd(1, reinterpret_cast<int*>(&ti.dwID), &pt.x, &pt.y);
                 }
               }
