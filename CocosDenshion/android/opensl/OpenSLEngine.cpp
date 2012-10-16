@@ -18,7 +18,7 @@ OpenSLEngine::~OpenSLEngine()
 /**********************************************************************************
  *   jni
  **********************************************************************************/
-#define  CLASS_NAME "org/cocos2dx/lib/Cocos2dxActivity"
+#define  CLASS_NAME "org/cocos2dx/lib/Cocos2dxHelper"
 
 typedef struct JniMethodInfo_
 {
