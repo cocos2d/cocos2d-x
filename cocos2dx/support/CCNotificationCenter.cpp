@@ -131,8 +131,10 @@ void CCNotificationCenter::unregisterScriptObserver(void)
 
 void CCNotificationCenter::postNotification(const char *name, CCObject *object)
 {
+    CCArray* ObserversCopy = CCArray::createWithCapacity(m_observers->count());
+    ObserversCopy->addObjectsFromArray(m_observers);
     CCObject* obj = NULL;
-    CCARRAY_FOREACH(m_observers, obj)
+    CCARRAY_FOREACH(ObserversCopy, obj)
     {
         CCNotificationObserver* observer = (CCNotificationObserver*) obj;
         if (!observer)

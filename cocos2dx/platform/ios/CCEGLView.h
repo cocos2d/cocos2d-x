@@ -40,7 +40,6 @@ public:
 
     virtual bool    isOpenGLReady();
     virtual bool    setContentScaleFactor(float contentScaleFactor);
-    virtual bool    enableRetina();
     
     // keep compatible
     virtual void    end();

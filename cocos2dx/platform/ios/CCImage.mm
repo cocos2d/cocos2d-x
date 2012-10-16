@@ -28,10 +28,6 @@ THE SOFTWARE.
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-// FontLabel support
-#import "FontLabel/FontManager.h"
-#import "FontLabel/FontLabelStringDrawing.h"
-
 typedef struct
 {
     unsigned int height;
@@ -171,7 +167,7 @@ static bool _isValidFontName(const char *fontName)
     return ret;
 }
 
-static CGSize _calculateStringSizeWithFontOrZFont(NSString *str, id font, CGSize *constrainSize, bool isZfont)
+static CGSize _calculateStringSize(NSString *str, id font, CGSize *constrainSize)
 {
     NSArray *listItems = [str componentsSeparatedByString: @"\n"];
     CGSize dim = CGSizeZero;
@@ -184,15 +180,7 @@ static CGSize _calculateStringSizeWithFontOrZFont(NSString *str, id font, CGSize
     
     for (NSString *s in listItems)
     {
-        CGSize tmp;
-        if (isZfont)
-        {
-            tmp = [FontLabelStringDrawingHelper sizeWithZFont:s zfont:font constrainedToSize:textRect];
-        }
-        else
-        {
-           tmp = [s sizeWithFont:font constrainedToSize:textRect]; 
-        }
+        CGSize tmp = [s sizeWithFont:font constrainedToSize:textRect];
         
         if (tmp.width > dim.width)
         {
@@ -228,19 +216,9 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
         font = [UIFont fontWithName:fntName size:nSize];  
         if (font)
         {
-            dim = _calculateStringSizeWithFontOrZFont(str, font, &constrainSize, false);
+            dim = _calculateStringSize(str, font, &constrainSize);
         }      
-        
-        if (! font)
-        {
-            font = [[FontManager sharedManager] zFontWithName:fntName pointSize:nSize];
-            if (font)
-            {
-                dim =_calculateStringSizeWithFontOrZFont(str, font, &constrainSize, true);
-            }  
-        }
-
-        if (! font)
+        else
         {
             fntName = _isValidFontName(pFontName) ? fntName : @"MarkerFelt-Wide";
             font = [UIFont fontWithName:fntName size:nSize];
@@ -252,7 +230,7 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
                 
             if (font)
             {
-                dim = _calculateStringSizeWithFontOrZFont(str, font, &constrainSize, false);
+                dim = _calculateStringSize(str, font, &constrainSize);
             }  
         }
 
@@ -314,6 +292,7 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
                                 : UITextAlignmentLeft);
         
         // normal fonts
+        /*
         if( [font isKindOfClass:[UIFont class] ] )
         {
             [str drawInRect:CGRectMake(0, startH, dim.width, dim.height) withFont:font lineBreakMode:(UILineBreakMode)UILineBreakModeWordWrap alignment:align];
@@ -322,6 +301,8 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
         {
             [FontLabelStringDrawingHelper drawInRect:str rect:CGRectMake(0, startH, dim.width, dim.height) withZFont:font lineBreakMode:(UILineBreakMode)UILineBreakModeWordWrap alignment:align];
         }
+         */
+        [str drawInRect:CGRectMake(0, startH, dim.width, dim.height) withFont:font lineBreakMode:(UILineBreakMode)UILineBreakModeWordWrap alignment:align];
         
         UIGraphicsPopContext();
         
