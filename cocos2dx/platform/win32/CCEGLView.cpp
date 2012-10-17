@@ -410,7 +410,7 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
                         input.x = TOUCH_COORD_TO_PIXEL(ti.x);
                         input.y = TOUCH_COORD_TO_PIXEL(ti.y);
                         ScreenToClient(m_hWnd, &input);
-                        CCPoint pt(input.x/CC_CONTENT_SCALE_FACTOR(), input.y/CC_CONTENT_SCALE_FACTOR());
+                        CCPoint pt(input.x, input.y);
                         CCPoint tmp = ccp(pt.x, m_obScreenSize.height - pt.y);
                         if (m_obViewPortRect.equals(CCRectZero) || m_obViewPortRect.containsPoint(tmp))
                         {
