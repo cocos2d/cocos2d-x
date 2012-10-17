@@ -157,6 +157,19 @@ void CCEGLViewProtocol::setScissorInPoints(float x , float y , float w , float h
               (GLsizei)(h * m_fScaleY));
 }
 
+void CCEGLViewProtocol::setViewName(const char* pszViewName)
+{
+    if (pszViewName != NULL && strlen(pszViewName) > 0)
+    {
+        strncpy(m_szViewName, pszViewName, sizeof(m_szViewName));
+    }
+}
+
+const char* CCEGLViewProtocol::getViewName()
+{
+    return m_szViewName;
+}
+
 void CCEGLViewProtocol::handleTouchesBegin(int num, int ids[], float xs[], float ys[])
 {
     CCSet set;
