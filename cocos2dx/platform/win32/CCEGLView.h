@@ -53,7 +53,7 @@ public:
     void setWndProc(CUSTOM_WND_PROC proc);
 
 private:
-    virtual bool Create(LPCTSTR pTitle, int w, int h);
+    virtual bool Create();
     bool initGL();
     void destroyGL();
 public:
@@ -81,6 +81,7 @@ private:
     HDC  m_hDC;
     HGLRC m_hRC;
     LPFN_ACCELEROMETER_KEYHOOK m_lpfnAccelerometerKeyHook;
+    bool m_bSupportTouch;
 
     LPCWSTR m_menu;
     CUSTOM_WND_PROC m_wndproc;
