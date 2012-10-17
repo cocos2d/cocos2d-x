@@ -302,8 +302,9 @@ bool CCEGLView::Create()
             wszBuf,                                                // Window Title
             WS_CAPTION | WS_POPUPWINDOW | WS_MINIMIZEBOX,        // Defined Window Style
             0, 0,                                                // Window Position
-            100,                                                  // Window Width
-            100,                                                  // Window Height
+            //TODO: Initializing width with a large value to avoid get a wrong client area by 'GetClientRect'.
+            1000,                                               // Window Width
+            1000,                                               // Window Height
             NULL,                                                // No Parent Window
             NULL,                                                // No Menu
             hInstance,                                            // Instance
@@ -582,6 +583,11 @@ void CCEGLView::setIMEKeyboardState(bool /*bOpen*/)
 void CCEGLView::setMenuResource(LPCWSTR menu)
 {
     m_menu = menu;
+    if (m_hWnd != NULL)
+    {
+        HMENU hMenu = LoadMenu(GetModuleHandle(NULL), menu);
+        SetMenu(m_hWnd, hMenu);
+    }
 }
 
 void CCEGLView::setWndProc(CUSTOM_WND_PROC proc)
@@ -631,7 +637,7 @@ void CCEGLView::resize(int width, int height)
 #endif
     }
 
-    AdjustWindowRectEx(&rcClient, GetWindowLong(m_hWnd, GWL_STYLE), false, GetWindowLong(m_hWnd, GWL_EXSTYLE));
+    AdjustWindowRectEx(&rcClient, GetWindowLong(m_hWnd, GWL_STYLE), FALSE, GetWindowLong(m_hWnd, GWL_EXSTYLE));
 
     // change width and height
     SetWindowPos(m_hWnd, 0, 0, 0, width + ptDiff.x, height + ptDiff.y,
