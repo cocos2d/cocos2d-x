@@ -302,7 +302,7 @@ bool CCEGLView::Create()
             wszBuf,                                                // Window Title
             WS_CAPTION | WS_POPUPWINDOW | WS_MINIMIZEBOX,        // Defined Window Style
             0, 0,                                                // Window Position
-            //TODO: Initializing width with a large value to avoid get a wrong client area by 'GetClientRect'.
+            //TODO: Initializing width with a large value to avoid getting a wrong client area by 'GetClientRect' function.
             1000,                                               // Window Width
             1000,                                               // Window Height
             NULL,                                                // No Parent Window
