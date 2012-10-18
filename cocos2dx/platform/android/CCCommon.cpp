@@ -38,7 +38,7 @@ void CCLog(const char * pszFormat, ...)
 
     va_list args;
     va_start(args, pszFormat);        
-    vsprintf(buf, pszFormat, args);
+    vsnprintf(buf, MAX_LEN, pszFormat, args);
     va_end(args);
 
     __android_log_print(ANDROID_LOG_DEBUG, "cocos2d-x debug info",  buf);
