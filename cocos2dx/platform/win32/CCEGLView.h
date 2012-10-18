@@ -46,16 +46,14 @@ public:
     virtual bool isOpenGLReady();
     virtual void end();
     virtual void swapBuffers();
-    virtual bool setContentScaleFactor(float contentScaleFactor);
     virtual void setFrameSize(float width, float height);
     virtual void setIMEKeyboardState(bool bOpen);
-    virtual bool enableRetina();
 
     void setMenuResource(LPCWSTR menu);
     void setWndProc(CUSTOM_WND_PROC proc);
 
 private:
-    virtual bool Create(LPCTSTR pTitle, int w, int h);
+    virtual bool Create();
     bool initGL();
     void destroyGL();
 public:
@@ -83,6 +81,7 @@ private:
     HDC  m_hDC;
     HGLRC m_hRC;
     LPFN_ACCELEROMETER_KEYHOOK m_lpfnAccelerometerKeyHook;
+    bool m_bSupportTouch;
 
     LPCWSTR m_menu;
     CUSTOM_WND_PROC m_wndproc;

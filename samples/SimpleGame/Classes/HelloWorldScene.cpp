@@ -199,8 +199,9 @@ void HelloWorld::ccTouchesEnded(CCSet* touches, CCEvent* event)
 
 	// Set up initial location of projectile
 	CCSize winSize = CCDirector::sharedDirector()->getVisibleSize();
+    CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
 	CCSprite *projectile = CCSprite::create("Projectile.png", CCRectMake(0, 0, 20, 20));
-	projectile->setPosition( ccp(20, winSize.height/2) );
+	projectile->setPosition( ccp(origin.x+20, origin.y+winSize.height/2) );
 
 	// Determinie offset of location to projectile
 	float offX = location.x - projectile->getPosition().x;
@@ -213,7 +214,7 @@ void HelloWorld::ccTouchesEnded(CCSet* touches, CCEvent* event)
 	this->addChild(projectile);
 
 	// Determine where we wish to shoot the projectile to
-	float realX = winSize.width + (projectile->getContentSize().width/2);
+	float realX = origin.x+winSize.width + (projectile->getContentSize().width/2);
 	float ratio = offY / offX;
 	float realY = (realX * ratio) + projectile->getPosition().y;
 	CCPoint realDest = ccp(realX, realY);

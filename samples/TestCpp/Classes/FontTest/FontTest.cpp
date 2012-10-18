@@ -13,15 +13,23 @@ static int fontIdx = 0;
 static std::string fontList[] =
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    // custom ttf files are defined in Test-info.plist
     "American Typewriter",
     "Marker Felt",
-#endif
+    "A Damn Mess",
+    "Abberancy",
+    "Abduction",
+    "Paint Boy",
+    "Schwarzwald Regular",
+    "Scissor Cuts",
+#else
     "fonts/A Damn Mess.ttf",
     "fonts/Abberancy.ttf",
     "fonts/Abduction.ttf",
     "fonts/Paint Boy.ttf",
     "fonts/Schwarzwald Regular.ttf",
     "fonts/Scissor Cuts.ttf",
+#endif
 };
 
 static int fontCount = sizeof(fontList) / sizeof(*fontList);

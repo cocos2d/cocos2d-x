@@ -24,6 +24,7 @@ THE SOFTWARE.
 #define __CC_PLATFORM_FILEUTILS_CPP__
 #include "platform/CCFileUtilsCommon_cpp.h"
 #include <windows.h>
+#include <Shlobj.h>
 #include "CCDirector.h"
 #include "CCApplication.h"
 
@@ -39,10 +40,10 @@ static void _CheckPath()
     if (! s_pszResourcePath[0])
     {
         WCHAR  wszPath[MAX_PATH] = {0};
-        int nNum = WideCharToMultiByte(CP_ACP, 0, wszPath, 
-            GetCurrentDirectoryW(sizeof(wszPath), wszPath), 
+        int nNum = WideCharToMultiByte(CP_ACP, 0, wszPath,
+            GetCurrentDirectoryW(sizeof(wszPath), wszPath),
             s_pszResourcePath, MAX_PATH, NULL, NULL);
-        s_pszResourcePath[nNum] = '\\'; 
+        s_pszResourcePath[nNum] = '\\';
     }
 }
 
@@ -64,7 +65,7 @@ void CCFileUtils::purgeFileUtils()
     {
         s_pFileUtils->purgeCachedEntries();
     }
-    
+
     CC_SAFE_DELETE(s_pFileUtils);
 }
 
@@ -85,7 +86,7 @@ const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
         // path start with "x:", is absolute path
         pRet->m_sString = pszRelativePath;
     }
-    else if (strlen(pszRelativePath) > 0 
+    else if (strlen(pszRelativePath) > 0
         && ('/' == pszRelativePath[0] || '\\' == pszRelativePath[0]))
     {
         // path start with '/' or '\', is absolute path without driver name
@@ -122,7 +123,7 @@ const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
     { // Can't find the file, return the relative path.
         pRet->m_sString = pszRelativePath;
     }
-   
+
     return pRet->m_sString.c_str();
 }
 
@@ -141,7 +142,7 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
     unsigned char* pBuffer = NULL;
     CCAssert(pszFileName != NULL && pSize != NULL && pszMode != NULL, "Invaild parameters.");
     *pSize = 0;
-    do 
+    do
     {
         // read the file from hardware
         FILE *fp = fopen(pszFileName, pszMode);
@@ -168,17 +169,48 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
 
 string CCFileUtils::getWriteablePath()
 {
-    // return the path that the exe file saved in
+	// Get full path of executable, e.g. c:\Program Files (x86)\My Game Folder\MyGame.exe
+	char full_path[_MAX_PATH + 1];
+	::GetModuleFileNameA(NULL, full_path, _MAX_PATH + 1);
 
-    char full_path[_MAX_PATH + 1];
-    ::GetModuleFileNameA(NULL, full_path, _MAX_PATH + 1);
+	// Debug app uses executable directory; Non-debug app uses local app data directory
+#ifndef _DEBUG
+		// Get filename of executable only, e.g. MyGame.exe
+		char *base_name = strrchr(full_path, '\\');
 
-    string ret((char*)full_path);
+		if(base_name)
+		{
+			char app_data_path[_MAX_PATH + 1];
 
-    // remove xxx.exe
-    ret =  ret.substr(0, ret.rfind("\\") + 1);
+			// Get local app data directory, e.g. C:\Documents and Settings\username\Local Settings\Application Data
+			if (SUCCEEDED(SHGetFolderPathA(NULL, CSIDL_LOCAL_APPDATA, NULL, SHGFP_TYPE_CURRENT, app_data_path)))
+			{
+				string ret((char*)app_data_path);
 
-    return ret;
+				// Adding executable filename, e.g. C:\Documents and Settings\username\Local Settings\Application Data\MyGame.exe
+				ret += base_name;
+
+				// Remove ".exe" extension, e.g. C:\Documents and Settings\username\Local Settings\Application Data\MyGame
+				ret = ret.substr(0, ret.rfind("."));
+
+				ret += "\\";
+
+				// Create directory
+				if (SUCCEEDED(SHCreateDirectoryExA(NULL, ret.c_str(), NULL)))
+				{
+					return ret;
+				}
+			}
+		}
+#endif // not defined _DEBUG
+
+	// If fetching of local app data directory fails, use the executable one
+	string ret((char*)full_path);
+
+	// remove xxx.exe
+	ret =  ret.substr(0, ret.rfind("\\") + 1);
+
+	return ret;
 }
 
 NS_CC_END
