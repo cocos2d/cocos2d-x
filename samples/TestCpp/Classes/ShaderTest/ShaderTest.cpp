@@ -150,6 +150,11 @@ ShaderNode::ShaderNode()
 {
 }
 
+ShaderNode::~ShaderNode()
+{
+    CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, EVNET_COME_TO_FOREGROUND);
+}
+
 ShaderNode* ShaderNode::shaderNodeWithVertex(const char *vert, const char *frag)
 {
     ShaderNode *node = new ShaderNode();
@@ -161,6 +166,10 @@ ShaderNode* ShaderNode::shaderNodeWithVertex(const char *vert, const char *frag)
 
 bool ShaderNode::initWithVertex(const char *vert, const char *frag)
 {
+    CCNotificationCenter::sharedNotificationCenter()->addObserver(this,
+                                                                  callfuncO_selector(ShaderNode::listenBackToForeground),
+                                                                  EVNET_COME_TO_FOREGROUND,
+                                                                  NULL);
 
     loadShaderVertex(vert, frag);
 
@@ -171,8 +180,17 @@ bool ShaderNode::initWithVertex(const char *vert, const char *frag)
 
     setContentSize(CCSizeMake(SIZE_X, SIZE_Y));
     setAnchorPoint(ccp(0.5f, 0.5f));
+    
+    m_vertFileName = vert;
+    m_fragFileName = frag;
 
     return true;
+}
+
+void ShaderNode::listenBackToForeground(CCObject *obj)
+{
+    this->setShaderProgram(NULL);
+    loadShaderVertex(m_vertFileName.c_str(), m_fragFileName.c_str());
 }
 
 void ShaderNode::loadShaderVertex(const char *vert, const char *frag)
