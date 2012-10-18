@@ -21,15 +21,18 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+#define __CC_PLATFORM_IMAGE_CPP__
+#include "platform/CCImageCommon_cpp.h"
 
 #include <string.h>
-
 #include <vector>
 #include <string>
 #include <sstream>
 
-#include "CCImage.h"
-#include "CCFileUtils.h"
+#include "platform/CCImage.h"
+#include "platform/CCFileUtils.h"
+#include "platform/CCCommon.h"
+#include "CCStdC.h"
 
 #include "SkTypeface.h"
 #include "SkBitmap.h"
@@ -50,7 +53,7 @@ struct TextLine {
 	int iLineWidth;
 };
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 class BitmapDC
 {
@@ -502,7 +505,7 @@ bool CCImage::initWithString(
         
 		bRet = true;
 #endif
-		const char* pFullFontName = CCFileUtils::fullPathFromRelativePath(pFontName);
+		const char* pFullFontName = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(pFontName);
         //CCLog("-----pText=%s and Font File is %s nWidth= %d,nHeight=%d",pText,pFullFontName,nWidth,nHeight);
         
         CC_BREAK_IF(! dc.getBitmap(pText, nWidth, nHeight, eAlignMask, pFullFontName, nSize));
@@ -527,5 +530,5 @@ bool CCImage::initWithString(
     return bRet;
 }
 
-NS_CC_END;
+NS_CC_END
 
