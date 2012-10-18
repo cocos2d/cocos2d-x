@@ -775,20 +775,21 @@ void CCDirector::createStatsLabel()
     m_pDrawsLabel = new CCLabelAtlas();
     m_pDrawsLabel->initWithString("000", "fps_images.png", 12, 32, '.');
      */
-    m_pFPSLabel = CCLabelTTF::create("00.0", "Arial", 24);
+    int fontSize = (int)(m_obWinSizeInPoints.height / 320.0f * 24);
+    m_pFPSLabel = CCLabelTTF::create("00.0", "Arial", fontSize);
     m_pFPSLabel->retain();
-    m_pSPFLabel = CCLabelTTF::create("0.000", "Arial", 24);
+    m_pSPFLabel = CCLabelTTF::create("0.000", "Arial", fontSize);
     m_pSPFLabel->retain();
-    m_pDrawsLabel = CCLabelTTF::create("000", "Arial", 24);
+    m_pDrawsLabel = CCLabelTTF::create("000", "Arial", fontSize);
     m_pDrawsLabel->retain();
 
     //CCTexture2D::setDefaultAlphaPixelFormat(currentFormat);
 
 
     CCSize contentSize = m_pDrawsLabel->getContentSize();
-    m_pDrawsLabel->setPosition(ccpAdd(ccp(contentSize.width/2, contentSize.height/2 + 40), CC_DIRECTOR_STATS_POSITION));
+    m_pDrawsLabel->setPosition(ccpAdd(ccp(contentSize.width/2, contentSize.height*5/2), CC_DIRECTOR_STATS_POSITION));
     contentSize = m_pSPFLabel->getContentSize();
-    m_pSPFLabel->setPosition(ccpAdd(ccp(contentSize.width/2, contentSize.height/2 + 20), CC_DIRECTOR_STATS_POSITION));
+    m_pSPFLabel->setPosition(ccpAdd(ccp(contentSize.width/2, contentSize.height*3/2), CC_DIRECTOR_STATS_POSITION));
     contentSize = m_pFPSLabel->getContentSize();
     m_pFPSLabel->setPosition(ccpAdd(ccp(contentSize.width/2, contentSize.height/2), CC_DIRECTOR_STATS_POSITION));
 }
