@@ -503,7 +503,7 @@ bool SpriteBlur::initWithTexture(CCTexture2D* texture, const CCRect& rect)
     if( CCSprite::initWithTexture(texture, rect) ) 
     {
         CCNotificationCenter::sharedNotificationCenter()->addObserver(this,
-                                                                      callfuncO_selector(ShaderNode::listenBackToForeground),
+                                                                      callfuncO_selector(SpriteBlur::listenBackToForeground),
                                                                       EVNET_COME_TO_FOREGROUND,
                                                                       NULL);
         
@@ -523,7 +523,7 @@ bool SpriteBlur::initWithTexture(CCTexture2D* texture, const CCRect& rect)
 void SpriteBlur::initProgram()
 {
     GLchar * fragSource = (GLchar*) CCString::createWithContentsOfFile(
-                                                                       CCFileUtils::sharedFileUtils()->fullPathFromRelativePath("Shaders/example_Blur.fsh"))->getCString();
+                                CCFileUtils::sharedFileUtils()->fullPathFromRelativePath("Shaders/example_Blur.fsh"))->getCString();
     CCGLProgram* pProgram = new CCGLProgram();
     pProgram->initWithVertexShaderByteArray(ccPositionTextureColor_vert, fragSource);
     setShaderProgram(pProgram);
