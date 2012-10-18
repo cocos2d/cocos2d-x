@@ -80,7 +80,10 @@ bool CCControlColourPicker::init()
         
         // MIPMAP
 //        ccTexParams params  = {GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT};
-        spriteSheet->getTexture()->setAliasTexParameters();
+		/* Comment next line to avoid something like mosaic in 'CCControlExtensionTest',
+		   especially the display of 'huePickerBackground.png' when in 800*480 window size with 480*320 design resolution and hd(960*640) resources.
+	    */
+//        spriteSheet->getTexture()->setAliasTexParameters();
 //         spriteSheet->getTexture()->setTexParameters(&params);
 //         spriteSheet->getTexture()->generateMipmap();
 

@@ -1,5 +1,6 @@
 #include "AppDelegate.h"
 #include "HelloWorldScene.h"
+#include "AppMacros.h"
 
 USING_NS_CC;
 
@@ -16,41 +17,27 @@ bool AppDelegate::applicationDidFinishLaunching() {
     CCDirector *pDirector = CCDirector::sharedDirector();
 
     pDirector->setOpenGLView(CCEGLView::sharedOpenGLView());
+	//pDirector->setProjection(kCCDirectorProjection2D);
+	CCSize screenSize = CCEGLView::sharedOpenGLView()->getFrameSize();
     
-    TargetPlatform target = getTargetPlatform();
+	if (screenSize.height > 768)
+	{
+		CCFileUtils::sharedFileUtils()->setResourceDirectory("ipadhd");
+        pDirector->setContentScaleFactor(1536.0f/kDesignResolutionSize_height);
+	}
+    else if (screenSize.height > 320)
+    {
+        CCFileUtils::sharedFileUtils()->setResourceDirectory("ipad");
+        pDirector->setContentScaleFactor(768.0f/kDesignResolutionSize_height);
+    }
+	else
+    {
+		CCFileUtils::sharedFileUtils()->setResourceDirectory("iphone");
+        pDirector->setContentScaleFactor(320.0f/kDesignResolutionSize_height);
+    }
+	
+    CCEGLView::sharedOpenGLView()->setDesignResolutionSize(kDesignResolutionSize_width, kDesignResolutionSize_height, kResolutionNoBorder);
     
-    if (target == kTargetIpad)
-    {
-        // ipad
-        
-        CCFileUtils::sharedFileUtils()->setResourceDirectory("iphonehd");
-        
-        // don't enable retina because we don't have ipad hd resource
-        CCEGLView::sharedOpenGLView()->setDesignResolutionSize(960, 640, kResolutionNoBorder);
-    }
-    else if (target == kTargetIphone)
-    {
-        // iphone
-        
-        // try to enable retina on device
-        if (true == CCDirector::sharedDirector()->enableRetinaDisplay(true))
-        {
-            // iphone hd
-            CCFileUtils::sharedFileUtils()->setResourceDirectory("iphonehd");
-        }
-        else 
-        {
-            CCFileUtils::sharedFileUtils()->setResourceDirectory("iphone");
-        }
-    }
-    else 
-    {
-        // android, windows, blackberry, linux or mac
-        // use 960*640 resources as design resolution size
-        CCFileUtils::sharedFileUtils()->setResourceDirectory("iphonehd");
-        CCEGLView::sharedOpenGLView()->setDesignResolutionSize(960, 640, kResolutionNoBorder);
-    }
-
     // turn on display FPS
     pDirector->setDisplayStats(true);
 
