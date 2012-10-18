@@ -53,7 +53,7 @@ static GetMessageExtraInfoFn s_pfGetMessageExtraInfoFunction = NULL;
 static GetTouchInputInfoFn s_pfGetTouchInputInfoFunction = NULL;
 static CloseTouchInputHandleFn s_pfCloseTouchInputHandleFunction = NULL;
 
-bool CheckTouchSupport()
+static bool CheckTouchSupport()
 {
 	s_pfRegisterTouchWindowFunction = (RegisterTouchWindowFn)GetProcAddress(GetModuleHandle(TEXT("user32.dll")), "RegisterTouchWindow");
 	s_pfUnregisterTouchWindowFunction = (UnregisterTouchWindowFn)GetProcAddress(GetModuleHandle(TEXT("user32.dll")), "UnregisterTouchWindow");
@@ -96,7 +96,7 @@ static void SetupPixelFormat(HDC hDC)
     SetPixelFormat(hDC, pixelFormat, &pfd);
 }
 
-bool glew_dynamic_binding()
+static bool glew_dynamic_binding()
 {
 	const char *gl_extensions = (const char*)glGetString(GL_EXTENSIONS);
 
@@ -184,8 +184,7 @@ CCEGLView::CCEGLView()
 , m_lpfnAccelerometerKeyHook(NULL)
 , m_menu(NULL)
 , m_wndproc(NULL)
-, m_windowTouchScaleX(1.0f)
-, m_windowTouchScaleY(1.0f)
+, m_fFrameZoomFactor(1.0f)
 , m_bSupportTouch(false)
 {
     strcpy(m_szViewName, "Cocos2dxWin32");
@@ -345,8 +344,8 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
         {
             POINT point = {(short)LOWORD(lParam), (short)HIWORD(lParam)};
             CCPoint pt(point.x, point.y);
-            pt.x *= m_windowTouchScaleX;
-            pt.y *= m_windowTouchScaleY;
+            pt.x /= m_fFrameZoomFactor;
+            pt.y /= m_fFrameZoomFactor;
             CCPoint tmp = ccp(pt.x, m_obScreenSize.height - pt.y);
             if (m_obViewPortRect.equals(CCRectZero) || m_obViewPortRect.containsPoint(tmp))
             {
@@ -368,8 +367,8 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
             POINT point = {(short)LOWORD(lParam), (short)HIWORD(lParam)};
             CCPoint pt(point.x, point.y);
             int id = 0;
-            pt.x *= m_windowTouchScaleX;
-            pt.y *= m_windowTouchScaleY;
+            pt.x /= m_fFrameZoomFactor;
+            pt.y /= m_fFrameZoomFactor;
             handleTouchesMove(1, &id, &pt.x, &pt.y);
         }
         break;
@@ -384,8 +383,8 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
             POINT point = {(short)LOWORD(lParam), (short)HIWORD(lParam)};
             CCPoint pt(point.x, point.y);
             int id = 0;
-            pt.x *= m_windowTouchScaleX;
-            pt.y *= m_windowTouchScaleY;
+            pt.x /= m_fFrameZoomFactor;
+            pt.y /= m_fFrameZoomFactor;
             handleTouchesEnd(1, &id, &pt.x, &pt.y);
 
             ReleaseCapture();
@@ -413,8 +412,8 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
                         CCPoint tmp = ccp(pt.x, m_obScreenSize.height - pt.y);
                         if (m_obViewPortRect.equals(CCRectZero) || m_obViewPortRect.containsPoint(tmp))
                         {
-                            pt.x *= m_windowTouchScaleX;
-                            pt.y *= m_windowTouchScaleY;
+                            pt.x /= m_fFrameZoomFactor;
+                            pt.y /= m_fFrameZoomFactor;
 
                             if (ti.dwFlags & TOUCHEVENTF_DOWN)
                                 handleTouchesBegin(1, reinterpret_cast<int*>(&ti.dwID), &pt.x, &pt.y);
@@ -621,14 +620,11 @@ void CCEGLView::resize(int width, int height)
     const CCSize& frameSize = getFrameSize();
     if (frameSize.width > 0)
     {
-        m_windowTouchScaleX = frameSize.width / width;
-        m_windowTouchScaleY = frameSize.height / height;
-
 #ifdef _DEBUG
         TCHAR buff[MAX_PATH + 1];
         memset(buff, 0, sizeof(buff));
         swprintf_s(buff, MAX_PATH, L"%s - %0.0fx%0.0f - %0.2f",
-                   kWindowClassName, frameSize.width, frameSize.height, 1.0f / m_windowTouchScaleX);
+                   kWindowClassName, frameSize.width, frameSize.height, m_fFrameZoomFactor);
         SetWindowText(m_hWnd, buff);
 #endif
     }
@@ -642,6 +638,7 @@ void CCEGLView::resize(int width, int height)
 
 void CCEGLView::setFrameZoom(float fZoomFactor)
 {
+    m_fFrameZoomFactor = fZoomFactor;
     resize(m_obScreenSize.width * fZoomFactor, m_obScreenSize.height * fZoomFactor);
     centerWindow();
     CCDirector::sharedDirector()->setProjection(CCDirector::sharedDirector()->getProjection());
@@ -689,10 +686,10 @@ void CCEGLView::centerWindow()
 
 void CCEGLView::setViewPortInPoints(float x , float y , float w , float h)
 {
-    glViewport((GLint)(x * m_fScaleX / m_windowTouchScaleX + m_obViewPortRect.origin.x / m_windowTouchScaleX),
-        (GLint)(y * m_fScaleY  / m_windowTouchScaleY + m_obViewPortRect.origin.y / m_windowTouchScaleY),
-        (GLsizei)(w * m_fScaleX / m_windowTouchScaleX),
-        (GLsizei)(h * m_fScaleY / m_windowTouchScaleY));
+    glViewport((GLint)(x * m_fScaleX * m_fFrameZoomFactor + m_obViewPortRect.origin.x * m_fFrameZoomFactor),
+        (GLint)(y * m_fScaleY  * m_fFrameZoomFactor + m_obViewPortRect.origin.y * m_fFrameZoomFactor),
+        (GLsizei)(w * m_fScaleX * m_fFrameZoomFactor),
+        (GLsizei)(h * m_fScaleY * m_fFrameZoomFactor));
 }
 
 CCEGLView* CCEGLView::sharedOpenGLView()
