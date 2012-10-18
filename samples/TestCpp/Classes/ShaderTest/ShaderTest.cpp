@@ -456,9 +456,12 @@ std::string ShaderPlasma::subtitle()
 class SpriteBlur : public CCSprite
 {
 public:
+    ~SpriteBlur();
     void setBlurSize(float f);
     bool initWithTexture(CCTexture2D* texture, const CCRect&  rect);
     void draw();
+    void initProgram();
+    void listenBackToForeground(CCObject *obj);
 
     static SpriteBlur* create(const char *pszFileName);
 
@@ -468,6 +471,11 @@ public:
     GLuint    blurLocation;
     GLuint    subLocation;
 };
+
+SpriteBlur::~SpriteBlur()
+{
+    CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, EVNET_COME_TO_FOREGROUND);
+}
 
 SpriteBlur* SpriteBlur::create(const char *pszFileName)
 {
@@ -484,46 +492,63 @@ SpriteBlur* SpriteBlur::create(const char *pszFileName)
     return pRet;
 }
 
+void SpriteBlur::listenBackToForeground(CCObject *obj)
+{
+    setShaderProgram(NULL);
+    initProgram();
+}
+
 bool SpriteBlur::initWithTexture(CCTexture2D* texture, const CCRect& rect)
 {
     if( CCSprite::initWithTexture(texture, rect) ) 
     {
+        CCNotificationCenter::sharedNotificationCenter()->addObserver(this,
+                                                                      callfuncO_selector(ShaderNode::listenBackToForeground),
+                                                                      EVNET_COME_TO_FOREGROUND,
+                                                                      NULL);
+        
         CCSize s = getTexture()->getContentSizeInPixels();
 
         blur_ = ccp(1/s.width, 1/s.height);
         sub_[0] = sub_[1] = sub_[2] = sub_[3] = 0;
 
-        GLchar * fragSource = (GLchar*) CCString::createWithContentsOfFile(
-            CCFileUtils::sharedFileUtils()->fullPathFromRelativePath("Shaders/example_Blur.fsh"))->getCString();
-        CCGLProgram* pProgram = new CCGLProgram();
-        pProgram->initWithVertexShaderByteArray(ccPositionTextureColor_vert, fragSource);
-        setShaderProgram(pProgram);
-        pProgram->release();
-
-        CHECK_GL_ERROR_DEBUG();
-
-        getShaderProgram()->addAttribute(kCCAttributeNamePosition, kCCVertexAttrib_Position);
-        getShaderProgram()->addAttribute(kCCAttributeNameColor, kCCVertexAttrib_Color);
-        getShaderProgram()->addAttribute(kCCAttributeNameTexCoord, kCCVertexAttrib_TexCoords);
-
-        CHECK_GL_ERROR_DEBUG();
-
-        getShaderProgram()->link();
-
-        CHECK_GL_ERROR_DEBUG();
-
-        getShaderProgram()->updateUniforms();
-
-        CHECK_GL_ERROR_DEBUG();
-
-        subLocation = glGetUniformLocation( getShaderProgram()->getProgram(), "substract");
-        blurLocation = glGetUniformLocation( getShaderProgram()->getProgram(), "blurSize");
-
-        CHECK_GL_ERROR_DEBUG();
+        this->initProgram();
+        
         return true;
     }
 
     return false;
+}
+
+void SpriteBlur::initProgram()
+{
+    GLchar * fragSource = (GLchar*) CCString::createWithContentsOfFile(
+                                                                       CCFileUtils::sharedFileUtils()->fullPathFromRelativePath("Shaders/example_Blur.fsh"))->getCString();
+    CCGLProgram* pProgram = new CCGLProgram();
+    pProgram->initWithVertexShaderByteArray(ccPositionTextureColor_vert, fragSource);
+    setShaderProgram(pProgram);
+    pProgram->release();
+    
+    CHECK_GL_ERROR_DEBUG();
+    
+    getShaderProgram()->addAttribute(kCCAttributeNamePosition, kCCVertexAttrib_Position);
+    getShaderProgram()->addAttribute(kCCAttributeNameColor, kCCVertexAttrib_Color);
+    getShaderProgram()->addAttribute(kCCAttributeNameTexCoord, kCCVertexAttrib_TexCoords);
+    
+    CHECK_GL_ERROR_DEBUG();
+    
+    getShaderProgram()->link();
+    
+    CHECK_GL_ERROR_DEBUG();
+    
+    getShaderProgram()->updateUniforms();
+    
+    CHECK_GL_ERROR_DEBUG();
+    
+    subLocation = glGetUniformLocation( getShaderProgram()->getProgram(), "substract");
+    blurLocation = glGetUniformLocation( getShaderProgram()->getProgram(), "blurSize");
+    
+    CHECK_GL_ERROR_DEBUG();
 }
 
 void SpriteBlur::draw()
