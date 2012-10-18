@@ -184,8 +184,6 @@ CCEGLView::CCEGLView()
 , m_lpfnAccelerometerKeyHook(NULL)
 , m_menu(NULL)
 , m_wndproc(NULL)
-, m_windowWidth(0)
-, m_windowHeight(0)
 , m_windowTouchScaleX(1.0f)
 , m_windowTouchScaleY(1.0f)
 , m_bSupportTouch(false)
@@ -347,14 +345,14 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
         {
             POINT point = {(short)LOWORD(lParam), (short)HIWORD(lParam)};
             CCPoint pt(point.x, point.y);
+            pt.x *= m_windowTouchScaleX;
+            pt.y *= m_windowTouchScaleY;
             CCPoint tmp = ccp(pt.x, m_obScreenSize.height - pt.y);
             if (m_obViewPortRect.equals(CCRectZero) || m_obViewPortRect.containsPoint(tmp))
             {
                 m_bCaptured = true;
                 SetCapture(m_hWnd);
                 int id = 0;
-                pt.x *= m_windowTouchScaleX;
-                pt.y *= m_windowTouchScaleY;
                 handleTouchesBegin(1, &id, &pt.x, &pt.y);
             }
         }
@@ -620,8 +618,6 @@ void CCEGLView::resize(int width, int height)
     rcClient.right = rcClient.left + width;
     rcClient.bottom = rcClient.top + height;
 
-    m_windowWidth = width;
-    m_windowHeight = height;
     const CCSize& frameSize = getFrameSize();
     if (frameSize.width > 0)
     {
@@ -642,6 +638,13 @@ void CCEGLView::resize(int width, int height)
     // change width and height
     SetWindowPos(m_hWnd, 0, 0, 0, width + ptDiff.x, height + ptDiff.y,
                  SWP_NOCOPYBITS | SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
+}
+
+void CCEGLView::setFrameZoom(float fZoomFactor)
+{
+    resize(m_obScreenSize.width * fZoomFactor, m_obScreenSize.height * fZoomFactor);
+    centerWindow();
+    CCDirector::sharedDirector()->setProjection(CCDirector::sharedDirector()->getProjection());
 }
 
 void CCEGLView::setFrameSize(float width, float height)
@@ -682,6 +685,14 @@ void CCEGLView::centerWindow()
     offsetY = (offsetY > 0) ? offsetY : rcDesktop.top;
 
     SetWindowPos(m_hWnd, 0, offsetX, offsetY, 0, 0, SWP_NOCOPYBITS | SWP_NOSIZE | SWP_NOOWNERZORDER | SWP_NOZORDER);
+}
+
+void CCEGLView::setViewPortInPoints(float x , float y , float w , float h)
+{
+    glViewport((GLint)(x * m_fScaleX / m_windowTouchScaleX + m_obViewPortRect.origin.x / m_windowTouchScaleX),
+        (GLint)(y * m_fScaleY  / m_windowTouchScaleY + m_obViewPortRect.origin.y / m_windowTouchScaleY),
+        (GLsizei)(w * m_fScaleX / m_windowTouchScaleX),
+        (GLsizei)(h * m_fScaleY / m_windowTouchScaleY));
 }
 
 CCEGLView* CCEGLView::sharedOpenGLView()
