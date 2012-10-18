@@ -91,8 +91,7 @@ private:
     LPCWSTR m_menu;
     CUSTOM_WND_PROC m_wndproc;
 
-    float m_windowTouchScaleX;
-    float m_windowTouchScaleY;
+    float m_fFrameZoomFactor;
 };
 
 NS_CC_END
