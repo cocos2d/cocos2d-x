@@ -1,11 +1,9 @@
-/* -*- Mode: C++; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*-
- * vim: set ts=8 sw=4 et tw=99 ft=cpp:
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
+/* -*- Mode: C++; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
+/* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this file,
  * You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-/* Utilities for hashing */
+/* Utilities for hashing. */
 
 /*
  * This file exports functions for hashing data down to a 32-bit value,
@@ -26,16 +24,18 @@
  *
  * You can chain these functions together to hash complex objects.  For example:
  *
- *  class ComplexObject {
- *    char* str;
- *    uint32_t uint1, uint2;
- *    void (*callbackFn)();
+ *  class ComplexObject
+ *  {
+ *      char* str;
+ *      uint32_t uint1, uint2;
+ *      void (*callbackFn)();
  *
- *    uint32_t Hash() {
- *      uint32_t hash = HashString(str);
- *      hash = AddToHash(hash, uint1, uint2);
- *      return AddToHash(hash, callbackFn);
- *    }
+ *    public:
+ *      uint32_t hash() {
+ *        uint32_t hash = HashString(str);
+ *        hash = AddToHash(hash, uint1, uint2);
+ *        return AddToHash(hash, callbackFn);
+ *      }
  *  };
  *
  * If you want to hash an nsAString or nsACString, use the HashString functions
@@ -48,6 +48,7 @@
 #include "mozilla/Assertions.h"
 #include "mozilla/Attributes.h"
 #include "mozilla/StandardInteger.h"
+#include "mozilla/Types.h"
 
 #ifdef __cplusplus
 namespace mozilla {

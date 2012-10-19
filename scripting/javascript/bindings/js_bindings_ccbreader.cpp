@@ -110,7 +110,9 @@ JSBool js_CocosBuilder_Run(JSContext *cx, uint32_t argc, jsval *vp)
         while (0);
       
         jsval obj =  argc >= 2 ? argv[1] : JSVAL_NULL;
-        js_log("%s: + ", JSVAL_TO_OBJECT(obj));
+		if (obj.isObject()) {
+			CCLOG("%p: + ", JSVAL_TO_OBJECT(obj));
+		}
         CCNode * ret = loadReader(arg0, obj);
         jsval jsret;
 		if (ret) {
@@ -135,8 +137,6 @@ JSBool js_CocosBuilder_Run(JSContext *cx, uint32_t argc, jsval *vp)
 
 
 void register_CCBuilderReader(JSContext *cx, JSObject *obj) {
-    
-    
     jsval nsval;
 	JSObject *ns;
 	JS_GetProperty(cx, obj, "cc", &nsval);
@@ -149,7 +149,9 @@ void register_CCBuilderReader(JSContext *cx, JSObject *obj) {
 	}
 	obj = ns;
 
-    JSObject *tmpObj = JSVAL_TO_OBJECT(anonEvaluate(cx, obj, "(function () { cc = cc || {}; cc.Reader = cc.Reader || {}; return cc.Reader; })()"));
-    JS_DefineFunction(cx, tmpObj, "load", js_CocosBuilder_Run, 2, JSPROP_READONLY | JSPROP_PERMANENT)    ;
-    
+	JSObject *ccReader = JS_NewObject(cx, NULL, NULL, NULL);
+	jsval valObj = OBJECT_TO_JSVAL(ccReader);
+	JS_SetProperty(cx, ns, "Reader", &valObj);
+
+	JS_DefineFunction(cx, ccReader, "load", js_CocosBuilder_Run, 2, JSPROP_READONLY | JSPROP_PERMANENT);
 }

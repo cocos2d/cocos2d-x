@@ -36,7 +36,7 @@ static AppDelegate s_sharedApplication;
 		// create the window
 		// note that using NSResizableWindowMask causes the window to be a little
 		// smaller and therefore ipad graphics are not loaded
-		NSRect rect = NSMakeRect(200, 200, 480, 320);
+		NSRect rect = NSMakeRect(0, 0, 2048, 1536);
 		window = [[NSWindow alloc] initWithContentRect:rect
 			styleMask:( NSClosableWindowMask | NSTitledWindowMask )
 			backing:NSBackingStoreBuffered
@@ -45,7 +45,6 @@ static AppDelegate s_sharedApplication;
 		// allocate our GL view
 		// (isn't there already a shared EAGLView?)
 		glView = [[EAGLView alloc] initWithFrame:rect];
-		[glView initWithFrame:rect];
 
 		// set window parameters
 		[window becomeFirstResponder];
@@ -53,6 +52,8 @@ static AppDelegate s_sharedApplication;
 		[window setTitle:@"HelloCpp"];
 		[window makeKeyAndOrderFront:self];
 		[window setAcceptsMouseMovedEvents:NO];
+        
+        [glView setFrameZoomFactor:0.4];
 
 		cocos2d::CCApplication::sharedApplication()->run();
 	}

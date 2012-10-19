@@ -87,12 +87,10 @@ void CCEGLViewProtocol::setDesignResolutionSize(float width, float height, Resol
     
     m_eResolutionPolicy = resolutionPolicy;
     
-    //setViewPortInPoints(0, 0,m_obScreenSize.width, m_obScreenSize.height);
-    
-    // reset director's member variables to fit visible rect
-    CCDirector::sharedDirector()->createStatsLabel();
+	// reset director's member variables to fit visible rect
     CCDirector::sharedDirector()->m_obWinSizeInPoints = getSize();
     CCDirector::sharedDirector()->m_obWinSizeInPixels = CCSizeMake(m_obDesignResolutionSize.width*CC_CONTENT_SCALE_FACTOR(), m_obDesignResolutionSize.height*CC_CONTENT_SCALE_FACTOR());
+    CCDirector::sharedDirector()->createStatsLabel();
     CCDirector::sharedDirector()->setGLDefaultValues();
 }
 
@@ -155,6 +153,19 @@ void CCEGLViewProtocol::setScissorInPoints(float x , float y , float w , float h
               (GLint)(y * m_fScaleY + m_obViewPortRect.origin.y),
               (GLsizei)(w * m_fScaleX),
               (GLsizei)(h * m_fScaleY));
+}
+
+void CCEGLViewProtocol::setViewName(const char* pszViewName)
+{
+    if (pszViewName != NULL && strlen(pszViewName) > 0)
+    {
+        strncpy(m_szViewName, pszViewName, sizeof(m_szViewName));
+    }
+}
+
+const char* CCEGLViewProtocol::getViewName()
+{
+    return m_szViewName;
 }
 
 void CCEGLViewProtocol::handleTouchesBegin(int num, int ids[], float xs[], float ys[])
