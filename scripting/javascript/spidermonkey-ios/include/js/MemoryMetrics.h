@@ -1,41 +1,9 @@
 /* -*- Mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*-
  * vim: set ts=8 sw=4 et tw=99 ft=cpp:
  *
- * ***** BEGIN LICENSE BLOCK *****
- * Version: MPL 1.1/GPL 2.0/LGPL 2.1
- *
- * The contents of this file are subject to the Mozilla Public License Version
- * 1.1 (the "License"); you may not use this file except in compliance with
- * the License. You may obtain a copy of the License at
- * http://www.mozilla.org/MPL/
- *
- * Software distributed under the License is distributed on an "AS IS" basis,
- * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
- * for the specific language governing rights and limitations under the
- * License.
- *
- * The Original Code is about:memory glue.
- *
- * The Initial Developer of the Original Code is
- * Ms2ger <ms2ger@gmail.com>.
- * Portions created by the Initial Developer are Copyright (C) 2011
- * the Initial Developer. All Rights Reserved.
- *
- * Contributor(s):
- *
- * Alternatively, the contents of this file may be used under the terms of
- * either the GNU General Public License Version 2 or later (the "GPL"), or
- * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
- * in which case the provisions of the GPL or the LGPL are applicable instead
- * of those above. If you wish to allow use of your version of this file only
- * under the terms of either the GPL or the LGPL, and not to allow others to
- * use your version of this file under the terms of the MPL, indicate your
- * decision by deleting the provisions above and replace them with the notice
- * and other provisions required by the GPL or the LGPL. If you do not delete
- * the provisions above, a recipient may use your version of this file under
- * the terms of any one of the MPL, the GPL or the LGPL.
- *
- * ***** END LICENSE BLOCK ***** */
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 #ifndef js_MemoryMetrics_h
 #define js_MemoryMetrics_h
@@ -62,6 +30,50 @@ struct TypeInferenceSizes
     size_t objects;
     size_t tables;
     size_t temporary;
+
+    void add(TypeInferenceSizes &sizes) {
+        this->scripts   += sizes.scripts;
+        this->objects   += sizes.objects;
+        this->tables    += sizes.tables;
+        this->temporary += sizes.temporary;
+    }
+};
+
+// These measurements relate directly to the JSRuntime, and not to
+// compartments within it.
+struct RuntimeSizes
+{
+    RuntimeSizes()
+      : object(0)
+      , atomsTable(0)
+      , contexts(0)
+      , dtoa(0)
+      , temporary(0)
+      , jaegerCode(0)
+      , ionCode(0)
+      , regexpCode(0)
+      , unusedCode(0)
+      , stackCommitted(0)
+      , gcMarker(0)
+      , mathCache(0)
+      , scriptFilenames(0)
+      , scriptSources(0)
+    {}
+
+    size_t object;
+    size_t atomsTable;
+    size_t contexts;
+    size_t dtoa;
+    size_t temporary;
+    size_t jaegerCode;
+    size_t ionCode;
+    size_t regexpCode;
+    size_t unusedCode;
+    size_t stackCommitted;
+    size_t gcMarker;
+    size_t mathCache;
+    size_t scriptFilenames;
+    size_t scriptSources;
 };
 
 struct CompartmentStats
@@ -70,10 +82,14 @@ struct CompartmentStats
         memset(this, 0, sizeof(*this));
     }
 
-    void   *extra;
-    size_t gcHeapArenaHeaders;
-    size_t gcHeapArenaPadding;
-    size_t gcHeapArenaUnused;
+    // These fields can be used by embedders.
+    void   *extra1;
+    void   *extra2;
+
+    // If you add a new number, remember to update add() and maybe
+    // gcHeapThingsSize()!
+    size_t gcHeapArenaAdmin;
+    size_t gcHeapUnusedGcThings;
 
     size_t gcHeapObjectsNonFunction;
     size_t gcHeapObjectsFunction;
@@ -83,84 +99,127 @@ struct CompartmentStats
     size_t gcHeapShapesBase;
     size_t gcHeapScripts;
     size_t gcHeapTypeObjects;
+    size_t gcHeapIonCodes;
+#if JS_HAS_XML_SUPPORT
     size_t gcHeapXML;
+#endif
 
     size_t objectSlots;
     size_t objectElements;
     size_t objectMisc;
+    size_t objectPrivate;
     size_t stringChars;
     size_t shapesExtraTreeTables;
     size_t shapesExtraDictTables;
     size_t shapesExtraTreeShapeKids;
     size_t shapesCompartmentTables;
     size_t scriptData;
+    size_t jaegerData;
+    size_t ionData;
+    size_t compartmentObject;
+    size_t crossCompartmentWrappers;
+    size_t regexpCompartment;
+    size_t debuggeesSet;
 
-#ifdef JS_METHODJIT
-    size_t mjitCode;
-    size_t mjitData;
-#endif
     TypeInferenceSizes typeInferenceSizes;
+
+    // Add cStats's numbers to this object's numbers.
+    void add(CompartmentStats &cStats) {
+        #define ADD(x)  this->x += cStats.x
+
+        ADD(gcHeapArenaAdmin);
+        ADD(gcHeapUnusedGcThings);
+
+        ADD(gcHeapObjectsNonFunction);
+        ADD(gcHeapObjectsFunction);
+        ADD(gcHeapStrings);
+        ADD(gcHeapShapesTree);
+        ADD(gcHeapShapesDict);
+        ADD(gcHeapShapesBase);
+        ADD(gcHeapScripts);
+        ADD(gcHeapTypeObjects);
+        ADD(gcHeapIonCodes);
+    #if JS_HAS_XML_SUPPORT
+        ADD(gcHeapXML);
+    #endif
+
+        ADD(objectSlots);
+        ADD(objectElements);
+        ADD(objectMisc);
+        ADD(objectPrivate);
+        ADD(stringChars);
+        ADD(shapesExtraTreeTables);
+        ADD(shapesExtraDictTables);
+        ADD(shapesExtraTreeShapeKids);
+        ADD(shapesCompartmentTables);
+        ADD(scriptData);
+        ADD(jaegerData);
+        ADD(ionData);
+        ADD(compartmentObject);
+        ADD(crossCompartmentWrappers);
+        ADD(regexpCompartment);
+        ADD(debuggeesSet);
+
+        #undef ADD
+
+        typeInferenceSizes.add(cStats.typeInferenceSizes);
+    }
+
+    // The size of all the live things in the GC heap.
+    size_t gcHeapThingsSize();
 };
 
 struct RuntimeStats
 {
     RuntimeStats(JSMallocSizeOfFun mallocSizeOf)
-      : runtimeObject(0)
-      , runtimeAtomsTable(0)
-      , runtimeContexts(0)
-      , runtimeNormal(0)
-      , runtimeTemporary(0)
-      , runtimeRegexpCode(0)
-      , runtimeStackCommitted(0)
-      , runtimeGCMarker(0)
+      : runtime()
       , gcHeapChunkTotal(0)
-      , gcHeapChunkCleanUnused(0)
-      , gcHeapChunkDirtyUnused(0)
-      , gcHeapChunkCleanDecommitted(0)
-      , gcHeapChunkDirtyDecommitted(0)
-      , gcHeapArenaUnused(0)
+      , gcHeapDecommittedArenas(0)
+      , gcHeapUnusedChunks(0)
+      , gcHeapUnusedArenas(0)
+      , gcHeapUnusedGcThings(0)
       , gcHeapChunkAdmin(0)
-      , gcHeapUnusedPercentage(0)
-      , totalObjects(0)
-      , totalShapes(0)
-      , totalScripts(0)
-      , totalStrings(0)
-#ifdef JS_METHODJIT
-      , totalMjit(0)
-#endif
-      , totalTypeInference(0)
-      , totalAnalysisTemp(0)
+      , gcHeapGcThings(0)
+      , totals()
       , compartmentStatsVector()
       , currCompartmentStats(NULL)
       , mallocSizeOf(mallocSizeOf)
     {}
 
-    size_t runtimeObject;
-    size_t runtimeAtomsTable;
-    size_t runtimeContexts;
-    size_t runtimeNormal;
-    size_t runtimeTemporary;
-    size_t runtimeRegexpCode;
-    size_t runtimeStackCommitted;
-    size_t runtimeGCMarker;
-    size_t gcHeapChunkTotal;
-    size_t gcHeapChunkCleanUnused;
-    size_t gcHeapChunkDirtyUnused;
-    size_t gcHeapChunkCleanDecommitted;
-    size_t gcHeapChunkDirtyDecommitted;
-    size_t gcHeapArenaUnused;
-    size_t gcHeapChunkAdmin;
-    size_t gcHeapUnusedPercentage;
-    size_t totalObjects;
-    size_t totalShapes;
-    size_t totalScripts;
-    size_t totalStrings;
-#ifdef JS_METHODJIT
-    size_t totalMjit;
-#endif
-    size_t totalTypeInference;
-    size_t totalAnalysisTemp;
+    RuntimeSizes runtime;
 
+    // If you add a new number, remember to update the constructor!
+
+    // Here's a useful breakdown of the GC heap.
+    //
+    // - rtStats.gcHeapChunkTotal
+    //   - decommitted bytes
+    //     - rtStats.gcHeapDecommittedArenas (decommitted arenas in non-empty chunks)
+    //   - unused bytes
+    //     - rtStats.gcHeapUnusedChunks (empty chunks)
+    //     - rtStats.gcHeapUnusedArenas (empty arenas within non-empty chunks)
+    //     - rtStats.total.gcHeapUnusedGcThings (empty GC thing slots within non-empty arenas)
+    //   - used bytes
+    //     - rtStats.gcHeapChunkAdmin
+    //     - rtStats.total.gcHeapArenaAdmin
+    //     - rtStats.gcHeapGcThings (in-use GC things)
+    //
+    // It's possible that some arenas in empty chunks may be decommitted, but
+    // we don't count those under rtStats.gcHeapDecommittedArenas because (a)
+    // it's rare, and (b) this means that rtStats.gcHeapUnusedChunks is a
+    // multiple of the chunk size, which is good.
+
+    size_t gcHeapChunkTotal;
+    size_t gcHeapDecommittedArenas;
+    size_t gcHeapUnusedChunks;
+    size_t gcHeapUnusedArenas;
+    size_t gcHeapUnusedGcThings;
+    size_t gcHeapChunkAdmin;
+    size_t gcHeapGcThings;
+
+    // The sum of all compartment's measurements.
+    CompartmentStats totals;
+ 
     js::Vector<CompartmentStats, 0, js::SystemAllocPolicy> compartmentStatsVector;
     CompartmentStats *currCompartmentStats;
 
@@ -171,8 +230,16 @@ struct RuntimeStats
 
 #ifdef JS_THREADSAFE
 
+class ObjectPrivateVisitor
+{
+public:
+    // Within CollectRuntimeStats, this method is called for each JS object
+    // that has a private slot containing an nsISupports pointer.
+    virtual size_t sizeOfIncludingThis(void *aSupports) = 0;
+};
+
 extern JS_PUBLIC_API(bool)
-CollectRuntimeStats(JSRuntime *rt, RuntimeStats *rtStats);
+CollectRuntimeStats(JSRuntime *rt, RuntimeStats *rtStats, ObjectPrivateVisitor *opv);
 
 extern JS_PUBLIC_API(int64_t)
 GetExplicitNonHeapForRuntime(JSRuntime *rt, JSMallocSizeOfFun mallocSizeOf);
