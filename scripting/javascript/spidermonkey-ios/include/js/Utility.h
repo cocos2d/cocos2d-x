@@ -1,46 +1,15 @@
 /* -*- Mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*-
  * vim: set ts=8 sw=4 et tw=99 ft=cpp:
  *
- * ***** BEGIN LICENSE BLOCK *****
- * Version: MPL 1.1/GPL 2.0/LGPL 2.1
- *
- * The contents of this file are subject to the Mozilla Public License Version
- * 1.1 (the "License"); you may not use this file except in compliance with
- * the License. You may obtain a copy of the License at
- * http://www.mozilla.org/MPL/
- *
- * Software distributed under the License is distributed on an "AS IS" basis,
- * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
- * for the specific language governing rights and limitations under the
- * License.
- *
- * The Original Code is Mozilla SpiderMonkey JavaScript code.
- *
- * The Initial Developer of the Original Code is
- * the Mozilla Foundation.
- * Portions created by the Initial Developer are Copyright (C) 2011
- * the Initial Developer. All Rights Reserved.
- *
- * Contributor(s):
- *
- * Alternatively, the contents of this file may be used under the terms of
- * either the GNU General Public License Version 2 or later (the "GPL"), or
- * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
- * in which case the provisions of the GPL or the LGPL are applicable instead
- * of those above. If you wish to allow use of your version of this file only
- * under the terms of either the GPL or the LGPL, and not to allow others to
- * use your version of this file under the terms of the MPL, indicate your
- * decision by deleting the provisions above and replace them with the notice
- * and other provisions required by the GPL or the LGPL. If you do not delete
- * the provisions above, a recipient may use your version of this file under
- * the terms of any one of the MPL, the GPL or the LGPL.
- *
- * ***** END LICENSE BLOCK ***** */
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 #ifndef js_utility_h__
 #define js_utility_h__
 
 #include "mozilla/Assertions.h"
+#include "mozilla/Attributes.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -53,6 +22,8 @@
 #include "jstypes.h"
 
 #ifdef __cplusplus
+# include "js/TemplateLib.h"
+# include "mozilla/Scoped.h"
 
 /* The public JS engine namespace. */
 namespace JS {}
@@ -96,6 +67,9 @@ JS_BEGIN_EXTERN_C
 
 #define JS_STATIC_ASSERT(cond)           MOZ_STATIC_ASSERT(cond, "JS_STATIC_ASSERT")
 #define JS_STATIC_ASSERT_IF(cond, expr)  MOZ_STATIC_ASSERT_IF(cond, expr, "JS_STATIC_ASSERT_IF")
+
+extern MOZ_NORETURN JS_PUBLIC_API(void)
+JS_Assert(const char *s, const char *file, int ln);
 
 /*
  * Abort the process in a non-graceful manner. This will cause a core file,
@@ -173,11 +147,6 @@ PrintBacktrace()
 #  define JS_OOM_POSSIBLY_FAIL_REPORT(cx) do {} while(0)
 # endif /* DEBUG */
 
-/*
- * SpiderMonkey code should not be calling these allocation functions directly.
- * Instead, all calls should go through JSRuntime, JSContext or OffTheBooks.
- * However, js_free() can be called directly.
- */
 static JS_INLINE void* js_malloc(size_t bytes)
 {
     JS_OOM_POSSIBLY_FAIL();
@@ -382,88 +351,71 @@ JS_FLOOR_LOG2W(size_t n)
     return js_FloorLog2wImpl(n);
 }
 
+/*
+ * JS_ROTATE_LEFT32
+ *
+ * There is no rotate operation in the C Language so the construct (a << 4) |
+ * (a >> 28) is used instead. Most compilers convert this to a rotate
+ * instruction but some versions of MSVC don't without a little help.  To get
+ * MSVC to generate a rotate instruction, we have to use the _rotl intrinsic
+ * and use a pragma to make _rotl inline.
+ *
+ * MSVC in VS2005 will do an inline rotate instruction on the above construct.
+ */
+#if defined(_MSC_VER) && (defined(_M_IX86) || defined(_M_AMD64) || \
+    defined(_M_X64))
+#include <stdlib.h>
+#pragma intrinsic(_rotl)
+#define JS_ROTATE_LEFT32(a, bits) _rotl(a, bits)
+#else
+#define JS_ROTATE_LEFT32(a, bits) (((a) << (bits)) | ((a) >> (32 - (bits))))
+#endif
+
 JS_END_EXTERN_C
 
 #ifdef __cplusplus
 #include <new>
 
 /*
- * User guide to memory management within SpiderMonkey:
+ * Low-level memory management in SpiderMonkey:
  *
- * Quick tips:
+ *  ** Do not use the standard malloc/free/realloc: SpiderMonkey allows these
+ *     to be redefined (via JS_USE_CUSTOM_ALLOCATOR) and Gecko even #define's
+ *     these symbols.
  *
- *   Allocation:
- *   - Prefer to allocate using JSContext:
- *       cx->{malloc_,realloc_,calloc_,new_,array_new}
+ *  ** Do not use the builtin C++ operator new and delete: these throw on
+ *     error and we cannot override them not to.
  *
- *   - If no JSContext is available, use a JSRuntime:
- *       rt->{malloc_,realloc_,calloc_,new_,array_new}
+ * Allocation:
  *
- *   - As a last resort, use unaccounted allocation ("OffTheBooks"):
- *       js::OffTheBooks::{malloc_,realloc_,calloc_,new_,array_new}
+ * - If the lifetime of the allocation is tied to the lifetime of a GC-thing
+ *   (that is, finalizing the GC-thing will free the allocation), call one of
+ *   the following functions:
  *
- *   Deallocation:
- *   - When the deallocation occurs on a slow path, use:
- *       Foreground::{free_,delete_,array_delete}
+ *     JSContext::{malloc_,realloc_,calloc_,new_}
+ *     JSRuntime::{malloc_,realloc_,calloc_,new_}
  *
- *   - Otherwise deallocate on a background thread using a JSContext:
- *       cx->{free_,delete_,array_delete}
+ *   These functions accumulate the number of bytes allocated which is used as
+ *   part of the GC-triggering heuristic.
  *
- *   - If no JSContext is available, use a JSRuntime:
- *       rt->{free_,delete_,array_delete}
+ *   The difference between the JSContext and JSRuntime versions is that the
+ *   cx version reports an out-of-memory error on OOM. (This follows from the
+ *   general SpiderMonkey idiom that a JSContext-taking function reports its
+ *   own errors.)
  *
- *   - As a last resort, use UnwantedForeground deallocation:
- *       js::UnwantedForeground::{free_,delete_,array_delete}
+ * - Otherwise, use js_malloc/js_realloc/js_calloc/js_free/js_new
  *
- * General tips:
+ * Deallocation:
  *
- *   - Mixing and matching these allocators is allowed (you may free memory
- *     allocated by any allocator, with any deallocator).
+ * - Ordinarily, use js_free/js_delete.
  *
- *   - Never, ever use normal C/C++ memory management:
- *       malloc, free, new, new[], delete, operator new, etc.
+ * - For deallocations during GC finalization, use one of the following
+ *   operations on the FreeOp provided to the finalizer:
  *
- *   - Never, ever use low-level SpiderMonkey allocators:
- *       js_malloc(), js_free(), js_calloc(), js_realloc()
- *     Their use is reserved for the other memory managers.
+ *     FreeOp::{free_,delete_}
  *
- *   - Classes which have private constructors or destructors should have
- *     JS_DECLARE_ALLOCATION_FRIENDS_FOR_PRIVATE_CONSTRUCTOR added to their
- *     declaration.
- *
- * Details:
- *
- *   Using vanilla new/new[] is unsafe in SpiderMonkey because they throw on
- *   failure instead of returning NULL, which is what SpiderMonkey expects.
- *   (Even overriding them is unsafe, as the system's C++ runtime library may
- *   throw, which we do not support. We also can't just use the 'nothrow'
- *   variant of new/new[], because we want to mediate *all* allocations
- *   within SpiderMonkey, to satisfy any embedders using
- *   JS_USE_CUSTOM_ALLOCATOR.)
- *
- *   JSContexts and JSRuntimes keep track of memory allocated, and use this
- *   accounting to schedule GC. OffTheBooks does not. We'd like to remove
- *   OffTheBooks allocations as much as possible (bug 636558).
- *
- *   On allocation failure, a JSContext correctly reports an error, which a
- *   JSRuntime and OffTheBooks does not.
- *
- *   A JSContext deallocates in a background thread. A JSRuntime might
- *   deallocate in the background in the future, but does not now. Foreground
- *   deallocation is preferable on slow paths. UnwantedForeground deallocations
- *   occur where we have no JSContext or JSRuntime, and the deallocation is not
- *   on a slow path. We want to remove UnwantedForeground deallocations (bug
- *   636561).
- *
- *   JS_DECLARE_ALLOCATION_FRIENDS_FOR_PRIVATE_CONSTRUCTOR makes the allocation
- *   classes friends with your class, giving them access to private
- *   constructors and destructors.
- *
- *   |make check| does a source level check on the number of uses OffTheBooks,
- *   UnwantedForeground, js_malloc, js_free etc, to prevent regressions. If you
- *   really must add one, update Makefile.in, and run |make check|.
- *
- *   |make check| also statically prevents the use of vanilla new/new[].
+ *   The advantage of these operations is that the memory is batched and freed
+ *   on another thread.
  */
 
 #define JS_NEW_BODY(allocator, t, parms)                                       \
@@ -471,173 +423,143 @@ JS_END_EXTERN_C
     return memory ? new(memory) t parms : NULL;
 
 /*
- * Given a class which should provide new_() methods, add
+ * Given a class which should provide 'new' methods, add
  * JS_DECLARE_NEW_METHODS (see JSContext for a usage example). This
- * adds new_()s with up to 12 parameters. Add more versions of new_ below if
+ * adds news with up to 12 parameters. Add more versions of new below if
  * you need more than 12 parameters.
  *
  * Note: Do not add a ; at the end of a use of JS_DECLARE_NEW_METHODS,
  * or the build will break.
  */
-#define JS_DECLARE_NEW_METHODS(ALLOCATOR, QUALIFIERS)\
+#define JS_DECLARE_NEW_METHODS(NEWNAME, ALLOCATOR, QUALIFIERS)\
     template <class T>\
-    QUALIFIERS T *new_() {\
+    QUALIFIERS T *NEWNAME() {\
         JS_NEW_BODY(ALLOCATOR, T, ())\
     }\
 \
     template <class T, class P1>\
-    QUALIFIERS T *new_(P1 p1) {\
+    QUALIFIERS T *NEWNAME(P1 p1) {\
         JS_NEW_BODY(ALLOCATOR, T, (p1))\
     }\
 \
     template <class T, class P1, class P2>\
-    QUALIFIERS T *new_(P1 p1, P2 p2) {\
+    QUALIFIERS T *NEWNAME(P1 p1, P2 p2) {\
         JS_NEW_BODY(ALLOCATOR, T, (p1, p2))\
     }\
 \
     template <class T, class P1, class P2, class P3>\
-    QUALIFIERS T *new_(P1 p1, P2 p2, P3 p3) {\
+    QUALIFIERS T *NEWNAME(P1 p1, P2 p2, P3 p3) {\
         JS_NEW_BODY(ALLOCATOR, T, (p1, p2, p3))\
     }\
 \
     template <class T, class P1, class P2, class P3, class P4>\
-    QUALIFIERS T *new_(P1 p1, P2 p2, P3 p3, P4 p4) {\
+    QUALIFIERS T *NEWNAME(P1 p1, P2 p2, P3 p3, P4 p4) {\
         JS_NEW_BODY(ALLOCATOR, T, (p1, p2, p3, p4))\
     }\
 \
     template <class T, class P1, class P2, class P3, class P4, class P5>\
-    QUALIFIERS T *new_(P1 p1, P2 p2, P3 p3, P4 p4, P5 p5) {\
+    QUALIFIERS T *NEWNAME(P1 p1, P2 p2, P3 p3, P4 p4, P5 p5) {\
         JS_NEW_BODY(ALLOCATOR, T, (p1, p2, p3, p4, p5))\
     }\
 \
     template <class T, class P1, class P2, class P3, class P4, class P5, class P6>\
-    QUALIFIERS T *new_(P1 p1, P2 p2, P3 p3, P4 p4, P5 p5, P6 p6) {\
+    QUALIFIERS T *NEWNAME(P1 p1, P2 p2, P3 p3, P4 p4, P5 p5, P6 p6) {\
         JS_NEW_BODY(ALLOCATOR, T, (p1, p2, p3, p4, p5, p6))\
     }\
 \
     template <class T, class P1, class P2, class P3, class P4, class P5, class P6, class P7>\
-    QUALIFIERS T *new_(P1 p1, P2 p2, P3 p3, P4 p4, P5 p5, P6 p6, P7 p7) {\
+    QUALIFIERS T *NEWNAME(P1 p1, P2 p2, P3 p3, P4 p4, P5 p5, P6 p6, P7 p7) {\
         JS_NEW_BODY(ALLOCATOR, T, (p1, p2, p3, p4, p5, p6, p7))\
     }\
 \
     template <class T, class P1, class P2, class P3, class P4, class P5, class P6, class P7, class P8>\
-    QUALIFIERS T *new_(P1 p1, P2 p2, P3 p3, P4 p4, P5 p5, P6 p6, P7 p7, P8 p8) {\
+    QUALIFIERS T *NEWNAME(P1 p1, P2 p2, P3 p3, P4 p4, P5 p5, P6 p6, P7 p7, P8 p8) {\
         JS_NEW_BODY(ALLOCATOR, T, (p1, p2, p3, p4, p5, p6, p7, p8))\
     }\
 \
     template <class T, class P1, class P2, class P3, class P4, class P5, class P6, class P7, class P8, class P9>\
-    QUALIFIERS T *new_(P1 p1, P2 p2, P3 p3, P4 p4, P5 p5, P6 p6, P7 p7, P8 p8, P9 p9) {\
+    QUALIFIERS T *NEWNAME(P1 p1, P2 p2, P3 p3, P4 p4, P5 p5, P6 p6, P7 p7, P8 p8, P9 p9) {\
         JS_NEW_BODY(ALLOCATOR, T, (p1, p2, p3, p4, p5, p6, p7, p8, p9))\
     }\
 \
     template <class T, class P1, class P2, class P3, class P4, class P5, class P6, class P7, class P8, class P9, class P10>\
-    QUALIFIERS T *new_(P1 p1, P2 p2, P3 p3, P4 p4, P5 p5, P6 p6, P7 p7, P8 p8, P9 p9, P10 p10) {\
+    QUALIFIERS T *NEWNAME(P1 p1, P2 p2, P3 p3, P4 p4, P5 p5, P6 p6, P7 p7, P8 p8, P9 p9, P10 p10) {\
         JS_NEW_BODY(ALLOCATOR, T, (p1, p2, p3, p4, p5, p6, p7, p8, p9, p10))\
     }\
 \
     template <class T, class P1, class P2, class P3, class P4, class P5, class P6, class P7, class P8, class P9, class P10, class P11>\
-    QUALIFIERS T *new_(P1 p1, P2 p2, P3 p3, P4 p4, P5 p5, P6 p6, P7 p7, P8 p8, P9 p9, P10 p10, P11 p11) {\
+    QUALIFIERS T *NEWNAME(P1 p1, P2 p2, P3 p3, P4 p4, P5 p5, P6 p6, P7 p7, P8 p8, P9 p9, P10 p10, P11 p11) {\
         JS_NEW_BODY(ALLOCATOR, T, (p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11))\
     }\
 \
     template <class T, class P1, class P2, class P3, class P4, class P5, class P6, class P7, class P8, class P9, class P10, class P11, class P12>\
-    QUALIFIERS T *new_(P1 p1, P2 p2, P3 p3, P4 p4, P5 p5, P6 p6, P7 p7, P8 p8, P9 p9, P10 p10, P11 p11, P12 p12) {\
+    QUALIFIERS T *NEWNAME(P1 p1, P2 p2, P3 p3, P4 p4, P5 p5, P6 p6, P7 p7, P8 p8, P9 p9, P10 p10, P11 p11, P12 p12) {\
         JS_NEW_BODY(ALLOCATOR, T, (p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12))\
     }\
-    static const int JSMinAlignment = 8;\
-    template <class T>\
-    QUALIFIERS T *array_new(size_t n) {\
-        /* The length is stored just before the vector memory. */\
-        uint64_t numBytes64 = uint64_t(JSMinAlignment) + uint64_t(sizeof(T)) * uint64_t(n);\
-        size_t numBytes = size_t(numBytes64);\
-        if (numBytes64 != numBytes) {\
-            JS_ASSERT(0);   /* we want to know if this happens in debug builds */\
-            return NULL;\
-        }\
-        void *memory = ALLOCATOR(numBytes);\
-        if (!memory)\
-            return NULL;\
-        *(size_t *)memory = n;\
-        memory = (void*)(uintptr_t(memory) + JSMinAlignment);\
-        return new(memory) T[n];\
-    }\
 
+JS_DECLARE_NEW_METHODS(js_new, js_malloc, static JS_ALWAYS_INLINE)
 
-#define JS_DECLARE_DELETE_METHODS(DEALLOCATOR, QUALIFIERS)\
-    template <class T>\
-    QUALIFIERS void delete_(T *p) {\
-        if (p) {\
-            p->~T();\
-            DEALLOCATOR(p);\
-        }\
-    }\
-\
-    template <class T>\
-    QUALIFIERS void array_delete(T *p) {\
-        if (p) {\
-            void* p0 = (void *)(uintptr_t(p) - js::OffTheBooks::JSMinAlignment);\
-            size_t n = *(size_t *)p0;\
-            for (size_t i = 0; i < n; i++)\
-                (p + i)->~T();\
-            DEALLOCATOR(p0);\
-        }\
+template <class T>
+static JS_ALWAYS_INLINE void
+js_delete(T *p)
+{
+    if (p) {
+        p->~T();
+        js_free(p);
     }
+}
 
+template <class T>
+static JS_ALWAYS_INLINE T *
+js_pod_malloc()
+{
+    return (T *)js_malloc(sizeof(T));
+}
 
-/*
- * In general, all allocations should go through a JSContext or JSRuntime, so
- * that the garbage collector knows how much memory has been allocated. In
- * cases where it is difficult to use a JSContext or JSRuntime, OffTheBooks can
- * be used, though this is undesirable.
- */
+template <class T>
+static JS_ALWAYS_INLINE T *
+js_pod_calloc()
+{
+    return (T *)js_calloc(sizeof(T));
+}
+
+template <class T>
+static JS_ALWAYS_INLINE T *
+js_pod_malloc(size_t numElems)
+{
+    if (numElems & js::tl::MulOverflowMask<sizeof(T)>::result)
+        return NULL;
+    return (T *)js_malloc(numElems * sizeof(T));
+}
+
+template <class T>
+static JS_ALWAYS_INLINE T *
+js_pod_calloc(size_t numElems)
+{
+    if (numElems & js::tl::MulOverflowMask<sizeof(T)>::result)
+        return NULL;
+    return (T *)js_calloc(numElems * sizeof(T));
+}
+
 namespace js {
 
-class OffTheBooks {
-public:
-    JS_DECLARE_NEW_METHODS(::js_malloc, JS_ALWAYS_INLINE static)
-
-    static JS_INLINE void* malloc_(size_t bytes) {
-        return ::js_malloc(bytes);
-    }
-
-    static JS_INLINE void* calloc_(size_t bytes) {
-        return ::js_calloc(bytes);
-    }
-
-    static JS_INLINE void* realloc_(void* p, size_t bytes) {
-        return ::js_realloc(p, bytes);
-    }
+template<typename T>
+struct ScopedFreePtrTraits
+{
+    typedef T* type;
+    static T* empty() { return NULL; }
+    static void release(T* ptr) { js_free(ptr); }
 };
+SCOPED_TEMPLATE(ScopedFreePtr, ScopedFreePtrTraits)
 
-/*
- * We generally prefer deallocating using JSContext because it can happen in
- * the background. On slow paths, we may prefer foreground allocation.
- */
-class Foreground {
-public:
-    /* See parentheses comment above. */
-    static JS_ALWAYS_INLINE void free_(void* p) {
-        ::js_free(p);
-    }
-
-    JS_DECLARE_DELETE_METHODS(::js_free, JS_ALWAYS_INLINE static)
+template <typename T>
+struct ScopedDeletePtrTraits : public ScopedFreePtrTraits<T>
+{
+    static void release(T *ptr) { js_delete(ptr); }
 };
-
-class UnwantedForeground : public Foreground {
-};
+SCOPED_TEMPLATE(ScopedDeletePtr, ScopedDeletePtrTraits)
 
 } /* namespace js */
-
-/*
- * Note lack of ; in JSRuntime below. This is intentional so "calling" this
- * looks "normal".
- */
-#define JS_DECLARE_ALLOCATION_FRIENDS_FOR_PRIVATE_CONSTRUCTOR \
-    friend class js::OffTheBooks;\
-    friend class js::Foreground;\
-    friend class js::UnwantedForeground;\
-    friend struct ::JSContext;\
-    friend struct ::JSRuntime
 
 /*
  * The following classes are designed to cause assertions to detect
@@ -847,20 +769,7 @@ class MoveRef {
     explicit MoveRef(T &t) : pointer(&t) { }
     T &operator*()  const { return *pointer; }
     T *operator->() const { return  pointer; }
-#ifdef __GXX_EXPERIMENTAL_CXX0X__
-    /*
-     * If MoveRef is used in a rvalue position (which is expected), we can
-     * end up in a situation where, without this ifdef, we would try to pass
-     * a T& to a move constructor, which fails. It is not clear if the compiler
-     * should instead use the copy constructor, but for now this lets us build
-     * with clang. See bug 689066 and llvm.org/pr11003 for the details.
-     * Note: We can probably remove MoveRef completely once we are comfortable
-     * using c++11.
-     */
-    operator T&& ()  const { return static_cast<T&&>(*pointer); }
-#else
     operator T& ()   const { return *pointer; }
-#endif
   private:
     T *pointer;
 };
@@ -913,6 +822,51 @@ RoundUpPow2(size_t x)
     return size_t(1) << JS_CEILING_LOG2W(x);
 }
 
+/* Integral types for all hash functions. */
+typedef uint32_t HashNumber;
+const unsigned HashNumberSizeBits = 32;
+
+namespace detail {
+
+/*
+ * Given a raw hash code, h, return a number that can be used to select a hash
+ * bucket.
+ *
+ * This function aims to produce as uniform an output distribution as possible,
+ * especially in the most significant (leftmost) bits, even though the input
+ * distribution may be highly nonrandom, given the constraints that this must
+ * be deterministic and quick to compute.
+ *
+ * Since the leftmost bits of the result are best, the hash bucket index is
+ * computed by doing ScrambleHashCode(h) / (2^32/N) or the equivalent
+ * right-shift, not ScrambleHashCode(h) % N or the equivalent bit-mask.
+ *
+ * FIXME: OrderedHashTable uses a bit-mask; see bug 775896.
+ */
+inline HashNumber
+ScrambleHashCode(HashNumber h)
+{
+    /*
+     * Simply returning h would not cause any hash tables to produce wrong
+     * answers. But it can produce pathologically bad performance: The caller
+     * right-shifts the result, keeping only the highest bits. The high bits of
+     * hash codes are very often completely entropy-free. (So are the lowest
+     * bits.)
+     *
+     * So we use Fibonacci hashing, as described in Knuth, The Art of Computer
+     * Programming, 6.4. This mixes all the bits of the input hash code h.
+     * 
+     * The value of goldenRatio is taken from the hex
+     * expansion of the golden ratio, which starts 1.9E3779B9....
+     * This value is especially good if values with consecutive hash codes
+     * are stored in a hash table; see Knuth for details.
+     */
+    static const HashNumber goldenRatio = 0x9E3779B9U;
+    return h * goldenRatio;
+}
+
+} /* namespace detail */
+
 } /* namespace js */
 
 namespace JS {
@@ -928,7 +882,7 @@ namespace JS {
  * a live integer value.
  */
 
-inline void PoisonPtr(uintptr_t *v)
+inline void PoisonPtr(void *v)
 {
 #if defined(JSGC_ROOT_ANALYSIS) && defined(DEBUG)
     uint8_t *ptr = (uint8_t *) v + 3;
