@@ -1,41 +1,9 @@
 /* -*- Mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*-
  * vim: set ts=4 sw=4 et tw=99 ft=cpp:
  *
- * ***** BEGIN LICENSE BLOCK *****
- * Version: MPL 1.1/GPL 2.0/LGPL 2.1
- *
- * The contents of this file are subject to the Mozilla Public License Version
- * 1.1 (the "License"); you may not use this file except in compliance with
- * the License. You may obtain a copy of the License at
- * http://www.mozilla.org/MPL/
- *
- * Software distributed under the License is distributed on an "AS IS" basis,
- * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
- * for the specific language governing rights and limitations under the
- * License.
- *
- * The Original Code is Mozilla SpiderMonkey JavaScript 1.9 code, released
- * June 30, 2010
- *
- * The Initial Developer of the Original Code is
- *   the Mozilla Corporation.
- *
- * Contributor(s):
- *   Luke Wagner <lw@mozilla.com>
- *
- * Alternatively, the contents of this file may be used under the terms of
- * either of the GNU General Public License Version 2 or later (the "GPL"),
- * or the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
- * in which case the provisions of the GPL or the LGPL are applicable instead
- * of those above. If you wish to allow use of your version of this file only
- * under the terms of either the GPL or the LGPL, and not to allow others to
- * use your version of this file under the terms of the MPL, indicate your
- * decision by deleting the provisions above and replace them with the notice
- * and other provisions required by the GPL or the LGPL. If you do not delete
- * the provisions above, a recipient may use your version of this file under
- * the terms of any one of the MPL, the GPL or the LGPL.
- *
- * ***** END LICENSE BLOCK ***** */
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 #ifndef jsvalimpl_h__
 #define jsvalimpl_h__
@@ -43,8 +11,6 @@
 /*
  * Implementation details for js::Value in jsapi.h.
  */
-
-#include "mozilla/FloatingPoint.h"
 
 #include "js/Utility.h"
 
@@ -247,10 +213,11 @@ typedef enum JSWhyMagic
     JS_ARG_POISON,               /* used in debug builds to catch tracing errors */
     JS_SERIALIZE_NO_NODE,        /* an empty subnode in the AST serializer */
     JS_LAZY_ARGUMENTS,           /* lazy arguments value on the stack */
-    JS_UNASSIGNED_ARGUMENTS,     /* the initial value of callobj.arguments */
     JS_OPTIMIZED_ARGUMENTS,      /* optimized-away 'arguments' value */
     JS_IS_CONSTRUCTING,          /* magic value passed to natives to indicate construction */
     JS_OVERWRITTEN_CALLEE,       /* arguments.callee has been overwritten */
+    JS_FORWARD_TO_CALL_OBJECT,   /* args object element stored in call object */
+    JS_BLOCK_NEEDS_CLONE,        /* value of static block object slot */
     JS_GENERIC_MAGIC             /* for local use */
 } JSWhyMagic;
 
@@ -269,6 +236,7 @@ typedef union jsval_layout
             void           *ptr;
             JSWhyMagic     why;
             size_t         word;
+            uintptr_t      uintptr;
         } payload;
         JSValueTag tag;
     } s;
@@ -296,6 +264,7 @@ typedef union jsval_layout
     double asDouble;
     void *asPtr;
     size_t asWord;
+    uintptr_t asUIntPtr;
 } JSVAL_ALIGNMENT jsval_layout;
 # endif  /* JS_BITS_PER_WORD */
 #else   /* defined(IS_LITTLE_ENDIAN) */
@@ -314,6 +283,7 @@ typedef union jsval_layout
             void           *ptr;
             JSWhyMagic     why;
             size_t         word;
+            uintptr_t      uintptr;
         } payload;
     } s;
     double asDouble;
@@ -338,6 +308,7 @@ typedef union jsval_layout
     double asDouble;
     void *asPtr;
     size_t asWord;
+    uintptr_t asUIntPtr;
 } JSVAL_ALIGNMENT jsval_layout;
 # endif /* JS_BITS_PER_WORD */
 #endif  /* defined(IS_LITTLE_ENDIAN) */
