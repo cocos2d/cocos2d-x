@@ -1,50 +1,21 @@
 /* -*- Mode: C++; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 4 -*-
  * vim: set ts=8 sw=4 et tw=78:
  *
- * ***** BEGIN LICENSE BLOCK *****
- * Version: MPL 1.1/GPL 2.0/LGPL 2.1
- *
- * The contents of this file are subject to the Mozilla Public License Version
- * 1.1 (the "License"); you may not use this file except in compliance with
- * the License. You may obtain a copy of the License at
- * http://www.mozilla.org/MPL/
- *
- * Software distributed under the License is distributed on an "AS IS" basis,
- * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
- * for the specific language governing rights and limitations under the
- * License.
- *
- * The Original Code is SpiderMonkey global object code.
- *
- * The Initial Developer of the Original Code is
- * the Mozilla Foundation.
- * Portions created by the Initial Developer are Copyright (C) 2012
- * the Initial Developer. All Rights Reserved.
- *
- * Contributor(s):
- *
- * Alternatively, the contents of this file may be used under the terms of
- * either of the GNU General Public License Version 2 or later (the "GPL"),
- * or the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
- * in which case the provisions of the GPL or the LGPL are applicable instead
- * of those above. If you wish to allow use of your version of this file only
- * under the terms of either the GPL or the LGPL, and not to allow others to
- * use your version of this file under the terms of the MPL, indicate your
- * decision by deleting the provisions above and replace them with the notice
- * and other provisions required by the GPL or the LGPL. If you do not delete
- * the provisions above, a recipient may use your version of this file under
- * the terms of any one of the MPL, the GPL or the LGPL.
- *
- * ***** END LICENSE BLOCK ***** */
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 #ifndef jsgc_root_h__
 #define jsgc_root_h__
 
-#include "jspubtd.h"
-
-#include "js/Utility.h"
-
 #ifdef __cplusplus
+
+#include "mozilla/TypeTraits.h"
+
+#include "jsapi.h"
+
+#include "js/TemplateLib.h"
+#include "js/Utility.h"
 
 namespace JS {
 
@@ -76,74 +47,158 @@ namespace JS {
  * on the type T of the value being rooted, for which RootMethods<T> must
  * have an instantiation.
  *
- * - Root<T> roots an existing stack allocated variable or other location of
- *   type T. This is typically used either when a variable only needs to be
- *   rooted on certain rare paths, or when a function takes a bare GC thing
- *   pointer as an argument and needs to root it. In the latter case a
- *   Handle<T> is generally preferred, see below.
+ * - Rooted<T> declares a variable of type T, whose value is always rooted.
+ *   Rooted<T> may be automatically coerced to a Handle<T>, below. Rooted<T>
+ *   should be used whenever a local variable's value may be held live across a
+ *   call which can allocate GC things or otherwise trigger a GC.
  *
- * - RootedVar<T> declares a variable of type T, whose value is always rooted.
- *
- * - Handle<T> is a const reference to a Root<T> or RootedVar<T>. Handles are
- *   coerced automatically from such a Root<T> or RootedVar<T>. Functions which
- *   take GC things or values as arguments and need to root those arguments
- *   should generally replace those arguments with handles and avoid any
- *   explicit rooting. This has two benefits. First, when several such
- *   functions call each other then redundant rooting of multiple copies of the
- *   GC thing can be avoided. Second, if the caller does not pass a rooted
- *   value a compile error will be generated, which is quicker and easier to
- *   fix than when relying on a separate rooting analysis.
+ * - Handle<T> is a const reference to a Rooted<T>. Functions which take GC
+ *   things or values as arguments and need to root those arguments should
+ *   generally use handles for those arguments and avoid any explicit rooting.
+ *   This has two benefits. First, when several such functions call each other
+ *   then redundant rooting of multiple copies of the GC thing can be avoided.
+ *   Second, if the caller does not pass a rooted value a compile error will be
+ *   generated, which is quicker and easier to fix than when relying on a
+ *   separate rooting analysis.
  */
 
-template <typename T> class Root;
-template <typename T> class RootedVar;
+template <typename T> class Rooted;
 
 template <typename T>
 struct RootMethods { };
 
 /*
- * Reference to a stack location rooted for GC. See the "Moving GC Stack
- * Rooting" comment above.
+ * Handle provides an implicit constructor for NullPtr so that, given:
+ *   foo(Handle<JSObject*> h);
+ * callers can simply write:
+ *   foo(NullPtr());
+ * which avoids creating a Rooted<JSObject*> just to pass NULL.
+ */
+struct NullPtr
+{
+    static void * const constNullValue;
+};
+
+template <typename T>
+class HandleBase {};
+
+/*
+ * Reference to a T that has been rooted elsewhere. This is most useful
+ * as a parameter type, which guarantees that the T lvalue is properly
+ * rooted. See "Move GC Stack Rooting" above.
+ *
+ * If you want to add additional methods to Handle for a specific
+ * specialization, define a HandleBase<T> specialization containing them.
  */
 template <typename T>
-class Handle
+class Handle : public HandleBase<T>
 {
   public:
-    /* Copy handles of different types, with implicit coercion. */
-    template <typename S> Handle(Handle<S> handle) {
-        testAssign<S>();
+    /* Creates a handle from a handle of a type convertible to T. */
+    template <typename S>
+    Handle(Handle<S> handle,
+           typename mozilla::EnableIf<mozilla::IsConvertible<S, T>::value, int>::Type dummy = 0)
+    {
         ptr = reinterpret_cast<const T *>(handle.address());
     }
 
-    /* Get a handle from a rooted stack location, with implicit coercion. */
-    template <typename S> inline Handle(const Root<S> &root);
-    template <typename S> inline Handle(const RootedVar<S> &root);
+    /* Create a handle for a NULL pointer. */
+    Handle(NullPtr) {
+        typedef typename js::tl::StaticAssert<js::tl::IsPointerType<T>::result>::result _;
+        ptr = reinterpret_cast<const T *>(&NullPtr::constNullValue);
+    }
 
-    const T *address() { return ptr; }
+    /*
+     * This may be called only if the location of the T is guaranteed
+     * to be marked (for some reason other than being a Rooted),
+     * e.g., if it is guaranteed to be reachable from an implicit root.
+     *
+     * Create a Handle from a raw location of a T.
+     */
+    static Handle fromMarkedLocation(const T *p) {
+        Handle h;
+        h.ptr = p;
+        return h;
+    }
 
-    operator T () { return value(); }
-    T operator ->() { return value(); }
+    /*
+     * Construct a handle from an explicitly rooted location. This is the
+     * normal way to create a handle, and normally happens implicitly.
+     */
+    template <typename S>
+    inline
+    Handle(Rooted<S> &root,
+           typename mozilla::EnableIf<mozilla::IsConvertible<S, T>::value, int>::Type dummy = 0);
+
+    const T *address() const { return ptr; }
+    T get() const { return *ptr; }
+
+    operator T () const { return get(); }
+    T operator ->() const { return get(); }
 
   private:
+    Handle() {}
+
     const T *ptr;
-    T value() { return *ptr; }
 
     template <typename S>
-    void testAssign() {
-#ifdef DEBUG
-        T a = RootMethods<T>::initial();
-        S b = RootMethods<S>::initial();
-        a = b;
-        (void)a;
-#endif
-    }
+    void operator =(S v) MOZ_DELETE;
 };
 
 typedef Handle<JSObject*>    HandleObject;
 typedef Handle<JSFunction*>  HandleFunction;
+typedef Handle<JSScript*>    HandleScript;
 typedef Handle<JSString*>    HandleString;
 typedef Handle<jsid>         HandleId;
 typedef Handle<Value>        HandleValue;
+
+template <typename T>
+class MutableHandleBase {};
+
+/*
+ * Similar to a handle, but the underlying storage can be changed. This is
+ * useful for outparams.
+ *
+ * If you want to add additional methods to MutableHandle for a specific
+ * specialization, define a MutableHandleBase<T> specialization containing
+ * them.
+ */
+template <typename T>
+class MutableHandle : public MutableHandleBase<T>
+{
+  public:
+    template <typename S>
+    MutableHandle(MutableHandle<S> handle,
+                  typename mozilla::EnableIf<mozilla::IsConvertible<S, T>::value, int>::Type dummy = 0)
+    {
+        this->ptr = reinterpret_cast<const T *>(handle.address());
+    }
+
+    template <typename S>
+    inline
+    MutableHandle(Rooted<S> *root,
+                  typename mozilla::EnableIf<mozilla::IsConvertible<S, T>::value, int>::Type dummy = 0);
+
+    void set(T v)
+    {
+        JS_ASSERT(!RootMethods<T>::poisoned(v));
+        *ptr = v;
+    }
+
+    T *address() const { return ptr; }
+    T get() const { return *ptr; }
+
+    operator T () const { return get(); }
+    T operator ->() const { return get(); }
+
+  private:
+    MutableHandle() {}
+
+    T *ptr;
+};
+
+typedef MutableHandle<JSObject*>    MutableHandleObject;
+typedef MutableHandle<Value>        MutableHandleValue;
 
 template <typename T>
 struct RootMethods<T *>
@@ -153,76 +208,103 @@ struct RootMethods<T *>
     static bool poisoned(T *v) { return IsPoisonedPtr(v); }
 };
 
+template <typename T>
+class RootedBase {};
+
 /*
- * Root a stack location holding a GC thing. This takes a stack pointer
- * and ensures that throughout its lifetime the referenced variable
- * will remain pinned against a moving GC.
+ * Local variable of type T whose value is always rooted. This is typically
+ * used for local variables, or for non-rooted values being passed to a
+ * function that requires a handle, e.g. Foo(Root<T>(cx, x)).
  *
- * It is important to ensure that the location referenced by a Root is
- * initialized, as otherwise the GC may try to use the the uninitialized value.
- * It is generally preferable to use either RootedVar for local variables, or
- * Handle for arguments.
+ * If you want to add additional methods to Rooted for a specific
+ * specialization, define a RootedBase<T> specialization containing them.
  */
 template <typename T>
-class Root
+class Rooted : public RootedBase<T>
 {
-  public:
-    Root(JSContext *cx_, const T *ptr
-         JS_GUARD_OBJECT_NOTIFIER_PARAM)
+    void init(JSContext *cx_)
     {
-#ifdef JSGC_ROOT_ANALYSIS
+#if defined(JSGC_ROOT_ANALYSIS) || defined(JSGC_USE_EXACT_ROOTING)
         ContextFriendFields *cx = ContextFriendFields::get(cx_);
 
         ThingRootKind kind = RootMethods<T>::kind();
-        this->stack = reinterpret_cast<Root<T>**>(&cx->thingGCRooters[kind]);
+        this->stack = reinterpret_cast<Rooted<T>**>(&cx->thingGCRooters[kind]);
         this->prev = *stack;
         *stack = this;
+
+        JS_ASSERT(!RootMethods<T>::poisoned(ptr));
 #endif
-
-        JS_ASSERT(!RootMethods<T>::poisoned(*ptr));
-
-        this->ptr = ptr;
-
-        JS_GUARD_OBJECT_NOTIFIER_INIT;
     }
 
-    ~Root()
+  public:
+    Rooted(JSContext *cx) : ptr(RootMethods<T>::initial()) { init(cx); }
+    Rooted(JSContext *cx, T initial) : ptr(initial) { init(cx); }
+
+    ~Rooted()
     {
-#ifdef JSGC_ROOT_ANALYSIS
+#if defined(JSGC_ROOT_ANALYSIS) || defined(JSGC_USE_EXACT_ROOTING)
         JS_ASSERT(*stack == this);
         *stack = prev;
 #endif
     }
 
-#ifdef JSGC_ROOT_ANALYSIS
-    Root<T> *previous() { return prev; }
+#if defined(JSGC_ROOT_ANALYSIS) || defined(JSGC_USE_EXACT_ROOTING)
+    Rooted<T> *previous() { return prev; }
 #endif
 
-    const T *address() const { return ptr; }
+    operator T () const { return ptr; }
+    T operator ->() const { return ptr; }
+    T * address() { return &ptr; }
+    const T * address() const { return &ptr; }
+    T & get() { return ptr; }
+    const T & get() const { return ptr; }
+
+    T & operator =(T value)
+    {
+        JS_ASSERT(!RootMethods<T>::poisoned(value));
+        ptr = value;
+        return ptr;
+    }
+
+    T & operator =(const Rooted &value)
+    {
+        ptr = value;
+        return ptr;
+    }
 
   private:
 
-#ifdef JSGC_ROOT_ANALYSIS
-    Root<T> **stack, *prev;
+#if defined(JSGC_ROOT_ANALYSIS) || defined(JSGC_USE_EXACT_ROOTING)
+    Rooted<T> **stack, *prev;
 #endif
-    const T *ptr;
+    T ptr;
 
-    JS_DECL_USE_GUARD_OBJECT_NOTIFIER
+    Rooted() MOZ_DELETE;
+    Rooted(const Rooted &) MOZ_DELETE;
 };
 
 template<typename T> template <typename S>
 inline
-Handle<T>::Handle(const Root<S> &root)
+Handle<T>::Handle(Rooted<S> &root,
+                  typename mozilla::EnableIf<mozilla::IsConvertible<S, T>::value, int>::Type dummy)
 {
-    testAssign<S>();
     ptr = reinterpret_cast<const T *>(root.address());
 }
 
-typedef Root<JSObject*>    RootObject;
-typedef Root<JSFunction*>  RootFunction;
-typedef Root<JSString*>    RootString;
-typedef Root<jsid>         RootId;
-typedef Root<Value>        RootValue;
+template<typename T> template <typename S>
+inline
+MutableHandle<T>::MutableHandle(Rooted<S> *root,
+                                typename mozilla::EnableIf<mozilla::IsConvertible<S, T>::value, int>::Type dummy)
+{
+    ptr = root->address();
+}
+
+typedef Rooted<JSObject*>    RootedObject;
+typedef Rooted<JSFunction*>  RootedFunction;
+typedef Rooted<JSScript*>    RootedScript;
+typedef Rooted<JSString*>    RootedString;
+typedef Rooted<jsid>         RootedId;
+typedef Rooted<Value>        RootedValue;
 
 /*
  * Mark a stack location as a root for the rooting analysis, without actually
@@ -238,18 +320,30 @@ class SkipRoot
     const uint8_t *start;
     const uint8_t *end;
 
-  public:
     template <typename T>
-    SkipRoot(JSContext *cx_, const T *ptr
-              JS_GUARD_OBJECT_NOTIFIER_PARAM)
+    void init(ContextFriendFields *cx, const T *ptr, size_t count)
     {
-        ContextFriendFields *cx = ContextFriendFields::get(cx_);
-
         this->stack = &cx->skipGCRooters;
         this->prev = *stack;
         *stack = this;
         this->start = (const uint8_t *) ptr;
-        this->end = this->start + sizeof(T);
+        this->end = this->start + (sizeof(T) * count);
+    }
+
+  public:
+    template <typename T>
+    SkipRoot(JSContext *cx, const T *ptr
+             JS_GUARD_OBJECT_NOTIFIER_PARAM)
+    {
+        init(ContextFriendFields::get(cx), ptr, 1);
+        JS_GUARD_OBJECT_NOTIFIER_INIT;
+    }
+
+    template <typename T>
+    SkipRoot(JSContext *cx, const T *ptr, size_t count
+             JS_GUARD_OBJECT_NOTIFIER_PARAM)
+    {
+        init(ContextFriendFields::get(cx), ptr, count);
         JS_GUARD_OBJECT_NOTIFIER_INIT;
     }
 
@@ -275,74 +369,66 @@ class SkipRoot
         JS_GUARD_OBJECT_NOTIFIER_INIT;
     }
 
+    template <typename T>
+    SkipRoot(JSContext *cx, const T *ptr, size_t count
+              JS_GUARD_OBJECT_NOTIFIER_PARAM)
+    {
+        JS_GUARD_OBJECT_NOTIFIER_INIT;
+    }
+
 #endif /* DEBUG && JSGC_ROOT_ANALYSIS */
 
     JS_DECL_USE_GUARD_OBJECT_NOTIFIER
 };
 
-/* Make a local variable which stays rooted throughout its lifetime. */
-template <typename T>
-class RootedVar
-{
-  public:
-    RootedVar(JSContext *cx)
-      : ptr(RootMethods<T>::initial()), root(cx, &ptr)
-    {}
+#ifdef DEBUG
+JS_FRIEND_API(bool) IsRootingUnnecessaryForContext(JSContext *cx);
+JS_FRIEND_API(void) SetRootingUnnecessaryForContext(JSContext *cx, bool value);
+JS_FRIEND_API(bool) RelaxRootChecksForContext(JSContext *cx);
+#endif
 
-    RootedVar(JSContext *cx, T initial)
-      : ptr(initial), root(cx, &ptr)
-    {}
-
-    operator T () const { return ptr; }
-    T operator ->() const { return ptr; }
-    T * address() { return &ptr; }
-    const T * address() const { return &ptr; }
-    T & reference() { return ptr; }
-    T raw() { return ptr; }
-
-    /*
-     * This method is only necessary due to an obscure C++98 requirement (that
-     * there be an accessible, usable copy constructor when passing a temporary
-     * to an implicitly-called constructor for use with a const-ref parameter).
-     * (Head spinning yet?)  We can remove this when we build the JS engine
-     * with -std=c++11.
-     */
-    operator Handle<T> () const { return Handle<T>(*this); }
-
-    T & operator =(T value)
+class AssertRootingUnnecessary {
+    JS_DECL_USE_GUARD_OBJECT_NOTIFIER
+    JSContext *cx;
+    bool prev;
+public:
+    AssertRootingUnnecessary(JSContext *cx JS_GUARD_OBJECT_NOTIFIER_PARAM)
+        : cx(cx)
     {
-        JS_ASSERT(!RootMethods<T>::poisoned(value));
-        ptr = value;
-        return ptr;
+        JS_GUARD_OBJECT_NOTIFIER_INIT;
+#ifdef DEBUG
+        prev = IsRootingUnnecessaryForContext(cx);
+        SetRootingUnnecessaryForContext(cx, true);
+#endif
     }
 
-    T & operator =(const RootedVar &value)
-    {
-        ptr = value;
-        return ptr;
+    ~AssertRootingUnnecessary() {
+#ifdef DEBUG
+        SetRootingUnnecessaryForContext(cx, prev);
+#endif
     }
-
-  private:
-    T ptr;
-    Root<T> root;
-
-    RootedVar() MOZ_DELETE;
-    RootedVar(const RootedVar &) MOZ_DELETE;
 };
 
-template <typename T> template <typename S>
-inline
-Handle<T>::Handle(const RootedVar<S> &root)
-{
-    testAssign<S>();
-    ptr = reinterpret_cast<const T *>(root.address());
-}
+#if defined(DEBUG) && defined(JS_GC_ZEAL) && defined(JSGC_ROOT_ANALYSIS) && !defined(JS_THREADSAFE)
+extern void
+CheckStackRoots(JSContext *cx);
+#endif
 
-typedef RootedVar<JSObject*>    RootedVarObject;
-typedef RootedVar<JSFunction*>  RootedVarFunction;
-typedef RootedVar<JSString*>    RootedVarString;
-typedef RootedVar<jsid>         RootedVarId;
-typedef RootedVar<Value>        RootedVarValue;
+/*
+ * Hook for dynamic root analysis. Checks the native stack and poisons
+ * references to GC things which have not been rooted.
+ */
+inline void MaybeCheckStackRoots(JSContext *cx, bool relax = true)
+{
+#ifdef DEBUG
+    JS_ASSERT(!IsRootingUnnecessaryForContext(cx));
+# if defined(JS_GC_ZEAL) && defined(JSGC_ROOT_ANALYSIS) && !defined(JS_THREADSAFE)
+    if (relax && RelaxRootChecksForContext(cx))
+        return;
+    CheckStackRoots(cx);
+# endif
+#endif
+}
 
 }  /* namespace JS */
 
