@@ -1,41 +1,8 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 4 -*-
  *
- * ***** BEGIN LICENSE BLOCK *****
- * Version: MPL 1.1/GPL 2.0/LGPL 2.1
- *
- * The contents of this file are subject to the Mozilla Public License Version
- * 1.1 (the "License"); you may not use this file except in compliance with
- * the License. You may obtain a copy of the License at
- * http://www.mozilla.org/MPL/
- *
- * Software distributed under the License is distributed on an "AS IS" basis,
- * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
- * for the specific language governing rights and limitations under the
- * License.
- *
- * The Original Code is Mozilla Communicator client code, released
- * March 31, 1998.
- *
- * The Initial Developer of the Original Code is
- * Netscape Communications Corporation.
- * Portions created by the Initial Developer are Copyright (C) 1998
- * the Initial Developer. All Rights Reserved.
- *
- * Contributor(s):
- *
- * Alternatively, the contents of this file may be used under the terms of
- * either of the GNU General Public License Version 2 or later (the "GPL"),
- * or the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
- * in which case the provisions of the GPL or the LGPL are applicable instead
- * of those above. If you wish to allow use of your version of this file only
- * under the terms of either the GPL or the LGPL, and not to allow others to
- * use your version of this file under the terms of the MPL, indicate your
- * decision by deleting the provisions above and replace them with the notice
- * and other provisions required by the GPL or the LGPL. If you do not delete
- * the provisions above, a recipient may use your version of this file under
- * the terms of any one of the MPL, the GPL or the LGPL.
- *
- * ***** END LICENSE BLOCK ***** */
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 /*
  * This is the JavaScript error message file.
@@ -147,8 +114,8 @@ MSG_DEF(JSMSG_CANT_OPEN,               60, 2, JSEXN_ERR, "can't open {0}: {1}")
 MSG_DEF(JSMSG_TOO_MANY_FUN_APPLY_ARGS, 61, 0, JSEXN_RANGEERR, "arguments array passed to Function.prototype.apply is too large")
 MSG_DEF(JSMSG_UNMATCHED_RIGHT_PAREN,   62, 0, JSEXN_SYNTAXERR, "unmatched ) in regular expression")
 MSG_DEF(JSMSG_TOO_BIG_TO_ENCODE,       63, 0, JSEXN_INTERNALERR, "data are to big to encode")
-MSG_DEF(JSMSG_UNUSED64,                64, 0, JSEXN_NONE,    "")
-MSG_DEF(JSMSG_UNUSED65,                65, 0, JSEXN_NONE,    "")
+MSG_DEF(JSMSG_ARG_INDEX_OUT_OF_RANGE,  64, 1, JSEXN_RANGEERR, "argument {0} accesses an index that is out of range")
+MSG_DEF(JSMSG_SPREAD_TOO_LARGE,        65, 0, JSEXN_RANGEERR, "array too large due to spread operand(s)")
 MSG_DEF(JSMSG_UNUSED66,                66, 0, JSEXN_NONE,    "")
 MSG_DEF(JSMSG_UNUSED67,                67, 0, JSEXN_NONE,    "")
 MSG_DEF(JSMSG_BAD_SCRIPT_MAGIC,        68, 0, JSEXN_INTERNALERR, "bad script XDR magic number")
@@ -258,7 +225,7 @@ MSG_DEF(JSMSG_BAD_XML_CHARACTER,      171, 0, JSEXN_SYNTAXERR, "illegal XML char
 MSG_DEF(JSMSG_BAD_DEFAULT_XML_NAMESPACE,172,0,JSEXN_SYNTAXERR, "invalid default XML namespace")
 MSG_DEF(JSMSG_BAD_XML_NAME_SYNTAX,    173, 0, JSEXN_SYNTAXERR, "invalid XML name")
 MSG_DEF(JSMSG_BRACKET_AFTER_ATTR_EXPR,174, 0, JSEXN_SYNTAXERR, "missing ] after attribute expression")
-MSG_DEF(JSMSG_NESTING_GENERATOR,      175, 1, JSEXN_TYPEERR, "already executing generator {0}")
+MSG_DEF(JSMSG_NESTING_GENERATOR,      175, 0, JSEXN_TYPEERR, "already executing generator")
 MSG_DEF(JSMSG_CURLY_IN_XML_EXPR,      176, 0, JSEXN_SYNTAXERR, "missing } in XML expression")
 MSG_DEF(JSMSG_BAD_XML_NAMESPACE,      177, 1, JSEXN_TYPEERR, "invalid XML namespace {0}")
 MSG_DEF(JSMSG_BAD_XML_ATTR_NAME,      178, 1, JSEXN_TYPEERR, "invalid XML attribute name {0}")
@@ -378,4 +345,10 @@ MSG_DEF(JSMSG_NOT_ITERABLE,           291, 1, JSEXN_TYPEERR, "{0} is not iterabl
 MSG_DEF(JSMSG_QUERY_LINE_WITHOUT_URL, 292, 0, JSEXN_TYPEERR, "findScripts query object has 'line' property, but no 'url' property")
 MSG_DEF(JSMSG_QUERY_INNERMOST_WITHOUT_LINE_URL, 293, 0, JSEXN_TYPEERR, "findScripts query object has 'innermost' property without both 'url' and 'line' properties")
 MSG_DEF(JSMSG_DEBUG_VARIABLE_NOT_FOUND, 294, 0, JSEXN_TYPEERR, "variable not found in environment")
-
+MSG_DEF(JSMSG_PARAMETER_AFTER_REST,   295, 0, JSEXN_SYNTAXERR, "parameter after rest parameter")
+MSG_DEF(JSMSG_NO_REST_NAME,           296, 0, JSEXN_SYNTAXERR, "no parameter name after ...")
+MSG_DEF(JSMSG_ARGUMENTS_AND_REST,     297, 0, JSEXN_SYNTAXERR, "'arguments' object may not be used in conjunction with a rest parameter")
+MSG_DEF(JSMSG_FUNCTION_ARGUMENTS_AND_REST, 298, 0, JSEXN_ERR, "the 'arguments' property of a function with a rest parameter may not be used")
+MSG_DEF(JSMSG_REST_WITH_DEFAULT,      299, 0, JSEXN_SYNTAXERR, "rest parameter may not have a default")
+MSG_DEF(JSMSG_NONDEFAULT_FORMAL_AFTER_DEFAULT, 300, 0, JSEXN_SYNTAXERR, "parameter(s) with default followed by parameter without default")
+MSG_DEF(JSMSG_YIELD_IN_DEFAULT,       301, 0, JSEXN_SYNTAXERR, "yield in default expression")

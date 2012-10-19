@@ -1,42 +1,7 @@
-/* -*- Mode: C++; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*-
- * vim: set ts=8 sw=4 et tw=99 ft=cpp:
- *
- * ***** BEGIN LICENSE BLOCK *****
- * Version: MPL 1.1/GPL 2.0/LGPL 2.1
- *
- * The contents of this file are subject to the Mozilla Public License Version
- * 1.1 (the "License"); you may not use this file except in compliance with
- * the License. You may obtain a copy of the License at:
- * http://www.mozilla.org/MPL/
- *
- * Software distributed under the License is distributed on an "AS IS" basis,
- * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
- * for the specific language governing rights and limitations under the
- * License.
- *
- * The Original Code is Mozilla Code.
- *
- * The Initial Developer of the Original Code is
- *   The Mozilla Foundation
- * Portions created by the Initial Developer are Copyright (C) 2011
- * the Initial Developer. All Rights Reserved.
- *
- * Contributor(s):
- *   Jeff Walden <jwalden+code@mit.edu>
- *
- * Alternatively, the contents of this file may be used under the terms of
- * either the GNU General Public License Version 2 or later (the "GPL"), or
- * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
- * in which case the provisions of the GPL or the LGPL are applicable instead
- * of those above. If you wish to allow use of your version of this file only
- * under the terms of either the GPL or the LGPL, and not to allow others to
- * use your version of this file under the terms of the MPL, indicate your
- * decision by deleting the provisions above and replace them with the notice
- * and other provisions required by the GPL or the LGPL. If you do not delete
- * the provisions above, a recipient may use your version of this file under
- * the terms of any one of the MPL, the GPL or the LGPL.
- *
- * ***** END LICENSE BLOCK ***** */
+/* -*- Mode: C++; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 /* Implementations of runtime and static assertion macros for C and C++. */
 
@@ -44,11 +9,27 @@
 #define mozilla_Assertions_h_
 
 #include "mozilla/Attributes.h"
-#include "mozilla/Types.h"
 
+#include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
-#ifndef WIN32
+#ifdef WIN32
+   /*
+    * TerminateProcess and GetCurrentProcess are defined in <winbase.h>, which
+    * further depends on <windef.h>.  We hardcode these few definitions manually
+    * because those headers clutter the global namespace with a significant
+    * number of undesired macros and symbols.
+    */
+#  ifdef __cplusplus
+   extern "C" {
+#  endif
+   __declspec(dllimport) int __stdcall
+   TerminateProcess(void* hProcess, unsigned int uExitCode);
+   __declspec(dllimport) void* __stdcall GetCurrentProcess(void);
+#  ifdef __cplusplus
+   }
+#  endif
+#else
 #  include <signal.h>
 #endif
 #ifdef ANDROID
@@ -140,58 +121,73 @@
 extern "C" {
 #endif
 
-#if defined(WIN32)
+/*
+ * MOZ_CRASH crashes the program, plain and simple, in a Breakpad-compatible
+ * way, in both debug and release builds.
+ *
+ * MOZ_CRASH is a good solution for "handling" failure cases when you're
+ * unwilling or unable to handle them more cleanly -- for OOM, for likely memory
+ * corruption, and so on.  It's also a good solution if you need safe behavior
+ * in release builds as well as debug builds.  But if the failure is one that
+ * should be debugged and fixed, MOZ_ASSERT is generally preferable.
+ */
+#if defined(_MSC_VER)
    /*
-    * We used to call DebugBreak() on Windows, but amazingly, it causes
-    * the MSVS 2010 debugger not to be able to recover a call stack.
-    */
-#  define MOZ_CRASH() \
-     do { \
-       *((volatile int *) NULL) = 123; \
-       exit(3); \
-     } while (0)
-#elif defined(ANDROID)
-   /*
-    * On Android, raise(SIGABRT) is handled asynchronously. Seg fault now
-    * so we crash immediately and capture the current call stack. We need
-    * to specifically use the global namespace in the C++ case.
+    * On MSVC use the __debugbreak compiler intrinsic, which produces an inline
+    * (not nested in a system function) breakpoint.  This distinctively invokes
+    * Breakpad without requiring system library symbols on all stack-processing
+    * machines, as a nested breakpoint would require.  We use TerminateProcess
+    * with the exit code aborting would generate because we don't want to invoke
+    * atexit handlers, destructors, library unload handlers, and so on when our
+    * process might be in a compromised state.  We don't use abort() because
+    * it'd cause Windows to annoyingly pop up the process error dialog multiple
+    * times.  See bug 345118 and bug 426163.
+    *
+    * (Technically these are Windows requirements, not MSVC requirements.  But
+    * practically you need MSVC for debugging, and we only ship builds created
+    * by MSVC, so doing it this way reduces complexity.)
     */
 #  ifdef __cplusplus
 #    define MOZ_CRASH() \
        do { \
-         *((volatile int *) NULL) = 123; \
+         __debugbreak(); \
+         *((volatile int*) NULL) = 123; \
+         ::TerminateProcess(::GetCurrentProcess(), 3); \
+       } while (0)
+#  else
+#    define MOZ_CRASH() \
+       do { \
+         __debugbreak(); \
+         *((volatile int*) NULL) = 123; \
+         TerminateProcess(GetCurrentProcess(), 3); \
+       } while (0)
+#  endif
+#else
+#  ifdef __cplusplus
+#    define MOZ_CRASH() \
+       do { \
+         *((volatile int*) NULL) = 123; \
          ::abort(); \
        } while (0)
 #  else
 #    define MOZ_CRASH() \
        do { \
-         *((volatile int *) NULL) = 123; \
+         *((volatile int*) NULL) = 123; \
          abort(); \
        } while (0)
 #  endif
-#elif defined(__APPLE__)
-   /*
-    * On Mac OS X, Breakpad ignores signals. Only real Mach exceptions are
-    * trapped.
-    */
-#  define MOZ_CRASH() \
-     do { \
-       *((volatile int *) NULL) = 123; \
-       raise(SIGABRT);  /* In case above statement gets nixed by the optimizer. */ \
-     } while (0)
-#else
-#  define MOZ_CRASH() \
-     do { \
-       raise(SIGABRT);  /* To continue from here in GDB: "signal 0". */ \
-     } while (0)
 #endif
 
-
-extern MFBT_API(void)
-MOZ_Assert(const char* s, const char* file, int ln);
-
+/*
+ * Prints |s| as an assertion failure (using file and ln as the location of the
+ * assertion) to the standard debug-output channel.
+ *
+ * Usually you should use MOZ_ASSERT instead of this method.  This method is
+ * primarily for internal use in this header, and only secondarily for use in
+ * implementing release-build assertions.
+ */
 static MOZ_ALWAYS_INLINE void
-MOZ_OutputAssertMessage(const char* s, const char *file, int ln)
+MOZ_ReportAssertionFailure(const char* s, const char* file, int ln)
 {
 #ifdef ANDROID
   __android_log_print(ANDROID_LOG_FATAL, "MOZ_Assert",
@@ -243,7 +239,7 @@ MOZ_OutputAssertMessage(const char* s, const char *file, int ln)
 #  define MOZ_ASSERT_HELPER1(expr) \
      do { \
        if (!(expr)) { \
-         MOZ_OutputAssertMessage(#expr, __FILE__, __LINE__); \
+         MOZ_ReportAssertionFailure(#expr, __FILE__, __LINE__); \
          MOZ_CRASH(); \
        } \
      } while (0)
@@ -251,7 +247,7 @@ MOZ_OutputAssertMessage(const char* s, const char *file, int ln)
 #  define MOZ_ASSERT_HELPER2(expr, explain) \
      do { \
        if (!(expr)) { \
-         MOZ_OutputAssertMessage(#expr " (" explain ")", __FILE__, __LINE__); \
+         MOZ_ReportAssertionFailure(#expr " (" explain ")", __FILE__, __LINE__); \
          MOZ_CRASH(); \
        } \
      } while (0)
@@ -302,19 +298,38 @@ MOZ_OutputAssertMessage(const char* s, const char *file, int ln)
 #  define MOZ_ASSERT_IF(cond, expr)  do { } while (0)
 #endif
 
-/* MOZ_NOT_REACHED_MARKER() expands (in compilers which support it) to an
- * expression which states that it is undefined behavior for the compiler to
- * reach this point. Most code should probably use the higher level
- * MOZ_NOT_REACHED (which expands to this when appropriate).
+/*
+ * MOZ_NOT_REACHED_MARKER() expands to an expression which states that it is
+ * undefined behavior for execution to reach this point.  No guarantees are made
+ * about what will happen if this is reached at runtime.  Most code should
+ * probably use the higher level MOZ_NOT_REACHED, which uses this when
+ * appropriate.
  */
 #if defined(__clang__)
 #  define MOZ_NOT_REACHED_MARKER() __builtin_unreachable()
 #elif defined(__GNUC__)
+   /*
+    * __builtin_unreachable() was implemented in gcc 4.5.  If we don't have
+    * that, call a noreturn function; abort() will do nicely.  Qualify the call
+    * in C++ in case there's another abort() visible in local scope.
+    */
 #  if __GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 5)
 #    define MOZ_NOT_REACHED_MARKER() __builtin_unreachable()
+#  else
+#    ifdef __cplusplus
+#      define MOZ_NOT_REACHED_MARKER() ::abort()
+#    else
+#      define MOZ_NOT_REACHED_MARKER() abort()
+#    endif
 #  endif
 #elif defined(_MSC_VER)
-# define MOZ_NOT_REACHED_MARKER() __assume(0)
+#  define MOZ_NOT_REACHED_MARKER() __assume(0)
+#else
+#  ifdef __cplusplus
+#    define MOZ_NOT_REACHED_MARKER() ::abort()
+#  else
+#    define MOZ_NOT_REACHED_MARKER() abort()
+#  endif
 #endif
 
 /*
@@ -334,39 +349,14 @@ MOZ_OutputAssertMessage(const char* s, const char *file, int ln)
  *       MOZ_NOT_REACHED("boolean literal that's not true or false?");
  *   }
  */
-#if defined(MOZ_NOT_REACHED_MARKER)
-#  if defined(DEBUG)
-#    define MOZ_NOT_REACHED(reason)  do { \
-                                       MOZ_Assert(reason, __FILE__, __LINE__); \
-                                       MOZ_NOT_REACHED_MARKER();        \
-                                     } while (0)
-#  else
-#    define MOZ_NOT_REACHED(reason)  MOZ_NOT_REACHED_MARKER()
-#  endif
+#if defined(DEBUG)
+#  define MOZ_NOT_REACHED(reason) \
+     do { \
+       MOZ_ASSERT(false, reason); \
+       MOZ_NOT_REACHED_MARKER(); \
+     } while (0)
 #else
-#  if defined(__GNUC__)
-     /*
-      * On older versions of gcc we need to call a noreturn function to mark the
-      * code as unreachable. Since what we want is an unreachable version of
-      * MOZ_Assert, we use an asm label
-      * (http://gcc.gnu.org/onlinedocs/gcc-4.6.2/gcc/Asm-Labels.html) to create
-      * a new declaration to the same symbol. MOZ_ASSERT_NR should only be
-      * used via this macro, as it is a very specific hack to older versions of
-      * gcc.
-      */
-#    define MOZ_GETASMPREFIX2(X) #X
-#    define MOZ_GETASMPREFIX(X) MOZ_GETASMPREFIX2(X)
-#    define MOZ_ASMPREFIX MOZ_GETASMPREFIX(__USER_LABEL_PREFIX__)
-     extern MOZ_NORETURN MFBT_API(void)
-     MOZ_ASSERT_NR(const char* s, const char* file, int ln) \
-       asm (MOZ_ASMPREFIX "MOZ_Assert");
-
-#    define MOZ_NOT_REACHED(reason)    MOZ_ASSERT_NR(reason, __FILE__, __LINE__)
-#  elif defined(DEBUG)
-#    define MOZ_NOT_REACHED(reason)    MOZ_Assert(reason, __FILE__, __LINE__)
-#  else
-#    define MOZ_NOT_REACHED(reason)    ((void)0)
-#  endif
+#  define MOZ_NOT_REACHED(reason)  MOZ_NOT_REACHED_MARKER()
 #endif
 
 /*
