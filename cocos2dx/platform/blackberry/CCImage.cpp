@@ -49,8 +49,8 @@
 using namespace std;
 
 struct TextLine {
-	string sLineStr;
 	int iLineWidth;
+    wchar_t* text;
 };
 
 NS_CC_BEGIN
@@ -77,86 +77,132 @@ public:
     void reset() {
 		iMaxLineWidth = 0;
 		iMaxLineHeight = 0;
+		size_t size = vLines.size();
+        for (int i=0; i<size; ++i) {
+            TextLine line = vLines[i];
+            free(line.text);
+        }
 		vLines.clear();
 	}
     
-	void buildLine(stringstream& ss, FT_Face face, int iCurXCursor, char cLastChar) {
+
+    int utf8(char **p)
+    {
+        if ((**p & 0x80) == 0x00)
+        {
+            int a = *((*p)++);
+
+            return a;
+        }
+        if ((**p & 0xE0) == 0xC0)
+        {
+            int a = *((*p)++) & 0x1F;
+            int b = *((*p)++) & 0x3F;
+
+            return (a << 6) | b;
+        }
+        if ((**p & 0xF0) == 0xE0)
+        {
+            int a = *((*p)++) & 0x0F;
+            int b = *((*p)++) & 0x3F;
+            int c = *((*p)++) & 0x3F;
+
+            return (a << 12) | (b << 6) | c;
+        }
+        if ((**p & 0xF8) == 0xF0)
+        {
+            int a = *((*p)++) & 0x07;
+            int b = *((*p)++) & 0x3F;
+            int c = *((*p)++) & 0x3F;
+            int d = *((*p)++) & 0x3F;
+
+            return (a << 18) | (b << 12) | (c << 8) | d;
+        }
+        return 0;
+    }
+
+	void buildLine(wchar_t* buf, size_t buf_len, FT_Face face, int iCurXCursor, FT_UInt cLastChar) {
 		TextLine oTempLine;
-		ss << '\0';
-		oTempLine.sLineStr = ss.str();
+        wchar_t* text = (wchar_t*)malloc(sizeof(wchar_t) * (buf_len+1));
+        memcpy(text, buf, sizeof(wchar_t) * buf_len);
+        text[buf_len] = '\0';
+        oTempLine.text = text;
+
 		//get last glyph
-		FT_Load_Glyph(face, FT_Get_Char_Index(face, cLastChar),
-                      FT_LOAD_DEFAULT);
-        
+        int iError = FT_Load_Char(face, cLastChar, FT_LOAD_DEFAULT);
+
         oTempLine.iLineWidth = iCurXCursor - SHIFT6((face->glyph->metrics.horiAdvance - face->glyph->metrics.horiBearingX - face->glyph->metrics.width))/*-iInterval*/;//TODO interval
 		iMaxLineWidth = MAX(iMaxLineWidth, oTempLine.iLineWidth);
-		ss.clear();
-		ss.str("");
-		vLines.push_back(oTempLine);
+
+        vLines.push_back(oTempLine);
 	}
-    
+
 	bool divideString(FT_Face face, const char* sText, int iMaxWidth, int iMaxHeight) {
-		const char* pText = sText;
 		int iError = 0;
-		int iCurXCursor;
-		iError = FT_Load_Glyph(face, FT_Get_Char_Index(face, *pText),
-                               FT_LOAD_DEFAULT);
+		int iCurXCursor, iCurYCursor;
+		const char* pText = sText;
+
+        FT_UInt unicode = utf8((char**)&pText);
+        iError = FT_Load_Char(face, unicode, FT_LOAD_DEFAULT);
 		if (iError) {
 			return false;
 		}
 		iCurXCursor = -SHIFT6(face->glyph->metrics.horiBearingX);
-		//init stringstream
-		stringstream ss;
-        
-		int cLastCh = 0;
-        
-		while (*pText != '\0') {
-			if (*pText == '\n') {
-				buildLine(ss, face, iCurXCursor, cLastCh);
-                
-				pText++;
-				iError = FT_Load_Glyph(face, FT_Get_Char_Index(face, *pText),
-                                       FT_LOAD_DEFAULT);
+
+		FT_UInt cLastCh = 0;
+
+        pText = sText;
+        size_t text_len = 0;
+        wchar_t* text_buf = (wchar_t*) malloc(sizeof(wchar_t) * strlen(sText));
+        while (unicode=utf8((char**)&pText)) {
+            if (unicode == '\n') {
+				buildLine(text_buf, text_len, face, iCurXCursor, cLastCh);
+                text_len = 0;
+
+                iError = FT_Load_Char(face, unicode, FT_LOAD_DEFAULT);
 				if (iError) {
+                    free(text_buf);
 					return false;
 				}
 				iCurXCursor = -SHIFT6(face->glyph->metrics.horiBearingX);
 				continue;
 			}
-            
-			iError = FT_Load_Glyph(face, FT_Get_Char_Index(face, *pText),
-                                   FT_LOAD_DEFAULT);
-            
+
+            iError = FT_Load_Char(face, unicode, FT_LOAD_DEFAULT);
+
 			if (iError) {
+                free(text_buf);
 				return false;
-				//break;
 			}
+
 			//check its width
 			//divide it when exceeding
 			if ((iMaxWidth > 0
-                 && iCurXCursor + SHIFT6(face->glyph->metrics.width)
-                 > iMaxWidth)) {
-				buildLine(ss, face , iCurXCursor, cLastCh);
-                
+							&& iCurXCursor + SHIFT6(face->glyph->metrics.width)
+							> iMaxWidth)) {
+				buildLine(text_buf, text_len, face , iCurXCursor, cLastCh);
+                text_len = 0;
+
 				iCurXCursor = -SHIFT6(face->glyph->metrics.horiBearingX);
-                
 			}
-            
-			cLastCh = *pText;
-			ss << *pText;
+
+			cLastCh = unicode;
+            text_buf[text_len] = unicode;
+            ++text_len;
 			iCurXCursor += SHIFT6(face->glyph->metrics.horiAdvance) + iInterval;
-			pText++;
-            
 		}
+        
 		if (iError) {
+            free(text_buf);
 			return false;
 		}
-        
-		buildLine(ss,face, iCurXCursor, cLastCh);
-        
+
+		buildLine(text_buf, text_len, face, iCurXCursor, cLastCh);
+        free(text_buf);
+
 		return true;
 	}
-    
+
 	/**
 	 * compute the start pos of every line
 	 *
@@ -183,6 +229,25 @@ public:
 		} else {
 			// left or other situation
 			iRet = -SHIFT6(face->glyph->metrics.horiBearingX );
+		}
+		return iRet;
+	}
+		
+	int computeLineStartY( FT_Face face, CCImage::ETextAlign eAlignMask, int txtHeight, int borderHeight ){
+		int iRet;
+		if (eAlignMask == CCImage::kAlignCenter || eAlignMask == CCImage::kAlignLeft ||
+			eAlignMask == CCImage::kAlignRight ) {
+			//vertical center
+			iRet = (borderHeight - txtHeight)/2 + SHIFT6(face->size->metrics.ascender);
+
+		} else if (eAlignMask == CCImage::kAlignBottomRight || 
+				   eAlignMask == CCImage::kAlignBottom || 
+				   eAlignMask == CCImage::kAlignBottomLeft ) {
+			//vertical bottom
+			iRet = borderHeight - txtHeight + SHIFT6(face->size->metrics.ascender);
+		} else {
+			// left or other situation
+			iRet = SHIFT6(face->size->metrics.ascender);
 		}
 		return iRet;
 	}
@@ -229,50 +294,62 @@ public:
 			- (face->size->metrics.descender >> 6);
 			iMaxLineHeight *= vLines.size();
             
+			int txtHeight = iMaxLineHeight;
+            
 			//compute the final line height
 			iMaxLineHeight = MAX(iMaxLineHeight, nHeight);
 			m_pData = new unsigned char[iMaxLineWidth * iMaxLineHeight*4];
-			iCurYCursor = SHIFT6(face->size->metrics.ascender);
-            
+//			iCurYCursor = SHIFT6(face->size->metrics.ascender);
+        	iCurYCursor = computeLineStartY( face, eAlignMask, txtHeight, iMaxLineHeight );
+
 			memset(m_pData,0, iMaxLineWidth * iMaxLineHeight*4);
             
-            for (size_t i = 0; i < vLines.size(); i++) {
-				pText = vLines[i].sLineStr.c_str();
+            size_t lines = vLines.size();
+            for (size_t i = 0; i < lines; i++) {
+                const wchar_t* text_ptr = vLines[i].text;
+
 				//initialize the origin cursor
-				iCurXCursor = computeLineStart(face, eAlignMask, *pText, i);
-                
-				while (*pText != 0) {
-					int iError = FT_Load_Glyph(face, FT_Get_Char_Index(face, *pText),
-                                               FT_LOAD_RENDER);
+				iCurXCursor = computeLineStart(face, eAlignMask, text_ptr[0], i);
+
+                size_t text_len = wcslen(text_ptr);
+                for (size_t i=0; i<text_len; ++i) {
+                    int iError = FT_Load_Char(face, text_ptr[i], FT_LOAD_RENDER);
 					if (iError) {
 						break;
 					}
-                    
+
 					//  convert glyph to bitmap with 256 gray
 					//  and get the bitmap
-					FT_Bitmap & bitmap = face->glyph->bitmap;
-                    
+					FT_Bitmap& bitmap = face->glyph->bitmap;
 
+                    int yoffset = iCurYCursor - (face->glyph->metrics.horiBearingY >> 6);
+                    int xoffset = iCurXCursor + (face->glyph->metrics.horiBearingX >> 6);
 					for (int i = 0; i < bitmap.rows; ++i) {
 						for (int j = 0; j < bitmap.width; ++j) {
+                            unsigned char cTemp = bitmap.buffer[i * bitmap.width + j];
+                            if (cTemp == 0) continue;
+
 							//  if it has gray>0 we set show it as 1, o otherwise
-							int iY = iCurYCursor + i
-							- (face->glyph->metrics.horiBearingY
-									>> 6);
-							int iX = iCurXCursor
-							+ (face->glyph->metrics.horiBearingX
-									>> 6) + j;
+							int iY = yoffset + i;
+							int iX = xoffset + j;
 
 							if (iY>=iMaxLineHeight) {
 								//exceed the height truncate
 								continue;
 							}
 
-							m_pData[(iY * iMaxLineWidth + iX) * 4 + 1] = bitmap.buffer[i * bitmap.width + j];//R
-							m_pData[(iY * iMaxLineWidth + iX) * 4 + 2] = bitmap.buffer[i * bitmap.width + j];//G
-							m_pData[(iY * iMaxLineWidth + iX) * 4 + 0] = bitmap.buffer[i * bitmap.width + j];//B
+//							m_pData[(iY * iMaxLineWidth + iX) * 4 + 3] =
+//							bitmap.buffer[i * bitmap.width + j] ?
+//							0xff : 0;//alpha
+//							m_pData[(iY * iMaxLineWidth + iX) * 4 + 1] =
+//							bitmap.buffer[i * bitmap.width + j];//R
+//							m_pData[(iY * iMaxLineWidth + iX) * 4 + 2] =
+//							bitmap.buffer[i * bitmap.width + j];//G
+//							m_pData[(iY * iMaxLineWidth + iX) * 4 + 0] =
+//							bitmap.buffer[i * bitmap.width + j];//B
 
-							m_pData[(iY * iMaxLineWidth + iX) * 4 + 3] = bitmap.buffer[i * bitmap.width + j];//alpha
+							int iTemp = cTemp << 24 | cTemp << 16 | cTemp << 8 | cTemp;
+							*(int*) &m_pData[(iY * iMaxLineWidth + iX) * 4 + 0] = iTemp;
 						}
 					}
 					//step to next glyph
