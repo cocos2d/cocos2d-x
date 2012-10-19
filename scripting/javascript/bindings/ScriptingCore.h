@@ -26,9 +26,9 @@ void registerDefaultClasses(JSContext* cx, JSObject* global);
 
 class ScriptingCore : public CCScriptEngineProtocol
 {
-	JSRuntime *rt;
-	JSContext *cx;
-	JSObject  *global;
+	JSRuntime *rt_;
+	JSContext *cx_;
+	JSObject  *global_;
 	
 	ScriptingCore();
 public:
@@ -93,13 +93,13 @@ public:
 	 * @param outVal The jsval that will hold the return value of the evaluation.
 	 * Can be NULL.
 	 */
-	JSBool evalString(const char *string, jsval *outVal, const char *filename = NULL);
+	JSBool evalString(const char *string, jsval *outVal, const char *filename = NULL, JSContext* cx = NULL, JSObject* global = NULL);
 	
 	/**
 	 * will run the specified string
 	 * @param string The path of the script to be run
 	 */
-	JSBool runScript(const char *path);
+	JSBool runScript(const char *path, JSObject* global = NULL, JSContext* cx = NULL);
 
 	/**
 	 * initialize everything
@@ -131,7 +131,7 @@ public:
 	 * @return the global context
 	 */
 	JSContext* getGlobalContext() {
-		return cx;
+		return cx_;
 	};
 	
 	/**
@@ -198,5 +198,13 @@ jsval ccgridsize_to_jsval(JSContext* cx, ccGridSize& v);
 jsval cccolor4b_to_jsval(JSContext* cx, ccColor4B& v);
 jsval cccolor4f_to_jsval(JSContext* cx, ccColor4F& v);
 jsval cccolor3b_to_jsval(JSContext* cx, ccColor3B& v);
+
+JSObject* NewGlobalObject(JSContext* cx);
+JSBool jsNewGlobal(JSContext* cx, unsigned argc, jsval* vp);
+
+JSBool jsSocketOpen(JSContext* cx, unsigned argc, jsval* vp);
+JSBool jsSocketRead(JSContext* cx, unsigned argc, jsval* vp);
+JSBool jsSocketWrite(JSContext* cx, unsigned argc, jsval* vp);
+JSBool jsSocketClose(JSContext* cx, unsigned argc, jsval* vp);
 
 #endif

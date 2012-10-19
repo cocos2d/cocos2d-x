@@ -1,41 +1,8 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 4 -*-
  *
- * ***** BEGIN LICENSE BLOCK *****
- * Version: MPL 1.1/GPL 2.0/LGPL 2.1
- *
- * The contents of this file are subject to the Mozilla Public License Version
- * 1.1 (the "License"); you may not use this file except in compliance with
- * the License. You may obtain a copy of the License at
- * http://www.mozilla.org/MPL/
- *
- * Software distributed under the License is distributed on an "AS IS" basis,
- * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
- * for the specific language governing rights and limitations under the
- * License.
- *
- * The Original Code is Mozilla Communicator client code, released
- * March 31, 1998.
- *
- * The Initial Developer of the Original Code is
- * Netscape Communications Corporation.
- * Portions created by the Initial Developer are Copyright (C) 1998
- * the Initial Developer. All Rights Reserved.
- *
- * Contributor(s):
- *
- * Alternatively, the contents of this file may be used under the terms of
- * either of the GNU General Public License Version 2 or later (the "GPL"),
- * or the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
- * in which case the provisions of the GPL or the LGPL are applicable instead
- * of those above. If you wish to allow use of your version of this file only
- * under the terms of either the GPL or the LGPL, and not to allow others to
- * use your version of this file under the terms of the MPL, indicate your
- * decision by deleting the provisions above and replace them with the notice
- * and other provisions required by the GPL or the LGPL. If you do not delete
- * the provisions above, a recipient may use your version of this file under
- * the terms of any one of the MPL, the GPL or the LGPL.
- *
- * ***** END LICENSE BLOCK ***** */
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 /*
  * This is the JavaScript error message file.
@@ -147,10 +114,10 @@ MSG_DEF(JSMSG_CANT_OPEN,               60, 2, JSEXN_ERR, "can't open {0}: {1}")
 MSG_DEF(JSMSG_TOO_MANY_FUN_APPLY_ARGS, 61, 0, JSEXN_RANGEERR, "arguments array passed to Function.prototype.apply is too large")
 MSG_DEF(JSMSG_UNMATCHED_RIGHT_PAREN,   62, 0, JSEXN_SYNTAXERR, "unmatched ) in regular expression")
 MSG_DEF(JSMSG_TOO_BIG_TO_ENCODE,       63, 0, JSEXN_INTERNALERR, "data are to big to encode")
-MSG_DEF(JSMSG_UNUSED64,                64, 0, JSEXN_NONE,    "")
-MSG_DEF(JSMSG_UNUSED65,                65, 0, JSEXN_NONE,    "")
-MSG_DEF(JSMSG_UNUSED66,                66, 0, JSEXN_NONE,    "")
-MSG_DEF(JSMSG_UNUSED67,                67, 0, JSEXN_NONE,    "")
+MSG_DEF(JSMSG_ARG_INDEX_OUT_OF_RANGE,  64, 1, JSEXN_RANGEERR, "argument {0} accesses an index that is out of range")
+MSG_DEF(JSMSG_SPREAD_TOO_LARGE,        65, 0, JSEXN_RANGEERR, "array too large due to spread operand(s)")
+MSG_DEF(JSMSG_SOURCE_TOO_LONG,         66, 0, JSEXN_RANGEERR, "source is too long")
+MSG_DEF(JSMSG_BAD_WEAKMAP_KEY,         67, 0, JSEXN_TYPEERR, "cannot use the given object as a weak map key")
 MSG_DEF(JSMSG_BAD_SCRIPT_MAGIC,        68, 0, JSEXN_INTERNALERR, "bad script XDR magic number")
 MSG_DEF(JSMSG_PAREN_BEFORE_FORMAL,     69, 0, JSEXN_SYNTAXERR, "missing ( before formal parameters")
 MSG_DEF(JSMSG_MISSING_FORMAL,          70, 0, JSEXN_SYNTAXERR, "missing formal parameter")
@@ -159,7 +126,7 @@ MSG_DEF(JSMSG_CURLY_BEFORE_BODY,       72, 0, JSEXN_SYNTAXERR, "missing { before
 MSG_DEF(JSMSG_CURLY_AFTER_BODY,        73, 0, JSEXN_SYNTAXERR, "missing } after function body")
 MSG_DEF(JSMSG_PAREN_BEFORE_COND,       74, 0, JSEXN_SYNTAXERR, "missing ( before condition")
 MSG_DEF(JSMSG_PAREN_AFTER_COND,        75, 0, JSEXN_SYNTAXERR, "missing ) after condition")
-MSG_DEF(JSMSG_DESTRUCT_DUP_ARG,        76, 0, JSEXN_SYNTAXERR, "duplicate argument is mixed with destructuring pattern")
+MSG_DEF(JSMSG_BAD_DUP_ARGS,            76, 0, JSEXN_SYNTAXERR, "duplicate argument names not allowed in this context")
 MSG_DEF(JSMSG_NAME_AFTER_DOT,          77, 0, JSEXN_SYNTAXERR, "missing name after . operator")
 MSG_DEF(JSMSG_BRACKET_IN_INDEX,        78, 0, JSEXN_SYNTAXERR, "missing ] in index expression")
 MSG_DEF(JSMSG_XML_WHOLE_PROGRAM,       79, 0, JSEXN_SYNTAXERR, "XML can't be the whole program")
@@ -229,7 +196,7 @@ MSG_DEF(JSMSG_BAD_CLONE_FUNOBJ_SCOPE, 142, 0, JSEXN_TYPEERR, "bad cloned functio
 MSG_DEF(JSMSG_SHARPVAR_TOO_BIG,       143, 0, JSEXN_SYNTAXERR, "overlarge sharp variable number")
 MSG_DEF(JSMSG_ILLEGAL_CHARACTER,      144, 0, JSEXN_SYNTAXERR, "illegal character")
 MSG_DEF(JSMSG_BAD_OCTAL,              145, 1, JSEXN_SYNTAXERR, "{0} is not a legal ECMA-262 octal constant")
-MSG_DEF(JSMSG_BAD_INDIRECT_CALL,      146, 1, JSEXN_EVALERR, "function {0} must be called directly, and not by way of a function of another name")
+MSG_DEF(JSMSG_UNUSED146,              146, 0, JSEXN_NONE, "")
 MSG_DEF(JSMSG_UNCAUGHT_EXCEPTION,     147, 1, JSEXN_INTERNALERR, "uncaught exception: {0}")
 MSG_DEF(JSMSG_INVALID_BACKREF,        148, 0, JSEXN_SYNTAXERR, "non-octal digit in an escape sequence that doesn't match a back-reference")
 MSG_DEF(JSMSG_BAD_BACKREF,            149, 0, JSEXN_SYNTAXERR, "back-reference exceeds number of capturing parentheses")
@@ -258,7 +225,7 @@ MSG_DEF(JSMSG_BAD_XML_CHARACTER,      171, 0, JSEXN_SYNTAXERR, "illegal XML char
 MSG_DEF(JSMSG_BAD_DEFAULT_XML_NAMESPACE,172,0,JSEXN_SYNTAXERR, "invalid default XML namespace")
 MSG_DEF(JSMSG_BAD_XML_NAME_SYNTAX,    173, 0, JSEXN_SYNTAXERR, "invalid XML name")
 MSG_DEF(JSMSG_BRACKET_AFTER_ATTR_EXPR,174, 0, JSEXN_SYNTAXERR, "missing ] after attribute expression")
-MSG_DEF(JSMSG_NESTING_GENERATOR,      175, 1, JSEXN_TYPEERR, "already executing generator {0}")
+MSG_DEF(JSMSG_NESTING_GENERATOR,      175, 0, JSEXN_TYPEERR, "already executing generator")
 MSG_DEF(JSMSG_CURLY_IN_XML_EXPR,      176, 0, JSEXN_SYNTAXERR, "missing } in XML expression")
 MSG_DEF(JSMSG_BAD_XML_NAMESPACE,      177, 1, JSEXN_TYPEERR, "invalid XML namespace {0}")
 MSG_DEF(JSMSG_BAD_XML_ATTR_NAME,      178, 1, JSEXN_TYPEERR, "invalid XML attribute name {0}")
@@ -378,4 +345,33 @@ MSG_DEF(JSMSG_NOT_ITERABLE,           291, 1, JSEXN_TYPEERR, "{0} is not iterabl
 MSG_DEF(JSMSG_QUERY_LINE_WITHOUT_URL, 292, 0, JSEXN_TYPEERR, "findScripts query object has 'line' property, but no 'url' property")
 MSG_DEF(JSMSG_QUERY_INNERMOST_WITHOUT_LINE_URL, 293, 0, JSEXN_TYPEERR, "findScripts query object has 'innermost' property without both 'url' and 'line' properties")
 MSG_DEF(JSMSG_DEBUG_VARIABLE_NOT_FOUND, 294, 0, JSEXN_TYPEERR, "variable not found in environment")
-
+MSG_DEF(JSMSG_PARAMETER_AFTER_REST,   295, 0, JSEXN_SYNTAXERR, "parameter after rest parameter")
+MSG_DEF(JSMSG_NO_REST_NAME,           296, 0, JSEXN_SYNTAXERR, "no parameter name after ...")
+MSG_DEF(JSMSG_ARGUMENTS_AND_REST,     297, 0, JSEXN_SYNTAXERR, "'arguments' object may not be used in conjunction with a rest parameter")
+MSG_DEF(JSMSG_FUNCTION_ARGUMENTS_AND_REST, 298, 0, JSEXN_ERR, "the 'arguments' property of a function with a rest parameter may not be used")
+MSG_DEF(JSMSG_REST_WITH_DEFAULT,      299, 0, JSEXN_SYNTAXERR, "rest parameter may not have a default")
+MSG_DEF(JSMSG_NONDEFAULT_FORMAL_AFTER_DEFAULT, 300, 0, JSEXN_SYNTAXERR, "parameter(s) with default followed by parameter without default")
+MSG_DEF(JSMSG_YIELD_IN_DEFAULT,       301, 0, JSEXN_SYNTAXERR, "yield in default expression")
+MSG_DEF(JSMSG_INTRINSIC_NOT_DEFINED,  302, 1, JSEXN_REFERENCEERR, "no intrinsic function {0}")
+MSG_DEF(JSMSG_ALREADY_HAS_SOURCEMAP,  303, 1, JSEXN_ERR,      "{0} is being assigned a source map, yet already has one")
+MSG_DEF(JSMSG_PAR_ARRAY_BAD_ARG,      304, 1, JSEXN_TYPEERR, "invalid ParallelArray{0} argument")
+MSG_DEF(JSMSG_PAR_ARRAY_BAD_PARTITION, 305, 0, JSEXN_ERR, "argument must be divisible by outermost dimension")
+MSG_DEF(JSMSG_PAR_ARRAY_REDUCE_EMPTY, 306, 0, JSEXN_ERR, "cannot reduce empty ParallelArray object")
+MSG_DEF(JSMSG_PAR_ARRAY_ALREADY_FLAT, 307, 0, JSEXN_ERR, "cannot flatten 1-dimensional ParallelArray object")
+MSG_DEF(JSMSG_PAR_ARRAY_SCATTER_CONFLICT, 308, 0, JSEXN_ERR, "no conflict resolution function provided")
+MSG_DEF(JSMSG_PAR_ARRAY_SCATTER_BOUNDS, 309, 0, JSEXN_ERR, "index in scatter vector out of bounds")
+MSG_DEF(JSMSG_CANT_REPORT_NC_AS_NE,   310, 0, JSEXN_TYPEERR, "proxy can't report a non-configurable own property as non-existent")
+MSG_DEF(JSMSG_CANT_REPORT_E_AS_NE,    311, 0, JSEXN_TYPEERR, "proxy can't report an existing own property as non-existent on a non-extensible object")
+MSG_DEF(JSMSG_CANT_REPORT_NEW,        312, 0, JSEXN_TYPEERR, "proxy can't report a new property on a non-extensible object")
+MSG_DEF(JSMSG_CANT_REPORT_INVALID,    313, 0, JSEXN_TYPEERR, "proxy can't report an incompatible property descriptor")
+MSG_DEF(JSMSG_CANT_REPORT_NE_AS_NC,   314, 0, JSEXN_TYPEERR, "proxy can't report a non-existent property as non-configurable")
+MSG_DEF(JSMSG_CANT_DEFINE_NEW,        315, 0, JSEXN_TYPEERR, "proxy can't define a new property on a non-extensible object")
+MSG_DEF(JSMSG_CANT_DEFINE_INVALID,    316, 0, JSEXN_TYPEERR, "proxy can't define an incompatible property descriptor")
+MSG_DEF(JSMSG_CANT_DEFINE_NE_AS_NC,   317, 0, JSEXN_TYPEERR, "proxy can't define a non-existent property as non-configurable")
+MSG_DEF(JSMSG_INVALID_TRAP_RESULT,    318, 2, JSEXN_TYPEERR, "trap {1} for {0} returned an invalid result")
+MSG_DEF(JSMSG_CANT_SKIP_NC,           319, 0, JSEXN_TYPEERR, "proxy can't skip a non-configurable property")
+MSG_DEF(JSMSG_MUST_REPORT_SAME_VALUE, 320, 0, JSEXN_TYPEERR, "proxy must report the same value for a non-writable, non-configurable property")
+MSG_DEF(JSMSG_MUST_REPORT_UNDEFINED,  321, 0, JSEXN_TYPEERR, "proxy must report undefined for a non-configurable accessor property without a getter")
+MSG_DEF(JSMSG_CANT_SET_NW_NC,         322, 0, JSEXN_TYPEERR, "proxy can't successfully set a non-writable, non-configurable property")
+MSG_DEF(JSMSG_CANT_SET_WO_SETTER,     323, 0, JSEXN_TYPEERR, "proxy can't succesfully set an accessor property without a setter")
+MSG_DEF(JSMSG_DEBUG_BAD_REFERENT,     324, 2, JSEXN_TYPEERR, "{0} does not refer to {1}")
