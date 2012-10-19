@@ -440,7 +440,7 @@ JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* c
     // this will always compile the script, we can actually check if the script
     // was compiled before, because it can be in the global map
 
-    // android can't use this function since all the sources are packed into apk file. 
+    // We can't use this function on android since all the sources are packed into apk file. 
     // JSScript* script = JS_CompileUTF8File(cx, global, rpath.c_str());
 
     unsigned char *content = NULL;
