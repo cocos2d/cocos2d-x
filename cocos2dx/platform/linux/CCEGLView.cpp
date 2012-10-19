@@ -77,6 +77,7 @@ NS_CC_BEGIN
 
 CCEGLView::CCEGLView()
 : bIsInit(false)
+, m_fFrameZoomFactor(1.0f)
 {
 }
 
@@ -109,6 +110,7 @@ void charEventHandle(int iCharID,int iCharState) {
 
 void mouseButtonEventHandle(int iMouseID,int iMouseState) {
 	if (iMouseID == GLFW_MOUSE_BUTTON_LEFT) {
+        CCEGLView* pEGLView = CCEGLView::sharedOpenGLView();
 		//get current mouse pos
 		int x,y;
 		glfwGetMousePos(&x, &y);
@@ -120,12 +122,14 @@ void mouseButtonEventHandle(int iMouseID,int iMouseState) {
 			return;
 		}
 		*/
+         oPoint.x /= pEGLView->m_fFrameZoomFactor;
+         oPoint.y /= pEGLView->m_fFrameZoomFactor;
 		int id = 0;
 		if (iMouseState == GLFW_PRESS) {
-			CCEGLView::sharedOpenGLView()->handleTouchesBegin(1, &id, &oPoint.x, &oPoint.y);
+			pEGLView->handleTouchesBegin(1, &id, &oPoint.x, &oPoint.y);
 
 		} else if (iMouseState == GLFW_RELEASE) {
-			CCEGLView::sharedOpenGLView()->handleTouchesEnd(1, &id, &oPoint.x, &oPoint.y);
+			pEGLView->handleTouchesEnd(1, &id, &oPoint.x, &oPoint.y);
 		}
 	}
 }
@@ -135,10 +139,13 @@ void mousePosEventHandle(int iPosX,int iPosY) {
 
 	//to test move
 	if (iButtonState == GLFW_PRESS) {
-	      int id = 0;
-	      float x = (float)iPosX;
-	      float y = (float)iPosY;
-	      CCEGLView::sharedOpenGLView()->handleTouchesMove(1, &id, &x, &y);
+            CCEGLView* pEGLView = CCEGLView::sharedOpenGLView();
+            int id = 0;
+            float x = (float)iPosX;
+            float y = (float)iPosY;
+            x /= pEGLView->m_fFrameZoomFactor;
+            y /= pEGLView->m_fFrameZoomFactor;
+            pEGLView->handleTouchesMove(1, &id, &x, &y);
 	}
 }
 
@@ -232,6 +239,21 @@ void CCEGLView::setFrameSize(float width, float height)
 		}
 		initGL();
 	}
+}
+
+void CCEGLView::setFrameZoom(float fZoomFactor)
+{
+    m_fFrameZoomFactor = fZoomFactor;
+    glfwSetWindowSize(m_obScreenSize.width * fZoomFactor, m_obScreenSize.height * fZoomFactor);
+    CCDirector::sharedDirector()->setProjection(CCDirector::sharedDirector()->getProjection());
+}
+
+void CCEGLView::setViewPortInPoints(float x , float y , float w , float h)
+{
+    glViewport((GLint)(x * m_fScaleX * m_fFrameZoomFactor+ m_obViewPortRect.origin.x * m_fFrameZoomFactor),
+        (GLint)(y * m_fScaleY * m_fFrameZoomFactor + m_obViewPortRect.origin.y * m_fFrameZoomFactor),
+        (GLsizei)(w * m_fScaleX * m_fFrameZoomFactor),
+        (GLsizei)(h * m_fScaleY * m_fFrameZoomFactor));
 }
 
 bool CCEGLView::isOpenGLReady()
