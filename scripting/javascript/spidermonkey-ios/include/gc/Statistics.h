@@ -40,7 +40,6 @@ enum Phase {
     PHASE_SWEEP_STRING,
     PHASE_SWEEP_SCRIPT,
     PHASE_SWEEP_SHAPE,
-    PHASE_SWEEP_IONCODE,
     PHASE_SWEEP_DISCARD_CODE,
     PHASE_DISCARD_ANALYSIS,
     PHASE_DISCARD_TI,
@@ -80,9 +79,6 @@ struct Statistics {
         JS_ASSERT(s < STAT_LIMIT);
         counts[s]++;
     }
-
-    int64_t beginSCC();
-    void endSCC(unsigned scc, int64_t start);
 
     jschar *formatMessage();
     jschar *formatJSON(uint64_t timestamp);
@@ -138,14 +134,10 @@ struct Statistics {
     /* Allocated space before the GC started. */
     size_t preBytes;
 
-    /* Sweep times for SCCs of compartments. */
-    Vector<int64_t, 0, SystemAllocPolicy> sccTimes;
-
     void beginGC();
     void endGC();
 
-    void gcDuration(int64_t *total, int64_t *maxPause);
-    void sccDurations(int64_t *total, int64_t *maxPause);
+    int64_t gcDuration();
     void printStats();
     bool formatData(StatisticsSerializer &ss, uint64_t timestamp);
 
@@ -173,17 +165,6 @@ struct AutoPhase {
 
     Statistics &stats;
     Phase phase;
-    JS_DECL_USE_GUARD_OBJECT_NOTIFIER
-};
-
-struct AutoSCC {
-    AutoSCC(Statistics &stats, unsigned scc JS_GUARD_OBJECT_NOTIFIER_PARAM)
-      : stats(stats), scc(scc) { JS_GUARD_OBJECT_NOTIFIER_INIT; start = stats.beginSCC(); }
-    ~AutoSCC() { stats.endSCC(scc, start); }
-
-    Statistics &stats;
-    unsigned scc;
-    int64_t start;
     JS_DECL_USE_GUARD_OBJECT_NOTIFIER
 };
 

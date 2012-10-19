@@ -10,8 +10,6 @@
 /*
  * JS public API typedefs.
  */
-
-#include "jsprototypes.h"
 #include "jstypes.h"
 
 /*
@@ -108,8 +106,8 @@ typedef enum JSType {
 
 /* Dense index into cached prototypes and class atoms for standard objects. */
 typedef enum JSProtoKey {
-#define PROTOKEY_AND_INITIALIZER(name,code,init) JSProto_##name = code,
-    JS_FOR_EACH_PROTOTYPE(PROTOKEY_AND_INITIALIZER)
+#define JS_PROTO(name,code,init) JSProto_##name = code,
+#include "jsproto.tbl"
 #undef JS_PROTO
     JSProto_LIMIT
 } JSProtoKey;
@@ -164,7 +162,6 @@ typedef enum {
      * Trace kinds internal to the engine. The embedding can only them if it
      * implements JSTraceCallback.
      */
-    JSTRACE_IONCODE,
 #if JS_HAS_XML_SUPPORT
     JSTRACE_XML,
 #endif
@@ -220,7 +217,7 @@ JS_END_EXTERN_C
 
 #ifdef __cplusplus
 
-namespace js {
+namespace JS {
 
 template <typename T>
 class Rooted;
@@ -240,30 +237,8 @@ enum ThingRootKind
     THING_ROOT_PROPERTY_ID,
     THING_ROOT_VALUE,
     THING_ROOT_TYPE,
-    THING_ROOT_BINDINGS,
     THING_ROOT_LIMIT
 };
-
-template <typename T>
-struct RootKind;
-
-/*
- * Specifically mark the ThingRootKind of externally visible types, so that
- * JSAPI users may use JSRooted... types without having the class definition
- * available.
- */
-template<typename T, ThingRootKind Kind>
-struct SpecificRootKind
-{
-    static ThingRootKind rootKind() { return Kind; }
-};
-
-template <> struct RootKind<JSObject *> : SpecificRootKind<JSObject *, THING_ROOT_OBJECT> {};
-template <> struct RootKind<JSFunction *> : SpecificRootKind<JSFunction *, THING_ROOT_OBJECT> {};
-template <> struct RootKind<JSString *> : SpecificRootKind<JSString *, THING_ROOT_STRING> {};
-template <> struct RootKind<JSScript *> : SpecificRootKind<JSScript *, THING_ROOT_SCRIPT> {};
-template <> struct RootKind<jsid> : SpecificRootKind<jsid, THING_ROOT_ID> {};
-template <> struct RootKind<JS::Value> : SpecificRootKind<JS::Value, THING_ROOT_VALUE> {};
 
 struct ContextFriendFields {
     JSRuntime *const    runtime;
@@ -300,34 +275,7 @@ struct ContextFriendFields {
 #endif
 };
 
-struct RuntimeFriendFields {
-    /*
-     * If non-zero, we were been asked to call the operation callback as soon
-     * as possible.
-     */
-    volatile int32_t    interrupt;
-
-    /* Limit pointer for checking native stack consumption. */
-    uintptr_t           nativeStackLimit;
-
-#if defined(JSGC_ROOT_ANALYSIS) || defined(JSGC_USE_EXACT_ROOTING)
-    /*
-     * Stack allocated GC roots for stack GC heap pointers, which may be
-     * overwritten if moved during a GC.
-     */
-    Rooted<void*> *thingGCRooters[THING_ROOT_LIMIT];
-#endif
-
-    RuntimeFriendFields()
-      : interrupt(0),
-        nativeStackLimit(0) { }
-
-    static const RuntimeFriendFields *get(const JSRuntime *rt) {
-        return reinterpret_cast<const RuntimeFriendFields *>(rt);
-    }
-};
-
-} /* namespace js */
+} /* namespace JS */
 
 #endif /* __cplusplus */
 

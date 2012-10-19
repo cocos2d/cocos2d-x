@@ -161,35 +161,35 @@ typedef JSBool
 (* LookupSpecialOp)(JSContext *cx, HandleObject obj, HandleSpecialId sid,
                     MutableHandleObject objp, MutableHandleShape propp);
 typedef JSBool
-(* DefineGenericOp)(JSContext *cx, HandleObject obj, HandleId id, HandleValue value,
+(* DefineGenericOp)(JSContext *cx, HandleObject obj, HandleId id, const Value *value,
                     PropertyOp getter, StrictPropertyOp setter, unsigned attrs);
 typedef JSBool
-(* DefinePropOp)(JSContext *cx, HandleObject obj, HandlePropertyName name, HandleValue value,
+(* DefinePropOp)(JSContext *cx, HandleObject obj, HandlePropertyName name, const Value *value,
                  PropertyOp getter, StrictPropertyOp setter, unsigned attrs);
 typedef JSBool
-(* DefineElementOp)(JSContext *cx, HandleObject obj, uint32_t index, HandleValue value,
+(* DefineElementOp)(JSContext *cx, HandleObject obj, uint32_t index, const Value *value,
                     PropertyOp getter, StrictPropertyOp setter, unsigned attrs);
 typedef JSBool
-(* DefineSpecialOp)(JSContext *cx, HandleObject obj, HandleSpecialId sid, HandleValue value,
+(* DefineSpecialOp)(JSContext *cx, HandleObject obj, HandleSpecialId sid, const Value *value,
                     PropertyOp getter, StrictPropertyOp setter, unsigned attrs);
 typedef JSBool
-(* GenericIdOp)(JSContext *cx, HandleObject obj, HandleObject receiver, HandleId id, MutableHandleValue vp);
+(* GenericIdOp)(JSContext *cx, HandleObject obj, HandleObject receiver, HandleId id, Value *vp);
 typedef JSBool
-(* PropertyIdOp)(JSContext *cx, HandleObject obj, HandleObject receiver, HandlePropertyName name, MutableHandleValue vp);
+(* PropertyIdOp)(JSContext *cx, HandleObject obj, HandleObject receiver, HandlePropertyName name, Value *vp);
 typedef JSBool
-(* ElementIdOp)(JSContext *cx, HandleObject obj, HandleObject receiver, uint32_t index, MutableHandleValue vp);
+(* ElementIdOp)(JSContext *cx, HandleObject obj, HandleObject receiver, uint32_t index, Value *vp);
 typedef JSBool
-(* ElementIfPresentOp)(JSContext *cx, HandleObject obj, HandleObject receiver, uint32_t index, MutableHandleValue vp, bool* present);
+(* ElementIfPresentOp)(JSContext *cx, HandleObject obj, HandleObject receiver, uint32_t index, Value *vp, bool* present);
 typedef JSBool
-(* SpecialIdOp)(JSContext *cx, HandleObject obj, HandleObject receiver, HandleSpecialId sid, MutableHandleValue vp);
+(* SpecialIdOp)(JSContext *cx, HandleObject obj, HandleObject receiver, HandleSpecialId sid, Value *vp);
 typedef JSBool
-(* StrictGenericIdOp)(JSContext *cx, HandleObject obj, HandleId id, MutableHandleValue vp, JSBool strict);
+(* StrictGenericIdOp)(JSContext *cx, HandleObject obj, HandleId id, Value *vp, JSBool strict);
 typedef JSBool
-(* StrictPropertyIdOp)(JSContext *cx, HandleObject obj, HandlePropertyName name, MutableHandleValue vp, JSBool strict);
+(* StrictPropertyIdOp)(JSContext *cx, HandleObject obj, HandlePropertyName name, Value *vp, JSBool strict);
 typedef JSBool
-(* StrictElementIdOp)(JSContext *cx, HandleObject obj, uint32_t index, MutableHandleValue vp, JSBool strict);
+(* StrictElementIdOp)(JSContext *cx, HandleObject obj, uint32_t index, Value *vp, JSBool strict);
 typedef JSBool
-(* StrictSpecialIdOp)(JSContext *cx, HandleObject obj, HandleSpecialId sid, MutableHandleValue vp, JSBool strict);
+(* StrictSpecialIdOp)(JSContext *cx, HandleObject obj, HandleSpecialId sid, Value *vp, JSBool strict);
 typedef JSBool
 (* GenericAttributesOp)(JSContext *cx, HandleObject obj, HandleId id, unsigned *attrsp);
 typedef JSBool
@@ -199,18 +199,20 @@ typedef JSBool
 typedef JSBool
 (* SpecialAttributesOp)(JSContext *cx, HandleObject obj, HandleSpecialId sid, unsigned *attrsp);
 typedef JSBool
-(* DeletePropertyOp)(JSContext *cx, HandleObject obj, HandlePropertyName name, MutableHandleValue vp, JSBool strict);
+(* DeletePropertyOp)(JSContext *cx, HandleObject obj, HandlePropertyName name, Value *vp, JSBool strict);
 typedef JSBool
-(* DeleteElementOp)(JSContext *cx, HandleObject obj, uint32_t index, MutableHandleValue vp, JSBool strict);
+(* DeleteElementOp)(JSContext *cx, HandleObject obj, uint32_t index, Value *vp, JSBool strict);
 typedef JSBool
-(* DeleteSpecialOp)(JSContext *cx, HandleObject obj, HandleSpecialId sid, MutableHandleValue vp, JSBool strict);
+(* DeleteSpecialOp)(JSContext *cx, HandleObject obj, HandleSpecialId sid, Value *vp, JSBool strict);
 typedef JSType
 (* TypeOfOp)(JSContext *cx, HandleObject obj);
 
 typedef JSObject *
 (* ObjectOp)(JSContext *cx, HandleObject obj);
 typedef void
-(* FinalizeOp)(FreeOp *fop, RawObject obj);
+(* ClearOp)(JSContext *cx, HandleObject obj);
+typedef void
+(* FinalizeOp)(FreeOp *fop, JSObject *obj);
 
 #define JS_CLASS_MEMBERS                                                      \
     const char          *name;                                                \
@@ -293,12 +295,13 @@ struct ObjectOps
     JSNewEnumerateOp    enumerate;
     TypeOfOp            typeOf;
     ObjectOp            thisObject;
+    ClearOp             clear;
 };
 
 #define JS_NULL_OBJECT_OPS                                                    \
     {NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,   \
      NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,        \
-     NULL,NULL,NULL,NULL}
+     NULL,NULL,NULL,NULL,NULL}
 
 struct Class
 {
@@ -381,6 +384,10 @@ ObjectClassIs(JSObject &obj, ESClassValue classValue, JSContext *cx);
 inline bool
 IsObjectWithClass(const Value &v, ESClassValue classValue, JSContext *cx);
 
+}  /* namespace js */
+
+namespace JS {
+
 inline bool
 IsPoisonedSpecialId(js::SpecialId iden)
 {
@@ -389,14 +396,14 @@ IsPoisonedSpecialId(js::SpecialId iden)
     return false;
 }
 
-template <> struct RootMethods<SpecialId>
+template <> struct RootMethods<js::SpecialId>
 {
-    static SpecialId initial() { return SpecialId(); }
+    static js::SpecialId initial() { return js::SpecialId(); }
     static ThingRootKind kind() { return THING_ROOT_ID; }
-    static bool poisoned(SpecialId id) { return IsPoisonedSpecialId(id); }
+    static bool poisoned(js::SpecialId id) { return IsPoisonedSpecialId(id); }
 };
 
-}  /* namespace js */
+} /* namespace JS */
 
 #endif  /* __cplusplus */
 

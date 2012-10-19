@@ -49,15 +49,14 @@ struct RuntimeSizes
       , contexts(0)
       , dtoa(0)
       , temporary(0)
-      , jaegerCode(0)
-      , ionCode(0)
+      , mjitCode(0)
       , regexpCode(0)
-      , unusedCode(0)
+      , unusedCodeMemory(0)
       , stackCommitted(0)
       , gcMarker(0)
       , mathCache(0)
       , scriptFilenames(0)
-      , scriptSources(0)
+      , compartmentObjects(0)
     {}
 
     size_t object;
@@ -65,15 +64,19 @@ struct RuntimeSizes
     size_t contexts;
     size_t dtoa;
     size_t temporary;
-    size_t jaegerCode;
-    size_t ionCode;
+    size_t mjitCode;
     size_t regexpCode;
-    size_t unusedCode;
+    size_t unusedCodeMemory;
     size_t stackCommitted;
     size_t gcMarker;
     size_t mathCache;
     size_t scriptFilenames;
-    size_t scriptSources;
+
+    // This is the exception to the "RuntimeSizes doesn't measure things within
+    // compartments" rule.  We combine the sizes of all the JSCompartment
+    // objects into a single measurement because each one is fairly small, and
+    // they're all the same size.
+    size_t compartmentObjects;
 };
 
 struct CompartmentStats
@@ -99,7 +102,6 @@ struct CompartmentStats
     size_t gcHeapShapesBase;
     size_t gcHeapScripts;
     size_t gcHeapTypeObjects;
-    size_t gcHeapIonCodes;
 #if JS_HAS_XML_SUPPORT
     size_t gcHeapXML;
 #endif
@@ -114,12 +116,8 @@ struct CompartmentStats
     size_t shapesExtraTreeShapeKids;
     size_t shapesCompartmentTables;
     size_t scriptData;
-    size_t jaegerData;
-    size_t ionData;
-    size_t compartmentObject;
+    size_t mjitData;
     size_t crossCompartmentWrappers;
-    size_t regexpCompartment;
-    size_t debuggeesSet;
 
     TypeInferenceSizes typeInferenceSizes;
 
@@ -138,7 +136,6 @@ struct CompartmentStats
         ADD(gcHeapShapesBase);
         ADD(gcHeapScripts);
         ADD(gcHeapTypeObjects);
-        ADD(gcHeapIonCodes);
     #if JS_HAS_XML_SUPPORT
         ADD(gcHeapXML);
     #endif
@@ -153,12 +150,8 @@ struct CompartmentStats
         ADD(shapesExtraTreeShapeKids);
         ADD(shapesCompartmentTables);
         ADD(scriptData);
-        ADD(jaegerData);
-        ADD(ionData);
-        ADD(compartmentObject);
+        ADD(mjitData);
         ADD(crossCompartmentWrappers);
-        ADD(regexpCompartment);
-        ADD(debuggeesSet);
 
         #undef ADD
 

@@ -1,3 +1,4 @@
+/* js-config.h.  Generated automatically by configure.  */
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 4 -*-
  * vim: set ts=8 sw=4 et tw=78:
  *
@@ -20,7 +21,7 @@
 
 /* Define to 1 if SpiderMonkey should support the ability to perform
    entirely too much GC.  */
-/* #undef JS_GC_ZEAL */
+#define JS_GC_ZEAL 1
 
 /* Define to 1 if the <endian.h> header is present and
    useable.  See jscpucfg.h.  */

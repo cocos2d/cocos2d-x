@@ -47,9 +47,11 @@ typedef uint8_t     jssrcnote;
 typedef uintptr_t   jsatomid;
 
 /* Struct typedefs. */
+typedef struct JSArgumentFormatMap  JSArgumentFormatMap;
 typedef struct JSGCThing            JSGCThing;
 typedef struct JSGenerator          JSGenerator;
 typedef struct JSNativeEnumerator   JSNativeEnumerator;
+typedef struct JSSharpObjectMap     JSSharpObjectMap;
 typedef struct JSTryNote            JSTryNote;
 
 /* Friend "Advanced API" typedefs. */
@@ -79,6 +81,8 @@ class JSDependentString;
 class JSExtensibleString;
 class JSExternalString;
 class JSLinearString;
+class JSFixedString;
+class JSStaticAtom;
 class JSRope;
 class JSAtom;
 class JSWrapper;
@@ -127,10 +131,24 @@ class StackSpace;
 class ContextStack;
 class ScriptFrameIter;
 
+struct BytecodeEmitter;
+struct Definition;
+struct FunctionBox;
+struct ObjectBox;
+struct ParseNode;
+struct Parser;
+struct SharedContext;
+class TokenStream;
+struct Token;
+struct TokenPos;
+struct TokenPtr;
+struct TreeContext;
+class UpvarCookie;
+
 class Proxy;
-class JS_FRIEND_API(BaseProxyHandler);
-class JS_FRIEND_API(DirectWrapper);
-class JS_FRIEND_API(CrossCompartmentWrapper);
+class BaseProxyHandler;
+class DirectWrapper;
+class CrossCompartmentWrapper;
 
 class TempAllocPolicy;
 class RuntimeAllocPolicy;
@@ -154,6 +172,13 @@ class Bindings;
 struct StackBaseShape;
 struct StackShape;
 
+class MultiDeclRange;
+class ParseMapPool;
+class DefinitionList;
+typedef InlineMap<JSAtom *, Definition *, 24> AtomDefnMap;
+typedef InlineMap<JSAtom *, jsatomid, 24> AtomIndexMap;
+typedef Vector<UpvarCookie, 8> UpvarCookies;
+
 class Breakpoint;
 class BreakpointSite;
 class Debugger;
@@ -171,22 +196,6 @@ typedef JSNative             Native;
 typedef JSPropertyOp         PropertyOp;
 typedef JSStrictPropertyOp   StrictPropertyOp;
 typedef JSPropertyDescriptor PropertyDescriptor;
-
-namespace frontend {
-
-struct BytecodeEmitter;
-struct Definition;
-class FunctionBox;
-class ObjectBox;
-struct Token;
-struct TokenPos;
-struct TokenPtr;
-class TokenStream;
-struct Parser;
-class ParseMapPool;
-struct ParseNode;
-
-} /* namespace frontend */
 
 namespace analyze {
 
@@ -215,15 +224,12 @@ typedef JS::Handle<JSAtom*>            HandleAtom;
 typedef JS::Handle<PropertyName*>      HandlePropertyName;
 
 typedef JS::MutableHandle<Shape*>      MutableHandleShape;
-typedef JS::MutableHandle<JSAtom*>     MutableHandleAtom;
 
-typedef JSAtom *                       RawAtom;
-
-typedef js::Rooted<Shape*>             RootedShape;
-typedef js::Rooted<BaseShape*>         RootedBaseShape;
-typedef js::Rooted<types::TypeObject*> RootedTypeObject;
-typedef js::Rooted<JSAtom*>            RootedAtom;
-typedef js::Rooted<PropertyName*>      RootedPropertyName;
+typedef JS::Rooted<Shape*>             RootedShape;
+typedef JS::Rooted<BaseShape*>         RootedBaseShape;
+typedef JS::Rooted<types::TypeObject*> RootedTypeObject;
+typedef JS::Rooted<JSAtom*>            RootedAtom;
+typedef JS::Rooted<PropertyName*>      RootedPropertyName;
 
 enum XDRMode {
     XDR_ENCODE,
@@ -298,7 +304,7 @@ typedef void
 /* called just before script destruction */
 typedef void
 (* JSDestroyScriptHook)(JSFreeOp *fop,
-                        JSRawScript script,
+                        JSScript  *script,
                         void      *callerdata);
 
 typedef void
@@ -370,7 +376,7 @@ typedef JSObject *
 
 /* Signature for class initialization ops. */
 typedef JSObject *
-(* JSClassInitializerOp)(JSContext *cx, JSHandleObject obj);
+(* JSClassInitializerOp)(JSContext *cx, JSObject *obj);
 
 /*
  * Hook that creates an iterator object for a given object. Returns the
