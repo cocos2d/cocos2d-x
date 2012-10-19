@@ -18,7 +18,7 @@
  *
  * DEFINE_ATOM(id, name)
  *   Define an atom whose JavaScript string's value is |name|.
- * 
+ *
  * DEFINE_PROTOTYPE_ATOM(id)
  *   Define an atom whose name is the same as one of those defined in
  *   jsproto.tbl. The code that processes that has already declared and
@@ -30,7 +30,7 @@
  *   jskeyword.tbl. The code that processes that has already declared and
  *   defined the js_<id>_str global, so this defines only the JSAtomState
  *   member.
- */ 
+ */
 
 
 
@@ -118,8 +118,33 @@ DEFINE_ATOM(hasOwn, "hasOwn")
 DEFINE_ATOM(keys, "keys")
 DEFINE_ATOM(iterate, "iterate")
 DEFINE_PROTOTYPE_ATOM(WeakMap)
+DEFINE_ATOM(buffer, "buffer")
 DEFINE_ATOM(byteLength, "byteLength")
+DEFINE_ATOM(byteOffset, "byteOffset")
 DEFINE_KEYWORD_ATOM(return)
 DEFINE_KEYWORD_ATOM(throw)
 DEFINE_ATOM(url, "url")
 DEFINE_ATOM(innermost, "innermost")
+
+DEFINE_ATOM(XMLList, "XMLList")
+DEFINE_ATOM(decodeURI, "decodeURI")
+DEFINE_ATOM(decodeURIComponent, "decodeURIComponent")
+DEFINE_ATOM(defineGetter, "__defineGetter__")
+DEFINE_ATOM(defineSetter, "__defineSetter__")
+DEFINE_ATOM(encodeURI, "encodeURI")
+DEFINE_ATOM(encodeURIComponent, "encodeURIComponent")
+DEFINE_ATOM(escape, "escape")
+DEFINE_ATOM(hasOwnProperty, "hasOwnProperty")
+DEFINE_ATOM(isFinite, "isFinite")
+DEFINE_ATOM(isNaN, "isNaN")
+DEFINE_ATOM(isPrototypeOf, "isPrototypeOf")
+DEFINE_ATOM(isXMLName, "isXMLName")
+DEFINE_ATOM(lookupGetter, "__lookupGetter__")
+DEFINE_ATOM(lookupSetter, "__lookupSetter__")
+DEFINE_ATOM(parseFloat, "parseFloat")
+DEFINE_ATOM(parseInt, "parseInt")
+DEFINE_ATOM(propertyIsEnumerable, "propertyIsEnumerable")
+DEFINE_ATOM(unescape, "unescape")
+DEFINE_ATOM(uneval, "uneval")
+DEFINE_ATOM(unwatch, "unwatch")
+DEFINE_ATOM(watch, "watch")

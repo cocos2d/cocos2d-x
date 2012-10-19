@@ -1,41 +1,8 @@
 /* -*- Mode: C++; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 4 -*-
  *
- * ***** BEGIN LICENSE BLOCK *****
- * Version: MPL 1.1/GPL 2.0/LGPL 2.1
- *
- * The contents of this file are subject to the Mozilla Public License Version
- * 1.1 (the "License"); you may not use this file except in compliance with
- * the License. You may obtain a copy of the License at
- * http://www.mozilla.org/MPL/
- *
- * Software distributed under the License is distributed on an "AS IS" basis,
- * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
- * for the specific language governing rights and limitations under the
- * License.
- *
- * The Original Code is Mozilla Communicator client code, released
- * March 31, 1998.
- *
- * The Initial Developer of the Original Code is
- * Netscape Communications Corporation.
- * Portions created by the Initial Developer are Copyright (C) 1998
- * the Initial Developer. All Rights Reserved.
- *
- * Contributor(s):
- *
- * Alternatively, the contents of this file may be used under the terms of
- * either of the GNU General Public License Version 2 or later (the "GPL"),
- * or the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
- * in which case the provisions of the GPL or the LGPL are applicable instead
- * of those above. If you wish to allow use of your version of this file only
- * under the terms of either the GPL or the LGPL, and not to allow others to
- * use your version of this file under the terms of the MPL, indicate your
- * decision by deleting the provisions above and replace them with the notice
- * and other provisions required by the GPL or the LGPL. If you do not delete
- * the provisions above, a recipient may use your version of this file under
- * the terms of any one of the MPL, the GPL or the LGPL.
- *
- * ***** END LICENSE BLOCK ***** */
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 #ifndef jsprvtd_h___
 #define jsprvtd_h___
@@ -84,7 +51,6 @@ typedef struct JSArgumentFormatMap  JSArgumentFormatMap;
 typedef struct JSGCThing            JSGCThing;
 typedef struct JSGenerator          JSGenerator;
 typedef struct JSNativeEnumerator   JSNativeEnumerator;
-typedef struct JSProperty           JSProperty;
 typedef struct JSSharpObjectMap     JSSharpObjectMap;
 typedef struct JSTryNote            JSTryNote;
 
@@ -95,7 +61,10 @@ typedef struct JSPrinter            JSPrinter;
 typedef struct JSStackHeader        JSStackHeader;
 typedef struct JSSubString          JSSubString;
 typedef struct JSSpecializedNative  JSSpecializedNative;
+
+#if JS_HAS_XML_SUPPORT
 typedef struct JSXML                JSXML;
+#endif
 
 /*
  * Template declarations.
@@ -160,9 +129,7 @@ class StackFrame;
 class StackSegment;
 class StackSpace;
 class ContextStack;
-class FrameRegsIter;
-class CallReceiver;
-class CallArgs;
+class ScriptFrameIter;
 
 struct BytecodeEmitter;
 struct Definition;
@@ -170,6 +137,7 @@ struct FunctionBox;
 struct ObjectBox;
 struct ParseNode;
 struct Parser;
+struct SharedContext;
 class TokenStream;
 struct Token;
 struct TokenPos;
@@ -178,8 +146,8 @@ struct TreeContext;
 class UpvarCookie;
 
 class Proxy;
-class ProxyHandler;
-class Wrapper;
+class BaseProxyHandler;
+class DirectWrapper;
 class CrossCompartmentWrapper;
 
 class TempAllocPolicy;
@@ -206,10 +174,9 @@ struct StackShape;
 
 class MultiDeclRange;
 class ParseMapPool;
-class DefnOrHeader;
+class DefinitionList;
 typedef InlineMap<JSAtom *, Definition *, 24> AtomDefnMap;
 typedef InlineMap<JSAtom *, jsatomid, 24> AtomIndexMap;
-typedef InlineMap<JSAtom *, DefnOrHeader, 24> AtomDOHMap;
 typedef Vector<UpvarCookie, 8> UpvarCookies;
 
 class Breakpoint;
@@ -256,17 +223,13 @@ typedef JS::Handle<types::TypeObject*> HandleTypeObject;
 typedef JS::Handle<JSAtom*>            HandleAtom;
 typedef JS::Handle<PropertyName*>      HandlePropertyName;
 
-typedef JS::Root<Shape*>             RootShape;
-typedef JS::Root<BaseShape*>         RootBaseShape;
-typedef JS::Root<types::TypeObject*> RootTypeObject;
-typedef JS::Root<JSAtom*>            RootAtom;
-typedef JS::Root<PropertyName*>      RootPropertyName;
+typedef JS::MutableHandle<Shape*>      MutableHandleShape;
 
-typedef JS::RootedVar<Shape*>             RootedVarShape;
-typedef JS::RootedVar<BaseShape*>         RootedVarBaseShape;
-typedef JS::RootedVar<types::TypeObject*> RootedVarTypeObject;
-typedef JS::RootedVar<JSAtom*>            RootedVarAtom;
-typedef JS::RootedVar<PropertyName*>      RootedVarPropertyName;
+typedef JS::Rooted<Shape*>             RootedShape;
+typedef JS::Rooted<BaseShape*>         RootedBaseShape;
+typedef JS::Rooted<types::TypeObject*> RootedTypeObject;
+typedef JS::Rooted<JSAtom*>            RootedAtom;
+typedef JS::Rooted<PropertyName*>      RootedPropertyName;
 
 enum XDRMode {
     XDR_ENCODE,
@@ -405,40 +368,22 @@ typedef struct JSDebugHooks {
 /* js::ObjectOps function pointer typedefs. */
 
 /*
- * Look for id in obj and its prototype chain, returning false on error or
- * exception, true on success.  On success, return null in *propp if id was
- * not found.  If id was found, return the first object searching from obj
- * along its prototype chain in which id names a direct property in *objp, and
- * return a non-null, opaque property pointer in *propp.
- *
- * If JSLookupPropOp succeeds and returns with *propp non-null, that pointer
- * may be passed as the prop parameter to a JSAttributesOp, as a short-cut
- * that bypasses id re-lookup.
- */
-typedef JSBool
-(* JSLookupPropOp)(JSContext *cx, JSObject *obj, jsid id, JSObject **objp,
-                   JSProperty **propp);
-
-/*
- * Get or set attributes of the property obj[id]. Return false on error or
- * exception, true with current attributes in *attrsp.
- */
-typedef JSBool
-(* JSAttributesOp)(JSContext *cx, JSObject *obj, jsid id, unsigned *attrsp);
-
-/*
  * A generic type for functions mapping an object to another object, or null
  * if an error or exception was thrown on cx.
  */
 typedef JSObject *
-(* JSObjectOp)(JSContext *cx, JSObject *obj);
+(* JSObjectOp)(JSContext *cx, JSHandleObject obj);
+
+/* Signature for class initialization ops. */
+typedef JSObject *
+(* JSClassInitializerOp)(JSContext *cx, JSObject *obj);
 
 /*
  * Hook that creates an iterator object for a given object. Returns the
  * iterator object or null if an error or exception was thrown on cx.
  */
 typedef JSObject *
-(* JSIteratorOp)(JSContext *cx, JSObject *obj, JSBool keysonly);
+(* JSIteratorOp)(JSContext *cx, JSHandleObject obj, JSBool keysonly);
 
 /*
  * The following determines whether JS_EncodeCharacters and JS_DecodeBytes
