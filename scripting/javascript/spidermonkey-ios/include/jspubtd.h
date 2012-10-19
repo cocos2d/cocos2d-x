@@ -1,41 +1,8 @@
 /* -*- Mode: C++; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 4 -*-
  *
- * ***** BEGIN LICENSE BLOCK *****
- * Version: MPL 1.1/GPL 2.0/LGPL 2.1
- *
- * The contents of this file are subject to the Mozilla Public License Version
- * 1.1 (the "License"); you may not use this file except in compliance with
- * the License. You may obtain a copy of the License at
- * http://www.mozilla.org/MPL/
- *
- * Software distributed under the License is distributed on an "AS IS" basis,
- * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
- * for the specific language governing rights and limitations under the
- * License.
- *
- * The Original Code is Mozilla Communicator client code, released
- * March 31, 1998.
- *
- * The Initial Developer of the Original Code is
- * Netscape Communications Corporation.
- * Portions created by the Initial Developer are Copyright (C) 1998
- * the Initial Developer. All Rights Reserved.
- *
- * Contributor(s):
- *
- * Alternatively, the contents of this file may be used under the terms of
- * either of the GNU General Public License Version 2 or later (the "GPL"),
- * or the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
- * in which case the provisions of the GPL or the LGPL are applicable instead
- * of those above. If you wish to allow use of your version of this file only
- * under the terms of either the GPL or the LGPL, and not to allow others to
- * use your version of this file under the terms of the MPL, indicate your
- * decision by deleting the provisions above and replace them with the notice
- * and other provisions required by the GPL or the LGPL. If you do not delete
- * the provisions above, a recipient may use your version of this file under
- * the terms of any one of the MPL, the GPL or the LGPL.
- *
- * ***** END LICENSE BLOCK ***** */
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 #ifndef jspubtd_h___
 #define jspubtd_h___
@@ -43,6 +10,8 @@
 /*
  * JS public API typedefs.
  */
+
+#include "jsprototypes.h"
 #include "jstypes.h"
 
 /*
@@ -139,8 +108,8 @@ typedef enum JSType {
 
 /* Dense index into cached prototypes and class atoms for standard objects. */
 typedef enum JSProtoKey {
-#define JS_PROTO(name,code,init) JSProto_##name = code,
-#include "jsproto.tbl"
+#define PROTOKEY_AND_INITIALIZER(name,code,init) JSProto_##name = code,
+    JS_FOR_EACH_PROTOTYPE(PROTOKEY_AND_INITIALIZER)
 #undef JS_PROTO
     JSProto_LIMIT
 } JSProtoKey;
@@ -148,7 +117,11 @@ typedef enum JSProtoKey {
 /* js_CheckAccess mode enumeration. */
 typedef enum JSAccessMode {
     JSACC_PROTO  = 0,           /* XXXbe redundant w.r.t. id */
-    JSACC_PARENT = 1,           /* XXXbe redundant w.r.t. id */
+
+                                /*
+                                 * enum value #1 formerly called JSACC_PARENT,
+                                 * gap preserved for ABI compatibility.
+                                 */
 
                                 /*
                                  * enum value #2 formerly called JSACC_IMPORT,
@@ -191,6 +164,7 @@ typedef enum {
      * Trace kinds internal to the engine. The embedding can only them if it
      * implements JSTraceCallback.
      */
+    JSTRACE_IONCODE,
 #if JS_HAS_XML_SUPPORT
     JSTRACE_XML,
 #endif
@@ -246,10 +220,10 @@ JS_END_EXTERN_C
 
 #ifdef __cplusplus
 
-namespace JS {
+namespace js {
 
 template <typename T>
-class Root;
+class Rooted;
 
 class SkipRoot;
 
@@ -261,10 +235,35 @@ enum ThingRootKind
     THING_ROOT_TYPE_OBJECT,
     THING_ROOT_STRING,
     THING_ROOT_SCRIPT,
+    THING_ROOT_XML,
     THING_ROOT_ID,
+    THING_ROOT_PROPERTY_ID,
     THING_ROOT_VALUE,
+    THING_ROOT_TYPE,
+    THING_ROOT_BINDINGS,
     THING_ROOT_LIMIT
 };
+
+template <typename T>
+struct RootKind;
+
+/*
+ * Specifically mark the ThingRootKind of externally visible types, so that
+ * JSAPI users may use JSRooted... types without having the class definition
+ * available.
+ */
+template<typename T, ThingRootKind Kind>
+struct SpecificRootKind
+{
+    static ThingRootKind rootKind() { return Kind; }
+};
+
+template <> struct RootKind<JSObject *> : SpecificRootKind<JSObject *, THING_ROOT_OBJECT> {};
+template <> struct RootKind<JSFunction *> : SpecificRootKind<JSFunction *, THING_ROOT_OBJECT> {};
+template <> struct RootKind<JSString *> : SpecificRootKind<JSString *, THING_ROOT_STRING> {};
+template <> struct RootKind<JSScript *> : SpecificRootKind<JSScript *, THING_ROOT_SCRIPT> {};
+template <> struct RootKind<jsid> : SpecificRootKind<jsid, THING_ROOT_ID> {};
+template <> struct RootKind<JS::Value> : SpecificRootKind<JS::Value, THING_ROOT_VALUE> {};
 
 struct ContextFriendFields {
     JSRuntime *const    runtime;
@@ -280,15 +279,15 @@ struct ContextFriendFields {
         return reinterpret_cast<ContextFriendFields *>(cx);
     }
 
-#ifdef JSGC_ROOT_ANALYSIS
-
+#if defined(JSGC_ROOT_ANALYSIS) || defined(JSGC_USE_EXACT_ROOTING)
     /*
      * Stack allocated GC roots for stack GC heap pointers, which may be
      * overwritten if moved during a GC.
      */
-    Root<void*> *thingGCRooters[THING_ROOT_LIMIT];
+    Rooted<void*> *thingGCRooters[THING_ROOT_LIMIT];
+#endif
 
-#ifdef DEBUG
+#if defined(DEBUG) && defined(JS_GC_ZEAL) && defined(JSGC_ROOT_ANALYSIS) && !defined(JS_THREADSAFE)
     /*
      * Stack allocated list of stack locations which hold non-relocatable
      * GC heap pointers (where the target is rooted somewhere else) or integer
@@ -299,11 +298,36 @@ struct ContextFriendFields {
      */
     SkipRoot *skipGCRooters;
 #endif
-
-#endif /* JSGC_ROOT_ANALYSIS */
 };
 
-} /* namespace JS */
+struct RuntimeFriendFields {
+    /*
+     * If non-zero, we were been asked to call the operation callback as soon
+     * as possible.
+     */
+    volatile int32_t    interrupt;
+
+    /* Limit pointer for checking native stack consumption. */
+    uintptr_t           nativeStackLimit;
+
+#if defined(JSGC_ROOT_ANALYSIS) || defined(JSGC_USE_EXACT_ROOTING)
+    /*
+     * Stack allocated GC roots for stack GC heap pointers, which may be
+     * overwritten if moved during a GC.
+     */
+    Rooted<void*> *thingGCRooters[THING_ROOT_LIMIT];
+#endif
+
+    RuntimeFriendFields()
+      : interrupt(0),
+        nativeStackLimit(0) { }
+
+    static const RuntimeFriendFields *get(const JSRuntime *rt) {
+        return reinterpret_cast<const RuntimeFriendFields *>(rt);
+    }
+};
+
+} /* namespace js */
 
 #endif /* __cplusplus */
 
