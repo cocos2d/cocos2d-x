@@ -17,7 +17,6 @@
 
 #ifdef ANDROID
 #include <android/log.h>
-#include <jni/JniHelper.h>
 #endif
 
 #ifdef ANDROID
@@ -217,6 +216,10 @@ ScriptingCore::ScriptingCore()
     this->addRegisterCallback(registerDefaultClasses);
 }
 
+void ScriptingCore::setExternalScriptPath(const char * externalScriptPath) {
+	this->externalScriptPath = externalScriptPath;
+}
+
 void ScriptingCore::string_report(jsval val) {
     if (JSVAL_IS_NULL(val)) {
         LOGD("val : (JSVAL_IS_NULL(val)");
@@ -300,27 +303,25 @@ JSBool ScriptingCore::runScript(const char *path)
 {
     CCLOG("ScriptingCore::runScript(%s)", path);
 
-    cocos2d::CCFileUtils *futil = cocos2d::CCFileUtils::sharedFileUtils();
+	std::string fullPath;
+	if (this->externalScriptPath == "") {
+		cocos2d::CCFileUtils * futil = cocos2d::CCFileUtils::sharedFileUtils();
 
-#ifdef ANDROID_SCRIPTINGCORE_LOAD_SCRIPTS_FROM_EXTERNAL_ASSET_DIRECTORY
-    const char * externalAssetPath = cocos2d::JniHelper::getExternalAssetPath();
-
-    std::string fullPath = std::string(externalAssetPath) + std::string(path);
-
-    const char *realPath = fullPath.c_str();
-#else
-    const char *realPath = futil->fullPathFromRelativePath(path);
-#endif
-
-    if (!realPath) {
-        CCLOG("!realPath. returning JS_FALSE");
-        return JS_FALSE;
-    }
+		const char * tmp = futil->fullPathFromRelativePath(path);
+		if (!tmp) {
+			CCLOG("!realPath. returning JS_FALSE");
+			return JS_FALSE;
+		} else {
+			fullPath = tmp;
+		}
+	} else {
+		fullPath = this->externalScriptPath + std::string(path);
+	}
 
     unsigned char *content = NULL;
     unsigned long contentSize = 0;
 
-    content = (unsigned char*)CCString::createWithContentsOfFile(realPath)->getCString();
+    content = (unsigned char*)CCString::createWithContentsOfFile(fullPath.c_str())->getCString();
     contentSize = strlen((char*)content);
 
     JSBool ret = JS_FALSE;
