@@ -636,12 +636,17 @@ void CCEGLView::resize(int width, int height)
                  SWP_NOCOPYBITS | SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 }
 
-void CCEGLView::setFrameZoom(float fZoomFactor)
+void CCEGLView::setFrameZoomFactor(float fZoomFactor)
 {
     m_fFrameZoomFactor = fZoomFactor;
     resize(m_obScreenSize.width * fZoomFactor, m_obScreenSize.height * fZoomFactor);
     centerWindow();
     CCDirector::sharedDirector()->setProjection(CCDirector::sharedDirector()->getProjection());
+}
+
+float CCEGLView::getFrameZoomFactor()
+{
+    return m_fFrameZoomFactor;
 }
 
 void CCEGLView::setFrameSize(float width, float height)

@@ -241,11 +241,16 @@ void CCEGLView::setFrameSize(float width, float height)
 	}
 }
 
-void CCEGLView::setFrameZoom(float fZoomFactor)
+void CCEGLView::setFrameZoomFactor(float fZoomFactor)
 {
     m_fFrameZoomFactor = fZoomFactor;
     glfwSetWindowSize(m_obScreenSize.width * fZoomFactor, m_obScreenSize.height * fZoomFactor);
     CCDirector::sharedDirector()->setProjection(CCDirector::sharedDirector()->getProjection());
+}
+
+float CCEGLView::getFrameZoomFactor()
+{
+    return m_fFrameZoomFactor;
 }
 
 void CCEGLView::setViewPortInPoints(float x , float y , float w , float h)
