@@ -1,0 +1,40 @@
+options
+{
+	module_path="../../../cocos2dx/proj.marmalade/"
+}
+
+includepaths
+{
+	../Classes
+}
+subprojects
+{
+	IwGL
+	cocos2dx
+}
+
+assets
+{
+	(data)
+	CloseNormal.png
+	CloseSelected.png
+	HelloWorld.png
+}
+
+
+
+files
+{
+	[Main]
+	(src)
+	Main.h
+	Main.cpp
+
+	(../Classes)
+	AppDelegate.h
+	AppDelegate.cpp
+	HelloWorldScene.h
+	HelloWorldScene.cpp
+}
+
+
