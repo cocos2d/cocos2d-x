@@ -361,6 +361,8 @@ JSBool ScriptingCore::evalString(const char *string, jsval *outVal, const char *
     JSScript* script = JS_CompileScript(cx, global, string, strlen(string), filename, 1);
     if (script) {
         // JSAutoCompartment ac(cx, global);
+        JSAutoEnterCompartment ac;
+        ac.enter(cx, global);
         JSBool evaluatedOK = JS_ExecuteScript(cx_, global_, script, &rval);
         if (JS_FALSE == evaluatedOK) {
             fprintf(stderr, "(evaluatedOK == JS_FALSE)\n");
@@ -437,12 +439,23 @@ JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* c
     }
     // this will always compile the script, we can actually check if the script
     // was compiled before, because it can be in the global map
-    JSScript* script = JS_CompileUTF8File(cx, global, rpath.c_str());
+
+    // We can't use this function on android since all the sources are packed into apk file. 
+    // JSScript* script = JS_CompileUTF8File(cx, global, rpath.c_str());
+
+    unsigned char *content = NULL;
+    unsigned long contentSize = 0;
+
+    content = (unsigned char*)CCString::createWithContentsOfFile(rpath.c_str())->getCString();
+    contentSize = strlen((char*)content);
+    JSScript* script = JS_CompileScript(cx, global, (char*)content, contentSize, "noname", 1);
     JSBool evaluatedOK = false;
     if (script) {
         jsval rval;
         filename_script[path] = script;
 //		JSAutoCompartment ac(cx, global);
+        JSAutoEnterCompartment ac;
+        ac.enter(cx, global);
         evaluatedOK = JS_ExecuteScript(cx, global, script, &rval);
         if (JS_FALSE == evaluatedOK) {
             fprintf(stderr, "(evaluatedOK == JS_FALSE)\n");
@@ -1106,6 +1119,8 @@ JSObject* NewGlobalObject(JSContext* cx)
         return NULL;
     }
     //JSAutoCompartment ac(cx, glob);
+    JSAutoEnterCompartment ac;
+    ac.enter(cx, glob);
     if (!JS_InitStandardClasses(cx, glob))
         return NULL;
     if (!JS_InitReflect(cx, glob))
