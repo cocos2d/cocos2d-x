@@ -1,42 +1,7 @@
-/* -*- Mode: C++; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 4 -*-
- * vim: set ts=4 sw=4 tw=80 et cin:
- *
- * ***** BEGIN LICENSE BLOCK *****
- * Version: MPL 1.1/GPL 2.0/LGPL 2.1
- *
- * The contents of this file are subject to the Mozilla Public License Version
- * 1.1 (the "License"); you may not use this file except in compliance with
- * the License. You may obtain a copy of the License at:
- * http://www.mozilla.org/MPL/
- *
- * Software distributed under the License is distributed on an "AS IS" basis,
- * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
- * for the specific language governing rights and limitations under the
- * License.
- *
- * The Original Code is Mozilla Code.
- *
- * The Initial Developer of the Original Code is
- *   The Mozilla Foundation
- * Portions created by the Initial Developer are Copyright (C) 2012
- * the Initial Developer. All Rights Reserved.
- *
- * Contributor(s):
- *   Justin Lebar <justin.lebar@gmail.com>
- *
- * Alternatively, the contents of this file may be used under the terms of
- * either the GNU General Public License Version 2 or later (the "GPL"), or
- * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
- * in which case the provisions of the GPL or the LGPL are applicable instead
- * of those above. If you wish to allow use of your version of this file only
- * under the terms of either the GPL or the LGPL, and not to allow others to
- * use your version of this file under the terms of the MPL, indicate your
- * decision by deleting the provisions above and replace them with the notice
- * and other provisions required by the GPL or the LGPL. If you do not delete
- * the provisions above, a recipient may use your version of this file under
- * the terms of any one of the MPL, the GPL or the LGPL.
- *
- * ***** END LICENSE BLOCK ***** */
+/* -*- Mode: C++; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 /* A type-safe doubly-linked list class. */
 
@@ -53,36 +18,30 @@
  *
  *   class Observer : public LinkedListElement<Observer>
  *   {
- *     void observe(char* topic) { ... }
+ *     public:
+ *       void observe(char* topic) { ... }
  *   };
  *
  *   class ObserverContainer
  *   {
- *   private:
- *     LinkedList<ElemType> list;
+ *     private:
+ *       LinkedList<Observer> list;
  *
- *   public:
- *
- *     void addObserver(Observer* observer)
- *     {
- *       // Will assert if |observer| is part of another list.
- *       list.insertBack(observer);
- *     }
- *
- *     void removeObserver(Observer* observer)
- *     {
- *       // Will assert if |observer| is not part of some list.
- *       observer.remove();
- *     }
- *
- *     void notifyObservers(char* topic)
- *     {
- *       for (Observer* o = list.getFirst();
- *            o != NULL;
- *            o = o->getNext()) {
- *         o->Observe(topic);
+ *     public:
+ *       void addObserver(Observer* observer) {
+ *         // Will assert if |observer| is part of another list.
+ *         list.insertBack(observer);
  *       }
- *     }
+ *
+ *       void removeObserver(Observer* observer) {
+ *         // Will assert if |observer| is not part of some list.
+ *         observer.remove();
+ *       }
+ *
+ *       void notifyObservers(char* topic) {
+ *         for (Observer* o = list.getFirst(); o != NULL; o = o->getNext())
+ *           o->Observe(topic);
+ *       }
  *   };
  *
  */
@@ -137,43 +96,41 @@ class LinkedListElement
      * lists, and supporting this painlessly was a key design criterion.
      */
 
-private:
+  private:
     LinkedListElement* next;
     LinkedListElement* prev;
     const bool isSentinel;
 
-public:
-    LinkedListElement()
-        : next(this)
-        , prev(this)
-        , isSentinel(false)
-    {
-    }
+  public:
+    LinkedListElement() : next(this), prev(this), isSentinel(false) { }
 
     /*
      * Get the next element in the list, or NULL if this is the last element in
      * the list.
      */
-    T* getNext()
-    {
-        return next->asT();
+    T* getNext() {
+      return next->asT();
+    }
+    const T* getNext() const {
+      return next->asT();
     }
 
     /*
      * Get the previous element in the list, or NULL if this is the first element
      * in the list.
      */
-    T* getPrevious()
-    {
-        return prev->asT();
+    T* getPrevious() {
+      return prev->asT();
+    }
+    const T* getPrevious() const {
+      return prev->asT();
     }
 
     /*
      * Insert elem after this element in the list.  |this| must be part of a
      * linked list when you call setNext(); otherwise, this method will assert.
      */
-    void setNext(T* elem)
-    {
+    void setNext(T* elem) {
         MOZ_ASSERT(isInList());
         setNextUnsafe(elem);
     }
@@ -183,50 +140,44 @@ public:
      * linked list when you call setPrevious(); otherwise, this method will
      * assert.
      */
-    void setPrevious(T* elem)
-    {
-        MOZ_ASSERT(isInList());
-        setPreviousUnsafe(elem);
+    void setPrevious(T* elem) {
+      MOZ_ASSERT(isInList());
+      setPreviousUnsafe(elem);
     }
 
     /*
      * Remove this element from the list which contains it.  If this element is
      * not currently part of a linked list, this method asserts.
      */
-    void remove()
-    {
-        MOZ_ASSERT(isInList());
+    void remove() {
+      MOZ_ASSERT(isInList());
 
-        prev->next = next;
-        next->prev = prev;
-        next = this;
-        prev = this;
+      prev->next = next;
+      next->prev = prev;
+      next = this;
+      prev = this;
     }
 
     /*
      * Return true if |this| part is of a linked list, and false otherwise.
      */
-    bool isInList()
-    {
-        MOZ_ASSERT((next == this) == (prev == this));
-        return next != this;
+    bool isInList() const {
+      MOZ_ASSERT((next == this) == (prev == this));
+      return next != this;
     }
 
-private:
-    LinkedListElement& operator=(const LinkedList<T>& other) MOZ_DELETE;
-    LinkedListElement(const LinkedList<T>& other) MOZ_DELETE;
-
+  private:
     friend class LinkedList<T>;
 
     enum NodeKind {
-        NODE_KIND_NORMAL,
-        NODE_KIND_SENTINEL
+      NODE_KIND_NORMAL,
+      NODE_KIND_SENTINEL
     };
 
     LinkedListElement(NodeKind nodeKind)
-        : next(this)
-        , prev(this)
-        , isSentinel(nodeKind == NODE_KIND_SENTINEL)
+      : next(this),
+        prev(this),
+        isSentinel(nodeKind == NODE_KIND_SENTINEL)
     {
     }
 
@@ -234,125 +185,123 @@ private:
      * Return |this| cast to T* if we're a normal node, or return NULL if we're
      * a sentinel node.
      */
-    T* asT()
-    {
-        if (isSentinel)
-            return NULL;
+    T* asT() {
+      if (isSentinel)
+        return NULL;
 
-        return static_cast<T*>(this);
+      return static_cast<T*>(this);
+    }
+    const T* asT() const {
+      if (isSentinel)
+        return NULL;
+
+      return static_cast<const T*>(this);
     }
 
     /*
      * Insert elem after this element, but don't check that this element is in
      * the list.  This is called by LinkedList::insertFront().
      */
-    void setNextUnsafe(T* elem)
-    {
-        LinkedListElement *listElem = static_cast<LinkedListElement*>(elem);
-        MOZ_ASSERT(!listElem->isInList());
+    void setNextUnsafe(T* elem) {
+      LinkedListElement *listElem = static_cast<LinkedListElement*>(elem);
+      MOZ_ASSERT(!listElem->isInList());
 
-        listElem->next = this->next;
-        listElem->prev = this;
-        this->next->prev = listElem;
-        this->next = listElem;
+      listElem->next = this->next;
+      listElem->prev = this;
+      this->next->prev = listElem;
+      this->next = listElem;
     }
 
     /*
      * Insert elem before this element, but don't check that this element is in
      * the list.  This is called by LinkedList::insertBack().
      */
-    void setPreviousUnsafe(T* elem)
-    {
-        LinkedListElement<T>* listElem = static_cast<LinkedListElement<T>*>(elem);
-        MOZ_ASSERT(!listElem->isInList());
+    void setPreviousUnsafe(T* elem) {
+      LinkedListElement<T>* listElem = static_cast<LinkedListElement<T>*>(elem);
+      MOZ_ASSERT(!listElem->isInList());
 
-        listElem->next = this;
-        listElem->prev = this->prev;
-        this->prev->next = listElem;
-        this->prev = listElem;
+      listElem->next = this;
+      listElem->prev = this->prev;
+      this->prev->next = listElem;
+      this->prev = listElem;
     }
+
+  private:
+    LinkedListElement& operator=(const LinkedList<T>& other) MOZ_DELETE;
+    LinkedListElement(const LinkedList<T>& other) MOZ_DELETE;
 };
 
 template<typename T>
 class LinkedList
 {
-private:
+  private:
     LinkedListElement<T> sentinel;
 
-public:
-    LinkedList& operator=(const LinkedList<T>& other) MOZ_DELETE;
-    LinkedList(const LinkedList<T>& other) MOZ_DELETE;
-
-    LinkedList()
-        : sentinel(LinkedListElement<T>::NODE_KIND_SENTINEL)
-    {
-    }
+  public:
+    LinkedList() : sentinel(LinkedListElement<T>::NODE_KIND_SENTINEL) { }
 
     /*
      * Add elem to the front of the list.
      */
-    void insertFront(T* elem)
-    {
-        /* Bypass setNext()'s this->isInList() assertion. */
-        sentinel.setNextUnsafe(elem);
+    void insertFront(T* elem) {
+      /* Bypass setNext()'s this->isInList() assertion. */
+      sentinel.setNextUnsafe(elem);
     }
 
     /*
      * Add elem to the back of the list.
      */
-    void insertBack(T* elem)
-    {
-        sentinel.setPreviousUnsafe(elem);
+    void insertBack(T* elem) {
+      sentinel.setPreviousUnsafe(elem);
     }
 
     /*
      * Get the first element of the list, or NULL if the list is empty.
      */
-    T* getFirst()
-    {
-        return sentinel.getNext();
+    T* getFirst() {
+      return sentinel.getNext();
+    }
+    const T* getFirst() const {
+      return sentinel.getNext();
     }
 
     /*
      * Get the last element of the list, or NULL if the list is empty.
      */
-    T* getLast()
-    {
-        return sentinel.getPrevious();
+    T* getLast() {
+      return sentinel.getPrevious();
+    }
+    const T* getLast() const {
+      return sentinel.getPrevious();
     }
 
     /*
      * Get and remove the first element of the list.  If the list is empty,
      * return NULL.
      */
-    T* popFirst()
-    {
-        T* ret = sentinel.getNext();
-        if (ret)
-            static_cast<LinkedListElement<T>*>(ret)->remove();
-
-        return ret;
+    T* popFirst() {
+      T* ret = sentinel.getNext();
+      if (ret)
+        static_cast<LinkedListElement<T>*>(ret)->remove();
+      return ret;
     }
 
     /*
      * Get and remove the last element of the list.  If the list is empty,
      * return NULL.
      */
-    T* popLast()
-    {
-        T* ret = sentinel.getPrevious();
-        if (ret)
-            static_cast<LinkedListElement<T>*>(ret)->remove();
-
-        return ret;
+    T* popLast() {
+      T* ret = sentinel.getPrevious();
+      if (ret)
+        static_cast<LinkedListElement<T>*>(ret)->remove();
+      return ret;
     }
 
     /*
      * Return true if the list is empty, or false otherwise.
      */
-    bool isEmpty()
-    {
-        return !sentinel.isInList();
+    bool isEmpty() const {
+      return !sentinel.isInList();
     }
 
     /*
@@ -361,71 +310,73 @@ public:
      * This runs in time linear to the list's length, because we have to mark
      * each element as not in the list.
      */
-    void clear()
-    {
-        while (popFirst())
-            continue;
+    void clear() {
+      while (popFirst())
+        continue;
     }
 
     /*
      * In a debug build, make sure that the list is sane (no cycles, consistent
      * next/prev pointers, only one sentinel).  Has no effect in release builds.
      */
-    void debugAssertIsSane()
-    {
+    void debugAssertIsSane() const {
 #ifdef DEBUG
-        /*
-         * Check for cycles in the forward singly-linked list using the
-         * tortoise/hare algorithm.
-         */
-        for (LinkedListElement<T>* slow = sentinel.next,
-                                 * fast1 = sentinel.next->next,
-                                 * fast2 = sentinel.next->next->next;
-             slow != sentinel && fast1 != sentinel && fast2 != sentinel;
-             slow = slow->next,
-             fast1 = fast2->next,
-             fast2 = fast1->next) {
+      const LinkedListElement<T>* slow;
+      const LinkedListElement<T>* fast1;
+      const LinkedListElement<T>* fast2;
 
-            MOZ_ASSERT(slow != fast1);
-            MOZ_ASSERT(slow != fast2);
-        }
+      /*
+       * Check for cycles in the forward singly-linked list using the
+       * tortoise/hare algorithm.
+       */
+      for (slow = sentinel.next,
+           fast1 = sentinel.next->next,
+           fast2 = sentinel.next->next->next;
+           slow != sentinel && fast1 != sentinel && fast2 != sentinel;
+           slow = slow->next, fast1 = fast2->next, fast2 = fast1->next)
+      {
+        MOZ_ASSERT(slow != fast1);
+        MOZ_ASSERT(slow != fast2);
+      }
 
-        /* Check for cycles in the backward singly-linked list. */
-        for (LinkedListElement<T>* slow = sentinel.prev,
-                                 * fast1 = sentinel.prev->prev,
-                                 * fast2 = sentinel.prev->prev->prev;
-             slow != sentinel && fast1 != sentinel && fast2 != sentinel;
-             slow = slow->prev,
-             fast1 = fast2->prev,
-             fast2 = fast1->prev) {
+      /* Check for cycles in the backward singly-linked list. */
+      for (slow = sentinel.prev,
+           fast1 = sentinel.prev->prev,
+           fast2 = sentinel.prev->prev->prev;
+           slow != sentinel && fast1 != sentinel && fast2 != sentinel;
+           slow = slow->prev, fast1 = fast2->prev, fast2 = fast1->prev)
+      {
+        MOZ_ASSERT(slow != fast1);
+        MOZ_ASSERT(slow != fast2);
+      }
 
-            MOZ_ASSERT(slow != fast1);
-            MOZ_ASSERT(slow != fast2);
-        }
+      /*
+       * Check that |sentinel| is the only node in the list with
+       * isSentinel == true.
+       */
+      for (const LinkedListElement<T>* elem = sentinel.next;
+           elem != sentinel;
+           elem = elem->next)
+      {
+        MOZ_ASSERT(!elem->isSentinel);
+      }
 
-        /*
-         * Check that |sentinel| is the only node in the list with
-         * isSentinel == true.
-         */
-        for (LinkedListElement<T>* elem = sentinel.next;
-             elem != sentinel;
-             elem = elem->next) {
+      /* Check that the next/prev pointers match up. */
+      const LinkedListElement<T>* prev = sentinel;
+      const LinkedListElement<T>* cur = sentinel.next;
+      do {
+          MOZ_ASSERT(cur->prev == prev);
+          MOZ_ASSERT(prev->next == cur);
 
-          MOZ_ASSERT(!elem->isSentinel);
-        }
-
-        /* Check that the next/prev pointers match up. */
-        LinkedListElement<T>* prev = sentinel;
-        LinkedListElement<T>* cur = sentinel.next;
-        do {
-            MOZ_ASSERT(cur->prev == prev);
-            MOZ_ASSERT(prev->next == cur);
-
-            prev = cur;
-            cur = cur->next;
-        } while (cur != sentinel);
+          prev = cur;
+          cur = cur->next;
+      } while (cur != sentinel);
 #endif /* ifdef DEBUG */
     }
+
+  private:
+    LinkedList& operator=(const LinkedList<T>& other) MOZ_DELETE;
+    LinkedList(const LinkedList<T>& other) MOZ_DELETE;
 };
 
 } /* namespace mozilla */
