@@ -1,41 +1,8 @@
 /* -*- Mode: C++; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 4 -*-
  *
- * ***** BEGIN LICENSE BLOCK *****
- * Version: MPL 1.1/GPL 2.0/LGPL 2.1
- *
- * The contents of this file are subject to the Mozilla Public License Version
- * 1.1 (the "License"); you may not use this file except in compliance with
- * the License. You may obtain a copy of the License at
- * http://www.mozilla.org/MPL/
- *
- * Software distributed under the License is distributed on an "AS IS" basis,
- * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
- * for the specific language governing rights and limitations under the
- * License.
- *
- *
- * The Original Code is SpiderMonkey code.
- *
- * The Initial Developer of the Original Code is
- * Mozilla Corporation.
- * Portions created by the Initial Developer are Copyright (C) 2010
- * the Initial Developer. All Rights Reserved.
- *
- * Contributor(s):
- *
- * Alternatively, the contents of this file may be used under the terms of
- * either of the GNU General Public License Version 2 or later (the "GPL"),
- * or the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
- * in which case the provisions of the GPL or the LGPL are applicable instead
- * of those above. If you wish to allow use of your version of this file only
- * under the terms of either the GPL or the LGPL, and not to allow others to
- * use your version of this file under the terms of the MPL, indicate your
- * decision by deleting the provisions above and replace them with the notice
- * and other provisions required by the GPL or the LGPL. If you do not delete
- * the provisions above, a recipient may use your version of this file under
- * the terms of any one of the MPL, the GPL or the LGPL.
- *
- * ***** END LICENSE BLOCK ***** */
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 #ifndef jsfriendapi_h___
 #define jsfriendapi_h___
@@ -88,6 +55,15 @@ extern JS_FRIEND_API(JSBool)
 JS_NondeterministicGetWeakMapKeys(JSContext *cx, JSObject *obj, JSObject **ret);
 
 /*
+ * Determine whether the given object is backed by a DeadObjectProxy.
+ *
+ * Such objects hold no other objects (they have no outgoing reference edges)
+ * and will throw if you touch them (e.g. by reading/writing a property).
+ */
+extern JS_FRIEND_API(JSBool)
+JS_IsDeadWrapper(JSObject *obj);
+
+/*
  * Used by the cycle collector to trace through the shape and all
  * shapes it reaches, marking all non-shape children found in the
  * process. Uses bounded stack space.
@@ -117,6 +93,9 @@ JS_SetAccumulateTelemetryCallback(JSRuntime *rt, JSAccumulateTelemetryDataCallba
 extern JS_FRIEND_API(JSPrincipals *)
 JS_GetCompartmentPrincipals(JSCompartment *compartment);
 
+extern JS_FRIEND_API(void)
+JS_SetCompartmentPrincipals(JSCompartment *compartment, JSPrincipals *principals);
+
 /* Safe to call with input obj == NULL. Returns non-NULL iff obj != NULL. */
 extern JS_FRIEND_API(JSObject *)
 JS_ObjectToInnerObject(JSContext *cx, JSObject *obj);
@@ -129,7 +108,7 @@ extern JS_FRIEND_API(JSObject *)
 JS_CloneObject(JSContext *cx, JSObject *obj, JSObject *proto, JSObject *parent);
 
 extern JS_FRIEND_API(JSBool)
-js_GetterOnlyPropertyStub(JSContext *cx, JSObject *obj, jsid id, JSBool strict, jsval *vp);
+js_GetterOnlyPropertyStub(JSContext *cx, JSHandleObject obj, JSHandleId id, JSBool strict, jsval *vp);
 
 JS_FRIEND_API(void)
 js_ReportOverRecursed(JSContext *maybecx);
@@ -164,7 +143,10 @@ extern JS_FRIEND_API(JSBool)
 JS_WrapPropertyDescriptor(JSContext *cx, js::PropertyDescriptor *desc);
 
 extern JS_FRIEND_API(JSBool)
-JS_EnumerateState(JSContext *cx, JSObject *obj, JSIterateOp enum_op, js::Value *statep, jsid *idp);
+JS_WrapAutoIdVector(JSContext *cx, JS::AutoIdVector &props);
+
+extern JS_FRIEND_API(JSBool)
+JS_EnumerateState(JSContext *cx, JSHandleObject obj, JSIterateOp enum_op, js::Value *statep, jsid *idp);
 
 struct JSFunctionSpecWithHelp {
     const char      *name;
@@ -217,25 +199,12 @@ GetRuntime(const JSContext *cx)
 typedef bool
 (* PreserveWrapperCallback)(JSContext *cx, JSObject *obj);
 
-#ifdef DEBUG
  /*
-  * DEBUG-only method to dump the complete object graph of heap-allocated things.
+  * Dump the complete object graph of heap-allocated things.
   * fp is the file for the dump output.
   */
 extern JS_FRIEND_API(void)
 DumpHeapComplete(JSRuntime *rt, FILE *fp);
-
-#endif
-
-class JS_FRIEND_API(AutoPreserveCompartment) {
-  private:
-    JSContext *cx;
-    JSCompartment *oldCompartment;
-  public:
-    AutoPreserveCompartment(JSContext *cx JS_GUARD_OBJECT_NOTIFIER_PARAM);
-    ~AutoPreserveCompartment();
-    JS_DECL_USE_GUARD_OBJECT_NOTIFIER
-};
 
 class JS_FRIEND_API(AutoSwitchCompartment) {
   private:
@@ -295,6 +264,15 @@ TraceWeakMaps(WeakMapTracer *trc);
 
 extern JS_FRIEND_API(bool)
 GCThingIsMarkedGray(void *thing);
+
+extern JS_FRIEND_API(JSCompartment*)
+GetGCThingCompartment(void *thing);
+
+typedef void
+(GCThingCallback)(void *closure, void *gcthing);
+
+extern JS_FRIEND_API(void)
+VisitGrayWrapperTargets(JSCompartment *comp, GCThingCallback *callback, void *closure);
 
 /*
  * Shadow declarations of JS internal structures, for access by inline access
@@ -387,6 +365,9 @@ GetObjectParentMaybeScope(JSObject *obj);
 
 JS_FRIEND_API(JSObject *)
 GetGlobalForObjectCrossCompartment(JSObject *obj);
+
+JS_FRIEND_API(void)
+NotifyAnimationActivity(JSObject *obj);
 
 JS_FRIEND_API(bool)
 IsOriginalScriptFunction(JSFunction *fun);
@@ -499,6 +480,9 @@ JS_FRIEND_API(bool)
 GetPropertyNames(JSContext *cx, JSObject *obj, unsigned flags, js::AutoIdVector *props);
 
 JS_FRIEND_API(bool)
+GetGeneric(JSContext *cx, JSObject *obj, JSObject *receiver, jsid id, Value *vp);
+
+JS_FRIEND_API(bool)
 StringIsArrayIndex(JSLinearString *str, uint32_t *indexp);
 
 JS_FRIEND_API(void)
@@ -552,6 +536,34 @@ GetPCCountScriptSummary(JSContext *cx, size_t script);
 JS_FRIEND_API(JSString *)
 GetPCCountScriptContents(JSContext *cx, size_t script);
 
+/*
+ * A call stack can be specified to the JS engine such that all JS entry/exits
+ * to functions push/pop an entry to/from the specified stack.
+ *
+ * For more detailed information, see vm/SPSProfiler.h
+ */
+struct ProfileEntry {
+    /*
+     * These two fields are marked as 'volatile' so that the compiler doesn't
+     * re-order instructions which modify them. The operation in question is:
+     *
+     *    stack[i].string = str;
+     *    (*size)++;
+     *
+     * If the size increment were re-ordered before the store of the string,
+     * then if sampling occurred there would be a bogus entry on the stack.
+     */
+    const char * volatile string;
+    void * volatile sp;
+};
+
+JS_FRIEND_API(void)
+SetRuntimeProfilingStack(JSRuntime *rt, ProfileEntry *stack, uint32_t *size,
+                         uint32_t max);
+
+JS_FRIEND_API(void)
+EnableRuntimeProfilingStack(JSRuntime *rt, bool enabled);
+
 #ifdef JS_THREADSAFE
 JS_FRIEND_API(void *)
 GetOwnerThread(const JSContext *cx);
@@ -581,7 +593,7 @@ extern JS_FRIEND_API(const JSStructuredCloneCallbacks *)
 GetContextStructuredCloneCallbacks(JSContext *cx);
 
 extern JS_FRIEND_API(JSVersion)
-VersionSetXML(JSVersion version, bool enable);
+VersionSetMoarXML(JSVersion version, bool enable);
 
 extern JS_FRIEND_API(bool)
 CanCallContextDebugHandler(JSContext *cx);
@@ -610,8 +622,8 @@ SizeOfJSContext();
     D(TOO_MUCH_MALLOC)                          \
     D(ALLOC_TRIGGER)                            \
     D(DEBUG_GC)                                 \
-    D(UNUSED2) /* was SHAPE */                  \
-    D(UNUSED3) /* was REFILL */                 \
+    D(DEBUG_MODE_GC)                            \
+    D(TRANSPLANT)                               \
                                                 \
     /* Reasons from Firefox */                  \
     D(DOM_WINDOW_UTILS)                         \
@@ -629,7 +641,9 @@ SizeOfJSContext();
     D(DOM_IPC)                                  \
     D(DOM_WORKER)                               \
     D(INTER_SLICE_GC)                           \
-    D(REFRESH_FRAME)
+    D(REFRESH_FRAME)                            \
+    D(FULL_GC_TIMER)                            \
+    D(SHUTDOWN_CC)
 
 namespace gcreason {
 
@@ -639,7 +653,15 @@ enum Reason {
     GCREASONS(MAKE_REASON)
 #undef MAKE_REASON
     NO_REASON,
-    NUM_REASONS
+    NUM_REASONS,
+
+    /*
+     * For telemetry, we want to keep a fixed max bucket size over time so we
+     * don't have to switch histograms. 100 is conservative; as of this writing
+     * there are 26. But the cost of extra buckets seems to be low while the
+     * cost of switching histograms is high.
+     */
+    NUM_TELEMETRY_REASONS = 100
 };
 
 } /* namespace gcreason */
@@ -649,6 +671,15 @@ PrepareCompartmentForGC(JSCompartment *comp);
 
 extern JS_FRIEND_API(void)
 PrepareForFullGC(JSRuntime *rt);
+
+extern JS_FRIEND_API(void)
+PrepareForIncrementalGC(JSRuntime *rt);
+
+extern JS_FRIEND_API(bool)
+IsGCScheduled(JSRuntime *rt);
+
+extern JS_FRIEND_API(void)
+SkipCompartmentForGC(JSCompartment *comp);
 
 /*
  * When triggering a GC using one of the functions below, it is first necessary
@@ -667,7 +698,7 @@ extern JS_FRIEND_API(void)
 IncrementalGC(JSRuntime *rt, gcreason::Reason reason);
 
 extern JS_FRIEND_API(void)
-SetGCSliceTimeBudget(JSContext *cx, int64_t millis);
+FinishIncrementalGC(JSRuntime *rt, gcreason::Reason reason);
 
 enum GCProgress {
     /*
@@ -724,11 +755,17 @@ IsIncrementalBarrierNeeded(JSContext *cx);
 extern JS_FRIEND_API(bool)
 IsIncrementalBarrierNeededOnObject(JSObject *obj);
 
+extern JS_FRIEND_API(bool)
+IsIncrementalBarrierNeededOnScript(JSScript *obj);
+
 extern JS_FRIEND_API(void)
 IncrementalReferenceBarrier(void *ptr);
 
 extern JS_FRIEND_API(void)
 IncrementalValueBarrier(const Value &v);
+
+extern JS_FRIEND_API(void)
+PokeGC(JSRuntime *rt);
 
 class ObjectPtr
 {
@@ -789,6 +826,16 @@ CastToJSFreeOp(FreeOp *fop)
  */
 extern JS_FRIEND_API(const jschar*)
 GetErrorTypeNameFromNumber(JSContext* cx, const unsigned errorNumber);
+
+/* Implemented in jswrapper.cpp. */
+typedef enum NukedGlobalHandling {
+    NukeForGlobalObject,
+    DontNukeForGlobalObject
+} NukedGlobalHandling;
+
+extern JS_FRIEND_API(JSBool)
+NukeChromeCrossCompartmentWrappersForGlobal(JSContext *cx, JSObject *obj,
+                                            NukedGlobalHandling nukeGlobal);
 
 } /* namespace js */
 
@@ -964,6 +1011,16 @@ extern JS_FRIEND_API(JSBool)
 JS_IsTypedArrayObject(JSObject *obj, JSContext *cx);
 
 /*
+ * Check whether obj supports JS_GetArrayBufferView* APIs. Note that this may
+ * return false if a security wrapper is encountered that denies the
+ * unwrapping. If this test or one of the more specific tests succeeds, then it
+ * is safe to call the various ArrayBufferView accessor JSAPI calls defined
+ * below. cx MUST be non-NULL and valid.
+ */
+extern JS_FRIEND_API(JSBool)
+JS_IsArrayBufferViewObject(JSObject *obj, JSContext *cx);
+
+/*
  * Test for specific typed array types (ArrayBufferView subtypes)
  */
 
@@ -1064,6 +1121,14 @@ extern JS_FRIEND_API(uint32_t)
 JS_GetTypedArrayByteLength(JSObject *obj, JSContext *cx);
 
 /*
+ * Check whether obj supports JS_ArrayBufferView* APIs. Note that this may
+ * return false if a security wrapper is encountered that denies the
+ * unwrapping.
+ */
+extern JS_FRIEND_API(JSBool)
+JS_IsArrayBufferViewObject(JSObject *obj, JSContext *cx);
+
+/*
  * More generic name for JS_GetTypedArrayByteLength to cover DataViews as well
  */
 extern JS_FRIEND_API(uint32_t)
@@ -1105,5 +1170,47 @@ JS_GetFloat64ArrayData(JSObject *obj, JSContext *cx);
  */
 extern JS_FRIEND_API(void *)
 JS_GetArrayBufferViewData(JSObject *obj, JSContext *cx);
+
+/*
+ * Check whether obj supports JS_GetDataView* APIs. Note that this may fail and
+ * throw an exception if a security wrapper is encountered that denies the
+ * operation.
+ */
+JS_FRIEND_API(JSBool)
+JS_IsDataViewObject(JSContext *cx, JSObject *obj, JSBool *isDataView);
+
+/*
+ * Return the byte offset of a data view into its array buffer. |obj| must be a
+ * DataView.
+ *
+ * |obj| must have passed a JS_IsDataViewObject test, or somehow be known that
+ * it would pass such a test: it is a data view or a wrapper of a data view,
+ * and the unwrapping will succeed. If cx is NULL, then DEBUG builds may be
+ * unable to assert when unwrapping should be disallowed.
+ */
+JS_FRIEND_API(uint32_t)
+JS_GetDataViewByteOffset(JSObject *obj, JSContext *cx);
+
+/*
+ * Return the byte length of a data view.
+ *
+ * |obj| must have passed a JS_IsDataViewObject test, or somehow be known that
+ * it would pass such a test: it is a data view or a wrapper of a data view,
+ * and the unwrapping will succeed. If cx is NULL, then DEBUG builds may be
+ * unable to assert when unwrapping should be disallowed.
+ */
+JS_FRIEND_API(uint32_t)
+JS_GetDataViewByteLength(JSObject *obj, JSContext *cx);
+
+/*
+ * Return a pointer to the beginning of the data referenced by a DataView.
+ *
+ * |obj| must have passed a JS_IsDataViewObject test, or somehow be known that
+ * it would pass such a test: it is a data view or a wrapper of a data view,
+ * and the unwrapping will succeed. If cx is NULL, then DEBUG builds may be
+ * unable to assert when unwrapping should be disallowed.
+ */
+JS_FRIEND_API(void *)
+JS_GetDataViewData(JSObject *obj, JSContext *cx);
 
 #endif /* jsfriendapi_h___ */

@@ -226,16 +226,6 @@ MOZ_DOUBLE_MIN_VALUE()
   return pun.d;
 }
 
-/** Computes a 32-bit hash of the given double. */
-static MOZ_ALWAYS_INLINE uint32_t
-MOZ_HASH_DOUBLE(double d)
-{
-  union MozDoublePun pun;
-  pun.d = d;
-
-  return ((uint32_t)(pun.u >> 32)) ^ ((uint32_t)(pun.u));
-}
-
 static MOZ_ALWAYS_INLINE int
 MOZ_DOUBLE_IS_INT32(double d, int32_t* i)
 {

@@ -1,4 +1,4 @@
-/* -*- Mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+/* -*- Mode: C++; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
 /* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this file,
  * You can obtain one at http://mozilla.org/MPL/2.0/. */
@@ -52,7 +52,8 @@ namespace mozilla {
  */
 
 template<unsigned KeySize, class T>
-class BloomFilter {
+class BloomFilter
+{
     /*
      * A counting Bloom filter with 8-bit counters.  For now we assume
      * that having two hash functions is enough, but we may revisit that
@@ -101,7 +102,7 @@ class BloomFilter {
      * positive rate for N == 100 and to quite bad false positive
      * rates for larger N.
      */
-public:
+  public:
     BloomFilter() {
         MOZ_STATIC_ASSERT(KeySize <= keyShift, "KeySize too big");
 
@@ -142,7 +143,7 @@ public:
     void remove(uint32_t hash);
     bool mightContain(uint32_t hash) const;
 
-private:
+  private:
     static const size_t arraySize = (1 << KeySize);
     static const uint32_t keyMask = (1 << KeySize) - 1;
     static const uint32_t keyShift = 16;
@@ -164,67 +165,67 @@ template<unsigned KeySize, class T>
 inline void
 BloomFilter<KeySize, T>::clear()
 {
-    memset(counters, 0, arraySize);
+  memset(counters, 0, arraySize);
 }
 
 template<unsigned KeySize, class T>
 inline void
 BloomFilter<KeySize, T>::add(uint32_t hash)
 {
-    uint8_t& slot1 = firstSlot(hash);
-    if (MOZ_LIKELY(!full(slot1)))
-        ++slot1;
+  uint8_t& slot1 = firstSlot(hash);
+  if (MOZ_LIKELY(!full(slot1)))
+    ++slot1;
 
-    uint8_t& slot2 = secondSlot(hash);
-    if (MOZ_LIKELY(!full(slot2)))
-        ++slot2;
+  uint8_t& slot2 = secondSlot(hash);
+  if (MOZ_LIKELY(!full(slot2)))
+    ++slot2;
 }
 
 template<unsigned KeySize, class T>
 MOZ_ALWAYS_INLINE void
 BloomFilter<KeySize, T>::add(const T* t)
 {
-    uint32_t hash = t->hash();
-    return add(hash);
+  uint32_t hash = t->hash();
+  return add(hash);
 }
 
 template<unsigned KeySize, class T>
 inline void
 BloomFilter<KeySize, T>::remove(uint32_t hash)
 {
-    // If the slots are full, we don't know whether we bumped them to be
-    // there when we added or not, so just leave them full.
-    uint8_t& slot1 = firstSlot(hash);
-    if (MOZ_LIKELY(!full(slot1)))
-        --slot1;
+  // If the slots are full, we don't know whether we bumped them to be
+  // there when we added or not, so just leave them full.
+  uint8_t& slot1 = firstSlot(hash);
+  if (MOZ_LIKELY(!full(slot1)))
+    --slot1;
 
-    uint8_t& slot2 = secondSlot(hash);
-    if (MOZ_LIKELY(!full(slot2)))
-        --slot2;
+  uint8_t& slot2 = secondSlot(hash);
+  if (MOZ_LIKELY(!full(slot2)))
+    --slot2;
 }
 
 template<unsigned KeySize, class T>
 MOZ_ALWAYS_INLINE void
 BloomFilter<KeySize, T>::remove(const T* t)
 {
-    uint32_t hash = t->hash();
-    remove(hash);
+  uint32_t hash = t->hash();
+  remove(hash);
 }
 
 template<unsigned KeySize, class T>
 MOZ_ALWAYS_INLINE bool
 BloomFilter<KeySize, T>::mightContain(uint32_t hash) const
 {
-    // Check that all the slots for this hash contain something
-    return firstSlot(hash) && secondSlot(hash);
+  // Check that all the slots for this hash contain something
+  return firstSlot(hash) && secondSlot(hash);
 }
 
 template<unsigned KeySize, class T>
 MOZ_ALWAYS_INLINE bool
 BloomFilter<KeySize, T>::mightContain(const T* t) const
 {
-    uint32_t hash = t->hash();
-    return mightContain(hash);
+  uint32_t hash = t->hash();
+  return mightContain(hash);
 }
 
 } // namespace mozilla
