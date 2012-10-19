@@ -36,7 +36,8 @@ public:
 	/*
 	 * Set zoom factor for frame. This method is for debugging big resolution (e.g.new ipad) app on desktop.
 	 */
-	void setFrameZoom(float fZoomFactor);
+	void setFrameZoomFactor(float fZoomFactor);
+	float getFrameZoomFactor();
 	virtual bool isOpenGLReady();
 	virtual void end();
 	virtual void swapBuffers();
