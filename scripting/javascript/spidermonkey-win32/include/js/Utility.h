@@ -1,46 +1,15 @@
 /* -*- Mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*-
  * vim: set ts=8 sw=4 et tw=99 ft=cpp:
  *
- * ***** BEGIN LICENSE BLOCK *****
- * Version: MPL 1.1/GPL 2.0/LGPL 2.1
- *
- * The contents of this file are subject to the Mozilla Public License Version
- * 1.1 (the "License"); you may not use this file except in compliance with
- * the License. You may obtain a copy of the License at
- * http://www.mozilla.org/MPL/
- *
- * Software distributed under the License is distributed on an "AS IS" basis,
- * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
- * for the specific language governing rights and limitations under the
- * License.
- *
- * The Original Code is Mozilla SpiderMonkey JavaScript code.
- *
- * The Initial Developer of the Original Code is
- * the Mozilla Foundation.
- * Portions created by the Initial Developer are Copyright (C) 2011
- * the Initial Developer. All Rights Reserved.
- *
- * Contributor(s):
- *
- * Alternatively, the contents of this file may be used under the terms of
- * either the GNU General Public License Version 2 or later (the "GPL"), or
- * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
- * in which case the provisions of the GPL or the LGPL are applicable instead
- * of those above. If you wish to allow use of your version of this file only
- * under the terms of either the GPL or the LGPL, and not to allow others to
- * use your version of this file under the terms of the MPL, indicate your
- * decision by deleting the provisions above and replace them with the notice
- * and other provisions required by the GPL or the LGPL. If you do not delete
- * the provisions above, a recipient may use your version of this file under
- * the terms of any one of the MPL, the GPL or the LGPL.
- *
- * ***** END LICENSE BLOCK ***** */
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 #ifndef js_utility_h__
 #define js_utility_h__
 
 #include "mozilla/Assertions.h"
+#include "mozilla/Attributes.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -53,6 +22,7 @@
 #include "jstypes.h"
 
 #ifdef __cplusplus
+# include "mozilla/Scoped.h"
 
 /* The public JS engine namespace. */
 namespace JS {}
@@ -96,6 +66,9 @@ JS_BEGIN_EXTERN_C
 
 #define JS_STATIC_ASSERT(cond)           MOZ_STATIC_ASSERT(cond, "JS_STATIC_ASSERT")
 #define JS_STATIC_ASSERT_IF(cond, expr)  MOZ_STATIC_ASSERT_IF(cond, expr, "JS_STATIC_ASSERT_IF")
+
+extern MOZ_NORETURN JS_PUBLIC_API(void)
+JS_Assert(const char *s, const char *file, int ln);
 
 /*
  * Abort the process in a non-graceful manner. This will cause a core file,
@@ -626,6 +599,15 @@ public:
 class UnwantedForeground : public Foreground {
 };
 
+template <typename T>
+struct ScopedDeletePtrTraits
+{
+    typedef T *type;
+    static T *empty() { return NULL; }
+    static void release(T *ptr) { Foreground::delete_(ptr); }
+};
+SCOPED_TEMPLATE(ScopedDeletePtr, ScopedDeletePtrTraits)
+
 } /* namespace js */
 
 /*
@@ -847,7 +829,7 @@ class MoveRef {
     explicit MoveRef(T &t) : pointer(&t) { }
     T &operator*()  const { return *pointer; }
     T *operator->() const { return  pointer; }
-#ifdef __GXX_EXPERIMENTAL_CXX0X__
+#if defined(__GXX_EXPERIMENTAL_CXX0X__) && defined(__clang__)
     /*
      * If MoveRef is used in a rvalue position (which is expected), we can
      * end up in a situation where, without this ifdef, we would try to pass
