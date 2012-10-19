@@ -87,7 +87,7 @@
       </DllDataFileName>
     </Midl>
     <PreBuildEvent>
-      <Command>xcopy $(ProjectDir)..\..\TestCpp\Resources $(ProjectDir)..\..\TestLua\Resources /e /Y</Command>
+      <Command>xcopy "$(ProjectDir)..\..\TestCpp\Resources" "$(ProjectDir)..\..\TestLua\Resources" /e /Y</Command>
       <Message>copy files from TestCpp to TestLua</Message>
     </PreBuildEvent>
   </ItemDefinitionGroup>
@@ -129,7 +129,7 @@
       </DllDataFileName>
     </Midl>
     <PreBuildEvent>
-      <Command>xcopy $(ProjectDir)..\..\TestCpp\Resources $(ProjectDir)..\..\TestLua\Resources /e /Y</Command>
+      <Command>xcopy "$(ProjectDir)..\..\TestCpp\Resources" "$(ProjectDir)..\..\TestLua\Resources" /e /Y</Command>
       <Message>copy files from TestCpp to TestLua</Message>
     </PreBuildEvent>
   </ItemDefinitionGroup>
