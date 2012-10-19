@@ -28,6 +28,7 @@
 #ifdef ANDROID
 #include <android/log.h>
 #include <jni/JniHelper.h>
+#include <netinet/in.h>
 #endif
 
 #ifdef ANDROID
