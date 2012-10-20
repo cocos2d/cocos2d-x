@@ -52,12 +52,12 @@ std::map<int,int> ports_sockets;
 // name ~> globals
 std::map<std::string, js::RootedObject*> globals;
 
-static void executeJSFunctionFromReservedSpot(JSContext *cx, JSObject *obj, 
+static void executeJSFunctionFromReservedSpot(JSContext *cx, JSObject *obj,
                                               jsval &dataVal, jsval &retval) {
 
     //  if(p->jsclass->JSCLASS_HAS_RESERVED_SLOTS(1)) {
     jsval func = JS_GetReservedSlot(obj, 0);
-    
+
     if(func == JSVAL_VOID) { return; }
     jsval thisObj = JS_GetReservedSlot(obj, 1);
     if(thisObj == JSVAL_VOID) {
@@ -65,7 +65,7 @@ static void executeJSFunctionFromReservedSpot(JSContext *cx, JSObject *obj,
     } else {
         assert(!JSVAL_IS_PRIMITIVE(thisObj));
         JS_CallFunctionValue(cx, JSVAL_TO_OBJECT(thisObj), func, 1, &dataVal, &retval);
-    }        
+    }
     //  }
 }
 
@@ -114,7 +114,7 @@ static void unRootObject(JSContext *cx, JSObject *obj) {
     JS_RemoveObjectRoot(cx, &obj);
 }
 
-static void getJSTouchObject(JSContext *cx, CCTouch *x, jsval &jsret) {    
+static void getJSTouchObject(JSContext *cx, CCTouch *x, jsval &jsret) {
     js_type_class_t *classType;
     TypeTest<cocos2d::CCTouch> t;
     uint32_t typeId = t.s_id();
@@ -150,12 +150,12 @@ void ScriptingCore::executeJSFunctionWithThisObj(jsval thisObj, jsval callback,
 }
 
 
-static void executeJSFunctionWithName(JSContext *cx, JSObject *obj, 
+static void executeJSFunctionWithName(JSContext *cx, JSObject *obj,
                                       const char *funcName, jsval &dataVal,
                                       jsval &retval) {
     JSBool hasAction;
     jsval temp_retval;
-    
+
     if (JS_HasProperty(cx, obj, funcName, &hasAction) && hasAction) {
         if(!JS_GetProperty(cx, obj, funcName, &temp_retval)) {
             return;
@@ -163,10 +163,10 @@ static void executeJSFunctionWithName(JSContext *cx, JSObject *obj,
         if(temp_retval == JSVAL_VOID) {
             return;
         }
-        JS_CallFunctionName(cx, obj, funcName, 
+        JS_CallFunctionName(cx, obj, funcName,
                             1, &dataVal, &retval);
     }
-    
+
 }
 
 void js_log(const char *format, ...) {
@@ -276,7 +276,7 @@ void registerDefaultClasses(JSContext* cx, JSObject* global) {
 
     jsb_register_cocos2d_config(cx, ns);
 
-    // 
+    //
     // Javascript controller (__jsc__)
     //
     JSObject *jsc = JS_NewObject(cx, NULL, NULL, NULL);
@@ -367,6 +367,7 @@ JSBool ScriptingCore::evalString(const char *string, jsval *outVal, const char *
         if (JS_FALSE == evaluatedOK) {
             fprintf(stderr, "(evaluatedOK == JS_FALSE)\n");
         }
+        ac.leave();
         return evaluatedOK;
     }
     return false;
@@ -437,29 +438,30 @@ JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* c
     if (cx == NULL) {
         cx = cx_;
     }
+
     // this will always compile the script, we can actually check if the script
     // was compiled before, because it can be in the global map
-
-    // We can't use this function on android since all the sources are packed into apk file. 
-    // JSScript* script = JS_CompileUTF8File(cx, global, rpath.c_str());
-
+#ifdef ANDROID
     unsigned char *content = NULL;
     unsigned long contentSize = 0;
 
     content = (unsigned char*)CCString::createWithContentsOfFile(rpath.c_str())->getCString();
     contentSize = strlen((char*)content);
-    JSScript* script = JS_CompileScript(cx, global, (char*)content, contentSize, "noname", 1);
+    JSScript* script = JS_CompileScript(cx, global, (char*)content, contentSize, path, 1);
+#else
+    JSScript* script = JS_CompileUTF8File(cx, global, rpath.c_str());
+#endif
     JSBool evaluatedOK = false;
     if (script) {
         jsval rval;
         filename_script[path] = script;
-//		JSAutoCompartment ac(cx, global);
         JSAutoEnterCompartment ac;
         ac.enter(cx, global);
         evaluatedOK = JS_ExecuteScript(cx, global, script, &rval);
         if (JS_FALSE == evaluatedOK) {
             fprintf(stderr, "(evaluatedOK == JS_FALSE)\n");
         }
+        ac.leave();
     }
     return evaluatedOK;
 }
@@ -596,8 +598,8 @@ JSBool ScriptingCore::removeRootJS(JSContext *cx, uint32_t argc, jsval *vp)
     return JS_FALSE;
 }
 
-void ScriptingCore::pauseSchedulesAndActions(CCNode *node) {    
-    
+void ScriptingCore::pauseSchedulesAndActions(CCNode *node) {
+
     CCArray * arr = JSSchedule::getTargetForNativeNode(node);
     if(! arr) return;
     for(unsigned int i = 0; i < arr->count(); ++i) {
@@ -609,7 +611,7 @@ void ScriptingCore::pauseSchedulesAndActions(CCNode *node) {
 
 
 void ScriptingCore::resumeSchedulesAndActions(CCNode *node) {
-    
+
     CCArray * arr = JSSchedule::getTargetForNativeNode(node);
     if(!arr) return;
     for(unsigned int i = 0; i < arr->count(); ++i) {
@@ -635,7 +637,7 @@ int ScriptingCore::executeNodeEvent(CCNode* pNode, int nAction)
     {
         executeJSFunctionWithName(this->cx_, p->obj, "onEnter", dataVal, retval);
         resumeSchedulesAndActions(pNode);
-    } 
+    }
     else if(nAction == kCCNodeOnExit)
     {
         executeJSFunctionWithName(this->cx_, p->obj, "onExit", dataVal, retval);
@@ -731,16 +733,16 @@ int ScriptingCore::executeLayerTouchEvent(CCLayer* pLayer, int eventType, CCTouc
 }
 
 int ScriptingCore::executeFunctionWithObjectData(CCNode *self, const char *name, JSObject *obj) {
-    
+
     js_proxy_t * p;
     JS_GET_PROXY(p, self);
     if (!p) return 0;
-    
+
     jsval retval;
     jsval dataVal = OBJECT_TO_JSVAL(obj);
-    
+
     executeJSFunctionWithName(this->cx_, p->obj, name, dataVal, retval);
-    
+
     return 1;
 }
 
@@ -752,13 +754,13 @@ int ScriptingCore::executeFunctionWithOwner(jsval owner, const char *name, jsval
     return 1;
 }
 
-int ScriptingCore::executeCustomTouchesEvent(int eventType, 
+int ScriptingCore::executeCustomTouchesEvent(int eventType,
                                        CCSet *pTouches, JSObject *obj)
 {
     jsval retval;
     std::string funcName;
     getTouchesFuncName(eventType, funcName);
-    
+
     JSObject *jsretArr = JS_NewArrayObject(this->cx_, 0, NULL);
     JS_AddNamedObjectRoot(this->cx_, &jsretArr, "touchArray");
     int count = 0;
@@ -769,48 +771,48 @@ int ScriptingCore::executeCustomTouchesEvent(int eventType,
             break;
         }
     }
-    
+
     jsval jsretArrVal = OBJECT_TO_JSVAL(jsretArr);
     executeJSFunctionWithName(this->cx_, obj, funcName.c_str(), jsretArrVal, retval);
     JS_RemoveObjectRoot(this->cx_, &jsretArr);
-    
+
     for(CCSetIterator it = pTouches->begin(); it != pTouches->end(); ++it, ++count) {
         jsval jsret;
         removeJSTouchObject(this->cx_, (CCTouch *) *it, jsret);
     }
-    
+
     return 1;
 }
 
 
-int ScriptingCore::executeCustomTouchEvent(int eventType, 
+int ScriptingCore::executeCustomTouchEvent(int eventType,
                                            CCTouch *pTouch, JSObject *obj) {
     jsval retval;
     std::string funcName;
     getTouchFuncName(eventType, funcName);
-    
+
     jsval jsTouch;
     getJSTouchObject(this->cx_, pTouch, jsTouch);
-    
+
     executeJSFunctionWithName(this->cx_, obj, funcName.c_str(), jsTouch, retval);
     return 1;
-    
-}  
+
+}
 
 
-int ScriptingCore::executeCustomTouchEvent(int eventType, 
+int ScriptingCore::executeCustomTouchEvent(int eventType,
                                            CCTouch *pTouch, JSObject *obj,
                                            jsval &retval) {
 
     std::string funcName;
     getTouchFuncName(eventType, funcName);
-    
+
     jsval jsTouch;
     getJSTouchObject(this->cx_, pTouch, jsTouch);
 
     executeJSFunctionWithName(this->cx_, obj, funcName.c_str(), jsTouch, retval);
     return 1;
-    
+
 }
 
 #pragma mark - Conversion Routines
@@ -948,22 +950,22 @@ JSBool jsval_to_ccarray_of_CCPoint(JSContext* cx, jsval v, CCPoint **points, int
     JSObject *jsobj;
     JSBool ok = JS_ValueToObject( cx, v, &jsobj );
     if(!jsobj || !JS_IsArrayObject( cx, jsobj)) return JS_FALSE;
-    
+
     uint32_t len;
     JS_GetArrayLength(cx, jsobj, &len);
-    
+
     CCPoint *array = (CCPoint*)malloc( sizeof(CCPoint) * len);
-    
+
     for( uint32_t i=0; i< len;i++ ) {
         jsval valarg;
         JS_GetElement(cx, jsobj, i, &valarg);
-        
+
         array[i] = jsval_to_ccpoint(cx, valarg);
     }
-    
+
     *numPoints = len;
     *points = array;
-    
+
     return JS_TRUE;
 }
 
@@ -992,7 +994,7 @@ CCArray* jsval_to_ccarray(JSContext* cx, jsval v) {
 
 
 jsval ccarray_to_jsval(JSContext* cx, CCArray *arr) {
-    
+
   JSObject *jsretArr = JS_NewArrayObject(cx, 0, NULL);
 
   for(int i = 0; i < arr->count(); ++i) {
@@ -1114,19 +1116,21 @@ jsval cccolor3b_to_jsval(JSContext* cx, ccColor3B& v) {
 
 JSObject* NewGlobalObject(JSContext* cx)
 {
-    JSObject* glob = JS_NewGlobalObject(cx, &global_class, NULL);
-    if (!glob) {
-        return NULL;
-    }
-    //JSAutoCompartment ac(cx, glob);
-    JSAutoEnterCompartment ac;
-    ac.enter(cx, glob);
-    if (!JS_InitStandardClasses(cx, glob))
-        return NULL;
-    if (!JS_InitReflect(cx, glob))
-        return NULL;
-    if (!JS_DefineDebuggerObject(cx, glob))
-        return NULL;
+	JSObject* glob = JS_NewGlobalObject(cx, &global_class, NULL);
+	if (!glob) {
+		return NULL;
+	}
+	JSAutoEnterCompartment ac;
+	ac.enter(cx, glob);
+	JSBool ok = JS_TRUE;
+	ok = JS_InitStandardClasses(cx, glob);
+	if (ok)
+		JS_InitReflect(cx, glob);
+	if (ok)
+		ok = JS_DefineDebuggerObject(cx, glob);
+	ac.leave();
+	if (!ok)
+		return NULL;
 
     return glob;
 }
@@ -1162,7 +1166,7 @@ JSBool jsSocketOpen(JSContext* cx, unsigned argc, jsval* vp)
         jsval* argv = JS_ARGV(cx, vp);
         int port = JSVAL_TO_INT(argv[0]);
         JSObject* callback = JSVAL_TO_OBJECT(argv[1]);
-        
+
         int s;
         s = ports_sockets[port];
         if (!s) {
@@ -1217,7 +1221,7 @@ JSBool jsSocketRead(JSContext* cx, unsigned argc, jsval* vp)
         int s = JSVAL_TO_INT(argv[0]);
         char buff[1024];
         JSString* outStr = JS_NewStringCopyZ(cx, "");
-        
+
         size_t bytesRead;
         while ((bytesRead = read(s, buff, 1024)) > 0) {
             JSString* newStr = JS_NewStringCopyN(cx, buff, bytesRead);
@@ -1240,13 +1244,13 @@ JSBool jsSocketWrite(JSContext* cx, unsigned argc, jsval* vp)
         jsval* argv = JS_ARGV(cx, vp);
         int s;
         const char* str;
-        
+
         s = JSVAL_TO_INT(argv[0]);
         JSString* jsstr = JS_ValueToString(cx, argv[1]);
         str = JS_EncodeString(cx, jsstr);
-        
+
         write(s, str, strlen(str));
-        
+
         JS_free(cx, (void*)str);
     }
     return JS_TRUE;
