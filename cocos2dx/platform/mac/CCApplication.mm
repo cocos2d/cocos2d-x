@@ -95,7 +95,25 @@ ccLanguageType CCApplication::getCurrentLanguage()
     {
         ret = kLanguageEnglish;
     }
-
+    else if ([languageCode isEqualToString:@"fr"]){
+        ret = kLanguageFrench;
+    }
+    else if ([languageCode isEqualToString:@"it"]){
+        ret = kLanguageItalian;
+    }
+    else if ([languageCode isEqualToString:@"de"]){
+        ret = kLanguageGerman;
+    }
+    else if ([languageCode isEqualToString:@"es"]){
+        ret = kLanguageSpanish;
+    }
+    else if ([languageCode isEqualToString:@"ru"]){
+        ret = kLanguageRussian;
+    }
+    else if ([languageCode isEqualToString:@"ko"]){
+        ret = kLanguageKorean;
+    }
+    
     return ret;
 }
 
