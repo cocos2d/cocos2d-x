@@ -13,6 +13,7 @@ Developers:
         Javascript Binding and testjs
 
     wenbin wang
+        add korean language support
         fix getDeviceModel bug in android CocosDenshion
 
     Horcruxes

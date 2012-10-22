@@ -32,6 +32,12 @@ public:
 	 * iDepth is not the buffer depth of opengl, it indicate how may bits for a pixel
 	 */
 	virtual void setFrameSize(float width, float height);
+	virtual void setViewPortInPoints(float x , float y , float w , float h);
+	/*
+	 * Set zoom factor for frame. This method is for debugging big resolution (e.g.new ipad) app on desktop.
+	 */
+	void setFrameZoomFactor(float fZoomFactor);
+	float getFrameZoomFactor();
 	virtual bool isOpenGLReady();
 	virtual void end();
 	virtual void swapBuffers();
@@ -42,13 +48,13 @@ public:
 	 */
 	static CCEGLView* sharedOpenGLView();
 private:
-    bool initGL();
-    void destroyGL();
+	bool initGL();
+	void destroyGL();
 private:
-	bool m_bCaptured;
 	//store current mouse point for moving, valid if and only if the mouse pressed
 	CCPoint m_mousePoint;
 	bool bIsInit;
+	float m_fFrameZoomFactor;
 };
 
 NS_CC_END

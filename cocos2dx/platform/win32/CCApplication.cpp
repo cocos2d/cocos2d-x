@@ -118,6 +118,9 @@ ccLanguageType CCApplication::getCurrentLanguage()
         case LANG_CHINESE:
             ret = kLanguageChinese;
             break;
+        case LANG_ENGLISH:
+            ret = kLanguageEnglish;
+            break;
         case LANG_FRENCH:
             ret = kLanguageFrench;
             break;
@@ -132,6 +135,9 @@ ccLanguageType CCApplication::getCurrentLanguage()
             break;
         case LANG_RUSSIAN:
             ret = kLanguageRussian;
+            break;
+        case LANG_KOREAN:
+            ret = kLanguageKorean;
             break;
     }
 
