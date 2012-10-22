@@ -14,7 +14,6 @@
 
 
 class CCBScriptCallbackProxy:  public cocos2d::CCLayer
-, public cocos2d::extension::CCBScriptOwnerProtocol
 , public cocos2d::extension::CCBSelectorResolver
 , public cocos2d::extension::CCBMemberVariableAssigner {
     
