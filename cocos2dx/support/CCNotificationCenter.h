@@ -48,7 +48,7 @@ public:
     /** @brief Adds an observer for the specified target.
      *  @param target The target which wants to observe notification events.
      *  @param selector The callback function which will be invoked when the specified notification event was posted.
-     *  @param name The name of notification.
+     *  @param name The name of this notification.
      *  @param obj The extra parameter which will be passed to the callback function.
      */
     void addObserver(CCObject *target, 
