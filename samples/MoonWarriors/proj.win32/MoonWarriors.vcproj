@@ -74,7 +74,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libcocos2d.lib libCocosDenshion.lib libchipmunk.lib mozjs.lib opengl32.lib glew32.lib"
+				AdditionalDependencies="libcocos2d.lib libCocosDenshion.lib libchipmunk.lib mozjs.lib opengl32.lib glew32.lib ws2_32.lib"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="&quot;$(OutDir)&quot;"
 				GenerateDebugInformation="true"
@@ -160,7 +160,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libcocos2d.lib libCocosDenshion.lib libchipmunk.lib mozjs.lib opengl32.lib glew32.lib"
+				AdditionalDependencies="libcocos2d.lib libCocosDenshion.lib libchipmunk.lib mozjs.lib opengl32.lib glew32.lib ws2_32.lib"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="$(OutDir)"
 				SubSystem="2"

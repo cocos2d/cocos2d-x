@@ -1,43 +1,9 @@
 /* -*- Mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*-
  * vim: set ts=4 sw=4 et tw=99:
  *
- * ***** BEGIN LICENSE BLOCK *****
- * Version: MPL 1.1/GPL 2.0/LGPL 2.1
- *
- * The contents of this file are subject to the Mozilla Public License Version
- * 1.1 (the "License"); you may not use this file except in compliance with
- * the License. You may obtain a copy of the License at
- * http://www.mozilla.org/MPL/
- *
- * Software distributed under the License is distributed on an "AS IS" basis,
- * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
- * for the specific language governing rights and limitations under the
- * License.
- *
- * The Original Code is Mozilla SpiderMonkey JavaScript 1.9 code, released
- * May 28, 2008.
- *
- * The Initial Developer of the Original Code is
- *   Mozilla Foundation
- * Portions created by the Initial Developer are Copyright (C) 2010
- * the Initial Developer. All Rights Reserved.
- *
- * Contributor(s):
- *   Andreas Gal <gal@mozilla.com>
- *
- * Alternatively, the contents of this file may be used under the terms of
- * either of the GNU General Public License Version 2 or later (the "GPL"),
- * or the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
- * in which case the provisions of the GPL or the LGPL are applicable instead
- * of those above. If you wish to allow use of your version of this file only
- * under the terms of either the GPL or the LGPL, and not to allow others to
- * use your version of this file under the terms of the MPL, indicate your
- * decision by deleting the provisions above and replace them with the notice
- * and other provisions required by the GPL or the LGPL. If you do not delete
- * the provisions above, a recipient may use your version of this file under
- * the terms of any one of the MPL, the GPL or the LGPL.
- *
- * ***** END LICENSE BLOCK ***** */
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 #ifndef jswrapper_h___
 #define jswrapper_h___
@@ -51,30 +17,76 @@ namespace js {
 
 class DummyFrameGuard;
 
-/* Base class that just implements no-op forwarding methods for fundamental
- * traps. This is meant to be used as a base class for ProxyHandlers that
- * want transparent forwarding behavior but don't want to use the derived
- * traps and other baggage of js::Wrapper.
+/*
+ * A wrapper is essentially a proxy that restricts access to certain traps. The
+ * way in which a wrapper restricts access to its traps depends on the
+ * particular policy for that wrapper. To allow a wrapper's policy to be
+ * customized, the Wrapper base class contains two functions, enter/leave, which
+ * are called as a policy enforcement check before/after each trap is forwarded.
+ *
+ * To minimize code duplication, a set of abstract wrapper classes is
+ * provided, from which other wrappers may inherit. These abstract classes are
+ * organized in the following hierarchy:
+ *
+ * BaseProxyHandler Wrapper
+ * |                    | |
+ * IndirectProxyHandler | |
+ * |                  | | |
+ * |      IndirectWrapper |
+ * |                      |
+ * DirectProxyHandler     |
+ *                  |     |
+ *            DirectWrapper
  */
-class JS_FRIEND_API(AbstractWrapper) : public ProxyHandler
+class JS_FRIEND_API(Wrapper)
 {
     unsigned mFlags;
+
   public:
-    unsigned flags() const { return mFlags; }
+    enum Action {
+        GET,
+        SET,
+        CALL,
+        PUNCTURE
+    };
 
-    explicit AbstractWrapper(unsigned flags);
+    enum Flags {
+        CROSS_COMPARTMENT = 1 << 0,
+        LAST_USED_FLAG = CROSS_COMPARTMENT
+    };
 
-    /* ES5 Harmony fundamental wrapper traps. */
-    virtual bool getPropertyDescriptor(JSContext *cx, JSObject *wrapper, jsid id, bool set,
-                                       PropertyDescriptor *desc) MOZ_OVERRIDE;
-    virtual bool getOwnPropertyDescriptor(JSContext *cx, JSObject *wrapper, jsid id, bool set,
-                                          PropertyDescriptor *desc) MOZ_OVERRIDE;
-    virtual bool defineProperty(JSContext *cx, JSObject *wrapper, jsid id,
-                                PropertyDescriptor *desc) MOZ_OVERRIDE;
-    virtual bool getOwnPropertyNames(JSContext *cx, JSObject *wrapper, AutoIdVector &props) MOZ_OVERRIDE;
-    virtual bool delete_(JSContext *cx, JSObject *wrapper, jsid id, bool *bp) MOZ_OVERRIDE;
-    virtual bool enumerate(JSContext *cx, JSObject *wrapper, AutoIdVector &props) MOZ_OVERRIDE;
-    virtual bool fix(JSContext *cx, JSObject *wrapper, Value *vp) MOZ_OVERRIDE;
+    typedef enum {
+        PermitObjectAccess,
+        PermitPropertyAccess,
+        DenyAccess
+    } Permission;
+
+    static JSObject *New(JSContext *cx, JSObject *obj, JSObject *proto,
+                         JSObject *parent, Wrapper *handler);
+
+    static Wrapper *wrapperHandler(const JSObject *wrapper);
+
+    static JSObject *wrappedObject(const JSObject *wrapper);
+
+    explicit Wrapper(unsigned flags);
+
+    unsigned flags() const {
+        return mFlags;
+    }
+
+    /*
+     * The function Wrapper::New takes a pointer to a Wrapper as the handler
+     * object. It then passes it on to the function NewProxyObject, which
+     * expects a pointer to a BaseProxyHandler as the handler object. We don't
+     * want to change Wrapper::New to take a pointer to a BaseProxyHandler,
+     * because that would allow the creation of wrappers with non-wrapper
+     * handlers. Unfortunately, we can't inherit Wrapper from BaseProxyHandler,
+     * since that would create a dreaded diamond, and we can't use dynamic_cast
+     * to cast Wrapper to BaseProxyHandler, since that would require us to
+     * compile with run time type information. Hence the need for this virtual
+     * function.
+     */
+    virtual BaseProxyHandler *toBaseProxyHandler() = 0;
 
     /* Policy enforcement traps.
      *
@@ -82,12 +94,9 @@ class JS_FRIEND_API(AbstractWrapper) : public ProxyHandler
      * on the underlying object's |id| property. In the case when |act| is CALL,
      * |id| is generally JSID_VOID.
      *
-     * leave() allows the policy to undo various scoped state changes taken in
-     * enter(). If enter() succeeds, leave() must be called upon completion of
-     * the approved action.
-     *
      * The |act| parameter to enter() specifies the action being performed. GET,
-     * SET, and CALL are self-explanatory, but PUNCTURE requires more explanation:
+     * SET, and CALL are self-explanatory, but PUNCTURE requires more
+     * explanation:
      *
      * GET and SET allow for a very fine-grained security membrane, through
      * which access can be granted or denied on a per-property, per-object, and
@@ -103,24 +112,87 @@ class JS_FRIEND_API(AbstractWrapper) : public ProxyHandler
      * permission, and thus should generally be denied for security wrappers
      * except under very special circumstances. When |act| is PUNCTURE, |id|
      * should be JSID_VOID.
-     * */
-    enum Action { GET, SET, CALL, PUNCTURE };
-    virtual bool enter(JSContext *cx, JSObject *wrapper, jsid id, Action act, bool *bp);
-    virtual void leave(JSContext *cx, JSObject *wrapper);
-
-    static JSObject *wrappedObject(const JSObject *wrapper);
-    static AbstractWrapper *wrapperHandler(const JSObject *wrapper);
+     */
+    virtual bool enter(JSContext *cx, JSObject *wrapper, jsid id, Action act,
+                       bool *bp);
 };
 
-/* No-op wrapper handler base class. */
-class JS_FRIEND_API(Wrapper) : public AbstractWrapper
+/*
+ * IndirectWrapper forwards its traps by forwarding them to
+ * IndirectProxyHandler. In effect, IndirectWrapper behaves the same as
+ * IndirectProxyHandler, except that it adds policy enforcement checks to each
+ * fundamental trap.
+ */
+class JS_FRIEND_API(IndirectWrapper) : public Wrapper,
+                                       public IndirectProxyHandler
 {
   public:
-    explicit Wrapper(unsigned flags);
+    explicit IndirectWrapper(unsigned flags);
 
-    typedef enum { PermitObjectAccess, PermitPropertyAccess, DenyAccess } Permission;
+    virtual BaseProxyHandler* toBaseProxyHandler() {
+        return this;
+    }
 
-    virtual ~Wrapper();
+    virtual Wrapper *toWrapper() {
+        return this;
+    }
+
+    /* ES5 Harmony fundamental wrapper traps. */
+    virtual bool getPropertyDescriptor(JSContext *cx, JSObject *wrapper,
+                                       jsid id, bool set,
+                                       PropertyDescriptor *desc) MOZ_OVERRIDE;
+    virtual bool getOwnPropertyDescriptor(JSContext *cx, JSObject *wrapper,
+                                          jsid id, bool set,
+                                          PropertyDescriptor *desc) MOZ_OVERRIDE;
+    virtual bool defineProperty(JSContext *cx, JSObject *wrapper, jsid id,
+                                PropertyDescriptor *desc) MOZ_OVERRIDE;
+    virtual bool getOwnPropertyNames(JSContext *cx, JSObject *wrapper,
+                                     AutoIdVector &props) MOZ_OVERRIDE;
+    virtual bool delete_(JSContext *cx, JSObject *wrapper, jsid id,
+                         bool *bp) MOZ_OVERRIDE;
+    virtual bool enumerate(JSContext *cx, JSObject *wrapper,
+                           AutoIdVector &props) MOZ_OVERRIDE;
+
+    /* Spidermonkey extensions. */
+    virtual bool defaultValue(JSContext *cx, JSObject *wrapper_, JSType hint,
+                              Value *vp) MOZ_OVERRIDE;
+};
+
+/*
+ * DirectWrapper forwards its traps by forwarding them to DirectProxyHandler.
+ * In effect, DirectWrapper behaves the same as DirectProxyHandler, except that
+ * it adds policy enforcement checks to each trap.
+ */
+class JS_FRIEND_API(DirectWrapper) : public Wrapper, public DirectProxyHandler
+{
+  public:
+    explicit DirectWrapper(unsigned flags);
+
+    virtual ~DirectWrapper();
+
+    virtual BaseProxyHandler* toBaseProxyHandler() {
+        return this;
+    }
+
+    virtual Wrapper *toWrapper() {
+        return this;
+    }
+
+    /* ES5 Harmony fundamental wrapper traps. */
+    virtual bool getPropertyDescriptor(JSContext *cx, JSObject *wrapper,
+                                       jsid id, bool set,
+                                       PropertyDescriptor *desc) MOZ_OVERRIDE;
+    virtual bool getOwnPropertyDescriptor(JSContext *cx, JSObject *wrapper,
+                                          jsid id, bool set,
+                                          PropertyDescriptor *desc) MOZ_OVERRIDE;
+    virtual bool defineProperty(JSContext *cx, JSObject *wrapper, jsid id,
+                                PropertyDescriptor *desc) MOZ_OVERRIDE;
+    virtual bool getOwnPropertyNames(JSContext *cx, JSObject *wrapper,
+                                     AutoIdVector &props) MOZ_OVERRIDE;
+    virtual bool delete_(JSContext *cx, JSObject *wrapper, jsid id,
+                         bool *bp) MOZ_OVERRIDE;
+    virtual bool enumerate(JSContext *cx, JSObject *wrapper,
+                           AutoIdVector &props) MOZ_OVERRIDE;
 
     /* ES5 Harmony derived wrapper traps. */
     virtual bool has(JSContext *cx, JSObject *wrapper, jsid id, bool *bp) MOZ_OVERRIDE;
@@ -136,36 +208,18 @@ class JS_FRIEND_API(Wrapper) : public AbstractWrapper
     virtual bool construct(JSContext *cx, JSObject *wrapper, unsigned argc, Value *argv, Value *rval) MOZ_OVERRIDE;
     virtual bool nativeCall(JSContext *cx, JSObject *wrapper, Class *clasp, Native native, CallArgs args) MOZ_OVERRIDE;
     virtual bool hasInstance(JSContext *cx, JSObject *wrapper, const Value *vp, bool *bp) MOZ_OVERRIDE;
-    virtual JSType typeOf(JSContext *cx, JSObject *proxy) MOZ_OVERRIDE;
-    virtual bool objectClassIs(JSObject *obj, ESClassValue classValue, JSContext *cx) MOZ_OVERRIDE;
     virtual JSString *obj_toString(JSContext *cx, JSObject *wrapper) MOZ_OVERRIDE;
     virtual JSString *fun_toString(JSContext *cx, JSObject *wrapper, unsigned indent) MOZ_OVERRIDE;
-    virtual bool regexp_toShared(JSContext *cx, JSObject *proxy, RegExpGuard *g) MOZ_OVERRIDE;
-    virtual bool defaultValue(JSContext *cx, JSObject *wrapper, JSType hint, Value *vp) MOZ_OVERRIDE;
-    virtual bool iteratorNext(JSContext *cx, JSObject *wrapper, Value *vp) MOZ_OVERRIDE;
+    virtual bool defaultValue(JSContext *cx, JSObject *wrapper_, JSType hint,
+                              Value *vp) MOZ_OVERRIDE;
 
-    virtual void trace(JSTracer *trc, JSObject *wrapper) MOZ_OVERRIDE;
-
-    using AbstractWrapper::Action;
-
-    static Wrapper singleton;
-
-    static JSObject *New(JSContext *cx, JSObject *obj, JSObject *proto, JSObject *parent,
-                         Wrapper *handler);
-
-    using AbstractWrapper::wrappedObject;
-    using AbstractWrapper::wrapperHandler;
-
-    enum {
-        CROSS_COMPARTMENT = 1 << 0,
-        LAST_USED_FLAG = CROSS_COMPARTMENT
-    };
+    static DirectWrapper singleton;
 
     static void *getWrapperFamily();
 };
 
 /* Base class for all cross compartment wrapper handlers. */
-class JS_FRIEND_API(CrossCompartmentWrapper) : public Wrapper
+class JS_FRIEND_API(CrossCompartmentWrapper) : public DirectWrapper
 {
   public:
     CrossCompartmentWrapper(unsigned flags);
@@ -199,10 +253,9 @@ class JS_FRIEND_API(CrossCompartmentWrapper) : public Wrapper
     virtual bool hasInstance(JSContext *cx, JSObject *wrapper, const Value *vp, bool *bp) MOZ_OVERRIDE;
     virtual JSString *obj_toString(JSContext *cx, JSObject *wrapper) MOZ_OVERRIDE;
     virtual JSString *fun_toString(JSContext *cx, JSObject *wrapper, unsigned indent) MOZ_OVERRIDE;
+    virtual bool regexp_toShared(JSContext *cx, JSObject *proxy, RegExpGuard *g) MOZ_OVERRIDE;
     virtual bool defaultValue(JSContext *cx, JSObject *wrapper, JSType hint, Value *vp) MOZ_OVERRIDE;
     virtual bool iteratorNext(JSContext *cx, JSObject *wrapper, Value *vp);
-
-    virtual void trace(JSTracer *trc, JSObject *wrapper) MOZ_OVERRIDE;
 
     static CrossCompartmentWrapper singleton;
 };
@@ -227,7 +280,7 @@ class JS_FRIEND_API(SecurityWrapper) : public Base
     virtual bool regexp_toShared(JSContext *cx, JSObject *proxy, RegExpGuard *g) MOZ_OVERRIDE;
 };
 
-typedef SecurityWrapper<Wrapper> SameCompartmentSecurityWrapper;
+typedef SecurityWrapper<DirectWrapper> SameCompartmentSecurityWrapper;
 typedef SecurityWrapper<CrossCompartmentWrapper> CrossCompartmentSecurityWrapper;
 
 /*
@@ -248,6 +301,43 @@ class JS_FRIEND_API(ForceFrame)
     bool enter();
 };
 
+
+class JS_FRIEND_API(DeadObjectProxy) : public BaseProxyHandler
+{
+  public:
+    static int sDeadObjectFamily;
+
+    explicit DeadObjectProxy();
+
+    /* ES5 Harmony fundamental wrapper traps. */
+    virtual bool getPropertyDescriptor(JSContext *cx, JSObject *wrapper, jsid id, bool set,
+                                       PropertyDescriptor *desc) MOZ_OVERRIDE;
+    virtual bool getOwnPropertyDescriptor(JSContext *cx, JSObject *wrapper, jsid id, bool set,
+                                          PropertyDescriptor *desc) MOZ_OVERRIDE;
+    virtual bool defineProperty(JSContext *cx, JSObject *wrapper, jsid id,
+                                PropertyDescriptor *desc) MOZ_OVERRIDE;
+    virtual bool getOwnPropertyNames(JSContext *cx, JSObject *wrapper, AutoIdVector &props) MOZ_OVERRIDE;
+    virtual bool delete_(JSContext *cx, JSObject *wrapper, jsid id, bool *bp) MOZ_OVERRIDE;
+    virtual bool enumerate(JSContext *cx, JSObject *wrapper, AutoIdVector &props) MOZ_OVERRIDE;
+
+    /* Spidermonkey extensions. */
+    virtual bool call(JSContext *cx, JSObject *proxy, unsigned argc, Value *vp);
+    virtual bool construct(JSContext *cx, JSObject *proxy, unsigned argc, Value *argv, Value *rval);
+    virtual bool nativeCall(JSContext *cx, JSObject *proxy, Class *clasp, Native native, CallArgs args);
+    virtual bool hasInstance(JSContext *cx, JSObject *proxy, const Value *vp, bool *bp);
+    virtual bool objectClassIs(JSObject *obj, ESClassValue classValue, JSContext *cx);
+    virtual JSString *obj_toString(JSContext *cx, JSObject *proxy);
+    virtual JSString *fun_toString(JSContext *cx, JSObject *proxy, unsigned indent);
+    virtual bool regexp_toShared(JSContext *cx, JSObject *proxy, RegExpGuard *g);
+    virtual bool defaultValue(JSContext *cx, JSObject *obj, JSType hint, Value *vp);
+    virtual bool iteratorNext(JSContext *cx, JSObject *proxy, Value *vp);
+    virtual bool getElementIfPresent(JSContext *cx, JSObject *obj, JSObject *receiver,
+                                     uint32_t index, Value *vp, bool *present);
+
+
+    static DeadObjectProxy singleton;
+};
+
 extern JSObject *
 TransparentObjectWrapper(JSContext *cx, JSObject *obj, JSObject *wrappedProto, JSObject *parent,
                          unsigned flags);
@@ -266,19 +356,68 @@ IsWrapper(const JSObject *obj)
 // stopAtOuter is true, then this returns the outer window if it was
 // previously wrapped. Otherwise, this returns the first object for
 // which JSObject::isWrapper returns false.
-JS_FRIEND_API(JSObject *) UnwrapObject(JSObject *obj, bool stopAtOuter = true,
-                                       unsigned *flagsp = NULL);
+JS_FRIEND_API(JSObject *)
+UnwrapObject(JSObject *obj, bool stopAtOuter = true, unsigned *flagsp = NULL);
 
 // Given a JSObject, returns that object stripped of wrappers. At each stage,
 // the security wrapper has the opportunity to veto the unwrap. Since checked
 // code should never be unwrapping outer window wrappers, we always stop at
 // outer windows.
-JS_FRIEND_API(JSObject *) UnwrapObjectChecked(JSContext *cx, JSObject *obj);
+JS_FRIEND_API(JSObject *)
+UnwrapObjectChecked(JSContext *cx, JSObject *obj);
 
-bool IsCrossCompartmentWrapper(const JSObject *obj);
+JS_FRIEND_API(bool)
+IsCrossCompartmentWrapper(const JSObject *obj);
+
+JSObject *
+NewDeadProxyObject(JSContext *cx, JSObject *parent);
 
 void
 NukeCrossCompartmentWrapper(JSObject *wrapper);
+
+bool
+RemapWrapper(JSContext *cx, JSObject *wobj, JSObject *newTarget);
+
+JS_FRIEND_API(bool)
+RemapAllWrappersForObject(JSContext *cx, JSObject *oldTarget,
+                          JSObject *newTarget);
+
+// API to recompute all cross-compartment wrappers whose source and target
+// match the given filters.
+//
+// These filters are designed to be ephemeral stack classes, and thus don't
+// do any rooting or holding of their members.
+struct CompartmentFilter {
+    virtual bool match(JSCompartment *c) const = 0;
+};
+
+struct AllCompartments : public CompartmentFilter {
+    virtual bool match(JSCompartment *c) const { return true; }
+};
+
+struct ContentCompartmentsOnly : public CompartmentFilter {
+    virtual bool match(JSCompartment *c) const {
+        return !IsSystemCompartment(c);
+    }
+};
+
+struct SingleCompartment : public CompartmentFilter {
+    JSCompartment *ours;
+    SingleCompartment(JSCompartment *c) : ours(c) {}
+    virtual bool match(JSCompartment *c) const { return c == ours; }
+};
+
+struct CompartmentsWithPrincipals : public CompartmentFilter {
+    JSPrincipals *principals;
+    CompartmentsWithPrincipals(JSPrincipals *p) : principals(p) {}
+    virtual bool match(JSCompartment *c) const {
+        return JS_GetCompartmentPrincipals(c) == principals;
+    }
+};
+
+JS_FRIEND_API(bool)
+RecomputeWrappers(JSContext *cx, const CompartmentFilter &sourceFilter,
+                  const CompartmentFilter &targetFilter);
 
 } /* namespace js */
 
