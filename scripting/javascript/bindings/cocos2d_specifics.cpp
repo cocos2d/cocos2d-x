@@ -273,9 +273,13 @@ JSBool js_cocos2dx_CCMenuItemImage_create(JSContext *cx, uint32_t argc, jsval *v
 			last = 3;
 		}
 		cocos2d::CCMenuItemImage* ret = cocos2d::CCMenuItemImage::create(arg0, arg1, arg2);
-		jsval thisObj = argv[last++];
-		jsval callback = argv[last];
-		JSObject *obj = bind_menu_item<cocos2d::CCMenuItemImage>(cx, ret, callback, thisObj);
+        jsval thisObj = JSVAL_VOID;
+        jsval callback = JSVAL_VOID;
+        if(argc > 3) {
+            thisObj = argv[last++];
+            callback = argv[last];
+        }
+        JSObject *obj = bind_menu_item<cocos2d::CCMenuItemImage>(cx, ret, callback, thisObj);
 		JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
 		return JS_TRUE;
 	}
