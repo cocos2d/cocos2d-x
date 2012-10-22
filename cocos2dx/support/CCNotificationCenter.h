@@ -28,38 +28,71 @@ THE SOFTWARE.
 #include "cocoa/CCObject.h"
 #include "cocoa/CCArray.h"
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 class CC_DLL CCNotificationCenter : public CCObject
 {
 public:
+    /* CCNotificationCenter constructor */
     CCNotificationCenter();
+
+    /* CCNotificationCenter destructor */
     ~CCNotificationCenter();
     
+    /* Get the single instance of CCNotificationCenter. */
     static CCNotificationCenter *sharedNotificationCenter(void);
+
+    /* Destroy the single instance of CCNotificationCenter. */
     static void purgeNotificationCenter(void);
 
+    /* @brief Add an observer for the specified target.
+     * @param target The target which want to be observed.
+     * @param selector The callback function which will be invoked when the specified notification event was posted.
+     * @param name The name of notification.
+     * @param obj The extra parameter which will be passed to the callback function.
+     */
     void addObserver(CCObject *target, 
                      SEL_CallFuncO selector,
                      const char *name,
                      CCObject *obj);
-    
+
+    /* @brief Remove the observer for the specified target.
+     * @param target The target which will not be observed any more.
+     * @param name The notification name which will not be observed any more. 
+     */
     void removeObserver(CCObject *target,const char *name);
     
+    /* @brief Register one hander for script binding.
+     * @note Only support Lua Binding now.
+     * @param handler The lua handler.
+     */
     void registerScriptObserver(int handler);
+
+    /* Unregister script observer */
     void unregisterScriptObserver(void);
     
+    /* brief Post one notification event by name.
+     * param name The name of this notification.
+     */
     void postNotification(const char *name);
+
+    /* brief Post one notification event by name.
+     * param name The name of this notification.
+     * param object The extra parameter.
+     */
     void postNotification(const char *name, CCObject *object);
     
+    /* brief Get script handler.
+     * note Only support Lua Binding now.
+     * return The script handle.
+     */
     inline int getScriptHandler() { return m_scriptHandler; };
 private:
-    //
     // internal functions
-    //
+
+    // Check whether the observer exists by the specified target and name.
     bool observerExisted(CCObject *target,const char *name);
     
-    //
     // variables
     //
     CCArray *m_observers;
@@ -69,12 +102,21 @@ private:
 class CC_DLL CCNotificationObserver : public CCObject
 {
 public:
+    /* brief Observer constructor
+     * @param target The target which want to be observed.
+     * @param selector The callback function which will be invoked when the specified notification event was posted.
+     * @param name The name of notification.
+     * @param obj The extra parameter which will be passed to the callback function.
+     */
     CCNotificationObserver(CCObject *target, 
                            SEL_CallFuncO selector,
                            const char *name,
                            CCObject *obj);
+
+    /* Observer destructor function */
     ~CCNotificationObserver();      
     
+    /* Invoke the callback function of this observer */
     void performSelector(CCObject *obj);
 private:
     CC_PROPERTY_READONLY(CCObject *, m_target, Target);
@@ -83,6 +125,6 @@ private:
     CC_PROPERTY_READONLY(CCObject *, m_object, Object);
 };
 
-NS_CC_END;
+NS_CC_END
 
 #endif//__CCNOTIFICATIONCENTER_H__
