@@ -68,6 +68,11 @@ static AccelerometerDispatcher* s_pAccelerometerDispatcher;
     }
 }
 
+-(void) setAccelerometerInterval:(float)interval
+{
+    [[UIAccelerometer sharedAccelerometer] setUpdateInterval:interval];
+}
+
 - (void)accelerometer:(UIAccelerometer *)accelerometer didAccelerate:(UIAcceleration *)acceleration
 {   
     if (! delegate_)
