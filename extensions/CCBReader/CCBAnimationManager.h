@@ -29,6 +29,14 @@ private:
     CCBAnimationManagerDelegate *mDelegate;
     CCBSequence *mRunningSequence;
     
+    CCArray *mDocumentOutletNames;
+    CCArray *mDocumentOutletNodes;
+    CCArray *mDocumentCallbackNames;
+    CCArray *mDocumentCallbackNodes;
+    std::string mDocumentControllerName;
+    std::string lastCompletedSequenceName;
+    
+    
 public:
     CCBAnimationManager();
     ~CCBAnimationManager();
@@ -41,7 +49,23 @@ public:
     void setAutoPlaySequenceId(int autoPlaySequenceId);
     
     CCNode* getRootNode();
-    void setRootNode(CCNode* pRootNode); // retain
+    void setRootNode(CCNode* pRootNode); // retain    
+    
+
+    void addDocumentCallbackNode(CCNode *node);
+    void addDocumentCallbackName(std::string name);
+    void addDocumentOutletNode(CCNode *node);
+    void addDocumentOutletName(std::string name);
+
+    void setDocumentControllerName(const std::string &name);
+    
+    std::string getDocumentControllerName();
+    CCArray* getDocumentCallbackNames();
+    CCArray* getDocumentCallbackNodes();
+    CCArray* getDocumentOutletNames();
+    CCArray* getDocumentOutletNodes();
+    std::string getLastCompletedSequenceName();
+    
     
     const CCSize& getRootContainerSize();
     void setRootContainerSize(const CCSize &rootContainerSize);
