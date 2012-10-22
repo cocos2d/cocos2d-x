@@ -59,7 +59,8 @@ public:
 	virtual int executeString(const char* codes) { return 0; }
     void pauseSchedulesAndActions(CCNode *node);
     void resumeSchedulesAndActions(CCNode *node);
-    
+    void cleanupSchedulesAndActions(CCNode *node);
+
     /**
      @brief Execute a script file.
      @param filename String object holding the filename of the script file that is to be executed
@@ -197,10 +198,7 @@ jsval ccsize_to_jsval(JSContext* cx, CCSize& v);
 jsval ccgridsize_to_jsval(JSContext* cx, ccGridSize& v);
 jsval cccolor4b_to_jsval(JSContext* cx, ccColor4B& v);
 jsval cccolor4f_to_jsval(JSContext* cx, ccColor4F& v);
-jsval cccolor3b_to_jsval(JSContext* cx, ccColor3B& v);
-
-JSObject* NewGlobalObject(JSContext* cx);
-JSBool jsNewGlobal(JSContext* cx, unsigned argc, jsval* vp);
+jsval cccolor3b_to_jsval(JSContext* cx, const ccColor3B& v);
 
 JSBool jsSocketOpen(JSContext* cx, unsigned argc, jsval* vp);
 JSBool jsSocketRead(JSContext* cx, unsigned argc, jsval* vp);
