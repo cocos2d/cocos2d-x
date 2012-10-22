@@ -620,6 +620,16 @@ void ScriptingCore::resumeSchedulesAndActions(CCNode *node) {
     }
 }
 
+void ScriptingCore::cleanupSchedulesAndActions(CCNode *node) {
+    
+    CCArray * arr = JSSchedule::getTargetForNativeNode(node);
+    if(! arr) return;
+    for(unsigned int i = 0; i < arr->count(); ++i) {
+        if(arr->objectAtIndex(i)) {
+            arr->removeObjectAtIndex(i);
+        }
+    }
+}
 
 int ScriptingCore::executeNodeEvent(CCNode* pNode, int nAction)
 {
@@ -650,6 +660,9 @@ int ScriptingCore::executeNodeEvent(CCNode* pNode, int nAction)
     else if(nAction == kCCNodeOnExitTransitionDidStart)
     {
         executeJSFunctionWithName(this->cx_, p->obj, "onExitTransitionDidStart", dataVal, retval);
+    }
+    else if(nAction == kCCNodeOnCleanup) {
+        cleanupSchedulesAndActions(pNode);
     }
 
     return 1;
@@ -1100,7 +1113,7 @@ jsval cccolor4f_to_jsval(JSContext* cx, ccColor4F& v) {
     return JSVAL_NULL;
 }
 
-jsval cccolor3b_to_jsval(JSContext* cx, ccColor3B& v) {
+jsval cccolor3b_to_jsval(JSContext* cx, const ccColor3B& v) {
     JSObject *tmp = JS_NewObject(cx, NULL, NULL, NULL);
     if (!tmp) return JSVAL_NULL;
     JSBool ok = JS_DefineProperty(cx, tmp, "r", INT_TO_JSVAL(v.r), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
