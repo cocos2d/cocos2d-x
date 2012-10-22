@@ -63,7 +63,7 @@ public:
     void removeObserver(CCObject *target,const char *name);
     
     /** @brief Registers one hander for script binding.
-     *  @note Only support Lua Binding now.
+     *  @note Only supports Lua Binding now.
      *  @param handler The lua handler.
      */
     void registerScriptObserver(int handler);
@@ -83,7 +83,7 @@ public:
     void postNotification(const char *name, CCObject *object);
     
     /** @brief Gets script handler.
-     *  @note Only support Lua Binding now.
+     *  @note Only supports Lua Binding now.
      *  @return The script handle.
      */
     inline int getScriptHandler() { return m_scriptHandler; };
