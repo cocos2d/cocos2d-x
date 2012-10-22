@@ -93,6 +93,52 @@ void CCBAnimationManager::setRootNode(CCNode *pRootNode)
     CC_SAFE_RETAIN(mRootNode);
 }
 
+void CCBAnimationManager::setDocumentControllerName(const std::string &name) {
+    mDocumentControllerName = name;
+}
+
+
+std::string CCBAnimationManager::getDocumentControllerName() {
+    return mDocumentControllerName;
+}
+
+void CCBAnimationManager::addDocumentCallbackNode(CCNode *node) {
+    mDocumentCallbackNodes->addObject(node);
+}
+
+void CCBAnimationManager::addDocumentCallbackName(std::string name) {
+    CCString *tmpName = CCString::create(name);
+    mDocumentCallbackNames->addObject(tmpName);
+}
+
+CCArray* CCBAnimationManager::getDocumentCallbackNames() {
+    return mDocumentCallbackNames;
+}
+
+CCArray* CCBAnimationManager::getDocumentCallbackNodes() {
+    return mDocumentCallbackNodes;
+}
+
+void CCBAnimationManager::addDocumentOutletNode(CCNode *node) {
+    mDocumentOutletNodes->addObject(node);
+}
+
+void CCBAnimationManager::addDocumentOutletName(std::string name) {
+    mDocumentOutletNames->addObject(CCString::create(name));
+}
+
+CCArray* CCBAnimationManager::getDocumentOutletNames() {
+    return mDocumentOutletNames;
+}
+
+CCArray* CCBAnimationManager::getDocumentOutletNodes() {
+    return mDocumentOutletNodes;
+}
+
+std::string CCBAnimationManager::getLastCompletedSequenceName() {
+    return lastCompletedSequenceName;
+}
+
 const CCSize& CCBAnimationManager::getRootContainerSize()
 {
     return mRootContainerSize;
@@ -592,6 +638,11 @@ void CCBAnimationManager::setAnimationCompletedCallback(CCObject *target, SEL_Ca
 
 void CCBAnimationManager::sequenceCompleted()
 {
+    
+    if(lastCompletedSequenceName != mRunningSequence->getName()) {
+        lastCompletedSequenceName = mRunningSequence->getName();
+    }
+    
     if (mDelegate)
     {
         mDelegate->completedAnimationSequenceNamed(mRunningSequence->getName());

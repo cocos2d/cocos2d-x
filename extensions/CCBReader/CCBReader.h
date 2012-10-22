@@ -26,7 +26,7 @@
     return NULL; \
 }
 
-#define kCCBVersion 3
+#define kCCBVersion 4
 
 enum {
     kCCBPropTypePosition = 0,
@@ -166,6 +166,8 @@ class CCBKeyframe;
 class CCBReader : public CCObject 
 {
 private:
+    
+    bool jsControlled;
     CCData *mData;
     unsigned char *mBytes;
     int mCurrentByte;
@@ -179,13 +181,21 @@ private:
     CCBAnimationManager *mActionManager;
 
     std::vector<std::pair<CCNode*, CCBAnimationManager *> > mAnimationManagers;
-
     std::set<std::string> *mAnimatedProps;
 
     CCNodeLoaderLibrary *mCCNodeLoaderLibrary;
     CCNodeLoaderListener *mCCNodeLoaderListener;
     CCBMemberVariableAssigner *mCCBMemberVariableAssigner;
-    CCBSelectorResolver *mCCBSelectorResolver; 
+    CCBSelectorResolver *mCCBSelectorResolver;
+    
+    CCArray* mOwnerOutletNames;
+    CCArray* mOwnerOutletNodes;
+    CCArray* mNodesWithAnimationManagers;
+    CCArray* mAnimationManagerForNodes;
+    
+    CCArray* mOwnerCallbackNames;
+    CCArray* mOwnerCallbackNodes;
+    
 
 public:
     CCBReader(CCNodeLoaderLibrary *pCCNodeLoaderLibrary, CCBMemberVariableAssigner *pCCBMemberVariableAssigner = NULL, CCBSelectorResolver *pCCBSelectorResolver = NULL, CCNodeLoaderListener *pCCNodeLoaderListener = NULL);
@@ -234,8 +244,6 @@ public:
     bool readBool();
     float readFloat();
     CCString* readCachedString();
-<<<<<<< HEAD
-=======
     bool isJSControlled();
             
     
@@ -244,18 +252,16 @@ public:
     CCArray* getOwnerOutletNames();
     CCArray* getOwnerOutletNodes();
     CCArray* getNodesWithAnimationManagers();
-    CCArray* getAnimationManagerForNodes();
+    CCArray* getAnimationManagersForNodes();
+
     std::vector<std::pair<CCNode *, CCBAnimationManager *> > getAnimationManagers();
     void setAnimationManagers(std::vector<std::pair<CCNode *, CCBAnimationManager *> > x);
-
-    
     
     void addOwnerCallbackName(std::string name);
     void addOwnerCallbackNode(CCNode *node);
     
     void addDocumentCallbackName(std::string name);
     void addDocumentCallbackNode(CCNode *node);
->>>>>>> Changing mAnimationManagers and bringing CCBReader implementation closer to cocos2d-iphone CCBReader
     
     static float getResolutionScale();
     
