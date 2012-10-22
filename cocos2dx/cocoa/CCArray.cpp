@@ -443,12 +443,9 @@ CCObject* CCArray::copyWithZone(CCZone* pZone)
     pArray->initWithCapacity(this->data->num > 0 ? this->data->num : 1);
 
     CCObject* pObj = NULL;
-    CCObject* pTmpObj = NULL;
     CCARRAY_FOREACH(this, pObj)
     {
-        pTmpObj = pObj->copy();
-        pArray->addObject(pTmpObj);
-        pTmpObj->release();
+        pArray->addObject(pObj);
     }
     return pArray;
 }
