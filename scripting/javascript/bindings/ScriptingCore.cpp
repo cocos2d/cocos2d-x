@@ -742,7 +742,23 @@ int ScriptingCore::executeLayerTouchesEvent(CCLayer* pLayer, int eventType, CCSe
 
 int ScriptingCore::executeLayerTouchEvent(CCLayer* pLayer, int eventType, CCTouch *pTouch)
 {
-    return 0;
+    std::string funcName = "";
+    getTouchFuncName(eventType, funcName);
+    
+    JSObject *jsretArr = JS_NewArrayObject(this->cx, 0, NULL);
+    
+    JS_AddNamedObjectRoot(this->cx, &jsretArr, "touchObject");
+    int count = 0;
+    jsval jsret;
+    getJSTouchObject(this->cx, pTouch, jsret);
+    JSObject *jsObj = JSVAL_TO_OBJECT(jsret);
+    executeFunctionWithObjectData(pLayer,  funcName.c_str(), jsObj);
+    
+    JS_RemoveObjectRoot(this->cx, &jsObj);
+    
+    removeJSTouchObject(this->cx, pTouch, jsret);
+    
+    return 1;
 }
 
 int ScriptingCore::executeFunctionWithObjectData(CCNode *self, const char *name, JSObject *obj) {
