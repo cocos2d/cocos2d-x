@@ -4,6 +4,31 @@
 #include "jsapi.h"
 #include "ScriptingCore.h"
 
+class JSSchedule;
+
+typedef struct jsScheduleFunc_proxy {
+    void * ptr;
+    JSSchedule *obj;
+    UT_hash_handle hh;
+} schedFunc_proxy_t;
+
+typedef struct jsScheduleTarget_proxy {
+    void * ptr;
+    CCArray *obj;
+    UT_hash_handle hh;
+} schedTarget_proxy_t;
+
+
+typedef struct jsCallFuncTarget_proxy {
+    void * ptr;
+    CCArray *obj;
+    UT_hash_handle hh;
+} callfuncTarget_proxy_t;
+
+extern schedFunc_proxy_t *_schedFunc_target_ht;
+extern schedTarget_proxy_t *_schedTarget_native_ht;
+
+extern callfuncTarget_proxy_t *_callfuncTarget_native_ht;
 
 /**
  * You don't need to manage the returned pointer. They live for the whole life of
@@ -58,12 +83,17 @@ class JSCallFunc: public CCObject {
 public:
     JSCallFunc(jsval func): jsCallback(func) {}
     JSCallFunc() { extraData = NULL; }
-    ~JSCallFunc(){}
+    virtual ~JSCallFunc() {
+        return;
+    }
+       
     void setJSCallbackFunc(jsval obj);
     void setJSCallbackThis(jsval thisObj);
     void setExtraDataField(jsval data);
     static void dumpNamedRoot(const char *name, void *addr, JSGCRootType type, void *data);
-    
+    static void setTargetForNativeNode(CCNode *pNode, JSCallFunc *target);
+    static CCArray * getTargetForNativeNode(CCNode *pNode);
+
     void callbackFunc(CCNode *node) const {
         
         jsval valArr[2];
@@ -91,30 +121,15 @@ private:
     jsval *extraData;
 };
 
-class JSSchedule;
-
-typedef struct jsScheduleFunc_proxy {
-    void * ptr;
-    JSSchedule *obj;
-    UT_hash_handle hh;
-} schedFunc_proxy_t;
-
-typedef struct jsScheduleTarget_proxy {
-    void * ptr;
-    CCArray *obj;
-    UT_hash_handle hh;
-} schedTarget_proxy_t;
-
-
-extern schedFunc_proxy_t *_schedFunc_target_ht;
-extern schedTarget_proxy_t *_schedTarget_native_ht;
 
 class JSSchedule: public CCObject {
     
 public:
     JSSchedule(jsval func): jsSchedule(func) {}
     JSSchedule() {}
-    ~JSSchedule(){}
+    virtual ~JSSchedule() {
+        return;
+    }
 
     static void setTargetForSchedule(jsval sched, JSSchedule *target);     
     static JSSchedule * getTargetForSchedule(jsval sched);
