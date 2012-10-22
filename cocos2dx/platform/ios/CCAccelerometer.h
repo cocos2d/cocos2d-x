@@ -36,6 +36,7 @@ public:
     ~CCAccelerometer();
 
     void setDelegate(CCAccelerometerDelegate* pDelegate);
+    void setAccelerometerInterval(float interval);
 };
 
 NS_CC_END

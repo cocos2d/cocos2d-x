@@ -40,5 +40,10 @@ void CCAccelerometer::setDelegate(CCAccelerometerDelegate* pDelegate)
     [[AccelerometerDispatcher sharedAccelerometerDispather] addDelegate:pDelegate];
 }
 
+void CCAccelerometer::setAccelerometerInterval(float interval)
+{
+    [[AccelerometerDispatcher sharedAccelerometerDispather] setAccelerometerInterval:interval];
+}
+
 NS_CC_END
 
