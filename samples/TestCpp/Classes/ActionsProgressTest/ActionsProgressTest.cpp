@@ -96,14 +96,14 @@ void SpriteDemo::onEnter()
 
     CCLabelTTF* label = CCLabelTTF::create(title().c_str(), "Arial", 18);
     addChild(label, 1);
-    label->setPosition( CCPointMake(s.width/2, s.height-50) );
+    label->setPosition( ccp(s.width/2, s.height-50) );
 
     std::string strSubtitle = subtitle();
     if( ! strSubtitle.empty() ) 
     {
         CCLabelTTF* l = CCLabelTTF::create(strSubtitle.c_str(), "Thonburi", 22);
         addChild(l, 1);
-        l->setPosition( CCPointMake(s.width/2, s.height-80) );
+        l->setPosition( ccp(s.width/2, s.height-80) );
     }    
 
     CCMenuItemImage *item1 = CCMenuItemImage::create(s_pPathB1, s_pPathB2, this, menu_selector(SpriteDemo::backCallback) );
@@ -112,9 +112,9 @@ void SpriteDemo::onEnter()
 
     CCMenu *menu = CCMenu::create(item1, item2, item3, NULL);
     menu->setPosition(CCPointZero);
-    item1->setPosition(CCPointMake( s.width/2 - item2->getContentSize().width*2, item2->getContentSize().height/2));
-    item2->setPosition(CCPointMake( s.width/2, item2->getContentSize().height/2));
-    item3->setPosition(CCPointMake( s.width/2 + item2->getContentSize().width*2, item2->getContentSize().height/2));    
+    item1->setPosition(ccp(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
+    item2->setPosition(ccp(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2));
+    item3->setPosition(ccp(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));   
     addChild(menu, 1);    
 
     CCLayerColor *background = CCLayerColor::create(ccc4(255,0,0,255));
@@ -163,7 +163,7 @@ void SpriteProgressToRadial::onEnter()
     CCProgressTimer *left = CCProgressTimer::create(CCSprite::create(s_pPathSister1));
     left->setType( kCCProgressTimerTypeRadial );
     addChild(left);
-    left->setPosition(CCPointMake(100, s.height/2));
+    left->setPosition(ccp(100, s.height/2));
     left->runAction( CCRepeatForever::create(to1));
     
     CCProgressTimer *right = CCProgressTimer::create(CCSprite::create(s_pPathBlock));
@@ -171,7 +171,7 @@ void SpriteProgressToRadial::onEnter()
     // Makes the ridial CCW
     right->setReverseProgress(true);
     addChild(right);
-    right->setPosition(CCPointMake(s.width-100, s.height/2));
+    right->setPosition(ccp(s.width-100, s.height/2));
     right->runAction( CCRepeatForever::create(to2));
 }
 
@@ -202,7 +202,7 @@ void SpriteProgressToHorizontal::onEnter()
     //    Setup for a horizontal bar since the bar change rate is 0 for y meaning no vertical change
     left->setBarChangeRate(ccp(1, 0));
     addChild(left);
-    left->setPosition(CCPointMake(100, s.height/2));
+    left->setPosition(ccp(100, s.height/2));
     left->runAction( CCRepeatForever::create(to1));
     
     CCProgressTimer *right = CCProgressTimer::create(CCSprite::create(s_pPathSister2));
@@ -212,7 +212,7 @@ void SpriteProgressToHorizontal::onEnter()
     //    Setup for a horizontal bar since the bar change rate is 0 for y meaning no vertical change
     right->setBarChangeRate(ccp(1, 0));
     addChild(right);
-    right->setPosition(CCPointMake(s.width-100, s.height/2));
+    right->setPosition(ccp(s.width-100, s.height/2));
     right->runAction( CCRepeatForever::create(to2));
 }
 
@@ -243,7 +243,7 @@ void SpriteProgressToVertical::onEnter()
     //    Setup for a vertical bar since the bar change rate is 0 for x meaning no horizontal change
     left->setBarChangeRate(ccp(0, 1));
     addChild(left);
-    left->setPosition(CCPointMake(100, s.height/2));
+    left->setPosition(ccp(100, s.height/2));
     left->runAction( CCRepeatForever::create(to1));
     
     CCProgressTimer *right = CCProgressTimer::create(CCSprite::create(s_pPathSister2));
@@ -253,7 +253,7 @@ void SpriteProgressToVertical::onEnter()
     //    Setup for a vertical bar since the bar change rate is 0 for x meaning no horizontal change
     right->setBarChangeRate(ccp(0, 1));
     addChild(right);
-    right->setPosition(CCPointMake(s.width-100, s.height/2));
+    right->setPosition(ccp(s.width-100, s.height/2));
     right->runAction( CCRepeatForever::create(to2));
 }
 
