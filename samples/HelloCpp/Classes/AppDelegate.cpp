@@ -23,22 +23,25 @@ bool AppDelegate::applicationDidFinishLaunching() {
     pEGLView->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, kResolutionNoBorder);
 
 	CCSize frameSize = pEGLView->getFrameSize();
-    // if the frame size is larger than medium resource size, select large resource.
+
+    // In this demo, we select resource according to the frame's height.
+    // If the resource size is different from design resolution size, you need to set contentScaleFactor.
+    // We use the ratio of resource's height to design resolution's height,
+    // this can make sure that the resource's height could fit for the height of design resolution.
+
+    // if the frame's height is larger than the height of medium resource size, select large resource.
 	if (frameSize.height > mediumResource.size.height)
 	{ 
 		CCFileUtils::sharedFileUtils()->setResourceDirectory(largeResource.directory);
-        // The contentScaleFactor is set by the ratio of resource's height and design resolution's height when your game is in landscape.
-        // Oppositely, if your game is in portrait, it need to be set by width. 
-        // This can make sure your game's status is in full screen.
         pDirector->setContentScaleFactor(largeResource.size.height/designResolutionSize.height);
 	}
-    // if the frame size is larger than small resource size, select medium resource.
+    // if the frame's height is larger than the height of small resource size, select medium resource.
     else if (frameSize.height > smallResource.size.height)
     { 
         CCFileUtils::sharedFileUtils()->setResourceDirectory(mediumResource.directory);
         pDirector->setContentScaleFactor(mediumResource.size.height/designResolutionSize.height);
     }
-    // if the frame size is smaller than medium resource size, select small resource.
+    // if the frame's height is smaller than the height of medium resource size, select small resource.
 	else
     { 
 		CCFileUtils::sharedFileUtils()->setResourceDirectory(smallResource.directory);
