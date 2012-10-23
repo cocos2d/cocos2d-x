@@ -354,9 +354,9 @@ CCHttpClient* CCHttpClient::getInstance()
 
 void CCHttpClient::destroyInstance()
 {
-    CCDirector::sharedDirector()->getScheduler()->unscheduleSelector(schedule_selector(CCHttpClient::dispatchResponseCallbacks), 
-                                                                     CCHttpClient::getInstance());
-    CC_SAFE_RELEASE_NULL(s_pHttpClient);
+    CC_ASSERT(s_pHttpClient);
+    CCDirector::sharedDirector()->getScheduler()->unscheduleSelector(schedule_selector(CCHttpClient::dispatchResponseCallbacks), s_pHttpClient);
+    s_pHttpClient->release();
 }
 
 CCHttpClient::CCHttpClient()
@@ -376,7 +376,7 @@ CCHttpClient::~CCHttpClient()
         sem_post(s_pSem);
     }
     
-    CCDirector::sharedDirector()->getScheduler()->unscheduleSelector(schedule_selector(CCHttpClient::dispatchResponseCallbacks), this);
+    s_pHttpClient = NULL;
 }
 
 //Lazy create semaphore & mutex & thread
