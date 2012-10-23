@@ -14,30 +14,37 @@ AppDelegate::~AppDelegate()
 
 bool AppDelegate::applicationDidFinishLaunching() {
     // initialize director
-    CCDirector *pDirector = CCDirector::sharedDirector();
+    CCDirector* pDirector = CCDirector::sharedDirector();
+    CCEGLView* pEGLView = CCEGLView::sharedOpenGLView();
 
-    pDirector->setOpenGLView(CCEGLView::sharedOpenGLView());
-	//pDirector->setProjection(kCCDirectorProjection2D);
-	CCSize screenSize = CCEGLView::sharedOpenGLView()->getFrameSize();
-    
-	if (screenSize.height > 768)
-	{
-		CCFileUtils::sharedFileUtils()->setResourceDirectory("ipadhd");
-        pDirector->setContentScaleFactor(1536.0f/kDesignResolutionSize_height);
+    pDirector->setOpenGLView(pEGLView);
+
+    // Set the design resolution
+    pEGLView->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, kResolutionNoBorder);
+
+	CCSize frameSize = pEGLView->getFrameSize();
+    // if the frame size is larger than medium resource size, select large resource.
+	if (frameSize.height > mediumResource.size.height)
+	{ 
+		CCFileUtils::sharedFileUtils()->setResourceDirectory(largeResource.directory);
+        // The contentScaleFactor is set by the ratio of resource's height and design resolution's height when your game is in landscape.
+        // Oppositely, if your game is in portrait, it need to be set by width. 
+        // This can make sure your game's status is in full screen.
+        pDirector->setContentScaleFactor(largeResource.size.height/designResolutionSize.height);
 	}
-    else if (screenSize.height > 320)
-    {
-        CCFileUtils::sharedFileUtils()->setResourceDirectory("ipad");
-        pDirector->setContentScaleFactor(768.0f/kDesignResolutionSize_height);
+    // if the frame size is larger than small resource size, select medium resource.
+    else if (frameSize.height > smallResource.size.height)
+    { 
+        CCFileUtils::sharedFileUtils()->setResourceDirectory(mediumResource.directory);
+        pDirector->setContentScaleFactor(mediumResource.size.height/designResolutionSize.height);
     }
+    // if the frame size is smaller than medium resource size, select small resource.
 	else
-    {
-		CCFileUtils::sharedFileUtils()->setResourceDirectory("iphone");
-        pDirector->setContentScaleFactor(320.0f/kDesignResolutionSize_height);
+    { 
+		CCFileUtils::sharedFileUtils()->setResourceDirectory(smallResource.directory);
+        pDirector->setContentScaleFactor(smallResource.size.height/designResolutionSize.height);
     }
 	
-    CCEGLView::sharedOpenGLView()->setDesignResolutionSize(kDesignResolutionSize_width, kDesignResolutionSize_height, kResolutionNoBorder);
-    
     // turn on display FPS
     pDirector->setDisplayStats(true);
 
