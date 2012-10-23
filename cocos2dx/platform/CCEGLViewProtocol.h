@@ -81,7 +81,7 @@ public:
     virtual void setDesignResolutionSize(float width, float height, ResolutionPolicy resolutionPolicy);
 
     /** Get design resolution size.
-     *  If setDesignResolutionSize wasn't invoked, the result of this function return is the same as 'getFrameSize'
+     *  Default resolution size is the same as 'getFrameSize'.
      */
     virtual const CCSize&  getDesignResolutionSize() const;
 
