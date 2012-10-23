@@ -509,6 +509,7 @@ JSBool js_cocos2dx_CCNode_copy(JSContext *cx, uint32_t argc, jsval *vp)
 		cocos2d::CCObject *ret = node->copy();
 		if (ret && jsret) {
 			JS_NEW_PROXY(proxy, ret, jsret);
+			JS_AddNamedObjectRoot(cx, &proxy->obj, typeid(*ret).name());
 			JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsret));
 			return JS_TRUE;
 		}
