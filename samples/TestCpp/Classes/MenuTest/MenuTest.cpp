@@ -97,11 +97,9 @@ MenuLayerMainMenu::MenuLayerMainMenu()
         if( i % 2 == 0)
             offset = -offset;
         
-        child->setPosition( CCPointMake( dstPoint.x + offset, dstPoint.y) );
+        child->setPosition( ccp( dstPoint.x + offset, dstPoint.y) );
         child->runAction( 
-                            CCEaseElasticOut::create(
-                                                                CCMoveBy::create(2, CCPointMake(dstPoint.x - offset,0)), 0.35f
-                                                            ) 
+                          CCEaseElasticOut::create(CCMoveBy::create(2, ccp(dstPoint.x - offset,0)), 0.35f) 
                         );
         i++;
     }
@@ -237,7 +235,7 @@ void MenuLayer2::alignMenusH()
             // TIP: if no padding, padding = 5
             menu->alignItemsHorizontally();            
             CCPoint p = menu->getPosition();
-            menu->setPosition( ccpAdd(p, CCPointMake(0,30)) );
+            menu->setPosition( ccpAdd(p, ccp(0,30)) );
             
         } 
         else 
@@ -245,7 +243,7 @@ void MenuLayer2::alignMenusH()
             // TIP: but padding is configurable
             menu->alignItemsHorizontallyWithPadding(40);
             CCPoint p = menu->getPosition();
-            menu->setPosition( ccpSub(p, CCPointMake(0,30)) );
+            menu->setPosition( ccpSub(p, ccp(0,30)) );
         }        
     }
 }
@@ -261,14 +259,14 @@ void MenuLayer2::alignMenusV()
             // TIP: if no padding, padding = 5
             menu->alignItemsVertically();            
             CCPoint p = menu->getPosition();
-            menu->setPosition( ccpAdd(p, CCPointMake(100,0)) );            
+            menu->setPosition( ccpAdd(p, ccp(100,0)) );            
         } 
         else 
         {
             // TIP: but padding is configurable
             menu->alignItemsVerticallyWithPadding(40);    
             CCPoint p = menu->getPosition();
-            menu->setPosition( ccpSub(p, CCPointMake(100,0)) );
+            menu->setPosition( ccpSub(p, ccp(100,0)) );
         }        
     }
 }
@@ -322,15 +320,15 @@ MenuLayer3::MenuLayer3()
     m_disabledItem->setEnabled( false );
     
     CCMenu *menu = CCMenu::create( item1, item2, item3, NULL);    
-    menu->setPosition( CCPointMake(0,0) );
+    menu->setPosition( ccp(0,0) );
 
     CCSize s = CCDirector::sharedDirector()->getWinSize();
     
-    item1->setPosition( CCPointMake(s.width/2 - 150, s.height/2) );
-    item2->setPosition( CCPointMake(s.width/2 - 200, s.height/2) );
-    item3->setPosition( CCPointMake(s.width/2, s.height/2 - 100) );
+    item1->setPosition( ccp(s.width/2 - 150, s.height/2) );
+    item2->setPosition( ccp(s.width/2 - 200, s.height/2) );
+    item3->setPosition( ccp(s.width/2, s.height/2 - 100) );
     
-    CCJumpBy* jump = CCJumpBy::create(3, CCPointMake(400,0), 50, 4);
+    CCJumpBy* jump = CCJumpBy::create(3, ccp(400,0), 50, 4);
     item2->runAction( CCRepeatForever::create(
                                 (CCActionInterval*)(CCSequence::create( jump, jump->reverse(), NULL))
                                 )

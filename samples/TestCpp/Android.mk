@@ -91,7 +91,8 @@ Classes/UserDefaultTest/UserDefaultTest.cpp \
 Classes/ZwoptexTest/ZwoptexTest.cpp \
 Classes/controller.cpp \
 Classes/testBasic.cpp \
-Classes/AppDelegate.cpp
+Classes/AppDelegate.cpp \
+Classes/VisibleRect.cpp
 
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dx_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocosdenshion_static

@@ -86,7 +86,7 @@ public:
     static CCActionInterval* create(float t)
     {
         CCSize size = CCDirector::sharedDirector()->getWinSize();
-        return CCLens3D::create(CCPointMake(size.width/2,size.height/2), 240, ccg(15,10), t); 
+        return CCLens3D::create(ccp(size.width/2,size.height/2), 240, ccg(15,10), t); 
     }
 };
 
@@ -97,7 +97,7 @@ public:
     static CCActionInterval* create(float t)
     {
         CCSize size = CCDirector::sharedDirector()->getWinSize();
-        return CCRipple3D::create(CCPointMake(size.width/2,size.height/2), 240, 4, 160, ccg(32,24), t);
+        return CCRipple3D::create(ccp(size.width/2,size.height/2), 240, 4, 160, ccg(32,24), t);
     }
 };
 
@@ -128,7 +128,7 @@ public:
     static CCActionInterval* create(float t)
     {
         CCSize size = CCDirector::sharedDirector()->getWinSize();
-        return CCTwirl::create(CCPointMake(size.width/2, size.height/2), 1, 2.5f, ccg(12,8), t); 
+        return CCTwirl::create(ccp(size.width/2, size.height/2), 1, 2.5f, ccg(12,8), t); 
     }
 };
 
@@ -340,12 +340,6 @@ void EffectTestScene::runThisTest()
 TextLayer::TextLayer(void)
 {
     initWithColor( ccc4(32,128,32,255) );
-        
-    float x,y;
-    
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
-    x = s.width;
-    y = s.height;
     
     CCNode* node = CCNode::create();
     CCActionInterval* effect = getAction();
@@ -355,25 +349,25 @@ TextLayer::TextLayer(void)
     CCSprite *bg = CCSprite::create(s_back3);
     node->addChild(bg, 0);
 //  bg->setAnchorPoint( CCPointZero );
-    bg->setPosition(ccp(s.width/2, s.height/2));
+    bg->setPosition(VisibleRect::center());
 
     CCSprite* grossini = CCSprite::create(s_pPathSister2);
     node->addChild(grossini, 1);
-    grossini->setPosition( CCPointMake(x/3,y/2) );
+    grossini->setPosition( ccp(VisibleRect::left().x+VisibleRect::getVisibleRect().size.width/3,VisibleRect::center().y) );
     CCActionInterval* sc = CCScaleBy::create(2, 5);
     CCActionInterval* sc_back = sc->reverse();
     grossini->runAction( CCRepeatForever::create((CCActionInterval*)(CCSequence::create(sc, sc_back, NULL)) ) );
 
     CCSprite* tamara = CCSprite::create(s_pPathSister1);
     node->addChild(tamara, 1);
-    tamara->setPosition( CCPointMake(2*x/3,y/2) );
+    tamara->setPosition( ccp(VisibleRect::left().x+2*VisibleRect::getVisibleRect().size.width/3,VisibleRect::center().y) );
     CCActionInterval* sc2 = CCScaleBy::create(2, 5);
     CCActionInterval* sc2_back = sc2->reverse();
     tamara->runAction( CCRepeatForever::create((CCActionInterval*)(CCSequence::create(sc2, sc2_back, NULL))) );
     
     CCLabelTTF* label = CCLabelTTF::create((effectsList[actionIdx]).c_str(), "Marker Felt", 32);
     
-    label->setPosition( CCPointMake(x/2,y-80) );
+    label->setPosition( ccp(VisibleRect::center().x,VisibleRect::top().y-80) );
     addChild(label);
     label->setTag( kTagLabel );
 
@@ -384,9 +378,9 @@ TextLayer::TextLayer(void)
     CCMenu *menu = CCMenu::create(item1, item2, item3, NULL);
 
     menu->setPosition(CCPointZero);
-    item1->setPosition(CCPointMake( s.width/2 - item2->getContentSize().width*2, item2->getContentSize().height/2));
-    item2->setPosition(CCPointMake( s.width/2, item2->getContentSize().height/2));
-    item3->setPosition(CCPointMake( s.width/2 + item2->getContentSize().width*2, item2->getContentSize().height/2));
+    item1->setPosition(ccp(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
+    item2->setPosition(ccp(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2));
+    item3->setPosition(ccp(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
     
     addChild(menu, 1);    
 
