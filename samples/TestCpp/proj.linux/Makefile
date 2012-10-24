@@ -121,6 +121,7 @@ OBJECTS = ../Classes/AccelerometerTest/AccelerometerTest.o \
 			../Classes/controller.o \
 			../Classes/testBasic.o \
 			../Classes/AppDelegate.o \
+			../Classes/VisibleRect.o \
 			./main.o 
 
 

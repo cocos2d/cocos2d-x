@@ -54,7 +54,7 @@ void DemoFire::onEnter()
     
     m_emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_fire) );//.pvr");
     CCPoint p = m_emitter->getPosition();
-    m_emitter->setPosition( CCPointMake(p.x, 100) );
+    m_emitter->setPosition( ccp(p.x, 100) );
     
     setEmitterPosition();
 }
@@ -171,7 +171,7 @@ void DemoBigFlower::onEnter()
     m_emitter->setTangentialAccelVar(0);
     
     // emitter position
-    m_emitter->setPosition( CCPointMake(160,240) );
+    m_emitter->setPosition( ccp(160,240) );
     m_emitter->setPosVar(CCPointZero);
     
     // life of particles
@@ -256,7 +256,7 @@ void DemoRotFlower::onEnter()
     m_emitter->setTangentialAccelVar(0);
     
     // emitter position
-    m_emitter->setPosition( CCPointMake(160,240) );
+    m_emitter->setPosition( ccp(160,240) );
     m_emitter->setPosVar(CCPointZero);
     
     // life of particles
@@ -387,7 +387,7 @@ void DemoSmoke::onEnter()
     m_emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_fire) );
     
     CCPoint p = m_emitter->getPosition();
-    m_emitter->setPosition( CCPointMake( p.x, 100) );
+    m_emitter->setPosition( ccp( p.x, 100) );
     
     setEmitterPosition();
 }
@@ -411,12 +411,12 @@ void DemoSnow::onEnter()
     m_background->addChild(m_emitter, 10);
     
     CCPoint p = m_emitter->getPosition();
-    m_emitter->setPosition( CCPointMake( p.x, p.y-110) );
+    m_emitter->setPosition( ccp( p.x, p.y-110) );
     m_emitter->setLife(3);
     m_emitter->setLifeVar(1);
     
     // gravity
-    m_emitter->setGravity(CCPointMake(0,-10));
+    m_emitter->setGravity(ccp(0,-10));
         
     // speed of particles
     m_emitter->setSpeed(130);
@@ -459,7 +459,7 @@ void DemoRain::onEnter()
     m_background->addChild(m_emitter, 10);
     
     CCPoint p = m_emitter->getPosition();
-    m_emitter->setPosition( CCPointMake( p.x, p.y-100) );
+    m_emitter->setPosition( ccp( p.x, p.y-100) );
     m_emitter->setLife(4);
     
     m_emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_fire) );
@@ -497,7 +497,7 @@ void DemoModernArt::onEnter()
     m_emitter->setDuration(-1);
     
     // gravity
-    m_emitter->setGravity(CCPointMake(0,0));
+    m_emitter->setGravity(ccp(0,0));
     
     // angle
     m_emitter->setAngle(0);
@@ -516,7 +516,7 @@ void DemoModernArt::onEnter()
     m_emitter->setSpeedVar(10);
     
     // emitter position
-    m_emitter->setPosition( CCPointMake( s.width/2, s.height/2) );
+    m_emitter->setPosition( ccp( s.width/2, s.height/2) );
     m_emitter->setPosVar(CCPointZero);
     
     // life of particles
@@ -606,21 +606,21 @@ void ParallaxParticle::onEnter()
     CCSprite *p1 = CCSprite::create(s_back3);
     CCSprite *p2 = CCSprite::create(s_back3);
     
-    p->addChild( p1, 1, CCPointMake(0.5f,1), CCPointMake(0,250) );
-    p->addChild(p2, 2, CCPointMake(1.5f,1), CCPointMake(0,50) );
+    p->addChild( p1, 1, ccp(0.5f,1), ccp(0,250) );
+    p->addChild(p2, 2, ccp(1.5f,1), ccp(0,50) );
 
     m_emitter = CCParticleFlower::create();
     m_emitter->retain();
     m_emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_fire) );
 
     p1->addChild(m_emitter, 10);
-    m_emitter->setPosition( CCPointMake(250,200) );
+    m_emitter->setPosition( ccp(250,200) );
     
     CCParticleSun* par = CCParticleSun::create();
     p2->addChild(par, 10);
     par->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_fire) );
     
-    CCActionInterval* move = CCMoveBy::create(4, CCPointMake(300,0));
+    CCActionInterval* move = CCMoveBy::create(4, ccp(300,0));
     CCActionInterval* move_back = move->reverse();
     CCFiniteTimeAction* seq = CCSequence::create( move, move_back, NULL);
     p->runAction(CCRepeatForever::create((CCActionInterval*)seq));    
@@ -1077,11 +1077,11 @@ void ParticleDemo::onEnter(void)
     CCSize s = CCDirector::sharedDirector()->getWinSize();
     CCLabelTTF* label = CCLabelTTF::create(title().c_str(), "Arial", 28);
     addChild(label, 100, 1000);
-    label->setPosition( CCPointMake(s.width/2, s.height-50) );
+    label->setPosition( ccp(s.width/2, s.height-50) );
     
     CCLabelTTF *sub = CCLabelTTF::create(subtitle().c_str(), "Arial", 16);
     addChild(sub, 100);
-    sub->setPosition(CCPointMake(s.width/2, s.height-80));
+    sub->setPosition(ccp(s.width/2, s.height-80));
     
     
     CCMenuItemImage* item1 = CCMenuItemImage::create(s_pPathB1, s_pPathB2, this, menu_selector(ParticleDemo::backCallback) );
@@ -1098,10 +1098,10 @@ void ParticleDemo::onEnter(void)
     CCMenu *menu = CCMenu::create(item1, item2, item3, item4, NULL);
     
     menu->setPosition( CCPointZero );
-    item1->setPosition( ccp( s.width/2 - item2->getContentSize().width*2, item2->getContentSize().height/2) );
-    item2->setPosition( ccp( s.width/2, item2->getContentSize().height/2) );
-    item3->setPosition( ccp( s.width/2 + item2->getContentSize().width*2, item2->getContentSize().height/2) );
-    item4->setPosition( ccp( 0, 100) );
+    item1->setPosition(ccp(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
+    item2->setPosition(ccp(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2));
+    item3->setPosition(ccp(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
+    item4->setPosition( ccp( VisibleRect::left().x, VisibleRect::bottom().y+ 100) );
     item4->setAnchorPoint( ccp(0,0) );
     
     addChild( menu, 100 );
@@ -1222,7 +1222,7 @@ void ParticleDemo::setEmitterPosition()
     CCSize s = CCDirector::sharedDirector()->getWinSize();
     if (m_emitter != NULL)
     {
-        m_emitter->setPosition( CCPointMake(s.width / 2, s.height / 2) );
+        m_emitter->setPosition( ccp(s.width / 2, s.height / 2) );
     }
 }
 

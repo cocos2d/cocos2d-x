@@ -15,6 +15,7 @@
 		154AE0B41609CB780098D8D8 /* CCData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 154AE0AB1609CB780098D8D8 /* CCData.cpp */; };
 		154AE0B51609CB780098D8D8 /* CCNode+CCBRelativePositioning.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 154AE0AD1609CB780098D8D8 /* CCNode+CCBRelativePositioning.cpp */; };
 		154AE0BA1609CBBE0098D8D8 /* AnimationsTestLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 154AE0B81609CBBE0098D8D8 /* AnimationsTestLayer.cpp */; };
+		15A048D0163784C700F7CC0A /* VisibleRect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A048CE163784C700F7CC0A /* VisibleRect.cpp */; };
 		15AA9D5115B7EC460033D6C2 /* AccelerometerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15AA9C4215B7EC450033D6C2 /* AccelerometerTest.cpp */; };
 		15AA9D5215B7EC460033D6C2 /* ActionManagerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15AA9C4515B7EC450033D6C2 /* ActionManagerTest.cpp */; };
 		15AA9D5315B7EC460033D6C2 /* ActionsEaseTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15AA9C4815B7EC450033D6C2 /* ActionsEaseTest.cpp */; };
@@ -287,6 +288,8 @@
 		154AE0B71609CBBE0098D8D8 /* AnimationsLayerLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationsLayerLoader.h; sourceTree = "<group>"; };
 		154AE0B81609CBBE0098D8D8 /* AnimationsTestLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimationsTestLayer.cpp; sourceTree = "<group>"; };
 		154AE0B91609CBBE0098D8D8 /* AnimationsTestLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationsTestLayer.h; sourceTree = "<group>"; };
+		15A048CE163784C700F7CC0A /* VisibleRect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VisibleRect.cpp; path = ../Classes/VisibleRect.cpp; sourceTree = "<group>"; };
+		15A048CF163784C700F7CC0A /* VisibleRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VisibleRect.h; path = ../Classes/VisibleRect.h; sourceTree = "<group>"; };
 		15AA9C4215B7EC450033D6C2 /* AccelerometerTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AccelerometerTest.cpp; sourceTree = "<group>"; };
 		15AA9C4315B7EC450033D6C2 /* AccelerometerTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccelerometerTest.h; sourceTree = "<group>"; };
 		15AA9C4515B7EC450033D6C2 /* ActionManagerTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ActionManagerTest.cpp; sourceTree = "<group>"; };
@@ -829,6 +832,8 @@
 		15AA9C4015B7EC450033D6C2 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				15A048CE163784C700F7CC0A /* VisibleRect.cpp */,
+				15A048CF163784C700F7CC0A /* VisibleRect.h */,
 				15AA9F3A15B7EF960033D6C2 /* AppDelegate.cpp */,
 				15AA9CAA15B7EC460033D6C2 /* controller.cpp */,
 				15AA9D3115B7EC460033D6C2 /* testBasic.cpp */,
@@ -2424,6 +2429,7 @@
 				15CFD0E31612A3EE00BF2188 /* CCControlSliderTest.cpp in Sources */,
 				15CFD0E41612A3EE00BF2188 /* CCControlStepperTest.cpp in Sources */,
 				15CFD0E51612A3EE00BF2188 /* CCControlSwitchTest.cpp in Sources */,
+				15A048D0163784C700F7CC0A /* VisibleRect.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

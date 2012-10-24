@@ -135,10 +135,9 @@ TestController::TestController()
     // add close menu
     CCMenuItemImage *pCloseItem = CCMenuItemImage::create(s_pPathClose, s_pPathClose, this, menu_selector(TestController::closeCallback) );
     CCMenu* pMenu =CCMenu::create(pCloseItem, NULL);
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
 
     pMenu->setPosition( CCPointZero );
-    pCloseItem->setPosition(CCPointMake( s.width - 30, s.height - 30));
+    pCloseItem->setPosition(ccp( VisibleRect::right().x - 30, VisibleRect::top().y - 30));
 
     // add menu items for tests
     m_pItemMenu = CCMenu::create();
@@ -152,10 +151,10 @@ TestController::TestController()
         CCMenuItemLabel* pMenuItem = CCMenuItemLabel::create(label, this, menu_selector(TestController::menuCallback));
 
         m_pItemMenu->addChild(pMenuItem, i + 10000);
-        pMenuItem->setPosition( CCPointMake( s.width / 2, (s.height - (i + 1) * LINE_SPACE) ));
+        pMenuItem->setPosition( ccp( VisibleRect::center().x, (VisibleRect::top().y - (i + 1) * LINE_SPACE) ));
     }
 
-    m_pItemMenu->setContentSize(CCSizeMake(s.width, (TESTS_COUNT + 1) * (LINE_SPACE)));
+    m_pItemMenu->setContentSize(CCSizeMake(VisibleRect::getVisibleRect().size.width, (TESTS_COUNT + 1) * (LINE_SPACE)));
     m_pItemMenu->setPosition(s_tCurPos);
     addChild(m_pItemMenu);
 
@@ -210,16 +209,16 @@ void TestController::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
 
     CCPoint curPos  = m_pItemMenu->getPosition();
     CCPoint nextPos = ccp(curPos.x, curPos.y + nMoveY);
-    CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+
     if (nextPos.y < 0.0f)
     {
         m_pItemMenu->setPosition(CCPointZero);
         return;
     }
 
-    if (nextPos.y > ((TESTS_COUNT + 1)* LINE_SPACE - winSize.height))
+    if (nextPos.y > ((TESTS_COUNT + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height))
     {
-        m_pItemMenu->setPosition(ccp(0, ((TESTS_COUNT + 1)* LINE_SPACE - winSize.height)));
+        m_pItemMenu->setPosition(ccp(0, ((TESTS_COUNT + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height)));
         return;
     }
 
