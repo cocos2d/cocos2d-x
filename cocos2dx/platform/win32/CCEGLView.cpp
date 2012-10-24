@@ -697,6 +697,14 @@ void CCEGLView::setViewPortInPoints(float x , float y , float w , float h)
         (GLsizei)(h * m_fScaleY * m_fFrameZoomFactor));
 }
 
+void CCEGLView::setScissorInPoints(float x , float y , float w , float h)
+{
+    glScissor((GLint)(x * m_fScaleX * m_fFrameZoomFactor + m_obViewPortRect.origin.x * m_fFrameZoomFactor),
+              (GLint)(y * m_fScaleY * m_fFrameZoomFactor + m_obViewPortRect.origin.y * m_fFrameZoomFactor),
+              (GLsizei)(w * m_fScaleX * m_fFrameZoomFactor),
+              (GLsizei)(h * m_fScaleY * m_fFrameZoomFactor));
+}
+
 CCEGLView* CCEGLView::sharedOpenGLView()
 {
     static CCEGLView* s_pEglView = NULL;
