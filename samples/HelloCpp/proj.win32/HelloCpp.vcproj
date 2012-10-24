@@ -191,6 +191,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\Classes\AppMacros.h"
+				>
+			</File>
+			<File
 				RelativePath="..\Classes\HelloWorldScene.cpp"
 				>
 			</File>
