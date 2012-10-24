@@ -82,7 +82,7 @@ void register_cocos2dx_js_extensions(JSContext* cx, JSObject* obj);
 class JSCallFunc: public CCObject {
 public:
     JSCallFunc(jsval func): jsCallback(func) {}
-    JSCallFunc() { extraData = NULL; }
+    JSCallFunc() {}
     virtual ~JSCallFunc() {
         return;
     }
@@ -102,16 +102,15 @@ public:
         js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::CCNode>(cx, node);
    
         valArr[0] = OBJECT_TO_JSVAL(proxy->obj);
-        
-        if(extraData != NULL) {
-            valArr[1] = *extraData;            
+        if(!JSVAL_IS_NULL(extraData)) {
+            valArr[1] = extraData;            
         } else {
             valArr[1] = JSVAL_NULL;
         }
         
         jsval retval;
         if(jsCallback != JSVAL_VOID || jsThisObj != JSVAL_VOID) {
-            JS_CallFunctionValue(cx, JSVAL_TO_OBJECT(jsThisObj), jsCallback, 1, valArr, &retval);
+            JS_CallFunctionValue(cx, JSVAL_TO_OBJECT(jsThisObj), jsCallback, 2, valArr, &retval);
         }
         JSCallFunc::setTargetForNativeNode(node, (JSCallFunc *)this);
 
@@ -119,7 +118,7 @@ public:
 private:
     jsval jsCallback;
     jsval jsThisObj;
-    jsval *extraData;
+    jsval extraData;
 };
 
 

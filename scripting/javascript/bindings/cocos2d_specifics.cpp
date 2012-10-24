@@ -554,8 +554,7 @@ void JSCallFunc::setJSCallbackThis(jsval thisObj) {
 }
 
 void JSCallFunc::setExtraDataField(jsval data) {
-     extraData = new jsval();
-     *extraData = data;
+    extraData = data;
 }
 
 void JSCallFunc::setTargetForNativeNode(CCNode *pNode, JSCallFunc *target) {
