@@ -155,9 +155,9 @@ void AtlasDemo::onEnter()
     CCMenu *menu = CCMenu::create(item1, item2, item3, NULL);
 
     menu->setPosition( CCPointZero );
-    item1->setPosition( ccp( s.width/2 - item2->getContentSize().width*2, item2->getContentSize().height/2));
-    item2->setPosition( ccp( s.width/2, item2->getContentSize().height/2));
-    item3->setPosition( ccp( s.width/2 + item2->getContentSize().width*2, item2->getContentSize().height/2));
+    item1->setPosition(ccp(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
+    item2->setPosition(ccp(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2));
+    item3->setPosition(ccp(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));;
     
     addChild(menu, 1);    
 }
@@ -447,9 +447,9 @@ Atlas3::Atlas3()
     
     
     CCSize s = CCDirector::sharedDirector()->getWinSize();    
-    label1->setPosition( ccp( 0,0) );
-    label2->setPosition( ccp( s.width/2, s.height/2) );
-    label3->setPosition( ccp( s.width, s.height) );
+    label1->setPosition( VisibleRect::leftBottom() );
+    label2->setPosition( VisibleRect::center() );
+    label3->setPosition( VisibleRect::rightTop() );
 
     schedule( schedule_selector(Atlas3::step) );//:@selector(step:)];
 }
@@ -776,10 +776,9 @@ BitmapFontMultiLine::BitmapFontMultiLine()
     s = label3->getContentSize();
     CCLOG("content size: %.2fx%.2f", s.width, s.height);
 
-    s = CCDirector::sharedDirector()->getWinSize();
-    label1->setPosition(ccp( 0,0));
-    label2->setPosition(ccp( s.width/2, s.height/2));
-    label3->setPosition(ccp( s.width, s.height));
+    label1->setPosition(VisibleRect::leftBottom());
+    label2->setPosition(VisibleRect::center());
+    label3->setPosition(VisibleRect::rightTop());
 }
 
 std::string BitmapFontMultiLine::title()

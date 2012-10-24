@@ -17,7 +17,7 @@ IntervalLayer::IntervalLayer()
     // sun
     CCParticleSystem* sun = CCParticleSun::create();
     sun->setTexture(CCTextureCache::sharedTextureCache()->addImage("Images/fire.png"));
-    sun->setPosition( CCPointMake(s.width-32,s.height-32) );
+    sun->setPosition( ccp(VisibleRect::rightTop().x-32,VisibleRect::rightTop().y-32) );
 
     sun->setTotalParticles(130);
     sun->setLife(0.6f);
@@ -36,11 +36,11 @@ IntervalLayer::IntervalLayer()
     schedule(schedule_selector(IntervalLayer::step3), 1.0f);
     schedule(schedule_selector(IntervalLayer::step4), 2.0f);
 
-    m_label0->setPosition(CCPointMake(s.width*1/6, s.height/2));
-    m_label1->setPosition(CCPointMake(s.width*2/6, s.height/2));
-    m_label2->setPosition(CCPointMake(s.width*3/6, s.height/2));
-    m_label3->setPosition(CCPointMake(s.width*4/6, s.height/2));
-    m_label4->setPosition(CCPointMake(s.width*5/6, s.height/2));
+    m_label0->setPosition(ccp(s.width*1/6, s.height/2));
+    m_label1->setPosition(ccp(s.width*2/6, s.height/2));
+    m_label2->setPosition(ccp(s.width*3/6, s.height/2));
+    m_label3->setPosition(ccp(s.width*4/6, s.height/2));
+    m_label4->setPosition(ccp(s.width*5/6, s.height/2));
 
     addChild(m_label0);
     addChild(m_label1);
@@ -50,9 +50,9 @@ IntervalLayer::IntervalLayer()
 
     // Sprite
     CCSprite* sprite = CCSprite::create(s_pPathGrossini);
-    sprite->setPosition( CCPointMake(40,50) );
+    sprite->setPosition( ccp(VisibleRect::left().x + 40, VisibleRect::bottom().y + 50) );
     
-    CCJumpBy* jump = CCJumpBy::create(3, CCPointMake(s.width-80,0), 50, 4);
+    CCJumpBy* jump = CCJumpBy::create(3, ccp(s.width-80,0), 50, 4);
     
     addChild(sprite);
     sprite->runAction( CCRepeatForever::create(
@@ -62,7 +62,7 @@ IntervalLayer::IntervalLayer()
     // pause button
     CCMenuItem* item1 = CCMenuItemFont::create("Pause", this, menu_selector(IntervalLayer::onPause) );
     CCMenu* menu = CCMenu::create(item1, NULL);
-    menu->setPosition( CCPointMake(s.width/2, s.height-50) );
+    menu->setPosition( ccp(s.width/2, s.height-50) );
 
     addChild( menu );
 }
