@@ -1,6 +1,6 @@
 #include "Ball.h"
 #include "Paddle.h"
-#include "VisibleRect.h"
+#include "../VisibleRect.h"
 
 Ball::Ball(void)
 {
