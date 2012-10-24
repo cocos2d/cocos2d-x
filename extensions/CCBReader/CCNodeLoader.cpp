@@ -804,8 +804,12 @@ CCNode * CCNodeLoader::parsePropTypeCCBFile(CCNode * pNode, CCNode * pParent, CC
     ccbReader->initWithData(data, pCCBReader->getOwner());
     data->release();
     ccbReader->getAnimationManager()->setRootContainerSize(pParent->getContentSize());
-
+    
+    ccbReader->setAnimationManagers(pCCBReader->getAnimationManagers());
+    
     CCNode * ccbFileNode = ccbReader->readFileWithCleanUp(false);
+    
+    pCCBReader->setAnimationManagers(ccbReader->getAnimationManagers());
     
     if (ccbFileNode && ccbReader->getAnimationManager()->getAutoPlaySequenceId() != -1)
     {
