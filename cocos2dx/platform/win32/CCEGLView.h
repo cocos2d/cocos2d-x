@@ -73,6 +73,8 @@ public:
     void setAccelerometerKeyHook( LPFN_ACCELEROMETER_KEYHOOK lpfnAccelerometerKeyHook );
 
     virtual void setViewPortInPoints(float x , float y , float w , float h);
+    virtual void setScissorInPoints(float x , float y , float w , float h);
+    
     // static function
     /**
     @brief    get the shared main open gl window
