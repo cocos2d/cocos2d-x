@@ -138,9 +138,9 @@ void TextInputTest::onEnter()
 
     CCMenu *menu = CCMenu::create(item1, item2, item3, NULL);
     menu->setPosition(CCPointZero);
-    item1->setPosition(ccp( s.width/2 - 100,30));
-    item2->setPosition(ccp( s.width/2, 30));
-    item3->setPosition(ccp( s.width/2 + 100,30));
+    item1->setPosition(ccp(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
+    item2->setPosition(ccp(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2));
+    item3->setPosition(ccp(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
 
     addChild(menu, 1);
 }

@@ -283,17 +283,17 @@ TestLayer1::TestLayer1(void)
     y = size.height;
 
     CCSprite* bg1 = CCSprite::create(s_back1);
-    bg1->setPosition( CCPointMake(size.width/2, size.height/2) );
+    bg1->setPosition( ccp(size.width/2, size.height/2) );
     addChild(bg1, -1);
 
     CCLabelTTF* title = CCLabelTTF::create( (transitions[s_nSceneIdx]).c_str(), "Thonburi", 32 );
     addChild(title);
     title->setColor( ccc3(255,32,32) );
-    title->setPosition( CCPointMake(x/2, y-100) );
+    title->setPosition( ccp(x/2, y-100) );
 
     CCLabelTTF* label = CCLabelTTF::create("SCENE 1", "Marker Felt", 38);
     label->setColor( ccc3(16,16,255));
-    label->setPosition( CCPointMake(x/2,y/2));    
+    label->setPosition( ccp(x/2,y/2));    
     addChild( label);
 
     // menu
@@ -304,9 +304,9 @@ TestLayer1::TestLayer1(void)
     CCMenu *menu = CCMenu::create(item1, item2, item3, NULL);
 
     menu->setPosition( CCPointZero );
-    item1->setPosition( ccp( size.width/2 - item2->getContentSize().width*2, item2->getContentSize().height/2) );
-    item2->setPosition( ccp( size.width/2, item2->getContentSize().height/2) );
-    item3->setPosition( ccp( size.width/2 + item2->getContentSize().width*2, item2->getContentSize().height/2) );
+    item1->setPosition(ccp(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
+    item2->setPosition(ccp(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2));
+    item3->setPosition(ccp(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
 
     addChild(menu, 1);    
 
@@ -412,17 +412,17 @@ TestLayer2::TestLayer2()
     y = size.height;
 
     CCSprite* bg1 = CCSprite::create(s_back2);
-    bg1->setPosition( CCPointMake(size.width/2, size.height/2) );
+    bg1->setPosition( ccp(size.width/2, size.height/2) );
     addChild(bg1, -1);
 
     CCLabelTTF* title = CCLabelTTF::create((transitions[s_nSceneIdx]).c_str(), "Thonburi", 32 );
     addChild(title);
     title->setColor( ccc3(255,32,32) );
-    title->setPosition( CCPointMake(x/2, y-100) );
+    title->setPosition( ccp(x/2, y-100) );
 
     CCLabelTTF* label = CCLabelTTF::create("SCENE 2", "Marker Felt", 38);
     label->setColor( ccc3(16,16,255));
-    label->setPosition( CCPointMake(x/2,y/2));    
+    label->setPosition( ccp(x/2,y/2));    
     addChild( label);
 
     // menu
@@ -433,9 +433,9 @@ TestLayer2::TestLayer2()
     CCMenu *menu = CCMenu::create(item1, item2, item3, NULL);
 
     menu->setPosition( CCPointZero );
-    item1->setPosition( ccp( size.width/2 - item2->getContentSize().width*2, item2->getContentSize().height/2) );
-    item2->setPosition( ccp( size.width/2, item2->getContentSize().height/2) );
-    item3->setPosition( ccp( size.width/2 + item2->getContentSize().width*2, item2->getContentSize().height/2) );
+    item1->setPosition(ccp(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
+    item2->setPosition(ccp(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2));
+    item3->setPosition(ccp(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
 
     addChild(menu, 1);    
 

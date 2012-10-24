@@ -53,7 +53,7 @@ m_nSoundId(0)
 
     // add menu items for tests
     m_pItmeMenu = CCMenu::create();
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
+
     m_nTestCount = sizeof(testItems) / sizeof(testItems[0]);
 
     for (int i = 0; i < m_nTestCount; ++i)
@@ -66,10 +66,10 @@ m_nSoundId(0)
         CCMenuItemLabel* pMenuItem = CCMenuItemLabel::create(label, this, menu_selector(CocosDenshionTest::menuCallback));
         
         m_pItmeMenu->addChild(pMenuItem, i + 10000);
-        pMenuItem->setPosition( CCPointMake( s.width / 2, (s.height - (i + 1) * LINE_SPACE) ));
+        pMenuItem->setPosition( ccp( VisibleRect::center().x, (VisibleRect::top().y - (i + 1) * LINE_SPACE) ));
     }
 
-    m_pItmeMenu->setContentSize(CCSizeMake(s.width, (m_nTestCount + 1) * LINE_SPACE));
+    m_pItmeMenu->setContentSize(CCSizeMake(VisibleRect::getVisibleRect().size.width, (m_nTestCount + 1) * LINE_SPACE));
     m_pItmeMenu->setPosition(CCPointZero);
     addChild(m_pItmeMenu);
 
@@ -204,16 +204,16 @@ void CocosDenshionTest::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
 
     CCPoint curPos  = m_pItmeMenu->getPosition();
     CCPoint nextPos = ccp(curPos.x, curPos.y + nMoveY);
-    CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+
     if (nextPos.y < 0.0f)
     {
         m_pItmeMenu->setPosition(CCPointZero);
         return;
     }
 
-    if (nextPos.y > ((m_nTestCount + 1)* LINE_SPACE - winSize.height))
+    if (nextPos.y > ((m_nTestCount + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height))
     {
-        m_pItmeMenu->setPosition(ccp(0, ((m_nTestCount + 1)* LINE_SPACE - winSize.height)));
+        m_pItmeMenu->setPosition(ccp(0, ((m_nTestCount + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height)));
         return;
     }
 
