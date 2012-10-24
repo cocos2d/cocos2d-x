@@ -1,6 +1,7 @@
 options
 {
 	module_path="../../../cocos2dx/proj.marmalade/;../../../CocosDenshion/proj.marmalade/;../../../external/chipmunk/proj.marmalade/;../../../external/Box2D/proj.marmalade/"
+	s3e-data-dir = "../Resources/"
 }
 
 includepaths
