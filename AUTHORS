@@ -12,6 +12,9 @@ Developers:
     Rolando Abarca
         Javascript Binding and testjs
 
+    sburavtsov
+        fix for correct unscheduling and instance destruction of extensions/network/HttpClient.cpp
+
     wenbin wang
         add korean language support
         fix getDeviceModel bug in android CocosDenshion
