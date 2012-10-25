@@ -63,7 +63,6 @@ Box2DTestLayer::Box2DTestLayer()
     setTouchEnabled( true );
     setAccelerometerEnabled( true );
 
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
     // init physics
     this->initPhysics();
     // create reset button
@@ -82,12 +81,12 @@ Box2DTestLayer::Box2DTestLayer()
     addChild(parent, 0, kTagParentNode);
 
 
-    addNewSpriteAtPosition(ccp(s.width/2, s.height/2));
+    addNewSpriteAtPosition(VisibleRect::center());
 
     CCLabelTTF *label = CCLabelTTF::create("Tap screen", "Marker Felt", 32);
     addChild(label, 0);
     label->setColor(ccc3(0,0,255));
-    label->setPosition(ccp( s.width/2, s.height-50));
+    label->setPosition(ccp( VisibleRect::center().x, VisibleRect::top().y-50));
     
     scheduleUpdate();
 }
@@ -102,9 +101,6 @@ Box2DTestLayer::~Box2DTestLayer()
 
 void Box2DTestLayer::initPhysics()
 {
-
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
-
     b2Vec2 gravity;
     gravity.Set(0.0f, -10.0f);
     world = new b2World(gravity);
@@ -139,20 +135,19 @@ void Box2DTestLayer::initPhysics()
     b2EdgeShape groundBox;
 
     // bottom
-
-    groundBox.Set(b2Vec2(0,0), b2Vec2(s.width/PTM_RATIO,0));
+    groundBox.Set(b2Vec2(VisibleRect::leftBottom().x/PTM_RATIO,VisibleRect::leftBottom().y/PTM_RATIO), b2Vec2(VisibleRect::rightBottom().x/PTM_RATIO,VisibleRect::rightBottom().y/PTM_RATIO));
     groundBody->CreateFixture(&groundBox,0);
 
     // top
-    groundBox.Set(b2Vec2(0,s.height/PTM_RATIO), b2Vec2(s.width/PTM_RATIO,s.height/PTM_RATIO));
+    groundBox.Set(b2Vec2(VisibleRect::leftTop().x/PTM_RATIO,VisibleRect::leftTop().y/PTM_RATIO), b2Vec2(VisibleRect::rightTop().x/PTM_RATIO,VisibleRect::rightTop().y/PTM_RATIO));
     groundBody->CreateFixture(&groundBox,0);
 
     // left
-    groundBox.Set(b2Vec2(0,s.height/PTM_RATIO), b2Vec2(0,0));
+    groundBox.Set(b2Vec2(VisibleRect::leftTop().x/PTM_RATIO,VisibleRect::leftTop().y/PTM_RATIO), b2Vec2(VisibleRect::leftBottom().x/PTM_RATIO,VisibleRect::leftBottom().y/PTM_RATIO));
     groundBody->CreateFixture(&groundBox,0);
 
     // right
-    groundBox.Set(b2Vec2(s.width/PTM_RATIO,s.height/PTM_RATIO), b2Vec2(s.width/PTM_RATIO,0));
+    groundBox.Set(b2Vec2(VisibleRect::rightBottom().x/PTM_RATIO,VisibleRect::rightBottom().y/PTM_RATIO), b2Vec2(VisibleRect::rightTop().x/PTM_RATIO,VisibleRect::rightTop().y/PTM_RATIO));
     groundBody->CreateFixture(&groundBox,0);
 }
 
@@ -162,9 +157,7 @@ void Box2DTestLayer::createResetButton()
 
     CCMenu *menu = CCMenu::create(reset, NULL);
 
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
-
-    menu->setPosition(ccp(s.width/2, 30));
+    menu->setPosition(ccp(VisibleRect::bottom().x, VisibleRect::bottom().y + 30));
     this->addChild(menu, -1);
 
 }
@@ -212,7 +205,7 @@ void Box2DTestLayer::addNewSpriteAtPosition(CCPoint p)
 
     parent->addChild(sprite);
     
-    sprite->setPosition( CCPointMake( p.x, p.y) );
+    sprite->setPosition( ccp( p.x, p.y) );
     
     // Define the dynamic body.
     //Set up a 1m squared box in the physics world

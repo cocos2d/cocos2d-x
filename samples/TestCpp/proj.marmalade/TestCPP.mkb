@@ -38,6 +38,8 @@ files
 	testBasic.h
 	testResource.h
 	tests.h
+	VisibleRect.cpp
+	VisibleRect.h
 
 	[AccelerometerTest]
 	(../Classes/AccelerometerTest)

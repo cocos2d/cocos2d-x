@@ -94,7 +94,7 @@ void LayerTest::onEnter()
 
     CCLabelTTF* label = CCLabelTTF::create(title().c_str(), "Arial", 32);
     addChild(label, 1);
-    label->setPosition( CCPointMake(s.width/2, s.height-50) );
+    label->setPosition( ccp(s.width/2, s.height-50) );
 
     string subtitle_ = subtitle();
     if (subtitle_.size() > 0)
@@ -111,9 +111,9 @@ void LayerTest::onEnter()
     CCMenu *menu = CCMenu::create(item1, item2, item3, NULL);
 
     menu->setPosition( CCPointZero );
-    item1->setPosition( ccp( s.width/2 - item2->getContentSize().width*2, item2->getContentSize().height/2) );
-    item2->setPosition( ccp( s.width/2, item2->getContentSize().height/2) );
-    item3->setPosition( ccp( s.width/2 + item2->getContentSize().width*2, item2->getContentSize().height/2) );
+    item1->setPosition(ccp(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
+    item2->setPosition(ccp(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2));
+    item3->setPosition(ccp(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
     
     addChild(menu, 1);    
 }
@@ -158,7 +158,7 @@ void LayerTest1::onEnter()
     CCLayerColor* layer = CCLayerColor::create( ccc4(0xFF, 0x00, 0x00, 0x80), 200, 200); 
     
     layer->ignoreAnchorPointForPosition(false);
-    layer->setPosition( CCPointMake(s.width/2, s.height/2) );
+    layer->setPosition( ccp(s.width/2, s.height/2) );
     addChild(layer, 1, kTagLayer);
 }
 
@@ -218,12 +218,12 @@ void LayerTest2::onEnter()
 
     CCSize s = CCDirector::sharedDirector()->getWinSize();
     CCLayerColor* layer1 = CCLayerColor::create( ccc4(255, 255, 0, 80), 100, 300);
-    layer1->setPosition(CCPointMake(s.width/3, s.height/2));
+    layer1->setPosition(ccp(s.width/3, s.height/2));
     layer1->ignoreAnchorPointForPosition(false);
     addChild(layer1, 1);
     
     CCLayerColor* layer2 = CCLayerColor::create( ccc4(0, 0, 255, 255), 100, 300);
-    layer2->setPosition(CCPointMake((s.width/3)*2, s.height/2));
+    layer2->setPosition(ccp((s.width/3)*2, s.height/2));
     layer2->ignoreAnchorPointForPosition(false);
     addChild(layer2, 1);
     
@@ -261,8 +261,8 @@ LayerTestBlend::LayerTestBlend()
     addChild(sister2);
     addChild(layer1, 100, kTagLayer);
     
-    sister1->setPosition( CCPointMake( 160, s.height/2) );
-    sister2->setPosition( CCPointMake( 320, s.height/2) );
+    sister1->setPosition( ccp( 160, s.height/2) );
+    sister2->setPosition( ccp( 320, s.height/2) );
 
     schedule( schedule_selector(LayerTestBlend::newBlend), 1.0f);
 }

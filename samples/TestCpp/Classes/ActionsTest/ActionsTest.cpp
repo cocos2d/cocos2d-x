@@ -164,27 +164,23 @@ void ActionsDemo::onEnter()
     addChild(m_tamara, 2);
     addChild(m_kathia, 3);
 
-	CCDirector* pDirector = CCDirector::sharedDirector();
-	CCPoint visibleOrigin = pDirector->getVisibleOrigin();
-	CCSize visibleSize = pDirector->getVisibleSize();
-
-    m_grossini->setPosition(ccp(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/3));
-    m_tamara->setPosition(ccp(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+2*visibleSize.height/3));
-    m_kathia->setPosition(ccp(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/2)); 
+    m_grossini->setPosition(ccp(VisibleRect::center().x, VisibleRect::bottom().y+VisibleRect::getVisibleRect().size.height/3));
+    m_tamara->setPosition(ccp(VisibleRect::center().x, VisibleRect::bottom().y+VisibleRect::getVisibleRect().size.height*2/3));
+    m_kathia->setPosition(ccp(VisibleRect::center().x, VisibleRect::bottom().y+VisibleRect::getVisibleRect().size.height/2)); 
 
     // add title and subtitle
     std::string str = title();
     const char * pTitle = str.c_str();
     CCLabelTTF* label = CCLabelTTF::create(pTitle, "Arial", 18);
     addChild(label, 1);
-    label->setPosition( ccp(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height - 30) );
+    label->setPosition( ccp(VisibleRect::center().x, VisibleRect::top().y - 30) );
 
     std::string strSubtitle = subtitle();
     if( ! strSubtitle.empty() ) 
     {
         CCLabelTTF* l = CCLabelTTF::create(strSubtitle.c_str(), "Thonburi", 22);
         addChild(l, 1);
-        l->setPosition( ccp(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height - 60) );
+        l->setPosition( ccp(VisibleRect::center().x, VisibleRect::top().y - 60) );
     }    
 
     // add menu
@@ -195,9 +191,9 @@ void ActionsDemo::onEnter()
     CCMenu *menu = CCMenu::create(item1, item2, item3, NULL);
 
     menu->setPosition(CCPointZero);
-    item1->setPosition(ccp(visibleOrigin.x+visibleSize.width/2 - item2->getContentSize().width*2, visibleOrigin.y+item2->getContentSize().height/2));
-    item2->setPosition(ccp(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+item2->getContentSize().height/2));
-    item3->setPosition(ccp(visibleOrigin.x+visibleSize.width/2 + item2->getContentSize().width*2, visibleOrigin.y+item2->getContentSize().height/2));
+    item1->setPosition(ccp(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
+    item2->setPosition(ccp(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2));
+    item3->setPosition(ccp(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
 
     addChild(menu, 1);
 }
@@ -249,19 +245,19 @@ void ActionsDemo::centerSprites(unsigned int numberOfSprites)
     {
         m_tamara->setVisible(false);
         m_kathia->setVisible(false);
-        m_grossini->setPosition(CCPointMake(s.width/2, s.height/2));
+        m_grossini->setPosition(ccp(s.width/2, s.height/2));
     }
     else if( numberOfSprites == 2 ) 
     {        
-        m_kathia->setPosition( CCPointMake(s.width/3, s.height/2));
-        m_tamara->setPosition( CCPointMake(2*s.width/3, s.height/2));
+        m_kathia->setPosition( ccp(s.width/3, s.height/2));
+        m_tamara->setPosition( ccp(2*s.width/3, s.height/2));
         m_grossini->setVisible(false);
     } 
     else if( numberOfSprites == 3 ) 
     {
-        m_grossini->setPosition( CCPointMake(s.width/2, s.height/2));
-        m_tamara->setPosition( CCPointMake(s.width/4, s.height/2));
-        m_kathia->setPosition( CCPointMake(3 * s.width/4, s.height/2));
+        m_grossini->setPosition( ccp(s.width/2, s.height/2));
+        m_tamara->setPosition( ccp(s.width/4, s.height/2));
+        m_kathia->setPosition( ccp(3 * s.width/4, s.height/2));
     }
 }
 
@@ -273,19 +269,19 @@ void ActionsDemo::alignSpritesLeft(unsigned int numberOfSprites)
     {
         m_tamara->setVisible(false);
         m_kathia->setVisible(false);
-        m_grossini->setPosition(CCPointMake(60, s.height/2));
+        m_grossini->setPosition(ccp(60, s.height/2));
     } 
     else if( numberOfSprites == 2 ) 
     {        
-        m_kathia->setPosition( CCPointMake(60, s.height/3));
-        m_tamara->setPosition( CCPointMake(60, 2*s.height/3));
+        m_kathia->setPosition( ccp(60, s.height/3));
+        m_tamara->setPosition( ccp(60, 2*s.height/3));
         m_grossini->setVisible( false );
     } 
     else if( numberOfSprites == 3 ) 
     {
-        m_grossini->setPosition( CCPointMake(60, s.height/2));
-        m_tamara->setPosition( CCPointMake(60, 2*s.height/3));
-        m_kathia->setPosition( CCPointMake(60, s.height/3));
+        m_grossini->setPosition( ccp(60, s.height/2));
+        m_tamara->setPosition( ccp(60, 2*s.height/3));
+        m_kathia->setPosition( ccp(60, s.height/3));
     }
 }
 
@@ -302,14 +298,14 @@ void ActionManual::onEnter()
 
     m_tamara->setScaleX( 2.5f);
     m_tamara->setScaleY( -1.0f);
-    m_tamara->setPosition( CCPointMake(100,70) );
+    m_tamara->setPosition( ccp(100,70) );
     m_tamara->setOpacity( 128);
 
     m_grossini->setRotation( 120);
-    m_grossini->setPosition( CCPointMake(s.width/2, s.height/2));
+    m_grossini->setPosition( ccp(s.width/2, s.height/2));
     m_grossini->setColor( ccc3( 255,0,0));
 
-    m_kathia->setPosition( CCPointMake(s.width-100, s.height/2));
+    m_kathia->setPosition( ccp(s.width-100, s.height/2));
     m_kathia->setColor( ccBLUE);
 }
 
@@ -331,13 +327,13 @@ void ActionMove::onEnter()
 
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-    CCActionInterval*  actionTo = CCMoveTo::create(2, CCPointMake(s.width-40, s.height-40));
-    CCActionInterval*  actionBy = CCMoveBy::create(2, CCPointMake(80,80));
+    CCActionInterval*  actionTo = CCMoveTo::create(2, ccp(s.width-40, s.height-40));
+    CCActionInterval*  actionBy = CCMoveBy::create(2, ccp(80,80));
     CCActionInterval*  actionByBack = actionBy->reverse();
 
     m_tamara->runAction( actionTo);
     m_grossini->runAction( CCSequence::create(actionBy, actionByBack, NULL));
-    m_kathia->runAction(CCMoveTo::create(1, CCPointMake(40,40)));
+    m_kathia->runAction(CCMoveTo::create(1, ccp(40,40)));
 }
 
 std::string ActionMove::subtitle()
@@ -484,9 +480,9 @@ void ActionJump::onEnter()
 
     centerSprites(3);
 
-    CCActionInterval*  actionTo = CCJumpTo::create(2, CCPointMake(300,300), 50, 4);
-    CCActionInterval*  actionBy = CCJumpBy::create(2, CCPointMake(300,0), 50, 4);
-    CCActionInterval*  actionUp = CCJumpBy::create(2, CCPointMake(0,0), 80, 4);
+    CCActionInterval*  actionTo = CCJumpTo::create(2, ccp(300,300), 50, 4);
+    CCActionInterval*  actionBy = CCJumpBy::create(2, ccp(300,0), 50, 4);
+    CCActionInterval*  actionUp = CCJumpBy::create(2, ccp(0,0), 80, 4);
     CCActionInterval*  actionByBack = actionBy->reverse();
 
     m_tamara->runAction( actionTo);
@@ -518,9 +514,9 @@ void ActionBezier::onEnter()
 
     // sprite 1
     ccBezierConfig bezier;
-    bezier.controlPoint_1 = CCPointMake(0, s.height/2);
-    bezier.controlPoint_2 = CCPointMake(300, -s.height/2);
-    bezier.endPosition = CCPointMake(300,100);
+    bezier.controlPoint_1 = ccp(0, s.height/2);
+    bezier.controlPoint_2 = ccp(300, -s.height/2);
+    bezier.endPosition = ccp(300,100);
 
     CCActionInterval*  bezierForward = CCBezierBy::create(3, bezier);
     CCActionInterval*  bezierBack = bezierForward->reverse();    
@@ -528,16 +524,16 @@ void ActionBezier::onEnter()
 
 
     // sprite 2
-    m_tamara->setPosition(CCPointMake(80,160));
+    m_tamara->setPosition(ccp(80,160));
     ccBezierConfig bezier2;
-    bezier2.controlPoint_1 = CCPointMake(100, s.height/2);
-    bezier2.controlPoint_2 = CCPointMake(200, -s.height/2);
-    bezier2.endPosition = CCPointMake(240,160);
+    bezier2.controlPoint_1 = ccp(100, s.height/2);
+    bezier2.controlPoint_2 = ccp(200, -s.height/2);
+    bezier2.endPosition = ccp(240,160);
 
     CCActionInterval*  bezierTo1 = CCBezierTo::create(2, bezier2);    
 
     // sprite 3
-    m_kathia->setPosition(CCPointMake(400,160));
+    m_kathia->setPosition(ccp(400,160));
     CCActionInterval*  bezierTo2 = CCBezierTo::create(2, bezier2);
 
     m_grossini->runAction( rep);
@@ -714,7 +710,7 @@ void ActionSequence::onEnter()
     alignSpritesLeft(1);
 
     CCFiniteTimeAction*  action = CCSequence::create(
-        CCMoveBy::create( 2, CCPointMake(240,0)),
+        CCMoveBy::create( 2, ccp(240,0)),
         CCRotateBy::create( 2,  540),
         NULL);
 
@@ -740,9 +736,9 @@ void ActionSequence2::onEnter()
     m_grossini->setVisible(false);
 
     CCFiniteTimeAction*  action = CCSequence::create(
-        CCPlace::create(CCPointMake(200,200)),
+        CCPlace::create(ccp(200,200)),
         CCShow::create(),
-        CCMoveBy::create(1, CCPointMake(100,0)),
+        CCMoveBy::create(1, ccp(100,0)),
         CCCallFunc::create(this, callfunc_selector(ActionSequence2::callback1)),
         CCCallFuncN::create(this, callfuncN_selector(ActionSequence2::callback2)),
         CCCallFuncND::create(this, callfuncND_selector(ActionSequence2::callback3), (void*)0xbebabeba),
@@ -755,7 +751,7 @@ void ActionSequence2::callback1()
 {
     CCSize s = CCDirector::sharedDirector()->getWinSize();
     CCLabelTTF *label = CCLabelTTF::create("callback 1 called", "Marker Felt", 16);
-    label->setPosition(CCPointMake( s.width/4*1,s.height/2));
+    label->setPosition(ccp( s.width/4*1,s.height/2));
 
     addChild(label);
 }
@@ -764,7 +760,7 @@ void ActionSequence2::callback2(CCNode* sender)
 {
     CCSize s = CCDirector::sharedDirector()->getWinSize();
     CCLabelTTF *label = CCLabelTTF::create("callback 2 called", "Marker Felt", 16);
-    label->setPosition(CCPointMake( s.width/4*2,s.height/2));
+    label->setPosition(ccp( s.width/4*2,s.height/2));
 
     addChild(label);
 }
@@ -773,7 +769,7 @@ void ActionSequence2::callback3(CCNode* sender, void* data)
 {
     CCSize s = CCDirector::sharedDirector()->getWinSize();
     CCLabelTTF *label = CCLabelTTF::create("callback 3 called", "Marker Felt", 16);
-    label->setPosition(CCPointMake( s.width/4*3,s.height/2));
+    label->setPosition(ccp( s.width/4*3,s.height/2));
 
     addChild(label);
 }
@@ -795,7 +791,7 @@ void ActionCallFunc::onEnter()
     centerSprites(3);
 
     CCFiniteTimeAction*  action = CCSequence::create(
-        CCMoveBy::create(2, CCPointMake(200,0)),
+        CCMoveBy::create(2, ccp(200,0)),
         CCCallFunc::create(this, callfunc_selector(ActionCallFunc::callback1)), 
         NULL);
 
@@ -821,7 +817,7 @@ void ActionCallFunc::callback1()
 {
     CCSize s = CCDirector::sharedDirector()->getWinSize();
     CCLabelTTF *label = CCLabelTTF::create("callback 1 called", "Marker Felt", 16);
-    label->setPosition(CCPointMake( s.width/4*1,s.height/2));
+    label->setPosition(ccp( s.width/4*1,s.height/2));
 
     addChild(label);
 }
@@ -830,7 +826,7 @@ void ActionCallFunc::callback2(CCNode* pSender)
 {
     CCSize s = CCDirector::sharedDirector()->getWinSize();
     CCLabelTTF *label = CCLabelTTF::create("callback 2 called", "Marker Felt", 16);
-    label->setPosition(CCPointMake( s.width/4*2,s.height/2));
+    label->setPosition(ccp( s.width/4*2,s.height/2));
 
     addChild(label);
 }
@@ -839,7 +835,7 @@ void ActionCallFunc::callback3(CCNode* pTarget, void* data)
 {
     CCSize s = CCDirector::sharedDirector()->getWinSize();
     CCLabelTTF *label = CCLabelTTF::create("callback 3 called", "Marker Felt", 16);
-    label->setPosition(CCPointMake( s.width/4*3,s.height/2));
+    label->setPosition(ccp( s.width/4*3,s.height/2));
     addChild(label);
 }
 
@@ -896,7 +892,7 @@ void ActionSpawn::onEnter()
 
 
     CCAction*  action = CCSpawn::create(
-        CCJumpBy::create(2, CCPointMake(300,0), 50, 4),
+        CCJumpBy::create(2, ccp(300,0), 50, 4),
         CCRotateBy::create( 2,  720),
         NULL);
 
@@ -1007,7 +1003,7 @@ void ActionReverse::onEnter()
 
     alignSpritesLeft(1);
 
-    CCActionInterval*  jump = CCJumpBy::create(2, CCPointMake(300,0), 50, 4);
+    CCActionInterval*  jump = CCJumpBy::create(2, ccp(300,0), 50, 4);
     CCFiniteTimeAction*  action = CCSequence::create( jump, jump->reverse(), NULL);
 
     m_grossini->runAction(action);
@@ -1030,7 +1026,7 @@ void ActionDelayTime::onEnter()
 
     alignSpritesLeft(1);
 
-    CCActionInterval*  move = CCMoveBy::create(1, CCPointMake(150,0));
+    CCActionInterval*  move = CCMoveBy::create(1, ccp(150,0));
     CCFiniteTimeAction*  action = CCSequence::create( move, CCDelayTime::create(2), move, NULL);
 
     m_grossini->runAction(action);
@@ -1053,8 +1049,8 @@ void ActionReverseSequence::onEnter()
 
     alignSpritesLeft(1);
 
-    CCActionInterval*  move1 = CCMoveBy::create(1, CCPointMake(250,0));
-    CCActionInterval*  move2 = CCMoveBy::create(1, CCPointMake(0,50));
+    CCActionInterval*  move1 = CCMoveBy::create(1, ccp(250,0));
+    CCActionInterval*  move2 = CCMoveBy::create(1, ccp(0,50));
     CCFiniteTimeAction*  seq = CCSequence::create( move1, move2, move1->reverse(), NULL);
     CCFiniteTimeAction*  action = CCSequence::create( seq, seq->reverse(), NULL);
 
@@ -1081,8 +1077,8 @@ void ActionReverseSequence2::onEnter()
 
     // Test:
     //   Sequence should work both with IntervalAction and InstantActions
-    CCActionInterval*  move1 = CCMoveBy::create(1, CCPointMake(250,0));
-    CCActionInterval*  move2 = CCMoveBy::create(1, CCPointMake(0,50));
+    CCActionInterval*  move1 = CCMoveBy::create(1, ccp(250,0));
+    CCActionInterval*  move2 = CCMoveBy::create(1, ccp(0,50));
     CCToggleVisibility*  tog1 = new CCToggleVisibility();
     CCToggleVisibility*  tog2 = new CCToggleVisibility();
     tog1->autorelease();
@@ -1096,8 +1092,8 @@ void ActionReverseSequence2::onEnter()
     //   Also test that the reverse of Hide is Show, and vice-versa
     m_kathia->runAction(action);
 
-    CCActionInterval*  move_tamara = CCMoveBy::create(1, CCPointMake(100,0));
-    CCActionInterval*  move_tamara2 = CCMoveBy::create(1, CCPointMake(50,0));
+    CCActionInterval*  move_tamara = CCMoveBy::create(1, ccp(100,0));
+    CCActionInterval*  move_tamara2 = CCMoveBy::create(1, ccp(50,0));
     CCActionInstant*  hide = new CCHide();
     hide->autorelease();
     CCFiniteTimeAction*  seq_tamara = CCSequence::create( move_tamara, hide, move_tamara2, NULL);
@@ -1121,9 +1117,9 @@ void ActionRepeat::onEnter()
     alignSpritesLeft(2);
 
 
-    CCActionInterval*  a1 = CCMoveBy::create(1, CCPointMake(150,0));
+    CCActionInterval*  a1 = CCMoveBy::create(1, ccp(150,0));
     CCActionInterval*  action1 = CCRepeat::create(
-        CCSequence::create( CCPlace::create(CCPointMake(60,60)), a1, NULL) , 
+        CCSequence::create( CCPlace::create(ccp(60,60)), a1, NULL) , 
         3); 
     CCAction*  action2 = CCRepeatForever::create(
         (CCActionInterval*)(CCSequence::create((CCActionInterval*)(a1->copy()->autorelease()), a1->reverse(), NULL))
@@ -1171,7 +1167,7 @@ void ActionOrbit::onEnter()
     m_tamara->runAction(CCRepeatForever::create((CCActionInterval*)action2));
     m_grossini->runAction(CCRepeatForever::create((CCActionInterval*)action3));
 
-    CCActionInterval*  move = CCMoveBy::create(3, CCPointMake(100,-100));
+    CCActionInterval*  move = CCMoveBy::create(3, ccp(100,-100));
     CCActionInterval*  move_back = move->reverse();
     CCFiniteTimeAction*  seq = CCSequence::create(move, move_back, NULL);
     CCAction*  rfe = CCRepeatForever::create((CCActionInterval*)seq);
@@ -1197,8 +1193,8 @@ void ActionFollow::onEnter()
     centerSprites(1);
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-    m_grossini->setPosition(CCPointMake(-200, s.height / 2));
-    CCActionInterval* move      = CCMoveBy::create(2, CCPointMake(s.width * 3, 0));
+    m_grossini->setPosition(ccp(-200, s.height / 2));
+    CCActionInterval* move      = CCMoveBy::create(2, ccp(s.width * 3, 0));
     CCActionInterval* move_back = move->reverse();
     CCFiniteTimeAction* seq       = CCSequence::create(move, move_back, NULL);
     CCAction* rep               = CCRepeatForever::create((CCActionInterval*)seq);
@@ -1317,13 +1313,13 @@ void Issue1305_2::onEnter()
     }];
     */
 
-    CCCallFunc* act2 = CCCallFunc::create(this, callfunc_selector(Issue1305_2::log1)) ;
+    CCCallFunc* act2 = CCCallFunc::create(this, callfunc_selector(Issue1305_2::printLog1));
     CCMoveBy* act3 = CCMoveBy::create(2, ccp(0, -100));
-    CCCallFunc* act4 = CCCallFunc::create(this, callfunc_selector(Issue1305_2::log2)) ;
+    CCCallFunc* act4 = CCCallFunc::create(this, callfunc_selector(Issue1305_2::printLog2));
     CCMoveBy* act5 = CCMoveBy::create(2, ccp(100, -100));
-    CCCallFunc* act6 = CCCallFunc::create(this, callfunc_selector(Issue1305_2::log3)) ;
+    CCCallFunc* act6 = CCCallFunc::create(this, callfunc_selector(Issue1305_2::printLog3));
     CCMoveBy* act7 = CCMoveBy::create(2, ccp(-100, 0));
-    CCCallFunc* act8 = CCCallFunc::create(this, callfunc_selector(Issue1305_2::log4)) ;
+    CCCallFunc* act8 = CCCallFunc::create(this, callfunc_selector(Issue1305_2::printLog4));
 
     CCFiniteTimeAction* actF = CCSequence::create(act1, act2, act3, act4, act5, act6, act7, act8, NULL);
 
@@ -1332,22 +1328,22 @@ void Issue1305_2::onEnter()
 
 }
 
-void Issue1305_2::log1()
+void Issue1305_2::printLog1()
 {
     CCLog("1st block");
 }
 
-void Issue1305_2::log2()
+void Issue1305_2::printLog2()
 {
     CCLog("2nd block");
 }
 
-void Issue1305_2::log3()
+void Issue1305_2::printLog3()
 {
     CCLog("3rd block");
 }
 
-void Issue1305_2::log4()
+void Issue1305_2::printLog4()
 {
     CCLog("4th block");
 }
@@ -1461,15 +1457,15 @@ void ActionCatmullRom::onEnter()
     
     CCSize s = CCDirector::sharedDirector()->getWinSize();
     
-	//
-	// sprite 1 (By)
-	//
-	// startPosition can be any coordinate, but since the movement
-	// is relative to the Catmull Rom curve, it is better to start with (0,0).
-	//
-	
+    //
+    // sprite 1 (By)
+    //
+    // startPosition can be any coordinate, but since the movement
+    // is relative to the Catmull Rom curve, it is better to start with (0,0).
+    //
+    
     m_tamara->setPosition(ccp(50, 50));
-	
+    
     CCPointArray *array = CCPointArray::create(20);
     
     array->addControlPoint(ccp(0, 0));
@@ -1482,18 +1478,18 @@ void ActionCatmullRom::onEnter()
     
     CCCatmullRomBy *action = CCCatmullRomBy::create(3, array);
     CCFiniteTimeAction *reverse = action->reverse();
-	
+    
     CCFiniteTimeAction *seq = CCSequence::create(action, reverse, NULL);
-	
+    
     m_tamara->runAction(seq);
-	
-	
-	//
-	// sprite 2 (To)
-	//
-	// The startPosition is not important here, because it uses a "To" action.
-	// The initial position will be the 1st point of the Catmull Rom path
-	//    
+    
+    
+    //
+    // sprite 2 (To)
+    //
+    // The startPosition is not important here, because it uses a "To" action.
+    // The initial position will be the 1st point of the Catmull Rom path
+    //    
     
     CCPointArray *array2 = CCPointArray::create(20);
     
@@ -1505,9 +1501,9 @@ void ActionCatmullRom::onEnter()
     
     CCCatmullRomTo *action2 = CCCatmullRomTo::create(3, array2);
     CCFiniteTimeAction *reverse2 = action2->reverse();
-	
+    
     CCFiniteTimeAction *seq2 = CCSequence::create(action2, reverse2, NULL);
-	
+    
     m_kathia->runAction(seq2);
     
     m_pArray1 = array;
@@ -1526,13 +1522,13 @@ void ActionCatmullRom::draw()
 {
     ActionsDemo::draw();
     
-	// move to 50,50 since the "by" path will start at 50,50
-	kmGLPushMatrix();
-	kmGLTranslatef(50, 50, 0);
-	ccDrawCatmullRom(m_pArray1, 50);
-	kmGLPopMatrix();
+    // move to 50,50 since the "by" path will start at 50,50
+    kmGLPushMatrix();
+    kmGLTranslatef(50, 50, 0);
+    ccDrawCatmullRom(m_pArray1, 50);
+    kmGLPopMatrix();
     
-	ccDrawCatmullRom(m_pArray2,50);
+    ccDrawCatmullRom(m_pArray2,50);
 }
 
 string ActionCatmullRom::title()
@@ -1550,9 +1546,9 @@ string ActionCatmullRom::subtitle()
 void ActionCardinalSpline::onEnter()
 {
     ActionsDemo::onEnter();
-	
+    
     this->centerSprites(2);
-	
+    
     CCSize s = CCDirector::sharedDirector()->getWinSize();
     
     CCPointArray *array = CCPointArray::create(20);
@@ -1563,34 +1559,34 @@ void ActionCardinalSpline::onEnter()
     array->addControlPoint(ccp(0, s.height-80));
     array->addControlPoint(ccp(0, 0));
     
-	//
-	// sprite 1 (By)
-	//
-	// Spline with no tension (tension==0)
-	//
+    //
+    // sprite 1 (By)
+    //
+    // Spline with no tension (tension==0)
+    //
     
     CCCardinalSplineBy *action = CCCardinalSplineBy::create(3, array, 0);
     CCActionInterval *reverse = action->reverse();
-	
+    
     CCFiniteTimeAction *seq = CCSequence::create(action, reverse, NULL);
-	
+    
     m_tamara->setPosition(ccp(50, 50));
     m_tamara->runAction(seq);
-	
-	//
-	// sprite 2 (By)
-	//
-	// Spline with high tension (tension==1)
-	//
+    
+    //
+    // sprite 2 (By)
+    //
+    // Spline with high tension (tension==1)
+    //
     
     CCCardinalSplineBy *action2 = CCCardinalSplineBy::create(3, array, 1);
     CCActionInterval *reverse2 = action2->reverse();
-	
+    
     CCFiniteTimeAction *seq2 = CCSequence::create(action2, reverse2, NULL);
-	
+    
     m_kathia->setPosition(ccp(s.width/2, 50));
     m_kathia->runAction(seq2);
-	
+    
     m_pArray = array;
     array->retain();
 }
@@ -1603,19 +1599,19 @@ ActionCardinalSpline::~ActionCardinalSpline()
 void ActionCardinalSpline::draw()
 {
     ActionsDemo::draw();
-	
-	// move to 50,50 since the "by" path will start at 50,50
-	kmGLPushMatrix();
-	kmGLTranslatef(50, 50, 0);
-	ccDrawCardinalSpline(m_pArray, 0, 100);
-	kmGLPopMatrix();
+    
+    // move to 50,50 since the "by" path will start at 50,50
+    kmGLPushMatrix();
+    kmGLTranslatef(50, 50, 0);
+    ccDrawCardinalSpline(m_pArray, 0, 100);
+    kmGLPopMatrix();
     
     CCSize s = CCDirector::sharedDirector()->getWinSize();
     
-	kmGLPushMatrix();
-	kmGLTranslatef(s.width/2, 50, 0);
-	ccDrawCardinalSpline(m_pArray, 1, 100);
-	kmGLPopMatrix();
+    kmGLPushMatrix();
+    kmGLTranslatef(s.width/2, 50, 0);
+    ccDrawCardinalSpline(m_pArray, 1, 100);
+    kmGLPopMatrix();
 }
 
 string ActionCardinalSpline::title()
@@ -1645,7 +1641,7 @@ PauseResumeActions::~PauseResumeActions()
 void PauseResumeActions::onEnter()
 {
     ActionsDemo::onEnter();
-	
+    
     this->centerSprites(2);
     
     m_tamara->runAction(CCRepeatForever::create(CCRotateBy::create(3, 360)));

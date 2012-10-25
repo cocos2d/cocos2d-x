@@ -74,9 +74,9 @@ bool MenuLayer::initWithEntryID(int entryId)
     CCMenu *menu = CCMenu::create(item1, item2, item3, NULL);
 
     menu->setPosition( CCPointZero );
-    item1->setPosition( ccp( visibleOrigin.x+visibleSize.width/2 - 100,visibleOrigin.y+30) );
-    item2->setPosition( ccp( visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+30) );
-    item3->setPosition( ccp( visibleOrigin.x+visibleSize.width/2 + 100,visibleOrigin.y+30) );
+    item1->setPosition(ccp(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
+    item2->setPosition(ccp(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2));
+    item3->setPosition(ccp(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
     
     addChild(menu, 1);    
 
