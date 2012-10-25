@@ -54,19 +54,15 @@ CCApplication::~CCApplication()
 	CC_ASSERT(this == sm_pSharedApplication);		
 	sm_pSharedApplication = NULL;
 }
-
-bool CCApplication::initInstance()	// MH: Added to fix compile issue
-{
-	return true;
-}
  
 int CCApplication::Run()
 {
 	IW_CALLSTACK("CCApplication::Run");
 	
 	s3eBool quitRequested = 0;
+    bool bNeedQuit = false;
 
-	if ( ! initInstance() || !applicationDidFinishLaunching() )
+	if (!applicationDidFinishLaunching() )
 	{
 		return 0;
 	}
@@ -83,17 +79,26 @@ int CCApplication::Run()
 			
 		ccAccelerationUpdate();
 
-		quitRequested = s3eDeviceCheckQuitRequest() ;
-		if( quitRequested && CCDirector::sharedDirector()->getOpenGLView() != NULL ) {
-			CCDirector::sharedDirector()->end() ;
-			// end status will be processed in CCDirector::sharedDirector()->mainLoop();
+		quitRequested = s3eDeviceCheckQuitRequest();
+		if( quitRequested) {
+            CCDirector* pDirector = CCDirector::sharedDirector();
+            // if opengl view has been released, delete the director.
+            if (pDirector->getOpenGLView() == NULL)
+            {
+                CC_SAFE_DELETE(pDirector);
+                bNeedQuit = true;
+            }
+            else
+            {
+                pDirector->end();
+            }
 		}
 
-		CCDirector::sharedDirector()->mainLoop();
-
-		if( quitRequested ) {
-			break ;
+		if( bNeedQuit ) {
+			break;
 		}
+
+        CCDirector::sharedDirector()->mainLoop();
 
 		while ((s3eTimerGetMs() - updateTime) < m_nAnimationInterval) {
 			int32 yield = (int32) (m_nAnimationInterval - (s3eTimerGetMs() - updateTime));
@@ -113,19 +118,6 @@ void CCApplication::setAnimationInterval(double interval)
 	
 }
 
-CCApplication::Orientation CCApplication::setOrientation(Orientation orientation)
-{
-	IW_CALLSTACK("CCApplication::setOrientation");
-	return orientation;
-}
-
-void CCApplication::statusBarFrame(CCRect * rect)
-{
-	if (rect)
-	{
-		*rect = CCRectMake(0, 0, 0, 0);
-	}
-}
 void CCApplication::ccAccelerationUpdate()
 {
 // Accelerometer doesn't work on Marmalade X86 MacOS-X simulator

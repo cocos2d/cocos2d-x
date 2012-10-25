@@ -45,11 +45,6 @@ public:
 
     CCApplication();
     virtual ~CCApplication();
-
-    /**
-	 @brief	Implement for initialize OpenGL instance, set source path, etc...
-	 */
-    virtual bool initInstance();	
 	
 	/**
     @brief	Implement CCDirector and sense init code here.
@@ -72,31 +67,6 @@ public:
 
 	void setAnimationInterval(double interval);
 	
-	typedef enum
-	{
-		/// Device oriented vertically, home button on the bottom
-		kOrientationPortrait = 0,
-		/// Device oriented vertically, home button on the top
-		kOrientationPortraitUpsideDown = 1,
-		/// Device oriented horizontally, home button on the right
-		kOrientationLandscapeLeft = 2,
-		/// Device oriented horizontally, home button on the left
-		kOrientationLandscapeRight = 3,
-	} Orientation;
-	
-	
-    /**
-	 @brief	Callback by CCDirector for change device orientation.
-	 @orientation    The defination of orientation which CCDirector want change to.
-	 @return         The actual orientation of the application.
-	 */
-    Orientation setOrientation(Orientation orientation);
-	
-	/**
-	 @brief	Get status bar rectangle in EGLView window.
-	 */
-	void    statusBarFrame(CCRect * rect);
-
     /**
 	 @brief	Run the message loop.
 	 */

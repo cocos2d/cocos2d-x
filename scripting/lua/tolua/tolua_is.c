@@ -170,13 +170,11 @@ static int lua_isusertype (lua_State* L, int lo, const char* type)
     };
     {
         /* check if it is of the same type */
-        // MARMALADE CHANGE: WE MUST DISABLE THIS, AS IT DOES NOT PERMIT HIERARCHIES MORE THAN 1 DEEP!
-        return 1;
-/*        int r;
+        int r;
         const char *tn;
-        if (lua_getmetatable(L,lo))        // if metatable?
+        if (lua_getmetatable(L,lo))        /* if metatable? */
         {
-            lua_rawget(L,LUA_REGISTRYINDEX);  // get registry[mt]
+            lua_rawget(L,LUA_REGISTRYINDEX);  /* get registry[mt] */
             tn = lua_tostring(L,-1);
             r = tn && (strcmp(tn,type) == 0);
             lua_pop(L, 1);
@@ -184,23 +182,23 @@ static int lua_isusertype (lua_State* L, int lo, const char* type)
                 return 1;
             else
             {
-                // check if it is a specialized class
+                /* check if it is a specialized class */
                 lua_pushstring(L,"tolua_super");
-                lua_rawget(L,LUA_REGISTRYINDEX); // get super
+                lua_rawget(L,LUA_REGISTRYINDEX); /* get super */
                 lua_getmetatable(L,lo);
-                lua_rawget(L,-2);                // get super[mt]
+                lua_rawget(L,-2);                /* get super[mt] */
                 if (lua_istable(L,-1))
                 {
                     int b;
                     lua_pushstring(L,type);
-                    lua_rawget(L,-2);                // get super[mt][type]
+                    lua_rawget(L,-2);                /* get super[mt][type] */
                     b = lua_toboolean(L,-1);
                     lua_pop(L,3);
                     if (b)
                         return 1;
                 }
             }
-        }*/
+        }
     }
     return 0;
 }

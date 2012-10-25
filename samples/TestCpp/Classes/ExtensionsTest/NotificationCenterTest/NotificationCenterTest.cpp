@@ -84,7 +84,7 @@ NotificationCenterTest::NotificationCenterTest()
 
     CCMenuItemFont* pBackItem = CCMenuItemFont::create("Back", this,
         menu_selector(NotificationCenterTest::toExtensionsMainLayer));
-    pBackItem->setPosition(ccp(s.width - 50, 25));
+    pBackItem->setPosition(ccp(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
     CCMenu* pBackMenu = CCMenu::create(pBackItem, NULL);
     pBackMenu->setPosition( CCPointZero );
     addChild(pBackMenu);

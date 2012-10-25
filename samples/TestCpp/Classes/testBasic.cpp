@@ -20,9 +20,9 @@ void TestScene::onEnter()
     CCMenuItemLabel* pMenuItem = CCMenuItemLabel::create(label, this, menu_selector(TestScene::MainMenuCallback));
 
     CCMenu* pMenu =CCMenu::create(pMenuItem, NULL);
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
+
     pMenu->setPosition( CCPointZero );
-    pMenuItem->setPosition( CCPointMake( s.width - 50, 25) );
+    pMenuItem->setPosition( ccp( VisibleRect::right().x - 50, VisibleRect::bottom().y + 25) );
 
     addChild(pMenu, 1);
 }
