@@ -158,7 +158,7 @@ static EAGLView *view;
 	cocos2d::CCDirector *director = cocos2d::CCDirector::sharedDirector();
 	CGSize size = NSSizeToCGSize(rect.size);
 	cocos2d::CCSize ccsize = cocos2d::CCSizeMake(size.width, size.height);
-	director->reshapeProjection(ccsize);
+	//director->reshapeProjection(ccsize);
 	
 	// avoid flicker
 	director->drawScene();
