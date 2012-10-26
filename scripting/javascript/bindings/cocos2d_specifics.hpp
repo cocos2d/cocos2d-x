@@ -82,7 +82,7 @@ void register_cocos2dx_js_extensions(JSContext* cx, JSObject* obj);
 class JSCallFunc: public CCObject {
 public:
     JSCallFunc(jsval func): jsCallback(func) {}
-    JSCallFunc() {}
+    JSCallFunc() {extraData = JSVAL_VOID;}
     virtual ~JSCallFunc() {
         return;
     }
@@ -100,19 +100,24 @@ public:
         
         JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
         js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::CCNode>(cx, node);
-   
+
+        JS_AddValueRoot(cx, valArr);
+
         valArr[0] = OBJECT_TO_JSVAL(proxy->obj);
-        if(!JSVAL_IS_NULL(extraData)) {
+        if(!JSVAL_IS_VOID(extraData)) {
             valArr[1] = extraData;            
         } else {
             valArr[1] = JSVAL_NULL;
         }
         
         jsval retval;
-        if(jsCallback != JSVAL_VOID || jsThisObj != JSVAL_VOID) {
+        if(jsCallback != JSVAL_VOID && jsThisObj != JSVAL_VOID) {
             JS_CallFunctionValue(cx, JSVAL_TO_OBJECT(jsThisObj), jsCallback, 2, valArr, &retval);
         }
+        
         JSCallFunc::setTargetForNativeNode(node, (JSCallFunc *)this);
+        
+        JS_RemoveValueRoot(cx, valArr);
 
     }
 private:
@@ -126,7 +131,7 @@ class JSSchedule: public CCObject {
     
 public:
     JSSchedule(jsval func): jsSchedule(func) {}
-    JSSchedule() {}
+    JSSchedule() {jsSchedule = JSVAL_VOID; jsThisObj = JSVAL_VOID;}
     virtual ~JSSchedule() {
         return;
     }
@@ -146,9 +151,17 @@ public:
         jsval retval = JSVAL_NULL, data = DOUBLE_TO_JSVAL(dt);
         JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
         
-        if(jsSchedule != JSVAL_VOID || jsThisObj != JSVAL_VOID) {
+        JSBool ok = JS_AddValueRoot(cx, &data);
+        if(!ok) {
+            return;
+        }
+        
+        if(!JSVAL_IS_VOID(jsSchedule)  && !JSVAL_IS_VOID(jsThisObj)) {
+            ScriptingCore::dumpRoot(cx, 0, NULL);
             JS_CallFunctionValue(cx, JSVAL_TO_OBJECT(jsThisObj), jsSchedule, 1, &data, &retval);
         }
+        
+        JS_RemoveValueRoot(cx, &data);
         
     }
 
