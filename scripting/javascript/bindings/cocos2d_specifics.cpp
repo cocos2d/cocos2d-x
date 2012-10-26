@@ -614,6 +614,9 @@ JSBool js_callFunc(JSContext *cx, uint32_t argc, jsval *vp)
         
         JS_SetReservedSlot(proxy->obj, 0, argv[0]);
         JS_SetReservedSlot(proxy->obj, 1, argv[1]);
+//        if(argc == 3) {
+//            JS_SetReservedSlot(proxy->obj, 2, argv[2]);
+//        }
         
       //  test->execute();
     }
@@ -744,6 +747,9 @@ JSBool js_CCNode_scheduleOnce(JSContext *cx, uint32_t argc, jsval *vp)
         }
         
         JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        
+        JS_SetReservedSlot(proxy->obj, 0, argv[0]);
+
     }
     return JS_TRUE;
 }
@@ -762,6 +768,7 @@ JSBool js_CCNode_schedule(JSContext *cx, uint32_t argc, jsval *vp)
 		cocos2d::CCNode *node = (cocos2d::CCNode *)(proxy ? proxy->ptr : NULL);
         
         CCScheduler *sched = node->getScheduler();
+        js_proxy_t *p = js_get_or_create_proxy<cocos2d::CCScheduler>(cx, sched);        
 
         JSSchedule *tmpCobj = new JSSchedule();
         
@@ -806,6 +813,8 @@ JSBool js_CCNode_schedule(JSContext *cx, uint32_t argc, jsval *vp)
 
         }
         
+        JS_SetReservedSlot(p->obj, 0, argv[0]);
+
         JS_SET_RVAL(cx, vp, JSVAL_VOID);
     }
     return JS_TRUE;
@@ -1133,6 +1142,30 @@ JSBool js_cocos2dx_ccpAdd(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
 	return JS_FALSE;
 }
+
+JSBool js_cocos2dx_ccpClamp(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+    
+	if (argc == 3) {
+		cocos2d::CCPoint arg0;
+		arg0 = jsval_to_ccpoint(cx, argv[0]);
+		cocos2d::CCPoint arg1;
+		arg1 = jsval_to_ccpoint(cx, argv[1]);
+		cocos2d::CCPoint arg2;
+		arg1 = jsval_to_ccpoint(cx, argv[2]);
+		
+		CCPoint ret = ccpClamp(arg0, arg1, arg2);
+		
+		jsval jsret = ccpoint_to_jsval(cx, ret);
+		JS_SET_RVAL(cx, vp, jsret);
+		return JS_TRUE;
+	}
+	
+    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
+	return JS_FALSE;
+}
+
 
 JSBool js_cocos2dx_ccpNeg(JSContext *cx, uint32_t argc, jsval *vp)
 {
@@ -1574,6 +1607,7 @@ void register_cocos2dx_js_extensions(JSContext* cx, JSObject* global)
     JS_DefineFunction(cx, ns, "pProject", js_cocos2dx_ccpProject, 0, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, ns, "pRotate", js_cocos2dx_ccpRotate, 0, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, ns, "pNormalize", js_cocos2dx_ccpNormalize, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, ns, "pClamp", js_cocos2dx_ccpClamp, 2, JSPROP_READONLY | JSPROP_PERMANENT);
 
     
     
