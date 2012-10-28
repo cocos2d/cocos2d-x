@@ -74,7 +74,7 @@ void Paddle::ccTouchMoved(CCTouch* touch, CCEvent* event)
     
     CCPoint touchPoint = touch->getLocation();
     
-    setPosition( CCPointMake(touchPoint.x, getPosition().y) );
+    setPosition( ccp(touchPoint.x, getPosition().y) );
 }
 
 CCObject* Paddle::copyWithZone(CCZone *pZone)

@@ -187,9 +187,9 @@ void SpriteTestDemo::onEnter()
     CCMenu *menu = CCMenu::create(item1, item2, item3, NULL);
 
     menu->setPosition(CCPointZero);
-    item1->setPosition(ccp( s.width/2 - item2->getContentSize().width*2, item2->getContentSize().height/2));
-    item2->setPosition(ccp( s.width/2, item2->getContentSize().height/2));
-    item3->setPosition(ccp( s.width/2 + item2->getContentSize().width*2, item2->getContentSize().height/2));
+    item1->setPosition(ccp(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
+    item2->setPosition(ccp(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2));
+    item3->setPosition(ccp(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
     
     addChild(menu, 1);    
 }
@@ -792,13 +792,13 @@ SpriteBatchNodeReorderIssue766::SpriteBatchNodeReorderIssue766()
     addChild(batchNode, 1, 0);
 
     sprite1 = makeSpriteZ(2);
-    sprite1->setPosition(CCPointMake(200,160));
+    sprite1->setPosition(ccp(200,160));
 
     sprite2 = makeSpriteZ(3);
-    sprite2->setPosition(CCPointMake(264,160));
+    sprite2->setPosition(ccp(264,160));
 
     sprite3 = makeSpriteZ(4);
-    sprite3->setPosition(CCPointMake(328,160));
+    sprite3->setPosition(ccp(328,160));
 
     schedule(schedule_selector(SpriteBatchNodeReorderIssue766::reorderSprite), 2);
 }
@@ -4145,23 +4145,23 @@ NodeSort::NodeSort()
     addChild(m_pNode, 0, 0);
 
     m_pSprite1 = CCSprite::create("Images/piece.png", CCRectMake(128, 0, 64, 64));
-    m_pSprite1->setPosition(CCPointMake(100, 160));
+    m_pSprite1->setPosition(ccp(100, 160));
     m_pNode->addChild(m_pSprite1, -6, 1);
 
     m_pSprite2 = CCSprite::create("Images/piece.png", CCRectMake(128, 0, 64, 64));
-    m_pSprite2->setPosition(CCPointMake(164, 160));
+    m_pSprite2->setPosition(ccp(164, 160));
     m_pNode->addChild(m_pSprite2, -6, 2);
 
     m_pSprite4 = CCSprite::create("Images/piece.png", CCRectMake(128, 0, 64, 64));
-    m_pSprite4->setPosition(CCPointMake(292, 160));
+    m_pSprite4->setPosition(ccp(292, 160));
     m_pNode->addChild(m_pSprite4, -3, 4);
 
     m_pSprite3 = CCSprite::create("Images/piece.png", CCRectMake(128, 0, 64, 64));
-    m_pSprite3->setPosition(CCPointMake(228, 160));
+    m_pSprite3->setPosition(ccp(228, 160));
     m_pNode->addChild(m_pSprite3, -4, 3);
 
     m_pSprite5 = CCSprite::create("Images/piece.png", CCRectMake(128, 0, 64, 64));
-    m_pSprite5->setPosition(CCPointMake(356, 160));
+    m_pSprite5->setPosition(ccp(356, 160));
     m_pNode->addChild(m_pSprite5, -3, 5);
 
     schedule(schedule_selector(NodeSort::reorderSprite));
@@ -4208,23 +4208,23 @@ SpriteBatchNodeReorderSameIndex::SpriteBatchNodeReorderSameIndex()
     addChild(m_pBatchNode, 1, 0);
 
     m_pSprite1 = CCSprite::createWithTexture(m_pBatchNode->getTexture(), CCRectMake(128,0,64,64));
-    m_pSprite1->setPosition(CCPointMake(100,160));
+    m_pSprite1->setPosition(ccp(100,160));
     m_pBatchNode->addChild(m_pSprite1, 3, 1);
 
     m_pSprite2= CCSprite::createWithTexture(m_pBatchNode->getTexture(), CCRectMake(128,0,64,64));
-    m_pSprite2->setPosition(CCPointMake(164,160));
+    m_pSprite2->setPosition(ccp(164,160));
     m_pBatchNode->addChild(m_pSprite2, 4, 2);
 
     m_pSprite3 = CCSprite::createWithTexture(m_pBatchNode->getTexture(), CCRectMake(128,0,64,64));
-    m_pSprite3->setPosition(CCPointMake(228,160));
+    m_pSprite3->setPosition(ccp(228,160));
     m_pBatchNode->addChild(m_pSprite3, 4, 3);
 
     m_pSprite4 = CCSprite::createWithTexture(m_pBatchNode->getTexture(), CCRectMake(128,0,64,64));
-    m_pSprite4->setPosition(CCPointMake(292,160));
+    m_pSprite4->setPosition(ccp(292,160));
     m_pBatchNode->addChild(m_pSprite4, 5, 4);
 
     m_pSprite5 = CCSprite::createWithTexture(m_pBatchNode->getTexture(), CCRectMake(128,0,64,64));
-    m_pSprite5->setPosition(CCPointMake(356,160));
+    m_pSprite5->setPosition(ccp(356,160));
     m_pBatchNode->addChild(m_pSprite5, 6, 5);
 
 
