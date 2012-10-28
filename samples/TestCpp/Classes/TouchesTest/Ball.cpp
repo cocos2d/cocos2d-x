@@ -1,5 +1,6 @@
 #include "Ball.h"
 #include "Paddle.h"
+#include "../VisibleRect.h"
 
 Ball::Ball(void)
 {
@@ -25,18 +26,16 @@ Ball* Ball::ballWithTexture(CCTexture2D* aTexture)
 
 void Ball::move(float delta)
 {
-    CCSize size = CCDirector::sharedDirector()->getWinSize();
-
     this->setPosition( ccpAdd(getPosition(), ccpMult(m_velocity, delta)) );
     
-    if (getPosition().x > size.width - radius()) 
+    if (getPosition().x > VisibleRect::right().x - radius()) 
     {
-        setPosition( ccp( size.width - radius(), getPosition().y) );
+        setPosition( ccp( VisibleRect::right().x - radius(), getPosition().y) );
         m_velocity.x *= -1;
     } 
-    else if (getPosition().x < radius()) 
+    else if (getPosition().x < VisibleRect::left().x + radius()) 
     {
-        setPosition( ccp(radius(), getPosition().y) );
+        setPosition( ccp(VisibleRect::left().x + radius(), getPosition().y) );
         m_velocity.x *= -1;
     }
 }
@@ -61,13 +60,13 @@ void Ball::collideWithPaddle(Paddle* paddle)
         
         if (getPosition().y > midY && getPosition().y <= highY + radius()) 
         {
-            setPosition( CCPointMake(getPosition().x, highY + radius()) );
+            setPosition( ccp(getPosition().x, highY + radius()) );
             hit = true;
             angleOffset = (float)M_PI / 2;
         }
         else if (getPosition().y < midY && getPosition().y >= lowY - radius()) 
         {
-            setPosition( CCPointMake(getPosition().x, lowY - radius()) );
+            setPosition( ccp(getPosition().x, lowY - radius()) );
             hit = true;
             angleOffset = -(float)M_PI / 2;
         }

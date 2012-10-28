@@ -74,11 +74,9 @@ ChipmunkAccelTouchTestLayer::ChipmunkAccelTouchTestLayer()
     setTouchEnabled(true);
     setAccelerometerEnabled(true);
 
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
-
     // title
     CCLabelTTF *label = CCLabelTTF::create("Multi touch the screen", "Marker Felt", 36);
-    label->setPosition(ccp( s.width / 2, s.height - 30));
+    label->setPosition(ccp( VisibleRect::center().x, VisibleRect::bottom().y - 30));
     this->addChild(label, -1);
 
     // reset button
@@ -116,8 +114,6 @@ ChipmunkAccelTouchTestLayer::~ChipmunkAccelTouchTestLayer()
 
 void ChipmunkAccelTouchTestLayer::initPhysics()
 {
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
-
     // init chipmunk
     //cpInitChipmunk();
 
@@ -130,16 +126,24 @@ void ChipmunkAccelTouchTestLayer::initPhysics()
     // We have to free them manually
     //
     // bottom
-    m_pWalls[0] = cpSegmentShapeNew( m_pSpace->staticBody, cpv(0,0), cpv(s.width,0), 0.0f);
+    m_pWalls[0] = cpSegmentShapeNew( m_pSpace->staticBody,
+        cpv(VisibleRect::leftBottom().x,VisibleRect::leftBottom().y),
+        cpv(VisibleRect::rightBottom().x, VisibleRect::rightBottom().y), 0.0f);
 
     // top
-    m_pWalls[1] = cpSegmentShapeNew( m_pSpace->staticBody, cpv(0,s.height), cpv(s.width,s.height), 0.0f);
+    m_pWalls[1] = cpSegmentShapeNew( m_pSpace->staticBody, 
+        cpv(VisibleRect::leftTop().x, VisibleRect::leftTop().y),
+        cpv(VisibleRect::rightTop().x, VisibleRect::rightTop().y), 0.0f);
 
     // left
-    m_pWalls[2] = cpSegmentShapeNew( m_pSpace->staticBody, cpv(0,0), cpv(0,s.height), 0.0f);
+    m_pWalls[2] = cpSegmentShapeNew( m_pSpace->staticBody,
+        cpv(VisibleRect::leftBottom().x,VisibleRect::leftBottom().y),
+        cpv(VisibleRect::leftTop().x,VisibleRect::leftTop().y), 0.0f);
 
     // right
-    m_pWalls[3] = cpSegmentShapeNew( m_pSpace->staticBody, cpv(s.width,0), cpv(s.width,s.height), 0.0f);
+    m_pWalls[3] = cpSegmentShapeNew( m_pSpace->staticBody, 
+        cpv(VisibleRect::rightBottom().x, VisibleRect::rightBottom().y),
+        cpv(VisibleRect::rightTop().x, VisibleRect::rightTop().y), 0.0f);
 
     for( int i=0;i<4;i++) {
         m_pWalls[i]->e = 1.0f;
@@ -165,9 +169,7 @@ void ChipmunkAccelTouchTestLayer::createResetButton()
 
     CCMenu *menu = CCMenu::create(reset, NULL);
 
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
-
-    menu->setPosition(ccp(s.width/2, 30));
+    menu->setPosition(ccp(VisibleRect::center().x, VisibleRect::bottom().y + 30));
     this->addChild(menu, -1);
 }
 

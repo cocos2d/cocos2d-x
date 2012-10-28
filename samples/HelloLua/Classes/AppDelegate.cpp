@@ -28,9 +28,6 @@ bool AppDelegate::applicationDidFinishLaunching()
     
     CCEGLView::sharedOpenGLView()->setDesignResolutionSize(480, 320, kResolutionNoBorder);
 
-    // enable High Resource Mode(2x, such as iphone4) and maintains low resource on other devices.
-    // pDirector->enableRetinaDisplay(true);
-
     // turn on display FPS
     pDirector->setDisplayStats(true);
 

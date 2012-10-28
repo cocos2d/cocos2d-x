@@ -79,9 +79,9 @@ void RenderTextureTest::onEnter()
     CCMenu *menu = CCMenu::create(item1, item2, item3, NULL);
 
     menu->setPosition( CCPointZero );
-    item1->setPosition( ccp( s.width/2 - item2->getContentSize().width*2, item2->getContentSize().height/2) );
-    item2->setPosition( ccp( s.width/2, item2->getContentSize().height/2) );
-    item3->setPosition( ccp( s.width/2 + item2->getContentSize().width*2, item2->getContentSize().height/2) );
+    item1->setPosition(ccp(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
+    item2->setPosition(ccp(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2));
+    item3->setPosition(ccp(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
 
     addChild(menu, 1);
 }
@@ -151,7 +151,7 @@ RenderTextureSave::RenderTextureSave()
     CCMenu *menu = CCMenu::create(item1, item2, NULL);
     this->addChild(menu);
     menu->alignItemsVertically();
-    menu->setPosition(ccp(s.width - 80, s.height - 30));
+    menu->setPosition(ccp(VisibleRect::rightTop().x - 80, VisibleRect::rightTop().y - 30));
 }
 
 string RenderTextureSave::title()

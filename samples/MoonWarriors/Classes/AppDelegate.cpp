@@ -23,10 +23,10 @@ bool AppDelegate::applicationDidFinishLaunching()
     // initialize director
     CCDirector *pDirector = CCDirector::sharedDirector();
     pDirector->setOpenGLView(CCEGLView::sharedOpenGLView());
+
+    // Set the design resolution
     CCEGLView::sharedOpenGLView()->setDesignResolutionSize(320, 480, kResolutionShowAll);
-    // enable High Resource Mode(2x, such as iphone4) and maintains low resource on other devices.
-    // pDirector->enableRetinaDisplay(true);
-    
+
     // turn on display FPS
     pDirector->setDisplayStats(true);
     

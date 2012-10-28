@@ -98,7 +98,7 @@ void PerformBasicLayer::onEnter()
     CCMenuItemFont::setFontSize(24);
     CCMenuItemFont* pMainItem = CCMenuItemFont::create("Back", this,
                                                     menu_selector(PerformBasicLayer::toMainLayer));
-    pMainItem->setPosition(ccp(s.width - 50, 25));
+    pMainItem->setPosition(ccp(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
     CCMenu* pMenu = CCMenu::create(pMainItem, NULL);
     pMenu->setPosition( CCPointZero );
 
@@ -107,9 +107,9 @@ void PerformBasicLayer::onEnter()
         CCMenuItemImage *item1 = CCMenuItemImage::create(s_pPathB1, s_pPathB2, this, menu_selector(PerformBasicLayer::backCallback) );
         CCMenuItemImage *item2 = CCMenuItemImage::create(s_pPathR1, s_pPathR2, this, menu_selector(PerformBasicLayer::restartCallback) );
         CCMenuItemImage *item3 = CCMenuItemImage::create(s_pPathF1, s_pPathF2, this, menu_selector(PerformBasicLayer::nextCallback) );
-        item1->setPosition( ccp( s.width/2 - 100,30) );
-        item2->setPosition( ccp( s.width/2, 30) );
-        item3->setPosition( ccp( s.width/2 + 100,30) );
+        item1->setPosition(ccp(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
+        item2->setPosition(ccp(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2));
+        item3->setPosition(ccp(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
 
         pMenu->addChild(item1, kItemTagBasic);
         pMenu->addChild(item2, kItemTagBasic);
