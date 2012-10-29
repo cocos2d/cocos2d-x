@@ -113,6 +113,7 @@ public:
         if(jsCallback != JSVAL_VOID || jsThisObj != JSVAL_VOID) {
             JS_CallFunctionValue(cx, JSVAL_TO_OBJECT(jsThisObj), jsCallback, 1, valArr, &retval);
         }
+        JSCallFunc::setTargetForNativeNode(node, (JSCallFunc *)this);
 
     }
 private:

@@ -621,13 +621,15 @@ void ScriptingCore::resumeSchedulesAndActions(CCNode *node) {
 }
 
 void ScriptingCore::cleanupSchedulesAndActions(CCNode *node) {
+ 
+    CCArray * arr = JSCallFunc::getTargetForNativeNode(node);
+    if(arr) {
+        arr->removeAllObjects();
+    }
     
-    CCArray * arr = JSSchedule::getTargetForNativeNode(node);
-    if(! arr) return;
-    for(unsigned int i = 0; i < arr->count(); ++i) {
-        if(arr->objectAtIndex(i)) {
-            arr->removeObjectAtIndex(i);
-        }
+    arr = JSSchedule::getTargetForNativeNode(node);
+    if(arr) {
+        arr->removeAllObjects();
     }
 }
 
@@ -745,18 +747,12 @@ int ScriptingCore::executeLayerTouchEvent(CCLayer* pLayer, int eventType, CCTouc
     std::string funcName = "";
     getTouchFuncName(eventType, funcName);
     
-    JSObject *jsretArr = JS_NewArrayObject(this->cx, 0, NULL);
-    
-    JS_AddNamedObjectRoot(this->cx, &jsretArr, "touchObject");
-    int count = 0;
     jsval jsret;
-    getJSTouchObject(this->cx, pTouch, jsret);
+    getJSTouchObject(this->getGlobalContext(), pTouch, jsret);
     JSObject *jsObj = JSVAL_TO_OBJECT(jsret);
     executeFunctionWithObjectData(pLayer,  funcName.c_str(), jsObj);
     
-    JS_RemoveObjectRoot(this->cx, &jsObj);
-    
-    removeJSTouchObject(this->cx, pTouch, jsret);
+    removeJSTouchObject(this->getGlobalContext(), pTouch, jsret);
     
     return 1;
 }

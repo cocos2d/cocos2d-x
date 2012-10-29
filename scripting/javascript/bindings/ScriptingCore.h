@@ -200,6 +200,9 @@ jsval cccolor4b_to_jsval(JSContext* cx, ccColor4B& v);
 jsval cccolor4f_to_jsval(JSContext* cx, ccColor4F& v);
 jsval cccolor3b_to_jsval(JSContext* cx, const ccColor3B& v);
 
+JSObject* NewGlobalObject(JSContext* cx);
+JSBool jsNewGlobal(JSContext* cx, unsigned argc, jsval* vp);
+
 JSBool jsSocketOpen(JSContext* cx, unsigned argc, jsval* vp);
 JSBool jsSocketRead(JSContext* cx, unsigned argc, jsval* vp);
 JSBool jsSocketWrite(JSContext* cx, unsigned argc, jsval* vp);
