@@ -208,7 +208,7 @@
 		<link>
 			<name>tilemap_parallax_nodes</name>
 			<type>2</type>
-			<locationURI>PARENT-1-PROJECT_LOC/tileMap_parallax_nodes</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/tilemap_parallax_nodes</locationURI>
 		</link>
 		<link>
 			<name>touch_dispatcher</name>
