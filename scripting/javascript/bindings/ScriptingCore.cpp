@@ -620,6 +620,18 @@ void ScriptingCore::resumeSchedulesAndActions(CCNode *node) {
     }
 }
 
+void ScriptingCore::cleanupSchedulesAndActions(CCNode *node) {
+ 
+    CCArray * arr = JSCallFunc::getTargetForNativeNode(node);
+    if(arr) {
+        arr->removeAllObjects();
+    }
+    
+    arr = JSSchedule::getTargetForNativeNode(node);
+    if(arr) {
+        arr->removeAllObjects();
+    }
+}
 
 int ScriptingCore::executeNodeEvent(CCNode* pNode, int nAction)
 {
@@ -650,6 +662,9 @@ int ScriptingCore::executeNodeEvent(CCNode* pNode, int nAction)
     else if(nAction == kCCNodeOnExitTransitionDidStart)
     {
         executeJSFunctionWithName(this->cx_, p->obj, "onExitTransitionDidStart", dataVal, retval);
+    }
+    else if(nAction == kCCNodeOnCleanup) {
+        cleanupSchedulesAndActions(pNode);
     }
 
     return 1;
@@ -729,7 +744,17 @@ int ScriptingCore::executeLayerTouchesEvent(CCLayer* pLayer, int eventType, CCSe
 
 int ScriptingCore::executeLayerTouchEvent(CCLayer* pLayer, int eventType, CCTouch *pTouch)
 {
-    return 0;
+    std::string funcName = "";
+    getTouchFuncName(eventType, funcName);
+    
+    jsval jsret;
+    getJSTouchObject(this->getGlobalContext(), pTouch, jsret);
+    JSObject *jsObj = JSVAL_TO_OBJECT(jsret);
+    executeFunctionWithObjectData(pLayer,  funcName.c_str(), jsObj);
+    
+    removeJSTouchObject(this->getGlobalContext(), pTouch, jsret);
+    
+    return 1;
 }
 
 int ScriptingCore::executeFunctionWithObjectData(CCNode *self, const char *name, JSObject *obj) {
@@ -1100,7 +1125,7 @@ jsval cccolor4f_to_jsval(JSContext* cx, ccColor4F& v) {
     return JSVAL_NULL;
 }
 
-jsval cccolor3b_to_jsval(JSContext* cx, ccColor3B& v) {
+jsval cccolor3b_to_jsval(JSContext* cx, const ccColor3B& v) {
     JSObject *tmp = JS_NewObject(cx, NULL, NULL, NULL);
     if (!tmp) return JSVAL_NULL;
     JSBool ok = JS_DefineProperty(cx, tmp, "r", INT_TO_JSVAL(v.r), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&

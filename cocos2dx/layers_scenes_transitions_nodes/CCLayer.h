@@ -36,6 +36,12 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+typedef enum {
+	kCCTouchesAllAtOnce,
+	kCCTouchesOneByOne,
+} ccTouchesMode;
+
+
 /**
  * @addtogroup layer
  * @{
@@ -80,7 +86,7 @@ public:
     virtual void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent);
     virtual void ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent);
     
-    virtual void didAccelerate(CCAcceleration* pAccelerationValue) {CC_UNUSED_PARAM(pAccelerationValue);}
+    virtual void didAccelerate(CCAcceleration* pAccelerationValue);
 
     /** If isTouchEnabled, this method is called onEnter. Override it to change the
     way CCLayer receives touch events.
@@ -106,12 +112,21 @@ public:
     */
     bool isTouchEnabled();
     void setTouchEnabled(bool value);
+    
+    void setTouchMode(ccTouchesMode mode);
+    void setTouchPriority(int priority);
+    int getTouchPriority();
+    int getTouchMode();
+                      
+
     /** whether or not it will receive Accelerometer events
     You can enable / disable accelerometer events with this property.
     @since v0.8.1
     */
     bool isAccelerometerEnabled();
     void setAccelerometerEnabled(bool value);
+    void setAccelerometerInterval(double interval);
+
     /** whether or not it will receive keypad events
     You can enable / disable accelerometer events with this property.
     it's new in cocos2d-x
@@ -128,6 +143,10 @@ protected:
 private:
     // Script touch events handler
     CCTouchScriptHandlerEntry* m_pScriptHandlerEntry;
+    
+    int m_bTouchPriority;
+    ccTouchesMode m_bTouchMode;
+    
     int  excuteScriptTouchHandler(int nEventType, CCTouch *pTouch);
     int  excuteScriptTouchHandler(int nEventType, CCSet *pTouches);
 };
