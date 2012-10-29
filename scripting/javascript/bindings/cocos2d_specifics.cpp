@@ -4,6 +4,7 @@
 
 schedFunc_proxy_t *_schedFunc_target_ht = NULL;
 schedTarget_proxy_t *_schedTarget_native_ht = NULL;
+callfuncTarget_proxy_t *_callfuncTarget_native_ht = NULL;
 
 void JSTouchDelegate::setJSObject(JSObject *obj) {
     _mObj = obj;
@@ -273,9 +274,13 @@ JSBool js_cocos2dx_CCMenuItemImage_create(JSContext *cx, uint32_t argc, jsval *v
 			last = 3;
 		}
 		cocos2d::CCMenuItemImage* ret = cocos2d::CCMenuItemImage::create(arg0, arg1, arg2);
-		jsval thisObj = argv[last++];
-		jsval callback = argv[last];
-		JSObject *obj = bind_menu_item<cocos2d::CCMenuItemImage>(cx, ret, callback, thisObj);
+        jsval thisObj = JSVAL_VOID;
+        jsval callback = JSVAL_VOID;
+        if(argc > 3) {
+            thisObj = argv[last++];
+            callback = argv[last];
+        }
+        JSObject *obj = bind_menu_item<cocos2d::CCMenuItemImage>(cx, ret, callback, thisObj);
 		JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
 		return JS_TRUE;
 	}
@@ -368,6 +373,7 @@ JSBool js_cocos2dx_CCMenuItemToggle_create(JSContext *cx, uint32_t argc, jsval *
   return JS_FALSE;
 }
 
+template<class T>
 JSBool js_cocos2dx_setCallback(JSContext *cx, uint32_t argc, jsval *vp) {
 
     if(argc == 2) {
@@ -375,12 +381,16 @@ JSBool js_cocos2dx_setCallback(JSContext *cx, uint32_t argc, jsval *vp) {
         JSObject *obj = JS_THIS_OBJECT(cx, vp);
         js_proxy_t *proxy;
         JS_GET_NATIVE_PROXY(proxy, obj);
-        cocos2d::CCMenuItem* item = (cocos2d::CCMenuItem*)(proxy ? proxy->ptr : NULL);
+        T* item = (T*)(proxy ? proxy->ptr : NULL);
         TEST_NATIVE_OBJECT(cx, item)
         bind_menu_item(cx, item, argv[1], argv[0]);
         return JS_TRUE;
     }
     return JS_FALSE;
+}
+
+JSBool js_cocos2dx_CCMenuItem_setCallback(JSContext *cx, uint32_t argc, jsval *vp) {
+    return js_cocos2dx_setCallback<cocos2d::CCMenuItem>(cx, argc, vp);
 }
 
 
@@ -392,7 +402,7 @@ JSBool js_cocos2dx_CCAnimation_create(JSContext *cx, uint32_t argc, jsval *vp)
 		if (argc > 0) {
 			arg0 = jsval_to_ccarray(cx, argv[0]);
 		}
-		cocos2d::CCAnimation* ret = NULL;
+		cocos2d::CCAnimation* ret;
 		double arg1 = 0.0f;
 		if (argc > 0 && argc == 2) {
 			if (argc == 2) {
@@ -499,6 +509,7 @@ JSBool js_cocos2dx_CCNode_copy(JSContext *cx, uint32_t argc, jsval *vp)
 		cocos2d::CCObject *ret = node->copy();
 		if (ret && jsret) {
 			JS_NEW_PROXY(proxy, ret, jsret);
+			JS_AddNamedObjectRoot(cx, &proxy->obj, typeid(*ret).name());
 			JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsret));
 			return JS_TRUE;
 		}
@@ -543,9 +554,41 @@ void JSCallFunc::setJSCallbackThis(jsval thisObj) {
 }
 
 void JSCallFunc::setExtraDataField(jsval data) {
-     extraData = new jsval();
-     *extraData = data;
+    extraData = data;
 }
+
+void JSCallFunc::setTargetForNativeNode(CCNode *pNode, JSCallFunc *target) {
+    callfuncTarget_proxy_t *t;
+    HASH_FIND_PTR(_callfuncTarget_native_ht, &pNode, t);
+    
+    CCArray *arr;
+    if(!t) {
+        arr = new CCArray();
+    } else {
+        arr = t->obj;
+    }
+    
+    arr->addObject(target);
+    
+    callfuncTarget_proxy_t *p = (callfuncTarget_proxy_t *)malloc(sizeof(callfuncTarget_proxy_t));
+    assert(p);
+    p->ptr = (void *)pNode;
+    p->obj = arr;
+    HASH_ADD_PTR(_callfuncTarget_native_ht, ptr, p);
+}
+
+CCArray * JSCallFunc::getTargetForNativeNode(CCNode *pNode) {
+    
+    schedTarget_proxy_t *t;
+    HASH_FIND_PTR(_callfuncTarget_native_ht, &pNode, t);
+    if(!t) {
+        return NULL;
+    }
+    return t->obj;
+    
+}
+
+
 
 JSBool js_callFunc(JSContext *cx, uint32_t argc, jsval *vp)
 {
@@ -553,8 +596,9 @@ JSBool js_callFunc(JSContext *cx, uint32_t argc, jsval *vp)
     if (argc >= 1) {        
 		jsval *argv = JS_ARGV(cx, vp);
 
-        JSCallFunc *tmpCobj = new JSCallFunc();
-
+        JSCallFunc *tmpCobj = new JSCallFunc();        
+        tmpCobj->autorelease();
+        
         tmpCobj->setJSCallbackThis(argv[0]);
         if(argc >= 2) {
             tmpCobj->setJSCallbackFunc(argv[1]);
@@ -567,6 +611,13 @@ JSBool js_callFunc(JSContext *cx, uint32_t argc, jsval *vp)
         
 		js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::CCCallFunc>(cx, ret);
 		JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(proxy->obj));
+        
+        JS_SetReservedSlot(proxy->obj, 0, argv[0]);
+        JS_SetReservedSlot(proxy->obj, 1, argv[1]);
+//        if(argc == 3) {
+//            JS_SetReservedSlot(proxy->obj, 2, argv[2]);
+//        }
+        
       //  test->execute();
     }
     return JS_TRUE;
@@ -696,6 +747,9 @@ JSBool js_CCNode_scheduleOnce(JSContext *cx, uint32_t argc, jsval *vp)
         }
         
         JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        
+        JS_SetReservedSlot(proxy->obj, 0, argv[0]);
+
     }
     return JS_TRUE;
 }
@@ -714,6 +768,7 @@ JSBool js_CCNode_schedule(JSContext *cx, uint32_t argc, jsval *vp)
 		cocos2d::CCNode *node = (cocos2d::CCNode *)(proxy ? proxy->ptr : NULL);
         
         CCScheduler *sched = node->getScheduler();
+        js_proxy_t *p = js_get_or_create_proxy<cocos2d::CCScheduler>(cx, sched);        
 
         JSSchedule *tmpCobj = new JSSchedule();
         
@@ -758,6 +813,8 @@ JSBool js_CCNode_schedule(JSContext *cx, uint32_t argc, jsval *vp)
 
         }
         
+        JS_SetReservedSlot(p->obj, 0, argv[0]);
+
         JS_SET_RVAL(cx, vp, JSVAL_VOID);
     }
     return JS_TRUE;
@@ -1085,6 +1142,30 @@ JSBool js_cocos2dx_ccpAdd(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
 	return JS_FALSE;
 }
+
+JSBool js_cocos2dx_ccpClamp(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+    
+	if (argc == 3) {
+		cocos2d::CCPoint arg0;
+		arg0 = jsval_to_ccpoint(cx, argv[0]);
+		cocos2d::CCPoint arg1;
+		arg1 = jsval_to_ccpoint(cx, argv[1]);
+		cocos2d::CCPoint arg2;
+		arg1 = jsval_to_ccpoint(cx, argv[2]);
+		
+		CCPoint ret = ccpClamp(arg0, arg1, arg2);
+		
+		jsval jsret = ccpoint_to_jsval(cx, ret);
+		JS_SET_RVAL(cx, vp, jsret);
+		return JS_TRUE;
+	}
+	
+    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
+	return JS_FALSE;
+}
+
 
 JSBool js_cocos2dx_ccpNeg(JSContext *cx, uint32_t argc, jsval *vp)
 {
@@ -1477,7 +1558,8 @@ void register_cocos2dx_js_extensions(JSContext* cx, JSObject* global)
 	JS_DefineFunction(cx, js_cocos2dx_CCAnimation_prototype, "release", js_cocos2dx_release, 0, JSPROP_READONLY | JSPROP_PERMANENT);
 	JS_DefineFunction(cx, js_cocos2dx_CCSpriteFrame_prototype, "retain", js_cocos2dx_retain, 0, JSPROP_READONLY | JSPROP_PERMANENT);
 	JS_DefineFunction(cx, js_cocos2dx_CCSpriteFrame_prototype, "release", js_cocos2dx_release, 0, JSPROP_READONLY | JSPROP_PERMANENT);
-	JS_DefineFunction(cx, js_cocos2dx_CCMenuItem_prototype, "setCallback", js_cocos2dx_setCallback, 2, JSPROP_READONLY | JSPROP_PERMANENT);
+	JS_DefineFunction(cx, js_cocos2dx_CCMenuItem_prototype, "setCallback", js_cocos2dx_CCMenuItem_setCallback, 2, JSPROP_READONLY | JSPROP_PERMANENT);
+
 	tmpObj = JSVAL_TO_OBJECT(anonEvaluate(cx, global, "(function () { return cc.Node.prototype; })()"));
 	JS_DefineFunction(cx, tmpObj, "copy", js_cocos2dx_CCNode_copy, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, tmpObj, "schedule", js_CCNode_schedule, 1, JSPROP_READONLY | JSPROP_PERMANENT);
@@ -1525,6 +1607,7 @@ void register_cocos2dx_js_extensions(JSContext* cx, JSObject* global)
     JS_DefineFunction(cx, ns, "pProject", js_cocos2dx_ccpProject, 0, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, ns, "pRotate", js_cocos2dx_ccpRotate, 0, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, ns, "pNormalize", js_cocos2dx_ccpNormalize, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, ns, "pClamp", js_cocos2dx_ccpClamp, 2, JSPROP_READONLY | JSPROP_PERMANENT);
 
     
     

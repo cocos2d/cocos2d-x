@@ -62,7 +62,8 @@ enum {
     kCCNodeOnEnter,
     kCCNodeOnExit,
     kCCNodeOnEnterTransitionDidFinish,
-    kCCNodeOnExitTransitionDidStart
+    kCCNodeOnExitTransitionDidStart,
+    kCCNodeOnCleanup
 };
 
 /** @brief CCNode is the main element. Anything that gets drawn or contains things that get drawn is a CCNode.
