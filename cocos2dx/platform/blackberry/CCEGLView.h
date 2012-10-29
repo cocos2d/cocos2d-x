@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 #include "cocoa/CCGeometry.h"
 #include "platform/CCEGLViewProtocol.h"
-#include "platform/CCPlatFormMacros.h"
+#include "platform/CCPlatformMacros.h"
 
 NS_CC_BEGIN
 
