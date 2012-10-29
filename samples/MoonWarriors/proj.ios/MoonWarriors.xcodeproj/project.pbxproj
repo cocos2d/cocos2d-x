@@ -151,6 +151,9 @@
 		156752A6163E77A90002AD61 /* cpVect.c in Sources */ = {isa = PBXBuildFile; fileRef = 15675278163E77A90002AD61 /* cpVect.c */; };
 		156752A9163E78180002AD61 /* RootViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 156752A8163E78180002AD61 /* RootViewController.mm */; };
 		156752BD163E7C350002AD61 /* Icon-144.png in Resources */ = {isa = PBXBuildFile; fileRef = 156752BC163E7C350002AD61 /* Icon-144.png */; };
+		156752F7163E7FC30002AD61 /* libjs_static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 156752F6163E7FC30002AD61 /* libjs_static.a */; };
+		156752F9163E82D40002AD61 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 156752F8163E82D40002AD61 /* libz.dylib */; };
+		15675300163E870E0002AD61 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 156752FF163E870E0002AD61 /* libxml2.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -417,6 +420,9 @@
 		156752A7163E78180002AD61 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		156752A8163E78180002AD61 /* RootViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RootViewController.mm; sourceTree = "<group>"; };
 		156752BC163E7C350002AD61 /* Icon-144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-144.png"; sourceTree = "<group>"; };
+		156752F6163E7FC30002AD61 /* libjs_static.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjs_static.a; path = "../../../scripting/javascript/spidermonkey-ios/lib/libjs_static.a"; sourceTree = "<group>"; };
+		156752F8163E82D40002AD61 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		156752FF163E870E0002AD61 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -424,6 +430,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				15675300163E870E0002AD61 /* libxml2.dylib in Frameworks */,
+				156752F9163E82D40002AD61 /* libz.dylib in Frameworks */,
+				156752F7163E7FC30002AD61 /* libjs_static.a in Frameworks */,
 				15675229163E77460002AD61 /* libcocos2dx.a in Frameworks */,
 				15674A6E163E70370002AD61 /* QuartzCore.framework in Frameworks */,
 				15674A70163E70370002AD61 /* OpenGLES.framework in Frameworks */,
@@ -442,6 +451,9 @@
 		15674A5E163E70370002AD61 = {
 			isa = PBXGroup;
 			children = (
+				156752FF163E870E0002AD61 /* libxml2.dylib */,
+				156752F8163E82D40002AD61 /* libz.dylib */,
+				156752F6163E7FC30002AD61 /* libjs_static.a */,
 				1567522A163E77A90002AD61 /* chipmunk */,
 				1567517F163E765D0002AD61 /* extensions */,
 				15675123163E73F40002AD61 /* Resources */,
@@ -1213,20 +1225,17 @@
 					"$(SRCROOT)/../../../external/chipmunk/include/**",
 				);
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../scripting/javascript/spidermonkey-ios/lib\"",
 				);
-				OTHER_LDFLAGS = (
-					"-lxml2",
-					"-lz",
-					"-ljs_static",
-				);
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PUBLIC_HEADERS_FOLDER_PATH = Headers;
+				PUBLIC_HEADERS_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/Headers";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "";
+				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1252,21 +1261,18 @@
 					"$(SRCROOT)/../../../external/chipmunk/include/**",
 				);
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../scripting/javascript/spidermonkey-ios/lib\"",
 				);
-				OTHER_LDFLAGS = (
-					"-lxml2",
-					"-lz",
-					"-ljs_static",
-				);
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PUBLIC_HEADERS_FOLDER_PATH = Headers;
+				PUBLIC_HEADERS_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/Headers";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "";
 				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

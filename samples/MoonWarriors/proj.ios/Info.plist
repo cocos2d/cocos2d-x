@@ -40,7 +40,7 @@
 	<dict>
 		<key>accelerometer</key>
 		<true/>
-		<key>opengles-1</key>
+		<key>opengles-2</key>
 		<true/>
 	</dict>
 	<key>UIStatusBarHidden</key>
