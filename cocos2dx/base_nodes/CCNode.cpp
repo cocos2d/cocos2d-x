@@ -456,8 +456,13 @@ void CCNode::cleanup()
 {
     // actions
     this->stopAllActions();
-    this->unscheduleAllSelectors();    
-
+    this->unscheduleAllSelectors();
+    
+    if ( m_eScriptType != kScriptTypeNone)
+    {
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeNodeEvent(this, kCCNodeOnCleanup);
+    }
+    
     // timers
     arrayMakeObjectsPerformSelector(m_pChildren, cleanup, CCNode*);
 }
@@ -838,6 +843,8 @@ void CCNode::onExit()
     }
 
     arrayMakeObjectsPerformSelector(m_pChildren, onExit, CCNode*);
+
+    
 }
 
 void CCNode::registerScriptHandler(int nHandler)
