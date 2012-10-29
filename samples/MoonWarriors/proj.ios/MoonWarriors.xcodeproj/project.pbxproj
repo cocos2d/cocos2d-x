@@ -150,6 +150,7 @@
 		156752A5163E77A90002AD61 /* cpSweep1D.c in Sources */ = {isa = PBXBuildFile; fileRef = 15675277163E77A90002AD61 /* cpSweep1D.c */; };
 		156752A6163E77A90002AD61 /* cpVect.c in Sources */ = {isa = PBXBuildFile; fileRef = 15675278163E77A90002AD61 /* cpVect.c */; };
 		156752A9163E78180002AD61 /* RootViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 156752A8163E78180002AD61 /* RootViewController.mm */; };
+		156752BD163E7C350002AD61 /* Icon-144.png in Resources */ = {isa = PBXBuildFile; fileRef = 156752BC163E7C350002AD61 /* Icon-144.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -415,6 +416,7 @@
 		15675279163E77A90002AD61 /* prime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = prime.h; sourceTree = "<group>"; };
 		156752A7163E78180002AD61 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		156752A8163E78180002AD61 /* RootViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RootViewController.mm; sourceTree = "<group>"; };
+		156752BC163E7C350002AD61 /* Icon-144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-144.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -594,6 +596,7 @@
 		15675123163E73F40002AD61 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				156752BC163E7C350002AD61 /* Icon-144.png */,
 				15675164163E741E0002AD61 /* Default-568h@2x.png */,
 				15675165163E741E0002AD61 /* Default.png */,
 				15675166163E741E0002AD61 /* Default@2x.png */,
@@ -1012,6 +1015,7 @@
 				15675174163E741E0002AD61 /* Icon.png in Resources */,
 				15675175163E741E0002AD61 /* Icon@2x.png in Resources */,
 				1567528A163E77A90002AD61 /* CMakeLists.txt in Resources */,
+				156752BD163E7C350002AD61 /* Icon-144.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1209,6 +1213,7 @@
 					"$(SRCROOT)/../../../external/chipmunk/include/**",
 				);
 				INFOPLIST_FILE = Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../scripting/javascript/spidermonkey-ios/lib\"",
@@ -1220,6 +1225,7 @@
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PUBLIC_HEADERS_FOLDER_PATH = Headers;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1246,6 +1252,7 @@
 					"$(SRCROOT)/../../../external/chipmunk/include/**",
 				);
 				INFOPLIST_FILE = Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../scripting/javascript/spidermonkey-ios/lib\"",
@@ -1257,6 +1264,7 @@
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PUBLIC_HEADERS_FOLDER_PATH = Headers;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "";
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
