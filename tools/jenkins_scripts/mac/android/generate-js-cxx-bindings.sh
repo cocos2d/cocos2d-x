@@ -35,17 +35,19 @@ if [ -z "${HUB+aaa}" ]; then
     HUB="$HOME/bin/hub"
 fi
 
-# Update local repo
-pushd "$COCOS2DX_ROOT"
+# Update cocos2d-x repo
+# It needs to be updated in Jenkins command before executing this script.
+#pushd "$COCOS2DX_ROOT"
 
-git checkout -f
-git checkout gles20
-git pull upstream gles20
-rm -rf "$GENERATED_WORKTREE"
-git submodule update --init
+#git checkout -f
+#git checkout gles20
+#git pull upstream gles20
+#rm -rf "$GENERATED_WORKTREE"
+#git submodule update --init
 
-popd
+#popd
 
+# Update submodule of auto-gen JSBinding repo.
 pushd "$GENERATED_WORKTREE"
 
 git checkout -f
