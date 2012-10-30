@@ -172,7 +172,7 @@ bool CCControlHuePicker::checkSliderPosition(CCPoint location)
 
 bool CCControlHuePicker::ccTouchBegan(CCTouch* touch, CCEvent* event)
 {
-    if (!isEnabled())
+    if (!isEnabled() || !isVisible())
     {
         return false;
     }

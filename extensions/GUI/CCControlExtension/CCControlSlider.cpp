@@ -216,8 +216,10 @@ CCPoint CCControlSlider::locationFromTouch(CCTouch* touch)
 
 bool CCControlSlider::ccTouchBegan(CCTouch* touch, CCEvent* pEvent)
 {
-      if (!isTouchInside(touch) || !isEnabled())
-          return false;
+    if (!isTouchInside(touch) || !isEnabled() || !isVisible())
+    {
+        return false;
+    }
 
     CCPoint location = locationFromTouch(touch);
     sliderBegan(location);
