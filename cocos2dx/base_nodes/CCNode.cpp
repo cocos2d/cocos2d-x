@@ -1124,5 +1124,12 @@ CCPoint CCNode::convertTouchToNodeSpaceAR(CCTouch *touch)
     return this->convertToNodeSpaceAR(point);
 }
 
+// MARMALADE ADDED
+void CCNode::updateTransform()
+{
+    // Recursively iterate over children
+    arrayMakeObjectsPerformSelector(m_pChildren, updateTransform, CCNode*);
+}
+
 NS_CC_END
 
