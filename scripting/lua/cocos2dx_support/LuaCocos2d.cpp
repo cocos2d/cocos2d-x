@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.92 on 10/12/12 16:02:35.
+** Generated automatically by tolua++-1.0.92 on 10/30/12 10:32:25.
 */
 
 #ifndef __cplusplus
@@ -8535,38 +8535,6 @@ static int tolua_Cocos2d_ccpIntersectPoint00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: getSize of class  CCEGLViewProtocol */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEGLViewProtocol_getSize00
-static int tolua_Cocos2d_CCEGLViewProtocol_getSize00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"const CCEGLViewProtocol",0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,2,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  const CCEGLViewProtocol* self = (const CCEGLViewProtocol*)  tolua_tousertype(tolua_S,1,0);
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getSize'", NULL);
-#endif
-  {
-   const CCSize& tolua_ret = (const CCSize&)  self->getSize();
-    tolua_pushusertype(tolua_S,(void*)&tolua_ret,"const CCSize");
-  }
- }
- return 1;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'getSize'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
 /* method: getFrameSize of class  CCEGLViewProtocol */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEGLViewProtocol_getFrameSize00
 static int tolua_Cocos2d_CCEGLViewProtocol_getFrameSize00(lua_State* tolua_S)
@@ -8750,6 +8718,38 @@ static int tolua_Cocos2d_CCEGLViewProtocol_setDesignResolutionSize00(lua_State* 
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'setDesignResolutionSize'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getDesignResolutionSize of class  CCEGLViewProtocol */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEGLViewProtocol_getDesignResolutionSize00
+static int tolua_Cocos2d_CCEGLViewProtocol_getDesignResolutionSize00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const CCEGLViewProtocol",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const CCEGLViewProtocol* self = (const CCEGLViewProtocol*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getDesignResolutionSize'", NULL);
+#endif
+  {
+   const CCSize& tolua_ret = (const CCSize&)  self->getDesignResolutionSize();
+    tolua_pushusertype(tolua_S,(void*)&tolua_ret,"const CCSize");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getDesignResolutionSize'.",&tolua_err);
  return 0;
 #endif
 }
@@ -55468,12 +55468,12 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
   tolua_constant(tolua_S,"kResolutionUnKnown",kResolutionUnKnown);
   tolua_cclass(tolua_S,"CCEGLViewProtocol","CCEGLViewProtocol","",NULL);
   tolua_beginmodule(tolua_S,"CCEGLViewProtocol");
-   tolua_function(tolua_S,"getSize",tolua_Cocos2d_CCEGLViewProtocol_getSize00);
    tolua_function(tolua_S,"getFrameSize",tolua_Cocos2d_CCEGLViewProtocol_getFrameSize00);
    tolua_function(tolua_S,"setFrameSize",tolua_Cocos2d_CCEGLViewProtocol_setFrameSize00);
    tolua_function(tolua_S,"getVisibleSize",tolua_Cocos2d_CCEGLViewProtocol_getVisibleSize00);
    tolua_function(tolua_S,"getVisibleOrigin",tolua_Cocos2d_CCEGLViewProtocol_getVisibleOrigin00);
    tolua_function(tolua_S,"setDesignResolutionSize",tolua_Cocos2d_CCEGLViewProtocol_setDesignResolutionSize00);
+   tolua_function(tolua_S,"getDesignResolutionSize",tolua_Cocos2d_CCEGLViewProtocol_getDesignResolutionSize00);
    tolua_function(tolua_S,"setTouchDelegate",tolua_Cocos2d_CCEGLViewProtocol_setTouchDelegate00);
    tolua_function(tolua_S,"setViewPortInPoints",tolua_Cocos2d_CCEGLViewProtocol_setViewPortInPoints00);
    tolua_function(tolua_S,"setScissorInPoints",tolua_Cocos2d_CCEGLViewProtocol_setScissorInPoints00);
