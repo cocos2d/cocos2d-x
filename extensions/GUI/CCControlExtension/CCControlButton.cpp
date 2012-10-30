@@ -637,7 +637,7 @@ void CCControlButton::needsLayout()
 
 bool CCControlButton::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 {
-    if (!isTouchInside(pTouch) || !isEnabled())
+    if (!isTouchInside(pTouch) || !isEnabled() || !isVisible())
     {
         return false;
     }
