@@ -189,7 +189,7 @@ bool CCControlSaturationBrightnessPicker::checkSliderPosition(CCPoint location)
 
 bool CCControlSaturationBrightnessPicker::ccTouchBegan(CCTouch* touch, CCEvent* event)
 {
-    if (!isEnabled())
+    if (!isEnabled() || !isVisible())
     {
         return false;
     }
