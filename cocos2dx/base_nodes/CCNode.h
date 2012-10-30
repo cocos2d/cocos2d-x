@@ -441,6 +441,9 @@ public:
     virtual void visit(void);
 
     // transformations
+    // MARMALADE ADDED THIS... SO IT IS NO LONGER SPECIFIC TO CCSprite
+    /** updates the quad according the the rotation, position, scale values. */
+    virtual void updateTransform(void);
 
     /** performs OpenGL view-matrix transformation based on position, scale, rotation and other attributes. */
     void transform(void);
