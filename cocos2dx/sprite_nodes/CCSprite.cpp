@@ -546,11 +546,16 @@ void CCSprite::updateTransform(void)
         setDirty(false);
     }
 
+    // MARMALADE CHANGED
     // recursively iterate over children
-    if( m_bHasChildren ) 
+/*    if( m_bHasChildren ) 
     {
+        // MARMALADE: CHANGED TO USE CCNode*
+        // NOTE THAT WE HAVE ALSO DEFINED virtual CCNode::updateTransform()
         arrayMakeObjectsPerformSelector(m_pChildren, updateTransform, CCSprite*);
-    }
+    }*/
+    CCNode::updateTransform();
+
 #if CC_SPRITE_DEBUG_DRAW
     // draw bounding box
     CCPoint vertices[4] = {
