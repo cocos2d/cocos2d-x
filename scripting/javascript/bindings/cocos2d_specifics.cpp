@@ -545,19 +545,19 @@ JSBool js_platform(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 
-void JSCallFunc::setJSCallbackFunc(jsval func) {
+void JSCallbackWrapper::setJSCallbackFunc(jsval func) {
     jsCallback = func;
 }
 
-void JSCallFunc::setJSCallbackThis(jsval thisObj) {
+void JSCallbackWrapper::setJSCallbackThis(jsval thisObj) {
     jsThisObj = thisObj;
 }
 
-void JSCallFunc::setExtraDataField(jsval data) {
+void JSCallbackWrapper::setJSExtraData(jsval data) {
     extraData = data;
 }
 
-void JSCallFunc::setTargetForNativeNode(CCNode *pNode, JSCallFunc *target) {
+void JSCallFuncWrapper::setTargetForNativeNode(CCNode *pNode, JSCallFuncWrapper *target) {
     callfuncTarget_proxy_t *t;
     HASH_FIND_PTR(_callfuncTarget_native_ht, &pNode, t);
     
@@ -577,7 +577,7 @@ void JSCallFunc::setTargetForNativeNode(CCNode *pNode, JSCallFunc *target) {
     HASH_ADD_PTR(_callfuncTarget_native_ht, ptr, p);
 }
 
-CCArray * JSCallFunc::getTargetForNativeNode(CCNode *pNode) {
+CCArray * JSCallFuncWrapper::getTargetForNativeNode(CCNode *pNode) {
     
     schedTarget_proxy_t *t;
     HASH_FIND_PTR(_callfuncTarget_native_ht, &pNode, t);
@@ -596,18 +596,18 @@ JSBool js_callFunc(JSContext *cx, uint32_t argc, jsval *vp)
     if (argc >= 1) {        
 		jsval *argv = JS_ARGV(cx, vp);
 
-        JSCallFunc *tmpCobj = new JSCallFunc();        
+        JSCallFuncWrapper *tmpCobj = new JSCallFuncWrapper();        
         tmpCobj->autorelease();
         
         tmpCobj->setJSCallbackThis(argv[0]);
         if(argc >= 2) {
             tmpCobj->setJSCallbackFunc(argv[1]);
         } if(argc == 3) {
-            tmpCobj->setExtraDataField(argv[2]);
+            tmpCobj->setJSExtraData(argv[2]);
         }
         
         CCCallFunc *ret = (CCCallFunc *)CCCallFuncN::create((CCObject *)tmpCobj, 
-                                             callfuncN_selector(JSCallFunc::callbackFunc));
+                                             callfuncN_selector(JSCallFuncWrapper::callbackFunc));
         
 		js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::CCCallFunc>(cx, ret);
 		JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(proxy->obj));
@@ -624,7 +624,8 @@ JSBool js_callFunc(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 
-void JSSchedule::setTargetForSchedule(jsval sched, JSSchedule *target) {
+
+void JSScheduleWrapper::setTargetForSchedule(jsval sched, JSScheduleWrapper *target) {
     do {
         schedFunc_proxy_t *p = (schedFunc_proxy_t *)malloc(sizeof(schedFunc_proxy_t));
         assert(p);
@@ -634,7 +635,7 @@ void JSSchedule::setTargetForSchedule(jsval sched, JSSchedule *target) {
     } while(0);
 }
 
-JSSchedule * JSSchedule::getTargetForSchedule(jsval sched) {
+JSScheduleWrapper * JSScheduleWrapper::getTargetForSchedule(jsval sched) {
     schedFunc_proxy_t *t;
     JSObject *o = JSVAL_TO_OBJECT(sched);
     HASH_FIND_PTR(_schedFunc_target_ht, &o, t);
@@ -642,7 +643,7 @@ JSSchedule * JSSchedule::getTargetForSchedule(jsval sched) {
 }
 
 
-void JSSchedule::setTargetForNativeNode(CCNode *pNode, JSSchedule *target) {
+void JSScheduleWrapper::setTargetForNativeNode(CCNode *pNode, JSScheduleWrapper *target) {
         schedTarget_proxy_t *t;
         HASH_FIND_PTR(_schedTarget_native_ht, &pNode, t);
         
@@ -662,7 +663,7 @@ void JSSchedule::setTargetForNativeNode(CCNode *pNode, JSSchedule *target) {
         HASH_ADD_PTR(_schedTarget_native_ht, ptr, p);
 }
 
-CCArray * JSSchedule::getTargetForNativeNode(CCNode *pNode) {
+CCArray * JSScheduleWrapper::getTargetForNativeNode(CCNode *pNode) {
     
     schedTarget_proxy_t *t;
     HASH_FIND_PTR(_schedTarget_native_ht, &pNode, t);
@@ -672,15 +673,6 @@ CCArray * JSSchedule::getTargetForNativeNode(CCNode *pNode) {
     return t->obj;
     
 }
-
-void JSSchedule::setJSScheduleFunc(jsval func) {
-    jsSchedule = func;
-}
-
-void JSSchedule::setJSScheduleThis(jsval thisObj) {
-    jsThisObj = thisObj;
-}
-
 
 
 JSBool js_CCNode_unschedule(JSContext *cx, uint32_t argc, jsval *vp)
@@ -698,9 +690,9 @@ JSBool js_CCNode_unschedule(JSContext *cx, uint32_t argc, jsval *vp)
         
         CCScheduler *sched = node->getScheduler();
         
-        JSSchedule *tmpCobj = JSSchedule::getTargetForSchedule(argv[0]);
+        JSScheduleWrapper *tmpCobj = JSScheduleWrapper::getTargetForSchedule(argv[0]);
         
-        sched->unscheduleSelector(schedule_selector(JSSchedule::scheduleFunc), tmpCobj);
+        sched->unscheduleSelector(schedule_selector(JSScheduleWrapper::scheduleFunc), tmpCobj);
         
         JS_SET_RVAL(cx, vp, JSVAL_VOID);
     }
@@ -722,7 +714,7 @@ JSBool js_CCNode_scheduleOnce(JSContext *cx, uint32_t argc, jsval *vp)
         
         CCScheduler *sched = node->getScheduler();
         
-        JSSchedule *tmpCobj = new JSSchedule();
+        JSScheduleWrapper *tmpCobj = new JSScheduleWrapper();
         
     	        
         //
@@ -734,16 +726,16 @@ JSBool js_CCNode_scheduleOnce(JSContext *cx, uint32_t argc, jsval *vp)
                 return JS_FALSE;
         }
         
-        tmpCobj->setJSScheduleThis(OBJECT_TO_JSVAL(obj));
-        tmpCobj->setJSScheduleFunc(argv[0]);
+        tmpCobj->setJSCallbackThis(OBJECT_TO_JSVAL(obj));
+        tmpCobj->setJSCallbackFunc(argv[0]);
         
-        JSSchedule::setTargetForSchedule(argv[0], tmpCobj);
-        JSSchedule::setTargetForNativeNode(node, tmpCobj);
+        JSScheduleWrapper::setTargetForSchedule(argv[0], tmpCobj);
+        JSScheduleWrapper::setTargetForNativeNode(node, tmpCobj);
         
         if(argc == 1) {
-            sched->scheduleSelector(schedule_selector(JSSchedule::scheduleFunc), tmpCobj, 0, node->isRunning(), 0, 0);
+            sched->scheduleSelector(schedule_selector(JSScheduleWrapper::scheduleFunc), tmpCobj, 0, node->isRunning(), 0, 0);
         } else {
-            sched->scheduleSelector(schedule_selector(JSSchedule::scheduleFunc), tmpCobj, interval, node->isRunning(), 0, 0);
+            sched->scheduleSelector(schedule_selector(JSScheduleWrapper::scheduleFunc), tmpCobj, interval, node->isRunning(), 0, 0);
         }
         
         JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -770,7 +762,7 @@ JSBool js_CCNode_schedule(JSContext *cx, uint32_t argc, jsval *vp)
         CCScheduler *sched = node->getScheduler();
         js_proxy_t *p = js_get_or_create_proxy<cocos2d::CCScheduler>(cx, sched);        
 
-        JSSchedule *tmpCobj = new JSSchedule();
+        JSScheduleWrapper *tmpCobj = new JSScheduleWrapper();
         
     	double interval;
         if( argc >= 2 ) {
@@ -796,20 +788,20 @@ JSBool js_CCNode_schedule(JSContext *cx, uint32_t argc, jsval *vp)
                 return JS_FALSE;
         }
         
-        tmpCobj->setJSScheduleThis(OBJECT_TO_JSVAL(obj));
-        tmpCobj->setJSScheduleFunc(argv[0]);
+        tmpCobj->setJSCallbackThis(OBJECT_TO_JSVAL(obj));
+        tmpCobj->setJSCallbackFunc(argv[0]);
 
-        JSSchedule::setTargetForSchedule(argv[0], tmpCobj);        
-        JSSchedule::setTargetForNativeNode(node, tmpCobj);
+        JSScheduleWrapper::setTargetForSchedule(argv[0], tmpCobj);        
+        JSScheduleWrapper::setTargetForNativeNode(node, tmpCobj);
         
         if(argc == 1) {
-            sched->scheduleSelector(schedule_selector(JSSchedule::scheduleFunc), tmpCobj, 0, node->isRunning());
+            sched->scheduleSelector(schedule_selector(JSScheduleWrapper::scheduleFunc), tmpCobj, 0, node->isRunning());
         } if(argc == 2) {
-            sched->scheduleSelector(schedule_selector(JSSchedule::scheduleFunc), tmpCobj, interval, node->isRunning());
+            sched->scheduleSelector(schedule_selector(JSScheduleWrapper::scheduleFunc), tmpCobj, interval, node->isRunning());
         } if(argc == 3) {
-            sched->scheduleSelector(schedule_selector(JSSchedule::scheduleFunc), tmpCobj, 0, node->isRunning(), repeat, 0);
+            sched->scheduleSelector(schedule_selector(JSScheduleWrapper::scheduleFunc), tmpCobj, 0, node->isRunning(), repeat, 0);
         } if (argc == 4) {
-            sched->scheduleSelector(schedule_selector(JSSchedule::scheduleFunc), tmpCobj, 0, node->isRunning(), repeat, delay);
+            sched->scheduleSelector(schedule_selector(JSScheduleWrapper::scheduleFunc), tmpCobj, 0, node->isRunning(), repeat, delay);
 
         }
         
@@ -1135,6 +1127,27 @@ JSBool js_cocos2dx_ccpAdd(JSContext *cx, uint32_t argc, jsval *vp)
 		CCPoint ret = ccpAdd(arg0, arg1);
 		
 		jsval jsret = ccpoint_to_jsval(cx, ret);
+		JS_SET_RVAL(cx, vp, jsret);
+		return JS_TRUE;
+	}
+	
+    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
+	return JS_FALSE;
+}
+
+JSBool js_cocos2dx_ccpDistance(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+    
+	if (argc == 2) {
+		cocos2d::CCPoint arg0;
+		arg0 = jsval_to_ccpoint(cx, argv[0]);
+		cocos2d::CCPoint arg1;
+		arg1 = jsval_to_ccpoint(cx, argv[1]);
+		
+		float ret = ccpDistance(arg0, arg1);
+		
+		jsval jsret = DOUBLE_TO_JSVAL(ret);
 		JS_SET_RVAL(cx, vp, jsret);
 		return JS_TRUE;
 	}
@@ -1596,6 +1609,7 @@ void register_cocos2dx_js_extensions(JSContext* cx, JSObject* global)
     JS_DefineFunction(cx, tmpObj, "garbageCollect", js_forceGC, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 
     JS_DefineFunction(cx, ns, "pAdd", js_cocos2dx_ccpAdd, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, ns, "pDistance", js_cocos2dx_ccpDistance, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, ns, "pSub", js_cocos2dx_ccpSub, 0, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, ns, "pNeg", js_cocos2dx_ccpNeg, 0, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, ns, "pMult", js_cocos2dx_ccpMult, 0, JSPROP_READONLY | JSPROP_PERMANENT);
