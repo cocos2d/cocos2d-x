@@ -221,12 +221,6 @@ JS_GetFrameAnnotation(JSContext *cx, JSStackFrame *fp);
 extern JS_PUBLIC_API(void)
 JS_SetFrameAnnotation(JSContext *cx, JSStackFrame *fp, void *annotation);
 
-extern JS_PUBLIC_API(JSPrincipals*)
-JS_GetPrincipalIfDummyFrame(JSContext *cx, JSStackFrame *fpArg);
-
-extern JS_PUBLIC_API(JSBool)
-JS_IsScriptFrame(JSContext *cx, JSStackFrame *fp);
-
 extern JS_PUBLIC_API(JSObject *)
 JS_GetFrameScopeChain(JSContext *cx, JSStackFrame *fp);
 
