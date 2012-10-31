@@ -12,8 +12,7 @@ LOCAL_SRC_FILES := ScriptingCore.cpp \
                    js_manual_conversions.cpp \
                    cocosjs_manual_conversions.cpp \
                    js_bindings_chipmunk_manual.cpp \
-                   js_bindings_chipmunk_functions.cpp \
-                   generated/cocos2dx.cpp
+                   js_bindings_chipmunk_functions.cpp
 
 LOCAL_CFLAGS := -DCOCOS2D_JAVASCRIPT
 
