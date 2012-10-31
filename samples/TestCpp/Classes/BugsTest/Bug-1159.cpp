@@ -64,4 +64,5 @@ void Bug1159Layer::callBack(CCObject* pSender)
 void Bug1159Layer::onExit()
 {
     CCDirector::sharedDirector()->setDepthTest(false);
+    BugsTestBaseLayer::onExit();
 }
