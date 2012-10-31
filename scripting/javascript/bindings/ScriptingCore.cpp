@@ -429,7 +429,7 @@ JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* c
         return false;
     }
 
-    std::string rPath;
+    std::string rpath;
     if (this->externalScriptPath == "") {
         const char * tmp;
 
@@ -445,9 +445,9 @@ JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* c
             }
         }
 
-        rPath = tmp;
+        rpath = tmp;
     } else {
-        rPath = this->externalScriptPath + std::string(path);
+        rpath = this->externalScriptPath + std::string(path);
     }
 
     if (global == NULL) {
@@ -463,7 +463,7 @@ JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* c
     unsigned char *content = NULL;
     unsigned long contentSize = 0;
 
-    content = (unsigned char*)CCString::createWithContentsOfFile(rPath.c_str())->getCString();
+    content = (unsigned char*)CCString::createWithContentsOfFile(rpath.c_str())->getCString();
     contentSize = strlen((char*)content);
     JSScript* script = JS_CompileScript(cx, global, (char*)content, contentSize, path, 1);
 #else
