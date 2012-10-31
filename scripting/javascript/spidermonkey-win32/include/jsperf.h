@@ -115,7 +115,7 @@ class JS_FRIEND_API(PerfMeasurement)
  * global object).  The JS-visible API is identical to the C++ API.
  */
 extern JS_FRIEND_API(JSObject*)
-    RegisterPerfMeasurement(JSContext *cx, JSObject *global);
+    RegisterPerfMeasurement(JSContext *cx, JSRawObject global);
 
 /*
  * Given a jsval which contains an instance of the aforementioned

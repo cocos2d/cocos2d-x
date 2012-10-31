@@ -15,9 +15,6 @@ namespace js {
 
 class TempAllocPolicy;
 
-/* Integral types for all hash functions. */
-typedef uint32_t HashNumber;
-
 /*****************************************************************************/
 
 namespace detail {
@@ -217,9 +214,6 @@ class HashTable : private AllocPolicy
          * this operation until the next call to |popFront()|.
          */
         void rekeyFront(const Lookup &l, const Key &k) {
-            JS_ASSERT(&k != &HashPolicy::getKey(this->cur->t));
-            if (match(*this->cur, l))
-                return;
             typename HashTableEntry<T>::NonConstT t = this->cur->t;
             HashPolicy::setKey(t, const_cast<Key &>(k));
             table.remove(*this->cur);
@@ -288,7 +282,6 @@ class HashTable : private AllocPolicy
     static const uint8_t  sMinAlphaFrac = 64;  /* (0x100 * .25) taken from jsdhash.h */
     static const uint8_t  sMaxAlphaFrac = 192; /* (0x100 * .75) taken from jsdhash.h */
     static const uint8_t  sInvMaxAlpha  = 171; /* (ceil(0x100 / .75) >> 1) */
-    static const HashNumber sGoldenRatio  = 0x9E3779B9U;       /* taken from jsdhash.h */
     static const HashNumber sFreeKey = Entry::sFreeKey;
     static const HashNumber sRemovedKey = Entry::sRemovedKey;
     static const HashNumber sCollisionBit = Entry::sCollisionBit;
@@ -308,10 +301,7 @@ class HashTable : private AllocPolicy
 
     static HashNumber prepareHash(const Lookup& l)
     {
-        HashNumber keyHash = HashPolicy::hash(l);
-
-        /* Improve keyHash distribution. */
-        keyHash *= sGoldenRatio;
+        HashNumber keyHash = ScrambleHashCode(HashPolicy::hash(l));
 
         /* Avoid reserved hash codes. */
         if (!isLiveHash(keyHash))
@@ -1003,6 +993,9 @@ template <class Key,
           class AllocPolicy = TempAllocPolicy>
 class HashMap
 {
+    typedef typename tl::StaticAssert<tl::IsRelocatableHeapType<Key>::result>::result keyAssert;
+    typedef typename tl::StaticAssert<tl::IsRelocatableHeapType<Value>::result>::result valAssert;
+
   public:
     typedef typename HashPolicy::Lookup Lookup;
 
