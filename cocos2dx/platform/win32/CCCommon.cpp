@@ -55,16 +55,21 @@ void CCMessageBox(const char * pszMsg, const char * pszTitle)
 void CCLuaLog(const char *pszMsg)
 {
     int bufflen = MultiByteToWideChar(CP_UTF8, 0, pszMsg, -1, NULL, 0);
-    ++bufflen;
-    WCHAR* buff = new WCHAR[bufflen];
-    memset(buff, 0, sizeof(WCHAR) * bufflen);
-    MultiByteToWideChar(CP_UTF8, 0, pszMsg, -1, buff, bufflen - 1);
+    WCHAR* widebuff = new WCHAR[bufflen + 1];
+    memset(widebuff, 0, sizeof(WCHAR) * (bufflen + 1));
+    MultiByteToWideChar(CP_UTF8, 0, pszMsg, -1, widebuff, bufflen);
 
-    OutputDebugStringW(buff);
+    OutputDebugStringW(widebuff);
     OutputDebugStringA("\n");
 
-    puts(pszMsg);
+	bufflen = WideCharToMultiByte(CP_ACP, 0, widebuff, -1, NULL, 0, NULL, NULL);
+	char* buff = new char[bufflen + 1];
+	memset(buff, 0, sizeof(char) * (bufflen + 1));
+	WideCharToMultiByte(CP_ACP, 0, widebuff, -1, buff, bufflen, NULL, NULL);
+	puts(buff);
+
+	delete[] widebuff;
+	delete[] buff;
 }
 
 NS_CC_END
-
