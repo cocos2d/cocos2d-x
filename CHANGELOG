@@ -1,3 +1,37 @@
+cocos2d-2.0-x-2.0.3 @Sep.26 2012
+ [all platforms]
+    Bug       #1452: change CCRGBAProtocol to public in order for actions like CCTintTo to have an affect on the CCScale9Sprite
+    Bug       #1454: make javascript binding work together with lua binding and c++ codes
+    Bug       #1464: fix a crash caused by CCLabelBMFont
+    Bug       #1478: fix a bug that TMX parser causes tileset images not to be loaded
+    Bug       #1479: fix a bug that CCNotificationCenter does not check whether the object is valid before post notification
+    Bug       #1485: fix potential memory leak in CCNotificationObserver
+    Feature   #1458: add CCTableView
+    Feature   #1460: min/max allowed value for CCControlSlider
+    Feature   #1470: update CCBReader to cocosbuilder v2.1 beta
+    Feature   #1483: synchronize CCControlExtension to newest version
+    Refactor  #1477: abstracts Lua and JS binding protocol, some bugs fixes in lua-binding, adding custom menu on win32 and mac for switching resolutions
+ [iOS]
+    Bug       #1482: fix a bug that orientation is wrong on iOS 6 SDK
+    Bug       #1453: fix a bug that CCGL.h includes wrong path of a header file
+    Bug       #1484: fix a minor memory-logic error in EditBoxImplIOS.mm
+    Feature   #1455: add Xcode template for cocos2dx-js
+ [android]
+    Refactor  #1481: refactor android Java+JNI
+ [mac os]
+    Bug       #1456: remove code signing from MAC TestCpp project
+ [linux]
+ [win32]
+    Feature   #1457: Add vs2012 sln
+    Feature   #1474: popup a warning dialog instead of crash directly when OpenGL version is too old to run 2dx
+ [js-binding]
+    Feature   #1451: merge new js-binding codes
+    Refactor  #1476: update location of spidermonkey-android makefile
+ [lua]
+    Refactor  #1480: Update lua-binding for overloaded functions
+ [tools]
+    Feature   #1404: add scripts for jenkins-ci
+
 cocos2d-2.0-x-2.0.2 @Aug.30 2012
  [all platforms]
     Bug       #1298: fix a logical error of CCSequence

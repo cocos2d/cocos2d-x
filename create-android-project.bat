@@ -36,7 +36,7 @@ echo Create android project
 mkdir %_PROJECTDIR%
 echo Create Android project inside proj.android
 call "%_ANDROIDTOOLS%\android.bat" create project -n %_PROJECTNAME% -t %_TARGETID% -k %_PACKAGEPATH% -a %_PROJECTNAME% -p %_PROJECTDIR%\proj.android
-	 
+call "%_ANDROIDTOOLS%\android.bat" update project -l ../../cocos2dx/platform/android/java -p %_PROJECTDIR%\proj.android
 :: Resolve ___.sh to /cygdrive based *nix path and store in %_CYGSCRIPT%
 for /f "delims=" %%A in ('%_CYGBIN%\cygpath.exe "%~dpn0.sh"') do set _CYGSCRIPT=%%A
 

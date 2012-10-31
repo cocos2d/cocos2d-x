@@ -2,6 +2,7 @@
 #define _TEST_BASIC_H_
 
 #include "cocos2d.h"
+#include "VisibleRect.h"
 
 USING_NS_CC;
 using namespace std;

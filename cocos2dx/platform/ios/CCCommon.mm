@@ -38,7 +38,7 @@ void CCLog(const char * pszFormat, ...)
     
     va_list ap;
     va_start(ap, pszFormat);
-    vsprintf(szBuf, pszFormat, ap);
+    vsnprintf(szBuf, kMaxLogLen, pszFormat, ap);
     va_end(ap);
     printf("%s", szBuf);
     printf("\n");

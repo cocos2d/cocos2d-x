@@ -30,6 +30,8 @@
 		BF82F42113A8652A00616D55 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = BF82F41F13A8652A00616D55 /* AppController.mm */; };
 		BF82F42213A8652A00616D55 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BF82F42013A8652A00616D55 /* main.m */; };
 		D403B5D9135D1AF1004B518D /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D403B5D8135D1AF1004B518D /* libxml2.dylib */; };
+		D41A0AA2160F13F8004552AE /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D41A0AA1160F13F8004552AE /* Default-568h@2x.png */; };
+		D446FD3B16102085000ADA7B /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D446FD3A16102085000ADA7B /* Default@2x.png */; };
 		D4CEAD7913B4634300780515 /* RootViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = D4CEAD7713B4634300780515 /* RootViewController.mm */; };
 		D4EF94D715BD311700D803EB /* Icon-57.png in Resources */ = {isa = PBXBuildFile; fileRef = D4EF94D615BD311700D803EB /* Icon-57.png */; };
 		D4EF94D915BD311A00D803EB /* Icon-114.png in Resources */ = {isa = PBXBuildFile; fileRef = D4EF94D815BD311A00D803EB /* Icon-114.png */; };
@@ -138,6 +140,8 @@
 		BF82F42013A8652A00616D55 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		BF82F42313A8654600616D55 /* HelloLua_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelloLua_Prefix.pch; sourceTree = "<group>"; };
 		D403B5D8135D1AF1004B518D /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
+		D41A0AA1160F13F8004552AE /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../proj.ios/Default-568h@2x.png"; sourceTree = "<group>"; };
+		D446FD3A16102085000ADA7B /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "../proj.ios/Default@2x.png"; sourceTree = "<group>"; };
 		D4CEAD7713B4634300780515 /* RootViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RootViewController.mm; sourceTree = "<group>"; };
 		D4CEAD7813B4634300780515 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		D4EF94D615BD311700D803EB /* Icon-57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-57.png"; path = "../proj.ios/Icon-57.png"; sourceTree = "<group>"; };
@@ -352,7 +356,6 @@
 				D4EF94D615BD311700D803EB /* Icon-57.png */,
 				78947C5E14EBB9B000DBD5A6 /* background.mp3 */,
 				78947C5F14EBB9B000DBD5A6 /* crop.png */,
-				78DC4C9815490B9500317402 /* Default.png */,
 				78947C6114EBB9B000DBD5A6 /* dog.png */,
 				78947C6214EBB9B000DBD5A6 /* effect1.wav */,
 				78947C6314EBB9B000DBD5A6 /* farm.jpg */,
@@ -361,6 +364,9 @@
 				78947C6914EBB9B000DBD5A6 /* land.png */,
 				78947C6A14EBB9B000DBD5A6 /* menu1.png */,
 				78947C6B14EBB9B000DBD5A6 /* menu2.png */,
+				78DC4C9815490B9500317402 /* Default.png */,
+				D446FD3A16102085000ADA7B /* Default@2x.png */,
+				D41A0AA1160F13F8004552AE /* Default-568h@2x.png */,
 			);
 			name = Resources;
 			path = ../Resources;
@@ -588,6 +594,8 @@
 				D4EF94D915BD311A00D803EB /* Icon-114.png in Resources */,
 				D4EF94DB15BD311E00D803EB /* Icon-72.png in Resources */,
 				D4EF94DD15BD312100D803EB /* Icon-144.png in Resources */,
+				D41A0AA2160F13F8004552AE /* Default-568h@2x.png in Resources */,
+				D446FD3B16102085000ADA7B /* Default@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

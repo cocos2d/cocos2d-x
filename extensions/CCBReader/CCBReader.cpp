@@ -7,6 +7,11 @@
 #include "CCNodeLoaderListener.h"
 #include "CCBMemberVariableAssigner.h"
 #include "CCBSelectorResolver.h"
+#include "CCData.h"
+#include "CCBAnimationManager.h"
+#include "CCBSequenceProperty.h"
+#include "CCBKeyframe.h"
+#include "CCBValue.h"
 
 #include <ctype.h>
 
@@ -14,35 +19,71 @@
 #include <UIKit/UIDevice.h>
 #endif
 
-USING_NS_CC;
+using namespace std;
+
 NS_CC_EXT_BEGIN;
 
-CCBReader::CCBReader(CCNodeLoaderLibrary * pCCNodeLoaderLibrary, CCBMemberVariableAssigner * pCCBMemberVariableAssigner, CCBSelectorResolver * pCCBSelectorResolver, CCNodeLoaderListener * pCCNodeLoaderListener) {
-    this->mRootNode = NULL;
-    this->mRootCCBReader = true;
+/*************************************************************************
+ Implementation of CCBFile
+ *************************************************************************/
 
+CCBFile::CCBFile():mCCBFileNode(NULL) {}
+
+CCBFile* CCBFile::create()
+{
+    CCBFile *ret = new CCBFile();
+    
+    if (ret)
+    {
+        ret->autorelease();
+    }
+    
+    return ret;
+}
+
+CCNode* CCBFile::getCCBFileNode()
+{
+    return mCCBFileNode;
+}
+
+void CCBFile::setCCBFileNode(CCNode *pNode)
+{
+    CC_SAFE_RELEASE(mCCBFileNode);
+    mCCBFileNode = pNode;
+    CC_SAFE_RETAIN(mCCBFileNode);
+}
+
+/*************************************************************************
+ Implementation of CCBReader
+ *************************************************************************/
+
+CCBReader::CCBReader(CCNodeLoaderLibrary * pCCNodeLoaderLibrary, CCBMemberVariableAssigner * pCCBMemberVariableAssigner, CCBSelectorResolver * pCCBSelectorResolver, CCNodeLoaderListener * pCCNodeLoaderListener) 
+: mData(NULL)
+, mBytes(NULL)
+, mCurrentByte(-1)
+, mCurrentBit(-1)
+, mOwner(NULL)
+, mActionManager(NULL)
+, mAnimatedProps(NULL)
+, hasScriptingOwner(false)
+{
     this->mCCNodeLoaderLibrary = pCCNodeLoaderLibrary;
     this->mCCNodeLoaderLibrary->retain();
     this->mCCBMemberVariableAssigner = pCCBMemberVariableAssigner;
     this->mCCBSelectorResolver = pCCBSelectorResolver;
     this->mCCNodeLoaderListener = pCCNodeLoaderListener;
-
-    this->mResolutionScale = 1;
-
-#ifdef __CC_PLATFORM_IOS
-    /* iPad */
-    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        this->mResolutionScale = 2;
-    }
-#endif
 }
 
-CCBReader::CCBReader(CCBReader * pCCBReader) {
-    this->mRootNode = NULL;
-    this->mRootCCBReader = false;
-
-    /* Borrow data from the 'parent' CCBReader. */
-    this->mResolutionScale = pCCBReader->mResolutionScale;
+CCBReader::CCBReader(CCBReader * pCCBReader) 
+: mData(NULL)
+, mBytes(NULL)
+, mCurrentByte(-1)
+, mCurrentBit(-1)
+, mOwner(NULL)
+, mActionManager(NULL)
+, mAnimatedProps(NULL)
+, hasScriptingOwner(false)
+{
     this->mLoadedSpriteSheets = pCCBReader->mLoadedSpriteSheets;
     this->mCCNodeLoaderLibrary = pCCBReader->mCCNodeLoaderLibrary;
     this->mCCNodeLoaderLibrary->retain();
@@ -52,26 +93,70 @@ CCBReader::CCBReader(CCBReader * pCCBReader) {
     this->mCCNodeLoaderListener = pCCBReader->mCCNodeLoaderListener;
 }
 
+CCBReader::CCBReader()
+: mData(NULL)
+, mBytes(NULL)
+, mCurrentByte(-1)
+, mCurrentBit(-1)
+, mOwner(NULL)
+, mActionManager(NULL)
+, mCCNodeLoaderLibrary(NULL)
+, mCCNodeLoaderListener(NULL)
+, mCCBMemberVariableAssigner(NULL)
+, mCCBSelectorResolver(NULL)
+, mAnimatedProps(NULL)
+, hasScriptingOwner(false)
+{}
+
 CCBReader::~CCBReader() {
-    CC_SAFE_DELETE_ARRAY(this->mBytes);
+    CC_SAFE_RELEASE_NULL(mOwner);
+    CC_SAFE_RELEASE_NULL(mData);
 
     this->mCCNodeLoaderLibrary->release();
 
-    /* Clear string cache. */
+    // Clear string cache.
     std::vector<CCString *>::iterator stringCacheIterator;
     for (stringCacheIterator = this->mStringCache.begin(); stringCacheIterator != this->mStringCache.end(); stringCacheIterator++) {
         (*stringCacheIterator)->release();
     }
     this->mStringCache.clear();
     
-    if(this->mRootCCBReader) {
-        /* Clear loaded spritesheets. */
-        this->mLoadedSpriteSheets.clear();
-    }
+    setAnimationManager(NULL);
 }
 
-CCString * CCBReader::getCCBRootPath() {
-    return this->mCCBRootPath;
+bool CCBReader::initWithData(CCData *pData, CCObject *pOwner)
+{
+    // Setup action manager
+    CCBAnimationManager *pActionManager = new CCBAnimationManager();
+    setAnimationManager(pActionManager);
+    pActionManager->release();
+    
+    // Setup byte array
+    mData = pData;
+    CC_SAFE_RETAIN(mData);
+    mBytes = mData->getBytes();
+    mCurrentByte = 0;
+    mCurrentBit = 0;
+    
+    mOwner = pOwner;
+    CC_SAFE_RETAIN(mOwner);
+    
+    // Setup resolution scale and container size
+    mActionManager->setRootContainerSize(CCDirector::sharedDirector()->getWinSize());
+    
+    return true;
+}
+
+CCBAnimationManager* CCBReader::getAnimationManager()
+{
+    return mActionManager;
+}
+
+void CCBReader::setAnimationManager(CCBAnimationManager *pAnimationManager)
+{
+    CC_SAFE_RELEASE(mActionManager);
+    mActionManager = pAnimationManager;
+    CC_SAFE_RETAIN(mActionManager);
 }
 
 CCBMemberVariableAssigner * CCBReader::getCCBMemberVariableAssigner() {
@@ -82,50 +167,105 @@ CCBSelectorResolver * CCBReader::getCCBSelectorResolver() {
     return this->mCCBSelectorResolver;
 }
 
-float CCBReader::getResolutionScale() {
-    return this->mResolutionScale;
+set<string>* CCBReader::getAnimatedProperties()
+{
+    return mAnimatedProps;
 }
 
-CCNode * CCBReader::readNodeGraphFromFile(const char * pCCBRootPath, const char * pCCBFileName, CCObject * pOwner) {
-    return this->readNodeGraphFromFile(pCCBRootPath, pCCBFileName, pOwner, CCDirector::sharedDirector()->getWinSize());
+set<string>& CCBReader::getLoadedSpriteSheet()
+{
+    return mLoadedSpriteSheets;
 }
 
-CCNode * CCBReader::readNodeGraphFromFile(CCString * pCCBRootPath, CCString * pCCBFileName, CCObject * pOwner) {
-    return this->readNodeGraphFromFile(pCCBRootPath, pCCBFileName, pOwner, CCDirector::sharedDirector()->getWinSize());
+CCObject* CCBReader::getOwner()
+{
+    return mOwner;
 }
 
-CCNode * CCBReader::readNodeGraphFromFile(const char * pCCBRootPath, const char * pCCBFileName, CCObject * pOwner, CCSize pRootContainerSize) {
-    return this->readNodeGraphFromFile(CCString::create(pCCBRootPath), CCString::create(pCCBFileName), pOwner, pRootContainerSize);
+CCNode* CCBReader::readNodeGraphFromFile(const char *pCCBFileName)
+{
+    return this->readNodeGraphFromFile(pCCBFileName, NULL);
 }
 
-CCNode * CCBReader::readNodeGraphFromFile(CCString * pCCBRootPath, CCString * pCCBFileName, CCObject * pOwner, CCSize pRootContainerSize) {
-    this->mCCBRootPath = pCCBRootPath;
-    this->mCCBRootPath->retain();
+CCNode* CCBReader::readNodeGraphFromFile(const char* pCCBFileName, CCObject* pOwner) 
+{
+    return this->readNodeGraphFromFile(pCCBFileName, pOwner, CCDirector::sharedDirector()->getWinSize());
+}
 
-    CCString * ccbFullFilePath = CCBReader::concat(pCCBRootPath, pCCBFileName);
+CCNode * CCBReader::readNodeGraphFromFile(const char * pCCBFileName, CCObject *pOwner, const CCSize &parentSize) 
+{
+    return this->readNodeGraphFromFile(pCCBFileName, pOwner, parentSize, NULL);
+}
 
-    const char * path = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(ccbFullFilePath->getCString());
+CCNode* CCBReader::readNodeGraphFromFile(const char *pCCBFileName, CCObject *pOwner, CCBAnimationManager **ppAnimationManager)
+{
+    return this->readNodeGraphFromFile(pCCBFileName, pOwner, CCDirector::sharedDirector()->getWinSize(), ppAnimationManager);
+}
 
-    unsigned long size = 0;
-    this->mBytes = CCFileUtils::sharedFileUtils()->getFileData(path, "rb", &size);
+CCNode* CCBReader::readNodeGraphFromFile(const char *pCCBFileName, CCObject *pOwner, const CCSize &parentSize, CCBAnimationManager **ppAnimationManager)
+{
+    const char *pPath = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(pCCBFileName);
+    unsigned long size;
 
-    this->mCurrentByte = 0;
-    this->mCurrentBit = 0;
+    unsigned char * pBytes = CCFileUtils::sharedFileUtils()->getFileData(pPath, "rb", &size);
+    CCData *data = new CCData(pBytes, size);
 
-    this->mOwner = pOwner;
-    CC_SAFE_RETAIN(this->mOwner);
-    this->mRootContainerSize = pRootContainerSize;
+    CCNode *ret =  this->readNodeGraphFromData(data, pOwner, parentSize, ppAnimationManager);
+    
+    data->release();
+    
+    return ret;
+}
 
-    CCNode * node = NULL;
-    if(this->readHeader() && this->readStringCache()) {
-        node = this->readNodeGraph();
+CCNode* CCBReader::readNodeGraphFromData(CCData *pData, CCObject *pOwner, const CCSize &parentSize)
+{
+    return this->readNodeGraphFromData(pData, pOwner, parentSize, NULL);
+}
+
+CCNode* CCBReader::readNodeGraphFromData(CCData *pData, CCObject *pOwner, const CCSize &parentSize, CCBAnimationManager **ppAnimationManager)
+{
+    initWithData(pData, pOwner);
+    mActionManager->setRootContainerSize(parentSize);
+    
+    CCNode *pNodeGraph = readFileWithCleanUp(true);
+    
+    if (pNodeGraph && mActionManager->getAutoPlaySequenceId() != -1)
+    {
+        // Auto play animations
+        mActionManager->runAnimations(mActionManager->getAutoPlaySequenceId(), 0);
     }
+    
+    // Return action manager by reference
+    if (ppAnimationManager)
+    {
+        *ppAnimationManager = mActionManager;
+    }
+    
+    return pNodeGraph;
+}
 
-    CC_SAFE_RELEASE(this->mOwner);
-    CC_SAFE_RELEASE(this->mCCBRootPath);
-    CC_SAFE_RELEASE(this->mRootNode);
+CCScene* CCBReader::createSceneWithNodeGraphFromFile(const char *pCCBFileName)
+{
+    return createSceneWithNodeGraphFromFile(pCCBFileName, NULL);
+}
 
-    return node;
+CCScene* CCBReader::createSceneWithNodeGraphFromFile(const char *pCCBFileName, CCObject *pOwner)
+{
+    return createSceneWithNodeGraphFromFile(pCCBFileName, pOwner, CCDirector::sharedDirector()->getWinSize());
+}
+
+CCScene* CCBReader::createSceneWithNodeGraphFromFile(const char *pCCBFileName, CCObject *pOwner, const CCSize &parentSize)
+{
+    return createSceneWithNodeGraphFromFile(pCCBFileName, pOwner, parentSize, NULL);
+}
+
+CCScene* CCBReader::createSceneWithNodeGraphFromFile(const char *pCCBFileName, CCObject *pOwner, const CCSize &parentSize, CCBAnimationManager **ppAnimationManager)
+{
+    CCNode *pNode = readNodeGraphFromFile(pCCBFileName, pOwner, parentSize, ppAnimationManager);
+    CCScene *pScene = CCScene::create();
+    pScene->addChild(pNode);
+    
+    return pScene;
 }
 
 bool CCBReader::readHeader() {
@@ -150,6 +290,44 @@ bool CCBReader::readHeader() {
     }
 
     return true;
+}
+
+void CCBReader::cleanUpNodeGraph(CCNode *pNode)
+{
+    pNode->setUserObject(NULL);
+    
+    CCObject *pChild = NULL;
+    CCARRAY_FOREACH(pNode->getChildren(), pChild)
+    {
+        cleanUpNodeGraph((CCNode*)pChild);
+    }
+}
+
+CCNode* CCBReader::readFileWithCleanUp(bool bCleanUp)
+{
+    if (! readHeader())
+    {
+        return NULL;
+    }
+    
+    if (! readStringCache())
+    {
+        return NULL;
+    }
+    
+    if (! readSequences())
+    {
+        return NULL;
+    }
+    
+    CCNode *pNode = readNodeGraph();
+    
+    if (bCleanUp)
+    {
+        cleanUpNodeGraph(pNode);
+    }
+    
+    return pNode;
 }
 
 bool CCBReader::readStringCache() {
@@ -281,26 +459,105 @@ CCNode * CCBReader::readNodeGraph(CCNode * pParent) {
     /* Read class name. */
     CCString * className = this->readCachedString();
 
+    // Read assignment type and name
     int memberVarAssignmentType = this->readInt(false);
     CCString * memberVarAssignmentName;
     if(memberVarAssignmentType != kCCBTargetTypeNone) {
         memberVarAssignmentName = this->readCachedString();
     }
 
-    CCNodeLoader * ccNodeLoader = this->mCCNodeLoaderLibrary->getCCNodeLoader(className);
-    CCNode * node = ccNodeLoader->loadCCNode(pParent, this);
-
-    /* Set root node, if not set yet. */
-    if(this->mRootNode == NULL) {
-        this->mRootNode = node;
-        this->mRootNode->retain();
+    CCNodeLoader *ccNodeLoader = this->mCCNodeLoaderLibrary->getCCNodeLoader(className);
+    if (! ccNodeLoader)
+    {
+        CCLog("no corresponding node loader for %s", className->getCString());
+        return NULL;
     }
 
+    CCNode *node = ccNodeLoader->loadCCNode(pParent, this);
+
+    // Set root node
+    if (! mActionManager->getRootNode())
+    {
+        mActionManager->setRootNode(node);
+    }
+    
+    // Read animated properties
+    CCDictionary *seqs = CCDictionary::create();
+    mAnimatedProps = new set<string>();
+    
+    int numSequence = readInt(false);
+    for (int i = 0; i < numSequence; ++i)
+    {
+        int seqId = readInt(false);
+        CCDictionary *seqNodeProps = CCDictionary::create();
+        
+        int numProps = readInt(false);
+        
+        for (int j = 0; j < numProps; ++j)
+        {
+            CCBSequenceProperty *seqProp = new CCBSequenceProperty();
+            seqProp->autorelease();
+            
+            seqProp->setName(readCachedString()->getCString());
+            seqProp->setType(readInt(false));
+            mAnimatedProps->insert(seqProp->getName());
+            
+            int numKeyframes = readInt(false);
+            
+            for (int k = 0; k < numKeyframes; ++k)
+            {
+                CCBKeyframe *keyframe = readKeyframe(seqProp->getType());
+                
+                seqProp->getKeyframes()->addObject(keyframe);
+            }
+            
+            seqNodeProps->setObject(seqProp, seqProp->getName());
+        }
+        
+        seqs->setObject(seqNodeProps, seqId);
+    }
+    
+    if (seqs->count() > 0)
+    {
+        mActionManager->addNode(node, seqs);
+    }
+    
+    // Read properties
+    ccNodeLoader->parseProperties(node, pParent, this);
+    
+    // Handle sub ccb files (remove middle node)
+    if (dynamic_cast<CCBFile*>(node))
+    {
+        CCBFile *ccbFileNode = (CCBFile*)node;
+        
+        CCNode *embeddedNode = ccbFileNode->getCCBFileNode();
+        embeddedNode->setPosition(ccbFileNode->getPosition());
+        embeddedNode->setRotation(ccbFileNode->getRotation());
+        embeddedNode->setScale(ccbFileNode->getScale());
+        embeddedNode->setTag(ccbFileNode->getTag());
+        embeddedNode->setVisible(true);
+        embeddedNode->ignoreAnchorPointForPosition(ccbFileNode->isIgnoreAnchorPointForPosition());
+        
+        ccbFileNode->setCCBFileNode(NULL);
+        
+        node = embeddedNode;
+    }
+
+#ifdef CCB_ENABLE_JAVASCRIPT
+    /*
+     if (memberVarAssignmentType && memberVarAssignmentName && ![memberVarAssignmentName isEqualToString:@""])
+     {
+     [[JSCocoa sharedController] setObject:node withName:memberVarAssignmentName];
+     }*/
+#else
     if(memberVarAssignmentType != kCCBTargetTypeNone) {
         CCObject * target = NULL;
-        if(memberVarAssignmentType == kCCBTargetTypeDocumentRoot) {
-            target = this->mRootNode;
-        } else if(memberVarAssignmentType == kCCBTargetTypeOwner) {
+        if(memberVarAssignmentType == kCCBTargetTypeDocumentRoot) 
+        {
+            target = mActionManager->getRootNode();
+        } 
+        else if(memberVarAssignmentType == kCCBTargetTypeOwner) 
+        {
             target = this->mOwner;
         }
 
@@ -318,6 +575,10 @@ CCNode * CCBReader::readNodeGraph(CCNode * pParent) {
             }
         }
     }
+#endif // CCB_ENABLE_JAVASCRIPT
+    
+    delete mAnimatedProps;
+    mAnimatedProps = NULL;
 
     /* Read and add children. */
     int numChildren = this->readInt(false);
@@ -326,6 +587,7 @@ CCNode * CCBReader::readNodeGraph(CCNode * pParent) {
         node->addChild(child);
     }
 
+    // Call onNodeLoaded
     CCNodeLoaderListener * nodeAsCCNodeLoaderListener = dynamic_cast<CCNodeLoaderListener *>(node);
     if(nodeAsCCNodeLoaderListener != NULL) {
         nodeAsCCNodeLoaderListener->onNodeLoaded(node, ccNodeLoader);
@@ -336,34 +598,118 @@ CCNode * CCBReader::readNodeGraph(CCNode * pParent) {
     return node;
 }
 
+CCBKeyframe* CCBReader::readKeyframe(int type)
+{
+    CCBKeyframe *keyframe = new CCBKeyframe();
+    keyframe->autorelease();
+    
+    keyframe->setTime(readFloat());
+    
+    int easingType = readInt(false);
+    float easingOpt = 0;
+    CCObject *value = NULL;
+    
+    if (easingType == kCCBKeyframeEasingCubicIn
+        || easingType == kCCBKeyframeEasingCubicOut
+        || easingType == kCCBKeyframeEasingCubicInOut
+        || easingType == kCCBKeyframeEasingElasticIn
+        || easingType == kCCBKeyframeEasingElasticOut
+        || easingType == kCCBKeyframeEasingElasticInOut)
+    {
+        easingOpt = readFloat();
+    }
+    keyframe->setEasingType(easingType);
+    keyframe->setEasingOpt(easingOpt);
+    
+    if (type == kCCBPropTypeCheck)
+    {
+        value = CCBValue::create(readBool());
+    }
+    else if (type == kCCBPropTypeByte)
+    {
+        value = CCBValue::create(readByte());
+    }
+    else if (type == kCCBPropTypeColor3)
+    {
+        int r = readByte();
+        int g = readByte();
+        int b = readByte();
+        
+        ccColor3B c = ccc3(r,g,b);
+        value = ccColor3BWapper::create(c);
+    }
+    else if (type == kCCBPropTypeDegrees)
+    {
+        value = CCBValue::create(readFloat());
+    }
+    else if (type == kCCBPropTypeScaleLock || type == kCCBPropTypePosition)
+    {
+        float a = readFloat();
+        float b = readFloat();
+        
+        value = CCArray::create(CCBValue::create(a),
+                                CCBValue::create(b),
+                                NULL);
+    }
+    else if (type == kCCBPropTypeSpriteFrame)
+    {
+        CCString *spriteSheet = readCachedString();
+        CCString *spriteFile = readCachedString();
+        
+        CCSpriteFrame* spriteFrame;
+        CCString empty("");
+        if (spriteSheet->isEqual(&empty))
+        {
+            CCTexture2D *texture = CCTextureCache::sharedTextureCache()->addImage(spriteFile->getCString());
+            CCRect bounds = CCRectMake(0, 0, texture->getContentSize().width, texture->getContentSize().height);
+            spriteFrame = CCSpriteFrame::createWithTexture(texture, bounds);
+        }
+        else
+        {
+            CCSpriteFrameCache* frameCache = CCSpriteFrameCache::sharedSpriteFrameCache();
+            
+            // Load the sprite sheet only if it is not loaded            
+            if (mLoadedSpriteSheets.find(spriteSheet->getCString()) == mLoadedSpriteSheets.end())
+            {
+                frameCache->addSpriteFramesWithFile(spriteSheet->getCString());
+                mLoadedSpriteSheets.insert(spriteSheet->getCString());
+            }
+            
+            spriteFrame = frameCache->spriteFrameByName(spriteFile->getCString());
+        }
+        value = spriteFrame;
+    }
+    
+    keyframe->setValue(value);
+    
+    return  keyframe;
+}
+
 CCNode * CCBReader::readNodeGraph() {
     return this->readNodeGraph(NULL);
 }
 
-CCObject * CCBReader::getOwner() {
-    return this->mOwner;
-}
-
-CCNode * CCBReader::getRootNode() {
-    return this->mRootNode;
-}
-
-CCSize CCBReader::getContainerSize(CCNode * pNode) {
-    if(pNode) {
-        return pNode->getContentSize();
-    } else {
-        return this->mRootContainerSize;
+bool CCBReader::readSequences()
+{
+    CCArray *sequences = mActionManager->getSequences();
+    
+    int numSeqs = readInt(false);
+    
+    for (int i = 0; i < numSeqs; i++)
+    {
+        CCBSequence *seq = new CCBSequence();
+        seq->autorelease();
+        
+        seq->setDuration(readFloat());
+        seq->setName(readCachedString()->getCString());
+        seq->setSequenceId(readInt(false));
+        seq->setChainedSequenceId(readInt(true));
+        
+        sequences->addObject(seq);
     }
-}
-
-bool CCBReader::isSpriteSheetLoaded(CCString * pSpriteSheet) {
-    return this->mLoadedSpriteSheets.find(pSpriteSheet->m_sString) != this->mLoadedSpriteSheets.end();
-}
-
-void CCBReader::addLoadedSpriteSheet(CCString * pSpriteSheet) {
-    // Since std::set<string> will copy the string from pSpriteSheet, we needn't to retain 'pSpriteSheet'.
-    //    pSpriteSheet->retain();
-    this->mLoadedSpriteSheets.insert(pSpriteSheet->m_sString);
+    
+    mActionManager->setAutoPlaySequenceId(readInt(true));
+    return true;
 }
 
 CCString * CCBReader::lastPathComponent(CCString * pPath) {
@@ -410,6 +756,23 @@ bool CCBReader::endsWith(CCString * pString, CCString * pEnding) {
         return (string.compare(string.length() - ending.length(), ending.length(), ending) == 0);
     } else {
         return false;
+    }
+}
+
+/************************************************************************
+ Static functions
+ ************************************************************************/
+
+float CCBReader::getResolutionScale()
+{
+    // Init resolution scale
+    if (CCApplication::sharedApplication()->getTargetPlatform() == kTargetIpad)
+    {
+        return 2;
+    }
+    else 
+    {
+        return 1;
     }
 }
 

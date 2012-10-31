@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" width="12" height="12" tilewidth="101" tileheight="81">
- <tileset firstgid="1" source="orthogonal-test1.tsx"/>
- <layer name="Layer 0" width="12" height="12">
-  <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA9XMzQpAQBhG4cnfwsK/sJVBuf/7c9Sn3o0aWXnrSTNz4ty/N4iQTSJkBUpUdp4futa+m4gRIUGKTNq7X7Fbr2usud48Frv3osaBER166/OX/Zf/n+tha6FAAgAA
-  </data>
- </layer>
-</map>

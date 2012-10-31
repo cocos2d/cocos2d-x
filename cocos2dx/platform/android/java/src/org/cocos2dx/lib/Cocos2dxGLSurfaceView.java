@@ -257,9 +257,11 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 				break;
 		}
 
+        /*
 		if (BuildConfig.DEBUG) {
 			Cocos2dxGLSurfaceView.dumpMotionEvent(pMotionEvent);
 		}
+		*/
 		return true;
 	}
 

@@ -38,5 +38,6 @@
 + (id) sharedAccelerometerDispather;
 - (id) init;
 - (void) addDelegate: (cocos2d::CCAccelerometerDelegate *) delegate;
+- (void) setAccelerometerInterval:(float)interval;
 
 @end

@@ -1,6 +1,6 @@
 #include "CCParticleSystemQuadLoader.h"
 
-USING_NS_CC;
+
 
 #define PROPERTY_EMITERMODE "emitterMode"
 #define PROPERTY_POSVAR "posVar"

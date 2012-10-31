@@ -20,7 +20,6 @@ class Ball;
 class PongLayer : public CCLayer
 {
 private:
-    CCSize      m_tWinSize;
     Ball*       m_ball;
     CCArray*    m_paddles;
     CCPoint     m_ballStartingVelocity; 

@@ -42,6 +42,21 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
+		<key>libs/javascript/spidermonkey-ios/include/gc/Heap.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>javascript</string>
+				<string>spidermonkey-ios</string>
+				<string>include</string>
+				<string>gc</string>
+			</array>
+			<key>Path</key>
+			<string>libs/javascript/spidermonkey-ios/include/gc/Heap.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
 		<key>libs/javascript/spidermonkey-ios/include/gc/Root.h</key>
 		<dict>
 			<key>Group</key>
@@ -241,20 +256,6 @@
 			</array>
 			<key>Path</key>
 			<string>libs/javascript/spidermonkey-ios/include/jsatom.tbl</string>
-		</dict>
-		<key>libs/javascript/spidermonkey-ios/include/jscell.h</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>javascript</string>
-				<string>spidermonkey-ios</string>
-				<string>include</string>
-			</array>
-			<key>Path</key>
-			<string>libs/javascript/spidermonkey-ios/include/jscell.h</string>
-			<key>TargetIndices</key>
-			<array/>
 		</dict>
 		<key>libs/javascript/spidermonkey-ios/include/jsclass.h</key>
 		<dict>
@@ -593,6 +594,21 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
+		<key>libs/javascript/spidermonkey-ios/include/mozilla/CheckedInt.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>javascript</string>
+				<string>spidermonkey-ios</string>
+				<string>include</string>
+				<string>mozilla</string>
+			</array>
+			<key>Path</key>
+			<string>libs/javascript/spidermonkey-ios/include/mozilla/CheckedInt.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
 		<key>libs/javascript/spidermonkey-ios/include/mozilla/FloatingPoint.h</key>
 		<dict>
 			<key>Group</key>
@@ -743,6 +759,21 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
+		<key>libs/javascript/spidermonkey-ios/include/mozilla/ThreadLocal.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>javascript</string>
+				<string>spidermonkey-ios</string>
+				<string>include</string>
+				<string>mozilla</string>
+			</array>
+			<key>Path</key>
+			<string>libs/javascript/spidermonkey-ios/include/mozilla/ThreadLocal.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
 		<key>libs/javascript/spidermonkey-ios/include/mozilla/Types.h</key>
 		<dict>
 			<key>Group</key>
@@ -755,6 +786,21 @@
 			</array>
 			<key>Path</key>
 			<string>libs/javascript/spidermonkey-ios/include/mozilla/Types.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/javascript/spidermonkey-ios/include/mozilla/TypeTraits.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>javascript</string>
+				<string>spidermonkey-ios</string>
+				<string>include</string>
+				<string>mozilla</string>
+			</array>
+			<key>Path</key>
+			<string>libs/javascript/spidermonkey-ios/include/mozilla/TypeTraits.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
@@ -785,23 +831,12 @@
 			<key>Path</key>
 			<string>libs/javascript/spidermonkey-ios/lib/libjs_static.a</string>
 		</dict>
-		<key>libs/javascript/spidermonkey-ios/lib/libjs_static.a.desc</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>javascript</string>
-				<string>spidermonkey-ios</string>
-				<string>lib</string>
-			</array>
-			<key>Path</key>
-			<string>libs/javascript/spidermonkey-ios/lib/libjs_static.a.desc</string>
-		</dict>
 	</dict>
 	<key>Nodes</key>
 	<array>
 		<string>libs/javascript/spidermonkey-ios/include/ds/BitArray.h</string>
 		<string>libs/javascript/spidermonkey-ios/include/gc/Barrier.h</string>
+		<string>libs/javascript/spidermonkey-ios/include/gc/Heap.h</string>
 		<string>libs/javascript/spidermonkey-ios/include/gc/Root.h</string>
 		<string>libs/javascript/spidermonkey-ios/include/gc/Statistics.h</string>
 		<string>libs/javascript/spidermonkey-ios/include/js/HashTable.h</string>
@@ -816,7 +851,6 @@
 		<string>libs/javascript/spidermonkey-ios/include/jsapi.h</string>
 		<string>libs/javascript/spidermonkey-ios/include/jsatom.h</string>
 		<string>libs/javascript/spidermonkey-ios/include/jsatom.tbl</string>
-		<string>libs/javascript/spidermonkey-ios/include/jscell.h</string>
 		<string>libs/javascript/spidermonkey-ios/include/jsclass.h</string>
 		<string>libs/javascript/spidermonkey-ios/include/jsclist.h</string>
 		<string>libs/javascript/spidermonkey-ios/include/jscpucfg.h</string>
@@ -841,6 +875,7 @@
 		<string>libs/javascript/spidermonkey-ios/include/mozilla/Assertions.h</string>
 		<string>libs/javascript/spidermonkey-ios/include/mozilla/Attributes.h</string>
 		<string>libs/javascript/spidermonkey-ios/include/mozilla/BloomFilter.h</string>
+		<string>libs/javascript/spidermonkey-ios/include/mozilla/CheckedInt.h</string>
 		<string>libs/javascript/spidermonkey-ios/include/mozilla/FloatingPoint.h</string>
 		<string>libs/javascript/spidermonkey-ios/include/mozilla/GuardObjects.h</string>
 		<string>libs/javascript/spidermonkey-ios/include/mozilla/HashFunctions.h</string>
@@ -851,10 +886,11 @@
 		<string>libs/javascript/spidermonkey-ios/include/mozilla/RefPtr.h</string>
 		<string>libs/javascript/spidermonkey-ios/include/mozilla/Scoped.h</string>
 		<string>libs/javascript/spidermonkey-ios/include/mozilla/StandardInteger.h</string>
+		<string>libs/javascript/spidermonkey-ios/include/mozilla/ThreadLocal.h</string>
 		<string>libs/javascript/spidermonkey-ios/include/mozilla/Types.h</string>
+		<string>libs/javascript/spidermonkey-ios/include/mozilla/TypeTraits.h</string>
 		<string>libs/javascript/spidermonkey-ios/include/mozilla/Util.h</string>
 		<string>libs/javascript/spidermonkey-ios/lib/libjs_static.a</string>
-		<string>libs/javascript/spidermonkey-ios/lib/libjs_static.a.desc</string>
 	</array>
 </dict>
 </plist>

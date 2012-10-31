@@ -45,15 +45,17 @@ copy_src_and_jni(){
     sh $COCOS2DX_ROOT/template/android/gamemk.sh $APP_DIR/proj.android/jni/Android.mk $NEED_BOX2D $NEED_CHIPMUNK $NEED_LUA
 }
 
-copy_library_src(){
-    cp -rf $COCOSJAVALIB_ROOT/src_common/* $APP_DIR/proj.android/src/
-}
-
 # copy build_native.sh and replace something
 copy_build_native(){
     # here should use # instead of /, why??
     sed "s#__cocos2dxroot__#$COCOS2DX_ROOT#;s#__ndkroot__#$NDK_ROOT#;s#__projectname__#$APP_NAME#" $COCOS2DX_ROOT/template/android/build_native.sh > $APP_DIR/proj.android/build_native.sh
     chmod u+x $APP_DIR/proj.android/build_native.sh
+}
+
+# copy debugger script and replace templated parameters
+copy_ndkgdb(){
+    sed "s#__projectname__#$APP_NAME#;s#__packagename__#$PACKAGE_PATH#" $COCOS2DX_ROOT/template/android/ndkgdb.sh > $APP_DIR/proj.android/ndkgdb.sh
+    chmod u+x $APP_DIR/proj.android/ndkgdb.sh
 }
 
 # copy .project and .classpath and replace project name
@@ -95,8 +97,8 @@ copy_icon(){
 copy_cpp_h
 copy_resouces
 copy_src_and_jni
-copy_library_src
 copy_build_native
+copy_ndkgdb
 modify_project_classpath
 modify_androidmanifest
 modify_applicationdemo

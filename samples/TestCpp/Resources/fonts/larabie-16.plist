@@ -5,7 +5,7 @@
 	<key>version</key>
 	<integer>1</integer>
 	<key>textureFilename</key>
-	<string>fonts/larabie-16.png</string>
+	<string>larabie-16.png</string>
 	<key>itemWidth</key>
 	<integer>10</integer>
 	<key>itemHeight</key>

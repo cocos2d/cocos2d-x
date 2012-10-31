@@ -75,10 +75,13 @@ bool HelloWorld::init()
 			this,
 			menu_selector(HelloWorld::menuCloseCallback));
 		CC_BREAK_IF(! pCloseItem);
-
+        
 		// Place the menu item bottom-right conner.
-		pCloseItem->setPosition(ccp(CCDirector::sharedDirector()->getVisibleSize().width - 20,
-                                    CCDirector::sharedDirector()->getVisibleOrigin().y + 20));
+        CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
+        CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
+        
+		pCloseItem->setPosition(ccp(origin.x + visibleSize.width - pCloseItem->getContentSize().width/2,
+                                    origin.y + pCloseItem->getContentSize().height/2));
 
 		// Create a menu with the "close" menu item, it's an auto release object.
 		CCMenu* pMenu = CCMenu::create(pCloseItem, NULL);
@@ -90,10 +93,10 @@ bool HelloWorld::init()
 
 		/////////////////////////////
 		// 2. add your codes below...
-
-		CCSize winSize = CCDirector::sharedDirector()->getVisibleSize();
 		CCSprite *player = CCSprite::create("Player.png", CCRectMake(0, 0, 27, 40) );
-		player->setPosition( ccp(player->getContentSize().width/2, winSize.height/2) );
+        
+		player->setPosition( ccp(origin.x + player->getContentSize().width/2,
+                                 origin.y + visibleSize.height/2) );
 		this->addChild(player);
 
 		this->schedule( schedule_selector(HelloWorld::gameLogic), 1.0 );
@@ -125,7 +128,7 @@ void HelloWorld::menuCloseCallback(CCObject* pSender)
 void HelloWorld::addTarget()
 {
 	CCSprite *target = CCSprite::create("Target.png", CCRectMake(0,0,27,40) );
-
+    
 	// Determine where to spawn the target along the Y axis
 	CCSize winSize = CCDirector::sharedDirector()->getVisibleSize();
 	float minY = target->getContentSize().height/2;
@@ -196,8 +199,9 @@ void HelloWorld::ccTouchesEnded(CCSet* touches, CCEvent* event)
 
 	// Set up initial location of projectile
 	CCSize winSize = CCDirector::sharedDirector()->getVisibleSize();
+    CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
 	CCSprite *projectile = CCSprite::create("Projectile.png", CCRectMake(0, 0, 20, 20));
-	projectile->setPosition( ccp(20, winSize.height/2) );
+	projectile->setPosition( ccp(origin.x+20, origin.y+winSize.height/2) );
 
 	// Determinie offset of location to projectile
 	float offX = location.x - projectile->getPosition().x;
@@ -210,7 +214,7 @@ void HelloWorld::ccTouchesEnded(CCSet* touches, CCEvent* event)
 	this->addChild(projectile);
 
 	// Determine where we wish to shoot the projectile to
-	float realX = winSize.width + (projectile->getContentSize().width/2);
+	float realX = origin.x+winSize.width + (projectile->getContentSize().width/2);
 	float ratio = offY / offX;
 	float realY = (realX * ratio) + projectile->getPosition().y;
 	CCPoint realDest = ccp(realX, realY);

@@ -1,6 +1,6 @@
 #include "CCMenuItemImageLoader.h"
 
-USING_NS_CC;
+
 
 #define PROPERTY_NORMALDISPLAYFRAME "normalSpriteFrame"
 #define PROPERTY_SELECTEDDISPLAYFRAME "selectedSpriteFrame"

@@ -3,7 +3,7 @@
 #include "cocos2d.h"
 #include "SimpleAudioEngine.h"
 #include "ScriptingCore.h"
-#include "cocos2dx.hpp"
+#include "generated/cocos2dx.hpp"
 #include "cocos2d_specifics.hpp"
 #include "js_bindings_chipmunk_manual.hpp"
 
@@ -25,16 +25,11 @@ bool AppDelegate::applicationDidFinishLaunching()
     CCDirector *pDirector = CCDirector::sharedDirector();
     pDirector->setOpenGLView(CCEGLView::sharedOpenGLView());
     
-    // enable High Resource Mode(2x, such as iphone4) and maintains low resource on other devices.
-    // pDirector->enableRetinaDisplay(true);
-    
     // turn on display FPS
     pDirector->setDisplayStats(true);
     
     // set FPS. the default value is 1.0/60 if you don't call this
     pDirector->setAnimationInterval(1.0 / 60);
-    
-    CCScene * pScene = CCScene::create();
     
     ScriptingCore* sc = ScriptingCore::getInstance();
     sc->addRegisterCallback(register_all_cocos2dx);
@@ -46,7 +41,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     
     CCScriptEngineProtocol *pEngine = ScriptingCore::getInstance();
     CCScriptEngineManager::sharedManager()->setScriptEngine(pEngine);
-    ScriptingCore::getInstance()->runScript("js/main.js");
+    ScriptingCore::getInstance()->runScript("tests-boot-jsb.js");
        
     return true;
 }

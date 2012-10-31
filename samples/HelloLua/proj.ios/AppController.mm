@@ -57,7 +57,17 @@ static AppDelegate s_sharedApplication;
     viewController.view = __glView;
 
     // Set RootViewController to window
-    [window addSubview: viewController.view];
+    if ( [[UIDevice currentDevice].systemVersion floatValue] < 6.0)
+    {
+        // warning: addSubView doesn't work on iOS6
+        [window addSubview: viewController.view];
+    }
+    else
+    {
+        // use this method on ios6
+        [window setRootViewController:viewController];
+    }
+    
     [window makeKeyAndVisible];
 
     [[UIApplication sharedApplication] setStatusBarHidden: YES];

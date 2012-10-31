@@ -46,8 +46,10 @@ MenuLayer* MenuLayer::menuWithEntryID(int entryId)
 
 bool MenuLayer::initWithEntryID(int entryId)
 {
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
-    
+    CCDirector* pDirector = CCDirector::sharedDirector();
+	CCPoint visibleOrigin = pDirector->getVisibleOrigin();
+	CCSize visibleSize = pDirector->getVisibleSize();
+
     m_entryID = entryId;
     
     setTouchEnabled( true );
@@ -56,14 +58,14 @@ bool MenuLayer::initWithEntryID(int entryId)
     addChild(view, 0, kTagBox2DNode);
     view->setScale(15);
     view->setAnchorPoint( ccp(0,0) );
-    view->setPosition( ccp(s.width/2, s.height/3) );
+    view->setPosition( ccp(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/3) );
 //#if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
 //    CCLabelBMFont* label = CCLabelBMFont::create(view->title().c_str(),  "fonts/arial16.fnt");
 //#else    
     CCLabelTTF* label = CCLabelTTF::create(view->title().c_str(), "Arial", 28);
 //#endif
     addChild(label, 1);
-    label->setPosition( ccp(s.width/2, s.height-50) );
+    label->setPosition( ccp(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height-50) );
 
     CCMenuItemImage *item1 = CCMenuItemImage::create("Images/b1.png", "Images/b2.png", this, menu_selector(MenuLayer::backCallback) );
     CCMenuItemImage *item2 = CCMenuItemImage::create("Images/r1.png","Images/r2.png", this, menu_selector(MenuLayer::restartCallback) );
@@ -72,9 +74,9 @@ bool MenuLayer::initWithEntryID(int entryId)
     CCMenu *menu = CCMenu::create(item1, item2, item3, NULL);
 
     menu->setPosition( CCPointZero );
-    item1->setPosition( ccp( s.width/2 - 100,30) );
-    item2->setPosition( ccp( s.width/2, 30) );
-    item3->setPosition( ccp( s.width/2 + 100,30) );
+    item1->setPosition(ccp(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
+    item2->setPosition(ccp(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2));
+    item3->setPosition(ccp(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
     
     addChild(menu, 1);    
 

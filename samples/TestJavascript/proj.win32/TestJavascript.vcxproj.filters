@@ -14,6 +14,9 @@
     <Filter Include="Classes">
       <UniqueIdentifier>{e93a77e1-af1e-4400-87d3-504b62ebdbb0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="bindings\generated">
+      <UniqueIdentifier>{146f26cf-13e1-4106-891b-4b0118ceac2b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -21,15 +24,6 @@
     </ClCompile>
     <ClCompile Include="..\Classes\AppDelegate.cpp">
       <Filter>Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\scripting\javascript\bindings\CCPhysicsSprite.cpp">
-      <Filter>bindings</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\scripting\javascript\bindings\cocos2d_specifics.cpp">
-      <Filter>bindings</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\scripting\javascript\bindings\cocos2dx.cpp">
-      <Filter>bindings</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\scripting\javascript\bindings\js_bindings_chipmunk_functions.cpp">
       <Filter>bindings</Filter>
@@ -43,6 +37,21 @@
     <ClCompile Include="..\..\..\scripting\javascript\bindings\ScriptingCore.cpp">
       <Filter>bindings</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\scripting\javascript\bindings\CCPhysicsSprite.cpp">
+      <Filter>bindings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\scripting\javascript\bindings\cocos2d_specifics.cpp">
+      <Filter>bindings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\scripting\javascript\bindings\cocosjs_manual_conversions.cpp">
+      <Filter>bindings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\scripting\javascript\bindings\js_bindings_ccbreader.cpp">
+      <Filter>bindings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\scripting\javascript\bindings\generated\cocos2dx.cpp">
+      <Filter>bindings\generated</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -54,13 +63,7 @@
     <ClInclude Include="..\Classes\AppDelegate.h">
       <Filter>Classes</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\scripting\javascript\bindings\CCPhysicsSprite.h">
-      <Filter>bindings</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\scripting\javascript\bindings\cocos2d_specifics.hpp">
-      <Filter>bindings</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\scripting\javascript\bindings\cocos2dx.hpp">
+    <ClInclude Include="..\..\..\scripting\javascript\bindings\js_bindings_ccbreader.h">
       <Filter>bindings</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\scripting\javascript\bindings\js_bindings_chipmunk_functions.hpp">
@@ -80,6 +83,18 @@
     </ClInclude>
     <ClInclude Include="..\..\..\scripting\javascript\bindings\spidermonkey_specifics.h">
       <Filter>bindings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\scripting\javascript\bindings\CCPhysicsSprite.h">
+      <Filter>bindings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\scripting\javascript\bindings\cocos2d_specifics.hpp">
+      <Filter>bindings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\scripting\javascript\bindings\cocosjs_manual_conversions.h">
+      <Filter>bindings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\scripting\javascript\bindings\generated\cocos2dx.hpp">
+      <Filter>bindings\generated</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
