@@ -161,35 +161,35 @@ typedef JSBool
 (* LookupSpecialOp)(JSContext *cx, HandleObject obj, HandleSpecialId sid,
                     MutableHandleObject objp, MutableHandleShape propp);
 typedef JSBool
-(* DefineGenericOp)(JSContext *cx, HandleObject obj, HandleId id, const Value *value,
+(* DefineGenericOp)(JSContext *cx, HandleObject obj, HandleId id, HandleValue value,
                     PropertyOp getter, StrictPropertyOp setter, unsigned attrs);
 typedef JSBool
-(* DefinePropOp)(JSContext *cx, HandleObject obj, HandlePropertyName name, const Value *value,
+(* DefinePropOp)(JSContext *cx, HandleObject obj, HandlePropertyName name, HandleValue value,
                  PropertyOp getter, StrictPropertyOp setter, unsigned attrs);
 typedef JSBool
-(* DefineElementOp)(JSContext *cx, HandleObject obj, uint32_t index, const Value *value,
+(* DefineElementOp)(JSContext *cx, HandleObject obj, uint32_t index, HandleValue value,
                     PropertyOp getter, StrictPropertyOp setter, unsigned attrs);
 typedef JSBool
-(* DefineSpecialOp)(JSContext *cx, HandleObject obj, HandleSpecialId sid, const Value *value,
+(* DefineSpecialOp)(JSContext *cx, HandleObject obj, HandleSpecialId sid, HandleValue value,
                     PropertyOp getter, StrictPropertyOp setter, unsigned attrs);
 typedef JSBool
-(* GenericIdOp)(JSContext *cx, HandleObject obj, HandleObject receiver, HandleId id, Value *vp);
+(* GenericIdOp)(JSContext *cx, HandleObject obj, HandleObject receiver, HandleId id, MutableHandleValue vp);
 typedef JSBool
-(* PropertyIdOp)(JSContext *cx, HandleObject obj, HandleObject receiver, HandlePropertyName name, Value *vp);
+(* PropertyIdOp)(JSContext *cx, HandleObject obj, HandleObject receiver, HandlePropertyName name, MutableHandleValue vp);
 typedef JSBool
-(* ElementIdOp)(JSContext *cx, HandleObject obj, HandleObject receiver, uint32_t index, Value *vp);
+(* ElementIdOp)(JSContext *cx, HandleObject obj, HandleObject receiver, uint32_t index, MutableHandleValue vp);
 typedef JSBool
-(* ElementIfPresentOp)(JSContext *cx, HandleObject obj, HandleObject receiver, uint32_t index, Value *vp, bool* present);
+(* ElementIfPresentOp)(JSContext *cx, HandleObject obj, HandleObject receiver, uint32_t index, MutableHandleValue vp, bool* present);
 typedef JSBool
-(* SpecialIdOp)(JSContext *cx, HandleObject obj, HandleObject receiver, HandleSpecialId sid, Value *vp);
+(* SpecialIdOp)(JSContext *cx, HandleObject obj, HandleObject receiver, HandleSpecialId sid, MutableHandleValue vp);
 typedef JSBool
-(* StrictGenericIdOp)(JSContext *cx, HandleObject obj, HandleId id, Value *vp, JSBool strict);
+(* StrictGenericIdOp)(JSContext *cx, HandleObject obj, HandleId id, MutableHandleValue vp, JSBool strict);
 typedef JSBool
-(* StrictPropertyIdOp)(JSContext *cx, HandleObject obj, HandlePropertyName name, Value *vp, JSBool strict);
+(* StrictPropertyIdOp)(JSContext *cx, HandleObject obj, HandlePropertyName name, MutableHandleValue vp, JSBool strict);
 typedef JSBool
-(* StrictElementIdOp)(JSContext *cx, HandleObject obj, uint32_t index, Value *vp, JSBool strict);
+(* StrictElementIdOp)(JSContext *cx, HandleObject obj, uint32_t index, MutableHandleValue vp, JSBool strict);
 typedef JSBool
-(* StrictSpecialIdOp)(JSContext *cx, HandleObject obj, HandleSpecialId sid, Value *vp, JSBool strict);
+(* StrictSpecialIdOp)(JSContext *cx, HandleObject obj, HandleSpecialId sid, MutableHandleValue vp, JSBool strict);
 typedef JSBool
 (* GenericAttributesOp)(JSContext *cx, HandleObject obj, HandleId id, unsigned *attrsp);
 typedef JSBool
@@ -199,11 +199,11 @@ typedef JSBool
 typedef JSBool
 (* SpecialAttributesOp)(JSContext *cx, HandleObject obj, HandleSpecialId sid, unsigned *attrsp);
 typedef JSBool
-(* DeletePropertyOp)(JSContext *cx, HandleObject obj, HandlePropertyName name, Value *vp, JSBool strict);
+(* DeletePropertyOp)(JSContext *cx, HandleObject obj, HandlePropertyName name, MutableHandleValue vp, JSBool strict);
 typedef JSBool
-(* DeleteElementOp)(JSContext *cx, HandleObject obj, uint32_t index, Value *vp, JSBool strict);
+(* DeleteElementOp)(JSContext *cx, HandleObject obj, uint32_t index, MutableHandleValue vp, JSBool strict);
 typedef JSBool
-(* DeleteSpecialOp)(JSContext *cx, HandleObject obj, HandleSpecialId sid, Value *vp, JSBool strict);
+(* DeleteSpecialOp)(JSContext *cx, HandleObject obj, HandleSpecialId sid, MutableHandleValue vp, JSBool strict);
 typedef JSType
 (* TypeOfOp)(JSContext *cx, HandleObject obj);
 
@@ -257,9 +257,22 @@ struct ClassExtension
      * WeakMaps use this to override the wrapper disposal optimization.
      */
     bool                isWrappedNative;
+
+    /*
+     * If an object is used as a key in a weakmap, it may be desirable for the
+     * garbage collector to keep that object around longer than it otherwise
+     * would. A common case is when the key is a wrapper around an object in
+     * another compartment, and we want to avoid collecting the wrapper (and
+     * removing the weakmap entry) as long as the wrapped object is alive. In
+     * that case, the wrapped object is returned by the wrapper's
+     * weakmapKeyDelegateOp hook. As long as the wrapper is used as a weakmap
+     * key, it will not be collected (and remain in the weakmap) until the
+     * wrapped object is collected.
+     */
+    JSWeakmapKeyDelegateOp weakmapKeyDelegateOp;
 };
 
-#define JS_NULL_CLASS_EXT   {NULL,NULL,NULL,NULL,NULL,false}
+#define JS_NULL_CLASS_EXT   {NULL,NULL,NULL,NULL,NULL,false,NULL}
 
 struct ObjectOps
 {
