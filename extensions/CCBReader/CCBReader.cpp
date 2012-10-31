@@ -91,6 +91,11 @@ CCBReader::CCBReader(CCBReader * pCCBReader)
     this->mCCBMemberVariableAssigner = pCCBReader->mCCBMemberVariableAssigner;
     this->mCCBSelectorResolver = pCCBReader->mCCBSelectorResolver;
     this->mCCNodeLoaderListener = pCCBReader->mCCNodeLoaderListener;
+
+    this->mOwnerCallbackNames = pCCBReader->mOwnerCallbackNames;
+    this->mOwnerCallbackNodes = pCCBReader->mOwnerCallbackNodes;
+    this->mOwnerOutletNames = pCCBReader->mOwnerOutletNames;
+    this->mOwnerOutletNodes = pCCBReader->mOwnerOutletNodes;
 }
 
 CCBReader::CCBReader()
@@ -227,6 +232,12 @@ CCNode* CCBReader::readNodeGraphFromData(CCData *pData, CCObject *pOwner, const 
     initWithData(pData, pOwner);
     mActionManager->setRootContainerSize(parentSize);
     
+    mOwnerOutletNames = CCArray::create();
+    mOwnerOutletNodes = CCArray::create();
+       
+    mOwnerCallbackNames = CCArray::create();
+    mOwnerCallbackNodes = CCArray::create();
+    
     CCNode *pNodeGraph = readFileWithCleanUp(true);
     
     if (pNodeGraph && mActionManager->getAutoPlaySequenceId() != -1)
@@ -234,7 +245,20 @@ CCNode* CCBReader::readNodeGraphFromData(CCData *pData, CCObject *pOwner, const 
         // Auto play animations
         mActionManager->runAnimations(mActionManager->getAutoPlaySequenceId(), 0);
     }
+
+    if(jsControlled) {
+        mNodesWithAnimationManagers = CCArray::create();
+        mAnimationManagerForNodes = CCArray::create();
+    }
     
+    for(int i = 0; i < mAnimationManagers.size(); ++i) {
+        if(jsControlled) {
+            mNodesWithAnimationManagers->addObject(mAnimationManagers[i].first);
+            mAnimationManagerForNodes->addObject(mAnimationManagers[i].second);
+        }
+        
+    }
+
     // Return action manager by reference
     if (ppAnimationManager)
     {
@@ -321,7 +345,13 @@ CCNode* CCBReader::readFileWithCleanUp(bool bCleanUp)
     }
     
     CCNode *pNode = readNodeGraph();
+<<<<<<< HEAD
     
+=======
+
+    mAnimationManagers.push_back(std::make_pair(pNode, mActionManager));
+
+>>>>>>> Changing mAnimationManagers and bringing CCBReader implementation closer to cocos2d-iphone CCBReader
     if (bCleanUp)
     {
         cleanUpNodeGraph(pNode);
@@ -481,6 +511,13 @@ CCNode * CCBReader::readNodeGraph(CCNode * pParent) {
         mActionManager->setRootNode(node);
     }
     
+<<<<<<< HEAD
+=======
+    if(jsControlled && node == mActionManager->getRootNode()) {
+        mActionManager->setDocumentControllerName(jsControlledName->getCString());
+    }
+    
+>>>>>>> Changing mAnimationManagers and bringing CCBReader implementation closer to cocos2d-iphone CCBReader
     // Read animated properties
     CCDictionary *seqs = CCDictionary::create();
     mAnimatedProps = new set<string>();
@@ -536,8 +573,10 @@ CCNode * CCBReader::readNodeGraph(CCNode * pParent) {
         embeddedNode->setScale(ccbFileNode->getScale());
         embeddedNode->setTag(ccbFileNode->getTag());
         embeddedNode->setVisible(true);
-        embeddedNode->ignoreAnchorPointForPosition(ccbFileNode->isIgnoreAnchorPointForPosition());
+        //embeddedNode->ignoreAnchorPointForPosition(ccbFileNode->isIgnoreAnchorPointForPosition());
         
+        mActionManager->moveAnimationsFromNode(ccbFileNode, embeddedNode);
+
         ccbFileNode->setCCBFileNode(NULL);
         
         node = embeddedNode;
@@ -759,6 +798,64 @@ bool CCBReader::endsWith(CCString * pString, CCString * pEnding) {
     }
 }
 
+<<<<<<< HEAD
+=======
+bool CCBReader::isJSControlled() {
+    return jsControlled;
+}
+
+void CCBReader::addOwnerCallbackName(std::string name) {
+    mOwnerCallbackNames->addObject(CCString::create(name));
+}
+
+void CCBReader::addOwnerCallbackNode(CCNode *node) {
+    mOwnerCallbackNodes->addObject(node);
+}
+
+
+void CCBReader::addDocumentCallbackName(std::string name) {
+    mActionManager->addDocumentCallbackName(name);
+}
+
+void CCBReader::addDocumentCallbackNode(CCNode *node) {
+    mActionManager->addDocumentCallbackNode(node);
+}
+
+
+CCArray* CCBReader::getOwnerCallbackNames() {
+    return mOwnerCallbackNames;
+}
+
+CCArray* CCBReader::getOwnerCallbackNodes() {
+    return mOwnerCallbackNodes;
+}
+
+CCArray* CCBReader::getOwnerOutletNames() {
+    return mOwnerOutletNames;
+}
+
+CCArray* CCBReader::getOwnerOutletNodes() {
+    return mOwnerOutletNodes;
+}
+
+CCArray* CCBReader::getNodesWithAnimationManagers() {
+    return mNodesWithAnimationManagers;
+}
+
+CCArray* CCBReader::getAnimationManagerForNodes() {
+    return mAnimationManagerForNodes;
+}
+
+std::vector<std::pair<CCNode *, CCBAnimationManager *> > CCBReader::getAnimationManagers() {
+    return mAnimationManagers;
+}
+
+void CCBReader::setAnimationManagers(std::vector<std::pair<CCNode *, CCBAnimationManager *> > x) {
+    mAnimationManagers = x;
+}
+
+
+>>>>>>> Changing mAnimationManagers and bringing CCBReader implementation closer to cocos2d-iphone CCBReader
 /************************************************************************
  Static functions
  ************************************************************************/
