@@ -55,18 +55,17 @@ std::map<std::string, js::RootedObject*> globals;
 static void executeJSFunctionFromReservedSpot(JSContext *cx, JSObject *obj,
                                               jsval &dataVal, jsval &retval) {
 
-    //  if(p->jsclass->JSCLASS_HAS_RESERVED_SLOTS(1)) {
     jsval func = JS_GetReservedSlot(obj, 0);
 
     if(func == JSVAL_VOID) { return; }
     jsval thisObj = JS_GetReservedSlot(obj, 1);
+	JSAutoCompartment ac(cx, obj);
     if(thisObj == JSVAL_VOID) {
         JS_CallFunctionValue(cx, obj, func, 1, &dataVal, &retval);
     } else {
         assert(!JSVAL_IS_PRIMITIVE(thisObj));
         JS_CallFunctionValue(cx, JSVAL_TO_OBJECT(thisObj), func, 1, &dataVal, &retval);
     }
-    //  }
 }
 
 static void getTouchesFuncName(int eventType, std::string &funcName) {
@@ -163,6 +162,7 @@ static void executeJSFunctionWithName(JSContext *cx, JSObject *obj,
         if(temp_retval == JSVAL_VOID) {
             return;
         }
+		JSAutoCompartment ac(cx, obj);
         JS_CallFunctionName(cx, obj, funcName,
                             1, &dataVal, &retval);
     }
@@ -361,13 +361,11 @@ JSBool ScriptingCore::evalString(const char *string, jsval *outVal, const char *
     JSScript* script = JS_CompileScript(cx, global, string, strlen(string), filename, 1);
     if (script) {
         // JSAutoCompartment ac(cx, global);
-        JSAutoEnterCompartment ac;
-        ac.enter(cx, global);
-        JSBool evaluatedOK = JS_ExecuteScript(cx_, global_, script, &rval);
+		JSAutoCompartment ac(cx, global);
+        JSBool evaluatedOK = JS_ExecuteScript(cx, global, script, &rval);
         if (JS_FALSE == evaluatedOK) {
             fprintf(stderr, "(evaluatedOK == JS_FALSE)\n");
         }
-        ac.leave();
         return evaluatedOK;
     }
     return false;
@@ -406,6 +404,7 @@ void ScriptingCore::createGlobalContext() {
         this->cx_ = NULL;
         this->rt_ = NULL;
     }
+	JS_SetCStringsAreUTF8();
     this->rt_ = JS_NewRuntime(10 * 1024 * 1024);
     this->cx_ = JS_NewContext(rt_, 10240);
     JS_SetOptions(this->cx_, JSOPTION_TYPE_INFERENCE);
@@ -455,13 +454,11 @@ JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* c
     if (script) {
         jsval rval;
         filename_script[path] = script;
-        JSAutoEnterCompartment ac;
-        ac.enter(cx, global);
+		JSAutoCompartment ac(cx, global);
         evaluatedOK = JS_ExecuteScript(cx, global, script, &rval);
         if (JS_FALSE == evaluatedOK) {
             fprintf(stderr, "(evaluatedOK == JS_FALSE)\n");
         }
-        ac.leave();
     }
     return evaluatedOK;
 }
@@ -1145,15 +1142,13 @@ JSObject* NewGlobalObject(JSContext* cx)
 	if (!glob) {
 		return NULL;
 	}
-	JSAutoEnterCompartment ac;
-	ac.enter(cx, glob);
+	JSAutoCompartment ac(cx, glob);
 	JSBool ok = JS_TRUE;
 	ok = JS_InitStandardClasses(cx, glob);
 	if (ok)
 		JS_InitReflect(cx, glob);
 	if (ok)
 		ok = JS_DefineDebuggerObject(cx, glob);
-	ac.leave();
 	if (!ok)
 		return NULL;
 
@@ -1173,6 +1168,7 @@ JSBool jsNewGlobal(JSContext* cx, unsigned argc, jsval* vp)
             JS_WrapObject(cx, global->address());
             globals[key] = global;
             // register everything on the list on this new global object
+			JSAutoCompartment ac(cx, g);
             for (std::vector<sc_register_sth>::iterator it = registrationList.begin(); it != registrationList.end(); it++) {
                 sc_register_sth callback = *it;
                 callback(cx, g);
