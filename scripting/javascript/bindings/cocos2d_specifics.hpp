@@ -4,11 +4,11 @@
 #include "jsapi.h"
 #include "ScriptingCore.h"
 
-class JSSchedule;
+class JSScheduleWrapper;
 
 typedef struct jsScheduleFunc_proxy {
     void * ptr;
-    JSSchedule *obj;
+    JSScheduleWrapper *obj;
     UT_hash_handle hh;
 } schedFunc_proxy_t;
 
@@ -79,19 +79,48 @@ inline js_proxy_t *js_get_or_create_proxy(JSContext *cx, T *native_obj) {
 jsval anonEvaluate(JSContext *cx, JSObject *thisObj, const char* string);
 void register_cocos2dx_js_extensions(JSContext* cx, JSObject* obj);
 
-class JSCallFunc: public CCObject {
+
+class JSCallbackWrapper: public CCObject {
 public:
-    JSCallFunc(jsval func): jsCallback(func) {}
-    JSCallFunc() {extraData = JSVAL_VOID;}
-    virtual ~JSCallFunc() {
-        return;
-    }
-       
+    JSCallbackWrapper() {}
+    virtual ~JSCallbackWrapper(void) {}
     void setJSCallbackFunc(jsval obj);
     void setJSCallbackThis(jsval thisObj);
-    void setExtraDataField(jsval data);
-    static void dumpNamedRoot(const char *name, void *addr, JSGCRootType type, void *data);
-    static void setTargetForNativeNode(CCNode *pNode, JSCallFunc *target);
+    void setJSExtraData(jsval data);
+    
+protected:
+    jsval jsCallback;
+    jsval jsThisObj;
+    jsval extraData;
+};
+
+
+class JSCCBAnimationWrapper: public JSCallbackWrapper {
+public:
+    JSCCBAnimationWrapper() {}
+    virtual ~JSCCBAnimationWrapper() {}
+    
+    void animationCompleteCallback() const {
+        
+        JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
+        jsval retval = JSVAL_NULL;
+        
+        if(!JSVAL_IS_VOID(jsCallback)  && !JSVAL_IS_VOID(jsThisObj)) {
+            JS_CallFunctionValue(cx, JSVAL_TO_OBJECT(jsThisObj), jsCallback, 0, NULL, &retval);
+        }
+    }
+    
+};
+
+
+class JSCallFuncWrapper: public JSCallbackWrapper {
+public:
+    JSCallFuncWrapper() {}
+    virtual ~JSCallFuncWrapper(void) {
+        return;
+    }
+
+    static void setTargetForNativeNode(CCNode *pNode, JSCallFuncWrapper *target);
     static CCArray * getTargetForNativeNode(CCNode *pNode);
 
     void callbackFunc(CCNode *node) const {
@@ -115,35 +144,28 @@ public:
             JS_CallFunctionValue(cx, JSVAL_TO_OBJECT(jsThisObj), jsCallback, 2, valArr, &retval);
         }
         
-        JSCallFunc::setTargetForNativeNode(node, (JSCallFunc *)this);
+        JSCallFuncWrapper::setTargetForNativeNode(node, (JSCallFuncWrapper *)this);
         
         JS_RemoveValueRoot(cx, valArr);
 
     }
-private:
-    jsval jsCallback;
-    jsval jsThisObj;
-    jsval extraData;
+
 };
 
 
-class JSSchedule: public CCObject {
+class JSScheduleWrapper: public JSCallbackWrapper {
     
 public:
-    JSSchedule(jsval func): jsSchedule(func) {}
-    JSSchedule() {jsSchedule = JSVAL_VOID; jsThisObj = JSVAL_VOID;}
-    virtual ~JSSchedule() {
+    JSScheduleWrapper() {}
+    virtual ~JSScheduleWrapper() {
         return;
     }
 
-    static void setTargetForSchedule(jsval sched, JSSchedule *target);     
-    static JSSchedule * getTargetForSchedule(jsval sched);
-    static void setTargetForNativeNode(CCNode *pNode, JSSchedule *target);
+    static void setTargetForSchedule(jsval sched, JSScheduleWrapper *target);
+    static JSScheduleWrapper * getTargetForSchedule(jsval sched);
+    static void setTargetForNativeNode(CCNode *pNode, JSScheduleWrapper *target);
     static CCArray * getTargetForNativeNode(CCNode *pNode);
 
-    void setJSScheduleFunc(jsval obj);
-    void setJSScheduleThis(jsval thisObj);
-       
     void pause();
     
     void scheduleFunc(float dt) const {
@@ -156,20 +178,13 @@ public:
             return;
         }
         
-        if(!JSVAL_IS_VOID(jsSchedule)  && !JSVAL_IS_VOID(jsThisObj)) {
-            ScriptingCore::dumpRoot(cx, 0, NULL);
-            JS_CallFunctionValue(cx, JSVAL_TO_OBJECT(jsThisObj), jsSchedule, 1, &data, &retval);
+        if(!JSVAL_IS_VOID(jsCallback)  && !JSVAL_IS_VOID(jsThisObj)) {
+            JS_CallFunctionValue(cx, JSVAL_TO_OBJECT(jsThisObj), jsCallback, 1, &data, &retval);
         }
         
         JS_RemoveValueRoot(cx, &data);
         
     }
-
-private:
-    
-    jsval jsSchedule;
-    jsval jsThisObj;
-    
 };
 
 
