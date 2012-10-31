@@ -71,6 +71,34 @@ jsval CCBScriptCallbackProxy::getJSOwner() {
     return owner;
 }
 
+JSBool js_cocos2dx_CCBAnimationManager_animationCompleteCallback(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    if (argc >= 1) {
+		jsval *argv = JS_ARGV(cx, vp);
+        
+        JSObject *obj = JS_THIS_OBJECT(cx, vp);
+		js_proxy_t *proxy;
+		JS_GET_NATIVE_PROXY(proxy, obj);
+		cocos2d::extension::CCBAnimationManager *node = (cocos2d::extension::CCBAnimationManager *)(proxy ? proxy->ptr : NULL);
+        
+        JSCCBAnimationWrapper *tmpCobj = new JSCCBAnimationWrapper();
+        tmpCobj->autorelease();
+        
+        tmpCobj->setJSCallbackThis(argv[0]);
+        if(argc >= 2) {
+            tmpCobj->setJSCallbackFunc(argv[1]);
+        }
+        
+        node->setAnimationCompletedCallback(tmpCobj, callfunc_selector(JSCCBAnimationWrapper::animationCompleteCallback));
+        
+        JS_SetReservedSlot(proxy->obj, 0, argv[0]);
+        JS_SetReservedSlot(proxy->obj, 1, argv[1]);
+        return JS_TRUE;
+    }
+    return JS_FALSE;
+}
+
+
 JSBool js_cocos2dx_CCBReader_readNodeGraphFromFile(JSContext *cx, uint32_t argc, jsval *vp)
 {
     jsval *argv = JS_ARGV(cx, vp);
@@ -255,7 +283,7 @@ JSBool js_CocosBuilder_create(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 extern JSObject* js_cocos2dx_CCBReader_prototype;
-
+extern JSObject* js_cocos2dx_CCBAnimationManager_prototype;
 
 void register_CCBuilderReader(JSContext *cx, JSObject *obj) {
     jsval nsval;
@@ -275,5 +303,6 @@ void register_CCBuilderReader(JSContext *cx, JSObject *obj) {
     JS_DefineFunction(cx, tmpObj, "loadScene", js_cocos2dx_CCBReader_createSceneWithNodeGraphFromFile, 2, JSPROP_READONLY | JSPROP_PERMANENT);
     
     JS_DefineFunction(cx, js_cocos2dx_CCBReader_prototype, "load", js_cocos2dx_CCBReader_readNodeGraphFromFile, 2, JSPROP_READONLY | JSPROP_PERMANENT);    
+    JS_DefineFunction(cx, js_cocos2dx_CCBAnimationManager_prototype, "setCompletedAnimationCallback", js_cocos2dx_CCBAnimationManager_animationCompleteCallback, 2, JSPROP_READONLY | JSPROP_PERMANENT);
 
 }
