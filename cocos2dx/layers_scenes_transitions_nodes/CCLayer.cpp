@@ -667,6 +667,11 @@ CCLayerGradient* CCLayerGradient::create(const ccColor4B& start, const ccColor4B
     return NULL;
 }
 
+bool CCLayerGradient::init()
+{
+	return initWithColor(ccc4(0, 0, 0, 255), ccc4(0, 0, 0, 255));
+}
+
 bool CCLayerGradient::initWithColor(const ccColor4B& start, const ccColor4B& end)
 {
     return initWithColor(start, end, ccp(0, -1));

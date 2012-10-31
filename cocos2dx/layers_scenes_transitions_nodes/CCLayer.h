@@ -262,6 +262,7 @@ public:
     /** Creates a full-screen CCLayer with a gradient between start and end in the direction of v. */
     static CCLayerGradient* create(const ccColor4B& start, const ccColor4B& end, const CCPoint& v);
 
+    virtual bool init();
     /** Initializes the CCLayer with a gradient between start and end. */
     virtual bool initWithColor(const ccColor4B& start, const ccColor4B& end);
 
