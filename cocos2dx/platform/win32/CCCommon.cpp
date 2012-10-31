@@ -68,8 +68,8 @@ void CCLuaLog(const char *pszMsg)
 	WideCharToMultiByte(CP_ACP, 0, widebuff, -1, buff, bufflen, NULL, NULL);
 	puts(buff);
 
-	delete widebuff;
-	delete buff;
+	delete[] widebuff;
+	delete[] buff;
 }
 
 NS_CC_END
