@@ -91,6 +91,11 @@ CCBReader::CCBReader(CCBReader * pCCBReader)
     this->mCCBMemberVariableAssigner = pCCBReader->mCCBMemberVariableAssigner;
     this->mCCBSelectorResolver = pCCBReader->mCCBSelectorResolver;
     this->mCCNodeLoaderListener = pCCBReader->mCCNodeLoaderListener;
+
+    this->mOwnerCallbackNames = pCCBReader->mOwnerCallbackNames;
+    this->mOwnerCallbackNodes = pCCBReader->mOwnerCallbackNodes;
+    this->mOwnerOutletNames = pCCBReader->mOwnerOutletNames;
+    this->mOwnerOutletNodes = pCCBReader->mOwnerOutletNodes;
 }
 
 CCBReader::CCBReader()
@@ -229,9 +234,7 @@ CCNode* CCBReader::readNodeGraphFromData(CCData *pData, CCObject *pOwner, const 
     
     mOwnerOutletNames = CCArray::create();
     mOwnerOutletNodes = CCArray::create();
-    mNodesWithAnimationManagers = CCArray::create();
-    mAnimationManagerForNodes = CCArray::create();
-    
+       
     mOwnerCallbackNames = CCArray::create();
     mOwnerCallbackNodes = CCArray::create();
     
@@ -243,12 +246,15 @@ CCNode* CCBReader::readNodeGraphFromData(CCData *pData, CCObject *pOwner, const 
         mActionManager->runAnimations(mActionManager->getAutoPlaySequenceId(), 0);
     }
     
-    for(std::map<CCNode *, CCBAnimationManager *>::iterator it = mAnimationManagers.begin();
-                                                        it != mAnimationManagers.end(); ++it) {
-
+    if(jsControlled) {
+        mNodesWithAnimationManagers = CCArray::create();
+        mAnimationManagerForNodes = CCArray::create();
+    }
+    
+    for(int i = 0; i < mAnimationManagers.size(); ++i) {
         if(jsControlled) {
-            mNodesWithAnimationManagers->addObject(it->first);
-            mAnimationManagerForNodes->addObject(it->second);
+            mNodesWithAnimationManagers->addObject(mAnimationManagers[i].first);
+            mAnimationManagerForNodes->addObject(mAnimationManagers[i].second);
         }
         
     }
@@ -342,9 +348,9 @@ CCNode* CCBReader::readFileWithCleanUp(bool bCleanUp)
     }
     
     CCNode *pNode = readNodeGraph();
-        
-    mAnimationManagers[pNode] = mActionManager;
-        
+
+    mAnimationManagers.push_back(std::make_pair(pNode, mActionManager));
+
     if (bCleanUp)
     {
         cleanUpNodeGraph(pNode);
@@ -510,7 +516,7 @@ CCNode * CCBReader::readNodeGraph(CCNode * pParent) {
         mActionManager->setRootNode(node);
     }
     
-    if(jsControlled && mActionManager->getRootNode()) {
+    if(jsControlled && node == mActionManager->getRootNode()) {
         mActionManager->setDocumentControllerName(jsControlledName->getCString());
     }
     
@@ -569,8 +575,10 @@ CCNode * CCBReader::readNodeGraph(CCNode * pParent) {
         embeddedNode->setScale(ccbFileNode->getScale());
         embeddedNode->setTag(ccbFileNode->getTag());
         embeddedNode->setVisible(true);
-        embeddedNode->ignoreAnchorPointForPosition(ccbFileNode->isIgnoreAnchorPointForPosition());
+        //embeddedNode->ignoreAnchorPointForPosition(ccbFileNode->isIgnoreAnchorPointForPosition());
         
+        mActionManager->moveAnimationsFromNode(ccbFileNode, embeddedNode);
+
         ccbFileNode->setCCBFileNode(NULL);
         
         node = embeddedNode;
@@ -847,6 +855,15 @@ CCArray* CCBReader::getNodesWithAnimationManagers() {
 CCArray* CCBReader::getAnimationManagerForNodes() {
     return mAnimationManagerForNodes;
 }
+
+std::vector<std::pair<CCNode *, CCBAnimationManager *> > CCBReader::getAnimationManagers() {
+    return mAnimationManagers;
+}
+
+void CCBReader::setAnimationManagers(std::vector<std::pair<CCNode *, CCBAnimationManager *> > x) {
+    mAnimationManagers = x;
+}
+
 
 /************************************************************************
  Static functions
