@@ -35,6 +35,8 @@ private:
     CCArray *mDocumentCallbackNodes;
     std::string mDocumentControllerName;
     std::string lastCompletedSequenceName;
+    SEL_CallFunc mAnimationCompleteCallbackFunc;
+    CCObject *mTarget;
     
     
 public:
@@ -79,11 +81,13 @@ public:
     
     void addNode(CCNode *pNode, CCDictionary *pSeq);
     void setBaseValue(CCObject *pValue, CCNode *pNode, const char *pPropName);
-    
+    void moveAnimationsFromNode(CCNode* fromNode, CCNode* toNode);
+
     void runAnimations(const char *pName, float fTweenDuration);
     void runAnimations(const char *pName);
     void runAnimations(int nSeqId, float fTweenDuraiton);
-    
+    void setAnimationCompletedCallback(CCObject *target, SEL_CallFunc callbackFunc);
+
     void debug();
     
 private:
