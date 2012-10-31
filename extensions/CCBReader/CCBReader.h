@@ -177,6 +177,9 @@ private:
     CCObject *mOwner;
     
     CCBAnimationManager *mActionManager;
+
+    std::vector<std::pair<CCNode*, CCBAnimationManager *> > mAnimationManagers;
+
     std::set<std::string> *mAnimatedProps;
 
     CCNodeLoaderLibrary *mCCNodeLoaderLibrary;
@@ -231,6 +234,28 @@ public:
     bool readBool();
     float readFloat();
     CCString* readCachedString();
+<<<<<<< HEAD
+=======
+    bool isJSControlled();
+            
+    
+    CCArray *getOwnerCallbackNames();
+    CCArray *getOwnerCallbackNodes();
+    CCArray* getOwnerOutletNames();
+    CCArray* getOwnerOutletNodes();
+    CCArray* getNodesWithAnimationManagers();
+    CCArray* getAnimationManagerForNodes();
+    std::vector<std::pair<CCNode *, CCBAnimationManager *> > getAnimationManagers();
+    void setAnimationManagers(std::vector<std::pair<CCNode *, CCBAnimationManager *> > x);
+
+    
+    
+    void addOwnerCallbackName(std::string name);
+    void addOwnerCallbackNode(CCNode *node);
+    
+    void addDocumentCallbackName(std::string name);
+    void addDocumentCallbackNode(CCNode *node);
+>>>>>>> Changing mAnimationManagers and bringing CCBReader implementation closer to cocos2d-iphone CCBReader
     
     static float getResolutionScale();
     
