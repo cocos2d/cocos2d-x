@@ -22,10 +22,10 @@ extern JS_FRIEND_API(JSString *)
 JS_GetAnonymousString(JSRuntime *rt);
 
 extern JS_FRIEND_API(JSObject *)
-JS_FindCompilationScope(JSContext *cx, JSObject *obj);
+JS_FindCompilationScope(JSContext *cx, JSRawObject obj);
 
 extern JS_FRIEND_API(JSFunction *)
-JS_GetObjectFunction(JSObject *obj);
+JS_GetObjectFunction(JSRawObject obj);
 
 extern JS_FRIEND_API(JSObject *)
 JS_GetGlobalForFrame(JSStackFrame *fp);
@@ -37,7 +37,7 @@ extern JS_FRIEND_API(JSObject *)
 JS_NewObjectWithUniqueType(JSContext *cx, JSClass *clasp, JSObject *proto, JSObject *parent);
 
 extern JS_FRIEND_API(uint32_t)
-JS_ObjectCountDynamicSlots(JSObject *obj);
+JS_ObjectCountDynamicSlots(JSHandleObject obj);
 
 extern JS_FRIEND_API(void)
 JS_ShrinkGCBuffers(JSRuntime *rt);
@@ -75,13 +75,18 @@ enum {
     JS_TELEMETRY_GC_REASON,
     JS_TELEMETRY_GC_IS_COMPARTMENTAL,
     JS_TELEMETRY_GC_MS,
+    JS_TELEMETRY_GC_MAX_PAUSE_MS,
     JS_TELEMETRY_GC_MARK_MS,
     JS_TELEMETRY_GC_SWEEP_MS,
+    JS_TELEMETRY_GC_MARK_ROOTS_MS,
+    JS_TELEMETRY_GC_MARK_GRAY_MS,
     JS_TELEMETRY_GC_SLICE_MS,
     JS_TELEMETRY_GC_MMU_50,
     JS_TELEMETRY_GC_RESET,
     JS_TELEMETRY_GC_INCREMENTAL_DISABLED,
-    JS_TELEMETRY_GC_NON_INCREMENTAL
+    JS_TELEMETRY_GC_NON_INCREMENTAL,
+    JS_TELEMETRY_GC_SCC_SWEEP_TOTAL_MS,
+    JS_TELEMETRY_GC_SCC_SWEEP_MAX_PAUSE_MS
 };
 
 typedef void
@@ -108,7 +113,7 @@ extern JS_FRIEND_API(JSObject *)
 JS_CloneObject(JSContext *cx, JSObject *obj, JSObject *proto, JSObject *parent);
 
 extern JS_FRIEND_API(JSBool)
-js_GetterOnlyPropertyStub(JSContext *cx, JSHandleObject obj, JSHandleId id, JSBool strict, jsval *vp);
+js_GetterOnlyPropertyStub(JSContext *cx, JSHandleObject obj, JSHandleId id, JSBool strict, JSMutableHandleValue vp);
 
 JS_FRIEND_API(void)
 js_ReportOverRecursed(JSContext *maybecx);
@@ -159,6 +164,8 @@ struct JSFunctionSpecWithHelp {
 
 #define JS_FN_HELP(name,call,nargs,flags,usage,help)                          \
     {name, call, nargs, (flags) | JSPROP_ENUMERATE | JSFUN_STUB_GSOPS, usage, help}
+#define JS_FS_HELP_END                                                        \
+    {NULL, NULL, 0, 0, NULL, NULL}
 
 extern JS_FRIEND_API(bool)
 JS_DefineFunctionsWithHelp(JSContext *cx, JSObject *obj, const JSFunctionSpecWithHelp *fs);
@@ -168,6 +175,11 @@ JS_DefineFunctionsWithHelp(JSContext *cx, JSObject *obj, const JSFunctionSpecWit
 JS_END_EXTERN_C
 
 #ifdef __cplusplus
+
+typedef bool (* JS_SourceHook)(JSContext *cx, JSScript *script, jschar **src, uint32_t *length);
+
+extern JS_FRIEND_API(void)
+JS_SetSourceHook(JSRuntime *rt, JS_SourceHook hook);
 
 namespace js {
 
@@ -213,7 +225,7 @@ class JS_FRIEND_API(AutoSwitchCompartment) {
   public:
     AutoSwitchCompartment(JSContext *cx, JSCompartment *newCompartment
                           JS_GUARD_OBJECT_NOTIFIER_PARAM);
-    AutoSwitchCompartment(JSContext *cx, JSObject *target JS_GUARD_OBJECT_NOTIFIER_PARAM);
+    AutoSwitchCompartment(JSContext *cx, JSHandleObject target JS_GUARD_OBJECT_NOTIFIER_PARAM);
     ~AutoSwitchCompartment();
     JS_DECL_USE_GUARD_OBJECT_NOTIFIER
 };
@@ -274,6 +286,9 @@ typedef void
 extern JS_FRIEND_API(void)
 VisitGrayWrapperTargets(JSCompartment *comp, GCThingCallback *callback, void *closure);
 
+extern JS_FRIEND_API(JSObject *)
+GetWeakmapKeyDelegate(JSObject *key);
+
 /*
  * Shadow declarations of JS internal structures, for access by inline access
  * functions below. Do not use these structures in any other way. When adding
@@ -318,6 +333,16 @@ struct Object {
     }
 };
 
+struct Function {
+    Object base;
+    uint16_t nargs;
+    uint16_t flags;
+    /* Used only for natives */
+    Native native;
+    const JSJitInfo *jitinfo;
+    void *_1;
+};
+
 struct Atom {
     size_t _;
     const jschar *chars;
@@ -339,35 +364,35 @@ extern JS_FRIEND_DATA(js::Class) XMLClass;
 extern JS_FRIEND_DATA(js::Class) ObjectClass;
 
 inline js::Class *
-GetObjectClass(const JSObject *obj)
+GetObjectClass(RawObject obj)
 {
     return reinterpret_cast<const shadow::Object*>(obj)->shape->base->clasp;
 }
 
 inline JSClass *
-GetObjectJSClass(const JSObject *obj)
+GetObjectJSClass(RawObject obj)
 {
     return js::Jsvalify(GetObjectClass(obj));
 }
 
 JS_FRIEND_API(bool)
-IsScopeObject(JSObject *obj);
+IsScopeObject(RawObject obj);
 
 inline JSObject *
-GetObjectParent(JSObject *obj)
+GetObjectParent(RawObject obj)
 {
     JS_ASSERT(!IsScopeObject(obj));
     return reinterpret_cast<shadow::Object*>(obj)->shape->base->parent;
 }
 
 JS_FRIEND_API(JSObject *)
-GetObjectParentMaybeScope(JSObject *obj);
+GetObjectParentMaybeScope(RawObject obj);
 
 JS_FRIEND_API(JSObject *)
-GetGlobalForObjectCrossCompartment(JSObject *obj);
+GetGlobalForObjectCrossCompartment(RawObject obj);
 
 JS_FRIEND_API(void)
-NotifyAnimationActivity(JSObject *obj);
+NotifyAnimationActivity(RawObject obj);
 
 JS_FRIEND_API(bool)
 IsOriginalScriptFunction(JSFunction *fun);
@@ -391,19 +416,19 @@ InitClassWithReserved(JSContext *cx, JSObject *obj, JSObject *parent_proto,
                       JSPropertySpec *static_ps, JSFunctionSpec *static_fs);
 
 JS_FRIEND_API(const Value &)
-GetFunctionNativeReserved(JSObject *fun, size_t which);
+GetFunctionNativeReserved(RawObject fun, size_t which);
 
 JS_FRIEND_API(void)
-SetFunctionNativeReserved(JSObject *fun, size_t which, const Value &val);
+SetFunctionNativeReserved(RawObject fun, size_t which, const Value &val);
 
 inline JSObject *
-GetObjectProto(JSObject *obj)
+GetObjectProto(RawObject obj)
 {
     return reinterpret_cast<const shadow::Object*>(obj)->type->proto;
 }
 
 inline void *
-GetObjectPrivate(JSObject *obj)
+GetObjectPrivate(RawObject obj)
 {
     const shadow::Object *nobj = reinterpret_cast<const shadow::Object*>(obj);
     void **addr = reinterpret_cast<void**>(&nobj->fixedSlots()[nobj->numFixedSlots()]);
@@ -415,17 +440,17 @@ GetObjectPrivate(JSObject *obj)
  * within the maximum capacity for the object's fixed slots).
  */
 inline const Value &
-GetReservedSlot(const JSObject *obj, size_t slot)
+GetReservedSlot(RawObject obj, size_t slot)
 {
     JS_ASSERT(slot < JSCLASS_RESERVED_SLOTS(GetObjectClass(obj)));
     return reinterpret_cast<const shadow::Object *>(obj)->slotRef(slot);
 }
 
 JS_FRIEND_API(void)
-SetReservedSlotWithBarrier(JSObject *obj, size_t slot, const Value &value);
+SetReservedSlotWithBarrier(RawObject obj, size_t slot, const Value &value);
 
 inline void
-SetReservedSlot(JSObject *obj, size_t slot, const Value &value)
+SetReservedSlot(RawObject obj, size_t slot, const Value &value)
 {
     JS_ASSERT(slot < JSCLASS_RESERVED_SLOTS(GetObjectClass(obj)));
     shadow::Object *sobj = reinterpret_cast<shadow::Object *>(obj);
@@ -436,20 +461,13 @@ SetReservedSlot(JSObject *obj, size_t slot, const Value &value)
 }
 
 JS_FRIEND_API(uint32_t)
-GetObjectSlotSpan(JSObject *obj);
+GetObjectSlotSpan(RawObject obj);
 
 inline const Value &
-GetObjectSlot(JSObject *obj, size_t slot)
+GetObjectSlot(RawObject obj, size_t slot)
 {
     JS_ASSERT(slot < GetObjectSlotSpan(obj));
     return reinterpret_cast<const shadow::Object *>(obj)->slotRef(slot);
-}
-
-inline Shape *
-GetObjectShape(JSObject *obj)
-{
-    shadow::Shape *shape = reinterpret_cast<const shadow::Object*>(obj)->shape;
-    return reinterpret_cast<Shape *>(shape);
 }
 
 inline const jschar *
@@ -465,19 +483,19 @@ AtomToLinearString(JSAtom *atom)
 }
 
 static inline js::PropertyOp
-CastAsJSPropertyOp(JSObject *object)
+CastAsJSPropertyOp(RawObject object)
 {
     return JS_DATA_TO_FUNC_PTR(js::PropertyOp, object);
 }
 
 static inline js::StrictPropertyOp
-CastAsJSStrictPropertyOp(JSObject *object)
+CastAsJSStrictPropertyOp(RawObject object)
 {
     return JS_DATA_TO_FUNC_PTR(js::StrictPropertyOp, object);
 }
 
 JS_FRIEND_API(bool)
-GetPropertyNames(JSContext *cx, JSObject *obj, unsigned flags, js::AutoIdVector *props);
+GetPropertyNames(JSContext *cx, RawObject obj, unsigned flags, js::AutoIdVector *props);
 
 JS_FRIEND_API(bool)
 GetGeneric(JSContext *cx, JSObject *obj, JSObject *receiver, jsid id, Value *vp);
@@ -489,7 +507,7 @@ JS_FRIEND_API(void)
 SetPreserveWrapperCallback(JSRuntime *rt, PreserveWrapperCallback callback);
 
 JS_FRIEND_API(bool)
-IsObjectInContextCompartment(const JSObject *obj, const JSContext *cx);
+IsObjectInContextCompartment(RawObject obj, const JSContext *cx);
 
 /*
  * NB: these flag bits are encoded into the bytecode stream in the immediate
@@ -542,19 +560,66 @@ GetPCCountScriptContents(JSContext *cx, size_t script);
  *
  * For more detailed information, see vm/SPSProfiler.h
  */
-struct ProfileEntry {
+class ProfileEntry
+{
     /*
-     * These two fields are marked as 'volatile' so that the compiler doesn't
-     * re-order instructions which modify them. The operation in question is:
+     * All fields are marked volatile to prevent the compiler from re-ordering
+     * instructions. Namely this sequence:
      *
-     *    stack[i].string = str;
-     *    (*size)++;
+     *    entry[size] = ...;
+     *    size++;
      *
-     * If the size increment were re-ordered before the store of the string,
-     * then if sampling occurred there would be a bogus entry on the stack.
+     * If the size modification were somehow reordered before the stores, then
+     * if a sample were taken it would be examining bogus information.
+     *
+     * A ProfileEntry represents both a C++ profile entry and a JS one. Both use
+     * the string as a description, but JS uses the sp as NULL to indicate that
+     * it is a JS entry. The script_ is then only ever examined for a JS entry,
+     * and the idx is used by both, but with different meanings.
      */
-    const char * volatile string;
-    void * volatile sp;
+    const char * volatile string; // Descriptive string of this entry
+    void * volatile sp;           // Relevant stack pointer for the entry
+    JSScript * volatile script_;  // if js(), non-null script which is running
+    int32_t volatile idx;         // if js(), idx of pc, otherwise line number
+
+  public:
+    /*
+     * All of these methods are marked with the 'volatile' keyword because SPS's
+     * representation of the stack is stored such that all ProfileEntry
+     * instances are volatile. These methods would not be available unless they
+     * were marked as volatile as well
+     */
+
+    bool js() volatile {
+        JS_ASSERT_IF(sp == NULL, script_ != NULL);
+        return sp == NULL;
+    }
+
+    uint32_t line() volatile { JS_ASSERT(!js()); return idx; }
+    JSScript *script() volatile { JS_ASSERT(js()); return script_; }
+    void *stackAddress() volatile { return sp; }
+    const char *label() volatile { return string; }
+
+    void setLine(uint32_t line) volatile { JS_ASSERT(!js()); idx = line; }
+    void setLabel(const char *string) volatile { this->string = string; }
+    void setStackAddress(void *sp) volatile { this->sp = sp; }
+    void setScript(JSScript *script) volatile { script_ = script; }
+
+    /* we can't know the layout of JSScript, so look in vm/SPSProfiler.cpp */
+    JS_FRIEND_API(jsbytecode *) pc() volatile;
+    JS_FRIEND_API(void) setPC(jsbytecode *pc) volatile;
+
+    static size_t offsetOfString() { return offsetof(ProfileEntry, string); }
+    static size_t offsetOfStackAddress() { return offsetof(ProfileEntry, sp); }
+    static size_t offsetOfPCIdx() { return offsetof(ProfileEntry, idx); }
+    static size_t offsetOfScript() { return offsetof(ProfileEntry, script_); }
+
+    /*
+     * The index used in the entry can either be a line number or the offset of
+     * a pc into a script's code. To signify a NULL pc, use a -1 index. This is
+     * checked against in pc() and setPC() to set/get the right pc.
+     */
+    static const int32_t NullPCIndex = -1;
 };
 
 JS_FRIEND_API(void)
@@ -563,6 +628,9 @@ SetRuntimeProfilingStack(JSRuntime *rt, ProfileEntry *stack, uint32_t *size,
 
 JS_FRIEND_API(void)
 EnableRuntimeProfilingStack(JSRuntime *rt, bool enabled);
+
+JS_FRIEND_API(jsbytecode*)
+ProfilingGetPC(JSRuntime *rt, JSScript *script, void *ip);
 
 #ifdef JS_THREADSAFE
 JS_FRIEND_API(void *)
@@ -624,6 +692,7 @@ SizeOfJSContext();
     D(DEBUG_GC)                                 \
     D(DEBUG_MODE_GC)                            \
     D(TRANSPLANT)                               \
+    D(RESET)                                    \
                                                 \
     /* Reasons from Firefox */                  \
     D(DOM_WINDOW_UTILS)                         \
@@ -695,7 +764,7 @@ extern JS_FRIEND_API(void)
 ShrinkingGC(JSRuntime *rt, gcreason::Reason reason);
 
 extern JS_FRIEND_API(void)
-IncrementalGC(JSRuntime *rt, gcreason::Reason reason);
+IncrementalGC(JSRuntime *rt, gcreason::Reason reason, int64_t millis = 0);
 
 extern JS_FRIEND_API(void)
 FinishIncrementalGC(JSRuntime *rt, gcreason::Reason reason);
@@ -733,6 +802,30 @@ typedef void
 extern JS_FRIEND_API(GCSliceCallback)
 SetGCSliceCallback(JSRuntime *rt, GCSliceCallback callback);
 
+typedef void
+(* AnalysisPurgeCallback)(JSRuntime *rt, JSFlatString *desc);
+
+extern JS_FRIEND_API(AnalysisPurgeCallback)
+SetAnalysisPurgeCallback(JSRuntime *rt, AnalysisPurgeCallback callback);
+
+/* Was the most recent GC run incrementally? */
+extern JS_FRIEND_API(bool)
+WasIncrementalGC(JSRuntime *rt);
+
+typedef JSBool
+(* DOMInstanceClassMatchesProto)(JSHandleObject protoObject, uint32_t protoID,
+                                 uint32_t depth);
+struct JSDOMCallbacks {
+    DOMInstanceClassMatchesProto instanceClassMatchesProto;
+};
+typedef struct JSDOMCallbacks DOMCallbacks;
+
+extern JS_FRIEND_API(void)
+SetDOMCallbacks(JSRuntime *rt, const DOMCallbacks *callbacks);
+
+extern JS_FRIEND_API(const DOMCallbacks *)
+GetDOMCallbacks(JSRuntime *rt);
+
 /*
  * Signals a good place to do an incremental slice, because the browser is
  * drawing a frame.
@@ -753,7 +846,7 @@ extern JS_FRIEND_API(bool)
 IsIncrementalBarrierNeeded(JSContext *cx);
 
 extern JS_FRIEND_API(bool)
-IsIncrementalBarrierNeededOnObject(JSObject *obj);
+IsIncrementalBarrierNeededOnObject(RawObject obj);
 
 extern JS_FRIEND_API(bool)
 IsIncrementalBarrierNeededOnScript(JSScript *obj);
@@ -821,21 +914,68 @@ CastToJSFreeOp(FreeOp *fop)
 /* Implemented in jsexn.cpp. */
 
 /*
- * Get an error type name from a number.
- * If no exception is associated, return NULL.
+ * Get an error type name from a JSExnType constant.
+ * Returns NULL for invalid arguments and JSEXN_INTERNALERR
  */
 extern JS_FRIEND_API(const jschar*)
-GetErrorTypeNameFromNumber(JSContext* cx, const unsigned errorNumber);
+GetErrorTypeName(JSContext* cx, int16_t exnType);
 
 /* Implemented in jswrapper.cpp. */
-typedef enum NukedGlobalHandling {
-    NukeForGlobalObject,
-    DontNukeForGlobalObject
-} NukedGlobalHandling;
+typedef enum NukeReferencesToWindow {
+    NukeWindowReferences,
+    DontNukeWindowReferences
+} NukeReferencesToWindow;
+
+/*
+ * These filters are designed to be ephemeral stack classes, and thus don't
+ * do any rooting or holding of their members.
+ */
+struct CompartmentFilter {
+    virtual bool match(JSCompartment *c) const = 0;
+};
+
+struct AllCompartments : public CompartmentFilter {
+    virtual bool match(JSCompartment *c) const { return true; }
+};
+
+struct ContentCompartmentsOnly : public CompartmentFilter {
+    virtual bool match(JSCompartment *c) const {
+        return !IsSystemCompartment(c);
+    }
+};
+
+struct ChromeCompartmentsOnly : public CompartmentFilter {
+    virtual bool match(JSCompartment *c) const {
+        return IsSystemCompartment(c);
+    }
+};
+
+struct SingleCompartment : public CompartmentFilter {
+    JSCompartment *ours;
+    SingleCompartment(JSCompartment *c) : ours(c) {}
+    virtual bool match(JSCompartment *c) const { return c == ours; }
+};
+
+struct CompartmentsWithPrincipals : public CompartmentFilter {
+    JSPrincipals *principals;
+    CompartmentsWithPrincipals(JSPrincipals *p) : principals(p) {}
+    virtual bool match(JSCompartment *c) const {
+        return JS_GetCompartmentPrincipals(c) == principals;
+    }
+};
 
 extern JS_FRIEND_API(JSBool)
-NukeChromeCrossCompartmentWrappersForGlobal(JSContext *cx, JSObject *obj,
-                                            NukedGlobalHandling nukeGlobal);
+NukeCrossCompartmentWrappers(JSContext* cx,
+                             const CompartmentFilter& sourceFilter,
+                             const CompartmentFilter& targetFilter,
+                             NukeReferencesToWindow nukeReferencesToWindow);
+
+/* Specify information about ListBase proxies in the DOM, for use by ICs. */
+JS_FRIEND_API(void)
+SetListBaseInformation(void *listBaseHandlerFamily, uint32_t listBaseExpandoSlot);
+
+void *GetListBaseHandlerFamily();
+uint32_t GetListBaseExpandoSlot();
 
 } /* namespace js */
 
@@ -851,7 +991,7 @@ extern JS_FRIEND_API(JSBool)
 js_DateIsValid(JSContext *cx, JSObject* obj);
 
 extern JS_FRIEND_API(double)
-js_DateGetMsecSinceEpoch(JSContext *cx, JSObject *obj);
+js_DateGetMsecSinceEpoch(JSContext *cx, JSRawObject obj);
 
 /* Implemented in jscntxt.cpp. */
 
@@ -1043,6 +1183,35 @@ JS_IsFloat32Array(JSObject *obj, JSContext *cx);
 extern JS_FRIEND_API(JSBool)
 JS_IsFloat64Array(JSObject *obj, JSContext *cx);
 
+
+/*
+ * Unwrap Typed arrays all at once. Return NULL without throwing if the object
+ * cannot be viewed as the correct typed array, or the typed array object on
+ * success, filling both outparameters.
+ */
+extern JS_FRIEND_API(JSObject *)
+JS_GetObjectAsInt8Array(JSContext *cx, JSObject *obj, uint32_t *length, int8_t **data);
+extern JS_FRIEND_API(JSObject *)
+JS_GetObjectAsUint8Array(JSContext *cx, JSObject *obj, uint32_t *length, uint8_t **data);
+extern JS_FRIEND_API(JSObject *)
+JS_GetObjectAsUint8ClampedArray(JSContext *cx, JSObject *obj, uint32_t *length, uint8_t **data);
+extern JS_FRIEND_API(JSObject *)
+JS_GetObjectAsInt16Array(JSContext *cx, JSObject *obj, uint32_t *length, int16_t **data);
+extern JS_FRIEND_API(JSObject *)
+JS_GetObjectAsUint16Array(JSContext *cx, JSObject *obj, uint32_t *length, uint16_t **data);
+extern JS_FRIEND_API(JSObject *)
+JS_GetObjectAsInt32Array(JSContext *cx, JSObject *obj, uint32_t *length, int32_t **data);
+extern JS_FRIEND_API(JSObject *)
+JS_GetObjectAsUint32Array(JSContext *cx, JSObject *obj, uint32_t *length, uint32_t **data);
+extern JS_FRIEND_API(JSObject *)
+JS_GetObjectAsFloat32Array(JSContext *cx, JSObject *obj, uint32_t *length, float **data);
+extern JS_FRIEND_API(JSObject *)
+JS_GetObjectAsFloat64Array(JSContext *cx, JSObject *obj, uint32_t *length, double **data);
+extern JS_FRIEND_API(JSObject *)
+JS_GetObjectAsArrayBufferView(JSContext *cx, JSObject *obj, uint32_t *length, uint8_t **data);
+extern JS_FRIEND_API(JSObject *)
+JS_GetObjectAsArrayBuffer(JSContext *cx, JSObject *obj, uint32_t *length, uint8_t **data);
+
 /*
  * Get the type of elements in a typed array.
  *
@@ -1212,5 +1381,43 @@ JS_GetDataViewByteLength(JSObject *obj, JSContext *cx);
  */
 JS_FRIEND_API(void *)
 JS_GetDataViewData(JSObject *obj, JSContext *cx);
+
+#ifdef __cplusplus
+/*
+ * This struct contains metadata passed from the DOM to the JS Engine for JIT
+ * optimizations on DOM property accessors. Eventually, this should be made
+ * available to general JSAPI users, but we are not currently ready to do so.
+ */
+typedef bool
+(* JSJitPropertyOp)(JSContext *cx, JSHandleObject thisObj,
+                    void *specializedThis, JS::Value *vp);
+typedef bool
+(* JSJitMethodOp)(JSContext *cx, JSHandleObject thisObj,
+                  void *specializedThis, unsigned argc, JS::Value *vp);
+
+struct JSJitInfo {
+    JSJitPropertyOp op;
+    uint32_t protoID;
+    uint32_t depth;
+    bool isInfallible;    /* Is op fallible? Getters only */
+    bool isConstant;      /* Getting a construction-time constant? */
+};
+
+static JS_ALWAYS_INLINE const JSJitInfo *
+FUNCTION_VALUE_TO_JITINFO(const JS::Value& v)
+{
+    JS_ASSERT(js::GetObjectClass(&v.toObject()) == &js::FunctionClass);
+    return reinterpret_cast<js::shadow::Function *>(&v.toObject())->jitinfo;
+}
+
+static JS_ALWAYS_INLINE void
+SET_JITINFO(JSFunction * func, const JSJitInfo *info)
+{
+    js::shadow::Function *fun = reinterpret_cast<js::shadow::Function *>(func);
+    /* JS_ASSERT(func->isNative()). 0x4000 is JSFUN_INTERPRETED */
+    JS_ASSERT(!(fun->flags & 0x4000));
+    fun->jitinfo = info;
+}
+#endif /* __cplusplus */
 
 #endif /* jsfriendapi_h___ */

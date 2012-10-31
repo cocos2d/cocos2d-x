@@ -240,6 +240,21 @@ enum ThingRootKind
     THING_ROOT_LIMIT
 };
 
+template <typename T>
+struct RootKind;
+
+/*
+ * Specifically mark the ThingRootKind of externally visible types, so that
+ * JSAPI users may use JSRooted... types without having the class definition
+ * available.
+ */
+template <> struct RootKind<JSObject *> { static ThingRootKind rootKind() { return THING_ROOT_OBJECT; }; };
+template <> struct RootKind<JSFunction *> { static ThingRootKind rootKind() { return THING_ROOT_OBJECT; }; };
+template <> struct RootKind<JSString *> { static ThingRootKind rootKind() { return THING_ROOT_STRING; }; };
+template <> struct RootKind<JSScript *> { static ThingRootKind rootKind() { return THING_ROOT_SCRIPT; }; };
+template <> struct RootKind<jsid> { static ThingRootKind rootKind() { return THING_ROOT_ID; }; };
+template <> struct RootKind<Value> { static ThingRootKind rootKind() { return THING_ROOT_VALUE; }; };
+
 struct ContextFriendFields {
     JSRuntime *const    runtime;
 
