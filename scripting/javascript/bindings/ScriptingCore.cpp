@@ -616,7 +616,7 @@ JSBool ScriptingCore::removeRootJS(JSContext *cx, uint32_t argc, jsval *vp)
 
 void ScriptingCore::pauseSchedulesAndActions(CCNode *node) {
 
-    CCArray * arr = JSSchedule::getTargetForNativeNode(node);
+    CCArray * arr = JSScheduleWrapper::getTargetForNativeNode(node);
     if(! arr) return;
     for(unsigned int i = 0; i < arr->count(); ++i) {
         if(arr->objectAtIndex(i)) {
@@ -628,7 +628,7 @@ void ScriptingCore::pauseSchedulesAndActions(CCNode *node) {
 
 void ScriptingCore::resumeSchedulesAndActions(CCNode *node) {
 
-    CCArray * arr = JSSchedule::getTargetForNativeNode(node);
+    CCArray * arr = JSScheduleWrapper::getTargetForNativeNode(node);
     if(!arr) return;
     for(unsigned int i = 0; i < arr->count(); ++i) {
         if(!arr->objectAtIndex(i)) continue;
@@ -637,13 +637,12 @@ void ScriptingCore::resumeSchedulesAndActions(CCNode *node) {
 }
 
 void ScriptingCore::cleanupSchedulesAndActions(CCNode *node) {
-
-    CCArray * arr = JSCallFunc::getTargetForNativeNode(node);
+    CCArray * arr = JSCallFuncWrapper::getTargetForNativeNode(node);
     if(arr) {
         arr->removeAllObjects();
     }
-
-    arr = JSSchedule::getTargetForNativeNode(node);
+    
+    arr = JSScheduleWrapper::getTargetForNativeNode(node);
     if(arr) {
         arr->removeAllObjects();
     }
@@ -1035,20 +1034,26 @@ CCArray* jsval_to_ccarray(JSContext* cx, jsval v) {
 
 
 jsval ccarray_to_jsval(JSContext* cx, CCArray *arr) {
-
-  JSObject *jsretArr = JS_NewArrayObject(cx, 0, NULL);
-
-  for(int i = 0; i < arr->count(); ++i) {
-
-    CCObject *obj = arr->objectAtIndex(i);
-    js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::CCObject>(cx, obj);
-    jsval arrElement = OBJECT_TO_JSVAL(proxy->obj);
-
-    if(!JS_SetElement(cx, jsretArr, i, &arrElement)) {
-      break;
+    
+    JSObject *jsretArr = JS_NewArrayObject(cx, 0, NULL);
+    
+    for(int i = 0; i < arr->count(); ++i) {
+        jsval arrElement;
+        CCObject *obj = arr->objectAtIndex(i);
+        
+        CCString *testString = dynamic_cast<cocos2d::CCString *>(obj);
+        if(testString) {
+            arrElement = c_string_to_jsval(cx, testString->getCString());
+        } else {
+            js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::CCObject>(cx, obj);
+            arrElement = OBJECT_TO_JSVAL(proxy->obj);
+        }
+        
+        if(!JS_SetElement(cx, jsretArr, i, &arrElement)) {
+            break;
+        }
     }
-  }
-  return OBJECT_TO_JSVAL(jsretArr);
+    return OBJECT_TO_JSVAL(jsretArr);
 }
 
 jsval long_long_to_jsval(JSContext* cx, long long v) {
