@@ -179,8 +179,8 @@ private:
     CCObject *mOwner;
     
     CCBAnimationManager *mActionManager;
-    std::vector<std::pair<CCNode*, CCBAnimationManager *> > mAnimationManagers;
 
+    std::vector<std::pair<CCNode*, CCBAnimationManager *> > mAnimationManagers;
     std::set<std::string> *mAnimatedProps;
 
     CCNodeLoaderLibrary *mCCNodeLoaderLibrary;
@@ -253,10 +253,9 @@ public:
     CCArray* getOwnerOutletNodes();
     CCArray* getNodesWithAnimationManagers();
     CCArray* getAnimationManagerForNodes();
+
     std::vector<std::pair<CCNode *, CCBAnimationManager *> > getAnimationManagers();
     void setAnimationManagers(std::vector<std::pair<CCNode *, CCBAnimationManager *> > x);
-
-    
     
     void addOwnerCallbackName(std::string name);
     void addOwnerCallbackNode(CCNode *node);

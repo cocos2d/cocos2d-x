@@ -35,9 +35,9 @@ private:
     CCArray *mDocumentCallbackNodes;
     std::string mDocumentControllerName;
     std::string lastCompletedSequenceName;
+
     SEL_CallFunc mAnimationCompleteCallbackFunc;
     CCObject *mTarget;
-    
     
 public:
     CCBAnimationManager();
