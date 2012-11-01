@@ -1,3 +1,41 @@
+cocos2d-2.0-x-2.0.4 @Nov.2 2012
+ [all platforms]
+    Bug       #1473: fix a bug that CCScale9Sprite does not support rotated spriteframe in atlas 
+    Bug       #1494: fix a bug that missing removing auto-release object from AutoReleasePool if it invokes 'autorelease' method more than one time
+    Bug       #1495: fix a bug that CCScrollView display area and touch area are wrong if its parent's postion isn't at CCPointZero in world
+    Bug       #1508: fix a bug that potential observer array modification while it's traversed in CCNotificationCenter
+    Bug       #1510: fix a bug that application will freeze when 'numberOfCellsInTableView' returns zero
+    Bug       #1516: fix a bug that the font size of labels for displaying FPS,SPF,DrawCount is incorrect in different design resolutions
+    Bug       #1536: CCControl* should not respond to touches if the control is not visible
+    Bug       #1538: fix a logic error in CCControlHuePicker::checkSliderPosition()
+    Bug       #1543: fix a bug that CCLayerGradient background of CocosBuilderTest can't be shown
+    Feature   #1515: add a zoom function for debugging large resolution (e.g.new ipad) app on desktop
+    Refactor  #1312: upgrade libcurl to 7.26.0  
+    Refactor  #1486: apply multi-resolution mechanic on iOS, especially for iphone5
+    Refactor  #1520: add comments to describe the usage of multiresolution in HelloCpp
+    Refactor  #1521: use relative coordinates in TestCpp
+    Document  #1532: write a document describes how to debug games for ipad3 on low-resolution PC 
+    Document  #1493: add doxygen comments in CCNotificationCenter.h
+ [android]
+    Bug       #1466: reload shader for test case "ShaderTest" after it comes from background
+    Bug       #1500: fix a bug that CCRenderTexture cannot render properly on some Qualcomm Adreno GPUs
+    Bug       #1507: fix a bug that can not play effect for the first time without pre-load effect
+ [iOS]
+    Bug       #1527: fix a bug that MoonWarriors can not run on iOS simulator sometimes
+    Refactor  #1491: remove dependency of FontLabel lib
+ [javascript binding]
+    Feature   #1469: add MoonWarriors as a sample game
+    Refactor  #1487: use shared javascript test cases with cocos2d-html5 and cocos2d-iphone
+    Refactor  #1517: upgrade SpiderMonkey to FF 16.0.1
+ [lua binding]
+    Bug       #1506: fix a compilation error of TestLua if the path of cocos2d-x contains spaces  
+ [win32]
+    Bug       #1496: fix an error of comparing font's face name in CCImage of win32 port
+    Bug       #1511: fix openGL framebuffer access violation
+    Bug       #1540: fix win32 CCLuaLog memory leaks and invalid console UTF8 output
+    Feature   #1513: add Multi-Touch support for win7/8 tablet or ultrabook
+    Refactor  #1512: change writable directory to "C:\Documents and Settings\username\Local Settings\Application Data\your app name" if the app be built in release mode
+
 cocos2d-2.0-x-2.0.3 @Sep.26 2012
  [all platforms]
     Bug       #1452: change CCRGBAProtocol to public in order for actions like CCTintTo to have an affect on the CCScale9Sprite
