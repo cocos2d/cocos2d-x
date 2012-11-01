@@ -23,10 +23,14 @@ INCLUDES = -I.. \
 			-I../platform/third_party/linux/libxml2 \
 			-I../platform/third_party/linux/libpng \
 			-I../platform/third_party/linux/libjpeg \
-			-I../platform/third_party/linux/libtiff/include \
-			-I../platform/third_party/linux/ \
+			-I../platform/third_party/linux/libtiff/include
 
-#			-I../platform/third_party/linux/libpng \
+LBITS := $(shell getconf LONG_BIT)
+ifeq ($(LBITS),64)
+INCLUDES += -I$(COCOS2DX_PATH)/platform/third_party/linux/include64
+else
+INCLUDES += -I$(COCOS2DX_PATH)/platform/third_party/linux
+endif
 
 DEFINES = -DLINUX
 DEFINES += -D__CC_PLATFORM_FILEUTILS_CPP__
@@ -191,7 +195,6 @@ OBJECTS = ../actions/CCAction.o \
 #					../../extensions/CCListView/CCListView.o \
 #					../../extensions/GUI/CCTextureWatcher/CCTextureWatcher.o \
 
-LBITS := $(shell getconf LONG_BIT)
 ifeq ($(LBITS),64)
 STATICLIBS_DIR = ../platform/third_party/linux/libraries/lib64
 else
