@@ -234,7 +234,7 @@ CCNode* CCBReader::readNodeGraphFromData(CCData *pData, CCObject *pOwner, const 
     
     mOwnerOutletNames = CCArray::create();
     mOwnerOutletNodes = CCArray::create();
-       
+
     mOwnerCallbackNames = CCArray::create();
     mOwnerCallbackNodes = CCArray::create();
     
@@ -245,7 +245,7 @@ CCNode* CCBReader::readNodeGraphFromData(CCData *pData, CCObject *pOwner, const 
         // Auto play animations
         mActionManager->runAnimations(mActionManager->getAutoPlaySequenceId(), 0);
     }
-    
+
     if(jsControlled) {
         mNodesWithAnimationManagers = CCArray::create();
         mAnimationManagerForNodes = CCArray::create();
@@ -258,8 +258,7 @@ CCNode* CCBReader::readNodeGraphFromData(CCData *pData, CCObject *pOwner, const 
         }
         
     }
-        
-    
+
     // Return action manager by reference
     if (ppAnimationManager)
     {
@@ -519,7 +518,7 @@ CCNode * CCBReader::readNodeGraph(CCNode * pParent) {
     if(jsControlled && node == mActionManager->getRootNode()) {
         mActionManager->setDocumentControllerName(jsControlledName->getCString());
     }
-    
+
     // Read animated properties
     CCDictionary *seqs = CCDictionary::create();
     mAnimatedProps = new set<string>();
