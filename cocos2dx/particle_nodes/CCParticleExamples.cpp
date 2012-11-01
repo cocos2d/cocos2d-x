@@ -32,6 +32,26 @@ NS_CC_BEGIN
 //
 // ParticleFire
 //
+
+CCParticleFire* CCParticleFire::node()
+{
+    return CCParticleFire::create();
+}
+
+CCParticleFire* CCParticleFire::create()
+{
+    CCParticleFire* pRet = new CCParticleFire();
+    if (pRet && pRet->init())
+    {
+        pRet->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(pRet);
+    }
+    return pRet;
+}
+
 bool CCParticleFire::initWithTotalParticles(unsigned int numberOfParticles)
 {
     if( CCParticleSystemQuad::initWithTotalParticles(numberOfParticles) )
@@ -102,6 +122,25 @@ bool CCParticleFire::initWithTotalParticles(unsigned int numberOfParticles)
 //
 // ParticleFireworks
 //
+CCParticleFireworks* CCParticleFireworks::node()
+{
+    return CCParticleFireworks::create();
+}
+
+CCParticleFireworks* CCParticleFireworks::create()
+{
+    CCParticleFireworks* pRet = new CCParticleFireworks();
+    if (pRet && pRet->init())
+    {
+        pRet->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(pRet);
+    }
+    return pRet;
+}
+
 bool CCParticleFireworks::initWithTotalParticles(unsigned int numberOfParticles)
 {
     if( CCParticleSystemQuad::initWithTotalParticles(numberOfParticles) )
@@ -170,6 +209,26 @@ bool CCParticleFireworks::initWithTotalParticles(unsigned int numberOfParticles)
 //
 // ParticleSun
 //
+
+CCParticleSun* CCParticleSun::node()
+{
+    return CCParticleSun::create();
+}
+
+CCParticleSun* CCParticleSun::create()
+{
+    CCParticleSun* pRet = new CCParticleSun();
+    if (pRet && pRet->init())
+    {
+        pRet->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(pRet);
+    }
+    return pRet;
+}
+
 bool CCParticleSun::initWithTotalParticles(unsigned int numberOfParticles)
 {
     if( CCParticleSystemQuad::initWithTotalParticles(numberOfParticles) )
@@ -242,6 +301,26 @@ bool CCParticleSun::initWithTotalParticles(unsigned int numberOfParticles)
 //
 // ParticleGalaxy
 //
+
+CCParticleGalaxy* CCParticleGalaxy::node()
+{
+    return CCParticleGalaxy::create();
+}
+
+CCParticleGalaxy* CCParticleGalaxy::create()
+{
+    CCParticleGalaxy* pRet = new CCParticleGalaxy();
+    if (pRet && pRet->init())
+    {
+        pRet->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(pRet);
+    }
+    return pRet;
+}
+
 bool CCParticleGalaxy::initWithTotalParticles(unsigned int numberOfParticles)
 {
     if( CCParticleSystemQuad::initWithTotalParticles(numberOfParticles) )
@@ -316,6 +395,26 @@ bool CCParticleGalaxy::initWithTotalParticles(unsigned int numberOfParticles)
 //
 // ParticleFlower
 //
+
+CCParticleFlower* CCParticleFlower::node()
+{
+    return CCParticleFlower::create();
+}
+
+CCParticleFlower* CCParticleFlower::create()
+{
+    CCParticleFlower* pRet = new CCParticleFlower();
+    if (pRet && pRet->init())
+    {
+        pRet->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(pRet);
+    }
+    return pRet;
+}
+
 bool CCParticleFlower::initWithTotalParticles(unsigned int numberOfParticles)
 {
     if( CCParticleSystemQuad::initWithTotalParticles(numberOfParticles) )
@@ -389,6 +488,26 @@ bool CCParticleFlower::initWithTotalParticles(unsigned int numberOfParticles)
 //
 // ParticleMeteor
 //
+
+CCParticleMeteor * CCParticleMeteor::node()
+{
+    return create();
+}
+
+CCParticleMeteor * CCParticleMeteor::create()
+{
+    CCParticleMeteor *pRet = new CCParticleMeteor();
+    if (pRet && pRet->init())
+    {
+        pRet->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(pRet);
+    }
+    return pRet;
+}
+
 bool CCParticleMeteor::initWithTotalParticles(unsigned int numberOfParticles)
 {
     if( CCParticleSystemQuad::initWithTotalParticles(numberOfParticles) )
@@ -463,6 +582,26 @@ bool CCParticleMeteor::initWithTotalParticles(unsigned int numberOfParticles)
 //
 // ParticleSpiral
 //
+
+CCParticleSpiral* CCParticleSpiral::node()
+{
+    return CCParticleSpiral::create();
+}
+
+CCParticleSpiral* CCParticleSpiral::create()
+{
+    CCParticleSpiral* pRet = new CCParticleSpiral();
+    if (pRet && pRet->init())
+    {
+        pRet->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(pRet);
+    }
+    return pRet;
+}
+
 bool CCParticleSpiral::initWithTotalParticles(unsigned int numberOfParticles)
 {
     if( CCParticleSystemQuad::initWithTotalParticles(numberOfParticles) ) 
@@ -537,6 +676,26 @@ bool CCParticleSpiral::initWithTotalParticles(unsigned int numberOfParticles)
 //
 // ParticleExplosion
 //
+
+CCParticleExplosion* CCParticleExplosion::node()
+{
+    return CCParticleExplosion::create();
+}
+
+CCParticleExplosion* CCParticleExplosion::create()
+{
+    CCParticleExplosion* pRet = new CCParticleExplosion();
+    if (pRet && pRet->init())
+    {
+        pRet->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(pRet);
+    }
+    return pRet;
+}
+
 bool CCParticleExplosion::initWithTotalParticles(unsigned int numberOfParticles)
 {
     if( CCParticleSystemQuad::initWithTotalParticles(numberOfParticles) ) 
@@ -610,6 +769,26 @@ bool CCParticleExplosion::initWithTotalParticles(unsigned int numberOfParticles)
 //
 // ParticleSmoke
 //
+
+CCParticleSmoke* CCParticleSmoke::node()
+{
+    return CCParticleSmoke::create();
+}
+
+CCParticleSmoke* CCParticleSmoke::create()
+{
+    CCParticleSmoke* pRet = new CCParticleSmoke();
+    if (pRet && pRet->init())
+    {
+        pRet->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(pRet);
+    }
+    return pRet;
+}
+
 bool CCParticleSmoke::initWithTotalParticles(unsigned int numberOfParticles)
 {
     if( CCParticleSystemQuad::initWithTotalParticles(numberOfParticles) )
@@ -676,9 +855,30 @@ bool CCParticleSmoke::initWithTotalParticles(unsigned int numberOfParticles)
     }
     return false;
 }
+
 //
 // CCParticleSnow
 //
+
+CCParticleSnow* CCParticleSnow::node()
+{
+    return CCParticleSnow::create();
+}
+
+CCParticleSnow* CCParticleSnow::create()
+{
+    CCParticleSnow* pRet = new CCParticleSnow();
+    if (pRet && pRet->init())
+    {
+        pRet->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(pRet);
+    }
+    return pRet;
+}
+
 bool CCParticleSnow::initWithTotalParticles(unsigned int numberOfParticles)
 {
     if( CCParticleSystemQuad::initWithTotalParticles(numberOfParticles) ) 
@@ -752,6 +952,25 @@ bool CCParticleSnow::initWithTotalParticles(unsigned int numberOfParticles)
 //
 // CCParticleRain
 //
+CCParticleRain* CCParticleRain::node()
+{
+    return CCParticleRain::create();
+}
+
+CCParticleRain* CCParticleRain::create()
+{
+    CCParticleRain* pRet = new CCParticleRain();
+    if (pRet && pRet->init())
+    {
+        pRet->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(pRet);
+    }
+    return pRet;
+}
+
 bool CCParticleRain::initWithTotalParticles(unsigned int numberOfParticles)
 {
     if( CCParticleSystemQuad::initWithTotalParticles(numberOfParticles) )
