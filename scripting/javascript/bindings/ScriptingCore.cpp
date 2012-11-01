@@ -637,6 +637,7 @@ void ScriptingCore::resumeSchedulesAndActions(CCNode *node) {
 }
 
 void ScriptingCore::cleanupSchedulesAndActions(CCNode *node) {
+ 
     CCArray * arr = JSCallFuncWrapper::getTargetForNativeNode(node);
     if(arr) {
         arr->removeAllObjects();

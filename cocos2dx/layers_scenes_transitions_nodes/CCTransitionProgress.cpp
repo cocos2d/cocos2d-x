@@ -48,6 +48,32 @@ CCTransitionProgress::CCTransitionProgress()
 
 }
 
+CCTransitionProgress* CCTransitionProgress::create(float t, CCScene* scene)
+{
+    CCTransitionProgress* pScene = new CCTransitionProgress();
+    if(pScene && pScene->initWithDuration(t, scene))
+    {
+        pScene->autorelease();
+        return pScene;
+    }
+    CC_SAFE_DELETE(pScene);
+    return NULL;
+}
+
+
+CCTransitionProgress* CCTransitionProgress::transitionWithDuration(float t, CCScene* scene)
+{
+    CCTransitionProgress* pScene = new CCTransitionProgress();
+    
+    if(pScene && pScene->initWithDuration(t, scene))
+    {
+        pScene->autorelease();
+        return pScene;
+    }
+    CC_SAFE_DELETE(pScene);
+    return NULL;
+}
+
 // CCTransitionProgress
 void CCTransitionProgress::onEnter()
 {
@@ -140,7 +166,58 @@ CCProgressTimer* CCTransitionProgressRadialCCW::progressTimerNodeWithRenderTextu
     return pNode;
 }
 
+CCTransitionProgressRadialCCW* CCTransitionProgressRadialCCW::create(float t, CCScene* scene)
+{
+    CCTransitionProgressRadialCCW* pScene = new CCTransitionProgressRadialCCW();
+    if(pScene && pScene->initWithDuration(t, scene))
+    {
+        pScene->autorelease();
+        return pScene;
+    }
+    CC_SAFE_DELETE(pScene);
+    return NULL;
+}
+
+
+CCTransitionProgressRadialCCW* CCTransitionProgressRadialCCW::transitionWithDuration(float t, CCScene* scene)
+{
+    CCTransitionProgressRadialCCW* pScene = new CCTransitionProgressRadialCCW();
+    
+    if(pScene && pScene->initWithDuration(t, scene))
+    {
+        pScene->autorelease();
+        return pScene;
+    }
+    CC_SAFE_DELETE(pScene);
+    return NULL;
+}
+
 // CCTransitionProgressRadialCW
+CCTransitionProgressRadialCW* CCTransitionProgressRadialCW::create(float t, CCScene* scene)
+{
+    CCTransitionProgressRadialCW* pScene = new CCTransitionProgressRadialCW();
+    if(pScene && pScene->initWithDuration(t, scene))
+    {
+        pScene->autorelease();
+        return pScene;
+    }
+    CC_SAFE_DELETE(pScene);
+    return NULL;
+}
+
+
+CCTransitionProgressRadialCW* CCTransitionProgressRadialCW::transitionWithDuration(float t, CCScene* scene)
+{
+    CCTransitionProgressRadialCW* pScene = new CCTransitionProgressRadialCW();
+    
+    if(pScene && pScene->initWithDuration(t, scene))
+    {
+        pScene->autorelease();
+        return pScene;
+    }
+    CC_SAFE_DELETE(pScene);
+    return NULL;
+}
 
 CCProgressTimer* CCTransitionProgressRadialCW::progressTimerNodeWithRenderTexture(CCRenderTexture* texture)
 {
@@ -162,6 +239,31 @@ CCProgressTimer* CCTransitionProgressRadialCW::progressTimerNodeWithRenderTextur
 }
 
 // CCTransitionProgressHorizontal
+CCTransitionProgressHorizontal* CCTransitionProgressHorizontal::create(float t, CCScene* scene)
+{
+    CCTransitionProgressHorizontal* pScene = new CCTransitionProgressHorizontal();
+    if(pScene && pScene->initWithDuration(t, scene))
+    {
+        pScene->autorelease();
+        return pScene;
+    }
+    CC_SAFE_DELETE(pScene);
+    return NULL;
+}
+
+
+CCTransitionProgressHorizontal* CCTransitionProgressHorizontal::transitionWithDuration(float t, CCScene* scene)
+{
+    CCTransitionProgressHorizontal* pScene = new CCTransitionProgressHorizontal();
+    
+    if(pScene && pScene->initWithDuration(t, scene))
+    {
+        pScene->autorelease();
+        return pScene;
+    }
+    CC_SAFE_DELETE(pScene);
+    return NULL;
+}
 
 CCProgressTimer* CCTransitionProgressHorizontal::progressTimerNodeWithRenderTexture(CCRenderTexture* texture)
 {    
@@ -184,6 +286,31 @@ CCProgressTimer* CCTransitionProgressHorizontal::progressTimerNodeWithRenderText
 }
 
 // CCTransitionProgressVertical
+CCTransitionProgressVertical* CCTransitionProgressVertical::create(float t, CCScene* scene)
+{
+    CCTransitionProgressVertical* pScene = new CCTransitionProgressVertical();
+    if(pScene && pScene->initWithDuration(t, scene))
+    {
+        pScene->autorelease();
+        return pScene;
+    }
+    CC_SAFE_DELETE(pScene);
+    return NULL;
+}
+
+
+CCTransitionProgressVertical* CCTransitionProgressVertical::transitionWithDuration(float t, CCScene* scene)
+{
+    CCTransitionProgressVertical* pScene = new CCTransitionProgressVertical();
+    
+    if(pScene && pScene->initWithDuration(t, scene))
+    {
+        pScene->autorelease();
+        return pScene;
+    }
+    CC_SAFE_DELETE(pScene);
+    return NULL;
+}
 
 CCProgressTimer* CCTransitionProgressVertical::progressTimerNodeWithRenderTexture(CCRenderTexture* texture)
 {    
@@ -207,6 +334,31 @@ CCProgressTimer* CCTransitionProgressVertical::progressTimerNodeWithRenderTextur
 
 
 // CCTransitionProgressInOut
+CCTransitionProgressInOut* CCTransitionProgressInOut::create(float t, CCScene* scene)
+{
+    CCTransitionProgressInOut* pScene = new CCTransitionProgressInOut();
+    if(pScene && pScene->initWithDuration(t, scene))
+    {
+        pScene->autorelease();
+        return pScene;
+    }
+    CC_SAFE_DELETE(pScene);
+    return NULL;
+}
+
+
+CCTransitionProgressInOut* CCTransitionProgressInOut::transitionWithDuration(float t, CCScene* scene)
+{
+    CCTransitionProgressInOut* pScene = new CCTransitionProgressInOut();
+    
+    if(pScene && pScene->initWithDuration(t, scene))
+    {
+        pScene->autorelease();
+        return pScene;
+    }
+    CC_SAFE_DELETE(pScene);
+    return NULL;
+}
 
 void CCTransitionProgressInOut::sceneOrder()
 {
@@ -242,6 +394,31 @@ CCProgressTimer* CCTransitionProgressInOut::progressTimerNodeWithRenderTexture(C
 
 
 // CCTransitionProgressOutIn
+CCTransitionProgressOutIn* CCTransitionProgressOutIn::create(float t, CCScene* scene)
+{
+    CCTransitionProgressOutIn* pScene = new CCTransitionProgressOutIn();
+    if(pScene && pScene->initWithDuration(t, scene))
+    {
+        pScene->autorelease();
+        return pScene;
+    }
+    CC_SAFE_DELETE(pScene);
+    return NULL;
+}
+
+
+CCTransitionProgressOutIn* CCTransitionProgressOutIn::transitionWithDuration(float t, CCScene* scene)
+{
+    CCTransitionProgressOutIn* pScene = new CCTransitionProgressOutIn();
+    
+    if(pScene && pScene->initWithDuration(t, scene))
+    {
+        pScene->autorelease();
+        return pScene;
+    }
+    CC_SAFE_DELETE(pScene);
+    return NULL;
+}
 
 CCProgressTimer* CCTransitionProgressOutIn::progressTimerNodeWithRenderTexture(CCRenderTexture* texture)
 {    

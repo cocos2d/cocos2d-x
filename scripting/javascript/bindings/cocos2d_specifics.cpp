@@ -715,7 +715,7 @@ JSBool js_CCNode_scheduleOnce(JSContext *cx, uint32_t argc, jsval *vp)
         CCScheduler *sched = node->getScheduler();
         
         JSScheduleWrapper *tmpCobj = new JSScheduleWrapper();
-        
+        tmpCobj->autorelease();
     	        
         //
         // delay
@@ -763,7 +763,8 @@ JSBool js_CCNode_schedule(JSContext *cx, uint32_t argc, jsval *vp)
         js_proxy_t *p = js_get_or_create_proxy<cocos2d::CCScheduler>(cx, sched);        
 
         JSScheduleWrapper *tmpCobj = new JSScheduleWrapper();
-        
+        tmpCobj->autorelease();
+
     	double interval;
         if( argc >= 2 ) {
             if( ! JS_ValueToNumber(cx, argv[1], &interval ) )
