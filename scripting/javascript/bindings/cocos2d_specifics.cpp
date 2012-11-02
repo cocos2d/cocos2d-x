@@ -716,7 +716,7 @@ JSBool js_CCNode_scheduleOnce(JSContext *cx, uint32_t argc, jsval *vp)
         
         JSScheduleWrapper *tmpCobj = new JSScheduleWrapper();
         tmpCobj->autorelease();
-    	        
+
         //
         // delay
         //
