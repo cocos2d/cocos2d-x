@@ -234,7 +234,7 @@ CCNode* CCBReader::readNodeGraphFromData(CCData *pData, CCObject *pOwner, const 
     
     mOwnerOutletNames = CCArray::create();
     mOwnerOutletNodes = CCArray::create();
-       
+
     mOwnerCallbackNames = CCArray::create();
     mOwnerCallbackNodes = CCArray::create();
     
@@ -313,6 +313,8 @@ bool CCBReader::readHeader() {
         return false;
     }
 
+    jsControlled = this->readBool();
+    
     return true;
 }
 
@@ -345,13 +347,9 @@ CCNode* CCBReader::readFileWithCleanUp(bool bCleanUp)
     }
     
     CCNode *pNode = readNodeGraph();
-<<<<<<< HEAD
-    
-=======
 
     mAnimationManagers.push_back(std::make_pair(pNode, mActionManager));
 
->>>>>>> Changing mAnimationManagers and bringing CCBReader implementation closer to cocos2d-iphone CCBReader
     if (bCleanUp)
     {
         cleanUpNodeGraph(pNode);
@@ -489,6 +487,12 @@ CCNode * CCBReader::readNodeGraph(CCNode * pParent) {
     /* Read class name. */
     CCString * className = this->readCachedString();
 
+     CCString * jsControlledName;
+    
+    if(jsControlled) {
+        jsControlledName = this->readCachedString();
+    }
+    
     // Read assignment type and name
     int memberVarAssignmentType = this->readInt(false);
     CCString * memberVarAssignmentName;
@@ -511,13 +515,10 @@ CCNode * CCBReader::readNodeGraph(CCNode * pParent) {
         mActionManager->setRootNode(node);
     }
     
-<<<<<<< HEAD
-=======
     if(jsControlled && node == mActionManager->getRootNode()) {
         mActionManager->setDocumentControllerName(jsControlledName->getCString());
     }
-    
->>>>>>> Changing mAnimationManagers and bringing CCBReader implementation closer to cocos2d-iphone CCBReader
+
     // Read animated properties
     CCDictionary *seqs = CCDictionary::create();
     mAnimatedProps = new set<string>();
@@ -573,7 +574,7 @@ CCNode * CCBReader::readNodeGraph(CCNode * pParent) {
         embeddedNode->setScale(ccbFileNode->getScale());
         embeddedNode->setTag(ccbFileNode->getTag());
         embeddedNode->setVisible(true);
-        //embeddedNode->ignoreAnchorPointForPosition(ccbFileNode->isIgnoreAnchorPointForPosition());
+        embeddedNode->ignoreAnchorPointForPosition(ccbFileNode->isIgnoreAnchorPointForPosition());
         
         mActionManager->moveAnimationsFromNode(ccbFileNode, embeddedNode);
 
@@ -590,6 +591,7 @@ CCNode * CCBReader::readNodeGraph(CCNode * pParent) {
      }*/
 #else
     if(memberVarAssignmentType != kCCBTargetTypeNone) {
+        if(!jsControlled) {
         CCObject * target = NULL;
         if(memberVarAssignmentType == kCCBTargetTypeDocumentRoot) 
         {
@@ -611,6 +613,15 @@ CCNode * CCBReader::readNodeGraph(CCNode * pParent) {
 
             if(!assigned && this->mCCBMemberVariableAssigner != NULL) {
                 this->mCCBMemberVariableAssigner->onAssignCCBMemberVariable(target, memberVarAssignmentName, node);
+            }
+        }
+        } else {
+            if(memberVarAssignmentType == kCCBTargetTypeDocumentRoot) {
+                mActionManager->addDocumentOutletName(memberVarAssignmentName->getCString());
+                mActionManager->addDocumentOutletNode(node);
+            } else {
+                mOwnerOutletNames->addObject(CCString::create(memberVarAssignmentName->getCString()));
+                mOwnerOutletNodes->addObject(node);
             }
         }
     }
@@ -798,8 +809,6 @@ bool CCBReader::endsWith(CCString * pString, CCString * pEnding) {
     }
 }
 
-<<<<<<< HEAD
-=======
 bool CCBReader::isJSControlled() {
     return jsControlled;
 }
@@ -842,7 +851,7 @@ CCArray* CCBReader::getNodesWithAnimationManagers() {
     return mNodesWithAnimationManagers;
 }
 
-CCArray* CCBReader::getAnimationManagerForNodes() {
+CCArray* CCBReader::getAnimationManagersForNodes() {
     return mAnimationManagerForNodes;
 }
 
@@ -854,8 +863,6 @@ void CCBReader::setAnimationManagers(std::vector<std::pair<CCNode *, CCBAnimatio
     mAnimationManagers = x;
 }
 
-
->>>>>>> Changing mAnimationManagers and bringing CCBReader implementation closer to cocos2d-iphone CCBReader
 /************************************************************************
  Static functions
  ************************************************************************/
