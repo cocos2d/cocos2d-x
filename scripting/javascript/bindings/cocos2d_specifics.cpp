@@ -1428,6 +1428,7 @@ JSBool js_cocos2dx_ccpNormalize(JSContext *cx, uint32_t argc, jsval *vp)
 extern JSObject* js_cocos2dx_CCNode_prototype;
 extern JSObject* js_cocos2dx_CCLayerColor_prototype;
 extern JSObject* js_cocos2dx_CCSprite_prototype;
+extern JSObject* js_cocos2dx_CCTMXLayer_prototype;
 extern JSObject* js_cocos2dx_CCAction_prototype;
 extern JSObject* js_cocos2dx_CCAnimation_prototype;
 extern JSObject* js_cocos2dx_CCMenuItem_prototype;
@@ -1505,6 +1506,31 @@ JSBool js_cocos2dx_CCParticleSystem_setBlendFunc(JSContext *cx, uint32_t argc, j
     return js_cocos2dx_setBlendFunc<CCParticleSystem>(cx, argc, vp);
 }
 
+// CCTMXLayer
+JSBool js_cocos2dx_CCTMXLayer_getTileFlagsAt(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    jsval *argv = JS_ARGV(cx, vp);
+    JSObject *obj;
+    CCTMXLayer* cobj;
+    obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
+    cobj = (CCTMXLayer*)(proxy ? proxy->ptr : NULL);
+    TEST_NATIVE_OBJECT(cx, cobj)
+    if (argc == 1)
+    {
+        ccTMXTileFlags flags;
+        CCPoint arg0 = jsval_to_ccpoint(cx, argv[0]);
+        cobj->tileGIDAt(arg0, &flags);
+        
+        JS_SET_RVAL(cx, vp, UINT_TO_JSVAL((uint32_t)flags));
+        return JS_TRUE;
+    }
+    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 2);
+    return JS_FALSE;
+}
+
+
 void register_cocos2dx_js_extensions(JSContext* cx, JSObject* global)
 {
 	// first, try to get the ns
@@ -1534,6 +1560,8 @@ void register_cocos2dx_js_extensions(JSContext* cx, JSObject* global)
     JS_DefineFunction(cx, js_cocos2dx_CCNode_prototype, "setPosition", js_cocos2dx_CCNode_setPosition, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 
     JS_DefineFunction(cx, js_cocos2dx_CCSprite_prototype, "setPosition", js_cocos2dx_CCSprite_setPosition, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+    
+    JS_DefineFunction(cx, js_cocos2dx_CCTMXLayer_prototype, "getTileFlagsAt", js_cocos2dx_CCTMXLayer_getTileFlagsAt, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 
     tmpObj = JSVAL_TO_OBJECT(anonEvaluate(cx, global, "(function () { return cc.BezierBy; })()"));
     JS_DefineFunction(cx, tmpObj, "create", JSB_CCBezierBy_actionWithDuration, 2, JSPROP_READONLY | JSPROP_PERMANENT);

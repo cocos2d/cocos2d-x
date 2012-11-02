@@ -16,7 +16,7 @@ cc.TEXTURE_PIXELFORMAT_PVRTC4 = 8;
 cc.TEXTURE_PIXELFORMAT_PVRTC4 = 9;
 cc.TEXTURE_PIXELFORMAT_DEFAULT = cc.TEXTURE_PIXELFORMAT_RGBA8888;
 
-cc.TEXT_ALIGNMENT_LEFT  = 0;
+cc.TEXT_ALIGNMENT_LEFT = 0;
 cc.TEXT_ALIGNMENT_CENTER = 1;
 cc.TEXT_ALIGNMENT_RIGHT = 2;
 
@@ -39,6 +39,18 @@ cc.PARTICLE_MODE_RADIUS = 1;
 cc.PARTICLE_START_SIZE_EQUAL_TO_END_SIZE = -1;
 cc.PARTICLE_START_RADIUS_EQUAL_TO_END_RADIUS = -1;
 
+cc.TOUCH_ALL_AT_ONCE = 0;
+cc.TOUCH_ONE_BY_ONE = 1;
+
+cc.TMX_TILE_HORIZONTAL_FLAG = 0x80000000;
+cc.TMX_TILE_VERTICAL_FLAG = 0x40000000;
+cc.TMX_TILE_DIAGONAL_FLAG = 0x20000000;
+
+cc.TRANSITION_ORIENTATION_LEFT_OVER = 0;
+cc.TRANSITION_ORIENTATION_RIGHT_OVER = 1;
+cc.TRANSITION_ORIENTATION_UP_OVER = 0;
+cc.TRANSITION_ORIENTATION_DOWN_OVER = 1;
+
 cc.RED = {r:255, g:0, b:0};
 cc.GREEN = {r:0, g:255, b:0};
 cc.BLUE = {r:0, g:0, b:255};
@@ -47,9 +59,18 @@ cc.WHITE = {r:255, g:255, b:255};
 
 cc.POINT_ZERO = {x:0, y:0};
 
-cc._reuse_p0 = {x:0, y:0};
-cc._reuse_p1 = {x:0, y:0};
+// XXX: This definition is different than cocos2d-html5
+cc.REPEAT_FOREVER = -1;
+// reusable objects
+cc._reuse_p = [
+    {x:0, y:0},
+    {x:0, y:0},
+    {x:0, y:0},
+    {x:0, y:0}
+];
 cc._reuse_p_index = 0;
+cc._reuse_size = {width:0, height:0};
+cc._reuse_rect = {x:0, y:0, width:0, height:0};
 cc._reuse_color3b = {r:255, g:255, b:255 };
 cc._reuse_color4b = {r:255, g:255, b:255, a:255 };
 cc._reuse_grid = {x:0, y:0};
@@ -57,12 +78,10 @@ cc._reuse_grid = {x:0, y:0};
 //
 // Color 3B
 //
-cc.c3b = function( r, g, b )
-{
+cc.c3b = function (r, g, b) {
     return {r:r, g:g, b:b };
 };
-cc._c3b = function( r, g, b )
-{
+cc._c3b = function (r, g, b) {
     cc._reuse_color3b.r = r;
     cc._reuse_color3b.g = g;
     cc._reuse_color3b.b = b;
@@ -75,12 +94,10 @@ cc._c3 = cc._c3b;
 //
 // Color 4B
 //
-cc.c4b = function( r, g, b, a )
-{
+cc.c4b = function (r, g, b, a) {
     return {r:r, g:g, b:b, a:a };
 };
-cc._c4b = function( r, g, b, a )
-{
+cc._c4b = function (r, g, b, a) {
     cc._reuse_color4b.r = r;
     cc._reuse_color4b.g = g;
     cc._reuse_color4b.b = b;
@@ -92,46 +109,41 @@ cc.c4 = cc.c4b;
 cc._c4 = cc._c4b;
 
 
-
 //
 // Color 4F
 //
-cc.c4f = function( r, g, b, a )
-{
+cc.c4f = function (r, g, b, a) {
     return {r:r, g:g, b:b, a:a };
 };
 
 //
 // Point
 //
-cc.p = function( x, y )
-{
+cc.p = function (x, y) {
     return {x:x, y:y};
 };
-cc._p = function( x, y )
-{
-    if( cc._reuse_p_index === 0 ) {
-        cc._reuse_p0.x = x;
-        cc._reuse_p0.y = y;
-        cc._reuse_p_index = 1;
-        return cc._reuse_p0;
-    } else {
-        cc._reuse_p1.x = x;
-        cc._reuse_p1.y = y;
+cc._p = function (x, y) {
+    if (cc._reuse_p_index == cc._reuse_p.length)
         cc._reuse_p_index = 0;
-        return cc._reuse_p1;
-    }
+
+    var p = cc._reuse_p[ cc._reuse_p_index];
+    cc._reuse_p_index++;
+    p.x = x;
+    p.y = y;
+    return p;
+};
+
+cc.pointEqualToPoint = function (point1, point2) {
+    return ((point1.x == point2.x) && (point1.y == point2.y));
 };
 
 //
 // Grid
 //
-cc.g = function(x, y)
-{
+cc.g = function (x, y) {
     return {x:x, y:y};
 };
-cc._g = function( x, y )
-{
+cc._g = function (x, y) {
     cc._reuse_grid.x = x;
     cc._reuse_grid.y = y;
     return cc._reuse_grid;
@@ -140,73 +152,106 @@ cc._g = function( x, y )
 //
 // Size
 //
-cc.size = function(w,h)
-{
+cc.size = function (w, h) {
     return {width:w, height:h};
+};
+cc._size = function (w, h) {
+    cc._reuse_size.width = w;
+    cc._reuse_size.height = h;
+    return cc._reuse_size;
+};
+cc.sizeEqualToSize = function (size1, size2) {
+    return ((size1.width == size2.width) && (size1.height == size2.height));
 };
 
 //
 // Rect
 //
-cc.rect = function(x,y,w,h)
-{
+cc.rect = function (x, y, w, h) {
     return {x:x, y:y, width:w, height:h};
 };
 
-
-// dump config info, but only in debug mode
-cc.dumpConfig = function()
-{
-    if( cc.config.debug ) {
-        for( var i in cc.config )
-            cc.log( i + " = " + cc.config[i] );
-    }
+cc._rect = function (x, y, w, h) {
+    cc._reuse_rect.x = x;
+    cc._reuse_rect.y = y;
+    cc._reuse_rect.width = w;
+    cc._reuse_rect.height = h;
+    return cc._reuse_rect;
+};
+cc.rectEqualToRect = function (rect1, rect2) {
+    return ( rect1.x == rect2.x && rect1.y == rect2.y && rect1.width == rect2.width && rect1.height == rect2.height);
 };
 
-//
-// MenuItemToggle
-//
-cc.MenuItemToggle.create = function( /* var args */) {
-
-    var n = arguments.length;
-
-    if (typeof arguments[n-1] === 'function') {
-        var args = Array.prototype.slice.call(arguments);
-        var func = args.pop();
-        var obj = args.pop();
-    
-        // create it with arguments,
-        var item = cc.MenuItemToggle._create.apply(this, args);
-
-        // then set the callback
-        item.setCallback(obj, func);
-        return item;
-    } else {
-        return cc.MenuItemToggle._create.apply(this, arguments);
-    }
+cc.rectContainsRect = function (rect1, rect2) {
+    if ((rect1.x >= rect2.x) || (rect1.y >= rect2.y) ||
+        ( rect1.x + rect1.width <= rect2.x + rect2.width) ||
+        ( rect1.y + rect1.height <= rect2.y + rect2.height))
+        return false;
+    return true;
 };
 
-/**
- * Associates a base class with a native superclass
- * @function
- * @param {object} jsobj subclass
- * @param {object} klass superclass
- */
-cc.associateWithNative = function( jsobj, superclass ) {
-    var native = new superclass();
-    __associateObjWithNative( jsobj, native );
+cc.rectGetMaxX = function (rect) {
+    return (rect.x + rect.width);
+};
+
+cc.rectGetMidX = function (rect) {
+    return (rect.x + rect.width / 2.0);
+};
+
+cc.rectGetMinX = function (rect) {
+    return rect.x;
+};
+
+cc.rectGetMaxY = function (rect) {
+    return(rect.y + rect.height);
+};
+
+cc.rectGetMidY = function (rect) {
+    return rect.y + rect.height / 2.0;
+};
+
+cc.rectGetMinY = function (rect) {
+    return rect.y;
+};
+
+cc.rectContainsPoint = function (rect, point) {
+    var ret = false;
+    if (point.x >= rect.x && point.x <= rect.x + rect.width &&
+        point.y >= rect.y && point.y <= rect.y + rect.height) {
+        ret = true;
+    }
+    return ret;
 };
 
 
 // XXX Should be done in native
-cc.rectIntersectsRect = function( rectA, rectB )
-{
-    var bool = ! (  rectA.x > rectB.x + rectB.width ||
-                    rectA.x + rectA.width < rectB.x ||
-                    rectA.y > rectB.y +rectB.height ||
-                    rectA.y + rectA.height < rectB.y );
+cc.rectIntersectsRect = function (rectA, rectB) {
+    var bool = !(  rectA.x > rectB.x + rectB.width ||
+        rectA.x + rectA.width < rectB.x ||
+        rectA.y > rectB.y + rectB.height ||
+        rectA.y + rectA.height < rectB.y );
 
     return bool;
+};
+
+cc.rectUnion = function (rectA, rectB) {
+    var rect = cc.rect(0, 0, 0, 0);
+    rect.x = Math.min(rectA.x, rectB.x);
+    rect.y = Math.min(rectA.y, rectB.y);
+    rect.width = Math.max(rectA.x + rectA.width, rectB.x + rectB.width) - rect.x;
+    rect.height = Math.max(rectA.y + rectA.height, rectB.y + rectB.height) - rect.y;
+    return rect;
+};
+
+cc.rectIntersection = function (rectA, rectB) {
+    var intersection = cc.rect(
+        Math.max(rectA.x, rectB.x),
+        Math.max(rectA.y, rectB.y),
+        0, 0);
+
+    intersection.width = Math.min(rectA.x + rectA.width, rectB.x + rectB.width) - intersection.x;
+    intersection.height = Math.min(rectA.y + rectA.height, rectB.y + rectB.height) - intersection.y;
+    return intersection;
 };
 
 //
@@ -220,67 +265,133 @@ cc.ArrayRemoveObject = function (arr, delObj) {
     }
 };
 
+//
+// Helpers
+//
+cc.dump = function (obj) {
+    for (var i in obj)
+        cc.log(i + " = " + obj[i]);
+};
+
+// dump config info, but only in debug mode
+cc.dumpConfig = function () {
+    if (cc.config.debug)
+        cc.dump(cc.config);
+};
 
 //
-// Google "subclasses"
-// borrowed from closure library
+// Bindings Overrides
 //
-var goog = goog || {}; // Check to see if already defined in current scope
-goog.inherits = function (childCtor, parentCtor) {
+// MenuItemToggle
+cc.MenuItemToggle.create = function (/* var args */) {
+
+    var n = arguments.length;
+
+    if (typeof arguments[n - 1] === 'function') {
+        var args = Array.prototype.slice.call(arguments);
+        var func = args.pop();
+        var obj = args.pop();
+
+        // create it with arguments,
+        var item = cc.MenuItemToggle._create.apply(this, args);
+
+        // then set the callback
+        item.setCallback(obj, func);
+        return item;
+    } else {
+        return cc.MenuItemToggle._create.apply(this, arguments);
+    }
+};
+
+// LabelAtlas
+// TODO:
+// cc.LabelAtlas.create = function (a, b, c, d, e) {
+
+//     var n = arguments.length;
+
+//     if (n == 5) {
+//         return cc.LabelAtlas._create(a, b, c, d, e.charCodeAt(0));
+//     } else {
+//         return cc.LabelAtlas._create.apply(this, arguments);
+//     }
+// };
+
+/**
+ * Associates a base class with a native superclass
+ * @function
+ * @param {object} jsobj subclass
+ * @param {object} klass superclass
+ */
+cc.associateWithNative = function (jsobj, superclass_or_instance) {
+
+    try {
+        // Used when subclassing using the "extend" method
+        var native = new superclass_or_instance();
+        __associateObjWithNative(jsobj, native);
+    } catch (err) {
+        // Used when subclassing using the goog.inherits method
+        __associateObjWithNative(jsobj, superclass_or_instance);
+    }
+};
+
+//
+// JSB supports 2 official ways to create subclasses
+//
+// 1) Google "subclasses" borrowed from closure library
+// This is the recommended way to do it
+//
+cc.inherits = function (childCtor, parentCtor) {
 	/** @constructor */
 	function tempCtor() {};
 	tempCtor.prototype = parentCtor.prototype;
 	childCtor.superClass_ = parentCtor.prototype;
-	childCtor.prototype = new tempCtor();
-	childCtor.prototype.constructor = childCtor;
+    childCtor.prototype = new tempCtor();
+    childCtor.prototype.constructor = childCtor;
 
-	// Copy "static" method, but doesn't generate subclasses.
+    // Copy "static" method, but doesn't generate subclasses.
 //	for( var i in parentCtor ) {
 //		childCtor[ i ] = parentCtor[ i ];
 //	}
 };
-goog.base = function(me, opt_methodName, var_args) {
-	var caller = arguments.callee.caller;
-	if (caller.superClass_) {
-		// This is a constructor. Call the superclass constructor.
-		ret =  caller.superClass_.constructor.apply( me, Array.prototype.slice.call(arguments, 1));
 
-		// XXX: SpiderMonkey bindings extensions
-//		__associateObjWithNative( me, ret );
-		return ret;
-	}
+cc.base = function (me, opt_methodName, var_args) {
+    var caller = arguments.callee.caller;
+    if (caller.superClass_) {
+        // This is a constructor. Call the superclass constructor.
+        ret = caller.superClass_.constructor.apply(me, Array.prototype.slice.call(arguments, 1));
+        return ret;
+    }
 
-	var args = Array.prototype.slice.call(arguments, 2);
-	var foundCaller = false;
-	for (var ctor = me.constructor;
-        ctor; ctor = ctor.superClass_ && ctor.superClass_.constructor) {
-		if (ctor.prototype[opt_methodName] === caller) {
-			foundCaller = true;
-		} else if (foundCaller) {
-			return ctor.prototype[opt_methodName].apply(me, args);
-		}
-	}
+    var args = Array.prototype.slice.call(arguments, 2);
+    var foundCaller = false;
+    for (var ctor = me.constructor;
+         ctor; ctor = ctor.superClass_ && ctor.superClass_.constructor) {
+        if (ctor.prototype[opt_methodName] === caller) {
+            foundCaller = true;
+        } else if (foundCaller) {
+            return ctor.prototype[opt_methodName].apply(me, args);
+        }
+    }
 
-	// If we did not find the caller in the prototype chain,
-	// then one of two things happened:
-	// 1) The caller is an instance method.
-	// 2) This method was not called by the right caller.
-	if (me[opt_methodName] === caller) {
-		return me.constructor.prototype[opt_methodName].apply(me, args);
-	} else {
-		throw Error(
-					'goog.base called from a method of one name ' +
-					'to a method of a different name');
-	}
+    // If we did not find the caller in the prototype chain,
+    // then one of two things happened:
+    // 1) The caller is an instance method.
+    // 2) This method was not called by the right caller.
+    if (me[opt_methodName] === caller) {
+        return me.constructor.prototype[opt_methodName].apply(me, args);
+    } else {
+        throw Error(
+            'cc.base called from a method of one name ' +
+                'to a method of a different name');
+    }
 };
 
 
 //
-// Simple subclass
+// 2) Using "extend" subclassing
+// Simple JavaScript Inheritance By John Resig http://ejohn.org/
 //
-
-cc.Class = function(){};
-
+cc.Class = function () {};
 cc.Class.extend = function (prop) {
     var _super = this.prototype;
 
@@ -334,6 +445,7 @@ cc.Class.extend = function (prop) {
     return Class;
 };
 
+cc.Node.prototype.ctor = function () {};
 cc.Node.extend = cc.Class.extend;
 cc.Layer.extend = cc.Class.extend;
 cc.LayerGradient.extend = cc.Class.extend;
