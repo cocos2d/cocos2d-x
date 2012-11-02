@@ -15,6 +15,27 @@ try {
     };
     cc.BLACK = cc.c3(0,0,0);
 
+    // MenuItemToggle
+    cc.MenuItemToggle.create = function (/* var args */) {
+        
+        var n = arguments.length;
+        
+        if (typeof arguments[n - 1] === 'function') {
+            var args = Array.prototype.slice.call(arguments);
+            var func = args.pop();
+            var obj = args.pop();
+            
+            // create it with arguments,
+            var item = cc.MenuItemToggle._create.apply(this, args);
+            
+            // then set the callback
+            item.setCallback(obj, func);
+            return item;
+        } else {
+            return cc.MenuItemToggle._create.apply(this, arguments);
+        }
+    };
+    
     
     director = cc.Director.getInstance();
     winSize = director.getWinSize();
