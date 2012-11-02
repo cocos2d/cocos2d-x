@@ -642,7 +642,7 @@ void CCSpriteBatchNode::removeSpriteFromAtlas(CCSprite *pobSprite)
 
         // update all sprites beyond this one
         unsigned int count = m_pobDescendants->count();
-
+        
         for(; uIndex < count; ++uIndex)
         {
             CCSprite* s = (CCSprite*)(m_pobDescendants->objectAtIndex(uIndex));

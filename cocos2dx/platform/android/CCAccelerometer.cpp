@@ -55,6 +55,12 @@ namespace cocos2d
         }
     }
 
+    void CCAccelerometer::setAccelerometerInterval(float interval) 
+    {
+        setAccelerometerIntervalJNI(interval);
+    }
+
+
     void CCAccelerometer::update(float x, float y, float z, long sensorTimeStamp) 
     {
         if (m_pAccelDelegate)

@@ -109,6 +109,11 @@ public class Cocos2dxHelper {
 		Cocos2dxHelper.sCocos2dxAccelerometer.enable();
 	}
 
+
+	public static void setAccelerometerInterval(float interval) {
+		Cocos2dxHelper.sCocos2dxAccelerometer.setInterval(interval);
+	}
+
 	public static void disableAccelerometer() {
 		Cocos2dxHelper.sAccelerometerEnabled = false;
 		Cocos2dxHelper.sCocos2dxAccelerometer.disable();

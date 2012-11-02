@@ -209,17 +209,11 @@ public:
     /** creates a bitmap font atlas with an initial string and the FNT file */
     static CCLabelBMFont * create(const char *str, const char *fntFile, float width, CCTextAlignment alignment, CCPoint imageOffset);
     
-	static CCLabelBMFont * create(const char *str, const char *fntFile, float width, CCTextAlignment alignment) {
-		return CCLabelBMFont::create(str, fntFile, width, alignment, CCPointZero);
-	}
+	static CCLabelBMFont * create(const char *str, const char *fntFile, float width, CCTextAlignment alignment);
 
-	static CCLabelBMFont * create(const char *str, const char *fntFile, float width) {
-		return CCLabelBMFont::create(str, fntFile, width, kCCTextAlignmentLeft, CCPointZero);
-	}
+	static CCLabelBMFont * create(const char *str, const char *fntFile, float width);
 
-	static CCLabelBMFont * create(const char *str, const char *fntFile) {
-        return CCLabelBMFont::create(str, fntFile, kCCLabelAutomaticWidth, kCCTextAlignmentLeft, CCPointZero);
-    }
+	static CCLabelBMFont * create(const char *str, const char *fntFile);
 
     /** Creates an label.
     @deprecated: This interface will be deprecated sooner or later.

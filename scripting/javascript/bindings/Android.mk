@@ -27,6 +27,7 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
 
 LOCAL_WHOLE_STATIC_LIBRARIES := spidermonkey_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos2dx_static
+LOCAL_WHOLE_STATIC_LIBRARIES += cocos_extension_static
 LOCAL_WHOLE_STATIC_LIBRARIES += chipmunk_static
 
 LOCAL_LDLIBS := -landroid
@@ -36,4 +37,5 @@ include $(BUILD_STATIC_LIBRARY)
 
 $(call import-module,scripting/javascript/spidermonkey-android)
 $(call import-module,cocos2dx)
+$(call import-module,extensions)
 $(call import-module,external/chipmunk)

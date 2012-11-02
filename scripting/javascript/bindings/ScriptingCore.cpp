@@ -55,18 +55,17 @@ std::map<std::string, js::RootedObject*> globals;
 static void executeJSFunctionFromReservedSpot(JSContext *cx, JSObject *obj,
                                               jsval &dataVal, jsval &retval) {
 
-    //  if(p->jsclass->JSCLASS_HAS_RESERVED_SLOTS(1)) {
     jsval func = JS_GetReservedSlot(obj, 0);
 
     if(func == JSVAL_VOID) { return; }
     jsval thisObj = JS_GetReservedSlot(obj, 1);
+	JSAutoCompartment ac(cx, obj);
     if(thisObj == JSVAL_VOID) {
         JS_CallFunctionValue(cx, obj, func, 1, &dataVal, &retval);
     } else {
         assert(!JSVAL_IS_PRIMITIVE(thisObj));
         JS_CallFunctionValue(cx, JSVAL_TO_OBJECT(thisObj), func, 1, &dataVal, &retval);
     }
-    //  }
 }
 
 static void getTouchesFuncName(int eventType, std::string &funcName) {
@@ -163,6 +162,7 @@ static void executeJSFunctionWithName(JSContext *cx, JSObject *obj,
         if(temp_retval == JSVAL_VOID) {
             return;
         }
+		JSAutoCompartment ac(cx, obj);
         JS_CallFunctionName(cx, obj, funcName,
                             1, &dataVal, &retval);
     }
@@ -361,13 +361,11 @@ JSBool ScriptingCore::evalString(const char *string, jsval *outVal, const char *
     JSScript* script = JS_CompileScript(cx, global, string, strlen(string), filename, 1);
     if (script) {
         // JSAutoCompartment ac(cx, global);
-        JSAutoEnterCompartment ac;
-        ac.enter(cx, global);
-        JSBool evaluatedOK = JS_ExecuteScript(cx_, global_, script, &rval);
+		JSAutoCompartment ac(cx, global);
+        JSBool evaluatedOK = JS_ExecuteScript(cx, global, script, &rval);
         if (JS_FALSE == evaluatedOK) {
             fprintf(stderr, "(evaluatedOK == JS_FALSE)\n");
         }
-        ac.leave();
         return evaluatedOK;
     }
     return false;
@@ -406,6 +404,7 @@ void ScriptingCore::createGlobalContext() {
         this->cx_ = NULL;
         this->rt_ = NULL;
     }
+	JS_SetCStringsAreUTF8();
     this->rt_ = JS_NewRuntime(10 * 1024 * 1024);
     this->cx_ = JS_NewContext(rt_, 10240);
     JS_SetOptions(this->cx_, JSOPTION_TYPE_INFERENCE);
@@ -455,13 +454,11 @@ JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* c
     if (script) {
         jsval rval;
         filename_script[path] = script;
-        JSAutoEnterCompartment ac;
-        ac.enter(cx, global);
+		JSAutoCompartment ac(cx, global);
         evaluatedOK = JS_ExecuteScript(cx, global, script, &rval);
         if (JS_FALSE == evaluatedOK) {
             fprintf(stderr, "(evaluatedOK == JS_FALSE)\n");
         }
-        ac.leave();
     }
     return evaluatedOK;
 }
@@ -600,7 +597,7 @@ JSBool ScriptingCore::removeRootJS(JSContext *cx, uint32_t argc, jsval *vp)
 
 void ScriptingCore::pauseSchedulesAndActions(CCNode *node) {
 
-    CCArray * arr = JSSchedule::getTargetForNativeNode(node);
+    CCArray * arr = JSScheduleWrapper::getTargetForNativeNode(node);
     if(! arr) return;
     for(unsigned int i = 0; i < arr->count(); ++i) {
         if(arr->objectAtIndex(i)) {
@@ -612,7 +609,7 @@ void ScriptingCore::pauseSchedulesAndActions(CCNode *node) {
 
 void ScriptingCore::resumeSchedulesAndActions(CCNode *node) {
 
-    CCArray * arr = JSSchedule::getTargetForNativeNode(node);
+    CCArray * arr = JSScheduleWrapper::getTargetForNativeNode(node);
     if(!arr) return;
     for(unsigned int i = 0; i < arr->count(); ++i) {
         if(!arr->objectAtIndex(i)) continue;
@@ -620,6 +617,18 @@ void ScriptingCore::resumeSchedulesAndActions(CCNode *node) {
     }
 }
 
+void ScriptingCore::cleanupSchedulesAndActions(CCNode *node) {
+ 
+    CCArray * arr = JSCallFuncWrapper::getTargetForNativeNode(node);
+    if(arr) {
+        arr->removeAllObjects();
+    }
+    
+    arr = JSScheduleWrapper::getTargetForNativeNode(node);
+    if(arr) {
+        arr->removeAllObjects();
+    }
+}
 
 int ScriptingCore::executeNodeEvent(CCNode* pNode, int nAction)
 {
@@ -650,6 +659,9 @@ int ScriptingCore::executeNodeEvent(CCNode* pNode, int nAction)
     else if(nAction == kCCNodeOnExitTransitionDidStart)
     {
         executeJSFunctionWithName(this->cx_, p->obj, "onExitTransitionDidStart", dataVal, retval);
+    }
+    else if(nAction == kCCNodeOnCleanup) {
+        cleanupSchedulesAndActions(pNode);
     }
 
     return 1;
@@ -729,7 +741,17 @@ int ScriptingCore::executeLayerTouchesEvent(CCLayer* pLayer, int eventType, CCSe
 
 int ScriptingCore::executeLayerTouchEvent(CCLayer* pLayer, int eventType, CCTouch *pTouch)
 {
-    return 0;
+    std::string funcName = "";
+    getTouchFuncName(eventType, funcName);
+    
+    jsval jsret;
+    getJSTouchObject(this->getGlobalContext(), pTouch, jsret);
+    JSObject *jsObj = JSVAL_TO_OBJECT(jsret);
+    executeFunctionWithObjectData(pLayer,  funcName.c_str(), jsObj);
+    
+    removeJSTouchObject(this->getGlobalContext(), pTouch, jsret);
+    
+    return 1;
 }
 
 int ScriptingCore::executeFunctionWithObjectData(CCNode *self, const char *name, JSObject *obj) {
@@ -994,20 +1016,26 @@ CCArray* jsval_to_ccarray(JSContext* cx, jsval v) {
 
 
 jsval ccarray_to_jsval(JSContext* cx, CCArray *arr) {
-
-  JSObject *jsretArr = JS_NewArrayObject(cx, 0, NULL);
-
-  for(int i = 0; i < arr->count(); ++i) {
-
-    CCObject *obj = arr->objectAtIndex(i);
-    js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::CCObject>(cx, obj);
-    jsval arrElement = OBJECT_TO_JSVAL(proxy->obj);
-
-    if(!JS_SetElement(cx, jsretArr, i, &arrElement)) {
-      break;
+    
+    JSObject *jsretArr = JS_NewArrayObject(cx, 0, NULL);
+    
+    for(int i = 0; i < arr->count(); ++i) {
+        jsval arrElement;
+        CCObject *obj = arr->objectAtIndex(i);
+        
+        CCString *testString = dynamic_cast<cocos2d::CCString *>(obj);
+        if(testString) {
+            arrElement = c_string_to_jsval(cx, testString->getCString());
+        } else {
+            js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::CCObject>(cx, obj);
+            arrElement = OBJECT_TO_JSVAL(proxy->obj);
+        }
+        
+        if(!JS_SetElement(cx, jsretArr, i, &arrElement)) {
+            break;
+        }
     }
-  }
-  return OBJECT_TO_JSVAL(jsretArr);
+    return OBJECT_TO_JSVAL(jsretArr);
 }
 
 jsval long_long_to_jsval(JSContext* cx, long long v) {
@@ -1100,7 +1128,7 @@ jsval cccolor4f_to_jsval(JSContext* cx, ccColor4F& v) {
     return JSVAL_NULL;
 }
 
-jsval cccolor3b_to_jsval(JSContext* cx, ccColor3B& v) {
+jsval cccolor3b_to_jsval(JSContext* cx, const ccColor3B& v) {
     JSObject *tmp = JS_NewObject(cx, NULL, NULL, NULL);
     if (!tmp) return JSVAL_NULL;
     JSBool ok = JS_DefineProperty(cx, tmp, "r", INT_TO_JSVAL(v.r), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
@@ -1120,15 +1148,13 @@ JSObject* NewGlobalObject(JSContext* cx)
 	if (!glob) {
 		return NULL;
 	}
-	JSAutoEnterCompartment ac;
-	ac.enter(cx, glob);
+	JSAutoCompartment ac(cx, glob);
 	JSBool ok = JS_TRUE;
 	ok = JS_InitStandardClasses(cx, glob);
 	if (ok)
 		JS_InitReflect(cx, glob);
 	if (ok)
 		ok = JS_DefineDebuggerObject(cx, glob);
-	ac.leave();
 	if (!ok)
 		return NULL;
 
@@ -1148,6 +1174,7 @@ JSBool jsNewGlobal(JSContext* cx, unsigned argc, jsval* vp)
             JS_WrapObject(cx, global->address());
             globals[key] = global;
             // register everything on the list on this new global object
+			JSAutoCompartment ac(cx, g);
             for (std::vector<sc_register_sth>::iterator it = registrationList.begin(); it != registrationList.end(); it++) {
                 sc_register_sth callback = *it;
                 callback(cx, g);
