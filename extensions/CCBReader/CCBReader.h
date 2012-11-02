@@ -26,7 +26,7 @@
     return NULL; \
 }
 
-#define kCCBVersion 3
+#define kCCBVersion 4
 
 enum {
     kCCBPropTypePosition = 0,
@@ -166,6 +166,8 @@ class CCBKeyframe;
 class CCBReader : public CCObject 
 {
 private:
+    
+    bool jsControlled;
     CCData *mData;
     unsigned char *mBytes;
     int mCurrentByte;
@@ -177,12 +179,23 @@ private:
     CCObject *mOwner;
     
     CCBAnimationManager *mActionManager;
+
+    std::vector<std::pair<CCNode*, CCBAnimationManager *> > mAnimationManagers;
     std::set<std::string> *mAnimatedProps;
 
     CCNodeLoaderLibrary *mCCNodeLoaderLibrary;
     CCNodeLoaderListener *mCCNodeLoaderListener;
     CCBMemberVariableAssigner *mCCBMemberVariableAssigner;
-    CCBSelectorResolver *mCCBSelectorResolver; 
+    CCBSelectorResolver *mCCBSelectorResolver;
+    
+    CCArray* mOwnerOutletNames;
+    CCArray* mOwnerOutletNodes;
+    CCArray* mNodesWithAnimationManagers;
+    CCArray* mAnimationManagerForNodes;
+    
+    CCArray* mOwnerCallbackNames;
+    CCArray* mOwnerCallbackNodes;
+    
 
 public:
     CCBReader(CCNodeLoaderLibrary *pCCNodeLoaderLibrary, CCBMemberVariableAssigner *pCCBMemberVariableAssigner = NULL, CCBSelectorResolver *pCCBSelectorResolver = NULL, CCNodeLoaderListener *pCCNodeLoaderListener = NULL);
@@ -231,6 +244,24 @@ public:
     bool readBool();
     float readFloat();
     CCString* readCachedString();
+    bool isJSControlled();
+            
+    
+    CCArray *getOwnerCallbackNames();
+    CCArray *getOwnerCallbackNodes();
+    CCArray* getOwnerOutletNames();
+    CCArray* getOwnerOutletNodes();
+    CCArray* getNodesWithAnimationManagers();
+    CCArray* getAnimationManagersForNodes();
+
+    std::vector<std::pair<CCNode *, CCBAnimationManager *> > getAnimationManagers();
+    void setAnimationManagers(std::vector<std::pair<CCNode *, CCBAnimationManager *> > x);
+    
+    void addOwnerCallbackName(std::string name);
+    void addOwnerCallbackNode(CCNode *node);
+    
+    void addDocumentCallbackName(std::string name);
+    void addDocumentCallbackNode(CCNode *node);
     
     static float getResolutionScale();
     
