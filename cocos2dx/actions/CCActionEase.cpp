@@ -738,6 +738,11 @@ CCEaseElastic* CCEaseElastic::actionWithAction(CCActionInterval *pAction, float 
     return CCEaseElastic::create(pAction, fPeriod);
 }
 
+CCEaseElastic* CCEaseElastic::create(CCActionInterval *pAction)
+{
+    return CCEaseElastic::create(pAction, 0.3f);
+}
+
 CCEaseElastic* CCEaseElastic::create(CCActionInterval *pAction, float fPeriod/* = 0.3f*/)
 {
     CCEaseElastic *pRet = new CCEaseElastic();
@@ -801,6 +806,11 @@ CCActionInterval* CCEaseElastic::reverse(void)
 CCEaseElasticIn* CCEaseElasticIn::actionWithAction(CCActionInterval *pAction, float fPeriod/* = 0.3f*/)
 {
     return CCEaseElasticIn::create(pAction, fPeriod);
+}
+
+CCEaseElasticIn* CCEaseElasticIn::create(CCActionInterval *pAction)
+{
+    return CCEaseElasticIn::create(pAction, 0.3f);
 }
 
 CCEaseElasticIn* CCEaseElasticIn::create(CCActionInterval *pAction, float fPeriod/* = 0.3f*/)
@@ -873,6 +883,11 @@ CCEaseElasticOut* CCEaseElasticOut::actionWithAction(CCActionInterval *pAction, 
     return CCEaseElasticOut::create(pAction, fPeriod);
 }
 
+CCEaseElasticOut* CCEaseElasticOut::create(CCActionInterval *pAction)
+{
+    return CCEaseElasticOut::create(pAction, 0.3f);
+}
+
 CCEaseElasticOut* CCEaseElasticOut::create(CCActionInterval *pAction, float fPeriod/* = 0.3f*/)
 {
     CCEaseElasticOut *pRet = new CCEaseElasticOut();
@@ -940,6 +955,11 @@ CCActionInterval* CCEaseElasticOut::reverse(void)
 CCEaseElasticInOut* CCEaseElasticInOut::actionWithAction(CCActionInterval *pAction, float fPeriod/* = 0.3f*/)
 {
     return CCEaseElasticInOut::create(pAction, fPeriod);
+}
+
+CCEaseElasticInOut* CCEaseElasticInOut::create(CCActionInterval *pAction)
+{
+    return CCEaseElasticInOut::create(pAction, 0.3f);
 }
 
 CCEaseElasticInOut* CCEaseElasticInOut::create(CCActionInterval *pAction, float fPeriod/* = 0.3f*/)
