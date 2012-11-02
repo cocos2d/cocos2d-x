@@ -24,6 +24,7 @@ cocos2d-2.0-x-2.0.4 @Nov.2 2012
     Bug       #1527: fix a bug that MoonWarriors can not run on iOS simulator sometimes
     Refactor  #1491: remove dependency of FontLabel lib
  [javascript binding]
+    Bug       #1526: fix a bug that javascript binding related samples will crash on iOS devices
     Feature   #1469: add MoonWarriors as a sample game
     Refactor  #1487: use shared javascript test cases with cocos2d-html5 and cocos2d-iphone
     Refactor  #1517: upgrade SpiderMonkey to FF 16.0.1
