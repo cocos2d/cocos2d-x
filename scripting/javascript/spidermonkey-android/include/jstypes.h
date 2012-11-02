@@ -147,8 +147,6 @@
 ***********************************************************************/
 #define JS_HOWMANY(x,y) (((x)+(y)-1)/(y))
 #define JS_ROUNDUP(x,y) (JS_HOWMANY(x,y)*(y))
-#define JS_MIN(x,y)     ((x)<(y)?(x):(y))
-#define JS_MAX(x,y)     ((x)>(y)?(x):(y))
 
 #include "jscpucfg.h"
 

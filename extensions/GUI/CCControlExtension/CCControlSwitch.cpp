@@ -389,8 +389,7 @@ CCPoint CCControlSwitch::locationFromTouch(CCTouch* pTouch)
 
 bool CCControlSwitch::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 {
-    if (!this->isTouchInside(pTouch)
-        || !this->isEnabled())
+    if (!isTouchInside(pTouch) || !isEnabled() || !isVisible())
     {
         return false;
     }

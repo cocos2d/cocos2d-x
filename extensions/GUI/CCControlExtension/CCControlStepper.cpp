@@ -276,8 +276,7 @@ void CCControlStepper::updateLayoutUsingTouchLocation(CCPoint location)
 
 bool CCControlStepper::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 {
-    if (!this->isTouchInside(pTouch)
-        || !this->isEnabled())
+    if (!isTouchInside(pTouch) || !isEnabled() || !isVisible())
     {
         return false;
     }
