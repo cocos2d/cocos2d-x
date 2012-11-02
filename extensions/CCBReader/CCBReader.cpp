@@ -574,7 +574,7 @@ CCNode * CCBReader::readNodeGraph(CCNode * pParent) {
         embeddedNode->setScale(ccbFileNode->getScale());
         embeddedNode->setTag(ccbFileNode->getTag());
         embeddedNode->setVisible(true);
-        //embeddedNode->ignoreAnchorPointForPosition(ccbFileNode->isIgnoreAnchorPointForPosition());
+        embeddedNode->ignoreAnchorPointForPosition(ccbFileNode->isIgnoreAnchorPointForPosition());
         
         mActionManager->moveAnimationsFromNode(ccbFileNode, embeddedNode);
 
@@ -851,7 +851,7 @@ CCArray* CCBReader::getNodesWithAnimationManagers() {
     return mNodesWithAnimationManagers;
 }
 
-CCArray* CCBReader::getAnimationManagerForNodes() {
+CCArray* CCBReader::getAnimationManagersForNodes() {
     return mAnimationManagerForNodes;
 }
 
@@ -862,7 +862,6 @@ std::vector<std::pair<CCNode *, CCBAnimationManager *> > CCBReader::getAnimation
 void CCBReader::setAnimationManagers(std::vector<std::pair<CCNode *, CCBAnimationManager *> > x) {
     mAnimationManagers = x;
 }
-
 
 /************************************************************************
  Static functions

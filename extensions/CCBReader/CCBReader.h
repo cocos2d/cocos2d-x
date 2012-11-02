@@ -252,7 +252,7 @@ public:
     CCArray* getOwnerOutletNames();
     CCArray* getOwnerOutletNodes();
     CCArray* getNodesWithAnimationManagers();
-    CCArray* getAnimationManagerForNodes();
+    CCArray* getAnimationManagersForNodes();
 
     std::vector<std::pair<CCNode *, CCBAnimationManager *> > getAnimationManagers();
     void setAnimationManagers(std::vector<std::pair<CCNode *, CCBAnimationManager *> > x);
