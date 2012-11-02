@@ -1412,16 +1412,16 @@
 		A92275321517C094001B78AA = {
 			isa = PBXGroup;
 			children = (
-				15384E6216119D5E0021DC07 /* extensions */,
-				15384E3C16119CC30021DC07 /* bindings */,
 				15426AE915B5733200712A7F /* cocos2dx.xcodeproj */,
-				15628F5B15F0F5C2000CF24B /* Resources */,
+				15384E3C16119CC30021DC07 /* bindings */,
 				2628297C15EC7196002C4240 /* chipmunk */,
 				D4545214156E28EF00887EB5 /* Classes */,
 				15426FC415B5743C00712A7F /* CocosDenshion */,
+				15384E6216119D5E0021DC07 /* extensions */,
 				A92275401517C094001B78AA /* Frameworks */,
 				D45446CC156DE73F00887EB5 /* ios */,
 				A922753E1517C094001B78AA /* Products */,
+				15628F5B15F0F5C2000CF24B /* Resources */,
 			);
 			sourceTree = "<group>";
 		};
