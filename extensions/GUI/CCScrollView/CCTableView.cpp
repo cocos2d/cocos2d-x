@@ -149,7 +149,7 @@ void CCTableView::updateCellAtIndex(unsigned int idx)
 
 void CCTableView::insertCellAtIndex(unsigned  int idx)
 {
-    if (idx == CC_INVALID_INDEX || idx > m_pDataSource->numberOfCellsInTableView(this)-1) {
+    if (idx == CC_INVALID_INDEX || m_pDataSource->numberOfCellsInTableView(this) == 0 || idx > m_pDataSource->numberOfCellsInTableView(this)-1) {
         return;
     }
     CCTableViewCell *cell;
@@ -294,6 +294,10 @@ CCPoint CCTableView::__offsetFromIndex(unsigned int index)
 
 unsigned int CCTableView::_indexFromOffset(CCPoint offset)
 {
+    if(m_pDataSource->numberOfCellsInTableView(this) == 0)
+    {
+       return 0;
+    }
     int index = 0;
     const int maxIdx = m_pDataSource->numberOfCellsInTableView(this)-1;
 
@@ -366,7 +370,7 @@ void CCTableView::scrollViewDidScroll(CCScrollView* view)
     CCPoint offset;
 
     offset   = ccpMult(this->getContentOffset(), -1);
-    maxIdx   = MAX(m_pDataSource->numberOfCellsInTableView(this)-1, 0);
+    maxIdx   = MAX(m_pDataSource->numberOfCellsInTableView(this), 1)-1;
     
     const CCSize cellSize = m_pDataSource->cellSizeForTable(this);
     
