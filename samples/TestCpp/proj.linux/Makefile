@@ -11,7 +11,6 @@ INCLUDES =  -I../ \
 			-I../../ \
 			-I../Classes \
 			-I$(COCOS2DX_PATH) \
-			-I$(COCOS2DX_PATH)/platform/third_party/linux \
 			-I$(COCOS2DX_PATH)/platform/third_party/linux/libfreetype2 \
 			-I$(COCOS2DX_PATH)/cocoa \
 			-I$(COCOS2DX_PATH)/include \
@@ -21,14 +20,17 @@ INCLUDES =  -I../ \
 			-I$(COCOS2DX_PATH)/platform/third_party/linux/glew-1.7.0/glew-1.7.0/include/ \
 			-I$(COCOS2DX_PATH)/platform/third_party/linux/libxml2 \
 			-I$(COCOS2DX_PATH)/platform/third_party/linux/libjpeg  \
-			-I$(COCOS2DX_PATH)/platform/third_party/linux/curl  \
 			-I../../../CocosDenshion/include \
 			-I../../../extensions/ \
 			-I../../../external/ \
 			-I../../../external/chipmunk/include/chipmunk \
 
-
-
+LBITS := $(shell getconf LONG_BIT)
+ifeq ($(LBITS),64)
+INCLUDES += -I$(COCOS2DX_PATH)/platform/third_party/linux/include64
+else
+INCLUDES += -I$(COCOS2DX_PATH)/platform/third_party/linux
+endif
 
 
 #CCFLAGS += -fno-tree-scev-cprop
@@ -121,10 +123,9 @@ OBJECTS = ../Classes/AccelerometerTest/AccelerometerTest.o \
 			../Classes/controller.o \
 			../Classes/testBasic.o \
 			../Classes/AppDelegate.o \
+			../Classes/VisibleRect.o \
 			./main.o 
 
-
-LBITS := $(shell getconf LONG_BIT)
 ifeq ($(LBITS),64)
 STATICLIBS_DIR = ../../../cocos2dx/platform/third_party/linux/libraries/lib64
 else

@@ -56,6 +56,7 @@ struct RuntimeSizes
       , gcMarker(0)
       , mathCache(0)
       , scriptFilenames(0)
+      , scriptSources(0)
       , compartmentObjects(0)
     {}
 
@@ -71,6 +72,7 @@ struct RuntimeSizes
     size_t gcMarker;
     size_t mathCache;
     size_t scriptFilenames;
+    size_t scriptSources;
 
     // This is the exception to the "RuntimeSizes doesn't measure things within
     // compartments" rule.  We combine the sizes of all the JSCompartment

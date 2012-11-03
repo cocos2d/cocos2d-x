@@ -1,3 +1,4 @@
+/* include/curl/curlbuild.h.  Generated from curlbuild.h.in by configure.  */
 #ifndef __CURL_CURLBUILD_H
 #define __CURL_CURLBUILD_H
 /***************************************************************************
@@ -113,7 +114,7 @@
 
 /* Configure process defines this to 1 when it finds out that system  */
 /* header file ws2tcpip.h must be included by the external interface. */
-#undef CURL_PULL_WS2TCPIP_H
+/* #undef CURL_PULL_WS2TCPIP_H */
 #ifdef CURL_PULL_WS2TCPIP_H
 #  ifndef WIN32_LEAN_AND_MEAN
 #    define WIN32_LEAN_AND_MEAN
@@ -125,66 +126,66 @@
 
 /* Configure process defines this to 1 when it finds out that system   */
 /* header file sys/types.h must be included by the external interface. */
-#undef CURL_PULL_SYS_TYPES_H
+#define CURL_PULL_SYS_TYPES_H 1
 #ifdef CURL_PULL_SYS_TYPES_H
 #  include <sys/types.h>
 #endif
 
 /* Configure process defines this to 1 when it finds out that system */
 /* header file stdint.h must be included by the external interface.  */
-#undef CURL_PULL_STDINT_H
+/* #undef CURL_PULL_STDINT_H */
 #ifdef CURL_PULL_STDINT_H
 #  include <stdint.h>
 #endif
 
 /* Configure process defines this to 1 when it finds out that system  */
 /* header file inttypes.h must be included by the external interface. */
-#undef CURL_PULL_INTTYPES_H
+/* #undef CURL_PULL_INTTYPES_H */
 #ifdef CURL_PULL_INTTYPES_H
 #  include <inttypes.h>
 #endif
 
 /* Configure process defines this to 1 when it finds out that system    */
 /* header file sys/socket.h must be included by the external interface. */
-#undef CURL_PULL_SYS_SOCKET_H
+#define CURL_PULL_SYS_SOCKET_H 1
 #ifdef CURL_PULL_SYS_SOCKET_H
 #  include <sys/socket.h>
 #endif
 
 /* The size of `long', as computed by sizeof. */
-#undef CURL_SIZEOF_LONG
+#define CURL_SIZEOF_LONG 8
 
 /* Integral data type used for curl_socklen_t. */
-#undef CURL_TYPEOF_CURL_SOCKLEN_T
+#define CURL_TYPEOF_CURL_SOCKLEN_T socklen_t
 
 /* The size of `curl_socklen_t', as computed by sizeof. */
-#undef CURL_SIZEOF_CURL_SOCKLEN_T
+#define CURL_SIZEOF_CURL_SOCKLEN_T 4
 
 /* Data type definition of curl_socklen_t. */
 typedef CURL_TYPEOF_CURL_SOCKLEN_T curl_socklen_t;
 
 /* Signed integral data type used for curl_off_t. */
-#undef CURL_TYPEOF_CURL_OFF_T
+#define CURL_TYPEOF_CURL_OFF_T long
 
 /* Data type definition of curl_off_t. */
 typedef CURL_TYPEOF_CURL_OFF_T curl_off_t;
 
 /* curl_off_t formatting string directive without "%" conversion specifier. */
-#undef CURL_FORMAT_CURL_OFF_T
+#define CURL_FORMAT_CURL_OFF_T "ld"
 
 /* unsigned curl_off_t formatting string without "%" conversion specifier. */
-#undef CURL_FORMAT_CURL_OFF_TU
+#define CURL_FORMAT_CURL_OFF_TU "lu"
 
 /* curl_off_t formatting string directive with "%" conversion specifier. */
-#undef CURL_FORMAT_OFF_T
+#define CURL_FORMAT_OFF_T "%ld"
 
 /* The size of `curl_off_t', as computed by sizeof. */
-#undef CURL_SIZEOF_CURL_OFF_T
+#define CURL_SIZEOF_CURL_OFF_T 8
 
 /* curl_off_t constant suffix. */
-#undef CURL_SUFFIX_CURL_OFF_T
+#define CURL_SUFFIX_CURL_OFF_T L
 
 /* unsigned curl_off_t constant suffix. */
-#undef CURL_SUFFIX_CURL_OFF_TU
+#define CURL_SUFFIX_CURL_OFF_TU UL
 
 #endif /* __CURL_CURLBUILD_H */

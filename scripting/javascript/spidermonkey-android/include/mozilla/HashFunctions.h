@@ -179,6 +179,14 @@ AddToHash(uint32_t hash, A* a)
   return detail::AddUintptrToHash<sizeof(uintptr_t)>(hash, uintptr_t(a));
 }
 
+template<>
+MOZ_WARN_UNUSED_RESULT
+inline uint32_t
+AddToHash(uint32_t hash, uintptr_t a)
+{
+  return detail::AddUintptrToHash<sizeof(uintptr_t)>(hash, a);
+}
+
 template<typename A, typename B>
 MOZ_WARN_UNUSED_RESULT
 uint32_t

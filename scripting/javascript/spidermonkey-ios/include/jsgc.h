@@ -41,6 +41,7 @@ namespace js {
 
 class GCHelperThread;
 struct Shape;
+struct SliceBudget;
 
 namespace gc {
 
@@ -48,6 +49,8 @@ enum State {
     NO_INCREMENTAL,
     MARK_ROOTS,
     MARK,
+    SWEEP,
+    SWEEP_END,
     INVALID
 };
 
@@ -112,35 +115,99 @@ MapAllocToTraceKind(AllocKind thingKind)
     return map[thingKind];
 }
 
+static inline bool
+IsNurseryAllocable(AllocKind kind)
+{
+    JS_ASSERT(kind >= 0 && unsigned(kind) < FINALIZE_LIMIT);
+    static const bool map[FINALIZE_LIMIT] = {
+        false,     /* FINALIZE_OBJECT0 */
+        true,      /* FINALIZE_OBJECT0_BACKGROUND */
+        false,     /* FINALIZE_OBJECT2 */
+        true,      /* FINALIZE_OBJECT2_BACKGROUND */
+        false,     /* FINALIZE_OBJECT4 */
+        true,      /* FINALIZE_OBJECT4_BACKGROUND */
+        false,     /* FINALIZE_OBJECT8 */
+        true,      /* FINALIZE_OBJECT8_BACKGROUND */
+        false,     /* FINALIZE_OBJECT12 */
+        true,      /* FINALIZE_OBJECT12_BACKGROUND */
+        false,     /* FINALIZE_OBJECT16 */
+        true,      /* FINALIZE_OBJECT16_BACKGROUND */
+        false,     /* FINALIZE_SCRIPT */
+        false,     /* FINALIZE_SHAPE */
+        false,     /* FINALIZE_BASE_SHAPE */
+        false,     /* FINALIZE_TYPE_OBJECT */
+#if JS_HAS_XML_SUPPORT
+        false,     /* FINALIZE_XML */
+#endif
+        true,      /* FINALIZE_SHORT_STRING */
+        true,      /* FINALIZE_STRING */
+        false      /* FINALIZE_EXTERNAL_STRING */
+    };
+    return map[kind];
+}
+
+static inline bool
+IsBackgroundFinalized(AllocKind kind)
+{
+    JS_ASSERT(kind >= 0 && unsigned(kind) < FINALIZE_LIMIT);
+    static const bool map[FINALIZE_LIMIT] = {
+        false,     /* FINALIZE_OBJECT0 */
+        true,      /* FINALIZE_OBJECT0_BACKGROUND */
+        false,     /* FINALIZE_OBJECT2 */
+        true,      /* FINALIZE_OBJECT2_BACKGROUND */
+        false,     /* FINALIZE_OBJECT4 */
+        true,      /* FINALIZE_OBJECT4_BACKGROUND */
+        false,     /* FINALIZE_OBJECT8 */
+        true,      /* FINALIZE_OBJECT8_BACKGROUND */
+        false,     /* FINALIZE_OBJECT12 */
+        true,      /* FINALIZE_OBJECT12_BACKGROUND */
+        false,     /* FINALIZE_OBJECT16 */
+        true,      /* FINALIZE_OBJECT16_BACKGROUND */
+        false,     /* FINALIZE_SCRIPT */
+        false,     /* FINALIZE_SHAPE */
+        false,     /* FINALIZE_BASE_SHAPE */
+        false,     /* FINALIZE_TYPE_OBJECT */
+#if JS_HAS_XML_SUPPORT
+        false,     /* FINALIZE_XML */
+#endif
+        true,      /* FINALIZE_SHORT_STRING */
+        true,      /* FINALIZE_STRING */
+        false      /* FINALIZE_EXTERNAL_STRING */
+    };
+    return map[kind];
+}
+
 inline JSGCTraceKind
 GetGCThingTraceKind(const void *thing);
 
+/*
+ * ArenaList::head points to the start of the list. Normally cursor points
+ * to the first arena in the list with some free things and all arenas
+ * before cursor are fully allocated. However, as the arena currently being
+ * allocated from is considered full while its list of free spans is moved
+ * into the freeList, during the GC or cell enumeration, when an
+ * unallocated freeList is moved back to the arena, we can see an arena
+ * with some free cells before the cursor. The cursor is an indirect
+ * pointer to allow for efficient list insertion at the cursor point and
+ * other list manipulations.
+ */
+struct ArenaList {
+    ArenaHeader     *head;
+    ArenaHeader     **cursor;
+
+    ArenaList() {
+        clear();
+    }
+
+    void clear() {
+        head = NULL;
+        cursor = &head;
+    }
+
+    void insert(ArenaHeader *arena);
+};
+
 struct ArenaLists {
-
-    /*
-     * ArenaList::head points to the start of the list. Normally cursor points
-     * to the first arena in the list with some free things and all arenas
-     * before cursor are fully allocated. However, as the arena currently being
-     * allocated from is considered full while its list of free spans is moved
-     * into the freeList, during the GC or cell enumeration, when an
-     * unallocated freeList is moved back to the arena, we can see an arena
-     * with some free cells before the cursor. The cursor is an indirect
-     * pointer to allow for efficient list insertion at the cursor point and
-     * other list manipulations.
-     */
-    struct ArenaList {
-        ArenaHeader     *head;
-        ArenaHeader     **cursor;
-
-        ArenaList() {
-            clear();
-        }
-
-        void clear() {
-            head = NULL;
-            cursor = &head;
-        }
-    };
 
   private:
     /*
@@ -181,11 +248,17 @@ struct ArenaLists {
     volatile uintptr_t backgroundFinalizeState[FINALIZE_LIMIT];
 
   public:
+    /* For each arena kind, a list of arenas remaining to be swept. */
+    ArenaHeader *arenaListsToSweep[FINALIZE_LIMIT];
+
+  public:
     ArenaLists() {
         for (size_t i = 0; i != FINALIZE_LIMIT; ++i)
             freeLists[i].initAsEmpty();
         for (size_t i = 0; i != FINALIZE_LIMIT; ++i)
             backgroundFinalizeState[i] = BFS_DONE;
+        for (size_t i = 0; i != FINALIZE_LIMIT; ++i)
+            arenaListsToSweep[i] = NULL;
     }
 
     ~ArenaLists() {
@@ -211,6 +284,10 @@ struct ArenaLists {
         return arenaLists[thingKind].head;
     }
 
+    ArenaHeader *getFirstArenaToSweep(AllocKind thingKind) const {
+        return arenaListsToSweep[thingKind];
+    }
+
     bool arenaListsAreEmpty() const {
         for (size_t i = 0; i != FINALIZE_LIMIT; ++i) {
             /*
@@ -223,6 +300,10 @@ struct ArenaLists {
                 return false;
         }
         return true;
+    }
+
+    bool arenasAreFull(AllocKind thingKind) const {
+        return !*arenaLists[thingKind].cursor;
     }
 
     void unmarkAll() {
@@ -238,7 +319,8 @@ struct ArenaLists {
     }
 
     bool doneBackgroundFinalize(AllocKind kind) const {
-        return backgroundFinalizeState[kind] == BFS_DONE;
+        return backgroundFinalizeState[kind] == BFS_DONE ||
+               backgroundFinalizeState[kind] == BFS_JUST_FINISHED;
     }
 
     /*
@@ -333,16 +415,18 @@ struct ArenaLists {
         JS_ASSERT(freeLists[kind].isEmpty());
     }
 
-    void finalizeObjects(FreeOp *fop);
-    void finalizeStrings(FreeOp *fop);
-    void finalizeShapes(FreeOp *fop);
-    void finalizeScripts(FreeOp *fop);
+    void queueObjectsForSweep(FreeOp *fop);
+    void queueStringsForSweep(FreeOp *fop);
+    void queueShapesForSweep(FreeOp *fop);
+    void queueScriptsForSweep(FreeOp *fop);
 
-    static void backgroundFinalize(FreeOp *fop, ArenaHeader *listHead);
+    bool foregroundFinalize(FreeOp *fop, AllocKind thingKind, SliceBudget &sliceBudget);
+    static void backgroundFinalize(FreeOp *fop, ArenaHeader *listHead, bool onBackgroundThread);
 
   private:
     inline void finalizeNow(FreeOp *fop, AllocKind thingKind);
-    inline void finalizeLater(FreeOp *fop, AllocKind thingKind);
+    inline void queueForForegroundSweep(FreeOp *fop, AllocKind thingKind);
+    inline void queueForBackgroundSweep(FreeOp *fop, AllocKind thingKind);
 
     inline void *allocateFromArena(JSCompartment *comp, AllocKind thingKind);
 };
@@ -478,7 +562,7 @@ extern void
 GC(JSRuntime *rt, JSGCInvocationKind gckind, js::gcreason::Reason reason);
 
 extern void
-GCSlice(JSRuntime *rt, JSGCInvocationKind gckind, js::gcreason::Reason reason);
+GCSlice(JSRuntime *rt, JSGCInvocationKind gckind, js::gcreason::Reason reason, int64_t millis = 0);
 
 extern void
 GCFinalSlice(JSRuntime *rt, JSGCInvocationKind gckind, js::gcreason::Reason reason);
@@ -539,8 +623,6 @@ class GCHelperThread {
     void            **freeCursor;
     void            **freeCursorEnd;
 
-    Vector<js::gc::ArenaHeader *, 64, js::SystemAllocPolicy> finalizeVector;
-
     bool    backgroundAllocation;
 
     friend struct js::gc::ArenaLists;
@@ -584,10 +666,10 @@ class GCHelperThread {
     /* Must be called with the GC lock taken. */
     void startBackgroundShrink();
 
-    /* Must be called with the GC lock taken. */
+    /* Must be called without the GC lock taken. */
     void waitBackgroundSweepEnd();
 
-    /* Must be called with the GC lock taken. */
+    /* Must be called without the GC lock taken. */
     void waitBackgroundSweepOrAllocEnd();
 
     /* Must be called with the GC lock taken. */
@@ -625,9 +707,6 @@ class GCHelperThread {
         else
             replenishAndFreeLater(ptr);
     }
-
-    /* Must be called with the GC lock taken. */
-    bool prepareForBackgroundSweep();
 };
 
 
@@ -1071,22 +1150,33 @@ RunDebugGC(JSContext *cx);
 void
 SetDeterministicGC(JSContext *cx, bool enabled);
 
+void
+SetValidateGC(JSContext *cx, bool enabled);
+
 const int ZealPokeValue = 1;
 const int ZealAllocValue = 2;
 const int ZealFrameGCValue = 3;
-const int ZealVerifierValue = 4;
-const int ZealFrameVerifierValue = 5;
+const int ZealVerifierPreValue = 4;
+const int ZealFrameVerifierPreValue = 5;
 const int ZealStackRootingSafeValue = 6;
 const int ZealStackRootingValue = 7;
 const int ZealIncrementalRootsThenFinish = 8;
 const int ZealIncrementalMarkAllThenFinish = 9;
 const int ZealIncrementalMultipleSlices = 10;
+const int ZealVerifierPostValue = 11;
+const int ZealFrameVerifierPostValue = 12;
+const int ZealPurgeAnalysisValue = 13;
+
+enum VerifierType {
+    PreBarrierVerifier,
+    PostBarrierVerifier
+};
 
 #ifdef JS_GC_ZEAL
 
 /* Check that write barriers have been used correctly. See jsgc.cpp. */
 void
-VerifyBarriers(JSRuntime *rt);
+VerifyBarriers(JSRuntime *rt, VerifierType type);
 
 void
 MaybeVerifyBarriers(JSContext *cx, bool always = false);
@@ -1094,7 +1184,7 @@ MaybeVerifyBarriers(JSContext *cx, bool always = false);
 #else
 
 static inline void
-VerifyBarriers(JSRuntime *rt)
+VerifyBarriers(JSRuntime *rt, VerifierType type)
 {
 }
 

@@ -33,6 +33,8 @@ public:
 	 */
 	virtual void setFrameSize(float width, float height);
 	virtual void setViewPortInPoints(float x , float y , float w , float h);
+	virtual void setScissorInPoints(float x , float y , float w , float h);
+
 	/*
 	 * Set zoom factor for frame. This method is for debugging big resolution (e.g.new ipad) app on desktop.
 	 */

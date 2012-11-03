@@ -423,38 +423,47 @@ struct ArenaHeader
      * chunk. The latter allows to quickly check if the arena is allocated
      * during the conservative GC scanning without searching the arena in the
      * list.
+     *
+     * We use 8 bits for the allocKind so the compiler can use byte-level memory
+     * instructions to access it.
      */
     size_t       allocKind          : 8;
 
     /*
-     * When recursive marking uses too much stack the marking is delayed and
-     * the corresponding arenas are put into a stack using the following field
-     * as a linkage. To distinguish the bottom of the stack from the arenas
-     * not present in the stack we use an extra flag to tag arenas on the
-     * stack.
+     * When collecting we sometimes need to keep an auxillary list of arenas,
+     * for which we use the following fields.  This happens for several reasons:
+     *
+     * When recursive marking uses too much stack the marking is delayed and the
+     * corresponding arenas are put into a stack. To distinguish the bottom of
+     * the stack from the arenas not present in the stack we use the
+     * markOverflow flag to tag arenas on the stack.
      *
      * Delayed marking is also used for arenas that we allocate into during an
      * incremental GC. In this case, we intend to mark all the objects in the
      * arena, and it's faster to do this marking in bulk.
      *
-     * To minimize the ArenaHeader size we record the next delayed marking
-     * linkage as arenaAddress() >> ArenaShift and pack it with the allocKind
-     * field and hasDelayedMarking flag. We use 8 bits for the allocKind, not
-     * ArenaShift - 1, so the compiler can use byte-level memory instructions
-     * to access it.
+     * When sweeping we keep track of which arenas have been allocated since the
+     * end of the mark phase.  This allows us to tell whether a pointer to an
+     * unmarked object is yet to be finalized or has already been reallocated.
+     * We set the allocatedDuringIncremental flag for this and clear it at the
+     * end of the sweep phase.
+     *
+     * To minimize the ArenaHeader size we record the next linkage as
+     * arenaAddress() >> ArenaShift and pack it with the allocKind field and the
+     * flags.
      */
   public:
     size_t       hasDelayedMarking  : 1;
     size_t       allocatedDuringIncremental : 1;
     size_t       markOverflow : 1;
-    size_t       nextDelayedMarking : JS_BITS_PER_WORD - 8 - 1 - 1 - 1;
+    size_t       auxNextLink : JS_BITS_PER_WORD - 8 - 1 - 1 - 1;
 
     static void staticAsserts() {
         /* We must be able to fit the allockind into uint8_t. */
         JS_STATIC_ASSERT(FINALIZE_LIMIT <= 255);
 
         /*
-         * nextDelayedMarkingpacking assumes that ArenaShift has enough bits
+         * auxNextLink packing assumes that ArenaShift has enough bits
          * to cover allocKind and hasDelayedMarking.
          */
         JS_STATIC_ASSERT(ArenaShift >= 8 + 1 + 1 + 1);
@@ -487,7 +496,7 @@ struct ArenaHeader
         markOverflow = 0;
         allocatedDuringIncremental = 0;
         hasDelayedMarking = 0;
-        nextDelayedMarking = 0;
+        auxNextLink = 0;
     }
 
     inline uintptr_t arenaAddress() const;
@@ -519,6 +528,11 @@ struct ArenaHeader
 
     inline ArenaHeader *getNextDelayedMarking() const;
     inline void setNextDelayedMarking(ArenaHeader *aheader);
+    inline void unsetDelayedMarking();
+
+    inline ArenaHeader *getNextAllocDuringSweep() const;
+    inline void setNextAllocDuringSweep(ArenaHeader *aheader);
+    inline void unsetAllocDuringSweep();
 };
 
 struct Arena
@@ -882,15 +896,48 @@ ArenaHeader::setFirstFreeSpan(const FreeSpan *span)
 inline ArenaHeader *
 ArenaHeader::getNextDelayedMarking() const
 {
-    return &reinterpret_cast<Arena *>(nextDelayedMarking << ArenaShift)->aheader;
+    JS_ASSERT(hasDelayedMarking);
+    return &reinterpret_cast<Arena *>(auxNextLink << ArenaShift)->aheader;
 }
 
 inline void
 ArenaHeader::setNextDelayedMarking(ArenaHeader *aheader)
 {
     JS_ASSERT(!(uintptr_t(aheader) & ArenaMask));
+    JS_ASSERT(!auxNextLink && !hasDelayedMarking);
     hasDelayedMarking = 1;
-    nextDelayedMarking = aheader->arenaAddress() >> ArenaShift;
+    auxNextLink = aheader->arenaAddress() >> ArenaShift;
+}
+
+inline void
+ArenaHeader::unsetDelayedMarking()
+{
+    JS_ASSERT(hasDelayedMarking);
+    hasDelayedMarking = 0;
+    auxNextLink = 0;
+}
+
+inline ArenaHeader *
+ArenaHeader::getNextAllocDuringSweep() const
+{
+    JS_ASSERT(allocatedDuringIncremental);
+    return &reinterpret_cast<Arena *>(auxNextLink << ArenaShift)->aheader;
+}
+
+inline void
+ArenaHeader::setNextAllocDuringSweep(ArenaHeader *aheader)
+{
+    JS_ASSERT(!auxNextLink && !allocatedDuringIncremental);
+    allocatedDuringIncremental = 1;
+    auxNextLink = aheader->arenaAddress() >> ArenaShift;
+}
+
+inline void
+ArenaHeader::unsetAllocDuringSweep()
+{
+    JS_ASSERT(allocatedDuringIncremental);
+    allocatedDuringIncremental = 0;
+    auxNextLink = 0;
 }
 
 JS_ALWAYS_INLINE void

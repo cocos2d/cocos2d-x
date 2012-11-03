@@ -113,6 +113,7 @@
     <ClCompile Include="..\Classes\ExtensionsTest\NetworkTest\HttpClientTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\TableViewTest\CustomTableViewCell.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\TableViewTest\TableViewTestScene.cpp" />
+    <ClCompile Include="..\Classes\VisibleRect.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
     <ClCompile Include="..\Classes\controller.cpp" />
@@ -201,6 +202,7 @@
     <ClInclude Include="..\Classes\ExtensionsTest\NetworkTest\HttpClientTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\TableViewTest\CustomTableViewCell.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\TableViewTest\TableViewTestScene.h" />
+    <ClInclude Include="..\Classes\VisibleRect.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="..\Classes\AppDelegate.h" />
     <ClInclude Include="..\Classes\controller.h" />

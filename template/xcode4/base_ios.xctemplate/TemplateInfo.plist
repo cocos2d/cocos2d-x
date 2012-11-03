@@ -235,5 +235,58 @@
 	</dict>
 	<key>Identifier</key>
 	<string>org.cocos2d-x.iosbase</string>
+	<key>Options</key>
+	<array>
+		<dict>
+			<key>Default</key>
+			<string>Universal</string>
+			<key>Description</key>
+			<string>What device family to create a project for.</string>
+			<key>Identifier</key>
+			<string>universalDeviceFamily</string>
+			<key>Name</key>
+			<string>Device Family</string>
+			<key>SortOrder</key>
+			<integer>1</integer>
+			<key>Type</key>
+			<string>popup</string>
+			<key>Units</key>
+			<dict>
+				<key>Universal</key>
+				<dict>
+					<key>Project</key>
+					<dict>
+						<key>SharedSettings</key>
+						<dict>
+							<key>TARGETED_DEVICE_FAMILY</key>
+							<string>1,2</string>
+						</dict>
+					</dict>
+				</dict>
+				<key>iPad</key>
+				<dict>
+					<key>Project</key>
+					<dict>
+						<key>SharedSettings</key>
+						<dict>
+							<key>TARGETED_DEVICE_FAMILY</key>
+							<string>2</string>
+						</dict>
+					</dict>
+				</dict>
+				<key>iPhone</key>
+				<dict>
+					<key>Project</key>
+					<dict>
+						<key>SharedSettings</key>
+						<dict>
+							<key>TARGETED_DEVICE_FAMILY</key>
+							<string>1</string>
+						</dict>
+					</dict>
+				</dict>
+			</dict>
+		</dict>
+	</array>
 </dict>
 </plist>

@@ -25,9 +25,9 @@ MainLayer::MainLayer()
     addChild(layer, -1);
         
     addChild(sprite, 0, kTagSprite);
-    sprite->setPosition( CCPointMake(20,150) );
+    sprite->setPosition( ccp(20,150) );
     
-    sprite->runAction( CCJumpTo::create(4, CCPointMake(300,48), 100, 4) );
+    sprite->runAction( CCJumpTo::create(4, ccp(300,48), 100, 4) );
     
     layer->runAction( CCRepeatForever::create( 
                                                         (CCActionInterval*)( CCSequence::create(    
@@ -46,7 +46,7 @@ void MainLayer::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
 
     CCNode* s = getChildByTag(kTagSprite);
     s->stopAllActions();
-    s->runAction( CCMoveTo::create(1, CCPointMake(location.x, location.y) ) );
+    s->runAction( CCMoveTo::create(1, ccp(location.x, location.y) ) );
     float o = location.x - s->getPosition().x;
     float a = location.y - s->getPosition().y;
     float at = (float) CC_RADIANS_TO_DEGREES( atanf( o/a) );

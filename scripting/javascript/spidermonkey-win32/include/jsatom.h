@@ -12,12 +12,12 @@
 #include "jsalloc.h"
 #include "jsapi.h"
 #include "jsprvtd.h"
-#include "jshash.h"
 #include "jspubtd.h"
 #include "jslock.h"
 
 #include "gc/Barrier.h"
 #include "js/HashTable.h"
+#include "mozilla/HashFunctions.h"
 
 struct JSIdArray {
     int length;
@@ -83,23 +83,15 @@ JSID_TO_ATOM(jsid id)
     return (JSAtom *)JSID_TO_STRING(id);
 }
 
-JS_STATIC_ASSERT(sizeof(JSHashNumber) == 4);
+JS_STATIC_ASSERT(sizeof(js::HashNumber) == 4);
 JS_STATIC_ASSERT(sizeof(jsid) == JS_BYTES_PER_WORD);
 
 namespace js {
 
-static JS_ALWAYS_INLINE JSHashNumber
+static JS_ALWAYS_INLINE js::HashNumber
 HashId(jsid id)
 {
-    JSHashNumber n =
-#if JS_BYTES_PER_WORD == 4
-        JSHashNumber(JSID_BITS(id));
-#elif JS_BYTES_PER_WORD == 8
-        JSHashNumber(JSID_BITS(id)) ^ JSHashNumber(JSID_BITS(id) >> 32);
-#else
-# error "Unsupported configuration"
-#endif
-    return n * JS_GOLDEN_RATIO;
+    return HashGeneric(JSID_BITS(id));
 }
 
 static JS_ALWAYS_INLINE Value
@@ -134,15 +126,6 @@ struct DefaultHasher<jsid>
 };
 
 }
-
-#if JS_BYTES_PER_WORD == 4
-# define ATOM_HASH(atom)          ((JSHashNumber)(atom) >> 2)
-#elif JS_BYTES_PER_WORD == 8
-# define ATOM_HASH(atom)          (((JSHashNumber)(uintptr_t)(atom) >> 3) ^   \
-                                   (JSHashNumber)((uintptr_t)(atom) >> 32))
-#else
-# error "Unsupported configuration"
-#endif
 
 /*
  * Return a printable, lossless char[] representation of a string-type atom.
@@ -342,29 +325,28 @@ extern const char   js_send_str[];
 extern const char   js_getter_str[];
 extern const char   js_setter_str[];
 
+namespace js {
+
 /*
  * Initialize atom state. Return true on success, false on failure to allocate
  * memory. The caller must zero rt->atomState before calling this function and
  * only call it after js_InitGC successfully returns.
  */
 extern JSBool
-js_InitAtomState(JSRuntime *rt);
+InitAtomState(JSRuntime *rt);
 
 /*
  * Free and clear atom state including any interned string atoms. This
  * function must be called before js_FinishGC.
  */
 extern void
-js_FinishAtomState(JSRuntime *rt);
+FinishAtomState(JSRuntime *rt);
 
 /*
  * Atom tracing and garbage collection hooks.
  */
-
-namespace js {
-
 extern void
-MarkAtomState(JSTracer *trc, bool markAll);
+MarkAtomState(JSTracer *trc);
 
 extern void
 SweepAtomState(JSRuntime *rt);
@@ -382,57 +364,31 @@ enum InternBehavior
     InternAtom = true
 };
 
-}  /* namespace js */
+extern JSAtom *
+Atomize(JSContext *cx, const char *bytes, size_t length,
+        js::InternBehavior ib = js::DoNotInternAtom,
+        js::FlationCoding fc = js::NormalEncoding);
 
 extern JSAtom *
-js_Atomize(JSContext *cx, const char *bytes, size_t length,
-           js::InternBehavior ib = js::DoNotInternAtom,
-           js::FlationCoding fc = js::NormalEncoding);
+AtomizeChars(JSContext *cx, const jschar *chars, size_t length,
+             js::InternBehavior ib = js::DoNotInternAtom);
 
 extern JSAtom *
-js_AtomizeChars(JSContext *cx, const jschar *chars, size_t length,
-                js::InternBehavior ib = js::DoNotInternAtom);
-
-extern JSAtom *
-js_AtomizeString(JSContext *cx, JSString *str, js::InternBehavior ib = js::DoNotInternAtom);
-
-/*
- * Return an existing atom for the given char array or null if the char
- * sequence is currently not atomized.
- */
-extern JSAtom *
-js_GetExistingStringAtom(JSContext *cx, const jschar *chars, size_t length);
-
-#ifdef DEBUG
-
-extern JS_FRIEND_API(void)
-js_DumpAtoms(JSContext *cx, FILE *fp);
-
-#endif
-
-namespace js {
+AtomizeString(JSContext *cx, JSString *str, js::InternBehavior ib = js::DoNotInternAtom);
 
 inline JSAtom *
 ToAtom(JSContext *cx, const js::Value &v);
 
 bool
 InternNonIntElementId(JSContext *cx, JSObject *obj, const Value &idval,
-                      jsid *idp, Value *vp);
+                      jsid *idp, MutableHandleValue vp);
 
 inline bool
 InternNonIntElementId(JSContext *cx, JSObject *obj, const Value &idval, jsid *idp)
 {
-    Value dummy;
+    RootedValue dummy(cx);
     return InternNonIntElementId(cx, obj, idval, idp, &dummy);
 }
-
-/*
- * For all unmapped atoms recorded in al, add a mapping from the atom's index
- * to its address. map->length must already be set to the number of atoms in
- * the list and map->vector must point to pre-allocated memory.
- */
-extern void
-InitAtomMap(JSContext *cx, AtomIndexMap *indices, HeapPtr<JSAtom> *atoms);
 
 template<XDRMode mode>
 bool

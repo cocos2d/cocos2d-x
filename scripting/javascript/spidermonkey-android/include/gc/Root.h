@@ -62,6 +62,7 @@ namespace JS {
  *   separate rooting analysis.
  */
 
+template <typename T> class MutableHandle;
 template <typename T> class Rooted;
 
 template <typename T>
@@ -78,6 +79,9 @@ struct NullPtr
 {
     static void * const constNullValue;
 };
+
+template <typename T>
+class MutableHandle;
 
 template <typename T>
 class HandleBase {};
@@ -108,6 +112,11 @@ class Handle : public HandleBase<T>
         ptr = reinterpret_cast<const T *>(&NullPtr::constNullValue);
     }
 
+    friend class MutableHandle<T>;
+    Handle(MutableHandle<T> handle) {
+        ptr = handle.address();
+    }
+
     /*
      * This may be called only if the location of the T is guaranteed
      * to be marked (for some reason other than being a Rooted),
@@ -128,6 +137,12 @@ class Handle : public HandleBase<T>
     template <typename S>
     inline
     Handle(Rooted<S> &root,
+           typename mozilla::EnableIf<mozilla::IsConvertible<S, T>::value, int>::Type dummy = 0);
+
+    /* Construct a read only handle from a mutable handle. */
+    template <typename S>
+    inline
+    Handle(MutableHandle<S> &root,
            typename mozilla::EnableIf<mozilla::IsConvertible<S, T>::value, int>::Type dummy = 0);
 
     const T *address() const { return ptr; }
@@ -185,6 +200,19 @@ class MutableHandle : public MutableHandleBase<T>
         *ptr = v;
     }
 
+    /*
+     * This may be called only if the location of the T is guaranteed
+     * to be marked (for some reason other than being a Rooted),
+     * e.g., if it is guaranteed to be reachable from an implicit root.
+     *
+     * Create a MutableHandle from a raw location of a T.
+     */
+    static MutableHandle fromMarkedLocation(T *p) {
+        MutableHandle h;
+        h.ptr = p;
+        return h;
+    }
+
     T *address() const { return ptr; }
     T get() const { return *ptr; }
 
@@ -195,16 +223,33 @@ class MutableHandle : public MutableHandleBase<T>
     MutableHandle() {}
 
     T *ptr;
+
+    template <typename S>
+    void operator =(S v) MOZ_DELETE;
 };
 
 typedef MutableHandle<JSObject*>    MutableHandleObject;
 typedef MutableHandle<Value>        MutableHandleValue;
 
+/*
+ * Raw pointer used as documentation that a parameter does not need to be
+ * rooted.
+ */
+typedef JSObject *                  RawObject;
+
+/*
+ * By default, pointers should use the inheritance hierarchy to find their
+ * ThingRootKind. Some pointer types are explicitly set in jspubtd.h so that
+ * Rooted<T> may be used without the class definition being available.
+ */
+template <typename T>
+struct RootKind<T *> { static ThingRootKind rootKind() { return T::rootKind(); }; };
+
 template <typename T>
 struct RootMethods<T *>
 {
     static T *initial() { return NULL; }
-    static ThingRootKind kind() { return T::rootKind(); }
+    static ThingRootKind kind() { return RootKind<T *>::rootKind(); }
     static bool poisoned(T *v) { return IsPoisonedPtr(v); }
 };
 
@@ -293,6 +338,14 @@ Handle<T>::Handle(Rooted<S> &root,
 
 template<typename T> template <typename S>
 inline
+Handle<T>::Handle(MutableHandle<S> &root,
+                  typename mozilla::EnableIf<mozilla::IsConvertible<S, T>::value, int>::Type dummy)
+{
+    ptr = reinterpret_cast<const T *>(root.address());
+}
+
+template<typename T> template <typename S>
+inline
 MutableHandle<T>::MutableHandle(Rooted<S> *root,
                                 typename mozilla::EnableIf<mozilla::IsConvertible<S, T>::value, int>::Type dummy)
 {
@@ -332,15 +385,7 @@ class SkipRoot
 
   public:
     template <typename T>
-    SkipRoot(JSContext *cx, const T *ptr
-             JS_GUARD_OBJECT_NOTIFIER_PARAM)
-    {
-        init(ContextFriendFields::get(cx), ptr, 1);
-        JS_GUARD_OBJECT_NOTIFIER_INIT;
-    }
-
-    template <typename T>
-    SkipRoot(JSContext *cx, const T *ptr, size_t count
+    SkipRoot(JSContext *cx, const T *ptr, size_t count = 1
              JS_GUARD_OBJECT_NOTIFIER_PARAM)
     {
         init(ContextFriendFields::get(cx), ptr, count);
@@ -363,14 +408,7 @@ class SkipRoot
 
   public:
     template <typename T>
-    SkipRoot(JSContext *cx, const T *ptr
-              JS_GUARD_OBJECT_NOTIFIER_PARAM)
-    {
-        JS_GUARD_OBJECT_NOTIFIER_INIT;
-    }
-
-    template <typename T>
-    SkipRoot(JSContext *cx, const T *ptr, size_t count
+    SkipRoot(JSContext *cx, const T *ptr, size_t count = 1
               JS_GUARD_OBJECT_NOTIFIER_PARAM)
     {
         JS_GUARD_OBJECT_NOTIFIER_INIT;
@@ -381,6 +419,12 @@ class SkipRoot
     JS_DECL_USE_GUARD_OBJECT_NOTIFIER
 };
 
+/*
+ * This typedef is to annotate parameters that we have manually verified do not
+ * need rooting, as opposed to parameters that have not yet been considered.
+ */
+typedef JSObject *RawObject;
+
 #ifdef DEBUG
 JS_FRIEND_API(bool) IsRootingUnnecessaryForContext(JSContext *cx);
 JS_FRIEND_API(void) SetRootingUnnecessaryForContext(JSContext *cx, bool value);
@@ -389,14 +433,16 @@ JS_FRIEND_API(bool) RelaxRootChecksForContext(JSContext *cx);
 
 class AssertRootingUnnecessary {
     JS_DECL_USE_GUARD_OBJECT_NOTIFIER
+#ifdef DEBUG
     JSContext *cx;
     bool prev;
+#endif
 public:
     AssertRootingUnnecessary(JSContext *cx JS_GUARD_OBJECT_NOTIFIER_PARAM)
-        : cx(cx)
     {
         JS_GUARD_OBJECT_NOTIFIER_INIT;
 #ifdef DEBUG
+        this->cx = cx;
         prev = IsRootingUnnecessaryForContext(cx);
         SetRootingUnnecessaryForContext(cx, true);
 #endif

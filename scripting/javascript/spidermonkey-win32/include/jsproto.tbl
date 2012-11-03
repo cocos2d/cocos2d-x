@@ -64,6 +64,7 @@ JS_PROTO(WeakMap,               36,     js_InitWeakMapClass)
 JS_PROTO(Map,                   37,     js_InitMapClass)
 JS_PROTO(Set,                   38,     js_InitSetClass)
 JS_PROTO(DataView,              39,     js_InitTypedArrayClasses)
+JS_PROTO(ParallelArray,         40,     js_InitParallelArrayClass)
 
 #undef XML_INIT
 #undef NAMESPACE_INIT
