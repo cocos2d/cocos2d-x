@@ -131,7 +131,7 @@ CCTableViewCell *CCTableView::cellAtIndex(unsigned int idx)
 
 void CCTableView::updateCellAtIndex(unsigned int idx)
 {
-    if (idx == CC_INVALID_INDEX || idx > m_pDataSource->numberOfCellsInTableView(this)-1)
+    if (idx == CC_INVALID_INDEX || m_pDataSource->numberOfCellsInTableView(this) == 0 || idx > m_pDataSource->numberOfCellsInTableView(this)-1)
     {
         return;
     }
