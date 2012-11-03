@@ -72,6 +72,7 @@ CCTableView::CCTableView()
 , m_pCellsFreed(NULL)
 , m_pDataSource(NULL)
 , m_pTableViewDelegate(NULL)
+, m_pTouchedCell(NULL)
 , m_eOldDirection(kCCScrollViewDirectionNone)
 {
 
@@ -486,24 +487,69 @@ void CCTableView::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
     if (!this->isVisible()) {
         return;
     }
-    if (m_pTouches->count() == 1 && !this->isTouchMoved()) {
+    
+    if (m_pTouchedCell) {
+        m_pTableViewDelegate->tableCellUnhighlight(this, m_pTouchedCell);
+        m_pTableViewDelegate->tableCellTouched(this, m_pTouchedCell);
+        
+        m_pTouchedCell = NULL;
+    }
+    
+    CCScrollView::ccTouchEnded(pTouch, pEvent);
+}
+
+bool CCTableView::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
+{
+    if (!this->isVisible()) {
+        return false;
+    }
+    
+    bool touchResult = CCScrollView::ccTouchBegan(pTouch, pEvent);
+    
+    if(m_pTouches->count() == 1) {
         unsigned int        index;
-        CCTableViewCell   *cell;
         CCPoint           point;
         
         point = this->getContainer()->convertTouchToNodeSpace(pTouch);
+        
         if (m_eVordering == kCCTableViewFillTopDown) {
             CCSize cellSize = m_pDataSource->cellSizeForTable(this);
             point.y -= cellSize.height;
         }
-        index = this->_indexFromOffset(point);
-        cell  = this->_cellWithIndex(index);
         
-        if (cell) {
-            m_pTableViewDelegate->tableCellTouched(this, cell);
+        index = this->_indexFromOffset(point);
+        m_pTouchedCell  = this->_cellWithIndex(index);
+    
+        if (m_pTouchedCell) {
+            m_pTableViewDelegate->tableCellHighlight(this, m_pTouchedCell);
         }
     }
-    CCScrollView::ccTouchEnded(pTouch, pEvent);
+    else if(m_pTouchedCell) {
+        m_pTableViewDelegate->tableCellUnhighlight(this, m_pTouchedCell);
+        m_pTouchedCell = NULL;
+    }
+
+    return touchResult;
+}
+
+void CCTableView::ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
+{
+    CCScrollView::ccTouchMoved(pTouch, pEvent);
+
+    if (m_pTouchedCell && isTouchMoved()) {
+        m_pTableViewDelegate->tableCellUnhighlight(this, m_pTouchedCell);
+        m_pTouchedCell = NULL;
+    }
+}
+
+void CCTableView::ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent)
+{
+    CCScrollView::ccTouchCancelled(pTouch, pEvent);
+
+    if (m_pTouchedCell) {
+        m_pTableViewDelegate->tableCellUnhighlight(this, m_pTouchedCell);
+        m_pTouchedCell = NULL;
+    }
 }
 
 NS_CC_EXT_END
