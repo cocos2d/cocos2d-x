@@ -37,6 +37,7 @@ extern "C" {
     extern const char * getPackageNameJNI();
     extern void enableAccelerometerJNI();
     extern void disableAccelerometerJNI();
+    extern void setAccelerometerIntervalJNI(float interval);
 }
 
 #endif

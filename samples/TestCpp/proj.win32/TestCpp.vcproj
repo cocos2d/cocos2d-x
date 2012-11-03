@@ -224,6 +224,14 @@
 				RelativePath="..\Classes\tests.h"
 				>
 			</File>
+			<File
+				RelativePath="..\Classes\VisibleRect.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\Classes\VisibleRect.h"
+				>
+			</File>
 			<Filter
 				Name="ActionsTest"
 				>

@@ -2,13 +2,12 @@
 
 CurrentLanguageTest::CurrentLanguageTest()
 {
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
     CCLabelTTF* label = CCLabelTTF::create("Current language Test", "Arial", 28);
     addChild(label, 0);
-    label->setPosition( ccp(s.width/2, s.height-50) );
+    label->setPosition( ccp(VisibleRect::center().x, VisibleRect::top().y-50) );
 
     CCLabelTTF *labelLanguage = CCLabelTTF::create("", "Arial", 20);
-    labelLanguage->setPosition(ccp(s.width/2, s.height/2));
+    labelLanguage->setPosition(VisibleRect::center());
 
     ccLanguageType currentLanguageType = CCApplication::sharedApplication()->getCurrentLanguage();
     switch (currentLanguageType)

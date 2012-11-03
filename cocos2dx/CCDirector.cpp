@@ -131,7 +131,7 @@ bool CCDirector::init(void)
     // purge ?
     m_bPurgeDirecotorInNextLoop = false;
 
-    m_obWinSizeInPixels = m_obWinSizeInPoints = CCSizeZero;    
+    m_obWinSizeInPoints = CCSizeZero;    
 
     m_pobOpenGLView = NULL;
 
@@ -301,8 +301,7 @@ void CCDirector::setOpenGLView(CCEGLView *pobOpenGLView)
         m_pobOpenGLView = pobOpenGLView;
 
         // set size
-        m_obWinSizeInPoints = m_pobOpenGLView->getSize();
-        m_obWinSizeInPixels = CCSizeMake(m_obWinSizeInPoints.width * m_fContentScaleFactor, m_obWinSizeInPoints.height * m_fContentScaleFactor);
+        m_obWinSizeInPoints = m_pobOpenGLView->getDesignResolutionSize();
         
         createStatsLabel();
         
@@ -454,7 +453,7 @@ CCSize CCDirector::getWinSize(void)
 
 CCSize CCDirector::getWinSizeInPixels()
 {
-    return m_obWinSizeInPixels;
+    return CCSizeMake(m_obWinSizeInPoints.width * m_fContentScaleFactor, m_obWinSizeInPoints.height * m_fContentScaleFactor);
 }
 
 CCSize CCDirector::getVisibleSize()
@@ -479,20 +478,6 @@ CCPoint CCDirector::getVisibleOrigin()
     {
         return CCPointZero;
     }
-}
-
-void CCDirector::reshapeProjection(const CCSize& newWindowSize)
-{
-    CC_UNUSED_PARAM(newWindowSize);
-    if (m_pobOpenGLView)
-    {
-       m_obWinSizeInPoints = m_pobOpenGLView->getSize();
-       m_obWinSizeInPixels = CCSizeMake(m_obWinSizeInPoints.width * m_fContentScaleFactor,
-                                     m_obWinSizeInPoints.height * m_fContentScaleFactor);
- 
-       setProjection(m_eProjection);       
-    }
-
 }
 
 // scene management
@@ -775,7 +760,16 @@ void CCDirector::createStatsLabel()
     m_pDrawsLabel = new CCLabelAtlas();
     m_pDrawsLabel->initWithString("000", "fps_images.png", 12, 32, '.');
      */
-    int fontSize = (int)(m_obWinSizeInPoints.height / 320.0f * 24);
+    int fontSize = 0;
+    if (m_obWinSizeInPoints.width > m_obWinSizeInPoints.height)
+    {
+        fontSize = (int)(m_obWinSizeInPoints.height / 320.0f * 24);
+    }
+    else
+    {
+        fontSize = (int)(m_obWinSizeInPoints.width / 320.0f * 24);
+    }
+    
     m_pFPSLabel = CCLabelTTF::create("00.0", "Arial", fontSize);
     m_pFPSLabel->retain();
     m_pSPFLabel = CCLabelTTF::create("0.000", "Arial", fontSize);
@@ -809,6 +803,7 @@ void CCDirector::setContentScaleFactor(float scaleFactor)
     if (scaleFactor != m_fContentScaleFactor)
     {
         m_fContentScaleFactor = scaleFactor;
+        createStatsLabel();
     }
 }
 
