@@ -224,9 +224,11 @@ JSBool js_cocos2dx_CCMenuItem_create(JSContext *cx, uint32_t argc, jsval *vp)
 	return JS_FALSE;
 }
 
+// "create" in JS
+// cc.MenuItemSprite.create( normalSprite, selectedSprite, [disabledSprite], [callback_fn], [this]
 JSBool js_cocos2dx_CCMenuItemSprite_create(JSContext *cx, uint32_t argc, jsval *vp)
 {
-	if (argc >= 2) {
+	if (argc >= 2 && argc <= 5) {
 		jsval *argv = JS_ARGV(cx, vp);
 		js_proxy_t *proxy;
 		JSObject *tmpObj;
@@ -252,18 +254,21 @@ JSBool js_cocos2dx_CCMenuItemSprite_create(JSContext *cx, uint32_t argc, jsval *
 		}
 		cocos2d::CCMenuItemSprite* ret = cocos2d::CCMenuItemSprite::create(arg0, arg1, arg2);
 
-        jsval thisObj = argv[last++];
-        jsval callback = argv[last];
+        jsval callback = argv[last++];
+        jsval thisObj = argv[last];
 		JSObject *obj = bind_menu_item<cocos2d::CCMenuItemSprite>(cx, ret, callback, thisObj);
 		JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
 		return JS_TRUE;
 	}
+    JS_ReportError(cx, "Invalid number of arguments. Expecting: 2 <= args <= 5");
 	return JS_FALSE;
 }
 
+// "create" in JS
+// cc.MenuItemImage.create( normalImage, selectedImage, [disabledImage], callback_fn, [this] 
 JSBool js_cocos2dx_CCMenuItemImage_create(JSContext *cx, uint32_t argc, jsval *vp)
 {
-	if (argc >= 2) {
+	if (argc >= 2 && argc <= 5) {
 		jsval *argv = JS_ARGV(cx, vp);
 		const char *arg0; do { JSString *tmp = JS_ValueToString(cx, argv[0]); arg0 = JS_EncodeString(cx, tmp); } while (0);
 		const char *arg1; do { JSString *tmp = JS_ValueToString(cx, argv[1]); arg1 = JS_EncodeString(cx, tmp); } while (0);
@@ -277,19 +282,25 @@ JSBool js_cocos2dx_CCMenuItemImage_create(JSContext *cx, uint32_t argc, jsval *v
         jsval thisObj = JSVAL_VOID;
         jsval callback = JSVAL_VOID;
         if(argc > 3) {
-            thisObj = argv[last++];
-            callback = argv[last];
+            callback = argv[last++];
+            thisObj = argv[last];
+        }
+        else if (argc == 3 && last == 2) {
+            callback = argv[last++];
         }
         JSObject *obj = bind_menu_item<cocos2d::CCMenuItemImage>(cx, ret, callback, thisObj);
 		JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
 		return JS_TRUE;
 	}
+    JS_ReportError(cx, "Invalid number of arguments. Expecting: 2 <= args <= 5");
 	return JS_FALSE;
 }
 
+// "create" in JS:
+// cc.MenuItemLabel.create( label, callback_fn, [this] );
 JSBool js_cocos2dx_CCMenuItemLabel_create(JSContext *cx, uint32_t argc, jsval *vp)
 {
-	if (argc >= 1) {
+	if (argc >= 1 && argc <= 3) {
 		jsval *argv = JS_ARGV(cx, vp);
 		js_proxy_t *proxy;
 		JSObject *tmpObj = JSVAL_TO_OBJECT(argv[0]);
@@ -297,10 +308,11 @@ JSBool js_cocos2dx_CCMenuItemLabel_create(JSContext *cx, uint32_t argc, jsval *v
 		cocos2d::CCNode* arg0 = (cocos2d::CCNode*)(proxy ? proxy->ptr : NULL);
 		TEST_NATIVE_OBJECT(cx, arg0)
 		cocos2d::CCMenuItemLabel* ret = cocos2d::CCMenuItemLabel::create(arg0);
-		JSObject *obj = bind_menu_item<cocos2d::CCMenuItemLabel>(cx, ret, (argc == 3 ? argv[2] : JSVAL_VOID),  (argc >= 2 ? argv[1] : JSVAL_VOID));
+		JSObject *obj = bind_menu_item<cocos2d::CCMenuItemLabel>(cx, ret, (argc >= 2 ? argv[1] : JSVAL_VOID), (argc == 3 ? argv[2] : JSVAL_VOID) );
 		JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
 		return JS_TRUE;
 	}
+    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d or %d or %d", argc, 1, 2, 3);
 	return JS_FALSE;
 }
 
@@ -321,16 +333,19 @@ JSBool js_cocos2dx_CCMenuItemAtlasFont_create(JSContext *cx, uint32_t argc, jsva
 	return JS_FALSE;
 }
 
+// "create" in JS
+// cc.MenuItemFont.create( string, callback_fn, [this] );
 JSBool js_cocos2dx_CCMenuItemFont_create(JSContext *cx, uint32_t argc, jsval *vp)
 {
-	if (argc >= 1) {
+	if (argc >= 1 && argc <= 3) {
 		jsval *argv = JS_ARGV(cx, vp);
 		const char *arg0; do { JSString *tmp = JS_ValueToString(cx, argv[0]); arg0 = JS_EncodeString(cx, tmp); } while (0);
 		cocos2d::CCMenuItemFont* ret = cocos2d::CCMenuItemFont::create(arg0);
-		JSObject *obj = bind_menu_item<cocos2d::CCMenuItemFont>(cx, ret, (argc == 3 ? argv[2] : JSVAL_VOID), (argc >= 2 ? argv[1] : JSVAL_VOID));
+		JSObject *obj = bind_menu_item<cocos2d::CCMenuItemFont>(cx, ret, (argc >= 2 ? argv[1] : JSVAL_VOID), (argc == 3 ? argv[2] : JSVAL_VOID));
 		JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
 		return JS_TRUE;
 	}
+    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d or %d or %d", argc, 1, 2, 3);
 	return JS_FALSE;
 }
 
@@ -373,19 +388,28 @@ JSBool js_cocos2dx_CCMenuItemToggle_create(JSContext *cx, uint32_t argc, jsval *
   return JS_FALSE;
 }
 
+// "setCallback" in JS
+// item.setCallback( callback_fn, [this]);
 template<class T>
 JSBool js_cocos2dx_setCallback(JSContext *cx, uint32_t argc, jsval *vp) {
 
-    if(argc == 2) {
+    if(argc == 1 || argc == 2) {
         jsval *argv = JS_ARGV(cx, vp);
         JSObject *obj = JS_THIS_OBJECT(cx, vp);
+        jsval jsThis = JSVAL_VOID;
+        jsval jsFunc = argv[0];
+        if (argc == 2) {
+            jsThis = argv[1];
+        }
+        
         js_proxy_t *proxy;
         JS_GET_NATIVE_PROXY(proxy, obj);
         T* item = (T*)(proxy ? proxy->ptr : NULL);
         TEST_NATIVE_OBJECT(cx, item)
-        bind_menu_item(cx, item, argv[1], argv[0]);
+        bind_menu_item(cx, item, jsFunc, jsThis);
         return JS_TRUE;
     }
+    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d or %d", argc, 1, 2);
     return JS_FALSE;
 }
 
@@ -588,20 +612,52 @@ CCArray * JSCallFuncWrapper::getTargetForNativeNode(CCNode *pNode) {
     
 }
 
+void JSCallFuncWrapper::callbackFunc(CCNode *node) const {
 
+    jsval valArr[2];
 
+    JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
+    js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::CCNode>(cx, node);
+
+    JS_AddValueRoot(cx, valArr);
+
+    valArr[0] = OBJECT_TO_JSVAL(proxy->obj);
+    if(!JSVAL_IS_VOID(extraData)) {
+        valArr[1] = extraData;            
+    } else {
+        valArr[1] = JSVAL_NULL;
+    }
+
+    jsval retval;
+    if(jsCallback != JSVAL_VOID) {
+        if (jsThisObj != JSVAL_VOID) {
+            JS_CallFunctionValue(cx, JSVAL_TO_OBJECT(jsThisObj), jsCallback, 2, valArr, &retval);
+        }
+        else {
+            JS_CallFunctionValue(cx, NULL, jsCallback, 2, valArr, &retval);
+        }
+    }
+
+    JSCallFuncWrapper::setTargetForNativeNode(node, (JSCallFuncWrapper *)this);
+
+    JS_RemoveValueRoot(cx, valArr);
+
+}
+
+// cc.CallFunc.create( func, this, [data])
+// cc.CallFunc.create( func )
 JSBool js_callFunc(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
-    if (argc >= 1) {        
+    if (argc >= 1 && argc <= 3) {        
 		jsval *argv = JS_ARGV(cx, vp);
 
         JSCallFuncWrapper *tmpCobj = new JSCallFuncWrapper();        
         tmpCobj->autorelease();
         
-        tmpCobj->setJSCallbackThis(argv[0]);
+        tmpCobj->setJSCallbackFunc(argv[0]);
         if(argc >= 2) {
-            tmpCobj->setJSCallbackFunc(argv[1]);
+            tmpCobj->setJSCallbackThis(argv[1]);
         } if(argc == 3) {
             tmpCobj->setJSExtraData(argv[2]);
         }
@@ -619,8 +675,10 @@ JSBool js_callFunc(JSContext *cx, uint32_t argc, jsval *vp)
 //        }
         
       //  test->execute();
+        return JS_TRUE;
     }
-    return JS_TRUE;
+    JS_ReportError(cx, "Invalid number of arguments");
+    return JS_FALSE;
 }
 
 
@@ -1553,6 +1611,10 @@ void register_cocos2dx_js_extensions(JSContext* cx, JSObject* global)
 	JS_DefineFunction(cx, js_cocos2dx_CCNode_prototype, "copy", js_cocos2dx_CCNode_copy, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, js_cocos2dx_CCNode_prototype, "onExit", js_doNothing, 1, JSPROP_ENUMERATE | JSPROP_SHARED | JSPROP_PERMANENT);
     JS_DefineFunction(cx, js_cocos2dx_CCNode_prototype, "onEnter", js_doNothing, 1, JSPROP_ENUMERATE | JSPROP_SHARED | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, js_cocos2dx_CCNode_prototype, "onEnterTransitionDidFinish", js_doNothing, 0, JSPROP_ENUMERATE | JSPROP_SHARED | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, js_cocos2dx_CCNode_prototype, "onExitTransitionDidStart", js_doNothing, 0, JSPROP_ENUMERATE | JSPROP_SHARED | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, js_cocos2dx_CCNode_prototype, "init", js_doNothing, 0, JSPROP_ENUMERATE | JSPROP_SHARED | JSPROP_PERMANENT);
+
     JS_DefineFunction(cx, js_cocos2dx_CCNode_prototype, "schedule", js_CCNode_schedule, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, js_cocos2dx_CCNode_prototype, "scheduleOnce", js_CCNode_scheduleOnce, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, js_cocos2dx_CCNode_prototype, "unschedule", js_CCNode_unschedule, 1, JSPROP_READONLY | JSPROP_PERMANENT);

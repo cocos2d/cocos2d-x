@@ -537,12 +537,22 @@ void CCNode::addChild(CCNode *child)
     this->addChild(child, child->m_nZOrder, child->m_nTag);
 }
 
+void CCNode::removeFromParent()
+{
+    this->removeFromParentAndCleanup(true);
+}
+
 void CCNode::removeFromParentAndCleanup(bool cleanup)
 {
     if (m_pParent != NULL)
     {
         m_pParent->removeChild(this,cleanup);
     } 
+}
+
+void CCNode::removeChild(CCNode* child)
+{
+    this->removeChild(child, true);
 }
 
 /* "remove" logic MUST only be on this method
@@ -563,6 +573,11 @@ void CCNode::removeChild(CCNode* child, bool cleanup)
     }
 }
 
+void CCNode::removeChildByTag(int tag)
+{
+    this->removeChildByTag(tag, true);
+}
+
 void CCNode::removeChildByTag(int tag, bool cleanup)
 {
     CCAssert( tag != kCCNodeTagInvalid, "Invalid tag");
@@ -577,6 +592,11 @@ void CCNode::removeChildByTag(int tag, bool cleanup)
     {
         this->removeChild(child, cleanup);
     }
+}
+
+void CCNode::removeAllChildren()
+{
+    this->removeAllChildrenWithCleanup(true);
 }
 
 void CCNode::removeAllChildrenWithCleanup(bool cleanup)
