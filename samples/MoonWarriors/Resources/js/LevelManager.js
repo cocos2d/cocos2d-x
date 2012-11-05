@@ -57,7 +57,7 @@ var LevelManager = cc.Class.extend({
         var enemypos = cc.p( 80 + (winSize.width - 160) * Math.random(), winSize.height);
         var enemycs =  addEnemy.getContentSize();
         addEnemy.setPosition( enemypos );
-        
+
 
         var offset, tmpAction;
         var a0=0;
@@ -75,13 +75,13 @@ var LevelManager = cc.Class.extend({
                 offset = cc.p(0, -100 - 200 * Math.random());
                 a0 = cc.MoveBy.create(0.5, offset);
                 a1 = cc.MoveBy.create(1, cc.p(-50 - 100 * Math.random(), 0));
-                var onComplete = cc.CallFunc.create(addEnemy, function (pSender) {
+                var onComplete = cc.CallFunc.create(function (pSender) {
                     var a2 = cc.DelayTime.create(1);
                     var a3 = cc.MoveBy.create(1, cc.p(100 + 100 * Math.random(), 0));
                     pSender.runAction(cc.RepeatForever.create(
                         cc.Sequence.create(a2, a3, a2.copy(), a3.reverse())
                     ));
-                });
+                }.bind(addEnemy) );
                 tmpAction = cc.Sequence.create(a0, a1, onComplete);
                 break;
             case MW.ENEMY_MOVE_TYPE.OVERLAP:

@@ -244,19 +244,43 @@ JSBool js_cocos2dx_CCMenuItemSprite_create(JSContext *cx, uint32_t argc, jsval *
 		TEST_NATIVE_OBJECT(cx, arg1);
 
         int last = 2;
+		JSBool thirdArgIsCallback = JS_FALSE;
+
+		jsval jsCallback = JSVAL_VOID;
+		jsval jsThis = JSVAL_VOID;
+
 		cocos2d::CCNode* arg2 = NULL;
-		if (argc == 5 || argc == 3) {
+		if (argc >= 3) {
 			tmpObj = JSVAL_TO_OBJECT(argv[2]);
-			JS_GET_NATIVE_PROXY(proxy, tmpObj);
-			arg2 = (cocos2d::CCNode*)(proxy ? proxy->ptr : NULL);
-			TEST_NATIVE_OBJECT(cx, arg2);
-            last = 3;
+			thirdArgIsCallback = JS_ObjectIsFunction(cx, tmpObj);
+			if (!thirdArgIsCallback) { 
+				JS_GET_NATIVE_PROXY(proxy, tmpObj);
+				arg2 = (cocos2d::CCNode*)(proxy ? proxy->ptr : NULL);
+				TEST_NATIVE_OBJECT(cx, arg2);
+				last = 3;
+			}
 		}
 		cocos2d::CCMenuItemSprite* ret = cocos2d::CCMenuItemSprite::create(arg0, arg1, arg2);
+		if (argc >= 3) { 
+			if (thirdArgIsCallback) {
+				//cc.MenuItemSprite.create( normalSprite, selectedSprite, callback_fn, [this] )
+				jsCallback = argv[last++];
+				if (argc == 4) {
+					jsThis = argv[last];
+				}
+			}
+			else { 
+				//cc.MenuItemSprite.create( normalSprite, selectedSprite, disabledSprite, callback_fn, [this] )
+				if (argc >= 4) {
+					jsCallback = argv[last++];
+					if (argc == 5) {
+						jsThis = argv[last];
+					}
+				}
+			}
+		}
 
-        jsval callback = argv[last++];
-        jsval thisObj = argv[last];
-		JSObject *obj = bind_menu_item<cocos2d::CCMenuItemSprite>(cx, ret, callback, thisObj);
+		JSObject *obj = bind_menu_item<cocos2d::CCMenuItemSprite>(cx, ret, jsCallback, jsThis);
 		JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
 		return JS_TRUE;
 	}
@@ -273,22 +297,42 @@ JSBool js_cocos2dx_CCMenuItemImage_create(JSContext *cx, uint32_t argc, jsval *v
 		const char *arg0; do { JSString *tmp = JS_ValueToString(cx, argv[0]); arg0 = JS_EncodeString(cx, tmp); } while (0);
 		const char *arg1; do { JSString *tmp = JS_ValueToString(cx, argv[1]); arg1 = JS_EncodeString(cx, tmp); } while (0);
 		const char *arg2 = NULL;
+
+		JSBool thirdArgIsString = JS_TRUE;
+
+		jsval jsCallback = JSVAL_VOID;
+		jsval jsThis = JSVAL_VOID;
+
 		int last = 2;
-		if (JSVAL_IS_STRING(argv[2])) {
-			do { JSString *tmp = JS_ValueToString(cx, argv[2]); arg2 = JS_EncodeString(cx, tmp); } while (0);
-			last = 3;
+		if (argc >= 3) {
+			thirdArgIsString = JSVAL_IS_STRING(argv[2]);
+			if (thirdArgIsString) {
+				do { JSString *tmp = JS_ValueToString(cx, argv[2]); arg2 = JS_EncodeString(cx, tmp); } while (0);
+				last = 3;
+			}
 		}
 		cocos2d::CCMenuItemImage* ret = cocos2d::CCMenuItemImage::create(arg0, arg1, arg2);
-        jsval thisObj = JSVAL_VOID;
-        jsval callback = JSVAL_VOID;
-        if(argc > 3) {
-            callback = argv[last++];
-            thisObj = argv[last];
-        }
-        else if (argc == 3 && last == 2) {
-            callback = argv[last++];
-        }
-        JSObject *obj = bind_menu_item<cocos2d::CCMenuItemImage>(cx, ret, callback, thisObj);
+
+		if (argc >= 3) { 
+			if (!thirdArgIsString) {
+				//cc.MenuItemImage.create( normalImage, selectedImage, callback_fn, [this] )
+				jsCallback = argv[last++];
+				if (argc == 4) {
+					jsThis = argv[last];
+				}
+			}
+			else { 
+				//cc.MenuItemImage.create( normalImage, selectedImage, disabledImage, callback_fn, [this] )
+				if (argc >= 4) {
+					jsCallback = argv[last++];
+					if (argc == 5) {
+						jsThis = argv[last];
+					}
+				}
+			}
+		}
+
+        JSObject *obj = bind_menu_item<cocos2d::CCMenuItemImage>(cx, ret, jsCallback, jsThis);
 		JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
 		return JS_TRUE;
 	}
@@ -1238,6 +1282,45 @@ JSBool js_cocos2dx_ccpClamp(JSContext *cx, uint32_t argc, jsval *vp)
 	return JS_FALSE;
 }
 
+JSBool js_cocos2dx_ccpLengthSQ(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+
+	if (argc == 1) {
+		cocos2d::CCPoint arg0;
+		arg0 = jsval_to_ccpoint(cx, argv[0]);
+
+		float ret = ccpLengthSQ(arg0);
+
+		jsval jsret = DOUBLE_TO_JSVAL(ret);
+		JS_SET_RVAL(cx, vp, jsret);
+		return JS_TRUE;
+
+	}
+
+	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
+	return JS_FALSE;
+}
+
+JSBool js_cocos2dx_ccpLength(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+
+	if (argc == 1) {
+		cocos2d::CCPoint arg0;
+		arg0 = jsval_to_ccpoint(cx, argv[0]);
+
+		float ret = ccpLength(arg0);
+
+		jsval jsret = DOUBLE_TO_JSVAL(ret);
+		JS_SET_RVAL(cx, vp, jsret);
+		return JS_TRUE;
+
+	}
+
+	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
+	return JS_FALSE;
+}
 
 JSBool js_cocos2dx_ccpNeg(JSContext *cx, uint32_t argc, jsval *vp)
 {
@@ -1325,7 +1408,7 @@ JSBool js_cocos2dx_ccpMidpoint(JSContext *cx, uint32_t argc, jsval *vp)
         
 	}
 	
-    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 2);
 	return JS_FALSE;
 }
 
@@ -1348,7 +1431,7 @@ JSBool js_cocos2dx_ccpDot(JSContext *cx, uint32_t argc, jsval *vp)
         
 	}
 	
-    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 2);
 	return JS_FALSE;
 }
 
@@ -1370,7 +1453,7 @@ JSBool js_cocos2dx_ccpCross(JSContext *cx, uint32_t argc, jsval *vp)
         
 	}
 	
-    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 2);
 	return JS_FALSE;
 }
 
@@ -1436,7 +1519,7 @@ JSBool js_cocos2dx_ccpProject(JSContext *cx, uint32_t argc, jsval *vp)
         
 	}
 	
-    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 2);
 	return JS_FALSE;
 }
 
@@ -1458,7 +1541,7 @@ JSBool js_cocos2dx_ccpRotate(JSContext *cx, uint32_t argc, jsval *vp)
         
 	}
 	
-    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 2);
 	return JS_FALSE;
 }
 
@@ -1713,8 +1796,8 @@ void register_cocos2dx_js_extensions(JSContext* cx, JSObject* global)
     JS_DefineFunction(cx, ns, "pRotate", js_cocos2dx_ccpRotate, 0, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, ns, "pNormalize", js_cocos2dx_ccpNormalize, 0, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, ns, "pClamp", js_cocos2dx_ccpClamp, 2, JSPROP_READONLY | JSPROP_PERMANENT);
-
-    
+	JS_DefineFunction(cx, ns, "pLengthSQ", js_cocos2dx_ccpLengthSQ, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, ns, "pLength", js_cocos2dx_ccpLength, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     
     // add constructor for CCSet
     JSFunction *ccSetConstructor = JS_NewFunction(cx, js_cocos2dx_CCSet_constructor, 0, JSPROP_READONLY | JSPROP_PERMANENT, NULL, "constructor");

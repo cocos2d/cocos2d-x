@@ -8,18 +8,18 @@ var GameControlMenu = cc.Layer.extend({
         if (this._super()) {
             cc.MenuItemFont.setFontSize(18);
             cc.MenuItemFont.setFontName("Arial");
-            var systemMenu = cc.MenuItemFont.create("Main Menu", this, this.sysMenu);
+            var systemMenu = cc.MenuItemFont.create("Main Menu", this.onSysMenu);
             var menu = cc.Menu.create(systemMenu);
-            menu.setPosition(cc.p(0, 0));
+            menu.setPosition(0, 0);
             systemMenu.setAnchorPoint(cc.p(0, 0));
-            systemMenu.setPosition(cc.p(winSize.width-95, 5));
+            systemMenu.setPosition(winSize.width-95, 5);
             this.addChild(menu, 1, 2);
             bRet = true;
         }
 
         return bRet;
     },
-    sysMenu:function (pSender) {
+    onSysMenu:function (pSender) {
         var scene = cc.Scene.create();
         scene.addChild(SysMenu.create());
         cc.Director.getInstance().replaceScene(cc.TransitionFade.create(1.2,scene));
