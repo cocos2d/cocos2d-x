@@ -15,12 +15,12 @@ var Explosion = cc.Sprite.extend({
         var animation = cc.AnimationCache.getInstance().getAnimation("Explosion");
         this.runAction(cc.Sequence.create(
             cc.Animate.create(animation),
-            cc.CallFunc.create(this, this.destroy)
+            cc.CallFunc.create(this.destroy, this)
         ));
         this.setBlendFunc(gl.SRC_ALPHA, gl.ONE);
     },
     destroy:function () {
-        this.getParent().removeChild(this,true);
+        this.getParent().removeChild(this);
     }
 });
 
