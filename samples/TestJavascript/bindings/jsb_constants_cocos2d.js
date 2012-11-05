@@ -283,20 +283,26 @@ cc.dumpConfig = function () {
 // Bindings Overrides
 //
 // MenuItemToggle
-cc.MenuItemToggle.create = function (/* var args */) {
+cc.MenuItemToggle.create = function( /* var args */) {
 
     var n = arguments.length;
 
-    if (typeof arguments[n - 1] === 'function') {
+    if (typeof arguments[n-2] === 'function' || typeof arguments[n-1] === 'function') {
         var args = Array.prototype.slice.call(arguments);
+        var obj = null;
+        if( typeof arguments[n-2] === 'function' )
+            obj = args.pop();
+
         var func = args.pop();
-        var obj = args.pop();
 
         // create it with arguments,
         var item = cc.MenuItemToggle._create.apply(this, args);
 
         // then set the callback
-        item.setCallback(obj, func);
+        if( obj !== null )
+            item.setCallback(func, obj);
+        else
+            item.setCallback(func);
         return item;
     } else {
         return cc.MenuItemToggle._create.apply(this, arguments);
@@ -304,17 +310,16 @@ cc.MenuItemToggle.create = function (/* var args */) {
 };
 
 // LabelAtlas
-// TODO:
-// cc.LabelAtlas.create = function (a, b, c, d, e) {
+cc.LabelAtlas.create = function( a,b,c,d,e ) {
 
-//     var n = arguments.length;
+    var n = arguments.length;
 
-//     if (n == 5) {
-//         return cc.LabelAtlas._create(a, b, c, d, e.charCodeAt(0));
-//     } else {
-//         return cc.LabelAtlas._create.apply(this, arguments);
-//     }
-// };
+    if ( n == 5) {
+        return cc.LabelAtlas._create(a,b,c,d,e.charCodeAt(0));
+    } else {
+        return cc.LabelAtlas._create.apply(this, arguments);
+    }
+};
 
 /**
  * Associates a base class with a native superclass
