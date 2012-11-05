@@ -16,7 +16,7 @@ var SysMenu = cc.Layer.extend({
 
             var logo = cc.Sprite.create(s_logo);
             logo.setAnchorPoint(cc.p(0, 0));
-            logo.setPosition(cc.p(0, 250));
+            logo.setPosition(0, 250);
             this.addChild(logo, 10, 1);
 
             var newGameNormal = cc.Sprite.create(s_menu, cc.rect(0, 0, 126, 33));
@@ -31,17 +31,22 @@ var SysMenu = cc.Layer.extend({
             var aboutSelected = cc.Sprite.create(s_menu, cc.rect(252, 33, 126, 33));
             var aboutDisabled = cc.Sprite.create(s_menu, cc.rect(252, 33 * 2, 126, 33));
 
-            var newGame = cc.MenuItemSprite.create(newGameNormal, newGameSelected, newGameDisabled, this, function () {
+            cc.log("SysMenu init");
+
+            var newGame = cc.MenuItemSprite.create(newGameNormal, newGameSelected, newGameDisabled, function () {
+                cc.log("newGame callback1");
                 this.onButtonEffect();
+                cc.log("newGame callback2");
                 flareEffect(this, this, this.onNewGame);
-            });
-            var gameSettings = cc.MenuItemSprite.create(gameSettingsNormal, gameSettingsSelected, gameSettingsDisabled, this, this.onSettings);
-            var about = cc.MenuItemSprite.create(aboutNormal, aboutSelected, aboutDisabled, this, this.onAbout);
+                cc.log("newGame callback3");
+            }.bind(this));
+            var gameSettings = cc.MenuItemSprite.create(gameSettingsNormal, gameSettingsSelected, gameSettingsDisabled, this.onSettings, this);
+            var about = cc.MenuItemSprite.create(aboutNormal, aboutSelected, aboutDisabled, this.onAbout, this);
 
             var menu = cc.Menu.create(newGame, gameSettings, about);
             menu.alignItemsVerticallyWithPadding(10);
             this.addChild(menu, 1, 2);
-            menu.setPosition(cc.p(winSize.width / 2, winSize.height / 2 - 80));
+            menu.setPosition(winSize.width / 2, winSize.height / 2 - 80);
             this.schedule(this.update, 0.1);
 
             var tmp = cc.TextureCache.getInstance().addImage(s_ship01);
@@ -52,8 +57,8 @@ var SysMenu = cc.Layer.extend({
             this._ship.runAction(cc.MoveBy.create(2, cc.p(Math.random() * winSize.width, pos.y + winSize.height + 100)));
 
             if (MW.SOUND) {
-                cc.AudioEngine.getInstance().setBackgroundMusicVolume(0.7);
-                cc.AudioEngine.getInstance().playBackgroundMusic(s_mainMainMusic, true);
+                cc.AudioEngine.getInstance().setMusicVolume(0.7);
+                cc.AudioEngine.getInstance().playMusic(s_mainMainMusic, true);
             }
 
             bRet = true;
@@ -61,10 +66,14 @@ var SysMenu = cc.Layer.extend({
         return bRet;
     },
     onNewGame:function (pSender) {
+        cc.log("onNewGame 1");
         var scene = cc.Scene.create();
         scene.addChild(GameLayer.create());
+        cc.log("onNewGame 2");
         scene.addChild(GameControlMenu.create());
+        cc.log("onNewGame 3");
         cc.Director.getInstance().replaceScene(cc.TransitionFade.create(1.2, scene));
+        cc.log("onNewGame 4");
     },
     onSettings:function (pSender) {
         this.onButtonEffect();
