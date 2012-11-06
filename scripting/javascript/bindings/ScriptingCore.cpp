@@ -1062,8 +1062,16 @@ jsval ccarray_to_jsval(JSContext* cx, CCArray *arr) {
         CCObject *obj = arr->objectAtIndex(i);
         
         CCString *testString = dynamic_cast<cocos2d::CCString *>(obj);
+        CCDictionary* testDict = NULL;
+        CCArray* testArray = NULL;
+        // XXX: Only supports string, since all data read from plist files will be stored as string in cocos2d-x
+        // Do we need to convert string to js base type ? 
         if(testString) {
             arrElement = c_string_to_jsval(cx, testString->getCString());
+        } else if (testDict = dynamic_cast<cocos2d::CCDictionary*>(obj)) {
+            arrElement = ccdictionary_to_jsval(cx, testDict);
+        } else if (testArray = dynamic_cast<cocos2d::CCArray*>(obj)) {
+            arrElement = ccarray_to_jsval(cx, testArray);
         } else {
             js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::CCObject>(cx, obj);
             arrElement = OBJECT_TO_JSVAL(proxy->obj);
@@ -1074,6 +1082,40 @@ jsval ccarray_to_jsval(JSContext* cx, CCArray *arr) {
         }
     }
     return OBJECT_TO_JSVAL(jsretArr);
+}
+
+jsval ccdictionary_to_jsval(JSContext* cx, CCDictionary* dict)
+{
+    JSObject* jsRet = JS_NewObject(cx, NULL, NULL, NULL);
+    CCDictElement* pElement = NULL;
+    CCDICT_FOREACH(dict, pElement)
+    {
+        jsval dictElement;
+        CCString* obj = dynamic_cast<CCString*>(pElement->getObject());
+
+        CCString *testString = dynamic_cast<cocos2d::CCString *>(obj);
+        CCDictionary* testDict = NULL;
+        CCArray* testArray = NULL;
+        // XXX: Only supports string, since all data read from plist files will be stored as string in cocos2d-x
+        // Do we need to convert string to js base type ? 
+        if(testString) {
+            dictElement = c_string_to_jsval(cx, testString->getCString());
+        } else if (testDict = dynamic_cast<cocos2d::CCDictionary*>(obj)) {
+            dictElement = ccdictionary_to_jsval(cx, testDict);
+        } else if (testArray = dynamic_cast<cocos2d::CCArray*>(obj)) {
+            dictElement = ccarray_to_jsval(cx, testArray);
+        } else {
+            js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::CCObject>(cx, obj);
+            dictElement = OBJECT_TO_JSVAL(proxy->obj);
+        }
+        
+        const char* key = pElement->getStrKey();
+        if (key && strlen(key) > 0)
+        {
+            JS_SetProperty(cx, jsRet, key, &dictElement);
+        }
+    }
+    return OBJECT_TO_JSVAL(jsRet);
 }
 
 jsval long_long_to_jsval(JSContext* cx, long long v) {
