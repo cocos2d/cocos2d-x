@@ -82,6 +82,7 @@ public:
     virtual int executeSchedule(CCTimer* pTimer, float dt, CCNode* pNode = NULL);
     virtual int executeLayerTouchesEvent(CCLayer* pLayer, int eventType, CCSet *pTouches);
     virtual int executeLayerTouchEvent(CCLayer* pLayer, int eventType, CCTouch *pTouch);
+    virtual int executeAccelerometerEvent(CCLayer* pLayer, CCAcceleration* pAccelerationValue);
 
     int executeFunctionWithObjectData(CCNode *self, const char *name, JSObject *obj);
     int executeFunctionWithOwner(jsval owner, const char *name, jsval data);

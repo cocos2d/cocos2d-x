@@ -249,14 +249,13 @@ void CCLayer::setAccelerometerInterval(double interval) {
 }
 
 
-void CCLayer::didAccelerate(CCAcceleration* pAccelerationValue) {
-    CC_UNUSED_PARAM(pAccelerationValue);
-//    
-//    if ( m_eScriptType != kScriptTypeNone)
-//    {
-//        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeAccelerometerEvent(this, pAccelerationValue);
-//    }
-    
+void CCLayer::didAccelerate(CCAcceleration* pAccelerationValue)
+{
+   CC_UNUSED_PARAM(pAccelerationValue);
+   if ( m_eScriptType != kScriptTypeNone)
+   {
+       CCScriptEngineManager::sharedManager()->getScriptEngine()->executeAccelerometerEvent(this, pAccelerationValue);
+   }
 }
 
 
