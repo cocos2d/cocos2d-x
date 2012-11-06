@@ -1024,6 +1024,7 @@ jsval ccarray_to_jsval(JSContext* cx, CCArray *arr) {
     for(int i = 0; i < arr->count(); ++i) {
         jsval arrElement;
         CCObject *obj = arr->objectAtIndex(i);
+        const char *type = typeid(*obj).name();
         
         CCString *testString = dynamic_cast<cocos2d::CCString *>(obj);
         CCDictionary* testDict = NULL;
@@ -1080,6 +1081,42 @@ jsval ccdictionary_to_jsval(JSContext* cx, CCDictionary* dict)
         }
     }
     return OBJECT_TO_JSVAL(jsRet);
+}
+
+CCDictionary* jsval_to_ccdictionary(JSContext* cx, jsval v) {
+    
+    JSObject *itEl = JS_NewPropertyIterator(cx, JSVAL_TO_OBJECT(v));
+    CCDictionary *dict = NULL;
+    
+    jsid propId;
+    do {
+        
+        jsval prop;
+        JS_GetPropertyById(cx, JSVAL_TO_OBJECT(v), propId, &prop);
+                
+        js_proxy_t *proxy;
+        JSObject *tmp = JSVAL_TO_OBJECT(prop);
+        JS_GET_NATIVE_PROXY(proxy, tmp);
+        cocos2d::CCObject* cobj = (cocos2d::CCObject *)(proxy ? proxy->ptr : NULL);
+        TEST_NATIVE_OBJECT(cx, cobj)
+        
+        jsval key;
+        std::string keyStr;
+        if(JSID_IS_STRING(propId)) {
+            JS_IdToValue(cx, propId, &key);
+            keyStr = jsval_to_std_string(cx, key);
+        }
+        
+        if(JSVAL_IS_NULL(key)) continue;
+        
+        if(!dict) {
+            dict = CCDictionary::create();
+        }
+        dict->setObject(cobj, keyStr);
+        
+    } while(JS_NextProperty(cx, itEl, &propId));
+    
+    return dict;
 }
 
 jsval long_long_to_jsval(JSContext* cx, long long v) {
