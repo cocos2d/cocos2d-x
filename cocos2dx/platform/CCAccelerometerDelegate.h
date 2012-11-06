@@ -31,14 +31,15 @@ NS_CC_BEGIN
 /**
 @brief The device accelerometer reports values for each axis in units of g-force 
 */
-typedef struct 
+class CCAcceleration
 {
+public:
     double x;
     double y;
     double z;
 
     double timestamp;
-} CCAcceleration;
+};
 
 /**
 @brief 

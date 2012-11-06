@@ -754,6 +754,44 @@ int ScriptingCore::executeLayerTouchEvent(CCLayer* pLayer, int eventType, CCTouc
     return 1;
 }
 
+int ScriptingCore::executeAccelerometerEvent(CCLayer* pLayer, CCAcceleration* pAccelerationValue)
+{
+    js_proxy_t * p;
+    JS_GET_PROXY(p, pLayer);
+
+    if (!p) return 0;
+
+    jsval retval;
+
+    JSBool found;
+    JS_HasProperty(this->cx_, p->obj, "onAccelerometer", &found);
+    if (found == JS_TRUE) {
+        jsval rval, fval;
+
+        double time = pAccelerationValue->timestamp;
+        double x = pAccelerationValue->x;
+        double y = pAccelerationValue->y;
+        double z = pAccelerationValue->z;
+
+        // Create an JS object with x,y,z,timestamp as properties
+        JSObject *object = JS_NewObject(this->cx_, NULL, NULL, NULL );
+        if( !object)
+            return 0;
+
+        if (!JS_DefineProperty(this->cx_, object, "x", DOUBLE_TO_JSVAL(x), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) ||
+            !JS_DefineProperty(this->cx_, object, "y", DOUBLE_TO_JSVAL(y), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) ||
+            !JS_DefineProperty(this->cx_, object, "z", DOUBLE_TO_JSVAL(z), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) ||
+            !JS_DefineProperty(this->cx_, object, "timestamp", DOUBLE_TO_JSVAL(time), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) )
+            return 0;
+
+        jsval argv = OBJECT_TO_JSVAL(object);
+
+        JS_GetProperty(this->cx_, p->obj, "onAccelerometer", &fval);
+        JS_CallFunctionValue(this->cx_, p->obj, fval, 1, &argv, &rval);
+    }
+    return 1;
+}
+
 int ScriptingCore::executeFunctionWithObjectData(CCNode *self, const char *name, JSObject *obj) {
 
     js_proxy_t * p;
@@ -1024,8 +1062,16 @@ jsval ccarray_to_jsval(JSContext* cx, CCArray *arr) {
         CCObject *obj = arr->objectAtIndex(i);
         
         CCString *testString = dynamic_cast<cocos2d::CCString *>(obj);
+        CCDictionary* testDict = NULL;
+        CCArray* testArray = NULL;
+        // XXX: Only supports string, since all data read from plist files will be stored as string in cocos2d-x
+        // Do we need to convert string to js base type ? 
         if(testString) {
             arrElement = c_string_to_jsval(cx, testString->getCString());
+        } else if (testDict = dynamic_cast<cocos2d::CCDictionary*>(obj)) {
+            arrElement = ccdictionary_to_jsval(cx, testDict);
+        } else if (testArray = dynamic_cast<cocos2d::CCArray*>(obj)) {
+            arrElement = ccarray_to_jsval(cx, testArray);
         } else {
             js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::CCObject>(cx, obj);
             arrElement = OBJECT_TO_JSVAL(proxy->obj);
@@ -1036,6 +1082,40 @@ jsval ccarray_to_jsval(JSContext* cx, CCArray *arr) {
         }
     }
     return OBJECT_TO_JSVAL(jsretArr);
+}
+
+jsval ccdictionary_to_jsval(JSContext* cx, CCDictionary* dict)
+{
+    JSObject* jsRet = JS_NewObject(cx, NULL, NULL, NULL);
+    CCDictElement* pElement = NULL;
+    CCDICT_FOREACH(dict, pElement)
+    {
+        jsval dictElement;
+        CCString* obj = dynamic_cast<CCString*>(pElement->getObject());
+
+        CCString *testString = dynamic_cast<cocos2d::CCString *>(obj);
+        CCDictionary* testDict = NULL;
+        CCArray* testArray = NULL;
+        // XXX: Only supports string, since all data read from plist files will be stored as string in cocos2d-x
+        // Do we need to convert string to js base type ? 
+        if(testString) {
+            dictElement = c_string_to_jsval(cx, testString->getCString());
+        } else if (testDict = dynamic_cast<cocos2d::CCDictionary*>(obj)) {
+            dictElement = ccdictionary_to_jsval(cx, testDict);
+        } else if (testArray = dynamic_cast<cocos2d::CCArray*>(obj)) {
+            dictElement = ccarray_to_jsval(cx, testArray);
+        } else {
+            js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::CCObject>(cx, obj);
+            dictElement = OBJECT_TO_JSVAL(proxy->obj);
+        }
+        
+        const char* key = pElement->getStrKey();
+        if (key && strlen(key) > 0)
+        {
+            JS_SetProperty(cx, jsRet, key, &dictElement);
+        }
+    }
+    return OBJECT_TO_JSVAL(jsRet);
 }
 
 jsval long_long_to_jsval(JSContext* cx, long long v) {
