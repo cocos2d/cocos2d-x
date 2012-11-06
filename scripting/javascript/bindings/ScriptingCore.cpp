@@ -747,52 +747,14 @@ int ScriptingCore::executeLayerTouchEvent(CCLayer* pLayer, int eventType, CCTouc
     jsval jsret;
     getJSTouchObject(this->getGlobalContext(), pTouch, jsret);
     JSObject *jsObj = JSVAL_TO_OBJECT(jsret);
-    executeFunctionWithObjectData(pLayer,  funcName.c_str(), jsObj);
+    bool retval = executeFunctionWithObjectData(pLayer,  funcName.c_str(), jsObj);
     
     removeJSTouchObject(this->getGlobalContext(), pTouch, jsret);
     
-    return 1;
+    return retval;
 }
 
-int ScriptingCore::executeAccelerometerEvent(CCLayer* pLayer, CCAcceleration* pAccelerationValue)
-{
-    js_proxy_t * p;
-    JS_GET_PROXY(p, pLayer);
-
-    if (!p) return 0;
-
-    jsval retval;
-
-    JSBool found;
-    JS_HasProperty(this->cx_, p->obj, "onAccelerometer", &found);
-    if (found == JS_TRUE) {
-        jsval rval, fval;
-
-        double time = pAccelerationValue->timestamp;
-        double x = pAccelerationValue->x;
-        double y = pAccelerationValue->y;
-        double z = pAccelerationValue->z;
-
-        // Create an JS object with x,y,z,timestamp as properties
-        JSObject *object = JS_NewObject(this->cx_, NULL, NULL, NULL );
-        if( !object)
-            return 0;
-
-        if (!JS_DefineProperty(this->cx_, object, "x", DOUBLE_TO_JSVAL(x), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) ||
-            !JS_DefineProperty(this->cx_, object, "y", DOUBLE_TO_JSVAL(y), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) ||
-            !JS_DefineProperty(this->cx_, object, "z", DOUBLE_TO_JSVAL(z), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) ||
-            !JS_DefineProperty(this->cx_, object, "timestamp", DOUBLE_TO_JSVAL(time), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) )
-            return 0;
-
-        jsval argv = OBJECT_TO_JSVAL(object);
-
-        JS_GetProperty(this->cx_, p->obj, "onAccelerometer", &fval);
-        JS_CallFunctionValue(this->cx_, p->obj, fval, 1, &argv, &rval);
-    }
-    return 1;
-}
-
-int ScriptingCore::executeFunctionWithObjectData(CCNode *self, const char *name, JSObject *obj) {
+bool ScriptingCore::executeFunctionWithObjectData(CCNode *self, const char *name, JSObject *obj) {
 
     js_proxy_t * p;
     JS_GET_PROXY(p, self);
@@ -802,9 +764,11 @@ int ScriptingCore::executeFunctionWithObjectData(CCNode *self, const char *name,
     jsval dataVal = OBJECT_TO_JSVAL(obj);
 
     executeJSFunctionWithName(this->cx_, p->obj, name, dataVal, retval);
-
-    return 1;
+    if(JSVAL_IS_NULL(retval)) return false;
+    else if(JSVAL_IS_BOOLEAN(retval)) return JSVAL_TO_BOOLEAN(retval);
+    
 }
+
 
 int ScriptingCore::executeFunctionWithOwner(jsval owner, const char *name, jsval data) {
     jsval retval;
