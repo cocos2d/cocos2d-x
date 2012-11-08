@@ -50,6 +50,21 @@ CCControl::CCControl()
 
 }
 
+CCControl* CCControl::create()
+{
+    CCControl* pRet = new CCControl();
+    if (pRet && pRet->init())
+    {
+        pRet->autorelease();
+        return pRet;
+    }
+    else
+    {
+        CC_SAFE_DELETE(pRet);
+        return NULL;
+    }
+}
+
 bool CCControl::init()
 {
     if (CCLayer::init())
