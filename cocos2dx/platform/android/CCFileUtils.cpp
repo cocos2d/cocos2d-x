@@ -24,6 +24,7 @@ THE SOFTWARE.
 
 #define __CC_PLATFORM_FILEUTILS_CPP__
 #include "platform/CCFileUtilsCommon_cpp.h"
+#include "support/zip_support/ZipUtils.h"
 
 using namespace std;
 
@@ -36,6 +37,7 @@ NS_CC_BEGIN
 static string s_strResourcePath = "";
     
 static CCFileUtils* s_pFileUtils = NULL;
+static ZipFile *s_pZipFile = NULL;
 
 CCFileUtils* CCFileUtils::sharedFileUtils()
 {
@@ -43,6 +45,7 @@ CCFileUtils* CCFileUtils::sharedFileUtils()
     {
         s_pFileUtils = new CCFileUtils();
         s_strResourcePath = getApkPath();
+        s_pZipFile = new ZipFile(s_strResourcePath, "assets/");
     }
     return s_pFileUtils;
 }
@@ -94,13 +97,13 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
         
         fullPath.insert(0, m_obDirectory.c_str());
         fullPath.insert(0, "assets/");
-        pData =  CCFileUtils::getFileDataFromZip(s_strResourcePath.c_str(), fullPath.c_str(), pSize);
+        pData = s_pZipFile->getFileData(fullPath, pSize);
         
         if (! pData && m_obDirectory.size() > 0)
         {
             // search from root
             pathWithoutDirectory.insert(0, "assets/");
-            pData =  CCFileUtils::getFileDataFromZip(s_strResourcePath.c_str(), pathWithoutDirectory.c_str(), pSize);
+            pData = s_pZipFile->getFileData(pathWithoutDirectory, pSize);
         }
     }
     else
