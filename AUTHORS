@@ -16,6 +16,7 @@ Developers:
         fix for correct unscheduling and instance destruction of extensions/network/HttpClient.cpp
 
     wenbin wang
+        add error handler when read image data using libjpeg
         add korean language support
         fix getDeviceModel bug in android CocosDenshion
 
