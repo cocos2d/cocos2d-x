@@ -11,7 +11,7 @@ var SettingsLayer = cc.Layer.extend({
 
             var cacheImage = cc.TextureCache.getInstance().addImage(s_menuTitle);
             var title = cc.Sprite.createWithTexture(cacheImage, cc.rect(0, 0, 134, 34));
-            title.setPosition(cc.p(winSize.width / 2, winSize.height - 120));
+            title.setPosition(winSize.width / 2, winSize.height - 120);
             this.addChild(title);
 
 
@@ -25,7 +25,7 @@ var SettingsLayer = cc.Layer.extend({
             var item1 = cc.MenuItemToggle.create(
                 cc.MenuItemFont.create("On"),
                 cc.MenuItemFont.create("Off") );
-            item1.setCallback(this, this.soundControl );
+            item1.setCallback(this.onSoundControl );
 
             cc.MenuItemFont.setFontName("Arial");
             cc.MenuItemFont.setFontSize(18);
@@ -38,13 +38,13 @@ var SettingsLayer = cc.Layer.extend({
                 cc.MenuItemFont.create("Easy"),
                 cc.MenuItemFont.create("Normal"),
                 cc.MenuItemFont.create("Hard"));
-            item2.setCallback( this, this.modeControl );
+            item2.setCallback( this.onModeControl );
 
 
             cc.MenuItemFont.setFontName("Arial");
             cc.MenuItemFont.setFontSize(26);
             var label = cc.LabelTTF.create("Go back", "Arial", 20);
-            var back = cc.MenuItemLabel.create(label, this, this.backCallback);
+            var back = cc.MenuItemLabel.create(label, this.onBackCallback);
             back.setScale(0.8);
 
             var menu = cc.Menu.create(title1, title2, item1, item2, back);
@@ -61,18 +61,18 @@ var SettingsLayer = cc.Layer.extend({
 
         return bRet;
     },
-    backCallback:function (pSender) {
+    onBackCallback:function (pSender) {
         var scene = cc.Scene.create();
         scene.addChild(SysMenu.create());
         cc.Director.getInstance().replaceScene(cc.TransitionFade.create(1.2, scene));
     },
-    soundControl:function(){
+    onSoundControl:function(){
         MW.SOUND = MW.SOUND ? false : true;
         if(!MW.SOUND){
-            cc.AudioEngine.getInstance().stopBackgroundMusic();
+            cc.AudioEngine.getInstance().stopMusic();
         }
     },
-    modeControl:function(){
+    onModeControl:function(){
     }
 });
 
