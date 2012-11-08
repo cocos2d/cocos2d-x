@@ -47,6 +47,8 @@ public:
     CC_DEPRECATED_ATTRIBUTE static CCParticleFire* node();
     
     static CCParticleFire* create();
+    static CCParticleFire* create(const char *plistFile);
+    static CCParticleFire* createWithTotalParticles(unsigned int numberOfParticles);
 };
 
 //! @brief A fireworks particle system
@@ -61,6 +63,8 @@ public:
     CC_DEPRECATED_ATTRIBUTE static CCParticleFireworks* node();
     
     static CCParticleFireworks* create();
+    static CCParticleFireworks* create(const char *plistFile);
+    static CCParticleFireworks* createWithTotalParticles(unsigned int numberOfParticles);
 };
 
 //! @brief A sun particle system
@@ -75,6 +79,8 @@ public:
     CC_DEPRECATED_ATTRIBUTE static CCParticleSun* node();
     
     static CCParticleSun* create();
+    static CCParticleSun* create(const char *plistFile);
+    static CCParticleSun* createWithTotalParticles(unsigned int numberOfParticles);
 };
 
 //! @brief A galaxy particle system
@@ -89,6 +95,8 @@ public:
     CC_DEPRECATED_ATTRIBUTE static CCParticleGalaxy* node();
     
     static CCParticleGalaxy* create();
+    static CCParticleGalaxy* create(const char *plistFile);
+    static CCParticleGalaxy* createWithTotalParticles(unsigned int numberOfParticles);
 };
 
 //! @brief A flower particle system
@@ -103,6 +111,8 @@ public:
     CC_DEPRECATED_ATTRIBUTE static CCParticleFlower* node();
     
     static CCParticleFlower* create();
+    static CCParticleFlower* create(const char *plistFile);
+    static CCParticleFlower* createWithTotalParticles(unsigned int numberOfParticles);
 };
 
 //! @brief A meteor particle system
@@ -115,6 +125,8 @@ public:
     virtual bool initWithTotalParticles(unsigned int numberOfParticles);
     CC_DEPRECATED_ATTRIBUTE static CCParticleMeteor * node();
     static CCParticleMeteor * create();
+    static CCParticleMeteor* create(const char *plistFile);
+    static CCParticleMeteor* createWithTotalParticles(unsigned int numberOfParticles);
 };
 
 //! @brief An spiral particle system
@@ -129,6 +141,8 @@ public:
     CC_DEPRECATED_ATTRIBUTE static CCParticleSpiral* node();
     
     static CCParticleSpiral* create();
+    static CCParticleSpiral* create(const char *plistFile);
+    static CCParticleSpiral* createWithTotalParticles(unsigned int numberOfParticles);
 };
 
 //! @brief An explosion particle system
@@ -143,6 +157,8 @@ public:
     CC_DEPRECATED_ATTRIBUTE static CCParticleExplosion* node();
     
     static CCParticleExplosion* create();
+    static CCParticleExplosion* create(const char *plistFile);
+    static CCParticleExplosion* createWithTotalParticles(unsigned int numberOfParticles);
 };
 
 //! @brief An smoke particle system
@@ -157,6 +173,8 @@ public:
     CC_DEPRECATED_ATTRIBUTE static CCParticleSmoke* node();
     
     static CCParticleSmoke* create();
+    static CCParticleSmoke* create(const char *plistFile);
+    static CCParticleSmoke* createWithTotalParticles(unsigned int numberOfParticles);
 };
 
 //! @brief An snow particle system
@@ -171,6 +189,8 @@ public:
     CC_DEPRECATED_ATTRIBUTE static CCParticleSnow* node();
     
     static CCParticleSnow* create();
+    static CCParticleSnow* create(const char *plistFile);
+    static CCParticleSnow* createWithTotalParticles(unsigned int numberOfParticles);
 };
 
 //! @brief A rain particle system
@@ -185,6 +205,8 @@ public:
     CC_DEPRECATED_ATTRIBUTE static CCParticleRain* node();
     
     static CCParticleRain* create();
+    static CCParticleRain* create(const char *plistFile);
+    static CCParticleRain* createWithTotalParticles(unsigned int numberOfParticles);
 };
 
 // end of particle_nodes group
