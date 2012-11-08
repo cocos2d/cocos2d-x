@@ -74,20 +74,6 @@ CCParticleFire* CCParticleFire::create()
     return pRet;
 }
 
-CCParticleFire* CCParticleFire::create(const char *plistFile)
-{
-    CCParticleFire* pRet = new CCParticleFire();
-    if (pRet && pRet->initWithFile(plistFile))
-    {
-        pRet->autorelease();
-    }
-    else
-    {
-        CC_SAFE_DELETE(pRet);
-    }
-    return pRet;
-}
-
 CCParticleFire* CCParticleFire::createWithTotalParticles(unsigned int numberOfParticles)
 {
     CCParticleFire* pRet = new CCParticleFire();
@@ -187,20 +173,6 @@ CCParticleFireworks* CCParticleFireworks::create()
 {
     CCParticleFireworks* pRet = new CCParticleFireworks();
     if (pRet && pRet->init())
-    {
-        pRet->autorelease();
-    }
-    else
-    {
-        CC_SAFE_DELETE(pRet);
-    }
-    return pRet;
-}
-
-CCParticleFireworks* CCParticleFireworks::create(const char *plistFile)
-{
-    CCParticleFireworks* pRet = new CCParticleFireworks();
-    if (pRet && pRet->initWithFile(plistFile))
     {
         pRet->autorelease();
     }
@@ -318,20 +290,6 @@ CCParticleSun* CCParticleSun::create()
     return pRet;
 }
 
-CCParticleSun* CCParticleSun::create(const char *plistFile)
-{
-    CCParticleSun* pRet = new CCParticleSun();
-    if (pRet && pRet->initWithFile(plistFile))
-    {
-        pRet->autorelease();
-    }
-    else
-    {
-        CC_SAFE_DELETE(pRet);
-    }
-    return pRet;
-}
-
 CCParticleSun* CCParticleSun::createWithTotalParticles(unsigned int numberOfParticles)
 {
     CCParticleSun* pRet = new CCParticleSun();
@@ -434,20 +392,6 @@ CCParticleGalaxy* CCParticleGalaxy::create()
 {
     CCParticleGalaxy* pRet = new CCParticleGalaxy();
     if (pRet && pRet->init())
-    {
-        pRet->autorelease();
-    }
-    else
-    {
-        CC_SAFE_DELETE(pRet);
-    }
-    return pRet;
-}
-
-CCParticleGalaxy* CCParticleGalaxy::create(const char *plistFile)
-{
-    CCParticleGalaxy* pRet = new CCParticleGalaxy();
-    if (pRet && pRet->initWithFile(plistFile))
     {
         pRet->autorelease();
     }
@@ -572,20 +516,6 @@ CCParticleFlower* CCParticleFlower::create()
     return pRet;
 }
 
-CCParticleFlower* CCParticleFlower::create(const char *plistFile)
-{
-    CCParticleFlower* pRet = new CCParticleFlower();
-    if (pRet && pRet->initWithFile(plistFile))
-    {
-        pRet->autorelease();
-    }
-    else
-    {
-        CC_SAFE_DELETE(pRet);
-    }
-    return pRet;
-}
-
 CCParticleFlower* CCParticleFlower::createWithTotalParticles(unsigned int numberOfParticles)
 {
     CCParticleFlower* pRet = new CCParticleFlower();
@@ -689,20 +619,6 @@ CCParticleMeteor * CCParticleMeteor::create()
 {
     CCParticleMeteor *pRet = new CCParticleMeteor();
     if (pRet && pRet->init())
-    {
-        pRet->autorelease();
-    }
-    else
-    {
-        CC_SAFE_DELETE(pRet);
-    }
-    return pRet;
-}
-
-CCParticleMeteor* CCParticleMeteor::create(const char *plistFile)
-{
-    CCParticleMeteor* pRet = new CCParticleMeteor();
-    if (pRet && pRet->initWithFile(plistFile))
     {
         pRet->autorelease();
     }
@@ -827,20 +743,6 @@ CCParticleSpiral* CCParticleSpiral::create()
     return pRet;
 }
 
-CCParticleSpiral* CCParticleSpiral::create(const char *plistFile)
-{
-    CCParticleSpiral* pRet = new CCParticleSpiral();
-    if (pRet && pRet->initWithFile(plistFile))
-    {
-        pRet->autorelease();
-    }
-    else
-    {
-        CC_SAFE_DELETE(pRet);
-    }
-    return pRet;
-}
-
 CCParticleSpiral* CCParticleSpiral::createWithTotalParticles(unsigned int numberOfParticles)
 {
     CCParticleSpiral* pRet = new CCParticleSpiral();
@@ -945,20 +847,6 @@ CCParticleExplosion* CCParticleExplosion::create()
 {
     CCParticleExplosion* pRet = new CCParticleExplosion();
     if (pRet && pRet->init())
-    {
-        pRet->autorelease();
-    }
-    else
-    {
-        CC_SAFE_DELETE(pRet);
-    }
-    return pRet;
-}
-
-CCParticleExplosion* CCParticleExplosion::create(const char *plistFile)
-{
-    CCParticleExplosion* pRet = new CCParticleExplosion();
-    if (pRet && pRet->initWithFile(plistFile))
     {
         pRet->autorelease();
     }
@@ -1082,20 +970,6 @@ CCParticleSmoke* CCParticleSmoke::create()
     return pRet;
 }
 
-CCParticleSmoke* CCParticleSmoke::create(const char *plistFile)
-{
-    CCParticleSmoke* pRet = new CCParticleSmoke();
-    if (pRet && pRet->initWithFile(plistFile))
-    {
-        pRet->autorelease();
-    }
-    else
-    {
-        CC_SAFE_DELETE(pRet);
-    }
-    return pRet;
-}
-
 CCParticleSmoke* CCParticleSmoke::createWithTotalParticles(unsigned int numberOfParticles)
 {
     CCParticleSmoke* pRet = new CCParticleSmoke();
@@ -1196,20 +1070,6 @@ CCParticleSnow* CCParticleSnow::create()
 {
     CCParticleSnow* pRet = new CCParticleSnow();
     if (pRet && pRet->init())
-    {
-        pRet->autorelease();
-    }
-    else
-    {
-        CC_SAFE_DELETE(pRet);
-    }
-    return pRet;
-}
-
-CCParticleSnow* CCParticleSnow::create(const char *plistFile)
-{
-    CCParticleSnow* pRet = new CCParticleSnow();
-    if (pRet && pRet->initWithFile(plistFile))
     {
         pRet->autorelease();
     }
@@ -1322,20 +1182,6 @@ CCParticleRain* CCParticleRain::create()
 {
     CCParticleRain* pRet = new CCParticleRain();
     if (pRet && pRet->init())
-    {
-        pRet->autorelease();
-    }
-    else
-    {
-        CC_SAFE_DELETE(pRet);
-    }
-    return pRet;
-}
-
-CCParticleRain* CCParticleRain::create(const char *plistFile)
-{
-    CCParticleRain* pRet = new CCParticleRain();
-    if (pRet && pRet->initWithFile(plistFile))
     {
         pRet->autorelease();
     }
