@@ -28,8 +28,12 @@ THE SOFTWARE.
 #include "ZipUtils.h"
 #include "ccMacros.h"
 #include "platform/CCFileUtils.h"
+#include "unzip.h"
+#include <map>
 
 NS_CC_BEGIN
+
+// --------------------- ZipUtils ---------------------
 
 // memory in iPhone is precious
 // Should buffer factor be 1.5 instead of 2 ?
@@ -278,6 +282,141 @@ int ZipUtils::ccInflateCCZFile(const char *path, unsigned char **out)
      }
 
      return len;
+}
+
+// --------------------- ZipFile ---------------------
+// from unzip.cpp
+#define UNZ_MAXFILENAMEINZIP 256
+
+class ZipFilePrivate
+{
+public:
+    unzFile zipFile;
+
+    // std::unordered_map is faster if available on the platform
+    typedef std::map<std::string, unz_file_pos> FileListContainer;
+    FileListContainer fileList;
+};
+
+ZipFile::ZipFile(const std::string &zipFile, const std::string &filter)
+    : m_data(new ZipFilePrivate)
+{
+    m_data->zipFile = unzOpen(zipFile.c_str());
+    if (m_data->zipFile)
+    {
+        setFilter(filter);
+    }
+}
+
+ZipFile::~ZipFile()
+{
+    if (m_data && m_data->zipFile)
+    {
+        unzClose(m_data->zipFile);
+    }
+    CC_SAFE_DELETE(m_data);
+}
+
+bool ZipFile::setFilter(const std::string &filter)
+{
+    bool ret = false;
+    do
+    {
+        CC_BREAK_IF(!m_data);
+        CC_BREAK_IF(!m_data->zipFile);
+
+        // clear existing file list
+        m_data->fileList.clear();
+
+        // go through all files and store position information about the required files
+        int err = unzGoToFirstFile(m_data->zipFile);
+        while (err == UNZ_OK)
+        {
+            unz_file_pos posInfo;
+            int posErr = unzGetFilePos(m_data->zipFile, &posInfo);
+            if (posErr == UNZ_OK)
+            {
+                // UNZ_MAXFILENAMEINZIP + 1 - it is done so in unzLocateFile
+                char szCurrentFileName[UNZ_MAXFILENAMEINZIP + 1];
+                int nameErr = unzGetCurrentFileInfo64(m_data->zipFile, NULL,
+                        szCurrentFileName, sizeof(szCurrentFileName) - 1,
+                        NULL, 0, NULL, 0);
+                std::string currentFileName = szCurrentFileName;
+                if (nameErr == UNZ_OK)
+                {
+                    // cache info about filtered files only (like 'assets/')
+                    if (filter.empty()
+                        || currentFileName.substr(0, filter.length()) == filter)
+                    {
+                        m_data->fileList[currentFileName] = posInfo;
+                    }
+                }
+            }
+            err = unzGoToNextFile(m_data->zipFile);
+        }
+        ret = true;
+
+    } while(false);
+
+    return ret;
+}
+
+bool ZipFile::fileExists(const std::string &fileName) const
+{
+    bool ret = false;
+    do
+    {
+        CC_BREAK_IF(!m_data);
+
+        ret = m_data->fileList.find(fileName) != m_data->fileList.end();
+    } while(false);
+
+    return ret;
+}
+
+unsigned char *ZipFile::getFileData(const std::string &fileName, unsigned long *pSize)
+{
+    unsigned char * pBuffer = NULL;
+    if (pSize)
+    {
+        *pSize = 0;
+    }
+
+    do
+    {
+        CC_BREAK_IF(!m_data->zipFile);
+        CC_BREAK_IF(fileName.empty());
+
+        ZipFilePrivate::FileListContainer::const_iterator it = m_data->fileList.find(fileName);
+        CC_BREAK_IF(it ==  m_data->fileList.end());
+
+        unz_file_pos filePos = it->second;
+
+        int nRet = unzGoToFilePos(m_data->zipFile, &filePos);
+        CC_BREAK_IF(UNZ_OK != nRet);
+
+        char szFilePathA[UNZ_MAXFILENAMEINZIP + 1];
+        unz_file_info FileInfo;
+        nRet = unzGetCurrentFileInfo(m_data->zipFile, &FileInfo,
+                szFilePathA, sizeof(szFilePathA) - 1, NULL, 0, NULL, 0);
+        CC_BREAK_IF(UNZ_OK != nRet);
+
+        nRet = unzOpenCurrentFile(m_data->zipFile);
+        CC_BREAK_IF(UNZ_OK != nRet);
+
+        pBuffer = new unsigned char[FileInfo.uncompressed_size];
+        int nSize = 0;
+        nSize = unzReadCurrentFile(m_data->zipFile, pBuffer, FileInfo.uncompressed_size);
+        CCAssert(nSize == 0 || nSize == (int)FileInfo.uncompressed_size, "the file size is wrong");
+
+        if (pSize)
+        {
+            *pSize = FileInfo.uncompressed_size;
+        }
+        unzCloseCurrentFile(m_data->zipFile);
+    } while (0);
+
+    return pBuffer;
 }
 
 NS_CC_END
