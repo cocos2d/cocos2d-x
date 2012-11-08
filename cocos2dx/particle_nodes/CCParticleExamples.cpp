@@ -27,11 +27,33 @@ THE SOFTWARE.
 #include "CCDirector.h"
 #include "textures/CCTextureCache.h"
 #include "support/CCPointExtension.h"
+#include "firePngData.h"
+#include "platform/CCImage.h"
 
 NS_CC_BEGIN
 //
 // ParticleFire
 //
+
+static CCTexture2D* getDefaultTexture()
+{
+    CCTexture2D* pTexture = NULL;
+    do 
+    {
+        bool bRet = false;
+        const char* key = "__firePngData";
+        pTexture = CCTextureCache::sharedTextureCache()->textureForKey(key);
+        CC_BREAK_IF(pTexture != NULL);
+
+        CCImage image;
+        bRet = image.initWithImageData((void*)__firePngData, sizeof(__firePngData), CCImage::kFmtPng);
+        CC_BREAK_IF(!bRet);
+
+        pTexture = CCTextureCache::sharedTextureCache()->addUIImage(&image, key);
+    } while (0);
+
+    return pTexture;
+}
 
 CCParticleFire* CCParticleFire::node()
 {
@@ -42,6 +64,20 @@ CCParticleFire* CCParticleFire::create()
 {
     CCParticleFire* pRet = new CCParticleFire();
     if (pRet && pRet->init())
+    {
+        pRet->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(pRet);
+    }
+    return pRet;
+}
+
+CCParticleFire* CCParticleFire::createWithTotalParticles(unsigned int numberOfParticles)
+{
+    CCParticleFire* pRet = new CCParticleFire();
+    if (pRet && pRet->initWithTotalParticles(numberOfParticles))
     {
         pRet->autorelease();
     }
@@ -113,6 +149,12 @@ bool CCParticleFire::initWithTotalParticles(unsigned int numberOfParticles)
         m_tEndColorVar.b = 0.0f;
         m_tEndColorVar.a = 0.0f;
 
+        CCTexture2D* pTexture = getDefaultTexture();
+        if (pTexture != NULL)
+        {
+            setTexture(pTexture);
+        }
+        
         // additive
         this->setBlendAdditive(true);
         return true;
@@ -131,6 +173,20 @@ CCParticleFireworks* CCParticleFireworks::create()
 {
     CCParticleFireworks* pRet = new CCParticleFireworks();
     if (pRet && pRet->init())
+    {
+        pRet->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(pRet);
+    }
+    return pRet;
+}
+
+CCParticleFireworks* CCParticleFireworks::createWithTotalParticles(unsigned int numberOfParticles)
+{
+    CCParticleFireworks* pRet = new CCParticleFireworks();
+    if (pRet && pRet->initWithTotalParticles(numberOfParticles))
     {
         pRet->autorelease();
     }
@@ -200,6 +256,11 @@ bool CCParticleFireworks::initWithTotalParticles(unsigned int numberOfParticles)
         m_fStartSizeVar = 2.0f;
         m_fEndSize = kCCParticleStartSizeEqualToEndSize;
 
+        CCTexture2D* pTexture = getDefaultTexture();
+        if (pTexture != NULL)
+        {
+            setTexture(pTexture);
+        }
         // additive
         this->setBlendAdditive(false);
         return true;
@@ -219,6 +280,20 @@ CCParticleSun* CCParticleSun::create()
 {
     CCParticleSun* pRet = new CCParticleSun();
     if (pRet && pRet->init())
+    {
+        pRet->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(pRet);
+    }
+    return pRet;
+}
+
+CCParticleSun* CCParticleSun::createWithTotalParticles(unsigned int numberOfParticles)
+{
+    CCParticleSun* pRet = new CCParticleSun();
+    if (pRet && pRet->initWithTotalParticles(numberOfParticles))
     {
         pRet->autorelease();
     }
@@ -293,6 +368,12 @@ bool CCParticleSun::initWithTotalParticles(unsigned int numberOfParticles)
         m_tEndColorVar.b = 0.0f;
         m_tEndColorVar.a = 0.0f;
 
+        CCTexture2D* pTexture = getDefaultTexture();
+        if (pTexture != NULL)
+        {
+            setTexture(pTexture);
+        }
+
         return true;
     }
     return false;
@@ -311,6 +392,20 @@ CCParticleGalaxy* CCParticleGalaxy::create()
 {
     CCParticleGalaxy* pRet = new CCParticleGalaxy();
     if (pRet && pRet->init())
+    {
+        pRet->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(pRet);
+    }
+    return pRet;
+}
+
+CCParticleGalaxy* CCParticleGalaxy::createWithTotalParticles(unsigned int numberOfParticles)
+{
+    CCParticleGalaxy* pRet = new CCParticleGalaxy();
+    if (pRet && pRet->initWithTotalParticles(numberOfParticles))
     {
         pRet->autorelease();
     }
@@ -385,6 +480,12 @@ bool CCParticleGalaxy::initWithTotalParticles(unsigned int numberOfParticles)
         m_tEndColorVar.b = 0.0f;
         m_tEndColorVar.a = 0.0f;
 
+        CCTexture2D* pTexture = getDefaultTexture();
+        if (pTexture != NULL)
+        {
+            setTexture(pTexture);
+        }
+
         // additive
         this->setBlendAdditive(true);
         return true;
@@ -405,6 +506,20 @@ CCParticleFlower* CCParticleFlower::create()
 {
     CCParticleFlower* pRet = new CCParticleFlower();
     if (pRet && pRet->init())
+    {
+        pRet->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(pRet);
+    }
+    return pRet;
+}
+
+CCParticleFlower* CCParticleFlower::createWithTotalParticles(unsigned int numberOfParticles)
+{
+    CCParticleFlower* pRet = new CCParticleFlower();
+    if (pRet && pRet->initWithTotalParticles(numberOfParticles))
     {
         pRet->autorelease();
     }
@@ -479,6 +594,12 @@ bool CCParticleFlower::initWithTotalParticles(unsigned int numberOfParticles)
         m_tEndColorVar.b = 0.0f;
         m_tEndColorVar.a = 0.0f;
 
+        CCTexture2D* pTexture = getDefaultTexture();
+        if (pTexture != NULL)
+        {
+            setTexture(pTexture);
+        }
+
         // additive
         this->setBlendAdditive(true);
         return true;
@@ -498,6 +619,20 @@ CCParticleMeteor * CCParticleMeteor::create()
 {
     CCParticleMeteor *pRet = new CCParticleMeteor();
     if (pRet && pRet->init())
+    {
+        pRet->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(pRet);
+    }
+    return pRet;
+}
+
+CCParticleMeteor* CCParticleMeteor::createWithTotalParticles(unsigned int numberOfParticles)
+{
+    CCParticleMeteor* pRet = new CCParticleMeteor();
+    if (pRet && pRet->initWithTotalParticles(numberOfParticles))
     {
         pRet->autorelease();
     }
@@ -572,6 +707,12 @@ bool CCParticleMeteor::initWithTotalParticles(unsigned int numberOfParticles)
         m_tEndColorVar.b = 0.0f;
         m_tEndColorVar.a = 0.0f;
 
+        CCTexture2D* pTexture = getDefaultTexture();
+        if (pTexture != NULL)
+        {
+            setTexture(pTexture);
+        }
+
         // additive
         this->setBlendAdditive(true);
         return true;
@@ -592,6 +733,20 @@ CCParticleSpiral* CCParticleSpiral::create()
 {
     CCParticleSpiral* pRet = new CCParticleSpiral();
     if (pRet && pRet->init())
+    {
+        pRet->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(pRet);
+    }
+    return pRet;
+}
+
+CCParticleSpiral* CCParticleSpiral::createWithTotalParticles(unsigned int numberOfParticles)
+{
+    CCParticleSpiral* pRet = new CCParticleSpiral();
+    if (pRet && pRet->initWithTotalParticles(numberOfParticles))
     {
         pRet->autorelease();
     }
@@ -666,6 +821,12 @@ bool CCParticleSpiral::initWithTotalParticles(unsigned int numberOfParticles)
         m_tEndColorVar.b = 0.5f;
         m_tEndColorVar.a = 0.0f;
 
+        CCTexture2D* pTexture = getDefaultTexture();
+        if (pTexture != NULL)
+        {
+            setTexture(pTexture);
+        }
+
         // additive
         this->setBlendAdditive(false);
         return true;
@@ -686,6 +847,20 @@ CCParticleExplosion* CCParticleExplosion::create()
 {
     CCParticleExplosion* pRet = new CCParticleExplosion();
     if (pRet && pRet->init())
+    {
+        pRet->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(pRet);
+    }
+    return pRet;
+}
+
+CCParticleExplosion* CCParticleExplosion::createWithTotalParticles(unsigned int numberOfParticles)
+{
+    CCParticleExplosion* pRet = new CCParticleExplosion();
+    if (pRet && pRet->initWithTotalParticles(numberOfParticles))
     {
         pRet->autorelease();
     }
@@ -759,6 +934,12 @@ bool CCParticleExplosion::initWithTotalParticles(unsigned int numberOfParticles)
         m_tEndColorVar.b = 0.5f;
         m_tEndColorVar.a = 0.0f;
 
+        CCTexture2D* pTexture = getDefaultTexture();
+        if (pTexture != NULL)
+        {
+            setTexture(pTexture);
+        }
+
         // additive
         this->setBlendAdditive(false);
         return true;
@@ -779,6 +960,20 @@ CCParticleSmoke* CCParticleSmoke::create()
 {
     CCParticleSmoke* pRet = new CCParticleSmoke();
     if (pRet && pRet->init())
+    {
+        pRet->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(pRet);
+    }
+    return pRet;
+}
+
+CCParticleSmoke* CCParticleSmoke::createWithTotalParticles(unsigned int numberOfParticles)
+{
+    CCParticleSmoke* pRet = new CCParticleSmoke();
+    if (pRet && pRet->initWithTotalParticles(numberOfParticles))
     {
         pRet->autorelease();
     }
@@ -849,6 +1044,12 @@ bool CCParticleSmoke::initWithTotalParticles(unsigned int numberOfParticles)
         m_tEndColorVar.b = 0.0f;
         m_tEndColorVar.a = 0.0f;
 
+        CCTexture2D* pTexture = getDefaultTexture();
+        if (pTexture != NULL)
+        {
+            setTexture(pTexture);
+        }
+
         // additive
         this->setBlendAdditive(false);
         return true;
@@ -869,6 +1070,20 @@ CCParticleSnow* CCParticleSnow::create()
 {
     CCParticleSnow* pRet = new CCParticleSnow();
     if (pRet && pRet->init())
+    {
+        pRet->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(pRet);
+    }
+    return pRet;
+}
+
+CCParticleSnow* CCParticleSnow::createWithTotalParticles(unsigned int numberOfParticles)
+{
+    CCParticleSnow* pRet = new CCParticleSnow();
+    if (pRet && pRet->initWithTotalParticles(numberOfParticles))
     {
         pRet->autorelease();
     }
@@ -943,6 +1158,12 @@ bool CCParticleSnow::initWithTotalParticles(unsigned int numberOfParticles)
         m_tEndColorVar.b = 0.0f;
         m_tEndColorVar.a = 0.0f;
 
+        CCTexture2D* pTexture = getDefaultTexture();
+        if (pTexture != NULL)
+        {
+            setTexture(pTexture);
+        }
+
         // additive
         this->setBlendAdditive(false);
         return true;
@@ -961,6 +1182,20 @@ CCParticleRain* CCParticleRain::create()
 {
     CCParticleRain* pRet = new CCParticleRain();
     if (pRet && pRet->init())
+    {
+        pRet->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(pRet);
+    }
+    return pRet;
+}
+
+CCParticleRain* CCParticleRain::createWithTotalParticles(unsigned int numberOfParticles)
+{
+    CCParticleRain* pRet = new CCParticleRain();
+    if (pRet && pRet->initWithTotalParticles(numberOfParticles))
     {
         pRet->autorelease();
     }
@@ -1034,6 +1269,12 @@ bool CCParticleRain::initWithTotalParticles(unsigned int numberOfParticles)
         m_tEndColorVar.g = 0.0f;
         m_tEndColorVar.b = 0.0f;
         m_tEndColorVar.a = 0.0f;
+
+        CCTexture2D* pTexture = getDefaultTexture();
+        if (pTexture != NULL)
+        {
+            setTexture(pTexture);
+        }
 
         // additive
         this->setBlendAdditive(false);
