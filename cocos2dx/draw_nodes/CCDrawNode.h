@@ -69,7 +69,7 @@ public:
     void drawSegment(const CCPoint &from, const CCPoint &to, float radius, const ccColor4F &color) const;
     
     /** draw a polygon with a fill color and line color */
-    void drawPolygon(const CCPoint *verts, unsigned int count, const ccColor4F &fillColor, float borderWidth, const ccColor4F &borderColor) const;
+    void drawPolygon(CCPoint *verts, unsigned int count, const ccColor4F &fillColor, float borderWidth, const ccColor4F &borderColor) const;
     
     /** Clear the geometry in the node's buffer. */
     void clear();
@@ -77,8 +77,10 @@ public:
     ccBlendFunc getBlendFunc() const;
     void setBlendFunc(const ccBlendFunc &blendFunc);
     
-private:
+protected:
     CCDrawNode();
+    
+private:
     void ensureCapacity(unsigned int count);
     void render();
 };

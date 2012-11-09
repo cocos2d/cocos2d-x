@@ -280,6 +280,8 @@
 		1551A871158F2ADF00E66CFE /* CCTouchHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1551A626158F2ADE00E66CFE /* CCTouchHandler.cpp */; };
 		1551A872158F2ADF00E66CFE /* CCTouchHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A627158F2ADE00E66CFE /* CCTouchHandler.h */; };
 		1551A874158F2B4700E66CFE /* cocos2dx-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 1551A873158F2B4700E66CFE /* cocos2dx-Prefix.pch */; };
+		15B64960164CBA3000E680CD /* CCPhysicsDebugNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 15B6495F164CBA3000E680CD /* CCPhysicsDebugNode.h */; };
+		15B64962164CF00000E680CD /* CCPhysicsDebugNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15B64961164CF00000E680CD /* CCPhysicsDebugNode.cpp */; };
 		15FBEE5C164B87F2008CB2C3 /* CCClippingNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 15FBEE5B164B87F2008CB2C3 /* CCClippingNode.h */; };
 		15FBEE5F164B8B5B008CB2C3 /* CCClippingNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15FBEE5E164B8B5B008CB2C3 /* CCClippingNode.cpp */; };
 		15FBEE68164BBA98008CB2C3 /* CCDrawingPrimitives.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15FBEE66164BBA98008CB2C3 /* CCDrawingPrimitives.cpp */; };
@@ -567,6 +569,8 @@
 		1551A626158F2ADE00E66CFE /* CCTouchHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTouchHandler.cpp; sourceTree = "<group>"; };
 		1551A627158F2ADE00E66CFE /* CCTouchHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTouchHandler.h; sourceTree = "<group>"; };
 		1551A873158F2B4700E66CFE /* cocos2dx-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "cocos2dx-Prefix.pch"; sourceTree = "<group>"; };
+		15B6495F164CBA3000E680CD /* CCPhysicsDebugNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsDebugNode.h; sourceTree = "<group>"; };
+		15B64961164CF00000E680CD /* CCPhysicsDebugNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPhysicsDebugNode.cpp; sourceTree = "<group>"; };
 		15FBEE5B164B87F2008CB2C3 /* CCClippingNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCClippingNode.h; sourceTree = "<group>"; };
 		15FBEE5E164B8B5B008CB2C3 /* CCClippingNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCClippingNode.cpp; sourceTree = "<group>"; };
 		15FBEE66164BBA98008CB2C3 /* CCDrawingPrimitives.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCDrawingPrimitives.cpp; sourceTree = "<group>"; };
@@ -640,6 +644,7 @@
 				1551A42A158F2ADE00E66CFE /* menu_nodes */,
 				1551A42F158F2ADE00E66CFE /* misc_nodes */,
 				1551A436158F2ADE00E66CFE /* particle_nodes */,
+				15B6495D164CB9DC00E680CD /* physics_nodes */,
 				1551A43F158F2ADE00E66CFE /* platform */,
 				1551A5C0158F2ADE00E66CFE /* script_support */,
 				1551A5C3158F2ADE00E66CFE /* shaders */,
@@ -1149,6 +1154,15 @@
 			path = touch_dispatcher;
 			sourceTree = "<group>";
 		};
+		15B6495D164CB9DC00E680CD /* physics_nodes */ = {
+			isa = PBXGroup;
+			children = (
+				15B6495F164CBA3000E680CD /* CCPhysicsDebugNode.h */,
+				15B64961164CF00000E680CD /* CCPhysicsDebugNode.cpp */,
+			);
+			path = physics_nodes;
+			sourceTree = "<group>";
+		};
 		15FBEE65164BBA97008CB2C3 /* draw_nodes */ = {
 			isa = PBXGroup;
 			children = (
@@ -1325,6 +1339,7 @@
 				15FBEE5C164B87F2008CB2C3 /* CCClippingNode.h in Headers */,
 				15FBEE69164BBA98008CB2C3 /* CCDrawingPrimitives.h in Headers */,
 				15FBEE6B164BBB20008CB2C3 /* CCDrawNode.h in Headers */,
+				15B64960164CBA3000E680CD /* CCPhysicsDebugNode.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1501,6 +1516,7 @@
 				15FBEE5F164B8B5B008CB2C3 /* CCClippingNode.cpp in Sources */,
 				15FBEE68164BBA98008CB2C3 /* CCDrawingPrimitives.cpp in Sources */,
 				15FBEE6D164BBF77008CB2C3 /* CCDrawNode.cpp in Sources */,
+				15B64962164CF00000E680CD /* CCPhysicsDebugNode.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
