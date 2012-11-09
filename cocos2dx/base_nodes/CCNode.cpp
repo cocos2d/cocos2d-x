@@ -82,7 +82,7 @@ CCNode::CCNode(void)
 , m_nScriptHandler(0)
 , m_pShaderProgram(NULL)
 , m_nOrderOfArrival(0)
-, m_glServerState(CC_GL_BLEND)
+, m_glServerState(ccGLServerState(0))
 , m_bReorderChildDirty(false)
 {
     // set default scheduler and actionManager

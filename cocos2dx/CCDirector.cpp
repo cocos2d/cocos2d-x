@@ -403,7 +403,6 @@ void CCDirector::setAlphaBlending(bool bOn)
 {
     if (bOn)
     {
-        ccGLEnable(CC_GL_BLEND);
         ccGLBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
     }
     else

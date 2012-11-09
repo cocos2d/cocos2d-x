@@ -69,6 +69,9 @@ THE SOFTWARE.
 #include "cocoa/CCNS.h"
 #include "cocoa/CCZone.h"
 
+// draw nodes
+#include "draw_nodes/CCDrawingPrimitives.h"
+
 // effects
 #include "effects/CCGrabber.h"
 #include "effects/CCGrid.h"
