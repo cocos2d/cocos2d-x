@@ -480,7 +480,7 @@ void CCTexture2D::drawAtPoint(const CCPoint& point)
 
     ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_TexCoords );
     m_pShaderProgram->use();
-    m_pShaderProgram->setUniformForModelViewProjectionMatrix();
+    m_pShaderProgram->setUniformsForBuiltins();
 
     ccGLBindTexture2D( m_uName );
 
@@ -506,7 +506,7 @@ void CCTexture2D::drawInRect(const CCRect& rect)
 
     ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_TexCoords );
     m_pShaderProgram->use();
-    m_pShaderProgram->setUniformForModelViewProjectionMatrix();
+    m_pShaderProgram->setUniformsForBuiltins();
 
     ccGLBindTexture2D( m_uName );
 

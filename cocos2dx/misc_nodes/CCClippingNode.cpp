@@ -30,6 +30,8 @@
 #include "shaders/CCGLProgram.h"
 #include "shaders/CCShaderCache.h"
 #include "CCDirector.h"
+#include "support/CCPointExtension.h"
+#include "draw_nodes/CCDrawingPrimitives.h"
 
 NS_CC_BEGIN
 
@@ -356,6 +358,38 @@ void CCClippingNode::visit()
     
     // we are done using this layer, decrement
     layer--;
+}
+
+CCNode* CCClippingNode::getStencil() const
+{
+    return m_pStencil;
+}
+
+void CCClippingNode::setStencil(CCNode *pStencil)
+{
+    CC_SAFE_RELEASE(m_pStencil);
+    m_pStencil = pStencil;
+    CC_SAFE_RETAIN(m_pStencil);
+}
+
+GLfloat CCClippingNode::getAlphaThreshold() const
+{
+    return m_fAlphaThreshold;
+}
+
+void CCClippingNode::setAlphaThreshold(GLfloat fAlphaThreshold)
+{
+    m_fAlphaThreshold = fAlphaThreshold;
+}
+
+bool CCClippingNode::isInverted() const
+{
+    return m_bInverted;
+}
+
+void CCClippingNode::setInverted(bool bInverted)
+{
+    m_bInverted = bInverted;
 }
 
 NS_CC_END

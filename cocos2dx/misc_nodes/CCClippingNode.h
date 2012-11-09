@@ -76,7 +76,7 @@ public:
      The stencil node will be retained.
      This default to nil.
      */
-    CCNode* getStencil();
+    CCNode* getStencil() const;
     void setStencil(CCNode *pStencil);
     
     /** The alpha threshold.
@@ -84,15 +84,15 @@ public:
      Should be a float between 0 and 1.
      This default to 1 (so alpha test is disabled).
      */
-    GLfloat getAlphaThreshold();
+    GLfloat getAlphaThreshold() const;
     void setAlphaThreshold(GLfloat fAlphaThreshold);
     
     /** Inverted. If this is set to YES,
      the stencil is inverted, so the content is drawn where the stencil is NOT drawn.
      This default to NO.
      */
-    bool isInverted();
-    bool setInverted(bool bInverted);
+    bool isInverted() const;
+    void setInverted(bool bInverted);
     
 private:
     CCClippingNode();

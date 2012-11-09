@@ -88,7 +88,7 @@ do { \
     CCAssert(getShaderProgram(), "No shader program set for this node"); \
     { \
         getShaderProgram()->use(); \
-        getShaderProgram()->setUniformForModelViewProjectionMatrix(); \
+        getShaderProgram()->setUniformsForBuiltins(); \
     } \
 } while(0)
 
