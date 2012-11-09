@@ -33,10 +33,8 @@ NS_CC_BEGIN
 #include "platform/CCCommon.h"
 #include "jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
 
-// record the resource path
-static string s_strResourcePath = "";
-    
 static CCFileUtils* s_pFileUtils = NULL;
+// record the zip on the resource path
 static ZipFile *s_pZipFile = NULL;
 
 CCFileUtils* CCFileUtils::sharedFileUtils()
@@ -44,8 +42,8 @@ CCFileUtils* CCFileUtils::sharedFileUtils()
     if (s_pFileUtils == NULL)
     {
         s_pFileUtils = new CCFileUtils();
-        s_strResourcePath = getApkPath();
-        s_pZipFile = new ZipFile(s_strResourcePath, "assets/");
+        std::string resourcePath = getApkPath();
+        s_pZipFile = new ZipFile(resourcePath, "assets/");
     }
     return s_pFileUtils;
 }
@@ -57,6 +55,7 @@ void CCFileUtils::purgeFileUtils()
         s_pFileUtils->purgeCachedEntries();
     }
 
+    CC_SAFE_DELETE(s_pZipFile);
     CC_SAFE_DELETE(s_pFileUtils);
 }
 
