@@ -157,7 +157,7 @@ void BugsTestBaseLayer::onEnter()
     CCMenuItemFont::setFontSize(24);
     CCMenuItemFont* pMainItem = CCMenuItemFont::create("Back", this,
         menu_selector(BugsTestBaseLayer::backCallback));
-    pMainItem->setPosition(ccp(s.width - 50, 25));
+    pMainItem->setPosition(ccp(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
     CCMenu* pMenu = CCMenu::create(pMainItem, NULL);
     pMenu->setPosition( CCPointZero );
     addChild(pMenu);
@@ -165,7 +165,7 @@ void BugsTestBaseLayer::onEnter()
 
 void BugsTestBaseLayer::backCallback(CCObject* pSender)
 {
-    CCDirector::sharedDirector()->enableRetinaDisplay(false);
+//    CCDirector::sharedDirector()->enableRetinaDisplay(false);
     BugsTestScene* pScene = new BugsTestScene();
     pScene->runThisTest();
     pScene->autorelease();

@@ -1,6 +1,6 @@
 #include "CCMenuItemLoader.h"
 
-USING_NS_CC;
+
 
 #define PROPERTY_BLOCK "block"
 #define PROPERTY_ISENABLED "isEnabled"

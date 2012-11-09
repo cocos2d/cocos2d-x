@@ -329,33 +329,28 @@ CCLayer* restartEffectAdvanceAction()
 void EffectAdvanceTextLayer::onEnter(void)
 {
     CCLayer::onEnter();
-    float x,y;
-    
-    CCSize size = CCDirector::sharedDirector()->getWinSize();
-    x = size.width;
-    y = size.height;
     
     CCSprite *bg = CCSprite::create("Images/background3.png");
     addChild(bg, 0, kTagBackground);
-    bg->setPosition( ccp(x/2,y/2) );
+    bg->setPosition( VisibleRect::center() );
     
     CCSprite* grossini = CCSprite::create("Images/grossinis_sister2.png");
     bg->addChild(grossini, 1, kTagSprite1);
-    grossini->setPosition( ccp(x/3.0f,200) );
+    grossini->setPosition( ccp(VisibleRect::left().x+VisibleRect::getVisibleRect().size.width/3.0f, VisibleRect::bottom().y+ 200) );
     CCActionInterval* sc = CCScaleBy::create(2, 5);
     CCActionInterval* sc_back = sc->reverse();
     grossini->runAction( CCRepeatForever::create( (CCActionInterval*)(CCSequence::create(sc, sc_back, NULL)) ) );
 
     CCSprite* tamara = CCSprite::create("Images/grossinis_sister1.png");
     bg->addChild(tamara, 1, kTagSprite2);
-    tamara->setPosition( ccp(2*x/3.0f,200) );
+    tamara->setPosition( ccp(VisibleRect::left().x+2*VisibleRect::getVisibleRect().size.width/3.0f,VisibleRect::bottom().y+200) );
     CCActionInterval* sc2 = CCScaleBy::create(2, 5);
     CCActionInterval* sc2_back = sc2->reverse();
     tamara->runAction( CCRepeatForever::create( (CCActionInterval*)(CCSequence::create(sc2, sc2_back, NULL)) ) );
     
     CCLabelTTF* label = CCLabelTTF::create(title().c_str(), "Marker Felt", 28);
     
-    label->setPosition( ccp(x/2,y-80) );
+    label->setPosition( ccp(VisibleRect::center().x,VisibleRect::top().y-80) );
     addChild(label);
     label->setTag( kTagLabel );
 
@@ -364,7 +359,7 @@ void EffectAdvanceTextLayer::onEnter(void)
     {
         CCLabelTTF* l = CCLabelTTF::create(strSubtitle.c_str(), "Thonburi", 16);
         addChild(l, 101);
-        l->setPosition( ccp(size.width/2, size.height-80) );
+        l->setPosition( ccp(VisibleRect::center().x,VisibleRect::top().y-80) );
     }    
 
     CCMenuItemImage *item1 = CCMenuItemImage::create("Images/b1.png", "Images/b2.png", this, menu_selector(EffectAdvanceTextLayer::backCallback) );
@@ -374,9 +369,9 @@ void EffectAdvanceTextLayer::onEnter(void)
     CCMenu *menu = CCMenu::create(item1, item2, item3, NULL);
 
     menu->setPosition(CCPointZero);
-    item1->setPosition(ccp(size.width/2 - item2->getContentSize().width*2, item2->getContentSize().height/2));
-    item2->setPosition(ccp(size.width/2, item2->getContentSize().height/2));
-    item3->setPosition(ccp(size.width/2 + item2->getContentSize().width*2, item2->getContentSize().height/2));
+    item1->setPosition(ccp(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
+    item2->setPosition(ccp(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2));
+    item3->setPosition(ccp(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
     
     addChild(menu, 1);    
 }

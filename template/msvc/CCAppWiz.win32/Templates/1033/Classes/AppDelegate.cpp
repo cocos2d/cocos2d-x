@@ -31,9 +31,6 @@ bool AppDelegate::applicationDidFinishLaunching()
     CCDirector *pDirector = CCDirector::sharedDirector();
     pDirector->setOpenGLView(CCEGLView::sharedOpenGLView());
 
-    // enable High Resource Mode(2x, such as iphone4) and maintains low resource on other devices.
-//     pDirector->enableRetinaDisplay(true);
-
     // turn on display FPS
     pDirector->setDisplayStats(true);
 
@@ -42,7 +39,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 
 [! if CC_USE_LUA]
     // register lua engine
-    CCScriptEngineProtocol* pEngine = CCLuaEngine::engine();
+    CCLuaEngine* pEngine = CCLuaEngine::defaultEngine();
     CCScriptEngineManager::sharedManager()->setScriptEngine(pEngine);
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)

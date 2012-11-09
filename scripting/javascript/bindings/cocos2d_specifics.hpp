@@ -4,6 +4,31 @@
 #include "jsapi.h"
 #include "ScriptingCore.h"
 
+class JSScheduleWrapper;
+
+typedef struct jsScheduleFunc_proxy {
+    void * ptr;
+    JSScheduleWrapper *obj;
+    UT_hash_handle hh;
+} schedFunc_proxy_t;
+
+typedef struct jsScheduleTarget_proxy {
+    void * ptr;
+    CCArray *obj;
+    UT_hash_handle hh;
+} schedTarget_proxy_t;
+
+
+typedef struct jsCallFuncTarget_proxy {
+    void * ptr;
+    CCArray *obj;
+    UT_hash_handle hh;
+} callfuncTarget_proxy_t;
+
+extern schedFunc_proxy_t *_schedFunc_target_ht;
+extern schedTarget_proxy_t *_schedTarget_native_ht;
+
+extern callfuncTarget_proxy_t *_callfuncTarget_native_ht;
 
 /**
  * You don't need to manage the returned pointer. They live for the whole life of
@@ -12,14 +37,14 @@
 template <class T>
 inline js_type_class_t *js_get_type_from_native(T* native_obj) {
     js_type_class_t *typeProxy;
-    long typeId = getHashCodeByString(typeid(*native_obj).name());
+    long typeId = cocos2d::getHashCodeByString(typeid(*native_obj).name());
     HASH_FIND_INT(_js_global_type_ht, &typeId, typeProxy);
     if (!typeProxy) {
-        TypeInfo *typeInfo = dynamic_cast<TypeInfo *>(native_obj);
+        cocos2d::TypeInfo *typeInfo = dynamic_cast<cocos2d::TypeInfo *>(native_obj);
         if (typeInfo) {
             typeId = typeInfo->getClassTypeInfo();
         } else {
-            typeId = getHashCodeByString(typeid(T).name());
+            typeId = cocos2d::getHashCodeByString(typeid(T).name());
         }
         HASH_FIND_INT(_js_global_type_ht, &typeId, typeProxy);
     }
@@ -54,36 +79,88 @@ inline js_proxy_t *js_get_or_create_proxy(JSContext *cx, T *native_obj) {
 jsval anonEvaluate(JSContext *cx, JSObject *thisObj, const char* string);
 void register_cocos2dx_js_extensions(JSContext* cx, JSObject* obj);
 
-class JSCallFunc: public CCObject {
+
+class JSCallbackWrapper: public CCObject {
 public:
-    JSCallFunc(jsval func): jsCallback(func) {}
-    JSCallFunc() { extraData = NULL; }
-    ~JSCallFunc(){}
+    JSCallbackWrapper() : jsCallback(JSVAL_VOID), jsThisObj(JSVAL_VOID), extraData(JSVAL_VOID) {}
+    virtual ~JSCallbackWrapper(void) {}
     void setJSCallbackFunc(jsval obj);
     void setJSCallbackThis(jsval thisObj);
-    void setExtraDataField(jsval data);
-    static void dumpNamedRoot(const char *name, void *addr, JSGCRootType type, void *data);
+    void setJSExtraData(jsval data);
     
-    void callbackFunc(CCNode *node) const {
-        
-        js_proxy_t *p;
-        JS_GET_PROXY(p, node);
-        jsval retObj = OBJECT_TO_JSVAL(p->obj);
-        if(extraData != NULL) {
-            ScriptingCore::getInstance()->executeJSFunctionWithThisObj(jsThisObj,
-                                                                   jsCallback,
-                                                                   *extraData);
-        } else {
-            ScriptingCore::getInstance()->executeJSFunctionWithThisObj(jsThisObj,
-                                                                       jsCallback,
-                                                                       retObj);
-        } 
-    }
-private:
+protected:
     jsval jsCallback;
     jsval jsThisObj;
-    jsval *extraData;
+    jsval extraData;
 };
+
+
+class JSCCBAnimationWrapper: public JSCallbackWrapper {
+public:
+    JSCCBAnimationWrapper() {}
+    virtual ~JSCCBAnimationWrapper() {}
+    
+    void animationCompleteCallback() const {
+        
+        JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
+        jsval retval = JSVAL_NULL;
+        
+        if(!JSVAL_IS_VOID(jsCallback)  && !JSVAL_IS_VOID(jsThisObj)) {
+            JS_CallFunctionValue(cx, JSVAL_TO_OBJECT(jsThisObj), jsCallback, 0, NULL, &retval);
+        }
+    }
+    
+};
+
+
+class JSCallFuncWrapper: public JSCallbackWrapper {
+public:
+    JSCallFuncWrapper() {}
+    virtual ~JSCallFuncWrapper(void) {
+        return;
+    }
+
+    static void setTargetForNativeNode(CCNode *pNode, JSCallFuncWrapper *target);
+    static CCArray * getTargetForNativeNode(CCNode *pNode);
+
+    void callbackFunc(CCNode *node) const;
+};
+
+
+class JSScheduleWrapper: public JSCallbackWrapper {
+    
+public:
+    JSScheduleWrapper() {}
+    virtual ~JSScheduleWrapper() {
+        return;
+    }
+
+    static void setTargetForSchedule(jsval sched, JSScheduleWrapper *target);
+    static JSScheduleWrapper * getTargetForSchedule(jsval sched);
+    static void setTargetForNativeNode(CCNode *pNode, JSScheduleWrapper *target);
+    static CCArray * getTargetForNativeNode(CCNode *pNode);
+
+    void pause();
+    
+    void scheduleFunc(float dt) const {
+        
+        jsval retval = JSVAL_NULL, data = DOUBLE_TO_JSVAL(dt);
+        JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
+        
+        JSBool ok = JS_AddValueRoot(cx, &data);
+        if(!ok) {
+            return;
+        }
+        
+        if(!JSVAL_IS_VOID(jsCallback)  && !JSVAL_IS_VOID(jsThisObj)) {
+            JS_CallFunctionValue(cx, JSVAL_TO_OBJECT(jsThisObj), jsCallback, 1, &data, &retval);
+        }
+        
+        JS_RemoveValueRoot(cx, &data);
+        
+    }
+};
+
 
 class JSTouchDelegate: public CCTouchDelegate, public CCNode {
     public:
@@ -106,7 +183,7 @@ class JSTouchDelegate: public CCTouchDelegate, public CCNode {
     void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent) {
         CC_UNUSED_PARAM(pTouch); 
         CC_UNUSED_PARAM(pEvent);
-        jsval retval; 
+        //jsval retval;
         ScriptingCore::getInstance()->executeCustomTouchEvent(CCTOUCHMOVED, 
                                                               pTouch, _mObj);
     }

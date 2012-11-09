@@ -1,5 +1,6 @@
 /*
- * CCControlButton.h
+ * Copyright (c) 2012 cocos2d-x.org
+ * http://www.cocos2d-x.org
  *
  * Copyright 2011 Yannick Loriot. All rights reserved.
  * http://yannickloriot.com
@@ -35,6 +36,12 @@
 
 NS_CC_EXT_BEGIN
 
+/* Define the button margin for Left/Right edge */
+#define CCControlButtonMarginLR 8 // px
+/* Define the button margin for Top/Bottom edge */
+#define CCControlButtonMarginTB 2 // px
+
+
 /**
  * @addtogroup GUI
  * @{
@@ -46,6 +53,7 @@ NS_CC_EXT_BEGIN
 class CCControlButton : public CCControl
 {        
 public:
+    CCControlButton();
     virtual ~CCControlButton();
     virtual void needsLayout(void);
 
@@ -56,42 +64,51 @@ protected:
     // CCRGBAProtocol
     //bool m_bIsOpacityModifyRGB;
 
+    /** The current title that is displayed on the button. */
+    CC_SYNTHESIZE_READONLY(CCString*, m_currentTitle, CurrentTitle);
+
+    /** The current color used to display the title. */
+    CC_SYNTHESIZE_READONLY_PASS_BY_REF(ccColor3B, m_currentTitleColor, CurrentTitleColor);
+
     /** Adjust the background image. YES by default. If the property is set to NO, the 
     background will use the prefered size of the background image. */
-    CC_PROPERTY(bool, m_adjustBackgroundImage, AdjustBackgroundImage); 
+    bool doesAdjustBackgroundImage();
+    void setAdjustBackgroundImage(bool adjustBackgroundImage);
+    bool m_doesAdjustBackgroundImage;
 
-    /** Adjust the button zooming on touchdown. Default value is YES. */
-    CC_PROPERTY(bool, m_zoomOnTouchDown, ZoomOnTouchDown);
+    /** The current title label. */
+    CC_SYNTHESIZE_RETAIN(CCNode*, m_titleLabel, TitleLabel);
+
+    /** The current background sprite. */
+    CC_SYNTHESIZE_RETAIN(CCScale9Sprite*, m_backgroundSprite, BackgroundSprite);
 
     /** The prefered size of the button, if label is larger it will be expanded. */
     CC_PROPERTY(CCSize, m_preferredSize, PreferredSize);
 
+    /** Adjust the button zooming on touchdown. Default value is YES. */
+    CC_PROPERTY(bool, m_zoomOnTouchDown, ZoomOnTouchDown);
+
     CC_PROPERTY(CCPoint, m_labelAnchorPoint, LabelAnchorPoint);
 
-    /** The current title that is displayed on the button. */
-    CC_SYNTHESIZE_READONLY(CCString*, m_currentTitle, CurrentTitle); 
-    /** The current color used to display the title. */
-    CC_SYNTHESIZE_READONLY_PASS_BY_REF(ccColor3B, m_currentTitleColor, CurrentTitleColor);
-    /** The current title label. */
-    //CC_PROPERTY(CCNode*, m_titleLabel, TitleLabel); 
-    CCNode* m_titleLabel;
-    /** The current background sprite. */
-    //CC_PROPERTY(CCScale9Sprite*, m_backgroundSprite, BackgroundSprite);
-    CCScale9Sprite* m_backgroundSprite;
-
     /* Override setter to affect a background sprite too */
-    CC_PROPERTY(GLubyte, m_cOpacity, Opacity);
+    virtual GLubyte getOpacity(void);
+    virtual void setOpacity(GLubyte var);
     
     /** Flag to know if the button is currently pushed.  */
-    CC_SYNTHESIZE_READONLY(bool, pushed, IsPushed); 
+protected:
+    bool m_isPushed;
+    bool m_bParentInited;
+public:
+    bool isPushed() { return m_isPushed; }
+
     // <CCControlState, CCString*>
-    CCDictionary* m_titleDispatchTable;
+    CC_SYNTHESIZE_RETAIN(CCDictionary*, m_titleDispatchTable, TitleDispatchTable);
     // <CCControlState, CCColor3bObject*>
-    CCDictionary* m_titleColorDispatchTable;
+    CC_SYNTHESIZE_RETAIN(CCDictionary*, m_titleColorDispatchTable, TitleColorDispatchTable);
     // <CCControlState, CCNode*>
-    CCDictionary* m_titleLabelDispatchTable;
+    CC_SYNTHESIZE_RETAIN(CCDictionary*, m_titleLabelDispatchTable, TitleLabelDispatchTable);
     // <CCControlState, CCScale9Sprite*>
-    CCDictionary* m_backgroundSpriteDispatchTable;
+    CC_SYNTHESIZE_RETAIN(CCDictionary*, m_backgroundSpriteDispatchTable, BackgroundSpriteDispatchTable);
 
     /* Define the button margin for Top/Bottom edge */
     CC_SYNTHESIZE_READONLY(int, m_marginV, VerticalMargin);

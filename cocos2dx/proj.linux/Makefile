@@ -1,8 +1,8 @@
 CC      = gcc
 CXX     = g++
 TARGET	= libcocos2d.so
-CCFLAGS = -Wall -g -fPIC #-O2 
-CXXFLAGS = -Wall -g -fPIC #-O2 
+CCFLAGS = -Wall -fPIC
+CXXFLAGS = -Wall -fPIC
 VISIBILITY = 
 
 LIBS = 
@@ -23,10 +23,14 @@ INCLUDES = -I.. \
 			-I../platform/third_party/linux/libxml2 \
 			-I../platform/third_party/linux/libpng \
 			-I../platform/third_party/linux/libjpeg \
-			-I../platform/third_party/linux/libtiff/include \
-			-I../platform/third_party/linux/ \
+			-I../platform/third_party/linux/libtiff/include
 
-#			-I../platform/third_party/linux/libpng \
+LBITS := $(shell getconf LONG_BIT)
+ifeq ($(LBITS),64)
+INCLUDES += -I$(COCOS2DX_PATH)/platform/third_party/linux/include64
+else
+INCLUDES += -I$(COCOS2DX_PATH)/platform/third_party/linux
+endif
 
 DEFINES = -DLINUX
 DEFINES += -D__CC_PLATFORM_FILEUTILS_CPP__
@@ -144,6 +148,13 @@ OBJECTS = ../actions/CCAction.o \
 					../../extensions/CCBReader/CCLayerGradientLoader.o \
 					../../extensions/CCBReader/CCSpriteLoader.o \
 					../../extensions/CCBReader/CCLayerLoader.o \
+                    ../../extensions/CCBReader/CCBAnimationManager.o \
+                    ../../extensions/CCBReader/CCBKeyframe.o \
+                    ../../extensions/CCBReader/CCBSequence.o \
+                    ../../extensions/CCBReader/CCBSequenceProperty.o \
+                    ../../extensions/CCBReader/CCBValue.o \
+                    ../../extensions/CCBReader/CCData.o \
+                    ../../extensions/CCBReader/CCNode+CCBRelativePositioning.o \
 					../../extensions/GUI/CCScrollView/CCScrollView.o \
 					../../extensions/GUI/CCScrollView/CCSorting.o \
 					../../extensions/GUI/CCScrollView/CCTableView.o \
@@ -157,9 +168,9 @@ OBJECTS = ../actions/CCAction.o \
 					../../extensions/GUI/CCControlExtension/CCControlSwitch.o \
 					../../extensions/GUI/CCControlExtension/CCControlUtils.o \
 					../../extensions/GUI/CCControlExtension/CCInvocation.o \
-					../../extensions/GUI/CCControlExtension/CCMenuPassive.o \
 					../../extensions/GUI/CCControlExtension/CCScale9Sprite.o \
-					../../extensions/GUI/CCControlExtension/CCSpacer.o \
+					../../extensions/GUI/CCControlExtension/CCControlPotentiometer.o \
+					../../extensions/GUI/CCControlExtension/CCControlStepper.o \
 					../../extensions/network/HttpClient.o \
 					../kazmath/src/aabb.o \
 					../kazmath/src/plane.o \
@@ -184,7 +195,6 @@ OBJECTS = ../actions/CCAction.o \
 #					../../extensions/CCListView/CCListView.o \
 #					../../extensions/GUI/CCTextureWatcher/CCTextureWatcher.o \
 
-LBITS := $(shell getconf LONG_BIT)
 ifeq ($(LBITS),64)
 STATICLIBS_DIR = ../platform/third_party/linux/libraries/lib64
 else
@@ -198,21 +208,30 @@ STATICLIBS = $(STATICLIBS_DIR)/libfreetype.a \
 				$(STATICLIBS_DIR)/libtiff.a \
 
 SHAREDLIBS = 
-SHAREDLIBS += -lglfw -lGL -lcurl
+SHAREDLIBS += -lglfw -lGL -lcurl -lfontconfig
 SHAREDLIBS += -Wl,-rpath,../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib
 SHAREDLIBS += -L../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib -lGLEW
 
+debug: CCFLAGS += -g3 -O0
+debug: CXXFLAGS += -g3 -O0
+debug: DEFINES += -DDEBUG
+debug: $(TARGET)
+
+release: CCFLAGS += -O3
+release: CXXFLAGS += -O3
+release: DEFINES += -DNDEBUG
+release: $(TARGET)
 
 ####### Build rules
 $(TARGET): $(OBJECTS) 
 	$(CXX) $(CXXFLAGS) $(INCLUDES) $(DEFINES) $(OBJECTS) -shared -o $(TARGET) $(SHAREDLIBS) $(STATICLIBS) $(LIBS)
-	
+
 ####### Compile
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) $(INCLUDES) $(DEFINES) $(VISIBILITY) -c $< -o $@
 
 %.o: %.c
 	$(CC) $(CCFLAGS) $(INCLUDES) $(DEFINES) $(VISIBILITY) -c $< -o $@
-		
+
 clean: 
 	rm -f $(OBJECTS) $(TARGET) core

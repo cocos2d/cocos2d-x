@@ -127,7 +127,7 @@ public:
             GetObjectA(m_hFont,  sizeof(tOldFont), &tOldFont);
 
             if (tOldFont.lfHeight == tNewFont.lfHeight
-                && ! strcpy(tOldFont.lfFaceName, tNewFont.lfFaceName))
+                && 0 == strcmp(tOldFont.lfFaceName, tNewFont.lfFaceName))
             {
                 // already has the font 
                 bRet = true;
@@ -152,7 +152,10 @@ public:
 						pwszBuffer = NULL;
 					}
 				}
-				fontPath.size()>0?(m_curFontPath = fontPath):(m_curFontPath.clear());
+				if (fontPath.size() > 0)
+					m_curFontPath = fontPath;
+				else
+					m_curFontPath.clear();
 				// register temp font
 				if (m_curFontPath.size() > 0)
 				{

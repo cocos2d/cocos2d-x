@@ -5,7 +5,7 @@
 	<key>version</key>
 	<integer>1</integer>
 	<key>textureFilename</key>
-	<string>fonts/tuffy_bold_italic-charmap.png</string>
+	<string>tuffy_bold_italic-charmap.png</string>
 	<key>itemHeight</key>
 	<integer>128</integer>
 	<key>itemWidth</key>

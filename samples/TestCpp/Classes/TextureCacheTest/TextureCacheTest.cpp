@@ -14,8 +14,8 @@ TextureCacheTest::TextureCacheTest()
     m_pLabelLoading = CCLabelTTF::create("loading...", "Arial", 15);
     m_pLabelPercent = CCLabelTTF::create("%0", "Arial", 15);
 
-    m_pLabelLoading->setPosition(CCPointMake(size.width / 2, size.height / 2 - 20));
-    m_pLabelPercent->setPosition(CCPointMake(size.width / 2, size.height / 2 + 20));
+    m_pLabelLoading->setPosition(ccp(size.width / 2, size.height / 2 - 20));
+    m_pLabelPercent->setPosition(ccp(size.width / 2, size.height / 2 + 20));
 
     this->addChild(m_pLabelLoading);
     this->addChild(m_pLabelPercent);
@@ -65,7 +65,7 @@ void TextureCacheTest::addSprite()
     // create sprites
 
     CCSprite *bg = CCSprite::create("Images/HelloWorld.png");
-    bg->setPosition(CCPointMake(size.width / 2, size.height / 2));
+    bg->setPosition(ccp(size.width / 2, size.height / 2));
 
     CCSprite *s1 = CCSprite::create("Images/grossini.png");
     CCSprite *s2 = CCSprite::create("Images/grossini_dance_01.png");
@@ -89,23 +89,23 @@ void TextureCacheTest::addSprite()
     CCSprite::create("Images/background3.png");
     CCSprite::create("Images/blocks.png");
 
-    s1->setPosition(CCPointMake(50, 50));
-    s2->setPosition(CCPointMake(60, 50));
-    s3->setPosition(CCPointMake(70, 50));
-    s4->setPosition(CCPointMake(80, 50));
-    s5->setPosition(CCPointMake(90, 50));
-    s6->setPosition(CCPointMake(100, 50));
+    s1->setPosition(ccp(50, 50));
+    s2->setPosition(ccp(60, 50));
+    s3->setPosition(ccp(70, 50));
+    s4->setPosition(ccp(80, 50));
+    s5->setPosition(ccp(90, 50));
+    s6->setPosition(ccp(100, 50));
 
-    s7->setPosition(CCPointMake(50, 180));
-    s8->setPosition(CCPointMake(60, 180));
-    s9->setPosition(CCPointMake(70, 180));
-    s10->setPosition(CCPointMake(80, 180));
-    s11->setPosition(CCPointMake(90, 180));
-    s12->setPosition(CCPointMake(100, 180));
+    s7->setPosition(ccp(50, 180));
+    s8->setPosition(ccp(60, 180));
+    s9->setPosition(ccp(70, 180));
+    s10->setPosition(ccp(80, 180));
+    s11->setPosition(ccp(90, 180));
+    s12->setPosition(ccp(100, 180));
 
-    s13->setPosition(CCPointMake(50, 270));
-    s14->setPosition(CCPointMake(60, 270));
-    s15->setPosition(CCPointMake(70, 270));
+    s13->setPosition(ccp(50, 270));
+    s14->setPosition(ccp(60, 270));
+    s15->setPosition(ccp(70, 270));
 
     this->addChild(bg);
    

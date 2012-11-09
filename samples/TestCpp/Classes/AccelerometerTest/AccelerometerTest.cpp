@@ -34,14 +34,13 @@ void AccelerometerTest::onEnter()
 
     setAccelerometerEnabled(true);
 
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
 
     CCLabelTTF* label = CCLabelTTF::create(title().c_str(), "Arial", 32);
     addChild(label, 1);
-    label->setPosition( CCPointMake(s.width/2, s.height-50) );
+    label->setPosition( ccp(VisibleRect::center().x, VisibleRect::top().y-50) );
 
     m_pBall = CCSprite::create("Images/ball.png");
-    m_pBall->setPosition(ccp(s.width / 2, s.height / 2));
+    m_pBall->setPosition(ccp(VisibleRect::center().x, VisibleRect::center().y));
     addChild(m_pBall);
 
     m_pBall->retain();
@@ -59,7 +58,6 @@ void AccelerometerTest::didAccelerate(CCAcceleration* pAccelerationValue)
 //     m_fLastTime = fNow;
 
     CCDirector* pDir = CCDirector::sharedDirector();
-    CCSize winSize   = pDir->getWinSize();
 
     /*FIXME: Testing on the Nexus S sometimes m_pBall is NULL */
     if ( m_pBall == NULL ) {
@@ -75,8 +73,8 @@ void AccelerometerTest::didAccelerate(CCAcceleration* pAccelerationValue)
     ptTemp.y -= pAccelerationValue->y * 9.81f;
 
     CCPoint ptNext = pDir->convertToGL(ptTemp);
-    FIX_POS(ptNext.x, (ballSize.width / 2.0), (winSize.width - ballSize.width / 2.0));
-    FIX_POS(ptNext.y, (ballSize.height / 2.0), (winSize.height - ballSize.height / 2.0));
+    FIX_POS(ptNext.x, (VisibleRect::left().x+ballSize.width / 2.0), (VisibleRect::right().x - ballSize.width / 2.0));
+    FIX_POS(ptNext.y, (VisibleRect::bottom().y+ballSize.height / 2.0), (VisibleRect::top().y - ballSize.height / 2.0));
     m_pBall->setPosition(ptNext);
 }
 

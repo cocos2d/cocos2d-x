@@ -43,8 +43,6 @@ CCEGLView* CCEGLView::sharedOpenGLView(void)
 
 CCEGLView::CCEGLView(void)
 {
-    m_obScreenSize.width = m_obDesignResolutionSize.width = [[EAGLView sharedEGLView] getWidth];
-    m_obScreenSize.height = m_obDesignResolutionSize.height = [[EAGLView sharedEGLView] getHeight];
 }
 
 CCEGLView::~CCEGLView(void)
@@ -88,6 +86,26 @@ void CCEGLView::setIMEKeyboardState(bool bOpen)
     {
         [[EAGLView sharedEGLView] resignFirstResponder];
     }
+}
+
+void CCEGLView::setViewPortInPoints(float x , float y , float w , float h)
+{
+    float frameZoomFactor = [[EAGLView sharedEGLView] frameZoomFactor];
+    
+    glViewport((GLint)(x * m_fScaleX * frameZoomFactor + m_obViewPortRect.origin.x * frameZoomFactor),
+               (GLint)(y * m_fScaleY * frameZoomFactor + m_obViewPortRect.origin.y * frameZoomFactor),
+               (GLsizei)(w * m_fScaleX * frameZoomFactor),
+               (GLsizei)(h * m_fScaleY * frameZoomFactor));
+}
+
+void CCEGLView::setScissorInPoints(float x , float y , float w , float h)
+{
+    float frameZoomFactor = [[EAGLView sharedEGLView] frameZoomFactor];
+    
+    glScissor((GLint)(x * m_fScaleX * frameZoomFactor + m_obViewPortRect.origin.x * frameZoomFactor),
+              (GLint)(y * m_fScaleY * frameZoomFactor + m_obViewPortRect.origin.y * frameZoomFactor),
+              (GLsizei)(w * m_fScaleX * frameZoomFactor),
+              (GLsizei)(h * m_fScaleY * frameZoomFactor));
 }
 
 void CCEGLView::setMultiTouchMask(bool mask)

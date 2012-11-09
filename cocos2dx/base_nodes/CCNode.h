@@ -62,7 +62,8 @@ enum {
     kCCNodeOnEnter,
     kCCNodeOnExit,
     kCCNodeOnEnterTransitionDidFinish,
-    kCCNodeOnExitTransitionDidStart
+    kCCNodeOnExitTransitionDidStart,
+    kCCNodeOnCleanup
 };
 
 /** @brief CCNode is the main element. Anything that gets drawn or contains things that get drawn is a CCNode.
@@ -379,21 +380,42 @@ public:
 
     // composition: REMOVE
 
+    /** Remove itself from its parent node forcing a cleanup.
+     If the node orphan, then nothing happens.
+     @since v2.1
+     */
+    virtual void removeFromParent();
+
     /** Remove itself from its parent node. If cleanup is true, then also remove all actions and callbacks.
      If the node orphan, then nothing happens.
      @since v0.99.3
      */
-    void removeFromParentAndCleanup(bool cleanup);
+    virtual void removeFromParentAndCleanup(bool cleanup);
+
+    /** Removes a child from the container forcing a cleanup
+     @since v2.1
+     */
+    virtual void removeChild(CCNode* child);
 
     /** Removes a child from the container. It will also cleanup all running actions depending on the cleanup parameter.
      @since v0.7.1
      */
     virtual void removeChild(CCNode* child, bool cleanup);
 
+    /** Removes a child from the container by tag value forcing a cleanup.
+     @since v2.1
+     */
+    virtual void removeChildByTag(int tag);
+
     /** Removes a child from the container by tag value. It will also cleanup all running actions depending on the cleanup parameter
      @since v0.7.1
      */
-    void removeChildByTag(int tag, bool cleanup);
+    virtual void removeChildByTag(int tag, bool cleanup);
+
+    /** Removes all children from the container forcing a cleanup.
+     @since v2.1
+     */
+    virtual void removeAllChildren();
 
     /** Removes all children from the container and do a cleanup all running actions depending on the cleanup parameter.
      @since v0.7.1
@@ -440,6 +462,9 @@ public:
     virtual void visit(void);
 
     // transformations
+    // MARMALADE ADDED THIS... SO IT IS NO LONGER SPECIFIC TO CCSprite
+    /** updates the quad according the the rotation, position, scale values. */
+    virtual void updateTransform(void);
 
     /** performs OpenGL view-matrix transformation based on position, scale, rotation and other attributes. */
     void transform(void);

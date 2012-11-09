@@ -1,42 +1,7 @@
-/* -*- Mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*-
- * vim: set ts=8 sw=4 et tw=99 ft=cpp:
- *
- * ***** BEGIN LICENSE BLOCK *****
- * Version: MPL 1.1/GPL 2.0/LGPL 2.1
- *
- * The contents of this file are subject to the Mozilla Public License Version
- * 1.1 (the "License"); you may not use this file except in compliance with
- * the License. You may obtain a copy of the License at:
- * http://www.mozilla.org/MPL/
- *
- * Software distributed under the License is distributed on an "AS IS" basis,
- * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
- * for the specific language governing rights and limitations under the
- * License.
- *
- * The Original Code is Mozilla Code.
- *
- * The Initial Developer of the Original Code is
- *   The Mozilla Foundation
- * Portions created by the Initial Developer are Copyright (C) 2011
- * the Initial Developer. All Rights Reserved.
- *
- * Contributor(s):
- *   Chris Jones <jones.chris.g@gmail.com>
- *
- * Alternatively, the contents of this file may be used under the terms of
- * either the GNU General Public License Version 2 or later (the "GPL"), or
- * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
- * in which case the provisions of the GPL or the LGPL are applicable instead
- * of those above. If you wish to allow use of your version of this file only
- * under the terms of either the GPL or the LGPL, and not to allow others to
- * use your version of this file under the terms of the MPL, indicate your
- * decision by deleting the provisions above and replace them with the notice
- * and other provisions required by the GPL or the LGPL. If you do not delete
- * the provisions above, a recipient may use your version of this file under
- * the terms of any one of the MPL, the GPL or the LGPL.
- *
- * ***** END LICENSE BLOCK ***** */
+/* -*- Mode: C++; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 /* Helpers for defining and using refcounted objects. */
 
@@ -80,24 +45,24 @@ class RefCounted
 {
     friend class RefPtr<T>;
 
-public:
+  public:
     RefCounted() : refCnt(0) { }
     ~RefCounted() { MOZ_ASSERT(refCnt == -0xdead); }
 
     // Compatibility with nsRefPtr.
     void AddRef() {
-        MOZ_ASSERT(refCnt >= 0);
-        ++refCnt;
+      MOZ_ASSERT(refCnt >= 0);
+      ++refCnt;
     }
 
     void Release() {
-        MOZ_ASSERT(refCnt > 0);
-        if (0 == --refCnt) {
+      MOZ_ASSERT(refCnt > 0);
+      if (0 == --refCnt) {
 #ifdef DEBUG
-            refCnt = -0xdead;
+        refCnt = -0xdead;
 #endif
-            delete static_cast<T*>(this);
-        }
+        delete static_cast<T*>(this);
+      }
     }
 
     // Compatibility with wtf::RefPtr.
@@ -105,11 +70,11 @@ public:
     void deref() { Release(); }
     int refCount() const { return refCnt; }
     bool hasOneRef() const {
-        MOZ_ASSERT(refCnt > 0);
-        return refCnt == 1;
+      MOZ_ASSERT(refCnt > 0);
+      return refCnt == 1;
     }
 
-private:
+  private:
     int refCnt;
 };
 
@@ -130,9 +95,9 @@ class RefPtr
     friend class TemporaryRef<T>;
     friend class OutParamRef<T>;
 
-    struct dontRef {};
+    struct DontRef {};
 
-public:
+  public:
     RefPtr() : ptr(0) { }
     RefPtr(const RefPtr& o) : ptr(ref(o.ptr)) {}
     RefPtr(const TemporaryRef<T>& o) : ptr(o.drop()) {}
@@ -144,28 +109,28 @@ public:
     ~RefPtr() { unref(ptr); }
 
     RefPtr& operator=(const RefPtr& o) {
-        assign(ref(o.ptr));
-        return *this;
+      assign(ref(o.ptr));
+      return *this;
     }
     RefPtr& operator=(const TemporaryRef<T>& o) {
-        assign(o.drop());
-        return *this;
+      assign(o.drop());
+      return *this;
     }
     RefPtr& operator=(T* t) {
-        assign(ref(t));
-        return *this;
+      assign(ref(t));
+      return *this;
     }
 
     template<typename U>
     RefPtr& operator=(const RefPtr<U>& o) {
-        assign(ref(o.get()));
-        return *this;
+      assign(ref(o.get()));
+      return *this;
     }
 
     TemporaryRef<T> forget() {
-        T* tmp = ptr;
-        ptr = 0;
-        return TemporaryRef<T>(tmp, dontRef());
+      T* tmp = ptr;
+      ptr = 0;
+      return TemporaryRef<T>(tmp, DontRef());
     }
 
     T* get() const { return ptr; }
@@ -175,25 +140,23 @@ public:
     template<typename U>
     operator TemporaryRef<U>() { return TemporaryRef<U>(ptr); }
 
-private:
+  private:
     void assign(T* t) {
-        unref(ptr);
-        ptr = t;
+      unref(ptr);
+      ptr = t;
     }
 
     T* ptr;
 
     static MOZ_ALWAYS_INLINE T* ref(T* t) {
-        if (t) {
-            t->AddRef();
-        }
-        return t;
+      if (t)
+        t->AddRef();
+      return t;
     }
 
     static MOZ_ALWAYS_INLINE void unref(T* t) {
-        if (t) {
-            t->Release();
-        }
+      if (t)
+        t->Release();
     }
 };
 
@@ -209,9 +172,9 @@ class TemporaryRef
     // To allow it to construct TemporaryRef from a bare T*
     friend class RefPtr<T>;
 
-    typedef typename RefPtr<T>::dontRef dontRef;
+    typedef typename RefPtr<T>::DontRef DontRef;
 
-public:
+  public:
     TemporaryRef(T* t) : ptr(RefPtr<T>::ref(t)) {}
     TemporaryRef(const TemporaryRef& o) : ptr(o.drop()) {}
 
@@ -221,18 +184,18 @@ public:
     ~TemporaryRef() { RefPtr<T>::unref(ptr); }
 
     T* drop() const {
-        T* tmp = ptr;
-        ptr = 0;
-        return tmp;
+      T* tmp = ptr;
+      ptr = 0;
+      return tmp;
     }
 
-private:
-    TemporaryRef(T* t, const dontRef&) : ptr(t) {}
+  private:
+    TemporaryRef(T* t, const DontRef&) : ptr(t) {}
 
     mutable T* ptr;
 
-    TemporaryRef();
-    TemporaryRef& operator=(const TemporaryRef&);
+    TemporaryRef() MOZ_DELETE;
+    void operator=(const TemporaryRef&) MOZ_DELETE;
 };
 
 /**
@@ -254,15 +217,15 @@ class OutParamRef
 {
     friend OutParamRef byRef<T>(RefPtr<T>&);
 
-public:
+  public:
     ~OutParamRef() {
-        RefPtr<T>::unref(refPtr.ptr);
-        refPtr.ptr = tmp;
+      RefPtr<T>::unref(refPtr.ptr);
+      refPtr.ptr = tmp;
     }
 
     operator T**() { return &tmp; }
 
-private:
+  private:
     OutParamRef(RefPtr<T>& p) : refPtr(p), tmp(p.get()) {}
 
     RefPtr<T>& refPtr;
@@ -279,7 +242,7 @@ template<typename T>
 OutParamRef<T>
 byRef(RefPtr<T>& ptr)
 {
-    return OutParamRef<T>(ptr);
+  return OutParamRef<T>(ptr);
 }
 
 } // namespace mozilla
@@ -297,15 +260,15 @@ using namespace mozilla;
 
 struct Foo : public RefCounted<Foo>
 {
-    Foo() : dead(false) { }
-    ~Foo() {
-        MOZ_ASSERT(!dead);
-        dead = true;
-        numDestroyed++;
-    }
+  Foo() : dead(false) { }
+  ~Foo() {
+    MOZ_ASSERT(!dead);
+    dead = true;
+    numDestroyed++;
+  }
 
-    bool dead;
-    static int numDestroyed;
+  bool dead;
+  static int numDestroyed;
 };
 int Foo::numDestroyed;
 
@@ -314,34 +277,34 @@ struct Bar : public Foo { };
 TemporaryRef<Foo>
 NewFoo()
 {
-    return RefPtr<Foo>(new Foo());
+  return RefPtr<Foo>(new Foo());
 }
 
 TemporaryRef<Foo>
 NewBar()
 {
-    return new Bar();
+  return new Bar();
 }
 
 void
 GetNewFoo(Foo** f)
 {
-    *f = new Bar();
-    // Kids, don't try this at home
-    (*f)->AddRef();
+  *f = new Bar();
+  // Kids, don't try this at home
+  (*f)->AddRef();
 }
 
 void
 GetPassedFoo(Foo** f)
 {
-    // Kids, don't try this at home
-    (*f)->AddRef();
+  // Kids, don't try this at home
+  (*f)->AddRef();
 }
 
 void
 GetNewFoo(RefPtr<Foo>* f)
 {
-    *f = new Bar();
+  *f = new Bar();
 }
 
 void
@@ -351,93 +314,93 @@ GetPassedFoo(RefPtr<Foo>* f)
 TemporaryRef<Foo>
 GetNullFoo()
 {
-    return 0;
+  return 0;
 }
 
 int
 main(int argc, char** argv)
 {
-    // This should blow up
+  // This should blow up
 //    Foo* f = new Foo(); delete f;
 
-    MOZ_ASSERT(0 == Foo::numDestroyed);
-    {
-        RefPtr<Foo> f = new Foo();
-        MOZ_ASSERT(f->refCount() == 1);
-    }
+  MOZ_ASSERT(0 == Foo::numDestroyed);
+  {
+    RefPtr<Foo> f = new Foo();
+    MOZ_ASSERT(f->refCount() == 1);
+  }
+  MOZ_ASSERT(1 == Foo::numDestroyed);
+
+  {
+    RefPtr<Foo> f1 = NewFoo();
+    RefPtr<Foo> f2(NewFoo());
     MOZ_ASSERT(1 == Foo::numDestroyed);
+  }
+  MOZ_ASSERT(3 == Foo::numDestroyed);
 
-    {
-        RefPtr<Foo> f1 = NewFoo();
-        RefPtr<Foo> f2(NewFoo());
-        MOZ_ASSERT(1 == Foo::numDestroyed);
-    }
+  {
+    RefPtr<Foo> b = NewBar();
     MOZ_ASSERT(3 == Foo::numDestroyed);
+  }
+  MOZ_ASSERT(4 == Foo::numDestroyed);
 
+  {
+    RefPtr<Foo> f1;
     {
-        RefPtr<Foo> b = NewBar();
-        MOZ_ASSERT(3 == Foo::numDestroyed);
+      f1 = new Foo();
+      RefPtr<Foo> f2(f1);
+      RefPtr<Foo> f3 = f2;
+      MOZ_ASSERT(4 == Foo::numDestroyed);
     }
     MOZ_ASSERT(4 == Foo::numDestroyed);
+  }
+  MOZ_ASSERT(5 == Foo::numDestroyed);
 
-    {
-        RefPtr<Foo> f1;
-        {
-            f1 = new Foo();
-            RefPtr<Foo> f2(f1);
-            RefPtr<Foo> f3 = f2;
-            MOZ_ASSERT(4 == Foo::numDestroyed);
-        }
-        MOZ_ASSERT(4 == Foo::numDestroyed);
-    }
-    MOZ_ASSERT(5 == Foo::numDestroyed);
+  {
+    RefPtr<Foo> f = new Foo();
+    f.forget();
+    MOZ_ASSERT(6 == Foo::numDestroyed);
+  }
 
-    {
-        RefPtr<Foo> f = new Foo();
-        f.forget();
-        MOZ_ASSERT(6 == Foo::numDestroyed);
-    }
+  {
+    RefPtr<Foo> f = new Foo();
+    GetNewFoo(byRef(f));
+    MOZ_ASSERT(7 == Foo::numDestroyed);
+  }
+  MOZ_ASSERT(8 == Foo::numDestroyed);
 
-    {
-        RefPtr<Foo> f = new Foo();
-        GetNewFoo(byRef(f));
-        MOZ_ASSERT(7 == Foo::numDestroyed);
-    }
+  {
+    RefPtr<Foo> f = new Foo();
+    GetPassedFoo(byRef(f));
     MOZ_ASSERT(8 == Foo::numDestroyed);
+  }
+  MOZ_ASSERT(9 == Foo::numDestroyed);
 
-    {
-        RefPtr<Foo> f = new Foo();
-        GetPassedFoo(byRef(f));
-        MOZ_ASSERT(8 == Foo::numDestroyed);
-    }
-    MOZ_ASSERT(9 == Foo::numDestroyed);
+  {
+    RefPtr<Foo> f = new Foo();
+    GetNewFoo(&f);
+    MOZ_ASSERT(10 == Foo::numDestroyed);
+  }
+  MOZ_ASSERT(11 == Foo::numDestroyed);
 
-    {
-        RefPtr<Foo> f = new Foo();
-        GetNewFoo(&f);
-        MOZ_ASSERT(10 == Foo::numDestroyed);
-    }
+  {
+    RefPtr<Foo> f = new Foo();
+    GetPassedFoo(&f);
     MOZ_ASSERT(11 == Foo::numDestroyed);
+  }
+  MOZ_ASSERT(12 == Foo::numDestroyed);
 
-    {
-        RefPtr<Foo> f = new Foo();
-        GetPassedFoo(&f);
-        MOZ_ASSERT(11 == Foo::numDestroyed);
-    }
-    MOZ_ASSERT(12 == Foo::numDestroyed);
+  {
+    RefPtr<Foo> f1 = new Bar();
+  }
+  MOZ_ASSERT(13 == Foo::numDestroyed);
 
-    {
-        RefPtr<Foo> f1 = new Bar();
-    }
+  {
+    RefPtr<Foo> f = GetNullFoo();
     MOZ_ASSERT(13 == Foo::numDestroyed);
+  }
+  MOZ_ASSERT(13 == Foo::numDestroyed);
 
-    {
-        RefPtr<Foo> f = GetNullFoo();
-        MOZ_ASSERT(13 == Foo::numDestroyed);
-    }
-    MOZ_ASSERT(13 == Foo::numDestroyed);
-
-    return 0;
+  return 0;
 }
 
 #endif

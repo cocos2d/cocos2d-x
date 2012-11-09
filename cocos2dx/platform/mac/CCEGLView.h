@@ -45,6 +45,11 @@ public:
     virtual bool setContentScaleFactor(float contentScaleFactor);
     virtual void end();
     virtual void swapBuffers(void);
+    /**
+     * Set opengl view port rectangle with points.
+     */
+    virtual void setViewPortInPoints(float x , float y , float w , float h);
+    virtual void setScissorInPoints(float x , float y , float w , float h);
     
     virtual void setIMEKeyboardState(bool bOpen);
 	virtual void setMultiTouchMask(bool mask);

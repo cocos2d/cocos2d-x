@@ -35,7 +35,7 @@ NS_CC_EXT_BEGIN
  Please refer to samples/TestCpp/Classes/ExtensionTest/NetworkTest/HttpClientTest.cpp as a sample
  @since v2.0.2
  */
-class CCHttpRequest : public cocos2d::CCObject
+class CCHttpRequest : public CCObject
 {
 public:
     /** Use this enum type as param in setReqeustType(param) */
@@ -155,7 +155,7 @@ public:
     
     /** Required field. You should set the callback selector function at ack the http request completed
      */
-    inline void setResponseCallback(cocos2d::CCObject* pTarget, cocos2d::SEL_CallFuncND pSelector)
+    inline void setResponseCallback(CCObject* pTarget, SEL_CallFuncND pSelector)
     {
         _pTarget = pTarget;
         _pSelector = pSelector;
@@ -171,20 +171,34 @@ public:
         return _pTarget;
     }
     /** Get the selector function pointer, mainly used by CCHttpClient */
-    inline cocos2d::SEL_CallFuncND getSelector()
+    inline SEL_CallFuncND getSelector()
     {
         return _pSelector;
     }
-        
+
+    /** Set any custom headers **/
+    inline void setHeaders(std::vector<std::string> pHeaders)
+   	{
+   		_headers=pHeaders;
+   	}
+   
+    /** Get custom headers **/
+   	inline std::vector<std::string> getHeaders()
+   	{
+   		return _headers;
+   	}
+
+
 protected:
     // properties
     HttpRequestType             _requestType;    /// kHttpRequestGet, kHttpRequestPost or other enums
     std::string                 _url;            /// target url that this request is sent to
     std::vector<char>           _requestData;    /// used for POST
     std::string                 _tag;            /// user defined tag, to identify different requests in response callback
-    cocos2d::CCObject*          _pTarget;        /// callback target of pSelector function
-    cocos2d::SEL_CallFuncND     _pSelector;      /// callback function, e.g. MyLayer::onHttpResponse(CCObject *sender, void *data)
+    CCObject*          _pTarget;        /// callback target of pSelector function
+    SEL_CallFuncND     _pSelector;      /// callback function, e.g. MyLayer::onHttpResponse(CCObject *sender, void *data)
     void*                       _pUserData;      /// You can add your customed data here 
+    std::vector<std::string>    _headers;		      /// custom http headers
 };
 
 NS_CC_EXT_END

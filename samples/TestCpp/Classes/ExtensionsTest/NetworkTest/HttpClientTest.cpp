@@ -43,7 +43,7 @@ HttpClientTest::HttpClientTest()
     
     // Back Menu
     CCMenuItemFont *itemBack = CCMenuItemFont::create("Back", this, menu_selector(HttpClientTest::toExtensionsMainLayer));
-    itemBack->setPosition(ccp(winSize.width - 50, 25));
+    itemBack->setPosition(ccp(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
     CCMenu *menuBack = CCMenu::create(itemBack, NULL);
     menuBack->setPosition(CCPointZero);
     addChild(menuBack);
@@ -101,18 +101,40 @@ void HttpClientTest::onMenuGetTestClicked(cocos2d::CCObject *sender)
 
 void HttpClientTest::onMenuPostTestClicked(cocos2d::CCObject *sender)
 {
-    CCHttpRequest* request = new CCHttpRequest();
-    request->setUrl("http://www.httpbin.org/post");
-    request->setRequestType(CCHttpRequest::kHttpPost);
-    request->setResponseCallback(this, callfuncND_selector(HttpClientTest::onHttpRequestCompleted));
+    // test 1
+    {
+        CCHttpRequest* request = new CCHttpRequest();
+        request->setUrl("http://www.httpbin.org/post");
+        request->setRequestType(CCHttpRequest::kHttpPost);
+        request->setResponseCallback(this, callfuncND_selector(HttpClientTest::onHttpRequestCompleted));
+        
+        // write the post data
+        const char* postData = "visitor=cocos2d&TestSuite=Extensions Test/NetworkTest";
+        request->setRequestData(postData, strlen(postData)); 
+        
+        request->setTag("POST test1");
+        CCHttpClient::getInstance()->send(request);
+        request->release();
+    }
     
-    // write the post data
-    const char* postData = "visitor=cocos2d&TestSuite=Extensions Test/NetowrkTest";
-    request->setRequestData(postData, strlen(postData)); 
-    
-    request->setTag("POST test");
-    CCHttpClient::getInstance()->send(request);
-    request->release();
+    // test 2: set Content-Type
+    {
+        CCHttpRequest* request = new CCHttpRequest();
+        request->setUrl("http://www.httpbin.org/post");
+        request->setRequestType(CCHttpRequest::kHttpPost);
+        std::vector<std::string> headers;
+        headers.push_back("Content-Type: application/json; charset=utf-8");
+        request->setHeaders(headers);
+        request->setResponseCallback(this, callfuncND_selector(HttpClientTest::onHttpRequestCompleted));
+        
+        // write the post data
+        const char* postData = "visitor=cocos2d&TestSuite=Extensions Test/NetworkTest";
+        request->setRequestData(postData, strlen(postData)); 
+        
+        request->setTag("POST test2");
+        CCHttpClient::getInstance()->send(request);
+        request->release();
+    }
     
     // waiting
     m_labelStatusCode->setString("waiting...");

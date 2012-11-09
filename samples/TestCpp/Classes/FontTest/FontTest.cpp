@@ -13,15 +13,23 @@ static int fontIdx = 0;
 static std::string fontList[] =
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    // custom ttf files are defined in Test-info.plist
     "American Typewriter",
     "Marker Felt",
-#endif
+    "A Damn Mess",
+    "Abberancy",
+    "Abduction",
+    "Paint Boy",
+    "Schwarzwald Regular",
+    "Scissor Cuts",
+#else
     "fonts/A Damn Mess.ttf",
     "fonts/Abberancy.ttf",
     "fonts/Abduction.ttf",
     "fonts/Paint Boy.ttf",
     "fonts/Schwarzwald Regular.ttf",
     "fonts/Scissor Cuts.ttf",
+#endif
 };
 
 static int fontCount = sizeof(fontList) / sizeof(*fontList);
@@ -66,16 +74,15 @@ static const char* restartAction(void)
 
 FontTest::FontTest()
 {
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
     CCMenuItemImage *item1 = CCMenuItemImage::create(s_pPathB1, s_pPathB2, this, menu_selector(FontTest::backCallback));
     CCMenuItemImage *item2 = CCMenuItemImage::create(s_pPathR1, s_pPathR2, this, menu_selector(FontTest::restartCallback));
     CCMenuItemImage *item3 = CCMenuItemImage::create(s_pPathF1, s_pPathF2, this, menu_selector(FontTest::nextCallback));
 
     CCMenu *menu = CCMenu::create(item1, item2, item3, NULL);
     menu->setPosition(CCPointZero);
-    item1->setPosition(ccp( s.width/2 - item2->getContentSize().width*2, item2->getContentSize().height/2));
-    item2->setPosition(ccp( s.width/2, item2->getContentSize().height/2));
-    item3->setPosition(ccp( s.width/2 + item2->getContentSize().width*2, item2->getContentSize().height/2));
+    item1->setPosition(ccp(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
+    item2->setPosition(ccp(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2));
+    item3->setPosition(ccp(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
     addChild(menu, 1);
     
     showFont(restartAction());

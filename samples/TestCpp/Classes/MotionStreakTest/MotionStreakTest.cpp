@@ -42,7 +42,7 @@ void MotionStreakTest1::onEnter()
     CCActionInterval* a1 = CCRotateBy::create(2, 360);
 
     CCAction* action1 = CCRepeatForever::create(a1);
-    CCActionInterval* motion = CCMoveBy::create(2, CCPointMake(100,0) );
+    CCActionInterval* motion = CCMoveBy::create(2, ccp(100,0) );
     m_root->runAction( CCRepeatForever::create((CCActionInterval*)(CCSequence::create(motion, motion->reverse(), NULL)) ) );
     m_root->runAction( action1 );
 
@@ -87,7 +87,7 @@ void MotionStreakTest2::onEnter()
     streak = CCMotionStreak::create(3, 3, 64, ccWHITE, s_streak );
     addChild(streak);
     
-    streak->setPosition( CCPointMake(s.width/2, s.height/2) ); 
+    streak->setPosition( ccp(s.width/2, s.height/2) ); 
 }
 
 void MotionStreakTest2::ccTouchesMoved(CCSet* touches, CCEvent* event)
@@ -234,7 +234,7 @@ void MotionStreakTest::onEnter()
 
     CCLabelTTF* label = CCLabelTTF::create(title().c_str(), "Arial", 32);
     addChild(label, 0, kTagLabel);
-    label->setPosition(CCPointMake(s.width/2, s.height-50));
+    label->setPosition(ccp(s.width/2, s.height-50));
     
     string subTitle = this->subtitle();
     if (subTitle.size() > 0)
@@ -251,9 +251,9 @@ void MotionStreakTest::onEnter()
     CCMenu *menu = CCMenu::create(item1, item2, item3, NULL);
 
     menu->setPosition(CCPointZero);
-    item1->setPosition(CCPointMake(s.width/2 - item2->getContentSize().width*2, item2->getContentSize().height/2));
-    item2->setPosition(CCPointMake(s.width/2, item2->getContentSize().height/2));
-    item3->setPosition(CCPointMake(s.width/2 + item2->getContentSize().width*2, item2->getContentSize().height/2));
+    item1->setPosition(ccp(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
+    item2->setPosition(ccp(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2));
+    item3->setPosition(ccp(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
     
     addChild(menu, 1);    
 

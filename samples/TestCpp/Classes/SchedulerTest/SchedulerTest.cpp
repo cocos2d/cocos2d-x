@@ -84,18 +84,16 @@ void SchedulerTestLayer::onEnter()
 {
     CCLayer::onEnter();
 
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
-
     CCLabelTTF* label = CCLabelTTF::create(title().c_str(), "Arial", 32);
     addChild(label);
-    label->setPosition(ccp(s.width/2, s.height-50));
+    label->setPosition(ccp(VisibleRect::center().x, VisibleRect::top().y-50));
 
     std::string subTitle = subtitle();
     if(! subTitle.empty())
     {
         CCLabelTTF* l = CCLabelTTF::create(subTitle.c_str(), "Thonburi", 16);
         addChild(l, 1);
-        l->setPosition(ccp(s.width/2, s.height-80));
+        l->setPosition(ccp(VisibleRect::center().x, VisibleRect::top().y-80));
     }
 
     CCMenuItemImage *item1 = CCMenuItemImage::create("Images/b1.png", "Images/b2.png", this, menu_selector(SchedulerTestLayer::backCallback));
@@ -104,9 +102,9 @@ void SchedulerTestLayer::onEnter()
 
     CCMenu *menu = CCMenu::create(item1, item2, item3, NULL);
     menu->setPosition(CCPointZero);
-    item1->setPosition(ccp( s.width/2 - item2->getContentSize().width*2, item2->getContentSize().height/2));
-    item2->setPosition(ccp( s.width/2, item2->getContentSize().height/2));
-    item3->setPosition(ccp( s.width/2 + item2->getContentSize().width*2, item2->getContentSize().height/2));
+    item1->setPosition(ccp(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
+    item2->setPosition(ccp(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2));
+    item3->setPosition(ccp(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
 
     addChild(menu, 1);
 }
@@ -252,10 +250,8 @@ void SchedulerPauseResumeAll::onEnter()
 {
     SchedulerTestLayer::onEnter();
 
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
-
     CCSprite *sprite = CCSprite::create("Images/grossinis_sister1.png");
-    sprite->setPosition(ccp(s.width/2, s.height/2));
+    sprite->setPosition(VisibleRect::center());
     this->addChild(sprite);
     sprite->runAction(CCRepeatForever::create(CCRotateBy::create(3.0, 360)));
 
@@ -1058,12 +1054,12 @@ void TwoSchedulers::onEnter()
     sliderCtl1 = sliderCtl();
     addChild(sliderCtl1);
     sliderCtl1->retain();
-    sliderCtl1->setPosition(ccp(s.width / 4.0f, s.height - 20));
+    sliderCtl1->setPosition(ccp(s.width / 4.0f, VisibleRect::top().y - 20));
 
     sliderCtl2 = sliderCtl();
     addChild(sliderCtl2);
     sliderCtl2->retain();
-    sliderCtl2->setPosition(ccp(s.width / 4.0f*3.0f, s.height-20));
+    sliderCtl2->setPosition(ccp(s.width / 4.0f*3.0f, VisibleRect::top().y-20));
 }
 
 

@@ -7,7 +7,7 @@
  *                            | (__| |_| |  _ <| |___
  *                             \___|\___/|_| \_\_____|
  *
- * Copyright (C) 1998 - 2011, Daniel Stenberg, <daniel@haxx.se>, et al.
+ * Copyright (C) 1998 - 2012, Daniel Stenberg, <daniel@haxx.se>, et al.
  *
  * This software is licensed as described in the file COPYING, which
  * you should have received as part of this distribution. The terms
@@ -141,8 +141,9 @@ __extension__ ({                                                              \
 
 /* To define a new warning, use _CURL_WARNING(identifier, "message") */
 #define _CURL_WARNING(id, message)                                            \
-  static void __attribute__((warning(message))) __attribute__((unused))       \
-  __attribute__((noinline)) id(void) { __asm__(""); }
+  static void __attribute__((__warning__(message)))                           \
+  __attribute__((__unused__)) __attribute__((__noinline__))                   \
+  id(void) { __asm__(""); }
 
 _CURL_WARNING(_curl_easy_setopt_err_long,
   "curl_easy_setopt expects a long argument for this option")
@@ -392,7 +393,8 @@ _CURL_WARNING(_curl_easy_getinfo_err_curl_slist,
 /* evaluates to true if expr is abuffer suitable for CURLOPT_ERRORBUFFER */
 /* XXX: also check size of an char[] array? */
 #define _curl_is_error_buffer(expr)                                           \
-  (__builtin_types_compatible_p(__typeof__(expr), char *) ||                  \
+  (_curl_is_NULL(expr) ||                                                     \
+   __builtin_types_compatible_p(__typeof__(expr), char *) ||                  \
    __builtin_types_compatible_p(__typeof__(expr), char[]))
 
 /* evaluates to true if expr is of type (const) void* or (const) FILE* */
@@ -521,7 +523,11 @@ typedef int (_curl_progress_callback2)(const void *,
    _curl_callback_compatible((expr), _curl_debug_callback1) ||                \
    _curl_callback_compatible((expr), _curl_debug_callback2) ||                \
    _curl_callback_compatible((expr), _curl_debug_callback3) ||                \
-   _curl_callback_compatible((expr), _curl_debug_callback4))
+   _curl_callback_compatible((expr), _curl_debug_callback4) ||                \
+   _curl_callback_compatible((expr), _curl_debug_callback5) ||                \
+   _curl_callback_compatible((expr), _curl_debug_callback6) ||                \
+   _curl_callback_compatible((expr), _curl_debug_callback7) ||                \
+   _curl_callback_compatible((expr), _curl_debug_callback8))
 typedef int (_curl_debug_callback1) (CURL *,
     curl_infotype, char *, size_t, void *);
 typedef int (_curl_debug_callback2) (CURL *,
@@ -530,6 +536,14 @@ typedef int (_curl_debug_callback3) (CURL *,
     curl_infotype, const char *, size_t, void *);
 typedef int (_curl_debug_callback4) (CURL *,
     curl_infotype, const char *, size_t, const void *);
+typedef int (_curl_debug_callback5) (CURL *,
+    curl_infotype, unsigned char *, size_t, void *);
+typedef int (_curl_debug_callback6) (CURL *,
+    curl_infotype, unsigned char *, size_t, const void *);
+typedef int (_curl_debug_callback7) (CURL *,
+    curl_infotype, const unsigned char *, size_t, void *);
+typedef int (_curl_debug_callback8) (CURL *,
+    curl_infotype, const unsigned char *, size_t, const void *);
 
 /* evaluates to true if expr is of type curl_ssl_ctx_callback or "similar" */
 /* this is getting even messier... */

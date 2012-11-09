@@ -1,3 +1,9 @@
 [submodule "tools/cxx-generator"]
 	path = tools/cxx-generator
 	url = git://github.com/funkaster/cxx-generator.git
+[submodule "scripting/javascript/bindings/generated"]
+	path = scripting/javascript/bindings/generated
+	url = git://github.com/folecr/cocos2dx-autogen-bindings.git
+[submodule "samples/TestJavascript/cocos2d-js-tests"]
+	path = samples/TestJavascript/cocos2d-js-tests
+	url = git://github.com/cocos2d/cocos2d-js-tests.git

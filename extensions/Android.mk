@@ -22,6 +22,13 @@ CCBReader/CCParticleSystemQuadLoader.cpp \
 CCBReader/CCScale9SpriteLoader.cpp \
 CCBReader/CCScrollViewLoader.cpp \
 CCBReader/CCSpriteLoader.cpp \
+CCBReader/CCBAnimationManager.cpp \
+CCBReader/CCBKeyframe.cpp \
+CCBReader/CCBSequence.cpp \
+CCBReader/CCBSequenceProperty.cpp \
+CCBReader/CCBValue.cpp \
+CCBReader/CCData.cpp \
+CCBReader/CCNode+CCBRelativePositioning.cpp \
 GUI/CCControlExtension/CCControl.cpp \
 GUI/CCControlExtension/CCControlButton.cpp \
 GUI/CCControlExtension/CCControlColourPicker.cpp \
@@ -31,9 +38,9 @@ GUI/CCControlExtension/CCControlSlider.cpp \
 GUI/CCControlExtension/CCControlSwitch.cpp \
 GUI/CCControlExtension/CCControlUtils.cpp \
 GUI/CCControlExtension/CCInvocation.cpp \
-GUI/CCControlExtension/CCMenuPassive.cpp \
 GUI/CCControlExtension/CCScale9Sprite.cpp \
-GUI/CCControlExtension/CCSpacer.cpp \
+GUI/CCControlExtension/CCControlPotentiometer.cpp \
+GUI/CCControlExtension/CCControlStepper.cpp \
 GUI/CCScrollView/CCScrollView.cpp \
 GUI/CCScrollView/CCTableView.cpp \
 GUI/CCScrollView/CCTableViewCell.cpp \

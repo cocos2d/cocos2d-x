@@ -26,15 +26,15 @@ void registerDefaultClasses(JSContext* cx, JSObject* global);
 
 class ScriptingCore : public CCScriptEngineProtocol
 {
-	JSRuntime *rt;
-	JSContext *cx;
-	JSObject  *global;
+	JSRuntime *rt_;
+	JSContext *cx_;
+	JSObject  *global_;
 	std::string externalScriptPath;
-	
+
 	ScriptingCore();
 public:
 	~ScriptingCore();
-	
+
 	static ScriptingCore *getInstance() {
 		static ScriptingCore* pInstance = NULL;
         if (pInstance == NULL) {
@@ -46,7 +46,7 @@ public:
 	virtual void setExternalScriptPath(const char * externalScriptPath);
 
     virtual ccScriptType getScriptType() { return kScriptTypeJavascript; };
-    
+
     /**
      @brief Remove CCObject from lua state
      @param object to remove
@@ -60,13 +60,16 @@ public:
      @return other if the string is excuted wrongly.
      */
 	virtual int executeString(const char* codes) { return 0; }
-    
+    void pauseSchedulesAndActions(CCNode *node);
+    void resumeSchedulesAndActions(CCNode *node);
+    void cleanupSchedulesAndActions(CCNode *node);
+
     /**
      @brief Execute a script file.
      @param filename String object holding the filename of the script file that is to be executed
      */
     virtual  int executeScriptFile(const char* filename) { return 0; }
-    
+
     /**
      @brief Execute a scripted global function.
      @brief The function should not take any parameters and should return an integer.
@@ -82,10 +85,12 @@ public:
     virtual int executeSchedule(CCTimer* pTimer, float dt, CCNode* pNode = NULL);
     virtual int executeLayerTouchesEvent(CCLayer* pLayer, int eventType, CCSet *pTouches);
     virtual int executeLayerTouchEvent(CCLayer* pLayer, int eventType, CCTouch *pTouch);
+    virtual int executeAccelerometerEvent(CCLayer* pLayer, CCAcceleration* pAccelerationValue);
 
     int executeFunctionWithObjectData(CCNode *self, const char *name, JSObject *obj);
-    
-    void executeJSFunctionWithThisObj(jsval thisObj, jsval callback, jsval data);
+    int executeFunctionWithOwner(jsval owner, const char *name, jsval data);
+
+    void executeJSFunctionWithThisObj(jsval thisObj, jsval callback, jsval *data);
 
 	/**
 	 * will eval the specified string
@@ -93,13 +98,13 @@ public:
 	 * @param outVal The jsval that will hold the return value of the evaluation.
 	 * Can be NULL.
 	 */
-	JSBool evalString(const char *string, jsval *outVal, const char *filename = NULL);
-	
+	JSBool evalString(const char *string, jsval *outVal, const char *filename = NULL, JSContext* cx = NULL, JSObject* global = NULL);
+
 	/**
 	 * will run the specified string
 	 * @param string The path of the script to be run
 	 */
-	JSBool runScript(const char *path);
+	JSBool runScript(const char *path, JSObject* global = NULL, JSContext* cx = NULL);
 
 	/**
 	 * initialize everything
@@ -117,28 +122,30 @@ public:
 	 * and create a new one.
 	 */
 	void createGlobalContext();
-	
-    
-    int executeCustomTouchEvent(int eventType, 
+
+    static void removeAllRoots(JSContext *cx);
+
+
+    int executeCustomTouchEvent(int eventType,
                                 CCTouch *pTouch, JSObject *obj, jsval &retval);
-    int executeCustomTouchEvent(int eventType, 
+    int executeCustomTouchEvent(int eventType,
                                 CCTouch *pTouch, JSObject *obj);
-    int executeCustomTouchesEvent(int eventType, 
+    int executeCustomTouchesEvent(int eventType,
                                   CCSet *pTouches, JSObject *obj);
 	/**
 	 * @return the global context
 	 */
 	JSContext* getGlobalContext() {
-		return cx;
+		return cx_;
 	};
-	
+
 	/**
 	 * @param cx
 	 * @param message
 	 * @param report
 	 */
 	static void reportError(JSContext *cx, const char *message, JSErrorReport *report);
-	
+
 	/**
 	 * Log something using CCLog
 	 * @param cx
@@ -146,14 +153,14 @@ public:
 	 * @param vp
 	 */
 	static JSBool log(JSContext *cx, uint32_t argc, jsval *vp);
-	
+
 	JSBool setReservedSpot(uint32_t i, JSObject *obj, jsval value);
-	
+
 	/**
 	 * run a script from script :)
 	 */
 	static JSBool executeScript(JSContext *cx, uint32_t argc, jsval *vp);
-	
+
 	/**
 	 * Force a cycle of GC
 	 * @param cx
@@ -182,7 +189,10 @@ ccGridSize jsval_to_ccgridsize(JSContext *cx, jsval v);
 ccColor4B jsval_to_cccolor4b(JSContext *cx, jsval v);
 ccColor4F jsval_to_cccolor4f(JSContext *cx, jsval v);
 ccColor3B jsval_to_cccolor3b(JSContext *cx, jsval v);
+JSBool jsval_to_ccarray_of_CCPoint(JSContext* cx, jsval v, CCPoint **points, int *numPoints);
 CCArray* jsval_to_ccarray(JSContext* cx, jsval v);
+jsval ccarray_to_jsval(JSContext* cx, CCArray *arr);
+jsval ccdictionary_to_jsval(JSContext* cx, CCDictionary* dict);
 // from native
 jsval long_long_to_jsval(JSContext* cx, long long v);
 jsval std_string_to_jsval(JSContext* cx, std::string& v);
@@ -193,6 +203,14 @@ jsval ccsize_to_jsval(JSContext* cx, CCSize& v);
 jsval ccgridsize_to_jsval(JSContext* cx, ccGridSize& v);
 jsval cccolor4b_to_jsval(JSContext* cx, ccColor4B& v);
 jsval cccolor4f_to_jsval(JSContext* cx, ccColor4F& v);
-jsval cccolor3b_to_jsval(JSContext* cx, ccColor3B& v);
+jsval cccolor3b_to_jsval(JSContext* cx, const ccColor3B& v);
+
+JSObject* NewGlobalObject(JSContext* cx);
+JSBool jsNewGlobal(JSContext* cx, unsigned argc, jsval* vp);
+
+JSBool jsSocketOpen(JSContext* cx, unsigned argc, jsval* vp);
+JSBool jsSocketRead(JSContext* cx, unsigned argc, jsval* vp);
+JSBool jsSocketWrite(JSContext* cx, unsigned argc, jsval* vp);
+JSBool jsSocketClose(JSContext* cx, unsigned argc, jsval* vp);
 
 #endif

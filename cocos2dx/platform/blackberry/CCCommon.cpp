@@ -34,7 +34,7 @@ void CCLog(const char * pszFormat, ...)
 
     va_list args;
     va_start(args, pszFormat);        
-    vsprintf(buf, pszFormat, args);
+    vsnprintf(buf, MAX_LEN, pszFormat, args);
     va_end(args);
 	
 	fprintf(stderr, "cocos2d-x debug info %s\n",  buf);

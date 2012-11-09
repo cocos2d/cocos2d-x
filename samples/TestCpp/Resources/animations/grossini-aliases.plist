@@ -6,15 +6,15 @@
 	<dict>
 		<key>grossini_dance_01.png</key>
 		<dict>
-			<key>frame</key>
+			<key>spriteSize</key>
+			<string>{51, 109}</string>
+			<key>textureRect</key>
 			<string>{{2, 2}, {51, 109}}</string>
-			<key>offset</key>
+			<key>spriteOffset</key>
 			<string>{0, -1}</string>
-			<key>rotated</key>
+			<key>textureRotated</key>
 			<false/>
-			<key>sourceColorRect</key>
-			<string>{{17, 7}, {51, 109}}</string>
-			<key>sourceSize</key>
+			<key>spriteSourceSize</key>
 			<string>{85, 121}</string>
 			<key>aliases</key>
 			<array>
@@ -23,15 +23,15 @@
 		</dict>
 		<key>grossini_dance_02.png</key>
 		<dict>
-			<key>frame</key>
+			<key>spriteSize</key>
+			<string>{63, 109}</string>
+			<key>textureRect</key>
 			<string>{{55, 2}, {63, 109}}</string>
-			<key>offset</key>
+			<key>spriteOffset</key>
 			<string>{-6, -1}</string>
-			<key>rotated</key>
+			<key>textureRotated</key>
 			<false/>
-			<key>sourceColorRect</key>
-			<string>{{5, 7}, {63, 109}}</string>
-			<key>sourceSize</key>
+			<key>spriteSourceSize</key>
 			<string>{85, 121}</string>
 			<key>aliases</key>
 			<array>
@@ -40,15 +40,15 @@
 		</dict>
 		<key>grossini_dance_03.png</key>
 		<dict>
-			<key>frame</key>
+			<key>spriteSize</key>
+			<string>{63, 109}</string>
+			<key>textureRect</key>
 			<string>{{120, 2}, {63, 109}}</string>
-			<key>offset</key>
+			<key>spriteOffset</key>
 			<string>{-6, -1}</string>
-			<key>rotated</key>
+			<key>textureRotated</key>
 			<false/>
-			<key>sourceColorRect</key>
-			<string>{{5, 7}, {63, 109}}</string>
-			<key>sourceSize</key>
+			<key>spriteSourceSize</key>
 			<string>{85, 121}</string>
 			<key>aliases</key>
 			<array>
@@ -57,15 +57,15 @@
 		</dict>
 		<key>grossini_dance_04.png</key>
 		<dict>
-			<key>frame</key>
+			<key>spriteSize</key>
+			<string>{74, 109}</string>
+			<key>textureRect</key>
 			<string>{{185, 2}, {74, 109}}</string>
-			<key>offset</key>
+			<key>spriteOffset</key>
 			<string>{-0.5, -1}</string>
-			<key>rotated</key>
+			<key>textureRotated</key>
 			<false/>
-			<key>sourceColorRect</key>
-			<string>{{5, 7}, {74, 109}}</string>
-			<key>sourceSize</key>
+			<key>spriteSourceSize</key>
 			<string>{85, 121}</string>
 			<key>aliases</key>
 			<array>
@@ -74,15 +74,15 @@
 		</dict>
 		<key>grossini_dance_05.png</key>
 		<dict>
-			<key>frame</key>
+			<key>spriteSize</key>
+			<string>{74, 109}</string>
+			<key>textureRect</key>
 			<string>{{261, 2}, {74, 109}}</string>
-			<key>offset</key>
+			<key>spriteOffset</key>
 			<string>{-0.5, -1}</string>
-			<key>rotated</key>
+			<key>textureRotated</key>
 			<false/>
-			<key>sourceColorRect</key>
-			<string>{{5, 7}, {74, 109}}</string>
-			<key>sourceSize</key>
+			<key>spriteSourceSize</key>
 			<string>{85, 121}</string>
 			<key>aliases</key>
 			<array>
@@ -91,15 +91,15 @@
 		</dict>
 		<key>grossini_dance_06.png</key>
 		<dict>
-			<key>frame</key>
+			<key>spriteSize</key>
+			<string>{63, 109}</string>
+			<key>textureRect</key>
 			<string>{{337, 2}, {63, 109}}</string>
-			<key>offset</key>
+			<key>spriteOffset</key>
 			<string>{-6, -1}</string>
-			<key>rotated</key>
+			<key>textureRotated</key>
 			<false/>
-			<key>sourceColorRect</key>
-			<string>{{5, 7}, {63, 109}}</string>
-			<key>sourceSize</key>
+			<key>spriteSourceSize</key>
 			<string>{85, 121}</string>
 			<key>aliases</key>
 			<array>
@@ -108,15 +108,15 @@
 		</dict>
 		<key>grossini_dance_07.png</key>
 		<dict>
-			<key>frame</key>
+			<key>spriteSize</key>
+			<string>{63, 109}</string>
+			<key>textureRect</key>
 			<string>{{402, 2}, {63, 109}}</string>
-			<key>offset</key>
+			<key>spriteOffset</key>
 			<string>{-6, -1}</string>
-			<key>rotated</key>
+			<key>textureRotated</key>
 			<false/>
-			<key>sourceColorRect</key>
-			<string>{{5, 7}, {63, 109}}</string>
-			<key>sourceSize</key>
+			<key>spriteSourceSize</key>
 			<string>{85, 121}</string>
 			<key>aliases</key>
 			<array>
@@ -125,15 +125,15 @@
 		</dict>
 		<key>grossini_dance_08.png</key>
 		<dict>
-			<key>frame</key>
+			<key>spriteSize</key>
+			<string>{51, 109}</string>
+			<key>textureRect</key>
 			<string>{{2, 113}, {51, 109}}</string>
-			<key>offset</key>
+			<key>spriteOffset</key>
 			<string>{0, -1}</string>
-			<key>rotated</key>
+			<key>textureRotated</key>
 			<false/>
-			<key>sourceColorRect</key>
-			<string>{{17, 7}, {51, 109}}</string>
-			<key>sourceSize</key>
+			<key>spriteSourceSize</key>
 			<string>{85, 121}</string>
 			<key>aliases</key>
 			<array>
@@ -142,15 +142,15 @@
 		</dict>
 		<key>grossini_dance_09.png</key>
 		<dict>
-			<key>frame</key>
+			<key>spriteSize</key>
+			<string>{51, 109}</string>
+			<key>textureRect</key>
 			<string>{{55, 113}, {51, 109}}</string>
-			<key>offset</key>
+			<key>spriteOffset</key>
 			<string>{0, -1}</string>
-			<key>rotated</key>
+			<key>textureRotated</key>
 			<false/>
-			<key>sourceColorRect</key>
-			<string>{{17, 7}, {51, 109}}</string>
-			<key>sourceSize</key>
+			<key>spriteSourceSize</key>
 			<string>{85, 121}</string>
 			<key>aliases</key>
 			<array>
@@ -159,15 +159,15 @@
 		</dict>
 		<key>grossini_dance_10.png</key>
 		<dict>
-			<key>frame</key>
+			<key>spriteSize</key>
+			<string>{62, 109}</string>
+			<key>textureRect</key>
 			<string>{{108, 113}, {62, 109}}</string>
-			<key>offset</key>
+			<key>spriteOffset</key>
 			<string>{5.5, -1}</string>
-			<key>rotated</key>
+			<key>textureRotated</key>
 			<false/>
-			<key>sourceColorRect</key>
-			<string>{{17, 7}, {62, 109}}</string>
-			<key>sourceSize</key>
+			<key>spriteSourceSize</key>
 			<string>{85, 121}</string>
 			<key>aliases</key>
 			<array>
@@ -176,15 +176,15 @@
 		</dict>
 		<key>grossini_dance_11.png</key>
 		<dict>
-			<key>frame</key>
+			<key>spriteSize</key>
+			<string>{62, 109}</string>
+			<key>textureRect</key>
 			<string>{{172, 113}, {62, 109}}</string>
-			<key>offset</key>
+			<key>spriteOffset</key>
 			<string>{5.5, -1}</string>
-			<key>rotated</key>
+			<key>textureRotated</key>
 			<false/>
-			<key>sourceColorRect</key>
-			<string>{{17, 7}, {62, 109}}</string>
-			<key>sourceSize</key>
+			<key>spriteSourceSize</key>
 			<string>{85, 121}</string>
 			<key>aliases</key>
 			<array>
@@ -193,15 +193,15 @@
 		</dict>
 		<key>grossini_dance_12.png</key>
 		<dict>
-			<key>frame</key>
+			<key>spriteSize</key>
+			<string>{51, 106}</string>
+			<key>textureRect</key>
 			<string>{{236, 113}, {51, 106}}</string>
-			<key>offset</key>
+			<key>spriteOffset</key>
 			<string>{0, -2.5}</string>
-			<key>rotated</key>
+			<key>textureRotated</key>
 			<false/>
-			<key>sourceColorRect</key>
-			<string>{{17, 10}, {51, 106}}</string>
-			<key>sourceSize</key>
+			<key>spriteSourceSize</key>
 			<string>{85, 121}</string>
 			<key>aliases</key>
 			<array>
@@ -210,15 +210,15 @@
 		</dict>
 		<key>grossini_dance_13.png</key>
 		<dict>
-			<key>frame</key>
+			<key>spriteSize</key>
+			<string>{51, 109}</string>
+			<key>textureRect</key>
 			<string>{{289, 113}, {51, 109}}</string>
-			<key>offset</key>
+			<key>spriteOffset</key>
 			<string>{0, -1}</string>
-			<key>rotated</key>
+			<key>textureRotated</key>
 			<false/>
-			<key>sourceColorRect</key>
-			<string>{{17, 7}, {51, 109}}</string>
-			<key>sourceSize</key>
+			<key>spriteSourceSize</key>
 			<string>{85, 121}</string>
 			<key>aliases</key>
 			<array>
@@ -227,15 +227,15 @@
 		</dict>
 		<key>grossini_dance_14.png</key>
 		<dict>
-			<key>frame</key>
+			<key>spriteSize</key>
+			<string>{51, 106}</string>
+			<key>textureRect</key>
 			<string>{{342, 113}, {51, 106}}</string>
-			<key>offset</key>
+			<key>spriteOffset</key>
 			<string>{0, -2.5}</string>
-			<key>rotated</key>
+			<key>textureRotated</key>
 			<false/>
-			<key>sourceColorRect</key>
-			<string>{{17, 10}, {51, 106}}</string>
-			<key>sourceSize</key>
+			<key>spriteSourceSize</key>
 			<string>{85, 121}</string>
 			<key>aliases</key>
 			<array>

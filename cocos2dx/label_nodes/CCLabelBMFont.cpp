@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2011      Zynga Inc.
 
@@ -734,6 +734,21 @@ CCLabelBMFont * CCLabelBMFont::create()
     }
     CC_SAFE_DELETE(pRet);
     return NULL;
+}
+
+CCLabelBMFont * CCLabelBMFont::create(const char *str, const char *fntFile, float width, CCTextAlignment alignment)
+{
+    return CCLabelBMFont::create(str, fntFile, width, alignment, CCPointZero);
+}
+
+CCLabelBMFont * CCLabelBMFont::create(const char *str, const char *fntFile, float width)
+{
+    return CCLabelBMFont::create(str, fntFile, width, kCCTextAlignmentLeft, CCPointZero);
+}
+
+CCLabelBMFont * CCLabelBMFont::create(const char *str, const char *fntFile)
+{
+    return CCLabelBMFont::create(str, fntFile, kCCLabelAutomaticWidth, kCCTextAlignmentLeft, CCPointZero);
 }
 
 CCLabelBMFont *CCLabelBMFont::labelWithString(const char *str, const char *fntFile, float width/* = kCCLabelAutomaticWidth*/, CCTextAlignment alignment/* = kCCTextAlignmentLeft*/, CCPoint imageOffset/* = CCPointZero*/)

@@ -18,16 +18,49 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\GUI\CCScrollView\CCScrollView.cpp">
+      <Filter>GUI\CCScrollView</Filter>
+    </ClCompile>
+    <ClCompile Include="..\network\HttpClient.cpp">
+      <Filter>GUI\network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GUI\CCScrollView\CCSorting.cpp">
+      <Filter>GUI\CCScrollView</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GUI\CCScrollView\CCTableView.cpp">
+      <Filter>GUI\CCScrollView</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GUI\CCScrollView\CCTableViewCell.cpp">
+      <Filter>GUI\CCScrollView</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCBReader\CCBAnimationManager.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
     <ClCompile Include="..\CCBReader\CCBFileLoader.cpp">
       <Filter>CCBReader</Filter>
     </ClCompile>
+    <ClCompile Include="..\CCBReader\CCBKeyframe.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
     <ClCompile Include="..\CCBReader\CCBReader.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCBReader\CCBSequence.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCBReader\CCBSequenceProperty.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCBReader\CCBValue.cpp">
       <Filter>CCBReader</Filter>
     </ClCompile>
     <ClCompile Include="..\CCBReader\CCControlButtonLoader.cpp">
       <Filter>CCBReader</Filter>
     </ClCompile>
     <ClCompile Include="..\CCBReader\CCControlLoader.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCBReader\CCData.cpp">
       <Filter>CCBReader</Filter>
     </ClCompile>
     <ClCompile Include="..\CCBReader\CCLabelBMFontLoader.cpp">
@@ -51,6 +84,9 @@
     <ClCompile Include="..\CCBReader\CCMenuItemLoader.cpp">
       <Filter>CCBReader</Filter>
     </ClCompile>
+    <ClCompile Include="..\CCBReader\CCNode+CCBRelativePositioning.cpp">
+      <Filter>CCBReader</Filter>
+    </ClCompile>
     <ClCompile Include="..\CCBReader\CCNodeLoader.cpp">
       <Filter>CCBReader</Filter>
     </ClCompile>
@@ -69,22 +105,22 @@
     <ClCompile Include="..\CCBReader\CCSpriteLoader.cpp">
       <Filter>CCBReader</Filter>
     </ClCompile>
-    <ClCompile Include="..\GUI\CCControlExtension\CCControl.cpp">
-      <Filter>GUI\CCControlExtension</Filter>
-    </ClCompile>
-    <ClCompile Include="..\GUI\CCControlExtension\CCControlButton.cpp">
-      <Filter>GUI\CCControlExtension</Filter>
-    </ClCompile>
     <ClCompile Include="..\GUI\CCControlExtension\CCControlColourPicker.cpp">
       <Filter>GUI\CCControlExtension</Filter>
     </ClCompile>
     <ClCompile Include="..\GUI\CCControlExtension\CCControlHuePicker.cpp">
       <Filter>GUI\CCControlExtension</Filter>
     </ClCompile>
+    <ClCompile Include="..\GUI\CCControlExtension\CCControlPotentiometer.cpp">
+      <Filter>GUI\CCControlExtension</Filter>
+    </ClCompile>
     <ClCompile Include="..\GUI\CCControlExtension\CCControlSaturationBrightnessPicker.cpp">
       <Filter>GUI\CCControlExtension</Filter>
     </ClCompile>
     <ClCompile Include="..\GUI\CCControlExtension\CCControlSlider.cpp">
+      <Filter>GUI\CCControlExtension</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GUI\CCControlExtension\CCControlStepper.cpp">
       <Filter>GUI\CCControlExtension</Filter>
     </ClCompile>
     <ClCompile Include="..\GUI\CCControlExtension\CCControlSwitch.cpp">
@@ -96,33 +132,47 @@
     <ClCompile Include="..\GUI\CCControlExtension\CCInvocation.cpp">
       <Filter>GUI\CCControlExtension</Filter>
     </ClCompile>
-    <ClCompile Include="..\GUI\CCControlExtension\CCMenuPassive.cpp">
-      <Filter>GUI\CCControlExtension</Filter>
-    </ClCompile>
     <ClCompile Include="..\GUI\CCControlExtension\CCScale9Sprite.cpp">
       <Filter>GUI\CCControlExtension</Filter>
     </ClCompile>
-    <ClCompile Include="..\GUI\CCControlExtension\CCSpacer.cpp">
+    <ClCompile Include="..\GUI\CCControlExtension\CCControl.cpp">
       <Filter>GUI\CCControlExtension</Filter>
     </ClCompile>
-    <ClCompile Include="..\GUI\CCScrollView\CCScrollView.cpp">
-      <Filter>GUI\CCScrollView</Filter>
-    </ClCompile>
-    <ClCompile Include="..\network\HttpClient.cpp">
-      <Filter>GUI\network</Filter>
-    </ClCompile>
-    <ClCompile Include="..\GUI\CCScrollView\CCSorting.cpp">
-      <Filter>GUI\CCScrollView</Filter>
-    </ClCompile>
-    <ClCompile Include="..\GUI\CCScrollView\CCTableView.cpp">
-      <Filter>GUI\CCScrollView</Filter>
-    </ClCompile>
-    <ClCompile Include="..\GUI\CCScrollView\CCTableViewCell.cpp">
-      <Filter>GUI\CCScrollView</Filter>
+    <ClCompile Include="..\GUI\CCControlExtension\CCControlButton.cpp">
+      <Filter>GUI\CCControlExtension</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\GUI\CCScrollView\CCScrollView.h">
+      <Filter>GUI\CCScrollView</Filter>
+    </ClInclude>
+    <ClInclude Include="..\cocos-ext.h" />
+    <ClInclude Include="..\ExtensionMacros.h" />
+    <ClInclude Include="..\network\HttpClient.h">
+      <Filter>GUI\network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\network\HttpRequest.h">
+      <Filter>GUI\network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\network\HttpResponse.h">
+      <Filter>GUI\network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GUI\CCScrollView\CCSorting.h">
+      <Filter>GUI\CCScrollView</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GUI\CCScrollView\CCTableView.h">
+      <Filter>GUI\CCScrollView</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GUI\CCScrollView\CCTableViewCell.h">
+      <Filter>GUI\CCScrollView</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCBReader\CCBAnimationManager.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
     <ClInclude Include="..\CCBReader\CCBFileLoader.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCBReader\CCBKeyframe.h">
       <Filter>CCBReader</Filter>
     </ClInclude>
     <ClInclude Include="..\CCBReader\CCBMemberVariableAssigner.h">
@@ -134,10 +184,22 @@
     <ClInclude Include="..\CCBReader\CCBSelectorResolver.h">
       <Filter>CCBReader</Filter>
     </ClInclude>
+    <ClInclude Include="..\CCBReader\CCBSequence.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCBReader\CCBSequenceProperty.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCBReader\CCBValue.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
     <ClInclude Include="..\CCBReader\CCControlButtonLoader.h">
       <Filter>CCBReader</Filter>
     </ClInclude>
     <ClInclude Include="..\CCBReader\CCControlLoader.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCBReader\CCData.h">
       <Filter>CCBReader</Filter>
     </ClInclude>
     <ClInclude Include="..\CCBReader\CCLabelBMFontLoader.h">
@@ -164,6 +226,9 @@
     <ClInclude Include="..\CCBReader\CCMenuLoader.h">
       <Filter>CCBReader</Filter>
     </ClInclude>
+    <ClInclude Include="..\CCBReader\CCNode+CCBRelativePositioning.h">
+      <Filter>CCBReader</Filter>
+    </ClInclude>
     <ClInclude Include="..\CCBReader\CCNodeLoader.h">
       <Filter>CCBReader</Filter>
     </ClInclude>
@@ -185,9 +250,6 @@
     <ClInclude Include="..\CCBReader\CCSpriteLoader.h">
       <Filter>CCBReader</Filter>
     </ClInclude>
-    <ClInclude Include="..\GUI\CCControlExtension\CCControl.h">
-      <Filter>GUI\CCControlExtension</Filter>
-    </ClInclude>
     <ClInclude Include="..\GUI\CCControlExtension\CCControlButton.h">
       <Filter>GUI\CCControlExtension</Filter>
     </ClInclude>
@@ -200,10 +262,16 @@
     <ClInclude Include="..\GUI\CCControlExtension\CCControlHuePicker.h">
       <Filter>GUI\CCControlExtension</Filter>
     </ClInclude>
+    <ClInclude Include="..\GUI\CCControlExtension\CCControlPotentiometer.h">
+      <Filter>GUI\CCControlExtension</Filter>
+    </ClInclude>
     <ClInclude Include="..\GUI\CCControlExtension\CCControlSaturationBrightnessPicker.h">
       <Filter>GUI\CCControlExtension</Filter>
     </ClInclude>
     <ClInclude Include="..\GUI\CCControlExtension\CCControlSlider.h">
+      <Filter>GUI\CCControlExtension</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GUI\CCControlExtension\CCControlStepper.h">
       <Filter>GUI\CCControlExtension</Filter>
     </ClInclude>
     <ClInclude Include="..\GUI\CCControlExtension\CCControlSwitch.h">
@@ -215,37 +283,11 @@
     <ClInclude Include="..\GUI\CCControlExtension\CCInvocation.h">
       <Filter>GUI\CCControlExtension</Filter>
     </ClInclude>
-    <ClInclude Include="..\GUI\CCControlExtension\CCMenuPassive.h">
-      <Filter>GUI\CCControlExtension</Filter>
-    </ClInclude>
     <ClInclude Include="..\GUI\CCControlExtension\CCScale9Sprite.h">
       <Filter>GUI\CCControlExtension</Filter>
     </ClInclude>
-    <ClInclude Include="..\GUI\CCControlExtension\CCSpacer.h">
+    <ClInclude Include="..\GUI\CCControlExtension\CCControl.h">
       <Filter>GUI\CCControlExtension</Filter>
-    </ClInclude>
-    <ClInclude Include="..\GUI\CCScrollView\CCScrollView.h">
-      <Filter>GUI\CCScrollView</Filter>
-    </ClInclude>
-    <ClInclude Include="..\cocos-ext.h" />
-    <ClInclude Include="..\ExtensionMacros.h" />
-    <ClInclude Include="..\network\HttpClient.h">
-      <Filter>GUI\network</Filter>
-    </ClInclude>
-    <ClInclude Include="..\network\HttpRequest.h">
-      <Filter>GUI\network</Filter>
-    </ClInclude>
-    <ClInclude Include="..\network\HttpResponse.h">
-      <Filter>GUI\network</Filter>
-    </ClInclude>
-    <ClInclude Include="..\GUI\CCScrollView\CCSorting.h">
-      <Filter>GUI\CCScrollView</Filter>
-    </ClInclude>
-    <ClInclude Include="..\GUI\CCScrollView\CCTableView.h">
-      <Filter>GUI\CCScrollView</Filter>
-    </ClInclude>
-    <ClInclude Include="..\GUI\CCScrollView\CCTableViewCell.h">
-      <Filter>GUI\CCScrollView</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

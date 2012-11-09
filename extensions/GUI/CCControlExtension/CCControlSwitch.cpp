@@ -1,5 +1,7 @@
 /*
- * 
+ * Copyright (c) 2012 cocos2d-x.org
+ * http://www.cocos2d-x.org
+ *
  * Copyright 2012 Yannick Loriot. All rights reserved.
  * http://yannickloriot.com
  * 
@@ -259,6 +261,10 @@ float CCControlSwitchSprite::offSideWidth()
 // CCControlSwitch
 
 CCControlSwitch::CCControlSwitch()
+: m_pSwitchSprite(NULL)
+, m_fInitialTouchXPosition(0.0f)
+, m_bMoved(false)
+, m_bOn(false)
 {
 
 }
@@ -367,8 +373,10 @@ void CCControlSwitch::setOn(bool isOn, bool animated)
 void CCControlSwitch::setEnabled(bool enabled)
 {
     m_bEnabled = enabled;
-
-    m_pSwitchSprite->setOpacity((enabled) ? 255 : 128);
+    if (m_pSwitchSprite != NULL)
+    {
+        m_pSwitchSprite->setOpacity((enabled) ? 255 : 128);
+    } 
 }
 
 CCPoint CCControlSwitch::locationFromTouch(CCTouch* pTouch)
@@ -381,8 +389,7 @@ CCPoint CCControlSwitch::locationFromTouch(CCTouch* pTouch)
 
 bool CCControlSwitch::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 {
-    if (!this->isTouchInside(pTouch)
-        || !this->isEnabled())
+    if (!isTouchInside(pTouch) || !isEnabled() || !isVisible())
     {
         return false;
     }

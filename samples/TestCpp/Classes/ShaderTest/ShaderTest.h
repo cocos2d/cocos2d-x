@@ -114,9 +114,11 @@ class ShaderNode : public CCNode
 {
 public:
     ShaderNode();
+    ~ShaderNode();
 
     bool initWithVertex(const char *vert, const char *frag);
     void loadShaderVertex(const char *vert, const char *frag);
+    void listenBackToForeground(CCObject *obj);
 
     virtual void update(float dt);
     virtual void setPosition(const CCPoint &newPosition);
@@ -130,6 +132,8 @@ private:
     ccVertex2F m_resolution;
     float      m_time;
     GLuint     m_uniformCenter, m_uniformResolution, m_uniformTime;
+    std::string m_vertFileName;
+    std::string m_fragFileName;
 };
 
 class ShaderTestScene : public TestScene

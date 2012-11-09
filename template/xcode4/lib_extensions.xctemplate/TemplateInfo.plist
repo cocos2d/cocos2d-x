@@ -12,6 +12,30 @@
 
 	<key>Definitions</key>
 	<dict>
+		<key>libs/extensions/CCBReader/CCBAnimationManager.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>CCBReader</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/CCBReader/CCBAnimationManager.cpp</string>
+		</dict>
+		<key>libs/extensions/CCBReader/CCBAnimationManager.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>CCBReader</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/CCBReader/CCBAnimationManager.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
 		<key>libs/extensions/CCBReader/CCBFileLoader.cpp</key>
 		<dict>
 			<key>Group</key>
@@ -33,6 +57,30 @@
 			</array>
 			<key>Path</key>
 			<string>libs/extensions/CCBReader/CCBFileLoader.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/extensions/CCBReader/CCBKeyframe.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>CCBReader</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/CCBReader/CCBKeyframe.cpp</string>
+		</dict>
+		<key>libs/extensions/CCBReader/CCBKeyframe.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>CCBReader</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/CCBReader/CCBKeyframe.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
@@ -86,6 +134,78 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
+		<key>libs/extensions/CCBReader/CCBSequence.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>CCBReader</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/CCBReader/CCBSequence.cpp</string>
+		</dict>
+		<key>libs/extensions/CCBReader/CCBSequence.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>CCBReader</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/CCBReader/CCBSequence.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/extensions/CCBReader/CCBSequenceProperty.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>CCBReader</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/CCBReader/CCBSequenceProperty.cpp</string>
+		</dict>
+		<key>libs/extensions/CCBReader/CCBSequenceProperty.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>CCBReader</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/CCBReader/CCBSequenceProperty.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/extensions/CCBReader/CCBValue.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>CCBReader</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/CCBReader/CCBValue.cpp</string>
+		</dict>
+		<key>libs/extensions/CCBReader/CCBValue.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>CCBReader</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/CCBReader/CCBValue.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
 		<key>libs/extensions/CCBReader/CCControlButtonLoader.cpp</key>
 		<dict>
 			<key>Group</key>
@@ -131,6 +251,30 @@
 			</array>
 			<key>Path</key>
 			<string>libs/extensions/CCBReader/CCControlLoader.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/extensions/CCBReader/CCData.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>CCBReader</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/CCBReader/CCData.cpp</string>
+		</dict>
+		<key>libs/extensions/CCBReader/CCData.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>CCBReader</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/CCBReader/CCData.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
@@ -312,6 +456,30 @@
 			</array>
 			<key>Path</key>
 			<string>libs/extensions/CCBReader/CCMenuLoader.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/extensions/CCBReader/CCNode+CCBRelativePositioning.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>CCBReader</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/CCBReader/CCNode+CCBRelativePositioning.cpp</string>
+		</dict>
+		<key>libs/extensions/CCBReader/CCNode+CCBRelativePositioning.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>CCBReader</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/CCBReader/CCNode+CCBRelativePositioning.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
@@ -614,6 +782,32 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
+		<key>libs/extensions/GUI/CCControlExtension/CCControlPotentiometer.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>GUI</string>
+				<string>CCControlExtension</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/GUI/CCControlExtension/CCControlPotentiometer.cpp</string>
+		</dict>
+		<key>libs/extensions/GUI/CCControlExtension/CCControlPotentiometer.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>GUI</string>
+				<string>CCControlExtension</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/GUI/CCControlExtension/CCControlPotentiometer.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
 		<key>libs/extensions/GUI/CCControlExtension/CCControlSaturationBrightnessPicker.cpp</key>
 		<dict>
 			<key>Group</key>
@@ -663,6 +857,32 @@
 			</array>
 			<key>Path</key>
 			<string>libs/extensions/GUI/CCControlExtension/CCControlSlider.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/extensions/GUI/CCControlExtension/CCControlStepper.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>GUI</string>
+				<string>CCControlExtension</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/GUI/CCControlExtension/CCControlStepper.cpp</string>
+		</dict>
+		<key>libs/extensions/GUI/CCControlExtension/CCControlStepper.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>GUI</string>
+				<string>CCControlExtension</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/GUI/CCControlExtension/CCControlStepper.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
@@ -744,32 +964,6 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>libs/extensions/GUI/CCControlExtension/CCMenuPassive.cpp</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>extensions</string>
-				<string>GUI</string>
-				<string>CCControlExtension</string>
-			</array>
-			<key>Path</key>
-			<string>libs/extensions/GUI/CCControlExtension/CCMenuPassive.cpp</string>
-		</dict>
-		<key>libs/extensions/GUI/CCControlExtension/CCMenuPassive.h</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>extensions</string>
-				<string>GUI</string>
-				<string>CCControlExtension</string>
-			</array>
-			<key>Path</key>
-			<string>libs/extensions/GUI/CCControlExtension/CCMenuPassive.h</string>
-			<key>TargetIndices</key>
-			<array/>
-		</dict>
 		<key>libs/extensions/GUI/CCControlExtension/CCScale9Sprite.cpp</key>
 		<dict>
 			<key>Group</key>
@@ -793,32 +987,6 @@
 			</array>
 			<key>Path</key>
 			<string>libs/extensions/GUI/CCControlExtension/CCScale9Sprite.h</string>
-			<key>TargetIndices</key>
-			<array/>
-		</dict>
-		<key>libs/extensions/GUI/CCControlExtension/CCSpacer.cpp</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>extensions</string>
-				<string>GUI</string>
-				<string>CCControlExtension</string>
-			</array>
-			<key>Path</key>
-			<string>libs/extensions/GUI/CCControlExtension/CCSpacer.cpp</string>
-		</dict>
-		<key>libs/extensions/GUI/CCControlExtension/CCSpacer.h</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>extensions</string>
-				<string>GUI</string>
-				<string>CCControlExtension</string>
-			</array>
-			<key>Path</key>
-			<string>libs/extensions/GUI/CCControlExtension/CCSpacer.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
@@ -940,6 +1108,84 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
+		<key>libs/extensions/GUI/CCScrollView/CCSorting.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>GUI</string>
+				<string>CCScrollView</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/GUI/CCScrollView/CCSorting.cpp</string>
+		</dict>
+		<key>libs/extensions/GUI/CCScrollView/CCSorting.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>GUI</string>
+				<string>CCScrollView</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/GUI/CCScrollView/CCSorting.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/extensions/GUI/CCScrollView/CCTableView.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>GUI</string>
+				<string>CCScrollView</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/GUI/CCScrollView/CCTableView.cpp</string>
+		</dict>
+		<key>libs/extensions/GUI/CCScrollView/CCTableView.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>GUI</string>
+				<string>CCScrollView</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/GUI/CCScrollView/CCTableView.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/extensions/GUI/CCScrollView/CCTableViewCell.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>GUI</string>
+				<string>CCScrollView</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/GUI/CCScrollView/CCTableViewCell.cpp</string>
+		</dict>
+		<key>libs/extensions/GUI/CCScrollView/CCTableViewCell.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>GUI</string>
+				<string>CCScrollView</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/GUI/CCScrollView/CCTableViewCell.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
 		<key>libs/extensions/network/HttpClient.cpp</key>
 		<dict>
 			<key>Group</key>
@@ -993,16 +1239,28 @@
 	</dict>
 	<key>Nodes</key>
 	<array>
+		<string>libs/extensions/CCBReader/CCBAnimationManager.cpp</string>
+		<string>libs/extensions/CCBReader/CCBAnimationManager.h</string>
 		<string>libs/extensions/CCBReader/CCBFileLoader.cpp</string>
 		<string>libs/extensions/CCBReader/CCBFileLoader.h</string>
+		<string>libs/extensions/CCBReader/CCBKeyframe.cpp</string>
+		<string>libs/extensions/CCBReader/CCBKeyframe.h</string>
 		<string>libs/extensions/CCBReader/CCBMemberVariableAssigner.h</string>
 		<string>libs/extensions/CCBReader/CCBReader.cpp</string>
 		<string>libs/extensions/CCBReader/CCBReader.h</string>
 		<string>libs/extensions/CCBReader/CCBSelectorResolver.h</string>
+		<string>libs/extensions/CCBReader/CCBSequence.cpp</string>
+		<string>libs/extensions/CCBReader/CCBSequence.h</string>
+		<string>libs/extensions/CCBReader/CCBSequenceProperty.cpp</string>
+		<string>libs/extensions/CCBReader/CCBSequenceProperty.h</string>
+		<string>libs/extensions/CCBReader/CCBValue.cpp</string>
+		<string>libs/extensions/CCBReader/CCBValue.h</string>
 		<string>libs/extensions/CCBReader/CCControlButtonLoader.cpp</string>
 		<string>libs/extensions/CCBReader/CCControlButtonLoader.h</string>
 		<string>libs/extensions/CCBReader/CCControlLoader.cpp</string>
 		<string>libs/extensions/CCBReader/CCControlLoader.h</string>
+		<string>libs/extensions/CCBReader/CCData.cpp</string>
+		<string>libs/extensions/CCBReader/CCData.h</string>
 		<string>libs/extensions/CCBReader/CCLabelBMFontLoader.cpp</string>
 		<string>libs/extensions/CCBReader/CCLabelBMFontLoader.h</string>
 		<string>libs/extensions/CCBReader/CCLabelTTFLoader.cpp</string>
@@ -1018,6 +1276,8 @@
 		<string>libs/extensions/CCBReader/CCMenuItemLoader.cpp</string>
 		<string>libs/extensions/CCBReader/CCMenuItemLoader.h</string>
 		<string>libs/extensions/CCBReader/CCMenuLoader.h</string>
+		<string>libs/extensions/CCBReader/CCNode+CCBRelativePositioning.cpp</string>
+		<string>libs/extensions/CCBReader/CCNode+CCBRelativePositioning.h</string>
 		<string>libs/extensions/CCBReader/CCNodeLoader.cpp</string>
 		<string>libs/extensions/CCBReader/CCNodeLoader.h</string>
 		<string>libs/extensions/CCBReader/CCNodeLoaderLibrary.cpp</string>
@@ -1042,22 +1302,22 @@
 		<string>libs/extensions/GUI/CCControlExtension/CCControlExtensions.h</string>
 		<string>libs/extensions/GUI/CCControlExtension/CCControlHuePicker.cpp</string>
 		<string>libs/extensions/GUI/CCControlExtension/CCControlHuePicker.h</string>
+		<string>libs/extensions/GUI/CCControlExtension/CCControlPotentiometer.cpp</string>
+		<string>libs/extensions/GUI/CCControlExtension/CCControlPotentiometer.h</string>
 		<string>libs/extensions/GUI/CCControlExtension/CCControlSaturationBrightnessPicker.cpp</string>
 		<string>libs/extensions/GUI/CCControlExtension/CCControlSaturationBrightnessPicker.h</string>
 		<string>libs/extensions/GUI/CCControlExtension/CCControlSlider.cpp</string>
 		<string>libs/extensions/GUI/CCControlExtension/CCControlSlider.h</string>
+		<string>libs/extensions/GUI/CCControlExtension/CCControlStepper.cpp</string>
+		<string>libs/extensions/GUI/CCControlExtension/CCControlStepper.h</string>
 		<string>libs/extensions/GUI/CCControlExtension/CCControlSwitch.cpp</string>
 		<string>libs/extensions/GUI/CCControlExtension/CCControlSwitch.h</string>
 		<string>libs/extensions/GUI/CCControlExtension/CCControlUtils.cpp</string>
 		<string>libs/extensions/GUI/CCControlExtension/CCControlUtils.h</string>
 		<string>libs/extensions/GUI/CCControlExtension/CCInvocation.cpp</string>
 		<string>libs/extensions/GUI/CCControlExtension/CCInvocation.h</string>
-		<string>libs/extensions/GUI/CCControlExtension/CCMenuPassive.cpp</string>
-		<string>libs/extensions/GUI/CCControlExtension/CCMenuPassive.h</string>
 		<string>libs/extensions/GUI/CCControlExtension/CCScale9Sprite.cpp</string>
 		<string>libs/extensions/GUI/CCControlExtension/CCScale9Sprite.h</string>
-		<string>libs/extensions/GUI/CCControlExtension/CCSpacer.cpp</string>
-		<string>libs/extensions/GUI/CCControlExtension/CCSpacer.h</string>
 		<string>libs/extensions/GUI/CCEditBox/CCEditBox.cpp</string>
 		<string>libs/extensions/GUI/CCEditBox/CCEditBox.h</string>
 		<string>libs/extensions/GUI/CCEditBox/CCEditBoxImpl.h</string>
@@ -1067,6 +1327,12 @@
 		<string>libs/extensions/GUI/CCEditBox/EditBoxImplIOS.mm</string>
 		<string>libs/extensions/GUI/CCScrollView/CCScrollView.cpp</string>
 		<string>libs/extensions/GUI/CCScrollView/CCScrollView.h</string>
+		<string>libs/extensions/GUI/CCScrollView/CCSorting.cpp</string>
+		<string>libs/extensions/GUI/CCScrollView/CCSorting.h</string>
+		<string>libs/extensions/GUI/CCScrollView/CCTableView.cpp</string>
+		<string>libs/extensions/GUI/CCScrollView/CCTableView.h</string>
+		<string>libs/extensions/GUI/CCScrollView/CCTableViewCell.cpp</string>
+		<string>libs/extensions/GUI/CCScrollView/CCTableViewCell.h</string>
 		<string>libs/extensions/network/HttpClient.cpp</string>
 		<string>libs/extensions/network/HttpClient.h</string>
 		<string>libs/extensions/network/HttpRequest.h</string>

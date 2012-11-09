@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2010-2011 cocos2d-x.org
+ Copyright (c) 2010-2012 cocos2d-x.org
  
  http://www.cocos2d-x.org
  
@@ -41,6 +41,7 @@ class CCLayer;
 class CCMenuItem;
 class CCNotificationCenter;
 class CCCallFunc;
+class CCAcceleration;
 
 enum ccScriptType {
     kScriptTypeNone = 0,
@@ -220,9 +221,12 @@ public:
     /** execute a schedule function */
     virtual int executeSchedule(CCTimer* pTimer, float dt, CCNode* pNode = NULL) = 0;
     
-    /** functions for execute touch event */
+    /** functions for executing touch event */
     virtual int executeLayerTouchesEvent(CCLayer* pLayer, int eventType, CCSet *pTouches) = 0;
     virtual int executeLayerTouchEvent(CCLayer* pLayer, int eventType, CCTouch *pTouch) = 0;
+
+    /** execute a accelerometer event */
+    virtual int executeAccelerometerEvent(CCLayer* pLayer, CCAcceleration* pAccelerationValue) = 0;
 };
 
 /**

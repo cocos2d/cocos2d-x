@@ -12,6 +12,31 @@ Developers:
     Rolando Abarca
         Javascript Binding and testjs
 
+    sburavtsov
+        fix for correct unscheduling and instance destruction of extensions/network/HttpClient.cpp
+
+    wenbin wang
+        add error handler when read image data using libjpeg
+        add korean language support
+        fix getDeviceModel bug in android CocosDenshion
+
+    Horcruxes
+        fix the bug that CCArray::createWithContentsOfFile() may not read file data on iOS
+
+    Hu Kaiou
+        contribute the new version of libcurl to support both armv7 & armv7s on iOS
+        fix some memory leak
+
+    ByungChoi
+         modify linux makefiles to fix compiling errors
+
+    edbartley
+         update MSVS and MAC projects to use project-relative path
+         CCControl* should not respond to touches if the control is not visible
+
+    Weeds 
+         use fontconfig to enhance font rendering on linux
+
     Nat Weiss (iphonegamekit.com)
         author of Mac port
 
@@ -31,14 +56,20 @@ Developers:
 
     Nicolas Gramlich (nicolasgramlich, Zynga)
         fixed CCDirector to use CCLabelBMFont instead of CCLabelTTF
-	added CCBReader (CCBI format)
-        
+        added CCBReader (CCBI format)
+    
+    Rohan Kuruvilla (rohankuruvilla, Zynga)
+        Improvements to JS Bindings.
+
     Jianfeng Zhou (NetGragon Inc)
         contributes CCListView and CCTextureWatcher.
 	  
     dducharme
         author of blackberry port
-    
+
+    ImperialPenguin
+        Added TTF support for blackberry port.
+
     HuaXu Cai (Kongzhong Corporation)
         author of linux port
         
@@ -54,7 +85,7 @@ Developers:
 
     Eli Yukelzon (reflog)
         add a helper method to draw filled polygons
-	improvements to CCUserDefaults
+        improvements to CCUserDefaults
 
     ZhuoShi Shun
 	contribute the lua binding of CocosDenshion
@@ -105,6 +136,12 @@ Developers:
 
     Dongyang Cai(John-cdy)
         add automatically test tools
+
+    Sergey Vikhirev(BorMor)
+        Remove retina specific methods and logic.
+
+    johnangel
+        OpenGL framebuffer access violation fix.
 
 Retired Core Developers:
     WenSheng Yang

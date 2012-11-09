@@ -16,23 +16,23 @@ class CCAction : public CCObject
 	CCObject* copyWithZone(CCZone* pZone);
 };
 
-class CCActionInterval : public CCAction
-{
-    float getElapsed(void);
-	bool isDone(void);
-    void setAmplitudeRate(float amp);
-    float getAmplitudeRate(void);
-	CCObject* copyWithZone(CCZone* pZone);
-	CCActionInterval* reverse(void);
-
-	CCActionInterval* create(float d);
-};
-
-class CCFiniteTimeAction : public CCActionInterval
+class CCFiniteTimeAction : public CCAction
 {
     float getDuration(void);
     void setDuration(float duration);
     CCFiniteTimeAction* reverse(void);
+};
+
+class CCActionInterval : public CCFiniteTimeAction
+{
+    float getElapsed(void);
+    bool isDone(void);
+    void setAmplitudeRate(float amp);
+    float getAmplitudeRate(void);
+    CCObject* copyWithZone(CCZone* pZone);
+    CCActionInterval* reverse(void);
+
+    CCActionInterval* create(float d);
 };
 
 // CCActionInterval
@@ -54,8 +54,8 @@ class CCFollow : public CCAction
 	bool isDone(void);
 	CCObject* copyWithZone(CCZone* pZone);
 
-    static CCFollow* create(CCNode *pFollowedNode);
     static CCFollow* create(CCNode *pFollowedNode, CCRect rect);
+    static CCFollow* create(CCNode *pFollowedNode);
 };
 
 class CCSequence : public CCActionInterval
@@ -90,8 +90,8 @@ class CCSpawn : public CCActionInterval
 	CCObject* copyWithZone(CCZone* pZone);
 	CCActionInterval* reverse(void);
 
-    static CCFiniteTimeAction* create(CCArray *actions);
     static CCFiniteTimeAction* createWithTwoActions(CCFiniteTimeAction *pAction1, CCFiniteTimeAction *pAction2);
+    static CCFiniteTimeAction* create(CCArray *actions);
 };
 
 class CCRotateTo : public CCActionInterval
@@ -185,8 +185,8 @@ class CCScaleTo : public CCActionInterval
 {
 	CCObject* copyWithZone(CCZone* pZone);
 
-    static CCScaleTo* create(float duration, float s);
     static CCScaleTo* create(float duration, float sx, float sy);
+    static CCScaleTo* create(float duration, float s);
 };
 
 class CCScaleBy : public CCActionInterval

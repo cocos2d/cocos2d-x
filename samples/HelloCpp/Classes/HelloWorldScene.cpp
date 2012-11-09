@@ -1,6 +1,7 @@
 #include "HelloWorldScene.h"
-
+#include "AppMacros.h"
 USING_NS_CC;
+
 
 CCScene* HelloWorld::scene()
 {
@@ -41,14 +42,8 @@ bool HelloWorld::init()
                                         this,
                                         menu_selector(HelloWorld::menuCloseCallback));
     
-    if (CCApplication::sharedApplication()->getTargetPlatform() == kTargetIphone)
-    {
-        pCloseItem->setPosition(ccp(visibleSize.width - 20 + origin.x, 20 + origin.y));
-    }
-    else 
-    {
-        pCloseItem->setPosition(ccp(visibleSize.width - 40 + origin.x, 40 + origin.y));
-    }
+	pCloseItem->setPosition(ccp(origin.x + visibleSize.width - pCloseItem->getContentSize().width/2 ,
+                                origin.y + pCloseItem->getContentSize().height/2));
 
     // create menu, it's an autorelease object
     CCMenu* pMenu = CCMenu::create(pCloseItem, NULL);
@@ -60,10 +55,12 @@ bool HelloWorld::init()
 
     // add a label shows "Hello World"
     // create and initialize a label
-    CCLabelTTF* pLabel = CCLabelTTF::create("Hello World", "Arial", 24);
-
+    
+    CCLabelTTF* pLabel = CCLabelTTF::create("Hello World", "Arial", TITLE_FONT_SIZE);
+    
     // position the label on the center of the screen
-    pLabel->setPosition(ccp(visibleSize.width/2 + origin.x, visibleSize.height - 50 + origin.y));
+    pLabel->setPosition(ccp(origin.x + visibleSize.width/2,
+                            origin.y + visibleSize.height - pLabel->getContentSize().height));
 
     // add the label as a child to this layer
     this->addChild(pLabel, 1);
@@ -79,6 +76,7 @@ bool HelloWorld::init()
     
     return true;
 }
+
 
 void HelloWorld::menuCloseCallback(CCObject* pSender)
 {

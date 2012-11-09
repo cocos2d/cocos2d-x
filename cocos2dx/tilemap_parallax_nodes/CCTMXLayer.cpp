@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2009-2010 Ricardo Quesada
 Copyright (c) 2011      Zynga Inc.
 
@@ -385,7 +385,7 @@ CCSprite * CCTMXLayer::insertTileForGID(unsigned int gid, const CCPoint& pos)
     CCRect rect = m_pTileSet->rectForGID(gid);
     rect = CC_RECT_PIXELS_TO_POINTS(rect);
 
-    int z = (int)(pos.x + pos.y * m_tLayerSize.width);
+    intptr_t z = (intptr_t)(pos.x + pos.y * m_tLayerSize.width);
 
     CCSprite *tile = reusedTileWithRect(rect);
 
@@ -447,7 +447,7 @@ CCSprite * CCTMXLayer::appendTileForGID(unsigned int gid, const CCPoint& pos)
     CCRect rect = m_pTileSet->rectForGID(gid);
     rect = CC_RECT_PIXELS_TO_POINTS(rect);
 
-    int z = (int)(pos.x + pos.y * m_tLayerSize.width);
+    intptr_t z = (intptr_t)(pos.x + pos.y * m_tLayerSize.width);
 
     CCSprite *tile = reusedTileWithRect(rect);
 
