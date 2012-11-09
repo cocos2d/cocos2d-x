@@ -288,13 +288,19 @@ int ZipUtils::ccInflateCCZFile(const char *path, unsigned char **out)
 // from unzip.cpp
 #define UNZ_MAXFILENAMEINZIP 256
 
+struct ZipEntryInfo
+{
+    unz_file_pos pos;
+    uLong uncompressed_size;
+};
+
 class ZipFilePrivate
 {
 public:
     unzFile zipFile;
 
     // std::unordered_map is faster if available on the platform
-    typedef std::map<std::string, unz_file_pos> FileListContainer;
+    typedef std::map<std::string, ZipEntryInfo> FileListContainer;
     FileListContainer fileList;
 };
 
@@ -338,7 +344,8 @@ bool ZipFile::setFilter(const std::string &filter)
             {
                 // UNZ_MAXFILENAMEINZIP + 1 - it is done so in unzLocateFile
                 char szCurrentFileName[UNZ_MAXFILENAMEINZIP + 1];
-                int nameErr = unzGetCurrentFileInfo64(m_data->zipFile, NULL,
+                unz_file_info64 fileInfo;
+                int nameErr = unzGetCurrentFileInfo64(m_data->zipFile, &fileInfo,
                         szCurrentFileName, sizeof(szCurrentFileName) - 1,
                         NULL, 0, NULL, 0);
                 std::string currentFileName = szCurrentFileName;
@@ -348,7 +355,10 @@ bool ZipFile::setFilter(const std::string &filter)
                     if (filter.empty()
                         || currentFileName.substr(0, filter.length()) == filter)
                     {
-                        m_data->fileList[currentFileName] = posInfo;
+                        ZipEntryInfo entry;
+                        entry.pos = posInfo;
+                        entry.uncompressed_size = (uLong)fileInfo.uncompressed_size;
+                        m_data->fileList[currentFileName] = entry;
                     }
                 }
             }
@@ -390,28 +400,22 @@ unsigned char *ZipFile::getFileData(const std::string &fileName, unsigned long *
         ZipFilePrivate::FileListContainer::const_iterator it = m_data->fileList.find(fileName);
         CC_BREAK_IF(it ==  m_data->fileList.end());
 
-        unz_file_pos filePos = it->second;
+        ZipEntryInfo fileInfo = it->second;
 
-        int nRet = unzGoToFilePos(m_data->zipFile, &filePos);
-        CC_BREAK_IF(UNZ_OK != nRet);
-
-        char szFilePathA[UNZ_MAXFILENAMEINZIP + 1];
-        unz_file_info FileInfo;
-        nRet = unzGetCurrentFileInfo(m_data->zipFile, &FileInfo,
-                szFilePathA, sizeof(szFilePathA) - 1, NULL, 0, NULL, 0);
+        int nRet = unzGoToFilePos(m_data->zipFile, &fileInfo.pos);
         CC_BREAK_IF(UNZ_OK != nRet);
 
         nRet = unzOpenCurrentFile(m_data->zipFile);
         CC_BREAK_IF(UNZ_OK != nRet);
 
-        pBuffer = new unsigned char[FileInfo.uncompressed_size];
+        pBuffer = new unsigned char[fileInfo.uncompressed_size];
         int nSize = 0;
-        nSize = unzReadCurrentFile(m_data->zipFile, pBuffer, FileInfo.uncompressed_size);
-        CCAssert(nSize == 0 || nSize == (int)FileInfo.uncompressed_size, "the file size is wrong");
+        nSize = unzReadCurrentFile(m_data->zipFile, pBuffer, fileInfo.uncompressed_size);
+        CCAssert(nSize == 0 || nSize == (int)fileInfo.uncompressed_size, "the file size is wrong");
 
         if (pSize)
         {
-            *pSize = FileInfo.uncompressed_size;
+            *pSize = fileInfo.uncompressed_size;
         }
         unzCloseCurrentFile(m_data->zipFile);
     } while (0);
