@@ -300,7 +300,7 @@ public:
     unzFile zipFile;
 
     // std::unordered_map is faster if available on the platform
-    typedef std::map<std::string, ZipEntryInfo> FileListContainer;
+    typedef std::map<std::string, struct ZipEntryInfo> FileListContainer;
     FileListContainer fileList;
 };
 
@@ -334,35 +334,33 @@ bool ZipFile::setFilter(const std::string &filter)
         // clear existing file list
         m_data->fileList.clear();
 
+        // UNZ_MAXFILENAMEINZIP + 1 - it is done so in unzLocateFile
+        char szCurrentFileName[UNZ_MAXFILENAMEINZIP + 1];
+        unz_file_info64 fileInfo;
+
         // go through all files and store position information about the required files
-        int err = unzGoToFirstFile(m_data->zipFile);
+        int err = unzGoToFirstFile64(m_data->zipFile, &fileInfo,
+                szCurrentFileName, sizeof(szCurrentFileName) - 1);
         while (err == UNZ_OK)
         {
             unz_file_pos posInfo;
             int posErr = unzGetFilePos(m_data->zipFile, &posInfo);
             if (posErr == UNZ_OK)
             {
-                // UNZ_MAXFILENAMEINZIP + 1 - it is done so in unzLocateFile
-                char szCurrentFileName[UNZ_MAXFILENAMEINZIP + 1];
-                unz_file_info64 fileInfo;
-                int nameErr = unzGetCurrentFileInfo64(m_data->zipFile, &fileInfo,
-                        szCurrentFileName, sizeof(szCurrentFileName) - 1,
-                        NULL, 0, NULL, 0);
                 std::string currentFileName = szCurrentFileName;
-                if (nameErr == UNZ_OK)
+                // cache info about filtered files only (like 'assets/')
+                if (filter.empty()
+                    || currentFileName.substr(0, filter.length()) == filter)
                 {
-                    // cache info about filtered files only (like 'assets/')
-                    if (filter.empty()
-                        || currentFileName.substr(0, filter.length()) == filter)
-                    {
-                        ZipEntryInfo entry;
-                        entry.pos = posInfo;
-                        entry.uncompressed_size = (uLong)fileInfo.uncompressed_size;
-                        m_data->fileList[currentFileName] = entry;
-                    }
+                    ZipEntryInfo entry;
+                    entry.pos = posInfo;
+                    entry.uncompressed_size = (uLong)fileInfo.uncompressed_size;
+                    m_data->fileList[currentFileName] = entry;
                 }
             }
-            err = unzGoToNextFile(m_data->zipFile);
+            // next file - also get the information about it
+            err = unzGoToNextFile64(m_data->zipFile, &fileInfo,
+                    szCurrentFileName, sizeof(szCurrentFileName) - 1);
         }
         ret = true;
 
