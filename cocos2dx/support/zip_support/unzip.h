@@ -225,14 +225,36 @@ int ZEXPORT unzGetGlobalComment OF((unzFile file,
 /* Unzip package allow you browse the directory of the zipfile */
 
 int ZEXPORT unzGoToFirstFile OF((unzFile file));
+
 /*
   Set the current file of the zipfile to the first file.
+  return UNZ_OK if there is no problem
+*/
+
+int ZEXPORT unzGoToFirstFile64 OF((unzFile file,
+                        unz_file_info64 *pfile_info,
+                        char *szFileName,
+                        uLong fileNameBufferSize));
+/*
+  Set the current file of the zipfile to the first file
+  with retrieving an information about the file.
   return UNZ_OK if there is no problem
 */
 
 int ZEXPORT unzGoToNextFile OF((unzFile file));
 /*
   Set the current file of the zipfile to the next file.
+  return UNZ_OK if there is no problem
+  return UNZ_END_OF_LIST_OF_FILE if the actual file was the latest.
+*/
+
+int ZEXPORT unzGoToNextFile64 OF((unzFile file,
+                       unz_file_info64 *pfile_info,
+                       char *szFileName,
+                       uLong fileNameBufferSize));
+/*
+  Set the current file of the zipfile to the next file
+  with retrieving an information about the file.
   return UNZ_OK if there is no problem
   return UNZ_END_OF_LIST_OF_FILE if the actual file was the latest.
 */
