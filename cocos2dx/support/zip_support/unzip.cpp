@@ -1536,7 +1536,7 @@ int ZEXPORT unzOpenCurrentFile3 (unzFile file, int* method,
 /* #endif */
         (s->cur_file_info.compression_method!=Z_DEFLATED))
 
-        //err=UNZ_BADZIPFILE;
+        ;//err=UNZ_BADZIPFILE;
 
     pfile_in_zip_read_info->crc32_wait=s->cur_file_info.crc;
     pfile_in_zip_read_info->crc32=0;
