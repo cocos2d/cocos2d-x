@@ -12,6 +12,9 @@ Developers:
     Rolando Abarca
         Javascript Binding and testjs
 
+    mingulov
+        improve the speed of accessing to files from apk
+
     sburavtsov
         fix for correct unscheduling and instance destruction of extensions/network/HttpClient.cpp
 

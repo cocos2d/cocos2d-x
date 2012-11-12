@@ -1313,13 +1313,13 @@ void Issue1305_2::onEnter()
     }];
     */
 
-    CCCallFunc* act2 = CCCallFunc::create(this, callfunc_selector(Issue1305_2::log1)) ;
+    CCCallFunc* act2 = CCCallFunc::create(this, callfunc_selector(Issue1305_2::printLog1));
     CCMoveBy* act3 = CCMoveBy::create(2, ccp(0, -100));
-    CCCallFunc* act4 = CCCallFunc::create(this, callfunc_selector(Issue1305_2::log2)) ;
+    CCCallFunc* act4 = CCCallFunc::create(this, callfunc_selector(Issue1305_2::printLog2));
     CCMoveBy* act5 = CCMoveBy::create(2, ccp(100, -100));
-    CCCallFunc* act6 = CCCallFunc::create(this, callfunc_selector(Issue1305_2::log3)) ;
+    CCCallFunc* act6 = CCCallFunc::create(this, callfunc_selector(Issue1305_2::printLog3));
     CCMoveBy* act7 = CCMoveBy::create(2, ccp(-100, 0));
-    CCCallFunc* act8 = CCCallFunc::create(this, callfunc_selector(Issue1305_2::log4)) ;
+    CCCallFunc* act8 = CCCallFunc::create(this, callfunc_selector(Issue1305_2::printLog4));
 
     CCFiniteTimeAction* actF = CCSequence::create(act1, act2, act3, act4, act5, act6, act7, act8, NULL);
 
@@ -1328,22 +1328,22 @@ void Issue1305_2::onEnter()
 
 }
 
-void Issue1305_2::log1()
+void Issue1305_2::printLog1()
 {
     CCLog("1st block");
 }
 
-void Issue1305_2::log2()
+void Issue1305_2::printLog2()
 {
     CCLog("2nd block");
 }
 
-void Issue1305_2::log3()
+void Issue1305_2::printLog3()
 {
     CCLog("3rd block");
 }
 
-void Issue1305_2::log4()
+void Issue1305_2::printLog4()
 {
     CCLog("4th block");
 }

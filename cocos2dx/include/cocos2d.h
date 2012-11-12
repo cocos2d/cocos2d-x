@@ -177,6 +177,16 @@ THE SOFTWARE.
 	#include "platform/linux/CCStdC.h"
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
 
+// MARMALADE CHANGE
+// Added for Marmalade support
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
+	#include "platform/Marmalade/CCAccelerometer.h"
+	#include "platform/Marmalade/CCApplication.h"
+	#include "platform/Marmalade/CCEGLView.h"
+	#include "platform/Marmalade/CCGL.h"
+	#include "platform/Marmalade/CCStdC.h"
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
+
 
 // script_support
 #include "script_support/CCScriptSupport.h"
