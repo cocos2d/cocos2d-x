@@ -282,6 +282,8 @@
 		1551A874158F2B4700E66CFE /* cocos2dx-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 1551A873158F2B4700E66CFE /* cocos2dx-Prefix.pch */; };
 		15B64960164CBA3000E680CD /* CCPhysicsDebugNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 15B6495F164CBA3000E680CD /* CCPhysicsDebugNode.h */; };
 		15B64962164CF00000E680CD /* CCPhysicsDebugNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15B64961164CF00000E680CD /* CCPhysicsDebugNode.cpp */; };
+		15B6496A164D0B6900E680CD /* CCPhysicsSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15B64968164D0B6900E680CD /* CCPhysicsSprite.cpp */; };
+		15B6496B164D0B6900E680CD /* CCPhysicsSprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 15B64969164D0B6900E680CD /* CCPhysicsSprite.h */; };
 		15FBEE5C164B87F2008CB2C3 /* CCClippingNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 15FBEE5B164B87F2008CB2C3 /* CCClippingNode.h */; };
 		15FBEE5F164B8B5B008CB2C3 /* CCClippingNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15FBEE5E164B8B5B008CB2C3 /* CCClippingNode.cpp */; };
 		15FBEE68164BBA98008CB2C3 /* CCDrawingPrimitives.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15FBEE66164BBA98008CB2C3 /* CCDrawingPrimitives.cpp */; };
@@ -571,6 +573,8 @@
 		1551A873158F2B4700E66CFE /* cocos2dx-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "cocos2dx-Prefix.pch"; sourceTree = "<group>"; };
 		15B6495F164CBA3000E680CD /* CCPhysicsDebugNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsDebugNode.h; sourceTree = "<group>"; };
 		15B64961164CF00000E680CD /* CCPhysicsDebugNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPhysicsDebugNode.cpp; sourceTree = "<group>"; };
+		15B64968164D0B6900E680CD /* CCPhysicsSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPhysicsSprite.cpp; sourceTree = "<group>"; };
+		15B64969164D0B6900E680CD /* CCPhysicsSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsSprite.h; sourceTree = "<group>"; };
 		15FBEE5B164B87F2008CB2C3 /* CCClippingNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCClippingNode.h; sourceTree = "<group>"; };
 		15FBEE5E164B8B5B008CB2C3 /* CCClippingNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCClippingNode.cpp; sourceTree = "<group>"; };
 		15FBEE66164BBA98008CB2C3 /* CCDrawingPrimitives.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCDrawingPrimitives.cpp; sourceTree = "<group>"; };
@@ -1159,6 +1163,8 @@
 			children = (
 				15B6495F164CBA3000E680CD /* CCPhysicsDebugNode.h */,
 				15B64961164CF00000E680CD /* CCPhysicsDebugNode.cpp */,
+				15B64968164D0B6900E680CD /* CCPhysicsSprite.cpp */,
+				15B64969164D0B6900E680CD /* CCPhysicsSprite.h */,
 			);
 			path = physics_nodes;
 			sourceTree = "<group>";
@@ -1340,6 +1346,7 @@
 				15FBEE69164BBA98008CB2C3 /* CCDrawingPrimitives.h in Headers */,
 				15FBEE6B164BBB20008CB2C3 /* CCDrawNode.h in Headers */,
 				15B64960164CBA3000E680CD /* CCPhysicsDebugNode.h in Headers */,
+				15B6496B164D0B6900E680CD /* CCPhysicsSprite.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1517,6 +1524,7 @@
 				15FBEE68164BBA98008CB2C3 /* CCDrawingPrimitives.cpp in Sources */,
 				15FBEE6D164BBF77008CB2C3 /* CCDrawNode.cpp in Sources */,
 				15B64962164CF00000E680CD /* CCPhysicsDebugNode.cpp in Sources */,
+				15B6496A164D0B6900E680CD /* CCPhysicsSprite.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
