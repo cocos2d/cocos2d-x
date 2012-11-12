@@ -267,19 +267,14 @@ void CCTableView::_updateContentSize()
     }
     this->setContentSize(size);
 
-	if (m_eOldDirection != m_eDirection)
-	{
-		if (m_eDirection == kCCScrollViewDirectionHorizontal)
-		{
-			this->setContentOffset(ccp(0,0));
-		}
-		else
-		{
-			this->setContentOffset(ccp(0,this->minContainerOffset().y));
-		}
-		m_eOldDirection = m_eDirection;
-	}
-
+    if (m_eDirection == kCCScrollViewDirectionHorizontal)
+    {
+        this->setContentOffset(ccp(0,0));
+    }
+    else
+    {
+        this->setContentOffset(ccp(0,this->minContainerOffset().y));
+    }
 }
 
 CCPoint CCTableView::_offsetFromIndex(unsigned int index)
