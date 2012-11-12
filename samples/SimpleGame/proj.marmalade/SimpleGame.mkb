@@ -1,0 +1,53 @@
+options
+{
+	module_path="../../../cocos2dx/proj.marmalade/;../../../CocosDenshion/proj.marmalade/"
+	s3e-data-dir = "../Resources/sd/"
+}
+
+includepaths
+{
+	../Classes
+}
+subprojects
+{
+	IwGL
+	cocos2dx
+	CocosDenshion
+}
+
+assets
+{
+	(data)
+	background-music-aac.wav
+	pew-pew-lei.wav
+	CloseNormal.png
+	CloseSelected.png
+	Player.png
+	Projectile.png
+	Target.png
+
+	(data/fonts)
+	arial.ttf
+	Marker Felt.ttf
+}
+
+
+
+files
+{
+	[Main]
+	(src)
+	Main.h
+	Main.cpp
+
+	(../Classes)
+	AppDelegate.h
+	AppDelegate.cpp
+	GameOverScene.cpp
+	GameOverScene.h
+	HelloWorldScene.cpp
+	HelloWorldScene.h
+
+}
+
+
