@@ -541,7 +541,12 @@ void CCSprite::updateTransform(void)
             m_sQuad.tr.vertices = vertex3( RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), m_fVertexZ );
         }
 
-        m_pobTextureAtlas->updateQuad(&m_sQuad, m_uAtlasIndex);
+        // MARMALADE CHANGE: ADDED CHECK FOR NULL, TO PERMIT SPRITES WITH NO BATCH NODE / TEXTURE ATLAS
+        if (m_pobTextureAtlas)
+		{
+            m_pobTextureAtlas->updateQuad(&m_sQuad, m_uAtlasIndex);
+        }
+		
         m_bRecursiveDirty = false;
         setDirty(false);
     }
