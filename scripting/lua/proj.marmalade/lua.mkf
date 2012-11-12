@@ -1,0 +1,16 @@
+includepaths
+{
+    ../lua/
+    ../tolua/
+}
+
+files
+{
+	("../lua")
+	"*.h"
+	"*.c"
+
+	("../tolua")
+	"*.h"
+	"*.c"
+}
