@@ -29,13 +29,6 @@ NS_CC_BEGIN
 
 #if CC_ENABLE_CHIPMUNK_INTEGRATION
 #include chipmunk.h
-class CC_DLL ChipmunkBody : public CCObject
-{
-public:
-    static ChipmunkBody* create();
-    
-    cpBody* getBody();
-};
 
 #elif CC_ENABLE_BOX2D_INTEGRATION
 class b2Body;

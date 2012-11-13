@@ -66,33 +66,6 @@ bool CCPhysicsSprite::isDirty()
 
 #if CC_ENABLE_CHIPMUNK_INTEGRATION
 
-// implementation of ChipmunkBody
-ChipmunkBody* ChipmunkBody::create()
-{
-    ChipmunkBody* pRet = new ChipmunkBody();
-    if (pRet)
-    {
-        pRet->autorelease();
-    }
-    return pRet;
-}
-
-cpBody* ChipmunkBody::getBody()
-{
-    return NULL;
-}
-
-// implementation of ChipmunkSprite
-ChipmunkBody* ChipmunkSprite::getChipmunkBody() const
-{
-    return (ChipmunkBody*)m_pBody->data;
-}
-
-void ChipmunkSprite::setChipmunkBody(ChipmunkBody *chipmunkBody)
-{
-    m_pBody = chipmunkBody->getBody();
-}
-
 // Override the setters and getters to always reflect the body's properties.
 const CCPoint& ChipmunkSprite::getPosition()
 {

@@ -82,7 +82,7 @@ enum {
 #define kCCUniformAlphaTestValue		"CC_alpha_value"
 
 // Attribute names
-#define    kCCAttributeNameColor            "a_color"
+#define    kCCAttributeNameColor           "a_color"
 #define    kCCAttributeNamePosition        "a_position"
 #define    kCCAttributeNameTexCoord        "a_texCoord"
 

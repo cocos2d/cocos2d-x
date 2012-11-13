@@ -33,9 +33,9 @@ THE SOFTWARE.
 #include "kazmath/GL/matrix.h"
 #include "kazmath/kazmath.h"
 
-NS_CC_BEGIN
+using namespace cocos2d;
 
-static GLuint    s_uCurrentProjectionMatrix = -1;
+static GLuint      s_uCurrentProjectionMatrix = -1;
 static bool        s_bVertexAttribPosition = false;
 static bool        s_bVertexAttribColor = false;
 static bool        s_bVertexAttribTexCoords = false;
@@ -49,8 +49,8 @@ static GLuint    s_uCurrentShaderProgram = -1;
 static GLuint    s_uCurrentBoundTexture[kCCMaxActiveTexture] =  {(GLuint)-1,(GLuint)-1,(GLuint)-1,(GLuint)-1, (GLuint)-1,(GLuint)-1,(GLuint)-1,(GLuint)-1, (GLuint)-1,(GLuint)-1,(GLuint)-1,(GLuint)-1, (GLuint)-1,(GLuint)-1,(GLuint)-1,(GLuint)-1, };
 static GLenum    s_eBlendingSource = -1;
 static GLenum    s_eBlendingDest = -1;
-static int      s_eGLServerState = 0;
-static GLuint   s_uVAO = 0;
+static int       s_eGLServerState = 0;
+static GLuint    s_uVAO = 0;
 #endif // CC_ENABLE_GL_STATE_CACHE
 
 // GL State Cache functions
@@ -58,10 +58,12 @@ static GLuint   s_uVAO = 0;
 void ccGLInvalidateStateCache( void )
 {
     kmGLFreeAll();
+    
     s_uCurrentProjectionMatrix = -1;
     s_bVertexAttribPosition = false;
     s_bVertexAttribColor = false;
     s_bVertexAttribTexCoords = false;
+    
 #if CC_ENABLE_GL_STATE_CACHE
     s_uCurrentShaderProgram = -1;
     for( int i=0; i < kCCMaxActiveTexture; i++ )
@@ -78,8 +80,10 @@ void ccGLInvalidateStateCache( void )
 void ccGLDeleteProgram( GLuint program )
 {
 #if CC_ENABLE_GL_STATE_CACHE
-    if( program == s_uCurrentShaderProgram )
+    if(program == s_uCurrentShaderProgram)
+    {
         s_uCurrentShaderProgram = -1;
+    }
 #endif // CC_ENABLE_GL_STATE_CACHE
 
     glDeleteProgram( program );
@@ -134,24 +138,29 @@ void ccGLBlendResetToCache(void)
 #endif // CC_ENABLE_GL_STATE_CACHE
 }
 
+void ccGLBindTexture2D(GLuint textureId)
+{
+    ccGLBindTexture2DN(0, textureId);
+}
+
 void ccGLBindTexture2DN(GLuint textureUnit, GLuint textureId)
 {
 #if CC_ENABLE_GL_STATE_CACHE
     CCAssert(textureUnit < kCCMaxActiveTexture, "textureUnit is too big");
-    if( s_uCurrentBoundTexture[textureUnit] != textureId )
+    if (s_uCurrentBoundTexture[textureUnit] != textureId)
     {
         s_uCurrentBoundTexture[textureUnit] = textureId;
         glActiveTexture(GL_TEXTURE0 + textureUnit);
-        glBindTexture(GL_TEXTURE_2D, textureId );
+        glBindTexture(GL_TEXTURE_2D, textureId);
     }
 #else
     glActiveTexture(GL_TEXTURE0 + textureUnit);
-    glBindTexture(GL_TEXTURE_2D, textureId );
+    glBindTexture(GL_TEXTURE_2D, textureId);
 #endif
 }
 
 
-void ccGLDeleteTexture( GLuint textureId )
+void ccGLDeleteTexture(GLuint textureId)
 {
     ccGLDeleteTextureN(0, textureId);
 }
@@ -165,7 +174,7 @@ void ccGLDeleteTextureN(GLuint textureUnit, GLuint textureId)
     }
 #endif // CC_ENABLE_GL_STATE_CACHE
     
-	glDeleteTextures(1, &textureId );
+	glDeleteTextures(1, &textureId);
 }
 
 void ccGLBindVAO(GLuint vaoId)
@@ -181,7 +190,7 @@ void ccGLBindVAO(GLuint vaoId)
 #endif
 }
 
-void ccGLEnable( ccGLServerState flags )
+void ccGLEnable(ccGLServerState flags)
 {
 #if CC_ENABLE_GL_STATE_CACHE
 
@@ -255,5 +264,3 @@ void ccSetProjectionMatrixDirty( void )
 {
     s_uCurrentProjectionMatrix = -1;
 }
-
-NS_CC_END

@@ -30,8 +30,6 @@ THE SOFTWARE.
 #include "CCGL.h"
 #include "platform/CCPlatformMacros.h"
 
-NS_CC_BEGIN
-
 /**
  * @addtogroup shaders
  * @{
@@ -44,8 +42,8 @@ enum {
     kCCVertexAttribFlag_None        = 0,
 
     kCCVertexAttribFlag_Position    = 1 << 0,
-    kCCVertexAttribFlag_Color        = 1 << 1,
-    kCCVertexAttribFlag_TexCoords    = 1 << 2,
+    kCCVertexAttribFlag_Color       = 1 << 1,
+    kCCVertexAttribFlag_TexCoords   = 1 << 2,
 
     kCCVertexAttribFlag_PosColorTex = ( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_Color | kCCVertexAttribFlag_TexCoords ),
 };
@@ -63,6 +61,10 @@ typedef enum {
       CC_GL_ALL = 0,
 
 } ccGLServerState;
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /** @file ccGLStateCache.h
 */
@@ -117,14 +119,14 @@ void CC_DLL ccGLEnableVertexAttribs(unsigned int flags);
 
 /** If the texture is not already bound to texture unit 0, it binds it.
  If CC_ENABLE_GL_STATE_CACHE is disabled, it will call glBindTexture() directly.
- @since v2.1.0
+ @since v2.0.0
  */
 void ccGLBindTexture2D(GLuint textureId);
 
 
 /** If the texture is not already bound to a given unit, it binds it.
  If CC_ENABLE_GL_STATE_CACHE is disabled, it will call glBindTexture() directly.
- @since v2.0.0
+ @since v2.1.0
  */
 void CC_DLL ccGLBindTexture2DN(GLuint textureUnit, GLuint textureId);
 
@@ -154,7 +156,9 @@ void CC_DLL ccGLEnable( ccGLServerState flags );
 
 // end of shaders group
 /// @}
-
-NS_CC_END
+    
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* __CCGLSTATE_H__ */
