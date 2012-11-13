@@ -40,9 +40,9 @@ NS_CC_BEGIN
 
 typedef struct _hashUniformEntry
 {
-    GLvoid*            value;        // value
+    GLvoid*         value;       // value
     unsigned int    location;    // Key
-    UT_hash_handle  hh;            // hash entry
+    UT_hash_handle  hh;          // hash entry
 } tHashUniformEntry;
 
 CCGLProgram::CCGLProgram()
@@ -50,6 +50,7 @@ CCGLProgram::CCGLProgram()
 , m_uVertShader(0)
 , m_uFragShader(0)
 , m_pHashForUniforms(NULL)
+, m_bUsesTime(false)
 {
     memset(m_uUniforms, 0, sizeof(m_uUniforms));
 }
@@ -87,18 +88,15 @@ bool CCGLProgram::initWithVertexShaderByteArray(const GLchar* vShaderByteArray, 
 
     if (vShaderByteArray)
     {
-
         if (!compileShader(&m_uVertShader, GL_VERTEX_SHADER, vShaderByteArray))
         {
             CCLOG("cocos2d: ERROR: Failed to compile vertex shader");
         }
-
     }
 
     // Create and compile fragment shader
     if (fShaderByteArray)
     {
-
         if (!compileShader(&m_uFragShader, GL_FRAGMENT_SHADER, fShaderByteArray))
         {
             CCLOG("cocos2d: ERROR: Failed to compile fragment shader");
@@ -161,12 +159,9 @@ bool CCGLProgram::compileShader(GLuint * shader, GLenum type, const GLchar* sour
 
     *shader = glCreateShader(type);
     glShaderSource(*shader, sizeof(sources)/sizeof(*sources), sources, NULL);
-    CHECK_GL_ERROR_DEBUG();
     glCompileShader(*shader);
-    CHECK_GL_ERROR_DEBUG();
 
     glGetShaderiv(*shader, GL_COMPILE_STATUS, &status);
-    CHECK_GL_ERROR_DEBUG();
 
     if (! status)
     {
@@ -189,7 +184,7 @@ bool CCGLProgram::compileShader(GLuint * shader, GLenum type, const GLchar* sour
 
         abort();
     }
-    return ( status == GL_TRUE );
+    return (status == GL_TRUE);
 }
 
 void CCGLProgram::addAttribute(const char* attributeName, GLuint index)
@@ -440,9 +435,9 @@ void CCGLProgram::setUniformsForBuiltins()
 	
 	kmMat4Multiply(&matrixMVP, &matrixP, &matrixMV);
     
-    setUniformLocationWith4fv(m_uUniforms[kCCUniformPMatrix], matrixP.mat, 1);
-    setUniformLocationWith4fv(m_uUniforms[kCCUniformMVMatrix], matrixMV.mat, 1);
-    setUniformLocationWith4fv(m_uUniforms[kCCUniformMVPMatrix], matrixMVP.mat, 1);
+    setUniformLocationwithMatrix4fv(m_uUniforms[kCCUniformPMatrix], matrixP.mat, 1);
+    setUniformLocationwithMatrix4fv(m_uUniforms[kCCUniformMVMatrix], matrixMV.mat, 1);
+    setUniformLocationwithMatrix4fv(m_uUniforms[kCCUniformMVPMatrix], matrixMVP.mat, 1);
 	
 	if(m_bUsesTime)
     {

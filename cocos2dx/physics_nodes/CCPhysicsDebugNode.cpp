@@ -167,15 +167,6 @@ static void DrawConstraint(cpConstraint *constraint, CCDrawNode *renderer)
 	}
 }
 
-class ChipmunkSpace : public CCObject
-{
-public:
-    cpSpace* getSapce() const
-    {
-        return NULL;
-    }
-};
-
 // implementation of CCPhysicsDebugNode
 
 void CCPhysicsDebugNode::draw()
@@ -194,30 +185,7 @@ void CCPhysicsDebugNode::draw()
 
 CCPhysicsDebugNode::CCPhysicsDebugNode()
 : m_pSpacePtr(NULL)
-, m_pSpaceObj(NULL)
 {}
-
-CCPhysicsDebugNode* CCPhysicsDebugNode::create(ChipmunkSpace *space)
-{
-    CCPhysicsDebugNode *node = new CCPhysicsDebugNode();
-    if (node)
-    {
-        node->init();
-        
-        node->m_pSpaceObj = space;
-        CC_SAFE_RETAIN(node->m_pSpaceObj);
-        
-        node->m_pSpacePtr = space->getSapce();
-        
-        node->autorelease();
-    }
-    else
-    {
-        CC_SAFE_DELETE(node);
-    }
-    
-    return node;
-}
 
 CCPhysicsDebugNode* CCPhysicsDebugNode::create(cpSpace *space)
 {
@@ -240,7 +208,6 @@ CCPhysicsDebugNode* CCPhysicsDebugNode::create(cpSpace *space)
 
 CCPhysicsDebugNode::~CCPhysicsDebugNode()
 {
-    CC_SAFE_RELEASE(m_pSpaceObj);
 }
 
 NS_CC_END

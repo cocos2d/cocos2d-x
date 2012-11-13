@@ -241,7 +241,7 @@ THE SOFTWARE.
 #include "CCCamera.h"
 #include "CCConfiguration.h"
 #include "CCDirector.h"
-#include "CCDrawingPrimitives.h"
+#include "draw_nodes/CCDrawingPrimitives.h"
 #include "CCScheduler.h"
 
 NS_CC_BEGIN
