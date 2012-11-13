@@ -1,0 +1,63 @@
+options
+{
+	module_path="../../../cocos2dx/proj.marmalade/;../../../CocosDenshion/proj.marmalade/;../../../scripting/lua/proj.marmalade/"
+	s3e-data-dir = "../Resources/"
+}
+
+includepaths
+{
+	../Classes
+	../../../scripting/lua/cocos2dx_support/
+}
+subprojects
+{
+	IwGL
+	cocos2dx
+	CocosDenshion
+	lua
+}
+
+assets
+{
+	(data)
+	background.mp3
+	background.ogg
+	effect1.wav
+	crop.png
+	dog.png
+	land.png
+	menu1.png
+	menu2.png
+	farm.jpg
+	hello.lua
+	hello2.lua
+
+	(data/fonts)
+	arial.ttf
+	Marker Felt.ttf
+}
+
+
+files
+{
+	[Main]
+	(src)
+	Main.h
+	Main.cpp
+
+	(../Classes)
+	AppDelegate.h
+	AppDelegate.cpp
+
+	[cocos2dx_support]
+	../../../scripting/lua/cocos2dx_support/CCLuaEngine.cpp
+	../../../scripting/lua/cocos2dx_support/CCLuaEngine.h
+	../../../scripting/lua/cocos2dx_support/Cocos2dxLuaLoader.cpp
+	../../../scripting/lua/cocos2dx_support/Cocos2dxLuaLoader.h
+	../../../scripting/lua/cocos2dx_support/LuaCocos2d.cpp
+	../../../scripting/lua/cocos2dx_support/LuaCocos2d.h
+	../../../scripting/lua/cocos2dx_support/tolua_fix.c
+	../../../scripting/lua/cocos2dx_support/tolua_fix.h
+}
+
+
