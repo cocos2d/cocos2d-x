@@ -86,7 +86,7 @@ public:
 
     bool executeFunctionWithObjectData(CCNode *self, const char *name, JSObject *obj);
     int executeFunctionWithOwner(jsval owner, const char *name, jsval data);
-    
+        
     void executeJSFunctionWithThisObj(jsval thisObj, jsval callback, jsval *data);
 
 	/**
@@ -189,6 +189,7 @@ ccColor3B jsval_to_cccolor3b(JSContext *cx, jsval v);
 JSBool jsval_to_ccarray_of_CCPoint(JSContext* cx, jsval v, CCPoint **points, int *numPoints);
 CCArray* jsval_to_ccarray(JSContext* cx, jsval v);
 CCDictionary* jsval_to_ccdictionary(JSContext* cx, jsval v);
+CCAcceleration jsval_to_ccacceleration(JSContext* cx,jsval v);
 
 // from native
 jsval long_long_to_jsval(JSContext* cx, long long v);
@@ -202,7 +203,9 @@ jsval cccolor4b_to_jsval(JSContext* cx, ccColor4B& v);
 jsval cccolor4f_to_jsval(JSContext* cx, ccColor4F& v);
 jsval cccolor3b_to_jsval(JSContext* cx, const ccColor3B& v);
 jsval ccdictionary_to_jsval(JSContext* cx, CCDictionary *dict);
+jsval ccdictionary_to_jsval(JSContext* cx, CCDictionary *dict);
 jsval ccarray_to_jsval(JSContext* cx, CCArray *arr);
+jsval ccacceleration_to_jsval(JSContext* cx, CCAcceleration& v);
 
 JSObject* NewGlobalObject(JSContext* cx);
 JSBool jsNewGlobal(JSContext* cx, unsigned argc, jsval* vp);
