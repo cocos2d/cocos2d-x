@@ -24,6 +24,17 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
+/*
+ *
+ * IMPORTANT       IMPORTANT        IMPORTANT        IMPORTANT
+ *
+ *
+ * LEGACY FUNCTIONS
+ *
+ * USE CCDrawNode instead
+ *
+ */
+
 #include "CCDrawingPrimitives.h"
 #include "ccTypes.h"
 #include "ccMacros.h"
@@ -141,16 +152,11 @@ void ccDrawLine( const CCPoint& origin, const CCPoint& destination )
     };
 
     s_pShader->use();
-    CHECK_GL_ERROR_DEBUG();
     s_pShader->setUniformsForBuiltins();
-    CHECK_GL_ERROR_DEBUG();
     s_pShader->setUniformLocationWith4fv(s_nColorLocation, (GLfloat*) &s_tColor.r, 1);
-    CHECK_GL_ERROR_DEBUG();
 
     ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
-    CHECK_GL_ERROR_DEBUG();
     glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);
-    CHECK_GL_ERROR_DEBUG();
     glDrawArrays(GL_LINES, 0, 2);
 
     CC_INCREMENT_GL_DRAWS(1);

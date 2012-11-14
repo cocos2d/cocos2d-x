@@ -486,7 +486,7 @@ void CCParticleSystem::initParticle(tCCParticle* particle)
     }
     else if ( m_ePositionType == kCCPositionTypeRelative )
     {
-        particle->startPos = m_tPosition;
+        particle->startPos = m_obPosition;
     }
 
     // direction
@@ -591,10 +591,10 @@ void CCParticleSystem::update(float dt)
     }
     else if (m_ePositionType == kCCPositionTypeRelative)
     {
-        currentPosition = m_tPosition;
+        currentPosition = m_obPosition;
     }
 
-    if (m_bIsVisible)
+    if (m_bVisible)
     {
         while (m_uParticleIdx < m_uParticleCount)
         {
@@ -677,8 +677,8 @@ void CCParticleSystem::update(float dt)
                 // don't update the particle with the new position information, it will interfere with the radius and tangential calculations
                 if (m_pBatchNode)
                 {
-                    newPos.x+=m_tPosition.x;
-                    newPos.y+=m_tPosition.y;
+                    newPos.x+=m_obPosition.x;
+                    newPos.y+=m_obPosition.y;
                 }
 
                 updateQuadWithParticle(p, newPos);

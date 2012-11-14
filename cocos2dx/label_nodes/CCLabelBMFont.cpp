@@ -812,7 +812,7 @@ bool CCLabelBMFont::initWithString(const char *theString, const char *fntFile, f
         m_fWidth = width;
         m_cOpacity = 255;
         m_tColor = ccWHITE;
-        m_tContentSize = CCSizeZero;
+        m_obContentSize = CCSizeZero;
         m_bIsOpacityModifyRGB = m_pobTextureAtlas->getTexture()->hasPremultipliedAlpha();
         this->setString(theString);
         setAnchorPoint(ccp(0.5f, 0.5f));
@@ -1091,7 +1091,7 @@ bool CCLabelBMFont::isOpacityModifyRGB()
 // LabelBMFont - AnchorPoint
 void CCLabelBMFont::setAnchorPoint(const CCPoint& point)
 {
-    if( ! point.equals(m_tAnchorPoint))
+    if( ! point.equals(m_obAnchorPoint))
     {
         CCSpriteBatchNode::setAnchorPoint(point);
         updateLabel();
