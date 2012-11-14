@@ -602,7 +602,7 @@ void CCDirector::end()
 void CCDirector::purgeDirector()
 {
     // cleanup scheduler
-    getScheduler()->unscheduleAllSelectors();
+    getScheduler()->unscheduleAll();
     
     // don't release the event handlers
     // They are needed in case the director is run again

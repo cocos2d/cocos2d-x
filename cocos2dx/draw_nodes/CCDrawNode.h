@@ -57,19 +57,19 @@ protected:
     
 public:
     static CCDrawNode* create();
-    ~CCDrawNode();
+    virtual ~CCDrawNode();
     
     virtual bool init();
     virtual void draw();
     
     /** draw a dot at a position, with a given radius and color */
-    void drawDot(const CCPoint &pos, float radius, const ccColor4F &color) const;
+    void drawDot(const CCPoint &pos, float radius, const ccColor4F &color);
     
     /** draw a segment with a radius and color */
-    void drawSegment(const CCPoint &from, const CCPoint &to, float radius, const ccColor4F &color) const;
+    void drawSegment(const CCPoint &from, const CCPoint &to, float radius, const ccColor4F &color);
     
     /** draw a polygon with a fill color and line color */
-    void drawPolygon(CCPoint *verts, unsigned int count, const ccColor4F &fillColor, float borderWidth, const ccColor4F &borderColor) const;
+    void drawPolygon(CCPoint *verts, unsigned int count, const ccColor4F &fillColor, float borderWidth, const ccColor4F &borderColor);
     
     /** Clear the geometry in the node's buffer. */
     void clear();
