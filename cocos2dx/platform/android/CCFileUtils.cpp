@@ -24,6 +24,7 @@ THE SOFTWARE.
 
 #define __CC_PLATFORM_FILEUTILS_CPP__
 #include "platform/CCFileUtilsCommon_cpp.h"
+#include "support/zip_support/ZipUtils.h"
 
 using namespace std;
 
@@ -32,17 +33,17 @@ NS_CC_BEGIN
 #include "platform/CCCommon.h"
 #include "jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
 
-// record the resource path
-static string s_strResourcePath = "";
-    
 static CCFileUtils* s_pFileUtils = NULL;
+// record the zip on the resource path
+static ZipFile *s_pZipFile = NULL;
 
 CCFileUtils* CCFileUtils::sharedFileUtils()
 {
     if (s_pFileUtils == NULL)
     {
         s_pFileUtils = new CCFileUtils();
-        s_strResourcePath = getApkPath();
+        std::string resourcePath = getApkPath();
+        s_pZipFile = new ZipFile(resourcePath, "assets/");
     }
     return s_pFileUtils;
 }
@@ -54,6 +55,7 @@ void CCFileUtils::purgeFileUtils()
         s_pFileUtils->purgeCachedEntries();
     }
 
+    CC_SAFE_DELETE(s_pZipFile);
     CC_SAFE_DELETE(s_pFileUtils);
 }
 
@@ -94,13 +96,13 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
         
         fullPath.insert(0, m_obDirectory.c_str());
         fullPath.insert(0, "assets/");
-        pData =  CCFileUtils::getFileDataFromZip(s_strResourcePath.c_str(), fullPath.c_str(), pSize);
+        pData = s_pZipFile->getFileData(fullPath, pSize);
         
         if (! pData && m_obDirectory.size() > 0)
         {
             // search from root
             pathWithoutDirectory.insert(0, "assets/");
-            pData =  CCFileUtils::getFileDataFromZip(s_strResourcePath.c_str(), pathWithoutDirectory.c_str(), pSize);
+            pData = s_pZipFile->getFileData(pathWithoutDirectory, pSize);
         }
     }
     else

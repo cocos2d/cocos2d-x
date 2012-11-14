@@ -47,10 +47,10 @@ var Bullet = cc.Sprite.extend({
         this.getParent().addChild(explode,9999);
         cc.ArrayRemoveObject(MW.CONTAINER.ENEMY_BULLETS,this);
         cc.ArrayRemoveObject(MW.CONTAINER.PLAYER_BULLETS,this);
-        this.removeFromParentAndCleanup(true);
+        this.removeFromParent();
 	
-	var removeExplode = cc.CallFunc.create(explode, function(sender) {
-		explode.removeFromParentAndCleanup(true);
+	var removeExplode = cc.CallFunc.create(function(sender) {
+		explode.removeFromParent();
 	    });
 
         explode.runAction(cc.ScaleBy.create(0.3, 2,2));

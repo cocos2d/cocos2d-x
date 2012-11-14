@@ -57,6 +57,9 @@ class CCSprite;
  */
 class CC_DLL CCSpriteFrameCache : public CCObject
 {
+protected:
+    // MARMALADE: Made this protected not private, as deriving from this class is pretty useful
+    CCSpriteFrameCache(void) : m_pSpriteFrames(NULL), m_pSpriteFramesAliases(NULL){}
 public:
     bool init(void);
     ~CCSpriteFrameCache(void);
@@ -135,7 +138,8 @@ public:
     static void purgeSharedSpriteFrameCache(void);
 
 private:
-    CCSpriteFrameCache(void) : m_pSpriteFrames(NULL), m_pSpriteFramesAliases(NULL){}
+    // MARMALADE: Made this protected not private, as deriving from this class is pretty useful
+//    CCSpriteFrameCache(void) : m_pSpriteFrames(NULL), m_pSpriteFramesAliases(NULL){}
 protected:
     CCDictionary* m_pSpriteFrames;
     CCDictionary* m_pSpriteFramesAliases;
