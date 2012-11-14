@@ -17,9 +17,6 @@
 # S3E documentation for details.
 [S3E]
 MemSize = 10000000
-# Sample only compatible with 480x320 display resolution
-WinWidth=480
-WinHeight=320
 
 [GL]
 AllowNegativeUniformLocation=1

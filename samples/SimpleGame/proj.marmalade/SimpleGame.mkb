@@ -1,7 +1,7 @@
 options
 {
 	module_path="../../../cocos2dx/proj.marmalade/;../../../CocosDenshion/proj.marmalade/"
-	s3e-data-dir = "../Resources/sd/"
+	s3e-data-dir = "../Resources/"
 }
 
 includepaths
@@ -18,17 +18,9 @@ subprojects
 assets
 {
 	(data)
-	background-music-aac.wav
-	pew-pew-lei.wav
-	CloseNormal.png
-	CloseSelected.png
-	Player.png
-	Projectile.png
-	Target.png
-
-	(data/fonts)
-	arial.ttf
-	Marker Felt.ttf
+	sd
+	hd
+	fonts
 }
 
 
