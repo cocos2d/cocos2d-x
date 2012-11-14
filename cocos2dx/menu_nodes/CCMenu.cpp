@@ -199,7 +199,10 @@ void CCMenu::onExit()
 {
     if (m_eState == kCCMenuStateTrackingTouch)
     {
-        m_pSelectedItem->unselected();
+        if (m_pSelectedItem->isSelected())
+        {
+            m_pSelectedItem->unselected();
+        }
         m_eState = kCCMenuStateWaiting;
         m_pSelectedItem = NULL;
     }
@@ -254,8 +257,14 @@ void CCMenu::ccTouchEnded(CCTouch *touch, CCEvent* event)
     CCAssert(m_eState == kCCMenuStateTrackingTouch, "[Menu ccTouchEnded] -- invalid state");
     if (m_pSelectedItem)
     {
-        m_pSelectedItem->unselected();
-        m_pSelectedItem->activate();
+        if (m_pSelectedItem->isSelected())
+        {
+            m_pSelectedItem->unselected();
+        }
+        if (!m_bEnabled)
+        {
+            m_pSelectedItem->activate();
+        }
     }
     m_eState = kCCMenuStateWaiting;
 }
@@ -267,7 +276,10 @@ void CCMenu::ccTouchCancelled(CCTouch *touch, CCEvent* event)
     CCAssert(m_eState == kCCMenuStateTrackingTouch, "[Menu ccTouchCancelled] -- invalid state");
     if (m_pSelectedItem)
     {
-        m_pSelectedItem->unselected();
+        if (m_pSelectedItem->isSelected())
+        {
+            m_pSelectedItem->unselected();
+        }
     }
     m_eState = kCCMenuStateWaiting;
 }
@@ -281,12 +293,18 @@ void CCMenu::ccTouchMoved(CCTouch* touch, CCEvent* event)
     {
         if (m_pSelectedItem)
         {
-            m_pSelectedItem->unselected();
+            if (m_pSelectedItem->isSelected())
+            {
+                m_pSelectedItem->unselected();
+            }
         }
         m_pSelectedItem = currentItem;
         if (m_pSelectedItem)
         {
-            m_pSelectedItem->selected();
+            if (!m_bEnabled)
+            {
+                m_pSelectedItem->selected();
+            }
         }
     }
 }
