@@ -1,7 +1,7 @@
 options
 {
 	module_path="../../../cocos2dx/proj.marmalade/"
-	s3e-data-dir = "../Resources/iphone"
+	s3e-data-dir = "../Resources"
 }
 
 includepaths
@@ -17,9 +17,10 @@ subprojects
 assets
 {
 	(data)
-	CloseNormal.png
-	CloseSelected.png
-	HelloWorld.png
+	fonts
+	ipad
+	ipadhd
+	iphone
 }
 
 
