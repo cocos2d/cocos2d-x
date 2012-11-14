@@ -256,7 +256,7 @@ protected:
      */
     void removeTargetWithActionForControlEvent(CCObject* target, SEL_CCControlHandler action, CCControlEvent controlEvent);
 
-    CREATE_FUNC(CCControl);
+    static CCControl* create();
 
 };
 

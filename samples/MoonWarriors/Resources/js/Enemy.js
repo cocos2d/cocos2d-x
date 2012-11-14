@@ -46,7 +46,7 @@ var Enemy = cc.Sprite.extend({
         this.getParent().addChild(a);
         spark(this.getPosition(),this.getParent(), 1.2, 0.7);
         cc.ArrayRemoveObject(MW.CONTAINER.ENEMIES,this);
-        this.removeFromParentAndCleanup(true);
+        this.removeFromParent();
         if(MW.SOUND){
             cc.AudioEngine.getInstance().playEffect(s_explodeEffect);
         }
@@ -56,7 +56,7 @@ var Enemy = cc.Sprite.extend({
         var b = new Bullet(this.bulletSpeed, "W2.png", this.attackMode);
         MW.CONTAINER.ENEMY_BULLETS.push(b);
         this.getParent().addChild(b, b.zOrder, MW.UNIT_TAG.ENMEY_BULLET);
-        b.setPosition(cc.p(p.x, p.y - this.getContentSize().height * 0.2));
+        b.setPosition(p.x, p.y - this.getContentSize().height * 0.2);
     },
     hurt:function () {
         this._hurtColorLife = 2;

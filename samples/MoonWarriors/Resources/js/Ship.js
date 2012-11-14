@@ -42,15 +42,15 @@ var Ship = cc.Sprite.extend({
         var ghostSprite = cc.Sprite.createWithTexture(shipTexture, cc.rect(0, 45, 60, 38));
         ghostSprite.setBlendFunc(gl.SRC_ALPHA, gl.ONE);
         ghostSprite.setScale(8);
-        ghostSprite.setPosition(cc.p(this.getContentSize().width / 2, 12));
+        ghostSprite.setPosition(this.getContentSize().width / 2, 12);
         this.addChild(ghostSprite, 3000, 99999);
         ghostSprite.runAction(cc.ScaleTo.create(0.5, 1, 1));
         var blinks = cc.Blink.create(3, 9);
-        var makeBeAttack = cc.CallFunc.create(this, function (t) {
+        var makeBeAttack = cc.CallFunc.create(function (t) {
             t.canBeAttack = true;
             t.setVisible(true);
             t.removeChild(ghostSprite,true);
-        });
+        }.bind(this));
         this.runAction(cc.Sequence.create(cc.DelayTime.create(0.5), blinks, makeBeAttack));
     },
     update:function (dt) {
@@ -95,12 +95,12 @@ var Ship = cc.Sprite.extend({
         var a = new Bullet(this.bulletSpeed, "W1.png", MW.ENEMY_MOVE_TYPE.NORMAL);
         MW.CONTAINER.PLAYER_BULLETS.push(a);
         this.getParent().addChild(a, a.zOrder, MW.UNIT_TAG.PLAYER_BULLET);
-        a.setPosition(cc.p(p.x + offset, p.y + 3 + cs.height * 0.3));
+        a.setPosition(p.x + offset, p.y + 3 + cs.height * 0.3);
 
         var b = new Bullet(this.bulletSpeed, "W1.png", MW.ENEMY_MOVE_TYPE.NORMAL);
         MW.CONTAINER.PLAYER_BULLETS.push(b);
         this.getParent().addChild(b, b.zOrder, MW.UNIT_TAG.PLAYER_BULLET);
-        b.setPosition(cc.p(p.x - offset, p.y + 3 + cs.height * 0.3));
+        b.setPosition(p.x - offset, p.y + 3 + cs.height * 0.3);
     },
     destroy:function () {
         MW.LIFE--;

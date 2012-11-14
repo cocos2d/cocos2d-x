@@ -976,8 +976,14 @@ void CCLabelBMFont::setString(const char *newString, bool fromUpdate)
 {
     CC_SAFE_DELETE_ARRAY(m_sString);
     m_sString = cc_utf16_from_utf8(newString);
-    m_sInitialString = newString;
 
+    // MARMALADE CHANGE
+    // THE ASSIGMENT OF STRINGS BELOW PERFORMS AN OVERLAPPING MEMCPY, WHEN fromUpdate IS TRUE
+    // ADDED THE "IF" LINE TO AVOID THIS
+    if (strcmp(m_sInitialString.c_str(), newString))
+	{
+        m_sInitialString = newString;
+	}
     updateString(fromUpdate);
 }
 
