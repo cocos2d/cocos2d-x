@@ -214,14 +214,19 @@ void CCMenu::onExit()
 
 void CCMenu::setHandlerPriority(int newPriority)
 {
+    m_handlerPriority = newPriority;
+    
     CCTouchDispatcher* pDispatcher = CCDirector::sharedDirector()->getTouchDispatcher();
-    pDispatcher->setPriority(newPriority, this);
+    if (pDispatcher->findHandler(this))
+    {
+        pDispatcher->setPriority(newPriority, this);
+    }
 }
 
 void CCMenu::registerWithTouchDispatcher()
 {
     CCDirector* pDirector = CCDirector::sharedDirector();
-    pDirector->getTouchDispatcher()->addTargetedDelegate(this, kCCMenuHandlerPriority, true);
+    pDirector->getTouchDispatcher()->addTargetedDelegate(this, m_handlerPriority, true);
 }
 
 bool CCMenu::ccTouchBegan(CCTouch* touch, CCEvent* event)
@@ -261,7 +266,7 @@ void CCMenu::ccTouchEnded(CCTouch *touch, CCEvent* event)
         {
             m_pSelectedItem->unselected();
         }
-        if (!m_bEnabled)
+        if (m_bEnabled)
         {
             m_pSelectedItem->activate();
         }
@@ -301,7 +306,7 @@ void CCMenu::ccTouchMoved(CCTouch* touch, CCEvent* event)
         m_pSelectedItem = currentItem;
         if (m_pSelectedItem)
         {
-            if (!m_bEnabled)
+            if (m_bEnabled)
             {
                 m_pSelectedItem->selected();
             }
