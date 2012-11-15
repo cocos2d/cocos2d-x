@@ -19,6 +19,7 @@ subprojects
 	libxml2
 	freetype
 	libjpeg
+	libtiff
 }
 includepaths
 {
