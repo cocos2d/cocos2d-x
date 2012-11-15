@@ -30,6 +30,8 @@ THE SOFTWARE.
 #include "CCGL.h"
 #include "platform/CCPlatformMacros.h"
 
+NS_CC_BEGIN
+
 /**
  * @addtogroup shaders
  * @{
@@ -61,10 +63,6 @@ typedef enum {
       CC_GL_ALL = 0,
 
 } ccGLServerState;
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 /** @file ccGLStateCache.h
 */
@@ -156,9 +154,8 @@ void CC_DLL ccGLEnable( ccGLServerState flags );
 
 // end of shaders group
 /// @}
+
+NS_CC_END
     
-#ifdef __cplusplus
-}
-#endif
 
 #endif /* __CCGLSTATE_H__ */

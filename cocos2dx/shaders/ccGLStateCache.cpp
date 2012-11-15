@@ -33,7 +33,7 @@ THE SOFTWARE.
 #include "kazmath/GL/matrix.h"
 #include "kazmath/kazmath.h"
 
-using namespace cocos2d;
+NS_CC_BEGIN
 
 static GLuint      s_uCurrentProjectionMatrix = -1;
 static bool        s_bVertexAttribPosition = false;
@@ -264,3 +264,5 @@ void ccSetProjectionMatrixDirty( void )
 {
     s_uCurrentProjectionMatrix = -1;
 }
+
+NS_CC_END
