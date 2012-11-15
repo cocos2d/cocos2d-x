@@ -1008,7 +1008,6 @@ ccColor3B jsval_to_cccolor3b(JSContext *cx, jsval v) {
 JSBool jsval_to_ccarray_of_CCPoint(JSContext* cx, jsval v, CCPoint **points, int *numPoints) {
     // Parsing sequence
     JSObject *jsobj;
-    JSBool ok = JS_ValueToObject( cx, v, &jsobj );
     if(!jsobj || !JS_IsArrayObject( cx, jsobj)) return JS_FALSE;
 
     uint32_t len;
@@ -1068,9 +1067,9 @@ jsval ccarray_to_jsval(JSContext* cx, CCArray *arr) {
         // Do we need to convert string to js base type ? 
         if(testString) {
             arrElement = c_string_to_jsval(cx, testString->getCString());
-        } else if (testDict = dynamic_cast<cocos2d::CCDictionary*>(obj)) {
+        } else if ((testDict = dynamic_cast<cocos2d::CCDictionary*>(obj))) {
             arrElement = ccdictionary_to_jsval(cx, testDict);
-        } else if (testArray = dynamic_cast<cocos2d::CCArray*>(obj)) {
+        } else if ((testArray = dynamic_cast<cocos2d::CCArray*>(obj))) {
             arrElement = ccarray_to_jsval(cx, testArray);
         } else {
             js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::CCObject>(cx, obj);
@@ -1100,9 +1099,9 @@ jsval ccdictionary_to_jsval(JSContext* cx, CCDictionary* dict)
         // Do we need to convert string to js base type ? 
         if(testString) {
             dictElement = c_string_to_jsval(cx, testString->getCString());
-        } else if (testDict = dynamic_cast<cocos2d::CCDictionary*>(obj)) {
+        } else if ((testDict = dynamic_cast<cocos2d::CCDictionary*>(obj))) {
             dictElement = ccdictionary_to_jsval(cx, testDict);
-        } else if (testArray = dynamic_cast<cocos2d::CCArray*>(obj)) {
+        } else if ((testArray = dynamic_cast<cocos2d::CCArray*>(obj))) {
             dictElement = ccarray_to_jsval(cx, testArray);
         } else {
             js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::CCObject>(cx, obj);
