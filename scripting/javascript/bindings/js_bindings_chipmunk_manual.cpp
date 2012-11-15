@@ -39,7 +39,7 @@ static unsigned long pair_ints( unsigned long A, unsigned long B )
 	// order is not important
   unsigned long k1 = (A < B) ? A : B;
   unsigned long k2 = (A > B) ? A : B;
-	
+
 	return (k1 + k2) * (k1 + k2 + 1) /2 + k2;
 }
 
@@ -47,62 +47,70 @@ static cpBool myCollisionBegin(cpArbiter *arb, cpSpace *space, void *data)
 {
 	struct collision_handler *handler = (struct collision_handler*) data;
 	jsval args[2];
-    
+
     handler->cx = ScriptingCore::getInstance()->getGlobalContext();
-    
+
 	args[0] = opaque_to_jsval( handler->cx, arb);
 	args[1] = opaque_to_jsval( handler->cx, space );
-	
+
 	jsval rval;
+	JSObject* obj = JS_GetGlobalForScopeChain(handler->cx);
+	JSAutoCompartment ac(handler->cx, obj);
 	JS_CallFunctionValue(handler->cx , handler->self, handler->begin, 2, args, &rval);
-	
+
 	if( JSVAL_IS_BOOLEAN(rval) ) {
 		JSBool ret = JSVAL_TO_BOOLEAN(rval);
 		return (cpBool)ret;
 	}
-	return cpTrue;	
+	return cpTrue;
 }
 
 static cpBool myCollisionPre(cpArbiter *arb, cpSpace *space, void *data)
 {
 	struct collision_handler *handler = (struct collision_handler*) data;
-	
+
 	jsval args[2];
 	args[0] = opaque_to_jsval( handler->cx, arb);
 	args[1] = opaque_to_jsval( handler->cx, space );
-	
+
 	jsval rval;
-	JS_CallFunctionValue( handler->cx, handler->self, handler->pre, 2, args, &rval);
-	
+	JSObject* obj = JS_GetGlobalForScopeChain(handler->cx);
+	JSAutoCompartment ac(handler->cx, obj);
+	JS_CallFunctionValue(handler->cx, handler->self, handler->pre, 2, args, &rval);
+
 	if( JSVAL_IS_BOOLEAN(rval) ) {
 		JSBool ret = JSVAL_TO_BOOLEAN(rval);
 		return (cpBool)ret;
 	}
-	return cpTrue;	
+	return cpTrue;
 }
 
 static void myCollisionPost(cpArbiter *arb, cpSpace *space, void *data)
 {
 	struct collision_handler *handler = (struct collision_handler*) data;
-	
+
 	jsval args[2];
 	args[0] = opaque_to_jsval( handler->cx, arb);
 	args[1] = opaque_to_jsval( handler->cx, space );
-	
+
 	jsval ignore;
-	JS_CallFunctionValue( handler->cx, handler->self, handler->post, 2, args, &ignore);
+	JSObject* obj = JS_GetGlobalForScopeChain(handler->cx);
+	JSAutoCompartment ac(handler->cx, obj);
+	JS_CallFunctionValue(handler->cx, handler->self, handler->post, 2, args, &ignore);
 }
 
 static void myCollisionSeparate(cpArbiter *arb, cpSpace *space, void *data)
 {
 	struct collision_handler *handler = (struct collision_handler*) data;
-	
+
 	jsval args[2];
 	args[0] = opaque_to_jsval( handler->cx, arb);
 	args[1] = opaque_to_jsval( handler->cx, space );
-	
+
 	jsval ignore;
-	JS_CallFunctionValue( handler->cx, handler->self, handler->separate, 2, args, &ignore);
+	JSObject* obj = JS_GetGlobalForScopeChain(handler->cx);
+	JSAutoCompartment ac(handler->cx, obj);
+	JS_CallFunctionValue(handler->cx, handler->self, handler->separate, 2, args, &ignore);
 }
 
 JSBool JSPROXY_cpSpaceAddCollisionHandler(JSContext *cx, uint32_t argc, jsval *vp)
@@ -116,7 +124,7 @@ JSBool JSPROXY_cpSpaceAddCollisionHandler(JSContext *cx, uint32_t argc, jsval *v
 	handler = (struct collision_handler *) malloc(sizeof (struct collision_handler));
 	if( ! handler )
 		return JS_FALSE;
-	
+
 	JSBool ok = JS_TRUE;
 
 	// args
@@ -124,7 +132,7 @@ JSBool JSPROXY_cpSpaceAddCollisionHandler(JSContext *cx, uint32_t argc, jsval *v
 	ok &= jsval_to_opaque( cx, *argvp++, (void**)&space);
 	ok &= jsval_to_int(cx, *argvp++, (int32_t*) &handler->typeA );
 	ok &= jsval_to_int(cx, *argvp++, (int32_t*) &handler->typeB );
-	
+
 
 	ok &= JS_ValueToObject(cx, *argvp++, &handler->self );
 
@@ -135,16 +143,16 @@ JSBool JSPROXY_cpSpaceAddCollisionHandler(JSContext *cx, uint32_t argc, jsval *v
 
 	if( ! ok )
 		return JS_FALSE;
-		
+
 	handler->cx = cx;
-	
+
 	cpSpaceAddCollisionHandler(space, handler->typeA, handler->typeB,
 							   JSVAL_IS_NULL(handler->begin) ? NULL : &myCollisionBegin,
 							   JSVAL_IS_NULL(handler->pre) ? NULL : &myCollisionPre,
 							   JSVAL_IS_NULL(handler->post) ? NULL : &myCollisionPost,
 							   JSVAL_IS_NULL(handler->separate) ? NULL : &myCollisionSeparate,
 							   handler );
-	
+
 
 	//
 	// Already added ? If so, remove it.
@@ -161,7 +169,7 @@ JSBool JSPROXY_cpSpaceAddCollisionHandler(JSContext *cx, uint32_t argc, jsval *v
 	handler->hash_key = paired_key;
 	HASH_ADD_INT( collision_handler_hash, hash_key, handler );
 
-		
+
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -170,22 +178,22 @@ JSBool JSPROXY_cpSpaceRemoveCollisionHandler(JSContext *cx, uint32_t argc, jsval
 {
 	if( argc != 3 )
 		return  JS_FALSE;
-	
+
 	jsval *argvp = JS_ARGV(cx,vp);
 	JSBool ok = JS_TRUE;
-	
+
 	cpSpace* space;
 	cpCollisionType typeA;
 	cpCollisionType typeB;
 	ok &= jsval_to_opaque( cx, *argvp++, (void**)&space);
 	ok &= jsval_to_int(cx, *argvp++, (int32_t*) &typeA );
 	ok &= jsval_to_int(cx, *argvp++, (int32_t*) &typeB );
-	
+
 	if( ! ok )
 		return JS_FALSE;
 
 	cpSpaceRemoveCollisionHandler(space, typeA, typeB );
-	
+
 	// Remove it
 	struct collision_handler *hashElement = NULL;
 	unsigned long key = pair_ints(typeA, typeB );
@@ -194,7 +202,7 @@ JSBool JSPROXY_cpSpaceRemoveCollisionHandler(JSContext *cx, uint32_t argc, jsval
 		HASH_DEL( collision_handler_hash, hashElement );
 		free( hashElement );
 	}
-	
+
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -205,9 +213,9 @@ JSBool JSPROXY_cpArbiterGetBodies(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	if( argc != 1 )
 		return  JS_FALSE;
-	
+
 	jsval *argvp = JS_ARGV(cx,vp);
-	
+
 	cpArbiter* arbiter;
 	if(!jsval_to_opaque( cx, *argvp++, (void**) &arbiter ) )
 		return JS_FALSE;
@@ -217,40 +225,40 @@ JSBool JSPROXY_cpArbiterGetBodies(JSContext *cx, uint32_t argc, jsval *vp)
 	cpArbiterGetBodies(arbiter, &bodyA, &bodyB);
 	jsval valA = opaque_to_jsval(cx, bodyA);
 	jsval valB = opaque_to_jsval(cx, bodyB);
-	
+
 	JSObject *jsobj = JS_NewArrayObject(cx, 2, NULL);
 	JS_SetElement(cx, jsobj, 0, &valA);
 	JS_SetElement(cx, jsobj, 1, &valB);
 
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-	
+
 	return JS_TRUE;
-	
+
 }
 
 JSBool JSPROXY_cpArbiterGetShapes(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	if( argc != 1 )
 		return  JS_FALSE;
-	
+
 	jsval *argvp = JS_ARGV(cx,vp);
-	
+
 	cpArbiter* arbiter;
 	if( ! jsval_to_opaque( cx, *argvp++, (void**) &arbiter ) )
 	   return JS_FALSE;
-	
+
 	cpShape *shapeA;
 	cpShape *shapeB;
 	cpArbiterGetShapes(arbiter, &shapeA, &shapeB);
 	jsval valA = opaque_to_jsval(cx, shapeA);
 	jsval valB = opaque_to_jsval(cx, shapeB);
-	
+
 	JSObject *jsobj = JS_NewArrayObject(cx, 2, NULL);
 	JS_SetElement(cx, jsobj, 0, &valA);
 	JS_SetElement(cx, jsobj, 1, &valB);
-	
+
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-	
+
 	return JS_TRUE;
 }
 
@@ -261,17 +269,17 @@ JSBool JSPROXY_cpBodyGetUserData(JSContext *cx, uint32_t argc, jsval *vp)
         js_log("Invalid number of arguments");
         return JS_FALSE;
     }
-    
+
 	jsval *argvp = JS_ARGV(cx,vp);
 	cpBody *body;
 	if( ! jsval_to_opaque( cx, *argvp++, (void**) &body ) )
 		return JS_FALSE;
-    
+
 	JSObject *data = (JSObject*) cpBodyGetUserData(body);
-	
-	
+
+
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(data));
-	
+
 	return JS_TRUE;
 }
 
@@ -281,23 +289,23 @@ JSBool JSPROXY_cpBodySetUserData(JSContext *cx, uint32_t argc, jsval *vp)
         js_log("Invalid number of arguments");
         return JS_FALSE;
     }
-    
+
 	jsval *argvp = JS_ARGV(cx,vp);
 	JSBool ok = JS_TRUE;
-	
+
 	cpBody *body;
 	JSObject *jsobj;
-	
+
 	ok &=jsval_to_opaque( cx, *argvp++, (void**) &body );
 	ok &=JS_ValueToObject(cx, *argvp++, &jsobj);
-	
+
 	if( ! ok )
 		return JS_FALSE;
-	
+
 	cpBodySetUserData(body, jsobj);
-	
+
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
-	
+
 	return JS_TRUE;
 }
 
@@ -316,37 +324,37 @@ JSObject* JSPROXY_CCPhysicsSprite_object = NULL;
 // Destructor
 void JSPROXY_CCPhysicsSprite_finalize(JSFreeOp *fop, JSObject *obj)
 {
-    
+
 }
 
 // Arguments:
 // Ret value: cpBody* (N/A)
 JSBool JSPROXY_CCPhysicsSprite_body(JSContext *cx, uint32_t argc, jsval *vp) {
-    
+
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
 	js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
     CCPhysicsSprite* real = (CCPhysicsSprite *)(proxy ? proxy->ptr : NULL);
 	TEST_NATIVE_OBJECT(cx, real)
 	cpBody* ret_val;
-    
+
 	ret_val = real->_body;
     jsval ret_jsval = opaque_to_jsval(cx, ret_val);
 	JS_SET_RVAL(cx, vp, ret_jsval);
-	
+
 	return JS_TRUE;
 }
 
 // Arguments:
 // Ret value: BOOL (b)
 JSBool JSPROXY_CCPhysicsSprite_ignoreBodyRotation(JSContext *cx, uint32_t argc, jsval *vp) {
-    
+
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
 	js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
 	CCPhysicsSprite* real = (CCPhysicsSprite *)(proxy ? proxy->ptr : NULL);
 	TEST_NATIVE_OBJECT(cx, real)
-    
+
 	bool ret_val;
-    
+
 	ret_val = real->_ignoreBodyRotation;
 	JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
 	return JS_TRUE;
@@ -355,20 +363,20 @@ JSBool JSPROXY_CCPhysicsSprite_ignoreBodyRotation(JSContext *cx, uint32_t argc, 
 // Arguments: cpBody*
 // Ret value: void (None)
 JSBool JSPROXY_CCPhysicsSprite_setBody_(JSContext *cx, uint32_t argc, jsval *vp) {
-    
+
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
 	js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
 	CCPhysicsSprite* real = (CCPhysicsSprite *)(proxy ? proxy->ptr : NULL);
 	TEST_NATIVE_OBJECT(cx, real)
-    
+
 	jsval *argvp = JS_ARGV(cx,vp);
 	JSBool ok = JS_TRUE;
-	
+
     cpBody* arg0;
-    
+
 	ok &= jsval_to_opaque( cx, *argvp++, (void**)&arg0 );
 	if( ! ok ) return JS_FALSE;
-    
+
 	real->setBody((cpBody*)arg0);
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
@@ -377,19 +385,19 @@ JSBool JSPROXY_CCPhysicsSprite_setBody_(JSContext *cx, uint32_t argc, jsval *vp)
 // Arguments: BOOL
 // Ret value: void (None)
 JSBool JSPROXY_CCPhysicsSprite_setIgnoreBodyRotation_(JSContext *cx, uint32_t argc, jsval *vp) {
-    
+
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
 	js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
 	CCPhysicsSprite* real = (CCPhysicsSprite *)(proxy ? proxy->ptr : NULL);
 	TEST_NATIVE_OBJECT(cx, real)
-    
+
 	jsval *argvp = JS_ARGV(cx,vp);
 	JSBool ok = JS_TRUE;
 	JSBool arg0;
-    
+
 	ok &= JS_ValueToBoolean( cx, *argvp++, &arg0 );
 	if( ! ok ) return JS_FALSE;
-    
+
 	real->setIgnoreBodyRotation((bool)arg0);
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
@@ -427,7 +435,7 @@ js_proxy_t *js_get_or_create_proxy(JSContext *cx, T *native_obj) {
 		assert(typeProxy);
 		JSObject* js_obj = JS_NewObject(cx, typeProxy->jsclass, typeProxy->proto, typeProxy->parentProto);
 		JS_NEW_PROXY(proxy, native_obj, js_obj);
-        
+
 		JS_AddNamedObjectRoot(cx, &proxy->obj, typeid(native_obj).name());
 		return proxy;
 	} else {
@@ -450,14 +458,14 @@ static JSBool dummy_constructor(JSContext *cx, uint32_t argc, jsval *vp) {
 	JS_NEW_PROXY(pp, cobj, _tmp);
 	JS_AddObjectRoot(cx, &pp->obj);
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(_tmp));
-    
+
 	return JS_TRUE;
 }
 
 // Arguments: NSString*, CGRect
 // Ret value: CCPhysicsSprite* (o)
 JSBool JSPROXY_CCPhysicsSprite_spriteWithFile_rect__static(JSContext *cx, uint32_t argc, jsval *vp) {
-    
+
     jsval *argv = JS_ARGV(cx, vp);
 	if (argc == 2) {
 		const char* arg0;
@@ -490,7 +498,7 @@ JSBool JSPROXY_CCPhysicsSprite_spriteWithFile_rect__static(JSContext *cx, uint32
 		std::string arg0_tmp = jsval_to_std_string(cx, argv[0]); arg0 = arg0_tmp.c_str();
 		CCPhysicsSprite* ret = new CCPhysicsSprite();
         ret->initWithFile(arg0);
-        
+
 		jsval jsret;
 		do {
 			if (ret) {
@@ -503,7 +511,7 @@ JSBool JSPROXY_CCPhysicsSprite_spriteWithFile_rect__static(JSContext *cx, uint32
 				jsret = OBJECT_TO_JSVAL(obj);
                 js_proxy_t *p;
                 JS_NEW_PROXY(p, ret, obj);
-                
+
 			} else {
 				jsret = JSVAL_NULL;
 			}
@@ -512,7 +520,7 @@ JSBool JSPROXY_CCPhysicsSprite_spriteWithFile_rect__static(JSContext *cx, uint32
 		return JS_TRUE;
 	}
 	return JS_FALSE;
-    
+
 }
 
 // Arguments: CCSpriteFrame*
@@ -594,7 +602,7 @@ void JSPROXY_CCPhysicsSprite_createClass(JSContext *cx, JSObject* globalObj)
 	JSPROXY_CCPhysicsSprite_class->convert = JS_ConvertStub;
 	JSPROXY_CCPhysicsSprite_class->finalize = JSPROXY_CCPhysicsSprite_finalize;
 	JSPROXY_CCPhysicsSprite_class->flags = 0;
-    
+
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
 	};
@@ -611,15 +619,15 @@ void JSPROXY_CCPhysicsSprite_createClass(JSContext *cx, JSObject* globalObj)
 		JS_FN("createWithSpriteFrameName", JSPROXY_CCPhysicsSprite_spriteWithSpriteFrameName__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
-    
+
     TypeTest<cocos2d::CCSprite> t1;
     js_type_class_t *typeClass;
     uint32_t typeId = t1.s_id();
     HASH_FIND_INT(_js_global_type_ht, &typeId, typeClass);
     assert(typeClass);
-    
+
 	JSPROXY_CCPhysicsSprite_object = JS_InitClass(cx, globalObj, typeClass->proto, JSPROXY_CCPhysicsSprite_class, dummy_constructor<CCPhysicsSprite>, 0,properties,funcs,NULL,st_funcs);
-    
+
     TypeTest<CCPhysicsSprite> t;
 	js_type_class_t *p;
 	typeId = t.s_id();
@@ -663,8 +671,8 @@ void register_chipmunk_manual(JSContext* cx, JSObject* global)
 	} else {
 		JS_ValueToObject(cx, nsval, &ns);
 	}
-    
-    
+
+
     // register chipmunk functions
     JSObject *chipmunk = JS_NewObject(cx, NULL, NULL, NULL);
     jsval chipmunkVal = OBJECT_TO_JSVAL(chipmunk);
@@ -945,7 +953,7 @@ void register_chipmunk_manual(JSContext* cx, JSObject* global)
     JS_DefineFunction(cx, chipmunk, "vsub", JSPROXY_cpvsub, 2, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
     JS_DefineFunction(cx, chipmunk, "vtoangle", JSPROXY_cpvtoangle, 1, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
     JS_DefineFunction(cx, chipmunk, "vunrotate", JSPROXY_cpvunrotate, 2, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
-    
+
 
     // manual
     JS_DefineFunction(cx, chipmunk, "spaceAddCollisionHandler", JSPROXY_cpSpaceAddCollisionHandler, 8, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
@@ -954,7 +962,7 @@ void register_chipmunk_manual(JSContext* cx, JSObject* global)
     JS_DefineFunction(cx, chipmunk, "arbiterGetShapes", JSPROXY_cpArbiterGetShapes, 1, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
     JS_DefineFunction(cx, chipmunk, "bodyGetUserData", JSPROXY_cpBodyGetUserData, 1, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
     JS_DefineFunction(cx, chipmunk, "bodySetUserData", JSPROXY_cpBodySetUserData, 2, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
-    
+
 }
 
 
