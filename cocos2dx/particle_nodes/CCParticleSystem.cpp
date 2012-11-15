@@ -57,6 +57,10 @@ THE SOFTWARE.
 // opengl
 #include "CCGL.h"
 
+#include <string>
+
+using namespace std;
+
 
 NS_CC_BEGIN
 
@@ -171,13 +175,30 @@ bool CCParticleSystem::initWithFile(const char *plistFile)
     CCDictionary *dict = CCDictionary::createWithContentsOfFileThreadSafe(m_sPlistFile.c_str());
 
     CCAssert( dict != NULL, "Particles: file not found");
-    bRet = this->initWithDictionary(dict);
+    
+    // XXX compute path from a path, should define a function somewhere to do it
+    string listFilePath = plistFile;
+    if (listFilePath.find('/') != string::npos)
+    {
+        listFilePath = listFilePath.substr(0, listFilePath.rfind('/') + 1);
+        bRet = this->initWithDictionary(dict, listFilePath.c_str());
+    }
+    else
+    {
+        bRet = this->initWithDictionary(dict, "");
+    }
+    
     dict->release();
 
     return bRet;
 }
 
 bool CCParticleSystem::initWithDictionary(CCDictionary *dictionary)
+{
+    return initWithDictionary(dictionary, "");
+}
+
+bool CCParticleSystem::initWithDictionary(CCDictionary *dictionary, const char *dirname)
 {
     bool bRet = false;
     unsigned char *buffer = NULL;
@@ -293,7 +314,21 @@ bool CCParticleSystem::initWithDictionary(CCDictionary *dictionary)
                 // texture        
                 // Try to get the texture from the cache
                 const char* textureName = dictionary->valueForKey("textureFileName")->getCString();
-                std::string fullpath = CCFileUtils::sharedFileUtils()->fullPathFromRelativeFile(textureName, m_sPlistFile.c_str());
+                string textureDir = textureName;
+                if (textureDir.find('/') != string::npos)
+                {
+                    textureDir = textureDir.substr(0, textureDir.rfind('/') + 1);
+                }
+                else
+                {
+                    textureDir = "";
+                }
+                
+                if (textureDir != dirname)
+                {
+                    textureName = textureName + textureDir.size();
+                    textureName = (string(dirname) + textureName).c_str();
+                }
                 
                 CCTexture2D *tex = NULL;
                 
@@ -302,7 +337,7 @@ bool CCParticleSystem::initWithDictionary(CCDictionary *dictionary)
                     // set not pop-up message box when load image failed
                     bool bNotify = CCFileUtils::sharedFileUtils()->isPopupNotify();
                     CCFileUtils::sharedFileUtils()->setPopupNotify(false);
-                    tex = CCTextureCache::sharedTextureCache()->addImage(fullpath.c_str());
+                    tex = CCTextureCache::sharedTextureCache()->addImage(textureName);
                     
                     // reset the value of UIImage notify
                     CCFileUtils::sharedFileUtils()->setPopupNotify(bNotify);
@@ -335,7 +370,7 @@ bool CCParticleSystem::initWithDictionary(CCDictionary *dictionary)
                         CCAssert(isOK, "CCParticleSystem: error init image with Data");
                         CC_BREAK_IF(!isOK);
                         
-                        setTexture(CCTextureCache::sharedTextureCache()->addUIImage(image, fullpath.c_str()));
+                        setTexture(CCTextureCache::sharedTextureCache()->addUIImage(image, textureName));
 
                         image->release();
                     }

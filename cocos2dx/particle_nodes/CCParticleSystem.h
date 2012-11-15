@@ -398,6 +398,11 @@ public:
     @since v0.99.3
     */
     bool initWithDictionary(CCDictionary *dictionary);
+    
+    /** initializes a particle system from a NSDictionary and the path from where to load the png
+     @since v2.1
+     */
+    bool initWithDictionary(CCDictionary *dictionary, const char *dirname);
 
     //! Initializes a system with a fixed number of particles
     virtual bool initWithTotalParticles(unsigned int numberOfParticles);
