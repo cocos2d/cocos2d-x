@@ -33,6 +33,7 @@
 #include "IwUtil.h"
 #include "png.h"
 #include "ft2build.h"
+#include "tiffio.h"
 #include FT_FREETYPE_H 
 #define FONT_KERNING 2
 #define RSHIFT6(num) ((num)>>6)
@@ -46,12 +47,12 @@ extern "C"
 
 //#include <string>
 
-// typedef struct 
-// {
-//     unsigned char* data;
-//     int size;
-//     int offset;
-// }tImageSource;
+typedef struct 
+{
+    unsigned char* data;
+    int size;
+    int offset;
+} tImageSource;
 
 struct TextLine {
 	std::string sLineStr;
@@ -519,8 +520,6 @@ CCImage::~CCImage()
 bool CCImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = eFmtPng*/)
 {
 	IW_CALLSTACK("UIImage::initWithImageFile");
-//    CCFileData data(CCFileUtils::fullPathFromRelativePath(strPath), "rb");	// MH: CCFileData was has been removed in CC 2.0.3
-//    return initWithImageData(data.getBuffer(), data.getSize(), eImgFmt);
     bool bRet = false;
     unsigned long nSize = 0;
     unsigned char* pBuffer = CCFileUtils::sharedFileUtils()->getFileData(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(strPath), "rb", &nSize);
@@ -535,8 +534,6 @@ bool CCImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = e
 bool CCImage::initWithImageFileThreadSafe( const char *fullpath, EImageFormat imageType /*= kFmtPng*/ )
 {
 	CC_UNUSED_PARAM(imageType);
-//	CCFileData data(fullpath, "rb");											// MH: CCFileData was has been removed in CC 2.0.3
-//	return initWithImageData(data.getBuffer(), data.getSize(), imageType);
     bool bRet = false;
     unsigned long nSize = 0;
     unsigned char *pBuffer = CCFileUtils::sharedFileUtils()->getFileData(fullpath, "rb", &nSize);
@@ -568,6 +565,11 @@ bool CCImage::initWithImageData(void * pData,
         else if (kFmtJpg == eFmt)
         {
             bRet = _initWithJpgData(pData, nDataLen);
+            break;
+        }
+        else if (kFmtTiff == eFmt)
+        {
+            bRet = _initWithTiffData(pData, nDataLen);
             break;
         }
     } while (0);
@@ -850,13 +852,208 @@ bool CCImage::initWithString(
 	return bRet; 
 }
 
-bool CCImage::saveToFile(const char *pszFilePath, bool bIsToRGB)
+static tmsize_t _tiffReadProc(thandle_t fd, void* buf, tmsize_t size)
 {
-	// todo
-	return false;
+    tImageSource* isource = (tImageSource*)fd;
+    uint8* ma;
+    uint64 mb;
+    unsigned long n;
+    unsigned long o;
+    tmsize_t p;
+    ma=(uint8*)buf;
+    mb=size;
+    p=0;
+    while (mb>0)
+    {
+        n=0x80000000UL;
+        if ((uint64)n>mb)
+            n=(unsigned long)mb;
+
+
+        if((int)(isource->offset + n) <= isource->size)
+        {
+            memcpy(ma, isource->data+isource->offset, n);
+            isource->offset += n;
+            o = n;
+        }
+        else
+        {
+            return 0;
+        }
+
+        ma+=o;
+        mb-=o;
+        p+=o;
+        if (o!=n)
+        {
+            break;
+        }
+    }
+    return p;
+}
+
+static tmsize_t _tiffWriteProc(thandle_t fd, void* buf, tmsize_t size)
+{
+    CC_UNUSED_PARAM(fd);
+    CC_UNUSED_PARAM(buf);
+    CC_UNUSED_PARAM(size);
+    return 0;
+}
+
+
+static uint64 _tiffSeekProc(thandle_t fd, uint64 off, int whence)
+{
+    tImageSource* isource = (tImageSource*)fd;
+    uint64 ret = -1;
+    do 
+    {
+        if (whence == SEEK_SET)
+        {
+            CC_BREAK_IF(off > isource->size-1);
+            ret = isource->offset = (uint32)off;
+        }
+        else if (whence == SEEK_CUR)
+        {
+            CC_BREAK_IF(isource->offset + off > isource->size-1);
+            ret = isource->offset += (uint32)off;
+        }
+        else if (whence == SEEK_END)
+        {
+            CC_BREAK_IF(off > isource->size-1);
+            ret = isource->offset = (uint32)(isource->size-1 - off);
+        }
+        else
+        {
+            CC_BREAK_IF(off > isource->size-1);
+            ret = isource->offset = (uint32)off;
+        }
+    } while (0);
+
+    return ret;
+}
+
+static uint64 _tiffSizeProc(thandle_t fd)
+{
+    tImageSource* pImageSrc = (tImageSource*)fd;
+    return pImageSrc->size;
+}
+
+static int _tiffCloseProc(thandle_t fd)
+{
+    CC_UNUSED_PARAM(fd);
+    return 0;
+}
+
+static int _tiffMapProc(thandle_t fd, void** pbase, toff_t* psize)
+{
+    CC_UNUSED_PARAM(fd);
+    CC_UNUSED_PARAM(pbase);
+    CC_UNUSED_PARAM(psize);
+    return 0;
+}
+
+static void _tiffUnmapProc(thandle_t fd, void* base, toff_t size)
+{
+    CC_UNUSED_PARAM(fd);
+    CC_UNUSED_PARAM(base);
+    CC_UNUSED_PARAM(size);
+}
+
+bool CCImage::_initWithTiffData(void* pData, int nDataLen)
+{
+    bool bRet = false;
+    do 
+    {
+        // set the read call back function
+        tImageSource imageSource;
+        imageSource.data    = (unsigned char*)pData;
+        imageSource.size    = nDataLen;
+        imageSource.offset  = 0;
+
+        TIFF* tif = TIFFClientOpen("file.tif", "r", (thandle_t)&imageSource, 
+            _tiffReadProc, _tiffWriteProc,
+            _tiffSeekProc, _tiffCloseProc, _tiffSizeProc,
+            _tiffMapProc,
+            _tiffUnmapProc);
+
+        CC_BREAK_IF(NULL == tif);
+
+        uint32 w = 0, h = 0;
+        uint16 bitsPerSample = 0, samplePerPixel = 0, planarConfig = 0;
+        size_t npixels = 0;
+        
+        TIFFGetField(tif, TIFFTAG_IMAGEWIDTH, &w);
+        TIFFGetField(tif, TIFFTAG_IMAGELENGTH, &h);
+        TIFFGetField(tif, TIFFTAG_BITSPERSAMPLE, &bitsPerSample);
+        TIFFGetField(tif, TIFFTAG_SAMPLESPERPIXEL, &samplePerPixel);
+        TIFFGetField(tif, TIFFTAG_PLANARCONFIG, &planarConfig);
+
+        npixels = w * h;
+        
+        m_bHasAlpha = true;
+        m_nWidth = w;
+        m_nHeight = h;
+        m_nBitsPerComponent = 8;
+
+        m_pData = new unsigned char[npixels * sizeof (uint32)];
+
+        uint32* raster = (uint32*) _TIFFmalloc(npixels * sizeof (uint32));
+        if (raster != NULL) 
+        {
+           if (TIFFReadRGBAImageOriented(tif, w, h, raster, ORIENTATION_TOPLEFT, 0))
+           {
+                unsigned char* src = (unsigned char*)raster;
+                unsigned int* tmp = (unsigned int*)m_pData;
+
+                /* the raster data is pre-multiplied by the alpha component 
+                   after invoking TIFFReadRGBAImageOriented
+                for(int j = 0; j < m_nWidth * m_nHeight * 4; j += 4)
+                {
+                    *tmp++ = CC_RGB_PREMULTIPLY_ALPHA( src[j], src[j + 1], 
+                        src[j + 2], src[j + 3] );
+                }
+                */
+                m_bPreMulti = true;
+
+               memcpy(m_pData, raster, npixels*sizeof (uint32));
+           }
+
+          _TIFFfree(raster);
+        }
+        
+
+        TIFFClose(tif);
+
+        bRet = true;
+    } while (0);
+    return bRet;
 }
 
 bool CCImage::_initWithRawData(void * pData, int nDatalen, int nWidth, int nHeight, int nBitsPerComponent)
+{
+    bool bRet = false;
+    do 
+    {
+        CC_BREAK_IF(0 == nWidth || 0 == nHeight);
+
+        m_nBitsPerComponent = nBitsPerComponent;
+        m_nHeight   = (short)nHeight;
+        m_nWidth    = (short)nWidth;
+        m_bHasAlpha = true;
+
+        // only RGBA8888 supported
+        int nBytesPerComponent = 4;
+        int nSize = nHeight * nWidth * nBytesPerComponent;
+        m_pData = new unsigned char[nSize];
+        CC_BREAK_IF(! m_pData);
+        memcpy(m_pData, pData, nSize);
+
+        bRet = true;
+    } while (0);
+    return bRet;
+}
+
+bool CCImage::saveToFile(const char *pszFilePath, bool bIsToRGB)
 {
 	// todo
 	return false;

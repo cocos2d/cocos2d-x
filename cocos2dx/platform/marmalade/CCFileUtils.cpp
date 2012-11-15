@@ -70,21 +70,26 @@ const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)		
     // TODO HOW ARE WE SUPPOSED TO WRITE BACK TO THE "ignore" REFERENCE?
 	IwAssert(GAME, pszRelativePath);
 
+    const char* resDir = m_obDirectory.c_str();
 	CCString * pRet = new CCString();
+
     pRet->autorelease();
     if ((strlen(pszRelativePath) > 1 && pszRelativePath[1] == ':'))
     {
-        pRet->m_sString = pszRelativePath;
+        pRet->m_sString = resDir;
+        pRet->m_sString += pszRelativePath;
     }
     else if (strlen(pszRelativePath) > 0 && pszRelativePath[0] == '/')
     {
 		char szDriver[3] = {s_pszResourcePath[0], s_pszResourcePath[1], 0};
         pRet->m_sString = szDriver;
+        pRet->m_sString += resDir;
         pRet->m_sString += pszRelativePath;
     }
     else
     {
         pRet->m_sString = s_pszResourcePath;
+        pRet->m_sString += resDir;
         pRet->m_sString += pszRelativePath;
     }
 
