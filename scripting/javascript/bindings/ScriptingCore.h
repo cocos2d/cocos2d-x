@@ -210,4 +210,50 @@ JSBool jsSocketRead(JSContext* cx, unsigned argc, jsval* vp);
 JSBool jsSocketWrite(JSContext* cx, unsigned argc, jsval* vp);
 JSBool jsSocketClose(JSContext* cx, unsigned argc, jsval* vp);
 
+// just a simple utility to avoid mem leaking when using JSString
+class JSStringWrapper
+{
+	JSString*	string;
+	const char*	buffer;
+public:
+	JSStringWrapper() {
+		buffer = NULL;
+	}
+	JSStringWrapper(JSString* str, JSContext* cx = NULL) {
+		set(str, cx);
+	}
+	JSStringWrapper(jsval val, JSContext* cx = NULL) {
+		set(val, cx);
+	}
+	~JSStringWrapper() {
+		if (buffer) {
+			JS_free(ScriptingCore::getInstance()->getGlobalContext(), (void*)buffer);
+		}
+	}
+	void set(jsval val, JSContext* cx) {
+		if (val.isString()) {
+			string = val.toString();
+			if (!cx) {
+				cx = ScriptingCore::getInstance()->getGlobalContext();
+			}
+			buffer = JS_EncodeString(cx, string);
+		} else {
+			buffer = NULL;
+		}
+	}
+	void set(JSString* str, JSContext* cx) {
+		string = str;
+		if (!cx) {
+			cx = ScriptingCore::getInstance()->getGlobalContext();
+		}
+		buffer = JS_EncodeString(cx, string);
+	}
+	operator std::string() {
+		return std::string(buffer);
+	}
+	operator char*() {
+		return (char*)buffer;
+	}
+};
+
 #endif

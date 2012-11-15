@@ -337,8 +337,8 @@ void ScriptingCore::string_report(jsval val) {
         if (NULL == str) {
             LOGD("val : return string is NULL");
         } else {
-            LOGD("val : return string =\n%s\n",
-                 JS_EncodeString(this->getGlobalContext(), str));
+			JSStringWrapper wrapper(str);
+            LOGD("val : return string =\n%s\n", (char *)wrapper);
         }
     } else if (JSVAL_IS_NUMBER(val)) {
         double number;
@@ -489,8 +489,8 @@ JSBool ScriptingCore::log(JSContext* cx, uint32_t argc, jsval *vp)
         JSString *string = NULL;
         JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "S", &string);
         if (string) {
-            char *cstr = JS_EncodeString(cx, string);
-            js_log(cstr);
+			JSStringWrapper wrapper(string);
+            js_log((char *)string);
         }
     }
     return JS_TRUE;
@@ -522,24 +522,22 @@ JSBool ScriptingCore::executeScript(JSContext *cx, uint32_t argc, jsval *vp)
     if (argc >= 1) {
         jsval* argv = JS_ARGV(cx, vp);
         JSString* str = JS_ValueToString(cx, argv[0]);
-        const char* path = JS_EncodeString(cx, str);
+		JSStringWrapper path(str);
         JSBool res = false;
         if (argc == 2 && argv[1].isString()) {
             JSString* globalName = JSVAL_TO_STRING(argv[1]);
-            const char* name = JS_EncodeString(cx, globalName);
+			JSStringWrapper name(globalName);
             js::RootedObject* rootedGlobal = globals[name];
             if (rootedGlobal) {
-                JS_free(cx, (void*)name);
                 res = ScriptingCore::getInstance()->runScript(path, rootedGlobal->get());
             } else {
-                JS_ReportError(cx, "Invalid global object: %s", name);
+                JS_ReportError(cx, "Invalid global object: %s", (char*)name);
                 return JS_FALSE;
             }
         } else {
             JSObject* glob = JS_GetGlobalForScopeChain(cx);
             res = ScriptingCore::getInstance()->runScript(path, glob);
         }
-        JS_free(cx, (void*)path);
         return res;
     }
     return JS_TRUE;
@@ -889,9 +887,7 @@ long long jsval_to_long_long(JSContext *cx, jsval v) {
 
 std::string jsval_to_std_string(JSContext *cx, jsval v) {
     JSString *tmp = JS_ValueToString(cx, v);
-    char *rawStr = JS_EncodeString(cx, tmp);
-    std::string ret = std::string(rawStr);
-    JS_free(cx, rawStr);
+	JSStringWrapper ret(tmp);
     return ret;
 }
 
@@ -1349,15 +1345,12 @@ JSBool jsSocketWrite(JSContext* cx, unsigned argc, jsval* vp)
     if (argc == 2) {
         jsval* argv = JS_ARGV(cx, vp);
         int s;
-        const char* str;
 
         s = JSVAL_TO_INT(argv[0]);
         JSString* jsstr = JS_ValueToString(cx, argv[1]);
-        str = JS_EncodeString(cx, jsstr);
+		JSStringWrapper str(jsstr);
 
         write(s, str, strlen(str));
-
-        JS_free(cx, (void*)str);
     }
     return JS_TRUE;
 }
