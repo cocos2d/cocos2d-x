@@ -29,6 +29,7 @@ class ScriptingCore : public CCScriptEngineProtocol
 	JSRuntime *rt_;
 	JSContext *cx_;
 	JSObject  *global_;
+	JSObject  *debugGlobal_;
 	
 	ScriptingCore();
 public:
@@ -169,6 +170,12 @@ public:
 	static JSBool addRootJS(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool removeRootJS(JSContext *cx, uint32_t argc, jsval *vp);
 
+	/**
+	 * enable the debug environment
+	 */
+	void enableDebugger();
+	JSObject* getDebugGlobal() { return debugGlobal_; }
+	
  private:
     void string_report(jsval val);
 };
@@ -202,8 +209,9 @@ jsval cccolor4b_to_jsval(JSContext* cx, ccColor4B& v);
 jsval cccolor4f_to_jsval(JSContext* cx, ccColor4F& v);
 jsval cccolor3b_to_jsval(JSContext* cx, const ccColor3B& v);
 
-JSObject* NewGlobalObject(JSContext* cx);
-JSBool jsNewGlobal(JSContext* cx, unsigned argc, jsval* vp);
+JSObject* NewGlobalObject(JSContext* cx, bool debug = false);
+JSBool jsStartDebugger(JSContext* cx, unsigned argc, jsval* vp);
+JSBool jsGetScript(JSContext* cx, unsigned argc, jsval* vp);
 
 JSBool jsSocketOpen(JSContext* cx, unsigned argc, jsval* vp);
 JSBool jsSocketRead(JSContext* cx, unsigned argc, jsval* vp);
