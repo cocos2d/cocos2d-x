@@ -24,6 +24,17 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
+/*
+ *
+ * IMPORTANT       IMPORTANT        IMPORTANT        IMPORTANT
+ *
+ *
+ * LEGACY FUNCTIONS
+ *
+ * USE CCDrawNode instead
+ *
+ */
+
 #include "CCDrawingPrimitives.h"
 #include "ccTypes.h"
 #include "ccMacros.h"
@@ -83,7 +94,7 @@ void ccDrawPoint( const CCPoint& point )
 
     ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
     s_pShader->use();
-    s_pShader->setUniformForModelViewProjectionMatrix();
+    s_pShader->setUniformsForBuiltins();
 
     s_pShader->setUniformLocationWith4fv(s_nColorLocation, (GLfloat*) &s_tColor.r, 1);
     s_pShader->setUniformLocationWith1f(s_nPointSizeLocation, s_fPointSize);
@@ -101,7 +112,7 @@ void ccDrawPoints( const CCPoint *points, unsigned int numberOfPoints )
 
     ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
     s_pShader->use();
-    s_pShader->setUniformForModelViewProjectionMatrix();
+    s_pShader->setUniformsForBuiltins();
     s_pShader->setUniformLocationWith4fv(s_nColorLocation, (GLfloat*) &s_tColor.r, 1);
     s_pShader->setUniformLocationWith1f(s_nPointSizeLocation, s_fPointSize);
 
@@ -141,16 +152,11 @@ void ccDrawLine( const CCPoint& origin, const CCPoint& destination )
     };
 
     s_pShader->use();
-    CHECK_GL_ERROR_DEBUG();
-    s_pShader->setUniformForModelViewProjectionMatrix();
-    CHECK_GL_ERROR_DEBUG();
+    s_pShader->setUniformsForBuiltins();
     s_pShader->setUniformLocationWith4fv(s_nColorLocation, (GLfloat*) &s_tColor.r, 1);
-    CHECK_GL_ERROR_DEBUG();
 
     ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
-    CHECK_GL_ERROR_DEBUG();
     glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);
-    CHECK_GL_ERROR_DEBUG();
     glDrawArrays(GL_LINES, 0, 2);
 
     CC_INCREMENT_GL_DRAWS(1);
@@ -181,7 +187,7 @@ void ccDrawPoly( const CCPoint *poli, unsigned int numberOfPoints, bool closePol
     lazy_init();
 
     s_pShader->use();
-    s_pShader->setUniformForModelViewProjectionMatrix();
+    s_pShader->setUniformsForBuiltins();
     s_pShader->setUniformLocationWith4fv(s_nColorLocation, (GLfloat*) &s_tColor.r, 1);
 
     ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
@@ -223,7 +229,7 @@ void ccDrawSolidPoly( const CCPoint *poli, unsigned int numberOfPoints, ccColor4
     lazy_init();
 
     s_pShader->use();
-    s_pShader->setUniformForModelViewProjectionMatrix();    
+    s_pShader->setUniformsForBuiltins();
     s_pShader->setUniformLocationWith4fv(s_nColorLocation, (GLfloat*) &color.r, 1);
 
     ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
@@ -278,7 +284,7 @@ void ccDrawCircle( const CCPoint& center, float radius, float angle, unsigned in
     vertices[(segments+1)*2+1] = center.y;
 
     s_pShader->use();
-    s_pShader->setUniformForModelViewProjectionMatrix();
+    s_pShader->setUniformsForBuiltins();
     s_pShader->setUniformLocationWith4fv(s_nColorLocation, (GLfloat*) &s_tColor.r, 1);
 
     ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
@@ -313,7 +319,7 @@ void ccDrawQuadBezier(const CCPoint& origin, const CCPoint& control, const CCPoi
     vertices[segments].y = destination.y;
 
     s_pShader->use();
-    s_pShader->setUniformForModelViewProjectionMatrix();
+    s_pShader->setUniformsForBuiltins();
     s_pShader->setUniformLocationWith4fv(s_nColorLocation, (GLfloat*) &s_tColor.r, 1);
 
     ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
@@ -365,7 +371,7 @@ void ccDrawCardinalSpline( CCPointArray *config, float tension,  unsigned int se
     }
 
     s_pShader->use();
-    s_pShader->setUniformForModelViewProjectionMatrix();    
+    s_pShader->setUniformsForBuiltins();
     s_pShader->setUniformLocationWith4fv(s_nColorLocation, (GLfloat*)&s_tColor.r, 1);
 
     ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
@@ -394,7 +400,7 @@ void ccDrawCubicBezier(const CCPoint& origin, const CCPoint& control1, const CCP
     vertices[segments].y = destination.y;
 
     s_pShader->use();
-    s_pShader->setUniformForModelViewProjectionMatrix();
+    s_pShader->setUniformsForBuiltins();
     s_pShader->setUniformLocationWith4fv(s_nColorLocation, (GLfloat*) &s_tColor.r, 1);
 
     ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );

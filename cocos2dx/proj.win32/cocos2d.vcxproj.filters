@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="base_nodes">
@@ -90,6 +90,12 @@
     </Filter>
     <Filter Include="shaders">
       <UniqueIdentifier>{163895ae-8a8e-46bf-bdf2-98bb2c1347fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="draw_nodes">
+      <UniqueIdentifier>{1179d205-d065-49f0-8457-bc4c3f1d0cb3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="physics_nodes">
+      <UniqueIdentifier>{58a223b7-e569-4463-bffa-a680c7d07ca9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -408,8 +414,25 @@
     <ClCompile Include="..\kazmath\src\GL\matrix.c">
       <Filter>kazmath\src\GL</Filter>
     </ClCompile>
-    <ClCompile Include="..\shaders\CCGLProgram.cpp">
-      <Filter>shaders</Filter>
+    <ClCompile Include="..\CCCamera.cpp" />
+    <ClCompile Include="..\CCConfiguration.cpp" />
+    <ClCompile Include="..\CCDirector.cpp" />
+    <ClCompile Include="..\CCScheduler.cpp" />
+    <ClCompile Include="..\cocos2d.cpp" />
+    <ClCompile Include="..\draw_nodes\CCDrawingPrimitives.cpp">
+      <Filter>draw_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\draw_nodes\CCDrawNode.cpp">
+      <Filter>draw_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\physics_nodes\CCPhysicsDebugNode.cpp">
+      <Filter>physics_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\physics_nodes\CCPhysicsSprite.cpp">
+      <Filter>physics_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\misc_nodes\CCClippingNode.cpp">
+      <Filter>misc_nodes</Filter>
     </ClCompile>
     <ClCompile Include="..\shaders\ccGLStateCache.cpp">
       <Filter>shaders</Filter>
@@ -420,12 +443,9 @@
     <ClCompile Include="..\shaders\ccShaders.cpp">
       <Filter>shaders</Filter>
     </ClCompile>
-    <ClCompile Include="..\CCCamera.cpp" />
-    <ClCompile Include="..\CCConfiguration.cpp" />
-    <ClCompile Include="..\CCDirector.cpp" />
-    <ClCompile Include="..\CCDrawingPrimitives.cpp" />
-    <ClCompile Include="..\CCScheduler.cpp" />
-    <ClCompile Include="..\cocos2d.cpp" />
+    <ClCompile Include="..\shaders\CCGLProgram.cpp">
+      <Filter>shaders</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\base_nodes\CCAtlasNode.h">
@@ -803,8 +823,24 @@
     <ClInclude Include="..\kazmath\include\kazmath\GL\matrix.h">
       <Filter>kazmath\include\kazmath\GL</Filter>
     </ClInclude>
-    <ClInclude Include="..\shaders\CCGLProgram.h">
-      <Filter>shaders</Filter>
+    <ClInclude Include="..\CCCamera.h" />
+    <ClInclude Include="..\CCConfiguration.h" />
+    <ClInclude Include="..\CCDirector.h" />
+    <ClInclude Include="..\CCScheduler.h" />
+    <ClInclude Include="..\draw_nodes\CCDrawingPrimitives.h">
+      <Filter>draw_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\draw_nodes\CCDrawNode.h">
+      <Filter>draw_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\physics_nodes\CCPhysicsDebugNode.h">
+      <Filter>physics_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\physics_nodes\CCPhysicsSprite.h">
+      <Filter>physics_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\misc_nodes\CCClippingNode.h">
+      <Filter>misc_nodes</Filter>
     </ClInclude>
     <ClInclude Include="..\shaders\ccGLStateCache.h">
       <Filter>shaders</Filter>
@@ -819,6 +855,12 @@
       <Filter>shaders</Filter>
     </ClInclude>
     <ClInclude Include="..\shaders\ccShader_PositionColor_vert.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shaders\ccShader_PositionColorLengthTexture_frag.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shaders\ccShader_PositionColorLengthTexture_vert.h">
       <Filter>shaders</Filter>
     </ClInclude>
     <ClInclude Include="..\shaders\ccShader_PositionTexture_frag.h">
@@ -857,10 +899,8 @@
     <ClInclude Include="..\shaders\ccShaders.h">
       <Filter>shaders</Filter>
     </ClInclude>
-    <ClInclude Include="..\CCCamera.h" />
-    <ClInclude Include="..\CCConfiguration.h" />
-    <ClInclude Include="..\CCDirector.h" />
-    <ClInclude Include="..\CCDrawingPrimitives.h" />
-    <ClInclude Include="..\CCScheduler.h" />
+    <ClInclude Include="..\shaders\CCGLProgram.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

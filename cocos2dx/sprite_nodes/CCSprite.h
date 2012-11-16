@@ -219,6 +219,8 @@ public:
     virtual void setDirtyRecursively(bool bValue);
     virtual void setPosition(const CCPoint& pos);
     virtual void setRotation(float fRotation);
+    virtual void setRotationX(float fRotationX);
+    virtual void setRotationY(float fRotationY);
     virtual void setSkewX(float sx);
     virtual void setSkewY(float sy);
     virtual void setScaleX(float fScaleX);

@@ -35,7 +35,7 @@ var Enemy = cc.Sprite.extend({
                 this._hurtColorLife--;
             }
             if (this._hurtColorLife == 1) {
-                this.setColor( cc.WHITE );
+                this.setColor( cc.c3b(255,255,255) );
             }
         }
     },
@@ -61,7 +61,7 @@ var Enemy = cc.Sprite.extend({
     hurt:function () {
         this._hurtColorLife = 2;
         this.HP--;
-        this.setColor( cc.RED );
+        this.setColor( cc.c3b(255,0,0) );
     },
     collideRect:function(){
         var a = this.getContentSize();

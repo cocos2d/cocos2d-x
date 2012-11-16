@@ -899,7 +899,7 @@ void CCTransitionFlipX::onEnter()
     float inDeltaZ, inAngleZ;
     float outDeltaZ, outAngleZ;
 
-    if( m_eOrientation == kOrientationRightOver )
+    if( m_eOrientation == kCCTransitionOrientationRightOver )
     {
         inDeltaZ = 90;
         inAngleZ = 270;
@@ -951,7 +951,7 @@ CCTransitionFlipX* CCTransitionFlipX::create(float t, CCScene* s, tOrientation o
 
 CCTransitionFlipX* CCTransitionFlipX::create(float t, CCScene* s)
 {
-    return CCTransitionFlipX::create(t, s, kOrientationRightOver);
+    return CCTransitionFlipX::create(t, s, kCCTransitionOrientationRightOver);
 }
 
 //
@@ -974,7 +974,7 @@ void CCTransitionFlipY::onEnter()
     float inDeltaZ, inAngleZ;
     float outDeltaZ, outAngleZ;
 
-    if( m_eOrientation == kOrientationUpOver ) 
+    if( m_eOrientation == kCCTransitionOrientationUpOver ) 
     {
         inDeltaZ = 90;
         inAngleZ = 270;
@@ -1026,7 +1026,7 @@ CCTransitionFlipY* CCTransitionFlipY::create(float t, CCScene* s, tOrientation o
 
 CCTransitionFlipY* CCTransitionFlipY::create(float t, CCScene* s)
 {
-    return CCTransitionFlipY::create(t, s, kOrientationUpOver);
+    return CCTransitionFlipY::create(t, s, kCCTransitionOrientationUpOver);
 }
 
 //
@@ -1050,7 +1050,7 @@ void CCTransitionFlipAngular::onEnter()
     float inDeltaZ, inAngleZ;
     float outDeltaZ, outAngleZ;
 
-    if( m_eOrientation == kOrientationRightOver ) 
+    if( m_eOrientation == kCCTransitionOrientationRightOver ) 
     {
         inDeltaZ = 90;
         inAngleZ = 270;
@@ -1101,7 +1101,7 @@ CCTransitionFlipAngular* CCTransitionFlipAngular::create(float t, CCScene* s, tO
 
 CCTransitionFlipAngular* CCTransitionFlipAngular::create(float t, CCScene* s)
 {
-    return CCTransitionFlipAngular::create(t, s, kOrientationRightOver);
+    return CCTransitionFlipAngular::create(t, s, kCCTransitionOrientationRightOver);
 }
 
 //
@@ -1124,7 +1124,7 @@ void CCTransitionZoomFlipX::onEnter()
     float inDeltaZ, inAngleZ;
     float outDeltaZ, outAngleZ;
 
-    if( m_eOrientation == kOrientationRightOver ) {
+    if( m_eOrientation == kCCTransitionOrientationRightOver ) {
         inDeltaZ = 90;
         inAngleZ = 270;
         outDeltaZ = 90;
@@ -1184,7 +1184,7 @@ CCTransitionZoomFlipX* CCTransitionZoomFlipX::create(float t, CCScene* s, tOrien
 
 CCTransitionZoomFlipX* CCTransitionZoomFlipX::create(float t, CCScene* s)
 {
-    return CCTransitionZoomFlipX::create(t, s, kOrientationRightOver);
+    return CCTransitionZoomFlipX::create(t, s, kCCTransitionOrientationRightOver);
 }
 
 //
@@ -1208,7 +1208,7 @@ void CCTransitionZoomFlipY::onEnter()
     float inDeltaZ, inAngleZ;
     float outDeltaZ, outAngleZ;
 
-    if( m_eOrientation== kOrientationUpOver ) {
+    if( m_eOrientation== kCCTransitionOrientationUpOver ) {
         inDeltaZ = 90;
         inAngleZ = 270;
         outDeltaZ = 90;
@@ -1268,7 +1268,7 @@ CCTransitionZoomFlipY* CCTransitionZoomFlipY::create(float t, CCScene* s, tOrien
 
 CCTransitionZoomFlipY* CCTransitionZoomFlipY::create(float t, CCScene* s)
 {
-    return CCTransitionZoomFlipY::create(t, s, kOrientationUpOver);
+    return CCTransitionZoomFlipY::create(t, s, kCCTransitionOrientationUpOver);
 }
 
 //
@@ -1292,7 +1292,7 @@ void CCTransitionZoomFlipAngular::onEnter()
     float inDeltaZ, inAngleZ;
     float outDeltaZ, outAngleZ;
 
-    if( m_eOrientation == kOrientationRightOver ) {
+    if( m_eOrientation == kCCTransitionOrientationRightOver ) {
         inDeltaZ = 90;
         inAngleZ = 270;
         outDeltaZ = 90;
@@ -1354,7 +1354,7 @@ CCTransitionZoomFlipAngular* CCTransitionZoomFlipAngular::create(float t, CCScen
 
 CCTransitionZoomFlipAngular* CCTransitionZoomFlipAngular::create(float t, CCScene* s)
 {
-    return CCTransitionZoomFlipAngular::create(t, s, kOrientationRightOver);
+    return CCTransitionZoomFlipAngular::create(t, s, kCCTransitionOrientationRightOver);
 }
 
 //

@@ -28,8 +28,8 @@ THE SOFTWARE.
 #define __COCOS2D_H__
 
 // 0x00 HI ME LO
-// 00   02 00 00
-#define COCOS2D_VERSION 0x00020003
+// 00   02 01 00
+#define COCOS2D_VERSION 0x00020100
 
 //
 // all cocos2d include files
@@ -69,6 +69,10 @@ THE SOFTWARE.
 #include "cocoa/CCNS.h"
 #include "cocoa/CCZone.h"
 
+// draw nodes
+#include "draw_nodes/CCDrawingPrimitives.h"
+#include "draw_nodes/CCDrawNode.h"
+
 // effects
 #include "effects/CCGrabber.h"
 #include "effects/CCGrid.h"
@@ -105,6 +109,7 @@ THE SOFTWARE.
 #include "menu_nodes/CCMenuItem.h"
 
 // misc_nodes
+#include "misc_nodes/CCClippingNode.h"
 #include "misc_nodes/CCMotionStreak.h"
 #include "misc_nodes/CCProgressTimer.h"
 #include "misc_nodes/CCRenderTexture.h"
@@ -238,8 +243,18 @@ THE SOFTWARE.
 #include "CCCamera.h"
 #include "CCConfiguration.h"
 #include "CCDirector.h"
-#include "CCDrawingPrimitives.h"
 #include "CCScheduler.h"
+
+// Physics integration
+#if CC_ENABLE_CHIPMUNK_INTEGRATION
+#include "physics_nodes/CCPhysicsDebugNode.h"
+#include "physics_nodes/CCPhysicsSprite.h"
+#endif
+
+#if CC_ENABLE_BOX2D_INTEGRATION
+#include "physics_nodes/CCPhysicsDebugNode.h"
+#include "physics_nodes/CCPhysicsSprite.h"
+#endif
 
 NS_CC_BEGIN
 
