@@ -56,7 +56,7 @@ var Ship = cc.Sprite.extend({
     update:function (dt) {
 
         // Keys are only enabled on the browser
-        if( cc.config.deviceType == 'browser' ) {
+        if( cc.config.platform == 'browser' ) {
             var pos = this.getPosition();
             if ((MW.KEYS[cc.KEY.w] || MW.KEYS[cc.KEY.up]) && pos.y <= winSize.height) {
                 pos.y += dt * this.speed;
@@ -83,7 +83,7 @@ var Ship = cc.Sprite.extend({
                 this._hurtColorLife--;
             }
             if (this._hurtColorLife == 1) {
-                this.setColor(cc.WHITE);
+                this.setColor(cc.c3b(255,255,255));
             }
         }
     },
@@ -116,7 +116,7 @@ var Ship = cc.Sprite.extend({
         if (this.canBeAttack) {
             this._hurtColorLife = 2;
             this.HP--;
-            this.setColor(cc.RED);
+            this.setColor(cc.c3b(255,0,0));
         }
     },
     collideRect:function(){

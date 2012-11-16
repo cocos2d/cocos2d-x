@@ -11,8 +11,7 @@
   
 JSBool jsval_to_CGPoint( JSContext *cx, jsval vp, cpVect *out );
 jsval CGPoint_to_jsval( JSContext *cx, cpVect p );
-JSBool jsval_to_cpBB( JSContext *cx, jsval vp, cpBB *ret );
-jsval cpBB_to_jsval(JSContext *cx, cpBB bb );
+
     
 //#ifdef __cplusplus
 //}

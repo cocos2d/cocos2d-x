@@ -204,26 +204,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\scripting\javascript\bindings\cocosjs_manual_conversions.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\scripting\javascript\bindings\cocosjs_manual_conversions.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\scripting\javascript\bindings\js_bindings_config.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\scripting\javascript\bindings\js_manual_conversions.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\scripting\javascript\bindings\js_manual_conversions.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\..\scripting\javascript\bindings\ScriptingCore.cpp"
 				>
 			</File>
