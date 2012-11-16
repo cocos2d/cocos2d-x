@@ -30,7 +30,6 @@ var GameLayer = cc.Layer.extend({
     },
     init:function () {
         var bRet = false;
-        cc.log("GameLayer init");
         if (this._super()) {
 
             // reset global values
@@ -65,7 +64,7 @@ var GameLayer = cc.Layer.extend({
             // ship Life count
             this._lbLife = cc.LabelTTF.create("0", "Arial", 20);
             this._lbLife.setPosition(60, 463);
-            this._lbLife.setColor(cc.RED);
+            this._lbLife.setColor(cc.c3b(255,0,0));
             this.addChild(this._lbLife, 1000);
 
             // ship
@@ -74,7 +73,7 @@ var GameLayer = cc.Layer.extend({
 
             // accept touch now!
 
-            var t = cc.config.deviceType;
+            var t = cc.config.platform;
             if( t == 'browser' )  {
                 this.setMouseEnabled(true);
                 this.setKeyboardEnabled(true);
@@ -143,7 +142,7 @@ var GameLayer = cc.Layer.extend({
             this.updateUI();
         }
 
-        if( cc.config.deviceType == 'browser' )
+        if( cc.config.platform == 'browser' )
             cc.$("#cou").innerHTML = "Ship:" + 1 + ", Enemy: " + MW.CONTAINER.ENEMIES.length + ", Bullet:" + MW.CONTAINER.ENEMY_BULLETS.length + "," + MW.CONTAINER.PLAYER_BULLETS.length + " all:" + this.getChildren().length;
     },
     checkIsCollide:function () {
@@ -223,7 +222,7 @@ var GameLayer = cc.Layer.extend({
         if (this._tmpScore < MW.SCORE) {
             this._tmpScore += 5;
         }
-        this._lbLife.setString(MW.LIFE);
+        this._lbLife.setString(MW.LIFE + '');
         this.lbScore.setString("Score: " + this._tmpScore);
     },
     collide:function (a, b) {
