@@ -31,14 +31,9 @@ var SysMenu = cc.Layer.extend({
             var aboutSelected = cc.Sprite.create(s_menu, cc.rect(252, 33, 126, 33));
             var aboutDisabled = cc.Sprite.create(s_menu, cc.rect(252, 33 * 2, 126, 33));
 
-            cc.log("SysMenu init");
-
             var newGame = cc.MenuItemSprite.create(newGameNormal, newGameSelected, newGameDisabled, function () {
-                cc.log("newGame callback1");
                 this.onButtonEffect();
-                cc.log("newGame callback2");
                 flareEffect(this, this, this.onNewGame);
-                cc.log("newGame callback3");
             }.bind(this));
             var gameSettings = cc.MenuItemSprite.create(gameSettingsNormal, gameSettingsSelected, gameSettingsDisabled, this.onSettings, this);
             var about = cc.MenuItemSprite.create(aboutNormal, aboutSelected, aboutDisabled, this.onAbout, this);
@@ -66,14 +61,10 @@ var SysMenu = cc.Layer.extend({
         return bRet;
     },
     onNewGame:function (pSender) {
-        cc.log("onNewGame 1");
         var scene = cc.Scene.create();
         scene.addChild(GameLayer.create());
-        cc.log("onNewGame 2");
         scene.addChild(GameControlMenu.create());
-        cc.log("onNewGame 3");
         cc.Director.getInstance().replaceScene(cc.TransitionFade.create(1.2, scene));
-        cc.log("onNewGame 4");
     },
     onSettings:function (pSender) {
         this.onButtonEffect();

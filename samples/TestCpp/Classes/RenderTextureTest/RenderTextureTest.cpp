@@ -475,7 +475,7 @@ RenderTextureTestDepthStencil::RenderTextureTestDepthStencil()
     CCSprite *sprite = CCSprite::create("Images/fire.png");
     sprite->setPosition(ccp(s.width * 0.25f, 0));
     sprite->setScale(10);
-    CCRenderTexture *rend = CCRenderTexture::create(s.width, s.height, kCCTexture2DPixelFormat_RGBA4444, CC_GL_DEPTH24_STENCIL8);
+    CCRenderTexture *rend = CCRenderTexture::create(s.width, s.height, kCCTexture2DPixelFormat_RGBA4444, GL_DEPTH24_STENCIL8);
 
     glStencilMask(0xFF);
     rend->beginWithClear(0, 0, 0, 0, 0, 0);

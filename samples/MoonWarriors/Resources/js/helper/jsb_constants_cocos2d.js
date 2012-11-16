@@ -68,12 +68,25 @@ cc._reuse_p = [
     {x:0, y:0},
     {x:0, y:0}
 ];
+
 cc._reuse_p_index = 0;
 cc._reuse_size = {width:0, height:0};
 cc._reuse_rect = {x:0, y:0, width:0, height:0};
 cc._reuse_color3b = {r:255, g:255, b:255 };
 cc._reuse_color4b = {r:255, g:255, b:255, a:255 };
-cc._reuse_grid = {x:0, y:0};
+
+//
+// Point
+//
+cc.p = function( x, y )
+{
+    return {x:x, y:y};
+};
+
+cc.g = cc.g || cc.p;
+cc._reuse_grid = cc.g(0,0);
+
+cc.log = cc.log || log;
 
 //
 // Color 3B
@@ -87,9 +100,6 @@ cc._c3b = function (r, g, b) {
     cc._reuse_color3b.b = b;
     return cc._reuse_color3b;
 };
-// compatibility
-cc.c3 = cc.c3b;
-cc._c3 = cc._c3b;
 
 //
 // Color 4B
@@ -107,7 +117,6 @@ cc._c4b = function (r, g, b, a) {
 // compatibility
 cc.c4 = cc.c4b;
 cc._c4 = cc._c4b;
-
 
 //
 // Color 4F
@@ -169,6 +178,17 @@ cc.sizeEqualToSize = function (size1, size2) {
 //
 cc.rect = function (x, y, w, h) {
     return {x:x, y:y, width:w, height:h};
+};
+cc._rect = function(x,y,w,h)
+{
+    cc._reuse_rect.x = x;
+    cc._reuse_rect.y = y;
+    cc._reuse_rect.width = w;
+    cc._reuse_rect.height = h;
+    return cc._reuse_rect;
+};
+cc.rectEqualToRect = function (rect1, rect2) {
+    return ( rect1.x==rect2.x && rect1.y==rect2.y && rect1.width==rect2.width && rect1.height==rect2.height);
 };
 
 cc._rect = function (x, y, w, h) {
@@ -345,6 +365,7 @@ cc.associateWithNative = function (jsobj, superclass_or_instance) {
 // 1) Google "subclasses" borrowed from closure library
 // This is the recommended way to do it
 //
+
 cc.inherits = function (childCtor, parentCtor) {
 	/** @constructor */
 	function tempCtor() {};
@@ -389,6 +410,7 @@ cc.base = function (me, opt_methodName, var_args) {
             'cc.base called from a method of one name ' +
                 'to a method of a different name');
     }
+
 };
 
 

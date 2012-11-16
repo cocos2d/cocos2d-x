@@ -38,6 +38,10 @@ THE SOFTWARE.
     #define isnan   _isnan
 #endif
 
+#ifndef snprintf
+#define snprintf _snprintf
+#endif
+
 #include <math.h>
 #include <string.h>
 #include <stdarg.h>

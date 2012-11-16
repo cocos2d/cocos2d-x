@@ -24,6 +24,8 @@ THE SOFTWARE.
 #ifndef __SUPPORT_ZIPUTILS_H__
 #define __SUPPORT_ZIPUTILS_H__
 
+#include <string>
+
 namespace cocos2d
 {
     /* XXX: pragma pack ??? */
@@ -91,6 +93,68 @@ namespace cocos2d
             unsigned int outLenghtHint);
     };
 
+    // forward declaration
+    class ZipFilePrivate;
+
+    /**
+    * Zip file - reader helper class.
+    *
+    * It will cache the file list of a particular zip file with positions inside an archive,
+    * so it would be much faster to read some particular files or to check their existance.
+    *
+    * @since v2.0.5
+    */
+    class ZipFile
+    {
+    public:
+        /**
+        * Constructor, open zip file and store file list.
+        *
+        * @param zipFile Zip file name
+        * @param filter The first part of file names, which should be accessible.
+        *               For example, "assets/". Other files will be missed.
+        *
+        * @since v2.0.5
+        */
+        ZipFile(const std::string &zipFile, const std::string &filter = std::string());
+        virtual ~ZipFile();
+
+        /**
+        * Regenerate accessible file list based on a new filter string.
+        *
+        * @param filter New filter string (first part of files names)
+        * @return true whenever zip file is open successfully and it is possible to locate
+        *              at least the first file, false otherwise
+        *
+        * @since v2.0.5
+        */
+        bool setFilter(const std::string &filter);
+
+        /**
+        * Check does a file exists or not in zip file
+        *
+        * @param fileName File to be checked on existance
+        * @return true whenever file exists, false otherwise
+        *
+        * @since v2.0.5
+        */
+        bool fileExists(const std::string &fileName) const;
+
+        /**
+        * Get resource file data from a zip file.
+        * @param fileName File name
+        * @param[out] pSize If the file read operation succeeds, it will be the data size, otherwise 0.
+        * @return Upon success, a pointer to the data is returned, otherwise NULL.
+        * @warning Recall: you are responsible for calling delete[] on any Non-NULL pointer returned.
+        *
+        * @since v2.0.5
+        */
+        unsigned char *getFileData(const std::string &fileName, unsigned long *pSize);
+
+    private:
+        /** Internal data like zip file pointer / file list array and so on */
+        ZipFilePrivate *m_data;
+    };
 } // end of namespace cocos2d
-#endif // __PLATFORM_WOPHONE_ZIPUTILS_H__
+#endif // __SUPPORT_ZIPUTILS_H__
 

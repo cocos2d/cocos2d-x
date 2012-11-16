@@ -491,7 +491,7 @@ void SchedulerUnscheduleAllHard::tick4(float dt)
 
 void SchedulerUnscheduleAllHard::unscheduleAll(float dt)
 {
-    CCDirector::sharedDirector()->getScheduler()->unscheduleAllSelectors();
+    CCDirector::sharedDirector()->getScheduler()->unscheduleAll();
     m_bActionManagerActive = false;
 }
 
@@ -550,7 +550,7 @@ void SchedulerUnscheduleAllUserLevel::tick4(float dt)
 
 void SchedulerUnscheduleAllUserLevel::unscheduleAll(float dt)
 {
-    CCDirector::sharedDirector()->getScheduler()->unscheduleAllSelectorsWithMinPriority(kCCPriorityNonSystemMin);
+    CCDirector::sharedDirector()->getScheduler()->unscheduleAllWithMinPriority(kCCPriorityNonSystemMin);
 }
 
 std::string SchedulerUnscheduleAllUserLevel::title()
@@ -1066,8 +1066,8 @@ void TwoSchedulers::onEnter()
 TwoSchedulers::~TwoSchedulers()
 {
     CCScheduler *defaultScheduler = CCDirector::sharedDirector()->getScheduler();
-    defaultScheduler->unscheduleAllSelectorsForTarget(sched1);
-    defaultScheduler->unscheduleAllSelectorsForTarget(sched2);
+    defaultScheduler->unscheduleAllForTarget(sched1);
+    defaultScheduler->unscheduleAllForTarget(sched2);
 
     sliderCtl1->release();
     sliderCtl2->release();
