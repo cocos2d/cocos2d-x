@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#define __CC_PLATFORM_FILEUTILS_CPP__	// MH: Required to be defiend by Cocos 2.0.3
+#define __CC_PLATFORM_FILEUTILS_CPP__
 #include "CCFileUtils.h"
 #include "CCFileUtilsCommon_cpp.h"
 #include "string.h"
@@ -38,61 +38,87 @@ NS_CC_BEGIN;
 
 static char s_pszResourcePath[S3E_FILE_MAX_PATH] = {0};
 
-static CCFileUtils* s_pFileUtils = NULL;			// Mh: Added, reuired ny Cocos2dx 2.0.3
+static CCFileUtils* s_pFileUtils = NULL;
 
-CCFileUtils* CCFileUtils::sharedFileUtils()			// Mh: Added, reuired ny Cocos2dx 2.0.3
+CCFileUtils* CCFileUtils::sharedFileUtils()
 {
-    if (s_pFileUtils == NULL)
-    {
-        s_pFileUtils = new CCFileUtils();
-    }
-    return s_pFileUtils;
+	if (s_pFileUtils == NULL)
+	{
+		s_pFileUtils = new CCFileUtils();
+	}
+	return s_pFileUtils;
 }
 
-void CCFileUtils::purgeFileUtils()					// Mh: Added, reuired ny Cocos2dx 2.0.3
+void CCFileUtils::purgeFileUtils()
 {
-    if (s_pFileUtils != NULL)
-    {
-        s_pFileUtils->purgeCachedEntries();
-    }
-    
-    CC_SAFE_DELETE(s_pFileUtils);
+	if (s_pFileUtils != NULL)
+	{
+		s_pFileUtils->purgeCachedEntries();
+	}
+	
+	CC_SAFE_DELETE(s_pFileUtils);
 }
 
-void CCFileUtils::purgeCachedEntries()				// Mh: Added, reuired ny Cocos2dx 2.0.3
+void CCFileUtils::purgeCachedEntries()
 {
 
 }
 
-//const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath, ccResolutionType* ignore)	// MH: Cocos2d 2.0.3 prototype changed
-const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)								// MH: Using new Cocos2D 2.0.3 prototype
+const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
 {
-    // TODO HOW ARE WE SUPPOSED TO WRITE BACK TO THE "ignore" REFERENCE?
+	// TODO HOW ARE WE SUPPOSED TO WRITE BACK TO THE "ignore" REFERENCE?
 	IwAssert(GAME, pszRelativePath);
 
-    const char* resDir = m_obDirectory.c_str();
+	bool bFileExist = true;
+	const char* resDir = m_obDirectory.c_str();
 	CCString * pRet = new CCString();
 
-    pRet->autorelease();
-    if ((strlen(pszRelativePath) > 1 && pszRelativePath[1] == ':'))
-    {
-        pRet->m_sString = resDir;
-        pRet->m_sString += pszRelativePath;
-    }
-    else if (strlen(pszRelativePath) > 0 && pszRelativePath[0] == '/')
-    {
+	pRet->autorelease();
+	if ((strlen(pszRelativePath) > 1 && pszRelativePath[1] == ':'))
+	{
+		pRet->m_sString = resDir;
+		pRet->m_sString += pszRelativePath;
+	}
+	else if (strlen(pszRelativePath) > 0 && pszRelativePath[0] == '/')
+	{
 		char szDriver[3] = {s_pszResourcePath[0], s_pszResourcePath[1], 0};
-        pRet->m_sString = szDriver;
-        pRet->m_sString += resDir;
-        pRet->m_sString += pszRelativePath;
-    }
-    else
-    {
-        pRet->m_sString = s_pszResourcePath;
-        pRet->m_sString += resDir;
-        pRet->m_sString += pszRelativePath;
-    }
+		pRet->m_sString = szDriver;
+		pRet->m_sString += resDir;
+		pRet->m_sString += pszRelativePath;
+	}
+	else
+	{
+		pRet->m_sString = s_pszResourcePath;
+		pRet->m_sString += resDir;
+		pRet->m_sString += pszRelativePath;
+	}
 
+	bool exists = s3eFileCheckExists(pRet->getCString()) == S3E_TRUE;
+	if (!exists)
+	{
+		if ((strlen(pszRelativePath) > 1 && pszRelativePath[1] == ':'))
+		{
+			pRet->m_sString = pszRelativePath;
+		}
+		else if (strlen(pszRelativePath) > 0 && pszRelativePath[0] == '/')
+		{
+			char szDriver[3] = {s_pszResourcePath[0], s_pszResourcePath[1], 0};
+			pRet->m_sString = szDriver;
+			pRet->m_sString += pszRelativePath;
+		}
+		else
+		{
+			pRet->m_sString = s_pszResourcePath;
+			pRet->m_sString += pszRelativePath;
+		}
+
+		bFileExist = s3eFileCheckExists(pRet->getCString()) == S3E_TRUE;
+	}
+
+	if (!bFileExist)
+	{
+		pRet->m_sString = pszRelativePath;
+	}
 
 	return pRet->m_sString.c_str();
 }
@@ -115,15 +141,15 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
 
 	s3eFile* pFile = s3eFileOpen(pszFileName, pszMode);
 	
-    if (! pFile && isPopupNotify())		// MH: Cocos2d 2.0.3 changed getIsPopupNotify to isPopupNotify
-    {    
-        IwAssertMsg(GAME, pFile, ("Open file %s Failed. s3eFileError Code : %i", pszFileName, s3eFileGetError()));
-    }
-    if (! pFile) 
-    {
-        *pSize = 0;
-        return 0;
-    }
+	if (! pFile && isPopupNotify())
+	{    
+		IwAssertMsg(GAME, pFile, ("Open file %s Failed. s3eFileError Code : %i", pszFileName, s3eFileGetError()));
+	}
+	if (! pFile) 
+	{
+		*pSize = 0;
+		return 0;
+	}
 	int32 fileSize = s3eFileGetSize(pFile);
 	*pSize=fileSize;
 
