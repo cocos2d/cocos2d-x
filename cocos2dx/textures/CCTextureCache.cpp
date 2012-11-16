@@ -900,11 +900,12 @@ void VolatileTexture::reloadAllTextures()
         case kString:
             {
                 vt->texture->initWithString(vt->m_strText.c_str(),
-                    vt->m_size,
-                    vt->m_alignment,
-                    vt->m_vAlignment,
-                    vt->m_strFontName.c_str(),
-                    vt->m_fFontSize);
+                                            vt->m_strFontName.c_str(),
+                                            vt->m_fFontSize,
+                                            vt->m_size,
+                                            vt->m_alignment,
+                                            vt->m_vAlignment
+                                            );
             }
             break;
         case kImage:
