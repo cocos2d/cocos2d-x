@@ -95,11 +95,9 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\scripting\javascript\spidermonkey-win32\lib\*
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
 if exist "$(OutDir)\TestJavascriptRes" rd /s /q "$(OutDir)\TestJavascriptRes"
 mkdir "$(OutDir)\TestJavascriptRes"
-xcopy "$(ProjectDir)..\cocos2d-html5-tests\res" "$(OutDir)\TestJavascriptRes\res\" /e /Y
+xcopy "$(ProjectDir)..\cocos2d-js-tests\res" "$(OutDir)\TestJavascriptRes\res\" /e /Y
 xcopy "$(ProjectDir)..\bindings\*.js" "$(OutDir)\TestJavascriptRes" /e /Y
-dir "$(ProjectDir)..\cocos2d-html5-tests\src\*.js" /a /b /s &gt; filelist.txt
-for /f %%I in (filelist.txt) do (copy /Y %%I "$(OutDir)\TestJavascriptRes")
-if exist filelist.txt del /f /q filelist.txt
+xcopy "$(ProjectDir)..\cocos2d-js-tests\src" "$(OutDir)\TestJavascriptRes\src\" /e /Y
 </Command>
     </PreBuildEvent>
     <PreBuildEvent>
@@ -152,11 +150,9 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\scripting\javascript\spidermonkey-win32\lib\*
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
 if exist "$(OutDir)\TestJavascriptRes" rd /s /q "$(OutDir)\TestJavascriptRes"
 mkdir "$(OutDir)\TestJavascriptRes"
-xcopy "$(ProjectDir)..\cocos2d-html5-tests\res" "$(OutDir)\TestJavascriptRes\res\" /e /Y
+xcopy "$(ProjectDir)..\cocos2d-js-tests\res" "$(OutDir)\TestJavascriptRes\res\" /e /Y
 xcopy "$(ProjectDir)..\bindings\*.js" "$(OutDir)\TestJavascriptRes" /e /Y
-dir "$(ProjectDir)..\cocos2d-html5-tests\src\*.js" /a /b /s &gt; filelist.txt
-for /f %%I in (filelist.txt) do (copy /Y %%I "$(OutDir)\TestJavascriptRes")
-if exist filelist.txt del /f /q filelist.txt
+xcopy "$(ProjectDir)..\cocos2d-js-tests\src" "$(OutDir)\TestJavascriptRes\src\" /e /Y
 </Command>
       <Message>Copy js and resource files.</Message>
     </PreBuildEvent>
@@ -167,8 +163,11 @@ if exist filelist.txt del /f /q filelist.txt
     <ClCompile Include="..\..\..\scripting\javascript\bindings\cocosjs_manual_conversions.cpp" />
     <ClCompile Include="..\..\..\scripting\javascript\bindings\generated\cocos2dx.cpp" />
     <ClCompile Include="..\..\..\scripting\javascript\bindings\js_bindings_ccbreader.cpp" />
+    <ClCompile Include="..\..\..\scripting\javascript\bindings\js_bindings_chipmunk_auto_classes.cpp" />
     <ClCompile Include="..\..\..\scripting\javascript\bindings\js_bindings_chipmunk_functions.cpp" />
     <ClCompile Include="..\..\..\scripting\javascript\bindings\js_bindings_chipmunk_manual.cpp" />
+    <ClCompile Include="..\..\..\scripting\javascript\bindings\js_bindings_chipmunk_registration.cpp" />
+    <ClCompile Include="..\..\..\scripting\javascript\bindings\js_bindings_core.cpp" />
     <ClCompile Include="..\..\..\scripting\javascript\bindings\js_manual_conversions.cpp" />
     <ClCompile Include="..\..\..\scripting\javascript\bindings\ScriptingCore.cpp" />
     <ClCompile Include="main.cpp" />
@@ -180,9 +179,15 @@ if exist filelist.txt del /f /q filelist.txt
     <ClInclude Include="..\..\..\scripting\javascript\bindings\cocosjs_manual_conversions.h" />
     <ClInclude Include="..\..\..\scripting\javascript\bindings\generated\cocos2dx.hpp" />
     <ClInclude Include="..\..\..\scripting\javascript\bindings\js_bindings_ccbreader.h" />
+    <ClInclude Include="..\..\..\scripting\javascript\bindings\js_bindings_chipmunk_auto_classes.h" />
+    <ClInclude Include="..\..\..\scripting\javascript\bindings\js_bindings_chipmunk_auto_classes_registration.h" />
+    <ClInclude Include="..\..\..\scripting\javascript\bindings\js_bindings_chipmunk_functions.h" />
     <ClInclude Include="..\..\..\scripting\javascript\bindings\js_bindings_chipmunk_functions.hpp" />
+    <ClInclude Include="..\..\..\scripting\javascript\bindings\js_bindings_chipmunk_manual.h" />
     <ClInclude Include="..\..\..\scripting\javascript\bindings\js_bindings_chipmunk_manual.hpp" />
+    <ClInclude Include="..\..\..\scripting\javascript\bindings\js_bindings_chipmunk_registration.h" />
     <ClInclude Include="..\..\..\scripting\javascript\bindings\js_bindings_config.h" />
+    <ClInclude Include="..\..\..\scripting\javascript\bindings\js_bindings_core.h" />
     <ClInclude Include="..\..\..\scripting\javascript\bindings\js_manual_conversions.h" />
     <ClInclude Include="..\..\..\scripting\javascript\bindings\ScriptingCore.h" />
     <ClInclude Include="..\..\..\scripting\javascript\bindings\spidermonkey_specifics.h" />
