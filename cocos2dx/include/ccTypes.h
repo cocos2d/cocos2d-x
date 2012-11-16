@@ -127,7 +127,8 @@ static inline ccColor4F ccc4FFromccc4B(ccColor4B c)
 
 static inline ccColor4B ccc4BFromccc4F(ccColor4F c)
 {
-	return (ccColor4B){(GLubyte)(c.r*255), (GLubyte)(c.g*255), (GLubyte)(c.b*255), (GLubyte)(c.a*255)};
+    ccColor4B ret = {(GLubyte)(c.r*255), (GLubyte)(c.g*255), (GLubyte)(c.b*255), (GLubyte)(c.a*255)};
+	return ret;
 }
 
 /** returns YES if both ccColor4F are equal. Otherwise it returns NO.
