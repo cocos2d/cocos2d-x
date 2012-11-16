@@ -1142,7 +1142,8 @@
 					USE_FILE32API,
 					TARGET_OS_IPHONE,
 				);
-				"GCC_THUMB_SUPPORT[arch=armv6]" = "";
+				GCC_THUMB_SUPPORT = NO;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				HEADER_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../../cocos2dx\"",
 					"\"$(SRCROOT)/../../../cocos2dx/kazmath/include\"",
@@ -1181,7 +1182,7 @@
 					USE_FILE32API,
 					TARGET_OS_IPHONE,
 				);
-				"GCC_THUMB_SUPPORT[arch=armv6]" = "";
+				GCC_THUMB_SUPPORT = NO;
 				HEADER_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../../cocos2dx\"",
 					"\"$(SRCROOT)/../../../cocos2dx/kazmath/include\"",
