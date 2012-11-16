@@ -1,9 +1,9 @@
 var dirImg = "";
 var dirMusic = "";
 var musicSuffix = ".mp3";
-if( cc.config.deviceType == 'browser') {
-    dirImg = "res/";
-    dirMusic = "res/Music/";
+if( cc.config.platform == 'browser' ) {
+    dirImg = "MoonWarriors/res/";
+    dirMusic = "MoonWarriors/res/Music/";
     musicSuffix = "";
 }
 else if( cc.config.engine == 'cocos2d-x') {

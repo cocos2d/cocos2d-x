@@ -305,7 +305,9 @@ cc.dumpConfig = function () {
 // MenuItemToggle
 cc.MenuItemToggle.create = function( /* var args */) {
 
-    var n = arguments.length;
+cc.rectGetMinX = function (rect) {
+    return rect.x;
+};
 
     if (typeof arguments[n-2] === 'function' || typeof arguments[n-1] === 'function') {
         var args = Array.prototype.slice.call(arguments);

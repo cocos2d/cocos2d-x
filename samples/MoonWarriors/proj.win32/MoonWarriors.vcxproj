@@ -137,19 +137,14 @@ xcopy /Y /Q "$(SolutionDir)scripting\javascript\spidermonkey-win32\lib\*.*" "$(O
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\scripting\javascript\bindings\cocos2d_specifics.cpp" />
-    <ClCompile Include="..\..\..\scripting\javascript\bindings\cocosjs_manual_conversions.cpp" />
     <ClCompile Include="..\..\..\scripting\javascript\bindings\generated\cocos2dx.cpp" />
-    <ClCompile Include="..\..\..\scripting\javascript\bindings\js_manual_conversions.cpp" />
     <ClCompile Include="..\..\..\scripting\javascript\bindings\ScriptingCore.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\scripting\javascript\bindings\cocos2d_specifics.hpp" />
-    <ClInclude Include="..\..\..\scripting\javascript\bindings\cocosjs_manual_conversions.h" />
     <ClInclude Include="..\..\..\scripting\javascript\bindings\generated\cocos2dx.hpp" />
-    <ClInclude Include="..\..\..\scripting\javascript\bindings\js_bindings_config.h" />
-    <ClInclude Include="..\..\..\scripting\javascript\bindings\js_manual_conversions.h" />
     <ClInclude Include="..\..\..\scripting\javascript\bindings\ScriptingCore.h" />
     <ClInclude Include="..\..\..\scripting\javascript\bindings\spidermonkey_specifics.h" />
     <ClInclude Include="main.h" />
