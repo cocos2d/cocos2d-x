@@ -199,10 +199,12 @@
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="support"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="text_input_node"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="textures"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="tileMap_parallax_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="touch_dispatcher"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="extensions"/>
-						<entry excluding="actions|base_nodes|cocoa|effects|include|kazmath|keypad_dispatcher|label_nodes|layers_scenes_transitions_nodes|menu_nodes|misc_nodes|particle_nodes|platform|script_support|shaders|sprite_nodes|support|text_input_node|textures|tileMap_parallax_nodes|touch_dispatcher|extensions" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name=""/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="draw_nodes"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="physics_nodes"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="tilemap_parallax_nodes"/>
+						<entry excluding="actions|base_nodes|cocoa|effects|include|kazmath|keypad_dispatcher|label_nodes|layers_scenes_transitions_nodes|menu_nodes|misc_nodes|particle_nodes|platform|script_support|shaders|sprite_nodes|support|text_input_node|textures|touch_dispatcher|extensions|draw_nodes|physics_nodes|tilemap_parallax_nodes" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
