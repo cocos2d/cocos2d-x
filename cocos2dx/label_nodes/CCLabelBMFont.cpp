@@ -35,11 +35,10 @@ http://www.angelcode.com/products/bmfont/ (Free, Windows only)
 #include "platform/platform.h"
 #include "cocoa/CCDictionary.h"
 #include "CCConfiguration.h"
-#include "CCDrawingPrimitives.h"
+#include "draw_nodes/CCDrawingPrimitives.h"
 #include "sprite_nodes/CCSprite.h"
 #include "support/CCPointExtension.h"
 #include "platform/CCFileUtils.h"
-#include "support/data_support/uthash.h"
 #include "CCDirector.h"
 #include "textures/CCTextureCache.h"
 
@@ -47,13 +46,6 @@ using namespace std;
 
 
 NS_CC_BEGIN
-
-typedef struct _FontDefHashElement
-{
-    unsigned int    key;        // key. Font Unicode value
-    ccBMFontDef        fontDef;    // font definition
-    UT_hash_handle    hh;
-} tFontDefHashElement;
 
 static int cc_wcslen(const unsigned short* str)
 {
@@ -251,46 +243,46 @@ static void cc_utf8_trim_ws(std::vector<unsigned short>* str)
  *
  * Return value: the length of the string in characters
  **/
-long
+static long
 cc_utf8_strlen (const char * p, int max)
 {
-  long len = 0;
-  const char *start = p;
+    long len = 0;
+    const char *start = p;
 
-  if (!(p != NULL || max == 0))
-  {
-      return 0;
-  }
-
-  if (max < 0)
+    if (!(p != NULL || max == 0))
     {
-      while (*p)
-    {
-      p = cc_utf8_next_char (p);
-      ++len;
-    }
-    }
-  else
-    {
-      if (max == 0 || !*p)
-    return 0;
-
-      p = cc_utf8_next_char (p);
-
-      while (p - start < max && *p)
-    {
-      ++len;
-      p = cc_utf8_next_char (p);
+        return 0;
     }
 
-      /* only do the last len increment if we got a complete
-       * char (don't count partial chars)
-       */
-      if (p - start == max)
-    ++len;
+    if (max < 0)
+    {
+        while (*p)
+        {
+            p = cc_utf8_next_char (p);
+            ++len;
+        }
+    }
+    else
+    {
+        if (max == 0 || !*p)
+            return 0;
+
+        p = cc_utf8_next_char (p);
+
+        while (p - start < max && *p)
+        {
+             ++len;
+             p = cc_utf8_next_char (p);
+        }
+
+        /* only do the last len increment if we got a complete
+        * char (don't count partial chars)
+        */
+        if (p - start == max)
+            ++len;
     }
 
-  return len;
+    return len;
 }
 
 /*
@@ -325,7 +317,7 @@ cc_utf8_get_char (const char * p)
  * @str_old: pointer to the start of a C string.
  * 
  * Creates a utf8 string from a cstring.
- * 
+ *
  * Return value: the newly created utf8 string.
  * */
 static unsigned short* cc_utf16_from_utf8(const char* str_old)
@@ -393,16 +385,6 @@ void FNTConfigRemoveCache( void )
 }
 
 //
-//Hash Element
-//
-// Equal function for targetSet.
-typedef struct _KerningHashElement
-{    
-    int                key;        // key for the hash. 16-bit for 1st element, 16-bit for 2nd element
-    int                amount;
-    UT_hash_handle    hh;
-} tKerningHashElement;
-//
 //BitmapFontConfiguration
 //
 
@@ -427,7 +409,10 @@ bool CCBMFontConfiguration::initWithFNTfile(const char *FNTfile)
 {
     m_pKerningDictionary = NULL;
     m_pFontDefDictionary = NULL;
-    if (! this->parseConfigFile(FNTfile))
+    
+    m_pCharacterSet = this->parseConfigFile(FNTfile);
+    
+    if (! m_pCharacterSet)
     {
         return false;
     }
@@ -435,10 +420,15 @@ bool CCBMFontConfiguration::initWithFNTfile(const char *FNTfile)
     return true;
 }
 
+std::set<unsigned int>* CCBMFontConfiguration::getCharacterSet() const
+{
+    return m_pCharacterSet;
+}
+
 CCBMFontConfiguration::CCBMFontConfiguration()
-    : m_pFontDefDictionary(NULL)
-    , m_nCommonHeight(0)
-    , m_pKerningDictionary(NULL)
+: m_pFontDefDictionary(NULL)
+, m_nCommonHeight(0)
+, m_pKerningDictionary(NULL)
 {
 
 }
@@ -449,6 +439,7 @@ CCBMFontConfiguration::~CCBMFontConfiguration()
     this->purgeFontDefDictionary();
     this->purgeKerningDictionary();
     m_sAtlasName.clear();
+    CC_SAFE_DELETE(m_pCharacterSet);
 }
 
 const char* CCBMFontConfiguration::description(void)
@@ -464,7 +455,7 @@ const char* CCBMFontConfiguration::description(void)
 
 void CCBMFontConfiguration::purgeKerningDictionary()
 {
-    tKerningHashElement *current;
+    tCCKerningHashElement *current;
     while(m_pKerningDictionary) 
     {
         current = m_pKerningDictionary; 
@@ -475,7 +466,7 @@ void CCBMFontConfiguration::purgeKerningDictionary()
 
 void CCBMFontConfiguration::purgeFontDefDictionary()
 {    
-    tFontDefHashElement *current, *tmp;
+    tCCFontDefHashElement *current, *tmp;
 
     HASH_ITER(hh, m_pFontDefDictionary, current, tmp) {
         HASH_DEL(m_pFontDefDictionary, current);
@@ -483,18 +474,19 @@ void CCBMFontConfiguration::purgeFontDefDictionary()
     }
 }
 
-
-bool CCBMFontConfiguration::parseConfigFile(const char *controlFile)
+std::set<unsigned int>* CCBMFontConfiguration::parseConfigFile(const char *controlFile)
 {    
     std::string fullpath = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(controlFile);
     CCString *contents = CCString::createWithContentsOfFile(fullpath.c_str());
 
     CCAssert(contents, "CCBMFontConfiguration::parseConfigFile | Open file error.");
+    
+    set<unsigned int> *validCharsString = new set<unsigned int>();
 
     if (!contents)
     {
         CCLOG("cocos2d: Error parsing FNTfile %s", controlFile);
-        return false;
+        return NULL;
     }
 
     // parse spacing / padding
@@ -540,11 +532,13 @@ bool CCBMFontConfiguration::parseConfigFile(const char *controlFile)
         else if(line.substr(0,strlen("char")) == "char")
         {
             // Parse the current line and create a new CharDef
-            tFontDefHashElement* element = (tFontDefHashElement*)malloc( sizeof(*element) );
+            tCCFontDefHashElement* element = (tCCFontDefHashElement*)malloc( sizeof(*element) );
             this->parseCharacterDefinition(line, &element->fontDef);
 
             element->key = element->fontDef.charID;
             HASH_ADD_INT(m_pFontDefDictionary, key, element);
+            
+            validCharsString->insert(element->fontDef.charID);
         }
 //        else if(line.substr(0,strlen("kernings count")) == "kernings count")
 //        {
@@ -556,7 +550,7 @@ bool CCBMFontConfiguration::parseConfigFile(const char *controlFile)
         }
     }
     
-    return true;
+    return validCharsString;
 }
 
 void CCBMFontConfiguration::parseImageFileName(std::string line, const char *fntFile)
@@ -704,7 +698,7 @@ void CCBMFontConfiguration::parseKerningEntry(std::string line)
     value = line.substr(index, index2-index);
     sscanf(value.c_str(), "amount=%d", &amount);
 
-    tKerningHashElement *element = (tKerningHashElement *)calloc( sizeof( *element ), 1 );
+    tCCKerningHashElement *element = (tCCKerningHashElement *)calloc( sizeof( *element ), 1 );
     element->amount = amount;
     element->key = (first<<16) | (second&0xffff);
     HASH_ADD_INT(m_pKerningDictionary,key, element);
@@ -784,7 +778,12 @@ bool CCLabelBMFont::initWithString(const char *theString, const char *fntFile, f
     if (fntFile)
     {
         CCBMFontConfiguration *newConf = FNTConfigLoadFile(fntFile);
-        CCAssert(newConf, "CCLabelBMFont: Impossible to create font. Please check file");
+        if (!newConf)
+        {
+            CCLOG("cocos2d: WARNING. CCLabelBMFont: Impossible to create font. Please check file: '%s'", fntFile);
+            release();
+            return false;
+        }
         
         newConf->retain();
         CC_SAFE_RELEASE(m_pConfiguration);
@@ -812,10 +811,15 @@ bool CCLabelBMFont::initWithString(const char *theString, const char *fntFile, f
         m_fWidth = width;
         m_cOpacity = 255;
         m_tColor = ccWHITE;
-        m_tContentSize = CCSizeZero;
+        m_obContentSize = CCSizeZero;
         m_bIsOpacityModifyRGB = m_pobTextureAtlas->getTexture()->hasPremultipliedAlpha();
+        m_obAnchorPoint = ccp(0.5f, 0.5f);
+        
+        m_pReusedChar = CCSprite::create();
+        m_pReusedChar->initWithTexture(m_pobTextureAtlas->getTexture(), CCRectMake(0, 0, 0, 0), false);
+        
         this->setString(theString);
-        setAnchorPoint(ccp(0.5f, 0.5f));
+        
         return true;
     }
     return false;
@@ -845,7 +849,7 @@ int CCLabelBMFont::kerningAmountForFirst(unsigned short first, unsigned short se
     unsigned int key = (first<<16) | (second & 0xffff);
 
     if( m_pConfiguration->m_pKerningDictionary ) {
-        tKerningHashElement *element = NULL;
+        tCCKerningHashElement *element = NULL;
         HASH_FIND_INT(m_pConfiguration->m_pKerningDictionary, &key, element);        
         if(element)
             ret = element->amount;
@@ -866,6 +870,8 @@ void CCLabelBMFont::createFontChars()
     unsigned int totalHeight = 0;
 
     unsigned int quantityOfLines = 1;
+    
+    set<unsigned int> *charSet = m_pConfiguration->getCharacterSet();
 
     unsigned int stringLen = cc_wcslen(m_sString);
     if (stringLen == 0)
@@ -884,6 +890,9 @@ void CCLabelBMFont::createFontChars()
 
     totalHeight = m_pConfiguration->m_nCommonHeight * quantityOfLines;
     nextFontPositionY = 0-(m_pConfiguration->m_nCommonHeight - m_pConfiguration->m_nCommonHeight * quantityOfLines);
+    
+    CCRect rect;
+    ccBMFontDef fontDef;
 
     for (unsigned int i= 0; i < stringLen; i++)
     {
@@ -895,17 +904,27 @@ void CCLabelBMFont::createFontChars()
             nextFontPositionY -= m_pConfiguration->m_nCommonHeight;
             continue;
         }
+        
+        if (charSet->find(c) == charSet->end())
+        {
+            CCLOG("CCLabelBMFont: Attempted to use character not defined in this bitmap: %d", c);
+            continue;      
+        }
 
-        tFontDefHashElement *element = NULL;
+        tCCFontDefHashElement *element = NULL;
 
         // unichar is a short, and an int is needed on HASH_FIND_INT
         unsigned int key = c;
         HASH_FIND_INT(m_pConfiguration->m_pFontDefDictionary, &key, element);
-        CCAssert(element, "FontDefinition could not be found!");
+        if (! element)
+        {
+            CCLOG("cocos2d: LabelBMFont: characer not found %d", c);
+            continue;
+        }
 
-        ccBMFontDef fontDef = element->fontDef;
+        fontDef = element->fontDef;
 
-        CCRect rect = fontDef.rect;
+        rect = fontDef.rect;
         rect = CC_RECT_PIXELS_TO_POINTS(rect);
 
         rect.origin.x += m_tImageOffset.x;
@@ -913,17 +932,31 @@ void CCLabelBMFont::createFontChars()
 
         CCSprite *fontChar;
 
+        bool hasSprite = true;
         fontChar = (CCSprite*)(this->getChildByTag(i));
         if( ! fontChar )
         {
-            fontChar = new CCSprite();
-            fontChar->initWithTexture(m_pobTextureAtlas->getTexture(), rect);
-            this->addChild(fontChar, 0, i);
-            fontChar->release();
+            if( 0 )
+            {
+				/* WIP: Doesn't support many features yet.
+				 But this code is super fast. It doesn't create any sprite.
+				 Ideal for big labels.
+				 */
+				fontChar = m_pReusedChar;
+				fontChar->setBatchNode(NULL);
+				hasSprite = false;
+			}
+            else
+            {
+                fontChar = CCSprite::create();
+                fontChar->initWithTexture(m_pobTextureAtlas->getTexture(), rect);
+                addChild(fontChar, i, i);
+                fontChar->release();
+			}
         }
         else
         {
-            // reusing fonts
+            // updating previous sprite
             fontChar->setTextureRect(rect, false, rect.size);
 
             // restore to default in case they were modified
@@ -957,13 +990,27 @@ void CCLabelBMFont::createFontChars()
         {
             longestLine = nextFontPositionX;
         }
+        
+        if (! hasSprite)
+        {
+            updateQuadFromSprite(fontChar, i);
+        }
     }
 
-    tmpSize.width  = (float) longestLine;
-    tmpSize.height = (float) totalHeight;
+    // If the last character processed has an xAdvance which is less that the width of the characters image, then we need
+    // to adjust the width of the string to take this into account, or the character will overlap the end of the bounding
+    // box
+    if (fontDef.xAdvance < fontDef.rect.size.width)
+    {
+        tmpSize.width = longestLine + fontDef.rect.size.width - fontDef.xAdvance;
+    }
+    else
+    {
+        tmpSize.width = longestLine;
+    }
+    tmpSize.height = totalHeight;
 
     this->setContentSize(CC_SIZE_PIXELS_TO_POINTS(tmpSize));
-    
 }
 
 //LabelBMFont - CCLabelProtocol protocol
@@ -1091,7 +1138,7 @@ bool CCLabelBMFont::isOpacityModifyRGB()
 // LabelBMFont - AnchorPoint
 void CCLabelBMFont::setAnchorPoint(const CCPoint& point)
 {
-    if( ! point.equals(m_tAnchorPoint))
+    if( ! point.equals(m_obAnchorPoint))
     {
         CCSpriteBatchNode::setAnchorPoint(point);
         updateLabel();
@@ -1126,7 +1173,8 @@ void CCLabelBMFont::updateLabel()
             while (!(characterSprite = (CCSprite*)this->getChildByTag(j + skip)))
                 skip++;
 
-            if (!characterSprite->isVisible()) continue;
+            if (!characterSprite->isVisible())
+                continue;
 
             if (i >= stringLength)
                 break;
