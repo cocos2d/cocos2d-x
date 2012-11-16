@@ -904,7 +904,8 @@ CCAcceleration jsval_to_ccacceleration(JSContext *cx, jsval v) {
     JS_ValueToNumber(cx, jsz, &z) &&
     JS_ValueToNumber(cx, jstimestamp, &timestamp);
     assert(ok == JS_TRUE);
-    return {x, y, z, timestamp};
+    CCAcceleration ret = {x, y, z, timestamp};
+    return ret;
 }
 
 

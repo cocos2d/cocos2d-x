@@ -2811,7 +2811,7 @@ JSBool JSB_cpSpace_pointQueryFirst(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ok &= jsval_to_cpVect( cx, *argvp++, (cpVect*) &arg1 );
 	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg2 );
-	ok &= jsval_to_uint( cx, *argvp++, (uint*) &arg3 );
+	ok &= jsval_to_uint( cx, *argvp++, (unsigned int*) &arg3 );
 	JSB_PRECONDITION3(ok, cx, JS_FALSE, "Error processing arguments");
 	cpShape* ret_val;
 
@@ -4327,7 +4327,7 @@ JSBool JSB_cpShape_setCollisionType(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSBool ok = JS_TRUE;
 	cpCollisionType arg1; 
 
-	ok &= jsval_to_uint( cx, *argvp++, (uint*) &arg1 );
+	ok &= jsval_to_uint( cx, *argvp++, (unsigned int*) &arg1 );
 	JSB_PRECONDITION3(ok, cx, JS_FALSE, "Error processing arguments");
 
 	cpShapeSetCollisionType((cpShape*)arg0 , (cpCollisionType)arg1  );
@@ -4387,7 +4387,7 @@ JSBool JSB_cpShape_setGroup(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSBool ok = JS_TRUE;
 	cpGroup arg1; 
 
-	ok &= jsval_to_uint( cx, *argvp++, (uint*) &arg1 );
+	ok &= jsval_to_uint( cx, *argvp++, (unsigned int*) &arg1 );
 	JSB_PRECONDITION3(ok, cx, JS_FALSE, "Error processing arguments");
 
 	cpShapeSetGroup((cpShape*)arg0 , (cpGroup)arg1  );
