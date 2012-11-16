@@ -178,6 +178,11 @@ void CCAccelerometer::setDelegate(CCAccelerometerDelegate* pDelegate)
     }
 }
 
+void CCAccelerometer::setAccelerometerInterval(float interval)
+{
+
+}
+
 void CCAccelerometer::update( double x,double y,double z,double timestamp ) 
 {
     if (m_pAccelDelegate)

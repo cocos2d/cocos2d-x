@@ -48,6 +48,7 @@ public:
     static CCAccelerometer* sharedAccelerometer();
 
 	void setDelegate(CCAccelerometerDelegate* pDelegate);
+    void setAccelerometerInterval(float interval) {CC_UNUSED_PARAM(interval);};
 	void update(float x, float y, float z, uint64 sensorTimeStamp);
 
 private:
