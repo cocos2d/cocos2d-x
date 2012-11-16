@@ -175,7 +175,6 @@ void CCLayer::setTouchEnabled(bool enabled)
     }
 }
 
-
 void CCLayer::setTouchMode(ccTouchesMode mode)
 {
     if(m_eTouchMode != mode)
