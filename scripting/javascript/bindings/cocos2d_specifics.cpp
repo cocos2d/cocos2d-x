@@ -851,13 +851,13 @@ JSBool js_cocos2dx_CCScheduler_unscheduleAllSelectorsForTarget(JSContext *cx, ui
             if(! arr) return JS_FALSE;
             for(unsigned int i = 0; i < arr->count(); ++i) {
                 if(arr->objectAtIndex(i)) {
-                    arg0->getScheduler()->unscheduleAllSelectorsForTarget(arr->objectAtIndex(i));
+                    arg0->getScheduler()->unscheduleAllForTarget(arr->objectAtIndex(i));
                 }
             }
 
 		} while (0);
         
-		cobj->unscheduleAllSelectorsForTarget(arg0);
+		cobj->unscheduleAllForTarget(arg0);
 		return JS_TRUE;
 	}
 	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);

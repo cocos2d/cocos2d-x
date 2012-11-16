@@ -47,27 +47,26 @@ void CCPhysicsSprite::setPosition(const cocos2d::CCPoint &pos) {
 
 
 float CCPhysicsSprite::getRotation() {
-    return (_ignoreBodyRotation ? m_fRotation : -CC_RADIANS_TO_DEGREES(cpBodyGetAngle(_body)));
+    return (_ignoreBodyRotation ? CCSprite::getRotation() : -CC_RADIANS_TO_DEGREES(cpBodyGetAngle(_body)));
 }
 
 void CCPhysicsSprite::setRotation(float rotation) {
 	if(_ignoreBodyRotation){
-		m_fRotation = rotation;
+        CCSprite::setRotation(rotation);
 	} else {
 		cpBodySetAngle(_body, -CC_DEGREES_TO_RADIANS(rotation));
-        m_fRotation = -CC_DEGREES_TO_RADIANS(rotation);
 	}
 }
 
 cocos2d::CCAffineTransform CCPhysicsSprite::nodeToParentTransform() {
-    cpVect rot = (_ignoreBodyRotation ? cpvforangle(-CC_DEGREES_TO_RADIANS(m_fRotation)) : _body->rot);
-    float x = _body->p.x + rot.x*-m_tAnchorPointInPoints.x - rot.y*-m_tAnchorPointInPoints.y;
-    float y = _body->p.y + rot.y*-m_tAnchorPointInPoints.x + rot.x*-m_tAnchorPointInPoints.y;
+    cpVect rot = (_ignoreBodyRotation ? cpvforangle(-CC_DEGREES_TO_RADIANS(m_fRotationX)) : _body->rot);
+    float x = _body->p.x + rot.x*-m_obAnchorPointInPoints.x - rot.y*-m_obAnchorPointInPoints.y;
+    float y = _body->p.y + rot.y*-m_obAnchorPointInPoints.x + rot.x*-m_obAnchorPointInPoints.y;
     
     if(m_bIgnoreAnchorPointForPosition){
-        x += m_tAnchorPointInPoints.x;
-        y += m_tAnchorPointInPoints.y;
+        x += m_obAnchorPointInPoints.x;
+        y += m_obAnchorPointInPoints.y;
     }
     
-    return (m_tTransform = cocos2d::__CCAffineTransformMake(rot.x, rot.y, -rot.y, rot.x, x,	y));
+    return (m_sTransform = cocos2d::__CCAffineTransformMake(rot.x, rot.y, -rot.y, rot.x, x,	y));
 }
