@@ -55,6 +55,9 @@ extern CC_DLL const GLchar * ccPositionTextureColorAlphaTest_frag;
 extern CC_DLL const GLchar * ccPositionTexture_uColor_frag;
 extern CC_DLL const GLchar * ccPositionTexture_uColor_vert;
 
+extern CC_DLL const GLchar * ccPositionColorLengthTexture_frag;
+extern CC_DLL const GLchar * ccPositionColorLengthTexture_vert;
+
 extern CC_DLL const GLchar * ccExSwitchMask_frag;
 
 // end of shaders group

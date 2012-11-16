@@ -337,7 +337,7 @@ void CCGrid3D::blit(void)
 
     ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_TexCoords );
     m_pShaderProgram->use();
-    m_pShaderProgram->setUniformForModelViewProjectionMatrix();;
+    m_pShaderProgram->setUniformsForBuiltins();;
 
     //
     // Attributes
@@ -542,7 +542,7 @@ void CCTiledGrid3D::blit(void)
 
     
     m_pShaderProgram->use();
-    m_pShaderProgram->setUniformForModelViewProjectionMatrix();
+    m_pShaderProgram->setUniformsForBuiltins();
 
     //
     // Attributes
