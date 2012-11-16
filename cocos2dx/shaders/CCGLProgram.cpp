@@ -167,7 +167,7 @@ bool CCGLProgram::compileShader(GLuint * shader, GLenum type, const GLchar* sour
     {
         GLsizei length;
 		glGetShaderiv(*shader, GL_SHADER_SOURCE_LENGTH, &length);
-		GLchar src[length];
+		GLchar* src = (GLchar *)malloc(sizeof(GLchar) * length);
 		
 		glGetShaderSource(*shader, length, NULL, src);
 		CCLOG("cocos2d: ERROR: Failed to compile shader:\n%s", src);
@@ -180,7 +180,7 @@ bool CCGLProgram::compileShader(GLuint * shader, GLenum type, const GLchar* sour
         {
             CCLOG("cocos2d: %s", fragmentShaderLog());
         }
-        
+        free(src);
 
         abort();
     }

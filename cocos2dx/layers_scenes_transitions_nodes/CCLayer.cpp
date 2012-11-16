@@ -246,8 +246,8 @@ void CCLayer::setAccelerometerInterval(double interval) {
     {
         if (m_bRunning)
         {
-//            CCDirector* pDirector = CCDirector::sharedDirector();
-//            pDirector->getAccelerometer()->setAccelerometerInterval(interval);
+            CCDirector* pDirector = CCDirector::sharedDirector();
+            pDirector->getAccelerometer()->setAccelerometerInterval(interval);
         }
     }
 }
