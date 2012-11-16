@@ -35,8 +35,8 @@ CCAffineTransform PhysicsSprite::nodeToParentTransform(void)
     float y = pos.y * PTM_RATIO;
 
     if ( isIgnoreAnchorPointForPosition() ) {
-        x += m_tAnchorPointInPoints.x;
-        y += m_tAnchorPointInPoints.y;
+        x += m_obAnchorPointInPoints.x;
+        y += m_obAnchorPointInPoints.y;
     }
 
     // Make matrix
@@ -44,17 +44,17 @@ CCAffineTransform PhysicsSprite::nodeToParentTransform(void)
     float c = cosf(radians);
     float s = sinf(radians);
 
-    if( ! m_tAnchorPointInPoints.equals(CCPointZero) ){
-        x += c*-m_tAnchorPointInPoints.x + -s*-m_tAnchorPointInPoints.y;
-        y += s*-m_tAnchorPointInPoints.x + c*-m_tAnchorPointInPoints.y;
+    if( ! m_obAnchorPointInPoints.equals(CCPointZero) ){
+        x += c*-m_obAnchorPointInPoints.x + -s*-m_obAnchorPointInPoints.y;
+        y += s*-m_obAnchorPointInPoints.x + c*-m_obAnchorPointInPoints.y;
     }
 
     // Rot, Translate Matrix
-    m_tTransform = CCAffineTransformMake( c,  s,
+    m_sTransform = CCAffineTransformMake( c,  s,
         -s,    c,
         x,    y );
 
-    return m_tTransform;
+    return m_sTransform;
 }
 
 Box2DTestLayer::Box2DTestLayer()

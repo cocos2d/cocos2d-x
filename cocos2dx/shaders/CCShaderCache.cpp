@@ -39,6 +39,7 @@ enum {
     kCCShaderType_PositionTexture_uColor,
     kCCShaderType_PositionTextureA8Color,
     kCCShaderType_Position_uColor,
+    kCCShaderType_PositionLengthTexureColor,
     
     kCCShaderType_MAX,
 };
@@ -140,7 +141,16 @@ void CCShaderCache::loadDefaultShaders()
     loadDefaultShader(p, kCCShaderType_Position_uColor);
     
     m_pPrograms->setObject(p, kCCShader_Position_uColor);
-    p->release();    
+    p->release();
+    
+    //
+	// Position, Legth(TexCoords, Color (used by Draw Node basically )
+	//
+    p = new CCGLProgram();
+    loadDefaultShader(p, kCCShaderType_PositionLengthTexureColor);
+    
+    m_pPrograms->setObject(p, kCCShader_PositionLengthTexureColor);
+    p->release();
 }
 
 void CCShaderCache::reloadDefaultShaders()
@@ -190,7 +200,14 @@ void CCShaderCache::reloadDefaultShaders()
     //
     p = programForKey(kCCShader_Position_uColor);
     p->reset();
-    loadDefaultShader(p, kCCShaderType_Position_uColor);  
+    loadDefaultShader(p, kCCShaderType_Position_uColor);
+    
+    //
+	// Position, Legth(TexCoords, Color (used by Draw Node basically )
+	//
+    p = programForKey(kCCShader_PositionLengthTexureColor);
+    p->reset();
+    loadDefaultShader(p, kCCShaderType_Position_uColor);
 }
 
 void CCShaderCache::loadDefaultShader(CCGLProgram *p, int type)
@@ -245,6 +262,14 @@ void CCShaderCache::loadDefaultShader(CCGLProgram *p, int type)
             p->initWithVertexShaderByteArray(ccPosition_uColor_vert, ccPosition_uColor_frag);    
             
             p->addAttribute("aVertex", kCCVertexAttrib_Position);    
+            
+            break;
+        case kCCShaderType_PositionLengthTexureColor:
+            p->initWithVertexShaderByteArray(ccPositionColorLengthTexture_vert, ccPositionColorLengthTexture_frag);
+            
+            p->addAttribute(kCCAttributeNamePosition, kCCVertexAttrib_Position);
+            p->addAttribute(kCCAttributeNameTexCoord, kCCVertexAttrib_TexCoords);
+            p->addAttribute(kCCAttributeNameColor, kCCVertexAttrib_Color);
             
             break;
         default:

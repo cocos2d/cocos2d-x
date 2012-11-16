@@ -48,7 +48,7 @@ void GLESDebugDraw::initShader( void )
 void GLESDebugDraw::DrawPolygon(const b2Vec2* old_vertices, int vertexCount, const b2Color& color)
 {
     mShaderProgram->use();
-    mShaderProgram->setUniformForModelViewProjectionMatrix();
+    mShaderProgram->setUniformsForBuiltins();
 
     b2Vec2* vertices = new b2Vec2[vertexCount];
     for( int i=0;i<vertexCount;i++) 
@@ -72,7 +72,7 @@ void GLESDebugDraw::DrawPolygon(const b2Vec2* old_vertices, int vertexCount, con
 void GLESDebugDraw::DrawSolidPolygon(const b2Vec2* old_vertices, int vertexCount, const b2Color& color)
 {
     mShaderProgram->use();
-    mShaderProgram->setUniformForModelViewProjectionMatrix();
+    mShaderProgram->setUniformsForBuiltins();
 
     b2Vec2* vertices = new b2Vec2[vertexCount];
     for( int i=0;i<vertexCount;i++) {
@@ -99,7 +99,7 @@ void GLESDebugDraw::DrawSolidPolygon(const b2Vec2* old_vertices, int vertexCount
 void GLESDebugDraw::DrawCircle(const b2Vec2& center, float32 radius, const b2Color& color)
 {
     mShaderProgram->use();
-    mShaderProgram->setUniformForModelViewProjectionMatrix();
+    mShaderProgram->setUniformsForBuiltins();
 
     const float32 k_segments = 16.0f;
     int vertexCount=16;
@@ -130,7 +130,7 @@ void GLESDebugDraw::DrawCircle(const b2Vec2& center, float32 radius, const b2Col
 void GLESDebugDraw::DrawSolidCircle(const b2Vec2& center, float32 radius, const b2Vec2& axis, const b2Color& color)
 {
     mShaderProgram->use();
-    mShaderProgram->setUniformForModelViewProjectionMatrix();
+    mShaderProgram->setUniformsForBuiltins();
 
     const float32 k_segments = 16.0f;
     int vertexCount=16;
@@ -167,7 +167,7 @@ void GLESDebugDraw::DrawSolidCircle(const b2Vec2& center, float32 radius, const 
 void GLESDebugDraw::DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2Color& color)
 {
     mShaderProgram->use();
-    mShaderProgram->setUniformForModelViewProjectionMatrix();
+    mShaderProgram->setUniformsForBuiltins();
 
     mShaderProgram->setUniformLocationWith4f(mColorLocation, color.r, color.g, color.b, 1);
 
@@ -199,7 +199,7 @@ void GLESDebugDraw::DrawTransform(const b2Transform& xf)
 void GLESDebugDraw::DrawPoint(const b2Vec2& p, float32 size, const b2Color& color)
 {
     mShaderProgram->use();
-    mShaderProgram->setUniformForModelViewProjectionMatrix();
+    mShaderProgram->setUniformsForBuiltins();
 
     mShaderProgram->setUniformLocationWith4f(mColorLocation, color.r, color.g, color.b, 1);
 
@@ -229,7 +229,7 @@ void GLESDebugDraw::DrawString(int x, int y, const char *string, ...)
 void GLESDebugDraw::DrawAABB(b2AABB* aabb, const b2Color& color)
 {
     mShaderProgram->use();
-    mShaderProgram->setUniformForModelViewProjectionMatrix();
+    mShaderProgram->setUniformsForBuiltins();
 
     mShaderProgram->setUniformLocationWith4f(mColorLocation, color.r, color.g, color.b, 1);
 
