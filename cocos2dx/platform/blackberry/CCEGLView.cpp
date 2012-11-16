@@ -54,6 +54,9 @@ PFNGLBINDVERTEXARRAYOESPROC glBindVertexArray = 0;
 PFNGLDELETEVERTEXARRAYSOESPROC glDeleteVertexArrays = 0;
 #endif
 
+PFNGLMAPBUFFEROESPROC glMapBuffer = 0;
+PFNGLUNMAPBUFFEROESPROC glUnmapBuffer = 0;
+PFNGLGETBUFFERPOINTERVOESPROC glGetBufferPointerv = 0;
 
 NS_CC_BEGIN
 
@@ -169,6 +172,11 @@ void CCEGLView::initEGLFunctions()
         glDeleteVertexArrays = (PFNGLDELETEVERTEXARRAYSOESPROC)eglGetProcAddress("glDeleteVertexArraysOES");
     }
 #endif
+
+    glMapBuffer = (PFNGLMAPBUFFEROESPROC)eglGetProcAddress("glMapBufferOES");
+    glUnmapBuffer = (PFNGLUNMAPBUFFEROESPROC)eglGetProcAddress("glUnmapBufferOES");
+    glGetBufferPointerv = (PFNGLGETBUFFERPOINTERVOESPROC)eglGetProcAddress("glGetBufferPointervOES");
+
 
 	m_initializedFunctions = true;
 }

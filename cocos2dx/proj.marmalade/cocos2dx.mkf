@@ -31,6 +31,7 @@ includepaths
 	"../actions"
 	"../base_nodes"
 	"../cocoa"
+	"../draw_nodes"
 	"../effects"
 	"../kazmath/include"
 #	"../keyboard_dispatcher"
@@ -40,6 +41,7 @@ includepaths
 	"../menu_nodes"
 	"../misc_nodes"
 	"../particle_nodes"
+	"../physics_nodes"
 	"../shaders"
 	"../script_support"
 	"../sprite_nodes"
@@ -76,6 +78,11 @@ files
 	"*.h"
 	"*.cpp"
 	
+	("../draw_nodes")
+	[draw_nodes]
+	"*.h"
+	"*.cpp"
+
 	("../effects")
 	[effects]
 	"*.h"
@@ -151,6 +158,11 @@ files
 	
 	("../particle_nodes")
 	[particle_nodes]
+	"*.h"
+	"*.cpp"
+	
+	("../physics_nodes")
+	[physics_nodes]
 	"*.h"
 	"*.cpp"
 	
