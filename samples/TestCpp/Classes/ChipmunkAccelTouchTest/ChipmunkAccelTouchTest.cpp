@@ -47,25 +47,25 @@ CCAffineTransform ChipmunkPhysicsSprite::nodeToParentTransform(void)
     float y = m_pBody->p.y;
 
     if ( isIgnoreAnchorPointForPosition() ) {
-        x += m_tAnchorPointInPoints.x;
-        y += m_tAnchorPointInPoints.y;
+        x += m_obAnchorPointInPoints.x;
+        y += m_obAnchorPointInPoints.y;
     }
 
     // Make matrix
     float c = m_pBody->rot.x;
     float s = m_pBody->rot.y;
 
-    if( ! m_tAnchorPointInPoints.equals(CCPointZero) ){
-        x += c*-m_tAnchorPointInPoints.x + -s*-m_tAnchorPointInPoints.y;
-        y += s*-m_tAnchorPointInPoints.x + c*-m_tAnchorPointInPoints.y;
+    if( ! m_obAnchorPointInPoints.equals(CCPointZero) ){
+        x += c*-m_obAnchorPointInPoints.x + -s*-m_obAnchorPointInPoints.y;
+        y += s*-m_obAnchorPointInPoints.x + c*-m_obAnchorPointInPoints.y;
     }
 
     // Rot, Translate Matrix
-    m_tTransform = CCAffineTransformMake( c,  s,
+    m_sTransform = CCAffineTransformMake( c,  s,
         -s,    c,
         x,    y );
 
-    return m_tTransform;
+    return m_sTransform;
 }
 
 ChipmunkAccelTouchTestLayer::ChipmunkAccelTouchTestLayer()

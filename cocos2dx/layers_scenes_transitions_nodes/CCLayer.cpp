@@ -43,15 +43,15 @@ NS_CC_BEGIN
 
 // CCLayer
 CCLayer::CCLayer()
-:m_bIsTouchEnabled(false)
-,m_bIsAccelerometerEnabled(false)
-,m_bIsKeypadEnabled(false)
-,m_pScriptHandlerEntry(NULL)
+: m_bTouchEnabled(false)
+, m_bAccelerometerEnabled(false)
+, m_bKeypadEnabled(false)
+, m_pScriptHandlerEntry(NULL)
+, m_eTouchMode(kCCTouchesAllAtOnce)
+, m_nTouchPriority(0)
 {
-    setAnchorPoint(ccp(0.5f, 0.5f));
     m_bIgnoreAnchorPointForPosition = true;
-    m_bTouchMode = kCCTouchesAllAtOnce;
-    m_bTouchPriority = 0;
+    setAnchorPoint(ccp(0.5f, 0.5f));
 }
 
 CCLayer::~CCLayer()
@@ -67,8 +67,8 @@ bool CCLayer::init()
         CCDirector * pDirector;
         CC_BREAK_IF(!(pDirector = CCDirector::sharedDirector()));
         this->setContentSize(pDirector->getWinSize());
-        m_bIsTouchEnabled = false;
-        m_bIsAccelerometerEnabled = false;
+        m_bTouchEnabled = false;
+        m_bAccelerometerEnabled = false;
         // success
         bRet = true;
     } while(0);
@@ -119,10 +119,10 @@ void CCLayer::registerWithTouchDispatcher()
     }
     else
     {
-        if( m_bTouchMode == kCCTouchesAllAtOnce ) {
+        if( m_eTouchMode == kCCTouchesAllAtOnce ) {
             pDispatcher->addStandardDelegate(this, 0);
         } else {
-            pDispatcher->addTargetedDelegate(this, m_bTouchPriority, true);
+            pDispatcher->addTargetedDelegate(this, m_nTouchPriority, true);
         }
     }
 }
@@ -152,15 +152,15 @@ int CCLayer::excuteScriptTouchHandler(int nEventType, CCSet *pTouches)
 /// isTouchEnabled getter
 bool CCLayer::isTouchEnabled()
 {
-    return m_bIsTouchEnabled;
+    return m_bTouchEnabled;
 }
 /// isTouchEnabled setter
 void CCLayer::setTouchEnabled(bool enabled)
 {
-    if (m_bIsTouchEnabled != enabled)
+    if (m_bTouchEnabled != enabled)
     {
-        m_bIsTouchEnabled = enabled;
-        if (m_bIsRunning)
+        m_bTouchEnabled = enabled;
+        if (m_bRunning)
         {
             if (enabled)
             {
@@ -175,53 +175,57 @@ void CCLayer::setTouchEnabled(bool enabled)
     }
 }
 
-
-void CCLayer::setTouchMode(ccTouchesMode mode) {
-    if(m_bTouchMode != mode) {
-        m_bTouchMode = mode;
+void CCLayer::setTouchMode(ccTouchesMode mode)
+{
+    if(m_eTouchMode != mode)
+    {
+        m_eTouchMode = mode;
         
-		if( m_bIsTouchEnabled) {
+		if( m_bTouchEnabled)
+        {
 			setTouchEnabled(false);
 			setTouchEnabled(true);
 		}
     }
 }
 
-void CCLayer::setTouchPriority(int priority) {
-    if(m_bTouchPriority != priority) {
-        m_bTouchPriority = priority;
+void CCLayer::setTouchPriority(int priority)
+{
+    if (m_nTouchPriority != priority)
+    {
+        m_nTouchPriority = priority;
         
-		if( m_bIsTouchEnabled) {
+		if( m_bTouchEnabled)
+        {
 			setTouchEnabled(false);
 			setTouchEnabled(true);
 		}
     }
 }
 
-int CCLayer::getTouchPriority() {
-    return m_bTouchPriority;
+int CCLayer::getTouchPriority()
+{
+    return m_nTouchPriority;
 }
 
-int CCLayer::getTouchMode() {
-    return m_bTouchMode;
+int CCLayer::getTouchMode()
+{
+    return m_eTouchMode;
 }
-
-    
-
 
 /// isAccelerometerEnabled getter
 bool CCLayer::isAccelerometerEnabled()
 {
-    return m_bIsAccelerometerEnabled;
+    return m_bAccelerometerEnabled;
 }
 /// isAccelerometerEnabled setter
 void CCLayer::setAccelerometerEnabled(bool enabled)
 {
-    if (enabled != m_bIsAccelerometerEnabled)
+    if (enabled != m_bAccelerometerEnabled)
     {
-        m_bIsAccelerometerEnabled = enabled;
+        m_bAccelerometerEnabled = enabled;
 
-        if (m_bIsRunning)
+        if (m_bRunning)
         {
             CCDirector* pDirector = CCDirector::sharedDirector();
             if (enabled)
@@ -238,9 +242,9 @@ void CCLayer::setAccelerometerEnabled(bool enabled)
 
 
 void CCLayer::setAccelerometerInterval(double interval) {
-    if (m_bIsAccelerometerEnabled)
+    if (m_bAccelerometerEnabled)
     {
-        if (m_bIsRunning)
+        if (m_bRunning)
         {
             CCDirector* pDirector = CCDirector::sharedDirector();
             pDirector->getAccelerometer()->setAccelerometerInterval(interval);
@@ -262,16 +266,16 @@ void CCLayer::didAccelerate(CCAcceleration* pAccelerationValue)
 /// isKeypadEnabled getter
 bool CCLayer::isKeypadEnabled()
 {
-    return m_bIsKeypadEnabled;
+    return m_bKeypadEnabled;
 }
 /// isKeypadEnabled setter
 void CCLayer::setKeypadEnabled(bool enabled)
 {
-    if (enabled != m_bIsKeypadEnabled)
+    if (enabled != m_bKeypadEnabled)
     {
-        m_bIsKeypadEnabled = enabled;
+        m_bKeypadEnabled = enabled;
 
-        if (m_bIsRunning)
+        if (m_bRunning)
         {
             CCDirector* pDirector = CCDirector::sharedDirector();
             if (enabled)
@@ -292,7 +296,7 @@ void CCLayer::onEnter()
     CCDirector* pDirector = CCDirector::sharedDirector();
     // register 'parent' nodes first
     // since events are propagated in reverse order
-    if (m_bIsTouchEnabled)
+    if (m_bTouchEnabled)
     {
         this->registerWithTouchDispatcher();
     }
@@ -301,13 +305,13 @@ void CCLayer::onEnter()
     CCNode::onEnter();
 
     // add this layer to concern the Accelerometer Sensor
-    if (m_bIsAccelerometerEnabled)
+    if (m_bAccelerometerEnabled)
     {
         pDirector->getAccelerometer()->setDelegate(this);
     }
 
     // add this layer to concern the keypad msg
-    if (m_bIsKeypadEnabled)
+    if (m_bKeypadEnabled)
     {
         pDirector->getKeypadDispatcher()->addDelegate(this);
     }
@@ -316,7 +320,7 @@ void CCLayer::onEnter()
 void CCLayer::onExit()
 {
     CCDirector* pDirector = CCDirector::sharedDirector();
-    if( m_bIsTouchEnabled )
+    if( m_bTouchEnabled )
     {
         pDirector->getTouchDispatcher()->removeDelegate(this);
         // [lua]:don't unregister script touch handler, or the handler will be destroyed
@@ -324,13 +328,13 @@ void CCLayer::onExit()
     }
 
     // remove this layer from the delegates who concern Accelerometer Sensor
-    if (m_bIsAccelerometerEnabled)
+    if (m_bAccelerometerEnabled)
     {
         pDirector->getAccelerometer()->setDelegate(NULL);
     }
 
     // remove this layer from the delegates who concern the keypad msg
-    if (m_bIsKeypadEnabled)
+    if (m_bKeypadEnabled)
     {
         pDirector->getKeypadDispatcher()->removeDelegate(this);
     }
@@ -340,7 +344,7 @@ void CCLayer::onExit()
 
 void CCLayer::onEnterTransitionDidFinish()
 {
-    if (m_bIsAccelerometerEnabled)
+    if (m_bAccelerometerEnabled)
     {
         CCDirector* pDirector = CCDirector::sharedDirector();
         pDirector->getAccelerometer()->setDelegate(this);
@@ -609,12 +613,12 @@ void CCLayerColor::changeWidthAndHeight(GLfloat w ,GLfloat h)
 
 void CCLayerColor::changeWidth(GLfloat w)
 {
-    this->setContentSize(CCSizeMake(w, m_tContentSize.height));
+    this->setContentSize(CCSizeMake(w, m_obContentSize.height));
 }
 
 void CCLayerColor::changeHeight(GLfloat h)
 {
-    this->setContentSize(CCSizeMake(m_tContentSize.width, h));
+    this->setContentSize(CCSizeMake(m_obContentSize.width, h));
 }
 
 void CCLayerColor::updateColor()
