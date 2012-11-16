@@ -32,6 +32,7 @@ THE SOFTWARE.
 #include "shaders/ccGLStateCache.h"
 #include "support/CCNotificationCenter.h"
 #include "CCEventType.h"
+#include "CCGL.h"
 // support
 #include "CCTexture2D.h"
 #include "cocoa/CCString.h"
@@ -253,7 +254,7 @@ void CCTextureAtlas::setupIndices()
 void CCTextureAtlas::setupVBOandVAO()
 {
     glGenVertexArrays(1, &m_uVAOname);
-    glBindVertexArray(m_uVAOname);
+    ccGLBindVAO(m_uVAOname);
 
 #define kQuadSize sizeof(m_pQuads[0].bl)
 
@@ -277,7 +278,8 @@ void CCTextureAtlas::setupVBOandVAO()
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_pBuffersVBO[1]);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(m_pIndices[0]) * m_uCapacity * 6, m_pIndices, GL_STATIC_DRAW);
 
-    glBindVertexArray(0);
+    // Must unbind the VAO before changing the element buffer.
+    ccGLBindVAO(0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
@@ -294,6 +296,9 @@ void CCTextureAtlas::setupVBO()
 
 void CCTextureAtlas::mapBuffers()
 {
+    // Avoid changing the element buffer for whatever VAO might be bound.
+	ccGLBindVAO(0);
+    
     glBindBuffer(GL_ARRAY_BUFFER, m_pBuffersVBO[0]);
     glBufferData(GL_ARRAY_BUFFER, sizeof(m_pQuads[0]) * m_uCapacity, m_pQuads, GL_DYNAMIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -606,8 +611,19 @@ void CCTextureAtlas::drawNumberOfQuads(unsigned int n, unsigned int start)
     if (m_bDirty) 
     {
         glBindBuffer(GL_ARRAY_BUFFER, m_pBuffersVBO[0]);
+        // option 1: subdata
         glBufferSubData(GL_ARRAY_BUFFER, sizeof(m_pQuads[0])*start, sizeof(m_pQuads[0]) * n , &m_pQuads[start] );
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
+		
+		// option 2: data
+        //		glBufferData(GL_ARRAY_BUFFER, sizeof(quads_[0]) * (n-start), &quads_[start], GL_DYNAMIC_DRAW);
+		
+		// option 3: orphaning + glMapBuffer
+		glBufferData(GL_ARRAY_BUFFER, sizeof(m_pQuads[0]) * (n-start), NULL, GL_DYNAMIC_DRAW);
+		void *buf = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
+		memcpy(buf, m_pQuads, sizeof(m_pQuads[0])* (n-start));
+		glUnmapBuffer(GL_ARRAY_BUFFER);
+		
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
         m_bDirty = false;
     }

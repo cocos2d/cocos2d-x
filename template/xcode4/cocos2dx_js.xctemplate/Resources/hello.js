@@ -1,3 +1,4 @@
+require("jsb_constants.js");
 
 try {
 
@@ -161,8 +162,10 @@ try {
     var game = GameCreator();
     
     __jsc__.garbageCollect();
+
+    // LOADING PLAY SCENE UNTILL CCBREADER IS FIXED
     
-    director.runWithScene(game.getMainMenuScene());
+    director.runWithScene(game.getPlayScene());
     
 } catch(e) {log(e);}
 

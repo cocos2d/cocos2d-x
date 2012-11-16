@@ -74,11 +74,13 @@ void ExtensionsMainLayer::menuCallback(CCObject* pSender)
 
     switch (nIndex)
     {
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)	// MARMALADE CHANGE: Not yet avaiable on Marmalade
     case TEST_NOTIFICATIONCENTER:
         {
             runNotificationCenterTest();
         }
         break;
+#endif
     case TEST_CCCONTROLBUTTON:
         {
             CCControlSceneManager* pManager = CCControlSceneManager::sharedControlSceneManager();
@@ -86,6 +88,7 @@ void ExtensionsMainLayer::menuCallback(CCObject* pSender)
             CCDirector::sharedDirector()->replaceScene(pScene);
         }
         break;
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)	// MARMALADE CHANGE: Not yet avaiable on Marmalade
     case TEST_COCOSBUILDER:
         {
             TestScene* pScene = new CocosBuilderTestScene();
@@ -96,11 +99,14 @@ void ExtensionsMainLayer::menuCallback(CCObject* pSender)
             }
         }
         break;
+#endif
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)	// MARMALADE CHANGE: Not yet avaiable on Marmalade
     case TEST_HTTPCLIENT:
         {
             runHttpClientTest();
         }
         break;
+#endif
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     case TEST_EDITBOX:
         {

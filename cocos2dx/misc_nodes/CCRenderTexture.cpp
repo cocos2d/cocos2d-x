@@ -37,6 +37,7 @@ THE SOFTWARE.
 #include "CCGL.h"
 #include "support/CCNotificationCenter.h"
 #include "CCEventType.h"
+#include "effects/CCGrid.h"
 // extern
 #include "kazmath/GL/matrix.h"
 
@@ -52,6 +53,11 @@ CCRenderTexture::CCRenderTexture()
 , m_pTextureCopy(0)
 , m_pUITextureImage(NULL)
 , m_ePixelFormat(kCCTexture2DPixelFormat_RGBA8888)
+, m_uClearFlags(0)
+, m_sClearColor(ccc4f(0,0,0,0))
+, m_fDlearDepth(0.0f)
+, m_nClearStencil(0)
+, m_bAutoDraw(false)
 {
     // Listen this event to save render texture before come to background.
     // Then it can be restored after coming to foreground on Android.
@@ -63,6 +69,7 @@ CCRenderTexture::CCRenderTexture()
 
 CCRenderTexture::~CCRenderTexture()
 {
+    CC_SAFE_RELEASE(m_pSprite);
     CC_SAFE_RELEASE(m_pTextureCopy);
     
     glDeleteFramebuffers(1, &m_uFBO);
@@ -104,7 +111,59 @@ CCSprite * CCRenderTexture::getSprite()
 
 void CCRenderTexture::setSprite(CCSprite* var)
 {
+    CC_SAFE_RELEASE(m_pSprite);
     m_pSprite = var;
+    CC_SAFE_RETAIN(m_pSprite);
+}
+
+unsigned int CCRenderTexture::getClearFlags() const
+{
+    return m_uClearFlags;
+}
+
+void CCRenderTexture::setClearFlags(unsigned int uClearFlags)
+{
+    m_uClearFlags = uClearFlags;
+}
+
+const ccColor4F& CCRenderTexture::getClearColor() const
+{
+    return m_sClearColor;
+}
+
+void CCRenderTexture::setClearColor(const ccColor4F &clearColor)
+{
+    m_sClearColor = clearColor;
+}
+
+float CCRenderTexture::getClearDepth() const
+{
+    return m_fDlearDepth;
+}
+
+void CCRenderTexture::setClearDepth(float fClearDepth)
+{
+    m_fDlearDepth = fClearDepth;
+}
+
+int CCRenderTexture::getClearStencil() const
+{
+    return m_nClearStencil;
+}
+
+void CCRenderTexture::setClearStencil(float fClearStencil)
+{
+    m_nClearStencil = fClearStencil;
+}
+
+bool CCRenderTexture::isAutoDraw() const
+{
+    return m_bAutoDraw;
+}
+
+void CCRenderTexture::setAutoDraw(bool bAutoDraw)
+{
+    m_bAutoDraw = bAutoDraw;
 }
 
 CCRenderTexture * CCRenderTexture::renderTextureWithWidthAndHeight(int w, int h, CCTexture2DPixelFormat eFormat)
@@ -241,7 +300,7 @@ bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CCTexture2DPixelForma
             glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, m_uDepthRenderBufffer);
 
             // if depth format is the one with stencil part, bind same render buffer as stencil attachment
-            if (uDepthStencilFormat == CC_GL_DEPTH24_STENCIL8)
+            if (uDepthStencilFormat == GL_DEPTH24_STENCIL8)
             {
                 glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, m_uDepthRenderBufffer);
             }
@@ -252,17 +311,24 @@ bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CCTexture2DPixelForma
 
         m_pTexture->setAliasTexParameters();
 
-        m_pSprite = CCSprite::createWithTexture(m_pTexture);
+        // retained
+        setSprite(CCSprite::createWithTexture(m_pTexture));
 
         m_pTexture->release();
         m_pSprite->setScaleY(-1);
-        this->addChild(m_pSprite);
 
         ccBlendFunc tBlendFunc = {GL_ONE, GL_ONE_MINUS_SRC_ALPHA };
         m_pSprite->setBlendFunc(tBlendFunc);
 
         glBindRenderbuffer(GL_RENDERBUFFER, oldRBO);
         glBindFramebuffer(GL_FRAMEBUFFER, m_nOldFBO);
+        
+        // Diabled by default.
+        m_bAutoDraw = false;
+        
+        // add sprite for backward compatibility
+        addChild(m_pSprite);
+        
         bRet = true;
     } while (0);
     
@@ -310,39 +376,20 @@ void CCRenderTexture::begin()
 
 void CCRenderTexture::beginWithClear(float r, float g, float b, float a)
 {
-    this->begin();
-
-    // save clear color
-    GLfloat    clearColor[4];
-    glGetFloatv(GL_COLOR_CLEAR_VALUE,clearColor); 
-
-    glClearColor(r, g, b, a);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-    // restore clear color
-    glClearColor(clearColor[0], clearColor[1], clearColor[2], clearColor[3]);     
+    beginWithClear(r, g, b, a, 0, 0, GL_COLOR_BUFFER_BIT);
 }
 
 void CCRenderTexture::beginWithClear(float r, float g, float b, float a, float depthValue)
 {
-    this->begin();
-
-    // save clear color
-    GLfloat	clearColor[4];
-    GLfloat depthClearValue;
-    glGetFloatv(GL_COLOR_CLEAR_VALUE,clearColor);
-    glGetFloatv(GL_DEPTH_CLEAR_VALUE, &depthClearValue);
-
-    glClearColor(r, g, b, a);
-    glClearDepth(depthValue);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-    // restore clear color
-    glClearColor(clearColor[0], clearColor[1], clearColor[2], clearColor[3]);
-    glClearDepth(depthClearValue);
+    beginWithClear(r, g, b, a, depthValue, GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 }
 
 void CCRenderTexture::beginWithClear(float r, float g, float b, float a, float depthValue, int stencilValue)
+{
+    beginWithClear(r, g, b, a, depthValue, GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT|GL_STENCIL_BUFFER_BIT);
+}
+
+void CCRenderTexture::beginWithClear(float r, float g, float b, float a, float depthValue, int stencilValue, GLbitfield flags)
 {
     this->begin();
 
@@ -350,19 +397,40 @@ void CCRenderTexture::beginWithClear(float r, float g, float b, float a, float d
     GLfloat	clearColor[4];
     GLfloat depthClearValue;
     int stencilClearValue;
-    glGetFloatv(GL_COLOR_CLEAR_VALUE,clearColor);
-    glGetFloatv(GL_DEPTH_CLEAR_VALUE, &depthClearValue);
-    glGetIntegerv(GL_STENCIL_CLEAR_VALUE, &stencilClearValue);
+    
+    if (flags & GL_COLOR_BUFFER_BIT)
+    {
+        glGetFloatv(GL_COLOR_CLEAR_VALUE,clearColor);
+        glClearColor(r, g, b, a);
+    }
+    
+    if (flags & GL_DEPTH_BUFFER_BIT)
+    {
+        glGetFloatv(GL_DEPTH_CLEAR_VALUE, &depthClearValue);
+        glClearDepth(depthValue);
+    }
 
-    glClearColor(r, g, b, a);
-    glClearDepth(depthValue);
-    glClearStencil(stencilValue);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+    if (flags & GL_STENCIL_BUFFER_BIT)
+    {
+        glGetIntegerv(GL_STENCIL_CLEAR_VALUE, &stencilClearValue);
+        glClearStencil(stencilValue);
+    }
+    
+    glClear(flags);
 
-    // restore clear color
-    glClearColor(clearColor[0], clearColor[1], clearColor[2], clearColor[3]);
-    glClearDepth(depthClearValue);
-    glClearStencil(stencilClearValue);
+    // restore
+    if (flags & GL_COLOR_BUFFER_BIT)
+    {
+        glClearColor(clearColor[0], clearColor[1], clearColor[2], clearColor[3]);
+    }
+    if (flags & GL_DEPTH_BUFFER_BIT)
+    {
+        glClearDepth(depthClearValue);
+    }
+    if (flags & GL_STENCIL_BUFFER_BIT)
+    {
+        glClearStencil(stencilClearValue);
+    }
 }
 
 void CCRenderTexture::end()
@@ -420,6 +488,104 @@ void CCRenderTexture::clearStencil(int stencilValue)
     glClearStencil(stencilClearValue);
 }
 
+void CCRenderTexture::visit()
+{
+    // override visit.
+	// Don't call visit on its children
+    if (m_bVisible)
+    {
+        return;
+    }
+	
+	kmGLPushMatrix();
+	
+    if (m_pGrid && m_pGrid->isActive())
+    {
+        m_pGrid->beforeDraw();
+        transformAncestors();
+    }
+    
+    transform();
+    m_pSprite->visit();
+    draw();
+	
+    if (m_pGrid && m_pGrid->isActive())
+    {
+        m_pGrid->afterDraw(this);
+        transformAncestors();
+    }
+	
+	kmGLPopMatrix();
+
+    m_uOrderOfArrival = 0;
+}
+
+void CCRenderTexture::draw()
+{
+    if( m_bAutoDraw)
+    {
+        begin();
+		
+        if (m_uClearFlags)
+        {
+			GLfloat oldClearColor[4];
+			GLfloat oldDepthClearValue;
+			GLint oldStencilClearValue;
+			
+			// backup and set
+			if (m_uClearFlags & GL_COLOR_BUFFER_BIT)
+            {
+				glGetFloatv(GL_COLOR_CLEAR_VALUE, oldClearColor);
+				glClearColor(m_sClearColor.r, m_sClearColor.g, m_sClearColor.b, m_sClearColor.a);
+			}
+			
+			if (m_uClearFlags & GL_DEPTH_BUFFER_BIT)
+            {
+				glGetFloatv(GL_DEPTH_CLEAR_VALUE, &oldDepthClearValue);
+				glClearDepth(m_fDlearDepth);
+			}
+			
+			if (m_uClearFlags & GL_STENCIL_BUFFER_BIT)
+            {
+				glGetIntegerv(GL_STENCIL_CLEAR_VALUE, &oldStencilClearValue);
+				glClearStencil(m_nClearStencil);
+			}
+			
+			// clear
+			glClear(m_uClearFlags);
+			
+			// restore
+			if (m_uClearFlags & GL_COLOR_BUFFER_BIT)
+            {
+				glClearColor(oldClearColor[0], oldClearColor[1], oldClearColor[2], oldClearColor[3]);
+            }
+			if (m_uClearFlags & GL_DEPTH_BUFFER_BIT)
+            {
+				glClearDepth(oldDepthClearValue);
+            }
+			if (m_uClearFlags & GL_STENCIL_BUFFER_BIT)
+            {
+				glClearStencil(oldStencilClearValue);
+            }
+		}
+		
+		//! make sure all children are drawn
+        sortAllChildren();
+		
+		CCObject *pElement;
+		CCARRAY_FOREACH(m_pChildren, pElement)
+        {
+            CCNode *pChild = (CCNode*)pElement;
+
+            if (pChild != m_pSprite)
+            {
+                pChild->visit();
+            }
+		}
+        
+        end();
+	}
+}
 
 bool CCRenderTexture::saveToFile(const char *szFilePath)
 {

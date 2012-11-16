@@ -294,6 +294,12 @@ void registerDefaultClasses(JSContext* cx, JSObject* global) {
     JS_DefineFunction(cx, global, "log", ScriptingCore::log, 0, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, global, "executeScript", ScriptingCore::executeScript, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, global, "forceGC", ScriptingCore::forceGC, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+
+    // these are used in the debug socket
+    JS_DefineFunction(cx, global, "_socketOpen", jsSocketOpen, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, global, "_socketWrite", jsSocketWrite, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, global, "_socketRead", jsSocketRead, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, global, "_socketClose", jsSocketClose, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 }
 
 void sc_finalize(JSFreeOp *freeOp, JSObject *obj) {
@@ -739,61 +745,26 @@ int ScriptingCore::executeLayerTouchEvent(CCLayer* pLayer, int eventType, CCTouc
     jsval jsret;
     getJSTouchObject(this->getGlobalContext(), pTouch, jsret);
     JSObject *jsObj = JSVAL_TO_OBJECT(jsret);
-    executeFunctionWithObjectData(pLayer,  funcName.c_str(), jsObj);
+    bool retval = executeFunctionWithObjectData(pLayer,  funcName.c_str(), jsObj);
     
     removeJSTouchObject(this->getGlobalContext(), pTouch, jsret);
     
-    return 1;
+    return retval;
 }
 
-int ScriptingCore::executeAccelerometerEvent(CCLayer* pLayer, CCAcceleration* pAccelerationValue)
-{
-    js_proxy_t * p;
-    JS_GET_PROXY(p, pLayer);
-
-    if (!p) return 0;
-
-    JSBool found;
-    JS_HasProperty(this->cx_, p->obj, "onAccelerometer", &found);
-    if (found == JS_TRUE) {
-        jsval rval, fval;
-
-        double time = pAccelerationValue->timestamp;
-        double x = pAccelerationValue->x;
-        double y = pAccelerationValue->y;
-        double z = pAccelerationValue->z;
-
-        // Create an JS object with x,y,z,timestamp as properties
-        JSObject *object = JS_NewObject(this->cx_, NULL, NULL, NULL );
-        if( !object)
-            return 0;
-
-        if (!JS_DefineProperty(this->cx_, object, "x", DOUBLE_TO_JSVAL(x), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) ||
-            !JS_DefineProperty(this->cx_, object, "y", DOUBLE_TO_JSVAL(y), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) ||
-            !JS_DefineProperty(this->cx_, object, "z", DOUBLE_TO_JSVAL(z), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) ||
-            !JS_DefineProperty(this->cx_, object, "timestamp", DOUBLE_TO_JSVAL(time), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) )
-            return 0;
-
-        jsval argv = OBJECT_TO_JSVAL(object);
-
-        JS_GetProperty(this->cx_, p->obj, "onAccelerometer", &fval);
-        JS_CallFunctionValue(this->cx_, p->obj, fval, 1, &argv, &rval);
-    }
-    return 1;
-}
-
-int ScriptingCore::executeFunctionWithObjectData(CCNode *self, const char *name, JSObject *obj) {
+bool ScriptingCore::executeFunctionWithObjectData(CCNode *self, const char *name, JSObject *obj) {
 
     js_proxy_t * p;
     JS_GET_PROXY(p, self);
     if (!p) return 0;
-
+    
     jsval retval;
     jsval dataVal = OBJECT_TO_JSVAL(obj);
 
     executeJSFunctionWithName(this->cx_, p->obj, name, dataVal, retval);
-
-    return 1;
+    if(JSVAL_IS_NULL(retval)) return false;
+    else if(JSVAL_IS_BOOLEAN(retval)) return JSVAL_TO_BOOLEAN(retval);
+    
 }
 
 int ScriptingCore::executeFunctionWithOwner(jsval owner, const char *name, jsval data) {
@@ -803,6 +774,18 @@ int ScriptingCore::executeFunctionWithOwner(jsval owner, const char *name, jsval
 
     return 1;
 }
+
+int ScriptingCore::executeAccelerometerEvent(CCLayer *pLayer, CCAcceleration *pAccelerationValue) {
+
+    jsval value = ccacceleration_to_jsval(this->getGlobalContext(), *pAccelerationValue);
+    JS_AddValueRoot(this->getGlobalContext(), &value);
+    
+    executeFunctionWithObjectData(pLayer, "onAccelerometer", JSVAL_TO_OBJECT(value));
+    
+    JS_RemoveValueRoot(this->getGlobalContext(), &value);
+    return 1;
+}
+
 
 int ScriptingCore::executeCustomTouchesEvent(int eventType,
                                        CCSet *pTouches, JSObject *obj)
@@ -901,6 +884,25 @@ CCPoint jsval_to_ccpoint(JSContext *cx, jsval v) {
     return cocos2d::CCPoint(x, y);
 }
 
+CCAcceleration jsval_to_ccacceleration(JSContext *cx, jsval v) {
+    JSObject *tmp;
+    jsval jsx, jsy, jsz, jstimestamp;
+    double x, y, timestamp, z;
+    JSBool ok = JS_ValueToObject(cx, v, &tmp) &&
+    JS_GetProperty(cx, tmp, "x", &jsx) &&
+    JS_GetProperty(cx, tmp, "y", &jsy) &&
+    JS_GetProperty(cx, tmp, "z", &jsz) &&
+    JS_GetProperty(cx, tmp, "timestamp", &jstimestamp) &&
+    JS_ValueToNumber(cx, jsx, &x) &&
+    JS_ValueToNumber(cx, jsy, &y) &&
+    JS_ValueToNumber(cx, jsz, &z) &&
+    JS_ValueToNumber(cx, jstimestamp, &timestamp);
+    assert(ok == JS_TRUE);
+    CCAcceleration ret = {x, y, z, timestamp};
+    return ret;
+}
+
+
 CCRect jsval_to_ccrect(JSContext *cx, jsval v) {
     JSObject *tmp;
     jsval jsx, jsy, jswidth, jsheight;
@@ -996,6 +998,7 @@ ccColor3B jsval_to_cccolor3b(JSContext *cx, jsval v) {
 JSBool jsval_to_ccarray_of_CCPoint(JSContext* cx, jsval v, CCPoint **points, int *numPoints) {
     // Parsing sequence
     JSObject *jsobj;
+    JSBool ok = JS_ValueToObject( cx, v, &jsobj );
     if(!jsobj || !JS_IsArrayObject( cx, jsobj)) return JS_FALSE;
 
     uint32_t len;
@@ -1047,6 +1050,7 @@ jsval ccarray_to_jsval(JSContext* cx, CCArray *arr) {
     for(int i = 0; i < arr->count(); ++i) {
         jsval arrElement;
         CCObject *obj = arr->objectAtIndex(i);
+        const char *type = typeid(*obj).name();
         
         CCString *testString = dynamic_cast<cocos2d::CCString *>(obj);
         CCDictionary* testDict = NULL;
@@ -1105,6 +1109,42 @@ jsval ccdictionary_to_jsval(JSContext* cx, CCDictionary* dict)
     return OBJECT_TO_JSVAL(jsRet);
 }
 
+CCDictionary* jsval_to_ccdictionary(JSContext* cx, jsval v) {
+    
+    JSObject *itEl = JS_NewPropertyIterator(cx, JSVAL_TO_OBJECT(v));
+    CCDictionary *dict = NULL;
+    
+    jsid propId;
+    do {
+        
+        jsval prop;
+        JS_GetPropertyById(cx, JSVAL_TO_OBJECT(v), propId, &prop);
+                
+        js_proxy_t *proxy;
+        JSObject *tmp = JSVAL_TO_OBJECT(prop);
+        JS_GET_NATIVE_PROXY(proxy, tmp);
+        cocos2d::CCObject* cobj = (cocos2d::CCObject *)(proxy ? proxy->ptr : NULL);
+        TEST_NATIVE_OBJECT(cx, cobj)
+        
+        jsval key;
+        std::string keyStr;
+        if(JSID_IS_STRING(propId)) {
+            JS_IdToValue(cx, propId, &key);
+            keyStr = jsval_to_std_string(cx, key);
+        }
+        
+        if(JSVAL_IS_NULL(key)) continue;
+        
+        if(!dict) {
+            dict = CCDictionary::create();
+        }
+        dict->setObject(cobj, keyStr);
+        
+    } while(JS_NextProperty(cx, itEl, &propId));
+    
+    return dict;
+}
+
 jsval long_long_to_jsval(JSContext* cx, long long v) {
     JSObject *tmp = JS_NewUint32Array(cx, 2);
     uint32_t *data = (uint32_t *)JS_GetArrayBufferViewData(tmp, cx);
@@ -1128,6 +1168,19 @@ jsval ccpoint_to_jsval(JSContext* cx, CCPoint& v) {
     if (!tmp) return JSVAL_NULL;
     JSBool ok = JS_DefineProperty(cx, tmp, "x", DOUBLE_TO_JSVAL(v.x), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
                 JS_DefineProperty(cx, tmp, "y", DOUBLE_TO_JSVAL(v.y), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    if (ok) {
+        return OBJECT_TO_JSVAL(tmp);
+    }
+    return JSVAL_NULL;
+}
+
+jsval ccacceleration_to_jsval(JSContext* cx, CCAcceleration& v) {
+    JSObject *tmp = JS_NewObject(cx, NULL, NULL, NULL);
+    if (!tmp) return JSVAL_NULL;
+    JSBool ok = JS_DefineProperty(cx, tmp, "x", DOUBLE_TO_JSVAL(v.x), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+    JS_DefineProperty(cx, tmp, "y", DOUBLE_TO_JSVAL(v.y), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+    JS_DefineProperty(cx, tmp, "z", DOUBLE_TO_JSVAL(v.z), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+    JS_DefineProperty(cx, tmp, "timestamp", DOUBLE_TO_JSVAL(v.timestamp), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     if (ok) {
         return OBJECT_TO_JSVAL(tmp);
     }
