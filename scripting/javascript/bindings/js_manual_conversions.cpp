@@ -111,33 +111,84 @@ jsval opaque_to_jsval( JSContext *cx, void *opaque )
 #endif
 }
 
+jsval c_class_to_jsval( JSContext *cx, void* handle, JSObject* object, JSClass *klass, const char* class_name)
+{
+	JSObject *jsobj;
+    
+	jsobj = jsb_get_jsobject_for_proxy(handle);
+	if( !jsobj ) {
+		jsobj = JS_NewObject(cx, klass, object, NULL);
+		CCAssert(jsobj, "Invalid object");
+		jsb_set_c_proxy_for_jsobject(jsobj, handle, JSB_C_FLAG_DO_NOT_CALL_FREE);
+		jsb_set_jsobject_for_proxy(jsobj, handle);
+	}
+    
+	return OBJECT_TO_JSVAL(jsobj);
+}
+
+JSBool jsval_to_c_class( JSContext *cx, jsval vp, void **out_native, struct jsb_c_proxy_s **out_proxy)
+{
+	JSObject *jsobj;
+	JSBool ok = JS_ValueToObject(cx, vp, &jsobj);
+	JSB_PRECONDITION3(ok, cx, JS_FALSE, "Error converting jsval to object");
+	
+	struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsobj);
+	*out_native = proxy->handle;
+	if( out_proxy )
+		*out_proxy = proxy;
+	return JS_TRUE;
+}
+
+JSBool jsval_to_uint( JSContext *cx, jsval vp, unsigned int *ret )
+{
+	// Since this is called to cast uint64 to uint32,
+	// it is needed to initialize the value to 0 first
+#ifdef __LP64__
+	long *tmp = (long*)ret;
+	*tmp = 0;
+#endif
+	return JS_ValueToInt32(cx, vp, (int32_t*)ret);
+}
+
 jsval int_to_jsval( JSContext *cx, int number )
 {
 	return INT_TO_JSVAL(number);
 }
 
+jsval uint_to_jsval( JSContext *cx, unsigned int number )
+{
+	return UINT_TO_JSVAL(number);
+}
+
 jsval long_to_jsval( JSContext *cx, long number )
 {
 #ifdef __LP64__
-	assert( sizeof(long)==8);
-
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_UINT32, 2);
-	int32_t *buffer = (int32_t*)JS_GetTypedArrayData(typedArray);
-	buffer[0] = number >> 32;
-	buffer[1] = number & 0xffffffff;
-	return OBJECT_TO_JSVAL(typedArray);		
+	NSCAssert( sizeof(long)==8, @"Error!");
+    
+	char chr[128];
+	snprintf(chr, sizeof(chr)-1, "%ld", number);
+	JSString *ret_obj = JS_NewStringCopyZ(cx, chr);
+	return STRING_TO_JSVAL(ret_obj);
 #else
-	assert( sizeof(int)==4);
+	CCAssert( sizeof(int)==4, "Error!");
 	return INT_TO_JSVAL(number);
 #endif
 }
 
 jsval longlong_to_jsval( JSContext *cx, long long number )
 {
-	//NSCAssert( sizeof(long long)==8, @"Error!");
+#if JSB_REPRESENT_LONGLONG_AS_STR
+	char chr[128];
+	snprintf(chr, sizeof(chr)-1, "%lld", number);
+	JSString *ret_obj = JS_NewStringCopyZ(cx, chr);
+	return STRING_TO_JSVAL(ret_obj);
+    
+#else
+	CCAssert( sizeof(long long)==8, "Error!");
 	JSObject *typedArray = JS_NewUint32Array( cx, 2 );
-	int32_t *buffer = (int32_t*)JS_GetArrayBufferViewData(typedArray, cx);
+	uint32_t *buffer = (uint32_t*)JS_GetArrayBufferViewData(typedArray, cx);
 	buffer[0] = number >> 32;
 	buffer[1] = number & 0xffffffff;
 	return OBJECT_TO_JSVAL(typedArray);
+#endif
 }

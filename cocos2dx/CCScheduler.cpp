@@ -792,6 +792,12 @@ void CCScheduler::update(float dt)
     {
         if ((! pEntry->paused) && (! pEntry->markedForDeletion))
         {
+            CCScriptEngineProtocol* pEngine = CCScriptEngineManager::sharedManager()->getScriptEngine();
+            if (pEngine != NULL && kScriptTypeJavascript == pEngine->getScriptType())
+            {
+                CCScriptEngineManager::sharedManager()->getScriptEngine()->executeSchedule(NULL, dt, (CCNode *)pEntry->target);
+            }
+
             pEntry->target->update(dt);
         }
     }
@@ -816,6 +822,12 @@ void CCScheduler::update(float dt)
     {
         if ((! pEntry->paused) && (! pEntry->markedForDeletion))
         {
+            CCScriptEngineProtocol* pEngine = CCScriptEngineManager::sharedManager()->getScriptEngine();
+            if (pEngine != NULL && kScriptTypeJavascript == pEngine->getScriptType())
+            {
+                CCScriptEngineManager::sharedManager()->getScriptEngine()->executeSchedule(NULL, dt, (CCNode *)pEntry->target);
+            }
+
             pEntry->target->update(dt);            
         }
     }

@@ -162,6 +162,11 @@ void CCUserDefault::purgeSharedUserDefault()
     m_spUserDefault = NULL;
 }
 
+ bool CCUserDefault::getBoolForKey(const char* pKey)
+ {
+     return getBoolForKey(pKey, false);
+ }
+
 bool CCUserDefault::getBoolForKey(const char* pKey, bool defaultValue)
 {
     const char* value = getValueForKey(pKey);
@@ -174,6 +179,11 @@ bool CCUserDefault::getBoolForKey(const char* pKey, bool defaultValue)
     }
 
     return ret;
+}
+
+int CCUserDefault::getIntegerForKey(const char* pKey)
+{
+    return getIntegerForKey(pKey, 0);
 }
 
 int CCUserDefault::getIntegerForKey(const char* pKey, int defaultValue)
@@ -190,11 +200,21 @@ int CCUserDefault::getIntegerForKey(const char* pKey, int defaultValue)
     return ret;
 }
 
+float CCUserDefault::getFloatForKey(const char* pKey)
+{
+    return getFloatForKey(pKey, 0.0f);
+}
+
 float CCUserDefault::getFloatForKey(const char* pKey, float defaultValue)
 {
     float ret = (float)getDoubleForKey(pKey, (double)defaultValue);
  
     return ret;
+}
+
+double  CCUserDefault::getDoubleForKey(const char* pKey)
+{
+    return getDoubleForKey(pKey, 0.0);
 }
 
 double CCUserDefault::getDoubleForKey(const char* pKey, double defaultValue)
@@ -209,6 +229,11 @@ double CCUserDefault::getDoubleForKey(const char* pKey, double defaultValue)
     }
 
     return ret;
+}
+
+std::string CCUserDefault::getStringForKey(const char* pKey)
+{
+    return getStringForKey(pKey, "");
 }
 
 string CCUserDefault::getStringForKey(const char* pKey, const std::string & defaultValue)

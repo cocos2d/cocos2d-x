@@ -198,6 +198,9 @@ typedef struct _PVRTexHeader
     unsigned int numSurfs;
 } ccPVRv2TexHeader;
 
+#ifdef _MSC_VER
+#pragma pack(push,1)
+#endif
 typedef struct {
 	uint32_t version;
 	uint32_t flags;
@@ -211,7 +214,13 @@ typedef struct {
 	uint32_t numberOfFaces;
 	uint32_t numberOfMipmaps;
 	uint32_t metadataLength;
-} __attribute__((packed)) ccPVRv3TexHeader ;
+#ifdef _MSC_VER
+} ccPVRv3TexHeader;
+#pragma pack(pop)
+#else
+} __attribute__((packed)) ccPVRv3TexHeader;
+#endif
+
 
 CCTexturePVR::CCTexturePVR() 
 : m_pPixelFormatInfo(NULL)

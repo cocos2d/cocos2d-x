@@ -32,9 +32,8 @@ assets
 	hello.lua
 	hello2.lua
 
-	(data/fonts)
-	arial.ttf
-	Marker Felt.ttf
+	fonts
+
 }
 
 
