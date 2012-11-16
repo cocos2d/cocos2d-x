@@ -23,6 +23,7 @@
 #include "CCDrawNode.h"
 #include "support/CCPointExtension.h"
 #include "shaders/CCShaderCache.h"
+#include "CCGL.h"
 
 NS_CC_BEGIN
 
@@ -110,8 +111,10 @@ CCDrawNode::~CCDrawNode()
     glDeleteBuffers(1, &m_uVbo);
     m_uVbo = 0;
     
+#if CC_TEXTURE_ATLAS_USE_VAO      
     glDeleteVertexArrays(1, &m_uVao);
     m_uVao = 0;
+#endif
 }
 
 CCDrawNode* CCDrawNode::create()
@@ -146,8 +149,10 @@ bool CCDrawNode::init()
     
     ensureCapacity(512);
     
+#if CC_TEXTURE_ATLAS_USE_VAO    
     glGenVertexArrays(1, &m_uVao);
     ccGLBindVAO(m_uVao);
+#endif
     
     glGenBuffers(1, &m_uVbo);
     glBindBuffer(GL_ARRAY_BUFFER, m_uVbo);
@@ -163,7 +168,10 @@ bool CCDrawNode::init()
     glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, sizeof(ccV2F_C4B_T2F), (GLvoid *)offsetof(ccV2F_C4B_T2F, texCoords));
     
     glBindBuffer(GL_ARRAY_BUFFER, 0);
+    
+#if CC_TEXTURE_ATLAS_USE_VAO 
     ccGLBindVAO(0);
+#endif
     
     CHECK_GL_ERROR_DEBUG();
     
@@ -174,16 +182,34 @@ bool CCDrawNode::init()
 
 void CCDrawNode::render()
 {
+    glBindBuffer(GL_ARRAY_BUFFER, m_uVbo);
+    
     if (m_bDirty)
     {
-        glBindBuffer(GL_ARRAY_BUFFER, m_uVbo);
         glBufferData(GL_ARRAY_BUFFER, sizeof(ccV2F_C4B_T2F)*m_uBufferCapacity, m_pBuffer, GL_STREAM_DRAW);
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
         m_bDirty = false;
     }
-    
+  
+#if CC_TEXTURE_ATLAS_USE_VAO     
     ccGLBindVAO(m_uVao);
+#else
+    ccGLEnableVertexAttribs(kCCVertexAttribFlag_PosColorTex);
+    
+    // vertex
+    int diff = offsetof(ccV2F_C4B_T2F, vertices);
+    glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, sizeof(ccV2F_C4B_T2F), (GLvoid *)(m_pBuffer+diff));
+    
+    // color
+    diff = offsetof(ccV2F_C4B_T2F, colors);
+    glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_FALSE, sizeof(ccV2F_C4B_T2F), (GLvoid *)(m_pBuffer+diff));
+    
+    // texcood
+    diff = offsetof(ccV2F_C4B_T2F, texCoords);
+    glVertexAttribPointer(kCCVertexAttrib_Color, 2, GL_FLOAT, GL_FALSE, sizeof(ccV2F_C4B_T2F), (GLvoid *)(m_pBuffer+diff));
+#endif
+    
     glDrawArrays(GL_TRIANGLES, 0, m_nBufferCount);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
     
     CC_INCREMENT_GL_DRAWS(1);
     CHECK_GL_ERROR_DEBUG();

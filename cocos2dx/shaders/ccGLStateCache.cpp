@@ -179,6 +179,8 @@ void ccGLDeleteTextureN(GLuint textureUnit, GLuint textureId)
 
 void ccGLBindVAO(GLuint vaoId)
 {
+#if CC_TEXTURE_ATLAS_USE_VAO  
+    
 #if CC_ENABLE_GL_STATE_CACHE
 	if (s_uVAO != vaoId)
 	{
@@ -187,6 +189,8 @@ void ccGLBindVAO(GLuint vaoId)
 	}
 #else
 	glBindVertexArray(vaoId);
+#endif // CC_ENABLE_GL_STATE_CACHE
+    
 #endif
 }
 
