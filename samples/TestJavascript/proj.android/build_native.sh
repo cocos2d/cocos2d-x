@@ -68,11 +68,11 @@ fi
 mkdir "$APP_ANDROID_ROOT"/assets
 mkdir "$APP_ANDROID_ROOT"/assets/res
 
-# copy "cocos2d-html5-tests/res" into "assets/res"
-cp -rf "$APP_ROOT"/cocos2d-html5-tests/res "$APP_ANDROID_ROOT"/assets
+# copy "cocos2d-js-tests/res" into "assets/res"
+cp -rf "$APP_ROOT"/cocos2d-js-tests/res "$APP_ANDROID_ROOT"/assets
 
-# copy src/**/*.js from cocos2d-html5-tests into assets' root
-find "$APP_ROOT"/cocos2d-html5-tests/src -type f -name '*.js' -exec cp -f {} "$APP_ANDROID_ROOT"/assets \;
+# copy src/**/*.js from cocos2d-js-tests into assets' root
+cp -rf "$APP_ROOT"/cocos2d-js-tests/src "$APP_ANDROID_ROOT"/assets
 
 # copy bindings/*.js into assets' root
 cp -f "$APP_ROOT"/bindings/*.js "$APP_ANDROID_ROOT"/assets
