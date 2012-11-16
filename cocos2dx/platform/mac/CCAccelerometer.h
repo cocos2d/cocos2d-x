@@ -36,6 +36,7 @@ public:
     ~CCAccelerometer() {}
 
     void setDelegate(CCAccelerometerDelegate* pDelegate) { CC_UNUSED_PARAM(pDelegate); }
+    void setAccelerometerInterval(float interval) {CC_UNUSED_PARAM(interval);};
 };
 
 NS_CC_END
