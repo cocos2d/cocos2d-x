@@ -834,7 +834,8 @@ NodeOpaqueTest::NodeOpaqueTest()
     for (int i = 0; i < 50; i++)
     {
         background = CCSprite::create("Images/background1.png");
-        background->setBlendFunc((ccBlendFunc){GL_ONE, GL_ONE_MINUS_SRC_ALPHA});
+        ccBlendFunc blendFunc = {GL_ONE, GL_ONE_MINUS_SRC_ALPHA};
+        background->setBlendFunc(blendFunc);
         background->setAnchorPoint(CCPointZero);
         addChild(background);
     }
