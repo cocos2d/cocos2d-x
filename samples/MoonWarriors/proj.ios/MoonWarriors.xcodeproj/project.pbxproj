@@ -30,8 +30,6 @@
 		1567510C163E73B10002AD61 /* cocos2dx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15675034163E73B10002AD61 /* cocos2dx.cpp */; };
 		1567510E163E73B10002AD61 /* README in Resources */ = {isa = PBXBuildFile; fileRef = 15675037163E73B10002AD61 /* README */; };
 		1567510F163E73B10002AD61 /* js_bindings_ccbreader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15675038163E73B10002AD61 /* js_bindings_ccbreader.cpp */; };
-		15675110163E73B10002AD61 /* js_bindings_chipmunk_functions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1567503A163E73B10002AD61 /* js_bindings_chipmunk_functions.cpp */; };
-		15675111163E73B10002AD61 /* js_bindings_chipmunk_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1567503C163E73B10002AD61 /* js_bindings_chipmunk_manual.cpp */; };
 		15675112163E73B10002AD61 /* js_manual_conversions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1567503F163E73B10002AD61 /* js_manual_conversions.cpp */; };
 		15675113163E73B10002AD61 /* ScriptingCore.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15675041163E73B10002AD61 /* ScriptingCore.cpp */; };
 		15675125163E74050002AD61 /* js in Resources */ = {isa = PBXBuildFile; fileRef = 15675124163E74050002AD61 /* js */; };
@@ -124,6 +122,11 @@
 		156752F9163E82D40002AD61 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 156752F8163E82D40002AD61 /* libz.dylib */; };
 		15675300163E870E0002AD61 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 156752FF163E870E0002AD61 /* libxml2.dylib */; };
 		1A4C5FDD164362D800509019 /* res in Resources */ = {isa = PBXBuildFile; fileRef = 1A4C5FDC164362D800509019 /* res */; };
+		263B99141655694D00228D8A /* js_bindings_chipmunk_auto_classes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 263B990B1655694D00228D8A /* js_bindings_chipmunk_auto_classes.cpp */; };
+		263B99151655694D00228D8A /* js_bindings_chipmunk_registration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 263B99101655694D00228D8A /* js_bindings_chipmunk_registration.cpp */; };
+		263B99161655694D00228D8A /* js_bindings_core.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 263B99121655694D00228D8A /* js_bindings_core.cpp */; };
+		26DAC48616556C2B00EE807D /* js_bindings_chipmunk_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 26DAC48516556C2B00EE807D /* js_bindings_chipmunk_manual.cpp */; };
+		26DAC48D16556FFB00EE807D /* js_bindings_chipmunk_functions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 26DAC48C16556FFB00EE807D /* js_bindings_chipmunk_functions.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -185,10 +188,6 @@
 		15675037163E73B10002AD61 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
 		15675038163E73B10002AD61 /* js_bindings_ccbreader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = js_bindings_ccbreader.cpp; sourceTree = "<group>"; };
 		15675039163E73B10002AD61 /* js_bindings_ccbreader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_ccbreader.h; sourceTree = "<group>"; };
-		1567503A163E73B10002AD61 /* js_bindings_chipmunk_functions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = js_bindings_chipmunk_functions.cpp; sourceTree = "<group>"; };
-		1567503B163E73B10002AD61 /* js_bindings_chipmunk_functions.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = js_bindings_chipmunk_functions.hpp; sourceTree = "<group>"; };
-		1567503C163E73B10002AD61 /* js_bindings_chipmunk_manual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = js_bindings_chipmunk_manual.cpp; sourceTree = "<group>"; };
-		1567503D163E73B10002AD61 /* js_bindings_chipmunk_manual.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = js_bindings_chipmunk_manual.hpp; sourceTree = "<group>"; };
 		1567503E163E73B10002AD61 /* js_bindings_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_config.h; sourceTree = "<group>"; };
 		1567503F163E73B10002AD61 /* js_manual_conversions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = js_manual_conversions.cpp; sourceTree = "<group>"; };
 		15675040163E73B10002AD61 /* js_manual_conversions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_manual_conversions.h; sourceTree = "<group>"; };
@@ -364,6 +363,18 @@
 		156752F8163E82D40002AD61 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		156752FF163E870E0002AD61 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		1A4C5FDC164362D800509019 /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; name = res; path = ../Resources/res; sourceTree = "<group>"; };
+		263B990A1655694D00228D8A /* js_bindings_chipmunk_auto_classes_registration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_chipmunk_auto_classes_registration.h; sourceTree = "<group>"; };
+		263B990B1655694D00228D8A /* js_bindings_chipmunk_auto_classes.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = js_bindings_chipmunk_auto_classes.cpp; sourceTree = "<group>"; };
+		263B990C1655694D00228D8A /* js_bindings_chipmunk_auto_classes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_chipmunk_auto_classes.h; sourceTree = "<group>"; };
+		263B990D1655694D00228D8A /* js_bindings_chipmunk_functions_registration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_chipmunk_functions_registration.h; sourceTree = "<group>"; };
+		263B990E1655694D00228D8A /* js_bindings_chipmunk_functions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_chipmunk_functions.h; sourceTree = "<group>"; };
+		263B990F1655694D00228D8A /* js_bindings_chipmunk_manual.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_chipmunk_manual.h; sourceTree = "<group>"; };
+		263B99101655694D00228D8A /* js_bindings_chipmunk_registration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = js_bindings_chipmunk_registration.cpp; sourceTree = "<group>"; };
+		263B99111655694D00228D8A /* js_bindings_chipmunk_registration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_chipmunk_registration.h; sourceTree = "<group>"; };
+		263B99121655694D00228D8A /* js_bindings_core.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = js_bindings_core.cpp; sourceTree = "<group>"; };
+		263B99131655694D00228D8A /* js_bindings_core.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_core.h; sourceTree = "<group>"; };
+		26DAC48516556C2B00EE807D /* js_bindings_chipmunk_manual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = js_bindings_chipmunk_manual.cpp; sourceTree = "<group>"; };
+		26DAC48C16556FFB00EE807D /* js_bindings_chipmunk_functions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = js_bindings_chipmunk_functions.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -510,6 +521,18 @@
 		1567502B163E73B10002AD61 /* bindings */ = {
 			isa = PBXGroup;
 			children = (
+				26DAC48C16556FFB00EE807D /* js_bindings_chipmunk_functions.cpp */,
+				26DAC48516556C2B00EE807D /* js_bindings_chipmunk_manual.cpp */,
+				263B990A1655694D00228D8A /* js_bindings_chipmunk_auto_classes_registration.h */,
+				263B990B1655694D00228D8A /* js_bindings_chipmunk_auto_classes.cpp */,
+				263B990C1655694D00228D8A /* js_bindings_chipmunk_auto_classes.h */,
+				263B990D1655694D00228D8A /* js_bindings_chipmunk_functions_registration.h */,
+				263B990E1655694D00228D8A /* js_bindings_chipmunk_functions.h */,
+				263B990F1655694D00228D8A /* js_bindings_chipmunk_manual.h */,
+				263B99101655694D00228D8A /* js_bindings_chipmunk_registration.cpp */,
+				263B99111655694D00228D8A /* js_bindings_chipmunk_registration.h */,
+				263B99121655694D00228D8A /* js_bindings_core.cpp */,
+				263B99131655694D00228D8A /* js_bindings_core.h */,
 				1567502C163E73B10002AD61 /* Android.mk */,
 				1567502D163E73B10002AD61 /* CCPhysicsSprite.cpp */,
 				1567502E163E73B10002AD61 /* CCPhysicsSprite.h */,
@@ -520,10 +543,6 @@
 				15675033163E73B10002AD61 /* generated */,
 				15675038163E73B10002AD61 /* js_bindings_ccbreader.cpp */,
 				15675039163E73B10002AD61 /* js_bindings_ccbreader.h */,
-				1567503A163E73B10002AD61 /* js_bindings_chipmunk_functions.cpp */,
-				1567503B163E73B10002AD61 /* js_bindings_chipmunk_functions.hpp */,
-				1567503C163E73B10002AD61 /* js_bindings_chipmunk_manual.cpp */,
-				1567503D163E73B10002AD61 /* js_bindings_chipmunk_manual.hpp */,
 				1567503E163E73B10002AD61 /* js_bindings_config.h */,
 				1567503F163E73B10002AD61 /* js_manual_conversions.cpp */,
 				15675040163E73B10002AD61 /* js_manual_conversions.h */,
@@ -917,8 +936,6 @@
 				1567510B163E73B10002AD61 /* cocosjs_manual_conversions.cpp in Sources */,
 				1567510C163E73B10002AD61 /* cocos2dx.cpp in Sources */,
 				1567510F163E73B10002AD61 /* js_bindings_ccbreader.cpp in Sources */,
-				15675110163E73B10002AD61 /* js_bindings_chipmunk_functions.cpp in Sources */,
-				15675111163E73B10002AD61 /* js_bindings_chipmunk_manual.cpp in Sources */,
 				15675112163E73B10002AD61 /* js_manual_conversions.cpp in Sources */,
 				15675113163E73B10002AD61 /* ScriptingCore.cpp in Sources */,
 				156751F4163E765D0002AD61 /* CCBAnimationManager.cpp in Sources */,
@@ -994,6 +1011,11 @@
 				156752A5163E77A90002AD61 /* cpSweep1D.c in Sources */,
 				156752A6163E77A90002AD61 /* cpVect.c in Sources */,
 				156752A9163E78180002AD61 /* RootViewController.mm in Sources */,
+				263B99141655694D00228D8A /* js_bindings_chipmunk_auto_classes.cpp in Sources */,
+				263B99151655694D00228D8A /* js_bindings_chipmunk_registration.cpp in Sources */,
+				263B99161655694D00228D8A /* js_bindings_core.cpp in Sources */,
+				26DAC48616556C2B00EE807D /* js_bindings_chipmunk_manual.cpp in Sources */,
+				26DAC48D16556FFB00EE807D /* js_bindings_chipmunk_functions.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

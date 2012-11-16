@@ -130,31 +130,3 @@ jsval CGPoint_to_jsval( JSContext *cx, cpVect p)
 	return OBJECT_TO_JSVAL(typedArray);
 #endif // ! JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
 }
-
-JSBool jsval_to_cpBB( JSContext *cx, jsval vp, cpBB *ret )
-{
-	JSObject *tmp_arg;
-	if( ! JS_ValueToObject( cx, vp, &tmp_arg ) )
-		return JS_FALSE;
-	
-	JSB_PRECONDITION( JS_IsTypedArrayObject( tmp_arg, cx ), "Not a TypedArray object");
-	
-	JSB_PRECONDITION( JS_GetTypedArrayByteLength( tmp_arg, cx ) == sizeof(cpFloat)*4, "Invalid length");
-	
-	*ret = *(cpBB*)JS_GetArrayBufferViewData( tmp_arg, cx);
-    
-	return JS_TRUE;
-}
-
-jsval cpBB_to_jsval(JSContext *cx, cpBB bb )
-{
-#ifdef __LP64__
-	JSObject *typedArray = JS_NewFloat64Array( cx, 4 );
-#else
-	JSObject *typedArray = JS_NewFloat32Array( cx, 4 );
-#endif
-	cpBB *buffer = (cpBB*)JS_GetArrayBufferViewData(typedArray, cx);
-	
-	*buffer = bb;
-	return OBJECT_TO_JSVAL(typedArray);
-}
