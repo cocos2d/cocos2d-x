@@ -1,7 +1,6 @@
 #include "KeypadTest.h"
 
 KeypadTest::KeypadTest()
-: m_bShow(true)
 {
     CCSize s = CCDirector::sharedDirector()->getWinSize();
     CCLabelTTF* label = CCLabelTTF::create("Keypad Test", "Arial", 28);
