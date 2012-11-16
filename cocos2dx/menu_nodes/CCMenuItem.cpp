@@ -138,9 +138,9 @@ bool CCMenuItem::isEnabled()
 
 CCRect CCMenuItem::rect()
 {
-    return CCRectMake( m_tPosition.x - m_tContentSize.width * m_tAnchorPoint.x, 
-                      m_tPosition.y - m_tContentSize.height * m_tAnchorPoint.y,
-                      m_tContentSize.width, m_tContentSize.height);
+    return CCRectMake( m_obPosition.x - m_obContentSize.width * m_obAnchorPoint.x,
+                      m_obPosition.y - m_obContentSize.height * m_obAnchorPoint.y,
+                      m_obContentSize.width, m_obContentSize.height);
 }
 
 bool CCMenuItem::isSelected()

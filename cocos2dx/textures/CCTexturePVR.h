@@ -46,6 +46,16 @@ struct CCPVRMipmap {
     unsigned int len;
 };
 
+typedef struct _ccPVRTexturePixelFormatInfo {
+	GLenum internalFormat;
+	GLenum format;
+	GLenum type;
+	uint32_t bpp;
+	bool compressed;
+	bool alpha;
+	CCTexture2DPixelFormat ccPixelFormat;
+} ccPVRTexturePixelFormatInfo;
+
 /**
  @brief Determine how many mipmaps can we have. 
  Its same as define but it respects namespaces
@@ -104,14 +114,14 @@ public:
     inline void setRetainName(bool retainName) { m_bRetainName = retainName; }
 
 private:
-    bool unpackPVRData(unsigned char* data, unsigned int len);
+    bool unpackPVRv2Data(unsigned char* data, unsigned int len);
+    bool unpackPVRv3Data(unsigned char* dataPointer, unsigned int dataLength);
     bool createGLTexture();
     
 protected:
     struct CCPVRMipmap m_asMipmaps[CC_PVRMIPMAP_MAX];   // pointer to mipmap images    
     unsigned int m_uNumberOfMipmaps;                    // number of mipmap used
     
-    unsigned int m_uTableFormatIndex;
     unsigned int m_uWidth, m_uHeight;
     GLuint m_uName;
     bool m_bHasAlpha;
@@ -119,6 +129,8 @@ protected:
     // cocos2d integration
     bool m_bRetainName;
     CCTexture2DPixelFormat m_eFormat;
+    
+   const ccPVRTexturePixelFormatInfo *m_pPixelFormatInfo;
 };
 
 // end of textures group
