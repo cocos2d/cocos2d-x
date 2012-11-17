@@ -19,7 +19,7 @@ subprojects
 
 assets
 {
-	(data)
+	(../Resources)
 }
 
 files

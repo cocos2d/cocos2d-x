@@ -19,7 +19,7 @@ subprojects
 
 assets
 {
-	(data)
+	(../Resources)
 	background.mp3
 	background.ogg
 	effect1.wav
