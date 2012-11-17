@@ -16,7 +16,7 @@ subprojects
 
 assets
 {
-	(data)
+	(../Resources)
 	fonts
 	ipad
 	ipadhd
