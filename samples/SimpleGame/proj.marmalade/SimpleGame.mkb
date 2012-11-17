@@ -17,7 +17,7 @@ subprojects
 
 assets
 {
-	(data)
+	(../Resources)
 	sd
 	hd
 	fonts
