@@ -1,13 +1,13 @@
 
 typedef enum {
     /// An horizontal orientation where the Left is nearer
-    kOrientationLeftOver = 0,
+    kCCTransitionOrientationLeftOver = 0,
     /// An horizontal orientation where the Right is nearer
-    kOrientationRightOver = 1,
+    kCCTransitionOrientationRightOver = 1,
     /// A vertical orientation where the Up is nearer
-    kOrientationUpOver = 0,
+    kCCTransitionOrientationUpOver = 0,
     /// A vertical orientation where the Bottom is nearer
-    kOrientationDownOver = 1,
+    kCCTransitionOrientationDownOver = 1,
 } tOrientation;
 
 class CCTransitionScene : public CCScene
@@ -77,32 +77,32 @@ class CCTransitionShrinkGrow : public CCScene
 
 class CCTransitionFlipX : public CCScene
 {
-    static CCTransitionFlipX* create(float t, CCScene* s, tOrientation o = kOrientationRightOver);
+    static CCTransitionFlipX* create(float t, CCScene* s, tOrientation o = kCCTransitionOrientationRightOver);
 };
 
 class CCTransitionFlipY : public CCScene
 {
-    static CCTransitionFlipY* create(float t, CCScene* s, tOrientation o = kOrientationUpOver);
+    static CCTransitionFlipY* create(float t, CCScene* s, tOrientation o = kCCTransitionOrientationUpOver);
 };
 
 class CCTransitionFlipAngular : public CCScene
 {
-    static CCTransitionFlipAngular* create(float t, CCScene* s, tOrientation o = kOrientationRightOver);
+    static CCTransitionFlipAngular* create(float t, CCScene* s, tOrientation o = kCCTransitionOrientationRightOver);
 };
 
 class CCTransitionZoomFlipX : public CCScene
 {
-    static CCTransitionZoomFlipX* create(float t, CCScene* s, tOrientation o = kOrientationRightOver);
+    static CCTransitionZoomFlipX* create(float t, CCScene* s, tOrientation o = kCCTransitionOrientationRightOver);
 };
 
 class CCTransitionZoomFlipY : public CCScene
 {
-    static CCTransitionZoomFlipY* create(float t, CCScene* s, tOrientation o = kOrientationUpOver);
+    static CCTransitionZoomFlipY* create(float t, CCScene* s, tOrientation o = kCCTransitionOrientationUpOver);
 };
 
 class CCTransitionZoomFlipAngular : public CCScene
 {
-    static CCTransitionZoomFlipAngular* create(float t, CCScene* s, tOrientation o = kOrientationRightOver);
+    static CCTransitionZoomFlipAngular* create(float t, CCScene* s, tOrientation o = kCCTransitionOrientationRightOver);
 };
 
 class CCTransitionFade : public CCScene
