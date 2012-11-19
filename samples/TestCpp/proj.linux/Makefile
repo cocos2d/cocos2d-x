@@ -71,7 +71,7 @@ OBJECTS = ../Classes/AccelerometerTest/AccelerometerTest.o \
 			../Classes/ExtensionsTest/CocosBuilderTest/ButtonTest/ButtonTestLayer.o \
 			../Classes/ExtensionsTest/CocosBuilderTest/CocosBuilderTest.o \
 			../Classes/ExtensionsTest/CocosBuilderTest/HelloCocosBuilder/HelloCocosBuilderLayer.o \
-                        ../Classes/ExtensionsTest/CocosBuilderTest/AnimationsTest/AnimationsTestLayer.o \
+            ../Classes/ExtensionsTest/CocosBuilderTest/AnimationsTest/AnimationsTestLayer.o \
 			../Classes/ExtensionsTest/CocosBuilderTest/MenuTest/MenuTestLayer.o \
 			../Classes/ExtensionsTest/CocosBuilderTest/TestHeader/TestHeaderLayer.o \
 			../Classes/ExtensionsTest/ControlExtensionTest/CCControlButtonTest/CCControlButtonTest.o \
@@ -151,11 +151,9 @@ SHAREDLIBS = -L$(SHAREDLIBS_DIR) -lfmodex
 endif
 
 SHAREDLIBS += -lglfw -lGL
-#SHAREDLIBS += -L../../../lib/linux/Debug -lcocos2d -lrt -lz -lcocosdenshion -Wl,-rpath,../../../../lib/linux/Debug/ 
-SHAREDLIBS += -Wl,-rpath,../../$(SHAREDLIBS_DIR)
-#SHAREDLIBS += -Wl,-rpath,../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib
+SHAREDLIBS += -Wl,-rpath,$(SHAREDLIBS_DIR)
 SHAREDLIBS += -L../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib -lGLEW
-SHAREDLIBS += -Wl,-rpath,../../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib
+SHAREDLIBS += -Wl,-rpath,../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib
 
 
 SHAREDLIBS += -Wl,-rpath,../$(STATICLIBS_DIR)
@@ -164,14 +162,14 @@ SHAREDLIBS += -lcurl
 BIN_DIR_ROOT=bin
 BIN_DIR = BIN_DIR_ROOT
 
-debug: SHAREDLIBS += -L../../../lib/linux/Debug -lcocos2d -lrt -lz -lcocosdenshion -Wl,-rpath,../../../../../lib/linux/Debug
+debug: SHAREDLIBS += -L../../../lib/linux/Debug -lcocos2d -lrt -lz -lcocosdenshion -Wl,-rpath,../../../lib/linux/Debug
 debug: CCFLAGS += -g3 -O0
 debug: CXXFLAGS += -g3 -O0
 debug: DEFINES += -DDEBUG
 debug: BIN_DIR = $(BIN_DIR_ROOT)/debug
 debug: $(TARGET)
 
-release: SHAREDLIBS += -L../../../lib/linux/Release -lcocos2d -lrt -lz -lcocosdenshion -Wl,-rpath,../../../../../lib/linux/Release
+release: SHAREDLIBS += -L../../../lib/linux/Release -lcocos2d -lrt -lz -lcocosdenshion -Wl,-rpath,../../../lib/linux/Release
 release: CCFLAGS += -O3
 release: CXXFLAGS += -O3
 release: DEFINES += -DNDEBUG
