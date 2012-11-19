@@ -3,6 +3,12 @@
 ** Generated automatically by tolua++-1.0.92 on 10/30/12 10:32:25.
 */
 
+#ifdef __GNUC__
+#define __VA_COPY(to, from) va_copy((to), (from))
+#else
+#define __VA_COPY(to, from) ((to) = (from))
+#endif
+
 #ifndef __cplusplus
 #include "stdlib.h"
 #endif
@@ -42181,7 +42187,8 @@ static int tolua_Cocos2d_CCMenu_alignItemsInColumns00(lua_State* tolua_S)
  {
   CCMenu* self = (CCMenu*)  tolua_tousertype(tolua_S,1,0);
   unsigned int columns = ((unsigned int)  tolua_tonumber(tolua_S,2,0));
-  va_list args = *((va_list*)  tolua_tousertype(tolua_S,3,0));
+  va_list args;
+  __VA_COPY(args, *((va_list*)  tolua_tousertype(tolua_S,3,0)));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'alignItemsInColumns'", NULL);
 #endif
@@ -42216,7 +42223,8 @@ static int tolua_Cocos2d_CCMenu_alignItemsInRows00(lua_State* tolua_S)
  {
   CCMenu* self = (CCMenu*)  tolua_tousertype(tolua_S,1,0);
   unsigned int rows = ((unsigned int)  tolua_tonumber(tolua_S,2,0));
-  va_list args = *((va_list*)  tolua_tousertype(tolua_S,3,0));
+  va_list args;
+  __VA_COPY(args, *((va_list*)  tolua_tousertype(tolua_S,3,0)));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'alignItemsInRows'", NULL);
 #endif
