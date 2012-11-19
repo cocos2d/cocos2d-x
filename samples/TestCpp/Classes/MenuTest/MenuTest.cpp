@@ -29,14 +29,13 @@ MenuLayerMainMenu::MenuLayerMainMenu()
     CCMenuItemFont::setFontName("Courier New");
 
     setTouchEnabled(true);
+    setTouchPriority(kCCMenuHandlerPriority + 1);
+    setTouchMode(kCCTouchesOneByOne);
     // Font Item
     
     CCSprite* spriteNormal = CCSprite::create(s_MenuItem, CCRectMake(0,23*2,115,23));
     CCSprite* spriteSelected = CCSprite::create(s_MenuItem, CCRectMake(0,23*1,115,23));
     CCSprite* spriteDisabled = CCSprite::create(s_MenuItem, CCRectMake(0,23*0,115,23));
-    //dynamic_cast<CCNode*>(mgr)->addChild(spriteNormal);
-    //dynamic_cast<CCNode*>(mgr)->addChild(spriteSelected);
-    //dynamic_cast<CCNode*>(mgr)->addChild(spriteDisabled);
 
     CCMenuItemSprite* item1 = CCMenuItemSprite::create(spriteNormal, spriteSelected, spriteDisabled, this, menu_selector(MenuLayerMainMenu::menuCallback) );
     
@@ -109,12 +108,6 @@ MenuLayerMainMenu::MenuLayerMainMenu()
 
     addChild(menu);
     menu->setPosition(ccp(s.width/2, s.height/2));
-}
-
-void MenuLayerMainMenu::registerWithTouchDispatcher()
-{
-    CCDirector* pDirector = CCDirector::sharedDirector();
-    pDirector->getTouchDispatcher()->addTargetedDelegate(this, kCCMenuHandlerPriority+1, true);
 }
 
 bool MenuLayerMainMenu::ccTouchBegan(CCTouch *touch, CCEvent * pEvent)
