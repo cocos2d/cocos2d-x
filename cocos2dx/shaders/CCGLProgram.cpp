@@ -414,7 +414,7 @@ void CCGLProgram::setUniformLocationWith4fv(GLint location, GLfloat* floats, uns
 }
 
 
-void CCGLProgram::setUniformLocationwithMatrix4fv(GLint location, GLfloat* matrixArray, unsigned int numberOfMatrices)
+void CCGLProgram::setUniformLocationWithMatrix4fv(GLint location, GLfloat* matrixArray, unsigned int numberOfMatrices)
 {
     bool updated =  updateUniformLocation(location, matrixArray, sizeof(float)*16*numberOfMatrices);
 
@@ -435,9 +435,9 @@ void CCGLProgram::setUniformsForBuiltins()
 	
 	kmMat4Multiply(&matrixMVP, &matrixP, &matrixMV);
     
-    setUniformLocationwithMatrix4fv(m_uUniforms[kCCUniformPMatrix], matrixP.mat, 1);
-    setUniformLocationwithMatrix4fv(m_uUniforms[kCCUniformMVMatrix], matrixMV.mat, 1);
-    setUniformLocationwithMatrix4fv(m_uUniforms[kCCUniformMVPMatrix], matrixMVP.mat, 1);
+    setUniformLocationWithMatrix4fv(m_uUniforms[kCCUniformPMatrix], matrixP.mat, 1);
+    setUniformLocationWithMatrix4fv(m_uUniforms[kCCUniformMVMatrix], matrixMV.mat, 1);
+    setUniformLocationWithMatrix4fv(m_uUniforms[kCCUniformMVPMatrix], matrixMVP.mat, 1);
 	
 	if(m_bUsesTime)
     {
