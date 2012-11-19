@@ -25,6 +25,10 @@ CCLayer* CreateLayer(int nIndex)
             pLayer = new ActionRotate(); break;
         case ACTION_SKEW_LAYER:
             pLayer = new ActionSkew(); break;
+        case ACTION_ROTATIONAL_SKEW_LAYER:
+            pLayer = new ActionRotationalSkew(); break;
+        case ACTION_ROTATIONAL_SKEW_VS_STANDARD_SKEW_LAYER:
+            pLayer = new ActionRotationalSkewVSStandardSkew(); break;
         case ACTION_SKEWROTATE_LAYER:
             pLayer = new ActionSkewRotateScale(); break;
         case ACTION_JUMP_LAYER:
@@ -81,6 +85,8 @@ CCLayer* CreateLayer(int nIndex)
             pLayer = new Issue1288_2(); break;
         case ACTION_ISSUE1327_LAYER:
             pLayer = new Issue1327(); break;
+        case ACTION_ISSUE1398_LAYER:
+            pLayer = new Issue1398(); break;
         case ACTION_CARDINALSPLINE_LAYER:
             pLayer = new ActionCardinalSpline(); break;
         case ACTION_CATMULLROM_LAYER:
@@ -394,6 +400,78 @@ string ActionSkew::subtitle()
     return "SkewTo / SkewBy";
 }
 
+// ActionRotationalSkew
+void ActionRotationalSkew::onEnter()
+{
+    ActionsDemo::onEnter();
+
+    this->centerSprites(3);
+
+    CCRotateTo* actionTo = CCRotateTo::create(2, 37.2f, -37.2f);
+    CCRotateTo* actionToBack = CCRotateTo::create(2, 0, 0);
+    CCRotateBy* actionBy = CCRotateBy::create(2, 0.0f, -90.0f);
+    CCRotateBy* actionBy2 = CCRotateBy::create(2, 45.0f, 45.0f);
+    CCRotateBy* actionByBack = (CCRotateBy*)actionBy->reverse();
+
+    m_tamara->runAction(CCSequence::create(actionTo, actionToBack, NULL));
+    m_grossini->runAction(CCSequence::create(actionBy, actionByBack, NULL));
+
+    m_kathia->runAction(CCSequence::create(actionBy2, actionBy2->reverse(), NULL));
+}
+
+std::string ActionRotationalSkew::subtitle()
+{
+    return "RotationalSkewTo / RotationalSkewBy";
+}
+
+
+
+//ActionRotationalSkewVSStandardSkew
+void ActionRotationalSkewVSStandardSkew::onEnter()
+{
+    ActionsDemo::onEnter();
+
+    m_tamara->removeFromParentAndCleanup(true);
+    m_grossini->removeFromParentAndCleanup(true);
+    m_kathia->removeFromParentAndCleanup(true);
+
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+
+    CCSize boxSize = CCSizeMake(100.0f, 100.0f);
+
+    CCLayerColor *box = CCLayerColor::create(ccc4(255,255,0,255));
+    box->setAnchorPoint(ccp(0.5,0.5));
+    box->setContentSize( boxSize );
+    box->ignoreAnchorPointForPosition(false);
+    box->setPosition(ccp(s.width/2, s.height - 100 - box->getContentSize().height/2));
+    this->addChild(box);
+    CCLabelTTF *label = CCLabelTTF::create("Standard cocos2d Skew", "Marker Felt", 16);
+    label->setPosition(ccp(s.width/2, s.height - 100 + label->getContentSize().height));
+    this->addChild(label);
+    CCSkewBy* actionTo = CCSkewBy::create(2, 360, 0);
+    CCSkewBy* actionToBack = CCSkewBy::create(2, -360, 0);
+
+    box->runAction(CCSequence::create(actionTo, actionToBack, NULL));
+
+    box = CCLayerColor::create(ccc4(255,255,0,255));
+    box->setAnchorPoint(ccp(0.5,0.5));
+    box->setContentSize(boxSize);
+    box->ignoreAnchorPointForPosition(false);
+    box->setPosition(ccp(s.width/2, s.height - 250 - box->getContentSize().height/2));
+    this->addChild(box);
+    label = CCLabelTTF::create("Rotational Skew", "Marker Felt", 16);
+    label->setPosition(ccp(s.width/2, s.height - 250 + label->getContentSize().height/2));
+    this->addChild(label);
+    CCRotateBy* actionTo2 = CCRotateBy::create(2, 360, 0);
+    CCRotateBy* actionToBack2 = CCRotateBy::create(2, -360, 0);
+    box->runAction(CCSequence::create(actionTo2, actionToBack2, NULL));
+}
+std::string ActionRotationalSkewVSStandardSkew::subtitle()
+{
+    return "Skew Comparison";
+}
+
+// ActionSkewRotateScale
 void ActionSkewRotateScale::onEnter()
 {
     ActionsDemo::onEnter();
@@ -1445,6 +1523,50 @@ std::string Issue1327::subtitle()
 void Issue1327::logSprRotation(CCNode* pSender)
 {
     CCLog("%f", ((CCSprite*)pSender)->getRotation());
+}
+
+//Issue1398
+void Issue1398::incrementInteger()
+{
+    m_nTestInteger++;
+    CCLog("incremented to %d", m_nTestInteger);
+}
+
+void Issue1398::onEnter()
+{
+    ActionsDemo::onEnter();
+    this->centerSprites(0);
+
+    m_nTestInteger = 0;
+    CCLog("testInt = %d", m_nTestInteger);
+
+    this->runAction(
+        CCSequence::create(
+            CCCallFuncND::create(this, callfuncND_selector(Issue1398::incrementIntegerCallback), (void*)"1"),
+            CCCallFuncND::create(this, callfuncND_selector(Issue1398::incrementIntegerCallback), (void*)"2"),
+            CCCallFuncND::create(this, callfuncND_selector(Issue1398::incrementIntegerCallback), (void*)"3"),
+            CCCallFuncND::create(this, callfuncND_selector(Issue1398::incrementIntegerCallback), (void*)"4"),
+            CCCallFuncND::create(this, callfuncND_selector(Issue1398::incrementIntegerCallback), (void*)"5"),
+            CCCallFuncND::create(this, callfuncND_selector(Issue1398::incrementIntegerCallback), (void*)"6"),
+            CCCallFuncND::create(this, callfuncND_selector(Issue1398::incrementIntegerCallback), (void*)"7"),
+            CCCallFuncND::create(this, callfuncND_selector(Issue1398::incrementIntegerCallback), (void*)"8"),
+            NULL));
+}
+
+void Issue1398::incrementIntegerCallback(CCNode* pSender, void* data)
+{
+    this->incrementInteger();
+    CCLog((char*)data);
+}
+
+std::string Issue1398::subtitle()
+{
+    return "See console: You should see an 8";
+}
+
+std::string Issue1398::title()
+{
+    return "Issue 1398";
 }
 
 /** ActionCatmullRom
