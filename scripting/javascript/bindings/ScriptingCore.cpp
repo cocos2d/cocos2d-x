@@ -218,7 +218,7 @@ void jsb_register_cocos2d_config( JSContext *_cx, JSObject *cocos2d)
 // #else
     str = JS_InternString(_cx, "mobile");
 // #endif
-    JS_DefineProperty(_cx, ccconfig, "deviceType", STRING_TO_JSVAL(str), NULL, NULL, JSPROP_ENUMERATE | JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineProperty(_cx, ccconfig, "platform", STRING_TO_JSVAL(str), NULL, NULL, JSPROP_ENUMERATE | JSPROP_READONLY | JSPROP_PERMANENT);
 
     // config.engine: Type of renderer
     // 'cocos2d', 'cocos2d-x', 'cocos2d-html5/canvas', 'cocos2d-html5/webgl', etc..
