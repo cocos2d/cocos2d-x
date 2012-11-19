@@ -26,6 +26,7 @@ public:
     void menuCallbackEnable(CCObject* pSender);
     void menuCallback2(CCObject* pSender);
     void menuCallbackPriorityTest(CCObject* pSender);
+    void menuCallbackBugsTest(CCObject *pSender);
     void onQuit(CCObject* pSender);
 
     //CREATE_NODE(MenuLayer1);
@@ -96,6 +97,16 @@ private:
     CCMenu* m_pMenu1;
     CCMenu* m_pMenu2;
     bool m_bPriority;
+};
+
+class BugsTest : public CCLayer
+{
+public:
+    BugsTest();
+    
+    void issue1410MenuCallback(CCObject *pSender);
+    void issue1410v2MenuCallback(CCObject *pSender);
+    void backMenuCallback(CCObject *pSender);
 };
 
 
