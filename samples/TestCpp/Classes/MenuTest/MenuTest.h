@@ -14,7 +14,6 @@ public:
     ~MenuLayerMainMenu();
 
 public:
-    virtual void registerWithTouchDispatcher();
     virtual bool ccTouchBegan(CCTouch *touch, CCEvent * pEvent);
     virtual void ccTouchEnded(CCTouch *touch, CCEvent * pEvent);
     virtual void ccTouchCancelled(CCTouch *touch, CCEvent * pEvent);
