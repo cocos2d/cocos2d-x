@@ -147,7 +147,7 @@ public:
     void setUniformLocationWith4fv(GLint location, GLfloat* floats, unsigned int numberOfArrays);
 
     /** calls glUniformMatrix4fv only if the values are different than the previous call for this same shader program. */
-    void setUniformLocationwithMatrix4fv(GLint location, GLfloat* matrixArray, unsigned int numberOfMatrices);
+    void setUniformLocationWithMatrix4fv(GLint location, GLfloat* matrixArray, unsigned int numberOfMatrices);
     
     /** will update the builtin uniforms if they are different than the previous call for this same shader program. */
     void setUniformsForBuiltins();
