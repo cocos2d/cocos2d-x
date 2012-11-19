@@ -11,13 +11,10 @@ if defined VS110COMNTOOLS (
 ) else if defined VS100COMNTOOLS (
     set VSVARS="%VS100COMNTOOLS%vsvars32.bat"
     set VC_VER=100
-) else if defined VS90COMNTOOLS (
-    set VSVARS="%VS90COMNTOOLS%vsvars32.bat"
-    set VC_VER=90
-) 
+)
 
 if not defined VSVARS (
-    echo Can't find VC2008, VC2010 or VC2012 installed!
+    echo Can't find VC2010 or VC2012 installed!
     goto ERROR
 )
 
@@ -27,9 +24,7 @@ echo.*/
 echo.
 
 call %VSVARS%
-if %VC_VER%==90 (
-    vcbuild /MP /M10 cocos2d-win32.vc2008.sln $ALL
-) else if %VC_VER%==100 (
+if %VC_VER%==100 (
     msbuild cocos2d-win32.vc2010.sln /p:Configuration="Debug" 
     msbuild cocos2d-win32.vc2010.sln /p:Configuration="Release"
 ) else if %VC_VER%==110 (
