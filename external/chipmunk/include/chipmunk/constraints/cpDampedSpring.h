@@ -52,11 +52,11 @@ cpDampedSpring* cpDampedSpringInit(cpDampedSpring *joint, cpBody *a, cpBody *b, 
 /// Allocate and initialize a damped spring.
 cpConstraint* cpDampedSpringNew(cpBody *a, cpBody *b, cpVect anchr1, cpVect anchr2, cpFloat restLength, cpFloat stiffness, cpFloat damping);
 
-CP_DefineConstraintProperty(cpDampedSpring, cpVect, anchr1, Anchr1);
-CP_DefineConstraintProperty(cpDampedSpring, cpVect, anchr2, Anchr2);
-CP_DefineConstraintProperty(cpDampedSpring, cpFloat, restLength, RestLength);
-CP_DefineConstraintProperty(cpDampedSpring, cpFloat, stiffness, Stiffness);
-CP_DefineConstraintProperty(cpDampedSpring, cpFloat, damping, Damping);
-CP_DefineConstraintProperty(cpDampedSpring, cpDampedSpringForceFunc, springForceFunc, SpringForceFunc);
+CP_DefineConstraintProperty(cpDampedSpring, cpVect, anchr1, Anchr1)
+CP_DefineConstraintProperty(cpDampedSpring, cpVect, anchr2, Anchr2)
+CP_DefineConstraintProperty(cpDampedSpring, cpFloat, restLength, RestLength)
+CP_DefineConstraintProperty(cpDampedSpring, cpFloat, stiffness, Stiffness)
+CP_DefineConstraintProperty(cpDampedSpring, cpFloat, damping, Damping)
+CP_DefineConstraintProperty(cpDampedSpring, cpDampedSpringForceFunc, springForceFunc, SpringForceFunc)
 
 /// @}
