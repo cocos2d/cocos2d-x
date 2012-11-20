@@ -81,4 +81,19 @@ public:
     virtual std::string subtitle();
 };
 
+class RenderTextureTargetNode : public RenderTextureTest
+{
+private:
+    cocos2d::CCSprite *sprite1, *sprite2;
+    cocos2d::CCRenderTexture *renderTexture;
+public:
+    RenderTextureTargetNode();
+    
+    virtual void update(float t);
+    virtual std::string title();
+    virtual std::string subtitle();
+    
+    void touched(cocos2d::CCObject* sender);
+};
+
 #endif
