@@ -33,85 +33,152 @@ enum
 
 static int sceneIdx = -1; 
 
-#define MAX_LAYER    55
 
 CCLayer* nextSpriteTestAction();
 CCLayer* backSpriteTestAction();
 CCLayer* restartSpriteTestAction();
 
+typedef CCLayer* (*NEWSPRITETESTFUNC)();
+#define SPRITETEST_CREATE_FUNC(className) \
+static CCLayer* create##className() \
+{ return new className(); }
 
-CCLayer* createSpriteTestLayer(int nIndex)
+SPRITETEST_CREATE_FUNC(Sprite1);
+SPRITETEST_CREATE_FUNC(SpriteBatchNode1);
+SPRITETEST_CREATE_FUNC(SpriteFrameTest);
+SPRITETEST_CREATE_FUNC(SpriteFrameAliasNameTest);
+SPRITETEST_CREATE_FUNC(SpriteAnchorPoint);
+SPRITETEST_CREATE_FUNC(SpriteBatchNodeAnchorPoint);
+SPRITETEST_CREATE_FUNC(SpriteOffsetAnchorRotation);
+SPRITETEST_CREATE_FUNC(SpriteBatchNodeOffsetAnchorRotation);
+SPRITETEST_CREATE_FUNC(SpriteOffsetAnchorScale);
+SPRITETEST_CREATE_FUNC(SpriteBatchNodeOffsetAnchorScale);
+SPRITETEST_CREATE_FUNC(SpriteOffsetAnchorSkew);
+SPRITETEST_CREATE_FUNC(SpriteOffsetAnchorRotationalSkew);
+SPRITETEST_CREATE_FUNC(SpriteBatchNodeOffsetAnchorSkew);
+SPRITETEST_CREATE_FUNC(SpriteBatchNodeOffsetAnchorRotationalSkew);
+SPRITETEST_CREATE_FUNC(SpriteOffsetAnchorSkewScale);
+SPRITETEST_CREATE_FUNC(SpriteOffsetAnchorRotationalSkewScale);
+SPRITETEST_CREATE_FUNC(SpriteBatchNodeOffsetAnchorSkewScale);
+SPRITETEST_CREATE_FUNC(SpriteBatchNodeOffsetAnchorRotationalSkewScale);
+SPRITETEST_CREATE_FUNC(SpriteOffsetAnchorFlip);
+SPRITETEST_CREATE_FUNC(SpriteBatchNodeOffsetAnchorFlip);
+SPRITETEST_CREATE_FUNC(SpriteAnimationSplit);
+SPRITETEST_CREATE_FUNC(SpriteColorOpacity);
+SPRITETEST_CREATE_FUNC(SpriteBatchNodeColorOpacity);
+SPRITETEST_CREATE_FUNC(SpriteZOrder);
+SPRITETEST_CREATE_FUNC(SpriteBatchNodeZOrder);
+SPRITETEST_CREATE_FUNC(SpriteBatchNodeReorder);
+SPRITETEST_CREATE_FUNC(SpriteBatchNodeReorderIssue744);
+SPRITETEST_CREATE_FUNC(SpriteBatchNodeReorderIssue766);
+SPRITETEST_CREATE_FUNC(SpriteBatchNodeReorderIssue767);
+SPRITETEST_CREATE_FUNC(SpriteBatchNodeReorderSameIndex);
+SPRITETEST_CREATE_FUNC(SpriteBatchNodeReorderOneChild);
+SPRITETEST_CREATE_FUNC(NodeSort);
+SPRITETEST_CREATE_FUNC(SpriteZVertex);
+SPRITETEST_CREATE_FUNC(SpriteBatchNodeZVertex);
+SPRITETEST_CREATE_FUNC(Sprite6);
+SPRITETEST_CREATE_FUNC(SpriteFlip);
+SPRITETEST_CREATE_FUNC(SpriteBatchNodeFlip);
+SPRITETEST_CREATE_FUNC(SpriteAliased);
+SPRITETEST_CREATE_FUNC(SpriteBatchNodeAliased);
+SPRITETEST_CREATE_FUNC(SpriteNewTexture);
+SPRITETEST_CREATE_FUNC(SpriteBatchNodeNewTexture);
+SPRITETEST_CREATE_FUNC(SpriteHybrid);
+SPRITETEST_CREATE_FUNC(SpriteBatchNodeChildren);
+SPRITETEST_CREATE_FUNC(SpriteBatchNodeChildrenZ);
+SPRITETEST_CREATE_FUNC(SpriteChildrenVisibility);
+SPRITETEST_CREATE_FUNC(SpriteChildrenVisibilityIssue665);
+SPRITETEST_CREATE_FUNC(SpriteChildrenAnchorPoint);
+SPRITETEST_CREATE_FUNC(SpriteBatchNodeChildrenAnchorPoint);
+SPRITETEST_CREATE_FUNC(SpriteBatchNodeChildrenScale);
+SPRITETEST_CREATE_FUNC(SpriteChildrenChildren);
+SPRITETEST_CREATE_FUNC(SpriteBatchNodeChildrenChildren);
+SPRITETEST_CREATE_FUNC(SpriteSkewNegativeScaleChildren);
+SPRITETEST_CREATE_FUNC(SpriteRotationalSkewNegativeScaleChildren);
+SPRITETEST_CREATE_FUNC(SpriteBatchNodeSkewNegativeScaleChildren);
+SPRITETEST_CREATE_FUNC(SpriteBatchNodeRotationalSkewNegativeScaleChildren);
+SPRITETEST_CREATE_FUNC(SpriteNilTexture);
+SPRITETEST_CREATE_FUNC(SpriteSubclass);
+SPRITETEST_CREATE_FUNC(SpriteDoubleResolution);
+SPRITETEST_CREATE_FUNC(SpriteBatchBug1217);
+SPRITETEST_CREATE_FUNC(AnimationCache);
+SPRITETEST_CREATE_FUNC(AnimationCacheFile);
+
+
+static NEWSPRITETESTFUNC createFunctions[] =
 {
+    createSprite1,
+	createSpriteBatchNode1,
+	createSpriteFrameTest,
+	createSpriteFrameAliasNameTest,
+	createSpriteAnchorPoint,
+	createSpriteBatchNodeAnchorPoint,
+	createSpriteOffsetAnchorRotation,
+	createSpriteBatchNodeOffsetAnchorRotation,
+	createSpriteOffsetAnchorScale,
+	createSpriteBatchNodeOffsetAnchorScale,
+	createSpriteOffsetAnchorSkew,
+	createSpriteOffsetAnchorRotationalSkew,
+	createSpriteBatchNodeOffsetAnchorSkew,
+	createSpriteBatchNodeOffsetAnchorRotationalSkew,
+	createSpriteOffsetAnchorSkewScale,
+	createSpriteOffsetAnchorRotationalSkewScale,
+	createSpriteBatchNodeOffsetAnchorSkewScale,
+	createSpriteBatchNodeOffsetAnchorRotationalSkewScale,
+	createSpriteOffsetAnchorFlip,
+	createSpriteBatchNodeOffsetAnchorFlip,
+	createSpriteAnimationSplit,
+	createSpriteColorOpacity,
+	createSpriteBatchNodeColorOpacity,
+	createSpriteZOrder,
+	createSpriteBatchNodeZOrder,
+	createSpriteBatchNodeReorder,
+	createSpriteBatchNodeReorderIssue744,
+	createSpriteBatchNodeReorderIssue766,
+	createSpriteBatchNodeReorderIssue767,
+	createSpriteBatchNodeReorderSameIndex,
+	createSpriteBatchNodeReorderOneChild,
+	createNodeSort,
+	createSpriteZVertex,
+	createSpriteBatchNodeZVertex,
+	createSprite6,
+	createSpriteFlip,
+	createSpriteBatchNodeFlip,
+	createSpriteAliased,
+	createSpriteBatchNodeAliased,
+	createSpriteNewTexture,
+	createSpriteBatchNodeNewTexture,
+	createSpriteHybrid,
+	createSpriteBatchNodeChildren,
+	createSpriteBatchNodeChildrenZ,
+	createSpriteChildrenVisibility,
+	createSpriteChildrenVisibilityIssue665,
+	createSpriteChildrenAnchorPoint,
+	createSpriteBatchNodeChildrenAnchorPoint,
+	createSpriteBatchNodeChildrenScale,
+	createSpriteChildrenChildren,
+	createSpriteBatchNodeChildrenChildren,
+	createSpriteSkewNegativeScaleChildren,
+	createSpriteRotationalSkewNegativeScaleChildren,
+	createSpriteBatchNodeSkewNegativeScaleChildren,
+	createSpriteBatchNodeRotationalSkewNegativeScaleChildren,
+	createSpriteNilTexture,
+	createSpriteSubclass,
+	createSpriteDoubleResolution,
+	createSpriteBatchBug1217,
+	createAnimationCache,
+	createAnimationCacheFile,
+};
 
-    switch(nIndex)
-    {
-        case 0: return new Sprite1();
-        case 1: return new SpriteBatchNode1();
-        case 2: return new SpriteFrameTest();
-        case 3: return new SpriteFrameAliasNameTest();
-        case 4: return new SpriteAnchorPoint();
-        case 5: return new SpriteBatchNodeAnchorPoint();
-        case 6: return new SpriteOffsetAnchorRotation();
-        case 7: return new SpriteBatchNodeOffsetAnchorRotation();
-        case 8: return new SpriteOffsetAnchorScale();
-        case 9: return new SpriteBatchNodeOffsetAnchorScale();
-        case 10: return new SpriteAnimationSplit();
-        case 11: return new SpriteColorOpacity();
-        case 12: return new SpriteBatchNodeColorOpacity();
-        case 13: return new SpriteZOrder();
-        case 14: return new SpriteBatchNodeZOrder();
-        case 15: return new SpriteBatchNodeReorder();
-        case 16: return new SpriteBatchNodeReorderIssue744();
-        case 17: return new SpriteBatchNodeReorderIssue766();
-        case 18: return new SpriteBatchNodeReorderIssue767();
-        case 19: return new SpriteZVertex();
-        case 20: return new SpriteBatchNodeZVertex();
-        case 21: return new Sprite6();
-        case 22: return new SpriteFlip();
-        case 23: return new SpriteBatchNodeFlip();
-        case 24: return new SpriteAliased();
-        case 25: return new SpriteBatchNodeAliased();
-        case 26: return new SpriteNewTexture();
-        case 27: return new SpriteBatchNodeNewTexture();
-        case 28: return new SpriteHybrid();
-        case 29: return new SpriteBatchNodeChildren();
-        case 30: return new SpriteBatchNodeChildrenZ();
-        case 31: return new SpriteChildrenVisibility();
-        case 32: return new SpriteChildrenVisibilityIssue665();
-        case 33: return new SpriteChildrenAnchorPoint();
-        case 34: return new SpriteBatchNodeChildrenAnchorPoint();
-        case 35: return new SpriteBatchNodeChildrenScale();
-        case 36: return new SpriteChildrenChildren();
-        case 37: return new SpriteBatchNodeChildrenChildren();
-        case 38: return new SpriteNilTexture();
-        case 39: return new SpriteSubclass();
-        case 40: return new AnimationCache();
-        case 41: return new SpriteOffsetAnchorSkew();
-        case 42: return new SpriteBatchNodeOffsetAnchorSkew();
-        case 43: return new SpriteOffsetAnchorSkewScale();
-        case 44: return new SpriteBatchNodeOffsetAnchorSkewScale();
-        case 45: return new SpriteOffsetAnchorFlip();
-        case 46: return new SpriteBatchNodeOffsetAnchorFlip();
-
-        case 47: return new SpriteBatchNodeReorderSameIndex();
-        case 48: return new SpriteBatchNodeReorderOneChild();
-        case 49: return new NodeSort();
-        case 50: return new SpriteSkewNegativeScaleChildren();
-        case 51: return new SpriteBatchNodeSkewNegativeScaleChildren();
-        case 52: return new SpriteDoubleResolution();
-        case 53: return new SpriteBatchBug1217();
-        case 54: return new AnimationCacheFile();
-    }
-
-    return NULL;
-}
+#define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
 
 CCLayer* nextSpriteTestAction()
 {
     sceneIdx++;
     sceneIdx = sceneIdx % MAX_LAYER;
 
-    CCLayer* pLayer = createSpriteTestLayer(sceneIdx);
+    CCLayer* pLayer = (createFunctions[sceneIdx])();
     pLayer->autorelease();
 
     return pLayer;
@@ -124,7 +191,7 @@ CCLayer* backSpriteTestAction()
     if( sceneIdx < 0 )
         sceneIdx += total;    
     
-    CCLayer* pLayer = createSpriteTestLayer(sceneIdx);
+    CCLayer* pLayer = (createFunctions[sceneIdx])();
     pLayer->autorelease();
 
     return pLayer;
@@ -132,7 +199,7 @@ CCLayer* backSpriteTestAction()
 
 CCLayer* restartSpriteTestAction()
 {
-    CCLayer* pLayer = createSpriteTestLayer(sceneIdx);
+    CCLayer* pLayer = (createFunctions[sceneIdx])();
     pLayer->autorelease();
 
     return pLayer;
@@ -4343,3 +4410,438 @@ std::string SpriteBatchNodeReorderOneChild::title()
     return "SpriteBatchNode reorder 1 child";
 }
 
+// SpriteOffsetAnchorRotationalSkew
+SpriteOffsetAnchorRotationalSkew::SpriteOffsetAnchorRotationalSkew()
+{
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    
+    CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+    cache->addSpriteFramesWithFile("animations/grossini.plist");
+    cache->addSpriteFramesWithFile("animations/grossini_gray.plist", "animations/grossini_gray.png");
+    
+    for(int i=0;i<3;i++)
+    {
+        //
+        // Animation using Sprite batch
+        //
+        CCSprite *sprite = CCSprite::createWithSpriteFrameName("grossini_dance_01.png");
+        sprite->setPosition(ccp(s.width/4*(i+1), s.height/2));
+        
+        CCSprite *point = CCSprite::create("Images/r1.png");
+                            
+        point->setScale(0.25f);
+        point->setPosition(sprite->getPosition());
+        addChild(point, 1);
+        
+        switch(i)
+        {
+            case 0:
+                sprite->setAnchorPoint(CCPointZero);
+                break;
+            case 1:
+                sprite->setAnchorPoint(ccp(0.5f, 0.5f));
+                break;
+            case 2:
+                sprite->setAnchorPoint(ccp(1,1));
+                break;
+        }
+        
+        point->setPosition(sprite->getPosition());
+        
+        CCArray *animFrames = CCArray::create();
+        for(int i = 0; i < 14; i++)
+        {
+            char pngName[30];
+            snprintf(pngName, 30, "grossini_dance_%02d.png", (i+1));
+            CCSpriteFrame *frame = cache->spriteFrameByName(pngName);
+            animFrames->addObject(frame);
+        }
+        CCAnimation *animation = CCAnimation::createWithSpriteFrames(animFrames, 0.3f);
+        sprite->runAction(CCRepeatForever::create(CCAnimate::create(animation)));
+        
+        CCRotateBy *skewX = CCRotateBy::create(2, 45, 0);
+        CCRotateBy *skewX_back = (CCRotateBy*)skewX->reverse();
+        CCRotateBy *skewY = CCRotateBy::create(2, 0, 45);
+        CCRotateBy *skewY_back = (CCRotateBy*)skewY->reverse();
+        
+        CCFiniteTimeAction *seq_skew = CCSequence::create(skewX, skewX_back, skewY, skewY_back, NULL);
+        sprite->runAction(CCRepeatForever::create((CCActionInterval *)seq_skew));
+        
+        addChild(sprite, 0);
+    }
+}
+
+SpriteOffsetAnchorRotationalSkew::~SpriteOffsetAnchorRotationalSkew()
+{
+    CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+    cache->removeSpriteFramesFromFile("animations/grossini.plist");
+    cache->removeSpriteFramesFromFile("animations/grossini_gray.plist");
+}
+
+string SpriteOffsetAnchorRotationalSkew::title()
+{
+    return "Sprite offset + anchor + rotational skew";
+}
+
+// SpriteBatchNodeOffsetAnchorRotationalSkew
+SpriteBatchNodeOffsetAnchorRotationalSkew::SpriteBatchNodeOffsetAnchorRotationalSkew()
+{
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    
+    CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+    cache->addSpriteFramesWithFile("animations/grossini.plist");
+    cache->addSpriteFramesWithFile("animations/grossini_gray.plist", "animations/grossini_gray.png");
+    
+    CCSpriteBatchNode *spritebatch = CCSpriteBatchNode::create("animations/grossini.png");
+    addChild(spritebatch);
+    
+    for(int i=0;i<3;i++)
+    {
+        //
+        // Animation using Sprite batch
+        //
+        CCSprite *sprite = CCSprite::createWithSpriteFrameName("grossini_dance_01.png");
+        sprite->setPosition(ccp(s.width/4*(i+1), s.height/2));
+        
+        CCSprite *point = CCSprite::create("Images/r1.png");
+        
+        point->setScale(0.25f);
+        point->setPosition(sprite->getPosition());
+        addChild(point, 200);
+        
+        switch(i)
+        {
+            case 0:
+                sprite->setAnchorPoint(CCPointZero);
+                break;
+            case 1:
+                sprite->setAnchorPoint(ccp(0.5f, 0.5f));
+                break;
+            case 2:
+                sprite->setAnchorPoint(ccp(1,1));
+                break;
+        }
+        
+        point->setPosition(sprite->getPosition());
+        
+        CCArray *animFrames = CCArray::create();
+        for(int i = 0; i < 14; i++)
+        {
+            char pngName[30];
+            snprintf(pngName, 30, "grossini_dance_%02d.png", (i+1));
+            CCSpriteFrame *frame = cache->spriteFrameByName(pngName);
+            animFrames->addObject(frame);
+        }
+        CCAnimation *animation = CCAnimation::createWithSpriteFrames(animFrames, 0.3f);
+        sprite->runAction(CCRepeatForever::create(CCAnimate::create(animation)));
+        
+        CCRotateBy *skewX = CCRotateBy::create(2, 45, 0);
+        CCRotateBy *skewX_back = (CCRotateBy*)skewX->reverse();
+        CCRotateBy *skewY = CCRotateBy::create(2, 0, 45);
+        CCRotateBy *skewY_back = (CCRotateBy*)skewY->reverse();
+        
+        CCFiniteTimeAction *seq_skew = CCSequence::create(skewX, skewX_back, skewY, skewY_back, NULL);
+        sprite->runAction(CCRepeatForever::create((CCActionInterval *)seq_skew));
+        
+        spritebatch->addChild(sprite, i);
+    }
+}
+
+SpriteBatchNodeOffsetAnchorRotationalSkew::~SpriteBatchNodeOffsetAnchorRotationalSkew()
+{
+    CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+    cache->removeSpriteFramesFromFile("animations/grossini.plist");
+    cache->removeSpriteFramesFromFile("animations/grossini_gray.plist");
+}
+
+string SpriteBatchNodeOffsetAnchorRotationalSkew::title()
+{
+    return "SpriteBatchNode offset + anchor + rot skew";
+}
+
+// SpriteOffsetAnchorRotationalSkewScale
+SpriteOffsetAnchorRotationalSkewScale::SpriteOffsetAnchorRotationalSkewScale()
+{
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    
+    CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+    cache->addSpriteFramesWithFile("animations/grossini.plist");
+    cache->addSpriteFramesWithFile("animations/grossini_gray.plist", "animations/grossini_gray.png");
+    
+    for(int i=0;i<3;i++)
+    {
+        //
+        // Animation using Sprite batch
+        //
+        CCSprite *sprite = CCSprite::createWithSpriteFrameName("grossini_dance_01.png");
+        sprite->setPosition(ccp(s.width/4*(i+1), s.height/2));
+        
+        CCSprite *point = CCSprite::create("Images/r1.png");
+        
+        point->setScale(0.25f);
+        point->setPosition(sprite->getPosition());
+        addChild(point, 1);
+        
+        switch(i)
+        {
+            case 0:
+                sprite->setAnchorPoint(CCPointZero);
+                break;
+            case 1:
+                sprite->setAnchorPoint(ccp(0.5f, 0.5f));
+                break;
+            case 2:
+                sprite->setAnchorPoint(ccp(1,1));
+                break;
+        }
+        
+        point->setPosition(sprite->getPosition());
+        
+        CCArray *animFrames = CCArray::create();
+        for(int i = 0; i < 14; i++)
+        {
+            char pngName[30];
+            snprintf(pngName, 30, "grossini_dance_%02d.png", (i+1));
+            CCSpriteFrame *frame = cache->spriteFrameByName(pngName);
+            animFrames->addObject(frame);
+        }
+        CCAnimation *animation = CCAnimation::createWithSpriteFrames(animFrames, 0.3f);
+        sprite->runAction(CCRepeatForever::create(CCAnimate::create(animation)));
+        
+        // Skew
+        CCRotateBy *skewX = CCRotateBy::create(2, 45, 0);
+        CCRotateBy *skewX_back = (CCRotateBy*)skewX->reverse();
+        CCRotateBy *skewY = CCRotateBy::create(2, 0, 45);
+        CCRotateBy *skewY_back = (CCRotateBy*)skewY->reverse();
+        
+        CCFiniteTimeAction *seq_skew = CCSequence::create(skewX, skewX_back, skewY, skewY_back, NULL);
+        sprite->runAction(CCRepeatForever::create((CCActionInterval *)seq_skew));
+        
+        // Scale
+        CCScaleBy *scale = CCScaleBy::create(2, 2);
+        CCScaleBy *scale_back = (CCScaleBy *)scale->reverse();
+        CCFiniteTimeAction *seq_scale = CCSequence::create(scale, scale_back, NULL);
+        sprite->runAction(CCRepeatForever::create((CCActionInterval *)seq_scale));
+        
+        addChild(sprite, i);
+    }
+}
+
+SpriteOffsetAnchorRotationalSkewScale::~SpriteOffsetAnchorRotationalSkewScale()
+{
+    CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+    cache->removeSpriteFramesFromFile("animations/grossini.plist");
+    cache->removeSpriteFramesFromFile("animations/grossini_gray.plist");
+}
+
+string SpriteOffsetAnchorRotationalSkewScale::title()
+{
+    return "Sprite anchor + rot skew + scale";
+}
+
+// SpriteBatchNodeOffsetAnchorRotationalSkewScale
+SpriteBatchNodeOffsetAnchorRotationalSkewScale::SpriteBatchNodeOffsetAnchorRotationalSkewScale()
+{
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    
+    CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+    cache->addSpriteFramesWithFile("animations/grossini.plist");
+    cache->addSpriteFramesWithFile("animations/grossini_gray.plist", "animations/grossini_gray.png");
+    
+    CCSpriteBatchNode *spritebatch = CCSpriteBatchNode::create("animations/grossini.png");
+    addChild(spritebatch);
+    
+    for(int i=0;i<3;i++)
+    {
+        //
+        // Animation using Sprite batch
+        //
+        CCSprite *sprite = CCSprite::createWithSpriteFrameName("grossini_dance_01.png");
+        sprite->setPosition(ccp(s.width/4*(i+1), s.height/2));
+        
+        CCSprite *point = CCSprite::create("Images/r1.png");
+        
+        point->setScale(0.25f);
+        point->setPosition(sprite->getPosition());
+        addChild(point, 200);
+        
+        switch(i)
+        {
+            case 0:
+                sprite->setAnchorPoint(CCPointZero);
+                break;
+            case 1:
+                sprite->setAnchorPoint(ccp(0.5f, 0.5f));
+                break;
+            case 2:
+                sprite->setAnchorPoint(ccp(1,1));
+                break;
+        }
+        
+        point->setPosition(sprite->getPosition());
+        
+        CCArray *animFrames = CCArray::create();
+        for(int i = 0; i < 14; i++)
+        {
+            char pngName[30];
+            snprintf(pngName, 30, "grossini_dance_%02d.png", (i+1));
+            CCSpriteFrame *frame = cache->spriteFrameByName(pngName);
+            animFrames->addObject(frame);
+        }
+        CCAnimation *animation = CCAnimation::createWithSpriteFrames(animFrames, 0.3f);
+        sprite->runAction(CCRepeatForever::create(CCAnimate::create(animation)));
+        
+        // Skew
+        CCRotateBy *skewX = CCRotateBy::create(2, 45, 0);
+        CCRotateBy *skewX_back = (CCRotateBy*)skewX->reverse();
+        CCRotateBy *skewY = CCRotateBy::create(2, 0, 45);
+        CCRotateBy *skewY_back = (CCRotateBy*)skewY->reverse();
+        
+        CCFiniteTimeAction *seq_skew = CCSequence::create(skewX, skewX_back, skewY, skewY_back, NULL);
+        sprite->runAction(CCRepeatForever::create((CCActionInterval *)seq_skew));
+        
+        // Scale
+        CCScaleBy *scale = CCScaleBy::create(2, 2);
+        CCScaleBy *scale_back = (CCScaleBy *)scale->reverse();
+        CCFiniteTimeAction *seq_scale = CCSequence::create(scale, scale_back, NULL);
+        sprite->runAction(CCRepeatForever::create((CCActionInterval *)seq_scale));
+        
+        spritebatch->addChild(sprite, i);
+    }
+}
+
+SpriteBatchNodeOffsetAnchorRotationalSkewScale::~SpriteBatchNodeOffsetAnchorRotationalSkewScale()
+{
+    CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+    cache->removeSpriteFramesFromFile("animations/grossini.plist");
+    cache->removeSpriteFramesFromFile("animations/grossini_gray.plist");
+}
+
+string SpriteBatchNodeOffsetAnchorRotationalSkewScale::title()
+{
+    return "SpriteBatchNode anchor + rot skew + scale";
+}
+
+// SpriteRotationalSkewNegativeScaleChildren
+SpriteRotationalSkewNegativeScaleChildren::SpriteRotationalSkewNegativeScaleChildren()
+{
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    
+    CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+    cache->addSpriteFramesWithFile("animations/grossini.plist");
+    cache->addSpriteFramesWithFile("animations/grossini_gray.plist", "animations/grossini_gray.png");
+    
+    CCNode *parent = CCNode::create();
+    addChild(parent);
+    
+    for(int i=0;i<2;i++)
+    {
+        //
+        // Animation using Sprite batch
+        //
+        CCSprite *sprite = CCSprite::createWithSpriteFrameName("grossini_dance_01.png");
+        sprite->setPosition(ccp(s.width/4*(i+1), s.height/2));
+        
+        CCSprite *point = CCSprite::create("Images/r1.png");
+        
+        point->setScale(0.25f);
+        point->setPosition(sprite->getPosition());
+        addChild(point, 200);
+        
+        // Skew
+        CCRotateBy *skewX = CCRotateBy::create(2, 45, 0);
+        CCRotateBy *skewX_back = (CCRotateBy*)skewX->reverse();
+        CCRotateBy *skewY = CCRotateBy::create(2, 0, 45);
+        CCRotateBy *skewY_back = (CCRotateBy*)skewY->reverse();
+        
+        if (1 == 1)
+        {
+            sprite->setScale(-1.0f);
+        }
+        
+        CCFiniteTimeAction *seq_skew = CCSequence::create(skewX, skewX_back, skewY, skewY_back, NULL);
+        sprite->runAction(CCRepeatForever::create((CCActionInterval *)seq_skew));
+        
+        CCSprite *child1 = CCSprite::create("Images/grossini_dance_01.png");
+        child1->setPosition(ccp(sprite->getContentSize().width/2.0f, sprite->getContentSize().height/2.0f));
+        
+        sprite->addChild(child1);
+        
+        child1->setScale(0.8f);
+        
+        parent->addChild(sprite, i);
+    }
+}
+
+SpriteRotationalSkewNegativeScaleChildren::~SpriteRotationalSkewNegativeScaleChildren()
+{
+    CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+    cache->removeSpriteFramesFromFile("animations/grossini.plist");
+    cache->removeSpriteFramesFromFile("animations/grossini_gray.plist");
+}
+
+string SpriteRotationalSkewNegativeScaleChildren::title()
+{
+    return "Sprite rot skew + negative scale with children";
+}
+
+// SpriteBatchNodeRotationalSkewNegativeScaleChildren
+SpriteBatchNodeRotationalSkewNegativeScaleChildren::SpriteBatchNodeRotationalSkewNegativeScaleChildren()
+{
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    
+    CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+    cache->addSpriteFramesWithFile("animations/grossini.plist");
+    cache->addSpriteFramesWithFile("animations/grossini_gray.plist", "animations/grossini_gray.png");
+    
+    CCSpriteBatchNode *spritebatch = CCSpriteBatchNode::create("animations/grossini.png");
+    addChild(spritebatch);
+    
+    for(int i=0;i<2;i++)
+    {
+        //
+        // Animation using Sprite batch
+        //
+        CCSprite *sprite = CCSprite::createWithSpriteFrameName("grossini_dance_01.png");
+        sprite->setPosition(ccp(s.width/4*(i+1), s.height/2));
+        
+        CCSprite *point = CCSprite::create("Images/r1.png");
+        
+        point->setScale(0.25f);
+        point->setPosition(sprite->getPosition());
+        addChild(point, 200);
+        
+        // Skew
+        CCRotateBy *skewX = CCRotateBy::create(2, 45, 0);
+        CCRotateBy *skewX_back = (CCRotateBy*)skewX->reverse();
+        CCRotateBy *skewY = CCRotateBy::create(2, 0, 45);
+        CCRotateBy *skewY_back = (CCRotateBy*)skewY->reverse();
+        
+        if (1 == 1)
+        {
+            sprite->setScale(-1.0f);
+        }
+        
+        CCFiniteTimeAction *seq_skew = CCSequence::create(skewX, skewX_back, skewY, skewY_back, NULL);
+        sprite->runAction(CCRepeatForever::create((CCActionInterval *)seq_skew));
+        
+        CCSprite *child1 = CCSprite::create("Images/grossini_dance_01.png");
+        child1->setPosition(ccp(sprite->getContentSize().width/2.0f, sprite->getContentSize().height/2.0f));
+        
+        sprite->addChild(child1);
+        
+        child1->setScale(0.8f);
+        
+        spritebatch->addChild(sprite, i);
+    }
+}
+
+SpriteBatchNodeRotationalSkewNegativeScaleChildren::~SpriteBatchNodeRotationalSkewNegativeScaleChildren()
+{
+    
+}
+
+string SpriteBatchNodeRotationalSkewNegativeScaleChildren::title()
+{
+    return "SpriteBatchNode + children + rot skew";
+}
