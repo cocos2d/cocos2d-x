@@ -41,17 +41,6 @@
 #include "TextureCacheTest/TextureCacheTest.h"
 #include "NodeTest/NodeTest.h"
 #include "ShaderTest/ShaderTest.h"
-
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
-    #include "ChipmunkTest/ChipmunkTest.h"
-#else
-#ifdef MARMALADEUSECHIPMUNK
-#if    (MARMALADEUSECHIPMUNK == 1)
-    #include "ChipmunkTest/ChipmunkTest.h"
-#endif
-#endif
-#endif // (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
-
 #include "ExtensionsTest/ExtensionsTest.h"
 #include "MutiTouchTest/MutiTouchTest.h"
 
@@ -76,7 +65,6 @@ enum
     TEST_PARALLAX,
     TEST_TILE_MAP,
     TEST_INTERVAL,
-    TEST_CHIPMUNKACCELTOUCH,
     TEST_LABEL,
     TEST_TEXT_INPUT,
     TEST_SPRITE,
@@ -123,7 +111,6 @@ const std::string g_aTestNames[TESTS_COUNT] = {
     "ParallaxTest",
     "TileMapTest",
     "IntervalTest",
-    "ChipmunkAccelTouchTest",
     "LabelTest",
     "TextInputTest",
     "SpriteTest",
