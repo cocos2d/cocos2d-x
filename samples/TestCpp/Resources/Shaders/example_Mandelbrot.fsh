@@ -6,16 +6,15 @@ precision highp float;
 
 uniform vec2 center;
 uniform vec2 resolution;
-uniform float time;
 
 void main(void)
 {
     vec2 p = 2.0 * (gl_FragCoord.xy - center.xy) / resolution.xy;
 	p.x *= resolution.x/resolution.y;
 
-	float zoo = .62+.38*sin(.1*time);
-	float coa = cos( 0.1*(1.0-zoo)*time );
-	float sia = sin( 0.1*(1.0-zoo)*time );
+	float zoo = .62+.38*sin(.1*CC_Time[1]);
+	float coa = cos( 0.1*(1.0-zoo)*CC_Time[1] );
+	float sia = sin( 0.1*(1.0-zoo)*CC_Time[1] );
 	zoo = pow( zoo,8.0);
 	vec2 xy = vec2( p.x*coa-p.y*sia, p.x*sia+p.y*coa);
 	vec2 cc = vec2(-.745,.186) + xy*zoo;
