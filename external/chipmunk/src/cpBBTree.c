@@ -105,11 +105,11 @@ GetRootIfTree(cpSpatialIndex *index){
 	return (index && index->klass == Klass() ? ((cpBBTree *)index)->root : NULL);
 }
 
-static inline cpTimestamp
-GetStamp(cpBBTree *tree)
+static inline cpBBTree *
+GetMasterTree(cpBBTree *tree)
 {
 	cpBBTree *dynamicTree = GetTree(tree->spatialIndex.dynamicIndex);
-	return (dynamicTree ? dynamicTree->stamp : tree->stamp);
+	return (dynamicTree ? dynamicTree : tree);
 }
 
 static inline void
@@ -128,6 +128,10 @@ IncrementStamp(cpBBTree *tree)
 static void
 PairRecycle(cpBBTree *tree, Pair *pair)
 {
+	// Share the pool of the master tree.
+	// TODO would be lovely to move the pairs stuff into an external data structure.
+	tree = GetMasterTree(tree);
+	
 	pair->a.next = tree->pooledPairs;
 	tree->pooledPairs = pair;
 }
@@ -135,6 +139,10 @@ PairRecycle(cpBBTree *tree, Pair *pair)
 static Pair *
 PairFromPool(cpBBTree *tree)
 {
+	// Share the pool of the master tree.
+	// TODO would be lovely to move the pairs stuff into an external data structure.
+	tree = GetMasterTree(tree);
+	
 	Pair *pair = tree->pooledPairs;
 	
 	if(pair){
@@ -433,7 +441,7 @@ static void
 MarkLeaf(Node *leaf, MarkContext *context)
 {
 	cpBBTree *tree = context->tree;
-	if(leaf->STAMP == GetStamp(tree)){
+	if(leaf->STAMP == GetMasterTree(tree)->stamp){
 		Node *staticRoot = context->staticRoot;
 		if(staticRoot) MarkLeafQuery(staticRoot, leaf, cpFalse, context);
 		
@@ -497,7 +505,7 @@ LeafUpdate(Node *leaf, cpBBTree *tree)
 		tree->root = SubtreeInsert(root, leaf, tree);
 		
 		PairsClear(leaf, tree);
-		leaf->STAMP = GetStamp(tree);
+		leaf->STAMP = GetMasterTree(tree)->stamp;
 		
 		return cpTrue;
 	}
@@ -599,7 +607,7 @@ cpBBTreeInsert(cpBBTree *tree, void *obj, cpHashValue hashid)
 	Node *root = tree->root;
 	tree->root = SubtreeInsert(root, leaf, tree);
 	
-	leaf->STAMP = GetStamp(tree);
+	leaf->STAMP = GetMasterTree(tree)->stamp;
 	LeafAddPairs(leaf, tree);
 	IncrementStamp(tree);
 }
