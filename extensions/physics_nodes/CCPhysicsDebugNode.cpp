@@ -32,7 +32,7 @@
 #include <limits.h>
 #include <string.h>
 
-NS_CC_BEGIN
+NS_CC_EXT_BEGIN
 
 /*
  IMPORTANT - READ ME!
@@ -47,15 +47,15 @@ static ccColor4F ColorForBody(cpBody *body)
 {
 	if (cpBodyIsRogue(body) || cpBodyIsSleeping(body))
     {
-		return ccc4f(0.5, 0.5, 0.5 ,0.5);
+		return ccc4f(0.5f, 0.5f, 0.5f ,0.5f);
 	}
     else if (body->CP_PRIVATE(node).idleTime > body->CP_PRIVATE(space)->sleepTimeThreshold)
     {
-		return ccc4f(0.33, 0.33, 0.33, 0.5);
+		return ccc4f(0.33f, 0.33f, 0.33f, 0.5f);
 	}
     else
     {
-		return ccc4f(1, 0, 0, 0.5);
+		return ccc4f(1.0f, 0.0f, 0.0f, 0.5f);
 	}
 }
 
@@ -64,9 +64,17 @@ static CCPoint cpVert2ccp(const cpVect &vert)
     return CCPointMake(vert.x, vert.y);
 }
 
-static CCPoint cpVert2ccp(cpVect *vert)
+static CCPoint* cpVertArray2ccpArrayN(const cpVect* cpVertArray, unsigned int count)
 {
-    return CCPointMake(vert->x, vert->y);
+    if (count == 0) return NULL;
+    CCPoint* pPoints = new CCPoint[count];
+    
+    for (unsigned int i = 0; i < count; ++i)
+    {
+        pPoints[i].x = cpVertArray[i].x;
+        pPoints[i].y = cpVertArray[i].y;
+    }
+    return pPoints;
 }
 
 static void DrawShape(cpShape *shape, CCDrawNode *renderer)
@@ -96,9 +104,9 @@ static void DrawShape(cpShape *shape, CCDrawNode *renderer)
             cpPolyShape *poly = (cpPolyShape *)shape;
             ccColor4F line = color;
             line.a = cpflerp(color.a, 1.0, 0.5);
-            
-            CCPoint p = cpVert2ccp(poly->tVerts);
-            renderer->drawPolygon(&p, poly->numVerts, color, 1.0, line);
+            CCPoint* pPoints = cpVertArray2ccpArrayN(poly->tVerts, poly->numVerts);
+            renderer->drawPolygon(pPoints, poly->numVerts, color, 1.0, line);
+            CC_SAFE_DELETE_ARRAY(pPoints);
         }
             break;
 		default:
@@ -210,6 +218,6 @@ CCPhysicsDebugNode::~CCPhysicsDebugNode()
 {
 }
 
-NS_CC_END
+NS_CC_EXT_END
 
 #endif // CC_ENABLE_CHIPMUNK_INTEGRATION
