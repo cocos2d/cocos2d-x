@@ -255,10 +255,15 @@ void SchedulerPauseResumeAll::onEnter()
     this->addChild(sprite);
     sprite->runAction(CCRepeatForever::create(CCRotateBy::create(3.0, 360)));
 
+    scheduleUpdate();
     schedule(schedule_selector(SchedulerPauseResumeAll::tick1), 0.5f);
     schedule(schedule_selector(SchedulerPauseResumeAll::tick2), 1.0f);
     schedule(schedule_selector(SchedulerPauseResumeAll::pause), 3.0f, false, 0);
-    //TODO: [self performSelector:@selector(resume) withObject:nil afterDelay:5];
+}
+
+void SchedulerPauseResumeAll::update(float delta)
+{
+    // do nothing
 }
 
 void SchedulerPauseResumeAll::onExit()
@@ -285,6 +290,14 @@ void SchedulerPauseResumeAll::pause(float dt)
     CCDirector* pDirector = CCDirector::sharedDirector();
     m_pPausedTargets = pDirector->getScheduler()->pauseAllTargets();
     CC_SAFE_RETAIN(m_pPausedTargets);
+    
+    unsigned int c = m_pPausedTargets->count();
+    
+    if (c > 2)
+    {
+        // should have only 2 items: CCActionManager, self
+        CCLog("Error: pausedTargets should have only 2 items, and not %u", (unsigned int)c);
+    }
 }
 
 void SchedulerPauseResumeAll::resume(float dt)
