@@ -160,7 +160,7 @@ void CCProgressTimer::setColor(const ccColor3B& color)
     updateColor();
 }
 
-const ccColor3B& CCProgressTimer::getColor(void)
+ccColor3B CCProgressTimer::getColor(void)
 {
     return m_pSprite->getColor();
 }

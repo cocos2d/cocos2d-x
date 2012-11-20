@@ -77,7 +77,7 @@ public:
     
     const char* getRunningSequenceName();
     
-    const CCSize& getContainerSize(CCNode* pNode);
+    CCSize getContainerSize(CCNode* pNode);
     
     void addNode(CCNode *pNode, CCDictionary *pSeq);
     void setBaseValue(CCObject *pValue, CCNode *pNode, const char *pPropName);

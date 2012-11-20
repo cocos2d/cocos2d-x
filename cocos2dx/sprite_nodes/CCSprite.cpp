@@ -317,7 +317,7 @@ CCSprite* CCSprite::initWithCGImage(CGImageRef pImage, const char *pszKey)
     // XXX: possible bug. See issue #349. New API should be added
     CCTexture2D *pTexture = CCTextureCache::sharedTextureCache()->addCGImage(pImage, pszKey);
 
-    const CCSize& size = pTexture->getContentSize();
+    CCSize size = pTexture->getContentSize();
     CCRect rect = CCRectMake(0 ,0, size.width, size.height);
 
     return initWithTexture(texture, rect);
@@ -967,7 +967,7 @@ void CCSprite::setOpacity(GLubyte opacity)
     updateColor();
 }
 
-const ccColor3B& CCSprite::getColor(void)
+ccColor3B CCSprite::getColor(void)
 {
     if (m_bOpacityModifyRGB)
     {

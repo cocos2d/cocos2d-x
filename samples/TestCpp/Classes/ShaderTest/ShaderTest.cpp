@@ -557,7 +557,7 @@ void SpriteBlur::draw()
     ccGLBlendFunc( m_sBlendFunc.src, m_sBlendFunc.dst );
 
     getShaderProgram()->use();
-    getShaderProgram()->setUniformForModelViewProjectionMatrix();
+    getShaderProgram()->setUniformsForBuiltins();
     getShaderProgram()->setUniformLocationWith2f(blurLocation, blur_.x, blur_.y);
     getShaderProgram()->setUniformLocationWith4fv(subLocation, sub_, 1);
 
