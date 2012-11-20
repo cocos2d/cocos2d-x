@@ -33,7 +33,7 @@ typedef struct cpGearJoint {
 	cpFloat iSum;
 		
 	cpFloat bias;
-	cpFloat jAcc, jMax;
+	cpFloat jAcc;
 } cpGearJoint;
 
 /// Allocate a gear joint.
@@ -43,8 +43,8 @@ cpGearJoint* cpGearJointInit(cpGearJoint *joint, cpBody *a, cpBody *b, cpFloat p
 /// Allocate and initialize a gear joint.
 cpConstraint* cpGearJointNew(cpBody *a, cpBody *b, cpFloat phase, cpFloat ratio);
 
-CP_DefineConstraintProperty(cpGearJoint, cpFloat, phase, Phase);
-CP_DefineConstraintGetter(cpGearJoint, cpFloat, ratio, Ratio);
+CP_DefineConstraintProperty(cpGearJoint, cpFloat, phase, Phase)
+CP_DefineConstraintGetter(cpGearJoint, cpFloat, ratio, Ratio)
 /// Set the ratio of a gear joint.
 void cpGearJointSetRatio(cpConstraint *constraint, cpFloat value);
 

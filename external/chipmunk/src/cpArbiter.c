@@ -212,6 +212,8 @@ cpArbiterInit(cpArbiter *arb, cpShape *a, cpShape *b)
 	arb->stamp = 0;
 	arb->state = cpArbiterStateFirstColl;
 	
+	arb->data = NULL;
+	
 	return arb;
 }
 

@@ -52,17 +52,6 @@ static TestScene* CreateTestScene(int nIdx)
         pScene = new TileMapTestScene(); break;
     case TEST_INTERVAL:
         pScene = new IntervalTestScene(); break;
-    case TEST_CHIPMUNKACCELTOUCH:
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
-        pScene = new ChipmunkAccelTouchTestScene(); break;
-#else
-#ifdef MARMALADEUSECHIPMUNK
-#if    (MARMALADEUSECHIPMUNK == 1)
-        pScene = new ChipmunkAccelTouchTestScene(); 
-#endif
-        break;
-#endif
-#endif
     case TEST_LABEL:
         pScene = new AtlasTestScene(); break;
     case TEST_TEXT_INPUT:

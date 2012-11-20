@@ -99,7 +99,7 @@ bool CCGridBase::initWithSize(const ccGridSize& gridSize, CCTexture2D *pTexture,
     CC_SAFE_RETAIN(m_pTexture);
     m_bIsTextureFlipped = bFlipped;
 
-    const CCSize& texSize = m_pTexture->getContentSize();
+    CCSize texSize = m_pTexture->getContentSize();
     m_obStep.x = texSize.width / m_sGridSize.x;
     m_obStep.y = texSize.height / m_sGridSize.y;
 
@@ -229,7 +229,7 @@ void CCGridBase::afterDraw(cocos2d::CCNode *pTarget)
 
     if (pTarget->getCamera()->isDirty())
     {
-        const CCPoint& offset = pTarget->getAnchorPointInPoints();
+        CCPoint offset = pTarget->getAnchorPointInPoints();
 
         //
         // XXX: Camera should be applied in the AnchorPoint
