@@ -189,29 +189,29 @@ local function createTransition(index, t, scene)
 	elseif index == Transition_Table.FadeWhiteTransition then
 		scene = CCTransitionFade:create(t, scene, ccc3(255, 255, 255))
 	elseif index == Transition_Table.FlipXLeftOver then
-		scene = CCTransitionFlipX:create(t, scene, kOrientationLeftOver)
+		scene = CCTransitionFlipX:create(t, scene, kCCTransitionOrientationLeftOver)
 	elseif index == Transition_Table.FlipXRightOver then
-		scene = CCTransitionFlipX:create(t, scene, kOrientationRightOver)
+		scene = CCTransitionFlipX:create(t, scene, kCCTransitionOrientationRightOver)
     elseif index == Transition_Table.FlipYUpOver then
-		scene = CCTransitionFlipY:create(t, scene, kOrientationUpOver)
+		scene = CCTransitionFlipY:create(t, scene, kCCTransitionOrientationUpOver)
     elseif index == Transition_Table.FlipYDownOver then
-		scene = CCTransitionFlipY:create(t, scene, kOrientationDownOver)
+		scene = CCTransitionFlipY:create(t, scene, kCCTransitionOrientationDownOver)
     elseif index == Transition_Table.FlipAngularLeftOver then
-		scene = CCTransitionFlipAngular:create(t, scene, kOrientationLeftOver)
+		scene = CCTransitionFlipAngular:create(t, scene, kCCTransitionOrientationLeftOver)
     elseif index == Transition_Table.FlipAngularRightOver then
-		scene = CCTransitionFlipAngular:create(t, scene, kOrientationRightOver)
+		scene = CCTransitionFlipAngular:create(t, scene, kCCTransitionOrientationRightOver)
     elseif index == Transition_Table.ZoomFlipXLeftOver then
-		scene = CCTransitionZoomFlipX:create(t, scene, kOrientationLeftOver)
+		scene = CCTransitionZoomFlipX:create(t, scene, kCCTransitionOrientationLeftOver)
     elseif index == Transition_Table.ZoomFlipXRightOver then
-		scene = CCTransitionZoomFlipX:create(t, scene, kOrientationRightOver)
+		scene = CCTransitionZoomFlipX:create(t, scene, kCCTransitionOrientationRightOver)
     elseif index == Transition_Table.ZoomFlipYUpOver then
-		scene = CCTransitionZoomFlipY:create(t, scene, kOrientationUpOver)
+		scene = CCTransitionZoomFlipY:create(t, scene, kCCTransitionOrientationUpOver)
     elseif index == Transition_Table.ZoomFlipYDownOver then
-		scene = CCTransitionZoomFlipY:create(t, scene, kOrientationDownOver)
+		scene = CCTransitionZoomFlipY:create(t, scene, kCCTransitionOrientationDownOver)
     elseif index == Transition_Table.ZoomFlipAngularLeftOver then
-		scene = CCTransitionZoomFlipAngular:create(t, scene, kOrientationLeftOver)
+		scene = CCTransitionZoomFlipAngular:create(t, scene, kCCTransitionOrientationLeftOver)
 	elseif index == Transition_Table.ZoomFlipAngularRightOver then
-		scene = CCTransitionZoomFlipAngular:create(t, scene, kOrientationRightOver)
+		scene = CCTransitionZoomFlipAngular:create(t, scene, kCCTransitionOrientationRightOver)
     elseif index == Transition_Table.CCTransitionShrinkGrow then
 		scene = CCTransitionShrinkGrow:create(t, scene)
     elseif index == Transition_Table.CCTransitionRotoZoom then
