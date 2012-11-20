@@ -47,7 +47,9 @@ GUI/CCScrollView/CCTableViewCell.cpp \
 GUI/CCScrollView/CCSorting.cpp \
 GUI/CCEditBox/CCEditBox.cpp \
 GUI/CCEditBox/CCEditBoxImplAndroid.cpp \
-network/HttpClient.cpp
+network/HttpClient.cpp \
+physics_nodes/CCPhysicsDebugNode.cpp \
+physics_nodes/CCPhysicsSprite.cpp 
 
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dx_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_curl_static
