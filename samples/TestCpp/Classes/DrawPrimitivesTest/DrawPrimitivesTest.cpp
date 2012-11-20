@@ -37,9 +37,6 @@ void DrawPrimitivesTest::draw()
     // draw big point in the center
     ccPointSize(64);
     ccDrawColor4B(0,0,255,128);
-    //glEnable(GL_POINT_SPRITE_ARB); //Uncomment this line to make point as 
-    // Enable point size
-    glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
     ccDrawPoint( VisibleRect::center() );
 
     CHECK_GL_ERROR_DEBUG();
@@ -49,9 +46,6 @@ void DrawPrimitivesTest::draw()
     ccPointSize(4);
     ccDrawColor4B(0,255,255,255);
     ccDrawPoints( points, 4);
-    // Disable point size
-    glDisable(GL_VERTEX_PROGRAM_POINT_SIZE);  
-    //glDisable(GL_POINT_SPRITE_ARB);  
 
     CHECK_GL_ERROR_DEBUG();
 
