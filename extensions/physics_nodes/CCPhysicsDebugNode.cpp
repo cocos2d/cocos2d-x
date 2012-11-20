@@ -110,7 +110,7 @@ static void DrawShape(cpShape *shape, CCDrawNode *renderer)
         }
             break;
 		default:
-			cpAssertHard(FALSE, "Bad assertion in DrawShape()");
+			cpAssertHard(false, "Bad assertion in DrawShape()");
 	}
 }
 
