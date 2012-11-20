@@ -1,18 +1,21 @@
 //
 // cocos2d
 //
-#ifndef __CHIPMUNKACCELTOUCHTEST_H__
-#define __CHIPMUNKACCELTOUCHTEST_H__
+#ifndef __CHIPMUNKTEST_H__
+#define __CHIPMUNKTEST_H__
 
 #include "cocos2d.h"
 #include "chipmunk.h"
 #include "../testBasic.h"
+#include "cocos-ext.h"
 
-class ChipmunkAccelTouchTestLayer : public CCLayer
+USING_NS_CC_EXT;
+
+class ChipmunkTestLayer : public CCLayer
 {
 public:
-    ChipmunkAccelTouchTestLayer();
-    ~ChipmunkAccelTouchTestLayer();
+    ChipmunkTestLayer();
+    ~ChipmunkTestLayer();
     void onEnter();
     void initPhysics();
     void createResetButton();
@@ -20,25 +23,15 @@ public:
 
     void addNewSpriteAtPosition(CCPoint p);
     void update(float dt);
+    void toggleDebugCallback(CCObject* pSender);
     virtual void ccTouchesEnded(CCSet* touches, CCEvent* event);
     virtual void didAccelerate(CCAcceleration* pAccelerationValue);
 
 private:
     CCTexture2D* m_pSpriteTexture; // weak ref
+    CCPhysicsDebugNode* m_pDebugLayer; // weak ref
     cpSpace* m_pSpace; // strong ref
     cpShape* m_pWalls[4];
-};
-
-class ChipmunkPhysicsSprite : public CCSprite
-{
-public:
-    ChipmunkPhysicsSprite();
-    virtual ~ChipmunkPhysicsSprite();
-    void setPhysicsBody(cpBody* body);
-    virtual bool isDirty(void);
-    virtual CCAffineTransform nodeToParentTransform(void);
-private:
-    cpBody* m_pBody;    // strong ref
 };
 
 class ChipmunkAccelTouchTestScene : public TestScene

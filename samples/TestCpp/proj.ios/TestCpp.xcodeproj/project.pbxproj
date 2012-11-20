@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		152DCF91165B7C63009B8D87 /* CCPhysicsDebugNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 152DCF8D165B7C63009B8D87 /* CCPhysicsDebugNode.cpp */; };
+		152DCF92165B7C63009B8D87 /* CCPhysicsSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 152DCF8F165B7C63009B8D87 /* CCPhysicsSprite.cpp */; };
 		15384F141611A44F0021DC07 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 15384F131611A44F0021DC07 /* fps_images.png */; };
 		15384F541611B3380021DC07 /* CCControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15384F3B1611B3380021DC07 /* CCControl.cpp */; };
 		15384F551611B3380021DC07 /* CCControlButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15384F3D1611B3380021DC07 /* CCControlButton.cpp */; };
@@ -53,7 +55,6 @@
 		15AA9D6315B7EC460033D6C2 /* Bug-899.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15AA9C9B15B7EC460033D6C2 /* Bug-899.cpp */; };
 		15AA9D6415B7EC460033D6C2 /* Bug-914.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15AA9C9D15B7EC460033D6C2 /* Bug-914.cpp */; };
 		15AA9D6515B7EC460033D6C2 /* BugsTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15AA9C9F15B7EC460033D6C2 /* BugsTest.cpp */; };
-		15AA9D6615B7EC460033D6C2 /* ChipmunkAccelTouchTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15AA9CA215B7EC460033D6C2 /* ChipmunkAccelTouchTest.cpp */; };
 		15AA9D6715B7EC460033D6C2 /* ClickAndMoveTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15AA9CA515B7EC460033D6C2 /* ClickAndMoveTest.cpp */; };
 		15AA9D6815B7EC460033D6C2 /* CocosDenshionTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15AA9CA815B7EC460033D6C2 /* CocosDenshionTest.cpp */; };
 		15AA9D6915B7EC460033D6C2 /* controller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15AA9CAA15B7EC460033D6C2 /* controller.cpp */; };
@@ -279,6 +280,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		152DCF8D165B7C63009B8D87 /* CCPhysicsDebugNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPhysicsDebugNode.cpp; sourceTree = "<group>"; };
+		152DCF8E165B7C63009B8D87 /* CCPhysicsDebugNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsDebugNode.h; sourceTree = "<group>"; };
+		152DCF8F165B7C63009B8D87 /* CCPhysicsSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPhysicsSprite.cpp; sourceTree = "<group>"; };
+		152DCF90165B7C63009B8D87 /* CCPhysicsSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsSprite.h; sourceTree = "<group>"; };
 		15384F131611A44F0021DC07 /* fps_images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fps_images.png; sourceTree = "<group>"; };
 		15384F3B1611B3380021DC07 /* CCControl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCControl.cpp; sourceTree = "<group>"; };
 		15384F3C1611B3380021DC07 /* CCControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCControl.h; sourceTree = "<group>"; };
@@ -416,8 +421,6 @@
 		15AA9C9E15B7EC460033D6C2 /* Bug-914.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bug-914.h"; sourceTree = "<group>"; };
 		15AA9C9F15B7EC460033D6C2 /* BugsTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BugsTest.cpp; sourceTree = "<group>"; };
 		15AA9CA015B7EC460033D6C2 /* BugsTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BugsTest.h; sourceTree = "<group>"; };
-		15AA9CA215B7EC460033D6C2 /* ChipmunkAccelTouchTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ChipmunkAccelTouchTest.cpp; sourceTree = "<group>"; };
-		15AA9CA315B7EC460033D6C2 /* ChipmunkAccelTouchTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChipmunkAccelTouchTest.h; sourceTree = "<group>"; };
 		15AA9CA515B7EC460033D6C2 /* ClickAndMoveTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ClickAndMoveTest.cpp; sourceTree = "<group>"; };
 		15AA9CA615B7EC460033D6C2 /* ClickAndMoveTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClickAndMoveTest.h; sourceTree = "<group>"; };
 		15AA9CA815B7EC460033D6C2 /* CocosDenshionTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CocosDenshionTest.cpp; sourceTree = "<group>"; };
@@ -854,6 +857,17 @@
 			path = Classes;
 			sourceTree = "<group>";
 		};
+		152DCF8C165B7C63009B8D87 /* physics_nodes */ = {
+			isa = PBXGroup;
+			children = (
+				152DCF8D165B7C63009B8D87 /* CCPhysicsDebugNode.cpp */,
+				152DCF8E165B7C63009B8D87 /* CCPhysicsDebugNode.h */,
+				152DCF8F165B7C63009B8D87 /* CCPhysicsSprite.cpp */,
+				152DCF90165B7C63009B8D87 /* CCPhysicsSprite.h */,
+			);
+			path = physics_nodes;
+			sourceTree = "<group>";
+		};
 		15384F3A1611B3380021DC07 /* CCControlExtension */ = {
 			isa = PBXGroup;
 			children = (
@@ -946,7 +960,6 @@
 				15AA9C5015B7EC450033D6C2 /* Box2DTest */,
 				15AA9C5315B7EC450033D6C2 /* Box2DTestBed */,
 				15AA9C8915B7EC460033D6C2 /* BugsTest */,
-				15AA9CA115B7EC460033D6C2 /* ChipmunkAccelTouchTest */,
 				15AA9CA415B7EC460033D6C2 /* ClickAndMoveTest */,
 				15AA9CA715B7EC460033D6C2 /* CocosDenshionTest */,
 				15AA9CAC15B7EC460033D6C2 /* CurlTest */,
@@ -1142,15 +1155,6 @@
 				15AA9C9615B7EC460033D6C2 /* QuestionContainerSprite.h */,
 			);
 			path = "Bug-458";
-			sourceTree = "<group>";
-		};
-		15AA9CA115B7EC460033D6C2 /* ChipmunkAccelTouchTest */ = {
-			isa = PBXGroup;
-			children = (
-				15AA9CA215B7EC460033D6C2 /* ChipmunkAccelTouchTest.cpp */,
-				15AA9CA315B7EC460033D6C2 /* ChipmunkAccelTouchTest.h */,
-			);
-			path = ChipmunkAccelTouchTest;
 			sourceTree = "<group>";
 		};
 		15AA9CA415B7EC460033D6C2 /* ClickAndMoveTest */ = {
@@ -1933,6 +1937,7 @@
 		15AA9ED615B7EDCB0033D6C2 /* extensions */ = {
 			isa = PBXGroup;
 			children = (
+				152DCF8C165B7C63009B8D87 /* physics_nodes */,
 				D49E9D6615CFAD7300B5A0D6 /* network */,
 				F28379F015B95F8000A5707B /* cocos-ext.h */,
 				F28379F115B95F8000A5707B /* ExtensionMacros.h */,
@@ -2293,7 +2298,6 @@
 				15AA9D6315B7EC460033D6C2 /* Bug-899.cpp in Sources */,
 				15AA9D6415B7EC460033D6C2 /* Bug-914.cpp in Sources */,
 				15AA9D6515B7EC460033D6C2 /* BugsTest.cpp in Sources */,
-				15AA9D6615B7EC460033D6C2 /* ChipmunkAccelTouchTest.cpp in Sources */,
 				15AA9D6715B7EC460033D6C2 /* ClickAndMoveTest.cpp in Sources */,
 				15AA9D6815B7EC460033D6C2 /* CocosDenshionTest.cpp in Sources */,
 				15AA9D6915B7EC460033D6C2 /* controller.cpp in Sources */,
@@ -2481,6 +2485,8 @@
 				15384F661611B38A0021DC07 /* CCControlPotentiometerTest.cpp in Sources */,
 				15384F671611B38A0021DC07 /* CCControlStepperTest.cpp in Sources */,
 				15A048C41637845600F7CC0A /* VisibleRect.cpp in Sources */,
+				152DCF91165B7C63009B8D87 /* CCPhysicsDebugNode.cpp in Sources */,
+				152DCF92165B7C63009B8D87 /* CCPhysicsSprite.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2511,6 +2517,7 @@
 					USE_FILE32API,
 					TARGET_OS_IPHONE,
 					"COCOS2D_DEBUG=1",
+					CC_ENABLE_CHIPMUNK_INTEGRATION,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_VERSION = "";
@@ -2519,7 +2526,7 @@
 					"\"$(SRCROOT)/../../../external/chipmunk/include/constraints\"",
 					"\"$(SRCROOT)/../../../external/chipmunk/include/chipmunk\"",
 					"\"$(SRCROOT)/../../../cocos2dx/kazmath/include\"",
-					"\"$(SRCROOT)/../../../external\"",
+					"\"$(SRCROOT)/../../../external\"/**",
 					"\"$(SRCROOT)/../../../cocos2dx\"",
 					"\"$(SRCROOT)/../../../cocos2dx/include\"",
 					"\"$(SRCROOT)/../../../cocos2dx/platform/third_party/ios\"",
@@ -2554,6 +2561,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					USE_FILE32API,
 					TARGET_OS_IPHONE,
+					CC_ENABLE_CHIPMUNK_INTEGRATION,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_VERSION = "";
@@ -2562,7 +2570,7 @@
 					"\"$(SRCROOT)/../../../external/chipmunk/include/constraints\"",
 					"\"$(SRCROOT)/../../../external/chipmunk/include/chipmunk\"",
 					"\"$(SRCROOT)/../../../cocos2dx/kazmath/include\"",
-					"\"$(SRCROOT)/../../../external\"",
+					"\"$(SRCROOT)/../../../external\"/**",
 					"\"$(SRCROOT)/../../../cocos2dx\"",
 					"\"$(SRCROOT)/../../../cocos2dx/include\"",
 					"\"$(SRCROOT)/../../../cocos2dx/platform/third_party/ios\"",
