@@ -11,10 +11,6 @@
 		152DCD8F165614AB009B8D87 /* CCDrawingPrimitives.h in Headers */ = {isa = PBXBuildFile; fileRef = 152DCD8B165614AB009B8D87 /* CCDrawingPrimitives.h */; };
 		152DCD90165614AB009B8D87 /* CCDrawNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 152DCD8C165614AB009B8D87 /* CCDrawNode.cpp */; };
 		152DCD91165614AB009B8D87 /* CCDrawNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 152DCD8D165614AB009B8D87 /* CCDrawNode.h */; };
-		152DCD97165614C2009B8D87 /* CCPhysicsDebugNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 152DCD93165614C2009B8D87 /* CCPhysicsDebugNode.cpp */; };
-		152DCD98165614C2009B8D87 /* CCPhysicsDebugNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 152DCD94165614C2009B8D87 /* CCPhysicsDebugNode.h */; };
-		152DCD99165614C2009B8D87 /* CCPhysicsSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 152DCD95165614C2009B8D87 /* CCPhysicsSprite.cpp */; };
-		152DCD9A165614C2009B8D87 /* CCPhysicsSprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 152DCD96165614C2009B8D87 /* CCPhysicsSprite.h */; };
 		154269DC15B5653000712A7F /* CCNotificationCenter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 154269DA15B5653000712A7F /* CCNotificationCenter.cpp */; };
 		154269DD15B5653000712A7F /* CCNotificationCenter.h in Headers */ = {isa = PBXBuildFile; fileRef = 154269DB15B5653000712A7F /* CCNotificationCenter.h */; };
 		1551A343158F2AB200E66CFE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1551A342158F2AB200E66CFE /* Foundation.framework */; };
@@ -290,10 +286,6 @@
 		152DCD8B165614AB009B8D87 /* CCDrawingPrimitives.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDrawingPrimitives.h; sourceTree = "<group>"; };
 		152DCD8C165614AB009B8D87 /* CCDrawNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCDrawNode.cpp; sourceTree = "<group>"; };
 		152DCD8D165614AB009B8D87 /* CCDrawNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDrawNode.h; sourceTree = "<group>"; };
-		152DCD93165614C2009B8D87 /* CCPhysicsDebugNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPhysicsDebugNode.cpp; sourceTree = "<group>"; };
-		152DCD94165614C2009B8D87 /* CCPhysicsDebugNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsDebugNode.h; sourceTree = "<group>"; };
-		152DCD95165614C2009B8D87 /* CCPhysicsSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPhysicsSprite.cpp; sourceTree = "<group>"; };
-		152DCD96165614C2009B8D87 /* CCPhysicsSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsSprite.h; sourceTree = "<group>"; };
 		154269DA15B5653000712A7F /* CCNotificationCenter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCNotificationCenter.cpp; sourceTree = "<group>"; };
 		154269DB15B5653000712A7F /* CCNotificationCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNotificationCenter.h; sourceTree = "<group>"; };
 		1551A33F158F2AB200E66CFE /* libcocos2dx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcocos2dx.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -590,17 +582,6 @@
 			path = draw_nodes;
 			sourceTree = "<group>";
 		};
-		152DCD92165614C2009B8D87 /* physics_nodes */ = {
-			isa = PBXGroup;
-			children = (
-				152DCD93165614C2009B8D87 /* CCPhysicsDebugNode.cpp */,
-				152DCD94165614C2009B8D87 /* CCPhysicsDebugNode.h */,
-				152DCD95165614C2009B8D87 /* CCPhysicsSprite.cpp */,
-				152DCD96165614C2009B8D87 /* CCPhysicsSprite.h */,
-			);
-			path = physics_nodes;
-			sourceTree = "<group>";
-		};
 		1551A334158F2AB200E66CFE = {
 			isa = PBXGroup;
 			children = (
@@ -652,7 +633,6 @@
 				1551A42A158F2ADE00E66CFE /* menu_nodes */,
 				1551A42F158F2ADE00E66CFE /* misc_nodes */,
 				1551A436158F2ADE00E66CFE /* particle_nodes */,
-				152DCD92165614C2009B8D87 /* physics_nodes */,
 				1551A43F158F2ADE00E66CFE /* platform */,
 				1551A5C0158F2ADE00E66CFE /* script_support */,
 				1551A5C3158F2ADE00E66CFE /* shaders */,
@@ -1305,8 +1285,6 @@
 				F4D7A74715F269D10081CE26 /* ccTypeInfo.h in Headers */,
 				152DCD8F165614AB009B8D87 /* CCDrawingPrimitives.h in Headers */,
 				152DCD91165614AB009B8D87 /* CCDrawNode.h in Headers */,
-				152DCD98165614C2009B8D87 /* CCPhysicsDebugNode.h in Headers */,
-				152DCD9A165614C2009B8D87 /* CCPhysicsSprite.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1479,8 +1457,6 @@
 				15842A2615CF6C42006B033F /* CCTouch.cpp in Sources */,
 				152DCD8E165614AB009B8D87 /* CCDrawingPrimitives.cpp in Sources */,
 				152DCD90165614AB009B8D87 /* CCDrawNode.cpp in Sources */,
-				152DCD97165614C2009B8D87 /* CCPhysicsDebugNode.cpp in Sources */,
-				152DCD99165614C2009B8D87 /* CCPhysicsSprite.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
