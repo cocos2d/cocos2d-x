@@ -243,7 +243,7 @@ static void cc_utf8_trim_ws(std::vector<unsigned short>* str)
  *
  * Return value: the length of the string in characters
  **/
-static long
+long
 cc_utf8_strlen (const char * p, int max)
 {
     long len = 0;
