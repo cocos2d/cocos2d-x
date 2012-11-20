@@ -210,7 +210,7 @@ void CCParticleSystemQuad::setTextureWithRect(CCTexture2D *texture, const CCRect
 }
 void CCParticleSystemQuad::setTexture(CCTexture2D* texture)
 {
-    const CCSize& s = texture->getContentSize();
+    CCSize s = texture->getContentSize();
     this->setTextureWithRect(texture, CCRectMake(0, 0, s.width, s.height));
 }
 void CCParticleSystemQuad::setDisplayFrame(CCSpriteFrame *spriteFrame)

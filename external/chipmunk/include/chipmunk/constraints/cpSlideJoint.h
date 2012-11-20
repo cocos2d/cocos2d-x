@@ -34,7 +34,7 @@ typedef struct cpSlideJoint {
 	cpVect n;
 	cpFloat nMass;
 	
-	cpFloat jnAcc, jnMax;
+	cpFloat jnAcc;
 	cpFloat bias;
 } cpSlideJoint;
 
@@ -45,9 +45,9 @@ cpSlideJoint* cpSlideJointInit(cpSlideJoint *joint, cpBody *a, cpBody *b, cpVect
 /// Allocate and initialize a slide joint.
 cpConstraint* cpSlideJointNew(cpBody *a, cpBody *b, cpVect anchr1, cpVect anchr2, cpFloat min, cpFloat max);
 
-CP_DefineConstraintProperty(cpSlideJoint, cpVect, anchr1, Anchr1);
-CP_DefineConstraintProperty(cpSlideJoint, cpVect, anchr2, Anchr2);
-CP_DefineConstraintProperty(cpSlideJoint, cpFloat, min, Min);
-CP_DefineConstraintProperty(cpSlideJoint, cpFloat, max, Max);
+CP_DefineConstraintProperty(cpSlideJoint, cpVect, anchr1, Anchr1)
+CP_DefineConstraintProperty(cpSlideJoint, cpVect, anchr2, Anchr2)
+CP_DefineConstraintProperty(cpSlideJoint, cpFloat, min, Min)
+CP_DefineConstraintProperty(cpSlideJoint, cpFloat, max, Max)
 
 /// @}

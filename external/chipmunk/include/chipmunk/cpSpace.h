@@ -127,18 +127,18 @@ static inline void cpSpaceSet##name(cpSpace *space, type value){space->member = 
 CP_DefineSpaceStructGetter(type, member, name) \
 CP_DefineSpaceStructSetter(type, member, name)
 
-CP_DefineSpaceStructProperty(int, iterations, Iterations);
-CP_DefineSpaceStructProperty(cpVect, gravity, Gravity);
-CP_DefineSpaceStructProperty(cpFloat, damping, Damping);
-CP_DefineSpaceStructProperty(cpFloat, idleSpeedThreshold, IdleSpeedThreshold);
-CP_DefineSpaceStructProperty(cpFloat, sleepTimeThreshold, SleepTimeThreshold);
-CP_DefineSpaceStructProperty(cpFloat, collisionSlop, CollisionSlop);
-CP_DefineSpaceStructProperty(cpFloat, collisionBias, CollisionBias);
-CP_DefineSpaceStructProperty(cpTimestamp, collisionPersistence, CollisionPersistence);
-CP_DefineSpaceStructProperty(cpBool, enableContactGraph, EnableContactGraph);
-CP_DefineSpaceStructProperty(cpDataPointer, data, UserData);
-CP_DefineSpaceStructGetter(cpBody*, staticBody, StaticBody);
-CP_DefineSpaceStructGetter(cpFloat, CP_PRIVATE(curr_dt), CurrentTimeStep);
+CP_DefineSpaceStructProperty(int, iterations, Iterations)
+CP_DefineSpaceStructProperty(cpVect, gravity, Gravity)
+CP_DefineSpaceStructProperty(cpFloat, damping, Damping)
+CP_DefineSpaceStructProperty(cpFloat, idleSpeedThreshold, IdleSpeedThreshold)
+CP_DefineSpaceStructProperty(cpFloat, sleepTimeThreshold, SleepTimeThreshold)
+CP_DefineSpaceStructProperty(cpFloat, collisionSlop, CollisionSlop)
+CP_DefineSpaceStructProperty(cpFloat, collisionBias, CollisionBias)
+CP_DefineSpaceStructProperty(cpTimestamp, collisionPersistence, CollisionPersistence)
+CP_DefineSpaceStructProperty(cpBool, enableContactGraph, EnableContactGraph)
+CP_DefineSpaceStructProperty(cpDataPointer, data, UserData)
+CP_DefineSpaceStructGetter(cpBody*, staticBody, StaticBody)
+CP_DefineSpaceStructGetter(cpFloat, CP_PRIVATE(curr_dt), CurrentTimeStep)
 
 /// returns true from inside a callback and objects cannot be added/removed.
 static inline cpBool
@@ -202,10 +202,12 @@ cpBool cpSpaceContainsBody(cpSpace *space, cpBody *body);
 cpBool cpSpaceContainsConstraint(cpSpace *space, cpConstraint *constraint);
 
 /// Post Step callback function type.
-typedef void (*cpPostStepFunc)(cpSpace *space, void *obj, void *data);
+typedef void (*cpPostStepFunc)(cpSpace *space, void *key, void *data);
 /// Schedule a post-step callback to be called when cpSpaceStep() finishes.
 /// You can only register one callback per unique value for @c key.
-void cpSpaceAddPostStepCallback(cpSpace *space, cpPostStepFunc func, void *key, void *data);
+/// Returns true only if @c key has never been scheduled before.
+/// It's possible to pass @c NULL for @c func if you only want to mark @c key as being used.
+cpBool cpSpaceAddPostStepCallback(cpSpace *space, cpPostStepFunc func, void *key, void *data);
 
 /// Point query callback function type.
 typedef void (*cpSpacePointQueryFunc)(cpShape *shape, void *data);

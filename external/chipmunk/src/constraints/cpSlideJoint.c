@@ -51,9 +51,6 @@ preStep(cpSlideJoint *joint, cpFloat dt)
 	// calculate bias velocity
 	cpFloat maxBias = joint->constraint.maxBias;
 	joint->bias = cpfclamp(-bias_coef(joint->constraint.errorBias, dt)*pdist/dt, -maxBias, maxBias);
-	
-	// compute max impulse
-	joint->jnMax = J_MAX(joint, dt);
 }
 
 static void
@@ -67,7 +64,7 @@ applyCachedImpulse(cpSlideJoint *joint, cpFloat dt_coef)
 }
 
 static void
-applyImpulse(cpSlideJoint *joint)
+applyImpulse(cpSlideJoint *joint, cpFloat dt)
 {
 	if(cpveql(joint->n, cpvzero)) return;  // early exit
 
@@ -85,7 +82,7 @@ applyImpulse(cpSlideJoint *joint)
 	// compute normal impulse
 	cpFloat jn = (joint->bias - vrn)*joint->nMass;
 	cpFloat jnOld = joint->jnAcc;
-	joint->jnAcc = cpfclamp(jnOld + jn, -joint->jnMax, 0.0f);
+	joint->jnAcc = cpfclamp(jnOld + jn, -joint->constraint.maxForce*dt, 0.0f);
 	jn = joint->jnAcc - jnOld;
 	
 	// apply impulse
