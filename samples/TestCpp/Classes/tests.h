@@ -43,11 +43,11 @@
 #include "ShaderTest/ShaderTest.h"
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
-    #include "ChipmunkAccelTouchTest/ChipmunkAccelTouchTest.h"
+    #include "ChipmunkTest/ChipmunkTest.h"
 #else
 #ifdef MARMALADEUSECHIPMUNK
 #if    (MARMALADEUSECHIPMUNK == 1)
-    #include "ChipmunkAccelTouchTest/ChipmunkAccelTouchTest.h"
+    #include "ChipmunkTest/ChipmunkTest.h"
 #endif
 #endif
 #endif // (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)

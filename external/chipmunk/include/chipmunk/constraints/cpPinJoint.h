@@ -34,7 +34,7 @@ typedef struct cpPinJoint {
 	cpVect n;
 	cpFloat nMass;
 	
-	cpFloat jnAcc, jnMax;
+	cpFloat jnAcc;
 	cpFloat bias;
 } cpPinJoint;
 
@@ -45,8 +45,8 @@ cpPinJoint* cpPinJointInit(cpPinJoint *joint, cpBody *a, cpBody *b, cpVect anchr
 /// Allocate and initialize a pin joint.
 cpConstraint* cpPinJointNew(cpBody *a, cpBody *b, cpVect anchr1, cpVect anchr2);
 
-CP_DefineConstraintProperty(cpPinJoint, cpVect, anchr1, Anchr1);
-CP_DefineConstraintProperty(cpPinJoint, cpVect, anchr2, Anchr2);
-CP_DefineConstraintProperty(cpPinJoint, cpFloat, dist, Dist);
+CP_DefineConstraintProperty(cpPinJoint, cpVect, anchr1, Anchr1)
+CP_DefineConstraintProperty(cpPinJoint, cpVect, anchr2, Anchr2)
+CP_DefineConstraintProperty(cpPinJoint, cpFloat, dist, Dist)
 
 ///@}

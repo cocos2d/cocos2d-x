@@ -94,9 +94,6 @@
     <Filter Include="draw_nodes">
       <UniqueIdentifier>{1179d205-d065-49f0-8457-bc4c3f1d0cb3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="physics_nodes">
-      <UniqueIdentifier>{58a223b7-e569-4463-bffa-a680c7d07ca9}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\base_nodes\CCAtlasNode.cpp">
@@ -424,12 +421,6 @@
     </ClCompile>
     <ClCompile Include="..\draw_nodes\CCDrawNode.cpp">
       <Filter>draw_nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\physics_nodes\CCPhysicsDebugNode.cpp">
-      <Filter>physics_nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\physics_nodes\CCPhysicsSprite.cpp">
-      <Filter>physics_nodes</Filter>
     </ClCompile>
     <ClCompile Include="..\misc_nodes\CCClippingNode.cpp">
       <Filter>misc_nodes</Filter>
@@ -832,12 +823,6 @@
     </ClInclude>
     <ClInclude Include="..\draw_nodes\CCDrawNode.h">
       <Filter>draw_nodes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\physics_nodes\CCPhysicsDebugNode.h">
-      <Filter>physics_nodes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\physics_nodes\CCPhysicsSprite.h">
-      <Filter>physics_nodes</Filter>
     </ClInclude>
     <ClInclude Include="..\misc_nodes\CCClippingNode.h">
       <Filter>misc_nodes</Filter>

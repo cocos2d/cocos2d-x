@@ -28,7 +28,7 @@ Classes/BugsTest/Bug-914.cpp \
 Classes/BugsTest/BugsTest.cpp \
 Classes/BugsTest/Bug-458/Bug-458.cpp \
 Classes/BugsTest/Bug-458/QuestionContainerSprite.cpp \
-Classes/ChipmunkAccelTouchTest/ChipmunkAccelTouchTest.cpp \
+Classes/ChipmunkTest/ChipmunkTest.cpp \
 Classes/ClickAndMoveTest/ClickAndMoveTest.cpp \
 Classes/CocosDenshionTest/CocosDenshionTest.cpp \
 Classes/CurlTest/CurlTest.cpp \

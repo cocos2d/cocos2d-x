@@ -34,9 +34,6 @@ preStep(cpGearJoint *joint, cpFloat dt)
 	// calculate bias velocity
 	cpFloat maxBias = joint->constraint.maxBias;
 	joint->bias = cpfclamp(-bias_coef(joint->constraint.errorBias, dt)*(b->a*joint->ratio - a->a - joint->phase)/dt, -maxBias, maxBias);
-	
-	// compute max impulse
-	joint->jMax = J_MAX(joint, dt);
 }
 
 static void
@@ -51,7 +48,7 @@ applyCachedImpulse(cpGearJoint *joint, cpFloat dt_coef)
 }
 
 static void
-applyImpulse(cpGearJoint *joint)
+applyImpulse(cpGearJoint *joint, cpFloat dt)
 {
 	cpBody *a = joint->constraint.a;
 	cpBody *b = joint->constraint.b;
@@ -59,10 +56,12 @@ applyImpulse(cpGearJoint *joint)
 	// compute relative rotational velocity
 	cpFloat wr = b->w*joint->ratio - a->w;
 	
+	cpFloat jMax = joint->constraint.maxForce*dt;
+	
 	// compute normal impulse	
 	cpFloat j = (joint->bias - wr)*joint->iSum;
 	cpFloat jOld = joint->jAcc;
-	joint->jAcc = cpfclamp(jOld + j, -joint->jMax, joint->jMax);
+	joint->jAcc = cpfclamp(jOld + j, -jMax, jMax);
 	j = joint->jAcc - jOld;
 	
 	// apply impulse

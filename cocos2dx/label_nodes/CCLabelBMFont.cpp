@@ -1084,10 +1084,12 @@ void CCLabelBMFont::setColor(const ccColor3B& var)
         }
     }
 }
-const ccColor3B& CCLabelBMFont::getColor()
+
+ccColor3B CCLabelBMFont::getColor()
 {
     return m_tColor;
 }
+
 void CCLabelBMFont::setOpacity(GLubyte var)
 {
     m_cOpacity = var;
@@ -1462,7 +1464,7 @@ const char* CCLabelBMFont::getFntFile()
 void CCLabelBMFont::draw()
 {
     CCSpriteBatchNode::draw();
-    const CCSize& s = this->getContentSize();
+    CCSize s = this->getContentSize();
     CCPoint vertices[4]={
         ccp(0,0),ccp(s.width,0),
         ccp(s.width,s.height),ccp(0,s.height),

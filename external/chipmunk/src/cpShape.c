@@ -103,7 +103,7 @@ cpShapeUpdate(cpShape *shape, cpVect pos, cpVect rot)
 
 cpBool
 cpShapePointQuery(cpShape *shape, cpVect p){
-	cpNearestPointQueryInfo info = {};
+	cpNearestPointQueryInfo info = {NULL, cpvzero, INFINITY};
 	cpShapeNearestPointQuery(shape, p, &info);
 	
 	return (info.d < 0.0f);

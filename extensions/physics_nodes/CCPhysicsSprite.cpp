@@ -26,10 +26,10 @@
 #if CC_ENABLE_CHIPMUNK_INTEGRATION
 #include "chipmunk.h"
 #elif CC_ENABLE_BOX2D_INTEGRATION
-#include "Box2D.h"
+#include "Box2D/Box2D.h"
 #endif
 
-NS_CC_BEGIN
+NS_CC_EXT_BEGIN
 
 CCPhysicsSprite::CCPhysicsSprite()
 : m_bIgnoreBodyRotation(false)
@@ -37,7 +37,7 @@ CCPhysicsSprite::CCPhysicsSprite()
 , m_pBody(NULL)
 #elif CC_ENABLE_BOX2D_INTEGRATION
 , m_pBody(NULL)
-, m_fPTMRation(0.0f)
+, m_fPTMRatio(0.0f)
 #endif
 {}
 
@@ -56,6 +56,96 @@ CCPhysicsSprite* CCPhysicsSprite::create()
     return pRet;
 }
 
+CCPhysicsSprite* CCPhysicsSprite::createWithTexture(CCTexture2D *pTexture)
+{
+    CCPhysicsSprite* pRet = new CCPhysicsSprite();
+    if (pRet && pRet->initWithTexture(pTexture))
+    {
+        pRet->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(pRet);
+    }
+
+    return pRet;
+}
+
+CCPhysicsSprite* CCPhysicsSprite::createWithTexture(CCTexture2D *pTexture, const CCRect& rect)
+{
+    CCPhysicsSprite* pRet = new CCPhysicsSprite();
+    if (pRet && pRet->initWithTexture(pTexture, rect))
+    {
+        pRet->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(pRet);
+    }
+
+    return pRet;
+}
+
+CCPhysicsSprite* CCPhysicsSprite::createWithSpriteFrame(CCSpriteFrame *pSpriteFrame)
+{
+    CCPhysicsSprite* pRet = new CCPhysicsSprite();
+    if (pRet && pRet->initWithSpriteFrame(pSpriteFrame))
+    {
+        pRet->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(pRet);
+    }
+
+    return pRet;
+}
+
+CCPhysicsSprite* CCPhysicsSprite::createWithSpriteFrameName(const char *pszSpriteFrameName)
+{
+    CCPhysicsSprite* pRet = new CCPhysicsSprite();
+    if (pRet && pRet->initWithSpriteFrameName(pszSpriteFrameName))
+    {
+        pRet->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(pRet);
+    }
+
+    return pRet;
+}
+
+CCPhysicsSprite* CCPhysicsSprite::create(const char *pszFileName)
+{
+    CCPhysicsSprite* pRet = new CCPhysicsSprite();
+    if (pRet && pRet->initWithFile(pszFileName))
+    {
+        pRet->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(pRet);
+    }
+
+    return pRet;
+}
+
+CCPhysicsSprite* CCPhysicsSprite::create(const char *pszFileName, const CCRect& rect)
+{
+    CCPhysicsSprite* pRet = new CCPhysicsSprite();
+    if (pRet && pRet->initWithFile(pszFileName, rect))
+    {
+        pRet->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(pRet);
+    }
+
+    return pRet;
+}
+
 // this method will only get called if the sprite is batched.
 // return YES if the physic's values (angles, position ) changed.
 // If you return NO, then nodeToParentTransform won't be called.
@@ -66,23 +156,35 @@ bool CCPhysicsSprite::isDirty()
 
 #if CC_ENABLE_CHIPMUNK_INTEGRATION
 
+cpBody* CCPhysicsSprite::getBody() const
+{
+    return m_pBody;
+}
+
+void CCPhysicsSprite::setBody(cpBody *pBody)
+{
+    m_pBody = pBody;
+}
+
 // Override the setters and getters to always reflect the body's properties.
-const CCPoint& ChipmunkSprite::getPosition()
+CCPoint CCPhysicsSprite::getPosition()
 {
-    return cpBodyGetPos(m_pBody);
+    cpVect cpPos = cpBodyGetPos(m_pBody);
+    return ccp(cpPos.x, cpPos.y);
 }
 
-void ChipmunkSprite::setPosition(const CCPoint &pos)
+void CCPhysicsSprite::setPosition(const CCPoint &pos)
 {
-    cpBodySetPos(m_pBody, position);
+    cpVect cpPos = cpv(pos.x, pos.y);
+    cpBodySetPos(m_pBody, cpPos);
 }
 
-float ChipmunkSprite::getRotation()
+float CCPhysicsSprite::getRotation()
 {
     return (m_bIgnoreBodyRotation ? CCSprite::getRotation() : -CC_RADIANS_TO_DEGREES(cpBodyGetAngle(m_pBody)));
 }
 
-void ChipmunkSprite::setRotation(float fRotation)
+void CCPhysicsSprite::setRotation(float fRotation)
 {
     if (m_bIgnoreBodyRotation)
     {
@@ -95,67 +197,66 @@ void ChipmunkSprite::setRotation(float fRotation)
 }
 
 // returns the transform matrix according the Chipmunk Body values
-CCAffineTransform ChipmunkSprite::nodeToParentTransform()
+CCAffineTransform CCPhysicsSprite::nodeToParentTransform()
 {
     cpVect rot = (m_bIgnoreBodyRotation ? cpvforangle(-CC_DEGREES_TO_RADIANS(m_fRotationX)) : m_pBody->rot);
-    float x = m_pBody->p.x + rot.x*(-m_tAnchorPointInPoints.x) - rot.y*(-m_tAnchorPointInPoints.y);
-    float y = m_pBody->p.y + rot.y*(-m_tAnchorPointInPoints.x) + rot.y*(-m_tAnchorPointInPoints.y);
+    float x = m_pBody->p.x + rot.x*(-m_obAnchorPointInPoints.x) - rot.y*(-m_obAnchorPointInPoints.y);
+    float y = m_pBody->p.y + rot.y*(-m_obAnchorPointInPoints.x) + rot.x*(-m_obAnchorPointInPoints.y);
     
     if (m_bIgnoreAnchorPointForPosition)
     {
-        x += m_tAnchorPointInPoints.x;
-        y += m_tAnchorPointInPoints.y;
+        x += m_obAnchorPointInPoints.x;
+        y += m_obAnchorPointInPoints.y;
     }
     
-    return (m_tTransform = CCAffineTransformMake(rot.x, rot.y, -rot.y, rot.x, x, y));
+    return (m_sTransform = CCAffineTransformMake(rot.x, rot.y, -rot.y, rot.x, x, y));
 }
 
 #elif CC_ENABLE_BOX2D_INTEGRATION
 
-b2Body* ChipmunkSprite::getBody() const
+b2Body* CCPhysicsSprite::getBody() const
 {
     return m_pBody;
 }
 
-void ChipmunkSprite::setBody(b2Body *pBody)
+void CCPhysicsSprite::setBody(b2Body *pBody)
 {
     m_pBody = pBody;
 }
 
-float ChipmunkSprite::getPTMRatio() const
+float CCPhysicsSprite::getPTMRatio() const
 {
     return m_fPTMRatio;
 }
 
-void ChipmunkSprite::setPTMRatio(float fRatio)
+void CCPhysicsSprite::setPTMRatio(float fRatio)
 {
     m_fPTMRatio = fRatio;
 }
 
 // Override the setters and getters to always reflect the body's properties.
-const CCpoint& ChipmunkSprite::getPosition()
+CCPoint CCPhysicsSprite::getPosition()
 {
     b2Vec2 pos = m_pBody->GetPosition();
     
     float x = pos.x * m_fPTMRatio;
     float y = pos.y * m_fPTMRatio;
-    
     return ccp(x,y);
 }
 
-void ChipmunkSprite::setPosition(const CCPoint &pos)
+void CCPhysicsSprite::setPosition(const CCPoint &pos)
 {
     float angle = m_pBody->GetAngle();
-    m_pBody->SetTransform(b2Vec2(m_tPosition.x / m_fPTMRatio, m_tPosition.y / m_fPTMRatio), angle);
+    m_pBody->SetTransform(b2Vec2(pos.x / m_fPTMRatio, pos.y / m_fPTMRatio), angle);
 }
 
-float ChipmunkSprite::getRotation()
+float CCPhysicsSprite::getRotation()
 {
     return (m_bIgnoreBodyRotation ? CCSprite::getRotation() :
             CC_RADIANS_TO_DEGREES(m_pBody->GetAngle()));
 }
 
-void ChipmunkSprite::setRotation(float fRotation)
+void CCPhysicsSprite::setRotation(float fRotation)
 {
     if (m_bIgnoreBodyRotation)
     {
@@ -170,7 +271,7 @@ void ChipmunkSprite::setRotation(float fRotation)
 }
 
 // returns the transform matrix according the Box2D Body values
-CCAffineTransform ChipmunkSprite::nodeToParentTransform()
+CCAffineTransform CCPhysicsSprite::nodeToParentTransform()
 {
     b2Vec2 pos = m_pBody->GetPosition();
     
@@ -179,8 +280,8 @@ CCAffineTransform ChipmunkSprite::nodeToParentTransform()
     
     if (m_bIgnoreAnchorPointForPosition)
     {
-        x += m_tAnchorPointInPoints.x;
-        y += m_tAnchorPointInPoints.y;
+        x += m_obAnchorPointInPoints.x;
+        y += m_obAnchorPointInPoints.y;
     }
     
     // Make matrix
@@ -188,20 +289,20 @@ CCAffineTransform ChipmunkSprite::nodeToParentTransform()
     float c = cosf(radians);
     float s = sinf(radians);
     
-    if (! m_tAnchorPointInPoints.equals(CCPointZero))
+    if (! m_obAnchorPointInPoints.equals(CCPointZero))
     {
-        x += c*(-m_tAnchorPointInPoints.x) + -s*(-m_tAnchorPointInPoints.y);
-        y += s*(-m_tAnchorPointInPoints.x) + c*(-m_tAnchorPointInPoints.y);
+        x += c*(-m_obAnchorPointInPoints.x) + -s*(-m_obAnchorPointInPoints.y);
+        y += s*(-m_obAnchorPointInPoints.x) + c*(-m_obAnchorPointInPoints.y);
     }
     
     // Rot, Transition Matrix
-    m_tTransform = CCAffineTransformMake(c, s,
+    m_sTransform = CCAffineTransformMake(c, s,
                                          -s, c,
                                          x, y);
     
-    return m_tTransform;
+    return m_sTransform;
 }
 
 #endif
 
-NS_CC_END
+NS_CC_EXT_END

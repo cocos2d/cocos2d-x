@@ -1,61 +1,13 @@
 #include "Box2dTest.h"
 #include "../testResource.h"
+#include "cocos-ext.h"
+USING_NS_CC_EXT;
 
 #define PTM_RATIO 32
 
 enum {
     kTagParentNode = 1,
 };
-
-PhysicsSprite::PhysicsSprite()
-: m_pBody(NULL)
-{
-
-}
-
-void PhysicsSprite::setPhysicsBody(b2Body * body)
-{
-    m_pBody = body;
-}
-
-// this method will only get called if the sprite is batched.
-// return YES if the physics values (angles, position ) changed
-// If you return NO, then nodeToParentTransform won't be called.
-bool PhysicsSprite::isDirty(void)
-{
-    return true;
-}
-
-// returns the transform matrix according the Chipmunk Body values
-CCAffineTransform PhysicsSprite::nodeToParentTransform(void)
-{
-    b2Vec2 pos  = m_pBody->GetPosition();
-
-    float x = pos.x * PTM_RATIO;
-    float y = pos.y * PTM_RATIO;
-
-    if ( isIgnoreAnchorPointForPosition() ) {
-        x += m_obAnchorPointInPoints.x;
-        y += m_obAnchorPointInPoints.y;
-    }
-
-    // Make matrix
-    float radians = m_pBody->GetAngle();
-    float c = cosf(radians);
-    float s = sinf(radians);
-
-    if( ! m_obAnchorPointInPoints.equals(CCPointZero) ){
-        x += c*-m_obAnchorPointInPoints.x + -s*-m_obAnchorPointInPoints.y;
-        y += s*-m_obAnchorPointInPoints.x + c*-m_obAnchorPointInPoints.y;
-    }
-
-    // Rot, Translate Matrix
-    m_sTransform = CCAffineTransformMake( c,  s,
-        -s,    c,
-        x,    y );
-
-    return m_sTransform;
-}
 
 Box2DTestLayer::Box2DTestLayer()
 : m_pSpriteTexture(NULL)
@@ -193,19 +145,6 @@ void Box2DTestLayer::draw()
 void Box2DTestLayer::addNewSpriteAtPosition(CCPoint p)
 {
     CCLOG("Add sprite %0.2f x %02.f",p.x,p.y);
-    CCNode* parent = getChildByTag(kTagParentNode);
-    
-    //We have a 64x64 sprite sheet with 4 different 32x32 images.  The following code is
-    //just randomly picking one of the images
-    int idx = (CCRANDOM_0_1() > .5 ? 0:1);
-    int idy = (CCRANDOM_0_1() > .5 ? 0:1);
-    PhysicsSprite *sprite = new PhysicsSprite();
-    sprite->initWithTexture(m_pSpriteTexture, CCRectMake(32 * idx,32 * idy,32,32));
-    sprite->autorelease();
-
-    parent->addChild(sprite);
-    
-    sprite->setPosition( ccp( p.x, p.y) );
     
     // Define the dynamic body.
     //Set up a 1m squared box in the physics world
@@ -226,7 +165,19 @@ void Box2DTestLayer::addNewSpriteAtPosition(CCPoint p)
     fixtureDef.friction = 0.3f;
     body->CreateFixture(&fixtureDef);
 
-    sprite->setPhysicsBody(body);
+    CCNode *parent = this->getChildByTag(kTagParentNode);
+
+    //We have a 64x64 sprite sheet with 4 different 32x32 images.  The following code is
+    //just randomly picking one of the images
+    int idx = (CCRANDOM_0_1() > .5 ? 0:1);
+    int idy = (CCRANDOM_0_1() > .5 ? 0:1);
+    CCPhysicsSprite *sprite = CCPhysicsSprite::createWithTexture(m_pSpriteTexture,CCRectMake(32 * idx,32 * idy,32,32));
+    parent->addChild(sprite);
+#if CC_ENABLE_BOX2D_INTEGRATION
+    sprite->setBody(body);
+    sprite->setPTMRatio(PTM_RATIO);
+    sprite->setPosition( ccp( p.x, p.y) );
+#endif
 }
 
 

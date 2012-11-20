@@ -80,11 +80,11 @@ static inline ccVertex2F v2fnormalize(const ccVertex2F &p)
 
 static inline ccVertex2F __v2f(const CCPoint &v)
 {
-#ifdef __LP64__
+//#ifdef __LP64__
 	return v2f(v.x, v.y);
-#else
-	return * ((ccVertex2F*) &v);
-#endif
+// #else
+// 	return * ((ccVertex2F*) &v);
+// #endif
 }
 
 static inline ccTex2F __t(const ccVertex2F &v)
@@ -146,9 +146,9 @@ void CCDrawNode::ensureCapacity(unsigned int count)
 
 bool CCDrawNode::init()
 {
-    ccBlendFunc blendFunc = {CC_BLEND_SRC, CC_BLEND_DST};
-    m_sBlendFunc = blendFunc;
-    
+    m_sBlendFunc.src = CC_BLEND_SRC;
+    m_sBlendFunc.dst = CC_BLEND_DST;
+
     setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionLengthTexureColor));
     
     ensureCapacity(512);
@@ -186,32 +186,27 @@ bool CCDrawNode::init()
 
 void CCDrawNode::render()
 {
-    glBindBuffer(GL_ARRAY_BUFFER, m_uVbo);
-    
     if (m_bDirty)
     {
+        glBindBuffer(GL_ARRAY_BUFFER, m_uVbo);
         glBufferData(GL_ARRAY_BUFFER, sizeof(ccV2F_C4B_T2F)*m_uBufferCapacity, m_pBuffer, GL_STREAM_DRAW);
         m_bDirty = false;
     }
-  
 #if CC_TEXTURE_ATLAS_USE_VAO     
     ccGLBindVAO(m_uVao);
 #else
     ccGLEnableVertexAttribs(kCCVertexAttribFlag_PosColorTex);
-    
+    glBindBuffer(GL_ARRAY_BUFFER, m_uVbo);
     // vertex
-    int diff = offsetof(ccV2F_C4B_T2F, vertices);
-    glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, sizeof(ccV2F_C4B_T2F), (GLvoid *)(m_pBuffer+diff));
+    glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, sizeof(ccV2F_C4B_T2F), (GLvoid *)offsetof(ccV2F_C4B_T2F, vertices));
     
     // color
-    diff = offsetof(ccV2F_C4B_T2F, colors);
-    glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_FALSE, sizeof(ccV2F_C4B_T2F), (GLvoid *)(m_pBuffer+diff));
+    glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_FALSE, sizeof(ccV2F_C4B_T2F), (GLvoid *)offsetof(ccV2F_C4B_T2F, colors));
     
     // texcood
-    diff = offsetof(ccV2F_C4B_T2F, texCoords);
-    glVertexAttribPointer(kCCVertexAttrib_Color, 2, GL_FLOAT, GL_FALSE, sizeof(ccV2F_C4B_T2F), (GLvoid *)(m_pBuffer+diff));
+    glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, sizeof(ccV2F_C4B_T2F), (GLvoid *)offsetof(ccV2F_C4B_T2F, texCoords));
 #endif
-    
+
     glDrawArrays(GL_TRIANGLES, 0, m_nBufferCount);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     
@@ -425,6 +420,8 @@ void CCDrawNode::drawPolygon(CCPoint *verts, unsigned int count, const ccColor4F
 	m_nBufferCount += vertex_count;
 	
 	m_bDirty = true;
+
+    free(extrude);
 }
 
 void CCDrawNode::clear()
