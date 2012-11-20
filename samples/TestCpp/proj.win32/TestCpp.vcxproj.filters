@@ -181,9 +181,6 @@
     <Filter Include="Classes\Box2DTestBed\Tests">
       <UniqueIdentifier>{17c1844a-dd68-4ed5-a368-383253473518}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Classes\ChipmunkAccelTouchTest">
-      <UniqueIdentifier>{8e327328-efce-47af-a44d-c19eedb1cb4c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Classes\MutiTouchTest">
       <UniqueIdentifier>{b3be049f-74ff-44a5-8895-0766e4807671}</UniqueIdentifier>
     </Filter>
@@ -201,6 +198,9 @@
     </Filter>
     <Filter Include="Classes\ExtensionsTest\ControlExtensionTest\CCControlStepperTest">
       <UniqueIdentifier>{7e809230-9bb5-45bb-a26c-b5cdd1390914}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ChipmunkTest">
+      <UniqueIdentifier>{0a728d21-a3d4-4d32-9d6d-f0fd078cbaa0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -435,9 +435,6 @@
     <ClCompile Include="..\Classes\Box2DTestBed\TestEntries.cpp">
       <Filter>Classes\Box2DTestBed</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\ChipmunkAccelTouchTest\ChipmunkAccelTouchTest.cpp">
-      <Filter>Classes\ChipmunkAccelTouchTest</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\MutiTouchTest\MutiTouchTest.cpp">
       <Filter>Classes\MutiTouchTest</Filter>
     </ClCompile>
@@ -461,6 +458,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\VisibleRect.cpp">
       <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ChipmunkTest\ChipmunkTest.cpp">
+      <Filter>Classes\ChipmunkTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -869,9 +869,6 @@
     <ClInclude Include="..\Classes\Box2DTestBed\Tests\Web.h">
       <Filter>Classes\Box2DTestBed\Tests</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\ChipmunkAccelTouchTest\ChipmunkAccelTouchTest.h">
-      <Filter>Classes\ChipmunkAccelTouchTest</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\MutiTouchTest\MutiTouchTest.h">
       <Filter>Classes\MutiTouchTest</Filter>
     </ClInclude>
@@ -898,6 +895,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\VisibleRect.h">
       <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ChipmunkTest\ChipmunkTest.h">
+      <Filter>Classes\ChipmunkTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

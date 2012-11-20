@@ -245,17 +245,6 @@ THE SOFTWARE.
 #include "CCDirector.h"
 #include "CCScheduler.h"
 
-// Physics integration
-#if CC_ENABLE_CHIPMUNK_INTEGRATION
-#include "physics_nodes/CCPhysicsDebugNode.h"
-#include "physics_nodes/CCPhysicsSprite.h"
-#endif
-
-#if CC_ENABLE_BOX2D_INTEGRATION
-#include "physics_nodes/CCPhysicsDebugNode.h"
-#include "physics_nodes/CCPhysicsSprite.h"
-#endif
-
 NS_CC_BEGIN
 
 CC_DLL const char* cocos2dVersion();

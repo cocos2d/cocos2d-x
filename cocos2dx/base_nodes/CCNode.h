@@ -237,7 +237,7 @@ public:
     virtual void setScaleY(float fScaleY);
 
     /** Position (x,y) of the node in OpenGL coordinates. (0,0) is the left-bottom corner. */
-    virtual const CCPoint& getPosition();
+    virtual CCPoint getPosition();
     virtual void setPosition(const CCPoint &position);
     
     /** The X skew angle of the node in degrees.
@@ -319,20 +319,20 @@ public:
      The default anchorPoint is (0.5,0.5), so it starts in the center of the node.
      @since v0.8
      */
-    virtual const CCPoint& getAnchorPoint();
+    virtual CCPoint getAnchorPoint();
     virtual void setAnchorPoint(const CCPoint &anchorPoint);
     
     /** The anchorPoint in absolute pixels.
      Since v0.8 you can only read it. If you wish to modify it, use anchorPoint instead
      */
-    virtual const CCPoint& getAnchorPointInPoints();
+    virtual CCPoint getAnchorPointInPoints();
     
     /** The untransformed size of the node.
      The contentSize remains the same no matter the node is scaled or rotated.
      All nodes has a size. Layer and Scene has the same size of the screen.
      @since v0.8
      */
-    virtual const CCSize& getContentSize();
+    virtual CCSize getContentSize();
     virtual void setContentSize(const CCSize &contentSize);
 
     virtual bool isVisible();

@@ -23,14 +23,14 @@
 #ifndef __PHYSICSNODES_DEBUGNODE_H__
 #define __PHYSICSNODES_DEBUGNODE_H__
 
-#include "ccConfig.h"
+#include "cocos2d.h"
+#include "ExtensionMacros.h"
 
 #if CC_ENABLE_CHIPMUNK_INTEGRATION
 
 #include "chipmunk.h"
-#include "draw_nodes/CCDrawNode.h"
 
-NS_CC_BEGIN
+NS_CC_EXT_BEGIN
 
 /**
  A Node that draws the components of a physics engine.
@@ -41,7 +41,8 @@ NS_CC_BEGIN
  
  @since v2.1
  */
-class CC_DLL CCPhysicsDebugNode : public CCDrawNode
+
+class CCPhysicsDebugNode : public CCDrawNode
 {
 protected:
     cpSpace *m_pSpacePtr;
@@ -61,7 +62,7 @@ protected:
     CCPhysicsDebugNode();
 };
 
-NS_CC_END
+NS_CC_EXT_END
 
 #endif // CC_ENABLE_CHIPMUNK_INTEGRATION
 

@@ -32,7 +32,7 @@ typedef struct cpRotaryLimitJoint {
 	cpFloat iSum;
 		
 	cpFloat bias;
-	cpFloat jAcc, jMax;
+	cpFloat jAcc;
 } cpRotaryLimitJoint;
 
 /// Allocate a damped rotary limit joint.
@@ -42,7 +42,7 @@ cpRotaryLimitJoint* cpRotaryLimitJointInit(cpRotaryLimitJoint *joint, cpBody *a,
 /// Allocate and initialize a damped rotary limit joint.
 cpConstraint* cpRotaryLimitJointNew(cpBody *a, cpBody *b, cpFloat min, cpFloat max);
 
-CP_DefineConstraintProperty(cpRotaryLimitJoint, cpFloat, min, Min);
-CP_DefineConstraintProperty(cpRotaryLimitJoint, cpFloat, max, Max);
+CP_DefineConstraintProperty(cpRotaryLimitJoint, cpFloat, min, Min)
+CP_DefineConstraintProperty(cpRotaryLimitJoint, cpFloat, max, Max)
 
 /// @}

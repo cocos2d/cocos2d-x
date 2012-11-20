@@ -479,7 +479,7 @@ void CCLayerColor::setOpacity(GLubyte var)
 }
 
 /// color getter
-const ccColor3B& CCLayerColor::getColor()
+ccColor3B CCLayerColor::getColor()
 {
     return m_tColor;
 }
@@ -789,7 +789,7 @@ void CCLayerGradient::updateColor()
     m_pSquareColors[3].a = E.a + (S.a - E.a) * ((c - u.x - u.y) / (2.0f * c));
 }
 
-const ccColor3B& CCLayerGradient::getStartColor()
+ccColor3B CCLayerGradient::getStartColor()
 {
     return m_tColor;
 }
@@ -805,7 +805,7 @@ void CCLayerGradient::setEndColor(const ccColor3B& color)
     updateColor();
 }
 
-const ccColor3B& CCLayerGradient::getEndColor()
+ccColor3B CCLayerGradient::getEndColor()
 {
     return m_endColor;
 }
@@ -838,7 +838,7 @@ void CCLayerGradient::setVector(const CCPoint& var)
     updateColor();
 }
 
-const CCPoint& CCLayerGradient::getVector()
+CCPoint CCLayerGradient::getVector()
 {
     return m_AlongVector;
 }

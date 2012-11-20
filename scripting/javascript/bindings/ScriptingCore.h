@@ -203,7 +203,6 @@ jsval cccolor4b_to_jsval(JSContext* cx, ccColor4B& v);
 jsval cccolor4f_to_jsval(JSContext* cx, ccColor4F& v);
 jsval cccolor3b_to_jsval(JSContext* cx, const ccColor3B& v);
 jsval ccdictionary_to_jsval(JSContext* cx, CCDictionary *dict);
-jsval ccdictionary_to_jsval(JSContext* cx, CCDictionary *dict);
 jsval ccarray_to_jsval(JSContext* cx, CCArray *arr);
 jsval ccacceleration_to_jsval(JSContext* cx, CCAcceleration& v);
 

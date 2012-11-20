@@ -265,7 +265,7 @@ void CCNode::setScaleY(float newScaleY)
 }
 
 /// position getter
-const CCPoint& CCNode::getPosition()
+CCPoint CCNode::getPosition()
 {
     return m_obPosition;
 }
@@ -363,13 +363,13 @@ void CCNode::setVisible(bool var)
     m_bVisible = var;
 }
 
-const CCPoint& CCNode::getAnchorPointInPoints()
+CCPoint CCNode::getAnchorPointInPoints()
 {
     return m_obAnchorPointInPoints;
 }
 
 /// anchorPoint getter
-const CCPoint& CCNode::getAnchorPoint()
+CCPoint CCNode::getAnchorPoint()
 {
     return m_obAnchorPoint;
 }
@@ -385,7 +385,7 @@ void CCNode::setAnchorPoint(const CCPoint& point)
 }
 
 /// contentSize getter
-const CCSize & CCNode::getContentSize()
+CCSize CCNode::getContentSize()
 {
     return m_obContentSize;
 }

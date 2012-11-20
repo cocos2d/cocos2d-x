@@ -154,20 +154,20 @@ static inline void cpShapeSet##name(cpShape *shape, type value){ \
 CP_DefineShapeStructGetter(type, member, name) \
 CP_DefineShapeStructSetter(type, member, name, activates)
 
-CP_DefineShapeStructGetter(cpSpace*, CP_PRIVATE(space), Space);
+CP_DefineShapeStructGetter(cpSpace*, CP_PRIVATE(space), Space)
 
-CP_DefineShapeStructGetter(cpBody*, body, Body);
+CP_DefineShapeStructGetter(cpBody*, body, Body)
 void cpShapeSetBody(cpShape *shape, cpBody *body);
 
-CP_DefineShapeStructGetter(cpBB, bb, BB);
-CP_DefineShapeStructProperty(cpBool, sensor, Sensor, cpTrue);
-CP_DefineShapeStructProperty(cpFloat, e, Elasticity, cpFalse);
-CP_DefineShapeStructProperty(cpFloat, u, Friction, cpTrue);
-CP_DefineShapeStructProperty(cpVect, surface_v, SurfaceVelocity, cpTrue);
-CP_DefineShapeStructProperty(cpDataPointer, data, UserData, cpFalse);
-CP_DefineShapeStructProperty(cpCollisionType, collision_type, CollisionType, cpTrue);
-CP_DefineShapeStructProperty(cpGroup, group, Group, cpTrue);
-CP_DefineShapeStructProperty(cpLayers, layers, Layers, cpTrue);
+CP_DefineShapeStructGetter(cpBB, bb, BB)
+CP_DefineShapeStructProperty(cpBool, sensor, Sensor, cpTrue)
+CP_DefineShapeStructProperty(cpFloat, e, Elasticity, cpFalse)
+CP_DefineShapeStructProperty(cpFloat, u, Friction, cpTrue)
+CP_DefineShapeStructProperty(cpVect, surface_v, SurfaceVelocity, cpTrue)
+CP_DefineShapeStructProperty(cpDataPointer, data, UserData, cpFalse)
+CP_DefineShapeStructProperty(cpCollisionType, collision_type, CollisionType, cpTrue)
+CP_DefineShapeStructProperty(cpGroup, group, Group, cpTrue)
+CP_DefineShapeStructProperty(cpLayers, layers, Layers, cpTrue)
 
 /// When initializing a shape, it's hash value comes from a counter.
 /// Because the hash value may affect iteration order, you can reset the shape ID counter

@@ -77,7 +77,7 @@ public:
     void setAnchorPoint(CCPoint anchorPoint);
 
     virtual void setColor(const ccColor3B& color);
-    virtual const ccColor3B& getColor(void);
+    virtual ccColor3B getColor(void);
     virtual GLubyte getOpacity(void);
     virtual void setOpacity(GLubyte opacity);
     virtual void setOpacityModifyRGB(bool bValue);
