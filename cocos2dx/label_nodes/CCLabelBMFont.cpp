@@ -429,6 +429,7 @@ CCBMFontConfiguration::CCBMFontConfiguration()
 : m_pFontDefDictionary(NULL)
 , m_nCommonHeight(0)
 , m_pKerningDictionary(NULL)
+, m_pCharacterSet(NULL)
 {
 
 }
@@ -815,8 +816,9 @@ bool CCLabelBMFont::initWithString(const char *theString, const char *fntFile, f
         m_bIsOpacityModifyRGB = m_pobTextureAtlas->getTexture()->hasPremultipliedAlpha();
         m_obAnchorPoint = ccp(0.5f, 0.5f);
         
-        m_pReusedChar = CCSprite::create();
+        m_pReusedChar = new CCSprite();
         m_pReusedChar->initWithTexture(m_pobTextureAtlas->getTexture(), CCRectMake(0, 0, 0, 0), false);
+        m_pReusedChar->setBatchNode(this);
         
         this->setString(theString);
         
@@ -838,6 +840,7 @@ CCLabelBMFont::CCLabelBMFont()
 
 CCLabelBMFont::~CCLabelBMFont()
 {
+    CC_SAFE_RELEASE(m_pReusedChar);
     CC_SAFE_DELETE(m_sString);
     CC_SAFE_RELEASE(m_pConfiguration);
 }
@@ -948,7 +951,7 @@ void CCLabelBMFont::createFontChars()
 			}
             else
             {
-                fontChar = CCSprite::create();
+                fontChar = new CCSprite();
                 fontChar->initWithTexture(m_pobTextureAtlas->getTexture(), rect);
                 addChild(fontChar, i, i);
                 fontChar->release();

@@ -37,7 +37,6 @@ void DrawPrimitivesTest::draw()
     // draw big point in the center
     ccPointSize(64);
     ccDrawColor4B(0,0,255,128);
-
     ccDrawPoint( VisibleRect::center() );
 
     CHECK_GL_ERROR_DEBUG();
