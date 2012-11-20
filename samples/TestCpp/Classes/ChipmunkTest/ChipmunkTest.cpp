@@ -4,71 +4,24 @@
 // http://www.cocos2d-x.org
 //
 
-#include "ChipmunkAccelTouchTest.h"
+#include "ChipmunkTest.h"
+
 
 enum {
     kTagParentNode = 1,
 };
 
+enum {
+    Z_PHYSICS_DEBUG = 100,
+};
+
 // callback to remove Shapes from the Space
-void removeShape( cpBody *body, cpShape *shape, void *data )
+static void removeShape( cpBody *body, cpShape *shape, void *data )
 {
     cpShapeFree( shape );
 }
 
-ChipmunkPhysicsSprite::ChipmunkPhysicsSprite()
-: m_pBody(NULL)
-{
-
-}
-
-ChipmunkPhysicsSprite::~ChipmunkPhysicsSprite()
-{
-    cpBodyEachShape(m_pBody, removeShape, NULL);
-    cpBodyFree( m_pBody );
-}
-
-void ChipmunkPhysicsSprite::setPhysicsBody(cpBody * body)
-{
-    m_pBody = body;
-}
-
-// this method will only get called if the sprite is batched.
-// return YES if the physics values (angles, position ) changed
-// If you return NO, then nodeToParentTransform won't be called.
-bool ChipmunkPhysicsSprite::isDirty(void)
-{
-    return true;
-}
-
-CCAffineTransform ChipmunkPhysicsSprite::nodeToParentTransform(void)
-{
-    float x = m_pBody->p.x;
-    float y = m_pBody->p.y;
-
-    if ( isIgnoreAnchorPointForPosition() ) {
-        x += m_obAnchorPointInPoints.x;
-        y += m_obAnchorPointInPoints.y;
-    }
-
-    // Make matrix
-    float c = m_pBody->rot.x;
-    float s = m_pBody->rot.y;
-
-    if( ! m_obAnchorPointInPoints.equals(CCPointZero) ){
-        x += c*-m_obAnchorPointInPoints.x + -s*-m_obAnchorPointInPoints.y;
-        y += s*-m_obAnchorPointInPoints.x + c*-m_obAnchorPointInPoints.y;
-    }
-
-    // Rot, Translate Matrix
-    m_sTransform = CCAffineTransformMake( c,  s,
-        -s,    c,
-        x,    y );
-
-    return m_sTransform;
-}
-
-ChipmunkAccelTouchTestLayer::ChipmunkAccelTouchTestLayer()
+ChipmunkTestLayer::ChipmunkTestLayer()
 {
     // enable events
     setTouchEnabled(true);
@@ -76,7 +29,7 @@ ChipmunkAccelTouchTestLayer::ChipmunkAccelTouchTestLayer()
 
     // title
     CCLabelTTF *label = CCLabelTTF::create("Multi touch the screen", "Marker Felt", 36);
-    label->setPosition(ccp( VisibleRect::center().x, VisibleRect::bottom().y - 30));
+    label->setPosition(ccp( VisibleRect::center().x, VisibleRect::top().y - 30));
     this->addChild(label, -1);
 
     // reset button
@@ -98,10 +51,23 @@ ChipmunkAccelTouchTestLayer::ChipmunkAccelTouchTestLayer()
 
     addNewSpriteAtPosition(ccp(200,200));
 
+    // menu for debug layer
+    CCMenuItemFont::setFontSize(18);
+    CCMenuItemFont *item = CCMenuItemFont::create("Toggle debug", this, menu_selector(ChipmunkTestLayer::toggleDebugCallback));
+
+    CCMenu *menu = CCMenu::create(item, NULL);
+    this->addChild(menu);
+    menu->setPosition(ccp(VisibleRect::right().x-100, VisibleRect::top().y-60));
+
     scheduleUpdate();
 }
 
-ChipmunkAccelTouchTestLayer::~ChipmunkAccelTouchTestLayer()
+void ChipmunkTestLayer::toggleDebugCallback(CCObject* pSender)
+{
+    m_pDebugLayer->setVisible(! m_pDebugLayer->isVisible());
+}
+
+ChipmunkTestLayer::~ChipmunkTestLayer()
 {
     // manually Free rogue shapes
     for( int i=0;i<4;i++) {
@@ -112,7 +78,7 @@ ChipmunkAccelTouchTestLayer::~ChipmunkAccelTouchTestLayer()
 
 }
 
-void ChipmunkAccelTouchTestLayer::initPhysics()
+void ChipmunkTestLayer::initPhysics()
 {
     // init chipmunk
     //cpInitChipmunk();
@@ -150,9 +116,13 @@ void ChipmunkAccelTouchTestLayer::initPhysics()
         m_pWalls[i]->u = 1.0f;
         cpSpaceAddStaticShape(m_pSpace, m_pWalls[i] );
     }
+
+    // Physics debug layer
+    m_pDebugLayer = CCPhysicsDebugNode::create(m_pSpace);
+    this->addChild(m_pDebugLayer, Z_PHYSICS_DEBUG);
 }
 
-void ChipmunkAccelTouchTestLayer::update(float delta)
+void ChipmunkTestLayer::update(float delta)
 {
     // Should use a fixed size step based on the animation interval.
     int steps = 2;
@@ -163,9 +133,9 @@ void ChipmunkAccelTouchTestLayer::update(float delta)
     }
 }
 
-void ChipmunkAccelTouchTestLayer::createResetButton()
+void ChipmunkTestLayer::createResetButton()
 {
-    CCMenuItemImage *reset = CCMenuItemImage::create("Images/r1.png", "Images/r2.png", this, menu_selector(ChipmunkAccelTouchTestLayer::reset));
+    CCMenuItemImage *reset = CCMenuItemImage::create("Images/r1.png", "Images/r2.png", this, menu_selector(ChipmunkTestLayer::reset));
 
     CCMenu *menu = CCMenu::create(reset, NULL);
 
@@ -173,17 +143,17 @@ void ChipmunkAccelTouchTestLayer::createResetButton()
     this->addChild(menu, -1);
 }
 
-void ChipmunkAccelTouchTestLayer::reset(CCObject* sender)
+void ChipmunkTestLayer::reset(CCObject* sender)
 {
     CCScene* s = new ChipmunkAccelTouchTestScene();
-    ChipmunkAccelTouchTestLayer* child = new ChipmunkAccelTouchTestLayer();
+    ChipmunkTestLayer* child = new ChipmunkTestLayer();
     s->addChild(child);
     child->release();
     CCDirector::sharedDirector()->replaceScene(s);
     s->release();
 }
 
-void ChipmunkAccelTouchTestLayer::addNewSpriteAtPosition(CCPoint pos)
+void ChipmunkTestLayer::addNewSpriteAtPosition(CCPoint pos)
 {
     int posx, posy;
 
@@ -195,13 +165,6 @@ void ChipmunkAccelTouchTestLayer::addNewSpriteAtPosition(CCPoint pos)
     posx = (posx % 4) * 85;
     posy = (posy % 3) * 121;
 
-    ChipmunkPhysicsSprite *sprite = new ChipmunkPhysicsSprite();
-    sprite->initWithTexture(m_pSpriteTexture, CCRectMake(posx, posy, 85, 121));
-    sprite->autorelease();
-
-    parent->addChild(sprite);
-
-    sprite->setPosition(pos);
 
     int num = 4;
     cpVect verts[] = {
@@ -220,15 +183,19 @@ void ChipmunkAccelTouchTestLayer::addNewSpriteAtPosition(CCPoint pos)
     shape->e = 0.5f; shape->u = 0.5f;
     cpSpaceAddShape(m_pSpace, shape);
 
-    sprite->setPhysicsBody(body);
+    CCPhysicsSprite *sprite = CCPhysicsSprite::createWithTexture(m_pSpriteTexture, CCRectMake(posx, posy, 85, 121));
+    parent->addChild(sprite);
+
+    sprite->setBody(body);
+    sprite->setPosition(pos);
 }
 
-void ChipmunkAccelTouchTestLayer::onEnter()
+void ChipmunkTestLayer::onEnter()
 {
     CCLayer::onEnter();
 }
 
-void ChipmunkAccelTouchTestLayer::ccTouchesEnded(CCSet* touches, CCEvent* event)
+void ChipmunkTestLayer::ccTouchesEnded(CCSet* touches, CCEvent* event)
 {
     //Add a new body/atlas sprite at the touched location
     CCSetIterator it;
@@ -247,7 +214,7 @@ void ChipmunkAccelTouchTestLayer::ccTouchesEnded(CCSet* touches, CCEvent* event)
     }
 }
 
-void ChipmunkAccelTouchTestLayer::didAccelerate(CCAcceleration* pAccelerationValue)
+void ChipmunkTestLayer::didAccelerate(CCAcceleration* pAccelerationValue)
 {
     static float prevX=0, prevY=0;
 
@@ -266,7 +233,7 @@ void ChipmunkAccelTouchTestLayer::didAccelerate(CCAcceleration* pAccelerationVal
 
 void ChipmunkAccelTouchTestScene::runThisTest()
 {
-    CCLayer* pLayer = new ChipmunkAccelTouchTestLayer();
+    CCLayer* pLayer = new ChipmunkTestLayer();
     addChild(pLayer);
     pLayer->release();
 
