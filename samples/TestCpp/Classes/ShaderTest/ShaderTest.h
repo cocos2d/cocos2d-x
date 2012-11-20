@@ -136,6 +136,14 @@ private:
     std::string m_fragFileName;
 };
 
+class ShaderFail : public ShaderTestDemo
+{
+public:
+    ShaderFail();
+    std::string title();
+    std::string subtitle();
+};
+
 class ShaderTestScene : public TestScene
 {
 public:
