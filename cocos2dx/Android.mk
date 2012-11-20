@@ -74,8 +74,6 @@ particle_nodes/CCParticleExamples.cpp \
 particle_nodes/CCParticleSystem.cpp \
 particle_nodes/CCParticleBatchNode.cpp \
 particle_nodes/CCParticleSystemQuad.cpp \
-physics_nodes/CCPhysicsDebugNode.cpp \
-physics_nodes/CCPhysicsSprite.cpp \
 platform/CCSAXParser.cpp \
 platform/CCThread.cpp \
 platform/platform.cpp \
