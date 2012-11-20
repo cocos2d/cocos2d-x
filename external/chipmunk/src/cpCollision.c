@@ -322,6 +322,64 @@ circle2poly(const cpShape *shape1, const cpShape *shape2, cpContact *con)
 	}
 }
 
+// Submitted by LegoCyclon
+static int
+seg2seg(const cpShape* shape1, const cpShape* shape2, cpContact* con)
+{
+	cpSegmentShape* seg1 = (cpSegmentShape *)shape1;
+	cpSegmentShape* seg2 = (cpSegmentShape *)shape2;
+	
+	cpVect v1 = cpvsub(seg1->tb, seg1->ta);
+	cpVect v2 = cpvsub(seg2->tb, seg2->ta);
+	cpFloat v1lsq = cpvlengthsq(v1);
+	cpFloat v2lsq = cpvlengthsq(v2);
+	// project seg2 onto seg1
+	cpVect p1a = cpvproject(cpvsub(seg2->ta, seg1->ta), v1);
+	cpVect p1b = cpvproject(cpvsub(seg2->tb, seg1->ta), v1);
+	// project seg1 onto seg2
+	cpVect p2a = cpvproject(cpvsub(seg1->ta, seg2->ta), v2);
+	cpVect p2b = cpvproject(cpvsub(seg1->tb, seg2->ta), v2);
+	
+	// clamp projections to segment endcaps
+	if (cpvdot(p1a, v1) < 0.0f)
+	 p1a = cpvzero;
+	else if (cpvdot(p1a, v1) > 0.0f && cpvlengthsq(p1a) > v1lsq)
+	 p1a = v1;
+	if (cpvdot(p1b, v1) < 0.0f)
+	 p1b = cpvzero;
+	else if (cpvdot(p1b, v1) > 0.0f && cpvlengthsq(p1b) > v1lsq)
+	 p1b = v1;
+	if (cpvdot(p2a, v2) < 0.0f)
+	 p2a = cpvzero;
+	else if (cpvdot(p2a, v2) > 0.0f && cpvlengthsq(p2a) > v2lsq)
+	 p2a = v2;
+	if (cpvdot(p2b, v2) < 0.0f)
+	 p2b = cpvzero;
+	else if (cpvdot(p2b, v2) > 0.0f && cpvlengthsq(p2b) > v2lsq)
+	 p2b = v2;
+	
+	p1a = cpvadd(p1a, seg1->ta);
+	p1b = cpvadd(p1b, seg1->ta);
+	p2a = cpvadd(p2a, seg2->ta);
+	p2b = cpvadd(p2b, seg2->ta);
+	
+	int num = 0;
+	
+	if (!circle2circleQuery(p1a, p2a, seg1->r, seg2->r, nextContactPoint(con, &num)))
+	 --num;
+	
+	if (!circle2circleQuery(p1b, p2b, seg1->r, seg2->r, nextContactPoint(con, &num)))
+	 --num;
+	
+	if (!circle2circleQuery(p1a, p2b, seg1->r, seg2->r, nextContactPoint(con, &num)))
+	 --num;
+	
+	if (!circle2circleQuery(p1b, p2a, seg1->r, seg2->r, nextContactPoint(con, &num)))
+	 --num;
+	
+	return num;
+}
+
 static const collisionFunc builtinCollisionFuncs[9] = {
 	circle2circle,
 	NULL,
@@ -335,36 +393,23 @@ static const collisionFunc builtinCollisionFuncs[9] = {
 };
 static const collisionFunc *colfuncs = builtinCollisionFuncs;
 
-//static collisionFunc *colfuncs = NULL;
-//
-//static void
-//addColFunc(const cpShapeType a, const cpShapeType b, const collisionFunc func)
-//{
-//	colfuncs[a + b*CP_NUM_SHAPES] = func;
-//}
-//
-//#ifdef __cplusplus
-//extern "C" {
-//#endif
-//	void cpInitCollisionFuncs(void);
-//	
-//	// Initializes the array of collision functions.
-//	// Called by cpInitChipmunk().
-//	void
-//	cpInitCollisionFuncs(void)
-//	{
-//		if(!colfuncs)
-//			colfuncs = (collisionFunc *)cpcalloc(CP_NUM_SHAPES*CP_NUM_SHAPES, sizeof(collisionFunc));
-//		
-//		addColFunc(CP_CIRCLE_SHAPE,  CP_CIRCLE_SHAPE,  circle2circle);
-//		addColFunc(CP_CIRCLE_SHAPE,  CP_SEGMENT_SHAPE, circle2segment);
-//		addColFunc(CP_SEGMENT_SHAPE, CP_POLY_SHAPE,    seg2poly);
-//		addColFunc(CP_CIRCLE_SHAPE,  CP_POLY_SHAPE,    circle2poly);
-//		addColFunc(CP_POLY_SHAPE,    CP_POLY_SHAPE,    poly2poly);
-//	}	
-//#ifdef __cplusplus
-//}
-//#endif
+static const collisionFunc segmentCollisions[9] = {
+	circle2circle,
+	NULL,
+	NULL,
+	(collisionFunc)circle2segment,
+	seg2seg,
+	NULL,
+	circle2poly,
+	seg2poly,
+	poly2poly,
+};
+
+void
+cpEnableSegmentToSegmentCollisions(void)
+{
+	colfuncs = segmentCollisions;
+}
 
 int
 cpCollideShapes(const cpShape *a, const cpShape *b, cpContact *arr)

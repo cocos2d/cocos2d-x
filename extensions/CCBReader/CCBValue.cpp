@@ -21,7 +21,7 @@ ccColor3BWapper* ccColor3BWapper::create(const ccColor3B& color)
     return ret;
 }
 
-const ccColor3B& ccColor3BWapper::getColor()
+ccColor3B ccColor3BWapper::getColor()
 {
     return color;
 }

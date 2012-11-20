@@ -381,12 +381,12 @@ void CCRenderTexture::beginWithClear(float r, float g, float b, float a)
 
 void CCRenderTexture::beginWithClear(float r, float g, float b, float a, float depthValue)
 {
-    beginWithClear(r, g, b, a, depthValue, GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+    beginWithClear(r, g, b, a, depthValue, 0, GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 }
 
 void CCRenderTexture::beginWithClear(float r, float g, float b, float a, float depthValue, int stencilValue)
 {
-    beginWithClear(r, g, b, a, depthValue, GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT|GL_STENCIL_BUFFER_BIT);
+    beginWithClear(r, g, b, a, depthValue, stencilValue, GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT|GL_STENCIL_BUFFER_BIT);
 }
 
 void CCRenderTexture::beginWithClear(float r, float g, float b, float a, float depthValue, int stencilValue, GLbitfield flags)
