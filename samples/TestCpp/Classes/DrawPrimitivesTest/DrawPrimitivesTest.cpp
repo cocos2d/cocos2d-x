@@ -140,7 +140,6 @@ DrawPrimitivesTest::DrawPrimitivesTest()
 
 void DrawPrimitivesTest::draw()
 {
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
     
 	CHECK_GL_ERROR_DEBUG();
     
@@ -150,7 +149,7 @@ void DrawPrimitivesTest::draw()
 	// color: 255,255,255,255 (white, non-transparent)
 	// Anti-Aliased
     //	glEnable(GL_LINE_SMOOTH);
-	ccDrawLine( ccp(0, 0), ccp(s.width, s.height) );
+    ccDrawLine( VisibleRect::leftBottom(), VisibleRect::rightTop() );
     
 	CHECK_GL_ERROR_DEBUG();
     
@@ -160,7 +159,7 @@ void DrawPrimitivesTest::draw()
     //	glDisable(GL_LINE_SMOOTH);
 	glLineWidth( 5.0f );
 	ccDrawColor4B(255,0,0,255);
-	ccDrawLine( ccp(0, s.height), ccp(s.width, 0) );
+    ccDrawLine( VisibleRect::leftTop(), VisibleRect::rightBottom() );
     
 	CHECK_GL_ERROR_DEBUG();
     
@@ -173,7 +172,7 @@ void DrawPrimitivesTest::draw()
 	// draw big point in the center
 	ccPointSize(64);
 	ccDrawColor4B(0,0,255,128);
-	ccDrawPoint( ccp(s.width / 2, s.height / 2) );
+    ccDrawPoint( VisibleRect::center() );
     
 	CHECK_GL_ERROR_DEBUG();
     
@@ -188,14 +187,14 @@ void DrawPrimitivesTest::draw()
 	// draw a green circle with 10 segments
 	glLineWidth(16);
 	ccDrawColor4B(0, 255, 0, 255);
-	ccDrawCircle( ccp(s.width/2,  s.height/2), 100, 0, 10, false);
+    ccDrawCircle( VisibleRect::center(), 100, 0, 10, false);
     
 	CHECK_GL_ERROR_DEBUG();
     
 	// draw a green circle with 50 segments with line to center
 	glLineWidth(2);
 	ccDrawColor4B(0, 255, 255, 255);
-	ccDrawCircle( ccp(s.width/2, s.height/2), 50, CC_DEGREES_TO_RADIANS(90), 50, true);
+    ccDrawCircle( VisibleRect::center(), 50, CC_DEGREES_TO_RADIANS(90), 50, true);
     
 	CHECK_GL_ERROR_DEBUG();
     
@@ -222,12 +221,12 @@ void DrawPrimitivesTest::draw()
 	CHECK_GL_ERROR_DEBUG();
     
 	// draw quad bezier path
-	ccDrawQuadBezier(ccp(0,s.height), ccp(s.width/2,s.height/2), ccp(s.width,s.height), 50);
+    ccDrawQuadBezier(VisibleRect::leftTop(), VisibleRect::center(), VisibleRect::rightTop(), 50);
     
 	CHECK_GL_ERROR_DEBUG();
     
 	// draw cubic bezier path
-	ccDrawCubicBezier(ccp(s.width/2, s.height/2), ccp(s.width/2+30,s.height/2+50), ccp(s.width/2+60,s.height/2-50),ccp(s.width, s.height/2),100);
+    ccDrawCubicBezier(VisibleRect::center(), ccp(VisibleRect::center().x+30,VisibleRect::center().y+50), ccp(VisibleRect::center().x+60,VisibleRect::center().y-50),VisibleRect::right(),100);
     
 	CHECK_GL_ERROR_DEBUG();
     

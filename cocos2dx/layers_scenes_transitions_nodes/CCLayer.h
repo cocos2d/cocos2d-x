@@ -62,7 +62,7 @@ class CC_DLL CCLayer : public CCNode, public CCTouchDelegate, public CCAccelerom
 public:
     CCLayer();
     virtual ~CCLayer();
-    bool init();
+    virtual bool init();
 
     // @deprecated: This interface will be deprecated sooner or later.
     CC_DEPRECATED_ATTRIBUTE static CCLayer *node(void);
