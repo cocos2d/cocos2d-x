@@ -149,23 +149,26 @@ std::string BaseClippingNodeTest::subtitle()
 
 void BaseClippingNodeTest::restartCallback(CCObject* sender)
 {
-	CCScene *s = CCScene::create();
+	CCScene *s = new ClippingNodeTestScene();
 	s->addChild(restartAction());
 	CCDirector::sharedDirector()->replaceScene(s);
+    s->release();
 }
 
 void BaseClippingNodeTest::nextCallback(CCObject* sender)
 {
-	CCScene *s = CCScene::create();
+	CCScene *s = new ClippingNodeTestScene();
 	s->addChild(nextAction());
 	CCDirector::sharedDirector()->replaceScene(s);
+    s->release();
 }
 
 void BaseClippingNodeTest::backCallback(CCObject* sender)
 {
-	CCScene *s = CCScene::create();
+	CCScene *s = new ClippingNodeTestScene();
 	s->addChild(backAction());
 	CCDirector::sharedDirector()->replaceScene(s);
+    s->release();
 }
 
 void BaseClippingNodeTest::setup()
@@ -790,7 +793,7 @@ void RawStencilBufferTest5::setupStencilForClippingOnPlane(GLint plane)
 
 void RawStencilBufferTest5::setupStencilForDrawingOnPlane(GLint plane)
 {
-#if defined(__CC_PLATFORM_MAC)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     glDisable(GL_ALPHA_TEST);
 #endif
     glDepthMask(GL_TRUE);
@@ -856,7 +859,7 @@ void RawStencilBufferTest6::setupStencilForClippingOnPlane(GLint plane)
 
 void RawStencilBufferTest6::setupStencilForDrawingOnPlane(GLint plane)
 {
-#if defined(__CC_PLATFORM_MAC)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     glDisable(GL_ALPHA_TEST);
 #endif
     glDepthMask(GL_TRUE);
