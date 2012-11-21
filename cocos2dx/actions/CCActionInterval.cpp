@@ -826,7 +826,7 @@ void CCRotateTo::startWithTarget(CCNode *pTarget)
     // Calculate X
     m_fStartAngleX = pTarget->getRotationX();
     
-    m_fDiffAngleX = m_fDiffAngleX - m_fStartAngleX;
+    m_fDiffAngleX = m_fDstAngleX - m_fStartAngleX;
     if (m_fDiffAngleX > 180)
     {
         m_fDiffAngleX -= 360;
