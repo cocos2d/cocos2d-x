@@ -48,12 +48,12 @@ protected:
 public:
     /** Creates and initializes a clipping node without a stencil.
      */
-    CCClippingNode* create();
+    static CCClippingNode* create();
     
     /** Creates and initializes a clipping node with an other node as its stencil.
      The stencil node will be retained.
      */
-    CCClippingNode* create(CCNode *pStencil);
+    static CCClippingNode* create(CCNode *pStencil);
     
     virtual ~CCClippingNode();
     

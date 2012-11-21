@@ -30,6 +30,7 @@ Classes/BugsTest/Bug-458/Bug-458.cpp \
 Classes/BugsTest/Bug-458/QuestionContainerSprite.cpp \
 Classes/ChipmunkTest/ChipmunkTest.cpp \
 Classes/ClickAndMoveTest/ClickAndMoveTest.cpp \
+Classes/ClippingNodeTest/ClippingNodeTest.cpp \
 Classes/CocosDenshionTest/CocosDenshionTest.cpp \
 Classes/CurlTest/CurlTest.cpp \
 Classes/CurrentLanguageTest/CurrentLanguageTest.cpp \
