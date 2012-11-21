@@ -64,6 +64,8 @@ static TestScene* CreateTestScene(int nIdx)
         pScene = new RenderTextureScene(); break;
     case TEST_TEXTURE2D:
         pScene = new TextureTestScene(); break;
+    case TEST_CHIPMUNK:
+        pScene = new ChipmunkAccelTouchTestScene(); break;
     case TEST_BOX2D:
         pScene = new Box2DTestScene(); break;
     case TEST_BOX2DBED:
