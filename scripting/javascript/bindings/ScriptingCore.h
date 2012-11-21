@@ -29,6 +29,7 @@ class ScriptingCore : public CCScriptEngineProtocol
 	JSRuntime *rt_;
 	JSContext *cx_;
 	JSObject  *global_;
+	JSObject  *debugGlobal_;
 	
 	ScriptingCore();
 public:
@@ -169,6 +170,12 @@ public:
 	static JSBool addRootJS(JSContext *cx, uint32_t argc, jsval *vp);
 	static JSBool removeRootJS(JSContext *cx, uint32_t argc, jsval *vp);
 
+	/**
+	 * enable the debug environment
+	 */
+	void enableDebugger();
+	JSObject* getDebugGlobal() { return debugGlobal_; }
+	
  private:
     void string_report(jsval val);
 };
@@ -206,12 +213,59 @@ jsval ccdictionary_to_jsval(JSContext* cx, CCDictionary *dict);
 jsval ccarray_to_jsval(JSContext* cx, CCArray *arr);
 jsval ccacceleration_to_jsval(JSContext* cx, CCAcceleration& v);
 
-JSObject* NewGlobalObject(JSContext* cx);
-JSBool jsNewGlobal(JSContext* cx, unsigned argc, jsval* vp);
+JSObject* NewGlobalObject(JSContext* cx, bool debug = false);
+JSBool jsStartDebugger(JSContext* cx, unsigned argc, jsval* vp);
+JSBool jsGetScript(JSContext* cx, unsigned argc, jsval* vp);
 
 JSBool jsSocketOpen(JSContext* cx, unsigned argc, jsval* vp);
 JSBool jsSocketRead(JSContext* cx, unsigned argc, jsval* vp);
 JSBool jsSocketWrite(JSContext* cx, unsigned argc, jsval* vp);
 JSBool jsSocketClose(JSContext* cx, unsigned argc, jsval* vp);
+
+// just a simple utility to avoid mem leaking when using JSString
+class JSStringWrapper
+{
+	JSString*	string;
+	const char*	buffer;
+public:
+	JSStringWrapper() {
+		buffer = NULL;
+	}
+	JSStringWrapper(JSString* str, JSContext* cx = NULL) {
+		set(str, cx);
+	}
+	JSStringWrapper(jsval val, JSContext* cx = NULL) {
+		set(val, cx);
+	}
+	~JSStringWrapper() {
+		if (buffer) {
+			JS_free(ScriptingCore::getInstance()->getGlobalContext(), (void*)buffer);
+		}
+	}
+	void set(jsval val, JSContext* cx) {
+		if (val.isString()) {
+			string = val.toString();
+			if (!cx) {
+				cx = ScriptingCore::getInstance()->getGlobalContext();
+			}
+			buffer = JS_EncodeString(cx, string);
+		} else {
+			buffer = NULL;
+		}
+	}
+	void set(JSString* str, JSContext* cx) {
+		string = str;
+		if (!cx) {
+			cx = ScriptingCore::getInstance()->getGlobalContext();
+		}
+		buffer = JS_EncodeString(cx, string);
+	}
+	operator std::string() {
+		return std::string(buffer);
+	}
+	operator char*() {
+		return (char*)buffer;
+	}
+};
 
 #endif
