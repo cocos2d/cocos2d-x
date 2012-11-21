@@ -44,6 +44,7 @@
 #include "ExtensionsTest/ExtensionsTest.h"
 #include "MutiTouchTest/MutiTouchTest.h"
 #include "ClippingNodeTest/ClippingNodeTest.h"
+#include "ChipmunkTest/ChipmunkTest.h"
 
 enum
 {
@@ -72,6 +73,7 @@ enum
     TEST_SCHEDULER,
     TEST_RENDERTEXTURE,
     TEST_TEXTURE2D,
+    TEST_CHIPMUNK,
     TEST_BOX2D,
     TEST_BOX2DBED,
     TEST_EFFECT_ADVANCE,
@@ -119,6 +121,7 @@ const std::string g_aTestNames[TESTS_COUNT] = {
     "SchdulerTest",
     "RenderTextureTest",
     "Texture2DTest",
+    "ChipmunkTest",
     "Box2dTest",
     "Box2dTestBed",
     "EffectAdvancedTest",
