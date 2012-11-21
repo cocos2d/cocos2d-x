@@ -213,6 +213,7 @@
 		15BA623515E4EAD7002BC3A5 /* ipadhd in Resources */ = {isa = PBXBuildFile; fileRef = 15BA623415E4EAD7002BC3A5 /* ipadhd */; };
 		15D2551A15E5FD6B000D5E89 /* ipad in Resources */ = {isa = PBXBuildFile; fileRef = 15D2551915E5FD6B000D5E89 /* ipad */; };
 		15E2AD85165C874400F7743F /* ChipmunkTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15E2AD83165C874400F7743F /* ChipmunkTest.cpp */; };
+		15E2ADA1165CBB0700F7743F /* ClippingNodeTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15E2AD9F165CBB0700F7743F /* ClippingNodeTest.cpp */; };
 		15FC61A816095C2B00AE81F8 /* ccb in Resources */ = {isa = PBXBuildFile; fileRef = 15FC61A716095C2B00AE81F8 /* ccb */; };
 		1A14ADF515DA49A50064E300 /* CCEditBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A14ADEC15DA49A50064E300 /* CCEditBox.cpp */; };
 		1A14ADF715DA49A50064E300 /* CCEditBoxImplIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A14ADF115DA49A50064E300 /* CCEditBoxImplIOS.mm */; };
@@ -750,6 +751,8 @@
 		15D2551915E5FD6B000D5E89 /* ipad */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ipad; sourceTree = "<group>"; };
 		15E2AD83165C874400F7743F /* ChipmunkTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ChipmunkTest.cpp; sourceTree = "<group>"; };
 		15E2AD84165C874400F7743F /* ChipmunkTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChipmunkTest.h; sourceTree = "<group>"; };
+		15E2AD9F165CBB0700F7743F /* ClippingNodeTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ClippingNodeTest.cpp; sourceTree = "<group>"; };
+		15E2ADA0165CBB0700F7743F /* ClippingNodeTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClippingNodeTest.h; sourceTree = "<group>"; };
 		15FC61A716095C2B00AE81F8 /* ccb */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ccb; sourceTree = "<group>"; };
 		1A14ADEC15DA49A50064E300 /* CCEditBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCEditBox.cpp; sourceTree = "<group>"; };
 		1A14ADED15DA49A50064E300 /* CCEditBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEditBox.h; sourceTree = "<group>"; };
@@ -965,6 +968,7 @@
 				15AA9C8915B7EC460033D6C2 /* BugsTest */,
 				15E2AD82165C874300F7743F /* ChipmunkTest */,
 				15AA9CA415B7EC460033D6C2 /* ClickAndMoveTest */,
+				15E2AD9E165CBB0700F7743F /* ClippingNodeTest */,
 				15AA9CA715B7EC460033D6C2 /* CocosDenshionTest */,
 				15AA9CAC15B7EC460033D6C2 /* CurlTest */,
 				15AA9CAF15B7EC460033D6C2 /* CurrentLanguageTest */,
@@ -2021,6 +2025,16 @@
 			path = ../Classes/ChipmunkTest;
 			sourceTree = "<group>";
 		};
+		15E2AD9E165CBB0700F7743F /* ClippingNodeTest */ = {
+			isa = PBXGroup;
+			children = (
+				15E2AD9F165CBB0700F7743F /* ClippingNodeTest.cpp */,
+				15E2ADA0165CBB0700F7743F /* ClippingNodeTest.h */,
+			);
+			name = ClippingNodeTest;
+			path = ../Classes/ClippingNodeTest;
+			sourceTree = "<group>";
+		};
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -2502,6 +2516,7 @@
 				152DCF91165B7C63009B8D87 /* CCPhysicsDebugNode.cpp in Sources */,
 				152DCF92165B7C63009B8D87 /* CCPhysicsSprite.cpp in Sources */,
 				15E2AD85165C874400F7743F /* ChipmunkTest.cpp in Sources */,
+				15E2ADA1165CBB0700F7743F /* ClippingNodeTest.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
