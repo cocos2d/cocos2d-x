@@ -749,7 +749,7 @@ void RawStencilBufferTest4::setupStencilForClippingOnPlane(GLint plane)
     glAlphaFunc(GL_GREATER, _alphaThreshold);
 #else
     CCGLProgram *program = CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColorAlphaTest);
-    GLint alphaValueLocation = glGetUniformLocation(program->program_, kCCUniformAlphaTestValue);
+    GLint alphaValueLocation = glGetUniformLocation(program->getProgram(), kCCUniformAlphaTestValue);
     program->setUniformLocationWith1f(alphaValueLocation, _alphaThreshold);
     m_pSprite->setShaderProgram(program );
 #endif
@@ -782,7 +782,7 @@ void RawStencilBufferTest5::setupStencilForClippingOnPlane(GLint plane)
     glAlphaFunc(GL_GREATER, _alphaThreshold);
 #else
     CCGLProgram *program = CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColorAlphaTest);
-    GLint alphaValueLocation = glGetUniformLocation(program->program_, kCCUniformAlphaTestValue);
+    GLint alphaValueLocation = glGetUniformLocation(program->getProgram(), kCCUniformAlphaTestValue);
     program->setUniformLocationWith1f(alphaValueLocation, _alphaThreshold);
     m_pSprite->setShaderProgram( program );
 #endif
@@ -847,7 +847,7 @@ void RawStencilBufferTest6::setupStencilForClippingOnPlane(GLint plane)
     glAlphaFunc(GL_GREATER, _alphaThreshold);
 #else
     CCGLProgram *program = CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColorAlphaTest);
-    GLint alphaValueLocation = glGetUniformLocation(program->program_, kCCUniformAlphaTestValue);
+    GLint alphaValueLocation = glGetUniformLocation(program->getProgram(), kCCUniformAlphaTestValue);
     program->setUniformLocationWith1f(alphaValueLocation, _alphaThreshold);
     m_pSprite->setShaderProgram(program);
 #endif
