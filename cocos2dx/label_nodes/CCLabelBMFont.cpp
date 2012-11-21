@@ -873,14 +873,13 @@ void CCLabelBMFont::createFontChars()
     unsigned int totalHeight = 0;
 
     unsigned int quantityOfLines = 1;
-    
-    set<unsigned int> *charSet = m_pConfiguration->getCharacterSet();
-
     unsigned int stringLen = cc_wcslen(m_sString);
     if (stringLen == 0)
     {
         return;
     }
+
+    set<unsigned int> *charSet = m_pConfiguration->getCharacterSet();
 
     for (unsigned int i = 0; i < stringLen - 1; ++i)
     {
