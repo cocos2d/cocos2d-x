@@ -202,6 +202,9 @@
     <Filter Include="Classes\ChipmunkTest">
       <UniqueIdentifier>{0a728d21-a3d4-4d32-9d6d-f0fd078cbaa0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\ClippingNodeTest">
+      <UniqueIdentifier>{b79f4701-6fe2-4996-83c5-0567bcf90287}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -461,6 +464,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\ChipmunkTest\ChipmunkTest.cpp">
       <Filter>Classes\ChipmunkTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ClippingNodeTest\ClippingNodeTest.cpp">
+      <Filter>Classes\ClippingNodeTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -898,6 +904,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ChipmunkTest\ChipmunkTest.h">
       <Filter>Classes\ChipmunkTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ClippingNodeTest\ClippingNodeTest.h">
+      <Filter>Classes\ClippingNodeTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

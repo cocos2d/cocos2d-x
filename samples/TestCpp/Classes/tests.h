@@ -43,6 +43,7 @@
 #include "ShaderTest/ShaderTest.h"
 #include "ExtensionsTest/ExtensionsTest.h"
 #include "MutiTouchTest/MutiTouchTest.h"
+#include "ClippingNodeTest/ClippingNodeTest.h"
 #include "ChipmunkTest/ChipmunkTest.h"
 
 enum
@@ -90,6 +91,7 @@ enum
     TEST_EXTENSIONS,
     TEST_SHADER,
     TEST_MUTITOUCH,
+    TEST_CLIPPINGNODE,
     TESTS_COUNT,    
 };
 
@@ -136,7 +138,8 @@ const std::string g_aTestNames[TESTS_COUNT] = {
     "TextureCacheTest",
     "ExtensionsTest",
     "ShaderTest",
-    "MutiTouchTest"
+    "MutiTouchTest",
+    "ClippingNodeTest"
 };
 
 #endif
