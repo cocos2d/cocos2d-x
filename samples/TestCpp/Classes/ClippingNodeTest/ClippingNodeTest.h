@@ -99,9 +99,9 @@ public:
     void pokeHoleAtPoint(CCPoint point);
     virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
 private:
-	CCClippingNode *outerClipper_;
-    CCNode *holes_;
-    CCNode *holesStencil_;
+	CCClippingNode* m_pOuterClipper;
+    CCNode* m_pHoles;
+    CCNode* m_pHolesStencil;
 };
 
 class ScrollViewDemo : public BaseClippingNodeTest
@@ -114,8 +114,8 @@ public:
     virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent);
     virtual void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent);
 private:
-	bool scrolling_;
-    CCPoint lastPoint_;
+	bool m_bScrolling;
+    CCPoint m_lastPoint;
 };
 
 //#if COCOS2D_DEBUG > 1
@@ -134,7 +134,7 @@ public:
 	virtual void setupStencilForDrawingOnPlane(GLint plane);
 
 protected:
-    CCSprite *sprite_;
+    CCSprite* m_pSprite;
 };
 
 class RawStencilBufferTest2 : public RawStencilBufferTest
