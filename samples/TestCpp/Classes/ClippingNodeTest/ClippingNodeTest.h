@@ -133,7 +133,7 @@ public:
 	virtual void setupStencilForClippingOnPlane(GLint plane);
 	virtual void setupStencilForDrawingOnPlane(GLint plane);
 
-private:
+protected:
     CCSprite *sprite_;
 };
 
