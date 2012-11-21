@@ -111,6 +111,9 @@ static TestScene* CreateTestScene(int nIdx)
     case TEST_MUTITOUCH:
         pScene = new MutiTouchTestScene();
         break;
+    case TEST_CLIPPINGNODE:
+        pScene = new ClippingNodeTestScene();
+        break;
     default:
         break;
     }
