@@ -163,7 +163,7 @@ js_proxy_t *js_get_or_create_proxy(JSContext *cx, T *native_obj) {
 		assert(typeProxy);
 		JSObject* js_obj = JS_NewObject(cx, typeProxy->jsclass, typeProxy->proto, typeProxy->parentProto);
 		JS_NEW_PROXY(proxy, native_obj, js_obj);
-        
+
 		JS_AddNamedObjectRoot(cx, &proxy->obj, typeid(native_obj).name());
 		return proxy;
 	} else {
@@ -186,14 +186,14 @@ static JSBool dummy_constructor(JSContext *cx, uint32_t argc, jsval *vp) {
 	JS_NEW_PROXY(pp, cobj, _tmp);
 	JS_AddObjectRoot(cx, &pp->obj);
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(_tmp));
-    
+
 	return JS_TRUE;
 }
 
 // Arguments: NSString*, CGRect
 // Ret value: CCPhysicsSprite* (o)
 JSBool JSPROXY_CCPhysicsSprite_spriteWithFile_rect__static(JSContext *cx, uint32_t argc, jsval *vp) {
-    
+
     jsval *argv = JS_ARGV(cx, vp);
 	if (argc == 2) {
 		const char* arg0;
@@ -226,7 +226,7 @@ JSBool JSPROXY_CCPhysicsSprite_spriteWithFile_rect__static(JSContext *cx, uint32
 		std::string arg0_tmp = jsval_to_std_string(cx, argv[0]); arg0 = arg0_tmp.c_str();
 		CCPhysicsSprite* ret = new CCPhysicsSprite();
         ret->initWithFile(arg0);
-        
+
 		jsval jsret;
 		do {
 			if (ret) {
@@ -239,7 +239,7 @@ JSBool JSPROXY_CCPhysicsSprite_spriteWithFile_rect__static(JSContext *cx, uint32
 				jsret = OBJECT_TO_JSVAL(obj);
                 js_proxy_t *p;
                 JS_NEW_PROXY(p, ret, obj);
-                
+
 			} else {
 				jsret = JSVAL_NULL;
 			}
@@ -248,7 +248,7 @@ JSBool JSPROXY_CCPhysicsSprite_spriteWithFile_rect__static(JSContext *cx, uint32
 		return JS_TRUE;
 	}
 	return JS_FALSE;
-    
+
 }
 
 // Arguments: CCSpriteFrame*
@@ -330,7 +330,7 @@ void JSPROXY_CCPhysicsSprite_createClass(JSContext *cx, JSObject* globalObj)
 	JSPROXY_CCPhysicsSprite_class->convert = JS_ConvertStub;
 	JSPROXY_CCPhysicsSprite_class->finalize = JSPROXY_CCPhysicsSprite_finalize;
 	JSPROXY_CCPhysicsSprite_class->flags = 0;
-    
+
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
 	};
@@ -347,15 +347,15 @@ void JSPROXY_CCPhysicsSprite_createClass(JSContext *cx, JSObject* globalObj)
 		JS_FN("createWithSpriteFrameName", JSPROXY_CCPhysicsSprite_spriteWithSpriteFrameName__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
-    
+
     TypeTest<cocos2d::CCSprite> t1;
     js_type_class_t *typeClass;
     uint32_t typeId = t1.s_id();
     HASH_FIND_INT(_js_global_type_ht, &typeId, typeClass);
     assert(typeClass);
-    
+
 	JSPROXY_CCPhysicsSprite_object = JS_InitClass(cx, globalObj, typeClass->proto, JSPROXY_CCPhysicsSprite_class, dummy_constructor<CCPhysicsSprite>, 0,properties,funcs,NULL,st_funcs);
-    
+
     TypeTest<CCPhysicsSprite> t;
 	js_type_class_t *p;
 	typeId = t.s_id();
