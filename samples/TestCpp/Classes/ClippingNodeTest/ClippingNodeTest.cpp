@@ -420,9 +420,9 @@ void NestedTest::setup()
 
 HoleDemo::~HoleDemo()
 {
-    CC_SAFE_RELEASE(outerClipper_);
-    CC_SAFE_RELEASE(holes_);
-    CC_SAFE_RELEASE(holesStencil_);
+    CC_SAFE_RELEASE(m_pOuterClipper);
+    CC_SAFE_RELEASE(m_pHoles);
+    CC_SAFE_RELEASE(m_pHolesStencil);
 }
 
 std::string HoleDemo::title()
@@ -441,17 +441,17 @@ void HoleDemo::setup()
     target->setAnchorPoint(CCPointZero);
     target->setScale(3);
     
-    outerClipper_ = CCClippingNode::create();
-    outerClipper_->retain();
+    m_pOuterClipper = CCClippingNode::create();
+    m_pOuterClipper->retain();
     CCAffineTransform tranform = CCAffineTransformMakeIdentity();
     tranform = CCAffineTransformScale(tranform, target->getScale(), target->getScale());
 
-    outerClipper_->setContentSize( CCSizeApplyAffineTransform(target->getContentSize(), tranform));
-    outerClipper_->setAnchorPoint( ccp(0.5, 0.5) );
-    outerClipper_->setPosition( ccpMult(ccpFromSize(this->getContentSize()), 0.5f) );
-    outerClipper_->runAction(CCRepeatForever::create(CCRotateBy::create(1, 45)));
+    m_pOuterClipper->setContentSize( CCSizeApplyAffineTransform(target->getContentSize(), tranform));
+    m_pOuterClipper->setAnchorPoint( ccp(0.5, 0.5) );
+    m_pOuterClipper->setPosition( ccpMult(ccpFromSize(this->getContentSize()), 0.5f) );
+    m_pOuterClipper->runAction(CCRepeatForever::create(CCRotateBy::create(1, 45)));
     
-    outerClipper_->setStencil( target );
+    m_pOuterClipper->setStencil( target );
     
     CCClippingNode *holesClipper = CCClippingNode::create();
     holesClipper->setInverted(true);
@@ -459,19 +459,19 @@ void HoleDemo::setup()
     
     holesClipper->addChild(target);
     
-    holes_ = CCNode::create();
-    holes_->retain();
+    m_pHoles = CCNode::create();
+    m_pHoles->retain();
     
-    holesClipper->addChild(holes_);
+    holesClipper->addChild(m_pHoles);
     
-    holesStencil_ = CCNode::create();
-    holesStencil_->retain();
+    m_pHolesStencil = CCNode::create();
+    m_pHolesStencil->retain();
     
-    holesClipper->setStencil( holesStencil_);
+    holesClipper->setStencil( m_pHolesStencil);
     
-    outerClipper_->addChild(holesClipper);
+    m_pOuterClipper->addChild(holesClipper);
     
-    this->addChild(outerClipper_);
+    this->addChild(m_pOuterClipper);
         
     this->setTouchEnabled(true);
 }
@@ -486,16 +486,16 @@ void HoleDemo::pokeHoleAtPoint(CCPoint point)
     hole->setRotation( rotation );
     hole->setScale( scale );
     
-    holes_->addChild(hole);
+    m_pHoles->addChild(hole);
     
     CCSprite *holeStencil = CCSprite::create("Images/hole_stencil.png");
     holeStencil->setPosition( point );
     holeStencil->setRotation( rotation );
     holeStencil->setScale( scale );
     
-    holesStencil_->addChild(holeStencil);
+    m_pHolesStencil->addChild(holeStencil);
 
-    outerClipper_->runAction(CCSequence::createWithTwoActions(CCScaleBy::create(0.05f, 0.95f),
+    m_pOuterClipper->runAction(CCSequence::createWithTwoActions(CCScaleBy::create(0.05f, 0.95f),
                                                CCScaleTo::create(0.125f, 1)));
 }
 
@@ -503,8 +503,8 @@ void HoleDemo::pokeHoleAtPoint(CCPoint point)
 void HoleDemo::ccTouchesBegan(CCSet* touches, CCEvent* event)
 {
 	CCTouch *touch = (CCTouch *)touches->anyObject();
-	CCPoint point = outerClipper_->convertToNodeSpace(CCDirector::sharedDirector()->convertToGL(touch->getLocationInView()));
-    CCRect rect = CCRectMake(0, 0, outerClipper_->getContentSize().width, outerClipper_->getContentSize().height);
+	CCPoint point = m_pOuterClipper->convertToNodeSpace(CCDirector::sharedDirector()->convertToGL(touch->getLocationInView()));
+    CCRect rect = CCRectMake(0, 0, m_pOuterClipper->getContentSize().width, m_pOuterClipper->getContentSize().height);
     if (!rect.containsPoint(point)) return;
     this->pokeHoleAtPoint(point);
 }
@@ -548,7 +548,7 @@ void ScrollViewDemo::setup()
     content->setPosition( ccp(clipper->getContentSize().width / 2, clipper->getContentSize().height / 2) );
     clipper->addChild(content);
     
-    scrolling_ = false;
+    m_bScrolling = false;
 
     this->setTouchEnabled(true);
 }
@@ -559,26 +559,26 @@ void ScrollViewDemo::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
     CCNode *clipper = this->getChildByTag(kTagClipperNode);
 	CCPoint point = clipper->convertToNodeSpace(CCDirector::sharedDirector()->convertToGL(touch->getLocationInView()));
     CCRect rect = CCRectMake(0, 0, clipper->getContentSize().width, clipper->getContentSize().height);
-    scrolling_ = rect.containsPoint(point);
-    lastPoint_ = point;
+    m_bScrolling = rect.containsPoint(point);
+    m_lastPoint = point;
 }
 
 void ScrollViewDemo::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
 {
-    if (!scrolling_) return;
+    if (!m_bScrolling) return;
 	CCTouch *touch = (CCTouch*)pTouches->anyObject();
     CCNode *clipper = this->getChildByTag(kTagClipperNode);
     CCPoint point = clipper->convertToNodeSpace(CCDirector::sharedDirector()->convertToGL(touch->getLocationInView()));
-	CCPoint diff = ccpSub(point, lastPoint_);
+	CCPoint diff = ccpSub(point, m_lastPoint);
     CCNode *content = clipper->getChildByTag(kTagContentNode);
     content->setPosition( ccpAdd(content->getPosition(), diff) );
-    lastPoint_ = point;
+    m_lastPoint = point;
 }
 
 void ScrollViewDemo::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
 {
-    if (!scrolling_) return;
-    scrolling_ = false;
+    if (!m_bScrolling) return;
+    m_bScrolling = false;
 }
 
 //#pragma mark - RawStencilBufferTests
@@ -603,7 +603,7 @@ static const ccColor4F _planeColor[] = {
 
 RawStencilBufferTest::~RawStencilBufferTest()
 {
-    CC_SAFE_RELEASE(sprite_);
+    CC_SAFE_RELEASE(m_pSprite);
 }
 
 std::string RawStencilBufferTest::title()
@@ -622,10 +622,10 @@ void RawStencilBufferTest::setup()
     if (_stencilBits < 3) {
         CCLOGWARN("Stencil must be enabled for the current CCGLView.");
     }
-    sprite_ = CCSprite::create(s_pPathGrossini);
-    sprite_->retain();
-    sprite_->setAnchorPoint(  ccp(0.5, 0) );
-    sprite_->setScale( 2.5f );
+    m_pSprite = CCSprite::create(s_pPathGrossini);
+    m_pSprite->retain();
+    m_pSprite->setAnchorPoint(  ccp(0.5, 0) );
+    m_pSprite->setScale( 2.5f );
     CCDirector::sharedDirector()->setAlphaBlending(true);
 }
 
@@ -646,7 +646,7 @@ void RawStencilBufferTest::draw()
         CCPoint spritePoint = ccpMult(planeSize, i);
         spritePoint.x += planeSize.x / 2;
         spritePoint.y = 0;
-        sprite_->setPosition( spritePoint );
+        m_pSprite->setPosition( spritePoint );
 
         this->setupStencilForClippingOnPlane(i);
         CHECK_GL_ERROR_DEBUG();
@@ -655,7 +655,7 @@ void RawStencilBufferTest::draw()
         
         kmGLPushMatrix();
         this->transform();
-        sprite_->visit();
+        m_pSprite->visit();
         kmGLPopMatrix();
         
         this->setupStencilForDrawingOnPlane(i);
@@ -665,7 +665,7 @@ void RawStencilBufferTest::draw()
         
         kmGLPushMatrix();
         this->transform();
-        sprite_->visit();
+        m_pSprite->visit();
         kmGLPopMatrix();
     }
     
@@ -751,7 +751,7 @@ void RawStencilBufferTest4::setupStencilForClippingOnPlane(GLint plane)
     CCGLProgram *program = CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColorAlphaTest);
     GLint alphaValueLocation = glGetUniformLocation(program->getProgram(), kCCUniformAlphaTestValue);
     program->setUniformLocationWith1f(alphaValueLocation, _alphaThreshold);
-    sprite_->setShaderProgram(program );
+    m_pSprite->setShaderProgram(program );
 #endif
 }
 
@@ -784,7 +784,7 @@ void RawStencilBufferTest5::setupStencilForClippingOnPlane(GLint plane)
     CCGLProgram *program = CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColorAlphaTest);
     GLint alphaValueLocation = glGetUniformLocation(program->getProgram(), kCCUniformAlphaTestValue);
     program->setUniformLocationWith1f(alphaValueLocation, _alphaThreshold);
-    sprite_->setShaderProgram( program );
+    m_pSprite->setShaderProgram( program );
 #endif
 }
 
@@ -849,7 +849,7 @@ void RawStencilBufferTest6::setupStencilForClippingOnPlane(GLint plane)
     CCGLProgram *program = CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColorAlphaTest);
     GLint alphaValueLocation = glGetUniformLocation(program->getProgram(), kCCUniformAlphaTestValue);
     program->setUniformLocationWith1f(alphaValueLocation, _alphaThreshold);
-    sprite_->setShaderProgram(program);
+    m_pSprite->setShaderProgram(program);
 #endif
     glFlush();
 }
