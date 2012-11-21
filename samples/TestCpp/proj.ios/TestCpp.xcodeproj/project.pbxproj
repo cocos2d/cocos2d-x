@@ -212,6 +212,7 @@
 		15BA623115E4EAC3002BC3A5 /* hd in Resources */ = {isa = PBXBuildFile; fileRef = 15BA623015E4EAC3002BC3A5 /* hd */; };
 		15BA623515E4EAD7002BC3A5 /* ipadhd in Resources */ = {isa = PBXBuildFile; fileRef = 15BA623415E4EAD7002BC3A5 /* ipadhd */; };
 		15D2551A15E5FD6B000D5E89 /* ipad in Resources */ = {isa = PBXBuildFile; fileRef = 15D2551915E5FD6B000D5E89 /* ipad */; };
+		15E2AD85165C874400F7743F /* ChipmunkTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15E2AD83165C874400F7743F /* ChipmunkTest.cpp */; };
 		15FC61A816095C2B00AE81F8 /* ccb in Resources */ = {isa = PBXBuildFile; fileRef = 15FC61A716095C2B00AE81F8 /* ccb */; };
 		1A14ADF515DA49A50064E300 /* CCEditBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A14ADEC15DA49A50064E300 /* CCEditBox.cpp */; };
 		1A14ADF715DA49A50064E300 /* CCEditBoxImplIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A14ADF115DA49A50064E300 /* CCEditBoxImplIOS.mm */; };
@@ -747,6 +748,8 @@
 		15BA623015E4EAC3002BC3A5 /* hd */ = {isa = PBXFileReference; lastKnownFileType = folder; path = hd; sourceTree = "<group>"; };
 		15BA623415E4EAD7002BC3A5 /* ipadhd */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ipadhd; sourceTree = "<group>"; };
 		15D2551915E5FD6B000D5E89 /* ipad */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ipad; sourceTree = "<group>"; };
+		15E2AD83165C874400F7743F /* ChipmunkTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ChipmunkTest.cpp; sourceTree = "<group>"; };
+		15E2AD84165C874400F7743F /* ChipmunkTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChipmunkTest.h; sourceTree = "<group>"; };
 		15FC61A716095C2B00AE81F8 /* ccb */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ccb; sourceTree = "<group>"; };
 		1A14ADEC15DA49A50064E300 /* CCEditBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCEditBox.cpp; sourceTree = "<group>"; };
 		1A14ADED15DA49A50064E300 /* CCEditBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEditBox.h; sourceTree = "<group>"; };
@@ -942,16 +945,16 @@
 		15AA9C4015B7EC450033D6C2 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				15A048C21637845600F7CC0A /* VisibleRect.cpp */,
-				15A048C31637845600F7CC0A /* VisibleRect.h */,
 				15AA9F3A15B7EF960033D6C2 /* AppDelegate.cpp */,
 				15AA9CAA15B7EC460033D6C2 /* controller.cpp */,
 				15AA9D3115B7EC460033D6C2 /* testBasic.cpp */,
+				15A048C21637845600F7CC0A /* VisibleRect.cpp */,
 				15AA9F3B15B7EF960033D6C2 /* AppDelegate.h */,
 				15AA9CAB15B7EC460033D6C2 /* controller.h */,
 				15AA9D3215B7EC460033D6C2 /* testBasic.h */,
 				15AA9D3315B7EC460033D6C2 /* testResource.h */,
 				15AA9D3415B7EC460033D6C2 /* tests.h */,
+				15A048C31637845600F7CC0A /* VisibleRect.h */,
 				15AA9C4115B7EC450033D6C2 /* AccelerometerTest */,
 				15AA9C4415B7EC450033D6C2 /* ActionManagerTest */,
 				15AA9C4715B7EC450033D6C2 /* ActionsEaseTest */,
@@ -960,6 +963,7 @@
 				15AA9C5015B7EC450033D6C2 /* Box2DTest */,
 				15AA9C5315B7EC450033D6C2 /* Box2DTestBed */,
 				15AA9C8915B7EC460033D6C2 /* BugsTest */,
+				15E2AD82165C874300F7743F /* ChipmunkTest */,
 				15AA9CA415B7EC460033D6C2 /* ClickAndMoveTest */,
 				15AA9CA715B7EC460033D6C2 /* CocosDenshionTest */,
 				15AA9CAC15B7EC460033D6C2 /* CurlTest */,
@@ -2007,6 +2011,16 @@
 			path = CCBReader;
 			sourceTree = "<group>";
 		};
+		15E2AD82165C874300F7743F /* ChipmunkTest */ = {
+			isa = PBXGroup;
+			children = (
+				15E2AD83165C874400F7743F /* ChipmunkTest.cpp */,
+				15E2AD84165C874400F7743F /* ChipmunkTest.h */,
+			);
+			name = ChipmunkTest;
+			path = ../Classes/ChipmunkTest;
+			sourceTree = "<group>";
+		};
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -2487,6 +2501,7 @@
 				15A048C41637845600F7CC0A /* VisibleRect.cpp in Sources */,
 				152DCF91165B7C63009B8D87 /* CCPhysicsDebugNode.cpp in Sources */,
 				152DCF92165B7C63009B8D87 /* CCPhysicsSprite.cpp in Sources */,
+				15E2AD85165C874400F7743F /* ChipmunkTest.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
