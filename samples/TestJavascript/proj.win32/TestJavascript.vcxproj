@@ -64,7 +64,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>$(ProjectDir)..\Classes;$(ProjectDir)..\..\..\scripting\javascript\spidermonkey-win32\include;$(ProjectDir)..\..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\..\extensions;$(ProjectDir)..\..\..\scripting\javascript\bindings;$(ProjectDir)..\..\..\cocos2dx;$(ProjectDir)..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\..\cocos2dx\platform\win32;$(ProjectDir)..\..\..\cocos2dx\platform\third_party\win32;$(ProjectDir)..\..\..\cocos2dx\platform\third_party\win32\OGLES;$(ProjectDir)..\..\..\CocosDenshion\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_WINDOWS;STRICT;_DEBUG;XP_WIN;JS_HAVE___INTN;JS_INTPTR_TYPE=int;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;STRICT;_DEBUG;XP_WIN;JS_HAVE___INTN;JS_INTPTR_TYPE=int;COCOS2D_DEBUG=1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -119,7 +119,7 @@ xcopy "$(ProjectDir)..\cocos2d-js-tests\src" "$(OutDir)\TestJavascriptRes\src\" 
     </Midl>
     <ClCompile>
       <AdditionalIncludeDirectories>$(ProjectDir)..\Classes;$(ProjectDir)..\..\..\scripting\javascript\spidermonkey-win32\include;$(ProjectDir)..\..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\..\extensions;$(ProjectDir)..\..\..\scripting\javascript\bindings;$(ProjectDir)..\..\..\cocos2dx;$(ProjectDir)..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\..\cocos2dx\platform\win32;$(ProjectDir)..\..\..\cocos2dx\platform\third_party\win32;$(ProjectDir)..\..\..\cocos2dx\platform\third_party\win32\OGLES;$(ProjectDir)..\..\..\CocosDenshion\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_WINDOWS;STRICT;NDEBUG;XP_WIN;JS_HAVE___INTN;JS_INTPTR_TYPE=int;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;STRICT;NDEBUG;XP_WIN;JS_HAVE___INTN;JS_INTPTR_TYPE=int;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ExceptionHandling>
       </ExceptionHandling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -158,7 +158,6 @@ xcopy "$(ProjectDir)..\cocos2d-js-tests\src" "$(OutDir)\TestJavascriptRes\src\" 
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\scripting\javascript\bindings\CCPhysicsSprite.cpp" />
     <ClCompile Include="..\..\..\scripting\javascript\bindings\cocos2d_specifics.cpp" />
     <ClCompile Include="..\..\..\scripting\javascript\bindings\cocosjs_manual_conversions.cpp" />
     <ClCompile Include="..\..\..\scripting\javascript\bindings\generated\cocos2dx.cpp" />
@@ -174,7 +173,6 @@ xcopy "$(ProjectDir)..\cocos2d-js-tests\src" "$(OutDir)\TestJavascriptRes\src\" 
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\scripting\javascript\bindings\CCPhysicsSprite.h" />
     <ClInclude Include="..\..\..\scripting\javascript\bindings\cocos2d_specifics.hpp" />
     <ClInclude Include="..\..\..\scripting\javascript\bindings\cocosjs_manual_conversions.h" />
     <ClInclude Include="..\..\..\scripting\javascript\bindings\generated\cocos2dx.hpp" />

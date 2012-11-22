@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-
+#include "cocos-ext.h"
 #include "js_bindings_config.h"
 #ifdef JSB_INCLUDE_CHIPMUNK
 
@@ -32,8 +32,8 @@
 #include "js_bindings_chipmunk_manual.h"
 #include "js_manual_conversions.h"
 #include "uthash.h"
-#include "CCPhysicsSprite.h"
 
+USING_NS_CC_EXT;
 // Function declarations
 void static freeSpaceChildren(cpSpace *space);
 
@@ -65,7 +65,7 @@ JSBool JSPROXY_CCPhysicsSprite_body(JSContext *cx, uint32_t argc, jsval *vp) {
 	TEST_NATIVE_OBJECT(cx, real)
 	cpBody* ret_val;
     
-	ret_val = real->_body;
+	ret_val = real->getBody();
     jsval ret_jsval = opaque_to_jsval(cx, ret_val);
 	JS_SET_RVAL(cx, vp, ret_jsval);
     
@@ -83,7 +83,7 @@ JSBool JSPROXY_CCPhysicsSprite_ignoreBodyRotation(JSContext *cx, uint32_t argc, 
     
 	bool ret_val;
     
-	ret_val = real->_ignoreBodyRotation;
+	ret_val = real->isIgnoreBodyRotation();
 	JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
 	return JS_TRUE;
 }
