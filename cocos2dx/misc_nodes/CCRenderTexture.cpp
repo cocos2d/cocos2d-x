@@ -394,9 +394,9 @@ void CCRenderTexture::beginWithClear(float r, float g, float b, float a, float d
     this->begin();
 
     // save clear color
-    GLfloat	clearColor[4];
-    GLfloat depthClearValue;
-    int stencilClearValue;
+    GLfloat	clearColor[4] = {0.0f};
+    GLfloat depthClearValue = 0.0f;
+    int stencilClearValue = 0;
     
     if (flags & GL_COLOR_BUFFER_BIT)
     {
@@ -512,7 +512,6 @@ void CCRenderTexture::visit()
     if (m_pGrid && m_pGrid->isActive())
     {
         m_pGrid->afterDraw(this);
-        transformAncestors();
     }
 	
 	kmGLPopMatrix();
@@ -528,9 +527,9 @@ void CCRenderTexture::draw()
 		
         if (m_uClearFlags)
         {
-			GLfloat oldClearColor[4];
-			GLfloat oldDepthClearValue;
-			GLint oldStencilClearValue;
+            GLfloat oldClearColor[4] = {0.0f};
+			GLfloat oldDepthClearValue = 0.0f;
+			GLint oldStencilClearValue = 0;
 			
 			// backup and set
 			if (m_uClearFlags & GL_COLOR_BUFFER_BIT)
