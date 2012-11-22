@@ -756,15 +756,19 @@ bool ScriptingCore::executeFunctionWithObjectData(CCNode *self, const char *name
 
     js_proxy_t * p;
     JS_GET_PROXY(p, self);
-    if (!p) return 0;
+    if (!p) return false;
     
     jsval retval;
     jsval dataVal = OBJECT_TO_JSVAL(obj);
 
     executeJSFunctionWithName(this->cx_, p->obj, name, dataVal, retval);
-    if(JSVAL_IS_NULL(retval)) return false;
-    else if(JSVAL_IS_BOOLEAN(retval)) return JSVAL_TO_BOOLEAN(retval);
-    
+    if(JSVAL_IS_NULL(retval)) {
+        return false;
+    }
+    else if(JSVAL_IS_BOOLEAN(retval)) {
+        return JSVAL_TO_BOOLEAN(retval);
+    }
+    return false;
 }
 
 int ScriptingCore::executeFunctionWithOwner(jsval owner, const char *name, jsval data) {
