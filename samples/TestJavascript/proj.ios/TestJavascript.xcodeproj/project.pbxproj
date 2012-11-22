@@ -343,7 +343,6 @@
 		263B98CE16548E4D00228D8A /* js_bindings_core.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = js_bindings_core.cpp; sourceTree = "<group>"; };
 		263B98CF16548E4D00228D8A /* js_bindings_core.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_core.h; sourceTree = "<group>"; };
 		263B98D316548EB700228D8A /* js_bindings_chipmunk_functions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = js_bindings_chipmunk_functions.cpp; sourceTree = "<group>"; };
-		263B98D416548EB700228D8A /* js_bindings_chipmunk_functions.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = js_bindings_chipmunk_functions.hpp; sourceTree = "<group>"; };
 		263B98D516548EB700228D8A /* js_bindings_chipmunk_manual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = js_bindings_chipmunk_manual.cpp; sourceTree = "<group>"; };
 		A922753D1517C094001B78AA /* TestJavascript.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestJavascript.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A92275411517C094001B78AA /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -396,7 +395,6 @@
 			isa = PBXGroup;
 			children = (
 				263B98D316548EB700228D8A /* js_bindings_chipmunk_functions.cpp */,
-				263B98D416548EB700228D8A /* js_bindings_chipmunk_functions.hpp */,
 				263B98D516548EB700228D8A /* js_bindings_chipmunk_manual.cpp */,
 				263B98C616548E4D00228D8A /* js_bindings_chipmunk_auto_classes_registration.h */,
 				263B98C716548E4D00228D8A /* js_bindings_chipmunk_auto_classes.cpp */,
