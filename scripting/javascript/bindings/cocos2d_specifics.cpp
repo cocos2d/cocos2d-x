@@ -1286,7 +1286,7 @@ JSBool js_BezierActions_create(JSContext *cx, uint32_t argc, jsval *vp) {
         config.controlPoint_2 = arr[1];
         config.endPosition = arr[2];
         
-        CCBezierBy* ret =  CCBezierBy::create(t, config);
+        T* ret =  T::create(t, config);
         
         free(arr);
 
@@ -1299,7 +1299,7 @@ JSBool js_BezierActions_create(JSContext *cx, uint32_t argc, jsval *vp) {
 					jsret = OBJECT_TO_JSVAL(p->obj);
 				} else {
 					// create a new js obj of that class
-					js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::CCBezierBy>(cx, ret);
+					js_proxy_t *proxy = js_get_or_create_proxy<T>(cx, ret);
 					jsret = OBJECT_TO_JSVAL(proxy->obj);
 				}
 			} else {
@@ -1815,7 +1815,7 @@ extern JSObject* js_cocos2dx_CCCardinalSplineBy_prototype;
 extern JSObject* js_cocos2dx_CCBezierTo_prototype;
 extern JSObject* js_cocos2dx_CCBezierBy_prototype;
 extern JSObject* js_cocos2dx_CCScheduler_prototype;
-extern JSObject* js_cocos2dx_CCTMXLayer_prototype;
+extern JSObject* js_cocos2dx_CCDrawNode_prototype;
 
 
 // setBlendFunc
@@ -1877,10 +1877,14 @@ JSBool js_cocos2dx_CCParticleSystem_setBlendFunc(JSContext *cx, uint32_t argc, j
     return js_cocos2dx_setBlendFunc<CCParticleSystem>(cx, argc, vp);
 }
 
+JSBool js_cocos2dx_CCDrawNode_setBlendFunc(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    return js_cocos2dx_setBlendFunc<CCDrawNode>(cx, argc, vp);
+}
+
 // CCTMXLayer
 JSBool js_cocos2dx_CCTMXLayer_getTileFlagsAt(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    
     jsval *argv = JS_ARGV(cx, vp);
     JSObject *obj;
     CCTMXLayer* cobj;
@@ -1901,6 +1905,65 @@ JSBool js_cocos2dx_CCTMXLayer_getTileFlagsAt(JSContext *cx, uint32_t argc, jsval
     return JS_FALSE;
 }
 
+//#pragma mark - CCDrawNode
+
+// Arguments: Array of points, fill color (ccc4f), width(float), border color (ccc4f)
+// Ret value: void
+JSBool js_cocos2dx_CCDrawNode_drawPolygon(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
+    CCDrawNode* cobj = (CCDrawNode*)(proxy ? proxy->ptr : NULL);
+    TEST_NATIVE_OBJECT(cx, cobj)
+
+    if ( argc == 4) {
+        jsval *argvp = JS_ARGV(cx,vp);
+        JSBool ok = JS_TRUE;
+        JSObject *argArray; ccColor4F argFillColor; double argWidth; ccColor4F argBorderColor; 
+
+        ok &= JS_ValueToObject(cx, *argvp++, &argArray);
+        if( ! (argArray && JS_IsArrayObject(cx, argArray) ) )
+            return JS_FALSE;
+
+        JSObject *tmp_arg;
+        ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg );
+        argFillColor = *(ccColor4F*)JS_GetArrayBufferViewData( tmp_arg, cx );
+
+        ok &= JS_ValueToNumber( cx, *argvp++, &argWidth );
+
+        ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg );
+        argBorderColor = *(ccColor4F*)JS_GetArrayBufferViewData( tmp_arg, cx );
+
+        if( ! ok )
+            return JS_FALSE;
+
+        {
+            uint32_t l;
+            if( ! JS_GetArrayLength(cx, argArray, &l) )
+                return JS_FALSE;
+
+            CCPoint* verts = new CCPoint[ l ];
+            CCPoint p;
+
+            for( int i=0; i<l; i++ ) {
+                jsval pointvp;
+                if( ! JS_GetElement(cx, argArray, i, &pointvp) )
+                    return JS_FALSE;
+                p = jsval_to_ccpoint(cx, pointvp);
+
+                verts[i] = p;
+            }
+
+            cobj->drawPolygon(verts, l, argFillColor, argWidth, argBorderColor);
+            CC_SAFE_DELETE_ARRAY(verts);
+        }
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return JS_TRUE;	
+    }
+
+    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 4);
+    return JS_FALSE;	
+}
 
 void register_cocos2dx_js_extensions(JSContext* cx, JSObject* global)
 {
@@ -1945,6 +2008,9 @@ void register_cocos2dx_js_extensions(JSContext* cx, JSObject* global)
     JS_DefineFunction(cx, js_cocos2dx_CCSprite_prototype, "setPosition", js_cocos2dx_CCSprite_setPosition, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     
     JS_DefineFunction(cx, js_cocos2dx_CCTMXLayer_prototype, "getTileFlagsAt", js_cocos2dx_CCTMXLayer_getTileFlagsAt, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+
+    JS_DefineFunction(cx, js_cocos2dx_CCDrawNode_prototype, "drawPoly", js_cocos2dx_CCDrawNode_drawPolygon, 4, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, js_cocos2dx_CCDrawNode_prototype, "setBlendFunc", js_cocos2dx_CCDrawNode_setBlendFunc, 2, JSPROP_READONLY | JSPROP_PERMANENT);
 
     tmpObj = JSVAL_TO_OBJECT(anonEvaluate(cx, global, "(function () { return cc.BezierBy; })()"));
     JS_DefineFunction(cx, tmpObj, "create", JSB_CCBezierBy_actionWithDuration, 2, JSPROP_READONLY | JSPROP_PERMANENT);
