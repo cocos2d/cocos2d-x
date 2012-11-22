@@ -66,13 +66,12 @@ if [ -d "$APP_ANDROID_ROOT"/assets ]; then
 fi
 
 mkdir "$APP_ANDROID_ROOT"/assets
-mkdir "$APP_ANDROID_ROOT"/assets/res
 
-# copy "cocos2d-js-tests/res" into "assets/res"
-cp -rf "$APP_ROOT"/cocos2d-js-tests/res "$APP_ANDROID_ROOT"/assets
+# copy "Resources" into "assets"
+find "$APP_ROOT"/Resources -type f -name '*.*' -exec cp -f {} "$APP_ANDROID_ROOT"/assets \;
 
-# copy src/**/*.js from cocos2d-js-tests into assets' root
-cp -rf "$APP_ROOT"/cocos2d-js-tests/src "$APP_ANDROID_ROOT"/assets
+# copy *.js from WatermelonWithMe into assets' root
+cp -rf "$APP_ROOT"/*.js "$APP_ANDROID_ROOT"/assets
 
 # copy bindings/*.js into assets' root
 cp -f "$APP_ROOT"/bindings/*.js "$APP_ANDROID_ROOT"/assets

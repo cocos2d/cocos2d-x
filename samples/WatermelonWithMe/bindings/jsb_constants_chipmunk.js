@@ -45,7 +45,7 @@ cp.BoxShape2 = function(body, box)
 		box.r, box.t,
 		box.r, box.b
 	];
-	
+
 	return new cp.PolyShape(body, verts, cp.vzero);
 };
 
@@ -54,13 +54,13 @@ cp.BoxShape = function(body, width, height)
 {
 	var hw = width/2;
 	var hh = height/2;
-	
+
 	return cp.BoxShape2(body, new cp.BB(-hw, -hh, hw, hh));
 };
 
 
 /// Initialize an static body
-cp.BodyStatic = function()
+cp.StaticBody = function()
 {
 	return new cp.Body(Infinity, Infinity);
 };
@@ -250,4 +250,26 @@ Object.defineProperties(cp.Body.prototype,
 						configurable : true
 					}
 
+				});
+
+// Shape properties
+Object.defineProperties(cp.Shape.prototype,
+				{
+					"body" : {
+						get : function(){
+                            return this.getBody();
+                        },
+						set : function(newValue){
+                            this.setBody(newValue);
+                        },
+						enumerable : true,
+						configurable : true
+					},
+					"collision_type" : {
+						get : function(){
+                            return this.getCollisionType();
+                        },
+						enumerable : true,
+						configurable : true
+					}
 				});
