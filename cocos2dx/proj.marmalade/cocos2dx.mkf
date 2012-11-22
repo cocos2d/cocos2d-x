@@ -160,12 +160,7 @@ files
 	[particle_nodes]
 	"*.h"
 	"*.cpp"
-	
-	("../physics_nodes")
-	[physics_nodes]
-	"*.h"
-	"*.cpp"
-	
+
 	("../platform")
 	[platforms]
 	"*.h"
