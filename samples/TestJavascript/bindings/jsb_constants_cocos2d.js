@@ -341,6 +341,29 @@ cc.LabelAtlas.create = function( a,b,c,d,e ) {
     }
 };
 
+// PhysicsDebugNode
+cc.PhysicsDebugNode.create = function( space ) {
+    var s = space;
+    if( space.handle !== undefined )
+        s = space.handle;
+    return cc.PhysicsDebugNode._create( s );
+};
+cc.PhysicsDebugNode.prototype.setSpace = function( space ) {
+    var s = space;
+    if( space.handle !== undefined )
+        s = space.handle;
+    return this._setSpace( s );
+};
+
+// PhysicsSprite
+cc.PhysicsSprite.prototype.setBody = function( body ) {
+    var b = body;
+    if( body.handle !== undefined )
+        b = body.handle;
+    return this._setBody( b );
+};
+
+
 /**
  * Associates a base class with a native superclass
  * @function

@@ -218,6 +218,16 @@ CCPhysicsDebugNode::~CCPhysicsDebugNode()
 {
 }
 
+cpSpace* CCPhysicsDebugNode::getSpace() const
+{
+    return m_pSpacePtr;
+}
+
+void CCPhysicsDebugNode::setSpace(cpSpace *space)
+{
+    m_pSpacePtr = space;
+}
+
 NS_CC_EXT_END
 
 #endif // CC_ENABLE_CHIPMUNK_INTEGRATION

@@ -92,6 +92,7 @@ void JSB_cpBase_createClass(JSContext* cx, JSObject* globalObj, const char * nam
 extern JSObject* JSB_cpBase_object;
 extern JSClass* JSB_cpBase_class;
 extern void register_CCPhysicsSprite(JSContext *cx, JSObject *obj);
+extern void register_CCPhysicsDebugNode(JSContext *cx, JSObject *obj);
 
 // Manual constructor / destructors
 JSBool JSB_cpPolyShape_constructor(JSContext *cx, uint32_t argc, jsval *vp);

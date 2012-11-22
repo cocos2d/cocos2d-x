@@ -58,7 +58,6 @@ public:
     cpSpace* getSpace() const;
     void setSpace(cpSpace *space);
     
-protected:
     CCPhysicsDebugNode();
 };
 
