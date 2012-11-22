@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		15384E5716119CC30021DC07 /* CCPhysicsSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15384E3E16119CC30021DC07 /* CCPhysicsSprite.cpp */; };
 		15384E5816119CC30021DC07 /* cocos2d_specifics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15384E4016119CC30021DC07 /* cocos2d_specifics.cpp */; };
 		15384E5916119CC30021DC07 /* cocosjs_manual_conversions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15384E4216119CC30021DC07 /* cocosjs_manual_conversions.cpp */; };
 		15384E5A16119CC30021DC07 /* cocos2dx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15384E4516119CC30021DC07 /* cocos2dx.cpp */; };
@@ -69,7 +68,10 @@
 		15DA882D1627C44800155276 /* jsb_constants_cocosbuilder.js in Resources */ = {isa = PBXBuildFile; fileRef = 15DA88281627C44800155276 /* jsb_constants_cocosbuilder.js */; };
 		15DA882E1627C44800155276 /* jsb_constants_gl.js in Resources */ = {isa = PBXBuildFile; fileRef = 15DA88291627C44800155276 /* jsb_constants_gl.js */; };
 		15DA88B71627C62000155276 /* cocos2dxapi.js in Resources */ = {isa = PBXBuildFile; fileRef = 15DA88B61627C62000155276 /* cocos2dxapi.js */; };
-		262829D415EC7196002C4240 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 262829A315EC7196002C4240 /* Makefile */; };
+		15E2AE9E165DC52C00F7743F /* CCPhysicsDebugNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15E2AE9A165DC52C00F7743F /* CCPhysicsDebugNode.cpp */; };
+		15E2AE9F165DC52C00F7743F /* CCPhysicsSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15E2AE9C165DC52C00F7743F /* CCPhysicsSprite.cpp */; };
+		15E2AEA3165DC6DD00F7743F /* res in Resources */ = {isa = PBXBuildFile; fileRef = 15E2AEA2165DC6DD00F7743F /* res */; };
+		15E2AEA5165DC73200F7743F /* src in Resources */ = {isa = PBXBuildFile; fileRef = 15E2AEA4165DC73200F7743F /* src */; };
 		262829DB15EC7196002C4240 /* chipmunk.c in Sources */ = {isa = PBXBuildFile; fileRef = 262829AC15EC7196002C4240 /* chipmunk.c */; };
 		262829DD15EC7196002C4240 /* cpConstraint.c in Sources */ = {isa = PBXBuildFile; fileRef = 262829AF15EC7196002C4240 /* cpConstraint.c */; };
 		262829DE15EC7196002C4240 /* cpDampedRotarySpring.c in Sources */ = {isa = PBXBuildFile; fileRef = 262829B015EC7196002C4240 /* cpDampedRotarySpring.c */; };
@@ -99,10 +101,6 @@
 		262829F615EC7196002C4240 /* cpSpatialIndex.c in Sources */ = {isa = PBXBuildFile; fileRef = 262829C815EC7196002C4240 /* cpSpatialIndex.c */; };
 		262829F715EC7196002C4240 /* cpSweep1D.c in Sources */ = {isa = PBXBuildFile; fileRef = 262829C915EC7196002C4240 /* cpSweep1D.c */; };
 		262829F815EC7196002C4240 /* cpVect.c in Sources */ = {isa = PBXBuildFile; fileRef = 262829CA15EC7196002C4240 /* cpVect.c */; };
-		263B98C216548DF500228D8A /* cocos2d.js in Resources */ = {isa = PBXBuildFile; fileRef = 263B98BE16548DF500228D8A /* cocos2d.js */; };
-		263B98C316548DF500228D8A /* main.js in Resources */ = {isa = PBXBuildFile; fileRef = 263B98BF16548DF500228D8A /* main.js */; };
-		263B98C416548DF500228D8A /* res in Resources */ = {isa = PBXBuildFile; fileRef = 263B98C016548DF500228D8A /* res */; };
-		263B98C516548DF500228D8A /* src in Resources */ = {isa = PBXBuildFile; fileRef = 263B98C116548DF500228D8A /* src */; };
 		263B98D016548E4D00228D8A /* js_bindings_chipmunk_auto_classes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 263B98C716548E4D00228D8A /* js_bindings_chipmunk_auto_classes.cpp */; };
 		263B98D116548E4D00228D8A /* js_bindings_chipmunk_registration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 263B98CC16548E4D00228D8A /* js_bindings_chipmunk_registration.cpp */; };
 		263B98D216548E4D00228D8A /* js_bindings_core.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 263B98CE16548E4D00228D8A /* js_bindings_core.cpp */; };
@@ -145,8 +143,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		15384E3E16119CC30021DC07 /* CCPhysicsSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPhysicsSprite.cpp; sourceTree = "<group>"; };
-		15384E3F16119CC30021DC07 /* CCPhysicsSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsSprite.h; sourceTree = "<group>"; };
 		15384E4016119CC30021DC07 /* cocos2d_specifics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cocos2d_specifics.cpp; sourceTree = "<group>"; };
 		15384E4116119CC30021DC07 /* cocos2d_specifics.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = cocos2d_specifics.hpp; sourceTree = "<group>"; };
 		15384E4216119CC30021DC07 /* cocosjs_manual_conversions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cocosjs_manual_conversions.cpp; sourceTree = "<group>"; };
@@ -275,9 +271,12 @@
 		15DA88281627C44800155276 /* jsb_constants_cocosbuilder.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_constants_cocosbuilder.js; sourceTree = "<group>"; };
 		15DA88291627C44800155276 /* jsb_constants_gl.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_constants_gl.js; sourceTree = "<group>"; };
 		15DA88B61627C62000155276 /* cocos2dxapi.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = cocos2dxapi.js; path = ../../../scripting/javascript/bindings/generated/cocos2dxapi.js; sourceTree = "<group>"; };
-		2628297D15EC7196002C4240 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
-		2628297E15EC7196002C4240 /* Android.mk */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Android.mk; sourceTree = "<group>"; };
-		2628297F15EC7196002C4240 /* chipmunk-docs.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "chipmunk-docs.html"; sourceTree = "<group>"; };
+		15E2AE9A165DC52C00F7743F /* CCPhysicsDebugNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPhysicsDebugNode.cpp; sourceTree = "<group>"; };
+		15E2AE9B165DC52C00F7743F /* CCPhysicsDebugNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsDebugNode.h; sourceTree = "<group>"; };
+		15E2AE9C165DC52C00F7743F /* CCPhysicsSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPhysicsSprite.cpp; sourceTree = "<group>"; };
+		15E2AE9D165DC52C00F7743F /* CCPhysicsSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsSprite.h; sourceTree = "<group>"; };
+		15E2AEA2165DC6DD00F7743F /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; name = res; path = "../cocos2d-js-tests/res"; sourceTree = "<group>"; };
+		15E2AEA4165DC73200F7743F /* src */ = {isa = PBXFileReference; lastKnownFileType = folder; name = src; path = "../cocos2d-js-tests/src"; sourceTree = "<group>"; };
 		2628298215EC7196002C4240 /* chipmunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk.h; sourceTree = "<group>"; };
 		2628298315EC7196002C4240 /* chipmunk_ffi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk_ffi.h; sourceTree = "<group>"; };
 		2628298415EC7196002C4240 /* chipmunk_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk_private.h; sourceTree = "<group>"; };
@@ -303,18 +302,6 @@
 		2628299915EC7196002C4240 /* cpSpace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cpSpace.h; sourceTree = "<group>"; };
 		2628299A15EC7196002C4240 /* cpSpatialIndex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cpSpatialIndex.h; sourceTree = "<group>"; };
 		2628299B15EC7196002C4240 /* cpVect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cpVect.h; sourceTree = "<group>"; };
-		2628299C15EC7196002C4240 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
-		2628299E15EC7196002C4240 /* .cproject */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = .cproject; sourceTree = "<group>"; };
-		2628299F15EC7196002C4240 /* .project */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = .project; sourceTree = "<group>"; };
-		262829A115EC7196002C4240 /* .cproject */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = .cproject; sourceTree = "<group>"; };
-		262829A215EC7196002C4240 /* .project */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = .project; sourceTree = "<group>"; };
-		262829A315EC7196002C4240 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
-		262829A515EC7196002C4240 /* chipmunk.vcproj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = chipmunk.vcproj; sourceTree = "<group>"; };
-		262829A615EC7196002C4240 /* chipmunk.vcproj.user */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = chipmunk.vcproj.user; sourceTree = "<group>"; };
-		262829A715EC7196002C4240 /* chipmunk.vcxproj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = chipmunk.vcxproj; sourceTree = "<group>"; };
-		262829A815EC7196002C4240 /* chipmunk.vcxproj.filters */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = chipmunk.vcxproj.filters; sourceTree = "<group>"; };
-		262829A915EC7196002C4240 /* chipmunk.vcxproj.user */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = chipmunk.vcxproj.user; sourceTree = "<group>"; };
-		262829AA15EC7196002C4240 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
 		262829AC15EC7196002C4240 /* chipmunk.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = chipmunk.c; sourceTree = "<group>"; };
 		262829AD15EC7196002C4240 /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		262829AF15EC7196002C4240 /* cpConstraint.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpConstraint.c; sourceTree = "<group>"; };
@@ -346,10 +333,6 @@
 		262829C915EC7196002C4240 /* cpSweep1D.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpSweep1D.c; sourceTree = "<group>"; };
 		262829CA15EC7196002C4240 /* cpVect.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpVect.c; sourceTree = "<group>"; };
 		262829CB15EC7196002C4240 /* prime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = prime.h; sourceTree = "<group>"; };
-		263B98BE16548DF500228D8A /* cocos2d.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = cocos2d.js; path = "../cocos2d-js-tests/cocos2d.js"; sourceTree = "<group>"; };
-		263B98BF16548DF500228D8A /* main.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = main.js; path = "../cocos2d-js-tests/main.js"; sourceTree = "<group>"; };
-		263B98C016548DF500228D8A /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; name = res; path = "../cocos2d-js-tests/res"; sourceTree = "<group>"; };
-		263B98C116548DF500228D8A /* src */ = {isa = PBXFileReference; lastKnownFileType = folder; name = src; path = "../cocos2d-js-tests/src"; sourceTree = "<group>"; };
 		263B98C616548E4D00228D8A /* js_bindings_chipmunk_auto_classes_registration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_chipmunk_auto_classes_registration.h; sourceTree = "<group>"; };
 		263B98C716548E4D00228D8A /* js_bindings_chipmunk_auto_classes.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = js_bindings_chipmunk_auto_classes.cpp; sourceTree = "<group>"; };
 		263B98C816548E4D00228D8A /* js_bindings_chipmunk_auto_classes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_chipmunk_auto_classes.h; sourceTree = "<group>"; };
@@ -424,8 +407,6 @@
 				263B98CD16548E4D00228D8A /* js_bindings_chipmunk_registration.h */,
 				263B98CE16548E4D00228D8A /* js_bindings_core.cpp */,
 				263B98CF16548E4D00228D8A /* js_bindings_core.h */,
-				15384E3E16119CC30021DC07 /* CCPhysicsSprite.cpp */,
-				15384E3F16119CC30021DC07 /* CCPhysicsSprite.h */,
 				15384E4016119CC30021DC07 /* cocos2d_specifics.cpp */,
 				15384E4116119CC30021DC07 /* cocos2d_specifics.hpp */,
 				15384E4216119CC30021DC07 /* cocosjs_manual_conversions.cpp */,
@@ -457,6 +438,7 @@
 		15384E6216119D5E0021DC07 /* extensions */ = {
 			isa = PBXGroup;
 			children = (
+				15E2AE99165DC52C00F7743F /* physics_nodes */,
 				15384E6416119D5E0021DC07 /* CCBReader */,
 				15384E9916119D5E0021DC07 /* cocos-ext.h */,
 				15384E9A16119D5E0021DC07 /* ExtensionMacros.h */,
@@ -611,10 +593,8 @@
 		15628F5B15F0F5C2000CF24B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				263B98BE16548DF500228D8A /* cocos2d.js */,
-				263B98BF16548DF500228D8A /* main.js */,
-				263B98C016548DF500228D8A /* res */,
-				263B98C116548DF500228D8A /* src */,
+				15E2AEA4165DC73200F7743F /* src */,
+				15E2AEA2165DC6DD00F7743F /* res */,
 				15DA88B61627C62000155276 /* cocos2dxapi.js */,
 				15DA88241627C44800155276 /* bindings */,
 				D446FDA616102D86000ADA7B /* Default-568h@2x.png */,
@@ -669,18 +649,21 @@
 			path = ../bindings;
 			sourceTree = "<group>";
 		};
+		15E2AE99165DC52C00F7743F /* physics_nodes */ = {
+			isa = PBXGroup;
+			children = (
+				15E2AE9A165DC52C00F7743F /* CCPhysicsDebugNode.cpp */,
+				15E2AE9B165DC52C00F7743F /* CCPhysicsDebugNode.h */,
+				15E2AE9C165DC52C00F7743F /* CCPhysicsSprite.cpp */,
+				15E2AE9D165DC52C00F7743F /* CCPhysicsSprite.h */,
+			);
+			path = physics_nodes;
+			sourceTree = "<group>";
+		};
 		2628297C15EC7196002C4240 /* chipmunk */ = {
 			isa = PBXGroup;
 			children = (
-				2628297D15EC7196002C4240 /* .gitignore */,
-				2628297E15EC7196002C4240 /* Android.mk */,
-				2628297F15EC7196002C4240 /* chipmunk-docs.html */,
 				2628298015EC7196002C4240 /* include */,
-				2628299C15EC7196002C4240 /* LICENSE.txt */,
-				2628299D15EC7196002C4240 /* proj.blackberry */,
-				262829A015EC7196002C4240 /* proj.linux */,
-				262829A415EC7196002C4240 /* proj.win32 */,
-				262829AA15EC7196002C4240 /* README.txt */,
 				262829AB15EC7196002C4240 /* src */,
 			);
 			name = chipmunk;
@@ -733,37 +716,6 @@
 				2628299315EC7196002C4240 /* util.h */,
 			);
 			path = constraints;
-			sourceTree = "<group>";
-		};
-		2628299D15EC7196002C4240 /* proj.blackberry */ = {
-			isa = PBXGroup;
-			children = (
-				2628299E15EC7196002C4240 /* .cproject */,
-				2628299F15EC7196002C4240 /* .project */,
-			);
-			path = proj.blackberry;
-			sourceTree = "<group>";
-		};
-		262829A015EC7196002C4240 /* proj.linux */ = {
-			isa = PBXGroup;
-			children = (
-				262829A115EC7196002C4240 /* .cproject */,
-				262829A215EC7196002C4240 /* .project */,
-				262829A315EC7196002C4240 /* Makefile */,
-			);
-			path = proj.linux;
-			sourceTree = "<group>";
-		};
-		262829A415EC7196002C4240 /* proj.win32 */ = {
-			isa = PBXGroup;
-			children = (
-				262829A515EC7196002C4240 /* chipmunk.vcproj */,
-				262829A615EC7196002C4240 /* chipmunk.vcproj.user */,
-				262829A715EC7196002C4240 /* chipmunk.vcxproj */,
-				262829A815EC7196002C4240 /* chipmunk.vcxproj.filters */,
-				262829A915EC7196002C4240 /* chipmunk.vcxproj.user */,
-			);
-			path = proj.win32;
 			sourceTree = "<group>";
 		};
 		262829AB15EC7196002C4240 /* src */ = {
@@ -949,14 +901,12 @@
 				15DA882A1627C44800155276 /* jsb_constants.js in Resources */,
 				15DA882B1627C44800155276 /* jsb_constants_chipmunk.js in Resources */,
 				15DA882C1627C44800155276 /* jsb_constants_cocos2d.js in Resources */,
-				263B98C216548DF500228D8A /* cocos2d.js in Resources */,
-				263B98C316548DF500228D8A /* main.js in Resources */,
 				15DA882D1627C44800155276 /* jsb_constants_cocosbuilder.js in Resources */,
 				15DA882E1627C44800155276 /* jsb_constants_gl.js in Resources */,
 				D446FDA516102D82000ADA7B /* Default@2x.png in Resources */,
 				D446FDA716102D86000ADA7B /* Default-568h@2x.png in Resources */,
-				263B98C416548DF500228D8A /* res in Resources */,
-				263B98C516548DF500228D8A /* src in Resources */,
+				15E2AEA3165DC6DD00F7743F /* res in Resources */,
+				15E2AEA5165DC73200F7743F /* src in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -976,7 +926,6 @@
 				15426FE815B5743C00712A7F /* CocosDenshion.m in Sources */,
 				15426FE915B5743C00712A7F /* SimpleAudioEngine.mm in Sources */,
 				15426FEA15B5743C00712A7F /* SimpleAudioEngine_objc.m in Sources */,
-				262829D415EC7196002C4240 /* Makefile in Sources */,
 				262829DB15EC7196002C4240 /* chipmunk.c in Sources */,
 				262829DD15EC7196002C4240 /* cpConstraint.c in Sources */,
 				262829DE15EC7196002C4240 /* cpDampedRotarySpring.c in Sources */,
@@ -1006,7 +955,6 @@
 				262829F615EC7196002C4240 /* cpSpatialIndex.c in Sources */,
 				262829F715EC7196002C4240 /* cpSweep1D.c in Sources */,
 				262829F815EC7196002C4240 /* cpVect.c in Sources */,
-				15384E5716119CC30021DC07 /* CCPhysicsSprite.cpp in Sources */,
 				15384E5816119CC30021DC07 /* cocos2d_specifics.cpp in Sources */,
 				15384E5916119CC30021DC07 /* cocosjs_manual_conversions.cpp in Sources */,
 				15384E5A16119CC30021DC07 /* cocos2dx.cpp in Sources */,
@@ -1061,6 +1009,8 @@
 				263B98D216548E4D00228D8A /* js_bindings_core.cpp in Sources */,
 				263B98D616548EB700228D8A /* js_bindings_chipmunk_functions.cpp in Sources */,
 				263B98D716548EB700228D8A /* js_bindings_chipmunk_manual.cpp in Sources */,
+				15E2AE9E165DC52C00F7743F /* CCPhysicsDebugNode.cpp in Sources */,
+				15E2AE9F165DC52C00F7743F /* CCPhysicsSprite.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1141,6 +1091,7 @@
 					"COCOS2D_DEBUG=1",
 					USE_FILE32API,
 					TARGET_OS_IPHONE,
+					CC_ENABLE_CHIPMUNK_INTEGRATION,
 				);
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
@@ -1181,6 +1132,7 @@
 					NDEBUG,
 					USE_FILE32API,
 					TARGET_OS_IPHONE,
+					CC_ENABLE_CHIPMUNK_INTEGRATION,
 				);
 				GCC_THUMB_SUPPORT = NO;
 				HEADER_SEARCH_PATHS = (
