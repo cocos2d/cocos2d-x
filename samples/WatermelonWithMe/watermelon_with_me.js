@@ -245,7 +245,7 @@ var GameLayer = cc.LayerGradient.extend({
         scroll.addChild( this._batch, Z_SPRITES, cc._p(1,1), cc.POINT_ZERO );
 
         // "endless" background image
-        var background = cc.Sprite.create("Parallax.pvr.gz", cc.rect(0,0,4096,512) );
+        var background = cc.Sprite.create("Parallax.pvr", cc.rect(0,0,4096,512) );
         scroll.addChild(background, Z_MOUNTAINS , cc._p(0.2, 0.2), cc._p(0,-150));
         background.setAnchorPoint( cc.POINT_ZERO );
         //cjh background.getTexture().setTexParameters(gl.LINEAR, gl.LINEAR, gl.REPEAT, gl.CLAMP_TO_EDGE);

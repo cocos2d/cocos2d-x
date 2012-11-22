@@ -88,13 +88,13 @@
             <key>format</key>
             <integer>2</integer>
             <key>realTextureFileName</key>
-            <string>labels-ipad.pvr.gz</string>
+            <string>labels-ipad.pvr</string>
             <key>size</key>
             <string>{512,128}</string>
             <key>smartupdate</key>
             <string>$TexturePacker:SmartUpdate:b8565b4ce18e44d132b770de99262f7a$</string>
             <key>textureFileName</key>
-            <string>labels-ipad.pvr.gz</string>
+            <string>labels-ipad.pvr</string>
         </dict>
     </dict>
 </plist>

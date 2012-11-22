@@ -88,13 +88,13 @@
             <key>format</key>
             <integer>2</integer>
             <key>realTextureFileName</key>
-            <string>labels.pvr.gz</string>
+            <string>labels.pvr</string>
             <key>size</key>
             <string>{128,256}</string>
             <key>smartupdate</key>
             <string>$TexturePacker:SmartUpdate:101602364defa93017595ecf32d95c5f$</string>
             <key>textureFileName</key>
-            <string>labels.pvr.gz</string>
+            <string>labels.pvr</string>
         </dict>
     </dict>
 </plist>
