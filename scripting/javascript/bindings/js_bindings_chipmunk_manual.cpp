@@ -38,6 +38,63 @@ USING_NS_CC_EXT;
 void static freeSpaceChildren(cpSpace *space);
 
 
+template <class T>
+js_type_class_t *js_get_type_from_native(T* native_obj) {
+	js_type_class_t *typeProxy;
+	uint32_t typeId = reinterpret_cast<int>(typeid(*native_obj).name());
+    //const char *nam = typeid(*native_obj).name();
+	HASH_FIND_INT(_js_global_type_ht, &typeId, typeProxy);
+	if (!typeProxy) {
+		TypeInfo *typeInfo = dynamic_cast<TypeInfo *>(native_obj);
+		if (typeInfo) {
+			typeId = typeInfo->getClassTypeInfo();
+		} else {
+			typeId = reinterpret_cast<int>(typeid(T).name());
+		}
+		HASH_FIND_INT(_js_global_type_ht, &typeId, typeProxy);
+	}
+	return typeProxy;
+}
+
+/**
+ * you don't need to manage the returned pointer. The returned pointer should be deleted
+ * using JS_REMOVE_PROXY. Most of the time you do that in the C++ destructor.
+ */
+template<class T>
+js_proxy_t *js_get_or_create_proxy(JSContext *cx, T *native_obj) {
+	js_proxy_t *proxy;
+	HASH_FIND_PTR(_native_js_global_ht, &native_obj, proxy);
+	if (!proxy) {
+		js_type_class_t *typeProxy = js_get_type_from_native<T>(native_obj);
+		assert(typeProxy);
+		JSObject* js_obj = JS_NewObject(cx, typeProxy->jsclass, typeProxy->proto, typeProxy->parentProto);
+		JS_NEW_PROXY(proxy, native_obj, js_obj);
+
+		JS_AddNamedObjectRoot(cx, &proxy->obj, typeid(native_obj).name());
+		return proxy;
+	} else {
+		return proxy;
+	}
+	return NULL;
+}
+
+template<class T>
+static JSBool dummy_constructor(JSContext *cx, uint32_t argc, jsval *vp) {
+    TypeTest<T> t;
+    T* cobj = new T();
+    js_type_class_t *p;
+    uint32_t typeId = t.s_id();
+    HASH_FIND_INT(_js_global_type_ht, &typeId, p);
+    assert(p);
+    JSObject *_tmp = JS_NewObject(cx, p->jsclass, p->proto, p->parentProto);
+    js_proxy_t *pp;
+    JS_NEW_PROXY(pp, cobj, _tmp);
+    JS_AddObjectRoot(cx, &pp->obj);
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(_tmp));
+
+    return JS_TRUE;
+}
+
 #pragma mark - convertions
 
 /*
@@ -131,63 +188,144 @@ JSBool JSPROXY_CCPhysicsSprite_setIgnoreBodyRotation_(JSContext *cx, uint32_t ar
 	return JS_TRUE;
 }
 
-
-template <class T>
-js_type_class_t *js_get_type_from_native(T* native_obj) {
-	js_type_class_t *typeProxy;
-	uint32_t typeId = reinterpret_cast<int>(typeid(*native_obj).name());
-    //const char *nam = typeid(*native_obj).name();
-	HASH_FIND_INT(_js_global_type_ht, &typeId, typeProxy);
-	if (!typeProxy) {
-		TypeInfo *typeInfo = dynamic_cast<TypeInfo *>(native_obj);
-		if (typeInfo) {
-			typeId = typeInfo->getClassTypeInfo();
-		} else {
-			typeId = reinterpret_cast<int>(typeid(T).name());
-		}
-		HASH_FIND_INT(_js_global_type_ht, &typeId, typeProxy);
-	}
-	return typeProxy;
-}
-
-/**
- * you don't need to manage the returned pointer. The returned pointer should be deleted
- * using JS_REMOVE_PROXY. Most of the time you do that in the C++ destructor.
+/*
+ * CCPhysicsDebugNode
  */
-template<class T>
-js_proxy_t *js_get_or_create_proxy(JSContext *cx, T *native_obj) {
-	js_proxy_t *proxy;
-	HASH_FIND_PTR(_native_js_global_ht, &native_obj, proxy);
-	if (!proxy) {
-		js_type_class_t *typeProxy = js_get_type_from_native<T>(native_obj);
-		assert(typeProxy);
-		JSObject* js_obj = JS_NewObject(cx, typeProxy->jsclass, typeProxy->proto, typeProxy->parentProto);
-		JS_NEW_PROXY(proxy, native_obj, js_obj);
+//#pragma mark - CCPhysicsDebugNode
 
-		JS_AddNamedObjectRoot(cx, &proxy->obj, typeid(native_obj).name());
-		return proxy;
-	} else {
-		return proxy;
-	}
-	return NULL;
+JSClass* JSB_CCPhysicsDebugNode_class = NULL;
+JSObject* JSB_CCPhysicsDebugNode_object = NULL;
+extern JSObject *js_cocos2dx_CCDrawNode_prototype;
+
+// Constructor
+
+// Destructor
+void JSB_CCPhysicsDebugNode_finalize(JSFreeOp *fop, JSObject *obj)
+{
+	CCLOGINFO("jsbindings: finalizing JS object %p (CCPhysicsDebugNode)", obj);
 }
 
+// Arguments: cpSpace*
+// Ret value: CCPhysicsDebugNode* (o)
+JSBool JSB_CCPhysicsDebugNode_debugNodeForCPSpace__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSB_PRECONDITION3( argc == 1, cx, JS_FALSE, "Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool ok = JS_TRUE;
+	cpSpace* arg0; 
 
-template<class T>
-static JSBool dummy_constructor(JSContext *cx, uint32_t argc, jsval *vp) {
-	TypeTest<T> t;
-	T* cobj = new T();
-	js_type_class_t *p;
-	uint32_t typeId = t.s_id();
-	HASH_FIND_INT(_js_global_type_ht, &typeId, p);
-	assert(p);
-	JSObject *_tmp = JS_NewObject(cx, p->jsclass, p->proto, p->parentProto);
-	js_proxy_t *pp;
-	JS_NEW_PROXY(pp, cobj, _tmp);
-	JS_AddObjectRoot(cx, &pp->obj);
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(_tmp));
+	ok &= jsval_to_opaque( cx, *argvp++, (void**)&arg0 );
+	JSB_PRECONDITION3(ok, cx, JS_FALSE, "Error processing arguments");
+
+	CCPhysicsDebugNode* ret = CCPhysicsDebugNode::create(arg0);
+    jsval jsret;
+    do {
+        if (ret) {
+            TypeTest<CCPhysicsDebugNode> t;
+            js_type_class_t *typeClass;
+            uint32_t typeId = t.s_id();
+            HASH_FIND_INT(_js_global_type_ht, &typeId, typeClass);
+            assert(typeClass);
+            JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+            jsret = OBJECT_TO_JSVAL(obj);
+            js_proxy_t *p;
+            JS_NEW_PROXY(p, ret, obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+    JS_SET_RVAL(cx, vp, jsret);
 
 	return JS_TRUE;
+}
+
+// Arguments: cpSpace*
+// Ret value: void (None)
+JSBool JSB_CCPhysicsDebugNode_setSpace_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, jsthis);
+    CCPhysicsDebugNode* real = (CCPhysicsDebugNode *)(proxy ? proxy->ptr : NULL);
+    TEST_NATIVE_OBJECT(cx, real)
+
+	JSB_PRECONDITION3( argc == 1, cx, JS_FALSE, "Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool ok = JS_TRUE;
+	cpSpace* arg0; 
+
+	ok &= jsval_to_opaque( cx, *argvp++, (void**)&arg0 );
+	JSB_PRECONDITION3(ok, cx, JS_FALSE, "Error processing arguments");
+
+	real->setSpace(arg0);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
+	return JS_TRUE;
+}
+
+// Arguments: 
+// Ret value: cpSpace* (N/A)
+JSBool JSB_CCPhysicsDebugNode_space(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, jsthis);
+    CCPhysicsDebugNode* real = (CCPhysicsDebugNode *)(proxy ? proxy->ptr : NULL);
+    TEST_NATIVE_OBJECT(cx, real)
+	JSB_PRECONDITION3( argc == 0, cx, JS_FALSE, "Invalid number of arguments" );
+	cpSpace* ret_val;
+
+	ret_val = real->getSpace();
+
+	jsval ret_jsval = opaque_to_jsval( cx, ret_val );
+	JS_SET_RVAL(cx, vp, ret_jsval);
+    
+	return JS_TRUE;
+}
+
+void JSB_CCPhysicsDebugNode_createClass(JSContext *cx, JSObject* globalObj, const char* name )
+{
+	JSB_CCPhysicsDebugNode_class = (JSClass *)calloc(1, sizeof(JSClass));
+	JSB_CCPhysicsDebugNode_class->name = name;
+	JSB_CCPhysicsDebugNode_class->addProperty = JS_PropertyStub;
+	JSB_CCPhysicsDebugNode_class->delProperty = JS_PropertyStub;
+	JSB_CCPhysicsDebugNode_class->getProperty = JS_PropertyStub;
+	JSB_CCPhysicsDebugNode_class->setProperty = JS_StrictPropertyStub;
+	JSB_CCPhysicsDebugNode_class->enumerate = JS_EnumerateStub;
+	JSB_CCPhysicsDebugNode_class->resolve = JS_ResolveStub;
+	JSB_CCPhysicsDebugNode_class->convert = JS_ConvertStub;
+	JSB_CCPhysicsDebugNode_class->finalize = JSB_CCPhysicsDebugNode_finalize;
+	JSB_CCPhysicsDebugNode_class->flags = 0;
+
+	static JSPropertySpec properties[] = {
+		{0, 0, 0, 0, 0}
+	};
+	static JSFunctionSpec funcs[] = {
+		JS_FN("_setSpace", JSB_CCPhysicsDebugNode_setSpace_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getSpace", JSB_CCPhysicsDebugNode_space, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FS_END
+	};
+	static JSFunctionSpec st_funcs[] = {
+		JS_FN("_create", JSB_CCPhysicsDebugNode_debugNodeForCPSpace__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FS_END
+	};
+
+    TypeTest<cocos2d::CCDrawNode> t1;
+    js_type_class_t *typeClass;
+    uint32_t typeId = t1.s_id();
+    HASH_FIND_INT(_js_global_type_ht, &typeId, typeClass);
+    assert(typeClass);
+
+    JSB_CCPhysicsDebugNode_object = JS_InitClass(cx, globalObj, typeClass->proto, JSB_CCPhysicsDebugNode_class, dummy_constructor<CCPhysicsDebugNode>, 0,properties,funcs,NULL,st_funcs);
+
+    TypeTest<CCPhysicsDebugNode> t;
+    js_type_class_t *p;
+    typeId = t.s_id();
+    HASH_FIND_INT(_js_global_type_ht, &typeId, p);
+    if (!p) {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->type = typeId;
+        p->jsclass = JSB_CCPhysicsDebugNode_class;
+        p->proto = JSB_CCPhysicsDebugNode_object;
+        p->parentProto = typeClass->proto;
+        HASH_ADD_INT(_js_global_type_ht, type, p);
+    }
 }
 
 // Arguments: NSString*, CGRect
@@ -337,7 +475,7 @@ void JSPROXY_CCPhysicsSprite_createClass(JSContext *cx, JSObject* globalObj)
 	static JSFunctionSpec funcs[] = {
 		JS_FN("getBody", JSPROXY_CCPhysicsSprite_body, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("getIgnoreBodyRotation", JSPROXY_CCPhysicsSprite_ignoreBodyRotation, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setBody", JSPROXY_CCPhysicsSprite_setBody_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("_setBody", JSPROXY_CCPhysicsSprite_setBody_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setIgnoreBodyRotation", JSPROXY_CCPhysicsSprite_setIgnoreBodyRotation_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -386,6 +524,20 @@ void register_CCPhysicsSprite(JSContext *cx, JSObject *obj) {
     JSPROXY_CCPhysicsSprite_createClass(cx, obj);
 }
 
+void register_CCPhysicsDebugNode(JSContext *cx, JSObject *obj) {
+    jsval nsval;
+    JSObject *ns;
+    JS_GetProperty(cx, obj, "cc", &nsval);
+    if (nsval == JSVAL_VOID) {
+        ns = JS_NewObject(cx, NULL, NULL, NULL);
+        nsval = OBJECT_TO_JSVAL(ns);
+        JS_SetProperty(cx, obj, "cc", &nsval);
+    } else {
+        JS_ValueToObject(cx, nsval, &ns);
+    }
+    obj = ns;
+    JSB_CCPhysicsDebugNode_createClass(cx, obj, "PhysicsDebugNode");
+}
 
 JSBool jsval_to_cpBB( JSContext *cx, jsval vp, cpBB *ret )
 {
