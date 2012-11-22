@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE map SYSTEM "http://mapeditor.org/dtd/1.0/map.dtd">
+<map version="1.0" orientation="orthogonal" width="14" height="8" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="Desert" tilewidth="32" tileheight="32" spacing="1" margin="1">
+  <image source="tmw_desert_spacing.png" width="265" height="199"/>
+ </tileset>
+ <layer name="Layer 0" width="14" height="8">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC1NjYGCQIxFrQGlGIGYCYmYglgRiKSiWRpJjQlID088JxFxAzA3EikCsAsSqQKwMlRMBYiEgFoWqwaVPB4h1kfRxI6nDpw/dPmL1odsnA/WbLJo+Qaj7hYFYE4i1oFgbSU4ISQ1Ijz4Z8WAAxADxIVkbwAEAAA==
+  </data>
+ </layer>
+ <objectgroup name="Object Layer 1" width="14" height="8">
+  <object name="sandro" gid="31" x="97" y="250"/>
+  <object gid="31" x="119" y="237"/>
+  <object gid="31" x="140" y="218"/>
+  <object gid="31" x="160" y="199"/>
+  <object gid="31" x="180" y="185"/>
+ </objectgroup>
+</map>

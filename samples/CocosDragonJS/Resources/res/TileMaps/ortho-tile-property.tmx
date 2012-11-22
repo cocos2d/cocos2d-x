@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE map SYSTEM "http://mapeditor.org/dtd/1.0/map.dtd">
+<map version="1.0" orientation="orthogonal" width="32" height="32" tilewidth="32" tileheight="32">
+ <properties>
+   <property name="map" value="ohye"/>
+  </properties>
+ <tileset firstgid="1" name="tiles" tilewidth="32" tileheight="32" spacing="2" margin="2">
+  <image source="fixed-ortho-test2.png" width="640" height="400"/>
+  <tile id="0">
+   <properties>
+    <property name="test" value="sss"/>
+    <property name="type" value="object"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="type" value="object"/>
+   </properties>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="type" value="object"/>
+   </properties>
+  </tile>
+  <tile id="3">
+   <properties>
+    <property name="type" value="platform"/>
+   </properties>
+  </tile>
+  <tile id="4">
+   <properties>
+    <property name="type" value="platform"/>
+   </properties>
+  </tile>
+  <tile id="5">
+   <properties>
+    <property name="type" value="platform"/>
+   </properties>
+  </tile>
+  <tile id="6">
+   <properties>
+    <property name="type" value="object"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="Layer 0" width="32" height="32">
+  <properties>
+   <property name="name" value="hello"/>
+   <property name="test" value="test"/>
+  </properties>
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3DsQkAIAwAsAriY/7/k6NQXBx00AQSAQAA8Iea3tZTprb4mrLxhAFhdCAKABAAAA==
+  </data>
+ </layer>
+ <objectgroup name="objectLayer" width="32" height="32">
+  <properties>
+   <property name="objectGroup" value="group"/>
+  </properties>
+  <object x="438" y="571" width="134" height="111">
+   <properties>
+    <property name="name" value="nero"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>
