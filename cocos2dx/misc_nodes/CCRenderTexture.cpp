@@ -492,7 +492,7 @@ void CCRenderTexture::visit()
 {
     // override visit.
 	// Don't call visit on its children
-    if (m_bVisible)
+    if (!m_bVisible)
     {
         return;
     }
