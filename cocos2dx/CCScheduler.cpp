@@ -268,7 +268,7 @@ void CCScheduler::removeHashElement(_hashSelectorEntry *pElement)
 
 void CCScheduler::scheduleSelector(SEL_SCHEDULE pfnSelector, CCObject *pTarget, float fInterval, bool bPaused)
 {
-    this->scheduleSelector(pfnSelector, pTarget, fInterval, bPaused, kCCRepeatForever, 0.0f);
+    this->scheduleSelector(pfnSelector, pTarget, fInterval, kCCRepeatForever, 0.0f, bPaused);
 }
 
 void CCScheduler::scheduleSelector(SEL_SCHEDULE pfnSelector, CCObject *pTarget, float fInterval, unsigned int repeat, float delay, bool bPaused)

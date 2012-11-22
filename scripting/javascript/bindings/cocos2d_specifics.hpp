@@ -142,23 +142,7 @@ public:
 
     void pause();
     
-    void scheduleFunc(float dt) const {
-        
-        jsval retval = JSVAL_NULL, data = DOUBLE_TO_JSVAL(dt);
-        JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
-        
-        JSBool ok = JS_AddValueRoot(cx, &data);
-        if(!ok) {
-            return;
-        }
-        
-        if(!JSVAL_IS_VOID(jsCallback)  && !JSVAL_IS_VOID(jsThisObj)) {
-            JS_CallFunctionValue(cx, JSVAL_TO_OBJECT(jsThisObj), jsCallback, 1, &data, &retval);
-        }
-        
-        JS_RemoveValueRoot(cx, &data);
-        
-    }
+    void scheduleFunc(float dt) const;
 };
 
 
