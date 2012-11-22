@@ -84,4 +84,4 @@ set -x
 
 "$NDK_ROOT"/ndk-build $PARALLEL_BUILD_FLAG -C "$APP_ANDROID_ROOT" $* \
     "NDK_MODULE_PATH=${COCOS2DX_ROOT}:${COCOS2DX_ROOT}/cocos2dx/platform/third_party/android/prebuilt" \
-    NDK_LOG=1 V=1
+    NDK_LOG=0 V=0
