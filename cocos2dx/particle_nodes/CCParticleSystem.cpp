@@ -313,31 +313,29 @@ bool CCParticleSystem::initWithDictionary(CCDictionary *dictionary, const char *
 
                 // texture        
                 // Try to get the texture from the cache
-                const char* textureName = dictionary->valueForKey("textureFileName")->getCString();
-                string textureDir = textureName;
-                if (textureDir.find('/') != string::npos)
-                {
-                    textureDir = textureDir.substr(0, textureDir.rfind('/') + 1);
-                }
-                else
-                {
-                    textureDir = "";
-                }
+                std::string textureName = dictionary->valueForKey("textureFileName")->getCString();
                 
-                if (textureDir != dirname)
+                size_t rPos = textureName.rfind('/');
+               
+                if (rPos != string::npos)
                 {
-                    textureName = textureName + textureDir.size();
-                    textureName = (string(dirname) + textureName).c_str();
+                    string textureDir = textureName.substr(0, rPos + 1);
+                    
+                    if (dirname != NULL && textureDir != dirname)
+                    {
+                        textureName = textureName.substr(rPos+1);
+                        textureName = string(dirname) + textureName;
+                    }
                 }
                 
                 CCTexture2D *tex = NULL;
                 
-                if (strlen(textureName) > 0)
+                if (textureName.length() > 0)
                 {
                     // set not pop-up message box when load image failed
                     bool bNotify = CCFileUtils::sharedFileUtils()->isPopupNotify();
                     CCFileUtils::sharedFileUtils()->setPopupNotify(false);
-                    tex = CCTextureCache::sharedTextureCache()->addImage(textureName);
+                    tex = CCTextureCache::sharedTextureCache()->addImage(textureName.c_str());
                     
                     // reset the value of UIImage notify
                     CCFileUtils::sharedFileUtils()->setPopupNotify(bNotify);
@@ -370,7 +368,7 @@ bool CCParticleSystem::initWithDictionary(CCDictionary *dictionary, const char *
                         CCAssert(isOK, "CCParticleSystem: error init image with Data");
                         CC_BREAK_IF(!isOK);
                         
-                        setTexture(CCTextureCache::sharedTextureCache()->addUIImage(image, textureName));
+                        setTexture(CCTextureCache::sharedTextureCache()->addUIImage(image, textureName.c_str()));
 
                         image->release();
                     }
