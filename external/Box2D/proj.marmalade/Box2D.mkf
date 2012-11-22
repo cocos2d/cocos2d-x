@@ -42,5 +42,10 @@ files
 	"*.h"
 	"*.cpp"
 	
+	("../Rope")
+	[Rope]
+	"*.h"
+	"*.cpp"
+	
 }
 
