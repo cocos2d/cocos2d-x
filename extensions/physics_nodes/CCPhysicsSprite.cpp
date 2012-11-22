@@ -154,6 +154,16 @@ bool CCPhysicsSprite::isDirty()
     return true;
 }
 
+bool CCPhysicsSprite::isIgnoreBodyRotation() const
+{
+    return m_bIgnoreBodyRotation;
+}
+
+void CCPhysicsSprite::setIgnoreBodyRotation(bool bIgnoreBodyRotation)
+{
+    m_bIgnoreBodyRotation = bIgnoreBodyRotation;
+}
+
 #if CC_ENABLE_CHIPMUNK_INTEGRATION
 
 cpBody* CCPhysicsSprite::getBody() const
