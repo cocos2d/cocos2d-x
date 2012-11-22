@@ -35,13 +35,13 @@ void CCNodeLoader::parseProperties(CCNode * pNode, CCNode * pParent, CCBReader *
         {
             setProp = true;
         }
-#ifdef __CC_PLATFORM_IOS
-        if(platform == kCCBPlatformIOS) 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+        if(platform == kCCBPlatformIOS)
         {
             setProp = true;
         }
-#elif defined(__CC_PLATFORM_MAC)
-        if(platform == kCCBPlatformMac) 
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+        if(platform == kCCBPlatformMac)
         {
             setProp = true;
         }
