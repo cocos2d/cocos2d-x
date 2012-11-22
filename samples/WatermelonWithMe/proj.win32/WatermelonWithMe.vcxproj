@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{D0F06A44-A245-4D13-A498-0120C203B539}</ProjectGuid>
+    <ProjectGuid>{BE092D9E-95AE-4F86-84CE-F4519E4F3F15}</ProjectGuid>
     <RootNamespace>WatermelonWithMe</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -92,8 +92,15 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\scripting\javascript\spidermonkey-win32\lib\*
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PreBuildEvent>
-      <Command>
-      </Command>
+      <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
+if exist "$(OutDir)\WatermelonWithMeRes" rd /s /q "$(OutDir)\WatermelonWithMeRes"
+mkdir "$(OutDir)\WatermelonWithMeRes"
+copy "$(ProjectDir)..\Resources\*.*" "$(OutDir)\WatermelonWithMeRes\"  /Y
+copy "$(ProjectDir)..\Resources\CCB\*.*" "$(OutDir)\WatermelonWithMeRes\"  /Y
+copy "$(ProjectDir)..\Resources\single_files\*.*" "$(OutDir)\WatermelonWithMeRes\"  /Y
+xcopy "$(ProjectDir)..\bindings\*.js" "$(OutDir)\WatermelonWithMeRes" /e /Y
+copy "$(ProjectDir)..\*.js" "$(OutDir)\WatermelonWithMeRes\"  /Y
+</Command>
     </PreBuildEvent>
     <PreBuildEvent>
       <Message>Copy js and resource files.</Message>
@@ -145,9 +152,11 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\scripting\javascript\spidermonkey-win32\lib\*
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
 if exist "$(OutDir)\WatermelonWithMeRes" rd /s /q "$(OutDir)\WatermelonWithMeRes"
 mkdir "$(OutDir)\WatermelonWithMeRes"
-xcopy "$(ProjectDir)..\cocos2d-js-tests\res" "$(OutDir)\WatermelonWithMeRes\res\" /e /Y
+copy "$(ProjectDir)..\Resources\*.*" "$(OutDir)\WatermelonWithMeRes\"  /Y
+copy "$(ProjectDir)..\Resources\CCB\*.*" "$(OutDir)\WatermelonWithMeRes\"  /Y
+copy "$(ProjectDir)..\Resources\single_files\*.*" "$(OutDir)\WatermelonWithMeRes\"  /Y
 xcopy "$(ProjectDir)..\bindings\*.js" "$(OutDir)\WatermelonWithMeRes" /e /Y
-xcopy "$(ProjectDir)..\cocos2d-js-tests\src" "$(OutDir)\WatermelonWithMeRes\src\" /e /Y
+copy "$(ProjectDir)..\*.js" "$(OutDir)\WatermelonWithMeRes\"  /Y
 </Command>
       <Message>Copy js and resource files.</Message>
     </PreBuildEvent>
