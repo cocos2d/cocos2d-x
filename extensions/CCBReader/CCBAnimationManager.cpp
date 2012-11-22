@@ -71,6 +71,11 @@ CCArray* CCBAnimationManager::getSequences()
     return mSequences;
 }
 
+void CCBAnimationManager::setSequences(CCArray* seq)
+{
+    mSequences = seq;
+}
+
 int CCBAnimationManager::getAutoPlaySequenceId()
 {
     return mAutoPlaySequenceId;
