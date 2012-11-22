@@ -780,6 +780,22 @@ CCArray * JSScheduleWrapper::getTargetForNativeNode(CCNode *pNode) {
     
 }
 
+void JSScheduleWrapper::scheduleFunc(float dt) const
+{
+    jsval retval = JSVAL_NULL, data = DOUBLE_TO_JSVAL(dt);
+    JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
+
+    JSBool ok = JS_AddValueRoot(cx, &data);
+    if(!ok) {
+        return;
+    }
+
+    if(!JSVAL_IS_VOID(jsCallback)  && !JSVAL_IS_VOID(jsThisObj)) {
+        JS_CallFunctionValue(cx, JSVAL_TO_OBJECT(jsThisObj), jsCallback, 1, &data, &retval);
+    }
+
+    JS_RemoveValueRoot(cx, &data);
+}
 
 JSBool js_CCNode_unschedule(JSContext *cx, uint32_t argc, jsval *vp)
 {
@@ -929,7 +945,7 @@ JSBool js_CCNode_schedule(JSContext *cx, uint32_t argc, jsval *vp)
         JSScheduleWrapper *tmpCobj = new JSScheduleWrapper();
         tmpCobj->autorelease();
 
-    	double interval;
+    	double interval = 0.0;
         if( argc >= 2 ) {
             if( ! JS_ValueToNumber(cx, argv[1], &interval ) )
                 return JS_FALSE;
@@ -938,7 +954,7 @@ JSBool js_CCNode_schedule(JSContext *cx, uint32_t argc, jsval *vp)
         //
         // repeat
         //
-        double repeat;
+        double repeat = 0.0;
         if( argc >= 3 ) {
             if( ! JS_ValueToNumber(cx, argv[2], &repeat ) )
                 return JS_FALSE;
@@ -947,7 +963,7 @@ JSBool js_CCNode_schedule(JSContext *cx, uint32_t argc, jsval *vp)
         //
         // delay
         //
-        double delay;
+        double delay = 0.0;
         if( argc >= 4 ) {
             if( ! JS_ValueToNumber(cx, argv[3], &delay ) )
                 return JS_FALSE;
@@ -964,9 +980,9 @@ JSBool js_CCNode_schedule(JSContext *cx, uint32_t argc, jsval *vp)
         } if(argc == 2) {
             sched->scheduleSelector(schedule_selector(JSScheduleWrapper::scheduleFunc), tmpCobj, interval, !node->isRunning());
         } if(argc == 3) {
-            sched->scheduleSelector(schedule_selector(JSScheduleWrapper::scheduleFunc), tmpCobj, 0, !node->isRunning(), repeat, 0);
+            sched->scheduleSelector(schedule_selector(JSScheduleWrapper::scheduleFunc), tmpCobj, interval, (unsigned int)repeat, 0, !node->isRunning());
         } if (argc == 4) {
-            sched->scheduleSelector(schedule_selector(JSScheduleWrapper::scheduleFunc), tmpCobj, 0, !node->isRunning(), repeat, delay);
+            sched->scheduleSelector(schedule_selector(JSScheduleWrapper::scheduleFunc), tmpCobj, interval, (unsigned int)repeat, delay, !node->isRunning());
         }
         
         JS_SetReservedSlot(p->obj, 0, argv[0]);
