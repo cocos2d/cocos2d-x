@@ -180,9 +180,7 @@ xcopy "$(ProjectDir)..\cocos2d-js-tests\src" "$(OutDir)\TestJavascriptRes\src\" 
     <ClInclude Include="..\..\..\scripting\javascript\bindings\js_bindings_chipmunk_auto_classes.h" />
     <ClInclude Include="..\..\..\scripting\javascript\bindings\js_bindings_chipmunk_auto_classes_registration.h" />
     <ClInclude Include="..\..\..\scripting\javascript\bindings\js_bindings_chipmunk_functions.h" />
-    <ClInclude Include="..\..\..\scripting\javascript\bindings\js_bindings_chipmunk_functions.hpp" />
     <ClInclude Include="..\..\..\scripting\javascript\bindings\js_bindings_chipmunk_manual.h" />
-    <ClInclude Include="..\..\..\scripting\javascript\bindings\js_bindings_chipmunk_manual.hpp" />
     <ClInclude Include="..\..\..\scripting\javascript\bindings\js_bindings_chipmunk_registration.h" />
     <ClInclude Include="..\..\..\scripting\javascript\bindings\js_bindings_config.h" />
     <ClInclude Include="..\..\..\scripting\javascript\bindings\js_bindings_core.h" />

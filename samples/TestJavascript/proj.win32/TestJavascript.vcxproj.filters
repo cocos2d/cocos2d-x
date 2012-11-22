@@ -90,13 +90,7 @@
     <ClInclude Include="..\..\..\scripting\javascript\bindings\js_bindings_chipmunk_functions.h">
       <Filter>bindings</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\scripting\javascript\bindings\js_bindings_chipmunk_functions.hpp">
-      <Filter>bindings</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\scripting\javascript\bindings\js_bindings_chipmunk_manual.h">
-      <Filter>bindings</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\scripting\javascript\bindings\js_bindings_chipmunk_manual.hpp">
       <Filter>bindings</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\scripting\javascript\bindings\js_bindings_chipmunk_registration.h">

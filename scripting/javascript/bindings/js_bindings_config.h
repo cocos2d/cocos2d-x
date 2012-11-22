@@ -45,33 +45,33 @@
 #else
 #define JSB_PRECONDITION( condition, error_msg) do {							\
 if( ! (condition) ) {														\
-printf("jsb: ERROR in %s: %s\n", __FUNCTION__, error_msg);				\
+cocos2d::CCLog("jsb: ERROR in %s: %s\n", __FUNCTION__, error_msg);				\
 return JS_FALSE;														\
 }																			\
 } while(0)
 #define ASSERT( condition, error_msg) do {							\
 if( ! (condition) ) {														\
-printf("jsb: ERROR in %s: %s\n", __FUNCTION__, error_msg);				\
+cocos2d::CCLog("jsb: ERROR in %s: %s\n", __FUNCTION__, error_msg);				\
 return false;														\
 }																			\
 } while(0)
 #define JSB_PRECONDITION2( condition, context, ret_value, error_msg) do {		\
 if( ! (condition) ) {														\
-printf("jsb: ERROR in %s: %s\n", __FUNCTION__, error_msg);				\
+cocos2d::CCLog("jsb: ERROR in %s: %s\n", __FUNCTION__, error_msg);				\
 JS_ReportPendingException( context );									\
 return ret_value;														\
 }																			\
 } while(0)
 #define JSB_PRECONDITION3( condition, context, ret_value, error_msg) do {		\
 if( ! (condition) ) {														\
-printf("jsb: ERROR in %s: %s\n", __FUNCTION__, error_msg);				\
+cocos2d::CCLog("jsb: ERROR in %s: %s\n", __FUNCTION__, error_msg);				\
 JS_ReportError( context, error_msg );									\
 return ret_value;														\
 }																			\
 } while(0)
 #define JSB_PRECONDITION( condition, error_msg) do {							\
 if( ! (condition) ) {														\
-printf("jsb: ERROR in %s: %s\n", __FUNCTION__, error_msg);				\
+cocos2d::CCLog("jsb: ERROR in %s: %s\n", __FUNCTION__, error_msg);				\
 return JS_FALSE;														\
 }																			\
 } while(0)
