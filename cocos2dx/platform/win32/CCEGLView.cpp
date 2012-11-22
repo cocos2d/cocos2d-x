@@ -248,6 +248,9 @@ bool CCEGLView::initGL()
 		return false;
 	}
 
+    // Enable point size by default on windows. 
+    glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
+
     return true;
 }
 
