@@ -77,7 +77,6 @@ public:
     ccBlendFunc getBlendFunc() const;
     void setBlendFunc(const ccBlendFunc &blendFunc);
     
-protected:
     CCDrawNode();
     
 private:
