@@ -28,9 +28,6 @@
     <ClCompile Include="..\..\..\scripting\javascript\bindings\generated\cocos2dx.cpp">
       <Filter>bindings\generated</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\scripting\javascript\bindings\CCPhysicsSprite.cpp">
-      <Filter>bindings</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\scripting\javascript\bindings\cocos2d_specifics.cpp">
       <Filter>bindings</Filter>
     </ClCompile>
@@ -74,9 +71,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\scripting\javascript\bindings\generated\cocos2dx.hpp">
       <Filter>bindings\generated</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\scripting\javascript\bindings\CCPhysicsSprite.h">
-      <Filter>bindings</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\scripting\javascript\bindings\cocos2d_specifics.hpp">
       <Filter>bindings</Filter>
