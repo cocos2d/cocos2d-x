@@ -193,7 +193,9 @@ void CCDirector::setGLDefaultValues(void)
     CCAssert(m_pobOpenGLView, "opengl view should not be null");
 
     setAlphaBlending(true);
-    setDepthTest(false);
+    // XXX: Fix me, should enable/disable depth test according the depth format as cocos2d-iphone did
+    // [self setDepthTest: view_.depthFormat];
+    setDepthTest(true);
     setProjection(m_eProjection);
 
     // set other opengl default values
