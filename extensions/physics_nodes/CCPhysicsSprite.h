@@ -59,6 +59,8 @@ protected:
     float   m_fPTMRatio;
 #endif // CC_ENABLE_CHIPMUNK_INTEGRATION
 public:
+    CCPhysicsSprite();
+
     static CCPhysicsSprite* create();
     /** Creates an sprite with a texture.
      The rect used will be the size of the texture.
@@ -127,8 +129,6 @@ public:
     
 #endif // CC_ENABLE_BOX2D_INTEGRATION
     
-protected:
-    CCPhysicsSprite();
 };
 
 NS_CC_EXT_END
