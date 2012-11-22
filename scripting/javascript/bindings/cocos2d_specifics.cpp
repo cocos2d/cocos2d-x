@@ -1158,6 +1158,45 @@ JSBool js_cocos2dx_release(JSContext *cx, uint32_t argc, jsval *vp)
 	return JS_FALSE;
 }
 
+
+JSBool js_cocos2dx_CCNode_removeChild(JSContext *cx, uint32_t argc, jsval *vp)
+{
+  jsval *argv = JS_ARGV(cx, vp);
+  JSObject *obj = JS_THIS_OBJECT(cx, vp);
+  js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
+  cocos2d::CCNode* cobj = (cocos2d::CCNode *)(proxy ? proxy->ptr : NULL);
+  TEST_NATIVE_OBJECT(cx, cobj)
+    
+    if (argc == 2) {
+      cocos2d::CCNode* arg0;
+      JSBool arg1;
+      do {
+	js_proxy_t *proxy;
+	JSObject *tmpObj = JSVAL_TO_OBJECT(argv[0]);
+	JS_GET_NATIVE_PROXY(proxy, tmpObj);
+	arg0 = (cocos2d::CCNode*)(proxy ? proxy->ptr : NULL);
+	TEST_NATIVE_OBJECT(cx, arg0)
+	  } while (0);
+      JS_ValueToBoolean(cx, argv[1], &arg1);
+      cobj->removeChild(arg0, arg1);
+      return JS_TRUE;
+    } else if(argc == 1) {
+      cocos2d::CCNode* arg0;
+      do {
+	js_proxy_t *proxy;
+	JSObject *tmpObj = JSVAL_TO_OBJECT(argv[0]);
+	JS_GET_NATIVE_PROXY(proxy, tmpObj);
+	arg0 = (cocos2d::CCNode*)(proxy ? proxy->ptr : NULL);
+	TEST_NATIVE_OBJECT(cx, arg0)
+	  } while (0);
+      cobj->removeChild(arg0, true);
+      return JS_TRUE;
+    }
+    
+  JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 2);
+  return JS_FALSE;
+}
+
 JSBool js_cocos2dx_CCSet_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	JSObject *obj;
@@ -2032,6 +2071,7 @@ void register_cocos2dx_js_extensions(JSContext* cx, JSObject* global)
         
 	JS_DefineFunction(cx, js_cocos2dx_CCNode_prototype, "retain", js_cocos2dx_retain, 0, JSPROP_READONLY | JSPROP_PERMANENT);
 	JS_DefineFunction(cx, js_cocos2dx_CCNode_prototype, "release", js_cocos2dx_release, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+	JS_DefineFunction(cx, js_cocos2dx_CCNode_prototype, "removeChild", js_cocos2dx_CCNode_removeChild, 0, JSPROP_READONLY | JSPROP_PERMANENT);
     
     JS_DefineFunction(cx, js_cocos2dx_CCSprite_prototype, "setBlendFunc", js_cocos2dx_CCSprite_setBlendFunc, 2, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, js_cocos2dx_CCSpriteBatchNode_prototype, "setBlendFunc", js_cocos2dx_CCSpriteBatchNode_setBlendFunc, 2, JSPROP_READONLY | JSPROP_PERMANENT);
