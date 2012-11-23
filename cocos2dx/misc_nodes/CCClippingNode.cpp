@@ -271,23 +271,13 @@ void CCClippingNode::visit()
     
     // enable alpha test only if the alpha threshold < 1,
     // indeed if alpha threshold == 1, every pixel will be drawn anyways
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WINDOWS || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
     GLboolean currentAlphaTestEnabled = GL_FALSE;
     GLenum currentAlphaTestFunc = GL_ALWAYS;
     GLclampf currentAlphaTestRef = 1;
 #endif
     if (m_fAlphaThreshold < 1) {
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_MAC)
-        // since glAlphaTest do not exists in OES, use a shader that writes
-        // pixel only if greater than an alpha threshold
-        CCGLProgram *program = CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColorAlphaTest);
-        GLint alphaValueLocation = glGetUniformLocation(program->getProgram(), kCCUniformAlphaTestValue);
-        // set our alphaThreshold
-        program->setUniformLocationWith1f(alphaValueLocation, m_fAlphaThreshold);
-        // we need to recursively apply this shader to all the nodes in the stencil node
-        // XXX: we should have a way to apply shader to all nodes without having to do this
-        setProgram(m_pStencil, program);
-#else
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WINDOWS || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
         // manually save the alpha test state
         currentAlphaTestEnabled = glIsEnabled(GL_ALPHA_TEST);
         glGetIntegerv(GL_ALPHA_TEST_FUNC, (GLint *)&currentAlphaTestFunc);
@@ -297,7 +287,18 @@ void CCClippingNode::visit()
         // check for OpenGL error while enabling alpha test
         CHECK_GL_ERROR_DEBUG();
         // pixel will be drawn only if greater than an alpha threshold
-        glAlphaFunc(GL_GREATER, alphaThreshold_);
+        glAlphaFunc(GL_GREATER, m_fAlphaThreshold);
+#else
+        // since glAlphaTest do not exists in OES, use a shader that writes
+        // pixel only if greater than an alpha threshold
+        CCGLProgram *program = CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColorAlphaTest);
+        GLint alphaValueLocation = glGetUniformLocation(program->getProgram(), kCCUniformAlphaTestValue);
+        // set our alphaThreshold
+        program->setUniformLocationWith1f(alphaValueLocation, m_fAlphaThreshold);
+        // we need to recursively apply this shader to all the nodes in the stencil node
+        // XXX: we should have a way to apply shader to all nodes without having to do this
+        setProgram(m_pStencil, program);
+       
 #endif
     }
     
@@ -311,7 +312,7 @@ void CCClippingNode::visit()
     // restore alpha test state
     if (m_fAlphaThreshold < 1)
     {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WINDOWS || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
         // manually restore the alpha test state
         glAlphaFunc(currentAlphaTestFunc, currentAlphaTestRef);
         if (!currentAlphaTestEnabled)
