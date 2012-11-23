@@ -457,7 +457,7 @@ JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* c
 		JSAutoCompartment ac(cx, global);
         evaluatedOK = JS_ExecuteScript(cx, global, script, &rval);
         if (JS_FALSE == evaluatedOK) {
-            fprintf(stderr, "(evaluatedOK == JS_FALSE)\n");
+            CCLog("(evaluatedOK == JS_FALSE)");
         }
     }
     return evaluatedOK;

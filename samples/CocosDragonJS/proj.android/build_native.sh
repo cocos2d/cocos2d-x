@@ -1,4 +1,4 @@
-NDK_ROOT="/opt/android/android-ndk"
+#NDK_ROOT="/opt/android/android-ndk"
 APPNAME="CocosDragonJS"
 
 # options
@@ -68,8 +68,8 @@ fi
 
 mkdir "$APP_ANDROID_ROOT"/assets
 
-# copy "cocos2d-js-tests/res" into "assets/res"
-cp -rf "$APP_ROOT"/CocosDragonJS/ "$APP_ANDROID_ROOT"/assets
+# copy "Resources" into "assets"
+cp -rf "$APP_ROOT"/Resources/* "$APP_ANDROID_ROOT"/assets
 
 # copy bindings/*.js into assets' root
 cp -f "$APP_ROOT"/bindings/*.js "$APP_ANDROID_ROOT"/assets
