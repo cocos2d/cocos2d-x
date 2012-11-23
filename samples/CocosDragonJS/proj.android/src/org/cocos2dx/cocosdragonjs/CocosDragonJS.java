@@ -34,6 +34,6 @@ public class CocosDragonJS extends Cocos2dxActivity{
 	}
 	
     static {
-        System.loadLibrary("testjavascript");
+        System.loadLibrary("cocosdragonjs");
     }
 }

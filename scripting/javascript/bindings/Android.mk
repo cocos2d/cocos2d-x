@@ -10,7 +10,6 @@ LOCAL_SRC_FILES := ScriptingCore.cpp \
                    cocos2d_specifics.cpp \
                    js_manual_conversions.cpp \
                    cocosjs_manual_conversions.cpp \
-                   js_bindings_ccbreader.cpp \
                    js_bindings_chipmunk_manual.cpp \
                    js_bindings_chipmunk_functions.cpp \
                    js_bindings_chipmunk_auto_classes.cpp \
