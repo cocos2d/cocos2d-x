@@ -26,6 +26,7 @@ THE SOFTWARE.
 #define __CCGL_H__
 
 #import <OpenGL/gl.h>
+#import <OpenGL/glu.h>
 #import <OpenGL/glext.h>
 
 #define CC_GL_DEPTH24_STENCIL8      -1

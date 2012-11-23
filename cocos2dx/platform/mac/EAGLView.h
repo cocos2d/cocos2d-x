@@ -25,8 +25,8 @@ THE SOFTWARE.
 #ifndef __EAGLVIEW_MAC_H__
 #define __EAGLVIEW_MAC_H__
 
-#include <Cocoa/Cocoa.h>
-#include "ccConfig.h"
+#import <Cocoa/Cocoa.h>
+#import "ccConfig.h"
 
 //PROTOCOLS:
 
@@ -91,6 +91,8 @@ THE SOFTWARE.
 
 // initializes the MacGLView with a frame rect and an OpenGL context
 - (id) initWithFrame:(NSRect)frameRect shareContext:(NSOpenGLContext*)context;
+
+- (id) initWithFrame:(NSRect)frameRect pixelFormat:(NSOpenGLPixelFormat *)format;
 
 /** uses and locks the OpenGL context */
 -(void) lockOpenGLContext;
