@@ -39,6 +39,7 @@ private:
     SEL_CallFunc mAnimationCompleteCallbackFunc;
     CCObject *mTarget;
     
+    
 public:
     CCBAnimationManager();
     ~CCBAnimationManager();
@@ -46,6 +47,8 @@ public:
     virtual bool init();
     
     CCArray* getSequences();
+    void setSequences(CCArray* seq);
+
     
     int getAutoPlaySequenceId();
     void setAutoPlaySequenceId(int autoPlaySequenceId);

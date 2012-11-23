@@ -39,6 +39,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MoonWarriors", "samples\Moo
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WatermelonWithMe", "samples\WatermelonWithMe\proj.win32\WatermelonWithMe.vcxproj", "{BE092D9E-95AE-4F86-84CE-F4519E4F3F15}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CocosDragonJS", "samples\CocosDragonJS\proj.win32\CocosDragonJS.vcxproj", "{68ED0B4E-2BCA-45D2-9648-CEABEBD3B9D7}"
+EndProject
 Global
 	GlobalSection(DPCodeReviewSolutionGUID) = preSolution
 		DPCodeReviewSolutionGUID = {00000000-0000-0000-0000-000000000000}
@@ -100,6 +102,10 @@ Global
 		{BE092D9E-95AE-4F86-84CE-F4519E4F3F15}.Debug|Win32.Build.0 = Debug|Win32
 		{BE092D9E-95AE-4F86-84CE-F4519E4F3F15}.Release|Win32.ActiveCfg = Release|Win32
 		{BE092D9E-95AE-4F86-84CE-F4519E4F3F15}.Release|Win32.Build.0 = Release|Win32
+		{68ED0B4E-2BCA-45D2-9648-CEABEBD3B9D7}.Debug|Win32.ActiveCfg = Debug|Win32
+		{68ED0B4E-2BCA-45D2-9648-CEABEBD3B9D7}.Debug|Win32.Build.0 = Debug|Win32
+		{68ED0B4E-2BCA-45D2-9648-CEABEBD3B9D7}.Release|Win32.ActiveCfg = Release|Win32
+		{68ED0B4E-2BCA-45D2-9648-CEABEBD3B9D7}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
