@@ -34,18 +34,17 @@ var gLevelOffsetX = 0;
 GameScene.prototype.onDidLoadFromCCB = function()
 {
     sharedGameScene = this;
-    cc.log("onDidLoadFromCCB 01");
+
     this.score = 0;
 
     var level = cc.Reader.load("Level.ccbi");
-    cc.log("onDidLoadFromCCB 02");
+    
     // Center the level on Screen
     gLevelOffsetX = (gWinSize.width-CD_LEVEL_WIDTH*gScaleFactor)/2;
     
     level.setPosition(cc.p(gLevelOffsetX,0));
-cc.log("onDidLoadFromCCB 03");
+
     this.rootNode.addChild(level);
-    cc.log("onDidLoadFromCCB 04");
 };
 
 GameScene.prototype.setScore = function(score)

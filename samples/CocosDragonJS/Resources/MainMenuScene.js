@@ -27,7 +27,7 @@ var CD_CONTROLTYPE_TILT = 1;
 
 // Setup global variables
 var gSettingMusicEnabled = true;
-var gSettingControlType;
+var gSettingControlType = CD_CONTROLTYPE_TOUCH;
 
 var gWinSize = cc.Director.getInstance().getWinSize();
 
@@ -70,11 +70,8 @@ MainMenuScene.prototype.onDidLoadFromCCB = function()
 
 MainMenuScene.prototype.onPressedPlay = function()
 {
-    cc.log("before play");
     var scene = cc.Reader.loadAsScene("GameScene.ccbi");
-    cc.log("load scene = "+scene);
     cc.Director.getInstance().replaceScene(scene);
-    cc.log("after loading");
 };
 
 MainMenuScene.prototype.onPressedMusic = function()
