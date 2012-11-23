@@ -252,6 +252,7 @@ CCNode* CCBReader::readNodeGraphFromData(CCData *pData, CCObject *pOwner, const 
     }
     
     for(int i = 0; i < mAnimationManagers.size(); ++i) {
+        mAnimationManagers[i].first->setUserObject(mAnimationManagers[i].second);
         if(jsControlled) {
             mNodesWithAnimationManagers->addObject(mAnimationManagers[i].first);
             mAnimationManagerForNodes->addObject(mAnimationManagers[i].second);
