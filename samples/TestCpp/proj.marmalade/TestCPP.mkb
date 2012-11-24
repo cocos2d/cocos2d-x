@@ -17,6 +17,10 @@ subprojects
 #	chipmunk
 }
 
+defines
+{
+	CC_ENABLE_BOX2D_INTEGRATION=1
+}
 assets
 {
 	(../Resources)
