@@ -48,11 +48,13 @@ class Xcode4Template(object):
         self.group_start_index = group  # eg: if 1 then libs/cocos2d/support -> ["cocos2d", "support"] ignoring "libs"
         self.output = []
         self.identifier = identifier
+        self.exclude = exclude
+        self.append = append
 
     def scandirs(self, path):
         for currentFile in glob.glob( os.path.join(path, self.wildcard) ):
             bExclude = False
-            for exclude_keyword in exclude:
+            for exclude_keyword in self.exclude:
                 if currentFile.find(exclude_keyword) >= 0:
                     bExclude = True
                     break
@@ -145,8 +147,8 @@ class Xcode4Template(object):
     #
     def generate_xml( self ):
         self.output.append( _template_open_body % self.identifier )
-        if append != "":
-            self.output.append( "".join(open(append, "r").readlines()) )
+        if self.append != "":
+            self.output.append( "".join(open(self.append, "r").readlines()) )
         self.generate_definitions()
         self.generate_nodes()
         self.output.append( _template_close_body )
@@ -171,35 +173,31 @@ if __name__ == "__main__":
     if len( sys.argv ) == 1:
         help()
 
-    directory = None
-    group = None
-    identifier = None
-    prefix = ""
-    exclude = []
-    append = ""
+    kwargs = dict()
 
     argv = sys.argv[1:]
     try:
         opts, args = getopt.getopt(argv, "d:g:i:p:e:a:", ["directory=","group=","identifier=","prefix=", "exclude=", "append="])
         for opt, arg in opts:
             if opt in ("-d","--directory"):
+                kwargs['directory'] = arg
                 directory = arg
             if opt in ("-g","--group"):
-                group = arg
+                kwargs['group'] = int(arg)
             if opt in ("-i","--identifier"):
-                identifier = arg
+                kwargs['identifier'] = arg
             if opt in ("-p","--prefix"):
-                prefix = arg
+                kwargs['prefix'] = arg
             if opt in ("-e","--exclude"):
-                exclude = arg.split()
+                kwargs['exclude'] = arg.split()
             if opt in ("-a","--append"):
-                append = arg
+                kwargs['append'] = arg
     except getopt.GetoptError,e:
         print e
 
-    if directory == None:
+    if not kwargs.has_key('directory'):
         help()
 
     #generate libs/cocos2dx
-    gen = Xcode4Template( directory=directory, group=group, identifier=identifier, prefix=prefix, exclude=exclude, append=append )
+    gen = Xcode4Template(**kwargs)
     gen.generate()
