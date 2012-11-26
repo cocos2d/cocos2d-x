@@ -45,27 +45,24 @@ void CCNodeLoaderLibrary::registerDefaultCCNodeLoaders() {
 }
 
 void CCNodeLoaderLibrary::registerCCNodeLoader(const char * pClassName, CCNodeLoader * pCCNodeLoader) {
-    this->registerCCNodeLoader(CCString::create(pClassName), pCCNodeLoader);
-}
-
-void CCNodeLoaderLibrary::registerCCNodeLoader(CCString * pClassName, CCNodeLoader * pCCNodeLoader) {
-    pClassName->retain();
     pCCNodeLoader->retain();
     this->mCCNodeLoaders.insert(CCNodeLoaderMapEntry(pClassName, pCCNodeLoader));
 }
 
 void CCNodeLoaderLibrary::unregisterCCNodeLoader(const char * pClassName) {
-    this->unregisterCCNodeLoader(CCString::create(pClassName));
-}
-
-void CCNodeLoaderLibrary::unregisterCCNodeLoader(CCString * pClassName) {
     CCNodeLoaderMap::iterator ccNodeLoadersIterator = this->mCCNodeLoaders.find(pClassName);
-    assert(ccNodeLoadersIterator != this->mCCNodeLoaders.end());
-    ccNodeLoadersIterator->first->release();
-    ccNodeLoadersIterator->second->release();
+    if (ccNodeLoadersIterator != this->mCCNodeLoaders.end())
+    {
+        ccNodeLoadersIterator->second->release();
+        mCCNodeLoaders.erase(ccNodeLoadersIterator);
+    }
+    else
+    {
+        CCLOG("The loader (%s) doesn't exist", pClassName);
+    }
 }
 
-CCNodeLoader * CCNodeLoaderLibrary::getCCNodeLoader(CCString * pClassName) {
+CCNodeLoader * CCNodeLoaderLibrary::getCCNodeLoader(const char* pClassName) {
     CCNodeLoaderMap::iterator ccNodeLoadersIterator = this->mCCNodeLoaders.find(pClassName);
     assert(ccNodeLoadersIterator != this->mCCNodeLoaders.end());
     return ccNodeLoadersIterator->second;
@@ -74,7 +71,6 @@ CCNodeLoader * CCNodeLoaderLibrary::getCCNodeLoader(CCString * pClassName) {
 void CCNodeLoaderLibrary::purge(bool pReleaseCCNodeLoaders) {
     if(pReleaseCCNodeLoaders) {
         for(CCNodeLoaderMap::iterator it = this->mCCNodeLoaders.begin(); it != this->mCCNodeLoaders.end(); it++) {
-            it->first->release();
             it->second->release();
         }
     }
