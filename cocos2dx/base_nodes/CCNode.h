@@ -276,7 +276,7 @@ public:
     
     /** Similar to userData, but instead of holding a void* it holds an id */
     virtual CCObject* getUserObject();
-    virtual void setUserObject(CCObject *pUserObject);
+    virtual void setUserObject(CCObject *pUserObject); //retain
     
     /** Shader Program
      @since v2.0
