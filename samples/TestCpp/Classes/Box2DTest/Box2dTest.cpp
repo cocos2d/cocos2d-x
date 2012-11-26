@@ -11,7 +11,9 @@ enum {
 
 Box2DTestLayer::Box2DTestLayer()
 : m_pSpriteTexture(NULL)
+, world(NULL)
 {
+#if CC_ENABLE_BOX2D_INTEGRATION
     setTouchEnabled( true );
     setAccelerometerEnabled( true );
 
@@ -41,12 +43,20 @@ Box2DTestLayer::Box2DTestLayer()
     label->setPosition(ccp( VisibleRect::center().x, VisibleRect::top().y-50));
     
     scheduleUpdate();
+#else
+    CCLabelTTF *pLabel = CCLabelTTF::create("Should define CC_ENABLE_BOX2D_INTEGRATION\n to run this test case",
+                                            "Arial",
+                                            18);
+    CCSize size = CCDirector::sharedDirector()->getWinSize();
+    pLabel->setPosition(ccp(size.width/2, size.height/2));
+    
+    addChild(pLabel);
+#endif
 }
 
 Box2DTestLayer::~Box2DTestLayer()
 {
-    delete world;
-    world = NULL;
+    CC_SAFE_DELETE(world);
     
     //delete m_debugDraw;
 }
@@ -133,6 +143,7 @@ void Box2DTestLayer::draw()
     //
     CCLayer::draw();
 
+#if CC_ENABLE_BOX2D_INTEGRATION
     ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
 
     kmGLPushMatrix();
@@ -140,6 +151,7 @@ void Box2DTestLayer::draw()
     world->DrawDebugData();
 
     kmGLPopMatrix();
+#endif
 }
 
 void Box2DTestLayer::addNewSpriteAtPosition(CCPoint p)
