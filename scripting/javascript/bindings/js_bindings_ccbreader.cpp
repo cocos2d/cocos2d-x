@@ -22,22 +22,22 @@ static void removeSelector(std::string &str) {
 }
 
 SEL_MenuHandler CCBScriptCallbackProxy::onResolveCCBCCMenuItemSelector(cocos2d::CCObject * pTarget,
-                                                                       cocos2d::CCString * pSelectorName) {
-    this->callBackProp = pSelectorName->getCString();
+                                                                       const char * pSelectorName) {
+    this->callBackProp = pSelectorName;
     removeSelector(this->callBackProp);
     return menu_selector(CCBScriptCallbackProxy::menuItemCallback);
 }
 
 SEL_CCControlHandler CCBScriptCallbackProxy::onResolveCCBCCControlSelector(CCObject * pTarget,
-                                                                           CCString * pSelectorName) {
+                                                                           const char * pSelectorName) {
     
-    this->callBackProp = pSelectorName->getCString();
+    this->callBackProp = pSelectorName;
     removeSelector(this->callBackProp);
     return cccontrol_selector(CCBScriptCallbackProxy::controlCallback);
 }
 
 bool CCBScriptCallbackProxy::onAssignCCBMemberVariable(CCObject * pTarget,
-                                                       CCString * pMemberVariableName,
+                                                       const char * pMemberVariableName,
                                                        CCNode * pNode) {
     return true;
 }

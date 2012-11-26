@@ -33,10 +33,10 @@ bool CCBAnimationManager::init()
     mNodeSequences = new CCDictionary();
     mBaseValues = new CCDictionary();
     
-    mDocumentOutletNames = CCArray::create();
-    mDocumentOutletNodes = CCArray::create();
-    mDocumentCallbackNames = CCArray::create();
-    mDocumentCallbackNodes = CCArray::create();
+    mDocumentOutletNames = new CCArray();
+    mDocumentOutletNodes = new CCArray();
+    mDocumentCallbackNames = new CCArray();
+    mDocumentCallbackNodes = new CCArray();
     
     mTarget = NULL;
     mAnimationCompleteCallbackFunc = NULL;
@@ -64,6 +64,12 @@ CCBAnimationManager::~CCBAnimationManager()
     mSequences->release();
     setRootNode(NULL);
     setDelegate(NULL);
+
+    CC_SAFE_RELEASE(mDocumentOutletNames);
+    CC_SAFE_RELEASE(mDocumentOutletNodes);
+    CC_SAFE_RELEASE(mDocumentCallbackNames);
+    CC_SAFE_RELEASE(mDocumentCallbackNodes);
+
 }
 
 CCArray* CCBAnimationManager::getSequences()
@@ -248,6 +254,9 @@ void CCBAnimationManager::moveAnimationsFromNode(CCNode* fromNode, CCNode* toNod
     if(baseValue) {
         mBaseValues->setObject(baseValue, (intptr_t)toNode);
         mBaseValues->removeObjectForKey((intptr_t)fromNode);
+
+        fromNode->release();
+        toNode->retain();
     }
     
     // Move seqs
@@ -255,6 +264,9 @@ void CCBAnimationManager::moveAnimationsFromNode(CCNode* fromNode, CCNode* toNod
     if(seqs) {
         mNodeSequences->setObject(seqs, (intptr_t)toNode);
         mNodeSequences->removeObjectForKey((intptr_t)fromNode);
+
+        fromNode->release();
+        toNode->retain();
     }
 }
 
