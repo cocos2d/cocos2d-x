@@ -64,7 +64,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>$(ProjectDir)..\Classes;$(ProjectDir)..\..\..\scripting\javascript\spidermonkey-win32\include;$(ProjectDir)..\..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\..\extensions;$(ProjectDir)..\..\..\scripting\javascript\bindings;$(ProjectDir)..\..\..\cocos2dx;$(ProjectDir)..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\..\cocos2dx\platform\win32;$(ProjectDir)..\..\..\cocos2dx\platform\third_party\win32;$(ProjectDir)..\..\..\cocos2dx\platform\third_party\win32\OGLES;$(ProjectDir)..\..\..\CocosDenshion\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_WINDOWS;STRICT;_DEBUG;XP_WIN;JS_HAVE___INTN;JS_INTPTR_TYPE=int;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;STRICT;DEBUG;_DEBUG;XP_WIN;JS_HAVE___INTN;JS_INTPTR_TYPE=int;COCOS2D_DEBUG=1;COCOS2D_JAVASCRIPT=1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -95,11 +95,9 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\scripting\javascript\spidermonkey-win32\lib\*
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
 if exist "$(OutDir)\TestJavascriptRes" rd /s /q "$(OutDir)\TestJavascriptRes"
 mkdir "$(OutDir)\TestJavascriptRes"
-xcopy "$(ProjectDir)..\cocos2d-html5-tests\res" "$(OutDir)\TestJavascriptRes\res\" /e /Y
+xcopy "$(ProjectDir)..\cocos2d-js-tests\res" "$(OutDir)\TestJavascriptRes\res\" /e /Y
 xcopy "$(ProjectDir)..\bindings\*.js" "$(OutDir)\TestJavascriptRes" /e /Y
-dir "$(ProjectDir)..\cocos2d-html5-tests\src\*.js" /a /b /s &gt; filelist.txt
-for /f %%I in (filelist.txt) do (copy /Y %%I "$(OutDir)\TestJavascriptRes")
-if exist filelist.txt del /f /q filelist.txt
+xcopy "$(ProjectDir)..\cocos2d-js-tests\src" "$(OutDir)\TestJavascriptRes\src\" /e /Y
 </Command>
     </PreBuildEvent>
     <PreBuildEvent>
@@ -121,7 +119,7 @@ if exist filelist.txt del /f /q filelist.txt
     </Midl>
     <ClCompile>
       <AdditionalIncludeDirectories>$(ProjectDir)..\Classes;$(ProjectDir)..\..\..\scripting\javascript\spidermonkey-win32\include;$(ProjectDir)..\..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\..\extensions;$(ProjectDir)..\..\..\scripting\javascript\bindings;$(ProjectDir)..\..\..\cocos2dx;$(ProjectDir)..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\..\cocos2dx\platform\win32;$(ProjectDir)..\..\..\cocos2dx\platform\third_party\win32;$(ProjectDir)..\..\..\cocos2dx\platform\third_party\win32\OGLES;$(ProjectDir)..\..\..\CocosDenshion\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_WINDOWS;STRICT;NDEBUG;XP_WIN;JS_HAVE___INTN;JS_INTPTR_TYPE=int;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;STRICT;NDEBUG;XP_WIN;JS_HAVE___INTN;JS_INTPTR_TYPE=int;COCOS2D_JAVASCRIPT=1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ExceptionHandling>
       </ExceptionHandling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -152,37 +150,40 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\scripting\javascript\spidermonkey-win32\lib\*
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
 if exist "$(OutDir)\TestJavascriptRes" rd /s /q "$(OutDir)\TestJavascriptRes"
 mkdir "$(OutDir)\TestJavascriptRes"
-xcopy "$(ProjectDir)..\cocos2d-html5-tests\res" "$(OutDir)\TestJavascriptRes\res\" /e /Y
+xcopy "$(ProjectDir)..\cocos2d-js-tests\res" "$(OutDir)\TestJavascriptRes\res\" /e /Y
 xcopy "$(ProjectDir)..\bindings\*.js" "$(OutDir)\TestJavascriptRes" /e /Y
-dir "$(ProjectDir)..\cocos2d-html5-tests\src\*.js" /a /b /s &gt; filelist.txt
-for /f %%I in (filelist.txt) do (copy /Y %%I "$(OutDir)\TestJavascriptRes")
-if exist filelist.txt del /f /q filelist.txt
+xcopy "$(ProjectDir)..\cocos2d-js-tests\src" "$(OutDir)\TestJavascriptRes\src\" /e /Y
 </Command>
       <Message>Copy js and resource files.</Message>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\scripting\javascript\bindings\CCPhysicsSprite.cpp" />
     <ClCompile Include="..\..\..\scripting\javascript\bindings\cocos2d_specifics.cpp" />
     <ClCompile Include="..\..\..\scripting\javascript\bindings\cocosjs_manual_conversions.cpp" />
     <ClCompile Include="..\..\..\scripting\javascript\bindings\generated\cocos2dx.cpp" />
     <ClCompile Include="..\..\..\scripting\javascript\bindings\js_bindings_ccbreader.cpp" />
+    <ClCompile Include="..\..\..\scripting\javascript\bindings\js_bindings_chipmunk_auto_classes.cpp" />
     <ClCompile Include="..\..\..\scripting\javascript\bindings\js_bindings_chipmunk_functions.cpp" />
     <ClCompile Include="..\..\..\scripting\javascript\bindings\js_bindings_chipmunk_manual.cpp" />
+    <ClCompile Include="..\..\..\scripting\javascript\bindings\js_bindings_chipmunk_registration.cpp" />
+    <ClCompile Include="..\..\..\scripting\javascript\bindings\js_bindings_core.cpp" />
     <ClCompile Include="..\..\..\scripting\javascript\bindings\js_manual_conversions.cpp" />
     <ClCompile Include="..\..\..\scripting\javascript\bindings\ScriptingCore.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\scripting\javascript\bindings\CCPhysicsSprite.h" />
     <ClInclude Include="..\..\..\scripting\javascript\bindings\cocos2d_specifics.hpp" />
     <ClInclude Include="..\..\..\scripting\javascript\bindings\cocosjs_manual_conversions.h" />
     <ClInclude Include="..\..\..\scripting\javascript\bindings\generated\cocos2dx.hpp" />
     <ClInclude Include="..\..\..\scripting\javascript\bindings\js_bindings_ccbreader.h" />
-    <ClInclude Include="..\..\..\scripting\javascript\bindings\js_bindings_chipmunk_functions.hpp" />
-    <ClInclude Include="..\..\..\scripting\javascript\bindings\js_bindings_chipmunk_manual.hpp" />
+    <ClInclude Include="..\..\..\scripting\javascript\bindings\js_bindings_chipmunk_auto_classes.h" />
+    <ClInclude Include="..\..\..\scripting\javascript\bindings\js_bindings_chipmunk_auto_classes_registration.h" />
+    <ClInclude Include="..\..\..\scripting\javascript\bindings\js_bindings_chipmunk_functions.h" />
+    <ClInclude Include="..\..\..\scripting\javascript\bindings\js_bindings_chipmunk_manual.h" />
+    <ClInclude Include="..\..\..\scripting\javascript\bindings\js_bindings_chipmunk_registration.h" />
     <ClInclude Include="..\..\..\scripting\javascript\bindings\js_bindings_config.h" />
+    <ClInclude Include="..\..\..\scripting\javascript\bindings\js_bindings_core.h" />
     <ClInclude Include="..\..\..\scripting\javascript\bindings\js_manual_conversions.h" />
     <ClInclude Include="..\..\..\scripting\javascript\bindings\ScriptingCore.h" />
     <ClInclude Include="..\..\..\scripting\javascript\bindings\spidermonkey_specifics.h" />

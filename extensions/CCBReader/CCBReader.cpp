@@ -91,6 +91,11 @@ CCBReader::CCBReader(CCBReader * pCCBReader)
     this->mCCBMemberVariableAssigner = pCCBReader->mCCBMemberVariableAssigner;
     this->mCCBSelectorResolver = pCCBReader->mCCBSelectorResolver;
     this->mCCNodeLoaderListener = pCCBReader->mCCNodeLoaderListener;
+
+    this->mOwnerCallbackNames = pCCBReader->mOwnerCallbackNames;
+    this->mOwnerCallbackNodes = pCCBReader->mOwnerCallbackNodes;
+    this->mOwnerOutletNames = pCCBReader->mOwnerOutletNames;
+    this->mOwnerOutletNodes = pCCBReader->mOwnerOutletNodes;
 }
 
 CCBReader::CCBReader()
@@ -227,6 +232,12 @@ CCNode* CCBReader::readNodeGraphFromData(CCData *pData, CCObject *pOwner, const 
     initWithData(pData, pOwner);
     mActionManager->setRootContainerSize(parentSize);
     
+    mOwnerOutletNames = CCArray::create();
+    mOwnerOutletNodes = CCArray::create();
+
+    mOwnerCallbackNames = CCArray::create();
+    mOwnerCallbackNodes = CCArray::create();
+    
     CCNode *pNodeGraph = readFileWithCleanUp(true);
     
     if (pNodeGraph && mActionManager->getAutoPlaySequenceId() != -1)
@@ -234,7 +245,21 @@ CCNode* CCBReader::readNodeGraphFromData(CCData *pData, CCObject *pOwner, const 
         // Auto play animations
         mActionManager->runAnimations(mActionManager->getAutoPlaySequenceId(), 0);
     }
+
+    if(jsControlled) {
+        mNodesWithAnimationManagers = CCArray::create();
+        mAnimationManagerForNodes = CCArray::create();
+    }
     
+    for(int i = 0; i < mAnimationManagers.size(); ++i) {
+        mAnimationManagers[i].first->setUserObject(mAnimationManagers[i].second);
+        if(jsControlled) {
+            mNodesWithAnimationManagers->addObject(mAnimationManagers[i].first);
+            mAnimationManagerForNodes->addObject(mAnimationManagers[i].second);
+        }
+        
+    }
+
     // Return action manager by reference
     if (ppAnimationManager)
     {
@@ -289,6 +314,8 @@ bool CCBReader::readHeader() {
         return false;
     }
 
+    jsControlled = this->readBool();
+    
     return true;
 }
 
@@ -321,7 +348,9 @@ CCNode* CCBReader::readFileWithCleanUp(bool bCleanUp)
     }
     
     CCNode *pNode = readNodeGraph();
-    
+
+    mAnimationManagers.push_back(std::make_pair(pNode, mActionManager));
+
     if (bCleanUp)
     {
         cleanUpNodeGraph(pNode);
@@ -459,6 +488,12 @@ CCNode * CCBReader::readNodeGraph(CCNode * pParent) {
     /* Read class name. */
     CCString * className = this->readCachedString();
 
+     CCString * jsControlledName;
+    
+    if(jsControlled) {
+        jsControlledName = this->readCachedString();
+    }
+    
     // Read assignment type and name
     int memberVarAssignmentType = this->readInt(false);
     CCString * memberVarAssignmentName;
@@ -481,6 +516,10 @@ CCNode * CCBReader::readNodeGraph(CCNode * pParent) {
         mActionManager->setRootNode(node);
     }
     
+    if(jsControlled && node == mActionManager->getRootNode()) {
+        mActionManager->setDocumentControllerName(jsControlledName->getCString());
+    }
+
     // Read animated properties
     CCDictionary *seqs = CCDictionary::create();
     mAnimatedProps = new set<string>();
@@ -538,6 +577,8 @@ CCNode * CCBReader::readNodeGraph(CCNode * pParent) {
         embeddedNode->setVisible(true);
         embeddedNode->ignoreAnchorPointForPosition(ccbFileNode->isIgnoreAnchorPointForPosition());
         
+        mActionManager->moveAnimationsFromNode(ccbFileNode, embeddedNode);
+
         ccbFileNode->setCCBFileNode(NULL);
         
         node = embeddedNode;
@@ -551,6 +592,7 @@ CCNode * CCBReader::readNodeGraph(CCNode * pParent) {
      }*/
 #else
     if(memberVarAssignmentType != kCCBTargetTypeNone) {
+        if(!jsControlled) {
         CCObject * target = NULL;
         if(memberVarAssignmentType == kCCBTargetTypeDocumentRoot) 
         {
@@ -572,6 +614,15 @@ CCNode * CCBReader::readNodeGraph(CCNode * pParent) {
 
             if(!assigned && this->mCCBMemberVariableAssigner != NULL) {
                 this->mCCBMemberVariableAssigner->onAssignCCBMemberVariable(target, memberVarAssignmentName, node);
+            }
+        }
+        } else {
+            if(memberVarAssignmentType == kCCBTargetTypeDocumentRoot) {
+                mActionManager->addDocumentOutletName(memberVarAssignmentName->getCString());
+                mActionManager->addDocumentOutletNode(node);
+            } else {
+                mOwnerOutletNames->addObject(CCString::create(memberVarAssignmentName->getCString()));
+                mOwnerOutletNodes->addObject(node);
             }
         }
     }
@@ -757,6 +808,60 @@ bool CCBReader::endsWith(CCString * pString, CCString * pEnding) {
     } else {
         return false;
     }
+}
+
+bool CCBReader::isJSControlled() {
+    return jsControlled;
+}
+
+void CCBReader::addOwnerCallbackName(std::string name) {
+    mOwnerCallbackNames->addObject(CCString::create(name));
+}
+
+void CCBReader::addOwnerCallbackNode(CCNode *node) {
+    mOwnerCallbackNodes->addObject(node);
+}
+
+
+void CCBReader::addDocumentCallbackName(std::string name) {
+    mActionManager->addDocumentCallbackName(name);
+}
+
+void CCBReader::addDocumentCallbackNode(CCNode *node) {
+    mActionManager->addDocumentCallbackNode(node);
+}
+
+
+CCArray* CCBReader::getOwnerCallbackNames() {
+    return mOwnerCallbackNames;
+}
+
+CCArray* CCBReader::getOwnerCallbackNodes() {
+    return mOwnerCallbackNodes;
+}
+
+CCArray* CCBReader::getOwnerOutletNames() {
+    return mOwnerOutletNames;
+}
+
+CCArray* CCBReader::getOwnerOutletNodes() {
+    return mOwnerOutletNodes;
+}
+
+CCArray* CCBReader::getNodesWithAnimationManagers() {
+    return mNodesWithAnimationManagers;
+}
+
+CCArray* CCBReader::getAnimationManagersForNodes() {
+    return mAnimationManagerForNodes;
+}
+
+std::vector<std::pair<CCNode *, CCBAnimationManager *> > CCBReader::getAnimationManagers() {
+    return mAnimationManagers;
+}
+
+void CCBReader::setAnimationManagers(std::vector<std::pair<CCNode *, CCBAnimationManager *> > x) {
+    mAnimationManagers = x;
 }
 
 /************************************************************************

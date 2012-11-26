@@ -31,10 +31,9 @@ public:
     void backCallback(CCObject* pSender);
     void toggleCallback(CCObject* pSender);
 
-    virtual void registerWithTouchDispatcher();
-    virtual bool ccTouchBegan(CCTouch* touch, CCEvent* event);
-    virtual void ccTouchMoved(CCTouch* touch, CCEvent* event);
-    virtual void ccTouchEnded(CCTouch* touch, CCEvent* event);
+    virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
+    virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent);
+    virtual void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent);
 
     virtual void update(float dt);
     void setEmitterPosition();

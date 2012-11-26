@@ -142,6 +142,7 @@ cpBodySetMass(cpBody *body, cpFloat mass)
 	cpBodyActivate(body);
 	body->m = mass;
 	body->m_inv = 1.0f/mass;
+	cpBodyAssertSane(body);
 }
 
 void
@@ -152,6 +153,7 @@ cpBodySetMoment(cpBody *body, cpFloat moment)
 	cpBodyActivate(body);
 	body->i = moment;
 	body->i_inv = 1.0f/moment;
+	cpBodyAssertSane(body);
 }
 
 void
@@ -208,8 +210,8 @@ void
 cpBodySetPos(cpBody *body, cpVect pos)
 {
 	cpBodyActivate(body);
-	cpBodyAssertSane(body);
 	body->p = pos;
+	cpBodyAssertSane(body);
 }
 
 static inline void
@@ -217,13 +219,13 @@ setAngle(cpBody *body, cpFloat angle)
 {
 	body->a = angle;//fmod(a, (cpFloat)M_PI*2.0f);
 	body->rot = cpvforangle(angle);
+	cpBodyAssertSane(body);
 }
 
 void
 cpBodySetAngle(cpBody *body, cpFloat angle)
 {
 	cpBodyActivate(body);
-	cpBodyAssertSane(body);
 	setAngle(body, angle);
 }
 

@@ -83,6 +83,11 @@ struct cpArbiter {
 	/// Override in a pre-solve collision handler for custom behavior.
 	cpVect surface_vr;
 	
+	/// User definable data pointer.
+	/// The value will persist for the pair of shapes until the separate() callback is called.
+	/// NOTE: If you need to clean up this pointer, you should implement the separate() callback to do it.
+	cpDataPointer data;
+	
 	CP_PRIVATE(cpShape *a);
 	CP_PRIVATE(cpShape *b);
 	CP_PRIVATE(cpBody *body_a);
@@ -110,9 +115,10 @@ static inline void cpArbiterSet##name(cpArbiter *arb, type value){arb->member = 
 CP_DefineArbiterStructGetter(type, member, name) \
 CP_DefineArbiterStructSetter(type, member, name)
 
-CP_DefineArbiterStructProperty(cpFloat, e, Elasticity);
-CP_DefineArbiterStructProperty(cpFloat, u, Friction);
-CP_DefineArbiterStructProperty(cpVect, surface_vr, SurfaceVelocity);
+CP_DefineArbiterStructProperty(cpFloat, e, Elasticity)
+CP_DefineArbiterStructProperty(cpFloat, u, Friction)
+CP_DefineArbiterStructProperty(cpVect, surface_vr, SurfaceVelocity)
+CP_DefineArbiterStructProperty(cpDataPointer, data, UserData)
 
 /// Calculate the total impulse that was applied by this arbiter.
 /// This function should only be called from a post-solve, post-step or cpBodyEachArbiter callback.

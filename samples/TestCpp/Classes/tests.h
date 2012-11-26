@@ -32,7 +32,12 @@
 #include "PerformanceTest/PerformanceTest.h"
 #include "ZwoptexTest/ZwoptexTest.h"
 #include "CocosDenshionTest/CocosDenshionTest.h"
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
+// bada don't support libcurl
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA)
 #include "CurlTest/CurlTest.h"
+#endif
+#endif
 #include "UserDefaultTest/UserDefaultTest.h"
 #include "BugsTest/BugsTest.h"
 #include "Texture2dTest/Texture2dTest.h"
@@ -41,19 +46,12 @@
 #include "TextureCacheTest/TextureCacheTest.h"
 #include "NodeTest/NodeTest.h"
 #include "ShaderTest/ShaderTest.h"
-
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
-    #include "ChipmunkAccelTouchTest/ChipmunkAccelTouchTest.h"
-#else
-#ifdef MARMALADEUSECHIPMUNK
-#if    (MARMALADEUSECHIPMUNK == 1)
-    #include "ChipmunkAccelTouchTest/ChipmunkAccelTouchTest.h"
-#endif
-#endif
-#endif // (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
-
 #include "ExtensionsTest/ExtensionsTest.h"
 #include "MutiTouchTest/MutiTouchTest.h"
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
+#include "ClippingNodeTest/ClippingNodeTest.h"
+#include "ChipmunkTest/ChipmunkTest.h"
+#endif
 
 enum
 {
@@ -76,13 +74,15 @@ enum
     TEST_PARALLAX,
     TEST_TILE_MAP,
     TEST_INTERVAL,
-    TEST_CHIPMUNKACCELTOUCH,
     TEST_LABEL,
     TEST_TEXT_INPUT,
     TEST_SPRITE,
     TEST_SCHEDULER,
     TEST_RENDERTEXTURE,
     TEST_TEXTURE2D,
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
+    TEST_CHIPMUNK,
+#endif
     TEST_BOX2D,
     TEST_BOX2DBED,
     TEST_EFFECT_ADVANCE,
@@ -91,7 +91,11 @@ enum
     TEST_COCOSDENSHION,
     TEST_PERFORMANCE,
     TEST_ZWOPTEX,
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA)
     TEST_CURL,
+#endif
+#endif
     TEST_USERDEFAULT,
     TEST_BUGS,
     TEST_FONTS,
@@ -100,6 +104,9 @@ enum
     TEST_EXTENSIONS,
     TEST_SHADER,
     TEST_MUTITOUCH,
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
+    TEST_CLIPPINGNODE,
+#endif
     TESTS_COUNT,    
 };
 
@@ -123,13 +130,15 @@ const std::string g_aTestNames[TESTS_COUNT] = {
     "ParallaxTest",
     "TileMapTest",
     "IntervalTest",
-    "ChipmunkAccelTouchTest",
     "LabelTest",
     "TextInputTest",
     "SpriteTest",
-    "SchdulerTest",
+    "SchedulerTest",
     "RenderTextureTest",
     "Texture2DTest",
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
+    "ChipmunkTest",
+#endif
     "Box2dTest",
     "Box2dTestBed",
     "EffectAdvancedTest",
@@ -138,7 +147,11 @@ const std::string g_aTestNames[TESTS_COUNT] = {
     "CocosDenshionTest",
     "PerformanceTest",
     "ZwoptexTest",
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA)
     "CurlTest",
+#endif
+#endif
     "UserDefaultTest",
     "BugsTest",
     "FontTest",
@@ -146,7 +159,10 @@ const std::string g_aTestNames[TESTS_COUNT] = {
     "TextureCacheTest",
     "ExtensionsTest",
     "ShaderTest",
-    "MutiTouchTest"
+    "MutiTouchTest",
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
+    "ClippingNodeTest"
+#endif
 };
 
 #endif

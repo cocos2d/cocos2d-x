@@ -42,9 +42,6 @@ preStep(cpRotaryLimitJoint *joint, cpFloat dt)
 	// calculate bias velocity
 	cpFloat maxBias = joint->constraint.maxBias;
 	joint->bias = cpfclamp(-bias_coef(joint->constraint.errorBias, dt)*pdist/dt, -maxBias, maxBias);
-	
-	// compute max impulse
-	joint->jMax = J_MAX(joint, dt);
 
 	// If the bias is 0, the joint is not at a limit. Reset the impulse.
 	if(!joint->bias) joint->jAcc = 0.0f;
@@ -62,7 +59,7 @@ applyCachedImpulse(cpRotaryLimitJoint *joint, cpFloat dt_coef)
 }
 
 static void
-applyImpulse(cpRotaryLimitJoint *joint)
+applyImpulse(cpRotaryLimitJoint *joint, cpFloat dt)
 {
 	if(!joint->bias) return; // early exit
 
@@ -72,13 +69,15 @@ applyImpulse(cpRotaryLimitJoint *joint)
 	// compute relative rotational velocity
 	cpFloat wr = b->w - a->w;
 	
+	cpFloat jMax = joint->constraint.maxForce*dt;
+	
 	// compute normal impulse	
 	cpFloat j = -(joint->bias + wr)*joint->iSum;
 	cpFloat jOld = joint->jAcc;
 	if(joint->bias < 0.0f){
-		joint->jAcc = cpfclamp(jOld + j, 0.0f, joint->jMax);
+		joint->jAcc = cpfclamp(jOld + j, 0.0f, jMax);
 	} else {
-		joint->jAcc = cpfclamp(jOld + j, -joint->jMax, 0.0f);
+		joint->jAcc = cpfclamp(jOld + j, -jMax, 0.0f);
 	}
 	j = joint->jAcc - jOld;
 	

@@ -29,6 +29,17 @@ private:
     CCBAnimationManagerDelegate *mDelegate;
     CCBSequence *mRunningSequence;
     
+    CCArray *mDocumentOutletNames;
+    CCArray *mDocumentOutletNodes;
+    CCArray *mDocumentCallbackNames;
+    CCArray *mDocumentCallbackNodes;
+    std::string mDocumentControllerName;
+    std::string lastCompletedSequenceName;
+
+    SEL_CallFunc mAnimationCompleteCallbackFunc;
+    CCObject *mTarget;
+    
+    
 public:
     CCBAnimationManager();
     ~CCBAnimationManager();
@@ -36,12 +47,30 @@ public:
     virtual bool init();
     
     CCArray* getSequences();
+    void setSequences(CCArray* seq);
+
     
     int getAutoPlaySequenceId();
     void setAutoPlaySequenceId(int autoPlaySequenceId);
     
     CCNode* getRootNode();
-    void setRootNode(CCNode* pRootNode); // retain
+    void setRootNode(CCNode* pRootNode); // retain    
+    
+
+    void addDocumentCallbackNode(CCNode *node);
+    void addDocumentCallbackName(std::string name);
+    void addDocumentOutletNode(CCNode *node);
+    void addDocumentOutletName(std::string name);
+
+    void setDocumentControllerName(const std::string &name);
+    
+    std::string getDocumentControllerName();
+    CCArray* getDocumentCallbackNames();
+    CCArray* getDocumentCallbackNodes();
+    CCArray* getDocumentOutletNames();
+    CCArray* getDocumentOutletNodes();
+    std::string getLastCompletedSequenceName();
+    
     
     const CCSize& getRootContainerSize();
     void setRootContainerSize(const CCSize &rootContainerSize);
@@ -51,15 +80,17 @@ public:
     
     const char* getRunningSequenceName();
     
-    const CCSize& getContainerSize(CCNode* pNode);
+    CCSize getContainerSize(CCNode* pNode);
     
     void addNode(CCNode *pNode, CCDictionary *pSeq);
     void setBaseValue(CCObject *pValue, CCNode *pNode, const char *pPropName);
-    
+    void moveAnimationsFromNode(CCNode* fromNode, CCNode* toNode);
+
     void runAnimations(const char *pName, float fTweenDuration);
     void runAnimations(const char *pName);
     void runAnimations(int nSeqId, float fTweenDuraiton);
-    
+    void setAnimationCompletedCallback(CCObject *target, SEL_CallFunc callbackFunc);
+
     void debug();
     
 private:

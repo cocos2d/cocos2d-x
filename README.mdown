@@ -8,6 +8,7 @@ Multi Platform
 -------------
    * iOS:  stable, well tested on iOS 4.x ~ 5.x SDK.
    * Android: stable, well tested on 2.0~4.0, based on ndk r5 ~ r8.
+   * Windows 8 Metro & Windows Phone 8: stable, it's in another repo http://github.com/cocos2d-x/cocos2dx-win8. We will merge it back sooner or later
    * Bada: stable on Bada SDK 1.0 & 2.0
    * BlackBerry Playbook & BB10: stable, contribued by engineers working at RIM
    * Marmalade: stable since cocos2d-x-0.11.0

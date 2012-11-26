@@ -41,21 +41,6 @@ class CCNode : public CCObject
     int     getTag();
     void    setTag(int var);
 
-    tolua_readonly tolua_property__CCZOrder int zOrder;
-    tolua_property__CCVertexZ       float vertexZ;
-    tolua_property__CCRotation      float rotation;
-    tolua_property__CCScale         float scale;
-    tolua_property__CCScaleX        float scaleX;
-    tolua_property__CCScaleY        float scaleY;
-    tolua_property__CCPositionX     float x;
-    tolua_property__CCPositionY     float y;
-    tolua_property__CCSkewX         float skewX;
-    tolua_property__CCSkewY         float skewY;
-    tolua_property__IsVisible       bool  isVisible;
-    tolua_property__CCAnchorPoint   CCPoint anchorPoint;
-    tolua_property__CCContentSize   CCSize contentSize;
-    tolua_property__CCTag           int tag;
-
     CCArray* getChildren();
     unsigned int getChildrenCount(void);
 

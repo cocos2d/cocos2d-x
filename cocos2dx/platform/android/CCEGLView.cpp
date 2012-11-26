@@ -36,10 +36,13 @@ THE SOFTWARE.
 
 
 #if CC_TEXTURE_ATLAS_USE_VAO
-  #include <EGL/egl.h>
-  PFNGLGENVERTEXARRAYSOESPROC glGenVertexArraysOESEXT = 0;
-  PFNGLBINDVERTEXARRAYOESPROC glBindVertexArrayOESEXT = 0;
-  PFNGLDELETEVERTEXARRAYSOESPROC glDeleteVertexArraysOESEXT = 0;
+
+// <EGL/egl.h> exists since android 2.3
+#include <EGL/egl.h>
+PFNGLGENVERTEXARRAYSOESPROC glGenVertexArraysOESEXT = 0;
+PFNGLBINDVERTEXARRAYOESPROC glBindVertexArrayOESEXT = 0;
+PFNGLDELETEVERTEXARRAYSOESPROC glDeleteVertexArraysOESEXT = 0;
+
 #endif
 
 void initExtensions() {

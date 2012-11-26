@@ -286,11 +286,35 @@ public:
     virtual std::string title();
 };
 
+class SpriteOffsetAnchorRotationalSkew : public SpriteTestDemo
+{
+public:
+    SpriteOffsetAnchorRotationalSkew();
+    ~SpriteOffsetAnchorRotationalSkew();
+    virtual std::string title();
+};
+
 class SpriteBatchNodeOffsetAnchorSkew : public SpriteTestDemo
 {
 public:
     SpriteBatchNodeOffsetAnchorSkew();
     ~SpriteBatchNodeOffsetAnchorSkew();
+    virtual std::string title();
+};
+
+class SpriteOffsetAnchorRotationalSkewScale : public SpriteTestDemo
+{
+public:
+    SpriteOffsetAnchorRotationalSkewScale();
+    ~SpriteOffsetAnchorRotationalSkewScale();
+    virtual std::string title();
+};
+
+class SpriteBatchNodeOffsetAnchorRotationalSkew : public SpriteTestDemo
+{
+public:
+    SpriteBatchNodeOffsetAnchorRotationalSkew();
+    ~SpriteBatchNodeOffsetAnchorRotationalSkew();
     virtual std::string title();
 };
 
@@ -307,6 +331,14 @@ class SpriteBatchNodeOffsetAnchorSkewScale : public SpriteTestDemo
 public:
     SpriteBatchNodeOffsetAnchorSkewScale();
     ~SpriteBatchNodeOffsetAnchorSkewScale();
+    virtual std::string title();
+};
+
+class SpriteBatchNodeOffsetAnchorRotationalSkewScale : public SpriteTestDemo
+{
+public:
+    SpriteBatchNodeOffsetAnchorRotationalSkewScale();
+    ~SpriteBatchNodeOffsetAnchorRotationalSkewScale();
     virtual std::string title();
 };
 
@@ -497,6 +529,14 @@ public:
     virtual std::string subtitle();
 };
 
+class SpriteBatchNodeRotationalSkewNegativeScaleChildren : public SpriteTestDemo
+{
+public:
+    SpriteBatchNodeRotationalSkewNegativeScaleChildren();
+    ~SpriteBatchNodeRotationalSkewNegativeScaleChildren();
+    virtual std::string title();
+};
+
 class SpriteSkewNegativeScaleChildren : public SpriteTestDemo
 {
 public:
@@ -504,6 +544,14 @@ public:
     ~SpriteSkewNegativeScaleChildren();
     virtual std::string title();
     virtual std::string subtitle();
+};
+
+class SpriteRotationalSkewNegativeScaleChildren : public SpriteTestDemo
+{
+public:
+    SpriteRotationalSkewNegativeScaleChildren();
+    ~SpriteRotationalSkewNegativeScaleChildren();
+    virtual std::string title();
 };
 
 class SpriteDoubleResolution : public SpriteTestDemo

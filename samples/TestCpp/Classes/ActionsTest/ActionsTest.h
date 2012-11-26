@@ -14,6 +14,8 @@ enum
     ACTION_SCALE_LAYER,
     ACTION_ROTATE_LAYER,
     ACTION_SKEW_LAYER,
+    ACTION_ROTATIONAL_SKEW_LAYER,
+    ACTION_ROTATIONAL_SKEW_VS_STANDARD_SKEW_LAYER,
     ACTION_SKEWROTATE_LAYER,
     ACTION_JUMP_LAYER,
     ACTION_CARDINALSPLINE_LAYER,
@@ -45,6 +47,7 @@ enum
     ACTION_ISSUE1288_LAYER,
     ACTION_ISSUE1288_2_LAYER,
     ACTION_ISSUE1327_LAYER,
+    ACTION_ISSUE1398_LAYER,
     ACTION_LAYER_COUNT,
 };
 
@@ -101,12 +104,28 @@ public:
 
 class ActionSkew : public ActionsDemo
 {
+public:
+    virtual void onEnter();
+    virtual std::string subtitle();
+};
+
+class ActionRotationalSkew : public ActionsDemo
+{
+public:
+    virtual void onEnter();
+    virtual std::string subtitle();
+};
+
+class ActionRotationalSkewVSStandardSkew : public ActionsDemo
+{
+public:
     virtual void onEnter();
     virtual std::string subtitle();
 };
 
 class ActionSkewRotateScale : public ActionsDemo
 {
+public:
     virtual void onEnter();
     virtual std::string subtitle();
 };
@@ -304,10 +323,10 @@ class Issue1305_2 : public ActionsDemo
 {
 public:
     virtual void onEnter();
-    void log1();
-    void log2();
-    void log3();
-    void log4();
+    void printLog1();
+    void printLog2();
+    void printLog3();
+    void printLog4();
     virtual std::string title();
     virtual std::string subtitle();
 };
@@ -335,6 +354,18 @@ public:
     virtual std::string subtitle();
     virtual std::string title();
     void logSprRotation(CCNode* pSender);
+};
+
+class Issue1398 : public ActionsDemo
+{
+public:
+    void incrementInteger();
+    void incrementIntegerCallback(CCNode* pSender, void* data);
+    virtual void onEnter();
+    virtual std::string subtitle();
+    virtual std::string title();
+private:
+    int m_nTestInteger;
 };
 
 class ActionCatmullRom : public ActionsDemo

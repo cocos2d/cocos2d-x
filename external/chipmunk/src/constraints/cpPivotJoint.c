@@ -32,10 +32,7 @@ preStep(cpPivotJoint *joint, cpFloat dt)
 	joint->r2 = cpvrotate(joint->anchr2, b->rot);
 	
 	// Calculate mass tensor
-	k_tensor(a, b, joint->r1, joint->r2, &joint->k1, &joint->k2);
-	
-	// compute max impulse
-	joint->jMaxLen = J_MAX(joint, dt);
+	joint-> k = k_tensor(a, b, joint->r1, joint->r2);
 	
 	// calculate bias velocity
 	cpVect delta = cpvsub(cpvadd(b->p, joint->r2), cpvadd(a->p, joint->r1));
@@ -52,7 +49,7 @@ applyCachedImpulse(cpPivotJoint *joint, cpFloat dt_coef)
 }
 
 static void
-applyImpulse(cpPivotJoint *joint)
+applyImpulse(cpPivotJoint *joint, cpFloat dt)
 {
 	cpBody *a = joint->constraint.a;
 	cpBody *b = joint->constraint.b;
@@ -64,9 +61,9 @@ applyImpulse(cpPivotJoint *joint)
 	cpVect vr = relative_velocity(a, b, r1, r2);
 	
 	// compute normal impulse
-	cpVect j = mult_k(cpvsub(joint->bias, vr), joint->k1, joint->k2);
+	cpVect j = cpMat2x2Transform(joint->k, cpvsub(joint->bias, vr));
 	cpVect jOld = joint->jAcc;
-	joint->jAcc = cpvclamp(cpvadd(joint->jAcc, j), joint->jMaxLen);
+	joint->jAcc = cpvclamp(cpvadd(joint->jAcc, j), joint->constraint.maxForce*dt);
 	j = cpvsub(joint->jAcc, jOld);
 	
 	// apply impulse

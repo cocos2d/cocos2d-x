@@ -159,7 +159,7 @@ void CCControlSwitchSprite::draw()
 
     ccGLEnableVertexAttribs(kCCVertexAttribFlag_PosColorTex);
     ccGLBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    getShaderProgram()->setUniformForModelViewProjectionMatrix();
+    getShaderProgram()->setUniformsForBuiltins();
 
     glActiveTexture(GL_TEXTURE0);
     glBindTexture( GL_TEXTURE_2D, getTexture()->getName());

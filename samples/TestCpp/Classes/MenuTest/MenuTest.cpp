@@ -25,18 +25,14 @@ enum {
 //------------------------------------------------------------------
 MenuLayerMainMenu::MenuLayerMainMenu()
 {
-    CCMenuItemFont::setFontSize( 30 );
-    CCMenuItemFont::setFontName("Courier New");
-
     setTouchEnabled(true);
-    // Font Item
-    
+    setTouchPriority(kCCMenuHandlerPriority + 1);
+    setTouchMode(kCCTouchesOneByOne);
+
+    // Font Item    
     CCSprite* spriteNormal = CCSprite::create(s_MenuItem, CCRectMake(0,23*2,115,23));
     CCSprite* spriteSelected = CCSprite::create(s_MenuItem, CCRectMake(0,23*1,115,23));
     CCSprite* spriteDisabled = CCSprite::create(s_MenuItem, CCRectMake(0,23*0,115,23));
-    //dynamic_cast<CCNode*>(mgr)->addChild(spriteNormal);
-    //dynamic_cast<CCNode*>(mgr)->addChild(spriteSelected);
-    //dynamic_cast<CCNode*>(mgr)->addChild(spriteDisabled);
 
     CCMenuItemSprite* item1 = CCMenuItemSprite::create(spriteNormal, spriteSelected, spriteDisabled, this, menu_selector(MenuLayerMainMenu::menuCallback) );
     
@@ -65,16 +61,19 @@ MenuLayerMainMenu::MenuLayerMainMenu()
     // Events
     CCMenuItemFont::setFontName("Marker Felt");
     CCMenuItemFont *item6 = CCMenuItemFont::create("Priority Test", this, menu_selector(MenuLayerMainMenu::menuCallbackPriorityTest));
+    
+    // Bugs Item
+    CCMenuItemFont *item7 = CCMenuItemFont::create("Bugs", this, menu_selector(MenuLayerMainMenu::menuCallbackBugsTest));
 
     // Font Item
-    CCMenuItemFont* item7 = CCMenuItemFont::create("Quit", this, menu_selector(MenuLayerMainMenu::onQuit));
+    CCMenuItemFont* item8 = CCMenuItemFont::create("Quit", this, menu_selector(MenuLayerMainMenu::onQuit));
     
     CCActionInterval* color_action = CCTintBy::create(0.5f, 0, -255, -255);
     CCActionInterval* color_back = color_action->reverse();
     CCFiniteTimeAction* seq = CCSequence::create(color_action, color_back, NULL);
-    item7->runAction(CCRepeatForever::create((CCActionInterval*)seq));
+    item8->runAction(CCRepeatForever::create((CCActionInterval*)seq));
 
-    CCMenu* menu = CCMenu::create( item1, item2, item3, item4, item5, item6, item7, NULL);
+    CCMenu* menu = CCMenu::create( item1, item2, item3, item4, item5, item6, item7, item8, NULL);
     menu->alignItemsVertically();
     
     
@@ -109,12 +108,6 @@ MenuLayerMainMenu::MenuLayerMainMenu()
 
     addChild(menu);
     menu->setPosition(ccp(s.width/2, s.height/2));
-}
-
-void MenuLayerMainMenu::registerWithTouchDispatcher()
-{
-    CCDirector* pDirector = CCDirector::sharedDirector();
-    pDirector->getTouchDispatcher()->addTargetedDelegate(this, kCCMenuHandlerPriority+1, true);
 }
 
 bool MenuLayerMainMenu::ccTouchBegan(CCTouch *touch, CCEvent * pEvent)
@@ -179,6 +172,11 @@ void MenuLayerMainMenu::menuCallback2(CCObject* sender)
 void MenuLayerMainMenu::menuCallbackPriorityTest(CCObject* pSender)
 {
     ((CCLayerMultiplex*)m_pParent)->switchTo(4);
+}
+
+void MenuLayerMainMenu::menuCallbackBugsTest(CCObject *pSender)
+{
+    ((CCLayerMultiplex*)m_pParent)->switchTo(5);
 }
 
 void MenuLayerMainMenu::onQuit(CCObject* sender)
@@ -537,6 +535,44 @@ void MenuLayerPriorityTest::togglePriorityCallback(CCObject* pSender)
     }
 }
 
+// BugsTest
+BugsTest::BugsTest()
+{
+    CCMenuItemFont *issue1410 = CCMenuItemFont::create("Issue 1410", this, menu_selector(BugsTest::issue1410MenuCallback));
+    CCMenuItemFont *issue1410_2 = CCMenuItemFont::create("Issue 1410 #2", this, menu_selector(BugsTest::issue1410v2MenuCallback));
+    CCMenuItemFont *back = CCMenuItemFont::create("Back", this, menu_selector(BugsTest::backMenuCallback));
+    
+    CCMenu *menu = CCMenu::create(issue1410, issue1410_2, back, NULL);
+    addChild(menu);
+    menu->alignItemsVertically();
+    
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    menu->setPosition(ccp(s.width/2, s.height/2));
+}
+
+void BugsTest::issue1410MenuCallback(cocos2d::CCObject *pSender)
+{
+    CCMenu *menu = (CCMenu*)((CCMenuItem*)pSender)->getParent();
+    menu->setTouchEnabled(false);
+    menu->setTouchEnabled(true);
+    
+    CCLog("NO CRASHES");
+}
+
+void BugsTest::issue1410v2MenuCallback(cocos2d::CCObject *pSender)
+{
+    CCMenu *menu = (CCMenu*)((CCMenuItem*)pSender)->getParent();
+    menu->setTouchEnabled(true);
+    menu->setTouchEnabled(false);
+    
+    CCLog("NO CRASHES. AND MENU SHOULD STOP WORKING");
+}
+
+void BugsTest::backMenuCallback(cocos2d::CCObject *pSender)
+{
+    ((CCLayerMultiplex*)m_pParent)->switchTo(0);
+}
+
 void MenuTestScene::runThisTest()
 {
     CCLayer* pLayer1 = new MenuLayerMainMenu();
@@ -544,8 +580,9 @@ void MenuTestScene::runThisTest()
     CCLayer* pLayer3 = new MenuLayer3();
     CCLayer* pLayer4 = new MenuLayer4();
     CCLayer* pLayer5 = new MenuLayerPriorityTest();
+    CCLayer* pLayer6 = new BugsTest();
 
-    CCLayerMultiplex* layer = CCLayerMultiplex::create(pLayer1, pLayer2, pLayer3, pLayer4, pLayer5, NULL);
+    CCLayerMultiplex* layer = CCLayerMultiplex::create(pLayer1, pLayer2, pLayer3, pLayer4, pLayer5, pLayer6, NULL);
     addChild(layer, 0); 
 
     pLayer1->release();
@@ -553,6 +590,7 @@ void MenuTestScene::runThisTest()
     pLayer3->release();
     pLayer4->release();
     pLayer5->release();
+    pLayer6->release();
 
     CCDirector::sharedDirector()->replaceScene(this);
 }
