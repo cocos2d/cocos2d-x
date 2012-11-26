@@ -10,15 +10,15 @@
 
 NS_CC_EXT_BEGIN
 
-void CCLayerLoader::onHandlePropTypeCheck(CCNode * pNode, CCNode * pParent, CCString * pPropertyName, bool pCheck, CCBReader * pCCBReader) {
-    if(pPropertyName->compare(PROPERTY_TOUCH_ENABLED) == 0) {
+void CCLayerLoader::onHandlePropTypeCheck(CCNode * pNode, CCNode * pParent, const char * pPropertyName, bool pCheck, CCBReader * pCCBReader) {
+    if(strcmp(pPropertyName, PROPERTY_TOUCH_ENABLED) == 0) {
         ((CCLayer *)pNode)->setTouchEnabled(pCheck);
-    } else if(pPropertyName->compare(PROPERTY_ACCELEROMETER_ENABLED) == 0) {
+    } else if(strcmp(pPropertyName, PROPERTY_ACCELEROMETER_ENABLED) == 0) {
         ((CCLayer *)pNode)->setAccelerometerEnabled(pCheck);
-    } else if(pPropertyName->compare(PROPERTY_MOUSE_ENABLED) == 0) {
+    } else if(strcmp(pPropertyName, PROPERTY_MOUSE_ENABLED) == 0) {
         // TODO XXX
         CCLOG("The property '%s' is not supported!", PROPERTY_MOUSE_ENABLED);
-    } else if(pPropertyName->compare(PROPERTY_KEYBOARD_ENABLED) == 0) {
+    } else if(strcmp(pPropertyName, PROPERTY_KEYBOARD_ENABLED) == 0) {
         // TODO XXX
         CCLOG("The property '%s' is not supported!", PROPERTY_KEYBOARD_ENABLED);
         // This comes closest: ((CCLayer *)pNode)->setKeypadEnabled(pCheck);
