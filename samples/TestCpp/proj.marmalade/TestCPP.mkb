@@ -1,6 +1,6 @@
 options
 {
-	module_path="../../../cocos2dx/proj.marmalade/;../../../CocosDenshion/proj.marmalade/;../../../external/chipmunk/proj.marmalade/;../../../external/Box2D/proj.marmalade/"
+	module_path="../../../cocos2dx/proj.marmalade/;../../../CocosDenshion/proj.marmalade/;../../../extensions/proj.marmalade/;../../../external/chipmunk/proj.marmalade/;../../../external/Box2D/proj.marmalade/"
 	s3e-data-dir = "../Resources/"
 }
 
@@ -12,6 +12,7 @@ subprojects
 {
 	IwGL
 	cocos2dx
+	cocos2dx-ext
 	Box2D
 	CocosDenshion
 #	chipmunk
