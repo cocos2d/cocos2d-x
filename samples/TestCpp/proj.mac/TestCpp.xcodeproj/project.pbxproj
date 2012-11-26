@@ -192,6 +192,7 @@
 		15C6482F165F399D007D4F18 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482E165F399D007D4F18 /* libz.dylib */; };
 		15C64831165F39AB007D4F18 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64830165F39AB007D4F18 /* libxml2.dylib */; };
 		15C64833165F3AFD007D4F18 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64832165F3AFD007D4F18 /* Foundation.framework */; };
+		15C6498716633E65007D4F18 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6498616633E65007D4F18 /* libcurl.a */; };
 		15CFD09D1612A36700BF2188 /* CCScrollView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15CFD0851612A36700BF2188 /* CCScrollView.cpp */; };
 		15CFD09E1612A36700BF2188 /* CCSorting.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15CFD0871612A36700BF2188 /* CCSorting.cpp */; };
 		15CFD09F1612A36700BF2188 /* CCTableView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15CFD0891612A36700BF2188 /* CCTableView.cpp */; };
@@ -249,7 +250,6 @@
 		41BC70FA15BF81DD006A0A6C /* CocosDenshion.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BC70F315BF81DD006A0A6C /* CocosDenshion.m */; };
 		41BC70FB15BF81DD006A0A6C /* SimpleAudioEngine.mm in Sources */ = {isa = PBXBuildFile; fileRef = 41BC70F415BF81DD006A0A6C /* SimpleAudioEngine.mm */; };
 		41BC70FC15BF81DD006A0A6C /* SimpleAudioEngine_objc.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BC70F615BF81DD006A0A6C /* SimpleAudioEngine_objc.m */; };
-		41BC711215BF8269006A0A6C /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 41BC710F15BF8269006A0A6C /* libcurl.dylib */; };
 		41BC711515BF8277006A0A6C /* libcocos2dx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 41BC70D215BF8048006A0A6C /* libcocos2dx.a */; };
 		D4EFE03315D272A0002D3DA0 /* HttpClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4EFE02F15D272A0002D3DA0 /* HttpClient.cpp */; };
 		D4EFE03715D27336002D3DA0 /* HttpClientTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4EFE03515D27336002D3DA0 /* HttpClientTest.cpp */; };
@@ -696,6 +696,7 @@
 		15C6482E165F399D007D4F18 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/lib/libz.dylib; sourceTree = DEVELOPER_DIR; };
 		15C64830165F39AB007D4F18 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/lib/libxml2.dylib; sourceTree = DEVELOPER_DIR; };
 		15C64832165F3AFD007D4F18 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		15C6498616633E65007D4F18 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../../../cocos2dx/platform/third_party/ios/libraries/libcurl.a; sourceTree = "<group>"; };
 		15CFD0851612A36700BF2188 /* CCScrollView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCScrollView.cpp; sourceTree = "<group>"; };
 		15CFD0861612A36700BF2188 /* CCScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCScrollView.h; sourceTree = "<group>"; };
 		15CFD0871612A36700BF2188 /* CCSorting.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSorting.cpp; sourceTree = "<group>"; };
@@ -791,17 +792,6 @@
 		41BC70F415BF81DD006A0A6C /* SimpleAudioEngine.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SimpleAudioEngine.mm; sourceTree = "<group>"; };
 		41BC70F515BF81DD006A0A6C /* SimpleAudioEngine_objc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleAudioEngine_objc.h; sourceTree = "<group>"; };
 		41BC70F615BF81DD006A0A6C /* SimpleAudioEngine_objc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleAudioEngine_objc.m; sourceTree = "<group>"; };
-		41BC70FF15BF8253006A0A6C /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = SDKs/MacOSX10.6.sdk/System/Library/Frameworks/AppKit.framework; sourceTree = DEVELOPER_DIR; };
-		41BC710015BF8253006A0A6C /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = SDKs/MacOSX10.6.sdk/System/Library/Frameworks/AudioToolbox.framework; sourceTree = DEVELOPER_DIR; };
-		41BC710115BF8253006A0A6C /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = SDKs/MacOSX10.6.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
-		41BC710215BF8253006A0A6C /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = SDKs/MacOSX10.6.sdk/System/Library/Frameworks/CoreFoundation.framework; sourceTree = DEVELOPER_DIR; };
-		41BC710315BF8253006A0A6C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = SDKs/MacOSX10.6.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		41BC710415BF8253006A0A6C /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = SDKs/MacOSX10.6.sdk/System/Library/Frameworks/OpenAL.framework; sourceTree = DEVELOPER_DIR; };
-		41BC710515BF8253006A0A6C /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = SDKs/MacOSX10.6.sdk/System/Library/Frameworks/OpenGL.framework; sourceTree = DEVELOPER_DIR; };
-		41BC710615BF8253006A0A6C /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = SDKs/MacOSX10.6.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
-		41BC710F15BF8269006A0A6C /* libcurl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.dylib; path = SDKs/MacOSX10.6.sdk/usr/lib/libcurl.dylib; sourceTree = DEVELOPER_DIR; };
-		41BC711015BF8269006A0A6C /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = SDKs/MacOSX10.6.sdk/usr/lib/libxml2.dylib; sourceTree = DEVELOPER_DIR; };
-		41BC711115BF8269006A0A6C /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = SDKs/MacOSX10.6.sdk/usr/lib/libz.dylib; sourceTree = DEVELOPER_DIR; };
 		D4EFE02F15D272A0002D3DA0 /* HttpClient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HttpClient.cpp; sourceTree = "<group>"; };
 		D4EFE03015D272A0002D3DA0 /* HttpClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpClient.h; sourceTree = "<group>"; };
 		D4EFE03115D272A0002D3DA0 /* HttpRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpRequest.h; sourceTree = "<group>"; };
@@ -817,6 +807,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				15C6498716633E65007D4F18 /* libcurl.a in Frameworks */,
 				15C64833165F3AFD007D4F18 /* Foundation.framework in Frameworks */,
 				15C64831165F39AB007D4F18 /* libxml2.dylib in Frameworks */,
 				15C6482F165F399D007D4F18 /* libz.dylib in Frameworks */,
@@ -826,7 +817,6 @@
 				15C64827165F394E007D4F18 /* QuartzCore.framework in Frameworks */,
 				15C64825165F3934007D4F18 /* OpenGL.framework in Frameworks */,
 				15C64823165F391E007D4F18 /* Cocoa.framework in Frameworks */,
-				41BC711215BF8269006A0A6C /* libcurl.dylib in Frameworks */,
 				41BC711515BF8277006A0A6C /* libcocos2dx.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2026,15 +2016,6 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				15C64832165F3AFD007D4F18 /* Foundation.framework */,
-				15C64830165F39AB007D4F18 /* libxml2.dylib */,
-				15C6482E165F399D007D4F18 /* libz.dylib */,
-				15C6482C165F3988007D4F18 /* AudioToolbox.framework */,
-				15C6482A165F3979007D4F18 /* ApplicationServices.framework */,
-				15C64828165F396B007D4F18 /* OpenAL.framework */,
-				15C64826165F394E007D4F18 /* QuartzCore.framework */,
-				15C64824165F3934007D4F18 /* OpenGL.framework */,
-				15C64822165F391E007D4F18 /* Cocoa.framework */,
 				41BC70CA15BF8048006A0A6C /* cocos2dx.xcodeproj */,
 				15AA9DCC15B7EC960033D6C2 /* Box2D */,
 				15AA9E6715B7ECB00033D6C2 /* chipmunk */,
@@ -2052,17 +2033,16 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				41BC710F15BF8269006A0A6C /* libcurl.dylib */,
-				41BC711015BF8269006A0A6C /* libxml2.dylib */,
-				41BC711115BF8269006A0A6C /* libz.dylib */,
-				41BC70FF15BF8253006A0A6C /* AppKit.framework */,
-				41BC710015BF8253006A0A6C /* AudioToolbox.framework */,
-				41BC710115BF8253006A0A6C /* Cocoa.framework */,
-				41BC710215BF8253006A0A6C /* CoreFoundation.framework */,
-				41BC710315BF8253006A0A6C /* Foundation.framework */,
-				41BC710415BF8253006A0A6C /* OpenAL.framework */,
-				41BC710515BF8253006A0A6C /* OpenGL.framework */,
-				41BC710615BF8253006A0A6C /* QuartzCore.framework */,
+				15C6498616633E65007D4F18 /* libcurl.a */,
+				15C64830165F39AB007D4F18 /* libxml2.dylib */,
+				15C6482E165F399D007D4F18 /* libz.dylib */,
+				15C6482C165F3988007D4F18 /* AudioToolbox.framework */,
+				15C6482A165F3979007D4F18 /* ApplicationServices.framework */,
+				15C64828165F396B007D4F18 /* OpenAL.framework */,
+				15C64826165F394E007D4F18 /* QuartzCore.framework */,
+				15C64824165F3934007D4F18 /* OpenGL.framework */,
+				15C64822165F391E007D4F18 /* Cocoa.framework */,
+				15C64832165F3AFD007D4F18 /* Foundation.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -2529,7 +2509,7 @@
 				GCC_PREFIX_HEADER = Test_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					USE_FILE32API,
-					TARGET_OS_MAC,
+					CC_TARGET_OS_MAC,
 					"COCOS2D_DEBUG=1",
 					CC_ENABLE_CHIPMUNK_INTEGRATION,
 				);
@@ -2570,7 +2550,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Test_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					TARGET_OS_MAC,
+					CC_TARGET_OS_MAC,
 					USE_FILE32API,
 					CC_ENABLE_CHIPMUNK_INTEGRATION,
 				);

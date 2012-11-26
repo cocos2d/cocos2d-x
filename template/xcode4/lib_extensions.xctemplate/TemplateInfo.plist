@@ -1236,6 +1236,54 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
+		<key>libs/extensions/physics_nodes/CCPhysicsDebugNode.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>physics_nodes</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/physics_nodes/CCPhysicsDebugNode.cpp</string>
+		</dict>
+		<key>libs/extensions/physics_nodes/CCPhysicsDebugNode.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>physics_nodes</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/physics_nodes/CCPhysicsDebugNode.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/extensions/physics_nodes/CCPhysicsSprite.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>physics_nodes</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/physics_nodes/CCPhysicsSprite.cpp</string>
+		</dict>
+		<key>libs/extensions/physics_nodes/CCPhysicsSprite.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>physics_nodes</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/physics_nodes/CCPhysicsSprite.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
 	</dict>
 	<key>Nodes</key>
 	<array>
@@ -1337,6 +1385,10 @@
 		<string>libs/extensions/network/HttpClient.h</string>
 		<string>libs/extensions/network/HttpRequest.h</string>
 		<string>libs/extensions/network/HttpResponse.h</string>
+		<string>libs/extensions/physics_nodes/CCPhysicsDebugNode.cpp</string>
+		<string>libs/extensions/physics_nodes/CCPhysicsDebugNode.h</string>
+		<string>libs/extensions/physics_nodes/CCPhysicsSprite.cpp</string>
+		<string>libs/extensions/physics_nodes/CCPhysicsSprite.h</string>
 	</array>
 </dict>
 </plist>

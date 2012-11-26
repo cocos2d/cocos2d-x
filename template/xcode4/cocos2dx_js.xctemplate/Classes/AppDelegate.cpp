@@ -2,13 +2,10 @@
 
 #include "cocos2d.h"
 #include "SimpleAudioEngine.h"
-
 #include "ScriptingCore.h"
 #include "cocos2dx.hpp"
 #include "cocos2d_specifics.hpp"
-#include "js_bindings_chipmunk_manual.hpp"
-#include "js_bindings_chipmunk_functions.hpp"
-#include "js_bindings_ccbreader.h"
+#include "js_bindings_chipmunk_registration.h"
 
 USING_NS_CC;
 using namespace CocosDenshion;
@@ -34,16 +31,10 @@ bool AppDelegate::applicationDidFinishLaunching()
     // set FPS. the default value is 1.0/60 if you don't call this
     pDirector->setAnimationInterval(1.0 / 60);
     
-    CCScene * pScene = CCScene::create();
-    
     ScriptingCore* sc = ScriptingCore::getInstance();
     sc->addRegisterCallback(register_all_cocos2dx);
     sc->addRegisterCallback(register_cocos2dx_js_extensions);
-    sc->addRegisterCallback(register_chipmunk_manual);
-    sc->addRegisterCallback(register_CCPhysicsSprite);
-    sc->addRegisterCallback(register_CCBuilderReader);
-    
-
+    sc->addRegisterCallback(jsb_register_chipmunk);
     
     sc->start();
     
@@ -60,18 +51,18 @@ void handle_signal(int signal) {
     // should start everything back
     CCDirector* director = CCDirector::sharedDirector();
     if (director->getRunningScene()) {
-         director->popToRootScene();
+        director->popToRootScene();
+    } else {
+        CCPoolManager::sharedPoolManager()->finalize();
+        if (internal_state == 0) {
+            //sc->dumpRoot(NULL, 0, NULL);
+            sc->start();
+            internal_state = 1;
         } else {
-             CCPoolManager::sharedPoolManager()->finalize();
-             if (internal_state == 0) {
-                  //sc->dumpRoot(NULL, 0, NULL);
-                  sc->start();
-                  internal_state = 1;
-                 } else {
-                      sc->runScript("hello.js");
-                      internal_state = 0;
-                     }
-            }
+            sc->runScript("hello.js");
+            internal_state = 0;
+        }
+    }
 }
 
 // This function will be called when the app is inactive. When comes a phone call,it's be invoked too
