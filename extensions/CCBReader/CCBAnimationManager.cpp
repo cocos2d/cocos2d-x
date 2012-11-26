@@ -33,6 +33,14 @@ bool CCBAnimationManager::init()
     mNodeSequences = new CCDictionary();
     mBaseValues = new CCDictionary();
     
+    mDocumentOutletNames = CCArray::create();
+    mDocumentOutletNodes = CCArray::create();
+    mDocumentCallbackNames = CCArray::create();
+    mDocumentCallbackNodes = CCArray::create();
+    
+    mTarget = NULL;
+    mAnimationCompleteCallbackFunc = NULL;
+    
     return true;
 }
 
@@ -63,6 +71,11 @@ CCArray* CCBAnimationManager::getSequences()
     return mSequences;
 }
 
+void CCBAnimationManager::setSequences(CCArray* seq)
+{
+    mSequences = seq;
+}
+
 int CCBAnimationManager::getAutoPlaySequenceId()
 {
     return mAutoPlaySequenceId;
@@ -83,6 +96,52 @@ void CCBAnimationManager::setRootNode(CCNode *pRootNode)
     CC_SAFE_RELEASE(mRootNode);
     mRootNode = pRootNode;
     CC_SAFE_RETAIN(mRootNode);
+}
+
+void CCBAnimationManager::setDocumentControllerName(const std::string &name) {
+    mDocumentControllerName = name;
+}
+
+
+std::string CCBAnimationManager::getDocumentControllerName() {
+    return mDocumentControllerName;
+}
+
+void CCBAnimationManager::addDocumentCallbackNode(CCNode *node) {
+    mDocumentCallbackNodes->addObject(node);
+}
+
+void CCBAnimationManager::addDocumentCallbackName(std::string name) {
+    CCString *tmpName = CCString::create(name);
+    mDocumentCallbackNames->addObject(tmpName);
+}
+
+CCArray* CCBAnimationManager::getDocumentCallbackNames() {
+    return mDocumentCallbackNames;
+}
+
+CCArray* CCBAnimationManager::getDocumentCallbackNodes() {
+    return mDocumentCallbackNodes;
+}
+
+void CCBAnimationManager::addDocumentOutletNode(CCNode *node) {
+    mDocumentOutletNodes->addObject(node);
+}
+
+void CCBAnimationManager::addDocumentOutletName(std::string name) {
+    mDocumentOutletNames->addObject(CCString::create(name));
+}
+
+CCArray* CCBAnimationManager::getDocumentOutletNames() {
+    return mDocumentOutletNames;
+}
+
+CCArray* CCBAnimationManager::getDocumentOutletNodes() {
+    return mDocumentOutletNodes;
+}
+
+std::string CCBAnimationManager::getLastCompletedSequenceName() {
+    return lastCompletedSequenceName;
 }
 
 const CCSize& CCBAnimationManager::getRootContainerSize()
@@ -112,7 +171,7 @@ const char* CCBAnimationManager::getRunningSequenceName()
     return mRunningSequence->getName();
 }
 
-const CCSize& CCBAnimationManager::getContainerSize(CCNode *pNode)
+CCSize CCBAnimationManager::getContainerSize(CCNode *pNode)
 {
     if (pNode)
     {
@@ -179,6 +238,24 @@ CCBSequence* CCBAnimationManager::getSequence(int nSequenceId)
         }
     }
     return NULL;
+}
+
+
+void CCBAnimationManager::moveAnimationsFromNode(CCNode* fromNode, CCNode* toNode) {
+
+    // Move base values
+    CCObject* baseValue = mBaseValues->objectForKey((intptr_t)fromNode);
+    if(baseValue) {
+        mBaseValues->setObject(baseValue, (intptr_t)toNode);
+        mBaseValues->removeObjectForKey((intptr_t)fromNode);
+    }
+    
+    // Move seqs
+    CCObject *seqs = mNodeSequences->objectForKey((intptr_t)fromNode);
+    if(seqs) {
+        mNodeSequences->setObject(seqs, (intptr_t)toNode);
+        mNodeSequences->removeObjectForKey((intptr_t)fromNode);
+    }
 }
 
 // Refer to CCBReader::readKeyframe() for the real type of value
@@ -265,15 +342,15 @@ CCActionInterval* CCBAnimationManager::getAction(CCBKeyframe *pKeyframe0, CCBKey
     return NULL;
 }
 
-void CCBAnimationManager::setAnimatedProperty(const char *pPropName, CCNode *pNode, CCObject *pValue, float fTweenDuraion)
+void CCBAnimationManager::setAnimatedProperty(const char *pPropName, CCNode *pNode, CCObject *pValue, float fTweenDuration)
 {
-    if (fTweenDuraion > 0)
+    if (fTweenDuration > 0)
     {
         // Create a fake keyframe to generate the action from
         CCBKeyframe *kf1 = new CCBKeyframe();
         kf1->autorelease();
         kf1->setValue(pValue);
-        kf1->setTime(fTweenDuraion);
+        kf1->setTime(fTweenDuration);
         kf1->setEasingType(kCCBKeyframeEasingLinear);
         
         // Animate
@@ -334,7 +411,16 @@ void CCBAnimationManager::setAnimatedProperty(const char *pPropName, CCNode *pNo
                 ccColor3BWapper *color = (ccColor3BWapper*)pValue;
                 ((CCSprite*)pNode)->setColor(color->getColor());
             }
-            else 
+            else if (strcmp(pPropName, "visible") == 0)
+            {
+                bool x = (bool)pValue;
+                if(x) {
+                    CCSequence::createWithTwoActions(CCDelayTime::create(fTweenDuration), CCShow::create());
+                } else {
+                    CCSequence::createWithTwoActions(CCDelayTime::create(fTweenDuration), CCHide::create());
+                }
+            }
+            else
             {
                 CCLog("unsupported property name is %s", pPropName);
                 CCAssert(false, "unsupported property now");
@@ -540,11 +626,35 @@ void CCBAnimationManager::debug()
     
 }
 
+void CCBAnimationManager::setAnimationCompletedCallback(CCObject *target, SEL_CallFunc callbackFunc) {
+    if (target)
+    {
+        target->retain();
+    }
+    
+    if (mTarget)
+    {
+        mTarget->release();
+    }
+    
+    mTarget = target;
+    mAnimationCompleteCallbackFunc = callbackFunc;
+}
+
 void CCBAnimationManager::sequenceCompleted()
 {
+    
+    if(lastCompletedSequenceName != mRunningSequence->getName()) {
+        lastCompletedSequenceName = mRunningSequence->getName();
+    }
+    
     if (mDelegate)
     {
         mDelegate->completedAnimationSequenceNamed(mRunningSequence->getName());
+    }
+    
+    if (mTarget && mAnimationCompleteCallbackFunc) {
+        (mTarget->*mAnimationCompleteCallbackFunc)();
     }
     
     int nextSeqId = mRunningSequence->getChainedSequenceId();

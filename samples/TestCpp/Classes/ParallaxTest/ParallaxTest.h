@@ -42,11 +42,7 @@ protected:
 public:
     Parallax2();
     
-    virtual void registerWithTouchDispatcher();
-    virtual bool ccTouchBegan(CCTouch* touch, CCEvent* event);
-    virtual void ccTouchEnded(CCTouch* touch, CCEvent* event);
-    virtual void ccTouchCancelled(CCTouch* touch, CCEvent* event);
-    virtual void ccTouchMoved(CCTouch* touch, CCEvent* event);
+    virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent);
 
     virtual std::string title();
 };

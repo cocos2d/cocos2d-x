@@ -35,13 +35,13 @@ void CCNodeLoader::parseProperties(CCNode * pNode, CCNode * pParent, CCBReader *
         {
             setProp = true;
         }
-#ifdef __CC_PLATFORM_IOS
-        if(platform == kCCBPlatformIOS) 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+        if(platform == kCCBPlatformIOS)
         {
             setProp = true;
         }
-#elif defined(__CC_PLATFORM_MAC)
-        if(platform == kCCBPlatformMac) 
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+        if(platform == kCCBPlatformMac)
         {
             setProp = true;
         }
@@ -680,54 +680,55 @@ BlockData * CCNodeLoader::parsePropTypeBlock(CCNode * pNode, CCNode * pParent, C
 
     if(selectorTarget != kCCBTargetTypeNone) {
         CCObject * target = NULL;
-        if(selectorTarget == kCCBTargetTypeDocumentRoot) {
-            target = pCCBReader->getAnimationManager()->getRootNode();
-        } else if(selectorTarget == kCCBTargetTypeOwner) {
-            target = pCCBReader->getOwner();
+        if(!pCCBReader->isJSControlled()) {
             
-            /* Scripting specific code because selector function is common for all callbacks.
-             * So if we had 1 target and 1 selector function, the context (callback function name)
-             * would get lost. Hence the need for a new target for each callback.
-             */
-            if(pCCBReader->hasScriptingOwner) {
-                CCBScriptOwnerProtocol *proxy = dynamic_cast<CCBScriptOwnerProtocol *>(pCCBReader->getOwner());
-                if(proxy) {
-                    target = dynamic_cast<CCObject *>(proxy->createNew());
-                }
+            if(selectorTarget == kCCBTargetTypeDocumentRoot) {
+                target = pCCBReader->getAnimationManager()->getRootNode();
+            } else if(selectorTarget == kCCBTargetTypeOwner) {
+                target = pCCBReader->getOwner();
             }
-        }
-
-        if(target != NULL) {
-            if(selectorName->length() > 0) {
-                SEL_MenuHandler selMenuHandler = 0;
-
-                CCBSelectorResolver * targetAsCCBSelectorResolver = dynamic_cast<CCBSelectorResolver *>(target);
-
-                if(targetAsCCBSelectorResolver != NULL) {
-                    selMenuHandler = targetAsCCBSelectorResolver->onResolveCCBCCMenuItemSelector(target, selectorName);
-                }
-                if(selMenuHandler == 0) {
-                    CCBSelectorResolver * ccbSelectorResolver = pCCBReader->getCCBSelectorResolver();
-                    if(ccbSelectorResolver != NULL) {
-                        selMenuHandler = ccbSelectorResolver->onResolveCCBCCMenuItemSelector(target, selectorName);
+            
+            if(target != NULL) {
+                if(selectorName->length() > 0) {
+                    SEL_MenuHandler selMenuHandler = 0;
+                    
+                    CCBSelectorResolver * targetAsCCBSelectorResolver = dynamic_cast<CCBSelectorResolver *>(target);
+                    
+                    if(targetAsCCBSelectorResolver != NULL) {
+                        selMenuHandler = targetAsCCBSelectorResolver->onResolveCCBCCMenuItemSelector(target, selectorName);
                     }
-                }
-
-                if(selMenuHandler == 0) {
-                    CCLOG("Skipping selector '%s' since no CCBSelectorResolver is present.", selectorName->getCString());
+                    if(selMenuHandler == 0) {
+                        CCBSelectorResolver * ccbSelectorResolver = pCCBReader->getCCBSelectorResolver();
+                        if(ccbSelectorResolver != NULL) {
+                            selMenuHandler = ccbSelectorResolver->onResolveCCBCCMenuItemSelector(target, selectorName);
+                        }
+                    }
+                    
+                    if(selMenuHandler == 0) {
+                        CCLOG("Skipping selector '%s' since no CCBSelectorResolver is present.", selectorName->getCString());
+                    } else {
+                        BlockData * blockData = new BlockData();
+                        blockData->mSELMenuHandler = selMenuHandler;
+                        
+                        blockData->mTarget = target;
+                        
+                        return blockData;
+                    }
                 } else {
-                    BlockData * blockData = new BlockData();
-                    blockData->mSELMenuHandler = selMenuHandler;
-
-                    blockData->mTarget = target;
-
-                    return blockData;
+                    CCLOG("Unexpected empty selector.");
                 }
             } else {
-                CCLOG("Unexpected empty selector.");
+                CCLOG("Unexpected NULL target for selector.");
             }
         } else {
-            CCLOG("Unexpected NULL target for selector.");
+            if(selectorTarget == kCCBTargetTypeDocumentRoot) {
+                pCCBReader->addDocumentCallbackNode(pNode);
+                pCCBReader->addDocumentCallbackName(selectorName->getCString());
+                
+            } else {
+                pCCBReader->addOwnerCallbackNode(pNode);
+                pCCBReader->addOwnerCallbackName(selectorName->getCString());
+            }
         }
     }
 
@@ -740,45 +741,57 @@ BlockCCControlData * CCNodeLoader::parsePropTypeBlockCCControl(CCNode * pNode, C
     int controlEvents = pCCBReader->readInt(false);
 
     if(selectorTarget != kCCBTargetTypeNone) {
-        CCObject * target = NULL;
-        if(selectorTarget == kCCBTargetTypeDocumentRoot) {
-            target = pCCBReader->getAnimationManager()->getRootNode();
-        } else if(selectorTarget == kCCBTargetTypeOwner) {
-            target = pCCBReader->getOwner();
-        }
-
-        if(target != NULL) {
-            if(selectorName->length() > 0) {
-                SEL_CCControlHandler selCCControlHandler = 0;
-
-                CCBSelectorResolver * targetAsCCBSelectorResolver = dynamic_cast<CCBSelectorResolver *>(target);
-
-                if(targetAsCCBSelectorResolver != NULL) {
-                    selCCControlHandler = targetAsCCBSelectorResolver->onResolveCCBCCControlSelector(target, selectorName);
-                }
-                if(selCCControlHandler == 0) {
-                    CCBSelectorResolver * ccbSelectorResolver = pCCBReader->getCCBSelectorResolver();
-                    if(ccbSelectorResolver != NULL) {
-                        selCCControlHandler = ccbSelectorResolver->onResolveCCBCCControlSelector(target, selectorName);
+        
+        if(!pCCBReader->isJSControlled()) {
+            CCObject * target = NULL;
+            if(selectorTarget == kCCBTargetTypeDocumentRoot) {
+                target = pCCBReader->getAnimationManager()->getRootNode();
+            } else if(selectorTarget == kCCBTargetTypeOwner) {
+                target = pCCBReader->getOwner();
+            }
+            
+            if(target != NULL) {
+                if(selectorName->length() > 0) {
+                    SEL_CCControlHandler selCCControlHandler = 0;
+                    
+                    CCBSelectorResolver * targetAsCCBSelectorResolver = dynamic_cast<CCBSelectorResolver *>(target);
+                    
+                    if(targetAsCCBSelectorResolver != NULL) {
+                        selCCControlHandler = targetAsCCBSelectorResolver->onResolveCCBCCControlSelector(target, selectorName);
                     }
-                }
-
-                if(selCCControlHandler == 0) {
-                    CCLOG("Skipping selector '%s' since no CCBSelectorResolver is present.", selectorName->getCString());
+                    if(selCCControlHandler == 0) {
+                        CCBSelectorResolver * ccbSelectorResolver = pCCBReader->getCCBSelectorResolver();
+                        if(ccbSelectorResolver != NULL) {
+                            selCCControlHandler = ccbSelectorResolver->onResolveCCBCCControlSelector(target, selectorName);
+                        }
+                    }
+                    
+                    if(selCCControlHandler == 0) {
+                        CCLOG("Skipping selector '%s' since no CCBSelectorResolver is present.", selectorName->getCString());
+                    } else {
+                        BlockCCControlData * blockCCControlData = new BlockCCControlData();
+                        blockCCControlData->mSELCCControlHandler = selCCControlHandler;
+                        
+                        blockCCControlData->mTarget = target;
+                        blockCCControlData->mControlEvents = controlEvents;
+                        
+                        return blockCCControlData;
+                    }
                 } else {
-                    BlockCCControlData * blockCCControlData = new BlockCCControlData();
-                    blockCCControlData->mSELCCControlHandler = selCCControlHandler;
-
-                    blockCCControlData->mTarget = target;
-                    blockCCControlData->mControlEvents = controlEvents;
-
-                    return blockCCControlData;
+                    CCLOG("Unexpected empty selector.");
                 }
             } else {
-                CCLOG("Unexpected empty selector.");
+                CCLOG("Unexpected NULL target for selector.");
             }
         } else {
-            CCLOG("Unexpected NULL target for selector.");
+            if(selectorTarget == kCCBTargetTypeDocumentRoot) {
+                pCCBReader->addDocumentCallbackNode(pNode);
+                pCCBReader->addDocumentCallbackName(selectorName->getCString());
+                
+            } else {
+                pCCBReader->addOwnerCallbackNode(pNode);
+                pCCBReader->addOwnerCallbackName(selectorName->getCString());
+            }
         }
     }
 
@@ -804,8 +817,12 @@ CCNode * CCNodeLoader::parsePropTypeCCBFile(CCNode * pNode, CCNode * pParent, CC
     ccbReader->initWithData(data, pCCBReader->getOwner());
     data->release();
     ccbReader->getAnimationManager()->setRootContainerSize(pParent->getContentSize());
-
+    
+    ccbReader->setAnimationManagers(pCCBReader->getAnimationManagers());
+    
     CCNode * ccbFileNode = ccbReader->readFileWithCleanUp(false);
+    
+    pCCBReader->setAnimationManagers(ccbReader->getAnimationManagers());
     
     if (ccbFileNode && ccbReader->getAnimationManager()->getAutoPlaySequenceId() != -1)
     {

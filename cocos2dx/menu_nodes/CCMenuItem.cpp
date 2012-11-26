@@ -138,9 +138,9 @@ bool CCMenuItem::isEnabled()
 
 CCRect CCMenuItem::rect()
 {
-    return CCRectMake( m_tPosition.x - m_tContentSize.width * m_tAnchorPoint.x, 
-                      m_tPosition.y - m_tContentSize.height * m_tAnchorPoint.y,
-                      m_tContentSize.width, m_tContentSize.height);
+    return CCRectMake( m_obPosition.x - m_obContentSize.width * m_obAnchorPoint.x,
+                      m_obPosition.y - m_obContentSize.height * m_obAnchorPoint.y,
+                      m_obContentSize.width, m_obContentSize.height);
 }
 
 bool CCMenuItem::isSelected()
@@ -158,7 +158,7 @@ void CCMenuItem::setTarget(CCObject *rec, SEL_MenuHandler selector)
 //CCMenuItemLabel
 //
 
-const ccColor3B& CCMenuItemLabel::getDisabledColor()
+ccColor3B CCMenuItemLabel::getDisabledColor()
 {
     return m_tDisabledColor;
 }
@@ -311,7 +311,7 @@ void CCMenuItemLabel::setColor(const ccColor3B& color)
     dynamic_cast<CCRGBAProtocol*>(m_pLabel)->setColor(color);
 }
 
-const ccColor3B& CCMenuItemLabel::getColor()
+ccColor3B CCMenuItemLabel::getColor()
 {
     return dynamic_cast<CCRGBAProtocol*>(m_pLabel)->getColor();
 }
@@ -573,7 +573,7 @@ GLubyte CCMenuItemSprite::getOpacity()
     return dynamic_cast<CCRGBAProtocol*>(m_pNormalImage)->getOpacity();
 }
 
-const ccColor3B& CCMenuItemSprite::getColor()
+ccColor3B CCMenuItemSprite::getColor()
 {
     return dynamic_cast<CCRGBAProtocol*>(m_pNormalImage)->getColor();
 }
@@ -936,7 +936,7 @@ void CCMenuItemToggle::setSelectedIndex(unsigned int index)
 
         CCMenuItem* item = (CCMenuItem*)m_pSubItems->objectAtIndex(m_uSelectedIndex);
         this->addChild(item, 0, kCurrentItem);
-        const CCSize& s = item->getContentSize();
+        CCSize s = item->getContentSize();
         this->setContentSize(s);
         item->setPosition( ccp( s.width/2, s.height/2 ) );
     }
@@ -1007,10 +1007,12 @@ void CCMenuItemToggle::setOpacity(GLubyte opacity)
         }
     }
 }
-const ccColor3B& CCMenuItemToggle::getColor()
+
+ccColor3B CCMenuItemToggle::getColor()
 {
     return m_tColor;
 }
+
 void CCMenuItemToggle::setColor(const ccColor3B& color)
 {
     m_tColor = color;

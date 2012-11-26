@@ -60,32 +60,24 @@ CCMenu * CCMenu::menuWithItems(CCMenuItem* item, ...)
 {
     va_list args;
     va_start(args,item);
-    CCMenu *pRet = new CCMenu();
-    if (pRet && pRet->initWithItems(item, args))
-    {
-        pRet->autorelease();
-        va_end(args);
-        return pRet;
-    }
+    
+    CCMenu *pRet = CCMenu::createWithItems(item, args);
+    
     va_end(args);
-    CC_SAFE_DELETE(pRet);
-    return NULL;
+    
+    return pRet;
 }
 
 CCMenu * CCMenu::create(CCMenuItem* item, ...)
 {
     va_list args;
     va_start(args,item);
-    CCMenu *pRet = new CCMenu();
-    if (pRet && pRet->initWithItems(item, args))
-    {
-        pRet->autorelease();
-        va_end(args);
-        return pRet;
-    }
+    
+    CCMenu *pRet = CCMenu::createWithItems(item, args);
+    
     va_end(args);
-    CC_SAFE_DELETE(pRet);
-    return NULL;
+
+    return pRet;
 }
 
 CCMenu* CCMenu::menuWithArray(CCArray* pArrayOfItems)
@@ -113,6 +105,23 @@ CCMenu* CCMenu::menuWithItem(CCMenuItem* item)
     return CCMenu::createWithItem(item);
 }
 
+CCMenu* CCMenu::createWithItems(CCMenuItem* item, va_list args)
+{
+    CCArray* pArray = NULL;
+    if( item )
+    {
+        pArray = CCArray::create(item, NULL);
+        CCMenuItem *i = va_arg(args, CCMenuItem*);
+        while(i)
+        {
+            pArray->addObject(i);
+            i = va_arg(args, CCMenuItem*);
+        }
+    }
+    
+    return CCMenu::createWithArray(pArray);
+}
+
 CCMenu* CCMenu::createWithItem(CCMenuItem* item)
 {
     return CCMenu::create(item, NULL);
@@ -123,27 +132,12 @@ bool CCMenu::init()
     return initWithArray(NULL);
 }
 
-bool CCMenu::initWithItems(CCMenuItem* item, va_list args)
-{
-    CCArray* pArray = NULL;
-    if( item ) 
-    {
-        pArray = CCArray::create(item, NULL);
-        CCMenuItem *i = va_arg(args, CCMenuItem*);
-        while(i) 
-        {
-            pArray->addObject(i);
-            i = va_arg(args, CCMenuItem*);
-        }
-    }
-
-    return initWithArray(pArray);
-}
-
 bool CCMenu::initWithArray(CCArray* pArrayOfItems)
 {
     if (CCLayer::init())
     {
+        setTouchPriority(kCCMenuHandlerPriority);
+        setTouchMode(kCCTouchesOneByOne);
         setTouchEnabled(true);
 
         m_bEnabled = true;
@@ -224,7 +218,7 @@ void CCMenu::registerWithTouchDispatcher()
 bool CCMenu::ccTouchBegan(CCTouch* touch, CCEvent* event)
 {
     CC_UNUSED_PARAM(event);
-    if (m_eState != kCCMenuStateWaiting || ! m_bIsVisible || !m_bEnabled)
+    if (m_eState != kCCMenuStateWaiting || ! m_bVisible || !m_bEnabled)
     {
         return false;
     }
@@ -638,7 +632,7 @@ void CCMenu::setColor(const ccColor3B& var)
     }
 }
 
-const ccColor3B& CCMenu::getColor(void)
+ccColor3B CCMenu::getColor(void)
 {
     return m_tColor;
 }

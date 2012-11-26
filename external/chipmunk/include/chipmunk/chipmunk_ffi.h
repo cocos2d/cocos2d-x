@@ -14,7 +14,7 @@
 #endif
 
 #define MAKE_PROPERTIES_REF(struct, property) \
-	MAKE_REF(struct##Get##property); MAKE_REF(struct##Set##property);
+	MAKE_REF(struct##Get##property); MAKE_REF(struct##Set##property)
 
 MAKE_REF(cpv); // makes a variable named _cpv that contains the function pointer for cpv()
 MAKE_REF(cpveql);

@@ -54,10 +54,7 @@ preStep(cpGrooveJoint *joint, cpFloat dt)
 	}
 	
 	// Calculate mass tensor
-	k_tensor(a, b, joint->r1, joint->r2, &joint->k1, &joint->k2);	
-	
-	// compute max impulse
-	joint->jMaxLen = J_MAX(joint, dt);
+	joint->k = k_tensor(a, b, joint->r1, joint->r2);
 	
 	// calculate bias velocity
 	cpVect delta = cpvsub(cpvadd(b->p, joint->r2), cpvadd(a->p, joint->r1));
@@ -74,14 +71,14 @@ applyCachedImpulse(cpGrooveJoint *joint, cpFloat dt_coef)
 }
 
 static inline cpVect
-grooveConstrain(cpGrooveJoint *joint, cpVect j){
+grooveConstrain(cpGrooveJoint *joint, cpVect j, cpFloat dt){
 	cpVect n = joint->grv_tn;
 	cpVect jClamp = (joint->clamp*cpvcross(j, n) > 0.0f) ? j : cpvproject(j, n);
-	return cpvclamp(jClamp, joint->jMaxLen);
+	return cpvclamp(jClamp, joint->constraint.maxForce*dt);
 }
 
 static void
-applyImpulse(cpGrooveJoint *joint)
+applyImpulse(cpGrooveJoint *joint, cpFloat dt)
 {
 	cpBody *a = joint->constraint.a;
 	cpBody *b = joint->constraint.b;
@@ -92,9 +89,9 @@ applyImpulse(cpGrooveJoint *joint)
 	// compute impulse
 	cpVect vr = relative_velocity(a, b, r1, r2);
 
-	cpVect j = mult_k(cpvsub(joint->bias, vr), joint->k1, joint->k2);
+	cpVect j = cpMat2x2Transform(joint->k, cpvsub(joint->bias, vr));
 	cpVect jOld = joint->jAcc;
-	joint->jAcc = grooveConstrain(joint, cpvadd(jOld, j));
+	joint->jAcc = grooveConstrain(joint, cpvadd(jOld, j), dt);
 	j = cpvsub(joint->jAcc, jOld);
 	
 	// apply impulse

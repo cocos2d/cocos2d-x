@@ -48,55 +48,55 @@ class CCSet;
 // CCTimer
 //
 /** @brief Light-weight timer */
+//
 class CC_DLL CCTimer : public CCObject
 {
 public:
     CCTimer(void);
-
+    
     /** get interval in seconds */
-    inline float getInterval(void) { return m_fInterval; }
+    float getInterval(void) const;
     /** set interval in seconds */
-    inline void setInterval(float fInterval){ m_fInterval = fInterval; }
-
+    void setInterval(float fInterval);
+    
+    SEL_SCHEDULE getSelector() const;
+    
     /** Initializes a timer with a target and a selector. */
     bool initWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector);
-
+    
     /** Initializes a timer with a target, a selector and an interval in seconds, repeat in number of times to repeat, delay in seconds. */
     bool initWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector, float fSeconds, unsigned int nRepeat, float fDelay);
-
+    
     /** Initializes a timer with a script callback function and an interval in seconds. */
     bool initWithScriptHandler(int nHandler, float fSeconds);
-
+    
     /** triggers the timer */
     void update(float dt);
-
+    
 public:
     /** Allocates a timer with a target and a selector. */
     static CCTimer* timerWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector);
-
+    
     /** Allocates a timer with a target, a selector and an interval in seconds. */
     static CCTimer* timerWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector, float fSeconds);
-
+    
     /** Allocates a timer with a script callback function and an interval in seconds. */
     static CCTimer* timerWithScriptHandler(int nHandler, float fSeconds);
-
+    
     inline int getScriptHandler() { return m_nScriptHandler; };
-
-public:
-    SEL_SCHEDULE m_pfnSelector;
-    float m_fInterval;
 
 protected:
     CCObject *m_pTarget;
     float m_fElapsed;
     bool m_bRunForever;
     bool m_bUseDelay;
-    unsigned int m_nTimesExecuted;
-    unsigned int m_nRepeat; //0 = once, 1 is 2 x executed
+    unsigned int m_uTimesExecuted;
+    unsigned int m_uRepeat; //0 = once, 1 is 2 x executed
     float m_fDelay;
-
-    int m_nScriptHandler;
+    float m_fInterval;
+    SEL_SCHEDULE m_pfnSelector;
     
+    int m_nScriptHandler;
 };
 
 //
@@ -149,7 +149,7 @@ public:
 
      @since v0.99.3, repeat and delay added in v1.1
      */
-    void scheduleSelector(SEL_SCHEDULE pfnSelector, CCObject *pTarget, float fInterval, bool bPaused, unsigned int repeat, float delay);
+    void scheduleSelector(SEL_SCHEDULE pfnSelector, CCObject *pTarget, float fInterval, unsigned int repeat, float delay, bool bPaused);
 
     /** calls scheduleSelector with kCCRepeatForever and a 0 delay */
     void scheduleSelector(SEL_SCHEDULE pfnSelector, CCObject *pTarget, float fInterval, bool bPaused);
@@ -175,20 +175,20 @@ public:
      This also includes the "update" selector.
      @since v0.99.3
      */
-    void unscheduleAllSelectorsForTarget(CCObject *pTarget);
+    void unscheduleAllForTarget(CCObject *pTarget);
 
     /** Unschedules all selectors from all targets.
      You should NEVER call this method, unless you know what you are doing.
 
      @since v0.99.3
      */
-    void unscheduleAllSelectors(void);
+    void unscheduleAll(void);
     
     /** Unschedules all selectors from all targets with a minimum priority.
       You should only call this with kCCPriorityNonSystemMin or higher.
       @since v2.0.0
       */
-    void unscheduleAllSelectorsWithMinPriority(int nMinPriority);
+    void unscheduleAllWithMinPriority(int nMinPriority);
 
     /** The scheduled script callback will be called every 'interval' seconds.
      If paused is YES, then it won't be called until it is resumed.
@@ -258,7 +258,7 @@ protected:
     struct _hashUpdateEntry *m_pHashForUpdates; // hash used to fetch quickly the list entries for pause,delete,etc
 
     // Used for "selectors with interval"
-    struct _hashSelectorEntry *m_pHashForSelectors;
+    struct _hashSelectorEntry *m_pHashForTimers;
     struct _hashSelectorEntry *m_pCurrentTarget;
     bool m_bCurrentTargetSalvaged;
     // If true unschedule will not remove anything from a hash. Elements will only be marked for deletion.

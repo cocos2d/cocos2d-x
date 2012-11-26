@@ -23,16 +23,9 @@
 		15675007163E737B0002AD61 /* CocosDenshion.m in Sources */ = {isa = PBXBuildFile; fileRef = 15674FA7163E737B0002AD61 /* CocosDenshion.m */; };
 		15675008163E737B0002AD61 /* SimpleAudioEngine.mm in Sources */ = {isa = PBXBuildFile; fileRef = 15674FA8163E737B0002AD61 /* SimpleAudioEngine.mm */; };
 		15675009163E737B0002AD61 /* SimpleAudioEngine_objc.m in Sources */ = {isa = PBXBuildFile; fileRef = 15674FAA163E737B0002AD61 /* SimpleAudioEngine_objc.m */; };
-		15675108163E73B10002AD61 /* Android.mk in Resources */ = {isa = PBXBuildFile; fileRef = 1567502C163E73B10002AD61 /* Android.mk */; };
-		15675109163E73B10002AD61 /* CCPhysicsSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1567502D163E73B10002AD61 /* CCPhysicsSprite.cpp */; };
 		1567510A163E73B10002AD61 /* cocos2d_specifics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1567502F163E73B10002AD61 /* cocos2d_specifics.cpp */; };
-		1567510B163E73B10002AD61 /* cocosjs_manual_conversions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15675031163E73B10002AD61 /* cocosjs_manual_conversions.cpp */; };
 		1567510C163E73B10002AD61 /* cocos2dx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15675034163E73B10002AD61 /* cocos2dx.cpp */; };
 		1567510E163E73B10002AD61 /* README in Resources */ = {isa = PBXBuildFile; fileRef = 15675037163E73B10002AD61 /* README */; };
-		1567510F163E73B10002AD61 /* js_bindings_ccbreader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15675038163E73B10002AD61 /* js_bindings_ccbreader.cpp */; };
-		15675110163E73B10002AD61 /* js_bindings_chipmunk_functions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1567503A163E73B10002AD61 /* js_bindings_chipmunk_functions.cpp */; };
-		15675111163E73B10002AD61 /* js_bindings_chipmunk_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1567503C163E73B10002AD61 /* js_bindings_chipmunk_manual.cpp */; };
-		15675112163E73B10002AD61 /* js_manual_conversions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1567503F163E73B10002AD61 /* js_manual_conversions.cpp */; };
 		15675113163E73B10002AD61 /* ScriptingCore.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15675041163E73B10002AD61 /* ScriptingCore.cpp */; };
 		15675125163E74050002AD61 /* js in Resources */ = {isa = PBXBuildFile; fileRef = 15675124163E74050002AD61 /* js */; };
 		1567516D163E741E0002AD61 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 15675164163E741E0002AD61 /* Default-568h@2x.png */; };
@@ -172,26 +165,12 @@
 		15674FA8163E737B0002AD61 /* SimpleAudioEngine.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SimpleAudioEngine.mm; sourceTree = "<group>"; };
 		15674FA9163E737B0002AD61 /* SimpleAudioEngine_objc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleAudioEngine_objc.h; sourceTree = "<group>"; };
 		15674FAA163E737B0002AD61 /* SimpleAudioEngine_objc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleAudioEngine_objc.m; sourceTree = "<group>"; };
-		1567502C163E73B10002AD61 /* Android.mk */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Android.mk; sourceTree = "<group>"; };
-		1567502D163E73B10002AD61 /* CCPhysicsSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPhysicsSprite.cpp; sourceTree = "<group>"; };
-		1567502E163E73B10002AD61 /* CCPhysicsSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsSprite.h; sourceTree = "<group>"; };
 		1567502F163E73B10002AD61 /* cocos2d_specifics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cocos2d_specifics.cpp; sourceTree = "<group>"; };
 		15675030163E73B10002AD61 /* cocos2d_specifics.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = cocos2d_specifics.hpp; sourceTree = "<group>"; };
-		15675031163E73B10002AD61 /* cocosjs_manual_conversions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cocosjs_manual_conversions.cpp; sourceTree = "<group>"; };
-		15675032163E73B10002AD61 /* cocosjs_manual_conversions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cocosjs_manual_conversions.h; sourceTree = "<group>"; };
 		15675034163E73B10002AD61 /* cocos2dx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cocos2dx.cpp; sourceTree = "<group>"; };
 		15675035163E73B10002AD61 /* cocos2dx.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = cocos2dx.hpp; sourceTree = "<group>"; };
 		15675036163E73B10002AD61 /* cocos2dxapi.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = cocos2dxapi.js; sourceTree = "<group>"; };
 		15675037163E73B10002AD61 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
-		15675038163E73B10002AD61 /* js_bindings_ccbreader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = js_bindings_ccbreader.cpp; sourceTree = "<group>"; };
-		15675039163E73B10002AD61 /* js_bindings_ccbreader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_ccbreader.h; sourceTree = "<group>"; };
-		1567503A163E73B10002AD61 /* js_bindings_chipmunk_functions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = js_bindings_chipmunk_functions.cpp; sourceTree = "<group>"; };
-		1567503B163E73B10002AD61 /* js_bindings_chipmunk_functions.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = js_bindings_chipmunk_functions.hpp; sourceTree = "<group>"; };
-		1567503C163E73B10002AD61 /* js_bindings_chipmunk_manual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = js_bindings_chipmunk_manual.cpp; sourceTree = "<group>"; };
-		1567503D163E73B10002AD61 /* js_bindings_chipmunk_manual.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = js_bindings_chipmunk_manual.hpp; sourceTree = "<group>"; };
-		1567503E163E73B10002AD61 /* js_bindings_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_config.h; sourceTree = "<group>"; };
-		1567503F163E73B10002AD61 /* js_manual_conversions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = js_manual_conversions.cpp; sourceTree = "<group>"; };
-		15675040163E73B10002AD61 /* js_manual_conversions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_manual_conversions.h; sourceTree = "<group>"; };
 		15675041163E73B10002AD61 /* ScriptingCore.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ScriptingCore.cpp; sourceTree = "<group>"; };
 		15675042163E73B10002AD61 /* ScriptingCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptingCore.h; sourceTree = "<group>"; };
 		15675043163E73B10002AD61 /* spidermonkey_specifics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = spidermonkey_specifics.h; sourceTree = "<group>"; };
@@ -392,19 +371,16 @@
 		15674A5E163E70370002AD61 = {
 			isa = PBXGroup;
 			children = (
-				156752FF163E870E0002AD61 /* libxml2.dylib */,
-				156752F8163E82D40002AD61 /* libz.dylib */,
-				156752F6163E7FC30002AD61 /* libjs_static.a */,
-				1567522A163E77A90002AD61 /* chipmunk */,
-				1567517F163E765D0002AD61 /* extensions */,
-				15675123163E73F40002AD61 /* Resources */,
-				1567502A163E73B10002AD61 /* javascript */,
-				15674F87163E737B0002AD61 /* CocosDenshion */,
-				15674F00163E730E0002AD61 /* ios */,
 				15674E43163E71D90002AD61 /* cocos2dx.xcodeproj */,
-				15674A6C163E70370002AD61 /* Frameworks */,
-				15674A6A163E70370002AD61 /* Products */,
+				1567522A163E77A90002AD61 /* chipmunk */,
 				15674EFC163E72EE0002AD61 /* Classes */,
+				15674F87163E737B0002AD61 /* CocosDenshion */,
+				1567517F163E765D0002AD61 /* extensions */,
+				15674A6C163E70370002AD61 /* Frameworks */,
+				15674F00163E730E0002AD61 /* ios */,
+				1567502A163E73B10002AD61 /* javascript */,
+				15674A6A163E70370002AD61 /* Products */,
+				15675123163E73F40002AD61 /* Resources */,
 			);
 			sourceTree = "<group>";
 		};
@@ -419,6 +395,9 @@
 		15674A6C163E70370002AD61 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				156752FF163E870E0002AD61 /* libxml2.dylib */,
+				156752F8163E82D40002AD61 /* libz.dylib */,
+				156752F6163E7FC30002AD61 /* libjs_static.a */,
 				15674A6D163E70370002AD61 /* QuartzCore.framework */,
 				15674A6F163E70370002AD61 /* OpenGLES.framework */,
 				15674A71163E70370002AD61 /* OpenAL.framework */,
@@ -510,23 +489,9 @@
 		1567502B163E73B10002AD61 /* bindings */ = {
 			isa = PBXGroup;
 			children = (
-				1567502C163E73B10002AD61 /* Android.mk */,
-				1567502D163E73B10002AD61 /* CCPhysicsSprite.cpp */,
-				1567502E163E73B10002AD61 /* CCPhysicsSprite.h */,
 				1567502F163E73B10002AD61 /* cocos2d_specifics.cpp */,
 				15675030163E73B10002AD61 /* cocos2d_specifics.hpp */,
-				15675031163E73B10002AD61 /* cocosjs_manual_conversions.cpp */,
-				15675032163E73B10002AD61 /* cocosjs_manual_conversions.h */,
 				15675033163E73B10002AD61 /* generated */,
-				15675038163E73B10002AD61 /* js_bindings_ccbreader.cpp */,
-				15675039163E73B10002AD61 /* js_bindings_ccbreader.h */,
-				1567503A163E73B10002AD61 /* js_bindings_chipmunk_functions.cpp */,
-				1567503B163E73B10002AD61 /* js_bindings_chipmunk_functions.hpp */,
-				1567503C163E73B10002AD61 /* js_bindings_chipmunk_manual.cpp */,
-				1567503D163E73B10002AD61 /* js_bindings_chipmunk_manual.hpp */,
-				1567503E163E73B10002AD61 /* js_bindings_config.h */,
-				1567503F163E73B10002AD61 /* js_manual_conversions.cpp */,
-				15675040163E73B10002AD61 /* js_manual_conversions.h */,
 				15675041163E73B10002AD61 /* ScriptingCore.cpp */,
 				15675042163E73B10002AD61 /* ScriptingCore.h */,
 				15675043163E73B10002AD61 /* spidermonkey_specifics.h */,
@@ -879,7 +844,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				15675108163E73B10002AD61 /* Android.mk in Resources */,
 				1567510E163E73B10002AD61 /* README in Resources */,
 				15675125163E74050002AD61 /* js in Resources */,
 				1567516D163E741E0002AD61 /* Default-568h@2x.png in Resources */,
@@ -912,14 +876,8 @@
 				15675007163E737B0002AD61 /* CocosDenshion.m in Sources */,
 				15675008163E737B0002AD61 /* SimpleAudioEngine.mm in Sources */,
 				15675009163E737B0002AD61 /* SimpleAudioEngine_objc.m in Sources */,
-				15675109163E73B10002AD61 /* CCPhysicsSprite.cpp in Sources */,
 				1567510A163E73B10002AD61 /* cocos2d_specifics.cpp in Sources */,
-				1567510B163E73B10002AD61 /* cocosjs_manual_conversions.cpp in Sources */,
 				1567510C163E73B10002AD61 /* cocos2dx.cpp in Sources */,
-				1567510F163E73B10002AD61 /* js_bindings_ccbreader.cpp in Sources */,
-				15675110163E73B10002AD61 /* js_bindings_chipmunk_functions.cpp in Sources */,
-				15675111163E73B10002AD61 /* js_bindings_chipmunk_manual.cpp in Sources */,
-				15675112163E73B10002AD61 /* js_manual_conversions.cpp in Sources */,
 				15675113163E73B10002AD61 /* ScriptingCore.cpp in Sources */,
 				156751F4163E765D0002AD61 /* CCBAnimationManager.cpp in Sources */,
 				156751F5163E765D0002AD61 /* CCBFileLoader.cpp in Sources */,
@@ -1076,7 +1034,8 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Prefix.pch;
-				"GCC_THUMB_SUPPORT[arch=armv6]" = "";
+				GCC_THUMB_SUPPORT = NO;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				HEADER_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../../cocos2dx/kazmath/include\"",
 					"\"$(SRCROOT)/../../../cocos2dx\"",
@@ -1112,7 +1071,8 @@
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Prefix.pch;
-				"GCC_THUMB_SUPPORT[arch=armv6]" = "";
+				GCC_THUMB_SUPPORT = NO;
+				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../../cocos2dx/kazmath/include\"",
 					"\"$(SRCROOT)/../../../cocos2dx\"",

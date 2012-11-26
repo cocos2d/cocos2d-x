@@ -52,19 +52,19 @@ var GameLayer = cc.Layer.extend({
             this.lbScore.setAnchorPoint( cc.p(1,0) );
             this.lbScore.setAlignment( cc.TEXT_ALIGNMENT_RIGHT );
             this.addChild(this.lbScore, 1000);
-            this.lbScore.setPosition(cc.p(winSize.width - 5 , winSize.height - 30));
+            this.lbScore.setPosition(winSize.width - 5 , winSize.height - 30);
 
             // ship life
             var shipTexture = cc.TextureCache.getInstance().addImage(s_ship01);
             var life = cc.Sprite.createWithTexture(shipTexture, cc.rect(0, 0, 60, 38));
             life.setScale(0.6);
-            life.setPosition(cc.p(30, 460));
+            life.setPosition(30, 460);
             this.addChild(life, 1, 5);
 
             // ship Life count
             this._lbLife = cc.LabelTTF.create("0", "Arial", 20);
-            this._lbLife.setPosition(cc.p(60, 463));
-            this._lbLife.setColor(cc.RED);
+            this._lbLife.setPosition(60, 463);
+            this._lbLife.setColor(cc.c3b(255,0,0));
             this.addChild(this._lbLife, 1000);
 
             // ship
@@ -73,9 +73,9 @@ var GameLayer = cc.Layer.extend({
 
             // accept touch now!
 
-            var t = cc.config.deviceType;
+            var t = cc.config.platform;
             if( t == 'browser' )  {
-                this.setTouchEnabled(true);
+                this.setMouseEnabled(true);
                 this.setKeyboardEnabled(true);
             } else if( t == 'desktop' ) {
                 this.setMouseEnabled(true);
@@ -88,7 +88,7 @@ var GameLayer = cc.Layer.extend({
             this.schedule(this.scoreCounter, 1);
 
             if (MW.SOUND) {
-                cc.AudioEngine.getInstance().playBackgroundMusic(s_bgMusic, true);
+                cc.AudioEngine.getInstance().playMusic(s_bgMusic, true);
             }
 
             bRet = true;
@@ -142,7 +142,7 @@ var GameLayer = cc.Layer.extend({
             this.updateUI();
         }
 
-        if( cc.config.deviceType == 'browser' )
+        if( cc.config.platform == 'browser' )
             cc.$("#cou").innerHTML = "Ship:" + 1 + ", Enemy: " + MW.CONTAINER.ENEMIES.length + ", Bullet:" + MW.CONTAINER.ENEMY_BULLETS.length + "," + MW.CONTAINER.PLAYER_BULLETS.length + " all:" + this.getChildren().length;
     },
     checkIsCollide:function () {
@@ -215,14 +215,14 @@ var GameLayer = cc.Layer.extend({
             this._ship = null;
             this.runAction(cc.Sequence.create(
                 cc.DelayTime.create(0.2),
-                cc.CallFunc.create(this, this.onGameOver)));
+                cc.CallFunc.create(this.onGameOver, this)));
         }
     },
     updateUI:function () {
         if (this._tmpScore < MW.SCORE) {
             this._tmpScore += 5;
         }
-        this._lbLife.setString(MW.LIFE);
+        this._lbLife.setString(MW.LIFE + '');
         this.lbScore.setString("Score: " + this._tmpScore);
     },
     collide:function (a, b) {
@@ -262,7 +262,7 @@ var GameLayer = cc.Layer.extend({
                 this._backSkyRe = cc.Sprite.create(s_bg01);
                 this._backSkyRe.setAnchorPoint(cc.p(0, 0));
                 this.addChild(this._backSkyRe, -10);
-                this._backSkyRe.setPosition(cc.p(0, winSize.height));
+                this._backSkyRe.setPosition(0, winSize.height);
                 this._isBackSkyReload = true;
             }
             this._backSkyRe.runAction(cc.MoveBy.create(3, cc.p(0, -48)));
@@ -279,7 +279,7 @@ var GameLayer = cc.Layer.extend({
             if (!this._isBackTileReload) {
                 this._backTileMapRe = cc.TMXTiledMap.create(s_level01);
                 this.addChild(this._backTileMapRe, -9);
-                this._backTileMapRe.setPosition(cc.p(0, winSize.height));
+                this._backTileMapRe.setPosition(0, winSize.height);
                 this._isBackTileReload = true;
             }
             this._backTileMapRe.runAction(cc.MoveBy.create(3, cc.p(0, -200)));

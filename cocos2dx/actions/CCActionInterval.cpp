@@ -169,25 +169,12 @@ CCFiniteTimeAction* CCSequence::actions(CCFiniteTimeAction *pAction1, ...)
 {
     va_list params;
     va_start(params, pAction1);
-
-    CCFiniteTimeAction *pNow;
-    CCFiniteTimeAction *pPrev = pAction1;
-
-    while (pAction1)
-    {
-        pNow = va_arg(params, CCFiniteTimeAction*);
-        if (pNow)
-        {
-            pPrev = CCSequence::createWithTwoActions(pPrev, pNow);
-        }
-        else
-        {
-            break;
-        }
-    }
-
+    
+    CCFiniteTimeAction *pRet = CCSequence::create(pAction1, params);
+    
     va_end(params);
-    return pPrev;
+    
+    return pRet;
 }
 
 CCFiniteTimeAction* CCSequence::create(CCFiniteTimeAction *pAction1, ...)
@@ -195,12 +182,21 @@ CCFiniteTimeAction* CCSequence::create(CCFiniteTimeAction *pAction1, ...)
     va_list params;
     va_start(params, pAction1);
 
+    CCFiniteTimeAction *pRet = CCSequence::create(pAction1, params);
+
+    va_end(params);
+    
+    return pRet;
+}
+
+CCFiniteTimeAction* CCSequence::create(CCFiniteTimeAction *pAction1, va_list args)
+{
     CCFiniteTimeAction *pNow;
     CCFiniteTimeAction *pPrev = pAction1;
-
+    
     while (pAction1)
     {
-        pNow = va_arg(params, CCFiniteTimeAction*);
+        pNow = va_arg(args, CCFiniteTimeAction*);
         if (pNow)
         {
             pPrev = createWithTwoActions(pPrev, pNow);
@@ -210,8 +206,7 @@ CCFiniteTimeAction* CCSequence::create(CCFiniteTimeAction *pAction1, ...)
             break;
         }
     }
-
-    va_end(params);
+    
     return pPrev;
 }
 
@@ -341,7 +336,7 @@ void CCSequence::update(float t)
         return;
     }
 
-    // New action. Start it.
+    // Last action found and it is done
     if( found != m_last )
     {
         m_pActions[found]->startWithTarget(m_pTarget);
@@ -582,25 +577,12 @@ CCFiniteTimeAction* CCSpawn::actions(CCFiniteTimeAction *pAction1, ...)
 {
     va_list params;
     va_start(params, pAction1);
-
-    CCFiniteTimeAction *pNow;
-    CCFiniteTimeAction *pPrev = pAction1;
-
-    while (pAction1)
-    {
-        pNow = va_arg(params, CCFiniteTimeAction*);
-        if (pNow)
-        {
-            pPrev = CCSpawn::createWithTwoActions(pPrev, pNow);
-        }
-        else
-        {
-            break;
-        }
-    }
-
+    
+    CCFiniteTimeAction *pRet = CCSpawn::create(pAction1, params);
+    
     va_end(params);
-    return pPrev;
+    
+    return pRet;
 }
 
 CCFiniteTimeAction* CCSpawn::create(CCFiniteTimeAction *pAction1, ...)
@@ -608,12 +590,21 @@ CCFiniteTimeAction* CCSpawn::create(CCFiniteTimeAction *pAction1, ...)
     va_list params;
     va_start(params, pAction1);
 
+    CCFiniteTimeAction *pRet = CCSpawn::create(pAction1, params);
+
+    va_end(params);
+    
+    return pRet;
+}
+
+CCFiniteTimeAction* CCSpawn::create(CCFiniteTimeAction *pAction1, va_list args)
+{
     CCFiniteTimeAction *pNow;
     CCFiniteTimeAction *pPrev = pAction1;
-
+    
     while (pAction1)
     {
-        pNow = va_arg(params, CCFiniteTimeAction*);
+        pNow = va_arg(args, CCFiniteTimeAction*);
         if (pNow)
         {
             pPrev = createWithTwoActions(pPrev, pNow);
@@ -624,7 +615,6 @@ CCFiniteTimeAction* CCSpawn::create(CCFiniteTimeAction *pAction1, ...)
         }
     }
 
-    va_end(params);
     return pPrev;
 }
 
@@ -758,28 +748,50 @@ CCActionInterval* CCSpawn::reverse(void)
 //
 // RotateTo
 //
-CCRotateTo* CCRotateTo::actionWithDuration(float duration, float fDeltaAngle)
+CCRotateTo* CCRotateTo::actionWithDuration(float fDuration, float fDeltaAngle)
 {
-    return CCRotateTo::create(duration, fDeltaAngle);
+    return CCRotateTo::create(fDuration, fDeltaAngle);
 }
 
-CCRotateTo* CCRotateTo::create(float duration, float fDeltaAngle)
+CCRotateTo* CCRotateTo::create(float fDuration, float fDeltaAngle)
 {
     CCRotateTo* pRotateTo = new CCRotateTo();
-    pRotateTo->initWithDuration(duration, fDeltaAngle);
+    pRotateTo->initWithDuration(fDuration, fDeltaAngle);
     pRotateTo->autorelease();
 
     return pRotateTo;
 }
 
-bool CCRotateTo::initWithDuration(float duration, float fDeltaAngle)
+bool CCRotateTo::initWithDuration(float fDuration, float fDeltaAngle)
 {
-    if (CCActionInterval::initWithDuration(duration))
+    if (CCActionInterval::initWithDuration(fDuration))
     {
-        m_fDstAngle = fDeltaAngle;
+        m_fDstAngleX = m_fDstAngleY = fDeltaAngle;
         return true;
     }
 
+    return false;
+}
+
+CCRotateTo* CCRotateTo::create(float fDuration, float fDeltaAngleX, float fDeltaAngleY)
+{
+    CCRotateTo* pRotateTo = new CCRotateTo();
+    pRotateTo->initWithDuration(fDuration, fDeltaAngleX, fDeltaAngleY);
+    pRotateTo->autorelease();
+    
+    return pRotateTo;
+}
+
+bool CCRotateTo::initWithDuration(float fDuration, float fDeltaAngleX, float fDeltaAngleY)
+{
+    if (CCActionInterval::initWithDuration(fDuration))
+    {
+        m_fDstAngleX = fDeltaAngleX;
+        m_fDstAngleY = fDeltaAngleY;
+        
+        return true;
+    }
+    
     return false;
 }
 
@@ -800,7 +812,7 @@ CCObject* CCRotateTo::copyWithZone(CCZone *pZone)
 
     CCActionInterval::copyWithZone(pZone);
 
-    pCopy->initWithDuration(m_fDuration, m_fDstAngle);
+    pCopy->initWithDuration(m_fDuration, m_fDstAngleX, m_fDstAngleY);
 
     //Action *copy = [[[self class] allocWithZone: zone] initWithDuration:[self duration] angle: angle];
     CC_SAFE_DELETE(pNewZone);
@@ -810,27 +822,41 @@ CCObject* CCRotateTo::copyWithZone(CCZone *pZone)
 void CCRotateTo::startWithTarget(CCNode *pTarget)
 {
     CCActionInterval::startWithTarget(pTarget);
-
-    m_fStartAngle = pTarget->getRotation();
-
-    if (m_fStartAngle > 0)
+    
+    // Calculate X
+    m_fStartAngleX = pTarget->getRotationX();
+    
+    m_fDiffAngleX = m_fDstAngleX - m_fStartAngleX;
+    if (m_fDiffAngleX > 180)
     {
-        m_fStartAngle = fmodf(m_fStartAngle, 360.0f);
+        m_fDiffAngleX -= 360;
+    }
+    if (m_fDiffAngleX < -180)
+    {
+        m_fDiffAngleX += 360;
+    }
+    
+    // Calculate Y
+    m_fStartAngleY = m_pTarget->getRotationY();
+
+    if (m_fStartAngleY > 0)
+    {
+        m_fStartAngleY = fmodf(m_fStartAngleY, 360.0f);
     }
     else
     {
-        m_fStartAngle = fmodf(m_fStartAngle, -360.0f);
+        m_fStartAngleY = fmodf(m_fStartAngleY, -360.0f);
     }
 
-    m_fDiffAngle = m_fDstAngle - m_fStartAngle;
-    if (m_fDiffAngle > 180)
+    m_fDiffAngleY = m_fDstAngleY - m_fStartAngleY;
+    if (m_fDiffAngleY > 180)
     {
-        m_fDiffAngle -= 360;
+        m_fDiffAngleY -= 360;
     }
 
-    if (m_fDiffAngle < -180)
+    if (m_fDiffAngleY < -180)
     {
-        m_fDiffAngle += 360;
+        m_fDiffAngleY += 360;
     }
 }
 
@@ -838,35 +864,57 @@ void CCRotateTo::update(float time)
 {
     if (m_pTarget)
     {
-        m_pTarget->setRotation(m_fStartAngle + m_fDiffAngle * time);
+        m_pTarget->setRotationX(m_fStartAngleX + m_fDiffAngleX * time);
+        m_pTarget->setRotationY(m_fStartAngleY + m_fDiffAngleY * time);
     }
 }
 
 //
 // RotateBy
 //
-CCRotateBy* CCRotateBy::actionWithDuration(float duration, float fDeltaAngle)
+CCRotateBy* CCRotateBy::actionWithDuration(float fDuration, float fDeltaAngle)
 {
-    return CCRotateBy::create(duration, fDeltaAngle);
+    return CCRotateBy::create(fDuration, fDeltaAngle);
 }
 
-CCRotateBy* CCRotateBy::create(float duration, float fDeltaAngle)
+CCRotateBy* CCRotateBy::create(float fDuration, float fDeltaAngle)
 {
     CCRotateBy *pRotateBy = new CCRotateBy();
-    pRotateBy->initWithDuration(duration, fDeltaAngle);
+    pRotateBy->initWithDuration(fDuration, fDeltaAngle);
     pRotateBy->autorelease();
 
     return pRotateBy;
 }
 
-bool CCRotateBy::initWithDuration(float duration, float fDeltaAngle)
+bool CCRotateBy::initWithDuration(float fDuration, float fDeltaAngle)
 {
-    if (CCActionInterval::initWithDuration(duration))
+    if (CCActionInterval::initWithDuration(fDuration))
     {
-        m_fAngle = fDeltaAngle;
+        m_fAngleX = m_fAngleY = fDeltaAngle;
         return true;
     }
 
+    return false;
+}
+
+CCRotateBy* CCRotateBy::create(float fDuration, float fDeltaAngleX, float fDeltaAngleY)
+{
+    CCRotateBy *pRotateBy = new CCRotateBy();
+    pRotateBy->initWithDuration(fDuration, fDeltaAngleX, fDeltaAngleY);
+    pRotateBy->autorelease();
+    
+    return pRotateBy;
+}
+
+bool CCRotateBy::initWithDuration(float fDuration, float fDeltaAngleX, float fDeltaAngleY)
+{
+    if (CCActionInterval::initWithDuration(fDuration))
+    {
+        m_fAngleX = fDeltaAngleX;
+        m_fAngleY = fDeltaAngleY;
+        return true;
+    }
+    
     return false;
 }
 
@@ -887,7 +935,7 @@ CCObject* CCRotateBy::copyWithZone(CCZone *pZone)
 
     CCActionInterval::copyWithZone(pZone);
 
-    pCopy->initWithDuration(m_fDuration, m_fAngle);
+    pCopy->initWithDuration(m_fDuration, m_fAngleX, m_fAngleY);
 
     CC_SAFE_DELETE(pNewZone);
     return pCopy;
@@ -896,7 +944,8 @@ CCObject* CCRotateBy::copyWithZone(CCZone *pZone)
 void CCRotateBy::startWithTarget(CCNode *pTarget)
 {
     CCActionInterval::startWithTarget(pTarget);
-    m_fStartAngle = pTarget->getRotation();
+    m_fStartAngleX = pTarget->getRotationX();
+    m_fStartAngleY = pTarget->getRotationY();
 }
 
 void CCRotateBy::update(float time)
@@ -904,13 +953,14 @@ void CCRotateBy::update(float time)
     // XXX: shall I add % 360
     if (m_pTarget)
     {
-        m_pTarget->setRotation(m_fStartAngle + m_fAngle * time);
+        m_pTarget->setRotationX(m_fStartAngleX + m_fAngleX * time);
+        m_pTarget->setRotationY(m_fStartAngleY + m_fAngleY * time);
     }
 }
 
 CCActionInterval* CCRotateBy::reverse(void)
 {
-    return CCRotateBy::create(m_fDuration, -m_fAngle);
+    return CCRotateBy::create(m_fDuration, -m_fAngleX, -m_fAngleY);
 }
 
 //
@@ -1472,6 +1522,17 @@ CCBezierTo* CCBezierTo::create(float t, const ccBezierConfig& c)
     return pBezierTo;
 }
 
+bool CCBezierTo::initWithDuration(float t, const ccBezierConfig &c)
+{
+    bool bRet = false;
+    
+    if (CCActionInterval::initWithDuration(t))
+    {
+        m_sToConfig = c;
+    }
+    
+    return bRet;
+}
 
 CCObject* CCBezierTo::copyWithZone(CCZone *pZone)
 {
@@ -1499,9 +1560,9 @@ CCObject* CCBezierTo::copyWithZone(CCZone *pZone)
 void CCBezierTo::startWithTarget(CCNode *pTarget)
 {
     CCBezierBy::startWithTarget(pTarget);
-    m_sConfig.controlPoint_1 = ccpSub(m_sConfig.controlPoint_1, m_startPosition);
-    m_sConfig.controlPoint_2 = ccpSub(m_sConfig.controlPoint_2, m_startPosition);
-    m_sConfig.endPosition = ccpSub(m_sConfig.endPosition, m_startPosition);
+    m_sConfig.controlPoint_1 = ccpSub(m_sToConfig.controlPoint_1, m_startPosition);
+    m_sConfig.controlPoint_2 = ccpSub(m_sToConfig.controlPoint_2, m_startPosition);
+    m_sConfig.endPosition = ccpSub(m_sToConfig.endPosition, m_startPosition);
 }
 
 //
@@ -1696,6 +1757,18 @@ bool CCBlink::initWithDuration(float duration, unsigned int uBlinks)
     }
 
     return false;
+}
+
+void CCBlink::stop()
+{
+    m_pTarget->setVisible(m_bOriginalState);
+    CCActionInterval::stop();
+}
+
+void CCBlink::startWithTarget(CCNode *pTarget)
+{
+    CCActionInterval::startWithTarget(pTarget);
+    m_bOriginalState = pTarget->isVisible();
 }
 
 CCObject* CCBlink::copyWithZone(CCZone *pZone)
@@ -2467,14 +2540,14 @@ CCObject* CCTargetedAction::copyWithZone(CCZone* pZone)
     }
     CCActionInterval::copyWithZone(pZone);
     // win32 : use the m_pOther's copy object.
-    pRet->initWithTarget(m_pTarget, (CCFiniteTimeAction*)m_pAction->copy()->autorelease()); 
+    pRet->initWithTarget(m_pForcedTarget, (CCFiniteTimeAction*)m_pAction->copy()->autorelease()); 
     CC_SAFE_DELETE(pNewZone);
     return pRet;
 }
 
 void CCTargetedAction::startWithTarget(CCNode *pTarget)
 {
-    CCActionInterval::startWithTarget(m_pForcedTarget);
+    CCActionInterval::startWithTarget(pTarget);
     m_pAction->startWithTarget(m_pForcedTarget);
 }
 

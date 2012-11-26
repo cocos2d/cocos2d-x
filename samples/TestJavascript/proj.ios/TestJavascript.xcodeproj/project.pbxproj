@@ -7,13 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		15384E5716119CC30021DC07 /* CCPhysicsSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15384E3E16119CC30021DC07 /* CCPhysicsSprite.cpp */; };
 		15384E5816119CC30021DC07 /* cocos2d_specifics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15384E4016119CC30021DC07 /* cocos2d_specifics.cpp */; };
 		15384E5916119CC30021DC07 /* cocosjs_manual_conversions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15384E4216119CC30021DC07 /* cocosjs_manual_conversions.cpp */; };
 		15384E5A16119CC30021DC07 /* cocos2dx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15384E4516119CC30021DC07 /* cocos2dx.cpp */; };
 		15384E5D16119CC30021DC07 /* js_bindings_ccbreader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15384E4916119CC30021DC07 /* js_bindings_ccbreader.cpp */; };
-		15384E5E16119CC30021DC07 /* js_bindings_chipmunk_functions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15384E4B16119CC30021DC07 /* js_bindings_chipmunk_functions.cpp */; };
-		15384E5F16119CC30021DC07 /* js_bindings_chipmunk_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15384E4D16119CC30021DC07 /* js_bindings_chipmunk_manual.cpp */; };
 		15384E6016119CC30021DC07 /* js_manual_conversions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15384E5016119CC30021DC07 /* js_manual_conversions.cpp */; };
 		15384E6116119CC30021DC07 /* ScriptingCore.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15384E5216119CC30021DC07 /* ScriptingCore.cpp */; };
 		15384ED716119D5E0021DC07 /* CCBAnimationManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15384E6516119D5E0021DC07 /* CCBAnimationManager.cpp */; };
@@ -70,109 +67,11 @@
 		15DA882C1627C44800155276 /* jsb_constants_cocos2d.js in Resources */ = {isa = PBXBuildFile; fileRef = 15DA88271627C44800155276 /* jsb_constants_cocos2d.js */; };
 		15DA882D1627C44800155276 /* jsb_constants_cocosbuilder.js in Resources */ = {isa = PBXBuildFile; fileRef = 15DA88281627C44800155276 /* jsb_constants_cocosbuilder.js */; };
 		15DA882E1627C44800155276 /* jsb_constants_gl.js in Resources */ = {isa = PBXBuildFile; fileRef = 15DA88291627C44800155276 /* jsb_constants_gl.js */; };
-		15DA88AE1627C45F00155276 /* tests-boot-jsb.js in Resources */ = {isa = PBXBuildFile; fileRef = 15DA887F1627C45F00155276 /* tests-boot-jsb.js */; };
-		15DA88AF1627C45F00155276 /* tests-main.js in Resources */ = {isa = PBXBuildFile; fileRef = 15DA88801627C45F00155276 /* tests-main.js */; };
-		15DA88B01627C45F00155276 /* tests_resources-html5.js in Resources */ = {isa = PBXBuildFile; fileRef = 15DA88811627C45F00155276 /* tests_resources-html5.js */; };
-		15DA88B11627C45F00155276 /* tests_resources-jsb.js in Resources */ = {isa = PBXBuildFile; fileRef = 15DA88821627C45F00155276 /* tests_resources-jsb.js */; };
-		15DA88B51627C50B00155276 /* res in Resources */ = {isa = PBXBuildFile; fileRef = 15DA88B41627C50B00155276 /* res */; };
 		15DA88B71627C62000155276 /* cocos2dxapi.js in Resources */ = {isa = PBXBuildFile; fileRef = 15DA88B61627C62000155276 /* cocos2dxapi.js */; };
-		1AC54652163E6F5300EFE021 /* ActionManagerTest.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AC545FB163E6F5300EFE021 /* ActionManagerTest.js */; };
-		1AC54653163E6F5300EFE021 /* ActionsTest.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AC545FD163E6F5300EFE021 /* ActionsTest.js */; };
-		1AC54654163E6F5300EFE021 /* Box2dTest.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AC545FF163E6F5300EFE021 /* Box2dTest.js */; };
-		1AC54655163E6F5300EFE021 /* ChipmunkTest.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AC54601163E6F5300EFE021 /* ChipmunkTest.js */; };
-		1AC54656163E6F5300EFE021 /* ClickAndMoveTest.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AC54603163E6F5300EFE021 /* ClickAndMoveTest.js */; };
-		1AC54657163E6F5300EFE021 /* CocosDenshionTest.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AC54605163E6F5300EFE021 /* CocosDenshionTest.js */; };
-		1AC54658163E6F5300EFE021 /* CocosNodeTest.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AC54607163E6F5300EFE021 /* CocosNodeTest.js */; };
-		1AC54659163E6F5300EFE021 /* CurrentLanguageTest.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AC54609163E6F5300EFE021 /* CurrentLanguageTest.js */; };
-		1AC5465A163E6F5300EFE021 /* DrawPrimitivesTest.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AC5460B163E6F5300EFE021 /* DrawPrimitivesTest.js */; };
-		1AC5465B163E6F5300EFE021 /* EaseActionsTest.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AC5460D163E6F5300EFE021 /* EaseActionsTest.js */; };
-		1AC5465C163E6F5300EFE021 /* EffectsTest.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AC5460F163E6F5300EFE021 /* EffectsTest.js */; };
-		1AC5465D163E6F5300EFE021 /* EventTest.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AC54611163E6F5300EFE021 /* EventTest.js */; };
-		1AC5465E163E6F5300EFE021 /* CocosBuilderTest.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AC54614163E6F5300EFE021 /* CocosBuilderTest.js */; };
-		1AC5465F163E6F5300EFE021 /* HelloCocosBuilderLayer.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AC54616163E6F5300EFE021 /* HelloCocosBuilderLayer.js */; };
-		1AC54660163E6F5300EFE021 /* TestHeaderLayer.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AC54618163E6F5300EFE021 /* TestHeaderLayer.js */; };
-		1AC54661163E6F5300EFE021 /* CCControlButtonTest.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AC5461B163E6F5300EFE021 /* CCControlButtonTest.js */; };
-		1AC54662163E6F5300EFE021 /* CCControlScene.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AC5461C163E6F5300EFE021 /* CCControlScene.js */; };
-		1AC54663163E6F5300EFE021 /* CCControlSceneManager.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AC5461D163E6F5300EFE021 /* CCControlSceneManager.js */; };
-		1AC54664163E6F5300EFE021 /* ExtensionsTest.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AC5461E163E6F5300EFE021 /* ExtensionsTest.js */; };
-		1AC54665163E6F5300EFE021 /* TableViewTestScene.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AC54620163E6F5300EFE021 /* TableViewTestScene.js */; };
-		1AC54666163E6F5300EFE021 /* FontTest.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AC54622163E6F5300EFE021 /* FontTest.js */; };
-		1AC54667163E6F5300EFE021 /* IntervelTest.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AC54624163E6F5300EFE021 /* IntervelTest.js */; };
-		1AC54668163E6F5300EFE021 /* LabelTest.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AC54626163E6F5300EFE021 /* LabelTest.js */; };
-		1AC54669163E6F5300EFE021 /* LayerTest.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AC54628163E6F5300EFE021 /* LayerTest.js */; };
-		1AC5466A163E6F5300EFE021 /* MenuTest.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AC5462A163E6F5300EFE021 /* MenuTest.js */; };
-		1AC5466B163E6F5300EFE021 /* MultiTouchTest.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AC5462C163E6F5300EFE021 /* MultiTouchTest.js */; };
-		1AC5466C163E6F5300EFE021 /* ParallaxTest.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AC5462E163E6F5300EFE021 /* ParallaxTest.js */; };
-		1AC5466D163E6F5300EFE021 /* ParticleTest.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AC54630163E6F5300EFE021 /* ParticleTest.js */; };
-		1AC5466E163E6F5300EFE021 /* PerformanceNodeChildrenTest.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AC54632163E6F5300EFE021 /* PerformanceNodeChildrenTest.js */; };
-		1AC5466F163E6F5300EFE021 /* PerformanceParticleTest.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AC54633163E6F5300EFE021 /* PerformanceParticleTest.js */; };
-		1AC54670163E6F5300EFE021 /* PerformanceSpriteTest.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AC54634163E6F5300EFE021 /* PerformanceSpriteTest.js */; };
-		1AC54671163E6F5300EFE021 /* PerformanceTest.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AC54635163E6F5300EFE021 /* PerformanceTest.js */; };
-		1AC54672163E6F5300EFE021 /* PerformanceTextureTest.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AC54636163E6F5300EFE021 /* PerformanceTextureTest.js */; };
-		1AC54673163E6F5300EFE021 /* PerformanceTouchesTest.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AC54637163E6F5300EFE021 /* PerformanceTouchesTest.js */; };
-		1AC54674163E6F5300EFE021 /* Presentation.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AC54639163E6F5300EFE021 /* Presentation.js */; };
-		1AC54675163E6F5300EFE021 /* ProgressActionsTest.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AC5463B163E6F5300EFE021 /* ProgressActionsTest.js */; };
-		1AC54676163E6F5300EFE021 /* RenderTextureTest.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AC5463D163E6F5300EFE021 /* RenderTextureTest.js */; };
-		1AC54677163E6F5300EFE021 /* RotateWorldTest.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AC5463F163E6F5300EFE021 /* RotateWorldTest.js */; };
-		1AC54678163E6F5300EFE021 /* SceneTest.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AC54641163E6F5300EFE021 /* SceneTest.js */; };
-		1AC54679163E6F5300EFE021 /* SchedulerTest.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AC54643163E6F5300EFE021 /* SchedulerTest.js */; };
-		1AC5467A163E6F5300EFE021 /* SpriteTest.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AC54645163E6F5300EFE021 /* SpriteTest.js */; };
-		1AC5467B163E6F5300EFE021 /* TextInputTest.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AC54647163E6F5300EFE021 /* TextInputTest.js */; };
-		1AC5467C163E6F5300EFE021 /* TextureCacheTest.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AC54649163E6F5300EFE021 /* TextureCacheTest.js */; };
-		1AC5467D163E6F5300EFE021 /* TileMapTest.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AC5464B163E6F5300EFE021 /* TileMapTest.js */; };
-		1AC5467E163E6F5300EFE021 /* Ball.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AC5464D163E6F5300EFE021 /* Ball.js */; };
-		1AC5467F163E6F5300EFE021 /* Paddle.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AC5464E163E6F5300EFE021 /* Paddle.js */; };
-		1AC54680163E6F5300EFE021 /* TouchesTest.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AC5464F163E6F5300EFE021 /* TouchesTest.js */; };
-		1AC54681163E6F5300EFE021 /* TransitionsTest.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AC54651163E6F5300EFE021 /* TransitionsTest.js */; };
-		1AC54682163E6FC500EFE021 /* ActionManagerTest.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AC545FB163E6F5300EFE021 /* ActionManagerTest.js */; };
-		1AC54683163E6FC500EFE021 /* ActionsTest.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AC545FD163E6F5300EFE021 /* ActionsTest.js */; };
-		1AC54684163E6FC500EFE021 /* Box2dTest.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AC545FF163E6F5300EFE021 /* Box2dTest.js */; };
-		1AC54685163E6FC500EFE021 /* ChipmunkTest.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AC54601163E6F5300EFE021 /* ChipmunkTest.js */; };
-		1AC54686163E6FC500EFE021 /* ClickAndMoveTest.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AC54603163E6F5300EFE021 /* ClickAndMoveTest.js */; };
-		1AC54687163E6FC500EFE021 /* CocosDenshionTest.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AC54605163E6F5300EFE021 /* CocosDenshionTest.js */; };
-		1AC54688163E6FC500EFE021 /* CocosNodeTest.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AC54607163E6F5300EFE021 /* CocosNodeTest.js */; };
-		1AC54689163E6FC500EFE021 /* CurrentLanguageTest.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AC54609163E6F5300EFE021 /* CurrentLanguageTest.js */; };
-		1AC5468A163E6FC500EFE021 /* DrawPrimitivesTest.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AC5460B163E6F5300EFE021 /* DrawPrimitivesTest.js */; };
-		1AC5468B163E6FC500EFE021 /* EaseActionsTest.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AC5460D163E6F5300EFE021 /* EaseActionsTest.js */; };
-		1AC5468C163E6FC500EFE021 /* EffectsTest.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AC5460F163E6F5300EFE021 /* EffectsTest.js */; };
-		1AC5468D163E6FC500EFE021 /* EventTest.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AC54611163E6F5300EFE021 /* EventTest.js */; };
-		1AC5468E163E6FC500EFE021 /* CocosBuilderTest.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AC54614163E6F5300EFE021 /* CocosBuilderTest.js */; };
-		1AC5468F163E6FC500EFE021 /* HelloCocosBuilderLayer.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AC54616163E6F5300EFE021 /* HelloCocosBuilderLayer.js */; };
-		1AC54690163E6FC500EFE021 /* TestHeaderLayer.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AC54618163E6F5300EFE021 /* TestHeaderLayer.js */; };
-		1AC54691163E6FC500EFE021 /* CCControlButtonTest.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AC5461B163E6F5300EFE021 /* CCControlButtonTest.js */; };
-		1AC54692163E6FC500EFE021 /* CCControlScene.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AC5461C163E6F5300EFE021 /* CCControlScene.js */; };
-		1AC54693163E6FC500EFE021 /* CCControlSceneManager.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AC5461D163E6F5300EFE021 /* CCControlSceneManager.js */; };
-		1AC54694163E6FC500EFE021 /* ExtensionsTest.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AC5461E163E6F5300EFE021 /* ExtensionsTest.js */; };
-		1AC54695163E6FC500EFE021 /* TableViewTestScene.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AC54620163E6F5300EFE021 /* TableViewTestScene.js */; };
-		1AC54696163E6FC500EFE021 /* FontTest.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AC54622163E6F5300EFE021 /* FontTest.js */; };
-		1AC54697163E6FC500EFE021 /* IntervelTest.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AC54624163E6F5300EFE021 /* IntervelTest.js */; };
-		1AC54698163E6FC500EFE021 /* LabelTest.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AC54626163E6F5300EFE021 /* LabelTest.js */; };
-		1AC54699163E6FC500EFE021 /* LayerTest.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AC54628163E6F5300EFE021 /* LayerTest.js */; };
-		1AC5469A163E6FC500EFE021 /* MenuTest.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AC5462A163E6F5300EFE021 /* MenuTest.js */; };
-		1AC5469B163E6FC500EFE021 /* MultiTouchTest.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AC5462C163E6F5300EFE021 /* MultiTouchTest.js */; };
-		1AC5469C163E6FC500EFE021 /* ParallaxTest.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AC5462E163E6F5300EFE021 /* ParallaxTest.js */; };
-		1AC5469D163E6FC500EFE021 /* ParticleTest.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AC54630163E6F5300EFE021 /* ParticleTest.js */; };
-		1AC5469E163E6FC500EFE021 /* PerformanceNodeChildrenTest.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AC54632163E6F5300EFE021 /* PerformanceNodeChildrenTest.js */; };
-		1AC5469F163E6FC500EFE021 /* PerformanceParticleTest.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AC54633163E6F5300EFE021 /* PerformanceParticleTest.js */; };
-		1AC546A0163E6FC500EFE021 /* PerformanceSpriteTest.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AC54634163E6F5300EFE021 /* PerformanceSpriteTest.js */; };
-		1AC546A1163E6FC500EFE021 /* PerformanceTest.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AC54635163E6F5300EFE021 /* PerformanceTest.js */; };
-		1AC546A2163E6FC500EFE021 /* PerformanceTextureTest.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AC54636163E6F5300EFE021 /* PerformanceTextureTest.js */; };
-		1AC546A3163E6FC500EFE021 /* PerformanceTouchesTest.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AC54637163E6F5300EFE021 /* PerformanceTouchesTest.js */; };
-		1AC546A4163E6FC500EFE021 /* Presentation.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AC54639163E6F5300EFE021 /* Presentation.js */; };
-		1AC546A5163E6FC500EFE021 /* ProgressActionsTest.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AC5463B163E6F5300EFE021 /* ProgressActionsTest.js */; };
-		1AC546A6163E6FC500EFE021 /* RenderTextureTest.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AC5463D163E6F5300EFE021 /* RenderTextureTest.js */; };
-		1AC546A7163E6FC500EFE021 /* RotateWorldTest.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AC5463F163E6F5300EFE021 /* RotateWorldTest.js */; };
-		1AC546A8163E6FC500EFE021 /* SceneTest.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AC54641163E6F5300EFE021 /* SceneTest.js */; };
-		1AC546A9163E6FC500EFE021 /* SchedulerTest.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AC54643163E6F5300EFE021 /* SchedulerTest.js */; };
-		1AC546AA163E6FC500EFE021 /* SpriteTest.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AC54645163E6F5300EFE021 /* SpriteTest.js */; };
-		1AC546AB163E6FC500EFE021 /* TextInputTest.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AC54647163E6F5300EFE021 /* TextInputTest.js */; };
-		1AC546AC163E6FC500EFE021 /* TextureCacheTest.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AC54649163E6F5300EFE021 /* TextureCacheTest.js */; };
-		1AC546AD163E6FC500EFE021 /* TileMapTest.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AC5464B163E6F5300EFE021 /* TileMapTest.js */; };
-		1AC546AE163E6FC500EFE021 /* Ball.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AC5464D163E6F5300EFE021 /* Ball.js */; };
-		1AC546AF163E6FC500EFE021 /* Paddle.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AC5464E163E6F5300EFE021 /* Paddle.js */; };
-		1AC546B0163E6FC500EFE021 /* TouchesTest.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AC5464F163E6F5300EFE021 /* TouchesTest.js */; };
-		1AC546B1163E6FC500EFE021 /* TransitionsTest.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AC54651163E6F5300EFE021 /* TransitionsTest.js */; };
-		262829D415EC7196002C4240 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 262829A315EC7196002C4240 /* Makefile */; };
+		15E2AE9E165DC52C00F7743F /* CCPhysicsDebugNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15E2AE9A165DC52C00F7743F /* CCPhysicsDebugNode.cpp */; };
+		15E2AE9F165DC52C00F7743F /* CCPhysicsSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15E2AE9C165DC52C00F7743F /* CCPhysicsSprite.cpp */; };
+		15E2AEA3165DC6DD00F7743F /* res in Resources */ = {isa = PBXBuildFile; fileRef = 15E2AEA2165DC6DD00F7743F /* res */; };
+		15E2AEA5165DC73200F7743F /* src in Resources */ = {isa = PBXBuildFile; fileRef = 15E2AEA4165DC73200F7743F /* src */; };
 		262829DB15EC7196002C4240 /* chipmunk.c in Sources */ = {isa = PBXBuildFile; fileRef = 262829AC15EC7196002C4240 /* chipmunk.c */; };
 		262829DD15EC7196002C4240 /* cpConstraint.c in Sources */ = {isa = PBXBuildFile; fileRef = 262829AF15EC7196002C4240 /* cpConstraint.c */; };
 		262829DE15EC7196002C4240 /* cpDampedRotarySpring.c in Sources */ = {isa = PBXBuildFile; fileRef = 262829B015EC7196002C4240 /* cpDampedRotarySpring.c */; };
@@ -202,6 +101,11 @@
 		262829F615EC7196002C4240 /* cpSpatialIndex.c in Sources */ = {isa = PBXBuildFile; fileRef = 262829C815EC7196002C4240 /* cpSpatialIndex.c */; };
 		262829F715EC7196002C4240 /* cpSweep1D.c in Sources */ = {isa = PBXBuildFile; fileRef = 262829C915EC7196002C4240 /* cpSweep1D.c */; };
 		262829F815EC7196002C4240 /* cpVect.c in Sources */ = {isa = PBXBuildFile; fileRef = 262829CA15EC7196002C4240 /* cpVect.c */; };
+		263B98D016548E4D00228D8A /* js_bindings_chipmunk_auto_classes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 263B98C716548E4D00228D8A /* js_bindings_chipmunk_auto_classes.cpp */; };
+		263B98D116548E4D00228D8A /* js_bindings_chipmunk_registration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 263B98CC16548E4D00228D8A /* js_bindings_chipmunk_registration.cpp */; };
+		263B98D216548E4D00228D8A /* js_bindings_core.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 263B98CE16548E4D00228D8A /* js_bindings_core.cpp */; };
+		263B98D616548EB700228D8A /* js_bindings_chipmunk_functions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 263B98D316548EB700228D8A /* js_bindings_chipmunk_functions.cpp */; };
+		263B98D716548EB700228D8A /* js_bindings_chipmunk_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 263B98D516548EB700228D8A /* js_bindings_chipmunk_manual.cpp */; };
 		A92275421517C094001B78AA /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A92275411517C094001B78AA /* QuartzCore.framework */; };
 		A92275441517C094001B78AA /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A92275431517C094001B78AA /* OpenGLES.framework */; };
 		A92275461517C094001B78AA /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A92275451517C094001B78AA /* OpenAL.framework */; };
@@ -239,8 +143,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		15384E3E16119CC30021DC07 /* CCPhysicsSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPhysicsSprite.cpp; sourceTree = "<group>"; };
-		15384E3F16119CC30021DC07 /* CCPhysicsSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsSprite.h; sourceTree = "<group>"; };
 		15384E4016119CC30021DC07 /* cocos2d_specifics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cocos2d_specifics.cpp; sourceTree = "<group>"; };
 		15384E4116119CC30021DC07 /* cocos2d_specifics.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = cocos2d_specifics.hpp; sourceTree = "<group>"; };
 		15384E4216119CC30021DC07 /* cocosjs_manual_conversions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cocosjs_manual_conversions.cpp; sourceTree = "<group>"; };
@@ -249,10 +151,6 @@
 		15384E4616119CC30021DC07 /* cocos2dx.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = cocos2dx.hpp; sourceTree = "<group>"; };
 		15384E4916119CC30021DC07 /* js_bindings_ccbreader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = js_bindings_ccbreader.cpp; sourceTree = "<group>"; };
 		15384E4A16119CC30021DC07 /* js_bindings_ccbreader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_ccbreader.h; sourceTree = "<group>"; };
-		15384E4B16119CC30021DC07 /* js_bindings_chipmunk_functions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = js_bindings_chipmunk_functions.cpp; sourceTree = "<group>"; };
-		15384E4C16119CC30021DC07 /* js_bindings_chipmunk_functions.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = js_bindings_chipmunk_functions.hpp; sourceTree = "<group>"; };
-		15384E4D16119CC30021DC07 /* js_bindings_chipmunk_manual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = js_bindings_chipmunk_manual.cpp; sourceTree = "<group>"; };
-		15384E4E16119CC30021DC07 /* js_bindings_chipmunk_manual.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = js_bindings_chipmunk_manual.hpp; sourceTree = "<group>"; };
 		15384E4F16119CC30021DC07 /* js_bindings_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_config.h; sourceTree = "<group>"; };
 		15384E5016119CC30021DC07 /* js_manual_conversions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = js_manual_conversions.cpp; sourceTree = "<group>"; };
 		15384E5116119CC30021DC07 /* js_manual_conversions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_manual_conversions.h; sourceTree = "<group>"; };
@@ -372,63 +270,13 @@
 		15DA88271627C44800155276 /* jsb_constants_cocos2d.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_constants_cocos2d.js; sourceTree = "<group>"; };
 		15DA88281627C44800155276 /* jsb_constants_cocosbuilder.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_constants_cocosbuilder.js; sourceTree = "<group>"; };
 		15DA88291627C44800155276 /* jsb_constants_gl.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_constants_gl.js; sourceTree = "<group>"; };
-		15DA887F1627C45F00155276 /* tests-boot-jsb.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "tests-boot-jsb.js"; sourceTree = "<group>"; };
-		15DA88801627C45F00155276 /* tests-main.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "tests-main.js"; sourceTree = "<group>"; };
-		15DA88811627C45F00155276 /* tests_resources-html5.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "tests_resources-html5.js"; sourceTree = "<group>"; };
-		15DA88821627C45F00155276 /* tests_resources-jsb.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "tests_resources-jsb.js"; sourceTree = "<group>"; };
-		15DA88B41627C50B00155276 /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; name = res; path = "../cocos2d-html5-tests/res"; sourceTree = "<group>"; };
 		15DA88B61627C62000155276 /* cocos2dxapi.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = cocos2dxapi.js; path = ../../../scripting/javascript/bindings/generated/cocos2dxapi.js; sourceTree = "<group>"; };
-		1AC545FB163E6F5300EFE021 /* ActionManagerTest.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = ActionManagerTest.js; sourceTree = "<group>"; };
-		1AC545FD163E6F5300EFE021 /* ActionsTest.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = ActionsTest.js; sourceTree = "<group>"; };
-		1AC545FF163E6F5300EFE021 /* Box2dTest.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = Box2dTest.js; sourceTree = "<group>"; };
-		1AC54601163E6F5300EFE021 /* ChipmunkTest.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = ChipmunkTest.js; sourceTree = "<group>"; };
-		1AC54603163E6F5300EFE021 /* ClickAndMoveTest.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = ClickAndMoveTest.js; sourceTree = "<group>"; };
-		1AC54605163E6F5300EFE021 /* CocosDenshionTest.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = CocosDenshionTest.js; sourceTree = "<group>"; };
-		1AC54607163E6F5300EFE021 /* CocosNodeTest.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = CocosNodeTest.js; sourceTree = "<group>"; };
-		1AC54609163E6F5300EFE021 /* CurrentLanguageTest.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = CurrentLanguageTest.js; sourceTree = "<group>"; };
-		1AC5460B163E6F5300EFE021 /* DrawPrimitivesTest.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = DrawPrimitivesTest.js; sourceTree = "<group>"; };
-		1AC5460D163E6F5300EFE021 /* EaseActionsTest.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = EaseActionsTest.js; sourceTree = "<group>"; };
-		1AC5460F163E6F5300EFE021 /* EffectsTest.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = EffectsTest.js; sourceTree = "<group>"; };
-		1AC54611163E6F5300EFE021 /* EventTest.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = EventTest.js; sourceTree = "<group>"; };
-		1AC54614163E6F5300EFE021 /* CocosBuilderTest.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = CocosBuilderTest.js; sourceTree = "<group>"; };
-		1AC54616163E6F5300EFE021 /* HelloCocosBuilderLayer.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = HelloCocosBuilderLayer.js; sourceTree = "<group>"; };
-		1AC54618163E6F5300EFE021 /* TestHeaderLayer.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = TestHeaderLayer.js; sourceTree = "<group>"; };
-		1AC5461B163E6F5300EFE021 /* CCControlButtonTest.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = CCControlButtonTest.js; sourceTree = "<group>"; };
-		1AC5461C163E6F5300EFE021 /* CCControlScene.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = CCControlScene.js; sourceTree = "<group>"; };
-		1AC5461D163E6F5300EFE021 /* CCControlSceneManager.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = CCControlSceneManager.js; sourceTree = "<group>"; };
-		1AC5461E163E6F5300EFE021 /* ExtensionsTest.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = ExtensionsTest.js; sourceTree = "<group>"; };
-		1AC54620163E6F5300EFE021 /* TableViewTestScene.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = TableViewTestScene.js; sourceTree = "<group>"; };
-		1AC54622163E6F5300EFE021 /* FontTest.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = FontTest.js; sourceTree = "<group>"; };
-		1AC54624163E6F5300EFE021 /* IntervelTest.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = IntervelTest.js; sourceTree = "<group>"; };
-		1AC54626163E6F5300EFE021 /* LabelTest.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = LabelTest.js; sourceTree = "<group>"; };
-		1AC54628163E6F5300EFE021 /* LayerTest.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = LayerTest.js; sourceTree = "<group>"; };
-		1AC5462A163E6F5300EFE021 /* MenuTest.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = MenuTest.js; sourceTree = "<group>"; };
-		1AC5462C163E6F5300EFE021 /* MultiTouchTest.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = MultiTouchTest.js; sourceTree = "<group>"; };
-		1AC5462E163E6F5300EFE021 /* ParallaxTest.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = ParallaxTest.js; sourceTree = "<group>"; };
-		1AC54630163E6F5300EFE021 /* ParticleTest.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = ParticleTest.js; sourceTree = "<group>"; };
-		1AC54632163E6F5300EFE021 /* PerformanceNodeChildrenTest.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = PerformanceNodeChildrenTest.js; sourceTree = "<group>"; };
-		1AC54633163E6F5300EFE021 /* PerformanceParticleTest.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = PerformanceParticleTest.js; sourceTree = "<group>"; };
-		1AC54634163E6F5300EFE021 /* PerformanceSpriteTest.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = PerformanceSpriteTest.js; sourceTree = "<group>"; };
-		1AC54635163E6F5300EFE021 /* PerformanceTest.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = PerformanceTest.js; sourceTree = "<group>"; };
-		1AC54636163E6F5300EFE021 /* PerformanceTextureTest.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = PerformanceTextureTest.js; sourceTree = "<group>"; };
-		1AC54637163E6F5300EFE021 /* PerformanceTouchesTest.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = PerformanceTouchesTest.js; sourceTree = "<group>"; };
-		1AC54639163E6F5300EFE021 /* Presentation.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = Presentation.js; sourceTree = "<group>"; };
-		1AC5463B163E6F5300EFE021 /* ProgressActionsTest.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = ProgressActionsTest.js; sourceTree = "<group>"; };
-		1AC5463D163E6F5300EFE021 /* RenderTextureTest.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = RenderTextureTest.js; sourceTree = "<group>"; };
-		1AC5463F163E6F5300EFE021 /* RotateWorldTest.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = RotateWorldTest.js; sourceTree = "<group>"; };
-		1AC54641163E6F5300EFE021 /* SceneTest.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = SceneTest.js; sourceTree = "<group>"; };
-		1AC54643163E6F5300EFE021 /* SchedulerTest.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = SchedulerTest.js; sourceTree = "<group>"; };
-		1AC54645163E6F5300EFE021 /* SpriteTest.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = SpriteTest.js; sourceTree = "<group>"; };
-		1AC54647163E6F5300EFE021 /* TextInputTest.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = TextInputTest.js; sourceTree = "<group>"; };
-		1AC54649163E6F5300EFE021 /* TextureCacheTest.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = TextureCacheTest.js; sourceTree = "<group>"; };
-		1AC5464B163E6F5300EFE021 /* TileMapTest.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = TileMapTest.js; sourceTree = "<group>"; };
-		1AC5464D163E6F5300EFE021 /* Ball.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = Ball.js; sourceTree = "<group>"; };
-		1AC5464E163E6F5300EFE021 /* Paddle.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = Paddle.js; sourceTree = "<group>"; };
-		1AC5464F163E6F5300EFE021 /* TouchesTest.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = TouchesTest.js; sourceTree = "<group>"; };
-		1AC54651163E6F5300EFE021 /* TransitionsTest.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = TransitionsTest.js; sourceTree = "<group>"; };
-		2628297D15EC7196002C4240 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
-		2628297E15EC7196002C4240 /* Android.mk */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Android.mk; sourceTree = "<group>"; };
-		2628297F15EC7196002C4240 /* chipmunk-docs.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "chipmunk-docs.html"; sourceTree = "<group>"; };
+		15E2AE9A165DC52C00F7743F /* CCPhysicsDebugNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPhysicsDebugNode.cpp; sourceTree = "<group>"; };
+		15E2AE9B165DC52C00F7743F /* CCPhysicsDebugNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsDebugNode.h; sourceTree = "<group>"; };
+		15E2AE9C165DC52C00F7743F /* CCPhysicsSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPhysicsSprite.cpp; sourceTree = "<group>"; };
+		15E2AE9D165DC52C00F7743F /* CCPhysicsSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsSprite.h; sourceTree = "<group>"; };
+		15E2AEA2165DC6DD00F7743F /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; name = res; path = "../cocos2d-js-tests/res"; sourceTree = "<group>"; };
+		15E2AEA4165DC73200F7743F /* src */ = {isa = PBXFileReference; lastKnownFileType = folder; name = src; path = "../cocos2d-js-tests/src"; sourceTree = "<group>"; };
 		2628298215EC7196002C4240 /* chipmunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk.h; sourceTree = "<group>"; };
 		2628298315EC7196002C4240 /* chipmunk_ffi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk_ffi.h; sourceTree = "<group>"; };
 		2628298415EC7196002C4240 /* chipmunk_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk_private.h; sourceTree = "<group>"; };
@@ -454,18 +302,6 @@
 		2628299915EC7196002C4240 /* cpSpace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cpSpace.h; sourceTree = "<group>"; };
 		2628299A15EC7196002C4240 /* cpSpatialIndex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cpSpatialIndex.h; sourceTree = "<group>"; };
 		2628299B15EC7196002C4240 /* cpVect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cpVect.h; sourceTree = "<group>"; };
-		2628299C15EC7196002C4240 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
-		2628299E15EC7196002C4240 /* .cproject */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = .cproject; sourceTree = "<group>"; };
-		2628299F15EC7196002C4240 /* .project */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = .project; sourceTree = "<group>"; };
-		262829A115EC7196002C4240 /* .cproject */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = .cproject; sourceTree = "<group>"; };
-		262829A215EC7196002C4240 /* .project */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = .project; sourceTree = "<group>"; };
-		262829A315EC7196002C4240 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
-		262829A515EC7196002C4240 /* chipmunk.vcproj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = chipmunk.vcproj; sourceTree = "<group>"; };
-		262829A615EC7196002C4240 /* chipmunk.vcproj.user */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = chipmunk.vcproj.user; sourceTree = "<group>"; };
-		262829A715EC7196002C4240 /* chipmunk.vcxproj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = chipmunk.vcxproj; sourceTree = "<group>"; };
-		262829A815EC7196002C4240 /* chipmunk.vcxproj.filters */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = chipmunk.vcxproj.filters; sourceTree = "<group>"; };
-		262829A915EC7196002C4240 /* chipmunk.vcxproj.user */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = chipmunk.vcxproj.user; sourceTree = "<group>"; };
-		262829AA15EC7196002C4240 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
 		262829AC15EC7196002C4240 /* chipmunk.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = chipmunk.c; sourceTree = "<group>"; };
 		262829AD15EC7196002C4240 /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		262829AF15EC7196002C4240 /* cpConstraint.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpConstraint.c; sourceTree = "<group>"; };
@@ -497,6 +333,17 @@
 		262829C915EC7196002C4240 /* cpSweep1D.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpSweep1D.c; sourceTree = "<group>"; };
 		262829CA15EC7196002C4240 /* cpVect.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpVect.c; sourceTree = "<group>"; };
 		262829CB15EC7196002C4240 /* prime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = prime.h; sourceTree = "<group>"; };
+		263B98C616548E4D00228D8A /* js_bindings_chipmunk_auto_classes_registration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_chipmunk_auto_classes_registration.h; sourceTree = "<group>"; };
+		263B98C716548E4D00228D8A /* js_bindings_chipmunk_auto_classes.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = js_bindings_chipmunk_auto_classes.cpp; sourceTree = "<group>"; };
+		263B98C816548E4D00228D8A /* js_bindings_chipmunk_auto_classes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_chipmunk_auto_classes.h; sourceTree = "<group>"; };
+		263B98CA16548E4D00228D8A /* js_bindings_chipmunk_functions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_chipmunk_functions.h; sourceTree = "<group>"; };
+		263B98CB16548E4D00228D8A /* js_bindings_chipmunk_manual.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_chipmunk_manual.h; sourceTree = "<group>"; };
+		263B98CC16548E4D00228D8A /* js_bindings_chipmunk_registration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = js_bindings_chipmunk_registration.cpp; sourceTree = "<group>"; };
+		263B98CD16548E4D00228D8A /* js_bindings_chipmunk_registration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_chipmunk_registration.h; sourceTree = "<group>"; };
+		263B98CE16548E4D00228D8A /* js_bindings_core.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = js_bindings_core.cpp; sourceTree = "<group>"; };
+		263B98CF16548E4D00228D8A /* js_bindings_core.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_core.h; sourceTree = "<group>"; };
+		263B98D316548EB700228D8A /* js_bindings_chipmunk_functions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = js_bindings_chipmunk_functions.cpp; sourceTree = "<group>"; };
+		263B98D516548EB700228D8A /* js_bindings_chipmunk_manual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = js_bindings_chipmunk_manual.cpp; sourceTree = "<group>"; };
 		A922753D1517C094001B78AA /* TestJavascript.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestJavascript.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A92275411517C094001B78AA /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		A92275431517C094001B78AA /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -547,8 +394,17 @@
 		15384E3C16119CC30021DC07 /* bindings */ = {
 			isa = PBXGroup;
 			children = (
-				15384E3E16119CC30021DC07 /* CCPhysicsSprite.cpp */,
-				15384E3F16119CC30021DC07 /* CCPhysicsSprite.h */,
+				263B98D316548EB700228D8A /* js_bindings_chipmunk_functions.cpp */,
+				263B98D516548EB700228D8A /* js_bindings_chipmunk_manual.cpp */,
+				263B98C616548E4D00228D8A /* js_bindings_chipmunk_auto_classes_registration.h */,
+				263B98C716548E4D00228D8A /* js_bindings_chipmunk_auto_classes.cpp */,
+				263B98C816548E4D00228D8A /* js_bindings_chipmunk_auto_classes.h */,
+				263B98CA16548E4D00228D8A /* js_bindings_chipmunk_functions.h */,
+				263B98CB16548E4D00228D8A /* js_bindings_chipmunk_manual.h */,
+				263B98CC16548E4D00228D8A /* js_bindings_chipmunk_registration.cpp */,
+				263B98CD16548E4D00228D8A /* js_bindings_chipmunk_registration.h */,
+				263B98CE16548E4D00228D8A /* js_bindings_core.cpp */,
+				263B98CF16548E4D00228D8A /* js_bindings_core.h */,
 				15384E4016119CC30021DC07 /* cocos2d_specifics.cpp */,
 				15384E4116119CC30021DC07 /* cocos2d_specifics.hpp */,
 				15384E4216119CC30021DC07 /* cocosjs_manual_conversions.cpp */,
@@ -556,10 +412,6 @@
 				15384E4416119CC30021DC07 /* generated */,
 				15384E4916119CC30021DC07 /* js_bindings_ccbreader.cpp */,
 				15384E4A16119CC30021DC07 /* js_bindings_ccbreader.h */,
-				15384E4B16119CC30021DC07 /* js_bindings_chipmunk_functions.cpp */,
-				15384E4C16119CC30021DC07 /* js_bindings_chipmunk_functions.hpp */,
-				15384E4D16119CC30021DC07 /* js_bindings_chipmunk_manual.cpp */,
-				15384E4E16119CC30021DC07 /* js_bindings_chipmunk_manual.hpp */,
 				15384E4F16119CC30021DC07 /* js_bindings_config.h */,
 				15384E5016119CC30021DC07 /* js_manual_conversions.cpp */,
 				15384E5116119CC30021DC07 /* js_manual_conversions.h */,
@@ -584,6 +436,7 @@
 		15384E6216119D5E0021DC07 /* extensions */ = {
 			isa = PBXGroup;
 			children = (
+				15E2AE99165DC52C00F7743F /* physics_nodes */,
 				15384E6416119D5E0021DC07 /* CCBReader */,
 				15384E9916119D5E0021DC07 /* cocos-ext.h */,
 				15384E9A16119D5E0021DC07 /* ExtensionMacros.h */,
@@ -738,9 +591,9 @@
 		15628F5B15F0F5C2000CF24B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				15E2AEA4165DC73200F7743F /* src */,
+				15E2AEA2165DC6DD00F7743F /* res */,
 				15DA88B61627C62000155276 /* cocos2dxapi.js */,
-				15DA88B41627C50B00155276 /* res */,
-				15DA882F1627C45F00155276 /* src */,
 				15DA88241627C44800155276 /* bindings */,
 				D446FDA616102D86000ADA7B /* Default-568h@2x.png */,
 				D446FDA416102D82000ADA7B /* Default@2x.png */,
@@ -794,406 +647,21 @@
 			path = ../bindings;
 			sourceTree = "<group>";
 		};
-		15DA882F1627C45F00155276 /* src */ = {
+		15E2AE99165DC52C00F7743F /* physics_nodes */ = {
 			isa = PBXGroup;
 			children = (
-				1AC545F9163E6F5300EFE021 /* tests */,
-				15DA887F1627C45F00155276 /* tests-boot-jsb.js */,
-				15DA88801627C45F00155276 /* tests-main.js */,
-				15DA88811627C45F00155276 /* tests_resources-html5.js */,
-				15DA88821627C45F00155276 /* tests_resources-jsb.js */,
+				15E2AE9A165DC52C00F7743F /* CCPhysicsDebugNode.cpp */,
+				15E2AE9B165DC52C00F7743F /* CCPhysicsDebugNode.h */,
+				15E2AE9C165DC52C00F7743F /* CCPhysicsSprite.cpp */,
+				15E2AE9D165DC52C00F7743F /* CCPhysicsSprite.h */,
 			);
-			name = src;
-			path = "../cocos2d-html5-tests/src";
-			sourceTree = "<group>";
-		};
-		1AC545F9163E6F5300EFE021 /* tests */ = {
-			isa = PBXGroup;
-			children = (
-				1AC545FA163E6F5300EFE021 /* ActionManagerTest */,
-				1AC545FC163E6F5300EFE021 /* ActionsTest */,
-				1AC545FE163E6F5300EFE021 /* Box2dTest */,
-				1AC54600163E6F5300EFE021 /* ChipmunkTest */,
-				1AC54602163E6F5300EFE021 /* ClickAndMoveTest */,
-				1AC54604163E6F5300EFE021 /* CocosDenshionTest */,
-				1AC54606163E6F5300EFE021 /* CocosNodeTest */,
-				1AC54608163E6F5300EFE021 /* CurrentLanguageTest */,
-				1AC5460A163E6F5300EFE021 /* DrawPrimitivesTest */,
-				1AC5460C163E6F5300EFE021 /* EaseActionsTest */,
-				1AC5460E163E6F5300EFE021 /* EffectsTest */,
-				1AC54610163E6F5300EFE021 /* EventTest */,
-				1AC54612163E6F5300EFE021 /* ExtensionsTest */,
-				1AC54621163E6F5300EFE021 /* FontTest */,
-				1AC54623163E6F5300EFE021 /* IntervelTest */,
-				1AC54625163E6F5300EFE021 /* LabelTest */,
-				1AC54627163E6F5300EFE021 /* LayerTest */,
-				1AC54629163E6F5300EFE021 /* MenuTest */,
-				1AC5462B163E6F5300EFE021 /* MultiTouchTest */,
-				1AC5462D163E6F5300EFE021 /* ParallaxTest */,
-				1AC5462F163E6F5300EFE021 /* ParticleTest */,
-				1AC54631163E6F5300EFE021 /* PerformanceTest */,
-				1AC54638163E6F5300EFE021 /* Presentation */,
-				1AC5463A163E6F5300EFE021 /* ProgressActionsTest */,
-				1AC5463C163E6F5300EFE021 /* RenderTextureTest */,
-				1AC5463E163E6F5300EFE021 /* RotateWorldTest */,
-				1AC54640163E6F5300EFE021 /* SceneTest */,
-				1AC54642163E6F5300EFE021 /* SchedulerTest */,
-				1AC54644163E6F5300EFE021 /* SpriteTest */,
-				1AC54646163E6F5300EFE021 /* TextInputTest */,
-				1AC54648163E6F5300EFE021 /* TextureCacheTest */,
-				1AC5464A163E6F5300EFE021 /* TileMapTest */,
-				1AC5464C163E6F5300EFE021 /* TouchesTest */,
-				1AC54650163E6F5300EFE021 /* TransitionsTest */,
-			);
-			path = tests;
-			sourceTree = "<group>";
-		};
-		1AC545FA163E6F5300EFE021 /* ActionManagerTest */ = {
-			isa = PBXGroup;
-			children = (
-				1AC545FB163E6F5300EFE021 /* ActionManagerTest.js */,
-			);
-			path = ActionManagerTest;
-			sourceTree = "<group>";
-		};
-		1AC545FC163E6F5300EFE021 /* ActionsTest */ = {
-			isa = PBXGroup;
-			children = (
-				1AC545FD163E6F5300EFE021 /* ActionsTest.js */,
-			);
-			path = ActionsTest;
-			sourceTree = "<group>";
-		};
-		1AC545FE163E6F5300EFE021 /* Box2dTest */ = {
-			isa = PBXGroup;
-			children = (
-				1AC545FF163E6F5300EFE021 /* Box2dTest.js */,
-			);
-			path = Box2dTest;
-			sourceTree = "<group>";
-		};
-		1AC54600163E6F5300EFE021 /* ChipmunkTest */ = {
-			isa = PBXGroup;
-			children = (
-				1AC54601163E6F5300EFE021 /* ChipmunkTest.js */,
-			);
-			path = ChipmunkTest;
-			sourceTree = "<group>";
-		};
-		1AC54602163E6F5300EFE021 /* ClickAndMoveTest */ = {
-			isa = PBXGroup;
-			children = (
-				1AC54603163E6F5300EFE021 /* ClickAndMoveTest.js */,
-			);
-			path = ClickAndMoveTest;
-			sourceTree = "<group>";
-		};
-		1AC54604163E6F5300EFE021 /* CocosDenshionTest */ = {
-			isa = PBXGroup;
-			children = (
-				1AC54605163E6F5300EFE021 /* CocosDenshionTest.js */,
-			);
-			path = CocosDenshionTest;
-			sourceTree = "<group>";
-		};
-		1AC54606163E6F5300EFE021 /* CocosNodeTest */ = {
-			isa = PBXGroup;
-			children = (
-				1AC54607163E6F5300EFE021 /* CocosNodeTest.js */,
-			);
-			path = CocosNodeTest;
-			sourceTree = "<group>";
-		};
-		1AC54608163E6F5300EFE021 /* CurrentLanguageTest */ = {
-			isa = PBXGroup;
-			children = (
-				1AC54609163E6F5300EFE021 /* CurrentLanguageTest.js */,
-			);
-			path = CurrentLanguageTest;
-			sourceTree = "<group>";
-		};
-		1AC5460A163E6F5300EFE021 /* DrawPrimitivesTest */ = {
-			isa = PBXGroup;
-			children = (
-				1AC5460B163E6F5300EFE021 /* DrawPrimitivesTest.js */,
-			);
-			path = DrawPrimitivesTest;
-			sourceTree = "<group>";
-		};
-		1AC5460C163E6F5300EFE021 /* EaseActionsTest */ = {
-			isa = PBXGroup;
-			children = (
-				1AC5460D163E6F5300EFE021 /* EaseActionsTest.js */,
-			);
-			path = EaseActionsTest;
-			sourceTree = "<group>";
-		};
-		1AC5460E163E6F5300EFE021 /* EffectsTest */ = {
-			isa = PBXGroup;
-			children = (
-				1AC5460F163E6F5300EFE021 /* EffectsTest.js */,
-			);
-			path = EffectsTest;
-			sourceTree = "<group>";
-		};
-		1AC54610163E6F5300EFE021 /* EventTest */ = {
-			isa = PBXGroup;
-			children = (
-				1AC54611163E6F5300EFE021 /* EventTest.js */,
-			);
-			path = EventTest;
-			sourceTree = "<group>";
-		};
-		1AC54612163E6F5300EFE021 /* ExtensionsTest */ = {
-			isa = PBXGroup;
-			children = (
-				1AC54613163E6F5300EFE021 /* CocosBuilderTest */,
-				1AC54619163E6F5300EFE021 /* ControlExtensionTest */,
-				1AC5461E163E6F5300EFE021 /* ExtensionsTest.js */,
-				1AC5461F163E6F5300EFE021 /* TableViewTest */,
-			);
-			path = ExtensionsTest;
-			sourceTree = "<group>";
-		};
-		1AC54613163E6F5300EFE021 /* CocosBuilderTest */ = {
-			isa = PBXGroup;
-			children = (
-				1AC54614163E6F5300EFE021 /* CocosBuilderTest.js */,
-				1AC54615163E6F5300EFE021 /* HelloCocosBuilder */,
-				1AC54617163E6F5300EFE021 /* TestHeader */,
-			);
-			path = CocosBuilderTest;
-			sourceTree = "<group>";
-		};
-		1AC54615163E6F5300EFE021 /* HelloCocosBuilder */ = {
-			isa = PBXGroup;
-			children = (
-				1AC54616163E6F5300EFE021 /* HelloCocosBuilderLayer.js */,
-			);
-			path = HelloCocosBuilder;
-			sourceTree = "<group>";
-		};
-		1AC54617163E6F5300EFE021 /* TestHeader */ = {
-			isa = PBXGroup;
-			children = (
-				1AC54618163E6F5300EFE021 /* TestHeaderLayer.js */,
-			);
-			path = TestHeader;
-			sourceTree = "<group>";
-		};
-		1AC54619163E6F5300EFE021 /* ControlExtensionTest */ = {
-			isa = PBXGroup;
-			children = (
-				1AC5461A163E6F5300EFE021 /* CCControlButtonTest */,
-				1AC5461C163E6F5300EFE021 /* CCControlScene.js */,
-				1AC5461D163E6F5300EFE021 /* CCControlSceneManager.js */,
-			);
-			path = ControlExtensionTest;
-			sourceTree = "<group>";
-		};
-		1AC5461A163E6F5300EFE021 /* CCControlButtonTest */ = {
-			isa = PBXGroup;
-			children = (
-				1AC5461B163E6F5300EFE021 /* CCControlButtonTest.js */,
-			);
-			path = CCControlButtonTest;
-			sourceTree = "<group>";
-		};
-		1AC5461F163E6F5300EFE021 /* TableViewTest */ = {
-			isa = PBXGroup;
-			children = (
-				1AC54620163E6F5300EFE021 /* TableViewTestScene.js */,
-			);
-			path = TableViewTest;
-			sourceTree = "<group>";
-		};
-		1AC54621163E6F5300EFE021 /* FontTest */ = {
-			isa = PBXGroup;
-			children = (
-				1AC54622163E6F5300EFE021 /* FontTest.js */,
-			);
-			path = FontTest;
-			sourceTree = "<group>";
-		};
-		1AC54623163E6F5300EFE021 /* IntervelTest */ = {
-			isa = PBXGroup;
-			children = (
-				1AC54624163E6F5300EFE021 /* IntervelTest.js */,
-			);
-			path = IntervelTest;
-			sourceTree = "<group>";
-		};
-		1AC54625163E6F5300EFE021 /* LabelTest */ = {
-			isa = PBXGroup;
-			children = (
-				1AC54626163E6F5300EFE021 /* LabelTest.js */,
-			);
-			path = LabelTest;
-			sourceTree = "<group>";
-		};
-		1AC54627163E6F5300EFE021 /* LayerTest */ = {
-			isa = PBXGroup;
-			children = (
-				1AC54628163E6F5300EFE021 /* LayerTest.js */,
-			);
-			path = LayerTest;
-			sourceTree = "<group>";
-		};
-		1AC54629163E6F5300EFE021 /* MenuTest */ = {
-			isa = PBXGroup;
-			children = (
-				1AC5462A163E6F5300EFE021 /* MenuTest.js */,
-			);
-			path = MenuTest;
-			sourceTree = "<group>";
-		};
-		1AC5462B163E6F5300EFE021 /* MultiTouchTest */ = {
-			isa = PBXGroup;
-			children = (
-				1AC5462C163E6F5300EFE021 /* MultiTouchTest.js */,
-			);
-			path = MultiTouchTest;
-			sourceTree = "<group>";
-		};
-		1AC5462D163E6F5300EFE021 /* ParallaxTest */ = {
-			isa = PBXGroup;
-			children = (
-				1AC5462E163E6F5300EFE021 /* ParallaxTest.js */,
-			);
-			path = ParallaxTest;
-			sourceTree = "<group>";
-		};
-		1AC5462F163E6F5300EFE021 /* ParticleTest */ = {
-			isa = PBXGroup;
-			children = (
-				1AC54630163E6F5300EFE021 /* ParticleTest.js */,
-			);
-			path = ParticleTest;
-			sourceTree = "<group>";
-		};
-		1AC54631163E6F5300EFE021 /* PerformanceTest */ = {
-			isa = PBXGroup;
-			children = (
-				1AC54632163E6F5300EFE021 /* PerformanceNodeChildrenTest.js */,
-				1AC54633163E6F5300EFE021 /* PerformanceParticleTest.js */,
-				1AC54634163E6F5300EFE021 /* PerformanceSpriteTest.js */,
-				1AC54635163E6F5300EFE021 /* PerformanceTest.js */,
-				1AC54636163E6F5300EFE021 /* PerformanceTextureTest.js */,
-				1AC54637163E6F5300EFE021 /* PerformanceTouchesTest.js */,
-			);
-			path = PerformanceTest;
-			sourceTree = "<group>";
-		};
-		1AC54638163E6F5300EFE021 /* Presentation */ = {
-			isa = PBXGroup;
-			children = (
-				1AC54639163E6F5300EFE021 /* Presentation.js */,
-			);
-			path = Presentation;
-			sourceTree = "<group>";
-		};
-		1AC5463A163E6F5300EFE021 /* ProgressActionsTest */ = {
-			isa = PBXGroup;
-			children = (
-				1AC5463B163E6F5300EFE021 /* ProgressActionsTest.js */,
-			);
-			path = ProgressActionsTest;
-			sourceTree = "<group>";
-		};
-		1AC5463C163E6F5300EFE021 /* RenderTextureTest */ = {
-			isa = PBXGroup;
-			children = (
-				1AC5463D163E6F5300EFE021 /* RenderTextureTest.js */,
-			);
-			path = RenderTextureTest;
-			sourceTree = "<group>";
-		};
-		1AC5463E163E6F5300EFE021 /* RotateWorldTest */ = {
-			isa = PBXGroup;
-			children = (
-				1AC5463F163E6F5300EFE021 /* RotateWorldTest.js */,
-			);
-			path = RotateWorldTest;
-			sourceTree = "<group>";
-		};
-		1AC54640163E6F5300EFE021 /* SceneTest */ = {
-			isa = PBXGroup;
-			children = (
-				1AC54641163E6F5300EFE021 /* SceneTest.js */,
-			);
-			path = SceneTest;
-			sourceTree = "<group>";
-		};
-		1AC54642163E6F5300EFE021 /* SchedulerTest */ = {
-			isa = PBXGroup;
-			children = (
-				1AC54643163E6F5300EFE021 /* SchedulerTest.js */,
-			);
-			path = SchedulerTest;
-			sourceTree = "<group>";
-		};
-		1AC54644163E6F5300EFE021 /* SpriteTest */ = {
-			isa = PBXGroup;
-			children = (
-				1AC54645163E6F5300EFE021 /* SpriteTest.js */,
-			);
-			path = SpriteTest;
-			sourceTree = "<group>";
-		};
-		1AC54646163E6F5300EFE021 /* TextInputTest */ = {
-			isa = PBXGroup;
-			children = (
-				1AC54647163E6F5300EFE021 /* TextInputTest.js */,
-			);
-			path = TextInputTest;
-			sourceTree = "<group>";
-		};
-		1AC54648163E6F5300EFE021 /* TextureCacheTest */ = {
-			isa = PBXGroup;
-			children = (
-				1AC54649163E6F5300EFE021 /* TextureCacheTest.js */,
-			);
-			path = TextureCacheTest;
-			sourceTree = "<group>";
-		};
-		1AC5464A163E6F5300EFE021 /* TileMapTest */ = {
-			isa = PBXGroup;
-			children = (
-				1AC5464B163E6F5300EFE021 /* TileMapTest.js */,
-			);
-			path = TileMapTest;
-			sourceTree = "<group>";
-		};
-		1AC5464C163E6F5300EFE021 /* TouchesTest */ = {
-			isa = PBXGroup;
-			children = (
-				1AC5464D163E6F5300EFE021 /* Ball.js */,
-				1AC5464E163E6F5300EFE021 /* Paddle.js */,
-				1AC5464F163E6F5300EFE021 /* TouchesTest.js */,
-			);
-			path = TouchesTest;
-			sourceTree = "<group>";
-		};
-		1AC54650163E6F5300EFE021 /* TransitionsTest */ = {
-			isa = PBXGroup;
-			children = (
-				1AC54651163E6F5300EFE021 /* TransitionsTest.js */,
-			);
-			path = TransitionsTest;
+			path = physics_nodes;
 			sourceTree = "<group>";
 		};
 		2628297C15EC7196002C4240 /* chipmunk */ = {
 			isa = PBXGroup;
 			children = (
-				2628297D15EC7196002C4240 /* .gitignore */,
-				2628297E15EC7196002C4240 /* Android.mk */,
-				2628297F15EC7196002C4240 /* chipmunk-docs.html */,
 				2628298015EC7196002C4240 /* include */,
-				2628299C15EC7196002C4240 /* LICENSE.txt */,
-				2628299D15EC7196002C4240 /* proj.blackberry */,
-				262829A015EC7196002C4240 /* proj.linux */,
-				262829A415EC7196002C4240 /* proj.win32 */,
-				262829AA15EC7196002C4240 /* README.txt */,
 				262829AB15EC7196002C4240 /* src */,
 			);
 			name = chipmunk;
@@ -1248,37 +716,6 @@
 			path = constraints;
 			sourceTree = "<group>";
 		};
-		2628299D15EC7196002C4240 /* proj.blackberry */ = {
-			isa = PBXGroup;
-			children = (
-				2628299E15EC7196002C4240 /* .cproject */,
-				2628299F15EC7196002C4240 /* .project */,
-			);
-			path = proj.blackberry;
-			sourceTree = "<group>";
-		};
-		262829A015EC7196002C4240 /* proj.linux */ = {
-			isa = PBXGroup;
-			children = (
-				262829A115EC7196002C4240 /* .cproject */,
-				262829A215EC7196002C4240 /* .project */,
-				262829A315EC7196002C4240 /* Makefile */,
-			);
-			path = proj.linux;
-			sourceTree = "<group>";
-		};
-		262829A415EC7196002C4240 /* proj.win32 */ = {
-			isa = PBXGroup;
-			children = (
-				262829A515EC7196002C4240 /* chipmunk.vcproj */,
-				262829A615EC7196002C4240 /* chipmunk.vcproj.user */,
-				262829A715EC7196002C4240 /* chipmunk.vcxproj */,
-				262829A815EC7196002C4240 /* chipmunk.vcxproj.filters */,
-				262829A915EC7196002C4240 /* chipmunk.vcxproj.user */,
-			);
-			path = proj.win32;
-			sourceTree = "<group>";
-		};
 		262829AB15EC7196002C4240 /* src */ = {
 			isa = PBXGroup;
 			children = (
@@ -1328,16 +765,16 @@
 		A92275321517C094001B78AA = {
 			isa = PBXGroup;
 			children = (
-				15384E6216119D5E0021DC07 /* extensions */,
-				15384E3C16119CC30021DC07 /* bindings */,
 				15426AE915B5733200712A7F /* cocos2dx.xcodeproj */,
-				15628F5B15F0F5C2000CF24B /* Resources */,
+				15384E3C16119CC30021DC07 /* bindings */,
 				2628297C15EC7196002C4240 /* chipmunk */,
 				D4545214156E28EF00887EB5 /* Classes */,
 				15426FC415B5743C00712A7F /* CocosDenshion */,
+				15384E6216119D5E0021DC07 /* extensions */,
 				A92275401517C094001B78AA /* Frameworks */,
 				D45446CC156DE73F00887EB5 /* ios */,
 				A922753E1517C094001B78AA /* Products */,
+				15628F5B15F0F5C2000CF24B /* Resources */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1457,68 +894,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1AC54682163E6FC500EFE021 /* ActionManagerTest.js in Resources */,
-				1AC54683163E6FC500EFE021 /* ActionsTest.js in Resources */,
-				1AC54684163E6FC500EFE021 /* Box2dTest.js in Resources */,
-				1AC54685163E6FC500EFE021 /* ChipmunkTest.js in Resources */,
-				1AC54686163E6FC500EFE021 /* ClickAndMoveTest.js in Resources */,
-				1AC54687163E6FC500EFE021 /* CocosDenshionTest.js in Resources */,
-				1AC54688163E6FC500EFE021 /* CocosNodeTest.js in Resources */,
-				1AC54689163E6FC500EFE021 /* CurrentLanguageTest.js in Resources */,
-				1AC5468A163E6FC500EFE021 /* DrawPrimitivesTest.js in Resources */,
-				1AC5468B163E6FC500EFE021 /* EaseActionsTest.js in Resources */,
-				1AC5468C163E6FC500EFE021 /* EffectsTest.js in Resources */,
-				1AC5468D163E6FC500EFE021 /* EventTest.js in Resources */,
-				1AC5468E163E6FC500EFE021 /* CocosBuilderTest.js in Resources */,
-				1AC5468F163E6FC500EFE021 /* HelloCocosBuilderLayer.js in Resources */,
-				1AC54690163E6FC500EFE021 /* TestHeaderLayer.js in Resources */,
-				1AC54691163E6FC500EFE021 /* CCControlButtonTest.js in Resources */,
-				1AC54692163E6FC500EFE021 /* CCControlScene.js in Resources */,
-				1AC54693163E6FC500EFE021 /* CCControlSceneManager.js in Resources */,
-				1AC54694163E6FC500EFE021 /* ExtensionsTest.js in Resources */,
-				1AC54695163E6FC500EFE021 /* TableViewTestScene.js in Resources */,
-				1AC54696163E6FC500EFE021 /* FontTest.js in Resources */,
-				1AC54697163E6FC500EFE021 /* IntervelTest.js in Resources */,
-				1AC54698163E6FC500EFE021 /* LabelTest.js in Resources */,
-				1AC54699163E6FC500EFE021 /* LayerTest.js in Resources */,
-				1AC5469A163E6FC500EFE021 /* MenuTest.js in Resources */,
-				1AC5469B163E6FC500EFE021 /* MultiTouchTest.js in Resources */,
-				1AC5469C163E6FC500EFE021 /* ParallaxTest.js in Resources */,
-				1AC5469D163E6FC500EFE021 /* ParticleTest.js in Resources */,
-				1AC5469E163E6FC500EFE021 /* PerformanceNodeChildrenTest.js in Resources */,
-				1AC5469F163E6FC500EFE021 /* PerformanceParticleTest.js in Resources */,
-				1AC546A0163E6FC500EFE021 /* PerformanceSpriteTest.js in Resources */,
-				1AC546A1163E6FC500EFE021 /* PerformanceTest.js in Resources */,
-				1AC546A2163E6FC500EFE021 /* PerformanceTextureTest.js in Resources */,
-				1AC546A3163E6FC500EFE021 /* PerformanceTouchesTest.js in Resources */,
-				1AC546A4163E6FC500EFE021 /* Presentation.js in Resources */,
-				1AC546A5163E6FC500EFE021 /* ProgressActionsTest.js in Resources */,
-				1AC546A6163E6FC500EFE021 /* RenderTextureTest.js in Resources */,
-				1AC546A7163E6FC500EFE021 /* RotateWorldTest.js in Resources */,
-				1AC546A8163E6FC500EFE021 /* SceneTest.js in Resources */,
-				1AC546A9163E6FC500EFE021 /* SchedulerTest.js in Resources */,
-				1AC546AA163E6FC500EFE021 /* SpriteTest.js in Resources */,
-				1AC546AB163E6FC500EFE021 /* TextInputTest.js in Resources */,
-				1AC546AC163E6FC500EFE021 /* TextureCacheTest.js in Resources */,
-				1AC546AD163E6FC500EFE021 /* TileMapTest.js in Resources */,
-				1AC546AE163E6FC500EFE021 /* Ball.js in Resources */,
-				1AC546AF163E6FC500EFE021 /* Paddle.js in Resources */,
-				1AC546B0163E6FC500EFE021 /* TouchesTest.js in Resources */,
-				1AC546B1163E6FC500EFE021 /* TransitionsTest.js in Resources */,
 				D446FDA316102D7D000ADA7B /* Default.png in Resources */,
 				15DA88B71627C62000155276 /* cocos2dxapi.js in Resources */,
 				15DA882A1627C44800155276 /* jsb_constants.js in Resources */,
 				15DA882B1627C44800155276 /* jsb_constants_chipmunk.js in Resources */,
 				15DA882C1627C44800155276 /* jsb_constants_cocos2d.js in Resources */,
-				15DA88AE1627C45F00155276 /* tests-boot-jsb.js in Resources */,
-				15DA88AF1627C45F00155276 /* tests-main.js in Resources */,
-				15DA88B01627C45F00155276 /* tests_resources-html5.js in Resources */,
-				15DA88B11627C45F00155276 /* tests_resources-jsb.js in Resources */,
 				15DA882D1627C44800155276 /* jsb_constants_cocosbuilder.js in Resources */,
 				15DA882E1627C44800155276 /* jsb_constants_gl.js in Resources */,
 				D446FDA516102D82000ADA7B /* Default@2x.png in Resources */,
 				D446FDA716102D86000ADA7B /* Default-568h@2x.png in Resources */,
-				15DA88B51627C50B00155276 /* res in Resources */,
+				15E2AEA3165DC6DD00F7743F /* res in Resources */,
+				15E2AEA5165DC73200F7743F /* src in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1538,7 +924,6 @@
 				15426FE815B5743C00712A7F /* CocosDenshion.m in Sources */,
 				15426FE915B5743C00712A7F /* SimpleAudioEngine.mm in Sources */,
 				15426FEA15B5743C00712A7F /* SimpleAudioEngine_objc.m in Sources */,
-				262829D415EC7196002C4240 /* Makefile in Sources */,
 				262829DB15EC7196002C4240 /* chipmunk.c in Sources */,
 				262829DD15EC7196002C4240 /* cpConstraint.c in Sources */,
 				262829DE15EC7196002C4240 /* cpDampedRotarySpring.c in Sources */,
@@ -1568,13 +953,10 @@
 				262829F615EC7196002C4240 /* cpSpatialIndex.c in Sources */,
 				262829F715EC7196002C4240 /* cpSweep1D.c in Sources */,
 				262829F815EC7196002C4240 /* cpVect.c in Sources */,
-				15384E5716119CC30021DC07 /* CCPhysicsSprite.cpp in Sources */,
 				15384E5816119CC30021DC07 /* cocos2d_specifics.cpp in Sources */,
 				15384E5916119CC30021DC07 /* cocosjs_manual_conversions.cpp in Sources */,
 				15384E5A16119CC30021DC07 /* cocos2dx.cpp in Sources */,
 				15384E5D16119CC30021DC07 /* js_bindings_ccbreader.cpp in Sources */,
-				15384E5E16119CC30021DC07 /* js_bindings_chipmunk_functions.cpp in Sources */,
-				15384E5F16119CC30021DC07 /* js_bindings_chipmunk_manual.cpp in Sources */,
 				15384E6016119CC30021DC07 /* js_manual_conversions.cpp in Sources */,
 				15384E6116119CC30021DC07 /* ScriptingCore.cpp in Sources */,
 				15384ED716119D5E0021DC07 /* CCBAnimationManager.cpp in Sources */,
@@ -1620,54 +1002,13 @@
 				15CFE1AF1612FD0E00BF2188 /* CCControlUtils.cpp in Sources */,
 				15CFE1B01612FD0E00BF2188 /* CCInvocation.cpp in Sources */,
 				15CFE1B11612FD0E00BF2188 /* CCScale9Sprite.cpp in Sources */,
-				1AC54652163E6F5300EFE021 /* ActionManagerTest.js in Sources */,
-				1AC54653163E6F5300EFE021 /* ActionsTest.js in Sources */,
-				1AC54654163E6F5300EFE021 /* Box2dTest.js in Sources */,
-				1AC54655163E6F5300EFE021 /* ChipmunkTest.js in Sources */,
-				1AC54656163E6F5300EFE021 /* ClickAndMoveTest.js in Sources */,
-				1AC54657163E6F5300EFE021 /* CocosDenshionTest.js in Sources */,
-				1AC54658163E6F5300EFE021 /* CocosNodeTest.js in Sources */,
-				1AC54659163E6F5300EFE021 /* CurrentLanguageTest.js in Sources */,
-				1AC5465A163E6F5300EFE021 /* DrawPrimitivesTest.js in Sources */,
-				1AC5465B163E6F5300EFE021 /* EaseActionsTest.js in Sources */,
-				1AC5465C163E6F5300EFE021 /* EffectsTest.js in Sources */,
-				1AC5465D163E6F5300EFE021 /* EventTest.js in Sources */,
-				1AC5465E163E6F5300EFE021 /* CocosBuilderTest.js in Sources */,
-				1AC5465F163E6F5300EFE021 /* HelloCocosBuilderLayer.js in Sources */,
-				1AC54660163E6F5300EFE021 /* TestHeaderLayer.js in Sources */,
-				1AC54661163E6F5300EFE021 /* CCControlButtonTest.js in Sources */,
-				1AC54662163E6F5300EFE021 /* CCControlScene.js in Sources */,
-				1AC54663163E6F5300EFE021 /* CCControlSceneManager.js in Sources */,
-				1AC54664163E6F5300EFE021 /* ExtensionsTest.js in Sources */,
-				1AC54665163E6F5300EFE021 /* TableViewTestScene.js in Sources */,
-				1AC54666163E6F5300EFE021 /* FontTest.js in Sources */,
-				1AC54667163E6F5300EFE021 /* IntervelTest.js in Sources */,
-				1AC54668163E6F5300EFE021 /* LabelTest.js in Sources */,
-				1AC54669163E6F5300EFE021 /* LayerTest.js in Sources */,
-				1AC5466A163E6F5300EFE021 /* MenuTest.js in Sources */,
-				1AC5466B163E6F5300EFE021 /* MultiTouchTest.js in Sources */,
-				1AC5466C163E6F5300EFE021 /* ParallaxTest.js in Sources */,
-				1AC5466D163E6F5300EFE021 /* ParticleTest.js in Sources */,
-				1AC5466E163E6F5300EFE021 /* PerformanceNodeChildrenTest.js in Sources */,
-				1AC5466F163E6F5300EFE021 /* PerformanceParticleTest.js in Sources */,
-				1AC54670163E6F5300EFE021 /* PerformanceSpriteTest.js in Sources */,
-				1AC54671163E6F5300EFE021 /* PerformanceTest.js in Sources */,
-				1AC54672163E6F5300EFE021 /* PerformanceTextureTest.js in Sources */,
-				1AC54673163E6F5300EFE021 /* PerformanceTouchesTest.js in Sources */,
-				1AC54674163E6F5300EFE021 /* Presentation.js in Sources */,
-				1AC54675163E6F5300EFE021 /* ProgressActionsTest.js in Sources */,
-				1AC54676163E6F5300EFE021 /* RenderTextureTest.js in Sources */,
-				1AC54677163E6F5300EFE021 /* RotateWorldTest.js in Sources */,
-				1AC54678163E6F5300EFE021 /* SceneTest.js in Sources */,
-				1AC54679163E6F5300EFE021 /* SchedulerTest.js in Sources */,
-				1AC5467A163E6F5300EFE021 /* SpriteTest.js in Sources */,
-				1AC5467B163E6F5300EFE021 /* TextInputTest.js in Sources */,
-				1AC5467C163E6F5300EFE021 /* TextureCacheTest.js in Sources */,
-				1AC5467D163E6F5300EFE021 /* TileMapTest.js in Sources */,
-				1AC5467E163E6F5300EFE021 /* Ball.js in Sources */,
-				1AC5467F163E6F5300EFE021 /* Paddle.js in Sources */,
-				1AC54680163E6F5300EFE021 /* TouchesTest.js in Sources */,
-				1AC54681163E6F5300EFE021 /* TransitionsTest.js in Sources */,
+				263B98D016548E4D00228D8A /* js_bindings_chipmunk_auto_classes.cpp in Sources */,
+				263B98D116548E4D00228D8A /* js_bindings_chipmunk_registration.cpp in Sources */,
+				263B98D216548E4D00228D8A /* js_bindings_core.cpp in Sources */,
+				263B98D616548EB700228D8A /* js_bindings_chipmunk_functions.cpp in Sources */,
+				263B98D716548EB700228D8A /* js_bindings_chipmunk_manual.cpp in Sources */,
+				15E2AE9E165DC52C00F7743F /* CCPhysicsDebugNode.cpp in Sources */,
+				15E2AE9F165DC52C00F7743F /* CCPhysicsSprite.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1748,8 +1089,10 @@
 					"COCOS2D_DEBUG=1",
 					USE_FILE32API,
 					TARGET_OS_IPHONE,
+					CC_ENABLE_CHIPMUNK_INTEGRATION,
 				);
-				"GCC_THUMB_SUPPORT[arch=armv6]" = "";
+				GCC_THUMB_SUPPORT = NO;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				HEADER_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../../cocos2dx\"",
 					"\"$(SRCROOT)/../../../cocos2dx/kazmath/include\"",
@@ -1787,8 +1130,9 @@
 					NDEBUG,
 					USE_FILE32API,
 					TARGET_OS_IPHONE,
+					CC_ENABLE_CHIPMUNK_INTEGRATION,
 				);
-				"GCC_THUMB_SUPPORT[arch=armv6]" = "";
+				GCC_THUMB_SUPPORT = NO;
 				HEADER_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../../cocos2dx\"",
 					"\"$(SRCROOT)/../../../cocos2dx/kazmath/include\"",

@@ -61,7 +61,7 @@ dynamicToStaticIter(void *obj, dynamicToStaticContext *context)
 void
 cpSpatialIndexCollideStatic(cpSpatialIndex *dynamicIndex, cpSpatialIndex *staticIndex, cpSpatialIndexQueryFunc func, void *data)
 {
-	if(cpSpatialIndexCount(staticIndex) > 0){
+	if(staticIndex && cpSpatialIndexCount(staticIndex) > 0){
 		dynamicToStaticContext context = {dynamicIndex->bbfunc, staticIndex, func, data};
 		cpSpatialIndexEach(dynamicIndex, (cpSpatialIndexIteratorFunc)dynamicToStaticIter, &context);
 	}

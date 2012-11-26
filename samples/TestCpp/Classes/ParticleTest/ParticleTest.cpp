@@ -1137,24 +1137,20 @@ std::string ParticleDemo::subtitle()
     return "No titile";
 }
 
-void ParticleDemo::registerWithTouchDispatcher()
+void ParticleDemo::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
 {
-    CCDirector* pDirector = CCDirector::sharedDirector();
-    pDirector->getTouchDispatcher()->addTargetedDelegate(this, 0, false);
+    ccTouchesEnded(pTouches, pEvent);
 }
 
-bool ParticleDemo::ccTouchBegan(CCTouch* touch, CCEvent* event)
+void ParticleDemo::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
 {
-    return true;
+    return ccTouchesEnded(pTouches, pEvent);
 }
 
-void ParticleDemo::ccTouchMoved(CCTouch* touch, CCEvent* event)
+void ParticleDemo::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
 {
-    return ccTouchEnded(touch, event);
-}
-
-void ParticleDemo::ccTouchEnded(CCTouch* touch, CCEvent* event)
-{
+    CCTouch *touch = (CCTouch*)pTouches->anyObject();
+    
     CCPoint location = touch->getLocation();
 
     CCPoint pos = CCPointZero;

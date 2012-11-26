@@ -284,7 +284,9 @@ ShapeQuery(cpShape *a, cpShape *b, struct ShapeQueryContext *context)
 		context->anyCollision = !(a->sensor || b->sensor);
 		
 		if(context->func){
-			cpContactPointSet set = {numContacts, {}};
+			cpContactPointSet set;
+			set.count = numContacts;
+			
 			for(int i=0; i<set.count; i++){
 				set.points[i].point = contacts[i].p;
 				set.points[i].normal = contacts[i].n;
