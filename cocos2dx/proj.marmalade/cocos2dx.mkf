@@ -116,6 +116,9 @@ files
 #	("../../extensions/CCTextureWatcher")
 #    "*.h"
 #    "*.cpp"
+	("../../extensions/physics_nodes")
+    "*.h"
+    "*.cpp"
     	
 	("../include")
 	[include]
