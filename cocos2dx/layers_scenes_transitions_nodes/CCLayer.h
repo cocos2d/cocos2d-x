@@ -224,8 +224,7 @@ protected:
 //
 // CCLayerGradient
 //
-/** CCLayerGradient is a subclass of CCLayerColor that draws gradients across
-the background.
+/** @brief CCLayerGradient is a subclass of CCLayerColor that draws gradients across the background.
 
 All features from CCLayerColor are valid, plus the following new features:
 - direction
