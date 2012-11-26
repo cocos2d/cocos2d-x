@@ -17,6 +17,7 @@ INCLUDES = -I.. \
 			-I../../extensions/CCBReader \
 			-I../../extensions/GUI/CCControlExtension \
 			-I../../extensions/GUI/CCControlExtension \
+                        -I../../external/chipmunk/include/chipmunk \
 			-I../../extensions/network \
 			-I../platform/linux/ \
 			-I../platform/third_party/linux/glew-1.7.0/glew-1.7.0/include/ \
@@ -79,6 +80,7 @@ OBJECTS = ../actions/CCAction.o \
 ../menu_nodes/CCMenuItem.o \
 ../misc_nodes/CCMotionStreak.o \
 ../misc_nodes/CCProgressTimer.o \
+../misc_nodes/CCClippingNode.o \
 ../misc_nodes/CCRenderTexture.o \
 ../particle_nodes/CCParticleExamples.o \
 ../particle_nodes/CCParticleSystem.o \
@@ -94,8 +96,6 @@ OBJECTS = ../actions/CCAction.o \
 ../platform/linux/CCApplication.o \
 ../platform/linux/CCEGLView.o \
 ../platform/linux/CCImage.o \
-../physics_nodes/CCPhysicsDebugNode.o \
-../physics_nodes/CCPhysicsSprite.o \
 ../script_support/CCScriptSupport.o \
 ../sprite_nodes/CCAnimation.o \
 ../sprite_nodes/CCAnimationCache.o \
@@ -135,47 +135,6 @@ OBJECTS = ../actions/CCAction.o \
 ../shaders/ccGLStateCache.o \
 ../shaders/CCShaderCache.o \
 ../shaders/ccShaders.o \
-../../extensions/CCBReader/CCBFileLoader.o \
-../../extensions/CCBReader/CCMenuItemImageLoader.o \
-../../extensions/CCBReader/CCBReader.o \
-../../extensions/CCBReader/CCMenuItemLoader.o \
-../../extensions/CCBReader/CCControlButtonLoader.o \
-../../extensions/CCBReader/CCNodeLoader.o \
-../../extensions/CCBReader/CCControlLoader.o \
-../../extensions/CCBReader/CCNodeLoaderLibrary.o \
-../../extensions/CCBReader/CCLabelBMFontLoader.o \
-../../extensions/CCBReader/CCParticleSystemQuadLoader.o \
-../../extensions/CCBReader/CCLabelTTFLoader.o \
-../../extensions/CCBReader/CCScale9SpriteLoader.o \
-../../extensions/CCBReader/CCLayerColorLoader.o \
-../../extensions/CCBReader/CCScrollViewLoader.o \
-../../extensions/CCBReader/CCLayerGradientLoader.o \
-../../extensions/CCBReader/CCSpriteLoader.o \
-../../extensions/CCBReader/CCLayerLoader.o \
-../../extensions/CCBReader/CCBAnimationManager.o \
-../../extensions/CCBReader/CCBKeyframe.o \
-../../extensions/CCBReader/CCBSequence.o \
-../../extensions/CCBReader/CCBSequenceProperty.o \
-../../extensions/CCBReader/CCBValue.o \
-../../extensions/CCBReader/CCData.o \
-../../extensions/CCBReader/CCNode+CCBRelativePositioning.o \
-../../extensions/GUI/CCScrollView/CCScrollView.o \
-../../extensions/GUI/CCScrollView/CCSorting.o \
-../../extensions/GUI/CCScrollView/CCTableView.o \
-../../extensions/GUI/CCScrollView/CCTableViewCell.o \
-../../extensions/GUI/CCControlExtension/CCControlButton.o \
-../../extensions/GUI/CCControlExtension/CCControlColourPicker.o \
-../../extensions/GUI/CCControlExtension/CCControl.o \
-../../extensions/GUI/CCControlExtension/CCControlHuePicker.o \
-../../extensions/GUI/CCControlExtension/CCControlSaturationBrightnessPicker.o \
-../../extensions/GUI/CCControlExtension/CCControlSlider.o \
-../../extensions/GUI/CCControlExtension/CCControlSwitch.o \
-../../extensions/GUI/CCControlExtension/CCControlUtils.o \
-../../extensions/GUI/CCControlExtension/CCInvocation.o \
-../../extensions/GUI/CCControlExtension/CCScale9Sprite.o \
-../../extensions/GUI/CCControlExtension/CCControlPotentiometer.o \
-../../extensions/GUI/CCControlExtension/CCControlStepper.o \
-../../extensions/network/HttpClient.o \
 ../kazmath/src/aabb.o \
 ../kazmath/src/plane.o \
 ../kazmath/src/vec2.o \
@@ -206,7 +165,7 @@ STATICLIBS = $(STATICLIBS_DIR)/libfreetype.a \
 				$(STATICLIBS_DIR)/libxml2.a \
 				$(STATICLIBS_DIR)/libpng.a \
 				$(STATICLIBS_DIR)/libjpeg.a \
-				$(STATICLIBS_DIR)/libtiff.a \
+				$(STATICLIBS_DIR)/libtiff.a 
 
 SHAREDLIBS = 
 SHAREDLIBS += -lglfw -lGL -lcurl -lfontconfig
@@ -215,12 +174,12 @@ SHAREDLIBS += -L../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/
 
 debug: CCFLAGS += -g3 -O0
 debug: CXXFLAGS += -g3 -O0
-debug: DEFINES += -DDEBUG
+debug: DEFINES += -DDEBUG -DCC_ENABLE_CHIPMUNK_INTEGRATION
 debug: $(TARGET)
 
 release: CCFLAGS += -O3
 release: CXXFLAGS += -O3
-release: DEFINES += -DNDEBUG
+release: DEFINES += -DNDEBUG -DCC_ENABLE_CHIPMUNK_INTEGRATION
 release: $(TARGET)
 
 ####### Build rules
