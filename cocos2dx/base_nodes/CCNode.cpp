@@ -489,6 +489,8 @@ void CCNode::setGLServerState(ccGLServerState glServerState)
 
 void CCNode::setUserObject(CCObject *pUserObject)
 {
+    CC_SAFE_RELEASE(m_pUserObject);
+    CC_SAFE_RETAIN(pUserObject);
     m_pUserObject = pUserObject;
 }
 
