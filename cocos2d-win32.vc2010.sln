@@ -40,6 +40,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WatermelonWithMe", "samples\WatermelonWithMe\proj.win32\WatermelonWithMe.vcxproj", "{BE092D9E-95AE-4F86-84CE-F4519E4F3F15}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CocosDragonJS", "samples\CocosDragonJS\proj.win32\CocosDragonJS.vcxproj", "{68ED0B4E-2BCA-45D2-9648-CEABEBD3B9D7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{21B2C324-891F-48EA-AD1A-5AE13DE12E28} = {21B2C324-891F-48EA-AD1A-5AE13DE12E28}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(DPCodeReviewSolutionGUID) = preSolution

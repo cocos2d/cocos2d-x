@@ -121,6 +121,8 @@ void HelloCocosBuilderLayer::onAnimationsTestClicked(CCObject * pSender, cocos2d
     // lblTestTitle is in the TestHeader.ccbi, which is referenced
     // from each of the test scenes.
     CCNode *animationsTest = ccbReader->readNodeGraphFromFile("ccb/ccb/TestAnimations.ccbi", this);
+    // Load node graph (TestAnimations is a sub class of CCLayer) and retrieve the ccb action manager
+    ((AnimationsTestLayer*)animationsTest)->setAnimationManager(ccbReader->getAnimationManager());
     
     this->mTestTitleLabelTTF->setString("TestAnimations.ccbi");
     
