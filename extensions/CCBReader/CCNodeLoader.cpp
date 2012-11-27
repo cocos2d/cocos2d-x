@@ -826,12 +826,14 @@ CCNode * CCNodeLoader::parsePropTypeCCBFile(CCNode * pNode, CCNode * pParent, CC
     ccbReader->getAnimationManager()->setRootContainerSize(pParent->getContentSize());
     
     CCData *data = new CCData(pBytes, size);
+    CC_SAFE_DELETE_ARRAY(pBytes);
+
     data->retain();
     ccbReader->mData = data;
     ccbReader->mBytes = data->getBytes();
     ccbReader->mCurrentByte = 0;
     ccbReader->mCurrentBit = 0;
-    pCCBReader->mOwner->retain();
+    CC_SAFE_RETAIN(pCCBReader->mOwner);
     ccbReader->mOwner = pCCBReader->mOwner;
 
     ccbReader->mOwnerOutletNames = pCCBReader->mOwnerOutletNames;
