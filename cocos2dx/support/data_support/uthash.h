@@ -895,6 +895,7 @@ do {                                                                            
   if (head) {                                                                    \
     uthash_free((head)->hh.tbl->buckets,                                         \
                 (head)->hh.tbl->num_buckets*sizeof(struct UT_hash_bucket));      \
+    HASH_BLOOM_FREE((head)->hh.tbl);                                             \
     uthash_free((head)->hh.tbl, sizeof(UT_hash_table));                          \
     (head)=NULL;                                                                 \
   }                                                                              \
