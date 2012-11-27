@@ -1242,7 +1242,7 @@
 					CC_ENABLE_CHIPMUNK_INTEGRATION,
 				);
 				GCC_THUMB_SUPPORT = NO;
-				GCC_VERSION = "";
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				HEADER_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../../cocos2dx\"",
 					"\"$(SRCROOT)/../../../cocos2dx/kazmath/include\"",
@@ -1283,6 +1283,7 @@
 					CC_ENABLE_CHIPMUNK_INTEGRATION,
 				);
 				GCC_THUMB_SUPPORT = NO;
+				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../../cocos2dx\"",
 					"\"$(SRCROOT)/../../../cocos2dx/kazmath/include\"",
