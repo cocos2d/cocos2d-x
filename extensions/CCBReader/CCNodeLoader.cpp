@@ -36,7 +36,7 @@ void CCNodeLoader::parseProperties(CCNode * pNode, CCNode * pParent, CCBReader *
             setProp = true;
         }
         // Cocos2d-x is using touch event callback for all platforms,
-        // It's different from cocos2d-iphone which uses mouse event for Mac port.
+        // it's different from cocos2d-iphone which uses mouse event for Mac port.
         // So we just need to touch event by using kCCBPlatformIOS.
 //#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
         if(platform == kCCBPlatformIOS)
