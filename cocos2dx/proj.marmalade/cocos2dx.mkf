@@ -50,7 +50,6 @@ includepaths
 	"../textures"
     "../tileMap_parallax_nodes"
 	"../touch_dispatcher"
-	"../../extensions"
 }
 
 files
@@ -88,39 +87,7 @@ files
 	"*.h"
 	"*.cpp"
 
-	[extensions]
-	("../../extensions")
-    "*.h"
-	("../../extensions/CCBReader")
-    CCBReader.h
-#    CCBCustomClass.h
-#    CCBCustomClass.cpp
-#    CCBReader_v1.cpp
-	("../../extensions/GUI/CCControlExtension")
-    "*.h"
-    "*.cpp"
-	("../../extensions/GUI/CCEditBox")
-#    "CCEditBox.h"
-#    "CCEditBox.cpp"
-	("../../extensions/GUI/CCScrollView")
-    "*.h"
-    "*.cpp"
-#	("../../extensions/CCListView")
-#    "*.h"
-#    "*.cpp"
-	("../support")
-    CCNotificationCenter.h
-    CCNotificationCenter.cpp
-#    "*.h"
-#    "*.cpp"
-#	("../../extensions/CCTextureWatcher")
-#    "*.h"
-#    "*.cpp"
-	("../../extensions/physics_nodes")
-    "*.h"
-    "*.cpp"
-    	
-	("../include")
+    ("../include")
 	[include]
 	"*.h"
 
