@@ -425,7 +425,7 @@ void CCBAnimationManager::setAnimatedProperty(const char *pPropName, CCNode *pNo
             }
             else if (strcmp(pPropName, "visible") == 0)
             {
-                bool x = (bool)pValue;
+                bool x = (NULL == pValue) ? false : true;
                 if(x) {
                     CCSequence::createWithTwoActions(CCDelayTime::create(fTweenDuration), CCShow::create());
                 } else {
@@ -559,7 +559,22 @@ void CCBAnimationManager::runAction(CCNode *pNode, CCBSequenceProperty *pSeqProp
     }
 }
 
-void CCBAnimationManager::runAnimations(int nSeqId, float fTweenDuration)
+void CCBAnimationManager::runAnimations(const char *pName, float fTweenDuration)
+{
+    runAnimationsForSequenceNamedTweenDuration(pName, fTweenDuration);
+}
+
+void CCBAnimationManager::runAnimations(const char *pName)
+{
+    runAnimationsForSequenceNamed(pName);
+}
+    
+void CCBAnimationManager::runAnimations(int nSeqId, float fTweenDuraiton)
+{
+    runAnimationsForSequenceIdTweenDuration(nSeqId, fTweenDuraiton);
+}
+
+void CCBAnimationManager::runAnimationsForSequenceIdTweenDuration(int nSeqId, float fTweenDuration)
 {
     CCAssert(nSeqId != -1, "Sequence id couldn't be found");
     
@@ -622,15 +637,15 @@ void CCBAnimationManager::runAnimations(int nSeqId, float fTweenDuration)
     mRunningSequence = getSequence(nSeqId);
 }
 
-void CCBAnimationManager::runAnimations(const char *pName, float fTweenDuration)
+void CCBAnimationManager::runAnimationsForSequenceNamedTweenDuration(const char *pName, float fTweenDuration)
 {
     int seqId = getSequenceId(pName);
-    runAnimations(seqId, fTweenDuration);
+    runAnimationsForSequenceIdTweenDuration(seqId, fTweenDuration);
 }
 
-void CCBAnimationManager::runAnimations(const char *pName)
+void CCBAnimationManager::runAnimationsForSequenceNamed(const char *pName)
 {
-    runAnimations(pName, 0);
+    runAnimationsForSequenceNamedTweenDuration(pName, 0);
 }
 
 void CCBAnimationManager::debug()
@@ -674,7 +689,7 @@ void CCBAnimationManager::sequenceCompleted()
     
     if (nextSeqId != -1)
     {
-        runAnimations(nextSeqId, 0);
+        runAnimationsForSequenceIdTweenDuration(nextSeqId, 0);
     }
 }
 
