@@ -70,13 +70,13 @@ public class Cocos2dxAccelerometer implements SensorEventListener {
 	// ===========================================================
 
 	public void enable() {
-		this.mSensorManager.registerListener(this, this.mAccelerometer, SensorManager.SENSOR_DELAY_GAME);
+		this.mSensorManager.registerListener(this, this.mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
 	}
 
         public void setInterval(float interval) {
 	        // Honeycomb version is 11
 	        if(android.os.Build.VERSION.SDK_INT < 11) {
-		    this.mSensorManager.registerListener(this, this.mAccelerometer, SensorManager.SENSOR_DELAY_GAME);
+		    this.mSensorManager.registerListener(this, this.mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
 		} else {
 		    //convert seconds to microseconds
 		    this.mSensorManager.registerListener(this, this.mAccelerometer, (int)(interval*100000));
@@ -116,9 +116,10 @@ public class Cocos2dxAccelerometer implements SensorEventListener {
 			final float tmp = x;
 			x = y;
 			y = -tmp;
-		}
-
-		Cocos2dxAccelerometer.onSensorChanged(x, y, z, pSensorEvent.timestamp);
+		}		
+		
+		Cocos2dxGLSurfaceView.queueAccelerometer(x,y,z,pSensorEvent.timestamp);
+		
 		/*
 		if(BuildConfig.DEBUG) {
 			Log.d(TAG, "x = " + pSensorEvent.values[0] + " y = " + pSensorEvent.values[1] + " z = " + pSensorEvent.values[2]);
@@ -132,9 +133,10 @@ public class Cocos2dxAccelerometer implements SensorEventListener {
 
 	// ===========================================================
 	// Methods
+        // Native method called from Cocos2dxGLSurfaceView (To be in the same thread)
 	// ===========================================================
-
-	private static native void onSensorChanged(final float pX, final float pY, final float pZ, final long pTimestamp);
+    
+	public static native void onSensorChanged(final float pX, final float pY, final float pZ, final long pTimestamp);
 
 	// ===========================================================
 	// Inner and Anonymous Classes
