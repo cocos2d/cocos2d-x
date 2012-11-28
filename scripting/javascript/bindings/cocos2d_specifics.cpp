@@ -578,10 +578,6 @@ JSBool js_cocos2dx_CCNode_copy(JSContext *cx, uint32_t argc, jsval *vp)
 		JS_GET_NATIVE_PROXY(proxy, obj);
 		cocos2d::CCObject *node = (cocos2d::CCObject *)(proxy ? proxy->ptr : NULL);
 		TEST_NATIVE_OBJECT(cx, node)
-		JSClass *jsclass = JS_GetClass(obj);
-		JSObject *proto = JS_GetPrototype(obj);
-		JSObject *parent = JS_GetParent(obj);
-		JSObject *jsret = JS_NewObject(cx, jsclass, proto, parent);
 		cocos2d::CCObject *ret = node->copy();
         proxy = js_get_or_create_proxy<cocos2d::CCObject>(cx, ret);
 		if (ret && proxy) {
