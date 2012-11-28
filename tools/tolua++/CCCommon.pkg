@@ -7,7 +7,9 @@ typedef enum LanguageType
     kLanguageItalian,
     kLanguageGerman,
     kLanguageSpanish,
-    kLanguageRussian
+    kLanguageRussian,
+    kLanguageKorean,
+    kLanguageJapanese
 } ccLanguageType;
 
 void CCLuaLog(const char * pszFormat);
