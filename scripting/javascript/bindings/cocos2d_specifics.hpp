@@ -6,15 +6,18 @@
 
 class JSScheduleWrapper;
 
+// JSScheduleWrapper* --> CCArray* since one js function may correspond to many targets.
+// To debug this, you could refer to JSScheduleWrapper::dump function.
+// It will prove that i'm right. :)
 typedef struct jsScheduleFunc_proxy {
-    void * ptr;
-    JSScheduleWrapper *obj;
+    JSObject* jsfuncObj;
+    CCArray*  targets; 
     UT_hash_handle hh;
 } schedFunc_proxy_t;
 
 typedef struct jsScheduleTarget_proxy {
-    void * ptr;
-    CCArray *obj;
+    CCNode*   nativeObj;
+    CCArray*  targets;
     UT_hash_handle hh;
 } schedTarget_proxy_t;
 
@@ -130,19 +133,25 @@ public:
 class JSScheduleWrapper: public JSCallbackWrapper {
     
 public:
-    JSScheduleWrapper() {}
+    JSScheduleWrapper() : m_pTarget(NULL) {}
     virtual ~JSScheduleWrapper() {
         return;
     }
 
     static void setTargetForSchedule(jsval sched, JSScheduleWrapper *target);
-    static JSScheduleWrapper * getTargetForSchedule(jsval sched);
+    static CCArray * getTargetForSchedule(jsval sched);
     static void setTargetForNativeNode(CCNode *pNode, JSScheduleWrapper *target);
     static CCArray * getTargetForNativeNode(CCNode *pNode);
+    static void removeAllTargetsForNatiaveNode(CCNode* pNode);
+    static void dump();
 
     void pause();
     
     void scheduleFunc(float dt) const;
+    CCObject* getTarget();
+    void setTarget(CCObject* pTarget);
+protected:
+    CCObject* m_pTarget;
 };
 
 
