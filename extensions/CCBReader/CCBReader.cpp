@@ -256,7 +256,7 @@ CCNode* CCBReader::readNodeGraphFromData(CCData *pData, CCObject *pOwner, const 
     if (pNodeGraph && mActionManager->getAutoPlaySequenceId() != -1)
     {
         // Auto play animations
-        mActionManager->runAnimations(mActionManager->getAutoPlaySequenceId(), 0);
+        mActionManager->runAnimationsForSequenceIdTweenDuration(mActionManager->getAutoPlaySequenceId(), 0);
     }
     // Assign actionManagers to userObject
     if(jsControlled) {
@@ -328,8 +328,7 @@ CCNode* CCBReader::readFileWithCleanUp(bool bCleanUp, CCDictionary* am)
         return NULL;
     }
     
-    mActionManagers = am;
-    mActionManagers->retain(); //cjh
+    setAnimationManagers(am);
 
     CCNode *pNode = readNodeGraph(NULL);
 
