@@ -229,6 +229,7 @@ JSBool JSB_CCPhysicsDebugNode_debugNodeForCPSpace__static(JSContext *cx, uint32_
             jsret = OBJECT_TO_JSVAL(obj);
             js_proxy_t *p;
             JS_NEW_PROXY(p, ret, obj);
+            JS_AddObjectRoot(cx, &p->obj);
         } else {
             jsret = JSVAL_NULL;
         }
@@ -352,6 +353,7 @@ JSBool JSPROXY_CCPhysicsSprite_spriteWithFile_rect__static(JSContext *cx, uint32
 				jsret = OBJECT_TO_JSVAL(obj);
                 js_proxy_t *p;
                 JS_NEW_PROXY(p, ret, obj);
+                JS_AddObjectRoot(cx, &p->obj);
 			} else {
 				jsret = JSVAL_NULL;
 			}
@@ -377,7 +379,7 @@ JSBool JSPROXY_CCPhysicsSprite_spriteWithFile_rect__static(JSContext *cx, uint32
 				jsret = OBJECT_TO_JSVAL(obj);
                 js_proxy_t *p;
                 JS_NEW_PROXY(p, ret, obj);
-
+                JS_AddObjectRoot(cx, &p->obj);
 			} else {
 				jsret = JSVAL_NULL;
 			}
@@ -417,6 +419,7 @@ JSBool JSPROXY_CCPhysicsSprite_spriteWithSpriteFrame__static(JSContext *cx, uint
             jsret = OBJECT_TO_JSVAL(obj);
             js_proxy_t *p;
             JS_NEW_PROXY(p, ret, obj);
+            JS_AddObjectRoot(cx, &p->obj);
 		} else {
 			jsret = JSVAL_NULL;
 		}
@@ -448,6 +451,7 @@ JSBool JSPROXY_CCPhysicsSprite_spriteWithSpriteFrameName__static(JSContext *cx, 
             jsret = OBJECT_TO_JSVAL(obj);
             js_proxy_t *p;
             JS_NEW_PROXY(p, ret, obj);
+            JS_AddObjectRoot(cx, &p->obj);
 		} else {
 			jsret = JSVAL_NULL;
 		}
