@@ -65,7 +65,6 @@ JSBool js_cocos2dx_CCNode_getChildren(JSContext *cx, uint32_t argc, jsval *vp)
 			cocos2d::CCArray *children = node->getChildren();
 
 			JSObject *jsarr = JS_NewArrayObject(cx, children->count(), NULL);
-            JS_AddNamedObjectRoot(cx, &jsarr, "CCNode_getChildren");
 
 			for (int i=0; i < children->count(); i++) {
 				cocos2d::CCNode *child = (cocos2d::CCNode*)children->objectAtIndex(i);
@@ -73,8 +72,6 @@ JSBool js_cocos2dx_CCNode_getChildren(JSContext *cx, uint32_t argc, jsval *vp)
 				jsval childVal = OBJECT_TO_JSVAL(childProxy->obj);
 				JS_SetElement(cx, jsarr, i, &childVal);
 			}
-
-            JS_RemoveObjectRoot(cx, &jsarr);
 
 			JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsarr));
 		}
