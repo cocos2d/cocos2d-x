@@ -34,6 +34,30 @@
     <ClCompile Include="..\..\..\scripting\javascript\bindings\generated\cocos2dx.cpp">
       <Filter>bindings\generated</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\scripting\javascript\bindings\cocosjs_manual_conversions.cpp">
+      <Filter>bindings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\scripting\javascript\bindings\js_bindings_ccbreader.cpp">
+      <Filter>bindings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\scripting\javascript\bindings\js_bindings_chipmunk_auto_classes.cpp">
+      <Filter>bindings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\scripting\javascript\bindings\js_bindings_chipmunk_functions.cpp">
+      <Filter>bindings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\scripting\javascript\bindings\js_bindings_chipmunk_manual.cpp">
+      <Filter>bindings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\scripting\javascript\bindings\js_bindings_chipmunk_registration.cpp">
+      <Filter>bindings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\scripting\javascript\bindings\js_bindings_core.cpp">
+      <Filter>bindings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\scripting\javascript\bindings\js_manual_conversions.cpp">
+      <Filter>bindings</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -56,6 +80,39 @@
     </ClInclude>
     <ClInclude Include="..\..\..\scripting\javascript\bindings\generated\cocos2dx.hpp">
       <Filter>bindings\generated</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\scripting\javascript\bindings\cocosjs_manual_conversions.h">
+      <Filter>bindings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\scripting\javascript\bindings\js_bindings_ccbreader.h">
+      <Filter>bindings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\scripting\javascript\bindings\js_bindings_chipmunk_auto_classes.h">
+      <Filter>bindings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\scripting\javascript\bindings\js_bindings_chipmunk_auto_classes_registration.h">
+      <Filter>bindings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\scripting\javascript\bindings\js_bindings_chipmunk_functions.h">
+      <Filter>bindings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\scripting\javascript\bindings\js_bindings_chipmunk_functions_registration.h">
+      <Filter>bindings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\scripting\javascript\bindings\js_bindings_chipmunk_manual.h">
+      <Filter>bindings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\scripting\javascript\bindings\js_bindings_chipmunk_registration.h">
+      <Filter>bindings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\scripting\javascript\bindings\js_bindings_config.h">
+      <Filter>bindings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\scripting\javascript\bindings\js_bindings_core.h">
+      <Filter>bindings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\scripting\javascript\bindings\js_manual_conversions.h">
+      <Filter>bindings</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
