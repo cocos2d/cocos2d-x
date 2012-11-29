@@ -425,12 +425,7 @@ void CCBAnimationManager::setAnimatedProperty(const char *pPropName, CCNode *pNo
             }
             else if (strcmp(pPropName, "visible") == 0)
             {
-                bool x = (NULL == pValue) ? false : true;
-                if(x) {
-                    CCSequence::createWithTwoActions(CCDelayTime::create(fTweenDuration), CCShow::create());
-                } else {
-                    CCSequence::createWithTwoActions(CCDelayTime::create(fTweenDuration), CCHide::create());
-                }
+                pNode->setVisible(NULL != pValue);
             }
             else
             {
