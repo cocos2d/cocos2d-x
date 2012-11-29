@@ -35,6 +35,7 @@ files
 	(../Classes)
 	AppDelegate.h
 	AppDelegate.cpp
+	AppMacros.h
 	HelloWorldScene.h
 	HelloWorldScene.cpp
 }
