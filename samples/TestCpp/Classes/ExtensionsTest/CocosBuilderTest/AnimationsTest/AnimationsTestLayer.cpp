@@ -40,17 +40,17 @@ void AnimationsTestLayer::setAnimationManager(cocos2d::extension::CCBAnimationMa
 }
 
 void AnimationsTestLayer::onCCControlButtonIdleClicked(CCObject *pSender, CCControlEvent pCCControlEvent) {
-    mAnimationManager->runAnimations("Idle", 0.3f);
+    mAnimationManager->runAnimationsForSequenceNamedTweenDuration("Idle", 0.3f);
 }
 
 void AnimationsTestLayer::onCCControlButtonWaveClicked(CCObject *pSender, CCControlEvent pCCControlEvent) {
-    mAnimationManager->runAnimations("Wave", 0.3f);
+    mAnimationManager->runAnimationsForSequenceNamedTweenDuration("Wave", 0.3f);
 }
 
 void AnimationsTestLayer::onCCControlButtonJumpClicked(CCObject *pSender, CCControlEvent pCCControlEvent) {
-    mAnimationManager->runAnimations("Jump", 0.3f);
+    mAnimationManager->runAnimationsForSequenceNamedTweenDuration("Jump", 0.3f);
 }
 
 void AnimationsTestLayer::onCCControlButtonFunkyClicked(CCObject *pSender, CCControlEvent pCCControlEvent) {
-    mAnimationManager->runAnimations("Funky", 0.3f);
+    mAnimationManager->runAnimationsForSequenceNamedTweenDuration("Funky", 0.3f);
 }
