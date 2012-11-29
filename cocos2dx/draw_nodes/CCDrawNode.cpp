@@ -324,7 +324,7 @@ void CCDrawNode::drawPolygon(CCPoint *verts, unsigned int count, const ccColor4F
 	struct ExtrudeVerts* extrude = (struct ExtrudeVerts*)malloc(sizeof(struct ExtrudeVerts)*count);
 	memset(extrude, 0, sizeof(struct ExtrudeVerts)*count);
 	
-	for(int i = 0; i < count; i++)
+	for(unsigned int i = 0; i < count; i++)
     {
 		ccVertex2F v0 = __v2f(verts[(i-1+count)%count]);
 		ccVertex2F v1 = __v2f(verts[i]);
@@ -348,7 +348,7 @@ void CCDrawNode::drawPolygon(CCPoint *verts, unsigned int count, const ccColor4F
 	ccV2F_C4B_T2F_Triangle *cursor = triangles;
 	
 	float inset = (outline == 0.0 ? 0.5 : 0.0);
-	for(int i = 0; i < count-2; i++)
+	for(unsigned int i = 0; i < count-2; i++)
     {
 		ccVertex2F v0 = v2fsub(__v2f(verts[0  ]), v2fmult(extrude[0  ].offset, inset));
 		ccVertex2F v1 = v2fsub(__v2f(verts[i+1]), v2fmult(extrude[i+1].offset, inset));
@@ -363,7 +363,7 @@ void CCDrawNode::drawPolygon(CCPoint *verts, unsigned int count, const ccColor4F
 		*cursor++ = tmp;
 	}
 	
-	for(int i = 0; i < count; i++)
+	for(unsigned int i = 0; i < count; i++)
     {
 		int j = (i+1)%count;
 		ccVertex2F v0 = __v2f(verts[i]);
