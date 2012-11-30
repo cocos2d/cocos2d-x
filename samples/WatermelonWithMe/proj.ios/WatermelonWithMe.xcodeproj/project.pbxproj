@@ -50,12 +50,20 @@
 		15426FE815B5743C00712A7F /* CocosDenshion.m in Sources */ = {isa = PBXBuildFile; fileRef = 15426FD515B5743C00712A7F /* CocosDenshion.m */; };
 		15426FE915B5743C00712A7F /* SimpleAudioEngine.mm in Sources */ = {isa = PBXBuildFile; fileRef = 15426FD615B5743C00712A7F /* SimpleAudioEngine.mm */; };
 		15426FEA15B5743C00712A7F /* SimpleAudioEngine_objc.m in Sources */ = {isa = PBXBuildFile; fileRef = 15426FD815B5743C00712A7F /* SimpleAudioEngine_objc.m */; };
-		157EFB251667100000BF1E11 /* tests in Resources */ = {isa = PBXBuildFile; fileRef = 157EFB241667100000BF1E11 /* tests */; };
-		157EFB2C1667102D00BF1E11 /* jsb_constants.js in Sources */ = {isa = PBXBuildFile; fileRef = 157EFB271667102D00BF1E11 /* jsb_constants.js */; };
-		157EFB2D1667102D00BF1E11 /* jsb_constants_chipmunk.js in Sources */ = {isa = PBXBuildFile; fileRef = 157EFB281667102D00BF1E11 /* jsb_constants_chipmunk.js */; };
-		157EFB2E1667102D00BF1E11 /* jsb_constants_cocos2d.js in Sources */ = {isa = PBXBuildFile; fileRef = 157EFB291667102D00BF1E11 /* jsb_constants_cocos2d.js */; };
-		157EFB2F1667102D00BF1E11 /* jsb_constants_cocosbuilder.js in Sources */ = {isa = PBXBuildFile; fileRef = 157EFB2A1667102D00BF1E11 /* jsb_constants_cocosbuilder.js */; };
-		157EFB301667102D00BF1E11 /* jsb_constants_gl.js in Sources */ = {isa = PBXBuildFile; fileRef = 157EFB2B1667102D00BF1E11 /* jsb_constants_gl.js */; };
+		157EFBF91667359100BF1E11 /* jsb_constants.js in Sources */ = {isa = PBXBuildFile; fileRef = 157EFBF41667359100BF1E11 /* jsb_constants.js */; };
+		157EFBFA1667359100BF1E11 /* jsb_constants_chipmunk.js in Sources */ = {isa = PBXBuildFile; fileRef = 157EFBF51667359100BF1E11 /* jsb_constants_chipmunk.js */; };
+		157EFBFB1667359100BF1E11 /* jsb_constants_cocos2d.js in Sources */ = {isa = PBXBuildFile; fileRef = 157EFBF61667359100BF1E11 /* jsb_constants_cocos2d.js */; };
+		157EFBFC1667359100BF1E11 /* jsb_constants_cocosbuilder.js in Sources */ = {isa = PBXBuildFile; fileRef = 157EFBF71667359100BF1E11 /* jsb_constants_cocosbuilder.js */; };
+		157EFBFD1667359100BF1E11 /* jsb_constants_gl.js in Sources */ = {isa = PBXBuildFile; fileRef = 157EFBF81667359100BF1E11 /* jsb_constants_gl.js */; };
+		157EFBFF1667361100BF1E11 /* cocos2dxapi.js in Sources */ = {isa = PBXBuildFile; fileRef = 157EFBFE1667361100BF1E11 /* cocos2dxapi.js */; };
+		157EFCE2166736A100BF1E11 /* boot-html5.js in Sources */ = {isa = PBXBuildFile; fileRef = 157EFCDA166736A100BF1E11 /* boot-html5.js */; };
+		157EFCE3166736A100BF1E11 /* boot-jsb.js in Sources */ = {isa = PBXBuildFile; fileRef = 157EFCDB166736A100BF1E11 /* boot-jsb.js */; };
+		157EFCE4166736A100BF1E11 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 157EFCDC166736A100BF1E11 /* index.html */; };
+		157EFCE5166736A100BF1E11 /* main.js in Sources */ = {isa = PBXBuildFile; fileRef = 157EFCDD166736A100BF1E11 /* main.js */; };
+		157EFCE6166736A100BF1E11 /* Resources in Resources */ = {isa = PBXBuildFile; fileRef = 157EFCDE166736A100BF1E11 /* Resources */; };
+		157EFCE7166736A100BF1E11 /* resources-html5.js in Sources */ = {isa = PBXBuildFile; fileRef = 157EFCDF166736A100BF1E11 /* resources-html5.js */; };
+		157EFCE8166736A100BF1E11 /* resources-jsb.js in Sources */ = {isa = PBXBuildFile; fileRef = 157EFCE0166736A100BF1E11 /* resources-jsb.js */; };
+		157EFCE9166736A100BF1E11 /* watermelon_with_me.js in Sources */ = {isa = PBXBuildFile; fileRef = 157EFCE1166736A100BF1E11 /* watermelon_with_me.js */; };
 		15CFE1A61612FD0E00BF2188 /* CCControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15CFE18D1612FD0E00BF2188 /* CCControl.cpp */; };
 		15CFE1A71612FD0E00BF2188 /* CCControlButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15CFE18F1612FD0E00BF2188 /* CCControlButton.cpp */; };
 		15CFE1A81612FD0E00BF2188 /* CCControlColourPicker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15CFE1911612FD0E00BF2188 /* CCControlColourPicker.cpp */; };
@@ -68,7 +76,6 @@
 		15CFE1AF1612FD0E00BF2188 /* CCControlUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15CFE1A01612FD0E00BF2188 /* CCControlUtils.cpp */; };
 		15CFE1B01612FD0E00BF2188 /* CCInvocation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15CFE1A21612FD0E00BF2188 /* CCInvocation.cpp */; };
 		15CFE1B11612FD0E00BF2188 /* CCScale9Sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15CFE1A41612FD0E00BF2188 /* CCScale9Sprite.cpp */; };
-		15DA88B71627C62000155276 /* cocos2dxapi.js in Resources */ = {isa = PBXBuildFile; fileRef = 15DA88B61627C62000155276 /* cocos2dxapi.js */; };
 		15E2AE9E165DC52C00F7743F /* CCPhysicsDebugNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15E2AE9A165DC52C00F7743F /* CCPhysicsDebugNode.cpp */; };
 		15E2AE9F165DC52C00F7743F /* CCPhysicsSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15E2AE9C165DC52C00F7743F /* CCPhysicsSprite.cpp */; };
 		262829DB15EC7196002C4240 /* chipmunk.c in Sources */ = {isa = PBXBuildFile; fileRef = 262829AC15EC7196002C4240 /* chipmunk.c */; };
@@ -239,12 +246,20 @@
 		15426FD615B5743C00712A7F /* SimpleAudioEngine.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SimpleAudioEngine.mm; sourceTree = "<group>"; };
 		15426FD715B5743C00712A7F /* SimpleAudioEngine_objc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleAudioEngine_objc.h; sourceTree = "<group>"; };
 		15426FD815B5743C00712A7F /* SimpleAudioEngine_objc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleAudioEngine_objc.m; sourceTree = "<group>"; };
-		157EFB241667100000BF1E11 /* tests */ = {isa = PBXFileReference; lastKnownFileType = folder; name = tests; path = "../cocos2d-js-tests/tests"; sourceTree = "<group>"; };
-		157EFB271667102D00BF1E11 /* jsb_constants.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_constants.js; sourceTree = "<group>"; };
-		157EFB281667102D00BF1E11 /* jsb_constants_chipmunk.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_constants_chipmunk.js; sourceTree = "<group>"; };
-		157EFB291667102D00BF1E11 /* jsb_constants_cocos2d.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_constants_cocos2d.js; sourceTree = "<group>"; };
-		157EFB2A1667102D00BF1E11 /* jsb_constants_cocosbuilder.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_constants_cocosbuilder.js; sourceTree = "<group>"; };
-		157EFB2B1667102D00BF1E11 /* jsb_constants_gl.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_constants_gl.js; sourceTree = "<group>"; };
+		157EFBF41667359100BF1E11 /* jsb_constants.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_constants.js; sourceTree = "<group>"; };
+		157EFBF51667359100BF1E11 /* jsb_constants_chipmunk.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_constants_chipmunk.js; sourceTree = "<group>"; };
+		157EFBF61667359100BF1E11 /* jsb_constants_cocos2d.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_constants_cocos2d.js; sourceTree = "<group>"; };
+		157EFBF71667359100BF1E11 /* jsb_constants_cocosbuilder.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_constants_cocosbuilder.js; sourceTree = "<group>"; };
+		157EFBF81667359100BF1E11 /* jsb_constants_gl.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_constants_gl.js; sourceTree = "<group>"; };
+		157EFBFE1667361100BF1E11 /* cocos2dxapi.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = cocos2dxapi.js; path = ../../../scripting/javascript/bindings/generated/cocos2dxapi.js; sourceTree = "<group>"; };
+		157EFCDA166736A100BF1E11 /* boot-html5.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = "boot-html5.js"; path = "../../TestJavascript/cocos2d-js-tests/games/WatermelonWithMe/boot-html5.js"; sourceTree = "<group>"; };
+		157EFCDB166736A100BF1E11 /* boot-jsb.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = "boot-jsb.js"; path = "../../TestJavascript/cocos2d-js-tests/games/WatermelonWithMe/boot-jsb.js"; sourceTree = "<group>"; };
+		157EFCDC166736A100BF1E11 /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = index.html; path = "../../TestJavascript/cocos2d-js-tests/games/WatermelonWithMe/index.html"; sourceTree = "<group>"; };
+		157EFCDD166736A100BF1E11 /* main.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = main.js; path = "../../TestJavascript/cocos2d-js-tests/games/WatermelonWithMe/main.js"; sourceTree = "<group>"; };
+		157EFCDE166736A100BF1E11 /* Resources */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Resources; path = "../../TestJavascript/cocos2d-js-tests/games/WatermelonWithMe/Resources"; sourceTree = "<group>"; };
+		157EFCDF166736A100BF1E11 /* resources-html5.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = "resources-html5.js"; path = "../../TestJavascript/cocos2d-js-tests/games/WatermelonWithMe/resources-html5.js"; sourceTree = "<group>"; };
+		157EFCE0166736A100BF1E11 /* resources-jsb.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = "resources-jsb.js"; path = "../../TestJavascript/cocos2d-js-tests/games/WatermelonWithMe/resources-jsb.js"; sourceTree = "<group>"; };
+		157EFCE1166736A100BF1E11 /* watermelon_with_me.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = watermelon_with_me.js; path = "../../TestJavascript/cocos2d-js-tests/games/WatermelonWithMe/watermelon_with_me.js"; sourceTree = "<group>"; };
 		15CFE18D1612FD0E00BF2188 /* CCControl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCControl.cpp; sourceTree = "<group>"; };
 		15CFE18E1612FD0E00BF2188 /* CCControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCControl.h; sourceTree = "<group>"; };
 		15CFE18F1612FD0E00BF2188 /* CCControlButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCControlButton.cpp; sourceTree = "<group>"; };
@@ -270,7 +285,6 @@
 		15CFE1A31612FD0E00BF2188 /* CCInvocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCInvocation.h; sourceTree = "<group>"; };
 		15CFE1A41612FD0E00BF2188 /* CCScale9Sprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCScale9Sprite.cpp; sourceTree = "<group>"; };
 		15CFE1A51612FD0E00BF2188 /* CCScale9Sprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCScale9Sprite.h; sourceTree = "<group>"; };
-		15DA88B61627C62000155276 /* cocos2dxapi.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = cocos2dxapi.js; path = ../../../scripting/javascript/bindings/generated/cocos2dxapi.js; sourceTree = "<group>"; };
 		15E2AE9A165DC52C00F7743F /* CCPhysicsDebugNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPhysicsDebugNode.cpp; sourceTree = "<group>"; };
 		15E2AE9B165DC52C00F7743F /* CCPhysicsDebugNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsDebugNode.h; sourceTree = "<group>"; };
 		15E2AE9C165DC52C00F7743F /* CCPhysicsSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPhysicsSprite.cpp; sourceTree = "<group>"; };
@@ -342,7 +356,7 @@
 		263B98CF16548E4D00228D8A /* js_bindings_core.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_core.h; sourceTree = "<group>"; };
 		263B98D316548EB700228D8A /* js_bindings_chipmunk_functions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = js_bindings_chipmunk_functions.cpp; sourceTree = "<group>"; };
 		263B98D516548EB700228D8A /* js_bindings_chipmunk_manual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = js_bindings_chipmunk_manual.cpp; sourceTree = "<group>"; };
-		A922753D1517C094001B78AA /* TestJavascript.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestJavascript.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A922753D1517C094001B78AA /* WatermelonWithMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WatermelonWithMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A92275411517C094001B78AA /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		A92275431517C094001B78AA /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		A92275451517C094001B78AA /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
@@ -589,9 +603,16 @@
 		15628F5B15F0F5C2000CF24B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				157EFB261667102D00BF1E11 /* js */,
-				157EFB241667100000BF1E11 /* tests */,
-				15DA88B61627C62000155276 /* cocos2dxapi.js */,
+				157EFCDA166736A100BF1E11 /* boot-html5.js */,
+				157EFCDB166736A100BF1E11 /* boot-jsb.js */,
+				157EFCDC166736A100BF1E11 /* index.html */,
+				157EFCDD166736A100BF1E11 /* main.js */,
+				157EFCDE166736A100BF1E11 /* Resources */,
+				157EFCDF166736A100BF1E11 /* resources-html5.js */,
+				157EFCE0166736A100BF1E11 /* resources-jsb.js */,
+				157EFCE1166736A100BF1E11 /* watermelon_with_me.js */,
+				157EFBFE1667361100BF1E11 /* cocos2dxapi.js */,
+				157EFBF31667359100BF1E11 /* js */,
 				D446FDA616102D86000ADA7B /* Default-568h@2x.png */,
 				D446FDA416102D82000ADA7B /* Default@2x.png */,
 				D446FDA216102D7D000ADA7B /* Default.png */,
@@ -599,14 +620,14 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
-		157EFB261667102D00BF1E11 /* js */ = {
+		157EFBF31667359100BF1E11 /* js */ = {
 			isa = PBXGroup;
 			children = (
-				157EFB271667102D00BF1E11 /* jsb_constants.js */,
-				157EFB281667102D00BF1E11 /* jsb_constants_chipmunk.js */,
-				157EFB291667102D00BF1E11 /* jsb_constants_cocos2d.js */,
-				157EFB2A1667102D00BF1E11 /* jsb_constants_cocosbuilder.js */,
-				157EFB2B1667102D00BF1E11 /* jsb_constants_gl.js */,
+				157EFBF41667359100BF1E11 /* jsb_constants.js */,
+				157EFBF51667359100BF1E11 /* jsb_constants_chipmunk.js */,
+				157EFBF61667359100BF1E11 /* jsb_constants_cocos2d.js */,
+				157EFBF71667359100BF1E11 /* jsb_constants_cocosbuilder.js */,
+				157EFBF81667359100BF1E11 /* jsb_constants_gl.js */,
 			);
 			name = js;
 			path = ../../../scripting/javascript/bindings/js;
@@ -778,7 +799,7 @@
 		A922753E1517C094001B78AA /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A922753D1517C094001B78AA /* TestJavascript.app */,
+				A922753D1517C094001B78AA /* WatermelonWithMe.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -827,9 +848,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		A922753C1517C094001B78AA /* TestJavascript */ = {
+		A922753C1517C094001B78AA /* WatermelonWithMe */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A92277001517C097001B78AA /* Build configuration list for PBXNativeTarget "TestJavascript" */;
+			buildConfigurationList = A92277001517C097001B78AA /* Build configuration list for PBXNativeTarget "WatermelonWithMe" */;
 			buildPhases = (
 				A92275391517C094001B78AA /* Sources */,
 				A922753A1517C094001B78AA /* Frameworks */,
@@ -840,9 +861,9 @@
 			dependencies = (
 				15426FC215B5741900712A7F /* PBXTargetDependency */,
 			);
-			name = TestJavascript;
-			productName = TestJavascript;
-			productReference = A922753D1517C094001B78AA /* TestJavascript.app */;
+			name = WatermelonWithMe;
+			productName = WatermelonWithMe;
+			productReference = A922753D1517C094001B78AA /* WatermelonWithMe.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -853,7 +874,7 @@
 			attributes = {
 				LastUpgradeCheck = 0430;
 			};
-			buildConfigurationList = A92275371517C094001B78AA /* Build configuration list for PBXProject "TestJavascript" */;
+			buildConfigurationList = A92275371517C094001B78AA /* Build configuration list for PBXProject "WatermelonWithMe" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -871,7 +892,7 @@
 			);
 			projectRoot = "";
 			targets = (
-				A922753C1517C094001B78AA /* TestJavascript */,
+				A922753C1517C094001B78AA /* WatermelonWithMe */,
 			);
 		};
 /* End PBXProject section */
@@ -892,10 +913,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				D446FDA316102D7D000ADA7B /* Default.png in Resources */,
-				15DA88B71627C62000155276 /* cocos2dxapi.js in Resources */,
 				D446FDA516102D82000ADA7B /* Default@2x.png in Resources */,
 				D446FDA716102D86000ADA7B /* Default-568h@2x.png in Resources */,
-				157EFB251667100000BF1E11 /* tests in Resources */,
+				157EFCE4166736A100BF1E11 /* index.html in Resources */,
+				157EFCE6166736A100BF1E11 /* Resources in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1000,11 +1021,18 @@
 				263B98D716548EB700228D8A /* js_bindings_chipmunk_manual.cpp in Sources */,
 				15E2AE9E165DC52C00F7743F /* CCPhysicsDebugNode.cpp in Sources */,
 				15E2AE9F165DC52C00F7743F /* CCPhysicsSprite.cpp in Sources */,
-				157EFB2C1667102D00BF1E11 /* jsb_constants.js in Sources */,
-				157EFB2D1667102D00BF1E11 /* jsb_constants_chipmunk.js in Sources */,
-				157EFB2E1667102D00BF1E11 /* jsb_constants_cocos2d.js in Sources */,
-				157EFB2F1667102D00BF1E11 /* jsb_constants_cocosbuilder.js in Sources */,
-				157EFB301667102D00BF1E11 /* jsb_constants_gl.js in Sources */,
+				157EFBF91667359100BF1E11 /* jsb_constants.js in Sources */,
+				157EFBFA1667359100BF1E11 /* jsb_constants_chipmunk.js in Sources */,
+				157EFBFB1667359100BF1E11 /* jsb_constants_cocos2d.js in Sources */,
+				157EFBFC1667359100BF1E11 /* jsb_constants_cocosbuilder.js in Sources */,
+				157EFBFD1667359100BF1E11 /* jsb_constants_gl.js in Sources */,
+				157EFBFF1667361100BF1E11 /* cocos2dxapi.js in Sources */,
+				157EFCE2166736A100BF1E11 /* boot-html5.js in Sources */,
+				157EFCE3166736A100BF1E11 /* boot-jsb.js in Sources */,
+				157EFCE5166736A100BF1E11 /* main.js in Sources */,
+				157EFCE7166736A100BF1E11 /* resources-html5.js in Sources */,
+				157EFCE8166736A100BF1E11 /* resources-jsb.js in Sources */,
+				157EFCE9166736A100BF1E11 /* watermelon_with_me.js in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1030,7 +1058,7 @@
 					DEBUG,
 					"COCOS2D_DEBUG=1",
 					USE_FILE32API,
-					CC_TARGET_OS_IPHONE,
+					TARGET_OS_IPHONE,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -1055,7 +1083,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_FILE32API,
-					CC_TARGET_OS_IPHONE,
+					TARGET_OS_IPHONE,
 				);
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
@@ -1108,7 +1136,7 @@
 					"-lz",
 					"-ljs_static",
 				);
-				PRODUCT_NAME = TestJavascript;
+				PRODUCT_NAME = WatermelonWithMe;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1148,7 +1176,7 @@
 					"-lz",
 					"-ljs_static",
 				);
-				PRODUCT_NAME = TestJavascript;
+				PRODUCT_NAME = WatermelonWithMe;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
@@ -1158,7 +1186,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		A92275371517C094001B78AA /* Build configuration list for PBXProject "TestJavascript" */ = {
+		A92275371517C094001B78AA /* Build configuration list for PBXProject "WatermelonWithMe" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A92276FE1517C097001B78AA /* Debug */,
@@ -1167,7 +1195,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A92277001517C097001B78AA /* Build configuration list for PBXNativeTarget "TestJavascript" */ = {
+		A92277001517C097001B78AA /* Build configuration list for PBXNativeTarget "WatermelonWithMe" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A92277011517C097001B78AA /* Debug */,
