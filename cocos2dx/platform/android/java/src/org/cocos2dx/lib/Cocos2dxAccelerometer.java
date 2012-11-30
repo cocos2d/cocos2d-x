@@ -70,13 +70,13 @@ public class Cocos2dxAccelerometer implements SensorEventListener {
 	// ===========================================================
 
 	public void enable() {
-		this.mSensorManager.registerListener(this, this.mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+		this.mSensorManager.registerListener(this, this.mAccelerometer, SensorManager.SENSOR_DELAY_GAME);
 	}
 
         public void setInterval(float interval) {
 	        // Honeycomb version is 11
 	        if(android.os.Build.VERSION.SDK_INT < 11) {
-		    this.mSensorManager.registerListener(this, this.mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+		    this.mSensorManager.registerListener(this, this.mAccelerometer, SensorManager.SENSOR_DELAY_GAME);
 		} else {
 		    //convert seconds to microseconds
 		    this.mSensorManager.registerListener(this, this.mAccelerometer, (int)(interval*100000));
