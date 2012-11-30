@@ -337,6 +337,12 @@ public:
     /** switches to a certain layer indexed by n. 
     The current (old) layer will be removed from it's parent with 'cleanup:YES'.
     */
+
+    /** initializes a CCMultiplexLayer with an array of layers
+    @since v2.1
+    */
+    bool initWithArray(CCArray* arrayOfLayers);
+
     void switchTo(unsigned int n);
     /** release the current layer and switches to another layer indexed by n.
     The current (old) layer will be removed from it's parent with 'cleanup:YES'.
@@ -347,6 +353,10 @@ public:
     static CCLayerMultiplex* node();
     
     static CCLayerMultiplex* create();
+    /** creates a CCMultiplexLayer with an array of layers.
+    @since v2.1
+    */
+    static CCLayerMultiplex* createWithArray(CCArray* arrayOfLayers);
 };
 
 

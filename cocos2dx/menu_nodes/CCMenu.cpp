@@ -29,6 +29,7 @@ THE SOFTWARE.
 #include "touch_dispatcher/CCTouchDispatcher.h"
 #include "touch_dispatcher/CCTouch.h"
 #include "CCStdC.h"
+#include "cocoa/CCInteger.h"
 
 #include <vector>
 #include <stdarg.h>
@@ -36,6 +37,18 @@ THE SOFTWARE.
 using namespace std;
 
 NS_CC_BEGIN
+
+static std::vector<unsigned int> ccarray_to_std_vector(CCArray* pArray)
+{
+    std::vector<unsigned int> ret;
+    CCObject* pObj;
+    CCARRAY_FOREACH(pArray, pObj)
+    {
+        CCInteger* pInteger = (CCInteger*)pObj;
+        ret.push_back((unsigned int)pInteger->getValue());
+    }
+    return ret;
+}
 
 enum 
 {
@@ -373,12 +386,18 @@ void CCMenu::alignItemsInColumns(unsigned int columns, ...)
 
 void CCMenu::alignItemsInColumns(unsigned int columns, va_list args)
 {
-    vector<unsigned int> rows;
+    CCArray* rows = CCArray::create();
     while (columns)
     {
-        rows.push_back(columns);
+        rows->addObject(CCInteger::create(columns));
         columns = va_arg(args, unsigned int);
     }
+    alignItemsInColumnsWithArray(rows);
+}
+
+void CCMenu::alignItemsInColumnsWithArray(CCArray* rowsArray)
+{
+    vector<unsigned int> rows = ccarray_to_std_vector(rowsArray);
 
     int height = -5;
     unsigned int row = 0;
@@ -478,12 +497,18 @@ void CCMenu::alignItemsInRows(unsigned int rows, ...)
 
 void CCMenu::alignItemsInRows(unsigned int rows, va_list args)
 {
-    vector<unsigned int> columns;
+    CCArray* pArray = CCArray::create();
     while (rows)
     {
-        columns.push_back(rows);
+        pArray->addObject(CCInteger::create(rows));
         rows = va_arg(args, unsigned int);
     }
+    alignItemsInRowsWithArray(pArray);
+}
+
+void CCMenu::alignItemsInRowsWithArray(CCArray* columnArray)
+{
+    vector<unsigned int> columns = ccarray_to_std_vector(columnArray);
 
     vector<unsigned int> columnWidths;
     vector<unsigned int> columnHeights;

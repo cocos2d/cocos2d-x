@@ -2,11 +2,11 @@
 // CocosBuilder definitions
 //
 
-cc.Reader = {};
+cc.BuilderReader = {};
 
 var _ccbGlobalContext = this;
 
-cc.Reader.load = function(file, owner, parentSize)
+cc.BuilderReader.load = function(file, owner, parentSize)
 {
     // Load the node graph using the correct function
     var reader = cc._Reader.create();
@@ -106,13 +106,13 @@ cc.Reader.load = function(file, owner, parentSize)
     }
 
     return node;
-}
+};
 
-cc.Reader.loadAsScene = function(file, owner, parentSize)
+cc.BuilderReader.loadAsScene = function(file, owner, parentSize)
 {
-    var node = cc.Reader.load(file, owner, parentSize);
+    var node = cc.BuilderReader.load(file, owner, parentSize);
     var scene = cc.Scene.create();
     scene.addChild( node );
 
     return scene;
-}
+};
