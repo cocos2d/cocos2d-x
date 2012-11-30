@@ -660,34 +660,34 @@ CCArray * JSCallFuncWrapper::getTargetForNativeNode(CCNode *pNode) {
 
 void JSCallFuncWrapper::callbackFunc(CCNode *node) const {
 
-    jsval valArr[2];
-
+    bool hasExtraData = !JSVAL_IS_VOID(extraData);
+    JSObject* thisObj = JSVAL_IS_VOID(jsThisObj) ? NULL : JSVAL_TO_OBJECT(jsThisObj);
     JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
     js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::CCNode>(cx, node);
 
-    JS_AddValueRoot(cx, valArr);
-
-    valArr[0] = OBJECT_TO_JSVAL(proxy->obj);
-    if(!JSVAL_IS_VOID(extraData)) {
-        valArr[1] = extraData;            
-    } else {
-        valArr[1] = JSVAL_NULL;
-    }
-
     jsval retval;
-    if(jsCallback != JSVAL_VOID) {
-        if (jsThisObj != JSVAL_VOID) {
-            JS_CallFunctionValue(cx, JSVAL_TO_OBJECT(jsThisObj), jsCallback, 2, valArr, &retval);
+    if(jsCallback != JSVAL_VOID)
+    {
+        if (hasExtraData)
+        {
+            jsval valArr[2];
+            valArr[0] = OBJECT_TO_JSVAL(proxy->obj);
+            valArr[1] = extraData;
+
+            JS_AddValueRoot(cx, valArr);
+            JS_CallFunctionValue(cx, thisObj, jsCallback, 2, valArr, &retval);
+            JS_RemoveValueRoot(cx, valArr);
         }
-        else {
-            JS_CallFunctionValue(cx, NULL, jsCallback, 2, valArr, &retval);
+        else
+        {
+            jsval senderVal = OBJECT_TO_JSVAL(proxy->obj);
+            JS_AddValueRoot(cx, &senderVal);
+            JS_CallFunctionValue(cx, thisObj, jsCallback, 1, &senderVal, &retval);
+            JS_RemoveValueRoot(cx, &senderVal);
         }
     }
 
     JSCallFuncWrapper::setTargetForNativeNode(node, (JSCallFuncWrapper *)this);
-
-    JS_RemoveValueRoot(cx, valArr);
-
 }
 
 // cc.CallFunc.create( func, this, [data])
@@ -1816,7 +1816,7 @@ extern JSObject* js_cocos2dx_CCBezierTo_prototype;
 extern JSObject* js_cocos2dx_CCBezierBy_prototype;
 extern JSObject* js_cocos2dx_CCScheduler_prototype;
 extern JSObject* js_cocos2dx_CCDrawNode_prototype;
-
+extern JSObject* js_cocos2dx_CCTexture2D_prototype;
 
 // setBlendFunc
 template<class T>
@@ -1880,6 +1880,40 @@ JSBool js_cocos2dx_CCParticleSystem_setBlendFunc(JSContext *cx, uint32_t argc, j
 JSBool js_cocos2dx_CCDrawNode_setBlendFunc(JSContext *cx, uint32_t argc, jsval *vp)
 {
     return js_cocos2dx_setBlendFunc<CCDrawNode>(cx, argc, vp);
+}
+
+JSBool js_cocos2dx_CCTexture2D_setTexParameters(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
+    CCTexture2D* cobj = (CCTexture2D*)(proxy ? proxy->ptr : NULL);
+    TEST_NATIVE_OBJECT(cx, cobj)
+
+    if (argc == 4)
+    {
+        jsval *argvp = JS_ARGV(cx,vp);
+        JSBool ok = JS_TRUE;
+
+        GLint arg0, arg1, arg2, arg3;
+
+        ok &= JS_ValueToInt32(cx, *argvp++, &arg0);
+        ok &= JS_ValueToInt32(cx, *argvp++, &arg1);
+        ok &= JS_ValueToInt32(cx, *argvp++, &arg2);
+        ok &= JS_ValueToInt32(cx, *argvp++, &arg3);
+
+        if( ! ok )
+            return JS_FALSE;
+
+        ccTexParams param = { arg0, arg1, arg2, arg3 };
+
+        cobj->setTexParameters(&param);
+
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return JS_TRUE;
+    }
+
+    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 4);
+    return JS_FALSE;		
 }
 
 // CCTMXLayer
@@ -2011,6 +2045,8 @@ void register_cocos2dx_js_extensions(JSContext* cx, JSObject* global)
 
     JS_DefineFunction(cx, js_cocos2dx_CCDrawNode_prototype, "drawPoly", js_cocos2dx_CCDrawNode_drawPolygon, 4, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, js_cocos2dx_CCDrawNode_prototype, "setBlendFunc", js_cocos2dx_CCDrawNode_setBlendFunc, 2, JSPROP_READONLY | JSPROP_PERMANENT);
+
+    JS_DefineFunction(cx, js_cocos2dx_CCTexture2D_prototype, "setTexParameters", js_cocos2dx_CCTexture2D_setTexParameters, 4, JSPROP_ENUMERATE | JSPROP_SHARED | JSPROP_PERMANENT);
 
     tmpObj = JSVAL_TO_OBJECT(anonEvaluate(cx, global, "(function () { return cc.BezierBy; })()"));
     JS_DefineFunction(cx, tmpObj, "create", JSB_CCBezierBy_actionWithDuration, 2, JSPROP_READONLY | JSPROP_PERMANENT);
