@@ -25,6 +25,20 @@ bool AppDelegate::applicationDidFinishLaunching()
     // initialize director
     CCDirector *pDirector = CCDirector::sharedDirector();
     pDirector->setOpenGLView(CCEGLView::sharedOpenGLView());
+
+
+    CCSize screenSize = CCEGLView::sharedOpenGLView()->getFrameSize();
+
+    CCSize designSize = CCSizeMake(320, 480);
+    
+//     if (screenSize.height > 320)
+//     {
+//         CCSize resourceSize = CCSizeMake(640, 960);
+//         CCFileUtils::sharedFileUtils()->setResourceDirectory("hd");
+//         pDirector->setContentScaleFactor(resourceSize.height/designSize.height);
+//     }
+
+    CCEGLView::sharedOpenGLView()->setDesignResolutionSize(designSize.width, designSize.height, kResolutionNoBorder);
     
     // turn on display FPS
     pDirector->setDisplayStats(true);
