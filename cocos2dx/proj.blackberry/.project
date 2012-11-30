@@ -27,7 +27,7 @@
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.buildLocation</key>
-					<value>${workspace_loc:/cocos2dx/Device-Release}</value>
+					<value>${workspace_loc:/cocos2dx/Device-Debug}</value>
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.contents</key>
@@ -169,11 +169,6 @@
 			<name>particle_nodes</name>
 			<type>2</type>
 			<locationURI>PARENT-1-PROJECT_LOC/particle_nodes</locationURI>
-		</link>
-		<link>
-			<name>physics_nodes</name>
-			<type>2</type>
-			<locationURI>PARENT-1-PROJECT_LOC/physics_nodes</locationURI>
 		</link>
 		<link>
 			<name>platform</name>
