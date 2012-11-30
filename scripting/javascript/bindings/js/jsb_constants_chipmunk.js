@@ -34,6 +34,8 @@ cp.v.sub = cp.vsub;
 cp.v.toangle = cp.vtoangle;
 cp.v.unrotate = cp.vunrotate;
 
+// XXX: renaming functions should be supported in JSB
+cp.clamp01 = cp.fclamp01;
 
 
 /// Initialize an offset box shaped polygon shape.
@@ -45,7 +47,7 @@ cp.BoxShape2 = function(body, box)
 		box.r, box.t,
 		box.r, box.b
 	];
-	
+
 	return new cp.PolyShape(body, verts, cp.vzero);
 };
 
@@ -54,13 +56,13 @@ cp.BoxShape = function(body, width, height)
 {
 	var hw = width/2;
 	var hh = height/2;
-	
+
 	return cp.BoxShape2(body, new cp.BB(-hw, -hh, hw, hh));
 };
 
 
 /// Initialize an static body
-cp.BodyStatic = function()
+cp.StaticBody = function()
 {
 	return new cp.Body(Infinity, Infinity);
 };
@@ -76,7 +78,6 @@ cp.BB = function(l, b, r, t)
 cp.bb = function(l, b, r, t) {
 	return new cp.BB(l, b, r, t);
 };
-
 
 //
 // Some properties
@@ -248,6 +249,88 @@ Object.defineProperties(cp.Body.prototype,
                         },
 						enumerable : true,
 						configurable : true
-					}
+					},
+                    "userData" : {
+						get : function(){
+                            return this.getUserData();
+                        },
+						set : function(newValue){
+                            this.setUserData(newValue);
+                        },
+						enumerable : true,
+						configurable : true
+                    }
 
+				});
+
+// Shape properties
+Object.defineProperties(cp.Shape.prototype,
+				{
+					"body" : {
+						get : function(){
+                            return this.getBody();
+                        },
+						set : function(newValue){
+                            this.setBody(newValue);
+                        },
+						enumerable : true,
+						configurable : true
+					},
+                    "group" : {
+						get : function(){
+                            return this.getGroup();
+                        },
+						set : function(newValue){
+                            this.setGroup(newValue);
+                        },
+						enumerable : true,
+						configurable : true
+                    },
+					"collision_type" : {
+						get : function(){
+                            return this.getCollisionType();
+                        },
+						enumerable : true,
+						configurable : true
+					}
+				});
+
+// Constraint properties
+Object.defineProperties(cp.Constraint.prototype,
+				{
+					"maxForce" : {
+						get : function(){
+                            return this.getMaxForce();
+                        },
+						set : function(newValue){
+                            this.setMaxForce(newValue);
+                        },
+						enumerable : true,
+						configurable : true
+					}
+				});
+
+// PinJoint properties
+Object.defineProperties(cp.PinJoint.prototype,
+				{
+					"anchr1" : {
+						get : function(){
+                            return this.getAnchr1();
+                        },
+						set : function(newValue){
+                            this.setAnchr1(newValue);
+                        },
+						enumerable : true,
+						configurable : true
+					},
+					"anchr2" : {
+						get : function(){
+                            return this.getAnchr2();
+                        },
+						set : function(newValue){
+                            this.setAnchr2(newValue);
+                        },
+						enumerable : true,
+						configurable : true
+					}
 				});

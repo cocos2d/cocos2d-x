@@ -221,8 +221,21 @@ CCNode* CCBReader::readNodeGraphFromFile(const char* pCCBFileName, CCObject* pOw
 
 CCNode* CCBReader::readNodeGraphFromFile(const char *pCCBFileName, CCObject *pOwner, const CCSize &parentSize)
 {
-    const char *pPath = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(pCCBFileName);
-    unsigned long size;
+    if (NULL == pCCBFileName || strlen(pCCBFileName) == 0)
+    {
+        return NULL;
+    }
+
+    std::string strCCBFileName(pCCBFileName);
+    std::string strSuffix(".ccbi");
+    // Add ccbi suffix
+    if (!CCBReader::endsWith(strCCBFileName.c_str(), strSuffix.c_str()))
+    {
+        strCCBFileName += strSuffix;
+    }
+
+    const char *pPath = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(strCCBFileName.c_str());
+    unsigned long size = 0;
 
     unsigned char * pBytes = CCFileUtils::sharedFileUtils()->getFileData(pPath, "rb", &size);
     CCData *data = new CCData(pBytes, size);

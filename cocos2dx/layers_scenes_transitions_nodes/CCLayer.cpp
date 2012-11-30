@@ -929,6 +929,19 @@ CCLayerMultiplex* CCLayerMultiplex::create()
     return pRet;
 }
 
+CCLayerMultiplex* CCLayerMultiplex::createWithArray(CCArray* arrayOfLayers)
+{
+    CCLayerMultiplex* pRet = new CCLayerMultiplex();
+    if (pRet && pRet->initWithArray(arrayOfLayers))
+    {
+        pRet->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(pRet);
+    }
+    return pRet;
+}
 
 void CCLayerMultiplex::addLayer(CCLayer* layer)
 {
@@ -938,23 +951,33 @@ void CCLayerMultiplex::addLayer(CCLayer* layer)
 
 bool CCLayerMultiplex::initWithLayers(CCLayer *layer, va_list params)
 {
-    m_pLayers = CCArray::createWithCapacity(5);
-    m_pLayers->retain();
+    if (CCLayer::init())
+    {
+        CCLayer *l = va_arg(params,CCLayer*);
+        while( l ) {
+            m_pLayers->addObject(l);
+            l = va_arg(params,CCLayer*);
+        }
 
-    m_pLayers->addObject(layer);
-
-    CCLayer *l = va_arg(params,CCLayer*);
-    while( l ) {
-        m_pLayers->addObject(l);
-        l = va_arg(params,CCLayer*);
+        m_nEnabledLayer = 0;
+        this->addChild((CCNode*)m_pLayers->objectAtIndex(m_nEnabledLayer));
+        return true;
     }
+
+    return false;
+}
+
+bool CCLayerMultiplex::initWithArray(CCArray* arrayOfLayers)
+{
+    m_pLayers = CCArray::createWithCapacity(arrayOfLayers->count());
+    m_pLayers->addObjectsFromArray(arrayOfLayers);
+    m_pLayers->retain();
 
     m_nEnabledLayer = 0;
     this->addChild((CCNode*)m_pLayers->objectAtIndex(m_nEnabledLayer));
 
     return true;
 }
-
 
 void CCLayerMultiplex::switchTo(unsigned int n)
 {
