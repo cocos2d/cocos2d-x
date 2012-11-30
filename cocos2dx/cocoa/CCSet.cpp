@@ -96,6 +96,24 @@ void CCSet::removeObject(CCObject *pObject)
     CC_SAFE_RELEASE(pObject);
 }
 
+void CCSet::removeAllObjects()
+{
+	if (!m_pSet || m_pSet->empty())
+	{
+		return;
+	}
+
+	CCSetIterator it;
+
+	for( it = m_pSet->begin(); it != m_pSet->end(); ++it)
+	{
+		if(*it)
+		{
+			removeObject(*it);
+		}
+	}
+}
+
 bool CCSet::containsObject(CCObject *pObject)
 {
     return m_pSet->find(pObject) != m_pSet->end();
