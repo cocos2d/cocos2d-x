@@ -412,6 +412,9 @@ void ScriptingCore::createGlobalContext() {
     JS_SetOptions(this->cx_, JS_GetOptions(this->cx_) & ~JSOPTION_METHODJIT);
     JS_SetOptions(this->cx_, JS_GetOptions(this->cx_) & ~JSOPTION_METHODJIT_ALWAYS);
     JS_SetErrorReporter(this->cx_, ScriptingCore::reportError);
+#ifdef DEBUG
+    JS_SetGCZeal(this->cx_, 2, JS_DEFAULT_ZEAL_FREQ);
+#endif
     this->global_ = NewGlobalObject(cx_);
     for (std::vector<sc_register_sth>::iterator it = registrationList.begin(); it != registrationList.end(); it++) {
         sc_register_sth callback = *it;
@@ -624,7 +627,14 @@ void ScriptingCore::cleanupSchedulesAndActions(CCNode *node) {
     
     arr = JSScheduleWrapper::getTargetForNativeNode(node);
     if(arr) {
-        arr->removeAllObjects();
+        CCScheduler* pScheduler = CCDirector::sharedDirector()->getScheduler();
+        CCObject* pObj = NULL;
+        CCARRAY_FOREACH(arr, pObj)
+        {
+            pScheduler->unscheduleAllForTarget(pObj);
+        }
+
+        JSScheduleWrapper::removeAllTargetsForNatiaveNode(node);
     }
 }
 
