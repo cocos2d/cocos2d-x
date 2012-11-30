@@ -70,8 +70,6 @@ extern "C" {
 	void jsb_set_jsobject_for_proxy(JSObject *jsobj, void* proxy);
 	/** delts a JSObject for a given proxy */
 	void jsb_del_jsobject_for_proxy(void* proxy);
-
-	JSBool jsb_set_reserved_slot(JSObject *obj, uint32_t idx, jsval value);
 	
 	
 	// needed for callbacks. It does nothing.

@@ -269,4 +269,7 @@ public:
 	}
 };
 
+JSBool jsb_set_reserved_slot(JSObject *obj, uint32_t idx, jsval value);
+JSBool jsb_get_reserved_slot(JSObject *obj, uint32_t idx, jsval& ret);
+
 #endif

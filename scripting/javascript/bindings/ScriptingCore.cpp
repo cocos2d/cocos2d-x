@@ -1488,3 +1488,27 @@ JSBool jsSocketClose(JSContext* cx, unsigned argc, jsval* vp)
     }
     return JS_TRUE;
 }
+
+JSBool jsb_set_reserved_slot(JSObject *obj, uint32_t idx, jsval value)
+{
+    JSClass *klass = JS_GetClass(obj);
+    unsigned int slots = JSCLASS_RESERVED_SLOTS(klass);
+    if( idx >= slots )
+        return JS_FALSE;
+
+    JS_SetReservedSlot(obj, idx, value);
+
+    return JS_TRUE;
+}
+
+JSBool jsb_get_reserved_slot(JSObject *obj, uint32_t idx, jsval& ret)
+{
+    JSClass *klass = JS_GetClass(obj);
+    unsigned int slots = JSCLASS_RESERVED_SLOTS(klass);
+    if( idx >= slots )
+        return JS_FALSE;
+
+    ret = JS_GetReservedSlot(obj, idx);
+
+    return JS_TRUE;
+}

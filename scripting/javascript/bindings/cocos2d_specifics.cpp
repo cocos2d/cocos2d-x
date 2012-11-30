@@ -829,11 +829,6 @@ void JSScheduleWrapper::removeAllTargetsForNatiaveNode(CCNode* pNode)
                 objectsNeedToBeReleased.push_back(pObj);
             }
         }
-        if (objectsNeedToBeReleased.size() > 1)
-        {
-            int a = 0;
-            a = 0;
-        }
         
         std::vector<CCObject*>::iterator iter = objectsNeedToBeReleased.begin();
         for (; iter != objectsNeedToBeReleased.end(); ++iter)
@@ -1043,10 +1038,9 @@ JSBool js_CCNode_scheduleOnce(JSContext *cx, uint32_t argc, jsval *vp)
         } else {
             sched->scheduleSelector(schedule_selector(JSScheduleWrapper::scheduleFunc), tmpCobj, 0, 0, delay, !node->isRunning());
         }
-        // Don't add the callback function to the reserved slot of this js object.
-        // Since the class of js object may be inherited from cocos class(e.g. cc.Sprite)
-        // The subclass will not contain reserved slots.
-        //JS_SetReservedSlot(proxy->obj, 0, argv[0]);
+
+        jsb_set_reserved_slot(proxy->obj, 0, argv[0]);
+
         JS_SET_RVAL(cx, vp, JSVAL_VOID);
     }
     return JS_TRUE;
@@ -1111,13 +1105,7 @@ JSBool js_CCNode_schedule(JSContext *cx, uint32_t argc, jsval *vp)
             sched->scheduleSelector(schedule_selector(JSScheduleWrapper::scheduleFunc), tmpCobj, interval, (unsigned int)repeat, delay, !node->isRunning());
         }
         
-        // Don't add js callback function to the reserved slot of scheduler js object.
-        // Since the scheduler is an object always rooted.
-        // So the callback function might not be released when gc comes.
-        // I looked inside the implementation of cc.Node.schedule, and it doesn't use JS_SetReservedSlot there.
-        // Could we comment this line?  If I'm wrong, please correct me. Thanks.
-        // By James Chen
-        //JS_SetReservedSlot(p->obj, 0, argv[0]);
+        jsb_set_reserved_slot(proxy->obj, 0, argv[0]);
 
         JS_SET_RVAL(cx, vp, JSVAL_VOID);
     }
