@@ -42,7 +42,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     
     CCScriptEngineProtocol *pEngine = ScriptingCore::getInstance();
     CCScriptEngineManager::sharedManager()->setScriptEngine(pEngine);
-    ScriptingCore::getInstance()->runScript("watermelon_with_me.js");
+    ScriptingCore::getInstance()->runScript("boot-jsb.js");
        
     return true;
 }
