@@ -25,7 +25,6 @@ THE SOFTWARE.
 #ifndef __CCDICTIONARY_H__
 #define __CCDICTIONARY_H__
 
-#include <string>
 #include "support/data_support/uthash.h"
 #include "CCObject.h"
 #include "CCArray.h"
