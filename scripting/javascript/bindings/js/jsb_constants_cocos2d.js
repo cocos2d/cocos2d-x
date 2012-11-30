@@ -62,6 +62,12 @@ cc.POINT_ZERO = {x:0, y:0};
 // XXX: This definition is different than cocos2d-html5
 cc.REPEAT_FOREVER = - 1;
 
+
+cc.MENU_STATE_WAITING = 0;
+cc.MENU_STATE_TRACKING_TOUCH = 1;
+cc.MENU_HANDLER_PRIORITY = -128;
+cc.DEFAULT_PADDING = 5;
+
 // reusable objects
 cc._reuse_p = [ {x:0, y:0}, {x:0,y:0}, {x:0,y:0}, {x:0,y:0} ];
 cc._reuse_p_index = 0;
@@ -331,6 +337,8 @@ cc.LabelAtlas.create = function( a,b,c,d,e ) {
         return cc.LabelAtlas._create.apply(this, arguments);
     }
 };
+
+cc.LayerMultiplex.create = cc.LayerMultiplex.createWithArray;
 
 // PhysicsDebugNode
 cc.PhysicsDebugNode.create = function( space ) {
