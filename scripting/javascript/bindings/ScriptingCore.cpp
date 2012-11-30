@@ -906,6 +906,40 @@ CCAcceleration jsval_to_ccacceleration(JSContext *cx, jsval v) {
     return ret;
 }
 
+CCArray* jsvals_variadic_to_ccarray( JSContext *cx, jsval *vp, int argc)
+{
+    JSBool ok = JS_FALSE;
+    CCArray* pArray = CCArray::create();
+    for( int i=0; i < argc; i++ )
+    {
+        double num = 0.0;
+        // optimization: JS_ValueToNumber is expensive. And can convert an string like "12" to a number
+        if( JSVAL_IS_NUMBER(*vp)) {
+            ok = JS_ValueToNumber(cx, *vp, &num );
+            if (!ok) {
+                break;
+            }
+            pArray->addObject(CCInteger::create((int)num));
+        }
+        else if (JSVAL_IS_STRING(*vp))
+        {
+            JSStringWrapper str(JSVAL_TO_STRING(*vp), cx);
+            pArray->addObject(CCString::create(str));
+        }
+        else
+        {
+            js_proxy_t* p;
+            JSObject* obj = JSVAL_TO_OBJECT(*vp);
+            JS_GET_NATIVE_PROXY(p, obj);
+            if (p) {
+                pArray->addObject((CCObject*)p->ptr);
+            }
+        }
+        // next
+        vp++;
+    }
+    return pArray;
+}
 
 CCRect jsval_to_ccrect(JSContext *cx, jsval v) {
     JSObject *tmp;
