@@ -21,11 +21,7 @@ public:
     void nextCallback(CCObject* pSender);
     void backCallback(CCObject* pSender);
 
-    void registerWithTouchDispatcher();
-    bool ccTouchBegan(CCTouch* touch, CCEvent* event);
-    void ccTouchEnded(CCTouch* touch, CCEvent* event);
-    void ccTouchCancelled(CCTouch* touch, CCEvent* event);
-    void ccTouchMoved(CCTouch* touch, CCEvent* event);
+    virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent);
 };
 
 class TileMapTest : public TileDemo

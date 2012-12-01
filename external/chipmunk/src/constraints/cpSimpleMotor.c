@@ -30,9 +30,6 @@ preStep(cpSimpleMotor *joint, cpFloat dt)
 	
 	// calculate moment of inertia coefficient.
 	joint->iSum = 1.0f/(a->i_inv + b->i_inv);
-	
-	// compute max impulse
-	joint->jMax = J_MAX(joint, dt);
 }
 
 static void
@@ -47,7 +44,7 @@ applyCachedImpulse(cpSimpleMotor *joint, cpFloat dt_coef)
 }
 
 static void
-applyImpulse(cpSimpleMotor *joint)
+applyImpulse(cpSimpleMotor *joint, cpFloat dt)
 {
 	cpBody *a = joint->constraint.a;
 	cpBody *b = joint->constraint.b;
@@ -55,10 +52,12 @@ applyImpulse(cpSimpleMotor *joint)
 	// compute relative rotational velocity
 	cpFloat wr = b->w - a->w + joint->rate;
 	
+	cpFloat jMax = joint->constraint.maxForce*dt;
+	
 	// compute normal impulse	
 	cpFloat j = -wr*joint->iSum;
 	cpFloat jOld = joint->jAcc;
-	joint->jAcc = cpfclamp(jOld + j, -joint->jMax, joint->jMax);
+	joint->jAcc = cpfclamp(jOld + j, -jMax, jMax);
 	j = joint->jAcc - jOld;
 	
 	// apply impulse

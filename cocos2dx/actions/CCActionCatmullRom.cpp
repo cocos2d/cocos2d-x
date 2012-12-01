@@ -253,7 +253,10 @@ void CCCardinalSplineTo::startWithTarget(cocos2d::CCNode *pTarget)
 {
     CCActionInterval::startWithTarget(pTarget);
 	
-    m_fDeltaT = (float) 1 / m_pPoints->count();
+//    m_fDeltaT = (float) 1 / m_pPoints->count();
+    
+    // Issue #1441
+    m_fDeltaT = (float) 1 / (m_pPoints->count() - 1);
 }
 
 CCCardinalSplineTo* CCCardinalSplineTo::copyWithZone(cocos2d::CCZone *pZone)
@@ -283,7 +286,10 @@ void CCCardinalSplineTo::update(float time)
     unsigned int p;
     float lt;
 	
-	// border
+	// eg.
+	// p..p..p..p..p..p..p
+	// 1..2..3..4..5..6..7
+	// want p to be 1, 2, 3, 4, 5, 6
     if (time == 1)
     {
         p = m_pPoints->count() - 1;

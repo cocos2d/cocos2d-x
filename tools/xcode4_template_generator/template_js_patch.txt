@@ -8,6 +8,7 @@
 				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
 				<array>
 					<string>COCOS2D_JAVASCRIPT</string>
+                                        <string>CC_ENABLE_CHIPMUNK_INTEGRATION</string>
 				</array>
 			</dict>
 			<key>Release</key>
@@ -15,6 +16,7 @@
 				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
 				<array>
 					<string>COCOS2D_JAVASCRIPT</string>
+                                        <string>CC_ENABLE_CHIPMUNK_INTEGRATION</string>
 				</array>
 			</dict>
 

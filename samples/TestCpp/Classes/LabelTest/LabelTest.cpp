@@ -40,7 +40,7 @@ CCLayer* restartAtlasAction();
 
 static int sceneIdx = -1; 
 
-#define MAX_LAYER    26
+#define MAX_LAYER    27
 
 CCLayer* createAtlasLayer(int nIndex)
 {
@@ -74,6 +74,7 @@ CCLayer* createAtlasLayer(int nIndex)
         case 23: return new TTFFontInit();
         case 24: return new Issue1343();
         case 25: return new LabelTTFAlignment();
+        case 26: return new LabelBMFontBounds();
     }
 
     return NULL;
@@ -1502,5 +1503,48 @@ std::string Issue1343::title()
 std::string Issue1343::subtitle()
 {
     return "You should see: ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz.,'";
+}
+
+LabelBMFontBounds::LabelBMFontBounds()
+{
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    
+    CCLayerColor *layer = CCLayerColor::create(ccc4(128,128,128,255));
+    addChild(layer, -10);
+    
+    // CCLabelBMFont
+    label1 = CCLabelBMFont::create("Testing Glyph Designer", "fonts/boundsTestFont.fnt");
+    
+    
+    addChild(label1);
+    label1->setPosition(ccp(s.width/2, s.height/2));
+}
+
+string LabelBMFontBounds::title()
+{
+    return "Testing LabelBMFont Bounds";
+}
+
+string LabelBMFontBounds::subtitle()
+{
+    return "You should see string enclosed by a box";
+}
+
+void LabelBMFontBounds::draw()
+{
+    CCSize labelSize = label1->getContentSize();
+    CCSize origin = CCDirector::sharedDirector()->getWinSize();
+    
+    origin.width = origin.width / 2 - (labelSize.width / 2);
+    origin.height = origin.height / 2 - (labelSize.height / 2);
+    
+    CCPoint vertices[4]=
+    {
+        ccp(origin.width, origin.height),
+        ccp(labelSize.width + origin.width, origin.height),
+        ccp(labelSize.width + origin.width, labelSize.height + origin.height),
+        ccp(origin.width, labelSize.height + origin.height)
+    };
+    ccDrawPoly(vertices, 4, true);
 }
 

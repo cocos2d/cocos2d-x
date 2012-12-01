@@ -4,6 +4,6 @@
 [submodule "scripting/javascript/bindings/generated"]
 	path = scripting/javascript/bindings/generated
 	url = git://github.com/folecr/cocos2dx-autogen-bindings.git
-[submodule "samples/TestJavascript/cocos2d-html5-tests"]
-	path = samples/TestJavascript/cocos2d-html5-tests
-	url = https://github.com/cocos2d/cocos2d-html5-tests.git
+[submodule "samples/TestJavascript/cocos2d-js-tests"]
+	path = samples/TestJavascript/cocos2d-js-tests
+	url = https://github.com/minggo/cocos2d-js-tests.git

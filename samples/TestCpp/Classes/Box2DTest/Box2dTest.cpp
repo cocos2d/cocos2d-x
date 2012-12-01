@@ -1,5 +1,7 @@
 #include "Box2dTest.h"
 #include "../testResource.h"
+#include "cocos-ext.h"
+USING_NS_CC_EXT;
 
 #define PTM_RATIO 32
 
@@ -7,59 +9,11 @@ enum {
     kTagParentNode = 1,
 };
 
-PhysicsSprite::PhysicsSprite()
-: m_pBody(NULL)
-{
-
-}
-
-void PhysicsSprite::setPhysicsBody(b2Body * body)
-{
-    m_pBody = body;
-}
-
-// this method will only get called if the sprite is batched.
-// return YES if the physics values (angles, position ) changed
-// If you return NO, then nodeToParentTransform won't be called.
-bool PhysicsSprite::isDirty(void)
-{
-    return true;
-}
-
-// returns the transform matrix according the Chipmunk Body values
-CCAffineTransform PhysicsSprite::nodeToParentTransform(void)
-{
-    b2Vec2 pos  = m_pBody->GetPosition();
-
-    float x = pos.x * PTM_RATIO;
-    float y = pos.y * PTM_RATIO;
-
-    if ( isIgnoreAnchorPointForPosition() ) {
-        x += m_tAnchorPointInPoints.x;
-        y += m_tAnchorPointInPoints.y;
-    }
-
-    // Make matrix
-    float radians = m_pBody->GetAngle();
-    float c = cosf(radians);
-    float s = sinf(radians);
-
-    if( ! m_tAnchorPointInPoints.equals(CCPointZero) ){
-        x += c*-m_tAnchorPointInPoints.x + -s*-m_tAnchorPointInPoints.y;
-        y += s*-m_tAnchorPointInPoints.x + c*-m_tAnchorPointInPoints.y;
-    }
-
-    // Rot, Translate Matrix
-    m_tTransform = CCAffineTransformMake( c,  s,
-        -s,    c,
-        x,    y );
-
-    return m_tTransform;
-}
-
 Box2DTestLayer::Box2DTestLayer()
 : m_pSpriteTexture(NULL)
+, world(NULL)
 {
+#if CC_ENABLE_BOX2D_INTEGRATION
     setTouchEnabled( true );
     setAccelerometerEnabled( true );
 
@@ -89,12 +43,20 @@ Box2DTestLayer::Box2DTestLayer()
     label->setPosition(ccp( VisibleRect::center().x, VisibleRect::top().y-50));
     
     scheduleUpdate();
+#else
+    CCLabelTTF *pLabel = CCLabelTTF::create("Should define CC_ENABLE_BOX2D_INTEGRATION\n to run this test case",
+                                            "Arial",
+                                            18);
+    CCSize size = CCDirector::sharedDirector()->getWinSize();
+    pLabel->setPosition(ccp(size.width/2, size.height/2));
+    
+    addChild(pLabel);
+#endif
 }
 
 Box2DTestLayer::~Box2DTestLayer()
 {
-    delete world;
-    world = NULL;
+    CC_SAFE_DELETE(world);
     
     //delete m_debugDraw;
 }
@@ -181,6 +143,7 @@ void Box2DTestLayer::draw()
     //
     CCLayer::draw();
 
+#if CC_ENABLE_BOX2D_INTEGRATION
     ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
 
     kmGLPushMatrix();
@@ -188,24 +151,12 @@ void Box2DTestLayer::draw()
     world->DrawDebugData();
 
     kmGLPopMatrix();
+#endif
 }
 
 void Box2DTestLayer::addNewSpriteAtPosition(CCPoint p)
 {
     CCLOG("Add sprite %0.2f x %02.f",p.x,p.y);
-    CCNode* parent = getChildByTag(kTagParentNode);
-    
-    //We have a 64x64 sprite sheet with 4 different 32x32 images.  The following code is
-    //just randomly picking one of the images
-    int idx = (CCRANDOM_0_1() > .5 ? 0:1);
-    int idy = (CCRANDOM_0_1() > .5 ? 0:1);
-    PhysicsSprite *sprite = new PhysicsSprite();
-    sprite->initWithTexture(m_pSpriteTexture, CCRectMake(32 * idx,32 * idy,32,32));
-    sprite->autorelease();
-
-    parent->addChild(sprite);
-    
-    sprite->setPosition( ccp( p.x, p.y) );
     
     // Define the dynamic body.
     //Set up a 1m squared box in the physics world
@@ -226,7 +177,19 @@ void Box2DTestLayer::addNewSpriteAtPosition(CCPoint p)
     fixtureDef.friction = 0.3f;
     body->CreateFixture(&fixtureDef);
 
-    sprite->setPhysicsBody(body);
+    CCNode *parent = this->getChildByTag(kTagParentNode);
+
+    //We have a 64x64 sprite sheet with 4 different 32x32 images.  The following code is
+    //just randomly picking one of the images
+    int idx = (CCRANDOM_0_1() > .5 ? 0:1);
+    int idy = (CCRANDOM_0_1() > .5 ? 0:1);
+#if CC_ENABLE_BOX2D_INTEGRATION
+    CCPhysicsSprite *sprite = CCPhysicsSprite::createWithTexture(m_pSpriteTexture,CCRectMake(32 * idx,32 * idy,32,32));
+    parent->addChild(sprite);
+    sprite->setBody(body);
+    sprite->setPTMRatio(PTM_RATIO);
+    sprite->setPosition( ccp( p.x, p.y) );
+#endif
 }
 
 

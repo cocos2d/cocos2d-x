@@ -5,7 +5,7 @@
 #include "ScriptingCore.h"
 #include "generated/cocos2dx.hpp"
 #include "cocos2d_specifics.hpp"
-#include "js_bindings_chipmunk_manual.hpp"
+#include "js_bindings_chipmunk_registration.h"
 
 USING_NS_CC;
 using namespace CocosDenshion;
@@ -34,14 +34,13 @@ bool AppDelegate::applicationDidFinishLaunching()
     ScriptingCore* sc = ScriptingCore::getInstance();
     sc->addRegisterCallback(register_all_cocos2dx);
     sc->addRegisterCallback(register_cocos2dx_js_extensions);
-    sc->addRegisterCallback(register_chipmunk_manual);
-    sc->addRegisterCallback(register_CCPhysicsSprite);
+    sc->addRegisterCallback(jsb_register_chipmunk);
     
     sc->start();
     
     CCScriptEngineProtocol *pEngine = ScriptingCore::getInstance();
     CCScriptEngineManager::sharedManager()->setScriptEngine(pEngine);
-    ScriptingCore::getInstance()->runScript("tests-boot-jsb.js");
+    ScriptingCore::getInstance()->runScript("tests/tests-boot-jsb.js");
        
     return true;
 }

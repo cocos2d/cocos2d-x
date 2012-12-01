@@ -137,7 +137,7 @@ void CCParticleBatchNode::visit()
     // The alternative is to have a void CCSprite#visit, but
     // although this is less maintainable, is faster
     //
-    if (!m_bIsVisible)
+    if (!m_bVisible)
     {
         return;
     }
@@ -235,7 +235,7 @@ unsigned int CCParticleBatchNode::addChildHelper(CCParticleSystem* child, int z,
 
     child->setParent(this);
 
-    if( m_bIsRunning ) 
+    if( m_bRunning ) 
     {
         child->onEnter();
         child->onEnterTransitionDidFinish();

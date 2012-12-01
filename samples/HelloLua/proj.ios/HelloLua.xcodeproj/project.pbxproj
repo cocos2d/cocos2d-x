@@ -79,8 +79,6 @@
 		F2837A6915B9606900A5707B /* lvm.c in Sources */ = {isa = PBXBuildFile; fileRef = F2837A3715B9606900A5707B /* lvm.c */; };
 		F2837A6A15B9606900A5707B /* lzio.c in Sources */ = {isa = PBXBuildFile; fileRef = F2837A3915B9606900A5707B /* lzio.c */; };
 		F2837A6B15B9606900A5707B /* print.c in Sources */ = {isa = PBXBuildFile; fileRef = F2837A3B15B9606900A5707B /* print.c */; };
-		F2837A6C15B9606900A5707B /* Android.mk in Resources */ = {isa = PBXBuildFile; fileRef = F2837A3E15B9606900A5707B /* Android.mk */; };
-		F2837A6D15B9606900A5707B /* liblua.vcproj in Resources */ = {isa = PBXBuildFile; fileRef = F2837A4015B9606900A5707B /* liblua.vcproj */; };
 		F2837A6E15B9606900A5707B /* tolua_event.c in Sources */ = {isa = PBXBuildFile; fileRef = F2837A4315B9606900A5707B /* tolua_event.c */; };
 		F2837A6F15B9606900A5707B /* tolua_is.c in Sources */ = {isa = PBXBuildFile; fileRef = F2837A4515B9606900A5707B /* tolua_is.c */; };
 		F2837A7015B9606900A5707B /* tolua_map.c in Sources */ = {isa = PBXBuildFile; fileRef = F2837A4615B9606900A5707B /* tolua_map.c */; };
@@ -217,8 +215,6 @@
 		F2837A3915B9606900A5707B /* lzio.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lzio.c; sourceTree = "<group>"; };
 		F2837A3A15B9606900A5707B /* lzio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lzio.h; sourceTree = "<group>"; };
 		F2837A3B15B9606900A5707B /* print.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = print.c; sourceTree = "<group>"; };
-		F2837A3E15B9606900A5707B /* Android.mk */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Android.mk; sourceTree = "<group>"; };
-		F2837A4015B9606900A5707B /* liblua.vcproj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = liblua.vcproj; sourceTree = "<group>"; };
 		F2837A4215B9606900A5707B /* tolua++.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "tolua++.h"; sourceTree = "<group>"; };
 		F2837A4315B9606900A5707B /* tolua_event.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tolua_event.c; sourceTree = "<group>"; };
 		F2837A4415B9606900A5707B /* tolua_event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tolua_event.h; sourceTree = "<group>"; };
@@ -386,8 +382,6 @@
 			children = (
 				F28379FC15B9606900A5707B /* cocos2dx_support */,
 				F2837A0515B9606900A5707B /* lua */,
-				F2837A3C15B9606900A5707B /* proj.android */,
-				F2837A3F15B9606900A5707B /* proj.win32 */,
 				F2837A4115B9606900A5707B /* tolua */,
 			);
 			name = lua;
@@ -468,30 +462,6 @@
 				F2837A3B15B9606900A5707B /* print.c */,
 			);
 			path = lua;
-			sourceTree = "<group>";
-		};
-		F2837A3C15B9606900A5707B /* proj.android */ = {
-			isa = PBXGroup;
-			children = (
-				F2837A3D15B9606900A5707B /* jni */,
-			);
-			path = proj.android;
-			sourceTree = "<group>";
-		};
-		F2837A3D15B9606900A5707B /* jni */ = {
-			isa = PBXGroup;
-			children = (
-				F2837A3E15B9606900A5707B /* Android.mk */,
-			);
-			path = jni;
-			sourceTree = "<group>";
-		};
-		F2837A3F15B9606900A5707B /* proj.win32 */ = {
-			isa = PBXGroup;
-			children = (
-				F2837A4015B9606900A5707B /* liblua.vcproj */,
-			);
-			path = proj.win32;
 			sourceTree = "<group>";
 		};
 		F2837A4115B9606900A5707B /* tolua */ = {
@@ -588,8 +558,6 @@
 				78947C7814EBB9B100DBD5A6 /* menu1.png in Resources */,
 				78947C7914EBB9B100DBD5A6 /* menu2.png in Resources */,
 				78DC4C9A15490B9500317402 /* Default.png in Resources */,
-				F2837A6C15B9606900A5707B /* Android.mk in Resources */,
-				F2837A6D15B9606900A5707B /* liblua.vcproj in Resources */,
 				D4EF94D715BD311700D803EB /* Icon-57.png in Resources */,
 				D4EF94D915BD311A00D803EB /* Icon-114.png in Resources */,
 				D4EF94DB15BD311E00D803EB /* Icon-72.png in Resources */,
@@ -684,7 +652,7 @@
 				GCC_PREFIX_HEADER = HelloLua_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					USE_FILE32API,
-					TARGET_OS_IPHONE,
+					CC_TARGET_OS_IPHONE,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
@@ -733,7 +701,7 @@
 				GCC_PREFIX_HEADER = HelloLua_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					USE_FILE32API,
-					TARGET_OS_IPHONE,
+					CC_TARGET_OS_IPHONE,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;

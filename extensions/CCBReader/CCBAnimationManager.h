@@ -39,6 +39,7 @@ private:
     SEL_CallFunc mAnimationCompleteCallbackFunc;
     CCObject *mTarget;
     
+    
 public:
     CCBAnimationManager();
     ~CCBAnimationManager();
@@ -46,6 +47,8 @@ public:
     virtual bool init();
     
     CCArray* getSequences();
+    void setSequences(CCArray* seq);
+
     
     int getAutoPlaySequenceId();
     void setAutoPlaySequenceId(int autoPlaySequenceId);
@@ -77,15 +80,23 @@ public:
     
     const char* getRunningSequenceName();
     
-    const CCSize& getContainerSize(CCNode* pNode);
+    CCSize getContainerSize(CCNode* pNode);
     
     void addNode(CCNode *pNode, CCDictionary *pSeq);
     void setBaseValue(CCObject *pValue, CCNode *pNode, const char *pPropName);
     void moveAnimationsFromNode(CCNode* fromNode, CCNode* toNode);
 
-    void runAnimations(const char *pName, float fTweenDuration);
-    void runAnimations(const char *pName);
-    void runAnimations(int nSeqId, float fTweenDuraiton);
+    /** @deprecated This interface will be deprecated sooner or later.*/
+    CC_DEPRECATED_ATTRIBUTE void runAnimations(const char *pName, float fTweenDuration);
+    /** @deprecated This interface will be deprecated sooner or later.*/
+    CC_DEPRECATED_ATTRIBUTE void runAnimations(const char *pName);
+    /** @deprecated This interface will be deprecated sooner or later.*/
+    CC_DEPRECATED_ATTRIBUTE void runAnimations(int nSeqId, float fTweenDuraiton);
+
+    void runAnimationsForSequenceNamedTweenDuration(const char *pName, float fTweenDuration);
+    void runAnimationsForSequenceNamed(const char *pName);
+    void runAnimationsForSequenceIdTweenDuration(int nSeqId, float fTweenDuraiton);
+
     void setAnimationCompletedCallback(CCObject *target, SEL_CallFunc callbackFunc);
 
     void debug();

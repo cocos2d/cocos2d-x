@@ -57,6 +57,10 @@ THE SOFTWARE.
 // opengl
 #include "CCGL.h"
 
+#include <string>
+
+using namespace std;
+
 
 NS_CC_BEGIN
 
@@ -171,13 +175,30 @@ bool CCParticleSystem::initWithFile(const char *plistFile)
     CCDictionary *dict = CCDictionary::createWithContentsOfFileThreadSafe(m_sPlistFile.c_str());
 
     CCAssert( dict != NULL, "Particles: file not found");
-    bRet = this->initWithDictionary(dict);
+    
+    // XXX compute path from a path, should define a function somewhere to do it
+    string listFilePath = plistFile;
+    if (listFilePath.find('/') != string::npos)
+    {
+        listFilePath = listFilePath.substr(0, listFilePath.rfind('/') + 1);
+        bRet = this->initWithDictionary(dict, listFilePath.c_str());
+    }
+    else
+    {
+        bRet = this->initWithDictionary(dict, "");
+    }
+    
     dict->release();
 
     return bRet;
 }
 
 bool CCParticleSystem::initWithDictionary(CCDictionary *dictionary)
+{
+    return initWithDictionary(dictionary, "");
+}
+
+bool CCParticleSystem::initWithDictionary(CCDictionary *dictionary, const char *dirname)
 {
     bool bRet = false;
     unsigned char *buffer = NULL;
@@ -292,17 +313,29 @@ bool CCParticleSystem::initWithDictionary(CCDictionary *dictionary)
 
                 // texture        
                 // Try to get the texture from the cache
-                const char* textureName = dictionary->valueForKey("textureFileName")->getCString();
-                std::string fullpath = CCFileUtils::sharedFileUtils()->fullPathFromRelativeFile(textureName, m_sPlistFile.c_str());
+                std::string textureName = dictionary->valueForKey("textureFileName")->getCString();
+                
+                size_t rPos = textureName.rfind('/');
+               
+                if (rPos != string::npos)
+                {
+                    string textureDir = textureName.substr(0, rPos + 1);
+                    
+                    if (dirname != NULL && textureDir != dirname)
+                    {
+                        textureName = textureName.substr(rPos+1);
+                        textureName = string(dirname) + textureName;
+                    }
+                }
                 
                 CCTexture2D *tex = NULL;
                 
-                if (strlen(textureName) > 0)
+                if (textureName.length() > 0)
                 {
                     // set not pop-up message box when load image failed
                     bool bNotify = CCFileUtils::sharedFileUtils()->isPopupNotify();
                     CCFileUtils::sharedFileUtils()->setPopupNotify(false);
-                    tex = CCTextureCache::sharedTextureCache()->addImage(fullpath.c_str());
+                    tex = CCTextureCache::sharedTextureCache()->addImage(textureName.c_str());
                     
                     // reset the value of UIImage notify
                     CCFileUtils::sharedFileUtils()->setPopupNotify(bNotify);
@@ -335,7 +368,7 @@ bool CCParticleSystem::initWithDictionary(CCDictionary *dictionary)
                         CCAssert(isOK, "CCParticleSystem: error init image with Data");
                         CC_BREAK_IF(!isOK);
                         
-                        setTexture(CCTextureCache::sharedTextureCache()->addUIImage(image, fullpath.c_str()));
+                        setTexture(CCTextureCache::sharedTextureCache()->addUIImage(image, textureName.c_str()));
 
                         image->release();
                     }
@@ -486,7 +519,7 @@ void CCParticleSystem::initParticle(tCCParticle* particle)
     }
     else if ( m_ePositionType == kCCPositionTypeRelative )
     {
-        particle->startPos = m_tPosition;
+        particle->startPos = m_obPosition;
     }
 
     // direction
@@ -591,10 +624,10 @@ void CCParticleSystem::update(float dt)
     }
     else if (m_ePositionType == kCCPositionTypeRelative)
     {
-        currentPosition = m_tPosition;
+        currentPosition = m_obPosition;
     }
 
-    if (m_bIsVisible)
+    if (m_bVisible)
     {
         while (m_uParticleIdx < m_uParticleCount)
         {
@@ -677,8 +710,8 @@ void CCParticleSystem::update(float dt)
                 // don't update the particle with the new position information, it will interfere with the radius and tangential calculations
                 if (m_pBatchNode)
                 {
-                    newPos.x+=m_tPosition.x;
-                    newPos.y+=m_tPosition.y;
+                    newPos.x+=m_obPosition.x;
+                    newPos.y+=m_obPosition.y;
                 }
 
                 updateQuadWithParticle(p, newPos);
@@ -990,7 +1023,7 @@ void CCParticleSystem::setDuration(float var)
     m_fDuration = var;
 }
 
-const CCPoint& CCParticleSystem::getSourcePosition()
+CCPoint CCParticleSystem::getSourcePosition()
 {
     return m_tSourcePosition;
 }
@@ -1000,7 +1033,7 @@ void CCParticleSystem::setSourcePosition(const CCPoint& var)
     m_tSourcePosition = var;
 }
 
-const CCPoint& CCParticleSystem::getPosVar()
+CCPoint CCParticleSystem::getPosVar()
 {
     return m_tPosVar;
 }
@@ -1090,7 +1123,7 @@ void CCParticleSystem::setEndSizeVar(float var)
     m_fEndSizeVar = var;
 }
 
-const ccColor4F& CCParticleSystem::getStartColor()
+ccColor4F CCParticleSystem::getStartColor()
 {
     return m_tStartColor;
 }
@@ -1100,7 +1133,7 @@ void CCParticleSystem::setStartColor(const ccColor4F& var)
     m_tStartColor = var;
 }
 
-const ccColor4F& CCParticleSystem::getStartColorVar()
+ccColor4F CCParticleSystem::getStartColorVar()
 {
     return m_tStartColorVar;
 }
@@ -1110,7 +1143,7 @@ void CCParticleSystem::setStartColorVar(const ccColor4F& var)
     m_tStartColorVar = var;
 }
 
-const ccColor4F& CCParticleSystem::getEndColor()
+ccColor4F CCParticleSystem::getEndColor()
 {
     return m_tEndColor;
 }
@@ -1120,7 +1153,7 @@ void CCParticleSystem::setEndColor(const ccColor4F& var)
     m_tEndColor = var;
 }
 
-const ccColor4F& CCParticleSystem::getEndColorVar()
+ccColor4F CCParticleSystem::getEndColorVar()
 {
     return m_tEndColorVar;
 }

@@ -123,11 +123,99 @@ enum {
 
 class CC_DLL CCNode : public CCObject
 {
+protected:
+    // rotation angle
+    float m_fRotationX, m_fRotationY;
+    
+    // scaling factors
+    float m_fScaleX, m_fScaleY;
+    
+    // openGL real Z vertex
+    float m_fVertexZ;
+    
+    // position of the node
+    CCPoint m_obPosition;
+    
+    // skew angles
+    float m_fSkewX, m_fSkewY;
+    
+    // anchor point in points
+    CCPoint m_obAnchorPointInPoints;
+    // anchor point normalized (NOT in points)
+    CCPoint m_obAnchorPoint;
+    
+    // untransformed size of the node
+    CCSize m_obContentSize;
+    
+    // transform
+    CCAffineTransform m_sTransform, m_sInverse;
+    
+    // a Camera
+    CCCamera *m_pCamera;
+    
+    // a Grid
+    CCGridBase *m_pGrid;
+    
+    // z-order value
+    int m_nZOrder;
+    
+    // array of children
+    CCArray *m_pChildren;
+    
+    // weak ref to parent
+    CCNode *m_pParent;
+    
+    // a tag. any number you want to assign to the node
+    int m_nTag;
+    
+    // user data field
+    void *m_pUserData;
+    CCObject *m_pUserObject;
+    
+    // Shader
+    CCGLProgram *m_pShaderProgram;
+    
+    // Server side state
+    ccGLServerState m_eGLServerState;
+    
+    // used to preserve sequence while sorting children with the same zOrder
+    unsigned int m_uOrderOfArrival;
+    
+    // scheduler used to schedule timers and updates
+    CCScheduler *m_pScheduler;
+    
+    // ActionManager used to handle all the actions
+    CCActionManager *m_pActionManager;
+    
+    // Is running
+    bool m_bRunning;
+    
+    bool m_bTransformDirty;
+    bool m_bInverseDirty;
+    
+    // is visible
+    bool m_bVisible;
+    
+    // If true, the Anchor Point will be (0,0) when you position the CCNode.
+	// Used by CCLayer and CCScene
+    bool m_bIgnoreAnchorPointForPosition;
 
-    // variable property
+    bool m_bReorderChildDirty;
+    
+    // Properties for script
+    
+    // script handler
+    int m_nScriptHandler;
+    
+    // script type, lua or javascript
+    ccScriptType m_eScriptType;
 
+public:
+    // getter & setter
+    
     /** The z order of the node relative to it's "brothers": children of the same parent */
-    CC_PROPERTY_READONLY(int, m_nZOrder, ZOrder)
+    virtual int getZOrder();
+    virtual void setZOrder(int nZOrder);
 
     /** The real openGL Z vertex.
      Differences between openGL Z vertex and cocos2d Z order:
@@ -137,29 +225,152 @@ class CC_DLL CCNode : public CCObject
      @warning: Use it at your own risk since it might break the cocos2d parent-children z order
      @since v0.8
      */
-    CC_PROPERTY(float, m_fVertexZ, VertexZ)
+    virtual float getVertexZ();
+    virtual void setVertexZ(float fVertexZ);
 
-    /** The rotation (angle) of the node in degrees. 0 is the default rotation angle. Positive values rotate node CW. */
-    CC_PROPERTY(float, m_fRotation, Rotation)
+    /** The scale factor of the node. 1.0 is the default scale factor. It only modifies the X scale factor. */
+    virtual float getScaleX();
+    virtual void setScaleX(float fScaleX);
 
+    /** The scale factor of the node. 1.0 is the default scale factor. It only modifies the Y scale factor. */
+    virtual float getScaleY();
+    virtual void setScaleY(float fScaleY);
+
+    /** Position (x,y) of the node in OpenGL coordinates. (0,0) is the left-bottom corner. */
+    virtual CCPoint getPosition();
+    virtual void setPosition(const CCPoint &position);
+    
+    /** The X skew angle of the node in degrees.
+     This angle describes the shear distortion in the X direction.
+     Thus, it is the angle between the Y axis and the left edge of the shape
+     The default skewX angle is 0. Positive values distort the node in a CW direction.
+     */
+    virtual float getSkewX();
+    virtual void setSkewX(float fSkewX);
+    
+    /** The Y skew angle of the node in degrees.
+     This angle describes the shear distortion in the Y direction.
+     Thus, it is the angle between the X axis and the bottom edge of the shape
+     The default skewY angle is 0. Positive values distort the node in a CCW direction.
+     */
+    virtual float getSkewY();
+    virtual void setSkewY(float fSkewY);
+    
+    virtual CCArray* getChildren();
+    
+    /** A CCCamera object that lets you move the node using a gluLookAt
+     */
+    virtual CCCamera* getCamera();
+    
+    /** A CCGrid object that is used when applying effects */
+    virtual CCGridBase* getGrid();
+    virtual void setGrid(CCGridBase *pGrid);
+    
+    /** A tag used to identify the node easily */
+    virtual int getTag();
+    virtual void setTag(int nTag);
+    
+    /** A custom user data pointer */
+    virtual void* getUserData();
+    virtual void setUserData(void *pUserData);
+    
+    /** Similar to userData, but instead of holding a void* it holds an id */
+    virtual CCObject* getUserObject();
+    virtual void setUserObject(CCObject *pUserObject); //retain
+    
+    /** Shader Program
+     @since v2.0
+     */
+    virtual CCGLProgram* getShaderProgram();
+    virtual void setShaderProgram(CCGLProgram *pShaderProgram);
+    
+    /** used internally for zOrder sorting, don't change this manually */
+    virtual unsigned int getOrderOfArrival();
+    virtual void setOrderOfArrival(unsigned int uOrderOfArrival);
+    
+    /** GL server side state
+     @since v2.0
+     */
+    virtual ccGLServerState getGLServerState();
+    virtual void setGLServerState(ccGLServerState glServerState);
+    
+    /** CCActionManager used by all the actions.
+     IMPORTANT: If you set a new CCActionManager, then previously created actions are going to be removed.
+     @since v2.0
+     */
+    virtual CCActionManager* getActionManager();
+    virtual void setActionManager(CCActionManager *pActionManager);
+    
+    /** CCScheduler used to schedule all "updates" and timers.
+     IMPORTANT: If you set a new CCScheduler, then previously created timers/update are going to be removed.
+     @since v2.0
+     */
+    virtual CCScheduler* getScheduler();
+    virtual void setScheduler(CCScheduler *pScheduler);
+    
+    /** A weak reference to the parent */
+    virtual CCNode* getParent();
+    virtual void setParent(CCNode *pParent);
+    
+    /** anchorPoint is the point around which all transformations and positioning manipulations take place.
+     It's like a pin in the node where it is "attached" to its parent.
+     The anchorPoint is normalized, like a percentage. (0,0) means the bottom-left corner and (1,1) means the top-right corner.
+     But you can use values higher than (1,1) and lower than (0,0) too.
+     The default anchorPoint is (0.5,0.5), so it starts in the center of the node.
+     @since v0.8
+     */
+    virtual CCPoint getAnchorPoint();
+    virtual void setAnchorPoint(const CCPoint &anchorPoint);
+    
+    /** The anchorPoint in absolute pixels.
+     Since v0.8 you can only read it. If you wish to modify it, use anchorPoint instead
+     */
+    virtual CCPoint getAnchorPointInPoints();
+    
+    /** The untransformed size of the node.
+     The contentSize remains the same no matter the node is scaled or rotated.
+     All nodes has a size. Layer and Scene has the same size of the screen.
+     @since v0.8
+     */
+    virtual CCSize getContentSize();
+    virtual void setContentSize(const CCSize &contentSize);
+
+    virtual bool isVisible();
+    virtual void setVisible(bool visible);
+    
     /** Get the scale factor of the node.
      @warning: Assert when m_fScaleX != m_fScaleY.
      */
-    float getScale();
+    virtual float getScale();
     /** The scale factor of the node. 1.0 is the default scale factor. It modifies the X and Y scale at the same time. */
-    void setScale(float scale);
+    virtual void setScale(float scale);
+    
+    /** The rotation (angle) of the node in degrees. 0 is the default rotation angle. Positive values rotate node CW. */
+    virtual float getRotation();
+    virtual void setRotation(float fRotation);
+    
+    /** The rotation (angle) of the node in degrees. 0 is the default rotation angle. Positive values rotate node CW. It only modifies the X rotation performing a horizontal rotational skew . */
+    virtual float getRotationX();
+    virtual void setRotationX(float fRotaionX);
+    /** The rotation (angle) of the node in degrees. 0 is the default rotation angle. Positive values rotate node CW. It only modifies the Y rotation performing a vertical rotational skew . */
+    virtual float getRotationY();
+    virtual void setRotationY(float fRotationY);
 
-    /** The scale factor of the node. 1.0 is the default scale factor. It only modifies the X scale factor. */
-    CC_PROPERTY(float, m_fScaleX, ScaleX)
+    /** whether or not the node is running */
+    virtual bool isRunning();
 
-    /** The scale factor of the node. 1.0 is the default scale factor. It only modifies the Y scale factor. */
-    CC_PROPERTY(float, m_fScaleY, ScaleY)
+    // If true, the Anchor Point will be (0,0) when you position the CCNode.
+	// Used by CCLayer and CCScene
+    virtual bool isIgnoreAnchorPointForPosition();
+    virtual void ignoreAnchorPointForPosition(bool isIgnoreAnchorPointForPosition);
 
-    /** Position (x,y) of the node in OpenGL coordinates. (0,0) is the left-bottom corner. */
-    CC_PROPERTY_PASS_BY_REF(CCPoint, m_tPosition, Position)
-
+    /** Get children count */
+    unsigned int getChildrenCount(void);
+    
+    inline int getScriptHandler() { return m_nScriptHandler; };
+    
     /** get/set Position for Lua (pass number faster than CCPoint object)
-
+     
      lua code:
      local pos  = node:getPositionLua() -- return CCPoint object from C++
      local x, y = node:getPosition()    -- return x, y values from C++
@@ -178,137 +389,8 @@ class CC_DLL CCNode : public CCObject
     void setPositionY(float y);
     void setPosition(float x, float y);
     void _setZOrder(int z);
-    /** The X skew angle of the node in degrees.
-     This angle describes the shear distortion in the X direction.
-     Thus, it is the angle between the Y axis and the left edge of the shape
-     The default skewX angle is 0. Positive values distort the node in a CW direction.
-     */
-    CC_PROPERTY(float, m_fSkewX, SkewX)
-
-    /** The Y skew angle of the node in degrees.
-     This angle describes the shear distortion in the Y direction.
-     Thus, it is the angle between the X axis and the bottom edge of the shape
-     The default skewY angle is 0. Positive values distort the node in a CCW direction.
-     */
-    CC_PROPERTY(float, m_fSkewY, SkewY)
-
-    CC_PROPERTY_READONLY(CCArray*, m_pChildren, Children)
-
-    /** Get children count */
-    unsigned int getChildrenCount(void);
-
-    /** A CCCamera object that lets you move the node using a gluLookAt
-     */
-    CC_PROPERTY_READONLY(CCCamera *, m_pCamera, Camera)
-
-    /** A CCGrid object that is used when applying effects */
-    CC_PROPERTY(CCGridBase *, m_pGrid, Grid)
-
-    /** Whether of not the node is visible. Default is true */
-protected:
-    bool m_bIsVisible;
-public:
-    virtual bool isVisible();
-    virtual void setVisible(bool visible);
-
-
-    /** anchorPoint is the point around which all transformations and positioning manipulations take place.
-     It's like a pin in the node where it is "attached" to its parent.
-     The anchorPoint is normalized, like a percentage. (0,0) means the bottom-left corner and (1,1) means the top-right corner.
-     But you can use values higher than (1,1) and lower than (0,0) too.
-     The default anchorPoint is (0.5,0.5), so it starts in the center of the node.
-     @since v0.8
-     */
-    CC_PROPERTY_PASS_BY_REF(CCPoint, m_tAnchorPoint, AnchorPoint)
-
-    /** The anchorPoint in absolute pixels.
-     Since v0.8 you can only read it. If you wish to modify it, use anchorPoint instead
-     */
-    CC_PROPERTY_READONLY_PASS_BY_REF(CCPoint, m_tAnchorPointInPoints, AnchorPointInPoints)
-
-    /** The untransformed size of the node.
-     The contentSize remains the same no matter the node is scaled or rotated.
-     All nodes has a size. Layer and Scene has the same size of the screen.
-     @since v0.8
-     */
-    CC_PROPERTY_PASS_BY_REF(CCSize, m_tContentSize, ContentSize)
-
-    /** whether or not the node is running */
-    bool m_bIsRunning;
-    bool isRunning();
-
-    /** A weak reference to the parent */
-    CC_PROPERTY(CCNode *, m_pParent, Parent)
-
-    // If true, the Anchor Point will be (0,0) when you position the CCNode.
-	// Used by CCLayer and CCScene
-    bool m_bIgnoreAnchorPointForPosition;
-    bool isIgnoreAnchorPointForPosition();
-    void ignoreAnchorPointForPosition(bool isIgnoreAnchorPointForPosition);
-
-    /** A tag used to identify the node easily */
-    CC_PROPERTY(int, m_nTag, Tag)
-
-    /** A custom user data pointer */
-    CC_PROPERTY(void *, m_pUserData, UserData)
-    /** Similar to userData, but instead of holding a void* it holds an id */
-    CC_SYNTHESIZE_RETAIN(CCObject*, m_pUserObject, UserObject);
-
-    /** Shader Program
-     @since v2.0
-     */
-    CC_SYNTHESIZE_RETAIN(CCGLProgram*, m_pShaderProgram, ShaderProgram);
-
-    /** used internally for zOrder sorting, don't change this manually */
-    CC_SYNTHESIZE(int, m_nOrderOfArrival, OrderOfArrival);
-
-    /** GL server side state
-     @since v2.0
-    */
-    CC_SYNTHESIZE(ccGLServerState, m_glServerState, GLServerState);
-
-    /** CCActionManager used by all the actions.
-     IMPORTANT: If you set a new CCActionManager, then previously created actions are going to be removed.
-     @since v2.0
-     */
-    CC_PROPERTY(CCActionManager*, m_pActionManager, ActionManager);
-
-    /** CCScheduler used to schedule all "updates" and timers.
-     IMPORTANT: If you set a new CCScheduler, then previously created timers/update are going to be removed.
-     @since v2.0
-     */
-    CC_PROPERTY(CCScheduler*, m_pScheduler, Scheduler);
-
-    inline int getScriptHandler() { return m_nScriptHandler; };
-
-protected:
-
-    // transform
-    CCAffineTransform m_tTransform, m_tInverse;
-
-    // To reduce memory, place bools that are not properties here:
-    bool m_bIsTransformDirty;
-    bool m_bIsInverseDirty;
-    bool m_bReorderChildDirty;
-    int m_nScriptHandler;
-    ccScriptType m_eScriptType;
-private:
-    //! lazy allocs
-    void childrenAlloc(void);
-
-    //! helper that reorder a child
-    void insertChild(CCNode* child, int z);
-
-    //! used internally to alter the zOrder variable. DON'T call this method manually
-    void setZOrder(int z);
-    
-    
-    void detachChild(CCNode *child, bool doCleanup);
-
-    CCPoint convertToWindowSpace(const CCPoint& nodePoint);
 
 public:
-
     CCNode(void);
 
     virtual ~CCNode(void);
@@ -380,21 +462,42 @@ public:
 
     // composition: REMOVE
 
+    /** Remove itself from its parent node forcing a cleanup.
+     If the node orphan, then nothing happens.
+     @since v2.1
+     */
+    virtual void removeFromParent();
+
     /** Remove itself from its parent node. If cleanup is true, then also remove all actions and callbacks.
      If the node orphan, then nothing happens.
      @since v0.99.3
      */
-    void removeFromParentAndCleanup(bool cleanup);
+    virtual void removeFromParentAndCleanup(bool cleanup);
+
+    /** Removes a child from the container forcing a cleanup
+     @since v2.1
+     */
+    virtual void removeChild(CCNode* child);
 
     /** Removes a child from the container. It will also cleanup all running actions depending on the cleanup parameter.
      @since v0.7.1
      */
     virtual void removeChild(CCNode* child, bool cleanup);
 
+    /** Removes a child from the container by tag value forcing a cleanup.
+     @since v2.1
+     */
+    virtual void removeChildByTag(int tag);
+
     /** Removes a child from the container by tag value. It will also cleanup all running actions depending on the cleanup parameter
      @since v0.7.1
      */
-    void removeChildByTag(int tag, bool cleanup);
+    virtual void removeChildByTag(int tag, bool cleanup);
+
+    /** Removes all children from the container forcing a cleanup.
+     @since v2.1
+     */
+    virtual void removeAllChildren();
 
     /** Removes all children from the container and do a cleanup all running actions depending on the cleanup parameter.
      @since v0.7.1
@@ -566,6 +669,10 @@ public:
      Called internally by onExit
      */
     void pauseSchedulerAndActions(void);
+    
+    /* Update will be called automatically every frame if "scheduleUpdate" is called, and the node is "live"
+     */
+    virtual void update(float fDelta);
 
     // transformation methods
 
@@ -619,6 +726,17 @@ public:
      @since v0.7.1
      */
     CCPoint convertTouchToNodeSpaceAR(CCTouch * touch);
+    
+private:
+    //! lazy allocs
+    void childrenAlloc(void);
+    
+    //! helper that reorder a child
+    void insertChild(CCNode* child, int z);
+    
+    void detachChild(CCNode *child, bool doCleanup);
+    
+    CCPoint convertToWindowSpace(const CCPoint& nodePoint);
 };
 
 // end of base_node group

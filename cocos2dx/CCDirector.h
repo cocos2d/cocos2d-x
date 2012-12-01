@@ -159,6 +159,12 @@ public:
      */
     CCNode* getNotificationNode();
     void setNotificationNode(CCNode *node);
+    
+    /** CCDirector delegate. It shall implemente the CCDirectorDelegate protocol
+     @since v0.99.5
+     */
+    CCDirectorDelegate* getDelegate() const;
+    void setDelegate(CCDirectorDelegate* pDelegate);
 
     // window size
 
@@ -181,7 +187,7 @@ public:
     CCPoint getVisibleOrigin();
 
     /** converts a UIKit coordinate to an OpenGL coordinate
-     Useful to convert (multi) touches coordinates to the current layout (portrait or landscape)
+     Useful to convert (multi) touch coordinates to the current layout (portrait or landscape)
      */
     CCPoint convertToGL(const CCPoint& obPoint);
 

@@ -371,7 +371,7 @@ void CCScale9Sprite::setContentSize(const CCSize &size)
 
 void CCScale9Sprite::updatePositions()
 {
-    CCSize size = this->m_tContentSize;
+    CCSize size = this->m_obContentSize;
 
     float sizableWidth = size.width - topLeft->getContentSize().width - topRight->getContentSize().width;
     float sizableHeight = size.height - topLeft->getContentSize().height - bottomRight->getContentSize().height;
@@ -663,7 +663,8 @@ void CCScale9Sprite::setColor(const ccColor3B& color3)
         }
     }
 }
-const ccColor3B& CCScale9Sprite::getColor(void)
+
+ccColor3B CCScale9Sprite::getColor(void)
 {
     return m_tColor;
 }
@@ -708,7 +709,7 @@ CCSize CCScale9Sprite::getPreferredSize()
 
 void CCScale9Sprite::setCapInsets(CCRect capInsets)
 {
-    CCSize contentSize = this->m_tContentSize;
+    CCSize contentSize = this->m_obContentSize;
     this->updateWithBatchNode(this->scale9Image, this->m_spriteRect, m_bSpriteFrameRotated, capInsets);
     this->setContentSize(contentSize);
 }

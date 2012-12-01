@@ -5,7 +5,8 @@
 #include "ScriptingCore.h"
 #include "generated/cocos2dx.hpp"
 #include "cocos2d_specifics.hpp"
-
+#include "js_bindings_chipmunk_registration.h"
+#include "js_bindings_ccbreader.h"
 USING_NS_CC;
 using namespace CocosDenshion;
 
@@ -36,12 +37,14 @@ bool AppDelegate::applicationDidFinishLaunching()
     ScriptingCore* sc = ScriptingCore::getInstance();
     sc->addRegisterCallback(register_all_cocos2dx);
     sc->addRegisterCallback(register_cocos2dx_js_extensions);
-    
+    sc->addRegisterCallback(register_CCBuilderReader);
+    sc->addRegisterCallback(jsb_register_chipmunk);
     sc->start();
     
     CCScriptEngineProtocol *pEngine = ScriptingCore::getInstance();
     CCScriptEngineManager::sharedManager()->setScriptEngine(pEngine);
-    ScriptingCore::getInstance()->runScript("js/MoonWarriors-native.js");
+    ScriptingCore::getInstance()->runScript("MoonWarriors-native.js");
+
     return true;
 }
 
