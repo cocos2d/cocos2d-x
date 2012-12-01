@@ -6,7 +6,7 @@
 NS_CC_EXT_BEGIN
 
 #define CCB_MEMBERVARIABLEASSIGNER_GLUE(TARGET, MEMBERVARIABLENAME, MEMBERVARIABLETYPE, MEMBERVARIABLE) \
-    if (pTarget == TARGET && pMemberVariableName->compare(MEMBERVARIABLENAME) == 0) { \
+    if (pTarget == TARGET && 0 == strcmp(pMemberVariableName, (MEMBERVARIABLENAME))) { \
         MEMBERVARIABLETYPE pOldVar = MEMBERVARIABLE; \
         MEMBERVARIABLE = dynamic_cast<MEMBERVARIABLETYPE>(pNode); \
         CC_ASSERT(MEMBERVARIABLE); \
@@ -21,7 +21,7 @@ class CCBMemberVariableAssigner {
     public:
         virtual ~CCBMemberVariableAssigner() {};
 
-        virtual bool onAssignCCBMemberVariable(CCObject * pTarget, CCString * pMemberVariableName, CCNode * pNode) = 0;
+        virtual bool onAssignCCBMemberVariable(CCObject* pTarget, const char* pMemberVariableName, CCNode* pNode) = 0;
 };
 
 NS_CC_EXT_END

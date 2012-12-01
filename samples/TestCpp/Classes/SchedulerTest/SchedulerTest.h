@@ -63,6 +63,7 @@ public:
     virtual ~SchedulerPauseResumeAll();
     virtual void onEnter();
     virtual void onExit();
+    virtual void update(float delta);
     virtual std::string title();
     virtual std::string subtitle();
 

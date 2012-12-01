@@ -53,27 +53,32 @@ public:
     @brief Get bool value by key, if the key doesn't exist, a default value will return.
      You can set the default value, or it is false.
     */
-    bool    getBoolForKey(const char* pKey, bool defaultValue = false);
+    bool    getBoolForKey(const char* pKey);
+    bool    getBoolForKey(const char* pKey, bool defaultValue);
     /**
     @brief Get integer value by key, if the key doesn't exist, a default value will return.
      You can set the default value, or it is 0.
     */
-    int        getIntegerForKey(const char* pKey, int defaultValue = 0);
+    int     getIntegerForKey(const char* pKey);
+    int     getIntegerForKey(const char* pKey, int defaultValue);
     /**
     @brief Get float value by key, if the key doesn't exist, a default value will return.
      You can set the default value, or it is 0.0f.
     */
-    float    getFloatForKey(const char* pKey, float defaultValue=0.0f);
+    float    getFloatForKey(const char* pKey);
+    float    getFloatForKey(const char* pKey, float defaultValue);
     /**
     @brief Get double value by key, if the key doesn't exist, a default value will return.
      You can set the default value, or it is 0.0.
     */
-    double  getDoubleForKey(const char* pKey, double defaultValue=0.0);
+    double  getDoubleForKey(const char* pKey);
+    double  getDoubleForKey(const char* pKey, double defaultValue);
     /**
     @brief Get string value by key, if the key doesn't exist, a default value will return.
     You can set the default value, or it is "".
     */
-    std::string getStringForKey(const char* pKey, const std::string & defaultValue = "");
+    std::string getStringForKey(const char* pKey);
+    std::string getStringForKey(const char* pKey, const std::string & defaultValue);
 
     // set value methods
 

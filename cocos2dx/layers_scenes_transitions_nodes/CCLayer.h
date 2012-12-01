@@ -41,7 +41,6 @@ typedef enum {
 	kCCTouchesOneByOne,
 } ccTouchesMode;
 
-
 /**
  * @addtogroup layer
  * @{
@@ -63,7 +62,7 @@ class CC_DLL CCLayer : public CCNode, public CCTouchDelegate, public CCAccelerom
 public:
     CCLayer();
     virtual ~CCLayer();
-    bool init();
+    virtual bool init();
 
     // @deprecated: This interface will be deprecated sooner or later.
     CC_DEPRECATED_ATTRIBUTE static CCLayer *node(void);
@@ -101,51 +100,52 @@ public:
     virtual void registerWithTouchDispatcher(void);
     
     /** Register script touch events handler */
-    void registerScriptTouchHandler(int nHandler, bool bIsMultiTouches = false, int nPriority = INT_MIN, bool bSwallowsTouches = false);
+    virtual void registerScriptTouchHandler(int nHandler, bool bIsMultiTouches = false, int nPriority = INT_MIN, bool bSwallowsTouches = false);
     /** Unregister script touch events handler */
-    void unregisterScriptTouchHandler(void);
+    virtual void unregisterScriptTouchHandler(void);
 
     /** whether or not it will receive Touch events.
     You can enable / disable touch events with this property.
     Only the touches of this node will be affected. This "method" is not propagated to it's children.
     @since v0.8.1
     */
-    bool isTouchEnabled();
-    void setTouchEnabled(bool value);
+    virtual bool isTouchEnabled();
+    virtual void setTouchEnabled(bool value);
     
-    void setTouchMode(ccTouchesMode mode);
-    void setTouchPriority(int priority);
-    int getTouchPriority();
-    int getTouchMode();
-                      
+    virtual void setTouchMode(ccTouchesMode mode);
+    virtual int getTouchMode();
+    
+    /** priority of the touch events. Default is 0 */
+    virtual void setTouchPriority(int priority);
+    virtual int getTouchPriority();
 
     /** whether or not it will receive Accelerometer events
     You can enable / disable accelerometer events with this property.
     @since v0.8.1
     */
-    bool isAccelerometerEnabled();
-    void setAccelerometerEnabled(bool value);
-    void setAccelerometerInterval(double interval);
+    virtual bool isAccelerometerEnabled();
+    virtual void setAccelerometerEnabled(bool value);
+    virtual void setAccelerometerInterval(double interval);
 
     /** whether or not it will receive keypad events
     You can enable / disable accelerometer events with this property.
     it's new in cocos2d-x
     */
-    bool isKeypadEnabled();
-    void setKeypadEnabled(bool value);
+    virtual bool isKeypadEnabled();
+    virtual void setKeypadEnabled(bool value);
     
     inline CCTouchScriptHandlerEntry* getScriptHandlerEntry() { return m_pScriptHandlerEntry; };
 protected:   
-    bool m_bIsTouchEnabled;
-    bool m_bIsAccelerometerEnabled;
-    bool m_bIsKeypadEnabled;
+    bool m_bTouchEnabled;
+    bool m_bAccelerometerEnabled;
+    bool m_bKeypadEnabled;
     
 private:
     // Script touch events handler
     CCTouchScriptHandlerEntry* m_pScriptHandlerEntry;
     
-    int m_bTouchPriority;
-    ccTouchesMode m_bTouchMode;
+    int m_nTouchPriority;
+    ccTouchesMode m_eTouchMode;
     
     int  excuteScriptTouchHandler(int nEventType, CCTouch *pTouch);
     int  excuteScriptTouchHandler(int nEventType, CCSet *pTouches);
@@ -217,17 +217,14 @@ public:
     virtual void setOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
     virtual bool isOpacityModifyRGB(void) { return false;}
 
-
 protected:
     virtual void updateColor();
 };
 
-
 //
 // CCLayerGradient
 //
-/** CCLayerGradient is a subclass of CCLayerColor that draws gradients across
-the background.
+/** @brief CCLayerGradient is a subclass of CCLayerColor that draws gradients across the background.
 
 All features from CCLayerColor are valid, plus the following new features:
 - direction
@@ -340,6 +337,12 @@ public:
     /** switches to a certain layer indexed by n. 
     The current (old) layer will be removed from it's parent with 'cleanup:YES'.
     */
+
+    /** initializes a CCMultiplexLayer with an array of layers
+    @since v2.1
+    */
+    bool initWithArray(CCArray* arrayOfLayers);
+
     void switchTo(unsigned int n);
     /** release the current layer and switches to another layer indexed by n.
     The current (old) layer will be removed from it's parent with 'cleanup:YES'.
@@ -350,6 +353,10 @@ public:
     static CCLayerMultiplex* node();
     
     static CCLayerMultiplex* create();
+    /** creates a CCMultiplexLayer with an array of layers.
+    @since v2.1
+    */
+    static CCLayerMultiplex* createWithArray(CCArray* arrayOfLayers);
 };
 
 

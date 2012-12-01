@@ -78,14 +78,14 @@ static void SetupPixelFormat(HDC hDC)
         PFD_DRAW_TO_WINDOW |        // render to window
         PFD_DOUBLEBUFFER,           // support double-buffering
         PFD_TYPE_RGBA,              // color type
-        32,                         // prefered color depth
+        32,                         // preferred color depth
         0, 0, 0, 0, 0, 0,           // color bits (ignored)
         0,                          // no alpha buffer
         0,                          // alpha bits (ignored)
         0,                          // no accumulation buffer
         0, 0, 0, 0,                 // accum bits (ignored)
-        16,                         // depth buffer
-        0,                          // no stencil buffer
+        24,                         // depth buffer
+        8,                          // no stencil buffer
         0,                          // no auxiliary buffers
         PFD_MAIN_PLANE,             // main layer
         0,                          // reserved
@@ -247,6 +247,9 @@ bool CCEGLView::initGL()
 		CCMessageBox("No OpenGL framebuffer support. Please upgrade the driver of your video card.", "OpenGL error");
 		return false;
 	}
+
+    // Enable point size by default on windows. 
+    glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
 
     return true;
 }

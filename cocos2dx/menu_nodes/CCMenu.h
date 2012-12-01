@@ -94,7 +94,7 @@ public:
     /** creates an empty CCMenu */
     static CCMenu* create();
 
-    /** creates a CCMenu with it's items */
+    /** creates a CCMenu with CCMenuItem objects */
     static CCMenu* create(CCMenuItem* item, ...);
 
     /** creates a CCMenu with a CCArray of CCMenuItem objects */
@@ -105,12 +105,12 @@ public:
       * number of variables.
     */
     static CCMenu* createWithItem(CCMenuItem* item);
+    
+    /** creates a CCMenu with CCMenuItem objects */
+    static CCMenu* createWithItems(CCMenuItem *firstItem, va_list args);
 
     /** initializes an empty CCMenu */
     bool init();
-
-    /** initializes a CCMenu with it's items */
-    bool initWithItems(CCMenuItem* item, va_list args);
 
     /** initializes a CCMenu with a NSArray of CCMenuItem objects */
     bool initWithArray(CCArray* pArrayOfItems);
@@ -132,10 +132,12 @@ public:
     /** align items in rows of columns */
     void alignItemsInColumns(unsigned int columns, ...);
     void alignItemsInColumns(unsigned int columns, va_list args);
+    void alignItemsInColumnsWithArray(CCArray* rows);
 
     /** align items in columns of rows */
     void alignItemsInRows(unsigned int rows, ...);
     void alignItemsInRows(unsigned int rows, va_list args);
+    void alignItemsInRowsWithArray(CCArray* columns);
 
     /** set event handler priority. By default it is: kCCMenuTouchPriority */
     void setHandlerPriority(int newPriority);

@@ -28,7 +28,7 @@
 #define DESIGN_RESOLUTION_2048X1536  2
 
 /* If you want to switch design resolution, change next line */
-#define TARGET_DESIGN_RESOLUTION_SIZE  DESIGN_RESOLUTION_2048X1536
+#define TARGET_DESIGN_RESOLUTION_SIZE  DESIGN_RESOLUTION_480X320
 
 typedef struct tagResource
 {

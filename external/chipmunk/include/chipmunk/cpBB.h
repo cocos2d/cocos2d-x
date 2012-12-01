@@ -123,7 +123,11 @@ static inline cpBool cpBBIntersectsSegment(cpBB bb, cpVect a, cpVect b)
 }
 
 /// Clamp a vector to a bounding box.
-cpVect cpBBClampVect(const cpBB bb, const cpVect v); // clamps the vector to lie within the bbox
+static inline cpVect
+cpBBClampVect(const cpBB bb, const cpVect v)
+{
+	return cpv(cpfclamp(v.x, bb.l, bb.r), cpfclamp(v.y, bb.b, bb.t));
+}
 
 // TODO edge case issue
 /// Wrap a vector to a bounding box.

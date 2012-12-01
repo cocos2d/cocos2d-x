@@ -6,15 +6,18 @@
 
 class JSScheduleWrapper;
 
+// JSScheduleWrapper* --> CCArray* since one js function may correspond to many targets.
+// To debug this, you could refer to JSScheduleWrapper::dump function.
+// It will prove that i'm right. :)
 typedef struct jsScheduleFunc_proxy {
-    void * ptr;
-    JSScheduleWrapper *obj;
+    JSObject* jsfuncObj;
+    CCArray*  targets; 
     UT_hash_handle hh;
 } schedFunc_proxy_t;
 
 typedef struct jsScheduleTarget_proxy {
-    void * ptr;
-    CCArray *obj;
+    CCNode*   nativeObj;
+    CCArray*  targets;
     UT_hash_handle hh;
 } schedTarget_proxy_t;
 
@@ -123,68 +126,32 @@ public:
     static void setTargetForNativeNode(CCNode *pNode, JSCallFuncWrapper *target);
     static CCArray * getTargetForNativeNode(CCNode *pNode);
 
-    void callbackFunc(CCNode *node) const {
-        
-        jsval valArr[2];
-        
-        JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
-        js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::CCNode>(cx, node);
-
-        JS_AddValueRoot(cx, valArr);
-
-        valArr[0] = OBJECT_TO_JSVAL(proxy->obj);
-        if(!JSVAL_IS_VOID(extraData)) {
-            valArr[1] = extraData;            
-        } else {
-            valArr[1] = JSVAL_NULL;
-        }
-        
-        jsval retval;
-        if(jsCallback != JSVAL_VOID && jsThisObj != JSVAL_VOID) {
-            JS_CallFunctionValue(cx, JSVAL_TO_OBJECT(jsThisObj), jsCallback, 2, valArr, &retval);
-        }
-        
-        JSCallFuncWrapper::setTargetForNativeNode(node, (JSCallFuncWrapper *)this);
-        
-        JS_RemoveValueRoot(cx, valArr);
-
-    }
-
+    void callbackFunc(CCNode *node) const;
 };
 
 
 class JSScheduleWrapper: public JSCallbackWrapper {
     
 public:
-    JSScheduleWrapper() {}
+    JSScheduleWrapper() : m_pTarget(NULL) {}
     virtual ~JSScheduleWrapper() {
         return;
     }
 
     static void setTargetForSchedule(jsval sched, JSScheduleWrapper *target);
-    static JSScheduleWrapper * getTargetForSchedule(jsval sched);
+    static CCArray * getTargetForSchedule(jsval sched);
     static void setTargetForNativeNode(CCNode *pNode, JSScheduleWrapper *target);
     static CCArray * getTargetForNativeNode(CCNode *pNode);
+    static void removeAllTargetsForNatiaveNode(CCNode* pNode);
+    static void dump();
 
     void pause();
     
-    void scheduleFunc(float dt) const {
-        
-        jsval retval = JSVAL_NULL, data = DOUBLE_TO_JSVAL(dt);
-        JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
-        
-        JSBool ok = JS_AddValueRoot(cx, &data);
-        if(!ok) {
-            return;
-        }
-        
-        if(!JSVAL_IS_VOID(jsCallback)  && !JSVAL_IS_VOID(jsThisObj)) {
-            JS_CallFunctionValue(cx, JSVAL_TO_OBJECT(jsThisObj), jsCallback, 1, &data, &retval);
-        }
-        
-        JS_RemoveValueRoot(cx, &data);
-        
-    }
+    void scheduleFunc(float dt) const;
+    CCObject* getTarget();
+    void setTarget(CCObject* pTarget);
+protected:
+    CCObject* m_pTarget;
 };
 
 

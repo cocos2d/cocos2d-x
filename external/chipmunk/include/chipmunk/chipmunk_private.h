@@ -188,7 +188,13 @@ void cpSpacePushFreshContactBuffer(cpSpace *space);
 cpContact *cpContactBufferGetArray(cpSpace *space);
 void cpSpacePushContacts(cpSpace *space, int count);
 
-void *cpSpaceGetPostStepData(cpSpace *space, void *key);
+typedef struct cpPostStepCallback {
+	cpPostStepFunc func;
+	void *key;
+	void *data;
+} cpPostStepCallback;
+
+cpPostStepCallback *cpSpaceGetPostStepCallback(cpSpace *space, void *key);
 
 cpBool cpSpaceArbiterSetFilter(cpArbiter *arb, cpSpace *space);
 void cpSpaceFilterArbiters(cpSpace *space, cpBody *body, cpShape *filter);

@@ -33,20 +33,11 @@ static inline cpVect cpv(const cpFloat x, const cpFloat y)
 	return v;
 }
 
-/// Returns the length of v.
-cpFloat cpvlength(const cpVect v);
-
 /// Spherical linearly interpolate between v1 and v2.
 cpVect cpvslerp(const cpVect v1, const cpVect v2, const cpFloat t);
 
 /// Spherical linearly interpolate between v1 towards v2 by no more than angle a radians
 cpVect cpvslerpconst(const cpVect v1, const cpVect v2, const cpFloat a);
-
-/// Returns the unit length vector for the given angle (in radians).
-cpVect cpvforangle(const cpFloat a);
-
-/// Returns the angular direction v is pointing in (in radians).
-cpFloat cpvtoangle(const cpVect v);
 
 ///	Returns a string representation of v. Intended mostly for debugging purposes and not production use.
 ///	@attention The string points to a static local and is reset every time the function is called.
@@ -115,6 +106,18 @@ static inline cpVect cpvproject(const cpVect v1, const cpVect v2)
 	return cpvmult(v2, cpvdot(v1, v2)/cpvdot(v2, v2));
 }
 
+/// Returns the unit length vector for the given angle (in radians).
+static inline cpVect cpvforangle(const cpFloat a)
+{
+	return cpv(cpfcos(a), cpfsin(a));
+}
+
+/// Returns the angular direction v is pointing in (in radians).
+static inline cpFloat cpvtoangle(const cpVect v)
+{
+	return cpfatan2(v.y, v.x);
+}
+
 /// Uses complex number multiplication to rotate v1 by v2. Scaling will occur if v1 is not a unit vector.
 static inline cpVect cpvrotate(const cpVect v1, const cpVect v2)
 {
@@ -131,6 +134,12 @@ static inline cpVect cpvunrotate(const cpVect v1, const cpVect v2)
 static inline cpFloat cpvlengthsq(const cpVect v)
 {
 	return cpvdot(v, v);
+}
+
+/// Returns the length of v.
+static inline cpFloat cpvlength(const cpVect v)
+{
+	return cpfsqrt(cpvdot(v, v));
 }
 
 /// Linearly interpolate between v1 and v2.
@@ -180,4 +189,24 @@ static inline cpBool cpvnear(const cpVect v1, const cpVect v2, const cpFloat dis
 {
 	return cpvdistsq(v1, v2) < dist*dist;
 }
+
 /// @}
+
+/// @defgroup cpMat2x2 cpMat2x2
+/// 2x2 matrix type used for tensors and such.
+/// @{
+
+static inline cpMat2x2
+cpMat2x2New(cpFloat a, cpFloat b, cpFloat c, cpFloat d)
+{
+	cpMat2x2 m = {a, b, c, d};
+	return m;
+}
+
+static inline cpVect
+cpMat2x2Transform(cpMat2x2 m, cpVect v)
+{
+	return cpv(v.x*m.a + v.y*m.b, v.x*m.c + v.y*m.d);
+}
+
+///@}

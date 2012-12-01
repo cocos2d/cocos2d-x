@@ -129,6 +129,8 @@ public:
     static CCFiniteTimeAction* create(CCFiniteTimeAction *pAction1, ...);
     /** helper constructor to create an array of sequenceable actions given an array */
     static CCFiniteTimeAction* create(CCArray *arrayOfActions);
+    /** helper constructor to create an array of sequence-able actions */
+    static CCFiniteTimeAction* create(CCFiniteTimeAction *pAction1, va_list args);
     /** creates the action */
     static CCSequence* createWithTwoActions(CCFiniteTimeAction *pActionOne, CCFiniteTimeAction *pActionTwo);
 
@@ -269,6 +271,9 @@ public:
 
     /** helper constructor to create an array of spawned actions */
     static CCFiniteTimeAction* create(CCFiniteTimeAction *pAction1, ...);
+    
+    /** helper constructor to create an array of spawned actions */
+    static CCFiniteTimeAction* create(CCFiniteTimeAction *pAction1, va_list args);
 
     /** helper constructor to create an array of spawned actions given an array */
     static CCFiniteTimeAction* create(CCArray *arrayOfActions);
@@ -288,24 +293,31 @@ protected:
 class CC_DLL CCRotateTo : public CCActionInterval
 {
 public:
+    /** creates the action
+     @deprecated: This interface will be deprecated sooner or later.
+     */
+    CC_DEPRECATED_ATTRIBUTE static CCRotateTo* actionWithDuration(float fDuration, float fDeltaAngle);
+    /** creates the action */
+    static CCRotateTo* create(float fDuration, float fDeltaAngle);
     /** initializes the action */
-    bool initWithDuration(float duration, float fDeltaAngle);
+    bool initWithDuration(float fDuration, float fDeltaAngle);
+    
+    /** creates the action with separate rotation angles */
+    static CCRotateTo* create(float fDuration, float fDeltaAngleX, float fDeltaAngleY);
+    virtual bool initWithDuration(float fDuration, float fDeltaAngleX, float fDeltaAngleY);
 
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void startWithTarget(CCNode *pTarget);
     virtual void update(float time);
-
-public:
-    /** creates the action 
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCRotateTo* actionWithDuration(float duration, float fDeltaAngle);
-    /** creates the action */
-    static CCRotateTo* create(float duration, float fDeltaAngle);
+    
 protected:
-    float m_fDstAngle;
-    float m_fStartAngle;
-    float m_fDiffAngle;
+    float m_fDstAngleX;
+    float m_fStartAngleX;
+    float m_fDiffAngleX;
+    
+    float m_fDstAngleY;
+    float m_fStartAngleY;
+    float m_fDiffAngleY;
 };
 
 /** @brief Rotates a CCNode object clockwise a number of degrees by modifying it's rotation attribute.
@@ -313,24 +325,28 @@ protected:
 class CC_DLL CCRotateBy : public CCActionInterval
 {
 public:
+    /** creates the action
+     @deprecated: This interface will be deprecated sooner or later.
+     */
+    CC_DEPRECATED_ATTRIBUTE static CCRotateBy* actionWithDuration(float fDuration, float fDeltaAngle);
+    /** creates the action */
+    static CCRotateBy* create(float fDuration, float fDeltaAngle);
     /** initializes the action */
-    bool initWithDuration(float duration, float fDeltaAngle);
+    bool initWithDuration(float fDuration, float fDeltaAngle);
+    
+    static CCRotateBy* create(float fDuration, float fDeltaAngleX, float fDeltaAngleY);
+    bool initWithDuration(float fDuration, float fDeltaAngleX, float fDeltaAngleY);
 
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void startWithTarget(CCNode *pTarget);
     virtual void update(float time);
     virtual CCActionInterval* reverse(void);
-
-public:
-    /** creates the action 
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCRotateBy* actionWithDuration(float duration, float fDeltaAngle);
-    /** creates the action */
-    static CCRotateBy* create(float duration, float fDeltaAngle);
+    
 protected:
-    float m_fAngle;
-    float m_fStartAngle;
+    float m_fAngleX;
+    float m_fStartAngleX;
+    float m_fAngleY;
+    float m_fStartAngleY;
 };
 
 /** @brief Moves a CCNode object to the position x,y. x and y are absolute coordinates by modifying it's position attribute.
@@ -528,6 +544,10 @@ public:
 
     /** creates the action with a duration and a bezier configuration */
     static CCBezierTo* create(float t, const ccBezierConfig& c);
+    bool initWithDuration(float t, const ccBezierConfig &c);
+    
+protected:
+    ccBezierConfig m_sToConfig;
 };
 
 /** @brief Scales a CCNode object to a zoom factor by modifying it's scale attribute.
@@ -566,7 +586,7 @@ protected:
     float m_fScaleX;
     float m_fScaleY;
     float m_fStartScaleX;
-      float m_fStartScaleY;
+    float m_fStartScaleY;
     float m_fEndScaleX;
     float m_fEndScaleY;
     float m_fDeltaX;
@@ -619,8 +639,13 @@ public:
     CC_DEPRECATED_ATTRIBUTE static CCBlink* actionWithDuration(float duration, unsigned int uBlinks);
     /** creates the action */
     static CCBlink* create(float duration, unsigned int uBlinks);
+    
+    virtual void startWithTarget(CCNode *pTarget);
+    virtual void stop();
+    
 protected:
     unsigned int m_nTimes;
+    bool m_bOriginalState;
 };
 
 /** @brief Fades In an object that implements the CCRGBAProtocol protocol. It modifies the opacity from 0 to 255.

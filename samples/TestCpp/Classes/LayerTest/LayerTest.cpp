@@ -12,7 +12,7 @@ CCLayer* restartTestAction();
 
 static int sceneIdx = -1; 
 
-#define MAX_LAYER    7
+#define MAX_LAYER    8
 
 CCLayer* createTestLayer(int nIndex)
 {
@@ -25,6 +25,7 @@ CCLayer* createTestLayer(int nIndex)
         case 4: return new LayerIgnoreAnchorPointPos();
         case 5: return new LayerIgnoreAnchorPointRot();
         case 6: return new LayerIgnoreAnchorPointScale();
+        case 7: return new LayerExtendedBlendOpacityTest();
     }
 
     return NULL;
@@ -162,12 +163,6 @@ void LayerTest1::onEnter()
     addChild(layer, 1, kTagLayer);
 }
 
-void LayerTest1::registerWithTouchDispatcher()
-{
-    CCDirector* pDirector = CCDirector::sharedDirector();
-    pDirector->getTouchDispatcher()->addTargetedDelegate(this, kCCMenuHandlerPriority + 1, true);
-}
-
 void LayerTest1::updateSize(CCPoint &touchLocation)
 {    
     CCSize s = CCDirector::sharedDirector()->getWinSize();
@@ -179,27 +174,22 @@ void LayerTest1::updateSize(CCPoint &touchLocation)
     l->setContentSize( newSize );
 }
 
-bool LayerTest1::ccTouchBegan(CCTouch* touch, CCEvent* event)
+void LayerTest1::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
 {
-    CCPoint touchLocation = touch->getLocation();
-
-    updateSize(touchLocation);
-
-    return true;
+    ccTouchesMoved(pTouches, pEvent);
 }
 
-void LayerTest1::ccTouchMoved(CCTouch* touch, CCEvent* event)
+void LayerTest1::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
 {
+    CCTouch *touch = (CCTouch*)pTouches->anyObject();
     CCPoint touchLocation = touch->getLocation();
 
     updateSize(touchLocation);
 }
 
-void LayerTest1::ccTouchEnded(CCTouch* touch, CCEvent* event)
+void LayerTest1::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
 {
-    CCPoint touchLocation = touch->getLocation();
-
-    updateSize(touchLocation);
+    ccTouchesMoved(pTouches, pEvent);
 }
 
 std::string LayerTest1::title()
@@ -261,8 +251,8 @@ LayerTestBlend::LayerTestBlend()
     addChild(sister2);
     addChild(layer1, 100, kTagLayer);
     
-    sister1->setPosition( ccp( 160, s.height/2) );
-    sister2->setPosition( ccp( 320, s.height/2) );
+    sister1->setPosition( ccp( s.width*1/3, s.height/2) );
+    sister2->setPosition( ccp( s.width*2/3, s.height/2) );
 
     schedule( schedule_selector(LayerTestBlend::newBlend), 1.0f);
 }
@@ -507,3 +497,40 @@ void LayerTestScene::runThisTest()
 
     CCDirector::sharedDirector()->replaceScene(this);
 }
+
+LayerExtendedBlendOpacityTest::LayerExtendedBlendOpacityTest()
+{
+    CCLayerGradient* layer1 = CCLayerGradient::create(ccc4(255, 0, 0, 255), ccc4(255, 0, 255, 255));
+    layer1->setContentSize(CCSizeMake(80, 80));
+    layer1->setPosition(ccp(50,50));
+    addChild(layer1);
+    
+    CCLayerGradient* layer2 = CCLayerGradient::create(ccc4(0, 0, 0, 127), ccc4(255, 255, 255, 127));
+    layer2->setContentSize(CCSizeMake(80, 80));
+    layer2->setPosition(ccp(100,90));
+    addChild(layer2);
+    
+    CCLayerGradient* layer3 = CCLayerGradient::create();
+    layer3->setContentSize(CCSizeMake(80, 80));
+    layer3->setPosition(ccp(150,140));
+    layer3->setStartColor(ccc3(255, 0, 0));
+    layer3->setEndColor(ccc3(255, 0, 255));
+    layer3->setStartOpacity(255);
+    layer3->setEndOpacity(255);
+    ccBlendFunc blend;
+    blend.src = GL_SRC_ALPHA;
+    blend.dst = GL_ONE_MINUS_SRC_ALPHA;
+    layer3->setBlendFunc(blend);
+    addChild(layer3);
+}
+
+string LayerExtendedBlendOpacityTest::title()
+{
+    return "Extended Blend & Opacity";
+}
+
+string LayerExtendedBlendOpacityTest::subtitle()
+{
+    return "You should see 3 layers";
+}
+

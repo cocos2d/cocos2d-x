@@ -1,2 +1,2 @@
 APP_STL := gnustl_static
-APP_CPPFLAGS := -frtti
+APP_CPPFLAGS := -frtti -DCC_ENABLE_CHIPMUNK_INTEGRATION=1

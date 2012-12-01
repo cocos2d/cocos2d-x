@@ -19,4 +19,11 @@ public:
     virtual void MainMenuCallback(CCObject* pSender);
 };
 
+typedef CCLayer* (*NEWTESTFUNC)();
+#define TESTLAYER_CREATE_FUNC(className) \
+static CCLayer* create##className() \
+{ return new className(); }
+
+#define CF(className) create##className
+
 #endif

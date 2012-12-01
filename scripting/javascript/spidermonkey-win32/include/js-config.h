@@ -60,7 +60,7 @@
 
 /* Some mozilla code uses JS-friend APIs that depend on JS_METHODJIT being
    correct. */
-/* #undef JS_METHODJIT */
+#define JS_METHODJIT 1
 
 /* Define to 1 to enable support for E4X (ECMA-357), 0 to disable it. */
 #define JS_HAS_XML_SUPPORT 1
