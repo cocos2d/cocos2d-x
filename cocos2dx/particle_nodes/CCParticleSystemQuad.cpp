@@ -327,16 +327,16 @@ void CCParticleSystemQuad::postStep()
     glBindBuffer(GL_ARRAY_BUFFER, m_pBuffersVBO[0]);
 	
 	// Option 1: Sub Data
-    //	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(quads_[0])*particleCount, quads_);
+    glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(m_pQuads[0])*m_uTotalParticles, m_pQuads);
 	
 	// Option 2: Data
     //	glBufferData(GL_ARRAY_BUFFER, sizeof(quads_[0]) * particleCount, quads_, GL_DYNAMIC_DRAW);
 	
 	// Option 3: Orphaning + glMapBuffer
-	glBufferData(GL_ARRAY_BUFFER, sizeof(m_pQuads[0])*m_uTotalParticles, NULL, GL_STREAM_DRAW);
-	void *buf = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
-	memcpy(buf, m_pQuads, sizeof(m_pQuads[0])*m_uTotalParticles);
-	glUnmapBuffer(GL_ARRAY_BUFFER);
+	// glBufferData(GL_ARRAY_BUFFER, sizeof(m_pQuads[0])*m_uTotalParticles, NULL, GL_STREAM_DRAW);
+	// void *buf = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
+	// memcpy(buf, m_pQuads, sizeof(m_pQuads[0])*m_uTotalParticles);
+	// glUnmapBuffer(GL_ARRAY_BUFFER);
     
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
     
