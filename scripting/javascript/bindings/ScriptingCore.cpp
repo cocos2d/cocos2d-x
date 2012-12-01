@@ -412,7 +412,7 @@ void ScriptingCore::createGlobalContext() {
     JS_SetOptions(this->cx_, JS_GetOptions(this->cx_) & ~JSOPTION_METHODJIT);
     JS_SetOptions(this->cx_, JS_GetOptions(this->cx_) & ~JSOPTION_METHODJIT_ALWAYS);
     JS_SetErrorReporter(this->cx_, ScriptingCore::reportError);
-#ifdef DEBUG
+#if defined(JS_GC_ZEAL) && defined(DEBUG)
     JS_SetGCZeal(this->cx_, 2, JS_DEFAULT_ZEAL_FREQ);
 #endif
     this->global_ = NewGlobalObject(cx_);
@@ -468,6 +468,7 @@ JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* c
 
 ScriptingCore::~ScriptingCore()
 {
+    removeAllRoots(cx_);
     JS_DestroyContext(cx_);
     JS_DestroyRuntime(rt_);
     JS_ShutDown();

@@ -37,51 +37,11 @@ USING_NS_CC_EXT;
 // Function declarations
 void static freeSpaceChildren(cpSpace *space);
 
-
-template <class T>
-js_type_class_t *js_get_type_from_native(T* native_obj) {
-	js_type_class_t *typeProxy;
-	uint32_t typeId = reinterpret_cast<int>(typeid(*native_obj).name());
-    //const char *nam = typeid(*native_obj).name();
-	HASH_FIND_INT(_js_global_type_ht, &typeId, typeProxy);
-	if (!typeProxy) {
-		TypeInfo *typeInfo = dynamic_cast<TypeInfo *>(native_obj);
-		if (typeInfo) {
-			typeId = typeInfo->getClassTypeInfo();
-		} else {
-			typeId = reinterpret_cast<int>(typeid(T).name());
-		}
-		HASH_FIND_INT(_js_global_type_ht, &typeId, typeProxy);
-	}
-	return typeProxy;
-}
-
-/**
- * you don't need to manage the returned pointer. The returned pointer should be deleted
- * using JS_REMOVE_PROXY. Most of the time you do that in the C++ destructor.
- */
-template<class T>
-js_proxy_t *js_get_or_create_proxy(JSContext *cx, T *native_obj) {
-	js_proxy_t *proxy;
-	HASH_FIND_PTR(_native_js_global_ht, &native_obj, proxy);
-	if (!proxy) {
-		js_type_class_t *typeProxy = js_get_type_from_native<T>(native_obj);
-		assert(typeProxy);
-		JSObject* js_obj = JS_NewObject(cx, typeProxy->jsclass, typeProxy->proto, typeProxy->parentProto);
-		JS_NEW_PROXY(proxy, native_obj, js_obj);
-
-		JS_AddNamedObjectRoot(cx, &proxy->obj, typeid(native_obj).name());
-		return proxy;
-	} else {
-		return proxy;
-	}
-	return NULL;
-}
-
 template<class T>
 static JSBool dummy_constructor(JSContext *cx, uint32_t argc, jsval *vp) {
     TypeTest<T> t;
     T* cobj = new T();
+    cobj->autorelease();
     js_type_class_t *p;
     uint32_t typeId = t.s_id();
     HASH_FIND_INT(_js_global_type_ht, &typeId, p);
@@ -109,7 +69,7 @@ JSObject* JSPROXY_CCPhysicsSprite_object = NULL;
 // Destructor
 void JSPROXY_CCPhysicsSprite_finalize(JSFreeOp *fop, JSObject *obj)
 {
-    
+    CCLOGINFO("jsbindings: finalizing JS object %p (CCPhysicsSprite)", obj);
 }
 
 // Arguments:
@@ -339,8 +299,8 @@ JSBool JSPROXY_CCPhysicsSprite_spriteWithFile_rect__static(JSContext *cx, uint32
 		std::string arg0_tmp = jsval_to_std_string(cx, argv[0]); arg0 = arg0_tmp.c_str();
 		cocos2d::CCRect arg1;
 		arg1 = jsval_to_ccrect(cx, argv[1]);
-        CCPhysicsSprite* ret = new CCPhysicsSprite();
-        ret->initWithFile(arg0, arg1);
+        CCPhysicsSprite* ret = CCPhysicsSprite::create(arg0, arg1);
+
 		jsval jsret;
 		do {
 			if (ret) {
@@ -364,8 +324,7 @@ JSBool JSPROXY_CCPhysicsSprite_spriteWithFile_rect__static(JSContext *cx, uint32
 	if (argc == 1) {
 		const char* arg0;
 		std::string arg0_tmp = jsval_to_std_string(cx, argv[0]); arg0 = arg0_tmp.c_str();
-		CCPhysicsSprite* ret = new CCPhysicsSprite();
-        ret->initWithFile(arg0);
+		CCPhysicsSprite* ret = CCPhysicsSprite::create(arg0);
 
 		jsval jsret;
 		do {
@@ -405,8 +364,8 @@ JSBool JSPROXY_CCPhysicsSprite_spriteWithSpriteFrame__static(JSContext *cx, uint
 			TEST_NATIVE_OBJECT(cx, arg0)
 		} while (0);
 	}
-    CCPhysicsSprite* ret = new CCPhysicsSprite();
-    ret->initWithSpriteFrame(arg0);
+    CCPhysicsSprite* ret = CCPhysicsSprite::createWithSpriteFrame(arg0);
+
 	jsval jsret;
 	do {
 		if (ret) {
@@ -437,8 +396,8 @@ JSBool JSPROXY_CCPhysicsSprite_spriteWithSpriteFrameName__static(JSContext *cx, 
 	if (argc >= 1) {
 		arg0_tmp = jsval_to_std_string(cx, argv[0]); arg0 = arg0_tmp.c_str();
 	}
-    CCPhysicsSprite* ret = new CCPhysicsSprite();
-    ret->initWithSpriteFrameName(arg0);
+    CCPhysicsSprite* ret = CCPhysicsSprite::createWithSpriteFrameName(arg0);
+
 	jsval jsret;
 	do {
 		if (ret) {
@@ -757,7 +716,7 @@ void JSB_cpSpace_finalize(JSFreeOp *fop, JSObject *jsthis)
 {
 	struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
 	if( proxy ) {
-		CCLOGINFO(@"jsbindings: finalizing JS object %p (cpSpace), handle: %p", jsthis, proxy->handle);
+		CCLOGINFO("jsbindings: finalizing JS object %p (cpSpace), handle: %p", jsthis, proxy->handle);
 		
 		// space
 		cpSpace *space = (cpSpace*) proxy->handle;
