@@ -468,6 +468,7 @@ JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* c
 
 ScriptingCore::~ScriptingCore()
 {
+    removeAllRoots(cx_);
     JS_DestroyContext(cx_);
     JS_DestroyRuntime(rt_);
     JS_ShutDown();
