@@ -15,32 +15,32 @@
 
 NS_CC_EXT_BEGIN
 
-void CCScale9SpriteLoader::onHandlePropTypeSpriteFrame(CCNode * pNode, CCNode * pParent, CCString * pPropertyName, CCSpriteFrame * pCCSpriteFrame, CCBReader * pCCBReader) {
-    if(pPropertyName->compare(PROPERTY_SPRITEFRAME) == 0) {
+void CCScale9SpriteLoader::onHandlePropTypeSpriteFrame(CCNode * pNode, CCNode * pParent, const char * pPropertyName, CCSpriteFrame * pCCSpriteFrame, CCBReader * pCCBReader) {
+    if(strcmp(pPropertyName, PROPERTY_SPRITEFRAME) == 0) {
         ((CCScale9Sprite *)pNode)->initWithSpriteFrame(pCCSpriteFrame);
     } else {
         CCNodeLoader::onHandlePropTypeSpriteFrame(pNode, pParent, pPropertyName, pCCSpriteFrame, pCCBReader);
     }
 }
 
-void CCScale9SpriteLoader::onHandlePropTypeColor3(CCNode * pNode, CCNode * pParent, CCString * pPropertyName, ccColor3B pCCColor3B, CCBReader * pCCBReader) {
-    if(pPropertyName->compare(PROPERTY_COLOR) == 0) {
+void CCScale9SpriteLoader::onHandlePropTypeColor3(CCNode * pNode, CCNode * pParent, const char * pPropertyName, ccColor3B pCCColor3B, CCBReader * pCCBReader) {
+    if(strcmp(pPropertyName, PROPERTY_COLOR) == 0) {
         ((CCScale9Sprite *)pNode)->setColor(pCCColor3B);
     } else {
         CCNodeLoader::onHandlePropTypeColor3(pNode, pParent, pPropertyName, pCCColor3B, pCCBReader);
     }
 }
 
-void CCScale9SpriteLoader::onHandlePropTypeByte(CCNode * pNode, CCNode * pParent, CCString * pPropertyName, unsigned char pByte, CCBReader * pCCBReader) {
-    if(pPropertyName->compare(PROPERTY_OPACITY) == 0) {
+void CCScale9SpriteLoader::onHandlePropTypeByte(CCNode * pNode, CCNode * pParent, const char * pPropertyName, unsigned char pByte, CCBReader * pCCBReader) {
+    if(strcmp(pPropertyName, PROPERTY_OPACITY) == 0) {
         ((CCScale9Sprite *)pNode)->setOpacity(pByte);
     } else {
         CCNodeLoader::onHandlePropTypeByte(pNode, pParent, pPropertyName, pByte, pCCBReader);
     }
 }
 
-void CCScale9SpriteLoader::onHandlePropTypeBlendFunc(CCNode * pNode, CCNode * pParent, CCString * pPropertyName, ccBlendFunc pCCBlendFunc, CCBReader * pCCBReader) {
-    if(pPropertyName->compare(PROPERTY_BLENDFUNC) == 0) {
+void CCScale9SpriteLoader::onHandlePropTypeBlendFunc(CCNode * pNode, CCNode * pParent, const char * pPropertyName, ccBlendFunc pCCBlendFunc, CCBReader * pCCBReader) {
+    if(strcmp(pPropertyName, PROPERTY_BLENDFUNC) == 0) {
         // TODO Not exported by CocosBuilder yet!
         // ((CCScale9Sprite *)pNode)->setBlendFunc(pCCBlendFunc);
     } else {
@@ -48,24 +48,24 @@ void CCScale9SpriteLoader::onHandlePropTypeBlendFunc(CCNode * pNode, CCNode * pP
     }
 }
 
-void CCScale9SpriteLoader::onHandlePropTypeSize(CCNode * pNode, CCNode * pParent, CCString * pPropertyName, CCSize pSize, CCBReader * pCCBReader) {
-    if(pPropertyName->compare(PROPERTY_CONTENTSIZE) == 0) {
+void CCScale9SpriteLoader::onHandlePropTypeSize(CCNode * pNode, CCNode * pParent, const char * pPropertyName, CCSize pSize, CCBReader * pCCBReader) {
+    if(strcmp(pPropertyName, PROPERTY_CONTENTSIZE) == 0) {
         //((CCScale9Sprite *)pNode)->setContentSize(pSize);
-    } else if(pPropertyName->compare(PROPERTY_PREFEREDSIZE) == 0) {
+    } else if(strcmp(pPropertyName, PROPERTY_PREFEREDSIZE) == 0) {
         ((CCScale9Sprite *)pNode)->setPreferredSize(pSize);
     } else {
         CCNodeLoader::onHandlePropTypeSize(pNode, pParent, pPropertyName, pSize, pCCBReader);
     }
 }
 
-void CCScale9SpriteLoader::onHandlePropTypeFloat(CCNode * pNode, CCNode * pParent, CCString * pPropertyName, float pFloat, CCBReader * pCCBReader) {
-    if(pPropertyName->compare(PROPERTY_INSETLEFT) == 0) {
+void CCScale9SpriteLoader::onHandlePropTypeFloat(CCNode * pNode, CCNode * pParent, const char * pPropertyName, float pFloat, CCBReader * pCCBReader) {
+    if(strcmp(pPropertyName, PROPERTY_INSETLEFT) == 0) {
         ((CCScale9Sprite *)pNode)->setInsetLeft(pFloat);
-    } else if(pPropertyName->compare(PROPERTY_INSETTOP) == 0) {
+    } else if(strcmp(pPropertyName, PROPERTY_INSETTOP) == 0) {
         ((CCScale9Sprite *)pNode)->setInsetTop(pFloat);
-    } else if(pPropertyName->compare(PROPERTY_INSETRIGHT) == 0) {
+    } else if(strcmp(pPropertyName, PROPERTY_INSETRIGHT) == 0) {
         ((CCScale9Sprite *)pNode)->setInsetRight(pFloat);
-    } else if(pPropertyName->compare(PROPERTY_INSETBOTTOM) == 0) {
+    } else if(strcmp(pPropertyName, PROPERTY_INSETBOTTOM) == 0) {
         ((CCScale9Sprite *)pNode)->setInsetBottom(pFloat);
     } else {
         CCNodeLoader::onHandlePropTypeFloat(pNode, pParent, pPropertyName, pFloat, pCCBReader);

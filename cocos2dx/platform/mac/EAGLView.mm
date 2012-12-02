@@ -93,6 +93,21 @@ static EAGLView *view;
 	return self;
 }
 
+- (id) initWithFrame:(NSRect)frameRect pixelFormat:(NSOpenGLPixelFormat *)format{
+    // event delegate
+    eventDelegate_ = [CCEventDispatcher sharedDispatcher];
+    
+    cocos2d::CCEGLView::sharedOpenGLView()->setFrameSize(frameRect.size.width, frameRect.size.height);
+    
+    frameZoomFactor_ = 1.0f;
+	
+	view = self;
+    
+    [super initWithFrame:frameRect pixelFormat:format];
+    
+    return self;
+}
+
 - (void) update
 {
 	// XXX: Should I do something here ?

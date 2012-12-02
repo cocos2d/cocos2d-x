@@ -30,8 +30,8 @@ static AppDelegate s_sharedApplication;
     
     // Init the EAGLView
     EAGLView *__glView = [EAGLView viewWithFrame: [window bounds]
-                                     pixelFormat: kEAGLColorFormatRGBA8
-                                     depthFormat: GL_DEPTH_COMPONENT16
+                                     pixelFormat: kEAGLColorFormatRGB565
+                                     depthFormat: GL_DEPTH24_STENCIL8_OES
                               preserveBackbuffer: NO
                                       sharegroup: nil
                                    multiSampling: NO

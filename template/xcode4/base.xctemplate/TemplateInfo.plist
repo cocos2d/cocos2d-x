@@ -50,7 +50,7 @@
 					<string>DEBUG</string>
 					<string>COCOS2D_DEBUG=1</string>
 					<string>USE_FILE32API</string>
-					<string>TARGET_OS_IPHONE</string>
+					<string>CC_TARGET_OS_IPHONE</string>
 				</array>
 				<key>GCC_SYMBOLS_PRIVATE_EXTERN</key>
 				<string>NO</string>
@@ -61,7 +61,7 @@
 				<array>
 					<string>NDEBUG</string>
 					<string>USE_FILE32API</string>
-					<string>TARGET_OS_IPHONE</string>
+					<string>CC_TARGET_OS_IPHONE</string>
 				</array>
 			</dict>
 		</dict>

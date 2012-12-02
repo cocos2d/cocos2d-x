@@ -55,7 +55,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 		
     	this.mHandler = new Cocos2dxHandler(this);
 
-    	this.mGLSurfaceView = onCreateView();
+    	this.init();
 
 		Cocos2dxHelper.init(this, this);
 	}
@@ -108,10 +108,8 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 	// ===========================================================
 	// Methods
 	// ===========================================================
-	
-    public Cocos2dxGLSurfaceView onCreateView() {
-    	// Init handler
-    			
+	public void init() {
+		
     	// FrameLayout
         ViewGroup.LayoutParams framelayout_params =
             new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,
@@ -130,18 +128,20 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
         framelayout.addView(edittext);
 
         // Cocos2dxGLSurfaceView
-        Cocos2dxGLSurfaceView gLSurfaceView = new Cocos2dxGLSurfaceView(this);
+        this.mGLSurfaceView = this.onCreateView();
 
         // ...add to FrameLayout
-        framelayout.addView(gLSurfaceView);
+        framelayout.addView(this.mGLSurfaceView);
 
-        gLSurfaceView.setCocos2dxRenderer(new Cocos2dxRenderer());
-        gLSurfaceView.setCocos2dxEditText(edittext);
+        this.mGLSurfaceView.setCocos2dxRenderer(new Cocos2dxRenderer());
+        this.mGLSurfaceView.setCocos2dxEditText(edittext);
 
         // Set framelayout as the content view
 		setContentView(framelayout);
-		
-		return gLSurfaceView;
+	}
+	
+    public Cocos2dxGLSurfaceView onCreateView() {
+    	return new Cocos2dxGLSurfaceView(this);
     }
 
 	// ===========================================================

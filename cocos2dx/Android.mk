@@ -8,7 +8,6 @@ LOCAL_MODULE_FILENAME := libcocos2d
 
 LOCAL_SRC_FILES := \
 CCConfiguration.cpp \
-CCDrawingPrimitives.cpp \
 CCScheduler.cpp \
 CCCamera.cpp \
 actions/CCAction.cpp \
@@ -38,6 +37,8 @@ cocoa/CCZone.cpp \
 cocoa/CCArray.cpp \
 cocos2d.cpp \
 CCDirector.cpp \
+draw_nodes/CCDrawingPrimitives.cpp \
+draw_nodes/CCDrawNode.cpp \
 effects/CCGrabber.cpp \
 effects/CCGrid.cpp \
 kazmath/src/aabb.c \
@@ -65,6 +66,7 @@ layers_scenes_transitions_nodes/CCTransition.cpp \
 layers_scenes_transitions_nodes/CCTransitionProgress.cpp \
 menu_nodes/CCMenu.cpp \
 menu_nodes/CCMenuItem.cpp \
+misc_nodes/CCClippingNode.cpp \
 misc_nodes/CCMotionStreak.cpp \
 misc_nodes/CCProgressTimer.cpp \
 misc_nodes/CCRenderTexture.cpp \

@@ -31,7 +31,7 @@ typedef struct cpSimpleMotor {
 	
 	cpFloat iSum;
 		
-	cpFloat jAcc, jMax;
+	cpFloat jAcc;
 } cpSimpleMotor;
 
 /// Allocate a simple motor.
@@ -41,6 +41,6 @@ cpSimpleMotor* cpSimpleMotorInit(cpSimpleMotor *joint, cpBody *a, cpBody *b, cpF
 /// Allocate and initialize a simple motor.
 cpConstraint* cpSimpleMotorNew(cpBody *a, cpBody *b, cpFloat rate);
 
-CP_DefineConstraintProperty(cpSimpleMotor, cpFloat, rate, Rate);
+CP_DefineConstraintProperty(cpSimpleMotor, cpFloat, rate, Rate)
 
 /// @}

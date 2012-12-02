@@ -18,7 +18,7 @@ private:
 public:
     static ccColor3BWapper* create(const ccColor3B& color);
     
-    const ccColor3B& getColor();
+    ccColor3B getColor();
 };
 
 enum

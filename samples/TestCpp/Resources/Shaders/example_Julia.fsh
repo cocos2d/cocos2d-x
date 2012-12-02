@@ -6,10 +6,10 @@ precision highp float;
 
 uniform vec2 center;
 uniform vec2 resolution;
-uniform float time;
 
 void main(void)
 {
+		float time = CC_Time[1];
     vec2 p = 2.0 * (gl_FragCoord.xy - center.xy) / resolution.xy;
     vec2 cc = vec2( cos(.25*time), sin(.25*time*1.423) );
 
