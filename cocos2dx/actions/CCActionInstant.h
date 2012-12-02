@@ -219,11 +219,8 @@ public:
 		, m_nScriptHandler(0)
     {
     }
-    virtual ~CCCallFunc()
-    {
-        CC_SAFE_RELEASE(m_pSelectorTarget);
-    }
-    /** creates the action with the callback 
+    virtual ~CCCallFunc();
+    /** creates the action with the callback
     @deprecated: This interface will be deprecated sooner or later.
     typedef void (CCObject::*SEL_CallFunc)();
     */
