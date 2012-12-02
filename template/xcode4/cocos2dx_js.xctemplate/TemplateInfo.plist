@@ -439,12 +439,40 @@
 			<key>Path</key>
 			<string>Resources/hello.js</string>
 		</dict>
-		<key>Resources/hello.js_BACK</key>
+		<key>Resources/jsb_constants.js</key>
 		<dict>
 			<key>Group</key>
 			<string>Resources</string>
 			<key>Path</key>
-			<string>Resources/hello.js_BACK</string>
+			<string>Resources/jsb_constants.js</string>
+		</dict>
+		<key>Resources/jsb_constants_cocos2d.js</key>
+		<dict>
+			<key>Group</key>
+			<string>Resources</string>
+			<key>Path</key>
+			<string>Resources/jsb_constants_cocos2d.js</string>
+		</dict>
+		<key>Resources/jsb_constants_gl.js</key>
+		<dict>
+			<key>Group</key>
+			<string>Resources</string>
+			<key>Path</key>
+			<string>Resources/jsb_constants_gl.js</string>
+		</dict>
+		<key>Resources/jsb_constants_cocosbuilder.js</key>
+		<dict>
+			<key>Group</key>
+			<string>Resources</string>
+			<key>Path</key>
+			<string>Resources/jsb_constants_cocosbuilder.js</string>
+		</dict>
+		<key>Resources/jsb_constants_chipmunk.js</key>
+		<dict>
+			<key>Group</key>
+			<string>Resources</string>
+			<key>Path</key>
+			<string>Resources/jsb_constants_chipmunk.js</string>
 		</dict>
 		<key>Resources/Icon.png</key>
 		<dict>
@@ -517,6 +545,11 @@
 		<string>Resources/fps_images-ipadhd.png</string>
 		<string>Resources/fps_images.png</string>
 		<string>Resources/hello.js</string>
+		<string>Resources/jsb_constants.js</string>
+		<string>Resources/jsb_constants_cocos2d.js</string>
+		<string>Resources/jsb_constants_gl.js</string>
+		<string>Resources/jsb_constants_cocosbuilder.js</string>
+		<string>Resources/jsb_constants_chipmunk.js</string>
 		<string>Resources/hello.js_BACK</string>
 		<string>Resources/Icon.png</string>
 		<string>Resources/menu1.png</string>

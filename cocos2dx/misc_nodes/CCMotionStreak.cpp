@@ -195,7 +195,7 @@ void CCMotionStreak::setColor(const ccColor3B& color)
     m_tColor = color;
 }
 
-const ccColor3B& CCMotionStreak::getColor(void)
+ccColor3B CCMotionStreak::getColor(void)
 {
     return m_tColor;
 }

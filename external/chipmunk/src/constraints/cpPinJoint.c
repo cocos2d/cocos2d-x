@@ -41,9 +41,6 @@ preStep(cpPinJoint *joint, cpFloat dt)
 	// calculate bias velocity
 	cpFloat maxBias = joint->constraint.maxBias;
 	joint->bias = cpfclamp(-bias_coef(joint->constraint.errorBias, dt)*(dist - joint->dist)/dt, -maxBias, maxBias);
-	
-	// compute max impulse
-	joint->jnMax = J_MAX(joint, dt);
 }
 
 static void
@@ -57,7 +54,7 @@ applyCachedImpulse(cpPinJoint *joint, cpFloat dt_coef)
 }
 
 static void
-applyImpulse(cpPinJoint *joint)
+applyImpulse(cpPinJoint *joint, cpFloat dt)
 {
 	cpBody *a = joint->constraint.a;
 	cpBody *b = joint->constraint.b;
@@ -66,10 +63,12 @@ applyImpulse(cpPinJoint *joint)
 	// compute relative velocity
 	cpFloat vrn = normal_relative_velocity(a, b, joint->r1, joint->r2, n);
 	
+	cpFloat jnMax = joint->constraint.maxForce*dt;
+	
 	// compute normal impulse
 	cpFloat jn = (joint->bias - vrn)*joint->nMass;
 	cpFloat jnOld = joint->jnAcc;
-	joint->jnAcc = cpfclamp(jnOld + jn, -joint->jnMax, joint->jnMax);
+	joint->jnAcc = cpfclamp(jnOld + jn, -jnMax, jnMax);
 	jn = joint->jnAcc - jnOld;
 	
 	// apply impulse
@@ -88,7 +87,7 @@ static const cpConstraintClass klass = {
 	(cpConstraintApplyImpulseImpl)applyImpulse,
 	(cpConstraintGetImpulseImpl)getImpulse,
 };
-CP_DefineClassGetter(cpPinJoint);
+CP_DefineClassGetter(cpPinJoint)
 
 
 cpPinJoint *

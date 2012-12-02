@@ -8,88 +8,115 @@ enum {
     kTagSprite2 = 3,
 };
 
-#define TEST_CASE_COUNT     35
+typedef CCLayer* (*NEWTEXTURE2DTESTFUNC)();
+#define TEXTURE2D_CREATE_FUNC(className) \
+static CCLayer* create##className() \
+{ return new className(); }
+
+TEXTURE2D_CREATE_FUNC(TextureMemoryAlloc);
+TEXTURE2D_CREATE_FUNC(TextureAlias);
+TEXTURE2D_CREATE_FUNC(TexturePVRMipMap);
+TEXTURE2D_CREATE_FUNC(TexturePVRMipMap2);
+TEXTURE2D_CREATE_FUNC(TexturePVRNonSquare);
+TEXTURE2D_CREATE_FUNC(TexturePVRNPOT4444);
+TEXTURE2D_CREATE_FUNC(TexturePVRNPOT8888);
+TEXTURE2D_CREATE_FUNC(TexturePVR);
+TEXTURE2D_CREATE_FUNC(TexturePVR2BPP);
+TEXTURE2D_CREATE_FUNC(TexturePVR2BPPv3);
+TEXTURE2D_CREATE_FUNC(TexturePVR4BPP);
+TEXTURE2D_CREATE_FUNC(TexturePVR4BPPv3);
+TEXTURE2D_CREATE_FUNC(TexturePVRII4BPPv3);
+TEXTURE2D_CREATE_FUNC(TexturePVRRGBA8888);
+TEXTURE2D_CREATE_FUNC(TexturePVRRGBA8888v3);
+TEXTURE2D_CREATE_FUNC(TexturePVRBGRA8888);
+TEXTURE2D_CREATE_FUNC(TexturePVRBGRA8888v3);
+TEXTURE2D_CREATE_FUNC(TexturePVRRGBA4444);
+TEXTURE2D_CREATE_FUNC(TexturePVRRGBA4444v3);
+TEXTURE2D_CREATE_FUNC(TexturePVRRGBA4444GZ);
+TEXTURE2D_CREATE_FUNC(TexturePVRRGBA4444CCZ);
+TEXTURE2D_CREATE_FUNC(TexturePVRRGBA5551);
+TEXTURE2D_CREATE_FUNC(TexturePVRRGBA5551v3);
+TEXTURE2D_CREATE_FUNC(TexturePVRRGB565);
+TEXTURE2D_CREATE_FUNC(TexturePVRRGB565v3);
+TEXTURE2D_CREATE_FUNC(TexturePVRRGB888);
+TEXTURE2D_CREATE_FUNC(TexturePVRRGB888v3);
+TEXTURE2D_CREATE_FUNC(TexturePVRA8);
+TEXTURE2D_CREATE_FUNC(TexturePVRA8v3);
+TEXTURE2D_CREATE_FUNC(TexturePVRI8);
+TEXTURE2D_CREATE_FUNC(TexturePVRI8v3);
+TEXTURE2D_CREATE_FUNC(TexturePVRAI88);
+TEXTURE2D_CREATE_FUNC(TexturePVRAI88v3);
+TEXTURE2D_CREATE_FUNC(TexturePVRBadEncoding);
+TESTLAYER_CREATE_FUNC(TexturePNG);
+TESTLAYER_CREATE_FUNC(TextureJPEG);
+TESTLAYER_CREATE_FUNC(TextureTIFF);
+TESTLAYER_CREATE_FUNC(TexturePixelFormat);
+TESTLAYER_CREATE_FUNC(TextureBlend);
+TESTLAYER_CREATE_FUNC(TextureAsync);
+TESTLAYER_CREATE_FUNC(TextureGlClamp);
+TESTLAYER_CREATE_FUNC(TextureGlRepeat);
+TESTLAYER_CREATE_FUNC(TextureSizeTest);
+TESTLAYER_CREATE_FUNC(TextureCache1);
+TESTLAYER_CREATE_FUNC(TextureDrawAtPoint);
+TESTLAYER_CREATE_FUNC(TextureDrawInRect);
+
+static NEWTEXTURE2DTESTFUNC createFunctions[] =
+{
+    createTextureMemoryAlloc,
+    createTextureAlias,
+    createTexturePVRMipMap,
+    createTexturePVRMipMap2,
+    createTexturePVRNonSquare,
+    createTexturePVRNPOT4444,
+    createTexturePVRNPOT8888,
+    createTexturePVR,
+    createTexturePVR2BPP,
+    createTexturePVR2BPPv3,
+    createTexturePVR4BPP,
+    createTexturePVR4BPPv3,
+    createTexturePVRII4BPPv3,
+    createTexturePVRRGBA8888,
+    createTexturePVRRGBA8888v3,
+    createTexturePVRBGRA8888,
+    createTexturePVRBGRA8888v3,
+    createTexturePVRRGBA4444,
+    createTexturePVRRGBA4444v3,
+    createTexturePVRRGBA4444GZ,
+    createTexturePVRRGBA4444CCZ,
+    createTexturePVRRGBA5551,
+    createTexturePVRRGBA5551v3,
+    createTexturePVRRGB565,
+    createTexturePVRRGB565v3,
+    createTexturePVRRGB888,
+    createTexturePVRRGB888v3,
+    createTexturePVRA8,
+    createTexturePVRA8v3,
+    createTexturePVRI8,
+    createTexturePVRI8v3,
+    createTexturePVRAI88,
+    createTexturePVRAI88v3,
+    
+    createTexturePVRBadEncoding,
+    createTexturePNG,
+    createTextureJPEG,
+    createTextureTIFF,
+    createTexturePixelFormat,
+    createTextureBlend,
+    createTextureAsync,
+    createTextureGlClamp,
+    createTextureGlRepeat,
+    createTextureSizeTest,
+    createTextureCache1,
+    createTextureDrawAtPoint,
+    createTextureDrawInRect,
+};
+
+static unsigned int TEST_CASE_COUNT = sizeof(createFunctions) / sizeof(createFunctions[0]);
 
 static int sceneIdx=-1;
 CCLayer* createTextureTest(int index)
 {
-    CCLayer* pLayer = NULL;
-
-    switch (index)
-    {
-    case 0:
-        pLayer = new TextureAlias(); break;
-    case 1:
-        pLayer = new TextureMipMap(); break;
-    case 2:
-        pLayer = new TexturePVRMipMap(); break;
-    case 3:
-        pLayer = new TexturePVRMipMap2(); break;
-    case 4:
-        pLayer = new TexturePVRNonSquare(); break;
-    case 5:
-        pLayer = new TexturePVRNPOT4444(); break;
-    case 6:
-        pLayer = new TexturePVRNPOT8888(); break;
-    case 7:
-        pLayer = new TexturePVR2BPP(); break;
-    case 8:
-        pLayer = new TexturePVR(); break;
-    case 9:
-        pLayer = new TexturePVR4BPP(); break;
-    case 10:
-        pLayer = new TexturePVRRGBA8888(); break;
-    case 11:
-        pLayer = new TexturePVRBGRA8888(); break;
-    case 12:
-        pLayer = new TexturePVRRGBA4444(); break;
-    case 13:
-        pLayer = new TexturePVRRGBA4444GZ(); break;
-    case 14:
-        pLayer = new TexturePVRRGBA4444CCZ(); break;
-    case 15:
-        pLayer = new TexturePVRRGBA5551(); break;
-    case 16:
-        pLayer = new TexturePVRRGB565(); break;
-    case 17:
-        pLayer = new TexturePVRA8(); break;
-    case 18:
-        pLayer = new TexturePVRI8(); break;
-    case 19:
-        pLayer = new TexturePVRAI88(); break;
-    case 20:
-        pLayer = new TexturePVRBadEncoding(); break;
-    case 21:
-        pLayer = new TextureTIFF(); break;
-    case 22:
-        pLayer = new TexturePNG(); break;
-    case 23:
-        pLayer = new TextureJPEG(); break;
-    case 24:
-        pLayer = new TexturePixelFormat(); break;
-    case 25:
-        pLayer = new TextureBlend(); break;
-    case 26:
-        pLayer = new TextureGlClamp(); break;
-    case 27:
-        pLayer = new TextureGlRepeat(); break;
-    case 28:
-        pLayer = new TextureSizeTest(); break;
-    case 29:
-        pLayer = new TextureCache1(); break;
-    case 30:
-        pLayer = new TexturePVRRGB888(); break;
-    case 31:
-        pLayer = new TextureAsync(); break;
-    case 32:
-        pLayer = new TextureDrawAtPoint(); break;
-    case 33:
-        pLayer = new TextureDrawInRect(); break;
-    case 34:
-        pLayer = new TextureMemoryAlloc(); break;
-    default:
-        break;
-    }
+    CCLayer* pLayer = (createFunctions[index])();;
 
     if (pLayer)
     {
@@ -775,6 +802,373 @@ void TexturePVRAI88::onEnter()
 std::string TexturePVRAI88::title()
 {
     return "PVR + AI88 Test";
+}
+
+// TexturePVR2BPPv3
+void TexturePVR2BPPv3::onEnter()
+{
+    TextureDemo::onEnter();
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    
+    CCSprite *img = CCSprite::create("Images/test_image_pvrtc2bpp_v3.pvr");
+    
+    if (img)
+    {
+        img->setPosition(ccp(s.width/2.0f, s.height/2.0f));
+        addChild(img);
+    }
+    
+    CCTextureCache::sharedTextureCache()->dumpCachedTextureInfo();
+}
+
+string TexturePVR2BPPv3::title()
+{
+    return "PVR TC 2bpp Test";
+}
+
+string TexturePVR2BPPv3::subtitle()
+{
+    return "Testing PVR File Format v3";
+}
+
+// TexturePVRII2BPPv3
+void TexturePVRII2BPPv3::onEnter()
+{
+    TextureDemo::onEnter();
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    
+    CCSprite *img = CCSprite::create("Images/test_image_pvrtcii2bpp_v3.pvr");
+    
+    if (img)
+    {
+        img->setPosition(ccp(s.width/2.0f, s.height/2.0f));
+        addChild(img);
+    }
+    
+    CCTextureCache::sharedTextureCache()->dumpCachedTextureInfo();
+}
+
+string TexturePVRII2BPPv3::title()
+{
+    return "PVR TC II 2bpp Test";
+}
+
+string TexturePVRII2BPPv3::subtitle()
+{
+    return "Testing PVR File Format v3";
+}
+
+// TexturePVR4BPPv3
+void TexturePVR4BPPv3::onEnter()
+{
+    TextureDemo::onEnter();
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    
+    CCSprite *img = CCSprite::create("Images/test_image_pvrtc4bpp_v3.pvr");
+    
+    if (img)
+    {
+        img->setPosition(ccp(s.width/2.0f, s.height/2.0f));
+        addChild(img);
+    }
+    else
+    {
+        CCLog("This test is not supported");
+    }
+    
+    CCTextureCache::sharedTextureCache()->dumpCachedTextureInfo();
+}
+
+string TexturePVR4BPPv3::title()
+{
+    return "PVR TC 4bpp Test";
+}
+
+string TexturePVR4BPPv3::subtitle()
+{
+    return "Testing PVR File Format v3";
+}
+
+// TexturePVRII4BPPv3
+
+// Image generated using PVRTexTool:
+// http://www.imgtec.com/powervr/insider/powervr-pvrtextool.asp
+
+void TexturePVRII4BPPv3::onEnter()
+{
+    TextureDemo::onEnter();
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    
+    CCSprite *img = CCSprite::create("Images/test_image_pvrtcii4bpp_v3.pvr");
+    
+    if (img)
+    {
+        img->setPosition(ccp(s.width/2.0f, s.height/2.0f));
+        addChild(img);
+    }
+    else
+    {
+        CCLog("This test is not supported");
+    }
+    
+    CCTextureCache::sharedTextureCache()->dumpCachedTextureInfo();
+}
+
+string TexturePVRII4BPPv3::title()
+{
+    return "PVR TC II 4bpp Test";
+}
+
+string TexturePVRII4BPPv3::subtitle()
+{
+    return "Testing PVR File Format v3";
+}
+
+// TexturePVRRGBA8888v3
+void TexturePVRRGBA8888v3::onEnter()
+{
+    TextureDemo::onEnter();
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    
+    CCSprite *img = CCSprite::create("Images/test_image_rgba8888_v3.pvr");
+    
+    if (img)
+    {
+        img->setPosition(ccp(s.width/2.0f, s.height/2.0f));
+        addChild(img);
+    }
+    
+    CCTextureCache::sharedTextureCache()->dumpCachedTextureInfo();
+}
+
+string TexturePVRRGBA8888v3::title()
+{
+    return "PVR + RGBA  8888 Test";
+}
+
+string TexturePVRRGBA8888v3::subtitle()
+{
+    return "Testing PVR File Format v3";
+}
+
+// TexturePVRBGRA8888v3
+void TexturePVRBGRA8888v3::onEnter()
+{
+    TextureDemo::onEnter();
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    
+    CCSprite *img = CCSprite::create("Images/test_image_bgra8888_v3.pvr");
+    
+    if (img)
+    {
+        img->setPosition(ccp(s.width/2.0f, s.height/2.0f));
+        addChild(img);
+    }
+    else
+    {
+        CCLog("BGRA images are not supported");
+    }
+    
+    CCTextureCache::sharedTextureCache()->dumpCachedTextureInfo();
+}
+
+string TexturePVRBGRA8888v3::title()
+{
+    return "PVR + BGRA 8888 Test";
+}
+
+string TexturePVRBGRA8888v3::subtitle()
+{
+    return "Testing PVR File Format v3";
+}
+
+// TexturePVRRGBA5551v3
+void TexturePVRRGBA5551v3::onEnter()
+{
+    TextureDemo::onEnter();
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    
+    CCSprite *img = CCSprite::create("Images/test_image_rgba5551_v3.pvr");
+    
+    if (img)
+    {
+        img->setPosition(ccp(s.width/2.0f, s.height/2.0f));
+        addChild(img);
+    }
+    
+    CCTextureCache::sharedTextureCache()->dumpCachedTextureInfo();
+}
+
+string TexturePVRRGBA5551v3::title()
+{
+    return "PVR + RGBA 5551 Test";
+}
+
+string TexturePVRRGBA5551v3::subtitle()
+{
+    return "Testing PVR File Format v3";
+}
+
+// TexturePVRRGBA4444v3
+void TexturePVRRGBA4444v3::onEnter()
+{
+    TextureDemo::onEnter();
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    
+    CCSprite *img = CCSprite::create("Images/test_image_rgba4444_v3.pvr");
+    
+    if (img)
+    {
+        img->setPosition(ccp(s.width/2.0f, s.height/2.0f));
+        addChild(img);
+    }
+    
+    CCTextureCache::sharedTextureCache()->dumpCachedTextureInfo();
+}
+
+string TexturePVRRGBA4444v3::title()
+{
+    return "PVR + RGBA 4444 Test";
+}
+
+string TexturePVRRGBA4444v3::subtitle()
+{
+    return "Testing PVR File Format v3";
+}
+
+// TexturePVRRGB565v3
+void TexturePVRRGB565v3::onEnter()
+{
+    TextureDemo::onEnter();
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    
+    CCSprite *img = CCSprite::create("Images/test_image_rgb565_v3.pvr");
+    
+    if (img)
+    {
+        img->setPosition(ccp(s.width/2.0f, s.height/2.0f));
+        addChild(img);
+    }
+    
+    CCTextureCache::sharedTextureCache()->dumpCachedTextureInfo();
+}
+
+string TexturePVRRGB565v3::title()
+{
+    return "PVR + RGB 565 Test";
+}
+
+string TexturePVRRGB565v3::subtitle()
+{
+    return "Testing PVR File Format v3";
+}
+
+// TexturePVRRGB888v3
+void TexturePVRRGB888v3::onEnter()
+{
+    TextureDemo::onEnter();
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    
+    CCSprite *img = CCSprite::create("Images/test_image_rgb888_v3.pvr");
+    
+    if (img)
+    {
+        img->setPosition(ccp(s.width/2.0f, s.height/2.0f));
+        addChild(img);
+    }
+    
+    CCTextureCache::sharedTextureCache()->dumpCachedTextureInfo();
+}
+
+string TexturePVRRGB888v3::title()
+{
+    return "PVR + RGB 888 Test";
+}
+
+string TexturePVRRGB888v3::subtitle()
+{
+    return "Testing PVR File Format v3";
+}
+
+// TexturePVRA8v3
+void TexturePVRA8v3::onEnter()
+{
+    TextureDemo::onEnter();
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    
+    CCSprite *img = CCSprite::create("Images/test_image_a8_v3.pvr");
+    
+    if (img)
+    {
+        img->setPosition(ccp(s.width/2.0f, s.height/2.0f));
+        addChild(img);
+    }
+    
+    CCTextureCache::sharedTextureCache()->dumpCachedTextureInfo();
+}
+
+string TexturePVRA8v3::title()
+{
+    return "PVR + A8 Test";
+}
+
+string TexturePVRA8v3::subtitle()
+{
+    return "Testing PVR File Format v3";
+}
+
+// TexturePVRI8v3
+void TexturePVRI8v3::onEnter()
+{
+    TextureDemo::onEnter();
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    
+    CCSprite *img = CCSprite::create("Images/test_image_i8_v3.pvr");
+    
+    if (img)
+    {
+        img->setPosition(ccp(s.width/2.0f, s.height/2.0f));
+        addChild(img);
+    }
+    
+    CCTextureCache::sharedTextureCache()->dumpCachedTextureInfo();
+}
+
+string TexturePVRI8v3::title()
+{
+    return "PVR + I8 Test";
+}
+
+string TexturePVRI8v3::subtitle()
+{
+    return "Testing PVR File Format v3";
+}
+
+// TexturePVRAI88v3
+void TexturePVRAI88v3::onEnter()
+{
+    TextureDemo::onEnter();
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    
+    CCSprite *img = CCSprite::create("Images/test_image_ai88_v3.pvr");
+    
+    if (img)
+    {
+        img->setPosition(ccp(s.width/2.0f, s.height/2.0f));
+        addChild(img);
+    }
+    
+    CCTextureCache::sharedTextureCache()->dumpCachedTextureInfo();
+}
+
+string TexturePVRAI88v3::title()
+{
+    return "PVR + AI88 Test";
+}
+
+string TexturePVRAI88v3::subtitle()
+{
+    return "Testing PVR File Format v3";
 }
 
 //------------------------------------------------------------------

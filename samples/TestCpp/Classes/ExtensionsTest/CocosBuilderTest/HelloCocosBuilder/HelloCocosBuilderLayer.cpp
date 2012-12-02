@@ -67,11 +67,11 @@ void HelloCocosBuilderLayer::onNodeLoaded(cocos2d::CCNode * pNode,  cocos2d::ext
 }
 
 
-SEL_MenuHandler HelloCocosBuilderLayer::onResolveCCBCCMenuItemSelector(CCObject * pTarget, CCString * pSelectorName) {
+SEL_MenuHandler HelloCocosBuilderLayer::onResolveCCBCCMenuItemSelector(CCObject * pTarget, const char * pSelectorName) {
     return NULL;    
 }
 
-SEL_CCControlHandler HelloCocosBuilderLayer::onResolveCCBCCControlSelector(CCObject * pTarget, CCString * pSelectorName) {
+SEL_CCControlHandler HelloCocosBuilderLayer::onResolveCCBCCControlSelector(CCObject * pTarget, const char * pSelectorName) {
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onMenuTestClicked", HelloCocosBuilderLayer::onMenuTestClicked);
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onSpriteTestClicked", HelloCocosBuilderLayer::onSpriteTestClicked);
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onButtonTestClicked", HelloCocosBuilderLayer::onButtonTestClicked);
@@ -82,7 +82,7 @@ SEL_CCControlHandler HelloCocosBuilderLayer::onResolveCCBCCControlSelector(CCObj
     return NULL;
 }
 
-bool HelloCocosBuilderLayer::onAssignCCBMemberVariable(CCObject * pTarget, CCString * pMemberVariableName, CCNode * pNode) {
+bool HelloCocosBuilderLayer::onAssignCCBMemberVariable(CCObject * pTarget, const char * pMemberVariableName, CCNode * pNode) {
     CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "mBurstSprite", CCSprite *, this->mBurstSprite);
     CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "mTestTitleLabelTTF", CCLabelTTF *, this->mTestTitleLabelTTF);
 
@@ -103,9 +103,7 @@ void HelloCocosBuilderLayer::onButtonTestClicked(CCObject * pSender, cocos2d::ex
 }
 
 void HelloCocosBuilderLayer::onAnimationsTestClicked(CCObject * pSender, cocos2d::extension::CCControlEvent pCCControlEvent) {
-    // Load node graph (TestAnimations is a sub class of CCLayer) and retrieve the ccb action manager
-    CCBAnimationManager *actionManager = NULL;
-    
+
     /* Create an autorelease CCNodeLoaderLibrary. */
     CCNodeLoaderLibrary * ccNodeLoaderLibrary = CCNodeLoaderLibrary::newDefaultCCNodeLoaderLibrary();
     
@@ -122,8 +120,9 @@ void HelloCocosBuilderLayer::onAnimationsTestClicked(CCObject * pSender, cocos2d
     // the owner will cause lblTestTitle to be set by the CCBReader.
     // lblTestTitle is in the TestHeader.ccbi, which is referenced
     // from each of the test scenes.
-    CCNode *animationsTest = ccbReader->readNodeGraphFromFile("ccb/ccb/TestAnimations.ccbi", this, &actionManager);
-    ((AnimationsTestLayer*)animationsTest)->setAnimationManager(actionManager);
+    CCNode *animationsTest = ccbReader->readNodeGraphFromFile("ccb/ccb/TestAnimations.ccbi", this);
+    // Load node graph (TestAnimations is a sub class of CCLayer) and retrieve the ccb action manager
+    ((AnimationsTestLayer*)animationsTest)->setAnimationManager(ccbReader->getAnimationManager());
     
     this->mTestTitleLabelTTF->setString("TestAnimations.ccbi");
     

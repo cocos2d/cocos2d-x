@@ -33,19 +33,19 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	if (frameSize.height > mediumResource.size.height)
 	{ 
 		CCFileUtils::sharedFileUtils()->setResourceDirectory(largeResource.directory);
-        pDirector->setContentScaleFactor(largeResource.size.height/designResolutionSize.height);
+        pDirector->setContentScaleFactor(MIN(largeResource.size.height/designResolutionSize.height, largeResource.size.width/designResolutionSize.width));
 	}
     // if the frame's height is larger than the height of small resource size, select medium resource.
     else if (frameSize.height > smallResource.size.height)
     { 
         CCFileUtils::sharedFileUtils()->setResourceDirectory(mediumResource.directory);
-        pDirector->setContentScaleFactor(mediumResource.size.height/designResolutionSize.height);
+        pDirector->setContentScaleFactor(MIN(mediumResource.size.height/designResolutionSize.height, mediumResource.size.width/designResolutionSize.width));
     }
     // if the frame's height is smaller than the height of medium resource size, select small resource.
 	else
     { 
 		CCFileUtils::sharedFileUtils()->setResourceDirectory(smallResource.directory);
-        pDirector->setContentScaleFactor(smallResource.size.height/designResolutionSize.height);
+        pDirector->setContentScaleFactor(MIN(smallResource.size.height/designResolutionSize.height, smallResource.size.width/designResolutionSize.width));
     }
 	
     // turn on display FPS

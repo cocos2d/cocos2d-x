@@ -28,12 +28,11 @@ public:
     virtual void onEnter();
     virtual std::string title();
 
-    void registerWithTouchDispatcher();
     void updateSize(CCPoint &touchLocation);
 
-    virtual bool ccTouchBegan(CCTouch* touche, CCEvent* event);
-    virtual void ccTouchMoved(CCTouch* touche, CCEvent* event);
-    virtual void ccTouchEnded(CCTouch* touche, CCEvent* event);
+    virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
+    virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent);
+    virtual void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent);
 };
 
 class LayerTest2 : public LayerTest
@@ -85,6 +84,14 @@ class LayerIgnoreAnchorPointScale : public LayerTest
 public:
     virtual void onEnter();
     void onToggle(CCObject* pObject);
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
+class LayerExtendedBlendOpacityTest : public LayerTest
+{
+public:
+    LayerExtendedBlendOpacityTest();
     virtual std::string title();
     virtual std::string subtitle();
 };

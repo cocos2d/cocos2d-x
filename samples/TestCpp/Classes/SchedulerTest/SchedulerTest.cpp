@@ -255,10 +255,15 @@ void SchedulerPauseResumeAll::onEnter()
     this->addChild(sprite);
     sprite->runAction(CCRepeatForever::create(CCRotateBy::create(3.0, 360)));
 
+    scheduleUpdate();
     schedule(schedule_selector(SchedulerPauseResumeAll::tick1), 0.5f);
     schedule(schedule_selector(SchedulerPauseResumeAll::tick2), 1.0f);
     schedule(schedule_selector(SchedulerPauseResumeAll::pause), 3.0f, false, 0);
-    //TODO: [self performSelector:@selector(resume) withObject:nil afterDelay:5];
+}
+
+void SchedulerPauseResumeAll::update(float delta)
+{
+    // do nothing
 }
 
 void SchedulerPauseResumeAll::onExit()
@@ -285,6 +290,14 @@ void SchedulerPauseResumeAll::pause(float dt)
     CCDirector* pDirector = CCDirector::sharedDirector();
     m_pPausedTargets = pDirector->getScheduler()->pauseAllTargets();
     CC_SAFE_RETAIN(m_pPausedTargets);
+    
+    unsigned int c = m_pPausedTargets->count();
+    
+    if (c > 2)
+    {
+        // should have only 2 items: CCActionManager, self
+        CCLog("Error: pausedTargets should have only 2 items, and not %u", (unsigned int)c);
+    }
 }
 
 void SchedulerPauseResumeAll::resume(float dt)
@@ -491,7 +504,7 @@ void SchedulerUnscheduleAllHard::tick4(float dt)
 
 void SchedulerUnscheduleAllHard::unscheduleAll(float dt)
 {
-    CCDirector::sharedDirector()->getScheduler()->unscheduleAllSelectors();
+    CCDirector::sharedDirector()->getScheduler()->unscheduleAll();
     m_bActionManagerActive = false;
 }
 
@@ -550,7 +563,7 @@ void SchedulerUnscheduleAllUserLevel::tick4(float dt)
 
 void SchedulerUnscheduleAllUserLevel::unscheduleAll(float dt)
 {
-    CCDirector::sharedDirector()->getScheduler()->unscheduleAllSelectorsWithMinPriority(kCCPriorityNonSystemMin);
+    CCDirector::sharedDirector()->getScheduler()->unscheduleAllWithMinPriority(kCCPriorityNonSystemMin);
 }
 
 std::string SchedulerUnscheduleAllUserLevel::title()
@@ -1066,8 +1079,8 @@ void TwoSchedulers::onEnter()
 TwoSchedulers::~TwoSchedulers()
 {
     CCScheduler *defaultScheduler = CCDirector::sharedDirector()->getScheduler();
-    defaultScheduler->unscheduleAllSelectorsForTarget(sched1);
-    defaultScheduler->unscheduleAllSelectorsForTarget(sched2);
+    defaultScheduler->unscheduleAllForTarget(sched1);
+    defaultScheduler->unscheduleAllForTarget(sched2);
 
     sliderCtl1->release();
     sliderCtl2->release();

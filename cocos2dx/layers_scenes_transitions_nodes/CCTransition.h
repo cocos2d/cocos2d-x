@@ -60,13 +60,19 @@ public:
 */
 typedef enum {
     /// An horizontal orientation where the Left is nearer
-    kOrientationLeftOver = 0,
-    /// An horizontal orientation where the Right is nearer
-    kOrientationRightOver = 1,
-    /// A vertical orientation where the Up is nearer
-    kOrientationUpOver = 0,
-    /// A vertical orientation where the Bottom is nearer
-    kOrientationDownOver = 1,
+	kCCTransitionOrientationLeftOver = 0,
+	/// An horizontal orientation where the Right is nearer
+	kCCTransitionOrientationRightOver = 1,
+	/// A vertical orientation where the Up is nearer
+	kCCTransitionOrientationUpOver = 0,
+	/// A vertical orientation where the Bottom is nearer
+	kCCTransitionOrientationDownOver = 1,
+    
+	// Deprecated
+    //	kOrientationLeftOver = kCCTransitionOrientationLeftOver,
+    //	kOrientationRightOver = kCCTransitionOrientationRightOver,
+    //	kOrientationUpOver = kCCTransitionOrientationUpOver,
+    //	kOrientationDownOver = kCCTransitionOrientationDownOver,
 } tOrientation;
 
 /** @brief Base class for CCTransition scenes
@@ -342,7 +348,7 @@ public:
     virtual void onEnter();
 
     // @deprecated: This interface will be deprecated sooner or later.
-    CC_DEPRECATED_ATTRIBUTE static CCTransitionFlipX* transitionWithDuration(float t, CCScene* s, tOrientation o = kOrientationRightOver);
+    CC_DEPRECATED_ATTRIBUTE static CCTransitionFlipX* transitionWithDuration(float t, CCScene* s, tOrientation o = kCCTransitionOrientationRightOver);
     static CCTransitionFlipX* create(float t, CCScene* s, tOrientation o);
     static CCTransitionFlipX* create(float t, CCScene* s);
 };
@@ -360,7 +366,7 @@ public:
     virtual void onEnter();
 
     //@deprecated: This interface will be deprecated sooner or later.
-    CC_DEPRECATED_ATTRIBUTE static CCTransitionFlipY* transitionWithDuration(float t, CCScene* s, tOrientation o = kOrientationUpOver);
+    CC_DEPRECATED_ATTRIBUTE static CCTransitionFlipY* transitionWithDuration(float t, CCScene* s, tOrientation o = kCCTransitionOrientationUpOver);
     static CCTransitionFlipY* create(float t, CCScene* s, tOrientation o);
     static CCTransitionFlipY* create(float t, CCScene* s);
 };
@@ -378,7 +384,7 @@ public:
     virtual void onEnter();
 
     //@deprecated: This interface will be deprecated sooner or later.
-    CC_DEPRECATED_ATTRIBUTE static CCTransitionFlipAngular* transitionWithDuration(float t, CCScene* s, tOrientation o = kOrientationRightOver);
+    CC_DEPRECATED_ATTRIBUTE static CCTransitionFlipAngular* transitionWithDuration(float t, CCScene* s, tOrientation o = kCCTransitionOrientationRightOver);
     static CCTransitionFlipAngular* create(float t, CCScene* s, tOrientation o);
     static CCTransitionFlipAngular* create(float t, CCScene* s);
 };
@@ -396,7 +402,7 @@ public:
     virtual void onEnter();
 
     //@deprecated: This interface will be deprecated sooner or later.
-    CC_DEPRECATED_ATTRIBUTE static CCTransitionZoomFlipX* transitionWithDuration(float t, CCScene* s, tOrientation o = kOrientationRightOver);
+    CC_DEPRECATED_ATTRIBUTE static CCTransitionZoomFlipX* transitionWithDuration(float t, CCScene* s, tOrientation o = kCCTransitionOrientationRightOver);
     static CCTransitionZoomFlipX* create(float t, CCScene* s, tOrientation o);
     static CCTransitionZoomFlipX* create(float t, CCScene* s);
 };
@@ -414,7 +420,7 @@ public:
     virtual void onEnter();
 
     //@deprecated: This interface will be deprecated sooner or later.
-    CC_DEPRECATED_ATTRIBUTE static CCTransitionZoomFlipY* transitionWithDuration(float t, CCScene* s, tOrientation o = kOrientationUpOver);
+    CC_DEPRECATED_ATTRIBUTE static CCTransitionZoomFlipY* transitionWithDuration(float t, CCScene* s, tOrientation o = kCCTransitionOrientationUpOver);
     static CCTransitionZoomFlipY* create(float t, CCScene* s, tOrientation o);
     static CCTransitionZoomFlipY* create(float t, CCScene* s);
 };
@@ -432,7 +438,7 @@ public:
     virtual void onEnter();
 
     //@deprecated: This interface will be deprecated sooner or later.
-    CC_DEPRECATED_ATTRIBUTE static CCTransitionZoomFlipAngular* transitionWithDuration(float t, CCScene* s, tOrientation o = kOrientationRightOver);
+    CC_DEPRECATED_ATTRIBUTE static CCTransitionZoomFlipAngular* transitionWithDuration(float t, CCScene* s, tOrientation o = kCCTransitionOrientationRightOver);
     static CCTransitionZoomFlipAngular* create(float t, CCScene* s, tOrientation o);
     static CCTransitionZoomFlipAngular* create(float t, CCScene* s);
 };

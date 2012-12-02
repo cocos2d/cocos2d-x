@@ -20,6 +20,7 @@
 				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
 				<array>
 					<string>COCOS2D_JAVASCRIPT</string>
+                                        <string>CC_ENABLE_CHIPMUNK_INTEGRATION</string>
 				</array>
 			</dict>
 			<key>Release</key>
@@ -27,6 +28,7 @@
 				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
 				<array>
 					<string>COCOS2D_JAVASCRIPT</string>
+                                        <string>CC_ENABLE_CHIPMUNK_INTEGRATION</string>
 				</array>
 			</dict>
 
@@ -35,30 +37,6 @@
 
 	<key>Definitions</key>
 	<dict>
-		<key>libs/javascript/bindings/CCPhysicsSprite.cpp</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>javascript</string>
-				<string>bindings</string>
-			</array>
-			<key>Path</key>
-			<string>libs/javascript/bindings/CCPhysicsSprite.cpp</string>
-		</dict>
-		<key>libs/javascript/bindings/CCPhysicsSprite.h</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>javascript</string>
-				<string>bindings</string>
-			</array>
-			<key>Path</key>
-			<string>libs/javascript/bindings/CCPhysicsSprite.h</string>
-			<key>TargetIndices</key>
-			<array/>
-		</dict>
 		<key>libs/javascript/bindings/cocos2d_specifics.cpp</key>
 		<dict>
 			<key>Group</key>
@@ -177,6 +155,43 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
+		<key>libs/javascript/bindings/js_bindings_chipmunk_auto_classes.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>javascript</string>
+				<string>bindings</string>
+			</array>
+			<key>Path</key>
+			<string>libs/javascript/bindings/js_bindings_chipmunk_auto_classes.cpp</string>
+		</dict>
+		<key>libs/javascript/bindings/js_bindings_chipmunk_auto_classes.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>javascript</string>
+				<string>bindings</string>
+			</array>
+			<key>Path</key>
+			<string>libs/javascript/bindings/js_bindings_chipmunk_auto_classes.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/javascript/bindings/js_bindings_chipmunk_auto_classes_registration.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>javascript</string>
+				<string>bindings</string>
+			</array>
+			<key>Path</key>
+			<string>libs/javascript/bindings/js_bindings_chipmunk_auto_classes_registration.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
 		<key>libs/javascript/bindings/js_bindings_chipmunk_functions.cpp</key>
 		<dict>
 			<key>Group</key>
@@ -188,7 +203,7 @@
 			<key>Path</key>
 			<string>libs/javascript/bindings/js_bindings_chipmunk_functions.cpp</string>
 		</dict>
-		<key>libs/javascript/bindings/js_bindings_chipmunk_functions.hpp</key>
+		<key>libs/javascript/bindings/js_bindings_chipmunk_functions.h</key>
 		<dict>
 			<key>Group</key>
 			<array>
@@ -197,7 +212,22 @@
 				<string>bindings</string>
 			</array>
 			<key>Path</key>
-			<string>libs/javascript/bindings/js_bindings_chipmunk_functions.hpp</string>
+			<string>libs/javascript/bindings/js_bindings_chipmunk_functions.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/javascript/bindings/js_bindings_chipmunk_functions_registration.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>javascript</string>
+				<string>bindings</string>
+			</array>
+			<key>Path</key>
+			<string>libs/javascript/bindings/js_bindings_chipmunk_functions_registration.h</string>
+			<key>TargetIndices</key>
+			<array/>
 		</dict>
 		<key>libs/javascript/bindings/js_bindings_chipmunk_manual.cpp</key>
 		<dict>
@@ -210,7 +240,7 @@
 			<key>Path</key>
 			<string>libs/javascript/bindings/js_bindings_chipmunk_manual.cpp</string>
 		</dict>
-		<key>libs/javascript/bindings/js_bindings_chipmunk_manual.hpp</key>
+		<key>libs/javascript/bindings/js_bindings_chipmunk_manual.h</key>
 		<dict>
 			<key>Group</key>
 			<array>
@@ -219,7 +249,33 @@
 				<string>bindings</string>
 			</array>
 			<key>Path</key>
-			<string>libs/javascript/bindings/js_bindings_chipmunk_manual.hpp</string>
+			<string>libs/javascript/bindings/js_bindings_chipmunk_manual.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/javascript/bindings/js_bindings_chipmunk_registration.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>javascript</string>
+				<string>bindings</string>
+			</array>
+			<key>Path</key>
+			<string>libs/javascript/bindings/js_bindings_chipmunk_registration.cpp</string>
+		</dict>
+		<key>libs/javascript/bindings/js_bindings_chipmunk_registration.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>javascript</string>
+				<string>bindings</string>
+			</array>
+			<key>Path</key>
+			<string>libs/javascript/bindings/js_bindings_chipmunk_registration.h</string>
+			<key>TargetIndices</key>
+			<array/>
 		</dict>
 		<key>libs/javascript/bindings/js_bindings_config.h</key>
 		<dict>
@@ -231,6 +287,30 @@
 			</array>
 			<key>Path</key>
 			<string>libs/javascript/bindings/js_bindings_config.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/javascript/bindings/js_bindings_core.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>javascript</string>
+				<string>bindings</string>
+			</array>
+			<key>Path</key>
+			<string>libs/javascript/bindings/js_bindings_core.cpp</string>
+		</dict>
+		<key>libs/javascript/bindings/js_bindings_core.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>javascript</string>
+				<string>bindings</string>
+			</array>
+			<key>Path</key>
+			<string>libs/javascript/bindings/js_bindings_core.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
@@ -311,8 +391,6 @@
 	</dict>
 	<key>Nodes</key>
 	<array>
-		<string>libs/javascript/bindings/CCPhysicsSprite.cpp</string>
-		<string>libs/javascript/bindings/CCPhysicsSprite.h</string>
 		<string>libs/javascript/bindings/cocos2d_specifics.cpp</string>
 		<string>libs/javascript/bindings/cocos2d_specifics.hpp</string>
 		<string>libs/javascript/bindings/cocosjs_manual_conversions.cpp</string>
@@ -323,11 +401,19 @@
 		<string>libs/javascript/bindings/generated/README</string>
 		<string>libs/javascript/bindings/js_bindings_ccbreader.cpp</string>
 		<string>libs/javascript/bindings/js_bindings_ccbreader.h</string>
+		<string>libs/javascript/bindings/js_bindings_chipmunk_auto_classes.cpp</string>
+		<string>libs/javascript/bindings/js_bindings_chipmunk_auto_classes.h</string>
+		<string>libs/javascript/bindings/js_bindings_chipmunk_auto_classes_registration.h</string>
 		<string>libs/javascript/bindings/js_bindings_chipmunk_functions.cpp</string>
-		<string>libs/javascript/bindings/js_bindings_chipmunk_functions.hpp</string>
+		<string>libs/javascript/bindings/js_bindings_chipmunk_functions.h</string>
+		<string>libs/javascript/bindings/js_bindings_chipmunk_functions_registration.h</string>
 		<string>libs/javascript/bindings/js_bindings_chipmunk_manual.cpp</string>
-		<string>libs/javascript/bindings/js_bindings_chipmunk_manual.hpp</string>
+		<string>libs/javascript/bindings/js_bindings_chipmunk_manual.h</string>
+		<string>libs/javascript/bindings/js_bindings_chipmunk_registration.cpp</string>
+		<string>libs/javascript/bindings/js_bindings_chipmunk_registration.h</string>
 		<string>libs/javascript/bindings/js_bindings_config.h</string>
+		<string>libs/javascript/bindings/js_bindings_core.cpp</string>
+		<string>libs/javascript/bindings/js_bindings_core.h</string>
 		<string>libs/javascript/bindings/js_manual_conversions.cpp</string>
 		<string>libs/javascript/bindings/js_manual_conversions.h</string>
 		<string>libs/javascript/bindings/ScriptingCore.cpp</string>
