@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.92 on Sun Dec  2 15:47:22 2012.
+** Generated automatically by tolua++-1.0.92 on Sun Dec  2 16:16:27 2012.
 */
 
 /****************************************************************************
@@ -54997,13 +54997,6 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"copy",tolua_Cocos2d_CCObject_copy00);
    tolua_function(tolua_S,"autorelease",tolua_Cocos2d_CCObject_autorelease00);
   tolua_endmodule(tolua_S);
-  tolua_constant(tolua_S,"kLanguageEnglish",kLanguageEnglish);
-  tolua_constant(tolua_S,"kLanguageChinese",kLanguageChinese);
-  tolua_constant(tolua_S,"kLanguageFrench",kLanguageFrench);
-  tolua_constant(tolua_S,"kLanguageItalian",kLanguageItalian);
-  tolua_constant(tolua_S,"kLanguageGerman",kLanguageGerman);
-  tolua_constant(tolua_S,"kLanguageSpanish",kLanguageSpanish);
-  tolua_constant(tolua_S,"kLanguageRussian",kLanguageRussian);
   tolua_function(tolua_S,"CCLuaLog",tolua_Cocos2d_CCLuaLog00);
   tolua_function(tolua_S,"CCMessageBox",tolua_Cocos2d_CCMessageBox00);
   #ifdef __cplusplus
