@@ -406,6 +406,15 @@ bool CCCallFunc::initWithTarget(CCObject* pSelectorTarget) {
     return true;
 }
 
+CCCallFunc::~CCCallFunc(void)
+{
+    if (m_nScriptHandler)
+    {
+        cocos2d::CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_nScriptHandler);
+    }
+    CC_SAFE_RELEASE(m_pSelectorTarget);
+}
+
 CCObject * CCCallFunc::copyWithZone(CCZone *pZone) {
     CCZone* pNewZone = NULL;
     CCCallFunc* pRet = NULL;
