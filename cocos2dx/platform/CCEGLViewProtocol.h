@@ -49,13 +49,6 @@ public:
     virtual void    setIMEKeyboardState(bool bOpen) = 0;
 
     /**
-     * Get design resolution size.
-     * If setDesignResolutionSize wasn't invoked, the result of this function return is the same as 'getFrameSize'
-     */
-
-    virtual const CCSize&  getSize() const;
-
-    /**
      * Get the frame size of EGL view.
      * In general, it returns the screen size since the EGL view is a fullscreen view.
      */
@@ -78,15 +71,19 @@ public:
 
     /**
      * Set the design resolution size.
-     * Behavior undefined when enableRetina == true.
      * @param width Design resolution width.
      * @param height Design resolution height.
      * @param resolutionPolicy The resolution policy desired, you may choose:
-     *                         [1] kCCResolutionExactFit Fill screen by stretch-to-fit: if the design resolution ratio of width to height is different from the screen resolution ratio, your game view will be stretched.
-     *                         [2] kCCResolutionNoBorder Full screen without black border: if the design resolution ratio of width to height is different from the screen resolution ratio, two areas of your game view will be cut.
-     *                         [3] kCCResolutionShowAll  Full screen with black border: if the design resolution ratio of width to height is different from the screen resolution ratio, two black borders will be shown.
+     *                         [1] kResolutionExactFit Fill screen by stretch-to-fit: if the design resolution ratio of width to height is different from the screen resolution ratio, your game view will be stretched.
+     *                         [2] kResolutionNoBorder Full screen without black border: if the design resolution ratio of width to height is different from the screen resolution ratio, two areas of your game view will be cut.
+     *                         [3] kResolutionShowAll  Full screen with black border: if the design resolution ratio of width to height is different from the screen resolution ratio, two black borders will be shown.
      */
     virtual void setDesignResolutionSize(float width, float height, ResolutionPolicy resolutionPolicy);
+
+    /** Get design resolution size.
+     *  Default resolution size is the same as 'getFrameSize'.
+     */
+    virtual const CCSize&  getDesignResolutionSize() const;
 
     /** Set touch delegate */
     virtual void setTouchDelegate(EGLTouchDelegate * pDelegate);

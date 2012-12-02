@@ -25,6 +25,10 @@ CCLayer* CreateLayer(int nIndex)
             pLayer = new ActionRotate(); break;
         case ACTION_SKEW_LAYER:
             pLayer = new ActionSkew(); break;
+        case ACTION_ROTATIONAL_SKEW_LAYER:
+            pLayer = new ActionRotationalSkew(); break;
+        case ACTION_ROTATIONAL_SKEW_VS_STANDARD_SKEW_LAYER:
+            pLayer = new ActionRotationalSkewVSStandardSkew(); break;
         case ACTION_SKEWROTATE_LAYER:
             pLayer = new ActionSkewRotateScale(); break;
         case ACTION_JUMP_LAYER:
@@ -81,6 +85,8 @@ CCLayer* CreateLayer(int nIndex)
             pLayer = new Issue1288_2(); break;
         case ACTION_ISSUE1327_LAYER:
             pLayer = new Issue1327(); break;
+        case ACTION_ISSUE1398_LAYER:
+            pLayer = new Issue1398(); break;
         case ACTION_CARDINALSPLINE_LAYER:
             pLayer = new ActionCardinalSpline(); break;
         case ACTION_CATMULLROM_LAYER:
@@ -394,6 +400,78 @@ string ActionSkew::subtitle()
     return "SkewTo / SkewBy";
 }
 
+// ActionRotationalSkew
+void ActionRotationalSkew::onEnter()
+{
+    ActionsDemo::onEnter();
+
+    this->centerSprites(3);
+
+    CCRotateTo* actionTo = CCRotateTo::create(2, 37.2f, -37.2f);
+    CCRotateTo* actionToBack = CCRotateTo::create(2, 0, 0);
+    CCRotateBy* actionBy = CCRotateBy::create(2, 0.0f, -90.0f);
+    CCRotateBy* actionBy2 = CCRotateBy::create(2, 45.0f, 45.0f);
+    CCRotateBy* actionByBack = (CCRotateBy*)actionBy->reverse();
+
+    m_tamara->runAction(CCSequence::create(actionTo, actionToBack, NULL));
+    m_grossini->runAction(CCSequence::create(actionBy, actionByBack, NULL));
+
+    m_kathia->runAction(CCSequence::create(actionBy2, actionBy2->reverse(), NULL));
+}
+
+std::string ActionRotationalSkew::subtitle()
+{
+    return "RotationalSkewTo / RotationalSkewBy";
+}
+
+
+
+//ActionRotationalSkewVSStandardSkew
+void ActionRotationalSkewVSStandardSkew::onEnter()
+{
+    ActionsDemo::onEnter();
+
+    m_tamara->removeFromParentAndCleanup(true);
+    m_grossini->removeFromParentAndCleanup(true);
+    m_kathia->removeFromParentAndCleanup(true);
+
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+
+    CCSize boxSize = CCSizeMake(100.0f, 100.0f);
+
+    CCLayerColor *box = CCLayerColor::create(ccc4(255,255,0,255));
+    box->setAnchorPoint(ccp(0.5,0.5));
+    box->setContentSize( boxSize );
+    box->ignoreAnchorPointForPosition(false);
+    box->setPosition(ccp(s.width/2, s.height - 100 - box->getContentSize().height/2));
+    this->addChild(box);
+    CCLabelTTF *label = CCLabelTTF::create("Standard cocos2d Skew", "Marker Felt", 16);
+    label->setPosition(ccp(s.width/2, s.height - 100 + label->getContentSize().height));
+    this->addChild(label);
+    CCSkewBy* actionTo = CCSkewBy::create(2, 360, 0);
+    CCSkewBy* actionToBack = CCSkewBy::create(2, -360, 0);
+
+    box->runAction(CCSequence::create(actionTo, actionToBack, NULL));
+
+    box = CCLayerColor::create(ccc4(255,255,0,255));
+    box->setAnchorPoint(ccp(0.5,0.5));
+    box->setContentSize(boxSize);
+    box->ignoreAnchorPointForPosition(false);
+    box->setPosition(ccp(s.width/2, s.height - 250 - box->getContentSize().height/2));
+    this->addChild(box);
+    label = CCLabelTTF::create("Rotational Skew", "Marker Felt", 16);
+    label->setPosition(ccp(s.width/2, s.height - 250 + label->getContentSize().height/2));
+    this->addChild(label);
+    CCRotateBy* actionTo2 = CCRotateBy::create(2, 360, 0);
+    CCRotateBy* actionToBack2 = CCRotateBy::create(2, -360, 0);
+    box->runAction(CCSequence::create(actionTo2, actionToBack2, NULL));
+}
+std::string ActionRotationalSkewVSStandardSkew::subtitle()
+{
+    return "Skew Comparison";
+}
+
+// ActionSkewRotateScale
 void ActionSkewRotateScale::onEnter()
 {
     ActionsDemo::onEnter();
@@ -1447,6 +1525,50 @@ void Issue1327::logSprRotation(CCNode* pSender)
     CCLog("%f", ((CCSprite*)pSender)->getRotation());
 }
 
+//Issue1398
+void Issue1398::incrementInteger()
+{
+    m_nTestInteger++;
+    CCLog("incremented to %d", m_nTestInteger);
+}
+
+void Issue1398::onEnter()
+{
+    ActionsDemo::onEnter();
+    this->centerSprites(0);
+
+    m_nTestInteger = 0;
+    CCLog("testInt = %d", m_nTestInteger);
+
+    this->runAction(
+        CCSequence::create(
+            CCCallFuncND::create(this, callfuncND_selector(Issue1398::incrementIntegerCallback), (void*)"1"),
+            CCCallFuncND::create(this, callfuncND_selector(Issue1398::incrementIntegerCallback), (void*)"2"),
+            CCCallFuncND::create(this, callfuncND_selector(Issue1398::incrementIntegerCallback), (void*)"3"),
+            CCCallFuncND::create(this, callfuncND_selector(Issue1398::incrementIntegerCallback), (void*)"4"),
+            CCCallFuncND::create(this, callfuncND_selector(Issue1398::incrementIntegerCallback), (void*)"5"),
+            CCCallFuncND::create(this, callfuncND_selector(Issue1398::incrementIntegerCallback), (void*)"6"),
+            CCCallFuncND::create(this, callfuncND_selector(Issue1398::incrementIntegerCallback), (void*)"7"),
+            CCCallFuncND::create(this, callfuncND_selector(Issue1398::incrementIntegerCallback), (void*)"8"),
+            NULL));
+}
+
+void Issue1398::incrementIntegerCallback(CCNode* pSender, void* data)
+{
+    this->incrementInteger();
+    CCLog((char*)data);
+}
+
+std::string Issue1398::subtitle()
+{
+    return "See console: You should see an 8";
+}
+
+std::string Issue1398::title()
+{
+    return "Issue 1398";
+}
+
 /** ActionCatmullRom
  */
 void ActionCatmullRom::onEnter()
@@ -1457,15 +1579,15 @@ void ActionCatmullRom::onEnter()
     
     CCSize s = CCDirector::sharedDirector()->getWinSize();
     
-    //
-    // sprite 1 (By)
-    //
-    // startPosition can be any coordinate, but since the movement
-    // is relative to the Catmull Rom curve, it is better to start with (0,0).
-    //
-    
+	//
+	// sprite 1 (By)
+	//
+	// startPosition can be any coordinate, but since the movement
+	// is relative to the Catmull Rom curve, it is better to start with (0,0).
+	//
+	
     m_tamara->setPosition(ccp(50, 50));
-    
+	
     CCPointArray *array = CCPointArray::create(20);
     
     array->addControlPoint(ccp(0, 0));
@@ -1478,18 +1600,18 @@ void ActionCatmullRom::onEnter()
     
     CCCatmullRomBy *action = CCCatmullRomBy::create(3, array);
     CCFiniteTimeAction *reverse = action->reverse();
-    
+	
     CCFiniteTimeAction *seq = CCSequence::create(action, reverse, NULL);
-    
+	
     m_tamara->runAction(seq);
-    
-    
-    //
-    // sprite 2 (To)
-    //
-    // The startPosition is not important here, because it uses a "To" action.
-    // The initial position will be the 1st point of the Catmull Rom path
-    //    
+	
+	
+	//
+	// sprite 2 (To)
+	//
+	// The startPosition is not important here, because it uses a "To" action.
+	// The initial position will be the 1st point of the Catmull Rom path
+	//    
     
     CCPointArray *array2 = CCPointArray::create(20);
     
@@ -1501,9 +1623,9 @@ void ActionCatmullRom::onEnter()
     
     CCCatmullRomTo *action2 = CCCatmullRomTo::create(3, array2);
     CCFiniteTimeAction *reverse2 = action2->reverse();
-    
+	
     CCFiniteTimeAction *seq2 = CCSequence::create(action2, reverse2, NULL);
-    
+	
     m_kathia->runAction(seq2);
     
     m_pArray1 = array;
@@ -1522,13 +1644,13 @@ void ActionCatmullRom::draw()
 {
     ActionsDemo::draw();
     
-    // move to 50,50 since the "by" path will start at 50,50
-    kmGLPushMatrix();
-    kmGLTranslatef(50, 50, 0);
-    ccDrawCatmullRom(m_pArray1, 50);
-    kmGLPopMatrix();
+	// move to 50,50 since the "by" path will start at 50,50
+	kmGLPushMatrix();
+	kmGLTranslatef(50, 50, 0);
+	ccDrawCatmullRom(m_pArray1, 50);
+	kmGLPopMatrix();
     
-    ccDrawCatmullRom(m_pArray2,50);
+	ccDrawCatmullRom(m_pArray2,50);
 }
 
 string ActionCatmullRom::title()
@@ -1546,9 +1668,9 @@ string ActionCatmullRom::subtitle()
 void ActionCardinalSpline::onEnter()
 {
     ActionsDemo::onEnter();
-    
+	
     this->centerSprites(2);
-    
+	
     CCSize s = CCDirector::sharedDirector()->getWinSize();
     
     CCPointArray *array = CCPointArray::create(20);
@@ -1559,34 +1681,34 @@ void ActionCardinalSpline::onEnter()
     array->addControlPoint(ccp(0, s.height-80));
     array->addControlPoint(ccp(0, 0));
     
-    //
-    // sprite 1 (By)
-    //
-    // Spline with no tension (tension==0)
-    //
+	//
+	// sprite 1 (By)
+	//
+	// Spline with no tension (tension==0)
+	//
     
     CCCardinalSplineBy *action = CCCardinalSplineBy::create(3, array, 0);
     CCActionInterval *reverse = action->reverse();
-    
+	
     CCFiniteTimeAction *seq = CCSequence::create(action, reverse, NULL);
-    
+	
     m_tamara->setPosition(ccp(50, 50));
     m_tamara->runAction(seq);
-    
-    //
-    // sprite 2 (By)
-    //
-    // Spline with high tension (tension==1)
-    //
+	
+	//
+	// sprite 2 (By)
+	//
+	// Spline with high tension (tension==1)
+	//
     
     CCCardinalSplineBy *action2 = CCCardinalSplineBy::create(3, array, 1);
     CCActionInterval *reverse2 = action2->reverse();
-    
+	
     CCFiniteTimeAction *seq2 = CCSequence::create(action2, reverse2, NULL);
-    
+	
     m_kathia->setPosition(ccp(s.width/2, 50));
     m_kathia->runAction(seq2);
-    
+	
     m_pArray = array;
     array->retain();
 }
@@ -1599,19 +1721,19 @@ ActionCardinalSpline::~ActionCardinalSpline()
 void ActionCardinalSpline::draw()
 {
     ActionsDemo::draw();
-    
-    // move to 50,50 since the "by" path will start at 50,50
-    kmGLPushMatrix();
-    kmGLTranslatef(50, 50, 0);
-    ccDrawCardinalSpline(m_pArray, 0, 100);
-    kmGLPopMatrix();
+	
+	// move to 50,50 since the "by" path will start at 50,50
+	kmGLPushMatrix();
+	kmGLTranslatef(50, 50, 0);
+	ccDrawCardinalSpline(m_pArray, 0, 100);
+	kmGLPopMatrix();
     
     CCSize s = CCDirector::sharedDirector()->getWinSize();
     
-    kmGLPushMatrix();
-    kmGLTranslatef(s.width/2, 50, 0);
-    ccDrawCardinalSpline(m_pArray, 1, 100);
-    kmGLPopMatrix();
+	kmGLPushMatrix();
+	kmGLTranslatef(s.width/2, 50, 0);
+	ccDrawCardinalSpline(m_pArray, 1, 100);
+	kmGLPopMatrix();
 }
 
 string ActionCardinalSpline::title()
@@ -1641,7 +1763,7 @@ PauseResumeActions::~PauseResumeActions()
 void PauseResumeActions::onEnter()
 {
     ActionsDemo::onEnter();
-    
+	
     this->centerSprites(2);
     
     m_tamara->runAction(CCRepeatForever::create(CCRotateBy::create(3, 360)));

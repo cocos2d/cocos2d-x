@@ -128,7 +128,7 @@ public:
     void setFontName(const char *fontName);
 
 private:
-    void updateTexture();
+    bool updateTexture();
 protected:
     /** Dimensions of the label in Points */
     CCSize m_tDimensions;

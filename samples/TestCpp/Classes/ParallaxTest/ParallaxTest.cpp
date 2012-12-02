@@ -132,27 +132,9 @@ Parallax2::Parallax2()
     addChild(voidNode, 0, kTagNode);
 }
 
-void Parallax2::registerWithTouchDispatcher()
+void Parallax2::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
 {
-    CCDirector* pDirector = CCDirector::sharedDirector();
-    pDirector->getTouchDispatcher()->addTargetedDelegate(this, 0, true);
-}
-
-bool Parallax2::ccTouchBegan(CCTouch* touch, CCEvent* event)
-{
-    return true;
-}
-
-void Parallax2::ccTouchEnded(CCTouch* touch, CCEvent* event)
-{
-}
-
-void Parallax2::ccTouchCancelled(CCTouch* touch, CCEvent* event)
-{
-}
-
-void Parallax2::ccTouchMoved(CCTouch* touch, CCEvent* event)
-{
+    CCTouch *touch = (CCTouch*)pTouches->anyObject();
     CCPoint diff = touch->getDelta();
     
     CCNode* node = getChildByTag(kTagNode);

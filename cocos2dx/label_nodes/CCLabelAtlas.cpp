@@ -26,7 +26,7 @@ THE SOFTWARE.
 #include "CCLabelAtlas.h"
 #include "textures/CCTextureAtlas.h"
 #include "support/CCPointExtension.h"
-#include "CCDrawingPrimitives.h"
+#include "draw_nodes/CCDrawingPrimitives.h"
 #include "ccConfig.h"
 #include "shaders/CCShaderCache.h"
 #include "shaders/CCGLProgram.h"
@@ -207,7 +207,7 @@ void CCLabelAtlas::draw()
 {
     CCAtlasNode::draw();
 
-    const CCSize& s = this->getContentSize();
+    CCSize s = this->getContentSize();
     CCPoint vertices[4]={
         ccp(0,0),ccp(s.width,0),
         ccp(s.width,s.height),ccp(0,s.height),

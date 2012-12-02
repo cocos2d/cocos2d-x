@@ -37,8 +37,8 @@ class Builder
 
     function build()
     {
-        $command = sprintf('%s -L basic.lua -o %s %s',
-                           TOLUA_BIN, $this->_outputCppPath, $this->_inputPath);
+        $command = sprintf('%s -n %s -L basic.lua -o %s %s',
+                           TOLUA_BIN, $this->_extensionName, $this->_outputCppPath, $this->_inputPath);
 
         printf("  creating file: %s.cpp\n", $this->_luabindingFilename);
         printf("  command: %s\n", $command);

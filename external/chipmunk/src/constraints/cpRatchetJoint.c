@@ -48,9 +48,6 @@ preStep(cpRatchetJoint *joint, cpFloat dt)
 	// calculate bias velocity
 	cpFloat maxBias = joint->constraint.maxBias;
 	joint->bias = cpfclamp(-bias_coef(joint->constraint.errorBias, dt)*pdist/dt, -maxBias, maxBias);
-	
-	// compute max impulse
-	joint->jMax = J_MAX(joint, dt);
 
 	// If the bias is 0, the joint is not at a limit. Reset the impulse.
 	if(!joint->bias) joint->jAcc = 0.0f;
@@ -68,7 +65,7 @@ applyCachedImpulse(cpRatchetJoint *joint, cpFloat dt_coef)
 }
 
 static void
-applyImpulse(cpRatchetJoint *joint)
+applyImpulse(cpRatchetJoint *joint, cpFloat dt)
 {
 	if(!joint->bias) return; // early exit
 
@@ -79,10 +76,12 @@ applyImpulse(cpRatchetJoint *joint)
 	cpFloat wr = b->w - a->w;
 	cpFloat ratchet = joint->ratchet;
 	
+	cpFloat jMax = joint->constraint.maxForce*dt;
+	
 	// compute normal impulse	
 	cpFloat j = -(joint->bias + wr)*joint->iSum;
 	cpFloat jOld = joint->jAcc;
-	joint->jAcc = cpfclamp((jOld + j)*ratchet, 0.0f, joint->jMax*cpfabs(ratchet))/ratchet;
+	joint->jAcc = cpfclamp((jOld + j)*ratchet, 0.0f, jMax*cpfabs(ratchet))/ratchet;
 	j = joint->jAcc - jOld;
 	
 	// apply impulse

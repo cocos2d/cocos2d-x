@@ -36,6 +36,22 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestLua", "samples\TestLua\
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MoonWarriors", "samples\MoonWarriors\proj.win32\MoonWarriors.vcxproj", "{1DB7C0FC-46FF-4A1B-82E0-C6244EEEC4C2}"
+	ProjectSection(ProjectDependencies) = postProject
+		{21B2C324-891F-48EA-AD1A-5AE13DE12E28} = {21B2C324-891F-48EA-AD1A-5AE13DE12E28}
+		{207BC7A9-CCF1-4F2F-A04D-45F72242AE25} = {207BC7A9-CCF1-4F2F-A04D-45F72242AE25}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WatermelonWithMe", "samples\WatermelonWithMe\proj.win32\WatermelonWithMe.vcxproj", "{BE092D9E-95AE-4F86-84CE-F4519E4F3F15}"
+	ProjectSection(ProjectDependencies) = postProject
+		{21B2C324-891F-48EA-AD1A-5AE13DE12E28} = {21B2C324-891F-48EA-AD1A-5AE13DE12E28}
+		{207BC7A9-CCF1-4F2F-A04D-45F72242AE25} = {207BC7A9-CCF1-4F2F-A04D-45F72242AE25}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CocosDragonJS", "samples\CocosDragonJS\proj.win32\CocosDragonJS.vcxproj", "{68ED0B4E-2BCA-45D2-9648-CEABEBD3B9D7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{21B2C324-891F-48EA-AD1A-5AE13DE12E28} = {21B2C324-891F-48EA-AD1A-5AE13DE12E28}
+		{207BC7A9-CCF1-4F2F-A04D-45F72242AE25} = {207BC7A9-CCF1-4F2F-A04D-45F72242AE25}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(DPCodeReviewSolutionGUID) = preSolution
@@ -94,6 +110,14 @@ Global
 		{1DB7C0FC-46FF-4A1B-82E0-C6244EEEC4C2}.Debug|Win32.Build.0 = Debug|Win32
 		{1DB7C0FC-46FF-4A1B-82E0-C6244EEEC4C2}.Release|Win32.ActiveCfg = Release|Win32
 		{1DB7C0FC-46FF-4A1B-82E0-C6244EEEC4C2}.Release|Win32.Build.0 = Release|Win32
+		{BE092D9E-95AE-4F86-84CE-F4519E4F3F15}.Debug|Win32.ActiveCfg = Debug|Win32
+		{BE092D9E-95AE-4F86-84CE-F4519E4F3F15}.Debug|Win32.Build.0 = Debug|Win32
+		{BE092D9E-95AE-4F86-84CE-F4519E4F3F15}.Release|Win32.ActiveCfg = Release|Win32
+		{BE092D9E-95AE-4F86-84CE-F4519E4F3F15}.Release|Win32.Build.0 = Release|Win32
+		{68ED0B4E-2BCA-45D2-9648-CEABEBD3B9D7}.Debug|Win32.ActiveCfg = Debug|Win32
+		{68ED0B4E-2BCA-45D2-9648-CEABEBD3B9D7}.Debug|Win32.Build.0 = Debug|Win32
+		{68ED0B4E-2BCA-45D2-9648-CEABEBD3B9D7}.Release|Win32.ActiveCfg = Release|Win32
+		{68ED0B4E-2BCA-45D2-9648-CEABEBD3B9D7}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -41,7 +41,7 @@ typedef struct cpPolyShape {
 cpPolyShape* cpPolyShapeAlloc(void);
 /// Initialize a polygon shape.
 /// A convex hull will be created from the vertexes.
-cpPolyShape* cpPolyShapeInit(cpPolyShape *poly, cpBody *body, int numVerts, cpVect *verts, cpVect offset);
+cpPolyShape* cpPolyShapeInit(cpPolyShape *poly, cpBody *body, int numVerts, const cpVect *verts, cpVect offset);
 /// Allocate and initialize a polygon shape.
 /// A convex hull will be created from the vertexes.
 cpShape* cpPolyShapeNew(cpBody *body, int numVerts, cpVect *verts, cpVect offset);

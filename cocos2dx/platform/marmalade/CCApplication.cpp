@@ -170,11 +170,15 @@ ccLanguageType CCApplication::getCurrentLanguage()
 			break;
 
 		case S3E_DEVICE_LANGUAGE_RUSSIAN:
-			currentLanguage = kLanguageItalian;
+			currentLanguage = kLanguageRussian;
+			break;
+			
+		case S3E_DEVICE_LANGUAGE_KOREAN:
+			currentLanguage = kLanguageKorean;
 			break;
 
 		default:
-			currentLanguage = kLanguageRussian;
+			currentLanguage = kLanguageEnglish;
 			break;
 	}
 	return currentLanguage;
@@ -200,7 +204,7 @@ TargetPlatform CCApplication::getTargetPlatform()	// MH: Cocos2dx 2.0.3 added th
 		return kTargetMacOS;
 	}
 
-	return kTargetWindows;				// TDOO: TargetPlatform contains no definition for unsupported platform
+	return kTargetWindows;				// TODO: TargetPlatform contains no definition for unsupported platform
 }
 
 

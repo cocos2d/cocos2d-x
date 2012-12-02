@@ -158,6 +158,110 @@ public:
     virtual void onEnter();
 };
 
+class TexturePVR2BPPv3 : public TextureDemo
+{
+public:
+    virtual std::string title();
+    virtual std::string subtitle();
+    virtual void onEnter();
+};
+
+class TexturePVRII2BPPv3 : public TextureDemo
+{
+public:
+    virtual std::string title();
+    virtual std::string subtitle();
+    virtual void onEnter();
+};
+
+class TexturePVR4BPPv3 : public TextureDemo
+{
+public:
+    virtual std::string title();
+    virtual std::string subtitle();
+    virtual void onEnter();
+};
+
+class TexturePVRII4BPPv3 : public TextureDemo
+{
+public:
+    virtual std::string title();
+    virtual std::string subtitle();
+    virtual void onEnter();
+};
+
+class TexturePVRRGBA8888v3 : public TextureDemo
+{
+public:
+    virtual std::string title();
+    virtual std::string subtitle();
+    virtual void onEnter();
+};
+
+class TexturePVRBGRA8888v3 : public TextureDemo
+{
+public:
+    virtual std::string title();
+    virtual std::string subtitle();
+    virtual void onEnter();
+};
+
+class TexturePVRRGBA4444v3 : public TextureDemo
+{
+public:
+    virtual std::string title();
+    virtual std::string subtitle();
+    virtual void onEnter();
+};
+
+class TexturePVRRGBA5551v3 : public TextureDemo
+{
+public:
+    virtual std::string title();
+    virtual std::string subtitle();
+    virtual void onEnter();
+};
+
+class TexturePVRRGB565v3 : public TextureDemo
+{
+public:
+    virtual std::string title();
+    virtual std::string subtitle();
+    virtual void onEnter();
+};
+
+class TexturePVRRGB888v3 : public TextureDemo
+{
+public:
+    virtual std::string title();
+    virtual std::string subtitle();
+    virtual void onEnter();
+};
+
+class TexturePVRA8v3 : public TextureDemo
+{
+public:
+    virtual std::string title();
+    virtual std::string subtitle();
+    virtual void onEnter();
+};
+
+class TexturePVRI8v3 : public TextureDemo
+{
+public:
+    virtual std::string title();
+    virtual std::string subtitle();
+    virtual void onEnter();
+};
+
+class TexturePVRAI88v3 : public TextureDemo
+{
+public:
+    virtual std::string title();
+    virtual std::string subtitle();
+    virtual void onEnter();
+};
+
 class TexturePVRBadEncoding : public TextureDemo
 {
 public:

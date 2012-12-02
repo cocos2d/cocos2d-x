@@ -263,7 +263,7 @@ static EAGLView *view = 0;
     cocos2d::CCSize size;
     size.width = size_.width;
     size.height = size_.height;
-    cocos2d::CCDirector::sharedDirector()->reshapeProjection(size);
+    //cocos2d::CCDirector::sharedDirector()->reshapeProjection(size);
 
     // Avoid flicker. Issue #350
     //[director performSelectorOnMainThread:@selector(drawScene) withObject:nil waitUntilDone:YES];

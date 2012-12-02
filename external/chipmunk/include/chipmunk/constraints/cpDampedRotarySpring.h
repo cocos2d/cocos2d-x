@@ -47,9 +47,9 @@ cpDampedRotarySpring* cpDampedRotarySpringInit(cpDampedRotarySpring *joint, cpBo
 /// Allocate and initialize a damped rotary spring.
 cpConstraint* cpDampedRotarySpringNew(cpBody *a, cpBody *b, cpFloat restAngle, cpFloat stiffness, cpFloat damping);
 
-CP_DefineConstraintProperty(cpDampedRotarySpring, cpFloat, restAngle, RestAngle);
-CP_DefineConstraintProperty(cpDampedRotarySpring, cpFloat, stiffness, Stiffness);
-CP_DefineConstraintProperty(cpDampedRotarySpring, cpFloat, damping, Damping);
-CP_DefineConstraintProperty(cpDampedRotarySpring, cpDampedRotarySpringTorqueFunc, springTorqueFunc, SpringTorqueFunc);
+CP_DefineConstraintProperty(cpDampedRotarySpring, cpFloat, restAngle, RestAngle)
+CP_DefineConstraintProperty(cpDampedRotarySpring, cpFloat, stiffness, Stiffness)
+CP_DefineConstraintProperty(cpDampedRotarySpring, cpFloat, damping, Damping)
+CP_DefineConstraintProperty(cpDampedRotarySpring, cpDampedRotarySpringTorqueFunc, springTorqueFunc, SpringTorqueFunc)
 
 /// @}

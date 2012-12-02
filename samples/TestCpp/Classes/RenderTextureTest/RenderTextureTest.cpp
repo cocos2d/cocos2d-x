@@ -6,7 +6,7 @@
 
 static int sceneIdx = -1; 
 
-#define MAX_LAYER    4
+#define MAX_LAYER    5
 
 CCLayer* createTestCase(int nIndex)
 {
@@ -17,6 +17,7 @@ CCLayer* createTestCase(int nIndex)
     case 1: return new RenderTextureIssue937();
     case 2: return new RenderTextureZbuffer();    
     case 3: return new RenderTextureTestDepthStencil();
+    case 4: return new RenderTextureTargetNode();
     }
 
     return NULL;
@@ -475,7 +476,7 @@ RenderTextureTestDepthStencil::RenderTextureTestDepthStencil()
     CCSprite *sprite = CCSprite::create("Images/fire.png");
     sprite->setPosition(ccp(s.width * 0.25f, 0));
     sprite->setScale(10);
-    CCRenderTexture *rend = CCRenderTexture::create(s.width, s.height, kCCTexture2DPixelFormat_RGBA4444, CC_GL_DEPTH24_STENCIL8);
+    CCRenderTexture *rend = CCRenderTexture::create(s.width, s.height, kCCTexture2DPixelFormat_RGBA4444, GL_DEPTH24_STENCIL8);
 
     glStencilMask(0xFF);
     rend->beginWithClear(0, 0, 0, 0, 0, 0);
@@ -510,5 +511,93 @@ std::string RenderTextureTestDepthStencil::title()
 std::string RenderTextureTestDepthStencil::subtitle()
 {
     return "Circle should be missing 1/4 of its region";
+}
+
+// RenderTextureTest
+RenderTextureTargetNode::RenderTextureTargetNode()
+{
+    /*
+	 *     1    2
+	 * A: A1   A2
+	 *
+	 * B: B1   B2
+	 *
+	 *  A1: premulti sprite
+	 *  A2: premulti render
+	 *
+	 *  B1: non-premulti sprite
+	 *  B2: non-premulti render
+	 */
+    CCLayerColor *background = CCLayerColor::create(ccc4(40,40,40,255));
+    addChild(background);
+    
+    // sprite 1
+    sprite1 = CCSprite::create("Images/fire.png");
+    
+    // sprite 2
+    sprite2 = CCSprite::create("Images/fire_rgba8888.pvr");
+    
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    
+    /* Create the render texture */
+    CCRenderTexture *renderTexture = CCRenderTexture::create(s.width, s.height, kCCTexture2DPixelFormat_RGBA4444);
+    this->renderTexture = renderTexture;
+    
+    renderTexture->setPosition(ccp(s.width/2, s.height/2));
+    //		[renderTexture setPosition:ccp(s.width, s.height)];
+    //		renderTexture.scale = 2;
+    
+    /* add the sprites to the render texture */
+    renderTexture->addChild(sprite1);
+    renderTexture->addChild(sprite2);
+    renderTexture->setClearColor(ccc4f(0, 0, 0, 0));
+    renderTexture->setClearFlags(GL_COLOR_BUFFER_BIT);
+    
+    /* add the render texture to the scene */
+    addChild(renderTexture);
+    
+    renderTexture->setAutoDraw(true);
+    
+    scheduleUpdate();
+    
+    // Toggle clear on / off
+    CCMenuItemFont *item = CCMenuItemFont::create("Clear On/Off", this, menu_selector(RenderTextureTargetNode::touched));
+    CCMenu *menu = CCMenu::create(item, NULL);
+    addChild(menu);
+
+    menu->setPosition(ccp(s.width/2, s.height/2));
+}
+
+void RenderTextureTargetNode::touched(CCObject* sender)
+{
+    if (renderTexture->getClearFlags() == 0)
+    {
+        renderTexture->setClearFlags(GL_COLOR_BUFFER_BIT);
+    }
+    else
+    {
+        renderTexture->setClearFlags(0);
+        renderTexture->setClearColor(ccc4f( CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1));
+    }
+}
+
+void RenderTextureTargetNode::update(float dt)
+{
+    static float time = 0;
+    float r = 80;
+    sprite1->setPosition(ccp(cosf(time * 2) * r, sinf(time * 2) * r));
+    sprite2->setPosition(ccp(sinf(time * 2) * r, cosf(time * 2) * r));
+    
+    time += dt;
+}
+
+string RenderTextureTargetNode::title()
+{
+    return "Testing Render Target Node";
+}
+
+string RenderTextureTargetNode::subtitle()
+{
+    return "Sprites should be equal and move with each frame";
 }
 

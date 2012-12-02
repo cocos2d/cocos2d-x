@@ -12,7 +12,15 @@ Developers:
     Rolando Abarca
         Javascript Binding and testjs
 
+    mingulov
+        improve the speed of accessing to files from apk
+
+    sburavtsov
+        fix for correct unscheduling and instance destruction of extensions/network/HttpClient.cpp
+
     wenbin wang
+        add error handler when read image data using libjpeg
+        add korean language support
         fix getDeviceModel bug in android CocosDenshion
 
     Horcruxes
@@ -27,6 +35,7 @@ Developers:
 
     edbartley
          update MSVS and MAC projects to use project-relative path
+         CCControl* should not respond to touches if the control is not visible
 
     Weeds 
          use fontconfig to enhance font rendering on linux
@@ -50,14 +59,20 @@ Developers:
 
     Nicolas Gramlich (nicolasgramlich, Zynga)
         fixed CCDirector to use CCLabelBMFont instead of CCLabelTTF
-	added CCBReader (CCBI format)
-        
+        added CCBReader (CCBI format)
+    
+    Rohan Kuruvilla (rohankuruvilla, Zynga)
+        Improvements to JS Bindings.
+
     Jianfeng Zhou (NetGragon Inc)
         contributes CCListView and CCTextureWatcher.
 	  
     dducharme
         author of blackberry port
-    
+
+    ImperialPenguin
+        Added TTF support for blackberry port.
+
     HuaXu Cai (Kongzhong Corporation)
         author of linux port
         
@@ -73,7 +88,7 @@ Developers:
 
     Eli Yukelzon (reflog)
         add a helper method to draw filled polygons
-	improvements to CCUserDefaults
+        improvements to CCUserDefaults
 
     ZhuoShi Shun
 	contribute the lua binding of CocosDenshion
@@ -93,6 +108,9 @@ Developers:
     Giovanni Zito
     Francis Styck
         authors of Marmalade port
+
+    Mat Hopwood( Marmalade official engineer )
+        Marmalade support for gles20 branch
 
     Carlos Sessa
 	implement the accelerometer module for Android port
@@ -124,6 +142,12 @@ Developers:
 
     Dongyang Cai(John-cdy)
         add automatically test tools
+
+    Sergey Vikhirev(BorMor)
+        Remove retina specific methods and logic.
+
+    johnangel
+        OpenGL framebuffer access violation fix.
 
 Retired Core Developers:
     WenSheng Yang

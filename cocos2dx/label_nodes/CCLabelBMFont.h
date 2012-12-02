@@ -34,6 +34,7 @@ Use any of these editors to generate BMFonts:
 #define __CCBITMAP_FONT_ATLAS_H__
 
 #include "sprite_nodes/CCSpriteBatchNode.h"
+#include "support/data_support/uthash.h"
 #include <map>
 #include <sstream>
 #include <iostream>
@@ -52,7 +53,6 @@ enum {
     kCCLabelAutomaticWidth = -1,
 };
 
-struct _KerningHashElement;
 struct _FontDefHashElement;
 
 /**
@@ -87,6 +87,20 @@ typedef struct _BMFontPadding {
     int bottom;
 } ccBMFontPadding;
 
+typedef struct _FontDefHashElement
+{
+	unsigned int	key;		// key. Font Unicode value
+	ccBMFontDef		fontDef;	// font definition
+	UT_hash_handle	hh;
+} tCCFontDefHashElement;
+
+// Equal function for targetSet.
+typedef struct _KerningHashElement
+{
+	int				key;		// key for the hash. 16-bit for 1st element, 16-bit for 2nd element
+	int				amount;
+	UT_hash_handle	hh;
+} tCCKerningHashElement;
 
 /** @brief CCBMFontConfiguration has parsed configuration of the the .fnt file
 @since v0.8
@@ -96,7 +110,7 @@ class CC_DLL CCBMFontConfiguration : public CCObject
     // XXX: Creating a public interface so that the bitmapFontArray[] is accessible
 public://@public
     // BMFont definitions
-    struct _FontDefHashElement* m_pFontDefDictionary;
+    tCCFontDefHashElement *m_pFontDefDictionary;
 
     //! FNTConfig: Common Height Should be signed (issue #1343)
     int m_nCommonHeight;
@@ -105,7 +119,10 @@ public://@public
     //! atlas name
     std::string m_sAtlasName;
     //! values for kerning
-    struct _KerningHashElement    *m_pKerningDictionary;
+    tCCKerningHashElement *m_pKerningDictionary;
+    
+    // Character Set defines the letters that actually exist in the font
+    std::set<unsigned int> *m_pCharacterSet;
 public:
     CCBMFontConfiguration();
     virtual ~CCBMFontConfiguration();
@@ -123,8 +140,10 @@ public:
     
     inline const char* getAtlasName(){ return m_sAtlasName.c_str(); }
     inline void setAtlasName(const char* atlasName) { m_sAtlasName = atlasName; }
+    
+    std::set<unsigned int>* getCharacterSet() const;
 private:
-    bool parseConfigFile(const char *controlFile);
+    std::set<unsigned int>* parseConfigFile(const char *controlFile);
     void parseCharacterDefinition(std::string line, ccBMFontDef *characterDefinition);
     void parseInfoArguments(std::string line);
     void parseCommonArguments(std::string line);
@@ -172,8 +191,7 @@ class CC_DLL CCLabelBMFont : public CCSpriteBatchNode, public CCLabelProtocol, p
     CC_PROPERTY_PASS_BY_REF(ccColor3B, m_tColor, Color)
     /** conforms to CCRGBAProtocol protocol */
     bool m_bIsOpacityModifyRGB;
-    bool isOpacityModifyRGB();
-    void setOpacityModifyRGB(bool isOpacityModifyRGB);
+    
 protected:
     // string to render
     unsigned short* m_sString;
@@ -193,6 +211,10 @@ protected:
     bool m_bLineBreakWithoutSpaces;
     // offset of the texture atlas
     CCPoint    m_tImageOffset;
+    
+    // reused char
+    CCSprite *m_pReusedChar;
+    
 public:
     CCLabelBMFont();
 
@@ -209,17 +231,11 @@ public:
     /** creates a bitmap font atlas with an initial string and the FNT file */
     static CCLabelBMFont * create(const char *str, const char *fntFile, float width, CCTextAlignment alignment, CCPoint imageOffset);
     
-	static CCLabelBMFont * create(const char *str, const char *fntFile, float width, CCTextAlignment alignment) {
-		return CCLabelBMFont::create(str, fntFile, width, alignment, CCPointZero);
-	}
+	static CCLabelBMFont * create(const char *str, const char *fntFile, float width, CCTextAlignment alignment);
 
-	static CCLabelBMFont * create(const char *str, const char *fntFile, float width) {
-		return CCLabelBMFont::create(str, fntFile, width, kCCTextAlignmentLeft, CCPointZero);
-	}
+	static CCLabelBMFont * create(const char *str, const char *fntFile, float width);
 
-	static CCLabelBMFont * create(const char *str, const char *fntFile) {
-        return CCLabelBMFont::create(str, fntFile, kCCLabelAutomaticWidth, kCCTextAlignmentLeft, CCPointZero);
-    }
+	static CCLabelBMFont * create(const char *str, const char *fntFile);
 
     /** Creates an label.
     @deprecated: This interface will be deprecated sooner or later.
@@ -250,6 +266,9 @@ public:
     virtual void setScale(float scale);
     virtual void setScaleX(float scaleX);
     virtual void setScaleY(float scaleY);
+    
+    virtual bool isOpacityModifyRGB();
+    virtual void setOpacityModifyRGB(bool isOpacityModifyRGB);
 
     void setFntFile(const char* fntFile);
     const char* getFntFile();

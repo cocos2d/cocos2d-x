@@ -179,8 +179,7 @@ bool CCControlPotentiometer::isTouchInside(CCTouch * touch)
 
 bool CCControlPotentiometer::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 {
-    if (!this->isTouchInside(pTouch)
-        || !this->isEnabled())
+    if (!this->isTouchInside(pTouch) || !this->isEnabled() || !isVisible())
     {
         return false;
     }

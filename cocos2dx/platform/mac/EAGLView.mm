@@ -93,6 +93,21 @@ static EAGLView *view;
 	return self;
 }
 
+- (id) initWithFrame:(NSRect)frameRect pixelFormat:(NSOpenGLPixelFormat *)format{
+    // event delegate
+    eventDelegate_ = [CCEventDispatcher sharedDispatcher];
+    
+    cocos2d::CCEGLView::sharedOpenGLView()->setFrameSize(frameRect.size.width, frameRect.size.height);
+    
+    frameZoomFactor_ = 1.0f;
+	
+	view = self;
+    
+    [super initWithFrame:frameRect pixelFormat:format];
+    
+    return self;
+}
+
 - (void) update
 {
 	// XXX: Should I do something here ?
@@ -158,7 +173,7 @@ static EAGLView *view;
 	cocos2d::CCDirector *director = cocos2d::CCDirector::sharedDirector();
 	CGSize size = NSSizeToCGSize(rect.size);
 	cocos2d::CCSize ccsize = cocos2d::CCSizeMake(size.width, size.height);
-	director->reshapeProjection(ccsize);
+	//director->reshapeProjection(ccsize);
 	
 	// avoid flicker
 	director->drawScene();

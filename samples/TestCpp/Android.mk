@@ -28,8 +28,9 @@ Classes/BugsTest/Bug-914.cpp \
 Classes/BugsTest/BugsTest.cpp \
 Classes/BugsTest/Bug-458/Bug-458.cpp \
 Classes/BugsTest/Bug-458/QuestionContainerSprite.cpp \
-Classes/ChipmunkAccelTouchTest/ChipmunkAccelTouchTest.cpp \
+Classes/ChipmunkTest/ChipmunkTest.cpp \
 Classes/ClickAndMoveTest/ClickAndMoveTest.cpp \
+Classes/ClippingNodeTest/ClippingNodeTest.cpp \
 Classes/CocosDenshionTest/CocosDenshionTest.cpp \
 Classes/CurlTest/CurlTest.cpp \
 Classes/CurrentLanguageTest/CurrentLanguageTest.cpp \
@@ -91,7 +92,8 @@ Classes/UserDefaultTest/UserDefaultTest.cpp \
 Classes/ZwoptexTest/ZwoptexTest.cpp \
 Classes/controller.cpp \
 Classes/testBasic.cpp \
-Classes/AppDelegate.cpp
+Classes/AppDelegate.cpp \
+Classes/VisibleRect.cpp
 
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dx_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocosdenshion_static

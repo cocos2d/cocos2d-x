@@ -218,6 +218,7 @@ typedef enum JSWhyMagic
     JS_OVERWRITTEN_CALLEE,       /* arguments.callee has been overwritten */
     JS_FORWARD_TO_CALL_OBJECT,   /* args object element stored in call object */
     JS_BLOCK_NEEDS_CLONE,        /* value of static block object slot */
+    JS_HASH_KEY_EMPTY,           /* see class js::HashableValue */
     JS_GENERIC_MAGIC             /* for local use */
 } JSWhyMagic;
 

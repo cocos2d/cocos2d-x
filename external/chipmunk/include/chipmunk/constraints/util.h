@@ -27,8 +27,6 @@
 
 void cpConstraintInit(cpConstraint *constraint, const cpConstraintClass *klass, cpBody *a, cpBody *b);
 
-#define J_MAX(constraint, dt) (((cpConstraint *)constraint)->maxForce*(dt))
-
 static inline cpVect
 relative_velocity(cpBody *a, cpBody *b, cpVect r1, cpVect r2){
 	cpVect v1_sum = cpvadd(a->v, cpvmult(cpvperp(r1), a->w));
@@ -85,17 +83,14 @@ k_scalar(cpBody *a, cpBody *b, cpVect r1, cpVect r2, cpVect n)
 	return value;
 }
 
-static inline void
-k_tensor(cpBody *a, cpBody *b, cpVect r1, cpVect r2, cpVect *k1, cpVect *k2)
+static inline cpMat2x2
+k_tensor(cpBody *a, cpBody *b, cpVect r1, cpVect r2)
 {
-	// calculate mass matrix
-	// If I wasn't lazy and wrote a proper matrix class, this wouldn't be so gross...
-	cpFloat k11, k12, k21, k22;
 	cpFloat m_sum = a->m_inv + b->m_inv;
 	
-	// start with I*m_sum
-	k11 = m_sum; k12 = 0.0f;
-	k21 = 0.0f;  k22 = m_sum;
+	// start with Identity*m_sum
+	cpFloat k11 = m_sum, k12 = 0.0f;
+	cpFloat k21 = 0.0f,  k22 = m_sum;
 	
 	// add the influence from r1
 	cpFloat a_i_inv = a->i_inv;
@@ -114,18 +109,14 @@ k_tensor(cpBody *a, cpBody *b, cpVect r1, cpVect r2, cpVect *k1, cpVect *k2)
 	k21 += r2nxy; k22 += r2xsq;
 	
 	// invert
-	cpFloat determinant = k11*k22 - k12*k21;
-	cpAssertSoft(determinant != 0.0, "Unsolvable constraint.");
+	cpFloat det = k11*k22 - k12*k21;
+	cpAssertSoft(det != 0.0, "Unsolvable constraint.");
 	
-	cpFloat det_inv = 1.0f/determinant;
-	*k1 = cpv( k22*det_inv, -k12*det_inv);
-	*k2 = cpv(-k21*det_inv,  k11*det_inv);
-}
-
-static inline cpVect
-mult_k(cpVect vr, cpVect k1, cpVect k2)
-{
-	return cpv(cpvdot(vr, k1), cpvdot(vr, k2));
+	cpFloat det_inv = 1.0f/det;
+	return cpMat2x2New(
+		 k22*det_inv, -k12*det_inv,
+		-k21*det_inv,  k11*det_inv
+ 	);
 }
 
 static inline cpFloat

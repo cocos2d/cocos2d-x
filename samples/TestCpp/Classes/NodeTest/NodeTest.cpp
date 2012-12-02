@@ -834,7 +834,8 @@ NodeOpaqueTest::NodeOpaqueTest()
     for (int i = 0; i < 50; i++)
     {
         background = CCSprite::create("Images/background1.png");
-        background->setGLServerState((ccGLServerState)(background->getGLServerState() & (~CC_GL_BLEND)));
+        ccBlendFunc blendFunc = {GL_ONE, GL_ONE_MINUS_SRC_ALPHA};
+        background->setBlendFunc(blendFunc);
         background->setAnchorPoint(CCPointZero);
         addChild(background);
     }
@@ -859,7 +860,7 @@ NodeNonOpaqueTest::NodeNonOpaqueTest()
     for (int i = 0; i < 50; i++)
     {
         background = CCSprite::create("Images/background1.jpg");
-        background->setGLServerState((ccGLServerState)(background->getGLServerState() | CC_GL_BLEND));
+        background->setBlendFunc(kCCBlendFuncDisable);
         background->setAnchorPoint(CCPointZero);
         addChild(background);
     }
