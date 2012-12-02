@@ -1,0 +1,42 @@
+options
+{
+	module_path="../../../cocos2dx/proj.marmalade/;../../../CocosDenshion/proj.marmalade/;../../../scripting/lua/proj.marmalade/"
+	s3e-data-dir = "../Resources"
+}
+
+includepaths
+{
+	../Classes
+	../../../scripting/lua/cocos2dx_support/
+}
+subprojects
+{
+	IwGL
+	cocos2dx
+	CocosDenshion
+	lua
+}
+
+assets
+{
+	(../Resources)
+	.
+
+	(../../TestCpp/Resources)
+	.
+}
+
+
+files
+{
+	[Main]
+	(src)
+	Main.h
+	Main.cpp
+
+	(../Classes)
+	AppDelegate.h
+	AppDelegate.cpp
+}
+
+
