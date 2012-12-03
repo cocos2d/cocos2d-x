@@ -854,6 +854,7 @@ void JSScheduleWrapper::removeAllTargetsForNatiaveNode(CCNode* pNode)
         if (targets->count() == 0)
         {
             HASH_DEL(_schedFunc_target_ht, current);
+            targets->release();
             free(current);
         }  
     }
