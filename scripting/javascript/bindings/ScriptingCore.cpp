@@ -393,7 +393,6 @@ void ScriptingCore::removeAllRoots(JSContext *cx) {
     }
     HASH_CLEAR(hh, _js_native_global_ht);
     HASH_CLEAR(hh, _native_js_global_ht);
-    HASH_CLEAR(hh, _js_global_type_ht);
 }
 
 void ScriptingCore::createGlobalContext() {
@@ -476,6 +475,15 @@ ScriptingCore::~ScriptingCore()
         free(_js_log_buf);
         _js_log_buf = NULL;
     }
+
+    js_type_class_t* current, *tmp;
+    HASH_ITER(hh, _js_global_type_ht, current, tmp)
+    {
+        HASH_DEL(_js_global_type_ht, current);
+        free(current->jsclass);
+        free(current);
+    }
+    HASH_CLEAR(hh, _js_global_type_ht);
 }
 
 void ScriptingCore::reportError(JSContext *cx, const char *message, JSErrorReport *report)
