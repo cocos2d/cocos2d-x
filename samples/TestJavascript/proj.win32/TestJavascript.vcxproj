@@ -96,7 +96,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\scripting\javascript\spidermonkey-win32\lib\*
 if exist "$(OutDir)\TestJavascriptRes" rd /s /q "$(OutDir)\TestJavascriptRes"
 mkdir "$(OutDir)\TestJavascriptRes"
 xcopy "$(ProjectDir)..\..\..\scripting\javascript\bindings\js\*.js" "$(OutDir)\TestJavascriptRes\" /e /Y
-xcopy "$(ProjectDir)..\cocos2d-js-tests\tests" "$(OutDir)\TestJavascriptRes\tests\" /e /Y</Command>
+xcopy "$(ProjectDir)..\cocos2d-js-tests\tests" "$(OutDir)\TestJavascriptRes\" /e /Y</Command>
     </PreBuildEvent>
     <PreBuildEvent>
       <Message>Copy js and resource files.</Message>
@@ -149,7 +149,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\scripting\javascript\spidermonkey-win32\lib\*
 if exist "$(OutDir)\TestJavascriptRes" rd /s /q "$(OutDir)\TestJavascriptRes"
 mkdir "$(OutDir)\TestJavascriptRes"
 xcopy "$(ProjectDir)..\..\..\scripting\javascript\bindings\js\*.js" "$(OutDir)\TestJavascriptRes\" /e /Y
-xcopy "$(ProjectDir)..\cocos2d-js-tests\tests" "$(OutDir)\TestJavascriptRes\tests\" /e /Y</Command>
+xcopy "$(ProjectDir)..\cocos2d-js-tests\tests" "$(OutDir)\TestJavascriptRes\" /e /Y</Command>
       <Message>Copy js and resource files.</Message>
     </PreBuildEvent>
   </ItemDefinitionGroup>
