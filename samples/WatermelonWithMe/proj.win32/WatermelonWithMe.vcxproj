@@ -95,11 +95,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\scripting\javascript\spidermonkey-win32\lib\*
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
 if exist "$(OutDir)\WatermelonWithMeRes" rd /s /q "$(OutDir)\WatermelonWithMeRes"
 mkdir "$(OutDir)\WatermelonWithMeRes"
-copy "$(ProjectDir)..\..\TestJavascript\cocos2d-js-tests\games\WatermelonWithMe\*.*" "$(OutDir)\WatermelonWithMeRes\"  /Y
-copy "$(ProjectDir)..\..\TestJavascript\cocos2d-js-tests\games\WatermelonWithMe\Resources\*.*" "$(OutDir)\WatermelonWithMeRes\"  /Y
-copy "$(ProjectDir)..\..\TestJavascript\cocos2d-js-tests\games\WatermelonWithMe\Resources\CCB\*.*" "$(OutDir)\WatermelonWithMeRes\"  /Y
-copy "$(ProjectDir)..\..\TestJavascript\cocos2d-js-tests\games\WatermelonWithMe\Resources\single_files\*.*" "$(OutDir)\WatermelonWithMeRes\"  /Y
-copy "$(ProjectDir)..\..\TestJavascript\cocos2d-js-tests\games\WatermelonWithMe\Resources\sound\*.*" "$(OutDir)\WatermelonWithMeRes\"  /Y
+xcopy "$(ProjectDir)..\..\TestJavascript\cocos2d-js-tests\games\WatermelonWithMe" "$(OutDir)\WatermelonWithMeRes\" /e /Y
 xcopy "$(ProjectDir)..\..\..\scripting\javascript\bindings\js\*.js" "$(OutDir)\WatermelonWithMeRes" /e /Y</Command>
     </PreBuildEvent>
     <PreBuildEvent>
@@ -152,11 +148,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\scripting\javascript\spidermonkey-win32\lib\*
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
 if exist "$(OutDir)\WatermelonWithMeRes" rd /s /q "$(OutDir)\WatermelonWithMeRes"
 mkdir "$(OutDir)\WatermelonWithMeRes"
-copy "$(ProjectDir)..\..\TestJavascript\cocos2d-js-tests\games\WatermelonWithMe\*.*" "$(OutDir)\WatermelonWithMeRes\"  /Y
-copy "$(ProjectDir)..\..\TestJavascript\cocos2d-js-tests\games\WatermelonWithMe\Resources\*.*" "$(OutDir)\WatermelonWithMeRes\"  /Y
-copy "$(ProjectDir)..\..\TestJavascript\cocos2d-js-tests\games\WatermelonWithMe\Resources\CCB\*.*" "$(OutDir)\WatermelonWithMeRes\"  /Y
-copy "$(ProjectDir)..\..\TestJavascript\cocos2d-js-tests\games\WatermelonWithMe\Resources\single_files\*.*" "$(OutDir)\WatermelonWithMeRes\"  /Y
-copy "$(ProjectDir)..\..\TestJavascript\cocos2d-js-tests\games\WatermelonWithMe\Resources\sound\*.*" "$(OutDir)\WatermelonWithMeRes\"  /Y
+xcopy "$(ProjectDir)..\..\TestJavascript\cocos2d-js-tests\games\WatermelonWithMe" "$(OutDir)\WatermelonWithMeRes\" /e /Y
 xcopy "$(ProjectDir)..\..\..\scripting\javascript\bindings\js\*.js" "$(OutDir)\WatermelonWithMeRes" /e /Y</Command>
       <Message>Copy js and resource files.</Message>
     </PreBuildEvent>
