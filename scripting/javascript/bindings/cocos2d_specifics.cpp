@@ -1232,7 +1232,7 @@ JSBool js_CCScheduler_schedule(JSContext *cx, uint32_t argc, jsval *vp)
         CCARRAY_FOREACH(pTargetArr, pObj)
         {
             JSScheduleWrapper* pTarget = (JSScheduleWrapper*)pObj;
-            if (argv[0] == pTarget->getJSCallbackFunc())
+            if (argv[1] == pTarget->getJSCallbackFunc())
             {
                 tmpCobj = pTarget;
                 bFound = true;
