@@ -3,6 +3,11 @@
 //
 
 cc.BuilderReader = {};
+cc.BuilderReader._resourcePath = "";
+
+cc.BuilderReader.setResourcePath = function (rootPath) {
+    cc.BuilderReader._resourcePath = rootPath;
+};
 
 var _ccbGlobalContext = this;
 
@@ -10,6 +15,8 @@ cc.BuilderReader.load = function(file, owner, parentSize)
 {
     // Load the node graph using the correct function
     var reader = cc._Reader.create();
+    reader.setCCBRootPath(cc.BuilderReader._resourcePath);
+    
     var node;
 
     if (owner && parentSize)
