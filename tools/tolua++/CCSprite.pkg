@@ -68,8 +68,6 @@ class CCSprite : public CCNode
 	void setOpacity(GLubyte opacity);
 	GLubyte getOpacity(void);
 
-	tolua_property__CCOpacity	GLubyte opacity;
-
 	void setColor(ccColor3B color3);
 	ccColor3B getColor(void);
 	void setOpacityModifyRGB(bool bValue);
