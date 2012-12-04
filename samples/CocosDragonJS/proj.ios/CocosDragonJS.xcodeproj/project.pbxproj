@@ -57,33 +57,23 @@
 		159001FC166DA87D006BF838 /* jsb_constants_cocosbuilder.js in Resources */ = {isa = PBXBuildFile; fileRef = 157EFB981667302B00BF1E11 /* jsb_constants_cocosbuilder.js */; };
 		159001FD166DA87D006BF838 /* jsb_constants_gl.js in Resources */ = {isa = PBXBuildFile; fileRef = 157EFB991667302B00BF1E11 /* jsb_constants_gl.js */; };
 		159002EE166DAB3E006BF838 /* Bomb.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = 159002C8166DAB3E006BF838 /* Bomb.ccbi */; };
-		159002EF166DAB3E006BF838 /* Bomb.js in Sources */ = {isa = PBXBuildFile; fileRef = 159002C9166DAB3E006BF838 /* Bomb.js */; };
 		159002F0166DAB3E006BF838 /* ccbResources in Resources */ = {isa = PBXBuildFile; fileRef = 159002CA166DAB3E006BF838 /* ccbResources */; };
 		159002F1166DAB3E006BF838 /* cloud.png in Resources */ = {isa = PBXBuildFile; fileRef = 159002CB166DAB3E006BF838 /* cloud.png */; };
 		159002F2166DAB3E006BF838 /* Coin.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = 159002CC166DAB3E006BF838 /* Coin.ccbi */; };
-		159002F3166DAB3E006BF838 /* Coin.js in Sources */ = {isa = PBXBuildFile; fileRef = 159002CD166DAB3E006BF838 /* Coin.js */; };
 		159002F4166DAB3E006BF838 /* Coin.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 159002CE166DAB3E006BF838 /* Coin.mp3 */; };
 		159002F5166DAB3E006BF838 /* Dragon.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = 159002CF166DAB3E006BF838 /* Dragon.ccbi */; };
-		159002F6166DAB3E006BF838 /* Dragon.js in Sources */ = {isa = PBXBuildFile; fileRef = 159002D0166DAB3E006BF838 /* Dragon.js */; };
 		159002F7166DAB3E006BF838 /* EndCoin.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = 159002D1166DAB3E006BF838 /* EndCoin.ccbi */; };
-		159002F8166DAB3E006BF838 /* EndCoin.js in Sources */ = {isa = PBXBuildFile; fileRef = 159002D2166DAB3E006BF838 /* EndCoin.js */; };
 		159002F9166DAB3E006BF838 /* Explo.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 159002D3166DAB3E006BF838 /* Explo.mp3 */; };
 		159002FA166DAB3E006BF838 /* Explosion.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = 159002D4166DAB3E006BF838 /* Explosion.ccbi */; };
-		159002FB166DAB3E006BF838 /* Explosion.js in Sources */ = {isa = PBXBuildFile; fileRef = 159002D5166DAB3E006BF838 /* Explosion.js */; };
 		159002FC166DAB3E006BF838 /* gameobjects.plist in Resources */ = {isa = PBXBuildFile; fileRef = 159002D6166DAB3E006BF838 /* gameobjects.plist */; };
 		159002FD166DAB3E006BF838 /* gameobjects.png in Resources */ = {isa = PBXBuildFile; fileRef = 159002D7166DAB3E006BF838 /* gameobjects.png */; };
 		159002FE166DAB3E006BF838 /* GameScene.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = 159002D8166DAB3E006BF838 /* GameScene.ccbi */; };
-		159002FF166DAB3E006BF838 /* GameScene.js in Sources */ = {isa = PBXBuildFile; fileRef = 159002D9166DAB3E006BF838 /* GameScene.js */; };
 		15900300166DAB3E006BF838 /* Level.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = 159002DA166DAB3E006BF838 /* Level.ccbi */; };
-		15900301166DAB3E006BF838 /* Level.js in Sources */ = {isa = PBXBuildFile; fileRef = 159002DB166DAB3E006BF838 /* Level.js */; };
 		15900302166DAB3E006BF838 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 159002DC166DAB3E006BF838 /* logo.png */; };
-		15900303166DAB3E006BF838 /* main.js in Sources */ = {isa = PBXBuildFile; fileRef = 159002DD166DAB3E006BF838 /* main.js */; };
 		15900304166DAB3E006BF838 /* MainMenuScene.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = 159002DE166DAB3E006BF838 /* MainMenuScene.ccbi */; };
-		15900305166DAB3E006BF838 /* MainMenuScene.js in Sources */ = {isa = PBXBuildFile; fileRef = 159002DF166DAB3E006BF838 /* MainMenuScene.js */; };
 		15900306166DAB3E006BF838 /* Music.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 159002E0166DAB3E006BF838 /* Music.mp3 */; };
 		15900307166DAB3E006BF838 /* play-button-down.png in Resources */ = {isa = PBXBuildFile; fileRef = 159002E1166DAB3E006BF838 /* play-button-down.png */; };
 		15900308166DAB3E006BF838 /* play-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 159002E2166DAB3E006BF838 /* play-button.png */; };
-		15900309166DAB3E006BF838 /* resources-html5.js in Sources */ = {isa = PBXBuildFile; fileRef = 159002E3166DAB3E006BF838 /* resources-html5.js */; };
 		1590030A166DAB3E006BF838 /* resources-ipad in Resources */ = {isa = PBXBuildFile; fileRef = 159002E4166DAB3E006BF838 /* resources-ipad */; };
 		1590030B166DAB3E006BF838 /* resources-ipadhd in Resources */ = {isa = PBXBuildFile; fileRef = 159002E5166DAB3E006BF838 /* resources-ipadhd */; };
 		1590030C166DAB3E006BF838 /* resources-iphone in Resources */ = {isa = PBXBuildFile; fileRef = 159002E6166DAB3E006BF838 /* resources-iphone */; };
@@ -112,6 +102,16 @@
 		15CFE1B11612FD0E00BF2188 /* CCScale9Sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15CFE1A41612FD0E00BF2188 /* CCScale9Sprite.cpp */; };
 		15E2AE9E165DC52C00F7743F /* CCPhysicsDebugNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15E2AE9A165DC52C00F7743F /* CCPhysicsDebugNode.cpp */; };
 		15E2AE9F165DC52C00F7743F /* CCPhysicsSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15E2AE9C165DC52C00F7743F /* CCPhysicsSprite.cpp */; };
+		1AB02DCD166DFB9B009465F5 /* Bomb.js in Resources */ = {isa = PBXBuildFile; fileRef = 159002C9166DAB3E006BF838 /* Bomb.js */; };
+		1AB02DCE166DFB9B009465F5 /* Coin.js in Resources */ = {isa = PBXBuildFile; fileRef = 159002CD166DAB3E006BF838 /* Coin.js */; };
+		1AB02DCF166DFB9B009465F5 /* Dragon.js in Resources */ = {isa = PBXBuildFile; fileRef = 159002D0166DAB3E006BF838 /* Dragon.js */; };
+		1AB02DD0166DFB9B009465F5 /* EndCoin.js in Resources */ = {isa = PBXBuildFile; fileRef = 159002D2166DAB3E006BF838 /* EndCoin.js */; };
+		1AB02DD1166DFB9B009465F5 /* Explosion.js in Resources */ = {isa = PBXBuildFile; fileRef = 159002D5166DAB3E006BF838 /* Explosion.js */; };
+		1AB02DD2166DFB9B009465F5 /* GameScene.js in Resources */ = {isa = PBXBuildFile; fileRef = 159002D9166DAB3E006BF838 /* GameScene.js */; };
+		1AB02DD3166DFB9B009465F5 /* Level.js in Resources */ = {isa = PBXBuildFile; fileRef = 159002DB166DAB3E006BF838 /* Level.js */; };
+		1AB02DD4166DFB9B009465F5 /* main.js in Resources */ = {isa = PBXBuildFile; fileRef = 159002DD166DAB3E006BF838 /* main.js */; };
+		1AB02DD5166DFB9B009465F5 /* MainMenuScene.js in Resources */ = {isa = PBXBuildFile; fileRef = 159002DF166DAB3E006BF838 /* MainMenuScene.js */; };
+		1AB02DD6166DFB9B009465F5 /* resources-html5.js in Resources */ = {isa = PBXBuildFile; fileRef = 159002E3166DAB3E006BF838 /* resources-html5.js */; };
 		262829DB15EC7196002C4240 /* chipmunk.c in Sources */ = {isa = PBXBuildFile; fileRef = 262829AC15EC7196002C4240 /* chipmunk.c */; };
 		262829DD15EC7196002C4240 /* cpConstraint.c in Sources */ = {isa = PBXBuildFile; fileRef = 262829AF15EC7196002C4240 /* cpConstraint.c */; };
 		262829DE15EC7196002C4240 /* cpDampedRotarySpring.c in Sources */ = {isa = PBXBuildFile; fileRef = 262829B015EC7196002C4240 /* cpDampedRotarySpring.c */; };
@@ -1022,6 +1022,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1AB02DCD166DFB9B009465F5 /* Bomb.js in Resources */,
+				1AB02DCE166DFB9B009465F5 /* Coin.js in Resources */,
+				1AB02DCF166DFB9B009465F5 /* Dragon.js in Resources */,
+				1AB02DD0166DFB9B009465F5 /* EndCoin.js in Resources */,
+				1AB02DD1166DFB9B009465F5 /* Explosion.js in Resources */,
+				1AB02DD2166DFB9B009465F5 /* GameScene.js in Resources */,
+				1AB02DD3166DFB9B009465F5 /* Level.js in Resources */,
+				1AB02DD4166DFB9B009465F5 /* main.js in Resources */,
+				1AB02DD5166DFB9B009465F5 /* MainMenuScene.js in Resources */,
+				1AB02DD6166DFB9B009465F5 /* resources-html5.js in Resources */,
 				159001F8166DA87D006BF838 /* cocos2dxapi.js in Resources */,
 				159001F9166DA87D006BF838 /* jsb_constants.js in Resources */,
 				159001FA166DA87D006BF838 /* jsb_constants_chipmunk.js in Resources */,
@@ -1167,16 +1177,6 @@
 				263B98D716548EB700228D8A /* js_bindings_chipmunk_manual.cpp in Sources */,
 				15E2AE9E165DC52C00F7743F /* CCPhysicsDebugNode.cpp in Sources */,
 				15E2AE9F165DC52C00F7743F /* CCPhysicsSprite.cpp in Sources */,
-				159002EF166DAB3E006BF838 /* Bomb.js in Sources */,
-				159002F3166DAB3E006BF838 /* Coin.js in Sources */,
-				159002F6166DAB3E006BF838 /* Dragon.js in Sources */,
-				159002F8166DAB3E006BF838 /* EndCoin.js in Sources */,
-				159002FB166DAB3E006BF838 /* Explosion.js in Sources */,
-				159002FF166DAB3E006BF838 /* GameScene.js in Sources */,
-				15900301166DAB3E006BF838 /* Level.js in Sources */,
-				15900303166DAB3E006BF838 /* main.js in Sources */,
-				15900305166DAB3E006BF838 /* MainMenuScene.js in Sources */,
-				15900309166DAB3E006BF838 /* resources-html5.js in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
