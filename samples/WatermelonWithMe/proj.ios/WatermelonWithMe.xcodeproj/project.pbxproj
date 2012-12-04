@@ -78,6 +78,7 @@
 		1A995D38166B40C5001C34E9 /* jsb_constants_cocos2d.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A995C56166B3F24001C34E9 /* jsb_constants_cocos2d.js */; };
 		1A995D39166B40C5001C34E9 /* jsb_constants_cocosbuilder.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A995C57166B3F24001C34E9 /* jsb_constants_cocosbuilder.js */; };
 		1A995D3A166B40C5001C34E9 /* jsb_constants_gl.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A995C58166B3F24001C34E9 /* jsb_constants_gl.js */; };
+		1AAD8928166DFD980028BAAB /* levels.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AAD8926166DFD820028BAAB /* levels.js */; };
 		262829DB15EC7196002C4240 /* chipmunk.c in Sources */ = {isa = PBXBuildFile; fileRef = 262829AC15EC7196002C4240 /* chipmunk.c */; };
 		262829DD15EC7196002C4240 /* cpConstraint.c in Sources */ = {isa = PBXBuildFile; fileRef = 262829AF15EC7196002C4240 /* cpConstraint.c */; };
 		262829DE15EC7196002C4240 /* cpDampedRotarySpring.c in Sources */ = {isa = PBXBuildFile; fileRef = 262829B015EC7196002C4240 /* cpDampedRotarySpring.c */; };
@@ -289,6 +290,7 @@
 		1A995C5F166B3F52001C34E9 /* main.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = main.js; path = "../../TestJavascript/cocos2d-js-tests/games/WatermelonWithMe/main.js"; sourceTree = "<group>"; };
 		1A995CC8166B3F52001C34E9 /* resources-jsb.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = "resources-jsb.js"; path = "../../TestJavascript/cocos2d-js-tests/games/WatermelonWithMe/resources-jsb.js"; sourceTree = "<group>"; };
 		1A995CC9166B3F52001C34E9 /* watermelon_with_me.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = watermelon_with_me.js; path = "../../TestJavascript/cocos2d-js-tests/games/WatermelonWithMe/watermelon_with_me.js"; sourceTree = "<group>"; };
+		1AAD8926166DFD820028BAAB /* levels.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = levels.js; path = "../../TestJavascript/cocos2d-js-tests/games/WatermelonWithMe/levels.js"; sourceTree = "<group>"; };
 		2628298215EC7196002C4240 /* chipmunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk.h; sourceTree = "<group>"; };
 		2628298315EC7196002C4240 /* chipmunk_ffi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk_ffi.h; sourceTree = "<group>"; };
 		2628298415EC7196002C4240 /* chipmunk_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk_private.h; sourceTree = "<group>"; };
@@ -603,6 +605,7 @@
 		15628F5B15F0F5C2000CF24B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				1AAD8926166DFD820028BAAB /* levels.js */,
 				159004D1166DE34B006BF838 /* Icon-144.png */,
 				159004CF166DE346006BF838 /* Icon-72.png */,
 				159004CD166DE33E006BF838 /* Icon-114.png */,
@@ -912,6 +915,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1AAD8928166DFD980028BAAB /* levels.js in Resources */,
 				1A995D32166B40C5001C34E9 /* boot-jsb.js in Resources */,
 				1A995D33166B40C5001C34E9 /* main.js in Resources */,
 				1A995D34166B40C5001C34E9 /* resources-jsb.js in Resources */,
