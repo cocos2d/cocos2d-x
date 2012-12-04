@@ -51,6 +51,10 @@
 		15426FE915B5743C00712A7F /* SimpleAudioEngine.mm in Sources */ = {isa = PBXBuildFile; fileRef = 15426FD615B5743C00712A7F /* SimpleAudioEngine.mm */; };
 		15426FEA15B5743C00712A7F /* SimpleAudioEngine_objc.m in Sources */ = {isa = PBXBuildFile; fileRef = 15426FD815B5743C00712A7F /* SimpleAudioEngine_objc.m */; };
 		15900400166DAD84006BF838 /* res in Resources */ = {isa = PBXBuildFile; fileRef = 159003FF166DAD84006BF838 /* res */; };
+		159004CC166DE338006BF838 /* Icon-57.png in Resources */ = {isa = PBXBuildFile; fileRef = 159004CB166DE338006BF838 /* Icon-57.png */; };
+		159004CE166DE33E006BF838 /* Icon-114.png in Resources */ = {isa = PBXBuildFile; fileRef = 159004CD166DE33E006BF838 /* Icon-114.png */; };
+		159004D0166DE346006BF838 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 159004CF166DE346006BF838 /* Icon-72.png */; };
+		159004D2166DE34B006BF838 /* Icon-144.png in Resources */ = {isa = PBXBuildFile; fileRef = 159004D1166DE34B006BF838 /* Icon-144.png */; };
 		15CFE1A61612FD0E00BF2188 /* CCControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15CFE18D1612FD0E00BF2188 /* CCControl.cpp */; };
 		15CFE1A71612FD0E00BF2188 /* CCControlButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15CFE18F1612FD0E00BF2188 /* CCControlButton.cpp */; };
 		15CFE1A81612FD0E00BF2188 /* CCControlColourPicker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15CFE1911612FD0E00BF2188 /* CCControlColourPicker.cpp */; };
@@ -243,6 +247,10 @@
 		15426FD715B5743C00712A7F /* SimpleAudioEngine_objc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleAudioEngine_objc.h; sourceTree = "<group>"; };
 		15426FD815B5743C00712A7F /* SimpleAudioEngine_objc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleAudioEngine_objc.m; sourceTree = "<group>"; };
 		159003FF166DAD84006BF838 /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; name = res; path = "../../TestJavascript/cocos2d-js-tests/games/WatermelonWithMe/res"; sourceTree = "<group>"; };
+		159004CB166DE338006BF838 /* Icon-57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-57.png"; sourceTree = "<group>"; };
+		159004CD166DE33E006BF838 /* Icon-114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-114.png"; sourceTree = "<group>"; };
+		159004CF166DE346006BF838 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
+		159004D1166DE34B006BF838 /* Icon-144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-144.png"; sourceTree = "<group>"; };
 		15CFE18D1612FD0E00BF2188 /* CCControl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCControl.cpp; sourceTree = "<group>"; };
 		15CFE18E1612FD0E00BF2188 /* CCControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCControl.h; sourceTree = "<group>"; };
 		15CFE18F1612FD0E00BF2188 /* CCControlButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCControlButton.cpp; sourceTree = "<group>"; };
@@ -771,6 +779,10 @@
 		A92275321517C094001B78AA = {
 			isa = PBXGroup;
 			children = (
+				159004D1166DE34B006BF838 /* Icon-144.png */,
+				159004CF166DE346006BF838 /* Icon-72.png */,
+				159004CD166DE33E006BF838 /* Icon-114.png */,
+				159004CB166DE338006BF838 /* Icon-57.png */,
 				15426AE915B5733200712A7F /* cocos2dx.xcodeproj */,
 				15384E3C16119CC30021DC07 /* bindings */,
 				2628297C15EC7196002C4240 /* chipmunk */,
@@ -913,6 +925,10 @@
 				D446FDA516102D82000ADA7B /* Default@2x.png in Resources */,
 				D446FDA716102D86000ADA7B /* Default-568h@2x.png in Resources */,
 				15900400166DAD84006BF838 /* res in Resources */,
+				159004CC166DE338006BF838 /* Icon-57.png in Resources */,
+				159004CE166DE33E006BF838 /* Icon-114.png in Resources */,
+				159004D0166DE346006BF838 /* Icon-72.png in Resources */,
+				159004D2166DE34B006BF838 /* Icon-144.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
