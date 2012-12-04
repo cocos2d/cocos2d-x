@@ -48,6 +48,8 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 COCOS2DX_ROOT="$DIR/../../.."
 APP_ROOT="$DIR/.."
 APP_ANDROID_ROOT="$DIR"
+RESROUCE_ROOT="$APP_ROOT/../TestJavascript/cocos2d-js-tests/games/WatermelonWithMe"
+BINDINGS_JS_ROOT="$APP_ROOT/../../scripting/javascript/bindings/js"
 
 echo
 echo "Paths"
@@ -68,13 +70,10 @@ fi
 mkdir "$APP_ANDROID_ROOT"/assets
 
 # copy "Resources" into "assets"
-find "$APP_ROOT"/Resources -type f -name '*.*' -exec cp -f {} "$APP_ANDROID_ROOT"/assets \;
-
-# copy *.js from WatermelonWithMe into assets' root
-cp -rf "$APP_ROOT"/*.js "$APP_ANDROID_ROOT"/assets
+cp -rf "$RESROUCE_ROOT"/* "$APP_ANDROID_ROOT"/assets
 
 # copy bindings/*.js into assets' root
-cp -f "$APP_ROOT"/bindings/*.js "$APP_ANDROID_ROOT"/assets
+cp -f "$BINDINGS_JS_ROOT"/*.js "$APP_ANDROID_ROOT"/assets
 
 echo "Using prebuilt externals"
 echo

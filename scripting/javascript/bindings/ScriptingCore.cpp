@@ -393,7 +393,6 @@ void ScriptingCore::removeAllRoots(JSContext *cx) {
     }
     HASH_CLEAR(hh, _js_native_global_ht);
     HASH_CLEAR(hh, _native_js_global_ht);
-    HASH_CLEAR(hh, _js_global_type_ht);
 }
 
 void ScriptingCore::createGlobalContext() {
@@ -412,6 +411,9 @@ void ScriptingCore::createGlobalContext() {
     JS_SetOptions(this->cx_, JS_GetOptions(this->cx_) & ~JSOPTION_METHODJIT);
     JS_SetOptions(this->cx_, JS_GetOptions(this->cx_) & ~JSOPTION_METHODJIT_ALWAYS);
     JS_SetErrorReporter(this->cx_, ScriptingCore::reportError);
+#if defined(JS_GC_ZEAL) && defined(DEBUG)
+    JS_SetGCZeal(this->cx_, 2, JS_DEFAULT_ZEAL_FREQ);
+#endif
     this->global_ = NewGlobalObject(cx_);
     for (std::vector<sc_register_sth>::iterator it = registrationList.begin(); it != registrationList.end(); it++) {
         sc_register_sth callback = *it;
@@ -465,6 +467,7 @@ JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* c
 
 ScriptingCore::~ScriptingCore()
 {
+    removeAllRoots(cx_);
     JS_DestroyContext(cx_);
     JS_DestroyRuntime(rt_);
     JS_ShutDown();
@@ -472,6 +475,15 @@ ScriptingCore::~ScriptingCore()
         free(_js_log_buf);
         _js_log_buf = NULL;
     }
+
+    js_type_class_t* current, *tmp;
+    HASH_ITER(hh, _js_global_type_ht, current, tmp)
+    {
+        HASH_DEL(_js_global_type_ht, current);
+        free(current->jsclass);
+        free(current);
+    }
+    HASH_CLEAR(hh, _js_global_type_ht);
 }
 
 void ScriptingCore::reportError(JSContext *cx, const char *message, JSErrorReport *report)
@@ -624,7 +636,14 @@ void ScriptingCore::cleanupSchedulesAndActions(CCNode *node) {
     
     arr = JSScheduleWrapper::getTargetForNativeNode(node);
     if(arr) {
-        arr->removeAllObjects();
+        CCScheduler* pScheduler = CCDirector::sharedDirector()->getScheduler();
+        CCObject* pObj = NULL;
+        CCARRAY_FOREACH(arr, pObj)
+        {
+            pScheduler->unscheduleAllForTarget(pObj);
+        }
+
+        JSScheduleWrapper::removeAllTargetsForNatiaveNode(node);
     }
 }
 
@@ -790,6 +809,11 @@ int ScriptingCore::executeAccelerometerEvent(CCLayer *pLayer, CCAcceleration *pA
     return 1;
 }
 
+int ScriptingCore::executeLayerKeypadEvent(CCLayer* pLayer, int eventType)
+{
+    return 0;
+}
+
 
 int ScriptingCore::executeCustomTouchesEvent(int eventType,
                                        CCSet *pTouches, JSObject *obj)
@@ -906,6 +930,40 @@ CCAcceleration jsval_to_ccacceleration(JSContext *cx, jsval v) {
     return ret;
 }
 
+CCArray* jsvals_variadic_to_ccarray( JSContext *cx, jsval *vp, int argc)
+{
+    JSBool ok = JS_FALSE;
+    CCArray* pArray = CCArray::create();
+    for( int i=0; i < argc; i++ )
+    {
+        double num = 0.0;
+        // optimization: JS_ValueToNumber is expensive. And can convert an string like "12" to a number
+        if( JSVAL_IS_NUMBER(*vp)) {
+            ok = JS_ValueToNumber(cx, *vp, &num );
+            if (!ok) {
+                break;
+            }
+            pArray->addObject(CCInteger::create((int)num));
+        }
+        else if (JSVAL_IS_STRING(*vp))
+        {
+            JSStringWrapper str(JSVAL_TO_STRING(*vp), cx);
+            pArray->addObject(CCString::create(str));
+        }
+        else
+        {
+            js_proxy_t* p;
+            JSObject* obj = JSVAL_TO_OBJECT(*vp);
+            JS_GET_NATIVE_PROXY(p, obj);
+            if (p) {
+                pArray->addObject((CCObject*)p->ptr);
+            }
+        }
+        // next
+        vp++;
+    }
+    return pArray;
+}
 
 CCRect jsval_to_ccrect(JSContext *cx, jsval v) {
     JSObject *tmp;
@@ -1442,5 +1500,29 @@ JSBool jsSocketClose(JSContext* cx, unsigned argc, jsval* vp)
         int s = JSVAL_TO_INT(argv[0]);
         close(s);
     }
+    return JS_TRUE;
+}
+
+JSBool jsb_set_reserved_slot(JSObject *obj, uint32_t idx, jsval value)
+{
+    JSClass *klass = JS_GetClass(obj);
+    unsigned int slots = JSCLASS_RESERVED_SLOTS(klass);
+    if( idx >= slots )
+        return JS_FALSE;
+
+    JS_SetReservedSlot(obj, idx, value);
+
+    return JS_TRUE;
+}
+
+JSBool jsb_get_reserved_slot(JSObject *obj, uint32_t idx, jsval& ret)
+{
+    JSClass *klass = JS_GetClass(obj);
+    unsigned int slots = JSCLASS_RESERVED_SLOTS(klass);
+    if( idx >= slots )
+        return JS_FALSE;
+
+    ret = JS_GetReservedSlot(obj, idx);
+
     return JS_TRUE;
 }

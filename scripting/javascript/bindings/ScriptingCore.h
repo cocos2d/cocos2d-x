@@ -84,6 +84,7 @@ public:
     virtual int executeLayerTouchesEvent(CCLayer* pLayer, int eventType, CCSet *pTouches);
     virtual int executeLayerTouchEvent(CCLayer* pLayer, int eventType, CCTouch *pTouch);
     virtual int executeAccelerometerEvent(CCLayer* pLayer, CCAcceleration* pAccelerationValue);
+    virtual int executeLayerKeypadEvent(CCLayer* pLayer, int eventType);
 
     bool executeFunctionWithObjectData(CCNode *self, const char *name, JSObject *obj);
     int executeFunctionWithOwner(jsval owner, const char *name, jsval data);
@@ -197,6 +198,7 @@ JSBool jsval_to_ccarray_of_CCPoint(JSContext* cx, jsval v, CCPoint **points, int
 CCArray* jsval_to_ccarray(JSContext* cx, jsval v);
 CCDictionary* jsval_to_ccdictionary(JSContext* cx, jsval v);
 CCAcceleration jsval_to_ccacceleration(JSContext* cx,jsval v);
+CCArray* jsvals_variadic_to_ccarray( JSContext *cx, jsval *vp, int argc);
 
 // from native
 jsval long_long_to_jsval(JSContext* cx, long long v);
@@ -267,5 +269,8 @@ public:
 		return (char*)buffer;
 	}
 };
+
+JSBool jsb_set_reserved_slot(JSObject *obj, uint32_t idx, jsval value);
+JSBool jsb_get_reserved_slot(JSObject *obj, uint32_t idx, jsval& ret);
 
 #endif

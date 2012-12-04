@@ -111,7 +111,7 @@ Developers:
 
     Mat Hopwood( Marmalade official engineer )
         Marmalade support for gles20 branch
-
+		
     Carlos Sessa
 	implement the accelerometer module for Android port
 
@@ -149,6 +149,9 @@ Developers:
     johnangel
         OpenGL framebuffer access violation fix.
 
+	Peter Farkas (fape)
+		contributes Marmalade port for gles20 branch.
+	
 Retired Core Developers:
     WenSheng Yang
 	Author of windows port, CCTextField, 

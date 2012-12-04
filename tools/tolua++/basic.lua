@@ -201,14 +201,3 @@ _to_functions["LUA_FUNCTION"] = "toluafix_ref_function"
 _is_functions["LUA_FUNCTION"] = "toluafix_isfunction"
 _to_functions["LUA_TABLE"] = "toluafix_totable"
 _is_functions["LUA_TABLE"] = "toluafix_istable"
-
-
-function get_property_methods_hook(ptype, name)
-    if ptype == "IsVisible" then
-        return "isVisible", "setVisible"
-    end
-    if string.sub(ptype, 1, 2) == "CC" then
-        ptype = string.sub(ptype, 3)
-    end
-    return "get"..ptype, "set"..ptype
-end

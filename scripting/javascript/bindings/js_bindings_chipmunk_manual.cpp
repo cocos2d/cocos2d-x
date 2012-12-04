@@ -37,51 +37,11 @@ USING_NS_CC_EXT;
 // Function declarations
 void static freeSpaceChildren(cpSpace *space);
 
-
-template <class T>
-js_type_class_t *js_get_type_from_native(T* native_obj) {
-	js_type_class_t *typeProxy;
-	uint32_t typeId = reinterpret_cast<int>(typeid(*native_obj).name());
-    //const char *nam = typeid(*native_obj).name();
-	HASH_FIND_INT(_js_global_type_ht, &typeId, typeProxy);
-	if (!typeProxy) {
-		TypeInfo *typeInfo = dynamic_cast<TypeInfo *>(native_obj);
-		if (typeInfo) {
-			typeId = typeInfo->getClassTypeInfo();
-		} else {
-			typeId = reinterpret_cast<int>(typeid(T).name());
-		}
-		HASH_FIND_INT(_js_global_type_ht, &typeId, typeProxy);
-	}
-	return typeProxy;
-}
-
-/**
- * you don't need to manage the returned pointer. The returned pointer should be deleted
- * using JS_REMOVE_PROXY. Most of the time you do that in the C++ destructor.
- */
-template<class T>
-js_proxy_t *js_get_or_create_proxy(JSContext *cx, T *native_obj) {
-	js_proxy_t *proxy;
-	HASH_FIND_PTR(_native_js_global_ht, &native_obj, proxy);
-	if (!proxy) {
-		js_type_class_t *typeProxy = js_get_type_from_native<T>(native_obj);
-		assert(typeProxy);
-		JSObject* js_obj = JS_NewObject(cx, typeProxy->jsclass, typeProxy->proto, typeProxy->parentProto);
-		JS_NEW_PROXY(proxy, native_obj, js_obj);
-
-		JS_AddNamedObjectRoot(cx, &proxy->obj, typeid(native_obj).name());
-		return proxy;
-	} else {
-		return proxy;
-	}
-	return NULL;
-}
-
 template<class T>
 static JSBool dummy_constructor(JSContext *cx, uint32_t argc, jsval *vp) {
     TypeTest<T> t;
     T* cobj = new T();
+    cobj->autorelease();
     js_type_class_t *p;
     uint32_t typeId = t.s_id();
     HASH_FIND_INT(_js_global_type_ht, &typeId, p);
@@ -109,7 +69,7 @@ JSObject* JSPROXY_CCPhysicsSprite_object = NULL;
 // Destructor
 void JSPROXY_CCPhysicsSprite_finalize(JSFreeOp *fop, JSObject *obj)
 {
-    
+    CCLOGINFO("jsbindings: finalizing JS object %p (CCPhysicsSprite)", obj);
 }
 
 // Arguments:
@@ -229,6 +189,7 @@ JSBool JSB_CCPhysicsDebugNode_debugNodeForCPSpace__static(JSContext *cx, uint32_
             jsret = OBJECT_TO_JSVAL(obj);
             js_proxy_t *p;
             JS_NEW_PROXY(p, ret, obj);
+            JS_AddNamedObjectRoot(cx, &p->obj, "CCDebugNode");
         } else {
             jsret = JSVAL_NULL;
         }
@@ -338,8 +299,8 @@ JSBool JSPROXY_CCPhysicsSprite_spriteWithFile_rect__static(JSContext *cx, uint32
 		std::string arg0_tmp = jsval_to_std_string(cx, argv[0]); arg0 = arg0_tmp.c_str();
 		cocos2d::CCRect arg1;
 		arg1 = jsval_to_ccrect(cx, argv[1]);
-        CCPhysicsSprite* ret = new CCPhysicsSprite();
-        ret->initWithFile(arg0, arg1);
+        CCPhysicsSprite* ret = CCPhysicsSprite::create(arg0, arg1);
+
 		jsval jsret;
 		do {
 			if (ret) {
@@ -352,6 +313,7 @@ JSBool JSPROXY_CCPhysicsSprite_spriteWithFile_rect__static(JSContext *cx, uint32
 				jsret = OBJECT_TO_JSVAL(obj);
                 js_proxy_t *p;
                 JS_NEW_PROXY(p, ret, obj);
+                JS_AddNamedObjectRoot(cx, &p->obj, "CCPhysicsSprite");
 			} else {
 				jsret = JSVAL_NULL;
 			}
@@ -362,8 +324,7 @@ JSBool JSPROXY_CCPhysicsSprite_spriteWithFile_rect__static(JSContext *cx, uint32
 	if (argc == 1) {
 		const char* arg0;
 		std::string arg0_tmp = jsval_to_std_string(cx, argv[0]); arg0 = arg0_tmp.c_str();
-		CCPhysicsSprite* ret = new CCPhysicsSprite();
-        ret->initWithFile(arg0);
+		CCPhysicsSprite* ret = CCPhysicsSprite::create(arg0);
 
 		jsval jsret;
 		do {
@@ -377,7 +338,7 @@ JSBool JSPROXY_CCPhysicsSprite_spriteWithFile_rect__static(JSContext *cx, uint32
 				jsret = OBJECT_TO_JSVAL(obj);
                 js_proxy_t *p;
                 JS_NEW_PROXY(p, ret, obj);
-
+                JS_AddNamedObjectRoot(cx, &p->obj, "CCPhysicsSprite");
 			} else {
 				jsret = JSVAL_NULL;
 			}
@@ -403,8 +364,8 @@ JSBool JSPROXY_CCPhysicsSprite_spriteWithSpriteFrame__static(JSContext *cx, uint
 			TEST_NATIVE_OBJECT(cx, arg0)
 		} while (0);
 	}
-    CCPhysicsSprite* ret = new CCPhysicsSprite();
-    ret->initWithSpriteFrame(arg0);
+    CCPhysicsSprite* ret = CCPhysicsSprite::createWithSpriteFrame(arg0);
+
 	jsval jsret;
 	do {
 		if (ret) {
@@ -417,6 +378,7 @@ JSBool JSPROXY_CCPhysicsSprite_spriteWithSpriteFrame__static(JSContext *cx, uint
             jsret = OBJECT_TO_JSVAL(obj);
             js_proxy_t *p;
             JS_NEW_PROXY(p, ret, obj);
+            JS_AddNamedObjectRoot(cx, &p->obj, "CCPhysicsSprite");
 		} else {
 			jsret = JSVAL_NULL;
 		}
@@ -434,8 +396,8 @@ JSBool JSPROXY_CCPhysicsSprite_spriteWithSpriteFrameName__static(JSContext *cx, 
 	if (argc >= 1) {
 		arg0_tmp = jsval_to_std_string(cx, argv[0]); arg0 = arg0_tmp.c_str();
 	}
-    CCPhysicsSprite* ret = new CCPhysicsSprite();
-    ret->initWithSpriteFrameName(arg0);
+    CCPhysicsSprite* ret = CCPhysicsSprite::createWithSpriteFrameName(arg0);
+
 	jsval jsret;
 	do {
 		if (ret) {
@@ -448,6 +410,7 @@ JSBool JSPROXY_CCPhysicsSprite_spriteWithSpriteFrameName__static(JSContext *cx, 
             jsret = OBJECT_TO_JSVAL(obj);
             js_proxy_t *p;
             JS_NEW_PROXY(p, ret, obj);
+            JS_AddNamedObjectRoot(cx, &p->obj, "CCPhysicsSprite");
 		} else {
 			jsret = JSVAL_NULL;
 		}
@@ -630,13 +593,18 @@ JSBool jsval_to_array_of_cpvect( JSContext *cx, jsval vp, cpVect**verts, int *nu
 struct collision_handler {
 	cpCollisionType		typeA;
 	cpCollisionType		typeB;
-	jsval				begin;
-	jsval				pre;
-	jsval				post;
-	jsval				separate;
+	
+	JSObject			*begin;
+	JSObject			*pre;
+	JSObject			*post;
+	JSObject			*separate;
 	JSObject			*jsthis;
 	JSContext			*cx;
 
+	// "owner" of the collision handler
+	// Needed when the space goes out of scope, it will remove all the allocated collision handlers for him.
+	cpSpace				*space;
+	
 	unsigned long		hash_key;
 
 	unsigned int		is_oo; // Objected oriented API ?
@@ -670,7 +638,7 @@ static cpBool myCollisionBegin(cpArbiter *arb, cpSpace *space, void *data)
 	}
 	
 	jsval rval;
-	JSBool ok = JS_CallFunctionValue( handler->cx, handler->jsthis, handler->begin, 2, args, &rval);
+	JSBool ok = JS_CallFunctionValue( handler->cx, handler->jsthis, OBJECT_TO_JSVAL(handler->begin), 2, args, &rval);
 	JSB_PRECONDITION2(ok, handler->cx, cpFalse, "Error calling collision callback: begin");
 
 	if( JSVAL_IS_BOOLEAN(rval) ) {
@@ -694,7 +662,7 @@ static cpBool myCollisionPre(cpArbiter *arb, cpSpace *space, void *data)
 	}
 	
 	jsval rval;
-	JSBool ok = JS_CallFunctionValue( handler->cx, handler->jsthis, handler->pre, 2, args, &rval);
+	JSBool ok = JS_CallFunctionValue( handler->cx, handler->jsthis, OBJECT_TO_JSVAL(handler->pre), 2, args, &rval);
 	JSB_PRECONDITION2(ok, handler->cx, JS_FALSE, "Error calling collision callback: pre");
 	
 	if( JSVAL_IS_BOOLEAN(rval) ) {
@@ -719,7 +687,7 @@ static void myCollisionPost(cpArbiter *arb, cpSpace *space, void *data)
 	}
 	
 	jsval ignore;
-	JSBool ok = JS_CallFunctionValue( handler->cx, handler->jsthis, handler->post, 2, args, &ignore);
+	JSBool ok = JS_CallFunctionValue( handler->cx, handler->jsthis, OBJECT_TO_JSVAL(handler->post), 2, args, &ignore);
 	JSB_PRECONDITION2(ok, handler->cx, , "Error calling collision callback: Post");
 }
 
@@ -737,7 +705,7 @@ static void myCollisionSeparate(cpArbiter *arb, cpSpace *space, void *data)
 	}
 	
 	jsval ignore;
-	JSBool ok = JS_CallFunctionValue( handler->cx, handler->jsthis, handler->separate, 2, args, &ignore);
+	JSBool ok = JS_CallFunctionValue( handler->cx, handler->jsthis, OBJECT_TO_JSVAL(handler->separate), 2, args, &ignore);
 	JSB_PRECONDITION2(ok, handler->cx, , "Error calling collision callback: Separate");}
 
 #pragma mark - cpSpace
@@ -750,12 +718,39 @@ void JSB_cpSpace_finalize(JSFreeOp *fop, JSObject *jsthis)
 	if( proxy ) {
 		CCLOGINFO("jsbindings: finalizing JS object %p (cpSpace), handle: %p", jsthis, proxy->handle);
 		
-		// Free Space Children
-		freeSpaceChildren((cpSpace*)proxy->handle);
+		// space
+		cpSpace *space = (cpSpace*) proxy->handle;
 		
-		jsb_del_jsobject_for_proxy(proxy->handle);
+		
+		// Remove collision handlers, since the user might have forgotten to manually remove them
+		struct collision_handler *current, *tmp;
+		HASH_ITER(hh, collision_handler_hash, current, tmp) {
+			if( current->space == space ) {
+
+				JSContext *cx = current->cx;
+
+				// unroot it
+				if( current->begin ) {
+					JS_RemoveObjectRoot(cx, &current->begin);
+                }
+				if( current->pre )
+					JS_RemoveObjectRoot(cx, &current->pre);
+				if( current->post )
+					JS_RemoveObjectRoot(cx, &current->post);
+				if( current->separate )
+					JS_RemoveObjectRoot(cx, &current->separate);
+				
+				HASH_DEL(collision_handler_hash,current);  /* delete; users advances to next */
+				free(current);            /* optional- if you want to free  */
+			}
+		}
+		
+		// Free Space Children
+		freeSpaceChildren(space);
+		
+		jsb_del_jsobject_for_proxy(space);
 		if(proxy->flags == JSB_C_FLAG_CALL_FREE)
-			cpSpaceFree( (cpSpace*)proxy->handle);
+			cpSpaceFree(space);
 		jsb_del_c_proxy_for_jsobject(jsthis);
 	}
 }
@@ -780,32 +775,40 @@ JSBool __jsb_cpSpace_addCollisionHandler(JSContext *cx, jsval *vp, jsval *argvp,
 //	ok &= JS_ValueToObject(cx, *argvp++, &handler->jsthis );
 	handler->jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	
-	handler->begin = *argvp++;
-	handler->pre = *argvp++;
-	handler->post = *argvp++;
-	handler->separate = *argvp++;
+	handler->begin = !JSVAL_IS_NULL(*argvp) ? JSVAL_TO_OBJECT(*argvp) : NULL;
+	argvp++;
+	handler->pre = !JSVAL_IS_NULL(*argvp) ? JSVAL_TO_OBJECT(*argvp) : NULL;
+	argvp++;
+	handler->post = !JSVAL_IS_NULL(*argvp) ? JSVAL_TO_OBJECT(*argvp) : NULL;
+	argvp++;
+	handler->separate = !JSVAL_IS_NULL(*argvp) ? JSVAL_TO_OBJECT(*argvp) : NULL;
+	argvp++;
 	
 	JSB_PRECONDITION(ok, "Error parsing arguments");
 	
 	// Object Oriented API ?
 	handler->is_oo = is_oo;
 	
-//	if( ! JSVAL_IS_NULL(handler->begin) )
-//		JS_AddNamedValueRoot(cx, &handler->begin, "begin collision_handler");
-//	if( ! JSVAL_IS_NULL(handler->pre) )
-//		JS_AddNamedValueRoot(cx, &handler->pre, "pre collision_handler");
-//	if( ! JSVAL_IS_NULL(handler->post) )
-//		JS_AddNamedValueRoot(cx, &handler->post, "post collision_handler");
-//	if( ! JSVAL_IS_NULL(handler->separate) )
-//		JS_AddNamedValueRoot(cx, &handler->separate, "separate collision_handler");
+	// owner of the collision handler
+	handler->space = space;
+	
+	// Root it
+	if( handler->begin )
+		JS_AddNamedObjectRoot(cx, &handler->begin, "begin collision_handler");
+	if( handler->pre )
+		JS_AddNamedObjectRoot(cx, &handler->pre, "pre collision_handler");
+	if( handler->post )
+		JS_AddNamedObjectRoot(cx, &handler->post, "post collision_handler");
+	if( handler->separate )
+		JS_AddNamedObjectRoot(cx, &handler->separate, "separate collision_handler");
 	
 	handler->cx = cx;
 	
 	cpSpaceAddCollisionHandler(space, handler->typeA, handler->typeB,
-							   JSVAL_IS_NULL(handler->begin) ? NULL : &myCollisionBegin,
-							   JSVAL_IS_NULL(handler->pre) ? NULL : &myCollisionPre,
-							   JSVAL_IS_NULL(handler->post) ? NULL : &myCollisionPost,
-							   JSVAL_IS_NULL(handler->separate) ? NULL : &myCollisionSeparate,
+							   !handler->begin ? NULL : &myCollisionBegin,
+							   !handler->pre ? NULL : &myCollisionPre,
+							   !handler->post ? NULL : &myCollisionPost,
+							   !handler->separate ? NULL : &myCollisionSeparate,
 							   handler );
 	
 	
@@ -880,14 +883,14 @@ JSBool __jsb_cpSpace_removeCollisionHandler(JSContext *cx, jsval *vp, jsval *arg
     if( hashElement ) {
 		
 		// unroot it
-//		if( ! JSVAL_IS_NULL(hashElement->begin) )
-//			JS_RemoveValueRoot(cx, &hashElement->begin);
-//		if( ! JSVAL_IS_NULL(hashElement->pre) )
-//			JS_RemoveValueRoot(cx, &hashElement->pre);
-//		if( ! JSVAL_IS_NULL(hashElement->post) )
-//			JS_RemoveValueRoot(cx, &hashElement->post);
-//		if( ! JSVAL_IS_NULL(hashElement->separate) )
-//			JS_RemoveValueRoot(cx, &hashElement->separate);
+		if( hashElement->begin )
+			JS_RemoveObjectRoot(cx, &hashElement->begin);
+		if( hashElement->pre )
+			JS_RemoveObjectRoot(cx, &hashElement->pre);
+		if( hashElement->post )
+			JS_RemoveObjectRoot(cx, &hashElement->post);
+		if( hashElement->separate )
+			JS_RemoveObjectRoot(cx, &hashElement->separate);
 		
 		HASH_DEL( collision_handler_hash, hashElement );
 		free( hashElement );

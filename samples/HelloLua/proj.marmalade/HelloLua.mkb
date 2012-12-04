@@ -47,16 +47,6 @@ files
 	(../Classes)
 	AppDelegate.h
 	AppDelegate.cpp
-
-	[cocos2dx_support]
-	../../../scripting/lua/cocos2dx_support/CCLuaEngine.cpp
-	../../../scripting/lua/cocos2dx_support/CCLuaEngine.h
-	../../../scripting/lua/cocos2dx_support/Cocos2dxLuaLoader.cpp
-	../../../scripting/lua/cocos2dx_support/Cocos2dxLuaLoader.h
-	../../../scripting/lua/cocos2dx_support/LuaCocos2d.cpp
-	../../../scripting/lua/cocos2dx_support/LuaCocos2d.h
-	../../../scripting/lua/cocos2dx_support/tolua_fix.c
-	../../../scripting/lua/cocos2dx_support/tolua_fix.h
 }
 
 

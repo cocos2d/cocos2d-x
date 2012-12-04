@@ -46,6 +46,19 @@ TEXTURE2D_CREATE_FUNC(TexturePVRI8);
 TEXTURE2D_CREATE_FUNC(TexturePVRI8v3);
 TEXTURE2D_CREATE_FUNC(TexturePVRAI88);
 TEXTURE2D_CREATE_FUNC(TexturePVRAI88v3);
+TEXTURE2D_CREATE_FUNC(TexturePVRBadEncoding);
+TESTLAYER_CREATE_FUNC(TexturePNG);
+TESTLAYER_CREATE_FUNC(TextureJPEG);
+TESTLAYER_CREATE_FUNC(TextureTIFF);
+TESTLAYER_CREATE_FUNC(TexturePixelFormat);
+TESTLAYER_CREATE_FUNC(TextureBlend);
+TESTLAYER_CREATE_FUNC(TextureAsync);
+TESTLAYER_CREATE_FUNC(TextureGlClamp);
+TESTLAYER_CREATE_FUNC(TextureGlRepeat);
+TESTLAYER_CREATE_FUNC(TextureSizeTest);
+TESTLAYER_CREATE_FUNC(TextureCache1);
+TESTLAYER_CREATE_FUNC(TextureDrawAtPoint);
+TESTLAYER_CREATE_FUNC(TextureDrawInRect);
 
 static NEWTEXTURE2DTESTFUNC createFunctions[] =
 {
@@ -82,6 +95,20 @@ static NEWTEXTURE2DTESTFUNC createFunctions[] =
     createTexturePVRI8v3,
     createTexturePVRAI88,
     createTexturePVRAI88v3,
+    
+    createTexturePVRBadEncoding,
+    createTexturePNG,
+    createTextureJPEG,
+    createTextureTIFF,
+    createTexturePixelFormat,
+    createTextureBlend,
+    createTextureAsync,
+    createTextureGlClamp,
+    createTextureGlRepeat,
+    createTextureSizeTest,
+    createTextureCache1,
+    createTextureDrawAtPoint,
+    createTextureDrawInRect,
 };
 
 static unsigned int TEST_CASE_COUNT = sizeof(createFunctions) / sizeof(createFunctions[0]);

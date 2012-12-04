@@ -13,7 +13,6 @@ class CCDirector : public CCObject
     double getAnimationInterval(void);
 
     bool isDisplayStats(void);
-    void setDisplayStats(bool bDisplayFPS);
 
     bool isPaused(void);
     unsigned int getTotalFrames(void);
@@ -37,12 +36,13 @@ class CCDirector : public CCObject
     void end @ endToLua ();
 
     float getContentScaleFactor(void);
+    void setContentScaleFactor(float scaleFactor);
 
     CCScheduler* getScheduler();
     CCActionManager* getActionManager();
     CCTouchDispatcher* getTouchDispatcher();
-    CCKeypadDispatcher* getKeypadDispatcher();
-    CCAccelerometer* getAccelerometer();
+    // CCKeypadDispatcher* getKeypadDispatcher();
+    // CCAccelerometer* getAccelerometer();
 
 	void setDepthTest(bool var);
 	void setProjection(ccDirectorProjection kProjection);

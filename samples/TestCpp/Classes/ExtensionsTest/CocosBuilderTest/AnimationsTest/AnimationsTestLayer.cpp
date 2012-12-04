@@ -12,12 +12,12 @@ AnimationsTestLayer::~AnimationsTestLayer()
     CC_SAFE_RELEASE_NULL(mAnimationManager);
 }
 
-SEL_MenuHandler AnimationsTestLayer::onResolveCCBCCMenuItemSelector(CCObject * pTarget, CCString * pSelectorName)
+SEL_MenuHandler AnimationsTestLayer::onResolveCCBCCMenuItemSelector(CCObject * pTarget, const char * pSelectorName)
 {
     return NULL;
 }
 
-SEL_CCControlHandler AnimationsTestLayer::onResolveCCBCCControlSelector(CCObject *pTarget, CCString*pSelectorName) {
+SEL_CCControlHandler AnimationsTestLayer::onResolveCCBCCControlSelector(CCObject *pTarget, const char*pSelectorName) {
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onCCControlButtonIdleClicked", AnimationsTestLayer::onCCControlButtonIdleClicked);
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onCCControlButtonWaveClicked", AnimationsTestLayer::onCCControlButtonWaveClicked);
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onCCControlButtonJumpClicked", AnimationsTestLayer::onCCControlButtonJumpClicked);
@@ -26,7 +26,7 @@ SEL_CCControlHandler AnimationsTestLayer::onResolveCCBCCControlSelector(CCObject
     return NULL;
 }
 
-bool AnimationsTestLayer::onAssignCCBMemberVariable(CCObject * pTarget, CCString * pMemberVariableName, CCNode * pNode) {
+bool AnimationsTestLayer::onAssignCCBMemberVariable(CCObject * pTarget, const char * pMemberVariableName, CCNode * pNode) {
      CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "mAnimationManager", CCBAnimationManager *, this->mAnimationManager);
     
     return false;
@@ -40,17 +40,17 @@ void AnimationsTestLayer::setAnimationManager(cocos2d::extension::CCBAnimationMa
 }
 
 void AnimationsTestLayer::onCCControlButtonIdleClicked(CCObject *pSender, CCControlEvent pCCControlEvent) {
-    mAnimationManager->runAnimations("Idle", 0.3f);
+    mAnimationManager->runAnimationsForSequenceNamedTweenDuration("Idle", 0.3f);
 }
 
 void AnimationsTestLayer::onCCControlButtonWaveClicked(CCObject *pSender, CCControlEvent pCCControlEvent) {
-    mAnimationManager->runAnimations("Wave", 0.3f);
+    mAnimationManager->runAnimationsForSequenceNamedTweenDuration("Wave", 0.3f);
 }
 
 void AnimationsTestLayer::onCCControlButtonJumpClicked(CCObject *pSender, CCControlEvent pCCControlEvent) {
-    mAnimationManager->runAnimations("Jump", 0.3f);
+    mAnimationManager->runAnimationsForSequenceNamedTweenDuration("Jump", 0.3f);
 }
 
 void AnimationsTestLayer::onCCControlButtonFunkyClicked(CCObject *pSender, CCControlEvent pCCControlEvent) {
-    mAnimationManager->runAnimations("Funky", 0.3f);
+    mAnimationManager->runAnimationsForSequenceNamedTweenDuration("Funky", 0.3f);
 }

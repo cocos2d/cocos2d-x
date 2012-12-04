@@ -78,7 +78,7 @@ public:
     
     /**
      * Change the download timeout
-     * @param timeout
+     * @param value
      * @return NULL
      */
     inline void setTimeoutForRead(int value) {_timeoutForRead = value;};
