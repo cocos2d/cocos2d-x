@@ -48,14 +48,13 @@ Config of cocos2d-x project, per target platform.
 #define CC_TARGET_PLATFORM             CC_PLATFORM_UNKNOWN
 
 // mac
-#if defined(TARGET_OS_MAC)
+#if defined(CC_TARGET_OS_MAC)
 #undef  CC_TARGET_PLATFORM
 #define CC_TARGET_PLATFORM         CC_PLATFORM_MAC
-//#define CC_SUPPORT_PVRTC
 #endif
 
 // iphone
-#if (defined(TARGET_OS_IPHONE) || defined(TARGET_IPHONE_SIMULATOR))
+#if defined(CC_TARGET_OS_IPHONE)
     #undef  CC_TARGET_PLATFORM
     #define CC_TARGET_PLATFORM         CC_PLATFORM_IOS
     #define CC_SUPPORT_PVRTC

@@ -22,22 +22,22 @@ static void removeSelector(std::string &str) {
 }
 
 SEL_MenuHandler CCBScriptCallbackProxy::onResolveCCBCCMenuItemSelector(cocos2d::CCObject * pTarget,
-                                                                       cocos2d::CCString * pSelectorName) {
-    this->callBackProp = pSelectorName->getCString();
+                                                                       const char * pSelectorName) {
+    this->callBackProp = pSelectorName;
     removeSelector(this->callBackProp);
     return menu_selector(CCBScriptCallbackProxy::menuItemCallback);
 }
 
 SEL_CCControlHandler CCBScriptCallbackProxy::onResolveCCBCCControlSelector(CCObject * pTarget,
-                                                                           CCString * pSelectorName) {
+                                                                           const char * pSelectorName) {
     
-    this->callBackProp = pSelectorName->getCString();
+    this->callBackProp = pSelectorName;
     removeSelector(this->callBackProp);
     return cccontrol_selector(CCBScriptCallbackProxy::controlCallback);
 }
 
 bool CCBScriptCallbackProxy::onAssignCCBMemberVariable(CCObject * pTarget,
-                                                       CCString * pMemberVariableName,
+                                                       const char * pMemberVariableName,
                                                        CCNode * pNode) {
     return true;
 }
@@ -97,7 +97,6 @@ JSBool js_cocos2dx_CCBAnimationManager_animationCompleteCallback(JSContext *cx, 
     }
     return JS_FALSE;
 }
-
 
 JSBool js_cocos2dx_CCBReader_readNodeGraphFromFile(JSContext *cx, uint32_t argc, jsval *vp)
 {
@@ -302,7 +301,6 @@ void register_CCBuilderReader(JSContext *cx, JSObject *obj) {
     JS_DefineFunction(cx, tmpObj, "create", js_CocosBuilder_create, 2, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, tmpObj, "loadScene", js_cocos2dx_CCBReader_createSceneWithNodeGraphFromFile, 2, JSPROP_READONLY | JSPROP_PERMANENT);
     
-    JS_DefineFunction(cx, js_cocos2dx_CCBReader_prototype, "load", js_cocos2dx_CCBReader_readNodeGraphFromFile, 2, JSPROP_READONLY | JSPROP_PERMANENT);    
+    JS_DefineFunction(cx, js_cocos2dx_CCBReader_prototype, "load", js_cocos2dx_CCBReader_readNodeGraphFromFile, 2, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, js_cocos2dx_CCBAnimationManager_prototype, "setCompletedAnimationCallback", js_cocos2dx_CCBAnimationManager_animationCompleteCallback, 2, JSPROP_READONLY | JSPROP_PERMANENT);
-
 }

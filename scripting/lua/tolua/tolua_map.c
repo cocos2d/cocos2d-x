@@ -240,6 +240,13 @@ static int tolua_bnd_cast (lua_State* L)
     return 1;
 }
 
+/* Test userdata is null
+*/
+static int tolua_bnd_isnulluserdata (lua_State* L) {
+    void **ud = (void**)lua_touserdata(L, -1);
+    return ud == NULL || *ud == NULL;
+}
+
 /* Inheritance
 */
 static int tolua_bnd_inherit (lua_State* L) {
@@ -353,6 +360,7 @@ TOLUA_API void tolua_open (lua_State* L)
         tolua_function(L,"takeownership",tolua_bnd_takeownership);
         tolua_function(L,"releaseownership",tolua_bnd_releaseownership);
         tolua_function(L,"cast",tolua_bnd_cast);
+        tolua_function(L,"isnull",tolua_bnd_isnulluserdata);
         tolua_function(L,"inherit", tolua_bnd_inherit);
 #ifdef LUA_VERSION_NUM /* lua 5.1 */
         tolua_function(L, "setpeer", tolua_bnd_setpeer);

@@ -86,6 +86,8 @@ public:
     virtual void ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent);
     
     virtual void didAccelerate(CCAcceleration* pAccelerationValue);
+    void registerScriptAccelerateHandler(int nHandler);
+    void unregisterScriptAccelerateHandler(void);
 
     /** If isTouchEnabled, this method is called onEnter. Override it to change the
     way CCLayer receives touch events.
@@ -133,8 +135,18 @@ public:
     */
     virtual bool isKeypadEnabled();
     virtual void setKeypadEnabled(bool value);
+
+    /** Register keypad events handler */
+    void registerScriptKeypadHandler(int nHandler);
+    /** Unregister keypad events handler */
+    void unregisterScriptKeypadHandler(void);
+
+    virtual void keyBackClicked(void);
+    virtual void keyMenuClicked(void);
     
-    inline CCTouchScriptHandlerEntry* getScriptHandlerEntry() { return m_pScriptHandlerEntry; };
+    inline CCTouchScriptHandlerEntry* getScriptTouchHandlerEntry() { return m_pScriptTouchHandlerEntry; };
+    inline CCScriptHandlerEntry* getScriptKeypadHandlerEntry() { return m_pScriptKeypadHandlerEntry; };
+    inline CCScriptHandlerEntry* getScriptAccelerateHandlerEntry() { return m_pScriptAccelerateHandlerEntry; };
 protected:   
     bool m_bTouchEnabled;
     bool m_bAccelerometerEnabled;
@@ -142,7 +154,9 @@ protected:
     
 private:
     // Script touch events handler
-    CCTouchScriptHandlerEntry* m_pScriptHandlerEntry;
+    CCTouchScriptHandlerEntry* m_pScriptTouchHandlerEntry;
+    CCScriptHandlerEntry* m_pScriptKeypadHandlerEntry;
+    CCScriptHandlerEntry* m_pScriptAccelerateHandlerEntry;
     
     int m_nTouchPriority;
     ccTouchesMode m_eTouchMode;
@@ -224,8 +238,7 @@ protected:
 //
 // CCLayerGradient
 //
-/** CCLayerGradient is a subclass of CCLayerColor that draws gradients across
-the background.
+/** @brief CCLayerGradient is a subclass of CCLayerColor that draws gradients across the background.
 
 All features from CCLayerColor are valid, plus the following new features:
 - direction
@@ -338,6 +351,12 @@ public:
     /** switches to a certain layer indexed by n. 
     The current (old) layer will be removed from it's parent with 'cleanup:YES'.
     */
+
+    /** initializes a CCMultiplexLayer with an array of layers
+    @since v2.1
+    */
+    bool initWithArray(CCArray* arrayOfLayers);
+
     void switchTo(unsigned int n);
     /** release the current layer and switches to another layer indexed by n.
     The current (old) layer will be removed from it's parent with 'cleanup:YES'.
@@ -348,6 +367,10 @@ public:
     static CCLayerMultiplex* node();
     
     static CCLayerMultiplex* create();
+    /** creates a CCMultiplexLayer with an array of layers.
+    @since v2.1
+    */
+    static CCLayerMultiplex* createWithArray(CCArray* arrayOfLayers);
 };
 
 
