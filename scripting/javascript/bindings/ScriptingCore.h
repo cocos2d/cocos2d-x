@@ -84,6 +84,7 @@ public:
     virtual int executeLayerTouchesEvent(CCLayer* pLayer, int eventType, CCSet *pTouches);
     virtual int executeLayerTouchEvent(CCLayer* pLayer, int eventType, CCTouch *pTouch);
     virtual int executeAccelerometerEvent(CCLayer* pLayer, CCAcceleration* pAccelerationValue);
+    virtual int executeLayerKeypadEvent(CCLayer* pLayer, int eventType);
 
     bool executeFunctionWithObjectData(CCNode *self, const char *name, JSObject *obj);
     int executeFunctionWithOwner(jsval owner, const char *name, jsval data);
