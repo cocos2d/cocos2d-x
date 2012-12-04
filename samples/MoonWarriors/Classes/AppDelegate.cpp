@@ -24,6 +24,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     // initialize director
     CCDirector *pDirector = CCDirector::sharedDirector();
     pDirector->setOpenGLView(CCEGLView::sharedOpenGLView());
+    pDirector->setProjection(kCCDirectorProjection2D);
 
     // Set the design resolution
     CCEGLView::sharedOpenGLView()->setDesignResolutionSize(320, 480, kResolutionShowAll);
