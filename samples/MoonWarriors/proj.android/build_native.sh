@@ -73,7 +73,7 @@ cp -rf "$RESROUCE_ROOT" "$APP_ANDROID_ROOT"/assets
 # copy MoonWarriors js
 cp -rf "$RESROUCE_ROOT"/../src "$APP_ANDROID_ROOT"/assets
 # copy MoonWarriors-native.js
-cp "$RESROUCE_ROOT"/../MoonWarriors-native.js "$APP_ANDROID_ROOT"/assets
+cp "$RESROUCE_ROOT"/../*.js "$APP_ANDROID_ROOT"/assets
 
 # copy bindings/*.js into assets' root
 cp -f "$BINDINGS_JS_ROOT"/*.js "$APP_ANDROID_ROOT"/assets
