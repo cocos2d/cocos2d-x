@@ -809,6 +809,11 @@ int ScriptingCore::executeAccelerometerEvent(CCLayer *pLayer, CCAcceleration *pA
     return 1;
 }
 
+int ScriptingCore::executeLayerKeypadEvent(CCLayer* pLayer, int eventType)
+{
+    return 0;
+}
+
 
 int ScriptingCore::executeCustomTouchesEvent(int eventType,
                                        CCSet *pTouches, JSObject *obj)
