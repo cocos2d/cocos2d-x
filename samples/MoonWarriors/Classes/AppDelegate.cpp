@@ -43,7 +43,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     
     CCScriptEngineProtocol *pEngine = ScriptingCore::getInstance();
     CCScriptEngineManager::sharedManager()->setScriptEngine(pEngine);
-    ScriptingCore::getInstance()->runScript("MoonWarriors-native.js");
+    ScriptingCore::getInstance()->runScript("MoonWarriors-jsb.js");
 
     return true;
 }
