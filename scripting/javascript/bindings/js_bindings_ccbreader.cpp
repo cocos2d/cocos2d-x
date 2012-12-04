@@ -98,31 +98,6 @@ JSBool js_cocos2dx_CCBAnimationManager_animationCompleteCallback(JSContext *cx, 
     return JS_FALSE;
 }
 
-JSBool js_cocos2dx_CCBReader_setCCBRootPath(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JSBool bRet = JS_FALSE;
-    if (argc == 1) {
-        jsval *argv = JS_ARGV(cx, vp);
-        cocos2d::extension::CCBReader* cobj;
-        JSObject* obj = JS_THIS_OBJECT(cx, vp);
-        js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
-        cobj = (cocos2d::extension::CCBReader *)(proxy ? proxy->ptr : NULL);
-        TEST_NATIVE_OBJECT(cx, cobj)
-
-        if (argv[0].isString())
-        {
-            JSStringWrapper str(argv[0], cx);
-            cobj->setCCBRootPath(str);
-            JS_SET_RVAL(cx, vp, JSVAL_VOID);
-            bRet = JS_TRUE;
-        }
-        return bRet;
-    }
-
-    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
-    return JS_FALSE;
-}
-
 JSBool js_cocos2dx_CCBReader_readNodeGraphFromFile(JSContext *cx, uint32_t argc, jsval *vp)
 {
     jsval *argv = JS_ARGV(cx, vp);
@@ -327,6 +302,5 @@ void register_CCBuilderReader(JSContext *cx, JSObject *obj) {
     JS_DefineFunction(cx, tmpObj, "loadScene", js_cocos2dx_CCBReader_createSceneWithNodeGraphFromFile, 2, JSPROP_READONLY | JSPROP_PERMANENT);
     
     JS_DefineFunction(cx, js_cocos2dx_CCBReader_prototype, "load", js_cocos2dx_CCBReader_readNodeGraphFromFile, 2, JSPROP_READONLY | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, js_cocos2dx_CCBReader_prototype, "setCCBRootPath", js_cocos2dx_CCBReader_setCCBRootPath, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, js_cocos2dx_CCBAnimationManager_prototype, "setCompletedAnimationCallback", js_cocos2dx_CCBAnimationManager_animationCompleteCallback, 2, JSPROP_READONLY | JSPROP_PERMANENT);
 }
