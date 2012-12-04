@@ -31,8 +31,6 @@ class CCLabelBMFont : public CCNode
 	bool isOpacityModifyRGB();
     void setOpacityModifyRGB(bool isOpacityModifyRGB);
 
-    tolua_property__CCOpacity   GLubyte opacity;
-
     static void purgeCachedData();
     static CCLabelBMFont * create(const char *str, const char *fntFile, float width = kCCLabelAutomaticWidth, CCTextAlignment alignment = kCCTextAlignmentLeft, CCPoint imageOffset = CCPointMake(0, 0));
 	static CCLabelBMFont * create();
