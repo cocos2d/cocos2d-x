@@ -120,15 +120,10 @@
 		156752F7163E7FC30002AD61 /* libjs_static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 156752F6163E7FC30002AD61 /* libjs_static.a */; };
 		156752F9163E82D40002AD61 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 156752F8163E82D40002AD61 /* libz.dylib */; };
 		15675300163E870E0002AD61 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 156752FF163E870E0002AD61 /* libxml2.dylib */; };
-		157EFB7E1667237500BF1E11 /* main.js in Sources */ = {isa = PBXBuildFile; fileRef = 157EFB791667237500BF1E11 /* main.js */; };
-		157EFB801667237500BF1E11 /* MoonWarriors-native.js in Sources */ = {isa = PBXBuildFile; fileRef = 157EFB7B1667237500BF1E11 /* MoonWarriors-native.js */; };
 		157EFB811667237500BF1E11 /* res in Resources */ = {isa = PBXBuildFile; fileRef = 157EFB7C1667237500BF1E11 /* res */; };
 		157EFB821667237500BF1E11 /* src in Resources */ = {isa = PBXBuildFile; fileRef = 157EFB7D1667237500BF1E11 /* src */; };
-		157EFB89166723A800BF1E11 /* jsb_constants.js in Sources */ = {isa = PBXBuildFile; fileRef = 157EFB84166723A800BF1E11 /* jsb_constants.js */; };
-		157EFB8A166723A800BF1E11 /* jsb_constants_chipmunk.js in Sources */ = {isa = PBXBuildFile; fileRef = 157EFB85166723A800BF1E11 /* jsb_constants_chipmunk.js */; };
-		157EFB8B166723A800BF1E11 /* jsb_constants_cocos2d.js in Sources */ = {isa = PBXBuildFile; fileRef = 157EFB86166723A800BF1E11 /* jsb_constants_cocos2d.js */; };
-		157EFB8C166723A800BF1E11 /* jsb_constants_cocosbuilder.js in Sources */ = {isa = PBXBuildFile; fileRef = 157EFB87166723A800BF1E11 /* jsb_constants_cocosbuilder.js */; };
-		157EFB8D166723A800BF1E11 /* jsb_constants_gl.js in Sources */ = {isa = PBXBuildFile; fileRef = 157EFB88166723A800BF1E11 /* jsb_constants_gl.js */; };
+		1590031F166DABBD006BF838 /* main.js in Resources */ = {isa = PBXBuildFile; fileRef = 157EFB791667237500BF1E11 /* main.js */; };
+		15900320166DABBD006BF838 /* MoonWarriors-jsb.js in Resources */ = {isa = PBXBuildFile; fileRef = 1590031D166DAB95006BF838 /* MoonWarriors-jsb.js */; };
 		15E35BC516688F9900ED83DB /* cocosjs_manual_conversions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15E35BC116688F9900ED83DB /* cocosjs_manual_conversions.cpp */; };
 		15E35BC616688F9900ED83DB /* js_bindings_ccbreader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15E35BC316688F9900ED83DB /* js_bindings_ccbreader.cpp */; };
 		15E35BD616688FA900ED83DB /* js_bindings_chipmunk_auto_classes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15E35BC816688FA900ED83DB /* js_bindings_chipmunk_auto_classes.cpp */; };
@@ -139,7 +134,6 @@
 		15E35BDB16688FA900ED83DB /* js_manual_conversions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15E35BD416688FA900ED83DB /* js_manual_conversions.cpp */; };
 		15E35BE116688FD800ED83DB /* CCPhysicsDebugNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15E35BDD16688FD800ED83DB /* CCPhysicsDebugNode.cpp */; };
 		15E35BE216688FD800ED83DB /* CCPhysicsSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15E35BDF16688FD800ED83DB /* CCPhysicsSprite.cpp */; };
-		15E35BE31668908C00ED83DB /* MoonWarriors-native.js in Resources */ = {isa = PBXBuildFile; fileRef = 157EFB7B1667237500BF1E11 /* MoonWarriors-native.js */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -365,7 +359,6 @@
 		156752F8163E82D40002AD61 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		156752FF163E870E0002AD61 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		157EFB791667237500BF1E11 /* main.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = main.js; path = "../../TestJavascript/cocos2d-js-tests/games/MoonWarriors/main.js"; sourceTree = "<group>"; };
-		157EFB7B1667237500BF1E11 /* MoonWarriors-native.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = "MoonWarriors-native.js"; path = "../../TestJavascript/cocos2d-js-tests/games/MoonWarriors/MoonWarriors-native.js"; sourceTree = "<group>"; };
 		157EFB7C1667237500BF1E11 /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; name = res; path = "../../TestJavascript/cocos2d-js-tests/games/MoonWarriors/res"; sourceTree = "<group>"; };
 		157EFB7D1667237500BF1E11 /* src */ = {isa = PBXFileReference; lastKnownFileType = folder; name = src; path = "../../TestJavascript/cocos2d-js-tests/games/MoonWarriors/src"; sourceTree = "<group>"; };
 		157EFB84166723A800BF1E11 /* jsb_constants.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_constants.js; sourceTree = "<group>"; };
@@ -373,6 +366,7 @@
 		157EFB86166723A800BF1E11 /* jsb_constants_cocos2d.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_constants_cocos2d.js; sourceTree = "<group>"; };
 		157EFB87166723A800BF1E11 /* jsb_constants_cocosbuilder.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_constants_cocosbuilder.js; sourceTree = "<group>"; };
 		157EFB88166723A800BF1E11 /* jsb_constants_gl.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_constants_gl.js; sourceTree = "<group>"; };
+		1590031D166DAB95006BF838 /* MoonWarriors-jsb.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = "MoonWarriors-jsb.js"; path = "../../TestJavascript/cocos2d-js-tests/games/MoonWarriors/MoonWarriors-jsb.js"; sourceTree = "<group>"; };
 		15E35BC116688F9900ED83DB /* cocosjs_manual_conversions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cocosjs_manual_conversions.cpp; sourceTree = "<group>"; };
 		15E35BC216688F9900ED83DB /* cocosjs_manual_conversions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cocosjs_manual_conversions.h; sourceTree = "<group>"; };
 		15E35BC316688F9900ED83DB /* js_bindings_ccbreader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = js_bindings_ccbreader.cpp; sourceTree = "<group>"; };
@@ -586,21 +580,21 @@
 		15675123163E73F40002AD61 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				157EFB83166723A800BF1E11 /* js */,
-				157EFB791667237500BF1E11 /* main.js */,
-				157EFB7B1667237500BF1E11 /* MoonWarriors-native.js */,
 				157EFB7C1667237500BF1E11 /* res */,
 				157EFB7D1667237500BF1E11 /* src */,
-				156752BC163E7C350002AD61 /* Icon-144.png */,
+				157EFB791667237500BF1E11 /* main.js */,
+				1590031D166DAB95006BF838 /* MoonWarriors-jsb.js */,
 				15675164163E741E0002AD61 /* Default-568h@2x.png */,
 				15675165163E741E0002AD61 /* Default.png */,
 				15675166163E741E0002AD61 /* Default@2x.png */,
+				156752BC163E7C350002AD61 /* Icon-144.png */,
 				15675167163E741E0002AD61 /* Icon-72.png */,
 				15675168163E741E0002AD61 /* Icon-Small-50.png */,
 				15675169163E741E0002AD61 /* Icon-Small.png */,
 				1567516A163E741E0002AD61 /* Icon-Small@2x.png */,
 				1567516B163E741E0002AD61 /* Icon.png */,
 				1567516C163E741E0002AD61 /* Icon@2x.png */,
+				157EFB83166723A800BF1E11 /* js */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -944,6 +938,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1590031F166DABBD006BF838 /* main.js in Resources */,
+				15900320166DABBD006BF838 /* MoonWarriors-jsb.js in Resources */,
 				1567510E163E73B10002AD61 /* README in Resources */,
 				1567516D163E741E0002AD61 /* Default-568h@2x.png in Resources */,
 				1567516E163E741E0002AD61 /* Default.png in Resources */,
@@ -960,7 +956,6 @@
 				151031791668915C00C0F72F /* jsb_constants_gl.js in Resources */,
 				151031781668915B00C0F72F /* jsb_constants_cocosbuilder.js in Resources */,
 				151031761668915900C0F72F /* jsb_constants_chipmunk.js in Resources */,
-				15E35BE31668908C00ED83DB /* MoonWarriors-native.js in Resources */,
 				156752BD163E7C350002AD61 /* Icon-144.png in Resources */,
 				157EFB811667237500BF1E11 /* res in Resources */,
 				157EFB821667237500BF1E11 /* src in Resources */,
@@ -1058,13 +1053,6 @@
 				156752A5163E77A90002AD61 /* cpSweep1D.c in Sources */,
 				156752A6163E77A90002AD61 /* cpVect.c in Sources */,
 				156752A9163E78180002AD61 /* RootViewController.mm in Sources */,
-				157EFB7E1667237500BF1E11 /* main.js in Sources */,
-				157EFB801667237500BF1E11 /* MoonWarriors-native.js in Sources */,
-				157EFB89166723A800BF1E11 /* jsb_constants.js in Sources */,
-				157EFB8A166723A800BF1E11 /* jsb_constants_chipmunk.js in Sources */,
-				157EFB8B166723A800BF1E11 /* jsb_constants_cocos2d.js in Sources */,
-				157EFB8C166723A800BF1E11 /* jsb_constants_cocosbuilder.js in Sources */,
-				157EFB8D166723A800BF1E11 /* jsb_constants_gl.js in Sources */,
 				15E35BC516688F9900ED83DB /* cocosjs_manual_conversions.cpp in Sources */,
 				15E35BC616688F9900ED83DB /* js_bindings_ccbreader.cpp in Sources */,
 				15E35BD616688FA900ED83DB /* js_bindings_chipmunk_auto_classes.cpp in Sources */,
