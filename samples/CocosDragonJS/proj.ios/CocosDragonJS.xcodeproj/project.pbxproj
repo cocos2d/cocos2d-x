@@ -94,6 +94,10 @@
 		15900311166DAB3E006BF838 /* settings-caption-musicoff.png in Resources */ = {isa = PBXBuildFile; fileRef = 159002EB166DAB3E006BF838 /* settings-caption-musicoff.png */; };
 		15900312166DAB3E006BF838 /* settings-caption-tilt.png in Resources */ = {isa = PBXBuildFile; fileRef = 159002EC166DAB3E006BF838 /* settings-caption-tilt.png */; };
 		15900313166DAB3E006BF838 /* settings-caption-touch.png in Resources */ = {isa = PBXBuildFile; fileRef = 159002ED166DAB3E006BF838 /* settings-caption-touch.png */; };
+		159004B2166DE190006BF838 /* Icon-57.png in Resources */ = {isa = PBXBuildFile; fileRef = 159004B1166DE18F006BF838 /* Icon-57.png */; };
+		159004B4166DE19C006BF838 /* Icon-114.png in Resources */ = {isa = PBXBuildFile; fileRef = 159004B3166DE19C006BF838 /* Icon-114.png */; };
+		159004B6166DE1A8006BF838 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 159004B5166DE1A8006BF838 /* Icon-72.png */; };
+		159004B8166DE1AF006BF838 /* Icon-144.png in Resources */ = {isa = PBXBuildFile; fileRef = 159004B7166DE1AF006BF838 /* Icon-144.png */; };
 		15CFE1A61612FD0E00BF2188 /* CCControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15CFE18D1612FD0E00BF2188 /* CCControl.cpp */; };
 		15CFE1A71612FD0E00BF2188 /* CCControlButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15CFE18F1612FD0E00BF2188 /* CCControlButton.cpp */; };
 		15CFE1A81612FD0E00BF2188 /* CCControlColourPicker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15CFE1911612FD0E00BF2188 /* CCControlColourPicker.cpp */; };
@@ -320,6 +324,10 @@
 		159002EB166DAB3E006BF838 /* settings-caption-musicoff.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "settings-caption-musicoff.png"; path = "../../TestJavascript/cocos2d-js-tests/games/CocosDragonJS/Published files iOS/settings-caption-musicoff.png"; sourceTree = "<group>"; };
 		159002EC166DAB3E006BF838 /* settings-caption-tilt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "settings-caption-tilt.png"; path = "../../TestJavascript/cocos2d-js-tests/games/CocosDragonJS/Published files iOS/settings-caption-tilt.png"; sourceTree = "<group>"; };
 		159002ED166DAB3E006BF838 /* settings-caption-touch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "settings-caption-touch.png"; path = "../../TestJavascript/cocos2d-js-tests/games/CocosDragonJS/Published files iOS/settings-caption-touch.png"; sourceTree = "<group>"; };
+		159004B1166DE18F006BF838 /* Icon-57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-57.png"; sourceTree = "<group>"; };
+		159004B3166DE19C006BF838 /* Icon-114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-114.png"; sourceTree = "<group>"; };
+		159004B5166DE1A8006BF838 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
+		159004B7166DE1AF006BF838 /* Icon-144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-144.png"; sourceTree = "<group>"; };
 		15CFE18D1612FD0E00BF2188 /* CCControl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCControl.cpp; sourceTree = "<group>"; };
 		15CFE18E1612FD0E00BF2188 /* CCControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCControl.h; sourceTree = "<group>"; };
 		15CFE18F1612FD0E00BF2188 /* CCControlButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCControlButton.cpp; sourceTree = "<group>"; };
@@ -881,6 +889,10 @@
 		A92275321517C094001B78AA = {
 			isa = PBXGroup;
 			children = (
+				159004B7166DE1AF006BF838 /* Icon-144.png */,
+				159004B5166DE1A8006BF838 /* Icon-72.png */,
+				159004B3166DE19C006BF838 /* Icon-114.png */,
+				159004B1166DE18F006BF838 /* Icon-57.png */,
 				15426AE915B5733200712A7F /* cocos2dx.xcodeproj */,
 				15384E3C16119CC30021DC07 /* bindings */,
 				2628297C15EC7196002C4240 /* chipmunk */,
@@ -1047,6 +1059,10 @@
 				15900311166DAB3E006BF838 /* settings-caption-musicoff.png in Resources */,
 				15900312166DAB3E006BF838 /* settings-caption-tilt.png in Resources */,
 				15900313166DAB3E006BF838 /* settings-caption-touch.png in Resources */,
+				159004B2166DE190006BF838 /* Icon-57.png in Resources */,
+				159004B4166DE19C006BF838 /* Icon-114.png in Resources */,
+				159004B6166DE1A8006BF838 /* Icon-72.png in Resources */,
+				159004B8166DE1AF006BF838 /* Icon-144.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
