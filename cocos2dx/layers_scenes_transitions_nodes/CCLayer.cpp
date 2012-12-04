@@ -953,6 +953,10 @@ bool CCLayerMultiplex::initWithLayers(CCLayer *layer, va_list params)
 {
     if (CCLayer::init())
     {
+        m_pLayers = CCArray::createWithCapacity(5);
+        m_pLayers->retain();
+        m_pLayers->addObject(layer);
+
         CCLayer *l = va_arg(params,CCLayer*);
         while( l ) {
             m_pLayers->addObject(l);
@@ -969,14 +973,17 @@ bool CCLayerMultiplex::initWithLayers(CCLayer *layer, va_list params)
 
 bool CCLayerMultiplex::initWithArray(CCArray* arrayOfLayers)
 {
-    m_pLayers = CCArray::createWithCapacity(arrayOfLayers->count());
-    m_pLayers->addObjectsFromArray(arrayOfLayers);
-    m_pLayers->retain();
+    if (CCLayer::init())
+    {
+        m_pLayers = CCArray::createWithCapacity(arrayOfLayers->count());
+        m_pLayers->addObjectsFromArray(arrayOfLayers);
+        m_pLayers->retain();
 
-    m_nEnabledLayer = 0;
-    this->addChild((CCNode*)m_pLayers->objectAtIndex(m_nEnabledLayer));
-
-    return true;
+        m_nEnabledLayer = 0;
+        this->addChild((CCNode*)m_pLayers->objectAtIndex(m_nEnabledLayer));
+        return true;
+    }
+    return false;
 }
 
 void CCLayerMultiplex::switchTo(unsigned int n)
