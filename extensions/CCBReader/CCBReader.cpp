@@ -908,15 +908,7 @@ CCArray* CCBReader::getAnimationManagersForNodes() {
 
 float CCBReader::getResolutionScale()
 {
-    // Init resolution scale
-    if (CCApplication::sharedApplication()->getTargetPlatform() == kTargetIpad)
-    {
-        return 2;
-    }
-    else 
-    {
-        return 1;
-    }
+    return 1;
 }
 
 NS_CC_EXT_END;
