@@ -388,6 +388,11 @@ void CCTableView::scrollViewDidScroll(CCScrollView* view)
         return;
     }
 
+    if (m_pTableViewDelegate)
+    {
+        m_pTableViewDelegate->scrollViewDidScroll(this);        
+    }
+    
     unsigned int startIdx = 0, endIdx = 0, idx = 0, maxIdx = 0;
     CCPoint offset = ccpMult(this->getContentOffset(), -1);
     maxIdx = MAX(uCountOfItems-1, 0);

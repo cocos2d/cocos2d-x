@@ -403,12 +403,17 @@ void CCScrollView::deaccelerateScrolling(float dt)
     newY     = MIN(m_pContainer->getPosition().y, maxInset.y);
     newY     = MAX(newY, minInset.y);
     
+    newX = m_pContainer->getPosition().x;
+    newY = m_pContainer->getPosition().y;
+    
     m_tScrollDistance     = ccpSub(m_tScrollDistance, ccp(newX - m_pContainer->getPosition().x, newY - m_pContainer->getPosition().y));
     m_tScrollDistance     = ccpMult(m_tScrollDistance, SCROLL_DEACCEL_RATE);
     this->setContentOffset(ccp(newX,newY));
     
     if ((fabsf(m_tScrollDistance.x) <= SCROLL_DEACCEL_DIST &&
          fabsf(m_tScrollDistance.y) <= SCROLL_DEACCEL_DIST) ||
+        newY > maxInset.y || newY < minInset.y ||
+        newX > maxInset.x || newX < minInset.x ||
         newX == maxInset.x || newX == minInset.x ||
         newY == maxInset.y || newY == minInset.y)
     {
@@ -662,20 +667,14 @@ void CCScrollView::ccTouchMoved(CCTouch* touch, CCEvent* event)
                     default:
                         break;
                 }
-
-                m_pContainer->setPosition(ccpAdd(m_pContainer->getPosition(), moveDistance));
                 
                 maxInset = m_fMaxInset;
                 minInset = m_fMinInset;
-                
-                
-                //check to see if offset lies within the inset bounds
-                newX     = MIN(m_pContainer->getPosition().x, maxInset.x);
-                newX     = MAX(newX, minInset.x);
-                newY     = MIN(m_pContainer->getPosition().y, maxInset.y);
-                newY     = MAX(newY, minInset.y);
-                
-                m_tScrollDistance     = ccpSub(moveDistance, ccp(newX - m_pContainer->getPosition().x, newY - m_pContainer->getPosition().y));
+
+                newX     = m_pContainer->getPosition().x + moveDistance.x;
+                newY     = m_pContainer->getPosition().y + moveDistance.y;
+
+                m_tScrollDistance = moveDistance;
                 this->setContentOffset(ccp(newX, newY));
             }
         }
