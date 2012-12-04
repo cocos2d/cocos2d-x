@@ -181,7 +181,7 @@ void CCEGLView::setFrameSize(float width, float height)
 		case 16:
 		{
 			/* Updates video mode */
-			eResult = (glfwOpenWindow(width, height, 5, 6, 5, 0, 16, 0, (int)u32GLFWFlags) != false) ? true : false;
+			eResult = (glfwOpenWindow(width, height, 5, 6, 5, 0, 16, 8, (int)u32GLFWFlags) != false) ? true : false;
 
 			break;
 		}
@@ -190,7 +190,7 @@ void CCEGLView::setFrameSize(float width, float height)
 		case 24:
 		{
 			/* Updates video mode */
-			eResult = (glfwOpenWindow(width, height, 8, 8, 8, 0, 16, 0, (int)u32GLFWFlags) != false) ? true : false;
+			eResult = (glfwOpenWindow(width, height, 8, 8, 8, 0, 16, 8, (int)u32GLFWFlags) != false) ? true : false;
 
 			break;
 		}
@@ -200,7 +200,7 @@ void CCEGLView::setFrameSize(float width, float height)
 		case 32:
 		{
 			/* Updates video mode */
-			eResult = (glfwOpenWindow(width, height, 8, 8, 8, 8, 16, 0, (int)u32GLFWFlags) != GL_FALSE) ? true :false;
+			eResult = (glfwOpenWindow(width, height, 8, 8, 8, 8, 16, 8, (int)u32GLFWFlags) != GL_FALSE) ? true :false;
 			break;
 		}
 	}
@@ -320,6 +320,10 @@ bool CCEGLView::initGL()
     {
         CCLog("OpenGL 2.0 not supported\n");
     }
+
+    // Enable point size by default on linux.
+    glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
+
     return true;
 }
 
