@@ -61,13 +61,6 @@
 		F293BC2115EB838A00256477 /* lvm.c in Sources */ = {isa = PBXBuildFile; fileRef = F293BBE915EB838A00256477 /* lvm.c */; };
 		F293BC2215EB838A00256477 /* lzio.c in Sources */ = {isa = PBXBuildFile; fileRef = F293BBEB15EB838A00256477 /* lzio.c */; };
 		F293BC2315EB838A00256477 /* print.c in Sources */ = {isa = PBXBuildFile; fileRef = F293BBED15EB838A00256477 /* print.c */; };
-		F293BC2415EB838A00256477 /* Android.mk in Resources */ = {isa = PBXBuildFile; fileRef = F293BBF015EB838A00256477 /* Android.mk */; };
-		F293BC2515EB838A00256477 /* .cproject in Resources */ = {isa = PBXBuildFile; fileRef = F293BBF215EB838A00256477 /* .cproject */; };
-		F293BC2615EB838A00256477 /* .project in Resources */ = {isa = PBXBuildFile; fileRef = F293BBF315EB838A00256477 /* .project */; };
-		F293BC2715EB838A00256477 /* liblua.vcproj in Resources */ = {isa = PBXBuildFile; fileRef = F293BBF515EB838A00256477 /* liblua.vcproj */; };
-		F293BC2815EB838A00256477 /* liblua.vcxproj in Resources */ = {isa = PBXBuildFile; fileRef = F293BBF615EB838A00256477 /* liblua.vcxproj */; };
-		F293BC2915EB838A00256477 /* liblua.vcxproj.filters in Resources */ = {isa = PBXBuildFile; fileRef = F293BBF715EB838A00256477 /* liblua.vcxproj.filters */; };
-		F293BC2A15EB838A00256477 /* liblua.vcxproj.user in Resources */ = {isa = PBXBuildFile; fileRef = F293BBF815EB838A00256477 /* liblua.vcxproj.user */; };
 		F293BC2B15EB838A00256477 /* tolua_event.c in Sources */ = {isa = PBXBuildFile; fileRef = F293BBFB15EB838A00256477 /* tolua_event.c */; };
 		F293BC2C15EB838A00256477 /* tolua_is.c in Sources */ = {isa = PBXBuildFile; fileRef = F293BBFD15EB838A00256477 /* tolua_is.c */; };
 		F293BC2D15EB838A00256477 /* tolua_map.c in Sources */ = {isa = PBXBuildFile; fileRef = F293BBFE15EB838A00256477 /* tolua_map.c */; };
@@ -215,13 +208,6 @@
 		F293BBEB15EB838A00256477 /* lzio.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lzio.c; sourceTree = "<group>"; };
 		F293BBEC15EB838A00256477 /* lzio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lzio.h; sourceTree = "<group>"; };
 		F293BBED15EB838A00256477 /* print.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = print.c; sourceTree = "<group>"; };
-		F293BBF015EB838A00256477 /* Android.mk */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Android.mk; sourceTree = "<group>"; };
-		F293BBF215EB838A00256477 /* .cproject */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = .cproject; sourceTree = "<group>"; };
-		F293BBF315EB838A00256477 /* .project */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = .project; sourceTree = "<group>"; };
-		F293BBF515EB838A00256477 /* liblua.vcproj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = liblua.vcproj; sourceTree = "<group>"; };
-		F293BBF615EB838A00256477 /* liblua.vcxproj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = liblua.vcxproj; sourceTree = "<group>"; };
-		F293BBF715EB838A00256477 /* liblua.vcxproj.filters */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = liblua.vcxproj.filters; sourceTree = "<group>"; };
-		F293BBF815EB838A00256477 /* liblua.vcxproj.user */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = liblua.vcxproj.user; sourceTree = "<group>"; };
 		F293BBFA15EB838A00256477 /* tolua++.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "tolua++.h"; sourceTree = "<group>"; };
 		F293BBFB15EB838A00256477 /* tolua_event.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tolua_event.c; sourceTree = "<group>"; };
 		F293BBFC15EB838A00256477 /* tolua_event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tolua_event.h; sourceTree = "<group>"; };
@@ -364,9 +350,6 @@
 			children = (
 				F293BBAE15EB838A00256477 /* cocos2dx_support */,
 				F293BBB715EB838A00256477 /* lua */,
-				F293BBEE15EB838A00256477 /* proj.android */,
-				F293BBF115EB838A00256477 /* proj.blackberry */,
-				F293BBF415EB838A00256477 /* proj.win32 */,
 				F293BBF915EB838A00256477 /* tolua */,
 			);
 			name = lua;
@@ -447,42 +430,6 @@
 				F293BBED15EB838A00256477 /* print.c */,
 			);
 			path = lua;
-			sourceTree = "<group>";
-		};
-		F293BBEE15EB838A00256477 /* proj.android */ = {
-			isa = PBXGroup;
-			children = (
-				F293BBEF15EB838A00256477 /* jni */,
-			);
-			path = proj.android;
-			sourceTree = "<group>";
-		};
-		F293BBEF15EB838A00256477 /* jni */ = {
-			isa = PBXGroup;
-			children = (
-				F293BBF015EB838A00256477 /* Android.mk */,
-			);
-			path = jni;
-			sourceTree = "<group>";
-		};
-		F293BBF115EB838A00256477 /* proj.blackberry */ = {
-			isa = PBXGroup;
-			children = (
-				F293BBF215EB838A00256477 /* .cproject */,
-				F293BBF315EB838A00256477 /* .project */,
-			);
-			path = proj.blackberry;
-			sourceTree = "<group>";
-		};
-		F293BBF415EB838A00256477 /* proj.win32 */ = {
-			isa = PBXGroup;
-			children = (
-				F293BBF515EB838A00256477 /* liblua.vcproj */,
-				F293BBF615EB838A00256477 /* liblua.vcxproj */,
-				F293BBF715EB838A00256477 /* liblua.vcxproj.filters */,
-				F293BBF815EB838A00256477 /* liblua.vcxproj.user */,
-			);
-			path = proj.win32;
 			sourceTree = "<group>";
 		};
 		F293BBF915EB838A00256477 /* tolua */ = {
@@ -678,13 +625,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F293BC2415EB838A00256477 /* Android.mk in Resources */,
-				F293BC2515EB838A00256477 /* .cproject in Resources */,
-				F293BC2615EB838A00256477 /* .project in Resources */,
-				F293BC2715EB838A00256477 /* liblua.vcproj in Resources */,
-				F293BC2815EB838A00256477 /* liblua.vcxproj in Resources */,
-				F293BC2915EB838A00256477 /* liblua.vcxproj.filters in Resources */,
-				F293BC2A15EB838A00256477 /* liblua.vcxproj.user in Resources */,
 				F2A1553E15EB91DE00C9B0B6 /* Collision in Resources */,
 				F2A1553F15EB91DE00C9B0B6 /* Common in Resources */,
 				F2A1554015EB91DE00C9B0B6 /* Dynamics in Resources */,
