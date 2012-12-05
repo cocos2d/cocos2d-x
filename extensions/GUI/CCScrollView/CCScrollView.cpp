@@ -346,8 +346,8 @@ void CCScrollView::relocateContainer(bool animated)
     newY     = oldPoint.y;
     if (m_eDirection == kCCScrollViewDirectionBoth || m_eDirection == kCCScrollViewDirectionHorizontal)
     {
-        newX     = MIN(newX, max.x);
         newX     = MAX(newX, min.x);
+        newX     = MIN(newX, max.x);
     }
 
     if (m_eDirection == kCCScrollViewDirectionBoth || m_eDirection == kCCScrollViewDirectionVertical)
