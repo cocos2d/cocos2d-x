@@ -64,7 +64,8 @@ typedef enum LanguageType
     kLanguageGerman,
     kLanguageSpanish,
     kLanguageRussian,
-    kLanguageKorean
+    kLanguageKorean,
+    kLanguageJapanese
 } ccLanguageType;
 
 // end of platform group
