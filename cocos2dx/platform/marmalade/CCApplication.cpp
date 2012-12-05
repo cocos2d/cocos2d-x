@@ -177,6 +177,10 @@ ccLanguageType CCApplication::getCurrentLanguage()
 			currentLanguage = kLanguageKorean;
 			break;
 			
+		case S3E_DEVICE_LANGUAGE_JAPANESE:
+			currentLanguage = kLanguageJapanese;
+			break;
+
 		default:
 			currentLanguage = kLanguageEnglish;
 			break;
