@@ -12,6 +12,12 @@ Developers:
     Rolando Abarca
         Javascript Binding and testjs
 
+    chenium
+        fix a bug that CCRenderTexture can not work when coming to foreground on Android
+
+    9re(Taro Kobayashi)
+        add Japanese language support
+
     mingulov
         improve the speed of accessing to files from apk
 
