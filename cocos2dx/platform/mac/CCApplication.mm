@@ -116,6 +116,9 @@ ccLanguageType CCApplication::getCurrentLanguage()
     else if ([languageCode isEqualToString:@"ja"]){
         ret = kLanguageJapanese;
     }
+    else if ([languageCode isEqualToString:@"hu"]){
+        ret = kLanguageHungarian;
+    }
     
     return ret;
 }
