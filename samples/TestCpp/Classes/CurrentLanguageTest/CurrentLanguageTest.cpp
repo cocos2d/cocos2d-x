@@ -39,6 +39,9 @@ CurrentLanguageTest::CurrentLanguageTest()
     case kLanguageJapanese:
         labelLanguage->setString("current language is Japanese");
         break;
+	case kLanguageHungarian:
+        labelLanguage->setString("current language is Hungarian");
+        break;
     }
 
     addChild(labelLanguage);

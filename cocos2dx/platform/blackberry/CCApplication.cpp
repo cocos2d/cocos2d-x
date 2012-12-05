@@ -155,6 +155,10 @@ ccLanguageType CCApplication::getCurrentLanguage()
 	{
 		ret_language = kLanguageJapanese;
 	}
+	else if (strcmp(language, "hu") == 0)
+	{
+		ret_language = kLanguageHungarian;
+	}
 
 	free(language);
 	free(country);
