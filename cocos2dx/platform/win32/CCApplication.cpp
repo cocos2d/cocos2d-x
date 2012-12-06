@@ -139,6 +139,12 @@ ccLanguageType CCApplication::getCurrentLanguage()
         case LANG_KOREAN:
             ret = kLanguageKorean;
             break;
+        case LANG_JAPANESE:
+            ret = kLanguageJapanese;
+            break;
+        case LANG_HUNGARIAN:
+            ret = kLanguageHungarian;
+            break;
     }
 
     return ret;
