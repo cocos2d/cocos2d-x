@@ -12,9 +12,6 @@ Developers:
     Rolando Abarca
         Javascript Binding and testjs
 
-    fape
-        add Hungarian language support
-
     chenium
         fix a bug that CCRenderTexture can not work when coming to foreground on Android
 
@@ -159,9 +156,10 @@ Developers:
     johnangel
         OpenGL framebuffer access violation fix.
 
-	Peter Farkas (fape)
-		contributes Marmalade port for gles20 branch.
-	
+    Peter Farkas (fape)
+        contributes Marmalade port for gles20 branch
+        add Hungarian language support
+
 Retired Core Developers:
     WenSheng Yang
 	Author of windows port, CCTextField, 
