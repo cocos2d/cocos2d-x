@@ -1,4 +1,4 @@
-//#include <stdint.h>
+#include <stdint.h>
 
 #ifdef __APPLE__
    #include "TargetConditionals.h"

@@ -67,7 +67,7 @@ debug: CCFLAGS += -g3 -O0
 debug: CXXFLAGS += -g3 -O0
 debug: SHAREDLIBS += -L../../../lib/linux/Debug -lcocos2d -lrt -lz -lcocosdenshion
 debug: SHAREDLIBS += -Wl,-rpath,../../../../../lib/linux/Debug/
-debug: DEFINES += -DDEBUG
+debug: DEFINES += -DDEBUG -DCOCOS2D_DEBUG=1
 debug: $(TARGET)
 
 release: BIN_DIR = $(BIN_DIR_ROOT)/release

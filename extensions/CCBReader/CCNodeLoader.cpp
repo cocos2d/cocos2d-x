@@ -269,7 +269,7 @@ void CCNodeLoader::parseProperties(CCNode * pNode, CCNode * pParent, CCBReader *
             }
             case kCCBPropTypeFntFile: 
             {
-                std::string fntFile = this->parsePropTypeFntFile(pNode, pParent, pCCBReader);
+                std::string fntFile = pCCBReader->getCCBRootPath() + this->parsePropTypeFntFile(pNode, pParent, pCCBReader);
                 if(setProp) 
                 {
                     this->onHandlePropTypeFntFile(pNode, pParent, propertyName.c_str(), fntFile.c_str(), pCCBReader);
@@ -521,6 +521,7 @@ CCSpriteFrame * CCNodeLoader::parsePropTypeSpriteFrame(CCNode * pNode, CCNode * 
     {
         if (spriteSheet.length() == 0)
         {
+            spriteFile = pCCBReader->getCCBRootPath() + spriteFile;
             CCTexture2D * texture = CCTextureCache::sharedTextureCache()->addImage(spriteFile.c_str());
             CCRect bounds = CCRectMake(0, 0, texture->getContentSize().width, texture->getContentSize().height);
             spriteFrame = CCSpriteFrame::createWithTexture(texture, bounds);
@@ -528,7 +529,7 @@ CCSpriteFrame * CCNodeLoader::parsePropTypeSpriteFrame(CCNode * pNode, CCNode * 
         else 
         {
             CCSpriteFrameCache * frameCache = CCSpriteFrameCache::sharedSpriteFrameCache();
-            
+            spriteSheet = pCCBReader->getCCBRootPath() + spriteSheet;   
             // Load the sprite sheet only if it is not loaded
             if (pCCBReader->getLoadedSpriteSheet().find(spriteSheet) == pCCBReader->getLoadedSpriteSheet().end())
             {
@@ -549,7 +550,7 @@ CCSpriteFrame * CCNodeLoader::parsePropTypeSpriteFrame(CCNode * pNode, CCNode * 
 }
 
 CCAnimation * CCNodeLoader::parsePropTypeAnimation(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader) {
-    std::string animationFile = pCCBReader->readCachedString();
+    std::string animationFile = pCCBReader->getCCBRootPath() + pCCBReader->readCachedString();
     std::string animation = pCCBReader->readCachedString();
     
     CCAnimation * ccAnimation = NULL;
@@ -573,7 +574,7 @@ CCAnimation * CCNodeLoader::parsePropTypeAnimation(CCNode * pNode, CCNode * pPar
 }
 
 CCTexture2D * CCNodeLoader::parsePropTypeTexture(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader) {
-    std::string spriteFile = pCCBReader->readCachedString();
+    std::string spriteFile = pCCBReader->getCCBRootPath() + pCCBReader->readCachedString();
     
     if (spriteFile.length() > 0)
     {
@@ -813,7 +814,7 @@ BlockCCControlData * CCNodeLoader::parsePropTypeBlockCCControl(CCNode * pNode, C
 }
 
 CCNode * CCNodeLoader::parsePropTypeCCBFile(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader) {
-    std::string ccbFileName = pCCBReader->readCachedString();
+    std::string ccbFileName = pCCBReader->getCCBRootPath() + pCCBReader->readCachedString();
 
     /* Change path extension to .ccbi. */
     std::string ccbFileWithoutPathExtension = CCBReader::deletePathExtension(ccbFileName.c_str());
