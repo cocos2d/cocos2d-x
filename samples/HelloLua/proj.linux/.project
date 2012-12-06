@@ -3,6 +3,9 @@
 	<name>HelloLua</name>
 	<comment></comment>
 	<projects>
+		<project>libcocos2d</project>
+		<project>libCocosDenshion</project>
+		<project>liblua</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
@@ -37,4 +40,3 @@
 		</link>
 	</linkedResources>
 </projectDescription>
-

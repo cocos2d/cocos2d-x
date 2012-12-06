@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?fileVersion 4.0.0?><cproject storage_type_id="org.eclipse.cdt.core.XmlProjectDescriptionStorage">
+<?fileVersion 4.0.0?>
+
+<cproject storage_type_id="org.eclipse.cdt.core.XmlProjectDescriptionStorage">
 	<storageModule moduleId="org.eclipse.cdt.core.settings">
 		<cconfiguration id="cdt.managedbuild.config.gnu.exe.debug.1394655853">
 			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="cdt.managedbuild.config.gnu.exe.debug.1394655853" moduleId="org.eclipse.cdt.core.settings" name="Debug">
@@ -74,6 +76,7 @@
 								</option>
 								<option id="gnu.cpp.link.option.paths.460163571" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="&quot;../../../../cocos2dx/proj.linux/${ConfigName}&quot;"/>
+									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib"/>
 									<listOptionValue builtIn="false" value="&quot;../../../../CocosDenshion/proj.linux/${ConfigName}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;../../../../scripting/lua/proj.linux/${ConfigName}&quot;"/>
 									<listOptionValue builtIn="false" value="../../../../CocosDenshion/third_party/fmod/api/lib"/>
@@ -169,6 +172,7 @@
 								</option>
 								<option id="gnu.cpp.link.option.paths.1057267673" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="&quot;../../../../cocos2dx/proj.linux/${ConfigName}&quot;"/>
+									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib"/>
 									<listOptionValue builtIn="false" value="&quot;../../../../CocosDenshion/proj.linux/${ConfigName}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;../../../../scripting/lua/proj.linux/${ConfigName}&quot;"/>
 									<listOptionValue builtIn="false" value="../../../../CocosDenshion/third_party/fmod/api/lib"/>

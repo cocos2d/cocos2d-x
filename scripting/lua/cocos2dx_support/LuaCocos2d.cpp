@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.92 on Sun Dec  2 16:16:27 2012.
+** Generated automatically by tolua++-1.0.93 on Thu Dec  6 14:06:39 2012.
 */
 
 /****************************************************************************
@@ -27,6 +27,11 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+#ifdef __GNUC__
+#define __VA_COPY(to, from) va_copy((to), (from))
+#else
+#define __VA_COPY(to, from) ((to) = (from))
+#endif
 
 
 
@@ -41882,7 +41887,8 @@ static int tolua_Cocos2d_CCMenu_alignItemsInColumns00(lua_State* tolua_S)
  {
   CCMenu* self = (CCMenu*)  tolua_tousertype(tolua_S,1,0);
   unsigned int columns = ((unsigned int)  tolua_tonumber(tolua_S,2,0));
-  va_list args = *((va_list*)  tolua_tousertype(tolua_S,3,0));
+  va_list args;
+  __VA_COPY(args, *((va_list*)  tolua_tousertype(tolua_S,3,0)));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'alignItemsInColumns'", NULL);
 #endif
@@ -41917,7 +41923,8 @@ static int tolua_Cocos2d_CCMenu_alignItemsInRows00(lua_State* tolua_S)
  {
   CCMenu* self = (CCMenu*)  tolua_tousertype(tolua_S,1,0);
   unsigned int rows = ((unsigned int)  tolua_tonumber(tolua_S,2,0));
-  va_list args = *((va_list*)  tolua_tousertype(tolua_S,3,0));
+  va_list args;
+  __VA_COPY(args, *((va_list*)  tolua_tousertype(tolua_S,3,0)));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'alignItemsInRows'", NULL);
 #endif
@@ -55232,6 +55239,9 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
   tolua_constant(tolua_S,"kLanguageGerman",kLanguageGerman);
   tolua_constant(tolua_S,"kLanguageSpanish",kLanguageSpanish);
   tolua_constant(tolua_S,"kLanguageRussian",kLanguageRussian);
+  tolua_constant(tolua_S,"kLanguageKorean",kLanguageKorean);
+  tolua_constant(tolua_S,"kLanguageJapanese",kLanguageJapanese);
+  tolua_constant(tolua_S,"kLanguageHungarian",kLanguageHungarian);
   tolua_constant(tolua_S,"kTargetWindows",kTargetWindows);
   tolua_constant(tolua_S,"kTargetLinux",kTargetLinux);
   tolua_constant(tolua_S,"kTargetMacOS",kTargetMacOS);
