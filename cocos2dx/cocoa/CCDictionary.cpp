@@ -298,6 +298,29 @@ CCObject* CCDictionary::copyWithZone(CCZone* pZone)
     return pNewDict;
 }
 
+CCObject* CCDictionary::randomObject()
+{
+    if (m_eDictType == kCCDictUnknown)
+    {
+        return NULL;
+    }
+    
+    CCObject* key = allKeys()->randomObject();
+    
+    if (m_eDictType == kCCDictInt)
+    {
+        return objectForKey(((CCInteger*)key)->getValue());
+    }
+    else if (m_eDictType == kCCDictStr)
+    {
+        return objectForKey(((CCString*)key)->getCString());
+    }
+    else
+    {
+        return NULL;
+    }
+}
+
 CCDictionary* CCDictionary::dictionary()
 {
     return CCDictionary::create();
