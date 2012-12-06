@@ -59,26 +59,9 @@ enum
 //CCMenu
 //
 
-CCMenu* CCMenu::node()
-{
-    return CCMenu::create();
-}
-
 CCMenu* CCMenu::create()
 {
     return CCMenu::create(NULL, NULL);
-}
-
-CCMenu * CCMenu::menuWithItems(CCMenuItem* item, ...)
-{
-    va_list args;
-    va_start(args,item);
-    
-    CCMenu *pRet = CCMenu::createWithItems(item, args);
-    
-    va_end(args);
-    
-    return pRet;
 }
 
 CCMenu * CCMenu::create(CCMenuItem* item, ...)
@@ -89,13 +72,8 @@ CCMenu * CCMenu::create(CCMenuItem* item, ...)
     CCMenu *pRet = CCMenu::createWithItems(item, args);
     
     va_end(args);
-
+    
     return pRet;
-}
-
-CCMenu* CCMenu::menuWithArray(CCArray* pArrayOfItems)
-{
-    return CCMenu::createWithArray(pArrayOfItems);
 }
 
 CCMenu* CCMenu::createWithArray(CCArray* pArrayOfItems)
@@ -111,11 +89,6 @@ CCMenu* CCMenu::createWithArray(CCArray* pArrayOfItems)
     }
     
     return pRet;
-}
-
-CCMenu* CCMenu::menuWithItem(CCMenuItem* item)
-{
-    return CCMenu::createWithItem(item);
 }
 
 CCMenu* CCMenu::createWithItems(CCMenuItem* item, va_list args)

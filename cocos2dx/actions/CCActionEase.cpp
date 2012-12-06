@@ -42,10 +42,6 @@ NS_CC_BEGIN
 //
 // EaseAction
 //
-CCActionEase* CCActionEase::actionWithAction(CCActionInterval *pAction)
-{
-    return CCActionEase::create(pAction);
-}
 
 CCActionEase* CCActionEase::create(CCActionInterval *pAction)
 {
@@ -133,10 +129,6 @@ CCActionInterval* CCActionEase::reverse(void)
 //
 // EaseRateAction
 //
-CCEaseRateAction* CCEaseRateAction::actionWithAction(CCActionInterval *pAction, float fRate)
-{
-    return CCEaseRateAction::create(pAction, fRate);
-}
 
 CCEaseRateAction* CCEaseRateAction::create(CCActionInterval *pAction, float fRate)
 {
@@ -200,10 +192,6 @@ CCActionInterval* CCEaseRateAction::reverse(void)
 //
 // EeseIn
 //
-CCEaseIn* CCEaseIn::actionWithAction(CCActionInterval *pAction, float fRate)
-{
-    return CCEaseIn::create(pAction, fRate);
-}
 
 CCEaseIn* CCEaseIn::create(CCActionInterval *pAction, float fRate)
 {
@@ -257,11 +245,6 @@ CCActionInterval* CCEaseIn::reverse(void)
 //
 // EaseOut
 //
-CCEaseOut* CCEaseOut::actionWithAction(CCActionInterval *pAction, float fRate)
-{
-    return CCEaseOut::create(pAction, fRate);
-}
-
 CCEaseOut* CCEaseOut::create(CCActionInterval *pAction, float fRate)
 {
     CCEaseOut *pRet = new CCEaseOut();
@@ -314,11 +297,6 @@ CCActionInterval* CCEaseOut::reverse()
 //
 // EaseInOut
 //
-CCEaseInOut* CCEaseInOut::actionWithAction(CCActionInterval *pAction, float fRate)
-{
-    return CCEaseInOut::create(pAction, fRate);
-}
-
 CCEaseInOut* CCEaseInOut::create(CCActionInterval *pAction, float fRate)
 {
     CCEaseInOut *pRet = new CCEaseInOut();
@@ -380,11 +358,6 @@ CCActionInterval* CCEaseInOut::reverse(void)
 //
 // EaseExponentialIn
 //
-CCEaseExponentialIn* CCEaseExponentialIn::actionWithAction(CCActionInterval* pAction)
-{
-    return CCEaseExponentialIn::create(pAction);
-}
-
 CCEaseExponentialIn* CCEaseExponentialIn::create(CCActionInterval* pAction)
 {
     CCEaseExponentialIn *pRet = new CCEaseExponentialIn();
@@ -437,11 +410,6 @@ CCActionInterval* CCEaseExponentialIn::reverse(void)
 //
 // EaseExponentialOut
 //
-CCEaseExponentialOut* CCEaseExponentialOut::actionWithAction(CCActionInterval* pAction)
-{
-    return CCEaseExponentialOut::create(pAction);
-}
-
 CCEaseExponentialOut* CCEaseExponentialOut::create(CCActionInterval* pAction)
 {
     CCEaseExponentialOut *pRet = new CCEaseExponentialOut();
@@ -494,10 +462,6 @@ CCActionInterval* CCEaseExponentialOut::reverse(void)
 //
 // EaseExponentialInOut
 //
-CCEaseExponentialInOut* CCEaseExponentialInOut::actionWithAction(CCActionInterval *pAction)
-{
-    return CCEaseExponentialInOut::create(pAction);
-}
 
 CCEaseExponentialInOut* CCEaseExponentialInOut::create(CCActionInterval *pAction)
 {
@@ -561,10 +525,6 @@ CCActionInterval* CCEaseExponentialInOut::reverse()
 //
 // EaseSineIn
 //
-CCEaseSineIn* CCEaseSineIn::actionWithAction(CCActionInterval* pAction)
-{
-    return CCEaseSineIn::create(pAction);
-}
 
 CCEaseSineIn* CCEaseSineIn::create(CCActionInterval* pAction)
 {
@@ -618,10 +578,6 @@ CCActionInterval* CCEaseSineIn::reverse(void)
 //
 // EaseSineOut
 //
-CCEaseSineOut* CCEaseSineOut::actionWithAction(CCActionInterval* pAction)
-{
-    return CCEaseSineOut::create(pAction);
-}
 
 CCEaseSineOut* CCEaseSineOut::create(CCActionInterval* pAction)
 {
@@ -675,10 +631,6 @@ CCActionInterval* CCEaseSineOut::reverse(void)
 //
 // EaseSineInOut
 //
-CCEaseSineInOut* CCEaseSineInOut::actionWithAction(CCActionInterval* pAction)
-{
-    return CCEaseSineInOut::create(pAction);
-}
 
 CCEaseSineInOut* CCEaseSineInOut::create(CCActionInterval* pAction)
 {
@@ -732,11 +684,6 @@ CCActionInterval* CCEaseSineInOut::reverse()
 //
 // EaseElastic
 //
-
-CCEaseElastic* CCEaseElastic::actionWithAction(CCActionInterval *pAction, float fPeriod/* = 0.3f*/)
-{
-    return CCEaseElastic::create(pAction, fPeriod);
-}
 
 CCEaseElastic* CCEaseElastic::create(CCActionInterval *pAction)
 {
@@ -803,10 +750,6 @@ CCActionInterval* CCEaseElastic::reverse(void)
 //
 // EaseElasticIn
 //
-CCEaseElasticIn* CCEaseElasticIn::actionWithAction(CCActionInterval *pAction, float fPeriod/* = 0.3f*/)
-{
-    return CCEaseElasticIn::create(pAction, fPeriod);
-}
 
 CCEaseElasticIn* CCEaseElasticIn::create(CCActionInterval *pAction)
 {
@@ -878,11 +821,6 @@ CCActionInterval* CCEaseElasticIn::reverse(void)
 // EaseElasticOut
 //
 
-CCEaseElasticOut* CCEaseElasticOut::actionWithAction(CCActionInterval *pAction, float fPeriod/* = 0.3f*/)
-{
-    return CCEaseElasticOut::create(pAction, fPeriod);
-}
-
 CCEaseElasticOut* CCEaseElasticOut::create(CCActionInterval *pAction)
 {
     return CCEaseElasticOut::create(pAction, 0.3f);
@@ -951,11 +889,6 @@ CCActionInterval* CCEaseElasticOut::reverse(void)
 //
 // EaseElasticInOut
 //
-
-CCEaseElasticInOut* CCEaseElasticInOut::actionWithAction(CCActionInterval *pAction, float fPeriod/* = 0.3f*/)
-{
-    return CCEaseElasticInOut::create(pAction, fPeriod);
-}
 
 CCEaseElasticInOut* CCEaseElasticInOut::create(CCActionInterval *pAction)
 {
@@ -1041,10 +974,6 @@ CCActionInterval* CCEaseElasticInOut::reverse(void)
 //
 // EaseBounce
 //
-CCEaseBounce* CCEaseBounce::actionWithAction(CCActionInterval* pAction)
-{
-    return CCEaseBounce::create(pAction);
-}
 
 CCEaseBounce* CCEaseBounce::create(CCActionInterval* pAction)
 {
@@ -1114,10 +1043,6 @@ CCActionInterval* CCEaseBounce::reverse()
 //
 // EaseBounceIn
 //
-CCEaseBounceIn* CCEaseBounceIn::actionWithAction(CCActionInterval* pAction)
-{
-    return CCEaseBounceIn::create(pAction);
-}
 
 CCEaseBounceIn* CCEaseBounceIn::create(CCActionInterval* pAction)
 {
@@ -1172,10 +1097,6 @@ CCActionInterval* CCEaseBounceIn::reverse(void)
 //
 // EaseBounceOut
 //
-CCEaseBounceOut* CCEaseBounceOut::actionWithAction(CCActionInterval* pAction)
-{
-    return CCEaseBounceOut::create(pAction);
-}
 
 CCEaseBounceOut* CCEaseBounceOut::create(CCActionInterval* pAction)
 {
@@ -1230,10 +1151,6 @@ CCActionInterval* CCEaseBounceOut::reverse(void)
 //
 // EaseBounceInOut
 //
-CCEaseBounceInOut* CCEaseBounceInOut::actionWithAction(CCActionInterval* pAction)
-{
-    return CCEaseBounceInOut::create(pAction);
-}
 
 CCEaseBounceInOut* CCEaseBounceInOut::create(CCActionInterval* pAction)
 {
@@ -1298,10 +1215,6 @@ CCActionInterval* CCEaseBounceInOut::reverse()
 //
 // EaseBackIn
 //
-CCEaseBackIn* CCEaseBackIn::actionWithAction(CCActionInterval *pAction)
-{
-    return CCEaseBackIn::create(pAction);
-}
 
 CCEaseBackIn* CCEaseBackIn::create(CCActionInterval *pAction)
 {
@@ -1356,10 +1269,6 @@ CCActionInterval* CCEaseBackIn::reverse(void)
 //
 // EaseBackOut
 //
-CCEaseBackOut* CCEaseBackOut::actionWithAction(CCActionInterval* pAction)
-{
-    return CCEaseBackOut::create(pAction);
-}
 
 CCEaseBackOut* CCEaseBackOut::create(CCActionInterval* pAction)
 {
@@ -1416,10 +1325,6 @@ CCActionInterval* CCEaseBackOut::reverse(void)
 //
 // EaseBackInOut
 //
-CCEaseBackInOut* CCEaseBackInOut::actionWithAction(CCActionInterval* pAction)
-{
-    return CCEaseBackInOut::create(pAction);
-}
 
 CCEaseBackInOut* CCEaseBackInOut::create(CCActionInterval* pAction)
 {

@@ -67,11 +67,6 @@ bool CCPoint::equals(const CCPoint& target) const
     return ((x == target.x) && (y == target.y));
 }
 
-bool CCPoint::CCPointEqualToPoint(const CCPoint& point1, const CCPoint& point2)
-{
-    return point1.equals(point2);
-}
-
 // implementation of CCSize
 
 CCSize::CCSize(void)
@@ -111,12 +106,6 @@ CCObject* CCSize::copyWithZone(CCZone* pZone)
 bool CCSize::equals(const CCSize& target) const
 {
     return ((width == target.width) && (height == target.height));
-}
-
-
-bool CCSize::CCSizeEqualToSize(const CCSize& size1, const CCSize& size2)
-{
-    return size1.equals(size2);
 }
 
 // implementation of CCRect
@@ -216,27 +205,6 @@ bool CCRect::intersectsRect(const CCRect& rect) const
              rect.getMaxX() <      getMinX() ||
                   getMaxY() < rect.getMinY() ||
              rect.getMaxY() <      getMinY());
-}
-
-bool CCRect::CCRectEqualToRect(const CCRect& rect1, const CCRect& rect2)
-{
-    return rect1.equals(rect2);
-}
-
-bool CCRect::CCRectContainsPoint(const CCRect& rect, const CCPoint& point)
-{
-    return rect.containsPoint(point);
-}
-
-bool CCRect::CCRectIntersectsRect(const CCRect& rectA, const CCRect& rectB)
-{
-    /*
-    return !(CCRectGetMaxX(rectA) < CCRectGetMinX(rectB)||
-            CCRectGetMaxX(rectB) < CCRectGetMinX(rectA)||
-            CCRectGetMaxY(rectA) < CCRectGetMinY(rectB)||
-            CCRectGetMaxY(rectB) < CCRectGetMinY(rectA));
-     */
-    return rectA.intersectsRect(rectB);
 }
 
 NS_CC_END

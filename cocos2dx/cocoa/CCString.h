@@ -84,42 +84,6 @@ public:
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual bool isEqual(const CCObject* pObject);
 
-    /* static functions */
-    /** create a string with c string
-     *  @return A CCString pointer which is an autorelease object pointer,
-     *          it means that you needn't do a release operation unless you retain it.
-     @deprecated: This interface will be deprecated sooner or later.
-     */
-    CC_DEPRECATED_ATTRIBUTE static CCString* stringWithCString(const char* pStr);
-
-    /** create a string with std::string
-     *  @return A CCString pointer which is an autorelease object pointer,
-     *          it means that you needn't do a release operation unless you retain it.
-     */
-    CC_DEPRECATED_ATTRIBUTE static CCString* stringWithString(const std::string& str);
-
-    /** create a string with format, it's similar with the c function 'sprintf', the default buffer size is (1024*100) bytes,
-     *  if you want to change it, you should modify the kMaxStringLen macro in CCString.cpp file.
-     *  @return A CCString pointer which is an autorelease object pointer,
-     *          it means that you needn't do a release operation unless you retain it.
-     @deprecated: This interface will be deprecated sooner or later.
-     */ 
-    CC_DEPRECATED_ATTRIBUTE static CCString* stringWithFormat(const char* format, ...);
-
-    /** create a string with binary data 
-     *  @return A CCString pointer which is an autorelease object pointer,
-     *          it means that you needn't do a release operation unless you retain it.
-     @deprecated: This interface will be deprecated sooner or later.
-     */
-    CC_DEPRECATED_ATTRIBUTE static CCString* stringWithData(const unsigned char* pData, unsigned long nLen);
-
-    /** create a string with a file, 
-     *  @return A CCString pointer which is an autorelease object pointer,
-     *          it means that you needn't do a release operation unless you retain it.
-     @deprecated: This interface will be deprecated sooner or later.
-     */
-    CC_DEPRECATED_ATTRIBUTE static CCString* stringWithContentsOfFile(const char* pszFileName);
-
     /** create a string with std string, you can also pass a c string pointer because the default constructor of std::string can access a c string pointer. 
      *  @return A CCString pointer which is an autorelease object pointer,
      *          it means that you needn't do a release operation unless you retain it.

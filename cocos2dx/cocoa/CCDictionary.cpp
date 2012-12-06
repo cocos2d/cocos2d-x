@@ -298,11 +298,6 @@ CCObject* CCDictionary::copyWithZone(CCZone* pZone)
     return pNewDict;
 }
 
-CCDictionary* CCDictionary::dictionary()
-{
-    return CCDictionary::create();
-}
-
 CCDictionary* CCDictionary::create()
 {
     CCDictionary* pRet = new CCDictionary();
@@ -311,11 +306,6 @@ CCDictionary* CCDictionary::create()
         pRet->autorelease();
     }
     return pRet;
-}
-
-CCDictionary* CCDictionary::dictionaryWithDictionary(CCDictionary* srcDict)
-{
-    return CCDictionary::createWithDictionary(srcDict);
 }
 
 CCDictionary* CCDictionary::createWithDictionary(CCDictionary* srcDict)
@@ -327,19 +317,9 @@ CCDictionary* CCDictionary::createWithDictionary(CCDictionary* srcDict)
 
 extern CCDictionary* ccFileUtils_dictionaryWithContentsOfFileThreadSafe(const char *pFileName);
 
-CCDictionary* CCDictionary::dictionaryWithContentsOfFileThreadSafe(const char *pFileName)
-{
-    return CCDictionary::createWithContentsOfFileThreadSafe(pFileName);
-}
-
 CCDictionary* CCDictionary::createWithContentsOfFileThreadSafe(const char *pFileName)
 {
     return ccFileUtils_dictionaryWithContentsOfFileThreadSafe(pFileName);
-}
-
-CCDictionary* CCDictionary::dictionaryWithContentsOfFile(const char *pFileName)
-{
-    return CCDictionary::createWithContentsOfFile(pFileName);
 }
 
 CCDictionary* CCDictionary::createWithContentsOfFile(const char *pFileName)
