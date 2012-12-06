@@ -7,7 +7,10 @@ typedef enum LanguageType
     kLanguageItalian,
     kLanguageGerman,
     kLanguageSpanish,
-    kLanguageRussian
+    kLanguageRussian,
+    kLanguageKorean,
+    kLanguageJapanese,
+    kLanguageHungarian
 } ccLanguageType;
 
 enum TargetPlatform
@@ -23,6 +26,7 @@ enum TargetPlatform
 
 class CCApplication
 {
+    ~CCApplication();
     static CCApplication* sharedApplication();
     ccLanguageType getCurrentLanguage();
     TargetPlatform getTargetPlatform();

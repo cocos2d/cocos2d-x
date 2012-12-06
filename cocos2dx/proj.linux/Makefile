@@ -174,7 +174,7 @@ SHAREDLIBS += -L../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/
 
 debug: CCFLAGS += -g3 -O0
 debug: CXXFLAGS += -g3 -O0
-debug: DEFINES += -DDEBUG -DCC_ENABLE_CHIPMUNK_INTEGRATION
+debug: DEFINES += -DDEBUG -DCC_ENABLE_CHIPMUNK_INTEGRATION -DCOCOS2D_DEBUG=1
 debug: $(TARGET)
 
 release: CCFLAGS += -O3

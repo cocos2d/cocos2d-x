@@ -904,8 +904,8 @@ CCMenuItemToggle* CCMenuItemToggle::create(CCMenuItem *item)
 bool CCMenuItemToggle::initWithItem(CCMenuItem *item)
 {
     CCMenuItem::initWithTarget(NULL, NULL);
-    this->m_pSubItems = CCArray::create();
-    this->m_pSubItems->retain();
+    setSubItems(CCArray::create());
+
     if (item) {
         m_pSubItems->addObject(item);
     }

@@ -287,7 +287,7 @@ function AddConfigurations(proj, strProjectName) {
             }
 
             // Additional Library Directories
-            var strAddDepends = 'libcocos2d.lib libExtensions.lib opengl32.lib glew32.lib';
+            var strAddDepends = 'libcocos2d.lib opengl32.lib glew32.lib';
             if (wizard.FindSymbol('CC_USE_BOX2D')) {
                 strAddDepends += ' libBox2d.lib';
             }

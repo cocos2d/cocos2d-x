@@ -1,3 +1,36 @@
+cocos2d-2.1beta3-x-2.1.0 @Dec.5 2012
+ [all platforms]
+     Bug      #1556: set a default texture for CCParticleFire, CCParticleFireworks, etc
+     Feature  #1555: update to cocos2d-iphone v2.1 beta3
+     Feature  #1564: update tests to cocos2d-iphone v2.1beta3
+     Feature  #1572: add sample game WatermelonWithMe
+     Feature  #1573: add sample game CocosDragonJS
+     Refactor #1545: remove the usage of NODE_FUNC and CREATE_FUNC
+     Refactor #1565: remove VS2008 support
+     Refactor #1576: update CCBReader to latest version of CocosBuilder
+     Refactor #1589: add CCBReader::setCCBRootPath()
+ [iOS]
+     Bug      #1548: update libcurl header files to 7.26.0 on iOS 
+ [android]
+     Bug      #1551: add error handler when reading image data using libjpeg
+     Refactor #1558: improve the speed of accessing to files from apk
+ [marmalade]
+     Bug      #1559: fix a bug that if a file in resource directory doesn't exist, it will not search from root directory
+     Bug      #1571: add box2d rope to marmalade project
+     Bug      #1590: JPEG and File fixes for marmalade
+     Feature  #1557: Marmalade support
+     Refactor #1574: update marmalade languages
+     Refactor #1575: update samples/TestCpp to compatible with marmalade
+     Refactor #1578: create cocos2dx-ext marmalade project
+     Refactor #1591: add TestLua marmalade project 
+ [javascript binding]
+     Bug      #1577: fix a bug that touch events lost on Win32 when using JSBinding
+     Bug      #1586: fix a crash in WatermelonWithMe
+     Bug      #1588: rescheduleCallback support for JSBinding
+     Refactor #1570: improve the debugger for JSBinding
+ [lua binding]
+     Bug      #1587: remove lua script handler in CCCallFunc's destructor
+
 cocos2d-2.0-x-2.0.4 @Nov.2 2012
  [all platforms]
     Bug       #1473: fix a bug that CCScale9Sprite does not support rotated spriteframe in atlas 

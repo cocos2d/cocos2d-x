@@ -195,7 +195,7 @@ private:
     
     std::vector<std::string> mOwnerCallbackNames;
     CCArray* mOwnerCallbackNodes;
-    
+    std::string mCCBRootPath;
     bool init();
 public:
     CCBReader(CCNodeLoaderLibrary *pCCNodeLoaderLibrary, CCBMemberVariableAssigner *pCCBMemberVariableAssigner = NULL, CCBSelectorResolver *pCCBSelectorResolver = NULL, CCNodeLoaderListener *pCCNodeLoaderListener = NULL);
@@ -203,6 +203,9 @@ public:
     virtual ~CCBReader();
     CCBReader();
    
+    void setCCBRootPath(const char* pCCBRootPath);
+    const std::string& getCCBRootPath() const;
+
     CCNode* readNodeGraphFromFile(const char *pCCBFileName);
     CCNode* readNodeGraphFromFile(const char *pCCBFileName, CCObject *pOwner);
     CCNode* readNodeGraphFromFile(const char *pCCBFileName, CCObject *pOwner, const CCSize &parentSize);
