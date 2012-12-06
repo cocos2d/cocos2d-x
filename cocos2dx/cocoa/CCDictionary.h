@@ -140,6 +140,9 @@ public:
 
     virtual CCObject* copyWithZone(CCZone* pZone);
 
+    /** Returns a random element */
+    CCObject* randomObject();
+    
     /* static functions */
     //@deprecated: Please use create() instead. This interface will be deprecated sooner or later.
     CC_DEPRECATED_ATTRIBUTE static CCDictionary* dictionary();
