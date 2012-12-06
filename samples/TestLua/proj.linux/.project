@@ -3,6 +3,11 @@
 	<name>TestLua</name>
 	<comment></comment>
 	<projects>
+		<project>libBox2D</project>
+		<project>libChipmunk</project>
+		<project>libcocos2d</project>
+		<project>libCocosDenshion</project>
+		<project>liblua</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
@@ -37,4 +42,3 @@
 		</link>
 	</linkedResources>
 </projectDescription>
-
