@@ -100,8 +100,60 @@ CCApplication* CCApplication::sharedApplication()
 
 ccLanguageType CCApplication::getCurrentLanguage()
 {
-	//TODO
-	return kLanguageEnglish;
+	char *pLanguageName = getenv("LANG");
+	ccLanguageType ret = kLanguageEnglish;
+	if (!pLanguageName)
+	{
+		return kLanguageEnglish;
+	}
+	strtok(pLanguageName, "_");
+	if (!pLanguageName)
+	{
+		return kLanguageEnglish;
+	}
+	
+	if (0 == strcmp("zh", pLanguageName))
+	{
+		ret = kLanguageChinese;
+	}
+	else if (0 == strcmp("en", pLanguageName))
+	{
+		ret = kLanguageEnglish;
+	}
+	else if (0 == strcmp("fr", pLanguageName))
+	{
+		ret = kLanguageFrench;
+	}
+	else if (0 == strcmp("it", pLanguageName))
+	{
+		ret = kLanguageItalian;
+	}
+	else if (0 == strcmp("de", pLanguageName))
+	{
+		ret = kLanguageGerman;
+	}
+	else if (0 == strcmp("es", pLanguageName))
+	{
+		ret = kLanguageSpanish;
+	}
+	else if (0 == strcmp("ru", pLanguageName))
+	{
+		ret = kLanguageRussian;
+	}
+	else if (0 == strcmp("ko", pLanguageName))
+	{
+		ret = kLanguageKorean;
+	}
+	else if (0 == strcmp("ja", pLanguageName))
+	{
+		ret = kLanguageJapanese;
+	}
+	else if (0 == strcmp("hu", pLanguageName))
+	{
+		ret = kLanguageHungarian;
+	}
+	
+	return ret;
 }
 
 NS_CC_END
