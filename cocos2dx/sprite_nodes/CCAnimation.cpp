@@ -81,11 +81,6 @@ CCObject* CCAnimationFrame::copyWithZone(CCZone* pZone)
 
 // implementation of CCAnimation
 
-CCAnimation* CCAnimation::animation(void)
-{
-    return CCAnimation::create();
-}
-
 CCAnimation* CCAnimation::create(void)
 {
     CCAnimation *pAnimation = new CCAnimation();
@@ -95,11 +90,6 @@ CCAnimation* CCAnimation::create(void)
     return pAnimation;
 } 
 
-CCAnimation* CCAnimation::animationWithSpriteFrames(CCArray *frames, float delay/* = 0.0f*/)
-{
-    return CCAnimation::createWithSpriteFrames(frames, delay);
-}
-
 CCAnimation* CCAnimation::createWithSpriteFrames(CCArray *frames, float delay/* = 0.0f*/)
 {
     CCAnimation *pAnimation = new CCAnimation();
@@ -107,11 +97,6 @@ CCAnimation* CCAnimation::createWithSpriteFrames(CCArray *frames, float delay/* 
     pAnimation->autorelease();
 
     return pAnimation;
-}
-
-CCAnimation* CCAnimation::animationWithAnimationFrames(CCArray* arrayOfAnimationFrameNames, float delayPerUnit, unsigned int loops)
-{
-    return CCAnimation::create(arrayOfAnimationFrameNames, delayPerUnit, loops);
 }
 
 CCAnimation* CCAnimation::create(CCArray* arrayOfAnimationFrameNames, float delayPerUnit, unsigned int loops)
