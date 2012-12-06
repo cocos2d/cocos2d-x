@@ -54,6 +54,22 @@ public:
      * @param cell  cell that is touched
      */
     virtual void tableCellTouched(CCTableView* table, CCTableViewCell* cell) = 0;
+
+    /**
+     * Delegate to respond a table cell press event.
+     *
+     * @param table table contains the given cell
+     * @param cell  cell that is pressed
+     */
+    virtual void tableCellHighlight(CCTableView* table, CCTableViewCell* cell){};
+
+    /**
+     * Delegate to respond a table cell release event
+     *
+     * @param table table contains the given cell
+     * @param cell  cell that is pressed
+     */
+    virtual void tableCellUnhighlight(CCTableView* table, CCTableViewCell* cell){};
 };
 
 
@@ -176,10 +192,15 @@ public:
 
     virtual void scrollViewDidScroll(CCScrollView* view);
     virtual void scrollViewDidZoom(CCScrollView* view) {}
+    
+    virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
+    virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
     virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
+    virtual void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent);
 
 protected:
     
+    CCTableViewCell *m_pTouchedCell;
     /**
      * vertical direction of cell filling
      */
