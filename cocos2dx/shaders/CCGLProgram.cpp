@@ -458,11 +458,6 @@ void CCGLProgram::setUniformsForBuiltins()
 	}
 }
 
-void CCGLProgram::setUniformForModelViewProjectionMatrix()
-{
-    setUniformsForBuiltins();
-}
-
 void CCGLProgram::reset()
 {
     m_uVertShader = m_uFragShader = 0;

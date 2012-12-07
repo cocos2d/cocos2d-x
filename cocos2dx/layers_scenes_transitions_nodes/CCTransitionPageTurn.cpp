@@ -40,11 +40,6 @@ CCTransitionPageTurn::~CCTransitionPageTurn()
 {
 }
 
-CCTransitionPageTurn * CCTransitionPageTurn::transitionWithDuration(float t, CCScene *scene, bool backwards)
-{
-    return CCTransitionPageTurn::create(t,scene,backwards);
-}
-
 /** creates a base transition with duration and incoming scene */
 CCTransitionPageTurn * CCTransitionPageTurn::create(float t, CCScene *scene, bool backwards)
 {

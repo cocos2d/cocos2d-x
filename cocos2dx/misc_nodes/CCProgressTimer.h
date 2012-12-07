@@ -87,10 +87,6 @@ public:
     inline void setReverseDirection(bool value) { m_bReverseDirection = value; };
 
 public:
-    /** Creates a progress timer with the sprite as the shape the timer goes through 
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCProgressTimer* progressWithSprite(CCSprite* sp);
     /** Creates a progress timer with the sprite as the shape the timer goes through */
     static CCProgressTimer* create(CCSprite* sp);
 protected:

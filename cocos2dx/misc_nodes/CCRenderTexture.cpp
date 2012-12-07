@@ -203,11 +203,6 @@ void CCRenderTexture::setAutoDraw(bool bAutoDraw)
     m_bAutoDraw = bAutoDraw;
 }
 
-CCRenderTexture * CCRenderTexture::renderTextureWithWidthAndHeight(int w, int h, CCTexture2DPixelFormat eFormat)
-{
-    return CCRenderTexture::create(w, h, eFormat);
-}
-
 CCRenderTexture * CCRenderTexture::create(int w, int h, CCTexture2DPixelFormat eFormat)
 {
     CCRenderTexture *pRet = new CCRenderTexture();
@@ -221,11 +216,6 @@ CCRenderTexture * CCRenderTexture::create(int w, int h, CCTexture2DPixelFormat e
     return NULL;
 }
 
-CCRenderTexture * CCRenderTexture::renderTextureWithWidthAndHeight(int w ,int h, CCTexture2DPixelFormat eFormat, GLuint uDepthStencilFormat)
-{
-    return CCRenderTexture::create(w, h, eFormat, uDepthStencilFormat);
-}
-
 CCRenderTexture * CCRenderTexture::create(int w ,int h, CCTexture2DPixelFormat eFormat, GLuint uDepthStencilFormat)
 {
     CCRenderTexture *pRet = new CCRenderTexture();
@@ -237,11 +227,6 @@ CCRenderTexture * CCRenderTexture::create(int w ,int h, CCTexture2DPixelFormat e
     }
     CC_SAFE_DELETE(pRet);
     return NULL;
-}
-
-CCRenderTexture * CCRenderTexture::renderTextureWithWidthAndHeight(int w, int h)
-{
-    return CCRenderTexture::create(w, h);
 }
 
 CCRenderTexture * CCRenderTexture::create(int w, int h)
