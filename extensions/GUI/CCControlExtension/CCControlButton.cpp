@@ -143,11 +143,6 @@ bool CCControlButton::initWithLabelAndBackgroundSprite(CCNode* node, CCScale9Spr
     }
 }
 
-CCControlButton* CCControlButton::buttonWithLabelAndBackgroundSprite(CCNode* label, CCScale9Sprite* backgroundSprite)
-{
-    return CCControlButton::create(label, backgroundSprite);
-}
-
 CCControlButton* CCControlButton::create(CCNode* label, CCScale9Sprite* backgroundSprite)
 {
     CCControlButton *pRet = new CCControlButton();
@@ -162,11 +157,6 @@ bool CCControlButton::initWithTitleAndFontNameAndFontSize(string title, const ch
     return initWithLabelAndBackgroundSprite(label, CCScale9Sprite::create());
 }
 
-CCControlButton* CCControlButton::buttonWithTitleAndFontNameAndFontSize(string title, const char * fontName, float fontSize)
-{
-    return CCControlButton::create(title, fontName, fontSize);
-}
-
 CCControlButton* CCControlButton::create(string title, const char * fontName, float fontSize)
 {
     CCControlButton *pRet = new CCControlButton();
@@ -179,11 +169,6 @@ bool CCControlButton::initWithBackgroundSprite(CCScale9Sprite* sprite)
 {
     CCLabelTTF *label = CCLabelTTF::create("", "Arial", 30);//
     return initWithLabelAndBackgroundSprite(label, sprite);
-}
-
-CCControlButton* CCControlButton::buttonWithBackgroundSprite(CCScale9Sprite* sprite)
-{
-    return CCControlButton::create(sprite);
 }
 
 CCControlButton* CCControlButton::create(CCScale9Sprite* sprite)
@@ -745,11 +730,6 @@ CCControlButton* CCControlButton::create()
     }
     CC_SAFE_DELETE(pControlButton);
     return NULL;
-}
-
-CCControlButton* CCControlButton::node()
-{
-    return CCControlButton::create();
 }
 
 NS_CC_EXT_END

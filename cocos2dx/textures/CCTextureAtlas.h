@@ -82,12 +82,6 @@ public:
 
     /** creates a TextureAtlas with an filename and with an initial capacity for Quads.
     * The TextureAtlas capacity can be increased in runtime.
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCTextureAtlas * textureAtlasWithFile(const char* file , unsigned int capacity);
-
-    /** creates a TextureAtlas with an filename and with an initial capacity for Quads.
-    * The TextureAtlas capacity can be increased in runtime.
     */
     static CCTextureAtlas* create(const char* file , unsigned int capacity);
 
@@ -97,13 +91,6 @@ public:
     * WARNING: Do not reinitialize the TextureAtlas because it will leak memory (issue #706)
     */
     bool initWithFile(const char* file, unsigned int capacity);
-
-    /** creates a TextureAtlas with a previously initialized Texture2D object, and
-    * with an initial capacity for n Quads. 
-    * The TextureAtlas capacity can be increased in runtime.
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCTextureAtlas * textureAtlasWithTexture(CCTexture2D *texture, unsigned int capacity);
 
    /** creates a TextureAtlas with a previously initialized Texture2D object, and
     * with an initial capacity for n Quads. 

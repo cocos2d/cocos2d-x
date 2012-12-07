@@ -67,11 +67,6 @@ CCScrollView::~CCScrollView()
     m_pTouches->release();
 }
 
-CCScrollView* CCScrollView::viewWithViewSize(CCSize size, CCNode* container/* = NULL*/)
-{
-    return CCScrollView::create(size, container);
-}
-
 CCScrollView* CCScrollView::create(CCSize size, CCNode* container/* = NULL*/)
 {
     CCScrollView* pRet = new CCScrollView();
@@ -84,11 +79,6 @@ CCScrollView* CCScrollView::create(CCSize size, CCNode* container/* = NULL*/)
         CC_SAFE_DELETE(pRet);
     }
     return pRet;
-}
-
-CCScrollView* CCScrollView::node()
-{
-    return CCScrollView::create();
 }
 
 CCScrollView* CCScrollView::create()

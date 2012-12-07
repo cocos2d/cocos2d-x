@@ -634,11 +634,6 @@ bool CCTexturePVR::initWithContentsOfFile(const char* path)
     return true;
 }
 
-CCTexturePVR * CCTexturePVR::pvrTextureWithContentsOfFile(const char* path)
-{
-    return CCTexturePVR::create(path);
-}
-
 CCTexturePVR * CCTexturePVR::create(const char* path)
 {
     CCTexturePVR * pTexture = new CCTexturePVR();

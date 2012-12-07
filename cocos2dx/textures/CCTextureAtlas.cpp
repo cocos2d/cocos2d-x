@@ -103,10 +103,6 @@ void CCTextureAtlas::setQuads(ccV3F_C4B_T2F_Quad *var)
 }
 
 // TextureAtlas - alloc & init
-CCTextureAtlas * CCTextureAtlas::textureAtlasWithFile(const char* file, unsigned int capacity)
-{
-    return CCTextureAtlas::create(file, capacity);
-}
 
 CCTextureAtlas * CCTextureAtlas::create(const char* file, unsigned int capacity)
 {
@@ -118,11 +114,6 @@ CCTextureAtlas * CCTextureAtlas::create(const char* file, unsigned int capacity)
     }
     CC_SAFE_DELETE(pTextureAtlas);
     return NULL;
-}
-
-CCTextureAtlas * CCTextureAtlas::textureAtlasWithTexture(CCTexture2D *texture, unsigned int capacity)
-{
-    return CCTextureAtlas::createWithTexture(texture, capacity);
 }
 
 CCTextureAtlas * CCTextureAtlas::createWithTexture(CCTexture2D *texture, unsigned int capacity)

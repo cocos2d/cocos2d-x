@@ -72,34 +72,16 @@ CCLabelTTF * CCLabelTTF::create()
     return pRet;
 }
 
-CCLabelTTF * CCLabelTTF::labelWithString(const char *string, const char *fontName, float fontSize)
-{
-    return CCLabelTTF::create(string, fontName, fontSize);
-}
-
 CCLabelTTF * CCLabelTTF::create(const char *string, const char *fontName, float fontSize)
 {
     return CCLabelTTF::create(string, fontName, fontSize,
                               CCSizeZero, kCCTextAlignmentCenter, kCCVerticalTextAlignmentTop);
 }
 
-CCLabelTTF * CCLabelTTF::labelWithString(const char *string, const CCSize& dimensions, CCTextAlignment hAlignment, const char *fontName, float fontSize)
-{
-    return CCLabelTTF::create(string, fontName, fontSize,
-                              dimensions, hAlignment, kCCVerticalTextAlignmentTop);
-}
-
 CCLabelTTF * CCLabelTTF::create(const char *string, const char *fontName, float fontSize,
                                 const CCSize& dimensions, CCTextAlignment hAlignment)
 {
     return CCLabelTTF::create(string, fontName, fontSize, dimensions, hAlignment, kCCVerticalTextAlignmentTop);
-}
-
-CCLabelTTF* CCLabelTTF::labelWithString(const char *string, const cocos2d::CCSize &dimensions, 
-                                        CCTextAlignment hAlignment, CCVerticalTextAlignment vAlignment, 
-                                        const char *fontName, float fontSize)
-{
-    return CCLabelTTF::create(string, fontName, fontSize, dimensions, hAlignment, vAlignment);
 }
 
 CCLabelTTF* CCLabelTTF::create(const char *string, const char *fontName, float fontSize,
