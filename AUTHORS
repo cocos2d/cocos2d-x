@@ -160,6 +160,9 @@ Developers:
         contributes Marmalade port for gles20 branch
         add Hungarian language support
 
+    Tomoaki Shimizu (tks2shimizu)
+	Adding randomObject to CCDictionary.
+
 Retired Core Developers:
     WenSheng Yang
 	Author of windows port, CCTextField, 
