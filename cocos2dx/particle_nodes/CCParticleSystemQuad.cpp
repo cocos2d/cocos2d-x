@@ -103,10 +103,6 @@ CCParticleSystemQuad::~CCParticleSystemQuad()
 }
 
 // implementation CCParticleSystemQuad
-CCParticleSystemQuad * CCParticleSystemQuad::particleWithFile(const char *plistFile)
-{
-    return CCParticleSystemQuad::create(plistFile);
-}
 
 CCParticleSystemQuad * CCParticleSystemQuad::create(const char *plistFile)
 {
@@ -591,11 +587,6 @@ void CCParticleSystemQuad::setBatchNode(CCParticleBatchNode * batchNode)
 #endif
         }
     }
-}
-
-CCParticleSystemQuad * CCParticleSystemQuad::node()
-{
-    return CCParticleSystemQuad::create();
 }
 
 CCParticleSystemQuad * CCParticleSystemQuad::create() {

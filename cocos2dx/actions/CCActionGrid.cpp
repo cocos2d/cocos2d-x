@@ -30,11 +30,6 @@ THE SOFTWARE.
 NS_CC_BEGIN
 // implementation of CCGridAction
 
-CCGridAction* CCGridAction::actionWithSize(const ccGridSize& gridSize, float duration)
-{
-    return CCGridAction::create(gridSize, duration);
-}
-
 CCGridAction* CCGridAction::create(const ccGridSize& gridSize, float duration)
 {
     CCGridAction *pAction = new CCGridAction();
@@ -186,11 +181,6 @@ void CCTiledGrid3DAction::setTile(const ccGridSize& pos, const ccQuad3& coords)
 
 // implementation CCAccelDeccelAmplitude
 
-CCAccelDeccelAmplitude* CCAccelDeccelAmplitude::actionWithAction(CCAction *pAction, float duration)
-{
-    return CCAccelDeccelAmplitude::create(pAction, duration);
-}
-
 CCAccelDeccelAmplitude* CCAccelDeccelAmplitude::create(CCAction *pAction, float duration)
 {
     CCAccelDeccelAmplitude *pRet = new CCAccelDeccelAmplitude();
@@ -254,11 +244,6 @@ CCActionInterval* CCAccelDeccelAmplitude::reverse(void)
 
 // implementation of AccelAmplitude
 
-CCAccelAmplitude* CCAccelAmplitude::actionWithAction(CCAction *pAction, float duration)
-{
-    return CCAccelAmplitude::create(pAction, duration);
-}
-
 CCAccelAmplitude* CCAccelAmplitude::create(CCAction *pAction, float duration)
 {
     CCAccelAmplitude *pRet = new CCAccelAmplitude();
@@ -314,11 +299,6 @@ CCActionInterval* CCAccelAmplitude::reverse(void)
 }
 
 // DeccelAmplitude
-
-CCDeccelAmplitude* CCDeccelAmplitude::actionWithAction(CCAction *pAction, float duration)
-{
-    return CCDeccelAmplitude::create(pAction, duration);
-}
 
 CCDeccelAmplitude* CCDeccelAmplitude::create(CCAction *pAction, float duration)
 {
@@ -388,11 +368,6 @@ void CCStopGrid::startWithTarget(CCNode *pTarget)
     }
 }
 
-CCStopGrid* CCStopGrid::action(void)
-{
-    return CCStopGrid::create();
-}
-
 CCStopGrid* CCStopGrid::create(void)
 {
     CCStopGrid* pAction = new CCStopGrid();
@@ -401,11 +376,6 @@ CCStopGrid* CCStopGrid::create(void)
     return pAction;
 }
 // implementation of CCReuseGrid
-
-CCReuseGrid* CCReuseGrid::actionWithTimes(int times)
-{
-    return CCReuseGrid::create(times);
-}
 
 CCReuseGrid* CCReuseGrid::create(int times)
 {

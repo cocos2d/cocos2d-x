@@ -54,11 +54,6 @@ CCControlSlider::~CCControlSlider()
     CC_SAFE_RELEASE(m_backgroundSprite);
 }
 
-CCControlSlider* CCControlSlider::sliderWithFiles(const char* bgFile, const char* progressFile, const char* thumbFile)
-{
-    return CCControlSlider::create(bgFile, progressFile, thumbFile);
-}
-
 CCControlSlider* CCControlSlider::create(const char* bgFile, const char* progressFile, const char* thumbFile)
 {
     // Prepare background for slider
@@ -71,11 +66,6 @@ CCControlSlider* CCControlSlider::create(const char* bgFile, const char* progres
     CCSprite *thumbSprite           = CCSprite::create(thumbFile);
     
     return CCControlSlider::create(backgroundSprite, progressSprite, thumbSprite);
-}
-
-CCControlSlider* CCControlSlider::sliderWithSprites(CCSprite * backgroundSprite, CCSprite* pogressSprite, CCSprite* thumbSprite)
-{
-    return CCControlSlider::create(backgroundSprite, pogressSprite, thumbSprite);
 }
 
 CCControlSlider* CCControlSlider::create(CCSprite * backgroundSprite, CCSprite* pogressSprite, CCSprite* thumbSprite)

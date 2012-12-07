@@ -56,11 +56,6 @@ CCProgressTimer::CCProgressTimer()
 ,m_bReverseDirection(false)
 {}
 
-CCProgressTimer* CCProgressTimer::progressWithSprite(CCSprite* sp)
-{
-    return CCProgressTimer::create(sp);
-}
-
 CCProgressTimer* CCProgressTimer::create(CCSprite* sp)
 {
     CCProgressTimer *pProgressTimer = new CCProgressTimer();

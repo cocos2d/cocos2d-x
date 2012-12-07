@@ -125,18 +125,6 @@ public:
     inline void setBlendFunc(ccBlendFunc blendFunc) { m_sBlendFunc = blendFunc; }
 
 public:
-    /** Creates an sprite with a texture.
-     The rect used will be the size of the texture.
-     The offset will be (0,0).
-     @deprecated: Please use createWithTexture(CCTexture2D*) instead. This interface will be deprecated sooner or later.
-     */
-    CC_DEPRECATED_ATTRIBUTE static CCSprite* spriteWithTexture(CCTexture2D *pTexture);
-
-    /** Creates an sprite with a texture and a rect.
-     The offset will be (0,0).
-     @deprecated: Please use createWithTexture(CCTexture2D*, const CCRect&) instead, This interface will be deprecated sooner or later.
-     */
-    CC_DEPRECATED_ATTRIBUTE static CCSprite* spriteWithTexture(CCTexture2D *pTexture, const CCRect& rect);
 
     /** Creates an sprite with a texture.
      The rect used will be the size of the texture.
@@ -149,19 +137,6 @@ public:
      */
     static CCSprite* createWithTexture(CCTexture2D *pTexture, const CCRect& rect);
 
-    /** Creates an sprite with an sprite frame. 
-    @deprecated: Please use createWithSpriteFrame(CCSpriteFrame*) instead. This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCSprite* spriteWithSpriteFrame(CCSpriteFrame *pSpriteFrame);
-
-    /** Creates an sprite with an sprite frame name.
-     An CCSpriteFrame will be fetched from the CCSpriteFrameCache by name.
-     If the CCSpriteFrame doesn't exist it will raise an exception.
-     @deprecated: Please use createWithSpriteFrameName(const char*) instead. This interface will be deprecated sooner or later.
-     @since v0.9
-     */
-    CC_DEPRECATED_ATTRIBUTE static CCSprite* spriteWithSpriteFrameName(const char *pszSpriteFrameName);
-
     /** Creates an sprite with an sprite frame. */
     static CCSprite* createWithSpriteFrame(CCSpriteFrame *pSpriteFrame);
 
@@ -171,19 +146,6 @@ public:
      @since v0.9
      */
     static CCSprite* createWithSpriteFrameName(const char *pszSpriteFrameName);
-
-    /** Creates an sprite with an image filename.
-     The rect used will be the size of the image.
-     The offset will be (0,0).
-     @deprecated: Please use create(const char*) instead. This interface will be deprecated sooner or later.
-     */
-    CC_DEPRECATED_ATTRIBUTE static CCSprite* spriteWithFile(const char *pszFileName);
-
-    /** Creates an sprite with an image filename and a rect.
-     The offset will be (0,0).
-     @deprecated: Please use create(const char*, const CCRect&) instead. This interface will be deprecated sooner or later.
-     */
-    CC_DEPRECATED_ATTRIBUTE static CCSprite* spriteWithFile(const char *pszFileName, const CCRect& rect);
     
     /** Creates an sprite with an image filename.
      The rect used will be the size of the image.
@@ -196,10 +158,6 @@ public:
      */
     static CCSprite* create(const char *pszFileName, const CCRect& rect);
 
-    /** Creates an sprite.
-    @deprecated: Please use create() instead. This interface will be deprecated sooner or later.
-     */
-    CC_DEPRECATED_ATTRIBUTE static CCSprite* node();
     /** Creates an sprite.
      */
     static CCSprite* create();
