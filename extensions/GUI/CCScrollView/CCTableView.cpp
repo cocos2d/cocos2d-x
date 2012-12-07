@@ -33,17 +33,18 @@
 
 NS_CC_EXT_BEGIN
 
-CCTableView* CCTableView::create(CCTableViewDataSource* dataSource, CCSize size)
+CCTableView* CCTableView::create(CCTableViewDataSource* dataSource, CCTableViewDelegate* viewDelegate, CCSize size)
 {
-    return CCTableView::create(dataSource, size, NULL);
+    return CCTableView::create(dataSource, viewDelegate, size, NULL);
 }
 
-CCTableView* CCTableView::create(CCTableViewDataSource* dataSource, CCSize size, CCNode *container)
+CCTableView* CCTableView::create(CCTableViewDataSource* dataSource, CCTableViewDelegate* viewDelegate, CCSize size, CCNode *container)
 {
     CCTableView *table = new CCTableView();
     table->initWithViewSize(size, container);
     table->autorelease();
     table->setDataSource(dataSource);
+    table->setDelegate(viewDelegate);
     table->_updateContentSize();
 
     return table;
@@ -56,7 +57,6 @@ bool CCTableView::initWithViewSize(CCSize size, CCNode* container/* = NULL*/)
         m_pCellsUsed      = new CCArrayForObjectSorting();
         m_pCellsFreed     = new CCArrayForObjectSorting();
         m_pIndices        = new std::set<unsigned int>();
-        m_pTableViewDelegate = NULL;
         m_eVordering      = kCCTableViewFillBottomUp;
         this->setDirection(kCCScrollViewDirectionVertical);
         
@@ -106,6 +106,7 @@ void CCTableView::reloadData()
     CCARRAY_FOREACH(m_pCellsUsed, pObj)
     {
         CCTableViewCell* cell = (CCTableViewCell*)pObj;
+        m_pTableViewDelegate->tableCellWillRecycle(this, cell);
         m_pCellsFreed->addObject(cell);
         cell->reset();
         if (cell->getParent() == this->getContainer())
@@ -363,6 +364,7 @@ CCTableViewCell* CCTableView::_cellWithIndex(unsigned int cellIndex)
 
 void CCTableView::_moveCellOutOfSight(CCTableViewCell *cell)
 {
+    m_pTableViewDelegate->tableCellWillRecycle(this, cell);
     m_pCellsFreed->addObject(cell);
     m_pCellsUsed->removeSortedObject(cell);
     m_pIndices->erase(cell->getIdx());
@@ -387,11 +389,8 @@ void CCTableView::scrollViewDidScroll(CCScrollView* view)
     {
         return;
     }
-
-    if (m_pTableViewDelegate)
-    {
-        m_pTableViewDelegate->scrollViewDidScroll(this);        
-    }
+    
+    m_pTableViewDelegate->scrollViewDidScroll(this);
     
     unsigned int startIdx = 0, endIdx = 0, idx = 0, maxIdx = 0;
     CCPoint offset = ccpMult(this->getContentOffset(), -1);
