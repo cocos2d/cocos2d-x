@@ -23,17 +23,15 @@ bool TableViewTestLayer::init()
 
 	CCSize winSize = CCDirector::sharedDirector()->getWinSize();
 
-    CCTableView* tableView = CCTableView::create(this, CCSizeMake(250, 60));
+    CCTableView* tableView = CCTableView::create(this, this, CCSizeMake(250, 60));
     tableView->setDirection(kCCScrollViewDirectionHorizontal);
     tableView->setPosition(ccp(20,winSize.height/2-30));
-    tableView->setDelegate(this);
     this->addChild(tableView);
     tableView->reloadData();
 
-	tableView = CCTableView::create(this, CCSizeMake(60, 280));
+	tableView = CCTableView::create(this, this, CCSizeMake(60, 280));
 	tableView->setDirection(kCCScrollViewDirectionVertical);
 	tableView->setPosition(ccp(winSize.width-150,winSize.height/2-120));
-	tableView->setDelegate(this);
 	tableView->setVerticalFillOrder(kCCTableViewFillTopDown);
 	this->addChild(tableView);
 	tableView->reloadData();
