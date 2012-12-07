@@ -15,7 +15,6 @@ public:
 
 private:
     CCLabelTTF*            m_pLabel;
-    bool                m_bShow;
 };
 
 class KeypadTestScene : public TestScene

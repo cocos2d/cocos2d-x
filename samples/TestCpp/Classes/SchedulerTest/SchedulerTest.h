@@ -63,6 +63,7 @@ public:
     virtual ~SchedulerPauseResumeAll();
     virtual void onEnter();
     virtual void onExit();
+    virtual void update(float delta);
     virtual std::string title();
     virtual std::string subtitle();
 
@@ -191,6 +192,7 @@ public:
     ~TestNode();
 
     void initWithString(CCString* pStr, int priority);
+    virtual void update(float dt);
 private:
     CCString* m_pstring;
 };

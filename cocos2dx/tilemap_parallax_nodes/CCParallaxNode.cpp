@@ -65,11 +65,6 @@ CCParallaxNode::~CCParallaxNode()
     }
 }
 
-CCParallaxNode * CCParallaxNode::node()
-{
-    return CCParallaxNode::create();
-}
-
 CCParallaxNode * CCParallaxNode::create()
 {
     CCParallaxNode *pRet = new CCParallaxNode();
@@ -91,7 +86,7 @@ void CCParallaxNode::addChild(CCNode *child, unsigned int z, const CCPoint& rati
     obj->setChild(child);
     ccArrayAppendObjectWithResize(m_pParallaxArray, (CCObject*)obj);
 
-    CCPoint pos = m_tPosition;
+    CCPoint pos = m_obPosition;
     pos.x = pos.x * ratio.x + offset.x;
     pos.y = pos.y * ratio.y + offset.y;
     child->setPosition(pos);
@@ -118,7 +113,7 @@ void CCParallaxNode::removeAllChildrenWithCleanup(bool cleanup)
 }
 CCPoint CCParallaxNode::absolutePosition()
 {
-    CCPoint ret = m_tPosition;
+    CCPoint ret = m_obPosition;
     CCNode *cn = this;
     while (cn->getParent() != NULL)
     {

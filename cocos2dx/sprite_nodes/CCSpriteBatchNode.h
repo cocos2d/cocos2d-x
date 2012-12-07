@@ -83,19 +83,6 @@ public:
 
     /** creates a CCSpriteBatchNode with a texture2d and capacity of children.
     The capacity will be increased in 33% in runtime if it run out of space.
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCSpriteBatchNode* batchNodeWithTexture(CCTexture2D* tex, unsigned int capacity = kDefaultSpriteBatchCapacity);
-
-    /** creates a CCSpriteBatchNode with a file image (.png, .jpeg, .pvr, etc) and capacity of children.
-    The capacity will be increased in 33% in runtime if it run out of space.
-    The file will be loaded using the TextureMgr.
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCSpriteBatchNode* batchNodeWithFile(const char* fileImage, unsigned int capacity = kDefaultSpriteBatchCapacity);
-
-    /** creates a CCSpriteBatchNode with a texture2d and capacity of children.
-    The capacity will be increased in 33% in runtime if it run out of space.
     */
     static CCSpriteBatchNode* createWithTexture(CCTexture2D* tex, unsigned int capacity);
     static CCSpriteBatchNode* createWithTexture(CCTexture2D* tex) {
@@ -157,15 +144,16 @@ public:
     virtual void draw(void);
 
 protected:
-    /* IMPORTANT XXX IMPORTANT:
-    * These 2 methods can't be part of CCTMXLayer since they call [super add...], and CCSpriteSheet#add SHALL not be called
-    */
-
-    /* Adds a quad into the texture atlas but it won't be added into the children array.
-    This method should be called only when you are dealing with very big AtlasSprite and when most of the CCSprite won't be updated.
-    For example: a tile map (CCTMXMap) or a label with lots of characters (BitmapFontAtlas)
-    */
-    void addQuadFromSprite(CCSprite *sprite, unsigned int index);
+    /** Inserts a quad at a certain index into the texture atlas. The CCSprite won't be added into the children array.
+     This method should be called only when you are dealing with very big AtlasSrite and when most of the CCSprite won't be updated.
+     For example: a tile map (CCTMXMap) or a label with lots of characters (CCLabelBMFont)
+     */
+    void insertQuadFromSprite(CCSprite *sprite, unsigned int index);
+    /** Updates a quad at a certain index into the texture atlas. The CCSprite won't be added into the children array.
+     This method should be called only when you are dealing with very big AtlasSrite and when most of the CCSprite won't be updated.
+     For example: a tile map (CCTMXMap) or a label with lots of characters (CCLabelBMFont)
+     */
+    void updateQuadFromSprite(CCSprite *sprite, unsigned int index);
     /* This is the opposite of "addQuadFromSprite.
     It add the sprite to the children and descendants array, but it doesn't update add it to the texture atlas
     */

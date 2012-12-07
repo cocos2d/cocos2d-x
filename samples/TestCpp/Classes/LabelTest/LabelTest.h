@@ -291,6 +291,18 @@ public:
     virtual std::string subtitle();
 };
 
+class LabelBMFontBounds : public AtlasDemo
+{
+public:
+    LabelBMFontBounds();
+    
+    virtual void draw();
+    virtual std::string title();
+    virtual std::string subtitle();
+private:
+    CCLabelBMFont *label1;
+};
+
 // we don't support linebreak mode
 
 #endif

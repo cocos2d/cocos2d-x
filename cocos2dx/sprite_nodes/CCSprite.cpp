@@ -32,13 +32,12 @@ THE SOFTWARE.
 #include "CCSpriteFrame.h"
 #include "CCSpriteFrameCache.h"
 #include "textures/CCTextureCache.h"
-#include "CCDrawingPrimitives.h"
+#include "draw_nodes/CCDrawingPrimitives.h"
 #include "shaders/CCShaderCache.h"
 #include "shaders/ccGLStateCache.h"
 #include "shaders/CCGLProgram.h"
 #include "CCDirector.h"
 #include "support/CCPointExtension.h"
-#include "CCDrawingPrimitives.h"
 #include "cocoa/CCGeometry.h"
 #include "textures/CCTexture2D.h"
 #include "cocoa/CCAffineTransform.h"
@@ -55,14 +54,8 @@ NS_CC_BEGIN
 #if CC_SPRITEBATCHNODE_RENDER_SUBPIXEL
 #define RENDER_IN_SUBPIXEL
 #else
-#define RENDER_IN_SUBPIXEL(__A__) ( (int)(__A__))
+#define RENDER_IN_SUBPIXEL(__ARGS__) (ceil(__ARGS__))
 #endif
-
-
-CCSprite* CCSprite::spriteWithTexture(CCTexture2D *pTexture)
-{
-    return CCSprite::createWithTexture(pTexture);
-}
 
 CCSprite* CCSprite::createWithTexture(CCTexture2D *pTexture)
 {
@@ -74,11 +67,6 @@ CCSprite* CCSprite::createWithTexture(CCTexture2D *pTexture)
     }
     CC_SAFE_DELETE(pobSprite);
     return NULL;
-}
-
-CCSprite* CCSprite::spriteWithTexture(CCTexture2D *pTexture, const CCRect& rect)
-{
-    return CCSprite::createWithTexture(pTexture, rect);
 }
 
 CCSprite* CCSprite::createWithTexture(CCTexture2D *pTexture, const CCRect& rect)
@@ -93,11 +81,6 @@ CCSprite* CCSprite::createWithTexture(CCTexture2D *pTexture, const CCRect& rect)
     return NULL;
 }
 
-CCSprite* CCSprite::spriteWithFile(const char *pszFileName)
-{
-    return CCSprite::create(pszFileName);
-}
-
 CCSprite* CCSprite::create(const char *pszFileName)
 {
     CCSprite *pobSprite = new CCSprite();
@@ -108,11 +91,6 @@ CCSprite* CCSprite::create(const char *pszFileName)
     }
     CC_SAFE_DELETE(pobSprite);
     return NULL;
-}
-
-CCSprite* CCSprite::spriteWithFile(const char *pszFileName, const CCRect& rect)
-{
-    return CCSprite::create(pszFileName, rect);
 }
 
 CCSprite* CCSprite::create(const char *pszFileName, const CCRect& rect)
@@ -127,11 +105,6 @@ CCSprite* CCSprite::create(const char *pszFileName, const CCRect& rect)
     return NULL;
 }
 
-CCSprite* CCSprite::spriteWithSpriteFrame(CCSpriteFrame *pSpriteFrame)
-{
-    return CCSprite::createWithSpriteFrame(pSpriteFrame);
-}
-
 CCSprite* CCSprite::createWithSpriteFrame(CCSpriteFrame *pSpriteFrame)
 {
     CCSprite *pobSprite = new CCSprite();
@@ -142,11 +115,6 @@ CCSprite* CCSprite::createWithSpriteFrame(CCSpriteFrame *pSpriteFrame)
     }
     CC_SAFE_DELETE(pobSprite);
     return NULL;
-}
-
-CCSprite* CCSprite::spriteWithSpriteFrameName(const char *pszSpriteFrameName)
-{
-    return CCSprite::createWithSpriteFrameName(pszSpriteFrameName);
 }
 
 CCSprite* CCSprite::createWithSpriteFrameName(const char *pszSpriteFrameName)
@@ -160,11 +128,6 @@ CCSprite* CCSprite::createWithSpriteFrameName(const char *pszSpriteFrameName)
 #endif
     
     return createWithSpriteFrame(pFrame);
-}
-
-CCSprite* CCSprite::node()
-{
-    return CCSprite::create();
 }
 
 CCSprite* CCSprite::create()
@@ -318,7 +281,7 @@ CCSprite* CCSprite::initWithCGImage(CGImageRef pImage, const char *pszKey)
     // XXX: possible bug. See issue #349. New API should be added
     CCTexture2D *pTexture = CCTextureCache::sharedTextureCache()->addCGImage(pImage, pszKey);
 
-    const CCSize& size = pTexture->getContentSize();
+    CCSize size = pTexture->getContentSize();
     CCRect rect = CCRectMake(0 ,0, size.width, size.height);
 
     return initWithTexture(texture, rect);
@@ -362,8 +325,8 @@ void CCSprite::setTextureRect(const CCRect& rect, bool rotated, const CCSize& un
         relativeOffset.y = -relativeOffset.y;
     }
 
-    m_obOffsetPosition.x = relativeOffset.x + (m_tContentSize.width - m_obRect.size.width) / 2;
-    m_obOffsetPosition.y = relativeOffset.y + (m_tContentSize.height - m_obRect.size.height) / 2;
+    m_obOffsetPosition.x = relativeOffset.x + (m_obContentSize.width - m_obRect.size.width) / 2;
+    m_obOffsetPosition.y = relativeOffset.y + (m_obContentSize.height - m_obRect.size.height) / 2;
 
     // rendering using batch node
     if (m_pobBatchNode)
@@ -486,7 +449,7 @@ void CCSprite::updateTransform(void)
     if( isDirty() ) {
 
         // If it is not visible, or one of its ancestors is not visible, then do nothing:
-        if( !m_bIsVisible || ( m_pParent && m_pParent != m_pobBatchNode && ((CCSprite*)m_pParent)->m_bShouldBeHidden) )
+        if( !m_bVisible || ( m_pParent && m_pParent != m_pobBatchNode && ((CCSprite*)m_pParent)->m_bShouldBeHidden) )
         {
             m_sQuad.br.vertices = m_sQuad.tl.vertices = m_sQuad.tr.vertices = m_sQuad.bl.vertices = vertex3(0,0,0);
             m_bShouldBeHidden = true;
@@ -824,6 +787,18 @@ void CCSprite::setRotation(float fRotation)
     SET_DIRTY_RECURSIVELY();
 }
 
+void CCSprite::setRotationX(float fRotationX)
+{
+    CCNode::setRotationX(fRotationX);
+    SET_DIRTY_RECURSIVELY();
+}
+
+void CCSprite::setRotationY(float fRotationY)
+{
+    CCNode::setRotationY(fRotationY);
+    SET_DIRTY_RECURSIVELY();
+}
+
 void CCSprite::setSkewX(float sx)
 {
     CCNode::setSkewX(sx);
@@ -883,7 +858,7 @@ void CCSprite::setFlipX(bool bFlipX)
     if (m_bFlipX != bFlipX)
     {
         m_bFlipX = bFlipX;
-        setTextureRect(m_obRect, m_bRectRotated, m_tContentSize);
+        setTextureRect(m_obRect, m_bRectRotated, m_obContentSize);
     }
 }
 
@@ -897,7 +872,7 @@ void CCSprite::setFlipY(bool bFlipY)
     if (m_bFlipY != bFlipY)
     {
         m_bFlipY = bFlipY;
-        setTextureRect(m_obRect, m_bRectRotated, m_tContentSize);
+        setTextureRect(m_obRect, m_bRectRotated, m_obContentSize);
     }
 }
 
@@ -956,7 +931,7 @@ void CCSprite::setOpacity(GLubyte opacity)
     updateColor();
 }
 
-const ccColor3B& CCSprite::getColor(void)
+ccColor3B CCSprite::getColor(void)
 {
     if (m_bOpacityModifyRGB)
     {
@@ -1040,7 +1015,7 @@ CCSpriteFrame* CCSprite::displayFrame(void)
                                            CC_RECT_POINTS_TO_PIXELS(m_obRect),
                                            m_bRectRotated,
                                            CC_POINT_POINTS_TO_PIXELS(m_obUnflippedOffsetPositionFromCenter),
-                                           CC_SIZE_POINTS_TO_PIXELS(m_tContentSize));
+                                           CC_SIZE_POINTS_TO_PIXELS(m_obContentSize));
 }
 
 CCSpriteBatchNode* CCSprite::getBatchNode(void)

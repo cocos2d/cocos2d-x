@@ -354,7 +354,7 @@ TMXReadWriteTest::TMXReadWriteTest()
     ////----UXLOG("Tile GID at:(0,63) is: %d", m_gid);
 
     schedule(schedule_selector(TMXReadWriteTest::updateCol), 2.0f); 
-    schedule(schedule_selector(TMXReadWriteTest::repaintWithGID), 2.0f); 
+    schedule(schedule_selector(TMXReadWriteTest::repaintWithGID), 2.05f);
     schedule(schedule_selector(TMXReadWriteTest::removeTiles), 1.0f); 
 
     ////----UXLOG("++++atlas quantity: %d", layer->textureAtlas()->getTotalQuads());
@@ -1512,27 +1512,10 @@ void TileDemo::backCallback(CCObject* pSender)
     s->release();
 } 
 
-void TileDemo::registerWithTouchDispatcher()
+void TileDemo::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
 {
-    CCDirector* pDirector = CCDirector::sharedDirector();
-    pDirector->getTouchDispatcher()->addTargetedDelegate(this, 0, true);
-}
-
-bool TileDemo::ccTouchBegan(CCTouch* touch, CCEvent* event)
-{
-    return true;
-}
-
-void TileDemo::ccTouchEnded(CCTouch* touch, CCEvent* event)
-{
-}
-
-void TileDemo::ccTouchCancelled(CCTouch* touch, CCEvent* event)
-{
-}
-
-void TileDemo::ccTouchMoved(CCTouch* touch, CCEvent* event)
-{
+    CCTouch *touch = (CCTouch*)pTouches->anyObject();
+    
     CCPoint diff = touch->getDelta();
     CCNode *node = getChildByTag(kTagTileMap);
     CCPoint currentPos = node->getPosition();

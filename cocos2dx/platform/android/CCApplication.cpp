@@ -112,6 +112,14 @@ ccLanguageType CCApplication::getCurrentLanguage()
     {
         ret = kLanguageKorean;
     }
+    else if (0 == strcmp("ja", pLanguageName))
+    {
+        ret = kLanguageJapanese;
+    }
+    else if (0 == strcmp("hu", pLanguageName))
+    {
+        ret = kLanguageHungarian;
+    }
     
     return ret;
 }

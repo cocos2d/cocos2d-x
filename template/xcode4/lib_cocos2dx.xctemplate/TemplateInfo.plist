@@ -438,28 +438,6 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>libs/cocos2dx/CCDrawingPrimitives.cpp</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>cocos2dx</string>
-			</array>
-			<key>Path</key>
-			<string>libs/cocos2dx/CCDrawingPrimitives.cpp</string>
-		</dict>
-		<key>libs/cocos2dx/CCDrawingPrimitives.h</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>cocos2dx</string>
-			</array>
-			<key>Path</key>
-			<string>libs/cocos2dx/CCDrawingPrimitives.h</string>
-			<key>TargetIndices</key>
-			<array/>
-		</dict>
 		<key>libs/cocos2dx/CCScheduler.cpp</key>
 		<dict>
 			<key>Group</key>
@@ -744,6 +722,54 @@
 			</array>
 			<key>Path</key>
 			<string>libs/cocos2dx/cocos2d.cpp</string>
+		</dict>
+		<key>libs/cocos2dx/draw_nodes/CCDrawingPrimitives.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>draw_nodes</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/draw_nodes/CCDrawingPrimitives.cpp</string>
+		</dict>
+		<key>libs/cocos2dx/draw_nodes/CCDrawingPrimitives.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>draw_nodes</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/draw_nodes/CCDrawingPrimitives.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2dx/draw_nodes/CCDrawNode.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>draw_nodes</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/draw_nodes/CCDrawNode.cpp</string>
+		</dict>
+		<key>libs/cocos2dx/draw_nodes/CCDrawNode.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>draw_nodes</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/draw_nodes/CCDrawNode.h</string>
+			<key>TargetIndices</key>
+			<array/>
 		</dict>
 		<key>libs/cocos2dx/effects/CCGrabber.cpp</key>
 		<dict>
@@ -1568,6 +1594,30 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
+		<key>libs/cocos2dx/misc_nodes/CCClippingNode.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>misc_nodes</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/misc_nodes/CCClippingNode.cpp</string>
+		</dict>
+		<key>libs/cocos2dx/misc_nodes/CCClippingNode.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>misc_nodes</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/misc_nodes/CCClippingNode.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
 		<key>libs/cocos2dx/misc_nodes/CCMotionStreak.cpp</key>
 		<dict>
 			<key>Group</key>
@@ -1733,6 +1783,19 @@
 			</array>
 			<key>Path</key>
 			<string>libs/cocos2dx/particle_nodes/CCParticleSystemQuad.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2dx/particle_nodes/firePngData.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>particle_nodes</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/particle_nodes/firePngData.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
@@ -2410,22 +2473,6 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>libs/cocos2dx/platform/third_party/ios/curl/types.h</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>cocos2dx</string>
-				<string>platform</string>
-				<string>third_party</string>
-				<string>ios</string>
-				<string>curl</string>
-			</array>
-			<key>Path</key>
-			<string>libs/cocos2dx/platform/third_party/ios/curl/types.h</string>
-			<key>TargetIndices</key>
-			<array/>
-		</dict>
 		<key>libs/cocos2dx/platform/third_party/ios/libraries/libcurl.a</key>
 		<dict>
 			<key>Group</key>
@@ -2561,6 +2608,32 @@
 			</array>
 			<key>Path</key>
 			<string>libs/cocos2dx/shaders/ccShader_PositionColor_vert.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2dx/shaders/ccShader_PositionColorLengthTexture_frag.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>shaders</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/shaders/ccShader_PositionColorLengthTexture_frag.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2dx/shaders/ccShader_PositionColorLengthTexture_vert.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>shaders</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/shaders/ccShader_PositionColorLengthTexture_vert.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
@@ -3661,8 +3734,6 @@
 		<string>libs/cocos2dx/CCConfiguration.h</string>
 		<string>libs/cocos2dx/CCDirector.cpp</string>
 		<string>libs/cocos2dx/CCDirector.h</string>
-		<string>libs/cocos2dx/CCDrawingPrimitives.cpp</string>
-		<string>libs/cocos2dx/CCDrawingPrimitives.h</string>
 		<string>libs/cocos2dx/CCScheduler.cpp</string>
 		<string>libs/cocos2dx/CCScheduler.h</string>
 		<string>libs/cocos2dx/cocoa/CCAffineTransform.cpp</string>
@@ -3687,6 +3758,10 @@
 		<string>libs/cocos2dx/cocoa/CCZone.cpp</string>
 		<string>libs/cocos2dx/cocoa/CCZone.h</string>
 		<string>libs/cocos2dx/cocos2d.cpp</string>
+		<string>libs/cocos2dx/draw_nodes/CCDrawingPrimitives.cpp</string>
+		<string>libs/cocos2dx/draw_nodes/CCDrawingPrimitives.h</string>
+		<string>libs/cocos2dx/draw_nodes/CCDrawNode.cpp</string>
+		<string>libs/cocos2dx/draw_nodes/CCDrawNode.h</string>
 		<string>libs/cocos2dx/effects/CCGrabber.cpp</string>
 		<string>libs/cocos2dx/effects/CCGrabber.h</string>
 		<string>libs/cocos2dx/effects/CCGrid.cpp</string>
@@ -3751,6 +3826,8 @@
 		<string>libs/cocos2dx/menu_nodes/CCMenu.h</string>
 		<string>libs/cocos2dx/menu_nodes/CCMenuItem.cpp</string>
 		<string>libs/cocos2dx/menu_nodes/CCMenuItem.h</string>
+		<string>libs/cocos2dx/misc_nodes/CCClippingNode.cpp</string>
+		<string>libs/cocos2dx/misc_nodes/CCClippingNode.h</string>
 		<string>libs/cocos2dx/misc_nodes/CCMotionStreak.cpp</string>
 		<string>libs/cocos2dx/misc_nodes/CCMotionStreak.h</string>
 		<string>libs/cocos2dx/misc_nodes/CCProgressTimer.cpp</string>
@@ -3765,6 +3842,7 @@
 		<string>libs/cocos2dx/particle_nodes/CCParticleSystem.h</string>
 		<string>libs/cocos2dx/particle_nodes/CCParticleSystemQuad.cpp</string>
 		<string>libs/cocos2dx/particle_nodes/CCParticleSystemQuad.h</string>
+		<string>libs/cocos2dx/particle_nodes/firePngData.h</string>
 		<string>libs/cocos2dx/platform/CCAccelerometerDelegate.h</string>
 		<string>libs/cocos2dx/platform/CCApplicationProtocol.h</string>
 		<string>libs/cocos2dx/platform/CCCommon.h</string>
@@ -3815,7 +3893,6 @@
 		<string>libs/cocos2dx/platform/third_party/ios/curl/multi.h</string>
 		<string>libs/cocos2dx/platform/third_party/ios/curl/stdcheaders.h</string>
 		<string>libs/cocos2dx/platform/third_party/ios/curl/typecheck-gcc.h</string>
-		<string>libs/cocos2dx/platform/third_party/ios/curl/types.h</string>
 		<string>libs/cocos2dx/platform/third_party/ios/libraries/libcurl.a</string>
 		<string>libs/cocos2dx/script_support/CCScriptSupport.cpp</string>
 		<string>libs/cocos2dx/script_support/CCScriptSupport.h</string>
@@ -3827,6 +3904,8 @@
 		<string>libs/cocos2dx/shaders/ccShader_Position_uColor_vert.h</string>
 		<string>libs/cocos2dx/shaders/ccShader_PositionColor_frag.h</string>
 		<string>libs/cocos2dx/shaders/ccShader_PositionColor_vert.h</string>
+		<string>libs/cocos2dx/shaders/ccShader_PositionColorLengthTexture_frag.h</string>
+		<string>libs/cocos2dx/shaders/ccShader_PositionColorLengthTexture_vert.h</string>
 		<string>libs/cocos2dx/shaders/ccShader_PositionTexture_frag.h</string>
 		<string>libs/cocos2dx/shaders/ccShader_PositionTexture_uColor_frag.h</string>
 		<string>libs/cocos2dx/shaders/ccShader_PositionTexture_uColor_vert.h</string>

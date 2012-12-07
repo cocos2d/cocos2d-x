@@ -33,7 +33,7 @@ function main() {
     // Decode command line arguments
     var bDebug = false;
     var bQuiet = false;
-    var bElevated = false;
+    var bElevated = true;
     var Args = WScript.Arguments;
     for (var i = 0; i < Args.length; i++) {
         if (Args(i) == "/debug")

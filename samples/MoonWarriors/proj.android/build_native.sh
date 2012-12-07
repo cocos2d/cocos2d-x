@@ -48,6 +48,8 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 COCOS2DX_ROOT="$DIR/../../.."
 APP_ROOT="$DIR/.."
 APP_ANDROID_ROOT="$DIR"
+RESROUCE_ROOT="$APP_ROOT/../TestJavascript/cocos2d-js-tests/games/MoonWarriors/res"
+BINDINGS_JS_ROOT="$APP_ROOT/../../scripting/javascript/bindings/js"
 
 echo
 echo "Paths"
@@ -65,29 +67,16 @@ fi
 mkdir "$APP_ANDROID_ROOT"/assets
 
 
-# copy resources
-for file in "$APP_ROOT"/Resources/*
-do
-if [ -d "$file" ]; then
-	cp -rf "$file" "$APP_ANDROID_ROOT"/assets
-fi
+# copy "Resources" into "assets"
+cp -rf "$RESROUCE_ROOT" "$APP_ANDROID_ROOT"/assets
 
+# copy MoonWarriors js
+cp -rf "$RESROUCE_ROOT"/../src "$APP_ANDROID_ROOT"/assets
+# copy MoonWarriors-native.js
+cp "$RESROUCE_ROOT"/../*.js "$APP_ANDROID_ROOT"/assets
 
-if [ -f "$file" ]; then
-    cp "$file" "$APP_ANDROID_ROOT"/assets
-fi
-done
-
-
-rm -f "$APP_ANDROID_ROOT"/assets/Images/landscape-1024x1024-rgba8888.pvr.gz
-rm -f "$APP_ANDROID_ROOT"/assets/Images/test_image_rgba4444.pvr.gz
-rm -f "$APP_ANDROID_ROOT"/assets/Images/test_1021x1024_a8.pvr.gz
-rm -f "$APP_ANDROID_ROOT"/assets/Images/test_1021x1024_rgb888.pvr.gz
-rm -f "$APP_ANDROID_ROOT"/assets/Images/test_1021x1024_rgba4444.pvr.gz
-rm -f "$APP_ANDROID_ROOT"/assets/Images/test_1021x1024_rgba8888.pvr.gz
-rm -f "$APP_ANDROID_ROOT"/assets/Images/test_image_rgba4444.pvr.gz
-rm -f "$APP_ANDROID_ROOT"/assets/Images/texture1024x1024_rgba4444.pvr.gz
-rm -f "$APP_ANDROID_ROOT"/assets/Images/PlanetCute-1024x1024-rgba4444.pvr.gz
+# copy bindings/*.js into assets' root
+cp -f "$BINDINGS_JS_ROOT"/*.js "$APP_ANDROID_ROOT"/assets
 
 
 echo "Using prebuilt externals"

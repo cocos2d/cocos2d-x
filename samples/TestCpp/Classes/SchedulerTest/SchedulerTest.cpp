@@ -5,74 +5,81 @@ enum {
     kTagAnimationDance = 1,
 };
 
-#define MAX_TESTS           13
 static int sceneIdx = -1;
 
 CCLayer* nextSchedulerTest();
 CCLayer* backSchedulerTest();
 CCLayer* restartSchedulerTest();
 
-CCLayer* createSchedulerTest(int nIndex)
-{
-    CCLayer* pLayer = NULL;
+TESTLAYER_CREATE_FUNC(SchedulerTimeScale)
+TESTLAYER_CREATE_FUNC(TwoSchedulers)
+TESTLAYER_CREATE_FUNC(SchedulerAutoremove)
+TESTLAYER_CREATE_FUNC(SchedulerPauseResume)
+TESTLAYER_CREATE_FUNC(SchedulerPauseResumeAll)
+TESTLAYER_CREATE_FUNC(SchedulerPauseResumeAllUser)
+TESTLAYER_CREATE_FUNC(SchedulerUnscheduleAll)
+TESTLAYER_CREATE_FUNC(SchedulerUnscheduleAllHard)
+TESTLAYER_CREATE_FUNC(SchedulerUnscheduleAllUserLevel)
+TESTLAYER_CREATE_FUNC(SchedulerSchedulesAndRemove)
+TESTLAYER_CREATE_FUNC(SchedulerUpdate)
+TESTLAYER_CREATE_FUNC(SchedulerUpdateAndCustom)
+TESTLAYER_CREATE_FUNC(SchedulerUpdateFromCustom)
+TESTLAYER_CREATE_FUNC(RescheduleSelector)
+TESTLAYER_CREATE_FUNC(SchedulerDelayAndRepeat)
 
-    switch (nIndex)
-    {
-    case 0:
-        pLayer = new SchedulerDelayAndRepeat(); break;
-    case 1:
-        pLayer = new SchedulerTimeScale(); break;
-    case 2:
-        pLayer = new TwoSchedulers(); break;
-    case 3:
-        pLayer = new SchedulerAutoremove(); break;
-    case 4:
-        pLayer = new SchedulerPauseResume(); break;
-    case 5:
-        pLayer = new SchedulerPauseResumeAll(); break;
-    case 6:
-        pLayer = new SchedulerUnscheduleAll(); break;
-    case 7:
-        pLayer = new SchedulerUnscheduleAllHard(); break;
-    case 8:
-        pLayer = new SchedulerUnscheduleAllUserLevel(); break;
-    case 9:
-        pLayer = new SchedulerSchedulesAndRemove(); break;
-    case 10:
-        pLayer = new SchedulerUpdate(); break;
-    case 11:
-        pLayer = new SchedulerUpdateAndCustom(); break;
-    case 12:
-        pLayer = new SchedulerUpdateFromCustom(); break;
-    default:
-        break;
-    }
+static NEWTESTFUNC createFunctions[] = {
+    CF(SchedulerTimeScale),
+    CF(TwoSchedulers),
+    CF(SchedulerAutoremove),
+    CF(SchedulerPauseResume),
+    CF(SchedulerPauseResumeAll),
+    CF(SchedulerPauseResumeAllUser),
+    CF(SchedulerUnscheduleAll),
+    CF(SchedulerUnscheduleAllHard),
+    CF(SchedulerUnscheduleAllUserLevel),
+    CF(SchedulerSchedulesAndRemove),
+    CF(SchedulerUpdate),
+    CF(SchedulerUpdateAndCustom),
+    CF(SchedulerUpdateFromCustom),
+    CF(RescheduleSelector),
+    CF(SchedulerDelayAndRepeat)
+};
+
+#define MAX_LAYER (sizeof(createFunctions) / sizeof(createFunctions[0]))
+
+CCLayer* nextSchedulerTest()
+{
+    sceneIdx++;
+    sceneIdx = sceneIdx % MAX_LAYER;
+
+    CCLayer* pLayer = (createFunctions[sceneIdx])();
+    pLayer->init();
     pLayer->autorelease();
 
     return pLayer;
 }
 
-CCLayer* nextSchedulerTest()
-{
-
-    sceneIdx++;
-    sceneIdx = sceneIdx % MAX_TESTS;
-
-    return createSchedulerTest(sceneIdx);
-}
-
 CCLayer* backSchedulerTest()
 {
     sceneIdx--;
+    int total = MAX_LAYER;
     if( sceneIdx < 0 )
-        sceneIdx += MAX_TESTS;
+        sceneIdx += total;    
 
-    return createSchedulerTest(sceneIdx);
+    CCLayer* pLayer = (createFunctions[sceneIdx])();
+    pLayer->init();
+    pLayer->autorelease();
+
+    return pLayer;
 }
 
 CCLayer* restartSchedulerTest()
 {
-    return createSchedulerTest(sceneIdx);
+    CCLayer* pLayer = (createFunctions[sceneIdx])();
+    pLayer->init();
+    pLayer->autorelease();
+
+    return pLayer;
 }
 
 //------------------------------------------------------------------
@@ -255,10 +262,15 @@ void SchedulerPauseResumeAll::onEnter()
     this->addChild(sprite);
     sprite->runAction(CCRepeatForever::create(CCRotateBy::create(3.0, 360)));
 
+    scheduleUpdate();
     schedule(schedule_selector(SchedulerPauseResumeAll::tick1), 0.5f);
     schedule(schedule_selector(SchedulerPauseResumeAll::tick2), 1.0f);
     schedule(schedule_selector(SchedulerPauseResumeAll::pause), 3.0f, false, 0);
-    //TODO: [self performSelector:@selector(resume) withObject:nil afterDelay:5];
+}
+
+void SchedulerPauseResumeAll::update(float delta)
+{
+    // do nothing
 }
 
 void SchedulerPauseResumeAll::onExit()
@@ -285,6 +297,14 @@ void SchedulerPauseResumeAll::pause(float dt)
     CCDirector* pDirector = CCDirector::sharedDirector();
     m_pPausedTargets = pDirector->getScheduler()->pauseAllTargets();
     CC_SAFE_RETAIN(m_pPausedTargets);
+    
+    unsigned int c = m_pPausedTargets->count();
+    
+    if (c > 2)
+    {
+        // should have only 2 items: CCActionManager, self
+        CCLog("Error: pausedTargets should have only 2 items, and not %u", (unsigned int)c);
+    }
 }
 
 void SchedulerPauseResumeAll::resume(float dt)
@@ -491,7 +511,7 @@ void SchedulerUnscheduleAllHard::tick4(float dt)
 
 void SchedulerUnscheduleAllHard::unscheduleAll(float dt)
 {
-    CCDirector::sharedDirector()->getScheduler()->unscheduleAllSelectors();
+    CCDirector::sharedDirector()->getScheduler()->unscheduleAll();
     m_bActionManagerActive = false;
 }
 
@@ -550,7 +570,7 @@ void SchedulerUnscheduleAllUserLevel::tick4(float dt)
 
 void SchedulerUnscheduleAllUserLevel::unscheduleAll(float dt)
 {
-    CCDirector::sharedDirector()->getScheduler()->unscheduleAllSelectorsWithMinPriority(kCCPriorityNonSystemMin);
+    CCDirector::sharedDirector()->getScheduler()->unscheduleAllWithMinPriority(kCCPriorityNonSystemMin);
 }
 
 std::string SchedulerUnscheduleAllUserLevel::title()
@@ -632,6 +652,11 @@ void TestNode::initWithString(CCString* pStr, int priority)
 TestNode::~TestNode()
 {
     m_pstring->release();
+}
+
+void TestNode::update(float dt)
+{
+    CCLog(m_pstring->getCString());
 }
 
 //------------------------------------------------------------------
@@ -1066,8 +1091,8 @@ void TwoSchedulers::onEnter()
 TwoSchedulers::~TwoSchedulers()
 {
     CCScheduler *defaultScheduler = CCDirector::sharedDirector()->getScheduler();
-    defaultScheduler->unscheduleAllSelectorsForTarget(sched1);
-    defaultScheduler->unscheduleAllSelectorsForTarget(sched2);
+    defaultScheduler->unscheduleAllForTarget(sched1);
+    defaultScheduler->unscheduleAllForTarget(sched2);
 
     sliderCtl1->release();
     sliderCtl2->release();

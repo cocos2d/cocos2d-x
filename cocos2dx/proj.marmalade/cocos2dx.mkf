@@ -19,6 +19,7 @@ subprojects
 	libxml2
 	freetype
 	libjpeg
+	libtiff
 }
 includepaths
 {
@@ -30,6 +31,7 @@ includepaths
 	"../actions"
 	"../base_nodes"
 	"../cocoa"
+	"../draw_nodes"
 	"../effects"
 	"../kazmath/include"
 #	"../keyboard_dispatcher"
@@ -39,6 +41,7 @@ includepaths
 	"../menu_nodes"
 	"../misc_nodes"
 	"../particle_nodes"
+	"../physics_nodes"
 	"../shaders"
 	"../script_support"
 	"../sprite_nodes"
@@ -47,7 +50,6 @@ includepaths
 	"../textures"
     "../tileMap_parallax_nodes"
 	"../touch_dispatcher"
-	"../../extensions"
 }
 
 files
@@ -75,41 +77,17 @@ files
 	"*.h"
 	"*.cpp"
 	
+	("../draw_nodes")
+	[draw_nodes]
+	"*.h"
+	"*.cpp"
+
 	("../effects")
 	[effects]
 	"*.h"
 	"*.cpp"
 
-	[extensions]
-	("../../extensions")
-    "*.h"
-	("../../extensions/CCBReader")
-    CCBReader.h
-#    CCBCustomClass.h
-#    CCBCustomClass.cpp
-#    CCBReader_v1.cpp
-	("../../extensions/GUI/CCControlExtension")
-    "*.h"
-    "*.cpp"
-	("../../extensions/GUI/CCEditBox")
-#    "CCEditBox.h"
-#    "CCEditBox.cpp"
-	("../../extensions/GUI/CCScrollView")
-    "*.h"
-    "*.cpp"
-#	("../../extensions/CCListView")
-#    "*.h"
-#    "*.cpp"
-	("../support")
-    CCNotificationCenter.h
-    CCNotificationCenter.cpp
-#    "*.h"
-#    "*.cpp"
-#	("../../extensions/CCTextureWatcher")
-#    "*.h"
-#    "*.cpp"
-    	
-	("../include")
+    ("../include")
 	[include]
 	"*.h"
 
@@ -152,7 +130,7 @@ files
 	[particle_nodes]
 	"*.h"
 	"*.cpp"
-	
+
 	("../platform")
 	[platforms]
 	"*.h"

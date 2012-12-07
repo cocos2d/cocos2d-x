@@ -62,21 +62,9 @@ class CC_DLL CCRenderTexture : public CCNode
 public:
     CCRenderTexture();
     virtual ~CCRenderTexture();
-
-    /** initializes a RenderTexture object with width and height in Points and a pixel format( only RGB and RGBA formats are valid ) and depthStencil format
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCRenderTexture * renderTextureWithWidthAndHeight(int w ,int h, CCTexture2DPixelFormat eFormat, GLuint uDepthStencilFormat);
-
-    /** creates a RenderTexture object with width and height in Points and a pixel format, only RGB and RGBA formats are valid 
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCRenderTexture * renderTextureWithWidthAndHeight(int w, int h, CCTexture2DPixelFormat eFormat);
-
-    /** creates a RenderTexture object with width and height in Points, pixel format is RGBA8888 
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCRenderTexture * renderTextureWithWidthAndHeight(int w, int h);
+    
+    virtual void visit();
+    virtual void draw();
 
     /** initializes a RenderTexture object with width and height in Points and a pixel format( only RGB and RGBA formats are valid ) and depthStencil format*/
     static CCRenderTexture * create(int w ,int h, CCTexture2DPixelFormat eFormat, GLuint uDepthStencilFormat);
@@ -125,7 +113,7 @@ public:
     /* creates a new CCImage from with the texture's data.
        Caller is responsible for releasing it by calling delete.
      */
-    CCImage* newCCImage();
+    CCImage* newCCImage(bool flipImage = true);
 
     /** saves the texture into a file using JPEG format. The file will be saved in the Documents folder.
         Returns YES if the operation is successful.
@@ -141,6 +129,36 @@ public:
      It only has effect on Android.
      */
     void listenToBackground(CCObject *obj);
+    
+    /** Listen "come to foreground" message and restore the frame buffer object
+     It only has effect on Android.
+     */
+    void listenToForeground(CCObject *obj);
+    
+    /** Valid flags: GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT, GL_STENCIL_BUFFER_BIT. They can be OR'ed. Valid when "autoDraw is YES. */
+    unsigned int getClearFlags() const;
+    void setClearFlags(unsigned int uClearFlags);
+    
+    /** Clear color value. Valid only when "autoDraw" is true. */
+    const ccColor4F& getClearColor() const;
+    void setClearColor(const ccColor4F &clearColor);
+    
+    /** Value for clearDepth. Valid only when autoDraw is true. */
+    float getClearDepth() const;
+    void setClearDepth(float fClearDepth);
+    
+    /** Value for clear Stencil. Valid only when autoDraw is true */
+    int getClearStencil() const;
+    void setClearStencil(float fClearStencil);
+    
+    /** When enabled, it will render its children into the texture automatically. Disabled by default for compatiblity reasons.
+     Will be enabled in the future.
+     */
+    bool isAutoDraw() const;
+    void setAutoDraw(bool bAutoDraw);
+
+private:
+    void beginWithClear(float r, float g, float b, float a, float depthValue, int stencilValue, GLbitfield flags);
 
 protected:
     GLuint       m_uFBO;
@@ -150,6 +168,13 @@ protected:
     CCTexture2D* m_pTextureCopy;    // a copy of m_pTexture
     CCImage*     m_pUITextureImage;
     GLenum       m_ePixelFormat;
+    
+    // code for "auto" update
+    GLbitfield   m_uClearFlags;
+    ccColor4F    m_sClearColor;
+    GLclampf     m_fDlearDepth;
+    GLint        m_nClearStencil;
+    bool         m_bAutoDraw;
 };
 
 // end of textures group

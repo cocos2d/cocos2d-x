@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include "ccConfig.h"
 #include "CCSprite.h"
 #include "effects/CCGrid.h"
-#include "CCDrawingPrimitives.h"
+#include "draw_nodes/CCDrawingPrimitives.h"
 #include "textures/CCTextureCache.h"
 #include "support/CCPointExtension.h"
 #include "shaders/CCShaderCache.h"
@@ -46,11 +46,6 @@ NS_CC_BEGIN
 * creation with CCTexture2D
 */
 
-CCSpriteBatchNode* CCSpriteBatchNode::batchNodeWithTexture(CCTexture2D* tex, unsigned int capacity/* = kDefaultSpriteBatchCapacity*/)
-{
-    return CCSpriteBatchNode::createWithTexture(tex, capacity);
-}
-
 CCSpriteBatchNode* CCSpriteBatchNode::createWithTexture(CCTexture2D* tex, unsigned int capacity/* = kDefaultSpriteBatchCapacity*/)
 {
     CCSpriteBatchNode *batchNode = new CCSpriteBatchNode();
@@ -63,10 +58,6 @@ CCSpriteBatchNode* CCSpriteBatchNode::createWithTexture(CCTexture2D* tex, unsign
 /*
 * creation with File Image
 */
-CCSpriteBatchNode* CCSpriteBatchNode::batchNodeWithFile(const char *fileImage, unsigned int capacity/* = kDefaultSpriteBatchCapacity*/)
-{
-    return CCSpriteBatchNode::create(fileImage, capacity);
-}
 
 CCSpriteBatchNode* CCSpriteBatchNode::create(const char *fileImage, unsigned int capacity/* = kDefaultSpriteBatchCapacity*/)
 {
@@ -141,7 +132,7 @@ void CCSpriteBatchNode::visit(void)
     // The alternative is to have a void CCSprite#visit, but
     // although this is less maintainable, is faster
     //
-    if (! m_bIsVisible)
+    if (! m_bVisible)
     {
         return;
     }
@@ -701,11 +692,12 @@ void CCSpriteBatchNode::setTexture(CCTexture2D *texture)
 // CCSpriteSheet Extension
 //implementation CCSpriteSheet (TMXTiledMapExtension)
 
-void CCSpriteBatchNode::addQuadFromSprite(CCSprite *sprite, unsigned int index)
+void CCSpriteBatchNode::insertQuadFromSprite(CCSprite *sprite, unsigned int index)
 {
     CCAssert( sprite != NULL, "Argument must be non-NULL");
     CCAssert( dynamic_cast<CCSprite*>(sprite), "CCSpriteBatchNode only supports CCSprites as children");
 
+    // make needed room
     while(index >= m_pobTextureAtlas->getCapacity() || m_pobTextureAtlas->getCapacity() == m_pobTextureAtlas->getTotalQuads())
     {
         this->increaseAtlasCapacity();
@@ -719,10 +711,33 @@ void CCSpriteBatchNode::addQuadFromSprite(CCSprite *sprite, unsigned int index)
     ccV3F_C4B_T2F_Quad quad = sprite->getQuad();
     m_pobTextureAtlas->insertQuad(&quad, index);
 
-    // XXX: updateTransform will update the textureAtlas too using updateQuad.
+    // XXX: updateTransform will update the textureAtlas too, using updateQuad.
     // XXX: so, it should be AFTER the insertQuad
     sprite->setDirty(true);
     sprite->updateTransform();
+}
+
+void CCSpriteBatchNode::updateQuadFromSprite(CCSprite *sprite, unsigned int index)
+{
+    CCAssert(sprite != NULL, "Argument must be non-nil");
+    CCAssert(dynamic_cast<CCSprite*>(sprite) != NULL, "CCSpriteBatchNode only supports CCSprites as children");
+    
+	// make needed room
+	while (index >= m_pobTextureAtlas->getCapacity() || m_pobTextureAtlas->getCapacity() == m_pobTextureAtlas->getTotalQuads())
+    {
+		this->increaseAtlasCapacity();
+    }
+    
+	//
+	// update the quad directly. Don't add the sprite to the scene graph
+	//
+	sprite->setBatchNode(this);
+    sprite->setAtlasIndex(index);
+    
+	sprite->setDirty(true);
+	
+	// UpdateTransform updates the textureAtlas quad
+	sprite->updateTransform();
 }
 
 CCSpriteBatchNode * CCSpriteBatchNode::addSpriteWithoutQuad(CCSprite*child, unsigned int z, int aTag)

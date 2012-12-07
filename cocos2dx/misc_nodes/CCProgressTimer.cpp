@@ -32,7 +32,7 @@ THE SOFTWARE.
 #include "shaders/ccGLStateCache.h"
 #include "CCDirector.h"
 #include "support/TransformUtils.h"
-#include "CCDrawingPrimitives.h"
+#include "draw_nodes/CCDrawingPrimitives.h"
 // extern
 #include "kazmath/GL/matrix.h"
 
@@ -55,11 +55,6 @@ CCProgressTimer::CCProgressTimer()
 ,m_tBarChangeRate(0,0)
 ,m_bReverseDirection(false)
 {}
-
-CCProgressTimer* CCProgressTimer::progressWithSprite(CCSprite* sp)
-{
-    return CCProgressTimer::create(sp);
-}
 
 CCProgressTimer* CCProgressTimer::create(CCSprite* sp)
 {
@@ -160,7 +155,7 @@ void CCProgressTimer::setColor(const ccColor3B& color)
     updateColor();
 }
 
-const ccColor3B& CCProgressTimer::getColor(void)
+ccColor3B CCProgressTimer::getColor(void)
 {
     return m_pSprite->getColor();
 }

@@ -84,12 +84,6 @@ public:
     CCAtlasNode();
     virtual ~CCAtlasNode();
 
-    /** creates a CCAtlasNode  with an Atlas file the width and height of each item and the quantity of items to render
-	@deprecated: This interface will be deprecated sooner or later.
-	*/
-    CC_DEPRECATED_ATTRIBUTE static CCAtlasNode * atlasWithTileFile(const char* tile,unsigned int tileWidth, unsigned int tileHeight, 
-         unsigned int itemsToRender);
-
 	/** creates a CCAtlasNode  with an Atlas file the width and height of each item and the quantity of items to render*/
 	static CCAtlasNode * create(const char* tile,unsigned int tileWidth, unsigned int tileHeight, 
 		unsigned int itemsToRender);

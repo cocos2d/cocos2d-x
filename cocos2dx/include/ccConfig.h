@@ -34,6 +34,29 @@ THE SOFTWARE.
  cocos2d (cc) configuration file
 */
 
+/** @def CC_ENABLE_CHIPMUNK_INTEGRATION
+ If enabled, it will include CCPhysicsScript and CCPhysicsDebugNode with Chipmunk Physics support.
+ If you enable it, make sure that Chipmunk is in the search path.
+ Disabled by default
+ 
+ @since v2.1
+ */
+#ifndef CC_ENABLE_CHIPMUNK_INTEGRATION
+#define CC_ENABLE_CHIPMUNK_INTEGRATION 0
+#endif
+
+/** @def CC_ENABLE_BOX2D_INTEGRATION
+ If enabled, it will include CCPhysicsScript with Box2D Physics support.
+ If you enable it, make sure that Box2D is in the search path.
+ 
+ Disabled by default
+ 
+ @since v2.1
+ */
+#ifndef CC_ENABLE_BOX2D_INTEGRATION
+#define CC_ENABLE_BOX2D_INTEGRATION 0
+#endif
+
 /** @def CC_ENABLE_GL_STATE_CACHE
  If enabled, cocos2d will maintain an OpenGL state cache internally to avoid unnecessary switches.
  In order to use them, you have to use the following functions, instead of the the GL ones:
@@ -84,7 +107,7 @@ To enabled set it to 1. Disabled by default.
  Default value: 0.1f
  */
 #ifndef CC_DIRECTOR_STATS_INTERVAL
-#define CC_DIRECTOR_STATS_INTERVAL (0.1f)
+#define CC_DIRECTOR_STATS_INTERVAL (0.5f)
 #endif
 
 /** @def CC_DIRECTOR_FPS_POSITION

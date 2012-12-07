@@ -26,7 +26,7 @@ THE SOFTWARE.
 #include "CCLabelAtlas.h"
 #include "textures/CCTextureAtlas.h"
 #include "support/CCPointExtension.h"
-#include "CCDrawingPrimitives.h"
+#include "draw_nodes/CCDrawingPrimitives.h"
 #include "ccConfig.h"
 #include "shaders/CCShaderCache.h"
 #include "shaders/CCGLProgram.h"
@@ -41,10 +41,6 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 //CCLabelAtlas - Creation & Init
-CCLabelAtlas* CCLabelAtlas::labelWithString(const char *string, const char *charMapFile, unsigned int itemWidth, int unsigned itemHeight, unsigned int startCharMap)
-{
-    return CCLabelAtlas::create(string, charMapFile, itemWidth, itemHeight, startCharMap);
-}
 
 CCLabelAtlas* CCLabelAtlas::create(const char *string, const char *charMapFile, unsigned int itemWidth, int unsigned itemHeight, unsigned int startCharMap)
 {
@@ -68,11 +64,6 @@ bool CCLabelAtlas::initWithString(const char *string, const char *charMapFile, u
         return true;
     }
     return false;
-}
-
-CCLabelAtlas* CCLabelAtlas::labelWithString(const char *string, const char *fntFile)
-{
-    return CCLabelAtlas::create(string, fntFile);
 }
 
 CCLabelAtlas* CCLabelAtlas::create(const char *string, const char *fntFile)
@@ -207,7 +198,7 @@ void CCLabelAtlas::draw()
 {
     CCAtlasNode::draw();
 
-    const CCSize& s = this->getContentSize();
+    CCSize s = this->getContentSize();
     CCPoint vertices[4]={
         ccp(0,0),ccp(s.width,0),
         ccp(s.width,s.height),ccp(0,s.height),

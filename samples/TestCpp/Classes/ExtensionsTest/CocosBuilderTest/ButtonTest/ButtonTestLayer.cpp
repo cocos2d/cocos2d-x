@@ -12,17 +12,17 @@ ButtonTestLayer::~ButtonTestLayer()
     CC_SAFE_RELEASE(mCCControlEventLabel);
 }
 
-SEL_MenuHandler ButtonTestLayer::onResolveCCBCCMenuItemSelector(CCObject * pTarget, CCString * pSelectorName) {
+SEL_MenuHandler ButtonTestLayer::onResolveCCBCCMenuItemSelector(CCObject * pTarget, const char * pSelectorName) {
     return NULL;    
 }
 
-SEL_CCControlHandler ButtonTestLayer::onResolveCCBCCControlSelector(CCObject * pTarget, CCString * pSelectorName) {
+SEL_CCControlHandler ButtonTestLayer::onResolveCCBCCControlSelector(CCObject * pTarget, const char * pSelectorName) {
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onCCControlButtonClicked", ButtonTestLayer::onCCControlButtonClicked);
 
     return NULL;
 }
 
-bool ButtonTestLayer::onAssignCCBMemberVariable(CCObject * pTarget, CCString * pMemberVariableName, CCNode * pNode) {
+bool ButtonTestLayer::onAssignCCBMemberVariable(CCObject * pTarget, const char * pMemberVariableName, CCNode * pNode) {
     CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "mCCControlEventLabel", CCLabelBMFont *, this->mCCControlEventLabel);
 
     return false;

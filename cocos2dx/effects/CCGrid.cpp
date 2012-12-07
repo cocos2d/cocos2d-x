@@ -39,11 +39,6 @@ THE SOFTWARE.
 NS_CC_BEGIN
 // implementation of CCGridBase
 
-CCGridBase* CCGridBase::gridWithSize(const ccGridSize& gridSize)
-{
-    return CCGridBase::create(gridSize);
-}
-
 CCGridBase* CCGridBase::create(const ccGridSize& gridSize)
 {
     CCGridBase *pGridBase = new CCGridBase();
@@ -61,11 +56,6 @@ CCGridBase* CCGridBase::create(const ccGridSize& gridSize)
     }
 
     return pGridBase;
-}
-
-CCGridBase* CCGridBase::gridWithSize(const ccGridSize& gridSize, CCTexture2D *texture, bool flipped)
-{
-    return CCGridBase::create(gridSize, texture, flipped);
 }
 
 CCGridBase* CCGridBase::create(const ccGridSize& gridSize, CCTexture2D *texture, bool flipped)
@@ -99,7 +89,7 @@ bool CCGridBase::initWithSize(const ccGridSize& gridSize, CCTexture2D *pTexture,
     CC_SAFE_RETAIN(m_pTexture);
     m_bIsTextureFlipped = bFlipped;
 
-    const CCSize& texSize = m_pTexture->getContentSize();
+    CCSize texSize = m_pTexture->getContentSize();
     m_obStep.x = texSize.width / m_sGridSize.x;
     m_obStep.y = texSize.height / m_sGridSize.y;
 
@@ -229,7 +219,7 @@ void CCGridBase::afterDraw(cocos2d::CCNode *pTarget)
 
     if (pTarget->getCamera()->isDirty())
     {
-        const CCPoint& offset = pTarget->getAnchorPointInPoints();
+        CCPoint offset = pTarget->getAnchorPointInPoints();
 
         //
         // XXX: Camera should be applied in the AnchorPoint
@@ -263,10 +253,6 @@ void CCGridBase::calculateVertexPoints(void)
 }
 
 // implementation of CCGrid3D
-CCGrid3D* CCGrid3D::gridWithSize(const ccGridSize& gridSize, CCTexture2D *pTexture, bool bFlipped)
-{
-    return CCGrid3D::create(gridSize, pTexture, bFlipped);
-}
 
 CCGrid3D* CCGrid3D::create(const ccGridSize& gridSize, CCTexture2D *pTexture, bool bFlipped)
 {
@@ -286,11 +272,6 @@ CCGrid3D* CCGrid3D::create(const ccGridSize& gridSize, CCTexture2D *pTexture, bo
     }
 
     return pRet;
-}
-
-CCGrid3D* CCGrid3D::gridWithSize(const ccGridSize& gridSize)
-{
-    return CCGrid3D::create(gridSize);
 }
 
 CCGrid3D* CCGrid3D::create(const ccGridSize& gridSize)
@@ -337,7 +318,7 @@ void CCGrid3D::blit(void)
 
     ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_TexCoords );
     m_pShaderProgram->use();
-    m_pShaderProgram->setUniformForModelViewProjectionMatrix();;
+    m_pShaderProgram->setUniformsForBuiltins();;
 
     //
     // Attributes
@@ -486,11 +467,6 @@ CCTiledGrid3D::~CCTiledGrid3D(void)
     CC_SAFE_FREE(m_pIndices);
 }
 
-CCTiledGrid3D* CCTiledGrid3D::gridWithSize(const ccGridSize& gridSize, CCTexture2D *pTexture, bool bFlipped)
-{
-    return CCTiledGrid3D::create(gridSize, pTexture, bFlipped);
-}
-
 CCTiledGrid3D* CCTiledGrid3D::create(const ccGridSize& gridSize, CCTexture2D *pTexture, bool bFlipped)
 {
     CCTiledGrid3D *pRet= new CCTiledGrid3D();
@@ -509,11 +485,6 @@ CCTiledGrid3D* CCTiledGrid3D::create(const ccGridSize& gridSize, CCTexture2D *pT
     }
 
     return pRet;
-}
-
-CCTiledGrid3D* CCTiledGrid3D::gridWithSize(const ccGridSize& gridSize)
-{
-    return CCTiledGrid3D::create(gridSize);
 }
 
 CCTiledGrid3D* CCTiledGrid3D::create(const ccGridSize& gridSize)
@@ -542,7 +513,7 @@ void CCTiledGrid3D::blit(void)
 
     
     m_pShaderProgram->use();
-    m_pShaderProgram->setUniformForModelViewProjectionMatrix();
+    m_pShaderProgram->setUniformsForBuiltins();
 
     //
     // Attributes

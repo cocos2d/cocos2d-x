@@ -25,6 +25,7 @@ INCLUDES =  -I../ \
 			-I../../../external/ \
 			-I../../../external/chipmunk/include/chipmunk \
 
+
 LBITS := $(shell getconf LONG_BIT)
 ifeq ($(LBITS),64)
 INCLUDES += -I$(COCOS2DX_PATH)/platform/third_party/linux/include64
@@ -60,8 +61,9 @@ OBJECTS = ../Classes/AccelerometerTest/AccelerometerTest.o \
 			../Classes/BugsTest/Bug-899.o \
 			../Classes/BugsTest/Bug-914.o \
 			../Classes/BugsTest/BugsTest.o \
-			../Classes/ChipmunkAccelTouchTest/ChipmunkAccelTouchTest.o \
+			../Classes/ChipmunkTest/ChipmunkTest.o \
 			../Classes/ClickAndMoveTest/ClickAndMoveTest.o \
+                        ../Classes/ClippingNodeTest/ClippingNodeTest.o \
 			../Classes/CocosDenshionTest/CocosDenshionTest.o \
 			../Classes/CurlTest/CurlTest.o \
 			../Classes/CurrentLanguageTest/CurrentLanguageTest.o \
@@ -126,6 +128,9 @@ OBJECTS = ../Classes/AccelerometerTest/AccelerometerTest.o \
 			../Classes/VisibleRect.o \
 			./main.o 
 
+include $(COCOS2DX_PATH)/../extensions/proj.linux/Makefile
+OBJECTS += $(addprefix ../../../extensions/proj.linux/, $(EXTENSIONS_OBJECTS))
+
 ifeq ($(LBITS),64)
 STATICLIBS_DIR = ../../../cocos2dx/platform/third_party/linux/libraries/lib64
 else
@@ -167,14 +172,14 @@ BIN_DIR = BIN_DIR_ROOT
 debug: SHAREDLIBS += -L../../../lib/linux/Debug -lcocos2d -lrt -lz -lcocosdenshion -Wl,-rpath,../../../../../lib/linux/Debug
 debug: CCFLAGS += -g3 -O0
 debug: CXXFLAGS += -g3 -O0
-debug: DEFINES += -DDEBUG
+debug: DEFINES += -DDEBUG -DCC_ENABLE_CHIPMUNK_INTEGRATION -DCOCOS2D_DEBUG=1
 debug: BIN_DIR = $(BIN_DIR_ROOT)/debug
 debug: $(TARGET)
 
 release: SHAREDLIBS += -L../../../lib/linux/Release -lcocos2d -lrt -lz -lcocosdenshion -Wl,-rpath,../../../../../lib/linux/Release
 release: CCFLAGS += -O3
 release: CXXFLAGS += -O3
-release: DEFINES += -DNDEBUG
+release: DEFINES += -DNDEBUG -DCC_ENABLE_CHIPMUNK_INTEGRATION
 release: BIN_DIR = $(BIN_DIR_ROOT)/release
 release: $(TARGET)
 

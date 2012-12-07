@@ -46,8 +46,6 @@
 		1551A649158F2ADE00E66CFE /* CCConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A378158F2ADE00E66CFE /* CCConfiguration.h */; };
 		1551A64A158F2ADE00E66CFE /* CCDirector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1551A379158F2ADE00E66CFE /* CCDirector.cpp */; };
 		1551A64B158F2ADE00E66CFE /* CCDirector.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A37A158F2ADE00E66CFE /* CCDirector.h */; };
-		1551A64C158F2ADE00E66CFE /* CCDrawingPrimitives.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1551A37B158F2ADE00E66CFE /* CCDrawingPrimitives.cpp */; };
-		1551A64D158F2ADE00E66CFE /* CCDrawingPrimitives.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A37C158F2ADE00E66CFE /* CCDrawingPrimitives.h */; };
 		1551A64E158F2ADE00E66CFE /* CCScheduler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1551A37D158F2ADE00E66CFE /* CCScheduler.cpp */; };
 		1551A64F158F2ADE00E66CFE /* CCScheduler.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A37E158F2ADE00E66CFE /* CCScheduler.h */; };
 		1551A650158F2ADE00E66CFE /* CCAffineTransform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1551A380158F2ADE00E66CFE /* CCAffineTransform.cpp */; };
@@ -282,6 +280,12 @@
 		1551A871158F2ADF00E66CFE /* CCTouchHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1551A626158F2ADE00E66CFE /* CCTouchHandler.cpp */; };
 		1551A872158F2ADF00E66CFE /* CCTouchHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A627158F2ADE00E66CFE /* CCTouchHandler.h */; };
 		1551A874158F2B4700E66CFE /* cocos2dx-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 1551A873158F2B4700E66CFE /* cocos2dx-Prefix.pch */; };
+		15FBEE5C164B87F2008CB2C3 /* CCClippingNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 15FBEE5B164B87F2008CB2C3 /* CCClippingNode.h */; };
+		15FBEE5F164B8B5B008CB2C3 /* CCClippingNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15FBEE5E164B8B5B008CB2C3 /* CCClippingNode.cpp */; };
+		15FBEE68164BBA98008CB2C3 /* CCDrawingPrimitives.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15FBEE66164BBA98008CB2C3 /* CCDrawingPrimitives.cpp */; };
+		15FBEE69164BBA98008CB2C3 /* CCDrawingPrimitives.h in Headers */ = {isa = PBXBuildFile; fileRef = 15FBEE67164BBA98008CB2C3 /* CCDrawingPrimitives.h */; };
+		15FBEE6B164BBB20008CB2C3 /* CCDrawNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 15FBEE6A164BBB20008CB2C3 /* CCDrawNode.h */; };
+		15FBEE6D164BBF77008CB2C3 /* CCDrawNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15FBEE6C164BBF77008CB2C3 /* CCDrawNode.cpp */; };
 		2628297A15EC7064002C4240 /* ccTypeInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 2628297915EC7064002C4240 /* ccTypeInfo.h */; };
 		D43F7F8A15C7D8BA00D713FC /* CCTouch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D43F7F8915C7D8BA00D713FC /* CCTouch.cpp */; };
 /* End PBXBuildFile section */
@@ -327,8 +331,6 @@
 		1551A378158F2ADE00E66CFE /* CCConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCConfiguration.h; sourceTree = "<group>"; };
 		1551A379158F2ADE00E66CFE /* CCDirector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCDirector.cpp; sourceTree = "<group>"; };
 		1551A37A158F2ADE00E66CFE /* CCDirector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDirector.h; sourceTree = "<group>"; };
-		1551A37B158F2ADE00E66CFE /* CCDrawingPrimitives.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCDrawingPrimitives.cpp; sourceTree = "<group>"; };
-		1551A37C158F2ADE00E66CFE /* CCDrawingPrimitives.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDrawingPrimitives.h; sourceTree = "<group>"; };
 		1551A37D158F2ADE00E66CFE /* CCScheduler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCScheduler.cpp; sourceTree = "<group>"; };
 		1551A37E158F2ADE00E66CFE /* CCScheduler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCScheduler.h; sourceTree = "<group>"; };
 		1551A380158F2ADE00E66CFE /* CCAffineTransform.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAffineTransform.cpp; sourceTree = "<group>"; };
@@ -565,6 +567,12 @@
 		1551A626158F2ADE00E66CFE /* CCTouchHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTouchHandler.cpp; sourceTree = "<group>"; };
 		1551A627158F2ADE00E66CFE /* CCTouchHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTouchHandler.h; sourceTree = "<group>"; };
 		1551A873158F2B4700E66CFE /* cocos2dx-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "cocos2dx-Prefix.pch"; sourceTree = "<group>"; };
+		15FBEE5B164B87F2008CB2C3 /* CCClippingNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCClippingNode.h; sourceTree = "<group>"; };
+		15FBEE5E164B8B5B008CB2C3 /* CCClippingNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCClippingNode.cpp; sourceTree = "<group>"; };
+		15FBEE66164BBA98008CB2C3 /* CCDrawingPrimitives.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCDrawingPrimitives.cpp; sourceTree = "<group>"; };
+		15FBEE67164BBA98008CB2C3 /* CCDrawingPrimitives.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDrawingPrimitives.h; sourceTree = "<group>"; };
+		15FBEE6A164BBB20008CB2C3 /* CCDrawNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDrawNode.h; sourceTree = "<group>"; };
+		15FBEE6C164BBF77008CB2C3 /* CCDrawNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCDrawNode.cpp; sourceTree = "<group>"; };
 		2628297915EC7064002C4240 /* ccTypeInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccTypeInfo.h; sourceTree = "<group>"; };
 		D43F7F8915C7D8BA00D713FC /* CCTouch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTouch.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -613,17 +621,16 @@
 				1551A375158F2ADE00E66CFE /* CCCamera.cpp */,
 				1551A377158F2ADE00E66CFE /* CCConfiguration.cpp */,
 				1551A379158F2ADE00E66CFE /* CCDirector.cpp */,
-				1551A37B158F2ADE00E66CFE /* CCDrawingPrimitives.cpp */,
 				1551A37D158F2ADE00E66CFE /* CCScheduler.cpp */,
 				1551A395158F2ADE00E66CFE /* cocos2d.cpp */,
 				1551A376158F2ADE00E66CFE /* CCCamera.h */,
 				1551A378158F2ADE00E66CFE /* CCConfiguration.h */,
 				1551A37A158F2ADE00E66CFE /* CCDirector.h */,
-				1551A37C158F2ADE00E66CFE /* CCDrawingPrimitives.h */,
 				1551A37E158F2ADE00E66CFE /* CCScheduler.h */,
 				1551A354158F2ADE00E66CFE /* actions */,
 				1551A370158F2ADE00E66CFE /* base_nodes */,
 				1551A37F158F2ADE00E66CFE /* cocoa */,
+				15FBEE65164BBA97008CB2C3 /* draw_nodes */,
 				1551A396158F2ADE00E66CFE /* effects */,
 				1551A3E8158F2ADE00E66CFE /* include */,
 				1551A3F0158F2ADE00E66CFE /* kazmath */,
@@ -881,6 +888,8 @@
 				1551A433158F2ADE00E66CFE /* CCProgressTimer.h */,
 				1551A434158F2ADE00E66CFE /* CCRenderTexture.cpp */,
 				1551A435158F2ADE00E66CFE /* CCRenderTexture.h */,
+				15FBEE5B164B87F2008CB2C3 /* CCClippingNode.h */,
+				15FBEE5E164B8B5B008CB2C3 /* CCClippingNode.cpp */,
 			);
 			path = misc_nodes;
 			sourceTree = "<group>";
@@ -1140,6 +1149,17 @@
 			path = touch_dispatcher;
 			sourceTree = "<group>";
 		};
+		15FBEE65164BBA97008CB2C3 /* draw_nodes */ = {
+			isa = PBXGroup;
+			children = (
+				15FBEE66164BBA98008CB2C3 /* CCDrawingPrimitives.cpp */,
+				15FBEE67164BBA98008CB2C3 /* CCDrawingPrimitives.h */,
+				15FBEE6A164BBB20008CB2C3 /* CCDrawNode.h */,
+				15FBEE6C164BBF77008CB2C3 /* CCDrawNode.cpp */,
+			);
+			path = draw_nodes;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -1165,7 +1185,6 @@
 				1551A647158F2ADE00E66CFE /* CCCamera.h in Headers */,
 				1551A649158F2ADE00E66CFE /* CCConfiguration.h in Headers */,
 				1551A64B158F2ADE00E66CFE /* CCDirector.h in Headers */,
-				1551A64D158F2ADE00E66CFE /* CCDrawingPrimitives.h in Headers */,
 				1551A64F158F2ADE00E66CFE /* CCScheduler.h in Headers */,
 				1551A651158F2ADE00E66CFE /* CCAffineTransform.h in Headers */,
 				1551A653158F2ADE00E66CFE /* CCArray.h in Headers */,
@@ -1303,6 +1322,9 @@
 				1551A874158F2B4700E66CFE /* cocos2dx-Prefix.pch in Headers */,
 				154269DD15B5653000712A7F /* CCNotificationCenter.h in Headers */,
 				2628297A15EC7064002C4240 /* ccTypeInfo.h in Headers */,
+				15FBEE5C164B87F2008CB2C3 /* CCClippingNode.h in Headers */,
+				15FBEE69164BBA98008CB2C3 /* CCDrawingPrimitives.h in Headers */,
+				15FBEE6B164BBB20008CB2C3 /* CCDrawNode.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1375,7 +1397,6 @@
 				1551A646158F2ADE00E66CFE /* CCCamera.cpp in Sources */,
 				1551A648158F2ADE00E66CFE /* CCConfiguration.cpp in Sources */,
 				1551A64A158F2ADE00E66CFE /* CCDirector.cpp in Sources */,
-				1551A64C158F2ADE00E66CFE /* CCDrawingPrimitives.cpp in Sources */,
 				1551A64E158F2ADE00E66CFE /* CCScheduler.cpp in Sources */,
 				1551A650158F2ADE00E66CFE /* CCAffineTransform.cpp in Sources */,
 				1551A652158F2ADE00E66CFE /* CCArray.cpp in Sources */,
@@ -1477,6 +1498,9 @@
 				1551A871158F2ADF00E66CFE /* CCTouchHandler.cpp in Sources */,
 				154269DC15B5653000712A7F /* CCNotificationCenter.cpp in Sources */,
 				D43F7F8A15C7D8BA00D713FC /* CCTouch.cpp in Sources */,
+				15FBEE5F164B8B5B008CB2C3 /* CCClippingNode.cpp in Sources */,
+				15FBEE68164BBA98008CB2C3 /* CCDrawingPrimitives.cpp in Sources */,
+				15FBEE6D164BBF77008CB2C3 /* CCDrawNode.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1538,7 +1562,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					COCOS2D_JAVASCRIPT,
 					USE_FILE32API,
-					TARGET_OS_IPHONE,
+					CC_TARGET_OS_IPHONE,
 					"COCOS2D_DEBUG=1",
 				);
 				HEADER_SEARCH_PATHS = (
@@ -1562,7 +1586,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					COCOS2D_JAVASCRIPT,
 					USE_FILE32API,
-					TARGET_OS_IPHONE,
+					CC_TARGET_OS_IPHONE,
 				);
 				HEADER_SEARCH_PATHS = (
 					"\"$(SRCROOT)/..\"",

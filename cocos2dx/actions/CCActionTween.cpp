@@ -27,11 +27,6 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-CCActionTween* CCActionTween::actionWithDuration(float aDuration, const char* key, float from, float to)
-{
-    return CCActionTween::create(aDuration, key, from, to);
-}
-
 CCActionTween* CCActionTween::create(float aDuration, const char* key, float from, float to)
 {
     CCActionTween* pRet = new CCActionTween();

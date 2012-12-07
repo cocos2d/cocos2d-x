@@ -367,13 +367,6 @@ public:
 public:
     CCParticleSystem();
     virtual ~CCParticleSystem();
-    /** creates an initializes a CCParticleSystem from a plist file.
-    This plist files can be created manually or with Particle Designer:
-    http://particledesigner.71squared.com/
-    @deprecated: This interface will be deprecated sooner or later.
-    @since v0.99.3
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCParticleSystem * particleWithFile(const char *plistFile);
 
     /** creates an initializes a CCParticleSystem from a plist file.
     This plist files can be created manually or with Particle Designer:
@@ -398,6 +391,11 @@ public:
     @since v0.99.3
     */
     bool initWithDictionary(CCDictionary *dictionary);
+    
+    /** initializes a particle system from a NSDictionary and the path from where to load the png
+     @since v2.1
+     */
+    bool initWithDictionary(CCDictionary *dictionary, const char *dirname);
 
     //! Initializes a system with a fixed number of particles
     virtual bool initWithTotalParticles(unsigned int numberOfParticles);

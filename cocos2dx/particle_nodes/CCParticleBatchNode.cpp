@@ -58,10 +58,6 @@ CCParticleBatchNode::~CCParticleBatchNode()
 /*
  * creation with CCTexture2D
  */
-CCParticleBatchNode* CCParticleBatchNode::batchNodeWithTexture(CCTexture2D *tex, unsigned int capacity/* = kCCParticleDefaultCapacity*/)
-{
-    return CCParticleBatchNode::createWithTexture(tex, capacity);
-}
 
 CCParticleBatchNode* CCParticleBatchNode::createWithTexture(CCTexture2D *tex, unsigned int capacity/* = kCCParticleDefaultCapacity*/)
 {
@@ -78,10 +74,6 @@ CCParticleBatchNode* CCParticleBatchNode::createWithTexture(CCTexture2D *tex, un
 /*
  * creation with File Image
  */
-CCParticleBatchNode* CCParticleBatchNode::batchNodeWithFile(const char* imageFile, unsigned int capacity/* = kCCParticleDefaultCapacity*/)
-{
-    return CCParticleBatchNode::create(imageFile, capacity);
-}
 
 CCParticleBatchNode* CCParticleBatchNode::create(const char* imageFile, unsigned int capacity/* = kCCParticleDefaultCapacity*/)
 {
@@ -137,7 +129,7 @@ void CCParticleBatchNode::visit()
     // The alternative is to have a void CCSprite#visit, but
     // although this is less maintainable, is faster
     //
-    if (!m_bIsVisible)
+    if (!m_bVisible)
     {
         return;
     }
@@ -235,7 +227,7 @@ unsigned int CCParticleBatchNode::addChildHelper(CCParticleSystem* child, int z,
 
     child->setParent(this);
 
-    if( m_bIsRunning ) 
+    if( m_bRunning ) 
     {
         child->onEnter();
         child->onEnterTransitionDidFinish();

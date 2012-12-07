@@ -160,8 +160,8 @@ static inline type cpBodyGet##name(const cpBody *body){return body->member;}
 #define CP_DefineBodyStructSetter(type, member, name) \
 static inline void cpBodySet##name(cpBody *body, const type value){ \
 	cpBodyActivate(body); \
-	cpBodyAssertSane(body); \
 	body->member = value; \
+	cpBodyAssertSane(body); \
 }
 
 #define CP_DefineBodyStructProperty(type, member, name) \
@@ -169,30 +169,30 @@ CP_DefineBodyStructGetter(type, member, name) \
 CP_DefineBodyStructSetter(type, member, name)
 
 // TODO add to docs
-CP_DefineBodyStructGetter(cpSpace*, CP_PRIVATE(space), Space);
+CP_DefineBodyStructGetter(cpSpace*, CP_PRIVATE(space), Space)
 
-CP_DefineBodyStructGetter(cpFloat, m, Mass);
+CP_DefineBodyStructGetter(cpFloat, m, Mass)
 /// Set the mass of a body.
 void cpBodySetMass(cpBody *body, cpFloat m);
 
-CP_DefineBodyStructGetter(cpFloat, i, Moment);
+CP_DefineBodyStructGetter(cpFloat, i, Moment)
 /// Set the moment of a body.
 void cpBodySetMoment(cpBody *body, cpFloat i);
 
-CP_DefineBodyStructGetter(cpVect, p, Pos);
+CP_DefineBodyStructGetter(cpVect, p, Pos)
 /// Set the position of a body.
 void cpBodySetPos(cpBody *body, cpVect pos);
-CP_DefineBodyStructProperty(cpVect, v, Vel);
-CP_DefineBodyStructProperty(cpVect, f, Force);
-CP_DefineBodyStructGetter(cpFloat, a, Angle);
+CP_DefineBodyStructProperty(cpVect, v, Vel)
+CP_DefineBodyStructProperty(cpVect, f, Force)
+CP_DefineBodyStructGetter(cpFloat, a, Angle)
 /// Set the angle of a body.
 void cpBodySetAngle(cpBody *body, cpFloat a);
-CP_DefineBodyStructProperty(cpFloat, w, AngVel);
-CP_DefineBodyStructProperty(cpFloat, t, Torque);
-CP_DefineBodyStructGetter(cpVect, rot, Rot);
-CP_DefineBodyStructProperty(cpFloat, v_limit, VelLimit);
-CP_DefineBodyStructProperty(cpFloat, w_limit, AngVelLimit);
-CP_DefineBodyStructProperty(cpDataPointer, data, UserData);
+CP_DefineBodyStructProperty(cpFloat, w, AngVel)
+CP_DefineBodyStructProperty(cpFloat, t, Torque)
+CP_DefineBodyStructGetter(cpVect, rot, Rot)
+CP_DefineBodyStructProperty(cpFloat, v_limit, VelLimit)
+CP_DefineBodyStructProperty(cpFloat, w_limit, AngVelLimit)
+CP_DefineBodyStructProperty(cpDataPointer, data, UserData)
 
 /// Default Integration functions.
 void cpBodyUpdateVelocity(cpBody *body, cpVect gravity, cpFloat damping, cpFloat dt);

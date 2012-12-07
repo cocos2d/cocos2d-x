@@ -159,7 +159,7 @@ void CCControlSwitchSprite::draw()
 
     ccGLEnableVertexAttribs(kCCVertexAttribFlag_PosColorTex);
     ccGLBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    getShaderProgram()->setUniformForModelViewProjectionMatrix();
+    getShaderProgram()->setUniformsForBuiltins();
 
     glActiveTexture(GL_TEXTURE0);
     glBindTexture( GL_TEXTURE_2D, getTexture()->getName());
@@ -279,11 +279,6 @@ bool CCControlSwitch::initWithMaskSprite(CCSprite *maskSprite, CCSprite * onSpri
     return initWithMaskSprite(maskSprite, onSprite, offSprite, thumbSprite, NULL, NULL);
 }
 
-CCControlSwitch* CCControlSwitch::switchWithMaskSprite(CCSprite *maskSprite, CCSprite * onSprite, CCSprite * offSprite, CCSprite * thumbSprite)
-{
-    return CCControlSwitch::create(maskSprite, onSprite, offSprite, thumbSprite);
-}
-
 CCControlSwitch* CCControlSwitch::create(CCSprite *maskSprite, CCSprite * onSprite, CCSprite * offSprite, CCSprite * thumbSprite)
 {
     CCControlSwitch* pRet = new CCControlSwitch();
@@ -326,11 +321,6 @@ bool CCControlSwitch::initWithMaskSprite(CCSprite *maskSprite, CCSprite * onSpri
         return true;
     }
     return false;
-}
-
-CCControlSwitch* CCControlSwitch::switchWithMaskSprite(CCSprite *maskSprite, CCSprite * onSprite, CCSprite * offSprite, CCSprite * thumbSprite, CCLabelTTF* onLabel, CCLabelTTF* offLabel)
-{
-    return CCControlSwitch::create(maskSprite, onSprite, offSprite, thumbSprite, onLabel, offLabel);
 }
 
 CCControlSwitch* CCControlSwitch::create(CCSprite *maskSprite, CCSprite * onSprite, CCSprite * offSprite, CCSprite * thumbSprite, CCLabelTTF* onLabel, CCLabelTTF* offLabel)

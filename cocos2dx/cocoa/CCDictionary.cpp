@@ -298,9 +298,27 @@ CCObject* CCDictionary::copyWithZone(CCZone* pZone)
     return pNewDict;
 }
 
-CCDictionary* CCDictionary::dictionary()
+CCObject* CCDictionary::randomObject()
 {
-    return CCDictionary::create();
+    if (m_eDictType == kCCDictUnknown)
+    {
+        return NULL;
+    }
+    
+    CCObject* key = allKeys()->randomObject();
+    
+    if (m_eDictType == kCCDictInt)
+    {
+        return objectForKey(((CCInteger*)key)->getValue());
+    }
+    else if (m_eDictType == kCCDictStr)
+    {
+        return objectForKey(((CCString*)key)->getCString());
+    }
+    else
+    {
+        return NULL;
+    }
 }
 
 CCDictionary* CCDictionary::create()
@@ -313,11 +331,6 @@ CCDictionary* CCDictionary::create()
     return pRet;
 }
 
-CCDictionary* CCDictionary::dictionaryWithDictionary(CCDictionary* srcDict)
-{
-    return CCDictionary::createWithDictionary(srcDict);
-}
-
 CCDictionary* CCDictionary::createWithDictionary(CCDictionary* srcDict)
 {
     CCDictionary* pNewDict = (CCDictionary*)srcDict->copy();
@@ -327,19 +340,9 @@ CCDictionary* CCDictionary::createWithDictionary(CCDictionary* srcDict)
 
 extern CCDictionary* ccFileUtils_dictionaryWithContentsOfFileThreadSafe(const char *pFileName);
 
-CCDictionary* CCDictionary::dictionaryWithContentsOfFileThreadSafe(const char *pFileName)
-{
-    return CCDictionary::createWithContentsOfFileThreadSafe(pFileName);
-}
-
 CCDictionary* CCDictionary::createWithContentsOfFileThreadSafe(const char *pFileName)
 {
     return ccFileUtils_dictionaryWithContentsOfFileThreadSafe(pFileName);
-}
-
-CCDictionary* CCDictionary::dictionaryWithContentsOfFile(const char *pFileName)
-{
-    return CCDictionary::createWithContentsOfFile(pFileName);
 }
 
 CCDictionary* CCDictionary::createWithContentsOfFile(const char *pFileName)
