@@ -140,6 +140,9 @@ public:
 
     virtual CCObject* copyWithZone(CCZone* pZone);
 
+    /** Returns a random element */
+    CCObject* randomObject();
+    
     static CCDictionary* create();
 
     static CCDictionary* createWithDictionary(CCDictionary* srcDict);
