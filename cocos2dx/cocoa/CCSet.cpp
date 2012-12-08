@@ -52,18 +52,7 @@ CCSet::CCSet(const CCSet &rSetObject)
 
 CCSet::~CCSet(void)
 {
-    // call release() of elements
-    CCSetIterator iter;
-    for (iter = m_pSet->begin(); iter != m_pSet->end(); ++iter)
-    {
-        if (! (*iter))
-        {
-            break;
-        }
-
-        (*iter)->release();
-    }
-
+    removeAllObjects();
     CC_SAFE_DELETE(m_pSet);
 }
 
@@ -94,6 +83,20 @@ void CCSet::removeObject(CCObject *pObject)
 {
     m_pSet->erase(pObject);
     CC_SAFE_RELEASE(pObject);
+}
+
+void CCSet::removeAllObjects()
+{
+    CCSetIterator it;
+    for (it = m_pSet->begin(); it != m_pSet->end(); ++it)
+    {
+        if (! (*it))
+        {
+            break;
+        }
+
+        (*it)->release();
+    }
 }
 
 bool CCSet::containsObject(CCObject *pObject)

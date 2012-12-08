@@ -52,18 +52,6 @@ public:
     CCPoint getLocationInView() const;
     /** returns the previous touch location in screen coordinates */
     CCPoint getPreviousLocationInView() const;
-
-    /** returns the current touch location in screen coordinates
-     @deprecated: use CCTouch::getLocationInView() instead. 
-     CCTouch::getLocation() is recommended, it will return OpenGL coordinate.
-    */
-    CC_DEPRECATED_ATTRIBUTE CCPoint locationInView()  { return m_point; }
-    
-    /** returns the current previous location in screen coordinates
-     @deprecated: use CCTouch::getPreviousLocationInView() instead. 
-     CCTouch::getPreviousLocation() is recommended, it will return OpenGL coordinate.
-     */
-    CC_DEPRECATED_ATTRIBUTE CCPoint previousLocationInView() { return m_prevPoint; }
     
     void setTouchInfo(int id, float x, float y)
     {

@@ -96,9 +96,6 @@ public:
     /** initializes a CCTexturePVR with a path */
     bool initWithContentsOfFile(const char* path);
 
-    /** creates and initializes a CCTexturePVR with a path 
-     @deprecated This interface will be deprecated when js-binding is stable. */
-    CC_DEPRECATED_ATTRIBUTE static CCTexturePVR* pvrTextureWithContentsOfFile(const char* path);
     /** creates and initializes a CCTexturePVR with a path */
     static CCTexturePVR* create(const char* path);
     

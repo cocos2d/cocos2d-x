@@ -55,10 +55,6 @@ NS_CC_BEGIN;
 class CC_DLL CCPointArray : public CCNode
 {
 public:
-    /** creates and initializes a Points array with capacity 
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCPointArray* arrayWithCapacity(unsigned int capacity);
     
     /** creates and initializes a Points array with capacity */
     static CCPointArray* create(unsigned int capacity);
@@ -114,10 +110,6 @@ private:
 class CC_DLL CCCardinalSplineTo : public CCActionInterval
 {
 public:
-    /** creates an action with a Cardinal Spline array of points and tension 
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCCardinalSplineTo* actionWithDuration(float duration, CCPointArray* points, float tension);
 
     /** creates an action with a Cardinal Spline array of points and tension */
     static CCCardinalSplineTo* create(float duration, CCPointArray* points, float tension);
@@ -158,10 +150,6 @@ protected:
 class CC_DLL CCCardinalSplineBy : public CCCardinalSplineTo 
 {
 public:
-    /** creates an action with a Cardinal Spline array of points and tension 
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCCardinalSplineBy* actionWithDuration(float duration, CCPointArray* points, float tension);
     
     /** creates an action with a Cardinal Spline array of points and tension */
     static CCCardinalSplineBy* create(float duration, CCPointArray* points, float tension);
@@ -183,10 +171,6 @@ protected:
 class CC_DLL CCCatmullRomTo : public CCCardinalSplineTo
 {
 public:
-    /** creates an action with a Cardinal Spline array of points and tension 
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCCatmullRomTo* actionWithDuration(float dt, CCPointArray* points);
     
     /** creates an action with a Cardinal Spline array of points and tension */
     static CCCatmullRomTo* create(float dt, CCPointArray* points);
@@ -203,10 +187,6 @@ public:
 class CC_DLL CCCatmullRomBy : public CCCardinalSplineBy
 {
 public:
-    /** creates an action with a Cardinal Spline array of points and tension 
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCCatmullRomBy* actionWithDuration(float dt, CCPointArray* points);
     
     /** creates an action with a Cardinal Spline array of points and tension */
     static CCCatmullRomBy* create(float dt, CCPointArray* points);

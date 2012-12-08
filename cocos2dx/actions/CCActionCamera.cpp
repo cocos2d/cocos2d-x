@@ -50,10 +50,6 @@ CCActionInterval * CCActionCamera::reverse()
 //
 // CCOrbitCamera
 //
-CCOrbitCamera * CCOrbitCamera::actionWithDuration(float t, float radius, float deltaRadius, float angleZ, float deltaAngleZ, float angleX, float deltaAngleX)
-{
-    return CCOrbitCamera::create(t, radius, deltaRadius, angleZ, deltaAngleZ, angleX, deltaAngleX);
-}
 
 CCOrbitCamera * CCOrbitCamera::create(float t, float radius, float deltaRadius, float angleZ, float deltaAngleZ, float angleX, float deltaAngleX)
 {

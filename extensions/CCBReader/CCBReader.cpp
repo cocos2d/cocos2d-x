@@ -149,6 +149,17 @@ CCBReader::~CCBReader() {
     setAnimationManagers(NULL);
 }
 
+void CCBReader::setCCBRootPath(const char* pCCBRootPath)
+{
+    CCAssert(pCCBRootPath != NULL, "");
+    mCCBRootPath = pCCBRootPath;
+}
+
+const std::string& CCBReader::getCCBRootPath() const
+{
+    return mCCBRootPath;
+}
+
 bool CCBReader::init()
 {
     // Setup action manager
@@ -234,10 +245,10 @@ CCNode* CCBReader::readNodeGraphFromFile(const char *pCCBFileName, CCObject *pOw
         strCCBFileName += strSuffix;
     }
 
-    const char *pPath = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(strCCBFileName.c_str());
+    std::string strPath = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(strCCBFileName.c_str());
     unsigned long size = 0;
 
-    unsigned char * pBytes = CCFileUtils::sharedFileUtils()->getFileData(pPath, "rb", &size);
+    unsigned char * pBytes = CCFileUtils::sharedFileUtils()->getFileData(strPath.c_str(), "rb", &size);
     CCData *data = new CCData(pBytes, size);
     CC_SAFE_DELETE_ARRAY(pBytes);
 
@@ -744,12 +755,14 @@ CCBKeyframe* CCBReader::readKeyframe(int type)
 
         if (spriteSheet.length() == 0)
         {
+            spriteFile = mCCBRootPath + spriteFile;
             CCTexture2D *texture = CCTextureCache::sharedTextureCache()->addImage(spriteFile.c_str());
             CCRect bounds = CCRectMake(0, 0, texture->getContentSize().width, texture->getContentSize().height);
             spriteFrame = CCSpriteFrame::createWithTexture(texture, bounds);
         }
         else
         {
+            spriteSheet = mCCBRootPath + spriteSheet;
             CCSpriteFrameCache* frameCache = CCSpriteFrameCache::sharedSpriteFrameCache();
             
             // Load the sprite sheet only if it is not loaded            
@@ -895,15 +908,7 @@ CCArray* CCBReader::getAnimationManagersForNodes() {
 
 float CCBReader::getResolutionScale()
 {
-    // Init resolution scale
-    if (CCApplication::sharedApplication()->getTargetPlatform() == kTargetIpad)
-    {
-        return 2;
-    }
-    else 
-    {
-        return 1;
-    }
+    return 1;
 }
 
 NS_CC_EXT_END;

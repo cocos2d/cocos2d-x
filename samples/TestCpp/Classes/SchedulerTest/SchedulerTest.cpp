@@ -5,74 +5,81 @@ enum {
     kTagAnimationDance = 1,
 };
 
-#define MAX_TESTS           13
 static int sceneIdx = -1;
 
 CCLayer* nextSchedulerTest();
 CCLayer* backSchedulerTest();
 CCLayer* restartSchedulerTest();
 
-CCLayer* createSchedulerTest(int nIndex)
-{
-    CCLayer* pLayer = NULL;
+TESTLAYER_CREATE_FUNC(SchedulerTimeScale)
+TESTLAYER_CREATE_FUNC(TwoSchedulers)
+TESTLAYER_CREATE_FUNC(SchedulerAutoremove)
+TESTLAYER_CREATE_FUNC(SchedulerPauseResume)
+TESTLAYER_CREATE_FUNC(SchedulerPauseResumeAll)
+TESTLAYER_CREATE_FUNC(SchedulerPauseResumeAllUser)
+TESTLAYER_CREATE_FUNC(SchedulerUnscheduleAll)
+TESTLAYER_CREATE_FUNC(SchedulerUnscheduleAllHard)
+TESTLAYER_CREATE_FUNC(SchedulerUnscheduleAllUserLevel)
+TESTLAYER_CREATE_FUNC(SchedulerSchedulesAndRemove)
+TESTLAYER_CREATE_FUNC(SchedulerUpdate)
+TESTLAYER_CREATE_FUNC(SchedulerUpdateAndCustom)
+TESTLAYER_CREATE_FUNC(SchedulerUpdateFromCustom)
+TESTLAYER_CREATE_FUNC(RescheduleSelector)
+TESTLAYER_CREATE_FUNC(SchedulerDelayAndRepeat)
 
-    switch (nIndex)
-    {
-    case 0:
-        pLayer = new SchedulerDelayAndRepeat(); break;
-    case 1:
-        pLayer = new SchedulerTimeScale(); break;
-    case 2:
-        pLayer = new TwoSchedulers(); break;
-    case 3:
-        pLayer = new SchedulerAutoremove(); break;
-    case 4:
-        pLayer = new SchedulerPauseResume(); break;
-    case 5:
-        pLayer = new SchedulerPauseResumeAll(); break;
-    case 6:
-        pLayer = new SchedulerUnscheduleAll(); break;
-    case 7:
-        pLayer = new SchedulerUnscheduleAllHard(); break;
-    case 8:
-        pLayer = new SchedulerUnscheduleAllUserLevel(); break;
-    case 9:
-        pLayer = new SchedulerSchedulesAndRemove(); break;
-    case 10:
-        pLayer = new SchedulerUpdate(); break;
-    case 11:
-        pLayer = new SchedulerUpdateAndCustom(); break;
-    case 12:
-        pLayer = new SchedulerUpdateFromCustom(); break;
-    default:
-        break;
-    }
+static NEWTESTFUNC createFunctions[] = {
+    CF(SchedulerTimeScale),
+    CF(TwoSchedulers),
+    CF(SchedulerAutoremove),
+    CF(SchedulerPauseResume),
+    CF(SchedulerPauseResumeAll),
+    CF(SchedulerPauseResumeAllUser),
+    CF(SchedulerUnscheduleAll),
+    CF(SchedulerUnscheduleAllHard),
+    CF(SchedulerUnscheduleAllUserLevel),
+    CF(SchedulerSchedulesAndRemove),
+    CF(SchedulerUpdate),
+    CF(SchedulerUpdateAndCustom),
+    CF(SchedulerUpdateFromCustom),
+    CF(RescheduleSelector),
+    CF(SchedulerDelayAndRepeat)
+};
+
+#define MAX_LAYER (sizeof(createFunctions) / sizeof(createFunctions[0]))
+
+CCLayer* nextSchedulerTest()
+{
+    sceneIdx++;
+    sceneIdx = sceneIdx % MAX_LAYER;
+
+    CCLayer* pLayer = (createFunctions[sceneIdx])();
+    pLayer->init();
     pLayer->autorelease();
 
     return pLayer;
 }
 
-CCLayer* nextSchedulerTest()
-{
-
-    sceneIdx++;
-    sceneIdx = sceneIdx % MAX_TESTS;
-
-    return createSchedulerTest(sceneIdx);
-}
-
 CCLayer* backSchedulerTest()
 {
     sceneIdx--;
+    int total = MAX_LAYER;
     if( sceneIdx < 0 )
-        sceneIdx += MAX_TESTS;
+        sceneIdx += total;    
 
-    return createSchedulerTest(sceneIdx);
+    CCLayer* pLayer = (createFunctions[sceneIdx])();
+    pLayer->init();
+    pLayer->autorelease();
+
+    return pLayer;
 }
 
 CCLayer* restartSchedulerTest()
 {
-    return createSchedulerTest(sceneIdx);
+    CCLayer* pLayer = (createFunctions[sceneIdx])();
+    pLayer->init();
+    pLayer->autorelease();
+
+    return pLayer;
 }
 
 //------------------------------------------------------------------
@@ -645,6 +652,11 @@ void TestNode::initWithString(CCString* pStr, int priority)
 TestNode::~TestNode()
 {
     m_pstring->release();
+}
+
+void TestNode::update(float dt)
+{
+    CCLog(m_pstring->getCString());
 }
 
 //------------------------------------------------------------------

@@ -65,6 +65,10 @@ public:
     */
     void removeObject(CCObject *pObject);
     /**
+     *@brief Remove all elements of the set
+     */
+    void removeAllObjects();
+    /**
     *@brief Check if CCSet contains a element equals pObject.
     */
     bool containsObject(CCObject *pObject);

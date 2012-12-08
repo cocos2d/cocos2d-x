@@ -63,8 +63,7 @@ public:
     CCControlHuePicker();
     virtual ~CCControlHuePicker();
     virtual bool initWithTargetAndPos(CCNode* target, CCPoint pos);
-    //@deprecated: This interface will be deprecated sooner or later.
-    CC_DEPRECATED_ATTRIBUTE static CCControlHuePicker* pickerWithTargetAndPos(CCNode* target, CCPoint pos);
+
     static CCControlHuePicker* create(CCNode* target, CCPoint pos);
     virtual void setEnabled(bool enabled);
 protected:    

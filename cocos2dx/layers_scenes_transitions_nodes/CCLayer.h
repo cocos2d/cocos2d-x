@@ -63,9 +63,7 @@ public:
     CCLayer();
     virtual ~CCLayer();
     virtual bool init();
-
-    // @deprecated: This interface will be deprecated sooner or later.
-    CC_DEPRECATED_ATTRIBUTE static CCLayer *node(void);
+    
     /** create one layer */
     static CCLayer *create(void);
 
@@ -86,6 +84,8 @@ public:
     virtual void ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent);
     
     virtual void didAccelerate(CCAcceleration* pAccelerationValue);
+    void registerScriptAccelerateHandler(int nHandler);
+    void unregisterScriptAccelerateHandler(void);
 
     /** If isTouchEnabled, this method is called onEnter. Override it to change the
     way CCLayer receives touch events.
@@ -133,8 +133,18 @@ public:
     */
     virtual bool isKeypadEnabled();
     virtual void setKeypadEnabled(bool value);
+
+    /** Register keypad events handler */
+    void registerScriptKeypadHandler(int nHandler);
+    /** Unregister keypad events handler */
+    void unregisterScriptKeypadHandler(void);
+
+    virtual void keyBackClicked(void);
+    virtual void keyMenuClicked(void);
     
-    inline CCTouchScriptHandlerEntry* getScriptHandlerEntry() { return m_pScriptHandlerEntry; };
+    inline CCTouchScriptHandlerEntry* getScriptTouchHandlerEntry() { return m_pScriptTouchHandlerEntry; };
+    inline CCScriptHandlerEntry* getScriptKeypadHandlerEntry() { return m_pScriptKeypadHandlerEntry; };
+    inline CCScriptHandlerEntry* getScriptAccelerateHandlerEntry() { return m_pScriptAccelerateHandlerEntry; };
 protected:   
     bool m_bTouchEnabled;
     bool m_bAccelerometerEnabled;
@@ -142,7 +152,9 @@ protected:
     
 private:
     // Script touch events handler
-    CCTouchScriptHandlerEntry* m_pScriptHandlerEntry;
+    CCTouchScriptHandlerEntry* m_pScriptTouchHandlerEntry;
+    CCScriptHandlerEntry* m_pScriptKeypadHandlerEntry;
+    CCScriptHandlerEntry* m_pScriptAccelerateHandlerEntry;
     
     int m_nTouchPriority;
     ccTouchesMode m_eTouchMode;
@@ -172,15 +184,6 @@ public:
 
     virtual void draw();
     virtual void setContentSize(const CCSize & var);
-
-    /** creates a CCLayer with color, width and height in Points 
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCLayerColor * layerWithColor(const ccColor4B& color, GLfloat width, GLfloat height);
-    /** creates a CCLayer with color. Width and height are the window size. 
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCLayerColor * layerWithColor(const ccColor4B& color);
 
     //@deprecated: This interface will be deprecated sooner or later.
     static CCLayerColor* node();
@@ -247,16 +250,6 @@ class CC_DLL CCLayerGradient : public CCLayerColor
 {
 public:
 
-    /** Creates a full-screen CCLayer with a gradient between start and end. 
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCLayerGradient* layerWithColor(const ccColor4B& start, const ccColor4B& end);
-
-    /** Creates a full-screen CCLayer with a gradient between start and end in the direction of v. 
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCLayerGradient* layerWithColor(const ccColor4B& start, const ccColor4B& end, const CCPoint& v);
-
     /** Creates a full-screen CCLayer with a gradient between start and end. */
     static CCLayerGradient* create(const ccColor4B& start, const ccColor4B& end);
 
@@ -308,18 +301,6 @@ protected:
 public:
     CCLayerMultiplex();
     virtual ~CCLayerMultiplex();
-
-    /** creates a CCLayerMultiplex with one or more layers using a variable argument list. 
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCLayerMultiplex * layerWithLayers(CCLayer* layer, ... );
-
-    /**
-     * lua script can not init with undetermined number of variables
-     * so add these functions to be used with lua.
-     @deprecated: This interface will be deprecated sooner or later.
-     */
-    CC_DEPRECATED_ATTRIBUTE static CCLayerMultiplex * layerWithLayer(CCLayer* layer);
 
     /** creates a CCLayerMultiplex with one or more layers using a variable argument list. */
     static CCLayerMultiplex * create(CCLayer* layer, ... );

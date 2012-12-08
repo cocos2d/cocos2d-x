@@ -91,6 +91,9 @@ public:
     void setJSCallbackThis(jsval thisObj);
     void setJSExtraData(jsval data);
     
+    const jsval& getJSCallbackFunc() const;
+    const jsval& getJSCallbackThis() const;
+    const jsval& getJSExtraData() const;
 protected:
     jsval jsCallback;
     jsval jsThisObj;

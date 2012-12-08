@@ -388,11 +388,6 @@ void FNTConfigRemoveCache( void )
 //BitmapFontConfiguration
 //
 
-CCBMFontConfiguration * CCBMFontConfiguration::configurationWithFNTFile(const char *FNTfile)
-{
-    return CCBMFontConfiguration::create(FNTfile);
-}
-
 CCBMFontConfiguration * CCBMFontConfiguration::create(const char *FNTfile)
 {
     CCBMFontConfiguration * pRet = new CCBMFontConfiguration();
@@ -714,11 +709,6 @@ void CCLabelBMFont::purgeCachedData()
     FNTConfigRemoveCache();
 }
 
-CCLabelBMFont * CCLabelBMFont::node()
-{
-    return CCLabelBMFont::create();
-}
-
 CCLabelBMFont * CCLabelBMFont::create()
 {
     CCLabelBMFont * pRet = new CCLabelBMFont();
@@ -744,11 +734,6 @@ CCLabelBMFont * CCLabelBMFont::create(const char *str, const char *fntFile, floa
 CCLabelBMFont * CCLabelBMFont::create(const char *str, const char *fntFile)
 {
     return CCLabelBMFont::create(str, fntFile, kCCLabelAutomaticWidth, kCCTextAlignmentLeft, CCPointZero);
-}
-
-CCLabelBMFont *CCLabelBMFont::labelWithString(const char *str, const char *fntFile, float width/* = kCCLabelAutomaticWidth*/, CCTextAlignment alignment/* = kCCTextAlignmentLeft*/, CCPoint imageOffset/* = CCPointZero*/)
-{
-    return CCLabelBMFont::create(str, fntFile, width, alignment, imageOffset);
 }
 
 //LabelBMFont - Creation & Init

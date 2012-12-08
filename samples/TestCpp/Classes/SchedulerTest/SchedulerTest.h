@@ -192,6 +192,7 @@ public:
     ~TestNode();
 
     void initWithString(CCString* pStr, int priority);
+    virtual void update(float dt);
 private:
     CCString* m_pstring;
 };
