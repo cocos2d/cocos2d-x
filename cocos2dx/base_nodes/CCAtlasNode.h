@@ -40,8 +40,7 @@ NS_CC_BEGIN
 
 class CCTextureAtlas;
 
-/** @brief CCAtlasNode is a subclass of CCNode that implements the CCRGBAProtocol and
-CCTextureProtocol protocol
+/** @brief CCAtlasNode is a subclass of CCNode that implements the CCRGBAProtocol and CCTextureProtocol protocol
 
 It knows how to render a TextureAtlas object.
 If you are going to render a TextureAtlas consider subclassing CCAtlasNode (or a subclass of CCAtlasNode)
