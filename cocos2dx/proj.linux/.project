@@ -102,11 +102,6 @@
 			<locationURI>PARENT-1-PROJECT_LOC/CCDirector.cpp</locationURI>
 		</link>
 		<link>
-			<name>CCDrawingPrimitives.cpp</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/CCDrawingPrimitives.cpp</locationURI>
-		</link>
-		<link>
 			<name>CCScheduler.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/CCScheduler.cpp</locationURI>
@@ -130,6 +125,11 @@
 			<name>cocos2d.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/cocos2d.cpp</locationURI>
+		</link>
+		<link>
+			<name>draw_nodes</name>
+			<type>2</type>
+			<locationURI>PARENT-1-PROJECT_LOC/draw_nodes</locationURI>
 		</link>
 		<link>
 			<name>effects</name>

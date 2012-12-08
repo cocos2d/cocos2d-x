@@ -60,12 +60,6 @@ CCAtlasNode::~CCAtlasNode()
     CC_SAFE_RELEASE(m_pTextureAtlas);
 }
 
-CCAtlasNode * CCAtlasNode::atlasWithTileFile(const char *tile, unsigned int tileWidth, unsigned int tileHeight, 
-                                             unsigned int itemsToRender)
-{
-    return CCAtlasNode::create(tile, tileWidth, tileHeight, itemsToRender);
-}
-
 CCAtlasNode * CCAtlasNode::create(const char *tile, unsigned int tileWidth, unsigned int tileHeight, 
 											 unsigned int itemsToRender)
 {

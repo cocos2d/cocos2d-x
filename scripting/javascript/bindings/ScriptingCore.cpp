@@ -393,7 +393,6 @@ void ScriptingCore::removeAllRoots(JSContext *cx) {
     }
     HASH_CLEAR(hh, _js_native_global_ht);
     HASH_CLEAR(hh, _native_js_global_ht);
-    HASH_CLEAR(hh, _js_global_type_ht);
 }
 
 void ScriptingCore::createGlobalContext() {
@@ -413,7 +412,7 @@ void ScriptingCore::createGlobalContext() {
     JS_SetOptions(this->cx_, JS_GetOptions(this->cx_) & ~JSOPTION_METHODJIT_ALWAYS);
     JS_SetErrorReporter(this->cx_, ScriptingCore::reportError);
 #if defined(JS_GC_ZEAL) && defined(DEBUG)
-    JS_SetGCZeal(this->cx_, 2, JS_DEFAULT_ZEAL_FREQ);
+    //JS_SetGCZeal(this->cx_, 2, JS_DEFAULT_ZEAL_FREQ);
 #endif
     this->global_ = NewGlobalObject(cx_);
     for (std::vector<sc_register_sth>::iterator it = registrationList.begin(); it != registrationList.end(); it++) {
@@ -476,6 +475,15 @@ ScriptingCore::~ScriptingCore()
         free(_js_log_buf);
         _js_log_buf = NULL;
     }
+
+    js_type_class_t* current, *tmp;
+    HASH_ITER(hh, _js_global_type_ht, current, tmp)
+    {
+        HASH_DEL(_js_global_type_ht, current);
+        free(current->jsclass);
+        free(current);
+    }
+    HASH_CLEAR(hh, _js_global_type_ht);
 }
 
 void ScriptingCore::reportError(JSContext *cx, const char *message, JSErrorReport *report)
@@ -799,6 +807,11 @@ int ScriptingCore::executeAccelerometerEvent(CCLayer *pLayer, CCAcceleration *pA
     
     JS_RemoveValueRoot(this->getGlobalContext(), &value);
     return 1;
+}
+
+int ScriptingCore::executeLayerKeypadEvent(CCLayer* pLayer, int eventType)
+{
+    return 0;
 }
 
 

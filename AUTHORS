@@ -12,6 +12,12 @@ Developers:
     Rolando Abarca
         Javascript Binding and testjs
 
+    chenium
+        fix a bug that CCRenderTexture can not work when coming to foreground on Android
+
+    9re(Taro Kobayashi)
+        add Japanese language support
+
     mingulov
         improve the speed of accessing to files from apk
 
@@ -36,6 +42,7 @@ Developers:
     edbartley
          update MSVS and MAC projects to use project-relative path
          CCControl* should not respond to touches if the control is not visible
+	 Some improvements for CCScrollView and CCTableView.
 
     Weeds 
          use fontconfig to enhance font rendering on linux
@@ -111,7 +118,7 @@ Developers:
 
     Mat Hopwood( Marmalade official engineer )
         Marmalade support for gles20 branch
-
+		
     Carlos Sessa
 	implement the accelerometer module for Android port
 
@@ -148,6 +155,13 @@ Developers:
 
     johnangel
         OpenGL framebuffer access violation fix.
+
+    Peter Farkas (fape)
+        contributes Marmalade port for gles20 branch
+        add Hungarian language support
+
+    Tomoaki Shimizu (tks2shimizu)
+	Adding randomObject to CCDictionary.
 
 Retired Core Developers:
     WenSheng Yang

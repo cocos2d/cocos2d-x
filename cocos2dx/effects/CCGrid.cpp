@@ -39,11 +39,6 @@ THE SOFTWARE.
 NS_CC_BEGIN
 // implementation of CCGridBase
 
-CCGridBase* CCGridBase::gridWithSize(const ccGridSize& gridSize)
-{
-    return CCGridBase::create(gridSize);
-}
-
 CCGridBase* CCGridBase::create(const ccGridSize& gridSize)
 {
     CCGridBase *pGridBase = new CCGridBase();
@@ -61,11 +56,6 @@ CCGridBase* CCGridBase::create(const ccGridSize& gridSize)
     }
 
     return pGridBase;
-}
-
-CCGridBase* CCGridBase::gridWithSize(const ccGridSize& gridSize, CCTexture2D *texture, bool flipped)
-{
-    return CCGridBase::create(gridSize, texture, flipped);
 }
 
 CCGridBase* CCGridBase::create(const ccGridSize& gridSize, CCTexture2D *texture, bool flipped)
@@ -263,10 +253,6 @@ void CCGridBase::calculateVertexPoints(void)
 }
 
 // implementation of CCGrid3D
-CCGrid3D* CCGrid3D::gridWithSize(const ccGridSize& gridSize, CCTexture2D *pTexture, bool bFlipped)
-{
-    return CCGrid3D::create(gridSize, pTexture, bFlipped);
-}
 
 CCGrid3D* CCGrid3D::create(const ccGridSize& gridSize, CCTexture2D *pTexture, bool bFlipped)
 {
@@ -286,11 +272,6 @@ CCGrid3D* CCGrid3D::create(const ccGridSize& gridSize, CCTexture2D *pTexture, bo
     }
 
     return pRet;
-}
-
-CCGrid3D* CCGrid3D::gridWithSize(const ccGridSize& gridSize)
-{
-    return CCGrid3D::create(gridSize);
 }
 
 CCGrid3D* CCGrid3D::create(const ccGridSize& gridSize)
@@ -486,11 +467,6 @@ CCTiledGrid3D::~CCTiledGrid3D(void)
     CC_SAFE_FREE(m_pIndices);
 }
 
-CCTiledGrid3D* CCTiledGrid3D::gridWithSize(const ccGridSize& gridSize, CCTexture2D *pTexture, bool bFlipped)
-{
-    return CCTiledGrid3D::create(gridSize, pTexture, bFlipped);
-}
-
 CCTiledGrid3D* CCTiledGrid3D::create(const ccGridSize& gridSize, CCTexture2D *pTexture, bool bFlipped)
 {
     CCTiledGrid3D *pRet= new CCTiledGrid3D();
@@ -509,11 +485,6 @@ CCTiledGrid3D* CCTiledGrid3D::create(const ccGridSize& gridSize, CCTexture2D *pT
     }
 
     return pRet;
-}
-
-CCTiledGrid3D* CCTiledGrid3D::gridWithSize(const ccGridSize& gridSize)
-{
-    return CCTiledGrid3D::create(gridSize);
 }
 
 CCTiledGrid3D* CCTiledGrid3D::create(const ccGridSize& gridSize)

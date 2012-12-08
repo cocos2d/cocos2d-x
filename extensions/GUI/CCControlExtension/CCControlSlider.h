@@ -82,23 +82,6 @@ public:
     */
     virtual bool initWithSprites(CCSprite * backgroundSprite, CCSprite* progressSprite, CCSprite* thumbSprite);
 
-
-    /** 
-    * Creates slider with a background filename, a progress filename and a 
-    * thumb image filename.
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCControlSlider* sliderWithFiles(const char* bgFile, const char* progressFile, const char* thumbFile);
-
-    /** 
-    * Creates a slider with a given background sprite and a progress bar and a
-    * thumb item.
-    *@deprecated: This interface will be deprecated sooner or later.
-    * @see initWithBackgroundSprite:progressSprite:thumbMenuItem:
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCControlSlider* sliderWithSprites(CCSprite * backgroundSprite, CCSprite* pogressSprite, CCSprite* thumbSprite);
-
-
     /** 
     * Creates slider with a background filename, a progress filename and a 
     * thumb image filename.

@@ -50,13 +50,44 @@
 		15426FE815B5743C00712A7F /* CocosDenshion.m in Sources */ = {isa = PBXBuildFile; fileRef = 15426FD515B5743C00712A7F /* CocosDenshion.m */; };
 		15426FE915B5743C00712A7F /* SimpleAudioEngine.mm in Sources */ = {isa = PBXBuildFile; fileRef = 15426FD615B5743C00712A7F /* SimpleAudioEngine.mm */; };
 		15426FEA15B5743C00712A7F /* SimpleAudioEngine_objc.m in Sources */ = {isa = PBXBuildFile; fileRef = 15426FD815B5743C00712A7F /* SimpleAudioEngine_objc.m */; };
-		157EFB9A1667302B00BF1E11 /* jsb_constants.js in Sources */ = {isa = PBXBuildFile; fileRef = 157EFB951667302B00BF1E11 /* jsb_constants.js */; };
-		157EFB9B1667302B00BF1E11 /* jsb_constants_chipmunk.js in Sources */ = {isa = PBXBuildFile; fileRef = 157EFB961667302B00BF1E11 /* jsb_constants_chipmunk.js */; };
-		157EFB9C1667302B00BF1E11 /* jsb_constants_cocos2d.js in Sources */ = {isa = PBXBuildFile; fileRef = 157EFB971667302B00BF1E11 /* jsb_constants_cocos2d.js */; };
-		157EFB9D1667302B00BF1E11 /* jsb_constants_cocosbuilder.js in Sources */ = {isa = PBXBuildFile; fileRef = 157EFB981667302B00BF1E11 /* jsb_constants_cocosbuilder.js */; };
-		157EFB9E1667302B00BF1E11 /* jsb_constants_gl.js in Sources */ = {isa = PBXBuildFile; fileRef = 157EFB991667302B00BF1E11 /* jsb_constants_gl.js */; };
-		157EFBAE1667308300BF1E11 /* cocos2dxapi.js in Sources */ = {isa = PBXBuildFile; fileRef = 157EFBAD1667308300BF1E11 /* cocos2dxapi.js */; };
-		157EFBB0166730EF00BF1E11 /* Published files iOS in Resources */ = {isa = PBXBuildFile; fileRef = 157EFBAF166730EF00BF1E11 /* Published files iOS */; };
+		159001F8166DA87D006BF838 /* cocos2dxapi.js in Resources */ = {isa = PBXBuildFile; fileRef = 157EFBAD1667308300BF1E11 /* cocos2dxapi.js */; };
+		159001F9166DA87D006BF838 /* jsb_constants.js in Resources */ = {isa = PBXBuildFile; fileRef = 157EFB951667302B00BF1E11 /* jsb_constants.js */; };
+		159001FA166DA87D006BF838 /* jsb_constants_chipmunk.js in Resources */ = {isa = PBXBuildFile; fileRef = 157EFB961667302B00BF1E11 /* jsb_constants_chipmunk.js */; };
+		159001FB166DA87D006BF838 /* jsb_constants_cocos2d.js in Resources */ = {isa = PBXBuildFile; fileRef = 157EFB971667302B00BF1E11 /* jsb_constants_cocos2d.js */; };
+		159001FC166DA87D006BF838 /* jsb_constants_cocosbuilder.js in Resources */ = {isa = PBXBuildFile; fileRef = 157EFB981667302B00BF1E11 /* jsb_constants_cocosbuilder.js */; };
+		159001FD166DA87D006BF838 /* jsb_constants_gl.js in Resources */ = {isa = PBXBuildFile; fileRef = 157EFB991667302B00BF1E11 /* jsb_constants_gl.js */; };
+		159002EE166DAB3E006BF838 /* Bomb.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = 159002C8166DAB3E006BF838 /* Bomb.ccbi */; };
+		159002F0166DAB3E006BF838 /* ccbResources in Resources */ = {isa = PBXBuildFile; fileRef = 159002CA166DAB3E006BF838 /* ccbResources */; };
+		159002F1166DAB3E006BF838 /* cloud.png in Resources */ = {isa = PBXBuildFile; fileRef = 159002CB166DAB3E006BF838 /* cloud.png */; };
+		159002F2166DAB3E006BF838 /* Coin.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = 159002CC166DAB3E006BF838 /* Coin.ccbi */; };
+		159002F4166DAB3E006BF838 /* Coin.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 159002CE166DAB3E006BF838 /* Coin.mp3 */; };
+		159002F5166DAB3E006BF838 /* Dragon.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = 159002CF166DAB3E006BF838 /* Dragon.ccbi */; };
+		159002F7166DAB3E006BF838 /* EndCoin.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = 159002D1166DAB3E006BF838 /* EndCoin.ccbi */; };
+		159002F9166DAB3E006BF838 /* Explo.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 159002D3166DAB3E006BF838 /* Explo.mp3 */; };
+		159002FA166DAB3E006BF838 /* Explosion.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = 159002D4166DAB3E006BF838 /* Explosion.ccbi */; };
+		159002FC166DAB3E006BF838 /* gameobjects.plist in Resources */ = {isa = PBXBuildFile; fileRef = 159002D6166DAB3E006BF838 /* gameobjects.plist */; };
+		159002FD166DAB3E006BF838 /* gameobjects.png in Resources */ = {isa = PBXBuildFile; fileRef = 159002D7166DAB3E006BF838 /* gameobjects.png */; };
+		159002FE166DAB3E006BF838 /* GameScene.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = 159002D8166DAB3E006BF838 /* GameScene.ccbi */; };
+		15900300166DAB3E006BF838 /* Level.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = 159002DA166DAB3E006BF838 /* Level.ccbi */; };
+		15900302166DAB3E006BF838 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 159002DC166DAB3E006BF838 /* logo.png */; };
+		15900304166DAB3E006BF838 /* MainMenuScene.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = 159002DE166DAB3E006BF838 /* MainMenuScene.ccbi */; };
+		15900306166DAB3E006BF838 /* Music.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 159002E0166DAB3E006BF838 /* Music.mp3 */; };
+		15900307166DAB3E006BF838 /* play-button-down.png in Resources */ = {isa = PBXBuildFile; fileRef = 159002E1166DAB3E006BF838 /* play-button-down.png */; };
+		15900308166DAB3E006BF838 /* play-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 159002E2166DAB3E006BF838 /* play-button.png */; };
+		1590030A166DAB3E006BF838 /* resources-ipad in Resources */ = {isa = PBXBuildFile; fileRef = 159002E4166DAB3E006BF838 /* resources-ipad */; };
+		1590030B166DAB3E006BF838 /* resources-ipadhd in Resources */ = {isa = PBXBuildFile; fileRef = 159002E5166DAB3E006BF838 /* resources-ipadhd */; };
+		1590030C166DAB3E006BF838 /* resources-iphone in Resources */ = {isa = PBXBuildFile; fileRef = 159002E6166DAB3E006BF838 /* resources-iphone */; };
+		1590030D166DAB3E006BF838 /* resources-iphonehd in Resources */ = {isa = PBXBuildFile; fileRef = 159002E7166DAB3E006BF838 /* resources-iphonehd */; };
+		1590030E166DAB3E006BF838 /* settings-button-down.png in Resources */ = {isa = PBXBuildFile; fileRef = 159002E8166DAB3E006BF838 /* settings-button-down.png */; };
+		1590030F166DAB3E006BF838 /* settings-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 159002E9166DAB3E006BF838 /* settings-button.png */; };
+		15900310166DAB3E006BF838 /* settings-caption-music.png in Resources */ = {isa = PBXBuildFile; fileRef = 159002EA166DAB3E006BF838 /* settings-caption-music.png */; };
+		15900311166DAB3E006BF838 /* settings-caption-musicoff.png in Resources */ = {isa = PBXBuildFile; fileRef = 159002EB166DAB3E006BF838 /* settings-caption-musicoff.png */; };
+		15900312166DAB3E006BF838 /* settings-caption-tilt.png in Resources */ = {isa = PBXBuildFile; fileRef = 159002EC166DAB3E006BF838 /* settings-caption-tilt.png */; };
+		15900313166DAB3E006BF838 /* settings-caption-touch.png in Resources */ = {isa = PBXBuildFile; fileRef = 159002ED166DAB3E006BF838 /* settings-caption-touch.png */; };
+		159004B2166DE190006BF838 /* Icon-57.png in Resources */ = {isa = PBXBuildFile; fileRef = 159004B1166DE18F006BF838 /* Icon-57.png */; };
+		159004B4166DE19C006BF838 /* Icon-114.png in Resources */ = {isa = PBXBuildFile; fileRef = 159004B3166DE19C006BF838 /* Icon-114.png */; };
+		159004B6166DE1A8006BF838 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 159004B5166DE1A8006BF838 /* Icon-72.png */; };
+		159004B8166DE1AF006BF838 /* Icon-144.png in Resources */ = {isa = PBXBuildFile; fileRef = 159004B7166DE1AF006BF838 /* Icon-144.png */; };
 		15CFE1A61612FD0E00BF2188 /* CCControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15CFE18D1612FD0E00BF2188 /* CCControl.cpp */; };
 		15CFE1A71612FD0E00BF2188 /* CCControlButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15CFE18F1612FD0E00BF2188 /* CCControlButton.cpp */; };
 		15CFE1A81612FD0E00BF2188 /* CCControlColourPicker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15CFE1911612FD0E00BF2188 /* CCControlColourPicker.cpp */; };
@@ -71,6 +102,16 @@
 		15CFE1B11612FD0E00BF2188 /* CCScale9Sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15CFE1A41612FD0E00BF2188 /* CCScale9Sprite.cpp */; };
 		15E2AE9E165DC52C00F7743F /* CCPhysicsDebugNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15E2AE9A165DC52C00F7743F /* CCPhysicsDebugNode.cpp */; };
 		15E2AE9F165DC52C00F7743F /* CCPhysicsSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15E2AE9C165DC52C00F7743F /* CCPhysicsSprite.cpp */; };
+		1AB02DCD166DFB9B009465F5 /* Bomb.js in Resources */ = {isa = PBXBuildFile; fileRef = 159002C9166DAB3E006BF838 /* Bomb.js */; };
+		1AB02DCE166DFB9B009465F5 /* Coin.js in Resources */ = {isa = PBXBuildFile; fileRef = 159002CD166DAB3E006BF838 /* Coin.js */; };
+		1AB02DCF166DFB9B009465F5 /* Dragon.js in Resources */ = {isa = PBXBuildFile; fileRef = 159002D0166DAB3E006BF838 /* Dragon.js */; };
+		1AB02DD0166DFB9B009465F5 /* EndCoin.js in Resources */ = {isa = PBXBuildFile; fileRef = 159002D2166DAB3E006BF838 /* EndCoin.js */; };
+		1AB02DD1166DFB9B009465F5 /* Explosion.js in Resources */ = {isa = PBXBuildFile; fileRef = 159002D5166DAB3E006BF838 /* Explosion.js */; };
+		1AB02DD2166DFB9B009465F5 /* GameScene.js in Resources */ = {isa = PBXBuildFile; fileRef = 159002D9166DAB3E006BF838 /* GameScene.js */; };
+		1AB02DD3166DFB9B009465F5 /* Level.js in Resources */ = {isa = PBXBuildFile; fileRef = 159002DB166DAB3E006BF838 /* Level.js */; };
+		1AB02DD4166DFB9B009465F5 /* main.js in Resources */ = {isa = PBXBuildFile; fileRef = 159002DD166DAB3E006BF838 /* main.js */; };
+		1AB02DD5166DFB9B009465F5 /* MainMenuScene.js in Resources */ = {isa = PBXBuildFile; fileRef = 159002DF166DAB3E006BF838 /* MainMenuScene.js */; };
+		1AB02DD6166DFB9B009465F5 /* resources-html5.js in Resources */ = {isa = PBXBuildFile; fileRef = 159002E3166DAB3E006BF838 /* resources-html5.js */; };
 		262829DB15EC7196002C4240 /* chipmunk.c in Sources */ = {isa = PBXBuildFile; fileRef = 262829AC15EC7196002C4240 /* chipmunk.c */; };
 		262829DD15EC7196002C4240 /* cpConstraint.c in Sources */ = {isa = PBXBuildFile; fileRef = 262829AF15EC7196002C4240 /* cpConstraint.c */; };
 		262829DE15EC7196002C4240 /* cpDampedRotarySpring.c in Sources */ = {isa = PBXBuildFile; fileRef = 262829B015EC7196002C4240 /* cpDampedRotarySpring.c */; };
@@ -245,7 +286,48 @@
 		157EFB981667302B00BF1E11 /* jsb_constants_cocosbuilder.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_constants_cocosbuilder.js; sourceTree = "<group>"; };
 		157EFB991667302B00BF1E11 /* jsb_constants_gl.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_constants_gl.js; sourceTree = "<group>"; };
 		157EFBAD1667308300BF1E11 /* cocos2dxapi.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = cocos2dxapi.js; path = ../../../scripting/javascript/bindings/generated/cocos2dxapi.js; sourceTree = "<group>"; };
-		157EFBAF166730EF00BF1E11 /* Published files iOS */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "Published files iOS"; path = "../../TestJavascript/cocos2d-js-tests/games/CocosDragonJS/Published files iOS"; sourceTree = "<group>"; };
+		159002C8166DAB3E006BF838 /* Bomb.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; name = Bomb.ccbi; path = "../../TestJavascript/cocos2d-js-tests/games/CocosDragonJS/Published files iOS/Bomb.ccbi"; sourceTree = "<group>"; };
+		159002C9166DAB3E006BF838 /* Bomb.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = Bomb.js; path = "../../TestJavascript/cocos2d-js-tests/games/CocosDragonJS/Published files iOS/Bomb.js"; sourceTree = "<group>"; };
+		159002CA166DAB3E006BF838 /* ccbResources */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ccbResources; path = "../../TestJavascript/cocos2d-js-tests/games/CocosDragonJS/Published files iOS/ccbResources"; sourceTree = "<group>"; };
+		159002CB166DAB3E006BF838 /* cloud.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cloud.png; path = "../../TestJavascript/cocos2d-js-tests/games/CocosDragonJS/Published files iOS/cloud.png"; sourceTree = "<group>"; };
+		159002CC166DAB3E006BF838 /* Coin.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; name = Coin.ccbi; path = "../../TestJavascript/cocos2d-js-tests/games/CocosDragonJS/Published files iOS/Coin.ccbi"; sourceTree = "<group>"; };
+		159002CD166DAB3E006BF838 /* Coin.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = Coin.js; path = "../../TestJavascript/cocos2d-js-tests/games/CocosDragonJS/Published files iOS/Coin.js"; sourceTree = "<group>"; };
+		159002CE166DAB3E006BF838 /* Coin.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Coin.mp3; path = "../../TestJavascript/cocos2d-js-tests/games/CocosDragonJS/Published files iOS/Coin.mp3"; sourceTree = "<group>"; };
+		159002CF166DAB3E006BF838 /* Dragon.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; name = Dragon.ccbi; path = "../../TestJavascript/cocos2d-js-tests/games/CocosDragonJS/Published files iOS/Dragon.ccbi"; sourceTree = "<group>"; };
+		159002D0166DAB3E006BF838 /* Dragon.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = Dragon.js; path = "../../TestJavascript/cocos2d-js-tests/games/CocosDragonJS/Published files iOS/Dragon.js"; sourceTree = "<group>"; };
+		159002D1166DAB3E006BF838 /* EndCoin.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; name = EndCoin.ccbi; path = "../../TestJavascript/cocos2d-js-tests/games/CocosDragonJS/Published files iOS/EndCoin.ccbi"; sourceTree = "<group>"; };
+		159002D2166DAB3E006BF838 /* EndCoin.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = EndCoin.js; path = "../../TestJavascript/cocos2d-js-tests/games/CocosDragonJS/Published files iOS/EndCoin.js"; sourceTree = "<group>"; };
+		159002D3166DAB3E006BF838 /* Explo.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Explo.mp3; path = "../../TestJavascript/cocos2d-js-tests/games/CocosDragonJS/Published files iOS/Explo.mp3"; sourceTree = "<group>"; };
+		159002D4166DAB3E006BF838 /* Explosion.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; name = Explosion.ccbi; path = "../../TestJavascript/cocos2d-js-tests/games/CocosDragonJS/Published files iOS/Explosion.ccbi"; sourceTree = "<group>"; };
+		159002D5166DAB3E006BF838 /* Explosion.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = Explosion.js; path = "../../TestJavascript/cocos2d-js-tests/games/CocosDragonJS/Published files iOS/Explosion.js"; sourceTree = "<group>"; };
+		159002D6166DAB3E006BF838 /* gameobjects.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = gameobjects.plist; path = "../../TestJavascript/cocos2d-js-tests/games/CocosDragonJS/Published files iOS/gameobjects.plist"; sourceTree = "<group>"; };
+		159002D7166DAB3E006BF838 /* gameobjects.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = gameobjects.png; path = "../../TestJavascript/cocos2d-js-tests/games/CocosDragonJS/Published files iOS/gameobjects.png"; sourceTree = "<group>"; };
+		159002D8166DAB3E006BF838 /* GameScene.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; name = GameScene.ccbi; path = "../../TestJavascript/cocos2d-js-tests/games/CocosDragonJS/Published files iOS/GameScene.ccbi"; sourceTree = "<group>"; };
+		159002D9166DAB3E006BF838 /* GameScene.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = GameScene.js; path = "../../TestJavascript/cocos2d-js-tests/games/CocosDragonJS/Published files iOS/GameScene.js"; sourceTree = "<group>"; };
+		159002DA166DAB3E006BF838 /* Level.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; name = Level.ccbi; path = "../../TestJavascript/cocos2d-js-tests/games/CocosDragonJS/Published files iOS/Level.ccbi"; sourceTree = "<group>"; };
+		159002DB166DAB3E006BF838 /* Level.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = Level.js; path = "../../TestJavascript/cocos2d-js-tests/games/CocosDragonJS/Published files iOS/Level.js"; sourceTree = "<group>"; };
+		159002DC166DAB3E006BF838 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo.png; path = "../../TestJavascript/cocos2d-js-tests/games/CocosDragonJS/Published files iOS/logo.png"; sourceTree = "<group>"; };
+		159002DD166DAB3E006BF838 /* main.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = main.js; path = "../../TestJavascript/cocos2d-js-tests/games/CocosDragonJS/Published files iOS/main.js"; sourceTree = "<group>"; };
+		159002DE166DAB3E006BF838 /* MainMenuScene.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; name = MainMenuScene.ccbi; path = "../../TestJavascript/cocos2d-js-tests/games/CocosDragonJS/Published files iOS/MainMenuScene.ccbi"; sourceTree = "<group>"; };
+		159002DF166DAB3E006BF838 /* MainMenuScene.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = MainMenuScene.js; path = "../../TestJavascript/cocos2d-js-tests/games/CocosDragonJS/Published files iOS/MainMenuScene.js"; sourceTree = "<group>"; };
+		159002E0166DAB3E006BF838 /* Music.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Music.mp3; path = "../../TestJavascript/cocos2d-js-tests/games/CocosDragonJS/Published files iOS/Music.mp3"; sourceTree = "<group>"; };
+		159002E1166DAB3E006BF838 /* play-button-down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "play-button-down.png"; path = "../../TestJavascript/cocos2d-js-tests/games/CocosDragonJS/Published files iOS/play-button-down.png"; sourceTree = "<group>"; };
+		159002E2166DAB3E006BF838 /* play-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "play-button.png"; path = "../../TestJavascript/cocos2d-js-tests/games/CocosDragonJS/Published files iOS/play-button.png"; sourceTree = "<group>"; };
+		159002E3166DAB3E006BF838 /* resources-html5.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = "resources-html5.js"; path = "../../TestJavascript/cocos2d-js-tests/games/CocosDragonJS/Published files iOS/resources-html5.js"; sourceTree = "<group>"; };
+		159002E4166DAB3E006BF838 /* resources-ipad */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "resources-ipad"; path = "../../TestJavascript/cocos2d-js-tests/games/CocosDragonJS/Published files iOS/resources-ipad"; sourceTree = "<group>"; };
+		159002E5166DAB3E006BF838 /* resources-ipadhd */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "resources-ipadhd"; path = "../../TestJavascript/cocos2d-js-tests/games/CocosDragonJS/Published files iOS/resources-ipadhd"; sourceTree = "<group>"; };
+		159002E6166DAB3E006BF838 /* resources-iphone */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "resources-iphone"; path = "../../TestJavascript/cocos2d-js-tests/games/CocosDragonJS/Published files iOS/resources-iphone"; sourceTree = "<group>"; };
+		159002E7166DAB3E006BF838 /* resources-iphonehd */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "resources-iphonehd"; path = "../../TestJavascript/cocos2d-js-tests/games/CocosDragonJS/Published files iOS/resources-iphonehd"; sourceTree = "<group>"; };
+		159002E8166DAB3E006BF838 /* settings-button-down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "settings-button-down.png"; path = "../../TestJavascript/cocos2d-js-tests/games/CocosDragonJS/Published files iOS/settings-button-down.png"; sourceTree = "<group>"; };
+		159002E9166DAB3E006BF838 /* settings-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "settings-button.png"; path = "../../TestJavascript/cocos2d-js-tests/games/CocosDragonJS/Published files iOS/settings-button.png"; sourceTree = "<group>"; };
+		159002EA166DAB3E006BF838 /* settings-caption-music.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "settings-caption-music.png"; path = "../../TestJavascript/cocos2d-js-tests/games/CocosDragonJS/Published files iOS/settings-caption-music.png"; sourceTree = "<group>"; };
+		159002EB166DAB3E006BF838 /* settings-caption-musicoff.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "settings-caption-musicoff.png"; path = "../../TestJavascript/cocos2d-js-tests/games/CocosDragonJS/Published files iOS/settings-caption-musicoff.png"; sourceTree = "<group>"; };
+		159002EC166DAB3E006BF838 /* settings-caption-tilt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "settings-caption-tilt.png"; path = "../../TestJavascript/cocos2d-js-tests/games/CocosDragonJS/Published files iOS/settings-caption-tilt.png"; sourceTree = "<group>"; };
+		159002ED166DAB3E006BF838 /* settings-caption-touch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "settings-caption-touch.png"; path = "../../TestJavascript/cocos2d-js-tests/games/CocosDragonJS/Published files iOS/settings-caption-touch.png"; sourceTree = "<group>"; };
+		159004B1166DE18F006BF838 /* Icon-57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-57.png"; sourceTree = "<group>"; };
+		159004B3166DE19C006BF838 /* Icon-114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-114.png"; sourceTree = "<group>"; };
+		159004B5166DE1A8006BF838 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
+		159004B7166DE1AF006BF838 /* Icon-144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-144.png"; sourceTree = "<group>"; };
 		15CFE18D1612FD0E00BF2188 /* CCControl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCControl.cpp; sourceTree = "<group>"; };
 		15CFE18E1612FD0E00BF2188 /* CCControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCControl.h; sourceTree = "<group>"; };
 		15CFE18F1612FD0E00BF2188 /* CCControlButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCControlButton.cpp; sourceTree = "<group>"; };
@@ -589,7 +671,11 @@
 		15628F5B15F0F5C2000CF24B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				157EFBAF166730EF00BF1E11 /* Published files iOS */,
+				159004B7166DE1AF006BF838 /* Icon-144.png */,
+				159004B5166DE1A8006BF838 /* Icon-72.png */,
+				159004B3166DE19C006BF838 /* Icon-114.png */,
+				159004B1166DE18F006BF838 /* Icon-57.png */,
+				159002C7166DAB1B006BF838 /* cocosdragon */,
 				157EFBAD1667308300BF1E11 /* cocos2dxapi.js */,
 				157EFB941667302B00BF1E11 /* js */,
 				D446FDA616102D86000ADA7B /* Default-568h@2x.png */,
@@ -610,6 +696,51 @@
 			);
 			name = js;
 			path = ../../../scripting/javascript/bindings/js;
+			sourceTree = "<group>";
+		};
+		159002C7166DAB1B006BF838 /* cocosdragon */ = {
+			isa = PBXGroup;
+			children = (
+				159002C8166DAB3E006BF838 /* Bomb.ccbi */,
+				159002C9166DAB3E006BF838 /* Bomb.js */,
+				159002CA166DAB3E006BF838 /* ccbResources */,
+				159002CB166DAB3E006BF838 /* cloud.png */,
+				159002CC166DAB3E006BF838 /* Coin.ccbi */,
+				159002CD166DAB3E006BF838 /* Coin.js */,
+				159002CE166DAB3E006BF838 /* Coin.mp3 */,
+				159002CF166DAB3E006BF838 /* Dragon.ccbi */,
+				159002D0166DAB3E006BF838 /* Dragon.js */,
+				159002D1166DAB3E006BF838 /* EndCoin.ccbi */,
+				159002D2166DAB3E006BF838 /* EndCoin.js */,
+				159002D3166DAB3E006BF838 /* Explo.mp3 */,
+				159002D4166DAB3E006BF838 /* Explosion.ccbi */,
+				159002D5166DAB3E006BF838 /* Explosion.js */,
+				159002D6166DAB3E006BF838 /* gameobjects.plist */,
+				159002D7166DAB3E006BF838 /* gameobjects.png */,
+				159002D8166DAB3E006BF838 /* GameScene.ccbi */,
+				159002D9166DAB3E006BF838 /* GameScene.js */,
+				159002DA166DAB3E006BF838 /* Level.ccbi */,
+				159002DB166DAB3E006BF838 /* Level.js */,
+				159002DC166DAB3E006BF838 /* logo.png */,
+				159002DD166DAB3E006BF838 /* main.js */,
+				159002DE166DAB3E006BF838 /* MainMenuScene.ccbi */,
+				159002DF166DAB3E006BF838 /* MainMenuScene.js */,
+				159002E0166DAB3E006BF838 /* Music.mp3 */,
+				159002E1166DAB3E006BF838 /* play-button-down.png */,
+				159002E2166DAB3E006BF838 /* play-button.png */,
+				159002E3166DAB3E006BF838 /* resources-html5.js */,
+				159002E4166DAB3E006BF838 /* resources-ipad */,
+				159002E5166DAB3E006BF838 /* resources-ipadhd */,
+				159002E6166DAB3E006BF838 /* resources-iphone */,
+				159002E7166DAB3E006BF838 /* resources-iphonehd */,
+				159002E8166DAB3E006BF838 /* settings-button-down.png */,
+				159002E9166DAB3E006BF838 /* settings-button.png */,
+				159002EA166DAB3E006BF838 /* settings-caption-music.png */,
+				159002EB166DAB3E006BF838 /* settings-caption-musicoff.png */,
+				159002EC166DAB3E006BF838 /* settings-caption-tilt.png */,
+				159002ED166DAB3E006BF838 /* settings-caption-touch.png */,
+			);
+			name = cocosdragon;
 			sourceTree = "<group>";
 		};
 		15CFE18C1612FD0E00BF2188 /* CCControlExtension */ = {
@@ -891,10 +1022,57 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1AB02DCD166DFB9B009465F5 /* Bomb.js in Resources */,
+				1AB02DCE166DFB9B009465F5 /* Coin.js in Resources */,
+				1AB02DCF166DFB9B009465F5 /* Dragon.js in Resources */,
+				1AB02DD0166DFB9B009465F5 /* EndCoin.js in Resources */,
+				1AB02DD1166DFB9B009465F5 /* Explosion.js in Resources */,
+				1AB02DD2166DFB9B009465F5 /* GameScene.js in Resources */,
+				1AB02DD3166DFB9B009465F5 /* Level.js in Resources */,
+				1AB02DD4166DFB9B009465F5 /* main.js in Resources */,
+				1AB02DD5166DFB9B009465F5 /* MainMenuScene.js in Resources */,
+				1AB02DD6166DFB9B009465F5 /* resources-html5.js in Resources */,
+				159001F8166DA87D006BF838 /* cocos2dxapi.js in Resources */,
+				159001F9166DA87D006BF838 /* jsb_constants.js in Resources */,
+				159001FA166DA87D006BF838 /* jsb_constants_chipmunk.js in Resources */,
+				159001FB166DA87D006BF838 /* jsb_constants_cocos2d.js in Resources */,
+				159001FC166DA87D006BF838 /* jsb_constants_cocosbuilder.js in Resources */,
+				159001FD166DA87D006BF838 /* jsb_constants_gl.js in Resources */,
 				D446FDA316102D7D000ADA7B /* Default.png in Resources */,
 				D446FDA516102D82000ADA7B /* Default@2x.png in Resources */,
 				D446FDA716102D86000ADA7B /* Default-568h@2x.png in Resources */,
-				157EFBB0166730EF00BF1E11 /* Published files iOS in Resources */,
+				159002EE166DAB3E006BF838 /* Bomb.ccbi in Resources */,
+				159002F0166DAB3E006BF838 /* ccbResources in Resources */,
+				159002F1166DAB3E006BF838 /* cloud.png in Resources */,
+				159002F2166DAB3E006BF838 /* Coin.ccbi in Resources */,
+				159002F4166DAB3E006BF838 /* Coin.mp3 in Resources */,
+				159002F5166DAB3E006BF838 /* Dragon.ccbi in Resources */,
+				159002F7166DAB3E006BF838 /* EndCoin.ccbi in Resources */,
+				159002F9166DAB3E006BF838 /* Explo.mp3 in Resources */,
+				159002FA166DAB3E006BF838 /* Explosion.ccbi in Resources */,
+				159002FC166DAB3E006BF838 /* gameobjects.plist in Resources */,
+				159002FD166DAB3E006BF838 /* gameobjects.png in Resources */,
+				159002FE166DAB3E006BF838 /* GameScene.ccbi in Resources */,
+				15900300166DAB3E006BF838 /* Level.ccbi in Resources */,
+				15900302166DAB3E006BF838 /* logo.png in Resources */,
+				15900304166DAB3E006BF838 /* MainMenuScene.ccbi in Resources */,
+				15900306166DAB3E006BF838 /* Music.mp3 in Resources */,
+				15900307166DAB3E006BF838 /* play-button-down.png in Resources */,
+				15900308166DAB3E006BF838 /* play-button.png in Resources */,
+				1590030A166DAB3E006BF838 /* resources-ipad in Resources */,
+				1590030B166DAB3E006BF838 /* resources-ipadhd in Resources */,
+				1590030C166DAB3E006BF838 /* resources-iphone in Resources */,
+				1590030D166DAB3E006BF838 /* resources-iphonehd in Resources */,
+				1590030E166DAB3E006BF838 /* settings-button-down.png in Resources */,
+				1590030F166DAB3E006BF838 /* settings-button.png in Resources */,
+				15900310166DAB3E006BF838 /* settings-caption-music.png in Resources */,
+				15900311166DAB3E006BF838 /* settings-caption-musicoff.png in Resources */,
+				15900312166DAB3E006BF838 /* settings-caption-tilt.png in Resources */,
+				15900313166DAB3E006BF838 /* settings-caption-touch.png in Resources */,
+				159004B2166DE190006BF838 /* Icon-57.png in Resources */,
+				159004B4166DE19C006BF838 /* Icon-114.png in Resources */,
+				159004B6166DE1A8006BF838 /* Icon-72.png in Resources */,
+				159004B8166DE1AF006BF838 /* Icon-144.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -999,12 +1177,6 @@
 				263B98D716548EB700228D8A /* js_bindings_chipmunk_manual.cpp in Sources */,
 				15E2AE9E165DC52C00F7743F /* CCPhysicsDebugNode.cpp in Sources */,
 				15E2AE9F165DC52C00F7743F /* CCPhysicsSprite.cpp in Sources */,
-				157EFB9A1667302B00BF1E11 /* jsb_constants.js in Sources */,
-				157EFB9B1667302B00BF1E11 /* jsb_constants_chipmunk.js in Sources */,
-				157EFB9C1667302B00BF1E11 /* jsb_constants_cocos2d.js in Sources */,
-				157EFB9D1667302B00BF1E11 /* jsb_constants_cocosbuilder.js in Sources */,
-				157EFB9E1667302B00BF1E11 /* jsb_constants_gl.js in Sources */,
-				157EFBAE1667308300BF1E11 /* cocos2dxapi.js in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

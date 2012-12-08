@@ -397,12 +397,6 @@ public:
 
     const char* description(void);
 
-    /** allocates and initializes a node.
-     The node will be created as "autorelease".
-	 @deprecated: This interface will be deprecated sooner or later.
-     */
-    CC_DEPRECATED_ATTRIBUTE static CCNode * node(void);
-
 	/** allocates and initializes a node.
      The node will be created as "autorelease".
      */

@@ -147,9 +147,17 @@ ccLanguageType CCApplication::getCurrentLanguage()
 	{
 		ret_language = kLanguageRussian;
 	}
-    else if (strcmp(language, "ko") == 0)
+	else if (strcmp(language, "ko") == 0)
 	{
 		ret_language = kLanguageKorean;
+	}
+	else if (strcmp(language, "ja") == 0)
+	{
+		ret_language = kLanguageJapanese;
+	}
+	else if (strcmp(language, "hu") == 0)
+	{
+		ret_language = kLanguageHungarian;
 	}
 
 	free(language);

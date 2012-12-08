@@ -25,18 +25,32 @@ bool AppDelegate::applicationDidFinishLaunching()
     // initialize director
     CCDirector *pDirector = CCDirector::sharedDirector();
     pDirector->setOpenGLView(CCEGLView::sharedOpenGLView());
+    pDirector->setProjection(kCCDirectorProjection2D);
 
 
     CCSize screenSize = CCEGLView::sharedOpenGLView()->getFrameSize();
 
     CCSize designSize = CCSizeMake(320, 480);
+    CCSize resourceSize = CCSizeMake(320, 480);
     
-//     if (screenSize.height > 320)
-//     {
-//         CCSize resourceSize = CCSizeMake(640, 960);
-//         CCFileUtils::sharedFileUtils()->setResourceDirectory("hd");
-//         pDirector->setContentScaleFactor(resourceSize.height/designSize.height);
-//     }
+    if (screenSize.height > 768)
+    {
+        resourceSize = CCSizeMake(1536, 2048);
+        CCFileUtils::sharedFileUtils()->setResourceDirectory("resources-ipadhd");
+    }
+     else if (screenSize.height > 640)
+    {
+        resourceSize = CCSizeMake(768, 1536);
+        CCFileUtils::sharedFileUtils()->setResourceDirectory("resources-ipad");
+    }
+    else if (screenSize.height > 320)
+    {
+        resourceSize = CCSizeMake(640, 960);
+        CCFileUtils::sharedFileUtils()->setResourceDirectory("resources-iphonehd");
+        
+    }
+    
+    pDirector->setContentScaleFactor(resourceSize.height/designSize.height);
 
     CCEGLView::sharedOpenGLView()->setDesignResolutionSize(designSize.width, designSize.height, kResolutionNoBorder);
     
