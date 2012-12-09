@@ -141,9 +141,10 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
 
 string CCFileUtils::getWriteablePath()
 {
-    // the path is: /data/data/ + package name
-    string dir("/data/data/");
-    const char *tmp = getPackageNameJNI();
+    // Fix for Nexus 10 (Android 4.2 multi-user environment)
+    // the path is retrieved through Java Context.getCacheDir() method
+    string dir("");
+    const char *tmp = getCacheDirectoryJNI();
 
     if (tmp)
     {
