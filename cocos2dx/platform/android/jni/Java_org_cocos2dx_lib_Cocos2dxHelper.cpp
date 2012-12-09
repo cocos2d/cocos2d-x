@@ -21,7 +21,7 @@ using namespace std;
 extern "C" {
     string g_apkPath;
     
-    void Java_org_cocos2dx_lib_Cocos2dxHelper_nativeSetApkPath(JNIEnv*  env, jobject thiz, jstring apkPath) {
+    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxHelper_nativeSetApkPath(JNIEnv*  env, jobject thiz, jstring apkPath) {
         g_apkPath = JniHelper::jstring2string(apkPath);
     }
 
@@ -29,7 +29,7 @@ extern "C" {
         return g_apkPath.c_str();
     }
 
-    void Java_org_cocos2dx_lib_Cocos2dxHelper_nativeSetExternalAssetPath(JNIEnv*  env, jobject thiz, jstring externalAssetPath) {
+    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxHelper_nativeSetExternalAssetPath(JNIEnv*  env, jobject thiz, jstring externalAssetPath) {
         const char* externalAssetPathChars = env->GetStringUTFChars(externalAssetPath, NULL);
         cocos2d::JniHelper::setExternalAssetPath(externalAssetPathChars);
         env->ReleaseStringUTFChars(externalAssetPath, externalAssetPathChars);
@@ -87,7 +87,7 @@ extern "C" {
         }
     }
 
-    void Java_org_cocos2dx_lib_Cocos2dxHelper_nativeSetEditTextDialogResult(JNIEnv * env, jobject obj, jbyteArray text) {
+    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxHelper_nativeSetEditTextDialogResult(JNIEnv * env, jobject obj, jbyteArray text) {
         jsize  size = env->GetArrayLength(text);
 
         if (size > 0) {
