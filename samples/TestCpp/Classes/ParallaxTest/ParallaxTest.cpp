@@ -68,8 +68,8 @@ Parallax1::Parallax1()
     CCActionInterval* goDown = goUp->reverse();
     CCActionInterval* go = CCMoveBy::create(8, ccp(-1000,0) );
     CCActionInterval* goBack = go->reverse();
-    CCFiniteTimeAction* seq = CCSequence::create(goUp, go, goDown, goBack, NULL);
-    voidNode->runAction( (CCRepeatForever::create((CCActionInterval*) seq) ));
+    CCSequence* seq = CCSequence::create(goUp, go, goDown, goBack, NULL);
+    voidNode->runAction( (CCRepeatForever::create(seq) ));
     
     addChild( voidNode );
 }
