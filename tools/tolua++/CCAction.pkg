@@ -63,7 +63,7 @@ class CCSequence : public CCActionInterval
 	CCObject* copyWithZone(CCZone* pZone);
 	CCActionInterval* reverse(void);
 
-    static CCFiniteTimeAction* createWithTwoActions(CCFiniteTimeAction *pActionOne, CCFiniteTimeAction *pActionTwo);
+    static CCSequence* createWithTwoActions(CCFiniteTimeAction *pActionOne, CCFiniteTimeAction *pActionTwo);
     static CCFiniteTimeAction* create(CCArray *actions);
 };
 
