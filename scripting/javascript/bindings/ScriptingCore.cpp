@@ -407,7 +407,7 @@ void ScriptingCore::createGlobalContext() {
         this->cx_ = NULL;
         this->rt_ = NULL;
     }
-	JS_SetCStringsAreUTF8();
+//	JS_SetCStringsAreUTF8();
     this->rt_ = JS_NewRuntime(10 * 1024 * 1024);
     this->cx_ = JS_NewContext(rt_, 10240);
     JS_SetOptions(this->cx_, JSOPTION_TYPE_INFERENCE);
