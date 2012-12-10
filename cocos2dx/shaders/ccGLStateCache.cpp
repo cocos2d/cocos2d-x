@@ -49,6 +49,8 @@ static GLuint    s_uCurrentShaderProgram = -1;
 static GLuint    s_uCurrentBoundTexture[kCCMaxActiveTexture] =  {(GLuint)-1,(GLuint)-1,(GLuint)-1,(GLuint)-1, (GLuint)-1,(GLuint)-1,(GLuint)-1,(GLuint)-1, (GLuint)-1,(GLuint)-1,(GLuint)-1,(GLuint)-1, (GLuint)-1,(GLuint)-1,(GLuint)-1,(GLuint)-1, };
 static GLenum    s_eBlendingSource = -1;
 static GLenum    s_eBlendingDest = -1;
+static GLenum    s_eBlendingSourceAlpha = -1;
+static GLenum    s_eBlendingDestAlpha = -1;
 static int       s_eGLServerState = 0;
 static GLuint    s_uVAO = 0;
 #endif // CC_ENABLE_GL_STATE_CACHE
@@ -101,30 +103,49 @@ void ccGLUseProgram( GLuint program )
 #endif // CC_ENABLE_GL_STATE_CACHE
 }
 
-static void SetBlending(GLenum sfactor, GLenum dfactor)
+static void SetBlending(GLenum srcRGB, GLenum dstRGB, GLenum srcAlpha, GLenum dstAlpha)
 {
-	if (sfactor == GL_ONE && dfactor == GL_ZERO)
+	if (srcRGB == GL_ONE && dstRGB == GL_ZERO && srcAlpha == GL_ONE && dstAlpha == GL_ZERO)
     {
 		glDisable(GL_BLEND);
 	}
     else
     {
 		glEnable(GL_BLEND);
-		glBlendFunc(sfactor, dfactor);
+		glBlendFuncSeparate(srcRGB, dstRGB, srcAlpha, dstAlpha);
 	}
 }
 
 void ccGLBlendFunc(GLenum sfactor, GLenum dfactor)
 {
 #if CC_ENABLE_GL_STATE_CACHE
-    if (sfactor != s_eBlendingSource || dfactor != s_eBlendingDest)
+    if (sfactor != s_eBlendingSource || dfactor != s_eBlendingDest ||
+		sfactor != s_eBlendingSourceAlpha || dfactor != s_eBlendingDestAlpha)
     {
         s_eBlendingSource = sfactor;
         s_eBlendingDest = dfactor;
-        SetBlending(sfactor, dfactor);
+		s_eBlendingSourceAlpha = sfactor;
+        s_eBlendingDestAlpha = dfactor;
+        SetBlending(sfactor, dfactor, sfactor, dfactor);
     }
 #else
-    SetBlending( sfactor, dfactor );
+    SetBlending(sfactor, dfactor, sfactor, dfactor);
+#endif // CC_ENABLE_GL_STATE_CACHE
+}
+
+void ccGLBlendFuncSeparate(GLenum srcRGB, GLenum dstRGB, GLenum srcAlpha, GLenum dstAlpha)
+{
+#if CC_ENABLE_GL_STATE_CACHE
+    if(srcRGB != s_eBlendingSource || dstRGB != s_eBlendingDest ||
+	   srcAlpha != s_eBlendingSourceAlpha || dstAlpha != s_eBlendingDestAlpha) {
+        s_eBlendingSource = srcRGB;
+        s_eBlendingDest = dstRGB;
+		s_eBlendingSourceAlpha = srcAlpha;
+        s_eBlendingDestAlpha = dstAlpha;
+		SetBlending(srcRGB, dstRGB, srcAlpha, dstAlpha);
+    }
+#else
+	SetBlending(srcRGB, dstRGB, srcAlpha, dstAlpha);
 #endif // CC_ENABLE_GL_STATE_CACHE
 }
 
