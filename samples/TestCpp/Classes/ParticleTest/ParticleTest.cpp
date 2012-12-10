@@ -622,8 +622,8 @@ void ParallaxParticle::onEnter()
     
     CCActionInterval* move = CCMoveBy::create(4, ccp(300,0));
     CCActionInterval* move_back = move->reverse();
-    CCFiniteTimeAction* seq = CCSequence::create( move, move_back, NULL);
-    p->runAction(CCRepeatForever::create((CCActionInterval*)seq));    
+    CCSequence* seq = CCSequence::create( move, move_back, NULL);
+    p->runAction(CCRepeatForever::create(seq));    
 }
 
 std::string ParallaxParticle::title()
@@ -1117,8 +1117,8 @@ void ParticleDemo::onEnter(void)
     
     CCActionInterval* move = CCMoveBy::create(4, ccp(300,0) );
     CCActionInterval* move_back = move->reverse();
-    CCFiniteTimeAction* seq = CCSequence::create( move, move_back, NULL);
-    m_background->runAction( CCRepeatForever::create((CCActionInterval*)seq) );
+    CCSequence* seq = CCSequence::create( move, move_back, NULL);
+    m_background->runAction( CCRepeatForever::create(seq) );
     
     
     scheduleUpdate();

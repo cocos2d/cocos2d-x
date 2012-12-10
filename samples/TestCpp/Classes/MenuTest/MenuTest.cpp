@@ -70,8 +70,8 @@ MenuLayerMainMenu::MenuLayerMainMenu()
     
     CCActionInterval* color_action = CCTintBy::create(0.5f, 0, -255, -255);
     CCActionInterval* color_back = color_action->reverse();
-    CCFiniteTimeAction* seq = CCSequence::create(color_action, color_back, NULL);
-    item8->runAction(CCRepeatForever::create((CCActionInterval*)seq));
+    CCSequence* seq = CCSequence::create(color_action, color_back, NULL);
+    item8->runAction(CCRepeatForever::create(seq));
 
     CCMenu* menu = CCMenu::create( item1, item2, item3, item4, item5, item6, item7, item8, NULL);
     menu->alignItemsVertically();
@@ -327,10 +327,8 @@ MenuLayer3::MenuLayer3()
     item3->setPosition( ccp(s.width/2, s.height/2 - 100) );
     
     CCJumpBy* jump = CCJumpBy::create(3, ccp(400,0), 50, 4);
-    item2->runAction( CCRepeatForever::create(
-                                (CCActionInterval*)(CCSequence::create( jump, jump->reverse(), NULL))
-                                )
-                    );
+    item2->runAction( CCRepeatForever::create(CCSequence::create( jump, jump->reverse(), NULL)));
+
     CCActionInterval* spin1 = CCRotateBy::create(3, 360);
     CCActionInterval* spin2 = (CCActionInterval*)(spin1->copy()->autorelease());
     CCActionInterval* spin3 = (CCActionInterval*)(spin1->copy()->autorelease());
@@ -515,7 +513,7 @@ void MenuLayerPriorityTest::disableMenuCallback(CCObject* pSender)
     CCDelayTime *wait = CCDelayTime::create(5);
     CCCallFunc *enable = CCCallFunc::create(this, callfunc_selector(MenuLayerPriorityTest::enableMenuCallback));
 
-    CCFiniteTimeAction* seq = CCSequence::create(wait, enable, NULL);
+    CCSequence* seq = CCSequence::create(wait, enable, NULL);
     m_pMenu1->runAction(seq);
 }
 
