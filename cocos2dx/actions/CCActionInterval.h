@@ -114,7 +114,7 @@ public:
     /** helper constructor to create an array of sequenceable actions given an array */
     static CCFiniteTimeAction* create(CCArray *arrayOfActions);
     /** helper constructor to create an array of sequence-able actions */
-    static CCFiniteTimeAction* create(CCFiniteTimeAction *pAction1, va_list args);
+    static CCFiniteTimeAction* createWithVariableList(CCFiniteTimeAction *pAction1, va_list args);
     /** creates the action */
     static CCSequence* createWithTwoActions(CCFiniteTimeAction *pActionOne, CCFiniteTimeAction *pActionTwo);
 
