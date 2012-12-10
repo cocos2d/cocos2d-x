@@ -206,7 +206,8 @@ protected:
     
     // script handler
     int m_nScriptHandler;
-    
+    int m_nUpdateScriptHandler;
+
     // script type, lua or javascript
     ccScriptType m_eScriptType;
 
@@ -367,6 +368,9 @@ public:
     /** Get children count */
     unsigned int getChildrenCount(void);
     
+    void _setZOrder(int z);
+
+    /** Get script handler for onEnter/onExit event. */
     inline int getScriptHandler() { return m_nScriptHandler; };
     
     /** get/set Position for Lua (pass number faster than CCPoint object)
@@ -379,7 +383,6 @@ public:
      node:setPosition(x, y)             -- pass x, y values to C++
      node:setPositionX(x)
      node:setPositionY(y)
-     node:setPositionInPixels(x, y)     -- pass x, y values to C++
      */
     const CCPoint& getPositionLua(void);
     void getPosition(float* x, float* y);
@@ -388,7 +391,6 @@ public:
     void setPositionX(float x);
     void setPositionY(float y);
     void setPosition(float x, float y);
-    void _setZOrder(int z);
 
 public:
     CCNode(void);
@@ -640,7 +642,7 @@ public:
      delay is the amount of time the action will wait before execution
      */
     void schedule(SEL_SCHEDULE selector, float interval, unsigned int repeat, float delay);
-
+    
     /**
      Schedules a selector that runs only once, with a delay of 0 or larger
     */
@@ -667,7 +669,7 @@ public:
     /* Update will be called automatically every frame if "scheduleUpdate" is called, and the node is "live"
      */
     virtual void update(float fDelta);
-
+    
     // transformation methods
 
     /** Returns the matrix that transform the node's (local) space coordinates into the parent's space coordinates.
@@ -720,7 +722,10 @@ public:
      @since v0.7.1
      */
     CCPoint convertTouchToNodeSpaceAR(CCTouch * touch);
-    
+        
+    /** Schedules for script. */
+    void scheduleUpdateWithPriorityLua(int nHandler, int priority);
+
 private:
     //! lazy allocs
     void childrenAlloc(void);
