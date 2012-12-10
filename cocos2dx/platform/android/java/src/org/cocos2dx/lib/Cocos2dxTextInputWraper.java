@@ -28,6 +28,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
@@ -149,6 +150,10 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
 				Log.d(TAG, "insertText(" + insertText + ")");
 			}
 			*/
+		}
+		
+		if (pActionID == EditorInfo.IME_ACTION_DONE) {
+			this.mCocos2dxGLSurfaceView.requestFocus();
 		}
 		return false;
 	}
