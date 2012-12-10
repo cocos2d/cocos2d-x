@@ -219,12 +219,12 @@ void LayerTest2::onEnter()
     
     CCActionInterval* actionTint = CCTintBy::create(2, -255, -127, 0);
     CCActionInterval* actionTintBack = actionTint->reverse();
-    CCActionInterval* seq1 = (CCActionInterval*)CCSequence::create( actionTint, actionTintBack, NULL);
+    CCActionInterval* seq1 = CCSequence::create( actionTint, actionTintBack, NULL);
     layer1->runAction(seq1);
 
     CCActionInterval* actionFade = CCFadeOut::create(2.0f);
     CCActionInterval* actionFadeBack = actionFade->reverse();
-    CCActionInterval* seq2 = (CCActionInterval*)CCSequence::create(actionFade, actionFadeBack, NULL);        
+    CCActionInterval* seq2 = CCSequence::create(actionFade, actionFadeBack, NULL);        
     layer2->runAction(seq2);
 }
 
@@ -357,7 +357,7 @@ void LayerIgnoreAnchorPointPos::onEnter()
 
     CCMoveBy *move = CCMoveBy::create(2, ccp(100,2));
     CCMoveBy * back = (CCMoveBy *)move->reverse();
-    CCSequence *seq = (CCSequence *)CCSequence::create(move, back, NULL);
+    CCSequence *seq = CCSequence::create(move, back, NULL);
     l->runAction(CCRepeatForever::create(seq));
     this->addChild(l, 0, kLayerIgnoreAnchorPoint);
 
@@ -454,7 +454,7 @@ void LayerIgnoreAnchorPointScale::onEnter()
 
     CCScaleBy *scale = CCScaleBy::create(2, 2);
     CCScaleBy* back = (CCScaleBy*)scale->reverse();
-    CCSequence *seq = (CCSequence*)CCSequence::create(scale, back, NULL);
+    CCSequence *seq = CCSequence::create(scale, back, NULL);
 
     l->runAction(CCRepeatForever::create(seq));
 

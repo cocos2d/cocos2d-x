@@ -35,6 +35,7 @@ extern "C" {
     extern void terminateProcessJNI();
     extern const char * getCurrentLanguageJNI();
     extern const char * getPackageNameJNI();
+    extern const char * getCacheDirectoryJNI();
     extern void enableAccelerometerJNI();
     extern void disableAccelerometerJNI();
     extern void setAccelerometerIntervalJNI(float interval);

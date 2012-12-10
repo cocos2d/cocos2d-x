@@ -416,12 +416,12 @@ void performanceActions(CCSprite* pSprite)
     float period = 0.5f + (rand() % 1000) / 500.0f;
     CCRotateBy* rot = CCRotateBy::create(period, 360.0f * CCRANDOM_0_1());
     CCActionInterval* rot_back = rot->reverse();
-    CCAction *permanentRotation = CCRepeatForever::create((CCActionInterval *)CCSequence::create(rot, rot_back, NULL));
+    CCAction *permanentRotation = CCRepeatForever::create(CCSequence::create(rot, rot_back, NULL));
     pSprite->runAction(permanentRotation);
 
     float growDuration = 0.5f + (rand() % 1000) / 500.0f;
     CCActionInterval *grow = CCScaleBy::create(growDuration, 0.5f, 0.5f);
-    CCAction *permanentScaleLoop = CCRepeatForever::create((CCActionInterval *)CCSequence::create(grow, grow->reverse(), NULL));
+    CCAction *permanentScaleLoop = CCRepeatForever::create(CCSequence::create(grow, grow->reverse(), NULL));
     pSprite->runAction(permanentScaleLoop);
 }
 
@@ -436,7 +436,7 @@ void performanceActions20(CCSprite* pSprite)
     float period = 0.5f + (rand() % 1000) / 500.0f;
     CCRotateBy* rot = CCRotateBy::create(period, 360.0f * CCRANDOM_0_1());
     CCActionInterval* rot_back = rot->reverse();
-    CCAction *permanentRotation = CCRepeatForever::create((CCActionInterval *)CCSequence::create(rot, rot_back, NULL));
+    CCAction *permanentRotation = CCRepeatForever::create(CCSequence::create(rot, rot_back, NULL));
     pSprite->runAction(permanentRotation);
 
     float growDuration = 0.5f + (rand() % 1000) / 500.0f;

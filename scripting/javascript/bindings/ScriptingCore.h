@@ -80,7 +80,7 @@ public:
     virtual int executeMenuItemEvent(CCMenuItem* pMenuItem);
     virtual int executeNotificationEvent(CCNotificationCenter* pNotificationCenter, const char* pszName);
     virtual int executeCallFuncActionEvent(CCCallFunc* pAction, CCObject* pTarget = NULL);
-    virtual int executeSchedule(CCTimer* pTimer, float dt, CCNode* pNode = NULL);
+    virtual int executeSchedule(int nHandler, float dt, CCNode* pNode = NULL);
     virtual int executeLayerTouchesEvent(CCLayer* pLayer, int eventType, CCSet *pTouches);
     virtual int executeLayerTouchEvent(CCLayer* pLayer, int eventType, CCTouch *pTouch);
     virtual int executeAccelerometerEvent(CCLayer* pLayer, CCAcceleration* pAccelerationValue);

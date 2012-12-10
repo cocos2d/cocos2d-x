@@ -321,7 +321,7 @@ void TextFieldTTFActionTest::onEnter()
     m_nCharLimit = 12;
 
     m_pTextFieldAction = CCRepeatForever::create(
-        (CCActionInterval*)CCSequence::create(
+        CCSequence::create(
             CCFadeOut::create(0.25),
             CCFadeIn::create(0.25),
             0

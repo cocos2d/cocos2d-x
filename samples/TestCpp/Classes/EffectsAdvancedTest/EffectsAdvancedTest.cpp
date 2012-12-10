@@ -37,7 +37,7 @@ void Effect1::onEnter()
     CCActionInterval* orbit = CCOrbitCamera::create(5, 1, 2, 0, 180, 0, -90);
     CCActionInterval* orbit_back = orbit->reverse();
 
-    target->runAction( CCRepeatForever::create( (CCActionInterval *)(CCSequence::create( orbit, orbit_back, NULL) ) ) );
+    target->runAction( CCRepeatForever::create( CCSequence::create( orbit, orbit_back, NULL)  ) );
     target->runAction( CCSequence::create(lens, delay, reuse, waves, NULL) );
 }
 
@@ -79,7 +79,7 @@ void Effect2::onEnter()
 //    id orbit_back = [orbit reverse];
 //
 //    [target runAction: [RepeatForever::create: [Sequence actions: orbit, orbit_back, nil]]];
-    target->runAction( (CCActionInterval *)(CCSequence::create( shaky, delay, reuse, shuffle, delay->copy()->autorelease(), turnoff, turnon, NULL) ) );
+    target->runAction(CCSequence::create( shaky, delay, reuse, shuffle, delay->copy()->autorelease(), turnoff, turnon, NULL) );
 }
 
 std::string Effect2::title()
@@ -109,7 +109,7 @@ void Effect3::onEnter()
     
     // moving background. Testing issue #244
     CCActionInterval* move = CCMoveBy::create(3, ccp(200,0) );
-    bg->runAction(CCRepeatForever::create( (CCActionInterval *)(CCSequence::create(move, move->reverse(), NULL) ) ) );    
+    bg->runAction(CCRepeatForever::create( CCSequence::create(move, move->reverse(), NULL) ));    
 }
 
 std::string Effect3::title()
@@ -155,7 +155,7 @@ void Effect4::onEnter()
     CCLens3D* lens = CCLens3D::create(ccp(100,180), 150, ccg(32,24), 10);
     CCActionInterval* move = CCJumpBy::create(5, ccp(380,0), 100, 4);
     CCActionInterval* move_back = move->reverse();
-    CCActionInterval* seq = (CCActionInterval *)(CCSequence::create( move, move_back, NULL));
+    CCActionInterval* seq = CCSequence::create( move, move_back, NULL);
 
     /* In cocos2d-iphone, the type of action's target is 'id', so it supports using the instance of 'CCLens3D' as its target.
         While in cocos2d-x, the target of action only supports CCNode or its subclass,
@@ -189,13 +189,13 @@ void Effect5::onEnter()
     
     CCActionInterval* effect = CCLiquid::create(1, 20, ccg(32,24), 2);    
 
-    CCActionInterval* stopEffect = (CCActionInterval *)( CCSequence::create(
+    CCActionInterval* stopEffect = CCSequence::create(
                                          effect,
                                          CCDelayTime::create(2),
                                          CCStopGrid::create(),
                     //                     [DelayTime::create:2],
                     //                     [[effect copy] autorelease],
-                                         NULL) );
+                                         NULL);
     
     CCNode* bg = getChildByTag(kTagBackground);
     bg->runAction(stopEffect);
@@ -222,7 +222,7 @@ void Issue631::onEnter()
 {
     EffectAdvanceTextLayer::onEnter();
         
-    CCActionInterval* effect = (CCActionInterval*)(CCSequence::create( CCDelayTime::create(2.0f), CCShaky3D::create(16, false, ccg(5, 5), 5.0f), NULL));
+    CCActionInterval* effect = CCSequence::create( CCDelayTime::create(2.0f), CCShaky3D::create(16, false, ccg(5, 5), 5.0f), NULL);
 
     // cleanup
     CCNode* bg = getChildByTag(kTagBackground);
@@ -339,14 +339,14 @@ void EffectAdvanceTextLayer::onEnter(void)
     grossini->setPosition( ccp(VisibleRect::left().x+VisibleRect::getVisibleRect().size.width/3.0f, VisibleRect::bottom().y+ 200) );
     CCActionInterval* sc = CCScaleBy::create(2, 5);
     CCActionInterval* sc_back = sc->reverse();
-    grossini->runAction( CCRepeatForever::create( (CCActionInterval*)(CCSequence::create(sc, sc_back, NULL)) ) );
+    grossini->runAction( CCRepeatForever::create(CCSequence::create(sc, sc_back, NULL) ) );
 
     CCSprite* tamara = CCSprite::create("Images/grossinis_sister1.png");
     bg->addChild(tamara, 1, kTagSprite2);
     tamara->setPosition( ccp(VisibleRect::left().x+2*VisibleRect::getVisibleRect().size.width/3.0f,VisibleRect::bottom().y+200) );
     CCActionInterval* sc2 = CCScaleBy::create(2, 5);
     CCActionInterval* sc2_back = sc2->reverse();
-    tamara->runAction( CCRepeatForever::create( (CCActionInterval*)(CCSequence::create(sc2, sc2_back, NULL)) ) );
+    tamara->runAction( CCRepeatForever::create(CCSequence::create(sc2, sc2_back, NULL) ) );
     
     CCLabelTTF* label = CCLabelTTF::create(title().c_str(), "Marker Felt", 28);
     
