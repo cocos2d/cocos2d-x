@@ -114,24 +114,22 @@ typedef enum
 } ccPVR2TexturePixelFormat;
 
 // v3
-typedef enum {
-	/* supported predefined formats */
-	kPVR3TexturePixelFormat_PVRTC_2BPP_RGB = 0,
-	kPVR3TexturePixelFormat_PVRTC_2BPP_RGBA = 1,
-	kPVR3TexturePixelFormat_PVRTC_4BPP_RGB = 2,
-	kPVR3TexturePixelFormat_PVRTC_4BPP_RGBA = 3,
+/* supported predefined formats */
+#define kPVR3TexturePixelFormat_PVRTC_2BPP_RGB   0
+#define kPVR3TexturePixelFormat_PVRTC_2BPP_RGBA  1
+#define kPVR3TexturePixelFormat_PVRTC_4BPP_RGB   2
+#define kPVR3TexturePixelFormat_PVRTC_4BPP_RGBA  3
 	
-	/* supported channel type formats */
-	kPVR3TexturePixelFormat_BGRA_8888 = 0x0808080861726762ULL,
-	kPVR3TexturePixelFormat_RGBA_8888 = 0x0808080861626772ULL,
-	kPVR3TexturePixelFormat_RGBA_4444 = 0x0404040461626772ULL,
-	kPVR3TexturePixelFormat_RGBA_5551 = 0x0105050561626772ULL,
-	kPVR3TexturePixelFormat_RGB_565 = 0x0005060500626772ULL,
-	kPVR3TexturePixelFormat_RGB_888 = 0x0008080800626772ULL,
-	kPVR3TexturePixelFormat_A_8 = 0x0000000800000061ULL,
-	kPVR3TexturePixelFormat_L_8 = 0x000000080000006cULL,
-	kPVR3TexturePixelFormat_LA_88 = 0x000008080000616cULL,
-} ccPVR3TexturePixelFormat;
+/* supported channel type formats */
+#define kPVR3TexturePixelFormat_BGRA_8888  0x0808080861726762ULL
+#define kPVR3TexturePixelFormat_RGBA_8888  0x0808080861626772ULL
+#define kPVR3TexturePixelFormat_RGBA_4444  0x0404040461626772ULL
+#define kPVR3TexturePixelFormat_RGBA_5551  0x0105050561626772ULL
+#define kPVR3TexturePixelFormat_RGB_565    0x0005060500626772ULL
+#define kPVR3TexturePixelFormat_RGB_888    0x0008080800626772ULL
+#define kPVR3TexturePixelFormat_A_8        0x0000000800000061ULL
+#define kPVR3TexturePixelFormat_L_8        0x000000080000006cULL
+#define kPVR3TexturePixelFormat_LA_88      0x000008080000616cULL
 
 
 // v2
