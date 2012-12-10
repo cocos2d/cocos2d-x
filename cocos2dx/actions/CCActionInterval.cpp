@@ -42,6 +42,8 @@ public:
     static ExtraAction* create();
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual ExtraAction* reverse(void);
+    virtual void update(float time);
+    virtual void step(float dt);
 };
 
 ExtraAction* ExtraAction::create()
@@ -56,6 +58,7 @@ ExtraAction* ExtraAction::create()
 
 CCObject* ExtraAction::copyWithZone(CCZone* pZone)
 {
+    CC_UNUSED_PARAM(pZone);
     ExtraAction* pRet = new ExtraAction();
     return pRet;
 }
@@ -63,6 +66,16 @@ CCObject* ExtraAction::copyWithZone(CCZone* pZone)
 ExtraAction* ExtraAction::reverse(void)
 {
     return ExtraAction::create();
+}
+
+void ExtraAction::update(float time)
+{
+    CC_UNUSED_PARAM(time);
+}
+
+void ExtraAction::step(float dt)
+{
+    CC_UNUSED_PARAM(dt);
 }
 
 //
