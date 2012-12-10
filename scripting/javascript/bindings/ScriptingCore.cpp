@@ -712,11 +712,6 @@ int ScriptingCore::executeCallFuncActionEvent(CCCallFunc* pAction, CCObject* pTa
     return 1;
 }
 
-int ScriptingCore::executeSchedule(CCTimer* pTimer, float dt, CCNode* pNode/* = NULL*/)
-{
-    executeSchedule(0, dt, pNode)
-}
-
 int ScriptingCore::executeSchedule(int nHandler, float dt, CCNode* pNode/* = NULL*/)
 {
     js_proxy_t * p;

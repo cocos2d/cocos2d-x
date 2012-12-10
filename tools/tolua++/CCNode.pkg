@@ -108,7 +108,7 @@ class CCNode : public CCObject
     void removeFromParentAndCleanup(bool cleanup);
     void removeChildByTag(int tag, bool cleanup);
 
-	void scheduleUpdateScriptHandlerWithPriority(LUA_FUNCTION nHandler, int priority);
+	void scheduleUpdateWithPriorityLua(LUA_FUNCTION nHandler, int priority);
 	void unscheduleUpdate(void);
 
     void registerScriptHandler(LUA_FUNCTION funcID);
