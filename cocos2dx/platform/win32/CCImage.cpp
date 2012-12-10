@@ -392,8 +392,8 @@ bool CCImage::initWithString(
         CC_BREAK_IF(! dc.drawText(pText, size, eAlignMask));
 
         // calc image size
-        int width = (size.cx / 4) * 4 + 4;
-        int height = (size.cy / 4) * 4 + 4;
+        int width = (size.cx / 2) * 2 + 2;
+        int height = (size.cy / 2) * 2 + 2;
         
         // alloc image data buffer
         pImageData = new unsigned char[width * height * 4];
