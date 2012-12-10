@@ -163,6 +163,9 @@ Developers:
     Tomoaki Shimizu (tks2shimizu)
 	Adding randomObject to CCDictionary.
 
+    Igor Zavorotkin (ivzave)
+        Adding lua support for linux platform.
+
 Retired Core Developers:
     WenSheng Yang
 	Author of windows port, CCTextField, 
