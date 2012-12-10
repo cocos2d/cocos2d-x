@@ -161,14 +161,14 @@ CCFiniteTimeAction* CCSequence::create(CCFiniteTimeAction *pAction1, ...)
     va_list params;
     va_start(params, pAction1);
 
-    CCFiniteTimeAction *pRet = CCSequence::create(pAction1, params);
+    CCFiniteTimeAction *pRet = CCSequence::createWithVariableList(pAction1, params);
 
     va_end(params);
     
     return pRet;
 }
 
-CCFiniteTimeAction* CCSequence::create(CCFiniteTimeAction *pAction1, va_list args)
+CCFiniteTimeAction* CCSequence::createWithVariableList(CCFiniteTimeAction *pAction1, va_list args)
 {
     CCFiniteTimeAction *pNow;
     CCFiniteTimeAction *pPrev = pAction1;
@@ -191,14 +191,24 @@ CCFiniteTimeAction* CCSequence::create(CCFiniteTimeAction *pAction1, va_list arg
 
 CCFiniteTimeAction* CCSequence::create(CCArray* arrayOfActions)
 {
-    CCFiniteTimeAction* prev = (CCFiniteTimeAction*)arrayOfActions->objectAtIndex(0);
-
-    for (unsigned int i = 1; i < arrayOfActions->count(); ++i)
+    CCFiniteTimeAction* pRet = NULL;
+    do 
     {
-        prev = createWithTwoActions(prev, (CCFiniteTimeAction*)arrayOfActions->objectAtIndex(i));
-    }
+        unsigned  int count = arrayOfActions->count();
+        CC_BREAK_IF(count == 0);
 
-    return prev;
+        CCFiniteTimeAction* prev = (CCFiniteTimeAction*)arrayOfActions->objectAtIndex(0);
+
+        if (count > 1)
+        {
+            for (unsigned int i = 1; i < count; ++i)
+            {
+                prev = createWithTwoActions(prev, (CCFiniteTimeAction*)arrayOfActions->objectAtIndex(i));
+            }
+        }
+        pRet = prev;
+    }while (0);
+    return pRet;
 }
 
 bool CCSequence::initWithTwoActions(CCFiniteTimeAction *pActionOne, CCFiniteTimeAction *pActionTwo)
