@@ -35,6 +35,49 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+// Extra action for making a CCSequence or CCSpawn when only adding one action to it.
+class ExtraAction : public CCFiniteTimeAction
+{
+public:
+    static ExtraAction* create();
+    virtual CCObject* copyWithZone(CCZone* pZone);
+    virtual ExtraAction* reverse(void);
+    virtual void update(float time);
+    virtual void step(float dt);
+};
+
+ExtraAction* ExtraAction::create()
+{
+    ExtraAction* pRet = new ExtraAction();
+    if (pRet)
+    {
+        pRet->autorelease();
+    }
+    return pRet;
+}
+
+CCObject* ExtraAction::copyWithZone(CCZone* pZone)
+{
+    CC_UNUSED_PARAM(pZone);
+    ExtraAction* pRet = new ExtraAction();
+    return pRet;
+}
+
+ExtraAction* ExtraAction::reverse(void)
+{
+    return ExtraAction::create();
+}
+
+void ExtraAction::update(float time)
+{
+    CC_UNUSED_PARAM(time);
+}
+
+void ExtraAction::step(float dt)
+{
+    CC_UNUSED_PARAM(dt);
+}
+
 //
 // IntervalAction
 //
@@ -156,42 +199,49 @@ CCSequence* CCSequence::createWithTwoActions(CCFiniteTimeAction *pActionOne, CCF
     return pSequence;
 }
 
-CCFiniteTimeAction* CCSequence::create(CCFiniteTimeAction *pAction1, ...)
+CCSequence* CCSequence::create(CCFiniteTimeAction *pAction1, ...)
 {
     va_list params;
     va_start(params, pAction1);
 
-    CCFiniteTimeAction *pRet = CCSequence::createWithVariableList(pAction1, params);
+    CCSequence *pRet = CCSequence::createWithVariableList(pAction1, params);
 
     va_end(params);
     
     return pRet;
 }
 
-CCFiniteTimeAction* CCSequence::createWithVariableList(CCFiniteTimeAction *pAction1, va_list args)
+CCSequence* CCSequence::createWithVariableList(CCFiniteTimeAction *pAction1, va_list args)
 {
     CCFiniteTimeAction *pNow;
     CCFiniteTimeAction *pPrev = pAction1;
-    
+    bool bOneAction = true;
+
     while (pAction1)
     {
         pNow = va_arg(args, CCFiniteTimeAction*);
         if (pNow)
         {
             pPrev = createWithTwoActions(pPrev, pNow);
+            bOneAction = false;
         }
         else
         {
+            // If only one action is added to CCSequence, make up a CCSequence by adding a simplest finite time action.
+            if (bOneAction)
+            {
+                pPrev = createWithTwoActions(pPrev, ExtraAction::create());
+            }
             break;
         }
     }
     
-    return pPrev;
+    return ((CCSequence*)pPrev);
 }
 
-CCFiniteTimeAction* CCSequence::create(CCArray* arrayOfActions)
+CCSequence* CCSequence::create(CCArray* arrayOfActions)
 {
-    CCFiniteTimeAction* pRet = NULL;
+    CCSequence* pRet = NULL;
     do 
     {
         unsigned  int count = arrayOfActions->count();
@@ -206,7 +256,12 @@ CCFiniteTimeAction* CCSequence::create(CCArray* arrayOfActions)
                 prev = createWithTwoActions(prev, (CCFiniteTimeAction*)arrayOfActions->objectAtIndex(i));
             }
         }
-        pRet = prev;
+        else
+        {
+            // If only one action is added to CCSequence, make up a CCSequence by adding a simplest finite time action.
+            prev = createWithTwoActions(prev, ExtraAction::create());
+        }
+        pRet = (CCSequence*)prev;
     }while (0);
     return pRet;
 }
@@ -549,49 +604,70 @@ CCActionInterval *CCRepeatForever::reverse()
 // Spawn
 //
 
-CCFiniteTimeAction* CCSpawn::create(CCFiniteTimeAction *pAction1, ...)
+CCSpawn* CCSpawn::create(CCFiniteTimeAction *pAction1, ...)
 {
     va_list params;
     va_start(params, pAction1);
 
-    CCFiniteTimeAction *pRet = CCSpawn::create(pAction1, params);
+    CCSpawn *pRet = CCSpawn::createWithVariableList(pAction1, params);
 
     va_end(params);
     
     return pRet;
 }
 
-CCFiniteTimeAction* CCSpawn::create(CCFiniteTimeAction *pAction1, va_list args)
+CCSpawn* CCSpawn::createWithVariableList(CCFiniteTimeAction *pAction1, va_list args)
 {
     CCFiniteTimeAction *pNow;
     CCFiniteTimeAction *pPrev = pAction1;
-    
+    bool bOneAction = true;
+
     while (pAction1)
     {
         pNow = va_arg(args, CCFiniteTimeAction*);
         if (pNow)
         {
             pPrev = createWithTwoActions(pPrev, pNow);
+            bOneAction = false;
         }
         else
         {
+            // If only one action is added to CCSpawn, make up a CCSpawn by adding a simplest finite time action.
+            if (bOneAction)
+            {
+                pPrev = createWithTwoActions(pPrev, ExtraAction::create());
+            }
             break;
         }
     }
 
-    return pPrev;
+    return ((CCSpawn*)pPrev);
 }
 
-CCFiniteTimeAction* CCSpawn::create(CCArray *arrayOfActions)
+CCSpawn* CCSpawn::create(CCArray *arrayOfActions)
 {
-    CCFiniteTimeAction* prev = (CCFiniteTimeAction*)arrayOfActions->objectAtIndex(0);
-
-    for (unsigned int i = 1; i < arrayOfActions->count(); ++i)
+    CCSpawn* pRet = NULL;
+    do 
     {
-        prev = createWithTwoActions(prev, (CCFiniteTimeAction*)arrayOfActions->objectAtIndex(i));
-    }
+        unsigned  int count = arrayOfActions->count();
+        CC_BREAK_IF(count == 0);
+        CCFiniteTimeAction* prev = (CCFiniteTimeAction*)arrayOfActions->objectAtIndex(0);
+        if (count > 1)
+        {
+            for (unsigned int i = 1; i < arrayOfActions->count(); ++i)
+            {
+                prev = createWithTwoActions(prev, (CCFiniteTimeAction*)arrayOfActions->objectAtIndex(i));
+            }
+        }
+        else
+        {
+            // If only one action is added to CCSpawn, make up a CCSpawn by adding a simplest finite time action.
+            prev = createWithTwoActions(prev, ExtraAction::create());
+        }
+        pRet = (CCSpawn*)prev;
+    }while (0);
 
-    return prev;
+    return pRet;
 }
 
 CCSpawn* CCSpawn::createWithTwoActions(CCFiniteTimeAction *pAction1, CCFiniteTimeAction *pAction2)

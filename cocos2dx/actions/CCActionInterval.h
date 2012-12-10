@@ -110,11 +110,11 @@ public:
 public:
 
     /** helper constructor to create an array of sequenceable actions */
-    static CCFiniteTimeAction* create(CCFiniteTimeAction *pAction1, ...);
+    static CCSequence* create(CCFiniteTimeAction *pAction1, ...);
     /** helper constructor to create an array of sequenceable actions given an array */
-    static CCFiniteTimeAction* create(CCArray *arrayOfActions);
+    static CCSequence* create(CCArray *arrayOfActions);
     /** helper constructor to create an array of sequence-able actions */
-    static CCFiniteTimeAction* createWithVariableList(CCFiniteTimeAction *pAction1, va_list args);
+    static CCSequence* createWithVariableList(CCFiniteTimeAction *pAction1, va_list args);
     /** creates the action */
     static CCSequence* createWithTwoActions(CCFiniteTimeAction *pActionOne, CCFiniteTimeAction *pActionTwo);
 
@@ -233,13 +233,13 @@ public:
 public:
 
     /** helper constructor to create an array of spawned actions */
-    static CCFiniteTimeAction* create(CCFiniteTimeAction *pAction1, ...);
+    static CCSpawn* create(CCFiniteTimeAction *pAction1, ...);
     
     /** helper constructor to create an array of spawned actions */
-    static CCFiniteTimeAction* create(CCFiniteTimeAction *pAction1, va_list args);
+    static CCSpawn* createWithVariableList(CCFiniteTimeAction *pAction1, va_list args);
 
     /** helper constructor to create an array of spawned actions given an array */
-    static CCFiniteTimeAction* create(CCArray *arrayOfActions);
+    static CCSpawn* create(CCArray *arrayOfActions);
 
     /** creates the Spawn action */
     static CCSpawn* createWithTwoActions(CCFiniteTimeAction *pAction1, CCFiniteTimeAction *pAction2);

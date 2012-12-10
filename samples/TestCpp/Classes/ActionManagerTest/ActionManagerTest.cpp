@@ -265,7 +265,7 @@ void RemoveTest::onEnter()
 
     CCMoveBy* pMove = CCMoveBy::create(2, ccp(200, 0));
     CCCallFunc* pCallback = CCCallFunc::create(this, callfunc_selector(RemoveTest::stopAction));
-    CCActionInterval* pSequence = (CCActionInterval*) CCSequence::create(pMove, pCallback, NULL);
+    CCActionInterval* pSequence = CCSequence::create(pMove, pCallback, NULL);
     pSequence->setTag(kTagSequence);
 
     CCSprite* pChild = CCSprite::create(s_pPathGrossini);
