@@ -64,7 +64,7 @@ class CCSequence : public CCActionInterval
 	CCActionInterval* reverse(void);
 
     static CCSequence* createWithTwoActions(CCFiniteTimeAction *pActionOne, CCFiniteTimeAction *pActionTwo);
-    static CCFiniteTimeAction* create(CCArray *actions);
+    static CCSequence* create(CCArray *actions);
 };
 
 class CCRepeat : public CCActionInterval
@@ -90,8 +90,8 @@ class CCSpawn : public CCActionInterval
 	CCObject* copyWithZone(CCZone* pZone);
 	CCActionInterval* reverse(void);
 
-    static CCFiniteTimeAction* createWithTwoActions(CCFiniteTimeAction *pAction1, CCFiniteTimeAction *pAction2);
-    static CCFiniteTimeAction* create(CCArray *actions);
+    static CCSpawn* createWithTwoActions(CCFiniteTimeAction *pAction1, CCFiniteTimeAction *pAction2);
+    static CCSpawn* create(CCArray *actions);
 };
 
 class CCRotateTo : public CCActionInterval

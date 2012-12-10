@@ -186,15 +186,13 @@ void Test2::onEnter()
     CCActionInterval* a1 = CCRotateBy::create(2, 360);
     CCActionInterval* a2 = CCScaleBy::create(2, 2);
     
-    CCAction* action1 = CCRepeatForever::create(
-                                                    (CCActionInterval*)(CCSequence::create(a1, a2, a2->reverse(), NULL))
-                                                );
+    CCAction* action1 = CCRepeatForever::create( CCSequence::create(a1, a2, a2->reverse(), NULL) );
     CCAction* action2 = CCRepeatForever::create(
-                                                    (CCActionInterval*)(CCSequence::create(
-                                                                                        (CCActionInterval*)(a1->copy()->autorelease()), 
-                                                                                        (CCActionInterval*)(a2->copy()->autorelease()), 
-                                                                                        a2->reverse(), 
-                                                                                        NULL) )
+                                                    CCSequence::create(
+                                                        (CCActionInterval*)(a1->copy()->autorelease()), 
+                                                        (CCActionInterval*)(a2->copy()->autorelease()), 
+                                                        a2->reverse(), 
+                                                        NULL)
                                                 );
     
     sp2->setAnchorPoint(ccp(0,0));
@@ -266,9 +264,7 @@ Test5::Test5()
 
     CCRotateBy* rot = CCRotateBy::create(2, 360);
     CCActionInterval* rot_back = rot->reverse();
-    CCAction* forever = CCRepeatForever::create(
-                                                    (CCActionInterval*)(CCSequence::create(rot, rot_back, NULL)) 
-                                                );
+    CCAction* forever = CCRepeatForever::create(CCSequence::create(rot, rot_back, NULL));
     CCAction* forever2 = (CCAction*)(forever->copy()->autorelease());
     forever->setTag(101);
     forever2->setTag(102);
@@ -323,8 +319,7 @@ Test6::Test6()
         
     CCActionInterval* rot = CCRotateBy::create(2, 360);
     CCActionInterval* rot_back = rot->reverse();
-    CCAction* forever1 = CCRepeatForever::create(
-                                                            (CCActionInterval*)(CCSequence::create(rot, rot_back, NULL)));
+    CCAction* forever1 = CCRepeatForever::create(CCSequence::create(rot, rot_back, NULL));
     CCAction* forever11 =  (CCAction*)(forever1->copy()->autorelease());
 
     CCAction* forever2 =  (CCAction*)(forever1->copy()->autorelease());
@@ -437,8 +432,8 @@ StressTest2::StressTest2()
     CCActionInterval* move = CCMoveBy::create(3, ccp(350,0));
     CCActionInterval* move_ease_inout3 = CCEaseInOut::create((CCActionInterval*)(move->copy()->autorelease()), 2.0f);
     CCActionInterval* move_ease_inout_back3 = move_ease_inout3->reverse();
-    CCFiniteTimeAction* seq3 = CCSequence::create( move_ease_inout3, move_ease_inout_back3, NULL);
-    sp1->runAction( CCRepeatForever::create((CCActionInterval*)seq3) );
+    CCSequence* seq3 = CCSequence::create( move_ease_inout3, move_ease_inout_back3, NULL);
+    sp1->runAction( CCRepeatForever::create(seq3) );
     sublayer->addChild(sp1, 1);
 
     CCParticleFire* fire = CCParticleFire::create();
@@ -527,8 +522,8 @@ NodeToWorld::NodeToWorld()
     
     CCActionInterval* move = CCMoveBy::create(3, ccp(200,0));
     CCActionInterval* move_back = move->reverse();
-    CCFiniteTimeAction* seq = CCSequence::create( move, move_back, NULL);
-    CCAction* fe2 = CCRepeatForever::create((CCActionInterval*)seq);
+    CCSequence* seq = CCSequence::create( move, move_back, NULL);
+    CCAction* fe2 = CCRepeatForever::create(seq);
     back->runAction(fe2);
 }
 
