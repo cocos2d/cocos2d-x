@@ -374,21 +374,6 @@ int CCLuaEngine::executeCallFuncActionEvent(CCCallFunc* pAction, CCObject* pTarg
     return ret;
 }
 
-int CCLuaEngine::executeSchedule(CCTimer* pTimer, float dt, CCNode* pNode/* = NULL*/)
-{
-    int ret = 0;
-    do 
-    {
-        int nScriptHandler = pTimer->getScriptHandler();
-        CC_BREAK_IF(0 == nScriptHandler);
-
-        cleanStack();
-        pushFloat(dt);
-        ret = executeFunctionByHandler(nScriptHandler, 1);
-    } while (0);
-    return ret;
-}
-
 int CCLuaEngine::executeSchedule(int nHandler, float dt, CCNode* pNode/* = NULL*/)
 {
     cleanStack();

@@ -951,7 +951,7 @@ void CCNode::unregisterScriptHandler(void)
     }
 }
 
-void CCNode::scheduleUpdateScriptHandlerWithPriority(int nHandler, int priority)
+void CCNode::scheduleUpdateWithPriorityLua(int nHandler, int priority)
 {
     if (m_nUpdateScriptHandler)
     {

@@ -211,7 +211,6 @@ public:
     /** execute a callfun event */
     virtual int executeCallFuncActionEvent(CCCallFunc* pAction, CCObject* pTarget = NULL) = 0;
     /** execute a schedule function */
-    virtual int executeSchedule(CCTimer* pTimer, float dt, CCNode* pNode = NULL) = 0;
     virtual int executeSchedule(int nHandler, float dt, CCNode* pNode = NULL) = 0;
     
     /** functions for executing touch event */

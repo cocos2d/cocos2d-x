@@ -724,7 +724,7 @@ public:
     CCPoint convertTouchToNodeSpaceAR(CCTouch * touch);
         
     /** Schedules for script. */
-    void scheduleUpdateScriptHandlerWithPriority(int nHandler, int priority);
+    void scheduleUpdateWithPriorityLua(int nHandler, int priority);
 
 private:
     //! lazy allocs
