@@ -51,9 +51,6 @@ enum ccScriptType {
     kScriptTypeJavascript
 };
 
-// #pragma mark -
-// #pragma mark CCScriptHandlerEntry
-
 class CCScriptHandlerEntry : public CCObject
 {
 public:
@@ -85,9 +82,6 @@ protected:
  * @addtogroup script_support
  * @{
  */
-
-// #pragma mark -
-// #pragma mark CCSchedulerScriptHandlerEntry
 
 class CCSchedulerScriptHandlerEntry : public CCScriptHandlerEntry
 {
@@ -128,8 +122,6 @@ private:
 };
 
 
-// #pragma mark -
-// #pragma mark CCTouchScriptHandlerEntry
 
 class CCTouchScriptHandlerEntry : public CCScriptHandlerEntry
 {
@@ -164,8 +156,6 @@ private:
     bool    m_bSwallowsTouches;
 };
 
-// #pragma mark -
-// #pragma mark CCScriptEngineProtocol
 
 // Don't make CCScriptEngineProtocol inherits from CCObject since setScriptEngine is invoked only once in AppDelegate.cpp,
 // It will affect the lifecycle of ScriptCore instance, the autorelease pool will be destroyed before destructing ScriptCore.
@@ -222,6 +212,7 @@ public:
     virtual int executeCallFuncActionEvent(CCCallFunc* pAction, CCObject* pTarget = NULL) = 0;
     /** execute a schedule function */
     virtual int executeSchedule(CCTimer* pTimer, float dt, CCNode* pNode = NULL) = 0;
+    virtual int executeSchedule(int nHandler, float dt, CCNode* pNode = NULL) = 0;
     
     /** functions for executing touch event */
     virtual int executeLayerTouchesEvent(CCLayer* pLayer, int eventType, CCSet *pTouches) = 0;
