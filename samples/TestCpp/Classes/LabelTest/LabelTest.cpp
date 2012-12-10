@@ -329,8 +329,8 @@ LabelAtlasColorTest::LabelAtlasColorTest()
 
     CCActionInterval* fade = CCFadeOut::create(1.0f);
     CCActionInterval* fade_in = fade->reverse();
-    CCFiniteTimeAction* seq = CCSequence::create(fade, fade_in, NULL);
-    CCAction* repeat = CCRepeatForever::create( (CCActionInterval*)seq );
+    CCSequence* seq = CCSequence::create(fade, fade_in, NULL);
+    CCAction* repeat = CCRepeatForever::create( seq );
     label2->runAction( repeat );    
 
     m_time = 0;
@@ -425,8 +425,8 @@ Atlas3::Atlas3()
     addChild(label1, 0, kTagBitmapAtlas1);
     CCActionInterval* fade = CCFadeOut::create(1.0f);
     CCActionInterval* fade_in = fade->reverse();
-    CCFiniteTimeAction* seq = CCSequence::create(fade, fade_in, NULL);
-    CCAction* repeat = CCRepeatForever::create((CCActionInterval*)seq);
+    CCSequence* seq = CCSequence::create(fade, fade_in, NULL);
+    CCAction* repeat = CCRepeatForever::create(seq);
     label1->runAction(repeat);
     
 
@@ -519,16 +519,16 @@ Atlas4::Atlas4()
     
     CCActionInterval* scale = CCScaleBy::create(2, 1.5f);
     CCActionInterval* scale_back = scale->reverse();
-    CCFiniteTimeAction* scale_seq = CCSequence::create(scale, scale_back,NULL);
-    CCAction* scale_4ever = CCRepeatForever::create((CCActionInterval*)scale_seq);
+    CCSequence* scale_seq = CCSequence::create(scale, scale_back,NULL);
+    CCAction* scale_4ever = CCRepeatForever::create(scale_seq);
     
     CCActionInterval* jump = CCJumpBy::create(0.5f, CCPointZero, 60, 1);
     CCAction* jump_4ever = CCRepeatForever::create(jump);
     
     CCActionInterval* fade_out = CCFadeOut::create(1);
     CCActionInterval* fade_in = CCFadeIn::create(1);
-    CCFiniteTimeAction* seq = CCSequence::create(fade_out, fade_in, NULL);
-    CCAction* fade_4ever = CCRepeatForever::create((CCActionInterval*)seq);
+    CCSequence* seq = CCSequence::create(fade_out, fade_in, NULL);
+    CCAction* fade_4ever = CCRepeatForever::create(seq);
     
     BChar->runAction(rot_4ever);
     BChar->runAction(scale_4ever);
@@ -1352,8 +1352,8 @@ LabelTTFA8Test::LabelTTFA8Test()
 
     CCFadeOut *fadeOut = CCFadeOut::create(2);
     CCFadeIn *fadeIn = CCFadeIn::create(2);
-    CCFiniteTimeAction *seq = CCSequence::create(fadeOut, fadeIn, NULL);
-    CCRepeatForever *forever = CCRepeatForever::create((CCActionInterval *)seq);
+    CCSequence *seq = CCSequence::create(fadeOut, fadeIn, NULL);
+    CCRepeatForever *forever = CCRepeatForever::create(seq);
     label1->runAction(forever);
 }
 

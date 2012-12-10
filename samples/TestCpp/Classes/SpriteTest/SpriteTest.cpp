@@ -329,7 +329,7 @@ void Sprite1::addNewSpriteWithCoords(CCPoint p)
     else 
         action = CCFadeOut::create(2);
     CCActionInterval* action_back = action->reverse();
-    CCActionInterval* seq = (CCActionInterval*)(CCSequence::create( action, action_back, NULL ));
+    CCActionInterval* seq = CCSequence::create( action, action_back, NULL );
     
     sprite->runAction( CCRepeatForever::create(seq) );
 }
@@ -403,7 +403,7 @@ void SpriteBatchNode1::addNewSpriteWithCoords(CCPoint p)
         action = CCFadeOut::create(2);
 
     CCActionInterval* action_back = action->reverse();
-    CCActionInterval* seq = (CCActionInterval*)(CCSequence::create(action, action_back, NULL));
+    CCActionInterval* seq = CCSequence::create(action, action_back, NULL);
     
     sprite->runAction( CCRepeatForever::create(seq));
 }
@@ -463,19 +463,19 @@ SpriteColorOpacity::SpriteColorOpacity()
     
     CCActionInterval* action = CCFadeIn::create(2);
     CCActionInterval* action_back = action->reverse();
-    CCAction* fade = CCRepeatForever::create( (CCActionInterval*)(CCSequence::create( action, action_back, NULL)));
+    CCAction* fade = CCRepeatForever::create( CCSequence::create( action, action_back, NULL) );
     
     CCActionInterval* tintred = CCTintBy::create(2, 0, -255, -255);
     CCActionInterval* tintred_back = tintred->reverse();
-    CCAction* red = CCRepeatForever::create( (CCActionInterval*)(CCSequence::create( tintred, tintred_back, NULL)) );
+    CCAction* red = CCRepeatForever::create( CCSequence::create( tintred, tintred_back, NULL) );
     
     CCActionInterval* tintgreen = CCTintBy::create(2, -255, 0, -255);
     CCActionInterval* tintgreen_back = tintgreen->reverse();
-    CCAction* green = CCRepeatForever::create( (CCActionInterval*)(CCSequence::create( tintgreen, tintgreen_back, NULL)));
+    CCAction* green = CCRepeatForever::create( CCSequence::create( tintgreen, tintgreen_back, NULL) );
     
     CCActionInterval* tintblue = CCTintBy::create(2, -255, -255, 0);
     CCActionInterval* tintblue_back = tintblue->reverse();
-    CCAction* blue = CCRepeatForever::create( (CCActionInterval*)(CCSequence::create( tintblue, tintblue_back, NULL)) );
+    CCAction* blue = CCRepeatForever::create( CCSequence::create( tintblue, tintblue_back, NULL) );
     
     sprite5->runAction(red);
     sprite6->runAction(green);
@@ -549,19 +549,19 @@ SpriteBatchNodeColorOpacity::SpriteBatchNodeColorOpacity()
 
     CCActionInterval* action = CCFadeIn::create(2);
     CCActionInterval* action_back = action->reverse();
-    CCAction* fade = CCRepeatForever::create( (CCActionInterval*)(CCSequence::create( action, action_back,NULL)));
+    CCAction* fade = CCRepeatForever::create( CCSequence::create( action, action_back,NULL) );
 
     CCActionInterval* tintred = CCTintBy::create(2, 0, -255, -255);
     CCActionInterval* tintred_back = tintred->reverse();
-    CCAction* red = CCRepeatForever::create( (CCActionInterval*)(CCSequence::create( tintred, tintred_back,NULL)));
+    CCAction* red = CCRepeatForever::create( CCSequence::create( tintred, tintred_back,NULL) );
 
     CCActionInterval* tintgreen = CCTintBy::create(2, -255, 0, -255);
     CCActionInterval* tintgreen_back = tintgreen->reverse();
-    CCAction* green = CCRepeatForever::create( (CCActionInterval*)(CCSequence::create( tintgreen, tintgreen_back,NULL)));
+    CCAction* green = CCRepeatForever::create( CCSequence::create( tintgreen, tintgreen_back,NULL) );
 
     CCActionInterval* tintblue = CCTintBy::create(2, -255, -255, 0);
     CCActionInterval* tintblue_back = tintblue->reverse();
-    CCAction* blue = CCRepeatForever::create( (CCActionInterval*)(CCSequence::create( tintblue, tintblue_back,NULL)));
+    CCAction* blue = CCRepeatForever::create( CCSequence::create( tintblue, tintblue_back,NULL) );
     
     
     sprite5->runAction(red);
@@ -1268,12 +1268,12 @@ Sprite6::Sprite6()
 
     // SpriteBatchNode actions
     CCActionInterval* rotate_back = rotate->reverse();
-    CCActionInterval* rotate_seq = (CCActionInterval*)(CCSequence::create(rotate, rotate_back, NULL));
+    CCActionInterval* rotate_seq = CCSequence::create(rotate, rotate_back, NULL);
     CCAction* rotate_forever = CCRepeatForever::create(rotate_seq);
     
     CCActionInterval* scale = CCScaleBy::create(5, 1.5f);
     CCActionInterval* scale_back = scale->reverse();
-    CCActionInterval* scale_seq = (CCActionInterval*)(CCSequence::create( scale, scale_back, NULL));
+    CCActionInterval* scale_seq = CCSequence::create( scale, scale_back, NULL);
     CCAction* scale_forever = CCRepeatForever::create(scale_seq);
 
     float step = s.width/4;
@@ -1398,7 +1398,7 @@ SpriteAliased::SpriteAliased()
     
     CCActionInterval* scale = CCScaleBy::create(2, 5);
     CCActionInterval* scale_back = scale->reverse();
-    CCActionInterval* seq = (CCActionInterval*)(CCSequence::create( scale, scale_back, NULL));
+    CCActionInterval* seq = CCSequence::create( scale, scale_back, NULL);
     CCAction* repeat = CCRepeatForever::create(seq);
     
     CCAction* repeat2 = (CCAction*)(repeat->copy()->autorelease());
@@ -1457,7 +1457,7 @@ SpriteBatchNodeAliased::SpriteBatchNodeAliased()
     
     CCActionInterval* scale = CCScaleBy::create(2, 5);
     CCActionInterval* scale_back = scale->reverse();
-    CCActionInterval* seq = (CCActionInterval*)(CCSequence::create( scale, scale_back, NULL));
+    CCActionInterval* seq = CCSequence::create( scale, scale_back, NULL);
     CCAction* repeat = CCRepeatForever::create(seq);
     
     CCAction* repeat2 = (CCAction*)(repeat->copy()->autorelease());
@@ -1548,7 +1548,7 @@ void SpriteNewTexture::addNewSprite()
         action = CCFadeOut::create(2);
 
     CCActionInterval* action_back = action->reverse();
-    CCActionInterval* seq = (CCActionInterval*)(CCSequence::create(action, action_back, NULL));
+    CCActionInterval* seq = CCSequence::create(action, action_back, NULL);
     
     sprite->runAction( CCRepeatForever::create(seq) );
 }
@@ -1654,7 +1654,7 @@ void SpriteBatchNodeNewTexture::addNewSprite()
     else 
         action = CCFadeOut::create(2);
     CCActionInterval* action_back = action->reverse();
-    CCActionInterval* seq = (CCActionInterval*)(CCSequence::create(action, action_back, NULL));
+    CCActionInterval* seq = CCSequence::create(action, action_back, NULL);
     
     sprite->runAction( CCRepeatForever::create(seq) );
 }
@@ -2097,7 +2097,7 @@ SpriteOffsetAnchorScale::SpriteOffsetAnchorScale()
         
         CCActionInterval* scale = CCScaleBy::create(2, 2);
         CCActionInterval* scale_back = scale->reverse();
-        CCActionInterval* seq_scale = (CCActionInterval*)(CCSequence::create(scale, scale_back, NULL));
+        CCActionInterval* seq_scale = CCSequence::create(scale, scale_back, NULL);
         sprite->runAction(CCRepeatForever::create(seq_scale));
         
         addChild(sprite, 0);
@@ -2174,7 +2174,7 @@ SpriteBatchNodeOffsetAnchorScale::SpriteBatchNodeOffsetAnchorScale()
 
         CCActionInterval* scale = CCScaleBy::create(2, 2);
         CCActionInterval* scale_back = scale->reverse();
-        CCActionInterval* seq_scale = (CCActionInterval*)(CCSequence::create(scale, scale_back, NULL) );
+        CCActionInterval* seq_scale = CCSequence::create(scale, scale_back, NULL);
         sprite->runAction(CCRepeatForever::create(seq_scale) );
         
         spritesheet->addChild(sprite, i);
@@ -2232,11 +2232,11 @@ SpriteAnimationSplit::SpriteAnimationSplit()
             
     CCAnimation *animation = CCAnimation::createWithSpriteFrames(animFrames, 0.2f);
     CCAnimate *animate = CCAnimate::create(animation);
-    CCActionInterval* seq = (CCActionInterval*)(CCSequence::create( animate,
+    CCActionInterval* seq = CCSequence::create( animate,
                        CCFlipX::create(true),
                        animate->copy()->autorelease(),
                        CCFlipX::create(false),
-                       NULL) );
+                       NULL);
     
     sprite->runAction(CCRepeatForever::create( seq ) );
 }
@@ -2408,9 +2408,9 @@ SpriteBatchNodeChildren::SpriteBatchNodeChildren()
     CCActionInterval* seq2 = action_rot->reverse();
     sprite2->runAction( CCRepeatForever::create(seq2) );
     
-    sprite1->runAction( (CCAction*)(CCRepeatForever::create(action_rot)) );
-    sprite1->runAction( (CCAction*)(CCRepeatForever::create((CCActionInterval*)(CCSequence::create(action, action_back,NULL)) )));
-    sprite1->runAction( (CCAction*)(CCRepeatForever::create((CCActionInterval*)(CCSequence::create(action_s, action_s_back,NULL)))) );
+    sprite1->runAction( CCRepeatForever::create(action_rot));
+    sprite1->runAction( CCRepeatForever::create(CCSequence::create(action, action_back,NULL)) );
+    sprite1->runAction( CCRepeatForever::create(CCSequence::create(action_s, action_s_back,NULL)) );
 
 }
 
@@ -3192,8 +3192,8 @@ SpriteBatchNodeSkewNegativeScaleChildren::SpriteBatchNodeSkewNegativeScaleChildr
             sprite->setScale(-1.0f);
         }
 
-        CCSequence* seq_skew = (CCSequence*)CCSequence::create(skewX, skewX_back, skewY, skewY_back, NULL);
-        sprite->runAction((CCAction*)CCRepeatForever::create(seq_skew));
+        CCSequence* seq_skew = CCSequence::create(skewX, skewX_back, skewY, skewY_back, NULL);
+        sprite->runAction(CCRepeatForever::create(seq_skew));
 
         CCSprite *child1 = CCSprite::createWithSpriteFrameName("grossini_dance_01.png");
         child1->setPosition(ccp(sprite->getContentSize().width / 2.0f, sprite->getContentSize().height / 2.0f));
@@ -3251,7 +3251,7 @@ SpriteSkewNegativeScaleChildren::SpriteSkewNegativeScaleChildren()
             sprite->setScale(-1.0f);
         }
 
-        CCSequence* seq_skew = (CCSequence*)CCSequence::create(skewX, skewX_back, skewY, skewY_back, NULL);
+        CCSequence* seq_skew = CCSequence::create(skewX, skewX_back, skewY, skewY_back, NULL);
         sprite->runAction(CCRepeatForever::create(seq_skew));
 
         CCSprite *child1 = CCSprite::createWithSpriteFrameName("grossini_dance_01.png");
@@ -3498,9 +3498,9 @@ SpriteDoubleResolution::SpriteDoubleResolution()
     // Actions
     CCScaleBy* scale = CCScaleBy::create(2, 0.5);
     CCScaleBy* scale_back = (CCScaleBy*)scale->reverse();
-    CCFiniteTimeAction* seq = CCSequence::create(scale, scale_back, NULL);
+    CCSequence* seq = CCSequence::create(scale, scale_back, NULL);
 
-    CCFiniteTimeAction* seq_copy = (CCFiniteTimeAction*)seq->copy()->autorelease();
+    CCSequence* seq_copy = (CCSequence*)seq->copy()->autorelease();
 
     spriteSD->runAction(seq);
     spriteHD->runAction(seq_copy);
@@ -3594,7 +3594,7 @@ AnimationCache::AnimationCache()
     CCAnimate *animG = CCAnimate::create(dance_grey);
     CCAnimate *animB = CCAnimate::create(dance_blue);
 
-    CCFiniteTimeAction *seq = CCSequence::create(animN, animG, animB, NULL);
+    CCSequence *seq = CCSequence::create(animN, animG, animB, NULL);
 
     // create an sprite without texture
     CCSprite *grossini = CCSprite::create();
@@ -3650,7 +3650,7 @@ AnimationCacheFile::AnimationCacheFile()
     CCAnimate *animG = CCAnimate::create(dance_grey);
     CCAnimate *animB = CCAnimate::create(dance_blue);
 
-    CCSequence *seq = (CCSequence*)CCSequence::create(animN, animG, animB, NULL);
+    CCSequence *seq = CCSequence::create(animN, animG, animB, NULL);
 
     // create an sprite without texture
     CCSprite *grossini = CCSprite::create();
@@ -3782,8 +3782,8 @@ SpriteOffsetAnchorSkew::SpriteOffsetAnchorSkew()
         CCSkewBy *skewY = CCSkewBy::create(2, 0, 45);
         CCActionInterval *skewY_back = skewY->reverse();
 
-        CCFiniteTimeAction *seq_skew = CCSequence::create(skewX, skewX_back, skewY, skewY_back, NULL);
-        sprite->runAction(CCRepeatForever::create((CCActionInterval*)seq_skew));
+        CCSequence *seq_skew = CCSequence::create(skewX, skewX_back, skewY, skewY_back, NULL);
+        sprite->runAction(CCRepeatForever::create(seq_skew));
 
         addChild(sprite, 0);
     }
@@ -3860,8 +3860,8 @@ SpriteBatchNodeOffsetAnchorSkew::SpriteBatchNodeOffsetAnchorSkew()
         CCSkewBy *skewY = CCSkewBy::create(2, 0, 45);
         CCActionInterval *skewY_back = skewY->reverse();
 
-        CCFiniteTimeAction *seq_skew = CCSequence::create(skewX, skewX_back, skewY, skewY_back, NULL);
-        sprite->runAction(CCRepeatForever::create((CCActionInterval*)seq_skew));
+        CCSequence *seq_skew = CCSequence::create(skewX, skewX_back, skewY, skewY_back, NULL);
+        sprite->runAction(CCRepeatForever::create(seq_skew));
 
         spritebatch->addChild(sprite, i);
     }
@@ -3936,14 +3936,14 @@ SpriteOffsetAnchorSkewScale::SpriteOffsetAnchorSkewScale()
         CCSkewBy *skewY = CCSkewBy::create(2, 0, 45);
         CCActionInterval *skewY_back = skewY->reverse();
 
-        CCFiniteTimeAction *seq_skew = CCSequence::create(skewX, skewX_back, skewY, skewY_back, NULL);
-        sprite->runAction(CCRepeatForever::create((CCActionInterval*)seq_skew));
+        CCSequence *seq_skew = CCSequence::create(skewX, skewX_back, skewY, skewY_back, NULL);
+        sprite->runAction(CCRepeatForever::create(seq_skew));
 
         // Scale
         CCScaleBy *scale = CCScaleBy::create(2, 2);
         CCActionInterval *scale_back = scale->reverse();
-        CCFiniteTimeAction *seq_scale = CCSequence::create(scale, scale_back, NULL);
-        sprite->runAction(CCRepeatForever::create((CCActionInterval*)seq_scale));
+        CCSequence *seq_scale = CCSequence::create(scale, scale_back, NULL);
+        sprite->runAction(CCRepeatForever::create(seq_scale));
 
         addChild(sprite, 0);
     }
@@ -4018,14 +4018,14 @@ SpriteBatchNodeOffsetAnchorSkewScale::SpriteBatchNodeOffsetAnchorSkewScale()
         CCSkewBy *skewY = CCSkewBy::create(2, 0, 45);
         CCActionInterval *skewY_back = skewY->reverse();
 
-        CCFiniteTimeAction *seq_skew = CCSequence::create(skewX, skewX_back, skewY, skewY_back, NULL);
-        sprite->runAction(CCRepeatForever::create((CCActionInterval*)seq_skew));
+        CCSequence *seq_skew = CCSequence::create(skewX, skewX_back, skewY, skewY_back, NULL);
+        sprite->runAction(CCRepeatForever::create(seq_skew));
 
         // scale 
         CCScaleBy *scale = CCScaleBy::create(2, 2);
         CCActionInterval *scale_back = scale->reverse();
-        CCFiniteTimeAction *seq_scale = CCSequence::create(scale, scale_back, NULL);
-        sprite->runAction(CCRepeatForever::create((CCActionInterval*)seq_scale));
+        CCSequence *seq_scale = CCSequence::create(scale, scale_back, NULL);
+        sprite->runAction(CCRepeatForever::create(seq_scale));
 
         spritebatch->addChild(sprite, i);
     }
@@ -4097,8 +4097,8 @@ SpriteOffsetAnchorFlip::SpriteOffsetAnchorFlip()
         CCFlipY *flip = CCFlipY::create(true);
         CCFlipY *flip_back = CCFlipY::create(false);
         CCDelayTime *delay = CCDelayTime::create(1);
-        CCFiniteTimeAction *seq = CCSequence::create(delay, flip, delay->copy()->autorelease(), flip_back, NULL);
-        sprite->runAction(CCRepeatForever::create((CCActionInterval*)seq));
+        CCSequence *seq = CCSequence::create(delay, flip, delay->copy()->autorelease(), flip_back, NULL);
+        sprite->runAction(CCRepeatForever::create(seq));
 
         addChild(sprite, 0);
     }
@@ -4179,8 +4179,8 @@ SpriteBatchNodeOffsetAnchorFlip::SpriteBatchNodeOffsetAnchorFlip()
         CCFlipY *flip = CCFlipY::create(true);
         CCFlipY *flip_back = CCFlipY::create(false);
         CCDelayTime *delay = CCDelayTime::create(1);
-        CCFiniteTimeAction *seq = CCSequence::create(delay, flip, delay->copyWithZone(NULL)->autorelease(), flip_back, NULL);
-        sprite->runAction(CCRepeatForever::create((CCActionInterval*)seq));
+        CCSequence *seq = CCSequence::create(delay, flip, delay->copyWithZone(NULL)->autorelease(), flip_back, NULL);
+        sprite->runAction(CCRepeatForever::create(seq));
 
         spritebatch->addChild(sprite, i);
     }
@@ -4464,8 +4464,8 @@ SpriteOffsetAnchorRotationalSkew::SpriteOffsetAnchorRotationalSkew()
         CCRotateBy *skewY = CCRotateBy::create(2, 0, 45);
         CCRotateBy *skewY_back = (CCRotateBy*)skewY->reverse();
         
-        CCFiniteTimeAction *seq_skew = CCSequence::create(skewX, skewX_back, skewY, skewY_back, NULL);
-        sprite->runAction(CCRepeatForever::create((CCActionInterval *)seq_skew));
+        CCSequence *seq_skew = CCSequence::create(skewX, skewX_back, skewY, skewY_back, NULL);
+        sprite->runAction(CCRepeatForever::create(seq_skew));
         
         addChild(sprite, 0);
     }
@@ -4540,8 +4540,8 @@ SpriteBatchNodeOffsetAnchorRotationalSkew::SpriteBatchNodeOffsetAnchorRotational
         CCRotateBy *skewY = CCRotateBy::create(2, 0, 45);
         CCRotateBy *skewY_back = (CCRotateBy*)skewY->reverse();
         
-        CCFiniteTimeAction *seq_skew = CCSequence::create(skewX, skewX_back, skewY, skewY_back, NULL);
-        sprite->runAction(CCRepeatForever::create((CCActionInterval *)seq_skew));
+        CCSequence *seq_skew = CCSequence::create(skewX, skewX_back, skewY, skewY_back, NULL);
+        sprite->runAction(CCRepeatForever::create(seq_skew));
         
         spritebatch->addChild(sprite, i);
     }
@@ -4614,14 +4614,14 @@ SpriteOffsetAnchorRotationalSkewScale::SpriteOffsetAnchorRotationalSkewScale()
         CCRotateBy *skewY = CCRotateBy::create(2, 0, 45);
         CCRotateBy *skewY_back = (CCRotateBy*)skewY->reverse();
         
-        CCFiniteTimeAction *seq_skew = CCSequence::create(skewX, skewX_back, skewY, skewY_back, NULL);
-        sprite->runAction(CCRepeatForever::create((CCActionInterval *)seq_skew));
+        CCSequence *seq_skew = CCSequence::create(skewX, skewX_back, skewY, skewY_back, NULL);
+        sprite->runAction(CCRepeatForever::create(seq_skew));
         
         // Scale
         CCScaleBy *scale = CCScaleBy::create(2, 2);
         CCScaleBy *scale_back = (CCScaleBy *)scale->reverse();
-        CCFiniteTimeAction *seq_scale = CCSequence::create(scale, scale_back, NULL);
-        sprite->runAction(CCRepeatForever::create((CCActionInterval *)seq_scale));
+        CCSequence *seq_scale = CCSequence::create(scale, scale_back, NULL);
+        sprite->runAction(CCRepeatForever::create(seq_scale));
         
         addChild(sprite, i);
     }
@@ -4697,14 +4697,14 @@ SpriteBatchNodeOffsetAnchorRotationalSkewScale::SpriteBatchNodeOffsetAnchorRotat
         CCRotateBy *skewY = CCRotateBy::create(2, 0, 45);
         CCRotateBy *skewY_back = (CCRotateBy*)skewY->reverse();
         
-        CCFiniteTimeAction *seq_skew = CCSequence::create(skewX, skewX_back, skewY, skewY_back, NULL);
-        sprite->runAction(CCRepeatForever::create((CCActionInterval *)seq_skew));
+        CCSequence *seq_skew = CCSequence::create(skewX, skewX_back, skewY, skewY_back, NULL);
+        sprite->runAction(CCRepeatForever::create(seq_skew));
         
         // Scale
         CCScaleBy *scale = CCScaleBy::create(2, 2);
         CCScaleBy *scale_back = (CCScaleBy *)scale->reverse();
-        CCFiniteTimeAction *seq_scale = CCSequence::create(scale, scale_back, NULL);
-        sprite->runAction(CCRepeatForever::create((CCActionInterval *)seq_scale));
+        CCSequence *seq_scale = CCSequence::create(scale, scale_back, NULL);
+        sprite->runAction(CCRepeatForever::create(seq_scale));
         
         spritebatch->addChild(sprite, i);
     }
@@ -4759,8 +4759,8 @@ SpriteRotationalSkewNegativeScaleChildren::SpriteRotationalSkewNegativeScaleChil
             sprite->setScale(-1.0f);
         }
         
-        CCFiniteTimeAction *seq_skew = CCSequence::create(skewX, skewX_back, skewY, skewY_back, NULL);
-        sprite->runAction(CCRepeatForever::create((CCActionInterval *)seq_skew));
+        CCSequence *seq_skew = CCSequence::create(skewX, skewX_back, skewY, skewY_back, NULL);
+        sprite->runAction(CCRepeatForever::create(seq_skew));
         
         CCSprite *child1 = CCSprite::create("Images/grossini_dance_01.png");
         child1->setPosition(ccp(sprite->getContentSize().width/2.0f, sprite->getContentSize().height/2.0f));
@@ -4822,8 +4822,8 @@ SpriteBatchNodeRotationalSkewNegativeScaleChildren::SpriteBatchNodeRotationalSke
             sprite->setScale(-1.0f);
         }
         
-        CCFiniteTimeAction *seq_skew = CCSequence::create(skewX, skewX_back, skewY, skewY_back, NULL);
-        sprite->runAction(CCRepeatForever::create((CCActionInterval *)seq_skew));
+        CCSequence *seq_skew = CCSequence::create(skewX, skewX_back, skewY, skewY_back, NULL);
+        sprite->runAction(CCRepeatForever::create(seq_skew));
         
         CCSprite *child1 = CCSprite::create("Images/grossini_dance_01.png");
         child1->setPosition(ccp(sprite->getContentSize().width/2.0f, sprite->getContentSize().height/2.0f));

@@ -916,8 +916,8 @@ void SchedulerTimeScale::onEnter()
     CCActionInterval *rot1 = CCRotateBy::create(4, 360*2);
     CCActionInterval *rot2 = rot1->reverse();
 
-    CCFiniteTimeAction* seq3_1 = CCSequence::create(jump2, jump1, NULL);
-    CCFiniteTimeAction* seq3_2 = CCSequence::create(rot1, rot2, NULL);
+    CCSequence* seq3_1 = CCSequence::create(jump2, jump1, NULL);
+    CCSequence* seq3_2 = CCSequence::create(rot1, rot2, NULL);
     CCFiniteTimeAction* spawn = CCSpawn::create(seq3_1, seq3_2, NULL);
     CCRepeat* action = CCRepeat::create(spawn, 50);
 
@@ -1010,8 +1010,8 @@ void TwoSchedulers::onEnter()
     CCActionInterval *jump1 = CCJumpBy::create(4, ccp(0,0), 100, 4);
     CCActionInterval *jump2 = jump1->reverse();
 
-    CCFiniteTimeAction* seq = CCSequence::create(jump2, jump1, NULL);
-    CCRepeatForever* action = CCRepeatForever::create((CCActionInterval *)seq);
+    CCSequence* seq = CCSequence::create(jump2, jump1, NULL);
+    CCRepeatForever* action = CCRepeatForever::create(seq);
 
         //
         // Center

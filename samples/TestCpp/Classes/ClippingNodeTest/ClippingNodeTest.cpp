@@ -217,7 +217,7 @@ CCAction* BasicTest::actionRotate()
 CCAction* BasicTest::actionScale()
 {
     CCScaleBy *scale = CCScaleBy::create(1.33f, 1.5f);
-    return CCRepeatForever::create((CCActionInterval*)CCSequence::create(scale, scale->reverse(), NULL));
+    return CCRepeatForever::create(CCSequence::create(scale, scale->reverse(), NULL));
 }
 
 CCDrawNode* BasicTest::shape()
