@@ -34,10 +34,10 @@ bool Bug1159Layer::init()
         sprite_a->setPosition(ccp(0.0f, s.height/2));
         addChild(sprite_a);
 
-        sprite_a->runAction(CCRepeatForever::create((CCActionInterval*) CCSequence::create(
-                                                               CCMoveTo::create(1.0f, ccp(1024.0f, 384.0f)),
-                                                               CCMoveTo::create(1.0f, ccp(0.0f, 384.0f)),
-                                                               NULL)));
+        sprite_a->runAction(CCRepeatForever::create(CCSequence::create(
+                                                        CCMoveTo::create(1.0f, ccp(1024.0f, 384.0f)),
+                                                        CCMoveTo::create(1.0f, ccp(0.0f, 384.0f)),
+                                                        NULL)));
 
         CCLayerColor *sprite_b = CCLayerColor::create(ccc4(0, 0, 255, 255), 400, 400);
         sprite_b->setAnchorPoint(ccp(0.5f, 0.5f));

@@ -63,7 +63,7 @@ public:
         CCActionInterval* flipx_back = flipx->reverse();
         CCDelayTime* delay = CCDelayTime::create(2);
         
-        return (CCActionInterval*)(CCSequence::create(flipx, delay, flipx_back, NULL));
+        return CCSequence::create(flipx, delay, flipx_back, NULL);
     }
 };
 
@@ -76,7 +76,7 @@ public:
         CCActionInterval* flipy_back = flipy->reverse();
         CCDelayTime* delay = CCDelayTime::create(2);
         
-        return (CCActionInterval*)(CCSequence::create(flipy, delay, flipy_back, NULL));
+        return CCSequence::create(flipy, delay, flipy_back, NULL);
     }
 };
 
@@ -162,7 +162,7 @@ public:
         CCActionInterval* shuffle_back = shuffle->reverse();
         CCDelayTime* delay = CCDelayTime::create(2);
 
-        return (CCActionInterval*)(CCSequence::create(shuffle, delay, shuffle_back, NULL));
+        return CCSequence::create(shuffle, delay, shuffle_back, NULL);
     }
 };
 
@@ -176,7 +176,7 @@ public:
         CCActionInterval* back = fadeout->reverse();
         CCDelayTime* delay = CCDelayTime::create(0.5f);
 
-        return (CCActionInterval*)(CCSequence::create(fadeout, delay, back, NULL));
+        return CCSequence::create(fadeout, delay, back, NULL);
     }
 };
 
@@ -190,7 +190,7 @@ public:
         CCActionInterval* back = fadeout->reverse();
         CCDelayTime* delay = CCDelayTime::create(0.5f);
 
-        return (CCActionInterval*)(CCSequence::create(fadeout, delay, back, NULL));
+        return CCSequence::create(fadeout, delay, back, NULL);
     }
 };
 
@@ -204,7 +204,7 @@ public:
         CCActionInterval* back = fadeout->reverse();
         CCDelayTime* delay = CCDelayTime::create(0.5f);
 
-        return (CCActionInterval*)(CCSequence::create(fadeout, delay, back, NULL));
+        return CCSequence::create(fadeout, delay, back, NULL);
     }
 };
 
@@ -217,7 +217,7 @@ public:
         CCActionInterval* back = fadeout->reverse();
         CCDelayTime* delay = CCDelayTime::create(0.5f);
 
-        return (CCActionInterval*)(CCSequence::create(fadeout, delay, back, NULL));
+        return CCSequence::create(fadeout, delay, back, NULL);
     }
 };
 
@@ -230,7 +230,7 @@ public:
         CCActionInterval* back = fadeout->reverse();
         CCDelayTime* delay = CCDelayTime::create(0.5f);
 
-        return (CCActionInterval*)(CCSequence::create(fadeout, delay, back, NULL));
+        return CCSequence::create(fadeout, delay, back, NULL);
     }
 };
 
@@ -356,14 +356,14 @@ TextLayer::TextLayer(void)
     grossini->setPosition( ccp(VisibleRect::left().x+VisibleRect::getVisibleRect().size.width/3,VisibleRect::center().y) );
     CCActionInterval* sc = CCScaleBy::create(2, 5);
     CCActionInterval* sc_back = sc->reverse();
-    grossini->runAction( CCRepeatForever::create((CCActionInterval*)(CCSequence::create(sc, sc_back, NULL)) ) );
+    grossini->runAction( CCRepeatForever::create(CCSequence::create(sc, sc_back, NULL) ) );
 
     CCSprite* tamara = CCSprite::create(s_pPathSister1);
     node->addChild(tamara, 1);
     tamara->setPosition( ccp(VisibleRect::left().x+2*VisibleRect::getVisibleRect().size.width/3,VisibleRect::center().y) );
     CCActionInterval* sc2 = CCScaleBy::create(2, 5);
     CCActionInterval* sc2_back = sc2->reverse();
-    tamara->runAction( CCRepeatForever::create((CCActionInterval*)(CCSequence::create(sc2, sc2_back, NULL))) );
+    tamara->runAction( CCRepeatForever::create(CCSequence::create(sc2, sc2_back, NULL)) );
     
     CCLabelTTF* label = CCLabelTTF::create((effectsList[actionIdx]).c_str(), "Marker Felt", 32);
     

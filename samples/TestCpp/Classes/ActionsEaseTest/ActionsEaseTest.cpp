@@ -32,18 +32,18 @@ void SpriteEase::onEnter()
     
     CCDelayTime *delay = CCDelayTime::create(0.25f);
     
-    CCFiniteTimeAction* seq1 = CCSequence::create(move, delay, move_back, CCCA(delay), NULL);
-    CCFiniteTimeAction* seq2 = CCSequence::create(move_ease_in, CCCA(delay), move_ease_in_back, CCCA(delay), NULL);
-    CCFiniteTimeAction* seq3 = CCSequence::create(move_ease_out, CCCA(delay), move_ease_out_back, CCCA(delay), NULL);
+    CCSequence* seq1 = CCSequence::create(move, delay, move_back, CCCA(delay), NULL);
+    CCSequence* seq2 = CCSequence::create(move_ease_in, CCCA(delay), move_ease_in_back, CCCA(delay), NULL);
+    CCSequence* seq3 = CCSequence::create(move_ease_out, CCCA(delay), move_ease_out_back, CCCA(delay), NULL);
     
     
-    CCAction *a2 = m_grossini->runAction(CCRepeatForever::create((CCActionInterval*)seq1));
+    CCAction *a2 = m_grossini->runAction(CCRepeatForever::create(seq1));
     a2->setTag(1);
 
-    CCAction *a1 = m_tamara->runAction(CCRepeatForever::create((CCActionInterval*)seq2));
+    CCAction *a1 = m_tamara->runAction(CCRepeatForever::create(seq2));
     a1->setTag(1);
 
-    CCAction *a = m_kathia->runAction(CCRepeatForever::create((CCActionInterval*)seq3));
+    CCAction *a = m_kathia->runAction(CCRepeatForever::create(seq3));
     a->setTag(1);
 
     schedule(schedule_selector(SpriteEase::testStopAction), 6.25f);
@@ -87,13 +87,13 @@ void SpriteEaseInOut::onEnter()
     
     CCDelayTime *delay = CCDelayTime::create(0.25f);
 
-    CCFiniteTimeAction*  seq1 = CCSequence::create( move_ease_inout1, delay, move_ease_inout_back1, CCCA(delay), NULL);
-    CCFiniteTimeAction*  seq2 = CCSequence::create( move_ease_inout2, CCCA(delay), move_ease_inout_back2, CCCA(delay), NULL);
-    CCFiniteTimeAction*  seq3 = CCSequence::create( move_ease_inout3, CCCA(delay), move_ease_inout_back3, CCCA(delay), NULL);
+    CCSequence*  seq1 = CCSequence::create( move_ease_inout1, delay, move_ease_inout_back1, CCCA(delay), NULL);
+    CCSequence*  seq2 = CCSequence::create( move_ease_inout2, CCCA(delay), move_ease_inout_back2, CCCA(delay), NULL);
+    CCSequence*  seq3 = CCSequence::create( move_ease_inout3, CCCA(delay), move_ease_inout_back3, CCCA(delay), NULL);
         
-    m_tamara->runAction(CCRepeatForever::create((CCActionInterval*)seq1));
-    m_kathia->runAction(CCRepeatForever::create((CCActionInterval*)seq2));
-    m_grossini->runAction(CCRepeatForever::create((CCActionInterval*)seq3));
+    m_tamara->runAction(CCRepeatForever::create(seq1));
+    m_kathia->runAction(CCRepeatForever::create(seq2));
+    m_grossini->runAction(CCRepeatForever::create(seq3));
 }
 
 
@@ -123,14 +123,14 @@ void SpriteEaseExponential::onEnter()
     
     CCDelayTime *delay = CCDelayTime::create(0.25f);
     
-    CCFiniteTimeAction* seq1 = CCSequence::create(move, delay, move_back, CCCA(delay), NULL);
-    CCFiniteTimeAction* seq2 = CCSequence::create(move_ease_in, CCCA(delay), move_ease_in_back, CCCA(delay), NULL);
-    CCFiniteTimeAction* seq3 = CCSequence::create(move_ease_out, CCCA(delay), move_ease_out_back, CCCA(delay), NULL);
+    CCSequence* seq1 = CCSequence::create(move, delay, move_back, CCCA(delay), NULL);
+    CCSequence* seq2 = CCSequence::create(move_ease_in, CCCA(delay), move_ease_in_back, CCCA(delay), NULL);
+    CCSequence* seq3 = CCSequence::create(move_ease_out, CCCA(delay), move_ease_out_back, CCCA(delay), NULL);
     
 
-    m_grossini->runAction( CCRepeatForever::create((CCActionInterval*)seq1));
-    m_tamara->runAction( CCRepeatForever::create((CCActionInterval*)seq2));
-    m_kathia->runAction( CCRepeatForever::create((CCActionInterval*)seq3));
+    m_grossini->runAction( CCRepeatForever::create(seq1));
+    m_tamara->runAction( CCRepeatForever::create(seq2));
+    m_kathia->runAction( CCRepeatForever::create(seq3));
 }
 
 
@@ -156,13 +156,13 @@ void SpriteEaseExponentialInOut::onEnter()
     
     CCDelayTime *delay = CCDelayTime::create(0.25f);
     
-    CCFiniteTimeAction* seq1 = CCSequence::create( move, delay, move_back, CCCA(delay), NULL);
-    CCFiniteTimeAction* seq2 = CCSequence::create( move_ease, delay, move_ease_back, CCCA(delay), NULL);
+    CCSequence* seq1 = CCSequence::create( move, delay, move_back, CCCA(delay), NULL);
+    CCSequence* seq2 = CCSequence::create( move_ease, delay, move_ease_back, CCCA(delay), NULL);
     
     this->positionForTwo();
     
-    m_grossini->runAction( CCRepeatForever::create((CCActionInterval*)seq1));
-    m_tamara->runAction( CCRepeatForever::create((CCActionInterval*)seq2));
+    m_grossini->runAction( CCRepeatForever::create(seq1));
+    m_tamara->runAction( CCRepeatForever::create(seq2));
 
 }
 
@@ -192,14 +192,14 @@ void SpriteEaseSine::onEnter()
     
     CCDelayTime *delay = CCDelayTime::create(0.25f);
         
-    CCFiniteTimeAction* seq1 = CCSequence::create(move, delay, move_back, CCCA(delay), NULL);
-    CCFiniteTimeAction* seq2 = CCSequence::create(move_ease_in, CCCA(delay), move_ease_in_back, CCCA(delay), NULL);
-    CCFiniteTimeAction* seq3 = CCSequence::create(move_ease_out, CCCA(delay), move_ease_out_back, CCCA(delay), NULL);
+    CCSequence* seq1 = CCSequence::create(move, delay, move_back, CCCA(delay), NULL);
+    CCSequence* seq2 = CCSequence::create(move_ease_in, CCCA(delay), move_ease_in_back, CCCA(delay), NULL);
+    CCSequence* seq3 = CCSequence::create(move_ease_out, CCCA(delay), move_ease_out_back, CCCA(delay), NULL);
     
     
-    m_grossini->runAction( CCRepeatForever::create((CCActionInterval*)seq1));
-    m_tamara->runAction( CCRepeatForever::create((CCActionInterval*)seq2));
-    m_kathia->runAction( CCRepeatForever::create((CCActionInterval*)seq3));    
+    m_grossini->runAction( CCRepeatForever::create(seq1));
+    m_tamara->runAction( CCRepeatForever::create(seq2));
+    m_kathia->runAction( CCRepeatForever::create(seq3));    
 
 }
 
@@ -226,13 +226,13 @@ void SpriteEaseSineInOut::onEnter()
     
     CCDelayTime *delay = CCDelayTime::create(0.25f);
     
-    CCFiniteTimeAction* seq1 = CCSequence::create(move, delay, move_back, CCCA(delay), NULL);
-    CCFiniteTimeAction* seq2 = CCSequence::create(move_ease, CCCA(delay), move_ease_back, CCCA(delay), NULL);
+    CCSequence* seq1 = CCSequence::create(move, delay, move_back, CCCA(delay), NULL);
+    CCSequence* seq2 = CCSequence::create(move_ease, CCCA(delay), move_ease_back, CCCA(delay), NULL);
 
     this->positionForTwo();
 
-    m_grossini->runAction( CCRepeatForever::create((CCActionInterval*)seq1));
-    m_tamara->runAction( CCRepeatForever::create((CCActionInterval*)seq2));
+    m_grossini->runAction( CCRepeatForever::create(seq1));
+    m_tamara->runAction( CCRepeatForever::create(seq2));
 }
 
 
@@ -261,13 +261,13 @@ void SpriteEaseElastic::onEnter()
     
     CCDelayTime *delay = CCDelayTime::create(0.25f);
 
-    CCFiniteTimeAction* seq1 = CCSequence::create(move, delay, move_back, CCCA(delay), NULL);
-    CCFiniteTimeAction* seq2 = CCSequence::create(move_ease_in, CCCA(delay), move_ease_in_back, CCCA(delay), NULL);
-    CCFiniteTimeAction* seq3 = CCSequence::create(move_ease_out, CCCA(delay), move_ease_out_back, CCCA(delay), NULL);
+    CCSequence* seq1 = CCSequence::create(move, delay, move_back, CCCA(delay), NULL);
+    CCSequence* seq2 = CCSequence::create(move_ease_in, CCCA(delay), move_ease_in_back, CCCA(delay), NULL);
+    CCSequence* seq3 = CCSequence::create(move_ease_out, CCCA(delay), move_ease_out_back, CCCA(delay), NULL);
     
-    m_grossini->runAction( CCRepeatForever::create((CCActionInterval*)seq1));
-    m_tamara->runAction( CCRepeatForever::create((CCActionInterval*)seq2));
-    m_kathia->runAction( CCRepeatForever::create((CCActionInterval*)seq3));    
+    m_grossini->runAction( CCRepeatForever::create(seq1));
+    m_tamara->runAction( CCRepeatForever::create(seq2));
+    m_kathia->runAction( CCRepeatForever::create(seq3));    
 }
 
 
@@ -299,13 +299,13 @@ void SpriteEaseElasticInOut::onEnter()
     
     CCDelayTime *delay = CCDelayTime::create(0.25f);
         
-    CCFiniteTimeAction* seq1 = CCSequence::create(move_ease_inout1, delay, move_ease_inout_back1, CCCA(delay), NULL);
-    CCFiniteTimeAction* seq2 = CCSequence::create(move_ease_inout2, CCCA(delay), move_ease_inout_back2, CCCA(delay), NULL);
-    CCFiniteTimeAction* seq3 = CCSequence::create(move_ease_inout3, CCCA(delay), move_ease_inout_back3, CCCA(delay), NULL);
+    CCSequence* seq1 = CCSequence::create(move_ease_inout1, delay, move_ease_inout_back1, CCCA(delay), NULL);
+    CCSequence* seq2 = CCSequence::create(move_ease_inout2, CCCA(delay), move_ease_inout_back2, CCCA(delay), NULL);
+    CCSequence* seq3 = CCSequence::create(move_ease_inout3, CCCA(delay), move_ease_inout_back3, CCCA(delay), NULL);
     
-    m_tamara->runAction( CCRepeatForever::create((CCActionInterval*)seq1));
-    m_kathia->runAction( CCRepeatForever::create((CCActionInterval*)seq2));
-    m_grossini->runAction( CCRepeatForever::create((CCActionInterval*)seq3)); 
+    m_tamara->runAction( CCRepeatForever::create(seq1));
+    m_kathia->runAction( CCRepeatForever::create(seq2));
+    m_grossini->runAction( CCRepeatForever::create(seq3)); 
 }
 
 
@@ -336,13 +336,13 @@ void SpriteEaseBounce::onEnter()
     
     CCDelayTime *delay = CCDelayTime::create(0.25f);
     
-    CCFiniteTimeAction* seq1 = CCSequence::create(move, delay, move_back, CCCA(delay), NULL);
-    CCFiniteTimeAction* seq2 = CCSequence::create(move_ease_in, CCCA(delay), move_ease_in_back, CCCA(delay), NULL);
-    CCFiniteTimeAction* seq3 = CCSequence::create(move_ease_out, CCCA(delay), move_ease_out_back, CCCA(delay), NULL);
+    CCSequence* seq1 = CCSequence::create(move, delay, move_back, CCCA(delay), NULL);
+    CCSequence* seq2 = CCSequence::create(move_ease_in, CCCA(delay), move_ease_in_back, CCCA(delay), NULL);
+    CCSequence* seq3 = CCSequence::create(move_ease_out, CCCA(delay), move_ease_out_back, CCCA(delay), NULL);
     
-    m_grossini->runAction( CCRepeatForever::create((CCActionInterval*)seq1));
-    m_tamara->runAction( CCRepeatForever::create((CCActionInterval*)seq2));
-    m_kathia->runAction( CCRepeatForever::create((CCActionInterval*)seq3));    
+    m_grossini->runAction( CCRepeatForever::create(seq1));
+    m_tamara->runAction( CCRepeatForever::create(seq2));
+    m_kathia->runAction( CCRepeatForever::create(seq3));    
 }
 
 
@@ -370,13 +370,13 @@ void SpriteEaseBounceInOut::onEnter()
     
     CCDelayTime *delay = CCDelayTime::create(0.25f);
     
-    CCFiniteTimeAction* seq1 = CCSequence::create(move, delay, move_back, CCCA(delay), NULL);
-    CCFiniteTimeAction* seq2 = CCSequence::create(move_ease, CCCA(delay), move_ease_back, CCCA(delay), NULL);
+    CCSequence* seq1 = CCSequence::create(move, delay, move_back, CCCA(delay), NULL);
+    CCSequence* seq2 = CCSequence::create(move_ease, CCCA(delay), move_ease_back, CCCA(delay), NULL);
     
     this->positionForTwo();
     
-    m_grossini->runAction( CCRepeatForever::create((CCActionInterval*)seq1));
-    m_tamara->runAction( CCRepeatForever::create((CCActionInterval*)seq2));
+    m_grossini->runAction( CCRepeatForever::create(seq1));
+    m_tamara->runAction( CCRepeatForever::create(seq2));
 }
 
 
@@ -406,13 +406,13 @@ void SpriteEaseBack::onEnter()
     
     CCDelayTime *delay = CCDelayTime::create(0.25f);
     
-    CCFiniteTimeAction* seq1 = CCSequence::create(move, delay, move_back, CCCA(delay), NULL);
-    CCFiniteTimeAction* seq2 = CCSequence::create(move_ease_in, CCCA(delay), move_ease_in_back, CCCA(delay), NULL);
-    CCFiniteTimeAction* seq3 = CCSequence::create(move_ease_out, CCCA(delay), move_ease_out_back, CCCA(delay), NULL);
+    CCSequence* seq1 = CCSequence::create(move, delay, move_back, CCCA(delay), NULL);
+    CCSequence* seq2 = CCSequence::create(move_ease_in, CCCA(delay), move_ease_in_back, CCCA(delay), NULL);
+    CCSequence* seq3 = CCSequence::create(move_ease_out, CCCA(delay), move_ease_out_back, CCCA(delay), NULL);
     
-    m_grossini->runAction(CCRepeatForever::create((CCActionInterval*)seq1));
-    m_tamara->runAction(CCRepeatForever::create((CCActionInterval*)seq2));
-    m_kathia->runAction(CCRepeatForever::create((CCActionInterval*)seq3));    
+    m_grossini->runAction(CCRepeatForever::create(seq1));
+    m_tamara->runAction(CCRepeatForever::create(seq2));
+    m_kathia->runAction(CCRepeatForever::create(seq3));    
 }
 
 
@@ -439,13 +439,13 @@ void SpriteEaseBackInOut::onEnter()
     
     CCDelayTime *delay = CCDelayTime::create(0.25f);
     
-    CCFiniteTimeAction* seq1 = CCSequence::create(move, delay, move_back, CCCA(delay), NULL);
-    CCFiniteTimeAction* seq2 = CCSequence::create(move_ease, CCCA(delay), move_ease_back, CCCA(delay), NULL);
+    CCSequence* seq1 = CCSequence::create(move, delay, move_back, CCCA(delay), NULL);
+    CCSequence* seq2 = CCSequence::create(move_ease, CCCA(delay), move_ease_back, CCCA(delay), NULL);
     
     this->positionForTwo();
     
-    m_grossini->runAction( CCRepeatForever::create((CCActionInterval*)seq1));
-    m_tamara->runAction( CCRepeatForever::create((CCActionInterval*)seq2));    
+    m_grossini->runAction( CCRepeatForever::create(seq1));
+    m_tamara->runAction( CCRepeatForever::create(seq2));    
 }
 
 
@@ -472,10 +472,10 @@ void SpeedTest::onEnter()
     CCActionInterval *rot1 = CCRotateBy::create(4, 360*2);
     CCActionInterval *rot2 = rot1->reverse();
     
-    CCFiniteTimeAction* seq3_1 = CCSequence::create(jump2, jump1, NULL);
-    CCFiniteTimeAction* seq3_2 = CCSequence::create( rot1, rot2, NULL);
-    CCFiniteTimeAction* spawn = CCSpawn::create(seq3_1, seq3_2, NULL);
-    CCSpeed* action = CCSpeed::create(CCRepeatForever::create((CCActionInterval*)spawn), 1.0f);
+    CCSequence* seq3_1 = CCSequence::create(jump2, jump1, NULL);
+    CCSequence* seq3_2 = CCSequence::create( rot1, rot2, NULL);
+    CCSpawn* spawn = CCSpawn::create(seq3_1, seq3_2, NULL);
+    CCSpeed* action = CCSpeed::create(CCRepeatForever::create(spawn), 1.0f);
     action->setTag(kTagAction1);
     
     CCAction* action2 = (CCAction*)(action->copy()->autorelease());

@@ -43,10 +43,10 @@ void MotionStreakTest1::onEnter()
 
     CCAction* action1 = CCRepeatForever::create(a1);
     CCActionInterval* motion = CCMoveBy::create(2, ccp(100,0) );
-    m_root->runAction( CCRepeatForever::create((CCActionInterval*)(CCSequence::create(motion, motion->reverse(), NULL)) ) );
+    m_root->runAction( CCRepeatForever::create(CCSequence::create(motion, motion->reverse(), NULL) ) );
     m_root->runAction( action1 );
 
-    CCActionInterval *colorAction = CCRepeatForever::create((CCActionInterval *)CCSequence::create(
+    CCActionInterval *colorAction = CCRepeatForever::create(CCSequence::create(
         CCTintTo::create(0.2f, 255, 0, 0),
         CCTintTo::create(0.2f, 0, 255, 0),
         CCTintTo::create(0.2f, 0, 0, 255),
