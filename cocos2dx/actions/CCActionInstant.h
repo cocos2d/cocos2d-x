@@ -187,8 +187,8 @@ class CC_DLL CCCallFunc : public CCActionInstant //<NSCopying>
 public:
     CCCallFunc()
         : m_pSelectorTarget(NULL)
-        , m_pCallFunc(NULL)
 		, m_nScriptHandler(0)
+        , m_pCallFunc(NULL)
     {
     }
     virtual ~CCCallFunc();
