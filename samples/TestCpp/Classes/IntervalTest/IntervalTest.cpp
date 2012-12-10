@@ -55,10 +55,7 @@ IntervalLayer::IntervalLayer()
     CCJumpBy* jump = CCJumpBy::create(3, ccp(s.width-80,0), 50, 4);
     
     addChild(sprite);
-    sprite->runAction( CCRepeatForever::create(
-                                                            (CCActionInterval*)(CCSequence::create(jump, jump->reverse(), NULL ))
-                                                        )
-                     );
+    sprite->runAction( CCRepeatForever::create(CCSequence::create(jump, jump->reverse(), NULL) ));
     // pause button
     CCMenuItem* item1 = CCMenuItemFont::create("Pause", this, menu_selector(IntervalLayer::onPause) );
     CCMenu* menu = CCMenu::create(item1, NULL);

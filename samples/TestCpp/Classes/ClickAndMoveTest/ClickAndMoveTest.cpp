@@ -29,12 +29,12 @@ MainLayer::MainLayer()
     
     sprite->runAction( CCJumpTo::create(4, ccp(300,48), 100, 4) );
     
-    layer->runAction( CCRepeatForever::create( 
-                                                        (CCActionInterval*)( CCSequence::create(    
-                                                                            CCFadeIn::create(1),
-                                                                            CCFadeOut::create(1),
-                                                                            NULL) )
-                                                        ) ); 
+    layer->runAction( CCRepeatForever::create(
+                                CCSequence::create(
+                                        CCFadeIn::create(1),
+                                        CCFadeOut::create(1),
+                                        NULL)
+                      )); 
 }
 
 void MainLayer::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)

@@ -82,6 +82,7 @@ EOT;
     {
         $contents = file_get_contents($this->_outputCppPath);
         $contents = str_replace("\t", '    ', $contents);
+        $contents = str_replace("\r\n", "\n", $contents);   // for windows
         foreach ($this->_fix as $find => $replace)
         {
             $find = str_replace('##EXTENSION_NAME##', $this->_extensionName, $find);

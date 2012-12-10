@@ -598,7 +598,7 @@ void ActionBezier::onEnter()
 
     CCActionInterval*  bezierForward = CCBezierBy::create(3, bezier);
     CCActionInterval*  bezierBack = bezierForward->reverse();    
-    CCAction*  rep = CCRepeatForever::create((CCActionInterval*)CCSequence::create( bezierForward, bezierBack, NULL));
+    CCAction*  rep = CCRepeatForever::create(CCSequence::create( bezierForward, bezierBack, NULL));
 
 
     // sprite 2
@@ -1028,7 +1028,7 @@ void ActionRotateToRepeat::onEnter()
 
     CCActionInterval*  act1 = CCRotateTo::create(1, 90);
     CCActionInterval*  act2 = CCRotateTo::create(1, 0);
-    CCActionInterval*  seq = (CCActionInterval*)(CCSequence::create(act1, act2, NULL));
+    CCActionInterval*  seq = CCSequence::create(act1, act2, NULL);
     CCAction*  rep1 = CCRepeatForever::create(seq);
     CCActionInterval*  rep2 = CCRepeat::create((CCFiniteTimeAction*)(seq->copy()->autorelease()), 10);
 
@@ -1162,7 +1162,7 @@ void ActionReverseSequence2::onEnter()
     tog1->autorelease();
     tog2->autorelease();
     CCFiniteTimeAction*  seq = CCSequence::create( move1, tog1, move2, tog2, move1->reverse(), NULL);
-    CCActionInterval*  action = CCRepeat::create((CCActionInterval*)(CCSequence::create( seq, seq->reverse(), NULL)), 3);
+    CCActionInterval*  action = CCRepeat::create(CCSequence::create( seq, seq->reverse(), NULL), 3);
 
 
 
@@ -1172,8 +1172,7 @@ void ActionReverseSequence2::onEnter()
 
     CCActionInterval*  move_tamara = CCMoveBy::create(1, ccp(100,0));
     CCActionInterval*  move_tamara2 = CCMoveBy::create(1, ccp(50,0));
-    CCActionInstant*  hide = new CCHide();
-    hide->autorelease();
+    CCActionInstant*  hide = CCHide::create();
     CCFiniteTimeAction*  seq_tamara = CCSequence::create( move_tamara, hide, move_tamara2, NULL);
     CCFiniteTimeAction*  seq_back = seq_tamara->reverse();
     m_tamara->runAction( CCSequence::create( seq_tamara, seq_back, NULL));
@@ -1200,7 +1199,7 @@ void ActionRepeat::onEnter()
         CCSequence::create( CCPlace::create(ccp(60,60)), a1, NULL) , 
         3); 
     CCAction*  action2 = CCRepeatForever::create(
-        (CCActionInterval*)(CCSequence::create((CCActionInterval*)(a1->copy()->autorelease()), a1->reverse(), NULL))
+        CCSequence::create((CCActionInterval*)(a1->copy()->autorelease()), a1->reverse(), NULL)
         );
 
     m_kathia->runAction(action1);
@@ -1224,31 +1223,31 @@ void ActionOrbit::onEnter()
     centerSprites(3);
 
     CCActionInterval*  orbit1 = CCOrbitCamera::create(2,1, 0, 0, 180, 0, 0);
-    CCFiniteTimeAction*  action1 = CCSequence::create(
+    CCSequence*  action1 = CCSequence::create(
         orbit1,
         orbit1->reverse(),
         NULL);
 
     CCActionInterval*  orbit2 = CCOrbitCamera::create(2,1, 0, 0, 180, -45, 0);
-    CCFiniteTimeAction*  action2 = CCSequence::create(
+    CCSequence*  action2 = CCSequence::create(
         orbit2,
         orbit2->reverse(),
         NULL);
 
     CCActionInterval*  orbit3 = CCOrbitCamera::create(2,1, 0, 0, 180, 90, 0);
-    CCFiniteTimeAction*  action3 = CCSequence::create(
+    CCSequence*  action3 = CCSequence::create(
         orbit3,
         orbit3->reverse(),
         NULL);
 
-    m_kathia->runAction(CCRepeatForever::create((CCActionInterval*)action1));
-    m_tamara->runAction(CCRepeatForever::create((CCActionInterval*)action2));
-    m_grossini->runAction(CCRepeatForever::create((CCActionInterval*)action3));
+    m_kathia->runAction(CCRepeatForever::create(action1));
+    m_tamara->runAction(CCRepeatForever::create(action2));
+    m_grossini->runAction(CCRepeatForever::create(action3));
 
     CCActionInterval*  move = CCMoveBy::create(3, ccp(100,-100));
     CCActionInterval*  move_back = move->reverse();
-    CCFiniteTimeAction*  seq = CCSequence::create(move, move_back, NULL);
-    CCAction*  rfe = CCRepeatForever::create((CCActionInterval*)seq);
+    CCSequence*  seq = CCSequence::create(move, move_back, NULL);
+    CCAction*  rfe = CCRepeatForever::create(seq);
     m_kathia->runAction(rfe);
     m_tamara->runAction((CCAction*)(rfe->copy()->autorelease()));
     m_grossini->runAction((CCAction*)(rfe->copy()->autorelease()));
@@ -1274,8 +1273,8 @@ void ActionFollow::onEnter()
     m_grossini->setPosition(ccp(-200, s.height / 2));
     CCActionInterval* move      = CCMoveBy::create(2, ccp(s.width * 3, 0));
     CCActionInterval* move_back = move->reverse();
-    CCFiniteTimeAction* seq       = CCSequence::create(move, move_back, NULL);
-    CCAction* rep               = CCRepeatForever::create((CCActionInterval*)seq);
+    CCSequence* seq       = CCSequence::create(move, move_back, NULL);
+    CCAction* rep               = CCRepeatForever::create(seq);
 
     m_grossini->runAction(rep);
 

@@ -81,6 +81,7 @@ CCNode::CCNode(void)
 , m_bTransformDirty(true)
 , m_bInverseDirty(true)
 , m_nScriptHandler(0)
+, m_nUpdateScriptHandler(0)
 , m_pShaderProgram(NULL)
 , m_uOrderOfArrival(0)
 , m_eGLServerState(ccGLServerState(0))
@@ -102,6 +103,10 @@ CCNode::~CCNode(void)
     CCLOGINFO( "cocos2d: deallocing" );
     
     unregisterScriptHandler();
+    if (m_nUpdateScriptHandler)
+    {
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_nUpdateScriptHandler);
+    }
 
     CC_SAFE_RELEASE(m_pActionManager);
     CC_SAFE_RELEASE(m_pScheduler);
@@ -946,6 +951,16 @@ void CCNode::unregisterScriptHandler(void)
     }
 }
 
+void CCNode::scheduleUpdateWithPriorityLua(int nHandler, int priority)
+{
+    if (m_nUpdateScriptHandler)
+    {
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_nUpdateScriptHandler);
+    }
+    m_nUpdateScriptHandler = nHandler;
+    m_pScheduler->scheduleUpdateForTarget(this, priority, !m_bRunning);
+}
+
 void CCNode::setActionManager(CCActionManager* actionManager)
 {
     if( actionManager != m_pActionManager ) {
@@ -1025,6 +1040,11 @@ void CCNode::scheduleUpdateWithPriority(int priority)
 void CCNode::unscheduleUpdate()
 {
     m_pScheduler->unscheduleUpdateForTarget(this);
+    if (m_nUpdateScriptHandler)
+    {
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_nUpdateScriptHandler);
+        m_nUpdateScriptHandler = 0;
+    }
 }
 
 void CCNode::schedule(SEL_SCHEDULE selector)
@@ -1079,7 +1099,10 @@ void CCNode::pauseSchedulerAndActions()
 // override me
 void CCNode::update(float fDelta)
 {
-    
+    if (m_nUpdateScriptHandler)
+    {
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeSchedule(m_nUpdateScriptHandler, fDelta);
+    }
 }
 
 CCAffineTransform CCNode::nodeToParentTransform(void)
