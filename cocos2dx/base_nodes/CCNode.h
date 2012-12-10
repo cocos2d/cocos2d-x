@@ -735,7 +735,7 @@ private:
     
     void detachChild(CCNode *child, bool doCleanup);
     
-    CCPoint convertToWindowSpace(const CCPoint& nodePoint);    
+    CCPoint convertToWindowSpace(const CCPoint& nodePoint);
 };
 
 // end of base_node group
