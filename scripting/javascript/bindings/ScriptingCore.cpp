@@ -714,16 +714,21 @@ int ScriptingCore::executeCallFuncActionEvent(CCCallFunc* pAction, CCObject* pTa
 
 int ScriptingCore::executeSchedule(CCTimer* pTimer, float dt, CCNode* pNode/* = NULL*/)
 {
+    executeSchedule(0, dt, pNode)
+}
+
+int ScriptingCore::executeSchedule(int nHandler, float dt, CCNode* pNode/* = NULL*/)
+{
     js_proxy_t * p;
     JS_GET_PROXY(p, pNode);
-
+    
     if (!p) return 0;
-
+    
     jsval retval;
     jsval dataVal = DOUBLE_TO_JSVAL(dt);
-
+    
     executeJSFunctionWithName(this->cx_, p->obj, "update", dataVal, retval);
-
+    
     return 1;
 }
 

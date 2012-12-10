@@ -389,6 +389,13 @@ int CCLuaEngine::executeSchedule(CCTimer* pTimer, float dt, CCNode* pNode/* = NU
     return ret;
 }
 
+int CCLuaEngine::executeSchedule(int nHandler, float dt, CCNode* pNode/* = NULL*/)
+{
+    cleanStack();
+    pushFloat(dt);
+    return executeFunctionByHandler(nHandler, 1);
+}
+
 // functions for excute touch event
 int CCLuaEngine::executeLayerTouchEvent(CCLayer* pLayer, int eventType, CCTouch *pTouch)
 {
