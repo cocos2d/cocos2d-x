@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.92 on Sun Dec  2 16:16:27 2012.
+** Generated automatically by tolua++-1.0.92 on Mon Dec 10 14:08:46 2012.
 */
 
 /****************************************************************************
@@ -376,7 +376,7 @@ static void tolua_reg_types (lua_State* tolua_S)
  tolua_usertype(tolua_S,"ccV3F_C4B_T2F_Quad");
  tolua_usertype(tolua_S,"ccColor4F");
  tolua_usertype(tolua_S,"CCActionEase");
- tolua_usertype(tolua_S,"CCTransitionProgressRadialCW");
+ tolua_usertype(tolua_S,"CCTransitionProgress");
  tolua_usertype(tolua_S,"CCGridAction");
  tolua_usertype(tolua_S,"CCRotateTo");
  tolua_usertype(tolua_S,"CCFiniteTimeAction");
@@ -487,9 +487,9 @@ static void tolua_reg_types (lua_State* tolua_S)
  tolua_usertype(tolua_S,"CCSkewTo");
  tolua_usertype(tolua_S,"CCLiquid");
  tolua_usertype(tolua_S,"Tile");
- tolua_usertype(tolua_S,"CCTransitionProgress");
- tolua_usertype(tolua_S,"ccAnimationFrameData");
  tolua_usertype(tolua_S,"CCTransitionRotoZoom");
+ tolua_usertype(tolua_S,"ccAnimationFrameData");
+ tolua_usertype(tolua_S,"CCTransitionProgressRadialCW");
  tolua_usertype(tolua_S,"CCGLProgram");
  tolua_usertype(tolua_S,"CCTextFieldTTF");
  
@@ -15366,32 +15366,36 @@ static int tolua_Cocos2d_CCNode_removeChildByTag00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: scheduleUpdate of class  CCNode */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCNode_scheduleUpdate00
-static int tolua_Cocos2d_CCNode_scheduleUpdate00(lua_State* tolua_S)
+/* method: scheduleUpdateScriptHandlerWithPriority of class  CCNode */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCNode_scheduleUpdateScriptHandlerWithPriority00
+static int tolua_Cocos2d_CCNode_scheduleUpdateScriptHandlerWithPriority00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
      !tolua_isusertype(tolua_S,1,"CCNode",0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,2,&tolua_err)
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !toluafix_isfunction(tolua_S,2,"LUA_FUNCTION",0,&tolua_err)) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
  )
   goto tolua_lerror;
  else
 #endif
  {
   CCNode* self = (CCNode*)  tolua_tousertype(tolua_S,1,0);
+  LUA_FUNCTION nHandler = (  toluafix_ref_function(tolua_S,2,0));
+  int priority = ((int)  tolua_tonumber(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'scheduleUpdate'", NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'scheduleUpdateScriptHandlerWithPriority'", NULL);
 #endif
   {
-   self->scheduleUpdate();
+   self->scheduleUpdateScriptHandlerWithPriority(nHandler,priority);
   }
  }
  return 0;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'scheduleUpdate'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'scheduleUpdateScriptHandlerWithPriority'.",&tolua_err);
  return 0;
 #endif
 }
@@ -24704,6 +24708,132 @@ static int tolua_Cocos2d_CCTransitionFadeDown_create00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: create of class  CCTransitionProgressRadialCCW */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTransitionProgressRadialCCW_create00
+static int tolua_Cocos2d_CCTransitionProgressRadialCCW_create00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"CCTransitionProgressRadialCCW",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,3,"CCScene",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  float t = ((float)  tolua_tonumber(tolua_S,2,0));
+  CCScene* scene = ((CCScene*)  tolua_tousertype(tolua_S,3,0));
+  {
+   CCTransitionProgressRadialCCW* tolua_ret = (CCTransitionProgressRadialCCW*)  CCTransitionProgressRadialCCW::create(t,scene);
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionProgressRadialCCW");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: create of class  CCTransitionProgressRadialCCW */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTransitionProgressRadialCCW_create01
+static int tolua_Cocos2d_CCTransitionProgressRadialCCW_create01(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"CCTransitionProgressRadialCCW",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,3,"CCScene",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  float t = ((float)  tolua_tonumber(tolua_S,2,0));
+  CCScene* scene = ((CCScene*)  tolua_tousertype(tolua_S,3,0));
+  {
+   CCTransitionProgressRadialCCW* tolua_ret = (CCTransitionProgressRadialCCW*)  CCTransitionProgressRadialCCW::create(t,scene);
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionProgressRadialCCW");
+  }
+ }
+ return 1;
+tolua_lerror:
+ return tolua_Cocos2d_CCTransitionProgressRadialCCW_create00(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: create of class  CCTransitionProgressRadialCW */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTransitionProgressRadialCW_create00
+static int tolua_Cocos2d_CCTransitionProgressRadialCW_create00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"CCTransitionProgressRadialCW",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,3,"CCScene",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  float t = ((float)  tolua_tonumber(tolua_S,2,0));
+  CCScene* scene = ((CCScene*)  tolua_tousertype(tolua_S,3,0));
+  {
+   CCTransitionProgressRadialCW* tolua_ret = (CCTransitionProgressRadialCW*)  CCTransitionProgressRadialCW::create(t,scene);
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionProgressRadialCW");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: create of class  CCTransitionProgressRadialCW */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTransitionProgressRadialCW_create01
+static int tolua_Cocos2d_CCTransitionProgressRadialCW_create01(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"CCTransitionProgressRadialCW",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,3,"CCScene",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  float t = ((float)  tolua_tonumber(tolua_S,2,0));
+  CCScene* scene = ((CCScene*)  tolua_tousertype(tolua_S,3,0));
+  {
+   CCTransitionProgressRadialCW* tolua_ret = (CCTransitionProgressRadialCW*)  CCTransitionProgressRadialCW::create(t,scene);
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionProgressRadialCW");
+  }
+ }
+ return 1;
+tolua_lerror:
+ return tolua_Cocos2d_CCTransitionProgressRadialCW_create00(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: actionWithSize of class  CCTransitionPageTurn */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTransitionPageTurn_actionWithSize00
 static int tolua_Cocos2d_CCTransitionPageTurn_actionWithSize00(lua_State* tolua_S)
@@ -24799,74 +24929,6 @@ static int tolua_Cocos2d_CCTransitionProgress_create00(lua_State* tolua_S)
     int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionProgress");
-  }
- }
- return 1;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: create of class  CCTransitionProgressRadialCCW */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTransitionProgressRadialCCW_create00
-static int tolua_Cocos2d_CCTransitionProgressRadialCCW_create00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertable(tolua_S,1,"CCTransitionProgressRadialCCW",0,&tolua_err) ||
-     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
-     !tolua_isusertype(tolua_S,3,"CCScene",0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,4,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  float t = ((float)  tolua_tonumber(tolua_S,2,0));
-  CCScene* scene = ((CCScene*)  tolua_tousertype(tolua_S,3,0));
-  {
-   CCTransitionProgressRadialCCW* tolua_ret = (CCTransitionProgressRadialCCW*)  CCTransitionProgressRadialCCW::create(t,scene);
-    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
-    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionProgressRadialCCW");
-  }
- }
- return 1;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: create of class  CCTransitionProgressRadialCW */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTransitionProgressRadialCW_create00
-static int tolua_Cocos2d_CCTransitionProgressRadialCW_create00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertable(tolua_S,1,"CCTransitionProgressRadialCW",0,&tolua_err) ||
-     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
-     !tolua_isusertype(tolua_S,3,"CCScene",0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,4,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  float t = ((float)  tolua_tonumber(tolua_S,2,0));
-  CCScene* scene = ((CCScene*)  tolua_tousertype(tolua_S,3,0));
-  {
-   CCTransitionProgressRadialCW* tolua_ret = (CCTransitionProgressRadialCW*)  CCTransitionProgressRadialCW::create(t,scene);
-    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
-    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTransitionProgressRadialCW");
   }
  }
  return 1;
@@ -55232,6 +55294,9 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
   tolua_constant(tolua_S,"kLanguageGerman",kLanguageGerman);
   tolua_constant(tolua_S,"kLanguageSpanish",kLanguageSpanish);
   tolua_constant(tolua_S,"kLanguageRussian",kLanguageRussian);
+  tolua_constant(tolua_S,"kLanguageKorean",kLanguageKorean);
+  tolua_constant(tolua_S,"kLanguageJapanese",kLanguageJapanese);
+  tolua_constant(tolua_S,"kLanguageHungarian",kLanguageHungarian);
   tolua_constant(tolua_S,"kTargetWindows",kTargetWindows);
   tolua_constant(tolua_S,"kTargetLinux",kTargetLinux);
   tolua_constant(tolua_S,"kTargetMacOS",kTargetMacOS);
@@ -55415,7 +55480,7 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"convertTouchToNodeSpaceAR",tolua_Cocos2d_CCNode_convertTouchToNodeSpaceAR00);
    tolua_function(tolua_S,"removeFromParentAndCleanup",tolua_Cocos2d_CCNode_removeFromParentAndCleanup00);
    tolua_function(tolua_S,"removeChildByTag",tolua_Cocos2d_CCNode_removeChildByTag00);
-   tolua_function(tolua_S,"scheduleUpdate",tolua_Cocos2d_CCNode_scheduleUpdate00);
+   tolua_function(tolua_S,"scheduleUpdateScriptHandlerWithPriority",tolua_Cocos2d_CCNode_scheduleUpdateScriptHandlerWithPriority00);
    tolua_function(tolua_S,"unscheduleUpdate",tolua_Cocos2d_CCNode_unscheduleUpdate00);
    tolua_function(tolua_S,"registerScriptHandler",tolua_Cocos2d_CCNode_registerScriptHandler00);
    tolua_function(tolua_S,"unregisterScriptHandler",tolua_Cocos2d_CCNode_unregisterScriptHandler00);
@@ -55851,6 +55916,16 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
   tolua_beginmodule(tolua_S,"CCTransitionFadeDown");
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCTransitionFadeDown_create00);
   tolua_endmodule(tolua_S);
+  tolua_cclass(tolua_S,"CCTransitionProgressRadialCCW","CCTransitionProgressRadialCCW","CCScene",NULL);
+  tolua_beginmodule(tolua_S,"CCTransitionProgressRadialCCW");
+   tolua_function(tolua_S,"create",tolua_Cocos2d_CCTransitionProgressRadialCCW_create00);
+   tolua_function(tolua_S,"create",tolua_Cocos2d_CCTransitionProgressRadialCCW_create01);
+  tolua_endmodule(tolua_S);
+  tolua_cclass(tolua_S,"CCTransitionProgressRadialCW","CCTransitionProgressRadialCW","CCScene",NULL);
+  tolua_beginmodule(tolua_S,"CCTransitionProgressRadialCW");
+   tolua_function(tolua_S,"create",tolua_Cocos2d_CCTransitionProgressRadialCW_create00);
+   tolua_function(tolua_S,"create",tolua_Cocos2d_CCTransitionProgressRadialCW_create01);
+  tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCTransitionPageTurn","CCTransitionPageTurn","CCScene",NULL);
   tolua_beginmodule(tolua_S,"CCTransitionPageTurn");
    tolua_function(tolua_S,"actionWithSize",tolua_Cocos2d_CCTransitionPageTurn_actionWithSize00);
@@ -55859,14 +55934,6 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
   tolua_cclass(tolua_S,"CCTransitionProgress","CCTransitionProgress","CCTransitionScene",NULL);
   tolua_beginmodule(tolua_S,"CCTransitionProgress");
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCTransitionProgress_create00);
-  tolua_endmodule(tolua_S);
-  tolua_cclass(tolua_S,"CCTransitionProgressRadialCCW","CCTransitionProgressRadialCCW","CCTransitionProgress",NULL);
-  tolua_beginmodule(tolua_S,"CCTransitionProgressRadialCCW");
-   tolua_function(tolua_S,"create",tolua_Cocos2d_CCTransitionProgressRadialCCW_create00);
-  tolua_endmodule(tolua_S);
-  tolua_cclass(tolua_S,"CCTransitionProgressRadialCW","CCTransitionProgressRadialCW","CCTransitionProgress",NULL);
-  tolua_beginmodule(tolua_S,"CCTransitionProgressRadialCW");
-   tolua_function(tolua_S,"create",tolua_Cocos2d_CCTransitionProgressRadialCW_create00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCTransitionProgressHorizontal","CCTransitionProgressHorizontal","CCTransitionProgress",NULL);
   tolua_beginmodule(tolua_S,"CCTransitionProgressHorizontal");
