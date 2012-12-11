@@ -4,7 +4,7 @@ TARGET	= TestCpp
 CCFLAGS = -Wall
 CXXFLAGS = -Wall
 VISIBILITY = 
-LIBS = 
+LIBS = -lXrandr
 
 COCOS2DX_PATH = ../../../cocos2dx
 INCLUDES =  -I../ \
