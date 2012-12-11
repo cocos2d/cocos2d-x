@@ -114,6 +114,16 @@ void SimpleAudioEngine::stopAllEffects() {
 	oAudioPlayer->stopAllEffects();
 }
 
+void SimpleAudioEngine::setMute(bool muteValue)
+{
+	//todo: need to coding. ref ios function: static_setMute(muteValue);
+}
+
+bool SimpleAudioEngine::isMuted()
+{
+	//todo: need to coding. ref ios function: return static_isMuted();
+	return false;
+}
 
 
 //////////////////////////////////////////////////////////////////////////
