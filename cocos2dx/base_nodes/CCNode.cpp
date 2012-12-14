@@ -953,10 +953,7 @@ void CCNode::unregisterScriptHandler(void)
 
 void CCNode::scheduleUpdateWithPriorityLua(int nHandler, int priority)
 {
-    if (m_nUpdateScriptHandler)
-    {
-        CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_nUpdateScriptHandler);
-    }
+    unscheduleUpdate();
     m_nUpdateScriptHandler = nHandler;
     m_pScheduler->scheduleUpdateForTarget(this, priority, !m_bRunning);
 }
