@@ -2196,23 +2196,32 @@ JSBool js_cocos2dx_CCDrawNode_drawPolygon(JSContext *cx, uint32_t argc, jsval *v
     if ( argc == 4) {
         jsval *argvp = JS_ARGV(cx,vp);
         JSBool ok = JS_TRUE;
-        JSObject *argArray; ccColor4F argFillColor; double argWidth; ccColor4F argBorderColor; 
+        JSObject *argArray = NULL;
+        ccColor4F argFillColor = ccc4f(0.0f, 0.0f, 0.0f, 0.0f);
+        double argWidth = 0.0;
+        ccColor4F argBorderColor = ccc4f(0.0f, 0.0f, 0.0f, 0.0f);
 
+        // Points
         ok &= JS_ValueToObject(cx, *argvp++, &argArray);
         if( ! (argArray && JS_IsArrayObject(cx, argArray) ) )
+        {
+            JS_ReportError(cx, "Vertex should be anArray object");
             return JS_FALSE;
+        }
 
-        JSObject *tmp_arg;
-        ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg );
-        argFillColor = *(ccColor4F*)JS_GetArrayBufferViewData( tmp_arg, cx );
+        // Color 4F
+        argFillColor = jsval_to_cccolor4f(cx, *argvp++);
 
+        // Width
         ok &= JS_ValueToNumber( cx, *argvp++, &argWidth );
 
-        ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg );
-        argBorderColor = *(ccColor4F*)JS_GetArrayBufferViewData( tmp_arg, cx );
+        // Color Border (4F)
+        argBorderColor = jsval_to_cccolor4f(cx, *argvp++);
 
         if( ! ok )
+        {
             return JS_FALSE;
+        }
 
         {
             uint32_t l;
