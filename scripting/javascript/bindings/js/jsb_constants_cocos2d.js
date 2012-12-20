@@ -60,8 +60,13 @@ cc.WHITE = {r:255, g:255, b:255};
 cc.POINT_ZERO = {x:0, y:0};
 
 // XXX: This definition is different than cocos2d-html5
-cc.REPEAT_FOREVER = - 1;
-
+// cc.REPEAT_FOREVER = - 1;
+// We can't assign -1 to cc.REPEAT_FOREVER, since it will be a very big double value after
+// converting it to double by JS_ValueToNumber on android.
+// Then cast it to unsigned int, the value will be 0. The schedule will not be able to work.
+// I don't know why this occurs only on android.
+// So instead of passing -1 to it, I assign it with max value of unsigned int in c++.
+cc.REPEAT_FOREVER = 0xffffffff;
 
 cc.MENU_STATE_WAITING = 0;
 cc.MENU_STATE_TRACKING_TOUCH = 1;
@@ -272,6 +277,33 @@ cc.rectIntersection = function (rectA, rectB) {
 //
 // Array: for cocos2d-html5 compatibility
 //
+
+/**
+ * Returns index of first occurence of object, -1 if value not found.
+ * @function
+ * @param {Array} arr Source Array
+ * @param {*} findObj find object
+ * @return {Number} index of first occurence of value
+ */
+cc.ArrayGetIndexOfObject = function (arr, findObj) {
+    for (var i = 0; i < arr.length; i++) {
+        if (arr[i] == findObj)
+            return i;
+    }
+    return -1;
+};
+
+/**
+ * Returns a Boolean value that indicates whether value is present in the array.
+ * @function
+ * @param {Array} arr
+ * @param {*} findObj
+ * @return {Boolean}
+ */
+cc.ArrayContainsObject = function (arr, findObj) {
+    return cc.ArrayGetIndexOfObject(arr, findObj) != -1;
+};
+
 cc.ArrayRemoveObject = function (arr, delObj) {
     for (var i = 0; i < arr.length; i++) {
         if (arr[i] == delObj) {
