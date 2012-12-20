@@ -7,30 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		15C1535F168310E800D239F2 /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 15C15347168310E800D239F2 /* animations */; };
-		15C15360168310E800D239F2 /* app.icf in Resources */ = {isa = PBXBuildFile; fileRef = 15C15348168310E800D239F2 /* app.icf */; };
-		15C15361168310E800D239F2 /* background.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 15C15349168310E800D239F2 /* background.mp3 */; };
-		15C15362168310E800D239F2 /* background.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 15C1534A168310E800D239F2 /* background.ogg */; };
-		15C15363168310E800D239F2 /* ccb in Resources */ = {isa = PBXBuildFile; fileRef = 15C1534B168310E800D239F2 /* ccb */; };
-		15C15364168310E800D239F2 /* CocosBuilderExample.ccbproj in Resources */ = {isa = PBXBuildFile; fileRef = 15C1534C168310E800D239F2 /* CocosBuilderExample.ccbproj */; };
-		15C15365168310E800D239F2 /* CocosBuilderExample.ccbresourcelog in Resources */ = {isa = PBXBuildFile; fileRef = 15C1534D168310E800D239F2 /* CocosBuilderExample.ccbresourcelog */; };
-		15C15366168310E800D239F2 /* development.icf in Resources */ = {isa = PBXBuildFile; fileRef = 15C1534E168310E800D239F2 /* development.icf */; };
-		15C15367168310E800D239F2 /* effect1.raw in Resources */ = {isa = PBXBuildFile; fileRef = 15C1534F168310E800D239F2 /* effect1.raw */; };
-		15C15368168310E800D239F2 /* effect1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 15C15350168310E800D239F2 /* effect1.wav */; };
-		15C15369168310E800D239F2 /* effect2.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 15C15351168310E800D239F2 /* effect2.ogg */; };
-		15C1536A168310E800D239F2 /* extensions in Resources */ = {isa = PBXBuildFile; fileRef = 15C15352168310E800D239F2 /* extensions */; };
-		15C1536B168310E800D239F2 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 15C15353168310E800D239F2 /* fonts */; };
-		15C1536C168310E800D239F2 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 15C15354168310E800D239F2 /* fps_images.png */; };
-		15C1536D168310E800D239F2 /* hd in Resources */ = {isa = PBXBuildFile; fileRef = 15C15355168310E800D239F2 /* hd */; };
-		15C1536E168310E800D239F2 /* Hello.png in Resources */ = {isa = PBXBuildFile; fileRef = 15C15356168310E800D239F2 /* Hello.png */; };
-		15C1536F168310E800D239F2 /* Images in Resources */ = {isa = PBXBuildFile; fileRef = 15C15357168310E800D239F2 /* Images */; };
-		15C15370168310E800D239F2 /* ipad in Resources */ = {isa = PBXBuildFile; fileRef = 15C15358168310E800D239F2 /* ipad */; };
-		15C15371168310E800D239F2 /* ipadhd in Resources */ = {isa = PBXBuildFile; fileRef = 15C15359168310E800D239F2 /* ipadhd */; };
-		15C15372168310E800D239F2 /* music.mid in Resources */ = {isa = PBXBuildFile; fileRef = 15C1535A168310E800D239F2 /* music.mid */; };
-		15C15373168310E800D239F2 /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = 15C1535B168310E800D239F2 /* Particles */; };
-		15C15374168310E800D239F2 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = 15C1535C168310E800D239F2 /* Shaders */; };
-		15C15375168310E800D239F2 /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = 15C1535D168310E800D239F2 /* TileMaps */; };
-		15C15376168310E800D239F2 /* zwoptex in Resources */ = {isa = PBXBuildFile; fileRef = 15C1535E168310E800D239F2 /* zwoptex */; };
 		15C153F71683112E00D239F2 /* CCBAnimationManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15C1537C1683112E00D239F2 /* CCBAnimationManager.cpp */; };
 		15C153F81683112E00D239F2 /* CCBFileLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15C1537E1683112E00D239F2 /* CCBFileLoader.cpp */; };
 		15C153F91683112E00D239F2 /* CCBKeyframe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15C153801683112E00D239F2 /* CCBKeyframe.cpp */; };
@@ -78,7 +54,6 @@
 		15C154241683112E00D239F2 /* CCPhysicsDebugNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15C153E61683112E00D239F2 /* CCPhysicsDebugNode.cpp */; };
 		15C154251683112E00D239F2 /* CCPhysicsSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15C153E81683112E00D239F2 /* CCPhysicsSprite.cpp */; };
 		15C154891683116B00D239F2 /* chipmunk.c in Sources */ = {isa = PBXBuildFile; fileRef = 15C1545C1683116B00D239F2 /* chipmunk.c */; };
-		15C1548A1683116B00D239F2 /* CMakeLists.txt in Resources */ = {isa = PBXBuildFile; fileRef = 15C1545D1683116B00D239F2 /* CMakeLists.txt */; };
 		15C1548B1683116B00D239F2 /* cpConstraint.c in Sources */ = {isa = PBXBuildFile; fileRef = 15C1545F1683116B00D239F2 /* cpConstraint.c */; };
 		15C1548C1683116B00D239F2 /* cpDampedRotarySpring.c in Sources */ = {isa = PBXBuildFile; fileRef = 15C154601683116B00D239F2 /* cpDampedRotarySpring.c */; };
 		15C1548D1683116B00D239F2 /* cpDampedSpring.c in Sources */ = {isa = PBXBuildFile; fileRef = 15C154611683116B00D239F2 /* cpDampedSpring.c */; };
@@ -199,7 +174,6 @@
 		15C15689168311CB00D239F2 /* tolua_to.c in Sources */ = {isa = PBXBuildFile; fileRef = 15C15657168311CB00D239F2 /* tolua_to.c */; };
 		15C1568C168311EC00D239F2 /* libcocos2dx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C15346168310C700D239F2 /* libcocos2dx.a */; };
 		15C1568E1683131500D239F2 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C1568D1683131500D239F2 /* libcurl.a */; };
-		15C156901683136200D239F2 /* luaScript in Resources */ = {isa = PBXBuildFile; fileRef = 15C1568F1683136200D239F2 /* luaScript */; };
 		15C156981683138E00D239F2 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 15C156911683138E00D239F2 /* Default-568h@2x.png */; };
 		15C156991683138E00D239F2 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 15C156921683138E00D239F2 /* Default.png */; };
 		15C1569A1683138E00D239F2 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 15C156931683138E00D239F2 /* Default@2x.png */; };
@@ -207,6 +181,31 @@
 		15C1569C1683138E00D239F2 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 15C156951683138E00D239F2 /* Icon-72.png */; };
 		15C1569D1683138E00D239F2 /* Icon-114.png in Resources */ = {isa = PBXBuildFile; fileRef = 15C156961683138E00D239F2 /* Icon-114.png */; };
 		15C1569E1683138E00D239F2 /* Icon-144.png in Resources */ = {isa = PBXBuildFile; fileRef = 15C156971683138E00D239F2 /* Icon-144.png */; };
+		1AD263A2168350490089000C /* luaScript in Resources */ = {isa = PBXBuildFile; fileRef = 1AD263A1168350490089000C /* luaScript */; };
+		1AD263BB1683506D0089000C /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 1AD263A31683506C0089000C /* animations */; };
+		1AD263BC1683506D0089000C /* app.icf in Resources */ = {isa = PBXBuildFile; fileRef = 1AD263A41683506C0089000C /* app.icf */; };
+		1AD263BD1683506D0089000C /* background.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 1AD263A51683506C0089000C /* background.mp3 */; };
+		1AD263BE1683506D0089000C /* background.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 1AD263A61683506C0089000C /* background.ogg */; };
+		1AD263BF1683506D0089000C /* ccb in Resources */ = {isa = PBXBuildFile; fileRef = 1AD263A71683506C0089000C /* ccb */; };
+		1AD263C01683506D0089000C /* CocosBuilderExample.ccbproj in Resources */ = {isa = PBXBuildFile; fileRef = 1AD263A81683506C0089000C /* CocosBuilderExample.ccbproj */; };
+		1AD263C11683506D0089000C /* CocosBuilderExample.ccbresourcelog in Resources */ = {isa = PBXBuildFile; fileRef = 1AD263A91683506C0089000C /* CocosBuilderExample.ccbresourcelog */; };
+		1AD263C21683506D0089000C /* development.icf in Resources */ = {isa = PBXBuildFile; fileRef = 1AD263AA1683506C0089000C /* development.icf */; };
+		1AD263C31683506D0089000C /* effect1.raw in Resources */ = {isa = PBXBuildFile; fileRef = 1AD263AB1683506C0089000C /* effect1.raw */; };
+		1AD263C41683506D0089000C /* effect1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1AD263AC1683506C0089000C /* effect1.wav */; };
+		1AD263C51683506D0089000C /* effect2.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 1AD263AD1683506C0089000C /* effect2.ogg */; };
+		1AD263C61683506D0089000C /* extensions in Resources */ = {isa = PBXBuildFile; fileRef = 1AD263AE1683506C0089000C /* extensions */; };
+		1AD263C71683506D0089000C /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 1AD263AF1683506C0089000C /* fonts */; };
+		1AD263C81683506D0089000C /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AD263B01683506C0089000C /* fps_images.png */; };
+		1AD263C91683506D0089000C /* hd in Resources */ = {isa = PBXBuildFile; fileRef = 1AD263B11683506C0089000C /* hd */; };
+		1AD263CA1683506D0089000C /* Hello.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AD263B21683506C0089000C /* Hello.png */; };
+		1AD263CB1683506D0089000C /* Images in Resources */ = {isa = PBXBuildFile; fileRef = 1AD263B31683506C0089000C /* Images */; };
+		1AD263CC1683506D0089000C /* ipad in Resources */ = {isa = PBXBuildFile; fileRef = 1AD263B41683506C0089000C /* ipad */; };
+		1AD263CD1683506D0089000C /* ipadhd in Resources */ = {isa = PBXBuildFile; fileRef = 1AD263B51683506C0089000C /* ipadhd */; };
+		1AD263CE1683506D0089000C /* music.mid in Resources */ = {isa = PBXBuildFile; fileRef = 1AD263B61683506C0089000C /* music.mid */; };
+		1AD263CF1683506D0089000C /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = 1AD263B71683506C0089000C /* Particles */; };
+		1AD263D01683506D0089000C /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = 1AD263B81683506C0089000C /* Shaders */; };
+		1AD263D11683506D0089000C /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = 1AD263B91683506C0089000C /* TileMaps */; };
+		1AD263D21683506D0089000C /* zwoptex in Resources */ = {isa = PBXBuildFile; fileRef = 1AD263BA1683506C0089000C /* zwoptex */; };
 		F293B3CD15EB7BE500256477 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F293B3CC15EB7BE500256477 /* QuartzCore.framework */; };
 		F293B3CF15EB7BE500256477 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F293B3CE15EB7BE500256477 /* OpenGLES.framework */; };
 		F293B3D115EB7BE500256477 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F293B3D015EB7BE500256477 /* OpenAL.framework */; };
@@ -240,30 +239,6 @@
 
 /* Begin PBXFileReference section */
 		15C1533E168310C700D239F2 /* cocos2dx.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2dx.xcodeproj; path = ../../../../cocos2dx/proj.ios/cocos2dx.xcodeproj; sourceTree = "<group>"; };
-		15C15347168310E800D239F2 /* animations */ = {isa = PBXFileReference; lastKnownFileType = folder; name = animations; path = ../../../Cpp/TestCpp/Resources/animations; sourceTree = "<group>"; };
-		15C15348168310E800D239F2 /* app.icf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = app.icf; path = ../../../Cpp/TestCpp/Resources/app.icf; sourceTree = "<group>"; };
-		15C15349168310E800D239F2 /* background.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = background.mp3; path = ../../../Cpp/TestCpp/Resources/background.mp3; sourceTree = "<group>"; };
-		15C1534A168310E800D239F2 /* background.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; name = background.ogg; path = ../../../Cpp/TestCpp/Resources/background.ogg; sourceTree = "<group>"; };
-		15C1534B168310E800D239F2 /* ccb */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ccb; path = ../../../Cpp/TestCpp/Resources/ccb; sourceTree = "<group>"; };
-		15C1534C168310E800D239F2 /* CocosBuilderExample.ccbproj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = CocosBuilderExample.ccbproj; path = ../../../Cpp/TestCpp/Resources/CocosBuilderExample.ccbproj; sourceTree = "<group>"; };
-		15C1534D168310E800D239F2 /* CocosBuilderExample.ccbresourcelog */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = CocosBuilderExample.ccbresourcelog; path = ../../../Cpp/TestCpp/Resources/CocosBuilderExample.ccbresourcelog; sourceTree = "<group>"; };
-		15C1534E168310E800D239F2 /* development.icf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = development.icf; path = ../../../Cpp/TestCpp/Resources/development.icf; sourceTree = "<group>"; };
-		15C1534F168310E800D239F2 /* effect1.raw */ = {isa = PBXFileReference; lastKnownFileType = file; name = effect1.raw; path = ../../../Cpp/TestCpp/Resources/effect1.raw; sourceTree = "<group>"; };
-		15C15350168310E800D239F2 /* effect1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = effect1.wav; path = ../../../Cpp/TestCpp/Resources/effect1.wav; sourceTree = "<group>"; };
-		15C15351168310E800D239F2 /* effect2.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; name = effect2.ogg; path = ../../../Cpp/TestCpp/Resources/effect2.ogg; sourceTree = "<group>"; };
-		15C15352168310E800D239F2 /* extensions */ = {isa = PBXFileReference; lastKnownFileType = folder; name = extensions; path = ../../../Cpp/TestCpp/Resources/extensions; sourceTree = "<group>"; };
-		15C15353168310E800D239F2 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = fonts; path = ../../../Cpp/TestCpp/Resources/fonts; sourceTree = "<group>"; };
-		15C15354168310E800D239F2 /* fps_images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fps_images.png; path = ../../../Cpp/TestCpp/Resources/fps_images.png; sourceTree = "<group>"; };
-		15C15355168310E800D239F2 /* hd */ = {isa = PBXFileReference; lastKnownFileType = folder; name = hd; path = ../../../Cpp/TestCpp/Resources/hd; sourceTree = "<group>"; };
-		15C15356168310E800D239F2 /* Hello.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Hello.png; path = ../../../Cpp/TestCpp/Resources/Hello.png; sourceTree = "<group>"; };
-		15C15357168310E800D239F2 /* Images */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Images; path = ../../../Cpp/TestCpp/Resources/Images; sourceTree = "<group>"; };
-		15C15358168310E800D239F2 /* ipad */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ipad; path = ../../../Cpp/TestCpp/Resources/ipad; sourceTree = "<group>"; };
-		15C15359168310E800D239F2 /* ipadhd */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ipadhd; path = ../../../Cpp/TestCpp/Resources/ipadhd; sourceTree = "<group>"; };
-		15C1535A168310E800D239F2 /* music.mid */ = {isa = PBXFileReference; lastKnownFileType = audio.midi; name = music.mid; path = ../../../Cpp/TestCpp/Resources/music.mid; sourceTree = "<group>"; };
-		15C1535B168310E800D239F2 /* Particles */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Particles; path = ../../../Cpp/TestCpp/Resources/Particles; sourceTree = "<group>"; };
-		15C1535C168310E800D239F2 /* Shaders */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Shaders; path = ../../../Cpp/TestCpp/Resources/Shaders; sourceTree = "<group>"; };
-		15C1535D168310E800D239F2 /* TileMaps */ = {isa = PBXFileReference; lastKnownFileType = folder; name = TileMaps; path = ../../../Cpp/TestCpp/Resources/TileMaps; sourceTree = "<group>"; };
-		15C1535E168310E800D239F2 /* zwoptex */ = {isa = PBXFileReference; lastKnownFileType = folder; name = zwoptex; path = ../../../Cpp/TestCpp/Resources/zwoptex; sourceTree = "<group>"; };
 		15C1537C1683112E00D239F2 /* CCBAnimationManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCBAnimationManager.cpp; sourceTree = "<group>"; };
 		15C1537D1683112E00D239F2 /* CCBAnimationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBAnimationManager.h; sourceTree = "<group>"; };
 		15C1537E1683112E00D239F2 /* CCBFileLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCBFileLoader.cpp; sourceTree = "<group>"; };
@@ -595,7 +570,6 @@
 		15C15656168311CB00D239F2 /* tolua_push.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tolua_push.c; sourceTree = "<group>"; };
 		15C15657168311CB00D239F2 /* tolua_to.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tolua_to.c; sourceTree = "<group>"; };
 		15C1568D1683131500D239F2 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../../../../cocos2dx/platform/third_party/ios/libraries/libcurl.a; sourceTree = "<group>"; };
-		15C1568F1683136200D239F2 /* luaScript */ = {isa = PBXFileReference; lastKnownFileType = folder; name = luaScript; path = ../../TestLua/Resources/luaScript; sourceTree = "<group>"; };
 		15C156911683138E00D239F2 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = SOURCE_ROOT; };
 		15C156921683138E00D239F2 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = SOURCE_ROOT; };
 		15C156931683138E00D239F2 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = SOURCE_ROOT; };
@@ -603,6 +577,31 @@
 		15C156951683138E00D239F2 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = SOURCE_ROOT; };
 		15C156961683138E00D239F2 /* Icon-114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-114.png"; sourceTree = SOURCE_ROOT; };
 		15C156971683138E00D239F2 /* Icon-144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-144.png"; sourceTree = SOURCE_ROOT; };
+		1AD263A1168350490089000C /* luaScript */ = {isa = PBXFileReference; lastKnownFileType = folder; name = luaScript; path = ../../../Lua/TestLua/Resources/luaScript; sourceTree = "<group>"; };
+		1AD263A31683506C0089000C /* animations */ = {isa = PBXFileReference; lastKnownFileType = folder; path = animations; sourceTree = "<group>"; };
+		1AD263A41683506C0089000C /* app.icf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = app.icf; sourceTree = "<group>"; };
+		1AD263A51683506C0089000C /* background.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = background.mp3; sourceTree = "<group>"; };
+		1AD263A61683506C0089000C /* background.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = background.ogg; sourceTree = "<group>"; };
+		1AD263A71683506C0089000C /* ccb */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ccb; sourceTree = "<group>"; };
+		1AD263A81683506C0089000C /* CocosBuilderExample.ccbproj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = CocosBuilderExample.ccbproj; sourceTree = "<group>"; };
+		1AD263A91683506C0089000C /* CocosBuilderExample.ccbresourcelog */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CocosBuilderExample.ccbresourcelog; sourceTree = "<group>"; };
+		1AD263AA1683506C0089000C /* development.icf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = development.icf; sourceTree = "<group>"; };
+		1AD263AB1683506C0089000C /* effect1.raw */ = {isa = PBXFileReference; lastKnownFileType = file; path = effect1.raw; sourceTree = "<group>"; };
+		1AD263AC1683506C0089000C /* effect1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = effect1.wav; sourceTree = "<group>"; };
+		1AD263AD1683506C0089000C /* effect2.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = effect2.ogg; sourceTree = "<group>"; };
+		1AD263AE1683506C0089000C /* extensions */ = {isa = PBXFileReference; lastKnownFileType = folder; path = extensions; sourceTree = "<group>"; };
+		1AD263AF1683506C0089000C /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
+		1AD263B01683506C0089000C /* fps_images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fps_images.png; sourceTree = "<group>"; };
+		1AD263B11683506C0089000C /* hd */ = {isa = PBXFileReference; lastKnownFileType = folder; path = hd; sourceTree = "<group>"; };
+		1AD263B21683506C0089000C /* Hello.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Hello.png; sourceTree = "<group>"; };
+		1AD263B31683506C0089000C /* Images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Images; sourceTree = "<group>"; };
+		1AD263B41683506C0089000C /* ipad */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ipad; sourceTree = "<group>"; };
+		1AD263B51683506C0089000C /* ipadhd */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ipadhd; sourceTree = "<group>"; };
+		1AD263B61683506C0089000C /* music.mid */ = {isa = PBXFileReference; lastKnownFileType = audio.midi; path = music.mid; sourceTree = "<group>"; };
+		1AD263B71683506C0089000C /* Particles */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Particles; sourceTree = "<group>"; };
+		1AD263B81683506C0089000C /* Shaders */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Shaders; sourceTree = "<group>"; };
+		1AD263B91683506C0089000C /* TileMaps */ = {isa = PBXFileReference; lastKnownFileType = folder; path = TileMaps; sourceTree = "<group>"; };
+		1AD263BA1683506C0089000C /* zwoptex */ = {isa = PBXFileReference; lastKnownFileType = folder; path = zwoptex; sourceTree = "<group>"; };
 		F293B3C815EB7BE500256477 /* TestLua.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestLua.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F293B3CC15EB7BE500256477 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		F293B3CE15EB7BE500256477 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -1279,6 +1278,31 @@
 		F293BC4615EB859D00256477 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				1AD263A31683506C0089000C /* animations */,
+				1AD263A41683506C0089000C /* app.icf */,
+				1AD263A51683506C0089000C /* background.mp3 */,
+				1AD263A61683506C0089000C /* background.ogg */,
+				1AD263A71683506C0089000C /* ccb */,
+				1AD263A81683506C0089000C /* CocosBuilderExample.ccbproj */,
+				1AD263A91683506C0089000C /* CocosBuilderExample.ccbresourcelog */,
+				1AD263AA1683506C0089000C /* development.icf */,
+				1AD263AB1683506C0089000C /* effect1.raw */,
+				1AD263AC1683506C0089000C /* effect1.wav */,
+				1AD263AD1683506C0089000C /* effect2.ogg */,
+				1AD263AE1683506C0089000C /* extensions */,
+				1AD263AF1683506C0089000C /* fonts */,
+				1AD263B01683506C0089000C /* fps_images.png */,
+				1AD263B11683506C0089000C /* hd */,
+				1AD263B21683506C0089000C /* Hello.png */,
+				1AD263B31683506C0089000C /* Images */,
+				1AD263B41683506C0089000C /* ipad */,
+				1AD263B51683506C0089000C /* ipadhd */,
+				1AD263B61683506C0089000C /* music.mid */,
+				1AD263B71683506C0089000C /* Particles */,
+				1AD263B81683506C0089000C /* Shaders */,
+				1AD263B91683506C0089000C /* TileMaps */,
+				1AD263BA1683506C0089000C /* zwoptex */,
+				1AD263A1168350490089000C /* luaScript */,
 				15C156911683138E00D239F2 /* Default-568h@2x.png */,
 				15C156921683138E00D239F2 /* Default.png */,
 				15C156931683138E00D239F2 /* Default@2x.png */,
@@ -1286,34 +1310,9 @@
 				15C156951683138E00D239F2 /* Icon-72.png */,
 				15C156961683138E00D239F2 /* Icon-114.png */,
 				15C156971683138E00D239F2 /* Icon-144.png */,
-				15C1568F1683136200D239F2 /* luaScript */,
-				15C15347168310E800D239F2 /* animations */,
-				15C15348168310E800D239F2 /* app.icf */,
-				15C15349168310E800D239F2 /* background.mp3 */,
-				15C1534A168310E800D239F2 /* background.ogg */,
-				15C1534B168310E800D239F2 /* ccb */,
-				15C1534C168310E800D239F2 /* CocosBuilderExample.ccbproj */,
-				15C1534D168310E800D239F2 /* CocosBuilderExample.ccbresourcelog */,
-				15C1534E168310E800D239F2 /* development.icf */,
-				15C1534F168310E800D239F2 /* effect1.raw */,
-				15C15350168310E800D239F2 /* effect1.wav */,
-				15C15351168310E800D239F2 /* effect2.ogg */,
-				15C15352168310E800D239F2 /* extensions */,
-				15C15353168310E800D239F2 /* fonts */,
-				15C15354168310E800D239F2 /* fps_images.png */,
-				15C15355168310E800D239F2 /* hd */,
-				15C15356168310E800D239F2 /* Hello.png */,
-				15C15357168310E800D239F2 /* Images */,
-				15C15358168310E800D239F2 /* ipad */,
-				15C15359168310E800D239F2 /* ipadhd */,
-				15C1535A168310E800D239F2 /* music.mid */,
-				15C1535B168310E800D239F2 /* Particles */,
-				15C1535C168310E800D239F2 /* Shaders */,
-				15C1535D168310E800D239F2 /* TileMaps */,
-				15C1535E168310E800D239F2 /* zwoptex */,
 			);
 			name = Resources;
-			path = ../../TestCpp/Resources;
+			path = ../../../Cpp/TestCpp/Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1383,32 +1382,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				15C1535F168310E800D239F2 /* animations in Resources */,
-				15C15360168310E800D239F2 /* app.icf in Resources */,
-				15C15361168310E800D239F2 /* background.mp3 in Resources */,
-				15C15362168310E800D239F2 /* background.ogg in Resources */,
-				15C15363168310E800D239F2 /* ccb in Resources */,
-				15C15364168310E800D239F2 /* CocosBuilderExample.ccbproj in Resources */,
-				15C15365168310E800D239F2 /* CocosBuilderExample.ccbresourcelog in Resources */,
-				15C15366168310E800D239F2 /* development.icf in Resources */,
-				15C15367168310E800D239F2 /* effect1.raw in Resources */,
-				15C15368168310E800D239F2 /* effect1.wav in Resources */,
-				15C15369168310E800D239F2 /* effect2.ogg in Resources */,
-				15C1536A168310E800D239F2 /* extensions in Resources */,
-				15C1536B168310E800D239F2 /* fonts in Resources */,
-				15C1536C168310E800D239F2 /* fps_images.png in Resources */,
-				15C1536D168310E800D239F2 /* hd in Resources */,
-				15C1536E168310E800D239F2 /* Hello.png in Resources */,
-				15C1536F168310E800D239F2 /* Images in Resources */,
-				15C15370168310E800D239F2 /* ipad in Resources */,
-				15C15371168310E800D239F2 /* ipadhd in Resources */,
-				15C15372168310E800D239F2 /* music.mid in Resources */,
-				15C15373168310E800D239F2 /* Particles in Resources */,
-				15C15374168310E800D239F2 /* Shaders in Resources */,
-				15C15375168310E800D239F2 /* TileMaps in Resources */,
-				15C15376168310E800D239F2 /* zwoptex in Resources */,
-				15C1548A1683116B00D239F2 /* CMakeLists.txt in Resources */,
-				15C156901683136200D239F2 /* luaScript in Resources */,
 				15C156981683138E00D239F2 /* Default-568h@2x.png in Resources */,
 				15C156991683138E00D239F2 /* Default.png in Resources */,
 				15C1569A1683138E00D239F2 /* Default@2x.png in Resources */,
@@ -1416,6 +1389,31 @@
 				15C1569C1683138E00D239F2 /* Icon-72.png in Resources */,
 				15C1569D1683138E00D239F2 /* Icon-114.png in Resources */,
 				15C1569E1683138E00D239F2 /* Icon-144.png in Resources */,
+				1AD263A2168350490089000C /* luaScript in Resources */,
+				1AD263BB1683506D0089000C /* animations in Resources */,
+				1AD263BC1683506D0089000C /* app.icf in Resources */,
+				1AD263BD1683506D0089000C /* background.mp3 in Resources */,
+				1AD263BE1683506D0089000C /* background.ogg in Resources */,
+				1AD263BF1683506D0089000C /* ccb in Resources */,
+				1AD263C01683506D0089000C /* CocosBuilderExample.ccbproj in Resources */,
+				1AD263C11683506D0089000C /* CocosBuilderExample.ccbresourcelog in Resources */,
+				1AD263C21683506D0089000C /* development.icf in Resources */,
+				1AD263C31683506D0089000C /* effect1.raw in Resources */,
+				1AD263C41683506D0089000C /* effect1.wav in Resources */,
+				1AD263C51683506D0089000C /* effect2.ogg in Resources */,
+				1AD263C61683506D0089000C /* extensions in Resources */,
+				1AD263C71683506D0089000C /* fonts in Resources */,
+				1AD263C81683506D0089000C /* fps_images.png in Resources */,
+				1AD263C91683506D0089000C /* hd in Resources */,
+				1AD263CA1683506D0089000C /* Hello.png in Resources */,
+				1AD263CB1683506D0089000C /* Images in Resources */,
+				1AD263CC1683506D0089000C /* ipad in Resources */,
+				1AD263CD1683506D0089000C /* ipadhd in Resources */,
+				1AD263CE1683506D0089000C /* music.mid in Resources */,
+				1AD263CF1683506D0089000C /* Particles in Resources */,
+				1AD263D01683506D0089000C /* Shaders in Resources */,
+				1AD263D11683506D0089000C /* TileMaps in Resources */,
+				1AD263D21683506D0089000C /* zwoptex in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
