@@ -173,7 +173,7 @@ JSBool js_cocos2dx_CCNode_getChildren(JSContext *cx, uint32_t argc, jsval *vp)
 
 			JSObject *jsarr = JS_NewArrayObject(cx, children->count(), NULL);
 
-			for (int i=0; i < children->count(); i++) {
+			for (unsigned int i=0; i < children->count(); i++) {
 				cocos2d::CCNode *child = (cocos2d::CCNode*)children->objectAtIndex(i);
 				js_proxy_t *childProxy = js_get_or_create_proxy<cocos2d::CCNode>(cx, child);
 				jsval childVal = OBJECT_TO_JSVAL(childProxy->obj);
@@ -192,7 +192,7 @@ JSBool js_cocos2dx_CCMenu_create(JSContext *cx, uint32_t argc, jsval *vp)
 	jsval *argv = JS_ARGV(cx, vp);
 	if (argc > 0) {
 		cocos2d::CCArray* array = cocos2d::CCArray::create();
-		int i = 0;
+		uint32_t i = 0;
 		while (i < argc) {
 			js_proxy_t *proxy;
 			JSObject *tmpObj = JSVAL_TO_OBJECT(argv[i]);
@@ -251,7 +251,7 @@ JSBool js_cocos2dx_CCSequence_create(JSContext *cx, uint32_t argc, jsval *vp)
 	jsval *argv = JS_ARGV(cx, vp);
 	if (argc > 0) {
 		cocos2d::CCArray* array = cocos2d::CCArray::create();
-		int i = 0;
+		uint32_t i = 0;
 		while (i < argc) {
 			js_proxy_t *proxy;
 			JSObject *tmpObj = JSVAL_TO_OBJECT(argv[i]);
@@ -289,7 +289,7 @@ JSBool js_cocos2dx_CCSpawn_create(JSContext *cx, uint32_t argc, jsval *vp)
 	jsval *argv = JS_ARGV(cx, vp);
 	if (argc > 0) {
 		cocos2d::CCArray* array = cocos2d::CCArray::create();
-		int i = 0;
+		uint32_t i = 0;
 		while (i < argc) {
 			js_proxy_t *proxy;
 			JSObject *tmpObj = JSVAL_TO_OBJECT(argv[i]);
@@ -511,9 +511,8 @@ JSBool js_cocos2dx_CCMenuItemToggle_create(JSContext *cx, uint32_t argc, jsval *
   if (argc >= 1) {
     jsval *argv = JS_ARGV(cx, vp);
     cocos2d::CCMenuItemToggle* ret = cocos2d::CCMenuItemToggle::create();
-        
-        
-    for (int i=0; i < argc; i++) {
+
+    for (uint32_t i=0; i < argc; i++) {
       js_proxy_t *proxy;
       JSObject *tmpObj = JSVAL_TO_OBJECT(argv[i]);
       JS_GET_NATIVE_PROXY(proxy, tmpObj);
@@ -2442,7 +2441,7 @@ JSBool js_cocos2dx_CCDrawNode_drawPolygon(JSContext *cx, uint32_t argc, jsval *v
             CCPoint* verts = new CCPoint[ l ];
             CCPoint p;
 
-            for( int i=0; i<l; i++ ) {
+            for( uint32_t i=0; i<l; i++ ) {
                 jsval pointvp;
                 if( ! JS_GetElement(cx, argArray, i, &pointvp) )
                     return JS_FALSE;

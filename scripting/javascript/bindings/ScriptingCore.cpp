@@ -1085,7 +1085,7 @@ CCArray* jsval_to_ccarray(JSContext* cx, jsval v) {
         uint32_t len = 0;
         JS_GetArrayLength(cx, arr, &len);
         CCArray* ret = CCArray::createWithCapacity(len);
-        for (int i=0; i < len; i++) {
+        for (uint32_t i=0; i < len; i++) {
             jsval elt;
             JSObject *elto;
             if (JS_GetElement(cx, arr, i, &elt) && JS_ValueToObject(cx, elt, &elto)) {
@@ -1106,7 +1106,7 @@ jsval ccarray_to_jsval(JSContext* cx, CCArray *arr) {
     
     JSObject *jsretArr = JS_NewArrayObject(cx, 0, NULL);
     
-    for(int i = 0; i < arr->count(); ++i) {
+    for(unsigned int i = 0; i < arr->count(); ++i) {
         jsval arrElement;
         CCObject *obj = arr->objectAtIndex(i);
         const char *type = typeid(*obj).name();
