@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		15003FA315D2601D00B6775A /* iphone in Resources */ = {isa = PBXBuildFile; fileRef = 15003FA215D2601D00B6775A /* iphone */; };
-		154269EB15B5669E00712A7F /* libcocos2dx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 154269D015B5644500712A7F /* libcocos2dx.a */; };
+		15A3D7B91682F609002FB0C5 /* libcocos2dx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15A3D7B61682F5ED002FB0C5 /* libcocos2dx.a */; };
 		1A1CF3691626CEFF00AFC938 /* ipad in Resources */ = {isa = PBXBuildFile; fileRef = 1A1CF3671626CEFF00AFC938 /* ipad */; };
 		1A1CF36A1626CEFF00AFC938 /* ipadhd in Resources */ = {isa = PBXBuildFile; fileRef = 1A1CF3681626CEFF00AFC938 /* ipadhd */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
@@ -33,16 +33,16 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		154269CF15B5644500712A7F /* PBXContainerItemProxy */ = {
+		15A3D7B51682F5ED002FB0C5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 154269C815B5644500712A7F /* cocos2dx.xcodeproj */;
+			containerPortal = 15A3D7AE1682F5EC002FB0C5 /* cocos2dx.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 1551A33F158F2AB200E66CFE;
 			remoteInfo = cocos2dx;
 		};
-		154269E915B5669800712A7F /* PBXContainerItemProxy */ = {
+		15A3D7B71682F600002FB0C5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 154269C815B5644500712A7F /* cocos2dx.xcodeproj */;
+			containerPortal = 15A3D7AE1682F5EC002FB0C5 /* cocos2dx.xcodeproj */;
 			proxyType = 1;
 			remoteGlobalIDString = 1551A33E158F2AB200E66CFE;
 			remoteInfo = cocos2dx;
@@ -51,7 +51,7 @@
 
 /* Begin PBXFileReference section */
 		15003FA215D2601D00B6775A /* iphone */ = {isa = PBXFileReference; lastKnownFileType = folder; path = iphone; sourceTree = "<group>"; };
-		154269C815B5644500712A7F /* cocos2dx.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2dx.xcodeproj; path = ../../../cocos2dx/proj.ios/cocos2dx.xcodeproj; sourceTree = "<group>"; };
+		15A3D7AE1682F5EC002FB0C5 /* cocos2dx.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2dx.xcodeproj; path = ../../../../cocos2dx/proj.ios/cocos2dx.xcodeproj; sourceTree = "<group>"; };
 		1A1CF3661626CB6000AFC938 /* AppMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppMacros.h; sourceTree = "<group>"; };
 		1A1CF3671626CEFF00AFC938 /* ipad */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ipad; sourceTree = "<group>"; };
 		1A1CF3681626CEFF00AFC938 /* ipadhd */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ipadhd; sourceTree = "<group>"; };
@@ -89,7 +89,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				154269EB15B5669E00712A7F /* libcocos2dx.a in Frameworks */,
+				15A3D7B91682F609002FB0C5 /* libcocos2dx.a in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */,
@@ -103,10 +103,10 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		154269C915B5644500712A7F /* Products */ = {
+		15A3D7AF1682F5EC002FB0C5 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				154269D015B5644500712A7F /* libcocos2dx.a */,
+				15A3D7B61682F5ED002FB0C5 /* libcocos2dx.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -122,7 +122,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				154269C815B5644500712A7F /* cocos2dx.xcodeproj */,
+				15A3D7AE1682F5EC002FB0C5 /* cocos2dx.xcodeproj */,
 				BF23D4E2143315EB00657E08 /* Classes */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				BF5681CC1313A84D0055EEAC /* ios */,
@@ -206,7 +206,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				154269EA15B5669800712A7F /* PBXTargetDependency */,
+				15A3D7B81682F600002FB0C5 /* PBXTargetDependency */,
 			);
 			name = HelloCpp;
 			productName = HelloWorld;
@@ -235,8 +235,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 154269C915B5644500712A7F /* Products */;
-					ProjectRef = 154269C815B5644500712A7F /* cocos2dx.xcodeproj */;
+					ProductGroup = 15A3D7AF1682F5EC002FB0C5 /* Products */;
+					ProjectRef = 15A3D7AE1682F5EC002FB0C5 /* cocos2dx.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -247,11 +247,11 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		154269D015B5644500712A7F /* libcocos2dx.a */ = {
+		15A3D7B61682F5ED002FB0C5 /* libcocos2dx.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libcocos2dx.a;
-			remoteRef = 154269CF15B5644500712A7F /* PBXContainerItemProxy */;
+			remoteRef = 15A3D7B51682F5ED002FB0C5 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -292,10 +292,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		154269EA15B5669800712A7F /* PBXTargetDependency */ = {
+		15A3D7B81682F600002FB0C5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = cocos2dx;
-			targetProxy = 154269E915B5669800712A7F /* PBXContainerItemProxy */;
+			targetProxy = 15A3D7B71682F600002FB0C5 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -322,11 +322,11 @@
 				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = (
 					"\"$(SDKROOT)/usr/include/libxml2/\"",
-					"\"$(SRCROOT)/../../../cocos2dx/include\"",
-					"\"$(SRCROOT)/../../../cocos2dx\"",
-					"\"$(SRCROOT)/../../../cocos2dx/platform/ios\"",
-					"\"$(SRCROOT)/../../../cocos2dx/kazmath/include\"",
-					"$(SRCROOT)/../../../external/chipmunk/include/chipmunk",
+					"\"$(SRCROOT)/../../../../cocos2dx/include\"",
+					"\"$(SRCROOT)/../../../../cocos2dx\"",
+					"\"$(SRCROOT)/../../../../cocos2dx/platform/ios\"",
+					"\"$(SRCROOT)/../../../../cocos2dx/kazmath/include\"",
+					"$(SRCROOT)/../../../../external/chipmunk/include/chipmunk",
 				);
 				INFOPLIST_FILE = "HelloCpp-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
@@ -357,11 +357,11 @@
 				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = (
 					"\"$(SDKROOT)/usr/include/libxml2/\"",
-					"\"$(SRCROOT)/../../../cocos2dx/include\"",
-					"\"$(SRCROOT)/../../../cocos2dx\"",
-					"\"$(SRCROOT)/../../../cocos2dx/platform/ios\"",
-					"\"$(SRCROOT)/../../../cocos2dx/kazmath/include\"",
-					"$(SRCROOT)/../../../external/chipmunk/include/chipmunk",
+					"\"$(SRCROOT)/../../../../cocos2dx/include\"",
+					"\"$(SRCROOT)/../../../../cocos2dx\"",
+					"\"$(SRCROOT)/../../../../cocos2dx/platform/ios\"",
+					"\"$(SRCROOT)/../../../../cocos2dx/kazmath/include\"",
+					"$(SRCROOT)/../../../../external/chipmunk/include/chipmunk",
 				);
 				INFOPLIST_FILE = "HelloCpp-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;

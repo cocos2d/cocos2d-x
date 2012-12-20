@@ -45,10 +45,10 @@ fi
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # ... use paths relative to current directory
-COCOS2DX_ROOT="$DIR/../../.."
+COCOS2DX_ROOT="$DIR/../../../.."
 APP_ROOT="$DIR/.."
 APP_ANDROID_ROOT="$DIR"
-BINDINGS_JS_ROOT="$APP_ROOT/../../scripting/javascript/bindings/js"
+BINDINGS_JS_ROOT="$APP_ROOT/../../../scripting/javascript/bindings/js"
 
 echo
 echo "Paths"
@@ -70,7 +70,7 @@ mkdir "$APP_ANDROID_ROOT"/assets
 mkdir "$APP_ANDROID_ROOT"/assets/res
 
 # copy src/**/*.js from cocos2d-js-tests into assets' root
-cp -rf "$APP_ROOT"/cocos2d-js-tests/tests/* "$APP_ANDROID_ROOT"/assets
+cp -rf "$APP_ROOT"/../Shared/tests/* "$APP_ANDROID_ROOT"/assets
 
 
 # copy bindings/*.js into assets' root
