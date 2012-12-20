@@ -10,8 +10,8 @@
 		1514DA3F163004980095A81C /* ipad in Resources */ = {isa = PBXBuildFile; fileRef = 1514DA3C163004980095A81C /* ipad */; };
 		1514DA40163004980095A81C /* ipadhd in Resources */ = {isa = PBXBuildFile; fileRef = 1514DA3D163004980095A81C /* ipadhd */; };
 		1514DA41163004980095A81C /* iphone in Resources */ = {isa = PBXBuildFile; fileRef = 1514DA3E163004980095A81C /* iphone */; };
+		15C156BB1683155600D239F2 /* libcocos2dx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C156B81683151A00D239F2 /* libcocos2dx.a */; };
 		41BC70AD15BF7CCE006A0A6C /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 41BC70AC15BF7CCE006A0A6C /* Icon.icns */; };
-		41BC70B715BF7E14006A0A6C /* libcocos2dx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 41CD6C5C15BF74E5005E6F29 /* libcocos2dx.a */; };
 		41CD6C6515BF7574005E6F29 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 41CD6C6315BF7574005E6F29 /* AppController.mm */; };
 		41CD6C6615BF7574005E6F29 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 41CD6C6415BF7574005E6F29 /* main.m */; };
 		41CD6C6E15BF7673005E6F29 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 41CD6C6815BF7673005E6F29 /* InfoPlist.strings */; };
@@ -31,16 +31,16 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		41CD6C5B15BF74E5005E6F29 /* PBXContainerItemProxy */ = {
+		15C156B71683151A00D239F2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 41CD6C5415BF74E5005E6F29 /* cocos2dx.xcodeproj */;
+			containerPortal = 15C156B01683151A00D239F2 /* cocos2dx.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 1551A33F158F2AB200E66CFE;
 			remoteInfo = cocos2dx;
 		};
-		41EFC1B915BF79BD0083EA95 /* PBXContainerItemProxy */ = {
+		15C156B91683155000D239F2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 41CD6C5415BF74E5005E6F29 /* cocos2dx.xcodeproj */;
+			containerPortal = 15C156B01683151A00D239F2 /* cocos2dx.xcodeproj */;
 			proxyType = 1;
 			remoteGlobalIDString = 1551A33E158F2AB200E66CFE;
 			remoteInfo = cocos2dx;
@@ -52,9 +52,9 @@
 		1514DA3D163004980095A81C /* ipadhd */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ipadhd; path = ../Resources/ipadhd; sourceTree = "<group>"; };
 		1514DA3E163004980095A81C /* iphone */ = {isa = PBXFileReference; lastKnownFileType = folder; name = iphone; path = ../Resources/iphone; sourceTree = "<group>"; };
 		15A6969B1630E63B00D7A229 /* AppMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppMacros.h; path = ../Classes/AppMacros.h; sourceTree = "<group>"; };
+		15C156B01683151A00D239F2 /* cocos2dx.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2dx.xcodeproj; path = ../../../../cocos2dx/proj.mac/cocos2dx.xcodeproj; sourceTree = "<group>"; };
 		41BC70AC15BF7CCE006A0A6C /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = "<group>"; };
 		41CD6C5115BF748C005E6F29 /* HelloCpp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloCpp.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		41CD6C5415BF74E5005E6F29 /* cocos2dx.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2dx.xcodeproj; path = ../../../cocos2dx/proj.mac/cocos2dx.xcodeproj; sourceTree = "<group>"; };
 		41CD6C6215BF7574005E6F29 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
 		41CD6C6315BF7574005E6F29 /* AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppController.mm; sourceTree = "<group>"; };
 		41CD6C6415BF7574005E6F29 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -83,6 +83,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				15C156BB1683155600D239F2 /* libcocos2dx.a in Frameworks */,
 				41CD6C8F15BF7793005E6F29 /* AppKit.framework in Frameworks */,
 				41CD6C9015BF7793005E6F29 /* AudioToolbox.framework in Frameworks */,
 				41CD6C9115BF7793005E6F29 /* Cocoa.framework in Frameworks */,
@@ -93,31 +94,30 @@
 				41CD6C9615BF7793005E6F29 /* QuartzCore.framework in Frameworks */,
 				41CD6C9915BF77CE005E6F29 /* libxml2.dylib in Frameworks */,
 				41CD6C9A15BF77CE005E6F29 /* libz.dylib in Frameworks */,
-				41BC70B715BF7E14006A0A6C /* libcocos2dx.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		15C156B11683151A00D239F2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				15C156B81683151A00D239F2 /* libcocos2dx.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		41851B8715B93C32004083E9 = {
 			isa = PBXGroup;
 			children = (
-				41CD6C5415BF74E5005E6F29 /* cocos2dx.xcodeproj */,
+				15C156B01683151A00D239F2 /* cocos2dx.xcodeproj */,
 				41CD6C5D15BF750B005E6F29 /* Classes */,
 				41CD6C5E15BF7514005E6F29 /* Frameworks */,
 				41CD6C5F15BF7522005E6F29 /* mac */,
 				41EFC1BB15BF7AC30083EA95 /* Products */,
 				41CD6C6115BF7556005E6F29 /* Resources */,
 			);
-			sourceTree = "<group>";
-		};
-		41CD6C5515BF74E5005E6F29 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				41CD6C5C15BF74E5005E6F29 /* libcocos2dx.a */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		41CD6C5D15BF750B005E6F29 /* Classes */ = {
@@ -204,7 +204,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				41EFC1BA15BF79BD0083EA95 /* PBXTargetDependency */,
+				15C156BA1683155000D239F2 /* PBXTargetDependency */,
 			);
 			name = HelloCpp;
 			productName = Paralaxer;
@@ -232,8 +232,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 41CD6C5515BF74E5005E6F29 /* Products */;
-					ProjectRef = 41CD6C5415BF74E5005E6F29 /* cocos2dx.xcodeproj */;
+					ProductGroup = 15C156B11683151A00D239F2 /* Products */;
+					ProjectRef = 15C156B01683151A00D239F2 /* cocos2dx.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -244,11 +244,11 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		41CD6C5C15BF74E5005E6F29 /* libcocos2dx.a */ = {
+		15C156B81683151A00D239F2 /* libcocos2dx.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libcocos2dx.a;
-			remoteRef = 41CD6C5B15BF74E5005E6F29 /* PBXContainerItemProxy */;
+			remoteRef = 15C156B71683151A00D239F2 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -284,10 +284,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		41EFC1BA15BF79BD0083EA95 /* PBXTargetDependency */ = {
+		15C156BA1683155000D239F2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = cocos2dx;
-			targetProxy = 41EFC1B915BF79BD0083EA95 /* PBXContainerItemProxy */;
+			targetProxy = 15C156B91683155000D239F2 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -376,10 +376,10 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				HEADER_SEARCH_PATHS = (
 					"\"$(SDKROOT)/usr/include/libxml2/\"",
-					"\"$(SRCROOT)/../../../cocos2dx/include\"",
-					"\"$(SRCROOT)/../../../cocos2dx\"",
-					"\"$(SRCROOT)/../../../cocos2dx/platform/mac\"",
-					"\"$(SRCROOT)/../../../cocos2dx/kazmath/include\"",
+					"\"$(SRCROOT)/../../../../cocos2dx/include\"",
+					"\"$(SRCROOT)/../../../../cocos2dx\"",
+					"\"$(SRCROOT)/../../../../cocos2dx/platform/mac\"",
+					"\"$(SRCROOT)/../../../../cocos2dx/kazmath/include\"",
 				);
 				INFOPLIST_FILE = HelloCpp_Info.plist;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
@@ -410,10 +410,10 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				HEADER_SEARCH_PATHS = (
 					"\"$(SDKROOT)/usr/include/libxml2/\"",
-					"\"$(SRCROOT)/../../../cocos2dx/include\"",
-					"\"$(SRCROOT)/../../../cocos2dx\"",
-					"\"$(SRCROOT)/../../../cocos2dx/platform/mac\"",
-					"\"$(SRCROOT)/../../../cocos2dx/kazmath/include\"",
+					"\"$(SRCROOT)/../../../../cocos2dx/include\"",
+					"\"$(SRCROOT)/../../../../cocos2dx\"",
+					"\"$(SRCROOT)/../../../../cocos2dx/platform/mac\"",
+					"\"$(SRCROOT)/../../../../cocos2dx/kazmath/include\"",
 				);
 				INFOPLIST_FILE = HelloCpp_Info.plist;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
