@@ -1,13 +1,13 @@
 options
 {
-	module_path="../../../cocos2dx/proj.marmalade/;../../../CocosDenshion/proj.marmalade/;../../../scripting/lua/proj.marmalade/"
+	module_path="../../../../cocos2dx/proj.marmalade/;../../../../CocosDenshion/proj.marmalade/;../../../../scripting/lua/proj.marmalade/"
 	s3e-data-dir = "../Resources/"
 }
 
 includepaths
 {
 	../Classes
-	../../../scripting/lua/cocos2dx_support/
+	../../../../scripting/lua/cocos2dx_support/
 }
 subprojects
 {
