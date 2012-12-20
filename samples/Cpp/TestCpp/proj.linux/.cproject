@@ -32,16 +32,16 @@
 								<option id="gnu.cpp.compiler.exe.debug.option.debugging.level.634257735" name="Debug Level" superClass="gnu.cpp.compiler.exe.debug.option.debugging.level" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.include.paths.1707443626" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="../../../"/>
-									<listOptionValue builtIn="false" value="../../../../external"/>
-									<listOptionValue builtIn="false" value="../../../../extensions"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/include"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/kazmath/include"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/linux"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/linux"/>
-									<listOptionValue builtIn="false" value="../../../../CocosDenshion/include"/>
-									<listOptionValue builtIn="false" value="../../../../external/chipmunk/include/chipmunk"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/include"/>
+									<listOptionValue builtIn="false" value="../../../../../external"/>
+									<listOptionValue builtIn="false" value="../../../../../extensions"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/include"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/kazmath/include"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/linux"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/linux"/>
+									<listOptionValue builtIn="false" value="../../../../../CocosDenshion/include"/>
+									<listOptionValue builtIn="false" value="../../../../../external/chipmunk/include/chipmunk"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/include"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.preprocessor.def.331369055" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="LINUX"/>
@@ -70,15 +70,15 @@
 									<listOptionValue builtIn="false" value="curl"/>
 								</option>
 								<option id="gnu.cpp.link.option.paths.335055881" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/proj.linux/${ConfigName}"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib"/>
-									<listOptionValue builtIn="false" value="../../../../CocosDenshion/proj.linux/${ConfigName}"/>
-									<listOptionValue builtIn="false" value="../../../../CocosDenshion/third_party/fmod/api/lib"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/proj.linux/${ConfigName}"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib"/>
+									<listOptionValue builtIn="false" value="../../../../../CocosDenshion/proj.linux/${ConfigName}"/>
+									<listOptionValue builtIn="false" value="../../../../../CocosDenshion/third_party/fmod/api/lib"/>
 								</option>
 								<option id="gnu.cpp.link.option.userobjs.1021852674" name="Other objects" superClass="gnu.cpp.link.option.userobjs" valueType="userObjs">
-									<listOptionValue builtIn="false" value="../../../../external/chipmunk/proj.linux/${ConfigName}/libchipmunk.a"/>
-									<listOptionValue builtIn="false" value="../../../../external/Box2D/proj.linux/${ConfigName}/libBox2D.a"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/linux/libraries/libcurl.a"/>
+									<listOptionValue builtIn="false" value="../../../../../external/chipmunk/proj.linux/${ConfigName}/libchipmunk.a"/>
+									<listOptionValue builtIn="false" value="../../../../../external/Box2D/proj.linux/${ConfigName}/libBox2D.a"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/linux/libraries/libcurl.a"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.280033790" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
@@ -134,16 +134,16 @@
 								<option id="gnu.cpp.compiler.exe.release.option.debugging.level.452676886" name="Debug Level" superClass="gnu.cpp.compiler.exe.release.option.debugging.level" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.include.paths.219173285" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="../../../"/>
-									<listOptionValue builtIn="false" value="../../../../external"/>
-									<listOptionValue builtIn="false" value="../../../../extensions"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/include"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/kazmath/include"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/linux"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/linux"/>
-									<listOptionValue builtIn="false" value="../../../../CocosDenshion/include"/>
-									<listOptionValue builtIn="false" value="../../../../external/chipmunk/include/chipmunk"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/include"/>
+									<listOptionValue builtIn="false" value="../../../../../external"/>
+									<listOptionValue builtIn="false" value="../../../../../extensions"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/include"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/kazmath/include"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/linux"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/linux"/>
+									<listOptionValue builtIn="false" value="../../../../../CocosDenshion/include"/>
+									<listOptionValue builtIn="false" value="../../../../../external/chipmunk/include/chipmunk"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/include"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.preprocessor.def.2022262883" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="LINUX"/>
@@ -171,15 +171,15 @@
 									<listOptionValue builtIn="false" value="cocosdenshion"/>
 								</option>
 								<option id="gnu.cpp.link.option.paths.2032137429" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/proj.linux/${ConfigName}"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib"/>
-									<listOptionValue builtIn="false" value="../../../../CocosDenshion/proj.linux/${ConfigName}"/>
-									<listOptionValue builtIn="false" value="../../../../CocosDenshion/third_party/fmod/api/lib"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/proj.linux/${ConfigName}"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib"/>
+									<listOptionValue builtIn="false" value="../../../../../CocosDenshion/proj.linux/${ConfigName}"/>
+									<listOptionValue builtIn="false" value="../../../../../CocosDenshion/third_party/fmod/api/lib"/>
 								</option>
 								<option id="gnu.cpp.link.option.userobjs.1558283777" name="Other objects" superClass="gnu.cpp.link.option.userobjs" valueType="userObjs">
-									<listOptionValue builtIn="false" value="../../../../external/chipmunk/proj.linux/${ConfigName}/libchipmunk.a"/>
-									<listOptionValue builtIn="false" value="../../../../external/Box2D/proj.linux/${ConfigName}/libBox2D.a"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/linux/libraries/libcurl.a"/>
+									<listOptionValue builtIn="false" value="../../../../../external/chipmunk/proj.linux/${ConfigName}/libchipmunk.a"/>
+									<listOptionValue builtIn="false" value="../../../../../external/Box2D/proj.linux/${ConfigName}/libBox2D.a"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/linux/libraries/libcurl.a"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.1573978538" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>

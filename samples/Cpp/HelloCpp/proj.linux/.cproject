@@ -28,13 +28,13 @@
 								<option id="gnu.cpp.compiler.option.include.paths.577331571" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="../../Classes"/>
 									<listOptionValue builtIn="false" value="../../../"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/include"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/kazmath/include"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/linux"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/linux"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/include"/>
-									<listOptionValue builtIn="false" value="../../../../CocosDenshion/include"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/include"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/kazmath/include"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/linux"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/linux"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/include"/>
+									<listOptionValue builtIn="false" value="../../../../../CocosDenshion/include"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.preprocessor.def.753894218" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="LINUX"/>
@@ -60,10 +60,10 @@
 									<listOptionValue builtIn="false" value="cocosdenshion"/>
 								</option>
 								<option id="gnu.cpp.link.option.paths.1730426040" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/proj.linux/${ConfigName}"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib"/>
-									<listOptionValue builtIn="false" value="../../../../CocosDenshion/proj.linux/${ConfigName}"/>
-									<listOptionValue builtIn="false" value="../../../../CocosDenshion/third_party/fmod/api/lib"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/proj.linux/${ConfigName}"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib"/>
+									<listOptionValue builtIn="false" value="../../../../../CocosDenshion/proj.linux/${ConfigName}"/>
+									<listOptionValue builtIn="false" value="../../../../../CocosDenshion/third_party/fmod/api/lib"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.338357910" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
@@ -110,13 +110,13 @@
 								<option id="gnu.cpp.compiler.option.include.paths.1175073911" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="../../Classes"/>
 									<listOptionValue builtIn="false" value="../../../"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/include"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/kazmath/include"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/linux"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/linux"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/include"/>
-									<listOptionValue builtIn="false" value="../../../../CocosDenshion/include"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/include"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/kazmath/include"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/linux"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/linux"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/include"/>
+									<listOptionValue builtIn="false" value="../../../../../CocosDenshion/include"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.preprocessor.def.1649765609" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="LINUX"/>
@@ -141,9 +141,9 @@
 									<listOptionValue builtIn="false" value="cocosdenshion"/>
 								</option>
 								<option id="gnu.cpp.link.option.paths.510724007" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/proj.linux/${ConfigName}"/>
-									<listOptionValue builtIn="false" value="../../../../CocosDenshion/proj.linux/${ConfigName}"/>
-									<listOptionValue builtIn="false" value="../../../../CocosDenshion/third_party/fmod/api/lib"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/proj.linux/${ConfigName}"/>
+									<listOptionValue builtIn="false" value="../../../../../CocosDenshion/proj.linux/${ConfigName}"/>
+									<listOptionValue builtIn="false" value="../../../../../CocosDenshion/third_party/fmod/api/lib"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.970027608" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
