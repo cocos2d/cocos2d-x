@@ -11,31 +11,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libcocos2d", "cocos2dx\proj
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "liblua", "scripting\lua\proj.win32\liblua.vcxproj", "{DDC3E27F-004D-4DD4-9DD3-931A013D2159}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestJavascript", "samples\TestJavascript\proj.win32\TestJavascript.vcxproj", "{D0F06A44-A245-4D13-A498-0120C203B539}"
-	ProjectSection(ProjectDependencies) = postProject
-		{21B2C324-891F-48EA-AD1A-5AE13DE12E28} = {21B2C324-891F-48EA-AD1A-5AE13DE12E28}
-		{207BC7A9-CCF1-4F2F-A04D-45F72242AE25} = {207BC7A9-CCF1-4F2F-A04D-45F72242AE25}
-	EndProjectSection
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libExtensions", "extensions\proj.win32\libExtensions.vcxproj", "{21B2C324-891F-48EA-AD1A-5AE13DE12E28}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MoonWarriors", "samples\MoonWarriors\proj.win32\MoonWarriors.vcxproj", "{1DB7C0FC-46FF-4A1B-82E0-C6244EEEC4C2}"
-	ProjectSection(ProjectDependencies) = postProject
-		{21B2C324-891F-48EA-AD1A-5AE13DE12E28} = {21B2C324-891F-48EA-AD1A-5AE13DE12E28}
-		{207BC7A9-CCF1-4F2F-A04D-45F72242AE25} = {207BC7A9-CCF1-4F2F-A04D-45F72242AE25}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WatermelonWithMe", "samples\WatermelonWithMe\proj.win32\WatermelonWithMe.vcxproj", "{BE092D9E-95AE-4F86-84CE-F4519E4F3F15}"
-	ProjectSection(ProjectDependencies) = postProject
-		{21B2C324-891F-48EA-AD1A-5AE13DE12E28} = {21B2C324-891F-48EA-AD1A-5AE13DE12E28}
-		{207BC7A9-CCF1-4F2F-A04D-45F72242AE25} = {207BC7A9-CCF1-4F2F-A04D-45F72242AE25}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CocosDragonJS", "samples\CocosDragonJS\proj.win32\CocosDragonJS.vcxproj", "{68ED0B4E-2BCA-45D2-9648-CEABEBD3B9D7}"
-	ProjectSection(ProjectDependencies) = postProject
-		{21B2C324-891F-48EA-AD1A-5AE13DE12E28} = {21B2C324-891F-48EA-AD1A-5AE13DE12E28}
-		{207BC7A9-CCF1-4F2F-A04D-45F72242AE25} = {207BC7A9-CCF1-4F2F-A04D-45F72242AE25}
-	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HelloCpp", "samples\Cpp\HelloCpp\proj.win32\HelloCpp.vcxproj", "{B8BF9E81-35FD-4582-BA1C-B85FA365BABB}"
 EndProject
@@ -44,6 +20,30 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HelloLua", "samples\Lua\HelloLua\proj.win32\HelloLua.vcxproj", "{13E55395-94A2-4CD9-BFC2-1A051F80C17D}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestLua", "samples\Lua\TestLua\proj.win32\TestLua.win32.vcxproj", "{4E6A7A0E-DDD8-4BAA-8B22-C964069364ED}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CocosDragonJS", "samples\Javascript\CocosDragonJS\proj.win32\CocosDragonJS.vcxproj", "{68ED0B4E-2BCA-45D2-9648-CEABEBD3B9D7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{21B2C324-891F-48EA-AD1A-5AE13DE12E28} = {21B2C324-891F-48EA-AD1A-5AE13DE12E28}
+		{207BC7A9-CCF1-4F2F-A04D-45F72242AE25} = {207BC7A9-CCF1-4F2F-A04D-45F72242AE25}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MoonWarriors", "samples\Javascript\MoonWarriors\proj.win32\MoonWarriors.vcxproj", "{1DB7C0FC-46FF-4A1B-82E0-C6244EEEC4C2}"
+	ProjectSection(ProjectDependencies) = postProject
+		{21B2C324-891F-48EA-AD1A-5AE13DE12E28} = {21B2C324-891F-48EA-AD1A-5AE13DE12E28}
+		{207BC7A9-CCF1-4F2F-A04D-45F72242AE25} = {207BC7A9-CCF1-4F2F-A04D-45F72242AE25}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestJavascript", "samples\Javascript\TestJavascript\proj.win32\TestJavascript.vcxproj", "{D0F06A44-A245-4D13-A498-0120C203B539}"
+	ProjectSection(ProjectDependencies) = postProject
+		{21B2C324-891F-48EA-AD1A-5AE13DE12E28} = {21B2C324-891F-48EA-AD1A-5AE13DE12E28}
+		{207BC7A9-CCF1-4F2F-A04D-45F72242AE25} = {207BC7A9-CCF1-4F2F-A04D-45F72242AE25}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WatermelonWithMe", "samples\Javascript\WatermelonWithMe\proj.win32\WatermelonWithMe.vcxproj", "{BE092D9E-95AE-4F86-84CE-F4519E4F3F15}"
+	ProjectSection(ProjectDependencies) = postProject
+		{21B2C324-891F-48EA-AD1A-5AE13DE12E28} = {21B2C324-891F-48EA-AD1A-5AE13DE12E28}
+		{207BC7A9-CCF1-4F2F-A04D-45F72242AE25} = {207BC7A9-CCF1-4F2F-A04D-45F72242AE25}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(DPCodeReviewSolutionGUID) = preSolution
@@ -74,26 +74,10 @@ Global
 		{DDC3E27F-004D-4DD4-9DD3-931A013D2159}.Debug|Win32.Build.0 = Debug|Win32
 		{DDC3E27F-004D-4DD4-9DD3-931A013D2159}.Release|Win32.ActiveCfg = Release|Win32
 		{DDC3E27F-004D-4DD4-9DD3-931A013D2159}.Release|Win32.Build.0 = Release|Win32
-		{D0F06A44-A245-4D13-A498-0120C203B539}.Debug|Win32.ActiveCfg = Debug|Win32
-		{D0F06A44-A245-4D13-A498-0120C203B539}.Debug|Win32.Build.0 = Debug|Win32
-		{D0F06A44-A245-4D13-A498-0120C203B539}.Release|Win32.ActiveCfg = Release|Win32
-		{D0F06A44-A245-4D13-A498-0120C203B539}.Release|Win32.Build.0 = Release|Win32
 		{21B2C324-891F-48EA-AD1A-5AE13DE12E28}.Debug|Win32.ActiveCfg = Debug|Win32
 		{21B2C324-891F-48EA-AD1A-5AE13DE12E28}.Debug|Win32.Build.0 = Debug|Win32
 		{21B2C324-891F-48EA-AD1A-5AE13DE12E28}.Release|Win32.ActiveCfg = Release|Win32
 		{21B2C324-891F-48EA-AD1A-5AE13DE12E28}.Release|Win32.Build.0 = Release|Win32
-		{1DB7C0FC-46FF-4A1B-82E0-C6244EEEC4C2}.Debug|Win32.ActiveCfg = Debug|Win32
-		{1DB7C0FC-46FF-4A1B-82E0-C6244EEEC4C2}.Debug|Win32.Build.0 = Debug|Win32
-		{1DB7C0FC-46FF-4A1B-82E0-C6244EEEC4C2}.Release|Win32.ActiveCfg = Release|Win32
-		{1DB7C0FC-46FF-4A1B-82E0-C6244EEEC4C2}.Release|Win32.Build.0 = Release|Win32
-		{BE092D9E-95AE-4F86-84CE-F4519E4F3F15}.Debug|Win32.ActiveCfg = Debug|Win32
-		{BE092D9E-95AE-4F86-84CE-F4519E4F3F15}.Debug|Win32.Build.0 = Debug|Win32
-		{BE092D9E-95AE-4F86-84CE-F4519E4F3F15}.Release|Win32.ActiveCfg = Release|Win32
-		{BE092D9E-95AE-4F86-84CE-F4519E4F3F15}.Release|Win32.Build.0 = Release|Win32
-		{68ED0B4E-2BCA-45D2-9648-CEABEBD3B9D7}.Debug|Win32.ActiveCfg = Debug|Win32
-		{68ED0B4E-2BCA-45D2-9648-CEABEBD3B9D7}.Debug|Win32.Build.0 = Debug|Win32
-		{68ED0B4E-2BCA-45D2-9648-CEABEBD3B9D7}.Release|Win32.ActiveCfg = Release|Win32
-		{68ED0B4E-2BCA-45D2-9648-CEABEBD3B9D7}.Release|Win32.Build.0 = Release|Win32
 		{B8BF9E81-35FD-4582-BA1C-B85FA365BABB}.Debug|Win32.ActiveCfg = Debug|Win32
 		{B8BF9E81-35FD-4582-BA1C-B85FA365BABB}.Debug|Win32.Build.0 = Debug|Win32
 		{B8BF9E81-35FD-4582-BA1C-B85FA365BABB}.Release|Win32.ActiveCfg = Release|Win32
@@ -110,6 +94,22 @@ Global
 		{4E6A7A0E-DDD8-4BAA-8B22-C964069364ED}.Debug|Win32.Build.0 = Debug|Win32
 		{4E6A7A0E-DDD8-4BAA-8B22-C964069364ED}.Release|Win32.ActiveCfg = Release|Win32
 		{4E6A7A0E-DDD8-4BAA-8B22-C964069364ED}.Release|Win32.Build.0 = Release|Win32
+		{68ED0B4E-2BCA-45D2-9648-CEABEBD3B9D7}.Debug|Win32.ActiveCfg = Debug|Win32
+		{68ED0B4E-2BCA-45D2-9648-CEABEBD3B9D7}.Debug|Win32.Build.0 = Debug|Win32
+		{68ED0B4E-2BCA-45D2-9648-CEABEBD3B9D7}.Release|Win32.ActiveCfg = Release|Win32
+		{68ED0B4E-2BCA-45D2-9648-CEABEBD3B9D7}.Release|Win32.Build.0 = Release|Win32
+		{1DB7C0FC-46FF-4A1B-82E0-C6244EEEC4C2}.Debug|Win32.ActiveCfg = Debug|Win32
+		{1DB7C0FC-46FF-4A1B-82E0-C6244EEEC4C2}.Debug|Win32.Build.0 = Debug|Win32
+		{1DB7C0FC-46FF-4A1B-82E0-C6244EEEC4C2}.Release|Win32.ActiveCfg = Release|Win32
+		{1DB7C0FC-46FF-4A1B-82E0-C6244EEEC4C2}.Release|Win32.Build.0 = Release|Win32
+		{D0F06A44-A245-4D13-A498-0120C203B539}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D0F06A44-A245-4D13-A498-0120C203B539}.Debug|Win32.Build.0 = Debug|Win32
+		{D0F06A44-A245-4D13-A498-0120C203B539}.Release|Win32.ActiveCfg = Release|Win32
+		{D0F06A44-A245-4D13-A498-0120C203B539}.Release|Win32.Build.0 = Release|Win32
+		{BE092D9E-95AE-4F86-84CE-F4519E4F3F15}.Debug|Win32.ActiveCfg = Debug|Win32
+		{BE092D9E-95AE-4F86-84CE-F4519E4F3F15}.Debug|Win32.Build.0 = Debug|Win32
+		{BE092D9E-95AE-4F86-84CE-F4519E4F3F15}.Release|Win32.ActiveCfg = Release|Win32
+		{BE092D9E-95AE-4F86-84CE-F4519E4F3F15}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
