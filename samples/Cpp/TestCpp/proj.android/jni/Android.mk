@@ -19,7 +19,7 @@ LOCAL_WHOLE_STATIC_LIBRARIES += cocos_extension_static
 
 include $(BUILD_SHARED_LIBRARY)
 
-$(call import-module,samples/TestCpp)
+$(call import-module,samples/Cpp/TestCpp)
 $(call import-module,cocos2dx)
 $(call import-module,cocos2dx/platform/third_party/android/prebuilt/libcurl)
 $(call import-module,CocosDenshion/android)
