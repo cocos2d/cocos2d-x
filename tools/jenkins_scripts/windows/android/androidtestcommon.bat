@@ -9,7 +9,7 @@ set AndroidHome=D:\Windows7\android-sdk-windows
 rem android version path
 set AndroidVersion=\platforms\android-8
 rem android project path
-set AndroidProject=D:\cocos2d-x\samples\TestCpp\proj.android
+set AndroidProject=D:\cocos2d-x\samples\Cpp\TestCpp\proj.android
 rem unsigned apk name
 set unsign_apk=Tests.apk
 rem signed apk name
