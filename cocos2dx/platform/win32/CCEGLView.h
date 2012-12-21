@@ -79,7 +79,7 @@ public:
     /**
     @brief    get the shared main open gl window
     */
-    static CCEGLView* sharedOpenGLView();
+    static CCEGLView* sharedOpenGLView(const char* pTitle=NULL);
 
 protected:
 
