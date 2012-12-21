@@ -20,6 +20,8 @@
     <ClCompile Include="..\js_bindings_chipmunk_manual.cpp" />
     <ClCompile Include="..\js_bindings_chipmunk_registration.cpp" />
     <ClCompile Include="..\js_bindings_core.cpp" />
+    <ClCompile Include="..\js_bindings_system_functions.cpp" />
+    <ClCompile Include="..\js_bindings_system_registration.cpp" />
     <ClCompile Include="..\js_manual_conversions.cpp" />
     <ClCompile Include="..\ScriptingCore.cpp" />
   </ItemGroup>
@@ -36,6 +38,9 @@
     <ClInclude Include="..\js_bindings_chipmunk_registration.h" />
     <ClInclude Include="..\js_bindings_config.h" />
     <ClInclude Include="..\js_bindings_core.h" />
+    <ClInclude Include="..\js_bindings_system_functions.h" />
+    <ClInclude Include="..\js_bindings_system_functions_registration.h" />
+    <ClInclude Include="..\js_bindings_system_registration.h" />
     <ClInclude Include="..\js_manual_conversions.h" />
     <ClInclude Include="..\ScriptingCore.h" />
     <ClInclude Include="..\spidermonkey_specifics.h" />
