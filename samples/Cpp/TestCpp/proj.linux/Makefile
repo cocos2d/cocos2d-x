@@ -6,7 +6,7 @@ CXXFLAGS = -Wall
 VISIBILITY = 
 LIBS = 
 
-COCOS2DX_PATH = ../../../cocos2dx
+COCOS2DX_PATH = ../../../../cocos2dx
 INCLUDES =  -I../ \
 			-I../../ \
 			-I../Classes \
@@ -20,10 +20,10 @@ INCLUDES =  -I../ \
 			-I$(COCOS2DX_PATH)/platform/third_party/linux/glew-1.7.0/glew-1.7.0/include/ \
 			-I$(COCOS2DX_PATH)/platform/third_party/linux/libxml2 \
 			-I$(COCOS2DX_PATH)/platform/third_party/linux/libjpeg  \
-			-I../../../CocosDenshion/include \
-			-I../../../extensions/ \
-			-I../../../external/ \
-			-I../../../external/chipmunk/include/chipmunk \
+			-I../../../../CocosDenshion/include \
+			-I../../../../extensions/ \
+			-I../../../../external/ \
+			-I../../../../external/chipmunk/include/chipmunk \
 
 
 LBITS := $(shell getconf LONG_BIT)
@@ -129,12 +129,12 @@ OBJECTS = ../Classes/AccelerometerTest/AccelerometerTest.o \
 			./main.o 
 
 include $(COCOS2DX_PATH)/../extensions/proj.linux/Makefile
-OBJECTS += $(addprefix ../../../extensions/proj.linux/, $(EXTENSIONS_OBJECTS))
+OBJECTS += $(addprefix ../../../../extensions/proj.linux/, $(EXTENSIONS_OBJECTS))
 
 ifeq ($(LBITS),64)
-STATICLIBS_DIR = ../../../cocos2dx/platform/third_party/linux/libraries/lib64
+STATICLIBS_DIR = ../../../../cocos2dx/platform/third_party/linux/libraries/lib64
 else
-STATICLIBS_DIR = ../../../cocos2dx/platform/third_party/linux/libraries
+STATICLIBS_DIR = ../../../../cocos2dx/platform/third_party/linux/libraries
 endif
 STATICLIBS = 
 STATICLIBS = $(STATICLIBS_DIR)/libfreetype.a \
@@ -143,24 +143,24 @@ STATICLIBS = $(STATICLIBS_DIR)/libfreetype.a \
 				$(STATICLIBS_DIR)/libpng.a \
 				$(STATICLIBS_DIR)/libjpeg.a \
 				$(STATICLIBS_DIR)/libtiff.a \
-				../../../lib/linux/Debug/libbox2d.a \
-				../../../lib/linux/Debug/libchipmunk.a \
+				../../../../lib/linux/Debug/libbox2d.a \
+				../../../../lib/linux/Debug/libchipmunk.a \
 
 SHAREDLIBS = 
 ifeq ($(LBITS),64)
-SHAREDLIBS_DIR = ../../../CocosDenshion/third_party/fmod/lib64/api/lib
+SHAREDLIBS_DIR = ../../../../CocosDenshion/third_party/fmod/lib64/api/lib
 SHAREDLIBS = -L$(SHAREDLIBS_DIR) -lfmodex64
 else
-SHAREDLIBS_DIR = ../../../CocosDenshion/third_party/fmod/api/lib
+SHAREDLIBS_DIR = ../../../../CocosDenshion/third_party/fmod/api/lib
 SHAREDLIBS = -L$(SHAREDLIBS_DIR) -lfmodex
 endif
 
 SHAREDLIBS += -lglfw -lGL
-#SHAREDLIBS += -L../../../lib/linux/Debug -lcocos2d -lrt -lz -lcocosdenshion -Wl,-rpath,../../../../lib/linux/Debug/ 
+#SHAREDLIBS += -L../../../../lib/linux/Debug -lcocos2d -lrt -lz -lcocosdenshion -Wl,-rpath,../../../../../lib/linux/Debug/ 
 SHAREDLIBS += -Wl,-rpath,../../$(SHAREDLIBS_DIR)
-#SHAREDLIBS += -Wl,-rpath,../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib
-SHAREDLIBS += -L../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib -lGLEW
-SHAREDLIBS += -Wl,-rpath,../../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib
+#SHAREDLIBS += -Wl,-rpath,../../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib
+SHAREDLIBS += -L../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib -lGLEW
+SHAREDLIBS += -Wl,-rpath,../../../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib
 
 
 SHAREDLIBS += -Wl,-rpath,../$(STATICLIBS_DIR)
@@ -169,14 +169,14 @@ SHAREDLIBS += -lcurl
 BIN_DIR_ROOT=bin
 BIN_DIR = BIN_DIR_ROOT
 
-debug: SHAREDLIBS += -L../../../lib/linux/Debug -lcocos2d -lrt -lz -lcocosdenshion -Wl,-rpath,../../../../../lib/linux/Debug
+debug: SHAREDLIBS += -L../../../../lib/linux/Debug -lcocos2d -lrt -lz -lcocosdenshion -Wl,-rpath,../../../../../../lib/linux/Debug
 debug: CCFLAGS += -g3 -O0
 debug: CXXFLAGS += -g3 -O0
 debug: DEFINES += -DDEBUG -DCC_ENABLE_CHIPMUNK_INTEGRATION -DCOCOS2D_DEBUG=1
 debug: BIN_DIR = $(BIN_DIR_ROOT)/debug
 debug: $(TARGET)
 
-release: SHAREDLIBS += -L../../../lib/linux/Release -lcocos2d -lrt -lz -lcocosdenshion -Wl,-rpath,../../../../../lib/linux/Release
+release: SHAREDLIBS += -L../../../../lib/linux/Release -lcocos2d -lrt -lz -lcocosdenshion -Wl,-rpath,../../../../../../lib/linux/Release
 release: CCFLAGS += -O3
 release: CXXFLAGS += -O3
 release: DEFINES += -DNDEBUG -DCC_ENABLE_CHIPMUNK_INTEGRATION
