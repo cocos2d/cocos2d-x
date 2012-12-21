@@ -16,7 +16,7 @@
 				</extensions>
 			</storageModule>
 			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-				<configuration artifactName="${ProjName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.gnu.exe.debug.684675641" name="Debug" parent="cdt.managedbuild.config.gnu.exe.debug" prebuildStep="mkdir -p bin &amp;&amp; cp -R ../../../../samples/TestCpp/Resources ../../../../samples/TestLua/">
+				<configuration artifactName="${ProjName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.gnu.exe.debug.684675641" name="Debug" parent="cdt.managedbuild.config.gnu.exe.debug" prebuildStep="mkdir -p bin &amp;&amp; cp -R ../../../../../samples/TestCpp/Resources ../../../../../samples/TestLua/">
 					<folderInfo id="cdt.managedbuild.config.gnu.exe.debug.684675641." name="/" resourcePath="">
 						<toolChain id="cdt.managedbuild.toolchain.gnu.exe.debug.1168665521" name="Linux GCC" superClass="cdt.managedbuild.toolchain.gnu.exe.debug">
 							<targetPlatform id="cdt.managedbuild.target.gnu.platform.exe.debug.2039781202" name="Debug Platform" superClass="cdt.managedbuild.target.gnu.platform.exe.debug"/>
@@ -31,16 +31,16 @@
 								<option id="gnu.cpp.compiler.option.include.paths.1761931224" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="../../Classes"/>
 									<listOptionValue builtIn="false" value="../../../"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/include"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/kazmath/include"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/linux"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/linux"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/include"/>
-									<listOptionValue builtIn="false" value="../../../../CocosDenshion/include"/>
-									<listOptionValue builtIn="false" value="../../../../scripting/lua/cocos2dx_support"/>
-									<listOptionValue builtIn="false" value="../../../../scripting/lua/lua"/>
-									<listOptionValue builtIn="false" value="../../../../scripting/lua/tolua"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/include"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/kazmath/include"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/linux"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/linux"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/include"/>
+									<listOptionValue builtIn="false" value="../../../../../CocosDenshion/include"/>
+									<listOptionValue builtIn="false" value="../../../../../scripting/lua/cocos2dx_support"/>
+									<listOptionValue builtIn="false" value="../../../../../scripting/lua/lua"/>
+									<listOptionValue builtIn="false" value="../../../../../scripting/lua/tolua"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.103685015" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
@@ -50,16 +50,16 @@
 								<option id="gnu.c.compiler.option.include.paths.2130120472" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="../../Classes"/>
 									<listOptionValue builtIn="false" value="../../../"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/include"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/kazmath/include"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/linux"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/linux"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/include"/>
-									<listOptionValue builtIn="false" value="../../../../CocosDenshion/include"/>
-									<listOptionValue builtIn="false" value="../../../../scripting/lua/cocos2dx_support"/>
-									<listOptionValue builtIn="false" value="../../../../scripting/lua/lua"/>
-									<listOptionValue builtIn="false" value="../../../../scripting/lua/tolua"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/include"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/kazmath/include"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/linux"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/linux"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/include"/>
+									<listOptionValue builtIn="false" value="../../../../../CocosDenshion/include"/>
+									<listOptionValue builtIn="false" value="../../../../../scripting/lua/cocos2dx_support"/>
+									<listOptionValue builtIn="false" value="../../../../../scripting/lua/lua"/>
+									<listOptionValue builtIn="false" value="../../../../../scripting/lua/tolua"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1540019914" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
@@ -75,11 +75,11 @@
 									<listOptionValue builtIn="false" value="fmodex"/>
 								</option>
 								<option id="gnu.cpp.link.option.paths.1982163393" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
-									<listOptionValue builtIn="false" value="&quot;../../../../cocos2dx/proj.linux/${ConfigName}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;../../../../CocosDenshion/proj.linux/${ConfigName}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;../../../../scripting/lua/proj.linux/${ConfigName}&quot;"/>
-									<listOptionValue builtIn="false" value="../../../../CocosDenshion/third_party/fmod/api/lib"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib"/>
+									<listOptionValue builtIn="false" value="&quot;../../../../../cocos2dx/proj.linux/${ConfigName}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;../../../../../CocosDenshion/proj.linux/${ConfigName}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;../../../../../scripting/lua/proj.linux/${ConfigName}&quot;"/>
+									<listOptionValue builtIn="false" value="../../../../../CocosDenshion/third_party/fmod/api/lib"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.154309798" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
@@ -113,7 +113,7 @@
 				</extensions>
 			</storageModule>
 			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-				<configuration artifactName="${ProjName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.gnu.exe.release.890968076" name="Release" parent="cdt.managedbuild.config.gnu.exe.release" prebuildStep="mkdir -p bin &amp;&amp; cp -R ../../../../samples/TestCpp/Resources ../../../../samples/TestLua/">
+				<configuration artifactName="${ProjName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.gnu.exe.release.890968076" name="Release" parent="cdt.managedbuild.config.gnu.exe.release" prebuildStep="mkdir -p bin &amp;&amp; cp -R ../../../../../samples/TestCpp/Resources ../../../../../samples/TestLua/">
 					<folderInfo id="cdt.managedbuild.config.gnu.exe.release.890968076." name="/" resourcePath="">
 						<toolChain id="cdt.managedbuild.toolchain.gnu.exe.release.720811514" name="Linux GCC" superClass="cdt.managedbuild.toolchain.gnu.exe.release">
 							<targetPlatform id="cdt.managedbuild.target.gnu.platform.exe.release.962949232" name="Debug Platform" superClass="cdt.managedbuild.target.gnu.platform.exe.release"/>
@@ -125,16 +125,16 @@
 								<option id="gnu.cpp.compiler.option.include.paths.717016654" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="../../Classes"/>
 									<listOptionValue builtIn="false" value="../../../"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/include"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/kazmath/include"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/linux"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/linux"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/include"/>
-									<listOptionValue builtIn="false" value="../../../../CocosDenshion/include"/>
-									<listOptionValue builtIn="false" value="../../../../scripting/lua/cocos2dx_support"/>
-									<listOptionValue builtIn="false" value="../../../../scripting/lua/lua"/>
-									<listOptionValue builtIn="false" value="../../../../scripting/lua/tolua"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/include"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/kazmath/include"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/linux"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/linux"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/include"/>
+									<listOptionValue builtIn="false" value="../../../../../CocosDenshion/include"/>
+									<listOptionValue builtIn="false" value="../../../../../scripting/lua/cocos2dx_support"/>
+									<listOptionValue builtIn="false" value="../../../../../scripting/lua/lua"/>
+									<listOptionValue builtIn="false" value="../../../../../scripting/lua/tolua"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.preprocessor.def.48956079" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="LINUX"/>
@@ -147,16 +147,16 @@
 								<option id="gnu.c.compiler.option.include.paths.606181663" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="../../Classes"/>
 									<listOptionValue builtIn="false" value="../../../"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/include"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/kazmath/include"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/linux"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/linux"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/include"/>
-									<listOptionValue builtIn="false" value="../../../../CocosDenshion/include"/>
-									<listOptionValue builtIn="false" value="../../../../scripting/lua/cocos2dx_support"/>
-									<listOptionValue builtIn="false" value="../../../../scripting/lua/lua"/>
-									<listOptionValue builtIn="false" value="../../../../scripting/lua/tolua"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/include"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/kazmath/include"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/linux"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/linux"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/include"/>
+									<listOptionValue builtIn="false" value="../../../../../CocosDenshion/include"/>
+									<listOptionValue builtIn="false" value="../../../../../scripting/lua/cocos2dx_support"/>
+									<listOptionValue builtIn="false" value="../../../../../scripting/lua/lua"/>
+									<listOptionValue builtIn="false" value="../../../../../scripting/lua/tolua"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1951510828" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
@@ -172,11 +172,11 @@
 									<listOptionValue builtIn="false" value="fmodex"/>
 								</option>
 								<option id="gnu.cpp.link.option.paths.815635762" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
-									<listOptionValue builtIn="false" value="&quot;../../../../cocos2dx/proj.linux/${ConfigName}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;../../../../CocosDenshion/proj.linux/${ConfigName}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;../../../../scripting/lua/proj.linux/${ConfigName}&quot;"/>
-									<listOptionValue builtIn="false" value="../../../../CocosDenshion/third_party/fmod/api/lib"/>
-									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib"/>
+									<listOptionValue builtIn="false" value="&quot;../../../../../cocos2dx/proj.linux/${ConfigName}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;../../../../../CocosDenshion/proj.linux/${ConfigName}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;../../../../../scripting/lua/proj.linux/${ConfigName}&quot;"/>
+									<listOptionValue builtIn="false" value="../../../../../CocosDenshion/third_party/fmod/api/lib"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.760339141" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
