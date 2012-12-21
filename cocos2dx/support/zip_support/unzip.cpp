@@ -1091,8 +1091,9 @@ local int unz64local_GetCurrentFileInfoInternal (unzFile file,
 
         if (lSeek!=0)
         {
-            if (ZSEEK64(s->z_filefunc, s->filestream,lSeek,ZLIB_FILEFUNC_SEEK_CUR)==0)
-              ;//lSeek=0;
+            if (ZSEEK64(s->z_filefunc, s->filestream,lSeek,ZLIB_FILEFUNC_SEEK_CUR)==0) {
+              //lSeek=0;
+			}
             else
                 err=UNZ_ERRNO;
         }
@@ -1566,10 +1567,10 @@ int ZEXPORT unzOpenCurrentFile3 (unzFile file, int* method,
 /* #ifdef HAVE_BZIP2 */
         (s->cur_file_info.compression_method!=Z_BZIP2ED) &&
 /* #endif */
-        (s->cur_file_info.compression_method!=Z_DEFLATED))
+        (s->cur_file_info.compression_method!=Z_DEFLATED)) {
 
-        ;//err=UNZ_BADZIPFILE;
-
+        //err=UNZ_BADZIPFILE;
+    }
     pfile_in_zip_read_info->crc32_wait=s->cur_file_info.crc;
     pfile_in_zip_read_info->crc32=0;
     pfile_in_zip_read_info->total_out_64=0;
