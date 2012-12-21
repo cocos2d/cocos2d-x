@@ -150,28 +150,11 @@ bool CCString::isEqual(const CCObject* pObject)
     return bRet;
 }
 
-CCString* CCString::stringWithCString(const char* pStr)
-{
-    return CCString::create(pStr);
-}
-
 CCString* CCString::create(const std::string& str)
 {
     CCString* pRet = new CCString(str);
     pRet->autorelease();
     return pRet;
-}
-
-CCString* CCString::stringWithString(const std::string& pStr)
-{
-    CCString* pRet = new CCString(pStr);
-    pRet->autorelease();
-    return pRet;
-}
-
-CCString* CCString::stringWithData(const unsigned char* pData, unsigned long nLen)
-{
-    return CCString::createWithData(pData, nLen);
 }
 
 CCString* CCString::createWithData(const unsigned char* pData, unsigned long nLen)
@@ -195,17 +178,6 @@ CCString* CCString::createWithData(const unsigned char* pData, unsigned long nLe
     return pRet;
 }
 
-CCString* CCString::stringWithFormat(const char* format, ...)
-{
-    CCString* pRet = CCString::create("");
-    va_list ap;
-    va_start(ap, format);
-    pRet->initWithFormatAndValist(format, ap);
-    va_end(ap);
-
-    return pRet;
-}
-
 CCString* CCString::createWithFormat(const char* format, ...)
 {
     CCString* pRet = CCString::create("");
@@ -215,11 +187,6 @@ CCString* CCString::createWithFormat(const char* format, ...)
     va_end(ap);
 
     return pRet;
-}
-
-CCString* CCString::stringWithContentsOfFile(const char* pszFileName)
-{
-    return CCString::createWithContentsOfFile(pszFileName);
 }
 
 CCString* CCString::createWithContentsOfFile(const char* pszFileName)

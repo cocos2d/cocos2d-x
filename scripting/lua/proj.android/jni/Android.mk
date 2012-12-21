@@ -40,7 +40,11 @@ LOCAL_SRC_FILES :=../../lua/lapi.c \
           ../../tolua/tolua_is.c \
           ../../tolua/tolua_map.c \
           ../../tolua/tolua_push.c \
-          ../../tolua/tolua_to.c
+          ../../tolua/tolua_to.c \
+          ../../cocos2dx_support/CCLuaEngine.cpp \
+          ../../cocos2dx_support/Cocos2dxLuaLoader.cpp \
+          ../../cocos2dx_support/LuaCocos2d.cpp \
+          ../../cocos2dx_support/tolua_fix.c
           
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../../lua \
                            $(LOCAL_PATH)/../../tolua \
@@ -48,7 +52,16 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../../lua \
           
           
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/ \
-                    $(LOCAL_PATH)/../../lua 
+                    $(LOCAL_PATH)/../../lua \
+                    $(LOCAL_PATH)/../../tolua \
+                    $(LOCAL_PATH)/../../../../cocos2dx \
+                    $(LOCAL_PATH)/../../../../cocos2dx/include \
+                    $(LOCAL_PATH)/../../../../cocos2dx/platform \
+                    $(LOCAL_PATH)/../../../../cocos2dx/platform/android \
+                    $(LOCAL_PATH)/../../../../cocos2dx/kazmath/include \
+                    $(LOCAL_PATH)/../../../../CocosDenshion/include
                     
+LOCAL_CFLAGS += -Wno-psabi
+LOCAL_EXPORT_CFLAGS += -Wno-psabi
 
 include $(BUILD_STATIC_LIBRARY)

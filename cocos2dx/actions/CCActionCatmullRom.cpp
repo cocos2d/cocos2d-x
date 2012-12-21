@@ -44,10 +44,6 @@ NS_CC_BEGIN;
 /*
  *  Implementation of CCPointArray
  */
-CCPointArray* CCPointArray::arrayWithCapacity(unsigned int capacity)
-{
-    return CCPointArray::create(capacity);
-}
 
 CCPointArray* CCPointArray::create(unsigned int capacity)
 {
@@ -199,10 +195,6 @@ CCPoint ccCardinalSplineAt(CCPoint &p0, CCPoint &p1, CCPoint &p2, CCPoint &p3, f
 
 /* Implementation of CCCardinalSplineTo
  */
-CCCardinalSplineTo* CCCardinalSplineTo::actionWithDuration(float duration, cocos2d::CCPointArray *points, float tension)
-{
-    return CCCardinalSplineTo::create(duration, points, tension);
-}
 
 CCCardinalSplineTo* CCCardinalSplineTo::create(float duration, cocos2d::CCPointArray *points, float tension)
 {
@@ -327,11 +319,6 @@ CCActionInterval* CCCardinalSplineTo::reverse()
 /* CCCardinalSplineBy
  */
 
-CCCardinalSplineBy* CCCardinalSplineBy::actionWithDuration(float duration, cocos2d::CCPointArray *points, float tension)
-{
-    return CCCardinalSplineBy::create(duration, points, tension);
-}
-
 CCCardinalSplineBy* CCCardinalSplineBy::create(float duration, cocos2d::CCPointArray *points, float tension)
 {
     CCCardinalSplineBy *ret = new CCCardinalSplineBy();
@@ -411,10 +398,6 @@ void CCCardinalSplineBy::startWithTarget(cocos2d::CCNode *pTarget)
 
 /* CCCatmullRomTo
  */
-CCCatmullRomTo* CCCatmullRomTo::actionWithDuration(float dt, cocos2d::CCPointArray *points)
-{
-    return CCCatmullRomTo::create(dt, points);
-}
 
 CCCatmullRomTo* CCCatmullRomTo::create(float dt, cocos2d::CCPointArray *points)
 {
@@ -446,10 +429,6 @@ bool CCCatmullRomTo::initWithDuration(float dt, cocos2d::CCPointArray *points)
 
 /* CCCatmullRomBy
  */
-CCCatmullRomBy* CCCatmullRomBy::actionWithDuration(float dt, cocos2d::CCPointArray *points)
-{
-    return CCCatmullRomBy::create(dt, points);
-}
 
 CCCatmullRomBy* CCCatmullRomBy::create(float dt, cocos2d::CCPointArray *points)
 {

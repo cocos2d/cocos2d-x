@@ -114,28 +114,18 @@ static void unRootObject(JSContext *cx, JSObject *obj) {
 }
 
 static void getJSTouchObject(JSContext *cx, CCTouch *x, jsval &jsret) {
-    js_type_class_t *classType;
-    TypeTest<cocos2d::CCTouch> t;
-    uint32_t typeId = t.s_id();
-    HASH_FIND_INT(_js_global_type_ht, &typeId, classType);
-    assert(classType);
-    JSObject *_tmp = JS_NewObject(cx, classType->jsclass, classType->proto, classType->parentProto);
-    js_proxy_t *proxy, *nproxy;
-    JS_NEW_PROXY(proxy, x, _tmp);
-    void *ptr = x;
-    JS_GET_PROXY(nproxy, ptr);
-    JS_AddNamedObjectRoot(cx, &nproxy->obj, "CCTouch");
-    jsret = OBJECT_TO_JSVAL(_tmp);
+    js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::CCTouch>(cx, x);
+    jsret = OBJECT_TO_JSVAL(proxy->obj);
 }
 
 static void removeJSTouchObject(JSContext *cx, CCTouch *x, jsval &jsret) {
     js_proxy_t* nproxy;
     js_proxy_t* jsproxy;
-    void *ptr = x;
+    void *ptr = (void*)x;
     JS_GET_PROXY(nproxy, ptr);
     if (nproxy) {
-        JS_RemoveObjectRoot(cx, &nproxy->obj);
         JS_GET_NATIVE_PROXY(jsproxy, nproxy->obj);
+        JS_RemoveObjectRoot(cx, &jsproxy->obj);
         JS_REMOVE_PROXY(nproxy, jsproxy);
     }
 }
@@ -712,18 +702,18 @@ int ScriptingCore::executeCallFuncActionEvent(CCCallFunc* pAction, CCObject* pTa
     return 1;
 }
 
-int ScriptingCore::executeSchedule(CCTimer* pTimer, float dt, CCNode* pNode/* = NULL*/)
+int ScriptingCore::executeSchedule(int nHandler, float dt, CCNode* pNode/* = NULL*/)
 {
     js_proxy_t * p;
     JS_GET_PROXY(p, pNode);
-
+    
     if (!p) return 0;
-
+    
     jsval retval;
     jsval dataVal = DOUBLE_TO_JSVAL(dt);
-
+    
     executeJSFunctionWithName(this->cx_, p->obj, "update", dataVal, retval);
-
+    
     return 1;
 }
 
@@ -856,6 +846,9 @@ int ScriptingCore::executeCustomTouchEvent(int eventType,
     getJSTouchObject(this->cx_, pTouch, jsTouch);
 
     executeJSFunctionWithName(this->cx_, obj, funcName.c_str(), jsTouch, retval);
+
+	// Remove touch object from global hash table and unroot it.
+    removeJSTouchObject(this->cx_, pTouch, jsTouch);
     return 1;
 
 }
@@ -872,6 +865,10 @@ int ScriptingCore::executeCustomTouchEvent(int eventType,
     getJSTouchObject(this->cx_, pTouch, jsTouch);
 
     executeJSFunctionWithName(this->cx_, obj, funcName.c_str(), jsTouch, retval);
+
+	// Remove touch object from global hash table and unroot it.
+    removeJSTouchObject(this->cx_, pTouch, jsTouch);
+
     return 1;
 
 }
@@ -1088,7 +1085,7 @@ CCArray* jsval_to_ccarray(JSContext* cx, jsval v) {
         uint32_t len = 0;
         JS_GetArrayLength(cx, arr, &len);
         CCArray* ret = CCArray::createWithCapacity(len);
-        for (int i=0; i < len; i++) {
+        for (uint32_t i=0; i < len; i++) {
             jsval elt;
             JSObject *elto;
             if (JS_GetElement(cx, arr, i, &elt) && JS_ValueToObject(cx, elt, &elto)) {
@@ -1109,7 +1106,7 @@ jsval ccarray_to_jsval(JSContext* cx, CCArray *arr) {
     
     JSObject *jsretArr = JS_NewArrayObject(cx, 0, NULL);
     
-    for(int i = 0; i < arr->count(); ++i) {
+    for(unsigned int i = 0; i < arr->count(); ++i) {
         jsval arrElement;
         CCObject *obj = arr->objectAtIndex(i);
         const char *type = typeid(*obj).name();

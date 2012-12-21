@@ -81,14 +81,6 @@ public:
     virtual void calculateVertexPoints(void);
 
 public:
-    /** create one Grid 
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCGridBase* gridWithSize(const ccGridSize& gridSize, CCTexture2D *texture, bool flipped);
-    /** create one Grid 
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCGridBase* gridWithSize(const ccGridSize& gridSize);
 
     /** create one Grid */
     static CCGridBase* create(const ccGridSize& gridSize, CCTexture2D *texture, bool flipped);
@@ -130,13 +122,6 @@ public:
     virtual void calculateVertexPoints(void);
 
 public:
-    /** @deprecated: This interface will be deprecated sooner or later.
-     */
-    CC_DEPRECATED_ATTRIBUTE static CCGrid3D* gridWithSize(const ccGridSize& gridSize, CCTexture2D *pTexture, bool bFlipped);
-    /** @deprecated: This interface will be deprecated sooner or later.
-     */
-    CC_DEPRECATED_ATTRIBUTE static CCGrid3D* gridWithSize(const ccGridSize& gridSize);
-    
     /** create one Grid */
     static CCGrid3D* create(const ccGridSize& gridSize, CCTexture2D *pTexture, bool bFlipped);
     /** create one Grid */
@@ -171,8 +156,7 @@ public:
     virtual void calculateVertexPoints(void);
 
 public:
-    CC_DEPRECATED_ATTRIBUTE static CCTiledGrid3D* gridWithSize(const ccGridSize& gridSize, CCTexture2D *pTexture, bool bFlipped);
-    CC_DEPRECATED_ATTRIBUTE static CCTiledGrid3D* gridWithSize(const ccGridSize& gridSize);
+
     /** create one Grid */
     static CCTiledGrid3D* create(const ccGridSize& gridSize, CCTexture2D *pTexture, bool bFlipped);
     /** create one Grid */
