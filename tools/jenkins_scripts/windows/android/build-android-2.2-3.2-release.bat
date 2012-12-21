@@ -11,16 +11,17 @@ if not exist "%JAVA_HOME%" echo Couldn't find Cygwin at "%JAVA_HOME%" and you sh
 if not exist "%ANT_HOME%" echo Couldn't find Ant at "%ANT_HOME%" and you should set it like this "D:\xx\apache-ant-1.8.4" $ pause $ exit 5
 
 set _PROJECTNAME=TestCpp
+set _LANGUAGE_=Cpp
 cd ..\..\..\..
 
 :project
 ::Copy build Configuration files to target directory
-copy %cd%\tools\jenkins_scripts\ant.properties %cd%\samples\%_PROJECTNAME%\proj.android
-copy %cd%\tools\jenkins_scripts\build.xml %cd%\samples\%_PROJECTNAME%\proj.android
-copy %cd%\tools\jenkins_scripts\windows\android\rootconfig.sh %cd%\samples\%_PROJECTNAME%\proj.android
+copy %cd%\tools\jenkins_scripts\ant.properties %cd%\samples\%_LANGUANE_%\%_PROJECTNAME%\proj.android
+copy %cd%\tools\jenkins_scripts\build.xml %cd%\samples\%_LANGUAGE_%\%_PROJECTNAME%\proj.android
+copy %cd%\tools\jenkins_scripts\windows\android\rootconfig.sh %cd%\samples\%_LANGUAGE_%\%_PROJECTNAME%\proj.android
 
 ::Modify the configuration files
-cd samples\%_PROJECTNAME%\proj.android
+cd samples\%_LANGUAGE_%\%_PROJECTNAME%\proj.android
 rootconfig.sh %_PROJECTNAME%
 cd ..
 set _PROJECTLOCATION=%cd%
@@ -147,7 +148,7 @@ move ant1.properties ant.properties
 ::Calculate the errorlevel and change build target.
 cd ..\..\..
 IF "%_PROJECTNAME%"=="TestCpp" set /a testresult1=(result8+result10+result11+result12+result13) && set _PROJECTNAME=HelloCpp&& goto project
-IF "%_PROJECTNAME%"=="HelloCpp" set /a testresult2=(result8+result10+result11+result12+result13) && set _PROJECTNAME=HelloLua&& goto project
+IF "%_PROJECTNAME%"=="HelloCpp" set /a testresult2=(result8+result10+result11+result12+result13) && set _LANGUAGE_=Lua && set _PROJECTNAME=HelloLua&& goto project
 IF "%_PROJECTNAME%"=="HelloLua" set /a testresult3=(result8+result10+result11+result12+result13)
 set /a testresult=(testresult1+testresult2+testresult3)
 IF %testresult% NEQ 0 goto error
