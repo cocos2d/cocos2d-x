@@ -12,7 +12,7 @@ cp $CUR/ReportManager.py $ANDROID_HOME/tools
 cd ../..
 PROJECT_HOME=$(pwd)
 #cp -r samples/TestCpp/proj.android/obj $ANDROID_HOME/tools
-cd samples/TestCpp/proj.android/bin
+cd samples/Cpp/TestCpp/proj.android/bin
 
 #Copy test apk to tools directory.
 CUR=$(pwd)
