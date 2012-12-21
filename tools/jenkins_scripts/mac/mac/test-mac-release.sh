@@ -4,8 +4,8 @@
 compileresult=0
 
 cd ..
-cp -r iOS_SikuliTest.sikuli ../../../samples/TestCpp/proj.mac
-cd ../../../samples/TestCpp/proj.mac
+cp -r iOS_SikuliTest.sikuli ../../../samples/Cpp/TestCpp/proj.mac
+cd ../../../samples/TestCpp/Cpp/proj.mac
 sdk_num=$(sed -n '1p' sdk_num.txt)
 
 for((i=1;i<=$sdk_num;i++))
