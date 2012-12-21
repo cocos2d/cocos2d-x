@@ -61,11 +61,6 @@ class CC_DLL CCTileMapAtlas : public CCAtlasNode
 public:
     CCTileMapAtlas();
     virtual ~CCTileMapAtlas();
-    /** creates a CCTileMap with a tile file (atlas) with a map file and the width and height of each tile in points.
-    The tile file will be loaded using the TextureMgr.
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCTileMapAtlas * tileMapAtlasWithTileFile(const char *tile, const char *mapFile, int tileWidth, int tileHeight);
     
     /** creates a CCTileMap with a tile file (atlas) with a map file and the width and height of each tile in points.
     The tile file will be loaded using the TextureMgr.

@@ -68,8 +68,6 @@ public:
     virtual ~CCControlSaturationBrightnessPicker();
     virtual bool initWithTargetAndPos(CCNode* target, CCPoint pos);
 
-    //@deprecated: This interface will be deprecated sooner or later.
-    CC_DEPRECATED_ATTRIBUTE static CCControlSaturationBrightnessPicker* pickerWithTargetAndPos(CCNode* target, CCPoint pos);
     static CCControlSaturationBrightnessPicker* create(CCNode* target, CCPoint pos);
 
     virtual void setEnabled(bool enabled);

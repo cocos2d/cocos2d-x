@@ -45,14 +45,6 @@ class CC_DLL CCMotionStreak : public CCNode, public CCTextureProtocol, public CC
 public:
     CCMotionStreak();
     virtual ~CCMotionStreak();
-    /** creates and initializes a motion streak with fade in seconds, minimum segments, stroke's width, color, texture filename 
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCMotionStreak* streakWithFade(float fade, float minSeg, float stroke, ccColor3B color, const char* path);
-    /** creates and initializes a motion streak with fade in seconds, minimum segments, stroke's width, color, texture 
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCMotionStreak* streakWithFade(float fade, float minSeg, float stroke, ccColor3B color, CCTexture2D* texture);
 
     /** creates and initializes a motion streak with fade in seconds, minimum segments, stroke's width, color, texture filename */
     static CCMotionStreak* create(float fade, float minSeg, float stroke, ccColor3B color, const char* path);
