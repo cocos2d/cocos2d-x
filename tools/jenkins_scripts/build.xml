@@ -51,7 +51,7 @@
 
     <target name="-pre-build">
 		<copy todir="src/org/cocos2dx">
-			<fileset dir="..\..\..\cocos2dx\platform\android\java\src\org\cocos2dx">
+			<fileset dir="..\..\..\..\cocos2dx\platform\android\java\src\org\cocos2dx">
 				<include name="lib/" />
 			</fileset>
 		</copy>
