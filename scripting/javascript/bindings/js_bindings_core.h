@@ -21,6 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+#ifndef __JS_BINDINGS_CORE_H__
+#define __JS_BINDINGS_CORE_H__
 
 #include "jsapi.h"
 #include "jsfriendapi.h"
@@ -84,3 +86,4 @@ extern "C" {
 }
 #endif
 
+#endif /* __JS_BINDINGS_CORE_H__ */
