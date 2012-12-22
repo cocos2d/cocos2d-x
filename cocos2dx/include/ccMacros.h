@@ -35,7 +35,12 @@ THE SOFTWARE.
 #include "CCStdC.h"
 
 #ifndef CCAssert
+#if CC_LUA_ENGINE_ENABLED > 0
+extern void cc_lua_assert(bool cond, const char *msg);
+#define CCAssert(cond, msg)         cc_lua_assert(cond, msg)
+#else
 #define CCAssert(cond, msg)         CC_ASSERT(cond)
+#endif
 #endif  // CCAssert
 
 #include "ccConfig.h"
