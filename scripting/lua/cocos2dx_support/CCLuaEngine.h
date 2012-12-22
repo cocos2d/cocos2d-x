@@ -36,6 +36,8 @@ extern "C" {
 #include "base_nodes/CCNode.h"
 #include "script_support/CCScriptSupport.h"
 
+void cc_lua_assert(bool cond, const char *msg);
+
 NS_CC_BEGIN
 
 typedef int LUA_FUNCTION;
