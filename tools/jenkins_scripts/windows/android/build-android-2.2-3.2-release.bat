@@ -12,16 +12,17 @@ if not exist "%ANT_HOME%" echo Couldn't find Ant at "%ANT_HOME%" and you should 
 
 set _PROJECTNAME=TestCpp
 set _LANGUAGE_=Cpp
-cd ..\..\..\..
+set _ROOT_=%cd%\..\..\..\..
+cd %_ROOT_%
 
 :project
 ::Copy build Configuration files to target directory
-copy %cd%\tools\jenkins_scripts\ant.properties %cd%\samples\%_LANGUANE_%\%_PROJECTNAME%\proj.android
-copy %cd%\tools\jenkins_scripts\build.xml %cd%\samples\%_LANGUAGE_%\%_PROJECTNAME%\proj.android
-copy %cd%\tools\jenkins_scripts\windows\android\rootconfig.sh %cd%\samples\%_LANGUAGE_%\%_PROJECTNAME%\proj.android
+copy %_ROOT_%\tools\jenkins_scripts\ant.properties %_ROOT_%\samples\%_LANGUANE_%\%_PROJECTNAME%\proj.android
+copy %_ROOT_%\tools\jenkins_scripts\build.xml %_ROOT_%\samples\%_LANGUAGE_%\%_PROJECTNAME%\proj.android
+copy %_ROOT_%\tools\jenkins_scripts\windows\android\rootconfig.sh %_ROOT_%\samples\%_LANGUAGE_%\%_PROJECTNAME%\proj.android
 
 ::Modify the configuration files
-cd samples\%_LANGUAGE_%\%_PROJECTNAME%\proj.android
+cd %_ROOT_%\samples\%_LANGUAGE_%\%_PROJECTNAME%\proj.android
 rootconfig.sh %_PROJECTNAME%
 cd ..
 set _PROJECTLOCATION=%cd%
@@ -146,7 +147,7 @@ for /f "delims=" %%a in (ant.properties) do set num=%%a&call :lis
 move ant1.properties ant.properties
 
 ::Calculate the errorlevel and change build target.
-cd ..\..\..
+cd %_ROOT_%
 IF "%_PROJECTNAME%"=="TestCpp" set /a testresult1=(result8+result10+result11+result12+result13) && set _PROJECTNAME=HelloCpp&& goto project
 IF "%_PROJECTNAME%"=="HelloCpp" set /a testresult2=(result8+result10+result11+result12+result13) && set _LANGUAGE_=Lua && set _PROJECTNAME=HelloLua&& goto project
 IF "%_PROJECTNAME%"=="HelloLua" set /a testresult3=(result8+result10+result11+result12+result13)
