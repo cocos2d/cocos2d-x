@@ -91,12 +91,12 @@ IsTestCpp=1
 cp $ROOT/tools/jenkins_scripts/ant.properties $ROOT/samples/Cpp/TestCpp/proj.android
 cp $ROOT/tools/jenkins_scripts/build.xml $ROOT/samples/Cpp/TestCpp/proj.android
 cp $ROOT/tools/jenkins_scripts/mac/rootconfig-mac.sh $ROOT/samples/Cpp/TestCpp/proj.android
-cd samples/Cpp/TestCpp/proj.android
+cd $ROOT/samples/Cpp/TestCpp/proj.android
 sh rootconfig-mac.sh TestCpp
 sh build_native.sh
 
 #update android project configuration files
-cd ..
+cd $ROOT/samples/Cpp/TestCpp
 android update project -p proj.android
 cd proj.android
 antcompile
@@ -106,10 +106,10 @@ IsTestCpp=0
 cp $ROOT/tools/jenkins_scripts/ant.properties $ROOT/samples/Cpp/HelloCpp/proj.android
 cp $ROOT/tools/jenkins_scripts/build.xml $ROOT/samples/Cpp/HelloCpp/proj.android
 cp $ROOT/tools/jenkins_scripts/mac/rootconfig-mac.sh $ROOT/samples/Cpp/HelloCpp/proj.android
-cd ../../Cpp/HelloCpp/proj.android
+cd $ROOT/samples/Cpp/HelloCpp/proj.android
 sh rootconfig-mac.sh HelloCpp
 sh build_native.sh
-cd ..
+cd $ROOT/samples/Cpp/HelloCpp
 android update project -p proj.android
 cd proj.android
 antcompile
@@ -117,16 +117,16 @@ antcompile
 cp $ROOT/tools/jenkins_scripts/ant.properties $ROOT/samples/Lua/HelloLua/proj.android
 cp $ROOT/tools/jenkins_scripts/build.xml $ROOT/samples/Lua/HelloLua/proj.android
 cp $ROOT/tools/jenkins_scripts/mac/rootconfig-mac.sh $ROOT/samples/Lua/CppHelloLua/proj.android
-cd ../../Lua/HelloLua/proj.android
+cd $ROOT/samples/Lua/HelloLua/proj.android
 sh rootconfig-mac.sh HelloLua
 sh build_native.sh
-cd ..
+cd $ROOT/samples/Lua/HelloLua
 android update project -p proj.android
 cd proj.android
 antcompile
 
 #return the compileresult.
-cd ../../..
+cd $ROOT
 if [ $compileresult != 0 ]; then
 #    git checkout -f
 #    git clean -df -x

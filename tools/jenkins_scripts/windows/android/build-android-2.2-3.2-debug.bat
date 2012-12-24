@@ -13,16 +13,17 @@ if not exist "%ANT_HOME%" echo Couldn't find Ant at "%ANT_HOME%" and you should 
 
 set _PROJECTNAME=TestCpp
 set _LANGUAGE_=Cpp
-cd ..\..\..\..
+set _ROOT_=%cd%\..\..\..\..
+cd %_ROOT_%
 
 :project
 ::Copy build Configuration files to target directory
-copy %cd%\tools\jenkins_scripts\ant.properties %cd%\samples\%_LANGUAGE_%\%_PROJECTNAME%\proj.android /Y
-copy %cd%\tools\jenkins_scripts\build.xml %cd%\samples\%_LANGUAGE_%\%_PROJECTNAME%\proj.android /Y
-copy %cd%\tools\jenkins_scripts\windows\android\rootconfig.sh %cd%\samples\%_LANGUAGE_%\%_PROJECTNAME%\proj.android /Y
+copy %_ROOT_%\tools\jenkins_scripts\ant.properties %_ROOT_%\samples\%_LANGUAGE_%\%_PROJECTNAME%\proj.android /Y
+copy %_ROOT_%\tools\jenkins_scripts\build.xml %_ROOT_%\samples\%_LANGUAGE_%\%_PROJECTNAME%\proj.android /Y
+copy %_ROOT_%\tools\jenkins_scripts\windows\android\rootconfig.sh %_ROOT_%\samples\%_LANGUAGE_%\%_PROJECTNAME%\proj.android /Y
 
 ::Modify the configuration files
-cd samples\%_LANGUAGE_%\%_PROJECTNAME%\proj.android
+cd %_ROOT_%\samples\%_LANGUAGE_%\%_PROJECTNAME%\proj.android
 rootconfig.sh %_PROJECTNAME%
 cd ..
 set _PROJECTLOCATION=%cd%
@@ -129,7 +130,7 @@ if "%%a"=="target=android-13" (echo/target=android-8)else echo/%%a
 move anttmp.properties ant.properties
 
 ::Calculate the errorlevel and change build target.
-cd ..\..\..
+cd %_ROOT_%
 if "%_PROJECTNAME%"=="TestCpp" set /a TestCpp_Result=(result8+result10+result11+result12+result13) && set _PROJECTNAME=HelloCpp&& goto project
 if "%_PROJECTNAME%"=="HelloCpp" set /a HelloCpp_Result=(result8+result10+result11+result12+result13) && set _LANGUAGE_=Lua && set _PROJECTNAME=HelloLua&& goto project
 if "%_PROJECTNAME%"=="HelloLua" set /a HelloLua_Result=(result8+result10+result11+result12+result13)
