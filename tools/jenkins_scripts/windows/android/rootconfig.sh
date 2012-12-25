@@ -39,7 +39,7 @@ elif [ $1 = TestLua ]; then
 elif [ $1 = TestJavascript ]; then
  	sed -i '2d' $CUR/build.xml
 	sed -i '2 i\<project name="TestJavascript" default="help">' $CUR/build.xml
-else [ $1 = SimpleGame ]; then
+elif [ $1 = SimpleGame ]; then
  	sed -i '2d' $CUR/build.xml
 	sed -i '2 i\<project name="SimpleGame" default="help">' $CUR/build.xml
 fi
