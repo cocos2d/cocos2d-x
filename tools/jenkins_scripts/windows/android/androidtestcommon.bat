@@ -58,7 +58,7 @@ mkdir %AndroidProject%\gen
 mkdir %AndroidProject%\src\org\cocos2dx\lib
 mkdir %AndroidProject%\bin
 ::mkdir %AndroidProject%\bin\classes
-xcopy D:\cocos2d-x\cocos2dx\platform\android\java\src_common\org\cocos2dx\lib %AndroidProject%\src\org\cocos2dx\lib /s
+xcopy D:\cocos2d-x\cocos2dx\platform\android\java\src\org\cocos2dx\lib %AndroidProject%\src\org\cocos2dx\lib /s
 
 echo generate R.java file
 %AndroidAAPT% package -f -m -J %AndroidProjectGen% -S %AndroidProjectRes% -I %AndroidJar% -M %AndroidProjectAndroidMainfest%
