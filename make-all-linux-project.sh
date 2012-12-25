@@ -54,21 +54,25 @@ make -C $COCOS2DX20_TRUNK/external/Box2D/proj.linux clean
 make -C $COCOS2DX20_TRUNK/external/Box2D/proj.linux debug
 check_make_result
 cp $COCOS2DX20_TRUNK/external/Box2D/proj.linux/libbox2d.a $OUTPUT_DEBUG
+rm $COCOS2DX20_TRUNK/external/Box2D/proj.linux/libbox2d.a
 
 make -C $COCOS2DX20_TRUNK/external/Box2D/proj.linux clean
 make -C $COCOS2DX20_TRUNK/external/Box2D/proj.linux release
 check_make_result
 cp $COCOS2DX20_TRUNK/external/Box2D/proj.linux/libbox2d.a $OUTPUT_RELEASE
+rm $COCOS2DX20_TRUNK/external/Box2D/proj.linux/libbox2d.a
 
 make -C $COCOS2DX20_TRUNK/external/chipmunk/proj.linux clean
 make -C $COCOS2DX20_TRUNK/external/chipmunk/proj.linux debug
 check_make_result
 cp $COCOS2DX20_TRUNK/external/chipmunk/proj.linux/libchipmunk.a $OUTPUT_DEBUG
+rm $COCOS2DX20_TRUNK/external/chipmunk/proj.linux/libchipmunk.a
 
 make -C $COCOS2DX20_TRUNK/external/chipmunk/proj.linux clean
 make -C $COCOS2DX20_TRUNK/external/chipmunk/proj.linux release
 check_make_result
 cp $COCOS2DX20_TRUNK/external/chipmunk/proj.linux/libchipmunk.a $OUTPUT_RELEASE
+rm $COCOS2DX20_TRUNK/external/chipmunk/proj.linux/libchipmunk.a
 
 make -C $COCOS2DX20_TRUNK/cocos2dx/proj.linux clean
 make -C $COCOS2DX20_TRUNK/cocos2dx/proj.linux debug
@@ -86,47 +90,51 @@ make -C $COCOS2DX20_TRUNK/CocosDenshion/proj.linux clean
 make -C $COCOS2DX20_TRUNK/CocosDenshion/proj.linux debug
 check_make_result
 cp $COCOS2DX20_TRUNK/CocosDenshion/proj.linux/libcocosdenshion.so $OUTPUT_DEBUG
+rm $COCOS2DX20_TRUNK/CocosDenshion/proj.linux/libcocosdenshion.so
 
 make -C $COCOS2DX20_TRUNK/CocosDenshion/proj.linux clean
 make -C $COCOS2DX20_TRUNK/CocosDenshion/proj.linux release
 check_make_result
 cp $COCOS2DX20_TRUNK/CocosDenshion/proj.linux/libcocosdenshion.so $OUTPUT_RELEASE
+rm $COCOS2DX20_TRUNK/CocosDenshion/proj.linux/libcocosdenshion.so
 
 make -C $COCOS2DX20_TRUNK/scripting/lua/proj.linux clean
 make -C $COCOS2DX20_TRUNK/scripting/lua/proj.linux debug
 check_make_result
 cp $COCOS2DX20_TRUNK/scripting/lua/proj.linux/liblua.so $OUTPUT_DEBUG
+rm $COCOS2DX20_TRUNK/scripting/lua/proj.linux/liblua.so
 
 make -C $COCOS2DX20_TRUNK/scripting/lua/proj.linux clean
 make -C $COCOS2DX20_TRUNK/scripting/lua/proj.linux release
 check_make_result
 cp $COCOS2DX20_TRUNK/scripting/lua/proj.linux/liblua.so $OUTPUT_RELEASE
+rm $COCOS2DX20_TRUNK/scripting/lua/proj.linux/liblua.so
 
-make -C $COCOS2DX20_TRUNK/samples/TestCpp/proj.linux clean
-make -C $COCOS2DX20_TRUNK/samples/TestCpp/proj.linux debug
+make -C $COCOS2DX20_TRUNK/samples/Cpp/TestCpp/proj.linux clean
+make -C $COCOS2DX20_TRUNK/samples/Cpp/TestCpp/proj.linux debug
 check_make_result
-make -C $COCOS2DX20_TRUNK/samples/TestCpp/proj.linux clean
-make -C $COCOS2DX20_TRUNK/samples/TestCpp/proj.linux release
-check_make_result
-
-make -C $COCOS2DX20_TRUNK/samples/HelloCpp/proj.linux clean
-make -C $COCOS2DX20_TRUNK/samples/HelloCpp/proj.linux debug
-check_make_result
-make -C $COCOS2DX20_TRUNK/samples/HelloCpp/proj.linux clean
-make -C $COCOS2DX20_TRUNK/samples/HelloCpp/proj.linux release
+make -C $COCOS2DX20_TRUNK/samples/Cpp/TestCpp/proj.linux clean
+make -C $COCOS2DX20_TRUNK/samples/Cpp/TestCpp/proj.linux release
 check_make_result
 
-make -C $COCOS2DX20_TRUNK/samples/TestLua/proj.linux clean
-make -C $COCOS2DX20_TRUNK/samples/TestLua/proj.linux debug
+make -C $COCOS2DX20_TRUNK/samples/Cpp/HelloCpp/proj.linux clean
+make -C $COCOS2DX20_TRUNK/samples/Cpp/HelloCpp/proj.linux debug
 check_make_result
-make -C $COCOS2DX20_TRUNK/samples/TestLua/proj.linux clean
-make -C $COCOS2DX20_TRUNK/samples/TestLua/proj.linux release
+make -C $COCOS2DX20_TRUNK/samples/Cpp/HelloCpp/proj.linux clean
+make -C $COCOS2DX20_TRUNK/samples/Cpp/HelloCpp/proj.linux release
 check_make_result
 
-make -C $COCOS2DX20_TRUNK/samples/HelloLua/proj.linux clean
-make -C $COCOS2DX20_TRUNK/samples/HelloLua/proj.linux debug
+make -C $COCOS2DX20_TRUNK/samples/Lua/TestLua/proj.linux clean
+make -C $COCOS2DX20_TRUNK/samples/Lua/TestLua/proj.linux debug
 check_make_result
-make -C $COCOS2DX20_TRUNK/samples/HelloLua/proj.linux clean
-make -C $COCOS2DX20_TRUNK/samples/HelloLua/proj.linux release
+make -C $COCOS2DX20_TRUNK/samples/Lua/TestLua/proj.linux clean
+make -C $COCOS2DX20_TRUNK/samples/Lua/TestLua/proj.linux release
+check_make_result
+
+make -C $COCOS2DX20_TRUNK/samples/Lua/HelloLua/proj.linux clean
+make -C $COCOS2DX20_TRUNK/samples/Lua/HelloLua/proj.linux debug
+check_make_result
+make -C $COCOS2DX20_TRUNK/samples/Lua/HelloLua/proj.linux clean
+make -C $COCOS2DX20_TRUNK/samples/Lua/HelloLua/proj.linux release
 check_make_result
 
