@@ -116,7 +116,7 @@ antcompile
 
 cp $ROOT/tools/jenkins_scripts/ant.properties $ROOT/samples/Lua/HelloLua/proj.android
 cp $ROOT/tools/jenkins_scripts/build.xml $ROOT/samples/Lua/HelloLua/proj.android
-cp $ROOT/tools/jenkins_scripts/mac/rootconfig-mac.sh $ROOT/samples/Lua/CppHelloLua/proj.android
+cp $ROOT/tools/jenkins_scripts/mac/rootconfig-mac.sh $ROOT/samples/Lua/HelloLua/proj.android
 cd $ROOT/samples/Lua/HelloLua/proj.android
 sh rootconfig-mac.sh HelloLua
 sh build_native.sh
