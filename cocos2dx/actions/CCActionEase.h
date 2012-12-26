@@ -62,7 +62,8 @@ public:
     static CCActionEase* create(CCActionInterval *pAction);
 
 protected:
-    CCActionInterval *m_pOther;
+    /** The inner action */
+    CCActionInterval *m_pInner;
 };
 
 /** 

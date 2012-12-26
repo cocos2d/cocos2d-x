@@ -277,6 +277,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\actions\CCActionTiledGrid.h" />
     <ClInclude Include="..\actions\CCActionTween.h" />
     <ClInclude Include="..\include\ccConfig.h" />
+    <ClInclude Include="..\include\ccDeprecated.h" />
     <ClInclude Include="..\include\CCEventType.h" />
     <ClInclude Include="..\include\ccMacros.h" />
     <ClInclude Include="..\include\CCProtocols.h" />
