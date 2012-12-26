@@ -35,11 +35,11 @@ THE SOFTWARE.
 #include "CCStdC.h"
 
 #ifndef CCAssert
-#if CC_LUA_ENGINE_ENABLED > 0
-extern void cc_lua_assert(bool cond, const char *msg);
-#define CCAssert(cond, msg)         cc_lua_assert(cond, msg)
+#if COCOS2D_DEBUG > 0
+extern void cc_assert_script_compatible(bool cond, const char *msg);
+#define CCAssert(cond, msg)         cc_assert_script_compatible(cond, msg)
 #else
-#define CCAssert(cond, msg)         CC_ASSERT(cond)
+#define CCAssert(cond, msg)
 #endif
 #endif  // CCAssert
 

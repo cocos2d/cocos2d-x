@@ -200,6 +200,7 @@ public:
     virtual int executeLayerKeypadEvent(CCLayer* pLayer, int eventType);
     /** execute a accelerometer event */
     virtual int executeAccelerometerEvent(CCLayer* pLayer, CCAcceleration* pAccelerationValue);
+    virtual bool executeAssert(bool cond, const char *msg = NULL);
     /**
      @brief Method used to get a pointer to the lua_State that the script module is attached to.
      @return A pointer to the lua_State that the script module is attached to.
@@ -227,6 +228,7 @@ public:
 private:
     CCLuaEngine(void)
     : m_state(NULL)
+    , m_callFromLua(false)
     {
     }
     
@@ -234,6 +236,8 @@ private:
     bool pushFunction(int nHandler);
     
     lua_State* m_state;
+    bool m_callFromLua;
+    
     static CCLuaEngine* m_defaultEngine;
 };
 
