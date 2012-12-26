@@ -132,7 +132,7 @@ move anttmp.properties ant.properties
 ::Calculate the errorlevel and change build target.
 cd %_ROOT_%
 if "%_PROJECTNAME%"=="TestCpp" set /a TestCpp_Result=(result8+result10+result11+result12+result13) && set _PROJECTNAME=HelloCpp&& goto project
-if "%_PROJECTNAME%"=="HelloCpp" set /a HelloCpp_Result=(result8+result10+result11+result12+result13) && set _LANGUAGE_=Lua && set _PROJECTNAME=HelloLua&& goto project
+if "%_PROJECTNAME%"=="HelloCpp" set /a HelloCpp_Result=(result8+result10+result11+result12+result13) && set _LANGUAGE_=Lua&& set _PROJECTNAME=HelloLua&& goto project
 if "%_PROJECTNAME%"=="HelloLua" set /a HelloLua_Result=(result8+result10+result11+result12+result13)
 set /a Compile_Result=(TestCpp_Result+HelloCpp_Result+HelloLua_Result)
 if %Compile_Result% NEQ 0 goto error

@@ -149,7 +149,7 @@ move ant1.properties ant.properties
 ::Calculate the errorlevel and change build target.
 cd %_ROOT_%
 if "%_PROJECTNAME%"=="TestCpp" set /a testresult1=(result8+result10+result11+result12+result13) && set _PROJECTNAME=HelloCpp&& goto project
-if "%_PROJECTNAME%"=="HelloCpp" set /a testresult2=(result8+result10+result11+result12+result13) && set _LANGUAGE_=Lua && set _PROJECTNAME=HelloLua&& goto project
+if "%_PROJECTNAME%"=="HelloCpp" set /a testresult2=(result8+result10+result11+result12+result13) && set _LANGUAGE_=Lua&& set _PROJECTNAME=HelloLua&& goto project
 if "%_PROJECTNAME%"=="HelloLua" set /a testresult3=(result8+result10+result11+result12+result13)
 set /a testresult=(testresult1+testresult2+testresult3)
 if %testresult% NEQ 0 goto error
