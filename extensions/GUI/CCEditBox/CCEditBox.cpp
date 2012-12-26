@@ -25,6 +25,7 @@
 
 #include "CCEditBox.h"
 #include "CCEditBoxImpl.h"
+#include "script_support/CCScriptSupport.h"
 
 NS_CC_EXT_BEGIN
 
@@ -99,6 +100,23 @@ void CCEditBox::setDelegate(CCEditBoxDelegate* pDelegate)
     if (m_pEditBoxImpl != NULL)
     {
         m_pEditBoxImpl->setDelegate(pDelegate);
+    }
+}
+
+void CCEditBox::registerScriptEditboxHandler(int nHandler)
+{
+    if (m_pEditBoxImpl != NULL)
+    {
+        m_pEditBoxImpl->unregisterScriptEditboxHandler();
+        m_pEditBoxImpl->registerScriptEditboxHandler(nHandler);
+    }
+}
+
+void CCEditBox::unregisterScriptEditboxHandler(void)
+{
+    if (m_pEditBoxImpl != NULL)
+    {
+        m_pEditBoxImpl->unregisterScriptEditboxHandler();
     }
 }
 

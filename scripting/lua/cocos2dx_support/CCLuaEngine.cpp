@@ -476,6 +476,21 @@ int CCLuaEngine::executeAccelerometerEvent(CCLayer* pLayer, CCAcceleration* pAcc
     return ret;
 }
 
+int CCLuaEngine::executeEvent(int nHandler, const char* pEventName, CCObject* pEventSource /* = NULL*/, const char* pEventSourceClassName /* = NULL*/)
+{
+    cleanStack();
+    lua_pushstring(m_state, pEventName);
+    if (pEventSource)
+    {
+        pushCCObject(pEventSource, pEventSourceClassName ? pEventSourceClassName : "CCObject");
+        return executeFunctionByHandler(nHandler, 2);
+    }
+    else
+    {
+        return executeFunctionByHandler(nHandler, 1);
+    }
+}
+
 int CCLuaEngine::executeFunctionByHandler(int nHandler, int numArgs)
 {
     if (pushFunction(nHandler))                                         /* stack: ... arg1 arg2 ... func */

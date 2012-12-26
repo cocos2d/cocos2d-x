@@ -26,6 +26,7 @@
 #import "EditBoxImplIOS.h"
 #import "EAGLView.h"
 #import "CCEditBoxImplIOS.h"
+#import "script_support/CCScriptSupport.h"
 
 #define getEditBoxImplIOS() ((cocos2d::extension::CCEditBoxImplIOS*)editBox_)
 
@@ -69,6 +70,7 @@
         textField_.font = [UIFont systemFontOfSize:frameRect.size.height*2/3]; //TODO need to delete hard code here.
         textField_.backgroundColor = [UIColor clearColor];
         textField_.borderStyle = UITextBorderStyleNone;
+        textField_.autocorrectionType = UITextAutocorrectionTypeNo;
         textField_.delegate = self;
         textField_.returnKeyType = UIReturnKeyDefault;
         [textField_ addTarget:self action:@selector(textChanged) forControlEvents:UIControlEventEditingChanged];
@@ -140,9 +142,18 @@
         [self performSelector:@selector(animationSelector) withObject:nil afterDelay:0.0f];
     }
     cocos2d::extension::CCEditBoxDelegate* pDelegate = getEditBoxImplIOS()->getDelegate();
+    cocos2d::extension::CCEditBox* pEditBox = getEditBoxImplIOS()->getCCEditBox();
     if (pDelegate != NULL)
     {
-        pDelegate->editBoxEditingDidBegin(getEditBoxImplIOS()->getCCEditBox());
+        pDelegate->editBoxEditingDidBegin(pEditBox);
+    }
+    int nScriptHandler = getEditBoxImplIOS()->getScriptEditboxHandler();
+    if (nScriptHandler)
+    {
+        cocos2d::CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEvent(nScriptHandler,
+                                                                                         "began",
+                                                                                         pEditBox,
+                                                                                         "CCEditBox");
     }
     return YES;
 }
@@ -153,10 +164,19 @@
     editState_ = NO;
     
     cocos2d::extension::CCEditBoxDelegate* pDelegate = getEditBoxImplIOS()->getDelegate();
+    cocos2d::extension::CCEditBox* pEditBox = getEditBoxImplIOS()->getCCEditBox();
     if (pDelegate != NULL)
     {
-        pDelegate->editBoxEditingDidEnd(getEditBoxImplIOS()->getCCEditBox());
-        pDelegate->editBoxReturn(getEditBoxImplIOS()->getCCEditBox());
+        pDelegate->editBoxEditingDidEnd(pEditBox);
+        pDelegate->editBoxReturn(pEditBox);
+    }
+    int nScriptHandler = getEditBoxImplIOS()->getScriptEditboxHandler();
+    if (nScriptHandler)
+    {
+        cocos2d::CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEvent(nScriptHandler,
+                                                                                         "ended",
+                                                                                         pEditBox,
+                                                                                         "CCEditBox");
     }
     return YES;
 }
@@ -191,9 +211,18 @@
 {
     // NSLog(@"text is %@", self.textField.text);
     cocos2d::extension::CCEditBoxDelegate* pDelegate = getEditBoxImplIOS()->getDelegate();
+    cocos2d::extension::CCEditBox* pEditBox = getEditBoxImplIOS()->getCCEditBox();
     if (pDelegate != NULL)
     {
-        pDelegate->editBoxTextChanged(getEditBoxImplIOS()->getCCEditBox(), getEditBoxImplIOS()->getText());
+        pDelegate->editBoxTextChanged(pEditBox, getEditBoxImplIOS()->getText());
+    }
+    int nScriptHandler = getEditBoxImplIOS()->getScriptEditboxHandler();
+    if (nScriptHandler)
+    {
+        cocos2d::CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEvent(nScriptHandler,
+                                                                                         "changed",
+                                                                                         pEditBox,
+                                                                                         "CCEditBox");
     }
 }
 

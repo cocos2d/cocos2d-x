@@ -201,6 +201,12 @@ public:
     void setDelegate(CCEditBoxDelegate* pDelegate);
     
     /**
+     * Register the delegate for script.
+     */
+    void registerScriptEditboxHandler(int nHandler);
+    void unregisterScriptEditboxHandler(void);
+
+    /**
      * Set the text entered in the edit box.
      * @param pText The given text.
      */
