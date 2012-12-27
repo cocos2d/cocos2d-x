@@ -37,7 +37,7 @@ THE SOFTWARE.
 #ifndef CCAssert
 #if COCOS2D_DEBUG > 0
 extern void cc_assert_script_compatible(bool cond, const char *msg);
-#define CCAssert(cond, msg)         cc_assert_script_compatible(cond, msg)
+#define CCAssert(cond, msg)         cc_assert_script_compatible(!!(cond), (msg))
 #else
 #define CCAssert(cond, msg)
 #endif
