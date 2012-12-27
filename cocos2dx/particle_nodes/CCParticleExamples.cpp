@@ -47,6 +47,7 @@ static CCTexture2D* getDefaultTexture()
         CC_BREAK_IF(pTexture != NULL);
 
         pImage = new CCImage();
+        CC_BREAK_IF(NULL == pImage);
         bRet = pImage->initWithImageData((void*)__firePngData, sizeof(__firePngData), CCImage::kFmtPng);
         CC_BREAK_IF(!bRet);
 
