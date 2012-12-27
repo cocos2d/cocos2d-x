@@ -38,6 +38,7 @@ NS_CC_BEGIN
 static CCTexture2D* getDefaultTexture()
 {
     CCTexture2D* pTexture = NULL;
+    CCImage* pImage = NULL;
     do 
     {
         bool bRet = false;
@@ -45,12 +46,15 @@ static CCTexture2D* getDefaultTexture()
         pTexture = CCTextureCache::sharedTextureCache()->textureForKey(key);
         CC_BREAK_IF(pTexture != NULL);
 
-        CCImage image;
-        bRet = image.initWithImageData((void*)__firePngData, sizeof(__firePngData), CCImage::kFmtPng);
+        pImage = new CCImage();
+        CC_BREAK_IF(NULL == pImage);
+        bRet = pImage->initWithImageData((void*)__firePngData, sizeof(__firePngData), CCImage::kFmtPng);
         CC_BREAK_IF(!bRet);
 
-        pTexture = CCTextureCache::sharedTextureCache()->addUIImage(&image, key);
+        pTexture = CCTextureCache::sharedTextureCache()->addUIImage(pImage, key);
     } while (0);
+
+    CC_SAFE_RELEASE(pImage);
 
     return pTexture;
 }
