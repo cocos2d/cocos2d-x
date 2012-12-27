@@ -238,7 +238,9 @@ void CCLuaEngine::addSearchPath(const char* path)
 
 int CCLuaEngine::executeString(const char *codes)
 {
-    int nRet =    luaL_dostring(m_state, codes);
+    m_callFromLua = true;
+    int nRet = luaL_dostring(m_state, codes);
+    m_callFromLua = false;
     lua_gc(m_state, LUA_GCCOLLECT, 0);
 
     if (nRet != 0)
@@ -252,7 +254,9 @@ int CCLuaEngine::executeString(const char *codes)
 
 int CCLuaEngine::executeScriptFile(const char* filename)
 {
+    m_callFromLua = true;
     int nRet = luaL_dofile(m_state, filename);
+    m_callFromLua = false;
     // lua_gc(m_state, LUA_GCCOLLECT, 0);
 
     if (nRet != 0)
@@ -274,7 +278,9 @@ int CCLuaEngine::executeGlobalFunction(const char* functionName)
         return 0;
     }
 
+    m_callFromLua = true;
     int error = lua_pcall(m_state, 0, 1, 0);             /* call function, stack: ret */
+    m_callFromLua = false;
     // lua_gc(m_state, LUA_GCCOLLECT, 0);
 
     if (error)
@@ -476,6 +482,15 @@ int CCLuaEngine::executeAccelerometerEvent(CCLayer* pLayer, CCAcceleration* pAcc
     return ret;
 }
 
+bool CCLuaEngine::executeAssert(bool cond, const char *msg/* = NULL */)
+{
+    if (!m_callFromLua) return false;
+    
+    lua_pushfstring(m_state, "ASSERT FAILED ON LUA EXECUTE: %s", msg ? msg : "unknown");
+    lua_error(m_state);
+    return true;
+}
+
 int CCLuaEngine::executeFunctionByHandler(int nHandler, int numArgs)
 {
     if (pushFunction(nHandler))                                         /* stack: ... arg1 arg2 ... func */
@@ -498,7 +513,9 @@ int CCLuaEngine::executeFunctionByHandler(int nHandler, int numArgs)
         }
         
         int error = 0;
+        m_callFromLua = true;
         error = lua_pcall(m_state, numArgs, 1, traceback);              /* stack: ... ret */
+        m_callFromLua = false;
         if (error)
         {
             if (traceback == 0)
