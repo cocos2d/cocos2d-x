@@ -162,7 +162,7 @@ class CCTransitionProgressRadialCW : public CCScene
 
 class CCTransitionPageTurn : public CCScene
 {
-    CCActionInterval* actionWithSize(ccGridSize vector);
+    CCActionInterval* actionWithSize(CCSize vector);
 
     static CCTransitionPageTurn* create(float t,CCScene* scene,bool backwards);
 };
