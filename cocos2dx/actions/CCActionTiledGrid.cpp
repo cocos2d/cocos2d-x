@@ -296,7 +296,7 @@ CCShuffleTiles::~CCShuffleTiles(void)
 
 void CCShuffleTiles::shuffle(unsigned int *pArray, unsigned int nLen)
 {
-    unsigned int i;
+    int i;
     for( i = nLen - 1; i >= 0; i-- )
     {
         unsigned int j = rand() % (i+1);
@@ -670,7 +670,7 @@ CCTurnOffTiles::~CCTurnOffTiles(void)
 
 void CCTurnOffTiles::shuffle(unsigned int *pArray, unsigned int nLen)
 {
-    unsigned int i;
+    int i;
     for (i = nLen - 1; i >= 0; i--)
     {
         unsigned int j = rand() % (i+1);

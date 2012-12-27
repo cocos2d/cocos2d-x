@@ -887,8 +887,5 @@
     <ClInclude Include="..\shaders\CCGLProgram.h">
       <Filter>shaders</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\ccDeprecated.h">
-      <Filter>include</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>
