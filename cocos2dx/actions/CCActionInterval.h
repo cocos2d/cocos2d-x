@@ -304,9 +304,38 @@ protected:
     float m_fStartAngleY;
 };
 
-/** @brief Moves a CCNode object to the position x,y. x and y are absolute coordinates by modifying it's position attribute.
-*/
-class CC_DLL CCMoveTo : public CCActionInterval
+/**  Moves a CCNode object x,y pixels by modifying it's position attribute.
+ x and y are relative to the position of the object.
+ Several CCMoveBy actions can be concurrently called, and the resulting
+ movement will be the sum of individual movements.
+ @since v2.1beta2-custom
+ */
+class CC_DLL CCMoveBy : public CCActionInterval
+{
+public:
+    /** initializes the action */
+    bool initWithDuration(float duration, const CCPoint& deltaPosition);
+
+    virtual CCObject* copyWithZone(CCZone* pZone);
+    virtual void startWithTarget(CCNode *pTarget);
+    virtual CCActionInterval* reverse(void);
+    virtual void update(float time);
+
+public:
+    /** creates the action */
+    static CCMoveBy* create(float duration, const CCPoint& deltaPosition);
+protected:
+    CCPoint m_positionDelta;
+    CCPoint m_startPosition;
+    CCPoint m_previousPosition;
+};
+
+/** Moves a CCNode object to the position x,y. x and y are absolute coordinates by modifying it's position attribute.
+ Several CCMoveTo actions can be concurrently called, and the resulting
+ movement will be the sum of individual movements.
+ @since v2.1beta2-custom
+ */
+class CC_DLL CCMoveTo : public CCMoveBy
 {
 public:
     /** initializes the action */
@@ -314,34 +343,12 @@ public:
 
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void startWithTarget(CCNode *pTarget);
-    virtual void update(float time);
 
 public:
     /** creates the action */
     static CCMoveTo* create(float duration, const CCPoint& position);
 protected:
     CCPoint m_endPosition;
-    CCPoint m_startPosition;
-    CCPoint m_delta;
-};
-
-/** @brief Moves a CCNode object x,y pixels by modifying it's position attribute.
- x and y are relative to the position of the object.
- Duration is is seconds.
-*/ 
-class CC_DLL CCMoveBy : public CCMoveTo
-{
-public:
-    /** initializes the action */
-    bool initWithDuration(float duration, const CCPoint& position);
-
-    virtual CCObject* copyWithZone(CCZone* pZone);
-    virtual void startWithTarget(CCNode *pTarget);
-    virtual CCActionInterval* reverse(void);
-
-public:
-    /** creates the action */
-    static CCMoveBy* create(float duration, const CCPoint& position);
 };
 
 /** Skews a CCNode object to given angles by modifying it's skewX and skewY attributes
@@ -404,10 +411,11 @@ public:
     /** creates the action */
     static CCJumpBy* create(float duration, const CCPoint& position, float height, unsigned int jumps);
 protected:
-    CCPoint            m_startPosition;
-    CCPoint            m_delta;
-    float            m_height;
+    CCPoint         m_startPosition;
+    CCPoint         m_delta;
+    float           m_height;
     unsigned int    m_nJumps;
+    CCPoint         m_previousPos;
 };
 
 /** @brief Moves a CCNode object to a parabolic position simulating a jump movement by modifying it's position attribute.
@@ -453,6 +461,7 @@ public:
 protected:
     ccBezierConfig m_sConfig;
     CCPoint m_startPosition;
+    CCPoint m_previousPosition;
 };
 
 /** @brief An action that moves the target with a cubic Bezier curve to a destination point.

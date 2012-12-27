@@ -249,6 +249,9 @@ void CCCardinalSplineTo::startWithTarget(cocos2d::CCNode *pTarget)
     
     // Issue #1441
     m_fDeltaT = (float) 1 / (m_pPoints->count() - 1);
+
+    m_previousPosition = pTarget->getPosition();
+    m_accumulatedDiff = CCPointZero;
 }
 
 CCCardinalSplineTo* CCCardinalSplineTo::copyWithZone(cocos2d::CCZone *pZone)
@@ -301,12 +304,21 @@ void CCCardinalSplineTo::update(float time)
 	
     CCPoint newPos = ccCardinalSplineAt(pp0, pp1, pp2, pp3, m_fTension, lt);
 	
+    // Support for stacked actions
+    CCNode *node = m_pTarget;
+    CCPoint diff = ccpSub( node->getPosition(), m_previousPosition);
+    if( diff.x !=0 || diff.y != 0 ) {
+        m_accumulatedDiff = ccpAdd( m_accumulatedDiff, diff);
+        newPos = ccpAdd( newPos, m_accumulatedDiff);
+    }
+
     this->updatePosition(newPos);
 }
 
 void CCCardinalSplineTo::updatePosition(cocos2d::CCPoint &newPos)
 {
     m_pTarget->setPosition(newPos);
+    m_previousPosition = newPos;
 }
 
 CCActionInterval* CCCardinalSplineTo::reverse()
@@ -343,7 +355,9 @@ CCCardinalSplineBy::CCCardinalSplineBy() : m_startPosition(0,0)
 
 void CCCardinalSplineBy::updatePosition(cocos2d::CCPoint &newPos)
 {
-    m_pTarget->setPosition(ccpAdd(newPos, m_startPosition));
+    CCPoint p = ccpAdd(newPos, m_startPosition);
+    m_pTarget->setPosition(p);
+    m_previousPosition = p;
 }
 
 CCActionInterval* CCCardinalSplineBy::reverse()
