@@ -85,14 +85,14 @@ end
 --  Shaky3DDemo
 --------------------------------------
 local function Shaky3DDemo(t)
-	return CCShaky3D:create(5, false, ccg(15,10), t)
+	return CCShaky3D:create(t, CCSizeMake(15,10), 5, false);
 end
 
 --------------------------------------
 --  Waves3DDemo
 --------------------------------------
 local function Waves3DDemo(t)
-	return CCWaves3D:create(5, 40, ccg(15,10), t)
+	return CCWaves3D:create(t, CCSizeMake(15,10), 5, 40);
 end
 
 --------------------------------------
@@ -129,56 +129,56 @@ end
 --  Lens3DDemo
 --------------------------------------
 local function Lens3DDemo(t)
-	return CCLens3D:create(CCPointMake(size.width / 2,size.height / 2), 240, ccg(15,10), t)
+	return CCLens3D:create(t, CCSizeMake(15,10), ccp(size.width/2,size.height/2), 240); 
 end
 
 --------------------------------------
 --  Ripple3DDemo
 --------------------------------------
 local function Ripple3DDemo(t)
-	return CCRipple3D:create(CCPointMake(size.width / 2,size.height / 2), 240, 4, 160, ccg(32,24), t)
+	return CCRipple3D:create(t, CCSizeMake(32,24), ccp(size.width/2,size.height/2), 240, 4, 160);
 end
 
 --------------------------------------
 --  LiquidDemo
 --------------------------------------
 local function LiquidDemo(t)
-	return CCLiquid:create(4, 20, ccg(16,12), t)
+	return CCLiquid:create(t, CCSizeMake(16,12), 4, 20); 
 end
 
 --------------------------------------
 --  WavesDemo
 --------------------------------------
 local function WavesDemo(t)
-	return CCWaves:create(4, 20, true, true, ccg(16, 12), t)
+	return CCWaves:create(t, CCSizeMake(16,12), 4, 20, true, true);  
 end
 
 --------------------------------------
 --  TwirlDemo
 --------------------------------------
 local function TwirlDemo(t)
-	return CCTwirl:create(CCPointMake(size.width / 2, size.height / 2), 1, 2.5, ccg(12, 8), t)
+	return CCTwirl:create(t, CCSizeMake(12,8), ccp(size.width/2, size.height/2), 1, 2.5); 
 end
 
 --------------------------------------
 --  ShakyTiles3DDemo
 --------------------------------------
 local function ShakyTiles3DDemo(t)
-	return CCShakyTiles3D:create(5, false, ccg(16,12), t)
+	return CCShakyTiles3D:create(t, CCSizeMake(16,12), 5, false) ;
 end
 
 --------------------------------------
 --  ShatteredTiles3DDemo
 --------------------------------------
 local function ShatteredTiles3DDemo(t)
-	return CCShatteredTiles3D:create(5, false, ccg(16,12), t)
+	return CCShatteredTiles3D:create(t, CCSizeMake(16,12), 5, false); 
 end
 
 --------------------------------------
 --  ShuffleTilesDemo
 --------------------------------------
 local function ShuffleTilesDemo(t)
-	local shuffle = CCShuffleTiles:create(25, ccg(16,12), t)
+	local shuffle = CCShuffleTiles:create(t, CCSizeMake(16,12), 25);
 	local shuffle_back = shuffle:reverse()
 	local delay = CCDelayTime:create(2)
 
@@ -193,7 +193,7 @@ end
 --  FadeOutTRTilesDemo
 --------------------------------------
 local function FadeOutTRTilesDemo(t)
-	local fadeout = CCFadeOutTRTiles:create(ccg(16,12), t)
+	local fadeout = CCFadeOutTRTiles:create(t, CCSizeMake(16,12));
 	local back = fadeout:reverse()
 	local delay = CCDelayTime:create(0.5)
 
@@ -208,7 +208,7 @@ end
 --  FadeOutBLTilesDemo
 --------------------------------------
 local function FadeOutBLTilesDemo(t)
-	local fadeout = CCFadeOutBLTiles:create(ccg(16,12), t)
+	local fadeout = CCFadeOutBLTiles:create(t, CCSizeMake(16,12));
 	local back = fadeout:reverse()
 	local delay = CCDelayTime:create(0.5)
 
@@ -223,7 +223,7 @@ end
 --  FadeOutUpTilesDemo
 --------------------------------------
 local function FadeOutUpTilesDemo(t)
-	local fadeout = CCFadeOutUpTiles:create(ccg(16,12), t)
+	local fadeout = CCFadeOutUpTiles:create(t, CCSizeMake(16,12));
 	local back = fadeout:reverse()
 	local delay = CCDelayTime:create(0.5)
 
@@ -238,7 +238,7 @@ end
 --  FadeOutDownTilesDemo
 --------------------------------------
 local function FadeOutDownTilesDemo(t)
-	local fadeout = CCFadeOutDownTiles:create(ccg(16,12), t)
+	local fadeout = CCFadeOutDownTiles:create(t, CCSizeMake(16,12));
 	local back = fadeout:reverse()
 	local delay = CCDelayTime:create(0.5)
 
@@ -253,7 +253,7 @@ end
 --  TurnOffTilesDemo
 --------------------------------------
 local function TurnOffTilesDemo(t)
-	local fadeout = CCTurnOffTiles:create(25, ccg(48, 32), t)
+	local fadeout = CCTurnOffTiles:create(t, CCSizeMake(48,32), 25);
 	local back = fadeout:reverse()
 	local delay = CCDelayTime:create(0.5)
 
@@ -268,28 +268,28 @@ end
 --  WavesTiles3DDemo
 --------------------------------------
 local function WavesTiles3DDemo(t)
-	return CCWavesTiles3D:create(4, 120, ccg(15,10), t)
+	return CCWavesTiles3D:create(t, CCSizeMake(15,10), 4, 120); 
 end
 
 --------------------------------------
 --  JumpTiles3DDemo
 --------------------------------------
 local function JumpTiles3DDemo(t)
-	return CCJumpTiles3D:create(2, 30, ccg(15,10), t)
+	return CCJumpTiles3D:create(t, CCSizeMake(15,10), 2, 30); 
 end
 
 --------------------------------------
 --  SplitRowsDemo
 --------------------------------------
 local function SplitRowsDemo(t)
-	return CCSplitRows:create(9, t)
+	return CCSplitRows:create(t, 9); 
 end
 
 --------------------------------------
 --  SplitColsDemo
 --------------------------------------
 local function SplitColsDemo(t)
-	return CCSplitCols:create(9, t)
+	return CCSplitCols:create(t, 9); 
 end
 
 --------------------------------------
@@ -297,7 +297,7 @@ end
 --------------------------------------
 local function PageTurn3DDemo(t)
 	CCDirector:sharedDirector():setDepthTest(true)
-	return CCPageTurn3D:create(ccg(15,10), t)
+	return CCPageTurn3D:create(t, CCSizeMake(15,10)); 
 end
 
 --------------------------------------

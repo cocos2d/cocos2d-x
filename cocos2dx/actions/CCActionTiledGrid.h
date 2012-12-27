@@ -39,8 +39,7 @@ class CC_DLL CCShakyTiles3D : public CCTiledGrid3DAction
 {
 public:
     /** initializes the action with a range, whether or not to shake Z vertices, a grid size, and duration */
-    bool initWithRange(int nRange, bool bShakeZ, const ccGridSize& gridSize,
-        float duration);
+    virtual bool initWithDuration(float duration, const CCSize& gridSize, int nRange, bool bShakeZ);
 
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void update(float time);
@@ -48,7 +47,7 @@ public:
 public:
 
     /** creates the action with a range, whether or not to shake Z vertices, a grid size, and duration */
-    static CCShakyTiles3D* create(int nRange, bool bShakeZ, const ccGridSize& gridSize, float duration);
+    static CCShakyTiles3D* create(float duration, const CCSize& gridSize, int nRange, bool bShakeZ);
 
 protected:
     int m_nRandrange;
@@ -60,8 +59,7 @@ class CC_DLL CCShatteredTiles3D : public CCTiledGrid3DAction
 {
 public:
     /** initializes the action with a range, whether or not to shatter Z vertices, a grid size and duration */
-    bool initWithRange(int nRange, bool bShatterZ, const ccGridSize& gridSize,
-        float duration);
+    virtual bool initWithDuration(float duration, const CCSize& gridSize, int nRange, bool bShatterZ);
 
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void update(float time);
@@ -69,8 +67,7 @@ public:
 public:
 
     /** creates the action with a range, whether of not to shatter Z vertices, a grid size and duration */
-    static CCShatteredTiles3D* create(int nRange, bool bShatterZ, const ccGridSize& gridSize,
-        float duration);
+    static CCShatteredTiles3D* create(float duration, const CCSize& gridSize, int nRange, bool bShatterZ);
 protected:
     int m_nRandrange;
     bool m_bOnce;
@@ -86,10 +83,10 @@ class CC_DLL CCShuffleTiles : public CCTiledGrid3DAction
 public:
     ~CCShuffleTiles(void);
     /** initializes the action with a random seed, the grid size and the duration */
-    bool initWithSeed(int s, const ccGridSize& gridSize, float duration);
-    void shuffle(int *pArray, unsigned int nLen);
-    ccGridSize getDelta(const ccGridSize& pos);
-    void placeTile(const ccGridSize& pos, Tile *t);
+    virtual bool initWithDuration(float duration, const CCSize& gridSize, unsigned int seed);
+    void shuffle(unsigned int *pArray, unsigned int nLen);
+    CCSize getDelta(const CCSize& pos);
+    void placeTile(const CCPoint& pos, Tile *t);
 
     virtual void startWithTarget(CCNode *pTarget);
     virtual void update(float time);
@@ -97,12 +94,12 @@ public:
 
 public:
     /** creates the action with a random seed, the grid size and the duration */
-    static CCShuffleTiles* create(int s, const ccGridSize& gridSize, float duration);
+    static CCShuffleTiles* create(float duration, const CCSize& gridSize, unsigned int seed);
 protected:
-    int             m_nSeed;
+    unsigned int m_nSeed;
     unsigned int m_nTilesCount;
-    int             *m_pTilesOrder;
-    Tile         *m_pTiles;
+    unsigned int* m_pTilesOrder;
+    Tile* m_pTiles;
 };
 
 /** @brief CCFadeOutTRTiles action
@@ -111,16 +108,16 @@ protected:
 class CC_DLL CCFadeOutTRTiles : public CCTiledGrid3DAction
 {
 public:
-    virtual float testFunc(const ccGridSize& pos, float time);
-    void turnOnTile(const ccGridSize& pos);
-    void turnOffTile(const ccGridSize& pos);
-    virtual void transformTile(const ccGridSize& pos, float distance);
+    virtual float testFunc(const CCSize& pos, float time);
+    void turnOnTile(const CCPoint& pos);
+    void turnOffTile(const CCPoint& pos);
+    virtual void transformTile(const CCPoint& pos, float distance);
     virtual void update(float time);
 
 public:
 
     /** creates the action with the grid size and the duration */
-    static CCFadeOutTRTiles* create(const ccGridSize& gridSize, float time);
+    static CCFadeOutTRTiles* create(float duration, const CCSize& gridSize);
 };
 
 /** @brief CCFadeOutBLTiles action.
@@ -129,12 +126,12 @@ public:
 class CC_DLL CCFadeOutBLTiles : public CCFadeOutTRTiles
 {
 public:
-    virtual float testFunc(const ccGridSize& pos, float time);
+    virtual float testFunc(const CCSize& pos, float time);
 
 public:
 
     /** creates the action with the grid size and the duration */
-    static CCFadeOutBLTiles* create(const ccGridSize& gridSize, float time);
+    static CCFadeOutBLTiles* create(float duration, const CCSize& gridSize);
 };
 
 /** @brief CCFadeOutUpTiles action.
@@ -143,12 +140,12 @@ public:
 class CC_DLL CCFadeOutUpTiles : public CCFadeOutTRTiles
 {
 public:
-    virtual float testFunc(const ccGridSize& pos, float time);
-    virtual void transformTile(const ccGridSize& pos, float distance);
+    virtual float testFunc(const CCSize& pos, float time);
+    virtual void transformTile(const CCPoint& pos, float distance);
 
 public:
     /** creates the action with the grid size and the duration */
-    static CCFadeOutUpTiles* create(const ccGridSize& gridSize, float time);
+    static CCFadeOutUpTiles* create(float duration, const CCSize& gridSize);
 
 };
 
@@ -158,12 +155,12 @@ public:
 class CC_DLL CCFadeOutDownTiles : public CCFadeOutUpTiles
 {
 public:
-    virtual float testFunc(const ccGridSize& pos, float time);
+    virtual float testFunc(const CCSize& pos, float time);
 
 public:
 
     /** creates the action with the grid size and the duration */
-    static CCFadeOutDownTiles* create(const ccGridSize& gridSize, float time);
+    static CCFadeOutDownTiles* create(float duration, const CCSize& gridSize);
 };
 
 /** @brief CCTurnOffTiles action.
@@ -174,10 +171,10 @@ class CC_DLL CCTurnOffTiles : public CCTiledGrid3DAction
 public:
     ~CCTurnOffTiles(void);
     /** initializes the action with a random seed, the grid size and the duration */
-    bool initWithSeed(int s, const ccGridSize& gridSize, float duration);
-    void shuffle(int *pArray, unsigned int nLen);
-    void turnOnTile(const ccGridSize& pos);
-    void turnOffTile(const ccGridSize& pos);
+    virtual bool initWithDuration(float duration, const CCSize& gridSize, unsigned int seed);
+    void shuffle(unsigned int *pArray, unsigned int nLen);
+    void turnOnTile(const CCPoint& pos);
+    void turnOffTile(const CCPoint& pos);
 
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void startWithTarget(CCNode *pTarget);
@@ -186,14 +183,14 @@ public:
 public:
 
     /** creates the action with the grid size and the duration */
-    static CCTurnOffTiles* create(const ccGridSize& size, float d);
+    static CCTurnOffTiles* create(float duration, const CCSize& gridSize);
     /** creates the action with a random seed, the grid size and the duration */
-    static CCTurnOffTiles* create(int s, const ccGridSize& gridSize, float duration);
+    static CCTurnOffTiles* create(float duration, const CCSize& gridSize, unsigned int seed);
 
 protected:
-    int                m_nSeed;
+    unsigned int    m_nSeed;
     unsigned int    m_nTilesCount;
-    int                *m_pTilesOrder;
+    unsigned int*   m_pTilesOrder;
 };
 
 /** @brief CCWavesTiles3D action. */
@@ -209,16 +206,16 @@ public:
     inline void setAmplitudeRate(float fAmplitudeRate) { m_fAmplitudeRate = fAmplitudeRate; }
 
     /** initializes the action with a number of waves, the waves amplitude, the grid size and the duration */
-    bool initWithWaves(int wav, float amp, const ccGridSize& gridSize, float duration);
+    virtual bool initWithDuration(float duration, const CCSize& gridSize, unsigned int waves, float amplitude);
 
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void update(float time);
 
 public:
     /** creates the action with a number of waves, the waves amplitude, the grid size and the duration */
-    static CCWavesTiles3D* create(int wav, float amp, const ccGridSize& gridSize, float duration);
+    static CCWavesTiles3D* create(float duration, const CCSize& gridSize, unsigned int waves, float amplitude);
 protected:
-    int m_nWaves;
+    unsigned int m_nWaves;
     float m_fAmplitude;
     float m_fAmplitudeRate;
 };
@@ -238,16 +235,16 @@ public:
     inline void setAmplitudeRate(float fAmplitudeRate) { m_fAmplitudeRate = fAmplitudeRate; }
 
     /** initializes the action with the number of jumps, the sin amplitude, the grid size and the duration */
-    bool initWithJumps(int j, float amp, const ccGridSize& gridSize, float duration);
+    bool initWithDuration(float duration, const CCSize& gridSize, unsigned int numberOfJumps, float amplitude);
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void update(float time);
 
 public:
 
     /** creates the action with the number of jumps, the sin amplitude, the grid size and the duration */
-    static CCJumpTiles3D* create(int j, float amp, const ccGridSize& gridSize, float duration);
+    static CCJumpTiles3D* create(float duration, const CCSize& gridSize, unsigned int numberOfJumps, float amplitude);
 protected:
-    int m_nJumps;
+    unsigned int m_nJumps;
     float m_fAmplitude;
     float m_fAmplitudeRate;
 };
@@ -257,7 +254,7 @@ class CC_DLL CCSplitRows : public CCTiledGrid3DAction
 {
 public :
     /** initializes the action with the number of rows to split and the duration */
-    bool initWithRows(int nRows, float duration);
+    virtual bool initWithDuration(float duration, unsigned int nRows);
 
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void update(float time);
@@ -266,9 +263,9 @@ public :
 public:
 
     /** creates the action with the number of rows to split and the duration */
-    static CCSplitRows* create(int nRows, float duration);
+    static CCSplitRows* create(float duration, unsigned int nRows);
 protected:
-    int m_nRows;
+    unsigned int m_nRows;
     CCSize m_winSize;
 };
 
@@ -277,7 +274,7 @@ class CC_DLL CCSplitCols : public CCTiledGrid3DAction
 {
 public:
     /** initializes the action with the number of columns to split and the duration */
-    bool initWithCols(int nCols, float duration);
+    virtual bool initWithDuration(float duration, unsigned int nCols);
 
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void update(float time);
@@ -285,9 +282,9 @@ public:
 
 public:
     /** creates the action with the number of columns to split and the duration */
-    static CCSplitCols* create(int nCols, float duration);
+    static CCSplitCols* create(float duration, unsigned int nCols);
 protected:
-    int m_nCols;
+    unsigned int m_nCols;
     CCSize m_winSize;
 };
 
