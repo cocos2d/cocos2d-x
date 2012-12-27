@@ -226,7 +226,7 @@ class TurnOffTilesDemo : public CCTurnOffTiles
 public:
     static CCActionInterval* create(float t)
     {
-        CCTurnOffTiles* fadeout = CCTurnOffTiles::create(25, CCSizeMake(48,32) , t);
+        CCTurnOffTiles* fadeout = CCTurnOffTiles::create(t, CCSizeMake(48,32), 25);
         CCActionInterval* back = fadeout->reverse();
         CCDelayTime* delay = CCDelayTime::create(0.5f);
 
