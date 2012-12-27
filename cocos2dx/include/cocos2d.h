@@ -34,7 +34,6 @@ THE SOFTWARE.
 //
 // all cocos2d include files
 //
-#include "ccDeprecated.h"
 #include "ccConfig.h"
 
 // actions
