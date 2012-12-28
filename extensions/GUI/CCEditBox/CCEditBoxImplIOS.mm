@@ -181,6 +181,11 @@ bool CCEditBoxImplIOS::isEditing()
     return [GET_IMPL isEditState] ? true : false;
 }
 
+void CCEditBoxImplIOS::setEnabled(bool enabled)
+{
+    [GET_IMPL.textField setEnabled:enabled];
+}
+
 void CCEditBoxImplIOS::setText(const char* pText)
 {
     GET_IMPL.textField.text = [NSString stringWithUTF8String:pText];
@@ -213,6 +218,17 @@ static CGPoint convertDesignCoordToScreenCoord(const CCPoint& designCoord, bool 
     }
     CCLOG("[EditBox] pos x = %f, y = %f", screenGLPos.x, screenGLPos.y);
     return screenPos;
+}
+
+GLubyte CCEditBoxImplIOS::getOpacity(void)
+{
+    return GET_IMPL.textField.alpha * 255;
+}
+
+void CCEditBoxImplIOS::setOpacity(GLubyte opacity)
+{
+    UIColor *color = [UIColor colorWithRed:1.0f green:1.0f blue:1.0f alpha:(CGFloat)opacity / (CGFloat)255.0f];
+    GET_IMPL.textField.textColor = color;
 }
 
 void CCEditBoxImplIOS::setPosition(const CCPoint& pos)

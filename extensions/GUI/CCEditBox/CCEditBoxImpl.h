@@ -50,6 +50,7 @@ public:
     virtual void setReturnType(KeyboardReturnType returnType) = 0;
     virtual bool isEditing() = 0;
     
+    virtual void setEnabled(bool enabled) = 0;
     virtual void setText(const char* pText) = 0;
     virtual const char* getText(void) = 0;
     virtual void setPlaceHolder(const char* pText) = 0;
@@ -58,6 +59,8 @@ public:
     virtual void openKeyboard() = 0;
     virtual void closeKeyboard() = 0;
     
+    virtual GLubyte getOpacity(void) = 0;
+    virtual void setOpacity(GLubyte opacity) = 0;
     virtual void setPosition(const CCPoint& pos) = 0;
     virtual void setContentSize(const CCSize& size) = 0;
     virtual void visit(void) = 0;

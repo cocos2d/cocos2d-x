@@ -67,7 +67,7 @@
         self.textField = [[[CustomUITextField alloc] initWithFrame: frameRect] autorelease];
         if (!textField_) break;
         [textField_ setTextColor:[UIColor whiteColor]];
-        textField_.font = [UIFont systemFontOfSize:frameRect.size.height*2/3]; //TODO need to delete hard code here.
+        textField_.font = [UIFont systemFontOfSize:(frameRect.size.height - 16)]; //TODO need to delete hard code here.
         textField_.backgroundColor = [UIColor clearColor];
         textField_.borderStyle = UITextBorderStyleNone;
         textField_.autocorrectionType = UITextAutocorrectionTypeNo;
@@ -134,6 +134,8 @@
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)sender        // return NO to disallow editing.
 {
+    if (![textField_ isEnabled]) return NO;
+    
     CCLOG("textFieldShouldBeginEditing...");
     editState_ = YES;
     id eglView = [EAGLView sharedEGLView];

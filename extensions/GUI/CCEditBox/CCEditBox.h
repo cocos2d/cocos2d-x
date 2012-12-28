@@ -277,10 +277,12 @@ public:
     void setReturnType(KeyboardReturnType returnType);
     
     /* override functions */
+    CC_PROPERTY(GLubyte, m_cOpacity, Opacity);
     virtual void setPosition(const CCPoint& pos);
     virtual void setContentSize(const CCSize& size);
     virtual void visit(void);
     virtual void onExit(void);
+    virtual void setEnabled(bool enabled);
     virtual void keyboardWillShow(CCIMEKeyboardNotificationInfo& info);
     virtual void keyboardDidShow(CCIMEKeyboardNotificationInfo& info);
     virtual void keyboardWillHide(CCIMEKeyboardNotificationInfo& info);
