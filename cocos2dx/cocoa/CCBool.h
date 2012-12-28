@@ -14,17 +14,20 @@ class CC_DLL CCBool : public CCObject
 {
 public:
     CCBool(bool v)
-        : m_nValue(v) {}
-    bool getValue() const {return m_nValue;}
+        : m_bValue(v) {}
+    bool getValue() const {return m_bValue;}
 
     static CCBool* create(bool v)
     {
         CCBool* pRet = new CCBool(v);
-        pRet->autorelease();
+        if (pRet)
+        {
+            pRet->autorelease();
+        }
         return pRet;
     }
 private:
-    double m_nValue;
+    bool m_bValue;
 };
 
 // end of data_structure group

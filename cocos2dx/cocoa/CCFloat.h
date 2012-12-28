@@ -14,17 +14,20 @@ class CC_DLL CCFloat : public CCObject
 {
 public:
     CCFloat(float v)
-        : m_nValue(v) {}
-    float getValue() const {return m_nValue;}
+        : m_fValue(v) {}
+    float getValue() const {return m_fValue;}
 
     static CCFloat* create(float v)
     {
         CCFloat* pRet = new CCFloat(v);
-        pRet->autorelease();
+        if (pRet)
+        {
+            pRet->autorelease();
+        }
         return pRet;
     }
 private:
-    float m_nValue;
+    float m_fValue;
 };
 
 // end of data_structure group
