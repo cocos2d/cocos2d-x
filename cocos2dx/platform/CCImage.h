@@ -45,6 +45,7 @@ public:
         kFmtJpg = 0,
         kFmtPng,
         kFmtTiff,
+        kFmtWebp,
         kFmtRawData,
         kFmtUnKnown
     }EImageFormat;
@@ -61,8 +62,8 @@ public:
         kAlignLeft          = 0x31, ///< Horizontal left and vertical center.
         kAlignTopLeft       = 0x11, ///< Horizontal left and vertical top.
     }ETextAlign;
-
-    /** 
+    
+    /**
     @brief  Load the image from the specified path. 
     @param strPath   the absolute file path.
     @param imageType the type of image, currently only supporting two types.
@@ -95,6 +96,12 @@ public:
                            int nHeight = 0,
                            int nBitsPerComponent = 8);
 
+    /**
+     @brief Load image from webp data.
+     */
+    bool initWithWebpData(void * pData, int nDataLen);
+
+    
     /**
     @brief    Create image with specified string.
     @param  pText       the text the image will show (cannot be nil).
