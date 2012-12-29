@@ -87,7 +87,11 @@ CCImage::CCImage()
 
 CCImage::~CCImage()
 {
-    CC_SAFE_DELETE_ARRAY(m_pData);
+    // CC_SAFE_DELETE_ARRAY(m_pData);
+    if (m_pData)
+    {
+        free(m_pData);
+    }
 }
 
 bool CCImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = eFmtPng*/)
@@ -141,6 +145,11 @@ bool CCImage::initWithImageData(void * pData,
         else if (kFmtTiff == eFmt)
         {
             bRet = _initWithTiffData(pData, nDataLen);
+            break;
+        }
+        else if (kFmtWebp == eFmt)
+        {
+            bRet = _initWithWebpData(pData, nDataLen);
             break;
         }
         else if (kFmtRawData == eFmt)
@@ -309,7 +318,8 @@ bool CCImage::_initWithJpgData(void * data, int nSize)
         row_pointer[0] = new unsigned char[cinfo.output_width*cinfo.output_components];
         CC_BREAK_IF(! row_pointer[0]);
 
-        m_pData = new unsigned char[cinfo.output_width*cinfo.output_height*cinfo.output_components];
+        // m_pData = new unsigned char[cinfo.output_width*cinfo.output_height*cinfo.output_components];
+        m_pData = (unsigned char*)malloc(cinfo.output_width*cinfo.output_height*cinfo.output_components);
         CC_BREAK_IF(! m_pData);
 
         /* now actually read the jpeg into the raw buffer */
@@ -424,7 +434,8 @@ bool CCImage::_initWithPngData(void * pData, int nDatalen)
         
         rowbytes = png_get_rowbytes(png_ptr, info_ptr);
         
-        m_pData = new unsigned char[rowbytes * m_nHeight];
+        //m_pData = new unsigned char[rowbytes * m_nHeight];
+        m_pData = (unsigned char*)malloc(rowbytes * m_nHeight);
         CC_BREAK_IF(!m_pData);
         
         for (unsigned short i = 0; i < m_nHeight; ++i)
@@ -607,7 +618,8 @@ bool CCImage::_initWithTiffData(void* pData, int nDataLen)
         m_nHeight = h;
         m_nBitsPerComponent = 8;
 
-        m_pData = new unsigned char[npixels * sizeof (uint32)];
+        //m_pData = new unsigned char[npixels * sizeof (uint32)];
+        m_pData = (unsigned char*)malloc(npixels * sizeof (uint32));
 
         uint32* raster = (uint32*) _TIFFmalloc(npixels * sizeof (uint32));
         if (raster != NULL) 
@@ -656,7 +668,8 @@ bool CCImage::_initWithRawData(void * pData, int nDatalen, int nWidth, int nHeig
         // only RGBA8888 supported
         int nBytesPerComponent = 4;
         int nSize = nHeight * nWidth * nBytesPerComponent;
-        m_pData = new unsigned char[nSize];
+        //m_pData = new unsigned char[nSize];
+        m_pData = (unsigned char*)malloc(nSize);
         CC_BREAK_IF(! m_pData);
         memcpy(m_pData, pData, nSize);
 

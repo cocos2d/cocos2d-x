@@ -97,12 +97,6 @@ public:
                            int nBitsPerComponent = 8);
 
     /**
-     @brief Load image from webp data.
-     */
-    bool initWithWebpData(void * pData, int nDataLen);
-
-    
-    /**
     @brief    Create image with specified string.
     @param  pText       the text the image will show (cannot be nil).
     @param  nWidth      the image width, if 0, the width will match the text's width.
@@ -139,7 +133,8 @@ public:
 protected:
     bool _initWithJpgData(void *pData, int nDatalen);
     bool _initWithPngData(void *pData, int nDatalen);
-    bool _initWithTiffData(void* pData, int nDataLen);
+    bool _initWithTiffData(void *pData, int nDataLen);
+    bool _initWithWebpData(void *pData, int nDataLen);
     // @warning kFmtRawData only support RGBA8888
     bool _initWithRawData(void *pData, int nDatalen, int nWidth, int nHeight, int nBitsPerComponent);
 

@@ -30,27 +30,27 @@
 
 NS_CC_BEGIN
 
-bool CCImage::initWithWebpData(void * pData, int nDataLen)
+bool CCImage::_initWithWebpData(void *pData, int nDataLen)
 {
 	bool bRet = false;
 	do
 	{
 		int width = 0;
-		int height = 0;
-		//WebPGetInfo((uint8_t*)pData, nDataLen, &width, &height);
-		uint8_t* data = WebPDecodeRGBA((uint8_t*)pData, nDataLen, &width, &height);
-		if(data) {
-			if(0 == width || 0 == height) {
-				free(data);
-				break;
-			}
-			m_nBitsPerComponent = 8;
-			m_nHeight   = (short)height;
-			m_nWidth    = (short)width;
-			m_bHasAlpha = true;
-			m_pData = (unsigned char*)data;
-			bRet = true;
-		}
+        int height = 0;
+        uint8_t *data = WebPDecodeRGBA((uint8_t*)pData, nDataLen, &width, &height);
+		if(!data) break;
+        if(width == 0 || height == 0)
+        {
+            free(data);
+            break;
+        }
+        
+        m_nBitsPerComponent = 8;
+        m_nHeight   = (short)height;
+        m_nWidth    = (short)width;
+        m_bHasAlpha = true;
+        m_pData = (unsigned char*)data;
+        bRet = true;
 	} while (0);
 	return bRet;
 }
