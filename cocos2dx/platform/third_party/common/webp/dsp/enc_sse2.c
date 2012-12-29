@@ -11,15 +11,15 @@
 
 #include "./dsp.h"
 
+#if defined(__cplusplus) || defined(c_plusplus)
+extern "C" {
+#endif
+
 #if defined(WEBP_USE_SSE2)
 #include <stdlib.h>  // for abs()
 #include <emmintrin.h>
 
 #include "../enc/vp8enci.h"
-
-#if defined(__cplusplus) || defined(c_plusplus)
-extern "C" {
-#endif
 
 //------------------------------------------------------------------------------
 // Compute susceptibility based on DCT-coeff histograms:
@@ -819,8 +819,15 @@ static int QuantizeBlockSSE2(int16_t in[16], int16_t out[16],
   }
 }
 
+#endif   // WEBP_USE_SSE2
+
+//------------------------------------------------------------------------------
+// Entry point
+
 extern void VP8EncDspInitSSE2(void);
+
 void VP8EncDspInitSSE2(void) {
+#if defined(WEBP_USE_SSE2)
   VP8CollectHistogram = CollectHistogramSSE2;
   VP8EncQuantizeBlock = QuantizeBlockSSE2;
   VP8ITransform = ITransformSSE2;
@@ -828,10 +835,9 @@ void VP8EncDspInitSSE2(void) {
   VP8SSE4x4 = SSE4x4SSE2;
   VP8TDisto4x4 = Disto4x4SSE2;
   VP8TDisto16x16 = Disto16x16SSE2;
+#endif   // WEBP_USE_SSE2
 }
 
 #if defined(__cplusplus) || defined(c_plusplus)
 }    // extern "C"
 #endif
-
-#endif   // WEBP_USE_SSE2

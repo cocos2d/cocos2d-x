@@ -76,6 +76,9 @@ static VP8StatusCode ParseRIFF(const uint8_t** const data,
       if (size < TAG_SIZE + CHUNK_HEADER_SIZE) {
         return VP8_STATUS_BITSTREAM_ERROR;
       }
+      if (size > MAX_CHUNK_PAYLOAD) {
+        return VP8_STATUS_BITSTREAM_ERROR;
+      }
       // We have a RIFF container. Skip it.
       *riff_size = size;
       *data += RIFF_HEADER_SIZE;
@@ -177,6 +180,9 @@ static VP8StatusCode ParseOptionalChunks(const uint8_t** const data,
     }
 
     chunk_size = get_le32(buf + TAG_SIZE);
+    if (chunk_size > MAX_CHUNK_PAYLOAD) {
+      return VP8_STATUS_BITSTREAM_ERROR;          // Not a valid chunk size.
+    }
     // For odd-sized chunk-payload, there's one byte padding at the end.
     disk_chunk_size = (CHUNK_HEADER_SIZE + chunk_size + 1) & ~1;
     total_size += disk_chunk_size;

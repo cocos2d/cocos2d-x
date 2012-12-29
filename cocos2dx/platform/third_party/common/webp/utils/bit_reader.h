@@ -93,6 +93,8 @@ static WEBP_INLINE void VP8LoadNewBytes(VP8BitReader* const br) {
 #elif (BITS == 16)
     // gcc will recognize a 'rorw $8, ...' here:
     bits = (bit_t)(in_bits >> 8) | ((in_bits & 0xff) << 8);
+#else   // BITS == 8
+    bits = (bit_t)in_bits;
 #endif
 #else    // LITTLE_ENDIAN
     bits = (bit_t)in_bits;
