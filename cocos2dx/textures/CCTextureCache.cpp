@@ -434,13 +434,27 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
                 {
                     eImageFormat = CCImage::kFmtTiff;
                 }
+                else if (std::string::npos != lowerCase.find(".webp"))
+                {
+                    eImageFormat = CCImage::kFmtWebp;
+                }
                 
                 pImage = new CCImage();
                 CC_BREAK_IF(NULL == pImage);
 
                 unsigned long nSize = 0;
                 unsigned char* pBuffer = CCFileUtils::sharedFileUtils()->getFileData(fullpath.c_str(), "rb", &nSize);
-                bool bRet = pImage->initWithImageData((void*)pBuffer, nSize, eImageFormat);
+                
+                bool bRet = false;
+                
+                if (eImageFormat == CCImage::kFmtWebp)
+                {
+                    bRet = pImage->initWithWebpData((void*)pBuffer, nSize);
+                }
+                else
+                {
+                    bRet = pImage->initWithImageData((void*)pBuffer, nSize, eImageFormat);
+                }
                 CC_SAFE_DELETE_ARRAY(pBuffer);
                 CC_BREAK_IF(!bRet);
 
@@ -453,7 +467,6 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
                     // cache the texture file name
                     VolatileTexture::addImageTexture(texture, fullpath.c_str(), eImageFormat);
 #endif
-
                     m_pTextures->setObject(texture, pathKey.c_str());
                     texture->release();
                 }
