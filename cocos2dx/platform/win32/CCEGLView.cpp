@@ -629,11 +629,13 @@ void CCEGLView::resize(int width, int height)
     if (frameSize.width > 0)
     {
 #ifdef _DEBUG
-        TCHAR buff[MAX_PATH + 1];
-        memset(buff, 0, sizeof(buff));
-        swprintf_s(buff, MAX_PATH, L"%S - %0.0fx%0.0f - %0.2f",
+        char szBuf[MAX_PATH + 1];
+        memset(szBuf, 0, sizeof(szBuf));
+        snprintf(szBuf, MAX_PATH, "%s - %0.0fx%0.0f - %0.2f",
                    m_szViewName, frameSize.width, frameSize.height, m_fFrameZoomFactor);
-        SetWindowText(m_hWnd, buff);
+        WCHAR wszBuf[MAX_PATH] = {0};
+        MultiByteToWideChar(CP_UTF8, 0, szBuf, -1, wszBuf, sizeof(wszBuf));
+        SetWindowText(m_hWnd, wszBuf);
 #endif
     }
 
@@ -713,13 +715,12 @@ void CCEGLView::setScissorInPoints(float x , float y , float w , float h)
               (GLsizei)(h * m_fScaleY * m_fFrameZoomFactor));
 }
 
-CCEGLView* CCEGLView::sharedOpenGLView(const char* pTitle)
+CCEGLView* CCEGLView::sharedOpenGLView()
 {
     static CCEGLView* s_pEglView = NULL;
     if (s_pEglView == NULL)
     {
         s_pEglView = new CCEGLView();
-		s_pEglView->setViewName(pTitle);
 		if(!s_pEglView->Create())
 		{
 			delete s_pEglView;
