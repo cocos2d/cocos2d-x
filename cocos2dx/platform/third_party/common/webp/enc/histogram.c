@@ -55,9 +55,9 @@ VP8LHistogramSet* VP8LAllocateHistogramSet(int size, int cache_bits) {
   int i;
   VP8LHistogramSet* set;
   VP8LHistogram* bulk;
-  const uint64_t total_size = (uint64_t)sizeof(*set)
-                            + size * sizeof(*set->histograms)
-                            + size * sizeof(**set->histograms);
+  const uint64_t total_size = sizeof(*set)
+                            + (uint64_t)size * sizeof(*set->histograms)
+                            + (uint64_t)size * sizeof(**set->histograms);
   uint8_t* memory = (uint8_t*)WebPSafeMalloc(total_size, sizeof(*memory));
   if (memory == NULL) return NULL;
 

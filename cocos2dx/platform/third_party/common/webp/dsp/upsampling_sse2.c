@@ -11,16 +11,16 @@
 
 #include "./dsp.h"
 
+#if defined(__cplusplus) || defined(c_plusplus)
+extern "C" {
+#endif
+
 #if defined(WEBP_USE_SSE2)
 
 #include <assert.h>
 #include <emmintrin.h>
 #include <string.h>
 #include "./yuv.h"
-
-#if defined(__cplusplus) || defined(c_plusplus)
-extern "C" {
-#endif
 
 #ifdef FANCY_UPSAMPLING
 
@@ -184,26 +184,32 @@ SSE2_UPSAMPLE_FUNC(UpsampleBgraLinePairSSE2, VP8YuvToBgra, 4)
 #undef CONVERT2RGB
 #undef SSE2_UPSAMPLE_FUNC
 
+#endif  // FANCY_UPSAMPLING
+
+#endif   // WEBP_USE_SSE2
+
 //------------------------------------------------------------------------------
 
 extern WebPUpsampleLinePairFunc WebPUpsamplers[/* MODE_LAST */];
 
 void WebPInitUpsamplersSSE2(void) {
+#if defined(WEBP_USE_SSE2)
   WebPUpsamplers[MODE_RGB]  = UpsampleRgbLinePairSSE2;
   WebPUpsamplers[MODE_RGBA] = UpsampleRgbaLinePairSSE2;
   WebPUpsamplers[MODE_BGR]  = UpsampleBgrLinePairSSE2;
   WebPUpsamplers[MODE_BGRA] = UpsampleBgraLinePairSSE2;
+#endif   // WEBP_USE_SSE2
 }
 
 void WebPInitPremultiplySSE2(void) {
+#if defined(WEBP_USE_SSE2)
   WebPUpsamplers[MODE_rgbA] = UpsampleRgbaLinePairSSE2;
   WebPUpsamplers[MODE_bgrA] = UpsampleBgraLinePairSSE2;
+#endif   // WEBP_USE_SSE2
 }
-
-#endif  // FANCY_UPSAMPLING
 
 #if defined(__cplusplus) || defined(c_plusplus)
 }    // extern "C"
 #endif
 
-#endif   // WEBP_USE_SSE2
+

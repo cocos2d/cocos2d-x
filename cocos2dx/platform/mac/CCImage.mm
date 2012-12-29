@@ -132,25 +132,22 @@ static bool _initPremultipliedATextureWithImage(CGImageRef image, NSUInteger POT
         case kCCTexture2DPixelFormat_RGBA4444:
         case kCCTexture2DPixelFormat_RGB5A1:
             colorSpace = CGColorSpaceCreateDeviceRGB();
-            //data = new unsigned char[POTHigh * POTWide * 4];
-            data = (unsigned char*)malloc(POTHigh * POTWide * 4);
-            info = hasAlpha ? kCGImageAlphaPremultipliedLast : kCGImageAlphaNoneSkipLast; 
+            data = new unsigned char[POTHigh * POTWide * 4];
+            info = hasAlpha ? kCGImageAlphaPremultipliedLast : kCGImageAlphaNoneSkipLast;
             context = CGBitmapContextCreate(data, POTWide, POTHigh, 8, 4 * POTWide, colorSpace, info | kCGBitmapByteOrder32Big);                
             CGColorSpaceRelease(colorSpace);
             break;
             
         case kCCTexture2DPixelFormat_RGB565:
             colorSpace = CGColorSpaceCreateDeviceRGB();
-            //data = new unsigned char[POTHigh * POTWide * 4];
-            data = (unsigned char*)malloc(POTHigh * POTWide * 4);
+            data = new unsigned char[POTHigh * POTWide * 4];
             info = kCGImageAlphaNoneSkipLast;
             context = CGBitmapContextCreate(data, POTWide, POTHigh, 8, 4 * POTWide, colorSpace, info | kCGBitmapByteOrder32Big);
             CGColorSpaceRelease(colorSpace);
             break;
         case kCCTexture2DPixelFormat_A8:
-            //data = new unsigned char[POTHigh * POTWide];
-            data = (unsigned char*)malloc(POTHigh * POTWide);
-            info = kCGImageAlphaOnly; 
+            data = new unsigned char[POTHigh * POTWide];
+            info = kCGImageAlphaOnly;
             context = CGBitmapContextCreate(data, POTWide, POTHigh, 8, POTWide, NULL, info);
             break;            
         default:
@@ -172,8 +169,7 @@ static bool _initPremultipliedATextureWithImage(CGImageRef image, NSUInteger POT
     if(pixelFormat == kCCTexture2DPixelFormat_RGB565) 
     {
         //Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRGGGGGGBBBBB"
-        //tempData = new unsigned char[POTHigh * POTWide * 2];
-        tempData = (unsigned char*)malloc(POTHigh * POTWide * 2);
+        tempData = new unsigned char[POTHigh * POTWide * 2];
         inPixel32 = (unsigned int*)data;
         outPixel16 = (unsigned short*)tempData;
         for(i = 0; i < POTWide * POTHigh; ++i, ++inPixel32)
@@ -181,15 +177,14 @@ static bool _initPremultipliedATextureWithImage(CGImageRef image, NSUInteger POT
             *outPixel16++ = ((((*inPixel32 >> 0) & 0xFF) >> 3) << 11) | ((((*inPixel32 >> 8) & 0xFF) >> 2) << 5) | ((((*inPixel32 >> 16) & 0xFF) >> 3) << 0);
         }
 
-        free(data);
+        delete []data;
         data = tempData;
         
     }
     else if (pixelFormat == kCCTexture2DPixelFormat_RGBA4444) 
     {
         //Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRGGGGBBBBAAAA"
-        //tempData = new unsigned char[POTHigh * POTWide * 2];
-        tempData = (unsigned char*)malloc(POTHigh * POTWide * 2);
+        tempData = new unsigned char[POTHigh * POTWide * 2];
         inPixel32 = (unsigned int*)data;
         outPixel16 = (unsigned short*)tempData;
         for(i = 0; i < POTWide * POTHigh; ++i, ++inPixel32)
@@ -201,15 +196,14 @@ static bool _initPremultipliedATextureWithImage(CGImageRef image, NSUInteger POT
             ((((*inPixel32 >> 24) & 0xFF) >> 4) << 0); // A
         }       
         
-        free(data);
+        delete []data;
         data = tempData;
         
     }
     else if (pixelFormat == kCCTexture2DPixelFormat_RGB5A1) 
     {
         //Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRGGGGGBBBBBA"
-        //tempData = new unsigned char[POTHigh * POTWide * 2];
-        tempData = (unsigned char*)malloc(POTHigh * POTWide * 2);
+        tempData = new unsigned char[POTHigh * POTWide * 2];
         inPixel32 = (unsigned int*)data;
         outPixel16 = (unsigned short*)tempData;
         for(i = 0; i < POTWide * POTHigh; ++i, ++inPixel32)
@@ -221,7 +215,7 @@ static bool _initPremultipliedATextureWithImage(CGImageRef image, NSUInteger POT
             ((((*inPixel32 >> 24) & 0xFF) >> 7) << 0); // A
         }
                 
-        free(data);
+        delete []data;
         data = tempData;
     }
     
@@ -234,8 +228,7 @@ static bool _initPremultipliedATextureWithImage(CGImageRef image, NSUInteger POT
     
     if (pImageInfo->data)
     {
-        //delete [] pImageInfo->data;
-        free(pImageInfo->data);
+        delete [] pImageInfo->data;
     }
     pImageInfo->data = data;
     
@@ -475,8 +468,7 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
 		
 		NSUInteger textureSize = POTWide*POTHigh*4;
 		
-		//unsigned char* dataNew = new unsigned char[textureSize];
-        unsigned char* dataNew = (unsigned char*)malloc(textureSize);
+		unsigned char* dataNew = new unsigned char[textureSize];
 		if (dataNew) {
 			memcpy(dataNew, data, textureSize);
 			// output params
@@ -573,11 +565,7 @@ CCImage::CCImage()
 
 CCImage::~CCImage()
 {
-    // CC_SAFE_DELETE_ARRAY(m_pData);
-    if (m_pData)
-    {
-        free(m_pData);
-    }
+    CC_SAFE_DELETE_ARRAY(m_pData);
 }
 
 bool CCImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = eFmtPng*/)
@@ -619,7 +607,7 @@ bool CCImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = e
 	unsigned long fileSize = 0;
 	unsigned char* pFileData = CCFileUtils::sharedFileUtils()->getFileData(strTemp.c_str(), "rb", &fileSize);
 	bool ret = initWithImageData(pFileData, fileSize, eImgFmt);
-	free(pFileData);
+	delete []pFileData;
 	return ret;
 }
 

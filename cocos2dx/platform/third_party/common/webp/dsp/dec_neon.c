@@ -12,13 +12,13 @@
 
 #include "./dsp.h"
 
-#if defined(WEBP_USE_NEON)
-
-#include "../dec/vp8i.h"
-
 #if defined(__cplusplus) || defined(c_plusplus)
 extern "C" {
 #endif
+
+#if defined(WEBP_USE_NEON)
+
+#include "../dec/vp8i.h"
 
 #define QRegs "q0", "q1", "q2", "q3", "q4", "q5", "q6", "q7",                  \
               "q8", "q9", "q10", "q11", "q12", "q13", "q14", "q15"
@@ -311,19 +311,24 @@ static void TransformTwoNEON(const int16_t* in, uint8_t* dst, int do_two) {
   }
 }
 
+#endif   // WEBP_USE_NEON
+
+//------------------------------------------------------------------------------
+// Entry point
+
 extern void VP8DspInitNEON(void);
 
 void VP8DspInitNEON(void) {
+#if defined(WEBP_USE_NEON)
   VP8Transform = TransformTwoNEON;
 
   VP8SimpleVFilter16 = SimpleVFilter16NEON;
   VP8SimpleHFilter16 = SimpleHFilter16NEON;
   VP8SimpleVFilter16i = SimpleVFilter16iNEON;
   VP8SimpleHFilter16i = SimpleHFilter16iNEON;
+#endif   // WEBP_USE_NEON
 }
 
 #if defined(__cplusplus) || defined(c_plusplus)
 }    // extern "C"
 #endif
-
-#endif   // WEBP_USE_NEON

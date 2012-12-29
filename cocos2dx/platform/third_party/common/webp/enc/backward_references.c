@@ -459,8 +459,8 @@ static int BackwardReferencesHashChainDistanceOnly(
   const int quality = 100;
   const int pix_count = xsize * ysize;
   const int use_color_cache = (cache_bits > 0);
-  double* const cost =
-      (double*)WebPSafeMalloc((uint64_t)pix_count, sizeof(*cost));
+  float* const cost =
+      (float*)WebPSafeMalloc((uint64_t)pix_count, sizeof(*cost));
   CostModel* cost_model = (CostModel*)malloc(sizeof(*cost_model));
   HashChain* hash_chain = (HashChain*)malloc(sizeof(*hash_chain));
   VP8LColorCache hashers;
@@ -481,7 +481,7 @@ static int BackwardReferencesHashChainDistanceOnly(
     goto Error;
   }
 
-  for (i = 0; i < pix_count; ++i) cost[i] = 1e100;
+  for (i = 0; i < pix_count; ++i) cost[i] = 1e38f;
 
   // We loop one pixel at a time, but store all currently best points to
   // non-processed locations from this point.
@@ -509,10 +509,9 @@ static int BackwardReferencesHashChainDistanceOnly(
             prev_cost + GetDistanceCost(cost_model, code);
         int k;
         for (k = 1; k < len; ++k) {
-          const double cost_val =
-              distance_cost + GetLengthCost(cost_model, k);
+          const double cost_val = distance_cost + GetLengthCost(cost_model, k);
           if (cost[i + k] > cost_val) {
-            cost[i + k] = cost_val;
+            cost[i + k] = (float)cost_val;
             dist_array[i + k] = k + 1;
           }
         }
@@ -554,7 +553,7 @@ static int BackwardReferencesHashChainDistanceOnly(
         cost_val += GetLiteralCost(cost_model, argb[i]) * mul1;
       }
       if (cost[i] > cost_val) {
-        cost[i] = cost_val;
+        cost[i] = (float)cost_val;
         dist_array[i] = 1;  // only one is inserted.
       }
       if (use_color_cache) VP8LColorCacheInsert(&hashers, argb[i]);

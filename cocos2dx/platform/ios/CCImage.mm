@@ -284,8 +284,7 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
         
         if (! context)
         {
-            //delete[] data;
-            free(data);
+            delete[] data;
             break;
         }
         
@@ -345,11 +344,7 @@ CCImage::CCImage()
 
 CCImage::~CCImage()
 {
-    //CC_SAFE_DELETE_ARRAY(m_pData);
-    if (m_pData)
-    {
-        free(m_pData);
-    }
+    CC_SAFE_DELETE_ARRAY(m_pData);
 }
 
 bool CCImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = eFmtPng*/)

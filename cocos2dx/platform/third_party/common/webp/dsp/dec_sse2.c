@@ -12,14 +12,14 @@
 
 #include "./dsp.h"
 
+#if defined(__cplusplus) || defined(c_plusplus)
+extern "C" {
+#endif
+
 #if defined(WEBP_USE_SSE2)
 
 #include <emmintrin.h>
 #include "../dec/vp8i.h"
-
-#if defined(__cplusplus) || defined(c_plusplus)
-extern "C" {
-#endif
 
 //------------------------------------------------------------------------------
 // Transforms (Paragraph 14.4)
@@ -876,9 +876,15 @@ static void HFilter8iSSE2(uint8_t* u, uint8_t* v, int stride,
   Store16x4(u, v, stride, &p1, &p0, &q0, &q1);
 }
 
+#endif   // WEBP_USE_SSE2
+
+//------------------------------------------------------------------------------
+// Entry point
+
 extern void VP8DspInitSSE2(void);
 
 void VP8DspInitSSE2(void) {
+#if defined(WEBP_USE_SSE2)
   VP8Transform = TransformSSE2;
 
   VP8VFilter16 = VFilter16SSE2;
@@ -894,10 +900,9 @@ void VP8DspInitSSE2(void) {
   VP8SimpleHFilter16 = SimpleHFilter16SSE2;
   VP8SimpleVFilter16i = SimpleVFilter16iSSE2;
   VP8SimpleHFilter16i = SimpleHFilter16iSSE2;
+#endif   // WEBP_USE_SSE2
 }
 
 #if defined(__cplusplus) || defined(c_plusplus)
 }    // extern "C"
 #endif
-
-#endif   // WEBP_USE_SSE2
