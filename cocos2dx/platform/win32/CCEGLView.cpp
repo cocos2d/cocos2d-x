@@ -455,6 +455,11 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
             if (GetKeyState(VK_LSHIFT) < 0 ||  GetKeyState(VK_RSHIFT) < 0 || GetKeyState(VK_SHIFT) < 0)
                 pDirector->getKeypadDispatcher()->dispatchKeypadMSG(wParam == VK_F1 ? kTypeBackClicked : kTypeMenuClicked);
         }
+        else if (wParam == VK_ESCAPE)
+        {
+            CCDirector::sharedDirector()->getKeypadDispatcher()->dispatchKeypadMSG(kTypeBackClicked);
+        }
+
         if ( m_lpfnAccelerometerKeyHook!=NULL )
         {
             (*m_lpfnAccelerometerKeyHook)( message,wParam,lParam );
@@ -626,8 +631,8 @@ void CCEGLView::resize(int width, int height)
 #ifdef _DEBUG
         TCHAR buff[MAX_PATH + 1];
         memset(buff, 0, sizeof(buff));
-        swprintf_s(buff, MAX_PATH, L"%s - %0.0fx%0.0f - %0.2f",
-                   kWindowClassName, frameSize.width, frameSize.height, m_fFrameZoomFactor);
+        swprintf_s(buff, MAX_PATH, L"%S - %0.0fx%0.0f - %0.2f",
+                   m_szViewName, frameSize.width, frameSize.height, m_fFrameZoomFactor);
         SetWindowText(m_hWnd, buff);
 #endif
     }
@@ -708,12 +713,13 @@ void CCEGLView::setScissorInPoints(float x , float y , float w , float h)
               (GLsizei)(h * m_fScaleY * m_fFrameZoomFactor));
 }
 
-CCEGLView* CCEGLView::sharedOpenGLView()
+CCEGLView* CCEGLView::sharedOpenGLView(const char* pTitle)
 {
     static CCEGLView* s_pEglView = NULL;
     if (s_pEglView == NULL)
     {
         s_pEglView = new CCEGLView();
+		s_pEglView->setViewName(pTitle);
 		if(!s_pEglView->Create())
 		{
 			delete s_pEglView;
