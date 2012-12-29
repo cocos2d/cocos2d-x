@@ -105,7 +105,11 @@ static CCImage::EImageFormat computeImageFormatType(string& filename)
     {
         ret = CCImage::kFmtTiff;
     }
-    
+    else if ((std::string::npos != filename.find(".webp")) || (std::string::npos != filename.find(".WEBP")))
+    {
+        ret = CCImage::kFmtWebp;
+    }
+   
     return ret;
 }
 
@@ -445,16 +449,7 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
                 unsigned long nSize = 0;
                 unsigned char* pBuffer = CCFileUtils::sharedFileUtils()->getFileData(fullpath.c_str(), "rb", &nSize);
                 
-                bool bRet = false;
-                
-                if (eImageFormat == CCImage::kFmtWebp)
-                {
-                    bRet = pImage->initWithWebpData((void*)pBuffer, nSize);
-                }
-                else
-                {
-                    bRet = pImage->initWithImageData((void*)pBuffer, nSize, eImageFormat);
-                }
+                bool bRet = pImage->initWithImageData((void*)pBuffer, nSize, eImageFormat);
                 CC_SAFE_DELETE_ARRAY(pBuffer);
                 CC_BREAK_IF(!bRet);
 

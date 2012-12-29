@@ -78,7 +78,8 @@ static bool _initWithImage(CGImageRef cgImage, tImageInfo *pImageinfo)
     // change to RGBA8888
     pImageinfo->hasAlpha = true;
     pImageinfo->bitsPerComponent = 8;
-    pImageinfo->data = new unsigned char[pImageinfo->width * pImageinfo->height * 4];
+    //pImageinfo->data = new unsigned char[pImageinfo->width * pImageinfo->height * 4];
+    pImageinfo->data = (unsigned char*)malloc(pImageinfo->width * pImageinfo->height * 4);
     colorSpace = CGColorSpaceCreateDeviceRGB();
     CGContextRef context = CGBitmapContextCreate(pImageinfo->data, 
                                                  pImageinfo->width, 
@@ -264,9 +265,16 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
         if (constrainSize.height > 0 && constrainSize.height > dim.height)
         {
             dim.height = constrainSize.height;
-        }         
+        }
         
-        unsigned char* data = new unsigned char[(int)(dim.width * dim.height * 4)];
+        dim.width = (int)(dim.width / 2) * 2 + 2;
+        dim.height = (int)(dim.height / 2) * 2 + 2;
+        
+        dim.width = (int)(dim.width / 2) * 2 + 2;
+        dim.height = (int)(dim.height / 2) * 2 + 2;
+        
+        //unsigned char* data = new unsigned char[(int)(dim.width * dim.height * 4)];
+        unsigned char* data = (unsigned char*)malloc((int)(dim.width * dim.height * 4));
         memset(data, 0, (int)(dim.width * dim.height * 4));
         
         // draw text
@@ -276,7 +284,8 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
         
         if (! context)
         {
-            delete[] data;
+            //delete[] data;
+            free(data);
             break;
         }
         
@@ -336,7 +345,11 @@ CCImage::CCImage()
 
 CCImage::~CCImage()
 {
-    CC_SAFE_DELETE_ARRAY(m_pData);
+    //CC_SAFE_DELETE_ARRAY(m_pData);
+    if (m_pData)
+    {
+        free(m_pData);
+    }
 }
 
 bool CCImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = eFmtPng*/)
@@ -388,6 +401,10 @@ bool CCImage::initWithImageData(void * pData,
         {
             bRet = _initWithRawData(pData, nDataLen, nWidth, nHeight, nBitsPerComponent);
         }
+        else if (eFmt == kFmtWebp)
+        {
+            bRet = _initWithWebpData(pData, nDataLen);
+        }
         else // init with png or jpg file data
         {
             bRet = _initWithData(pData, nDataLen, &info);
@@ -421,7 +438,8 @@ bool CCImage::_initWithRawData(void *pData, int nDatalen, int nWidth, int nHeigh
         // only RGBA8888 supported
         int nBytesPerComponent = 4;
         int nSize = nHeight * nWidth * nBytesPerComponent;
-        m_pData = new unsigned char[nSize];
+        //m_pData = new unsigned char[nSize];
+        m_pData = (unsigned char*)malloc(nSize);
         CC_BREAK_IF(! m_pData);
         memcpy(m_pData, pData, nSize);
 
