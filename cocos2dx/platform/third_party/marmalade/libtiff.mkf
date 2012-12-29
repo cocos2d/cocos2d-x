@@ -1,9 +1,12 @@
-includepath headers
+includepath 
+{
+	libtiff/headers
+}
 
 files
 {
-	[Source]
-	(source)
+	[source]
+	(libtiff/source)
 	tif_aux.c
     tif_close.c
     tif_codec.c
@@ -42,8 +45,8 @@ files
     tif_write.c
     tif_zip.c
 
-	[Headers]
-	(headers)
+	[headers]
+	(libtiff/headers)
     t4.h
     tiff.h
     tiffconf.h
