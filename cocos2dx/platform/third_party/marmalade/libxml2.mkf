@@ -53,15 +53,6 @@ undefines
 
 files
 {
-	(libxml2/sources)
-	elfgcchack.h
-	libxml.h
-	trio.h
-	triodef.h
-	trionan.h
-	triop.h
-	triostr.h
-
 	(libxml2/include/libxml)
 	["common/libxml"]
 	c14n.h
@@ -122,6 +113,14 @@ files
 	
 	(libxml2/sources)
 	["sources"]
+	elfgcchack.h
+	libxml.h
+	trio.h
+	triodef.h
+	trionan.h
+	triop.h
+	triostr.h
+	
 	c14n.c
 	catalog.c
 	chvalid.c
