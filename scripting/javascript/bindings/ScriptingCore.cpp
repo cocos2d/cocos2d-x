@@ -888,7 +888,7 @@ long long jsval_to_long_long(JSContext *cx, jsval v) {
 std::string jsval_to_std_string(JSContext *cx, jsval v) {
     JSString *tmp = JS_ValueToString(cx, v);
 	JSStringWrapper ret(tmp);
-    return ret;
+    return ret.get();
 }
 
 const char* jsval_to_c_string(JSContext *cx, jsval v) {
