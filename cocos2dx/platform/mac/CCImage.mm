@@ -132,7 +132,8 @@ static bool _initPremultipliedATextureWithImage(CGImageRef image, NSUInteger POT
         case kCCTexture2DPixelFormat_RGBA4444:
         case kCCTexture2DPixelFormat_RGB5A1:
             colorSpace = CGColorSpaceCreateDeviceRGB();
-            data = new unsigned char[POTHigh * POTWide * 4];
+            //data = new unsigned char[POTHigh * POTWide * 4];
+            data = (unsigned char*)malloc(POTHigh * POTWide * 4);
             info = hasAlpha ? kCGImageAlphaPremultipliedLast : kCGImageAlphaNoneSkipLast; 
             context = CGBitmapContextCreate(data, POTWide, POTHigh, 8, 4 * POTWide, colorSpace, info | kCGBitmapByteOrder32Big);                
             CGColorSpaceRelease(colorSpace);
@@ -140,13 +141,15 @@ static bool _initPremultipliedATextureWithImage(CGImageRef image, NSUInteger POT
             
         case kCCTexture2DPixelFormat_RGB565:
             colorSpace = CGColorSpaceCreateDeviceRGB();
-            data = new unsigned char[POTHigh * POTWide * 4];
+            //data = new unsigned char[POTHigh * POTWide * 4];
+            data = (unsigned char*)malloc(POTHigh * POTWide * 4);
             info = kCGImageAlphaNoneSkipLast;
             context = CGBitmapContextCreate(data, POTWide, POTHigh, 8, 4 * POTWide, colorSpace, info | kCGBitmapByteOrder32Big);
             CGColorSpaceRelease(colorSpace);
             break;
         case kCCTexture2DPixelFormat_A8:
-            data = new unsigned char[POTHigh * POTWide];
+            //data = new unsigned char[POTHigh * POTWide];
+            data = (unsigned char*)malloc(POTHigh * POTWide);
             info = kCGImageAlphaOnly; 
             context = CGBitmapContextCreate(data, POTWide, POTHigh, 8, POTWide, NULL, info);
             break;            
@@ -169,7 +172,8 @@ static bool _initPremultipliedATextureWithImage(CGImageRef image, NSUInteger POT
     if(pixelFormat == kCCTexture2DPixelFormat_RGB565) 
     {
         //Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRGGGGGGBBBBB"
-        tempData = new unsigned char[POTHigh * POTWide * 2];
+        //tempData = new unsigned char[POTHigh * POTWide * 2];
+        tempData = (unsigned char*)malloc(POTHigh * POTWide * 2);
         inPixel32 = (unsigned int*)data;
         outPixel16 = (unsigned short*)tempData;
         for(i = 0; i < POTWide * POTHigh; ++i, ++inPixel32)
@@ -177,14 +181,15 @@ static bool _initPremultipliedATextureWithImage(CGImageRef image, NSUInteger POT
             *outPixel16++ = ((((*inPixel32 >> 0) & 0xFF) >> 3) << 11) | ((((*inPixel32 >> 8) & 0xFF) >> 2) << 5) | ((((*inPixel32 >> 16) & 0xFF) >> 3) << 0);
         }
 
-        delete[] data;
+        free(data);
         data = tempData;
         
     }
     else if (pixelFormat == kCCTexture2DPixelFormat_RGBA4444) 
     {
         //Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRGGGGBBBBAAAA"
-        tempData = new unsigned char[POTHigh * POTWide * 2];
+        //tempData = new unsigned char[POTHigh * POTWide * 2];
+        tempData = (unsigned char*)malloc(POTHigh * POTWide * 2);
         inPixel32 = (unsigned int*)data;
         outPixel16 = (unsigned short*)tempData;
         for(i = 0; i < POTWide * POTHigh; ++i, ++inPixel32)
@@ -196,14 +201,15 @@ static bool _initPremultipliedATextureWithImage(CGImageRef image, NSUInteger POT
             ((((*inPixel32 >> 24) & 0xFF) >> 4) << 0); // A
         }       
         
-        delete[] data;
+        free(data);
         data = tempData;
         
     }
     else if (pixelFormat == kCCTexture2DPixelFormat_RGB5A1) 
     {
         //Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRGGGGGBBBBBA"
-        tempData = new unsigned char[POTHigh * POTWide * 2];
+        //tempData = new unsigned char[POTHigh * POTWide * 2];
+        tempData = (unsigned char*)malloc(POTHigh * POTWide * 2);
         inPixel32 = (unsigned int*)data;
         outPixel16 = (unsigned short*)tempData;
         for(i = 0; i < POTWide * POTHigh; ++i, ++inPixel32)
@@ -215,7 +221,7 @@ static bool _initPremultipliedATextureWithImage(CGImageRef image, NSUInteger POT
             ((((*inPixel32 >> 24) & 0xFF) >> 7) << 0); // A
         }
                 
-        delete[] data;
+        free(data);
         data = tempData;
     }
     
@@ -228,7 +234,8 @@ static bool _initPremultipliedATextureWithImage(CGImageRef image, NSUInteger POT
     
     if (pImageInfo->data)
     {
-        delete [] pImageInfo->data;
+        //delete [] pImageInfo->data;
+        free(pImageInfo->data);
     }
     pImageInfo->data = data;
     
@@ -425,6 +432,12 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
 		} else if (dimensions.height <= 0) {
 			dimensions.height = realDimensions.height;
 		}
+        
+        dimensions.width = (int)(dimensions.width / 2) * 2 + 2;
+        dimensions.height = (int)(dimensions.height / 2) * 2 + 2;
+
+        dimensions.width = (int)(dimensions.width / 2) * 2 + 2;
+        dimensions.height = (int)(dimensions.height / 2) * 2 + 2;
 
 		NSUInteger POTWide = (NSUInteger)dimensions.width;
 		NSUInteger POTHigh = (NSUInteger)(MAX(dimensions.height, realDimensions.height));
@@ -462,7 +475,8 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
 		
 		NSUInteger textureSize = POTWide*POTHigh*4;
 		
-		unsigned char* dataNew = new unsigned char[textureSize];
+		//unsigned char* dataNew = new unsigned char[textureSize];
+        unsigned char* dataNew = (unsigned char*)malloc(textureSize);
 		if (dataNew) {
 			memcpy(dataNew, data, textureSize);
 			// output params
@@ -559,7 +573,11 @@ CCImage::CCImage()
 
 CCImage::~CCImage()
 {
-    CC_SAFE_DELETE_ARRAY(m_pData);
+    // CC_SAFE_DELETE_ARRAY(m_pData);
+    if (m_pData)
+    {
+        free(m_pData);
+    }
 }
 
 bool CCImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = eFmtPng*/)
@@ -816,26 +834,34 @@ bool CCImage::initWithImageData(void * pData,
     do 
     {
         CC_BREAK_IF(! pData || nDataLen <= 0);
-        bRet = _initWithData(pData, nDataLen, &info, 1.0f, 1.0f);//m_dScaleX, m_dScaleY);
+        
+        if (eFmt == CCImage::kFmtWebp)
+        {
+            bRet = _initWithWebpData(pData, nDataLen);
+        }
+        else
+        {
+            bRet = _initWithData(pData, nDataLen, &info, 1.0f, 1.0f);//m_dScaleX, m_dScaleY);
+            if (bRet)
+            {
+                m_nHeight = (short)info.height;
+                m_nWidth = (short)info.width;
+                m_nBitsPerComponent = info.bitsPerComponent;
+                if (eFmt == kFmtJpg)
+                {
+                    m_bHasAlpha = true;
+                    m_bPreMulti = false;
+                }
+                else
+                {
+                    m_bHasAlpha = info.hasAlpha;
+                    m_bPreMulti = info.isPremultipliedAlpha;
+                }
+                m_pData = info.data;
+            }
+        }
     } while (0);
 	
-    if (bRet)
-    {
-        m_nHeight = (short)info.height;
-        m_nWidth = (short)info.width;
-        m_nBitsPerComponent = info.bitsPerComponent;
-		if (eFmt == kFmtJpg)
-		{
-			m_bHasAlpha = true;
-			m_bPreMulti = false;
-		}
-		else
-		{
-			m_bHasAlpha = info.hasAlpha;
-			m_bPreMulti = info.isPremultipliedAlpha;
-		}
-        m_pData = info.data;
-    }
     return bRet;
 }
 
