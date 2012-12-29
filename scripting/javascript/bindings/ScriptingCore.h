@@ -261,6 +261,10 @@ public:
 		}
 		buffer = JS_EncodeString(cx, string);
 	}
+    std::string get() {
+        return buffer;
+    }
+
 	operator std::string() {
 		return std::string(buffer);
 	}
