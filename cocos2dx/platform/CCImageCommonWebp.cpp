@@ -23,10 +23,10 @@
  ****************************************************************************/
 
 #include "CCImage.h"
+#include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include "platform/third_party/common/webp/webp/decode.h"
-#include "platform/third_party/common/webp/webp/mux.h"
 
 NS_CC_BEGIN
 
