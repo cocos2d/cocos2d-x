@@ -66,43 +66,36 @@
     
     <configuration id="com.qnx.qcc.configuration.exe.debug.446234419" name="Device-Debug">
        <platformArchitecture>armle-v7</platformArchitecture>
-       <asset path="empty/../../../../cocos2dx/platform/third_party/blackberry/libraries/armle-v7/libgrskia.so" type="Qnx/Elf">lib/libgrskia.so</asset>
         <asset path="empty/../../../../CocosDenshion/proj.blackberry/Device-Debug/libCocosDenshion.so" type="Qnx/Elf">lib/libCocosDenshion.so</asset>
        <asset path="Device-Debug/BBTemplateProject" entry="true" type="Qnx/Elf">BBTemplateProject</asset>
     </configuration>
     <configuration id="com.qnx.qcc.configuration.exe.release.1265921422" name="Device-Release">
        <platformArchitecture>armle-v7</platformArchitecture>
-       <asset path="empty/../../../../cocos2dx/platform/third_party/blackberry/libraries/armle-v7/libgrskia.so" type="Qnx/Elf">lib/libgrskia.so</asset>
        <asset path="empty/../../../../CocosDenshion/proj.blackberry/Device-Release/libCocosDenshion.so" type="Qnx/Elf">lib/libCocosDenshion.so</asset>
        <asset path="Device-Release/BBTemplateProject" entry="true" type="Qnx/Elf">BBTemplateProject</asset>
     </configuration>
     <configuration id="com.qnx.qcc.configuration.exe.profile.1761000041" name="Device-Profile">
        <platformArchitecture>armle-v7</platformArchitecture>
-       <asset path="empty/../../../../cocos2dx/platform/third_party/blackberry/libraries/armle-v7/libgrskia.so" type="Qnx/Elf">lib/libgrskia.so</asset>
        <asset path="empty/../../../../CocosDenshion/proj.blackberry/Device-Profile/libCocosDenshion.so" type="Qnx/Elf">lib/libCocosDenshion.so</asset>
        <asset path="Device-Profile/BBTemplateProject" entry="true" type="Qnx/Elf">BBTemplateProject</asset>
     </configuration>
     <configuration id="com.qnx.qcc.configuration.exe.profile.coverage.1771167181" name="Device-Coverage">
        <platformArchitecture>armle-v7</platformArchitecture>
-       <asset path="empty/../../../../cocos2dx/platform/third_party/blackberry/libraries/armle-v7/libgrskia.so" type="Qnx/Elf">lib/libgrskia.so</asset>
        <asset path="empty/../../../../CocosDenshion/proj.blackberry/Device-Coverage/libCocosDenshion.so" type="Qnx/Elf">lib/libCocosDenshion.so</asset>
        <asset path="Device-Coverage/BBTemplateProject" entry="true" type="Qnx/Elf">BBTemplateProject</asset>
     </configuration>
     <configuration id="com.qnx.qcc.configuration.exe.debug.660208940" name="Simulator">
        <platformArchitecture>x86</platformArchitecture>
-       <asset path="empty/../../../../cocos2dx/platform/third_party/blackberry/libraries/x86/libgrskia.so" type="Qnx/Elf">lib/libgrskia.so</asset>
        <asset path="empty/../../../../CocosDenshion/proj.blackberry/Simulator/libCocosDenshion.so" type="Qnx/Elf">lib/libCocosDenshion.so</asset>
        <asset path="Simulator/BBTemplateProject" entry="true" type="Qnx/Elf">BBTemplateProject</asset>
     </configuration>
     <configuration id="com.qnx.qcc.configuration.exe.profile.1237484173" name="Simulator-Profile">
        <platformArchitecture>x86</platformArchitecture>
-       <asset path="empty/../../../../cocos2dx/platform/third_party/blackberry/libraries/x86/libgrskia.so" type="Qnx/Elf">lib/libgrskia.so</asset>
        <asset path="empty/../../../../CocosDenshion/proj.blackberry/Simulator-Profile/libCocosDenshion.so" type="Qnx/Elf">lib/libCocosDenshion.so</asset>
        <asset path="Simulator-Profile/BBTemplateProject" entry="true" type="Qnx/Elf">BBTemplateProject</asset>
     </configuration>
     <configuration id="com.qnx.qcc.configuration.exe.profile.coverage.181538713" name="Simulator-Coverage">
        <platformArchitecture>x86</platformArchitecture>
-       <asset path="empty/../../../../cocos2dx/platform/third_party/blackberry/libraries/x86/libgrskia.so" type="Qnx/Elf">lib/libgrskia.so</asset>
        <asset path="empty/../../../../CocosDenshion/proj.blackberry/Simulator-Coverage/libCocosDenshion.so" type="Qnx/Elf">lib/libCocosDenshion.so</asset>
        <asset path="Simulator-Coverage/BBTemplateProject" entry="true" type="Qnx/Elf">BBTemplateProject</asset>
     </configuration>
