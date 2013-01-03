@@ -28,9 +28,6 @@ assets
 {
 	(../Resources)
 	.
-
-	(../../TestCpp/Resources)
-	.
 }
 
 
@@ -45,5 +42,7 @@ files
 	AppDelegate.h
 	AppDelegate.cpp
 }
+
+postbuild "${MARMALADE_ROOT}/s3e/python/python ./CopyResources.py"
 
 
