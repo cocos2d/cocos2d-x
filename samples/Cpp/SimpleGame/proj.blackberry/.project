@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>HelloLua</name>
+	<name>SimpleGame</name>
 	<comment></comment>
 	<projects>
 		<project>cocos2dx</project>
-		<project>CocosDenshion</project>
-		<project>lua</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
@@ -30,7 +28,7 @@
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.buildLocation</key>
-					<value>${workspace_loc:/HelloLua/Device-Debug}</value>
+					<value>${workspace_loc:/SimpleGame/Device-Debug}</value>
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.contents</key>
@@ -87,11 +85,6 @@
 			<name>Resources</name>
 			<type>2</type>
 			<locationURI>PARENT-1-PROJECT_LOC/Resources</locationURI>
-		</link>
-		<link>
-			<name>cocos2dx_support</name>
-			<type>2</type>
-			<locationURI>PARENT-4-PROJECT_LOC/scripting/lua/cocos2dx_support</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>

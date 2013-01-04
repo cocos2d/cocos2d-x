@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>HelloLua</name>
+	<name>TestLua</name>
 	<comment></comment>
 	<projects>
 		<project>cocos2dx</project>
@@ -30,7 +30,7 @@
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.buildLocation</key>
-					<value>${workspace_loc:/HelloLua/Device-Debug}</value>
+					<value>${workspace_loc:/TestLua/Device-Debug}</value>
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.contents</key>
