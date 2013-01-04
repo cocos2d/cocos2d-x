@@ -54,44 +54,37 @@
     
     <configuration id="com.qnx.qcc.configuration.exe.debug.2142540956" name="Device-Debug">
        <platformArchitecture>armle-v7</platformArchitecture>
-       <asset path="empty/../../../../cocos2dx/platform/third_party/blackberry/libraries/armle-v7/libgrskia.so" type="Qnx/Elf">lib/libgrskia.so</asset>
-       <asset path="empty/../../../../CocosDenshion/proj.blackberry/Device-Debug/libCocosDenshion.so" type="Qnx/Elf">lib/libCocosDenshion.so</asset>
+       <asset path="empty/../../../../../CocosDenshion/proj.blackberry/Device-Debug/libCocosDenshion.so" type="Qnx/Elf">lib/libCocosDenshion.so</asset>
        <asset path="Device-Debug/TestCpp" entry="true" type="Qnx/Elf">TestCpp</asset>
     </configuration>
     <configuration id="com.qnx.qcc.configuration.exe.release.1185536621" name="Device-Release">
        <platformArchitecture>armle-v7</platformArchitecture>
-       <asset path="empty/../../../../cocos2dx/platform/third_party/blackberry/libraries/armle-v7/libgrskia.so" type="Qnx/Elf">lib/libgrskia.so</asset>
-       <asset path="empty/../../../../CocosDenshion/proj.blackberry/Device-Release/libCocosDenshion.so" type="Qnx/Elf">lib/libCocosDenshion.so</asset>
+       <asset path="empty/../../../../../CocosDenshion/proj.blackberry/Device-Release/libCocosDenshion.so" type="Qnx/Elf">lib/libCocosDenshion.so</asset>
        <asset path="Device-Release/TestCpp" entry="true" type="Qnx/Elf">TestCpp</asset>
     </configuration>
     <configuration id="com.qnx.qcc.configuration.exe.profile.1563929245" name="Device-Profile">
        <platformArchitecture>armle-v7</platformArchitecture>
-       <asset path="empty/../../../../cocos2dx/platform/third_party/blackberry/libraries/armle-v7/libgrskia.so" type="Qnx/Elf">lib/libgrskia.so</asset>
-       <asset path="empty/../../../../CocosDenshion/proj.blackberry/Device-Profile/libCocosDenshion.so" type="Qnx/Elf">lib/libCocosDenshion.so</asset>
+       <asset path="empty/../../../../../CocosDenshion/proj.blackberry/Device-Profile/libCocosDenshion.so" type="Qnx/Elf">lib/libCocosDenshion.so</asset>
        <asset path="Device-Profile/TestCpp" entry="true" type="Qnx/Elf">TestCpp</asset>
     </configuration>
     <configuration id="com.qnx.qcc.configuration.exe.profile.coverage.2091050949" name="Device-Coverage">
        <platformArchitecture>armle-v7</platformArchitecture>
-       <asset path="empty/../../../../cocos2dx/platform/third_party/blackberry/libraries/armle-v7/libgrskia.so" type="Qnx/Elf">lib/libgrskia.so</asset>
-       <asset path="empty/../../../../CocosDenshion/proj.blackberry/Device-Coverage/libCocosDenshion.so" type="Qnx/Elf">lib/libCocosDenshion.so</asset>
+       <asset path="empty/../../../../../CocosDenshion/proj.blackberry/Device-Coverage/libCocosDenshion.so" type="Qnx/Elf">lib/libCocosDenshion.so</asset>
        <asset path="Device-Coverage/TestCpp" entry="true" type="Qnx/Elf">TestCpp</asset>
     </configuration>
     <configuration id="com.qnx.qcc.configuration.exe.debug.538064218" name="Simulator">
        <platformArchitecture>x86</platformArchitecture>
-       <asset path="empty/../../../../cocos2dx/platform/third_party/blackberry/libraries/x86/libgrskia.so" type="Qnx/Elf">lib/libgrskia.so</asset>
-       <asset path="empty/../../../../CocosDenshion/proj.blackberry/Simulator/libCocosDenshion.so" type="Qnx/Elf">lib/libCocosDenshion.so</asset>
+       <asset path="empty/../../../../../CocosDenshion/proj.blackberry/Simulator/libCocosDenshion.so" type="Qnx/Elf">lib/libCocosDenshion.so</asset>
        <asset path="Simulator/TestCpp" entry="true" type="Qnx/Elf">TestCpp</asset>
     </configuration>
     <configuration id="com.qnx.qcc.configuration.exe.profile.808507225" name="Simulator-Profile">
        <platformArchitecture>x86</platformArchitecture>
-       <asset path="empty/../../../../cocos2dx/platform/third_party/blackberry/libraries/x86/libgrskia.so" type="Qnx/Elf">lib/libgrskia.so</asset>
-       <asset path="empty/../../../../CocosDenshion/proj.blackberry/Simulator-Profile/libCocosDenshion.so" type="Qnx/Elf">lib/libCocosDenshion.so</asset>
+       <asset path="empty/../../../../../CocosDenshion/proj.blackberry/Simulator-Profile/libCocosDenshion.so" type="Qnx/Elf">lib/libCocosDenshion.so</asset>
        <asset path="Simulator-Profile/TestCpp" entry="true" type="Qnx/Elf">TestCpp</asset>
     </configuration>
     <configuration id="com.qnx.qcc.configuration.exe.profile.coverage.78763272" name="Simulator-Coverage">
        <platformArchitecture>x86</platformArchitecture>
-       <asset path="empty/../../../../cocos2dx/platform/third_party/blackberry/libraries/x86/libgrskia.so" type="Qnx/Elf">lib/libgrskia.so</asset>
-       <asset path="empty/../../../../CocosDenshion/proj.blackberry/Simulator-Coverage/libCocosDenshion.so" type="Qnx/Elf">lib/libCocosDenshion.so</asset>
+       <asset path="empty/../../../../../CocosDenshion/proj.blackberry/Simulator-Coverage/libCocosDenshion.so" type="Qnx/Elf">lib/libCocosDenshion.so</asset>
        <asset path="Simulator-Coverage/TestCpp" entry="true" type="Qnx/Elf">TestCpp</asset>
     </configuration>
     
