@@ -42,6 +42,8 @@ js_proxy_t *_native_js_global_ht = NULL;
 js_proxy_t *_js_native_global_ht = NULL;
 js_type_class_t *_js_global_type_ht = NULL;
 char *_js_log_buf = NULL;
+static const char * JSB_version = "JSB v0.5";
+
 
 std::vector<sc_register_sth> registrationList;
 
@@ -174,82 +176,86 @@ void js_log(const char *format, ...) {
 
 #define JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES 1
 
-void jsb_register_cocos2d_config( JSContext *_cx, JSObject *cocos2d)
+JSBool JSBCore_platform(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    // Config Object
-    JSObject *ccconfig = JS_NewObject(_cx, NULL, NULL, NULL);
-    // config.os: The Operating system
-    // osx, ios, android, windows, linux, etc..
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    JSString *str = JS_InternString(_cx, "ios");
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    JSString *str = JS_InternString(_cx, "android");
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-    JSString *str = JS_InternString(_cx, "windows");
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
-    JSString *str = JS_InternString(_cx, "marmalade");
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-    JSString *str = JS_InternString(_cx, "linux");
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_BADA)
-    JSString *str = JS_InternString(_cx, "bada");
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY)
-    JSString *str = JS_InternString(_cx, "blackberry");
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-    JSString *str = JS_InternString(_cx, "osx");
-#else
-    JSString *str = JS_InternString(_cx, "unknown");
-#endif
-    JS_DefineProperty(_cx, ccconfig, "os", STRING_TO_JSVAL(str), NULL, NULL, JSPROP_ENUMERATE | JSPROP_READONLY | JSPROP_PERMANENT);
-
+	if (argc==0)
+    {
+        JS_ReportError(cx, "Invalid number of arguments in __getPlatform");
+        return JS_FALSE;
+    }
+    
+	JSString * platform;
+    
     // config.deviceType: Device Type
     // 'mobile' for any kind of mobile devices, 'desktop' for PCs, 'browser' for Web Browsers
-// #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-//     str = JS_InternString(_cx, "desktop");
-// #else
-    str = JS_InternString(_cx, "mobile");
-// #endif
-    JS_DefineProperty(_cx, ccconfig, "platform", STRING_TO_JSVAL(str), NULL, NULL, JSPROP_ENUMERATE | JSPROP_READONLY | JSPROP_PERMANENT);
+    // #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+    //     platform = JS_InternString(_cx, "desktop");
+    // #else
+    platform = JS_InternString(cx, "mobile");
+    // #endif
+    
+	jsval ret = STRING_TO_JSVAL(platform);
+    
+	JS_SET_RVAL(cx, vp, ret);
+    
+	return JS_TRUE;
+};
 
-    // config.engine: Type of renderer
-    // 'cocos2d', 'cocos2d-x', 'cocos2d-html5/canvas', 'cocos2d-html5/webgl', etc..
-    str = JS_InternString(_cx, "cocos2d-x");
-    JS_DefineProperty(_cx, ccconfig, "engine", STRING_TO_JSVAL(str), NULL, NULL, JSPROP_ENUMERATE | JSPROP_READONLY | JSPROP_PERMANENT);
+JSBool JSBCore_version(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    if (argc==0)
+    {
+        JS_ReportError(cx, "Invalid number of arguments in __getVersion");
+        return JS_FALSE;
+    }
+	
+	char version[256];
+	snprintf(version, sizeof(version)-1, "%s - %s", cocos2dVersion(), JSB_version);
+	JSString * js_version = JS_InternString(cx, version);
+	
+	jsval ret = STRING_TO_JSVAL(js_version);
+	JS_SET_RVAL(cx, vp, ret);
+	
+	return JS_TRUE;
+};
 
-    // config.arch: CPU Architecture
-    // i386, ARM, x86_64, web
-#ifdef __LP64__
-    str = JS_InternString(_cx, "x86_64");
-#elif defined(__arm__) || defined(__ARM_NEON__)
-    str = JS_InternString(_cx, "arm");
+JSBool JSBCore_os(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    if (argc==0)
+    {
+        JS_ReportError(cx, "Invalid number of arguments in __getOS");
+        return JS_FALSE;
+    }
+	
+	JSString * os;
+    
+    // osx, ios, android, windows, linux, etc..
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    os = JS_InternString(cx, "ios");
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    os = JS_InternString(cx, "android");
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+    os = JS_InternString(cx, "windows");
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
+    os = JS_InternString(cx, "marmalade");
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
+    os = JS_InternString(cx, "linux");
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_BADA)
+    os = JS_InternString(cx, "bada");
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY)
+    os = JS_InternString(cx, "blackberry");
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+    os = JS_InternString(cx, "osx");
 #else
-    str = JS_InternString(_cx, "i386");
+    os = JS_InternString(cx, "unknown");
 #endif
-    JS_DefineProperty(_cx, ccconfig, "arch", STRING_TO_JSVAL(str), NULL, NULL, JSPROP_ENUMERATE | JSPROP_READONLY | JSPROP_PERMANENT);
+	
+	jsval ret = STRING_TO_JSVAL(os);
+	JS_SET_RVAL(cx, vp, ret);
+	
+	return JS_TRUE;
+};
 
-    // config.version: Version of cocos2d + renderer
-    str = JS_InternString(_cx, cocos2dVersion() );
-    JS_DefineProperty(_cx, ccconfig, "version", STRING_TO_JSVAL(str), NULL, NULL, JSPROP_ENUMERATE | JSPROP_READONLY | JSPROP_PERMANENT);
-
-    // config.usesTypedArrays
-#if JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
-    JSBool b = JS_FALSE;
-#else
-    JSBool b = JS_TRUE;
-#endif
-    JS_DefineProperty(_cx, ccconfig, "usesTypedArrays", BOOLEAN_TO_JSVAL(b), NULL, NULL, JSPROP_ENUMERATE | JSPROP_READONLY | JSPROP_PERMANENT);
-
-    // config.debug: Debug build ?
-#if COCOS2D_DEBUG > 0
-    b = JS_TRUE;
-#else
-    b = JS_FALSE;
-#endif
-    JS_DefineProperty(_cx, ccconfig, "debug", BOOLEAN_TO_JSVAL(b), NULL, NULL, JSPROP_ENUMERATE | JSPROP_READONLY | JSPROP_PERMANENT);
-
-
-    // Add "config" to "cc"
-    JS_DefineProperty(_cx, cocos2d, "config", OBJECT_TO_JSVAL(ccconfig), NULL, NULL, JSPROP_ENUMERATE | JSPROP_READONLY | JSPROP_PERMANENT);
-}
 
 void registerDefaultClasses(JSContext* cx, JSObject* global) {
     // first, try to get the ns
@@ -263,8 +269,6 @@ void registerDefaultClasses(JSContext* cx, JSObject* global) {
     } else {
         JS_ValueToObject(cx, nsval, &ns);
     }
-
-    jsb_register_cocos2d_config(cx, ns);
 
     //
     // Javascript controller (__jsc__)
@@ -290,6 +294,10 @@ void registerDefaultClasses(JSContext* cx, JSObject* global) {
     JS_DefineFunction(cx, global, "_socketWrite", jsSocketWrite, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, global, "_socketRead", jsSocketRead, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, global, "_socketClose", jsSocketClose, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+    
+    JS_DefineFunction(cx, global, "__getPlatform", JSBCore_platform, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+	JS_DefineFunction(cx, global, "__getOS", JSBCore_os, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+	JS_DefineFunction(cx, global, "__getVersion", JSBCore_version, 0, JSPROP_READONLY | JSPROP_PERMANENT);
 }
 
 void sc_finalize(JSFreeOp *freeOp, JSObject *obj) {
