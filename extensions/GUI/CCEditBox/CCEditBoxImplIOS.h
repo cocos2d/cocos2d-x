@@ -27,6 +27,9 @@
 #define __CCEditBoxIMPLIOS_H__
 
 #include "cocos2d.h"
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+
 #include "ExtensionMacros.h"
 #include "CCEditBoxImpl.h"
 
@@ -99,6 +102,9 @@ private:
 
 
 NS_CC_EXT_END
+
+
+#endif /* #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) */
 
 #endif /* __CCEditBoxIMPLIOS_H__ */
 
