@@ -108,7 +108,10 @@ public class Cocos2dxSound {
 
 		if (soundID == null) {
 			soundID = this.createSoundIDFromAsset(pPath);
-			this.mPathSoundIDMap.put(pPath, soundID);
+			// save value just in case if file is really loaded
+			if (soundID != Cocos2dxSound.INVALID_SOUND_ID) {
+				this.mPathSoundIDMap.put(pPath, soundID);
+			}
 		}
 
 		return soundID;
@@ -270,6 +273,11 @@ public class Cocos2dxSound {
 		} catch (final Exception e) {
 			soundID = Cocos2dxSound.INVALID_SOUND_ID;
 			Log.e(Cocos2dxSound.TAG, "error: " + e.getMessage(), e);
+		}
+
+		// mSoundPool.load returns 0 if something goes wrong, for example a file does not exist
+		if (soundID == 0) {
+			soundID = Cocos2dxSound.INVALID_SOUND_ID;
 		}
 
 		return soundID;

@@ -141,6 +141,8 @@ protected:
     CCPointArray *m_pPoints;
     float m_fDeltaT;
     float m_fTension;
+    CCPoint	m_previousPosition;
+    CCPoint	m_accumulatedDiff;
 };
 
 /** Cardinal Spline path.

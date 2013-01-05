@@ -28,8 +28,8 @@ void Effect1::onEnter()
     //     Waves3D is Grid3D and it's size is (15,10)
     
     CCSize size = CCDirector::sharedDirector()->getWinSize();
-    CCActionInterval* lens = CCLens3D::create(ccp(size.width/2,size.height/2), 240, ccg(15,10), 0.0f);
-    CCActionInterval* waves = CCWaves3D::create(18, 15, ccg(15,10), 10);
+    CCActionInterval* lens = CCLens3D::create(0.0f, CCSizeMake(15,10), ccp(size.width/2,size.height/2), 240);
+    CCActionInterval* waves = CCWaves3D::create(10, CCSizeMake(15,10), 18, 15);
 
     CCFiniteTimeAction* reuse = CCReuseGrid::create(1);
     CCActionInterval* delay = CCDelayTime::create(8);
@@ -62,9 +62,9 @@ void Effect2::onEnter()
     //     ShakyTiles is TiledGrid3D and it's size is (15,10)
     //     Shuffletiles is TiledGrid3D and it's size is (15,10)
     //       TurnOfftiles is TiledGrid3D and it's size is (15,10)
-    CCActionInterval* shaky = CCShakyTiles3D::create(4, false, ccg(15,10), 5);
-    CCActionInterval* shuffle = CCShuffleTiles::create(0, ccg(15,10), 3);
-    CCActionInterval* turnoff = CCTurnOffTiles::create(0, ccg(15,10), 3);
+    CCActionInterval* shaky = CCShakyTiles3D::create(5, CCSizeMake(15,10), 4, false);
+    CCActionInterval* shuffle = CCShuffleTiles::create(0, CCSizeMake(15,10), 3);
+    CCActionInterval* turnoff = CCTurnOffTiles::create(0, CCSizeMake(15,10), 3);
     CCActionInterval* turnon = turnoff->reverse();
     
     // reuse 2 times:
@@ -101,8 +101,8 @@ void Effect3::onEnter()
     CCNode* target1 = bg->getChildByTag(kTagSprite1);
     CCNode* target2 = bg->getChildByTag(kTagSprite2);    
     
-    CCActionInterval* waves = CCWaves::create(5, 20, true, false, ccg(15,10), 5);
-    CCActionInterval* shaky = CCShaky3D::create(4, false, ccg(15,10), 5);
+    CCActionInterval* waves = CCWaves::create(5, CCSizeMake(15,10), 5, 20, true, false);
+    CCActionInterval* shaky = CCShaky3D::create(5, CCSizeMake(15,10), 4, false);
     
     target1->runAction( CCRepeatForever::create( waves ) );
     target2->runAction( CCRepeatForever::create( shaky ) );
@@ -152,7 +152,7 @@ void Effect4::onEnter()
 {
     EffectAdvanceTextLayer::onEnter();
 
-    CCLens3D* lens = CCLens3D::create(ccp(100,180), 150, ccg(32,24), 10);
+    CCLens3D* lens = CCLens3D::create(10, CCSizeMake(32,24), ccp(100,180), 150);
     CCActionInterval* move = CCJumpBy::create(5, ccp(380,0), 100, 4);
     CCActionInterval* move_back = move->reverse();
     CCActionInterval* seq = CCSequence::create( move, move_back, NULL);
@@ -187,7 +187,7 @@ void Effect5::onEnter()
 
     //CCDirector::sharedDirector()->setProjection(CCDirectorProjection2D);
     
-    CCActionInterval* effect = CCLiquid::create(1, 20, ccg(32,24), 2);    
+    CCActionInterval* effect = CCLiquid::create(2, CCSizeMake(32,24), 1, 20);    
 
     CCActionInterval* stopEffect = CCSequence::create(
                                          effect,
@@ -222,7 +222,7 @@ void Issue631::onEnter()
 {
     EffectAdvanceTextLayer::onEnter();
         
-    CCActionInterval* effect = CCSequence::create( CCDelayTime::create(2.0f), CCShaky3D::create(16, false, ccg(5, 5), 5.0f), NULL);
+    CCActionInterval* effect = CCSequence::create( CCDelayTime::create(2.0f), CCShaky3D::create(5.0f, CCSizeMake(5, 5), 16, false), NULL);
 
     // cleanup
     CCNode* bg = getChildByTag(kTagBackground);

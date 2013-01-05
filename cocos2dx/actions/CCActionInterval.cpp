@@ -851,7 +851,15 @@ void CCRotateTo::startWithTarget(CCNode *pTarget)
     
     // Calculate X
     m_fStartAngleX = pTarget->getRotationX();
-    
+    if (m_fStartAngleX > 0)
+    {
+        m_fStartAngleX = fmodf(m_fStartAngleX, 360.0f);
+    }
+    else
+    {
+        m_fStartAngleX = fmodf(m_fStartAngleX, -360.0f);
+    }
+
     m_fDiffAngleX = m_fDstAngleX - m_fStartAngleX;
     if (m_fDiffAngleX > 180)
     {
@@ -862,7 +870,7 @@ void CCRotateTo::startWithTarget(CCNode *pTarget)
         m_fDiffAngleX += 360;
     }
     
-    // Calculate Y
+    //Calculate Y: It's duplicated from calculating X since the rotation wrap should be the same
     m_fStartAngleY = m_pTarget->getRotationY();
 
     if (m_fStartAngleY > 0)
@@ -986,16 +994,88 @@ CCActionInterval* CCRotateBy::reverse(void)
 }
 
 //
+// MoveBy
+//
+
+CCMoveBy* CCMoveBy::create(float duration, const CCPoint& deltaPosition)
+{
+    CCMoveBy *pRet = new CCMoveBy();
+    pRet->initWithDuration(duration, deltaPosition);
+    pRet->autorelease();
+
+    return pRet;
+}
+
+bool CCMoveBy::initWithDuration(float duration, const CCPoint& deltaPosition)
+{
+    if (CCActionInterval::initWithDuration(duration))
+    {
+        m_positionDelta = deltaPosition;
+        return true;
+    }
+
+    return false;
+}
+
+CCObject* CCMoveBy::copyWithZone(CCZone *pZone)
+{
+    CCZone* pNewZone = NULL;
+    CCMoveBy* pCopy = NULL;
+    if(pZone && pZone->m_pCopyObject) 
+    {
+        //in case of being called at sub class
+        pCopy = (CCMoveBy*)(pZone->m_pCopyObject);
+    }
+    else
+    {
+        pCopy = new CCMoveBy();
+        pZone = pNewZone = new CCZone(pCopy);
+    }
+
+    CCActionInterval::copyWithZone(pZone);
+
+    pCopy->initWithDuration(m_fDuration, m_positionDelta);
+
+    CC_SAFE_DELETE(pNewZone);
+    return pCopy;
+}
+
+void CCMoveBy::startWithTarget(CCNode *pTarget)
+{
+    CCActionInterval::startWithTarget(pTarget);
+    m_previousPosition = m_startPosition = pTarget->getPosition();
+}
+
+CCActionInterval* CCMoveBy::reverse(void)
+{
+    return CCMoveBy::create(m_fDuration, ccp( -m_positionDelta.x, -m_positionDelta.y));
+}
+
+
+void CCMoveBy::update(float t)
+{
+    if (m_pTarget)
+    {
+        CCPoint currentPos = m_pTarget->getPosition();
+        CCPoint diff = ccpSub(currentPos, m_previousPosition);
+        m_startPosition = ccpAdd( m_startPosition, diff);
+        CCPoint newPos =  ccpAdd( m_startPosition, ccpMult(m_positionDelta, t) );
+        m_pTarget->setPosition(newPos);
+        m_previousPosition = newPos;
+    }
+}
+
+//
 // MoveTo
 //
 
 CCMoveTo* CCMoveTo::create(float duration, const CCPoint& position)
 {
-    CCMoveTo *pMoveTo = new CCMoveTo();
-    pMoveTo->initWithDuration(duration, position);
-    pMoveTo->autorelease();
+    CCMoveTo *pRet = new CCMoveTo();
+    pRet->initWithDuration(duration, position);
+    pRet->autorelease();
 
-    return pMoveTo;
+    return pRet;
 }
 
 bool CCMoveTo::initWithDuration(float duration, const CCPoint& position)
@@ -1024,88 +1104,20 @@ CCObject* CCMoveTo::copyWithZone(CCZone *pZone)
         pZone = pNewZone = new CCZone(pCopy);
     }
 
-    CCActionInterval::copyWithZone(pZone);
+    CCMoveBy::copyWithZone(pZone);
 
     pCopy->initWithDuration(m_fDuration, m_endPosition);
-
+    
     CC_SAFE_DELETE(pNewZone);
     return pCopy;
 }
 
 void CCMoveTo::startWithTarget(CCNode *pTarget)
 {
-    CCActionInterval::startWithTarget(pTarget);
-    m_startPosition = pTarget->getPosition();
-    m_delta = ccpSub(m_endPosition, m_startPosition);
+    CCMoveBy::startWithTarget(pTarget);
+    m_positionDelta = ccpSub( m_endPosition, pTarget->getPosition() );
 }
 
-void CCMoveTo::update(float time)
-{
-    if (m_pTarget)
-    {
-        m_pTarget->setPosition(ccp(m_startPosition.x + m_delta.x * time,
-            m_startPosition.y + m_delta.y * time));
-    }
-}
-
-//
-// MoveBy
-//
-
-CCMoveBy* CCMoveBy::create(float duration, const CCPoint& position)
-{
-    CCMoveBy *pMoveBy = new CCMoveBy();
-    pMoveBy->initWithDuration(duration, position);
-    pMoveBy->autorelease();
-
-    return pMoveBy;
-}
-
-bool CCMoveBy::initWithDuration(float duration, const CCPoint& position)
-{
-    if (CCActionInterval::initWithDuration(duration))
-    {
-        m_delta = position;
-        return true;
-    }
-
-    return false;
-}
-
-CCObject* CCMoveBy::copyWithZone(CCZone *pZone)
-{
-    CCZone* pNewZone = NULL;
-    CCMoveBy* pCopy = NULL;
-    if(pZone && pZone->m_pCopyObject) 
-    {
-        //in case of being called at sub class
-        pCopy = (CCMoveBy*)(pZone->m_pCopyObject);
-    }
-    else
-    {
-        pCopy = new CCMoveBy();
-        pZone = pNewZone = new CCZone(pCopy);
-    }
-
-    CCMoveTo::copyWithZone(pZone);
-
-    pCopy->initWithDuration(m_fDuration, m_delta);
-    
-    CC_SAFE_DELETE(pNewZone);
-    return pCopy;
-}
-
-void CCMoveBy::startWithTarget(CCNode *pTarget)
-{
-    CCPoint dTmp = m_delta;
-    CCMoveTo::startWithTarget(pTarget);
-    m_delta = dTmp;
-}
-
-CCActionInterval* CCMoveBy::reverse(void)
-{
-    return CCMoveBy::create(m_fDuration, ccp(-m_delta.x, -m_delta.y));
-}
 
 //
 // CCSkewTo
@@ -1336,19 +1348,29 @@ CCObject* CCJumpBy::copyWithZone(CCZone *pZone)
 void CCJumpBy::startWithTarget(CCNode *pTarget)
 {
     CCActionInterval::startWithTarget(pTarget);
-    m_startPosition = pTarget->getPosition();
+    m_previousPos = m_startPosition = pTarget->getPosition();
 }
 
-void CCJumpBy::update(float time)
+void CCJumpBy::update(float t)
 {
     // parabolic jump (since v0.8.2)
     if (m_pTarget)
     {
-        float frac = fmodf(time * m_nJumps, 1.0f);
+        float frac = fmodf( t * m_nJumps, 1.0f );
         float y = m_height * 4 * frac * (1 - frac);
-        y += m_delta.y * time;
-        float x = m_delta.x * time;
-        m_pTarget->setPosition(ccp(m_startPosition.x + x, m_startPosition.y + y));
+        y += m_delta.y * t;
+
+        float x = m_delta.x * t;
+
+        CCPoint currentPos = m_pTarget->getPosition();
+
+        CCPoint diff = ccpSub( currentPos, m_previousPos );
+        m_startPosition = ccpAdd( diff, m_startPosition);
+
+        CCPoint newPos = ccpAdd( m_startPosition, ccp(x,y));
+        m_pTarget->setPosition(newPos);
+
+        m_previousPos = newPos;
     }
 }
 
@@ -1439,7 +1461,7 @@ bool CCBezierBy::initWithDuration(float t, const ccBezierConfig& c)
 void CCBezierBy::startWithTarget(CCNode *pTarget)
 {
     CCActionInterval::startWithTarget(pTarget);
-    m_startPosition = pTarget->getPosition();
+    m_previousPosition = m_startPosition = pTarget->getPosition();
 }
 
 CCObject* CCBezierBy::copyWithZone(CCZone *pZone)
@@ -1481,7 +1503,15 @@ void CCBezierBy::update(float time)
 
         float x = bezierat(xa, xb, xc, xd, time);
         float y = bezierat(ya, yb, yc, yd, time);
-        m_pTarget->setPosition(ccpAdd(m_startPosition, ccp(x, y)));
+
+        CCPoint currentPos = m_pTarget->getPosition();
+        CCPoint diff = ccpSub(currentPos, m_previousPosition);
+        m_startPosition = ccpAdd( m_startPosition, diff);
+
+        CCPoint newPos = ccpAdd( m_startPosition, ccp(x,y));
+        m_pTarget->setPosition(newPos);
+
+        m_previousPosition = newPos;
     }
 }
 
@@ -2380,7 +2410,9 @@ void CCAnimate::update(float t)
                 //TODO: [[NSNotificationCenter defaultCenter] postNotificationName:CCAnimationFrameDisplayedNotification object:target_ userInfo:dict];
             }
             m_nNextFrame = i+1;
-
+        }
+        // Issue 1438. Could be more than one frame per tick, due to low frame rate or frame delta < 1/FPS
+        else {
             break;
         }
     }

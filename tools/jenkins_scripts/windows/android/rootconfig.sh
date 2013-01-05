@@ -5,7 +5,6 @@
 #NDK_ROOT=$($CYGWIN/bin/cygpath.exe $ANDROID_NDK)
 #echo $NDK_ROOT
 CUR=$(pwd)
-cd ../../..
 #tmp=$(pwd)
 #COCOS2DX=$($CYGWIN/bin/cygpath.exe $tmp)
 #echo $COCOS2DX
@@ -31,16 +30,16 @@ if [ $1 = TestCpp ]; then
 elif [ $1 = HelloCpp ]; then
 	sed -i '2d' $CUR/build.xml
 	sed -i '2 i\<project name="HelloCpp" default="help">' $CUR/build.xml
-else [ $1 = HelloLua ]; then
+elif [ $1 = HelloLua ]; then
 	sed -i '2d' $CUR/build.xml
 	sed -i '2 i\<project name="HelloLua" default="help">' $CUR/build.xml
-else [ $1 = TestLua ]; then
+elif [ $1 = TestLua ]; then
 	sed -i '2d' $CUR/build.xml
 	sed -i '2 i\<project name="TestLua" default="help">' $CUR/build.xml
-else [ $1 = TestJavascript ]; then
+elif [ $1 = TestJavascript ]; then
  	sed -i '2d' $CUR/build.xml
 	sed -i '2 i\<project name="TestJavascript" default="help">' $CUR/build.xml
-else [ $1 = SimpleGame ]; then
+elif [ $1 = SimpleGame ]; then
  	sed -i '2d' $CUR/build.xml
 	sed -i '2 i\<project name="SimpleGame" default="help">' $CUR/build.xml
 fi

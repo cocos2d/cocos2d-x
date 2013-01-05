@@ -888,7 +888,7 @@ long long jsval_to_long_long(JSContext *cx, jsval v) {
 std::string jsval_to_std_string(JSContext *cx, jsval v) {
     JSString *tmp = JS_ValueToString(cx, v);
 	JSStringWrapper ret(tmp);
-    return ret;
+    return ret.get();
 }
 
 const char* jsval_to_c_string(JSContext *cx, jsval v) {
@@ -990,19 +990,6 @@ CCSize jsval_to_ccsize(JSContext *cx, jsval v) {
         JS_ValueToNumber(cx, jsh, &h);
     assert(ok == JS_TRUE);
     return cocos2d::CCSize(w, h);
-}
-
-ccGridSize jsval_to_ccgridsize(JSContext *cx, jsval v) {
-    JSObject *tmp;
-    jsval jsx, jsy;
-    double x, y;
-    JSBool ok = JS_ValueToObject(cx, v, &tmp) &&
-        JS_GetProperty(cx, tmp, "x", &jsx) &&
-        JS_GetProperty(cx, tmp, "y", &jsy) &&
-        JS_ValueToNumber(cx, jsx, &x) &&
-        JS_ValueToNumber(cx, jsy, &y);
-    assert(ok == JS_TRUE);
-    return cocos2d::ccg(x, y);
 }
 
 ccColor4B jsval_to_cccolor4b(JSContext *cx, jsval v) {
@@ -1264,17 +1251,6 @@ jsval ccsize_to_jsval(JSContext* cx, CCSize& v) {
     if (!tmp) return JSVAL_NULL;
     JSBool ok = JS_DefineProperty(cx, tmp, "width", DOUBLE_TO_JSVAL(v.width), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
                 JS_DefineProperty(cx, tmp, "height", DOUBLE_TO_JSVAL(v.height), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    if (ok) {
-        return OBJECT_TO_JSVAL(tmp);
-    }
-    return JSVAL_NULL;
-}
-
-jsval ccgridsize_to_jsval(JSContext* cx, ccGridSize& v) {
-    JSObject *tmp = JS_NewObject(cx, NULL, NULL, NULL);
-    if (!tmp) return JSVAL_NULL;
-    JSBool ok = JS_DefineProperty(cx, tmp, "x", DOUBLE_TO_JSVAL(v.x), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
-                JS_DefineProperty(cx, tmp, "y", DOUBLE_TO_JSVAL(v.y), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     if (ok) {
         return OBJECT_TO_JSVAL(tmp);
     }

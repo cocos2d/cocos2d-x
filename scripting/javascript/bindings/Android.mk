@@ -14,6 +14,8 @@ LOCAL_SRC_FILES := ScriptingCore.cpp \
                    js_bindings_chipmunk_functions.cpp \
                    js_bindings_chipmunk_auto_classes.cpp \
                    js_bindings_chipmunk_registration.cpp \
+                   js_bindings_system_functions.cpp \
+                   js_bindings_system_registration.cpp \
                    js_bindings_ccbreader.cpp \
                    js_bindings_core.cpp \
                    generated/cocos2dx.cpp
