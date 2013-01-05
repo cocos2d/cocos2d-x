@@ -22,9 +22,12 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#import "EAGLView.h"
 #include "CCEditBoxImplIOS.h"
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+
 #include "CCEditBox.h"
+#import "EAGLView.h"
 
 #define getEditBoxImplIOS() ((cocos2d::extension::CCEditBoxImplIOS*)editBox_)
 
@@ -410,4 +413,7 @@ void CCEditBoxImplIOS::closeKeyboard()
 }
 
 NS_CC_EXT_END
+
+#endif /* #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) */
+
 
