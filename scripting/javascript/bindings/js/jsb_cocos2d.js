@@ -1,6 +1,9 @@
 //
 // cocos2d constants
 //
+
+var cc = cc || {};
+
 cc.DIRECTOR_PROJECTION_2D = 0;
 cc.DIRECTOR_PROJECTION_3D = 1;
 
@@ -80,18 +83,6 @@ cc._reuse_size = {width:0, height:0};
 cc._reuse_rect = {x:0, y:0, width:0, height:0};
 cc._reuse_color3b = {r:255, g:255, b:255 };
 cc._reuse_color4b = {r:255, g:255, b:255, a:255 };
-
-//
-// Point
-//
-cc.p = function( x, y )
-{
-    return {x:x, y:y};
-};
-
-cc.g = cc.g || cc.p;
-cc._reuse_grid = cc.g(0,0);
-
 cc.log = cc.log || log;
 
 //
@@ -139,7 +130,10 @@ cc.c4f = function( r, g, b, a )
 //
 // Point
 //
-
+cc.p = function( x, y )
+{
+    return {x:x, y:y};
+};
 cc._p = function( x, y )
 {
     if( cc._reuse_p_index == cc._reuse_p.length )
@@ -324,8 +318,8 @@ cc.dump = function(obj)
 // dump config info, but only in debug mode
 cc.dumpConfig = function()
 {
-    if( cc.config.debug )
-        cc.dump(cc.config);
+    cc.dump(sys);
+    cc.dump(sys.capabilities);
 };
 
 //
@@ -391,7 +385,7 @@ cc.PhysicsSprite.prototype.setBody = function( body ) {
     var b = body;
     if( body.handle !== undefined )
         b = body.handle;
-    return this._setBody( b );
+    return this._setCPBody( b );
 };
 
 

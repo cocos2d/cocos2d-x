@@ -3,6 +3,7 @@
 //
 
 var gl = gl || {};
+
 gl.NEAREST                      = 0x2600;
 gl.LINEAR                       = 0x2601;
 gl.REPEAT                       = 0x2901;
