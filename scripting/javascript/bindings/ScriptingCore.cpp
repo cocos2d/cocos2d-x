@@ -178,7 +178,7 @@ void js_log(const char *format, ...) {
 
 JSBool JSBCore_platform(JSContext *cx, uint32_t argc, jsval *vp)
 {
-	if (argc==0)
+	if (argc!=0)
     {
         JS_ReportError(cx, "Invalid number of arguments in __getPlatform");
         return JS_FALSE;
@@ -203,7 +203,7 @@ JSBool JSBCore_platform(JSContext *cx, uint32_t argc, jsval *vp)
 
 JSBool JSBCore_version(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    if (argc==0)
+    if (argc!=0)
     {
         JS_ReportError(cx, "Invalid number of arguments in __getVersion");
         return JS_FALSE;
@@ -221,7 +221,7 @@ JSBool JSBCore_version(JSContext *cx, uint32_t argc, jsval *vp)
 
 JSBool JSBCore_os(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    if (argc==0)
+    if (argc!=0)
     {
         JS_ReportError(cx, "Invalid number of arguments in __getOS");
         return JS_FALSE;
