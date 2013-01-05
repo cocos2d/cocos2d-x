@@ -30,6 +30,36 @@
 #include "ExtensionMacros.h"
 #include "CCEditBoxImpl.h"
 
+#import <Foundation/Foundation.h>
+
+@interface CustomUITextField : UITextField
+{
+}
+
+@end
+
+
+@interface EditBoxImplIOS : NSObject <UITextFieldDelegate>
+{
+    CustomUITextField* textField_;
+    void* editBox_;
+    BOOL editState_;
+}
+
+@property(nonatomic, retain) UITextField* textField;
+@property(nonatomic, readonly, getter = isEditState) BOOL editState;
+@property(nonatomic, assign) void* editBox;
+
+-(id) initWithFrame: (CGRect) frameRect editBox: (void*) editBox;
+-(void) doAnimationWhenKeyboardMoveWithDuration:(float)duration distance:(float)distance;
+-(void) setPosition:(CGPoint) pos;
+-(void) setContentSize:(CGSize) size;
+-(void) visit;
+-(void) openKeyboard;
+-(void) closeKeyboard;
+
+@end
+
 NS_CC_EXT_BEGIN
 
 class CCEditBox;
@@ -61,10 +91,10 @@ public:
     virtual void closeKeyboard();
     
 private:
-    CCSize     m_tContentSize;
-    void*      m_pSysEdit;
-    int        m_nMaxTextLength;
-    bool       m_bInRetinaMode;
+    CCSize          m_tContentSize;
+    EditBoxImplIOS* m_systemControl;
+    int             m_nMaxTextLength;
+    bool            m_bInRetinaMode;
 };
 
 
