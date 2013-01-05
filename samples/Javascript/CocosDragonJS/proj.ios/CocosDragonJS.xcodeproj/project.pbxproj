@@ -107,7 +107,6 @@
 		15A3CF7A1682C2B8002FB0C5 /* CCScale9Sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A3CF2B1682C2B8002FB0C5 /* CCScale9Sprite.cpp */; };
 		15A3CF7B1682C2B8002FB0C5 /* CCEditBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A3CF2E1682C2B8002FB0C5 /* CCEditBox.cpp */; };
 		15A3CF7D1682C2B8002FB0C5 /* CCEditBoxImplIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 15A3CF341682C2B8002FB0C5 /* CCEditBoxImplIOS.mm */; };
-		15A3CF7E1682C2B8002FB0C5 /* EditBoxImplIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 15A3CF361682C2B8002FB0C5 /* EditBoxImplIOS.mm */; };
 		15A3CF7F1682C2B8002FB0C5 /* CCScrollView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A3CF381682C2B8002FB0C5 /* CCScrollView.cpp */; };
 		15A3CF801682C2B8002FB0C5 /* CCSorting.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A3CF3A1682C2B8002FB0C5 /* CCSorting.cpp */; };
 		15A3CF811682C2B8002FB0C5 /* CCTableView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A3CF3C1682C2B8002FB0C5 /* CCTableView.cpp */; };
@@ -368,8 +367,6 @@
 		15A3CF301682C2B8002FB0C5 /* CCEditBoxImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEditBoxImpl.h; sourceTree = "<group>"; };
 		15A3CF331682C2B8002FB0C5 /* CCEditBoxImplIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEditBoxImplIOS.h; sourceTree = "<group>"; };
 		15A3CF341682C2B8002FB0C5 /* CCEditBoxImplIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCEditBoxImplIOS.mm; sourceTree = "<group>"; };
-		15A3CF351682C2B8002FB0C5 /* EditBoxImplIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditBoxImplIOS.h; sourceTree = "<group>"; };
-		15A3CF361682C2B8002FB0C5 /* EditBoxImplIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = EditBoxImplIOS.mm; sourceTree = "<group>"; };
 		15A3CF381682C2B8002FB0C5 /* CCScrollView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCScrollView.cpp; sourceTree = "<group>"; };
 		15A3CF391682C2B8002FB0C5 /* CCScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCScrollView.h; sourceTree = "<group>"; };
 		15A3CF3A1682C2B8002FB0C5 /* CCSorting.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSorting.cpp; sourceTree = "<group>"; };
@@ -770,8 +767,6 @@
 				15A3CF301682C2B8002FB0C5 /* CCEditBoxImpl.h */,
 				15A3CF331682C2B8002FB0C5 /* CCEditBoxImplIOS.h */,
 				15A3CF341682C2B8002FB0C5 /* CCEditBoxImplIOS.mm */,
-				15A3CF351682C2B8002FB0C5 /* EditBoxImplIOS.h */,
-				15A3CF361682C2B8002FB0C5 /* EditBoxImplIOS.mm */,
 			);
 			path = CCEditBox;
 			sourceTree = "<group>";
@@ -1163,7 +1158,6 @@
 				15A3CF7A1682C2B8002FB0C5 /* CCScale9Sprite.cpp in Sources */,
 				15A3CF7B1682C2B8002FB0C5 /* CCEditBox.cpp in Sources */,
 				15A3CF7D1682C2B8002FB0C5 /* CCEditBoxImplIOS.mm in Sources */,
-				15A3CF7E1682C2B8002FB0C5 /* EditBoxImplIOS.mm in Sources */,
 				15A3CF7F1682C2B8002FB0C5 /* CCScrollView.cpp in Sources */,
 				15A3CF801682C2B8002FB0C5 /* CCSorting.cpp in Sources */,
 				15A3CF811682C2B8002FB0C5 /* CCTableView.cpp in Sources */,
