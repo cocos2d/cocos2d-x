@@ -144,17 +144,6 @@ class ccQuad3
     ccVertex3F        tr;
 };
 
-//! A 2D grid size
-class ccGridSize
-{
-	ccGridSize(void);
-    int    x;
-    int    y;
-};
-
-//! helper function to create a ccGridSize
-static ccGridSize ccg(const int x, const int y);
-
 //! a Point with a vertex point, a tex coord point and a color 4B
 class ccV2F_C4B_T2F
 {

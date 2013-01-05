@@ -34,7 +34,6 @@ THE SOFTWARE.
 //
 // all cocos2d include files
 //
-
 #include "ccConfig.h"
 
 // actions
@@ -65,6 +64,9 @@ THE SOFTWARE.
 #include "cocoa/CCSet.h"
 #include "cocoa/CCAutoreleasePool.h"
 #include "cocoa/CCInteger.h"
+#include "cocoa/CCFloat.h"
+#include "cocoa/CCDouble.h"
+#include "cocoa/CCBool.h"
 #include "cocoa/CCString.h"
 #include "cocoa/CCNS.h"
 #include "cocoa/CCZone.h"

@@ -49,7 +49,7 @@ IsTestCpp=1
 cp $ROOT/tools/jenkins_scripts/ant.properties $ROOT/samples/Cpp/TestCpp/proj.android
 cp $ROOT/tools/jenkins_scripts/build.xml $ROOT/samples/Cpp/TestCpp/proj.android
 cp $ROOT/tools/jenkins_scripts/mac/rootconfig-mac.sh $ROOT/samples/Cpp/TestCpp/proj.android
-cd samples/TestCpp/proj.android
+cd samples/Cpp/TestCpp/proj.android
 sh rootconfig-mac.sh TestCpp
 sh build_native.sh
 

@@ -9,10 +9,10 @@ cd ..\..\..\..\
 "%VS100COMNTOOLS%..\IDE\devenv.com" "%cd%\cocos2d-win32.vc2010.sln" /Build "Release|Win32"
 
 ::Set the directory of test project's resources.
-set CC_TEST_RES=%cd%\samples\TestCpp\Resources\*.*
-set CC_HELLOWORLD_RES=%cd%\samples\HelloCpp\Resources\*.*
-set CC_HELLOLUA_RES=%cd%\samples\HelloLua\Resources\*.*
-set CC_TESTJS_RES=%cd%\samples\TestJavascript\Resources\*.*
+set CC_TEST_RES=%cd%\samples\Cpp\TestCpp\Resources\*.*
+set CC_HELLOWORLD_RES=%cd%\samples\Cpp\HelloCpp\Resources\*.*
+set CC_HELLOLUA_RES=%cd%\samples\Lua\HelloLua\Resources\*.*
+set CC_TESTJS_RES=%cd%\samples\Javascript\TestJavascript\Resources\*.*
 
 cd Release.win32
 

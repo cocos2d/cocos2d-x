@@ -159,9 +159,9 @@ static void* loadImage(void* data)
         
         // generate image            
         CCImage *pImage = new CCImage();
-        if (! pImage->initWithImageFileThreadSafe(filename, imageType))
+        if (pImage && !pImage->initWithImageFileThreadSafe(filename, imageType))
         {
-            delete pImage;
+            CC_SAFE_RELEASE(pImage);
             CCLOG("can not load %s", filename);
             continue;
         }
@@ -391,6 +391,7 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
     CCAssert(path != NULL, "TextureCache: fileimage MUST not be NULL");
 
     CCTexture2D * texture = NULL;
+    CCImage* pImage = NULL;
     // Split up directory and filename
     // MUTEX:
     // Needed since addImageAsync calls this method from a different thread
@@ -434,23 +435,19 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
                     eImageFormat = CCImage::kFmtTiff;
                 }
                 
-                CCImage image;                
+                pImage = new CCImage();
+                CC_BREAK_IF(NULL == pImage);
+
                 unsigned long nSize = 0;
                 unsigned char* pBuffer = CCFileUtils::sharedFileUtils()->getFileData(fullpath.c_str(), "rb", &nSize);
-                if (! image.initWithImageData((void*)pBuffer, nSize, eImageFormat))
-                {
-                    CC_SAFE_DELETE_ARRAY(pBuffer);
-                    break;
-                }
-                else
-                {
-                    CC_SAFE_DELETE_ARRAY(pBuffer);
-                }                
+                bool bRet = pImage->initWithImageData((void*)pBuffer, nSize, eImageFormat);
+                CC_SAFE_DELETE_ARRAY(pBuffer);
+                CC_BREAK_IF(!bRet);
 
                 texture = new CCTexture2D();
                 
                 if( texture &&
-                    texture->initWithImage(&image) )
+                    texture->initWithImage(pImage) )
                 {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
                     // cache the texture file name
@@ -467,6 +464,8 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
             }
         } while (0);
     }
+
+    CC_SAFE_RELEASE(pImage);
 
     //pthread_mutex_unlock(m_pDictLock);
     return texture;
@@ -856,7 +855,6 @@ void VolatileTexture::reloadAllTextures()
         {
         case kImageFile:
             {
-                CCImage image;
                 std::string lowerCase(vt->m_strFileName.c_str());
                 for (unsigned int i = 0; i < lowerCase.length(); ++i)
                 {
@@ -873,18 +871,20 @@ void VolatileTexture::reloadAllTextures()
                 } 
                 else 
                 {
+                    CCImage* pImage = new CCImage();
                     unsigned long nSize = 0;
                     unsigned char* pBuffer = CCFileUtils::sharedFileUtils()->getFileData(vt->m_strFileName.c_str(), "rb", &nSize);
 
-                    if (image.initWithImageData((void*)pBuffer, nSize, vt->m_FmtImage))
+                    if (pImage && pImage->initWithImageData((void*)pBuffer, nSize, vt->m_FmtImage))
                     {
                         CCTexture2DPixelFormat oldPixelFormat = CCTexture2D::defaultAlphaPixelFormat();
                         CCTexture2D::setDefaultAlphaPixelFormat(vt->m_PixelFormat);
-                        vt->texture->initWithImage(&image);
+                        vt->texture->initWithImage(pImage);
                         CCTexture2D::setDefaultAlphaPixelFormat(oldPixelFormat);
                     }
 
                     CC_SAFE_DELETE_ARRAY(pBuffer);
+                    CC_SAFE_RELEASE(pImage);
                 }
             }
             break;

@@ -22,11 +22,185 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-
 #include "CCEditBoxImplIOS.h"
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+
 #include "CCEditBox.h"
 #import "EAGLView.h"
-#import "EditBoxImplIOS.h"
+
+#define getEditBoxImplIOS() ((cocos2d::extension::CCEditBoxImplIOS*)editBox_)
+
+@implementation CustomUITextField
+- (CGRect)textRectForBounds:(CGRect)bounds {
+    float padding = 5.0f;
+    return CGRectMake(bounds.origin.x + padding, bounds.origin.y + padding,
+                      bounds.size.width - padding*2, bounds.size.height - padding*2);
+}
+- (CGRect)editingRectForBounds:(CGRect)bounds {
+    return [self textRectForBounds:bounds];
+}
+@end
+
+
+@implementation EditBoxImplIOS
+
+@synthesize textField = textField_;
+@synthesize editState = editState_;
+@synthesize editBox = editBox_;
+
+- (void)dealloc
+{
+    [textField_ resignFirstResponder];
+    [textField_ removeFromSuperview];
+    self.textField = NULL;
+    [super dealloc];
+}
+
+-(id) initWithFrame: (CGRect) frameRect editBox: (void*) editBox
+{
+    self = [super init];
+    
+    do
+    {
+        if (self == nil) break;
+        editState_ = NO;
+        self.textField = [[[CustomUITextField alloc] initWithFrame: frameRect] autorelease];
+        if (!textField_) break;
+        [textField_ setTextColor:[UIColor whiteColor]];
+        textField_.font = [UIFont systemFontOfSize:frameRect.size.height*2/3]; //TODO need to delete hard code here.
+        textField_.backgroundColor = [UIColor clearColor];
+        textField_.borderStyle = UITextBorderStyleNone;
+        textField_.delegate = self;
+        textField_.returnKeyType = UIReturnKeyDefault;
+        [textField_ addTarget:self action:@selector(textChanged) forControlEvents:UIControlEventEditingChanged];
+        self.editBox = editBox;
+        
+        [[EAGLView sharedEGLView] addSubview:textField_];
+        
+        return self;
+    }while(0);
+    
+    return nil;
+}
+
+-(void) doAnimationWhenKeyboardMoveWithDuration:(float)duration distance:(float)distance
+{
+    id eglView = [EAGLView sharedEGLView];
+    [eglView doAnimationWhenKeyboardMoveWithDuration:duration distance:distance];
+}
+
+-(void) setPosition:(CGPoint) pos
+{
+    CGRect frame = [textField_ frame];
+    frame.origin = pos;
+    [textField_ setFrame:frame];
+}
+
+-(void) setContentSize:(CGSize) size
+{
+    
+}
+
+-(void) visit
+{
+    
+}
+
+-(void) openKeyboard
+{
+    [textField_ becomeFirstResponder];
+}
+
+-(void) closeKeyboard
+{
+    [textField_ resignFirstResponder];
+    [textField_ removeFromSuperview];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)sender
+{
+    if (sender == textField_) {
+        [sender resignFirstResponder];
+    }
+    return NO;
+}
+
+-(void)animationSelector
+{
+    id eglView = [EAGLView sharedEGLView];
+    [eglView doAnimationWhenAnotherEditBeClicked];
+}
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)sender        // return NO to disallow editing.
+{
+    CCLOG("textFieldShouldBeginEditing...");
+    editState_ = YES;
+    id eglView = [EAGLView sharedEGLView];
+    if ([eglView isKeyboardShown])
+    {
+        [self performSelector:@selector(animationSelector) withObject:nil afterDelay:0.0f];
+    }
+    cocos2d::extension::CCEditBoxDelegate* pDelegate = getEditBoxImplIOS()->getDelegate();
+    if (pDelegate != NULL)
+    {
+        pDelegate->editBoxEditingDidBegin(getEditBoxImplIOS()->getCCEditBox());
+    }
+    return YES;
+}
+
+- (BOOL)textFieldShouldEndEditing:(UITextField *)sender
+{
+    CCLOG("textFieldShouldEndEditing...");
+    editState_ = NO;
+    
+    cocos2d::extension::CCEditBoxDelegate* pDelegate = getEditBoxImplIOS()->getDelegate();
+    if (pDelegate != NULL)
+    {
+        pDelegate->editBoxEditingDidEnd(getEditBoxImplIOS()->getCCEditBox());
+        pDelegate->editBoxReturn(getEditBoxImplIOS()->getCCEditBox());
+    }
+    return YES;
+}
+
+/**
+ * Delegate method called before the text has been changed.
+ * @param textField The text field containing the text.
+ * @param range The range of characters to be replaced.
+ * @param string The replacement string.
+ * @return YES if the specified text range should be replaced; otherwise, NO to keep the old text.
+ */
+- (BOOL)textField:(UITextField *) textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if (getEditBoxImplIOS()->getMaxLength() < 0)
+    {
+        return YES;
+    }
+    
+    NSUInteger oldLength = [textField.text length];
+    NSUInteger replacementLength = [string length];
+    NSUInteger rangeLength = range.length;
+    
+    NSUInteger newLength = oldLength - rangeLength + replacementLength;
+    
+    return newLength <= getEditBoxImplIOS()->getMaxLength();
+}
+
+/**
+ * Called each time when the text field's text has changed.
+ */
+- (void) textChanged
+{
+    // NSLog(@"text is %@", self.textField.text);
+    cocos2d::extension::CCEditBoxDelegate* pDelegate = getEditBoxImplIOS()->getDelegate();
+    if (pDelegate != NULL)
+    {
+        pDelegate->editBoxTextChanged(getEditBoxImplIOS()->getCCEditBox(), getEditBoxImplIOS()->getText());
+    }
+}
+
+@end
+
 
 NS_CC_EXT_BEGIN
 
@@ -35,11 +209,9 @@ CCEditBoxImpl* __createSystemEditBox(CCEditBox* pEditBox)
     return new CCEditBoxImplIOS(pEditBox);
 }
 
-#define GET_IMPL ((EditBoxImplIOS*)m_pSysEdit)
-
 CCEditBoxImplIOS::CCEditBoxImplIOS(CCEditBox* pEditText)
 : CCEditBoxImpl(pEditText)
-, m_pSysEdit(NULL)
+, m_systemControl(NULL)
 , m_nMaxTextLength(-1)
 {
     m_bInRetinaMode = [[EAGLView sharedEGLView] contentScaleFactor] == 2.0f ? true : false;
@@ -47,14 +219,14 @@ CCEditBoxImplIOS::CCEditBoxImplIOS(CCEditBox* pEditText)
 
 CCEditBoxImplIOS::~CCEditBoxImplIOS()
 {
-    [GET_IMPL release];
+    [m_systemControl release];
 }
 
 void CCEditBoxImplIOS::doAnimationWhenKeyboardMove(float duration, float distance)
 {
-    if ([GET_IMPL isEditState] || distance < 0.0f)
+    if ([m_systemControl isEditState] || distance < 0.0f)
     {
-        [GET_IMPL doAnimationWhenKeyboardMoveWithDuration:duration distance:distance];
+        [m_systemControl doAnimationWhenKeyboardMoveWithDuration:duration distance:distance];
     }
 }
 
@@ -72,8 +244,8 @@ bool CCEditBoxImplIOS::initWithSize(const CCSize& size)
             rect.size.height /= 2.0f;
         }
         
-        m_pSysEdit = [[EditBoxImplIOS alloc] initWithFrame:rect editBox:this];
-        if (!m_pSysEdit) break;
+        m_systemControl = [[EditBoxImplIOS alloc] initWithFrame:rect editBox:this];
+        if (!m_systemControl) break;
         
         return true;
     }while (0);
@@ -83,7 +255,7 @@ bool CCEditBoxImplIOS::initWithSize(const CCSize& size)
 
 void CCEditBoxImplIOS::setFontColor(const ccColor3B& color)
 {
-    GET_IMPL.textField.textColor = [UIColor colorWithRed:color.r / 255.0f green:color.g / 255.0f blue:color.b / 255.0f alpha:1.0f];
+    m_systemControl.textField.textColor = [UIColor colorWithRed:color.r / 255.0f green:color.g / 255.0f blue:color.b / 255.0f alpha:1.0f];
 }
 
 void CCEditBoxImplIOS::setPlaceholderFontColor(const ccColor3B& color)
@@ -96,25 +268,25 @@ void CCEditBoxImplIOS::setInputMode(EditBoxInputMode inputMode)
     switch (inputMode)
     {
         case kEditBoxInputModeEmailAddr:
-            GET_IMPL.textField.keyboardType = UIKeyboardTypeEmailAddress;
+            m_systemControl.textField.keyboardType = UIKeyboardTypeEmailAddress;
             break;
         case kEditBoxInputModeNumeric:
-            GET_IMPL.textField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+            m_systemControl.textField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
             break;
         case kEditBoxInputModePhoneNumber:
-            GET_IMPL.textField.keyboardType = UIKeyboardTypePhonePad;
+            m_systemControl.textField.keyboardType = UIKeyboardTypePhonePad;
             break;
         case kEditBoxInputModeUrl:
-            GET_IMPL.textField.keyboardType = UIKeyboardTypeURL;
+            m_systemControl.textField.keyboardType = UIKeyboardTypeURL;
             break;
         case kEditBoxInputModeDecimal:
-            GET_IMPL.textField.keyboardType = UIKeyboardTypeDecimalPad;
+            m_systemControl.textField.keyboardType = UIKeyboardTypeDecimalPad;
             break;
         case kEditBoxInputModeSingleLine:
-            GET_IMPL.textField.keyboardType = UIKeyboardTypeDefault;
+            m_systemControl.textField.keyboardType = UIKeyboardTypeDefault;
             break;
         default:
-            GET_IMPL.textField.keyboardType = UIKeyboardTypeDefault;
+            m_systemControl.textField.keyboardType = UIKeyboardTypeDefault;
             break;
     }
 }
@@ -134,16 +306,16 @@ void CCEditBoxImplIOS::setInputFlag(EditBoxInputFlag inputFlag)
     switch (inputFlag)
     {
         case kEditBoxInputFlagPassword:
-            GET_IMPL.textField.secureTextEntry = YES;
+            m_systemControl.textField.secureTextEntry = YES;
             break;
         case kEditBoxInputFlagInitialCapsWord:
-            GET_IMPL.textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
+            m_systemControl.textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
             break;
         case kEditBoxInputFlagInitialCapsSentence:
-            GET_IMPL.textField.autocapitalizationType = UITextAutocapitalizationTypeSentences;
+            m_systemControl.textField.autocapitalizationType = UITextAutocapitalizationTypeSentences;
             break;
         case kEditBoxInputFlagInitialCapsAllCharacters:
-            GET_IMPL.textField.autocapitalizationType = UITextAutocapitalizationTypeAllCharacters;
+            m_systemControl.textField.autocapitalizationType = UITextAutocapitalizationTypeAllCharacters;
             break;
         default:
             break;
@@ -154,44 +326,44 @@ void CCEditBoxImplIOS::setReturnType(KeyboardReturnType returnType)
 {
     switch (returnType) {
         case kKeyboardReturnTypeDefault:
-            GET_IMPL.textField.returnKeyType = UIReturnKeyDefault;
+            m_systemControl.textField.returnKeyType = UIReturnKeyDefault;
             break;
         case kKeyboardReturnTypeDone:
-            GET_IMPL.textField.returnKeyType = UIReturnKeyDone;
+            m_systemControl.textField.returnKeyType = UIReturnKeyDone;
             break;
         case kKeyboardReturnTypeSend:
-            GET_IMPL.textField.returnKeyType = UIReturnKeySend;
+            m_systemControl.textField.returnKeyType = UIReturnKeySend;
             break;
         case kKeyboardReturnTypeSearch:
-            GET_IMPL.textField.returnKeyType = UIReturnKeySearch;
+            m_systemControl.textField.returnKeyType = UIReturnKeySearch;
             break;
         case kKeyboardReturnTypeGo:
-            GET_IMPL.textField.returnKeyType = UIReturnKeyGo;
+            m_systemControl.textField.returnKeyType = UIReturnKeyGo;
             break;
         default:
-            GET_IMPL.textField.returnKeyType = UIReturnKeyDefault;
+            m_systemControl.textField.returnKeyType = UIReturnKeyDefault;
             break;
     }
 }
 
 bool CCEditBoxImplIOS::isEditing()
 {
-    return [GET_IMPL isEditState] ? true : false;
+    return [m_systemControl isEditState] ? true : false;
 }
 
 void CCEditBoxImplIOS::setText(const char* pText)
 {
-    GET_IMPL.textField.text = [NSString stringWithUTF8String:pText];
+    m_systemControl.textField.text = [NSString stringWithUTF8String:pText];
 }
 
 const char*  CCEditBoxImplIOS::getText(void)
 {
-    return [GET_IMPL.textField.text UTF8String];
+    return [m_systemControl.textField.text UTF8String];
 }
 
 void CCEditBoxImplIOS::setPlaceHolder(const char* pText)
 {
-    GET_IMPL.textField.placeholder = [NSString stringWithUTF8String:pText];
+    m_systemControl.textField.placeholder = [NSString stringWithUTF8String:pText];
 }
 
 static CGPoint convertDesignCoordToScreenCoord(const CCPoint& designCoord, bool bInRetinaMode)
@@ -216,7 +388,7 @@ static CGPoint convertDesignCoordToScreenCoord(const CCPoint& designCoord, bool 
 void CCEditBoxImplIOS::setPosition(const CCPoint& pos)
 {
     //TODO should consider anchor point, the default value is (0.5, 0,5)
-    [GET_IMPL setPosition:convertDesignCoordToScreenCoord(ccp(pos.x-m_tContentSize.width/2, pos.y+m_tContentSize.height/2), m_bInRetinaMode)];
+    [m_systemControl setPosition:convertDesignCoordToScreenCoord(ccp(pos.x-m_tContentSize.width/2, pos.y+m_tContentSize.height/2), m_bInRetinaMode)];
 }
 
 void CCEditBoxImplIOS::setContentSize(const CCSize& size)
@@ -232,13 +404,16 @@ void CCEditBoxImplIOS::visit(void)
 
 void CCEditBoxImplIOS::openKeyboard()
 {
-    [GET_IMPL openKeyboard];
+    [m_systemControl openKeyboard];
 }
 
 void CCEditBoxImplIOS::closeKeyboard()
 {
-    [GET_IMPL closeKeyboard];
+    [m_systemControl closeKeyboard];
 }
 
 NS_CC_EXT_END
+
+#endif /* #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) */
+
 

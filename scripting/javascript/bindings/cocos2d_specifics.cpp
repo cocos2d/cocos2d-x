@@ -170,10 +170,10 @@ JSBool js_cocos2dx_CCNode_getChildren(JSContext *cx, uint32_t argc, jsval *vp)
 		if (proxy) {
 			cocos2d::CCNode *node = (cocos2d::CCNode *)(proxy->ptr ? proxy->ptr : NULL);
 			cocos2d::CCArray *children = node->getChildren();
+            unsigned int count = children ? children->count() : 0;
+			JSObject *jsarr = JS_NewArrayObject(cx, count, NULL);
 
-			JSObject *jsarr = JS_NewArrayObject(cx, children->count(), NULL);
-
-			for (unsigned int i=0; i < children->count(); i++) {
+			for (unsigned int i=0; i < count; i++) {
 				cocos2d::CCNode *child = (cocos2d::CCNode*)children->objectAtIndex(i);
 				js_proxy_t *childProxy = js_get_or_create_proxy<cocos2d::CCNode>(cx, child);
 				jsval childVal = OBJECT_TO_JSVAL(childProxy->obj);

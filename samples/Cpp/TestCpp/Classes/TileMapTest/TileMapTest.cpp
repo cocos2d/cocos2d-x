@@ -84,7 +84,7 @@ void TileMapEditTest::updateMap(float dt)
     // over all your tiles in every frame. It's very expensive
     //    for(int x=0; x < tilemap.tgaInfo->width; x++) {
     //        for(int y=0; y < tilemap.tgaInfo->height; y++) {
-    //            ccColor3B c =[tilemap tileAt:ccg(x,y));
+    //            ccColor3B c =[tilemap tileAt:CCSizeMake(x,y));
     //            if( c.r != 0 ) {
     //                ////----UXLOG("%d,%d = %d", x,y,c.r);
     //            }
@@ -92,14 +92,14 @@ void TileMapEditTest::updateMap(float dt)
     //    }
     
     // NEW since v0.7
-    ccColor3B c = tilemap->tileAt(ccg(13,21));        
+    ccColor3B c = tilemap->tileAt(ccp(13,21));        
     c.r++;
     c.r %= 50;
     if( c.r==0)
         c.r=1;
     
     // NEW since v0.7
-    tilemap->setTile(c, ccg(13,21) );             
+    tilemap->setTile(c, ccp(13,21) );             
 }
 
 std::string TileMapEditTest::title()

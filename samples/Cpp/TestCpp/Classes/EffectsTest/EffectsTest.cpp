@@ -41,7 +41,7 @@ class Shaky3DDemo : public CCShaky3D
 public:
     static CCActionInterval* create(float t)
     {
-        return CCShaky3D::create(5, false, ccg(15,10), t);
+        return CCShaky3D::create(t, CCSizeMake(15,10), 5, false);
     }
 };
 
@@ -50,7 +50,7 @@ class Waves3DDemo : public CCWaves3D
 public:
     static CCActionInterval* create(float t)
     {
-        return CCWaves3D::create(5, 40, ccg(15,10), t);
+        return CCWaves3D::create(t, CCSizeMake(15,10), 5, 40);
     }
 };
 
@@ -86,7 +86,7 @@ public:
     static CCActionInterval* create(float t)
     {
         CCSize size = CCDirector::sharedDirector()->getWinSize();
-        return CCLens3D::create(ccp(size.width/2,size.height/2), 240, ccg(15,10), t); 
+        return CCLens3D::create(t, CCSizeMake(15,10), ccp(size.width/2,size.height/2), 240); 
     }
 };
 
@@ -97,7 +97,7 @@ public:
     static CCActionInterval* create(float t)
     {
         CCSize size = CCDirector::sharedDirector()->getWinSize();
-        return CCRipple3D::create(ccp(size.width/2,size.height/2), 240, 4, 160, ccg(32,24), t);
+        return CCRipple3D::create(t, CCSizeMake(32,24), ccp(size.width/2,size.height/2), 240, 4, 160);
     }
 };
 
@@ -107,7 +107,7 @@ class LiquidDemo : public CCLiquid
 public:
     static CCActionInterval* create(float t)
     {
-        return CCLiquid::create(4, 20, ccg(16,12), t); 
+        return CCLiquid::create(t, CCSizeMake(16,12), 4, 20); 
     }
 };
 
@@ -117,7 +117,7 @@ class WavesDemo : public CCWaves
 public:
     static CCActionInterval* create(float t)
     {
-        return CCWaves::create(4, 20, true, true, ccg(16,12), t);  
+        return CCWaves::create(t, CCSizeMake(16,12), 4, 20, true, true);  
     }
 };
 
@@ -128,7 +128,7 @@ public:
     static CCActionInterval* create(float t)
     {
         CCSize size = CCDirector::sharedDirector()->getWinSize();
-        return CCTwirl::create(ccp(size.width/2, size.height/2), 1, 2.5f, ccg(12,8), t); 
+        return CCTwirl::create(t, CCSizeMake(12,8), ccp(size.width/2, size.height/2), 1, 2.5f); 
     }
 };
 
@@ -138,7 +138,7 @@ class ShakyTiles3DDemo : public CCShakyTiles3D
 public:
     static CCActionInterval* create(float t)
     {
-        return CCShakyTiles3D::create(5, false, ccg(16,12), t) ;
+        return CCShakyTiles3D::create(t, CCSizeMake(16,12), 5, false) ;
     }
 };
 
@@ -148,7 +148,7 @@ class ShatteredTiles3DDemo : public CCShatteredTiles3D
 public:
     static CCActionInterval* create(float t)
     {
-        return CCShatteredTiles3D::create(5, false, ccg(16,12), t); 
+        return CCShatteredTiles3D::create(t, CCSizeMake(16,12), 5, false); 
     }
 };
 
@@ -158,7 +158,7 @@ class ShuffleTilesDemo : public CCShuffleTiles
 public:
     static CCActionInterval* create(float t)
     {
-        CCShuffleTiles* shuffle = CCShuffleTiles::create(25, ccg(16,12), t);
+        CCShuffleTiles* shuffle = CCShuffleTiles::create(t, CCSizeMake(16,12), 25);
         CCActionInterval* shuffle_back = shuffle->reverse();
         CCDelayTime* delay = CCDelayTime::create(2);
 
@@ -172,7 +172,7 @@ class FadeOutTRTilesDemo : public CCFadeOutTRTiles
 public:
     static CCActionInterval* create(float t)
     {
-        CCFadeOutTRTiles* fadeout = CCFadeOutTRTiles::create(ccg(16,12), t);
+        CCFadeOutTRTiles* fadeout = CCFadeOutTRTiles::create(t, CCSizeMake(16,12));
         CCActionInterval* back = fadeout->reverse();
         CCDelayTime* delay = CCDelayTime::create(0.5f);
 
@@ -186,7 +186,7 @@ class FadeOutBLTilesDemo : public CCFadeOutBLTiles
 public:
     static CCActionInterval* create(float t)
     {
-        CCFadeOutBLTiles* fadeout = CCFadeOutBLTiles::create(ccg(16,12), t);
+        CCFadeOutBLTiles* fadeout = CCFadeOutBLTiles::create(t, CCSizeMake(16,12));
         CCActionInterval* back = fadeout->reverse();
         CCDelayTime* delay = CCDelayTime::create(0.5f);
 
@@ -200,7 +200,7 @@ class FadeOutUpTilesDemo : public CCFadeOutUpTiles
 public:
     static CCActionInterval* create(float t)
     {
-        CCFadeOutUpTiles* fadeout = CCFadeOutUpTiles::create(ccg(16,12), t);
+        CCFadeOutUpTiles* fadeout = CCFadeOutUpTiles::create(t, CCSizeMake(16,12));
         CCActionInterval* back = fadeout->reverse();
         CCDelayTime* delay = CCDelayTime::create(0.5f);
 
@@ -213,7 +213,7 @@ class FadeOutDownTilesDemo : public CCFadeOutDownTiles
 public:
     static CCActionInterval* create(float t)
     {
-        CCFadeOutDownTiles* fadeout = CCFadeOutDownTiles::create(ccg(16,12), t);
+        CCFadeOutDownTiles* fadeout = CCFadeOutDownTiles::create(t, CCSizeMake(16,12));
         CCActionInterval* back = fadeout->reverse();
         CCDelayTime* delay = CCDelayTime::create(0.5f);
 
@@ -226,7 +226,7 @@ class TurnOffTilesDemo : public CCTurnOffTiles
 public:
     static CCActionInterval* create(float t)
     {
-        CCTurnOffTiles* fadeout = CCTurnOffTiles::create(25, ccg(48,32) , t);
+        CCTurnOffTiles* fadeout = CCTurnOffTiles::create(t, CCSizeMake(48,32), 25);
         CCActionInterval* back = fadeout->reverse();
         CCDelayTime* delay = CCDelayTime::create(0.5f);
 
@@ -239,7 +239,7 @@ class WavesTiles3DDemo : public CCWavesTiles3D
 public:
     static CCActionInterval* create(float t)
     {
-        return CCWavesTiles3D::create(4, 120, ccg(15,10), t); 
+        return CCWavesTiles3D::create(t, CCSizeMake(15,10), 4, 120); 
     }
 };
 
@@ -249,7 +249,7 @@ public:
     static CCActionInterval* create(float t)
     {
         CCSize size = CCDirector::sharedDirector()->getWinSize();
-        return CCJumpTiles3D::create(2, 30, ccg(15,10), t); 
+        return CCJumpTiles3D::create(t, CCSizeMake(15,10), 2, 30); 
     }
 };
 
@@ -258,7 +258,7 @@ class SplitRowsDemo : public CCSplitRows
 public:
     static CCActionInterval* create(float t)
     {
-        return CCSplitRows::create(9, t); 
+        return CCSplitRows::create(t, 9); 
     }
 };
 
@@ -267,7 +267,7 @@ class SplitColsDemo : public CCSplitCols
 public:
     static CCActionInterval* create(float t)
     {
-        return CCSplitCols::create(9, t); 
+        return CCSplitCols::create(t, 9); 
     }
 };
 
@@ -277,7 +277,7 @@ public:
     static CCActionInterval* create(float t)
     {
         CCDirector::sharedDirector()->setDepthTest(true);
-        return CCPageTurn3D::create(ccg(15,10), t); 
+        return CCPageTurn3D::create(t, CCSizeMake(15,10)); 
     }
 };
 

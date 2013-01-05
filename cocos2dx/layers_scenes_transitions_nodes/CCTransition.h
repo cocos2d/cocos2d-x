@@ -516,7 +516,7 @@ class CC_DLL CCTransitionFadeTR : public CCTransitionScene , public CCTransition
 public:
     CCTransitionFadeTR();
     virtual ~CCTransitionFadeTR();
-    virtual CCActionInterval* actionWithSize(const ccGridSize& size);
+    virtual CCActionInterval* actionWithSize(const CCSize& size);
     virtual void onEnter();
     virtual CCActionInterval* easeActionWithAction(CCActionInterval * action);
 
@@ -535,7 +535,7 @@ class CC_DLL CCTransitionFadeBL : public CCTransitionFadeTR
 public:
     CCTransitionFadeBL();
     virtual ~CCTransitionFadeBL();
-    virtual CCActionInterval* actionWithSize(const ccGridSize& size);
+    virtual CCActionInterval* actionWithSize(const CCSize& size);
 
 public:
 
@@ -550,7 +550,7 @@ class CC_DLL CCTransitionFadeUp : public CCTransitionFadeTR
 public:
     CCTransitionFadeUp();
     virtual ~CCTransitionFadeUp();
-    virtual CCActionInterval* actionWithSize(const ccGridSize& size);
+    virtual CCActionInterval* actionWithSize(const CCSize& size);
 
 public:
 
@@ -565,7 +565,7 @@ class CC_DLL CCTransitionFadeDown : public CCTransitionFadeTR
 public:
     CCTransitionFadeDown();
     virtual ~CCTransitionFadeDown();
-    virtual CCActionInterval* actionWithSize(const ccGridSize& size);
+    virtual CCActionInterval* actionWithSize(const CCSize& size);
 
 public:
 

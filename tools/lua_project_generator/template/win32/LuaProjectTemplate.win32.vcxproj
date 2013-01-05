@@ -19,10 +19,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0'">v110</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0'">v110</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -49,6 +51,12 @@
     <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
     <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LibraryPath>$(WindowsSdkDir_71A)lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LibraryPath>$(WindowsSdkDir_71A)lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Midl>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -64,7 +72,7 @@
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\Classes;$(SolutionDir)\lua\cocos2dx_support;$(SolutionDir)\lua\CocosDenshion_support;$(SolutionDir)\lua\lua;$(SolutionDir)\lua\tolua;.;$(SolutionDir)\cocos2dx;$(SolutionDir)\cocos2dx\include;$(SolutionDir)\cocos2dx\platform;$(SolutionDir)\cocos2dx\platform\third_party\win32\OGLES;$(SolutionDir)\CocosDenshion\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(WindowsSdkDir_71A)include;..\Classes;$(SolutionDir)\lua\cocos2dx_support;$(SolutionDir)\lua\CocosDenshion_support;$(SolutionDir)\lua\lua;$(SolutionDir)\lua\tolua;.;$(SolutionDir)\cocos2dx;$(SolutionDir)\cocos2dx\include;$(SolutionDir)\cocos2dx\platform;$(SolutionDir)\cocos2dx\platform\third_party\win32\OGLES;$(SolutionDir)\CocosDenshion\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_WINDOWS;STRICT;_DEBUG;COCOS2D_DEBUG=1;ENABLE_LUA;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -78,7 +86,7 @@
     <ResourceCompile>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <Culture>0x0409</Culture>
-      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(WindowsSdkDir_71A)include;$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
       <AdditionalDependencies>libcocos2d.lib;libCocosDenshion.lib;libgles_cm.lib;liblua.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -102,7 +110,7 @@
       <ProxyFileName>LuaProjectTemplate_p.c</ProxyFileName>
     </Midl>
     <ClCompile>
-      <AdditionalIncludeDirectories>..\Classes;$(SolutionDir)\lua\cocos2dx_support;$(SolutionDir)\lua\CocosDenshion_support;$(SolutionDir)\lua\lua;$(SolutionDir)\lua\tolua;$(SolutionDir)\lua\src;.;$(SolutionDir)\cocos2dx;$(SolutionDir)\cocos2dx\include;$(SolutionDir)\cocos2dx\platform;$(SolutionDir)\cocos2dx\platform\third_party\win32\OGLES;$(SolutionDir)\CocosDenshion\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(WindowsSdkDir_71A)include;..\Classes;$(SolutionDir)\lua\cocos2dx_support;$(SolutionDir)\lua\CocosDenshion_support;$(SolutionDir)\lua\lua;$(SolutionDir)\lua\tolua;$(SolutionDir)\lua\src;.;$(SolutionDir)\cocos2dx;$(SolutionDir)\cocos2dx\include;$(SolutionDir)\cocos2dx\platform;$(SolutionDir)\cocos2dx\platform\third_party\win32\OGLES;$(SolutionDir)\CocosDenshion\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_WINDOWS;STRICT;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ExceptionHandling>
       </ExceptionHandling>
@@ -117,7 +125,7 @@
     <ResourceCompile>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <Culture>0x0409</Culture>
-      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(WindowsSdkDir_71A)include;$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
       <AdditionalDependencies>libcocos2d.lib;libCocosDenshion.lib;libgles_cm.lib;liblua.lib;%(AdditionalDependencies)</AdditionalDependencies>

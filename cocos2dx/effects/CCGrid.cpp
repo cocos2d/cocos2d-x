@@ -39,7 +39,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 // implementation of CCGridBase
 
-CCGridBase* CCGridBase::create(const ccGridSize& gridSize)
+CCGridBase* CCGridBase::create(const CCSize& gridSize)
 {
     CCGridBase *pGridBase = new CCGridBase();
 
@@ -58,7 +58,7 @@ CCGridBase* CCGridBase::create(const ccGridSize& gridSize)
     return pGridBase;
 }
 
-CCGridBase* CCGridBase::create(const ccGridSize& gridSize, CCTexture2D *texture, bool flipped)
+CCGridBase* CCGridBase::create(const CCSize& gridSize, CCTexture2D *texture, bool flipped)
 {
     CCGridBase *pGridBase = new CCGridBase();
 
@@ -77,7 +77,7 @@ CCGridBase* CCGridBase::create(const ccGridSize& gridSize, CCTexture2D *texture,
     return pGridBase;
 }
 
-bool CCGridBase::initWithSize(const ccGridSize& gridSize, CCTexture2D *pTexture, bool bFlipped)
+bool CCGridBase::initWithSize(const CCSize& gridSize, CCTexture2D *pTexture, bool bFlipped)
 {
     bool bRet = true;
 
@@ -90,8 +90,8 @@ bool CCGridBase::initWithSize(const ccGridSize& gridSize, CCTexture2D *pTexture,
     m_bIsTextureFlipped = bFlipped;
 
     CCSize texSize = m_pTexture->getContentSize();
-    m_obStep.x = texSize.width / m_sGridSize.x;
-    m_obStep.y = texSize.height / m_sGridSize.y;
+    m_obStep.x = texSize.width / m_sGridSize.width;
+    m_obStep.y = texSize.height / m_sGridSize.height;
 
     m_pGrabber = new CCGrabber();
     if (m_pGrabber)
@@ -109,7 +109,7 @@ bool CCGridBase::initWithSize(const ccGridSize& gridSize, CCTexture2D *pTexture,
     return bRet;
 }
 
-bool CCGridBase::initWithSize(const ccGridSize& gridSize)
+bool CCGridBase::initWithSize(const CCSize& gridSize)
 {
     CCDirector *pDirector = CCDirector::sharedDirector();
     CCSize s = pDirector->getWinSizeInPixels();
@@ -254,7 +254,7 @@ void CCGridBase::calculateVertexPoints(void)
 
 // implementation of CCGrid3D
 
-CCGrid3D* CCGrid3D::create(const ccGridSize& gridSize, CCTexture2D *pTexture, bool bFlipped)
+CCGrid3D* CCGrid3D::create(const CCSize& gridSize, CCTexture2D *pTexture, bool bFlipped)
 {
     CCGrid3D *pRet= new CCGrid3D();
 
@@ -274,7 +274,7 @@ CCGrid3D* CCGrid3D::create(const ccGridSize& gridSize, CCTexture2D *pTexture, bo
     return pRet;
 }
 
-CCGrid3D* CCGrid3D::create(const ccGridSize& gridSize)
+CCGrid3D* CCGrid3D::create(const CCSize& gridSize)
 {
     CCGrid3D *pRet= new CCGrid3D();
 
@@ -314,7 +314,7 @@ CCGrid3D::~CCGrid3D(void)
 
 void CCGrid3D::blit(void)
 {
-    int n = m_sGridSize.x * m_sGridSize.y;
+    int n = m_sGridSize.width * m_sGridSize.height;
 
     ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_TexCoords );
     m_pShaderProgram->use();
@@ -346,32 +346,32 @@ void CCGrid3D::calculateVertexPoints(void)
     CC_SAFE_FREE(m_pTexCoordinates);
     CC_SAFE_FREE(m_pIndices);
 
-    unsigned int numOfPoints = (m_sGridSize.x+1) * (m_sGridSize.y+1);
+    unsigned int numOfPoints = (m_sGridSize.width+1) * (m_sGridSize.height+1);
 
     m_pVertices = malloc(numOfPoints * sizeof(ccVertex3F));
     m_pOriginalVertices = malloc(numOfPoints * sizeof(ccVertex3F));
     m_pTexCoordinates = malloc(numOfPoints * sizeof(ccVertex2F));
-    m_pIndices = (GLushort*)malloc(m_sGridSize.x * m_sGridSize.y * sizeof(GLushort) * 6);
+    m_pIndices = (GLushort*)malloc(m_sGridSize.width * m_sGridSize.height * sizeof(GLushort) * 6);
 
     GLfloat *vertArray = (GLfloat*)m_pVertices;
     GLfloat *texArray = (GLfloat*)m_pTexCoordinates;
     GLushort *idxArray = m_pIndices;
 
-    for (x = 0; x < m_sGridSize.x; ++x)
+    for (x = 0; x < m_sGridSize.width; ++x)
     {
-        for (y = 0; y < m_sGridSize.y; ++y)
+        for (y = 0; y < m_sGridSize.height; ++y)
         {
-            int idx = (y * m_sGridSize.x) + x;
+            int idx = (y * m_sGridSize.width) + x;
 
             GLfloat x1 = x * m_obStep.x;
             GLfloat x2 = x1 + m_obStep.x;
             GLfloat y1 = y * m_obStep.y;
             GLfloat y2= y1 + m_obStep.y;
 
-            GLushort a = (GLushort)(x * (m_sGridSize.y + 1) + y);
-            GLushort b = (GLushort)((x + 1) * (m_sGridSize.y + 1) + y);
-            GLushort c = (GLushort)((x + 1) * (m_sGridSize.y + 1) + (y + 1));
-            GLushort d = (GLushort)(x * (m_sGridSize.y + 1) + (y + 1));
+            GLushort a = (GLushort)(x * (m_sGridSize.height + 1) + y);
+            GLushort b = (GLushort)((x + 1) * (m_sGridSize.height + 1) + y);
+            GLushort c = (GLushort)((x + 1) * (m_sGridSize.height + 1) + (y + 1));
+            GLushort d = (GLushort)(x * (m_sGridSize.height + 1) + (y + 1));
 
             GLushort tempidx[6] = {a, b, d, b, c, d};
 
@@ -407,12 +407,12 @@ void CCGrid3D::calculateVertexPoints(void)
         }
     }
 
-    memcpy(m_pOriginalVertices, m_pVertices, (m_sGridSize.x+1) * (m_sGridSize.y+1) * sizeof(ccVertex3F));
+    memcpy(m_pOriginalVertices, m_pVertices, (m_sGridSize.width+1) * (m_sGridSize.height+1) * sizeof(ccVertex3F));
 }
 
-ccVertex3F CCGrid3D::vertex(const ccGridSize& pos)
+ccVertex3F CCGrid3D::vertex(const CCPoint& pos)
 {
-    int index = (pos.x * (m_sGridSize.y+1) + pos.y) * 3;
+    int index = (pos.x * (m_sGridSize.height+1) + pos.y) * 3;
     float *vertArray = (float*)m_pVertices;
 
     ccVertex3F vert = {vertArray[index], vertArray[index+1], vertArray[index+2]};
@@ -420,9 +420,9 @@ ccVertex3F CCGrid3D::vertex(const ccGridSize& pos)
     return vert;
 }
 
-ccVertex3F CCGrid3D::originalVertex(const ccGridSize& pos)
+ccVertex3F CCGrid3D::originalVertex(const CCPoint& pos)
 {
-    int index = (pos.x * (m_sGridSize.y+1) + pos.y) * 3;
+    int index = (pos.x * (m_sGridSize.height+1) + pos.y) * 3;
     float *vertArray = (float*)m_pOriginalVertices;
 
     ccVertex3F vert = {vertArray[index], vertArray[index+1], vertArray[index+2]};
@@ -430,9 +430,9 @@ ccVertex3F CCGrid3D::originalVertex(const ccGridSize& pos)
     return vert;
 }
 
-void CCGrid3D::setVertex(const ccGridSize& pos, const ccVertex3F& vertex)
+void CCGrid3D::setVertex(const CCPoint& pos, const ccVertex3F& vertex)
 {
-    int index = (pos.x * (m_sGridSize.y + 1) + pos.y) * 3;
+    int index = (pos.x * (m_sGridSize.height + 1) + pos.y) * 3;
     float *vertArray = (float*)m_pVertices;
     vertArray[index] = vertex.x;
     vertArray[index+1] = vertex.y;
@@ -443,7 +443,7 @@ void CCGrid3D::reuse(void)
 {
     if (m_nReuseGrid > 0)
     {
-        memcpy(m_pOriginalVertices, m_pVertices, (m_sGridSize.x+1) * (m_sGridSize.y+1) * sizeof(ccVertex3F));
+        memcpy(m_pOriginalVertices, m_pVertices, (m_sGridSize.width+1) * (m_sGridSize.height+1) * sizeof(ccVertex3F));
         --m_nReuseGrid;
     }
 }
@@ -467,7 +467,7 @@ CCTiledGrid3D::~CCTiledGrid3D(void)
     CC_SAFE_FREE(m_pIndices);
 }
 
-CCTiledGrid3D* CCTiledGrid3D::create(const ccGridSize& gridSize, CCTexture2D *pTexture, bool bFlipped)
+CCTiledGrid3D* CCTiledGrid3D::create(const CCSize& gridSize, CCTexture2D *pTexture, bool bFlipped)
 {
     CCTiledGrid3D *pRet= new CCTiledGrid3D();
 
@@ -487,7 +487,7 @@ CCTiledGrid3D* CCTiledGrid3D::create(const ccGridSize& gridSize, CCTexture2D *pT
     return pRet;
 }
 
-CCTiledGrid3D* CCTiledGrid3D::create(const ccGridSize& gridSize)
+CCTiledGrid3D* CCTiledGrid3D::create(const CCSize& gridSize)
 {
     CCTiledGrid3D *pRet= new CCTiledGrid3D();
 
@@ -509,7 +509,7 @@ CCTiledGrid3D* CCTiledGrid3D::create(const ccGridSize& gridSize)
 
 void CCTiledGrid3D::blit(void)
 {
-    int n = m_sGridSize.x * m_sGridSize.y;
+    int n = m_sGridSize.width * m_sGridSize.height;
 
     
     m_pShaderProgram->use();
@@ -536,7 +536,7 @@ void CCTiledGrid3D::calculateVertexPoints(void)
     float height = (float)m_pTexture->getPixelsHigh();
     float imageH = m_pTexture->getContentSizeInPixels().height;
     
-    int numQuads = m_sGridSize.x * m_sGridSize.y;
+    int numQuads = m_sGridSize.width * m_sGridSize.height;
     CC_SAFE_FREE(m_pVertices);
     CC_SAFE_FREE(m_pOriginalVertices);
     CC_SAFE_FREE(m_pTexCoordinates);
@@ -553,9 +553,9 @@ void CCTiledGrid3D::calculateVertexPoints(void)
     
     int x, y;
     
-    for( x = 0; x < m_sGridSize.x; x++ )
+    for( x = 0; x < m_sGridSize.width; x++ )
     {
-        for( y = 0; y < m_sGridSize.y; y++ )
+        for( y = 0; y < m_sGridSize.height; y++ )
         {
             float x1 = x * m_obStep.x;
             float x2 = x1 + m_obStep.x;
@@ -609,16 +609,16 @@ void CCTiledGrid3D::calculateVertexPoints(void)
     memcpy(m_pOriginalVertices, m_pVertices, numQuads * 12 * sizeof(GLfloat));
 }
 
-void CCTiledGrid3D::setTile(const ccGridSize& pos, const ccQuad3& coords)
+void CCTiledGrid3D::setTile(const CCPoint& pos, const ccQuad3& coords)
 {
-    int idx = (m_sGridSize.y * pos.x + pos.y) * 4 * 3;
+    int idx = (m_sGridSize.height * pos.x + pos.y) * 4 * 3;
     float *vertArray = (float*)m_pVertices;
     memcpy(&vertArray[idx], &coords, sizeof(ccQuad3));
 }
 
-ccQuad3 CCTiledGrid3D::originalTile(const ccGridSize& pos)
+ccQuad3 CCTiledGrid3D::originalTile(const CCPoint& pos)
 {
-    int idx = (m_sGridSize.y * pos.x + pos.y) * 4 * 3;
+    int idx = (m_sGridSize.height * pos.x + pos.y) * 4 * 3;
     float *vertArray = (float*)m_pOriginalVertices;
 
     ccQuad3 ret;
@@ -627,9 +627,9 @@ ccQuad3 CCTiledGrid3D::originalTile(const ccGridSize& pos)
     return ret;
 }
 
-ccQuad3 CCTiledGrid3D::tile(const ccGridSize& pos)
+ccQuad3 CCTiledGrid3D::tile(const CCPoint& pos)
 {
-    int idx = (m_sGridSize.y * pos.x + pos.y) * 4 * 3;
+    int idx = (m_sGridSize.height * pos.x + pos.y) * 4 * 3;
     float *vertArray = (float*)m_pVertices;
 
     ccQuad3 ret;
@@ -642,7 +642,7 @@ void CCTiledGrid3D::reuse(void)
 {
     if (m_nReuseGrid > 0)
     {
-        int numQuads = m_sGridSize.x * m_sGridSize.y;
+        int numQuads = m_sGridSize.width * m_sGridSize.height;
 
         memcpy(m_pOriginalVertices, m_pVertices, numQuads * 12 * sizeof(GLfloat));
         --m_nReuseGrid;

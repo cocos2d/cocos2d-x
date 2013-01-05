@@ -23,6 +23,8 @@ THE SOFTWARE.
  ****************************************************************************/
 package org.cocos2dx.lib;
 
+import java.io.FileInputStream;
+
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
 import android.media.MediaPlayer;
@@ -77,7 +79,7 @@ public class Cocos2dxMusic {
 				this.mBackgroundMediaPlayer.release();
 			}
 
-			this.mBackgroundMediaPlayer = this.createMediaplayerFromAssets(pPath);
+			this.mBackgroundMediaPlayer = this.createMediaplayer(pPath);
 
 			// record the path
 			this.mCurrentPath = pPath;
@@ -87,7 +89,7 @@ public class Cocos2dxMusic {
 	public void playBackgroundMusic(final String pPath, final boolean isLoop) {
 		if (this.mCurrentPath == null) {
 			// it is the first time to play background music or end() was called
-			this.mBackgroundMediaPlayer = this.createMediaplayerFromAssets(pPath);
+			this.mBackgroundMediaPlayer = this.createMediaplayer(pPath);
 			this.mCurrentPath = pPath;
 		} else {
 			if (!this.mCurrentPath.equals(pPath)) {
@@ -97,7 +99,7 @@ public class Cocos2dxMusic {
 				if (this.mBackgroundMediaPlayer != null) {
 					this.mBackgroundMediaPlayer.release();
 				}
-				this.mBackgroundMediaPlayer = this.createMediaplayerFromAssets(pPath);
+				this.mBackgroundMediaPlayer = this.createMediaplayer(pPath);
 
 				// record the path
 				this.mCurrentPath = pPath;
@@ -222,12 +224,14 @@ public class Cocos2dxMusic {
 	 *            the pPath relative to assets
 	 * @return
 	 */
-	private MediaPlayer createMediaplayerFromAssets(final String pPath) {
+	private MediaPlayer createMediaplayer(final String pPath) {
 		MediaPlayer mediaPlayer = new MediaPlayer();
 
 		try {
 			if (pPath.startsWith("/")) {
-				mediaPlayer.setDataSource(pPath);
+				final FileInputStream fis = new FileInputStream(pPath);
+				mediaPlayer.setDataSource(fis.getFD());
+				fis.close();
 			} else {
 				final AssetFileDescriptor assetFileDescritor = this.mContext.getAssets().openFd(pPath);
 				mediaPlayer.setDataSource(assetFileDescritor.getFileDescriptor(), assetFileDescritor.getStartOffset(), assetFileDescritor.getLength());

@@ -192,3 +192,33 @@ jsval longlong_to_jsval( JSContext *cx, long long number )
 	return OBJECT_TO_JSVAL(typedArray);
 #endif
 }
+
+JSBool jsval_to_charptr( JSContext *cx, jsval vp, const char **ret )
+{
+    JSString *jsstr = JS_ValueToString( cx, vp );
+    JSB_PRECONDITION2( jsstr, cx, JS_FALSE, "invalid string" );
+
+    // root it
+    vp = STRING_TO_JSVAL(jsstr);
+
+    char *ptr = JS_EncodeString(cx, jsstr);
+
+    JSB_PRECONDITION2(ptr, cx, JS_FALSE, "Error encoding string");
+
+    // XXX: It is converted to CCString and then back to char* to autorelease the created object.
+    CCString *tmp = CCString::create(ptr);
+
+    JSB_PRECONDITION2( tmp, cx, JS_FALSE, "Error creating string from UTF8");
+
+    *ret = tmp->getCString();
+    JS_free( cx, ptr );
+
+    return JS_TRUE;
+}
+
+jsval charptr_to_jsval( JSContext *cx, const char *str)
+{
+    JSString *ret_obj = JS_NewStringCopyZ(cx, str);
+    return STRING_TO_JSVAL(ret_obj);
+}
+

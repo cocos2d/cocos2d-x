@@ -47,6 +47,12 @@
     <ClCompile Include="..\ScriptingCore.cpp">
       <Filter>manual</Filter>
     </ClCompile>
+    <ClCompile Include="..\js_bindings_system_functions.cpp">
+      <Filter>manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\js_bindings_system_registration.cpp">
+      <Filter>manual</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\generated\cocos2dx.hpp">
@@ -92,6 +98,15 @@
       <Filter>manual</Filter>
     </ClInclude>
     <ClInclude Include="..\spidermonkey_specifics.h">
+      <Filter>manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\js_bindings_system_functions.h">
+      <Filter>manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\js_bindings_system_functions_registration.h">
+      <Filter>manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\js_bindings_system_registration.h">
       <Filter>manual</Filter>
     </ClInclude>
   </ItemGroup>

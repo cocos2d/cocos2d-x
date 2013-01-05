@@ -12,6 +12,9 @@ Developers:
     Rolando Abarca
         Javascript Binding and testjs
 
+    tks2shimizu
+        add CCFloat, CCDouble and CCBool
+
     chenium
         fix a bug that CCRenderTexture can not work when coming to foreground on Android
 

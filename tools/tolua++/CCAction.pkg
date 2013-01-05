@@ -121,7 +121,7 @@ class CCMoveBy : public CCActionInterval
 	CCObject* copyWithZone(CCZone* pZone);
 	CCActionInterval* reverse(void);
 
-    static CCMoveBy* create(float duration, CCPoint position);
+    static CCMoveBy* create(float duration, CCPoint deltaPosition);
 };
 
 class CCSkewTo : public CCActionInterval
