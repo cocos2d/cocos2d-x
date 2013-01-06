@@ -186,7 +186,7 @@ void ChipmunkTestLayer::addNewSpriteAtPosition(CCPoint pos)
     CCPhysicsSprite *sprite = CCPhysicsSprite::createWithTexture(m_pSpriteTexture, CCRectMake(posx, posy, 85, 121));
     parent->addChild(sprite);
 
-    sprite->setBody(body);
+    sprite->setCPBody(body);
     sprite->setPosition(pos);
 }
 
