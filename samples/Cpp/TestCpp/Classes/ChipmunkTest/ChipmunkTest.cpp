@@ -23,6 +23,7 @@ static void removeShape( cpBody *body, cpShape *shape, void *data )
 
 ChipmunkTestLayer::ChipmunkTestLayer()
 {
+#if CC_ENABLE_CHIPMUNK_INTEGRATION      
     // enable events
     setTouchEnabled(true);
     setAccelerometerEnabled(true);
@@ -60,11 +61,24 @@ ChipmunkTestLayer::ChipmunkTestLayer()
     menu->setPosition(ccp(VisibleRect::right().x-100, VisibleRect::top().y-60));
 
     scheduleUpdate();
+#else
+    CCLabelTTF *pLabel = CCLabelTTF::create("Should define CC_ENABLE_CHIPMUNK_INTEGRATION=1\n to run this test case",
+                                            "Arial",
+                                            18);
+    CCSize size = CCDirector::sharedDirector()->getWinSize();
+    pLabel->setPosition(ccp(size.width/2, size.height/2));
+    
+    addChild(pLabel);
+    
+#endif
+    
 }
 
 void ChipmunkTestLayer::toggleDebugCallback(CCObject* pSender)
 {
+#if CC_ENABLE_CHIPMUNK_INTEGRATION
     m_pDebugLayer->setVisible(! m_pDebugLayer->isVisible());
+#endif
 }
 
 ChipmunkTestLayer::~ChipmunkTestLayer()
@@ -80,6 +94,7 @@ ChipmunkTestLayer::~ChipmunkTestLayer()
 
 void ChipmunkTestLayer::initPhysics()
 {
+#if CC_ENABLE_CHIPMUNK_INTEGRATION    
     // init chipmunk
     //cpInitChipmunk();
 
@@ -120,6 +135,7 @@ void ChipmunkTestLayer::initPhysics()
     // Physics debug layer
     m_pDebugLayer = CCPhysicsDebugNode::create(m_pSpace);
     this->addChild(m_pDebugLayer, Z_PHYSICS_DEBUG);
+#endif
 }
 
 void ChipmunkTestLayer::update(float delta)
@@ -155,6 +171,7 @@ void ChipmunkTestLayer::reset(CCObject* sender)
 
 void ChipmunkTestLayer::addNewSpriteAtPosition(CCPoint pos)
 {
+#if CC_ENABLE_CHIPMUNK_INTEGRATION    
     int posx, posy;
 
     CCNode *parent = getChildByTag(kTagParentNode);
@@ -188,6 +205,7 @@ void ChipmunkTestLayer::addNewSpriteAtPosition(CCPoint pos)
 
     sprite->setCPBody(body);
     sprite->setPosition(pos);
+#endif
 }
 
 void ChipmunkTestLayer::onEnter()
