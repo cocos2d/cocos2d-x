@@ -74,7 +74,7 @@ void JSPROXY_CCPhysicsSprite_finalize(JSFreeOp *fop, JSObject *obj)
 
 // Arguments:
 // Ret value: cpBody* (N/A)
-JSBool JSPROXY_CCPhysicsSprite_body(JSContext *cx, uint32_t argc, jsval *vp) {
+JSBool JSPROXY_CCPhysicsSprite_getCPBody(JSContext *cx, uint32_t argc, jsval *vp) {
     
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
 	js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
@@ -82,7 +82,7 @@ JSBool JSPROXY_CCPhysicsSprite_body(JSContext *cx, uint32_t argc, jsval *vp) {
 	TEST_NATIVE_OBJECT(cx, real)
 	cpBody* ret_val;
     
-	ret_val = real->getBody();
+	ret_val = real->getCPBody();
     jsval ret_jsval = opaque_to_jsval(cx, ret_val);
 	JS_SET_RVAL(cx, vp, ret_jsval);
     
@@ -107,7 +107,7 @@ JSBool JSPROXY_CCPhysicsSprite_ignoreBodyRotation(JSContext *cx, uint32_t argc, 
 
 // Arguments: cpBody*
 // Ret value: void (None)
-JSBool JSPROXY_CCPhysicsSprite_setBody_(JSContext *cx, uint32_t argc, jsval *vp) {
+JSBool JSPROXY_CCPhysicsSprite_setCPBody_(JSContext *cx, uint32_t argc, jsval *vp) {
     
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
 	js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
@@ -122,7 +122,7 @@ JSBool JSPROXY_CCPhysicsSprite_setBody_(JSContext *cx, uint32_t argc, jsval *vp)
 	ok &= jsval_to_opaque( cx, *argvp++, (void**)&arg0 );
 	if( ! ok ) return JS_FALSE;
     
-	real->setBody((cpBody*)arg0);
+	real->setCPBody((cpBody*)arg0);
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -437,9 +437,9 @@ void JSPROXY_CCPhysicsSprite_createClass(JSContext *cx, JSObject* globalObj)
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("getBody", JSPROXY_CCPhysicsSprite_body, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getCPBody", JSPROXY_CCPhysicsSprite_getCPBody, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("getIgnoreBodyRotation", JSPROXY_CCPhysicsSprite_ignoreBodyRotation, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("_setBody", JSPROXY_CCPhysicsSprite_setBody_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("_setCPBody", JSPROXY_CCPhysicsSprite_setCPBody_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setIgnoreBodyRotation", JSPROXY_CCPhysicsSprite_setIgnoreBodyRotation_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
