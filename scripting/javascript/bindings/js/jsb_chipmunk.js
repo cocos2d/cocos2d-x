@@ -2,6 +2,8 @@
 // Chipmunk defines
 //
 
+var cp = cp || {};
+
 cp.v = cc.p;
 cp._v = cc._p;
 cp.vzero  = cp.v(0,0);
@@ -249,17 +251,7 @@ Object.defineProperties(cp.Body.prototype,
                         },
 						enumerable : true,
 						configurable : true
-					},
-                    "userData" : {
-						get : function(){
-                            return this.getUserData();
-                        },
-						set : function(newValue){
-                            this.setUserData(newValue);
-                        },
-						enumerable : true,
-						configurable : true
-                    }
+					}
 
 				});
 
