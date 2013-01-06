@@ -425,7 +425,8 @@ void CCBAnimationManager::setAnimatedProperty(const char *pPropName, CCNode *pNo
             }
             else if (strcmp(pPropName, "visible") == 0)
             {
-                pNode->setVisible(NULL != pValue);
+                bool visible = ((CCBValue*)pValue)->getBoolValue();
+                pNode->setVisible(visible);
             }
             else
             {
