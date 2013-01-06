@@ -33,10 +33,6 @@ THE SOFTWARE.
 #include <stdio.h>
 #include <stdlib.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 /** Initializes the database. If path is null, it will create an in-memory DB */
 void localStorageInit( const char *fullpath);
 
@@ -51,10 +47,5 @@ const char* localStorageGetItem( const char *key );
 
 /** removes an item from the LS */
 void localStorageRemoveItem( const char *key );
-
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif // __JSB_LOCALSTORAGE_H
