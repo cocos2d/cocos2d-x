@@ -24,8 +24,8 @@
 
 #include "js_bindings_config.h"
 #include "js_bindings_core.h"
-//#include "LocalStorage.h"
-
+#include "LocalStorage.h"
+#include "cocos2d.h"
 
 // system
 #include "js_bindings_system_functions.h"
@@ -50,11 +50,13 @@ void jsb_register_system( JSContext *_cx, JSObject *object)
 	JSObject *system = ls;
 #include "js_bindings_system_functions_registration.h"
 	
-	/*
+	
 	// Init DB with full path
-	NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-	NSString *fullpath = [path stringByAppendingPathComponent:@"jsb.sqlite"];
-	localStorageInit([fullpath UTF8String]);
-	*/
+	//NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+	//NSString *fullpath = [path stringByAppendingPathComponent:@"jsb.sqlite"];
+    std::string strFilePath = cocos2d::CCFileUtils::sharedFileUtils()->getWriteablePath();
+    strFilePath += "/jsb.sqlite";
+	localStorageInit(strFilePath.c_str());
+	
 }
 
