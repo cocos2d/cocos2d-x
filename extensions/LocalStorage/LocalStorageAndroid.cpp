@@ -122,7 +122,7 @@ const char* localStorageGetItem( const char *key )
         t.env->DeleteLocalRef(jkey);
         t.env->DeleteLocalRef(t.classID);
     }
-    return pStr->getCString();
+    return pStr ? pStr->getCString() : NULL;
 }
 
 /** removes an item from the LS */
