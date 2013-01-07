@@ -16,7 +16,7 @@
 #include "ScriptingCore.h"
 #include "jsdbgapi.h"
 #include "cocos2d.h"
-#include "cocos-ext.h"
+#include "LocalStorage.h"
 #include "cocos2d_specifics.hpp"
 // for debug socket
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
