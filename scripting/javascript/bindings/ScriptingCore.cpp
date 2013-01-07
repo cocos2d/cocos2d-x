@@ -16,6 +16,7 @@
 #include "ScriptingCore.h"
 #include "jsdbgapi.h"
 #include "cocos2d.h"
+#include "cocos-ext.h"
 #include "cocos2d_specifics.hpp"
 // for debug socket
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
@@ -465,6 +466,7 @@ JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* c
 
 ScriptingCore::~ScriptingCore()
 {
+    localStorageFree();
     removeAllRoots(cx_);
     JS_DestroyContext(cx_);
     JS_DestroyRuntime(rt_);
