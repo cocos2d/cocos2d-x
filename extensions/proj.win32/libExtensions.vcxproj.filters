@@ -19,6 +19,9 @@
     <Filter Include="physics_nodes">
       <UniqueIdentifier>{d5806151-7ae1-4fef-af5a-2fa1d1c7377b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="LocalStorage">
+      <UniqueIdentifier>{4da8061d-80f3-45fd-aa7e-2c0a96701b79}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\GUI\CCScrollView\CCScrollView.cpp">
@@ -149,6 +152,9 @@
     </ClCompile>
     <ClCompile Include="..\physics_nodes\CCPhysicsSprite.cpp">
       <Filter>physics_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LocalStorage\LocalStorage.cpp">
+      <Filter>LocalStorage</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -303,6 +309,9 @@
     </ClInclude>
     <ClInclude Include="..\physics_nodes\CCPhysicsSprite.h">
       <Filter>physics_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LocalStorage\LocalStorage.h">
+      <Filter>LocalStorage</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
