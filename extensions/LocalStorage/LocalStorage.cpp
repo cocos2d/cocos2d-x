@@ -27,6 +27,10 @@
  Works on cocos2d-iphone and cocos2d-x.
  */
 
+#include "cocos2d.h"
+
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID)
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
@@ -149,3 +153,5 @@ void localStorageRemoveItem( const char *key )
 	if( ok != SQLITE_OK && ok != SQLITE_DONE)
 		printf("Error in localStorage.removeItem()\n");
 }
+
+#endif // #if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID)
