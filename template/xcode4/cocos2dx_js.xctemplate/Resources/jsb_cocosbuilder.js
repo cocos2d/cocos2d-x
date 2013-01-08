@@ -2,14 +2,21 @@
 // CocosBuilder definitions
 //
 
-cc.Reader = {};
+cc.BuilderReader = cc.BuilderReader || {};
+cc.BuilderReader._resourcePath = "";
 
 var _ccbGlobalContext = this;
 
-cc.Reader.load = function(file, owner, parentSize)
+cc.BuilderReader.setResourcePath = function (rootPath) {
+    cc.BuilderReader._resourcePath = rootPath;
+};
+
+cc.BuilderReader.load = function(file, owner, parentSize)
 {
     // Load the node graph using the correct function
     var reader = cc._Reader.create();
+    reader.setCCBRootPath(cc.BuilderReader._resourcePath);
+    
     var node;
 
     if (owner && parentSize)
@@ -106,13 +113,13 @@ cc.Reader.load = function(file, owner, parentSize)
     }
 
     return node;
-}
+};
 
-cc.Reader.loadAsScene = function(file, owner, parentSize)
+cc.BuilderReader.loadAsScene = function(file, owner, parentSize)
 {
-    var node = cc.Reader.load(file, owner, parentSize);
+    var node = cc.BuilderReader.load(file, owner, parentSize);
     var scene = cc.Scene.create();
     scene.addChild( node );
 
     return scene;
-}
+};
