@@ -44,7 +44,7 @@ Box2DTestLayer::Box2DTestLayer()
     
     scheduleUpdate();
 #else
-    CCLabelTTF *pLabel = CCLabelTTF::create("Should define CC_ENABLE_BOX2D_INTEGRATION\n to run this test case",
+    CCLabelTTF *pLabel = CCLabelTTF::create("Should define CC_ENABLE_BOX2D_INTEGRATION=1\n to run this test case",
                                             "Arial",
                                             18);
     CCSize size = CCDirector::sharedDirector()->getWinSize();
@@ -186,7 +186,7 @@ void Box2DTestLayer::addNewSpriteAtPosition(CCPoint p)
 #if CC_ENABLE_BOX2D_INTEGRATION
     CCPhysicsSprite *sprite = CCPhysicsSprite::createWithTexture(m_pSpriteTexture,CCRectMake(32 * idx,32 * idy,32,32));
     parent->addChild(sprite);
-    sprite->setBody(body);
+    sprite->setB2Body(body);
     sprite->setPTMRatio(PTM_RATIO);
     sprite->setPosition( ccp( p.x, p.y) );
 #endif
