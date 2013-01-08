@@ -153,7 +153,7 @@ void CCAnimationCache::parseVersion2(CCDictionary* animations)
         const char* name = pElement->getStrKey();
         CCDictionary* animationDict = (CCDictionary*)pElement->getObject();
 
-        int loops = animationDict->valueForKey("loops")->intValue();
+        const CCString* loops = animationDict->valueForKey("loops");
         bool restoreOriginalFrame = animationDict->valueForKey("restoreOriginalFrame")->boolValue();
 
         CCArray* frameArray = (CCArray*)animationDict->objectForKey("frames");
@@ -193,7 +193,7 @@ void CCAnimationCache::parseVersion2(CCDictionary* animations)
 
         float delayPerUnit = animationDict->valueForKey("delayPerUnit")->floatValue();
         CCAnimation *animation = new CCAnimation();
-        animation->initWithAnimationFrames(array, delayPerUnit, loops);
+        animation->initWithAnimationFrames(array, delayPerUnit, 0 != loops->length() ? loops->intValue() : 1);
         array->release();
 
         animation->setRestoreOriginalFrame(restoreOriginalFrame);
