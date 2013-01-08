@@ -483,42 +483,6 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>libs/javascript/bindings/proj.win32/libJSBinding.vcxproj</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>javascript</string>
-				<string>bindings</string>
-				<string>proj.win32</string>
-			</array>
-			<key>Path</key>
-			<string>libs/javascript/bindings/proj.win32/libJSBinding.vcxproj</string>
-		</dict>
-		<key>libs/javascript/bindings/proj.win32/libJSBinding.vcxproj.filters</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>javascript</string>
-				<string>bindings</string>
-				<string>proj.win32</string>
-			</array>
-			<key>Path</key>
-			<string>libs/javascript/bindings/proj.win32/libJSBinding.vcxproj.filters</string>
-		</dict>
-		<key>libs/javascript/bindings/proj.win32/libJSBinding.vcxproj.user</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>javascript</string>
-				<string>bindings</string>
-				<string>proj.win32</string>
-			</array>
-			<key>Path</key>
-			<string>libs/javascript/bindings/proj.win32/libJSBinding.vcxproj.user</string>
-		</dict>
 		<key>libs/javascript/bindings/ScriptingCore.cpp</key>
 		<dict>
 			<key>Group</key>
@@ -609,9 +573,6 @@
 		<string>libs/javascript/bindings/js_bindings_system_registration.h</string>
 		<string>libs/javascript/bindings/js_manual_conversions.cpp</string>
 		<string>libs/javascript/bindings/js_manual_conversions.h</string>
-		<string>libs/javascript/bindings/proj.win32/libJSBinding.vcxproj</string>
-		<string>libs/javascript/bindings/proj.win32/libJSBinding.vcxproj.filters</string>
-		<string>libs/javascript/bindings/proj.win32/libJSBinding.vcxproj.user</string>
 		<string>libs/javascript/bindings/ScriptingCore.cpp</string>
 		<string>libs/javascript/bindings/ScriptingCore.h</string>
 		<string>libs/javascript/bindings/spidermonkey_specifics.h</string>

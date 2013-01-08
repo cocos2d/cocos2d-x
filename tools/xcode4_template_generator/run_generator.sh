@@ -30,7 +30,7 @@ popd
 echo "generating libjs"
 mkdir -p template/xcode4/lib_js.xctemplate
 pushd scripting
-python ../tools/xcode4_template_generator/template_generator.py --directory javascript/bindings --identifier libjs --prefix libs --append ../tools/xcode4_template_generator/template_js_patch.txt --exclude "Android.mk helper.js sample.js"  > ../template/xcode4/lib_js.xctemplate/TemplateInfo.plist
+python ../tools/xcode4_template_generator/template_generator.py --directory javascript/bindings --identifier libjs --prefix libs --append ../tools/xcode4_template_generator/template_js_patch.txt --exclude "Android.mk helper.js sample.js proj.win32"  > ../template/xcode4/lib_js.xctemplate/TemplateInfo.plist
 popd
 
 echo "generating libspidermonkey"
