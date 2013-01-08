@@ -122,7 +122,7 @@
 			<key>Path</key>
 			<string>Resources/CCB/coins-hd.plist</string>
 		</dict>
-		<key>Resources/CCB/coins-hd.pvr.ccz</key>
+		<key>Resources/CCB/coins-hd.png</key>
 		<dict>
 			<key>Group</key>
 			<array>
@@ -130,7 +130,7 @@
 				<string>CCB</string>
 			</array>
 			<key>Path</key>
-			<string>Resources/CCB/coins-hd.pvr.ccz</string>
+			<string>Resources/CCB/coins-hd.png</string>
 		</dict>
 		<key>Resources/CCB/coins.plist</key>
 		<dict>
@@ -142,7 +142,7 @@
 			<key>Path</key>
 			<string>Resources/CCB/coins.plist</string>
 		</dict>
-		<key>Resources/CCB/coins.pvr.ccz</key>
+		<key>Resources/CCB/coins.png</key>
 		<dict>
 			<key>Group</key>
 			<array>
@@ -150,7 +150,7 @@
 				<string>CCB</string>
 			</array>
 			<key>Path</key>
-			<string>Resources/CCB/coins.pvr.ccz</string>
+			<string>Resources/CCB/coins.png</string>
 		</dict>
 		<key>Resources/CCB/Gas40-hd.fnt</key>
 		<dict>
@@ -292,7 +292,7 @@
 			<key>Path</key>
 			<string>Resources/CCB/labels-hd.plist</string>
 		</dict>
-		<key>Resources/CCB/labels-hd.pvr.gz</key>
+		<key>Resources/CCB/labels-hd.png</key>
 		<dict>
 			<key>Group</key>
 			<array>
@@ -300,7 +300,7 @@
 				<string>CCB</string>
 			</array>
 			<key>Path</key>
-			<string>Resources/CCB/labels-hd.pvr.gz</string>
+			<string>Resources/CCB/labels-hd.png</string>
 		</dict>
 		<key>Resources/CCB/labels-ipad.plist</key>
 		<dict>
@@ -332,7 +332,7 @@
 			<key>Path</key>
 			<string>Resources/CCB/labels.plist</string>
 		</dict>
-		<key>Resources/CCB/labels.pvr.gz</key>
+		<key>Resources/CCB/labels.png</key>
 		<dict>
 			<key>Group</key>
 			<array>
@@ -340,7 +340,7 @@
 				<string>CCB</string>
 			</array>
 			<key>Path</key>
-			<string>Resources/CCB/labels.pvr.gz</string>
+			<string>Resources/CCB/labels.png</string>
 		</dict>
 		<key>Resources/CCB/MainMenu.ccbi</key>
 		<dict>
@@ -407,61 +407,12 @@
 			<key>Path</key>
 			<string>Resources/hello.js</string>
 		</dict>
-		<key>Resources/jsb_constants.js</key>
-		<dict>
-			<key>Group</key>
-			<string>Resources</string>
-			<key>Path</key>
-			<string>Resources/jsb_constants.js</string>
-		</dict>
-		<key>Resources/jsb_constants_cocos2d.js</key>
-		<dict>
-			<key>Group</key>
-			<string>Resources</string>
-			<key>Path</key>
-			<string>Resources/jsb_constants_cocos2d.js</string>
-		</dict>
-		<key>Resources/jsb_constants_gl.js</key>
-		<dict>
-			<key>Group</key>
-			<string>Resources</string>
-			<key>Path</key>
-			<string>Resources/jsb_constants_gl.js</string>
-		</dict>
-		<key>Resources/jsb_constants_cocosbuilder.js</key>
-		<dict>
-			<key>Group</key>
-			<string>Resources</string>
-			<key>Path</key>
-			<string>Resources/jsb_constants_cocosbuilder.js</string>
-		</dict>
-		<key>Resources/jsb_constants_chipmunk.js</key>
-		<dict>
-			<key>Group</key>
-			<string>Resources</string>
-			<key>Path</key>
-			<string>Resources/jsb_constants_chipmunk.js</string>
-		</dict>
 		<key>Resources/Icon.png</key>
 		<dict>
 			<key>Group</key>
 			<string>Resources</string>
 			<key>Path</key>
 			<string>Resources/Icon.png</string>
-		</dict>
-		<key>Resources/menu1.png</key>
-		<dict>
-			<key>Group</key>
-			<string>Resources</string>
-			<key>Path</key>
-			<string>Resources/menu1.png</string>
-		</dict>
-		<key>Resources/menu2.png</key>
-		<dict>
-			<key>Group</key>
-			<string>Resources</string>
-			<key>Path</key>
-			<string>Resources/menu2.png</string>
 		</dict>
 	</dict>
 	<key>Description</key>
@@ -483,9 +434,9 @@
 		<string>Resources/CCB/Abadi40.png</string>
 		<string>Resources/CCB/About.ccbi</string>
 		<string>Resources/CCB/coins-hd.plist</string>
-		<string>Resources/CCB/coins-hd.pvr.ccz</string>
+		<string>Resources/CCB/coins-hd.png</string>
 		<string>Resources/CCB/coins.plist</string>
-		<string>Resources/CCB/coins.pvr.ccz</string>
+		<string>Resources/CCB/coins.png</string>
 		<string>Resources/CCB/Gas40-hd.fnt</string>
 		<string>Resources/CCB/Gas40-hd.png</string>
 		<string>Resources/CCB/Gas40-ipad.fnt</string>
@@ -500,29 +451,17 @@
 		<string>Resources/CCB/konqa32.fnt</string>
 		<string>Resources/CCB/konqa32.png</string>
 		<string>Resources/CCB/labels-hd.plist</string>
-		<string>Resources/CCB/labels-hd.pvr.gz</string>
+		<string>Resources/CCB/labels-hd.png</string>
 		<string>Resources/CCB/labels-ipad.plist</string>
 		<string>Resources/CCB/labels-ipad.pvr.gz</string>
 		<string>Resources/CCB/labels.plist</string>
-		<string>Resources/CCB/labels.pvr.gz</string>
+		<string>Resources/CCB/labels.png</string>
 		<string>Resources/CCB/MainMenu.ccbi</string>
 		<string>Resources/CCB/stars2.png</string>
 		<string>Resources/CCB/watermelon.png</string>
 		<string>Resources/Default.png</string>
-		<string>Resources/fps_images-hd.png</string>
-		<string>Resources/fps_images-ipadhd.png</string>
-		<string>Resources/fps_images.png</string>
 		<string>Resources/hello.js</string>
-		<string>Resources/jsb.js</string>
-		<string>Resources/jsb_cocos2d.js</string>
-		<string>Resources/jsb_opengl.js</string>
-		<string>Resources/jsb_cocosbuilder.js</string>
-		<string>Resources/jsb_chipmunk.js</string>
-		<string>Resources/jsb_sys.js</string>
-		<string>Resources/jsb_debugger.js</string>
 		<string>Resources/Icon.png</string>
-		<string>Resources/menu1.png</string>
-		<string>Resources/menu2.png</string>
 	</array>
 	<key>Options</key>
 	<array>
@@ -554,7 +493,7 @@
 				<key>USER_HEADER_SEARCH_PATHS</key>
 				<string>&quot;___PACKAGENAME___/libs/Chipmunk/include/chipmunk&quot; &quot;___PACKAGENAME___/libs/javascript/spidermonkey-ios/include&quot;</string>
 				<key>OTHER_LDFLAGS</key>
-				<string>-lxml2 -lz -ljs_static</string>
+				<string>-lxml2 -lsqlite3 -lz -ljs_static</string>
 			</dict>
 		</dict>
 	</array>
