@@ -7,7 +7,7 @@
             <key>button_about_normal.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,92},{82,28}}</string>
+                <string>{{2,120},{82,28}}</string>
                 <key>offset</key>
                 <string>{-1,1}</string>
                 <key>rotated</key>
@@ -20,7 +20,7 @@
             <key>button_about_selected.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,62},{82,28}}</string>
+                <string>{{2,90},{82,28}}</string>
                 <key>offset</key>
                 <string>{1,0}</string>
                 <key>rotated</key>
@@ -59,7 +59,7 @@
             <key>button_play_normal.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,152},{66,28}}</string>
+                <string>{{2,180},{66,28}}</string>
                 <key>offset</key>
                 <string>{-1,1}</string>
                 <key>rotated</key>
@@ -72,7 +72,7 @@
             <key>button_play_selected.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,122},{66,28}}</string>
+                <string>{{2,150},{66,28}}</string>
                 <key>offset</key>
                 <string>{1,0}</string>
                 <key>rotated</key>
@@ -82,19 +82,45 @@
                 <key>sourceSize</key>
                 <string>{128,32}</string>
             </dict>
+            <key>button_scores_normal.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{2,62},{94,26}}</string>
+                <key>offset</key>
+                <string>{0,1}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{17,2},{94,26}}</string>
+                <key>sourceSize</key>
+                <string>{128,32}</string>
+            </dict>
+            <key>button_scores_selected.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{2,62},{94,26}}</string>
+                <key>offset</key>
+                <string>{1,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{18,3},{94,26}}</string>
+                <key>sourceSize</key>
+                <string>{128,32}</string>
+            </dict>
         </dict>
         <key>metadata</key>
         <dict>
             <key>format</key>
             <integer>2</integer>
             <key>realTextureFileName</key>
-            <string>labels.pvr.gz</string>
+            <string>labels.png</string>
             <key>size</key>
             <string>{128,256}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:101602364defa93017595ecf32d95c5f$</string>
+            <string>$TexturePacker:SmartUpdate:17e1d57014fad9de17184eeee889f83e$</string>
             <key>textureFileName</key>
-            <string>labels.pvr.gz</string>
+            <string>labels.png</string>
         </dict>
     </dict>
 </plist>
