@@ -8,10 +8,8 @@
 #ifndef js_MemoryMetrics_h
 #define js_MemoryMetrics_h
 
-/*
- * These declarations are not within jsapi.h because they are highly likely
- * to change in the future. Depend on them at your own risk.
- */
+// These declarations are not within jsapi.h because they are highly likely to
+// change in the future. Depend on them at your own risk.
 
 #include <string.h>
 
@@ -21,11 +19,31 @@
 #include "js/Utility.h"
 #include "js/Vector.h"
 
+namespace js {
+
+// In memory reporting, we have concept of "sundries", line items which are too
+// small to be worth reporting individually.  Under some circumstances, a memory
+// reporter gets tossed into the sundries bucket if it's smaller than
+// MemoryReportingSundriesThreshold() bytes.
+//
+// We need to define this value here, rather than in the code which actually
+// generates the memory reports, because HugeStringInfo uses this value.
+JS_FRIEND_API(size_t) MemoryReportingSundriesThreshold();
+
+} // namespace js
+
 namespace JS {
 
-/* Data for tracking analysis/inference memory usage. */
+// Data for tracking analysis/inference memory usage.
 struct TypeInferenceSizes
 {
+    TypeInferenceSizes()
+      : scripts(0)
+      , objects(0)
+      , tables(0)
+      , temporary(0)
+    {}
+
     size_t scripts;
     size_t objects;
     size_t tables;
@@ -39,6 +57,34 @@ struct TypeInferenceSizes
     }
 };
 
+// Holds data about a huge string (one which uses more HugeStringInfo::MinSize
+// bytes of memory), so we can report it individually.
+struct HugeStringInfo
+{
+    HugeStringInfo()
+      : length(0)
+      , size(0)
+    {
+        memset(&buffer, 0, sizeof(buffer));
+    }
+
+    // A string needs to take up this many bytes of storage before we consider
+    // it to be "huge".
+    static size_t MinSize()
+    {
+      return js::MemoryReportingSundriesThreshold();
+    }
+
+    // A string's size in memory is not necessarily equal to twice its length
+    // because the allocator and the JS engine both may round up.
+    size_t length;
+    size_t size;
+
+    // We record the first 32 chars of the escaped string here.  (We escape the
+    // string so we can use a char[] instead of a jschar[] here.
+    char buffer[32];
+};
+
 // These measurements relate directly to the JSRuntime, and not to
 // compartments within it.
 struct RuntimeSizes
@@ -49,15 +95,15 @@ struct RuntimeSizes
       , contexts(0)
       , dtoa(0)
       , temporary(0)
-      , mjitCode(0)
+      , jaegerCode(0)
+      , ionCode(0)
       , regexpCode(0)
-      , unusedCodeMemory(0)
-      , stackCommitted(0)
+      , unusedCode(0)
+      , stack(0)
       , gcMarker(0)
       , mathCache(0)
       , scriptFilenames(0)
       , scriptSources(0)
-      , compartmentObjects(0)
     {}
 
     size_t object;
@@ -65,34 +111,102 @@ struct RuntimeSizes
     size_t contexts;
     size_t dtoa;
     size_t temporary;
-    size_t mjitCode;
+    size_t jaegerCode;
+    size_t ionCode;
     size_t regexpCode;
-    size_t unusedCodeMemory;
-    size_t stackCommitted;
+    size_t unusedCode;
+    size_t stack;
     size_t gcMarker;
     size_t mathCache;
     size_t scriptFilenames;
     size_t scriptSources;
-
-    // This is the exception to the "RuntimeSizes doesn't measure things within
-    // compartments" rule.  We combine the sizes of all the JSCompartment
-    // objects into a single measurement because each one is fairly small, and
-    // they're all the same size.
-    size_t compartmentObjects;
 };
 
 struct CompartmentStats
 {
-    CompartmentStats() {
-        memset(this, 0, sizeof(*this));
+    CompartmentStats()
+      : extra1(0)
+      , extra2(0)
+      , gcHeapArenaAdmin(0)
+      , gcHeapUnusedGcThings(0)
+      , gcHeapObjectsNonFunction(0)
+      , gcHeapObjectsFunction(0)
+      , gcHeapStrings(0)
+      , gcHeapShapesTree(0)
+      , gcHeapShapesDict(0)
+      , gcHeapShapesBase(0)
+      , gcHeapScripts(0)
+      , gcHeapTypeObjects(0)
+      , gcHeapIonCodes(0)
+#if JS_HAS_XML_SUPPORT
+      , gcHeapXML(0)
+#endif
+      , objectsExtraSlots(0)
+      , objectsExtraElements(0)
+      , objectsExtraArgumentsData(0)
+      , objectsExtraRegExpStatics(0)
+      , objectsExtraPropertyIteratorData(0)
+      , objectsExtraPrivate(0)
+      , nonHugeStringChars(0)
+      , shapesExtraTreeTables(0)
+      , shapesExtraDictTables(0)
+      , shapesExtraTreeShapeKids(0)
+      , shapesCompartmentTables(0)
+      , scriptData(0)
+      , jaegerData(0)
+      , ionData(0)
+      , compartmentObject(0)
+      , crossCompartmentWrappers(0)
+      , regexpCompartment(0)
+      , debuggeesSet(0)
+    {}
+
+    CompartmentStats(const CompartmentStats &other)
+      : extra1(other.extra1)
+      , extra2(other.extra2)
+      , gcHeapArenaAdmin(other.gcHeapArenaAdmin)
+      , gcHeapUnusedGcThings(other.gcHeapUnusedGcThings)
+      , gcHeapObjectsNonFunction(other.gcHeapObjectsNonFunction)
+      , gcHeapObjectsFunction(other.gcHeapObjectsFunction)
+      , gcHeapStrings(other.gcHeapStrings)
+      , gcHeapShapesTree(other.gcHeapShapesTree)
+      , gcHeapShapesDict(other.gcHeapShapesDict)
+      , gcHeapShapesBase(other.gcHeapShapesBase)
+      , gcHeapScripts(other.gcHeapScripts)
+      , gcHeapTypeObjects(other.gcHeapTypeObjects)
+      , gcHeapIonCodes(other.gcHeapIonCodes)
+#if JS_HAS_XML_SUPPORT
+      , gcHeapXML(other.gcHeapXML)
+#endif
+      , objectsExtraSlots(other.objectsExtraSlots)
+      , objectsExtraElements(other.objectsExtraElements)
+      , objectsExtraArgumentsData(other.objectsExtraArgumentsData)
+      , objectsExtraRegExpStatics(other.objectsExtraRegExpStatics)
+      , objectsExtraPropertyIteratorData(other.objectsExtraPropertyIteratorData)
+      , objectsExtraPrivate(other.objectsExtraPrivate)
+      , nonHugeStringChars(other.nonHugeStringChars)
+      , shapesExtraTreeTables(other.shapesExtraTreeTables)
+      , shapesExtraDictTables(other.shapesExtraDictTables)
+      , shapesExtraTreeShapeKids(other.shapesExtraTreeShapeKids)
+      , shapesCompartmentTables(other.shapesCompartmentTables)
+      , scriptData(other.scriptData)
+      , jaegerData(other.jaegerData)
+      , ionData(other.ionData)
+      , compartmentObject(other.compartmentObject)
+      , crossCompartmentWrappers(other.crossCompartmentWrappers)
+      , regexpCompartment(other.regexpCompartment)
+      , debuggeesSet(other.debuggeesSet)
+      , typeInferenceSizes(other.typeInferenceSizes)
+    {
+      hugeStrings.append(other.hugeStrings);
     }
 
     // These fields can be used by embedders.
     void   *extra1;
     void   *extra2;
 
-    // If you add a new number, remember to update add() and maybe
-    // gcHeapThingsSize()!
+    // If you add a new number, remember to update the constructors, add(), and
+    // maybe gcHeapThingsSize()!
     size_t gcHeapArenaAdmin;
     size_t gcHeapUnusedGcThings;
 
@@ -104,27 +218,36 @@ struct CompartmentStats
     size_t gcHeapShapesBase;
     size_t gcHeapScripts;
     size_t gcHeapTypeObjects;
+    size_t gcHeapIonCodes;
 #if JS_HAS_XML_SUPPORT
     size_t gcHeapXML;
 #endif
 
-    size_t objectSlots;
-    size_t objectElements;
-    size_t objectMisc;
-    size_t objectPrivate;
-    size_t stringChars;
+    size_t objectsExtraSlots;
+    size_t objectsExtraElements;
+    size_t objectsExtraArgumentsData;
+    size_t objectsExtraRegExpStatics;
+    size_t objectsExtraPropertyIteratorData;
+    size_t objectsExtraPrivate;
+    size_t nonHugeStringChars;
     size_t shapesExtraTreeTables;
     size_t shapesExtraDictTables;
     size_t shapesExtraTreeShapeKids;
     size_t shapesCompartmentTables;
     size_t scriptData;
-    size_t mjitData;
+    size_t jaegerData;
+    size_t ionData;
+    size_t compartmentObject;
     size_t crossCompartmentWrappers;
+    size_t regexpCompartment;
+    size_t debuggeesSet;
 
     TypeInferenceSizes typeInferenceSizes;
+    js::Vector<HugeStringInfo, 0, js::SystemAllocPolicy> hugeStrings;
 
     // Add cStats's numbers to this object's numbers.
-    void add(CompartmentStats &cStats) {
+    void add(CompartmentStats &cStats)
+    {
         #define ADD(x)  this->x += cStats.x
 
         ADD(gcHeapArenaAdmin);
@@ -138,26 +261,34 @@ struct CompartmentStats
         ADD(gcHeapShapesBase);
         ADD(gcHeapScripts);
         ADD(gcHeapTypeObjects);
+        ADD(gcHeapIonCodes);
     #if JS_HAS_XML_SUPPORT
         ADD(gcHeapXML);
     #endif
 
-        ADD(objectSlots);
-        ADD(objectElements);
-        ADD(objectMisc);
-        ADD(objectPrivate);
-        ADD(stringChars);
+        ADD(objectsExtraSlots);
+        ADD(objectsExtraElements);
+        ADD(objectsExtraArgumentsData);
+        ADD(objectsExtraRegExpStatics);
+        ADD(objectsExtraPropertyIteratorData);
+        ADD(objectsExtraPrivate);
+        ADD(nonHugeStringChars);
         ADD(shapesExtraTreeTables);
         ADD(shapesExtraDictTables);
         ADD(shapesExtraTreeShapeKids);
         ADD(shapesCompartmentTables);
         ADD(scriptData);
-        ADD(mjitData);
+        ADD(jaegerData);
+        ADD(ionData);
+        ADD(compartmentObject);
         ADD(crossCompartmentWrappers);
+        ADD(regexpCompartment);
+        ADD(debuggeesSet);
 
         #undef ADD
 
         typeInferenceSizes.add(cStats.typeInferenceSizes);
+        hugeStrings.append(cStats.hugeStrings);
     }
 
     // The size of all the live things in the GC heap.
@@ -239,7 +370,7 @@ CollectRuntimeStats(JSRuntime *rt, RuntimeStats *rtStats, ObjectPrivateVisitor *
 extern JS_PUBLIC_API(int64_t)
 GetExplicitNonHeapForRuntime(JSRuntime *rt, JSMallocSizeOfFun mallocSizeOf);
 
-#endif /* JS_THREADSAFE */
+#endif // JS_THREADSAFE
 
 extern JS_PUBLIC_API(size_t)
 SystemCompartmentCount(const JSRuntime *rt);

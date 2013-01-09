@@ -21,6 +21,10 @@
 # define JS_ATOMIC_ADD(p,v)          PR_ATOMIC_ADD((int32_t *)(p), (int32_t)(v))
 # define JS_ATOMIC_SET(p,v)          PR_ATOMIC_SET((int32_t *)(p), (int32_t)(v))
 
+namespace js {
+    unsigned GetCPUCount();
+}
+
 #else  /* JS_THREADSAFE */
 
 typedef struct PRThread PRThread;
