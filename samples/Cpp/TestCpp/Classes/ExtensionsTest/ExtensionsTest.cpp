@@ -6,7 +6,7 @@
 #include "NetworkTest/HttpClientTest.h"
 #include "TableViewTest/TableViewTestScene.h"
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 #include "EditBoxTest/EditBoxTest.h"
 #endif
 
@@ -22,7 +22,7 @@ enum
     TEST_CCCONTROLBUTTON,
     TEST_COCOSBUILDER,
     TEST_HTTPCLIENT,
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     TEST_EDITBOX,
 #endif
 	TEST_TABLEVIEW,
@@ -35,7 +35,7 @@ static const std::string testsName[TEST_MAX_COUNT] =
     "CCControlButtonTest",
     "CocosBuilderTest",
     "HttpClientTest",
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     "EditBoxTest",
 #endif
 	"TableViewTest"
@@ -107,7 +107,7 @@ void ExtensionsMainLayer::menuCallback(CCObject* pSender)
         }
         break;
 #endif
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     case TEST_EDITBOX:
         {
             runEditBoxTest();
