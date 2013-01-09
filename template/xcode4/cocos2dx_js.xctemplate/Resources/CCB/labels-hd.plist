@@ -7,7 +7,7 @@
             <key>button_about_normal.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{168,62},{164,58}}</string>
+                <string>{{210,2},{164,58}}</string>
                 <key>offset</key>
                 <string>{-1,3}</string>
                 <key>rotated</key>
@@ -20,7 +20,7 @@
             <key>button_about_selected.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,62},{164,58}}</string>
+                <string>{{192,62},{164,58}}</string>
                 <key>offset</key>
                 <string>{3,0}</string>
                 <key>rotated</key>
@@ -59,7 +59,7 @@
             <key>button_play_normal.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{334,62},{130,58}}</string>
+                <string>{{376,2},{130,58}}</string>
                 <key>offset</key>
                 <string>{-1,3}</string>
                 <key>rotated</key>
@@ -72,7 +72,7 @@
             <key>button_play_selected.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{210,2},{130,58}}</string>
+                <string>{{358,62},{130,58}}</string>
                 <key>offset</key>
                 <string>{3,0}</string>
                 <key>rotated</key>
@@ -82,19 +82,45 @@
                 <key>sourceSize</key>
                 <string>{256,64}</string>
             </dict>
+            <key>button_scores_normal.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{2,62},{188,52}}</string>
+                <key>offset</key>
+                <string>{1,2}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{35,4},{188,52}}</string>
+                <key>sourceSize</key>
+                <string>{256,64}</string>
+            </dict>
+            <key>button_scores_selected.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{2,62},{188,52}}</string>
+                <key>offset</key>
+                <string>{3,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{37,6},{188,52}}</string>
+                <key>sourceSize</key>
+                <string>{256,64}</string>
+            </dict>
         </dict>
         <key>metadata</key>
         <dict>
             <key>format</key>
             <integer>2</integer>
             <key>realTextureFileName</key>
-            <string>labels-hd.pvr.gz</string>
+            <string>labels-hd.png</string>
             <key>size</key>
             <string>{512,128}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:b8565b4ce18e44d132b770de99262f7a$</string>
+            <string>$TexturePacker:SmartUpdate:a2eebfcc016761061009eb178670ae3a$</string>
             <key>textureFileName</key>
-            <string>labels-hd.pvr.gz</string>
+            <string>labels-hd.png</string>
         </dict>
     </dict>
 </plist>
