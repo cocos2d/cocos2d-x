@@ -2,14 +2,14 @@
 // CocosBuilder definitions
 //
 
-cc.BuilderReader = {};
+cc.BuilderReader = cc.BuilderReader || {};
 cc.BuilderReader._resourcePath = "";
+
+var _ccbGlobalContext = this;
 
 cc.BuilderReader.setResourcePath = function (rootPath) {
     cc.BuilderReader._resourcePath = rootPath;
 };
-
-var _ccbGlobalContext = this;
 
 cc.BuilderReader.load = function(file, owner, parentSize)
 {

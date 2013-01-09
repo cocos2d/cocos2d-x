@@ -7,7 +7,7 @@
 #include "js_bindings_config.h"
 //#ifdef JSB_INCLUDE_SYSTEM
 
-//#include "LocalStorage.h"
+#include "LocalStorage.h"
 
 #include "jsfriendapi.h"
 #include "js_bindings_config.h"
@@ -27,12 +27,11 @@ JSBool JSB_localStorageGetItem(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ok &= jsval_to_charptr( cx, *argvp++, &arg0 );
 	JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
-	std::string ret_val;
+	const char* ret_val;
 
-	//ret_val = localStorageGetItem((char*)arg0  );
-    ret_val = CCUserDefault::sharedUserDefault()->getStringForKey(arg0);
+	ret_val = localStorageGetItem((char*)arg0  );
 
-	jsval ret_jsval = charptr_to_jsval( cx, ret_val.c_str() );
+	jsval ret_jsval = charptr_to_jsval( cx, ret_val);
 	JS_SET_RVAL(cx, vp, ret_jsval );
 
 	return JS_TRUE;
@@ -49,9 +48,7 @@ JSBool JSB_localStorageRemoveItem(JSContext *cx, uint32_t argc, jsval *vp) {
 	ok &= jsval_to_charptr( cx, *argvp++, &arg0 );
 	JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
 
-    CCUserDefault::sharedUserDefault()->setStringForKey(arg0, "");
-
-	//localStorageRemoveItem((char*)arg0  );
+	localStorageRemoveItem((char*)arg0  );
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -68,8 +65,7 @@ JSBool JSB_localStorageSetItem(JSContext *cx, uint32_t argc, jsval *vp) {
 	ok &= jsval_to_charptr( cx, *argvp++, &arg1 );
 	JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
 
-	//localStorageSetItem((char*)arg0 , (char*)arg1  );
-    CCUserDefault::sharedUserDefault()->setStringForKey(arg0, arg1);
+	localStorageSetItem((char*)arg0 , (char*)arg1  );
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
