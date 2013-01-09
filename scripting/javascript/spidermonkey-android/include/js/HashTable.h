@@ -8,6 +8,8 @@
 #ifndef jshashtable_h_
 #define jshashtable_h_
 
+#include "mozilla/Attributes.h"
+
 #include "TemplateLib.h"
 #include "Utility.h"
 
@@ -340,8 +342,7 @@ class HashTable : private AllocPolicy
 
     MOZ_WARN_UNUSED_RESULT bool init(uint32_t length)
     {
-        /* Make sure that init isn't called twice. */
-        JS_ASSERT(table == NULL);
+        JS_ASSERT(!initialized());
 
         /*
          * Correct for sMaxAlphaFrac such that the table will not resize
@@ -1013,10 +1014,6 @@ class HashMap
 
     friend class Impl::Enum;
 
-    /* Not implicitly copyable (expensive). May add explicit |clone| later. */
-    HashMap(const HashMap &);
-    HashMap &operator=(const HashMap &);
-
     Impl impl;
 
   public:
@@ -1218,6 +1215,11 @@ class HashMap
         if (Ptr p = lookup(l))
             remove(p);
     }
+
+  private:
+    /* Not implicitly copyable (expensive). May add explicit |clone| later. */
+    HashMap(const HashMap &hm) MOZ_DELETE;
+    HashMap &operator=(const HashMap &hm) MOZ_DELETE;
 };
 
 /*
@@ -1250,10 +1252,6 @@ class HashSet
     typedef detail::HashTable<const T, SetOps, AllocPolicy> Impl;
 
     friend class Impl::Enum;
-
-    /* Not implicitly copyable (expensive). May add explicit |clone| later. */
-    HashSet(const HashSet &);
-    HashSet &operator=(const HashSet &);
 
     Impl impl;
 
@@ -1418,6 +1416,11 @@ class HashSet
         if (Ptr p = lookup(l))
             remove(p);
     }
+
+  private:
+    /* Not implicitly copyable (expensive). May add explicit |clone| later. */
+    HashSet(const HashSet &hs) MOZ_DELETE;
+    HashSet &operator=(const HashSet &hs) MOZ_DELETE;
 };
 
 }  /* namespace js */
