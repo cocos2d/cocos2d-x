@@ -254,6 +254,9 @@
 		41BC70E615BF81A5006A0A6C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41BC70DE15BF81A5006A0A6C /* MainMenu.xib */; };
 		41BC70E715BF81A5006A0A6C /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 41BC70E015BF81A5006A0A6C /* Icon.icns */; };
 		41BC70E815BF81A5006A0A6C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BC70E115BF81A5006A0A6C /* main.m */; };
+		8C583FA6169DB64700F63A10 /* EditBoxTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8C583FA4169DB64700F63A10 /* EditBoxTest.cpp */; };
+		8C583FAD169DB6D500F63A10 /* CCEditBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8C583FA8169DB6D500F63A10 /* CCEditBox.cpp */; };
+		8C583FAE169DB6D500F63A10 /* CCEditBoxImplMac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8C583FAC169DB6D500F63A10 /* CCEditBoxImplMac.mm */; };
 		D4EFE03715D27336002D3DA0 /* HttpClientTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4EFE03515D27336002D3DA0 /* HttpClientTest.cpp */; };
 /* End PBXBuildFile section */
 
@@ -802,6 +805,13 @@
 		41BC70E115BF81A5006A0A6C /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = SOURCE_ROOT; };
 		41BC70E215BF81A5006A0A6C /* Test_Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Test_Info.plist; sourceTree = SOURCE_ROOT; };
 		41BC70E315BF81A5006A0A6C /* Test_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Test_Prefix.pch; sourceTree = SOURCE_ROOT; };
+		8C583FA4169DB64700F63A10 /* EditBoxTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = EditBoxTest.cpp; path = ../../Classes/ExtensionsTest/EditBoxTest/EditBoxTest.cpp; sourceTree = "<group>"; };
+		8C583FA5169DB64700F63A10 /* EditBoxTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EditBoxTest.h; path = ../../Classes/ExtensionsTest/EditBoxTest/EditBoxTest.h; sourceTree = "<group>"; };
+		8C583FA8169DB6D500F63A10 /* CCEditBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCEditBox.cpp; path = CCEditBox/CCEditBox.cpp; sourceTree = "<group>"; };
+		8C583FA9169DB6D500F63A10 /* CCEditBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCEditBox.h; path = CCEditBox/CCEditBox.h; sourceTree = "<group>"; };
+		8C583FAA169DB6D500F63A10 /* CCEditBoxImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCEditBoxImpl.h; path = CCEditBox/CCEditBoxImpl.h; sourceTree = "<group>"; };
+		8C583FAB169DB6D500F63A10 /* CCEditBoxImplMac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCEditBoxImplMac.h; path = CCEditBox/CCEditBoxImplMac.h; sourceTree = "<group>"; };
+		8C583FAC169DB6D500F63A10 /* CCEditBoxImplMac.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = CCEditBoxImplMac.mm; path = CCEditBox/CCEditBoxImplMac.mm; sourceTree = "<group>"; };
 		D4EFE03515D27336002D3DA0 /* HttpClientTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HttpClientTest.cpp; sourceTree = "<group>"; };
 		D4EFE03615D27336002D3DA0 /* HttpClientTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpClientTest.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1125,6 +1135,7 @@
 		15AA9CBB15B7EC460033D6C2 /* ExtensionsTest */ = {
 			isa = PBXGroup;
 			children = (
+				8C583FA3169DB63A00F63A10 /* EditboxTest */,
 				15CFD0C71612A3EE00BF2188 /* ControlExtensionTest */,
 				1A20135F15FD90240013D092 /* TableViewTest */,
 				D4EFE03415D27336002D3DA0 /* NetworkTest */,
@@ -1850,6 +1861,7 @@
 		15C158D5168315E500D239F2 /* GUI */ = {
 			isa = PBXGroup;
 			children = (
+				8C583FA7169DB6BB00F63A10 /* CCEditBox */,
 				15C158D6168315E500D239F2 /* CCControlExtension */,
 				15C158FA168315E500D239F2 /* CCScrollView */,
 			);
@@ -2149,6 +2161,27 @@
 			);
 			name = Resources;
 			path = ../Resources;
+			sourceTree = "<group>";
+		};
+		8C583FA3169DB63A00F63A10 /* EditboxTest */ = {
+			isa = PBXGroup;
+			children = (
+				8C583FA4169DB64700F63A10 /* EditBoxTest.cpp */,
+				8C583FA5169DB64700F63A10 /* EditBoxTest.h */,
+			);
+			name = EditboxTest;
+			sourceTree = "<group>";
+		};
+		8C583FA7169DB6BB00F63A10 /* CCEditBox */ = {
+			isa = PBXGroup;
+			children = (
+				8C583FA8169DB6D500F63A10 /* CCEditBox.cpp */,
+				8C583FA9169DB6D500F63A10 /* CCEditBox.h */,
+				8C583FAA169DB6D500F63A10 /* CCEditBoxImpl.h */,
+				8C583FAB169DB6D500F63A10 /* CCEditBoxImplMac.h */,
+				8C583FAC169DB6D500F63A10 /* CCEditBoxImplMac.mm */,
+			);
+			name = CCEditBox;
 			sourceTree = "<group>";
 		};
 		D4EFE03415D27336002D3DA0 /* NetworkTest */ = {
@@ -2478,6 +2511,9 @@
 				15D8B241168318C3006C7997 /* CocosDenshion.m in Sources */,
 				15D8B242168318C3006C7997 /* SimpleAudioEngine.mm in Sources */,
 				15D8B243168318C3006C7997 /* SimpleAudioEngine_objc.m in Sources */,
+				8C583FA6169DB64700F63A10 /* EditBoxTest.cpp in Sources */,
+				8C583FAD169DB6D500F63A10 /* CCEditBox.cpp in Sources */,
+				8C583FAE169DB6D500F63A10 /* CCEditBoxImplMac.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

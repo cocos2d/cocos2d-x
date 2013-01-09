@@ -26,9 +26,39 @@
 #ifndef __CCEditBoxIMPLMAC_H__
 #define __CCEditBoxIMPLMAC_H__
 
+#import <Foundation/Foundation.h>
+#import <AppKit/AppKit.h>
+
 #include "cocos2d.h"
 #include "ExtensionMacros.h"
 #include "CCEditBoxImpl.h"
+
+@interface CustomNSTextField : NSTextField
+{
+}
+
+@end
+
+@interface EditBoxImplMac : NSObject <NSTextFieldDelegate>
+{
+    CustomNSTextField* textField_;
+    void* editBox_;
+    BOOL editState_;
+}
+
+@property(nonatomic, retain) NSTextField* textField;
+@property(nonatomic, readonly, getter = isEditState) BOOL editState;
+@property(nonatomic, assign) void* editBox;
+
+-(id) initWithFrame: (NSRect) frameRect editBox: (void*) editBox;
+-(void) doAnimationWhenKeyboardMoveWithDuration:(float)duration distance:(float)distance;
+-(void) setPosition:(NSPoint) pos;
+-(void) setContentSize:(NSSize) size;
+-(void) visit;
+-(void) openKeyboard;
+-(void) closeKeyboard;
+
+@end
 
 NS_CC_EXT_BEGIN
 
