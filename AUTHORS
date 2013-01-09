@@ -168,6 +168,9 @@ Developers:
 
     Igor Zavorotkin (ivzave)
         Adding lua support for linux platform.
+	
+    Jozef Prídavok (jpridavok)
+	Adding CCEditBox implementation for Mac OSX.
 
 Retired Core Developers:
     WenSheng Yang
