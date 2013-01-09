@@ -51,7 +51,7 @@ class JS_FRIEND_API(BaseProxyHandler) {
     bool mHasPrototype;
   protected:
     // Subclasses may set this in their constructor.
-    void setHasPrototype(bool hasPrototype) { mHasPrototype = hasPrototype; };
+    void setHasPrototype(bool hasPrototype) { mHasPrototype = hasPrototype; }
 
   public:
     explicit BaseProxyHandler(void *family);
@@ -112,7 +112,7 @@ class JS_FRIEND_API(BaseProxyHandler) {
     virtual bool call(JSContext *cx, JSObject *proxy, unsigned argc, Value *vp);
     virtual bool construct(JSContext *cx, JSObject *proxy, unsigned argc, Value *argv, Value *rval);
     virtual bool nativeCall(JSContext *cx, IsAcceptableThis test, NativeImpl impl, CallArgs args);
-    virtual bool hasInstance(JSContext *cx, JSObject *proxy, const Value *vp, bool *bp);
+    virtual bool hasInstance(JSContext *cx, HandleObject proxy, MutableHandleValue v, bool *bp);
     virtual JSType typeOf(JSContext *cx, JSObject *proxy);
     virtual bool objectClassIs(JSObject *obj, ESClassValue classValue, JSContext *cx);
     virtual JSString *obj_toString(JSContext *cx, JSObject *proxy);
@@ -123,7 +123,7 @@ class JS_FRIEND_API(BaseProxyHandler) {
     virtual void finalize(JSFreeOp *fop, JSObject *proxy);
     virtual bool getElementIfPresent(JSContext *cx, JSObject *obj, JSObject *receiver,
                                      uint32_t index, Value *vp, bool *present);
-    virtual bool getPrototypeOf(JSContext *cx, JSObject *proxy, JSObject **proto);
+    virtual bool getPrototypeOf(JSContext *cx, JSObject *proxy, JSObject **protop);
 
     /* See comment for weakmapKeyDelegateOp in jsclass.h. */
     virtual JSObject *weakmapKeyDelegate(JSObject *proxy);
@@ -165,7 +165,7 @@ class JS_PUBLIC_API(IndirectProxyHandler) : public BaseProxyHandler {
                            Value *argv, Value *rval) MOZ_OVERRIDE;
     virtual bool nativeCall(JSContext *cx, IsAcceptableThis test, NativeImpl impl,
                             CallArgs args) MOZ_OVERRIDE;
-    virtual bool hasInstance(JSContext *cx, JSObject *proxy, const Value *vp,
+    virtual bool hasInstance(JSContext *cx, HandleObject proxy, MutableHandleValue v,
                              bool *bp) MOZ_OVERRIDE;
     virtual JSType typeOf(JSContext *cx, JSObject *proxy) MOZ_OVERRIDE;
     virtual bool objectClassIs(JSObject *obj, ESClassValue classValue,
@@ -241,7 +241,7 @@ class Proxy {
     static bool call(JSContext *cx, JSObject *proxy, unsigned argc, Value *vp);
     static bool construct(JSContext *cx, JSObject *proxy, unsigned argc, Value *argv, Value *rval);
     static bool nativeCall(JSContext *cx, IsAcceptableThis test, NativeImpl impl, CallArgs args);
-    static bool hasInstance(JSContext *cx, JSObject *proxy, const Value *vp, bool *bp);
+    static bool hasInstance(JSContext *cx, HandleObject proxy, MutableHandleValue v, bool *bp);
     static JSType typeOf(JSContext *cx, JSObject *proxy);
     static bool objectClassIs(JSObject *obj, ESClassValue classValue, JSContext *cx);
     static JSString *obj_toString(JSContext *cx, JSObject *proxy);
@@ -249,6 +249,9 @@ class Proxy {
     static bool regexp_toShared(JSContext *cx, JSObject *proxy, RegExpGuard *g);
     static bool defaultValue(JSContext *cx, JSObject *obj, JSType hint, Value *vp);
     static bool iteratorNext(JSContext *cx, JSObject *proxy, Value *vp);
+    static bool getPrototypeOf(JSContext *cx, JSObject *proxy, JSObject **protop);
+
+    static JSObject * const LazyProto;
 };
 
 inline bool IsObjectProxyClass(const Class *clasp)
@@ -352,7 +355,7 @@ NewProxyObject(JSContext *cx, BaseProxyHandler *handler, const Value &priv,
 JS_BEGIN_EXTERN_C
 
 extern JS_FRIEND_API(JSObject *)
-js_InitProxyClass(JSContext *cx, JSObject *obj);
+js_InitProxyClass(JSContext *cx, JSHandleObject obj);
 
 JS_END_EXTERN_C
 
