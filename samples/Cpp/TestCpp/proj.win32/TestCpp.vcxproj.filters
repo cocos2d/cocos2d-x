@@ -205,6 +205,9 @@
     <Filter Include="Classes\ClippingNodeTest">
       <UniqueIdentifier>{b79f4701-6fe2-4996-83c5-0567bcf90287}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\ExtensionsTest\EditBoxTest">
+      <UniqueIdentifier>{a24eb0b9-5a01-4750-bc9a-cc14637a636a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -467,6 +470,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\ClippingNodeTest\ClippingNodeTest.cpp">
       <Filter>Classes\ClippingNodeTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\EditBoxTest\EditBoxTest.cpp">
+      <Filter>Classes\ExtensionsTest\EditBoxTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -907,6 +913,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ClippingNodeTest\ClippingNodeTest.h">
       <Filter>Classes\ClippingNodeTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\EditBoxTest\EditBoxTest.h">
+      <Filter>Classes\ExtensionsTest\EditBoxTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
