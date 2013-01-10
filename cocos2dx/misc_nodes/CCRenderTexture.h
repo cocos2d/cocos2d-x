@@ -172,7 +172,7 @@ protected:
     // code for "auto" update
     GLbitfield   m_uClearFlags;
     ccColor4F    m_sClearColor;
-    GLclampf     m_fDlearDepth;
+    GLclampf     m_fClearDepth;
     GLint        m_nClearStencil;
     bool         m_bAutoDraw;
 };
