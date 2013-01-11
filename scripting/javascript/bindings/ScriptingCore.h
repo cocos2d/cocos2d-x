@@ -12,6 +12,7 @@
 #include <assert.h>
 #include "cocos2d.h"
 #include "js_bindings_config.h"
+#include "js_bindings_core.h"
 #include "uthash.h"
 #include "jsapi.h"
 #include "jsfriendapi.h"

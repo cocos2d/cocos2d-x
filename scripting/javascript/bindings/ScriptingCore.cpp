@@ -424,6 +424,9 @@ void ScriptingCore::createGlobalContext() {
     //JS_SetGCZeal(this->cx_, 2, JS_DEFAULT_ZEAL_FREQ);
 #endif
     this->global_ = NewGlobalObject(cx_);
+#if JSB_ENABLE_DEBUGGER
+	JS_SetDebugMode(cx_, JS_TRUE);
+#endif
     for (std::vector<sc_register_sth>::iterator it = registrationList.begin(); it != registrationList.end(); it++) {
         sc_register_sth callback = *it;
         callback(this->cx_, this->global_);
@@ -469,6 +472,7 @@ JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* c
         evaluatedOK = JS_ExecuteScript(cx, global, script, &rval);
         if (JS_FALSE == evaluatedOK) {
             CCLog("(evaluatedOK == JS_FALSE)");
+			JS_ReportPendingException(cx);
         }
     }
     return evaluatedOK;
@@ -1435,12 +1439,12 @@ JSBool jsb_get_reserved_slot(JSObject *obj, uint32_t idx, jsval& ret)
 JSBool JSBDebug_StartDebugger(JSContext* cx, unsigned argc, jsval* vp)
 {
 	JSObject* debugGlobal = ScriptingCore::getInstance()->getDebugGlobal();
-	if (argc == 3) {
+	if (argc >= 2) {
 		jsval* argv = JS_ARGV(cx, vp);
 		jsval out;
 		JS_WrapObject(cx, &debugGlobal);
 		JSAutoCompartment ac(cx, debugGlobal);
-		JS_CallFunctionName(cx, debugGlobal, "_startDebugger", 3, argv, &out);
+		JS_CallFunctionName(cx, debugGlobal, "_startDebugger", argc, argv, &out);
 		return JS_TRUE;
 	}
 	return JS_FALSE;
