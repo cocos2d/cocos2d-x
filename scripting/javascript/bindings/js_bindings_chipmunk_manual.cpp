@@ -300,10 +300,8 @@ JSBool JSPROXY_CCPhysicsSprite_spriteWithFile_rect__static(JSContext *cx, uint32
 		std::string arg0_tmp; ok &= jsval_to_std_string(cx, argv[0], &arg0_tmp); arg0 = arg0_tmp.c_str();
 		cocos2d::CCRect arg1;
 		ok &= jsval_to_ccrect(cx, argv[1], &arg1);
-        if (!ok) {
-			JS_ReportError(cx, "Error processing arguments");
-			return JS_FALSE;
-		}
+        JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+        
         CCPhysicsSprite* ret = CCPhysicsSprite::create(arg0, arg1);
 
 		jsval jsret;
@@ -329,10 +327,8 @@ JSBool JSPROXY_CCPhysicsSprite_spriteWithFile_rect__static(JSContext *cx, uint32
 	if (argc == 1) {
 		const char* arg0;
 		std::string arg0_tmp; ok &= jsval_to_std_string(cx, argv[0], &arg0_tmp); arg0 = arg0_tmp.c_str();
-        if (!ok) {
-			JS_ReportError(cx, "Error processing arguments");
-			return JS_FALSE;
-		}
+        JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+        
 		CCPhysicsSprite* ret = CCPhysicsSprite::create(arg0);
 
 		jsval jsret;
