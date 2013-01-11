@@ -43,10 +43,11 @@
  *
  * Extension:
  *
- * In addition, this header provides class |Scoped| and macro |SCOPED_TEMPLATE|
- * to simplify the definition of RAII classes for other scenarios. These macros
- * have been used to automatically close file descriptors/file handles when
- * reaching the end of the scope, graphics contexts, etc.
+ * In addition, this header provides class |Scoped| and macros |SCOPED_TEMPLATE|
+ * and |MOZ_TYPE_SPECIFIC_SCOPED_POINTER_TEMPLATE|  to simplify the definition
+ * of RAII classes for other scenarios. These macros have been used to
+ * automatically close file descriptors/file handles when reaching the end of
+ * the scope, graphics contexts, etc.
  */
 
 #include "mozilla/Attributes.h"
@@ -222,6 +223,48 @@ struct ScopedDeleteArrayTraits : public ScopedFreePtrTraits<T>
     static void release(T* ptr) { delete [] ptr; }
 };
 SCOPED_TEMPLATE(ScopedDeleteArray, ScopedDeleteArrayTraits)
+
+/*
+ * MOZ_TYPE_SPECIFIC_SCOPED_POINTER_TEMPLATE makes it easy to create scoped
+ * pointers for types with custom deleters; just overload
+ * TypeSpecificDelete(T*) in the same namespace as T to call the deleter for
+ * type T.
+ *
+ * @param name The name of the class to define.
+ * @param Type A struct implementing clean-up. See the implementations
+ * for more details.
+ * *param Deleter The function that is used to delete/destroy/free a
+ *        non-null value of Type*.
+ *
+ * Example:
+ *
+ *   MOZ_TYPE_SPECIFIC_SCOPED_POINTER_TEMPLATE(ScopedPRFileDesc, PRFileDesc, \
+ *                                             PR_Close)
+ *   ...
+ *   {
+ *       ScopedPRFileDesc file(PR_OpenFile(...));
+ *       ...
+ *   } // file is closed with PR_Close here
+ */
+#define MOZ_TYPE_SPECIFIC_SCOPED_POINTER_TEMPLATE(name, Type, Deleter) \
+template <> inline void TypeSpecificDelete(Type * value) { Deleter(value); } \
+typedef ::mozilla::TypeSpecificScopedPointer<Type> name;
+
+template <typename T> void TypeSpecificDelete(T * value);
+
+template <typename T>
+struct TypeSpecificScopedPointerTraits
+{
+    typedef T* type;
+    const static type empty() { return NULL; }
+    const static void release(type value)
+    {
+      if (value)
+        TypeSpecificDelete(value);
+    }
+};
+
+SCOPED_TEMPLATE(TypeSpecificScopedPointer, TypeSpecificScopedPointerTraits)
 
 } /* namespace mozilla */
 

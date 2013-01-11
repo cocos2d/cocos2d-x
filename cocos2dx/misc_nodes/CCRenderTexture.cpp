@@ -55,7 +55,7 @@ CCRenderTexture::CCRenderTexture()
 , m_ePixelFormat(kCCTexture2DPixelFormat_RGBA8888)
 , m_uClearFlags(0)
 , m_sClearColor(ccc4f(0,0,0,0))
-, m_fDlearDepth(0.0f)
+, m_fClearDepth(0.0f)
 , m_nClearStencil(0)
 , m_bAutoDraw(false)
 {
@@ -175,12 +175,12 @@ void CCRenderTexture::setClearColor(const ccColor4F &clearColor)
 
 float CCRenderTexture::getClearDepth() const
 {
-    return m_fDlearDepth;
+    return m_fClearDepth;
 }
 
 void CCRenderTexture::setClearDepth(float fClearDepth)
 {
-    m_fDlearDepth = fClearDepth;
+    m_fClearDepth = fClearDepth;
 }
 
 int CCRenderTexture::getClearStencil() const
@@ -563,7 +563,7 @@ void CCRenderTexture::draw()
 			if (m_uClearFlags & GL_DEPTH_BUFFER_BIT)
             {
 				glGetFloatv(GL_DEPTH_CLEAR_VALUE, &oldDepthClearValue);
-				glClearDepth(m_fDlearDepth);
+				glClearDepth(m_fClearDepth);
 			}
 			
 			if (m_uClearFlags & GL_STENCIL_BUFFER_BIT)
