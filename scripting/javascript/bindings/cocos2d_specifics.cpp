@@ -597,13 +597,15 @@ JSBool js_cocos2dx_CCAnimation_create(JSContext *cx, uint32_t argc, jsval *vp)
 		double arg1 = 0.0f;
 		if (argc > 0 && argc == 2) {
 			if (argc == 2) {
-				JS_ValueToNumber(cx, argv[1], &arg1);
+				ok &= JS_ValueToNumber(cx, argv[1], &arg1);
+                JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
 			}
 			ret = cocos2d::CCAnimation::createWithSpriteFrames(arg0, arg1);
 		} else if (argc == 3) {
 			unsigned int loops;
-			JS_ValueToNumber(cx, argv[1], &arg1);
-			jsval_to_uint32(cx, argv[1], &loops);
+			ok &= JS_ValueToNumber(cx, argv[1], &arg1);
+			ok &= jsval_to_uint32(cx, argv[1], &loops);
+            JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
 			ret = cocos2d::CCAnimation::create(arg0, arg1, loops);
 		} else if (argc == 1) {
 			ret = cocos2d::CCAnimation::createWithSpriteFrames(arg0);
@@ -755,11 +757,11 @@ JSBool js_cocos2dx_CCNode_copy(JSContext *cx, uint32_t argc, jsval *vp)
 
 JSObject* getObjectFromNamespace(JSContext* cx, JSObject *ns, const char *name) {
 	jsval out;
+    JSBool ok = JS_TRUE;
 	if (JS_GetProperty(cx, ns, name, &out) == JS_TRUE) {
 		JSObject *obj;
-		if (JS_ValueToObject(cx, out, &obj) == JS_TRUE) {
-			
-		}
+		ok &= JS_ValueToObject(cx, out, &obj);
+        JSB_PRECONDITION2(ok, cx, NULL, "Error processing arguments");
 	}
 	return NULL;
 }
@@ -1112,7 +1114,8 @@ void JSScheduleWrapper::scheduleFunc(float dt) const
     JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
 
     JSBool ok = JS_AddValueRoot(cx, &data);
-    if(!ok) {
+    if (!ok) {
+        CCLOG("scheduleFunc: Root value fails.");
         return;
     }
 
@@ -1243,6 +1246,7 @@ JSBool js_cocos2dx_CCScheduler_unscheduleAllSelectorsForTarget(JSContext *cx, ui
 JSBool js_CCNode_scheduleOnce(JSContext *cx, uint32_t argc, jsval *vp)
 {
     if (argc >= 1) {
+        JSBool ok = JS_TRUE;
 		jsval *argv = JS_ARGV(cx, vp);
         
         JSObject *obj = JS_THIS_OBJECT(cx, vp);
@@ -1259,8 +1263,8 @@ JSBool js_CCNode_scheduleOnce(JSContext *cx, uint32_t argc, jsval *vp)
         //
         double delay;
         if( argc >= 2 ) {
-            if( ! JS_ValueToNumber(cx, argv[1], &delay ) )
-                return JS_FALSE;
+            ok &= JS_ValueToNumber(cx, argv[1], &delay );
+            JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
         }
         
         bool bFound = false;
@@ -1313,8 +1317,10 @@ JSBool js_CCNode_scheduleOnce(JSContext *cx, uint32_t argc, jsval *vp)
         //jsb_set_reserved_slot(proxy->obj, 0, argv[0]);
 
         JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return JS_TRUE;
     }
-    return JS_TRUE;
+    JS_ReportError(cx, "wrong number of arguments");
+    return JS_FALSE;
 }
 
 
@@ -1322,6 +1328,7 @@ JSBool js_CCNode_scheduleOnce(JSContext *cx, uint32_t argc, jsval *vp)
 JSBool js_CCNode_schedule(JSContext *cx, uint32_t argc, jsval *vp)
 {
     if (argc >= 1) {
+        JSBool ok = JS_TRUE;
 		jsval *argv = JS_ARGV(cx, vp);
         
         JSObject *obj = JS_THIS_OBJECT(cx, vp);
@@ -1336,8 +1343,7 @@ JSBool js_CCNode_schedule(JSContext *cx, uint32_t argc, jsval *vp)
 
     	double interval = 0.0;
         if( argc >= 2 ) {
-            if( ! JS_ValueToNumber(cx, argv[1], &interval ) )
-                return JS_FALSE;
+            ok &= JS_ValueToNumber(cx, argv[1], &interval );
         }
         
         //
@@ -1345,8 +1351,7 @@ JSBool js_CCNode_schedule(JSContext *cx, uint32_t argc, jsval *vp)
         //
         double repeat = 0.0;
         if( argc >= 3 ) {
-            if( ! JS_ValueToNumber(cx, argv[2], &repeat ) )
-                return JS_FALSE;
+            ok &= JS_ValueToNumber(cx, argv[2], &repeat );
         }
         
         //
@@ -1354,9 +1359,10 @@ JSBool js_CCNode_schedule(JSContext *cx, uint32_t argc, jsval *vp)
         //
         double delay = 0.0;
         if( argc >= 4 ) {
-            if( ! JS_ValueToNumber(cx, argv[3], &delay ) )
-                return JS_FALSE;
+            ok &= JS_ValueToNumber(cx, argv[3], &delay );
         }
+        
+        JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
         
         bool bFound = false;
         CCArray* pTargetArr = JSScheduleWrapper::getTargetForNativeNode(node);
@@ -1397,8 +1403,10 @@ JSBool js_CCNode_schedule(JSContext *cx, uint32_t argc, jsval *vp)
         //jsb_set_reserved_slot(proxy->obj, 0, argv[0]);
 
         JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return JS_TRUE;
     }
-    return JS_TRUE;
+    JS_ReportError(cx, "wrong number of arguments");
+    return JS_FALSE;
 }
 
 
@@ -1406,6 +1414,7 @@ JSBool js_CCScheduler_schedule(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     if (argc >= 2) {
+        JSBool ok = JS_TRUE;
 		jsval *argv = JS_ARGV(cx, vp);
         
         JSObject *obj = JS_THIS_OBJECT(cx, vp);
@@ -1423,8 +1432,7 @@ JSBool js_CCScheduler_schedule(JSContext *cx, uint32_t argc, jsval *vp)
         
     	double interval = 0;
         if( argc >= 3 ) {
-            if( ! JS_ValueToNumber(cx, argv[2], &interval ) )
-                return JS_FALSE;
+            ok &= JS_ValueToNumber(cx, argv[2], &interval );
         }
         
         //
@@ -1432,8 +1440,7 @@ JSBool js_CCScheduler_schedule(JSContext *cx, uint32_t argc, jsval *vp)
         //
         double repeat = -1;
         if( argc >= 4 ) {
-            if( ! JS_ValueToNumber(cx, argv[3], &repeat ) )
-                return JS_FALSE;
+            ok &= JS_ValueToNumber(cx, argv[3], &repeat );
         }
         
         //
@@ -1441,16 +1448,16 @@ JSBool js_CCScheduler_schedule(JSContext *cx, uint32_t argc, jsval *vp)
         //
         double delay = 0;
         if( argc >= 5 ) {
-            if( ! JS_ValueToNumber(cx, argv[4], &delay ) )
-                return JS_FALSE;
+            ok &= JS_ValueToNumber(cx, argv[4], &delay );
         }
         
         JSBool paused = !node->isRunning();
         
         if( argc >= 6 ) {
-            if( ! JS_ValueToBoolean(cx,  argv[4], &paused))
-                return JS_FALSE;
+            ok &= JS_ValueToBoolean(cx,  argv[4], &paused);
         }
+        
+        JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
         
         bool bFound = false;
         CCArray* pTargetArr = JSScheduleWrapper::getTargetForNativeNode(node);
@@ -1480,8 +1487,10 @@ JSBool js_CCScheduler_schedule(JSContext *cx, uint32_t argc, jsval *vp)
         sched->scheduleSelector(schedule_selector(JSScheduleWrapper::scheduleFunc), tmpCobj, interval, repeat, delay, paused);
                 
         JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return JS_TRUE;
     }
-    return JS_TRUE;
+    JS_ReportError(cx, "wrong number of arguments");
+    return JS_FALSE;
 }
 
 
@@ -1629,17 +1638,17 @@ JSBool js_cocos2dx_CCNode_setPosition(JSContext *cx, uint32_t argc, jsval *vp)
         JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
         
 		cobj->setPosition(arg0);
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
 		return JS_TRUE;
 	} if (argc == 2) {
         double x;
-        if( ! JS_ValueToNumber(cx, argv[0], &x ) ) {
-            return JS_FALSE;
-        }
+        ok &= JS_ValueToNumber(cx, argv[0], &x );
         double y;
-        if( ! JS_ValueToNumber(cx, argv[1], &y ) ) {
-            return JS_FALSE;
-        }
-        cobj->setPosition(CCPoint(x,y));
+        ok &= JS_ValueToNumber(cx, argv[1], &y );
+        JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+        
+        cobj->setPosition(ccp(x,y));
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
         return JS_TRUE;
     }
 	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
@@ -1661,17 +1670,17 @@ JSBool js_cocos2dx_CCSprite_setPosition(JSContext *cx, uint32_t argc, jsval *vp)
 		ok &= jsval_to_ccpoint(cx, argv[0], &arg0);
         JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
 		cobj->setPosition(arg0);
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
 		return JS_TRUE;
 	} if (argc == 2) {
         double x;
-        if( ! JS_ValueToNumber(cx, argv[0], &x ) ) {
-                return JS_FALSE;
-        }
+        ok &= JS_ValueToNumber(cx, argv[0], &x );
         double y;
-        if( ! JS_ValueToNumber(cx, argv[1], &y ) ) {
-                return JS_FALSE;
-        }
+        ok &= JS_ValueToNumber(cx, argv[1], &y );
+
+        JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
         cobj->setPosition(CCPoint(x,y));
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
         return JS_TRUE;
     }
 	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
@@ -1755,22 +1764,20 @@ JSBool js_BezierActions_create(JSContext *cx, uint32_t argc, jsval *vp) {
 template<class T>
 JSBool js_CardinalSplineActions_create(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argv = JS_ARGV(cx, vp);
+    JSBool ok = JS_TRUE;
     
     if (argc == 3) {
         double dur;
-        if( ! JS_ValueToNumber(cx, argv[0], &dur) ) {
-            return JS_FALSE;
-        }
+        ok &= JS_ValueToNumber(cx, argv[0], &dur);
         
         int num;
         CCPoint *arr;
-        jsval_to_ccarray_of_CCPoint(cx, argv[1], &arr, &num);
+        ok &= jsval_to_ccarray_of_CCPoint(cx, argv[1], &arr, &num);
         
         double ten;
-        if( ! JS_ValueToNumber(cx, argv[2], &ten) ) {
-            return JS_FALSE;
-        }
+        ok &= JS_ValueToNumber(cx, argv[2], &ten);
         
+        JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
         
         CCPointArray *points = CCPointArray::create(num);
         
@@ -1809,17 +1816,17 @@ JSBool js_CardinalSplineActions_create(JSContext *cx, uint32_t argc, jsval *vp) 
 template<class T>
 JSBool js_CatmullRomActions_create(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argv = JS_ARGV(cx, vp);
+    JSBool ok = JS_TRUE;
     
     if (argc == 2) {
         double dur;
-        if( ! JS_ValueToNumber(cx, argv[0], &dur) ) {
-            return JS_FALSE;
-        }
+        ok &= JS_ValueToNumber(cx, argv[0], &dur);
         
         int num;
         CCPoint *arr;
-        jsval_to_ccarray_of_CCPoint(cx, argv[1], &arr, &num);
+        ok &= jsval_to_ccarray_of_CCPoint(cx, argv[1], &arr, &num);
         
+        JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
         
         CCPointArray *points = CCPointArray::create(num);
         
@@ -2043,13 +2050,11 @@ JSBool js_cocos2dx_ccpMult(JSContext *cx, uint32_t argc, jsval *vp)
 	if (argc == 2) {
         cocos2d::CCPoint arg0;
 		ok &= jsval_to_ccpoint(cx, argv[0], &arg0);
-        JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
         
 		double arg1;
-		if( ! JS_ValueToNumber(cx, argv[1], &arg1) ) {
-		  return JS_FALSE;
-		}
-		
+		ok &= JS_ValueToNumber(cx, argv[1], &arg1);
+        
+        JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
 		
 		CCPoint ret = ccpMult(arg0, arg1);
 		
@@ -2482,10 +2487,11 @@ JSBool js_cocos2dx_CCDrawNode_drawPolygon(JSContext *cx, uint32_t argc, jsval *v
 
             for( uint32_t i=0; i<l; i++ ) {
                 jsval pointvp;
-                if( ! JS_GetElement(cx, argArray, i, &pointvp) )
-                    return JS_FALSE;
-                ok = jsval_to_ccpoint(cx, pointvp, &p);
-
+                ok &= JS_GetElement(cx, argArray, i, &pointvp);
+                JSB_PRECONDITION2(ok, cx, JS_FALSE, "JS_GetElement fails.");
+                
+                ok &= jsval_to_ccpoint(cx, pointvp, &p);
+                JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
                 verts[i] = p;
             }
 
