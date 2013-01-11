@@ -109,6 +109,9 @@
 		15A3D79A1682F4A3002FB0C5 /* main.js in Resources */ = {isa = PBXBuildFile; fileRef = 15A3D78B1682F470002FB0C5 /* main.js */; };
 		15A3D79B1682F4A3002FB0C5 /* resources-jsb.js in Resources */ = {isa = PBXBuildFile; fileRef = 15A3D78C1682F470002FB0C5 /* resources-jsb.js */; };
 		15A3D79C1682F4A3002FB0C5 /* watermelon_with_me.js in Resources */ = {isa = PBXBuildFile; fileRef = 15A3D78D1682F470002FB0C5 /* watermelon_with_me.js */; };
+		1A82F606169AC9C800C4B13A /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A82F605169AC9C800C4B13A /* libsqlite3.dylib */; };
+		1A82F60B169AC9E000C4B13A /* LocalStorage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A82F608169AC9E000C4B13A /* LocalStorage.cpp */; };
+		1A82F60C169AC9E000C4B13A /* LocalStorageAndroid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A82F60A169AC9E000C4B13A /* LocalStorageAndroid.cpp */; };
 		1AAF0C02169829E200C5F611 /* jsb_chipmunk.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AAF0BFB169829E200C5F611 /* jsb_chipmunk.js */; };
 		1AAF0C03169829E200C5F611 /* jsb_cocos2d.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AAF0BFC169829E200C5F611 /* jsb_cocos2d.js */; };
 		1AAF0C04169829E200C5F611 /* jsb_cocosbuilder.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AAF0BFD169829E200C5F611 /* jsb_cocosbuilder.js */; };
@@ -366,6 +369,10 @@
 		15A3D78B1682F470002FB0C5 /* main.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = main.js; path = ../../Shared/games/WatermelonWithMe/main.js; sourceTree = "<group>"; };
 		15A3D78C1682F470002FB0C5 /* resources-jsb.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = "resources-jsb.js"; path = "../../Shared/games/WatermelonWithMe/resources-jsb.js"; sourceTree = "<group>"; };
 		15A3D78D1682F470002FB0C5 /* watermelon_with_me.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = watermelon_with_me.js; path = ../../Shared/games/WatermelonWithMe/watermelon_with_me.js; sourceTree = "<group>"; };
+		1A82F605169AC9C800C4B13A /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		1A82F608169AC9E000C4B13A /* LocalStorage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LocalStorage.cpp; sourceTree = "<group>"; };
+		1A82F609169AC9E000C4B13A /* LocalStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalStorage.h; sourceTree = "<group>"; };
+		1A82F60A169AC9E000C4B13A /* LocalStorageAndroid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LocalStorageAndroid.cpp; sourceTree = "<group>"; };
 		1AAF0BFB169829E200C5F611 /* jsb_chipmunk.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_chipmunk.js; sourceTree = "<group>"; };
 		1AAF0BFC169829E200C5F611 /* jsb_cocos2d.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_cocos2d.js; sourceTree = "<group>"; };
 		1AAF0BFD169829E200C5F611 /* jsb_cocosbuilder.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_cocosbuilder.js; sourceTree = "<group>"; };
@@ -408,6 +415,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1A82F606169AC9C800C4B13A /* libsqlite3.dylib in Frameworks */,
 				15A3D57A1682F3AA002FB0C5 /* libcocos2dx.a in Frameworks */,
 				D454520C156E22BD00887EB5 /* libz.dylib in Frameworks */,
 				D454520A156E22B400887EB5 /* libxml2.dylib in Frameworks */,
@@ -661,6 +669,7 @@
 		15A3D6D21682F407002FB0C5 /* extensions */ = {
 			isa = PBXGroup;
 			children = (
+				1A82F607169AC9E000C4B13A /* LocalStorage */,
 				15A3D6D41682F407002FB0C5 /* CCBReader */,
 				15A3D7091682F407002FB0C5 /* cocos-ext.h */,
 				15A3D70A1682F407002FB0C5 /* ExtensionMacros.h */,
@@ -810,6 +819,16 @@
 			path = physics_nodes;
 			sourceTree = "<group>";
 		};
+		1A82F607169AC9E000C4B13A /* LocalStorage */ = {
+			isa = PBXGroup;
+			children = (
+				1A82F608169AC9E000C4B13A /* LocalStorage.cpp */,
+				1A82F609169AC9E000C4B13A /* LocalStorage.h */,
+				1A82F60A169AC9E000C4B13A /* LocalStorageAndroid.cpp */,
+			);
+			path = LocalStorage;
+			sourceTree = "<group>";
+		};
 		A92275321517C094001B78AA = {
 			isa = PBXGroup;
 			children = (
@@ -837,6 +856,7 @@
 		A92275401517C094001B78AA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1A82F605169AC9C800C4B13A /* libsqlite3.dylib */,
 				D454520B156E22BD00887EB5 /* libz.dylib */,
 				D4545209156E22B400887EB5 /* libxml2.dylib */,
 				A92275411517C094001B78AA /* QuartzCore.framework */,
@@ -1076,6 +1096,8 @@
 				1AAF0C08169829E200C5F611 /* jsb.js in Sources */,
 				1AAF0C1516982A0000C5F611 /* js_bindings_system_functions.cpp in Sources */,
 				1AAF0C1616982A0000C5F611 /* js_bindings_system_registration.cpp in Sources */,
+				1A82F60B169AC9E000C4B13A /* LocalStorage.cpp in Sources */,
+				1A82F60C169AC9E000C4B13A /* LocalStorageAndroid.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1148,6 +1170,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 1;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1159,7 +1182,7 @@
 					CC_ENABLE_CHIPMUNK_INTEGRATION,
 				);
 				GCC_THUMB_SUPPORT = NO;
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../../../cocos2dx\"",
 					"\"$(SRCROOT)/../../../../cocos2dx/kazmath/include\"",

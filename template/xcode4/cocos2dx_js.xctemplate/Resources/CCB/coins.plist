@@ -322,13 +322,13 @@
             <key>format</key>
             <integer>2</integer>
             <key>realTextureFileName</key>
-            <string>coins.pvr.ccz</string>
+            <string>coins.png</string>
             <key>size</key>
             <string>{128,256}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:f92d8c6c67e4743418f9134193c55176$</string>
+            <string>$TexturePacker:SmartUpdate:826eb3de5c6f496f7b015eceb33b1b66$</string>
             <key>textureFileName</key>
-            <string>coins.pvr.ccz</string>
+            <string>coins.png</string>
         </dict>
     </dict>
 </plist>

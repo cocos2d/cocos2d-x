@@ -1,6 +1,9 @@
 //
 // cocos2d constants
 //
+
+var cc = cc || {};
+
 cc.DIRECTOR_PROJECTION_2D = 0;
 cc.DIRECTOR_PROJECTION_3D = 1;
 
@@ -16,7 +19,7 @@ cc.TEXTURE_PIXELFORMAT_PVRTC4 = 8;
 cc.TEXTURE_PIXELFORMAT_PVRTC4 = 9;
 cc.TEXTURE_PIXELFORMAT_DEFAULT = cc.TEXTURE_PIXELFORMAT_RGBA8888;
 
-cc.TEXT_ALIGNMENT_LEFT = 0;
+cc.TEXT_ALIGNMENT_LEFT  = 0;
 cc.TEXT_ALIGNMENT_CENTER = 1;
 cc.TEXT_ALIGNMENT_RIGHT = 2;
 
@@ -60,41 +63,37 @@ cc.WHITE = {r:255, g:255, b:255};
 cc.POINT_ZERO = {x:0, y:0};
 
 // XXX: This definition is different than cocos2d-html5
-cc.REPEAT_FOREVER = -1;
-// reusable objects
-cc._reuse_p = [
-    {x:0, y:0},
-    {x:0, y:0},
-    {x:0, y:0},
-    {x:0, y:0}
-];
+// cc.REPEAT_FOREVER = - 1;
+// We can't assign -1 to cc.REPEAT_FOREVER, since it will be a very big double value after
+// converting it to double by JS_ValueToNumber on android.
+// Then cast it to unsigned int, the value will be 0. The schedule will not be able to work.
+// I don't know why this occurs only on android.
+// So instead of passing -1 to it, I assign it with max value of unsigned int in c++.
+cc.REPEAT_FOREVER = 0xffffffff;
 
+cc.MENU_STATE_WAITING = 0;
+cc.MENU_STATE_TRACKING_TOUCH = 1;
+cc.MENU_HANDLER_PRIORITY = -128;
+cc.DEFAULT_PADDING = 5;
+
+// reusable objects
+cc._reuse_p = [ {x:0, y:0}, {x:0,y:0}, {x:0,y:0}, {x:0,y:0} ];
 cc._reuse_p_index = 0;
 cc._reuse_size = {width:0, height:0};
 cc._reuse_rect = {x:0, y:0, width:0, height:0};
 cc._reuse_color3b = {r:255, g:255, b:255 };
 cc._reuse_color4b = {r:255, g:255, b:255, a:255 };
-
-//
-// Point
-//
-cc.p = function( x, y )
-{
-    return {x:x, y:y};
-};
-
-cc.g = cc.g || cc.p;
-cc._reuse_grid = cc.g(0,0);
-
 cc.log = cc.log || log;
 
 //
 // Color 3B
 //
-cc.c3b = function (r, g, b) {
+cc.c3b = function( r, g, b )
+{
     return {r:r, g:g, b:b };
 };
-cc._c3b = function (r, g, b) {
+cc._c3b = function( r, g, b )
+{
     cc._reuse_color3b.r = r;
     cc._reuse_color3b.g = g;
     cc._reuse_color3b.b = b;
@@ -104,10 +103,12 @@ cc._c3b = function (r, g, b) {
 //
 // Color 4B
 //
-cc.c4b = function (r, g, b, a) {
+cc.c4b = function( r, g, b, a )
+{
     return {r:r, g:g, b:b, a:a };
 };
-cc._c4b = function (r, g, b, a) {
+cc._c4b = function( r, g, b, a )
+{
     cc._reuse_color4b.r = r;
     cc._reuse_color4b.g = g;
     cc._reuse_color4b.b = b;
@@ -121,18 +122,21 @@ cc._c4 = cc._c4b;
 //
 // Color 4F
 //
-cc.c4f = function (r, g, b, a) {
+cc.c4f = function( r, g, b, a )
+{
     return {r:r, g:g, b:b, a:a };
 };
 
 //
 // Point
 //
-cc.p = function (x, y) {
+cc.p = function( x, y )
+{
     return {x:x, y:y};
 };
-cc._p = function (x, y) {
-    if (cc._reuse_p_index == cc._reuse_p.length)
+cc._p = function( x, y )
+{
+    if( cc._reuse_p_index == cc._reuse_p.length )
         cc._reuse_p_index = 0;
 
     var p = cc._reuse_p[ cc._reuse_p_index];
@@ -149,10 +153,8 @@ cc.pointEqualToPoint = function (point1, point2) {
 //
 // Grid
 //
-cc.g = function (x, y) {
-    return {x:x, y:y};
-};
-cc._g = function (x, y) {
+cc._g = function( x, y )
+{
     cc._reuse_grid.x = x;
     cc._reuse_grid.y = y;
     return cc._reuse_grid;
@@ -161,22 +163,26 @@ cc._g = function (x, y) {
 //
 // Size
 //
-cc.size = function (w, h) {
+cc.size = function(w,h)
+{
     return {width:w, height:h};
 };
-cc._size = function (w, h) {
+cc._size = function(w,h)
+{
     cc._reuse_size.width = w;
     cc._reuse_size.height = h;
     return cc._reuse_size;
 };
-cc.sizeEqualToSize = function (size1, size2) {
+cc.sizeEqualToSize = function (size1, size2)
+{
     return ((size1.width == size2.width) && (size1.height == size2.height));
 };
 
 //
 // Rect
 //
-cc.rect = function (x, y, w, h) {
+cc.rect = function(x,y,w,h)
+{
     return {x:x, y:y, width:w, height:h};
 };
 cc._rect = function(x,y,w,h)
@@ -189,17 +195,6 @@ cc._rect = function(x,y,w,h)
 };
 cc.rectEqualToRect = function (rect1, rect2) {
     return ( rect1.x==rect2.x && rect1.y==rect2.y && rect1.width==rect2.width && rect1.height==rect2.height);
-};
-
-cc._rect = function (x, y, w, h) {
-    cc._reuse_rect.x = x;
-    cc._reuse_rect.y = y;
-    cc._reuse_rect.width = w;
-    cc._reuse_rect.height = h;
-    return cc._reuse_rect;
-};
-cc.rectEqualToRect = function (rect1, rect2) {
-    return ( rect1.x == rect2.x && rect1.y == rect2.y && rect1.width == rect2.width && rect1.height == rect2.height);
 };
 
 cc.rectContainsRect = function (rect1, rect2) {
@@ -243,13 +238,12 @@ cc.rectContainsPoint = function (rect, point) {
     return ret;
 };
 
-
-// XXX Should be done in native
-cc.rectIntersectsRect = function (rectA, rectB) {
-    var bool = !(  rectA.x > rectB.x + rectB.width ||
-        rectA.x + rectA.width < rectB.x ||
-        rectA.y > rectB.y + rectB.height ||
-        rectA.y + rectA.height < rectB.y );
+cc.rectIntersectsRect = function( rectA, rectB )
+{
+    var bool = ! (  rectA.x > rectB.x + rectB.width ||
+                    rectA.x + rectA.width < rectB.x ||
+                    rectA.y > rectB.y +rectB.height ||
+                    rectA.y + rectA.height < rectB.y );
 
     return bool;
 };
@@ -269,14 +263,41 @@ cc.rectIntersection = function (rectA, rectB) {
         Math.max(rectA.y, rectB.y),
         0, 0);
 
-    intersection.width = Math.min(rectA.x + rectA.width, rectB.x + rectB.width) - intersection.x;
-    intersection.height = Math.min(rectA.y + rectA.height, rectB.y + rectB.height) - intersection.y;
+    intersection.width = Math.min(rectA.x+rectA.width, rectB.x+rectB.width) - intersection.x;
+    intersection.height = Math.min(rectA.y+rectA.height, rectB.y+rectB.height) - intersection.y;
     return intersection;
 };
 
 //
 // Array: for cocos2d-html5 compatibility
 //
+
+/**
+ * Returns index of first occurence of object, -1 if value not found.
+ * @function
+ * @param {Array} arr Source Array
+ * @param {*} findObj find object
+ * @return {Number} index of first occurence of value
+ */
+cc.ArrayGetIndexOfObject = function (arr, findObj) {
+    for (var i = 0; i < arr.length; i++) {
+        if (arr[i] == findObj)
+            return i;
+    }
+    return -1;
+};
+
+/**
+ * Returns a Boolean value that indicates whether value is present in the array.
+ * @function
+ * @param {Array} arr
+ * @param {*} findObj
+ * @return {Boolean}
+ */
+cc.ArrayContainsObject = function (arr, findObj) {
+    return cc.ArrayGetIndexOfObject(arr, findObj) != -1;
+};
+
 cc.ArrayRemoveObject = function (arr, delObj) {
     for (var i = 0; i < arr.length; i++) {
         if (arr[i] == delObj) {
@@ -288,15 +309,17 @@ cc.ArrayRemoveObject = function (arr, delObj) {
 //
 // Helpers
 //
-cc.dump = function (obj) {
-    for (var i in obj)
-        cc.log(i + " = " + obj[i]);
+cc.dump = function(obj)
+{
+    for( var i in obj )
+        cc.log( i + " = " + obj[i] );
 };
 
 // dump config info, but only in debug mode
-cc.dumpConfig = function () {
-    if (cc.config.debug)
-        cc.dump(cc.config);
+cc.dumpConfig = function()
+{
+    cc.dump(sys);
+    cc.dump(sys.capabilities);
 };
 
 //
@@ -305,9 +328,7 @@ cc.dumpConfig = function () {
 // MenuItemToggle
 cc.MenuItemToggle.create = function( /* var args */) {
 
-cc.rectGetMinX = function (rect) {
-    return rect.x;
-};
+    var n = arguments.length;
 
     if (typeof arguments[n-2] === 'function' || typeof arguments[n-1] === 'function') {
         var args = Array.prototype.slice.call(arguments);
@@ -343,22 +364,47 @@ cc.LabelAtlas.create = function( a,b,c,d,e ) {
     }
 };
 
+cc.LayerMultiplex.create = cc.LayerMultiplex.createWithArray;
+
+// PhysicsDebugNode
+cc.PhysicsDebugNode.create = function( space ) {
+    var s = space;
+    if( space.handle !== undefined )
+        s = space.handle;
+    return cc.PhysicsDebugNode._create( s );
+};
+cc.PhysicsDebugNode.prototype.setSpace = function( space ) {
+    var s = space;
+    if( space.handle !== undefined )
+        s = space.handle;
+    return this._setSpace( s );
+};
+
+// PhysicsSprite
+cc.PhysicsSprite.prototype.setBody = function( body ) {
+    var b = body;
+    if( body.handle !== undefined )
+        b = body.handle;
+    return this._setCPBody( b );
+};
+
+
 /**
  * Associates a base class with a native superclass
  * @function
  * @param {object} jsobj subclass
  * @param {object} klass superclass
  */
-cc.associateWithNative = function (jsobj, superclass_or_instance) {
+cc.associateWithNative = function( jsobj, superclass_or_instance ) {
 
     try {
         // Used when subclassing using the "extend" method
         var native = new superclass_or_instance();
-        __associateObjWithNative(jsobj, native);
-    } catch (err) {
+        __associateObjWithNative( jsobj, native );
+    } catch(err) {
         // Used when subclassing using the goog.inherits method
-        __associateObjWithNative(jsobj, superclass_or_instance);
-    }
+       __associateObjWithNative( jsobj, superclass_or_instance );
+   }
 };
 
 //
@@ -367,52 +413,49 @@ cc.associateWithNative = function (jsobj, superclass_or_instance) {
 // 1) Google "subclasses" borrowed from closure library
 // This is the recommended way to do it
 //
-
 cc.inherits = function (childCtor, parentCtor) {
 	/** @constructor */
 	function tempCtor() {};
 	tempCtor.prototype = parentCtor.prototype;
 	childCtor.superClass_ = parentCtor.prototype;
-    childCtor.prototype = new tempCtor();
-    childCtor.prototype.constructor = childCtor;
+	childCtor.prototype = new tempCtor();
+	childCtor.prototype.constructor = childCtor;
 
     // Copy "static" method, but doesn't generate subclasses.
 //	for( var i in parentCtor ) {
 //		childCtor[ i ] = parentCtor[ i ];
 //	}
 };
+cc.base = function(me, opt_methodName, var_args) {
+	var caller = arguments.callee.caller;
+	if (caller.superClass_) {
+		// This is a constructor. Call the superclass constructor.
+		ret =  caller.superClass_.constructor.apply( me, Array.prototype.slice.call(arguments, 1));
+		return ret;
+	}
 
-cc.base = function (me, opt_methodName, var_args) {
-    var caller = arguments.callee.caller;
-    if (caller.superClass_) {
-        // This is a constructor. Call the superclass constructor.
-        ret = caller.superClass_.constructor.apply(me, Array.prototype.slice.call(arguments, 1));
-        return ret;
-    }
+	var args = Array.prototype.slice.call(arguments, 2);
+	var foundCaller = false;
+	for (var ctor = me.constructor;
+        ctor; ctor = ctor.superClass_ && ctor.superClass_.constructor) {
+		if (ctor.prototype[opt_methodName] === caller) {
+			foundCaller = true;
+		} else if (foundCaller) {
+			return ctor.prototype[opt_methodName].apply(me, args);
+		}
+	}
 
-    var args = Array.prototype.slice.call(arguments, 2);
-    var foundCaller = false;
-    for (var ctor = me.constructor;
-         ctor; ctor = ctor.superClass_ && ctor.superClass_.constructor) {
-        if (ctor.prototype[opt_methodName] === caller) {
-            foundCaller = true;
-        } else if (foundCaller) {
-            return ctor.prototype[opt_methodName].apply(me, args);
-        }
-    }
-
-    // If we did not find the caller in the prototype chain,
-    // then one of two things happened:
-    // 1) The caller is an instance method.
-    // 2) This method was not called by the right caller.
-    if (me[opt_methodName] === caller) {
-        return me.constructor.prototype[opt_methodName].apply(me, args);
-    } else {
-        throw Error(
-            'cc.base called from a method of one name ' +
-                'to a method of a different name');
-    }
-
+	// If we did not find the caller in the prototype chain,
+	// then one of two things happened:
+	// 1) The caller is an instance method.
+	// 2) This method was not called by the right caller.
+	if (me[opt_methodName] === caller) {
+		return me.constructor.prototype[opt_methodName].apply(me, args);
+	} else {
+		throw Error(
+					'cc.base called from a method of one name ' +
+					'to a method of a different name');
+	}
 };
 
 
@@ -420,7 +463,7 @@ cc.base = function (me, opt_methodName, var_args) {
 // 2) Using "extend" subclassing
 // Simple JavaScript Inheritance By John Resig http://ejohn.org/
 //
-cc.Class = function () {};
+cc.Class = function(){};
 cc.Class.extend = function (prop) {
     var _super = this.prototype;
 
@@ -474,7 +517,7 @@ cc.Class.extend = function (prop) {
     return Class;
 };
 
-cc.Node.prototype.ctor = function () {};
+cc.Node.prototype.ctor = function() {};
 cc.Node.extend = cc.Class.extend;
 cc.Layer.extend = cc.Class.extend;
 cc.LayerGradient.extend = cc.Class.extend;
@@ -482,3 +525,4 @@ cc.LayerColor.extend = cc.Class.extend;
 cc.Sprite.extend = cc.Class.extend;
 cc.MenuItemFont.extend = cc.Class.extend;
 cc.Scene.extend = cc.Class.extend;
+cc.DrawNode.extend = cc.Class.extend;

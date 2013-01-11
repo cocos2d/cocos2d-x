@@ -144,6 +144,9 @@
 		1A177EC41698262E00C9AC27 /* jsb.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A177EB61698261C00C9AC27 /* jsb.js */; };
 		1A177ECA1698271700C9AC27 /* js_bindings_system_functions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A177EC61698271700C9AC27 /* js_bindings_system_functions.cpp */; };
 		1A177ECB1698271700C9AC27 /* js_bindings_system_registration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A177EC81698271700C9AC27 /* js_bindings_system_registration.cpp */; };
+		1A82F5E7169AC86100C4B13A /* LocalStorage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A82F5E4169AC86100C4B13A /* LocalStorage.cpp */; };
+		1A82F5E8169AC86100C4B13A /* LocalStorageAndroid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A82F5E6169AC86100C4B13A /* LocalStorageAndroid.cpp */; };
+		1A82F5EA169AC8DD00C4B13A /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A82F5E9169AC8DD00C4B13A /* libsqlite3.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -404,6 +407,10 @@
 		1A177EC71698271700C9AC27 /* js_bindings_system_functions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_system_functions.h; sourceTree = "<group>"; };
 		1A177EC81698271700C9AC27 /* js_bindings_system_registration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = js_bindings_system_registration.cpp; sourceTree = "<group>"; };
 		1A177EC91698271700C9AC27 /* js_bindings_system_registration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_system_registration.h; sourceTree = "<group>"; };
+		1A82F5E4169AC86100C4B13A /* LocalStorage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LocalStorage.cpp; sourceTree = "<group>"; };
+		1A82F5E5169AC86100C4B13A /* LocalStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalStorage.h; sourceTree = "<group>"; };
+		1A82F5E6169AC86100C4B13A /* LocalStorageAndroid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LocalStorageAndroid.cpp; sourceTree = "<group>"; };
+		1A82F5E9169AC8DD00C4B13A /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -411,6 +418,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1A82F5EA169AC8DD00C4B13A /* libsqlite3.dylib in Frameworks */,
 				15A3D2DE1682EF08002FB0C5 /* libcocos2dx.a in Frameworks */,
 				15675300163E870E0002AD61 /* libxml2.dylib in Frameworks */,
 				156752F9163E82D40002AD61 /* libz.dylib in Frameworks */,
@@ -456,6 +464,7 @@
 		15674A6C163E70370002AD61 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1A82F5E9169AC8DD00C4B13A /* libsqlite3.dylib */,
 				156752FF163E870E0002AD61 /* libxml2.dylib */,
 				156752F8163E82D40002AD61 /* libz.dylib */,
 				156752F6163E7FC30002AD61 /* libjs_static.a */,
@@ -666,6 +675,7 @@
 		15A3D1E61682EE48002FB0C5 /* extensions */ = {
 			isa = PBXGroup;
 			children = (
+				1A82F5E3169AC86100C4B13A /* LocalStorage */,
 				15A3D1E81682EE48002FB0C5 /* CCBReader */,
 				15A3D21D1682EE48002FB0C5 /* cocos-ext.h */,
 				15A3D21E1682EE48002FB0C5 /* ExtensionMacros.h */,
@@ -880,6 +890,16 @@
 			path = js;
 			sourceTree = "<group>";
 		};
+		1A82F5E3169AC86100C4B13A /* LocalStorage */ = {
+			isa = PBXGroup;
+			children = (
+				1A82F5E4169AC86100C4B13A /* LocalStorage.cpp */,
+				1A82F5E5169AC86100C4B13A /* LocalStorage.h */,
+				1A82F5E6169AC86100C4B13A /* LocalStorageAndroid.cpp */,
+			);
+			path = LocalStorage;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1082,6 +1102,8 @@
 				1A177EBD1698261C00C9AC27 /* jsb.js in Sources */,
 				1A177ECA1698271700C9AC27 /* js_bindings_system_functions.cpp in Sources */,
 				1A177ECB1698271700C9AC27 /* js_bindings_system_registration.cpp in Sources */,
+				1A82F5E7169AC86100C4B13A /* LocalStorage.cpp in Sources */,
+				1A82F5E8169AC86100C4B13A /* LocalStorageAndroid.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1162,6 +1184,7 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 1;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1173,7 +1196,7 @@
 					CC_ENABLE_CHIPMUNK_INTEGRATION,
 				);
 				GCC_THUMB_SUPPORT = NO;
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../../../cocos2dx/kazmath/include\"",
 					"\"$(SRCROOT)/../../../../cocos2dx\"",
