@@ -8,6 +8,7 @@
 
 #include "js_bindings_ccbreader.h"
 #include "ScriptingCore.h"
+#include "js_bindings_config.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
@@ -120,10 +121,9 @@ JSBool js_cocos2dx_CCBReader_readNodeGraphFromFile(JSContext *cx, uint32_t argc,
             arg1 = (cocos2d::CCObject*)(proxy ? proxy->ptr : NULL);
             TEST_NATIVE_OBJECT(cx, arg1)
         } while (0);
-		if (!ok) {
-			JS_ReportError(cx, "Error processing arguments");
-			return JS_FALSE;
-		}
+        
+        JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+
         cocos2d::CCNode* ret = cobj->readNodeGraphFromFile(arg0, arg1);
         jsval jsret; do {
             if (ret) {
@@ -139,10 +139,8 @@ JSBool js_cocos2dx_CCBReader_readNodeGraphFromFile(JSContext *cx, uint32_t argc,
     if (argc == 1) {
         const char* arg0;
 		std::string arg0_tmp; ok &= jsval_to_std_string(cx, argv[0], &arg0_tmp); arg0 = arg0_tmp.c_str();
-        if (!ok) {
-			JS_ReportError(cx, "Error processing arguments");
-			return JS_FALSE;
-		}
+        JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+        
         cocos2d::CCNode* ret = cobj->readNodeGraphFromFile(arg0);
         jsval jsret; do {
             if (ret) {
@@ -169,10 +167,8 @@ JSBool js_cocos2dx_CCBReader_readNodeGraphFromFile(JSContext *cx, uint32_t argc,
         cocos2d::CCSize arg2;
         ok &= jsval_to_ccsize(cx, argv[2], &arg2);
         
-        if (!ok) {
-			JS_ReportError(cx, "Error processing arguments");
-			return JS_FALSE;
-		}
+        JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+        
         cocos2d::CCNode* ret = cobj->readNodeGraphFromFile(arg0, arg1, arg2);
         jsval jsret; do {
             if (ret) {
@@ -210,10 +206,9 @@ JSBool js_cocos2dx_CCBReader_createSceneWithNodeGraphFromFile(JSContext *cx, uin
 			arg1 = (cocos2d::CCObject*)(proxy ? proxy->ptr : NULL);
 			TEST_NATIVE_OBJECT(cx, arg1)
 		} while (0);
-        if (!ok) {
-			JS_ReportError(cx, "Error processing arguments");
-			return JS_FALSE;
-		}
+        
+        JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+        
 		cocos2d::CCScene* ret = cobj->createSceneWithNodeGraphFromFile(arg0, arg1);
 		jsval jsret; do {
 			if (ret) {
@@ -229,10 +224,8 @@ JSBool js_cocos2dx_CCBReader_createSceneWithNodeGraphFromFile(JSContext *cx, uin
 	if (argc == 1) {
 		const char* arg0;
 		std::string arg0_tmp; ok &= jsval_to_std_string(cx, argv[0], &arg0_tmp); arg0 = arg0_tmp.c_str();
-        if (!ok) {
-			JS_ReportError(cx, "Error processing arguments");
-			return JS_FALSE;
-		}
+        JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+        
 		cocos2d::CCScene* ret = cobj->createSceneWithNodeGraphFromFile(arg0);
 		jsval jsret; do {
 			if (ret) {
@@ -258,10 +251,9 @@ JSBool js_cocos2dx_CCBReader_createSceneWithNodeGraphFromFile(JSContext *cx, uin
 		} while (0);
 		cocos2d::CCSize arg2;
         ok &= jsval_to_ccsize(cx, argv[2], &arg2);
-        if (!ok) {
-			JS_ReportError(cx, "Error processing arguments");
-			return JS_FALSE;
-		}
+        
+        JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+        
 		cocos2d::CCScene* ret = cobj->createSceneWithNodeGraphFromFile(arg0, arg1, arg2);
 		jsval jsret; do {
 			if (ret) {
