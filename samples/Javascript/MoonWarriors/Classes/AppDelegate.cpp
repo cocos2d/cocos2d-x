@@ -9,6 +9,10 @@
 #include "js_bindings_ccbreader.h"
 #include "js_bindings_system_registration.h"
 
+#if JSB_ENABLE_DEBUGGER
+#include "js_bindings_dbg.h"
+#endif
+
 USING_NS_CC;
 using namespace CocosDenshion;
 
@@ -47,7 +51,12 @@ bool AppDelegate::applicationDidFinishLaunching()
     
     CCScriptEngineProtocol *pEngine = ScriptingCore::getInstance();
     CCScriptEngineManager::sharedManager()->setScriptEngine(pEngine);
+#if JSB_ENABLE_DEBUGGER
+    ScriptingCore::getInstance()->enableDebugger();
+    ScriptingCore::getInstance()->runScript("main.debug.js");
+#else
     ScriptingCore::getInstance()->runScript("MoonWarriors-jsb.js");
+#endif
 
     return true;
 }

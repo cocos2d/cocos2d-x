@@ -140,5 +140,17 @@ return JS_FALSE;														\
 #define JSB_INCLUDE_COCOSDENSHION 1
 #endif // JSB_INCLUDE_COCOSDENSHION
 
+/** @def JSB_ENABLE_DEBUGGER
+ Set this to 1 to enable the debugger
+ */
+#ifndef JSB_ENABLE_DEBUGGER
+#define JSB_ENABLE_DEBUGGER 1
+#endif // JSB_ENABLE_DEBUGGER
+
+/**
+ * @def JSB_DEBUGGER_PORT
+ * The port number, where the client will be listening on
+ */
+#define JSB_DEBUGGER_PORT 1337
 
 #endif // __JS_BINDINGS_CONFIG_H

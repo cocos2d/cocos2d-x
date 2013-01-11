@@ -28,7 +28,7 @@ var stepFunction = function (frame, script) {
 
 dbg.breakLine = 0;
 
-var processInput = function (str, frame, script) {
+this.processInput = function (str, frame, script) {
 	str = str.replace(/\n$/, "");
 	if (str.length === 0) {
 		return;
@@ -171,7 +171,7 @@ dbg.onError = function (frame, report) {
 	cc.log("!! exception");
 };
 
-function _prepareDebugger(global) {
+this._prepareDebugger = function (global) {
 	var tmp = new Debugger(global);
 	tmp.onNewScript = dbg.onNewScript;
 	tmp.onDebuggerStatement = dbg.onDebuggerStatement;
@@ -179,7 +179,7 @@ function _prepareDebugger(global) {
 	dbg.dbg = tmp;
 }
 
-function _startDebugger(global, files, startFunc) {
+this._startDebugger = function (global, files, startFunc) {
 	cc.log("starting with debugger enabled");
 	for (var i in files) {
 		global['eval']("require('" + files[i] + "');");
