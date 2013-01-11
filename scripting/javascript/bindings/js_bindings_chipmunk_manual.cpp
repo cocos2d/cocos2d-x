@@ -294,11 +294,16 @@ void JSB_CCPhysicsDebugNode_createClass(JSContext *cx, JSObject* globalObj, cons
 JSBool JSPROXY_CCPhysicsSprite_spriteWithFile_rect__static(JSContext *cx, uint32_t argc, jsval *vp) {
 
     jsval *argv = JS_ARGV(cx, vp);
+    JSBool ok = JS_TRUE;
 	if (argc == 2) {
 		const char* arg0;
-		std::string arg0_tmp = jsval_to_std_string(cx, argv[0]); arg0 = arg0_tmp.c_str();
+		std::string arg0_tmp; ok &= jsval_to_std_string(cx, argv[0], &arg0_tmp); arg0 = arg0_tmp.c_str();
 		cocos2d::CCRect arg1;
-		arg1 = jsval_to_ccrect(cx, argv[1]);
+		ok &= jsval_to_ccrect(cx, argv[1], &arg1);
+        if (!ok) {
+			JS_ReportError(cx, "Error processing arguments");
+			return JS_FALSE;
+		}
         CCPhysicsSprite* ret = CCPhysicsSprite::create(arg0, arg1);
 
 		jsval jsret;
@@ -323,7 +328,11 @@ JSBool JSPROXY_CCPhysicsSprite_spriteWithFile_rect__static(JSContext *cx, uint32
 	}
 	if (argc == 1) {
 		const char* arg0;
-		std::string arg0_tmp = jsval_to_std_string(cx, argv[0]); arg0 = arg0_tmp.c_str();
+		std::string arg0_tmp; ok &= jsval_to_std_string(cx, argv[0], &arg0_tmp); arg0 = arg0_tmp.c_str();
+        if (!ok) {
+			JS_ReportError(cx, "Error processing arguments");
+			return JS_FALSE;
+		}
 		CCPhysicsSprite* ret = CCPhysicsSprite::create(arg0);
 
 		jsval jsret;
@@ -391,10 +400,11 @@ JSBool JSPROXY_CCPhysicsSprite_spriteWithSpriteFrame__static(JSContext *cx, uint
 // Ret value: CCPhysicsSprite* (o)
 JSBool JSPROXY_CCPhysicsSprite_spriteWithSpriteFrameName__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argv = JS_ARGV(cx, vp);
+    JSBool ok = JS_TRUE;
 	const char* arg0;
     std::string arg0_tmp;
 	if (argc >= 1) {
-		arg0_tmp = jsval_to_std_string(cx, argv[0]); arg0 = arg0_tmp.c_str();
+		ok &= jsval_to_std_string(cx, argv[0], &arg0_tmp); arg0 = arg0_tmp.c_str();
 	}
     CCPhysicsSprite* ret = CCPhysicsSprite::createWithSpriteFrameName(arg0);
 
