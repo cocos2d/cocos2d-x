@@ -39,12 +39,28 @@
 #define  LOGD(...) js_log(__VA_ARGS__)
 #endif
 
+#include "js_bindings_config.h"
+#if JSB_ENABLE_DEBUGGER
+#include "js_bindings_dbg.h"
+#endif
+
+pthread_t debugThread;
+string inData;
+string outData;
+vector<string> queue;
+pthread_mutex_t g_qMutex;
+pthread_mutex_t g_rwMutex;
+bool vmLock = false;
+jsval frame = JSVAL_NULL, script = JSVAL_NULL;
+int clientSocket;
+
+// server entry point for the bg thread
+void* serverEntryPoint(void*);
+
 js_proxy_t *_native_js_global_ht = NULL;
 js_proxy_t *_js_native_global_ht = NULL;
 js_type_class_t *_js_global_type_ht = NULL;
 char *_js_log_buf = NULL;
-static const char * JSB_version = "JSB v0.5";
-
 
 std::vector<sc_register_sth> registrationList;
 
@@ -289,12 +305,6 @@ void registerDefaultClasses(JSContext* cx, JSObject* global) {
     JS_DefineFunction(cx, global, "log", ScriptingCore::log, 0, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, global, "executeScript", ScriptingCore::executeScript, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, global, "forceGC", ScriptingCore::forceGC, 0, JSPROP_READONLY | JSPROP_PERMANENT);
-
-    // these are used in the debug socket
-    JS_DefineFunction(cx, global, "_socketOpen", jsSocketOpen, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, global, "_socketWrite", jsSocketWrite, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, global, "_socketRead", jsSocketRead, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, global, "_socketClose", jsSocketClose, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     
     JS_DefineFunction(cx, global, "__getPlatform", JSBCore_platform, 0, JSPROP_READONLY | JSPROP_PERMANENT);
 	JS_DefineFunction(cx, global, "__getOS", JSBCore_os, 0, JSPROP_READONLY | JSPROP_PERMANENT);
@@ -1307,41 +1317,55 @@ jsval cccolor3b_to_jsval(JSContext* cx, const ccColor3B& v) {
 
 #pragma mark - Debug
 
+void ScriptingCore::debugProcessInput(string str) {
+	JSString* jsstr = JS_NewStringCopyZ(cx_, str.c_str());
+	jsval argv[3] = {
+		STRING_TO_JSVAL(jsstr),
+		frame,
+		script
+	};
+	jsval outval;
+	JSAutoCompartment ac(cx_, debugGlobal_);
+	JS_CallFunctionName(cx_, debugGlobal_, "processInput", 3, argv, &outval);
+}
+
 void ScriptingCore::enableDebugger() {
-	
 	if (debugGlobal_ == NULL) {
 		debugGlobal_ = NewGlobalObject(cx_, true);
-		// these are used in the debug socket
+		JS_WrapObject(cx_, &debugGlobal_);
+		JSAutoCompartment ac(cx_, debugGlobal_);
+		// these are used in the debug program
 		JS_DefineFunction(cx_, debugGlobal_, "log", ScriptingCore::log, 0, JSPROP_READONLY | JSPROP_PERMANENT);
-		JS_DefineFunction(cx_, debugGlobal_, "_getScript", jsGetScript, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-		JS_DefineFunction(cx_, debugGlobal_, "_socketOpen", jsSocketOpen, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-		JS_DefineFunction(cx_, debugGlobal_, "_socketWrite", jsSocketWrite, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-		JS_DefineFunction(cx_, debugGlobal_, "_socketRead", jsSocketRead, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-		JS_DefineFunction(cx_, debugGlobal_, "_socketClose", jsSocketClose, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+		JS_DefineFunction(cx_, debugGlobal_, "_bufferWrite", JSBDebug_BufferWrite, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+		JS_DefineFunction(cx_, debugGlobal_, "_bufferRead", JSBDebug_BufferRead, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+		JS_DefineFunction(cx_, debugGlobal_, "_lockVM", JSBDebug_LockExecution, 2, JSPROP_READONLY | JSPROP_PERMANENT);
+		JS_DefineFunction(cx_, debugGlobal_, "_unlockVM", JSBDebug_UnlockExecution, 0, JSPROP_READONLY | JSPROP_PERMANENT);
 		
-		runScript("debugger.js", debugGlobal_);
+		runScript("jsb_debugger.js", debugGlobal_);
+
 		// prepare the debugger
-		do {
-			jsval argv = OBJECT_TO_JSVAL(global_);
-			jsval out;
-			JS_WrapObject(cx_, &debugGlobal_);
-			JSAutoCompartment ac(cx_, debugGlobal_);
-			JS_CallFunctionName(cx_, debugGlobal_, "_prepareDebugger", 1, &argv, &out);
-		} while (0);
+		jsval argv = OBJECT_TO_JSVAL(global_);
+		jsval outval;
+		JSBool ok = JS_CallFunctionName(cx_, debugGlobal_, "_prepareDebugger", 1, &argv, &outval);
+		if (!ok) {
+			JS_ReportPendingException(cx_);
+		}
 		// define the start debugger function
-		JS_DefineFunction(cx_, global_, "startDebugger", jsStartDebugger, 3, JSPROP_READONLY | JSPROP_PERMANENT);
+		JS_DefineFunction(cx_, global_, "startDebugger", JSBDebug_StartDebugger, 3, JSPROP_READONLY | JSPROP_PERMANENT);
+		// start bg thread
+		pthread_create(&debugThread, NULL, serverEntryPoint, NULL);
 	}
 }
 
 JSBool jsStartDebugger(JSContext* cx, unsigned argc, jsval* vp)
 {
 	JSObject* debugGlobal = ScriptingCore::getInstance()->getDebugGlobal();
-	if (argc == 3) {
+	if (argc >= 2) {
 		jsval* argv = JS_ARGV(cx, vp);
 		jsval out;
 		JS_WrapObject(cx, &debugGlobal);
 		JSAutoCompartment ac(cx, debugGlobal);
-		JS_CallFunctionName(cx, debugGlobal, "_startDebugger", 3, argv, &out);
+		JS_CallFunctionName(cx, debugGlobal, "_startDebugger", argc, argv, &out);
 		return JS_TRUE;
 	}
 	return JS_FALSE;
@@ -1382,110 +1406,6 @@ JSObject* NewGlobalObject(JSContext* cx, bool debug)
     return glob;
 }
 
-// open a socket, bind it to a port and start listening, all at once :)
-JSBool jsSocketOpen(JSContext* cx, unsigned argc, jsval* vp)
-{
-    if (argc == 2) {
-        jsval* argv = JS_ARGV(cx, vp);
-        int port = JSVAL_TO_INT(argv[0]);
-        JSObject* callback = JSVAL_TO_OBJECT(argv[1]);
-
-        int s;
-        s = ports_sockets[port];
-        if (!s) {
-            char myname[256];
-            struct sockaddr_in sa;
-            struct hostent *hp;
-            memset(&sa, 0, sizeof(struct sockaddr_in));
-            gethostname(myname, 256);
-            hp = gethostbyname(myname);
-            sa.sin_family = hp->h_addrtype;
-            sa.sin_port = htons(port);
-            if ((s = socket(PF_INET, SOCK_STREAM, 0)) < 0) {
-                JS_ReportError(cx, "error opening socket");
-                return JS_FALSE;
-            }
-            int optval = 1;
-            if ((setsockopt(s, SOL_SOCKET, SO_REUSEADDR, (char*)&optval, sizeof(optval))) < 0) {
-                close(s);
-                JS_ReportError(cx, "error setting socket options");
-                return JS_FALSE;
-            }
-            if ((bind(s, (const struct sockaddr *)&sa, sizeof(struct sockaddr_in))) < 0) {
-                close(s);
-                JS_ReportError(cx, "error binding socket");
-                return JS_FALSE;
-            }
-            listen(s, 1);
-            int clientSocket;
-            if ((clientSocket = accept(s, NULL, NULL)) > 0) {
-                ports_sockets[port] = clientSocket;
-                jsval fval = OBJECT_TO_JSVAL(callback);
-                jsval jsSocket = INT_TO_JSVAL(clientSocket);
-                jsval outVal;
-                JS_CallFunctionValue(cx, NULL, fval, 1, &jsSocket, &outVal);
-            }
-        } else {
-            // just call the callback with the client socket
-            jsval fval = OBJECT_TO_JSVAL(callback);
-            jsval jsSocket = INT_TO_JSVAL(s);
-            jsval outVal;
-            JS_CallFunctionValue(cx, NULL, fval, 1, &jsSocket, &outVal);
-        }
-        JS_SET_RVAL(cx, vp, INT_TO_JSVAL(s));
-    }
-    return JS_TRUE;
-}
-
-JSBool jsSocketRead(JSContext* cx, unsigned argc, jsval* vp)
-{
-    if (argc == 1) {
-        jsval* argv = JS_ARGV(cx, vp);
-        int s = JSVAL_TO_INT(argv[0]);
-        char buff[1024];
-        JSString* outStr = JS_NewStringCopyZ(cx, "");
-
-        int bytesRead;
-        while ((bytesRead = read(s, buff, 1024)) > 0) {
-            JSString* newStr = JS_NewStringCopyN(cx, buff, bytesRead);
-            outStr = JS_ConcatStrings(cx, outStr, newStr);
-            // break on new line
-            if (buff[bytesRead-1] == '\n') {
-                break;
-            }
-        }
-        JS_SET_RVAL(cx, vp, STRING_TO_JSVAL(outStr));
-    } else {
-        JS_SET_RVAL(cx, vp, JSVAL_NULL);
-    }
-    return JS_TRUE;
-}
-
-JSBool jsSocketWrite(JSContext* cx, unsigned argc, jsval* vp)
-{
-    if (argc == 2) {
-        jsval* argv = JS_ARGV(cx, vp);
-        int s;
-
-        s = JSVAL_TO_INT(argv[0]);
-        JSString* jsstr = JS_ValueToString(cx, argv[1]);
-		JSStringWrapper str(jsstr);
-
-        write(s, str, strlen(str));
-    }
-    return JS_TRUE;
-}
-
-JSBool jsSocketClose(JSContext* cx, unsigned argc, jsval* vp)
-{
-    if (argc == 1) {
-        jsval* argv = JS_ARGV(cx, vp);
-        int s = JSVAL_TO_INT(argv[0]);
-        close(s);
-    }
-    return JS_TRUE;
-}
-
 JSBool jsb_set_reserved_slot(JSObject *obj, uint32_t idx, jsval value)
 {
     JSClass *klass = JS_GetClass(obj);
@@ -1508,4 +1428,182 @@ JSBool jsb_get_reserved_slot(JSObject *obj, uint32_t idx, jsval& ret)
     ret = JS_GetReservedSlot(obj, idx);
 
     return JS_TRUE;
+}
+
+#pragma mark - Debugger
+
+JSBool JSBDebug_StartDebugger(JSContext* cx, unsigned argc, jsval* vp)
+{
+	JSObject* debugGlobal = ScriptingCore::getInstance()->getDebugGlobal();
+	if (argc == 3) {
+		jsval* argv = JS_ARGV(cx, vp);
+		jsval out;
+		JS_WrapObject(cx, &debugGlobal);
+		JSAutoCompartment ac(cx, debugGlobal);
+		JS_CallFunctionName(cx, debugGlobal, "_startDebugger", 3, argv, &out);
+		return JS_TRUE;
+	}
+	return JS_FALSE;
+}
+
+JSBool JSBDebug_BufferRead(JSContext* cx, unsigned argc, jsval* vp)
+{
+    if (argc == 0) {
+		JSString* str;
+		// this is safe because we're already inside a lock (from clearBuffers)
+		if (vmLock) {
+			pthread_mutex_lock(&g_rwMutex);
+		}
+		str = JS_NewStringCopyZ(cx, inData.c_str());
+		inData.clear();
+		if (vmLock) {
+			pthread_mutex_unlock(&g_rwMutex);
+		}
+		JS_SET_RVAL(cx, vp, STRING_TO_JSVAL(str));
+    } else {
+        JS_SET_RVAL(cx, vp, JSVAL_NULL);
+    }
+    return JS_TRUE;
+}
+
+JSBool JSBDebug_BufferWrite(JSContext* cx, unsigned argc, jsval* vp)
+{
+    if (argc == 1) {
+        jsval* argv = JS_ARGV(cx, vp);
+        const char* str;
+		
+        JSString* jsstr = JS_ValueToString(cx, argv[0]);
+        str = JS_EncodeString(cx, jsstr);
+		
+		// this is safe because we're already inside a lock (from clearBuffers)
+		outData.append(str);
+		
+        JS_free(cx, (void*)str);
+    }
+    return JS_TRUE;
+}
+
+// this should lock the execution of the running thread, waiting for a signal
+JSBool JSBDebug_LockExecution(JSContext* cx, unsigned argc, jsval* vp)
+{
+	if (argc == 2) {
+		printf("locking vm\n");
+		jsval* argv = JS_ARGV(cx, vp);
+		frame = argv[0];
+		script = argv[1];
+		vmLock = true;
+		while (vmLock) {
+			// try to read the input, if there's anything
+			pthread_mutex_lock(&g_qMutex);
+			while (queue.size() > 0) {
+				vector<string>::iterator first = queue.begin();
+				string str = *first;
+				ScriptingCore::getInstance()->debugProcessInput(str);
+				queue.erase(first);
+			}
+			pthread_mutex_unlock(&g_qMutex);
+			sched_yield();
+		}
+		printf("vm unlocked\n");
+		frame = JSVAL_NULL;
+		script = JSVAL_NULL;
+		return JS_TRUE;
+	}
+	JS_ReportError(cx, "invalid call to _lockVM");
+	return JS_FALSE;
+}
+
+JSBool JSBDebug_UnlockExecution(JSContext* cx, unsigned argc, jsval* vp)
+{
+	vmLock = false;
+	return JS_TRUE;
+}
+
+bool serverAlive = true;
+
+void processInput(string data) {
+	pthread_mutex_lock(&g_qMutex);
+	queue.push_back(string(data));
+	pthread_mutex_unlock(&g_qMutex);
+}
+
+void clearBuffers() {
+	pthread_mutex_lock(&g_rwMutex);
+	{
+		// only process input if there's something and we're not locked
+		if (inData.length() > 0) {
+			processInput(inData);
+			inData.clear();
+		}
+		if (outData.length() > 0) {
+			write(clientSocket, outData.c_str(), outData.length());
+			outData.clear();
+		}
+	}
+	pthread_mutex_unlock(&g_rwMutex);
+}
+
+void* serverEntryPoint(void*)
+{
+	// init the mutex
+	assert(pthread_mutex_init(&g_rwMutex, NULL) == 0);
+	assert(pthread_mutex_init(&g_qMutex, NULL) == 0);
+	// start a server, accept the connection and keep reading data from it
+	struct addrinfo hints, *result, *rp;
+	int s;
+	memset(&hints, 0, sizeof(struct addrinfo));
+	hints.ai_family = AF_INET;
+	hints.ai_socktype = SOCK_STREAM; // TCP
+	
+	int err;
+	stringstream portstr;
+	portstr << JSB_DEBUGGER_PORT;
+	const char* tmp = portstr.str().c_str();
+	if ((err = getaddrinfo(NULL, tmp, &hints, &result)) != 0) {
+		printf("error: %s\n", gai_strerror(err));
+	}
+	
+	for (rp = result; rp != NULL; rp = rp->ai_next) {
+		if ((s = socket(rp->ai_family, rp->ai_socktype, 0)) < 0) {
+			continue;
+		}
+		int optval = 1;
+		if ((setsockopt(s, SOL_SOCKET, SO_REUSEADDR, (char*)&optval, sizeof(optval))) < 0) {
+			close(s);
+			LOGD("error setting socket options");
+			return NULL;
+		}
+		if ((bind(s, rp->ai_addr, rp->ai_addrlen)) == 0) {
+			break;
+		}
+		close(s);
+		s = -1;
+	}
+	if (s < 0 || rp == NULL) {
+		LOGD("error creating/binding socket");
+		return NULL;
+	}
+	
+	freeaddrinfo(result);
+	
+	listen(s, 1);
+	while (serverAlive && (clientSocket = accept(s, NULL, NULL)) > 0) {
+		// read/write data
+		LOGD("debug client connected");
+		while (serverAlive) {
+			char buf[256];
+			int readBytes;
+			while ((readBytes = read(clientSocket, buf, 256)) > 0) {
+				buf[readBytes] = '\0';
+				// no other thread is using this
+				inData.append(buf);
+				// process any input, send any output
+				clearBuffers();
+			} // while(read)
+		} // while(serverAlive)
+	}
+	// we're done, destroy the mutex
+	pthread_mutex_destroy(&g_rwMutex);
+	pthread_mutex_destroy(&g_qMutex);
+	return NULL;
 }
