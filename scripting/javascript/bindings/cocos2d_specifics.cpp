@@ -1,6 +1,7 @@
 #include "cocos2d.h"
 #include "cocos2d_specifics.hpp"
 #include <typeinfo>
+#include "js_bindings_config.h"
 
 schedFunc_proxy_t *_schedFunc_target_ht = NULL;
 schedTarget_proxy_t *_schedTarget_native_ht = NULL;
@@ -181,9 +182,10 @@ JSBool js_cocos2dx_CCNode_getChildren(JSContext *cx, uint32_t argc, jsval *vp)
 			}
 
 			JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsarr));
+            return JS_TRUE;
 		}
-		return JS_TRUE;
 	}
+    JS_ReportError(cx, "Error in js_cocos2dx_CCNode_getChildren");
 	return JS_FALSE;
 }
 
@@ -243,6 +245,7 @@ JSBool js_cocos2dx_CCMenu_create(JSContext *cx, uint32_t argc, jsval *vp)
 		JS_SET_RVAL(cx, vp, jsret);
 		return JS_TRUE;
 	}
+    JS_ReportError(cx, "wrong number of arguments");
 	return JS_FALSE;
 }
 
@@ -281,6 +284,7 @@ JSBool js_cocos2dx_CCSequence_create(JSContext *cx, uint32_t argc, jsval *vp)
 		JS_SET_RVAL(cx, vp, jsret);
 		return JS_TRUE;
 	}
+    JS_ReportError(cx, "wrong number of arguments");
 	return JS_FALSE;
 }
 
@@ -319,6 +323,7 @@ JSBool js_cocos2dx_CCSpawn_create(JSContext *cx, uint32_t argc, jsval *vp)
 		JS_SET_RVAL(cx, vp, jsret);
 		return JS_TRUE;
 	}
+    JS_ReportError(cx, "wrong number of arguments");
 	return JS_FALSE;
 }
 
@@ -331,6 +336,7 @@ JSBool js_cocos2dx_CCMenuItem_create(JSContext *cx, uint32_t argc, jsval *vp)
 		JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
 		return JS_TRUE;
 	}
+    JS_ReportError(cx, "wrong number of arguments");
 	return JS_FALSE;
 }
 
@@ -475,17 +481,20 @@ JSBool js_cocos2dx_CCMenuItemLabel_create(JSContext *cx, uint32_t argc, jsval *v
 JSBool js_cocos2dx_CCMenuItemAtlasFont_create(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	if (argc >= 5) {
+        JSBool ok = JS_TRUE;
 		jsval *argv = JS_ARGV(cx, vp);
 		JSStringWrapper arg0(argv[0]);
 		JSStringWrapper arg1(argv[1]);
-		int arg2; if (!JS_ValueToInt32(cx, argv[2], &arg2)) return JS_FALSE;
-		int arg3; if (!JS_ValueToInt32(cx, argv[3], &arg3)) return JS_FALSE;
-		int arg4; if (!JS_ValueToInt32(cx, argv[4], &arg4)) return JS_FALSE;
+		int arg2; ok &= jsval_to_int32(cx, argv[2], &arg2);
+		int arg3; ok &= jsval_to_int32(cx, argv[3], &arg3);
+		int arg4; ok &= jsval_to_int32(cx, argv[4], &arg4);
+        JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
 		cocos2d::CCMenuItemAtlasFont* ret = cocos2d::CCMenuItemAtlasFont::create(arg0, arg1, arg2, arg3, arg4);
 		JSObject *obj = bind_menu_item<cocos2d::CCMenuItemAtlasFont>(cx, ret, (argc >= 6 ? argv[5] : JSVAL_VOID), (argc == 7 ? argv[6] : JSVAL_VOID));
 		JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
 		return JS_TRUE;
 	}
+    JS_ReportError(cx, "wrong number of arguments");
 	return JS_FALSE;
 }
 
@@ -540,6 +549,7 @@ JSBool js_cocos2dx_CCMenuItemToggle_create(JSContext *cx, uint32_t argc, jsval *
     JS_SET_RVAL(cx, vp, jsret);
     return JS_TRUE;
   }
+  JS_ReportError(cx, "wrong number of arguments");
   return JS_FALSE;
 }
 
@@ -581,10 +591,7 @@ JSBool js_cocos2dx_CCAnimation_create(JSContext *cx, uint32_t argc, jsval *vp)
 		cocos2d::CCArray* arg0;
 		if (argc > 0) {
 			ok &= jsval_to_ccarray(cx, argv[0], &arg0);
-            if (!ok) {
-                // TODO: Need to use JSB_PRECONDITION2 like which was done in cocos2d-iphone.
-                return JS_FALSE;
-            }
+            JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
 		}
 		cocos2d::CCAnimation* ret;
 		double arg1 = 0.0f;
@@ -596,7 +603,7 @@ JSBool js_cocos2dx_CCAnimation_create(JSContext *cx, uint32_t argc, jsval *vp)
 		} else if (argc == 3) {
 			unsigned int loops;
 			JS_ValueToNumber(cx, argv[1], &arg1);
-			JS_ValueToECMAUint32(cx, argv[1], &loops);
+			jsval_to_uint32(cx, argv[1], &loops);
 			ret = cocos2d::CCAnimation::create(arg0, arg1, loops);
 		} else if (argc == 1) {
 			ret = cocos2d::CCAnimation::createWithSpriteFrames(arg0);
@@ -620,6 +627,7 @@ JSBool js_cocos2dx_CCAnimation_create(JSContext *cx, uint32_t argc, jsval *vp)
 		JS_SET_RVAL(cx, vp, jsret);
 		return JS_TRUE;
 	}
+    JS_ReportError(cx, "wrong number of arguments");
 	return JS_FALSE;
 }
 
@@ -629,10 +637,8 @@ JSBool js_cocos2dx_CCLayerMultiplex_create(JSContext *cx, uint32_t argc, jsval *
 	cocos2d::CCArray* arg0;
     JSBool ok = JS_TRUE;
 	ok &= jsvals_variadic_to_ccarray(cx, argv, argc, &arg0);
-    if (!ok) {
-        // TODO: Need to use JSB_PRECONDITION2 like which was done in cocos2d-iphone.
-        return JS_FALSE;
-    }
+    JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+    
 	cocos2d::CCLayerMultiplex* ret = cocos2d::CCLayerMultiplex::createWithArray(arg0);
 	jsval jsret;
 	do {
@@ -743,6 +749,7 @@ JSBool js_cocos2dx_CCNode_copy(JSContext *cx, uint32_t argc, jsval *vp)
 			return JS_TRUE;
 		}
 	}
+    JS_ReportError(cx, "wrong number of arguments");
 	return JS_FALSE;
 }
 
@@ -1137,8 +1144,7 @@ JSBool js_CCNode_unschedule(JSContext *cx, uint32_t argc, jsval *vp)
 		js_proxy_t *proxy;
 		JS_GET_NATIVE_PROXY(proxy, obj);
 		cocos2d::CCNode *node = (cocos2d::CCNode *)(proxy ? proxy->ptr : NULL);
-        
-        if(!node) return JS_FALSE;
+        JSB_PRECONDITION2(node, cx, JS_FALSE, "Invalid Native Object");
         
         CCScheduler *sched = node->getScheduler();
         
@@ -1562,6 +1568,7 @@ JSBool js_cocos2dx_retain(JSContext *cx, uint32_t argc, jsval *vp)
 			return JS_TRUE;
 		}
 	}
+    JS_ReportError(cx, "Invalid Native Object.");
 	return JS_FALSE;
 }
 
@@ -1576,6 +1583,7 @@ JSBool js_cocos2dx_release(JSContext *cx, uint32_t argc, jsval *vp)
 			return JS_TRUE;
 		}
 	}
+    JS_ReportError(cx, "Invalid Native Object.");
 	return JS_FALSE;
 }
 
@@ -1601,6 +1609,8 @@ JSBool js_cocos2dx_CCSet_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 		JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
 		return JS_TRUE;
 	}
+    
+    JS_ReportError(cx, "Error in js_cocos2dx_CCSet_constructor");
 	return JS_FALSE;
 }
 
@@ -1616,10 +1626,8 @@ JSBool js_cocos2dx_CCNode_setPosition(JSContext *cx, uint32_t argc, jsval *vp)
 	if (argc == 1) {
 		cocos2d::CCPoint arg0;
         ok &= jsval_to_ccpoint(cx, argv[0], &arg0);
-        if (!ok) {
-            // TODO: Need to use JSB_PRECONDITION2 like which was done in cocos2d-iphone.
-            return JS_FALSE;
-        }
+        JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+        
 		cobj->setPosition(arg0);
 		return JS_TRUE;
 	} if (argc == 2) {
@@ -1651,10 +1659,7 @@ JSBool js_cocos2dx_CCSprite_setPosition(JSContext *cx, uint32_t argc, jsval *vp)
 	if (argc == 1) {
 		cocos2d::CCPoint arg0;
 		ok &= jsval_to_ccpoint(cx, argv[0], &arg0);
-        if (!ok) {
-            // TODO: Need to use JSB_PRECONDITION2 like which was done in cocos2d-iphone.
-            return JS_FALSE;
-        }
+        JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
 		cobj->setPosition(arg0);
 		return JS_TRUE;
 	} if (argc == 2) {
@@ -1695,6 +1700,7 @@ JSBool js_cocos2dx_CCTMXLayer_tileFlagsAt(JSContext *cx, uint32_t argc, jsval *v
 		JS_SET_RVAL(cx, vp, jsret);
 		return JS_TRUE;
 	}
+    JS_ReportError(cx, "wrong number of arguments");
     return JS_FALSE;
 }
 
@@ -1885,10 +1891,8 @@ JSBool js_cocos2dx_ccpAdd(JSContext *cx, uint32_t argc, jsval *vp)
 		ok &= jsval_to_ccpoint(cx, argv[0], &arg0);
 		cocos2d::CCPoint arg1;
 		ok &= jsval_to_ccpoint(cx, argv[1], &arg1);
-        if (!ok) {
-            // TODO: Need to use JSB_PRECONDITION2 like which was done in cocos2d-iphone.
-            return JS_FALSE;
-        }
+        JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+        
 		CCPoint ret = ccpAdd(arg0, arg1);
 		
 		jsval jsret = ccpoint_to_jsval(cx, ret);
@@ -1911,10 +1915,7 @@ JSBool js_cocos2dx_ccpDistance(JSContext *cx, uint32_t argc, jsval *vp)
 		cocos2d::CCPoint arg1;
 		ok &= jsval_to_ccpoint(cx, argv[1], &arg1);
 		
-        if (!ok) {
-            // TODO: Need to use JSB_PRECONDITION2 like which was done in cocos2d-iphone.
-            return JS_FALSE;
-        }
+        JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
 		float ret = ccpDistance(arg0, arg1);
 		
 		jsval jsret = DOUBLE_TO_JSVAL(ret);
@@ -1937,10 +1938,7 @@ JSBool js_cocos2dx_ccpClamp(JSContext *cx, uint32_t argc, jsval *vp)
 		ok &= jsval_to_ccpoint(cx, argv[1], &arg1);
 		cocos2d::CCPoint arg2;
 		ok &= jsval_to_ccpoint(cx, argv[2], &arg2);
-        if (!ok) {
-            // TODO: Need to use JSB_PRECONDITION2 like which was done in cocos2d-iphone.
-            return JS_FALSE;
-        }
+        JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
         
 		CCPoint ret = ccpClamp(arg0, arg1, arg2);
 		
@@ -1960,10 +1958,7 @@ JSBool js_cocos2dx_ccpLengthSQ(JSContext *cx, uint32_t argc, jsval *vp)
 	if (argc == 1) {
 		cocos2d::CCPoint arg0;
 		ok &= jsval_to_ccpoint(cx, argv[0], &arg0);
-        if (!ok) {
-            // TODO: Need to use JSB_PRECONDITION2 like which was done in cocos2d-iphone.
-            return JS_FALSE;
-        }
+        JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
 		float ret = ccpLengthSQ(arg0);
 
 		jsval jsret = DOUBLE_TO_JSVAL(ret);
@@ -1983,10 +1978,7 @@ JSBool js_cocos2dx_ccpLength(JSContext *cx, uint32_t argc, jsval *vp)
 	if (argc == 1) {
 		cocos2d::CCPoint arg0;
         ok &= jsval_to_ccpoint(cx, argv[0], &arg0);
-        if (!ok) {
-            // TODO: Need to use JSB_PRECONDITION2 like which was done in cocos2d-iphone.
-            return JS_FALSE;
-        }
+        JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
 
 		float ret = ccpLength(arg0);
 
@@ -2007,10 +1999,7 @@ JSBool js_cocos2dx_ccpNeg(JSContext *cx, uint32_t argc, jsval *vp)
 	if (argc == 1) {
 		cocos2d::CCPoint arg0;
         ok &= jsval_to_ccpoint(cx, argv[0], &arg0);
-        if (!ok) {
-            // TODO: Need to use JSB_PRECONDITION2 like which was done in cocos2d-iphone.
-            return JS_FALSE;
-        }
+        JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
         
 		CCPoint ret = ccpNeg(arg0);
 		
@@ -2033,10 +2022,8 @@ JSBool js_cocos2dx_ccpSub(JSContext *cx, uint32_t argc, jsval *vp)
 		ok &= jsval_to_ccpoint(cx, argv[0], &arg0);
 		cocos2d::CCPoint arg1;
 		ok &= jsval_to_ccpoint(cx, argv[1], &arg1);
-        if (!ok) {
-            // TODO: Need to use JSB_PRECONDITION2 like which was done in cocos2d-iphone.
-            return JS_FALSE;
-        }
+        JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+        
 		CCPoint ret = ccpSub(arg0, arg1);
 		
 		jsval jsret = ccpoint_to_jsval(cx, ret);
@@ -2056,10 +2043,8 @@ JSBool js_cocos2dx_ccpMult(JSContext *cx, uint32_t argc, jsval *vp)
 	if (argc == 2) {
         cocos2d::CCPoint arg0;
 		ok &= jsval_to_ccpoint(cx, argv[0], &arg0);
-        if (!ok) {
-            // TODO: Need to use JSB_PRECONDITION2 like which was done in cocos2d-iphone.
-            return JS_FALSE;
-        }
+        JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+        
 		double arg1;
 		if( ! JS_ValueToNumber(cx, argv[1], &arg1) ) {
 		  return JS_FALSE;
@@ -2087,10 +2072,8 @@ JSBool js_cocos2dx_ccpMidpoint(JSContext *cx, uint32_t argc, jsval *vp)
 		ok &= jsval_to_ccpoint(cx, argv[0], &arg0);
 		cocos2d::CCPoint arg1;
 		ok &= jsval_to_ccpoint(cx, argv[1], &arg1);
-        if (!ok) {
-            // TODO: Need to use JSB_PRECONDITION2 like which was done in cocos2d-iphone.
-            return JS_FALSE;
-        }
+        JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+        
 		CCPoint ret = ccpMidpoint(arg0, arg1);
 		
 		jsval jsret = ccpoint_to_jsval(cx, ret);
@@ -2113,10 +2096,8 @@ JSBool js_cocos2dx_ccpDot(JSContext *cx, uint32_t argc, jsval *vp)
 		ok &= jsval_to_ccpoint(cx, argv[0], &arg0);
 		cocos2d::CCPoint arg1;
 		ok &= jsval_to_ccpoint(cx, argv[1], &arg1);
-        if (!ok) {
-            // TODO: Need to use JSB_PRECONDITION2 like which was done in cocos2d-iphone.
-            return JS_FALSE;
-        }
+        JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+        
 		float ret = ccpDot(arg0, arg1);
 		
 		jsval jsret = DOUBLE_TO_JSVAL(ret);
@@ -2138,10 +2119,8 @@ JSBool js_cocos2dx_ccpCross(JSContext *cx, uint32_t argc, jsval *vp)
 		ok &= jsval_to_ccpoint(cx, argv[0], &arg0);
 		cocos2d::CCPoint arg1;
 		ok &= jsval_to_ccpoint(cx, argv[1], &arg1);
-        if (!ok) {
-            // TODO: Need to use JSB_PRECONDITION2 like which was done in cocos2d-iphone.
-            return JS_FALSE;
-        }
+        JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+        
 		float ret = ccpCross(arg0, arg1);
 		
 		jsval jsret = DOUBLE_TO_JSVAL(ret);
@@ -2161,10 +2140,8 @@ JSBool js_cocos2dx_ccpPerp(JSContext *cx, uint32_t argc, jsval *vp)
 	if (argc == 1) {
 		cocos2d::CCPoint arg0;
 		ok &= jsval_to_ccpoint(cx, argv[0], &arg0);
-        if (!ok) {
-            // TODO: Need to use JSB_PRECONDITION2 like which was done in cocos2d-iphone.
-            return JS_FALSE;
-        }
+        JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+        
 		CCPoint ret = ccpPerp(arg0);
 		
 		jsval jsret = ccpoint_to_jsval(cx, ret);
@@ -2185,10 +2162,8 @@ JSBool js_cocos2dx_ccpRPerp(JSContext *cx, uint32_t argc, jsval *vp)
 	if (argc == 1) {
 		cocos2d::CCPoint arg0;
 		ok &= jsval_to_ccpoint(cx, argv[0], &arg0);
-        if (!ok) {
-            // TODO: Need to use JSB_PRECONDITION2 like which was done in cocos2d-iphone.
-            return JS_FALSE;
-        }
+        JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+        
 		CCPoint ret = ccpRPerp(arg0);
 		
 		jsval jsret = ccpoint_to_jsval(cx, ret);
@@ -2211,10 +2186,8 @@ JSBool js_cocos2dx_ccpProject(JSContext *cx, uint32_t argc, jsval *vp)
 		ok &= jsval_to_ccpoint(cx, argv[0], &arg0);
 		cocos2d::CCPoint arg1;
 		ok &= jsval_to_ccpoint(cx, argv[1], &arg1);
-        if (!ok) {
-            // TODO: Need to use JSB_PRECONDITION2 like which was done in cocos2d-iphone.
-            return JS_FALSE;
-        }
+        JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+        
 		CCPoint ret = ccpProject(arg0, arg1);
 		
 		jsval jsret = ccpoint_to_jsval(cx, ret);
@@ -2236,10 +2209,8 @@ JSBool js_cocos2dx_ccpRotate(JSContext *cx, uint32_t argc, jsval *vp)
 		ok &= jsval_to_ccpoint(cx, argv[0], &arg0);
 		cocos2d::CCPoint arg1;
 		ok &= jsval_to_ccpoint(cx, argv[1], &arg1);
-        if (!ok) {
-            // TODO: Need to use JSB_PRECONDITION2 like which was done in cocos2d-iphone.
-            return JS_FALSE;
-        }
+        JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+        
 		CCPoint ret = ccpRotate(arg0, arg1);
 		
 		jsval jsret = ccpoint_to_jsval(cx, ret);
@@ -2259,10 +2230,8 @@ JSBool js_cocos2dx_ccpNormalize(JSContext *cx, uint32_t argc, jsval *vp)
 	if (argc == 1) {
 		cocos2d::CCPoint arg0;
 		ok &= jsval_to_ccpoint(cx, argv[0], &arg0);
-        if (!ok) {
-            // TODO: Need to use JSB_PRECONDITION2 like which was done in cocos2d-iphone.
-            return JS_FALSE;
-        }
+        JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+        
 		CCPoint ret = ccpNormalize(arg0);
 		
 		jsval jsret = ccpoint_to_jsval(cx, ret);
@@ -2317,8 +2286,8 @@ JSBool js_cocos2dx_setBlendFunc(JSContext *cx, uint32_t argc, jsval *vp)
     if (argc == 2)
     {
         GLenum src, dst;
-        JS_ValueToInt32(cx, argv[0], (int32_t*)&src);
-        JS_ValueToInt32(cx, argv[1], (int32_t*)&dst);
+        jsval_to_int32(cx, argv[0], (int32_t*)&src);
+        jsval_to_int32(cx, argv[1], (int32_t*)&dst);
         ccBlendFunc blendFunc = {src, dst};
         cobj->setBlendFunc(blendFunc);
         return JS_TRUE;
@@ -2381,13 +2350,12 @@ JSBool js_cocos2dx_CCTexture2D_setTexParameters(JSContext *cx, uint32_t argc, js
 
         GLint arg0, arg1, arg2, arg3;
 
-        ok &= JS_ValueToInt32(cx, *argvp++, &arg0);
-        ok &= JS_ValueToInt32(cx, *argvp++, &arg1);
-        ok &= JS_ValueToInt32(cx, *argvp++, &arg2);
-        ok &= JS_ValueToInt32(cx, *argvp++, &arg3);
+        ok &= jsval_to_int32(cx, *argvp++, &arg0);
+        ok &= jsval_to_int32(cx, *argvp++, &arg1);
+        ok &= jsval_to_int32(cx, *argvp++, &arg2);
+        ok &= jsval_to_int32(cx, *argvp++, &arg3);
 
-        if( ! ok )
-            return JS_FALSE;
+        JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
 
         ccTexParams param = { arg0, arg1, arg2, arg3 };
 
@@ -2419,7 +2387,7 @@ JSBool js_cocos2dx_CCMenu_alignItemsInRows(JSContext *cx, uint32_t argc, jsval *
         JS_SET_RVAL(cx, vp, JSVAL_VOID);
         return JS_TRUE;
     }
-
+    JS_ReportError(cx, "Error in js_cocos2dx_CCMenu_alignItemsInRows");
     return JS_FALSE;
 }
 
@@ -2440,7 +2408,7 @@ JSBool js_cocos2dx_CCMenu_alignItemsInColumns(JSContext *cx, uint32_t argc, jsva
         JS_SET_RVAL(cx, vp, JSVAL_VOID);
         return JS_TRUE;
     }
-
+    JS_ReportError(cx, "Error in js_cocos2dx_CCMenu_alignItemsInColumns");
     return JS_FALSE;
 }
 
@@ -2460,10 +2428,7 @@ JSBool js_cocos2dx_CCTMXLayer_getTileFlagsAt(JSContext *cx, uint32_t argc, jsval
         ccTMXTileFlags flags;
         CCPoint arg0;
         ok &= jsval_to_ccpoint(cx, argv[0], &arg0);
-        if (!ok) {
-            // TODO: Need to use JSB_PRECONDITION2 like which was done in cocos2d-iphone.
-            return JS_FALSE;
-        }
+        JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
         cobj->tileGIDAt(arg0, &flags);
         
         JS_SET_RVAL(cx, vp, UINT_TO_JSVAL((uint32_t)flags));
@@ -2494,11 +2459,7 @@ JSBool js_cocos2dx_CCDrawNode_drawPolygon(JSContext *cx, uint32_t argc, jsval *v
 
         // Points
         ok &= JS_ValueToObject(cx, *argvp++, &argArray);
-        if( ! (argArray && JS_IsArrayObject(cx, argArray) ) )
-        {
-            JS_ReportError(cx, "Vertex should be anArray object");
-            return JS_FALSE;
-        }
+        JSB_PRECONDITION2( (argArray && JS_IsArrayObject(cx, argArray)) , cx, JS_FALSE, "Vertex should be anArray object");
 
         // Color 4F
         ok &= jsval_to_cccolor4f(cx, *argvp++, &argFillColor);
@@ -2509,10 +2470,7 @@ JSBool js_cocos2dx_CCDrawNode_drawPolygon(JSContext *cx, uint32_t argc, jsval *v
         // Color Border (4F)
         ok &= jsval_to_cccolor4f(cx, *argvp++, &argBorderColor);
 
-        if( ! ok )
-        {
-            return JS_FALSE;
-        }
+        JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error parsing arguments");
 
         {
             uint32_t l;
@@ -2539,7 +2497,7 @@ JSBool js_cocos2dx_CCDrawNode_drawPolygon(JSContext *cx, uint32_t argc, jsval *v
     }
 
     JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 4);
-    return JS_FALSE;	
+    return JS_FALSE;
 }
 
 void register_cocos2dx_js_extensions(JSContext* cx, JSObject* global)
