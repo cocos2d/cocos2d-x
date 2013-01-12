@@ -111,6 +111,9 @@ public:
     // sets a new label using an string
     virtual void setString(const char *label) = 0;
 
+    // sets a new label using a string with format
+    virtual void setStringWithFormat(const char* format, ...) = 0;
+    
     /** returns the string that is rendered */
     virtual const char* getString(void) = 0;
 };

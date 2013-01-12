@@ -36,6 +36,8 @@ NS_CC_BEGIN
 #define SHADER_PROGRAM kCCShader_PositionTextureA8Color
 #endif
 
+#define kMaxStringLen (1024*100)
+
 //
 //CCLabelTTF
 //
@@ -148,6 +150,26 @@ void CCLabelTTF::setString(const char *string)
         
         this->updateTexture();
     }
+}
+
+void CCLabelTTF::setStringWithFormat(const char* format, ...)
+{
+    std::string sString;
+    
+    va_list ap;
+    va_start(ap, format);
+    
+    char* pBuf = (char*)malloc(kMaxStringLen);
+    if (pBuf != NULL)
+    {
+        vsnprintf(pBuf, kMaxStringLen, format, ap);
+        sString = pBuf;
+        free(pBuf);
+    }
+    
+    va_end(ap);
+    
+    this->setString(sString.c_str());
 }
 
 const char* CCLabelTTF::getString(void)
