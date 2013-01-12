@@ -40,6 +40,8 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+#define kMaxStringLen (1024*100)
+
 //CCLabelAtlas - Creation & Init
 
 CCLabelAtlas* CCLabelAtlas::create(const char *string, const char *charMapFile, unsigned int itemWidth, int unsigned itemHeight, unsigned int startCharMap)
@@ -184,6 +186,26 @@ void CCLabelAtlas::setString(const char *label)
     this->setContentSize(s);
 
     m_uQuadsToDraw = len;
+}
+
+void CCLabelAtlas::setStringWithFormat(const char* format, ...)
+{
+    std::string sString;
+    
+    va_list ap;
+    va_start(ap, format);
+    
+    char* pBuf = (char*)malloc(kMaxStringLen);
+    if (pBuf != NULL)
+    {
+        vsnprintf(pBuf, kMaxStringLen, format, ap);
+        sString = pBuf;
+        free(pBuf);
+    }
+    
+    va_end(ap);
+    
+    this->setString(sString.c_str());
 }
 
 const char* CCLabelAtlas::getString(void)

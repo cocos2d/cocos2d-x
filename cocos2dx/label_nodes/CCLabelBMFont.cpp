@@ -47,6 +47,8 @@ using namespace std;
 
 NS_CC_BEGIN
 
+#define kMaxStringLen (1024*100)
+
 static int cc_wcslen(const unsigned short* str)
 {
     int i=0;
@@ -1004,6 +1006,26 @@ void CCLabelBMFont::createFontChars()
 void CCLabelBMFont::setString(const char *newString)
 {
     this->setString(newString, false);
+}
+
+void CCLabelBMFont::setStringWithFormat(const char* format, ...)
+{
+    std::string sString;
+    
+    va_list ap;
+    va_start(ap, format);
+    
+    char* pBuf = (char*)malloc(kMaxStringLen);
+    if (pBuf != NULL)
+    {
+        vsnprintf(pBuf, kMaxStringLen, format, ap);
+        sString = pBuf;
+        free(pBuf);
+    }
+    
+    va_end(ap);
+    
+    this->setString(sString.c_str());
 }
 
 void CCLabelBMFont::setString(const char *newString, bool fromUpdate)

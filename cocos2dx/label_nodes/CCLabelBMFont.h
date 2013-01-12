@@ -242,6 +242,7 @@ public:
     void createFontChars();
     // super method
     virtual void setString(const char *label);
+    virtual void setStringWithFormat(const char* format, ...);
     virtual void setString(const char *label, bool fromUpdate);
     virtual void updateString(bool fromUpdate);
     virtual const char* getString(void);
