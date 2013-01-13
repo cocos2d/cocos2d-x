@@ -217,7 +217,7 @@ CCSequence* CCSequence::createWithVariableList(CCFiniteTimeAction *pAction1, va_
     CCFiniteTimeAction *pPrev = pAction1;
     bool bOneAction = true;
 
-    while (pAction1)
+    while (pAction1 && args)
     {
         pNow = va_arg(args, CCFiniteTimeAction*);
         if (pNow)
@@ -1424,7 +1424,7 @@ void CCJumpTo::startWithTarget(CCNode *pTarget)
 
 // Bezier cubic formula:
 //    ((1 - t) + t)3 = 1 
-// Expands to¡­ 
+// Expands toï¿½ï¿½ 
 //   (1 - t)3 + 3t(1-t)2 + 3t2(1 - t) + t3 = 1 
 static inline float bezierat( float a, float b, float c, float d, float t )
 {
