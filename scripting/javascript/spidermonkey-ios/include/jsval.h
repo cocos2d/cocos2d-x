@@ -193,6 +193,11 @@ typedef uint64_t JSValueShiftedTag;
 #define JSVAL_TYPE_TO_TAG(type)      ((JSValueTag)(JSVAL_TAG_MAX_DOUBLE | (type)))
 #define JSVAL_TYPE_TO_SHIFTED_TAG(type) (((uint64_t)JSVAL_TYPE_TO_TAG(type)) << JSVAL_TAG_SHIFT)
 
+#define JSVAL_LOWER_INCL_TAG_OF_OBJ_OR_NULL_SET         JSVAL_TAG_NULL
+#define JSVAL_UPPER_EXCL_TAG_OF_PRIMITIVE_SET           JSVAL_TAG_OBJECT
+#define JSVAL_UPPER_INCL_TAG_OF_NUMBER_SET              JSVAL_TAG_INT32
+#define JSVAL_LOWER_INCL_TAG_OF_GCTHING_SET             JSVAL_TAG_STRING
+
 #define JSVAL_LOWER_INCL_SHIFTED_TAG_OF_OBJ_OR_NULL_SET  JSVAL_SHIFTED_TAG_NULL
 #define JSVAL_UPPER_EXCL_SHIFTED_TAG_OF_PRIMITIVE_SET    JSVAL_SHIFTED_TAG_OBJECT
 #define JSVAL_UPPER_EXCL_SHIFTED_TAG_OF_NUMBER_SET       JSVAL_SHIFTED_TAG_UNDEFINED
@@ -219,6 +224,8 @@ typedef enum JSWhyMagic
     JS_FORWARD_TO_CALL_OBJECT,   /* args object element stored in call object */
     JS_BLOCK_NEEDS_CLONE,        /* value of static block object slot */
     JS_HASH_KEY_EMPTY,           /* see class js::HashableValue */
+    JS_ION_ERROR,                /* error while running Ion code */
+    JS_ION_BAILOUT,              /* status code to signal EnterIon will OSR into Interpret */
     JS_GENERIC_MAGIC             /* for local use */
 } JSWhyMagic;
 
