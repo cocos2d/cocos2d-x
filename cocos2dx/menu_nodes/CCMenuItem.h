@@ -143,7 +143,7 @@ public:
     virtual void setOpacity(GLubyte opacity);
     virtual GLubyte getOpacity();
     virtual void setColor(const ccColor3B& color);
-    virtual ccColor3B getColor();
+    virtual const ccColor3B& getColor();
     
     virtual void setOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
     virtual bool isOpacityModifyRGB(void) { return false;}
@@ -255,7 +255,7 @@ public:
     bool initWithNormalSprite(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite, CCObject* target, SEL_MenuHandler selector);
     // super methods
     virtual void setColor(const ccColor3B& color);
-    virtual ccColor3B getColor();
+    virtual const ccColor3B& getColor();
     virtual void setOpacity(GLubyte opacity);
     virtual GLubyte getOpacity();
     

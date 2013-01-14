@@ -68,7 +68,7 @@ protected:
     CC_SYNTHESIZE_READONLY(CCString*, m_currentTitle, CurrentTitle);
 
     /** The current color used to display the title. */
-    CC_SYNTHESIZE_READONLY(ccColor3B, m_currentTitleColor, CurrentTitleColor);
+    CC_SYNTHESIZE_READONLY_PASS_BY_REF(ccColor3B, m_currentTitleColor, CurrentTitleColor);
 
     /** Adjust the background image. YES by default. If the property is set to NO, the 
     background will use the prefered size of the background image. */

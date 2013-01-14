@@ -618,7 +618,7 @@ void CCScale9Sprite::setColor(const ccColor3B& color3)
     }
 }
 
-ccColor3B CCScale9Sprite::getColor(void)
+const ccColor3B& CCScale9Sprite::getColor(void)
 {
     return m_tColor;
 }
