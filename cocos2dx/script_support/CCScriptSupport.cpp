@@ -32,8 +32,6 @@ void CC_DLL cc_assert_script_compatible(bool cond, const char *msg)
     {
         return;
     }
-    
-    CC_ASSERT(cond);
 }
 
 NS_CC_BEGIN

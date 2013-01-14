@@ -248,7 +248,7 @@ bool CCEGLView::initGL()
 		return false;
 	}
 
-    // Enable point size by default on windows. 
+    // Enable point size by default on windows.
     glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
 
     return true;
@@ -528,7 +528,7 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
     default:
         if (m_wndproc)
         {
-            
+
             m_wndproc(message, wParam, lParam, &bProcessed);
             if (bProcessed) break;
         }
@@ -628,15 +628,17 @@ void CCEGLView::resize(int width, int height)
     const CCSize& frameSize = getFrameSize();
     if (frameSize.width > 0)
     {
+        WCHAR wszBuf[MAX_PATH] = {0};
 #ifdef _DEBUG
         char szBuf[MAX_PATH + 1];
         memset(szBuf, 0, sizeof(szBuf));
         snprintf(szBuf, MAX_PATH, "%s - %0.0fx%0.0f - %0.2f",
                    m_szViewName, frameSize.width, frameSize.height, m_fFrameZoomFactor);
-        WCHAR wszBuf[MAX_PATH] = {0};
         MultiByteToWideChar(CP_UTF8, 0, szBuf, -1, wszBuf, sizeof(wszBuf));
-        SetWindowText(m_hWnd, wszBuf);
+#else
+        MultiByteToWideChar(CP_UTF8, 0, m_szViewName, -1, wszBuf, sizeof(wszBuf));
 #endif
+        SetWindowText(m_hWnd, wszBuf);
     }
 
     AdjustWindowRectEx(&rcClient, GetWindowLong(m_hWnd, GWL_STYLE), FALSE, GetWindowLong(m_hWnd, GWL_EXSTYLE));
