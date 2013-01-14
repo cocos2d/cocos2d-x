@@ -110,9 +110,8 @@ public:
     static CCSprite* create(const char *pszFileName, const CCRect& rect);
     
     /**
-     * Creates a sprite with a exsiting texture contained in CCTexture2D object
-     *
-     * After creation, the rect will be the size of the texture, and thhe offset will be (0,0).
+     * Creates a sprite with an exsiting texture contained in a CCTexture2D object
+     * After creation, the rect will be the size of the texture, and the offset will be (0,0).
      *
      * @param   pTexture    A pointer to a CCTexture2D object.
      * @return  A valid sprite object that is marked as autoreleased.
@@ -124,9 +123,9 @@ public:
      *
      * After creation, the offset will be (0,0).
      *
-     * @param   pTexture    A pointer to an exisiting CCTexture2D object.
+     * @param   pTexture    A pointer to an existing CCTexture2D object.
      *                      You can use a CCTexture2D object for many sprites.
-     * @param   rect        Only the contents inside rect of this texture will be applied for this sprite.
+     * @param   rect        Only the contents inside the rect of this texture will be applied for this sprite.
      * @return  A valid sprite object that is marked as autoreleased.
      */
     static CCSprite* createWithTexture(CCTexture2D *pTexture, const CCRect& rect);
@@ -142,10 +141,10 @@ public:
     /**
      * Creates a sprite with an sprite frame name.
      *
-     * A CCSpriteFrame will be fetched from the CCSpriteFrameCache by name.
+     * A CCSpriteFrame will be fetched from the CCSpriteFrameCache by pszSpriteFrameName param.
      * If the CCSpriteFrame doesn't exist it will raise an exception.
      *
-     * @param   pszSpriteFrameName
+     * @param   pszSpriteFrameName A null terminated string which indicates the sprite frame name.
      * @return  A valid sprite object that is marked as autoreleased.
      */
     static CCSprite* createWithSpriteFrameName(const char *pszSpriteFrameName);
@@ -177,7 +176,7 @@ public:
      *
      * After initialization, the rect used will be the size of the texture, and the offset will be (0,0).
      *
-     * @param   pTexture    A pointer to an exisiting CCTexture2D object.
+     * @param   pTexture    A pointer to an existing CCTexture2D object.
      *                      You can use a CCTexture2D object for many sprites.
      * @return  true if the sprite is initialized properly, false otherwise.
      */
@@ -196,7 +195,7 @@ public:
     virtual bool initWithTexture(CCTexture2D *pTexture, const CCRect& rect);
     
     /**
-     * Initializes an sprite with a texture and a rect in points, optionally rotated.
+     * Initializes a sprite with a texture and a rect in points, optionally rotated.
      *
      * After initialization, the offset will be (0,0).
      * @note    This is the designated initializer.
@@ -217,7 +216,7 @@ public:
     virtual bool initWithSpriteFrame(CCSpriteFrame *pSpriteFrame);
     
     /**
-     * Initializes an sprite with an sprite frame name.
+     * Initializes a sprite with an sprite frame name.
      *
      * A CCSpriteFrame will be fetched from the CCSpriteFrameCache by name.
      * If the CCSpriteFrame doesn't exist it will raise an exception.
@@ -228,7 +227,7 @@ public:
     virtual bool initWithSpriteFrameName(const char *pszSpriteFrameName);
     
     /**
-     * Initializes an sprite with an image filename.
+     * Initializes a sprite with an image filename.
      *
      * This method will find pszFilename from local file system, load its content to CCTexture2D,
      * then use CCTexture2D to create a sprite.
@@ -240,7 +239,7 @@ public:
     virtual bool initWithFile(const char *pszFilename);
     
     /**
-     * Initializes an sprite with an image filename, and a rect.
+     * Initializes a sprite with an image filename, and a rect.
      *
      * This method will find pszFilename from local file system, load its content to CCTexture2D,
      * then use CCTexture2D to create a sprite.
@@ -258,9 +257,25 @@ public:
     /// @{
     /// @name Functions inherited from CCRGBAProtocol
     inline virtual GLubyte getOpacity() { return m_nOpacity; }
+    /**
+     * Changes the opacity.
+     *
+     * @warning If the sprite's texture has premultiplied alpha then, the R, G and B channels will be modified.
+     *
+     * @param   value   Goes from 0 to 255, where 255 means fully opaque and 0 means fully transparent.
+     */
     virtual void setOpacity(GLubyte value);
-    virtual ccColor3B getColor();
+    virtual const ccColor3B& getColor();
     virtual void setColor(const ccColor3B& value);
+    /**
+     * Changes the premultipliedAlphaOpacity property.
+     *
+     * Textures with premultiplied alpha will have this property by default on true.
+     * Otherwise the default value is false.
+     *
+     * @param   bValue  flase then opacity will be applied as: glColor(R,G,B,opacity);
+     *                  true then opacity will be applied as: glColor(opacity, opacity, opacity, opacity);
+     */
     virtual void setOpacityModifyRGB(bool bValue);
     virtual bool isOpacityModifyRGB(void);
     /// @} end of CCRGBAProtocol Inheritance
@@ -303,7 +318,7 @@ public:
     /// @name BatchNode methods
     
     /**
-     * Updates the quad according the the rotation, position, scale values. 
+     * Updates the quad according the rotation, position, scale values. 
      */
     virtual void updateTransform(void);
     

@@ -55,7 +55,7 @@ public:
     /**
      * Returns the opacity.
      *
-     * The opacity which indicates how transparent or opaque this sprite is.
+     * The opacity which indicates how transparent or opaque this node is.
      * 0 indicates fully transparent and 255 is fully opaque.
      *
      * @return  The opacity of sprite, from 0 ~ 255
@@ -65,8 +65,6 @@ public:
     /**
      * Changes the opacity.
      *
-     * @warning If the the sprite's texture has premultiplied alpha then, the R, G and B channels will be modified.
-     *
      * @param   value   Goes from 0 to 255, where 255 means fully opaque and 0 means fully transparent.
      */
     virtual void setOpacity(GLubyte opacity) = 0;
@@ -74,13 +72,12 @@ public:
     // optional
 
     /**
-     * Changes the premultipliedAlphaOpacity property.
+     * Changes the OpacityModifyRGB property. 
+     * If thie property is set to true, then the rendered color will be affected by opacity.
+     * Normally, r = r * opacity/255, g = g * opacity/255, b = b * opacity/255.
      *
-     * Textures with premultiplied alpha will have this property by default on YES.
-     * Otherwise the default value is NO.
-     *
-     * @param   bValue  If set to NO then opacity will be applied as: glColor(R,G,B,opacity);
-     *                  If set to YES then opacity will be applied as: glColor(opacity, opacity, opacity, opacity);
+     * @param   bValue  true then the opacity will be applied as: glColor(R,G,B,opacity);
+     *                  false then the opacity will be applied as: glColor(opacity, opacity, opacity, opacity);
      */
     virtual void setOpacityModifyRGB(bool bValue) = 0;
 
@@ -102,7 +99,7 @@ class CC_DLL CCBlendProtocol
 {
 public:
     /**
-     * Sets the source blending function for the texture.
+     * Sets the source blending function.
      *
      * @param blendFunc A structure with source and destination factor to specify pixel arithmetic, 
      *                  e.g. {GL_ONE, GL_ONE}, {GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA}.
@@ -111,7 +108,7 @@ public:
     virtual void setBlendFunc(ccBlendFunc blendFunc) = 0;
 
     /**
-     * Returns the blending function that is currently being used for the texture.
+     * Returns the blending function that is currently being used.
      * 
      * @return A ccBlendFunc structure with source and destination factor which specified pixel arithmetic.
      */
@@ -119,7 +116,7 @@ public:
 };
 
 /** 
- * CCNode objects that uses a Texture2D to render the images.
+ * CCNode objects that uses a CCTexture2D to render the images.
  * The texture can have a blending function.
  * If the texture has alpha premultiplied the default blending function is:
  *   src=GL_ONE dst= GL_ONE_MINUS_SRC_ALPHA
