@@ -270,7 +270,7 @@ void CCTextFieldTTF::draw()
     setColor(color);
 }
 
-ccColor3B CCTextFieldTTF::getColorSpaceHolder()
+const ccColor3B& CCTextFieldTTF::getColorSpaceHolder()
 {
     return m_ColorSpaceHolder;
 }
