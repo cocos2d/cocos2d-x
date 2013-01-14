@@ -931,7 +931,7 @@ void CCSprite::setOpacity(GLubyte opacity)
     updateColor();
 }
 
-ccColor3B CCSprite::getColor(void)
+const ccColor3B& CCSprite::getColor(void)
 {
     if (m_bOpacityModifyRGB)
     {

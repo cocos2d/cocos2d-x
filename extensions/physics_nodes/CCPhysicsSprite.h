@@ -102,7 +102,7 @@ public:
     
 #if CC_ENABLE_CHIPMUNK_INTEGRATION
     
-    virtual CCPoint getPosition();
+    virtual const CCPoint& getPosition();
     virtual void setPosition(const CCPoint &position);
     virtual float getRotation();
     virtual void setRotation(float fRotation);
@@ -114,7 +114,7 @@ public:
 
 #elif CC_ENABLE_BOX2D_INTEGRATION
     
-    virtual CCPoint getPosition();
+    virtual const CCPoint& getPosition();
     virtual void setPosition(const CCPoint &position);
     virtual float getRotation();
     virtual void setRotation(float fRotation);

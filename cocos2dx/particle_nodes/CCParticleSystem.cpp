@@ -1019,7 +1019,7 @@ void CCParticleSystem::setDuration(float var)
     m_fDuration = var;
 }
 
-CCPoint CCParticleSystem::getSourcePosition()
+const CCPoint& CCParticleSystem::getSourcePosition()
 {
     return m_tSourcePosition;
 }
@@ -1029,7 +1029,7 @@ void CCParticleSystem::setSourcePosition(const CCPoint& var)
     m_tSourcePosition = var;
 }
 
-CCPoint CCParticleSystem::getPosVar()
+const CCPoint& CCParticleSystem::getPosVar()
 {
     return m_tPosVar;
 }
@@ -1119,7 +1119,7 @@ void CCParticleSystem::setEndSizeVar(float var)
     m_fEndSizeVar = var;
 }
 
-ccColor4F CCParticleSystem::getStartColor()
+const ccColor4F& CCParticleSystem::getStartColor()
 {
     return m_tStartColor;
 }
@@ -1129,7 +1129,7 @@ void CCParticleSystem::setStartColor(const ccColor4F& var)
     m_tStartColor = var;
 }
 
-ccColor4F CCParticleSystem::getStartColorVar()
+const ccColor4F& CCParticleSystem::getStartColorVar()
 {
     return m_tStartColorVar;
 }
@@ -1139,7 +1139,7 @@ void CCParticleSystem::setStartColorVar(const ccColor4F& var)
     m_tStartColorVar = var;
 }
 
-ccColor4F CCParticleSystem::getEndColor()
+const ccColor4F& CCParticleSystem::getEndColor()
 {
     return m_tEndColor;
 }
@@ -1149,7 +1149,7 @@ void CCParticleSystem::setEndColor(const ccColor4F& var)
     m_tEndColor = var;
 }
 
-ccColor4F CCParticleSystem::getEndColorVar()
+const ccColor4F& CCParticleSystem::getEndColorVar()
 {
     return m_tEndColorVar;
 }
