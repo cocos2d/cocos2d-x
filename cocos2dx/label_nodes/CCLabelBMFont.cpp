@@ -1069,7 +1069,7 @@ void CCLabelBMFont::setColor(const ccColor3B& var)
     }
 }
 
-ccColor3B CCLabelBMFont::getColor()
+const ccColor3B& CCLabelBMFont::getColor()
 {
     return m_tColor;
 }

@@ -142,7 +142,7 @@ void CCAtlasNode::draw(void)
 
 // CCAtlasNode - RGBA protocol
 
-ccColor3B CCAtlasNode:: getColor()
+const ccColor3B& CCAtlasNode:: getColor()
 {
     if(m_bIsOpacityModifyRGB)
     {

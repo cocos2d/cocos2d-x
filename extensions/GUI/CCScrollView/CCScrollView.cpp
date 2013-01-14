@@ -432,7 +432,7 @@ void CCScrollView::performedAnimatedScroll(float dt)
 }
 
 
-CCSize CCScrollView::getContentSize()
+const CCSize& CCScrollView::getContentSize()
 {
 	return m_pContainer->getContentSize();
 }
