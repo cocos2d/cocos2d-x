@@ -630,7 +630,7 @@ void CCMenu::setColor(const ccColor3B& var)
     }
 }
 
-ccColor3B CCMenu::getColor(void)
+const ccColor3B& CCMenu::getColor(void)
 {
     return m_tColor;
 }

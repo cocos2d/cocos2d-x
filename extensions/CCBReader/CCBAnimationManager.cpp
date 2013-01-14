@@ -177,7 +177,7 @@ const char* CCBAnimationManager::getRunningSequenceName()
     return mRunningSequence->getName();
 }
 
-CCSize CCBAnimationManager::getContainerSize(CCNode *pNode)
+const CCSize& CCBAnimationManager::getContainerSize(CCNode *pNode)
 {
     if (pNode)
     {

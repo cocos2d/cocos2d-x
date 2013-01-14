@@ -11,6 +11,7 @@
 #include "jsapi.h"
 
 #include "gc/Heap.h"
+#include "gc/Root.h"
 #include "js/HashTable.h"
 
 /*
@@ -172,7 +173,7 @@ class EncapsulatedPtr
     operator T*() const { return value; }
 
   protected:
-    void pre() { T::writeBarrierPre(value); }
+    void pre();
 };
 
 template <class T, class Unioned = uintptr_t>
@@ -215,6 +216,36 @@ class HeapPtr : public EncapsulatedPtr<T, Unioned>
     BarrieredSetPair(JSCompartment *comp,
                      HeapPtr<T1> &v1, T1 *val1,
                      HeapPtr<T2> &v2, T2 *val2);
+};
+
+/*
+ * FixedHeapPtr is designed for one very narrow case: replacing immutable raw
+ * pointers to GC-managed things, implicitly converting to a handle type for
+ * ease of use.  Pointers encapsulated by this type must:
+ *
+ *   be immutable (no incremental write barriers),
+ *   never point into the nursery (no generational write barriers), and
+ *   be traced via MarkRuntime (we use fromMarkedLocation).
+ *
+ * In short: you *really* need to know what you're doing before you use this
+ * class!
+ */
+template <class T>
+class FixedHeapPtr
+{
+    T *value;
+
+  public:
+    operator T*() const { return value; }
+    T * operator->() const { return value; }
+
+    operator Handle<T*>() const {
+        return Handle<T*>::fromMarkedLocation(&value);
+    }
+
+    void init(T *ptr) {
+        value = ptr;
+    }
 };
 
 template <class T>

@@ -264,6 +264,28 @@ Swap(T &t, T &u)
     u = Move(tmp);
 }
 
+template <typename T>
+static inline bool
+IsPowerOfTwo(T t)
+{
+    return t && !(t & (t - 1));
+}
+
+template <typename T, typename U>
+static inline U
+ComputeByteAlignment(T bytes, U alignment)
+{
+    JS_ASSERT(IsPowerOfTwo(alignment));
+    return (alignment - (bytes % alignment)) % alignment;
+}
+
+template <typename T, typename U>
+static inline T
+AlignBytes(T bytes, U alignment)
+{
+    return bytes + ComputeByteAlignment(bytes, alignment);
+}
+
 JS_ALWAYS_INLINE static size_t
 UnsignedPtrDiff(const void *bigger, const void *smaller)
 {
@@ -433,8 +455,9 @@ typedef size_t jsbitmap;
 # define JS_SILENCE_UNUSED_VALUE_IN_EXPR(expr)                                \
     JS_BEGIN_MACRO                                                            \
         _Pragma("clang diagnostic push")                                      \
+        /* If these _Pragmas cause warnings for you, try disabling ccache. */ \
         _Pragma("clang diagnostic ignored \"-Wunused-value\"")                \
-        expr;                                                                 \
+        { expr; }                                                             \
         _Pragma("clang diagnostic pop")                                       \
     JS_END_MACRO
 #elif (__GNUC__ >= 5) || (__GNUC__ == 4 && __GNUC_MINOR__ >= 6)

@@ -125,7 +125,7 @@ Developers:
     Carlos Sessa
 	implement the accelerometer module for Android port
 
-    JianHua Chen (Dumganhar)
+    James Chen(dumganhar)
         author of Bada port
 
     Erawppa
@@ -158,6 +158,7 @@ Developers:
 
     johnangel
         OpenGL framebuffer access violation fix.
+        Enable Windows XP support in Visual Studio 2012 Update 1.
 
     Peter Farkas (fape)
         contributes Marmalade port for gles20 branch
@@ -168,6 +169,9 @@ Developers:
 
     Igor Zavorotkin (ivzave)
         Adding lua support for linux platform.
+	
+    Jozef Prídavok (jpridavok)
+	Adding CCEditBox implementation for Mac OSX.
 
 Retired Core Developers:
     WenSheng Yang

@@ -50,7 +50,7 @@ public:
      *
      * @return The ccColor3B contains R,G,B bytes.
      */
-    virtual ccColor3B getColor(void) = 0;
+    virtual const ccColor3B& getColor(void) = 0;
 
     /**
      * Returns the opacity.
