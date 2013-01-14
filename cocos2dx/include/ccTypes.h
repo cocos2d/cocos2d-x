@@ -37,8 +37,8 @@ NS_CC_BEGIN
  */
 typedef struct _ccColor3B
 {
-    GLubyte    r;
-    GLubyte    g;
+    GLubyte r;
+    GLubyte g;
     GLubyte b;
 } ccColor3B;
 
