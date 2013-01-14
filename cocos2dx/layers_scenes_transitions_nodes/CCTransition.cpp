@@ -1444,7 +1444,7 @@ void CCTransitionSplitCols::onEnter()
 
 CCActionInterval* CCTransitionSplitCols:: action()
 {
-    return CCSplitCols::create(3, m_fDuration/2.0f);
+    return CCSplitCols::create(m_fDuration/2.0f, 3);
 }
 
 
@@ -1467,7 +1467,7 @@ CCTransitionSplitRows::~CCTransitionSplitRows()
 
 CCActionInterval* CCTransitionSplitRows::action()
 {
-    return CCSplitRows::create(3, m_fDuration/2.0f);
+    return CCSplitRows::create(m_fDuration/2.0f, 3);
 }
 
 CCTransitionSplitRows* CCTransitionSplitRows::create(float t, CCScene* scene)
