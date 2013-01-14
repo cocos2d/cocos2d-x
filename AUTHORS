@@ -12,6 +12,9 @@ Developers:
     Rolando Abarca
         Javascript Binding and testjs
 
+    Victor K(fnz)
+        fix memory leak of CCTextureCache::addImageAsync() on iOS
+
     tks2shimizu
         add CCFloat, CCDouble and CCBool
 
