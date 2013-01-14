@@ -149,7 +149,7 @@ private:
     void purgeFontDefDictionary();
 };
 
-/** @brief CCLabelBMFont is a subclass of CCSpriteSheet.
+/** @brief CCLabelBMFont is a subclass of CCSpriteBatchNode.
 
 Features:
 - Treats each character like a CCSprite. This means that each individual character can be:
