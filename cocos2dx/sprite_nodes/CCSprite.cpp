@@ -913,11 +913,6 @@ void CCSprite::updateColor(void)
     // do nothing
 }
 
-GLubyte CCSprite::getOpacity(void)
-{
-    return m_nOpacity;
-}
-
 void CCSprite::setOpacity(GLubyte opacity)
 {
     m_nOpacity = opacity;
@@ -1055,7 +1050,7 @@ void CCSprite::setBatchNode(CCSpriteBatchNode *pobSpriteBatchNode)
 
 void CCSprite::updateBlendFunc(void)
 {
-    CCAssert (! m_pobBatchNode, "CCSprite: updateBlendFunc doesn't work when the sprite is rendered using a CCSpriteSheet");
+    CCAssert (! m_pobBatchNode, "CCSprite: updateBlendFunc doesn't work when the sprite is rendered using a CCSpriteBatchNode");
 
     // it is possible to have an untextured sprite
     if (! m_pobTexture || ! m_pobTexture->hasPremultipliedAlpha())
