@@ -142,7 +142,7 @@ public: virtual void set##funName(varType var);
 
 #define CC_PROPERTY_PASS_BY_REF(varType, varName, funName)\
 protected: varType varName;\
-public: virtual varType get##funName(void);\
+public: virtual const varType& get##funName(void);\
 public: virtual void set##funName(const varType& var);
 
 /** CC_SYNTHESIZE_READONLY is used to declare a protected variable.
@@ -179,7 +179,7 @@ public: virtual void set##funName(varType var){ varName = var; }
 
 #define CC_SYNTHESIZE_PASS_BY_REF(varType, varName, funName)\
 protected: varType varName;\
-public: virtual varType get##funName(void) const { return varName; }\
+public: virtual const varType& get##funName(void) const { return varName; }\
 public: virtual void set##funName(const varType& var){ varName = var; }
 
 #define CC_SYNTHESIZE_RETAIN(varType, varName, funName)    \
