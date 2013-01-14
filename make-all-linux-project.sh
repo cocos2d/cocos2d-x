@@ -28,6 +28,7 @@ if ! test -d $DIR_GLEW170/glew-1.7.0/; then
 	DEPENDS+=' libzip-dev'
 	DEPENDS+=' libcurl4-gnutls-dev'
 	DEPENDS+=' libfontconfig1-dev'
+	DEPENDS+=' libsqlite3-dev'
 	for i in $DEPENDS; do
 		echo -e $TXTCOLOR_GREEN"sudo apt-get install $i, please enter your password:"$TXTCOLOR_DEFAULT
 		sudo apt-get install $i
