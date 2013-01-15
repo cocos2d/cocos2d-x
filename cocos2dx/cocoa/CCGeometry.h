@@ -35,7 +35,7 @@ NS_CC_BEGIN
  * @{
  */
 
-struct CCPoint
+class CC_DLL CCPoint
 {
 public:
     float x;
@@ -50,7 +50,7 @@ public:
     bool equals(const CCPoint& target) const;
 };
 
-struct CCSize
+class CC_DLL CCSize
 {
 public:
     float width;
@@ -65,7 +65,7 @@ public:
     bool equals(const CCSize& target) const;
 };
 
-struct CCRect
+class CC_DLL CCRect
 {
 public:
     CCPoint origin;
