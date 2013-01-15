@@ -78,11 +78,12 @@ private:
      */
     CCDictElement(intptr_t iKey, CCObject* pObject);
     
+public:
     /**
      *  The destructor of CCDictElement.
      */
     ~CCDictElement();
-public:
+
     /**
      * Get the string key of this element.
      * @note    This method assumes you know the key type in the element. 
