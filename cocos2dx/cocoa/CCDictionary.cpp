@@ -65,23 +65,6 @@ CCDictElement::~CCDictElement()
 
 }
 
-inline const char* CCDictElement::getStrKey() const
-{
-    CCAssert(m_szKey[0] != '\0', "Should not call this function for integer dictionary");
-    return m_szKey;
-}
-
-inline intptr_t CCDictElement::getIntKey() const
-{
-    CCAssert(m_szKey[0] == '\0', "Should not call this function for string dictionary");
-    return m_iKey;
-}
-
-inline CCObject* CCDictElement::getObject() const
-{
-    return m_pObject;
-}
-
 // -----------------------------------------------------------------------
 // CCDictionary
 
