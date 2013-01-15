@@ -24,6 +24,9 @@
  ****************************************************************************/
 
 #include "CCEditBoxImplMac.h"
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+
 #include "CCEditBox.h"
 #import "EAGLView.h"
 
@@ -351,4 +354,7 @@ void CCEditBoxImplMac::closeKeyboard()
 }
 
 NS_CC_EXT_END
+
+#endif // #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+
 

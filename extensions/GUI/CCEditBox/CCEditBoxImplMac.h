@@ -26,10 +26,13 @@
 #ifndef __CCEditBoxIMPLMAC_H__
 #define __CCEditBoxIMPLMAC_H__
 
+#include "cocos2d.h"
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+
 #import <Foundation/Foundation.h>
 #import <AppKit/AppKit.h>
 
-#include "cocos2d.h"
 #include "ExtensionMacros.h"
 #include "CCEditBoxImpl.h"
 
@@ -99,6 +102,8 @@ private:
 
 
 NS_CC_EXT_END
+
+#endif // #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 
 #endif /* __CCEditBoxIMPLMAC_H__ */
 
