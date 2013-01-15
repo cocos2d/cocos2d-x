@@ -84,6 +84,8 @@ public:
      */
     ~CCDictElement();
 
+    // Inline functions need to be implemented in header file on Android.
+    
     /**
      * Get the string key of this element.
      * @note    This method assumes you know the key type in the element. 
@@ -91,7 +93,11 @@ public:
      *
      * @return  The string key of this element.
      */
-    inline const char* getStrKey() const;
+    inline const char* getStrKey() const
+    {
+        CCAssert(m_szKey[0] != '\0', "Should not call this function for integer dictionary");
+        return m_szKey;
+    }
 
     /**
      * Get the integer key of this element.
@@ -100,14 +106,18 @@ public:
      *
      * @return  The integer key of this element.
      */
-    inline intptr_t getIntKey() const;
+    inline intptr_t getIntKey() const
+    {
+        CCAssert(m_szKey[0] == '\0', "Should not call this function for string dictionary");
+        return m_iKey;
+    }
     
     /**
      * Get the object of this element.
      *
      * @return  The object of this element.
      */
-    inline CCObject* getObject() const;
+    inline CCObject* getObject() const { return m_pObject; }
 
 private:
     // The max length of string key.
@@ -117,9 +127,9 @@ private:
     char      m_szKey[MAX_KEY_LEN];     // hash key of string type
     intptr_t  m_iKey;       // hash key of integer type
     CCObject* m_pObject;    // hash value
-    friend class CCDictionary; // declare CCDictionary as friend class
 public:
     UT_hash_handle hh;      // makes this class hashable
+    friend class CCDictionary; // declare CCDictionary as friend class
 };
 
 /** The macro for traversing dictionary
@@ -286,7 +296,7 @@ public:
     void removeObjectForKey(int key);
     
     /**
-     *  Remove an object by an array.
+     *  Remove objects by an array of keys.
      *
      *  @param pKeyArray  The array contains keys to be removed.
      *  @see removeObjectForKey(const std::string&), removeObjectForKey(int),
@@ -336,7 +346,7 @@ public:
     static CCDictionary* create();
 
     /**
-     *  Create a dictionary with an exist dictionary.
+     *  Create a dictionary with an existing dictionary.
      *
      *  @param srcDict The exist dictionary.
      *  @return A dictionary which is an autorelease object.
@@ -356,7 +366,7 @@ public:
      *  Create a dictionary with a plist file.
      *  
      *  @note the return object isn't an autorelease object.
-     *        This can make sure not using autorelease pool in different thread.
+     *        This can make sure not using autorelease pool in a new thread.
      *        Therefore, you need to manage the lifecycle of the return object.
      *        It means that when you don't need it, CC_SAFE_RELEASE needs to be invoked.
      *
@@ -367,7 +377,7 @@ public:
 
 private:
     /** 
-     *  For internal use, invoked by setObject.
+     *  For internal usage, invoked by setObject.
      */
     void setObjectUnSafe(CCObject* pObject, const std::string& key);
     void setObjectUnSafe(CCObject* pObject, const int key);
@@ -376,12 +386,12 @@ public:
     /**
      *  All the elements in dictionary.
      * 
-     *  @note For internal use, we need to make this member variable as public since it's used in UT_HASH.
+     *  @note For internal usage, we need to declare this member variable as public since it's used in UT_HASH.
      */
     CCDictElement* m_pElements;
 private:
     
-    /** The support type of dictionary, it's be confirmed when once setObject is invoked. */
+    /** The support type of dictionary, it's confirmed when setObject is invoked. */
     enum CCDictType
     {
         kCCDictUnknown = 0,
@@ -390,7 +400,7 @@ private:
     };
     
     /** 
-     *  The type of dictionary, it's assigned with kCCDictUnknown by default.
+     *  The type of dictionary, it's assigned to kCCDictUnknown by default.
      */
     CCDictType m_eDictType;
 };
