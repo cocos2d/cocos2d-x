@@ -66,6 +66,7 @@ public:
     CCMenu()
         : m_cOpacity(0)
         , m_pSelectedItem(NULL)
+        , m_handlerPriority(kCCMenuHandlerPriority)
     {}
     virtual ~CCMenu(){}
 
@@ -119,7 +120,9 @@ public:
 
     /** set event handler priority. By default it is: kCCMenuTouchPriority */
     void setHandlerPriority(int newPriority);
-
+    /** get event handler priority. By default it is: kCCMenuTouchPriority */
+    int getHandlerPriority() { return m_handlerPriority; }
+    
     //super methods
     virtual void addChild(CCNode * child);
     virtual void addChild(CCNode * child, int zOrder);
@@ -150,6 +153,7 @@ protected:
     CCMenuItem* itemForTouch(CCTouch * touch);
     tCCMenuState m_eState;
     CCMenuItem *m_pSelectedItem;
+    int m_handlerPriority;
 };
 
 // end of GUI group
