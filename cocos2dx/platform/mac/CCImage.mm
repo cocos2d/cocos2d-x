@@ -426,6 +426,9 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
 			dimensions.height = realDimensions.height;
 		}
 
+        dimensions.width = (int)(dimensions.width / 2) * 2 + 2;
+        dimensions.height = (int)(dimensions.height / 2) * 2 + 2;
+
 		NSUInteger POTWide = (NSUInteger)dimensions.width;
 		NSUInteger POTHigh = (NSUInteger)(MAX(dimensions.height, realDimensions.height));
 		unsigned char*			data;
