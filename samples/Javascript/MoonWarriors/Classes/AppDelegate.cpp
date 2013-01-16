@@ -9,10 +9,6 @@
 #include "js_bindings_ccbreader.h"
 #include "js_bindings_system_registration.h"
 
-#if JSB_ENABLE_DEBUGGER
-#include "js_bindings_dbg.h"
-#endif
-
 USING_NS_CC;
 using namespace CocosDenshion;
 
