@@ -18,6 +18,7 @@
 #include "cocos2d.h"
 #include "LocalStorage.h"
 #include "cocos2d_specifics.hpp"
+#include "js_bindings_config.h"
 // for debug socket
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #include <io.h>
@@ -898,29 +899,69 @@ int ScriptingCore::executeCustomTouchEvent(int eventType,
 }
 
 #pragma mark - Conversion Routines
+JSBool jsval_to_int32( JSContext *cx, jsval vp, int32_t *outval )
+{
+	JSBool ok = JS_TRUE;
+	double dp;
+	ok &= JS_ValueToNumber(cx, vp, &dp);
+    JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+    ok &= !isnan(dp);
+    JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
 
-long long jsval_to_long_long(JSContext *cx, jsval v) {
+    *outval = (int32_t)dp;
+    
+	return ok;
+}
+
+JSBool jsval_to_uint32( JSContext *cx, jsval vp, uint32_t *outval )
+{
+    JSBool ok = JS_TRUE;
+	double dp;
+	ok &= JS_ValueToNumber(cx, vp, &dp);
+    JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+    ok &= !isnan(dp);
+    JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+    
+    *outval = (uint32_t)dp;
+    
+	return ok;
+}
+
+JSBool jsval_to_uint16( JSContext *cx, jsval vp, uint16_t *outval )
+{
+    JSBool ok = JS_TRUE;
+	double dp;
+	ok &= JS_ValueToNumber(cx, vp, &dp);
+    JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+    ok &= !isnan(dp);
+    JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+    
+    *outval = (uint16_t)dp;
+    
+	return ok;
+}
+
+JSBool jsval_to_long_long(JSContext *cx, jsval v, long long* ret) {
+    JSBool ok = JS_TRUE;
     JSObject *tmp = JSVAL_TO_OBJECT(v);
-    if (JS_IsTypedArrayObject(tmp, cx) && JS_GetTypedArrayByteLength(tmp, cx) == 8) {
-        uint32_t *data = (uint32_t *)JS_GetUint32ArrayData(tmp, cx);
-        long long r = (long long)(*data);
-        return r;
-    }
-    return 0;
+    ok &= JS_IsTypedArrayObject(tmp, cx) && JS_GetTypedArrayByteLength(tmp, cx) == 8;
+    JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+
+    uint32_t *data = (uint32_t *)JS_GetUint32ArrayData(tmp, cx);
+    *ret = (long long)(*data);
+    return ok;
 }
 
-std::string jsval_to_std_string(JSContext *cx, jsval v) {
+JSBool jsval_to_std_string(JSContext *cx, jsval v, std::string* ret) {
     JSString *tmp = JS_ValueToString(cx, v);
-	JSStringWrapper ret(tmp);
-    return ret.get();
+    JSB_PRECONDITION2(tmp, cx, JS_FALSE, "Error processing arguments");
+    
+	JSStringWrapper str(tmp);
+    *ret = str.get();
+    return JS_TRUE;
 }
 
-const char* jsval_to_c_string(JSContext *cx, jsval v) {
-    JSString *tmp = JS_ValueToString(cx, v);
-    return JS_EncodeString(cx, tmp);
-}
-
-CCPoint jsval_to_ccpoint(JSContext *cx, jsval v) {
+JSBool jsval_to_ccpoint(JSContext *cx, jsval v, CCPoint* ret) {
     JSObject *tmp;
     jsval jsx, jsy;
     double x, y;
@@ -929,11 +970,15 @@ CCPoint jsval_to_ccpoint(JSContext *cx, jsval v) {
         JS_GetProperty(cx, tmp, "y", &jsy) &&
         JS_ValueToNumber(cx, jsx, &x) &&
         JS_ValueToNumber(cx, jsy, &y);
-    assert(ok == JS_TRUE);
-    return cocos2d::CCPoint(x, y);
+
+    JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+
+    ret->x = (float)x;
+    ret->y = (float)y;
+    return JS_TRUE;
 }
 
-CCAcceleration jsval_to_ccacceleration(JSContext *cx, jsval v) {
+JSBool jsval_to_ccacceleration(JSContext* cx,jsval v, CCAcceleration* ret) {
     JSObject *tmp;
     jsval jsx, jsy, jsz, jstimestamp;
     double x, y, timestamp, z;
@@ -946,21 +991,26 @@ CCAcceleration jsval_to_ccacceleration(JSContext *cx, jsval v) {
     JS_ValueToNumber(cx, jsy, &y) &&
     JS_ValueToNumber(cx, jsz, &z) &&
     JS_ValueToNumber(cx, jstimestamp, &timestamp);
-    assert(ok == JS_TRUE);
-    CCAcceleration ret = {x, y, z, timestamp};
-    return ret;
+    
+    JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+    
+    ret->x = x;
+    ret->y = y;
+    ret->z = z;
+    ret->timestamp = timestamp;
+    return JS_TRUE;
 }
 
-CCArray* jsvals_variadic_to_ccarray( JSContext *cx, jsval *vp, int argc)
+JSBool jsvals_variadic_to_ccarray( JSContext *cx, jsval *vp, int argc, CCArray** ret)
 {
-    JSBool ok = JS_FALSE;
+    JSBool ok = JS_TRUE;
     CCArray* pArray = CCArray::create();
     for( int i=0; i < argc; i++ )
     {
         double num = 0.0;
         // optimization: JS_ValueToNumber is expensive. And can convert an string like "12" to a number
         if( JSVAL_IS_NUMBER(*vp)) {
-            ok = JS_ValueToNumber(cx, *vp, &num );
+            ok &= JS_ValueToNumber(cx, *vp, &num );
             if (!ok) {
                 break;
             }
@@ -983,10 +1033,12 @@ CCArray* jsvals_variadic_to_ccarray( JSContext *cx, jsval *vp, int argc)
         // next
         vp++;
     }
-    return pArray;
+    *ret = pArray;
+    JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+    return ok;
 }
 
-CCRect jsval_to_ccrect(JSContext *cx, jsval v) {
+JSBool jsval_to_ccrect(JSContext *cx, jsval v, CCRect* ret) {
     JSObject *tmp;
     jsval jsx, jsy, jswidth, jsheight;
     double x, y, width, height;
@@ -999,11 +1051,17 @@ CCRect jsval_to_ccrect(JSContext *cx, jsval v) {
         JS_ValueToNumber(cx, jsy, &y) &&
         JS_ValueToNumber(cx, jswidth, &width) &&
         JS_ValueToNumber(cx, jsheight, &height);
-    assert(ok == JS_TRUE);
-    return cocos2d::CCRect(x, y, width, height);
+
+    JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+    
+    ret->origin.x = x;
+    ret->origin.y = y;
+    ret->size.width = width;
+    ret->size.height = height;
+    return JS_TRUE;
 }
 
-CCSize jsval_to_ccsize(JSContext *cx, jsval v) {
+JSBool jsval_to_ccsize(JSContext *cx, jsval v, CCSize* ret) {
     JSObject *tmp;
     jsval jsw, jsh;
     double w, h;
@@ -1012,11 +1070,14 @@ CCSize jsval_to_ccsize(JSContext *cx, jsval v) {
         JS_GetProperty(cx, tmp, "height", &jsh) &&
         JS_ValueToNumber(cx, jsw, &w) &&
         JS_ValueToNumber(cx, jsh, &h);
-    assert(ok == JS_TRUE);
-    return cocos2d::CCSize(w, h);
+    
+    JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+    ret->width = w;
+    ret->height = h;
+    return JS_TRUE;
 }
 
-ccColor4B jsval_to_cccolor4b(JSContext *cx, jsval v) {
+JSBool jsval_to_cccolor4b(JSContext *cx, jsval v, ccColor4B* ret) {
     JSObject *tmp;
     jsval jsr, jsg, jsb, jsa;
     double r, g, b, a;
@@ -1029,11 +1090,17 @@ ccColor4B jsval_to_cccolor4b(JSContext *cx, jsval v) {
         JS_ValueToNumber(cx, jsg, &g) &&
         JS_ValueToNumber(cx, jsb, &b) &&
         JS_ValueToNumber(cx, jsa, &a);
-    assert(ok == JS_TRUE);
-    return cocos2d::ccc4(r, g, b, a);
+    
+    JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+
+    ret->r = r;
+    ret->g = g;
+    ret->b = b;
+    ret->a = a;
+    return JS_TRUE;
 }
 
-ccColor4F jsval_to_cccolor4f(JSContext *cx, jsval v) {
+JSBool jsval_to_cccolor4f(JSContext *cx, jsval v, ccColor4F* ret) {
     JSObject *tmp;
     jsval jsr, jsg, jsb, jsa;
     double r, g, b, a;
@@ -1046,11 +1113,16 @@ ccColor4F jsval_to_cccolor4f(JSContext *cx, jsval v) {
         JS_ValueToNumber(cx, jsg, &g) &&
         JS_ValueToNumber(cx, jsb, &b) &&
         JS_ValueToNumber(cx, jsa, &a);
-    assert(ok == JS_TRUE);
-    return cocos2d::ccc4f(r, g, b, a);
+    
+    JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+    ret->r = r;
+    ret->g = g;
+    ret->b = b;
+    ret->a = a;
+    return JS_TRUE;
 }
 
-ccColor3B jsval_to_cccolor3b(JSContext *cx, jsval v) {
+JSBool jsval_to_cccolor3b(JSContext *cx, jsval v, ccColor3B* ret) {
     JSObject *tmp;
     jsval jsr, jsg, jsb;
     double r, g, b;
@@ -1061,15 +1133,21 @@ ccColor3B jsval_to_cccolor3b(JSContext *cx, jsval v) {
         JS_ValueToNumber(cx, jsr, &r) &&
         JS_ValueToNumber(cx, jsg, &g) &&
         JS_ValueToNumber(cx, jsb, &b);
-    assert(ok == JS_TRUE);
-    return cocos2d::ccc3(r, g, b);
+    
+    JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+    
+    ret->r = r;
+    ret->g = g;
+    ret->b = b;
+    return JS_TRUE;
 }
 
 JSBool jsval_to_ccarray_of_CCPoint(JSContext* cx, jsval v, CCPoint **points, int *numPoints) {
     // Parsing sequence
     JSObject *jsobj;
     JSBool ok = JS_ValueToObject( cx, v, &jsobj );
-    if(!jsobj || !JS_IsArrayObject( cx, jsobj)) return JS_FALSE;
+    JSB_PRECONDITION2( ok, cx, JS_FALSE, "Error converting value to object");
+	JSB_PRECONDITION2( jsobj && JS_IsArrayObject( cx, jsobj), cx, JS_FALSE, "Object must be an array");
 
     uint32_t len;
     JS_GetArrayLength(cx, jsobj, &len);
@@ -1080,7 +1158,8 @@ JSBool jsval_to_ccarray_of_CCPoint(JSContext* cx, jsval v, CCPoint **points, int
         jsval valarg;
         JS_GetElement(cx, jsobj, i, &valarg);
 
-        array[i] = jsval_to_ccpoint(cx, valarg);
+        ok = jsval_to_ccpoint(cx, valarg, &array[i]);
+        JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
     }
 
     *numPoints = len;
@@ -1090,26 +1169,28 @@ JSBool jsval_to_ccarray_of_CCPoint(JSContext* cx, jsval v, CCPoint **points, int
 }
 
 
-CCArray* jsval_to_ccarray(JSContext* cx, jsval v) {
-    JSObject *arr;
-    if (JS_ValueToObject(cx, v, &arr) && JS_IsArrayObject(cx, arr)) {
-        uint32_t len = 0;
-        JS_GetArrayLength(cx, arr, &len);
-        CCArray* ret = CCArray::createWithCapacity(len);
-        for (uint32_t i=0; i < len; i++) {
-            jsval elt;
-            JSObject *elto;
-            if (JS_GetElement(cx, arr, i, &elt) && JS_ValueToObject(cx, elt, &elto)) {
-                js_proxy_t *proxy;
-                JS_GET_NATIVE_PROXY(proxy, elto);
-                if (proxy) {
-                    ret->addObject((CCObject *)proxy->ptr);
-                }
-            }
+JSBool jsval_to_ccarray(JSContext* cx, jsval v, CCArray** ret) {
+    JSObject *jsobj;
+    JSBool ok = JS_ValueToObject( cx, v, &jsobj );
+    JSB_PRECONDITION2( ok, cx, JS_FALSE, "Error converting value to object");
+	JSB_PRECONDITION2( jsobj && JS_IsArrayObject( cx, jsobj),  cx, JS_FALSE, "Object must be an array");
+
+    uint32_t len = 0;
+    JS_GetArrayLength(cx, jsobj, &len);
+    CCArray* arr = CCArray::createWithCapacity(len);
+    for (uint32_t i=0; i < len; i++) {
+        jsval elt;
+        JSObject *elto;
+        if (JS_GetElement(cx, jsobj, i, &elt) && JS_ValueToObject(cx, elt, &elto)) {
+            js_proxy_t *proxy;
+            JS_GET_NATIVE_PROXY(proxy, elto);
+            JSB_PRECONDITION2( proxy, cx, JS_FALSE, "Error getting proxy.");
+            
+            arr->addObject((CCObject *)proxy->ptr);
         }
-        return ret;
     }
-    return NULL;
+    *ret = arr;
+    return JS_TRUE;
 }
 
 
@@ -1120,7 +1201,6 @@ jsval ccarray_to_jsval(JSContext* cx, CCArray *arr) {
     for(unsigned int i = 0; i < arr->count(); ++i) {
         jsval arrElement;
         CCObject *obj = arr->objectAtIndex(i);
-        const char *type = typeid(*obj).name();
         
         CCString *testString = dynamic_cast<cocos2d::CCString *>(obj);
         CCDictionary* testDict = NULL;
@@ -1179,11 +1259,11 @@ jsval ccdictionary_to_jsval(JSContext* cx, CCDictionary* dict)
     return OBJECT_TO_JSVAL(jsRet);
 }
 
-CCDictionary* jsval_to_ccdictionary(JSContext* cx, jsval v) {
+JSBool jsval_to_ccdictionary(JSContext* cx, jsval v, CCDictionary** ret) {
     
     JSObject *itEl = JS_NewPropertyIterator(cx, JSVAL_TO_OBJECT(v));
-    CCDictionary *dict = NULL;
-    
+    JSBool ok = JS_TRUE;
+    CCDictionary* dict = NULL;
     jsid propId;
     do {
         
@@ -1200,7 +1280,8 @@ CCDictionary* jsval_to_ccdictionary(JSContext* cx, jsval v) {
         std::string keyStr;
         if(JSID_IS_STRING(propId)) {
             JS_IdToValue(cx, propId, &key);
-            keyStr = jsval_to_std_string(cx, key);
+            ok &= jsval_to_std_string(cx, key, &keyStr);
+            JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
         }
         
         if(JSVAL_IS_NULL(key)) continue;
@@ -1211,8 +1292,19 @@ CCDictionary* jsval_to_ccdictionary(JSContext* cx, jsval v) {
         dict->setObject(cobj, keyStr);
         
     } while(JS_NextProperty(cx, itEl, &propId));
-    
-    return dict;
+    *ret = dict;
+    return JS_TRUE;
+}
+
+// From native type to jsval
+jsval int32_to_jsval( JSContext *cx, int32_t number )
+{
+	return INT_TO_JSVAL(number);
+}
+
+jsval uint32_to_jsval( JSContext *cx, uint32_t number )
+{
+	return UINT_TO_JSVAL(number);
 }
 
 jsval long_long_to_jsval(JSContext* cx, long long v) {

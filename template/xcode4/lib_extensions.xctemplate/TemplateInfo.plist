@@ -1056,6 +1056,32 @@
 			<key>Path</key>
 			<string>libs/extensions/GUI/CCEditBox/CCEditBoxImplIOS.mm</string>
 		</dict>
+		<key>libs/extensions/GUI/CCEditBox/CCEditBoxImplMac.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>GUI</string>
+				<string>CCEditBox</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/GUI/CCEditBox/CCEditBoxImplMac.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/extensions/GUI/CCEditBox/CCEditBoxImplMac.mm</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>GUI</string>
+				<string>CCEditBox</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/GUI/CCEditBox/CCEditBoxImplMac.mm</string>
+		</dict>
 		<key>libs/extensions/GUI/CCScrollView/CCScrollView.cpp</key>
 		<dict>
 			<key>Group</key>
@@ -1402,6 +1428,8 @@
 		<string>libs/extensions/GUI/CCEditBox/CCEditBoxImpl.h</string>
 		<string>libs/extensions/GUI/CCEditBox/CCEditBoxImplIOS.h</string>
 		<string>libs/extensions/GUI/CCEditBox/CCEditBoxImplIOS.mm</string>
+		<string>libs/extensions/GUI/CCEditBox/CCEditBoxImplMac.h</string>
+		<string>libs/extensions/GUI/CCEditBox/CCEditBoxImplMac.mm</string>
 		<string>libs/extensions/GUI/CCScrollView/CCScrollView.cpp</string>
 		<string>libs/extensions/GUI/CCScrollView/CCScrollView.h</string>
 		<string>libs/extensions/GUI/CCScrollView/CCSorting.cpp</string>

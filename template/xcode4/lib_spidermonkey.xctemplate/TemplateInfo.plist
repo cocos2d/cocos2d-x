@@ -246,32 +246,6 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>libs/javascript/spidermonkey-ios/include/jsatom.h</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>javascript</string>
-				<string>spidermonkey-ios</string>
-				<string>include</string>
-			</array>
-			<key>Path</key>
-			<string>libs/javascript/spidermonkey-ios/include/jsatom.h</string>
-			<key>TargetIndices</key>
-			<array/>
-		</dict>
-		<key>libs/javascript/spidermonkey-ios/include/jsatom.tbl</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>javascript</string>
-				<string>spidermonkey-ios</string>
-				<string>include</string>
-			</array>
-			<key>Path</key>
-			<string>libs/javascript/spidermonkey-ios/include/jsatom.tbl</string>
-		</dict>
 		<key>libs/javascript/spidermonkey-ios/include/jsclass.h</key>
 		<dict>
 			<key>Group</key>
@@ -426,7 +400,7 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>libs/javascript/spidermonkey-ios/include/jsproto.tbl</key>
+		<key>libs/javascript/spidermonkey-ios/include/jsprototypes.h</key>
 		<dict>
 			<key>Group</key>
 			<array>
@@ -436,7 +410,9 @@
 				<string>include</string>
 			</array>
 			<key>Path</key>
-			<string>libs/javascript/spidermonkey-ios/include/jsproto.tbl</string>
+			<string>libs/javascript/spidermonkey-ios/include/jsprototypes.h</string>
+			<key>TargetIndices</key>
+			<array/>
 		</dict>
 		<key>libs/javascript/spidermonkey-ios/include/jsproxy.h</key>
 		<dict>
@@ -926,8 +902,6 @@
 		<string>libs/javascript/spidermonkey-ios/include/js.msg</string>
 		<string>libs/javascript/spidermonkey-ios/include/jsalloc.h</string>
 		<string>libs/javascript/spidermonkey-ios/include/jsapi.h</string>
-		<string>libs/javascript/spidermonkey-ios/include/jsatom.h</string>
-		<string>libs/javascript/spidermonkey-ios/include/jsatom.tbl</string>
 		<string>libs/javascript/spidermonkey-ios/include/jsclass.h</string>
 		<string>libs/javascript/spidermonkey-ios/include/jsclist.h</string>
 		<string>libs/javascript/spidermonkey-ios/include/jscpucfg.h</string>
@@ -939,7 +913,7 @@
 		<string>libs/javascript/spidermonkey-ios/include/json.h</string>
 		<string>libs/javascript/spidermonkey-ios/include/jsperf.h</string>
 		<string>libs/javascript/spidermonkey-ios/include/jsprf.h</string>
-		<string>libs/javascript/spidermonkey-ios/include/jsproto.tbl</string>
+		<string>libs/javascript/spidermonkey-ios/include/jsprototypes.h</string>
 		<string>libs/javascript/spidermonkey-ios/include/jsproxy.h</string>
 		<string>libs/javascript/spidermonkey-ios/include/jsprvtd.h</string>
 		<string>libs/javascript/spidermonkey-ios/include/jspubtd.h</string>

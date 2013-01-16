@@ -111,14 +111,14 @@ static CCImage::EImageFormat computeImageFormatType(string& filename)
 
 static void* loadImage(void* data)
 {
-    // create autorelease pool for iOS
-    CCThread thread;
-    thread.createAutoreleasePool();
-
     AsyncStruct *pAsyncStruct = NULL;
 
     while (true)
     {
+        // create autorelease pool for iOS
+        CCThread thread;
+        thread.createAutoreleasePool();
+        
         // wait for rendering thread to ask for loading if s_pAsyncStructQueue is empty
         int semWaitRet = sem_wait(s_pSem);
         if( semWaitRet < 0 )

@@ -17,13 +17,13 @@ CCApplication * CCApplication::sm_pSharedApplication = 0;
 
 CCApplication::CCApplication()
 {
-    CC_ASSERT(! sm_pSharedApplication);
+    CCAssert(! sm_pSharedApplication, "");
     sm_pSharedApplication = this;
 }
 
 CCApplication::~CCApplication()
 {
-    CC_ASSERT(this == sm_pSharedApplication);
+    CCAssert(this == sm_pSharedApplication, "");
     sm_pSharedApplication = NULL;
 }
 
@@ -71,7 +71,7 @@ CCApplication::Orientation CCApplication::setOrientation(Orientation orientation
 //////////////////////////////////////////////////////////////////////////
 CCApplication* CCApplication::sharedApplication()
 {
-    CC_ASSERT(sm_pSharedApplication);
+    CCAssert(sm_pSharedApplication, "");
     return sm_pSharedApplication;
 }
 

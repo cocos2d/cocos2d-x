@@ -117,7 +117,7 @@ bool CCAtlasNode::initWithTileFile(const char *tile, unsigned int tileWidth, uns
 
 void CCAtlasNode::calculateMaxItems()
 {
-    CCSize s = m_pTextureAtlas->getTexture()->getContentSize();
+    const CCSize& s = m_pTextureAtlas->getTexture()->getContentSize();
     m_uItemsPerColumn = (int)(s.height / m_uItemHeight);
     m_uItemsPerRow = (int)(s.width / m_uItemWidth);
 }
@@ -142,7 +142,7 @@ void CCAtlasNode::draw(void)
 
 // CCAtlasNode - RGBA protocol
 
-ccColor3B CCAtlasNode:: getColor()
+const ccColor3B& CCAtlasNode:: getColor()
 {
     if(m_bIsOpacityModifyRGB)
     {
