@@ -329,6 +329,7 @@ ScriptingCore::ScriptingCore()
     // set utf8 strings internally (we don't need utf16)
     JS_SetCStringsAreUTF8();
     this->addRegisterCallback(registerDefaultClasses);
+	this->runLoop = new SimpleRunLoop();
 }
 
 void ScriptingCore::string_report(jsval val) {
@@ -1410,6 +1411,17 @@ jsval cccolor3b_to_jsval(JSContext* cx, const ccColor3B& v) {
 
 #pragma mark - Debug
 
+void SimpleRunLoop::update(float dt) {
+	pthread_mutex_lock(&g_qMutex);
+	while (queue.size() > 0) {
+		vector<string>::iterator first = queue.begin();
+		string str = *first;
+		ScriptingCore::getInstance()->debugProcessInput(str);
+		queue.erase(first);
+	}
+	pthread_mutex_unlock(&g_qMutex);
+}
+
 void ScriptingCore::debugProcessInput(string str) {
 	JSString* jsstr = JS_NewStringCopyZ(cx_, str.c_str());
 	jsval argv[3] = {
@@ -1447,6 +1459,9 @@ void ScriptingCore::enableDebugger() {
 		JS_DefineFunction(cx_, global_, "startDebugger", JSBDebug_StartDebugger, 3, JSPROP_READONLY | JSPROP_PERMANENT);
 		// start bg thread
 		pthread_create(&debugThread, NULL, serverEntryPoint, NULL);
+		
+		CCScheduler* scheduler = CCDirector::sharedDirector()->getScheduler();
+		scheduler->scheduleUpdateForTarget(this->runLoop, 0, false);
 	}
 }
 
