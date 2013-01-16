@@ -147,6 +147,8 @@
 		1A82F5E7169AC86100C4B13A /* LocalStorage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A82F5E4169AC86100C4B13A /* LocalStorage.cpp */; };
 		1A82F5E8169AC86100C4B13A /* LocalStorageAndroid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A82F5E6169AC86100C4B13A /* LocalStorageAndroid.cpp */; };
 		1A82F5EA169AC8DD00C4B13A /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A82F5E9169AC8DD00C4B13A /* libsqlite3.dylib */; };
+		A9706D8416A0C1FA0090A01D /* main.debug.js in Sources */ = {isa = PBXBuildFile; fileRef = A9706D8316A0C1FA0090A01D /* main.debug.js */; };
+		A9706D8516A0C3830090A01D /* main.debug.js in Resources */ = {isa = PBXBuildFile; fileRef = A9706D8316A0C1FA0090A01D /* main.debug.js */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -411,6 +413,7 @@
 		1A82F5E5169AC86100C4B13A /* LocalStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalStorage.h; sourceTree = "<group>"; };
 		1A82F5E6169AC86100C4B13A /* LocalStorageAndroid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LocalStorageAndroid.cpp; sourceTree = "<group>"; };
 		1A82F5E9169AC8DD00C4B13A /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		A9706D8316A0C1FA0090A01D /* main.debug.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = main.debug.js; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -879,6 +882,7 @@
 		15A3D2A61682EE81002FB0C5 /* js */ = {
 			isa = PBXGroup;
 			children = (
+				A9706D8316A0C1FA0090A01D /* main.debug.js */,
 				1A177EB01698261C00C9AC27 /* jsb_chipmunk.js */,
 				1A177EB11698261C00C9AC27 /* jsb_cocos2d.js */,
 				1A177EB21698261C00C9AC27 /* jsb_cocosbuilder.js */,
@@ -975,6 +979,7 @@
 				1A177EC31698262E00C9AC27 /* jsb_sys.js in Resources */,
 				1A177EC41698262E00C9AC27 /* jsb.js in Resources */,
 				15A3D2E41682EF31002FB0C5 /* main.js in Resources */,
+				A9706D8516A0C3830090A01D /* main.debug.js in Resources */,
 				15A3D2E51682EF31002FB0C5 /* MoonWarriors-jsb.js in Resources */,
 				1567516D163E741E0002AD61 /* Default-568h@2x.png in Resources */,
 				1567516E163E741E0002AD61 /* Default.png in Resources */,
@@ -1104,6 +1109,7 @@
 				1A177ECB1698271700C9AC27 /* js_bindings_system_registration.cpp in Sources */,
 				1A82F5E7169AC86100C4B13A /* LocalStorage.cpp in Sources */,
 				1A82F5E8169AC86100C4B13A /* LocalStorageAndroid.cpp in Sources */,
+				A9706D8416A0C1FA0090A01D /* main.debug.js in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
