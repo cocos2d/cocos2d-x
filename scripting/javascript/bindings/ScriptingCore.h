@@ -27,12 +27,20 @@ typedef void (*sc_register_sth)(JSContext* cx, JSObject* global);
 
 void registerDefaultClasses(JSContext* cx, JSObject* global);
 
+
+class SimpleRunLoop : public CCObject
+{
+public:
+	void update(float d);
+};
+
 class ScriptingCore : public CCScriptEngineProtocol
 {
 	JSRuntime *rt_;
 	JSContext *cx_;
 	JSObject  *global_;
 	JSObject  *debugGlobal_;
+	SimpleRunLoop* runLoop;
 	
 	ScriptingCore();
 public:
