@@ -11,6 +11,8 @@
 
 #include <assert.h>
 #include "cocos2d.h"
+#include "js_bindings_config.h"
+#include "js_bindings_core.h"
 #include "uthash.h"
 #include "jsapi.h"
 #include "jsfriendapi.h"
@@ -19,6 +21,7 @@
 void js_log(const char *format, ...);
 
 using namespace cocos2d;
+using namespace std;
 
 typedef void (*sc_register_sth)(JSContext* cx, JSObject* global);
 
@@ -175,6 +178,7 @@ public:
 	/**
 	 * enable the debug environment
 	 */
+	void debugProcessInput(string str);
 	void enableDebugger();
 	JSObject* getDebugGlobal() { return debugGlobal_; }
 	
@@ -205,7 +209,7 @@ JSBool jsvals_variadic_to_ccarray( JSContext *cx, jsval *vp, int argc, CCArray**
 jsval int32_to_jsval( JSContext *cx, int32_t l);
 jsval uint32_to_jsval( JSContext *cx, uint32_t number );
 jsval long_long_to_jsval(JSContext* cx, long long v);
-jsval std_string_to_jsval(JSContext* cx, std::string& v);
+jsval std_string_to_jsval(JSContext* cx, string& v);
 jsval c_string_to_jsval(JSContext* cx, const char* v);
 jsval ccpoint_to_jsval(JSContext* cx, CCPoint& v);
 jsval ccrect_to_jsval(JSContext* cx, CCRect& v);
@@ -221,10 +225,11 @@ JSObject* NewGlobalObject(JSContext* cx, bool debug = false);
 JSBool jsStartDebugger(JSContext* cx, unsigned argc, jsval* vp);
 JSBool jsGetScript(JSContext* cx, unsigned argc, jsval* vp);
 
-JSBool jsSocketOpen(JSContext* cx, unsigned argc, jsval* vp);
-JSBool jsSocketRead(JSContext* cx, unsigned argc, jsval* vp);
-JSBool jsSocketWrite(JSContext* cx, unsigned argc, jsval* vp);
-JSBool jsSocketClose(JSContext* cx, unsigned argc, jsval* vp);
+JSBool JSBDebug_StartDebugger(JSContext* cx, unsigned argc, jsval* vp);
+JSBool JSBDebug_BufferRead(JSContext* cx, unsigned argc, jsval* vp);
+JSBool JSBDebug_BufferWrite(JSContext* cx, unsigned argc, jsval* vp);
+JSBool JSBDebug_LockExecution(JSContext* cx, unsigned argc, jsval* vp);
+JSBool JSBDebug_UnlockExecution(JSContext* cx, unsigned argc, jsval* vp);
 
 // just a simple utility to avoid mem leaking when using JSString
 class JSStringWrapper
@@ -264,7 +269,7 @@ public:
 		}
 		buffer = JS_EncodeString(cx, string);
 	}
-    std::string get() {
+	std::string get() {
         return buffer;
     }
 
