@@ -35,7 +35,7 @@ NS_CC_BEGIN
  * @{
  */
 
-class CC_DLL CCPoint : public CCObject
+class CC_DLL CCPoint
 {
 public:
     float x;
@@ -47,11 +47,10 @@ public:
     CCPoint(const CCPoint& other);
     CCPoint& operator= (const CCPoint& other);
     void setPoint(float x, float y);
-    virtual CCObject* copyWithZone(CCZone* pZone);
     bool equals(const CCPoint& target) const;
 };
 
-class CC_DLL CCSize : public CCObject
+class CC_DLL CCSize
 {
 public:
     float width;
@@ -63,11 +62,10 @@ public:
     CCSize(const CCSize& other);
     CCSize& operator= (const CCSize& other);
     void setSize(float width, float height);
-    virtual CCObject* copyWithZone(CCZone* pZone);
     bool equals(const CCSize& target) const;
 };
 
-class CC_DLL CCRect : public CCObject
+class CC_DLL CCRect
 {
 public:
     CCPoint origin;
@@ -79,7 +77,6 @@ public:
     CCRect(const CCRect& other);
     CCRect& operator= (const CCRect& other); 
     void setRect(float x, float y, float width, float height);
-    virtual CCObject* copyWithZone(CCZone* pZone);
     float getMinX() const; /// return the leftmost x-value of current rect
     float getMidX() const; /// return the midpoint x-value of current rect
     float getMaxX() const; /// return the rightmost x-value of current rect

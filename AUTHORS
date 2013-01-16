@@ -12,6 +12,9 @@ Developers:
     Rolando Abarca
         Javascript Binding and testjs
 
+    Victor K(fnz)
+        fix memory leak of CCTextureCache::addImageAsync() on iOS
+
     tks2shimizu
         add CCFloat, CCDouble and CCBool
 
@@ -125,7 +128,7 @@ Developers:
     Carlos Sessa
 	implement the accelerometer module for Android port
 
-    JianHua Chen (Dumganhar)
+    James Chen(dumganhar)
         author of Bada port
 
     Erawppa
@@ -158,6 +161,7 @@ Developers:
 
     johnangel
         OpenGL framebuffer access violation fix.
+        Enable Windows XP support in Visual Studio 2012 Update 1.
 
     Peter Farkas (fape)
         contributes Marmalade port for gles20 branch

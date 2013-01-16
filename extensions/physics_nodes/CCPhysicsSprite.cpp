@@ -177,10 +177,11 @@ void CCPhysicsSprite::setCPBody(cpBody *pBody)
 }
 
 // Override the setters and getters to always reflect the body's properties.
-CCPoint CCPhysicsSprite::getPosition()
+const CCPoint& CCPhysicsSprite::getPosition()
 {
     cpVect cpPos = cpBodyGetPos(m_pCPBody);
-    return ccp(cpPos.x, cpPos.y);
+    m_obPosition = ccp(cpPos.x, cpPos.y);
+    return m_obPosition;
 }
 
 void CCPhysicsSprite::setPosition(const CCPoint &pos)
@@ -245,13 +246,14 @@ void CCPhysicsSprite::setPTMRatio(float fRatio)
 }
 
 // Override the setters and getters to always reflect the body's properties.
-CCPoint CCPhysicsSprite::getPosition()
+const CCPoint& CCPhysicsSprite::getPosition()
 {
     b2Vec2 pos = m_pB2Body->GetPosition();
     
     float x = pos.x * m_fPTMRatio;
     float y = pos.y * m_fPTMRatio;
-    return ccp(x,y);
+    m_obPosition = ccp(x,y);
+    return m_obPosition;
 }
 
 void CCPhysicsSprite::setPosition(const CCPoint &pos)
