@@ -86,7 +86,7 @@ release: $(TARGET)
 ####### Build rules
 $(TARGET): $(OBJECTS) 
 	mkdir -p $(BIN_DIR)
-	cp -R ../../../../samples/Cpp/TestCpp/Resources ../../../../samples/Lua/TestLua 
+	cp -R -n ../../../../samples/Cpp/TestCpp/Resources ../../../../samples/Lua/TestLua 
 	$(CXX) $(CXXFLAGS) $(INCLUDES) $(DEFINES) $(OBJECTS) -o $(BIN_DIR)/$(TARGET) $(SHAREDLIBS) $(STATICLIBS)
 
 ####### Compile
