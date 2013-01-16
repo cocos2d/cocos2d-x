@@ -41,9 +41,6 @@
 #endif
 
 #include "js_bindings_config.h"
-#if JSB_ENABLE_DEBUGGER
-#include "js_bindings_dbg.h"
-#endif
 
 pthread_t debugThread;
 string inData;
