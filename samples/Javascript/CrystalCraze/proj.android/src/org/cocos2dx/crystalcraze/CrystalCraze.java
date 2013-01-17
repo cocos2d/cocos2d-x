@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 
 http://www.cocos2d-x.org
 
@@ -21,57 +21,19 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
+package org.cocos2dx.crystalcraze;
 
-#ifndef __CC_STD_C_H__
-#define __CC_STD_C_H__
+import org.cocos2dx.lib.Cocos2dxActivity;
 
-#include "platform/CCPlatformMacros.h"
-#include <float.h>
+import android.os.Bundle;
 
-// for math.h on win32 platform
-
-#if !defined(_USE_MATH_DEFINES)
-    #define _USE_MATH_DEFINES       // make M_PI can be use
-#endif
-
-#if !defined(isnan)
-    #define isnan   _isnan
-#endif
-
-#ifndef snprintf
-#define snprintf _snprintf
-#endif
-
-#include <math.h>
-#include <string.h>
-#include <stdarg.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-
-// for MIN MAX and sys/time.h on win32 platform
-
-#define MIN     min
-#define MAX     max
-
-#if _MSC_VER >= 1600
-    #include <stdint.h>
-#else
-    #include "./compat/stdint.h"
-#endif
-
-#define _WINSOCKAPI_
-// Structure timeval has define in winsock.h, include windows.h for it.
-#include <Windows.h>
-#include <WinSock2.h>
-
-struct timezone
-{
-    int tz_minuteswest;
-    int tz_dsttime;
-};
-
-int CC_DLL gettimeofday(struct timeval *, struct timezone *);
-
-#endif  // __CC_STD_C_H__
-
+public class CrystalCraze extends Cocos2dxActivity{
+	
+	protected void onCreate(Bundle savedInstanceState){
+		super.onCreate(savedInstanceState);
+	}
+	
+    static {
+        System.loadLibrary("crystalcraze");
+    }
+}
