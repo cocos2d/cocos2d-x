@@ -272,9 +272,20 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
     do 
     {
         // read the file from hardware
-        FILE *fp = fopen(pszFileName, pszMode);
+        std::string pathWithoutDir = pszFileName;
+        std::string pathWithDir = m_obDirectory.c_str();
+        pathWithDir.append(pszFileName);
+        
+        pathWithoutDir = fullPathFromRelativePath(pathWithoutDir.c_str());
+        pathWithDir = fullPathFromRelativePath(pathWithDir.c_str());
+        // read the file from hardware
+        FILE *fp = fopen(pathWithDir.c_str(), pszMode);
+        if (!fp) {
+            fp = fopen(pathWithoutDir.c_str(), pszMode);
+        }
+        
         CC_BREAK_IF(!fp);
-
+        
         fseek(fp,0,SEEK_END);
         *pSize = ftell(fp);
         fseek(fp,0,SEEK_SET);
