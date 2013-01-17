@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{68ED0B4E-2BCA-45D2-9648-CEABEBD3B9D7}</ProjectGuid>
+    <ProjectGuid>{9A17D9A4-4B11-4E32-94F6-895FF4909EC5}</ProjectGuid>
     <RootNamespace>CrystalCraze</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -97,7 +97,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\scripting\javascript\spidermonkey-win32\li
 </Command>
     </PreLinkEvent>
     <Link>
-      <AdditionalDependencies>libcocos2d.lib;libExtensions.lib;opengl32.lib;glew32.lib;libCocosDenshion.lib;libchipmunk.lib;libJSBinding.lib;mozjs.lib;ws2_32.lib;sqlite3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libcocos2d.lib;libExtensions.lib;opengl32.lib;glew32.lib;libCocosDenshion.lib;libchipmunk.lib;libJSBinding.lib;mozjs.lib;ws2_32.lib;sqlite3.lib;pthreadVCE2.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
@@ -108,7 +108,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\scripting\javascript\spidermonkey-win32\li
 if exist "$(OutDir)\CrystalCrazeRes" rd /s /q "$(OutDir)\CrystalCrazeRes"
 mkdir "$(OutDir)\CrystalCrazeRes"
 xcopy "$(ProjectDir)..\..\..\..\scripting\javascript\bindings\js\*.js" "$(OutDir)\CrystalCrazeRes" /e /Y
-xcopy "$(ProjectDir)..\..\Shared\games\CrystalCraze\Published files iOS" "$(OutDir)\CrystalCrazeRes\" /e /Y</Command>
+xcopy "$(ProjectDir)..\..\Shared\games\CrystalCraze\Published-iOS" "$(OutDir)\CrystalCrazeRes\" /e /Y</Command>
     </PreBuildEvent>
     <PreBuildEvent>
       <Message>Copy js and resource files.</Message>
@@ -151,7 +151,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\scripting\javascript\spidermonkey-win32\li
 </Command>
     </PreLinkEvent>
     <Link>
-      <AdditionalDependencies>libcocos2d.lib;libExtensions.lib;opengl32.lib;glew32.lib;libCocosDenshion.lib;libchipmunk.lib;libJSBinding.lib;mozjs.lib;ws2_32.lib;sqlite3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libcocos2d.lib;libExtensions.lib;opengl32.lib;glew32.lib;libCocosDenshion.lib;libchipmunk.lib;libJSBinding.lib;mozjs.lib;ws2_32.lib;sqlite3.lib;pthreadVCE2.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
@@ -161,7 +161,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\scripting\javascript\spidermonkey-win32\li
 if exist "$(OutDir)\CrystalCrazeRes" rd /s /q "$(OutDir)\CrystalCrazeRes"
 mkdir "$(OutDir)\CrystalCrazeRes"
 xcopy "$(ProjectDir)..\..\..\..\scripting\javascript\bindings\js\*.js" "$(OutDir)\CrystalCrazeRes" /e /Y
-xcopy "$(ProjectDir)..\..\Shared\games\CrystalCraze\Published files iOS" "$(OutDir)\CrystalCrazeRes\" /e /Y</Command>
+xcopy "$(ProjectDir)..\..\Shared\games\CrystalCraze\Published-iOS" "$(OutDir)\CrystalCrazeRes\" /e /Y</Command>
       <Message>Copy js and resource files.</Message>
     </PreBuildEvent>
   </ItemDefinitionGroup>

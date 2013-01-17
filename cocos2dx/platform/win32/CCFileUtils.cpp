@@ -23,7 +23,6 @@ THE SOFTWARE.
 ****************************************************************************/
 #define __CC_PLATFORM_FILEUTILS_CPP__
 #include "platform/CCFileUtilsCommon_cpp.h"
-#include <windows.h>
 #include <Shlobj.h>
 #include "CCDirector.h"
 #include "CCApplication.h"
