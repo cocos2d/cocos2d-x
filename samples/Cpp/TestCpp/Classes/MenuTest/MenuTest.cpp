@@ -68,12 +68,15 @@ MenuLayerMainMenu::MenuLayerMainMenu()
     // Font Item
     CCMenuItemFont* item8 = CCMenuItemFont::create("Quit", this, menu_selector(MenuLayerMainMenu::onQuit));
     
+    CCMenuItemFont* item9 = CCMenuItemFont::create("Remove menu item when moving", this,
+                                                   menu_selector(MenuLayerMainMenu::menuMovingCallback));
+    
     CCActionInterval* color_action = CCTintBy::create(0.5f, 0, -255, -255);
     CCActionInterval* color_back = color_action->reverse();
     CCSequence* seq = CCSequence::create(color_action, color_back, NULL);
     item8->runAction(CCRepeatForever::create(seq));
 
-    CCMenu* menu = CCMenu::create( item1, item2, item3, item4, item5, item6, item7, item8, NULL);
+    CCMenu* menu = CCMenu::create( item1, item2, item3, item4, item5, item6, item7, item8, item9, NULL);
     menu->alignItemsVertically();
     
     
@@ -183,6 +186,11 @@ void MenuLayerMainMenu::onQuit(CCObject* sender)
 {
     //[[Director sharedDirector] end];
     //getCocosApp()->exit();
+}
+
+void MenuLayerMainMenu::menuMovingCallback(CCObject *pSender)
+{
+    ((CCLayerMultiplex*)m_pParent)->switchTo(6);
 }
 
 //------------------------------------------------------------------
@@ -571,6 +579,58 @@ void BugsTest::backMenuCallback(cocos2d::CCObject *pSender)
     ((CCLayerMultiplex*)m_pParent)->switchTo(0);
 }
 
+RemoveMenuItemWhenMove::RemoveMenuItemWhenMove()
+{
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    
+    CCLabelTTF* label = CCLabelTTF::create("click item and move, should not crash", "Arial", 20);
+    label->setPosition(ccp(s.width/2, s.height - 30));
+    addChild(label);
+    
+    item = CCMenuItemFont::create("item 1");
+    item->retain();
+    
+    CCMenuItemFont *back = CCMenuItemFont::create("go back", this, menu_selector(RemoveMenuItemWhenMove::goBack));
+    
+    CCMenu *menu = CCMenu::create(item, back, NULL);
+    addChild(menu);
+    menu->alignItemsVertically();
+    
+    menu->setPosition(ccp(s.width/2, s.height/2));
+    
+    setTouchEnabled(true);
+}
+
+void RemoveMenuItemWhenMove::goBack(CCObject *pSender)
+{
+    ((CCLayerMultiplex*)m_pParent)->switchTo(0);
+}
+
+RemoveMenuItemWhenMove::~RemoveMenuItemWhenMove()
+{
+    CC_SAFE_RELEASE(item);
+}
+
+void RemoveMenuItemWhenMove::registerWithTouchDispatcher(void)
+{
+    CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, -129, false);
+}
+
+bool RemoveMenuItemWhenMove::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
+{
+    return true;
+}
+
+void RemoveMenuItemWhenMove::ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
+{
+    if (item)
+    {
+        item->removeFromParentAndCleanup(true);
+        item->release();
+        item = NULL;
+    }
+}
+
 void MenuTestScene::runThisTest()
 {
     CCLayer* pLayer1 = new MenuLayerMainMenu();
@@ -579,8 +639,9 @@ void MenuTestScene::runThisTest()
     CCLayer* pLayer4 = new MenuLayer4();
     CCLayer* pLayer5 = new MenuLayerPriorityTest();
     CCLayer* pLayer6 = new BugsTest();
+    CCLayer* pLayer7 = new RemoveMenuItemWhenMove();
 
-    CCLayerMultiplex* layer = CCLayerMultiplex::create(pLayer1, pLayer2, pLayer3, pLayer4, pLayer5, pLayer6, NULL);
+    CCLayerMultiplex* layer = CCLayerMultiplex::create(pLayer1, pLayer2, pLayer3, pLayer4, pLayer5, pLayer6, pLayer7, NULL);
     addChild(layer, 0); 
 
     pLayer1->release();
@@ -589,6 +650,7 @@ void MenuTestScene::runThisTest()
     pLayer4->release();
     pLayer5->release();
     pLayer6->release();
+    pLayer7->release();
 
     CCDirector::sharedDirector()->replaceScene(this);
 }
