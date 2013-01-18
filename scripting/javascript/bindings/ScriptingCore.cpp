@@ -22,10 +22,12 @@
 // for debug socket
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #include <io.h>
+#include <WS2tcpip.h>
 #else
 #include <sys/socket.h>
 #include <netdb.h>
 #endif
+#include <pthread.h>
 
 #ifdef ANDROID
 #include <android/log.h>
@@ -44,6 +46,8 @@
 #if JSB_ENABLE_DEBUGGER
 #include "js_bindings_dbg.h"
 #endif
+
+
 
 pthread_t debugThread;
 string inData;
@@ -1669,7 +1673,7 @@ void* serverEntryPoint(void*)
 			LOGD("error setting socket options");
 			return NULL;
 		}
-		if ((bind(s, rp->ai_addr, rp->ai_addrlen)) == 0) {
+		if ((::bind(s, rp->ai_addr, rp->ai_addrlen)) == 0) {
 			break;
 		}
 		close(s);
