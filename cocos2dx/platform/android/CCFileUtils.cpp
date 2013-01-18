@@ -88,17 +88,8 @@ const char* CCFileUtils::fullPathForFilename(const char* pszFileName)
     if (pszFileName == NULL || pszFileName[0] == '\0') {
         return pszFileName;
     }
-    const char* pszNewFileName = NULL;
-    // in Lookup Filename dictionary ?
-    CCString* fileNameFound = m_pFilenameLookupDict ? (CCString*)m_pFilenameLookupDict->objectForKey(pszFileName) : NULL;
-    if( NULL == fileNameFound || fileNameFound->length() == 0) {
-        pszNewFileName = pszFileName;
-    }
-    else {
-        pszNewFileName = fileNameFound->getCString();
-    }
 
-    return pszNewFileName;
+    return getFilenameForLookupDictionary(m_pFilenameLookupDict, pszFileName);
 }
 
 const char* CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const char *pszRelativeFile)
