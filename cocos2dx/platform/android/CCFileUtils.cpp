@@ -66,7 +66,25 @@ void CCFileUtils::purgeCachedEntries()
 
 const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
 {
-    return pszRelativePath;
+    return fullPathForFilename(pszRelativePath);
+}
+
+const char* CCFileUtils::fullPathForFilename(const char* pszFileName)
+{
+    if (pszFileName == NULL || pszFileName[0] == '\0') {
+        return pszFileName;
+    }
+    const char* pszNewFileName = NULL;
+    // in Lookup Filename dictionary ?
+    CCString* fileNameFound = m_pFilenameLookupDict ? (CCString*)m_pFilenameLookupDict->objectForKey(pszFileName) : NULL;
+    if( NULL == fileNameFound || fileNameFound->length() == 0) {
+        pszNewFileName = pszFileName;
+    }
+    else {
+        pszNewFileName = fileNameFound->getCString();
+    }
+
+    return pszNewFileName;
 }
 
 const char* CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const char *pszRelativeFile)
@@ -82,12 +100,13 @@ const char* CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const
 unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize)
 {    
     unsigned char * pData = 0;
-    string fullPath(pszFileName);
 
-    if ((! pszFileName) || (! pszMode))
+    if ((! pszFileName) || (! pszMode) || 0 == strlen(pszFileName))
     {
         return 0;
     }
+
+    string fullPath(pszFileName);
 
     if (pszFileName[0] != '/')
     {
