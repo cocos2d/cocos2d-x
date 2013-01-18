@@ -108,7 +108,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\scripting\javascript\spidermonkey-win32\li
 if exist "$(OutDir)\CrystalCrazeRes" rd /s /q "$(OutDir)\CrystalCrazeRes"
 mkdir "$(OutDir)\CrystalCrazeRes"
 xcopy "$(ProjectDir)..\..\..\..\scripting\javascript\bindings\js\*.js" "$(OutDir)\CrystalCrazeRes" /e /Y
-xcopy "$(ProjectDir)..\..\Shared\games\CrystalCraze\Published-iOS" "$(OutDir)\CrystalCrazeRes\" /e /Y</Command>
+xcopy "$(ProjectDir)..\..\Shared\games\CrystalCraze\Published-Cocos2d-x" "$(OutDir)\CrystalCrazeRes\" /e /Y</Command>
     </PreBuildEvent>
     <PreBuildEvent>
       <Message>Copy js and resource files.</Message>
@@ -161,7 +161,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\scripting\javascript\spidermonkey-win32\li
 if exist "$(OutDir)\CrystalCrazeRes" rd /s /q "$(OutDir)\CrystalCrazeRes"
 mkdir "$(OutDir)\CrystalCrazeRes"
 xcopy "$(ProjectDir)..\..\..\..\scripting\javascript\bindings\js\*.js" "$(OutDir)\CrystalCrazeRes" /e /Y
-xcopy "$(ProjectDir)..\..\Shared\games\CrystalCraze\Published-iOS" "$(OutDir)\CrystalCrazeRes\" /e /Y</Command>
+xcopy "$(ProjectDir)..\..\Shared\games\CrystalCraze\Published-Cocos2d-x" "$(OutDir)\CrystalCrazeRes\" /e /Y</Command>
       <Message>Copy js and resource files.</Message>
     </PreBuildEvent>
   </ItemDefinitionGroup>
