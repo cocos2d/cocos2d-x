@@ -179,9 +179,9 @@ void CCAtlasNode::setOpacity(GLubyte opacity)
 
 void CCAtlasNode::setOpacityModifyRGB(bool bValue)
 {
-    ccColor3B oldColor    = this->m_tColor;
+    ccColor3B oldColor = this->getColor();
     m_bIsOpacityModifyRGB = bValue;
-    this->m_tColor        = oldColor;
+    this->setColor(oldColor);
 }
 
 bool CCAtlasNode::isOpacityModifyRGB()
