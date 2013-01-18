@@ -1,7 +1,7 @@
 #ifndef _MCI_PLAYER_WIN32_H_
 #define _MCI_PLAYER_WIN32_H_
 
-#include<windows.h>
+#include "CCStdC.h"
 #include <mmsystem.h>
 
 namespace CocosDenshion {

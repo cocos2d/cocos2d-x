@@ -247,12 +247,12 @@ void CCSpriteFrameCache::addSpriteFramesWithFile(const char *pszPlist)
         if (! texturePath.empty())
         {
             // build texture path relative to plist file
-            texturePath = CCFileUtils::sharedFileUtils()->fullPathFromRelativeFile(texturePath.c_str(), pszPath);
+            texturePath = CCFileUtils::sharedFileUtils()->fullPathFromRelativeFile(texturePath.c_str(), pszPlist);
         }
         else
         {
             // build texture path by replacing file extension
-            texturePath = pszPath;
+            texturePath = pszPlist;
 
             // remove .xxx
             size_t startPos = texturePath.find_last_of("."); 
