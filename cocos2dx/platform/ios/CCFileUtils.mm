@@ -187,6 +187,20 @@ const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
     return fullPathForFilename(pszRelativePath);
 }
 
+static const char* getFilenameForLookupDictionary(CCDictionary* pDict, const char* pszFileName)
+{
+    const char* pszNewFileName = NULL;
+    // in Lookup Filename dictionary ?
+    CCString* fileNameFound = pDict ? (CCString*)pDict->objectForKey(pszFileName) : NULL;
+    if( NULL == fileNameFound || fileNameFound->length() == 0) {
+        pszNewFileName = pszFileName;
+    }
+    else {
+        pszNewFileName = fileNameFound->getCString();
+    }
+    return pszNewFileName;
+}
+
 const char* CCFileUtils::fullPathForFilename(const char* filename)
 {
     CCAssert(filename != NULL, "CCFileUtils: Invalid path");
@@ -197,15 +211,7 @@ const char* CCFileUtils::fullPathForFilename(const char* filename)
     // only if it is not an absolute path
     if( ! [relPath isAbsolutePath] ) {
         
-        NSString* newfilename = NULL;
-        // in Lookup Filename dictionary ?
-        CCString* fileNameFound = m_pFilenameLookupDict ? (CCString*)m_pFilenameLookupDict->objectForKey(filename) : NULL;
-        if( NULL == fileNameFound || fileNameFound->length() == 0) {
-            newfilename = [NSString stringWithUTF8String:filename];
-        }
-        else {
-            newfilename = [NSString stringWithUTF8String:fileNameFound->getCString()];
-        }
+        NSString* newfilename = [NSString stringWithUTF8String: getFilenameForLookupDictionary(m_pFilenameLookupDict, filename)];
         
         // pathForResource also searches in .lproj directories. issue #1230
         NSString *lastPathComponent = [newfilename lastPathComponent];
@@ -269,7 +275,7 @@ const char *CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const
     CCString *pRet = new CCString();
     pRet->autorelease();
     pRet->m_sString = relativeFile.substr(0, relativeFile.rfind('/')+1);
-    pRet->m_sString += pszFilename;
+    pRet->m_sString += getFilenameForLookupDictionary(m_pFilenameLookupDict, pszFilename);
     return pRet->m_sString.c_str();
 }
 
