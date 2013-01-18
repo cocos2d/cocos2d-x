@@ -27,18 +27,25 @@ THE SOFTWARE.
 #include <string>
 #include "CCPlatformMacros.h"
 #include "ccTypes.h"
+#include "ccTypeInfo.h"
 
 NS_CC_BEGIN
 
+class CCDictionary;
 /**
  * @addtogroup platform
  * @{
  */
 
 //! @brief  Helper class to handle file operations
-class CC_DLL CCFileUtils
+class CC_DLL CCFileUtils : public TypeInfo
 {
 public:
+    virtual long getClassTypeInfo() {
+		static const long id = cocos2d::getHashCodeByString(typeid(cocos2d::CCFileUtils).name());
+		return id;
+    }
+    
     static CCFileUtils* sharedFileUtils();
     static void purgeFileUtils();
 
@@ -70,8 +77,67 @@ public:
     If you have not set the ResourcePath, the function appends "/NEWPLUS/TDA_DATA/UserData/" by default.
     You can set ResourcePath with void setResourcePath(const char *pszResourcePath);
     */
-    const char* fullPathFromRelativePath(const char *pszRelativePath);
-
+    CC_DEPRECATED_ATTRIBUTE const char* fullPathFromRelativePath(const char *pszRelativePath);
+    
+    /** Returns the fullpath for a given filename.
+     
+     First it will try to get a new filename from the "filenameLookup" dictionary. If a new filename can't be found on the dictionary, it will use the original filename.
+     Then it will try obtain the full path of the filename using the CCFileUtils search rules: resolutions, and search paths
+     
+     If in iPad mode, and an iPad file is found, it will return that path.
+     If in iPhoneRetinaDisplay mode, and a RetinaDisplay file is found, it will return that path. But if it is not found, it will try load an iPhone Non-RetinaDisplay  file.
+     
+     If the filename can't be found on the file system, it will return nil.
+     
+     This method was added to simplify multiplatform support. Whether you are using cocos2d-js or any cross-compilation toolchain like StellaSDK or Apportable,
+     you might need to load differerent resources for a given file in the different platforms.
+     
+     Examples:
+     
+     * In iPad mode: "image.png" -> "image.pvr" -> "/full/path/image-ipad.pvr" (in case the -ipad file exists)
+     * In Android: "image.png" -> "image.png" -> "/full/path/image.png"
+     
+     @since v2.1
+     */
+    const char* fullPathForFilename(const char* filename);
+    
+    /**
+     * Loads the filenameLookup dictionary from the contents of a filename.
+     * 
+     * @note The plist file name should follow the format below:
+     * <?xml version="1.0" encoding="UTF-8"?>
+     * <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+     * <plist version="1.0">
+     * <dict>
+     *     <key>filenames</key>
+     *     <dict>
+     *         <key>sounds/click.wav</key>
+     *         <string>sounds/click.caf</string>
+     *         <key>sounds/endgame.wav</key>
+     *         <string>sounds/endgame.caf</string>
+     *         <key>sounds/gem-0.wav</key>
+     *         <string>sounds/gem-0.caf</string>
+     *     </dict>
+     *     <key>metadata</key>
+     *     <dict>
+     *         <key>version</key>
+     *         <integer>1</integer>
+     *     </dict>
+     * </dict>
+     * </plist>
+     *
+     * @param filename The plist file name.
+     *
+     @since v2.1
+     */
+    void loadFilenameLookupDictionaryFromFile(const char* filename);
+    
+    /** Loads the filenameLookup dictionary from the contents of a filename.
+     
+     @since v2.1
+     */
+    void setFilenameLookupDictionary(CCDictionary* pFilenameLookupDict);
+    
     /// @cond
     const char* fullPathFromRelativeFile(const char *pszFilename, const char *pszRelativeFile);
     /// @endcond
@@ -101,10 +167,20 @@ public:
     
 protected:
     CCFileUtils(void)
+    : m_pFilenameLookupDict(NULL)
     {
     }
     
     std::string m_obDirectory;
+    
+    /** Dictionary used to lookup filenames based on a key.
+     It is used internally by the following methods:
+     
+     const char* fullPathForFilename(const char* )key;
+     
+     @since v2.1
+     */
+    CCDictionary* m_pFilenameLookupDict;
 };
 
 // end of platform group

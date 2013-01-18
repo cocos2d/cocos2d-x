@@ -106,30 +106,11 @@
 		15A3D0B81682E7D2002FB0C5 /* libcocos2dx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15A3CE091682C057002FB0C5 /* libcocos2dx.a */; };
 		1A177F141698297600C9AC27 /* js_bindings_system_functions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A177F101698297600C9AC27 /* js_bindings_system_functions.cpp */; };
 		1A177F151698297600C9AC27 /* js_bindings_system_registration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A177F121698297600C9AC27 /* js_bindings_system_registration.cpp */; };
-		1A253FDA16A7999E002F2EEB /* AboutScene.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = 1A253FC716A7999E002F2EEB /* AboutScene.ccbi */; };
-		1A253FDB16A7999E002F2EEB /* AboutScene.js in Sources */ = {isa = PBXBuildFile; fileRef = 1A253FC816A7999E002F2EEB /* AboutScene.js */; };
-		1A253FDC16A7999E002F2EEB /* ccbResources in Resources */ = {isa = PBXBuildFile; fileRef = 1A253FC916A7999E002F2EEB /* ccbResources */; };
-		1A253FDD16A7999E002F2EEB /* clickme-down.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A253FCA16A7999E002F2EEB /* clickme-down.png */; };
-		1A253FDE16A7999E002F2EEB /* clickme.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A253FCB16A7999E002F2EEB /* clickme.png */; };
-		1A253FDF16A7999E002F2EEB /* fileLookup.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1A253FCC16A7999E002F2EEB /* fileLookup.plist */; };
-		1A253FE016A7999E002F2EEB /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 1A253FCD16A7999E002F2EEB /* fonts */; };
-		1A253FE116A7999E002F2EEB /* GameBoard.js in Sources */ = {isa = PBXBuildFile; fileRef = 1A253FCE16A7999E002F2EEB /* GameBoard.js */; };
-		1A253FE216A7999E002F2EEB /* gamescene in Resources */ = {isa = PBXBuildFile; fileRef = 1A253FCF16A7999E002F2EEB /* gamescene */; };
-		1A253FE316A7999E002F2EEB /* GameScene.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = 1A253FD016A7999E002F2EEB /* GameScene.ccbi */; };
-		1A253FE416A7999E002F2EEB /* GameScene.js in Sources */ = {isa = PBXBuildFile; fileRef = 1A253FD116A7999E002F2EEB /* GameScene.js */; };
-		1A253FE516A7999E002F2EEB /* main.js in Sources */ = {isa = PBXBuildFile; fileRef = 1A253FD216A7999E002F2EEB /* main.js */; };
-		1A253FE616A7999E002F2EEB /* mainscene in Resources */ = {isa = PBXBuildFile; fileRef = 1A253FD316A7999E002F2EEB /* mainscene */; };
-		1A253FE716A7999E002F2EEB /* MainScene.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = 1A253FD416A7999E002F2EEB /* MainScene.ccbi */; };
-		1A253FE816A7999E002F2EEB /* MainScene.js in Sources */ = {isa = PBXBuildFile; fileRef = 1A253FD516A7999E002F2EEB /* MainScene.js */; };
-		1A253FE916A7999E002F2EEB /* particles in Resources */ = {isa = PBXBuildFile; fileRef = 1A253FD616A7999E002F2EEB /* particles */; };
-		1A253FEA16A7999E002F2EEB /* resources-iphone in Resources */ = {isa = PBXBuildFile; fileRef = 1A253FD716A7999E002F2EEB /* resources-iphone */; };
-		1A253FEB16A7999E002F2EEB /* resources-iphonehd in Resources */ = {isa = PBXBuildFile; fileRef = 1A253FD816A7999E002F2EEB /* resources-iphonehd */; };
-		1A253FEC16A7999E002F2EEB /* sounds in Resources */ = {isa = PBXBuildFile; fileRef = 1A253FD916A7999E002F2EEB /* sounds */; };
-		1A253FED16A799DB002F2EEB /* AboutScene.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A253FC816A7999E002F2EEB /* AboutScene.js */; };
-		1A253FEE16A799DB002F2EEB /* GameBoard.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A253FCE16A7999E002F2EEB /* GameBoard.js */; };
-		1A253FEF16A799DB002F2EEB /* GameScene.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A253FD116A7999E002F2EEB /* GameScene.js */; };
-		1A253FF016A799DB002F2EEB /* main.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A253FD216A7999E002F2EEB /* main.js */; };
-		1A253FF116A799DB002F2EEB /* MainScene.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A253FD516A7999E002F2EEB /* MainScene.js */; };
+		1A21A3F916A9308800006B7F /* AboutScene.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A7E9E2A16A90CC600169038 /* AboutScene.js */; };
+		1A21A3FA16A9308800006B7F /* GameBoard.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A7E9E2C16A90CC600169038 /* GameBoard.js */; };
+		1A21A3FB16A9308800006B7F /* GameScene.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A7E9E2E16A90CC600169038 /* GameScene.js */; };
+		1A21A3FC16A9308800006B7F /* main.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A7E9E2F16A90CC600169038 /* main.js */; };
+		1A21A3FD16A9308800006B7F /* MainScene.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A7E9E3116A90CC600169038 /* MainScene.js */; };
 		1A2758101698218C00504026 /* jsb_chipmunk.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A2757991697FA7200504026 /* jsb_chipmunk.js */; };
 		1A2758111698218C00504026 /* jsb_cocos2d.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A27579A1697FA7200504026 /* jsb_cocos2d.js */; };
 		1A2758121698218C00504026 /* jsb_cocosbuilder.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A27579B1697FA7200504026 /* jsb_cocosbuilder.js */; };
@@ -137,6 +118,19 @@
 		1A2758141698218C00504026 /* jsb_opengl.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A27579D1697FA7200504026 /* jsb_opengl.js */; };
 		1A2758151698218C00504026 /* jsb_sys.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A27579E1697FA7200504026 /* jsb_sys.js */; };
 		1A2758161698218C00504026 /* jsb.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A27579F1697FA7200504026 /* jsb.js */; };
+		1A7E9E3616A90CC600169038 /* AboutScene.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = 1A7E9E2916A90CC600169038 /* AboutScene.ccbi */; };
+		1A7E9E3716A90CC600169038 /* AboutScene.js in Sources */ = {isa = PBXBuildFile; fileRef = 1A7E9E2A16A90CC600169038 /* AboutScene.js */; };
+		1A7E9E3816A90CC600169038 /* fileLookup.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1A7E9E2B16A90CC600169038 /* fileLookup.plist */; };
+		1A7E9E3916A90CC600169038 /* GameBoard.js in Sources */ = {isa = PBXBuildFile; fileRef = 1A7E9E2C16A90CC600169038 /* GameBoard.js */; };
+		1A7E9E3A16A90CC600169038 /* GameScene.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = 1A7E9E2D16A90CC600169038 /* GameScene.ccbi */; };
+		1A7E9E3B16A90CC600169038 /* GameScene.js in Sources */ = {isa = PBXBuildFile; fileRef = 1A7E9E2E16A90CC600169038 /* GameScene.js */; };
+		1A7E9E3C16A90CC600169038 /* main.js in Sources */ = {isa = PBXBuildFile; fileRef = 1A7E9E2F16A90CC600169038 /* main.js */; };
+		1A7E9E3D16A90CC600169038 /* MainScene.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = 1A7E9E3016A90CC600169038 /* MainScene.ccbi */; };
+		1A7E9E3E16A90CC600169038 /* MainScene.js in Sources */ = {isa = PBXBuildFile; fileRef = 1A7E9E3116A90CC600169038 /* MainScene.js */; };
+		1A7E9E3F16A90CC600169038 /* particles in Resources */ = {isa = PBXBuildFile; fileRef = 1A7E9E3216A90CC600169038 /* particles */; };
+		1A7E9E4016A90CC600169038 /* resources-iphone in Resources */ = {isa = PBXBuildFile; fileRef = 1A7E9E3316A90CC600169038 /* resources-iphone */; };
+		1A7E9E4116A90CC600169038 /* resources-iphonehd in Resources */ = {isa = PBXBuildFile; fileRef = 1A7E9E3416A90CC600169038 /* resources-iphonehd */; };
+		1A7E9E4216A90CC600169038 /* sounds in Resources */ = {isa = PBXBuildFile; fileRef = 1A7E9E3516A90CC600169038 /* sounds */; };
 		1A82F5D1169AC71F00C4B13A /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A82F5D0169AC71F00C4B13A /* libsqlite3.dylib */; };
 		1A82F5D8169AC75500C4B13A /* LocalStorage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A82F5D5169AC75500C4B13A /* LocalStorage.cpp */; };
 		1A82F5D9169AC75500C4B13A /* LocalStorageAndroid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A82F5D7169AC75500C4B13A /* LocalStorageAndroid.cpp */; };
@@ -381,25 +375,6 @@
 		1A177F111698297600C9AC27 /* js_bindings_system_functions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_system_functions.h; sourceTree = "<group>"; };
 		1A177F121698297600C9AC27 /* js_bindings_system_registration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = js_bindings_system_registration.cpp; sourceTree = "<group>"; };
 		1A177F131698297600C9AC27 /* js_bindings_system_registration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_system_registration.h; sourceTree = "<group>"; };
-		1A253FC716A7999E002F2EEB /* AboutScene.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; name = AboutScene.ccbi; path = "../../Shared/games/CrystalCraze/Published-iOS/AboutScene.ccbi"; sourceTree = "<group>"; };
-		1A253FC816A7999E002F2EEB /* AboutScene.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = AboutScene.js; path = "../../Shared/games/CrystalCraze/Published-iOS/AboutScene.js"; sourceTree = "<group>"; };
-		1A253FC916A7999E002F2EEB /* ccbResources */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ccbResources; path = "../../Shared/games/CrystalCraze/Published-iOS/ccbResources"; sourceTree = "<group>"; };
-		1A253FCA16A7999E002F2EEB /* clickme-down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "clickme-down.png"; path = "../../Shared/games/CrystalCraze/Published-iOS/clickme-down.png"; sourceTree = "<group>"; };
-		1A253FCB16A7999E002F2EEB /* clickme.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = clickme.png; path = "../../Shared/games/CrystalCraze/Published-iOS/clickme.png"; sourceTree = "<group>"; };
-		1A253FCC16A7999E002F2EEB /* fileLookup.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = fileLookup.plist; path = "../../Shared/games/CrystalCraze/Published-iOS/fileLookup.plist"; sourceTree = "<group>"; };
-		1A253FCD16A7999E002F2EEB /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = fonts; path = "../../Shared/games/CrystalCraze/Published-iOS/fonts"; sourceTree = "<group>"; };
-		1A253FCE16A7999E002F2EEB /* GameBoard.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = GameBoard.js; path = "../../Shared/games/CrystalCraze/Published-iOS/GameBoard.js"; sourceTree = "<group>"; };
-		1A253FCF16A7999E002F2EEB /* gamescene */ = {isa = PBXFileReference; lastKnownFileType = folder; name = gamescene; path = "../../Shared/games/CrystalCraze/Published-iOS/gamescene"; sourceTree = "<group>"; };
-		1A253FD016A7999E002F2EEB /* GameScene.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; name = GameScene.ccbi; path = "../../Shared/games/CrystalCraze/Published-iOS/GameScene.ccbi"; sourceTree = "<group>"; };
-		1A253FD116A7999E002F2EEB /* GameScene.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = GameScene.js; path = "../../Shared/games/CrystalCraze/Published-iOS/GameScene.js"; sourceTree = "<group>"; };
-		1A253FD216A7999E002F2EEB /* main.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = main.js; path = "../../Shared/games/CrystalCraze/Published-iOS/main.js"; sourceTree = "<group>"; };
-		1A253FD316A7999E002F2EEB /* mainscene */ = {isa = PBXFileReference; lastKnownFileType = folder; name = mainscene; path = "../../Shared/games/CrystalCraze/Published-iOS/mainscene"; sourceTree = "<group>"; };
-		1A253FD416A7999E002F2EEB /* MainScene.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; name = MainScene.ccbi; path = "../../Shared/games/CrystalCraze/Published-iOS/MainScene.ccbi"; sourceTree = "<group>"; };
-		1A253FD516A7999E002F2EEB /* MainScene.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = MainScene.js; path = "../../Shared/games/CrystalCraze/Published-iOS/MainScene.js"; sourceTree = "<group>"; };
-		1A253FD616A7999E002F2EEB /* particles */ = {isa = PBXFileReference; lastKnownFileType = folder; name = particles; path = "../../Shared/games/CrystalCraze/Published-iOS/particles"; sourceTree = "<group>"; };
-		1A253FD716A7999E002F2EEB /* resources-iphone */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "resources-iphone"; path = "../../Shared/games/CrystalCraze/Published-iOS/resources-iphone"; sourceTree = "<group>"; };
-		1A253FD816A7999E002F2EEB /* resources-iphonehd */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "resources-iphonehd"; path = "../../Shared/games/CrystalCraze/Published-iOS/resources-iphonehd"; sourceTree = "<group>"; };
-		1A253FD916A7999E002F2EEB /* sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; name = sounds; path = "../../Shared/games/CrystalCraze/Published-iOS/sounds"; sourceTree = "<group>"; };
 		1A2757991697FA7200504026 /* jsb_chipmunk.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_chipmunk.js; sourceTree = "<group>"; };
 		1A27579A1697FA7200504026 /* jsb_cocos2d.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_cocos2d.js; sourceTree = "<group>"; };
 		1A27579B1697FA7200504026 /* jsb_cocosbuilder.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_cocosbuilder.js; sourceTree = "<group>"; };
@@ -407,6 +382,19 @@
 		1A27579D1697FA7200504026 /* jsb_opengl.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_opengl.js; sourceTree = "<group>"; };
 		1A27579E1697FA7200504026 /* jsb_sys.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_sys.js; sourceTree = "<group>"; };
 		1A27579F1697FA7200504026 /* jsb.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb.js; sourceTree = "<group>"; };
+		1A7E9E2916A90CC600169038 /* AboutScene.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; name = AboutScene.ccbi; path = "../../Shared/games/CrystalCraze/Published-Cocos2d-x/AboutScene.ccbi"; sourceTree = "<group>"; };
+		1A7E9E2A16A90CC600169038 /* AboutScene.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = AboutScene.js; path = "../../Shared/games/CrystalCraze/Published-Cocos2d-x/AboutScene.js"; sourceTree = "<group>"; };
+		1A7E9E2B16A90CC600169038 /* fileLookup.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = fileLookup.plist; path = "../../Shared/games/CrystalCraze/Published-Cocos2d-x/fileLookup.plist"; sourceTree = "<group>"; };
+		1A7E9E2C16A90CC600169038 /* GameBoard.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = GameBoard.js; path = "../../Shared/games/CrystalCraze/Published-Cocos2d-x/GameBoard.js"; sourceTree = "<group>"; };
+		1A7E9E2D16A90CC600169038 /* GameScene.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; name = GameScene.ccbi; path = "../../Shared/games/CrystalCraze/Published-Cocos2d-x/GameScene.ccbi"; sourceTree = "<group>"; };
+		1A7E9E2E16A90CC600169038 /* GameScene.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = GameScene.js; path = "../../Shared/games/CrystalCraze/Published-Cocos2d-x/GameScene.js"; sourceTree = "<group>"; };
+		1A7E9E2F16A90CC600169038 /* main.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = main.js; path = "../../Shared/games/CrystalCraze/Published-Cocos2d-x/main.js"; sourceTree = "<group>"; };
+		1A7E9E3016A90CC600169038 /* MainScene.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; name = MainScene.ccbi; path = "../../Shared/games/CrystalCraze/Published-Cocos2d-x/MainScene.ccbi"; sourceTree = "<group>"; };
+		1A7E9E3116A90CC600169038 /* MainScene.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = MainScene.js; path = "../../Shared/games/CrystalCraze/Published-Cocos2d-x/MainScene.js"; sourceTree = "<group>"; };
+		1A7E9E3216A90CC600169038 /* particles */ = {isa = PBXFileReference; lastKnownFileType = folder; name = particles; path = "../../Shared/games/CrystalCraze/Published-Cocos2d-x/particles"; sourceTree = "<group>"; };
+		1A7E9E3316A90CC600169038 /* resources-iphone */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "resources-iphone"; path = "../../Shared/games/CrystalCraze/Published-Cocos2d-x/resources-iphone"; sourceTree = "<group>"; };
+		1A7E9E3416A90CC600169038 /* resources-iphonehd */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "resources-iphonehd"; path = "../../Shared/games/CrystalCraze/Published-Cocos2d-x/resources-iphonehd"; sourceTree = "<group>"; };
+		1A7E9E3516A90CC600169038 /* sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; name = sounds; path = "../../Shared/games/CrystalCraze/Published-Cocos2d-x/sounds"; sourceTree = "<group>"; };
 		1A82F5D0169AC71F00C4B13A /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		1A82F5D5169AC75500C4B13A /* LocalStorage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LocalStorage.cpp; sourceTree = "<group>"; };
 		1A82F5D6169AC75500C4B13A /* LocalStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalStorage.h; sourceTree = "<group>"; };
@@ -462,25 +450,19 @@
 		15628F5B15F0F5C2000CF24B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				1A253FC716A7999E002F2EEB /* AboutScene.ccbi */,
-				1A253FC816A7999E002F2EEB /* AboutScene.js */,
-				1A253FC916A7999E002F2EEB /* ccbResources */,
-				1A253FCA16A7999E002F2EEB /* clickme-down.png */,
-				1A253FCB16A7999E002F2EEB /* clickme.png */,
-				1A253FCC16A7999E002F2EEB /* fileLookup.plist */,
-				1A253FCD16A7999E002F2EEB /* fonts */,
-				1A253FCE16A7999E002F2EEB /* GameBoard.js */,
-				1A253FCF16A7999E002F2EEB /* gamescene */,
-				1A253FD016A7999E002F2EEB /* GameScene.ccbi */,
-				1A253FD116A7999E002F2EEB /* GameScene.js */,
-				1A253FD216A7999E002F2EEB /* main.js */,
-				1A253FD316A7999E002F2EEB /* mainscene */,
-				1A253FD416A7999E002F2EEB /* MainScene.ccbi */,
-				1A253FD516A7999E002F2EEB /* MainScene.js */,
-				1A253FD616A7999E002F2EEB /* particles */,
-				1A253FD716A7999E002F2EEB /* resources-iphone */,
-				1A253FD816A7999E002F2EEB /* resources-iphonehd */,
-				1A253FD916A7999E002F2EEB /* sounds */,
+				1A7E9E2916A90CC600169038 /* AboutScene.ccbi */,
+				1A7E9E2A16A90CC600169038 /* AboutScene.js */,
+				1A7E9E2B16A90CC600169038 /* fileLookup.plist */,
+				1A7E9E2C16A90CC600169038 /* GameBoard.js */,
+				1A7E9E2D16A90CC600169038 /* GameScene.ccbi */,
+				1A7E9E2E16A90CC600169038 /* GameScene.js */,
+				1A7E9E2F16A90CC600169038 /* main.js */,
+				1A7E9E3016A90CC600169038 /* MainScene.ccbi */,
+				1A7E9E3116A90CC600169038 /* MainScene.js */,
+				1A7E9E3216A90CC600169038 /* particles */,
+				1A7E9E3316A90CC600169038 /* resources-iphone */,
+				1A7E9E3416A90CC600169038 /* resources-iphonehd */,
+				1A7E9E3516A90CC600169038 /* sounds */,
 				159004B7166DE1AF006BF838 /* Icon-144.png */,
 				159004B5166DE1A8006BF838 /* Icon-72.png */,
 				159004B3166DE19C006BF838 /* Icon-114.png */,
@@ -1002,11 +984,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1A253FED16A799DB002F2EEB /* AboutScene.js in Resources */,
-				1A253FEE16A799DB002F2EEB /* GameBoard.js in Resources */,
-				1A253FEF16A799DB002F2EEB /* GameScene.js in Resources */,
-				1A253FF016A799DB002F2EEB /* main.js in Resources */,
-				1A253FF116A799DB002F2EEB /* MainScene.js in Resources */,
+				1A21A3F916A9308800006B7F /* AboutScene.js in Resources */,
+				1A21A3FA16A9308800006B7F /* GameBoard.js in Resources */,
+				1A21A3FB16A9308800006B7F /* GameScene.js in Resources */,
+				1A21A3FC16A9308800006B7F /* main.js in Resources */,
+				1A21A3FD16A9308800006B7F /* MainScene.js in Resources */,
 				1A2758101698218C00504026 /* jsb_chipmunk.js in Resources */,
 				1A2758111698218C00504026 /* jsb_cocos2d.js in Resources */,
 				1A2758121698218C00504026 /* jsb_cocosbuilder.js in Resources */,
@@ -1024,20 +1006,14 @@
 				15A3CE661682C205002FB0C5 /* CMakeLists.txt in Resources */,
 				15A3D09E1682E721002FB0C5 /* Android.mk in Resources */,
 				15A3D0A31682E721002FB0C5 /* README in Resources */,
-				1A253FDA16A7999E002F2EEB /* AboutScene.ccbi in Resources */,
-				1A253FDC16A7999E002F2EEB /* ccbResources in Resources */,
-				1A253FDD16A7999E002F2EEB /* clickme-down.png in Resources */,
-				1A253FDE16A7999E002F2EEB /* clickme.png in Resources */,
-				1A253FDF16A7999E002F2EEB /* fileLookup.plist in Resources */,
-				1A253FE016A7999E002F2EEB /* fonts in Resources */,
-				1A253FE216A7999E002F2EEB /* gamescene in Resources */,
-				1A253FE316A7999E002F2EEB /* GameScene.ccbi in Resources */,
-				1A253FE616A7999E002F2EEB /* mainscene in Resources */,
-				1A253FE716A7999E002F2EEB /* MainScene.ccbi in Resources */,
-				1A253FE916A7999E002F2EEB /* particles in Resources */,
-				1A253FEA16A7999E002F2EEB /* resources-iphone in Resources */,
-				1A253FEB16A7999E002F2EEB /* resources-iphonehd in Resources */,
-				1A253FEC16A7999E002F2EEB /* sounds in Resources */,
+				1A7E9E3616A90CC600169038 /* AboutScene.ccbi in Resources */,
+				1A7E9E3816A90CC600169038 /* fileLookup.plist in Resources */,
+				1A7E9E3A16A90CC600169038 /* GameScene.ccbi in Resources */,
+				1A7E9E3D16A90CC600169038 /* MainScene.ccbi in Resources */,
+				1A7E9E3F16A90CC600169038 /* particles in Resources */,
+				1A7E9E4016A90CC600169038 /* resources-iphone in Resources */,
+				1A7E9E4116A90CC600169038 /* resources-iphonehd in Resources */,
+				1A7E9E4216A90CC600169038 /* sounds in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1145,11 +1121,11 @@
 				1A177F151698297600C9AC27 /* js_bindings_system_registration.cpp in Sources */,
 				1A82F5D8169AC75500C4B13A /* LocalStorage.cpp in Sources */,
 				1A82F5D9169AC75500C4B13A /* LocalStorageAndroid.cpp in Sources */,
-				1A253FDB16A7999E002F2EEB /* AboutScene.js in Sources */,
-				1A253FE116A7999E002F2EEB /* GameBoard.js in Sources */,
-				1A253FE416A7999E002F2EEB /* GameScene.js in Sources */,
-				1A253FE516A7999E002F2EEB /* main.js in Sources */,
-				1A253FE816A7999E002F2EEB /* MainScene.js in Sources */,
+				1A7E9E3716A90CC600169038 /* AboutScene.js in Sources */,
+				1A7E9E3916A90CC600169038 /* GameBoard.js in Sources */,
+				1A7E9E3B16A90CC600169038 /* GameScene.js in Sources */,
+				1A7E9E3C16A90CC600169038 /* main.js in Sources */,
+				1A7E9E3E16A90CC600169038 /* MainScene.js in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
