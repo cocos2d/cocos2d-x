@@ -28,6 +28,7 @@ public:
     void menuCallbackPriorityTest(CCObject* pSender);
     void menuCallbackBugsTest(CCObject *pSender);
     void onQuit(CCObject* pSender);
+    void menuMovingCallback(CCObject *pSender);
 
     //CREATE_NODE(MenuLayer1);
 };
@@ -107,6 +108,22 @@ public:
     void issue1410MenuCallback(CCObject *pSender);
     void issue1410v2MenuCallback(CCObject *pSender);
     void backMenuCallback(CCObject *pSender);
+};
+
+class RemoveMenuItemWhenMove : public CCLayer
+{
+public:
+    RemoveMenuItemWhenMove();
+    ~RemoveMenuItemWhenMove();
+    
+    virtual void registerWithTouchDispatcher(void);
+    virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
+    virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
+    
+    void goBack(CCObject *pSender);
+    
+private:
+    CCMenuItemFont *item;
 };
 
 
