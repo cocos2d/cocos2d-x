@@ -54,7 +54,7 @@ public:
     void setAutoPlaySequenceId(int autoPlaySequenceId);
     
     CCNode* getRootNode();
-    void setRootNode(CCNode* pRootNode); // retain    
+    void setRootNode(CCNode* pRootNode); // weak reference    
     
 
     void addDocumentCallbackNode(CCNode *node);
