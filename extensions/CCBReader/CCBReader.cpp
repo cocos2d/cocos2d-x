@@ -635,32 +635,39 @@ CCNode * CCBReader::readNodeGraph(CCNode * pParent) {
      [[JSCocoa sharedController] setObject:node withName:memberVarAssignmentName];
      }*/
 #else
-    if(memberVarAssignmentType != kCCBTargetTypeNone) {
-        if(!jsControlled) {
-        CCObject * target = NULL;
-        if(memberVarAssignmentType == kCCBTargetTypeDocumentRoot) 
+    if (memberVarAssignmentType != kCCBTargetTypeNone)
+    {
+        if(!jsControlled)
         {
-            target = mActionManager->getRootNode();
-        } 
-        else if(memberVarAssignmentType == kCCBTargetTypeOwner) 
+            CCObject * target = NULL;
+            if(memberVarAssignmentType == kCCBTargetTypeDocumentRoot) 
+            {
+                target = mActionManager->getRootNode();
+            } 
+            else if(memberVarAssignmentType == kCCBTargetTypeOwner) 
+            {
+                target = this->mOwner;
+            }
+            
+            if(target != NULL)
+            {
+                CCBMemberVariableAssigner * targetAsCCBMemberVariableAssigner = dynamic_cast<CCBMemberVariableAssigner *>(target);
+                
+                bool assigned = false;
+                if (memberVarAssignmentType != kCCBTargetTypeNone)
+                {
+                    if(targetAsCCBMemberVariableAssigner != NULL) {
+                        assigned = targetAsCCBMemberVariableAssigner->onAssignCCBMemberVariable(target, memberVarAssignmentName.c_str(), node);
+                    }
+                    
+                    if(!assigned && this->mCCBMemberVariableAssigner != NULL) {
+                        assigned = this->mCCBMemberVariableAssigner->onAssignCCBMemberVariable(target, memberVarAssignmentName.c_str(), node);
+                    }
+                }
+            }
+        }
+        else
         {
-            target = this->mOwner;
-        }
-
-        if(target != NULL) {
-            bool assigned = false;
-
-            CCBMemberVariableAssigner * targetAsCCBMemberVariableAssigner = dynamic_cast<CCBMemberVariableAssigner *>(target);
-
-            if(targetAsCCBMemberVariableAssigner != NULL) {
-                assigned = targetAsCCBMemberVariableAssigner->onAssignCCBMemberVariable(target, memberVarAssignmentName.c_str(), node);
-            }
-
-            if(!assigned && this->mCCBMemberVariableAssigner != NULL) {
-                this->mCCBMemberVariableAssigner->onAssignCCBMemberVariable(target, memberVarAssignmentName.c_str(), node);
-            }
-        }
-        } else {
             if(memberVarAssignmentType == kCCBTargetTypeDocumentRoot) {
                 mActionManager->addDocumentOutletName(memberVarAssignmentName);
                 mActionManager->addDocumentOutletNode(node);
@@ -670,6 +677,36 @@ CCNode * CCBReader::readNodeGraph(CCNode * pParent) {
             }
         }
     }
+    
+    // Assign custom properties.
+    if (ccNodeLoader->getCustomProperties()->count() > 0) {
+            
+        bool customAssigned = false;
+        
+        if(!jsControlled)
+        {
+            CCObject * target = mActionManager->getRootNode();
+            if(target != NULL)
+            {
+                CCBMemberVariableAssigner * targetAsCCBMemberVariableAssigner = dynamic_cast<CCBMemberVariableAssigner *>(target);
+                if(targetAsCCBMemberVariableAssigner != NULL) {
+                    
+                    CCDictionary* pCustomPropeties = ccNodeLoader->getCustomProperties();
+                    CCDictElement* pElement;
+                    CCDICT_FOREACH(pCustomPropeties, pElement)
+                    {
+                        customAssigned = targetAsCCBMemberVariableAssigner->onAssignCCBCustomProperty(target, pElement->getStrKey(), (CCBValue*)pElement->getObject());
+
+                        if(!customAssigned && this->mCCBMemberVariableAssigner != NULL)
+                        {
+                            customAssigned = this->mCCBMemberVariableAssigner->onAssignCCBCustomProperty(target, pElement->getStrKey(), (CCBValue*)pElement->getObject());
+                        }
+                    }
+                }
+            }
+        }
+    }
+
 #endif // CCB_ENABLE_JAVASCRIPT
     
     delete mAnimatedProps;
