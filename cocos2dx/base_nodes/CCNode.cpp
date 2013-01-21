@@ -293,6 +293,26 @@ void CCNode::setPosition(float x, float y)
     setPosition(ccp(x, y));
 }
 
+float CCNode::getPositionX(void)
+{
+    return m_obPosition.x;
+}
+
+float CCNode::getPositionY(void)
+{
+    return  m_obPosition.y;
+}
+
+void CCNode::setPositionX(float x)
+{
+    setPosition(ccp(x, m_obPosition.y));
+}
+
+void CCNode::setPositionY(float y)
+{
+    setPosition(ccp(m_obPosition.x, y));
+}
+
 /// children getter
 CCArray* CCNode::getChildren()
 {
