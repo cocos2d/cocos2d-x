@@ -685,7 +685,7 @@ CCNode * CCBReader::readNodeGraph(CCNode * pParent) {
         
         if(!jsControlled)
         {
-            CCObject * target = mActionManager->getRootNode();
+            CCObject * target = node;
             if(target != NULL)
             {
                 CCBMemberVariableAssigner * targetAsCCBMemberVariableAssigner = dynamic_cast<CCBMemberVariableAssigner *>(target);
