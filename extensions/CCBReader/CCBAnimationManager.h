@@ -143,6 +143,14 @@ public:
     virtual void startWithTarget(CCNode *pNode);
 };
 
+class CCBEaseInstant : public CCActionEase
+{
+public:
+    static CCBEaseInstant* create(CCActionInterval *pAction);
+    
+    virtual void update(float dt);
+};
+
 NS_CC_EXT_END
 
 #endif // __CCB_CCBANIMATION_MANAGER_H__
