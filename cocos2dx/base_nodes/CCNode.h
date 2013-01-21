@@ -311,6 +311,14 @@ public:
      * @see setPosition(float, float)
      */
     void getPosition(float* x, float* y);
+    /**
+     * Gets/Sets x or y coordinate individually for position.
+     * These methods are used in Lua and Javascript Bindings
+     */
+    void  setPositionX(float x);
+    float getPositionX(void);
+    void  setPositionY(float y);
+    float getPositionY(void);
     
     
     /**
