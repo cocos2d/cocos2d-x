@@ -174,7 +174,10 @@ Developers:
         Adding lua support for linux platform.
 	
     Jozef Prídavok (jpridavok)
-	Adding CCEditBox implementation for Mac OSX.
+        Adding CCEditBox implementation for Mac OSX.
+
+    tiantian20007
+        Fix crash for call runAnimation() in CCBAnimationManagerDelegate::completedAnimationSequenceNamed.
 
 Retired Core Developers:
     WenSheng Yang

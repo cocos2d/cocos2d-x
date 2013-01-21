@@ -670,22 +670,24 @@ void CCBAnimationManager::setAnimationCompletedCallback(CCObject *target, SEL_Ca
 
 void CCBAnimationManager::sequenceCompleted()
 {
+    const char *runningSequenceName = mRunningSequence->getName();
+    int nextSeqId = mRunningSequence->getChainedSequenceId();
+    mRunningSequence = NULL;
     
-    if(lastCompletedSequenceName != mRunningSequence->getName()) {
-        lastCompletedSequenceName = mRunningSequence->getName();
+    if(lastCompletedSequenceName != runningSequenceName) {
+        lastCompletedSequenceName = runningSequenceName;
     }
     
     if (mDelegate)
     {
-        mDelegate->completedAnimationSequenceNamed(mRunningSequence->getName());
+        // There may be another runAnimation() call in this delegate method
+        // which will assign mRunningSequence
+        mDelegate->completedAnimationSequenceNamed(runningSequenceName);
     }
     
     if (mTarget && mAnimationCompleteCallbackFunc) {
         (mTarget->*mAnimationCompleteCallbackFunc)();
     }
-    
-    int nextSeqId = mRunningSequence->getChainedSequenceId();
-    mRunningSequence = NULL;
     
     if (nextSeqId != -1)
     {
