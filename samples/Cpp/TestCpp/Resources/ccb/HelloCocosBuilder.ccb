@@ -20,6 +20,8 @@
 	<integer>4</integer>
 	<key>guides</key>
 	<array/>
+	<key>jsControlled</key>
+	<false/>
 	<key>nodeGraph</key>
 	<dict>
 		<key>animatedProperties</key>
@@ -62,6 +64,17 @@
 					</dict>
 					<dict>
 						<key>name</key>
+						<string>anchorPoint</string>
+						<key>type</key>
+						<string>Point</string>
+						<key>value</key>
+						<array>
+							<real>0.5</real>
+							<real>0.5</real>
+						</array>
+					</dict>
+					<dict>
+						<key>name</key>
 						<string>scale</string>
 						<key>type</key>
 						<string>ScaleLock</string>
@@ -75,11 +88,11 @@
 					</dict>
 					<dict>
 						<key>name</key>
-						<string>visible</string>
+						<string>ignoreAnchorPointForPosition</string>
 						<key>type</key>
 						<string>Check</string>
 						<key>value</key>
-						<true/>
+						<false/>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -166,14 +179,6 @@
 					</dict>
 					<dict>
 						<key>name</key>
-						<string>visible</string>
-						<key>type</key>
-						<string>Check</string>
-						<key>value</key>
-						<true/>
-					</dict>
-					<dict>
-						<key>name</key>
 						<string>isTouchEnabled</string>
 						<key>platform</key>
 						<string>iOS</string>
@@ -194,13 +199,13 @@
 					</dict>
 					<dict>
 						<key>name</key>
-						<string>isMouseEnabled</string>
+						<string>mouseEnabled</string>
 						<key>platform</key>
 						<string>Mac</string>
 						<key>type</key>
 						<string>Check</string>
 						<key>value</key>
-						<false/>
+						<true/>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -302,11 +307,11 @@
 					</dict>
 					<dict>
 						<key>name</key>
-						<string>visible</string>
+						<string>ignoreAnchorPointForPosition</string>
 						<key>type</key>
 						<string>Check</string>
 						<key>value</key>
-						<true/>
+						<false/>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -606,6 +611,17 @@
 						</array>
 					</dict>
 					<dict>
+						<key>name</key>
+						<string>anchorPoint</string>
+						<key>type</key>
+						<string>Point</string>
+						<key>value</key>
+						<array>
+							<real>0.5</real>
+							<real>0.5</real>
+						</array>
+					</dict>
+					<dict>
 						<key>baseValue</key>
 						<array>
 							<real>0.5</real>
@@ -625,11 +641,11 @@
 					</dict>
 					<dict>
 						<key>name</key>
-						<string>visible</string>
+						<string>ignoreAnchorPointForPosition</string>
 						<key>type</key>
 						<string>Check</string>
 						<key>value</key>
-						<true/>
+						<false/>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -770,6 +786,17 @@
 					</dict>
 					<dict>
 						<key>name</key>
+						<string>anchorPoint</string>
+						<key>type</key>
+						<string>Point</string>
+						<key>value</key>
+						<array>
+							<real>0.5</real>
+							<real>0.5</real>
+						</array>
+					</dict>
+					<dict>
+						<key>name</key>
 						<string>scale</string>
 						<key>type</key>
 						<string>ScaleLock</string>
@@ -793,11 +820,11 @@
 					</dict>
 					<dict>
 						<key>name</key>
-						<string>visible</string>
+						<string>ignoreAnchorPointForPosition</string>
 						<key>type</key>
 						<string>Check</string>
 						<key>value</key>
-						<true/>
+						<false/>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -898,6 +925,17 @@
 					</dict>
 					<dict>
 						<key>name</key>
+						<string>anchorPoint</string>
+						<key>type</key>
+						<string>Point</string>
+						<key>value</key>
+						<array>
+							<real>0.5</real>
+							<real>0.5</real>
+						</array>
+					</dict>
+					<dict>
+						<key>name</key>
 						<string>scale</string>
 						<key>type</key>
 						<string>ScaleLock</string>
@@ -911,11 +949,11 @@
 					</dict>
 					<dict>
 						<key>name</key>
-						<string>visible</string>
+						<string>ignoreAnchorPointForPosition</string>
 						<key>type</key>
 						<string>Check</string>
 						<key>value</key>
-						<true/>
+						<false/>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -1111,6 +1149,17 @@
 						</array>
 					</dict>
 					<dict>
+						<key>name</key>
+						<string>anchorPoint</string>
+						<key>type</key>
+						<string>Point</string>
+						<key>value</key>
+						<array>
+							<real>0.5</real>
+							<real>0.5</real>
+						</array>
+					</dict>
+					<dict>
 						<key>baseValue</key>
 						<array>
 							<real>1</real>
@@ -1140,11 +1189,11 @@
 					</dict>
 					<dict>
 						<key>name</key>
-						<string>visible</string>
+						<string>ignoreAnchorPointForPosition</string>
 						<key>type</key>
 						<string>Check</string>
 						<key>value</key>
-						<true/>
+						<false/>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -1450,6 +1499,17 @@
 						</array>
 					</dict>
 					<dict>
+						<key>name</key>
+						<string>anchorPoint</string>
+						<key>type</key>
+						<string>Point</string>
+						<key>value</key>
+						<array>
+							<real>0.5</real>
+							<real>0.5</real>
+						</array>
+					</dict>
+					<dict>
 						<key>baseValue</key>
 						<array>
 							<real>1</real>
@@ -1479,11 +1539,11 @@
 					</dict>
 					<dict>
 						<key>name</key>
-						<string>visible</string>
+						<string>ignoreAnchorPointForPosition</string>
 						<key>type</key>
 						<string>Check</string>
 						<key>value</key>
-						<true/>
+						<false/>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -1789,6 +1849,17 @@
 						</array>
 					</dict>
 					<dict>
+						<key>name</key>
+						<string>anchorPoint</string>
+						<key>type</key>
+						<string>Point</string>
+						<key>value</key>
+						<array>
+							<real>0.5</real>
+							<real>0.5</real>
+						</array>
+					</dict>
+					<dict>
 						<key>baseValue</key>
 						<array>
 							<real>1</real>
@@ -1818,11 +1889,11 @@
 					</dict>
 					<dict>
 						<key>name</key>
-						<string>visible</string>
+						<string>ignoreAnchorPointForPosition</string>
 						<key>type</key>
 						<string>Check</string>
 						<key>value</key>
-						<true/>
+						<false/>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -2188,6 +2259,17 @@
 						</array>
 					</dict>
 					<dict>
+						<key>name</key>
+						<string>anchorPoint</string>
+						<key>type</key>
+						<string>Point</string>
+						<key>value</key>
+						<array>
+							<real>0.5</real>
+							<real>0.5</real>
+						</array>
+					</dict>
+					<dict>
 						<key>baseValue</key>
 						<array>
 							<real>1</real>
@@ -2217,11 +2299,11 @@
 					</dict>
 					<dict>
 						<key>name</key>
-						<string>visible</string>
+						<string>ignoreAnchorPointForPosition</string>
 						<key>type</key>
 						<string>Check</string>
 						<key>value</key>
-						<true/>
+						<false/>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -2527,6 +2609,17 @@
 						</array>
 					</dict>
 					<dict>
+						<key>name</key>
+						<string>anchorPoint</string>
+						<key>type</key>
+						<string>Point</string>
+						<key>value</key>
+						<array>
+							<real>0.5</real>
+							<real>0.5</real>
+						</array>
+					</dict>
+					<dict>
 						<key>baseValue</key>
 						<array>
 							<real>1</real>
@@ -2556,11 +2649,11 @@
 					</dict>
 					<dict>
 						<key>name</key>
-						<string>visible</string>
+						<string>ignoreAnchorPointForPosition</string>
 						<key>type</key>
 						<string>Check</string>
 						<key>value</key>
-						<true/>
+						<false/>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -2866,6 +2959,17 @@
 						</array>
 					</dict>
 					<dict>
+						<key>name</key>
+						<string>anchorPoint</string>
+						<key>type</key>
+						<string>Point</string>
+						<key>value</key>
+						<array>
+							<real>0.5</real>
+							<real>0.5</real>
+						</array>
+					</dict>
+					<dict>
 						<key>baseValue</key>
 						<array>
 							<real>1</real>
@@ -2895,11 +2999,11 @@
 					</dict>
 					<dict>
 						<key>name</key>
-						<string>visible</string>
+						<string>ignoreAnchorPointForPosition</string>
 						<key>type</key>
 						<string>Check</string>
 						<key>value</key>
-						<true/>
+						<false/>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -3252,11 +3356,11 @@
 					</dict>
 					<dict>
 						<key>name</key>
-						<string>visible</string>
+						<string>ignoreAnchorPointForPosition</string>
 						<key>type</key>
 						<string>Check</string>
 						<key>value</key>
-						<true/>
+						<false/>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -3485,11 +3589,11 @@
 					</dict>
 					<dict>
 						<key>name</key>
-						<string>visible</string>
+						<string>ignoreAnchorPointForPosition</string>
 						<key>type</key>
 						<string>Check</string>
 						<key>value</key>
-						<true/>
+						<false/>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -3517,6 +3621,49 @@
 		</array>
 		<key>customClass</key>
 		<string>HelloCocosBuilderLayer</string>
+		<key>customProperties</key>
+		<array>
+			<dict>
+				<key>name</key>
+				<string>mCustomPropertyInt</string>
+				<key>optimized</key>
+				<false/>
+				<key>type</key>
+				<integer>0</integer>
+				<key>value</key>
+				<string>123</string>
+			</dict>
+			<dict>
+				<key>name</key>
+				<string>mCustomPropertyFloat</string>
+				<key>optimized</key>
+				<false/>
+				<key>type</key>
+				<integer>1</integer>
+				<key>value</key>
+				<string>123.440002</string>
+			</dict>
+			<dict>
+				<key>name</key>
+				<string>mCustomPropertyBoolean</string>
+				<key>optimized</key>
+				<false/>
+				<key>type</key>
+				<integer>2</integer>
+				<key>value</key>
+				<string>1</string>
+			</dict>
+			<dict>
+				<key>name</key>
+				<string>mCustomPropertyString</string>
+				<key>optimized</key>
+				<false/>
+				<key>type</key>
+				<integer>3</integer>
+				<key>value</key>
+				<string>Hello Custom Property.</string>
+			</dict>
+		</array>
 		<key>displayName</key>
 		<string>HelloCocosBuilder</string>
 		<key>memberVarAssignmentName</key>
@@ -3539,6 +3686,17 @@
 			</dict>
 			<dict>
 				<key>name</key>
+				<string>anchorPoint</string>
+				<key>type</key>
+				<string>Point</string>
+				<key>value</key>
+				<array>
+					<real>0.5</real>
+					<real>0.5</real>
+				</array>
+			</dict>
+			<dict>
+				<key>name</key>
 				<string>scale</string>
 				<key>type</key>
 				<string>ScaleLock</string>
@@ -3553,14 +3711,6 @@
 			<dict>
 				<key>name</key>
 				<string>ignoreAnchorPointForPosition</string>
-				<key>type</key>
-				<string>Check</string>
-				<key>value</key>
-				<true/>
-			</dict>
-			<dict>
-				<key>name</key>
-				<string>visible</string>
 				<key>type</key>
 				<string>Check</string>
 				<key>value</key>
@@ -3588,13 +3738,13 @@
 			</dict>
 			<dict>
 				<key>name</key>
-				<string>isMouseEnabled</string>
+				<string>mouseEnabled</string>
 				<key>platform</key>
 				<string>Mac</string>
 				<key>type</key>
 				<string>Check</string>
 				<key>value</key>
-				<false/>
+				<true/>
 			</dict>
 			<dict>
 				<key>name</key>

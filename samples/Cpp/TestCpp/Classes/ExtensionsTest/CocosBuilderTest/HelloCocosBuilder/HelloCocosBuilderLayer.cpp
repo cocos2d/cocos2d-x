@@ -89,6 +89,40 @@ bool HelloCocosBuilderLayer::onAssignCCBMemberVariable(CCObject * pTarget, const
     return false;
 }
 
+bool HelloCocosBuilderLayer::onAssignCCBCustomProperty(CCObject* pTarget, const char* pMemberVariableName, cocos2d::extension::CCBValue* pCCBValue)
+{
+    bool bRet = false;
+    if (pTarget == this)
+    {
+        if (0 == strcmp(pMemberVariableName, "mCustomPropertyInt"))
+        {
+            this->mCustomPropertyInt = pCCBValue->getIntValue();
+            CCLog("mCustomPropertyInt = %d", mCustomPropertyInt);
+            bRet = true;
+        }
+        else if ( 0 == strcmp(pMemberVariableName, "mCustomPropertyFloat"))
+        {
+            this->mCustomPropertyFloat = pCCBValue->getFloatValue();
+            CCLog("mCustomPropertyFloat = %f", mCustomPropertyFloat);
+            bRet = true;
+        }
+        else if ( 0  == strcmp(pMemberVariableName, "mCustomPropertyBoolean"))
+        {
+            this->mCustomPropertyBoolean = pCCBValue->getBoolValue();
+            CCLog("mCustomPropertyBoolean = %d", mCustomPropertyBoolean);
+            bRet = true;
+        }
+        else if ( 0  == strcmp(pMemberVariableName, "mCustomPropertyString"))
+        {
+            this->mCustomPropertyString = pCCBValue->getStringValue();
+            CCLog("mCustomPropertyString = %s", mCustomPropertyString.c_str());
+            bRet = true;
+        }
+        
+    }
+
+    return bRet;
+}
 
 void HelloCocosBuilderLayer::onMenuTestClicked(CCObject * pSender, cocos2d::extension::CCControlEvent pCCControlEvent) {
     this->openTest("ccb/ccb/TestMenus.ccbi", "TestMenusLayer", MenuTestLayerLoader::loader());
