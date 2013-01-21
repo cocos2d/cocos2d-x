@@ -124,6 +124,7 @@ CCParticleSystem::CCParticleSystem()
     modeA.tangentialAccelVar = 0;
     modeA.radialAccel = 0;
     modeA.radialAccelVar = 0;
+    modeA.rotationIsDir = false;
     modeB.startRadius = 0;
     modeB.startRadiusVar = 0;
     modeB.endRadius = 0;
@@ -277,6 +278,9 @@ bool CCParticleSystem::initWithDictionary(CCDictionary *dictionary, const char *
                 // tangential acceleration
                 modeA.tangentialAccel = dictionary->valueForKey("tangentialAcceleration")->floatValue();
                 modeA.tangentialAccelVar = dictionary->valueForKey("tangentialAccelVariance")->floatValue();
+                
+                // rotation is dir
+                modeA.rotationIsDir = dictionary->valueForKey("rotationIsDir")->boolValue();
             }
 
             // or Mode B: radius movement
@@ -544,6 +548,9 @@ void CCParticleSystem::initParticle(tCCParticle* particle)
         // tangential accel
         particle->modeA.tangentialAccel = modeA.tangentialAccel + modeA.tangentialAccelVar * CCRANDOM_MINUS1_1();
 
+        // rotation is dir
+        if(modeA.rotationIsDir)
+            particle->rotation = -CC_RADIANS_TO_DEGREES(ccpToAngle(particle->modeA.dir));
     }
 
     // Mode Radius: B
@@ -895,6 +902,18 @@ float CCParticleSystem::getRadialAccelVar()
 {
     CCAssert( m_nEmitterMode == kCCParticleModeGravity, "Particle Mode should be Gravity");
     return modeA.radialAccelVar;
+}
+
+void CCParticleSystem::setRotationIsDir(bool t)
+{
+    CCAssert( m_nEmitterMode == kCCParticleModeGravity, "Particle Mode should be Gravity");
+    modeA.rotationIsDir = t;
+}
+
+bool CCParticleSystem::getRotationIsDir()
+{
+    CCAssert( m_nEmitterMode == kCCParticleModeGravity, "Particle Mode should be Gravity");
+    return modeA.rotationIsDir;
 }
 
 void CCParticleSystem::setGravity(const CCPoint& g)
