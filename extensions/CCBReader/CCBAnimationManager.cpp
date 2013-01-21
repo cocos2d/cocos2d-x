@@ -99,9 +99,7 @@ CCNode* CCBAnimationManager::getRootNode()
 
 void CCBAnimationManager::setRootNode(CCNode *pRootNode)
 {
-    CC_SAFE_RELEASE(mRootNode);
     mRootNode = pRootNode;
-    CC_SAFE_RETAIN(mRootNode);
 }
 
 void CCBAnimationManager::setDocumentControllerName(const std::string &name) {
@@ -458,9 +456,13 @@ void CCBAnimationManager::setFirstFrame(CCNode *pNode, CCBSequenceProperty *pSeq
 
 CCActionInterval* CCBAnimationManager::getEaseAction(CCActionInterval *pAction, int nEasingType, float fEasingOpt)
 {
-    if (nEasingType == kCCBKeyframeEasingLinear || nEasingType == kCCBKeyframeEasingInstant)
+    if (nEasingType == kCCBKeyframeEasingLinear)
     {
         return pAction;
+    }
+    else if (nEasingType == kCCBKeyframeEasingInstant)
+    {
+        return CCBEaseInstant::create(pAction);
     }
     else if (nEasingType == kCCBKeyframeEasingCubicIn)
     {
@@ -666,28 +668,32 @@ void CCBAnimationManager::setAnimationCompletedCallback(CCObject *target, SEL_Ca
 
 void CCBAnimationManager::sequenceCompleted()
 {
+    const char *runningSequenceName = mRunningSequence->getName();
+    int nextSeqId = mRunningSequence->getChainedSequenceId();
+    mRunningSequence = NULL;
     
-    if(lastCompletedSequenceName != mRunningSequence->getName()) {
-        lastCompletedSequenceName = mRunningSequence->getName();
+    if(lastCompletedSequenceName != runningSequenceName) {
+        lastCompletedSequenceName = runningSequenceName;
     }
     
     if (mDelegate)
     {
-        mDelegate->completedAnimationSequenceNamed(mRunningSequence->getName());
+        // There may be another runAnimation() call in this delegate method
+        // which will assign mRunningSequence
+        mDelegate->completedAnimationSequenceNamed(runningSequenceName);
     }
     
     if (mTarget && mAnimationCompleteCallbackFunc) {
         (mTarget->*mAnimationCompleteCallbackFunc)();
     }
     
-    int nextSeqId = mRunningSequence->getChainedSequenceId();
-    mRunningSequence = NULL;
-    
     if (nextSeqId != -1)
     {
         runAnimationsForSequenceIdTweenDuration(nextSeqId, 0);
     }
 }
+
+// Custom actions
 
 /************************************************************
  CCBSetSpriteFrame
@@ -813,5 +819,36 @@ void CCBRotateTo::update(float time)
     m_pTarget->setRotation(mStartAngle + (mDiffAngle * time))
     ;
 }
+
+/************************************************************
+ CCBEaseInstant
+ ************************************************************/
+CCBEaseInstant* CCBEaseInstant::create(CCActionInterval *pAction)
+{
+    CCBEaseInstant *pRet = new CCBEaseInstant();
+    if (pRet && pRet->initWithAction(pAction))
+    {
+        pRet->autorelease();
+    }
+    else
+    {
+        CC_SAFE_RELEASE_NULL(pRet);
+    }
+    
+    return pRet;
+}
+
+void CCBEaseInstant::update(float dt)
+{
+    if (dt < 0)
+    {
+        m_pInner->update(0);
+    }
+    else
+    {
+        m_pInner->update(1);
+    }
+}
+
 
 NS_CC_EXT_END

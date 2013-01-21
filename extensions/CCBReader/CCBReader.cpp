@@ -69,6 +69,8 @@ CCBReader::CCBReader(CCNodeLoaderLibrary * pCCNodeLoaderLibrary, CCBMemberVariab
 , mActionManagers(NULL)
 , mNodesWithAnimationManagers(NULL)
 , mAnimationManagersForNodes(NULL)
+, mOwnerOutletNodes(NULL)
+, mOwnerCallbackNodes(NULL)
 {
     this->mCCNodeLoaderLibrary = pCCNodeLoaderLibrary;
     this->mCCNodeLoaderLibrary->retain();
@@ -90,6 +92,8 @@ CCBReader::CCBReader(CCBReader * pCCBReader)
 , mActionManagers(NULL)
 , mNodesWithAnimationManagers(NULL)
 , mAnimationManagersForNodes(NULL)
+, mOwnerOutletNodes(NULL)
+, mOwnerCallbackNodes(NULL)
 {
     this->mLoadedSpriteSheets = pCCBReader->mLoadedSpriteSheets;
     this->mCCNodeLoaderLibrary = pCCBReader->mCCNodeLoaderLibrary;
@@ -134,9 +138,9 @@ CCBReader::~CCBReader() {
 
     this->mCCNodeLoaderLibrary->release();
 
-    mOwnerOutletNodes->release();
+    CC_SAFE_RELEASE(mOwnerOutletNodes);
     mOwnerOutletNames.clear();
-    mOwnerCallbackNodes->release();
+    CC_SAFE_RELEASE(mOwnerCallbackNodes);
     mOwnerCallbackNames.clear();
 
     // Clear string cache.
@@ -146,7 +150,6 @@ CCBReader::~CCBReader() {
     CC_SAFE_RELEASE(mAnimationManagersForNodes);
 
     setAnimationManager(NULL);
-    setAnimationManagers(NULL);
 }
 
 void CCBReader::setCCBRootPath(const char* pCCBRootPath)
@@ -192,9 +195,7 @@ CCDictionary* CCBReader::getAnimationManagers()
 
 void CCBReader::setAnimationManagers(CCDictionary* x)
 {
-    CC_SAFE_RELEASE(mActionManagers);
     mActionManagers = x;
-    CC_SAFE_RETAIN(mActionManagers);
 }
 
 CCBMemberVariableAssigner * CCBReader::getCCBMemberVariableAssigner() {
@@ -293,7 +294,7 @@ CCNode* CCBReader::readNodeGraphFromData(CCData *pData, CCObject *pOwner, const 
     {
         CCNode* pNode = (CCNode*)pElement->getIntKey();
         CCBAnimationManager* manager = (CCBAnimationManager*)animationManagers->objectForKey((intptr_t)pNode);
-        pNode->setUserObject(manager);
+        //pNode->setUserObject(manager);
 
         if (jsControlled)
         {

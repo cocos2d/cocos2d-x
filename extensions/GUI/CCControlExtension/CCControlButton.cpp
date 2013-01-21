@@ -63,6 +63,8 @@ CCControlButton::CCControlButton()
 
 CCControlButton::~CCControlButton()
 {
+    CC_SAFE_RELEASE(m_currentTitle);
+    CC_SAFE_RELEASE(m_titleLabel);
     CC_SAFE_RELEASE(m_backgroundSpriteDispatchTable);
     CC_SAFE_RELEASE(m_titleLabelDispatchTable);
     CC_SAFE_RELEASE(m_titleColorDispatchTable);
