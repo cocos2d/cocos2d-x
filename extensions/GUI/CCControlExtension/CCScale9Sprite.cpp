@@ -458,25 +458,6 @@ CCScale9Sprite* CCScale9Sprite::create(const char* file, CCRect rect)
     return NULL;
 }
 
-
-bool CCScale9Sprite::initWithFile(CCRect capInsets, const char* file)
-{
-    bool pReturn = this->initWithFile(file, CCRectZero, capInsets);
-    return pReturn;
-}
-
-CCScale9Sprite* CCScale9Sprite::create(CCRect capInsets, const char* file)
-{
-    CCScale9Sprite* pReturn = new CCScale9Sprite();
-    if ( pReturn && pReturn->initWithFile(file, capInsets) )
-    {
-        pReturn->autorelease();
-        return pReturn;
-    }
-    CC_SAFE_DELETE(pReturn);
-    return NULL;
-}
-
 bool CCScale9Sprite::initWithFile(const char* file)
 {
     bool pReturn = this->initWithFile(file, CCRectZero);
