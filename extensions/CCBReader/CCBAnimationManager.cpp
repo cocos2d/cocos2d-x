@@ -458,9 +458,13 @@ void CCBAnimationManager::setFirstFrame(CCNode *pNode, CCBSequenceProperty *pSeq
 
 CCActionInterval* CCBAnimationManager::getEaseAction(CCActionInterval *pAction, int nEasingType, float fEasingOpt)
 {
-    if (nEasingType == kCCBKeyframeEasingLinear || nEasingType == kCCBKeyframeEasingInstant)
+    if (nEasingType == kCCBKeyframeEasingLinear)
     {
         return pAction;
+    }
+    else if (nEasingType == kCCBKeyframeEasingInstant)
+    {
+        return CCBEaseInstant::create(pAction);
     }
     else if (nEasingType == kCCBKeyframeEasingCubicIn)
     {
@@ -689,6 +693,8 @@ void CCBAnimationManager::sequenceCompleted()
     }
 }
 
+// Custom actions
+
 /************************************************************
  CCBSetSpriteFrame
  ************************************************************/
@@ -813,5 +819,36 @@ void CCBRotateTo::update(float time)
     m_pTarget->setRotation(mStartAngle + (mDiffAngle * time))
     ;
 }
+
+/************************************************************
+ CCBEaseInstant
+ ************************************************************/
+CCBEaseInstant* CCBEaseInstant::create(CCActionInterval *pAction)
+{
+    CCBEaseInstant *pRet = new CCBEaseInstant();
+    if (pRet && pRet->initWithAction(pAction))
+    {
+        pRet->autorelease();
+    }
+    else
+    {
+        CC_SAFE_RELEASE_NULL(pRet);
+    }
+    
+    return pRet;
+}
+
+void CCBEaseInstant::update(float dt)
+{
+    if (dt < 0)
+    {
+        m_pInner->update(0);
+    }
+    else
+    {
+        m_pInner->update(1);
+    }
+}
+
 
 NS_CC_EXT_END
