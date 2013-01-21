@@ -315,10 +315,10 @@ public:
      * Gets/Sets x or y coordinate individually for position.
      * These methods are used in Lua and Javascript Bindings
      */
-    void  setPositionX(float x);
-    float getPositionX(void);
-    void  setPositionY(float y);
-    float getPositionY(void);
+    inline void  setPositionX(float x);
+    inline float getPositionX(void);
+    inline void  setPositionY(float y);
+    inline float getPositionY(void);
     
     
     /**
