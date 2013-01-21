@@ -99,9 +99,7 @@ CCNode* CCBAnimationManager::getRootNode()
 
 void CCBAnimationManager::setRootNode(CCNode *pRootNode)
 {
-    CC_SAFE_RELEASE(mRootNode);
     mRootNode = pRootNode;
-    CC_SAFE_RETAIN(mRootNode);
 }
 
 void CCBAnimationManager::setDocumentControllerName(const std::string &name) {
