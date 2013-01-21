@@ -82,20 +82,19 @@ public:
     /** Returns the fullpath for a given filename.
      
      First it will try to get a new filename from the "filenameLookup" dictionary. If a new filename can't be found on the dictionary, it will use the original filename.
-     Then it will try obtain the full path of the filename using the CCFileUtils search rules: resolutions, and search paths
+     Then it will try obtain the full path of the filename using the CCFileUtils search rules:  resources directory
      
-     If in iPad mode, and an iPad file is found, it will return that path.
-     If in iPhoneRetinaDisplay mode, and a RetinaDisplay file is found, it will return that path. But if it is not found, it will try load an iPhone Non-RetinaDisplay  file.
+     If the filename can't be found on resource directory(e.g. Resources/iphone-hd), it will go back to the root of asset folder(e.g. Resources/) to find the filename.
      
-     If the filename can't be found on the file system, it will return nil.
+     If the filename can't be found on the file system, it will return the filename directly.
      
      This method was added to simplify multiplatform support. Whether you are using cocos2d-js or any cross-compilation toolchain like StellaSDK or Apportable,
      you might need to load differerent resources for a given file in the different platforms.
      
      Examples:
      
-     * In iPad mode: "image.png" -> "image.pvr" -> "/full/path/image-ipad.pvr" (in case the -ipad file exists)
-     * In Android: "image.png" -> "image.png" -> "/full/path/image.png"
+     * In iOS: "image.png" -> "image.pvr" -> "/full/path/res_dir/image.pvr"
+     * In Android: "image.png" -> "image.png" -> "/full/path/res_dir/image.png"
      
      @since v2.1
      */
@@ -109,7 +108,7 @@ public:
      * <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
      * <plist version="1.0">
      * <dict>
-     *     <key>filenames</key>
+     *     <key>ios</key>
      *     <dict>
      *         <key>sounds/click.wav</key>
      *         <string>sounds/click.caf</string>
@@ -117,6 +116,15 @@ public:
      *         <string>sounds/endgame.caf</string>
      *         <key>sounds/gem-0.wav</key>
      *         <string>sounds/gem-0.caf</string>
+     *     </dict>
+     *     <key>android</key>
+     *     <dict>
+     *         <key>sounds/click.wav</key>
+     *         <string>sounds/click.ogg</string>
+     *         <key>sounds/endgame.wav</key>
+     *         <string>sounds/endgame.ogg</string>
+     *         <key>sounds/gem-0.wav</key>
+     *         <string>sounds/gem-0.ogg</string>
      *     </dict>
      *     <key>metadata</key>
      *     <dict>
