@@ -840,12 +840,13 @@ CCNode * CCNodeLoader::parsePropTypeCCBFile(CCNode * pNode, CCNode * pParent, CC
     CC_SAFE_RETAIN(pCCBReader->mOwner);
     ccbReader->mOwner = pCCBReader->mOwner;
 
-    ccbReader->mOwnerOutletNames = pCCBReader->mOwnerOutletNames;
-    ccbReader->mOwnerOutletNodes = pCCBReader->mOwnerOutletNodes;
-    ccbReader->mOwnerOutletNodes->retain();
-    ccbReader->mOwnerCallbackNames = pCCBReader->mOwnerCallbackNames;
-    ccbReader->mOwnerCallbackNodes = pCCBReader->mOwnerCallbackNodes;
-    ccbReader->mOwnerCallbackNodes->retain();
+    // The assignments below are done in the CCBReader constructor.
+//     ccbReader->mOwnerOutletNames = pCCBReader->mOwnerOutletNames;
+//     ccbReader->mOwnerOutletNodes = pCCBReader->mOwnerOutletNodes;
+//     ccbReader->mOwnerOutletNodes->retain();
+//     ccbReader->mOwnerCallbackNames = pCCBReader->mOwnerCallbackNames;
+//     ccbReader->mOwnerCallbackNodes = pCCBReader->mOwnerCallbackNodes;
+//     ccbReader->mOwnerCallbackNodes->retain();
 
     data->release();
     
