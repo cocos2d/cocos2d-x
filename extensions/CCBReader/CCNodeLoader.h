@@ -4,6 +4,7 @@
 #include "../GUI/CCControlExtension/CCInvocation.h"
 #include "cocos2d.h"
 #include "CCBReader.h"
+#include "CCBValue.h"
 
 NS_CC_EXT_BEGIN
 
@@ -41,12 +42,14 @@ class CCBReader;
 
 class CCNodeLoader : public CCObject {
     public:
-        virtual ~CCNodeLoader() {};
+        CCNodeLoader();
+        virtual ~CCNodeLoader();
         CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(CCNodeLoader, loader);
 
         virtual CCNode * loadCCNode(CCNode *, CCBReader * pCCBReader);
         virtual void parseProperties(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader);
-
+        virtual CCDictionary* getCustomProperties();
+    
     protected:
         CCB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(CCNode);
 
@@ -106,6 +109,9 @@ class CCNodeLoader : public CCObject {
         virtual void onHandlePropTypeBlock(CCNode * pNode, CCNode * pParent, const char* pPropertyName, BlockData * pBlockData, CCBReader * pCCBReader);
         virtual void onHandlePropTypeBlockCCControl(CCNode * pNode, CCNode * pParent, const char* pPropertyName, BlockCCControlData * pBlockCCControlData, CCBReader * pCCBReader);
         virtual void onHandlePropTypeCCBFile(CCNode * pNode, CCNode * pParent, const char* pPropertyName, CCNode * pCCBFileNode, CCBReader * pCCBReader);
+
+protected:
+        CCDictionary* m_pCustomProperties;
 };
 
 NS_CC_EXT_END

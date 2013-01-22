@@ -31,6 +31,7 @@ class HelloCocosBuilderLayer
         virtual cocos2d::SEL_MenuHandler onResolveCCBCCMenuItemSelector(cocos2d::CCObject * pTarget, const char * pSelectorName);
         virtual cocos2d::extension::SEL_CCControlHandler onResolveCCBCCControlSelector(cocos2d::CCObject * pTarget, const char * pSelectorName);
         virtual bool onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode);
+        virtual bool onAssignCCBCustomProperty(CCObject* pTarget, const char* pMemberVariableName, cocos2d::extension::CCBValue* pCCBValue);
         virtual void onNodeLoaded(cocos2d::CCNode * pNode, cocos2d::extension::CCNodeLoader * pNodeLoader);
 
         void onMenuTestClicked(cocos2d::CCObject * pSender, cocos2d::extension::CCControlEvent pCCControlEvent);
@@ -43,6 +44,11 @@ class HelloCocosBuilderLayer
     private:
         cocos2d::CCSprite * mBurstSprite;
         cocos2d::CCLabelTTF * mTestTitleLabelTTF;
+    
+        int mCustomPropertyInt;
+        float mCustomPropertyFloat;
+        bool mCustomPropertyBoolean;
+        std::string mCustomPropertyString;
 };
 
 #endif
