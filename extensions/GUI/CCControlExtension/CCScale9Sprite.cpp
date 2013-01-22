@@ -468,7 +468,7 @@ bool CCScale9Sprite::initWithFile(CCRect capInsets, const char* file)
 CCScale9Sprite* CCScale9Sprite::create(CCRect capInsets, const char* file)
 {
     CCScale9Sprite* pReturn = new CCScale9Sprite();
-    if ( pReturn && pReturn->initWithFile(file, capInsets) )
+    if ( pReturn && pReturn->initWithFile(capInsets, file) )
     {
         pReturn->autorelease();
         return pReturn;
