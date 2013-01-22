@@ -63,20 +63,17 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 	public Cocos2dxGLSurfaceView(final Context context) {
 		super(context);
 
-		this.setEGLContextClientVersion(2);
-
 		this.initView();
 	}
 
 	public Cocos2dxGLSurfaceView(final Context context, final AttributeSet attrs) {
 		super(context, attrs);
-
-		this.setEGLContextClientVersion(2);
-
+		
 		this.initView();
 	}
 
 	protected void initView() {
+		this.setEGLContextClientVersion(2);
 		this.setFocusableInTouchMode(true);
 
 		Cocos2dxGLSurfaceView.mCocos2dxGLSurfaceView = this;
