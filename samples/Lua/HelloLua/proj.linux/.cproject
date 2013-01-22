@@ -219,7 +219,6 @@
 									<listOptionValue builtIn="false" value="../../../../../cocos2dx/kazmath/include"/>
 									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/linux"/>
 									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/linux"/>
-									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/include"/>
 									<listOptionValue builtIn="false" value="../../../../../CocosDenshion/include"/>
 									<listOptionValue builtIn="false" value="../../../../../scripting/lua/cocos2dx_support"/>
 									<listOptionValue builtIn="false" value="../../../../../scripting/lua/lua"/>
@@ -262,7 +261,6 @@
 								</option>
 								<option id="gnu.cpp.link.option.paths.516157740" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="&quot;../../../../../cocos2dx/proj.linux/${ConfigName}&quot;"/>
-									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib"/>
 									<listOptionValue builtIn="false" value="&quot;../../../../../CocosDenshion/proj.linux/${ConfigName}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;../../../../../scripting/lua/proj.linux/${ConfigName}&quot;"/>
 									<listOptionValue builtIn="false" value="../../../../../CocosDenshion/third_party/fmod/lib64/api/lib"/>
@@ -316,7 +314,6 @@
 									<listOptionValue builtIn="false" value="../../../../../cocos2dx/kazmath/include"/>
 									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/linux"/>
 									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/linux"/>
-									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/include"/>
 									<listOptionValue builtIn="false" value="../../../../../CocosDenshion/include"/>
 									<listOptionValue builtIn="false" value="../../../../../scripting/lua/cocos2dx_support"/>
 									<listOptionValue builtIn="false" value="../../../../../scripting/lua/lua"/>
@@ -359,7 +356,6 @@
 								</option>
 								<option id="gnu.cpp.link.option.paths.2111931120" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="&quot;../../../../../cocos2dx/proj.linux/${ConfigName}&quot;"/>
-									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib"/>
 									<listOptionValue builtIn="false" value="&quot;../../../../../CocosDenshion/proj.linux/${ConfigName}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;../../../../../scripting/lua/proj.linux/${ConfigName}&quot;"/>
 									<listOptionValue builtIn="false" value="../../../../../CocosDenshion/third_party/fmod/lib64/api/lib"/>

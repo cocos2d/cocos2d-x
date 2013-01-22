@@ -17,7 +17,6 @@ INCLUDES =  -I../ \
 			-I$(COCOS2DX_PATH)/kazmath/include \
 			-I$(COCOS2DX_PATH)/platform \
 			-I$(COCOS2DX_PATH)/platform/linux \
-			-I$(COCOS2DX_PATH)/platform/third_party/linux/glew-1.7.0/glew-1.7.0/include/ \
 			-I$(COCOS2DX_PATH)/platform/third_party/linux/libxml2 \
 			-I$(COCOS2DX_PATH)/platform/third_party/linux/libjpeg  \
 			-I../../../../CocosDenshion/include \
