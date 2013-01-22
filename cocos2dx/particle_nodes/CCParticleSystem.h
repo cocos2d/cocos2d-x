@@ -197,7 +197,7 @@ protected:
         /** radial acceleration variance of each particle. Only available in 'Gravity' mode. */
         float radialAccelVar;
         /** set the rotation of each particle to its direction Only available in 'Gravity' mode. */
-        bool rotationIsDir
+        bool rotationIsDir;
     } modeA;
 
     //! Mode B: circular movement (gravity, radial accel and tangential accel don't are not used in this mode)
