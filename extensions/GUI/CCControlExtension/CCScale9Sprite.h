@@ -151,27 +151,6 @@ public:
      * @see initWithFile:rect:
      */
     static CCScale9Sprite* create(const char* file, CCRect rect);
-
-    /**
-     * Initializes a 9-slice sprite with a texture file and with the specified cap
-     * insets.
-     * Once the sprite is created, you can then call its "setContentSize:" method
-     * to resize the sprite will all it's 9-slice goodness intract.
-     * It respects the anchorPoint too.
-     *
-     * @param file The name of the texture file.
-     * @param capInsets The values to use for the cap insets.
-     */
-    virtual bool initWithFile(CCRect capInsets, const char* file);
-
-    /** 
-     * Creates a 9-slice sprite with a texture file. The whole texture will be
-     * broken down into a 3×3 grid of equal blocks.
-     *
-     * @see initWithFile:capInsets:
-     */
-    static CCScale9Sprite* create(CCRect capInsets, const char* file);
-
     
     /**
      * Initializes a 9-slice sprite with a texture file. The whole texture will be
