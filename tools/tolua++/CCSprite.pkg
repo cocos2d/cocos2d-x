@@ -39,13 +39,11 @@ class CCSprite : public CCNode
 
 	CCPoint getOffsetPosition(void);
 
-	void setDirtyRecursively(bool bValue);
 	void ignoreAnchorPointForPosition(bool newValue);
 	void setFlipX(bool bFlipX);
 	void setFlipY(bool bFlipY);
 	bool isFlipX(void);
 	bool isFlipY(void);
-	void updateColor(void);
 
 	void removeChild(CCNode* pChild, bool bCleanUp);
 	void removeAllChildrenWithCleanup(bool bCleanup);
