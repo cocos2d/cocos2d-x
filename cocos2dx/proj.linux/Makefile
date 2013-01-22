@@ -20,7 +20,6 @@ INCLUDES = -I.. \
                         -I../../external/chipmunk/include/chipmunk \
 			-I../../extensions/network \
 			-I../platform/linux/ \
-			-I../platform/third_party/linux/glew-1.7.0/glew-1.7.0/include/ \
 			-I../platform/third_party/linux/libxml2 \
 			-I../platform/third_party/linux/libpng \
 			-I../platform/third_party/linux/libjpeg \
@@ -168,7 +167,7 @@ STATICLIBS = $(STATICLIBS_DIR)/libfreetype.a \
 				$(STATICLIBS_DIR)/libtiff.a 
 
 SHAREDLIBS = 
-SHAREDLIBS += -lglfw -lGL -lcurl -lfontconfig
+SHAREDLIBS += -lglfw -lcurl -lfontconfig
 SHAREDLIBS += -Wl,-rpath,../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib
 SHAREDLIBS += -L../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib -lGLEW
 
