@@ -1,5 +1,8 @@
 dbg = {};
 
+cc = cc || {};
+cc.log = log;
+
 var breakpointHandler = {
 	hit: function (frame) {
 		var script = frame.script;
