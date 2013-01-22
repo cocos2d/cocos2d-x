@@ -35,7 +35,7 @@ class CCBMemberVariableAssigner {
 
         /**
          *  The callback function of assigning custom properties.
-         *  @note The member variable must be CCNode or its subclass.
+         *  @note The member variable must be Integer, Float, Boolean or String.
          *  @param pTarget The custom class.
          *  @param pMemberVariableName The name of the member variable.
          *  @param pValue The value of the property.
