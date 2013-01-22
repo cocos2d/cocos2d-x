@@ -309,7 +309,6 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libxml2"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libjpeg"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libtiff/include"/>
-									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/include"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.preprocessor.def.500904227" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="LINUX"/>
@@ -349,7 +348,6 @@
 								<option id="gnu.cpp.link.option.libs.1702730055" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
 									<listOptionValue builtIn="false" value="glfw"/>
 									<listOptionValue builtIn="false" value="fontconfig"/>
-									<listOptionValue builtIn="false" value="GL"/>
 									<listOptionValue builtIn="false" value="GLEW"/>
 								</option>
 								<option id="gnu.cpp.link.option.soname.1183316897" name="Shared object name (-Wl,-soname=)" superClass="gnu.cpp.link.option.soname" value="" valueType="string"/>
@@ -361,9 +359,7 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/lib64/libpng.a"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/lib64/libjpeg.a"/>
 								</option>
-								<option id="gnu.cpp.link.option.paths.2216001" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
-									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib"/>
-								</option>
+								<option id="gnu.cpp.link.option.paths.2216001" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.1435212610" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
@@ -444,7 +440,6 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libxml2"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libjpeg"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libtiff/include"/>
-									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/include"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.preprocessor.def.120885829" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="LINUX"/>
@@ -484,7 +479,6 @@
 								<option id="gnu.cpp.link.option.libs.514385176" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
 									<listOptionValue builtIn="false" value="glfw"/>
 									<listOptionValue builtIn="false" value="fontconfig"/>
-									<listOptionValue builtIn="false" value="GL"/>
 									<listOptionValue builtIn="false" value="GLEW"/>
 								</option>
 								<option id="gnu.cpp.link.option.soname.121494156" name="Shared object name (-Wl,-soname=)" superClass="gnu.cpp.link.option.soname" value="" valueType="string"/>
@@ -496,9 +490,7 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/lib64/libpng.a"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/lib64/libjpeg.a"/>
 								</option>
-								<option id="gnu.cpp.link.option.paths.2133869956" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
-									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib"/>
-								</option>
+								<option id="gnu.cpp.link.option.paths.2133869956" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.350375429" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>

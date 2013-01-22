@@ -20,7 +20,6 @@ INCLUDES = -I.. \
                         -I../../external/chipmunk/include/chipmunk \
 			-I../../extensions/network \
 			-I../platform/linux/ \
-			-I../platform/third_party/linux/glew-1.7.0/glew-1.7.0/include/ \
 			-I../platform/third_party/linux/libxml2 \
 			-I../platform/third_party/linux/libpng \
 			-I../platform/third_party/linux/libjpeg \
