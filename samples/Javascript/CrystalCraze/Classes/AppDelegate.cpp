@@ -33,32 +33,45 @@ bool AppDelegate::applicationDidFinishLaunching()
 
     CCSize designSize = CCSizeMake(320, 480);
     CCSize resourceSize = CCSizeMake(320, 480);
-    
-    CCFileUtils::sharedFileUtils()->setSearchPath(CCArray::create(CCString::create("Published-iOS"), CCString::create(""), NULL));
-//    if (screenSize.height > 1024)
-//    {
-//        resourceSize = CCSizeMake(1536, 2048);
-//        CCFileUtils::sharedFileUtils()->setResourceDirectory("resources-ipadhd");
-//    }
-//     else if (screenSize.height > 960)
-//    {
-//        resourceSize = CCSizeMake(768, 1536);
-//        CCFileUtils::sharedFileUtils()->setResourceDirectory("resources-ipad");
-//    }
-//    else
+    TargetPlatform platform = CCApplication::sharedApplication()->getTargetPlatform();
+    if (platform == kTargetIphone || platform == kTargetIpad)
+    {
+        CCFileUtils::sharedFileUtils()->setSearchPath(CCArray::create(CCString::create("Published-iOS"), CCString::create(""), NULL));
+
         if (screenSize.height > 480)
-    {
-        resourceSize = CCSizeMake(640, 960);
-        CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(CCArray::create(CCString::create("resources-iphonehd"), CCString::create(""),  NULL));
-        //CCFileUtils::sharedFileUtils()->setResourceDirectory("resources-iphonehd");
-        
+        {
+            resourceSize = CCSizeMake(640, 960);
+            CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(CCArray::create(CCString::create("resources-iphonehd"), CCString::create(""),  NULL));
+        }
+        else
+        {
+            CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(CCArray::create(CCString::create("resources-iphone"), CCString::create(""), NULL));
+        }
     }
-    else
+    else if (platform == kTargetAndroid)
     {
-        CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(CCArray::create(CCString::create("resources-iphone"), CCString::create(""), NULL));
-        //CCFileUtils::sharedFileUtils()->setResourceDirectory("resources-iphone");
+        CCFileUtils::sharedFileUtils()->setSearchPath(CCArray::create(CCString::create(""), NULL));
+        if (screenSize.height > 1024)
+        {
+            resourceSize = CCSizeMake(1280, 1920);
+            CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(CCArray::create(CCString::create("resources-xlarge"), CCString::create(""),  NULL));
+        }
+        else if (screenSize.height > 960)
+        {
+            resourceSize = CCSizeMake(640, 960);
+            CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(CCArray::create(CCString::create("resources-large"), CCString::create(""),  NULL));
+        }
+        else if (screenSize.height > 480)
+        {
+            resourceSize = CCSizeMake(480, 720);
+            CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(CCArray::create(CCString::create("resources-medium"), CCString::create(""),  NULL));
+        }
+        else
+        {
+            resourceSize = CCSizeMake(320, 568);
+            CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(CCArray::create(CCString::create("resources-small"), CCString::create(""), NULL));
+        }
     }
-    
     pDirector->setContentScaleFactor(resourceSize.height/designSize.height);
 
     CCEGLView::sharedOpenGLView()->setDesignResolutionSize(designSize.width, designSize.height, kResolutionShowAll);
