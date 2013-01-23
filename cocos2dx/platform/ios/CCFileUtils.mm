@@ -165,7 +165,7 @@ void CCFileUtils::purgeFileUtils()
 
 void CCFileUtils::purgeCachedEntries()
 {
-
+    CC_SAFE_RELEASE(s_pFileUtils->m_pFilenameLookupDict);
 }
 
 void CCFileUtils::setResourceDirectory(const char *pszDirectoryName)
@@ -184,18 +184,39 @@ const char* CCFileUtils::getResourceDirectory()
 
 const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
 {
-    CCAssert(pszRelativePath != NULL, "CCFileUtils: Invalid path");
+    return fullPathForFilename(pszRelativePath);
+}
+
+static const char* getFilenameForLookupDictionary(CCDictionary* pDict, const char* pszFileName)
+{
+    const char* pszNewFileName = NULL;
+    // in Lookup Filename dictionary ?
+    CCString* fileNameFound = pDict ? (CCString*)pDict->objectForKey(pszFileName) : NULL;
+    if( NULL == fileNameFound || fileNameFound->length() == 0) {
+        pszNewFileName = pszFileName;
+    }
+    else {
+        pszNewFileName = fileNameFound->getCString();
+    }
+    return pszNewFileName;
+}
+
+const char* CCFileUtils::fullPathForFilename(const char* filename)
+{
+    CCAssert(filename != NULL, "CCFileUtils: Invalid path");
     
     NSString *fullpath = nil;
-    NSString *relPath = [NSString stringWithUTF8String:pszRelativePath];
+    NSString *relPath = [NSString stringWithUTF8String:filename];
     
     // only if it is not an absolute path
     if( ! [relPath isAbsolutePath] ) {
         
-        // pathForResource also searches in .lproj directories. issue #1230
-        NSString *lastPathComponent = [relPath lastPathComponent];
+        NSString* newfilename = [NSString stringWithUTF8String: getFilenameForLookupDictionary(m_pFilenameLookupDict, filename)];
         
-        NSString *imageDirectory = [relPath stringByDeletingLastPathComponent];
+        // pathForResource also searches in .lproj directories. issue #1230
+        NSString *lastPathComponent = [newfilename lastPathComponent];
+        
+        NSString *imageDirectory = [newfilename stringByDeletingLastPathComponent];
         NSMutableString *imageDirectoryByAppendDirectory = [NSMutableString stringWithUTF8String:m_obDirectory.c_str()];
         [imageDirectoryByAppendDirectory appendString:imageDirectory];
         
@@ -220,13 +241,41 @@ const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
     return [fullpath UTF8String];
 }
 
+void CCFileUtils::loadFilenameLookupDictionaryFromFile(const char* filename)
+{
+    const char* pFullPath = this->fullPathForFilename(filename);
+    if (pFullPath)
+    {
+        CCDictionary* pDict = CCDictionary::createWithContentsOfFile(filename);
+        if (pDict)
+        {
+            CCDictionary* pMetadata = (CCDictionary*)pDict->objectForKey("metadata");
+            int version = ((CCString*)pMetadata->objectForKey("version"))->intValue();
+            if (version != 1)
+            {
+                CCLOG("cocos2d: ERROR: Invalid filenameLookup dictionary version: %ld. Filename: %s", (long)version, filename);
+                return;
+            }
+            
+            setFilenameLookupDictionary((CCDictionary*)pDict->objectForKey("ios"));
+        }
+    }
+}
+
+void CCFileUtils::setFilenameLookupDictionary(CCDictionary* pFilenameLookupDict)
+{
+    CC_SAFE_RELEASE(m_pFilenameLookupDict);
+    m_pFilenameLookupDict = pFilenameLookupDict;
+    CC_SAFE_RETAIN(m_pFilenameLookupDict);
+}
+
 const char *CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const char *pszRelativeFile)
 {
     std::string relativeFile = fullPathFromRelativePath(pszRelativeFile);
     CCString *pRet = new CCString();
     pRet->autorelease();
     pRet->m_sString = relativeFile.substr(0, relativeFile.rfind('/')+1);
-    pRet->m_sString += pszFilename;
+    pRet->m_sString += getFilenameForLookupDictionary(m_pFilenameLookupDict, pszFilename);
     return pRet->m_sString.c_str();
 }
 

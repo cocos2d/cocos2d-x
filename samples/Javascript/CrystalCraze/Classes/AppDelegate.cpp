@@ -34,17 +34,18 @@ bool AppDelegate::applicationDidFinishLaunching()
     CCSize designSize = CCSizeMake(320, 480);
     CCSize resourceSize = CCSizeMake(320, 480);
     
-    if (screenSize.height > 1024)
-    {
-        resourceSize = CCSizeMake(1536, 2048);
-        CCFileUtils::sharedFileUtils()->setResourceDirectory("resources-ipadhd");
-    }
-     else if (screenSize.height > 960)
-    {
-        resourceSize = CCSizeMake(768, 1536);
-        CCFileUtils::sharedFileUtils()->setResourceDirectory("resources-ipad");
-    }
-    else if (screenSize.height > 480)
+//    if (screenSize.height > 1024)
+//    {
+//        resourceSize = CCSizeMake(1536, 2048);
+//        CCFileUtils::sharedFileUtils()->setResourceDirectory("resources-ipadhd");
+//    }
+//     else if (screenSize.height > 960)
+//    {
+//        resourceSize = CCSizeMake(768, 1536);
+//        CCFileUtils::sharedFileUtils()->setResourceDirectory("resources-ipad");
+//    }
+//    else
+        if (screenSize.height > 480)
     {
         resourceSize = CCSizeMake(640, 960);
         CCFileUtils::sharedFileUtils()->setResourceDirectory("resources-iphonehd");
@@ -57,7 +58,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     
     pDirector->setContentScaleFactor(resourceSize.height/designSize.height);
 
-    CCEGLView::sharedOpenGLView()->setDesignResolutionSize(designSize.width, designSize.height, kResolutionNoBorder);
+    CCEGLView::sharedOpenGLView()->setDesignResolutionSize(designSize.width, designSize.height, kResolutionShowAll);
     
     // turn on display FPS
     pDirector->setDisplayStats(true);

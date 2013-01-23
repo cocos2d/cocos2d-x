@@ -66,7 +66,30 @@ void CCFileUtils::purgeCachedEntries()
 
 const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
 {
-    return pszRelativePath;
+    return fullPathForFilename(pszRelativePath);
+}
+
+static const char* getFilenameForLookupDictionary(CCDictionary* pDict, const char* pszFileName)
+{
+    const char* pszNewFileName = NULL;
+    // in Lookup Filename dictionary ?
+    CCString* fileNameFound = pDict ? (CCString*)pDict->objectForKey(pszFileName) : NULL;
+    if( NULL == fileNameFound || fileNameFound->length() == 0) {
+        pszNewFileName = pszFileName;
+    }
+    else {
+        pszNewFileName = fileNameFound->getCString();
+    }
+    return pszNewFileName;
+}
+
+const char* CCFileUtils::fullPathForFilename(const char* pszFileName)
+{
+    if (pszFileName == NULL || pszFileName[0] == '\0') {
+        return pszFileName;
+    }
+
+    return getFilenameForLookupDictionary(m_pFilenameLookupDict, pszFileName);
 }
 
 const char* CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const char *pszRelativeFile)
@@ -75,19 +98,42 @@ const char* CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const
     CCString *pRet = new CCString();
     pRet->autorelease();
     pRet->m_sString = relativeFile.substr(0, relativeFile.rfind('/')+1);
-    pRet->m_sString += pszFilename;
+    pRet->m_sString += getFilenameForLookupDictionary(m_pFilenameLookupDict, pszFilename);
     return pRet->m_sString.c_str();
 }
+
+void CCFileUtils::loadFilenameLookupDictionaryFromFile(const char* filename)
+{
+    const char* pFullPath = this->fullPathForFilename(filename);
+    if (pFullPath)
+    {
+        CCDictionary* pDict = CCDictionary::createWithContentsOfFile(filename);
+        if (pDict)
+        {
+            CCDictionary* pMetadata = (CCDictionary*)pDict->objectForKey("metadata");
+            int version = ((CCString*)pMetadata->objectForKey("version"))->intValue();
+            if (version != 1)
+            {
+                CCLOG("cocos2d: ERROR: Invalid filenameLookup dictionary version: %ld. Filename: %s", (long)version, filename);
+                return;
+            }
+            
+            setFilenameLookupDictionary((CCDictionary*)pDict->objectForKey("android"));
+        }
+    }
+}
+
 
 unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize)
 {    
     unsigned char * pData = 0;
-    string fullPath(pszFileName);
 
-    if ((! pszFileName) || (! pszMode))
+    if ((! pszFileName) || (! pszMode) || 0 == strlen(pszFileName))
     {
         return 0;
     }
+
+    string fullPath(pszFileName);
 
     if (pszFileName[0] != '/')
     {

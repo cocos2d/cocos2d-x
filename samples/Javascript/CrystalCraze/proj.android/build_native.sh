@@ -49,7 +49,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 COCOS2DX_ROOT="$DIR/../../../.."
 APP_ROOT="$DIR/.."
 APP_ANDROID_ROOT="$DIR"
-RESROUCE_ROOT="$APP_ROOT/../Shared/games/CrystalCraze/Published-iOS"
+RESROUCE_ROOT="$APP_ROOT/../Shared/games/CrystalCraze/Published-Cocos2d-x"
 BINDINGS_JS_ROOT="$APP_ROOT/../../../scripting/javascript/bindings/js"
 
 echo
@@ -75,6 +75,12 @@ cp -rf "$RESROUCE_ROOT"/* "$APP_ANDROID_ROOT"/assets
 
 # copy bindings/*.js into assets' root
 cp -f "$BINDINGS_JS_ROOT"/*.js "$APP_ANDROID_ROOT"/assets
+
+# remove test_image_rgba4444.pvr.gz
+rm -f "$APP_ANDROID_ROOT"/assets/resources-iphone/*.pvr.gz
+rm -f "$APP_ANDROID_ROOT"/assets/resources-iphonehd/*.pvr.gz
+rm -f "$APP_ANDROID_ROOT"/assets/resources-iphone/gamescene/*.pvr.gz
+rm -f "$APP_ANDROID_ROOT"/assets/resources-iphonehd/gamescene/*.pvr.gz
 
 echo "Using prebuilt externals"
 echo

@@ -386,6 +386,13 @@ const char* CCFileUtils::getResourceDirectory()
     return m_obDirectory.c_str();
 }
 
+void CCFileUtils::setFilenameLookupDictionary(CCDictionary* pFilenameLookupDict)
+{
+    CC_SAFE_RELEASE(m_pFilenameLookupDict);
+    m_pFilenameLookupDict = pFilenameLookupDict;
+    CC_SAFE_RETAIN(m_pFilenameLookupDict);
+}
+
 //////////////////////////////////////////////////////////////////////////
 // Notification support when getFileData from invalid file path.
 //////////////////////////////////////////////////////////////////////////
