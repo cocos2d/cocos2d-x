@@ -372,6 +372,44 @@ unsigned char* CCFileUtils::getFileDataFromZip(const char* pszZipFilePath, const
     return pBuffer;
 }
 
+std::string CCFileUtils::getNewFilename(const char* pszFileName)
+{
+    const char* pszNewFileName = NULL;
+    // in Lookup Filename dictionary ?
+    CCString* fileNameFound = m_pFilenameLookupDict ? (CCString*)m_pFilenameLookupDict->objectForKey(pszFileName) : NULL;
+    if( NULL == fileNameFound || fileNameFound->length() == 0) {
+        pszNewFileName = pszFileName;
+    }
+    else {
+        pszNewFileName = fileNameFound->getCString();
+    }
+    return pszNewFileName;
+}
+
+void CCFileUtils::setSearchResolutionsOrder(CCArray* pSearchResolutionsOrder)
+{
+    CC_SAFE_RETAIN(pSearchResolutionsOrder);
+    CC_SAFE_RELEASE(m_pSearchResolutionsOrderArray);
+    m_pSearchResolutionsOrderArray = pSearchResolutionsOrder;
+}
+
+CCArray* CCFileUtils::getSearchResolutionsOrder()
+{
+    return m_pSearchResolutionsOrderArray;
+}
+
+void CCFileUtils::setSearchPath(CCArray* pSearchPaths)
+{
+    CC_SAFE_RETAIN(pSearchPaths);
+    CC_SAFE_RELEASE(m_pSearchPathArray);
+    m_pSearchPathArray = pSearchPaths;
+}
+
+CCArray* CCFileUtils::getSearchPath()
+{
+    return m_pSearchPathArray;
+}
+
 void CCFileUtils::setResourceDirectory(const char* pszResourceDirectory)
 {
     m_obDirectory = pszResourceDirectory;
