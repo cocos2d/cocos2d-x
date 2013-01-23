@@ -50,13 +50,13 @@ CCBAnimationManager::~CCBAnimationManager()
     CCDICT_FOREACH(mNodeSequences, pElement)
     {
         CCNode *node = (CCNode*)pElement->getIntKey();
-        node->release();
+        // node->release();
     }
     
     CCDICT_FOREACH(mBaseValues, pElement)
     {
         CCNode *node = (CCNode*)pElement->getIntKey();
-        node->release();
+        // node->release();
     }
     
     mNodeSequences->release();
@@ -70,6 +70,7 @@ CCBAnimationManager::~CCBAnimationManager()
     CC_SAFE_RELEASE(mDocumentCallbackNames);
     CC_SAFE_RELEASE(mDocumentCallbackNodes);
 
+    CC_SAFE_RELEASE(mTarget);
 }
 
 CCArray* CCBAnimationManager::getSequences()
@@ -190,7 +191,7 @@ const CCSize& CCBAnimationManager::getContainerSize(CCNode *pNode)
 // refer to CCBReader::readNodeGraph() for data structure of pSeq
 void CCBAnimationManager::addNode(CCNode *pNode, CCDictionary *pSeq)
 {
-    pNode->retain();
+    // pNode->retain();
     
     mNodeSequences->setObject(pSeq, (intptr_t)pNode);
 }
@@ -202,7 +203,7 @@ void CCBAnimationManager::setBaseValue(CCObject *pValue, CCNode *pNode, const ch
     {
         props = CCDictionary::create();
         mBaseValues->setObject(props, (intptr_t)pNode);
-        pNode->retain();
+        // pNode->retain();
     }
     
     props->setObject(pValue, pPropName);
@@ -253,8 +254,8 @@ void CCBAnimationManager::moveAnimationsFromNode(CCNode* fromNode, CCNode* toNod
         mBaseValues->setObject(baseValue, (intptr_t)toNode);
         mBaseValues->removeObjectForKey((intptr_t)fromNode);
 
-        fromNode->release();
-        toNode->retain();
+//         fromNode->release();
+//         toNode->retain();
     }
     
     // Move seqs
@@ -263,8 +264,8 @@ void CCBAnimationManager::moveAnimationsFromNode(CCNode* fromNode, CCNode* toNod
         mNodeSequences->setObject(seqs, (intptr_t)toNode);
         mNodeSequences->removeObjectForKey((intptr_t)fromNode);
 
-        fromNode->release();
-        toNode->retain();
+//         fromNode->release();
+//         toNode->retain();
     }
 }
 
