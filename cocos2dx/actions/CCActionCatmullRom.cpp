@@ -81,7 +81,8 @@ CCObject* CCPointArray::copyWithZone(cocos2d::CCZone *zone)
         newArray->push_back(new CCPoint((*iter)->x, (*iter)->y));
     }
     
-    CCPointArray *points = CCPointArray::create(10);
+    CCPointArray *points = new CCPointArray();
+    points->initWithCapacity(10);
     points->setControlPoints(newArray);
     
     return points;
@@ -106,9 +107,9 @@ const std::vector<CCPoint*>* CCPointArray::getControlPoints()
 
 void CCPointArray::setControlPoints(vector<CCPoint*> *controlPoints)
 {
-    CCAssert(controlPoints != NULL, "control ponts should  not be null");
+    CCAssert(controlPoints != NULL, "control points should not be NULL");
     
-    // delete old ponts
+    // delete old points
     vector<CCPoint*>::iterator iter;
     for (iter = m_pControlPoints->begin(); iter != m_pControlPoints->end(); ++iter)
     {
@@ -146,7 +147,10 @@ void CCPointArray::replaceControlPoint(cocos2d::CCPoint &controlPoint, unsigned 
 
 void CCPointArray::removeControlPointAtIndex(unsigned int index)
 {
-    m_pControlPoints->erase(m_pControlPoints->begin() + index);
+    vector<CCPoint*>::iterator iter = m_pControlPoints->begin() + index;
+    CCPoint* pRemovedPoint = *iter;
+    m_pControlPoints->erase(iter);
+    delete pRemovedPoint;
 }
 
 unsigned int CCPointArray::count()
