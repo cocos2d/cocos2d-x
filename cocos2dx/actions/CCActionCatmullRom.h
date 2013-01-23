@@ -54,7 +54,7 @@ NS_CC_BEGIN;
  Used by CCCardinalSplineTo and (By) and CCCatmullRomTo (and By) actions.
 @ingroup Actions
  */
-class CC_DLL CCPointArray : public CCNode
+class CC_DLL CCPointArray : public CCObject
 {
 public:
     
