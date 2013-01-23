@@ -294,7 +294,7 @@ CCNode* CCBReader::readNodeGraphFromData(CCData *pData, CCObject *pOwner, const 
     {
         CCNode* pNode = (CCNode*)pElement->getIntKey();
         CCBAnimationManager* manager = (CCBAnimationManager*)animationManagers->objectForKey((intptr_t)pNode);
-        //pNode->setUserObject(manager);
+        pNode->setUserObject(manager);
 
         if (jsControlled)
         {
