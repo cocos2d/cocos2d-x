@@ -24,6 +24,8 @@ THE SOFTWARE.
 
 #include "SimpleAudioEngine.h"
 #include "SimpleAudioEngine_objc.h"
+#include "cocos2d.h"
+USING_NS_CC;
 
 static void static_end()
 {
@@ -174,12 +176,16 @@ void SimpleAudioEngine::end()
 
 void SimpleAudioEngine::preloadBackgroundMusic(const char* pszFilePath)
 {
-    static_preloadBackgroundMusic(pszFilePath);
+    // Changing file path to full path
+    const char* fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
+    static_preloadBackgroundMusic(fullPath);
 }
 
 void SimpleAudioEngine::playBackgroundMusic(const char* pszFilePath, bool bLoop)
 {
-    static_playBackgroundMusic(pszFilePath, bLoop);
+    // Changing file path to full path
+    const char* fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
+    static_playBackgroundMusic(fullPath, bLoop);
 }
 
 void SimpleAudioEngine::stopBackgroundMusic(bool bReleaseData)
@@ -224,32 +230,38 @@ void SimpleAudioEngine::setBackgroundMusicVolume(float volume)
 
 float SimpleAudioEngine::getEffectsVolume()
 {
-            return static_getEffectsVolume();
+    return static_getEffectsVolume();
 }
 
 void SimpleAudioEngine::setEffectsVolume(float volume)
 {
-            static_setEffectsVolume(volume);
+    static_setEffectsVolume(volume);
 }
 
 unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop)
 {
-            return static_playEffect(pszFilePath, bLoop);
+    // Changing file path to full path
+    const char* fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
+    return static_playEffect(fullPath, bLoop);
 }
 
 void SimpleAudioEngine::stopEffect(unsigned int nSoundId)
 {
-            static_stopEffect(nSoundId);
+    static_stopEffect(nSoundId);
 }
 
 void SimpleAudioEngine::preloadEffect(const char* pszFilePath)
 {
-            static_preloadEffect(pszFilePath);
+    // Changing file path to full path
+    const char* fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
+    static_preloadEffect(fullPath);
 }
 
 void SimpleAudioEngine::unloadEffect(const char* pszFilePath)
 {
-            static_unloadEffect(pszFilePath);
+    // Changing file path to full path
+    const char* fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
+    static_unloadEffect(fullPath);
 }
 
 void SimpleAudioEngine::pauseEffect(unsigned int uSoundId)

@@ -407,7 +407,7 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
     std::string fullpath = pathKey; // (CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(path));
     if( ! texture ) 
     {
-        std::string lowerCase(path);
+        std::string lowerCase(pathKey);
         for (unsigned int i = 0; i < lowerCase.length(); ++i)
         {
             lowerCase[i] = tolower(lowerCase[i]);

@@ -75,42 +75,63 @@ void CCFileUtils::purgeCachedEntries()
 
 const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
 {
+    return fullPathForFilename(pszRelativePath);
+}
+
+static const char* getFilenameForLookupDictionary(CCDictionary* pDict, const char* pszFileName)
+{
+    const char* pszNewFileName = NULL;
+    // in Lookup Filename dictionary ?
+    CCString* fileNameFound = pDict ? (CCString*)pDict->objectForKey(pszFileName) : NULL;
+    if( NULL == fileNameFound || fileNameFound->length() == 0) {
+        pszNewFileName = pszFileName;
+    }
+    else {
+        pszNewFileName = fileNameFound->getCString();
+    }
+    return pszNewFileName;
+}
+
+const char* CCFileUtils::fullPathForFilename(const char* pszFileName)
+{
     bool bFileExist = true;
     const char* resDir = m_obDirectory.c_str();
     CCString* pRet = CCString::create("");
 
+    const char* pszNewFileName = getFilenameForLookupDictionary(m_pFilenameLookupDict, pszFileName);
+
     const std::string& resourceRootPath = CCApplication::sharedApplication()->getResourceRootPath();
-    if ((strlen(pszRelativePath) > 1 && pszRelativePath[1] == ':'))
+    if ((strlen(pszNewFileName) > 1 && pszNewFileName[1] == ':'))
     {
         // path start with "x:", is absolute path
-        pRet->m_sString = pszRelativePath;
+        pRet->m_sString = pszNewFileName;
     }
-    else if (strlen(pszRelativePath) > 0
-        && ('/' == pszRelativePath[0] || '\\' == pszRelativePath[0]))
+    else if (strlen(pszNewFileName) > 0
+        && ('/' == pszNewFileName[0] || '\\' == pszNewFileName[0]))
     {
         // path start with '/' or '\', is absolute path without driver name
         char szDriver[3] = {s_pszResourcePath[0], s_pszResourcePath[1], 0};
         pRet->m_sString = szDriver;
-        pRet->m_sString += pszRelativePath;
+        pRet->m_sString += pszNewFileName;
     }
     else if (resourceRootPath.length() > 0)
     {
         pRet->m_sString = resourceRootPath.c_str();
         pRet->m_sString += m_obDirectory.c_str();
-        pRet->m_sString += pszRelativePath;
+        pRet->m_sString += pszNewFileName;
     }
     else
     {
         pRet->m_sString = s_pszResourcePath;
         pRet->m_sString += resDir;
-        pRet->m_sString += pszRelativePath;
+        pRet->m_sString += pszNewFileName;
     }
 
     // If file or directory doesn't exist, try to find it in the root path.
     if (GetFileAttributesA(pRet->m_sString.c_str()) == -1)
     {
         pRet->m_sString = s_pszResourcePath;
-        pRet->m_sString += pszRelativePath;
+        pRet->m_sString += pszNewFileName;
 
         if (GetFileAttributesA(pRet->m_sString.c_str()) == -1)
         {
@@ -120,19 +141,40 @@ const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
 
     if (!bFileExist)
     { // Can't find the file, return the relative path.
-        pRet->m_sString = pszRelativePath;
+        pRet->m_sString = pszNewFileName;
     }
 
     return pRet->m_sString.c_str();
 }
 
+void CCFileUtils::loadFilenameLookupDictionaryFromFile(const char* filename)
+{
+    const char* pFullPath = this->fullPathForFilename(filename);
+    if (pFullPath)
+    {
+        CCDictionary* pDict = CCDictionary::createWithContentsOfFile(filename);
+        if (pDict)
+        {
+            CCDictionary* pMetadata = (CCDictionary*)pDict->objectForKey("metadata");
+            int version = ((CCString*)pMetadata->objectForKey("version"))->intValue();
+            if (version != 1)
+            {
+                CCLOG("cocos2d: ERROR: Invalid filenameLookup dictionary version: %ld. Filename: %s", (long)version, filename);
+                return;
+            }
+
+            setFilenameLookupDictionary((CCDictionary*)pDict->objectForKey("win32"));
+        }
+    }
+}
+
 const char *CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const char *pszRelativeFile)
 {
-    // std::string relativeFile = fullPathFromRelativePath(pszRelativeFile);
+    //std::string relativeFile = fullPathFromRelativePath(pszRelativeFile);
     std::string relativeFile = pszRelativeFile;
     CCString *pRet = CCString::create("");
     pRet->m_sString = relativeFile.substr(0, relativeFile.find_last_of("/\\") + 1);
-    pRet->m_sString += pszFilename;
+    pRet->m_sString += getFilenameForLookupDictionary(m_pFilenameLookupDict, pszFilename);
     return pRet->m_sString.c_str();
 }
 
