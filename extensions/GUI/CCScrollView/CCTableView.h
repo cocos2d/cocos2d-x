@@ -70,6 +70,17 @@ public:
      * @param cell  cell that is pressed
      */
     virtual void tableCellUnhighlight(CCTableView* table, CCTableViewCell* cell){};
+    
+    /**
+     * Delegate called when the cell is about to be recycled. Immediately
+     * after this call the cell will be removed from the scene graph and
+     * recycled.
+     *
+     * @param table table contains the given cell
+     * @param cell  cell that is pressed
+     */
+    virtual void tableCellWillRecycle(CCTableView* table, CCTableViewCell* cell){};
+    
 };
 
 
