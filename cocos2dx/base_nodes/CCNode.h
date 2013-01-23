@@ -134,7 +134,7 @@ public:
     CCNode(void);
     
     /**
-     * Default distructor
+     * Default destructor
      */
     virtual ~CCNode(void);
     
@@ -159,7 +159,7 @@ public:
     /// @name Setters & Getters for Graphic Peroperties
     
     /**
-     * Sets the Z order which stand for the drawing order, and reorder this node in its parent's children array.
+     * Sets the Z order which stands for the drawing order, and reorder this node in its parent's children array.
      *
      * The Z order of node is relative to its "brothers": children of the same parent.
      * It's nothing to do with OpenGL's z vertex. This one only affects the draw order of nodes in cocos2d.
