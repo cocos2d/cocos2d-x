@@ -20,7 +20,6 @@ class CCNode : public CCObject
     void    setScaleX(float newScaleX);
     float   getScaleY();
     void    setScaleY(float newScaleY);
-    CCPoint getPositionLua();
     void    getPosition(float* x = 0, float* y = 0);
     float   getPositionX();
     float   getPositionY();
