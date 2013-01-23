@@ -32,6 +32,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 class CCDictionary;
+class CCArray;
 /**
  * @addtogroup platform
  * @{
@@ -74,6 +75,7 @@ public:
     @param   pszRelativePath     The relative path of the file.
     @return  The absolute path of the file.
     @warning We only add the ResourcePath before the relative path of the file.
+    @deprecated Please use fullPathForFilename instead.
     If you have not set the ResourcePath, the function appends "/NEWPLUS/TDA_DATA/UserData/" by default.
     You can set ResourcePath with void setResourcePath(const char *pszResourcePath);
     */
@@ -151,11 +153,41 @@ public:
     /// @endcond
 
     /**
-    @brief  Set the resource directory; we will find resources relative to this directory.
-    @param pszDirectoryName  Relative path to root.
+     @brief  Set the resource directory; we will find resources relative to this directory.
+     @param pszDirectoryName  Relative path to root.
+     @deprecated Please use setSearchPath instead.
     */
-    void setResourceDirectory(const char *pszDirectoryName);
+    CC_DEPRECATED_ATTRIBUTE void setResourceDirectory(const char *pszDirectoryName);
 
+    /** Array that contains the search order of the resources based for the device.
+     By default it will try to load resources in the following order until one is found:
+     - On iPad HD: iPad HD resources, iPad resources, resources not associated with any device
+     - On iPad: iPad resources, resources not associated with any device
+     - On iPhone 5 HD: iPhone 5 HD resources, iPhone HD resouces, iPhone 5 resources, iPhone resources, resources not associated with any device
+     - On iPhone HD: iPhone HD resources, iPhone resouces, resources not associated with any device
+     - On iPhone: iPhone resources, resources not associated with any device
+     
+     - On Mac HD: Mac HD resources, Mac resources, resources not associated with any device
+     - On Mac: Mac resources, resources not associated with any device
+     
+     If the property "enableiPhoneResourcesOniPad" is enabled, it will also search for iPhone resources if you are in an iPad.
+     
+     @since v2.1
+     */
+    void setSearchResolutionsOrder(CCArray* pSearchResolutionsOrder);
+    CCArray* getSearchResolutionsOrder();
+    
+    /** Array of search paths.
+     You can use this array to modify the search path of the resources.
+     If you want to use "themes" or search resources in the "cache", you can do it easily by adding new entries in this array.
+     
+     By default it is an array with only the "" (empty string) element.
+     
+     @since v2.1
+     */
+    void setSearchPath(CCArray* pSearchPaths);
+    CCArray* getSearchPath();
+    
     /**
     @brief  Get the resource directory
     */
@@ -176,8 +208,15 @@ public:
 protected:
     CCFileUtils(void)
     : m_pFilenameLookupDict(NULL)
+    , m_pSearchResolutionsOrderArray(NULL)
+    , m_pSearchPathArray(NULL)
     {
     }
+    
+    bool init();
+    
+    std::string getNewFilename(const char* pszFileName);
+    std::string getPathForFilename(const std::string& filename, const std::string& resourceDirectory, const std::string& searchPath);
     
     std::string m_obDirectory;
     
@@ -189,6 +228,9 @@ protected:
      @since v2.1
      */
     CCDictionary* m_pFilenameLookupDict;
+    
+    CCArray* m_pSearchResolutionsOrderArray;
+    CCArray* m_pSearchPathArray;
 };
 
 // end of platform group
