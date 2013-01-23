@@ -217,6 +217,7 @@ void CCFileUtils::setResourceDirectory(const char *pszDirectoryName)
     {
         m_obDirectory.append("/");
     }
+    m_pSearchPathArray->addObject(CCString::create(m_obDirectory.c_str()));
 }
 
 const char* CCFileUtils::getResourceDirectory()
@@ -252,12 +253,17 @@ std::string CCFileUtils::getPathForFilename(const std::string& filename, const s
     size_t pos = filename.find_last_of("/");
     if (pos != std::string::npos)
     {
-        file_path = filename.substr(0, pos);
+        file_path = filename.substr(0, pos+1);
         file = filename.substr(pos+1);
     }
     
 	// searchPath + file_path + resourceDirectory
-    std::string path = searchPath + "/" + file_path;
+    std::string path = searchPath;
+    if (path[path.length()-1] != '/')
+    {
+        path += "/";
+    }
+    path += file_path;
 	path += resourceDirectory;
     
     NSString* fullpath = [[NSBundle mainBundle] pathForResource:[NSString stringWithUTF8String:file.c_str()]

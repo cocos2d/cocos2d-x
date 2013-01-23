@@ -34,6 +34,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     CCSize designSize = CCSizeMake(320, 480);
     CCSize resourceSize = CCSizeMake(320, 480);
     
+    CCFileUtils::sharedFileUtils()->setSearchPath(CCArray::create(CCString::create("Published-iOS"), CCString::create(""), NULL));
 //    if (screenSize.height > 1024)
 //    {
 //        resourceSize = CCSizeMake(1536, 2048);
@@ -48,12 +49,14 @@ bool AppDelegate::applicationDidFinishLaunching()
         if (screenSize.height > 480)
     {
         resourceSize = CCSizeMake(640, 960);
-        CCFileUtils::sharedFileUtils()->setResourceDirectory("resources-iphonehd");
+        CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(CCArray::create(CCString::create("resources-iphonehd"), CCString::create(""),  NULL));
+        //CCFileUtils::sharedFileUtils()->setResourceDirectory("resources-iphonehd");
         
     }
     else
     {
-        CCFileUtils::sharedFileUtils()->setResourceDirectory("resources-iphone");
+        CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(CCArray::create(CCString::create("resources-iphone"), CCString::create(""), NULL));
+        //CCFileUtils::sharedFileUtils()->setResourceDirectory("resources-iphone");
     }
     
     pDirector->setContentScaleFactor(resourceSize.height/designSize.height);
