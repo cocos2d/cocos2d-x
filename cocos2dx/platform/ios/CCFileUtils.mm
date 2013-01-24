@@ -30,7 +30,7 @@ THE SOFTWARE.
 #include <libxml/parser.h>
 #include <libxml/tree.h>
 #include <libxml/xmlmemory.h>
-#include "CCString.h"
+#include "cocoa/CCString.h"
 #include "CCFileUtils.h"
 #include "CCDirector.h"
 #include "CCSAXParser.h"
@@ -217,7 +217,7 @@ void CCFileUtils::setResourceDirectory(const char *pszDirectoryName)
     {
         m_obDirectory.append("/");
     }
-    m_pSearchPathArray->addObject(CCString::create(m_obDirectory.c_str()));
+    m_pSearchPathArray->insertObject(CCString::create(m_obDirectory.c_str()), 0);
 }
 
 const char* CCFileUtils::getResourceDirectory()
