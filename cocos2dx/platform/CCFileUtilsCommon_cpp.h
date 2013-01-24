@@ -417,6 +417,7 @@ void CCFileUtils::setResourceDirectory(const char* pszResourceDirectory)
     {
         m_obDirectory.append("/");
     }
+	m_pSearchPathArray->insertObject(CCString::create(m_obDirectory.c_str()), 0);
 }
 
 const char* CCFileUtils::getResourceDirectory()

@@ -48,18 +48,18 @@ bool AppDelegate::applicationDidFinishLaunching()
             CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(CCArray::create(CCString::create("resources-iphone"), CCString::create(""), NULL));
         }
     }
-    else if (platform == kTargetAndroid)
+    else if (platform == kTargetAndroid || platform == kTargetWindows)
     {
         CCFileUtils::sharedFileUtils()->setSearchPath(CCArray::create(CCString::create(""), NULL));
         if (screenSize.height > 1024)
         {
             resourceSize = CCSizeMake(1280, 1920);
-            CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(CCArray::create(CCString::create("resources-xlarge"), CCString::create(""),  NULL));
+            CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(CCArray::create(CCString::create("resources-xlarge"), CCString::create("resources-large"), CCString::create(""),  NULL));
         }
         else if (screenSize.height > 960)
         {
             resourceSize = CCSizeMake(640, 960);
-            CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(CCArray::create(CCString::create("resources-large"), CCString::create(""),  NULL));
+            CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(CCArray::create(CCString::create("resources-large"), CCString::create("resources-medium"), CCString::create(""),  NULL));
         }
         else if (screenSize.height > 480)
         {
@@ -72,7 +72,7 @@ bool AppDelegate::applicationDidFinishLaunching()
             CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(CCArray::create(CCString::create("resources-small"), CCString::create(""), NULL));
         }
     }
-    pDirector->setContentScaleFactor(resourceSize.height/designSize.height);
+    pDirector->setContentScaleFactor(resourceSize.width/designSize.width);
 
     CCEGLView::sharedOpenGLView()->setDesignResolutionSize(designSize.width, designSize.height, kResolutionShowAll);
     
