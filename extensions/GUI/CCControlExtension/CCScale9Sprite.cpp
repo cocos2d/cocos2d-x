@@ -407,6 +407,16 @@ void CCScale9Sprite::setContentSize(const CCSize &size)
 
 void CCScale9Sprite::updatePositions()
 {
+    // Check that instances are non-NULL
+    if(!((topLeft) &&
+         (topRight) &&
+         (bottomRight) &&
+         (bottomLeft) &&
+         (centre))) {
+        // if any of the above sprites are NULL, return
+        return;
+    }
+
     CCSize size = this->m_obContentSize;
 
     float sizableWidth = size.width - topLeft->getContentSize().width - topRight->getContentSize().width;
