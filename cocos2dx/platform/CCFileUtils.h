@@ -204,7 +204,8 @@ public:
     */
     void setPopupNotify(bool bNotify);
     bool isPopupNotify();
-    
+
+    std::string getAbsoluteFilenamePath(const char *filename);
 protected:
     CCFileUtils(void)
     : m_pFilenameLookupDict(NULL)
