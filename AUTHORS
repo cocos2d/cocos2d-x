@@ -48,7 +48,9 @@ Developers:
     edbartley
          update MSVS and MAC projects to use project-relative path
          CCControl* should not respond to touches if the control is not visible
-	 Some improvements for CCScrollView and CCTableView.
+         Some improvements for CCScrollView and CCTableView.
+         Touch priority can't be set to the value specified by a call to CCMenu::setTouchPriority(int).
+         CCTableView crashes if a CCTableViewDelegate is not provided.
 
     Weeds 
          use fontconfig to enhance font rendering on linux
