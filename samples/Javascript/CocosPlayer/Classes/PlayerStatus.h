@@ -41,7 +41,8 @@ public:
   void pressedReset(CCObject * pSender, cocos2d::extension::CCControlEvent pCCControlEvent);
   void pressedRun(CCObject * pSender, cocos2d::extension::CCControlEvent pCCControlEvent);
   static void loadMainScene(const char *fileName);
-  
+  static void setDeviceResolution(std::string res);
+
   cocos2d::CCMenuItemImage* mBtnRun;
   cocos2d::CCMenuItemImage* mBtnReset;
   cocos2d::CCMenuItemImage* mBtnPair;

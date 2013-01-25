@@ -46,6 +46,10 @@ SEL_MenuHandler PlayerStatus::onResolveCCBCCMenuItemSelector(CCObject * pTarget,
   return NULL;    
 }
 
+void PlayerStatus::setDeviceResolution(std::string res) {
+  setDeviceResolutionJNI(res.c_str());
+}
+
 void editBoxCallbackFunc(const char* pText, void* ctx)
 {
   PlayerStatus *thiz = (PlayerStatus *)ctx;
