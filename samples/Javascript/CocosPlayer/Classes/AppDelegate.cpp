@@ -29,7 +29,8 @@ AppDelegate::~AppDelegate()
 }
 
 void handle_ccb_run() {
-  ScriptingCore::getInstance()->runScript("main.js");
+    CCFileUtils::sharedFileUtils()->purgeCachedEntries();
+    ScriptingCore::getInstance()->runScript("main.js");
 }
 
 void handle_connected() {
