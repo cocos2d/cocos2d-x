@@ -47,6 +47,19 @@ USING_NS_CC;
 
 namespace CocosDenshion {
 
+static std::string getFullPathWithoutAssetsPrefix(const char* pszFilename)
+{
+	// Changing file path to full path
+    std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszFilename);
+    // Removing `assets` since it isn't needed for the API of playing sound.
+    size_t pos = fullPath.find("assets/");
+    if (pos == 0)
+    {
+    	fullPath = fullPath.substr(strlen("assets/"));
+    }
+    return fullPath;
+}
+
 static SimpleAudioEngine *s_pEngine = 0;
 
 SimpleAudioEngine::SimpleAudioEngine()
@@ -105,16 +118,14 @@ void SimpleAudioEngine::end()
 
 void SimpleAudioEngine::preloadBackgroundMusic(const char* pszFilePath)
 {
-		// Changing file path to full path
-    const char* fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
-    preloadBackgroundMusicJNI(fullPath);
+    std::string fullPath = getFullPathWithoutAssetsPrefix(pszFilePath);
+    preloadBackgroundMusicJNI(fullPath.c_str());
 }
 
 void SimpleAudioEngine::playBackgroundMusic(const char* pszFilePath, bool bLoop)
 {
-		// Changing file path to full path
-    const char* fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
-    playBackgroundMusicJNI(fullPath, bLoop);
+	std::string fullPath = getFullPathWithoutAssetsPrefix(pszFilePath);
+    playBackgroundMusicJNI(fullPath.c_str(), bLoop);
 }
 
 void SimpleAudioEngine::stopBackgroundMusic(bool bReleaseData)
@@ -183,15 +194,14 @@ void SimpleAudioEngine::setEffectsVolume(float volume)
 
 unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop)
 {
-	// Changing file path to full path
-    const char* fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
+	std::string fullPath = getFullPathWithoutAssetsPrefix(pszFilePath);
 	if (s_bI9100)
 	{
-		return SimpleAudioEngineOpenSL::sharedEngine()->playEffect(fullPath, bLoop);
+		return SimpleAudioEngineOpenSL::sharedEngine()->playEffect(fullPath.c_str(), bLoop);
 	}
 	else 
 	{
-		return playEffectJNI(fullPath, bLoop);
+		return playEffectJNI(fullPath.c_str(), bLoop);
 	}
 }
 
@@ -209,31 +219,29 @@ void SimpleAudioEngine::stopEffect(unsigned int nSoundId)
 
 void SimpleAudioEngine::preloadEffect(const char* pszFilePath)
 {
-	// Changing file path to full path
-    const char* fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
+	std::string fullPath = getFullPathWithoutAssetsPrefix(pszFilePath);
 
 	if (s_bI9100)
 	{
-		SimpleAudioEngineOpenSL::sharedEngine()->preloadEffect(fullPath);
+		SimpleAudioEngineOpenSL::sharedEngine()->preloadEffect(fullPath.c_str());
 	}
 	else
 	{
-		preloadEffectJNI(fullPath);
+		preloadEffectJNI(fullPath.c_str());
 	}
 }
 
 void SimpleAudioEngine::unloadEffect(const char* pszFilePath)
 {
-	// Changing file path to full path
-    const char* fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
+	std::string fullPath = getFullPathWithoutAssetsPrefix(pszFilePath);
 
 	if (s_bI9100)
 	{
-		SimpleAudioEngineOpenSL::sharedEngine()->unloadEffect(fullPath);
+		SimpleAudioEngineOpenSL::sharedEngine()->unloadEffect(fullPath.c_str());
 	}
 	else
 	{
-		unloadEffectJNI(fullPath);
+		unloadEffectJNI(fullPath.c_str());
 	}
 }
 
