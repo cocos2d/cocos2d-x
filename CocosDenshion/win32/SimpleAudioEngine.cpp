@@ -18,7 +18,7 @@ static char     s_szRootPath[MAX_PATH];
 static DWORD    s_dwRootLen;
 static char     s_szFullPath[MAX_PATH];
 
-static const char * _FullPath(const char * szPath);
+static std::string _FullPath(const char * szPath);
 static unsigned int _Hash(const char *key);
 
 #define BREAK_IF(cond)  if (cond) break;
@@ -75,7 +75,7 @@ void SimpleAudioEngine::playBackgroundMusic(const char* pszFilePath, bool bLoop)
         return;
     }
 
-    sharedMusic().Open(_FullPath(pszFilePath), _Hash(pszFilePath));
+    sharedMusic().Open(_FullPath(pszFilePath).c_str(), _Hash(pszFilePath));
     sharedMusic().Play((bLoop) ? -1 : 1);
 }
 
@@ -157,7 +157,7 @@ void SimpleAudioEngine::preloadEffect(const char* pszFilePath)
 
         sharedList().insert(Effect(nRet, new MciPlayer()));
         MciPlayer * pPlayer = sharedList()[nRet];
-        pPlayer->Open(_FullPath(pszFilePath), nRet);
+        pPlayer->Open(_FullPath(pszFilePath).c_str(), nRet);
 
         BREAK_IF(nRet == pPlayer->GetSoundID());
 
@@ -255,7 +255,7 @@ void SimpleAudioEngine::setEffectsVolume(float volume)
 // static function
 //////////////////////////////////////////////////////////////////////////
 
-const char * _FullPath(const char * szPath)
+static std::string _FullPath(const char * szPath)
 {
     return CCFileUtils::sharedFileUtils()->fullPathForFilename(szPath);
 }
