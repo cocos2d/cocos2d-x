@@ -77,7 +77,7 @@ void CCBHelper::setPairMessage(std::string str) {
 }
 
 bool CCBHelper::isMainJSPresent() {
-  std::string path = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath("main.js");
+  std::string path = CCFileUtils::sharedFileUtils()->getAbsoluteFilenamePath(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath("main.js"));
   CCLOG("PATH RETURNED: %s", path.c_str());
   if(path == "") {
     return false;
