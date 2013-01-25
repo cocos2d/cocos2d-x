@@ -90,7 +90,7 @@ const char* CCFileUtils::fullPathForFilename(const char* pszFileName)
         return pszFileName;
     }
 
-    return CCString::create(getAbsoluteFilenamePath(getNewFilename(pszFileName).c_str()))->getCString();
+    return CCString::create(getNewFilename(pszFileName).c_str())->getCString();
 }
 
 const char* CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const char *pszRelativeFile)
