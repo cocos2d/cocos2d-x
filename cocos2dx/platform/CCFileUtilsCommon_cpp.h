@@ -372,6 +372,44 @@ unsigned char* CCFileUtils::getFileDataFromZip(const char* pszZipFilePath, const
     return pBuffer;
 }
 
+std::string CCFileUtils::getNewFilename(const char* pszFileName)
+{
+    const char* pszNewFileName = NULL;
+    // in Lookup Filename dictionary ?
+    CCString* fileNameFound = m_pFilenameLookupDict ? (CCString*)m_pFilenameLookupDict->objectForKey(pszFileName) : NULL;
+    if( NULL == fileNameFound || fileNameFound->length() == 0) {
+        pszNewFileName = pszFileName;
+    }
+    else {
+        pszNewFileName = fileNameFound->getCString();
+    }
+    return pszNewFileName;
+}
+
+void CCFileUtils::setSearchResolutionsOrder(CCArray* pSearchResolutionsOrder)
+{
+    CC_SAFE_RETAIN(pSearchResolutionsOrder);
+    CC_SAFE_RELEASE(m_pSearchResolutionsOrderArray);
+    m_pSearchResolutionsOrderArray = pSearchResolutionsOrder;
+}
+
+CCArray* CCFileUtils::getSearchResolutionsOrder()
+{
+    return m_pSearchResolutionsOrderArray;
+}
+
+void CCFileUtils::setSearchPath(CCArray* pSearchPaths)
+{
+    CC_SAFE_RETAIN(pSearchPaths);
+    CC_SAFE_RELEASE(m_pSearchPathArray);
+    m_pSearchPathArray = pSearchPaths;
+}
+
+CCArray* CCFileUtils::getSearchPath()
+{
+    return m_pSearchPathArray;
+}
+
 void CCFileUtils::setResourceDirectory(const char* pszResourceDirectory)
 {
     m_obDirectory = pszResourceDirectory;
@@ -379,11 +417,40 @@ void CCFileUtils::setResourceDirectory(const char* pszResourceDirectory)
     {
         m_obDirectory.append("/");
     }
+	m_pSearchPathArray->insertObject(CCString::create(m_obDirectory.c_str()), 0);
 }
 
 const char* CCFileUtils::getResourceDirectory()
 {
     return m_obDirectory.c_str();
+}
+
+void CCFileUtils::setFilenameLookupDictionary(CCDictionary* pFilenameLookupDict)
+{
+    CC_SAFE_RELEASE(m_pFilenameLookupDict);
+    m_pFilenameLookupDict = pFilenameLookupDict;
+    CC_SAFE_RETAIN(m_pFilenameLookupDict);
+}
+
+void CCFileUtils::loadFilenameLookupDictionaryFromFile(const char* filename)
+{
+    std::string fullPath = this->fullPathForFilename(filename);
+    if (fullPath.length() > 0)
+    {
+        CCDictionary* pDict = CCDictionary::createWithContentsOfFile(fullPath.c_str());
+        if (pDict)
+        {
+            CCDictionary* pMetadata = (CCDictionary*)pDict->objectForKey("metadata");
+            int version = ((CCString*)pMetadata->objectForKey("version"))->intValue();
+            if (version != 1)
+            {
+                CCLOG("cocos2d: ERROR: Invalid filenameLookup dictionary version: %ld. Filename: %s", (long)version, filename);
+                return;
+            }
+            
+            setFilenameLookupDictionary((CCDictionary*)pDict->objectForKey("filenames"));
+        }
+    }
 }
 
 //////////////////////////////////////////////////////////////////////////

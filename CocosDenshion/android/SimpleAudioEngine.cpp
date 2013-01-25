@@ -26,6 +26,7 @@ THE SOFTWARE.
 #include "jni/SimpleAudioEngineJni.h"
 #include "opensl/SimpleAudioEngineOpenSL.h"
 
+#include "cocos2d.h"
 #include <cstring>
 #include <android/log.h>
 #include <jni/JniHelper.h>
@@ -37,110 +38,27 @@ THE SOFTWARE.
 
 static bool s_bI9100 = false;
 
+USING_NS_CC;
 /**********************************************************************************
  *   jni
  **********************************************************************************/
 #define  CLASS_NAME   "org/cocos2dx/lib/Cocos2dxHelper"
 #define  METHOD_NAME  "getDeviceModel"
 
-typedef struct JniMethodInfo_
-{
-	JNIEnv *    env;
-	jclass      classID;
-	jmethodID   methodID;
-} JniMethodInfo;
-
-extern "C" {
-	static JNIEnv* getJNIEnv(void)
-	{
-
-		JavaVM* jvm = cocos2d::JniHelper::getJavaVM();
-		if (NULL == jvm) {
-			LOGD("Failed to get JNIEnv. JniHelper::getJavaVM() is NULL");
-			return NULL;
-		}
-
-		JNIEnv *env = NULL;
-		// get jni environment
-		jint ret = jvm->GetEnv((void**)&env, JNI_VERSION_1_4);
-
-		switch (ret) {
-		case JNI_OK :
-			// Success!
-			return env;
-
-		case JNI_EDETACHED :
-			// Thread not attached
-
-			// TODO : If calling AttachCurrentThread() on a native thread
-			// must call DetachCurrentThread() in future.
-			// see: http://developer.android.com/guide/practices/design/jni.html
-
-			if (jvm->AttachCurrentThread(&env, NULL) < 0)
-			{
-				LOGD("Failed to get the environment using AttachCurrentThread()");
-				return NULL;
-			} else {
-				// Success : Attached and obtained JNIEnv!
-				return env;
-			}
-
-		case JNI_EVERSION :
-			// Cannot recover from this error
-			LOGD("JNI interface version 1.4 not supported");
-		default :
-			LOGD("Failed to get the environment using GetEnv()");
-			return NULL;
-		}
-	}
-
-	static jclass getClassID(JNIEnv *pEnv)
-	{
-		jclass ret = pEnv->FindClass(CLASS_NAME);
-		if (! ret)
-		{
-			LOGD("Failed to find class of %s", CLASS_NAME);
-		}
-
-		return ret;
-	}
-
-	static bool getStaticMethodInfo(JniMethodInfo &methodinfo, const char *methodName, const char *paramCode)
-	{
-		jmethodID methodID = 0;
-		JNIEnv *pEnv = 0;
-		bool bRet = false;
-
-		do 
-		{
-			pEnv = getJNIEnv();
-			if (! pEnv)
-			{
-				break;
-			}
-
-			jclass classID = getClassID(pEnv);
-
-			methodID = pEnv->GetStaticMethodID(classID, methodName, paramCode);
-			if (! methodID)
-			{
-				LOGD("Failed to find static method id of %s", methodName);
-				break;
-			}
-
-			methodinfo.classID = classID;
-			methodinfo.env = pEnv;
-			methodinfo.methodID = methodID;
-
-			bRet = true;
-		} while (0);
-
-		return bRet;
-	}
-};
-
-
 namespace CocosDenshion {
+
+static std::string getFullPathWithoutAssetsPrefix(const char* pszFilename)
+{
+	// Changing file path to full path
+    std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszFilename);
+    // Removing `assets` since it isn't needed for the API of playing sound.
+    size_t pos = fullPath.find("assets/");
+    if (pos == 0)
+    {
+    	fullPath = fullPath.substr(strlen("assets/"));
+    }
+    return fullPath;
+}
 
 static SimpleAudioEngine *s_pEngine = 0;
 
@@ -148,7 +66,7 @@ SimpleAudioEngine::SimpleAudioEngine()
 {
 	JniMethodInfo methodInfo;
 	jstring jstr;
-	if (getStaticMethodInfo(methodInfo, METHOD_NAME, "()Ljava/lang/String;"))
+	if (JniHelper::getStaticMethodInfo(methodInfo, CLASS_NAME, METHOD_NAME, "()Ljava/lang/String;"))
 	{
 		jstr = (jstring)methodInfo.env->CallStaticObjectMethod(methodInfo.classID, methodInfo.methodID);
 	}
@@ -200,12 +118,14 @@ void SimpleAudioEngine::end()
 
 void SimpleAudioEngine::preloadBackgroundMusic(const char* pszFilePath)
 {
-    preloadBackgroundMusicJNI(pszFilePath);
+    std::string fullPath = getFullPathWithoutAssetsPrefix(pszFilePath);
+    preloadBackgroundMusicJNI(fullPath.c_str());
 }
 
 void SimpleAudioEngine::playBackgroundMusic(const char* pszFilePath, bool bLoop)
 {
-    playBackgroundMusicJNI(pszFilePath, bLoop);
+	std::string fullPath = getFullPathWithoutAssetsPrefix(pszFilePath);
+    playBackgroundMusicJNI(fullPath.c_str(), bLoop);
 }
 
 void SimpleAudioEngine::stopBackgroundMusic(bool bReleaseData)
@@ -274,13 +194,14 @@ void SimpleAudioEngine::setEffectsVolume(float volume)
 
 unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop)
 {
+	std::string fullPath = getFullPathWithoutAssetsPrefix(pszFilePath);
 	if (s_bI9100)
 	{
-		return SimpleAudioEngineOpenSL::sharedEngine()->playEffect(pszFilePath, bLoop);
+		return SimpleAudioEngineOpenSL::sharedEngine()->playEffect(fullPath.c_str(), bLoop);
 	}
 	else 
 	{
-		return playEffectJNI(pszFilePath, bLoop);
+		return playEffectJNI(fullPath.c_str(), bLoop);
 	}
 }
 
@@ -298,25 +219,29 @@ void SimpleAudioEngine::stopEffect(unsigned int nSoundId)
 
 void SimpleAudioEngine::preloadEffect(const char* pszFilePath)
 {
+	std::string fullPath = getFullPathWithoutAssetsPrefix(pszFilePath);
+
 	if (s_bI9100)
 	{
-		SimpleAudioEngineOpenSL::sharedEngine()->preloadEffect(pszFilePath);
+		SimpleAudioEngineOpenSL::sharedEngine()->preloadEffect(fullPath.c_str());
 	}
 	else
 	{
-		preloadEffectJNI(pszFilePath);
+		preloadEffectJNI(fullPath.c_str());
 	}
 }
 
 void SimpleAudioEngine::unloadEffect(const char* pszFilePath)
 {
+	std::string fullPath = getFullPathWithoutAssetsPrefix(pszFilePath);
+
 	if (s_bI9100)
 	{
-		SimpleAudioEngineOpenSL::sharedEngine()->unloadEffect(pszFilePath);
+		SimpleAudioEngineOpenSL::sharedEngine()->unloadEffect(fullPath.c_str());
 	}
 	else
 	{
-		unloadEffectJNI(pszFilePath);
+		unloadEffectJNI(fullPath.c_str());
 	}
 }
 

@@ -163,6 +163,9 @@ void CCFileUtils::purgeFileUtils()
     if (s_pFileUtils != NULL)
     {
         s_pFileUtils->purgeCachedEntries();
+        CC_SAFE_RELEASE(s_pFileUtils->m_pFilenameLookupDict);
+        CC_SAFE_RELEASE(s_pFileUtils->m_pSearchPathArray);
+        CC_SAFE_RELEASE(s_pFileUtils->m_pSearchResolutionsOrderArray);
     }
     
     CC_SAFE_DELETE(s_pFileUtils);
@@ -173,6 +176,17 @@ void CCFileUtils::purgeCachedEntries()
     
 }
 
+bool CCFileUtils::init()
+{
+    m_pSearchPathArray = new CCArray();
+    m_pSearchPathArray->addObject(CCString::create(""));
+    
+    m_pSearchResolutionsOrderArray = new CCArray();
+    m_pSearchResolutionsOrderArray->addObject(CCString::create(""));
+    
+    return true;
+}
+
 void CCFileUtils::setResourceDirectory(const char *pszDirectoryName)
 {
     m_obDirectory = pszDirectoryName;
@@ -180,6 +194,31 @@ void CCFileUtils::setResourceDirectory(const char *pszDirectoryName)
     {
         m_obDirectory.append("/");
     }
+    m_pSearchPathArray->insertObject(CCString::create(m_obDirectory.c_str()), 0);
+}
+
+void CCFileUtils::setSearchResolutionsOrder(CCArray* pSearchResolutionsOrder)
+{
+    CC_SAFE_RETAIN(pSearchResolutionsOrder);
+    CC_SAFE_RELEASE(m_pSearchResolutionsOrderArray);
+    m_pSearchResolutionsOrderArray = pSearchResolutionsOrder;
+}
+
+CCArray* CCFileUtils::getSearchResolutionsOrder()
+{
+    return m_pSearchResolutionsOrderArray;
+}
+
+void CCFileUtils::setSearchPath(CCArray* pSearchPaths)
+{
+    CC_SAFE_RETAIN(pSearchPaths);
+    CC_SAFE_RELEASE(m_pSearchPathArray);
+    m_pSearchPathArray = pSearchPaths;
+}
+
+CCArray* CCFileUtils::getSearchPath()
+{
+    return m_pSearchPathArray;
 }
 
 const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
