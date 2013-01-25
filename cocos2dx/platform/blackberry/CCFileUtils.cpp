@@ -240,6 +240,16 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
 	return buffer;
 }
 
+void CCFileUtils::setResourceDirectory(const char* pszResourceDirectory)
+{
+    m_obDirectory = pszResourceDirectory;
+    if (m_obDirectory.size() > 0 && m_obDirectory[m_obDirectory.size() - 1] != '/')
+    {
+        m_obDirectory.append("/");
+    }
+    m_pSearchPathArray->insertObject(CCString::create(m_obDirectory.c_str()), 0);
+}
+
 std::string CCFileUtils::getWriteablePath()
 {
 	// Let's write it in the current working directory's data folder
