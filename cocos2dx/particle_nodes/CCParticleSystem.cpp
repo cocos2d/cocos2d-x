@@ -167,7 +167,7 @@ bool CCParticleSystem::init()
 bool CCParticleSystem::initWithFile(const char *plistFile)
 {
     bool bRet = false;
-    m_sPlistFile = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(plistFile);
+    m_sPlistFile = CCFileUtils::sharedFileUtils()->fullPathForFilename(plistFile);
     CCDictionary *dict = CCDictionary::createWithContentsOfFileThreadSafe(m_sPlistFile.c_str());
 
     CCAssert( dict != NULL, "Particles: file not found");
@@ -339,7 +339,6 @@ bool CCParticleSystem::initWithDictionary(CCDictionary *dictionary, const char *
                     bool bNotify = CCFileUtils::sharedFileUtils()->isPopupNotify();
                     CCFileUtils::sharedFileUtils()->setPopupNotify(false);
                     tex = CCTextureCache::sharedTextureCache()->addImage(textureName.c_str());
-                    
                     // reset the value of UIImage notify
                     CCFileUtils::sharedFileUtils()->setPopupNotify(bNotify);
                 }

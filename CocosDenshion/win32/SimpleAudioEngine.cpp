@@ -4,6 +4,8 @@
 #include <cstdlib>
 
 #include "MciPlayer.h"
+#include "cocos2d.h"
+USING_NS_CC;
 
 using namespace std;
 
@@ -255,27 +257,7 @@ void SimpleAudioEngine::setEffectsVolume(float volume)
 
 const char * _FullPath(const char * szPath)
 {
-    if (! s_szRootPath[0])
-    {
-        WCHAR  wszPath[MAX_PATH];
-        s_dwRootLen = WideCharToMultiByte(CP_ACP, 0, wszPath, 
-            GetCurrentDirectoryW(sizeof(wszPath), wszPath), 
-            s_szRootPath, MAX_PATH, NULL, NULL);
-        s_szRootPath[s_dwRootLen] = '\\';
-        s_szRootPath[s_dwRootLen + 1] = 0;
-        strcpy_s(s_szFullPath, sizeof(s_szFullPath), s_szRootPath);
-        ++s_dwRootLen;
-    }
-
-    if (0 != szPath[0] && ':' != szPath[1])
-    {
-        strcpy_s(s_szFullPath + s_dwRootLen, sizeof(s_szFullPath) - s_dwRootLen, szPath);
-        return s_szFullPath;
-    }
-    else
-    {
-        return szPath;
-    }
+    return CCFileUtils::sharedFileUtils()->fullPathForFilename(szPath);
 }
 
 unsigned int _Hash(const char *key)

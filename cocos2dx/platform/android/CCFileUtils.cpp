@@ -37,15 +37,29 @@ static CCFileUtils* s_pFileUtils = NULL;
 // record the zip on the resource path
 static ZipFile *s_pZipFile = NULL;
 
+static std::map<std::string, std::string> s_fullPathCache;
+
 CCFileUtils* CCFileUtils::sharedFileUtils()
 {
     if (s_pFileUtils == NULL)
     {
         s_pFileUtils = new CCFileUtils();
+        s_pFileUtils->init();
         std::string resourcePath = getApkPath();
         s_pZipFile = new ZipFile(resourcePath, "assets/");
     }
     return s_pFileUtils;
+}
+
+bool CCFileUtils::init()
+{
+    m_pSearchPathArray = new CCArray();
+    m_pSearchPathArray->addObject(CCString::create("assets/"));
+    
+    m_pSearchResolutionsOrderArray = new CCArray();
+    m_pSearchResolutionsOrderArray->addObject(CCString::create(""));
+
+    return true;
 }
 
 void CCFileUtils::purgeFileUtils()
@@ -53,6 +67,9 @@ void CCFileUtils::purgeFileUtils()
     if (s_pFileUtils != NULL)
     {
         s_pFileUtils->purgeCachedEntries();
+        CC_SAFE_RELEASE(s_pFileUtils->m_pFilenameLookupDict);
+        CC_SAFE_RELEASE(s_pFileUtils->m_pSearchPathArray);
+        CC_SAFE_RELEASE(s_pFileUtils->m_pSearchResolutionsOrderArray);
     }
 
     CC_SAFE_DELETE(s_pZipFile);
@@ -61,55 +78,133 @@ void CCFileUtils::purgeFileUtils()
 
 void CCFileUtils::purgeCachedEntries()
 {
-
+    s_fullPathCache.clear();
 }
 
 const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
 {
-    return pszRelativePath;
+    return CCString::create(fullPathForFilename(pszRelativePath))->getCString();
+}
+
+std::string CCFileUtils::fullPathForFilename(const char* pszFileName)
+{
+    if (pszFileName == NULL || pszFileName[0] == '\0' || pszFileName[0] == '/') {
+        return pszFileName;
+    }
+
+    // Already Cached ?
+    std::map<std::string, std::string>::iterator cacheIter = s_fullPathCache.find(pszFileName);
+    if (cacheIter != s_fullPathCache.end())
+    {
+        CCLOG("Return full path from cache: %s", cacheIter->second.c_str());
+        return cacheIter->second;
+    }
+
+    // Get the new file name.
+    std::string newFilename = getNewFilename(pszFileName);
+
+    string fullpath = "";
+
+    
+    bool bFound = false;
+    CCObject* pSearchObj = NULL;
+    CCARRAY_FOREACH(m_pSearchPathArray, pSearchObj)
+    {
+        CCString* pSearchPath = (CCString*)pSearchObj;
+        
+        CCObject* pResourceDirObj = NULL;
+        CCARRAY_FOREACH(m_pSearchResolutionsOrderArray, pResourceDirObj)
+        {
+            CCString* pResourceDirectory = (CCString*)pResourceDirObj;
+    
+            CCLOG("\n\nSEARCHING: %s, %s, %s", pszFileName, pResourceDirectory->getCString(), pSearchPath->getCString());
+                    fullpath = this->getPathForFilename(pszFileName, pResourceDirectory->getCString(), pSearchPath->getCString());
+            
+            // Check whether file exists in apk.
+            if (s_pZipFile->fileExists(fullpath))
+            {
+                bFound = true;
+            } 
+            else
+            {
+                FILE *fp = fopen(fullpath.c_str(), "r");
+                if(fp)
+                {
+                    bFound = true;
+                    fclose(fp);
+                }
+            }
+            if (bFound)
+            {
+                s_fullPathCache.insert(std::pair<std::string, std::string>(pszFileName, fullpath));
+                CCLOG("Returning path: %s", fullpath.c_str());
+                return fullpath;
+            }
+        }
+    }
+
+    return pszFileName;
 }
 
 const char* CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const char *pszRelativeFile)
 {
     std::string relativeFile = pszRelativeFile;
-    CCString *pRet = new CCString();
-    pRet->autorelease();
+    CCString *pRet = CCString::create("");
     pRet->m_sString = relativeFile.substr(0, relativeFile.rfind('/')+1);
-    pRet->m_sString += pszFilename;
-    return pRet->m_sString.c_str();
+    pRet->m_sString += getNewFilename(pszFilename);
+    return pRet->getCString();
+}
+
+std::string CCFileUtils::getPathForFilename(const std::string& filename, const std::string& resourceDirectory, const std::string& searchPath)
+{
+    std::string file = filename;
+    std::string file_path = "";
+    size_t pos = filename.find_last_of("/");
+    if (pos != std::string::npos)
+    {
+        file_path = filename.substr(0, pos+1);
+        file = filename.substr(pos+1);
+    }
+    
+  // searchPath + file_path + resourceDirectory
+    std::string path = searchPath;
+    if (path.size() > 0 && path[path.length()-1] != '/')
+    {
+        path += "/";
+    }
+    path += file_path;
+    path += resourceDirectory;
+    
+    if (path.size() > 0 && path[path.length()-1] != '/')
+    {
+        path += "/";
+    }
+    path += file;
+
+    CCLOG("getPathForFilename, fullPath = %s", path.c_str());
+    return path;
 }
 
 unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize)
 {    
     unsigned char * pData = 0;
-    string fullPath(pszFileName);
 
-    if ((! pszFileName) || (! pszMode))
+    if ((! pszFileName) || (! pszMode) || 0 == strlen(pszFileName))
     {
         return 0;
     }
 
     if (pszFileName[0] != '/')
     {
-        // read from apk
-        string pathWithoutDirectory = fullPath;
-        
-        fullPath.insert(0, m_obDirectory.c_str());
-        fullPath.insert(0, "assets/");
-        pData = s_pZipFile->getFileData(fullPath, pSize);
-        
-        if (! pData && m_obDirectory.size() > 0)
-        {
-            // search from root
-            pathWithoutDirectory.insert(0, "assets/");
-            pData = s_pZipFile->getFileData(pathWithoutDirectory, pSize);
-        }
+        CCLOG("GETTING FILE RELATIVE DATA: %s", pszFileName);
+        pData = s_pZipFile->getFileData(pszFileName, pSize);
     }
     else
     {
         do 
         {
             // read rrom other path than user set it
+	        CCLOG("GETTING FILE ABSOLUTE DATA: %s", pszFileName);
             FILE *fp = fopen(pszFileName, pszMode);
             CC_BREAK_IF(!fp);
 
@@ -132,7 +227,7 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
     {
         std::string title = "Notification";
         std::string msg = "Get data from file(";
-        msg.append(fullPath.c_str()).append(") failed!");
+        msg.append(pszFileName).append(") failed!");
         CCMessageBox(msg.c_str(), title.c_str());
     }
 
