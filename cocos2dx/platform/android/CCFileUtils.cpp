@@ -236,12 +236,18 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
 
 void CCFileUtils::setResourceDirectory(const char* pszResourceDirectory)
 {
+    if (pszResourceDirectory == NULL) return;
+
     m_obDirectory = pszResourceDirectory;
     if (m_obDirectory.size() > 0 && m_obDirectory[m_obDirectory.size() - 1] != '/')
     {
         m_obDirectory.append("/");
     }
-    m_obDirectory += "assets/";
+    if (pszResourceDirectory[0] != '/')
+    {
+        m_obDirectory.insert(0, "assets/");
+    }
+    
     m_pSearchPathArray->insertObject(CCString::create(m_obDirectory.c_str()), 0);
 }
 
