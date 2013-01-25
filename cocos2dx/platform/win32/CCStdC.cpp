@@ -24,6 +24,8 @@ THE SOFTWARE.
 
 #include "CCStdC.h"
 
+#ifndef __MINGW32__
+
 int gettimeofday(struct timeval * val, struct timezone *)
 {
     if (val)
@@ -37,3 +39,4 @@ int gettimeofday(struct timeval * val, struct timezone *)
     return 0;
 }
 
+#endif // __MINGW32__
