@@ -234,6 +234,17 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
     return pData;
 }
 
+void CCFileUtils::setResourceDirectory(const char* pszResourceDirectory)
+{
+    m_obDirectory = pszResourceDirectory;
+    if (m_obDirectory.size() > 0 && m_obDirectory[m_obDirectory.size() - 1] != '/')
+    {
+        m_obDirectory.append("/");
+    }
+    m_obDirectory += "assets/";
+    m_pSearchPathArray->insertObject(CCString::create(m_obDirectory.c_str()), 0);
+}
+
 string CCFileUtils::getWriteablePath()
 {
     // Fix for Nexus 10 (Android 4.2 multi-user environment)
