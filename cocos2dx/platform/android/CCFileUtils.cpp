@@ -52,6 +52,7 @@ CCFileUtils* CCFileUtils::sharedFileUtils()
 bool CCFileUtils::init()
 {
     m_pSearchPathArray = new CCArray();
+    m_pSearchPathArray->addObject(CCString::create("assets/"));
     m_pSearchPathArray->addObject(CCString::create(""));
     
     m_pSearchResolutionsOrderArray = new CCArray();
@@ -125,8 +126,7 @@ void CCFileUtils::loadFilenameLookupDictionaryFromFile(const char* filename)
 
 std::string CCFileUtils::getPathForFilename(const std::string& filename, const std::string& resourceDirectory, const std::string& searchPath)
 {
-    std::string ret = "assets/";
-  
+    std::string  ret = "";
     std::string file = filename;
     std::string file_path = "";
     size_t pos = filename.find_last_of("/");
@@ -156,17 +156,10 @@ std::string CCFileUtils::getPathForFilename(const std::string& filename, const s
     return ret;
 }
 
-unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize)
-{    
-    unsigned char * pData = 0;
 
-    if ((! pszFileName) || (! pszMode) || 0 == strlen(pszFileName))
-    {
-        return 0;
-    }
+string CCFileUtils::getAbsoluteFilenamePath(const char *pszFileName) {
 
-    string fullpath;
-
+    string fullpath = "";
     if (pszFileName[0] != '/')
     {
         // read from apk
@@ -181,28 +174,62 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
             {
                 CCString* pResourceDirectory = (CCString*)pResourceDirObj;
                 // Search in subdirectories
+		
+		CCLOG("\n\nSEARCHING: %s, %s, %s", pszFileName, pResourceDirectory->getCString(), pSearchPath->getCString());
                 fullpath = this->getPathForFilename(pszFileName, pResourceDirectory->getCString(), pSearchPath->getCString());
-                                               
-                pData = s_pZipFile->getFileData(fullpath.c_str(), pSize);
-                
-                if (pData)
-                {
-                    bFound = true;
-                    break;
-                }
-            }
-            if (bFound)
-            {
-                break;
-            }
-        }
+		
+		unsigned char * pData = 0;
+		unsigned long * pSize;
+		pData = s_pZipFile->getFileData(fullpath.c_str(), pSize);
+		if (pData)
+		  {
+		    bFound = true;
+		  } else {
+		  FILE *fp = fopen(fullpath.c_str(), "r");
+		  if(fp) {
+		    bFound = true;
+		    fclose(fp);
+		  }
+		}
+		if (bFound)
+		  {
+		    CCLOG("Returning path: %s", fullpath.c_str());
+		    return fullpath;
+		  }
+	    }
+	}
+    } else {
+      return pszFileName;
+    }
+
+    return "";
+}
+
+
+unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize)
+{    
+    unsigned char * pData = 0;
+
+    if ((! pszFileName) || (! pszMode) || 0 == strlen(pszFileName))
+    {
+        return 0;
+    }
+
+    string fullpath;
+                    
+    string fullFilename = getAbsoluteFilenamePath(pszFileName);
+
+    if (fullFilename[0] != '/') {
+      CCLOG("GETTING FILE RELATIVE DATA: %s", pszFileName);
+      pData = s_pZipFile->getFileData(fullFilename.c_str(), pSize);
     }
     else
     {
         do 
         {
             // read rrom other path than user set it
-            FILE *fp = fopen(pszFileName, pszMode);
+	  CCLOG("GETTING FILE ABSOLUTE DATA: %s", fullFilename.c_str());
+            FILE *fp = fopen(fullFilename.c_str(), pszMode);
             CC_BREAK_IF(!fp);
 
             unsigned long size;
