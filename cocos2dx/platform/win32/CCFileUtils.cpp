@@ -90,7 +90,7 @@ bool CCFileUtils::init()
 
 const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
 {
-    return fullPathForFilename(pszRelativePath);
+    return CCString::create(fullPathForFilename(pszRelativePath))->getCString();
 }
 
 std::string CCFileUtils::getPathForFilename(const std::string& filename, const std::string& resourceDirectory, const std::string& searchPath)
@@ -147,10 +147,9 @@ std::string CCFileUtils::getPathForFilename(const std::string& filename, const s
     return ret;
 }
 
-const char* CCFileUtils::fullPathForFilename(const char* pszFileName)
+std::string CCFileUtils::fullPathForFilename(const char* pszFileName)
 {
 	bool bFound = false;
-    CCString* pRet = CCString::create("");
 
     std::string newFileName = getNewFilename(pszFileName);
     std::string fullpath;
@@ -159,12 +158,9 @@ const char* CCFileUtils::fullPathForFilename(const char* pszFileName)
     {
         if ((newFileName.length() > 1 && newFileName[1] == ':'))
         {
-            // path start with "x:", is absolute path
-            pRet->m_sString = newFileName;
-            // return directly
-            return pRet->getCString();
+            // path start with "x:", is absolute path, return directly
+            return newFileName;
         }
-
         
         CCObject* pSearchObj = NULL;
         CCARRAY_FOREACH(m_pSearchPathArray, pSearchObj)
@@ -180,7 +176,6 @@ const char* CCFileUtils::fullPathForFilename(const char* pszFileName)
 
                 if (GetFileAttributesA(fullpath.c_str()) != -1)
                 {
-					pRet->m_sString = fullpath;
                     bFound = true;
                     break;
                 }
@@ -192,39 +187,12 @@ const char* CCFileUtils::fullPathForFilename(const char* pszFileName)
         }
 
     }while(false);
-    
-    if (!bFound)
-    { // Can't find the file, return the relative path.
-        pRet->m_sString = newFileName;
-    }
 
-    return pRet->getCString();
-}
-
-void CCFileUtils::loadFilenameLookupDictionaryFromFile(const char* filename)
-{
-    const char* pFullPath = this->fullPathForFilename(filename);
-    if (pFullPath)
-    {
-        CCDictionary* pDict = CCDictionary::createWithContentsOfFile(filename);
-        if (pDict)
-        {
-            CCDictionary* pMetadata = (CCDictionary*)pDict->objectForKey("metadata");
-            int version = ((CCString*)pMetadata->objectForKey("version"))->intValue();
-            if (version != 1)
-            {
-                CCLOG("cocos2d: ERROR: Invalid filenameLookup dictionary version: %ld. Filename: %s", (long)version, filename);
-                return;
-            }
-
-            setFilenameLookupDictionary((CCDictionary*)pDict->objectForKey("filenames"));
-        }
-    }
+    return bFound ? fullpath : newFileName;
 }
 
 const char *CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const char *pszRelativeFile)
 {
-    //std::string relativeFile = fullPathFromRelativePath(pszRelativeFile);
     std::string relativeFile = pszRelativeFile;
     CCString *pRet = CCString::create("");
     pRet->m_sString = relativeFile.substr(0, relativeFile.find_last_of("/\\") + 1);
