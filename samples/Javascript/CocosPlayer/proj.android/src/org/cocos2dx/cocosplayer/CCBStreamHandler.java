@@ -23,6 +23,7 @@ import java.nio.ByteOrder;
 
 public class CCBStreamHandler {
 
+    private static String resolution = "xlarge";
     public static final String TAG = CocosPlayerSocket.class.getSimpleName();
     
     public static NSDictionary parseBinaryPLIST(InputStream is) {
@@ -95,7 +96,7 @@ public class CCBStreamHandler {
 	    root.put("cmd", "deviceinfo");
 	    root.put("devicename", android.os.Build.MODEL);
 	    root.put("devicetype", "Android");
-	    root.put("preferredresourcetype", "xlarge");
+	    root.put("preferredresourcetype", resolution);
 	    String payload = root.toXMLPropertyList();
 	    
 	    //		String data = new String(header, 0 , header.length);
@@ -104,4 +105,13 @@ public class CCBStreamHandler {
 	}
 	return null;
     }
+
+    public static void setDeviceResolution(String res) {
+	CocosPlayerSocket server = new CocosPlayerSocket();
+	Log.i(TAG, "Starting with resolution: "+res);
+	resolution = res;
+	server.setContext(CocosPlayer.c);
+	server.createServer();
+    }
+
 }

@@ -29,6 +29,7 @@ THE SOFTWARE.
 extern "C" {
   extern void setPairingCodeJNI(int code);
   extern void cleanCacheDirJNI();
+  extern void setDeviceResolutionJNI(const char* res);
 }
 
 #endif

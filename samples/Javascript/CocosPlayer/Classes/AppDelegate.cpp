@@ -65,26 +65,30 @@ bool AppDelegate::applicationDidFinishLaunching()
     CCSize designSize = CCSizeMake(320, 480);
     CCSize resourceSize = CCSizeMake(320, 480);
 
-
+    string res = "xlarge";
     if (screenSize.height > 1024)
       {
 	resourceSize = CCSizeMake(1280, 1920);
 	CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(CCArray::create(CCString::create("resources-xlarge"), CCString::create(""),  NULL));
+	res = "xlarge";
       }
     else if (screenSize.height > 960)
       {
 	resourceSize = CCSizeMake(640, 960);
 	CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(CCArray::create(CCString::create("resources-large"), CCString::create(""),  NULL));
+	res = "large";
       }
     else if (screenSize.height > 480)
       {
 	resourceSize = CCSizeMake(480, 720);
 	CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(CCArray::create(CCString::create("resources-medium"), CCString::create(""),  NULL));
+	res = "medium";
       }
     else
       {
 	resourceSize = CCSizeMake(320, 568);
 	CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(CCArray::create(CCString::create("resources-small"), CCString::create(""), NULL));
+	res = "small";
       }
 
     pDirector->setContentScaleFactor(resourceSize.height/designSize.height);
@@ -93,6 +97,8 @@ bool AppDelegate::applicationDidFinishLaunching()
 
     CCFileUtils::sharedFileUtils()->setSearchPath(CCArray::create(CCString::create(CCFileUtils::sharedFileUtils()->getWriteablePath()),
 								  CCString::create("assets/"), CCString::create(""), NULL));
+
+    PlayerStatus::setDeviceResolution(res);
     // turn on display FPS
     pDirector->setDisplayStats(true);
     

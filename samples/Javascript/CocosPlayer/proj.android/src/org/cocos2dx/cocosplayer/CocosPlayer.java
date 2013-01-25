@@ -27,15 +27,15 @@ import org.cocos2dx.lib.Cocos2dxActivity;
 
 import android.os.Bundle;
 import android.content.Intent;
+import android.content.ContextWrapper;
+import android.content.Context;
 
 public class CocosPlayer extends Cocos2dxActivity{
-	
+
+    public static Context c;
     protected void onCreate(Bundle savedInstanceState){
 	super.onCreate(savedInstanceState);
-	
-	CocosPlayerSocket server = new CocosPlayerSocket();
-	server.setContext(getApplicationContext());
-	server.createServer();
+	c = getApplicationContext();
     }
 	
     static {

@@ -10,6 +10,7 @@
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
 
 #define  SOCKET_CLASS_NAME "org/cocos2dx/cocosplayer/CocosPlayerSocket"
+#define  STREAM_CLASS_NAME "org/cocos2dx/cocosplayer/CCBStreamHandler"
 
 using namespace cocos2d;
 using namespace std;
@@ -29,5 +30,15 @@ extern "C" {
 	  t.env->CallStaticVoidMethod(t.classID, t.methodID);
 	  t.env->DeleteLocalRef(t.classID);
         }
-    }
+   }
+
+  void setDeviceResolutionJNI(const char *res) {
+      JniMethodInfo t;
+      if (JniHelper::getStaticMethodInfo(t, STREAM_CLASS_NAME, "setDeviceResolution", "(Ljava/lang/String;)V")) {
+	  jstring stringArg1 = t.env->NewStringUTF(res);
+	  t.env->CallStaticVoidMethod(t.classID, t.methodID, stringArg1);
+	  t.env->DeleteLocalRef(stringArg1);
+	  t.env->DeleteLocalRef(t.classID);
+      }
+  }
 }
