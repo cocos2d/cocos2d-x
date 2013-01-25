@@ -142,6 +142,8 @@ static void static_addValueToCCDict(id key, id value, CCDictionary* pDict)
 
 NS_CC_BEGIN
 
+static std::map<std::string, std::string> s_fullPathCache;
+
 static CCFileUtils* s_pFileUtils = NULL;
 
 CCFileUtils* CCFileUtils::sharedFileUtils()
@@ -169,7 +171,7 @@ void CCFileUtils::purgeFileUtils()
 
 void CCFileUtils::purgeCachedEntries()
 {
-
+    s_fullPathCache.clear();
 }
 
 bool CCFileUtils::init()
@@ -224,9 +226,7 @@ const char* CCFileUtils::getResourceDirectory()
 
 const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
 {
-    CCString* pRet = CCString::create("");
-    pRet->m_sString = fullPathForFilename(pszRelativePath);
-    return pRet->getCString();
+    return CCString::create(fullPathForFilename(pszRelativePath))->getCString();
 }
 
 std::string CCFileUtils::getNewFilename(const char* pszFileName)
@@ -282,9 +282,15 @@ std::string CCFileUtils::fullPathForFilename(const char* filename)
 {
     CCAssert(filename != NULL, "CCFileUtils: Invalid path");
     
+    // Already Cached ?
+    std::map<std::string, std::string>::iterator cacheIter = s_fullPathCache.find(filename);
+    if (cacheIter != s_fullPathCache.end())
+    {
+        return cacheIter->second;
+    }
+    
     std::string fullpath = "";
     NSString *relPath = [NSString stringWithUTF8String:filename];
-    BOOL found = NO;
     
     // only if it is not an absolute path
     if( ! [relPath isAbsolutePath] ) {
@@ -306,6 +312,7 @@ std::string CCFileUtils::fullPathForFilename(const char* filename)
                 
                 if (fullpath.length() > 0)
                 {
+                    s_fullPathCache.insert(std::pair<std::string, std::string>(filename, fullpath));
                     return fullpath;
                 }
             }

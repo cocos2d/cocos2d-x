@@ -37,6 +37,8 @@ static CCFileUtils* s_pFileUtils = NULL;
 // record the zip on the resource path
 static ZipFile *s_pZipFile = NULL;
 
+static std::map<std::string, std::string> s_fullPathCache;
+
 CCFileUtils* CCFileUtils::sharedFileUtils()
 {
     if (s_pFileUtils == NULL)
@@ -53,7 +55,6 @@ bool CCFileUtils::init()
 {
     m_pSearchPathArray = new CCArray();
     m_pSearchPathArray->addObject(CCString::create("assets/"));
-    m_pSearchPathArray->addObject(CCString::create(""));
     
     m_pSearchResolutionsOrderArray = new CCArray();
     m_pSearchResolutionsOrderArray->addObject(CCString::create(""));
@@ -77,14 +78,12 @@ void CCFileUtils::purgeFileUtils()
 
 void CCFileUtils::purgeCachedEntries()
 {
-
+    s_fullPathCache.clear();
 }
 
 const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
 {
-    CCString* pRet = CCString::create("");
-    pRet->m_sString = fullPathForFilename(pszRelativePath);
-    return pRet->getCString();
+    return CCString::create(fullPathForFilename(pszRelativePath))->getCString();
 }
 
 std::string CCFileUtils::fullPathForFilename(const char* pszFileName)
@@ -92,6 +91,15 @@ std::string CCFileUtils::fullPathForFilename(const char* pszFileName)
     if (pszFileName == NULL || pszFileName[0] == '\0' || pszFileName[0] == '/') {
         return pszFileName;
     }
+
+    // Already Cached ?
+    std::map<std::string, std::string>::iterator cacheIter = s_fullPathCache.find(pszFileName);
+    if (cacheIter != s_fullPathCache.end())
+    {
+        CCLOG("Return full path from cache: %s", cacheIter->second.c_str());
+        return cacheIter->second;
+    }
+
     // Get the new file name.
     std::string newFilename = getNewFilename(pszFileName);
 
@@ -128,6 +136,7 @@ std::string CCFileUtils::fullPathForFilename(const char* pszFileName)
             }
             if (bFound)
             {
+                s_fullPathCache.insert(std::pair<std::string, std::string>(pszFileName, fullpath));
                 CCLOG("Returning path: %s", fullpath.c_str());
                 return fullpath;
             }
@@ -148,7 +157,6 @@ const char* CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const
 
 std::string CCFileUtils::getPathForFilename(const std::string& filename, const std::string& resourceDirectory, const std::string& searchPath)
 {
-    std::string  ret = "";
     std::string file = filename;
     std::string file_path = "";
     size_t pos = filename.find_last_of("/");
@@ -172,10 +180,9 @@ std::string CCFileUtils::getPathForFilename(const std::string& filename, const s
         path += "/";
     }
     path += file;
-    ret += path;
 
-    CCLOG("getPathForFilename, fullPath = %s", ret.c_str());
-    return ret;
+    CCLOG("getPathForFilename, fullPath = %s", path.c_str());
+    return path;
 }
 
 unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize)
