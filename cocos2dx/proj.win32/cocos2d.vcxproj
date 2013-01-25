@@ -230,6 +230,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\tileMap_parallax_nodes\CCTMXObjectGroup.cpp" />
     <ClCompile Include="..\tileMap_parallax_nodes\CCTMXTiledMap.cpp" />
     <ClCompile Include="..\tileMap_parallax_nodes\CCTMXXMLParser.cpp" />
+    <ClCompile Include="..\tinyxml2\tinyxml2.cpp" />
     <ClCompile Include="..\touch_dispatcher\CCTouch.cpp" />
     <ClCompile Include="..\touch_dispatcher\CCTouchDispatcher.cpp" />
     <ClCompile Include="..\touch_dispatcher\CCTouchHandler.cpp" />
@@ -382,6 +383,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\tileMap_parallax_nodes\CCTMXObjectGroup.h" />
     <ClInclude Include="..\tileMap_parallax_nodes\CCTMXTiledMap.h" />
     <ClInclude Include="..\tileMap_parallax_nodes\CCTMXXMLParser.h" />
+    <ClInclude Include="..\tinyxml2\tinyxml2.h" />
     <ClInclude Include="..\touch_dispatcher\CCTouch.h" />
     <ClInclude Include="..\touch_dispatcher\CCTouchDelegateProtocol.h" />
     <ClInclude Include="..\touch_dispatcher\CCTouchDispatcher.h" />
