@@ -840,9 +840,9 @@ CCNode * CCNodeLoader::parsePropTypeCCBFile(CCNode * pNode, CCNode * pParent, CC
     ccbFileName = ccbFileWithoutPathExtension + ".ccbi";
     
     // Load sub file
-    const char *path = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(ccbFileName.c_str());
+    std::string path = CCFileUtils::sharedFileUtils()->fullPathForFilename(ccbFileName.c_str());
     unsigned long size = 0;
-    unsigned char * pBytes = CCFileUtils::sharedFileUtils()->getFileData(path, "rb", &size);
+    unsigned char * pBytes = CCFileUtils::sharedFileUtils()->getFileData(path.c_str(), "rb", &size);
 
     CCBReader * ccbReader = new CCBReader(pCCBReader);
     ccbReader->autorelease();

@@ -66,13 +66,14 @@ bool AppDelegate::applicationDidFinishLaunching()
     CCSize resourceSize = CCSizeMake(320, 480);
 
     string res = "xlarge";
-    if (screenSize.height > 1024)
-      {
-	resourceSize = CCSizeMake(1280, 1920);
-	CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(CCArray::create(CCString::create("resources-xlarge"), CCString::create(""),  NULL));
-	res = "xlarge";
-      }
-    else if (screenSize.height > 960)
+ //    if (screenSize.height > 1024)
+ //      {
+	// resourceSize = CCSizeMake(1280, 1920);
+	// CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(CCArray::create(CCString::create("resources-xlarge"), CCString::create(""),  NULL));
+	// res = "xlarge";
+ //      }
+ //    else
+     if (screenSize.height > 960)
       {
 	resourceSize = CCSizeMake(640, 960);
 	CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(CCArray::create(CCString::create("resources-large"), CCString::create(""),  NULL));

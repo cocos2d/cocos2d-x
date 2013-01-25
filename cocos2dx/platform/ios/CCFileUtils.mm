@@ -227,7 +227,9 @@ const char* CCFileUtils::getResourceDirectory()
 
 const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
 {
-    return fullPathForFilename(pszRelativePath);
+    CCString* pRet = CCString::create("");
+    pRet->m_sString = fullPathForFilename(pszRelativePath);
+    return pRet->getCString();
 }
 
 std::string CCFileUtils::getNewFilename(const char* pszFileName)
@@ -279,7 +281,7 @@ std::string CCFileUtils::getPathForFilename(const std::string& filename, const s
 	return ret;
 }
 
-const char* CCFileUtils::fullPathForFilename(const char* filename)
+std::string CCFileUtils::fullPathForFilename(const char* filename)
 {
     CCAssert(filename != NULL, "CCFileUtils: Invalid path");
     
@@ -309,21 +311,19 @@ const char* CCFileUtils::fullPathForFilename(const char* filename)
                 
                 if (found)
                 {
-                    return CCString::create(fullpath.c_str())->getCString();
+                    return fullpath;
                 }
             }
         }
     }
-    
-
     
     return filename;
 }
 
 void CCFileUtils::loadFilenameLookupDictionaryFromFile(const char* filename)
 {
-    const char* pFullPath = this->fullPathForFilename(filename);
-    if (pFullPath)
+    std::string pFullPath = this->fullPathForFilename(filename);
+    if (pFullPath.length() > 0)
     {
         CCDictionary* pDict = CCDictionary::createWithContentsOfFile(filename);
         if (pDict)
@@ -350,7 +350,7 @@ void CCFileUtils::setFilenameLookupDictionary(CCDictionary* pFilenameLookupDict)
 
 const char *CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const char *pszRelativeFile)
 {
-    std::string relativeFile = fullPathFromRelativePath(pszRelativeFile);
+    std::string relativeFile = fullPathForFilename(pszRelativeFile);
     CCString *pRet = new CCString();
     pRet->autorelease();
     pRet->m_sString = relativeFile.substr(0, relativeFile.rfind('/')+1);
@@ -360,8 +360,8 @@ const char *CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const
 
 CCDictionary* ccFileUtils_dictionaryWithContentsOfFileThreadSafe(const char *pFileName)
 {
-    const char* pszFullPath = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(pFileName);
-    NSString* pPath = [NSString stringWithUTF8String:pszFullPath];
+    std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pFileName);
+    NSString* pPath = [NSString stringWithUTF8String:fullPath.c_str()];
     NSDictionary* pDict = [NSDictionary dictionaryWithContentsOfFile:pPath];
     
     CCDictionary* pRet = new CCDictionary();
@@ -380,8 +380,8 @@ CCArray* ccFileUtils_arrayWithContentsOfFileThreadSafe(const char* pFileName)
 //    pPath = [pPath stringByDeletingPathExtension];
 //    pPath = [[NSBundle mainBundle] pathForResource:pPath ofType:pathExtension];
 //    fixing cannot read data using CCArray::createWithContentsOfFile
-    const char* pszFullPath = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(pFileName);
-    NSString* pPath = [NSString stringWithUTF8String:pszFullPath];
+    std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pFileName);
+    NSString* pPath = [NSString stringWithUTF8String:fullPath.c_str()];
     NSArray* pArray = [NSArray arrayWithContentsOfFile:pPath];
     
     CCArray* pRet = new CCArray();
@@ -400,7 +400,7 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
     do 
     {
         // read the file from hardware
-        std::string fullPath = fullPathFromRelativePath(pszFileName);
+        std::string fullPath = pszFileName;
         FILE *fp = fopen(fullPath.c_str(), pszMode);
         CC_BREAK_IF(!fp);
 

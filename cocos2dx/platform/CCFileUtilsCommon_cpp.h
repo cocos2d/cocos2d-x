@@ -403,9 +403,6 @@ void CCFileUtils::setSearchPath(CCArray* pSearchPaths)
     CC_SAFE_RETAIN(pSearchPaths);
     CC_SAFE_RELEASE(m_pSearchPathArray);
     m_pSearchPathArray = pSearchPaths;
-    if(m_pSearchPathArray) {
-        m_pSearchPathArray->addObject(CCString::create("assets/"));
-    }
 }
 
 CCArray* CCFileUtils::getSearchPath()
@@ -433,6 +430,27 @@ void CCFileUtils::setFilenameLookupDictionary(CCDictionary* pFilenameLookupDict)
     CC_SAFE_RELEASE(m_pFilenameLookupDict);
     m_pFilenameLookupDict = pFilenameLookupDict;
     CC_SAFE_RETAIN(m_pFilenameLookupDict);
+}
+
+void CCFileUtils::loadFilenameLookupDictionaryFromFile(const char* filename)
+{
+    std::string fullPath = this->fullPathForFilename(filename);
+    if (fullPath.length() > 0)
+    {
+        CCDictionary* pDict = CCDictionary::createWithContentsOfFile(fullPath.c_str());
+        if (pDict)
+        {
+            CCDictionary* pMetadata = (CCDictionary*)pDict->objectForKey("metadata");
+            int version = ((CCString*)pMetadata->objectForKey("version"))->intValue();
+            if (version != 1)
+            {
+                CCLOG("cocos2d: ERROR: Invalid filenameLookup dictionary version: %ld. Filename: %s", (long)version, filename);
+                return;
+            }
+            
+            setFilenameLookupDictionary((CCDictionary*)pDict->objectForKey("filenames"));
+        }
+    }
 }
 
 //////////////////////////////////////////////////////////////////////////
