@@ -100,7 +100,7 @@ public:
      
      @since v2.1
      */
-    const char* fullPathForFilename(const char* filename);
+    std::string fullPathForFilename(const char* filename);
     
     /**
      * Loads the filenameLookup dictionary from the contents of a filename.
@@ -110,7 +110,7 @@ public:
      * <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
      * <plist version="1.0">
      * <dict>
-     *     <key>ios</key>
+     *     <key>filenames</key>
      *     <dict>
      *         <key>sounds/click.wav</key>
      *         <string>sounds/click.caf</string>
@@ -118,15 +118,6 @@ public:
      *         <string>sounds/endgame.caf</string>
      *         <key>sounds/gem-0.wav</key>
      *         <string>sounds/gem-0.caf</string>
-     *     </dict>
-     *     <key>android</key>
-     *     <dict>
-     *         <key>sounds/click.wav</key>
-     *         <string>sounds/click.ogg</string>
-     *         <key>sounds/endgame.wav</key>
-     *         <string>sounds/endgame.ogg</string>
-     *         <key>sounds/gem-0.wav</key>
-     *         <string>sounds/gem-0.ogg</string>
      *     </dict>
      *     <key>metadata</key>
      *     <dict>
@@ -205,7 +196,6 @@ public:
     void setPopupNotify(bool bNotify);
     bool isPopupNotify();
 
-    std::string getAbsoluteFilenamePath(const char *filename);
 protected:
     CCFileUtils(void)
     : m_pFilenameLookupDict(NULL)

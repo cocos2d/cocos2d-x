@@ -86,7 +86,7 @@ CCLabelAtlas* CCLabelAtlas::create(const char *string, const char *fntFile)
 
 bool CCLabelAtlas::initWithString(const char *theString, const char *fntFile)
 {
-  std::string pathStr = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(fntFile);
+  std::string pathStr = CCFileUtils::sharedFileUtils()->fullPathForFilename(fntFile);
   std::string relPathStr = pathStr.substr(0, pathStr.find_last_of("/"))+"/";
   CCDictionary *dict = CCDictionary::createWithContentsOfFile(pathStr.c_str());
   

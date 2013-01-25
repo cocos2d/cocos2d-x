@@ -177,15 +177,15 @@ void SimpleAudioEngine::end()
 void SimpleAudioEngine::preloadBackgroundMusic(const char* pszFilePath)
 {
     // Changing file path to full path
-    const char* fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
-    static_preloadBackgroundMusic(fullPath);
+    std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
+    static_preloadBackgroundMusic(fullPath.c_str());
 }
 
 void SimpleAudioEngine::playBackgroundMusic(const char* pszFilePath, bool bLoop)
 {
     // Changing file path to full path
-    const char* fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
-    static_playBackgroundMusic(fullPath, bLoop);
+    std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
+    static_playBackgroundMusic(fullPath.c_str(), bLoop);
 }
 
 void SimpleAudioEngine::stopBackgroundMusic(bool bReleaseData)
@@ -241,8 +241,8 @@ void SimpleAudioEngine::setEffectsVolume(float volume)
 unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop)
 {
     // Changing file path to full path
-    const char* fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
-    return static_playEffect(fullPath, bLoop);
+    std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
+    return static_playEffect(fullPath.c_str(), bLoop);
 }
 
 void SimpleAudioEngine::stopEffect(unsigned int nSoundId)
@@ -253,15 +253,15 @@ void SimpleAudioEngine::stopEffect(unsigned int nSoundId)
 void SimpleAudioEngine::preloadEffect(const char* pszFilePath)
 {
     // Changing file path to full path
-    const char* fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
-    static_preloadEffect(fullPath);
+    std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
+    static_preloadEffect(fullPath.c_str());
 }
 
 void SimpleAudioEngine::unloadEffect(const char* pszFilePath)
 {
     // Changing file path to full path
-    const char* fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
-    static_unloadEffect(fullPath);
+    std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
+    static_unloadEffect(fullPath.c_str());
 }
 
 void SimpleAudioEngine::pauseEffect(unsigned int uSoundId)

@@ -446,7 +446,7 @@ JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* c
     if (path[0] == '/') {
         rpath = path;
     } else {
-        rpath = futil->getAbsoluteFilenamePath(futil->fullPathFromRelativePath(path));
+        rpath = futil->fullPathForFilename(path);
     }
     if (global == NULL) {
         global = global_;

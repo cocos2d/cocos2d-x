@@ -244,8 +244,8 @@ void CCAnimationCache::addAnimationsWithFile(const char* plist)
 {
     CCAssert( plist, "Invalid texture file name");
 
-    const char* path = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(plist);
-    CCDictionary* dict = CCDictionary::createWithContentsOfFile(path);
+    std::string path = CCFileUtils::sharedFileUtils()->fullPathForFilename(plist);
+    CCDictionary* dict = CCDictionary::createWithContentsOfFile(path.c_str());
 
     CCAssert( dict, "CCAnimationCache: File could not be found");
 
