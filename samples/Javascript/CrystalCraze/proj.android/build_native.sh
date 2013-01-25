@@ -49,7 +49,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 COCOS2DX_ROOT="$DIR/../../../.."
 APP_ROOT="$DIR/.."
 APP_ANDROID_ROOT="$DIR"
-RESROUCE_ROOT="$APP_ROOT/../Shared/games/CrystalCraze/Published-iOS"
+RESROUCE_ROOT="$APP_ROOT/../Shared/games/CrystalCraze/Published-Android"
 BINDINGS_JS_ROOT="$APP_ROOT/../../../scripting/javascript/bindings/js"
 
 echo
@@ -75,6 +75,7 @@ cp -rf "$RESROUCE_ROOT"/* "$APP_ANDROID_ROOT"/assets
 
 # copy bindings/*.js into assets' root
 cp -f "$BINDINGS_JS_ROOT"/*.js "$APP_ANDROID_ROOT"/assets
+
 
 echo "Using prebuilt externals"
 echo

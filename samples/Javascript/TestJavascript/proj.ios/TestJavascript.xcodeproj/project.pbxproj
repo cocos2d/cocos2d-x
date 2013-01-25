@@ -160,7 +160,6 @@
 		1A2757C61697FC0900504026 /* FileUtils in Resources */ = {isa = PBXBuildFile; fileRef = 1A2757C51697FC0900504026 /* FileUtils */; };
 		1A2758051698032000504026 /* js_bindings_system_functions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2758011698032000504026 /* js_bindings_system_functions.cpp */; };
 		1A2758061698032000504026 /* js_bindings_system_registration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2758031698032000504026 /* js_bindings_system_registration.cpp */; };
-		1A7E9E1F16A9001B00169038 /* S9SpriteTest in Resources */ = {isa = PBXBuildFile; fileRef = 1A7E9E1E16A9001B00169038 /* S9SpriteTest */; };
 		1A82F5F8169AC91400C4B13A /* LocalStorage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A82F5F5169AC91400C4B13A /* LocalStorage.cpp */; };
 		1A82F5F9169AC91400C4B13A /* LocalStorageAndroid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A82F5F7169AC91400C4B13A /* LocalStorageAndroid.cpp */; };
 		1A82F5FB169AC92500C4B13A /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A82F5FA169AC92500C4B13A /* libsqlite3.dylib */; };
@@ -452,7 +451,6 @@
 		1A2758021698032000504026 /* js_bindings_system_functions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_system_functions.h; sourceTree = "<group>"; };
 		1A2758031698032000504026 /* js_bindings_system_registration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = js_bindings_system_registration.cpp; sourceTree = "<group>"; };
 		1A2758041698032000504026 /* js_bindings_system_registration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_system_registration.h; sourceTree = "<group>"; };
-		1A7E9E1E16A9001B00169038 /* S9SpriteTest */ = {isa = PBXFileReference; lastKnownFileType = folder; name = S9SpriteTest; path = ../../Shared/tests/S9SpriteTest; sourceTree = "<group>"; };
 		1A82F5F5169AC91400C4B13A /* LocalStorage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LocalStorage.cpp; sourceTree = "<group>"; };
 		1A82F5F6169AC91400C4B13A /* LocalStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalStorage.h; sourceTree = "<group>"; };
 		1A82F5F7169AC91400C4B13A /* LocalStorageAndroid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LocalStorageAndroid.cpp; sourceTree = "<group>"; };
@@ -535,7 +533,6 @@
 				15A3D4691682F14C002FB0C5 /* RenderTextureTest */,
 				15A3D46A1682F14C002FB0C5 /* res */,
 				15A3D46B1682F14C002FB0C5 /* RotateWorldTest */,
-				1A7E9E1E16A9001B00169038 /* S9SpriteTest */,
 				15A3D46C1682F14C002FB0C5 /* SceneTest */,
 				15A3D46D1682F14C002FB0C5 /* SchedulerTest */,
 				15A3D46E1682F14C002FB0C5 /* SpriteTest */,
@@ -1127,7 +1124,6 @@
 				15A3D4A51682F14C002FB0C5 /* TransitionsTest in Resources */,
 				15A3D4A61682F14C002FB0C5 /* UnitTest in Resources */,
 				1A2757C61697FC0900504026 /* FileUtils in Resources */,
-				1A7E9E1F16A9001B00169038 /* S9SpriteTest in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
