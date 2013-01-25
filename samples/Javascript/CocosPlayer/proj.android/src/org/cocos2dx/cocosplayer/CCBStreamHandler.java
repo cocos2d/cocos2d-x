@@ -93,7 +93,7 @@ public class CCBStreamHandler {
 	try {
 	    NSDictionary root = new NSDictionary();
 	    root.put("cmd", "deviceinfo");
-	    root.put("devicename", "TEST_ANDROID");
+	    root.put("devicename", android.os.Build.MODEL);
 	    root.put("devicetype", "Android");
 	    root.put("preferredresourcetype", "xlarge");
 	    String payload = root.toXMLPropertyList();
