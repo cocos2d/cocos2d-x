@@ -143,7 +143,6 @@ static void static_addValueToCCDict(id key, id value, CCDictionary* pDict)
 NS_CC_BEGIN
 
 static CCFileUtils* s_pFileUtils = NULL;
-static NSFileManager* _fileManager = nil;
 
 CCFileUtils* CCFileUtils::sharedFileUtils()
 {
@@ -160,7 +159,6 @@ void CCFileUtils::purgeFileUtils()
     if (s_pFileUtils != NULL)
     {
         s_pFileUtils->purgeCachedEntries();
-        [_fileManager release];
         CC_SAFE_RELEASE(s_pFileUtils->m_pFilenameLookupDict);
         CC_SAFE_RELEASE(s_pFileUtils->m_pSearchPathArray);
         CC_SAFE_RELEASE(s_pFileUtils->m_pSearchResolutionsOrderArray);
@@ -176,7 +174,6 @@ void CCFileUtils::purgeCachedEntries()
 
 bool CCFileUtils::init()
 {
-    _fileManager = [[NSFileManager alloc] init];
     m_pSearchPathArray = new CCArray();
     m_pSearchPathArray->addObject(CCString::create(""));
     
@@ -304,12 +301,10 @@ std::string CCFileUtils::fullPathForFilename(const char* filename)
             CCARRAY_FOREACH(m_pSearchResolutionsOrderArray, pResourceDirObj)
             {
                 CCString* pResourceDirectory = (CCString*)pResourceDirObj;
-                // Search in subdirectories
+
                 fullpath = this->getPathForFilename(newfilename, pResourceDirectory->getCString(), pSearchPath->getCString());
-                                               
-                found = [_fileManager fileExistsAtPath: [NSString stringWithUTF8String:fullpath.c_str()]];
                 
-                if (found)
+                if (fullpath.length() > 0)
                 {
                     return fullpath;
                 }
