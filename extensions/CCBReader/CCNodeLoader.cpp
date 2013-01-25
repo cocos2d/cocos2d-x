@@ -351,7 +351,7 @@ CCPoint CCNodeLoader::parsePropTypePosition(CCNode * pNode, CCNode * pParent, CC
     CCSize containerSize = pCCBReader->getAnimationManager()->getContainerSize(pParent);
     
     CCPoint pt = getAbsolutePosition(ccp(x,y), type, containerSize, pPropertyName);
-    pNode->setPosition(getAbsolutePosition(pt, type, containerSize, pPropertyName));;
+    pNode->setPosition(pt);
     
     if (pCCBReader->getAnimatedProperties()->find(pPropertyName) != pCCBReader->getAnimatedProperties()->end())
     {
