@@ -151,25 +151,4 @@ public class CCBFileUtilsHelper {
 	return android.os.Environment.getExternalStorageDirectory();
     }
 
-    private static void cleanDir(File dir) {
-
-        long bytesDeleted = 0;
-        File[] files = dir.listFiles();
-
-        for (File file : files) {
-	    if(file.isDirectory()) {
-		cleanDir(file);
-		continue;
-	    }
-	    Log.i(TAG, "Deleting file: "+file.getName());
-            bytesDeleted += file.length();
-            file.delete();
-        }
-    }
-    
-    public static void cleanCache(Context cw) {
-	File path = new File(getBaseDirectory(cw));
-	cleanDir(path);
-    }
-
 }

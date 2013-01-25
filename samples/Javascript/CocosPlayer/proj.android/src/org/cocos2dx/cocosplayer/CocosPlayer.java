@@ -39,6 +39,6 @@ public class CocosPlayer extends Cocos2dxActivity{
     }
 	
     static {
-	System.loadLibrary("cocosdragonjs");
+	System.loadLibrary("cocosplayer");
     }
 }

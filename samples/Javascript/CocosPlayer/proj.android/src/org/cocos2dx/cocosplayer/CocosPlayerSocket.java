@@ -21,6 +21,7 @@ import java.io.OutputStream;
 
 import java.io.InputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 
 import com.dd.plist.NSDictionary;
 import com.dd.plist.NSData;
@@ -78,7 +79,7 @@ public class CocosPlayerSocket {
 	    for(int i =0 ; i < keys.length; ++i ) {
 	    }
 	    if(cmd.equalsIgnoreCase("zip")) {
-		CCBFileUtilsHelper.cleanCache(cw);
+		cleanCache();
 		try {
 		    Log.i(TAG, "Size of NSDATA payload: "+((NSData)data.objectForKey("data")).bytes().length);
 		    CCBFileUtilsHelper.unzipCCB(((NSData)data.objectForKey("data")).bytes(), cw);
@@ -97,6 +98,27 @@ public class CocosPlayerSocket {
 	    Log.i(TAG, "JSON Error: "+e.toString());
 	    e.printStackTrace();
 	}
+    }
+
+    private static void cleanDir(File dir) {
+
+        long bytesDeleted = 0;
+        File[] files = dir.listFiles();
+
+        for (File file : files) {
+	    if(file.isDirectory()) {
+		cleanDir(file);
+		continue;
+	    }
+	    Log.i(TAG, "Deleting file: "+file.getName());
+            bytesDeleted += file.length();
+            file.delete();
+        }
+    }
+    
+    public static void cleanCache() {
+	File path = new File(CCBFileUtilsHelper.getBaseDirectory(cw));
+	cleanDir(path);
     }
 
     private void parsePayload(byte[] b) {
