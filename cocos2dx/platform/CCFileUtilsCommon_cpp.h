@@ -403,6 +403,9 @@ void CCFileUtils::setSearchPath(CCArray* pSearchPaths)
     CC_SAFE_RETAIN(pSearchPaths);
     CC_SAFE_RELEASE(m_pSearchPathArray);
     m_pSearchPathArray = pSearchPaths;
+    if(m_pSearchPathArray) {
+        m_pSearchPathArray->addObject(CCString::create("assets/"));
+    }
 }
 
 CCArray* CCFileUtils::getSearchPath()

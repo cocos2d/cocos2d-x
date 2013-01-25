@@ -31,110 +31,172 @@ NS_CC_BEGIN;
 
 #define  MAX_PATH 256
 
-static CCFileUtils *theFileUtils = 0;
+static CCFileUtils *s_pFileUtils = 0;
 
 CCFileUtils *CCFileUtils::sharedFileUtils()
 {
-	if (!theFileUtils)
-		theFileUtils = new CCFileUtils();
+	if (!s_pFileUtils) {
+		s_pFileUtils = new CCFileUtils();
+		s_pFileUtils->init();
+	}
 
-	return theFileUtils;
+	return s_pFileUtils;
 }
 
 void CCFileUtils::purgeFileUtils()
 {
-    if (theFileUtils != NULL)
+    if (s_pFileUtils != NULL)
     {
-        theFileUtils->purgeCachedEntries();
+    	s_pFileUtils->purgeCachedEntries();
+        CC_SAFE_RELEASE(s_pFileUtils->m_pFilenameLookupDict);
+        CC_SAFE_RELEASE(s_pFileUtils->m_pSearchPathArray);
+        CC_SAFE_RELEASE(s_pFileUtils->m_pSearchResolutionsOrderArray);
     }
 
-    CC_SAFE_DELETE(theFileUtils);
+    CC_SAFE_DELETE(s_pFileUtils);
 }
+
+bool CCFileUtils::init()
+{
+    m_pSearchPathArray = new CCArray();
+    m_pSearchPathArray->addObject(CCString::create(""));
+
+    m_pSearchResolutionsOrderArray = new CCArray();
+    m_pSearchResolutionsOrderArray->addObject(CCString::create(""));
+
+    return true;
+}
+
 
 void CCFileUtils::purgeCachedEntries()
 {
 
 }
 
-static std::string fullPathFromRelativePathThreadSafe(const char* pszRelativePath)
+std::string CCFileUtils::getPathForFilename(const std::string& filename, const std::string& resourceDirectory, const std::string& searchPath)
 {
-	bool bFileExist = true;
-	std::string ret("");
-	std::string strPathWithoutResDir("");
-    const char* pszRootPath = CCApplication::sharedApplication()->getResourceRootPath();
-    CCAssert(pszRootPath != NULL, "The resource root path must be set in the main.cpp");
-    CCAssert(pszRelativePath != NULL, "Parameter can't be NULL!");
+    std::string ret;
+    const std::string& resourceRootPath = CCApplication::sharedApplication()->getResourceRootPath();
 
-    std::string pstrRelativePath = pszRelativePath;
-    // if the relative path contains root path, skip it.
-    if (pstrRelativePath.find(pszRootPath) == std::string::npos)
+    ret = resourceRootPath;
+    if (ret[ret.length()-1] != '\\' && ret[ret.length()-1] != '/')
     {
-    	ret += pszRootPath;
+        ret += "/";
     }
 
-    strPathWithoutResDir = ret + pszRelativePath;
-
-    const char* resDir = CCFileUtils::sharedFileUtils()->getResourceDirectory();
-
-    if (resDir != NULL)
+    std::string file = filename;
+    std::string file_path = "";
+    size_t pos = filename.find_last_of("/");
+    if (pos != std::string::npos)
     {
-    	std::string pstrRootPath = pszRootPath;
-    	std::string pstrResourceFullPath = pstrRootPath + resDir;
-    	// if the relative path contains root path and resource directory, skip it.
-    	if (pstrRelativePath.find(pstrResourceFullPath.c_str()) == std::string::npos)
-    	{
-    		ret += resDir;
-    	}
+        file_path = filename.substr(0, pos+1);
+        file = filename.substr(pos+1);
     }
 
-    ret += pszRelativePath;
-
-    // If file or directory doesn't exist, try to find it in the root path.
-    if (access(ret.c_str(), F_OK) == -1)
+    // searchPath + file_path + resourceDirectory
+    std::string path = searchPath;
+    if (path.size() > 0 && path[path.length()-1] != '/')
     {
-    	//CCLOG("file or directory(%s) in Resource Directory doesn't exist.", ret.c_str());
-    	ret = strPathWithoutResDir;
+        path += "/";
+    }
+    path += file_path;
+    path += resourceDirectory;
 
-        if (access(ret.c_str(), F_OK) == -1)
+    if (path.size() > 0 && path[path.length()-1] != '/')
+    {
+        path += "/";
+    }
+    path += file;
+    ret += path;
+
+    return ret;
+}
+
+const char* CCFileUtils::fullPathForFilename(const char* pszFileName)
+{
+    if (pszFileName && pszFileName[0] == '/')
+    {
+        return pszFileName;
+    }
+
+    bool bFound = false;
+    CCString* pRet = CCString::create("");
+
+    std::string newFileName = getNewFilename(pszFileName);
+    std::string fullpath;
+
+    do
+    {
+        CCObject* pSearchObj = NULL;
+        CCARRAY_FOREACH(m_pSearchPathArray, pSearchObj)
         {
-        	//CCLOG("file or directory(%s) in Root Directory also doesn't exist.", ret.c_str());
-            bFileExist = false;
-        }
-        else
-        {
-        	//CCLOG("(%s) in Root Directory exist.", ret.c_str());
-        }
-    }
-    else
-    {
-    	//CCLOG("(%s) in Resource Directory exist.", ret.c_str());
-    }
+            CCString* pSearchPath = (CCString*)pSearchObj;
 
-    if (!bFileExist)
+            CCObject* pResourceDirObj = NULL;
+            CCARRAY_FOREACH(m_pSearchResolutionsOrderArray, pResourceDirObj)
+            {
+                CCString* pResourceDirectory = (CCString*)pResourceDirObj;
+                // Search in subdirectories
+                fullpath = this->getPathForFilename(newFileName, pResourceDirectory->getCString(), pSearchPath->getCString());
+
+                // check if file or path exist
+                if (access(fullpath.c_str(), F_OK) != -1)
+                {
+                    pRet->m_sString = fullpath;
+                    bFound = true;
+                    break;
+                }
+            }
+            if (bFound)
+            {
+                break;
+            }
+        }
+
+    }while(false);
+
+    if (!bFound)
     { // Can't find the file, return the relative path.
-    	ret = pszRelativePath;
-    	//CCLOG("Can't find the file, return the relative path(%s).", ret.c_str());
+        pRet->m_sString = newFileName;
     }
 
-	return ret;
+    return pRet->getCString();
 }
 
 const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
 {
-	CCString* pRet = CCString::create("");
-	std::string strFullPath = fullPathFromRelativePathThreadSafe(pszRelativePath);
-	pRet->m_sString = strFullPath;
-    return pRet->getCString();
+    return fullPathForFilename(pszRelativePath);
 }
+
 
 const char *CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const char *pszRelativeFile)
 {
 	std::string relativeFile = pszRelativeFile;
-	CCString *pRet = new CCString();
-	pRet->autorelease();
+	CCString *pRet = CCString::create("");
 	pRet->m_sString = relativeFile.substr(0, relativeFile.rfind('/')+1);
-	pRet->m_sString += pszFilename;
+	pRet->m_sString += getNewFilename(pszFilename);
 	return pRet->m_sString.c_str();
+}
+
+void CCFileUtils::loadFilenameLookupDictionaryFromFile(const char* filename)
+{
+    const char* pFullPath = this->fullPathForFilename(filename);
+    if (pFullPath)
+    {
+        CCDictionary* pDict = CCDictionary::createWithContentsOfFile(filename);
+        if (pDict)
+        {
+            CCDictionary* pMetadata = (CCDictionary*)pDict->objectForKey("metadata");
+            int version = ((CCString*)pMetadata->objectForKey("version"))->intValue();
+            if (version != 1)
+            {
+                CCLOG("cocos2d: ERROR: Invalid filenameLookup dictionary version: %ld. Filename: %s", (long)version, filename);
+                return;
+            }
+
+            setFilenameLookupDictionary((CCDictionary*)pDict->objectForKey("filenames"));
+        }
+    }
 }
 
 unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize)
@@ -149,7 +211,6 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
 
 	do
 	{
-		full_path = fullPathFromRelativePathThreadSafe(full_path.c_str());
 		// read from other path than user set it
 		FILE *fp = fopen(full_path.c_str(), pszMode);
 		CC_BREAK_IF(!fp);
