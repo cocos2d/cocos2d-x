@@ -40,7 +40,7 @@ NS_CC_BEGIN
  * export xmlNodePtr and other types in "CCUserDefault.h"
  */
 
-static xmlNodePtr getXMLNodeForKey(const char* pKey, xmlNodePtr *rootNode)
+static tinyxml2::XMLElement* getXMLNodeForKey(const char* pKey, tinyxml2::XMLElement** rootNode, tinyxml2::XMLDocument **doc)
 {
     tinyxml2::XMLElement* curNode = NULL;
 
@@ -54,8 +54,10 @@ static xmlNodePtr getXMLNodeForKey(const char* pKey, xmlNodePtr *rootNode)
     {
  		tinyxml2::XMLDocument* xmlDoc = new tinyxml2::XMLDocument();
 		*doc = xmlDoc;
-		CCFileData data(CCUserDefault::sharedUserDefault()->getXMLFilePath().c_str(),"rt");
-		const char* pXmlBuffer = (const char*)data.getBuffer();
+		//CCFileData data(CCUserDefault::sharedUserDefault()->getXMLFilePath().c_str(),"rt");
+		unsigned long nSize;
+		const char* pXmlBuffer = (const char*)CCFileUtils::sharedFileUtils()->getFileData(CCUserDefault::sharedUserDefault()->getXMLFilePath().c_str(), "rb", &nSize);
+		//const char* pXmlBuffer = (const char*)data.getBuffer();
 		if(NULL == pXmlBuffer)
 		{
 			CCLOG("can not read xml file");
