@@ -162,8 +162,6 @@ void CCFileUtils::purgeFileUtils()
     {
         s_pFileUtils->purgeCachedEntries();
         CC_SAFE_RELEASE(s_pFileUtils->m_pFilenameLookupDict);
-        CC_SAFE_RELEASE(s_pFileUtils->m_pSearchPathArray);
-        CC_SAFE_RELEASE(s_pFileUtils->m_pSearchResolutionsOrderArray);
     }
 
     CC_SAFE_DELETE(s_pFileUtils);
@@ -176,37 +174,30 @@ void CCFileUtils::purgeCachedEntries()
 
 bool CCFileUtils::init()
 {
-    m_pSearchPathArray = new CCArray();
-    m_pSearchPathArray->addObject(CCString::create(""));
-    
-    m_pSearchResolutionsOrderArray = new CCArray();
-    m_pSearchResolutionsOrderArray->addObject(CCString::create(""));
+    m_searchPathArray.push_back("");
+    m_searchResolutionsOrderArray.push_back("");
 
     return true;
 }
 
-void CCFileUtils::setSearchResolutionsOrder(CCArray* pSearchResolutionsOrder)
+void CCFileUtils::setSearchResolutionsOrder(const std::vector<std::string>& searchResolutionsOrder)
 {
-    CC_SAFE_RETAIN(pSearchResolutionsOrder);
-    CC_SAFE_RELEASE(m_pSearchResolutionsOrderArray);
-    m_pSearchResolutionsOrderArray = pSearchResolutionsOrder;
+    m_searchResolutionsOrderArray = searchResolutionsOrder;
 }
 
-CCArray* CCFileUtils::getSearchResolutionsOrder()
+const std::vector<std::string>& CCFileUtils::getSearchResolutionsOrder()
 {
-    return m_pSearchResolutionsOrderArray;
+    return m_searchResolutionsOrderArray;
 }
 
-void CCFileUtils::setSearchPath(CCArray* pSearchPaths)
+void CCFileUtils::setSearchPath(const std::vector<std::string>& searchPaths)
 {
-    CC_SAFE_RETAIN(pSearchPaths);
-    CC_SAFE_RELEASE(m_pSearchPathArray);
-    m_pSearchPathArray = pSearchPaths;
+    m_searchPathArray = searchPaths;
 }
 
-CCArray* CCFileUtils::getSearchPath()
+const std::vector<std::string>& CCFileUtils::getSearchPath()
 {
-    return m_pSearchPathArray;
+    return m_searchPathArray;
 }
 
 void CCFileUtils::setResourceDirectory(const char *pszDirectoryName)
@@ -216,7 +207,7 @@ void CCFileUtils::setResourceDirectory(const char *pszDirectoryName)
     {
         m_obDirectory.append("/");
     }
-    m_pSearchPathArray->insertObject(CCString::create(m_obDirectory.c_str()), 0);
+    m_searchPathArray.insert(m_searchPathArray.begin(), m_obDirectory);
 }
 
 const char* CCFileUtils::getResourceDirectory()
@@ -298,18 +289,13 @@ std::string CCFileUtils::fullPathForFilename(const char* pszFileName)
     
     // in Lookup Filename dictionary ?
     std::string newfilename = this->getNewFilename(pszFileName);
-    
-    CCObject* pSearchObj = NULL;
-    CCARRAY_FOREACH(m_pSearchPathArray, pSearchObj)
-    {
-        CCString* pSearchPath = (CCString*)pSearchObj;
-        
-        CCObject* pResourceDirObj = NULL;
-        CCARRAY_FOREACH(m_pSearchResolutionsOrderArray, pResourceDirObj)
-        {
-            CCString* pResourceDirectory = (CCString*)pResourceDirObj;
 
-            fullpath = this->getPathForFilename(newfilename, pResourceDirectory->getCString(), pSearchPath->getCString());
+    for (std::vector<std::string>::iterator searchPathsIter = m_searchPathArray.begin();
+         searchPathsIter != m_searchPathArray.end(); ++searchPathsIter) {
+        for (std::vector<std::string>::iterator resOrderIter = m_searchResolutionsOrderArray.begin();
+             resOrderIter != m_searchResolutionsOrderArray.end(); ++resOrderIter) {
+            
+            fullpath = this->getPathForFilename(newfilename, *resOrderIter, *searchPathsIter);
             
             if (fullpath.length() > 0)
             {

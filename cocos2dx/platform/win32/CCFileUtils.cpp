@@ -66,8 +66,6 @@ void CCFileUtils::purgeFileUtils()
     {
         s_pFileUtils->purgeCachedEntries();
         CC_SAFE_RELEASE(s_pFileUtils->m_pFilenameLookupDict);
-        CC_SAFE_RELEASE(s_pFileUtils->m_pSearchPathArray);
-        CC_SAFE_RELEASE(s_pFileUtils->m_pSearchResolutionsOrderArray);
     }
 
     CC_SAFE_DELETE(s_pFileUtils);
@@ -80,11 +78,8 @@ void CCFileUtils::purgeCachedEntries()
 
 bool CCFileUtils::init()
 {
-    m_pSearchPathArray = new CCArray();
-    m_pSearchPathArray->addObject(CCString::create(""));
-
-    m_pSearchResolutionsOrderArray = new CCArray();
-    m_pSearchResolutionsOrderArray->addObject(CCString::create(""));
+    m_searchPathArray.push_back("");
+    m_searchResolutionsOrderArray.push_back("");
 
     return true;
 }
@@ -167,16 +162,12 @@ std::string CCFileUtils::fullPathForFilename(const char* pszFileName)
     std::string newFileName = getNewFilename(pszFileName);
     std::string fullpath;
     
-    CCObject* pSearchObj = NULL;
-    CCARRAY_FOREACH(m_pSearchPathArray, pSearchObj)
-    {
-        CCString* pSearchPath = (CCString*)pSearchObj;
+    for (std::vector<std::string>::iterator searchPathsIter = m_searchPathArray.begin();
+         searchPathsIter != m_searchPathArray.end(); ++searchPathsIter) {
+        for (std::vector<std::string>::iterator resOrderIter = m_searchResolutionsOrderArray.begin();
+             resOrderIter != m_searchResolutionsOrderArray.end(); ++resOrderIter) {
 
-        CCObject* pResourceDirObj = NULL;
-        CCARRAY_FOREACH(m_pSearchResolutionsOrderArray, pResourceDirObj)
-        {
-            CCString* pResourceDirectory = (CCString*)pResourceDirObj;
-            fullpath = this->getPathForFilename(newFileName, pResourceDirectory->getCString(), pSearchPath->getCString());
+            fullpath = this->getPathForFilename(newFileName, *resOrderIter, *searchPathsIter);
 
             if (GetFileAttributesA(fullpath.c_str()) != -1)
             {
