@@ -245,8 +245,6 @@ std::string CCFileUtils::getNewFilename(const char* pszFileName)
 
 std::string CCFileUtils::getPathForFilename(const std::string& filename, const std::string& resourceDirectory, const std::string& searchPath)
 {
-    std::string ret = "";
-	
     std::string file = filename;
     std::string file_path = "";
     size_t pos = filename.find_last_of("/");
@@ -270,56 +268,60 @@ std::string CCFileUtils::getPathForFilename(const std::string& filename, const s
                                           inDirectory:[NSString stringWithUTF8String:path.c_str()]];
 
     
-    if (fullpath != nil)
-    {
-        ret = [fullpath UTF8String];
+    if (fullpath != nil) {
+        return [fullpath UTF8String];
     }
     
-	return ret;
+    // Return empty string when file wasn't found.
+	return "";
 }
 
-std::string CCFileUtils::fullPathForFilename(const char* filename)
+std::string CCFileUtils::fullPathForFilename(const char* pszFileName)
 {
-    CCAssert(filename != NULL, "CCFileUtils: Invalid path");
+    CCAssert(pszFileName != NULL, "CCFileUtils: Invalid path");
+
+    NSString *relPath = [NSString stringWithUTF8String:pszFileName];
+    
+    // Return directly if it's an absolute path.
+    if ([relPath isAbsolutePath]) {
+        return pszFileName;
+    }
     
     // Already Cached ?
-    std::map<std::string, std::string>::iterator cacheIter = s_fullPathCache.find(filename);
-    if (cacheIter != s_fullPathCache.end())
-    {
+    std::map<std::string, std::string>::iterator cacheIter = s_fullPathCache.find(pszFileName);
+    if (cacheIter != s_fullPathCache.end()) {
+        //CCLOG("Return full path from cache: %s", cacheIter->second.c_str());
         return cacheIter->second;
     }
     
     std::string fullpath = "";
-    NSString *relPath = [NSString stringWithUTF8String:filename];
     
-    // only if it is not an absolute path
-    if( ! [relPath isAbsolutePath] ) {
+    // in Lookup Filename dictionary ?
+    std::string newfilename = this->getNewFilename(pszFileName);
+    
+    CCObject* pSearchObj = NULL;
+    CCARRAY_FOREACH(m_pSearchPathArray, pSearchObj)
+    {
+        CCString* pSearchPath = (CCString*)pSearchObj;
         
-        std::string newfilename = this->getNewFilename(filename);
-        
-        
-        CCObject* pSearchObj = NULL;
-        CCARRAY_FOREACH(m_pSearchPathArray, pSearchObj)
+        CCObject* pResourceDirObj = NULL;
+        CCARRAY_FOREACH(m_pSearchResolutionsOrderArray, pResourceDirObj)
         {
-            CCString* pSearchPath = (CCString*)pSearchObj;
-            
-            CCObject* pResourceDirObj = NULL;
-            CCARRAY_FOREACH(m_pSearchResolutionsOrderArray, pResourceDirObj)
-            {
-                CCString* pResourceDirectory = (CCString*)pResourceDirObj;
+            CCString* pResourceDirectory = (CCString*)pResourceDirObj;
 
-                fullpath = this->getPathForFilename(newfilename, pResourceDirectory->getCString(), pSearchPath->getCString());
-                
-                if (fullpath.length() > 0)
-                {
-                    s_fullPathCache.insert(std::pair<std::string, std::string>(filename, fullpath));
-                    return fullpath;
-                }
+            fullpath = this->getPathForFilename(newfilename, pResourceDirectory->getCString(), pSearchPath->getCString());
+            
+            if (fullpath.length() > 0)
+            {
+                // Adding the full path to cache if the file was found.
+                s_fullPathCache.insert(std::pair<std::string, std::string>(pszFileName, fullpath));
+                return fullpath;
             }
         }
     }
-    
-    return filename;
+
+    // The file wasn't found, return the file name passed in.
+    return pszFileName;
 }
 
 void CCFileUtils::loadFilenameLookupDictionaryFromFile(const char* filename)

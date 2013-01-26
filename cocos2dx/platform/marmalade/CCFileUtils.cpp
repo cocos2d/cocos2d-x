@@ -38,6 +38,7 @@ NS_CC_BEGIN;
 
 
 static CCFileUtils* s_pFileUtils = NULL;
+static std::map<std::string, std::string> s_fullPathCache;
 
 CCFileUtils* CCFileUtils::sharedFileUtils()
 {
@@ -75,7 +76,7 @@ void CCFileUtils::purgeFileUtils()
 
 void CCFileUtils::purgeCachedEntries()
 {
-
+    s_fullPathCache.clear();
 }
 
 std::string CCFileUtils::getPathForFilename(const std::string& filename, const std::string& resourceDirectory, const std::string& searchPath)
@@ -115,63 +116,56 @@ std::string CCFileUtils::getPathForFilename(const std::string& filename, const s
     return ret;
 }
 
-const char* CCFileUtils::fullPathForFilename(const char* pszFileName)
+std::string CCFileUtils::fullPathForFilename(const char* pszFileName)
 {
     // TODO HOW ARE WE SUPPOSED TO WRITE BACK TO THE "ignore" REFERENCE?
 	IwAssert(GAME, pszFileName);
     
-    if (pszFileName && pszFileName[0] == '/')
+    // Return directly if it's an absolute path.
+    if (pszFileName[0] == '/')
     {
         return pszFileName;
     }
     
-    bool bFound = false;
-    CCString* pRet = CCString::create("");
-    
+    // Already Cached ?
+    std::map<std::string, std::string>::iterator cacheIter = s_fullPathCache.find(pszFileName);
+    if (cacheIter != s_fullPathCache.end()) {
+        CCLOG("Return full path from cache: %s", cacheIter->second.c_str());
+        return cacheIter->second;
+    }
+
     std::string newFileName = getNewFilename(pszFileName);
     std::string fullpath;
     
-    do
+    CCObject* pSearchObj = NULL;
+    CCARRAY_FOREACH(m_pSearchPathArray, pSearchObj)
     {
-        CCObject* pSearchObj = NULL;
-        CCARRAY_FOREACH(m_pSearchPathArray, pSearchObj)
+        CCString* pSearchPath = (CCString*)pSearchObj;
+        
+        CCObject* pResourceDirObj = NULL;
+        CCARRAY_FOREACH(m_pSearchResolutionsOrderArray, pResourceDirObj)
         {
-            CCString* pSearchPath = (CCString*)pSearchObj;
+            CCString* pResourceDirectory = (CCString*)pResourceDirObj;
+            // Search in subdirectories
+            fullpath = this->getPathForFilename(newFileName, pResourceDirectory->getCString(), pSearchPath->getCString());
             
-            CCObject* pResourceDirObj = NULL;
-            CCARRAY_FOREACH(m_pSearchResolutionsOrderArray, pResourceDirObj)
+            // check if file or path exist
+            if (s3eFileCheckExists(fullpath.c_str()) == S3E_TRUE)
             {
-                CCString* pResourceDirectory = (CCString*)pResourceDirObj;
-                // Search in subdirectories
-                fullpath = this->getPathForFilename(newFileName, pResourceDirectory->getCString(), pSearchPath->getCString());
-                
-                // check if file or path exist
-                if (s3eFileCheckExists(fullpath.c_str()) == S3E_TRUE)
-                {
-                    pRet->m_sString = fullpath;
-                    bFound = true;
-                    break;
-                }
-            }
-            if (bFound)
-            {
-                break;
+                // Adding the full path to cache if the file was found.
+                s_fullPathCache.insert(std::pair<std::string, std::string>(pszFileName, fullpath));
+                return fullpath;
             }
         }
-        
-    }while(false);
-    
-    if (!bFound)
-    { // Can't find the file, return the relative path.
-        pRet->m_sString = newFileName;
     }
     
-    return pRet->getCString();
+    // The file wasn't found, return the file name passed in.
+    return pszFileName;
 }
 
 const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
 {
-    return fullPathForFilename(pszRelativePath);
+    return CCString::create(fullPathForFilename(pszRelativePath))->getCString();
 }
 
 
