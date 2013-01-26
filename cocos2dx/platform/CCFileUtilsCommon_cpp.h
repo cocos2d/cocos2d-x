@@ -382,6 +382,7 @@ std::string CCFileUtils::getNewFilename(const char* pszFileName)
     }
     else {
         pszNewFileName = fileNameFound->getCString();
+        CCLOG("FOUND NEW FILE NAME: %s.", pszNewFileName);
     }
     return pszNewFileName;
 }
@@ -437,7 +438,7 @@ void CCFileUtils::loadFilenameLookupDictionaryFromFile(const char* filename)
                 CCLOG("cocos2d: ERROR: Invalid filenameLookup dictionary version: %ld. Filename: %s", (long)version, filename);
                 return;
             }
-            
+            CCLOG("Found file lookup plist.");
             setFilenameLookupDictionary((CCDictionary*)pDict->objectForKey("filenames"));
         }
     }
