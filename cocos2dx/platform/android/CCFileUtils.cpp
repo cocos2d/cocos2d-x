@@ -117,8 +117,8 @@ std::string CCFileUtils::fullPathForFilename(const char* pszFileName)
         {
             CCString* pResourceDirectory = (CCString*)pResourceDirObj;
     
-            CCLOG("\n\nSEARCHING: %s, %s, %s", pszFileName, pResourceDirectory->getCString(), pSearchPath->getCString());
-                    fullpath = this->getPathForFilename(pszFileName, pResourceDirectory->getCString(), pSearchPath->getCString());
+            CCLOG("\n\nSEARCHING: %s, %s, %s", newFilename.c_str(), pResourceDirectory->getCString(), pSearchPath->getCString());
+                    fullpath = this->getPathForFilename(newFilename, pResourceDirectory->getCString(), pSearchPath->getCString());
             
             // Check whether file exists in apk.
             if (s_pZipFile->fileExists(fullpath))
@@ -136,14 +136,14 @@ std::string CCFileUtils::fullPathForFilename(const char* pszFileName)
             }
             if (bFound)
             {
-                s_fullPathCache.insert(std::pair<std::string, std::string>(pszFileName, fullpath));
+                s_fullPathCache.insert(std::pair<std::string, std::string>(newFilename, fullpath));
                 CCLOG("Returning path: %s", fullpath.c_str());
                 return fullpath;
             }
         }
     }
 
-    return pszFileName;
+    return newFilename;
 }
 
 const char* CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const char *pszRelativeFile)
