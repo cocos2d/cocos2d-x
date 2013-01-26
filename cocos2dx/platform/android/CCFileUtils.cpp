@@ -53,12 +53,8 @@ CCFileUtils* CCFileUtils::sharedFileUtils()
 
 bool CCFileUtils::init()
 {
-    m_pSearchPathArray = new CCArray();
-    m_pSearchPathArray->addObject(CCString::create("assets/"));
-    
-    m_pSearchResolutionsOrderArray = new CCArray();
-    m_pSearchResolutionsOrderArray->addObject(CCString::create(""));
-
+    m_searchPathArray.push_back("assets/");
+    m_searchResolutionsOrderArray.push_back("");
     return true;
 }
 
@@ -68,8 +64,6 @@ void CCFileUtils::purgeFileUtils()
     {
         s_pFileUtils->purgeCachedEntries();
         CC_SAFE_RELEASE(s_pFileUtils->m_pFilenameLookupDict);
-        CC_SAFE_RELEASE(s_pFileUtils->m_pSearchPathArray);
-        CC_SAFE_RELEASE(s_pFileUtils->m_pSearchResolutionsOrderArray);
     }
 
     CC_SAFE_DELETE(s_pZipFile);
@@ -108,20 +102,15 @@ std::string CCFileUtils::fullPathForFilename(const char* pszFileName)
 
     string fullpath = "";
 
-    
     bool bFound = false;
-    CCObject* pSearchObj = NULL;
-    CCARRAY_FOREACH(m_pSearchPathArray, pSearchObj)
-    {
-        CCString* pSearchPath = (CCString*)pSearchObj;
-        
-        CCObject* pResourceDirObj = NULL;
-        CCARRAY_FOREACH(m_pSearchResolutionsOrderArray, pResourceDirObj)
-        {
-            CCString* pResourceDirectory = (CCString*)pResourceDirObj;
+
+    for (std::vector<std::string>::iterator searchPathsIter = m_searchPathArray.begin();
+         searchPathsIter != m_searchPathArray.end(); ++searchPathsIter) {
+        for (std::vector<std::string>::iterator resOrderIter = m_searchResolutionsOrderArray.begin();
+             resOrderIter != m_searchResolutionsOrderArray.end(); ++resOrderIter) {
     
-            CCLOG("\n\nSEARCHING: %s, %s, %s", newFilename.c_str(), pResourceDirectory->getCString(), pSearchPath->getCString());
-                    fullpath = this->getPathForFilename(newFilename, pResourceDirectory->getCString(), pSearchPath->getCString());
+            CCLOG("\n\nSEARCHING: %s, %s, %s", newFilename.c_str(), resOrderIter->c_str(), searchPathsIter->c_str());
+                    fullpath = this->getPathForFilename(newFilename, *resOrderIter, *searchPathsIter);
             
             // Check whether file exists in apk.
             if (s_pZipFile->fileExists(fullpath))
@@ -253,7 +242,7 @@ void CCFileUtils::setResourceDirectory(const char* pszResourceDirectory)
         m_obDirectory.insert(0, "assets/");
     }
     
-    m_pSearchPathArray->insertObject(CCString::create(m_obDirectory.c_str()), 0);
+    m_searchPathArray.insert(m_searchPathArray.begin(), m_obDirectory);
 }
 
 string CCFileUtils::getWriteablePath()

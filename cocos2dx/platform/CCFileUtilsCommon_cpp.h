@@ -387,28 +387,24 @@ std::string CCFileUtils::getNewFilename(const char* pszFileName)
     return pszNewFileName;
 }
 
-void CCFileUtils::setSearchResolutionsOrder(CCArray* pSearchResolutionsOrder)
+void CCFileUtils::setSearchResolutionsOrder(const std::vector<std::string>& searchResolutionsOrder)
 {
-    CC_SAFE_RETAIN(pSearchResolutionsOrder);
-    CC_SAFE_RELEASE(m_pSearchResolutionsOrderArray);
-    m_pSearchResolutionsOrderArray = pSearchResolutionsOrder;
+    m_searchResolutionsOrderArray = searchResolutionsOrder;
 }
 
-CCArray* CCFileUtils::getSearchResolutionsOrder()
+const std::vector<std::string>& CCFileUtils::getSearchResolutionsOrder()
 {
-    return m_pSearchResolutionsOrderArray;
+    return m_searchResolutionsOrderArray;
 }
 
-void CCFileUtils::setSearchPath(CCArray* pSearchPaths)
+void CCFileUtils::setSearchPath(const std::vector<std::string>& searchPaths)
 {
-    CC_SAFE_RETAIN(pSearchPaths);
-    CC_SAFE_RELEASE(m_pSearchPathArray);
-    m_pSearchPathArray = pSearchPaths;
+    m_searchPathArray = searchPaths;
 }
 
-CCArray* CCFileUtils::getSearchPath()
+const std::vector<std::string>& CCFileUtils::getSearchPath()
 {
-    return m_pSearchPathArray;
+    return m_searchPathArray;
 }
 
 const char* CCFileUtils::getResourceDirectory()
