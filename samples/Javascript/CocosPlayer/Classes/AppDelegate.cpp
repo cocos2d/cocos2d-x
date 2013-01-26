@@ -66,39 +66,43 @@ bool AppDelegate::applicationDidFinishLaunching()
     CCSize designSize = CCSizeMake(320, 480);
     CCSize resourceSize = CCSizeMake(320, 480);
 
+    CCFileUtils* pFileUtils = CCFileUtils::sharedFileUtils();
+    std::vector<std::string> searchResOrder = pFileUtils->getSearchResolutionsOrder();
     string res = "xlarge";
- //    if (screenSize.height > 1024)
- //      {
-	// resourceSize = CCSizeMake(1280, 1920);
-	// CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(CCArray::create(CCString::create("resources-xlarge"), CCString::create(""),  NULL));
-	// res = "xlarge";
- //      }
- //    else
+    // if (screenSize.height > 1024)
+    // {
+    //     resourceSize = CCSizeMake(1280, 1920);
+    //     searchResOrder.insert(searchResOrder.begin(), "resources-xlarge");
+    //     res = "xlarge";
+    // }
+    // else
      if (screenSize.height > 960)
       {
-	resourceSize = CCSizeMake(640, 960);
-	CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(CCArray::create(CCString::create("resources-large"), CCString::create(""),  NULL));
-	res = "large";
+    	resourceSize = CCSizeMake(640, 960);
+        searchResOrder.insert(searchResOrder.begin(), "resources-large");
+    	res = "large";
       }
     else if (screenSize.height > 480)
       {
-	resourceSize = CCSizeMake(480, 720);
-	CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(CCArray::create(CCString::create("resources-medium"), CCString::create(""),  NULL));
-	res = "medium";
+    	resourceSize = CCSizeMake(480, 720);
+        searchResOrder.insert(searchResOrder.begin(), "resources-medium");
+    	res = "medium";
       }
     else
       {
-	resourceSize = CCSizeMake(320, 568);
-	CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(CCArray::create(CCString::create("resources-small"), CCString::create(""), NULL));
-	res = "small";
+    	resourceSize = CCSizeMake(320, 568);
+        searchResOrder.insert(searchResOrder.begin(), "resources-small");
+    	res = "small";
       }
 
+    pFileUtils->setSearchResolutionsOrder(searchResOrder);
     pDirector->setContentScaleFactor(resourceSize.height/designSize.height);
 
     CCEGLView::sharedOpenGLView()->setDesignResolutionSize(designSize.width, designSize.height, kResolutionNoBorder);
 
-    CCFileUtils::sharedFileUtils()->setSearchPath(CCArray::create(CCString::create(CCFileUtils::sharedFileUtils()->getWriteablePath()),
-								  CCString::create("assets/"), CCString::create(""), NULL));
+    std::vector<std::string> searchPaths = pFileUtils->getSearchPath();
+    searchPaths.insert(searchPaths.begin(), pFileUtils->getWriteablePath());
+    pFileUtils->setSearchPath(searchPaths);
 
     PlayerStatus::setDeviceResolution(res);
     // turn on display FPS
