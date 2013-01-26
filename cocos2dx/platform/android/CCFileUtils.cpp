@@ -88,10 +88,13 @@ const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
 
 std::string CCFileUtils::fullPathForFilename(const char* pszFileName)
 {
-    if (pszFileName == NULL || pszFileName[0] == '\0' || pszFileName[0] == '/') {
+    CCAssert(pszFileName != NULL, "CCFileUtils: Invalid path");
+
+    // Return directly if it's an absolute path.
+    if (pszFileName[0] == '/')
+    {
         return pszFileName;
     }
-
     // Already Cached ?
     std::map<std::string, std::string>::iterator cacheIter = s_fullPathCache.find(pszFileName);
     if (cacheIter != s_fullPathCache.end())
@@ -136,14 +139,16 @@ std::string CCFileUtils::fullPathForFilename(const char* pszFileName)
             }
             if (bFound)
             {
-                s_fullPathCache.insert(std::pair<std::string, std::string>(newFilename, fullpath));
+                // Using the filename passed in as key.
+                s_fullPathCache.insert(std::pair<std::string, std::string>(pszFileName, fullpath));
                 CCLOG("Returning path: %s", fullpath.c_str());
                 return fullpath;
             }
         }
     }
 
-    return newFilename;
+    // The file wasn't found, return the file name passed in.
+    return pszFileName;
 }
 
 const char* CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const char *pszRelativeFile)
