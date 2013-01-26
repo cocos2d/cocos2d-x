@@ -212,7 +212,7 @@ void CCFileUtils::setResourceDirectory(const char* pszResourceDirectory)
     {
         m_obDirectory.append("/");
     }
-    m_pSearchPathArray->insertObject(CCString::create(m_obDirectory.c_str()), 0);
+    m_searchPathArray.insert(m_searchPathArray.begin(), m_obDirectory);
 }
 
 std::string CCFileUtils::getWriteablePath()
