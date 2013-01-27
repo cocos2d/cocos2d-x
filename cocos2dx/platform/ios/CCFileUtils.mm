@@ -338,11 +338,10 @@ void CCFileUtils::setFilenameLookupDictionary(CCDictionary* pFilenameLookupDict)
     CC_SAFE_RETAIN(m_pFilenameLookupDict);
 }
 
-const char *CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const char *pszRelativeFile)
+const char* CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const char *pszRelativeFile)
 {
     std::string relativeFile = fullPathForFilename(pszRelativeFile);
-    CCString *pRet = new CCString();
-    pRet->autorelease();
+    CCString *pRet = CCString::create("");
     pRet->m_sString = relativeFile.substr(0, relativeFile.rfind('/')+1);
     pRet->m_sString += getNewFilename(pszFilename);
     return pRet->m_sString.c_str();
