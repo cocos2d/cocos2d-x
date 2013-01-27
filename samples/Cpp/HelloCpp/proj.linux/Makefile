@@ -17,7 +17,7 @@ INCLUDES =  -I../ \
 			-I$(COCOS2DX_PATH)/platform/linux \
 			-I$(COCOS2DX_PATH)/kazmath/include \
 			-I$(COCOS2DX_PATH)/platform/third_party/linux/libxml2 \
-			-I$(COCOS2DX_PATH)/platform/third_party/linux/libjpeg  \
+			-I$(COCOS2DX_PATH)/platform/third_party/linux/libjpeg 
 
 
 DEFINES = -DLINUX
