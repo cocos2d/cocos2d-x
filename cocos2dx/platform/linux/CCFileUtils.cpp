@@ -101,13 +101,14 @@ std::string CCFileUtils::fullPathForFilename(const char* pszFileName)
     // Return directly if it's an absolute path.
     if (pszFileName[0] == '/')
     {
+        //CCLOG("return absolute path directly: %s ", pszFileName);
         return pszFileName;
     }
 
     // Already Cached ?
     std::map<std::string, std::string>::iterator cacheIter = s_fullPathCache.find(pszFileName);
     if (cacheIter != s_fullPathCache.end()) {
-        CCLOG("Return full path from cache: %s", cacheIter->second.c_str());
+        //CCLOG("Return full path from cache: %s", cacheIter->second.c_str());
         return cacheIter->second;
     }
 
