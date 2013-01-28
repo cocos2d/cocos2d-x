@@ -564,7 +564,7 @@ CCImage::~CCImage()
 
 bool CCImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = eFmtPng*/)
 {
- 	std::string strTemp = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(strPath);
+    std::string strTemp = CCFileUtils::sharedFileUtils()->fullPathForFilename(strPath);
 	if (m_bEnabledScale)
 	{
 		if (!isFileExists(strTemp.c_str()))
