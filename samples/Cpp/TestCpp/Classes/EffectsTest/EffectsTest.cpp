@@ -248,7 +248,6 @@ class JumpTiles3DDemo : public CCJumpTiles3D
 public:
     static CCActionInterval* create(float t)
     {
-        CCSize size = CCDirector::sharedDirector()->getWinSize();
         return CCJumpTiles3D::create(t, CCSizeMake(15,10), 2, 30); 
     }
 };
