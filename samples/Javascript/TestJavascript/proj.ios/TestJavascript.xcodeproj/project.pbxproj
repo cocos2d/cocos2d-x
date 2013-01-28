@@ -143,13 +143,6 @@
 		15A3D5661682F20C002FB0C5 /* tests-boot-html5.js in Resources */ = {isa = PBXBuildFile; fileRef = 15A3D4721682F14C002FB0C5 /* tests-boot-html5.js */; };
 		15A3D5671682F20C002FB0C5 /* tests-boot-jsb.js in Resources */ = {isa = PBXBuildFile; fileRef = 15A3D4731682F14C002FB0C5 /* tests-boot-jsb.js */; };
 		15A3D5681682F20C002FB0C5 /* tests-main.js in Resources */ = {isa = PBXBuildFile; fileRef = 15A3D4741682F14C002FB0C5 /* tests-main.js */; };
-		1A2757B71697FAAD00504026 /* jsb_chipmunk.js in Sources */ = {isa = PBXBuildFile; fileRef = 1A2757B01697FAAD00504026 /* jsb_chipmunk.js */; };
-		1A2757B81697FAAD00504026 /* jsb_cocos2d.js in Sources */ = {isa = PBXBuildFile; fileRef = 1A2757B11697FAAD00504026 /* jsb_cocos2d.js */; };
-		1A2757B91697FAAD00504026 /* jsb_cocosbuilder.js in Sources */ = {isa = PBXBuildFile; fileRef = 1A2757B21697FAAD00504026 /* jsb_cocosbuilder.js */; };
-		1A2757BA1697FAAD00504026 /* jsb_debugger.js in Sources */ = {isa = PBXBuildFile; fileRef = 1A2757B31697FAAD00504026 /* jsb_debugger.js */; };
-		1A2757BB1697FAAD00504026 /* jsb_opengl.js in Sources */ = {isa = PBXBuildFile; fileRef = 1A2757B41697FAAD00504026 /* jsb_opengl.js */; };
-		1A2757BC1697FAAD00504026 /* jsb_sys.js in Sources */ = {isa = PBXBuildFile; fileRef = 1A2757B51697FAAD00504026 /* jsb_sys.js */; };
-		1A2757BD1697FAAD00504026 /* jsb.js in Sources */ = {isa = PBXBuildFile; fileRef = 1A2757B61697FAAD00504026 /* jsb.js */; };
 		1A2757BE1697FBE500504026 /* jsb_chipmunk.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A2757B01697FAAD00504026 /* jsb_chipmunk.js */; };
 		1A2757BF1697FBE500504026 /* jsb_cocos2d.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A2757B11697FAAD00504026 /* jsb_cocos2d.js */; };
 		1A2757C01697FBE500504026 /* jsb_cocosbuilder.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A2757B21697FAAD00504026 /* jsb_cocosbuilder.js */; };
@@ -1227,13 +1220,6 @@
 				15A3D5521682F1A5002FB0C5 /* CCTableViewCell.cpp in Sources */,
 				15A3D5541682F1A5002FB0C5 /* CCPhysicsDebugNode.cpp in Sources */,
 				15A3D5551682F1A5002FB0C5 /* CCPhysicsSprite.cpp in Sources */,
-				1A2757B71697FAAD00504026 /* jsb_chipmunk.js in Sources */,
-				1A2757B81697FAAD00504026 /* jsb_cocos2d.js in Sources */,
-				1A2757B91697FAAD00504026 /* jsb_cocosbuilder.js in Sources */,
-				1A2757BA1697FAAD00504026 /* jsb_debugger.js in Sources */,
-				1A2757BB1697FAAD00504026 /* jsb_opengl.js in Sources */,
-				1A2757BC1697FAAD00504026 /* jsb_sys.js in Sources */,
-				1A2757BD1697FAAD00504026 /* jsb.js in Sources */,
 				1A2758051698032000504026 /* js_bindings_system_functions.cpp in Sources */,
 				1A2758061698032000504026 /* js_bindings_system_registration.cpp in Sources */,
 				1A82F5F8169AC91400C4B13A /* LocalStorage.cpp in Sources */,
