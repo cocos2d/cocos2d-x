@@ -85,8 +85,14 @@ std::string CCFileUtils::fullPathForFilename(const char* pszFileName)
     CCAssert(pszFileName != NULL, "CCFileUtils: Invalid path");
 
     // Return directly if it's an absolute path.
-    if (pszFileName[0] == '/')
+    // On Android, there are two situations for full path.
+    // 1) Files in APK, e.g. assets/path/path/file.png
+    // 2) Files not in APK, e.g. /data/data/org.cocos2dx.hellocpp/cache/path/path/file.png, or /sdcard/path/path/file.png.
+    // So these two situations need to be checked on Android.
+    std::string strFileName = pszFileName;
+    if (pszFileName[0] == '/' || strFileName.find("assets/") == 0)
     {
+        CCLOG("Return absolute path( %s ) directly.", pszFileName);
         return pszFileName;
     }
     // Already Cached ?
