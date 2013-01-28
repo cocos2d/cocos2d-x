@@ -25,6 +25,7 @@ THE SOFTWARE.
 #define __CC_FILEUTILS_PLATFORM_H__
 
 #include <string>
+#include <vector>
 #include "CCPlatformMacros.h"
 #include "ccTypes.h"
 #include "ccTypeInfo.h"
@@ -42,15 +43,36 @@ class CCArray;
 class CC_DLL CCFileUtils : public TypeInfo
 {
 public:
+    /**
+     *  Returns an unique ID for this class.
+     *  @note It's only used for JSBindings now.
+     *  @return The unique ID for this class.
+     */
     virtual long getClassTypeInfo() {
 		static const long id = cocos2d::getHashCodeByString(typeid(cocos2d::CCFileUtils).name());
 		return id;
     }
     
+    /**
+     *  Gets the instance of CCFileUtils.
+     */
     static CCFileUtils* sharedFileUtils();
+    
+    /**
+     *  Destroys the instance of CCFileUtils.
+     */
     static void purgeFileUtils();
-
+    
+    /**
+     *  Purges the file searching cache.
+     *
+     *  @note It should be invoked after the resources were updated.
+     *        For instance, in the CocosPlayer sample, every time you run application from CocosBuilder,
+     *        All the resources will be downloaded to the writable folder, before new js app launchs,
+     *        this method should be invokded to clean the file searching cache.
+     */
     void purgeCachedEntries();
+    
     /**
     @brief Get resource file data
     @param[in]  pszFileName The resource file name which contains the path.
@@ -71,14 +93,13 @@ public:
     unsigned char* getFileDataFromZip(const char* pszZipFilePath, const char* pszFileName, unsigned long * pSize);
 
     /**
-    @brief   Generate the absolute path of the file.
-    @param   pszRelativePath     The relative path of the file.
-    @return  The absolute path of the file.
-    @warning We only add the ResourcePath before the relative path of the file.
-    @deprecated Please use fullPathForFilename instead.
-    If you have not set the ResourcePath, the function appends "/NEWPLUS/TDA_DATA/UserData/" by default.
-    You can set ResourcePath with void setResourcePath(const char *pszResourcePath);
-    */
+     *  @brief   Generate the absolute path of the file.
+     *  @param   pszRelativePath     The relative path of the file.
+     *  @return  The absolute path of the file.
+     *  @warning We only add the ResourcePath before the relative path of the file.
+     *  @deprecated Please use fullPathForFilename instead.
+     *
+     */
     CC_DEPRECATED_ATTRIBUTE const char* fullPathFromRelativePath(const char *pszRelativePath);
     
     /** Returns the fullpath for a given filename.
@@ -95,12 +116,13 @@ public:
      
      Examples:
      
-     * In iOS: "image.png" -> "image.pvr" -> "/full/path/res_dir/image.pvr"
-     * In Android: "image.png" -> "image.png" -> "/full/path/res_dir/image.png"
+     * In iOS: "image.png" -> "image.pvr.ccz" -> "searching path/resolution dir/image.pvr.ccz"
+     *         "gamescene/background.png" -> "gamescene/background.pvr.ccz" -> "searching path/gamescene/resolution dir/background.pvr.ccz"
+     * In Android: "sounds/click.wav" -> "sounds/click.ogg" -> "searching path/sounds/resolution dir/click.ogg"
      
      @since v2.1
      */
-    std::string fullPathForFilename(const char* filename);
+    std::string fullPathForFilename(const char* pszFileName);
     
     /**
      * Loads the filenameLookup dictionary from the contents of a filename.
@@ -150,39 +172,32 @@ public:
     */
     CC_DEPRECATED_ATTRIBUTE void setResourceDirectory(const char *pszDirectoryName);
 
-    /** Array that contains the search order of the resources based for the device.
-     By default it will try to load resources in the following order until one is found:
-     - On iPad HD: iPad HD resources, iPad resources, resources not associated with any device
-     - On iPad: iPad resources, resources not associated with any device
-     - On iPhone 5 HD: iPhone 5 HD resources, iPhone HD resouces, iPhone 5 resources, iPhone resources, resources not associated with any device
-     - On iPhone HD: iPhone HD resources, iPhone resouces, resources not associated with any device
-     - On iPhone: iPhone resources, resources not associated with any device
-     
-     - On Mac HD: Mac HD resources, Mac resources, resources not associated with any device
-     - On Mac: Mac resources, resources not associated with any device
-     
-     If the property "enableiPhoneResourcesOniPad" is enabled, it will also search for iPhone resources if you are in an iPad.
-     
-     @since v2.1
+    /** 
+     *  Sets the array that contains the search order of the resources based for the device.
+     *
+     *  @see getSearchResolutionsOrder().
+     *  @since v2.1
      */
-    void setSearchResolutionsOrder(CCArray* pSearchResolutionsOrder);
-    CCArray* getSearchResolutionsOrder();
+    void setSearchResolutionsOrder(const std::vector<std::string>& searchResolutionsOrder);
+    const std::vector<std::string>& getSearchResolutionsOrder();
     
-    /** Array of search paths.
-     You can use this array to modify the search path of the resources.
-     If you want to use "themes" or search resources in the "cache", you can do it easily by adding new entries in this array.
-     
-     By default it is an array with only the "" (empty string) element.
-     
-     @since v2.1
+    /** 
+     *  Sets the array of search paths.
+     *  You can use this array to modify the search path of the resources.
+     *  If you want to use "themes" or search resources in the "cache", you can do it easily by adding new entries in this array.
+     *
+     *  By default it is an array with only the "" (empty string) element.
+     *
+     *  @since v2.1
      */
-    void setSearchPath(CCArray* pSearchPaths);
-    CCArray* getSearchPath();
+    void setSearchPath(const std::vector<std::string>& searchPaths);
+    const std::vector<std::string>& getSearchPath();
     
     /**
-    @brief  Get the resource directory
-    */
-    const char* getResourceDirectory();
+     *  Gets the resource directory
+     *  @deprecated Please use getSearchPath() instead.
+     */
+    CC_DEPRECATED_ATTRIBUTE const char* getResourceDirectory();
 
     /**
     @brief   Get the writeable path
@@ -199,8 +214,6 @@ public:
 protected:
     CCFileUtils(void)
     : m_pFilenameLookupDict(NULL)
-    , m_pSearchResolutionsOrderArray(NULL)
-    , m_pSearchPathArray(NULL)
     {
     }
     
@@ -220,8 +233,8 @@ protected:
      */
     CCDictionary* m_pFilenameLookupDict;
     
-    CCArray* m_pSearchResolutionsOrderArray;
-    CCArray* m_pSearchPathArray;
+    std::vector<std::string> m_searchResolutionsOrderArray;
+    std::vector<std::string> m_searchPathArray;
 };
 
 // end of platform group

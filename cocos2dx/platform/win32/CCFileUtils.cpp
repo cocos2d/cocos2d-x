@@ -33,6 +33,7 @@ NS_CC_BEGIN
 
 // record the resource path
 static char s_pszResourcePath[MAX_PATH] = {0};
+static std::map<std::string, std::string> s_fullPathCache;
 
 static void _CheckPath()
 {
@@ -65,8 +66,6 @@ void CCFileUtils::purgeFileUtils()
     {
         s_pFileUtils->purgeCachedEntries();
         CC_SAFE_RELEASE(s_pFileUtils->m_pFilenameLookupDict);
-        CC_SAFE_RELEASE(s_pFileUtils->m_pSearchPathArray);
-        CC_SAFE_RELEASE(s_pFileUtils->m_pSearchResolutionsOrderArray);
     }
 
     CC_SAFE_DELETE(s_pFileUtils);
@@ -74,16 +73,13 @@ void CCFileUtils::purgeFileUtils()
 
 void CCFileUtils::purgeCachedEntries()
 {
-
+    s_fullPathCache.clear();
 }
 
 bool CCFileUtils::init()
 {
-    m_pSearchPathArray = new CCArray();
-    m_pSearchPathArray->addObject(CCString::create(""));
-
-    m_pSearchResolutionsOrderArray = new CCArray();
-    m_pSearchResolutionsOrderArray->addObject(CCString::create(""));
+    m_searchPathArray.push_back("");
+    m_searchResolutionsOrderArray.push_back("");
 
     return true;
 }
@@ -96,17 +92,10 @@ const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
 std::string CCFileUtils::getPathForFilename(const std::string& filename, const std::string& resourceDirectory, const std::string& searchPath)
 {
     std::string ret;
+    
     const std::string& resourceRootPath = CCApplication::sharedApplication()->getResourceRootPath();
 
-    if (filename.length() > 0
-        && ('/' == filename[0] || '\\' == filename[0]))
-    {
-        // path start with '/' or '\', is absolute path without driver name
-        char szDriver[3] = {s_pszResourcePath[0], s_pszResourcePath[1], 0};
-        ret = szDriver;
-        ret += "/";
-    }
-    else if (resourceRootPath.length() > 0)
+    if (resourceRootPath.length() > 0)
     {
        ret = resourceRootPath;
        if (ret[ret.length()-1] != '\\' && ret[ret.length()-1] != '/')
@@ -149,46 +138,48 @@ std::string CCFileUtils::getPathForFilename(const std::string& filename, const s
 
 std::string CCFileUtils::fullPathForFilename(const char* pszFileName)
 {
-	bool bFound = false;
+	CCAssert(pszFileName != NULL, "CCFileUtils: Invalid path");
+
+    // Return directly if it's an absolute path.
+    if (strlen(pszFileName) > 3 
+        && pszFileName[0] >= 'a' && pszFileName[0] <= 'z'
+        && pszFileName[0] >= 'A' && pszFileName[0] <= 'Z'
+        && (pszFileName[1] == ':')
+        && (pszFileName[2] == '\\' || pszFileName[2] == '/')
+    )
+    {
+        CCLOG("Probably invoking fullPathForFilename recursively, return the full path: %s", pszFileName);
+        return pszFileName;
+    }
+
+    // Already Cached ?
+    std::map<std::string, std::string>::iterator cacheIter = s_fullPathCache.find(pszFileName);
+    if (cacheIter != s_fullPathCache.end()) {
+        // CCLOG("Return full path from cache: %s", cacheIter->second.c_str());
+        return cacheIter->second;
+    }
 
     std::string newFileName = getNewFilename(pszFileName);
     std::string fullpath;
+    
+    for (std::vector<std::string>::iterator searchPathsIter = m_searchPathArray.begin();
+         searchPathsIter != m_searchPathArray.end(); ++searchPathsIter) {
+        for (std::vector<std::string>::iterator resOrderIter = m_searchResolutionsOrderArray.begin();
+             resOrderIter != m_searchResolutionsOrderArray.end(); ++resOrderIter) {
 
-    do 
-    {
-        if ((newFileName.length() > 1 && newFileName[1] == ':'))
-        {
-            // path start with "x:", is absolute path, return directly
-            return newFileName;
-        }
-        
-        CCObject* pSearchObj = NULL;
-        CCARRAY_FOREACH(m_pSearchPathArray, pSearchObj)
-        {
-            CCString* pSearchPath = (CCString*)pSearchObj;
+            fullpath = this->getPathForFilename(newFileName, *resOrderIter, *searchPathsIter);
 
-            CCObject* pResourceDirObj = NULL;
-            CCARRAY_FOREACH(m_pSearchResolutionsOrderArray, pResourceDirObj)
+            if (GetFileAttributesA(fullpath.c_str()) != -1)
             {
-                CCString* pResourceDirectory = (CCString*)pResourceDirObj;
-                // Search in subdirectories
-                fullpath = this->getPathForFilename(newFileName, pResourceDirectory->getCString(), pSearchPath->getCString());
-
-                if (GetFileAttributesA(fullpath.c_str()) != -1)
-                {
-                    bFound = true;
-                    break;
-                }
-            }
-            if (bFound)
-            {
-                break;
+                // Adding the full path to cache if the file was found.
+                s_fullPathCache.insert(std::pair<std::string, std::string>(pszFileName, fullpath));
+                return fullpath;
             }
         }
+    }
 
-    }while(false);
-
-    return bFound ? fullpath : newFileName;
+    // The file wasn't found, return the file name passed in.
+    return pszFileName;
 }
 
 const char *CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const char *pszRelativeFile)
@@ -238,7 +229,7 @@ void CCFileUtils::setResourceDirectory(const char* pszResourceDirectory)
         m_obDirectory.append("/");
     }
 
-    m_pSearchPathArray->insertObject(CCString::create(m_obDirectory.c_str()), 0);
+    m_searchPathArray.insert(m_searchPathArray.begin(), m_obDirectory);
 }
 
 string CCFileUtils::getWriteablePath()

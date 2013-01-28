@@ -33,45 +33,62 @@ bool AppDelegate::applicationDidFinishLaunching()
 
     CCSize designSize = CCSizeMake(320, 480);
     CCSize resourceSize = CCSizeMake(320, 480);
+    
+    std::vector<std::string> searchPaths;
+    std::vector<std::string> resDirOrders;
+    
     TargetPlatform platform = CCApplication::sharedApplication()->getTargetPlatform();
     if (platform == kTargetIphone || platform == kTargetIpad)
     {
-        CCFileUtils::sharedFileUtils()->setSearchPath(CCArray::create(CCString::create("Published-iOS"), CCString::create(""), NULL));
+        searchPaths.push_back("Published-iOS"); // Resources/Published-iOS
+        searchPaths.push_back(""); // Resources/, we added this searching path since some files such as jsb_cocos2d.js were placed at the root folder.
+        CCFileUtils::sharedFileUtils()->setSearchPath(searchPaths);
 
         if (screenSize.height > 480)
         {
             resourceSize = CCSizeMake(640, 960);
-            CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(CCArray::create(CCString::create("resources-iphonehd"), CCString::create(""),  NULL));
+            resDirOrders.push_back("resources-iphonehd");
+            resDirOrders.push_back("");
+            
         }
         else
         {
-            CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(CCArray::create(CCString::create("resources-iphone"), CCString::create(""), NULL));
+            resDirOrders.push_back("resources-iphone");
+            resDirOrders.push_back("");
         }
+        
+        CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(resDirOrders);
     }
     else if (platform == kTargetAndroid || platform == kTargetWindows)
     {
         // Comments it since opengles2.0 only supports texture size within 2048x2048.
-        // if (screenSize.height > 1024)
-        // {
-        //     resourceSize = CCSizeMake(1280, 1920);
-        //     CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(CCArray::create(CCString::create("resources-xlarge"), CCString::create("resources-large"), CCString::create(""),  NULL));
-        // }
-        // else 
+//        if (screenSize.height > 1024)
+//        {
+//            resourceSize = CCSizeMake(1280, 1920);
+//            resDirOrders.push_back("resources-xlarge");
+//            resDirOrders.push_back("");
+//        }
+//        else 
             if (screenSize.height > 960)
         {
             resourceSize = CCSizeMake(640, 960);
-            CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(CCArray::create(CCString::create("resources-large"), CCString::create("resources-medium"), CCString::create(""),  NULL));
+            resDirOrders.push_back("resources-large");
+            resDirOrders.push_back("");
         }
         else if (screenSize.height > 480)
         {
             resourceSize = CCSizeMake(480, 720);
-            CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(CCArray::create(CCString::create("resources-medium"), CCString::create(""),  NULL));
+            resDirOrders.push_back("resources-medium");
+            resDirOrders.push_back("");
         }
         else
         {
             resourceSize = CCSizeMake(320, 568);
-            CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(CCArray::create(CCString::create("resources-small"), CCString::create(""), NULL));
+            resDirOrders.push_back("resources-small");
+            resDirOrders.push_back("");
         }
+        
+        CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(resDirOrders);
     }
     pDirector->setContentScaleFactor(resourceSize.width/designSize.width);
 

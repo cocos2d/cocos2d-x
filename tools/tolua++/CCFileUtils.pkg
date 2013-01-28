@@ -6,4 +6,5 @@ class CCFileUtils
     void setResourceDirectory(const char *pszDirectoryName);
     const char* fullPathFromRelativeFile(const char *pszFilename, const char *pszRelativeFile);
 	const char* fullPathFromRelativePath(const char *pszRelativePath);
+    std::string fullPathForFilename(const char *pszFileName);
 };

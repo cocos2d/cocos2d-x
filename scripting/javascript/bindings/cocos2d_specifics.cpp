@@ -2276,6 +2276,7 @@ extern JSObject* js_cocos2dx_CCScheduler_prototype;
 extern JSObject* js_cocos2dx_CCDrawNode_prototype;
 extern JSObject* js_cocos2dx_CCTexture2D_prototype;
 extern JSObject* js_cocos2dx_CCMenu_prototype;
+extern JSObject* js_cocos2dx_CCFileUtils_prototype;
 
 // setBlendFunc
 template<class T>
@@ -2506,6 +2507,122 @@ JSBool js_cocos2dx_CCDrawNode_drawPolygon(JSContext *cx, uint32_t argc, jsval *v
     return JS_FALSE;
 }
 
+static JSBool jsval_to_string_vector(JSContext* cx, jsval v, std::vector<std::string>& ret) {
+    JSObject *jsobj;
+    JSBool ok = JS_ValueToObject( cx, v, &jsobj );
+    JSB_PRECONDITION2( ok, cx, JS_FALSE, "Error converting value to object");
+	JSB_PRECONDITION2( jsobj && JS_IsArrayObject( cx, jsobj),  cx, JS_FALSE, "Object must be an array");
+    
+    uint32_t len = 0;
+    JS_GetArrayLength(cx, jsobj, &len);
+
+    for (uint32_t i=0; i < len; i++) {
+        jsval elt;
+        if (JS_GetElement(cx, jsobj, i, &elt)) {
+            
+            if (JSVAL_IS_STRING(elt))
+            {
+                JSStringWrapper str(JSVAL_TO_STRING(elt));
+                ret.push_back(str.get());
+            }
+        }
+    }
+
+    return JS_TRUE;
+}
+
+
+static jsval string_vector_to_jsval(JSContext* cx, const std::vector<std::string>& arr) {
+    
+    JSObject *jsretArr = JS_NewArrayObject(cx, 0, NULL);
+    
+    int i = 0;
+    for(std::vector<std::string>::const_iterator iter = arr.begin(); iter != arr.end(); ++iter, ++i) {
+        jsval arrElement = c_string_to_jsval(cx, iter->c_str());
+        if(!JS_SetElement(cx, jsretArr, i, &arrElement)) {
+            break;
+        }
+    }
+    return OBJECT_TO_JSVAL(jsretArr);
+}
+
+JSBool js_cocos2dx_CCFileUtils_setSearchResolutionsOrder(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    JSBool ok = JS_TRUE;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
+    cocos2d::CCFileUtils* cobj = (cocos2d::CCFileUtils *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
+    
+    if (argc == 1) {
+        std::vector<std::string> arg0;
+        ok &= jsval_to_string_vector(cx, argv[0], arg0);
+        JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+        cobj->setSearchResolutionsOrder(arg0);
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return JS_TRUE;
+    }
+    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
+    return JS_FALSE;
+}
+
+JSBool js_cocos2dx_CCFileUtils_setSearchPath(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    JSBool ok = JS_TRUE;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
+    cocos2d::CCFileUtils* cobj = (cocos2d::CCFileUtils *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
+    
+    if (argc == 1) {
+        std::vector<std::string> arg0;
+        ok &= jsval_to_string_vector(cx, argv[0], arg0);
+        JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+        cobj->setSearchPath(arg0);
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return JS_TRUE;
+    }
+    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
+    return JS_FALSE;
+}
+JSBool js_cocos2dx_CCFileUtils_getSearchPath(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
+    cocos2d::CCFileUtils* cobj = (cocos2d::CCFileUtils *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
+    
+    if (argc == 0) {
+        std::vector<std::string> ret = cobj->getSearchPath();
+        jsval jsret;
+        jsret = string_vector_to_jsval(cx, ret);
+        JS_SET_RVAL(cx, vp, jsret);
+        return JS_TRUE;
+    }
+    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 0);
+    return JS_FALSE;
+}
+JSBool js_cocos2dx_CCFileUtils_getSearchResolutionsOrder(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
+    cocos2d::CCFileUtils* cobj = (cocos2d::CCFileUtils *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
+    
+    if (argc == 0) {
+        std::vector<std::string> ret = cobj->getSearchResolutionsOrder();
+        jsval jsret;
+        jsret = string_vector_to_jsval(cx, ret);
+        JS_SET_RVAL(cx, vp, jsret);
+        return JS_TRUE;
+    }
+    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 0);
+    return JS_FALSE;
+}
+
+
 void register_cocos2dx_js_extensions(JSContext* cx, JSObject* global)
 {
 	// first, try to get the ns
@@ -2557,6 +2674,12 @@ void register_cocos2dx_js_extensions(JSContext* cx, JSObject* global)
     JS_DefineFunction(cx, js_cocos2dx_CCMenu_prototype, "alignItemsInRows", js_cocos2dx_CCMenu_alignItemsInRows, 1, JSPROP_ENUMERATE | JSPROP_SHARED | JSPROP_PERMANENT);
     JS_DefineFunction(cx, js_cocos2dx_CCMenu_prototype, "alignItemsInColumns", js_cocos2dx_CCMenu_alignItemsInColumns, 1, JSPROP_ENUMERATE | JSPROP_SHARED | JSPROP_PERMANENT);
 
+    JS_DefineFunction(cx, js_cocos2dx_CCFileUtils_prototype, "setSearchResolutionsOrder", js_cocos2dx_CCFileUtils_setSearchResolutionsOrder, 1, JSPROP_PERMANENT | JSPROP_SHARED);
+    JS_DefineFunction(cx, js_cocos2dx_CCFileUtils_prototype, "setSearchPath", js_cocos2dx_CCFileUtils_setSearchPath, 1, JSPROP_PERMANENT | JSPROP_SHARED);
+    JS_DefineFunction(cx, js_cocos2dx_CCFileUtils_prototype, "getSearchPath", js_cocos2dx_CCFileUtils_getSearchPath, 0, JSPROP_PERMANENT | JSPROP_SHARED);
+    JS_DefineFunction(cx, js_cocos2dx_CCFileUtils_prototype, "getSearchResolutionsOrder", js_cocos2dx_CCFileUtils_getSearchResolutionsOrder, 0, JSPROP_PERMANENT | JSPROP_SHARED);
+
+    
     tmpObj = JSVAL_TO_OBJECT(anonEvaluate(cx, global, "(function () { return cc.BezierBy; })()"));
     JS_DefineFunction(cx, tmpObj, "create", JSB_CCBezierBy_actionWithDuration, 2, JSPROP_READONLY | JSPROP_PERMANENT);
     

@@ -44,8 +44,6 @@ USING_NS_CC;
 static void static_addValueToCCDict(id key, id value, CCDictionary* pDict);
 static void static_addItemToCCArray(id item, CCArray* pArray);
 
-static NSFileManager *__localFileManager= [NSFileManager defaultManager];
-
 static void static_addItemToCCArray(id item, CCArray *pArray)
 {
     // add string value into array
@@ -148,12 +146,14 @@ CCDictionary* ccFileUtils_dictionaryWithContentsOfFileThreadSafe(const char *pFi
 CCArray* ccFileUtils_arrayWithContentsOfFileThreadSafe(const char* pFileName);
 
 static CCFileUtils* s_pFileUtils = NULL;
+static std::map<std::string, std::string> s_fullPathCache;
 
 CCFileUtils* CCFileUtils::sharedFileUtils()
 {
     if (s_pFileUtils == NULL)
     {
         s_pFileUtils = new CCFileUtils();
+        s_pFileUtils->init();
     }
     return s_pFileUtils;
 }
@@ -164,8 +164,6 @@ void CCFileUtils::purgeFileUtils()
     {
         s_pFileUtils->purgeCachedEntries();
         CC_SAFE_RELEASE(s_pFileUtils->m_pFilenameLookupDict);
-        CC_SAFE_RELEASE(s_pFileUtils->m_pSearchPathArray);
-        CC_SAFE_RELEASE(s_pFileUtils->m_pSearchResolutionsOrderArray);
     }
     
     CC_SAFE_DELETE(s_pFileUtils);
@@ -173,18 +171,35 @@ void CCFileUtils::purgeFileUtils()
 
 void CCFileUtils::purgeCachedEntries()
 {
-    
+    s_fullPathCache.clear();
 }
 
 bool CCFileUtils::init()
 {
-    m_pSearchPathArray = new CCArray();
-    m_pSearchPathArray->addObject(CCString::create(""));
-    
-    m_pSearchResolutionsOrderArray = new CCArray();
-    m_pSearchResolutionsOrderArray->addObject(CCString::create(""));
+    m_searchPathArray.push_back("");
+    m_searchResolutionsOrderArray.push_back("");
     
     return true;
+}
+
+void CCFileUtils::setSearchResolutionsOrder(const std::vector<std::string>& searchResolutionsOrder)
+{
+    m_searchResolutionsOrderArray = searchResolutionsOrder;
+}
+
+const std::vector<std::string>& CCFileUtils::getSearchResolutionsOrder()
+{
+    return m_searchResolutionsOrderArray;
+}
+
+void CCFileUtils::setSearchPath(const std::vector<std::string>& searchPaths)
+{
+    m_searchPathArray = searchPaths;
+}
+
+const std::vector<std::string>& CCFileUtils::getSearchPath()
+{
+    return m_searchPathArray;
 }
 
 void CCFileUtils::setResourceDirectory(const char *pszDirectoryName)
@@ -194,92 +209,151 @@ void CCFileUtils::setResourceDirectory(const char *pszDirectoryName)
     {
         m_obDirectory.append("/");
     }
-    m_pSearchPathArray->insertObject(CCString::create(m_obDirectory.c_str()), 0);
+    m_searchPathArray.insert(m_searchPathArray.begin(), m_obDirectory);
 }
 
-void CCFileUtils::setSearchResolutionsOrder(CCArray* pSearchResolutionsOrder)
+const char* CCFileUtils::getResourceDirectory()
 {
-    CC_SAFE_RETAIN(pSearchResolutionsOrder);
-    CC_SAFE_RELEASE(m_pSearchResolutionsOrderArray);
-    m_pSearchResolutionsOrderArray = pSearchResolutionsOrder;
-}
-
-CCArray* CCFileUtils::getSearchResolutionsOrder()
-{
-    return m_pSearchResolutionsOrderArray;
-}
-
-void CCFileUtils::setSearchPath(CCArray* pSearchPaths)
-{
-    CC_SAFE_RETAIN(pSearchPaths);
-    CC_SAFE_RELEASE(m_pSearchPathArray);
-    m_pSearchPathArray = pSearchPaths;
-}
-
-CCArray* CCFileUtils::getSearchPath()
-{
-    return m_pSearchPathArray;
+    return m_obDirectory.c_str();
 }
 
 const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
 {
-    CCAssert(pszRelativePath != NULL, "CCFileUtils: Invalid path");
-    
-    NSString *fullpath = nil;
-    NSString *relPath = [NSString stringWithUTF8String:pszRelativePath];
-    
-    // only if it is not an absolute path
-    if( ! [relPath isAbsolutePath] ) {
-        // pathForResource also searches in .lproj directories. issue #1230
-        NSString *lastPathComponent = [relPath lastPathComponent];
-        
-        NSString *imageDirectory = [relPath stringByDeletingLastPathComponent];
-        NSMutableString *imageDirectoryByAppendDirectory = [NSMutableString stringWithUTF8String:m_obDirectory.c_str()];
-        [imageDirectoryByAppendDirectory appendString:imageDirectory];
-        
-        const std::string& resourceRootPath = CCApplication::sharedApplication()->getResourceRootPath();
-        if (resourceRootPath.length() == 0)
-        {
-            // search path from directory set by setResourceDirectory
-            fullpath = [[NSBundle mainBundle] pathForResource:lastPathComponent
-                                                       ofType:nil
-                                                  inDirectory:imageDirectoryByAppendDirectory];
-            if (fullpath == nil)
-            {
-                // search from root directory
-                fullpath = [[NSBundle mainBundle] pathForResource:lastPathComponent
-                                                           ofType:nil
-                                                      inDirectory:imageDirectory];
-            }
-        }
-        else
-        {
-            fullpath = [NSString stringWithFormat:@"%s%s%@", resourceRootPath.c_str(), m_obDirectory.c_str(), relPath];
-        }
-    }
-    
-    if (fullpath == nil)
-    {
-        fullpath = relPath;
-    }
-    
-    return [fullpath UTF8String];
+    return CCString::create(fullPathForFilename(pszRelativePath))->getCString();
 }
 
-const char *CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const char *pszRelativeFile)
+std::string CCFileUtils::getNewFilename(const char* pszFileName)
 {
-    std::string relativeFile = fullPathFromRelativePath(pszRelativeFile);
-    CCString *pRet = new CCString();
-    pRet->autorelease();
+    const char* pszNewFileName = NULL;
+    // in Lookup Filename dictionary ?
+    CCString* fileNameFound = m_pFilenameLookupDict ? (CCString*)m_pFilenameLookupDict->objectForKey(pszFileName) : NULL;
+    if( NULL == fileNameFound || fileNameFound->length() == 0) {
+        pszNewFileName = pszFileName;
+    }
+    else {
+        pszNewFileName = fileNameFound->getCString();
+    }
+    return pszNewFileName;
+}
+
+std::string CCFileUtils::getPathForFilename(const std::string& filename, const std::string& resourceDirectory, const std::string& searchPath)
+{
+    std::string file = filename;
+    std::string file_path = "";
+    size_t pos = filename.find_last_of("/");
+    if (pos != std::string::npos)
+    {
+        file_path = filename.substr(0, pos+1);
+        file = filename.substr(pos+1);
+    }
+    
+	// searchPath + file_path + resourceDirectory
+    std::string path = searchPath;
+    if (path[path.length()-1] != '/')
+    {
+        path += "/";
+    }
+    path += file_path;
+	path += resourceDirectory;
+    
+    NSString* fullpath = [[NSBundle mainBundle] pathForResource:[NSString stringWithUTF8String:file.c_str()]
+                                                         ofType:nil
+                                                    inDirectory:[NSString stringWithUTF8String:path.c_str()]];
+    
+    
+    if (fullpath != nil) {
+        return [fullpath UTF8String];
+    }
+    
+    // Return empty string when file wasn't found.
+	return "";
+}
+
+std::string CCFileUtils::fullPathForFilename(const char* pszFileName)
+{
+    CCAssert(pszFileName != NULL, "CCFileUtils: Invalid path");
+    
+    NSString *relPath = [NSString stringWithUTF8String:pszFileName];
+    
+    // Return directly if it's an absolute path.
+    if ([relPath isAbsolutePath]) {
+        return pszFileName;
+    }
+    
+    // Already Cached ?
+    std::map<std::string, std::string>::iterator cacheIter = s_fullPathCache.find(pszFileName);
+    if (cacheIter != s_fullPathCache.end()) {
+        //CCLOG("Return full path from cache: %s", cacheIter->second.c_str());
+        return cacheIter->second;
+    }
+    
+    std::string fullpath = "";
+    
+    // in Lookup Filename dictionary ?
+    std::string newfilename = this->getNewFilename(pszFileName);
+    
+    for (std::vector<std::string>::iterator searchPathsIter = m_searchPathArray.begin();
+         searchPathsIter != m_searchPathArray.end(); ++searchPathsIter) {
+        for (std::vector<std::string>::iterator resOrderIter = m_searchResolutionsOrderArray.begin();
+             resOrderIter != m_searchResolutionsOrderArray.end(); ++resOrderIter) {
+            
+            fullpath = this->getPathForFilename(newfilename, *resOrderIter, *searchPathsIter);
+            
+            if (fullpath.length() > 0)
+            {
+                // Adding the full path to cache if the file was found.
+                s_fullPathCache.insert(std::pair<std::string, std::string>(pszFileName, fullpath));
+                return fullpath;
+            }
+        }
+    }
+    
+    // The file wasn't found, return the file name passed in.
+    return pszFileName;
+}
+
+void CCFileUtils::loadFilenameLookupDictionaryFromFile(const char* filename)
+{
+    std::string pFullPath = this->fullPathForFilename(filename);
+    if (pFullPath.length() > 0)
+    {
+        CCDictionary* pDict = CCDictionary::createWithContentsOfFile(filename);
+        if (pDict)
+        {
+            CCDictionary* pMetadata = (CCDictionary*)pDict->objectForKey("metadata");
+            int version = ((CCString*)pMetadata->objectForKey("version"))->intValue();
+            if (version != 1)
+            {
+                CCLOG("cocos2d: ERROR: Invalid filenameLookup dictionary version: %ld. Filename: %s", (long)version, filename);
+                return;
+            }
+            
+            setFilenameLookupDictionary((CCDictionary*)pDict->objectForKey("filenames"));
+        }
+    }
+}
+
+void CCFileUtils::setFilenameLookupDictionary(CCDictionary* pFilenameLookupDict)
+{
+    CC_SAFE_RELEASE(m_pFilenameLookupDict);
+    m_pFilenameLookupDict = pFilenameLookupDict;
+    CC_SAFE_RETAIN(m_pFilenameLookupDict);
+}
+
+
+const char* CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const char *pszRelativeFile)
+{
+    std::string relativeFile = fullPathForFilename(pszRelativeFile);
+    CCString *pRet = CCString::create("");
     pRet->m_sString = relativeFile.substr(0, relativeFile.rfind('/')+1);
-    pRet->m_sString += pszFilename;
+    pRet->m_sString += getNewFilename(pszFilename);
     return pRet->m_sString.c_str();
 }
 
 CCDictionary* ccFileUtils_dictionaryWithContentsOfFileThreadSafe(const char *pFileName)
 {
-    const char* pszFullPath = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(pFileName);
-    NSString* pPath = [NSString stringWithUTF8String:pszFullPath];
+    std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pFileName);
+    NSString* pPath = [NSString stringWithUTF8String:fullPath.c_str()];
     NSDictionary* pDict = [NSDictionary dictionaryWithContentsOfFile:pPath];
     
     CCDictionary* pRet = new CCDictionary();
