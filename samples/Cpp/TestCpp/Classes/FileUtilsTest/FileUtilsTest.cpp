@@ -144,7 +144,7 @@ void TestResolutionDirectories::onEnter()
     sharedFileUtils->setSearchPath(searchPaths);
     
     m_defaultResolutionsOrderArray = sharedFileUtils->getSearchResolutionsOrder();
-    vector<string> resolutionsOrder = m_defaultSearchPathArray;
+    vector<string> resolutionsOrder = m_defaultResolutionsOrderArray;
 
     resolutionsOrder.insert(resolutionsOrder.begin(), "resources-ipadhd");
     resolutionsOrder.insert(resolutionsOrder.begin()+1, "resources-ipad");
@@ -194,11 +194,24 @@ void TestSearchPath::onEnter()
     sharedFileUtils->purgeCachedEntries();
     m_defaultSearchPathArray = sharedFileUtils->getSearchPath();
     vector<string> searchPaths = m_defaultSearchPathArray;
-    searchPaths.insert(searchPaths.begin(),   "Misc/searchpath1");
-    searchPaths.insert(searchPaths.begin()+1, "Misc/searchpath2");
+    string writablePath = sharedFileUtils->getWriteablePath();
+    string fileName = writablePath+"external.txt";
+    char szBuf[100] = "Hello Cocos2d-x!";
+    FILE* fp = fopen(fileName.c_str(), "wb");
+    if (fp)
+    {
+        fwrite(szBuf, 1, strlen(szBuf), fp);
+        fclose(fp);
+        CCLog("Writing file to writable path succeed.");
+    }
+    
+    searchPaths.insert(searchPaths.begin(), writablePath);
+    searchPaths.insert(searchPaths.begin()+1,   "Misc/searchpath1");
+    searchPaths.insert(searchPaths.begin()+2, "Misc/searchpath2");
     sharedFileUtils->setSearchPath(searchPaths);
+    
     m_defaultResolutionsOrderArray = sharedFileUtils->getSearchResolutionsOrder();
-    vector<string> resolutionsOrder = m_defaultSearchPathArray;
+    vector<string> resolutionsOrder = m_defaultResolutionsOrderArray;
     
     resolutionsOrder.insert(resolutionsOrder.begin(), "resources-ipad");
     sharedFileUtils->setSearchResolutionsOrder(resolutionsOrder);
@@ -207,6 +220,20 @@ void TestSearchPath::onEnter()
         CCString *filename = CCString::createWithFormat("file%d.txt", i);
         ret = sharedFileUtils->fullPathForFilename(filename->getCString());
         CCLog("%s -> %s", filename->getCString(), ret.c_str());
+    }
+    
+    // Gets external.txt from writable path
+    string fullPath = sharedFileUtils->fullPathForFilename("external.txt");
+    CCLog("\nexternal file path = %s\n", fullPath.c_str());
+    if (fullPath.length() > 0) {
+        fp = fopen(fullPath.c_str(), "rb");
+        if (fp)
+        {
+            char szReadBuf[100] = {0};
+            fread(szReadBuf, 1, strlen(szBuf), fp);
+            CCLog("The content of file from writable path: %s", szReadBuf);
+            fclose(fp);
+        }
     }
 }
 
