@@ -67,31 +67,31 @@ bool AppDelegate::applicationDidFinishLaunching()
     CCSize resourceSize = CCSizeMake(320, 480);
 
     CCFileUtils* pFileUtils = CCFileUtils::sharedFileUtils();
-    std::vector<std::string> searchResOrder = pFileUtils->getSearchResolutionsOrder();
+    std::vector<std::string> searchResOrder;
     string res = "xlarge";
     // if (screenSize.height > 1024)
     // {
     //     resourceSize = CCSizeMake(1280, 1920);
-    //     searchResOrder.insert(searchResOrder.begin(), "resources-xlarge");
+    //     searchResOrder.push_back("resources-xlarge");
     //     res = "xlarge";
     // }
     // else
      if (screenSize.height > 960)
       {
     	resourceSize = CCSizeMake(640, 960);
-        searchResOrder.insert(searchResOrder.begin(), "resources-large");
+        searchResOrder.push_back("resources-large");
     	res = "large";
       }
     else if (screenSize.height > 480)
       {
     	resourceSize = CCSizeMake(480, 720);
-        searchResOrder.insert(searchResOrder.begin(), "resources-medium");
+        searchResOrder.push_back("resources-medium");
     	res = "medium";
       }
     else
       {
     	resourceSize = CCSizeMake(320, 568);
-        searchResOrder.insert(searchResOrder.begin(), "resources-small");
+        searchResOrder.push_back("resources-small");
     	res = "small";
       }
 

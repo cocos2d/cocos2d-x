@@ -10,6 +10,7 @@
 
 #include "platform/CCCommon.h"
 #include "platform/CCApplicationProtocol.h"
+#include <string>
 
 NS_CC_BEGIN
 class CCRect;
@@ -44,13 +45,13 @@ public:
      *  Sets the Resource root path.
      *  @deprecated Please use CCFileUtils::sharedFileUtils()->setSearchPath() instead.
      */
-    CC_DEPRECATED_ATTRIBUTE void setResourceRootPath(const char* pszRootResDir);
+    CC_DEPRECATED_ATTRIBUTE void setResourceRootPath(const std::string& rootResDir);
     
 	/** 
      *  Gets the Resource root path.
      *  @deprecated Please use CCFileUtils::sharedFileUtils()->getSearchPath() instead. 
      */
-    CC_DEPRECATED_ATTRIBUTE const char* getResourceRootPath(void);
+    CC_DEPRECATED_ATTRIBUTE const std::string& getResourceRootPath(void);
     
     /**
      @brief Get target platform

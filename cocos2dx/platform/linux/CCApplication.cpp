@@ -9,6 +9,7 @@
 #include <sys/time.h>
 #include <string>
 #include "CCDirector.h"
+#include "platform/CCFileUtils.h"
 
 NS_CC_BEGIN
 
