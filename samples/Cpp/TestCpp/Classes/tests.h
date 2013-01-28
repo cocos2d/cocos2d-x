@@ -52,6 +52,7 @@
 #include "ClippingNodeTest/ClippingNodeTest.h"
 #include "ChipmunkTest/ChipmunkTest.h"
 #endif
+#include "FileUtilsTest/FileUtilsTest.h"
 
 enum
 {
@@ -107,6 +108,7 @@ enum
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
     TEST_CLIPPINGNODE,
 #endif
+    TEST_FILEUTILS,
     TESTS_COUNT,    
 };
 
@@ -161,8 +163,9 @@ const std::string g_aTestNames[TESTS_COUNT] = {
     "ShaderTest",
     "MutiTouchTest",
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
-    "ClippingNodeTest"
+    "ClippingNodeTest",
 #endif
+    "FileUtilsTest"
 };
 
 #endif
