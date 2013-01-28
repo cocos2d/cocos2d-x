@@ -7,11 +7,7 @@ LOCAL_MODULE := hellolua_shared
 LOCAL_MODULE_FILENAME := libhellolua
 
 LOCAL_SRC_FILES := hellolua/main.cpp \
-                   ../../Classes/AppDelegate.cpp \
-                   ../../../../scripting/lua/cocos2dx_support/CCLuaEngine.cpp \
-                   ../../../../scripting/lua/cocos2dx_support/Cocos2dxLuaLoader.cpp \
-                   ../../../../scripting/lua/cocos2dx_support/LuaCocos2d.cpp \
-                   ../../../../scripting/lua/cocos2dx_support/tolua_fix.c
+                   ../../Classes/AppDelegate.cpp
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes
 
