@@ -161,13 +161,14 @@ const char *CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const
 unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize)
 {	
 	unsigned char *buffer = 0;
-	std::string full_path(pszFileName);
-
+	
 	if (!pszFileName || !pszMode)
 	{
 		return 0;
 	}
 
+    std::string full_path = fullPathForFilename(pszFileName);
+    
 	do
 	{
 		// read from other path than user set it
