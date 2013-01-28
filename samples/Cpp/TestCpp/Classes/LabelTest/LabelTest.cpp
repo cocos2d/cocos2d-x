@@ -445,9 +445,7 @@ Atlas3::Atlas3()
     // testing anchors
     label3->setAnchorPoint( ccp(1,1) );
     addChild(label3, 0, kTagBitmapAtlas3);
-    
-    
-    CCSize s = CCDirector::sharedDirector()->getWinSize();    
+       
     label1->setPosition( VisibleRect::leftBottom() );
     label2->setPosition( VisibleRect::center() );
     label3->setPosition( VisibleRect::rightTop() );

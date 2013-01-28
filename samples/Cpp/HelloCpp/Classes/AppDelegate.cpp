@@ -1,8 +1,13 @@
 #include "AppDelegate.h"
+
+#include <vector>
+#include <string>
+
 #include "HelloWorldScene.h"
 #include "AppMacros.h"
 
 USING_NS_CC;
+using namespace std;
 
 AppDelegate::AppDelegate() {
 
@@ -23,6 +28,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
     pEGLView->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, kResolutionNoBorder);
 
 	CCSize frameSize = pEGLView->getFrameSize();
+    
+    vector<string> searchPath;
 
     // In this demo, we select resource according to the frame's height.
     // If the resource size is different from design resolution size, you need to set contentScaleFactor.
@@ -31,22 +38,28 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     // if the frame's height is larger than the height of medium resource size, select large resource.
 	if (frameSize.height > mediumResource.size.height)
-	{ 
-		CCFileUtils::sharedFileUtils()->setResourceDirectory(largeResource.directory);
+	{
+        searchPath.push_back(largeResource.directory);
+
         pDirector->setContentScaleFactor(MIN(largeResource.size.height/designResolutionSize.height, largeResource.size.width/designResolutionSize.width));
 	}
     // if the frame's height is larger than the height of small resource size, select medium resource.
     else if (frameSize.height > smallResource.size.height)
-    { 
-        CCFileUtils::sharedFileUtils()->setResourceDirectory(mediumResource.directory);
+    {
+        searchPath.push_back(mediumResource.directory);
+        
         pDirector->setContentScaleFactor(MIN(mediumResource.size.height/designResolutionSize.height, mediumResource.size.width/designResolutionSize.width));
     }
     // if the frame's height is smaller than the height of medium resource size, select small resource.
 	else
-    { 
-		CCFileUtils::sharedFileUtils()->setResourceDirectory(smallResource.directory);
+    {
+        searchPath.push_back(smallResource.directory);
+
         pDirector->setContentScaleFactor(MIN(smallResource.size.height/designResolutionSize.height, smallResource.size.width/designResolutionSize.width));
     }
+    
+    // set searching path
+    CCFileUtils::sharedFileUtils()->setSearchPath(searchPath);
 	
     // turn on display FPS
     pDirector->setDisplayStats(true);
