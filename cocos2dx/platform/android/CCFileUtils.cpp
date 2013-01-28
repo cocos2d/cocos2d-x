@@ -23,6 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #define __CC_PLATFORM_FILEUTILS_CPP__
+#include <string>
 #include "platform/CCFileUtilsCommon_cpp.h"
 #include "support/zip_support/ZipUtils.h"
 #include "platform/CCCommon.h"
@@ -198,7 +199,8 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
     if (pszFileName[0] != '/')
     {
         CCLOG("GETTING FILE RELATIVE DATA: %s", pszFileName);
-        pData = s_pZipFile->getFileData(pszFileName, pSize);
+        string fullPath = fullPathForFilename(pszFileName);
+        pData = s_pZipFile->getFileData(fullPath.c_str(), pSize);
     }
     else
     {
