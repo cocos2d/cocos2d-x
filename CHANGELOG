@@ -13,7 +13,7 @@ cocos2d-2.1beta3-x-2.1.1 @Jan.29 2013
      Bug      #1680: fix a bug that can't set touch priority by invoking CCMenu::setTouchPriority()
      Bug      #1681: fix a bug that CCTableView crashes if CCTableViewDelegate is not provided
      Feature  #1598: add japanese language support
-     Feature  #1625: add stackable action support and exchang the order of parameters for 3d relative actions
+     Feature  #1625: add stackable action support and exchange the order of parameters for 3d relative actions
      Feature  #1667: add file name lookup support
      Refactor #1593: remove all deprecated methods
      Refactor #1599: do some improvements of CCScrollView and CCTableView
@@ -44,7 +44,7 @@ cocos2d-2.1beta3-x-2.1.1 @Jan.29 2013
 [marmalade]
      Bug      #1631: make SimpleGame force landscape
      Refactor #1629: add marmalade third party cleanup
-     Refactor #1630: add TestLua postbuilt script
+     Refactor #1630: add TestLua post-build script
      Refactor #1632: remove grskia dependency and add in freetype support to the builds.
 [linux]
      Feature  #1611: add lua support
