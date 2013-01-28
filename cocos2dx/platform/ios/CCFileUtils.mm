@@ -145,6 +145,7 @@ NS_CC_BEGIN
 static std::map<std::string, std::string> s_fullPathCache;
 
 static CCFileUtils* s_pFileUtils = NULL;
+static NSFileManager* s_fileManager = [NSFileManager defaultManager];
 
 CCFileUtils* CCFileUtils::sharedFileUtils()
 {
@@ -182,7 +183,20 @@ bool CCFileUtils::init()
 
 void CCFileUtils::setSearchResolutionsOrder(const std::vector<std::string>& searchResolutionsOrder)
 {
-    m_searchResolutionsOrderArray = searchResolutionsOrder;
+    bool bExistDefault = false;
+    m_searchResolutionsOrderArray.clear();
+    for (std::vector<std::string>::const_iterator iter = searchResolutionsOrder.begin(); iter != searchResolutionsOrder.end(); ++iter)
+    {
+        if (!bExistDefault && (*iter) == "")
+        {
+            bExistDefault = true;
+        }
+        m_searchResolutionsOrderArray.push_back(*iter);
+    }
+    if (!bExistDefault)
+    {
+        m_searchResolutionsOrderArray.push_back("");
+    }
 }
 
 const std::vector<std::string>& CCFileUtils::getSearchResolutionsOrder()
@@ -192,7 +206,20 @@ const std::vector<std::string>& CCFileUtils::getSearchResolutionsOrder()
 
 void CCFileUtils::setSearchPath(const std::vector<std::string>& searchPaths)
 {
-    m_searchPathArray = searchPaths;
+    bool bExistDefault = false;
+    m_searchPathArray.clear();
+    for (std::vector<std::string>::const_iterator iter = searchPaths.begin(); iter != searchPaths.end(); ++iter)
+    {
+        if (!bExistDefault && (*iter) == "")
+        {
+            bExistDefault = true;
+        }
+        m_searchPathArray.push_back(*iter);
+    }
+    if (!bExistDefault)
+    {
+        m_searchPathArray.push_back("");
+    }
 }
 
 const std::vector<std::string>& CCFileUtils::getSearchPath()
@@ -254,13 +281,21 @@ std::string CCFileUtils::getPathForFilename(const std::string& filename, const s
     path += file_path;
 	path += resourceDirectory;
     
-    NSString* fullpath = [[NSBundle mainBundle] pathForResource:[NSString stringWithUTF8String:file.c_str()]
+    if (searchPath[0] != '/')
+    {
+        NSString* fullpath = [[NSBundle mainBundle] pathForResource:[NSString stringWithUTF8String:file.c_str()]
                                                ofType:nil
                                           inDirectory:[NSString stringWithUTF8String:path.c_str()]];
-
-    
-    if (fullpath != nil) {
-        return [fullpath UTF8String];
+        if (fullpath != nil) {
+            return [fullpath UTF8String];
+        }
+    }
+    else
+    {// Search path is an absolute path.
+        std::string fullPath = path + file;
+        if ([s_fileManager fileExistsAtPath:[NSString stringWithUTF8String:fullPath.c_str()]]) {
+            return fullPath;
+        }
     }
     
     // Return empty string when file wasn't found.

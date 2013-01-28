@@ -184,7 +184,20 @@ bool CCFileUtils::init()
 
 void CCFileUtils::setSearchResolutionsOrder(const std::vector<std::string>& searchResolutionsOrder)
 {
-    m_searchResolutionsOrderArray = searchResolutionsOrder;
+    bool bExistDefault = false;
+    m_searchResolutionsOrderArray.clear();
+    for (std::vector<std::string>::const_iterator iter = searchResolutionsOrder.begin(); iter != searchResolutionsOrder.end(); ++iter)
+    {
+        if (!bExistDefault && (*iter) == "")
+        {
+            bExistDefault = true;
+        }
+        m_searchResolutionsOrderArray.push_back(*iter);
+    }
+    if (!bExistDefault)
+    {
+        m_searchResolutionsOrderArray.push_back("");
+    }
 }
 
 const std::vector<std::string>& CCFileUtils::getSearchResolutionsOrder()
@@ -194,7 +207,20 @@ const std::vector<std::string>& CCFileUtils::getSearchResolutionsOrder()
 
 void CCFileUtils::setSearchPath(const std::vector<std::string>& searchPaths)
 {
-    m_searchPathArray = searchPaths;
+    bool bExistDefault = false;
+    m_searchPathArray.clear();
+    for (std::vector<std::string>::const_iterator iter = searchPaths.begin(); iter != searchPaths.end(); ++iter)
+    {
+        if (!bExistDefault && (*iter) == "")
+        {
+            bExistDefault = true;
+        }
+        m_searchPathArray.push_back(*iter);
+    }
+    if (!bExistDefault)
+    {
+        m_searchPathArray.push_back("");
+    }
 }
 
 const std::vector<std::string>& CCFileUtils::getSearchPath()

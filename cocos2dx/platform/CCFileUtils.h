@@ -235,6 +235,7 @@ protected:
     
     std::vector<std::string> m_searchResolutionsOrderArray;
     std::vector<std::string> m_searchPathArray;
+    std::string m_strDefaultResRootPath;
 };
 
 // end of platform group

@@ -90,6 +90,7 @@ Classes/TouchesTest/TouchesTest.cpp \
 Classes/TransitionsTest/TransitionsTest.cpp \
 Classes/UserDefaultTest/UserDefaultTest.cpp \
 Classes/ZwoptexTest/ZwoptexTest.cpp \
+Classes/FileUtilsTest/FileUtilsTest.cpp \
 Classes/controller.cpp \
 Classes/testBasic.cpp \
 Classes/AppDelegate.cpp \
