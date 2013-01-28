@@ -169,7 +169,7 @@ public:
      *  @param pszRelativeFile The path of the relative file.
      *  @return The full path.
      *          e.g. pszFilename: hello.png, pszRelativeFile: /User/path1/path2/hello.plist
-     *               Return: /User/path1/path2/hello.pvr (If there are a key(hello.png)-value(hello.pvr) in FilenameLookup dictionary. )
+     *               Return: /User/path1/path2/hello.pvr (If there a a key(hello.png)-value(hello.pvr) in FilenameLookup dictionary. )
      *
      */
     const char* fullPathFromRelativeFile(const char *pszFilename, const char *pszRelativeFile);
