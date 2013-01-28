@@ -25,18 +25,17 @@ THE SOFTWARE.
 #define __CC_PLATFORM_FILEUTILS_CPP__
 #include "platform/CCFileUtilsCommon_cpp.h"
 #include "support/zip_support/ZipUtils.h"
+#include "platform/CCCommon.h"
+#include "jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
 
 using namespace std;
 
 NS_CC_BEGIN
 
-#include "platform/CCCommon.h"
-#include "jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
-
 static CCFileUtils* s_pFileUtils = NULL;
 // record the zip on the resource path
 static ZipFile *s_pZipFile = NULL;
-
+// The full path cache, key: relative path, value: full path.
 static std::map<std::string, std::string> s_fullPathCache;
 
 CCFileUtils* CCFileUtils::sharedFileUtils()
@@ -53,8 +52,10 @@ CCFileUtils* CCFileUtils::sharedFileUtils()
 
 bool CCFileUtils::init()
 {
-    m_searchPathArray.push_back("assets/");
+    m_strDefaultResRootPath = "assets/";
+    m_searchPathArray.push_back(m_strDefaultResRootPath);
     m_searchResolutionsOrderArray.push_back("");
+
     return true;
 }
 
@@ -237,18 +238,45 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
 void CCFileUtils::setResourceDirectory(const char* pszResourceDirectory)
 {
     if (pszResourceDirectory == NULL) return;
-
     m_obDirectory = pszResourceDirectory;
-    if (m_obDirectory.size() > 0 && m_obDirectory[m_obDirectory.size() - 1] != '/')
+    std::vector<std::string> searchPaths = this->getSearchPath();;
+    searchPaths.insert(searchPaths.begin(), pszResourceDirectory);
+    this->setSearchPath(searchPaths);
+}
+
+void CCFileUtils::setSearchPath(const std::vector<std::string>& searchPaths)
+{
+    bool bExistDefaultRootPath = false;
+
+    m_searchPathArray.clear();
+    for (std::vector<std::string>::const_iterator iter = searchPaths.begin(); iter != searchPaths.end(); ++iter)
     {
-        m_obDirectory.append("/");
+        std::string strPrefix;
+        std::string path;
+        if ((*iter)[0] != '/')
+        { // Not an absolute path
+            if (iter->find(m_strDefaultResRootPath) != 0)
+            { // The path contains no default resource root path, insert the root path.
+                strPrefix = m_strDefaultResRootPath;
+            }
+        }
+        path = strPrefix+(*iter);
+        if (path.length() > 0 && path[path.length()-1] != '/')
+        {
+            path += "/";
+        }
+        if (!bExistDefaultRootPath && path == m_strDefaultResRootPath)
+        {
+            bExistDefaultRootPath = true;
+        }
+        m_searchPathArray.push_back(path);
     }
-    if (pszResourceDirectory[0] != '/')
+
+    if (!bExistDefaultRootPath)
     {
-        m_obDirectory.insert(0, "assets/");
+        CCLOG("Default root path doesn't exist, adding it.");
+        m_searchPathArray.push_back(m_strDefaultResRootPath);
     }
-    
-    m_searchPathArray.insert(m_searchPathArray.begin(), m_obDirectory);
 }
 
 string CCFileUtils::getWriteablePath()
