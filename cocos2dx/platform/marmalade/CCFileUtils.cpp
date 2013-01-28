@@ -166,7 +166,9 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
 {
 	IW_CALLSTACK("CCFileUtils::getFileData");
 
-	s3eFile* pFile = s3eFileOpen(pszFileName, pszMode);
+    std::string fullPath = fullPathForFilename(pszFileName);
+
+	s3eFile* pFile = s3eFileOpen(fullPath.c_str(), pszMode);
 	
 	if (! pFile && isPopupNotify())
 	{    
