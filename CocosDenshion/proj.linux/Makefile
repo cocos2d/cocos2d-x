@@ -5,6 +5,8 @@ CCFLAGS = -Wall -fPIC
 CXXFLAGS = -Wall -fPIC
 VISIBILITY = 
 
+COCOS2DX_PATH = ../../cocos2dx
+
 LBITS := $(shell getconf LONG_BIT)
 ifeq ($(LBITS),64)
 INCLUDES = -I.. \
@@ -16,6 +18,16 @@ INCLUDES = -I.. \
 		-I../third_party/fmod/api/inc 
 endif
 
+INCLUDES += -I$(COCOS2DX_PATH) \
+			-I$(COCOS2DX_PATH)/platform/third_party/linux \
+			-I$(COCOS2DX_PATH)/platform/third_party/linux/libfreetype2 \
+			-I$(COCOS2DX_PATH)/cocoa \
+			-I$(COCOS2DX_PATH)/include \
+			-I$(COCOS2DX_PATH)/platform \
+			-I$(COCOS2DX_PATH)/platform/linux \
+			-I$(COCOS2DX_PATH)/kazmath/include \
+			-I$(COCOS2DX_PATH)/platform/third_party/linux/libxml2 \
+			-I$(COCOS2DX_PATH)/platform/third_party/linux/libjpeg 
 
 DEFINES = -DLINUX
 

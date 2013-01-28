@@ -40,11 +40,17 @@ public:
 	/* override functions */
 	virtual ccLanguageType getCurrentLanguage();
 
-	/* set the Resource root path */
-	void setResourceRootPath(const char* pszRootResDir);
+	/**
+     *  Sets the Resource root path.
+     *  @deprecated Please use CCFileUtils::sharedFileUtils()->setSearchPath() instead.
+     */
+    CC_DEPRECATED_ATTRIBUTE void setResourceRootPath(const char* pszRootResDir);
     
-	/* get the Resource root path */
-	const char* getResourceRootPath(void);
+	/** 
+     *  Gets the Resource root path.
+     *  @deprecated Please use CCFileUtils::sharedFileUtils()->getSearchPath() instead. 
+     */
+    CC_DEPRECATED_ATTRIBUTE const char* getResourceRootPath(void);
     
     /**
      @brief Get target platform
@@ -52,7 +58,8 @@ public:
     virtual TargetPlatform getTargetPlatform();
 protected:
     long       m_nAnimationInterval;  //micro second
-
+    std::string m_resourceRootPath;
+    
 	static CCApplication * sm_pSharedApplication;
 };
 

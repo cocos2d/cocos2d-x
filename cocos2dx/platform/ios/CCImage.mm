@@ -344,7 +344,7 @@ bool CCImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = e
 	bool bRet = false;
     unsigned long nSize = 0;
     unsigned char* pBuffer = CCFileUtils::sharedFileUtils()->getFileData(
-				CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(strPath),
+				CCFileUtils::sharedFileUtils()->fullPathForFilename(strPath).c_str(),
 				"rb",
 				&nSize);
 				
