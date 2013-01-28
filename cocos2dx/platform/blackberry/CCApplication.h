@@ -73,7 +73,7 @@ public:
 
 protected:
 	static CCApplication * sm_pSharedApplication;
-
+	std::string m_resourceRootPath;
 	static long   			m_animationInterval;
 };
 

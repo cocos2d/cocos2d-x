@@ -126,7 +126,6 @@ ccLanguageType CCApplication::getCurrentLanguage()
 void CCApplication::setResourceRootPath(const std::string& rootResDir)
 {
     m_resourceRootPath = rootResDir;
-    std::replace(m_resourceRootPath.begin(), m_resourceRootPath.end(), '\\', '/');
     if (m_resourceRootPath[m_resourceRootPath.length() - 1] != '/')
     {
         m_resourceRootPath += '/';

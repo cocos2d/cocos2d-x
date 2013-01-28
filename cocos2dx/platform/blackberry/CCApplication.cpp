@@ -14,7 +14,6 @@ NS_CC_BEGIN;
 // sharedApplication pointer
 CCApplication * CCApplication::sm_pSharedApplication = 0;
 long CCApplication::m_animationInterval = 1000;
-static std::string s_strRootResPath = "";
 
 // convert the timespec into milliseconds
 static long time2millis(struct timespec *times)
@@ -81,21 +80,22 @@ CCApplication::Orientation CCApplication::setOrientation(Orientation orientation
     return orientation;
 }
 
-void CCApplication::setResourceRootPath(const char *pszRootResDir)
+void CCApplication::setResourceRootPath(const std::string& rootResDir)
 {
-	if (pszRootResDir)
-	{
-		s_strRootResPath = pszRootResDir;
-		if (s_strRootResPath[s_strRootResPath.length() - 1] != '/')
-		{
-			s_strRootResPath += '/';
-		}
-	}
+    m_resourceRootPath = rootResDir;
+    if (m_resourceRootPath[m_resourceRootPath.length() - 1] != '/')
+    {
+        m_resourceRootPath += '/';
+    }
+    CCFileUtils* pFileUtils = CCFileUtils::sharedFileUtils();
+    std::vector<std::string> searchPaths = pFileUtils->getSearchPath();
+    searchPaths.insert(searchPaths.begin(), m_resourceRootPath);
+    pFileUtils->setSearchPath(searchPaths);
 }
 
-const char *CCApplication::getResourceRootPath(void)
+const std::string& CCApplication::getResourceRootPath(void)
 {
-    return s_strRootResPath.c_str();
+    return m_resourceRootPath;
 }
 
 TargetPlatform CCApplication::getTargetPlatform()
