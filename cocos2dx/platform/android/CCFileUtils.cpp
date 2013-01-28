@@ -92,7 +92,7 @@ std::string CCFileUtils::fullPathForFilename(const char* pszFileName)
     // 2) Files not in APK, e.g. /data/data/org.cocos2dx.hellocpp/cache/path/path/file.png, or /sdcard/path/path/file.png.
     // So these two situations need to be checked on Android.
     std::string strFileName = pszFileName;
-    if (pszFileName[0] == '/' || strFileName.find("assets/") == 0)
+    if (pszFileName[0] == '/' || strFileName.find(m_strDefaultResRootPath) == 0)
     {
         CCLOG("Return absolute path( %s ) directly.", pszFileName);
         return pszFileName;
