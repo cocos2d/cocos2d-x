@@ -465,6 +465,10 @@ files
 	ZwoptexTest.cpp
 	ZwoptexTest.h
 
+	[FileUtilsTest]
+	(../Classes/FileUtilsTest)
+	FileUtilsTest.cpp
+	FileUtilsTest.h
 }
 
 

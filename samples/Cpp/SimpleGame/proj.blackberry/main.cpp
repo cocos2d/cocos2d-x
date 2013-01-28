@@ -25,7 +25,6 @@ int main(int argc, char **argv)
 		height = 600;
 	}
 
-	CCApplication::sharedApplication()->setResourceRootPath("app/native/Resources/");
 
     CCEGLView* eglView = CCEGLView::sharedOpenGLView();
     eglView->setFrameSize(width, height);

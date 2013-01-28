@@ -57,7 +57,8 @@ void CCFileUtils::purgeFileUtils()
 
 bool CCFileUtils::init()
 {
-    m_searchPathArray.push_back("");
+    m_strDefaultResRootPath = "app/native/Resources/";
+    m_searchPathArray.push_back(m_strDefaultResRootPath);
     m_searchResolutionsOrderArray.push_back("");
 
     return true;
@@ -71,13 +72,6 @@ void CCFileUtils::purgeCachedEntries()
 
 std::string CCFileUtils::getPathForFilename(const std::string& filename, const std::string& resourceDirectory, const std::string& searchPath)
 {
-    std::string ret = CCApplication::sharedApplication()->getResourceRootPath();;
-
-    if (ret[ret.length()-1] != '\\' && ret[ret.length()-1] != '/')
-    {
-        ret += "/";
-    }
-
     std::string file = filename;
     std::string file_path = "";
     size_t pos = filename.find_last_of("/");
@@ -101,9 +95,8 @@ std::string CCFileUtils::getPathForFilename(const std::string& filename, const s
         path += "/";
     }
     path += file;
-    ret += path;
 
-    return ret;
+    return path;
 }
 
 std::string CCFileUtils::fullPathForFilename(const char* pszFileName)
@@ -140,6 +133,7 @@ std::string CCFileUtils::fullPathForFilename(const char* pszFileName)
             {
                 // Adding the full path to cache if the file was found.
                 s_fullPathCache.insert(std::pair<std::string, std::string>(pszFileName, fullpath));
+                CCLOG("Returning path: %s", fullpath.c_str());
                 return fullpath;
             }
         }
@@ -207,12 +201,46 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
 
 void CCFileUtils::setResourceDirectory(const char* pszResourceDirectory)
 {
+    if (pszResourceDirectory == NULL) return;
     m_obDirectory = pszResourceDirectory;
-    if (m_obDirectory.size() > 0 && m_obDirectory[m_obDirectory.size() - 1] != '/')
+    std::vector<std::string> searchPaths = this->getSearchPath();;
+    searchPaths.insert(searchPaths.begin(), pszResourceDirectory);
+    this->setSearchPath(searchPaths);
+}
+
+void CCFileUtils::setSearchPath(const std::vector<std::string>& searchPaths)
+{
+    bool bExistDefaultRootPath = false;
+
+    m_searchPathArray.clear();
+    for (std::vector<std::string>::const_iterator iter = searchPaths.begin(); iter != searchPaths.end(); ++iter)
     {
-        m_obDirectory.append("/");
+        std::string strPrefix;
+        std::string path;
+        if ((*iter)[0] != '/')
+        { // Not an absolute path
+            if (iter->find(m_strDefaultResRootPath) != 0)
+            { // The path contains no default resource root path, insert the root path.
+                strPrefix = m_strDefaultResRootPath;
+            }
+        }
+        path = strPrefix+(*iter);
+        if (path.length() > 0 && path[path.length()-1] != '/')
+        {
+            path += "/";
+        }
+        if (!bExistDefaultRootPath && path == m_strDefaultResRootPath)
+        {
+            bExistDefaultRootPath = true;
+        }
+        m_searchPathArray.push_back(path);
     }
-    m_searchPathArray.insert(m_searchPathArray.begin(), m_obDirectory);
+
+    if (!bExistDefaultRootPath)
+    {
+        CCLOG("Default root path doesn't exist, adding it.");
+        m_searchPathArray.push_back(m_strDefaultResRootPath);
+    }
 }
 
 std::string CCFileUtils::getWriteablePath()
