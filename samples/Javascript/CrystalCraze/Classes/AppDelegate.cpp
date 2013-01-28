@@ -41,20 +41,16 @@ bool AppDelegate::applicationDidFinishLaunching()
     if (platform == kTargetIphone || platform == kTargetIpad)
     {
         searchPaths.push_back("Published-iOS"); // Resources/Published-iOS
-        searchPaths.push_back(""); // Resources/, we added this searching path since some files such as jsb_cocos2d.js were placed at the root folder.
         CCFileUtils::sharedFileUtils()->setSearchPath(searchPaths);
 
         if (screenSize.height > 480)
         {
             resourceSize = CCSizeMake(640, 960);
             resDirOrders.push_back("resources-iphonehd");
-            resDirOrders.push_back("");
-            
         }
         else
         {
             resDirOrders.push_back("resources-iphone");
-            resDirOrders.push_back("");
         }
         
         CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(resDirOrders);
@@ -69,23 +65,20 @@ bool AppDelegate::applicationDidFinishLaunching()
 //            resDirOrders.push_back("");
 //        }
 //        else 
-            if (screenSize.height > 960)
+        if (screenSize.height > 960)
         {
             resourceSize = CCSizeMake(640, 960);
             resDirOrders.push_back("resources-large");
-            resDirOrders.push_back("");
         }
         else if (screenSize.height > 480)
         {
             resourceSize = CCSizeMake(480, 720);
             resDirOrders.push_back("resources-medium");
-            resDirOrders.push_back("");
         }
         else
         {
             resourceSize = CCSizeMake(320, 568);
             resDirOrders.push_back("resources-small");
-            resDirOrders.push_back("");
         }
         
         CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(resDirOrders);
