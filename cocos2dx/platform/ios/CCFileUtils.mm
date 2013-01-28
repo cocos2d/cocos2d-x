@@ -175,7 +175,8 @@ void CCFileUtils::purgeCachedEntries()
 
 bool CCFileUtils::init()
 {
-    m_searchPathArray.push_back("");
+    m_strDefaultResRootPath = "";
+    m_searchPathArray.push_back(m_strDefaultResRootPath);
     m_searchResolutionsOrderArray.push_back("");
 
     return true;
@@ -218,7 +219,7 @@ void CCFileUtils::setSearchPath(const std::vector<std::string>& searchPaths)
     }
     if (!bExistDefault)
     {
-        m_searchPathArray.push_back("");
+        m_searchPathArray.push_back(m_strDefaultResRootPath);
     }
 }
 
