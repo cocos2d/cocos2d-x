@@ -163,6 +163,15 @@ void CCApplication::setResourceRootPath(const std::string& rootResDir)
     {
         m_resourceRootPath += '/';
     }
+    CCFileUtils* pFileUtils = CCFileUtils::sharedFileUtils();
+    std::vector<std::string> searchPaths = pFileUtils->getSearchPath();
+    searchPaths.insert(searchPaths.begin(), m_resourceRootPath);
+    pFileUtils->setSearchPath(searchPaths);
+}
+
+const std::string& CCApplication::getResourceRootPath(void)
+{
+    return m_resourceRootPath;
 }
 
 void CCApplication::setStartupScriptFilename(const std::string& startupScriptFile)

@@ -25,7 +25,7 @@
 #import "CCApplication.h"
 #import <Cocoa/Cocoa.h>
 #include <algorithm>
-
+#include "platform/CCFileUtils.h"
 #include "CCGeometry.h"
 #include "CCDirector.h"
 #import "CCDirectorCaller.h"
@@ -131,6 +131,10 @@ void CCApplication::setResourceRootPath(const std::string& rootResDir)
     {
         m_resourceRootPath += '/';
     }
+    CCFileUtils* pFileUtils = CCFileUtils::sharedFileUtils();
+    std::vector<std::string> searchPaths = pFileUtils->getSearchPath();
+    searchPaths.insert(searchPaths.begin(), m_resourceRootPath);
+    pFileUtils->setSearchPath(searchPaths);
 }
 
 const std::string& CCApplication::getResourceRootPath(void)
