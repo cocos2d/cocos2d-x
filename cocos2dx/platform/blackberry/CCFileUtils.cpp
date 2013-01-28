@@ -104,8 +104,9 @@ std::string CCFileUtils::fullPathForFilename(const char* pszFileName)
     CCAssert(pszFileName != NULL, "CCFileUtils: Invalid path");
 
     // Return directly if it's absolute path.
-    if (pszFileName[0] == '/')
+    if (pszFileName[0] == '/' || strFileName.find(m_strDefaultResRootPath) == 0)
     {
+		CCLOG("Return absolute path( %s ) directly.", pszFileName);
         return pszFileName;
     }
 
