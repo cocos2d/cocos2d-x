@@ -1,5 +1,8 @@
 #include "AppDelegate.h"
 
+#include <vector>
+#include <string>
+
 #include "cocos2d.h"
 #include "SimpleAudioEngine.h"
 #include "ScriptingCore.h"
@@ -11,6 +14,7 @@
 
 USING_NS_CC;
 using namespace CocosDenshion;
+using namespace std;
 
 AppDelegate::AppDelegate()
 {
@@ -34,22 +38,25 @@ bool AppDelegate::applicationDidFinishLaunching()
     CCSize designSize = CCSizeMake(320, 480);
     CCSize resourceSize = CCSizeMake(320, 480);
     
+    vector<string> searchPath;
+    
     if (screenSize.height > 768)
     {
         resourceSize = CCSizeMake(1536, 2048);
-        CCFileUtils::sharedFileUtils()->setResourceDirectory("resources-ipadhd");
+        searchPath.push_back("resources-ipadhd");
     }
      else if (screenSize.height > 640)
     {
         resourceSize = CCSizeMake(768, 1536);
-        CCFileUtils::sharedFileUtils()->setResourceDirectory("resources-ipad");
+        searchPath.push_back("resources-ipad");
     }
     else if (screenSize.height > 320)
     {
         resourceSize = CCSizeMake(640, 960);
-        CCFileUtils::sharedFileUtils()->setResourceDirectory("resources-iphonehd");
-        
+        searchPath.push_back("resources-iphonehd");
     }
+    
+    CCFileUtils::sharedFileUtils()->setSearchPath(searchPath);
     
     pDirector->setContentScaleFactor(resourceSize.height/designSize.height);
 
