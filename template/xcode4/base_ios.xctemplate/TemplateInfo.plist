@@ -56,7 +56,7 @@
 				<key>GCC_THUMB_SUPPORT[arch=armv6]</key>
 				<string></string>
 				<key>OTHER_LDFLAGS</key>
-				<string>-lxml2 -lz</string>
+				<string>-lxml2 -lz -lsqlite3</string>
 			</dict>
 			<key>Frameworks</key>
 			<array>

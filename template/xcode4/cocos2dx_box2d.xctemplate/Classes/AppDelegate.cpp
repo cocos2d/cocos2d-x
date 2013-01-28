@@ -9,9 +9,11 @@
 #include "AppDelegate.h"
 
 #include "cocos2d.h"
+#include "SimpleAudioEngine.h"
 #include "HelloWorldScene.h"
 
 USING_NS_CC;
+using namespace CocosDenshion;
 
 AppDelegate::AppDelegate()
 {
