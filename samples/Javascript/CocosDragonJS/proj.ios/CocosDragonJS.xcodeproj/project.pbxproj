@@ -127,7 +127,6 @@
 		15A3D06F1682C3B8002FB0C5 /* Level.js in Resources */ = {isa = PBXBuildFile; fileRef = 15A3CEA01682C292002FB0C5 /* Level.js */; };
 		15A3D0701682C3B8002FB0C5 /* main.js in Resources */ = {isa = PBXBuildFile; fileRef = 15A3CEA21682C292002FB0C5 /* main.js */; };
 		15A3D0711682C3B8002FB0C5 /* MainMenuScene.js in Resources */ = {isa = PBXBuildFile; fileRef = 15A3CEA41682C292002FB0C5 /* MainMenuScene.js */; };
-		15A3D0721682C3B8002FB0C5 /* resources-html5.js in Resources */ = {isa = PBXBuildFile; fileRef = 15A3CEA81682C292002FB0C5 /* resources-html5.js */; };
 		15A3D09E1682E721002FB0C5 /* Android.mk in Resources */ = {isa = PBXBuildFile; fileRef = 15A3D0791682E721002FB0C5 /* Android.mk */; };
 		15A3D09F1682E721002FB0C5 /* cocos2d_specifics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A3D07A1682E721002FB0C5 /* cocos2d_specifics.cpp */; };
 		15A3D0A01682E721002FB0C5 /* cocosjs_manual_conversions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A3D07C1682E721002FB0C5 /* cocosjs_manual_conversions.cpp */; };
@@ -286,7 +285,6 @@
 		15A3CEA51682C292002FB0C5 /* Music.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Music.mp3; path = "../../Shared/games/CocosDragonJS/Published files iOS/Music.mp3"; sourceTree = "<group>"; };
 		15A3CEA61682C292002FB0C5 /* play-button-down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "play-button-down.png"; path = "../../Shared/games/CocosDragonJS/Published files iOS/play-button-down.png"; sourceTree = "<group>"; };
 		15A3CEA71682C292002FB0C5 /* play-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "play-button.png"; path = "../../Shared/games/CocosDragonJS/Published files iOS/play-button.png"; sourceTree = "<group>"; };
-		15A3CEA81682C292002FB0C5 /* resources-html5.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = "resources-html5.js"; path = "../../Shared/games/CocosDragonJS/Published files iOS/resources-html5.js"; sourceTree = "<group>"; };
 		15A3CEA91682C292002FB0C5 /* resources-ipad */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "resources-ipad"; path = "../../Shared/games/CocosDragonJS/Published files iOS/resources-ipad"; sourceTree = "<group>"; };
 		15A3CEAA1682C292002FB0C5 /* resources-ipadhd */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "resources-ipadhd"; path = "../../Shared/games/CocosDragonJS/Published files iOS/resources-ipadhd"; sourceTree = "<group>"; };
 		15A3CEAB1682C292002FB0C5 /* resources-iphone */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "resources-iphone"; path = "../../Shared/games/CocosDragonJS/Published files iOS/resources-iphone"; sourceTree = "<group>"; };
@@ -544,7 +542,6 @@
 				15A3CEA51682C292002FB0C5 /* Music.mp3 */,
 				15A3CEA61682C292002FB0C5 /* play-button-down.png */,
 				15A3CEA71682C292002FB0C5 /* play-button.png */,
-				15A3CEA81682C292002FB0C5 /* resources-html5.js */,
 				15A3CEA91682C292002FB0C5 /* resources-ipad */,
 				15A3CEAA1682C292002FB0C5 /* resources-ipadhd */,
 				15A3CEAB1682C292002FB0C5 /* resources-iphone */,
@@ -1085,7 +1082,6 @@
 				15A3D06F1682C3B8002FB0C5 /* Level.js in Resources */,
 				15A3D0701682C3B8002FB0C5 /* main.js in Resources */,
 				15A3D0711682C3B8002FB0C5 /* MainMenuScene.js in Resources */,
-				15A3D0721682C3B8002FB0C5 /* resources-html5.js in Resources */,
 				D446FDA316102D7D000ADA7B /* Default.png in Resources */,
 				D446FDA516102D82000ADA7B /* Default@2x.png in Resources */,
 				D446FDA716102D86000ADA7B /* Default-568h@2x.png in Resources */,
