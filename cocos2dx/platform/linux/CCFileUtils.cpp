@@ -171,8 +171,9 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
 
 	do
 	{
+        std::string fullPath = fullPathForFilename(pszFileName);
 		// read rrom other path than user set it
-		FILE *fp = fopen(pszFileName, pszMode);
+		FILE *fp = fopen(fullPath.c_str(), pszMode);
 		CC_BREAK_IF(!fp);
 
 		fseek(fp,0,SEEK_END);

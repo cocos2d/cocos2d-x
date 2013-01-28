@@ -425,7 +425,7 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
     do 
     {
         // read the file from hardware
-        std::string fullPath = pszFileName;
+        std::string fullPath = fullPathForFilename(pszFileName);
         FILE *fp = fopen(fullPath.c_str(), pszMode);
         CC_BREAK_IF(!fp);
 
