@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		152647CB16B6AA5100A2D258 /* fileLookup.plist in Resources */ = {isa = PBXBuildFile; fileRef = 152647CA16B6AA5100A2D258 /* fileLookup.plist */; };
 		159004B2166DE190006BF838 /* Icon-57.png in Resources */ = {isa = PBXBuildFile; fileRef = 159004B1166DE18F006BF838 /* Icon-57.png */; };
 		159004B4166DE19C006BF838 /* Icon-114.png in Resources */ = {isa = PBXBuildFile; fileRef = 159004B3166DE19C006BF838 /* Icon-114.png */; };
 		159004B6166DE1A8006BF838 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 159004B5166DE1A8006BF838 /* Icon-72.png */; };
@@ -197,6 +198,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		152647CA16B6AA5100A2D258 /* fileLookup.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = fileLookup.plist; path = "../../Shared/games/CocosDragonJS/Published files iOS/fileLookup.plist"; sourceTree = "<group>"; };
 		159004B1166DE18F006BF838 /* Icon-57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-57.png"; sourceTree = "<group>"; };
 		159004B3166DE19C006BF838 /* Icon-114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-114.png"; sourceTree = "<group>"; };
 		159004B5166DE1A8006BF838 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
@@ -515,6 +517,7 @@
 		159002C7166DAB1B006BF838 /* cocosdragon */ = {
 			isa = PBXGroup;
 			children = (
+				152647CA16B6AA5100A2D258 /* fileLookup.plist */,
 				15A3CE8D1682C292002FB0C5 /* Bomb.ccbi */,
 				15A3CE8E1682C292002FB0C5 /* Bomb.js */,
 				15A3CE8F1682C292002FB0C5 /* ccbResources */,
@@ -1120,6 +1123,7 @@
 				15A3CED81682C292002FB0C5 /* settings-caption-touch.png in Resources */,
 				15A3D09E1682E721002FB0C5 /* Android.mk in Resources */,
 				15A3D0A31682E721002FB0C5 /* README in Resources */,
+				152647CB16B6AA5100A2D258 /* fileLookup.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
