@@ -7,11 +7,8 @@ LOCAL_MODULE := testlua_shared
 LOCAL_MODULE_FILENAME := libtestlua
 
 LOCAL_SRC_FILES := testlua/main.cpp \
-                   ../../Classes/AppDelegate.cpp \
-                   ../../../../scripting/lua/cocos2dx_support/CCLuaEngine.cpp \
-                   ../../../../scripting/lua/cocos2dx_support/Cocos2dxLuaLoader.cpp \
-                   ../../../../scripting/lua/cocos2dx_support/LuaCocos2d.cpp \
-                   ../../../../scripting/lua/cocos2dx_support/tolua_fix.c
+                   ../../Classes/AppDelegate.cpp
+
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes
 
