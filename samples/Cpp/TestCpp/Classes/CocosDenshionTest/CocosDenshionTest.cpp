@@ -76,8 +76,8 @@ m_nSoundId(0)
     setTouchEnabled(true);
 
     // preload background music and effect
-    SimpleAudioEngine::sharedEngine()->preloadBackgroundMusic( CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(MUSIC_FILE) );
-    SimpleAudioEngine::sharedEngine()->preloadEffect( CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(EFFECT_FILE) );
+    SimpleAudioEngine::sharedEngine()->preloadBackgroundMusic( MUSIC_FILE );
+    SimpleAudioEngine::sharedEngine()->preloadEffect( EFFECT_FILE );
     
     // set default volume
     SimpleAudioEngine::sharedEngine()->setEffectsVolume(0.5);
@@ -106,7 +106,7 @@ void CocosDenshionTest::menuCallback(CCObject * pSender)
     // play background music
     case 0:
 
-        SimpleAudioEngine::sharedEngine()->playBackgroundMusic(std::string(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(MUSIC_FILE)).c_str(), true);
+        SimpleAudioEngine::sharedEngine()->playBackgroundMusic(MUSIC_FILE, true);
         break;
     // stop background music
     case 1:
@@ -137,11 +137,11 @@ void CocosDenshionTest::menuCallback(CCObject * pSender)
         break;
     // play effect
     case 6:
-        m_nSoundId = SimpleAudioEngine::sharedEngine()->playEffect(std::string(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(EFFECT_FILE)).c_str());
+        m_nSoundId = SimpleAudioEngine::sharedEngine()->playEffect(EFFECT_FILE);
         break;
     // play effect
     case 7:
-        m_nSoundId = SimpleAudioEngine::sharedEngine()->playEffect(std::string(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(EFFECT_FILE)).c_str(), true);
+        m_nSoundId = SimpleAudioEngine::sharedEngine()->playEffect(EFFECT_FILE, true);
         break;
     // stop effect
     case 8:
@@ -149,7 +149,7 @@ void CocosDenshionTest::menuCallback(CCObject * pSender)
         break;
     // unload effect
     case 9:
-        SimpleAudioEngine::sharedEngine()->unloadEffect(std::string(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(EFFECT_FILE)).c_str());
+        SimpleAudioEngine::sharedEngine()->unloadEffect(EFFECT_FILE);
         break;
         // add bakcground music volume
     case 10:
