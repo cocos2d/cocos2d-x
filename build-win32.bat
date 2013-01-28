@@ -52,16 +52,16 @@ cd ".\Release.win32\"
 
 set CC_TEST_BIN=TestCpp.exe
 
-set CC_TEST_RES=..\samples\TestCpp\Resources
-set CC_HELLOWORLD_RES=..\samples\HelloCpp\Resources
-set CC_TESTLUA_RES=..\samples\TestLua\Resources
-set CC_SIMPLEGAME_RES=..\samples\SimpleGame\Resources
-set CC_HELLOLUA_RES=..\samples\HelloLua\Resources
+set CC_TEST_RES=..\samples\Cpp\TestCpp\Resources
+set CC_HELLOWORLD_RES=..\samples\Cpp\HelloCpp\Resources
+set CC_TESTLUA_RES=..\samples\Lua\TestLua\Resources
+set CC_SIMPLEGAME_RES=..\samples\Cpp\SimpleGame\Resources
+set CC_HELLOLUA_RES=..\samples\Lua\HelloLua\Resources
 set CC_JSB_SOURCES=..\scripting\javascript\bindings\js
-set CC_TESTJS_RES=..\samples\TestJavascript\cocos2d-js-tests\tests
-set CC_DRAGONJS_RES=..\samples\TestJavascript\cocos2d-js-tests\games\CocosDragonJS\Published files iOS
-set CC_MOONWARRIORS_RES=..\samples\TestJavascript\cocos2d-js-tests\games\MoonWarriors
-set CC_WATERMELONWITHME_RES=..\samples\TestJavascript\cocos2d-js-tests\games\WatermelonWithMe
+set CC_TESTJS_RES=..\samples\Javascript\Shared\tests
+set CC_DRAGONJS_RES=..\samples\Javascript\Shared\games\CocosDragonJS\Published files iOS
+set CC_MOONWARRIORS_RES=..\samples\Javascript\Shared\games\MoonWarriors
+set CC_WATERMELONWITHME_RES=..\samples\Javascript\Shared\games\WatermelonWithMe
 
 
 echo./*
