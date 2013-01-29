@@ -207,7 +207,7 @@ const std::vector<std::string>& CCFileUtils::getSearchResolutionsOrder()
     return m_searchResolutionsOrderArray;
 }
 
-void CCFileUtils::setSearchPath(const std::vector<std::string>& searchPaths)
+void CCFileUtils::setSearchPaths(const std::vector<std::string>& searchPaths)
 {
     bool bExistDefault = false;
     m_searchPathArray.clear();
@@ -225,7 +225,7 @@ void CCFileUtils::setSearchPath(const std::vector<std::string>& searchPaths)
     }
 }
 
-const std::vector<std::string>& CCFileUtils::getSearchPath()
+const std::vector<std::string>& CCFileUtils::getSearchPaths()
 {
     return m_searchPathArray;
 }

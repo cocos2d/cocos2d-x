@@ -56,7 +56,7 @@ bool AppDelegate::applicationDidFinishLaunching()
         searchPath.push_back("resources-iphonehd");
     }
     
-    CCFileUtils::sharedFileUtils()->setSearchPath(searchPath);
+    CCFileUtils::sharedFileUtils()->setSearchPaths(searchPath);
     
     pDirector->setContentScaleFactor(resourceSize.height/designSize.height);
 

@@ -104,8 +104,9 @@ std::string CCFileUtils::fullPathForFilename(const char* pszFileName)
     CCAssert(pszFileName != NULL, "CCFileUtils: Invalid path");
 
     // Return directly if it's absolute path.
-    if (pszFileName[0] == '/')
+    if (pszFileName[0] == '/' || strFileName.find(m_strDefaultResRootPath) == 0)
     {
+		CCLOG("Return absolute path( %s ) directly.", pszFileName);
         return pszFileName;
     }
 
@@ -204,12 +205,12 @@ void CCFileUtils::setResourceDirectory(const char* pszResourceDirectory)
 {
     if (pszResourceDirectory == NULL) return;
     m_obDirectory = pszResourceDirectory;
-    std::vector<std::string> searchPaths = this->getSearchPath();;
+    std::vector<std::string> searchPaths = this->getSearchPaths();;
     searchPaths.insert(searchPaths.begin(), pszResourceDirectory);
-    this->setSearchPath(searchPaths);
+    this->setSearchPaths(searchPaths);
 }
 
-void CCFileUtils::setSearchPath(const std::vector<std::string>& searchPaths)
+void CCFileUtils::setSearchPaths(const std::vector<std::string>& searchPaths)
 {
     bool bExistDefaultRootPath = false;
 

@@ -100,9 +100,9 @@ bool AppDelegate::applicationDidFinishLaunching()
 
     CCEGLView::sharedOpenGLView()->setDesignResolutionSize(designSize.width, designSize.height, kResolutionNoBorder);
 
-    std::vector<std::string> searchPaths = pFileUtils->getSearchPath();
+    std::vector<std::string> searchPaths = pFileUtils->getSearchPaths();
     searchPaths.insert(searchPaths.begin(), pFileUtils->getWriteablePath());
-    pFileUtils->setSearchPath(searchPaths);
+    pFileUtils->setSearchPaths(searchPaths);
 
     PlayerStatus::setDeviceResolution(res);
     // turn on display FPS

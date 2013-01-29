@@ -177,7 +177,7 @@ public:
     /**
      @brief  Set the resource directory; we will find resources relative to this directory.
      @param pszDirectoryName  Relative path to root.
-     @deprecated Please use setSearchPath instead.
+     @deprecated Please use setSearchPaths instead.
     */
     CC_DEPRECATED_ATTRIBUTE void setResourceDirectory(const char *pszDirectoryName);
 
@@ -206,17 +206,17 @@ public:
      *  @param searchPaths
      *  @since v2.1
      */
-    void setSearchPath(const std::vector<std::string>& searchPaths);
+    void setSearchPaths(const std::vector<std::string>& searchPaths);
     
     /**
      *  Gets the array of search paths.
      *  
      */
-    const std::vector<std::string>& getSearchPath();
+    const std::vector<std::string>& getSearchPaths();
     
     /**
      *  Gets the resource directory
-     *  @deprecated Please use getSearchPath() instead.
+     *  @deprecated Please use getSearchPaths() instead.
      */
     CC_DEPRECATED_ATTRIBUTE const char* getResourceDirectory();
 
