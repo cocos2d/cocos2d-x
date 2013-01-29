@@ -32,7 +32,7 @@ bool AppDelegate::applicationDidFinishLaunching()
         CCSize resourceSize = CCSizeMake(960, 640);
         std::vector<std::string> searchPaths;
         searchPaths.push_back("hd");
-        pFileUtils->setSearchPath(searchPaths);
+        pFileUtils->setSearchPaths(searchPaths);
         pDirector->setContentScaleFactor(resourceSize.height/designSize.height);
     }
 
