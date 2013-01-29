@@ -228,6 +228,13 @@ public:
      *  You can use this array to modify the search path of the resources.
      *  If you want to use "themes" or search resources in the "cache", you can do it easily by adding new entries in this array.
      *
+     *  @note This method could access relative path and absolute path.
+     *        If the relative path was passed to the vector, CCFileUtils will add the default resource directory before the relative path.
+     *        For instance:
+     *        	On Android, the default resource root path is "assets/".
+     *        	If "/mnt/sdcard/" and "resources-large" were set to the search paths vector,
+     *        	"resources-large" will be converted to "assets/resources-large" since it was a relative path.
+     *
      *  @param searchPaths The array contains search paths.
      *  @see fullPathForFilename()
      *  @since v2.1
