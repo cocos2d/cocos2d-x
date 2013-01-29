@@ -131,14 +131,14 @@ std::string CCFileUtils::fullPathForFilename(const char* pszFileName)
         && (pszFileName[2] == '\\' || pszFileName[2] == '/')
     )
     {
-        CCLOG("Probably invoking fullPathForFilename recursively, return the full path: %s", pszFileName);
+        //CCLOG("Probably invoking fullPathForFilename recursively, return the full path: %s", pszFileName);
         return pszFileName;
     }
 
     // Already Cached ?
     std::map<std::string, std::string>::iterator cacheIter = s_fullPathCache.find(pszFileName);
     if (cacheIter != s_fullPathCache.end()) {
-        CCLOG("Return full path from cache: %s", cacheIter->second.c_str());
+        //CCLOG("Return full path from cache: %s", cacheIter->second.c_str());
         return cacheIter->second;
     }
 
@@ -156,7 +156,7 @@ std::string CCFileUtils::fullPathForFilename(const char* pszFileName)
             {
                 // Adding the full path to cache if the file was found.
                 s_fullPathCache.insert(std::pair<std::string, std::string>(pszFileName, fullpath));
-				CCLOG("Returning path: %s", fullpath.c_str());
+				//CCLOG("Returning path: %s", fullpath.c_str());
                 return fullpath;
             }
         }
@@ -245,7 +245,7 @@ void CCFileUtils::setSearchPaths(const std::vector<std::string>& searchPaths)
 
 	if (!bExistDefaultRootPath)
 	{
-		CCLOG("Default root path doesn't exist, adding it.");
+		//CCLOG("Default root path doesn't exist, adding it.");
 		m_searchPathArray.push_back(m_strDefaultResRootPath);
 	}
 }

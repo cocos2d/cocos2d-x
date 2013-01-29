@@ -94,14 +94,14 @@ std::string CCFileUtils::fullPathForFilename(const char* pszFileName)
     std::string strFileName = pszFileName;
     if (pszFileName[0] == '/' || strFileName.find(m_strDefaultResRootPath) == 0)
     {
-        CCLOG("Return absolute path( %s ) directly.", pszFileName);
+        //CCLOG("Return absolute path( %s ) directly.", pszFileName);
         return pszFileName;
     }
     // Already Cached ?
     std::map<std::string, std::string>::iterator cacheIter = s_fullPathCache.find(pszFileName);
     if (cacheIter != s_fullPathCache.end())
     {
-        CCLOG("Return full path from cache: %s", cacheIter->second.c_str());
+        //CCLOG("Return full path from cache: %s", cacheIter->second.c_str());
         return cacheIter->second;
     }
 
@@ -117,8 +117,8 @@ std::string CCFileUtils::fullPathForFilename(const char* pszFileName)
         for (std::vector<std::string>::iterator resOrderIter = m_searchResolutionsOrderArray.begin();
              resOrderIter != m_searchResolutionsOrderArray.end(); ++resOrderIter) {
     
-            CCLOG("\n\nSEARCHING: %s, %s, %s", newFilename.c_str(), resOrderIter->c_str(), searchPathsIter->c_str());
-                    fullpath = this->getPathForFilename(newFilename, *resOrderIter, *searchPathsIter);
+            //CCLOG("\n\nSEARCHING: %s, %s, %s", newFilename.c_str(), resOrderIter->c_str(), searchPathsIter->c_str());
+            fullpath = this->getPathForFilename(newFilename, *resOrderIter, *searchPathsIter);
             
             // Check whether file exists in apk.
             if (s_pZipFile->fileExists(fullpath))
@@ -138,7 +138,7 @@ std::string CCFileUtils::fullPathForFilename(const char* pszFileName)
             {
                 // Using the filename passed in as key.
                 s_fullPathCache.insert(std::pair<std::string, std::string>(pszFileName, fullpath));
-                CCLOG("Returning path: %s", fullpath.c_str());
+                //CCLOG("Returning path: %s", fullpath.c_str());
                 return fullpath;
             }
         }
@@ -183,7 +183,7 @@ std::string CCFileUtils::getPathForFilename(const std::string& filename, const s
     }
     path += file;
 
-    CCLOG("getPathForFilename, fullPath = %s", path.c_str());
+    //CCLOG("getPathForFilename, fullPath = %s", path.c_str());
     return path;
 }
 
@@ -198,7 +198,7 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
 
     if (pszFileName[0] != '/')
     {
-        CCLOG("GETTING FILE RELATIVE DATA: %s", pszFileName);
+        //CCLOG("GETTING FILE RELATIVE DATA: %s", pszFileName);
         string fullPath = fullPathForFilename(pszFileName);
         pData = s_pZipFile->getFileData(fullPath.c_str(), pSize);
     }
@@ -207,7 +207,7 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
         do 
         {
             // read rrom other path than user set it
-	        CCLOG("GETTING FILE ABSOLUTE DATA: %s", pszFileName);
+	        //CCLOG("GETTING FILE ABSOLUTE DATA: %s", pszFileName);
             FILE *fp = fopen(pszFileName, pszMode);
             CC_BREAK_IF(!fp);
 
@@ -276,7 +276,7 @@ void CCFileUtils::setSearchPaths(const std::vector<std::string>& searchPaths)
 
     if (!bExistDefaultRootPath)
     {
-        CCLOG("Default root path doesn't exist, adding it.");
+        //CCLOG("Default root path doesn't exist, adding it.");
         m_searchPathArray.push_back(m_strDefaultResRootPath);
     }
 }
