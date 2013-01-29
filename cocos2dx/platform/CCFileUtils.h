@@ -127,14 +127,14 @@ public:
 
         If the filename contains relative path like "gamescene/uilayer/sprite.png", The file search order will be:
 
-     	    external_dir/gamescene/resources-ipadhd/sprite.png     (if not found, search next)
-     	    external_dir/gamescene/resources-ipad/sprite.png       (if not found, search next)
-     	    external_dir/gamescene/resources-iphonehd/sprite.png   (if not found, search next)
-     	    external_dir/gamescene/sprite.png                      (if not found, search next)
-     	    internal_dir/gamescene/resources-ipadhd/sprite.png     (if not found, search next)
-     	    internal_dir/gamescene/resources-ipad/sprite.png       (if not found, search next)
-     	    internal_dir/gamescene/resources-iphonehd/sprite.png   (if not found, search next)
-     	    internal_dir/gamescene/sprite.png                      (if not found, return "gamescene/sprite.png")
+     	    external_dir/gamescene/uilayer/resources-ipadhd/sprite.png     (if not found, search next)
+     	    external_dir/gamescene/uilayer/resources-ipad/sprite.png       (if not found, search next)
+     	    external_dir/gamescene/uilayer/resources-iphonehd/sprite.png   (if not found, search next)
+     	    external_dir/gamescene/uilayer/sprite.png                      (if not found, search next)
+     	    internal_dir/gamescene/uilayer/resources-ipadhd/sprite.png     (if not found, search next)
+     	    internal_dir/gamescene/uilayer/resources-ipad/sprite.png       (if not found, search next)
+     	    internal_dir/gamescene/uilayer/resources-iphonehd/sprite.png   (if not found, search next)
+     	    internal_dir/gamescene/uilayer/sprite.png                      (if not found, return "gamescene/sprite.png")
 
      If the filename can't be found on the file system, it will return the filename directly.
      If the filenameLookup dictionary has been set. It will try to replace the filename with a new filename.
