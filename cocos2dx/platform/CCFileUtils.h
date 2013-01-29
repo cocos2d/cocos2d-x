@@ -106,7 +106,7 @@ public:
      
      First it will try to get a new filename from the "filenameLookup" dictionary.
      If a new filename can't be found on the dictionary, it will use the original filename.
-     Then it will try obtain the full path of the filename using the CCFileUtils search rules: resolutions, and search paths.
+     Then it will try to obtain the full path of the filename using the CCFileUtils search rules: resolutions, and search paths.
      The file search is based on the array element order of search paths and resolution directories.
      
      For instance:
