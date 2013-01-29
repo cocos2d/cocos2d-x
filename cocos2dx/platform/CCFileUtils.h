@@ -111,16 +111,16 @@ public:
      
      For instance:
      
-     	We set two elements("external_dir/", "internal_dir/") to search paths vector by setSearchPaths,
+     	We set two elements("/mnt/sdcard/", "internal_dir/") to search paths vector by setSearchPaths,
      	and set three elements("resources-ipadhd/", "resources-ipad/", "resources-iphonehd")
-     	to resolutions vector by setSearchResolutionsOrder.
+     	to resolutions vector by setSearchResolutionsOrder. The "internal_dir" is relative to the root of "Resources/".
 
      	The file (e.g. sprite.png) search order will be:
 
-     	    external_dir/resources-ipadhd/sprite.png     (if not found, search next)
-     	    external_dir/resources-ipad/sprite.png       (if not found, search next)
-     	    external_dir/resources-iphonehd/sprite.png   (if not found, search next)
-     	    external_dir/sprite.png                      (if not found, search next)
+     	    /mnt/sdcard/resources-ipadhd/sprite.png     (if not found, search next)
+     	    /mnt/sdcard/resources-ipad/sprite.png       (if not found, search next)
+     	    /mnt/sdcard/resources-iphonehd/sprite.png   (if not found, search next)
+     	    /mnt/sdcard/sprite.png                      (if not found, search next)
      	    internal_dir/resources-ipadhd/sprite.png     (if not found, search next)
      	    internal_dir/resources-ipad/sprite.png       (if not found, search next)
      	    internal_dir/resources-iphonehd/sprite.png   (if not found, search next)
@@ -128,17 +128,17 @@ public:
 
         If the filename contains relative path like "gamescene/uilayer/sprite.png", The file search order will be:
 
-     	    external_dir/gamescene/uilayer/resources-ipadhd/sprite.png     (if not found, search next)
-     	    external_dir/gamescene/uilayer/resources-ipad/sprite.png       (if not found, search next)
-     	    external_dir/gamescene/uilayer/resources-iphonehd/sprite.png   (if not found, search next)
-     	    external_dir/gamescene/uilayer/sprite.png                      (if not found, search next)
+     	    /mnt/sdcard/gamescene/uilayer/resources-ipadhd/sprite.png     (if not found, search next)
+     	    /mnt/sdcard/gamescene/uilayer/resources-ipad/sprite.png       (if not found, search next)
+     	    /mnt/sdcard/gamescene/uilayer/resources-iphonehd/sprite.png   (if not found, search next)
+     	    /mnt/sdcard/gamescene/uilayer/sprite.png                      (if not found, search next)
      	    internal_dir/gamescene/uilayer/resources-ipadhd/sprite.png     (if not found, search next)
      	    internal_dir/gamescene/uilayer/resources-ipad/sprite.png       (if not found, search next)
      	    internal_dir/gamescene/uilayer/resources-iphonehd/sprite.png   (if not found, search next)
      	    internal_dir/gamescene/uilayer/sprite.png                      (if not found, return "gamescene/sprite.png")
 
      If the filename can't be found on the file system, it will return the filename directly.
-     If the filenameLookup dictionary has been set. It will try to replace the filename with a new filename.
+     If the filenameLookup dictionary has been set, it will try to replace the filename with a new filename.
      For example:
      
      * In iOS: "image.png" -> "image.pvr.ccz" -> "search path/resolution dir/image.pvr.ccz"
