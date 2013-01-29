@@ -131,7 +131,12 @@ public:
     {
         m_pLens3D->setPosition(var);
     }
-
+    
+    virtual const CCPoint& getPosition()
+    {
+        return m_pLens3D->getPosition();
+    }
+    
     static Lens3DTarget* create(CCLens3D* pAction)
     {
         Lens3DTarget* pRet = new Lens3DTarget();
