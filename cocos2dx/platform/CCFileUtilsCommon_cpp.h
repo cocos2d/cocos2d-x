@@ -410,7 +410,7 @@ const std::vector<std::string>& CCFileUtils::getSearchResolutionsOrder()
     return m_searchResolutionsOrderArray;
 }
 
-const std::vector<std::string>& CCFileUtils::getSearchPath()
+const std::vector<std::string>& CCFileUtils::getSearchPaths()
 {
     return m_searchPathArray;
 }

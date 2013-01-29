@@ -138,10 +138,10 @@ void TestResolutionDirectories::onEnter()
     string ret;
     
     sharedFileUtils->purgeCachedEntries();
-    m_defaultSearchPathArray = sharedFileUtils->getSearchPath();
+    m_defaultSearchPathArray = sharedFileUtils->getSearchPaths();
     vector<string> searchPaths = m_defaultSearchPathArray;
     searchPaths.insert(searchPaths.begin(),   "Misc");
-    sharedFileUtils->setSearchPath(searchPaths);
+    sharedFileUtils->setSearchPaths(searchPaths);
     
     m_defaultResolutionsOrderArray = sharedFileUtils->getSearchResolutionsOrder();
     vector<string> resolutionsOrder = m_defaultResolutionsOrderArray;
@@ -167,7 +167,7 @@ void TestResolutionDirectories::onExit()
     CCFileUtils *sharedFileUtils = CCFileUtils::sharedFileUtils();
     
 	// reset search path
-	sharedFileUtils->setSearchPath(m_defaultSearchPathArray);
+	sharedFileUtils->setSearchPaths(m_defaultSearchPathArray);
     sharedFileUtils->setSearchResolutionsOrder(m_defaultResolutionsOrderArray);
     FileUtilsDemo::onExit();
 }
@@ -192,7 +192,7 @@ void TestSearchPath::onEnter()
     string ret;
     
     sharedFileUtils->purgeCachedEntries();
-    m_defaultSearchPathArray = sharedFileUtils->getSearchPath();
+    m_defaultSearchPathArray = sharedFileUtils->getSearchPaths();
     vector<string> searchPaths = m_defaultSearchPathArray;
     string writablePath = sharedFileUtils->getWriteablePath();
     string fileName = writablePath+"external.txt";
@@ -208,7 +208,7 @@ void TestSearchPath::onEnter()
     searchPaths.insert(searchPaths.begin(), writablePath);
     searchPaths.insert(searchPaths.begin()+1,   "Misc/searchpath1");
     searchPaths.insert(searchPaths.begin()+2, "Misc/searchpath2");
-    sharedFileUtils->setSearchPath(searchPaths);
+    sharedFileUtils->setSearchPaths(searchPaths);
     
     m_defaultResolutionsOrderArray = sharedFileUtils->getSearchResolutionsOrder();
     vector<string> resolutionsOrder = m_defaultResolutionsOrderArray;
@@ -242,7 +242,7 @@ void TestSearchPath::onExit()
 	CCFileUtils *sharedFileUtils = CCFileUtils::sharedFileUtils();
 
 	// reset search path
-	sharedFileUtils->setSearchPath(m_defaultSearchPathArray);
+	sharedFileUtils->setSearchPaths(m_defaultSearchPathArray);
     sharedFileUtils->setSearchResolutionsOrder(m_defaultResolutionsOrderArray);
     FileUtilsDemo::onExit();
 }
