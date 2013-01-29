@@ -45,7 +45,7 @@ bool CCFileUtils::init()
     resourcePath = resourcePath.substr(0, resourcePath.find_last_of("/"));
     resourcePath += "/../../../Resources/";
     m_strDefaultResRootPath = resourcePath;
-    CCLOG("DEFAULT RES PATH = %s", m_strDefaultResRootPath.c_str());
+    //CCLOG("DEFAULT RES PATH = %s", m_strDefaultResRootPath.c_str());
     m_searchPathArray.push_back(m_strDefaultResRootPath);
     m_searchResolutionsOrderArray.push_back("");
 
@@ -125,7 +125,7 @@ std::string CCFileUtils::fullPathForFilename(const char* pszFileName)
         for (std::vector<std::string>::iterator resOrderIter = m_searchResolutionsOrderArray.begin();
              resOrderIter != m_searchResolutionsOrderArray.end(); ++resOrderIter) {
 
-            CCLOG("\n\nSEARCHING: %s, %s, %s", newFileName.c_str(), resOrderIter->c_str(), searchPathsIter->c_str());
+            //CCLOG("\n\nSEARCHING: %s, %s, %s", newFileName.c_str(), resOrderIter->c_str(), searchPathsIter->c_str());
 
             fullpath = this->getPathForFilename(newFileName, *resOrderIter, *searchPathsIter);
 
@@ -135,7 +135,7 @@ std::string CCFileUtils::fullPathForFilename(const char* pszFileName)
             {
                 // Adding the full path to cache if the file was found.
                 s_fullPathCache.insert(std::pair<std::string, std::string>(pszFileName, fullpath));
-                CCLOG("Returning path: %s", fullpath.c_str());
+                //CCLOG("Returning path: %s", fullpath.c_str());
                 return fullpath;
             }
         }
@@ -234,7 +234,7 @@ void CCFileUtils::setSearchPaths(const std::vector<std::string>& searchPaths)
 
     if (!bExistDefaultRootPath)
     {
-        CCLOG("Default root path doesn't exist, adding it.");
+        //CCLOG("Default root path doesn't exist, adding it.");
         m_searchPathArray.push_back(m_strDefaultResRootPath);
     }
 }
