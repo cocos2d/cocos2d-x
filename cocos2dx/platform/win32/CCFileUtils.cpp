@@ -210,12 +210,12 @@ void CCFileUtils::setResourceDirectory(const char* pszResourceDirectory)
 {
 	if (pszResourceDirectory == NULL) return;
 	m_obDirectory = pszResourceDirectory;
-	std::vector<std::string> searchPaths = this->getSearchPath();;
+	std::vector<std::string> searchPaths = this->getSearchPaths();;
 	searchPaths.insert(searchPaths.begin(), pszResourceDirectory);
-	this->setSearchPath(searchPaths);
+	this->setSearchPaths(searchPaths);
 }
 
-void CCFileUtils::setSearchPath(const std::vector<std::string>& searchPaths)
+void CCFileUtils::setSearchPaths(const std::vector<std::string>& searchPaths)
 {
 	bool bExistDefaultRootPath = false;
 
