@@ -27,10 +27,6 @@ fi
 if [ $NEED_LUA = "true" ]; then
     LOCAL_STATIC_LIBRARIES=$LOCAL_STATIC_LIBRARIES" cocos_lua_static"
     MODULES_TO_CALL=$MODULES_TO_CALL" \$(call import-module,scripting/lua/proj.android/jni)"
-    LOCAL_SRC_FILES=$LOCAL_SRC_FILES" ../../../scripting/lua/cocos2dx_support/CCLuaEngine.cpp \\
-                                      ../../../scripting/lua/cocos2dx_support/Cocos2dxLuaLoader.cpp \\
-                                      ../../../scripting/lua/cocos2dx_support/LuaCocos2d.cpp \\
-                                      ../../../scripting/lua/cocos2dx_support/tolua_fix.c"
 fi
 
 cat > $FILE << EOF
