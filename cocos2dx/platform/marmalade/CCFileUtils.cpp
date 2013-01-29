@@ -112,7 +112,7 @@ std::string CCFileUtils::fullPathForFilename(const char* pszFileName)
     // Return directly if it's an absolute path.
     if (pszFileName[0] == '/')
     {
-        CCLOG("Return absolute path( %s ) directly.", pszFileName);
+        //CCLOG("Return absolute path( %s ) directly.", pszFileName);
         return pszFileName;
     }
     
@@ -234,7 +234,7 @@ void CCFileUtils::setSearchPaths(const std::vector<std::string>& searchPaths)
     
     if (!bExistDefaultRootPath)
     {
-        CCLOG("Default root path doesn't exist, adding it.");
+        //CCLOG("Default root path doesn't exist, adding it.");
         m_searchPathArray.push_back(m_strDefaultResRootPath);
     }
 }
