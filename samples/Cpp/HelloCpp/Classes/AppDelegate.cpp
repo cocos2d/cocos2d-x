@@ -59,7 +59,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     }
     
     // set searching path
-    CCFileUtils::sharedFileUtils()->setSearchPath(searchPath);
+    CCFileUtils::sharedFileUtils()->setSearchPaths(searchPath);
 	
     // turn on display FPS
     pDirector->setDisplayStats(true);
