@@ -71,7 +71,6 @@ bool AppDelegate::applicationDidFinishLaunching()
     }
     else if (platform == kTargetAndroid || platform == kTargetWindows)
     {
-        CCLOG("screen size [%f, %f]", screenSize.width, screenSize.height);
         if (screenSize.height > 960)
         {
             resourceSize = CCSizeMake(1280, 1920);
