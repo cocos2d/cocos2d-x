@@ -69,11 +69,14 @@ bool AppDelegate::applicationDidFinishLaunching()
         {
             resourceSize = CCSizeMake(640, 960);
             resDirOrders.push_back("resources-large");
+            resDirOrders.push_back("resources-medium");
+            resDirOrders.push_back("resources-small");
         }
         else if (screenSize.height > 480)
         {
             resourceSize = CCSizeMake(480, 720);
             resDirOrders.push_back("resources-medium");
+            resDirOrders.push_back("resources-small");
         }
         else
         {
