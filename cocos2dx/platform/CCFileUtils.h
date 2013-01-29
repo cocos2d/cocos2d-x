@@ -113,7 +113,7 @@ public:
      
      	We set two elements("/mnt/sdcard/", "internal_dir/") to search paths vector by setSearchPaths,
      	and set three elements("resources-ipadhd/", "resources-ipad/", "resources-iphonehd")
-     	to resolutions vector by setSearchResolutionsOrder. The "internal_dir" is relative to the root of "Resources/".
+     	to resolutions vector by setSearchResolutionsOrder. The "internal_dir" is relative to "Resources/".
 
      	The file (e.g. sprite.png) search order will be:
 
