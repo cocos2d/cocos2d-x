@@ -104,49 +104,46 @@ public:
     
     /** Returns the fullpath for a given filename.
      
-     First it will try to get a new filename from the "filenameLookup" dictionary. If a new filename can't be found on the dictionary, it will use the original filename.
+     First it will try to get a new filename from the "filenameLookup" dictionary.
+     If a new filename can't be found on the dictionary, it will use the original filename.
      Then it will try obtain the full path of the filename using the CCFileUtils search rules: resolutions, and search paths.
-
      The file search is based on the array element order of search paths and resolution directories.
      
      For instance:
-     
+
      	We set two elements("/mnt/sdcard/", "internal_dir/") to search paths vector by setSearchPaths,
      	and set three elements("resources-ipadhd/", "resources-ipad/", "resources-iphonehd")
      	to resolutions vector by setSearchResolutionsOrder. The "internal_dir" is relative to "Resources/".
 
-     	The file (e.g. sprite.png) search order will be:
+		If we have a file named 'sprite.png', the mapping in fileLookup dictionary contains `key: sprite.png -> value: sprite.pvr.gz`.
+     	Firstly, it will replace 'sprite.png' with 'sprite.pvr.gz', then searching the file sprite.pvr.gz as follows:
 
-     	    /mnt/sdcard/resources-ipadhd/sprite.png     (if not found, search next)
-     	    /mnt/sdcard/resources-ipad/sprite.png       (if not found, search next)
-     	    /mnt/sdcard/resources-iphonehd/sprite.png   (if not found, search next)
-     	    /mnt/sdcard/sprite.png                      (if not found, search next)
-     	    internal_dir/resources-ipadhd/sprite.png     (if not found, search next)
-     	    internal_dir/resources-ipad/sprite.png       (if not found, search next)
-     	    internal_dir/resources-iphonehd/sprite.png   (if not found, search next)
-     	    internal_dir/sprite.png                      (if not found, return "sprite.png")
+     	    /mnt/sdcard/resources-ipadhd/sprite.pvr.gz      (if not found, search next)
+     	    /mnt/sdcard/resources-ipad/sprite.pvr.gz        (if not found, search next)
+     	    /mnt/sdcard/resources-iphonehd/sprite.pvr.gz    (if not found, search next)
+     	    /mnt/sdcard/sprite.pvr.gz                       (if not found, search next)
+     	    internal_dir/resources-ipadhd/sprite.pvr.gz     (if not found, search next)
+     	    internal_dir/resources-ipad/sprite.pvr.gz       (if not found, search next)
+     	    internal_dir/resources-iphonehd/sprite.pvr.gz   (if not found, search next)
+     	    internal_dir/sprite.pvr.gz                      (if not found, return "sprite.png")
 
-        If the filename contains relative path like "gamescene/uilayer/sprite.png", The file search order will be:
+        If the filename contains relative path like "gamescene/uilayer/sprite.png",
+        and the mapping in fileLookup dictionary contains `key: gamescene/uilayer/sprite.png -> value: gamescene/uilayer/sprite.pvr.gz`.
+        The file search order will be:
 
-     	    /mnt/sdcard/gamescene/uilayer/resources-ipadhd/sprite.png     (if not found, search next)
-     	    /mnt/sdcard/gamescene/uilayer/resources-ipad/sprite.png       (if not found, search next)
-     	    /mnt/sdcard/gamescene/uilayer/resources-iphonehd/sprite.png   (if not found, search next)
-     	    /mnt/sdcard/gamescene/uilayer/sprite.png                      (if not found, search next)
-     	    internal_dir/gamescene/uilayer/resources-ipadhd/sprite.png     (if not found, search next)
-     	    internal_dir/gamescene/uilayer/resources-ipad/sprite.png       (if not found, search next)
-     	    internal_dir/gamescene/uilayer/resources-iphonehd/sprite.png   (if not found, search next)
-     	    internal_dir/gamescene/uilayer/sprite.png                      (if not found, return "gamescene/sprite.png")
+     	    /mnt/sdcard/gamescene/uilayer/resources-ipadhd/sprite.pvr.gz      (if not found, search next)
+     	    /mnt/sdcard/gamescene/uilayer/resources-ipad/sprite.pvr.gz        (if not found, search next)
+     	    /mnt/sdcard/gamescene/uilayer/resources-iphonehd/sprite.pvr.gz    (if not found, search next)
+     	    /mnt/sdcard/gamescene/uilayer/sprite.pvr.gz                       (if not found, search next)
+     	    internal_dir/gamescene/uilayer/resources-ipadhd/sprite.pvr.gz     (if not found, search next)
+     	    internal_dir/gamescene/uilayer/resources-ipad/sprite.pvr.gz       (if not found, search next)
+     	    internal_dir/gamescene/uilayer/resources-iphonehd/sprite.pvr.gz   (if not found, search next)
+     	    internal_dir/gamescene/uilayer/sprite.pvr.gz                      (if not found, return "gamescene/uilayer/sprite.png")
 
-     If the filename can't be found on the file system, it will return the filename directly.
-     If the filenameLookup dictionary has been set, it will try to replace the filename with a new filename.
-     For example:
-     
-     * In iOS: "image.png" -> "image.pvr.ccz" -> "search path/resolution dir/image.pvr.ccz"
-     *         "gamescene/background.png" -> "gamescene/background.pvr.ccz" -> "search path/gamescene/resolution dir/background.pvr.ccz"
-     * In Android: "sounds/click.wav" -> "sounds/click.ogg" -> "search path/sounds/resolution dir/click.ogg"
+     If the new file can't be found on the file system, it will return the parameter pszFileName directly.
      
      This method was added to simplify multiplatform support. Whether you are using cocos2d-js or any cross-compilation toolchain like StellaSDK or Apportable,
-     you might need to load differerent resources for a given file in the different platforms.
+     you might need to load different resources for a given file in the different platforms.
 
      @since v2.1
      */
