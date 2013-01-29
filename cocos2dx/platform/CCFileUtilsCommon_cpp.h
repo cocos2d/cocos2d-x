@@ -389,7 +389,20 @@ std::string CCFileUtils::getNewFilename(const char* pszFileName)
 
 void CCFileUtils::setSearchResolutionsOrder(const std::vector<std::string>& searchResolutionsOrder)
 {
-    m_searchResolutionsOrderArray = searchResolutionsOrder;
+    bool bExistDefault = false;
+    m_searchResolutionsOrderArray.clear();
+    for (std::vector<std::string>::const_iterator iter = searchResolutionsOrder.begin(); iter != searchResolutionsOrder.end(); ++iter)
+    {
+        if (!bExistDefault && (*iter) == "")
+        {
+            bExistDefault = true;
+        }
+        m_searchResolutionsOrderArray.push_back(*iter);
+    }
+    if (!bExistDefault)
+    {
+        m_searchResolutionsOrderArray.push_back("");
+    }
 }
 
 const std::vector<std::string>& CCFileUtils::getSearchResolutionsOrder()
@@ -397,12 +410,7 @@ const std::vector<std::string>& CCFileUtils::getSearchResolutionsOrder()
     return m_searchResolutionsOrderArray;
 }
 
-void CCFileUtils::setSearchPath(const std::vector<std::string>& searchPaths)
-{
-    m_searchPathArray = searchPaths;
-}
-
-const std::vector<std::string>& CCFileUtils::getSearchPath()
+const std::vector<std::string>& CCFileUtils::getSearchPaths()
 {
     return m_searchPathArray;
 }

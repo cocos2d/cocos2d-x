@@ -2567,7 +2567,7 @@ JSBool js_cocos2dx_CCFileUtils_setSearchResolutionsOrder(JSContext *cx, uint32_t
     return JS_FALSE;
 }
 
-JSBool js_cocos2dx_CCFileUtils_setSearchPath(JSContext *cx, uint32_t argc, jsval *vp)
+JSBool js_cocos2dx_CCFileUtils_setSearchPaths(JSContext *cx, uint32_t argc, jsval *vp)
 {
     jsval *argv = JS_ARGV(cx, vp);
     JSBool ok = JS_TRUE;
@@ -2580,14 +2580,14 @@ JSBool js_cocos2dx_CCFileUtils_setSearchPath(JSContext *cx, uint32_t argc, jsval
         std::vector<std::string> arg0;
         ok &= jsval_to_string_vector(cx, argv[0], arg0);
         JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
-        cobj->setSearchPath(arg0);
+        cobj->setSearchPaths(arg0);
         JS_SET_RVAL(cx, vp, JSVAL_VOID);
         return JS_TRUE;
     }
     JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
     return JS_FALSE;
 }
-JSBool js_cocos2dx_CCFileUtils_getSearchPath(JSContext *cx, uint32_t argc, jsval *vp)
+JSBool js_cocos2dx_CCFileUtils_getSearchPaths(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
@@ -2595,7 +2595,7 @@ JSBool js_cocos2dx_CCFileUtils_getSearchPath(JSContext *cx, uint32_t argc, jsval
     JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
     
     if (argc == 0) {
-        std::vector<std::string> ret = cobj->getSearchPath();
+        std::vector<std::string> ret = cobj->getSearchPaths();
         jsval jsret;
         jsret = string_vector_to_jsval(cx, ret);
         JS_SET_RVAL(cx, vp, jsret);
@@ -2675,8 +2675,8 @@ void register_cocos2dx_js_extensions(JSContext* cx, JSObject* global)
     JS_DefineFunction(cx, js_cocos2dx_CCMenu_prototype, "alignItemsInColumns", js_cocos2dx_CCMenu_alignItemsInColumns, 1, JSPROP_ENUMERATE | JSPROP_SHARED | JSPROP_PERMANENT);
 
     JS_DefineFunction(cx, js_cocos2dx_CCFileUtils_prototype, "setSearchResolutionsOrder", js_cocos2dx_CCFileUtils_setSearchResolutionsOrder, 1, JSPROP_PERMANENT | JSPROP_SHARED);
-    JS_DefineFunction(cx, js_cocos2dx_CCFileUtils_prototype, "setSearchPath", js_cocos2dx_CCFileUtils_setSearchPath, 1, JSPROP_PERMANENT | JSPROP_SHARED);
-    JS_DefineFunction(cx, js_cocos2dx_CCFileUtils_prototype, "getSearchPath", js_cocos2dx_CCFileUtils_getSearchPath, 0, JSPROP_PERMANENT | JSPROP_SHARED);
+    JS_DefineFunction(cx, js_cocos2dx_CCFileUtils_prototype, "setSearchPaths", js_cocos2dx_CCFileUtils_setSearchPaths, 1, JSPROP_PERMANENT | JSPROP_SHARED);
+    JS_DefineFunction(cx, js_cocos2dx_CCFileUtils_prototype, "getSearchPaths", js_cocos2dx_CCFileUtils_getSearchPaths, 0, JSPROP_PERMANENT | JSPROP_SHARED);
     JS_DefineFunction(cx, js_cocos2dx_CCFileUtils_prototype, "getSearchResolutionsOrder", js_cocos2dx_CCFileUtils_getSearchResolutionsOrder, 0, JSPROP_PERMANENT | JSPROP_SHARED);
 
     

@@ -121,6 +121,7 @@ OBJECTS = ../Classes/AccelerometerTest/AccelerometerTest.o \
 			../Classes/TransitionsTest/TransitionsTest.o \
 			../Classes/UserDefaultTest/UserDefaultTest.o \
 			../Classes/ZwoptexTest/ZwoptexTest.o \
+			../Classes/FileUtilsTest/FileUtilsTest.o \
 			../Classes/controller.o \
 			../Classes/testBasic.o \
 			../Classes/AppDelegate.o \

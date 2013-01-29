@@ -155,47 +155,68 @@ public:
      */
     void loadFilenameLookupDictionaryFromFile(const char* filename);
     
-    /** Loads the filenameLookup dictionary from the contents of a filename.
-     
-     @since v2.1
+    /** 
+     *  Sets the filenameLookup dictionary.
+     *
+     *  @param pFilenameLookupDict The dictionary for replacing filename.
+     *  @since v2.1
      */
     void setFilenameLookupDictionary(CCDictionary* pFilenameLookupDict);
     
-    /// @cond
+    /**
+     *  Gets full path from a file name and the path of the reletive file.
+     *  @param pszFilename The file name.
+     *  @param pszRelativeFile The path of the relative file.
+     *  @return The full path.
+     *          e.g. pszFilename: hello.png, pszRelativeFile: /User/path1/path2/hello.plist
+     *               Return: /User/path1/path2/hello.pvr (If there a a key(hello.png)-value(hello.pvr) in FilenameLookup dictionary. )
+     *
+     */
     const char* fullPathFromRelativeFile(const char *pszFilename, const char *pszRelativeFile);
-    /// @endcond
 
     /**
      @brief  Set the resource directory; we will find resources relative to this directory.
      @param pszDirectoryName  Relative path to root.
-     @deprecated Please use setSearchPath instead.
+     @deprecated Please use setSearchPaths instead.
     */
     CC_DEPRECATED_ATTRIBUTE void setResourceDirectory(const char *pszDirectoryName);
 
     /** 
-     *  Sets the array that contains the search order of the resources based for the device.
+     *  Sets the array that contains the search order of the resources.
      *
+     *  @param searchResolutionsOrder The source array that contains the search order of the resources.
      *  @see getSearchResolutionsOrder().
      *  @since v2.1
      */
     void setSearchResolutionsOrder(const std::vector<std::string>& searchResolutionsOrder);
+    
+    /**
+     *  Gets the array that contains the search order of the resources.
+     *
+     *  @see setSearchResolutionsOrder().
+     *  @since v2.1
+     */
     const std::vector<std::string>& getSearchResolutionsOrder();
     
     /** 
      *  Sets the array of search paths.
      *  You can use this array to modify the search path of the resources.
      *  If you want to use "themes" or search resources in the "cache", you can do it easily by adding new entries in this array.
-     *
-     *  By default it is an array with only the "" (empty string) element.
-     *
+     *  
+     *  @param searchPaths
      *  @since v2.1
      */
-    void setSearchPath(const std::vector<std::string>& searchPaths);
-    const std::vector<std::string>& getSearchPath();
+    void setSearchPaths(const std::vector<std::string>& searchPaths);
+    
+    /**
+     *  Gets the array of search paths.
+     *  
+     */
+    const std::vector<std::string>& getSearchPaths();
     
     /**
      *  Gets the resource directory
-     *  @deprecated Please use getSearchPath() instead.
+     *  @deprecated Please use getSearchPaths() instead.
      */
     CC_DEPRECATED_ATTRIBUTE const char* getResourceDirectory();
 
@@ -235,6 +256,7 @@ protected:
     
     std::vector<std::string> m_searchResolutionsOrderArray;
     std::vector<std::string> m_searchPathArray;
+    std::string m_strDefaultResRootPath;
 };
 
 // end of platform group
