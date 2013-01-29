@@ -408,10 +408,10 @@ bool CCImage::initWithString(
         CC_BREAK_IF(! pText);
         BitmapDC &dc = sharedBitmapDC();
 
-		const char* pFullFontName = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(pFontName);
-        //CCLog("-----pText=%s and Font File is %s nWidth= %d,nHeight=%d",pText,pFullFontName,nWidth,nHeight);
+		std::string fullFontName = CCFileUtils::sharedFileUtils()->fullPathForFilename(pFontName);
+        //CCLog("-----pText=%s and Font File is %s nWidth= %d,nHeight=%d",pText,fullFontName.c_str(),nWidth,nHeight);
         
-        CC_BREAK_IF(! dc.getBitmap(pText, nWidth, nHeight, eAlignMask, pFullFontName, nSize));
+        CC_BREAK_IF(! dc.getBitmap(pText, nWidth, nHeight, eAlignMask, fullFontName.c_str(), nSize));
         //CCLog("---- dc.getBitmap is Succesfull... \n");
         
         // assign the dc.m_pData to m_pData in order to save time
