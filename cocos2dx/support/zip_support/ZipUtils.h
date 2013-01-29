@@ -154,6 +154,7 @@ namespace cocos2d
     private:
         /** Internal data like zip file pointer / file list array and so on */
         ZipFilePrivate *m_data;
+        pthread_mutex_t m_zipFileMutex;
     };
 } // end of namespace cocos2d
 #endif // __SUPPORT_ZIPUTILS_H__
