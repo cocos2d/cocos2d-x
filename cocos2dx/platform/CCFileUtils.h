@@ -111,8 +111,9 @@ public:
      
      For instance:
      
-     	We set two elements("external_dir/", "internal_dir/") to search paths vector, set three elements("resources-ipadhd/", "resources-ipad/", "resources-iphonehd")
-     	to resolutions vector.
+     	We set two elements("external_dir/", "internal_dir/") to search paths vector by setSearchPaths,
+     	and set three elements("resources-ipadhd/", "resources-ipad/", "resources-iphonehd")
+     	to resolutions vector by setSearchResolutionsOrder.
 
      	The file (e.g. sprite.png) search order will be:
 
