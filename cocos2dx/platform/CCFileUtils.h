@@ -69,7 +69,7 @@ public:
      *  @note It should be invoked after the resources were updated.
      *        For instance, in the CocosPlayer sample, every time you run application from CocosBuilder,
      *        All the resources will be downloaded to the writable folder, before new js app launchs,
-     *        this method should be invokded to clean the file searching cache.
+     *        this method should be invoked to clean the file search cache.
      */
     void purgeCachedEntries();
     
@@ -105,21 +105,48 @@ public:
     /** Returns the fullpath for a given filename.
      
      First it will try to get a new filename from the "filenameLookup" dictionary. If a new filename can't be found on the dictionary, it will use the original filename.
-     Then it will try obtain the full path of the filename using the CCFileUtils search rules:  resources directory
+     Then it will try obtain the full path of the filename using the CCFileUtils search rules: resolutions, and search paths.
+
+     The file search is based on the array element order of search paths and resolution directories.
      
-     If the filename can't be found on resource directory(e.g. Resources/iphone-hd), it will go back to the root of asset folder(e.g. Resources/) to find the filename.
+     For instance:
      
+     	We set two elements("external_dir/", "internal_dir/") to search paths vector, set three elements("resources-ipadhd/", "resources-ipad/", "resources-iphonehd")
+     	to resolutions vector.
+
+     	The file (e.g. sprite.png) search order will be:
+
+     	    external_dir/resources-ipadhd/sprite.png     (if not found, search next)
+     	    external_dir/resources-ipad/sprite.png       (if not found, search next)
+     	    external_dir/resources-iphonehd/sprite.png   (if not found, search next)
+     	    external_dir/sprite.png                      (if not found, search next)
+     	    internal_dir/resources-ipadhd/sprite.png     (if not found, search next)
+     	    internal_dir/resources-ipad/sprite.png       (if not found, search next)
+     	    internal_dir/resources-iphonehd/sprite.png   (if not found, search next)
+     	    internal_dir/sprite.png                      (if not found, return "sprite.png")
+
+        If the filename contains relative path like "gamescene/uilayer/sprite.png", The file search order will be:
+
+     	    external_dir/gamescene/resources-ipadhd/sprite.png     (if not found, search next)
+     	    external_dir/gamescene/resources-ipad/sprite.png       (if not found, search next)
+     	    external_dir/gamescene/resources-iphonehd/sprite.png   (if not found, search next)
+     	    external_dir/gamescene/sprite.png                      (if not found, search next)
+     	    internal_dir/gamescene/resources-ipadhd/sprite.png     (if not found, search next)
+     	    internal_dir/gamescene/resources-ipad/sprite.png       (if not found, search next)
+     	    internal_dir/gamescene/resources-iphonehd/sprite.png   (if not found, search next)
+     	    internal_dir/gamescene/sprite.png                      (if not found, return "gamescene/sprite.png")
+
      If the filename can't be found on the file system, it will return the filename directly.
+     If the filenameLookup dictionary has been set. It will try to replace the filename with a new filename.
+     For example:
+     
+     * In iOS: "image.png" -> "image.pvr.ccz" -> "search path/resolution dir/image.pvr.ccz"
+     *         "gamescene/background.png" -> "gamescene/background.pvr.ccz" -> "search path/gamescene/resolution dir/background.pvr.ccz"
+     * In Android: "sounds/click.wav" -> "sounds/click.ogg" -> "search path/sounds/resolution dir/click.ogg"
      
      This method was added to simplify multiplatform support. Whether you are using cocos2d-js or any cross-compilation toolchain like StellaSDK or Apportable,
      you might need to load differerent resources for a given file in the different platforms.
-     
-     Examples:
-     
-     * In iOS: "image.png" -> "image.pvr.ccz" -> "searching path/resolution dir/image.pvr.ccz"
-     *         "gamescene/background.png" -> "gamescene/background.pvr.ccz" -> "searching path/gamescene/resolution dir/background.pvr.ccz"
-     * In Android: "sounds/click.wav" -> "sounds/click.ogg" -> "searching path/sounds/resolution dir/click.ogg"
-     
+
      @since v2.1
      */
     std::string fullPathForFilename(const char* pszFileName);
@@ -185,7 +212,7 @@ public:
      *  Sets the array that contains the search order of the resources.
      *
      *  @param searchResolutionsOrder The source array that contains the search order of the resources.
-     *  @see getSearchResolutionsOrder().
+     *  @see getSearchResolutionsOrder(), fullPathForFilename().
      *  @since v2.1
      */
     void setSearchResolutionsOrder(const std::vector<std::string>& searchResolutionsOrder);
@@ -193,7 +220,7 @@ public:
     /**
      *  Gets the array that contains the search order of the resources.
      *
-     *  @see setSearchResolutionsOrder().
+     *  @see setSearchResolutionsOrder(), fullPathForFilename().
      *  @since v2.1
      */
     const std::vector<std::string>& getSearchResolutionsOrder();
@@ -202,8 +229,9 @@ public:
      *  Sets the array of search paths.
      *  You can use this array to modify the search path of the resources.
      *  If you want to use "themes" or search resources in the "cache", you can do it easily by adding new entries in this array.
-     *  
-     *  @param searchPaths
+     *
+     *  @param searchPaths The array contains search paths.
+     *  @see fullPathForFilename()
      *  @since v2.1
      */
     void setSearchPaths(const std::vector<std::string>& searchPaths);
@@ -211,6 +239,8 @@ public:
     /**
      *  Gets the array of search paths.
      *  
+     *  @return The array of search paths.
+     *  @see fullPathForFilename().
      */
     const std::vector<std::string>& getSearchPaths();
     
