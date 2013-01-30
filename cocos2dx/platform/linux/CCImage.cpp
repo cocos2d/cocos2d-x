@@ -1,5 +1,6 @@
 #include <string.h>
 
+#include <algorithm>
 #include <vector>
 #include <string>
 #include <sstream>
@@ -231,8 +232,10 @@ public:
     	std::string fontPath = family_name;
 
     	// check if the parameter is a font file shipped with the application
-    	if ( fontPath.find(".ttf") != std::string::npos ) {
-    		fontPath = cocos2d::CCApplication::sharedApplication()->getResourceRootPath() + std::string("/") + fontPath;
+    	std::string lowerCasePath = fontPath;
+    	std::transform(lowerCasePath.begin(), lowerCasePath.end(), lowerCasePath.begin(), ::tolower);
+    	if ( lowerCasePath.find(".ttf") != std::string::npos ) {
+    		fontPath = cocos2d::CCFileUtils::sharedFileUtils()->fullPathForFilename(fontPath.c_str());
 
     		FILE *f = fopen(fontPath.c_str(), "r");
     		if ( f ) {
