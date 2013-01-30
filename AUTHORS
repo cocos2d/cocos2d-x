@@ -52,8 +52,10 @@ Developers:
          Touch priority can't be set to the value specified by a call to CCMenu::setTouchPriority(int).
          CCTableView crashes if a CCTableViewDelegate is not provided.
 
-    Weeds 
-         use fontconfig to enhance font rendering on linux
+    Weeds (Andre Rudlaff)
+        Used fontconfig to enhance font rendering on linux.
+        Fixed a bug about missing horizontal alignment for Custom TTF fonts on linux.
+        Fixed a bug that the truetype fonts from resource directory can't be found on linux.	
 
     Nat Weiss (iphonegamekit.com)
         author of Mac port
