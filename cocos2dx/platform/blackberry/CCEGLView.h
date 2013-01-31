@@ -29,15 +29,28 @@ THE SOFTWARE.
 #include "platform/CCEGLViewProtocol.h"
 #include "platform/CCPlatformMacros.h"
 
+#include <bps/event.h>
+
 NS_CC_BEGIN
 
 class CC_DLL CCEGLView : public CCEGLViewProtocol
 {
 public:
+class CC_DLL EventHandler
+	{
+	public:
+		virtual bool HandleBPSEvent(bps_event_t* event) = 0;
+
+	    virtual ~EventHandler() {}
+	};
+public:
     CCEGLView();
     virtual ~CCEGLView();
 
     bool    isOpenGLReady();
+	
+	void    setEventHandler(EventHandler* pHandler);
+    const char* getWindowGroupId() const;
 
     // keep compatible
     void    end();
@@ -67,6 +80,8 @@ private:
 
 	bool			 m_isGLInitialized;
 	bool 		     m_isWindowActive;
+	
+	EventHandler*	 m_pEventHandler;
 
 	EGLDisplay 		 m_eglDisplay;
 	EGLContext 		 m_eglContext;
