@@ -1,4 +1,7 @@
 #include "Win32InputBox.h"
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+
 #include <stdio.h>
 
 #pragma warning (disable: 4312)
@@ -214,8 +217,8 @@ void CWin32InputBox::InitDialog()
     ::SetDlgItemText(_param->hDlg, (int) definputbox_buttonids[i], definputbox_buttonnames[i]);
 
   // Set other controls
-  ::SetWindowTextA(_param->hDlg, _param->szTitle);
-  ::SetDlgItemTextA(_param->hDlg, definputbox_id_prompt, _param->szPrompt);
+  ::SetWindowTextA(_param->hDlg, Utf8ToAnsi(_param->szTitle).c_str());
+  ::SetDlgItemTextA(_param->hDlg, definputbox_id_prompt, Utf8ToAnsi(_param->szPrompt).c_str());
 
   HWND hwndEdit1 = ::GetDlgItem(_param->hDlg, definputbox_id_edit1);
   HWND hwndEdit2 = ::GetDlgItem(_param->hDlg, definputbox_id_edit2);
@@ -225,7 +228,7 @@ void CWin32InputBox::InitDialog()
   else
     _hwndEditCtrl = hwndEdit1;
 
-  ::SetWindowTextA(_hwndEditCtrl, _param->szResult);
+  ::SetWindowTextA(_hwndEditCtrl, Utf8ToAnsi(_param->szResult).c_str());
 
   RECT rectDlg, rectEdit1, rectEdit2;
 
@@ -308,6 +311,11 @@ LRESULT CALLBACK CWin32InputBox::DlgProc(HWND hDlg, UINT message, WPARAM wParam,
             _this->_param->szResult, 
             _this->_param->nResultSize);
 
+		  std::string strUtf8 = AnsiToUtf8(_this->_param->szResult);
+
+		  memset(_this->_param->szResult, 0, _this->_param->nResultSize);
+		  strncpy(_this->_param->szResult, strUtf8.c_str(), _this->_param->nResultSize-1);
+
           ::EndDialog(hDlg, buttonId);
           return TRUE;
         }
@@ -317,3 +325,55 @@ LRESULT CALLBACK CWin32InputBox::DlgProc(HWND hDlg, UINT message, WPARAM wParam,
   }
   return FALSE;
 }
+
+
+std::string CWin32InputBox::AnsiToUtf8(std::string strAnsi)
+{
+	std::string ret;
+	if (strAnsi.length() > 0)
+	{	
+		int nWideStrLength = MultiByteToWideChar(CP_ACP, 0, strAnsi.c_str(), -1, NULL, 0);
+		WCHAR* pwszBuf = (WCHAR*)malloc((nWideStrLength+1)*sizeof(WCHAR));
+		memset(pwszBuf, 0, (nWideStrLength+1)*sizeof(WCHAR));
+		MultiByteToWideChar(CP_ACP, 0, strAnsi.c_str(), -1, pwszBuf, (nWideStrLength+1)*sizeof(WCHAR));
+
+		int nUtf8Length = WideCharToMultiByte( CP_UTF8,0,pwszBuf,-1,NULL,0,NULL,FALSE );
+		char* pszUtf8Buf = (char*)malloc((nUtf8Length+1)*sizeof(char));
+		memset(pszUtf8Buf, 0, (nUtf8Length+1)*sizeof(char));
+
+		WideCharToMultiByte(CP_UTF8, 0, pwszBuf, -1, pszUtf8Buf, (nUtf8Length+1)*sizeof(char), NULL, FALSE);
+		ret = pszUtf8Buf;
+
+		free(pszUtf8Buf);
+		free(pwszBuf);
+	}
+	return ret;
+}
+
+std::string CWin32InputBox::Utf8ToAnsi(std::string strUTF8)
+{
+	std::string ret;
+	if (strUTF8.length() > 0)
+	{
+		int nWideStrLength = MultiByteToWideChar(CP_UTF8, 0, strUTF8.c_str(), -1, NULL, 0);
+		WCHAR* pwszBuf = (WCHAR*)malloc((nWideStrLength+1)*sizeof(WCHAR));
+		memset(pwszBuf, 0, (nWideStrLength+1)*sizeof(WCHAR));
+		MultiByteToWideChar(CP_UTF8, 0, strUTF8.c_str(), -1, pwszBuf, (nWideStrLength+1)*sizeof(WCHAR));
+
+		int nAnsiStrLength = WideCharToMultiByte( CP_ACP,0,pwszBuf,-1,NULL,0,NULL,FALSE );
+		char* pszAnsiBuf = (char*)malloc((nAnsiStrLength+1)*sizeof(char));
+		memset(pszAnsiBuf, 0, (nAnsiStrLength+1)*sizeof(char));
+
+		WideCharToMultiByte(CP_ACP, 0, pwszBuf, -1, pszAnsiBuf, (nAnsiStrLength+1)*sizeof(char), NULL, FALSE);
+		ret = pszAnsiBuf;
+
+		free(pszAnsiBuf);
+		free(pwszBuf);
+	}
+
+	return ret;
+}
+
+
+
+#endif /* #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) */

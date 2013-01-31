@@ -22,13 +22,15 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-
 #include "CCEditBoxImplWin.h"
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+
 #include "CCEditBox.h"
 #include "proj.win32/Win32InputBox.h"
 
 NS_CC_BEGIN
-extern long cc_utf8_strlen (const char * p, int max);
+extern CC_DLL long cc_utf8_strlen (const char * p, int max);
 NS_CC_END
 
 NS_CC_EXT_BEGIN
@@ -136,7 +138,7 @@ void CCEditBoxImplWin::setText(const char* pText)
 
             if (kEditBoxInputFlagPassword == m_eEditBoxInputFlag)
             {
-                long length = strlen(m_strText.c_str());
+                long length = cc_utf8_strlen(m_strText.c_str(), -1);
                 for (long i = 0; i < length; i++)
                 {
                     strToShow.append("*");
@@ -241,142 +243,4 @@ void CCEditBoxImplWin::closeKeyboard()
 
 NS_CC_EXT_END
 
-/*
-
-#include "CCEditBoxImplWin.h"
-#include "CCEditBox.h"
-#include "CCEGLView.h"
-
-NS_CC_EXT_BEGIN
-
-CCEditBoxImpl* __createSystemEditBox(CCEditBox* pEditBox)
-{
-    return new CCEditBoxImplWin(pEditBox);
-}
-
-//#define GET_IMPL ((CCEditBoxImplWin*)m_pSysEdit)
-
-CCEditBoxImplWin::CCEditBoxImplWin(CCEditBox* pEditText)
-: CCEditBoxImpl(pEditText)
-, m_pSysEdit(NULL)
-, m_nMaxTextLength(-1)
-{
-}
-
-CCEditBoxImplWin::~CCEditBoxImplWin()
-{
-}
-
-void CCEditBoxImplWin::doAnimationWhenKeyboardMove(float duration, float distance)
-{
-}
-
-bool CCEditBoxImplWin::initWithSize(const CCSize& size)
-{
-    do 
-    {
-        CCEGLViewProtocol* eglView = CCEGLView::sharedOpenGLView();
-		CCEGLView* pMainWnd = CCEGLView::sharedOpenGLView();
-
-		HWND hParent = pMainWnd->getHWnd();
-        m_pSysEdit = ::CreateWindowA("EDIT", "text", WS_CHILD|WS_CLIPCHILDREN|WS_VISIBLE, 0, 0, size.width * eglView->getScaleX(),size.height * eglView->getScaleY(), hParent, NULL, NULL, NULL);
-        if (!m_pSysEdit) 
-			break;
-
-        return true;
-    } while (0);
-    
-    return false;
-}
-
-void CCEditBoxImplWin::setFontColor(const ccColor3B& color)
-{
-    //GET_IMPL.textField.textColor = [UIColor colorWithRed:color.r / 255.0f green:color.g / 255.0f blue:color.b / 255.0f alpha:1.0f];
-}
-
-void CCEditBoxImplWin::setPlaceholderFontColor(const ccColor3B& color)
-{
-    // TODO need to be implemented.
-}
-
-void CCEditBoxImplWin::setInputMode(EditBoxInputMode inputMode)
-{
-}
-
-void CCEditBoxImplWin::setMaxLength(int maxLength)
-{
-    m_nMaxTextLength = maxLength;
-}
-
-int CCEditBoxImplWin::getMaxLength()
-{
-    return m_nMaxTextLength;
-}
-
-void CCEditBoxImplWin::setInputFlag(EditBoxInputFlag inputFlag)
-{
-	// TODO: ES_PASSWORD 
-}
-
-void CCEditBoxImplWin::setReturnType(KeyboardReturnType returnType)
-{
-}
-
-bool CCEditBoxImplWin::isEditing()
-{
-    return true; //GET_IMPL->isEditState() ? true : false;
-}
-
-void CCEditBoxImplWin::setText(const char* pText)
-{
-	::SetWindowTextA(m_pSysEdit, pText);
-    //GET_IMPL.textField.text = [NSString stringWithUTF8String:pText];
-}
-
-const char*  CCEditBoxImplWin::getText(void)
-{
-	int nCharacters = ::GetWindowTextLength(m_pSysEdit);
-	char *szBuff = (char *)malloc(nCharacters + 1);
-	::GetWindowText(m_pSysEdit, szBuff, nCharacters);
-	return szBuff;
-}
-
-void CCEditBoxImplWin::setPlaceHolder(const char* pText)
-{
-}
-
-void CCEditBoxImplWin::setPosition(const CCPoint& pos)
-{
-    //TODO should consider anchor point, the default value is (0.5, 0,5)
-	RECT rect;
-	::GetWindowRect(m_pSysEdit, &rect);
-	POINT pt;
-	pt.x = rect.left;
-	pt.y = rect.top;
-	CCEGLView* pMainWnd = CCEGLView::sharedOpenGLView();
-	::ScreenToClient(pMainWnd->getHWnd(), &pt);
-	::SetWindowPos(m_pSysEdit, NULL, pt.x + pos.x-m_tContentSize.width/2, pt.y + pos.y+m_tContentSize.height/2, 0, 0, SWP_NOSIZE|SWP_NOOWNERZORDER|SWP_NOZORDER|SWP_NOCOPYBITS);
-    //GET_IMPL->setPosition(ccp(pos.x-m_tContentSize.width/2, pos.y+m_tContentSize.height/2));;
-}
-
-void CCEditBoxImplWin::setContentSize(const CCSize& size)
-{
-    m_tContentSize = size;
-}
-
-void CCEditBoxImplWin::visit(void)
-{
-    
-}
-
-void CCEditBoxImplWin::openKeyboard()
-{
-}
-
-void CCEditBoxImplWin::closeKeyboard()
-{
-}
-
-NS_CC_EXT_END
-
-*/
+#endif /* (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) */
