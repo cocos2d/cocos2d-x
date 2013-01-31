@@ -55,7 +55,7 @@ Developers:
     Weeds (Andre Rudlaff)
         Used fontconfig to enhance font rendering on linux.
         Fixed a bug about missing horizontal alignment for Custom TTF fonts on linux.
-        Fixed a bug that the truetype fonts from resource directory can't be found on linux.	
+        Fixed a bug that the truetype fonts from resource directory can't be found on linux.
 
     Nat Weiss (iphonegamekit.com)
         author of Mac port
@@ -63,7 +63,7 @@ Developers:
     XiaoLong Zhang (Chukong Inc)
     Mike McGary (Zynga)
     Di Wu (Zynga China)
-        CCBReader and cpp reflection mechanic  
+        CCBReader and cpp reflection mechanic
 
     Angus Comrie
         contributes cocos2d-x port of CCControlExtension.
@@ -77,13 +77,13 @@ Developers:
     Nicolas Gramlich (nicolasgramlich, Zynga)
         fixed CCDirector to use CCLabelBMFont instead of CCLabelTTF
         added CCBReader (CCBI format)
-    
+
     Rohan Kuruvilla (rohankuruvilla, Zynga)
         Improvements to JS Bindings.
 
     Jianfeng Zhou (NetGragon Inc)
         contributes CCListView and CCTextureWatcher.
-	  
+
     dducharme
         author of blackberry port
 
@@ -92,8 +92,8 @@ Developers:
 
     HuaXu Cai (Kongzhong Corporation)
         author of linux port
-        
-    ciaranj 
+
+    ciaranj
         add a build file that correctly generates LuaCocos2d.cpp
         add a lua template
         add particle systems to lua bindings
@@ -128,7 +128,7 @@ Developers:
 
     Mat Hopwood( Marmalade official engineer )
         Marmalade support for gles20 branch
-		
+
     Carlos Sessa
 	implement the accelerometer module for Android port
 
@@ -137,7 +137,7 @@ Developers:
 
     Erawppa
         implement CCNotificationCenter
-        
+
     YuLei Liao(dualface)
         contribute the factor of lua binding
 
@@ -163,7 +163,7 @@ Developers:
     Sergey Vikhirev(BorMor)
         Remove retina specific methods and logic.
 
-    johnangel
+    Finalhit
         OpenGL framebuffer access violation fix.
         Enable Windows XP support in Visual Studio 2012 Update 1.
 
@@ -176,7 +176,7 @@ Developers:
 
     Igor Zavorotkin (ivzave)
         Adding lua support for linux platform.
-	
+
     Jozef Prídavok (jpridavok)
         Adding CCEditBox implementation for Mac OSX.
 
@@ -185,8 +185,8 @@ Developers:
 
 Retired Core Developers:
     WenSheng Yang
-	Author of windows port, CCTextField, 
-        Designer of CCApplication/CCEGLView/platform structure. 
+	Author of windows port, CCTextField,
+        Designer of CCApplication/CCEGLView/platform structure.
         He's working together with 2dx core team but leading FishingJoy game
 
     Bin Zhang
@@ -195,7 +195,7 @@ Retired Core Developers:
     RongHong Huang (flyingpaper)
         Author of cocos2d-xna and spent all his time on wp7.
 
-	  		
+
 Cocos2d-x can not grow so fast without the active community.
 Thanks to all developers who report & trace bugs, discuss the engine usage in forum & QQ groups!
 Special thanks to Ricardo Quesada for giving us lots of guidances & suggestions.
