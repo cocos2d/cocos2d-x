@@ -22,6 +22,9 @@
     <Filter Include="LocalStorage">
       <UniqueIdentifier>{4da8061d-80f3-45fd-aa7e-2c0a96701b79}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GUI\CCEditBox">
+      <UniqueIdentifier>{5d186e3d-0aaf-4904-a5d8-e5cb0f35f4cc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\GUI\CCScrollView\CCScrollView.cpp">
@@ -155,6 +158,15 @@
     </ClCompile>
     <ClCompile Include="..\LocalStorage\LocalStorage.cpp">
       <Filter>LocalStorage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GUI\CCEditBox\CCEditBoxImplWin.cpp">
+      <Filter>GUI\CCEditBox</Filter>
+    </ClCompile>
+    <ClCompile Include="Win32InputBox.cpp">
+      <Filter>GUI\CCEditBox</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GUI\CCEditBox\CCEditBox.cpp">
+      <Filter>GUI\CCEditBox</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -312,6 +324,18 @@
     </ClInclude>
     <ClInclude Include="..\LocalStorage\LocalStorage.h">
       <Filter>LocalStorage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GUI\CCEditBox\CCEditBoxImplWin.h">
+      <Filter>GUI\CCEditBox</Filter>
+    </ClInclude>
+    <ClInclude Include="Win32InputBox.h">
+      <Filter>GUI\CCEditBox</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GUI\CCEditBox\CCEditBox.h">
+      <Filter>GUI\CCEditBox</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GUI\CCEditBox\CCEditBoxImpl.h">
+      <Filter>GUI\CCEditBox</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
