@@ -1,6 +1,9 @@
 #ifndef __03022006__WIN32INPUTBOX__
 #define __03022006__WIN32INPUTBOX__
 
+#include "cocos2d.h"
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 /*
 
 This library is (c) Elias Bachaalany aka lallous <lallousx86@yahoo.com>
@@ -93,6 +96,11 @@ public:
     DWORD nResultSize,
     bool bMultiLine = false,
     HWND hwndParent = 0);
+
+  static std::string AnsiToUtf8(std::string strAnsi);
+  static std::string Utf8ToAnsi(std::string strUTF8);
 };
+
+#endif /* (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) */
 
 #endif
