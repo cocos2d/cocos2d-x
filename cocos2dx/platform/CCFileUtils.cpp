@@ -316,20 +316,25 @@ public:
     }
 };
 
-CCDictionary* ccFileUtils_dictionaryWithContentsOfFileThreadSafe(const char *pFileName)
+CCDictionary* CCFileUtils::createCCDictionaryWithContentsOfFile(const std::string& filename)
 {
     CCDictMaker tMaker;
-    return tMaker.dictionaryWithContentsOfFile(pFileName);
+    return tMaker.dictionaryWithContentsOfFile(filename.c_str());
 }
 
-CCArray* ccFileUtils_arrayWithContentsOfFileThreadSafe(const char* pFileName)
+CCArray* CCFileUtils::createCCArrayWithContentsOfFile(const std::string& filename)
 {
     CCDictMaker tMaker;
-    return tMaker.arrayWithContentsOfFile(pFileName);
+    return tMaker.arrayWithContentsOfFile(filename.c_str());
 }
 
 #else
 NS_CC_BEGIN
+
+/* The subclass CCFileUtilsIOS and CCFileUtilsMac should override these two method. */
+CCDictionary* CCFileUtils::createCCDictionaryWithContentsOfFile(const std::string& filename) {return NULL;}
+CCArray* CCFileUtils::createCCArrayWithContentsOfFile(const std::string& filename) {return NULL;}
+
 #endif /* (CC_TARGET_PLATFORM != CC_PLATFORM_IOS) && (CC_TARGET_PLATFORM != CC_PLATFORM_MAC) */
 
 
@@ -463,17 +468,8 @@ std::string CCFileUtils::getPathForFilename(const std::string& filename, const s
     
     // searchPath + file_path + resourceDirectory
     std::string path = searchPath;
-    if (path.size() > 0 && path[path.length()-1] != '/')
-    {
-        path += "/";
-    }
     path += file_path;
     path += resolutionDirectory;
-    
-    if (path.size() > 0 && path[path.length()-1] != '/')
-    {
-        path += "/";
-    }
     
     path = getFullPathForDirectoryAndFilename(path, file);
     
@@ -544,11 +540,18 @@ void CCFileUtils::setSearchResolutionsOrder(const std::vector<std::string>& sear
     m_searchResolutionsOrderArray.clear();
     for (std::vector<std::string>::const_iterator iter = searchResolutionsOrder.begin(); iter != searchResolutionsOrder.end(); ++iter)
     {
-        if (!bExistDefault && (*iter) == "")
+        std::string resolutionDirectory = *iter;
+        if (!bExistDefault && resolutionDirectory == "")
         {
             bExistDefault = true;
         }
-        m_searchResolutionsOrderArray.push_back(*iter);
+        
+        if (resolutionDirectory.length() > 0 && resolutionDirectory[resolutionDirectory.length()-1] != '/')
+        {
+            resolutionDirectory += "/";
+        }
+        
+        m_searchResolutionsOrderArray.push_back(resolutionDirectory);
     }
     if (!bExistDefault)
     {

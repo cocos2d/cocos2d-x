@@ -43,6 +43,8 @@ class CCArray;
 //! @brief  Helper class to handle file operations
 class CC_DLL CCFileUtils : public TypeInfo
 {
+    friend class CCArray;
+    friend class CCDictionary;
 public:
     /**
      *  Returns an unique ID for this class.
@@ -246,12 +248,12 @@ public:
 
     /**
      *  Gets the writeable path.
-     *  @return  The path that can write/read file
+     *  @return  The path that can be write/read a file in
      */
     virtual std::string getWriteablePath() = 0;
     
     /**
-     *  Checks whether file exists.
+     *  Checks whether a file exists.
      *
      *  @param strFullpathOfFile The full path of file.
      */
@@ -268,7 +270,7 @@ public:
     
     
     /**
-     * Sets/Gets whether pop-up a message box when the image load failed
+     *  Sets/Gets whether to pop-up a message box when failed to load an image.
      */
     virtual void setPopupNotify(bool bNotify);
     virtual bool isPopupNotify();
@@ -284,7 +286,7 @@ protected:
      *
      *  @note When you are porting Cocos2d-x to a new platform, you may need to take care of this method.
      *        You could assign a default value to m_strDefaultResRootPath in the subclass of CCFileUtils(e.g. CCFileUtilsAndroid). Then invoke the CCFileUtils::init().
-     *  @return True if successed, otherwise it returns false.
+     *  @return true if successed, otherwise it returns false.
      *
      */
     virtual bool init();
@@ -293,7 +295,7 @@ protected:
      *  Gets the new filename from the filename lookup dictionary.
      *  @param pszFileName The original filename.
      *  @return The new filename after searching in the filename lookup dictionary.
-     *          If the original filename wasn't in the dictionary, it will return original filename.
+     *          If the original filename wasn't in the dictionary, it will return the original filename.
      */
     virtual std::string getNewFilename(const char* pszFileName);
     
@@ -319,6 +321,18 @@ protected:
      *  @return The full path of the file, if the file can't be found, it will return an empty string.
      */
     virtual std::string getFullPathForDirectoryAndFilename(const std::string& strDirectory, const std::string& strFilename);
+    
+    /**
+     *  Creates a dictionary by the contents of a file.
+     *  @note This method is used internally.
+     */
+    virtual CCDictionary* createCCDictionaryWithContentsOfFile(const std::string& filename);
+    
+    /**
+     *  Creates an array by the contents of a file.
+     *  @note This method is used internally.
+     */
+    virtual CCArray* createCCArrayWithContentsOfFile(const std::string& filename);
     
     /** Dictionary used to lookup filenames based on a key.
      It is used internally by the following methods:
@@ -351,7 +365,8 @@ protected:
     std::string m_strDefaultResRootPath;
     
     /**
-     *  The full path cache. When files are found, it will be added into this cache. It could improve the performance of file search.
+     *  The full path cache. When a file is found, it will be added into this cache. 
+     *  This variable is used for improving the performance of file search.
      */
     std::map<std::string, std::string> m_fullPathCache;
     

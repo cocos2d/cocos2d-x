@@ -70,6 +70,10 @@ public:
      *  
      */
     virtual std::string getFullPathForDirectoryAndFilename(const std::string& strDirectory, const std::string& strFilename);
+    
+    virtual CCDictionary* createCCDictionaryWithContentsOfFile(const std::string& filename);
+    virtual CCArray* createCCArrayWithContentsOfFile(const std::string& filename);
+
 };
 
 // end of platform group

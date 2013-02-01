@@ -25,11 +25,9 @@ THE SOFTWARE.
 #import <Foundation/Foundation.h>
 #import <UIKit/UIDevice.h>
 
+#include "platform/NS2CC.h"
 #include <string>
 #include <stack>
-#include <libxml/parser.h>
-#include <libxml/tree.h>
-#include <libxml/xmlmemory.h>
 #include "cocoa/CCString.h"
 #include "CCFileUtils.h"
 #include "CCDirector.h"
@@ -122,6 +120,40 @@ bool CCFileUtilsIOS::isAbsolutePath(const std::string& strPath)
 {
     NSString* path = [NSString stringWithUTF8String:strPath.c_str()];
     return [path isAbsolutePath] ? true : false;
+}
+
+CCDictionary* CCFileUtilsIOS::createCCDictionaryWithContentsOfFile(const std::string& filename)
+{
+    std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(filename.c_str());
+    NSString* pPath = [NSString stringWithUTF8String:fullPath.c_str()];
+    NSDictionary* pDict = [NSDictionary dictionaryWithContentsOfFile:pPath];
+    
+    CCDictionary* pRet = new CCDictionary();
+    for (id key in [pDict allKeys]) {
+        id value = [pDict objectForKey:key];
+        addValueToCCDict(key, value, pRet);
+    }
+    
+    return pRet;
+}
+
+CCArray* CCFileUtilsIOS::createCCArrayWithContentsOfFile(const std::string& filename)
+{
+    //    NSString* pPath = [NSString stringWithUTF8String:pFileName];
+    //    NSString* pathExtension= [pPath pathExtension];
+    //    pPath = [pPath stringByDeletingPathExtension];
+    //    pPath = [[NSBundle mainBundle] pathForResource:pPath ofType:pathExtension];
+    //    fixing cannot read data using CCArray::createWithContentsOfFile
+    std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(filename.c_str());
+    NSString* pPath = [NSString stringWithUTF8String:fullPath.c_str()];
+    NSArray* pArray = [NSArray arrayWithContentsOfFile:pPath];
+    
+    CCArray* pRet = new CCArray();
+    for (id value in pArray) {
+        addItemToCCArray(value, pRet);
+    }
+    
+    return pRet;
 }
 
 NS_CC_END
