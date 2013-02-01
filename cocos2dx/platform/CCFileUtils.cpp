@@ -453,7 +453,7 @@ std::string CCFileUtils::getNewFilename(const char* pszFileName)
     }
     else {
         pszNewFileName = fileNameFound->getCString();
-        CCLOG("FOUND NEW FILE NAME: %s.", pszNewFileName);
+        //CCLOG("FOUND NEW FILE NAME: %s.", pszNewFileName);
     }
     return pszNewFileName;
 }
@@ -485,7 +485,7 @@ std::string CCFileUtils::getPathForFilename(const std::string& filename, const s
     
     path = getFullPathForDirectoryAndFilename(path, file);
     
-    CCLOG("getPathForFilename, fullPath = %s", path.c_str());
+    //CCLOG("getPathForFilename, fullPath = %s", path.c_str());
     return path;
 }
 
@@ -497,7 +497,7 @@ std::string CCFileUtils::fullPathForFilename(const char* pszFileName)
     std::string strFileName = pszFileName;
     if (isAbsolutePath(pszFileName))
     {
-        CCLOG("Return absolute path( %s ) directly.", pszFileName);
+        //CCLOG("Return absolute path( %s ) directly.", pszFileName);
         return pszFileName;
     }
     
@@ -505,7 +505,7 @@ std::string CCFileUtils::fullPathForFilename(const char* pszFileName)
     std::map<std::string, std::string>::iterator cacheIter = s_fullPathCache.find(pszFileName);
     if (cacheIter != s_fullPathCache.end())
     {
-        CCLOG("Return full path from cache: %s", cacheIter->second.c_str());
+        //CCLOG("Return full path from cache: %s", cacheIter->second.c_str());
         return cacheIter->second;
     }
     
@@ -519,7 +519,7 @@ std::string CCFileUtils::fullPathForFilename(const char* pszFileName)
         for (std::vector<std::string>::iterator resOrderIter = m_searchResolutionsOrderArray.begin();
              resOrderIter != m_searchResolutionsOrderArray.end(); ++resOrderIter) {
             
-            CCLOG("\n\nSEARCHING: %s, %s, %s", newFilename.c_str(), resOrderIter->c_str(), searchPathsIter->c_str());
+            //CCLOG("\n\nSEARCHING: %s, %s, %s", newFilename.c_str(), resOrderIter->c_str(), searchPathsIter->c_str());
             
             fullpath = this->getPathForFilename(newFilename, *resOrderIter, *searchPathsIter);
             
@@ -527,7 +527,7 @@ std::string CCFileUtils::fullPathForFilename(const char* pszFileName)
             {
                 // Using the filename passed in as key.
                 s_fullPathCache.insert(std::pair<std::string, std::string>(pszFileName, fullpath));
-                CCLOG("Returning path: %s", fullpath.c_str());
+                //CCLOG("Returning path: %s", fullpath.c_str());
                 return fullpath;
             }
         }
@@ -601,7 +601,7 @@ void CCFileUtils::setSearchPaths(const std::vector<std::string>& searchPaths)
     
     if (!bExistDefaultRootPath)
     {
-        CCLOG("Default root path doesn't exist, adding it.");
+        //CCLOG("Default root path doesn't exist, adding it.");
         m_searchPathArray.push_back(m_strDefaultResRootPath);
     }
 }
