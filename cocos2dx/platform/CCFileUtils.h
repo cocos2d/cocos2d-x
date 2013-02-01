@@ -26,6 +26,7 @@ THE SOFTWARE.
 
 #include <string>
 #include <vector>
+#include <map>
 #include "CCPlatformMacros.h"
 #include "ccTypes.h"
 #include "ccTypeInfo.h"
@@ -258,6 +259,8 @@ public:
     
     /**
      *  Checks whether the path is an absolute path.
+     *  @note On Android, if the parameter passed in is relative to "assets/", this method will treat it as an absolute path.
+     *        Also on Blackberry, path starts with "app/native/Resources/" is treated as an absolute path.
      *
      *  @param strPath The path that needs to be checked.
      */
@@ -343,9 +346,15 @@ protected:
     std::string m_strDefaultResRootPath;
     
     /**
+     *  The full path cache. When files are found, it will be added into this cache. It could improve the performance of file search.
+     */
+    std::map<std::string, std::string> m_fullPathCache;
+    
+    /**
      *  The singleton pointer of CCFileUtils.
      */
     static CCFileUtils* s_sharedFileUtils;
+    
 };
 
 // end of platform group
