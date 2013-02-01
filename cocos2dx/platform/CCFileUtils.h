@@ -216,6 +216,14 @@ public:
     void setSearchResolutionsOrder(const std::vector<std::string>& searchResolutionsOrder);
     
     /**
+     * Append search order of the resources.
+     *
+     * @see setSearchResolutionsOrder(), fullPathForFilename().
+     * @since v2.1
+     */
+    void addSearchResolutionsOrder(const char* order);
+    
+    /**
      *  Gets the array that contains the search order of the resources.
      *
      *  @see setSearchResolutionsOrder(), fullPathForFilename().
@@ -242,13 +250,20 @@ public:
     void setSearchPaths(const std::vector<std::string>& searchPaths);
     
     /**
+     * Add search path.
+     *
+     * @since v2.1
+     */
+    void addSearchPath(const char* path);
+    
+    /**
      *  Gets the array of search paths.
      *  
      *  @return The array of search paths.
      *  @see fullPathForFilename().
      */
     const std::vector<std::string>& getSearchPaths();
-    
+
     /**
      *  Gets the resource directory
      *  @deprecated Please use getSearchPaths() instead.
