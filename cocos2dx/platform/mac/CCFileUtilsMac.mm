@@ -32,6 +32,7 @@ THE SOFTWARE.
 #include "CCSAXParser.h"
 #include "CCDictionary.h"
 #include "support/zip_support/unzip.h"
+#include "platform/NS2CC.h"
 
 NS_CC_BEGIN
 
@@ -117,6 +118,41 @@ bool CCFileUtilsMac::isAbsolutePath(const std::string& strPath)
     NSString* path = [NSString stringWithUTF8String:strPath.c_str()];
     return [path isAbsolutePath] ? true : false;
 }
+
+CCDictionary* CCFileUtilsMac::createCCDictionaryWithContentsOfFile(const std::string& filename)
+{
+    std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(filename.c_str());
+    NSString* pPath = [NSString stringWithUTF8String:fullPath.c_str()];
+    NSDictionary* pDict = [NSDictionary dictionaryWithContentsOfFile:pPath];
+    
+    CCDictionary* pRet = new CCDictionary();
+    for (id key in [pDict allKeys]) {
+        id value = [pDict objectForKey:key];
+        addValueToCCDict(key, value, pRet);
+    }
+    
+    return pRet;
+}
+
+CCArray* CCFileUtilsMac::createCCArrayWithContentsOfFile(const std::string& filename)
+{
+    //    NSString* pPath = [NSString stringWithUTF8String:pFileName];
+    //    NSString* pathExtension= [pPath pathExtension];
+    //    pPath = [pPath stringByDeletingPathExtension];
+    //    pPath = [[NSBundle mainBundle] pathForResource:pPath ofType:pathExtension];
+    //    fixing cannot read data using CCArray::createWithContentsOfFile
+    std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(filename.c_str());
+    NSString* pPath = [NSString stringWithUTF8String:fullPath.c_str()];
+    NSArray* pArray = [NSArray arrayWithContentsOfFile:pPath];
+    
+    CCArray* pRet = new CCArray();
+    for (id value in pArray) {
+        addItemToCCArray(value, pRet);
+    }
+    
+    return pRet;
+}
+
 
 NS_CC_END
 

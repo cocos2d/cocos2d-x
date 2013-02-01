@@ -129,40 +129,6 @@ void addValueToCCDict(id key, id value, CCDictionary* pDict)
     }
 }
 
-CCDictionary* ccFileUtils_dictionaryWithContentsOfFileThreadSafe(const char *pFileName)
-{
-    std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pFileName);
-    NSString* pPath = [NSString stringWithUTF8String:fullPath.c_str()];
-    NSDictionary* pDict = [NSDictionary dictionaryWithContentsOfFile:pPath];
-    
-    CCDictionary* pRet = new CCDictionary();
-    for (id key in [pDict allKeys]) {
-        id value = [pDict objectForKey:key];
-        addValueToCCDict(key, value, pRet);
-    }
-    
-    return pRet;
-}
-
-CCArray* ccFileUtils_arrayWithContentsOfFileThreadSafe(const char* pFileName)
-{
-    //    NSString* pPath = [NSString stringWithUTF8String:pFileName];
-    //    NSString* pathExtension= [pPath pathExtension];
-    //    pPath = [pPath stringByDeletingPathExtension];
-    //    pPath = [[NSBundle mainBundle] pathForResource:pPath ofType:pathExtension];
-    //    fixing cannot read data using CCArray::createWithContentsOfFile
-    std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pFileName);
-    NSString* pPath = [NSString stringWithUTF8String:fullPath.c_str()];
-    NSArray* pArray = [NSArray arrayWithContentsOfFile:pPath];
-    
-    CCArray* pRet = new CCArray();
-    for (id value in pArray) {
-        addItemToCCArray(value, pRet);
-    }
-    
-    return pRet;
-}
-
 NS_CC_END
 
 #endif /* #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) */

@@ -77,6 +77,9 @@ public:
      *  @return The full path of the file, if the file can't be found, it will return an empty string.
      */
     virtual std::string getFullPathForDirectoryAndFilename(const std::string& strDirectory, const std::string& strFilename);
+    
+    virtual CCDictionary* createCCDictionaryWithContentsOfFile(const std::string& filename);
+    virtual CCArray* createCCArrayWithContentsOfFile(const std::string& filename);
 };
 
 // end of platform group
