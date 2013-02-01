@@ -333,18 +333,10 @@ NS_CC_BEGIN
 #endif /* (CC_TARGET_PLATFORM != CC_PLATFORM_IOS) && (CC_TARGET_PLATFORM != CC_PLATFORM_MAC) */
 
 
-static std::map<std::string, std::string> s_fullPathCache;
-
 CCFileUtils* CCFileUtils::s_sharedFileUtils = NULL;
 
 void CCFileUtils::purgeFileUtils()
 {
-    if (s_sharedFileUtils != NULL)
-    {
-        s_sharedFileUtils->purgeCachedEntries();
-        CC_SAFE_RELEASE(s_sharedFileUtils->m_pFilenameLookupDict);
-    }
-    
     CC_SAFE_DELETE(s_sharedFileUtils);
 }
 
@@ -355,7 +347,7 @@ CCFileUtils::CCFileUtils()
 
 CCFileUtils::~CCFileUtils()
 {
-    
+    CC_SAFE_RELEASE(m_pFilenameLookupDict);
 }
 
 bool CCFileUtils::init()
@@ -367,7 +359,7 @@ bool CCFileUtils::init()
 
 void CCFileUtils::purgeCachedEntries()
 {
-    s_fullPathCache.clear();
+    m_fullPathCache.clear();
 }
 
 unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize)
@@ -502,8 +494,8 @@ std::string CCFileUtils::fullPathForFilename(const char* pszFileName)
     }
     
     // Already Cached ?
-    std::map<std::string, std::string>::iterator cacheIter = s_fullPathCache.find(pszFileName);
-    if (cacheIter != s_fullPathCache.end())
+    std::map<std::string, std::string>::iterator cacheIter = m_fullPathCache.find(pszFileName);
+    if (cacheIter != m_fullPathCache.end())
     {
         //CCLOG("Return full path from cache: %s", cacheIter->second.c_str());
         return cacheIter->second;
@@ -526,7 +518,7 @@ std::string CCFileUtils::fullPathForFilename(const char* pszFileName)
             if (fullpath.length() > 0)
             {
                 // Using the filename passed in as key.
-                s_fullPathCache.insert(std::pair<std::string, std::string>(pszFileName, fullpath));
+                m_fullPathCache.insert(std::pair<std::string, std::string>(pszFileName, fullpath));
                 //CCLOG("Returning path: %s", fullpath.c_str());
                 return fullpath;
             }
