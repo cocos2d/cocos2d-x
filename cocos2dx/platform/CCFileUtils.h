@@ -331,17 +331,22 @@ protected:
     
     /** 
      *  The vector contains resolution folders.
+     *  The lower index of the element in this vector, the higher priority for this resolution directory.
      */
     std::vector<std::string> m_searchResolutionsOrderArray;
     
     /**
      * The vector contains search paths.
+     * The lower index of the element in this vector, the higher priority for this search path.
      */
     std::vector<std::string> m_searchPathArray;
     
     /**
      *  The default root path of resources.
      *  If the default root path of resources needs to be changed, do it in the `init` method of CCFileUtils's subclass.
+     *  For instance:
+     *  On Android, the default root path of resources will be assigned with "assets/" in CCFileUtilsAndroid::init().
+     *  Similarly on Blackberry, we assign "app/native/Resources/" to this variable in CCFileUtilsBlackberry::init().
      */
     std::string m_strDefaultResRootPath;
     
