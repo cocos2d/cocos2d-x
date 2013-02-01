@@ -51,9 +51,18 @@ bool CCFileUtilsBlackberry::isAbsolutePath(const std::string& strPath)
     return false;
 }
 
-bool CCFileUtilsBlackberry::isFileExist(const std::string& strFullpathOfFile)
+bool CCFileUtilsBlackberry::isFileExist(const std::string& strFilePath)
 {
-    return access(strFullpathOfFile.c_str(), F_OK) != -1 ? true : false;
+    std::string strPath = strFilePath;
+    if (strPath[0] != '/')
+    { // Not absolute path, add the default root path at the beginning.
+        if (strPath.find(m_strDefaultResRootPath) != 0)
+        {// Didn't find "assets/" at the beginning of the path, adding it.
+            strPath.insert(0, m_strDefaultResRootPath);
+        }
+    }
+
+    return access(strPath.c_str(), F_OK) != -1 ? true : false;
 }
 
 NS_CC_END

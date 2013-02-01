@@ -60,17 +60,27 @@ bool CCFileUtilsAndroid::init()
     return CCFileUtils::init();
 }
 
-bool CCFileUtilsAndroid::isFileExist(const std::string& strFullpathOfFile)
+bool CCFileUtilsAndroid::isFileExist(const std::string& strFilePath)
 {
     bool bFound = false;
+    
     // Check whether file exists in apk.
-    if (s_pZipFile->fileExists(strFullpathOfFile))
+    if (strFilePath[0] != '/')
     {
-        bFound = true;
-    } 
+        std::string strPath = strFilePath;
+        if (strPath.find(m_strDefaultResRootPath) != 0)
+        {// Didn't find "assets/" at the beginning of the path, adding it.
+            strPath.insert(0, m_strDefaultResRootPath);
+        }
+
+        if (s_pZipFile->fileExists(strPath))
+        {
+            bFound = true;
+        } 
+    }
     else
     {
-        FILE *fp = fopen(strFullpathOfFile.c_str(), "r");
+        FILE *fp = fopen(strFilePath.c_str(), "r");
         if(fp)
         {
             bFound = true;
@@ -105,7 +115,7 @@ unsigned char* CCFileUtilsAndroid::getFileData(const char* pszFileName, const ch
 
     if (pszFileName[0] != '/')
     {
-        CCLOG("GETTING FILE RELATIVE DATA: %s", pszFileName);
+        //CCLOG("GETTING FILE RELATIVE DATA: %s", pszFileName);
         string fullPath = fullPathForFilename(pszFileName);
         pData = s_pZipFile->getFileData(fullPath.c_str(), pSize);
     }
@@ -114,7 +124,7 @@ unsigned char* CCFileUtilsAndroid::getFileData(const char* pszFileName, const ch
         do 
         {
             // read rrom other path than user set it
-	        CCLOG("GETTING FILE ABSOLUTE DATA: %s", pszFileName);
+	        //CCLOG("GETTING FILE ABSOLUTE DATA: %s", pszFileName);
             FILE *fp = fopen(pszFileName, pszMode);
             CC_BREAK_IF(!fp);
 

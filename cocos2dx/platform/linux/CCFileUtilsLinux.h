@@ -33,8 +33,6 @@
 
 NS_CC_BEGIN
 
-class CCDictionary;
-class CCArray;
 /**
  * @addtogroup platform
  * @{
@@ -48,19 +46,8 @@ class CC_DLL CCFileUtilsLinux : public CCFileUtils
 public:
     /* override funtions */
     bool init();
-
-    /**
-     *  Gets the writeable path
-     *  @return  The path that can write/read file
-     */
     virtual std::string getWriteablePath();
-    
-    /**
-     *  Checks whether file exists.
-     *
-     *  @param strFullpathOfFile The full path of file.
-     */
-    virtual bool isFileExist(const std::string& strFullpathOfFile);
+    virtual bool isFileExist(const std::string& strFilePath);
 };
 
 // end of platform group
