@@ -277,12 +277,16 @@ std::string CCFileUtils::getPathForFilename(const std::string& filename, const s
     
 	// searchPath + file_path + resourceDirectory
     std::string path = searchPath;
-    if (path[path.length()-1] != '/')
+    if (path.size() > 0 && path[path.length()-1] != '/')
     {
         path += "/";
     }
     path += file_path;
 	path += resourceDirectory;
+    if (path.size() > 0 && path[path.length()-1] != '/')
+    {
+        path += "/";
+    }
     
     if (searchPath[0] != '/')
     {
