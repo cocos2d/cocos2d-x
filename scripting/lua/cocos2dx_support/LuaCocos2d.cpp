@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.92 on Sun Jan 27 20:24:47 2013.
+** Generated automatically by tolua++-1.0.92 on Sat Feb  2 01:07:21 2013.
 */
 
 /****************************************************************************
@@ -8847,9 +8847,36 @@ static int tolua_Cocos2d_CCFileUtils_sharedFileUtils00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: getWriteablePath of class  CCFileUtils */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCFileUtils_getWriteablePath00
-static int tolua_Cocos2d_CCFileUtils_getWriteablePath00(lua_State* tolua_S)
+/* method: purgeFileUtils of class  CCFileUtils */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCFileUtils_purgeFileUtils00
+static int tolua_Cocos2d_CCFileUtils_purgeFileUtils00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"CCFileUtils",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  {
+   CCFileUtils::purgeFileUtils();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'purgeFileUtils'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: purgeCachedEntries of class  CCFileUtils */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCFileUtils_purgeCachedEntries00
+static int tolua_Cocos2d_CCFileUtils_purgeCachedEntries00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -8863,25 +8890,24 @@ static int tolua_Cocos2d_CCFileUtils_getWriteablePath00(lua_State* tolua_S)
  {
   CCFileUtils* self = (CCFileUtils*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getWriteablePath'", NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'purgeCachedEntries'", NULL);
 #endif
   {
-   std::string tolua_ret = (std::string)  self->getWriteablePath();
-   tolua_pushcppstring(tolua_S,(const char*)tolua_ret);
+   self->purgeCachedEntries();
   }
  }
- return 1;
+ return 0;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'getWriteablePath'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'purgeCachedEntries'.",&tolua_err);
  return 0;
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: setResourceDirectory of class  CCFileUtils */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCFileUtils_setResourceDirectory00
-static int tolua_Cocos2d_CCFileUtils_setResourceDirectory00(lua_State* tolua_S)
+/* method: fullPathForFilename of class  CCFileUtils */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCFileUtils_fullPathForFilename00
+static int tolua_Cocos2d_CCFileUtils_fullPathForFilename00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -8895,18 +8921,52 @@ static int tolua_Cocos2d_CCFileUtils_setResourceDirectory00(lua_State* tolua_S)
 #endif
  {
   CCFileUtils* self = (CCFileUtils*)  tolua_tousertype(tolua_S,1,0);
-  const char* pszDirectoryName = ((const char*)  tolua_tostring(tolua_S,2,0));
+  const char* pszFileName = ((const char*)  tolua_tostring(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setResourceDirectory'", NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'fullPathForFilename'", NULL);
 #endif
   {
-   self->setResourceDirectory(pszDirectoryName);
+   std::string tolua_ret = (std::string)  self->fullPathForFilename(pszFileName);
+   tolua_pushcppstring(tolua_S,(const char*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'fullPathForFilename'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: loadFilenameLookupDictionaryFromFile of class  CCFileUtils */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCFileUtils_loadFilenameLookupDictionaryFromFile00
+static int tolua_Cocos2d_CCFileUtils_loadFilenameLookupDictionaryFromFile00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCFileUtils",0,&tolua_err) ||
+     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCFileUtils* self = (CCFileUtils*)  tolua_tousertype(tolua_S,1,0);
+  const char* filename = ((const char*)  tolua_tostring(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'loadFilenameLookupDictionaryFromFile'", NULL);
+#endif
+  {
+   self->loadFilenameLookupDictionaryFromFile(filename);
   }
  }
  return 0;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'setResourceDirectory'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'loadFilenameLookupDictionaryFromFile'.",&tolua_err);
  return 0;
 #endif
 }
@@ -8948,9 +9008,9 @@ static int tolua_Cocos2d_CCFileUtils_fullPathFromRelativeFile00(lua_State* tolua
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: fullPathFromRelativePath of class  CCFileUtils */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCFileUtils_fullPathFromRelativePath00
-static int tolua_Cocos2d_CCFileUtils_fullPathFromRelativePath00(lua_State* tolua_S)
+/* method: addSearchResolutionsOrder of class  CCFileUtils */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCFileUtils_addSearchResolutionsOrder00
+static int tolua_Cocos2d_CCFileUtils_addSearchResolutionsOrder00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -8964,27 +9024,26 @@ static int tolua_Cocos2d_CCFileUtils_fullPathFromRelativePath00(lua_State* tolua
 #endif
  {
   CCFileUtils* self = (CCFileUtils*)  tolua_tousertype(tolua_S,1,0);
-  const char* pszRelativePath = ((const char*)  tolua_tostring(tolua_S,2,0));
+  const char* order = ((const char*)  tolua_tostring(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'fullPathFromRelativePath'", NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'addSearchResolutionsOrder'", NULL);
 #endif
   {
-   const char* tolua_ret = (const char*)  self->fullPathFromRelativePath(pszRelativePath);
-   tolua_pushstring(tolua_S,(const char*)tolua_ret);
+   self->addSearchResolutionsOrder(order);
   }
  }
- return 1;
+ return 0;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'fullPathFromRelativePath'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'addSearchResolutionsOrder'.",&tolua_err);
  return 0;
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: fullPathForFilename of class  CCFileUtils */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCFileUtils_fullPathForFilename00
-static int tolua_Cocos2d_CCFileUtils_fullPathForFilename00(lua_State* tolua_S)
+/* method: addSearchPath of class  CCFileUtils */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCFileUtils_addSearchPath00
+static int tolua_Cocos2d_CCFileUtils_addSearchPath00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -8998,19 +9057,115 @@ static int tolua_Cocos2d_CCFileUtils_fullPathForFilename00(lua_State* tolua_S)
 #endif
  {
   CCFileUtils* self = (CCFileUtils*)  tolua_tousertype(tolua_S,1,0);
-  const char* pszFileName = ((const char*)  tolua_tostring(tolua_S,2,0));
+  const char* path = ((const char*)  tolua_tostring(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'fullPathForFilename'", NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'addSearchPath'", NULL);
 #endif
   {
-   std::string tolua_ret = (std::string)  self->fullPathForFilename(pszFileName);
+   self->addSearchPath(path);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'addSearchPath'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getWriteablePath of class  CCFileUtils */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCFileUtils_getWriteablePath00
+static int tolua_Cocos2d_CCFileUtils_getWriteablePath00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCFileUtils",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCFileUtils* self = (CCFileUtils*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getWriteablePath'", NULL);
+#endif
+  {
+   std::string tolua_ret = (std::string)  self->getWriteablePath();
    tolua_pushcppstring(tolua_S,(const char*)tolua_ret);
   }
  }
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'fullPathForFilename'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'getWriteablePath'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setPopupNotify of class  CCFileUtils */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCFileUtils_setPopupNotify00
+static int tolua_Cocos2d_CCFileUtils_setPopupNotify00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCFileUtils",0,&tolua_err) ||
+     !tolua_isboolean(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCFileUtils* self = (CCFileUtils*)  tolua_tousertype(tolua_S,1,0);
+  bool bNotify = ((bool)  tolua_toboolean(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setPopupNotify'", NULL);
+#endif
+  {
+   self->setPopupNotify(bNotify);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setPopupNotify'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: isPopupNotify of class  CCFileUtils */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCFileUtils_isPopupNotify00
+static int tolua_Cocos2d_CCFileUtils_isPopupNotify00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCFileUtils",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCFileUtils* self = (CCFileUtils*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isPopupNotify'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->isPopupNotify();
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'isPopupNotify'.",&tolua_err);
  return 0;
 #endif
 }
@@ -54954,11 +55109,16 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
   tolua_cclass(tolua_S,"CCFileUtils","CCFileUtils","",NULL);
   tolua_beginmodule(tolua_S,"CCFileUtils");
    tolua_function(tolua_S,"sharedFileUtils",tolua_Cocos2d_CCFileUtils_sharedFileUtils00);
-   tolua_function(tolua_S,"getWriteablePath",tolua_Cocos2d_CCFileUtils_getWriteablePath00);
-   tolua_function(tolua_S,"setResourceDirectory",tolua_Cocos2d_CCFileUtils_setResourceDirectory00);
-   tolua_function(tolua_S,"fullPathFromRelativeFile",tolua_Cocos2d_CCFileUtils_fullPathFromRelativeFile00);
-   tolua_function(tolua_S,"fullPathFromRelativePath",tolua_Cocos2d_CCFileUtils_fullPathFromRelativePath00);
+   tolua_function(tolua_S,"purgeFileUtils",tolua_Cocos2d_CCFileUtils_purgeFileUtils00);
+   tolua_function(tolua_S,"purgeCachedEntries",tolua_Cocos2d_CCFileUtils_purgeCachedEntries00);
    tolua_function(tolua_S,"fullPathForFilename",tolua_Cocos2d_CCFileUtils_fullPathForFilename00);
+   tolua_function(tolua_S,"loadFilenameLookupDictionaryFromFile",tolua_Cocos2d_CCFileUtils_loadFilenameLookupDictionaryFromFile00);
+   tolua_function(tolua_S,"fullPathFromRelativeFile",tolua_Cocos2d_CCFileUtils_fullPathFromRelativeFile00);
+   tolua_function(tolua_S,"addSearchResolutionsOrder",tolua_Cocos2d_CCFileUtils_addSearchResolutionsOrder00);
+   tolua_function(tolua_S,"addSearchPath",tolua_Cocos2d_CCFileUtils_addSearchPath00);
+   tolua_function(tolua_S,"getWriteablePath",tolua_Cocos2d_CCFileUtils_getWriteablePath00);
+   tolua_function(tolua_S,"setPopupNotify",tolua_Cocos2d_CCFileUtils_setPopupNotify00);
+   tolua_function(tolua_S,"isPopupNotify",tolua_Cocos2d_CCFileUtils_isPopupNotify00);
   tolua_endmodule(tolua_S);
   tolua_function(tolua_S,"ccDrawPoint",tolua_Cocos2d_ccDrawPoint00);
   tolua_function(tolua_S,"ccDrawPoints",tolua_Cocos2d_ccDrawPoints00);

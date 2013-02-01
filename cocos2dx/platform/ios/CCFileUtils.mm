@@ -200,6 +200,11 @@ void CCFileUtils::setSearchResolutionsOrder(const std::vector<std::string>& sear
     }
 }
 
+void CCFileUtils::addSearchResolutionsOrder(const char* order)
+{
+    m_searchResolutionsOrderArray.push_back(order);
+}
+
 const std::vector<std::string>& CCFileUtils::getSearchResolutionsOrder()
 {
     return m_searchResolutionsOrderArray;
@@ -221,6 +226,11 @@ void CCFileUtils::setSearchPaths(const std::vector<std::string>& searchPaths)
     {
         m_searchPathArray.push_back(m_strDefaultResRootPath);
     }
+}
+
+void CCFileUtils::addSearchPath(const char* path)
+{
+    m_searchPathArray.push_back(path);
 }
 
 const std::vector<std::string>& CCFileUtils::getSearchPaths()
@@ -275,12 +285,16 @@ std::string CCFileUtils::getPathForFilename(const std::string& filename, const s
     
 	// searchPath + file_path + resourceDirectory
     std::string path = searchPath;
-    if (path[path.length()-1] != '/')
+    if (path.size() > 0 && path[path.length()-1] != '/')
     {
         path += "/";
     }
     path += file_path;
 	path += resourceDirectory;
+    if (path.size() > 0 && path[path.length()-1] != '/')
+    {
+        path += "/";
+    }
     
     if (searchPath[0] != '/')
     {

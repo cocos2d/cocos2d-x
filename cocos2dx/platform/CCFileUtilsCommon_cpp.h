@@ -410,9 +410,19 @@ const std::vector<std::string>& CCFileUtils::getSearchResolutionsOrder()
     return m_searchResolutionsOrderArray;
 }
 
+void CCFileUtils::addSearchResolutionsOrder(const char* order)
+{
+    m_searchResolutionsOrderArray.push_back(order);
+}
+
 const std::vector<std::string>& CCFileUtils::getSearchPaths()
 {
     return m_searchPathArray;
+}
+
+void CCFileUtils::addSearchPath(const char* path)
+{
+    m_searchPathArray.push_back(path);
 }
 
 const char* CCFileUtils::getResourceDirectory()
