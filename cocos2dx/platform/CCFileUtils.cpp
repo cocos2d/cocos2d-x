@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2013 cocos2d-x.org
 
 http://www.cocos2d-x.org
 
@@ -21,21 +21,19 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef __CC_PLATFORM_FILEUTILS_CPP__
-#error "CCFileUtilsCommon_cpp.h can only be included for CCFileUtils.cpp in platform/win32(android,...)"
-#endif /* __CC_PLATFORM_FILEUTILS_CPP__ */
 
 #include "CCFileUtils.h"
 #include "CCDirector.h"
 #include "cocoa/CCDictionary.h"
-
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS && CC_TARGET_PLATFORM != CC_PLATFORM_MAC)
-
 #include "cocoa/CCString.h"
 #include "CCSAXParser.h"
 #include "support/zip_support/unzip.h"
-
 #include <stack>
+
+using namespace std;
+
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS) && (CC_TARGET_PLATFORM != CC_PLATFORM_MAC)
+
 #include <libxml/parser.h>
 #include <libxml/tree.h>
 #include <libxml/xmlmemory.h>
@@ -330,6 +328,79 @@ CCArray* ccFileUtils_arrayWithContentsOfFileThreadSafe(const char* pFileName)
     return tMaker.arrayWithContentsOfFile(pFileName);
 }
 
+#else
+NS_CC_BEGIN
+#endif /* (CC_TARGET_PLATFORM != CC_PLATFORM_IOS) && (CC_TARGET_PLATFORM != CC_PLATFORM_MAC) */
+
+
+static std::map<std::string, std::string> s_fullPathCache;
+
+CCFileUtils* CCFileUtils::s_sharedFileUtils = NULL;
+
+void CCFileUtils::purgeFileUtils()
+{
+    if (s_sharedFileUtils != NULL)
+    {
+        s_sharedFileUtils->purgeCachedEntries();
+        CC_SAFE_RELEASE(s_sharedFileUtils->m_pFilenameLookupDict);
+    }
+    
+    CC_SAFE_DELETE(s_sharedFileUtils);
+}
+
+CCFileUtils::CCFileUtils()
+: m_pFilenameLookupDict(NULL)
+{
+}
+
+CCFileUtils::~CCFileUtils()
+{
+    
+}
+
+bool CCFileUtils::init()
+{
+    m_searchPathArray.push_back(m_strDefaultResRootPath);
+    m_searchResolutionsOrderArray.push_back("");
+    return false;
+}
+
+void CCFileUtils::purgeCachedEntries()
+{
+    s_fullPathCache.clear();
+}
+
+unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize)
+{
+    unsigned char * pBuffer = NULL;
+    CCAssert(pszFileName != NULL && pSize != NULL && pszMode != NULL, "Invalid parameters.");
+    *pSize = 0;
+    do
+    {
+        // read the file from hardware
+        std::string fullPath = fullPathForFilename(pszFileName);
+        FILE *fp = fopen(fullPath.c_str(), pszMode);
+        CC_BREAK_IF(!fp);
+        
+        fseek(fp,0,SEEK_END);
+        *pSize = ftell(fp);
+        fseek(fp,0,SEEK_SET);
+        pBuffer = new unsigned char[*pSize];
+        *pSize = fread(pBuffer,sizeof(unsigned char), *pSize,fp);
+        fclose(fp);
+    } while (0);
+    
+    if (! pBuffer && isPopupNotify())
+    {
+        std::string title = "Notification";
+        std::string msg = "Get data from file(";
+        msg.append(pszFileName).append(") failed!");
+        
+        CCMessageBox(msg.c_str(), title.c_str());
+    }
+    return pBuffer;
+}
+
 unsigned char* CCFileUtils::getFileDataFromZip(const char* pszZipFilePath, const char* pszFileName, unsigned long * pSize)
 {
     unsigned char * pBuffer = NULL;
@@ -382,9 +453,97 @@ std::string CCFileUtils::getNewFilename(const char* pszFileName)
     }
     else {
         pszNewFileName = fileNameFound->getCString();
-        //CCLOG("FOUND NEW FILE NAME: %s.", pszNewFileName);
+        CCLOG("FOUND NEW FILE NAME: %s.", pszNewFileName);
     }
     return pszNewFileName;
+}
+
+std::string CCFileUtils::getPathForFilename(const std::string& filename, const std::string& resolutionDirectory, const std::string& searchPath)
+{
+    std::string file = filename;
+    std::string file_path = "";
+    size_t pos = filename.find_last_of("/");
+    if (pos != std::string::npos)
+    {
+        file_path = filename.substr(0, pos+1);
+        file = filename.substr(pos+1);
+    }
+    
+    // searchPath + file_path + resourceDirectory
+    std::string path = searchPath;
+    if (path.size() > 0 && path[path.length()-1] != '/')
+    {
+        path += "/";
+    }
+    path += file_path;
+    path += resolutionDirectory;
+    
+    if (path.size() > 0 && path[path.length()-1] != '/')
+    {
+        path += "/";
+    }
+    
+    path = getFullPathForDirectoryAndFilename(path, file);
+    
+    CCLOG("getPathForFilename, fullPath = %s", path.c_str());
+    return path;
+}
+
+
+std::string CCFileUtils::fullPathForFilename(const char* pszFileName)
+{
+    CCAssert(pszFileName != NULL, "CCFileUtils: Invalid path");
+    
+    std::string strFileName = pszFileName;
+    if (isAbsolutePath(pszFileName))
+    {
+        CCLOG("Return absolute path( %s ) directly.", pszFileName);
+        return pszFileName;
+    }
+    
+    // Already Cached ?
+    std::map<std::string, std::string>::iterator cacheIter = s_fullPathCache.find(pszFileName);
+    if (cacheIter != s_fullPathCache.end())
+    {
+        CCLOG("Return full path from cache: %s", cacheIter->second.c_str());
+        return cacheIter->second;
+    }
+    
+    // Get the new file name.
+    std::string newFilename = getNewFilename(pszFileName);
+    
+    string fullpath = "";
+    
+    for (std::vector<std::string>::iterator searchPathsIter = m_searchPathArray.begin();
+         searchPathsIter != m_searchPathArray.end(); ++searchPathsIter) {
+        for (std::vector<std::string>::iterator resOrderIter = m_searchResolutionsOrderArray.begin();
+             resOrderIter != m_searchResolutionsOrderArray.end(); ++resOrderIter) {
+            
+            CCLOG("\n\nSEARCHING: %s, %s, %s", newFilename.c_str(), resOrderIter->c_str(), searchPathsIter->c_str());
+            
+            fullpath = this->getPathForFilename(newFilename, *resOrderIter, *searchPathsIter);
+            
+            if (fullpath.length() > 0)
+            {
+                // Using the filename passed in as key.
+                s_fullPathCache.insert(std::pair<std::string, std::string>(pszFileName, fullpath));
+                CCLOG("Returning path: %s", fullpath.c_str());
+                return fullpath;
+            }
+        }
+    }
+    
+    // The file wasn't found, return the file name passed in.
+    return pszFileName;
+}
+
+const char* CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const char *pszRelativeFile)
+{
+    std::string relativeFile = pszRelativeFile;
+    CCString *pRet = CCString::create("");
+    pRet->m_sString = relativeFile.substr(0, relativeFile.rfind('/')+1);
+    pRet->m_sString += getNewFilename(pszFilename);
+    return pRet->getCString();
 }
 
 void CCFileUtils::setSearchResolutionsOrder(const std::vector<std::string>& searchResolutionsOrder)
@@ -415,9 +574,36 @@ const std::vector<std::string>& CCFileUtils::getSearchPaths()
     return m_searchPathArray;
 }
 
-const char* CCFileUtils::getResourceDirectory()
+void CCFileUtils::setSearchPaths(const std::vector<std::string>& searchPaths)
 {
-    return m_obDirectory.c_str();
+    bool bExistDefaultRootPath = false;
+    
+    m_searchPathArray.clear();
+    for (std::vector<std::string>::const_iterator iter = searchPaths.begin(); iter != searchPaths.end(); ++iter)
+    {
+        std::string strPrefix;
+        std::string path;
+        if (!isAbsolutePath(*iter))
+        { // Not an absolute path
+            strPrefix = m_strDefaultResRootPath;
+        }
+        path = strPrefix+(*iter);
+        if (path.length() > 0 && path[path.length()-1] != '/')
+        {
+            path += "/";
+        }
+        if (!bExistDefaultRootPath && path == m_strDefaultResRootPath)
+        {
+            bExistDefaultRootPath = true;
+        }
+        m_searchPathArray.push_back(path);
+    }
+    
+    if (!bExistDefaultRootPath)
+    {
+        CCLOG("Default root path doesn't exist, adding it.");
+        m_searchPathArray.push_back(m_strDefaultResRootPath);
+    }
 }
 
 void CCFileUtils::setFilenameLookupDictionary(CCDictionary* pFilenameLookupDict)
@@ -447,6 +633,20 @@ void CCFileUtils::loadFilenameLookupDictionaryFromFile(const char* filename)
     }
 }
 
+std::string CCFileUtils::getFullPathForDirectoryAndFilename(const std::string& strDirectory, const std::string& strFilename)
+{
+    std::string ret = strDirectory+strFilename;
+    if (!isFileExist(ret)) {
+        ret = "";
+    }
+    return ret;
+}
+
+bool CCFileUtils::isAbsolutePath(const std::string& strPath)
+{
+    return strPath[0] == '/' ? true : false;
+}
+
 //////////////////////////////////////////////////////////////////////////
 // Notification support when getFileData from invalid file path.
 //////////////////////////////////////////////////////////////////////////
@@ -464,4 +664,3 @@ bool CCFileUtils::isPopupNotify()
 
 NS_CC_END
 
-#endif // (CC_TARGET_PLATFORM != CC_PLATFORM_IOS && CC_TARGET_PLATFORM != CC_PLATFORM_MAC)

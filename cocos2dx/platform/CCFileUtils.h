@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2013 cocos2d-x.org
 
 http://www.cocos2d-x.org
 
@@ -21,8 +21,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef __CC_FILEUTILS_PLATFORM_H__
-#define __CC_FILEUTILS_PLATFORM_H__
+#ifndef __CC_FILEUTILS_H__
+#define __CC_FILEUTILS_H__
 
 #include <string>
 #include <vector>
@@ -39,7 +39,7 @@ class CCArray;
  * @{
  */
 
-//! @brief  Helper class to handle file operations
+//! @brief  The super class for CCFileUtils
 class CC_DLL CCFileUtils : public TypeInfo
 {
 public:
@@ -64,6 +64,11 @@ public:
     static void purgeFileUtils();
     
     /**
+     *  The destructor of CCFileUtils.
+     */
+    virtual ~CCFileUtils();
+    
+    /**
      *  Purges the file searching cache.
      *
      *  @note It should be invoked after the resources were updated.
@@ -71,7 +76,7 @@ public:
      *        All the resources will be downloaded to the writable folder, before new js app launchs,
      *        this method should be invoked to clean the file search cache.
      */
-    void purgeCachedEntries();
+    virtual void purgeCachedEntries();
     
     /**
     @brief Get resource file data
@@ -81,7 +86,7 @@ public:
     @return Upon success, a pointer to the data is returned, otherwise NULL.
     @warning Recall: you are responsible for calling delete[] on any Non-NULL pointer returned.
     */
-    unsigned char* getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize);
+    virtual unsigned char* getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize);
 
     /**
     @brief Get resource file data from a zip file.
@@ -90,17 +95,8 @@ public:
     @return Upon success, a pointer to the data is returned, otherwise NULL.
     @warning Recall: you are responsible for calling delete[] on any Non-NULL pointer returned.
     */
-    unsigned char* getFileDataFromZip(const char* pszZipFilePath, const char* pszFileName, unsigned long * pSize);
+    virtual unsigned char* getFileDataFromZip(const char* pszZipFilePath, const char* pszFileName, unsigned long * pSize);
 
-    /**
-     *  @brief   Generate the absolute path of the file.
-     *  @param   pszRelativePath     The relative path of the file.
-     *  @return  The absolute path of the file.
-     *  @warning We only add the ResourcePath before the relative path of the file.
-     *  @deprecated Please use fullPathForFilename instead.
-     *
-     */
-    CC_DEPRECATED_ATTRIBUTE const char* fullPathFromRelativePath(const char *pszRelativePath);
     
     /** Returns the fullpath for a given filename.
      
@@ -147,7 +143,7 @@ public:
 
      @since v2.1
      */
-    std::string fullPathForFilename(const char* pszFileName);
+    virtual std::string fullPathForFilename(const char* pszFileName);
     
     /**
      * Loads the filenameLookup dictionary from the contents of a filename.
@@ -178,7 +174,7 @@ public:
      *
      @since v2.1
      */
-    void loadFilenameLookupDictionaryFromFile(const char* filename);
+    virtual void loadFilenameLookupDictionaryFromFile(const char* filename);
     
     /** 
      *  Sets the filenameLookup dictionary.
@@ -186,7 +182,7 @@ public:
      *  @param pFilenameLookupDict The dictionary for replacing filename.
      *  @since v2.1
      */
-    void setFilenameLookupDictionary(CCDictionary* pFilenameLookupDict);
+    virtual void setFilenameLookupDictionary(CCDictionary* pFilenameLookupDict);
     
     /**
      *  Gets full path from a file name and the path of the reletive file.
@@ -197,14 +193,7 @@ public:
      *               Return: /User/path1/path2/hello.pvr (If there a a key(hello.png)-value(hello.pvr) in FilenameLookup dictionary. )
      *
      */
-    const char* fullPathFromRelativeFile(const char *pszFilename, const char *pszRelativeFile);
-
-    /**
-     @brief  Set the resource directory; we will find resources relative to this directory.
-     @param pszDirectoryName  Relative path to root.
-     @deprecated Please use setSearchPaths instead.
-    */
-    CC_DEPRECATED_ATTRIBUTE void setResourceDirectory(const char *pszDirectoryName);
+    virtual const char* fullPathFromRelativeFile(const char *pszFilename, const char *pszRelativeFile);
 
     /** 
      *  Sets the array that contains the search order of the resources.
@@ -213,7 +202,7 @@ public:
      *  @see getSearchResolutionsOrder(), fullPathForFilename().
      *  @since v2.1
      */
-    void setSearchResolutionsOrder(const std::vector<std::string>& searchResolutionsOrder);
+    virtual void setSearchResolutionsOrder(const std::vector<std::string>& searchResolutionsOrder);
     
     /**
      *  Gets the array that contains the search order of the resources.
@@ -221,7 +210,7 @@ public:
      *  @see setSearchResolutionsOrder(), fullPathForFilename().
      *  @since v2.1
      */
-    const std::vector<std::string>& getSearchResolutionsOrder();
+    virtual const std::vector<std::string>& getSearchResolutionsOrder();
     
     /** 
      *  Sets the array of search paths.
@@ -239,7 +228,7 @@ public:
      *  @see fullPathForFilename()
      *  @since v2.1
      */
-    void setSearchPaths(const std::vector<std::string>& searchPaths);
+    virtual void setSearchPaths(const std::vector<std::string>& searchPaths);
     
     /**
      *  Gets the array of search paths.
@@ -247,38 +236,54 @@ public:
      *  @return The array of search paths.
      *  @see fullPathForFilename().
      */
-    const std::vector<std::string>& getSearchPaths();
-    
-    /**
-     *  Gets the resource directory
-     *  @deprecated Please use getSearchPaths() instead.
-     */
-    CC_DEPRECATED_ATTRIBUTE const char* getResourceDirectory();
+    virtual const std::vector<std::string>& getSearchPaths();
 
     /**
-    @brief   Get the writeable path
+    @brief   Gets the writeable path.
     @return  The path that can write/read file
     */
-    std::string getWriteablePath();
-
+    virtual std::string getWriteablePath() = 0;
+    
+    /**
+     *  Checks whether file exists.
+     *
+     *  @param strFullpathOfFile The full path of file.
+     */
+    virtual bool isFileExist(const std::string& strFullpathOfFile) = 0;
+    
+    /**
+     *  Checks whether the path is an absolute path.
+     *
+     *  @param strPath The path that needs to be checked.
+     */
+    virtual bool isAbsolutePath(const std::string& strPath);
+    
+    
     /**
     @brief Set/Get whether pop-up a message box when the image load failed
     */
-    void setPopupNotify(bool bNotify);
-    bool isPopupNotify();
+    virtual void setPopupNotify(bool bNotify);
+    virtual bool isPopupNotify();
 
 protected:
-    CCFileUtils(void)
-    : m_pFilenameLookupDict(NULL)
-    {
-    }
+    CCFileUtils();
     
-    bool init();
+    virtual bool init();
     
-    std::string getNewFilename(const char* pszFileName);
-    std::string getPathForFilename(const std::string& filename, const std::string& resourceDirectory, const std::string& searchPath);
+    virtual std::string getNewFilename(const char* pszFileName);
     
-    std::string m_obDirectory;
+    /**
+     *  Get Full path for filename, resolution directory and search path.
+     *
+     *  @param filename The file name.
+     *  @param resolutionDirectory The resolution directory.
+     *  @param searchPath The search path.
+     *  @param retFullPath The return value of full path.
+     *  @return Whether the file exists.
+     */
+    virtual std::string getPathForFilename(const std::string& filename, const std::string& resolutionDirectory, const std::string& searchPath);
+    
+    virtual std::string getFullPathForDirectoryAndFilename(const std::string& strDirectory, const std::string& strFilename);
     
     /** Dictionary used to lookup filenames based on a key.
      It is used internally by the following methods:
@@ -292,6 +297,8 @@ protected:
     std::vector<std::string> m_searchResolutionsOrderArray;
     std::vector<std::string> m_searchPathArray;
     std::string m_strDefaultResRootPath;
+    
+    static CCFileUtils* s_sharedFileUtils;
 };
 
 // end of platform group
@@ -299,4 +306,4 @@ protected:
 
 NS_CC_END
 
-#endif    // __CC_FILEUTILS_PLATFORM_H__
+#endif    // __CC_FILEUTILS_H__
