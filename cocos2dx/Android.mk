@@ -76,13 +76,14 @@ particle_nodes/CCParticleBatchNode.cpp \
 particle_nodes/CCParticleSystemQuad.cpp \
 platform/CCSAXParser.cpp \
 platform/CCThread.cpp \
+platform/CCFileUtils.cpp \
 platform/platform.cpp \
 platform/CCEGLViewProtocol.cpp \
 platform/android/CCEGLView.cpp \
 platform/android/CCAccelerometer.cpp \
 platform/android/CCApplication.cpp \
 platform/android/CCCommon.cpp \
-platform/android/CCFileUtils.cpp \
+platform/android/CCFileUtilsAndroid.cpp \
 platform/android/CCImage.cpp \
 platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxBitmap.cpp \
 platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxHelper.cpp \
