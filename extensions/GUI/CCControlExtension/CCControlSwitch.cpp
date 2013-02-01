@@ -345,17 +345,22 @@ void CCControlSwitch::setOn(bool isOn)
 void CCControlSwitch::setOn(bool isOn, bool animated)
 {
     m_bOn     = isOn;
-
-    m_pSwitchSprite->runAction
-    (
-        CCActionTween::create
-            (
-                0.2f, 
-                "sliderXPosition",
-                m_pSwitchSprite->getSliderXPosition(),
-                (m_bOn) ? m_pSwitchSprite->getOnPosition() : m_pSwitchSprite->getOffPosition()
-            )
-    );
+    
+    if (animated) {
+        m_pSwitchSprite->runAction
+        (
+            CCActionTween::create
+                (
+                    0.2f,
+                    "sliderXPosition",
+                    m_pSwitchSprite->getSliderXPosition(),
+                    (m_bOn) ? m_pSwitchSprite->getOnPosition() : m_pSwitchSprite->getOffPosition()
+                )
+         );
+    }
+    else {
+        m_pSwitchSprite->setSliderXPosition((m_bOn) ? m_pSwitchSprite->getOnPosition() : m_pSwitchSprite->getOffPosition());
+    }
     
     sendActionsForControlEvents(CCControlEventValueChanged);
 }
