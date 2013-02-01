@@ -62,13 +62,13 @@ std::string CCFileUtilsIOS::getWriteablePath()
     return strRet;
 }
 
-bool CCFileUtilsIOS::isFileExist(const std::string& strFullpathOfFile)
+bool CCFileUtilsIOS::isFileExist(const std::string& strFilePath)
 {
     bool bRet = false;
     
-    if (strFullpathOfFile[0] != '/')
+    if (strFilePath[0] != '/')
     {
-        std::string path = strFullpathOfFile;
+        std::string path = strFilePath;
         std::string file;
         size_t pos = path.find_last_of("/");
         if (pos != std::string::npos)
@@ -86,7 +86,7 @@ bool CCFileUtilsIOS::isFileExist(const std::string& strFullpathOfFile)
     else
     {
         // Search path is an absolute path.
-        if ([s_fileManager fileExistsAtPath:[NSString stringWithUTF8String:strFullpathOfFile.c_str()]]) {
+        if ([s_fileManager fileExistsAtPath:[NSString stringWithUTF8String:strFilePath.c_str()]]) {
             bRet = true;
         }
     }

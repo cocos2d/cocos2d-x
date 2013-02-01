@@ -32,9 +32,6 @@
 #include "ccTypeInfo.h"
 
 NS_CC_BEGIN
-
-class CCDictionary;
-class CCArray;
 /**
  * @addtogroup platform
  * @{
@@ -45,30 +42,9 @@ class CC_DLL CCFileUtilsMac : public CCFileUtils
 {
 public:
     /* override funtions */
-    
-    /**
-     *  Gets the writeable path
-     *  @return  The path that can write/read file
-     */
     virtual std::string getWriteablePath();
-    
-    /**
-     *  Checks whether file exists.
-     *
-     *  @param strFullpathOfFile The full path of file.
-     */
-    virtual bool isFileExist(const std::string& strFullpathOfFile);
-    
-    /**
-     *  Checks whether the path is an absolute path.
-     *
-     *  @param strPath The path that needs to be checked.
-     */
+    virtual bool isFileExist(const std::string& strFilePath);
     virtual bool isAbsolutePath(const std::string& strPath);
-    
-    /**
-     *  
-     */
     virtual std::string getFullPathForDirectoryAndFilename(const std::string& strDirectory, const std::string& strFilename);
     
     virtual CCDictionary* createCCDictionaryWithContentsOfFile(const std::string& filename);

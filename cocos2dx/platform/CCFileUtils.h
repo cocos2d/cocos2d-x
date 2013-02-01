@@ -255,16 +255,20 @@ public:
     /**
      *  Checks whether a file exists.
      *
-     *  @param strFullpathOfFile The full path of file.
+     *  @note If a relative path was passed in, it will be inserted a default root path at the beginning.
+     *  @param strFilePath The path of the file, it could be a relative or absolute path.
+     *  @return true if the file exists, otherwise it will return false.
      */
-    virtual bool isFileExist(const std::string& strFullpathOfFile) = 0;
+    virtual bool isFileExist(const std::string& strFilePath) = 0;
     
     /**
      *  Checks whether the path is an absolute path.
+     *
      *  @note On Android, if the parameter passed in is relative to "assets/", this method will treat it as an absolute path.
      *        Also on Blackberry, path starts with "app/native/Resources/" is treated as an absolute path.
      *
      *  @param strPath The path that needs to be checked.
+     *  @return true if it's an absolute path, otherwise it will return false.
      */
     virtual bool isAbsolutePath(const std::string& strPath);
     
@@ -305,8 +309,7 @@ protected:
      *  @param filename The file name.
      *  @param resolutionDirectory The resolution directory.
      *  @param searchPath The search path.
-     *  @param retFullPath The return value of full path.
-     *  @return Whether the file exists.
+     *  @return The full path of the file. It will return an empty string if the full path of the file doesn't exist.
      */
     virtual std::string getPathForFilename(const std::string& filename, const std::string& resolutionDirectory, const std::string& searchPath);
     
@@ -335,11 +338,11 @@ protected:
     virtual CCArray* createCCArrayWithContentsOfFile(const std::string& filename);
     
     /** Dictionary used to lookup filenames based on a key.
-     It is used internally by the following methods:
-     
-     std::string fullPathForFilename(const char*);
-     
-     @since v2.1
+     *  It is used internally by the following methods:
+     *
+     *  std::string fullPathForFilename(const char*);
+     *
+     *  @since v2.1
      */
     CCDictionary* m_pFilenameLookupDict;
     

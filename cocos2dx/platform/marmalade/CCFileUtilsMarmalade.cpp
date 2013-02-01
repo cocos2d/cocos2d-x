@@ -28,9 +28,9 @@ string CCFileUtilsMarmalade::getWriteablePath()
     return std::string("ram://");
 }
 
-bool CCFileUtilsMarmalade::isFileExist(const std::string& strFullpathOfFile)
+bool CCFileUtilsMarmalade::isFileExist(const std::string& strFilePath)
 {
-    return s3eFileCheckExists(strFullpathOfFile.c_str()) == S3E_TRUE ? true : false;
+    return s3eFileCheckExists(strFilePath.c_str()) == S3E_TRUE ? true : false;
 }
 
 unsigned char* CCFileUtilsMarmalade::getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize)

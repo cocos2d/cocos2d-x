@@ -33,8 +33,6 @@
 
 NS_CC_BEGIN
 
-class CCDictionary;
-class CCArray;
 /**
  * @addtogroup platform
  * @{
@@ -47,28 +45,12 @@ class CC_DLL CCFileUtilsAndroid : public CCFileUtils
     CCFileUtilsAndroid();
 public:
     virtual ~CCFileUtilsAndroid();
+
     /* override funtions */
     bool init();
-
     virtual unsigned char* getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize);
-    /**
-     *  Gets the writeable path
-     *  @return  The path that can write/read file
-     */
     virtual std::string getWriteablePath();
-    
-    /**
-     *  Checks whether file exists.
-     *
-     *  @param strFullpathOfFile The full path of file.
-     */
-    virtual bool isFileExist(const std::string& strFullpathOfFile);
-    
-    /**
-     *  Checks whether the path is an absolute path.
-     *
-     *  @param strPath The path that needs to be checked.
-     */
+    virtual bool isFileExist(const std::string& strFilePath);
     virtual bool isAbsolutePath(const std::string& strPath);
 };
 
