@@ -67,7 +67,14 @@ public:
     virtual bool isAbsolutePath(const std::string& strPath);
     
     /**
-     *  
+     *  Gets full path for the directory and the filename.
+     *
+     *  @note Only iOS and Mac need to override this method since they are using
+     *        `[[NSBundle mainBundle] pathForResource: ofType: inDirectory:]` to make a full path.
+     *        Other platforms will use the default implementation of this method.
+     *  @param strDirectory The directory contains the file we are looking for.
+     *  @param strFilename  The name of the file.
+     *  @return The full path of the file, if the file can't be found, it will return an empty string.
      */
     virtual std::string getFullPathForDirectoryAndFilename(const std::string& strDirectory, const std::string& strFilename);
 };

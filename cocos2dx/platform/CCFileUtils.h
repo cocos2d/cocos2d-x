@@ -39,7 +39,7 @@ class CCArray;
  * @{
  */
 
-//! @brief  The super class for CCFileUtils
+//! @brief  Helper class to handle file operations
 class CC_DLL CCFileUtils : public TypeInfo
 {
 public:
@@ -79,22 +79,24 @@ public:
     virtual void purgeCachedEntries();
     
     /**
-    @brief Get resource file data
-    @param[in]  pszFileName The resource file name which contains the path.
-    @param[in]  pszMode The read mode of the file.
-    @param[out] pSize If the file read operation succeeds, it will be the data size, otherwise 0.
-    @return Upon success, a pointer to the data is returned, otherwise NULL.
-    @warning Recall: you are responsible for calling delete[] on any Non-NULL pointer returned.
-    */
+     *  Gets resource file data
+     *
+     *  @param[in]  pszFileName The resource file name which contains the path.
+     *  @param[in]  pszMode The read mode of the file.
+     *  @param[out] pSize If the file read operation succeeds, it will be the data size, otherwise 0.
+     *  @return Upon success, a pointer to the data is returned, otherwise NULL.
+     *  @warning Recall: you are responsible for calling delete[] on any Non-NULL pointer returned.
+     */
     virtual unsigned char* getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize);
 
     /**
-    @brief Get resource file data from a zip file.
-    @param[in]  pszFileName The resource file name which contains the relative path of the zip file.
-    @param[out] pSize If the file read operation succeeds, it will be the data size, otherwise 0.
-    @return Upon success, a pointer to the data is returned, otherwise NULL.
-    @warning Recall: you are responsible for calling delete[] on any Non-NULL pointer returned.
-    */
+     *  Gets resource file data from a zip file.
+     *
+     *  @param[in]  pszFileName The resource file name which contains the relative path of the zip file.
+     *  @param[out] pSize If the file read operation succeeds, it will be the data size, otherwise 0.
+     *  @return Upon success, a pointer to the data is returned, otherwise NULL.
+     *  @warning Recall: you are responsible for calling delete[] on any Non-NULL pointer returned.
+     */
     virtual unsigned char* getFileDataFromZip(const char* pszZipFilePath, const char* pszFileName, unsigned long * pSize);
 
     
@@ -149,6 +151,8 @@ public:
      * Loads the filenameLookup dictionary from the contents of a filename.
      * 
      * @note The plist file name should follow the format below:
+     * 
+     * @code
      * <?xml version="1.0" encoding="UTF-8"?>
      * <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
      * <plist version="1.0">
@@ -169,7 +173,7 @@ public:
      *     </dict>
      * </dict>
      * </plist>
-     *
+     * @endcode
      * @param filename The plist file name.
      *
      @since v2.1
@@ -199,7 +203,7 @@ public:
      *  Sets the array that contains the search order of the resources.
      *
      *  @param searchResolutionsOrder The source array that contains the search order of the resources.
-     *  @see getSearchResolutionsOrder(), fullPathForFilename().
+     *  @see getSearchResolutionsOrder(void), fullPathForFilename(const char*).
      *  @since v2.1
      */
     virtual void setSearchResolutionsOrder(const std::vector<std::string>& searchResolutionsOrder);
@@ -207,13 +211,14 @@ public:
     /**
      *  Gets the array that contains the search order of the resources.
      *
-     *  @see setSearchResolutionsOrder(), fullPathForFilename().
+     *  @see setSearchResolutionsOrder(const std::vector<std::string>&), fullPathForFilename(const char*).
      *  @since v2.1
      */
     virtual const std::vector<std::string>& getSearchResolutionsOrder();
     
     /** 
      *  Sets the array of search paths.
+     * 
      *  You can use this array to modify the search path of the resources.
      *  If you want to use "themes" or search resources in the "cache", you can do it easily by adding new entries in this array.
      *
@@ -225,7 +230,7 @@ public:
      *        	"resources-large" will be converted to "assets/resources-large" since it was a relative path.
      *
      *  @param searchPaths The array contains search paths.
-     *  @see fullPathForFilename()
+     *  @see fullPathForFilename(const char*)
      *  @since v2.1
      */
     virtual void setSearchPaths(const std::vector<std::string>& searchPaths);
@@ -234,14 +239,14 @@ public:
      *  Gets the array of search paths.
      *  
      *  @return The array of search paths.
-     *  @see fullPathForFilename().
+     *  @see fullPathForFilename(const char*).
      */
     virtual const std::vector<std::string>& getSearchPaths();
 
     /**
-    @brief   Gets the writeable path.
-    @return  The path that can write/read file
-    */
+     *  Gets the writeable path.
+     *  @return  The path that can write/read file
+     */
     virtual std::string getWriteablePath() = 0;
     
     /**
@@ -260,20 +265,37 @@ public:
     
     
     /**
-    @brief Set/Get whether pop-up a message box when the image load failed
-    */
+     * Sets/Gets whether pop-up a message box when the image load failed
+     */
     virtual void setPopupNotify(bool bNotify);
     virtual bool isPopupNotify();
 
 protected:
+    /**
+     *  The default constructor.
+     */
     CCFileUtils();
     
+    /**
+     *  Initializes the instance of CCFileUtils. It will set m_searchPathArray and m_searchResolutionsOrderArray to default values.
+     *
+     *  @note When you are porting Cocos2d-x to a new platform, you may need to take care of this method.
+     *        You could assign a default value to m_strDefaultResRootPath in the subclass of CCFileUtils(e.g. CCFileUtilsAndroid). Then invoke the CCFileUtils::init().
+     *  @return True if successed, otherwise it returns false.
+     *
+     */
     virtual bool init();
     
+    /**
+     *  Gets the new filename from the filename lookup dictionary.
+     *  @param pszFileName The original filename.
+     *  @return The new filename after searching in the filename lookup dictionary.
+     *          If the original filename wasn't in the dictionary, it will return original filename.
+     */
     virtual std::string getNewFilename(const char* pszFileName);
     
     /**
-     *  Get Full path for filename, resolution directory and search path.
+     *  Gets full path for filename, resolution directory and search path.
      *
      *  @param filename The file name.
      *  @param resolutionDirectory The resolution directory.
@@ -283,21 +305,46 @@ protected:
      */
     virtual std::string getPathForFilename(const std::string& filename, const std::string& resolutionDirectory, const std::string& searchPath);
     
+    /**
+     *  Gets full path for the directory and the filename.
+     *
+     *  @note Only iOS and Mac need to override this method since they are using
+     *        `[[NSBundle mainBundle] pathForResource: ofType: inDirectory:]` to make a full path.
+     *        Other platforms will use the default implementation of this method.
+     *  @param strDirectory The directory contains the file we are looking for.
+     *  @param strFilename  The name of the file.
+     *  @return The full path of the file, if the file can't be found, it will return an empty string.
+     */
     virtual std::string getFullPathForDirectoryAndFilename(const std::string& strDirectory, const std::string& strFilename);
     
     /** Dictionary used to lookup filenames based on a key.
      It is used internally by the following methods:
      
-     const char* fullPathForFilename(const char* )key;
+     std::string fullPathForFilename(const char*);
      
      @since v2.1
      */
     CCDictionary* m_pFilenameLookupDict;
     
+    /** 
+     *  The vector contains resolution folders.
+     */
     std::vector<std::string> m_searchResolutionsOrderArray;
+    
+    /**
+     * The vector contains search paths.
+     */
     std::vector<std::string> m_searchPathArray;
+    
+    /**
+     *  The default root path of resources.
+     *  If the default root path of resources needs to be changed, do it in the `init` method of CCFileUtils's subclass.
+     */
     std::string m_strDefaultResRootPath;
     
+    /**
+     *  The singleton pointer of CCFileUtils.
+     */
     static CCFileUtils* s_sharedFileUtils;
 };
 
