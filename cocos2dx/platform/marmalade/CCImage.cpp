@@ -24,7 +24,7 @@
 #include <vector>
 #include <string>
 #include <sstream> 
-
+#include <algorithm>
 #include "CCImage.h"
 #include "CCCommon.h"
 #include "CCStdC.h"
@@ -863,7 +863,13 @@ bool CCImage::initWithString(
 
 		BitmapDC &dc = sharedBitmapDC();
 
-		std::string fullFontName = CCFileUtils::sharedFileUtils()->fullPathForFilename(pFontName);
+        std::string fullFontName = pFontName;
+    	std::string lowerCasePath = fullFontName;
+    	std::transform(lowerCasePath.begin(), lowerCasePath.end(), lowerCasePath.begin(), ::tolower);
+        
+    	if ( lowerCasePath.find(".ttf") != std::string::npos ) {
+    		fullFontName = CCFileUtils::sharedFileUtils()->fullPathForFilename(pFontName);
+    	}
 
 		CC_BREAK_IF(! dc.getBitmap(pText, nWidth, nHeight, eAlignMask, fullFontName.c_str(), nSize));
 
