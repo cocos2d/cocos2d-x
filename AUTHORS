@@ -183,6 +183,9 @@ Developers:
     tiantian20007
         Fix crash for call runAnimation() in CCBAnimationManagerDelegate::completedAnimationSequenceNamed.
 
+    xyhl515
+        Fixed a bug that CCControlSwitch::setOn(isOn,false) doesn't work.
+
 Retired Core Developers:
     WenSheng Yang
 	Author of windows port, CCTextField, 
