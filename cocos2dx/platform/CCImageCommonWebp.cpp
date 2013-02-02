@@ -22,13 +22,13 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCImage.h"
-#include "CCTexture2D.h"
+#include "platform/CCImage.h"
+#include "textures/CCTexture2D.h"
+#include "platform/third_party/common/webp/webp/decode.h"
 #include "ccMacros.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "platform/third_party/common/webp/webp/decode.h"
 
 NS_CC_BEGIN
 
