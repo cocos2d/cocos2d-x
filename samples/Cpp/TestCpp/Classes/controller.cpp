@@ -120,6 +120,9 @@ static TestScene* CreateTestScene(int nIdx)
         pScene = new ClippingNodeTestScene();
         break;
 #endif
+    case TEST_FILEUTILS:
+        pScene = new FileUtilsTestScene();
+        break;
     default:
         break;
     }

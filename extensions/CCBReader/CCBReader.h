@@ -251,7 +251,7 @@ public:
     CCArray* getAnimationManagersForNodes();
 
     CCDictionary* getAnimationManagers();
-    void setAnimationManagers(CCDictionary* x);
+    void setAnimationManagers(CCDictionary* x);  // weak reference
     
     void addOwnerCallbackName(std::string name);
     void addOwnerCallbackNode(CCNode *node);

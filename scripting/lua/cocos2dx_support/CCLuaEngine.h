@@ -228,7 +228,7 @@ public:
 private:
     CCLuaEngine(void)
     : m_state(NULL)
-    , m_callFromLua(false)
+    , m_callFromLua(0)
     {
     }
     
@@ -236,7 +236,7 @@ private:
     bool pushFunction(int nHandler);
     
     lua_State* m_state;
-    bool m_callFromLua;
+    int m_callFromLua;
     
     static CCLuaEngine* m_defaultEngine;
 };

@@ -111,7 +111,7 @@ public:
                 int nFindTTF = fontName.find(".TTF");
                 if (nFindttf >= 0 || nFindTTF >= 0)
                 {
-                    fontPath = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(fontName.c_str());
+                    fontPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(fontName.c_str());
                     int nFindPos = fontName.rfind("/");
                     fontName = &fontName[nFindPos+1];
                     nFindPos = fontName.rfind(".");

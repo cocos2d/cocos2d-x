@@ -1,5 +1,6 @@
 #include <string.h>
 
+#include <algorithm>
 #include <vector>
 #include <string>
 #include <sstream>
@@ -194,11 +195,11 @@ public:
 			return -1;
 		}
 
-		if (eAlignMask == CCImage::kAlignCenter) {
+		if (eAlignMask == CCImage::kAlignCenter || eAlignMask == CCImage::kAlignTop || eAlignMask == CCImage::kAlignBottom) {
 			iRet = (iMaxLineWidth - vLines[iLineIndex].iLineWidth) / 2
 			- SHIFT6(face->glyph->metrics.horiBearingX );
 
-		} else if (eAlignMask == CCImage::kAlignRight) {
+		} else if (eAlignMask == CCImage::kAlignRight || eAlignMask == CCImage::kAlignTopRight || eAlignMask == CCImage::kAlignBottomRight) {
 			iRet = (iMaxLineWidth - vLines[iLineIndex].iLineWidth)
 			- SHIFT6(face->glyph->metrics.horiBearingX );
 		} else {
@@ -231,8 +232,10 @@ public:
     	std::string fontPath = family_name;
 
     	// check if the parameter is a font file shipped with the application
-    	if ( fontPath.find(".ttf") != std::string::npos ) {
-    		fontPath = cocos2d::CCApplication::sharedApplication()->getResourceRootPath() + std::string("/") + fontPath;
+    	std::string lowerCasePath = fontPath;
+    	std::transform(lowerCasePath.begin(), lowerCasePath.end(), lowerCasePath.begin(), ::tolower);
+    	if ( lowerCasePath.find(".ttf") != std::string::npos ) {
+    		fontPath = cocos2d::CCFileUtils::sharedFileUtils()->fullPathForFilename(fontPath.c_str());
 
     		FILE *f = fopen(fontPath.c_str(), "r");
     		if ( f ) {

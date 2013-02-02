@@ -127,7 +127,7 @@ public:
     
     CC_SYNTHESIZE(CCTextFieldDelegate *, m_pDelegate, Delegate);
     CC_SYNTHESIZE_READONLY(int, m_nCharCount, CharCount);
-    virtual ccColor3B getColorSpaceHolder();
+    virtual const ccColor3B& getColorSpaceHolder();
     virtual void setColorSpaceHolder(const ccColor3B& color);
 
     // input text property

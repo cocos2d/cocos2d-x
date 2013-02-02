@@ -18,16 +18,16 @@ private:
 public:
     static ccColor3BWapper* create(const ccColor3B& color);
     
-    ccColor3B getColor();
+    const ccColor3B& getColor() const;
 };
 
 enum
 {
     kIntValue,
     kFloatValue,
-    kPointerValue,
     kBoolValue,
     kUnsignedCharValue,
+    kStringValue
 };
 
 class CCBValue : public CCObject
@@ -37,9 +37,9 @@ private:
     {
         int nValue;
         float fValue;
-        const void *pointer;
     } mValue;
     
+    std::string m_strValue;
     int mType;
     
 public:
@@ -47,13 +47,15 @@ public:
     static CCBValue* create(bool bValue);
     static CCBValue* create(float fValue);
     static CCBValue* create(unsigned char byte);
-    static CCBValue* create(const void *pPointer);
+    static CCBValue* create(const char* pStr);
     
     int getIntValue();
     float getFloatValue();
     bool getBoolValue();
     unsigned char getByteValue();
-    const void* getPointer();
+    const char* getStringValue();
+    
+    int getType();
 };
 
 NS_CC_EXT_END

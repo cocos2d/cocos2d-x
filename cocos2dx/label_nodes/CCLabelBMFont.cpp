@@ -243,7 +243,7 @@ static void cc_utf8_trim_ws(std::vector<unsigned short>* str)
  *
  * Return value: the length of the string in characters
  **/
-long
+CC_DLL long
 cc_utf8_strlen (const char * p, int max)
 {
     long len = 0;
@@ -472,7 +472,7 @@ void CCBMFontConfiguration::purgeFontDefDictionary()
 
 std::set<unsigned int>* CCBMFontConfiguration::parseConfigFile(const char *controlFile)
 {    
-    std::string fullpath = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(controlFile);
+    std::string fullpath = CCFileUtils::sharedFileUtils()->fullPathForFilename(controlFile);
     CCString *contents = CCString::createWithContentsOfFile(fullpath.c_str());
 
     CCAssert(contents, "CCBMFontConfiguration::parseConfigFile | Open file error.");
@@ -1069,7 +1069,7 @@ void CCLabelBMFont::setColor(const ccColor3B& var)
     }
 }
 
-ccColor3B CCLabelBMFont::getColor()
+const ccColor3B& CCLabelBMFont::getColor()
 {
     return m_tColor;
 }
@@ -1448,7 +1448,7 @@ const char* CCLabelBMFont::getFntFile()
 void CCLabelBMFont::draw()
 {
     CCSpriteBatchNode::draw();
-    CCSize s = this->getContentSize();
+    const CCSize& s = this->getContentSize();
     CCPoint vertices[4]={
         ccp(0,0),ccp(s.width,0),
         ccp(s.width,s.height),ccp(0,s.height),

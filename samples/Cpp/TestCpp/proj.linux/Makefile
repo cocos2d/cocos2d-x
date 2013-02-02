@@ -17,7 +17,6 @@ INCLUDES =  -I../ \
 			-I$(COCOS2DX_PATH)/kazmath/include \
 			-I$(COCOS2DX_PATH)/platform \
 			-I$(COCOS2DX_PATH)/platform/linux \
-			-I$(COCOS2DX_PATH)/platform/third_party/linux/glew-1.7.0/glew-1.7.0/include/ \
 			-I$(COCOS2DX_PATH)/platform/third_party/linux/libxml2 \
 			-I$(COCOS2DX_PATH)/platform/third_party/linux/libjpeg  \
 			-I../../../../CocosDenshion/include \
@@ -122,6 +121,7 @@ OBJECTS = ../Classes/AccelerometerTest/AccelerometerTest.o \
 			../Classes/TransitionsTest/TransitionsTest.o \
 			../Classes/UserDefaultTest/UserDefaultTest.o \
 			../Classes/ZwoptexTest/ZwoptexTest.o \
+			../Classes/FileUtilsTest/FileUtilsTest.o \
 			../Classes/controller.o \
 			../Classes/testBasic.o \
 			../Classes/AppDelegate.o \
@@ -155,7 +155,7 @@ SHAREDLIBS_DIR = ../../../../CocosDenshion/third_party/fmod/api/lib
 SHAREDLIBS = -L$(SHAREDLIBS_DIR) -lfmodex
 endif
 
-SHAREDLIBS += -lglfw -lGL
+SHAREDLIBS += -lglfw 
 #SHAREDLIBS += -L../../../../lib/linux/Debug -lcocos2d -lrt -lz -lcocosdenshion -Wl,-rpath,../../../../../lib/linux/Debug/ 
 SHAREDLIBS += -Wl,-rpath,../../$(SHAREDLIBS_DIR)
 #SHAREDLIBS += -Wl,-rpath,../../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib

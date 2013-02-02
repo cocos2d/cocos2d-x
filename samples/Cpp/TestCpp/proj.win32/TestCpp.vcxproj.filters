@@ -190,9 +190,6 @@
     <Filter Include="Classes\ExtensionsTest\TableViewTest">
       <UniqueIdentifier>{2603ae57-b062-4281-9daf-c925634eaeb4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Classes\ExtensionsTest\AnimationsTest">
-      <UniqueIdentifier>{e8752620-8414-4f43-a572-5fa82650f223}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Classes\ExtensionsTest\ControlExtensionTest\CCControlPotentiometerTest">
       <UniqueIdentifier>{08850f9d-e7e5-4bca-ae90-cf8df391479f}</UniqueIdentifier>
     </Filter>
@@ -204,6 +201,15 @@
     </Filter>
     <Filter Include="Classes\ClippingNodeTest">
       <UniqueIdentifier>{b79f4701-6fe2-4996-83c5-0567bcf90287}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\CocosBuilderTest\AnimationsTest">
+      <UniqueIdentifier>{e8752620-8414-4f43-a572-5fa82650f223}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\FileUtilsTest">
+      <UniqueIdentifier>{a4c2111f-cf9f-492c-884d-3de24715adce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\EditBoxTest">
+      <UniqueIdentifier>{18a69e7e-8ca7-475a-bfbb-7296baab16ce}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -451,7 +457,7 @@
       <Filter>Classes\ExtensionsTest\TableViewTest</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\ExtensionsTest\CocosBuilderTest\AnimationsTest\AnimationsTestLayer.cpp">
-      <Filter>Classes\ExtensionsTest\AnimationsTest</Filter>
+      <Filter>Classes\ExtensionsTest\CocosBuilderTest\AnimationsTest</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlPotentiometerTest\CCControlPotentiometerTest.cpp">
       <Filter>Classes\ExtensionsTest\ControlExtensionTest\CCControlPotentiometerTest</Filter>
@@ -467,6 +473,12 @@
     </ClCompile>
     <ClCompile Include="..\Classes\ClippingNodeTest\ClippingNodeTest.cpp">
       <Filter>Classes\ClippingNodeTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\FileUtilsTest\FileUtilsTest.cpp">
+      <Filter>Classes\FileUtilsTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\EditBoxTest\EditBoxTest.cpp">
+      <Filter>Classes\ExtensionsTest\EditBoxTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -888,10 +900,10 @@
       <Filter>Classes\ExtensionsTest\TableViewTest</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\ExtensionsTest\CocosBuilderTest\AnimationsTest\AnimationsLayerLoader.h">
-      <Filter>Classes\ExtensionsTest\AnimationsTest</Filter>
+      <Filter>Classes\ExtensionsTest\CocosBuilderTest\AnimationsTest</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\ExtensionsTest\CocosBuilderTest\AnimationsTest\AnimationsTestLayer.h">
-      <Filter>Classes\ExtensionsTest\AnimationsTest</Filter>
+      <Filter>Classes\ExtensionsTest\CocosBuilderTest\AnimationsTest</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlPotentiometerTest\CCControlPotentiometerTest.h">
       <Filter>Classes\ExtensionsTest\ControlExtensionTest\CCControlPotentiometerTest</Filter>
@@ -907,6 +919,12 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ClippingNodeTest\ClippingNodeTest.h">
       <Filter>Classes\ClippingNodeTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\FileUtilsTest\FileUtilsTest.h">
+      <Filter>Classes\FileUtilsTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\EditBoxTest\EditBoxTest.h">
+      <Filter>Classes\ExtensionsTest\EditBoxTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

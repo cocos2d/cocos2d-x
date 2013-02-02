@@ -37,6 +37,8 @@
 #ifndef __CCACTION_CATMULLROM_H__
 #define __CCACTION_CATMULLROM_H__
 
+#include <vector>
+
 #include "CCActionInterval.h"
 #include "base_nodes/CCNode.h"
 #include "cocoa/CCGeometry.h"
@@ -52,7 +54,7 @@ NS_CC_BEGIN;
  Used by CCCardinalSplineTo and (By) and CCCatmullRomTo (and By) actions.
 @ingroup Actions
  */
-class CC_DLL CCPointArray : public CCNode
+class CC_DLL CCPointArray : public CCObject
 {
 public:
     
@@ -91,16 +93,12 @@ public:
     
     virtual CCObject* copyWithZone(CCZone *zone);
     
-    inline CCArray* getControlPoints(){ return m_pControlPoints; }
-    inline void setControlPoints(CCArray *controlPoints)
-    {
-        CC_SAFE_RETAIN(controlPoints);
-        CC_SAFE_RELEASE(m_pControlPoints);
-        m_pControlPoints = controlPoints;
-    }
+    const std::vector<CCPoint*>* getControlPoints();
+
+    void setControlPoints(std::vector<CCPoint*> *controlPoints);
 private:
     /** Array that contains the control points */
-    CCArray *m_pControlPoints;
+    std::vector<CCPoint*> *m_pControlPoints;
 };
 
 /** Cardinal Spline path.

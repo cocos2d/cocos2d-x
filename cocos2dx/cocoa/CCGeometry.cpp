@@ -55,13 +55,6 @@ void CCPoint::setPoint(float x, float y)
     this->y = y;
 }
 
-CCObject* CCPoint::copyWithZone(CCZone* pZone)
-{
-    CCPoint* pRet = new CCPoint();
-    pRet->setPoint(this->x, this->y);
-    return pRet;
-}
-
 bool CCPoint::equals(const CCPoint& target) const
 {
     return ((x == target.x) && (y == target.y));
@@ -96,13 +89,6 @@ void CCSize::setSize(float width, float height)
     this->height = height;
 }
 
-CCObject* CCSize::copyWithZone(CCZone* pZone)
-{
-    CCSize* pRet = new CCSize();
-    pRet->setSize(this->width, this->width);
-    return pRet;
-}
-
 bool CCSize::equals(const CCSize& target) const
 {
     return ((width == target.width) && (height == target.height));
@@ -133,21 +119,14 @@ CCRect& CCRect::operator= (const CCRect& other)
 
 void CCRect::setRect(float x, float y, float width, float height)
 {
-    // Only support that, the width and height > 0
-    CCAssert(width >= 0.0f && height >= 0.0f, "width and height of Rect must not less than 0.");
+    // CGRect can support width<0 or height<0
+    // CCAssert(width >= 0.0f && height >= 0.0f, "width and height of Rect must not less than 0.");
 
     origin.x = x;
     origin.y = y;
 
     size.width = width;
     size.height = height;
-}
-
-CCObject* CCRect::copyWithZone(CCZone* pZone)
-{
-    CCRect* pRet = new CCRect();
-    pRet->setRect(this->origin.x, this->origin.y, this->size.width, this->size.height);
-    return pRet;
 }
 
 bool CCRect::equals(const CCRect& rect) const

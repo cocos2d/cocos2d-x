@@ -13,6 +13,7 @@ class CCDirector : public CCObject
     double getAnimationInterval(void);
 
     bool isDisplayStats(void);
+    void setDisplayStats(bool bDisplayStats);
 
     bool isPaused(void);
     unsigned int getTotalFrames(void);
