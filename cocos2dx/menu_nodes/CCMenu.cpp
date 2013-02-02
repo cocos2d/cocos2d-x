@@ -179,12 +179,29 @@ void CCMenu::onExit()
 {
     if (m_eState == kCCMenuStateTrackingTouch)
     {
-        m_pSelectedItem->unselected();
+        if (m_pSelectedItem)
+        {
+            m_pSelectedItem->unselected();
+            m_pSelectedItem = NULL;
+        }
+        
         m_eState = kCCMenuStateWaiting;
-        m_pSelectedItem = NULL;
     }
 
     CCLayer::onExit();
+}
+
+void CCMenu::removeChild(CCNode* child, bool cleanup)
+{
+    CCMenuItem *pMenuItem = dynamic_cast<CCMenuItem*>(child);
+    CCAssert(pMenuItem != NULL, "Menu only supports MenuItem objects as children");
+    
+    if (m_pSelectedItem == pMenuItem)
+    {
+        m_pSelectedItem = NULL;
+    }
+    
+    CCNode::removeChild(child, cleanup);
 }
 
 //Menu - Events
@@ -198,7 +215,7 @@ void CCMenu::setHandlerPriority(int newPriority)
 void CCMenu::registerWithTouchDispatcher()
 {
     CCDirector* pDirector = CCDirector::sharedDirector();
-    pDirector->getTouchDispatcher()->addTargetedDelegate(this, kCCMenuHandlerPriority, true);
+    pDirector->getTouchDispatcher()->addTargetedDelegate(this, this->getTouchPriority(), true);
 }
 
 bool CCMenu::ccTouchBegan(CCTouch* touch, CCEvent* event)
@@ -630,7 +647,7 @@ void CCMenu::setColor(const ccColor3B& var)
     }
 }
 
-ccColor3B CCMenu::getColor(void)
+const ccColor3B& CCMenu::getColor(void)
 {
     return m_tColor;
 }

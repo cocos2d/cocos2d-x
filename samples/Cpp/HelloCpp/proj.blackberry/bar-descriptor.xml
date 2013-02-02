@@ -66,37 +66,30 @@
     
     <configuration id="com.qnx.qcc.configuration.exe.debug.446234419" name="Device-Debug">
        <platformArchitecture>armle-v7</platformArchitecture>
-       <asset path="empty/../../../../cocos2dx/platform/third_party/blackberry/libraries/armle-v7/libgrskia.so" type="Qnx/Elf">lib/libgrskia.so</asset>
        <asset path="Device-Debug/HelloCpp" entry="true" type="Qnx/Elf">HelloCpp</asset>
     </configuration>
     <configuration id="com.qnx.qcc.configuration.exe.release.1265921422" name="Device-Release">
        <platformArchitecture>armle-v7</platformArchitecture>
-       <asset path="empty/../../../../cocos2dx/platform/third_party/blackberry/libraries/armle-v7/libgrskia.so" type="Qnx/Elf">lib/libgrskia.so</asset>
        <asset path="Device-Release/HelloCpp" entry="true" type="Qnx/Elf">HelloCpp</asset>
     </configuration>
     <configuration id="com.qnx.qcc.configuration.exe.profile.1761000041" name="Device-Profile">
        <platformArchitecture>armle-v7</platformArchitecture>
-       <asset path="empty/../../../../cocos2dx/platform/third_party/blackberry/libraries/armle-v7/libgrskia.so" type="Qnx/Elf">lib/libgrskia.so</asset>
        <asset path="Device-Profile/HelloCpp" entry="true" type="Qnx/Elf">HelloCpp</asset>
     </configuration>
     <configuration id="com.qnx.qcc.configuration.exe.profile.coverage.1771167181" name="Device-Coverage">
        <platformArchitecture>armle-v7</platformArchitecture>
-       <asset path="empty/../../../../cocos2dx/platform/third_party/blackberry/libraries/armle-v7/libgrskia.so" type="Qnx/Elf">lib/libgrskia.so</asset>
        <asset path="Device-Coverage/HelloCpp" entry="true" type="Qnx/Elf">HelloCpp</asset>
     </configuration>
     <configuration id="com.qnx.qcc.configuration.exe.debug.660208940" name="Simulator">
        <platformArchitecture>x86</platformArchitecture>
-       <asset path="empty/../../../../cocos2dx/platform/third_party/blackberry/libraries/x86/libgrskia.so" type="Qnx/Elf">lib/libgrskia.so</asset>
        <asset path="Simulator/HelloCpp" entry="true" type="Qnx/Elf">HelloCpp</asset>
     </configuration>
     <configuration id="com.qnx.qcc.configuration.exe.profile.1237484173" name="Simulator-Profile">
        <platformArchitecture>x86</platformArchitecture>
-       <asset path="empty/../../../../cocos2dx/platform/third_party/blackberry/libraries/x86/libgrskia.so" type="Qnx/Elf">lib/libgrskia.so</asset>
        <asset path="Simulator-Profile/HelloCpp" entry="true" type="Qnx/Elf">HelloCpp</asset>
     </configuration>
     <configuration id="com.qnx.qcc.configuration.exe.profile.coverage.181538713" name="Simulator-Coverage">
        <platformArchitecture>x86</platformArchitecture>
-       <asset path="empty/../../../../cocos2dx/platform/third_party/blackberry/libraries/x86/libgrskia.so" type="Qnx/Elf">lib/libgrskia.so</asset>
        <asset path="Simulator-Coverage/HelloCpp" entry="true" type="Qnx/Elf">HelloCpp</asset>
     </configuration>
     

@@ -11,6 +11,8 @@
 
 #include <assert.h>
 #include "cocos2d.h"
+#include "js_bindings_config.h"
+#include "js_bindings_core.h"
 #include "uthash.h"
 #include "jsapi.h"
 #include "jsfriendapi.h"
@@ -19,10 +21,18 @@
 void js_log(const char *format, ...);
 
 using namespace cocos2d;
+using namespace std;
 
 typedef void (*sc_register_sth)(JSContext* cx, JSObject* global);
 
 void registerDefaultClasses(JSContext* cx, JSObject* global);
+
+
+class SimpleRunLoop : public CCObject
+{
+public:
+	void update(float d);
+};
 
 class ScriptingCore : public CCScriptEngineProtocol
 {
@@ -30,6 +40,7 @@ class ScriptingCore : public CCScriptEngineProtocol
 	JSContext *cx_;
 	JSObject  *global_;
 	JSObject  *debugGlobal_;
+	SimpleRunLoop* runLoop;
 	
 	ScriptingCore();
 public:
@@ -175,6 +186,7 @@ public:
 	/**
 	 * enable the debug environment
 	 */
+	void debugProcessInput(string str);
 	void enableDebugger();
 	JSObject* getDebugGlobal() { return debugGlobal_; }
 	
@@ -184,25 +196,28 @@ public:
 
 // some utility functions
 // to native
-long long jsval_to_long_long(JSContext *cx, jsval v);
-std::string jsval_to_std_string(JSContext *cx, jsval v);
-// you should free this pointer after you're done with it
-const char* jsval_to_c_string(JSContext *cx, jsval v);
-CCPoint jsval_to_ccpoint(JSContext *cx, jsval v);
-CCRect jsval_to_ccrect(JSContext *cx, jsval v);
-CCSize jsval_to_ccsize(JSContext *cx, jsval v);
-ccColor4B jsval_to_cccolor4b(JSContext *cx, jsval v);
-ccColor4F jsval_to_cccolor4f(JSContext *cx, jsval v);
-ccColor3B jsval_to_cccolor3b(JSContext *cx, jsval v);
+JSBool jsval_to_int32( JSContext *cx, jsval vp, int32_t *ret );
+JSBool jsval_to_uint32( JSContext *cx, jsval vp, uint32_t *ret );
+JSBool jsval_to_uint16( JSContext *cx, jsval vp, uint16_t *ret );
+JSBool jsval_to_long_long(JSContext *cx, jsval v, long long* ret);
+JSBool jsval_to_std_string(JSContext *cx, jsval v, std::string* ret);
+JSBool jsval_to_ccpoint(JSContext *cx, jsval v, CCPoint* ret);
+JSBool jsval_to_ccrect(JSContext *cx, jsval v, CCRect* ret);
+JSBool jsval_to_ccsize(JSContext *cx, jsval v, CCSize* ret);
+JSBool jsval_to_cccolor4b(JSContext *cx, jsval v, ccColor4B* ret);
+JSBool jsval_to_cccolor4f(JSContext *cx, jsval v, ccColor4F* ret);
+JSBool jsval_to_cccolor3b(JSContext *cx, jsval v, ccColor3B* ret);
 JSBool jsval_to_ccarray_of_CCPoint(JSContext* cx, jsval v, CCPoint **points, int *numPoints);
-CCArray* jsval_to_ccarray(JSContext* cx, jsval v);
-CCDictionary* jsval_to_ccdictionary(JSContext* cx, jsval v);
-CCAcceleration jsval_to_ccacceleration(JSContext* cx,jsval v);
-CCArray* jsvals_variadic_to_ccarray( JSContext *cx, jsval *vp, int argc);
+JSBool jsval_to_ccarray(JSContext* cx, jsval v, CCArray** ret);
+JSBool jsval_to_ccdictionary(JSContext* cx, jsval v, CCDictionary** ret);
+JSBool jsval_to_ccacceleration(JSContext* cx,jsval v, CCAcceleration* ret);
+JSBool jsvals_variadic_to_ccarray( JSContext *cx, jsval *vp, int argc, CCArray** ret);
 
 // from native
+jsval int32_to_jsval( JSContext *cx, int32_t l);
+jsval uint32_to_jsval( JSContext *cx, uint32_t number );
 jsval long_long_to_jsval(JSContext* cx, long long v);
-jsval std_string_to_jsval(JSContext* cx, std::string& v);
+jsval std_string_to_jsval(JSContext* cx, string& v);
 jsval c_string_to_jsval(JSContext* cx, const char* v);
 jsval ccpoint_to_jsval(JSContext* cx, CCPoint& v);
 jsval ccrect_to_jsval(JSContext* cx, CCRect& v);
@@ -218,10 +233,11 @@ JSObject* NewGlobalObject(JSContext* cx, bool debug = false);
 JSBool jsStartDebugger(JSContext* cx, unsigned argc, jsval* vp);
 JSBool jsGetScript(JSContext* cx, unsigned argc, jsval* vp);
 
-JSBool jsSocketOpen(JSContext* cx, unsigned argc, jsval* vp);
-JSBool jsSocketRead(JSContext* cx, unsigned argc, jsval* vp);
-JSBool jsSocketWrite(JSContext* cx, unsigned argc, jsval* vp);
-JSBool jsSocketClose(JSContext* cx, unsigned argc, jsval* vp);
+JSBool JSBDebug_StartDebugger(JSContext* cx, unsigned argc, jsval* vp);
+JSBool JSBDebug_BufferRead(JSContext* cx, unsigned argc, jsval* vp);
+JSBool JSBDebug_BufferWrite(JSContext* cx, unsigned argc, jsval* vp);
+JSBool JSBDebug_LockExecution(JSContext* cx, unsigned argc, jsval* vp);
+JSBool JSBDebug_UnlockExecution(JSContext* cx, unsigned argc, jsval* vp);
 
 // just a simple utility to avoid mem leaking when using JSString
 class JSStringWrapper
@@ -261,6 +277,10 @@ public:
 		}
 		buffer = JS_EncodeString(cx, string);
 	}
+	std::string get() {
+        return buffer;
+    }
+
 	operator std::string() {
 		return std::string(buffer);
 	}

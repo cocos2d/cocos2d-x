@@ -9,6 +9,21 @@ using namespace std;
 
 NS_CC_EXT_BEGIN
 
+CCNodeLoader::CCNodeLoader()
+{
+    m_pCustomProperties = new CCDictionary();
+}
+
+CCNodeLoader::~CCNodeLoader()
+{
+    CC_SAFE_RELEASE(m_pCustomProperties);
+}
+
+CCDictionary* CCNodeLoader::getCustomProperties()
+{
+    return m_pCustomProperties;
+}
+
 CCNode * CCNodeLoader::loadCCNode(CCNode * pParent, CCBReader * pCCBReader) {
     CCNode * ccNode = this->createCCNode(pParent, pCCBReader);
 
@@ -336,7 +351,7 @@ CCPoint CCNodeLoader::parsePropTypePosition(CCNode * pNode, CCNode * pParent, CC
     CCSize containerSize = pCCBReader->getAnimationManager()->getContainerSize(pParent);
     
     CCPoint pt = getAbsolutePosition(ccp(x,y), type, containerSize, pPropertyName);
-    pNode->setPosition(getAbsolutePosition(pt, type, containerSize, pPropertyName));;
+    pNode->setPosition(pt);
     
     if (pCCBReader->getAnimatedProperties()->find(pPropertyName) != pCCBReader->getAnimatedProperties()->end())
     {
@@ -408,8 +423,12 @@ CCSize CCNodeLoader::parsePropTypeSize(CCNode * pNode, CCNode * pParent, CCBRead
             
             width *= resolutionScale;
             height *= resolutionScale;
+            break;
         }
         default:
+        {
+            CCLog("Unknown CCB type.");
+        }
             break;
     }
     
@@ -821,9 +840,9 @@ CCNode * CCNodeLoader::parsePropTypeCCBFile(CCNode * pNode, CCNode * pParent, CC
     ccbFileName = ccbFileWithoutPathExtension + ".ccbi";
     
     // Load sub file
-    const char *path = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(ccbFileName.c_str());
+    std::string path = CCFileUtils::sharedFileUtils()->fullPathForFilename(ccbFileName.c_str());
     unsigned long size = 0;
-    unsigned char * pBytes = CCFileUtils::sharedFileUtils()->getFileData(path, "rb", &size);
+    unsigned char * pBytes = CCFileUtils::sharedFileUtils()->getFileData(path.c_str(), "rb", &size);
 
     CCBReader * ccbReader = new CCBReader(pCCBReader);
     ccbReader->autorelease();
@@ -840,12 +859,13 @@ CCNode * CCNodeLoader::parsePropTypeCCBFile(CCNode * pNode, CCNode * pParent, CC
     CC_SAFE_RETAIN(pCCBReader->mOwner);
     ccbReader->mOwner = pCCBReader->mOwner;
 
-    ccbReader->mOwnerOutletNames = pCCBReader->mOwnerOutletNames;
-    ccbReader->mOwnerOutletNodes = pCCBReader->mOwnerOutletNodes;
-    ccbReader->mOwnerOutletNodes->retain();
-    ccbReader->mOwnerCallbackNames = pCCBReader->mOwnerCallbackNames;
-    ccbReader->mOwnerCallbackNodes = pCCBReader->mOwnerCallbackNodes;
-    ccbReader->mOwnerCallbackNodes->retain();
+    // The assignments below are done in the CCBReader constructor.
+//     ccbReader->mOwnerOutletNames = pCCBReader->mOwnerOutletNames;
+//     ccbReader->mOwnerOutletNodes = pCCBReader->mOwnerOutletNodes;
+//     ccbReader->mOwnerOutletNodes->retain();
+//     ccbReader->mOwnerCallbackNames = pCCBReader->mOwnerCallbackNames;
+//     ccbReader->mOwnerCallbackNodes = pCCBReader->mOwnerCallbackNodes;
+//     ccbReader->mOwnerCallbackNodes->retain();
 
     data->release();
     
@@ -900,7 +920,9 @@ void CCNodeLoader::onHandlePropTypeScaleLock(CCNode * pNode, CCNode * pParent, c
 }
 
 void CCNodeLoader::onHandlePropTypeFloat(CCNode * pNode, CCNode * pParent, const char* pPropertyName, float pFloat, CCBReader * pCCBReader) {
-    ASSERT_FAIL_UNEXPECTED_PROPERTY(pPropertyName);
+//    ASSERT_FAIL_UNEXPECTED_PROPERTY(pPropertyName);
+    // It may be a custom property, add it to custom property dictionary.
+    m_pCustomProperties->setObject(CCBValue::create(pFloat), pPropertyName);
 }
 
 void CCNodeLoader::onHandlePropTypeDegrees(CCNode * pNode, CCNode * pParent, const char* pPropertyName, float pDegrees, CCBReader * pCCBReader) {
@@ -919,7 +941,9 @@ void CCNodeLoader::onHandlePropTypeInteger(CCNode * pNode, CCNode * pParent, con
     if(strcmp(pPropertyName, PROPERTY_TAG) == 0) {
         pNode->setTag(pInteger);
     } else {
-        ASSERT_FAIL_UNEXPECTED_PROPERTY(pPropertyName);
+ //       ASSERT_FAIL_UNEXPECTED_PROPERTY(pPropertyName);
+        // It may be a custom property, add it to custom property dictionary.
+        m_pCustomProperties->setObject(CCBValue::create(pInteger), pPropertyName);
     }
 }
 
@@ -937,7 +961,9 @@ void CCNodeLoader::onHandlePropTypeCheck(CCNode * pNode, CCNode * pParent, const
     } else if(strcmp(pPropertyName, PROPERTY_IGNOREANCHORPOINTFORPOSITION) == 0) {
         pNode->ignoreAnchorPointForPosition(pCheck);
     } else {
-        ASSERT_FAIL_UNEXPECTED_PROPERTY(pPropertyName);
+        //ASSERT_FAIL_UNEXPECTED_PROPERTY(pPropertyName);
+        // It may be a custom property, add it to custom property dictionary.
+        m_pCustomProperties->setObject(CCBValue::create(pCheck), pPropertyName);
     }
 }
 
@@ -978,7 +1004,9 @@ void CCNodeLoader::onHandlePropTypeFntFile(CCNode * pNode, CCNode * pParent, con
 }
 
 void CCNodeLoader::onHandlePropTypeString(CCNode * pNode, CCNode * pParent, const char* pPropertyName, const char * pString, CCBReader * pCCBReader) {
-    ASSERT_FAIL_UNEXPECTED_PROPERTY(pPropertyName);
+//    ASSERT_FAIL_UNEXPECTED_PROPERTY(pPropertyName);
+    // It may be a custom property, add it to custom property dictionary.
+    m_pCustomProperties->setObject(CCBValue::create(pString), pPropertyName);
 }
 
 void CCNodeLoader::onHandlePropTypeText(CCNode * pNode, CCNode * pParent, const char* pPropertyName, const char * pText, CCBReader * pCCBReader) {

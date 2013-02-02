@@ -50,10 +50,10 @@ class CCPhysicsSprite : public CCSprite
 protected:
     bool    m_bIgnoreBodyRotation;
 #if CC_ENABLE_CHIPMUNK_INTEGRATION
-    cpBody  *m_pBody;
+    cpBody  *m_pCPBody;
     
 #elif CC_ENABLE_BOX2D_INTEGRATION
-    b2Body  *m_pBody;
+    b2Body  *m_pB2Body;
     
     // Pixels to Meters ratio
     float   m_fPTMRatio;
@@ -102,27 +102,27 @@ public:
     
 #if CC_ENABLE_CHIPMUNK_INTEGRATION
     
-    virtual CCPoint getPosition();
+    virtual const CCPoint& getPosition();
     virtual void setPosition(const CCPoint &position);
     virtual float getRotation();
     virtual void setRotation(float fRotation);
     virtual CCAffineTransform nodeToParentTransform();
     
     /** Body accessor when using regular Chipmunk */
-    cpBody* getBody() const;
-    void setBody(cpBody *pBody);
+    cpBody* getCPBody() const;
+    void setCPBody(cpBody *pBody);
 
 #elif CC_ENABLE_BOX2D_INTEGRATION
     
-    virtual CCPoint getPosition();
+    virtual const CCPoint& getPosition();
     virtual void setPosition(const CCPoint &position);
     virtual float getRotation();
     virtual void setRotation(float fRotation);
     virtual CCAffineTransform nodeToParentTransform();
     
     /** Body accessor when using box2d */
-    b2Body* getBody() const;
-    void setBody(b2Body *pBody);
+    b2Body* getB2Body() const;
+    void setB2Body(b2Body *pBody);
     
     float getPTMRatio() const;
     void setPTMRatio(float fPTMRatio);

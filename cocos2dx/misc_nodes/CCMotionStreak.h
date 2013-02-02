@@ -73,7 +73,7 @@ public:
     virtual void setBlendFunc(ccBlendFunc blendFunc);
     virtual ccBlendFunc getBlendFunc(void);
     virtual void setColor(const ccColor3B& color);
-    virtual ccColor3B getColor(void);
+    virtual const ccColor3B& getColor(void);
     virtual GLubyte getOpacity(void);
     virtual void setOpacity(GLubyte opacity);
     virtual void setOpacityModifyRGB(bool bValue);

@@ -794,7 +794,7 @@ void CCScheduler::update(float dt)
         {
             if (pEngine != NULL && kScriptTypeJavascript == pEngine->getScriptType())
             {
-                pEngine->executeSchedule(NULL, dt, (CCNode *)pEntry->target);
+                pEngine->executeSchedule(0, dt, (CCNode *)pEntry->target);
             }
 
             pEntry->target->update(dt);
@@ -808,7 +808,7 @@ void CCScheduler::update(float dt)
         {
             if (pEngine != NULL && kScriptTypeJavascript == pEngine->getScriptType())
             {
-                pEngine->executeSchedule(NULL, dt, (CCNode *)pEntry->target);
+                pEngine->executeSchedule(0, dt, (CCNode *)pEntry->target);
             }
             
             pEntry->target->update(dt);
@@ -822,7 +822,7 @@ void CCScheduler::update(float dt)
         {
             if (pEngine != NULL && kScriptTypeJavascript == pEngine->getScriptType())
             {
-                pEngine->executeSchedule(NULL, dt, (CCNode *)pEntry->target);
+                pEngine->executeSchedule(0, dt, (CCNode *)pEntry->target);
             }
 
             pEntry->target->update(dt);

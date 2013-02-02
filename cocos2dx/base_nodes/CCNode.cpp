@@ -270,7 +270,7 @@ void CCNode::setScaleY(float newScaleY)
 }
 
 /// position getter
-CCPoint CCNode::getPosition()
+const CCPoint& CCNode::getPosition()
 {
     return m_obPosition;
 }
@@ -282,15 +282,15 @@ void CCNode::setPosition(const CCPoint& newPosition)
     m_bTransformDirty = m_bInverseDirty = true;
 }
 
-const CCPoint& CCNode::getPositionLua(void)
-{
-    return m_obPosition;
-}
-
 void CCNode::getPosition(float* x, float* y)
 {
     *x = m_obPosition.x;
     *y = m_obPosition.y;
+}
+
+void CCNode::setPosition(float x, float y)
+{
+    setPosition(ccp(x, y));
 }
 
 float CCNode::getPositionX(void)
@@ -311,11 +311,6 @@ void CCNode::setPositionX(float x)
 void CCNode::setPositionY(float y)
 {
     setPosition(ccp(m_obPosition.x, y));
-}
-
-void CCNode::setPosition(float x, float y)
-{
-    setPosition(ccp(x, y));
 }
 
 /// children getter
@@ -368,13 +363,13 @@ void CCNode::setVisible(bool var)
     m_bVisible = var;
 }
 
-CCPoint CCNode::getAnchorPointInPoints()
+const CCPoint& CCNode::getAnchorPointInPoints()
 {
     return m_obAnchorPointInPoints;
 }
 
 /// anchorPoint getter
-CCPoint CCNode::getAnchorPoint()
+const CCPoint& CCNode::getAnchorPoint()
 {
     return m_obAnchorPoint;
 }
@@ -390,7 +385,7 @@ void CCNode::setAnchorPoint(const CCPoint& point)
 }
 
 /// contentSize getter
-CCSize CCNode::getContentSize()
+const CCSize& CCNode::getContentSize()
 {
     return m_obContentSize;
 }
@@ -929,9 +924,7 @@ void CCNode::onExit()
         CCScriptEngineManager::sharedManager()->getScriptEngine()->executeNodeEvent(this, kCCNodeOnExit);
     }
 
-    arrayMakeObjectsPerformSelector(m_pChildren, onExit, CCNode*);
-
-    
+    arrayMakeObjectsPerformSelector(m_pChildren, onExit, CCNode*);    
 }
 
 void CCNode::registerScriptHandler(int nHandler)
@@ -949,13 +942,6 @@ void CCNode::unregisterScriptHandler(void)
         LUALOG("[LUA] Remove CCNode event handler: %d", m_nScriptHandler);
         m_nScriptHandler = 0;
     }
-}
-
-void CCNode::scheduleUpdateWithPriorityLua(int nHandler, int priority)
-{
-    unscheduleUpdate();
-    m_nUpdateScriptHandler = nHandler;
-    m_pScheduler->scheduleUpdateForTarget(this, priority, !m_bRunning);
 }
 
 void CCNode::setActionManager(CCActionManager* actionManager)
@@ -1031,6 +1017,13 @@ void CCNode::scheduleUpdate()
 
 void CCNode::scheduleUpdateWithPriority(int priority)
 {
+    m_pScheduler->scheduleUpdateForTarget(this, priority, !m_bRunning);
+}
+
+void CCNode::scheduleUpdateWithPriorityLua(int nHandler, int priority)
+{
+    unscheduleUpdate();
+    m_nUpdateScriptHandler = nHandler;
     m_pScheduler->scheduleUpdateForTarget(this, priority, !m_bRunning);
 }
 
@@ -1239,11 +1232,11 @@ CCPoint CCNode::convertTouchToNodeSpaceAR(CCTouch *touch)
     return this->convertToNodeSpaceAR(point);
 }
 
-// MARMALADE ADDED
 void CCNode::updateTransform()
 {
     // Recursively iterate over children
     arrayMakeObjectsPerformSelector(m_pChildren, updateTransform, CCNode*);
 }
+
 
 NS_CC_END

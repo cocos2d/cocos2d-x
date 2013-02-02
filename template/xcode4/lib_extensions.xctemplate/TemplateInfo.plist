@@ -1056,7 +1056,7 @@
 			<key>Path</key>
 			<string>libs/extensions/GUI/CCEditBox/CCEditBoxImplIOS.mm</string>
 		</dict>
-		<key>libs/extensions/GUI/CCEditBox/EditBoxImplIOS.h</key>
+		<key>libs/extensions/GUI/CCEditBox/CCEditBoxImplMac.h</key>
 		<dict>
 			<key>Group</key>
 			<array>
@@ -1066,11 +1066,11 @@
 				<string>CCEditBox</string>
 			</array>
 			<key>Path</key>
-			<string>libs/extensions/GUI/CCEditBox/EditBoxImplIOS.h</string>
+			<string>libs/extensions/GUI/CCEditBox/CCEditBoxImplMac.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>libs/extensions/GUI/CCEditBox/EditBoxImplIOS.mm</key>
+		<key>libs/extensions/GUI/CCEditBox/CCEditBoxImplMac.mm</key>
 		<dict>
 			<key>Group</key>
 			<array>
@@ -1080,7 +1080,7 @@
 				<string>CCEditBox</string>
 			</array>
 			<key>Path</key>
-			<string>libs/extensions/GUI/CCEditBox/EditBoxImplIOS.mm</string>
+			<string>libs/extensions/GUI/CCEditBox/CCEditBoxImplMac.mm</string>
 		</dict>
 		<key>libs/extensions/GUI/CCScrollView/CCScrollView.cpp</key>
 		<dict>
@@ -1186,6 +1186,41 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
+		<key>libs/extensions/LocalStorage/LocalStorage.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>LocalStorage</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/LocalStorage/LocalStorage.cpp</string>
+		</dict>
+		<key>libs/extensions/LocalStorage/LocalStorage.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>LocalStorage</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/LocalStorage/LocalStorage.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/extensions/LocalStorage/LocalStorageAndroid.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>LocalStorage</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/LocalStorage/LocalStorageAndroid.cpp</string>
+		</dict>
 		<key>libs/extensions/network/HttpClient.cpp</key>
 		<dict>
 			<key>Group</key>
@@ -1284,6 +1319,28 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
+		<key>libs/extensions/proj.marmalade/cocos2dx-ext.mkf</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>proj.marmalade</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/proj.marmalade/cocos2dx-ext.mkf</string>
+		</dict>
+		<key>libs/extensions/proj.marmalade/cocos2dx-ext_public.defines.txt</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>proj.marmalade</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/proj.marmalade/cocos2dx-ext_public.defines.txt</string>
+		</dict>
 	</dict>
 	<key>Nodes</key>
 	<array>
@@ -1371,8 +1428,8 @@
 		<string>libs/extensions/GUI/CCEditBox/CCEditBoxImpl.h</string>
 		<string>libs/extensions/GUI/CCEditBox/CCEditBoxImplIOS.h</string>
 		<string>libs/extensions/GUI/CCEditBox/CCEditBoxImplIOS.mm</string>
-		<string>libs/extensions/GUI/CCEditBox/EditBoxImplIOS.h</string>
-		<string>libs/extensions/GUI/CCEditBox/EditBoxImplIOS.mm</string>
+		<string>libs/extensions/GUI/CCEditBox/CCEditBoxImplMac.h</string>
+		<string>libs/extensions/GUI/CCEditBox/CCEditBoxImplMac.mm</string>
 		<string>libs/extensions/GUI/CCScrollView/CCScrollView.cpp</string>
 		<string>libs/extensions/GUI/CCScrollView/CCScrollView.h</string>
 		<string>libs/extensions/GUI/CCScrollView/CCSorting.cpp</string>
@@ -1381,6 +1438,9 @@
 		<string>libs/extensions/GUI/CCScrollView/CCTableView.h</string>
 		<string>libs/extensions/GUI/CCScrollView/CCTableViewCell.cpp</string>
 		<string>libs/extensions/GUI/CCScrollView/CCTableViewCell.h</string>
+		<string>libs/extensions/LocalStorage/LocalStorage.cpp</string>
+		<string>libs/extensions/LocalStorage/LocalStorage.h</string>
+		<string>libs/extensions/LocalStorage/LocalStorageAndroid.cpp</string>
 		<string>libs/extensions/network/HttpClient.cpp</string>
 		<string>libs/extensions/network/HttpClient.h</string>
 		<string>libs/extensions/network/HttpRequest.h</string>
@@ -1389,6 +1449,8 @@
 		<string>libs/extensions/physics_nodes/CCPhysicsDebugNode.h</string>
 		<string>libs/extensions/physics_nodes/CCPhysicsSprite.cpp</string>
 		<string>libs/extensions/physics_nodes/CCPhysicsSprite.h</string>
+		<string>libs/extensions/proj.marmalade/cocos2dx-ext.mkf</string>
+		<string>libs/extensions/proj.marmalade/cocos2dx-ext_public.defines.txt</string>
 	</array>
 </dict>
 </plist>

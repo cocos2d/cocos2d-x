@@ -126,7 +126,6 @@
 		15A3DA541682F826002FB0C5 /* CCScale9Sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A3DA051682F826002FB0C5 /* CCScale9Sprite.cpp */; };
 		15A3DA551682F826002FB0C5 /* CCEditBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A3DA081682F826002FB0C5 /* CCEditBox.cpp */; };
 		15A3DA571682F826002FB0C5 /* CCEditBoxImplIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 15A3DA0E1682F826002FB0C5 /* CCEditBoxImplIOS.mm */; };
-		15A3DA581682F826002FB0C5 /* EditBoxImplIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 15A3DA101682F826002FB0C5 /* EditBoxImplIOS.mm */; };
 		15A3DA591682F826002FB0C5 /* CCScrollView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A3DA121682F826002FB0C5 /* CCScrollView.cpp */; };
 		15A3DA5A1682F826002FB0C5 /* CCSorting.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A3DA141682F826002FB0C5 /* CCSorting.cpp */; };
 		15A3DA5B1682F826002FB0C5 /* CCTableView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A3DA161682F826002FB0C5 /* CCTableView.cpp */; };
@@ -224,8 +223,11 @@
 		15E2ADA1165CBB0700F7743F /* ClippingNodeTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15E2AD9F165CBB0700F7743F /* ClippingNodeTest.cpp */; };
 		15FC61A816095C2B00AE81F8 /* ccb in Resources */ = {isa = PBXBuildFile; fileRef = 15FC61A716095C2B00AE81F8 /* ccb */; };
 		1A14AE0615DA5E780064E300 /* EditBoxTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A14AE0415DA5E780064E300 /* EditBoxTest.cpp */; };
+		1A27573F1697CF2B00504026 /* CCEditBoxImplAndroid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A27573D1697CF2B00504026 /* CCEditBoxImplAndroid.cpp */; };
 		1A4D4A2615FD7E2200F61EEB /* CustomTableViewCell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A4D4A2215FD7E2200F61EEB /* CustomTableViewCell.cpp */; };
 		1A4D4A2715FD7E2200F61EEB /* TableViewTestScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A4D4A2415FD7E2200F61EEB /* TableViewTestScene.cpp */; };
+		1AB2D71716B649C200D72C48 /* FileUtilsTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AB2D71516B649C200D72C48 /* FileUtilsTest.cpp */; };
+		1AB2D71B16B64DC600D72C48 /* Misc in Resources */ = {isa = PBXBuildFile; fileRef = 1AB2D71A16B64DC600D72C48 /* Misc */; };
 		1ACB3244164770DE00914215 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ACB3243164770DE00914215 /* libcurl.a */; };
 		1D3623260D0F684500981E51 /* testsAppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* testsAppDelegate.mm */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
@@ -525,8 +527,6 @@
 		15A3DA0A1682F826002FB0C5 /* CCEditBoxImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEditBoxImpl.h; sourceTree = "<group>"; };
 		15A3DA0D1682F826002FB0C5 /* CCEditBoxImplIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEditBoxImplIOS.h; sourceTree = "<group>"; };
 		15A3DA0E1682F826002FB0C5 /* CCEditBoxImplIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCEditBoxImplIOS.mm; sourceTree = "<group>"; };
-		15A3DA0F1682F826002FB0C5 /* EditBoxImplIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditBoxImplIOS.h; sourceTree = "<group>"; };
-		15A3DA101682F826002FB0C5 /* EditBoxImplIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = EditBoxImplIOS.mm; sourceTree = "<group>"; };
 		15A3DA121682F826002FB0C5 /* CCScrollView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCScrollView.cpp; sourceTree = "<group>"; };
 		15A3DA131682F826002FB0C5 /* CCScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCScrollView.h; sourceTree = "<group>"; };
 		15A3DA141682F826002FB0C5 /* CCSorting.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSorting.cpp; sourceTree = "<group>"; };
@@ -777,10 +777,15 @@
 		15FC61A716095C2B00AE81F8 /* ccb */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ccb; sourceTree = "<group>"; };
 		1A14AE0415DA5E780064E300 /* EditBoxTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EditBoxTest.cpp; sourceTree = "<group>"; };
 		1A14AE0515DA5E780064E300 /* EditBoxTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditBoxTest.h; sourceTree = "<group>"; };
+		1A27573D1697CF2B00504026 /* CCEditBoxImplAndroid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCEditBoxImplAndroid.cpp; sourceTree = "<group>"; };
+		1A27573E1697CF2B00504026 /* CCEditBoxImplAndroid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEditBoxImplAndroid.h; sourceTree = "<group>"; };
 		1A4D4A2215FD7E2200F61EEB /* CustomTableViewCell.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CustomTableViewCell.cpp; sourceTree = "<group>"; };
 		1A4D4A2315FD7E2200F61EEB /* CustomTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTableViewCell.h; sourceTree = "<group>"; };
 		1A4D4A2415FD7E2200F61EEB /* TableViewTestScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TableViewTestScene.cpp; sourceTree = "<group>"; };
 		1A4D4A2515FD7E2200F61EEB /* TableViewTestScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewTestScene.h; sourceTree = "<group>"; };
+		1AB2D71516B649C200D72C48 /* FileUtilsTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileUtilsTest.cpp; sourceTree = "<group>"; };
+		1AB2D71616B649C200D72C48 /* FileUtilsTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileUtilsTest.h; sourceTree = "<group>"; };
+		1AB2D71A16B64DC600D72C48 /* Misc */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Misc; sourceTree = "<group>"; };
 		1ACB3243164770DE00914215 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../../../cocos2dx/platform/third_party/ios/libraries/libcurl.a; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D3623240D0F684500981E51 /* testsAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = testsAppDelegate.h; sourceTree = "<group>"; };
@@ -1282,10 +1287,10 @@
 				15A3DA081682F826002FB0C5 /* CCEditBox.cpp */,
 				15A3DA091682F826002FB0C5 /* CCEditBox.h */,
 				15A3DA0A1682F826002FB0C5 /* CCEditBoxImpl.h */,
+				1A27573D1697CF2B00504026 /* CCEditBoxImplAndroid.cpp */,
+				1A27573E1697CF2B00504026 /* CCEditBoxImplAndroid.h */,
 				15A3DA0D1682F826002FB0C5 /* CCEditBoxImplIOS.h */,
 				15A3DA0E1682F826002FB0C5 /* CCEditBoxImplIOS.mm */,
-				15A3DA0F1682F826002FB0C5 /* EditBoxImplIOS.h */,
-				15A3DA101682F826002FB0C5 /* EditBoxImplIOS.mm */,
 			);
 			path = CCEditBox;
 			sourceTree = "<group>";
@@ -1394,6 +1399,7 @@
 				15AA9CB515B7EC460033D6C2 /* EffectsAdvancedTest */,
 				15AA9CB815B7EC460033D6C2 /* EffectsTest */,
 				15AA9CBB15B7EC460033D6C2 /* ExtensionsTest */,
+				1AB2D71416B649C200D72C48 /* FileUtilsTest */,
 				15AA9CF115B7EC460033D6C2 /* FontTest */,
 				15AA9CF415B7EC460033D6C2 /* IntervalTest */,
 				15AA9CF715B7EC460033D6C2 /* KeypadTest */,
@@ -2115,6 +2121,16 @@
 			path = ../../Classes/ExtensionsTest/TableViewTest;
 			sourceTree = "<group>";
 		};
+		1AB2D71416B649C200D72C48 /* FileUtilsTest */ = {
+			isa = PBXGroup;
+			children = (
+				1AB2D71516B649C200D72C48 /* FileUtilsTest.cpp */,
+				1AB2D71616B649C200D72C48 /* FileUtilsTest.h */,
+			);
+			name = FileUtilsTest;
+			path = ../Classes/FileUtilsTest;
+			sourceTree = "<group>";
+		};
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
@@ -2153,33 +2169,34 @@
 		78C7DDAA14EBA5050085D0C2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				15384F131611A44F0021DC07 /* fps_images.png */,
-				15FC61A716095C2B00AE81F8 /* ccb */,
-				15D2551915E5FD6B000D5E89 /* ipad */,
-				15BA623415E4EAD7002BC3A5 /* ipadhd */,
-				15BA623015E4EAC3002BC3A5 /* hd */,
-				D4EF949F15BD2D9800D803EB /* Icon-144.png */,
-				D4EF949D15BD2D9600D803EB /* Icon-72.png */,
-				D4EF949B15BD2D8E00D803EB /* Icon-114.png */,
-				D4EF949915BD2D8B00D803EB /* Icon-57.png */,
-				1552794F157C64F9007CC855 /* Shaders */,
 				789B560C15197BE00038CD1E /* animations */,
-				78C7DDBE14EBA5050085D0C2 /* background.mp3 */,
-				78C7DDBF14EBA5050085D0C2 /* background.ogg */,
-				7855E0DF153FEF240059DD9A /* Default.png */,
-				D446FD6D16102124000ADA7B /* Default@2x.png */,
-				D41A0AD0160F154A004552AE /* Default-568h@2x.png */,
-				78C7DDC014EBA5050085D0C2 /* effect1.raw */,
-				78C7DDC114EBA5050085D0C2 /* effect1.wav */,
-				78C7DDC214EBA5050085D0C2 /* effect2.ogg */,
+				15FC61A716095C2B00AE81F8 /* ccb */,
 				78ED2F84153D5BC500330E29 /* extensions */,
 				789B560E15197BF30038CD1E /* fonts */,
-				78C7DDEB14EBA5050085D0C2 /* Hello.png */,
+				15BA623015E4EAC3002BC3A5 /* hd */,
 				789B561015197BFB0038CD1E /* Images */,
-				78C7DEBD14EBA5060085D0C2 /* music.mid */,
+				15D2551915E5FD6B000D5E89 /* ipad */,
+				15BA623415E4EAD7002BC3A5 /* ipadhd */,
+				1AB2D71A16B64DC600D72C48 /* Misc */,
 				78CAE768156F8124002A7A68 /* Particles */,
+				1552794F157C64F9007CC855 /* Shaders */,
 				789B561215197C040038CD1E /* TileMaps */,
 				789B561315197C040038CD1E /* zwoptex */,
+				78C7DEBD14EBA5060085D0C2 /* music.mid */,
+				78C7DDBE14EBA5050085D0C2 /* background.mp3 */,
+				78C7DDBF14EBA5050085D0C2 /* background.ogg */,
+				78C7DDC214EBA5050085D0C2 /* effect2.ogg */,
+				D41A0AD0160F154A004552AE /* Default-568h@2x.png */,
+				7855E0DF153FEF240059DD9A /* Default.png */,
+				D446FD6D16102124000ADA7B /* Default@2x.png */,
+				15384F131611A44F0021DC07 /* fps_images.png */,
+				78C7DDEB14EBA5050085D0C2 /* Hello.png */,
+				D4EF949B15BD2D8E00D803EB /* Icon-114.png */,
+				D4EF949F15BD2D9800D803EB /* Icon-144.png */,
+				D4EF949915BD2D8B00D803EB /* Icon-57.png */,
+				D4EF949D15BD2D9600D803EB /* Icon-72.png */,
+				78C7DDC014EBA5050085D0C2 /* effect1.raw */,
+				78C7DDC114EBA5050085D0C2 /* effect1.wav */,
 			);
 			name = Resources;
 			path = ../Resources;
@@ -2292,6 +2309,7 @@
 				D446FD6E16102124000ADA7B /* Default@2x.png in Resources */,
 				15384F141611A44F0021DC07 /* fps_images.png in Resources */,
 				15A3D9961682F7F9002FB0C5 /* CMakeLists.txt in Resources */,
+				1AB2D71B16B64DC600D72C48 /* Misc in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2504,7 +2522,6 @@
 				15A3DA541682F826002FB0C5 /* CCScale9Sprite.cpp in Sources */,
 				15A3DA551682F826002FB0C5 /* CCEditBox.cpp in Sources */,
 				15A3DA571682F826002FB0C5 /* CCEditBoxImplIOS.mm in Sources */,
-				15A3DA581682F826002FB0C5 /* EditBoxImplIOS.mm in Sources */,
 				15A3DA591682F826002FB0C5 /* CCScrollView.cpp in Sources */,
 				15A3DA5A1682F826002FB0C5 /* CCSorting.cpp in Sources */,
 				15A3DA5B1682F826002FB0C5 /* CCTableView.cpp in Sources */,
@@ -2517,6 +2534,8 @@
 				15A3DAED1682F8A6002FB0C5 /* CocosDenshion.m in Sources */,
 				15A3DAEE1682F8A6002FB0C5 /* SimpleAudioEngine.mm in Sources */,
 				15A3DAEF1682F8A6002FB0C5 /* SimpleAudioEngine_objc.m in Sources */,
+				1A27573F1697CF2B00504026 /* CCEditBoxImplAndroid.cpp in Sources */,
+				1AB2D71716B649C200D72C48 /* FileUtilsTest.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

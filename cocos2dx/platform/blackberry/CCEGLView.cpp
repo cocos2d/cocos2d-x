@@ -77,6 +77,7 @@ static CCTouch *s_pTouches[MAX_TOUCHES] = { NULL };
 static CCEGLView* s_pInstance = NULL;
 
 CCEGLView::CCEGLView()
+	: m_pEventHandler(NULL)
 {
 	m_eglDisplay = EGL_NO_DISPLAY;
 	m_eglContext = EGL_NO_CONTEXT;
@@ -103,7 +104,16 @@ CCEGLView::CCEGLView()
 
 CCEGLView::~CCEGLView()
 {
+}
 
+void CCEGLView::setEventHandler(EventHandler* pHandler)
+{
+	m_pEventHandler = pHandler;
+}
+
+const char* CCEGLView::getWindowGroupId() const
+{
+	return m_windowGroupID;
 }
 
 void CCEGLView::release()
@@ -575,6 +585,9 @@ bool CCEGLView::handleEvents()
 		// break if no more events
 		if (event == NULL)
 			break;
+			
+		if (m_pEventHandler && m_pEventHandler->HandleBPSEvent(event))
+			continue;
 
 		domain = bps_event_get_domain(event);
 

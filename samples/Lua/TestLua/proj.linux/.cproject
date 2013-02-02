@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?fileVersion 4.0.0?><cproject storage_type_id="org.eclipse.cdt.core.XmlProjectDescriptionStorage">
+<?fileVersion 4.0.0?>
+
+<cproject storage_type_id="org.eclipse.cdt.core.XmlProjectDescriptionStorage">
 	<storageModule moduleId="org.eclipse.cdt.core.settings">
 		<cconfiguration id="cdt.managedbuild.config.gnu.exe.debug.684675641">
 			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="cdt.managedbuild.config.gnu.exe.debug.684675641" moduleId="org.eclipse.cdt.core.settings" name="Debug">
@@ -14,7 +16,7 @@
 				</extensions>
 			</storageModule>
 			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-				<configuration artifactName="${ProjName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.gnu.exe.debug.684675641" name="Debug" parent="cdt.managedbuild.config.gnu.exe.debug" prebuildStep="mkdir -p bin &amp;&amp; cp -R ../../../../../samples/Cpp/TestCpp/Resources ../../../../../samples/Lua/TestLua/ &amp;&amp; rm ../../../../../samples/Lua/TestLua/Resources/.gitignore">
+				<configuration artifactName="${ProjName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.gnu.exe.debug.684675641" name="Debug" parent="cdt.managedbuild.config.gnu.exe.debug" prebuildStep="mkdir -p bin &amp;&amp; cp -R -n ../../../../../samples/Cpp/TestCpp/Resources ../../../../../samples/Lua/TestLua/">
 					<folderInfo id="cdt.managedbuild.config.gnu.exe.debug.684675641." name="/" resourcePath="">
 						<toolChain id="cdt.managedbuild.toolchain.gnu.exe.debug.1168665521" name="Linux GCC" superClass="cdt.managedbuild.toolchain.gnu.exe.debug">
 							<targetPlatform id="cdt.managedbuild.target.gnu.platform.exe.debug.2039781202" name="Debug Platform" superClass="cdt.managedbuild.target.gnu.platform.exe.debug"/>
@@ -34,7 +36,6 @@
 									<listOptionValue builtIn="false" value="../../../../../cocos2dx/kazmath/include"/>
 									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/linux"/>
 									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/linux"/>
-									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/include"/>
 									<listOptionValue builtIn="false" value="../../../../../CocosDenshion/include"/>
 									<listOptionValue builtIn="false" value="../../../../../scripting/lua/cocos2dx_support"/>
 									<listOptionValue builtIn="false" value="../../../../../scripting/lua/lua"/>
@@ -53,7 +54,6 @@
 									<listOptionValue builtIn="false" value="../../../../../cocos2dx/kazmath/include"/>
 									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/linux"/>
 									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/linux"/>
-									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/include"/>
 									<listOptionValue builtIn="false" value="../../../../../CocosDenshion/include"/>
 									<listOptionValue builtIn="false" value="../../../../../scripting/lua/cocos2dx_support"/>
 									<listOptionValue builtIn="false" value="../../../../../scripting/lua/lua"/>
@@ -77,7 +77,6 @@
 									<listOptionValue builtIn="false" value="&quot;../../../../../CocosDenshion/proj.linux/${ConfigName}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;../../../../../scripting/lua/proj.linux/${ConfigName}&quot;"/>
 									<listOptionValue builtIn="false" value="../../../../../CocosDenshion/third_party/fmod/api/lib"/>
-									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.154309798" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
@@ -111,7 +110,7 @@
 				</extensions>
 			</storageModule>
 			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-				<configuration artifactName="${ProjName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.gnu.exe.release.890968076" name="Release" parent="cdt.managedbuild.config.gnu.exe.release" prebuildStep="mkdir -p bin &amp;&amp; cp -R ../../../../../samples/Cpp/TestCpp/Resources ../../../../../samples/Lua/TestLua/ &amp;&amp; rm ../../../../../samples/Lua/TestLua/Resources/.gitignore">
+				<configuration artifactName="${ProjName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.gnu.exe.release.890968076" name="Release" parent="cdt.managedbuild.config.gnu.exe.release" prebuildStep="mkdir -p bin &amp;&amp; cp -R -n ../../../../../samples/Cpp/TestCpp/Resources ../../../../../samples/Lua/TestLua/">
 					<folderInfo id="cdt.managedbuild.config.gnu.exe.release.890968076." name="/" resourcePath="">
 						<toolChain id="cdt.managedbuild.toolchain.gnu.exe.release.720811514" name="Linux GCC" superClass="cdt.managedbuild.toolchain.gnu.exe.release">
 							<targetPlatform id="cdt.managedbuild.target.gnu.platform.exe.release.962949232" name="Debug Platform" superClass="cdt.managedbuild.target.gnu.platform.exe.release"/>
@@ -128,7 +127,6 @@
 									<listOptionValue builtIn="false" value="../../../../../cocos2dx/kazmath/include"/>
 									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/linux"/>
 									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/linux"/>
-									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/include"/>
 									<listOptionValue builtIn="false" value="../../../../../CocosDenshion/include"/>
 									<listOptionValue builtIn="false" value="../../../../../scripting/lua/cocos2dx_support"/>
 									<listOptionValue builtIn="false" value="../../../../../scripting/lua/lua"/>
@@ -150,7 +148,6 @@
 									<listOptionValue builtIn="false" value="../../../../../cocos2dx/kazmath/include"/>
 									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/linux"/>
 									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/linux"/>
-									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/include"/>
 									<listOptionValue builtIn="false" value="../../../../../CocosDenshion/include"/>
 									<listOptionValue builtIn="false" value="../../../../../scripting/lua/cocos2dx_support"/>
 									<listOptionValue builtIn="false" value="../../../../../scripting/lua/lua"/>
@@ -174,7 +171,6 @@
 									<listOptionValue builtIn="false" value="&quot;../../../../../CocosDenshion/proj.linux/${ConfigName}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;../../../../../scripting/lua/proj.linux/${ConfigName}&quot;"/>
 									<listOptionValue builtIn="false" value="../../../../../CocosDenshion/third_party/fmod/api/lib"/>
-									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.760339141" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
@@ -203,7 +199,7 @@
 				</extensions>
 			</storageModule>
 			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-				<configuration artifactName="${ProjName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.gnu.exe.debug.684675641.877862202" name="Debug64" parent="cdt.managedbuild.config.gnu.exe.debug" prebuildStep="mkdir -p bin &amp;&amp; cp -R ../../../../../samples/Cpp/TestCpp/Resources ../../../../../samples/Lua/TestLua/ &amp;&amp; rm ../../../../../samples/Lua/TestLua/Resources/.gitignore">
+				<configuration artifactName="${ProjName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.gnu.exe.debug.684675641.877862202" name="Debug64" parent="cdt.managedbuild.config.gnu.exe.debug" prebuildStep="mkdir -p bin &amp;&amp; cp -R -n ../../../../../samples/Cpp/TestCpp/Resources ../../../../../samples/Lua/TestLua/">
 					<folderInfo id="cdt.managedbuild.config.gnu.exe.debug.684675641.877862202." name="/" resourcePath="">
 						<toolChain id="cdt.managedbuild.toolchain.gnu.exe.debug.1546937154" name="Linux GCC" superClass="cdt.managedbuild.toolchain.gnu.exe.debug">
 							<targetPlatform id="cdt.managedbuild.target.gnu.platform.exe.debug.1457614998" name="Debug Platform" superClass="cdt.managedbuild.target.gnu.platform.exe.debug"/>
@@ -223,7 +219,6 @@
 									<listOptionValue builtIn="false" value="../../../../../cocos2dx/kazmath/include"/>
 									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/linux"/>
 									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/linux"/>
-									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/include"/>
 									<listOptionValue builtIn="false" value="../../../../../CocosDenshion/include"/>
 									<listOptionValue builtIn="false" value="../../../../../scripting/lua/cocos2dx_support"/>
 									<listOptionValue builtIn="false" value="../../../../../scripting/lua/lua"/>
@@ -242,7 +237,6 @@
 									<listOptionValue builtIn="false" value="../../../../../cocos2dx/kazmath/include"/>
 									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/linux"/>
 									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/linux"/>
-									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/include"/>
 									<listOptionValue builtIn="false" value="../../../../../CocosDenshion/include"/>
 									<listOptionValue builtIn="false" value="../../../../../scripting/lua/cocos2dx_support"/>
 									<listOptionValue builtIn="false" value="../../../../../scripting/lua/lua"/>
@@ -266,7 +260,6 @@
 									<listOptionValue builtIn="false" value="&quot;../../../../../CocosDenshion/proj.linux/${ConfigName}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;../../../../../scripting/lua/proj.linux/${ConfigName}&quot;"/>
 									<listOptionValue builtIn="false" value="../../../../../CocosDenshion/third_party/fmod/lib64/api/lib"/>
-									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.1332538227" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
@@ -300,7 +293,7 @@
 				</extensions>
 			</storageModule>
 			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-				<configuration artifactName="${ProjName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.gnu.exe.release.890968076.613854536" name="Release64" parent="cdt.managedbuild.config.gnu.exe.release" prebuildStep="mkdir -p bin &amp;&amp; cp -R ../../../../../samples/Cpp/TestCpp/Resources ../../../../../samples/Lua/TestLua/ &amp;&amp; rm ../../../../../samples/Lua/TestLua/Resources/.gitignore">
+				<configuration artifactName="${ProjName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.gnu.exe.release.890968076.613854536" name="Release64" parent="cdt.managedbuild.config.gnu.exe.release" prebuildStep="mkdir -p bin &amp;&amp; cp -R -n ../../../../../samples/Cpp/TestCpp/Resources ../../../../../samples/Lua/TestLua/">
 					<folderInfo id="cdt.managedbuild.config.gnu.exe.release.890968076.613854536." name="/" resourcePath="">
 						<toolChain id="cdt.managedbuild.toolchain.gnu.exe.release.965057447" name="Linux GCC" superClass="cdt.managedbuild.toolchain.gnu.exe.release">
 							<targetPlatform id="cdt.managedbuild.target.gnu.platform.exe.release.864921619" name="Debug Platform" superClass="cdt.managedbuild.target.gnu.platform.exe.release"/>
@@ -317,7 +310,6 @@
 									<listOptionValue builtIn="false" value="../../../../../cocos2dx/kazmath/include"/>
 									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/linux"/>
 									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/linux"/>
-									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/include"/>
 									<listOptionValue builtIn="false" value="../../../../../CocosDenshion/include"/>
 									<listOptionValue builtIn="false" value="../../../../../scripting/lua/cocos2dx_support"/>
 									<listOptionValue builtIn="false" value="../../../../../scripting/lua/lua"/>
@@ -339,7 +331,6 @@
 									<listOptionValue builtIn="false" value="../../../../../cocos2dx/kazmath/include"/>
 									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/linux"/>
 									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/linux"/>
-									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/include"/>
 									<listOptionValue builtIn="false" value="../../../../../CocosDenshion/include"/>
 									<listOptionValue builtIn="false" value="../../../../../scripting/lua/cocos2dx_support"/>
 									<listOptionValue builtIn="false" value="../../../../../scripting/lua/lua"/>
@@ -363,7 +354,6 @@
 									<listOptionValue builtIn="false" value="&quot;../../../../../CocosDenshion/proj.linux/${ConfigName}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;../../../../../scripting/lua/proj.linux/${ConfigName}&quot;"/>
 									<listOptionValue builtIn="false" value="../../../../../CocosDenshion/third_party/fmod/lib64/api/lib"/>
-									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.479170088" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>

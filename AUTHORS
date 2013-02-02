@@ -12,6 +12,12 @@ Developers:
     Rolando Abarca
         Javascript Binding and testjs
 
+    Victor K(fnz)
+        fix memory leak of CCTextureCache::addImageAsync() on iOS
+
+    tks2shimizu
+        add CCFloat, CCDouble and CCBool
+
     chenium
         fix a bug that CCRenderTexture can not work when coming to foreground on Android
 
@@ -42,10 +48,14 @@ Developers:
     edbartley
          update MSVS and MAC projects to use project-relative path
          CCControl* should not respond to touches if the control is not visible
-	 Some improvements for CCScrollView and CCTableView.
+         Some improvements for CCScrollView and CCTableView.
+         Touch priority can't be set to the value specified by a call to CCMenu::setTouchPriority(int).
+         CCTableView crashes if a CCTableViewDelegate is not provided.
 
-    Weeds 
-         use fontconfig to enhance font rendering on linux
+    Weeds (Andre Rudlaff)
+        Used fontconfig to enhance font rendering on linux.
+        Fixed a bug about missing horizontal alignment for Custom TTF fonts on linux.
+        Fixed a bug that the truetype fonts from resource directory can't be found on linux.	
 
     Nat Weiss (iphonegamekit.com)
         author of Mac port
@@ -122,7 +132,7 @@ Developers:
     Carlos Sessa
 	implement the accelerometer module for Android port
 
-    JianHua Chen (Dumganhar)
+    James Chen(dumganhar)
         author of Bada port
 
     Erawppa
@@ -155,6 +165,7 @@ Developers:
 
     johnangel
         OpenGL framebuffer access violation fix.
+        Enable Windows XP support in Visual Studio 2012 Update 1.
 
     Peter Farkas (fape)
         contributes Marmalade port for gles20 branch
@@ -165,6 +176,15 @@ Developers:
 
     Igor Zavorotkin (ivzave)
         Adding lua support for linux platform.
+	
+    Jozef Prídavok (jpridavok)
+        Adding CCEditBox implementation for Mac OSX.
+
+    tiantian20007
+        Fix crash for call runAnimation() in CCBAnimationManagerDelegate::completedAnimationSequenceNamed.
+
+    xyhl515
+        Fixed a bug that CCControlSwitch::setOn(isOn,false) doesn't work.
 
 Retired Core Developers:
     WenSheng Yang

@@ -1,5 +1,8 @@
 #include "AppDelegate.h"
 
+#include <vector>
+#include <string>
+
 #include "cocos2d.h"
 #include "SimpleAudioEngine.h"
 #include "ScriptingCore.h"
@@ -7,9 +10,11 @@
 #include "cocos2d_specifics.hpp"
 #include "js_bindings_chipmunk_registration.h"
 #include "js_bindings_ccbreader.h"
+#include "js_bindings_system_registration.h"
 
 USING_NS_CC;
 using namespace CocosDenshion;
+using namespace std;
 
 AppDelegate::AppDelegate()
 {
@@ -33,24 +38,70 @@ bool AppDelegate::applicationDidFinishLaunching()
     CCSize designSize = CCSizeMake(320, 480);
     CCSize resourceSize = CCSizeMake(320, 480);
     
-    if (screenSize.height > 768)
+    std::vector<std::string> resDirOrders;
+    
+    TargetPlatform platform = CCApplication::sharedApplication()->getTargetPlatform();
+    if (platform == kTargetIphone || platform == kTargetIpad)
     {
-        resourceSize = CCSizeMake(1536, 2048);
-        CCFileUtils::sharedFileUtils()->setResourceDirectory("resources-ipadhd");
-    }
-     else if (screenSize.height > 640)
-    {
-        resourceSize = CCSizeMake(768, 1536);
-        CCFileUtils::sharedFileUtils()->setResourceDirectory("resources-ipad");
-    }
-    else if (screenSize.height > 320)
-    {
-        resourceSize = CCSizeMake(640, 960);
-        CCFileUtils::sharedFileUtils()->setResourceDirectory("resources-iphonehd");
+        if (screenSize.height > 1024)
+        {
+            resourceSize = CCSizeMake(1536, 2048);
+            resDirOrders.push_back("resources-ipadhd");
+            resDirOrders.push_back("resources-ipad");
+            resDirOrders.push_back("resources-iphonehd");
+        }
+        else if (screenSize.height > 960)
+        {
+            resourceSize = CCSizeMake(768, 1024);
+            resDirOrders.push_back("resources-ipad");
+            resDirOrders.push_back("resources-iphonehd");
+        }
+        else if (screenSize.height > 480)
+        {
+            resourceSize = CCSizeMake(640, 960);
+            resDirOrders.push_back("resources-iphonehd");
+            resDirOrders.push_back("resources-iphone");
+        }
+        else
+        {
+            resourceSize = CCSizeMake(320, 480);
+            resDirOrders.push_back("resources-iphone");
+        }
         
     }
+    else if (platform == kTargetAndroid || platform == kTargetWindows)
+    {
+        if (screenSize.height > 960)
+        {
+            resourceSize = CCSizeMake(1280, 1920);
+            resDirOrders.push_back("resources-xlarge");
+            resDirOrders.push_back("resources-large");
+            resDirOrders.push_back("resources-medium");
+            resDirOrders.push_back("resources-small");
+        }
+        else if (screenSize.height > 720)
+        {
+            resourceSize = CCSizeMake(640, 960);
+            resDirOrders.push_back("resources-large");
+            resDirOrders.push_back("resources-medium");
+            resDirOrders.push_back("resources-small");
+        }
+        else if (screenSize.height > 480)
+        {
+            resourceSize = CCSizeMake(480, 720);
+            resDirOrders.push_back("resources-medium");
+            resDirOrders.push_back("resources-small");
+        }
+        else
+        {
+            resourceSize = CCSizeMake(320, 480);
+            resDirOrders.push_back("resources-small");
+        }
+    }
     
-    pDirector->setContentScaleFactor(resourceSize.height/designSize.height);
+    CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(resDirOrders);
+    
+    pDirector->setContentScaleFactor(resourceSize.width/designSize.width);
 
     CCEGLView::sharedOpenGLView()->setDesignResolutionSize(designSize.width, designSize.height, kResolutionNoBorder);
     
@@ -65,6 +116,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(register_cocos2dx_js_extensions);
     sc->addRegisterCallback(register_CCBuilderReader);
     sc->addRegisterCallback(jsb_register_chipmunk);
+    sc->addRegisterCallback(jsb_register_system);
     
     sc->start();
 

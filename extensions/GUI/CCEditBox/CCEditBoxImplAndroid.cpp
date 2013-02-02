@@ -24,6 +24,9 @@
  ****************************************************************************/
 
 #include "CCEditBoxImplAndroid.h"
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+
 #include "CCEditBox.h"
 #include "jni/Java_org_cocos2dx_lib_Cocos2dxBitmap.h"
 #include "jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
@@ -235,4 +238,6 @@ void CCEditBoxImplAndroid::closeKeyboard()
 }
 
 NS_CC_EXT_END
+
+#endif /* #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) */
 

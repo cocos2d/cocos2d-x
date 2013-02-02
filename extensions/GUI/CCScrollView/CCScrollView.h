@@ -187,7 +187,7 @@ public:
     virtual void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent);
 
     virtual void setContentSize(const CCSize & size);
-    virtual CCSize getContentSize();
+    virtual const CCSize& getContentSize();
 
 	void updateInset();
     /**

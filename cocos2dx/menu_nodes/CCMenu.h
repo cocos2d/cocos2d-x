@@ -125,6 +125,7 @@ public:
     virtual void addChild(CCNode * child, int zOrder);
     virtual void addChild(CCNode * child, int zOrder, int tag);
     virtual void registerWithTouchDispatcher();
+    virtual void removeChild(CCNode* child, bool cleanup);
 
     /**
     @brief For phone event handle functions

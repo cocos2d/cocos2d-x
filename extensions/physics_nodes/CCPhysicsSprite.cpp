@@ -34,9 +34,9 @@ NS_CC_EXT_BEGIN
 CCPhysicsSprite::CCPhysicsSprite()
 : m_bIgnoreBodyRotation(false)
 #if CC_ENABLE_CHIPMUNK_INTEGRATION
-, m_pBody(NULL)
+, m_pCPBody(NULL)
 #elif CC_ENABLE_BOX2D_INTEGRATION
-, m_pBody(NULL)
+, m_pB2Body(NULL)
 , m_fPTMRatio(0.0f)
 #endif
 {}
@@ -166,32 +166,33 @@ void CCPhysicsSprite::setIgnoreBodyRotation(bool bIgnoreBodyRotation)
 
 #if CC_ENABLE_CHIPMUNK_INTEGRATION
 
-cpBody* CCPhysicsSprite::getBody() const
+cpBody* CCPhysicsSprite::getCPBody() const
 {
-    return m_pBody;
+    return m_pCPBody;
 }
 
-void CCPhysicsSprite::setBody(cpBody *pBody)
+void CCPhysicsSprite::setCPBody(cpBody *pBody)
 {
-    m_pBody = pBody;
+    m_pCPBody = pBody;
 }
 
 // Override the setters and getters to always reflect the body's properties.
-CCPoint CCPhysicsSprite::getPosition()
+const CCPoint& CCPhysicsSprite::getPosition()
 {
-    cpVect cpPos = cpBodyGetPos(m_pBody);
-    return ccp(cpPos.x, cpPos.y);
+    cpVect cpPos = cpBodyGetPos(m_pCPBody);
+    m_obPosition = ccp(cpPos.x, cpPos.y);
+    return m_obPosition;
 }
 
 void CCPhysicsSprite::setPosition(const CCPoint &pos)
 {
     cpVect cpPos = cpv(pos.x, pos.y);
-    cpBodySetPos(m_pBody, cpPos);
+    cpBodySetPos(m_pCPBody, cpPos);
 }
 
 float CCPhysicsSprite::getRotation()
 {
-    return (m_bIgnoreBodyRotation ? CCSprite::getRotation() : -CC_RADIANS_TO_DEGREES(cpBodyGetAngle(m_pBody)));
+    return (m_bIgnoreBodyRotation ? CCSprite::getRotation() : -CC_RADIANS_TO_DEGREES(cpBodyGetAngle(m_pCPBody)));
 }
 
 void CCPhysicsSprite::setRotation(float fRotation)
@@ -202,16 +203,16 @@ void CCPhysicsSprite::setRotation(float fRotation)
     }
     else
     {
-        cpBodySetAngle(m_pBody, -CC_DEGREES_TO_RADIANS(fRotation));
+        cpBodySetAngle(m_pCPBody, -CC_DEGREES_TO_RADIANS(fRotation));
     }
 }
 
 // returns the transform matrix according the Chipmunk Body values
 CCAffineTransform CCPhysicsSprite::nodeToParentTransform()
 {
-    cpVect rot = (m_bIgnoreBodyRotation ? cpvforangle(-CC_DEGREES_TO_RADIANS(m_fRotationX)) : m_pBody->rot);
-    float x = m_pBody->p.x + rot.x*(-m_obAnchorPointInPoints.x) - rot.y*(-m_obAnchorPointInPoints.y);
-    float y = m_pBody->p.y + rot.y*(-m_obAnchorPointInPoints.x) + rot.x*(-m_obAnchorPointInPoints.y);
+    cpVect rot = (m_bIgnoreBodyRotation ? cpvforangle(-CC_DEGREES_TO_RADIANS(m_fRotationX)) : m_pCPBody->rot);
+    float x = m_pCPBody->p.x + rot.x*(-m_obAnchorPointInPoints.x) - rot.y*(-m_obAnchorPointInPoints.y);
+    float y = m_pCPBody->p.y + rot.y*(-m_obAnchorPointInPoints.x) + rot.x*(-m_obAnchorPointInPoints.y);
     
     if (m_bIgnoreAnchorPointForPosition)
     {
@@ -224,14 +225,14 @@ CCAffineTransform CCPhysicsSprite::nodeToParentTransform()
 
 #elif CC_ENABLE_BOX2D_INTEGRATION
 
-b2Body* CCPhysicsSprite::getBody() const
+b2Body* CCPhysicsSprite::getB2Body() const
 {
-    return m_pBody;
+    return m_pB2Body;
 }
 
-void CCPhysicsSprite::setBody(b2Body *pBody)
+void CCPhysicsSprite::setB2Body(b2Body *pBody)
 {
-    m_pBody = pBody;
+    m_pB2Body = pBody;
 }
 
 float CCPhysicsSprite::getPTMRatio() const
@@ -245,25 +246,26 @@ void CCPhysicsSprite::setPTMRatio(float fRatio)
 }
 
 // Override the setters and getters to always reflect the body's properties.
-CCPoint CCPhysicsSprite::getPosition()
+const CCPoint& CCPhysicsSprite::getPosition()
 {
-    b2Vec2 pos = m_pBody->GetPosition();
+    b2Vec2 pos = m_pB2Body->GetPosition();
     
     float x = pos.x * m_fPTMRatio;
     float y = pos.y * m_fPTMRatio;
-    return ccp(x,y);
+    m_obPosition = ccp(x,y);
+    return m_obPosition;
 }
 
 void CCPhysicsSprite::setPosition(const CCPoint &pos)
 {
-    float angle = m_pBody->GetAngle();
-    m_pBody->SetTransform(b2Vec2(pos.x / m_fPTMRatio, pos.y / m_fPTMRatio), angle);
+    float angle = m_pB2Body->GetAngle();
+    m_pB2Body->SetTransform(b2Vec2(pos.x / m_fPTMRatio, pos.y / m_fPTMRatio), angle);
 }
 
 float CCPhysicsSprite::getRotation()
 {
     return (m_bIgnoreBodyRotation ? CCSprite::getRotation() :
-            CC_RADIANS_TO_DEGREES(m_pBody->GetAngle()));
+            CC_RADIANS_TO_DEGREES(m_pB2Body->GetAngle()));
 }
 
 void CCPhysicsSprite::setRotation(float fRotation)
@@ -274,16 +276,16 @@ void CCPhysicsSprite::setRotation(float fRotation)
     }
     else
     {
-        b2Vec2 p = m_pBody->GetPosition();
+        b2Vec2 p = m_pB2Body->GetPosition();
         float radians = CC_DEGREES_TO_RADIANS(fRotation);
-        m_pBody->SetTransform(p, radians);
+        m_pB2Body->SetTransform(p, radians);
     }
 }
 
 // returns the transform matrix according the Box2D Body values
 CCAffineTransform CCPhysicsSprite::nodeToParentTransform()
 {
-    b2Vec2 pos = m_pBody->GetPosition();
+    b2Vec2 pos = m_pB2Body->GetPosition();
     
     float x = pos.x * m_fPTMRatio;
     float y = pos.y * m_fPTMRatio;
@@ -295,7 +297,7 @@ CCAffineTransform CCPhysicsSprite::nodeToParentTransform()
     }
     
     // Make matrix
-    float radians = m_pBody->GetAngle();
+    float radians = m_pB2Body->GetAngle();
     float c = cosf(radians);
     float s = sinf(radians);
     
