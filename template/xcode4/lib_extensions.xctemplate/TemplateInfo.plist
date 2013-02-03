@@ -1082,6 +1082,32 @@
 			<key>Path</key>
 			<string>libs/extensions/GUI/CCEditBox/CCEditBoxImplMac.mm</string>
 		</dict>
+		<key>libs/extensions/GUI/CCEditBox/CCEditBoxImplWin.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>GUI</string>
+				<string>CCEditBox</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/GUI/CCEditBox/CCEditBoxImplWin.cpp</string>
+		</dict>
+		<key>libs/extensions/GUI/CCEditBox/CCEditBoxImplWin.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>GUI</string>
+				<string>CCEditBox</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/GUI/CCEditBox/CCEditBoxImplWin.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
 		<key>libs/extensions/GUI/CCScrollView/CCScrollView.cpp</key>
 		<dict>
 			<key>Group</key>
@@ -1430,6 +1456,8 @@
 		<string>libs/extensions/GUI/CCEditBox/CCEditBoxImplIOS.mm</string>
 		<string>libs/extensions/GUI/CCEditBox/CCEditBoxImplMac.h</string>
 		<string>libs/extensions/GUI/CCEditBox/CCEditBoxImplMac.mm</string>
+		<string>libs/extensions/GUI/CCEditBox/CCEditBoxImplWin.cpp</string>
+		<string>libs/extensions/GUI/CCEditBox/CCEditBoxImplWin.h</string>
 		<string>libs/extensions/GUI/CCScrollView/CCScrollView.cpp</string>
 		<string>libs/extensions/GUI/CCScrollView/CCScrollView.h</string>
 		<string>libs/extensions/GUI/CCScrollView/CCSorting.cpp</string>

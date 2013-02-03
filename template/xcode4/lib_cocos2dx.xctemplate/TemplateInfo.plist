@@ -1901,6 +1901,17 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
+		<key>libs/cocos2dx/platform/CCFileUtils.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>platform</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/platform/CCFileUtils.cpp</string>
+		</dict>
 		<key>libs/cocos2dx/platform/CCFileUtils.h</key>
 		<dict>
 			<key>Group</key>
@@ -2172,7 +2183,7 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>libs/cocos2dx/platform/ios/CCFileUtils.mm</key>
+		<key>libs/cocos2dx/platform/ios/CCFileUtilsIOS.h</key>
 		<dict>
 			<key>Group</key>
 			<array>
@@ -2182,7 +2193,21 @@
 				<string>ios</string>
 			</array>
 			<key>Path</key>
-			<string>libs/cocos2dx/platform/ios/CCFileUtils.mm</string>
+			<string>libs/cocos2dx/platform/ios/CCFileUtilsIOS.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2dx/platform/ios/CCFileUtilsIOS.mm</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>platform</string>
+				<string>ios</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/platform/ios/CCFileUtilsIOS.mm</string>
 		</dict>
 		<key>libs/cocos2dx/platform/ios/CCGL.h</key>
 		<dict>
@@ -3890,6 +3915,7 @@
 		<string>libs/cocos2dx/platform/CCCommon.h</string>
 		<string>libs/cocos2dx/platform/CCEGLViewProtocol.cpp</string>
 		<string>libs/cocos2dx/platform/CCEGLViewProtocol.h</string>
+		<string>libs/cocos2dx/platform/CCFileUtils.cpp</string>
 		<string>libs/cocos2dx/platform/CCFileUtils.h</string>
 		<string>libs/cocos2dx/platform/CCImage.h</string>
 		<string>libs/cocos2dx/platform/CCPlatformConfig.h</string>
@@ -3911,7 +3937,8 @@
 		<string>libs/cocos2dx/platform/ios/CCES2Renderer.h</string>
 		<string>libs/cocos2dx/platform/ios/CCES2Renderer.m</string>
 		<string>libs/cocos2dx/platform/ios/CCESRenderer.h</string>
-		<string>libs/cocos2dx/platform/ios/CCFileUtils.mm</string>
+		<string>libs/cocos2dx/platform/ios/CCFileUtilsIOS.h</string>
+		<string>libs/cocos2dx/platform/ios/CCFileUtilsIOS.mm</string>
 		<string>libs/cocos2dx/platform/ios/CCGL.h</string>
 		<string>libs/cocos2dx/platform/ios/CCImage.mm</string>
 		<string>libs/cocos2dx/platform/ios/CCLock.cpp</string>
