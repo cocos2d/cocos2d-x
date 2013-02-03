@@ -32,9 +32,106 @@ THE SOFTWARE.
 #include "CCSAXParser.h"
 #include "CCDictionary.h"
 #include "support/zip_support/unzip.h"
-#include "platform/NS2CC.h"
 
 NS_CC_BEGIN
+
+static void addValueToCCDict(id key, id value, CCDictionary* pDict);
+
+static void addItemToCCArray(id item, CCArray *pArray)
+{
+    // add string value into array
+    if ([item isKindOfClass:[NSString class]]) {
+        CCString* pValue = new CCString([item UTF8String]);
+        
+        pArray->addObject(pValue);
+        pValue->release();
+        return;
+    }
+    
+    // add number value into array(such as int, float, bool and so on)
+    if ([item isKindOfClass:[NSNumber class]]) {
+        NSString* pStr = [item stringValue];
+        CCString* pValue = new CCString([pStr UTF8String]);
+        
+        pArray->addObject(pValue);
+        pValue->release();
+        return;
+    }
+    
+    // add dictionary value into array
+    if ([item isKindOfClass:[NSDictionary class]]) {
+        CCDictionary* pDictItem = new CCDictionary();
+        for (id subKey in [item allKeys]) {
+            id subValue = [item objectForKey:subKey];
+            addValueToCCDict(subKey, subValue, pDictItem);
+        }
+        pArray->addObject(pDictItem);
+        pDictItem->release();
+        return;
+    }
+    
+    // add array value into array
+    if ([item isKindOfClass:[NSArray class]]) {
+        CCArray *pArrayItem = new CCArray();
+        pArrayItem->init();
+        for (id subItem in item) {
+            addItemToCCArray(subItem, pArrayItem);
+        }
+        pArray->addObject(pArrayItem);
+        pArrayItem->release();
+        return;
+    }
+}
+
+static void addValueToCCDict(id key, id value, CCDictionary* pDict)
+{
+    // the key must be a string
+    CCAssert([key isKindOfClass:[NSString class]], "The key should be a string!");
+    std::string pKey = [key UTF8String];
+    
+    // the value is a new dictionary
+    if ([value isKindOfClass:[NSDictionary class]]) {
+        CCDictionary* pSubDict = new CCDictionary();
+        for (id subKey in [value allKeys]) {
+            id subValue = [value objectForKey:subKey];
+            addValueToCCDict(subKey, subValue, pSubDict);
+        }
+        pDict->setObject(pSubDict, pKey.c_str());
+        pSubDict->release();
+        return;
+    }
+    
+    // the value is a string
+    if ([value isKindOfClass:[NSString class]]) {
+        CCString* pValue = new CCString([value UTF8String]);
+        
+        pDict->setObject(pValue, pKey.c_str());
+        pValue->release();
+        return;
+    }
+    
+    // the value is a number
+    if ([value isKindOfClass:[NSNumber class]]) {
+        NSString* pStr = [value stringValue];
+        CCString* pValue = new CCString([pStr UTF8String]);
+        
+        pDict->setObject(pValue, pKey.c_str());
+        pValue->release();
+        return;
+    }
+    
+    // the value is a array
+    if ([value isKindOfClass:[NSArray class]]) {
+        CCArray *pArray = new CCArray();
+        pArray->init();
+        for (id item in value) {
+            addItemToCCArray(item, pArray);
+        }
+        pDict->setObject(pArray, pKey.c_str());
+        pArray->release();
+        return;
+    }
+}
 
 CCFileUtils* CCFileUtils::sharedFileUtils()
 {

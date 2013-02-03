@@ -263,8 +263,6 @@
 		1A950DF916BB6651003F4508 /* CCFileUtilsMac.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A950DF716BB6651003F4508 /* CCFileUtilsMac.h */; };
 		1A950DFA16BB6651003F4508 /* CCFileUtilsMac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A950DF816BB6651003F4508 /* CCFileUtilsMac.mm */; };
 		1A950DFC16BB6661003F4508 /* CCFileUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A950DFB16BB6661003F4508 /* CCFileUtils.cpp */; };
-		1A950DFF16BB66BC003F4508 /* NS2CC.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A950DFD16BB66BC003F4508 /* NS2CC.h */; };
-		1A950E0016BB66BC003F4508 /* NS2CC.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A950DFE16BB66BC003F4508 /* NS2CC.mm */; };
 		41BC70B915BF7EA2006A0A6C /* CCThread.mm in Sources */ = {isa = PBXBuildFile; fileRef = 41BC70B815BF7EA2006A0A6C /* CCThread.mm */; };
 		41CD6C3515BF7382005E6F29 /* CCAccelerometer.h in Headers */ = {isa = PBXBuildFile; fileRef = 41CD6C2215BF7382005E6F29 /* CCAccelerometer.h */; };
 		41CD6C3615BF7382005E6F29 /* CCApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = 41CD6C2315BF7382005E6F29 /* CCApplication.h */; };
@@ -547,8 +545,6 @@
 		1A950DF716BB6651003F4508 /* CCFileUtilsMac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFileUtilsMac.h; sourceTree = "<group>"; };
 		1A950DF816BB6651003F4508 /* CCFileUtilsMac.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCFileUtilsMac.mm; sourceTree = "<group>"; };
 		1A950DFB16BB6661003F4508 /* CCFileUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCFileUtils.cpp; sourceTree = "<group>"; };
-		1A950DFD16BB66BC003F4508 /* NS2CC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NS2CC.h; sourceTree = "<group>"; };
-		1A950DFE16BB66BC003F4508 /* NS2CC.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = NS2CC.mm; sourceTree = "<group>"; };
 		41BC70B815BF7EA2006A0A6C /* CCThread.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCThread.mm; sourceTree = "<group>"; };
 		41CD6C2215BF7382005E6F29 /* CCAccelerometer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAccelerometer.h; sourceTree = "<group>"; };
 		41CD6C2315BF7382005E6F29 /* CCApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCApplication.h; sourceTree = "<group>"; };
@@ -931,8 +927,6 @@
 				1551A478158F2ADE00E66CFE /* CCSAXParser.h */,
 				1551A47A158F2ADE00E66CFE /* CCThread.h */,
 				41CD6C2115BF7382005E6F29 /* mac */,
-				1A950DFD16BB66BC003F4508 /* NS2CC.h */,
-				1A950DFE16BB66BC003F4508 /* NS2CC.mm */,
 				1551A4A4158F2ADE00E66CFE /* platform.cpp */,
 				1551A4A5158F2ADE00E66CFE /* platform.h */,
 			);
@@ -1305,7 +1299,6 @@
 				152DCD91165614AB009B8D87 /* CCDrawNode.h in Headers */,
 				15C647F0165F2B77007D4F18 /* CCClippingNode.h in Headers */,
 				1A950DF916BB6651003F4508 /* CCFileUtilsMac.h in Headers */,
-				1A950DFF16BB66BC003F4508 /* NS2CC.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1480,7 +1473,6 @@
 				15C647EF165F2B77007D4F18 /* CCClippingNode.cpp in Sources */,
 				1A950DFA16BB6651003F4508 /* CCFileUtilsMac.mm in Sources */,
 				1A950DFC16BB6661003F4508 /* CCFileUtils.cpp in Sources */,
-				1A950E0016BB66BC003F4508 /* NS2CC.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
