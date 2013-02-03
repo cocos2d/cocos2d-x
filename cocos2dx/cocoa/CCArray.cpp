@@ -24,6 +24,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCArray.h"
+#include "platform/CCFileUtils.h"
 
 NS_CC_BEGIN
 
@@ -131,11 +132,9 @@ CCArray* CCArray::createWithContentsOfFile(const char* pFileName)
     return pRet;
 }
 
-extern CCArray* ccFileUtils_arrayWithContentsOfFileThreadSafe(const char* pFileName);
-
 CCArray* CCArray::createWithContentsOfFileThreadSafe(const char* pFileName)
 {
-    return ccFileUtils_arrayWithContentsOfFileThreadSafe(pFileName);
+    return CCFileUtils::sharedFileUtils()->createCCArrayWithContentsOfFile(pFileName);
 }
 
 bool CCArray::init()

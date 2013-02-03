@@ -4,11 +4,13 @@
 TESTLAYER_CREATE_FUNC(TestResolutionDirectories);
 TESTLAYER_CREATE_FUNC(TestSearchPath);
 TESTLAYER_CREATE_FUNC(TestFilenameLookup);
+TESTLAYER_CREATE_FUNC(TestIsFileExist);
 
 static NEWTESTFUNC createFunctions[] = {
     CF(TestResolutionDirectories),
     CF(TestSearchPath),
-    CF(TestFilenameLookup)
+    CF(TestFilenameLookup),
+    CF(TestIsFileExist)
 };
 
 static int sceneIdx=-1;
@@ -301,3 +303,46 @@ string TestFilenameLookup::subtitle()
     return "See the console";
 }
 
+//#pragma mark - TestIsFileExist
+
+void TestIsFileExist::onEnter()
+{
+    FileUtilsDemo::onEnter();
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    CCFileUtils *sharedFileUtils = CCFileUtils::sharedFileUtils();
+    
+    CCLabelTTF* pTTF = NULL;
+    bool isExist = false;
+    
+    isExist = sharedFileUtils->isFileExist("Images/grossini.png");
+    
+    pTTF = CCLabelTTF::create(isExist ? "Images/grossini.png exists" : "Images/grossini.png doesn't exist", "", 20);
+    pTTF->setPosition(ccp(s.width/2, s.height/3));
+    this->addChild(pTTF);
+    
+    isExist = sharedFileUtils->isFileExist("Images/grossini.xcf");
+    pTTF = CCLabelTTF::create(isExist ? "Images/grossini.xcf exists" : "Images/grossini.xcf doesn't exist", "", 20);
+    pTTF->setPosition(ccp(s.width/2, s.height/3*2));
+    this->addChild(pTTF);
+}
+
+void TestIsFileExist::onExit()
+{
+	
+	CCFileUtils *sharedFileUtils = CCFileUtils::sharedFileUtils();
+	
+	// reset filename lookup
+    sharedFileUtils->setFilenameLookupDictionary(CCDictionary::create());
+	
+    FileUtilsDemo::onExit();
+}
+
+string TestIsFileExist::title()
+{
+    return "FileUtils: check whether the file exists";
+}
+
+string TestIsFileExist::subtitle()
+{
+    return "";
+}
