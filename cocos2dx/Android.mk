@@ -74,6 +74,7 @@ particle_nodes/CCParticleExamples.cpp \
 particle_nodes/CCParticleSystem.cpp \
 particle_nodes/CCParticleBatchNode.cpp \
 particle_nodes/CCParticleSystemQuad.cpp \
+platform/CCImageCommonWebp.cpp \
 platform/CCSAXParser.cpp \
 platform/CCThread.cpp \
 platform/CCFileUtils.cpp \
@@ -92,6 +93,56 @@ platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxAccelerometer.cpp \
 platform/android/jni/JniHelper.cpp \
 platform/android/jni/IMEJni.cpp \
 platform/android/jni/TouchesJni.cpp \
+platform/third_party/common/webp/dec/alpha.c \
+platform/third_party/common/webp/dec/buffer.c \
+platform/third_party/common/webp/dec/frame.c \
+platform/third_party/common/webp/dec/idec.c \
+platform/third_party/common/webp/dec/io.c \
+platform/third_party/common/webp/dec/layer.c \
+platform/third_party/common/webp/dec/quant.c \
+platform/third_party/common/webp/dec/tree.c \
+platform/third_party/common/webp/dec/vp8.c \
+platform/third_party/common/webp/dec/vp8l.c \
+platform/third_party/common/webp/dec/webp.c \
+platform/third_party/common/webp/dsp/dec.c \
+platform/third_party/common/webp/dsp/dec_neon.c \
+platform/third_party/common/webp/dsp/dec_sse2.c \
+platform/third_party/common/webp/dsp/enc.c \
+platform/third_party/common/webp/dsp/enc_sse2.c \
+platform/third_party/common/webp/dsp/lossless.c \
+platform/third_party/common/webp/dsp/upsampling.c \
+platform/third_party/common/webp/dsp/upsampling_sse2.c \
+platform/third_party/common/webp/dsp/yuv.c \
+platform/third_party/common/webp/enc/alpha.c \
+platform/third_party/common/webp/enc/analysis.c \
+platform/third_party/common/webp/enc/backward_references.c \
+platform/third_party/common/webp/enc/config.c \
+platform/third_party/common/webp/enc/cost.c \
+platform/third_party/common/webp/enc/filter.c \
+platform/third_party/common/webp/enc/frame.c \
+platform/third_party/common/webp/enc/histogram.c \
+platform/third_party/common/webp/enc/iterator.c \
+platform/third_party/common/webp/enc/layer.c \
+platform/third_party/common/webp/enc/picture.c \
+platform/third_party/common/webp/enc/quant.c \
+platform/third_party/common/webp/enc/syntax.c \
+platform/third_party/common/webp/enc/tree.c \
+platform/third_party/common/webp/enc/vp8l.c \
+platform/third_party/common/webp/enc/webpenc.c \
+platform/third_party/common/webp/mux/demux.c \
+platform/third_party/common/webp/mux/muxedit.c \
+platform/third_party/common/webp/mux/muxinternal.c \
+platform/third_party/common/webp/mux/muxread.c \
+platform/third_party/common/webp/utils/bit_reader.c \
+platform/third_party/common/webp/utils/bit_writer.c \
+platform/third_party/common/webp/utils/color_cache.c \
+platform/third_party/common/webp/utils/filters.c \
+platform/third_party/common/webp/utils/huffman.c \
+platform/third_party/common/webp/utils/huffman_encode.c \
+platform/third_party/common/webp/utils/quant_levels.c \
+platform/third_party/common/webp/utils/rescaler.c \
+platform/third_party/common/webp/utils/thread.c \
+platform/third_party/common/webp/utils/utils.c \
 script_support/CCScriptSupport.cpp \
 shaders/ccShaders.cpp \
 shaders/CCGLProgram.cpp \
@@ -150,14 +201,14 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH) \
 LOCAL_LDLIBS := -lGLESv2 \
                 -lEGL \
                 -llog \
-                -lz 
+                -lz
 
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos_libpng_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_jpeg_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_libxml2_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_libtiff_static
 
-# define the macro to compile through support/zip_support/ioapi.c                
+# define the macro to compile through support/zip_support/ioapi.c
 LOCAL_CFLAGS := -Wno-psabi -DUSE_FILE32API
 LOCAL_EXPORT_CFLAGS := -Wno-psabi -DUSE_FILE32API
 
