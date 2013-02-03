@@ -2,7 +2,7 @@ pushd ../../
 
 echo "generating libcocos2dx"
 mkdir -p template/xcode4/lib_cocos2dx.xctemplate
-python ./tools/xcode4_template_generator/template_generator.py --directory cocos2dx --identifier libcocos2dx --prefix libs --exclude "android win32 blackberry linux marmalade CCImage.cpp CCThread.cpp proj.ios CCFileUtilsCommon_cpp.h CCImageCommon_cpp.h CCFileUtils.cpp Android.mk mac" > ./template/xcode4/lib_cocos2dx.xctemplate/TemplateInfo.plist
+python ./tools/xcode4_template_generator/template_generator.py --directory cocos2dx --identifier libcocos2dx --prefix libs --exclude "android win32 blackberry linux marmalade CCImage.cpp CCThread.cpp proj.ios CCImageCommon_cpp.h Android.mk mac" > ./template/xcode4/lib_cocos2dx.xctemplate/TemplateInfo.plist
 
 echo "generating libcocosdenshion"
 mkdir -p template/xcode4/lib_cocosdenshion.xctemplate
