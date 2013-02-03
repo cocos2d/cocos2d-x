@@ -20,17 +20,22 @@ bool AppDelegate::applicationDidFinishLaunching() {
     
     CCSize screenSize = CCEGLView::sharedOpenGLView()->getFrameSize();
     CCSize designSize = CCSizeMake(480, 320);
+    std::vector<std::string> searchPaths;
     
     if (screenSize.height > 320)
     {
-        CCFileUtils::sharedFileUtils()->setResourceDirectory("hd");
+        searchPaths.push_back("hd");
+        searchPaths.push_back("sd");
         pDirector->setContentScaleFactor(640.0f/designSize.height);
     }
     else
     {
-        CCFileUtils::sharedFileUtils()->setResourceDirectory("sd");
+        searchPaths.push_back("sd");
         pDirector->setContentScaleFactor(320.0f/designSize.height);
     }
+    
+    CCFileUtils::sharedFileUtils()->setSearchPaths(searchPaths);
+    
     CCEGLView::sharedOpenGLView()->setDesignResolutionSize(designSize.width, designSize.height, kResolutionNoBorder);
 
     // turn on display FPS
