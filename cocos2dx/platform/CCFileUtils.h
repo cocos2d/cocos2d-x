@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2013 cocos2d-x.org
 
 http://www.cocos2d-x.org
 
@@ -21,11 +21,12 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef __CC_FILEUTILS_PLATFORM_H__
-#define __CC_FILEUTILS_PLATFORM_H__
+#ifndef __CC_FILEUTILS_H__
+#define __CC_FILEUTILS_H__
 
 #include <string>
 #include <vector>
+#include <map>
 #include "CCPlatformMacros.h"
 #include "ccTypes.h"
 #include "ccTypeInfo.h"
@@ -42,6 +43,8 @@ class CCArray;
 //! @brief  Helper class to handle file operations
 class CC_DLL CCFileUtils : public TypeInfo
 {
+    friend class CCArray;
+    friend class CCDictionary;
 public:
     /**
      *  Returns an unique ID for this class.
@@ -64,6 +67,11 @@ public:
     static void purgeFileUtils();
     
     /**
+     *  The destructor of CCFileUtils.
+     */
+    virtual ~CCFileUtils();
+    
+    /**
      *  Purges the file searching cache.
      *
      *  @note It should be invoked after the resources were updated.
@@ -71,36 +79,29 @@ public:
      *        All the resources will be downloaded to the writable folder, before new js app launchs,
      *        this method should be invoked to clean the file search cache.
      */
-    void purgeCachedEntries();
+    virtual void purgeCachedEntries();
     
     /**
-    @brief Get resource file data
-    @param[in]  pszFileName The resource file name which contains the path.
-    @param[in]  pszMode The read mode of the file.
-    @param[out] pSize If the file read operation succeeds, it will be the data size, otherwise 0.
-    @return Upon success, a pointer to the data is returned, otherwise NULL.
-    @warning Recall: you are responsible for calling delete[] on any Non-NULL pointer returned.
-    */
-    unsigned char* getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize);
-
-    /**
-    @brief Get resource file data from a zip file.
-    @param[in]  pszFileName The resource file name which contains the relative path of the zip file.
-    @param[out] pSize If the file read operation succeeds, it will be the data size, otherwise 0.
-    @return Upon success, a pointer to the data is returned, otherwise NULL.
-    @warning Recall: you are responsible for calling delete[] on any Non-NULL pointer returned.
-    */
-    unsigned char* getFileDataFromZip(const char* pszZipFilePath, const char* pszFileName, unsigned long * pSize);
-
-    /**
-     *  @brief   Generate the absolute path of the file.
-     *  @param   pszRelativePath     The relative path of the file.
-     *  @return  The absolute path of the file.
-     *  @warning We only add the ResourcePath before the relative path of the file.
-     *  @deprecated Please use fullPathForFilename instead.
+     *  Gets resource file data
      *
+     *  @param[in]  pszFileName The resource file name which contains the path.
+     *  @param[in]  pszMode The read mode of the file.
+     *  @param[out] pSize If the file read operation succeeds, it will be the data size, otherwise 0.
+     *  @return Upon success, a pointer to the data is returned, otherwise NULL.
+     *  @warning Recall: you are responsible for calling delete[] on any Non-NULL pointer returned.
      */
-    CC_DEPRECATED_ATTRIBUTE const char* fullPathFromRelativePath(const char *pszRelativePath);
+    virtual unsigned char* getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize);
+
+    /**
+     *  Gets resource file data from a zip file.
+     *
+     *  @param[in]  pszFileName The resource file name which contains the relative path of the zip file.
+     *  @param[out] pSize If the file read operation succeeds, it will be the data size, otherwise 0.
+     *  @return Upon success, a pointer to the data is returned, otherwise NULL.
+     *  @warning Recall: you are responsible for calling delete[] on any Non-NULL pointer returned.
+     */
+    virtual unsigned char* getFileDataFromZip(const char* pszZipFilePath, const char* pszFileName, unsigned long * pSize);
+
     
     /** Returns the fullpath for a given filename.
      
@@ -147,12 +148,14 @@ public:
 
      @since v2.1
      */
-    std::string fullPathForFilename(const char* pszFileName);
+    virtual std::string fullPathForFilename(const char* pszFileName);
     
     /**
      * Loads the filenameLookup dictionary from the contents of a filename.
      * 
      * @note The plist file name should follow the format below:
+     * 
+     * @code
      * <?xml version="1.0" encoding="UTF-8"?>
      * <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
      * <plist version="1.0">
@@ -173,12 +176,12 @@ public:
      *     </dict>
      * </dict>
      * </plist>
-     *
+     * @endcode
      * @param filename The plist file name.
      *
      @since v2.1
      */
-    void loadFilenameLookupDictionaryFromFile(const char* filename);
+    virtual void loadFilenameLookupDictionaryFromFile(const char* filename);
     
     /** 
      *  Sets the filenameLookup dictionary.
@@ -186,7 +189,7 @@ public:
      *  @param pFilenameLookupDict The dictionary for replacing filename.
      *  @since v2.1
      */
-    void setFilenameLookupDictionary(CCDictionary* pFilenameLookupDict);
+    virtual void setFilenameLookupDictionary(CCDictionary* pFilenameLookupDict);
     
     /**
      *  Gets full path from a file name and the path of the reletive file.
@@ -197,34 +200,28 @@ public:
      *               Return: /User/path1/path2/hello.pvr (If there a a key(hello.png)-value(hello.pvr) in FilenameLookup dictionary. )
      *
      */
-    const char* fullPathFromRelativeFile(const char *pszFilename, const char *pszRelativeFile);
-
-    /**
-     @brief  Set the resource directory; we will find resources relative to this directory.
-     @param pszDirectoryName  Relative path to root.
-     @deprecated Please use setSearchPaths instead.
-    */
-    CC_DEPRECATED_ATTRIBUTE void setResourceDirectory(const char *pszDirectoryName);
+    virtual const char* fullPathFromRelativeFile(const char *pszFilename, const char *pszRelativeFile);
 
     /** 
      *  Sets the array that contains the search order of the resources.
      *
      *  @param searchResolutionsOrder The source array that contains the search order of the resources.
-     *  @see getSearchResolutionsOrder(), fullPathForFilename().
+     *  @see getSearchResolutionsOrder(void), fullPathForFilename(const char*).
      *  @since v2.1
      */
-    void setSearchResolutionsOrder(const std::vector<std::string>& searchResolutionsOrder);
+    virtual void setSearchResolutionsOrder(const std::vector<std::string>& searchResolutionsOrder);
     
     /**
      *  Gets the array that contains the search order of the resources.
      *
-     *  @see setSearchResolutionsOrder(), fullPathForFilename().
+     *  @see setSearchResolutionsOrder(const std::vector<std::string>&), fullPathForFilename(const char*).
      *  @since v2.1
      */
-    const std::vector<std::string>& getSearchResolutionsOrder();
+    virtual const std::vector<std::string>& getSearchResolutionsOrder();
     
     /** 
      *  Sets the array of search paths.
+     * 
      *  You can use this array to modify the search path of the resources.
      *  If you want to use "themes" or search resources in the "cache", you can do it easily by adding new entries in this array.
      *
@@ -236,62 +233,151 @@ public:
      *        	"resources-large" will be converted to "assets/resources-large" since it was a relative path.
      *
      *  @param searchPaths The array contains search paths.
-     *  @see fullPathForFilename()
+     *  @see fullPathForFilename(const char*)
      *  @since v2.1
      */
-    void setSearchPaths(const std::vector<std::string>& searchPaths);
+    virtual void setSearchPaths(const std::vector<std::string>& searchPaths);
     
     /**
      *  Gets the array of search paths.
      *  
      *  @return The array of search paths.
-     *  @see fullPathForFilename().
+     *  @see fullPathForFilename(const char*).
      */
-    const std::vector<std::string>& getSearchPaths();
+    virtual const std::vector<std::string>& getSearchPaths();
+
+    /**
+     *  Gets the writeable path.
+     *  @return  The path that can be write/read a file in
+     */
+    virtual std::string getWriteablePath() = 0;
     
     /**
-     *  Gets the resource directory
-     *  @deprecated Please use getSearchPaths() instead.
+     *  Checks whether a file exists.
+     *
+     *  @note If a relative path was passed in, it will be inserted a default root path at the beginning.
+     *  @param strFilePath The path of the file, it could be a relative or absolute path.
+     *  @return true if the file exists, otherwise it will return false.
      */
-    CC_DEPRECATED_ATTRIBUTE const char* getResourceDirectory();
-
+    virtual bool isFileExist(const std::string& strFilePath) = 0;
+    
     /**
-    @brief   Get the writeable path
-    @return  The path that can write/read file
-    */
-    std::string getWriteablePath();
-
+     *  Checks whether the path is an absolute path.
+     *
+     *  @note On Android, if the parameter passed in is relative to "assets/", this method will treat it as an absolute path.
+     *        Also on Blackberry, path starts with "app/native/Resources/" is treated as an absolute path.
+     *
+     *  @param strPath The path that needs to be checked.
+     *  @return true if it's an absolute path, otherwise it will return false.
+     */
+    virtual bool isAbsolutePath(const std::string& strPath);
+    
+    
     /**
-    @brief Set/Get whether pop-up a message box when the image load failed
-    */
-    void setPopupNotify(bool bNotify);
-    bool isPopupNotify();
+     *  Sets/Gets whether to pop-up a message box when failed to load an image.
+     */
+    virtual void setPopupNotify(bool bNotify);
+    virtual bool isPopupNotify();
 
 protected:
-    CCFileUtils(void)
-    : m_pFilenameLookupDict(NULL)
-    {
-    }
+    /**
+     *  The default constructor.
+     */
+    CCFileUtils();
     
-    bool init();
+    /**
+     *  Initializes the instance of CCFileUtils. It will set m_searchPathArray and m_searchResolutionsOrderArray to default values.
+     *
+     *  @note When you are porting Cocos2d-x to a new platform, you may need to take care of this method.
+     *        You could assign a default value to m_strDefaultResRootPath in the subclass of CCFileUtils(e.g. CCFileUtilsAndroid). Then invoke the CCFileUtils::init().
+     *  @return true if successed, otherwise it returns false.
+     *
+     */
+    virtual bool init();
     
-    std::string getNewFilename(const char* pszFileName);
-    std::string getPathForFilename(const std::string& filename, const std::string& resourceDirectory, const std::string& searchPath);
+    /**
+     *  Gets the new filename from the filename lookup dictionary.
+     *  @param pszFileName The original filename.
+     *  @return The new filename after searching in the filename lookup dictionary.
+     *          If the original filename wasn't in the dictionary, it will return the original filename.
+     */
+    virtual std::string getNewFilename(const char* pszFileName);
     
-    std::string m_obDirectory;
+    /**
+     *  Gets full path for filename, resolution directory and search path.
+     *
+     *  @param filename The file name.
+     *  @param resolutionDirectory The resolution directory.
+     *  @param searchPath The search path.
+     *  @return The full path of the file. It will return an empty string if the full path of the file doesn't exist.
+     */
+    virtual std::string getPathForFilename(const std::string& filename, const std::string& resolutionDirectory, const std::string& searchPath);
+    
+    /**
+     *  Gets full path for the directory and the filename.
+     *
+     *  @note Only iOS and Mac need to override this method since they are using
+     *        `[[NSBundle mainBundle] pathForResource: ofType: inDirectory:]` to make a full path.
+     *        Other platforms will use the default implementation of this method.
+     *  @param strDirectory The directory contains the file we are looking for.
+     *  @param strFilename  The name of the file.
+     *  @return The full path of the file, if the file can't be found, it will return an empty string.
+     */
+    virtual std::string getFullPathForDirectoryAndFilename(const std::string& strDirectory, const std::string& strFilename);
+    
+    /**
+     *  Creates a dictionary by the contents of a file.
+     *  @note This method is used internally.
+     */
+    virtual CCDictionary* createCCDictionaryWithContentsOfFile(const std::string& filename);
+    
+    /**
+     *  Creates an array by the contents of a file.
+     *  @note This method is used internally.
+     */
+    virtual CCArray* createCCArrayWithContentsOfFile(const std::string& filename);
     
     /** Dictionary used to lookup filenames based on a key.
-     It is used internally by the following methods:
-     
-     const char* fullPathForFilename(const char* )key;
-     
-     @since v2.1
+     *  It is used internally by the following methods:
+     *
+     *  std::string fullPathForFilename(const char*);
+     *
+     *  @since v2.1
      */
     CCDictionary* m_pFilenameLookupDict;
     
+    /** 
+     *  The vector contains resolution folders.
+     *  The lower index of the element in this vector, the higher priority for this resolution directory.
+     */
     std::vector<std::string> m_searchResolutionsOrderArray;
+    
+    /**
+     * The vector contains search paths.
+     * The lower index of the element in this vector, the higher priority for this search path.
+     */
     std::vector<std::string> m_searchPathArray;
+    
+    /**
+     *  The default root path of resources.
+     *  If the default root path of resources needs to be changed, do it in the `init` method of CCFileUtils's subclass.
+     *  For instance:
+     *  On Android, the default root path of resources will be assigned with "assets/" in CCFileUtilsAndroid::init().
+     *  Similarly on Blackberry, we assign "app/native/Resources/" to this variable in CCFileUtilsBlackberry::init().
+     */
     std::string m_strDefaultResRootPath;
+    
+    /**
+     *  The full path cache. When a file is found, it will be added into this cache. 
+     *  This variable is used for improving the performance of file search.
+     */
+    std::map<std::string, std::string> m_fullPathCache;
+    
+    /**
+     *  The singleton pointer of CCFileUtils.
+     */
+    static CCFileUtils* s_sharedFileUtils;
+    
 };
 
 // end of platform group
@@ -299,4 +385,4 @@ protected:
 
 NS_CC_END
 
-#endif    // __CC_FILEUTILS_PLATFORM_H__
+#endif    // __CC_FILEUTILS_H__

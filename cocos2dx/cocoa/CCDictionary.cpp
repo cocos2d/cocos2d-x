@@ -25,6 +25,7 @@
 #include "CCDictionary.h"
 #include "CCString.h"
 #include "CCInteger.h"
+#include "platform/CCFileUtils.h"
 
 using namespace std;
 
@@ -401,11 +402,9 @@ CCDictionary* CCDictionary::createWithDictionary(CCDictionary* srcDict)
     return pNewDict;
 }
 
-extern CCDictionary* ccFileUtils_dictionaryWithContentsOfFileThreadSafe(const char *pFileName);
-
 CCDictionary* CCDictionary::createWithContentsOfFileThreadSafe(const char *pFileName)
 {
-    return ccFileUtils_dictionaryWithContentsOfFileThreadSafe(pFileName);
+    return CCFileUtils::sharedFileUtils()->createCCDictionaryWithContentsOfFile(pFileName);
 }
 
 CCDictionary* CCDictionary::createWithContentsOfFile(const char *pFileName)

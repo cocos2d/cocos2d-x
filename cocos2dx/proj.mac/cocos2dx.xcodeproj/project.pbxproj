@@ -260,6 +260,9 @@
 		15842A2615CF6C42006B033F /* CCTouch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15842A2515CF6C42006B033F /* CCTouch.cpp */; };
 		15C647EF165F2B77007D4F18 /* CCClippingNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15C647ED165F2B77007D4F18 /* CCClippingNode.cpp */; };
 		15C647F0165F2B77007D4F18 /* CCClippingNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 15C647EE165F2B77007D4F18 /* CCClippingNode.h */; };
+		1A950DF916BB6651003F4508 /* CCFileUtilsMac.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A950DF716BB6651003F4508 /* CCFileUtilsMac.h */; };
+		1A950DFA16BB6651003F4508 /* CCFileUtilsMac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A950DF816BB6651003F4508 /* CCFileUtilsMac.mm */; };
+		1A950DFC16BB6661003F4508 /* CCFileUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A950DFB16BB6661003F4508 /* CCFileUtils.cpp */; };
 		41BC70B915BF7EA2006A0A6C /* CCThread.mm in Sources */ = {isa = PBXBuildFile; fileRef = 41BC70B815BF7EA2006A0A6C /* CCThread.mm */; };
 		41CD6C3515BF7382005E6F29 /* CCAccelerometer.h in Headers */ = {isa = PBXBuildFile; fileRef = 41CD6C2215BF7382005E6F29 /* CCAccelerometer.h */; };
 		41CD6C3615BF7382005E6F29 /* CCApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = 41CD6C2315BF7382005E6F29 /* CCApplication.h */; };
@@ -271,7 +274,6 @@
 		41CD6C3C15BF7382005E6F29 /* CCEGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 41CD6C2915BF7382005E6F29 /* CCEGLView.mm */; };
 		41CD6C3D15BF7382005E6F29 /* CCEventDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = 41CD6C2A15BF7382005E6F29 /* CCEventDispatcher.h */; };
 		41CD6C3E15BF7382005E6F29 /* CCEventDispatcher.mm in Sources */ = {isa = PBXBuildFile; fileRef = 41CD6C2B15BF7382005E6F29 /* CCEventDispatcher.mm */; };
-		41CD6C3F15BF7382005E6F29 /* CCFileUtils.mm in Sources */ = {isa = PBXBuildFile; fileRef = 41CD6C2C15BF7382005E6F29 /* CCFileUtils.mm */; };
 		41CD6C4015BF7382005E6F29 /* CCGL.h in Headers */ = {isa = PBXBuildFile; fileRef = 41CD6C2D15BF7382005E6F29 /* CCGL.h */; };
 		41CD6C4115BF7382005E6F29 /* CCImage.mm in Sources */ = {isa = PBXBuildFile; fileRef = 41CD6C2E15BF7382005E6F29 /* CCImage.mm */; };
 		41CD6C4215BF7382005E6F29 /* CCPlatformDefine.h in Headers */ = {isa = PBXBuildFile; fileRef = 41CD6C2F15BF7382005E6F29 /* CCPlatformDefine.h */; };
@@ -540,6 +542,9 @@
 		15842A2515CF6C42006B033F /* CCTouch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTouch.cpp; sourceTree = "<group>"; };
 		15C647ED165F2B77007D4F18 /* CCClippingNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCClippingNode.cpp; sourceTree = "<group>"; };
 		15C647EE165F2B77007D4F18 /* CCClippingNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCClippingNode.h; sourceTree = "<group>"; };
+		1A950DF716BB6651003F4508 /* CCFileUtilsMac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFileUtilsMac.h; sourceTree = "<group>"; };
+		1A950DF816BB6651003F4508 /* CCFileUtilsMac.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCFileUtilsMac.mm; sourceTree = "<group>"; };
+		1A950DFB16BB6661003F4508 /* CCFileUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCFileUtils.cpp; sourceTree = "<group>"; };
 		41BC70B815BF7EA2006A0A6C /* CCThread.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCThread.mm; sourceTree = "<group>"; };
 		41CD6C2215BF7382005E6F29 /* CCAccelerometer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAccelerometer.h; sourceTree = "<group>"; };
 		41CD6C2315BF7382005E6F29 /* CCApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCApplication.h; sourceTree = "<group>"; };
@@ -551,7 +556,6 @@
 		41CD6C2915BF7382005E6F29 /* CCEGLView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCEGLView.mm; sourceTree = "<group>"; };
 		41CD6C2A15BF7382005E6F29 /* CCEventDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEventDispatcher.h; sourceTree = "<group>"; };
 		41CD6C2B15BF7382005E6F29 /* CCEventDispatcher.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCEventDispatcher.mm; sourceTree = "<group>"; };
-		41CD6C2C15BF7382005E6F29 /* CCFileUtils.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCFileUtils.mm; sourceTree = "<group>"; };
 		41CD6C2D15BF7382005E6F29 /* CCGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGL.h; sourceTree = "<group>"; };
 		41CD6C2E15BF7382005E6F29 /* CCImage.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCImage.mm; sourceTree = "<group>"; };
 		41CD6C2F15BF7382005E6F29 /* CCPlatformDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPlatformDefine.h; sourceTree = "<group>"; };
@@ -914,6 +918,7 @@
 				1551A46E158F2ADE00E66CFE /* CCCommon.h */,
 				1551A46F158F2ADE00E66CFE /* CCEGLViewProtocol.cpp */,
 				1551A470158F2ADE00E66CFE /* CCEGLViewProtocol.h */,
+				1A950DFB16BB6661003F4508 /* CCFileUtils.cpp */,
 				1551A471158F2ADE00E66CFE /* CCFileUtils.h */,
 				1551A473158F2ADE00E66CFE /* CCImage.h */,
 				1551A475158F2ADE00E66CFE /* CCPlatformConfig.h */,
@@ -1117,7 +1122,8 @@
 				41CD6C2915BF7382005E6F29 /* CCEGLView.mm */,
 				41CD6C2A15BF7382005E6F29 /* CCEventDispatcher.h */,
 				41CD6C2B15BF7382005E6F29 /* CCEventDispatcher.mm */,
-				41CD6C2C15BF7382005E6F29 /* CCFileUtils.mm */,
+				1A950DF716BB6651003F4508 /* CCFileUtilsMac.h */,
+				1A950DF816BB6651003F4508 /* CCFileUtilsMac.mm */,
 				41CD6C2D15BF7382005E6F29 /* CCGL.h */,
 				41CD6C2E15BF7382005E6F29 /* CCImage.mm */,
 				41CD6C2F15BF7382005E6F29 /* CCPlatformDefine.h */,
@@ -1292,6 +1298,7 @@
 				152DCD8F165614AB009B8D87 /* CCDrawingPrimitives.h in Headers */,
 				152DCD91165614AB009B8D87 /* CCDrawNode.h in Headers */,
 				15C647F0165F2B77007D4F18 /* CCClippingNode.h in Headers */,
+				1A950DF916BB6651003F4508 /* CCFileUtilsMac.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1456,7 +1463,6 @@
 				41CD6C3A15BF7382005E6F29 /* CCDirectorCaller.mm in Sources */,
 				41CD6C3C15BF7382005E6F29 /* CCEGLView.mm in Sources */,
 				41CD6C3E15BF7382005E6F29 /* CCEventDispatcher.mm in Sources */,
-				41CD6C3F15BF7382005E6F29 /* CCFileUtils.mm in Sources */,
 				41CD6C4115BF7382005E6F29 /* CCImage.mm in Sources */,
 				41CD6C4515BF7382005E6F29 /* CCWindow.m in Sources */,
 				41CD6C4715BF7382005E6F29 /* EAGLView.mm in Sources */,
@@ -1465,6 +1471,8 @@
 				152DCD8E165614AB009B8D87 /* CCDrawingPrimitives.cpp in Sources */,
 				152DCD90165614AB009B8D87 /* CCDrawNode.cpp in Sources */,
 				15C647EF165F2B77007D4F18 /* CCClippingNode.cpp in Sources */,
+				1A950DFA16BB6651003F4508 /* CCFileUtilsMac.mm in Sources */,
+				1A950DFC16BB6661003F4508 /* CCFileUtils.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
