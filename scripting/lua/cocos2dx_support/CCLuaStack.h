@@ -22,8 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __CC_LUA_ENGINE_H__
-#define __CC_LUA_ENGINE_H__
+#ifndef __CC_LUA_STACK_H_
+#define __CC_LUA_STACK_H_
 
 extern "C" {
 #include "lua.h"
@@ -31,28 +31,22 @@ extern "C" {
 
 #include "ccTypes.h"
 #include "cocoa/CCObject.h"
-#include "touch_dispatcher/CCTouch.h"
-#include "cocoa/CCSet.h"
-#include "base_nodes/CCNode.h"
-#include "script_support/CCScriptSupport.h"
-#include "CCLuaStack.h"
 #include "CCLuaValue.h"
 
 NS_CC_BEGIN
 
-// Lua support for cocos2d-x
-class CCLuaEngine : public CCScriptEngineProtocol
+class CCLuaStack : public CCObject
 {
 public:
-    static CCLuaEngine* defaultEngine(void);    
-    virtual ~CCLuaEngine(void);
+    static CCLuaStack *create(void);
+    static CCLuaStack *attach(lua_State *L);
     
-    virtual ccScriptType getScriptType() {
-        return kScriptTypeLua;
-    };
-
-    CCLuaStack *getLuaStack(void) {
-        return m_stack;
+    /**
+     @brief Method used to get a pointer to the lua_State that the script module is attached to.
+     @return A pointer to the lua_State that the script module is attached to.
+     */
+    lua_State* getLuaState(void) {
+        return m_state;
     }
     
     /**
@@ -90,7 +84,7 @@ public:
      @param filename String object holding the filename of the script file that is to be executed
      */
     virtual int executeScriptFile(const char* filename);
-    
+
     /**
      @brief Execute a scripted global function.
      @brief The function should not take any parameters and should return an integer.
@@ -99,31 +93,37 @@ public:
      */
     virtual int executeGlobalFunction(const char* functionName);
 
-    virtual int executeNodeEvent(CCNode* pNode, int nAction);
-    virtual int executeMenuItemEvent(CCMenuItem* pMenuItem);
-    virtual int executeNotificationEvent(CCNotificationCenter* pNotificationCenter, const char* pszName);
-    virtual int executeCallFuncActionEvent(CCCallFunc* pAction, CCObject* pTarget = NULL);
-    virtual int executeSchedule(int nHandler, float dt, CCNode* pNode = NULL);
-    virtual int executeLayerTouchesEvent(CCLayer* pLayer, int eventType, CCSet *pTouches);
-    virtual int executeLayerTouchEvent(CCLayer* pLayer, int eventType, CCTouch *pTouch);
-    virtual int executeLayerKeypadEvent(CCLayer* pLayer, int eventType);
-    /** execute a accelerometer event */
-    virtual int executeAccelerometerEvent(CCLayer* pLayer, CCAcceleration* pAccelerationValue);
-    virtual int executeEvent(int nHandler, const char* pEventName, CCObject* pEventSource = NULL, const char* pEventSourceClassName = NULL);
-    virtual bool executeAssert(bool cond, const char *msg = NULL);
+    virtual void clean(void);
+    virtual void pushInt(int intValue);
+    virtual void pushFloat(float floatValue);
+    virtual void pushBoolean(bool boolValue);
+    virtual void pushString(const char* stringValue);
+    virtual void pushString(const char* stringValue, int length);
+    virtual void pushNil(void);
+    virtual void pushCCObject(CCObject* objectValue, const char* typeName);
+    virtual void pushCCLuaValue(const CCLuaValue& value);
+    virtual void pushCCLuaValueDict(const CCLuaValueDict& dict);
+    virtual void pushCCLuaValueArray(const CCLuaValueArray& array);    
+    virtual bool pushFunctionByHandler(int nHandler);
+    virtual int executeFunction(int numArgs);
     
-private:
-    CCLuaEngine(void)
-    : m_stack(NULL)
+    virtual int executeFunctionByHandler(int nHandler, int numArgs);
+    virtual bool executeAssert(bool cond, const char *msg);
+    
+protected:
+    CCLuaStack(void)
+    : m_state(NULL)
+    , m_callFromLua(0)
     {
     }
     
     bool init(void);
+    bool initWithLuaState(lua_State *L);
     
-    static CCLuaEngine* m_defaultEngine;
-    CCLuaStack *m_stack;
+    lua_State *m_state;
+    int m_callFromLua;
 };
 
 NS_CC_END
 
-#endif // __CC_LUA_ENGINE_H__
+#endif // __CC_LUA_STACK_H_
