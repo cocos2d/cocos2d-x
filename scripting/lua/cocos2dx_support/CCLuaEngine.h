@@ -54,7 +54,18 @@ public:
     CCLuaStack *getLuaStack(void) {
         return m_stack;
     }
-
+    
+    /**
+     @brief Add a path to find lua files in
+     @param path to be added to the Lua path
+     */
+    virtual void addSearchPath(const char* path);
+    
+    /**
+     @brief Add lua loader, now it is used on android
+     */
+    virtual void addLuaLoader(lua_CFunction func);
+    
     /**
      @brief Remove CCObject from lua state
      @param object to remove

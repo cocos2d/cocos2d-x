@@ -54,6 +54,16 @@ bool CCLuaEngine::init(void)
     return true;
 }
 
+void CCLuaEngine::addSearchPath(const char* path)
+{
+    m_stack->addSearchPath(path);
+}
+
+void CCLuaEngine::addLuaLoader(lua_CFunction func)
+{
+    m_stack->addLuaLoader(func);
+}
+
 void CCLuaEngine::removeScriptObjectByCCObject(CCObject* pObj)
 {
     m_stack->removeScriptObjectByCCObject(pObj);
