@@ -96,6 +96,7 @@ public:
     virtual int executeLayerTouchEvent(CCLayer* pLayer, int eventType, CCTouch *pTouch);
     virtual int executeAccelerometerEvent(CCLayer* pLayer, CCAcceleration* pAccelerationValue);
     virtual int executeLayerKeypadEvent(CCLayer* pLayer, int eventType);
+    virtual int executeEvent(int nHandler, const char* pEventName, CCObject* pEventSource = NULL, const char* pEventSourceClassName = NULL) {}
     virtual bool executeAssert(bool cond, const char *msg = NULL) {return false;}
 
     bool executeFunctionWithObjectData(CCNode *self, const char *name, JSObject *obj);
