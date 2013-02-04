@@ -253,7 +253,6 @@ bool CCTexture2D::initWithImage(CCImage *uiImage)
     if (uiImage == NULL)
     {
         CCLOG("cocos2d: CCTexture2D. Can't create Texture. UIImage is nil");
-        this->release();
         return false;
     }
     
@@ -266,7 +265,6 @@ bool CCTexture2D::initWithImage(CCImage *uiImage)
     if (imageWidth > maxTextureSize || imageHeight > maxTextureSize) 
     {
         CCLOG("cocos2d: WARNING: Image (%u x %u) is bigger than the supported %u x %u", imageWidth, imageHeight, maxTextureSize, maxTextureSize);
-        this->release();
         return NULL;
     }
     
@@ -526,7 +524,6 @@ bool CCTexture2D::initWithPVRTCData(const void *data, int level, int bpp, bool h
     if( !(CCConfiguration::sharedConfiguration()->supportsPVRTC()) )
     {
         CCLOG("cocos2d: WARNING: PVRTC images is not supported.");
-        this->release();
         return false;
     }
 
