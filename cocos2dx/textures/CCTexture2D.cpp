@@ -265,7 +265,7 @@ bool CCTexture2D::initWithImage(CCImage *uiImage)
     if (imageWidth > maxTextureSize || imageHeight > maxTextureSize) 
     {
         CCLOG("cocos2d: WARNING: Image (%u x %u) is bigger than the supported %u x %u", imageWidth, imageHeight, maxTextureSize, maxTextureSize);
-        return NULL;
+        return false;
     }
     
     // always load premultiplied images
