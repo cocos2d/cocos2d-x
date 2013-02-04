@@ -460,6 +460,8 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
                 else
                 {
                     CCLOG("cocos2d: Couldn't add image:%s in CCTextureCache", path);
+                    // texture is release()d if CCTexture2D::initWithImage fails
+                    texture = NULL;
                 }
             }
         } while (0);
