@@ -559,6 +559,11 @@ void CCFileUtils::setSearchResolutionsOrder(const std::vector<std::string>& sear
     }
 }
 
+void CCFileUtils::addSearchResolutionsOrder(const char* order)
+{
+    m_searchResolutionsOrderArray.push_back(order);
+}
+
 const std::vector<std::string>& CCFileUtils::getSearchResolutionsOrder()
 {
     return m_searchResolutionsOrderArray;
@@ -599,6 +604,22 @@ void CCFileUtils::setSearchPaths(const std::vector<std::string>& searchPaths)
         //CCLOG("Default root path doesn't exist, adding it.");
         m_searchPathArray.push_back(m_strDefaultResRootPath);
     }
+}
+
+void CCFileUtils::addSearchPath(const char* path_)
+{
+    std::string strPrefix;
+    std::string path(path_);
+    if (!isAbsolutePath(path))
+    { // Not an absolute path
+        strPrefix = m_strDefaultResRootPath;
+    }
+    path = strPrefix + path;
+    if (path.length() > 0 && path[path.length()-1] != '/')
+    {
+        path += "/";
+    }
+    m_searchPathArray.push_back(path);
 }
 
 void CCFileUtils::setFilenameLookupDictionary(CCDictionary* pFilenameLookupDict)
