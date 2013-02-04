@@ -105,7 +105,10 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\cocos2dx_support\CCLuaBridge.cpp" />
     <ClCompile Include="..\cocos2dx_support\CCLuaEngine.cpp" />
+    <ClCompile Include="..\cocos2dx_support\CCLuaStack.cpp" />
+    <ClCompile Include="..\cocos2dx_support\CCLuaValue.cpp" />
     <ClCompile Include="..\cocos2dx_support\Cocos2dxLuaLoader.cpp" />
     <ClCompile Include="..\cocos2dx_support\LuaCocos2d.cpp" />
     <ClCompile Include="..\cocos2dx_support\tolua_fix.c" />
@@ -147,7 +150,10 @@
     <ClCompile Include="..\tolua\tolua_to.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\cocos2dx_support\CCLuaBridge.h" />
     <ClInclude Include="..\cocos2dx_support\CCLuaEngine.h" />
+    <ClInclude Include="..\cocos2dx_support\CCLuaStack.h" />
+    <ClInclude Include="..\cocos2dx_support\CCLuaValue.h" />
     <ClInclude Include="..\cocos2dx_support\Cocos2dxLuaLoader.h" />
     <ClInclude Include="..\cocos2dx_support\LuaCocos2d.h" />
     <ClInclude Include="..\cocos2dx_support\tolua_fix.h" />
