@@ -46,7 +46,13 @@ OBJECTS = ../lua/lapi.o \
           ../tolua/tolua_is.o \
           ../tolua/tolua_map.o \
           ../tolua/tolua_push.o \
-          ../tolua/tolua_to.o
+          ../tolua/tolua_to.o \
+          ../cocos2dx_support/CCLuaBridge.cpp \
+          ../cocos2dx_support/CCLuaEngine.cpp \
+          ../cocos2dx_support/CCLuaStack.cpp \
+          ../cocos2dx_support/CCLuaValue.cpp \
+          ../cocos2dx_support/Cocos2dxLuaLoader.cpp \
+          ../cocos2dx_support/LuaCocos2d.cpp 
 
 STATICLIBS = 
 
