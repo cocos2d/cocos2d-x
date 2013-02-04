@@ -112,7 +112,7 @@ ccLanguageType CCApplication::getCurrentLanguage()
 
     LCID localeID = GetUserDefaultLCID();
     unsigned short primaryLanguageID = localeID & 0xFF;
-    
+
     switch (primaryLanguageID)
     {
         case LANG_CHINESE:
@@ -178,6 +178,11 @@ void CCApplication::setStartupScriptFilename(const std::string& startupScriptFil
 {
     m_startupScriptFilename = startupScriptFile;
     std::replace(m_startupScriptFilename.begin(), m_startupScriptFilename.end(), '\\', '/');
+}
+
+void CCApplication::openURL(const char* pszUrl)
+{
+    ShellExecuteA(NULL, "open", pszUrl, NULL, NULL, SW_SHOWNORMAL);
 }
 
 NS_CC_END
