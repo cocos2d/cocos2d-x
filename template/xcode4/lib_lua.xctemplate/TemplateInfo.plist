@@ -33,6 +33,30 @@
 
 	<key>Definitions</key>
 	<dict>
+		<key>libs/lua/cocos2dx_support/CCLuaBridge.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>lua</string>
+				<string>cocos2dx_support</string>
+			</array>
+			<key>Path</key>
+			<string>libs/lua/cocos2dx_support/CCLuaBridge.cpp</string>
+		</dict>
+		<key>libs/lua/cocos2dx_support/CCLuaBridge.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>lua</string>
+				<string>cocos2dx_support</string>
+			</array>
+			<key>Path</key>
+			<string>libs/lua/cocos2dx_support/CCLuaBridge.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
 		<key>libs/lua/cocos2dx_support/CCLuaEngine.cpp</key>
 		<dict>
 			<key>Group</key>
@@ -54,6 +78,54 @@
 			</array>
 			<key>Path</key>
 			<string>libs/lua/cocos2dx_support/CCLuaEngine.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/lua/cocos2dx_support/CCLuaStack.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>lua</string>
+				<string>cocos2dx_support</string>
+			</array>
+			<key>Path</key>
+			<string>libs/lua/cocos2dx_support/CCLuaStack.cpp</string>
+		</dict>
+		<key>libs/lua/cocos2dx_support/CCLuaStack.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>lua</string>
+				<string>cocos2dx_support</string>
+			</array>
+			<key>Path</key>
+			<string>libs/lua/cocos2dx_support/CCLuaStack.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/lua/cocos2dx_support/CCLuaValue.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>lua</string>
+				<string>cocos2dx_support</string>
+			</array>
+			<key>Path</key>
+			<string>libs/lua/cocos2dx_support/CCLuaValue.cpp</string>
+		</dict>
+		<key>libs/lua/cocos2dx_support/CCLuaValue.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>lua</string>
+				<string>cocos2dx_support</string>
+			</array>
+			<key>Path</key>
+			<string>libs/lua/cocos2dx_support/CCLuaValue.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
@@ -104,6 +176,34 @@
 			<string>libs/lua/cocos2dx_support/LuaCocos2d.h</string>
 			<key>TargetIndices</key>
 			<array/>
+		</dict>
+		<key>libs/lua/cocos2dx_support/platform/ios/CCLuaObjcBridge.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>lua</string>
+				<string>cocos2dx_support</string>
+				<string>platform</string>
+				<string>ios</string>
+			</array>
+			<key>Path</key>
+			<string>libs/lua/cocos2dx_support/platform/ios/CCLuaObjcBridge.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/lua/cocos2dx_support/platform/ios/CCLuaObjcBridge.mm</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>lua</string>
+				<string>cocos2dx_support</string>
+				<string>platform</string>
+				<string>ios</string>
+			</array>
+			<key>Path</key>
+			<string>libs/lua/cocos2dx_support/platform/ios/CCLuaObjcBridge.mm</string>
 		</dict>
 		<key>libs/lua/cocos2dx_support/tolua_fix.c</key>
 		<dict>
@@ -853,12 +953,20 @@
 	</dict>
 	<key>Nodes</key>
 	<array>
+		<string>libs/lua/cocos2dx_support/CCLuaBridge.cpp</string>
+		<string>libs/lua/cocos2dx_support/CCLuaBridge.h</string>
 		<string>libs/lua/cocos2dx_support/CCLuaEngine.cpp</string>
 		<string>libs/lua/cocos2dx_support/CCLuaEngine.h</string>
+		<string>libs/lua/cocos2dx_support/CCLuaStack.cpp</string>
+		<string>libs/lua/cocos2dx_support/CCLuaStack.h</string>
+		<string>libs/lua/cocos2dx_support/CCLuaValue.cpp</string>
+		<string>libs/lua/cocos2dx_support/CCLuaValue.h</string>
 		<string>libs/lua/cocos2dx_support/Cocos2dxLuaLoader.cpp</string>
 		<string>libs/lua/cocos2dx_support/Cocos2dxLuaLoader.h</string>
 		<string>libs/lua/cocos2dx_support/LuaCocos2d.cpp</string>
 		<string>libs/lua/cocos2dx_support/LuaCocos2d.h</string>
+		<string>libs/lua/cocos2dx_support/platform/ios/CCLuaObjcBridge.h</string>
+		<string>libs/lua/cocos2dx_support/platform/ios/CCLuaObjcBridge.mm</string>
 		<string>libs/lua/cocos2dx_support/tolua_fix.c</string>
 		<string>libs/lua/cocos2dx_support/tolua_fix.h</string>
 		<string>libs/lua/lua/lapi.c</string>

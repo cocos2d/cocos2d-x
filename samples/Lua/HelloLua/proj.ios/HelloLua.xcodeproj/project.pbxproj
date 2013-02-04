@@ -13,10 +13,6 @@
 		15A3DBA21682FB86002FB0C5 /* SimpleAudioEngine.mm in Sources */ = {isa = PBXBuildFile; fileRef = 15A3DB401682FB86002FB0C5 /* SimpleAudioEngine.mm */; };
 		15A3DBA31682FB86002FB0C5 /* SimpleAudioEngine_objc.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A3DB421682FB86002FB0C5 /* SimpleAudioEngine_objc.m */; };
 		15A3DBC61682FBA8002FB0C5 /* libcocos2dx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15A3DB1E1682FB66002FB0C5 /* libcocos2dx.a */; };
-		15A3DC201682FC3C002FB0C5 /* CCLuaEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A3DBC91682FC3C002FB0C5 /* CCLuaEngine.cpp */; };
-		15A3DC211682FC3C002FB0C5 /* Cocos2dxLuaLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A3DBCB1682FC3C002FB0C5 /* Cocos2dxLuaLoader.cpp */; };
-		15A3DC221682FC3C002FB0C5 /* LuaCocos2d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A3DBCD1682FC3C002FB0C5 /* LuaCocos2d.cpp */; };
-		15A3DC231682FC3C002FB0C5 /* tolua_fix.c in Sources */ = {isa = PBXBuildFile; fileRef = 15A3DBCF1682FC3C002FB0C5 /* tolua_fix.c */; };
 		15A3DC241682FC3C002FB0C5 /* lapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 15A3DBD21682FC3C002FB0C5 /* lapi.c */; };
 		15A3DC251682FC3C002FB0C5 /* lauxlib.c in Sources */ = {isa = PBXBuildFile; fileRef = 15A3DBD41682FC3C002FB0C5 /* lauxlib.c */; };
 		15A3DC261682FC3C002FB0C5 /* lbaselib.c in Sources */ = {isa = PBXBuildFile; fileRef = 15A3DBD61682FC3C002FB0C5 /* lbaselib.c */; };
@@ -53,6 +49,14 @@
 		15A3DC4F1682FC3C002FB0C5 /* tolua_map.c in Sources */ = {isa = PBXBuildFile; fileRef = 15A3DC1D1682FC3C002FB0C5 /* tolua_map.c */; };
 		15A3DC501682FC3C002FB0C5 /* tolua_push.c in Sources */ = {isa = PBXBuildFile; fileRef = 15A3DC1E1682FC3C002FB0C5 /* tolua_push.c */; };
 		15A3DC511682FC3C002FB0C5 /* tolua_to.c in Sources */ = {isa = PBXBuildFile; fileRef = 15A3DC1F1682FC3C002FB0C5 /* tolua_to.c */; };
+		46C1006A16BF5A2C00F74D54 /* CCLuaBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46C1005816BF5A2C00F74D54 /* CCLuaBridge.cpp */; };
+		46C1006B16BF5A2C00F74D54 /* CCLuaEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46C1005A16BF5A2C00F74D54 /* CCLuaEngine.cpp */; };
+		46C1006C16BF5A2C00F74D54 /* CCLuaStack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46C1005C16BF5A2C00F74D54 /* CCLuaStack.cpp */; };
+		46C1006D16BF5A2C00F74D54 /* CCLuaValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46C1005E16BF5A2C00F74D54 /* CCLuaValue.cpp */; };
+		46C1006E16BF5A2C00F74D54 /* Cocos2dxLuaLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46C1006016BF5A2C00F74D54 /* Cocos2dxLuaLoader.cpp */; };
+		46C1006F16BF5A2C00F74D54 /* LuaCocos2d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46C1006216BF5A2C00F74D54 /* LuaCocos2d.cpp */; };
+		46C1007116BF5A2C00F74D54 /* tolua_fix.c in Sources */ = {isa = PBXBuildFile; fileRef = 46C1006816BF5A2C00F74D54 /* tolua_fix.c */; };
+		46C1007616BF62DA00F74D54 /* CCLuaObjcBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46C1007516BF62DA00F74D54 /* CCLuaObjcBridge.mm */; };
 		506EDB88102F4C4000A389B3 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 506EDB87102F4C4000A389B3 /* libz.dylib */; };
 		506EDBA5102F4C9F00A389B3 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 506EDBA4102F4C9F00A389B3 /* AVFoundation.framework */; };
 		78947C6D14EBB9B100DBD5A6 /* background.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 78947C5E14EBB9B000DBD5A6 /* background.mp3 */; };
@@ -117,14 +121,6 @@
 		15A3DB401682FB86002FB0C5 /* SimpleAudioEngine.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SimpleAudioEngine.mm; sourceTree = "<group>"; };
 		15A3DB411682FB86002FB0C5 /* SimpleAudioEngine_objc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleAudioEngine_objc.h; sourceTree = "<group>"; };
 		15A3DB421682FB86002FB0C5 /* SimpleAudioEngine_objc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleAudioEngine_objc.m; sourceTree = "<group>"; };
-		15A3DBC91682FC3C002FB0C5 /* CCLuaEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLuaEngine.cpp; sourceTree = "<group>"; };
-		15A3DBCA1682FC3C002FB0C5 /* CCLuaEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLuaEngine.h; sourceTree = "<group>"; };
-		15A3DBCB1682FC3C002FB0C5 /* Cocos2dxLuaLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Cocos2dxLuaLoader.cpp; sourceTree = "<group>"; };
-		15A3DBCC1682FC3C002FB0C5 /* Cocos2dxLuaLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cocos2dxLuaLoader.h; sourceTree = "<group>"; };
-		15A3DBCD1682FC3C002FB0C5 /* LuaCocos2d.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LuaCocos2d.cpp; sourceTree = "<group>"; };
-		15A3DBCE1682FC3C002FB0C5 /* LuaCocos2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LuaCocos2d.h; sourceTree = "<group>"; };
-		15A3DBCF1682FC3C002FB0C5 /* tolua_fix.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tolua_fix.c; sourceTree = "<group>"; };
-		15A3DBD01682FC3C002FB0C5 /* tolua_fix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tolua_fix.h; sourceTree = "<group>"; };
 		15A3DBD21682FC3C002FB0C5 /* lapi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lapi.c; sourceTree = "<group>"; };
 		15A3DBD31682FC3C002FB0C5 /* lapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lapi.h; sourceTree = "<group>"; };
 		15A3DBD41682FC3C002FB0C5 /* lauxlib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lauxlib.c; sourceTree = "<group>"; };
@@ -187,6 +183,22 @@
 		15A3DC1E1682FC3C002FB0C5 /* tolua_push.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tolua_push.c; sourceTree = "<group>"; };
 		15A3DC1F1682FC3C002FB0C5 /* tolua_to.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tolua_to.c; sourceTree = "<group>"; };
 		1D6058910D05DD3D006BFB54 /* HelloLua.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloLua.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		46C1005816BF5A2C00F74D54 /* CCLuaBridge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLuaBridge.cpp; sourceTree = "<group>"; };
+		46C1005916BF5A2C00F74D54 /* CCLuaBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLuaBridge.h; sourceTree = "<group>"; };
+		46C1005A16BF5A2C00F74D54 /* CCLuaEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLuaEngine.cpp; sourceTree = "<group>"; };
+		46C1005B16BF5A2C00F74D54 /* CCLuaEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLuaEngine.h; sourceTree = "<group>"; };
+		46C1005C16BF5A2C00F74D54 /* CCLuaStack.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLuaStack.cpp; sourceTree = "<group>"; };
+		46C1005D16BF5A2C00F74D54 /* CCLuaStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLuaStack.h; sourceTree = "<group>"; };
+		46C1005E16BF5A2C00F74D54 /* CCLuaValue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLuaValue.cpp; sourceTree = "<group>"; };
+		46C1005F16BF5A2C00F74D54 /* CCLuaValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLuaValue.h; sourceTree = "<group>"; };
+		46C1006016BF5A2C00F74D54 /* Cocos2dxLuaLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Cocos2dxLuaLoader.cpp; sourceTree = "<group>"; };
+		46C1006116BF5A2C00F74D54 /* Cocos2dxLuaLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cocos2dxLuaLoader.h; sourceTree = "<group>"; };
+		46C1006216BF5A2C00F74D54 /* LuaCocos2d.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LuaCocos2d.cpp; sourceTree = "<group>"; };
+		46C1006316BF5A2C00F74D54 /* LuaCocos2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LuaCocos2d.h; sourceTree = "<group>"; };
+		46C1006816BF5A2C00F74D54 /* tolua_fix.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tolua_fix.c; sourceTree = "<group>"; };
+		46C1006916BF5A2C00F74D54 /* tolua_fix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tolua_fix.h; sourceTree = "<group>"; };
+		46C1007416BF62DA00F74D54 /* CCLuaObjcBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLuaObjcBridge.h; sourceTree = "<group>"; };
+		46C1007516BF62DA00F74D54 /* CCLuaObjcBridge.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCLuaObjcBridge.mm; sourceTree = "<group>"; };
 		506EDB87102F4C4000A389B3 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		506EDBA4102F4C9F00A389B3 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		78947C5E14EBB9B000DBD5A6 /* background.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = background.mp3; sourceTree = "<group>"; };
@@ -304,14 +316,21 @@
 		15A3DBC81682FC3C002FB0C5 /* cocos2dx_support */ = {
 			isa = PBXGroup;
 			children = (
-				15A3DBC91682FC3C002FB0C5 /* CCLuaEngine.cpp */,
-				15A3DBCA1682FC3C002FB0C5 /* CCLuaEngine.h */,
-				15A3DBCB1682FC3C002FB0C5 /* Cocos2dxLuaLoader.cpp */,
-				15A3DBCC1682FC3C002FB0C5 /* Cocos2dxLuaLoader.h */,
-				15A3DBCD1682FC3C002FB0C5 /* LuaCocos2d.cpp */,
-				15A3DBCE1682FC3C002FB0C5 /* LuaCocos2d.h */,
-				15A3DBCF1682FC3C002FB0C5 /* tolua_fix.c */,
-				15A3DBD01682FC3C002FB0C5 /* tolua_fix.h */,
+				46C1007216BF62DA00F74D54 /* platform */,
+				46C1005816BF5A2C00F74D54 /* CCLuaBridge.cpp */,
+				46C1005916BF5A2C00F74D54 /* CCLuaBridge.h */,
+				46C1005A16BF5A2C00F74D54 /* CCLuaEngine.cpp */,
+				46C1005B16BF5A2C00F74D54 /* CCLuaEngine.h */,
+				46C1005C16BF5A2C00F74D54 /* CCLuaStack.cpp */,
+				46C1005D16BF5A2C00F74D54 /* CCLuaStack.h */,
+				46C1005E16BF5A2C00F74D54 /* CCLuaValue.cpp */,
+				46C1005F16BF5A2C00F74D54 /* CCLuaValue.h */,
+				46C1006016BF5A2C00F74D54 /* Cocos2dxLuaLoader.cpp */,
+				46C1006116BF5A2C00F74D54 /* Cocos2dxLuaLoader.h */,
+				46C1006216BF5A2C00F74D54 /* LuaCocos2d.cpp */,
+				46C1006316BF5A2C00F74D54 /* LuaCocos2d.h */,
+				46C1006816BF5A2C00F74D54 /* tolua_fix.c */,
+				46C1006916BF5A2C00F74D54 /* tolua_fix.h */,
 			);
 			path = cocos2dx_support;
 			sourceTree = "<group>";
@@ -442,6 +461,23 @@
 				D403B5D8135D1AF1004B518D /* libxml2.dylib */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		46C1007216BF62DA00F74D54 /* platform */ = {
+			isa = PBXGroup;
+			children = (
+				46C1007316BF62DA00F74D54 /* ios */,
+			);
+			path = platform;
+			sourceTree = "<group>";
+		};
+		46C1007316BF62DA00F74D54 /* ios */ = {
+			isa = PBXGroup;
+			children = (
+				46C1007416BF62DA00F74D54 /* CCLuaObjcBridge.h */,
+				46C1007516BF62DA00F74D54 /* CCLuaObjcBridge.mm */,
+			);
+			path = ios;
 			sourceTree = "<group>";
 		};
 		78947C5C14EBB9B000DBD5A6 /* Resources */ = {
@@ -583,10 +619,6 @@
 				15A3DBA11682FB86002FB0C5 /* CocosDenshion.m in Sources */,
 				15A3DBA21682FB86002FB0C5 /* SimpleAudioEngine.mm in Sources */,
 				15A3DBA31682FB86002FB0C5 /* SimpleAudioEngine_objc.m in Sources */,
-				15A3DC201682FC3C002FB0C5 /* CCLuaEngine.cpp in Sources */,
-				15A3DC211682FC3C002FB0C5 /* Cocos2dxLuaLoader.cpp in Sources */,
-				15A3DC221682FC3C002FB0C5 /* LuaCocos2d.cpp in Sources */,
-				15A3DC231682FC3C002FB0C5 /* tolua_fix.c in Sources */,
 				15A3DC241682FC3C002FB0C5 /* lapi.c in Sources */,
 				15A3DC251682FC3C002FB0C5 /* lauxlib.c in Sources */,
 				15A3DC261682FC3C002FB0C5 /* lbaselib.c in Sources */,
@@ -623,6 +655,14 @@
 				15A3DC4F1682FC3C002FB0C5 /* tolua_map.c in Sources */,
 				15A3DC501682FC3C002FB0C5 /* tolua_push.c in Sources */,
 				15A3DC511682FC3C002FB0C5 /* tolua_to.c in Sources */,
+				46C1006A16BF5A2C00F74D54 /* CCLuaBridge.cpp in Sources */,
+				46C1006B16BF5A2C00F74D54 /* CCLuaEngine.cpp in Sources */,
+				46C1006C16BF5A2C00F74D54 /* CCLuaStack.cpp in Sources */,
+				46C1006D16BF5A2C00F74D54 /* CCLuaValue.cpp in Sources */,
+				46C1006E16BF5A2C00F74D54 /* Cocos2dxLuaLoader.cpp in Sources */,
+				46C1006F16BF5A2C00F74D54 /* LuaCocos2d.cpp in Sources */,
+				46C1007116BF5A2C00F74D54 /* tolua_fix.c in Sources */,
+				46C1007616BF62DA00F74D54 /* CCLuaObjcBridge.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
