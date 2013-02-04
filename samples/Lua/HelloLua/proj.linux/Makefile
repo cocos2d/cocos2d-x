@@ -26,11 +26,7 @@ INCLUDES =  -I../ \
 DEFINES = -DLINUX
 
 OBJECTS = ./main.o \
-        ../Classes/AppDelegate.o \
-        ../../../../scripting/lua/cocos2dx_support/CCLuaEngine.o \
-        ../../../../scripting/lua/cocos2dx_support/Cocos2dxLuaLoader.o \
-        ../../../../scripting/lua/cocos2dx_support/LuaCocos2d.o \
-        ../../../../scripting/lua/cocos2dx_support/tolua_fix.o
+        ../Classes/AppDelegate.o
 
 LBITS := $(shell getconf LONG_BIT)
 ifeq ($(LBITS),64)

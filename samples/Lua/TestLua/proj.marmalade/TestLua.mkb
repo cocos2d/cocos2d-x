@@ -7,7 +7,6 @@ options
 includepaths
 {
 	../Classes
-	../../../../scripting/lua/cocos2dx_support/
 }
 subprojects
 {
