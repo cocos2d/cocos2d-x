@@ -45,6 +45,7 @@ public:
         kFmtJpg = 0,
         kFmtPng,
         kFmtTiff,
+        kFmtWebp,
         kFmtRawData,
         kFmtUnKnown
     }EImageFormat;
@@ -61,8 +62,8 @@ public:
         kAlignLeft          = 0x31, ///< Horizontal left and vertical center.
         kAlignTopLeft       = 0x11, ///< Horizontal left and vertical top.
     }ETextAlign;
-
-    /** 
+    
+    /**
     @brief  Load the image from the specified path. 
     @param strPath   the absolute file path.
     @param imageType the type of image, currently only supporting two types.
@@ -132,7 +133,8 @@ public:
 protected:
     bool _initWithJpgData(void *pData, int nDatalen);
     bool _initWithPngData(void *pData, int nDatalen);
-    bool _initWithTiffData(void* pData, int nDataLen);
+    bool _initWithTiffData(void *pData, int nDataLen);
+    bool _initWithWebpData(void *pData, int nDataLen);
     // @warning kFmtRawData only support RGBA8888
     bool _initWithRawData(void *pData, int nDatalen, int nWidth, int nHeight, int nBitsPerComponent);
 
