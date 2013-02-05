@@ -24,7 +24,7 @@
 
 #include "platform/CCImage.h"
 #include "textures/CCTexture2D.h"
-#include "platform/third_party/common/webp/webp/decode.h"
+#include "decode.h"
 #include "ccMacros.h"
 #include <stdlib.h>
 #include <stdio.h>
