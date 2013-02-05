@@ -210,6 +210,14 @@ public:
      *  @since v2.1
      */
     virtual void setSearchResolutionsOrder(const std::vector<std::string>& searchResolutionsOrder);
+
+    /**
+      * Append search order of the resources.
+      *
+      * @see setSearchResolutionsOrder(), fullPathForFilename().
+      * @since v2.1
+      */
+    virtual void addSearchResolutionsOrder(const char* order);
     
     /**
      *  Gets the array that contains the search order of the resources.
@@ -237,6 +245,13 @@ public:
      *  @since v2.1
      */
     virtual void setSearchPaths(const std::vector<std::string>& searchPaths);
+    
+    /**
+      * Add search path.
+      *
+      * @since v2.1
+      */
+     void addSearchPath(const char* path);
     
     /**
      *  Gets the array of search paths.
