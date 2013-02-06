@@ -37,7 +37,7 @@ extern "C" {
 static WEBP_INLINE int BitsLog2Floor(uint32_t n) {
   return n == 0 ? -1 : 31 ^ __builtin_clz(n);
 }
-#elif defined(_MSC_VER) && (defined(_M_X64) || defined(_M_IX86))
+#elif (defined(_MSC_VER) && (defined(_M_X64) || defined(_M_IX86))) && (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
 #include <intrin.h>
 #pragma intrinsic(_BitScanReverse)
 
