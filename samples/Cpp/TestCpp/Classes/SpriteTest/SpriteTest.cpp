@@ -4525,10 +4525,10 @@ SpriteBatchNodeOffsetAnchorRotationalSkew::SpriteBatchNodeOffsetAnchorRotational
         point->setPosition(sprite->getPosition());
         
         CCArray *animFrames = CCArray::create();
-        for(int i = 0; i < 14; i++)
+        for(int j = 0; j < 14; j++)
         {
             char pngName[30];
-            snprintf(pngName, 30, "grossini_dance_%02d.png", (i+1));
+            snprintf(pngName, 30, "grossini_dance_%02d.png", (j+1));
             CCSpriteFrame *frame = cache->spriteFrameByName(pngName);
             animFrames->addObject(frame);
         }
@@ -4598,10 +4598,10 @@ SpriteOffsetAnchorRotationalSkewScale::SpriteOffsetAnchorRotationalSkewScale()
         point->setPosition(sprite->getPosition());
         
         CCArray *animFrames = CCArray::create();
-        for(int i = 0; i < 14; i++)
+        for(int j = 0; j < 14; j++)
         {
             char pngName[30];
-            snprintf(pngName, 30, "grossini_dance_%02d.png", (i+1));
+            snprintf(pngName, 30, "grossini_dance_%02d.png", (j+1));
             CCSpriteFrame *frame = cache->spriteFrameByName(pngName);
             animFrames->addObject(frame);
         }
@@ -4681,10 +4681,10 @@ SpriteBatchNodeOffsetAnchorRotationalSkewScale::SpriteBatchNodeOffsetAnchorRotat
         point->setPosition(sprite->getPosition());
         
         CCArray *animFrames = CCArray::create();
-        for(int i = 0; i < 14; i++)
+        for(int j = 0; j < 14; j++)
         {
             char pngName[30];
-            snprintf(pngName, 30, "grossini_dance_%02d.png", (i+1));
+            snprintf(pngName, 30, "grossini_dance_%02d.png", (j+1));
             CCSpriteFrame *frame = cache->spriteFrameByName(pngName);
             animFrames->addObject(frame);
         }
