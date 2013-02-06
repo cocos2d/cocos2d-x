@@ -73,7 +73,7 @@ distribution.
 #endif
 
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1400 )
+#if (defined(_MSC_VER) && (_MSC_VER >= 1400 ) && (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE))
 // Microsoft visual studio, version 2005 and higher.
 /*int _snprintf_s(
    char *buffer,
