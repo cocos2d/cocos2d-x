@@ -1066,11 +1066,11 @@ static void CopyOrSwap(const uint32_t* src, int num_pixels, uint8_t* dst,
     const uint32_t* const src_end = src + num_pixels;
     while (src < src_end) {
       uint32_t argb = *src++;
-#if !defined(__BIG_ENDIAN__) && (defined(__i386__) || defined(__x86_64__))
+#if (!defined(__BIG_ENDIAN__) && (defined(__i386__) || defined(__x86_64__))) && (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
       __asm__ volatile("bswap %0" : "=r"(argb) : "0"(argb));
       *(uint32_t*)dst = argb;
       dst += sizeof(argb);
-#elif !defined(__BIG_ENDIAN__) && defined(_MSC_VER)
+#elif (!defined(__BIG_ENDIAN__) && defined(_MSC_VER)) && (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
       argb = _byteswap_ulong(argb);
       *(uint32_t*)dst = argb;
       dst += sizeof(argb);

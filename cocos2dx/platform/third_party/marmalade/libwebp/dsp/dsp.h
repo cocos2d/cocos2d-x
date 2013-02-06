@@ -21,7 +21,7 @@ extern "C" {
 //------------------------------------------------------------------------------
 // CPU detection
 
-#if defined(_MSC_VER) && (defined(_M_X64) || defined(_M_IX86))
+#if defined(_MSC_VER) && (defined(_M_X64) || defined(_M_IX86)) && (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
 #define WEBP_MSC_SSE2  // Visual C++ SSE2 targets
 #endif
 

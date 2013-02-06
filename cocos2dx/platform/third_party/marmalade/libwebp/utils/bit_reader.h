@@ -81,10 +81,10 @@ static WEBP_INLINE void VP8LoadNewBytes(VP8BitReader* const br) {
     br->buf_ += (BITS) >> 3;
 #if !defined(__BIG_ENDIAN__)
 #if (BITS == 32)
-#if defined(__i386__) || defined(__x86_64__)
+#if (defined(__i386__) || defined(__x86_64__) ) && (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
     __asm__ volatile("bswap %k0" : "=r"(in_bits) : "0"(in_bits));
     bits = (bit_t)in_bits;   // 32b -> 64b zero-extension
-#elif defined(_MSC_VER)
+#elif defined(_MSC_VER) && (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
     bits = _byteswap_ulong(in_bits);
 #else
     bits = (bit_t)(in_bits >> 24) | ((in_bits >> 8) & 0xff00)
