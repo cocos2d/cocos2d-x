@@ -42,9 +42,7 @@ STATICLIBS = $(STATICLIBS_DIR)/libfreetype.a \
 				$(STATICLIBS_DIR)/libtiff.a \
 #				$(STATICLIBS_DIR)/libGLEW.a \
 
-SHAREDLIBS += -lglfw -lcurl -llua
-SHAREDLIBS += -Wl,-rpath,../../../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib
-SHAREDLIBS += -L../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib -lGLEW
+SHAREDLIBS += -lglfw -lcurl -llua -lGLEW
 SHAREDLIBS += -Wl,-rpath,../../../../../../lib/linux/Debug
 
 ifeq ($(LBITS),64)
