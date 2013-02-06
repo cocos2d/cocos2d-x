@@ -94,6 +94,9 @@
     <Filter Include="draw_nodes">
       <UniqueIdentifier>{1179d205-d065-49f0-8457-bc4c3f1d0cb3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="support\tinyxml2">
+      <UniqueIdentifier>{cc25bb83-527d-4218-8d68-ebf963ce7698}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\base_nodes\CCAtlasNode.cpp">
@@ -443,6 +446,7 @@
     <ClCompile Include="..\platform\CCImageCommonWebp.cpp">
       <Filter>platform</Filter>
     </ClCompile>
+    <ClCompile Include="..\support\tinyxml2\tinyxml2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\base_nodes\CCAtlasNode.h">
@@ -893,5 +897,6 @@
     <ClInclude Include="..\platform\win32\CCFileUtilsWin32.h">
       <Filter>platform\win32</Filter>
     </ClInclude>
+    <ClInclude Include="..\support\tinyxml2\tinyxml2.h" />
   </ItemGroup>
 </Project>
