@@ -63,7 +63,9 @@ bool XmlSaxHander::VisitEnter( const tinyxml2::XMLElement& element, const tinyxm
 		//CCLog("%s",attrib->Value());
 		attsVector.push_back(attrib->Value());
 	}
-	attsVector.push_back(nullptr);
+    
+    // nullptr is used in c++11
+	//attsVector.push_back(nullptr);
 
 	CCSAXParser::startElement(m_ccsaxParserImp, (const CC_XML_CHAR *)element.Value(), (const CC_XML_CHAR **)(&attsVector[0]));
 	return true;
