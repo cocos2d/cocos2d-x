@@ -28,7 +28,7 @@ bool CCFileUtilsBlackberry::init()
     return CCFileUtils::init();
 }
 
-string CCFileUtilsBlackberry::getWriteablePath()
+string CCFileUtilsBlackberry::getWritablePath()
 {
     // Let's write it in the current working directory's data folder
     char cwd[FILENAME_MAX] = {0};

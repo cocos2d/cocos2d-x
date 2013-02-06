@@ -196,7 +196,7 @@ void TestSearchPath::onEnter()
     sharedFileUtils->purgeCachedEntries();
     m_defaultSearchPathArray = sharedFileUtils->getSearchPaths();
     vector<string> searchPaths = m_defaultSearchPathArray;
-    string writablePath = sharedFileUtils->getWriteablePath();
+    string writablePath = sharedFileUtils->getWritablePath();
     string fileName = writablePath+"external.txt";
     char szBuf[100] = "Hello Cocos2d-x!";
     FILE* fp = fopen(fileName.c_str(), "wb");

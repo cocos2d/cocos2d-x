@@ -46,7 +46,7 @@ class CC_DLL CCFileUtilsLinux : public CCFileUtils
 public:
     /* override funtions */
     bool init();
-    virtual std::string getWriteablePath();
+    virtual std::string getWritablePath();
     virtual bool isFileExist(const std::string& strFilePath);
 };
 

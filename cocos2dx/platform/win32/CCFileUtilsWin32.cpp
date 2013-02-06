@@ -85,7 +85,7 @@ bool CCFileUtilsWin32::isAbsolutePath(const std::string& strPath)
     return false;
 }
 
-string CCFileUtilsWin32::getWriteablePath()
+string CCFileUtilsWin32::getWritablePath()
 {
     // Get full path of executable, e.g. c:\Program Files (x86)\My Game Folder\MyGame.exe
     char full_path[_MAX_PATH + 1];
