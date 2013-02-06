@@ -2,7 +2,18 @@
 class CCFileUtils
 {
     static CCFileUtils* sharedFileUtils();
-    std::string getWriteablePath();
-    const char* fullPathFromRelativeFile(const char *pszFilename, const char *pszRelativeFile);
+    static void purgeFileUtils();
+    
+    void purgeCachedEntries();
+
     std::string fullPathForFilename(const char *pszFileName);
+    void loadFilenameLookupDictionaryFromFile(const char* filename);
+    const char* fullPathFromRelativeFile(const char *pszFilename, const char *pszRelativeFile);
+    void addSearchResolutionsOrder(const char* order);
+    void addSearchPath(const char* path);
+
+    std::string getWriteablePath();
+    
+    void setPopupNotify(bool bNotify);
+    bool isPopupNotify();
 };
