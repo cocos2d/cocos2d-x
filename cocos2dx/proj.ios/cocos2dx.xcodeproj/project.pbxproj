@@ -289,6 +289,8 @@
 		1AC6CE8816B910CD00330EFD /* CCFileUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC6CE8616B910CD00330EFD /* CCFileUtils.cpp */; };
 		1AC6CE8916B910CD00330EFD /* CCFileUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AC6CE8716B910CD00330EFD /* CCFileUtils.h */; };
 		2628297A15EC7064002C4240 /* ccTypeInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 2628297915EC7064002C4240 /* ccTypeInfo.h */; };
+		469A7DE316C1F517006FFCB2 /* tinyxml2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 469A7DE116C1F517006FFCB2 /* tinyxml2.cpp */; };
+		469A7DE416C1F517006FFCB2 /* tinyxml2.h in Headers */ = {isa = PBXBuildFile; fileRef = 469A7DE216C1F517006FFCB2 /* tinyxml2.h */; };
 		D43F7F8A15C7D8BA00D713FC /* CCTouch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D43F7F8915C7D8BA00D713FC /* CCTouch.cpp */; };
 /* End PBXBuildFile section */
 
@@ -578,6 +580,8 @@
 		1AC6CE8616B910CD00330EFD /* CCFileUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCFileUtils.cpp; sourceTree = "<group>"; };
 		1AC6CE8716B910CD00330EFD /* CCFileUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFileUtils.h; sourceTree = "<group>"; };
 		2628297915EC7064002C4240 /* ccTypeInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccTypeInfo.h; sourceTree = "<group>"; };
+		469A7DE116C1F517006FFCB2 /* tinyxml2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxml2.cpp; sourceTree = "<group>"; };
+		469A7DE216C1F517006FFCB2 /* tinyxml2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tinyxml2.h; sourceTree = "<group>"; };
 		D43F7F8915C7D8BA00D713FC /* CCTouch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTouch.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1039,24 +1043,25 @@
 		1551A5E7158F2ADE00E66CFE /* support */ = {
 			isa = PBXGroup;
 			children = (
-				154269DA15B5653000712A7F /* CCNotificationCenter.cpp */,
-				154269DB15B5653000712A7F /* CCNotificationCenter.h */,
 				1551A5E8158F2ADE00E66CFE /* base64.cpp */,
-				1551A5E9158F2ADE00E66CFE /* base64.h */,
+				154269DA15B5653000712A7F /* CCNotificationCenter.cpp */,
 				1551A5EA158F2ADE00E66CFE /* CCPointExtension.cpp */,
-				1551A5EB158F2ADE00E66CFE /* CCPointExtension.h */,
 				1551A5EC158F2ADE00E66CFE /* CCProfiling.cpp */,
-				1551A5ED158F2ADE00E66CFE /* CCProfiling.h */,
 				1551A5EE158F2ADE00E66CFE /* CCUserDefault.cpp */,
-				1551A5EF158F2ADE00E66CFE /* CCUserDefault.h */,
 				1551A5F0158F2ADE00E66CFE /* ccUtils.cpp */,
-				1551A5F1158F2ADE00E66CFE /* ccUtils.h */,
 				1551A5F2158F2ADE00E66CFE /* CCVertex.cpp */,
+				1551A5FC158F2ADE00E66CFE /* TransformUtils.cpp */,
+				1551A5E9158F2ADE00E66CFE /* base64.h */,
+				154269DB15B5653000712A7F /* CCNotificationCenter.h */,
+				1551A5EB158F2ADE00E66CFE /* CCPointExtension.h */,
+				1551A5ED158F2ADE00E66CFE /* CCProfiling.h */,
+				1551A5EF158F2ADE00E66CFE /* CCUserDefault.h */,
+				1551A5F1158F2ADE00E66CFE /* ccUtils.h */,
 				1551A5F3158F2ADE00E66CFE /* CCVertex.h */,
+				1551A5FD158F2ADE00E66CFE /* TransformUtils.h */,
 				1551A5F4158F2ADE00E66CFE /* data_support */,
 				1551A5F9158F2ADE00E66CFE /* image_support */,
-				1551A5FC158F2ADE00E66CFE /* TransformUtils.cpp */,
-				1551A5FD158F2ADE00E66CFE /* TransformUtils.h */,
+				469A7DE016C1F517006FFCB2 /* tinyxml2 */,
 				1551A5FE158F2ADE00E66CFE /* zip_support */,
 			);
 			path = support;
@@ -1164,6 +1169,15 @@
 				15FBEE6C164BBF77008CB2C3 /* CCDrawNode.cpp */,
 			);
 			path = draw_nodes;
+			sourceTree = "<group>";
+		};
+		469A7DE016C1F517006FFCB2 /* tinyxml2 */ = {
+			isa = PBXGroup;
+			children = (
+				469A7DE116C1F517006FFCB2 /* tinyxml2.cpp */,
+				469A7DE216C1F517006FFCB2 /* tinyxml2.h */,
+			);
+			path = tinyxml2;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1332,6 +1346,7 @@
 				15FBEE6B164BBB20008CB2C3 /* CCDrawNode.h in Headers */,
 				1AC6CE8116B9075B00330EFD /* CCFileUtilsIOS.h in Headers */,
 				1AC6CE8916B910CD00330EFD /* CCFileUtils.h in Headers */,
+				469A7DE416C1F517006FFCB2 /* tinyxml2.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1509,6 +1524,7 @@
 				15FBEE68164BBA98008CB2C3 /* CCDrawingPrimitives.cpp in Sources */,
 				15FBEE6D164BBF77008CB2C3 /* CCDrawNode.cpp in Sources */,
 				1AC6CE8816B910CD00330EFD /* CCFileUtils.cpp in Sources */,
+				469A7DE316C1F517006FFCB2 /* tinyxml2.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

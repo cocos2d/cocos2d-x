@@ -25,7 +25,7 @@
 #include "CCSAXParser.h"
 #include "cocoa/CCDictionary.h"
 #include "CCFileUtils.h"
-#include "tinyxml2/tinyxml2.h"
+#include "support/tinyxml2/tinyxml2.h"
 
 #include <vector> // because its based on windows 8 build :P
 
@@ -66,6 +66,7 @@ bool XmlSaxHander::VisitEnter( const tinyxml2::XMLElement& element, const tinyxm
     
     // nullptr is used in c++11
 	//attsVector.push_back(nullptr);
+    attsVector.push_back(NULL);
 
 	CCSAXParser::startElement(m_ccsaxParserImp, (const CC_XML_CHAR *)element.Value(), (const CC_XML_CHAR **)(&attsVector[0]));
 	return true;
