@@ -74,6 +74,7 @@ particle_nodes/CCParticleExamples.cpp \
 particle_nodes/CCParticleSystem.cpp \
 particle_nodes/CCParticleBatchNode.cpp \
 particle_nodes/CCParticleSystemQuad.cpp \
+platform/CCImageCommonWebp.cpp \
 platform/CCSAXParser.cpp \
 platform/CCThread.cpp \
 platform/CCFileUtils.cpp \
@@ -151,14 +152,15 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH) \
 LOCAL_LDLIBS := -lGLESv2 \
                 -lEGL \
                 -llog \
-                -lz 
+                -lz
 
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos_libpng_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_jpeg_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_libxml2_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_libtiff_static
+LOCAL_WHOLE_STATIC_LIBRARIES += cocos_libwebp_static
 
-# define the macro to compile through support/zip_support/ioapi.c                
+# define the macro to compile through support/zip_support/ioapi.c
 LOCAL_CFLAGS := -Wno-psabi -DUSE_FILE32API
 LOCAL_EXPORT_CFLAGS := -Wno-psabi -DUSE_FILE32API
 
@@ -167,3 +169,4 @@ include $(BUILD_STATIC_LIBRARY)
 $(call import-module,libjpeg)
 $(call import-module,libpng)
 $(call import-module,libtiff)
+$(call import-module,libwebp)

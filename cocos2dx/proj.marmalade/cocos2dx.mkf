@@ -19,6 +19,7 @@ subprojects
 	freetype
 	libjpeg
 	libtiff
+	libwebp
 }
 includepaths
 {

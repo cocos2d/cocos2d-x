@@ -21,7 +21,8 @@ INCLUDES =  -I.. \
 			-I../platform/linux \
 			-I../platform/third_party/linux/libpng \
 			-I../platform/third_party/linux/libjpeg \
-			-I../platform/third_party/linux/libtiff/include
+			-I../platform/third_party/linux/libtiff/include \
+			-I../platform/third_party/linux/libwebp 
 
 LBITS := $(shell getconf LONG_BIT)
 ifeq ($(LBITS),64)
@@ -86,6 +87,7 @@ OBJECTS = ../actions/CCAction.o \
 ../platform/CCSAXParser.o \
 ../platform/CCThread.o \
 ../platform/platform.o \
+../platform/CCImageCommonWebp.o \
 ../platform/CCEGLViewProtocol.o \
 ../platform/CCFileUtils.o \
 ../platform/linux/CCStdC.o \
@@ -163,11 +165,12 @@ STATICLIBS =
 STATICLIBS = $(STATICLIBS_DIR)/libfreetype.a \
 				$(STATICLIBS_DIR)/libpng.a \
 				$(STATICLIBS_DIR)/libjpeg.a \
-				$(STATICLIBS_DIR)/libtiff.a 
+				$(STATICLIBS_DIR)/libtiff.a \
+				$(STATICLIBS_DIR)/libwebp.a
 
-SHAREDLIBS = -lglfw -lcurl -lfontconfig -lGLEW
+SHAREDLIBS = -lglfw -lcurl -lfontconfig -lGLEW 
 
-debug: CCFLAGS += -g3 -O0
+debug: CCFLAGS += -g3 -O0 
 debug: CXXFLAGS += -g3 -O0
 debug: DEFINES += -DDEBUG -DCC_ENABLE_CHIPMUNK_INTEGRATION -DCOCOS2D_DEBUG=1
 debug: $(TARGET)
