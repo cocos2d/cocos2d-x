@@ -19,7 +19,6 @@ INCLUDES =  -I.. \
             -I../../external/chipmunk/include/chipmunk \
 			-I../../extensions/network \
 			-I../platform/linux \
-			-I../platform/third_party/linux/libxml2 \
 			-I../platform/third_party/linux/libpng \
 			-I../platform/third_party/linux/libjpeg \
 			-I../platform/third_party/linux/libtiff/include \
@@ -113,6 +112,7 @@ OBJECTS = ../actions/CCAction.o \
 ../support/CCVertex.o \
 ../support/CCNotificationCenter.o \
 ../support/image_support/TGAlib.o \
+../support/tinyxml2/tinyxml2.cpp \
 ../support/zip_support/ZipUtils.o \
 ../support/zip_support/ioapi.o \
 ../support/zip_support/unzip.o \
@@ -163,7 +163,6 @@ STATICLIBS_DIR = ../platform/third_party/linux/libraries
 endif
 STATICLIBS = 
 STATICLIBS = $(STATICLIBS_DIR)/libfreetype.a \
-				$(STATICLIBS_DIR)/libxml2.a \
 				$(STATICLIBS_DIR)/libpng.a \
 				$(STATICLIBS_DIR)/libjpeg.a \
 				$(STATICLIBS_DIR)/libtiff.a \
