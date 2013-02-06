@@ -9,6 +9,8 @@
 //
 // Author: Christian Duvivier (cduvivier@google.com)
 
+#include "platform/CCPlatformConfig.h"
+
 #include "./dsp.h"
 
 #if defined(__ANDROID__)
