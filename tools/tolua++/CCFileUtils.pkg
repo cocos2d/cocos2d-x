@@ -12,7 +12,7 @@ class CCFileUtils
     void addSearchResolutionsOrder(const char* order);
     void addSearchPath(const char* path);
 
-    std::string getWriteablePath();
+    std::string getWritablePath();
     
     void setPopupNotify(bool bNotify);
     bool isPopupNotify();

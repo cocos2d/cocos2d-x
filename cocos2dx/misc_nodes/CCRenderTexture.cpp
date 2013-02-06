@@ -630,7 +630,7 @@ bool CCRenderTexture::saveToFile(const char *fileName, tCCImageFormat format)
     CCImage *pImage = newCCImage(true);
     if (pImage)
     {
-        std::string fullpath = CCFileUtils::sharedFileUtils()->getWriteablePath() + fileName;
+        std::string fullpath = CCFileUtils::sharedFileUtils()->getWritablePath() + fileName;
         
         bRet = pImage->saveToFile(fullpath.c_str(), true);
     }

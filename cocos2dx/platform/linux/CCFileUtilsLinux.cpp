@@ -47,7 +47,7 @@ bool CCFileUtilsLinux::init()
     return CCFileUtils::init();
 }
 
-string CCFileUtilsLinux::getWriteablePath()
+string CCFileUtilsLinux::getWritablePath()
 {
     //return current resource path
     return m_strDefaultResRootPath;

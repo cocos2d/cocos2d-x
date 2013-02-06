@@ -149,7 +149,7 @@ CCFileUtils* CCFileUtils::sharedFileUtils()
 
 static NSFileManager* s_fileManager = [NSFileManager defaultManager];
 
-std::string CCFileUtilsIOS::getWriteablePath()
+std::string CCFileUtilsIOS::getWritablePath()
 {
     // save to document folder
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
