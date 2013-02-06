@@ -166,5 +166,4 @@ include $(BUILD_STATIC_LIBRARY)
 
 $(call import-module,libjpeg)
 $(call import-module,libpng)
-$(call import-module,libxml2)
 $(call import-module,libtiff)
