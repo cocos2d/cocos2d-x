@@ -16,7 +16,6 @@ subprojects
 {
 	zlib
 	libpng
-	libxml2
 	freetype
 	libjpeg
 	libtiff
@@ -181,7 +180,7 @@ files
        ("../support/image_support")
 	"*.h"
 	"*.cpp"
-       ("../support/tinxml2")
+       ("../support/tinyxml2")
        "*.h"
        "*.cpp"
 	("../support/zip_support")
