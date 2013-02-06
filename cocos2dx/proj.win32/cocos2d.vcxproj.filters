@@ -440,6 +440,9 @@
     <ClCompile Include="..\platform\CCFileUtils.cpp">
       <Filter>platform</Filter>
     </ClCompile>
+    <ClCompile Include="..\platform\CCImageCommonWebp.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\base_nodes\CCAtlasNode.h">
