@@ -50,6 +50,7 @@ TEXTURE2D_CREATE_FUNC(TexturePVRBadEncoding);
 TESTLAYER_CREATE_FUNC(TexturePNG);
 TESTLAYER_CREATE_FUNC(TextureJPEG);
 TESTLAYER_CREATE_FUNC(TextureTIFF);
+TESTLAYER_CREATE_FUNC(TextureWEBP);
 TESTLAYER_CREATE_FUNC(TexturePixelFormat);
 TESTLAYER_CREATE_FUNC(TextureBlend);
 TESTLAYER_CREATE_FUNC(TextureAsync);
@@ -100,6 +101,7 @@ static NEWTEXTURE2DTESTFUNC createFunctions[] =
     createTexturePNG,
     createTextureJPEG,
     createTextureTIFF,
+    createTextureWEBP,
     createTexturePixelFormat,
     createTextureBlend,
     createTextureAsync,
@@ -291,6 +293,27 @@ void TextureJPEG::onEnter()
 std::string TextureJPEG::title()
 {
     return "JPEG Test";
+}
+
+//------------------------------------------------------------------
+//
+// TextureWEBP
+//
+//------------------------------------------------------------------
+void TextureWEBP::onEnter()
+{
+    TextureDemo::onEnter();
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    
+    CCSprite *img = CCSprite::create("Images/test_image.webp");
+    img->setPosition(ccp( s.width/2.0f, s.height/2.0f));
+    addChild(img);
+    CCTextureCache::sharedTextureCache()->dumpCachedTextureInfo();
+}
+
+std::string TextureWEBP::title()
+{
+    return "WEBP Test";
 }
 
 //------------------------------------------------------------------
