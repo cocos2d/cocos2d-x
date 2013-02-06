@@ -282,6 +282,8 @@
 		41CD6C4515BF7382005E6F29 /* CCWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 41CD6C3215BF7382005E6F29 /* CCWindow.m */; };
 		41CD6C4615BF7382005E6F29 /* EAGLView.h in Headers */ = {isa = PBXBuildFile; fileRef = 41CD6C3315BF7382005E6F29 /* EAGLView.h */; };
 		41CD6C4715BF7382005E6F29 /* EAGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 41CD6C3415BF7382005E6F29 /* EAGLView.mm */; };
+		469A7DE916C227A3006FFCB2 /* tinyxml2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 469A7DE716C227A3006FFCB2 /* tinyxml2.cpp */; };
+		469A7DEA16C227A3006FFCB2 /* tinyxml2.h in Headers */ = {isa = PBXBuildFile; fileRef = 469A7DE816C227A3006FFCB2 /* tinyxml2.h */; };
 		F4D7A74715F269D10081CE26 /* ccTypeInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = F4D7A74615F269D10081CE26 /* ccTypeInfo.h */; };
 /* End PBXBuildFile section */
 
@@ -564,6 +566,8 @@
 		41CD6C3215BF7382005E6F29 /* CCWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCWindow.m; sourceTree = "<group>"; };
 		41CD6C3315BF7382005E6F29 /* EAGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EAGLView.h; sourceTree = "<group>"; };
 		41CD6C3415BF7382005E6F29 /* EAGLView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = EAGLView.mm; sourceTree = "<group>"; };
+		469A7DE716C227A3006FFCB2 /* tinyxml2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxml2.cpp; sourceTree = "<group>"; };
+		469A7DE816C227A3006FFCB2 /* tinyxml2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tinyxml2.h; sourceTree = "<group>"; };
 		F4D7A74615F269D10081CE26 /* ccTypeInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccTypeInfo.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -993,24 +997,25 @@
 		1551A5E7158F2ADE00E66CFE /* support */ = {
 			isa = PBXGroup;
 			children = (
-				154269DA15B5653000712A7F /* CCNotificationCenter.cpp */,
-				154269DB15B5653000712A7F /* CCNotificationCenter.h */,
 				1551A5E8158F2ADE00E66CFE /* base64.cpp */,
-				1551A5E9158F2ADE00E66CFE /* base64.h */,
+				154269DA15B5653000712A7F /* CCNotificationCenter.cpp */,
 				1551A5EA158F2ADE00E66CFE /* CCPointExtension.cpp */,
-				1551A5EB158F2ADE00E66CFE /* CCPointExtension.h */,
 				1551A5EC158F2ADE00E66CFE /* CCProfiling.cpp */,
-				1551A5ED158F2ADE00E66CFE /* CCProfiling.h */,
 				1551A5EE158F2ADE00E66CFE /* CCUserDefault.cpp */,
-				1551A5EF158F2ADE00E66CFE /* CCUserDefault.h */,
 				1551A5F0158F2ADE00E66CFE /* ccUtils.cpp */,
-				1551A5F1158F2ADE00E66CFE /* ccUtils.h */,
 				1551A5F2158F2ADE00E66CFE /* CCVertex.cpp */,
+				1551A5FC158F2ADE00E66CFE /* TransformUtils.cpp */,
+				1551A5E9158F2ADE00E66CFE /* base64.h */,
+				154269DB15B5653000712A7F /* CCNotificationCenter.h */,
+				1551A5EB158F2ADE00E66CFE /* CCPointExtension.h */,
+				1551A5ED158F2ADE00E66CFE /* CCProfiling.h */,
+				1551A5EF158F2ADE00E66CFE /* CCUserDefault.h */,
+				1551A5F1158F2ADE00E66CFE /* ccUtils.h */,
 				1551A5F3158F2ADE00E66CFE /* CCVertex.h */,
+				1551A5FD158F2ADE00E66CFE /* TransformUtils.h */,
 				1551A5F4158F2ADE00E66CFE /* data_support */,
 				1551A5F9158F2ADE00E66CFE /* image_support */,
-				1551A5FC158F2ADE00E66CFE /* TransformUtils.cpp */,
-				1551A5FD158F2ADE00E66CFE /* TransformUtils.h */,
+				469A7DE616C227A3006FFCB2 /* tinyxml2 */,
 				1551A5FE158F2ADE00E66CFE /* zip_support */,
 			);
 			path = support;
@@ -1135,6 +1140,15 @@
 				41CD6C3415BF7382005E6F29 /* EAGLView.mm */,
 			);
 			path = mac;
+			sourceTree = "<group>";
+		};
+		469A7DE616C227A3006FFCB2 /* tinyxml2 */ = {
+			isa = PBXGroup;
+			children = (
+				469A7DE716C227A3006FFCB2 /* tinyxml2.cpp */,
+				469A7DE816C227A3006FFCB2 /* tinyxml2.h */,
+			);
+			path = tinyxml2;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1299,6 +1313,7 @@
 				152DCD91165614AB009B8D87 /* CCDrawNode.h in Headers */,
 				15C647F0165F2B77007D4F18 /* CCClippingNode.h in Headers */,
 				1A950DF916BB6651003F4508 /* CCFileUtilsMac.h in Headers */,
+				469A7DEA16C227A3006FFCB2 /* tinyxml2.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1473,6 +1488,7 @@
 				15C647EF165F2B77007D4F18 /* CCClippingNode.cpp in Sources */,
 				1A950DFA16BB6651003F4508 /* CCFileUtilsMac.mm in Sources */,
 				1A950DFC16BB6661003F4508 /* CCFileUtils.cpp in Sources */,
+				469A7DE916C227A3006FFCB2 /* tinyxml2.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
