@@ -153,7 +153,6 @@ CCUserDefault::CCUserDefault()
 
 void CCUserDefault::purgeSharedUserDefault()
 {
-    CC_SAFE_DELETE(m_spUserDefault);
     m_spUserDefault = NULL;
 }
 
@@ -418,7 +417,7 @@ bool CCUserDefault::createXMLFile()
 		return false;  
 	}  
 	pDoc->LinkEndChild(pRootEle);  
-	bRet = pDoc->SaveFile(m_sFilePath.c_str());
+	bRet = tinyxml2::XML_SUCCESS == pDoc->SaveFile(m_sFilePath.c_str());
 
 	if(pDoc)
 	{
