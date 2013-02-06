@@ -13,6 +13,8 @@
 #ifndef WEBP_UTILS_BIT_READER_H_
 #define WEBP_UTILS_BIT_READER_H_
 
+#include "platform/CCPlatformConfig.h"
+
 #include <assert.h>
 #ifdef _MSC_VER
 #include <stdlib.h>  // _byteswap_ulong

@@ -11,6 +11,8 @@
 //          Jyrki Alakuijala (jyrki@google.com)
 //          Urvang Joshi (urvang@google.com)
 
+#include "platform/CCPlatformConfig.h"
+
 #if defined(__cplusplus) || defined(c_plusplus)
 extern "C" {
 #endif

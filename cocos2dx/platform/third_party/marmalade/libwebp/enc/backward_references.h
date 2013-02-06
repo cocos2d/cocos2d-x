@@ -11,6 +11,8 @@
 #ifndef WEBP_ENC_BACKWARD_REFERENCES_H_
 #define WEBP_ENC_BACKWARD_REFERENCES_H_
 
+#include "platform/CCPlatformConfig.h"
+
 #include <assert.h>
 #include <stdlib.h>
 #include "../webp/types.h"

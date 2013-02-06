@@ -12,6 +12,8 @@
 #ifndef WEBP_DSP_DSP_H_
 #define WEBP_DSP_DSP_H_
 
+#include "platform/CCPlatformConfig.h"
+
 #include "../webp/types.h"
 
 #if defined(__cplusplus) || defined(c_plusplus)
