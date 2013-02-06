@@ -27,7 +27,7 @@ extern "C" {
 #define WEBP_MSC_SSE2  // Visual C++ SSE2 targets
 #endif
 
-#if defined(__SSE2__) || defined(WEBP_MSC_SSE2)
+#if (defined(__SSE2__) || defined(WEBP_MSC_SSE2)) && (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
 #define WEBP_USE_SSE2
 #endif
 
