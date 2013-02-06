@@ -215,6 +215,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\support\CCUserDefault.cpp" />
     <ClCompile Include="..\support\ccUtils.cpp" />
     <ClCompile Include="..\support\CCVertex.cpp" />
+    <ClCompile Include="..\support\tinyxml2\tinyxml2.cpp" />
     <ClCompile Include="..\support\TransformUtils.cpp" />
     <ClCompile Include="..\support\data_support\ccCArray.cpp" />
     <ClCompile Include="..\support\image_support\TGAlib.cpp" />
@@ -365,6 +366,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\support\CCUserDefault.h" />
     <ClInclude Include="..\support\ccUtils.h" />
     <ClInclude Include="..\support\CCVertex.h" />
+    <ClInclude Include="..\support\tinyxml2\tinyxml2.h" />
     <ClInclude Include="..\support\TransformUtils.h" />
     <ClInclude Include="..\support\data_support\ccCArray.h" />
     <ClInclude Include="..\support\data_support\uthash.h" />
