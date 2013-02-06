@@ -215,6 +215,7 @@ THE SOFTWARE.
 #include "support/CCProfiling.h"
 #include "support/CCUserDefault.h"
 #include "support/CCVertex.h"
+#include "support/tinyxml2/tinyxml2.h"
 
 // text_input_node
 #include "text_input_node/CCIMEDelegate.h"

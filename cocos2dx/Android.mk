@@ -114,6 +114,7 @@ support/ccUtils.cpp \
 support/CCVertex.cpp \
 support/data_support/ccCArray.cpp \
 support/image_support/TGAlib.cpp \
+support/tinyxml2/tinyxml2.cpp \
 support/zip_support/ZipUtils.cpp \
 support/zip_support/ioapi.cpp \
 support/zip_support/unzip.cpp \
@@ -167,6 +168,5 @@ include $(BUILD_STATIC_LIBRARY)
 
 $(call import-module,libjpeg)
 $(call import-module,libpng)
-$(call import-module,libxml2)
 $(call import-module,libtiff)
 $(call import-module,libwebp)

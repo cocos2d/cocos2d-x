@@ -16,7 +16,6 @@ subprojects
 {
 	zlib
 	libpng
-	libxml2
 	freetype
 	libjpeg
 	libtiff
@@ -47,9 +46,10 @@ includepaths
 	"../script_support"
 	"../sprite_nodes"
 	"../support"
+        "../support/tinyxml2"
 	"../text_input_node"
 	"../textures"
-    "../tileMap_parallax_nodes"
+       "../tileMap_parallax_nodes"
 	"../touch_dispatcher"
 }
 
@@ -178,9 +178,12 @@ files
 	("../support/data_support")
 	"*.cpp"			# MH: Many ccCArray linker errors without ccCArray.cpp
 	"*.h"
-    ("../support/image_support")
+       ("../support/image_support")
 	"*.h"
 	"*.cpp"
+       ("../support/tinyxml2")
+       "*.h"
+       "*.cpp"
 	("../support/zip_support")
 	"*.h"
 	"*.cpp"
