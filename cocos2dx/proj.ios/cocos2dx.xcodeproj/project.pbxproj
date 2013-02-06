@@ -1624,27 +1624,7 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../platform/third_party/android/prebuilt/libcurl/libs/armeabi\"",
-					"\"$(SRCROOT)/../platform/third_party/android/prebuilt/libcurl/libs/armeabi-v7a\"",
-					"\"$(SRCROOT)/../platform/third_party/android/prebuilt/libcurl/libs/x86\"",
-					"\"$(SRCROOT)/../platform/third_party/android/prebuilt/libjpeg/libs/armeabi\"",
-					"\"$(SRCROOT)/../platform/third_party/android/prebuilt/libjpeg/libs/armeabi-v7a\"",
-					"\"$(SRCROOT)/../platform/third_party/android/prebuilt/libjpeg/libs/x86\"",
-					"\"$(SRCROOT)/../platform/third_party/android/prebuilt/libpng/libs/armeabi\"",
-					"\"$(SRCROOT)/../platform/third_party/android/prebuilt/libpng/libs/armeabi-v7a\"",
-					"\"$(SRCROOT)/../platform/third_party/android/prebuilt/libpng/libs/x86\"",
-					"\"$(SRCROOT)/../platform/third_party/android/prebuilt/libtiff/libs/armeabi\"",
-					"\"$(SRCROOT)/../platform/third_party/android/prebuilt/libtiff/libs/armeabi-v7a\"",
-					"\"$(SRCROOT)/../platform/third_party/android/prebuilt/libtiff/libs/x86\"",
-					"\"$(SRCROOT)/../platform/third_party/android/prebuilt/libxml2/libs/armeabi\"",
-					"\"$(SRCROOT)/../platform/third_party/android/prebuilt/libxml2/libs/armeabi-v7a\"",
-					"\"$(SRCROOT)/../platform/third_party/android/prebuilt/libxml2/libs/x86\"",
-					"\"$(SRCROOT)/../platform/third_party/blackberry/libraries/armle-v7\"",
-					"\"$(SRCROOT)/../platform/third_party/blackberry/libraries/x86\"",
 					"\"$(SRCROOT)/../platform/third_party/ios/libraries\"",
-					"\"$(SRCROOT)/../platform/third_party/linux/libraries/lib64\"",
-					"\"$(SRCROOT)/../platform/third_party/linux/libraries\"",
-					"\"$(SRCROOT)/../platform/third_party/win32/libraries\"",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1670,27 +1650,7 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../platform/third_party/android/prebuilt/libcurl/libs/armeabi\"",
-					"\"$(SRCROOT)/../platform/third_party/android/prebuilt/libcurl/libs/armeabi-v7a\"",
-					"\"$(SRCROOT)/../platform/third_party/android/prebuilt/libcurl/libs/x86\"",
-					"\"$(SRCROOT)/../platform/third_party/android/prebuilt/libjpeg/libs/armeabi\"",
-					"\"$(SRCROOT)/../platform/third_party/android/prebuilt/libjpeg/libs/armeabi-v7a\"",
-					"\"$(SRCROOT)/../platform/third_party/android/prebuilt/libjpeg/libs/x86\"",
-					"\"$(SRCROOT)/../platform/third_party/android/prebuilt/libpng/libs/armeabi\"",
-					"\"$(SRCROOT)/../platform/third_party/android/prebuilt/libpng/libs/armeabi-v7a\"",
-					"\"$(SRCROOT)/../platform/third_party/android/prebuilt/libpng/libs/x86\"",
-					"\"$(SRCROOT)/../platform/third_party/android/prebuilt/libtiff/libs/armeabi\"",
-					"\"$(SRCROOT)/../platform/third_party/android/prebuilt/libtiff/libs/armeabi-v7a\"",
-					"\"$(SRCROOT)/../platform/third_party/android/prebuilt/libtiff/libs/x86\"",
-					"\"$(SRCROOT)/../platform/third_party/android/prebuilt/libxml2/libs/armeabi\"",
-					"\"$(SRCROOT)/../platform/third_party/android/prebuilt/libxml2/libs/armeabi-v7a\"",
-					"\"$(SRCROOT)/../platform/third_party/android/prebuilt/libxml2/libs/x86\"",
-					"\"$(SRCROOT)/../platform/third_party/blackberry/libraries/armle-v7\"",
-					"\"$(SRCROOT)/../platform/third_party/blackberry/libraries/x86\"",
 					"\"$(SRCROOT)/../platform/third_party/ios/libraries\"",
-					"\"$(SRCROOT)/../platform/third_party/linux/libraries/lib64\"",
-					"\"$(SRCROOT)/../platform/third_party/linux/libraries\"",
-					"\"$(SRCROOT)/../platform/third_party/win32/libraries\"",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
