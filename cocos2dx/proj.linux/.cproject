@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?fileVersion 4.0.0?>
-
-<cproject storage_type_id="org.eclipse.cdt.core.XmlProjectDescriptionStorage">
+<?fileVersion 4.0.0?><cproject storage_type_id="org.eclipse.cdt.core.XmlProjectDescriptionStorage">
 	<storageModule moduleId="org.eclipse.cdt.core.settings">
 		<cconfiguration id="cdt.managedbuild.config.gnu.exe.debug.502995704">
 			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="cdt.managedbuild.config.gnu.exe.debug.502995704" moduleId="org.eclipse.cdt.core.settings" name="Debug">
@@ -42,6 +40,7 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libxml2"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libjpeg"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libtiff/include"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libwebp"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.preprocessor.def.954744053" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="LINUX"/>
@@ -64,7 +63,7 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libxml2"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libjpeg"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libtiff/include"/>
-									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/include"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libwebp"/>
 								</option>
 								<option id="gnu.c.compiler.option.preprocessor.def.symbols.1531770269" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="LINUX"/>
@@ -91,8 +90,9 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/libxml2.a"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/libpng.a"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/libjpeg.a"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/libwebp.a"/>
 								</option>
-								<option id="gnu.cpp.link.option.paths.1027331890" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths"/>
+								<option id="gnu.cpp.link.option.paths.1027331890" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.620370737" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
@@ -173,6 +173,7 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libxml2"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libjpeg"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libtiff/include"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libwebp"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.preprocessor.def.1432872181" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="LINUX"/>
@@ -194,7 +195,7 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libxml2"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libjpeg"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libtiff/include"/>
-									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/include"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libwebp"/>
 								</option>
 								<option id="gnu.c.compiler.option.preprocessor.def.symbols.1479035749" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="LINUX"/>
@@ -220,8 +221,9 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/libxml2.a"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/libpng.a"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/libjpeg.a"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/libwebp.a"/>
 								</option>
-								<option id="gnu.cpp.link.option.paths.1001119408" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths"/>
+								<option id="gnu.cpp.link.option.paths.1001119408" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.319060310" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
@@ -303,6 +305,7 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libxml2"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libjpeg"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libtiff/include"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libwebp"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.preprocessor.def.500904227" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="LINUX"/>
@@ -325,7 +328,7 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libxml2"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libjpeg"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libtiff/include"/>
-									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/include"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libwebp"/>
 								</option>
 								<option id="gnu.c.compiler.option.preprocessor.def.symbols.1461044764" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="LINUX"/>
@@ -352,6 +355,7 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/lib64/libxml2.a"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/lib64/libpng.a"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/lib64/libjpeg.a"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/lib64/libwebp.a"/>
 								</option>
 								<option id="gnu.cpp.link.option.paths.2216001" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.1435212610" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
@@ -434,6 +438,7 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libxml2"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libjpeg"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libtiff/include"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libwebp"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.preprocessor.def.120885829" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="LINUX"/>
@@ -456,7 +461,7 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libxml2"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libjpeg"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libtiff/include"/>
-									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/include"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libwebp"/>
 								</option>
 								<option id="gnu.c.compiler.option.preprocessor.def.symbols.1821931544" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="LINUX"/>
@@ -483,6 +488,7 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/lib64/libxml2.a"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/lib64/libpng.a"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/lib64/libjpeg.a"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/lib64/libwebp.a"/>
 								</option>
 								<option id="gnu.cpp.link.option.paths.2133869956" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.350375429" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">

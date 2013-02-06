@@ -39,6 +39,14 @@ public:
     virtual void onEnter();
 };
 
+class TextureWEBP : public TextureDemo
+{
+public:
+    virtual std::string title();
+    
+    virtual void onEnter();
+};
+
 class TextureMipMap : public TextureDemo
 {
 public:
