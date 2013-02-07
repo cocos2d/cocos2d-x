@@ -262,10 +262,10 @@ public:
     virtual const std::vector<std::string>& getSearchPaths();
 
     /**
-     *  Gets the writeable path.
+     *  Gets the writable path.
      *  @return  The path that can be write/read a file in
      */
-    virtual std::string getWriteablePath() = 0;
+    virtual std::string getWritablePath() = 0;
     
     /**
      *  Checks whether a file exists.
