@@ -45,7 +45,7 @@ class CC_DLL CCFileUtilsMarmalade : public CCFileUtils
     CCFileUtilsMarmalade();
 public:
     /* override funtions */
-    virtual std::string getWriteablePath();
+    virtual std::string getWritablePath();
     virtual bool isFileExist(const std::string& strFilePath);
     virtual bool isAbsolutePath(const std::string& strPath);
     virtual unsigned char* getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize);

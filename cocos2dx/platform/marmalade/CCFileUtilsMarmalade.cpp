@@ -23,7 +23,7 @@ CCFileUtilsMarmalade::CCFileUtilsMarmalade()
 {}
 
 
-string CCFileUtilsMarmalade::getWriteablePath()
+string CCFileUtilsMarmalade::getWritablePath()
 {
     return std::string("ram://");
 }
