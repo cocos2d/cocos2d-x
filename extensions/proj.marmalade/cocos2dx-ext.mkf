@@ -15,6 +15,10 @@ includepaths
 
 files
 {
+	(.)
+	["docs"]
+	cocos2dx-ext_public.defines.txt
+
 	("../")
     "*.h"
 	
