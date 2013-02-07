@@ -171,6 +171,7 @@ Developers:
     Peter Farkas (fape)
         contributes Marmalade port for gles20 branch
         add Hungarian language support
+        fixed compilation errors after adding support of webp image format.
 
     Tomoaki Shimizu (tks2shimizu)
 	Adding randomObject to CCDictionary.
