@@ -1587,7 +1587,7 @@ XMLError XMLDocument::LoadFile( const char* filename )
     InitDocument();
     FILE* fp = 0;
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1400 )
+#if defined(_MSC_VER) && (_MSC_VER >= 1400 ) && (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
     errno_t err = fopen_s(&fp, filename, "rb" );
     if ( !fp || err) {
 #else
@@ -1641,7 +1641,7 @@ XMLError XMLDocument::LoadFile( FILE* fp )
 XMLError XMLDocument::SaveFile( const char* filename, bool compact )
 {
     FILE* fp = 0;
-#if defined(_MSC_VER) && (_MSC_VER >= 1400 )
+#if defined(_MSC_VER) && (_MSC_VER >= 1400 ) && (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
     errno_t err = fopen_s(&fp, filename, "w" );
     if ( !fp || err) {
 #else
@@ -1768,7 +1768,7 @@ void XMLPrinter::Print( const char* format, ... )
     else {
         // This seems brutally complex. Haven't figured out a better
         // way on windows.
-#ifdef _MSC_VER
+#if defined _MSC_VER && (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
         int len = -1;
         int expand = 1000;
         while ( len < 0 ) {
