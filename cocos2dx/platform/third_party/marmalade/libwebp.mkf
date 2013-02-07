@@ -33,5 +33,5 @@ files
 
 	["headers"]
 	("libwebp/webp")
-
+	"*.h"
 }
