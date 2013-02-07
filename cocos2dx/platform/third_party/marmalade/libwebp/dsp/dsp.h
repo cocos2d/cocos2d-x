@@ -12,6 +12,8 @@
 #ifndef WEBP_DSP_DSP_H_
 #define WEBP_DSP_DSP_H_
 
+#include "platform/CCPlatformConfig.h"
+
 #include "../webp/types.h"
 
 #if defined(__cplusplus) || defined(c_plusplus)
@@ -21,11 +23,11 @@ extern "C" {
 //------------------------------------------------------------------------------
 // CPU detection
 
-#if defined(_MSC_VER) && (defined(_M_X64) || defined(_M_IX86))
+#if defined(_MSC_VER) && (defined(_M_X64) || defined(_M_IX86)) && (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
 #define WEBP_MSC_SSE2  // Visual C++ SSE2 targets
 #endif
 
-#if defined(__SSE2__) || defined(WEBP_MSC_SSE2)
+#if (defined(__SSE2__) || defined(WEBP_MSC_SSE2)) && (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
 #define WEBP_USE_SSE2
 #endif
 

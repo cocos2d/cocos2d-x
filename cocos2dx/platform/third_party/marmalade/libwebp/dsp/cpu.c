@@ -9,6 +9,8 @@
 //
 // Author: Christian Duvivier (cduvivier@google.com)
 
+#include "platform/CCPlatformConfig.h"
+
 #include "./dsp.h"
 
 #if defined(__ANDROID__)
@@ -33,7 +35,7 @@ static WEBP_INLINE void GetCPUInfo(int cpu_info[4], int info_type) {
     : "=a"(cpu_info[0]), "=D"(cpu_info[1]), "=c"(cpu_info[2]), "=d"(cpu_info[3])
     : "a"(info_type));
 }
-#elif defined(__i386__) || defined(__x86_64__)
+#elif (defined(__i386__) || defined(__x86_64__) ) && (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
 static WEBP_INLINE void GetCPUInfo(int cpu_info[4], int info_type) {
   __asm__ volatile (
     "cpuid\n"
@@ -44,7 +46,7 @@ static WEBP_INLINE void GetCPUInfo(int cpu_info[4], int info_type) {
 #define GetCPUInfo __cpuid
 #endif
 
-#if defined(__i386__) || defined(__x86_64__) || defined(WEBP_MSC_SSE2)
+#if (defined(__i386__) || defined(__x86_64__) || defined(WEBP_MSC_SSE2)) && (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
 static int x86CPUInfo(CPUFeature feature) {
   int cpu_info[4];
   GetCPUInfo(cpu_info, 1);
