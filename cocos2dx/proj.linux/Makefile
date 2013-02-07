@@ -112,7 +112,7 @@ OBJECTS = ../actions/CCAction.o \
 ../support/CCVertex.o \
 ../support/CCNotificationCenter.o \
 ../support/image_support/TGAlib.o \
-../support/tinyxml2/tinyxml2.cpp \
+../support/tinyxml2/tinyxml2.o \
 ../support/zip_support/ZipUtils.o \
 ../support/zip_support/ioapi.o \
 ../support/zip_support/unzip.o \
