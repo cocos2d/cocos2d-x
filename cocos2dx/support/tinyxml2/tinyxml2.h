@@ -24,6 +24,8 @@ distribution.
 #ifndef TINYXML2_INCLUDED
 #define TINYXML2_INCLUDED
 
+#include "platform/CCPlatformConfig.h"
+
 #if defined(ANDROID_NDK) || defined(__BORLANDC__)
 #   include <ctype.h>
 #   include <limits.h>
@@ -73,7 +75,7 @@ distribution.
 #endif
 
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1400 )
+#if (defined(_MSC_VER) && (_MSC_VER >= 1400 ) && (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE))
 // Microsoft visual studio, version 2005 and higher.
 /*int _snprintf_s(
    char *buffer,
