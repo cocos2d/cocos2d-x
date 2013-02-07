@@ -51,7 +51,8 @@ static bool _initWithImage(CGImageRef cgImage, tImageInfo *pImageinfo)
     pImageinfo->height = CGImageGetHeight(cgImage);
     
     CGImageAlphaInfo info = CGImageGetAlphaInfo(cgImage);
-    pImageinfo->hasAlpha = (info == kCGImageAlphaPremultipliedLast) 
+    pImageinfo->hasAlpha =  (info == kCGImageAlphaNoneSkipLast)
+			    || (info == kCGImageAlphaPremultipliedLast) 
                             || (info == kCGImageAlphaPremultipliedFirst) 
                             || (info == kCGImageAlphaLast) 
                             || (info == kCGImageAlphaFirst);
