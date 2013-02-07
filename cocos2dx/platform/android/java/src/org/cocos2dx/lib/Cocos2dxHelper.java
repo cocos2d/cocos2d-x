@@ -23,6 +23,7 @@ THE SOFTWARE.
  ****************************************************************************/
 package org.cocos2dx.lib;
 
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.util.Locale;
 
@@ -48,6 +49,7 @@ public class Cocos2dxHelper {
 	private static boolean sAccelerometerEnabled;
 	private static String sPackageName;
 	private static String sCacheDirectory;
+	private static String sFileDirectory;
 
 	private static Cocos2dxHelperListener sCocos2dxHelperListener;
 
@@ -62,6 +64,7 @@ public class Cocos2dxHelper {
 
 		Cocos2dxHelper.sPackageName = applicationInfo.packageName;
 		Cocos2dxHelper.sCacheDirectory = pContext.getCacheDir().getAbsolutePath();
+		Cocos2dxHelper.sFileDirectory = pContext.getFilesDir().getAbsolutePath();
 		Cocos2dxHelper.nativeSetApkPath(applicationInfo.sourceDir);
 		Cocos2dxHelper.nativeSetExternalAssetPath(Cocos2dxHelper.getAbsolutePathOnExternalStorage(applicationInfo, "assets/"));
 
@@ -96,6 +99,10 @@ public class Cocos2dxHelper {
 
 	public static String getCocos2dxCacheDirectory() {
 		return Cocos2dxHelper.sCacheDirectory;
+	}
+	
+	public static String getCocos2dxWritablePath() {
+		return Cocos2dxHelper.sFileDirectory;
 	}
 
 	public static String getCurrentLanguage() {

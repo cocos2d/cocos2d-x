@@ -154,12 +154,12 @@ unsigned char* CCFileUtilsAndroid::getFileData(const char* pszFileName, const ch
     return pData;
 }
 
-string CCFileUtilsAndroid::getWriteablePath()
+string CCFileUtilsAndroid::getWritablePath()
 {
     // Fix for Nexus 10 (Android 4.2 multi-user environment)
     // the path is retrieved through Java Context.getCacheDir() method
     string dir("");
-    const char *tmp = getCacheDirectoryJNI();
+    const char *tmp = getFileDirectoryJNI();
 
     if (tmp)
     {
