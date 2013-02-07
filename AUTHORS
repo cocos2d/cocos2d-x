@@ -187,6 +187,9 @@ Developers:
     xyhl515
         Fixed a bug that CCControlSwitch::setOn(isOn,false) doesn't work.
 
+    DarraghCoy
+        Fix for unaligned memory access crash in CCBReader::readFloat().
+
 Retired Core Developers:
     WenSheng Yang
 	Author of windows port, CCTextField, 
