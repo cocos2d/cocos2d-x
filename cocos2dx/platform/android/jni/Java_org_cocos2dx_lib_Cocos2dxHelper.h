@@ -36,6 +36,7 @@ extern "C" {
     extern const char * getCurrentLanguageJNI();
     extern const char * getPackageNameJNI();
     extern const char * getCacheDirectoryJNI();
+    extern const char * getFileDirectoryJNI();
     extern void enableAccelerometerJNI();
     extern void disableAccelerometerJNI();
     extern void setAccelerometerIntervalJNI(float interval);
