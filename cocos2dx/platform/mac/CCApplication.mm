@@ -119,6 +119,14 @@ ccLanguageType CCApplication::getCurrentLanguage()
     else if ([languageCode isEqualToString:@"hu"]){
         ret = kLanguageHungarian;
     }
+    else if ([languageCode isEqualToString:@"pt"])
+    {
+        ret = kLanguagePortuguese;
+    }
+    else if ([languageCode isEqualToString:@"ar"])
+    {
+        ret = kLanguageArabic;
+    }
     
     return ret;
 }
