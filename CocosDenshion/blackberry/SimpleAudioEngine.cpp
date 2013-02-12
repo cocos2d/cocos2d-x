@@ -58,11 +58,15 @@ namespace CocosDenshion
 
 	static float s_volume 				   = 1.0f;
 	static float s_effectVolume			   = 1.0f;
-	static bool  s_isBackgroundInitialized = false;
-	static std::string s_currentBackgroundStr;
 
-	ALuint s_backgroundBuffer;
-	ALuint s_backgroundSource;
+	struct backgroundMusicData {
+		ALuint buffer;
+		ALuint source;
+	};
+	typedef map<string, backgroundMusicData *> BackgroundMusicsMap;
+	BackgroundMusicsMap s_backgroundMusics;
+
+	static ALuint s_backgroundSource = AL_NONE;
 
 	static SimpleAudioEngine  *s_engine = 0;
 
@@ -101,18 +105,25 @@ namespace CocosDenshion
 
     static void stopBackground(bool bReleaseData)
     {
-    	alSourceStop(s_backgroundSource);
+		alSourceStop(s_backgroundSource);
 
 		if (bReleaseData)
 		{
-			s_currentBackgroundStr = "";
-			s_isBackgroundInitialized = false;
-
-			alDeleteBuffers(1, &s_backgroundBuffer);
-			checkALError("stopBackground");
-			alDeleteSources(1, &s_backgroundSource);
-			checkALError("stopBackground");
+			for (BackgroundMusicsMap::iterator it = s_backgroundMusics.begin(); it != s_backgroundMusics.end(); ++it)
+			{
+				if (it->second->source == s_backgroundSource)
+				{
+					alDeleteBuffers(1, &it->second->buffer);
+					checkALError("stopBackground");
+					alDeleteSources(1, &it->second->source);
+					checkALError("stopBackground");
+					s_backgroundMusics.erase(it);
+					break;
+				}
+			}
 		}
+
+		s_backgroundSource = AL_NONE;
     }
 
     static void setBackgroundVolume(float volume)
@@ -158,6 +169,18 @@ namespace CocosDenshion
 
 		// and the background too
 		stopBackground(true);
+
+		for (BackgroundMusicsMap::iterator it = s_backgroundMusics.begin(); it != s_backgroundMusics.end(); ++it)
+		{
+			alSourceStop(it->second->source);
+			checkALError("end");
+			alDeleteBuffers(1, &it->second->buffer);
+			checkALError("end");
+			alDeleteSources(1, &it->second->source);
+			checkALError("end");
+			delete it->second;
+		}
+		s_backgroundMusics.clear();
 	}
 
 	//
@@ -262,52 +285,64 @@ namespace CocosDenshion
 		// Changing file path to full path
     	std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
 
-		if (!s_isBackgroundInitialized || s_currentBackgroundStr != fullPath)
+    	BackgroundMusicsMap::const_iterator it = s_backgroundMusics.find(fullPath);
+		if (it == s_backgroundMusics.end())
 		{
-			string path = fullPath;
-
-			if (isOGGFile(path.data()))
+			ALuint buffer = AL_NONE;
+			if (isOGGFile(fullPath.data()))
 			{
-				s_backgroundBuffer = createBufferFromOGG(path.data());
+				buffer = createBufferFromOGG(fullPath.data());
 			}
 			else
 			{
-				s_backgroundBuffer = alutCreateBufferFromFile(path.data());
+				buffer = alutCreateBufferFromFile(fullPath.data());
 			}
 
 			checkALError("preloadBackgroundMusic");
 
-			if (s_backgroundBuffer == AL_NONE)
+			if (buffer == AL_NONE)
 			{
-				fprintf(stderr, "Error loading file: '%s'\n", path.data());
-				alDeleteBuffers(1, &s_backgroundBuffer);
+				fprintf(stderr, "Error loading file: '%s'\n", fullPath.data());
+				alDeleteBuffers(1, &buffer);
 				return;
 			}
 
-			alGenSources(1, &s_backgroundSource);
+			ALuint source = AL_NONE;
+			alGenSources(1, &source);
 			checkALError("preloadBackgroundMusic");
 
-			alSourcei(s_backgroundSource, AL_BUFFER, s_backgroundBuffer);
+			alSourcei(source, AL_BUFFER, buffer);
 			checkALError("preloadBackgroundMusic");
 
-			s_currentBackgroundStr = fullPath;
+			backgroundMusicData* data = new backgroundMusicData();
+			data->buffer = buffer;
+			data->source = source;
+			s_backgroundMusics.insert(BackgroundMusicsMap::value_type(fullPath, data));
 		}
-
-		s_currentBackgroundStr 	  = fullPath;
-		s_isBackgroundInitialized = true;
 	}
 
 	void SimpleAudioEngine::playBackgroundMusic(const char* pszFilePath, bool bLoop)
 	{
+		if (s_backgroundSource != AL_NONE)
+			stopBackgroundMusic(false);
+
 		// Changing file path to full path
     	std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
 
-		if (!s_isBackgroundInitialized)
+    	BackgroundMusicsMap::const_iterator it = s_backgroundMusics.find(fullPath);
+		if (it == s_backgroundMusics.end())
+		{
 			preloadBackgroundMusic(fullPath.c_str());
+			it = s_backgroundMusics.find(fullPath);
+		}
 
-		alSourcei(s_backgroundSource, AL_LOOPING, bLoop ? AL_TRUE : AL_FALSE);
-		alSourcePlay(s_backgroundSource);
-		checkALError("playBackgroundMusic");
+		if (it != s_backgroundMusics.end())
+		{
+			s_backgroundSource = it->second->source;
+			alSourcei(s_backgroundSource, AL_LOOPING, bLoop ? AL_TRUE : AL_FALSE);
+			alSourcePlay(s_backgroundSource);
+			checkALError("playBackgroundMusic");
+		}
 	}
 
 	void SimpleAudioEngine::stopBackgroundMusic(bool bReleaseData)
