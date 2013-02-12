@@ -355,7 +355,7 @@ bool CCEGLView::initGL()
     };
 
     // Create the screen context.
-    rc = screen_create_context(&m_screenContext, 0);
+    rc = screen_create_context(&m_screenContext, SCREEN_APPLICATION_CONTEXT);
     if (rc)
     {
         perror("screen_create_context");
@@ -370,6 +370,12 @@ bool CCEGLView::initGL()
         return false;
     }
 
+    rc = screen_create_window_group(m_screenWindow, m_windowGroupID);
+	if (rc)
+	{
+		perror("screen_create_window_group");
+		return false;
+	}
     // Set/get any window prooperties.
     rc = screen_set_window_property_iv(m_screenWindow, SCREEN_PROPERTY_FORMAT, &screenFormat);
     if (rc)
