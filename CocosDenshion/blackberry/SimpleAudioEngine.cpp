@@ -117,6 +117,7 @@ namespace CocosDenshion
 					checkALError("stopBackground");
 					alDeleteSources(1, &it->second->source);
 					checkALError("stopBackground");
+					delete it->second;
 					s_backgroundMusics.erase(it);
 					break;
 				}
