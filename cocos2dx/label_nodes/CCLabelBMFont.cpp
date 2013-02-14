@@ -487,24 +487,9 @@ std::set<unsigned int>* CCBMFontConfiguration::parseConfigFile(const char *contr
 
     // parse spacing / padding
     std::string line;
-    std::string strLeft = contents->getCString();
-    while (strLeft.length() > 0)
+    std::istringstream f(contents->getCString());
+    while (std::getline(f, line))
     {
-        int pos = strLeft.find('\n');
-
-        if (pos != (int)std::string::npos)
-        {
-            // the data is more than a line.get one line
-            line = strLeft.substr(0, pos);
-            strLeft = strLeft.substr(pos + 1);
-        }
-        else
-        {
-            // get the left data
-            line = strLeft;
-            strLeft.erase();
-        }
-
         if(line.substr(0,strlen("info face")) == "info face") 
         {
             // XXX: info parsing is incomplete
