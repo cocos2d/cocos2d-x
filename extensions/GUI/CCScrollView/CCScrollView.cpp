@@ -490,17 +490,19 @@ void CCScrollView::beforeDraw()
 {
     if (m_bClippingToBounds)
     {
-		// TODO: This scrollview should respect parents' positions
-		CCPoint screenPos = this->getParent()->convertToWorldSpace(this->getPosition());
-
+		CCPoint screenPos = this->convertToWorldSpace(CCPointZero);
+        
+        float scaleX = this->getScaleX();
+        float scaleY = this->getScaleY();
+        
+        for (CCNode *p = m_pParent; p != NULL; p = p->getParent()) {
+            scaleX *= p->getScaleX();
+            scaleY *= p->getScaleY();
+        }
+        
         glEnable(GL_SCISSOR_TEST);
-        float s = this->getScale();
-
-//        CCDirector *director = CCDirector::sharedDirector();
-//        s *= director->getContentScaleFactor();
-        CCEGLView::sharedOpenGLView()->setScissorInPoints(screenPos.x*s, screenPos.y*s, m_tViewSize.width*s, m_tViewSize.height*s);
-        //glScissor((GLint)screenPos.x, (GLint)screenPos.y, (GLsizei)(m_tViewSize.width*s), (GLsizei)(m_tViewSize.height*s));
-		
+        
+        CCEGLView::sharedOpenGLView()->setScissorInPoints(screenPos.x, screenPos.y, m_tViewSize.width*scaleX, m_tViewSize.height*scaleY);
     }
 }
 
