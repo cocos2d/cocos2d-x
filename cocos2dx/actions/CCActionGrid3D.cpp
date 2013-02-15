@@ -439,7 +439,7 @@ void CCLens3D::update(float time)
                     {
                         vect = ccpNormalize(vect);
                         CCPoint new_vect = ccpMult(vect, new_r);
-                        v.z = (m_bConcave ? -1.0f : 1.0f) * ccpLength(new_vect) * m_fLensEffect;
+                        v.z += (m_bConcave ? -1.0f : 1.0f) * ccpLength(new_vect) * m_fLensEffect;
                     }
                 }
                 
