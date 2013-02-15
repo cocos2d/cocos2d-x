@@ -367,6 +367,7 @@ bool CCLens3D::initWithPosition(const CCPoint& pos, float r, const ccGridSize& g
         setPosition(pos);
         m_fRadius = r;
         m_fLensEffect = 0.7f;
+        m_bConcave = false;
         m_bDirty = true;
 
         return true;
@@ -438,7 +439,7 @@ void CCLens3D::update(float time)
                     {
                         vect = ccpNormalize(vect);
                         CCPoint new_vect = ccpMult(vect, new_r);
-                        v.z += ccpLength(new_vect) * m_fLensEffect;
+                        v.z = (m_bConcave ? -1.0f : 1.0f) * ccpLength(new_vect) * m_fLensEffect;
                     }
                 }
                 
