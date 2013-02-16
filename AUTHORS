@@ -12,6 +12,9 @@ Developers:
     Rolando Abarca
         Javascript Binding and testjs
 
+    benjamesward
+        add Portuguese and Arabic language support
+
     Victor K(fnz)
         fix memory leak of CCTextureCache::addImageAsync() on iOS
 
