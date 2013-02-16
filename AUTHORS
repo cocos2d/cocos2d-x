@@ -77,6 +77,7 @@ Developers:
 
     Surith Thekkiam (folecr, Zynga)
         contribute for Android module building
+        Simpler, correct handling of spritesheet sources for CCScale9Sprite.
 
     Nicolas Gramlich (nicolasgramlich, Zynga)
         fixed CCDirector to use CCLabelBMFont instead of CCLabelTTF
