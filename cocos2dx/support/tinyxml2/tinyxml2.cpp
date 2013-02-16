@@ -24,7 +24,7 @@ distribution.
 #include "tinyxml2.h"
 
 #include <new>		// yes, this one new style header, is in the Android SDK.
-#   ifdef ANDROID_NDK
+#   if defined(ANDROID_NDK) || (CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY)
 #   include <stddef.h>
 #else
 #   include <cstddef>
