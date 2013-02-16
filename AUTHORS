@@ -104,8 +104,9 @@ Developers:
         use ant to generate LuaCocos2d.cpp and lua projects
 
     Marat Yakupov (moadib)
-        add ability of simulating android enter/resume background on win32
-        add ability of simulating android back/menu key on win32
+        Adds ability of simulating android enter/resume background on win32
+        Adds ability of simulating android back/menu key on win32
+        Adds support for multiple background music sources to CocosDenshion for Blackberry
 
     Eli Yukelzon (reflog)
         add a helper method to draw filled polygons
