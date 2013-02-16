@@ -616,7 +616,9 @@
 				1551A341158F2AB200E66CFE /* Frameworks */,
 				1551A340158F2AB200E66CFE /* Products */,
 			);
+			indentWidth = 4;
 			sourceTree = "<group>";
+			tabWidth = 4;
 		};
 		1551A340158F2AB200E66CFE /* Products */ = {
 			isa = PBXGroup;
