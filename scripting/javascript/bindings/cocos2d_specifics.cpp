@@ -2354,12 +2354,12 @@ JSBool js_cocos2dx_CCTexture2D_setTexParameters(JSContext *cx, uint32_t argc, js
         jsval *argvp = JS_ARGV(cx,vp);
         JSBool ok = JS_TRUE;
 
-        GLint arg0, arg1, arg2, arg3;
+        GLuint arg0, arg1, arg2, arg3;
 
-        ok &= jsval_to_int32(cx, *argvp++, &arg0);
-        ok &= jsval_to_int32(cx, *argvp++, &arg1);
-        ok &= jsval_to_int32(cx, *argvp++, &arg2);
-        ok &= jsval_to_int32(cx, *argvp++, &arg3);
+        ok &= jsval_to_uint32(cx, *argvp++, &arg0);
+        ok &= jsval_to_uint32(cx, *argvp++, &arg1);
+        ok &= jsval_to_uint32(cx, *argvp++, &arg2);
+        ok &= jsval_to_uint32(cx, *argvp++, &arg3);
 
         JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
 
