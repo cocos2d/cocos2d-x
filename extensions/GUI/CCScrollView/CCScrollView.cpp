@@ -24,16 +24,6 @@
  ****************************************************************************/
 
 #include "CCScrollView.h"
-#include "actions/CCActionInterval.h"
-#include "actions/CCActionTween.h"
-#include "actions/CCActionInstant.h"
-#include "support/CCPointExtension.h"
-#include "touch_dispatcher/CCTouchDispatcher.h"
-#include "effects/CCGrid.h"
-#include "CCDirector.h"
-#include "kazmath/GL/matrix.h"
-#include "touch_dispatcher/CCTouch.h"
-#include "CCEGLView.h"
 
 NS_CC_EXT_BEGIN
 
@@ -41,6 +31,13 @@ NS_CC_EXT_BEGIN
 #define SCROLL_DEACCEL_DIST  1.0f
 #define BOUNCE_DURATION      0.15f
 #define INSET_RATIO          0.2f
+#define MOVE_INCH            7.0f/160.0f
+
+static float convertDistanceFromPointToInch(float pointDis)
+{
+    float factor = ( CCEGLView::sharedOpenGLView()->getScaleX() + CCEGLView::sharedOpenGLView()->getScaleY() ) / 2;
+    return pointDis * factor / CCDevice::getDPI();
+}
 
 
 CCScrollView::CCScrollView()
@@ -629,12 +626,38 @@ void CCScrollView::ccTouchMoved(CCTouch* touch, CCEvent* event)
             CCRect  frame;
             float newX, newY;
             
-            m_bTouchMoved  = true;
             frame = getViewRect();
 
             newPoint     = this->convertTouchToNodeSpace((CCTouch*)m_pTouches->objectAtIndex(0));
             moveDistance = ccpSub(newPoint, m_tTouchPoint);
-            m_tTouchPoint  = newPoint;
+            
+            float dis = 0.0f;
+            if (m_eDirection == kCCScrollViewDirectionVertical)
+            {
+                dis = moveDistance.y;
+            }
+            else if (m_eDirection == kCCScrollViewDirectionHorizontal)
+            {
+                dis = moveDistance.x;
+            }
+            else
+            {
+                dis = sqrtf(moveDistance.x*moveDistance.x + moveDistance.y*moveDistance.y);
+            }
+            float disInch = 0.0f;
+            if (!m_bTouchMoved && ( disInch = fabs(convertDistanceFromPointToInch(dis))) < MOVE_INCH)
+            {
+                CCLOG("Invalid movement, distance = [%f, %f], disInch = %f", moveDistance.x, moveDistance.y, disInch);
+                return;
+            }
+            
+            if (!m_bTouchMoved)
+            {
+                moveDistance = CCPointZero;
+            }
+            
+            m_tTouchPoint = newPoint;
+            m_bTouchMoved = true;
             
             if (frame.containsPoint(this->convertToWorldSpace(newPoint)))
             {

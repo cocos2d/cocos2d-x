@@ -26,7 +26,7 @@
 #ifndef __CCSCROLLVIEW_H__
 #define __CCSCROLLVIEW_H__
 
-#include "layers_scenes_transitions_nodes/CCLayer.h"
+#include "cocos2d.h"
 #include "ExtensionMacros.h"
 
 NS_CC_EXT_BEGIN
