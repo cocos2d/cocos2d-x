@@ -29,7 +29,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Message;
+import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 
 public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelperListener {
@@ -106,6 +109,25 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 		this.mHandler.sendMessage(msg);
 	}
 	
+    public static float getDPI()
+    {
+		if (sContext != null)
+		{
+			DisplayMetrics metrics = new DisplayMetrics();
+			WindowManager wm = ((Activity)sContext).getWindowManager();
+			if (wm != null)
+			{
+				Display d = wm.getDefaultDisplay();
+				if (d != null)
+				{
+					d.getMetrics(metrics);
+					return (int)(metrics.density*160.0f);
+				}
+			}
+		}
+		return 0.0f;
+    }
+    
 	@Override
 	public void runOnGLThread(final Runnable pRunnable) {
 		this.mGLSurfaceView.queueEvent(pRunnable);
