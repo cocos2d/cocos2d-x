@@ -490,17 +490,11 @@ void CCScrollView::beforeDraw()
 {
     if (m_bClippingToBounds)
     {
-		// TODO: This scrollview should respect parents' positions
-		CCPoint screenPos = this->getParent()->convertToWorldSpace(this->getPosition());
-
+		CCRect frame = getViewRect();
+        
         glEnable(GL_SCISSOR_TEST);
-        float s = this->getScale();
-
-//        CCDirector *director = CCDirector::sharedDirector();
-//        s *= director->getContentScaleFactor();
-        CCEGLView::sharedOpenGLView()->setScissorInPoints(screenPos.x*s, screenPos.y*s, m_tViewSize.width*s, m_tViewSize.height*s);
-        //glScissor((GLint)screenPos.x, (GLint)screenPos.y, (GLsizei)(m_tViewSize.width*s), (GLsizei)(m_tViewSize.height*s));
-		
+        
+        CCEGLView::sharedOpenGLView()->setScissorInPoints(frame.origin.x, frame.origin.y, frame.size.width, frame.size.height);
     }
 }
 
@@ -585,10 +579,9 @@ bool CCScrollView::ccTouchBegan(CCTouch* touch, CCEvent* event)
     {
         return false;
     }
-    CCRect frame;
-    CCPoint frameOriginal = this->getParent()->convertToWorldSpace(this->getPosition());
-    frame = CCRectMake(frameOriginal.x, frameOriginal.y, m_tViewSize.width, m_tViewSize.height);
     
+    CCRect frame = getViewRect();
+
     //dispatcher does not know about clipping. reject touches outside visible bounds.
     if (m_pTouches->count() > 2 ||
         m_bTouchMoved          ||
@@ -637,8 +630,7 @@ void CCScrollView::ccTouchMoved(CCTouch* touch, CCEvent* event)
             float newX, newY;
             
             m_bTouchMoved  = true;
-            CCPoint frameOriginal = this->getParent()->convertToWorldSpace(this->getPosition());
-            frame = CCRectMake(frameOriginal.x, frameOriginal.y, m_tViewSize.width, m_tViewSize.height);
+            frame = getViewRect();
 
             newPoint     = this->convertTouchToNodeSpace((CCTouch*)m_pTouches->objectAtIndex(0));
             moveDistance = ccpSub(newPoint, m_tTouchPoint);
@@ -711,6 +703,21 @@ void CCScrollView::ccTouchCancelled(CCTouch* touch, CCEvent* event)
         m_bDragging = false;    
         m_bTouchMoved = false;
     }
+}
+
+CCRect CCScrollView::getViewRect()
+{
+    CCPoint screenPos = this->convertToWorldSpace(CCPointZero);
+    
+    float scaleX = this->getScaleX();
+    float scaleY = this->getScaleY();
+    
+    for (CCNode *p = m_pParent; p != NULL; p = p->getParent()) {
+        scaleX *= p->getScaleX();
+        scaleY *= p->getScaleY();
+    }
+    
+    return CCRectMake(screenPos.x, screenPos.y, m_tViewSize.width*scaleX, m_tViewSize.height*scaleY);
 }
 
 NS_CC_EXT_END

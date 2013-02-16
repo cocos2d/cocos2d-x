@@ -245,6 +245,8 @@ private:
     void handleZoom();
 
 protected:
+    CCRect getViewRect();
+    
     /**
      * current zoom scale
      */
