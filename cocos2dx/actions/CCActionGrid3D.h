@@ -96,7 +96,9 @@ public:
     inline float getLensEffect(void) { return m_fLensEffect; }
     /** Set lens center position */
     inline void setLensEffect(float fLensEffect) { m_fLensEffect = fLensEffect; }
-    
+    /** Set whether lens is concave */
+    inline void setConcave(bool bConcave) { m_bConcave = bConcave; }
+  
     inline const CCPoint& getPosition(void) { return m_position; }
     void setPosition(const CCPoint& position);
 
@@ -114,6 +116,8 @@ protected:
     float m_fRadius;
     /** lens effect. Defaults to 0.7 - 0 means no effect, 1 is very strong effect */
     float m_fLensEffect;
+    /** lens is concave. (true = concave, false = convex) default is convex i.e. false */
+    bool m_bConcave;
 
     bool    m_bDirty;
 };
