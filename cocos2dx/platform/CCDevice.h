@@ -5,7 +5,7 @@
 
 NS_CC_BEGIN
 
-class CCDevice
+class CC_DLL CCDevice
 {
 private:
     CCDevice();
