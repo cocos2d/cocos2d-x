@@ -448,7 +448,7 @@
     </ClCompile>
     <ClCompile Include="..\support\tinyxml2\tinyxml2.cpp" />
     <ClCompile Include="..\platform\win32\CCDevice.cpp">
-      <Filter>platform</Filter>
+      <Filter>platform\win32</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
