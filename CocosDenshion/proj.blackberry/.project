@@ -80,14 +80,14 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>include</name>
-			<type>2</type>
-			<locationURI>PARENT-1-PROJECT_LOC/include</locationURI>
-		</link>
-		<link>
 			<name>blackberry</name>
 			<type>2</type>
 			<locationURI>PARENT-1-PROJECT_LOC/blackberry</locationURI>
+		</link>
+		<link>
+			<name>include</name>
+			<type>2</type>
+			<locationURI>PARENT-1-PROJECT_LOC/include</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>
