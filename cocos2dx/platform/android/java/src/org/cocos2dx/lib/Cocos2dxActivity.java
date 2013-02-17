@@ -109,7 +109,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 		this.mHandler.sendMessage(msg);
 	}
 	
-    public static float getDPI()
+    public static int getDPI()
     {
 		if (sContext != null)
 		{
@@ -125,7 +125,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 				}
 			}
 		}
-		return 0.0f;
+		return -1;
     }
     
 	@Override
