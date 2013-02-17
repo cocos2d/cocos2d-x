@@ -6,7 +6,7 @@
 
 NS_CC_BEGIN
 
-float CCDevice::getDPI()
+int CCDevice::getDPI()
 {
     static int dpi = -1;
     if (dpi == -1)

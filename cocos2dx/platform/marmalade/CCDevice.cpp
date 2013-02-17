@@ -2,9 +2,10 @@
 
 NS_CC_BEGIN
 
-float CCDevice::getDPI()
+int CCDevice::getDPI()
 {
-
+//TODO: 
+    return 160;
 }
 
 NS_CC_END

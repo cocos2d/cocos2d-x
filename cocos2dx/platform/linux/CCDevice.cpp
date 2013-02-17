@@ -4,7 +4,7 @@
 
 NS_CC_BEGIN
 
-float CCDevice::getDPI()
+int CCDevice::getDPI()
 {
 	static int dpi = -1;
 	if (dpi == -1)
@@ -23,7 +23,7 @@ float CCDevice::getDPI()
 	    double xres = ((((double) DisplayWidth(dpy,scr)) * 25.4) / 
 	        ((double) DisplayWidthMM(dpy,scr)));
 	    dpi = (int) (xres + 0.5);
-	    printf("dpi = %d\n", dpi);
+	    //printf("dpi = %d\n", dpi);
 	}
 	return dpi;
 }
