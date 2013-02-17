@@ -8,7 +8,7 @@ extern "C" {
 int getDPIJNI()
 {
     JniMethodInfo t;
-    jfloat ret = 0.0f;
+    jint ret = -1;
     if (JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/Cocos2dxActivity", "getDPI", "()I")) {
         ret = t.env->CallStaticIntMethod(t.classID, t.methodID);
         t.env->DeleteLocalRef(t.classID);
