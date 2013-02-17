@@ -3,7 +3,7 @@
 
 extern "C" {
 
-float getDPIJNI();
+int getDPIJNI();
 
 } // extern "C"
 
