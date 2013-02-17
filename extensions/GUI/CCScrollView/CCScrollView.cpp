@@ -644,10 +644,10 @@ void CCScrollView::ccTouchMoved(CCTouch* touch, CCEvent* event)
             {
                 dis = sqrtf(moveDistance.x*moveDistance.x + moveDistance.y*moveDistance.y);
             }
-            float disInch = 0.0f;
-            if (!m_bTouchMoved && ( disInch = fabs(convertDistanceFromPointToInch(dis))) < MOVE_INCH)
+
+            if (!m_bTouchMoved && fabs(convertDistanceFromPointToInch(dis)) < MOVE_INCH )
             {
-                CCLOG("Invalid movement, distance = [%f, %f], disInch = %f", moveDistance.x, moveDistance.y, disInch);
+                //CCLOG("Invalid movement, distance = [%f, %f], disInch = %f", moveDistance.x, moveDistance.y);
                 return;
             }
             

@@ -10,7 +10,11 @@ class CC_DLL CCDevice
 private:
     CCDevice();
 public:
-    static float getDPI();
+    /**
+     *  Gets the DPI of device
+     *  @return The DPI of device.
+     */
+    static int getDPI();
 };
 
 

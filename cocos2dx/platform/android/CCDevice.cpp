@@ -3,9 +3,14 @@
 
 NS_CC_BEGIN
 
-float CCDevice::getDPI()
+int CCDevice::getDPI()
 {
-    return getDPIJNI();
+    static int dpi = -1;
+    if (dpi == -1)
+    {
+        dpi = (int)getDPIJNI();
+    }
+    return dpi;
 }
 
 NS_CC_END

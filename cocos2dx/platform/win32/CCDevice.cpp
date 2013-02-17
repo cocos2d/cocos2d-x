@@ -3,13 +3,18 @@
 
 NS_CC_BEGIN
 
-float CCDevice::getDPI()
+int CCDevice::getDPI()
 {
-    HDC hScreenDC = GetDC( NULL );
-    int PixelsX = GetDeviceCaps( hScreenDC, HORZRES );
-    int MMX = GetDeviceCaps( hScreenDC, HORZSIZE );
-    ReleaseDC( NULL, hScreenDC );   
-    return 254.0f*PixelsX/MMX/10;
+    static int dpi = -1;
+    if (dpi == -1)
+    {
+        HDC hScreenDC = GetDC( NULL );
+        int PixelsX = GetDeviceCaps( hScreenDC, HORZRES );
+        int MMX = GetDeviceCaps( hScreenDC, HORZSIZE );
+        ReleaseDC( NULL, hScreenDC );   
+        dpi = 254.0f*PixelsX/MMX/10;
+    }
+    return dpi;
 }
 
 NS_CC_END
