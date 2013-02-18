@@ -447,6 +447,9 @@
       <Filter>platform</Filter>
     </ClCompile>
     <ClCompile Include="..\support\tinyxml2\tinyxml2.cpp" />
+    <ClCompile Include="..\platform\win32\CCDevice.cpp">
+      <Filter>platform\win32</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\base_nodes\CCAtlasNode.h">

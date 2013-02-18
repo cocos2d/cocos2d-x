@@ -195,6 +195,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\platform\win32\CCAccelerometer.cpp" />
     <ClCompile Include="..\platform\win32\CCApplication.cpp" />
     <ClCompile Include="..\platform\win32\CCCommon.cpp" />
+    <ClCompile Include="..\platform\win32\CCDevice.cpp" />
     <ClCompile Include="..\platform\win32\CCEGLView.cpp" />
     <ClCompile Include="..\platform\win32\CCFileUtilsWin32.cpp" />
     <ClCompile Include="..\platform\win32\CCImage.cpp" />
