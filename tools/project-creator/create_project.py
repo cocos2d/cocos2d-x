@@ -101,11 +101,9 @@ else:
 # call process_proj from each platform's script folder
 platforms_list = ["ios",
                   "android",
-#                  "win32",
-#                  "mac",
-#                  "linux",
-#                  "blackberry"
+                  "win32",
                  ]
+                 
 for platform in platforms_list:
     exec "import creator_%s.handle_project_files" % (platform)
     exec "creator_%s.handle_project_files.handle_project_files(context)" % (platform)
