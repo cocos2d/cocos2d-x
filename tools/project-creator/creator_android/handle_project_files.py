@@ -20,12 +20,21 @@ def handle_project_files(context):
         context["src_package_name"] = "org.cocos2dx.hellojavascript"
                   
     # rename files and folders
-    package_name_list = context["dst_package_name"].split('.')
-    os.rename(proj_path + "src/org/cocos2dx/HelloJavascript/HelloJavascript.java",
-              proj_path + "src/" + 
-              package_name_list[0] + "/" + package_name_list[1] + "/" + package_name_list[2] + "/" + 
-              context["dst_project_name"] + ".java")
-                  
+    src_pkg = context["src_package_name"].split('.')
+    dst_pkg = context["dst_package_name"].split('.')
+
+    os.rename(proj_path + "src/" + src_pkg[0],
+              proj_path + "src/" + dst_pkg[0])
+    os.rename(proj_path + "src/" + dst_pkg[0] + "/" + src_pkg[1],
+              proj_path + "src/" + dst_pkg[0] + "/" + dst_pkg[1])
+    os.rename(proj_path + "src/" + dst_pkg[0] + "/" + dst_pkg[1] + "/" + src_pkg[2],
+              proj_path + "src/" + dst_pkg[0] + "/" + dst_pkg[1] + "/" + dst_pkg[2])
+    os.rename(proj_path + "src/" + dst_pkg[0] + "/" + dst_pkg[1] + "/" + dst_pkg[2] + "/HelloJavascript.java",
+              proj_path + "src/" + dst_pkg[0] + "/" + dst_pkg[1] + "/" + dst_pkg[2] + "/" + context["dst_project_name"] + ".java")
+
+    dst_java_file_path = proj_path + "src/" + dst_pkg[0] + "/" + dst_pkg[1] + "/" + dst_pkg[2] + "/" + context["dst_project_name"] + ".java"
+      
+    
     # remove useless files.
     os.popen("rm -rf " + proj_path + "assets")
     os.popen("rm -rf " + proj_path + "bin")
@@ -37,7 +46,7 @@ def handle_project_files(context):
     # package_name should be replaced at first. Don't change this sequence
     replaces.replaceString(proj_path + "AndroidManifest.xml",   context["src_package_name"], context["dst_package_name"])
     replaces.replaceString(proj_path + "ndkgdb.sh",             context["src_package_name"], context["dst_package_name"])
-    replaces.replaceString(proj_path + "src/org/cocos2dx/hellojavascript/HelloJavascript.java",  context["src_package_name"], context["dst_package_name"])     
+    replaces.replaceString(dst_java_file_path,  context["src_package_name"], context["dst_package_name"])     
      
     replaces.replaceString(proj_path + ".project",              context["src_project_name"], context["dst_project_name"])
     replaces.replaceString(proj_path + "AndroidManifest.xml",   context["src_project_name"], context["dst_project_name"])
@@ -45,6 +54,6 @@ def handle_project_files(context):
     replaces.replaceString(proj_path + "build_native.sh",       context["src_project_name"], context["dst_project_name"])
     replaces.replaceString(proj_path + "ndkgdb.sh",             context["src_project_name"], context["dst_project_name"])
     replaces.replaceString(proj_path + "res/values/strings.xml",context["src_project_name"], context["dst_project_name"])
-    replaces.replaceString(proj_path + "src/org/cocos2dx/hellojavascript/HelloJavascript.java",  context["src_project_name"], context["dst_project_name"])
+    replaces.replaceString(dst_java_file_path,  context["src_project_name"], context["dst_project_name"])
     # done!
     print "proj.android     : Done!"
