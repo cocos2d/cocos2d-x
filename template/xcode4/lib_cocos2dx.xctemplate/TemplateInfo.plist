@@ -1877,6 +1877,19 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
+		<key>libs/cocos2dx/platform/CCDevice.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>platform</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/platform/CCDevice.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
 		<key>libs/cocos2dx/platform/CCEGLViewProtocol.cpp</key>
 		<dict>
 			<key>Group</key>
@@ -2101,6 +2114,18 @@
 			</array>
 			<key>Path</key>
 			<string>libs/cocos2dx/platform/ios/CCCommon.mm</string>
+		</dict>
+		<key>libs/cocos2dx/platform/ios/CCDevice.mm</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>platform</string>
+				<string>ios</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/platform/ios/CCDevice.mm</string>
 		</dict>
 		<key>libs/cocos2dx/platform/ios/CCDirectorCaller.h</key>
 		<dict>
@@ -4012,6 +4037,7 @@
 		<string>libs/cocos2dx/platform/CCAccelerometerDelegate.h</string>
 		<string>libs/cocos2dx/platform/CCApplicationProtocol.h</string>
 		<string>libs/cocos2dx/platform/CCCommon.h</string>
+		<string>libs/cocos2dx/platform/CCDevice.h</string>
 		<string>libs/cocos2dx/platform/CCEGLViewProtocol.cpp</string>
 		<string>libs/cocos2dx/platform/CCEGLViewProtocol.h</string>
 		<string>libs/cocos2dx/platform/CCFileUtils.cpp</string>
@@ -4030,6 +4056,7 @@
 		<string>libs/cocos2dx/platform/ios/CCApplication.h</string>
 		<string>libs/cocos2dx/platform/ios/CCApplication.mm</string>
 		<string>libs/cocos2dx/platform/ios/CCCommon.mm</string>
+		<string>libs/cocos2dx/platform/ios/CCDevice.mm</string>
 		<string>libs/cocos2dx/platform/ios/CCDirectorCaller.h</string>
 		<string>libs/cocos2dx/platform/ios/CCDirectorCaller.mm</string>
 		<string>libs/cocos2dx/platform/ios/CCEGLView.h</string>

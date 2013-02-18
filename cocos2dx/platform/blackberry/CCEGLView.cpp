@@ -401,18 +401,23 @@ bool CCEGLView::initGL()
 		screen_res[0] = atoi(width_str);
 		screen_res[1] = atoi(height_str);
 
-		int rc = screen_set_window_property_iv(m_screenWindow, SCREEN_PROPERTY_BUFFER_SIZE, screen_res);
+		rc = screen_set_window_property_iv(m_screenWindow, SCREEN_PROPERTY_BUFFER_SIZE, screen_res);
 		if (rc)
 		{
 			fprintf(stderr, "screen_set_window_property_iv(SCREEN_PROPERTY_BUFFER_SIZE)");
 			return false;
 		}
+
+        rc = screen_get_window_property_pv(m_screenWindow, SCREEN_PROPERTY_DISPLAY, (void **)&m_screen_display);
+        if (rc)
+        {
+            perror("screen_get_window_property_pv(SCREEN_PROPERTY_DISPLAY)");
+            return false;
+        }
 	}
 	else
 	{
-
-	    screen_display_t screen_display;
-	    rc = screen_get_window_property_pv(m_screenWindow, SCREEN_PROPERTY_DISPLAY, (void **)&screen_display);
+	    rc = screen_get_window_property_pv(m_screenWindow, SCREEN_PROPERTY_DISPLAY, (void **)&m_screen_display);
 	    if (rc)
 	    {
 	        perror("screen_get_window_property_pv(SCREEN_PROPERTY_DISPLAY)");
@@ -420,7 +425,7 @@ bool CCEGLView::initGL()
 	    }
 
 	    screen_display_mode_t screen_mode;
-	    rc = screen_get_display_property_pv(screen_display, SCREEN_PROPERTY_MODE, (void**)&screen_mode);
+	    rc = screen_get_display_property_pv(m_screen_display, SCREEN_PROPERTY_MODE, (void**)&screen_mode);
 	    if (rc)
 	    {
 	        perror("screen_get_display_property_pv(SCREEN_PROPERTY_MODE)");
@@ -791,6 +796,11 @@ bool CCEGLView::handleEvents()
 	}
 
 	return true;
+}
+
+screen_display_t CCEGLView::getScreenDisplay() const
+{
+    return m_screen_display;
 }
 
 NS_CC_END
