@@ -412,6 +412,11 @@ void CCScrollView::deaccelerateScrolling(float dt)
 void CCScrollView::stoppedAnimatedScroll(CCNode * node)
 {
     this->unschedule(schedule_selector(CCScrollView::performedAnimatedScroll));
+    // After the animation stopped, "scrollViewDidScroll" should be invoked, this could fix the bug of lack of tableview cells.
+    if (m_pDelegate != NULL)
+    {
+        m_pDelegate->scrollViewDidScroll(this);
+    }
 }
 
 void CCScrollView::performedAnimatedScroll(float dt)
