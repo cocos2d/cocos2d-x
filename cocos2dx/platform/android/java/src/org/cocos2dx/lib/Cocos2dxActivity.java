@@ -109,25 +109,6 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 		this.mHandler.sendMessage(msg);
 	}
 	
-    public static int getDPI()
-    {
-		if (sContext != null)
-		{
-			DisplayMetrics metrics = new DisplayMetrics();
-			WindowManager wm = ((Activity)sContext).getWindowManager();
-			if (wm != null)
-			{
-				Display d = wm.getDefaultDisplay();
-				if (d != null)
-				{
-					d.getMetrics(metrics);
-					return (int)(metrics.density*160.0f);
-				}
-			}
-		}
-		return -1;
-    }
-    
 	@Override
 	public void runOnGLThread(final Runnable pRunnable) {
 		this.mGLSurfaceView.queueEvent(pRunnable);
