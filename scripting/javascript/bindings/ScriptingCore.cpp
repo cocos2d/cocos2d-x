@@ -25,6 +25,7 @@
 #include <WS2tcpip.h>
 #else
 #include <sys/socket.h>
+#include <unistd.h>
 #include <netdb.h>
 #endif
 #include <pthread.h>
