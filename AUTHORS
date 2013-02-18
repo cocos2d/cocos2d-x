@@ -196,6 +196,9 @@ Developers:
     DarraghCoy
         Fix for unaligned memory access crash in CCBReader::readFloat().
 
+    Sergej Tatarincev (SevInf)
+        Making ScriptingCore.cpp compiled fine with C++11 on iOS.
+
 Retired Core Developers:
     WenSheng Yang
 	Author of windows port, CCTextField, 

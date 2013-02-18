@@ -34,6 +34,6 @@ public class HelloJavascript extends Cocos2dxActivity{
 	}
 	
     static {
-        System.loadLibrary("hellojavascript");
+        System.loadLibrary("cocos2djs");
     }
 }
