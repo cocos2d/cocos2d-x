@@ -14,7 +14,7 @@ context = {
 "src_package_name"  : "undefined",                          # it depends on "language"
 "dst_project_name"  : "undeifned",
 "dst_package_name"  : "undefined",
-"scr_project_path"  : "undefined",
+"src_project_path"  : "undefined",
 "dst_project_path"  : "undefined",
 "script_dir"        : "undefined",
 }
@@ -27,11 +27,10 @@ import shutil # for copy folders and files
 def dumpUsage():
     print "Usage: create-project.py [options]"
     print "Options:"
-    print "  -project   PROJECT_NAME      Project name, e.g. MyGame"
-    print "  -package   PACKAGE_NAME      Package name, e.g. org.cocos2d-x.MyAwesomeGame"
-    print "  -language  SCRIPT_LANGUAGE   Script lanauge you want to used, should be cpp | lua | javascript"
-    print "                               If this param is nil, we will create a cpp project for you"
-#    print "  -modules   MODULE_LIST       Extenal moduels you want to added, should be extensions | chipmunk | box2d"
+    print "  -project   PROJECT_NAME          Project name, for example: MyGame"
+    print "  -package   PACKAGE_NAME          Package name, for example: com.MyCompany.MyAwesomeGame"
+    print "  -language  PROGRAMING_LANGUAGE   Major programing lanauge you want to used, should be cpp | lua | javascript"
+    print "                                   If this param is nil, we will create a cpp project by default"
     print "Sample 1: ./create-project.py -project MyGame -package com.MyCompany.AwesomeGame"
     print "Sample 2: ./create-project.py -project MyGame -package com.MyCompany.AwesomeGame -language javascript"
 
@@ -64,19 +63,16 @@ def checkParams(context):
     # fill in src_project_name and src_package_name according to "language"
     if ("cpp" == context["language"]):
         context["src_project_name"] = "HelloCpp"
-        # context["src_package_name"] = "org.cocos2d-x.hellocpp"
         context["src_project_path"] = os.getcwd() + "/../../template/multi-platform-cpp"
         print "Creating multi-platform cpp projects haven't been supported in this python script yet"
         sys.exit()
     elif ("lua" == context["language"]):
         context["src_project_name"] = "HelloLua"
-        # context["src_package_name"] = "org.cocos2d-x.hellolua"
         context["src_project_path"] = os.getcwd() + "/../../template/multi-platform-lua"
         print "Creating multi-platform lua projects haven't been supported in this python script yet"
         sys.exit()
     elif ("javascript" == context["language"]):
         context["src_project_name"] = "HelloJavascript"
-        # context["src_package_name"] = "org.cocos2d-x.hellojavascript"
         context["src_project_path"] = os.getcwd() + "/../../template/multi-platform-js"
 
     # decide the modules to remove
@@ -87,12 +83,12 @@ def checkParams(context):
 
 # -------------- main --------------
 # dump argvs
-print sys.argv
+# print sys.argv
 
 # prepare valid "context" dictionary
 checkParams(context)
-import pprint
-pprint.pprint(context)
+# import pprint
+# pprint.pprint(context)
 
 # copy "lauguage"(cpp/lua/javascript) platform.proj into cocos2d-x/projects/<project_name>/folder
 if (os.path.exists(context["dst_project_path"]) == True):
@@ -114,6 +110,6 @@ for platform in platforms_list:
     exec "import creator_%s.handle_project_files" % (platform)
     exec "creator_%s.handle_project_files.handle_project_files(context)" % (platform)
 
-print "New project is created in this path: " + context["dst_project_path"]
+print "New project has been created in this path: " + context["dst_project_path"]
 print "Have Fun!"
 
