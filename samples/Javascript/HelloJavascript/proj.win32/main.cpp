@@ -26,7 +26,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
     AppDelegate app;
     CCEGLView* eglView = CCEGLView::sharedOpenGLView();
     eglView->setViewName("HelloJavascript");
-    eglView->setFrameSize(800, 450);
+    eglView->setFrameSize(480, 320);
 
     int ret = CCApplication::sharedApplication()->run();
 
