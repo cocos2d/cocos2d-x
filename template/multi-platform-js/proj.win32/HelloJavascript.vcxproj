@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{D0F06A44-A245-4D13-A498-0120C203B539}</ProjectGuid>
+    <ProjectGuid>{3B0B58B1-2734-488E-A542-ECEC11EB2455}</ProjectGuid>
     <RootNamespace>HelloJavascript</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -108,7 +108,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\scripting\javascript\spidermonkey-win32\lib\*
 if exist "$(OutDir)\HelloJavascriptRes" rd /s /q "$(OutDir)\HelloJavascriptRes"
 mkdir "$(OutDir)\HelloJavascriptRes"
 xcopy "$(ProjectDir)..\..\..\scripting\javascript\bindings\js\*.js" "$(OutDir)\HelloJavascriptRes\" /e /Y
-xcopy "$(ProjectDir)..\..\Shared\tests" "$(OutDir)\HelloJavascriptRes\" /e /Y</Command>
+xcopy "$(ProjectDir)..\Resources" "$(OutDir)\HelloJavascriptRes\" /e /Y</Command>
     </PreBuildEvent>
     <PreBuildEvent>
       <Message>Copy js and resource files.</Message>
@@ -161,7 +161,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\scripting\javascript\spidermonkey-win32\lib\*
 if exist "$(OutDir)\HelloJavascriptRes" rd /s /q "$(OutDir)\HelloJavascriptRes"
 mkdir "$(OutDir)\HelloJavascriptRes"
 xcopy "$(ProjectDir)..\..\..\scripting\javascript\bindings\js\*.js" "$(OutDir)\HelloJavascriptRes\" /e /Y
-xcopy "$(ProjectDir)..\..\Shared\tests" "$(OutDir)\HelloJavascriptRes\" /e /Y</Command>
+xcopy "$(ProjectDir)..\Resources" "$(OutDir)\HelloJavascriptRes\" /e /Y</Command>
       <Message>Copy js and resource files.</Message>
     </PreBuildEvent>
   </ItemDefinitionGroup>
