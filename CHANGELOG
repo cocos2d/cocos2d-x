@@ -1,3 +1,74 @@
+cocos2d-2.1beta3-x-2.1.1 @Jan.29 2013
+[ all platforms]
+     Bug      #1547: fix a bug that when CCMenuItem is removed before touch ended, application will crash if keeping moving
+     Bug      #1553: fix a memory leak in CCControllButton
+     Bug      #1604: fix a bug that the enum values in ccPVR3TexturePixelFormat are truncated to 32bit
+     Bug      #1605: fix a crash that when adding just one action to CCSequence
+     Bug      #1639: fix a bug that CCBReader miss parsing some properties  
+     Bug      #1659: fix a bug that invoking runAnimation() in CCBAnimationManagerDelegate::completedAnimationSequenceNamed will cause crash
+     Bug      #1662: fix a bug that returns wrong full path if texture name in the plist doesn't contain relative path 
+     Bug      #1664: fix a logical error in CCAtlasNode::setOpacityModifyRGB
+     Bug      #1670: fix a memory leak in CCBReader
+     Bug      #1674: fix a logical error in CCScale9Sprite constructor
+     Bug      #1680: fix a bug that can't set touch priority by invoking CCMenu::setTouchPriority()
+     Bug      #1681: fix a bug that CCTableView crashes if CCTableViewDelegate is not provided
+     Feature  #1598: add japanese language support
+     Feature  #1625: add stackable action support and exchange the order of parameters for 3d relative actions
+     Feature  #1667: add file name lookup support
+     Refactor #1593: remove all deprecated methods
+     Refactor #1599: do some improvements of CCScrollView and CCTableView
+     Refactor #1602: add randomObject to CCDictionary
+     Refactor #1603: adjust samples directory structure
+     Refactor #1606: return CCSequence pointer for CCSequence::create
+     Refactor #1648: make CCPoint, CCRect and CCSize not inherit from CCObject
+     Refactor #1649: change return type to const reference for member variable accessing
+     Refactor #1654: report function and line number for CCAssert
+     Refactor #1683: refactor CCFileUtils to make it be compatible with the resource searching strategy of cocos2d-iphone
+     Document #1650: add detailed comments for CCDictionary
+     Document #1678: add detailed doxygen comments for CCNode
+[android]
+     Bug      #1544: fix a bug that CCRenderTexture works wrong after coming back to foreground
+     Bug      #1580: fix a bug that application may lost focus after popping up keyboard
+     Bug      #1607: fix a bug that the path CCUserDefault saves in may cause issue
+     Bug      #1610: fix a bug that CCLabelTTF will lost a character at the end of a line
+     Bug      #1623: fix a bug that SimpleAudioEngine::playBackgroundMusic() may not take effect
+     Bug      #1679: upload unstripped prebuilt libraries for armeabi-v7a architectures
+     Refactor #1673: add <uses-feature android:glEsVersion="0x00020000"/> to AndroidManifest.xml
+[iOS]
+     Bug      #1600: fix a bug that application created by xCode template will crash after coming to foreground
+     Bug      #1612: fix some compilation errors when using c++11 compiler
+     Bug      #1657: fix a memory leak in CCTextureCache::addImageAsync()
+     Refactor #1636: refactor CCEditBox
+[win32]
+     Refactor #1627: add VS version check in project file
+[marmalade]
+     Bug      #1631: make SimpleGame force landscape
+     Refactor #1629: add marmalade third party cleanup
+     Refactor #1630: add TestLua post-build script
+     Refactor #1632: remove grskia dependency and add in freetype support to the builds.
+[linux]
+     Feature  #1611: add lua support
+     Refactor #1621: add linux 64bit target for eclipse project
+     Refactor #1676: refactor makefile and eclipse project configuration
+[javascript binding]
+     Bug      #1550: fix some memory leaks in JSBinding
+     Bug      #1614: fix a crash caused by DrawNodeTest
+     Bug      #1622: fix a crash when cc.Node.getChildren is invoked if it has no children
+     Bug      #1641: fix a bug that the coins in WatermelonWithMe don't animate
+     Bug      #1644: fix a crash caused by passing NULL parameter to ccdictionary_to_jsval
+     Bug      #1645: fix a bug that JS Project created by xXode template doesn't work correctly
+     Bug      #1653: handle correctly when parsing int value in JSB
+     Feature  #1620: add sys.localStorage support for JSB
+     Feature  #1642: add tools for generating js-binding codes on windows
+     Feature  #1646: update SpiderMonkey to v18.0
+     Feature  #1660: add js-debugger for js-binding
+     Feature  #1661: add jsb sample game CrystalCraze
+     Refactor #1530: do some improvements to JS Bindings
+     Refactor #1633: implement sys.capabilities for JSB
+[lua binding]
+     Refactor #1608: add CCNode::scheduleUpdateWithPriorityLua() for LuaBinding
+     Refactor #1626: add CCDirector::setDisplayStats() for luabinding
+
 cocos2d-2.1beta3-x-2.1.0 @Dec.5 2012
  [all platforms]
      Bug      #1556: set a default texture for CCParticleFire, CCParticleFireworks, etc

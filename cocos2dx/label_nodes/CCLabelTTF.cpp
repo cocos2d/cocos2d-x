@@ -72,34 +72,16 @@ CCLabelTTF * CCLabelTTF::create()
     return pRet;
 }
 
-CCLabelTTF * CCLabelTTF::labelWithString(const char *string, const char *fontName, float fontSize)
-{
-    return CCLabelTTF::create(string, fontName, fontSize);
-}
-
 CCLabelTTF * CCLabelTTF::create(const char *string, const char *fontName, float fontSize)
 {
     return CCLabelTTF::create(string, fontName, fontSize,
                               CCSizeZero, kCCTextAlignmentCenter, kCCVerticalTextAlignmentTop);
 }
 
-CCLabelTTF * CCLabelTTF::labelWithString(const char *string, const CCSize& dimensions, CCTextAlignment hAlignment, const char *fontName, float fontSize)
-{
-    return CCLabelTTF::create(string, fontName, fontSize,
-                              dimensions, hAlignment, kCCVerticalTextAlignmentTop);
-}
-
 CCLabelTTF * CCLabelTTF::create(const char *string, const char *fontName, float fontSize,
                                 const CCSize& dimensions, CCTextAlignment hAlignment)
 {
     return CCLabelTTF::create(string, fontName, fontSize, dimensions, hAlignment, kCCVerticalTextAlignmentTop);
-}
-
-CCLabelTTF* CCLabelTTF::labelWithString(const char *string, const cocos2d::CCSize &dimensions, 
-                                        CCTextAlignment hAlignment, CCVerticalTextAlignment vAlignment, 
-                                        const char *fontName, float fontSize)
-{
-    return CCLabelTTF::create(string, fontName, fontSize, dimensions, hAlignment, vAlignment);
 }
 
 CCLabelTTF* CCLabelTTF::create(const char *string, const char *fontName, float fontSize,
@@ -277,31 +259,33 @@ void CCLabelTTF::setFontName(const char *fontName)
 // Helper
 bool CCLabelTTF::updateTexture()
 {
+    bool bRet = false;
     CCTexture2D *tex;
     
-    // let system compute label's width or height when its value is 0
-    // refer to cocos2d-x issue #1430
-    tex = new CCTexture2D();
-    tex->initWithString( m_string.c_str(),
-                        m_pFontName->c_str(),
-                        m_fFontSize * CC_CONTENT_SCALE_FACTOR(),
-                        CC_SIZE_POINTS_TO_PIXELS(m_tDimensions), 
-                        m_hAlignment,
-                        m_vAlignment);
-    
-    if (! tex)
+    do
     {
-        return false;
-    }
+        // let system compute label's width or height when its value is 0
+        // refer to cocos2d-x issue #1430
+        tex = new CCTexture2D();
+        CC_BREAK_IF(!tex);
+
+        bRet = tex->initWithString( m_string.c_str(),
+                            m_pFontName->c_str(),
+                            m_fFontSize * CC_CONTENT_SCALE_FACTOR(),
+                            CC_SIZE_POINTS_TO_PIXELS(m_tDimensions), 
+                            m_hAlignment,
+                            m_vAlignment);
+        CC_BREAK_IF(!bRet);
 	
-    this->setTexture(tex);
-    tex->release();
+        this->setTexture(tex);
+        tex->release();
 	
-	CCRect rect = CCRectZero;
-    rect.size = m_pobTexture->getContentSize();
-    this->setTextureRect(rect);
-    
-    return true;
+	    CCRect rect = CCRectZero;
+        rect.size = m_pobTexture->getContentSize();
+        this->setTextureRect(rect);
+    }while(false);
+
+    return bRet;
 }
 
 NS_CC_END

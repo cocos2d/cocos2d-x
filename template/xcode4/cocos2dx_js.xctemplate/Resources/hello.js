@@ -1,52 +1,66 @@
-require("jsb_constants.js");
+require("jsb.js");
 
 try {
-
-    cc.p = cc.p || function( x, y ) {
-        return {x:x, y:y};
-    };
-    
-    cc.c4b = cc.c4 || function (r, g, b, o) {
-        return {r: r, g: g, b: b, a: o};
-    };
-  
-    
-    cc.c3 = cc.c3 || function (r, g, b) {
-        return {r: r, g: g, b: b};
-    };
-    cc.BLACK = cc.c3(0,0,0);
-
-    // MenuItemToggle
-    cc.MenuItemToggle.create = function (/* var args */) {
-        
-        var n = arguments.length;
-        
-        if (typeof arguments[n - 1] === 'function') {
-            var args = Array.prototype.slice.call(arguments);
-            var func = args.pop();
-            var obj = args.pop();
-            
-            // create it with arguments,
-            var item = cc.MenuItemToggle._create.apply(this, args);
-            
-            // then set the callback
-            item.setCallback(obj, func);
-            return item;
-        } else {
-            return cc.MenuItemToggle._create.apply(this, arguments);
-        }
-    };
-    
     
     director = cc.Director.getInstance();
     winSize = director.getWinSize();
     centerPos = cc.p( winSize.width/2, winSize.height/2 );
+    
+    //
+    // Main Menu
+    //
+    
+    // 'MenuLayerController' class is instantiated by CocosBuilder Reader
+    var MenuLayerController = function () {
+    };
+    
+    // callback triggered by CCB Reader once the instance is created
+    MenuLayerController.prototype.onDidLoadFromCCB = function () {
+        // Spin the 'o' in the title
+        var o = this.titleLabel.getChildByTag(8);
+        
+        var a_delay = cc.DelayTime.create(6);
+        var a_tint = cc.TintTo.create(0.5, 0, 255, 0);
+        var a_rotate = cc.RotateBy.create(4, 360);
+        var a_rep = cc.Repeat.create(a_rotate, 1000);
+        var a_seq = cc.Sequence.create(a_delay, a_tint, a_delay.copy(), a_rep);
+        o.runAction(a_seq);
+    };
+    
+    // callbacks for the menu, defined in the editor
+    MenuLayerController.prototype.onPlay = function () {
+        director.replaceScene( cc.TransitionFade.create(1, game.getPlayScene()) );
+    };
+    
+    MenuLayerController.prototype.onOptions = function () {
+        director.replaceScene( cc.TransitionFade.create(1, game.getOptionsScene()) );
+    };
+    
+    MenuLayerController.prototype.onAbout = function () {
+        director.replaceScene( cc.TransitionZoomFlipY.create(1, game.getAboutScene()) );
+    };
 
+    var AboutLayerController = function() {}
+    
+    AboutLayerController.prototype.onDidLoadFromCCB = function () {
+        var back = cc.MenuItemFont.create("Back", this.onBack, this);
+        back.setColor(cc.BLACK);
+        var menu = cc.Menu.create(back);
+        this.rootNode.addChild(menu);
+        menu.zOrder = 100;
+        menu.alignItemsVertically();
+        menu.setPosition(winSize.width - 50, 50);
+    };
+    
+    AboutLayerController.prototype.onBack = function () {
+        director.replaceScene( cc.TransitionFade.create(1, game.getMainMenuScene()));
+    };
+    
     var GameCreator = function() {
         
         var self = {};
         self.callbacks = {};
-
+        
         self.getPlayScene = function() {
             
             var scene = new cc.Scene();
@@ -59,7 +73,7 @@ try {
             layer.addChild(label, 1);
             label.setPosition( cc.p(winSize.width / 2, winSize.height / 2));
             
-            var back = cc.MenuItemFont.create("Back", this.callbacks, this.callbacks.onBack );
+            var back = cc.MenuItemFont.create("Back", self.callbacks.onBack, self.callbacks);
             back.setColor( cc.BLACK );
             
             var menu = cc.Menu.create( back );
@@ -73,15 +87,7 @@ try {
         };
         
         self.getMainMenuScene = function() {
-            var l = cc.Layer.create();
-            var scene = cc.Scene.create();
-            
-            var node = cc.Reader.load("MainMenu.ccbi", this, winSize);
-            l.addChild(node);
-            
-            scene.addChild(l);
-            
-            return scene;
+            return cc.BuilderReader.loadAsScene("MainMenu.ccbi");
         };
         
         self.getOptionsScene = function() {
@@ -98,11 +104,12 @@ try {
             var toggle = cc.MenuItemToggle.create( item1, item2 );
             
             this.onMusicToggle = function( sender ) {
+                cc.log("OptionsScene onMusicToggle...");
             };
             
-            toggle.setCallback( this, this.onMusicToggle);
+            toggle.setCallback( this.onMusicToggle, this);
             
-            var back = cc.MenuItemFont.create("Back", this.callbacks, this.callbacks.onBack );
+            var back = cc.MenuItemFont.create("Back", self.callbacks.onBack, self.callbacks);
             var menu = cc.Menu.create( toggle, back );
             l.addChild( menu );
             menu.alignItemsVertically();
@@ -118,43 +125,20 @@ try {
             
             var scene = cc.Scene.create();
             var l = cc.Layer.create();
-            var about = cc.Reader.load("About.ccbi", this);
+            var about = cc.BuilderReader.load("About.ccbi", l);
             l.addChild( about )
-            
-            var back = cc.MenuItemFont.create("Back", this.callbacks, this.callbacks.onBack );
-            back.setColor( cc.BLACK );
-            var menu = cc.Menu.create( back );
-            l.addChild( menu );
-            menu.alignItemsVertically();
-            menu.setPosition( cc.p( winSize.width - 50, 50) );
             
             scene.addChild( l );
             
             return scene;
         };
         
-        
-        // CCBuilder Selectors
-        
-        self.onPlay = function() {
-            director.replaceScene( cc.TransitionFade.create(1, this.getPlayScene()) );
-        }
-        
-        self.onAbout = function() {
-            director.replaceScene( cc.TransitionZoomFlipY.create(1, this.getAboutScene()) );
-        };
-    
-        self.onOptions = function() {
-            director.replaceScene( cc.TransitionZoomFlipY.create(1, this.getOptionsScene()) );
-        };
-        
-        
         // Manual Callbacks
         
         self.callbacks.onBack  = function( sender) {
             director.replaceScene( cc.TransitionFlipX.create(1,  self.getMainMenuScene()) );
         };
-        
+
         return self;
 
     };

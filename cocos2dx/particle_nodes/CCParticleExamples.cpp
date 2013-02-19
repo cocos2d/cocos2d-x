@@ -38,6 +38,7 @@ NS_CC_BEGIN
 static CCTexture2D* getDefaultTexture()
 {
     CCTexture2D* pTexture = NULL;
+    CCImage* pImage = NULL;
     do 
     {
         bool bRet = false;
@@ -45,19 +46,17 @@ static CCTexture2D* getDefaultTexture()
         pTexture = CCTextureCache::sharedTextureCache()->textureForKey(key);
         CC_BREAK_IF(pTexture != NULL);
 
-        CCImage image;
-        bRet = image.initWithImageData((void*)__firePngData, sizeof(__firePngData), CCImage::kFmtPng);
+        pImage = new CCImage();
+        CC_BREAK_IF(NULL == pImage);
+        bRet = pImage->initWithImageData((void*)__firePngData, sizeof(__firePngData), CCImage::kFmtPng);
         CC_BREAK_IF(!bRet);
 
-        pTexture = CCTextureCache::sharedTextureCache()->addUIImage(&image, key);
+        pTexture = CCTextureCache::sharedTextureCache()->addUIImage(pImage, key);
     } while (0);
 
-    return pTexture;
-}
+    CC_SAFE_RELEASE(pImage);
 
-CCParticleFire* CCParticleFire::node()
-{
-    return CCParticleFire::create();
+    return pTexture;
 }
 
 CCParticleFire* CCParticleFire::create()
@@ -164,10 +163,6 @@ bool CCParticleFire::initWithTotalParticles(unsigned int numberOfParticles)
 //
 // ParticleFireworks
 //
-CCParticleFireworks* CCParticleFireworks::node()
-{
-    return CCParticleFireworks::create();
-}
 
 CCParticleFireworks* CCParticleFireworks::create()
 {
@@ -270,12 +265,6 @@ bool CCParticleFireworks::initWithTotalParticles(unsigned int numberOfParticles)
 //
 // ParticleSun
 //
-
-CCParticleSun* CCParticleSun::node()
-{
-    return CCParticleSun::create();
-}
-
 CCParticleSun* CCParticleSun::create()
 {
     CCParticleSun* pRet = new CCParticleSun();
@@ -382,11 +371,6 @@ bool CCParticleSun::initWithTotalParticles(unsigned int numberOfParticles)
 //
 // ParticleGalaxy
 //
-
-CCParticleGalaxy* CCParticleGalaxy::node()
-{
-    return CCParticleGalaxy::create();
-}
 
 CCParticleGalaxy* CCParticleGalaxy::create()
 {
@@ -497,11 +481,6 @@ bool CCParticleGalaxy::initWithTotalParticles(unsigned int numberOfParticles)
 // ParticleFlower
 //
 
-CCParticleFlower* CCParticleFlower::node()
-{
-    return CCParticleFlower::create();
-}
-
 CCParticleFlower* CCParticleFlower::create()
 {
     CCParticleFlower* pRet = new CCParticleFlower();
@@ -609,11 +588,6 @@ bool CCParticleFlower::initWithTotalParticles(unsigned int numberOfParticles)
 //
 // ParticleMeteor
 //
-
-CCParticleMeteor * CCParticleMeteor::node()
-{
-    return create();
-}
 
 CCParticleMeteor * CCParticleMeteor::create()
 {
@@ -724,11 +698,6 @@ bool CCParticleMeteor::initWithTotalParticles(unsigned int numberOfParticles)
 // ParticleSpiral
 //
 
-CCParticleSpiral* CCParticleSpiral::node()
-{
-    return CCParticleSpiral::create();
-}
-
 CCParticleSpiral* CCParticleSpiral::create()
 {
     CCParticleSpiral* pRet = new CCParticleSpiral();
@@ -838,11 +807,6 @@ bool CCParticleSpiral::initWithTotalParticles(unsigned int numberOfParticles)
 // ParticleExplosion
 //
 
-CCParticleExplosion* CCParticleExplosion::node()
-{
-    return CCParticleExplosion::create();
-}
-
 CCParticleExplosion* CCParticleExplosion::create()
 {
     CCParticleExplosion* pRet = new CCParticleExplosion();
@@ -951,11 +915,6 @@ bool CCParticleExplosion::initWithTotalParticles(unsigned int numberOfParticles)
 // ParticleSmoke
 //
 
-CCParticleSmoke* CCParticleSmoke::node()
-{
-    return CCParticleSmoke::create();
-}
-
 CCParticleSmoke* CCParticleSmoke::create()
 {
     CCParticleSmoke* pRet = new CCParticleSmoke();
@@ -1060,11 +1019,6 @@ bool CCParticleSmoke::initWithTotalParticles(unsigned int numberOfParticles)
 //
 // CCParticleSnow
 //
-
-CCParticleSnow* CCParticleSnow::node()
-{
-    return CCParticleSnow::create();
-}
 
 CCParticleSnow* CCParticleSnow::create()
 {
@@ -1173,10 +1127,6 @@ bool CCParticleSnow::initWithTotalParticles(unsigned int numberOfParticles)
 //
 // CCParticleRain
 //
-CCParticleRain* CCParticleRain::node()
-{
-    return CCParticleRain::create();
-}
 
 CCParticleRain* CCParticleRain::create()
 {

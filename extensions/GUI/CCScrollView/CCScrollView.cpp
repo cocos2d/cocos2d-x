@@ -67,11 +67,6 @@ CCScrollView::~CCScrollView()
     m_pTouches->release();
 }
 
-CCScrollView* CCScrollView::viewWithViewSize(CCSize size, CCNode* container/* = NULL*/)
-{
-    return CCScrollView::create(size, container);
-}
-
 CCScrollView* CCScrollView::create(CCSize size, CCNode* container/* = NULL*/)
 {
     CCScrollView* pRet = new CCScrollView();
@@ -84,11 +79,6 @@ CCScrollView* CCScrollView::create(CCSize size, CCNode* container/* = NULL*/)
         CC_SAFE_DELETE(pRet);
     }
     return pRet;
-}
-
-CCScrollView* CCScrollView::node()
-{
-    return CCScrollView::create();
 }
 
 CCScrollView* CCScrollView::create()
@@ -346,8 +336,8 @@ void CCScrollView::relocateContainer(bool animated)
     newY     = oldPoint.y;
     if (m_eDirection == kCCScrollViewDirectionBoth || m_eDirection == kCCScrollViewDirectionHorizontal)
     {
-        newX     = MIN(newX, max.x);
         newX     = MAX(newX, min.x);
+        newX     = MIN(newX, max.x);
     }
 
     if (m_eDirection == kCCScrollViewDirectionBoth || m_eDirection == kCCScrollViewDirectionVertical)
@@ -403,12 +393,17 @@ void CCScrollView::deaccelerateScrolling(float dt)
     newY     = MIN(m_pContainer->getPosition().y, maxInset.y);
     newY     = MAX(newY, minInset.y);
     
+    newX = m_pContainer->getPosition().x;
+    newY = m_pContainer->getPosition().y;
+    
     m_tScrollDistance     = ccpSub(m_tScrollDistance, ccp(newX - m_pContainer->getPosition().x, newY - m_pContainer->getPosition().y));
     m_tScrollDistance     = ccpMult(m_tScrollDistance, SCROLL_DEACCEL_RATE);
     this->setContentOffset(ccp(newX,newY));
     
     if ((fabsf(m_tScrollDistance.x) <= SCROLL_DEACCEL_DIST &&
          fabsf(m_tScrollDistance.y) <= SCROLL_DEACCEL_DIST) ||
+        newY > maxInset.y || newY < minInset.y ||
+        newX > maxInset.x || newX < minInset.x ||
         newX == maxInset.x || newX == minInset.x ||
         newY == maxInset.y || newY == minInset.y)
     {
@@ -437,7 +432,7 @@ void CCScrollView::performedAnimatedScroll(float dt)
 }
 
 
-CCSize CCScrollView::getContentSize()
+const CCSize& CCScrollView::getContentSize()
 {
 	return m_pContainer->getContentSize();
 }
@@ -662,20 +657,14 @@ void CCScrollView::ccTouchMoved(CCTouch* touch, CCEvent* event)
                     default:
                         break;
                 }
-
-                m_pContainer->setPosition(ccpAdd(m_pContainer->getPosition(), moveDistance));
                 
                 maxInset = m_fMaxInset;
                 minInset = m_fMinInset;
-                
-                
-                //check to see if offset lies within the inset bounds
-                newX     = MIN(m_pContainer->getPosition().x, maxInset.x);
-                newX     = MAX(newX, minInset.x);
-                newY     = MIN(m_pContainer->getPosition().y, maxInset.y);
-                newY     = MAX(newY, minInset.y);
-                
-                m_tScrollDistance     = ccpSub(moveDistance, ccp(newX - m_pContainer->getPosition().x, newY - m_pContainer->getPosition().y));
+
+                newX     = m_pContainer->getPosition().x + moveDistance.x;
+                newY     = m_pContainer->getPosition().y + moveDistance.y;
+
+                m_tScrollDistance = moveDistance;
                 this->setContentOffset(ccp(newX, newY));
             }
         }

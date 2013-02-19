@@ -3,63 +3,63 @@ class CCShakyTiles3D : public CCTiledGrid3DAction
 {
 	CCObject* copyWithZone(CCZone* pZone);
 
-    static CCShakyTiles3D* create(int nRange, bool bShakeZ, ccGridSize gridSize, float duration);
+    CCShakyTiles3D* create(float duration, CCSize gridSize, int nRange, bool bShakeZ);
 };
 
 class CCShatteredTiles3D : public CCTiledGrid3DAction
 {
 	CCObject* copyWithZone(CCZone* pZone);
 
-    static CCShatteredTiles3D* create(int nRange, bool bShatterZ, ccGridSize gridSize, float duration);
+    static CCShatteredTiles3D* create(float duration, CCSize gridSize, int nRange, bool bShatterZ);
 };
 
 class CCShuffleTiles : public CCTiledGrid3DAction
 {
 	CCObject* copyWithZone(CCZone* pZone);
 
-    void shuffle(int *pArray, int nLen);
-    ccGridSize getDelta(ccGridSize pos);
-    void placeTile(ccGridSize pos, Tile *t);
+    void shuffle(unsigned int *pArray, int nLen);
+    CCSize getDelta(CCSize pos);
+    void placeTile(CCPoint pos, Tile *t);
 
-    static CCShuffleTiles* create(int s, ccGridSize gridSize, float duration);
+    static CCShuffleTiles* create(float duration, CCSize gridSize, unsigned int seed);
 };
 
 class CCFadeOutTRTiles : public CCTiledGrid3DAction
 {
-    void turnOnTile(ccGridSize pos);
-    void turnOffTile(ccGridSize pos);
-    void transformTile(ccGridSize pos, float distance);
+    void turnOnTile(CCPoint pos);
+    void turnOffTile(CCPoint pos);
+    void transformTile(CCPoint pos, float distance);
 
-    static CCFadeOutTRTiles* create(ccGridSize gridSize, float time);
+    static CCFadeOutTRTiles* create(float duration, CCSize gridSize);
 };
 
 class CCFadeOutBLTiles : public CCFadeOutTRTiles
 {
-    static CCFadeOutBLTiles* create(ccGridSize gridSize, float time);
+     static CCFadeOutBLTiles* create(float duration, CCSize gridSize);
 };
 
 class CCFadeOutUpTiles : public CCFadeOutTRTiles
 {
-	void transformTile(ccGridSize pos, float distance);
+	void transformTile(CCPoint pos, float distance);
 
-    static CCFadeOutUpTiles* create(ccGridSize gridSize, float time);
+    static CCFadeOutUpTiles* create(float duration, CCSize gridSize);
 };
 
 class CCFadeOutDownTiles : public CCFadeOutUpTiles
 {
-    static CCFadeOutDownTiles* create(ccGridSize gridSize, float time);
+    static CCFadeOutDownTiles* create(float duration, CCSize gridSize);
 };
 
 class CCTurnOffTiles : public CCTiledGrid3DAction
 {
 	CCObject* copyWithZone(CCZone* pZone);
 
-    void shuffle(int *pArray, int nLen);
-    void turnOnTile(ccGridSize pos);
-    void turnOffTile(ccGridSize pos);
+    void shuffle(unsigned int *pArray, int nLen);
+    void turnOnTile(CCPoint pos);
+    void turnOffTile(CCPoint pos);
 
-    static CCTurnOffTiles* create(int s, ccGridSize gridSize, float duration);
-    static CCTurnOffTiles* create(ccGridSize size, float d);
+    static CCTurnOffTiles* create(float duration, CCSize gridSize);
+    static CCTurnOffTiles* create(float duration, CCSize gridSize, unsigned int seed);
 };
 
 class CCWavesTiles3D : public CCTiledGrid3DAction
@@ -71,7 +71,7 @@ class CCWavesTiles3D : public CCTiledGrid3DAction
     float getAmplitudeRate(void);
     void setAmplitudeRate(float fAmplitudeRate);
 
-    static CCWavesTiles3D* create(int wav, float amp, ccGridSize gridSize, float duration);
+    static CCWavesTiles3D* create(float duration, CCSize gridSize, unsigned int waves, float amplitude);
 };
 
 class CCJumpTiles3D : public CCTiledGrid3DAction
@@ -83,19 +83,19 @@ class CCJumpTiles3D : public CCTiledGrid3DAction
     float getAmplitudeRate(void);
     void setAmplitudeRate(float fAmplitudeRate);
 
-    static CCJumpTiles3D* create(int j, float amp, ccGridSize gridSize, float duration);
+    static CCJumpTiles3D* create(float duration, CCSize gridSize, unsigned int numberOfJumps, float amplitude);
 };
 
 class CCSplitRows : public CCTiledGrid3DAction
 {
 	CCObject* copyWithZone(CCZone* pZone);
 
-    static CCSplitRows* create(int nRows, float duration);
+    static CCSplitRows* create(float duration, unsigned int nRows);
 };
 
 class CCSplitCols : public CCTiledGrid3DAction
 {
 	CCObject* copyWithZone(CCZone* pZone);
 
-    static CCSplitCols* create(int nCols, float duration);
+    static CCSplitCols* create(float duration, unsigned int nCols);
 };

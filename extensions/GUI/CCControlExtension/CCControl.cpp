@@ -239,7 +239,7 @@ void CCControl::setColor(const ccColor3B& color)
     }
 }
 
-ccColor3B CCControl::getColor(void)
+const ccColor3B& CCControl::getColor(void)
 {
     return m_tColor;
 }

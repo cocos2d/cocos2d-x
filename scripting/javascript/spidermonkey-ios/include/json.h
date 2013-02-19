@@ -15,7 +15,7 @@
 #define JSON_PARSER_BUFSIZE 1024
 
 extern JSObject *
-js_InitJSONClass(JSContext *cx, JSObject *obj);
+js_InitJSONClass(JSContext *cx, js::HandleObject obj);
 
 extern JSBool
 js_Stringify(JSContext *cx, js::MutableHandleValue vp,

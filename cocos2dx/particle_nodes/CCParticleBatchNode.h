@@ -70,16 +70,6 @@ public:
     CCParticleBatchNode();
     virtual ~CCParticleBatchNode();
 
-    /** initializes the particle system with CCTexture2D, a capacity of particles, which particle system to use 
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCParticleBatchNode* batchNodeWithTexture(CCTexture2D *tex, unsigned int capacity = kCCParticleDefaultCapacity);
-
-    /** initializes the particle system with the name of a file on disk (for a list of supported formats look at the CCTexture2D class), a capacity of particles
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCParticleBatchNode* batchNodeWithFile(const char* fileImage, unsigned int capacity = kCCParticleDefaultCapacity);
-
     /** initializes the particle system with CCTexture2D, a capacity of particles, which particle system to use */
     static CCParticleBatchNode* createWithTexture(CCTexture2D *tex, unsigned int capacity = kCCParticleDefaultCapacity);
 

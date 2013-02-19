@@ -152,9 +152,6 @@ public:
     /** will update the builtin uniforms if they are different than the previous call for this same shader program. */
     void setUniformsForBuiltins();
 
-    /** Deprecated alias for setUniformsForBuiltins */
-    CC_DEPRECATED_ATTRIBUTE void setUniformForModelViewProjectionMatrix();
-
     /** returns the vertexShader error log */
     const char* vertexShaderLog();
     /** returns the fragmentShader error log */

@@ -9,11 +9,10 @@
 #include <sys/time.h>
 #include <string>
 #include "CCDirector.h"
+#include "platform/CCFileUtils.h"
 
 NS_CC_BEGIN
 
-
-static std::string s_strRootResPath = "";
 
 // sharedApplication pointer
 CCApplication * CCApplication::sm_pSharedApplication = 0;
@@ -67,21 +66,22 @@ void CCApplication::setAnimationInterval(double interval)
 	m_nAnimationInterval = interval*1000.0f;
 }
 
-void CCApplication::setResourceRootPath(const char* pszRootResDir)
+void CCApplication::setResourceRootPath(const std::string& rootResDir)
 {
-  if (pszRootResDir)
-  {
-      s_strRootResPath = pszRootResDir;
-      if (s_strRootResPath[s_strRootResPath.length()-1] != '/')
-      {
-	  s_strRootResPath += '/';
-      }
-  }
+    m_resourceRootPath = rootResDir;
+    if (m_resourceRootPath[m_resourceRootPath.length() - 1] != '/')
+    {
+        m_resourceRootPath += '/';
+    }
+    CCFileUtils* pFileUtils = CCFileUtils::sharedFileUtils();
+    std::vector<std::string> searchPaths = pFileUtils->getSearchPaths();
+    searchPaths.insert(searchPaths.begin(), m_resourceRootPath);
+    pFileUtils->setSearchPaths(searchPaths);
 }
 
-const char* CCApplication::getResourceRootPath(void)
+const std::string& CCApplication::getResourceRootPath(void)
 {
-  return s_strRootResPath.c_str();
+    return m_resourceRootPath;
 }
 
 TargetPlatform CCApplication::getTargetPlatform()
@@ -100,8 +100,60 @@ CCApplication* CCApplication::sharedApplication()
 
 ccLanguageType CCApplication::getCurrentLanguage()
 {
-	//TODO
-	return kLanguageEnglish;
+	char *pLanguageName = getenv("LANG");
+	ccLanguageType ret = kLanguageEnglish;
+	if (!pLanguageName)
+	{
+		return kLanguageEnglish;
+	}
+	strtok(pLanguageName, "_");
+	if (!pLanguageName)
+	{
+		return kLanguageEnglish;
+	}
+	
+	if (0 == strcmp("zh", pLanguageName))
+	{
+		ret = kLanguageChinese;
+	}
+	else if (0 == strcmp("en", pLanguageName))
+	{
+		ret = kLanguageEnglish;
+	}
+	else if (0 == strcmp("fr", pLanguageName))
+	{
+		ret = kLanguageFrench;
+	}
+	else if (0 == strcmp("it", pLanguageName))
+	{
+		ret = kLanguageItalian;
+	}
+	else if (0 == strcmp("de", pLanguageName))
+	{
+		ret = kLanguageGerman;
+	}
+	else if (0 == strcmp("es", pLanguageName))
+	{
+		ret = kLanguageSpanish;
+	}
+	else if (0 == strcmp("ru", pLanguageName))
+	{
+		ret = kLanguageRussian;
+	}
+	else if (0 == strcmp("ko", pLanguageName))
+	{
+		ret = kLanguageKorean;
+	}
+	else if (0 == strcmp("ja", pLanguageName))
+	{
+		ret = kLanguageJapanese;
+	}
+	else if (0 == strcmp("hu", pLanguageName))
+	{
+		ret = kLanguageHungarian;
+	}
+	
+	return ret;
 }
 
 NS_CC_END

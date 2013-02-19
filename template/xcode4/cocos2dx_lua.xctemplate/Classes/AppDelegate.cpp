@@ -43,7 +43,7 @@ bool AppDelegate::applicationDidFinishLaunching()
         pEngine->executeString(pstrFileContent->getCString());
     }
 #else
-    std::string path = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath("hello.lua");
+    std::string path = CCFileUtils::sharedFileUtils()->fullPathForFilename("hello.lua");
     pEngine->addSearchPath(path.substr(0, path.find_last_of("/")).c_str());
     pEngine->executeScriptFile(path.c_str());
 #endif 
@@ -56,6 +56,7 @@ void AppDelegate::applicationDidEnterBackground()
 {
     CCDirector::sharedDirector()->stopAnimation();
     SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
+    SimpleAudioEngine::sharedEngine()->pauseAllEffects();
 }
 
 // this function will be called when the app is active again
@@ -63,4 +64,5 @@ void AppDelegate::applicationWillEnterForeground()
 {
     CCDirector::sharedDirector()->startAnimation();
     SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
+    SimpleAudioEngine::sharedEngine()->resumeAllEffects();
 }

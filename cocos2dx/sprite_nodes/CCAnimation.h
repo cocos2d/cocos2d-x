@@ -89,25 +89,6 @@ public:
     ~CCAnimation(void);
 public:
     /** Creates an animation
-    @deprecated: This interface will be deprecated sooner or later.
-    @since v0.99.5
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCAnimation* animation(void);
-
-    /* Creates an animation with an array of CCSpriteFrame and a delay between frames in seconds.
-     The frames will be added with one "delay unit".
-     @deprecated: This interface will be deprecated sooner or later.
-     @since v0.99.5
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCAnimation* animationWithSpriteFrames(CCArray* arrayOfSpriteFrameNames, float delay = 0.0f);
-
-    /* Creates an animation with an array of CCAnimationFrame, the delay per units in seconds and and how many times it should be executed.
-     @deprecated: This interface will be deprecated sooner or later.
-     @since v2.0
-     */
-    CC_DEPRECATED_ATTRIBUTE static CCAnimation* animationWithAnimationFrames(CCArray *arrayOfAnimationFrameNames, float delayPerUnit, unsigned int loops);
-
-        /** Creates an animation
     @since v0.99.5
     */
     static CCAnimation* create(void);

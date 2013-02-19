@@ -69,11 +69,17 @@ public:
      */
     virtual TargetPlatform getTargetPlatform();
 
-    /* set the Resource root path */
-    void setResourceRootPath(const std::string& rootResDir);
+    /**
+     *  Sets the Resource root path.
+     *  @deprecated Please use CCFileUtils::sharedFileUtils()->setSearchPaths() instead.
+     */
+    CC_DEPRECATED_ATTRIBUTE void setResourceRootPath(const std::string& rootResDir);
     
-    /* get the Resource root path */
-    const std::string& getResourceRootPath(void);
+    /** 
+     *  Gets the Resource root path.
+     *  @deprecated Please use CCFileUtils::sharedFileUtils()->getSearchPaths() instead. 
+     */
+    CC_DEPRECATED_ATTRIBUTE const std::string& getResourceRootPath(void);
     
     void setStartupScriptFilename(const std::string& startupScriptFile);
     

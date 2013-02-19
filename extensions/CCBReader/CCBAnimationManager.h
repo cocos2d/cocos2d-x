@@ -54,7 +54,7 @@ public:
     void setAutoPlaySequenceId(int autoPlaySequenceId);
     
     CCNode* getRootNode();
-    void setRootNode(CCNode* pRootNode); // retain    
+    void setRootNode(CCNode* pRootNode); // weak reference    
     
 
     void addDocumentCallbackNode(CCNode *node);
@@ -80,7 +80,7 @@ public:
     
     const char* getRunningSequenceName();
     
-    CCSize getContainerSize(CCNode* pNode);
+    const CCSize& getContainerSize(CCNode* pNode);
     
     void addNode(CCNode *pNode, CCDictionary *pSeq);
     void setBaseValue(CCObject *pValue, CCNode *pNode, const char *pPropName);
@@ -141,6 +141,14 @@ public:
     virtual void update(float time);
     virtual CCObject* copyWithZone(CCZone *pZone);
     virtual void startWithTarget(CCNode *pNode);
+};
+
+class CCBEaseInstant : public CCActionEase
+{
+public:
+    static CCBEaseInstant* create(CCActionInterval *pAction);
+    
+    virtual void update(float dt);
 };
 
 NS_CC_EXT_END

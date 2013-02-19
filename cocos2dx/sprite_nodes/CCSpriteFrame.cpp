@@ -31,25 +31,6 @@ NS_CC_BEGIN
 
 // implementation of CCSpriteFrame
 
-CCSpriteFrame* CCSpriteFrame::frameWithTexture(CCTexture2D *pobTexture, const CCRect& rect)
-{
-    return CCSpriteFrame::createWithTexture(pobTexture, rect);
-}
-
-CCSpriteFrame* CCSpriteFrame::createWithTexture(CCTexture2D *pobTexture, const CCRect& rect)
-{
-    CCSpriteFrame *pSpriteFrame = new CCSpriteFrame();;
-    pSpriteFrame->initWithTexture(pobTexture, rect);
-    pSpriteFrame->autorelease();
-
-    return pSpriteFrame;
-}
-
-CCSpriteFrame* CCSpriteFrame::frameWithTextureFilename(const char* filename, const CCRect& rect)
-{
-    return CCSpriteFrame::create(filename, rect);
-}
-
 CCSpriteFrame* CCSpriteFrame::create(const char* filename, const CCRect& rect)
 {
     CCSpriteFrame *pSpriteFrame = new CCSpriteFrame();;
@@ -59,9 +40,13 @@ CCSpriteFrame* CCSpriteFrame::create(const char* filename, const CCRect& rect)
     return pSpriteFrame;
 }
 
-CCSpriteFrame* CCSpriteFrame::frameWithTexture(CCTexture2D* pobTexture, const CCRect& rect, bool rotated, const CCPoint& offset, const CCSize& originalSize)
+CCSpriteFrame* CCSpriteFrame::createWithTexture(CCTexture2D *pobTexture, const CCRect& rect)
 {
-    return CCSpriteFrame::createWithTexture(pobTexture, rect, rotated, offset, originalSize);
+    CCSpriteFrame *pSpriteFrame = new CCSpriteFrame();;
+    pSpriteFrame->initWithTexture(pobTexture, rect);
+    pSpriteFrame->autorelease();
+    
+    return pSpriteFrame;
 }
 
 CCSpriteFrame* CCSpriteFrame::createWithTexture(CCTexture2D* pobTexture, const CCRect& rect, bool rotated, const CCPoint& offset, const CCSize& originalSize)
@@ -71,11 +56,6 @@ CCSpriteFrame* CCSpriteFrame::createWithTexture(CCTexture2D* pobTexture, const C
     pSpriteFrame->autorelease();
 
     return pSpriteFrame;
-}
-
-CCSpriteFrame* CCSpriteFrame::frameWithTextureFilename(const char* filename, const CCRect& rect, bool rotated, const CCPoint& offset, const CCSize& originalSize)
-{
-    return CCSpriteFrame::create(filename, rect, rotated, offset, originalSize);
 }
 
 CCSpriteFrame* CCSpriteFrame::create(const char* filename, const CCRect& rect, bool rotated, const CCPoint& offset, const CCSize& originalSize)

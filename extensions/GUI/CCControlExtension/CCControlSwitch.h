@@ -54,22 +54,12 @@ public:
     /** Initializes a switch with a mask sprite, on/off sprites for on/off states and a thumb sprite. */
     bool initWithMaskSprite(CCSprite *maskSprite, CCSprite * onSprite, CCSprite * offSprite, CCSprite * thumbSprite);
 
-    /** Creates a switch with a mask sprite, on/off sprites for on/off states and a thumb sprite. 
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCControlSwitch* switchWithMaskSprite(CCSprite *maskSprite, CCSprite * onSprite, CCSprite * offSprite, CCSprite * thumbSprite);
-
     /** Creates a switch with a mask sprite, on/off sprites for on/off states and a thumb sprite. */
     static CCControlSwitch* create(CCSprite *maskSprite, CCSprite * onSprite, CCSprite * offSprite, CCSprite * thumbSprite);
 
 
     /** Initializes a switch with a mask sprite, on/off sprites for on/off states, a thumb sprite and an on/off labels. */
     bool initWithMaskSprite(CCSprite *maskSprite, CCSprite * onSprite, CCSprite * offSprite, CCSprite * thumbSprite, CCLabelTTF* onLabel, CCLabelTTF* offLabel);
-
-    /** Creates a switch with a mask sprite, on/off sprites for on/off states, a thumb sprite and an on/off labels.
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCControlSwitch* switchWithMaskSprite(CCSprite *maskSprite, CCSprite * onSprite, CCSprite * offSprite, CCSprite * thumbSprite, CCLabelTTF* onLabel, CCLabelTTF* offLabel);
 
     /** Creates a switch with a mask sprite, on/off sprites for on/off states, a thumb sprite and an on/off labels. */
     static CCControlSwitch* create(CCSprite *maskSprite, CCSprite * onSprite, CCSprite * offSprite, CCSprite * thumbSprite, CCLabelTTF* onLabel, CCLabelTTF* offLabel);

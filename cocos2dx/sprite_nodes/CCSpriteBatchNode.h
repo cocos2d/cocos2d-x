@@ -83,19 +83,6 @@ public:
 
     /** creates a CCSpriteBatchNode with a texture2d and capacity of children.
     The capacity will be increased in 33% in runtime if it run out of space.
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCSpriteBatchNode* batchNodeWithTexture(CCTexture2D* tex, unsigned int capacity = kDefaultSpriteBatchCapacity);
-
-    /** creates a CCSpriteBatchNode with a file image (.png, .jpeg, .pvr, etc) and capacity of children.
-    The capacity will be increased in 33% in runtime if it run out of space.
-    The file will be loaded using the TextureMgr.
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCSpriteBatchNode* batchNodeWithFile(const char* fileImage, unsigned int capacity = kDefaultSpriteBatchCapacity);
-
-    /** creates a CCSpriteBatchNode with a texture2d and capacity of children.
-    The capacity will be increased in 33% in runtime if it run out of space.
     */
     static CCSpriteBatchNode* createWithTexture(CCTexture2D* tex, unsigned int capacity);
     static CCSpriteBatchNode* createWithTexture(CCTexture2D* tex) {

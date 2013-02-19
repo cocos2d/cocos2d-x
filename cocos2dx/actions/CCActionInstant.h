@@ -68,11 +68,6 @@ public:
     virtual CCFiniteTimeAction * reverse(void);
     virtual CCObject* copyWithZone(CCZone *pZone);
 public:
-    //override static method
-    /** Allocates and initializes the action 
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCShow * action();
 
     /** Allocates and initializes the action */
     static CCShow * create();
@@ -93,11 +88,6 @@ public:
     virtual CCFiniteTimeAction * reverse(void);
     virtual CCObject* copyWithZone(CCZone *pZone);
 public:
-    //override static method
-    /** Allocates and initializes the action 
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCHide * action();
 
     /** Allocates and initializes the action */
     static CCHide * create();
@@ -114,11 +104,6 @@ public:
     virtual void update(float time);
     virtual CCObject* copyWithZone(CCZone *pZone);
 public:
-    //override static method
-    /** Allocates and initializes the action 
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCToggleVisibility * action();
 
     /** Allocates and initializes the action */
     static CCToggleVisibility * create();
@@ -135,11 +120,6 @@ public:
         :m_bFlipX(false)
     {}
     virtual ~CCFlipX(){}
-
-    /** create the action 
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCFlipX * actionWithFlipX(bool x);
 
     /** create the action */
     static CCFlipX * create(bool x);
@@ -166,11 +146,6 @@ public:
         :m_bFlipY(false)
     {}
     virtual ~CCFlipY(){}
-    
-    /** create the action 
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCFlipY * actionWithFlipY(bool y);
 
     /** create the action */
     static CCFlipY * create(bool y);
@@ -193,10 +168,7 @@ class CC_DLL CCPlace : public CCActionInstant //<NSCopying>
 public:
     CCPlace(){}
     virtual ~CCPlace(){}
-    /** creates a Place action with a position 
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCPlace * actionWithPosition(const CCPoint& pos);
+
     /** creates a Place action with a position */
     static CCPlace * create(const CCPoint& pos);
     /** Initializes a Place action with a position */
@@ -215,16 +187,11 @@ class CC_DLL CCCallFunc : public CCActionInstant //<NSCopying>
 public:
     CCCallFunc()
         : m_pSelectorTarget(NULL)
-        , m_pCallFunc(NULL)
 		, m_nScriptHandler(0)
+        , m_pCallFunc(NULL)
     {
     }
     virtual ~CCCallFunc();
-    /** creates the action with the callback
-    @deprecated: This interface will be deprecated sooner or later.
-    typedef void (CCObject::*SEL_CallFunc)();
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCCallFunc * actionWithTarget(CCObject* pSelectorTarget, SEL_CallFunc selector);
 
     /** creates the action with the callback 
 
@@ -292,12 +259,6 @@ public:
     }
 
     /** creates the action with the callback 
-    @deprecated: This interface will be deprecated sooner or later.
-    typedef void (CCObject::*SEL_CallFuncN)(CCNode*);
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCCallFuncN * actionWithTarget(CCObject* pSelectorTarget, SEL_CallFuncN selector);
-
-    /** creates the action with the callback 
 
     typedef void (CCObject::*SEL_CallFuncN)(CCNode*);
     */
@@ -329,11 +290,6 @@ public:
 		return id;
     }
 
-    /** creates the action with the callback and the data to pass as an argument 
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCCallFuncND * actionWithTarget(CCObject* pSelectorTarget, SEL_CallFuncND selector, void* d);
-
     /** creates the action with the callback and the data to pass as an argument */
     static CCCallFuncND * create(CCObject* pSelectorTarget, SEL_CallFuncND selector, void* d);
 
@@ -364,12 +320,6 @@ public:
 	    static const long id = cocos2d::getHashCodeByString(typeid(cocos2d::CCCallFunc).name());
 		return id;
     }
-
-    /** creates the action with the callback 
-    @deprecated: This interface will be deprecated sooner or later.
-    typedef void (CCObject::*SEL_CallFuncO)(CCObject*);
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCCallFuncO * actionWithTarget(CCObject* pSelectorTarget, SEL_CallFuncO selector, CCObject* pObject);
 
     /** creates the action with the callback 
 

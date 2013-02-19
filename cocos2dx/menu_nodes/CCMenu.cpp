@@ -59,26 +59,9 @@ enum
 //CCMenu
 //
 
-CCMenu* CCMenu::node()
-{
-    return CCMenu::create();
-}
-
 CCMenu* CCMenu::create()
 {
     return CCMenu::create(NULL, NULL);
-}
-
-CCMenu * CCMenu::menuWithItems(CCMenuItem* item, ...)
-{
-    va_list args;
-    va_start(args,item);
-    
-    CCMenu *pRet = CCMenu::createWithItems(item, args);
-    
-    va_end(args);
-    
-    return pRet;
 }
 
 CCMenu * CCMenu::create(CCMenuItem* item, ...)
@@ -89,13 +72,8 @@ CCMenu * CCMenu::create(CCMenuItem* item, ...)
     CCMenu *pRet = CCMenu::createWithItems(item, args);
     
     va_end(args);
-
+    
     return pRet;
-}
-
-CCMenu* CCMenu::menuWithArray(CCArray* pArrayOfItems)
-{
-    return CCMenu::createWithArray(pArrayOfItems);
 }
 
 CCMenu* CCMenu::createWithArray(CCArray* pArrayOfItems)
@@ -111,11 +89,6 @@ CCMenu* CCMenu::createWithArray(CCArray* pArrayOfItems)
     }
     
     return pRet;
-}
-
-CCMenu* CCMenu::menuWithItem(CCMenuItem* item)
-{
-    return CCMenu::createWithItem(item);
 }
 
 CCMenu* CCMenu::createWithItems(CCMenuItem* item, va_list args)
@@ -206,12 +179,29 @@ void CCMenu::onExit()
 {
     if (m_eState == kCCMenuStateTrackingTouch)
     {
-        m_pSelectedItem->unselected();
+        if (m_pSelectedItem)
+        {
+            m_pSelectedItem->unselected();
+            m_pSelectedItem = NULL;
+        }
+        
         m_eState = kCCMenuStateWaiting;
-        m_pSelectedItem = NULL;
     }
 
     CCLayer::onExit();
+}
+
+void CCMenu::removeChild(CCNode* child, bool cleanup)
+{
+    CCMenuItem *pMenuItem = dynamic_cast<CCMenuItem*>(child);
+    CCAssert(pMenuItem != NULL, "Menu only supports MenuItem objects as children");
+    
+    if (m_pSelectedItem == pMenuItem)
+    {
+        m_pSelectedItem = NULL;
+    }
+    
+    CCNode::removeChild(child, cleanup);
 }
 
 //Menu - Events
@@ -225,7 +215,7 @@ void CCMenu::setHandlerPriority(int newPriority)
 void CCMenu::registerWithTouchDispatcher()
 {
     CCDirector* pDirector = CCDirector::sharedDirector();
-    pDirector->getTouchDispatcher()->addTargetedDelegate(this, kCCMenuHandlerPriority, true);
+    pDirector->getTouchDispatcher()->addTargetedDelegate(this, this->getTouchPriority(), true);
 }
 
 bool CCMenu::ccTouchBegan(CCTouch* touch, CCEvent* event)
@@ -657,7 +647,7 @@ void CCMenu::setColor(const ccColor3B& var)
     }
 }
 
-ccColor3B CCMenu::getColor(void)
+const ccColor3B& CCMenu::getColor(void)
 {
     return m_tColor;
 }

@@ -28,7 +28,7 @@
 
 
 /** @def JSB_ASSERT_ON_FAIL
- Wheter or not to assert when the arguments or conversions are incorrect.
+ Whether or not to assert when the arguments or conversions are incorrect.
  It is recommened to turn it off in Release mode.
  */
 #ifndef JSB_ASSERT_ON_FAIL
@@ -39,42 +39,36 @@
 #if JSB_ASSERT_ON_FAIL
 #define JSB_PRECONDITION( condition, error_msg) do { NSCAssert( condition, [NSString stringWithUTF8String:error_msg] ); } while(0)
 #define JSB_PRECONDITION2( condition, context, ret_value, error_msg) do { NSCAssert( condition, [NSString stringWithUTF8String:error_msg] ); } while(0)
-#define JSB_PRECONDITION3( condition, context, ret_value, error_msg) do { NSCAssert( condition, [NSString stringWithUTF8String:error_msg] ); } while(0)
 #define ASSERT( condition, error_msg) do { NSCAssert( condition, [NSString stringWithUTF8String:error_msg] ); } while(0)
 
 #else
-#define JSB_PRECONDITION( condition, error_msg) do {							\
-if( ! (condition) ) {														\
-cocos2d::CCLog("jsb: ERROR in %s: %s\n", __FUNCTION__, error_msg);				\
-return JS_FALSE;														\
-}																			\
+#define JSB_PRECONDITION( condition, ...) do {							\
+	if( ! (condition) ) {														\
+        cocos2d::CCLog("jsb: ERROR: File %s: Line: %d, Function: %s", __FILE__, __LINE__, __FUNCTION__ );			\
+        cocos2d::CCLog(__VA_ARGS__);                                        \
+		JSContext* globalContext = ScriptingCore::getInstance()->getGlobalContext();	\
+		if( ! JS_IsExceptionPending( globalContext ) ) {						\
+			JS_ReportError( globalContext, __VA_ARGS__ );							\
+		}																		\
+		return JS_FALSE;														\
+	}																			\
 } while(0)
-#define ASSERT( condition, error_msg) do {							\
-if( ! (condition) ) {														\
-cocos2d::CCLog("jsb: ERROR in %s: %s\n", __FUNCTION__, error_msg);				\
-return false;														\
-}																			\
+#define JSB_PRECONDITION2( condition, context, ret_value, ...) do {             \
+    if( ! (condition) ) {														\
+        cocos2d::CCLog("jsb: ERROR: File %s: Line: %d, Function: %s", __FILE__, __LINE__, __FUNCTION__ );			\
+        cocos2d::CCLog(__VA_ARGS__);                                        \
+        if( ! JS_IsExceptionPending( context ) ) {							\
+            JS_ReportError( context, __VA_ARGS__ );								\
+        }																		\
+        return ret_value;														\
+    }                                                                           \
 } while(0)
-#define JSB_PRECONDITION2( condition, context, ret_value, error_msg) do {		\
-if( ! (condition) ) {														\
-cocos2d::CCLog("jsb: ERROR in %s: %s\n", __FUNCTION__, error_msg);				\
-JS_ReportPendingException( context );									\
-return ret_value;														\
-}																			\
-} while(0)
-#define JSB_PRECONDITION3( condition, context, ret_value, error_msg) do {		\
-if( ! (condition) ) {														\
-cocos2d::CCLog("jsb: ERROR in %s: %s\n", __FUNCTION__, error_msg);				\
-JS_ReportError( context, error_msg );									\
-return ret_value;														\
-}																			\
-} while(0)
-#define JSB_PRECONDITION( condition, error_msg) do {							\
-if( ! (condition) ) {														\
-cocos2d::CCLog("jsb: ERROR in %s: %s\n", __FUNCTION__, error_msg);				\
-return JS_FALSE;														\
-}																			\
-} while(0)
+#define ASSERT( condition, error_msg) do {										\
+	if( ! (condition) ) {														\
+		CCLOG("jsb: ERROR in %s: %s\n", __FUNCTION__, error_msg);				\
+		return false;															\
+	}																			\
+	} while(0)
 #endif
 
 
@@ -140,5 +134,31 @@ return JS_FALSE;														\
 #define JSB_INCLUDE_COCOSDENSHION 1
 #endif // JSB_INCLUDE_COCOSDENSHION
 
+/** @def JSB_ENABLE_DEBUGGER
+ Set this to 1 to enable the debugger
+ */
+#ifndef JSB_ENABLE_DEBUGGER
+#define JSB_ENABLE_DEBUGGER 0
+#endif // JSB_ENABLE_DEBUGGER
+
+#if JSB_ENABLE_DEBUGGER
+#define JSB_ENSURE_AUTOCOMPARTMENT(cx, obj) \
+JSAutoCompartment ac(cx, obj)
+#else
+#define JSB_ENSURE_AUTOCOMPARTMENT(cx, obj)
+#endif
+
+/**
+ * @def JSB_DEBUGGER_PORT
+ * The port number, where the client will be listening on
+ */
+#define JSB_DEBUGGER_PORT 1337
+
+/** @def JSB_INCLUDE_SYSTEM
+ Whether or not it should include bindings for system components like LocalStorage
+ */
+#ifndef JSB_INCLUDE_SYSTEM
+#define JSB_INCLUDE_SYSTEM 1
+#endif // JSB_INCLUDE_SYSTEM
 
 #endif // __JS_BINDINGS_CONFIG_H

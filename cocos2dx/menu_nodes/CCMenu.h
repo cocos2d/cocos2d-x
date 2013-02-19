@@ -69,28 +69,6 @@ public:
     {}
     virtual ~CCMenu(){}
 
-    /** creates an empty CCMenu 
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCMenu* node();
-
-    /** creates a CCMenu with it's items 
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCMenu* menuWithItems(CCMenuItem* item, ...);
-
-    /** creates a CCMenu with a NSArray of CCMenuItem objects 
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCMenu* menuWithArray(CCArray* pArrayOfItems);
-
-    /** creates a CCMenu with it's item, then use addChild() to add 
-      * other items. It is used for script, it can't init with undetermined
-      * number of variables.
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCMenu* menuWithItem(CCMenuItem* item);
-
     /** creates an empty CCMenu */
     static CCMenu* create();
 
@@ -147,6 +125,7 @@ public:
     virtual void addChild(CCNode * child, int zOrder);
     virtual void addChild(CCNode * child, int zOrder, int tag);
     virtual void registerWithTouchDispatcher();
+    virtual void removeChild(CCNode* child, bool cleanup);
 
     /**
     @brief For phone event handle functions

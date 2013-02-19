@@ -46,18 +46,18 @@ bool CCBAnimationManager::init()
 
 CCBAnimationManager::~CCBAnimationManager()
 {
-    CCDictElement *pElement = NULL;
-    CCDICT_FOREACH(mNodeSequences, pElement)
-    {
-        CCNode *node = (CCNode*)pElement->getIntKey();
-        node->release();
-    }
-    
-    CCDICT_FOREACH(mBaseValues, pElement)
-    {
-        CCNode *node = (CCNode*)pElement->getIntKey();
-        node->release();
-    }
+//     CCDictElement *pElement = NULL;
+//     CCDICT_FOREACH(mNodeSequences, pElement)
+//     {
+//         CCNode *node = (CCNode*)pElement->getIntKey();
+//         node->release();
+//     }
+//     
+//     CCDICT_FOREACH(mBaseValues, pElement)
+//     {
+//         CCNode *node = (CCNode*)pElement->getIntKey();
+//         node->release();
+//     }
     
     mNodeSequences->release();
     mBaseValues->release();
@@ -70,6 +70,7 @@ CCBAnimationManager::~CCBAnimationManager()
     CC_SAFE_RELEASE(mDocumentCallbackNames);
     CC_SAFE_RELEASE(mDocumentCallbackNodes);
 
+    CC_SAFE_RELEASE(mTarget);
 }
 
 CCArray* CCBAnimationManager::getSequences()
@@ -99,9 +100,7 @@ CCNode* CCBAnimationManager::getRootNode()
 
 void CCBAnimationManager::setRootNode(CCNode *pRootNode)
 {
-    CC_SAFE_RELEASE(mRootNode);
     mRootNode = pRootNode;
-    CC_SAFE_RETAIN(mRootNode);
 }
 
 void CCBAnimationManager::setDocumentControllerName(const std::string &name) {
@@ -177,7 +176,7 @@ const char* CCBAnimationManager::getRunningSequenceName()
     return mRunningSequence->getName();
 }
 
-CCSize CCBAnimationManager::getContainerSize(CCNode *pNode)
+const CCSize& CCBAnimationManager::getContainerSize(CCNode *pNode)
 {
     if (pNode)
     {
@@ -192,7 +191,7 @@ CCSize CCBAnimationManager::getContainerSize(CCNode *pNode)
 // refer to CCBReader::readNodeGraph() for data structure of pSeq
 void CCBAnimationManager::addNode(CCNode *pNode, CCDictionary *pSeq)
 {
-    pNode->retain();
+    // pNode->retain();
     
     mNodeSequences->setObject(pSeq, (intptr_t)pNode);
 }
@@ -204,7 +203,7 @@ void CCBAnimationManager::setBaseValue(CCObject *pValue, CCNode *pNode, const ch
     {
         props = CCDictionary::create();
         mBaseValues->setObject(props, (intptr_t)pNode);
-        pNode->retain();
+        // pNode->retain();
     }
     
     props->setObject(pValue, pPropName);
@@ -255,8 +254,8 @@ void CCBAnimationManager::moveAnimationsFromNode(CCNode* fromNode, CCNode* toNod
         mBaseValues->setObject(baseValue, (intptr_t)toNode);
         mBaseValues->removeObjectForKey((intptr_t)fromNode);
 
-        fromNode->release();
-        toNode->retain();
+//         fromNode->release();
+//         toNode->retain();
     }
     
     // Move seqs
@@ -265,8 +264,8 @@ void CCBAnimationManager::moveAnimationsFromNode(CCNode* fromNode, CCNode* toNod
         mNodeSequences->setObject(seqs, (intptr_t)toNode);
         mNodeSequences->removeObjectForKey((intptr_t)fromNode);
 
-        fromNode->release();
-        toNode->retain();
+//         fromNode->release();
+//         toNode->retain();
     }
 }
 
@@ -421,11 +420,12 @@ void CCBAnimationManager::setAnimatedProperty(const char *pPropName, CCNode *pNo
             else if (strcmp(pPropName, "color") == 0)
             {
                 ccColor3BWapper *color = (ccColor3BWapper*)pValue;
-                ((CCSprite*)pNode)->setColor(color->getColor());
+                (dynamic_cast<CCRGBAProtocol*>(pNode))->setColor(color->getColor());
             }
             else if (strcmp(pPropName, "visible") == 0)
             {
-                pNode->setVisible(NULL != pValue);
+                bool visible = ((CCBValue*)pValue)->getBoolValue();
+                pNode->setVisible(visible);
             }
             else
             {
@@ -457,9 +457,13 @@ void CCBAnimationManager::setFirstFrame(CCNode *pNode, CCBSequenceProperty *pSeq
 
 CCActionInterval* CCBAnimationManager::getEaseAction(CCActionInterval *pAction, int nEasingType, float fEasingOpt)
 {
-    if (nEasingType == kCCBKeyframeEasingLinear || nEasingType == kCCBKeyframeEasingInstant)
+    if (nEasingType == kCCBKeyframeEasingLinear)
     {
         return pAction;
+    }
+    else if (nEasingType == kCCBKeyframeEasingInstant)
+    {
+        return CCBEaseInstant::create(pAction);
     }
     else if (nEasingType == kCCBKeyframeEasingCubicIn)
     {
@@ -665,28 +669,32 @@ void CCBAnimationManager::setAnimationCompletedCallback(CCObject *target, SEL_Ca
 
 void CCBAnimationManager::sequenceCompleted()
 {
+    const char *runningSequenceName = mRunningSequence->getName();
+    int nextSeqId = mRunningSequence->getChainedSequenceId();
+    mRunningSequence = NULL;
     
-    if(lastCompletedSequenceName != mRunningSequence->getName()) {
-        lastCompletedSequenceName = mRunningSequence->getName();
+    if(lastCompletedSequenceName != runningSequenceName) {
+        lastCompletedSequenceName = runningSequenceName;
     }
     
     if (mDelegate)
     {
-        mDelegate->completedAnimationSequenceNamed(mRunningSequence->getName());
+        // There may be another runAnimation() call in this delegate method
+        // which will assign mRunningSequence
+        mDelegate->completedAnimationSequenceNamed(runningSequenceName);
     }
     
     if (mTarget && mAnimationCompleteCallbackFunc) {
         (mTarget->*mAnimationCompleteCallbackFunc)();
     }
     
-    int nextSeqId = mRunningSequence->getChainedSequenceId();
-    mRunningSequence = NULL;
-    
     if (nextSeqId != -1)
     {
         runAnimationsForSequenceIdTweenDuration(nextSeqId, 0);
     }
 }
+
+// Custom actions
 
 /************************************************************
  CCBSetSpriteFrame
@@ -812,5 +820,36 @@ void CCBRotateTo::update(float time)
     m_pTarget->setRotation(mStartAngle + (mDiffAngle * time))
     ;
 }
+
+/************************************************************
+ CCBEaseInstant
+ ************************************************************/
+CCBEaseInstant* CCBEaseInstant::create(CCActionInterval *pAction)
+{
+    CCBEaseInstant *pRet = new CCBEaseInstant();
+    if (pRet && pRet->initWithAction(pAction))
+    {
+        pRet->autorelease();
+    }
+    else
+    {
+        CC_SAFE_RELEASE_NULL(pRet);
+    }
+    
+    return pRet;
+}
+
+void CCBEaseInstant::update(float dt)
+{
+    if (dt < 0)
+    {
+        m_pInner->update(0);
+    }
+    else
+    {
+        m_pInner->update(1);
+    }
+}
+
 
 NS_CC_EXT_END

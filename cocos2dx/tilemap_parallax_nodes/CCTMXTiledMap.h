@@ -122,16 +122,6 @@ public:
     CCTMXTiledMap();
     virtual ~CCTMXTiledMap();
 
-    /** creates a TMX Tiled Map with a TMX file.
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCTMXTiledMap* tiledMapWithTMXFile(const char *tmxFile);
-
-    /** initializes a TMX Tiled Map with a TMX formatted XML string and a path to TMX resources 
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCTMXTiledMap* tiledMapWithXML(const char* tmxString, const char* resourcePath);
-
     /** creates a TMX Tiled Map with a TMX file.*/
     static CCTMXTiledMap* create(const char *tmxFile);
 

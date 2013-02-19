@@ -149,20 +149,20 @@ class CCTransitionFadeDown : public CCScene
 {
     static  CCTransitionFadeDown* create(float t, CCScene* scene);
 };
-/*
-class CCTransitionRadialCCW : public CCScene
+
+class CCTransitionProgressRadialCCW : public CCScene
 {
-    static CCTransitionRadialCCW* create(float t, CCScene* scene);
+    static CCTransitionProgressRadialCCW* create(float t, CCScene* scene);
 };
 
-class CCTransitionRadialCW : public CCScene
+class CCTransitionProgressRadialCW : public CCScene
 {
-    static CCTransitionRadialCW* create(float t, CCScene* scene);
+    static CCTransitionProgressRadialCW* create(float t, CCScene* scene);
 };
-*/
+
 class CCTransitionPageTurn : public CCScene
 {
-    CCActionInterval* actionWithSize(ccGridSize vector);
+    CCActionInterval* actionWithSize(CCSize vector);
 
     static CCTransitionPageTurn* create(float t,CCScene* scene,bool backwards);
 };

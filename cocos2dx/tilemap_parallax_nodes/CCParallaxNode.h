@@ -55,8 +55,7 @@ public:
     */
     CCParallaxNode();
     virtual ~CCParallaxNode();
-    //@deprecated: This interface will be deprecated sooner or later.
-    CC_DEPRECATED_ATTRIBUTE static CCParallaxNode * node();
+
     static CCParallaxNode * create();
     virtual void addChild(CCNode * child, unsigned int z, const CCPoint& parallaxRatio, const CCPoint& positionOffset);
     // super methods

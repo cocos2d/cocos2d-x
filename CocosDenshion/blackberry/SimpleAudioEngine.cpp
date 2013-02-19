@@ -34,6 +34,8 @@ THE SOFTWARE.
 #include <vorbis/vorbisfile.h>
 
 #include "SimpleAudioEngine.h"
+#include "cocos2d.h"
+USING_NS_CC;
 
 using namespace std;
 
@@ -257,9 +259,12 @@ namespace CocosDenshion
 	//
     void SimpleAudioEngine::preloadBackgroundMusic(const char* pszFilePath)
 	{
-		if (!s_isBackgroundInitialized || s_currentBackgroundStr != pszFilePath)
+		// Changing file path to full path
+    	std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
+
+		if (!s_isBackgroundInitialized || s_currentBackgroundStr != fullPath)
 		{
-			string path = pszFilePath;
+			string path = fullPath;
 
 			if (isOGGFile(path.data()))
 			{
@@ -285,17 +290,20 @@ namespace CocosDenshion
 			alSourcei(s_backgroundSource, AL_BUFFER, s_backgroundBuffer);
 			checkALError("preloadBackgroundMusic");
 
-			s_currentBackgroundStr = pszFilePath;
+			s_currentBackgroundStr = fullPath;
 		}
 
-		s_currentBackgroundStr 	  = pszFilePath;
+		s_currentBackgroundStr 	  = fullPath;
 		s_isBackgroundInitialized = true;
 	}
 
 	void SimpleAudioEngine::playBackgroundMusic(const char* pszFilePath, bool bLoop)
 	{
+		// Changing file path to full path
+    	std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
+
 		if (!s_isBackgroundInitialized)
-			preloadBackgroundMusic(pszFilePath);
+			preloadBackgroundMusic(fullPath.c_str());
 
 		alSourcei(s_backgroundSource, AL_LOOPING, bLoop ? AL_TRUE : AL_FALSE);
 		alSourcePlay(s_backgroundSource);
@@ -383,17 +391,20 @@ namespace CocosDenshion
 
 	unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop)
 	{
-		EffectsMap::iterator iter = s_effects.find(pszFilePath);
+		// Changing file path to full path
+    	std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
+
+		EffectsMap::iterator iter = s_effects.find(fullPath);
 
 		if (iter == s_effects.end())
 		{
-			preloadEffect(pszFilePath);
+			preloadEffect(fullPath.c_str());
 
 			// let's try again
-			iter = s_effects.find(pszFilePath);
+			iter = s_effects.find(fullPath);
 			if (iter == s_effects.end())
 			{
-				fprintf(stderr, "could not find play sound %s\n", pszFilePath);
+				fprintf(stderr, "could not find play sound %s\n", fullPath.c_str());
 				return -1;
 			}
 		}
@@ -415,7 +426,10 @@ namespace CocosDenshion
 
 	void SimpleAudioEngine::preloadEffect(const char* pszFilePath)
 	{
-		EffectsMap::iterator iter = s_effects.find(pszFilePath);
+		// Changing file path to full path
+    	std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
+
+		EffectsMap::iterator iter = s_effects.find(fullPath);
 
 		// check if we have this already
 		if (iter == s_effects.end())
@@ -423,7 +437,7 @@ namespace CocosDenshion
 			ALuint 		buffer;
 			ALuint 		source;
 			soundData  *data = new soundData;
-			string 	    path = pszFilePath;
+			string 	    path = fullPath;
 
 			checkALError("preloadEffect");
 
@@ -459,13 +473,16 @@ namespace CocosDenshion
 			data->buffer = buffer;
 			data->source = source;
 
-			s_effects.insert(EffectsMap::value_type(pszFilePath, data));
+			s_effects.insert(EffectsMap::value_type(fullPath, data));
 		}
 	}
 
 	void SimpleAudioEngine::unloadEffect(const char* pszFilePath)
 	{
-		EffectsMap::iterator iter = s_effects.find(pszFilePath);
+		// Changing file path to full path
+    	std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
+    	
+		EffectsMap::iterator iter = s_effects.find(fullPath);
 
 		if (iter != s_effects.end())
 	    {

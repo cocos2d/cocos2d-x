@@ -7,10 +7,10 @@ class CCTileMapAtlas : public CCAtlasNode
     // struct sImageTGA* getTGAInfo();
     // void setTGAInfo(struct sImageTGA* val);
 
-    void setTile(ccColor3B tile, ccGridSize position);
+    void setTile(ccColor3B tile, CCPoint position);
     void releaseMap();
 
-	ccColor3B tileAt(const ccGridSize & pos);
+	ccColor3B tileAt(const CCPoint & pos);
 
     static CCTileMapAtlas * create(const char *tile, const char *mapFile, int tileWidth, int tileHeight);
 };

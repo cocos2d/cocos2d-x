@@ -58,16 +58,6 @@ public:
     { 
         m_sString.clear(); 
     }
-    /** creates the CCLabelAtlas with a string, a char map file(the atlas), the width and height of each element and the starting char of the atlas 
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCLabelAtlas * labelWithString(const char *string, const char *charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap);
-    
-    /** creates the CCLabelAtlas with a string and a configuration file
-    @deprecated: This interface will be deprecated sooner or later.
-    @since v2.0
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCLabelAtlas* labelWithString(const char *string, const char *fntFile);
 
     /** creates the CCLabelAtlas with a string, a char map file(the atlas), the width and height of each element and the starting char of the atlas */
     static CCLabelAtlas * create(const char *string, const char *charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap);

@@ -38,10 +38,6 @@ NS_CC_BEGIN
 
 
 // CCTMXLayer - init & alloc & dealloc
-CCTMXLayer * CCTMXLayer::layerWithTilesetInfo(CCTMXTilesetInfo *tilesetInfo, CCTMXLayerInfo *layerInfo, CCTMXMapInfo *mapInfo)
-{
-    return CCTMXLayer::create(tilesetInfo, layerInfo, mapInfo);
-}
 
 CCTMXLayer * CCTMXLayer::create(CCTMXTilesetInfo *tilesetInfo, CCTMXLayerInfo *layerInfo, CCTMXMapInfo *mapInfo)
 {

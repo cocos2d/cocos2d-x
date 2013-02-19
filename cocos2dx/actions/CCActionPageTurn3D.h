@@ -49,12 +49,9 @@ public:
     virtual void update(float time);
 
 public:
-    /** create the action 
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCPageTurn3D* actionWithSize(const ccGridSize& gridSize, float time);
+
     /** create the action */
-    static CCPageTurn3D* create(const ccGridSize& gridSize, float time);
+    static CCPageTurn3D* create(float duration, const CCSize& gridSize);
 };
 
 // end of actions group

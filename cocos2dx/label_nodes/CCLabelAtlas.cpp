@@ -41,10 +41,6 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 //CCLabelAtlas - Creation & Init
-CCLabelAtlas* CCLabelAtlas::labelWithString(const char *string, const char *charMapFile, unsigned int itemWidth, int unsigned itemHeight, unsigned int startCharMap)
-{
-    return CCLabelAtlas::create(string, charMapFile, itemWidth, itemHeight, startCharMap);
-}
 
 CCLabelAtlas* CCLabelAtlas::create(const char *string, const char *charMapFile, unsigned int itemWidth, int unsigned itemHeight, unsigned int startCharMap)
 {
@@ -70,11 +66,6 @@ bool CCLabelAtlas::initWithString(const char *string, const char *charMapFile, u
     return false;
 }
 
-CCLabelAtlas* CCLabelAtlas::labelWithString(const char *string, const char *fntFile)
-{
-    return CCLabelAtlas::create(string, fntFile);
-}
-
 CCLabelAtlas* CCLabelAtlas::create(const char *string, const char *fntFile)
 {    
     CCLabelAtlas *ret = new CCLabelAtlas();
@@ -95,7 +86,7 @@ CCLabelAtlas* CCLabelAtlas::create(const char *string, const char *fntFile)
 
 bool CCLabelAtlas::initWithString(const char *theString, const char *fntFile)
 {
-  std::string pathStr = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(fntFile);
+  std::string pathStr = CCFileUtils::sharedFileUtils()->fullPathForFilename(fntFile);
   std::string relPathStr = pathStr.substr(0, pathStr.find_last_of("/"))+"/";
   CCDictionary *dict = CCDictionary::createWithContentsOfFile(pathStr.c_str());
   
@@ -207,7 +198,7 @@ void CCLabelAtlas::draw()
 {
     CCAtlasNode::draw();
 
-    CCSize s = this->getContentSize();
+    const CCSize& s = this->getContentSize();
     CCPoint vertices[4]={
         ccp(0,0),ccp(s.width,0),
         ccp(s.width,s.height),ccp(0,s.height),

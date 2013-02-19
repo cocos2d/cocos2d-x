@@ -28,7 +28,7 @@ JSBool jsval_to_opaque( JSContext *cx, jsval vp, void **r)
 #else
 	assert( sizeof(int)==4);
 	int32_t ret;
-	if( ! JS_ValueToInt32(cx, vp, &ret ) )
+	if( ! jsval_to_int32(cx, vp, &ret ) )
 	  return JS_FALSE;
 #endif
 	*r = (void*)ret;
@@ -43,7 +43,7 @@ JSBool jsval_to_int( JSContext *cx, jsval vp, int *ret )
 	long *tmp = (long*)ret;
 	*tmp = 0;
 #endif
-	return JS_ValueToInt32(cx, vp, (int32_t*)ret);
+	return jsval_to_int32(cx, vp, (int32_t*)ret);
 }
 
 // XXX: sizeof(long) == 8 in 64 bits on OS X... apparently on Windows it is 32 bits (???)
@@ -130,7 +130,7 @@ JSBool jsval_to_c_class( JSContext *cx, jsval vp, void **out_native, struct jsb_
 {
 	JSObject *jsobj;
 	JSBool ok = JS_ValueToObject(cx, vp, &jsobj);
-	JSB_PRECONDITION3(ok, cx, JS_FALSE, "Error converting jsval to object");
+	JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error converting jsval to object");
 	
 	struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsobj);
 	*out_native = proxy->handle;
@@ -147,7 +147,7 @@ JSBool jsval_to_uint( JSContext *cx, jsval vp, unsigned int *ret )
 	long *tmp = (long*)ret;
 	*tmp = 0;
 #endif
-	return JS_ValueToInt32(cx, vp, (int32_t*)ret);
+	return jsval_to_int32(cx, vp, (int32_t*)ret);
 }
 
 jsval int_to_jsval( JSContext *cx, int number )
@@ -192,3 +192,33 @@ jsval longlong_to_jsval( JSContext *cx, long long number )
 	return OBJECT_TO_JSVAL(typedArray);
 #endif
 }
+
+JSBool jsval_to_charptr( JSContext *cx, jsval vp, const char **ret )
+{
+    JSString *jsstr = JS_ValueToString( cx, vp );
+    JSB_PRECONDITION2( jsstr, cx, JS_FALSE, "invalid string" );
+
+    // root it
+    vp = STRING_TO_JSVAL(jsstr);
+
+    char *ptr = JS_EncodeString(cx, jsstr);
+
+    JSB_PRECONDITION2(ptr, cx, JS_FALSE, "Error encoding string");
+
+    // XXX: It is converted to CCString and then back to char* to autorelease the created object.
+    CCString *tmp = CCString::create(ptr);
+
+    JSB_PRECONDITION2( tmp, cx, JS_FALSE, "Error creating string from UTF8");
+
+    *ret = tmp->getCString();
+    JS_free( cx, ptr );
+
+    return JS_TRUE;
+}
+
+jsval charptr_to_jsval( JSContext *cx, const char *str)
+{
+    JSString *ret_obj = JS_NewStringCopyZ(cx, str);
+    return STRING_TO_JSVAL(ret_obj);
+}
+

@@ -77,10 +77,6 @@ public:
     virtual CCActionInterval* reverse(void);
 
 public:
-    /** creates the action 
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCActionInterval* actionWithDuration(float d);
 
     /** creates the action */
     static CCActionInterval* create(float d);
@@ -112,25 +108,13 @@ public:
     virtual CCActionInterval* reverse(void);
 
 public:
-    /** helper constructor to create an array of sequenceable actions 
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCFiniteTimeAction* actions(CCFiniteTimeAction *pAction1, ...);
-    /** helper constructor to create an array of sequenceable actions given an array 
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCFiniteTimeAction* actionWithArray(CCArray *arrayOfActions);
-    /** creates the action 
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCSequence* actionOneTwo(CCFiniteTimeAction *pActionOne, CCFiniteTimeAction *pActionTwo);
 
     /** helper constructor to create an array of sequenceable actions */
-    static CCFiniteTimeAction* create(CCFiniteTimeAction *pAction1, ...);
+    static CCSequence* create(CCFiniteTimeAction *pAction1, ...);
     /** helper constructor to create an array of sequenceable actions given an array */
-    static CCFiniteTimeAction* create(CCArray *arrayOfActions);
+    static CCSequence* create(CCArray *arrayOfActions);
     /** helper constructor to create an array of sequence-able actions */
-    static CCFiniteTimeAction* create(CCFiniteTimeAction *pAction1, va_list args);
+    static CCSequence* createWithVariableList(CCFiniteTimeAction *pAction1, va_list args);
     /** creates the action */
     static CCSequence* createWithTwoActions(CCFiniteTimeAction *pActionOne, CCFiniteTimeAction *pActionTwo);
 
@@ -174,10 +158,6 @@ public:
     }
 
 public:
-    /** creates a CCRepeat action. Times is an unsigned integer between 1 and pow(2,30) 
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCRepeat* actionWithAction(CCFiniteTimeAction *pAction, unsigned int times);
 
     /** creates a CCRepeat action. Times is an unsigned integer between 1 and pow(2,30) */
     static CCRepeat* create(CCFiniteTimeAction *pAction, unsigned int times);
@@ -226,10 +206,7 @@ public:
     }
 
 public:
-    /** creates the action 
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCRepeatForever* actionWithAction(CCActionInterval *pAction);
+
     /** creates the action */
     static CCRepeatForever* create(CCActionInterval *pAction);
 protected:
@@ -254,29 +231,15 @@ public:
     virtual CCActionInterval* reverse(void);
 
 public:
-    /** helper constructor to create an array of spawned actions 
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCFiniteTimeAction* actions(CCFiniteTimeAction *pAction1, ...);
-
-    /** helper constructor to create an array of spawned actions given an array 
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCFiniteTimeAction* actionWithArray(CCArray *arrayOfActions);
-
-    /** creates the Spawn action 
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCSpawn* actionOneTwo(CCFiniteTimeAction *pAction1, CCFiniteTimeAction *pAction2);
 
     /** helper constructor to create an array of spawned actions */
-    static CCFiniteTimeAction* create(CCFiniteTimeAction *pAction1, ...);
+    static CCSpawn* create(CCFiniteTimeAction *pAction1, ...);
     
     /** helper constructor to create an array of spawned actions */
-    static CCFiniteTimeAction* create(CCFiniteTimeAction *pAction1, va_list args);
+    static CCSpawn* createWithVariableList(CCFiniteTimeAction *pAction1, va_list args);
 
     /** helper constructor to create an array of spawned actions given an array */
-    static CCFiniteTimeAction* create(CCArray *arrayOfActions);
+    static CCSpawn* create(CCArray *arrayOfActions);
 
     /** creates the Spawn action */
     static CCSpawn* createWithTwoActions(CCFiniteTimeAction *pAction1, CCFiniteTimeAction *pAction2);
@@ -293,10 +256,6 @@ protected:
 class CC_DLL CCRotateTo : public CCActionInterval
 {
 public:
-    /** creates the action
-     @deprecated: This interface will be deprecated sooner or later.
-     */
-    CC_DEPRECATED_ATTRIBUTE static CCRotateTo* actionWithDuration(float fDuration, float fDeltaAngle);
     /** creates the action */
     static CCRotateTo* create(float fDuration, float fDeltaAngle);
     /** initializes the action */
@@ -325,10 +284,6 @@ protected:
 class CC_DLL CCRotateBy : public CCActionInterval
 {
 public:
-    /** creates the action
-     @deprecated: This interface will be deprecated sooner or later.
-     */
-    CC_DEPRECATED_ATTRIBUTE static CCRotateBy* actionWithDuration(float fDuration, float fDeltaAngle);
     /** creates the action */
     static CCRotateBy* create(float fDuration, float fDeltaAngle);
     /** initializes the action */
@@ -349,52 +304,51 @@ protected:
     float m_fStartAngleY;
 };
 
-/** @brief Moves a CCNode object to the position x,y. x and y are absolute coordinates by modifying it's position attribute.
-*/
-class CC_DLL CCMoveTo : public CCActionInterval
-{
-public:
-    /** initializes the action */
-    bool initWithDuration(float duration, const CCPoint& position);
-
-    virtual CCObject* copyWithZone(CCZone* pZone);
-    virtual void startWithTarget(CCNode *pTarget);
-    virtual void update(float time);
-
-public:
-    /** creates the action 
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCMoveTo* actionWithDuration(float duration, const CCPoint& position);
-    /** creates the action */
-    static CCMoveTo* create(float duration, const CCPoint& position);
-protected:
-    CCPoint m_endPosition;
-    CCPoint m_startPosition;
-    CCPoint m_delta;
-};
-
-/** @brief Moves a CCNode object x,y pixels by modifying it's position attribute.
+/**  Moves a CCNode object x,y pixels by modifying it's position attribute.
  x and y are relative to the position of the object.
- Duration is is seconds.
-*/ 
-class CC_DLL CCMoveBy : public CCMoveTo
+ Several CCMoveBy actions can be concurrently called, and the resulting
+ movement will be the sum of individual movements.
+ @since v2.1beta2-custom
+ */
+class CC_DLL CCMoveBy : public CCActionInterval
 {
 public:
     /** initializes the action */
-    bool initWithDuration(float duration, const CCPoint& position);
+    bool initWithDuration(float duration, const CCPoint& deltaPosition);
 
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void startWithTarget(CCNode *pTarget);
     virtual CCActionInterval* reverse(void);
+    virtual void update(float time);
 
 public:
-    /** creates the action 
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCMoveBy* actionWithDuration(float duration, const CCPoint& position);
     /** creates the action */
-    static CCMoveBy* create(float duration, const CCPoint& position);
+    static CCMoveBy* create(float duration, const CCPoint& deltaPosition);
+protected:
+    CCPoint m_positionDelta;
+    CCPoint m_startPosition;
+    CCPoint m_previousPosition;
+};
+
+/** Moves a CCNode object to the position x,y. x and y are absolute coordinates by modifying it's position attribute.
+ Several CCMoveTo actions can be concurrently called, and the resulting
+ movement will be the sum of individual movements.
+ @since v2.1beta2-custom
+ */
+class CC_DLL CCMoveTo : public CCMoveBy
+{
+public:
+    /** initializes the action */
+    bool initWithDuration(float duration, const CCPoint& position);
+
+    virtual CCObject* copyWithZone(CCZone* pZone);
+    virtual void startWithTarget(CCNode *pTarget);
+
+public:
+    /** creates the action */
+    static CCMoveTo* create(float duration, const CCPoint& position);
+protected:
+    CCPoint m_endPosition;
 };
 
 /** Skews a CCNode object to given angles by modifying it's skewX and skewY attributes
@@ -410,10 +364,6 @@ public:
     virtual void update(float time);
 
 public:
-    /** creates the action 
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCSkewTo* actionWithDuration(float t, float sx, float sy);
 
     /** creates the action */
     static CCSkewTo* create(float t, float sx, float sy);
@@ -439,10 +389,7 @@ public:
     virtual CCActionInterval* reverse(void);
 
 public:
-    /** creates the action 
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCSkewBy* actionWithDuration(float t, float deltaSkewX, float deltaSkewY);
+
     /** creates the action */
     static CCSkewBy* create(float t, float deltaSkewX, float deltaSkewY);
 };
@@ -461,17 +408,14 @@ public:
     virtual CCActionInterval* reverse(void);
 
 public:
-    /** creates the action 
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCJumpBy* actionWithDuration(float duration, const CCPoint& position, float height, unsigned int jumps);
     /** creates the action */
     static CCJumpBy* create(float duration, const CCPoint& position, float height, unsigned int jumps);
 protected:
-    CCPoint            m_startPosition;
-    CCPoint            m_delta;
-    float            m_height;
+    CCPoint         m_startPosition;
+    CCPoint         m_delta;
+    float           m_height;
     unsigned int    m_nJumps;
+    CCPoint         m_previousPos;
 };
 
 /** @brief Moves a CCNode object to a parabolic position simulating a jump movement by modifying it's position attribute.
@@ -483,10 +427,6 @@ public:
     virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
-    /** creates the action 
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCJumpTo* actionWithDuration(float duration, const CCPoint& position, float height, int jumps);
     /** creates the action */
     static CCJumpTo* create(float duration, const CCPoint& position, float height, int jumps);
 };
@@ -516,15 +456,12 @@ public:
     virtual CCActionInterval* reverse(void);
 
 public:
-    /** creates the action with a duration and a bezier configuration 
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCBezierBy* actionWithDuration(float t, const ccBezierConfig& c);
     /** creates the action with a duration and a bezier configuration */
     static CCBezierBy* create(float t, const ccBezierConfig& c);
 protected:
     ccBezierConfig m_sConfig;
     CCPoint m_startPosition;
+    CCPoint m_previousPosition;
 };
 
 /** @brief An action that moves the target with a cubic Bezier curve to a destination point.
@@ -537,10 +474,6 @@ public:
     virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
-    /** creates the action with a duration and a bezier configuration 
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCBezierTo* actionWithDuration(float t, const ccBezierConfig& c);
 
     /** creates the action with a duration and a bezier configuration */
     static CCBezierTo* create(float t, const ccBezierConfig& c);
@@ -567,15 +500,6 @@ public:
     virtual void update(float time);
 
 public:
-    /** creates the action with the same scale factor for X and Y 
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCScaleTo* actionWithDuration(float duration, float s);
-
-    /** creates the action with and X factor and a Y factor 
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCScaleTo* actionWithDuration(float duration, float sx, float sy);
 
     /** creates the action with the same scale factor for X and Y */
     static CCScaleTo* create(float duration, float s);
@@ -603,15 +527,6 @@ public:
     virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
-    /** creates the action with the same scale factor for X and Y 
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCScaleBy* actionWithDuration(float duration, float s);
-
-    /** creates the action with and X factor and a Y factor 
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCScaleBy* actionWithDuration(float duration, float sx, float sy);
 
     /** creates the action with the same scale factor for X and Y */
     static CCScaleBy* create(float duration, float s);
@@ -633,10 +548,7 @@ public:
     virtual CCActionInterval* reverse(void);
 
 public:
-    /** creates the action 
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCBlink* actionWithDuration(float duration, unsigned int uBlinks);
+
     /** creates the action */
     static CCBlink* create(float duration, unsigned int uBlinks);
     
@@ -659,10 +571,6 @@ public:
     virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
-    /** creates the action
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCFadeIn* actionWithDuration(float d);
     /** creates the action */
     static CCFadeIn* create(float d);
 };
@@ -678,10 +586,6 @@ public:
     virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
-    /** creates the action 
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCFadeOut* actionWithDuration(float d);
 
     /** creates the action */
     static CCFadeOut* create(float d);
@@ -701,10 +605,6 @@ public:
     virtual void update(float time);
 
 public:
-    /** creates an action with duration and opacity
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCFadeTo* actionWithDuration(float duration, GLubyte opacity);
     /** creates an action with duration and opacity */
     static CCFadeTo* create(float duration, GLubyte opacity);
 protected:
@@ -727,10 +627,6 @@ public:
     virtual void update(float time);
 
 public:
-    /** creates an action with duration and color 
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCTintTo* actionWithDuration(float duration, GLubyte red, GLubyte green, GLubyte blue);
     /** creates an action with duration and color */
     static CCTintTo* create(float duration, GLubyte red, GLubyte green, GLubyte blue);
 protected:
@@ -753,10 +649,6 @@ public:
     virtual CCActionInterval* reverse(void);
 
 public:
-    /** creates an action with duration and color 
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCTintBy* actionWithDuration(float duration, GLshort deltaRed, GLshort deltaGreen, GLshort deltaBlue);
     /** creates an action with duration and color */
     static CCTintBy* create(float duration, GLshort deltaRed, GLshort deltaGreen, GLshort deltaBlue);
 protected:
@@ -779,10 +671,6 @@ public:
     virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
-    /** creates the action 
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCDelayTime* actionWithDuration(float d);
 
     /** creates the action */
     static CCDelayTime* create(float d);
@@ -811,10 +699,6 @@ public:
     virtual CCActionInterval* reverse(void);
 
 public:
-    /** creates the action 
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCReverseTime* actionWithAction(CCFiniteTimeAction *pAction);
     /** creates the action */
     static CCReverseTime* create(CCFiniteTimeAction *pAction);
 protected:
@@ -840,10 +724,6 @@ public:
     virtual CCActionInterval* reverse(void);
 
 public:
-    /** creates the action with an Animation and will restore the original frame when the animation is over 
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCAnimate* actionWithAnimation(CCAnimation *pAnimation);
     /** creates the action with an Animation and will restore the original frame when the animation is over */
     static CCAnimate* create(CCAnimation *pAnimation);
     CC_SYNTHESIZE_RETAIN(CCAnimation*, m_pAnimation, Animation)
@@ -862,10 +742,7 @@ class CC_DLL CCTargetedAction : public CCActionInterval
 public:
     CCTargetedAction();
     virtual ~CCTargetedAction();
-    /** Create an action with the specified action and forced target 
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCTargetedAction* actionWithTarget(CCNode* pTarget, CCFiniteTimeAction* pAction);
+
     /** Create an action with the specified action and forced target */
     static CCTargetedAction* create(CCNode* pTarget, CCFiniteTimeAction* pAction);
 

@@ -50,11 +50,6 @@ CCControlHuePicker::~CCControlHuePicker()
     CC_SAFE_RELEASE(m_slider);
 }
 
-CCControlHuePicker* CCControlHuePicker::pickerWithTargetAndPos(CCNode* target, CCPoint pos)
-{
-    return CCControlHuePicker::create(target, pos);
-}
-
 CCControlHuePicker* CCControlHuePicker::create(CCNode* target, CCPoint pos)
 {
     CCControlHuePicker *pRet = new CCControlHuePicker();

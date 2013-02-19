@@ -11,8 +11,8 @@ class CCPointArray : public CCNode
     CCPointArray* reverse();
     void reverseInline();
     CCObject* copyWithZone(CCZone *zone);
-    CCArray* getControlPoints();
-    void setControlPoints(CCArray *controlPoints);
+    const std::vector<CCPoint*>* getControlPoints();
+    void setControlPoints(std::vector<CCPoint*> *controlPoints);
 
 	static CCPointArray* create(unsigned int capacity);
 };

@@ -35,7 +35,7 @@ NS_CC_BEGIN
  * @{
  */
 
-class CC_DLL CCPoint : public CCObject
+class CC_DLL CCPoint
 {
 public:
     float x;
@@ -47,16 +47,10 @@ public:
     CCPoint(const CCPoint& other);
     CCPoint& operator= (const CCPoint& other);
     void setPoint(float x, float y);
-    virtual CCObject* copyWithZone(CCZone* pZone);
     bool equals(const CCPoint& target) const;
-
-public:
-    /** @deprecated use CCPoint::equals(const CCPoint&) instead, like p1.equals(p2)
-     */
-    CC_DEPRECATED_ATTRIBUTE static bool CCPointEqualToPoint(const CCPoint& point1, const CCPoint& point2);
 };
 
-class CC_DLL CCSize : public CCObject
+class CC_DLL CCSize
 {
 public:
     float width;
@@ -68,15 +62,10 @@ public:
     CCSize(const CCSize& other);
     CCSize& operator= (const CCSize& other);
     void setSize(float width, float height);
-    virtual CCObject* copyWithZone(CCZone* pZone);
     bool equals(const CCSize& target) const;
-    
-public:
-    /** @deprecated use CCSize::equals(const CCSize&) instead, like size1.equals(size2) */
-    CC_DEPRECATED_ATTRIBUTE static bool CCSizeEqualToSize(const CCSize& size1, const CCSize& size2);
 };
 
-class CC_DLL CCRect : public CCObject
+class CC_DLL CCRect
 {
 public:
     CCPoint origin;
@@ -88,7 +77,6 @@ public:
     CCRect(const CCRect& other);
     CCRect& operator= (const CCRect& other); 
     void setRect(float x, float y, float width, float height);
-    virtual CCObject* copyWithZone(CCZone* pZone);
     float getMinX() const; /// return the leftmost x-value of current rect
     float getMidX() const; /// return the midpoint x-value of current rect
     float getMaxX() const; /// return the rightmost x-value of current rect
@@ -98,14 +86,6 @@ public:
     bool equals(const CCRect& rect) const;   
     bool containsPoint(const CCPoint& point) const;
     bool intersectsRect(const CCRect& rect) const;
-    
-public:
-    /** @deprecated use CCRect::equals(const CCRect&) instead, like r1.equals(r2) */
-    CC_DEPRECATED_ATTRIBUTE static bool CCRectEqualToRect(const CCRect& rect1, const CCRect& rect2);
-    /** @deprecated use CCRect::containsPoint(const CCPoint&) instead, like rect.containsPoint(point) */
-    CC_DEPRECATED_ATTRIBUTE static bool CCRectContainsPoint(const CCRect& rect, const CCPoint& point);
-    /** @deprecated use CCRect::intersectsRect(const CCRect&) instead, like r1.intersectsRect(r2) */
-    CC_DEPRECATED_ATTRIBUTE static bool CCRectIntersectsRect(const CCRect& rectA, const CCRect& rectB);
 };
 
 

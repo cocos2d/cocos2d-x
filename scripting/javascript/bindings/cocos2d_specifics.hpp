@@ -85,8 +85,8 @@ void register_cocos2dx_js_extensions(JSContext* cx, JSObject* obj);
 
 class JSCallbackWrapper: public CCObject {
 public:
-    JSCallbackWrapper() : jsCallback(JSVAL_VOID), jsThisObj(JSVAL_VOID), extraData(JSVAL_VOID) {}
-    virtual ~JSCallbackWrapper(void) {}
+    JSCallbackWrapper();
+    virtual ~JSCallbackWrapper();
     void setJSCallbackFunc(jsval obj);
     void setJSCallbackThis(jsval thisObj);
     void setJSExtraData(jsval data);
@@ -145,7 +145,10 @@ public:
     static CCArray * getTargetForSchedule(jsval sched);
     static void setTargetForNativeNode(CCNode *pNode, JSScheduleWrapper *target);
     static CCArray * getTargetForNativeNode(CCNode *pNode);
+	// Remove all targets by native node from hash table(_schedFunc_target_ht and _schedTarget_native_ht).	
     static void removeAllTargetsForNatiaveNode(CCNode* pNode);
+	// Remove the target by native node and the wrapper for native schedule.
+    static void removeTargetForNativeNode(CCNode* pNode, JSScheduleWrapper* target);
     static void dump();
 
     void pause();
@@ -158,74 +161,40 @@ protected:
 };
 
 
-class JSTouchDelegate: public CCTouchDelegate, public CCNode {
-    public:
-        void setJSObject(JSObject *obj);
-        void registerStandardDelegate();
-        void registerTargettedDelegate(int priority, bool swallowsTouches);
-    
-    bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent) {
-        CC_UNUSED_PARAM(pTouch); 
-        CC_UNUSED_PARAM(pEvent); 
-        jsval retval; 
-        ScriptingCore::getInstance()->executeCustomTouchEvent(CCTOUCHBEGAN, 
-                                                        pTouch, _mObj, retval);
-        if(JSVAL_IS_BOOLEAN(retval)) {
-            return JSVAL_TO_BOOLEAN(retval);
-        } return false;
-    };
-    // optional
-    
-    void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent) {
-        CC_UNUSED_PARAM(pTouch); 
-        CC_UNUSED_PARAM(pEvent);
-        //jsval retval;
-        ScriptingCore::getInstance()->executeCustomTouchEvent(CCTOUCHMOVED, 
-                                                              pTouch, _mObj);
-    }
-    
-    void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent) {
-        CC_UNUSED_PARAM(pTouch); 
-        CC_UNUSED_PARAM(pEvent);
-        ScriptingCore::getInstance()->executeCustomTouchEvent(CCTOUCHENDED, 
-                                                              pTouch, _mObj);
-    }
-    
-    void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent) {
-        CC_UNUSED_PARAM(pTouch); 
-        CC_UNUSED_PARAM(pEvent);
-        ScriptingCore::getInstance()->executeCustomTouchEvent(CCTOUCHCANCELLED, 
-                                                              pTouch, _mObj);
-    }
+class JSTouchDelegate: public CCObject, public CCTouchDelegate
+{
+public:
+	// Set the touch delegate to map by using the key (pJSObj).
+    static void setDelegateForJSObject(JSObject* pJSObj, JSTouchDelegate* pDelegate);
+    // Get the touch delegate by the key (pJSObj).
+	static JSTouchDelegate* getDelegateForJSObject(JSObject* pJSObj);
+	// Remove the delegate by the key (pJSObj).
+    static void removeDelegateForJSObject(JSObject* pJSObj);
+
+    void setJSObject(JSObject *obj);
+    void registerStandardDelegate();
+    void registerTargettedDelegate(int priority, bool swallowsTouches);
+	// unregister touch delegate.
+	// Normally, developer should invoke cc.unregisterTouchDelegate() in when the scene exits.
+	// So this function need to be binded.
+    void unregisterTouchDelegate();
+
+    bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
+    void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
+    void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
+    void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent);
     
     // optional
-    void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent) {
-        CC_UNUSED_PARAM(pTouches); 
-        CC_UNUSED_PARAM(pEvent);
-        ScriptingCore::getInstance()->executeCustomTouchesEvent(CCTOUCHBEGAN, 
-                                                              pTouches, _mObj);
-    }
-    
-    void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent) {
-        CC_UNUSED_PARAM(pTouches); 
-        CC_UNUSED_PARAM(pEvent);
-        ScriptingCore::getInstance()->executeCustomTouchesEvent(CCTOUCHMOVED, 
-                                                                pTouches, _mObj);        
-    }
-    void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent) {
-        CC_UNUSED_PARAM(pTouches); 
-        CC_UNUSED_PARAM(pEvent);
-        ScriptingCore::getInstance()->executeCustomTouchesEvent(CCTOUCHENDED, 
-                                                                pTouches, _mObj);
-    }
-    void ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent) {
-        CC_UNUSED_PARAM(pTouches); 
-        CC_UNUSED_PARAM(pEvent);
-        ScriptingCore::getInstance()->executeCustomTouchesEvent(CCTOUCHCANCELLED, 
-                                                                pTouches, _mObj);
-    }
-    private:
-        JSObject *_mObj;    
+    void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
+    void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent);
+    void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent);
+    void ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent);
+
+private:
+    JSObject *_mObj;
+    typedef std::map<JSObject*, JSTouchDelegate*> TouchDelegateMap;
+    typedef std::pair<JSObject*, JSTouchDelegate*> TouchDelegatePair;
+    static TouchDelegateMap sTouchDelegateMap;
 };
 
 

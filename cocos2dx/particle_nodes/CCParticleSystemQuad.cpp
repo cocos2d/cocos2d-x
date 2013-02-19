@@ -103,10 +103,6 @@ CCParticleSystemQuad::~CCParticleSystemQuad()
 }
 
 // implementation CCParticleSystemQuad
-CCParticleSystemQuad * CCParticleSystemQuad::particleWithFile(const char *plistFile)
-{
-    return CCParticleSystemQuad::create(plistFile);
-}
 
 CCParticleSystemQuad * CCParticleSystemQuad::create(const char *plistFile)
 {
@@ -210,7 +206,7 @@ void CCParticleSystemQuad::setTextureWithRect(CCTexture2D *texture, const CCRect
 }
 void CCParticleSystemQuad::setTexture(CCTexture2D* texture)
 {
-    CCSize s = texture->getContentSize();
+    const CCSize& s = texture->getContentSize();
     this->setTextureWithRect(texture, CCRectMake(0, 0, s.width, s.height));
 }
 void CCParticleSystemQuad::setDisplayFrame(CCSpriteFrame *spriteFrame)
@@ -591,11 +587,6 @@ void CCParticleSystemQuad::setBatchNode(CCParticleBatchNode * batchNode)
 #endif
         }
     }
-}
-
-CCParticleSystemQuad * CCParticleSystemQuad::node()
-{
-    return CCParticleSystemQuad::create();
 }
 
 CCParticleSystemQuad * CCParticleSystemQuad::create() {

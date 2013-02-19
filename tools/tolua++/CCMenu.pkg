@@ -16,8 +16,8 @@ class CCMenu : public CCLayer
     void alignItemsVerticallyWithPadding(float padding);
     void alignItemsHorizontally();
     void alignItemsHorizontallyWithPadding(float padding);
-    void alignItemsInColumns(unsigned int columns, va_list args);
-    void alignItemsInRows(unsigned int rows, va_list args);
+    // void alignItemsInColumns(unsigned int columns, va_list args);
+    // void alignItemsInRows(unsigned int rows, va_list args);
 
 	setHandlerPriority(int newPriority);
 

@@ -12,6 +12,18 @@ Developers:
     Rolando Abarca
         Javascript Binding and testjs
 
+    Victor K(fnz)
+        fix memory leak of CCTextureCache::addImageAsync() on iOS
+
+    tks2shimizu
+        add CCFloat, CCDouble and CCBool
+
+    chenium
+        fix a bug that CCRenderTexture can not work when coming to foreground on Android
+
+    9re(Taro Kobayashi)
+        add Japanese language support
+
     mingulov
         improve the speed of accessing to files from apk
 
@@ -36,6 +48,9 @@ Developers:
     edbartley
          update MSVS and MAC projects to use project-relative path
          CCControl* should not respond to touches if the control is not visible
+         Some improvements for CCScrollView and CCTableView.
+         Touch priority can't be set to the value specified by a call to CCMenu::setTouchPriority(int).
+         CCTableView crashes if a CCTableViewDelegate is not provided.
 
     Weeds 
          use fontconfig to enhance font rendering on linux
@@ -115,7 +130,7 @@ Developers:
     Carlos Sessa
 	implement the accelerometer module for Android port
 
-    JianHua Chen (Dumganhar)
+    James Chen(dumganhar)
         author of Bada port
 
     Erawppa
@@ -148,10 +163,24 @@ Developers:
 
     johnangel
         OpenGL framebuffer access violation fix.
+        Enable Windows XP support in Visual Studio 2012 Update 1.
 
-	Peter Farkas (fape)
-		contributes Marmalade port for gles20 branch.
+    Peter Farkas (fape)
+        contributes Marmalade port for gles20 branch
+        add Hungarian language support
+
+    Tomoaki Shimizu (tks2shimizu)
+	Adding randomObject to CCDictionary.
+
+    Igor Zavorotkin (ivzave)
+        Adding lua support for linux platform.
 	
+    Jozef Prídavok (jpridavok)
+        Adding CCEditBox implementation for Mac OSX.
+
+    tiantian20007
+        Fix crash for call runAnimation() in CCBAnimationManagerDelegate::completedAnimationSequenceNamed.
+
 Retired Core Developers:
     WenSheng Yang
 	Author of windows port, CCTextField, 

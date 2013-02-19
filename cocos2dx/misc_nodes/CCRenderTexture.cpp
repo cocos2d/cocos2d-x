@@ -55,16 +55,23 @@ CCRenderTexture::CCRenderTexture()
 , m_ePixelFormat(kCCTexture2DPixelFormat_RGBA8888)
 , m_uClearFlags(0)
 , m_sClearColor(ccc4f(0,0,0,0))
-, m_fDlearDepth(0.0f)
+, m_fClearDepth(0.0f)
 , m_nClearStencil(0)
 , m_bAutoDraw(false)
 {
+#if CC_ENABLE_CACHE_TEXTURE_DATA
     // Listen this event to save render texture before come to background.
     // Then it can be restored after coming to foreground on Android.
     CCNotificationCenter::sharedNotificationCenter()->addObserver(this,
-                                                                             callfuncO_selector(CCRenderTexture::listenToBackground),
-                                                                             EVENT_COME_TO_BACKGROUND,
-                                                                             NULL);
+                                                                  callfuncO_selector(CCRenderTexture::listenToBackground),
+                                                                  EVENT_COME_TO_BACKGROUND,
+                                                                  NULL);
+    
+    CCNotificationCenter::sharedNotificationCenter()->addObserver(this,
+                                                                  callfuncO_selector(CCRenderTexture::listenToForeground),
+                                                                  EVNET_COME_TO_FOREGROUND, // this is misspelt
+                                                                  NULL);
+#endif
 }
 
 CCRenderTexture::~CCRenderTexture()
@@ -78,29 +85,59 @@ CCRenderTexture::~CCRenderTexture()
         glDeleteRenderbuffers(1, &m_uDepthRenderBufffer);
     }
     CC_SAFE_DELETE(m_pUITextureImage);
-    
+
+#if CC_ENABLE_CACHE_TEXTURE_DATA
     CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, EVENT_COME_TO_BACKGROUND);
+    CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, EVNET_COME_TO_FOREGROUND);
+#endif
 }
 
 void CCRenderTexture::listenToBackground(cocos2d::CCObject *obj)
 {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
-    
     CC_SAFE_DELETE(m_pUITextureImage);
     
     // to get the rendered texture data
-    m_pUITextureImage = newCCImage();
-
+    m_pUITextureImage = newCCImage(false);
 
     if (m_pUITextureImage)
     {
         const CCSize& s = m_pTexture->getContentSizeInPixels();
         VolatileTexture::addDataTexture(m_pTexture, m_pUITextureImage->getData(), kTexture2DPixelFormat_RGBA8888, s);
-    } 
+        
+        if ( m_pTextureCopy )
+        {
+            VolatileTexture::addDataTexture(m_pTextureCopy, m_pUITextureImage->getData(), kTexture2DPixelFormat_RGBA8888, s);
+        }
+    }
     else
     {
         CCLOG("Cache rendertexture failed!");
     }
+    
+    glDeleteFramebuffers(1, &m_uFBO);
+    m_uFBO = 0;
+#endif
+}
+
+void CCRenderTexture::listenToForeground(cocos2d::CCObject *obj)
+{
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    // -- regenerate frame buffer object and attach the texture
+    glGetIntegerv(GL_FRAMEBUFFER_BINDING, &m_nOldFBO);
+    
+    glGenFramebuffers(1, &m_uFBO);
+    glBindFramebuffer(GL_FRAMEBUFFER, m_uFBO);
+    
+    m_pTexture->setAliasTexParameters();
+    
+    if ( m_pTextureCopy )
+    {
+        m_pTextureCopy->setAliasTexParameters();
+    }
+    
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_pTexture->getName(), 0);
+    glBindFramebuffer(GL_FRAMEBUFFER, m_nOldFBO);
 #endif
 }
 
@@ -138,12 +175,12 @@ void CCRenderTexture::setClearColor(const ccColor4F &clearColor)
 
 float CCRenderTexture::getClearDepth() const
 {
-    return m_fDlearDepth;
+    return m_fClearDepth;
 }
 
 void CCRenderTexture::setClearDepth(float fClearDepth)
 {
-    m_fDlearDepth = fClearDepth;
+    m_fClearDepth = fClearDepth;
 }
 
 int CCRenderTexture::getClearStencil() const
@@ -166,11 +203,6 @@ void CCRenderTexture::setAutoDraw(bool bAutoDraw)
     m_bAutoDraw = bAutoDraw;
 }
 
-CCRenderTexture * CCRenderTexture::renderTextureWithWidthAndHeight(int w, int h, CCTexture2DPixelFormat eFormat)
-{
-    return CCRenderTexture::create(w, h, eFormat);
-}
-
 CCRenderTexture * CCRenderTexture::create(int w, int h, CCTexture2DPixelFormat eFormat)
 {
     CCRenderTexture *pRet = new CCRenderTexture();
@@ -184,11 +216,6 @@ CCRenderTexture * CCRenderTexture::create(int w, int h, CCTexture2DPixelFormat e
     return NULL;
 }
 
-CCRenderTexture * CCRenderTexture::renderTextureWithWidthAndHeight(int w ,int h, CCTexture2DPixelFormat eFormat, GLuint uDepthStencilFormat)
-{
-    return CCRenderTexture::create(w, h, eFormat, uDepthStencilFormat);
-}
-
 CCRenderTexture * CCRenderTexture::create(int w ,int h, CCTexture2DPixelFormat eFormat, GLuint uDepthStencilFormat)
 {
     CCRenderTexture *pRet = new CCRenderTexture();
@@ -200,11 +227,6 @@ CCRenderTexture * CCRenderTexture::create(int w ,int h, CCTexture2DPixelFormat e
     }
     CC_SAFE_DELETE(pRet);
     return NULL;
-}
-
-CCRenderTexture * CCRenderTexture::renderTextureWithWidthAndHeight(int w, int h)
-{
-    return CCRenderTexture::create(w, h);
 }
 
 CCRenderTexture * CCRenderTexture::create(int w, int h)
@@ -541,7 +563,7 @@ void CCRenderTexture::draw()
 			if (m_uClearFlags & GL_DEPTH_BUFFER_BIT)
             {
 				glGetFloatv(GL_DEPTH_CLEAR_VALUE, &oldDepthClearValue);
-				glClearDepth(m_fDlearDepth);
+				glClearDepth(m_fClearDepth);
 			}
 			
 			if (m_uClearFlags & GL_STENCIL_BUFFER_BIT)
@@ -590,7 +612,7 @@ bool CCRenderTexture::saveToFile(const char *szFilePath)
 {
     bool bRet = false;
 
-    CCImage *pImage = newCCImage();
+    CCImage *pImage = newCCImage(true);
     if (pImage)
     {
         bRet = pImage->saveToFile(szFilePath, kCCImageFormatJPEG);
@@ -605,7 +627,7 @@ bool CCRenderTexture::saveToFile(const char *fileName, tCCImageFormat format)
     CCAssert(format == kCCImageFormatJPEG || format == kCCImageFormatPNG,
              "the image can only be saved as JPG or PNG format");
 
-    CCImage *pImage = newCCImage();
+    CCImage *pImage = newCCImage(true);
     if (pImage)
     {
         std::string fullpath = CCFileUtils::sharedFileUtils()->getWriteablePath() + fileName;
@@ -619,7 +641,7 @@ bool CCRenderTexture::saveToFile(const char *fileName, tCCImageFormat format)
 }
 
 /* get buffer as CCImage */
-CCImage* CCRenderTexture::newCCImage()
+CCImage* CCRenderTexture::newCCImage(bool flipImage)
 {
     CCAssert(m_ePixelFormat == kCCTexture2DPixelFormat_RGBA8888, "only RGBA8888 can be saved as image");
 
@@ -656,16 +678,24 @@ CCImage* CCRenderTexture::newCCImage()
         glReadPixels(0,0,nSavedBufferWidth, nSavedBufferHeight,GL_RGBA,GL_UNSIGNED_BYTE, pTempData);
         this->end();
 
-        // to get the actual texture data 
-        // #640 the image read from rendertexture is dirty
-        for (int i = 0; i < nSavedBufferHeight; ++i)
+        if ( flipImage ) // -- flip is only required when saving image to file
         {
-            memcpy(&pBuffer[i * nSavedBufferWidth * 4], 
-                   &pTempData[(nSavedBufferHeight - i - 1) * nSavedBufferWidth * 4], 
-                   nSavedBufferWidth * 4);
-        }
+            // to get the actual texture data
+            // #640 the image read from rendertexture is dirty
+            for (int i = 0; i < nSavedBufferHeight; ++i)
+            {
+                memcpy(&pBuffer[i * nSavedBufferWidth * 4], 
+                       &pTempData[(nSavedBufferHeight - i - 1) * nSavedBufferWidth * 4], 
+                       nSavedBufferWidth * 4);
+            }
 
-        pImage->initWithImageData(pBuffer, nSavedBufferWidth * nSavedBufferHeight * 4, CCImage::kFmtRawData, nSavedBufferWidth, nSavedBufferHeight, 8);
+            pImage->initWithImageData(pBuffer, nSavedBufferWidth * nSavedBufferHeight * 4, CCImage::kFmtRawData, nSavedBufferWidth, nSavedBufferHeight, 8);
+        }
+        else
+        {
+            pImage->initWithImageData(pTempData, nSavedBufferWidth * nSavedBufferHeight * 4, CCImage::kFmtRawData, nSavedBufferWidth, nSavedBufferHeight, 8);
+        }
+        
     } while (0);
 
     CC_SAFE_DELETE_ARRAY(pBuffer);

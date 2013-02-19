@@ -31,15 +31,11 @@ THE SOFTWARE.
 #include "cocoa/CCDictionary.h"
 #include "cocoa/CCInteger.h"
 #include "CCDirector.h"
+#include "support/CCPointExtension.h"
 
 NS_CC_BEGIN
 
 // implementation CCTileMapAtlas
-
-CCTileMapAtlas * CCTileMapAtlas::tileMapAtlasWithTileFile(const char *tile, const char *mapFile, int tileWidth, int tileHeight)
-{
-    return CCTileMapAtlas::create(tile, mapFile, tileWidth, tileHeight);
-}
 
 CCTileMapAtlas * CCTileMapAtlas::create(const char *tile, const char *mapFile, int tileWidth, int tileHeight)
 {
@@ -120,14 +116,14 @@ void CCTileMapAtlas::loadTGAfile(const char *file)
 {
     CCAssert( file != NULL, "file must be non-nil");
 
-    const char* pPath = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(file);
+    std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(file);
 
     //    //Find the path of the file
     //    NSBundle *mainBndl = [CCDirector sharedDirector].loadingBundle;
     //    CCString *resourcePath = [mainBndl resourcePath];
     //    CCString * path = [resourcePath stringByAppendingPathComponent:file];
 
-    m_pTGAInfo = tgaLoad( pPath );
+    m_pTGAInfo = tgaLoad( fullPath.c_str() );
 #if 1
     if( m_pTGAInfo->status != TGA_OK ) 
     {
@@ -137,7 +133,7 @@ void CCTileMapAtlas::loadTGAfile(const char *file)
 }
 
 // CCTileMapAtlas - Atlas generation / updates
-void CCTileMapAtlas::setTile(const ccColor3B& tile, const ccGridSize& position)
+void CCTileMapAtlas::setTile(const ccColor3B& tile, const CCPoint& position)
 {
     CCAssert( m_pTGAInfo != NULL, "tgaInfo must not be nil");
     CCAssert( m_pPosToAtlasIndex != NULL, "posToAtlasIndex must not be nil");
@@ -146,14 +142,14 @@ void CCTileMapAtlas::setTile(const ccColor3B& tile, const ccGridSize& position)
     CCAssert( tile.r != 0, "R component must be non 0");
 
     ccColor3B *ptr = (ccColor3B*)m_pTGAInfo->imageData;
-    ccColor3B value = ptr[position.x + position.y * m_pTGAInfo->width];
+    ccColor3B value = ptr[(unsigned int)(position.x + position.y * m_pTGAInfo->width)];
     if( value.r == 0 )
     {
         CCLOG("cocos2d: Value.r must be non 0.");
     } 
     else
     {
-        ptr[position.x + position.y * m_pTGAInfo->width] = tile;
+        ptr[(unsigned int)(position.x + position.y * m_pTGAInfo->width)] = tile;
 
         // XXX: this method consumes a lot of memory
         // XXX: a tree of something like that shall be implemented
@@ -164,19 +160,19 @@ void CCTileMapAtlas::setTile(const ccColor3B& tile, const ccGridSize& position)
     }    
 }
 
-ccColor3B CCTileMapAtlas::tileAt(const ccGridSize& position)
+ccColor3B CCTileMapAtlas::tileAt(const CCPoint& position)
 {
     CCAssert( m_pTGAInfo != NULL, "tgaInfo must not be nil");
     CCAssert( position.x < m_pTGAInfo->width, "Invalid position.x");
     CCAssert( position.y < m_pTGAInfo->height, "Invalid position.y");
 
     ccColor3B *ptr = (ccColor3B*)m_pTGAInfo->imageData;
-    ccColor3B value = ptr[position.x + position.y * m_pTGAInfo->width];
+    ccColor3B value = ptr[(unsigned int)(position.x + position.y * m_pTGAInfo->width)];
 
     return value;    
 }
 
-void CCTileMapAtlas::updateAtlasValueAt(const ccGridSize& pos, const ccColor3B& value, unsigned int index)
+void CCTileMapAtlas::updateAtlasValueAt(const CCPoint& pos, const ccColor3B& value, unsigned int index)
 {
     ccV3F_C4B_T2F_Quad quad;
 
@@ -251,7 +247,7 @@ void CCTileMapAtlas::updateAtlasValues()
 
                 if( value.r != 0 )
                 {
-                    this->updateAtlasValueAt(ccg(x,y), value, total);
+                    this->updateAtlasValueAt(ccp(x,y), value, total);
 
                     CCString *key = CCString::createWithFormat("%d,%d", x,y);
                     CCInteger *num = CCInteger::create(total);

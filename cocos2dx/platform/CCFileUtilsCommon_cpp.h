@@ -372,18 +372,79 @@ unsigned char* CCFileUtils::getFileDataFromZip(const char* pszZipFilePath, const
     return pBuffer;
 }
 
-void CCFileUtils::setResourceDirectory(const char* pszResourceDirectory)
+std::string CCFileUtils::getNewFilename(const char* pszFileName)
 {
-    m_obDirectory = pszResourceDirectory;
-    if (m_obDirectory.size() > 0 && m_obDirectory[m_obDirectory.size() - 1] != '/')
-    {
-        m_obDirectory.append("/");
+    const char* pszNewFileName = NULL;
+    // in Lookup Filename dictionary ?
+    CCString* fileNameFound = m_pFilenameLookupDict ? (CCString*)m_pFilenameLookupDict->objectForKey(pszFileName) : NULL;
+    if( NULL == fileNameFound || fileNameFound->length() == 0) {
+        pszNewFileName = pszFileName;
     }
+    else {
+        pszNewFileName = fileNameFound->getCString();
+        //CCLOG("FOUND NEW FILE NAME: %s.", pszNewFileName);
+    }
+    return pszNewFileName;
+}
+
+void CCFileUtils::setSearchResolutionsOrder(const std::vector<std::string>& searchResolutionsOrder)
+{
+    bool bExistDefault = false;
+    m_searchResolutionsOrderArray.clear();
+    for (std::vector<std::string>::const_iterator iter = searchResolutionsOrder.begin(); iter != searchResolutionsOrder.end(); ++iter)
+    {
+        if (!bExistDefault && (*iter) == "")
+        {
+            bExistDefault = true;
+        }
+        m_searchResolutionsOrderArray.push_back(*iter);
+    }
+    if (!bExistDefault)
+    {
+        m_searchResolutionsOrderArray.push_back("");
+    }
+}
+
+const std::vector<std::string>& CCFileUtils::getSearchResolutionsOrder()
+{
+    return m_searchResolutionsOrderArray;
+}
+
+const std::vector<std::string>& CCFileUtils::getSearchPaths()
+{
+    return m_searchPathArray;
 }
 
 const char* CCFileUtils::getResourceDirectory()
 {
     return m_obDirectory.c_str();
+}
+
+void CCFileUtils::setFilenameLookupDictionary(CCDictionary* pFilenameLookupDict)
+{
+    CC_SAFE_RELEASE(m_pFilenameLookupDict);
+    m_pFilenameLookupDict = pFilenameLookupDict;
+    CC_SAFE_RETAIN(m_pFilenameLookupDict);
+}
+
+void CCFileUtils::loadFilenameLookupDictionaryFromFile(const char* filename)
+{
+    std::string fullPath = this->fullPathForFilename(filename);
+    if (fullPath.length() > 0)
+    {
+        CCDictionary* pDict = CCDictionary::createWithContentsOfFile(fullPath.c_str());
+        if (pDict)
+        {
+            CCDictionary* pMetadata = (CCDictionary*)pDict->objectForKey("metadata");
+            int version = ((CCString*)pMetadata->objectForKey("version"))->intValue();
+            if (version != 1)
+            {
+                CCLOG("cocos2d: ERROR: Invalid filenameLookup dictionary version: %ld. Filename: %s", (long)version, filename);
+                return;
+            }
+            setFilenameLookupDictionary((CCDictionary*)pDict->objectForKey("filenames"));
+        }
+    }
 }
 
 //////////////////////////////////////////////////////////////////////////

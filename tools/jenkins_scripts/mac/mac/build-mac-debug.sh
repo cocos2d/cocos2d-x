@@ -2,7 +2,7 @@
 #This script is used to finish a mac automated compiler.
 
 compileresult=0
-cd ../../../../samples
+cd ../../../../samples/Cpp
 #List simulator sdks
 xcodebuild -showsdks > tmp.txt
 

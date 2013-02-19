@@ -127,10 +127,6 @@ public:
     CCBMFontConfiguration();
     virtual ~CCBMFontConfiguration();
     const char * description();
-    /** allocates a CCBMFontConfiguration with a FNT file 
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCBMFontConfiguration * configurationWithFNTFile(const char *FNTfile);
 
     /** allocates a CCBMFontConfiguration with a FNT file */
     static CCBMFontConfiguration * create(const char *FNTfile);
@@ -153,7 +149,7 @@ private:
     void purgeFontDefDictionary();
 };
 
-/** @brief CCLabelBMFont is a subclass of CCSpriteSheet.
+/** @brief CCLabelBMFont is a subclass of CCSpriteBatchNode.
 
 Features:
 - Treats each character like a CCSprite. This means that each individual character can be:
@@ -224,10 +220,7 @@ public:
     @since v0.99.3
     */
     static void purgeCachedData();
-    /** creates a bitmap font atlas with an initial string and the FNT file 
-    @deprecated: This interface will be deprecated sooner or later.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CCLabelBMFont * labelWithString(const char *str, const char *fntFile, float width = kCCLabelAutomaticWidth, CCTextAlignment alignment = kCCTextAlignmentLeft, CCPoint imageOffset = CCPointZero);
+
     /** creates a bitmap font atlas with an initial string and the FNT file */
     static CCLabelBMFont * create(const char *str, const char *fntFile, float width, CCTextAlignment alignment, CCPoint imageOffset);
     
@@ -236,11 +229,6 @@ public:
 	static CCLabelBMFont * create(const char *str, const char *fntFile, float width);
 
 	static CCLabelBMFont * create(const char *str, const char *fntFile);
-
-    /** Creates an label.
-    @deprecated: This interface will be deprecated sooner or later.
-     */
-    CC_DEPRECATED_ATTRIBUTE static CCLabelBMFont * node();
 
     /** Creates an label.
      */

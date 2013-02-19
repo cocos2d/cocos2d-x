@@ -238,7 +238,10 @@ void CCLuaEngine::addSearchPath(const char* path)
 
 int CCLuaEngine::executeString(const char *codes)
 {
-    int nRet =    luaL_dostring(m_state, codes);
+    ++m_callFromLua;
+    int nRet = luaL_dostring(m_state, codes);
+    --m_callFromLua;
+    CC_ASSERT(m_callFromLua >= 0);
     lua_gc(m_state, LUA_GCCOLLECT, 0);
 
     if (nRet != 0)
@@ -252,7 +255,10 @@ int CCLuaEngine::executeString(const char *codes)
 
 int CCLuaEngine::executeScriptFile(const char* filename)
 {
+    ++m_callFromLua;
     int nRet = luaL_dofile(m_state, filename);
+    --m_callFromLua;
+    CC_ASSERT(m_callFromLua >= 0);
     // lua_gc(m_state, LUA_GCCOLLECT, 0);
 
     if (nRet != 0)
@@ -274,7 +280,10 @@ int CCLuaEngine::executeGlobalFunction(const char* functionName)
         return 0;
     }
 
+    ++m_callFromLua;
     int error = lua_pcall(m_state, 0, 1, 0);             /* call function, stack: ret */
+    --m_callFromLua;
+    CC_ASSERT(m_callFromLua >= 0);
     // lua_gc(m_state, LUA_GCCOLLECT, 0);
 
     if (error)
@@ -374,19 +383,11 @@ int CCLuaEngine::executeCallFuncActionEvent(CCCallFunc* pAction, CCObject* pTarg
     return ret;
 }
 
-int CCLuaEngine::executeSchedule(CCTimer* pTimer, float dt, CCNode* pNode/* = NULL*/)
+int CCLuaEngine::executeSchedule(int nHandler, float dt, CCNode* pNode/* = NULL*/)
 {
-    int ret = 0;
-    do 
-    {
-        int nScriptHandler = pTimer->getScriptHandler();
-        CC_BREAK_IF(0 == nScriptHandler);
-
-        cleanStack();
-        pushFloat(dt);
-        ret = executeFunctionByHandler(nScriptHandler, 1);
-    } while (0);
-    return ret;
+    cleanStack();
+    pushFloat(dt);
+    return executeFunctionByHandler(nHandler, 1);
 }
 
 // functions for excute touch event
@@ -484,6 +485,15 @@ int CCLuaEngine::executeAccelerometerEvent(CCLayer* pLayer, CCAcceleration* pAcc
     return ret;
 }
 
+bool CCLuaEngine::executeAssert(bool cond, const char *msg/* = NULL */)
+{
+    if (m_callFromLua == 0) return false;
+    
+    lua_pushfstring(m_state, "ASSERT FAILED ON LUA EXECUTE: %s", msg ? msg : "unknown");
+    lua_error(m_state);
+    return true;
+}
+
 int CCLuaEngine::executeFunctionByHandler(int nHandler, int numArgs)
 {
     if (pushFunction(nHandler))                                         /* stack: ... arg1 arg2 ... func */
@@ -506,7 +516,9 @@ int CCLuaEngine::executeFunctionByHandler(int nHandler, int numArgs)
         }
         
         int error = 0;
+        ++m_callFromLua;
         error = lua_pcall(m_state, numArgs, 1, traceback);              /* stack: ... ret */
+        --m_callFromLua;
         if (error)
         {
             if (traceback == 0)

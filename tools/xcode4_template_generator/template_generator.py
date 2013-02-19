@@ -185,7 +185,7 @@ if __name__ == "__main__":
             if opt in ("-d","--directory"):
                 directory = arg
             if opt in ("-g","--group"):
-                group = arg
+                group = int(arg)
             if opt in ("-i","--identifier"):
                 identifier = arg
             if opt in ("-p","--prefix"):

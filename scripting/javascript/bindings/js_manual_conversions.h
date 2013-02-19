@@ -24,8 +24,10 @@ extern jsval int_to_jsval( JSContext *cx, int number );
 extern jsval uint_to_jsval( JSContext *cx, unsigned int number );
 extern jsval long_to_jsval( JSContext *cx, long number );
 extern jsval longlong_to_jsval( JSContext *cx, long long number );
-
-
+/** converts a jsval (JS string) into a char */
+extern JSBool jsval_to_charptr( JSContext *cx, jsval vp, const char **out);
+/* Converts a char ptr into a jsval (using JS string) */
+extern jsval charptr_to_jsval( JSContext *cx, const char *str);
 //#ifdef __cplusplus
 //}
 //#endif

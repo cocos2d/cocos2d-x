@@ -48,6 +48,11 @@
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
 									<listOptionValue builtIn="false" value="../../include"/>
 									<listOptionValue builtIn="false" value="../../third_party/blackberry/include"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/include"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/kazmath/include"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/blackberry"/>
 								</option>
 								<option id="com.qnx.qcc.option.compiler.qccoptions.1372558930" name="QCC Options" superClass="com.qnx.qcc.option.compiler.qccoptions"/>
 								<inputType id="com.qnx.qcc.inputType.compiler.1849571146" superClass="com.qnx.qcc.inputType.compiler"/>
@@ -128,6 +133,11 @@
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
 									<listOptionValue builtIn="false" value="../../include"/>
 									<listOptionValue builtIn="false" value="../../third_party/blackberry/include"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/include"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/kazmath/include"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/blackberry"/>
 								</option>
 								<option id="com.qnx.qcc.option.compiler.qccoptions.1936049270" name="QCC Options" superClass="com.qnx.qcc.option.compiler.qccoptions"/>
 								<inputType id="com.qnx.qcc.inputType.compiler.82187465" superClass="com.qnx.qcc.inputType.compiler"/>
@@ -199,6 +209,11 @@
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
 									<listOptionValue builtIn="false" value="../../include"/>
 									<listOptionValue builtIn="false" value="../../third_party/blackberry/include"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/include"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/kazmath/include"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/blackberry"/>
 								</option>
 								<option id="com.qnx.qcc.option.compiler.qccoptions.584937839" name="QCC Options" superClass="com.qnx.qcc.option.compiler.qccoptions"/>
 								<inputType id="com.qnx.qcc.inputType.compiler.2036659301" superClass="com.qnx.qcc.inputType.compiler"/>
@@ -273,6 +288,11 @@
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
 									<listOptionValue builtIn="false" value="../../include"/>
 									<listOptionValue builtIn="false" value="../../third_party/blackberry/include"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/include"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/kazmath/include"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/blackberry"/>
 								</option>
 								<option id="com.qnx.qcc.option.compiler.qccoptions.1106404059" name="QCC Options" superClass="com.qnx.qcc.option.compiler.qccoptions"/>
 								<inputType id="com.qnx.qcc.inputType.compiler.1381169559" superClass="com.qnx.qcc.inputType.compiler"/>
@@ -283,7 +303,7 @@
 							</tool>
 							<tool id="com.qnx.qcc.tool.linker.533573966" name="QCC Linker" superClass="com.qnx.qcc.tool.linker">
 								<option id="com.qnx.qcc.option.linker.debug.1616435546" name="Debug (-g)" superClass="com.qnx.qcc.option.linker.debug" value="true" valueType="boolean"/>
-								<option id="com.qnx.qcc.option.linker.coverage.609660025" name="Build for Code Coverage (-ftest-coverage -fprofile-arcs)" superClass="com.qnx.qcc.option.linker.coverage" value="true" valueType="boolean"/>
+								<option id="com.qnx.qcc.option.linker.coverage.609660025" name="Build for Code Coverage (-ftest-coverage -fprofile-arcs -p)" superClass="com.qnx.qcc.option.linker.coverage" value="true" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.linker.shared.196470993" name="Shared (-shared)" superClass="com.qnx.qcc.option.linker.shared" value="true" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.linker.langcpp.2037217861" name="C++ (-lang-c++)" superClass="com.qnx.qcc.option.linker.langcpp" value="true" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.linker.security.1123898612" name="Enhanced Security (-Wl,-z,relro -Wl,-z,now)" superClass="com.qnx.qcc.option.linker.security" value="true" valueType="boolean"/>
@@ -345,6 +365,11 @@
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
 									<listOptionValue builtIn="false" value="../../include"/>
 									<listOptionValue builtIn="false" value="../../third_party/blackberry/include"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/include"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/kazmath/include"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/blackberry"/>
 								</option>
 								<option id="com.qnx.qcc.option.compiler.qccoptions.641179327" name="QCC Options" superClass="com.qnx.qcc.option.compiler.qccoptions"/>
 								<inputType id="com.qnx.qcc.inputType.compiler.1896937509" superClass="com.qnx.qcc.inputType.compiler"/>
@@ -417,6 +442,11 @@
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
 									<listOptionValue builtIn="false" value="../../include"/>
 									<listOptionValue builtIn="false" value="../../third_party/blackberry/include"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/include"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/kazmath/include"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/blackberry"/>
 								</option>
 								<option id="com.qnx.qcc.option.compiler.qccoptions.151407782" name="QCC Options" superClass="com.qnx.qcc.option.compiler.qccoptions"/>
 								<inputType id="com.qnx.qcc.inputType.compiler.746859765" superClass="com.qnx.qcc.inputType.compiler"/>
@@ -490,6 +520,11 @@
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
 									<listOptionValue builtIn="false" value="../../include"/>
 									<listOptionValue builtIn="false" value="../../third_party/blackberry/include"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/include"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/kazmath/include"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform"/>
+									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/blackberry"/>
 								</option>
 								<option id="com.qnx.qcc.option.compiler.qccoptions.1555108705" name="QCC Options" superClass="com.qnx.qcc.option.compiler.qccoptions"/>
 								<inputType id="com.qnx.qcc.inputType.compiler.1894319763" superClass="com.qnx.qcc.inputType.compiler"/>
@@ -500,7 +535,7 @@
 							</tool>
 							<tool id="com.qnx.qcc.tool.linker.557662309" name="QCC Linker" superClass="com.qnx.qcc.tool.linker">
 								<option id="com.qnx.qcc.option.linker.debug.2077179537" name="Debug (-g)" superClass="com.qnx.qcc.option.linker.debug" value="true" valueType="boolean"/>
-								<option id="com.qnx.qcc.option.linker.coverage.1300750623" name="Build for Code Coverage (-ftest-coverage -fprofile-arcs)" superClass="com.qnx.qcc.option.linker.coverage" value="true" valueType="boolean"/>
+								<option id="com.qnx.qcc.option.linker.coverage.1300750623" name="Build for Code Coverage (-ftest-coverage -fprofile-arcs -p)" superClass="com.qnx.qcc.option.linker.coverage" value="true" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.linker.shared.692015673" name="Shared (-shared)" superClass="com.qnx.qcc.option.linker.shared" value="true" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.linker.langcpp.2076404861" name="C++ (-lang-c++)" superClass="com.qnx.qcc.option.linker.langcpp" value="true" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.linker.security.1793451941" name="Enhanced Security (-Wl,-z,relro -Wl,-z,now)" superClass="com.qnx.qcc.option.linker.security" value="true" valueType="boolean"/>

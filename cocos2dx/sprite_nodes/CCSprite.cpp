@@ -57,12 +57,6 @@ NS_CC_BEGIN
 #define RENDER_IN_SUBPIXEL(__ARGS__) (ceil(__ARGS__))
 #endif
 
-
-CCSprite* CCSprite::spriteWithTexture(CCTexture2D *pTexture)
-{
-    return CCSprite::createWithTexture(pTexture);
-}
-
 CCSprite* CCSprite::createWithTexture(CCTexture2D *pTexture)
 {
     CCSprite *pobSprite = new CCSprite();
@@ -73,11 +67,6 @@ CCSprite* CCSprite::createWithTexture(CCTexture2D *pTexture)
     }
     CC_SAFE_DELETE(pobSprite);
     return NULL;
-}
-
-CCSprite* CCSprite::spriteWithTexture(CCTexture2D *pTexture, const CCRect& rect)
-{
-    return CCSprite::createWithTexture(pTexture, rect);
 }
 
 CCSprite* CCSprite::createWithTexture(CCTexture2D *pTexture, const CCRect& rect)
@@ -92,11 +81,6 @@ CCSprite* CCSprite::createWithTexture(CCTexture2D *pTexture, const CCRect& rect)
     return NULL;
 }
 
-CCSprite* CCSprite::spriteWithFile(const char *pszFileName)
-{
-    return CCSprite::create(pszFileName);
-}
-
 CCSprite* CCSprite::create(const char *pszFileName)
 {
     CCSprite *pobSprite = new CCSprite();
@@ -107,11 +91,6 @@ CCSprite* CCSprite::create(const char *pszFileName)
     }
     CC_SAFE_DELETE(pobSprite);
     return NULL;
-}
-
-CCSprite* CCSprite::spriteWithFile(const char *pszFileName, const CCRect& rect)
-{
-    return CCSprite::create(pszFileName, rect);
 }
 
 CCSprite* CCSprite::create(const char *pszFileName, const CCRect& rect)
@@ -126,11 +105,6 @@ CCSprite* CCSprite::create(const char *pszFileName, const CCRect& rect)
     return NULL;
 }
 
-CCSprite* CCSprite::spriteWithSpriteFrame(CCSpriteFrame *pSpriteFrame)
-{
-    return CCSprite::createWithSpriteFrame(pSpriteFrame);
-}
-
 CCSprite* CCSprite::createWithSpriteFrame(CCSpriteFrame *pSpriteFrame)
 {
     CCSprite *pobSprite = new CCSprite();
@@ -141,11 +115,6 @@ CCSprite* CCSprite::createWithSpriteFrame(CCSpriteFrame *pSpriteFrame)
     }
     CC_SAFE_DELETE(pobSprite);
     return NULL;
-}
-
-CCSprite* CCSprite::spriteWithSpriteFrameName(const char *pszSpriteFrameName)
-{
-    return CCSprite::createWithSpriteFrameName(pszSpriteFrameName);
 }
 
 CCSprite* CCSprite::createWithSpriteFrameName(const char *pszSpriteFrameName)
@@ -159,11 +128,6 @@ CCSprite* CCSprite::createWithSpriteFrameName(const char *pszSpriteFrameName)
 #endif
     
     return createWithSpriteFrame(pFrame);
-}
-
-CCSprite* CCSprite::node()
-{
-    return CCSprite::create();
 }
 
 CCSprite* CCSprite::create()
@@ -317,7 +281,7 @@ CCSprite* CCSprite::initWithCGImage(CGImageRef pImage, const char *pszKey)
     // XXX: possible bug. See issue #349. New API should be added
     CCTexture2D *pTexture = CCTextureCache::sharedTextureCache()->addCGImage(pImage, pszKey);
 
-    CCSize size = pTexture->getContentSize();
+    const CCSize& size = pTexture->getContentSize();
     CCRect rect = CCRectMake(0 ,0, size.width, size.height);
 
     return initWithTexture(texture, rect);
@@ -949,11 +913,6 @@ void CCSprite::updateColor(void)
     // do nothing
 }
 
-GLubyte CCSprite::getOpacity(void)
-{
-    return m_nOpacity;
-}
-
 void CCSprite::setOpacity(GLubyte opacity)
 {
     m_nOpacity = opacity;
@@ -967,7 +926,7 @@ void CCSprite::setOpacity(GLubyte opacity)
     updateColor();
 }
 
-ccColor3B CCSprite::getColor(void)
+const ccColor3B& CCSprite::getColor(void)
 {
     if (m_bOpacityModifyRGB)
     {
@@ -1091,7 +1050,7 @@ void CCSprite::setBatchNode(CCSpriteBatchNode *pobSpriteBatchNode)
 
 void CCSprite::updateBlendFunc(void)
 {
-    CCAssert (! m_pobBatchNode, "CCSprite: updateBlendFunc doesn't work when the sprite is rendered using a CCSpriteSheet");
+    CCAssert (! m_pobBatchNode, "CCSprite: updateBlendFunc doesn't work when the sprite is rendered using a CCSpriteBatchNode");
 
     // it is possible to have an untextured sprite
     if (! m_pobTexture || ! m_pobTexture->hasPremultipliedAlpha())

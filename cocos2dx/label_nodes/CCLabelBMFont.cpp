@@ -388,11 +388,6 @@ void FNTConfigRemoveCache( void )
 //BitmapFontConfiguration
 //
 
-CCBMFontConfiguration * CCBMFontConfiguration::configurationWithFNTFile(const char *FNTfile)
-{
-    return CCBMFontConfiguration::create(FNTfile);
-}
-
 CCBMFontConfiguration * CCBMFontConfiguration::create(const char *FNTfile)
 {
     CCBMFontConfiguration * pRet = new CCBMFontConfiguration();
@@ -477,7 +472,7 @@ void CCBMFontConfiguration::purgeFontDefDictionary()
 
 std::set<unsigned int>* CCBMFontConfiguration::parseConfigFile(const char *controlFile)
 {    
-    std::string fullpath = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(controlFile);
+    std::string fullpath = CCFileUtils::sharedFileUtils()->fullPathForFilename(controlFile);
     CCString *contents = CCString::createWithContentsOfFile(fullpath.c_str());
 
     CCAssert(contents, "CCBMFontConfiguration::parseConfigFile | Open file error.");
@@ -714,11 +709,6 @@ void CCLabelBMFont::purgeCachedData()
     FNTConfigRemoveCache();
 }
 
-CCLabelBMFont * CCLabelBMFont::node()
-{
-    return CCLabelBMFont::create();
-}
-
 CCLabelBMFont * CCLabelBMFont::create()
 {
     CCLabelBMFont * pRet = new CCLabelBMFont();
@@ -744,11 +734,6 @@ CCLabelBMFont * CCLabelBMFont::create(const char *str, const char *fntFile, floa
 CCLabelBMFont * CCLabelBMFont::create(const char *str, const char *fntFile)
 {
     return CCLabelBMFont::create(str, fntFile, kCCLabelAutomaticWidth, kCCTextAlignmentLeft, CCPointZero);
-}
-
-CCLabelBMFont *CCLabelBMFont::labelWithString(const char *str, const char *fntFile, float width/* = kCCLabelAutomaticWidth*/, CCTextAlignment alignment/* = kCCTextAlignmentLeft*/, CCPoint imageOffset/* = CCPointZero*/)
-{
-    return CCLabelBMFont::create(str, fntFile, width, alignment, imageOffset);
 }
 
 //LabelBMFont - Creation & Init
@@ -1084,7 +1069,7 @@ void CCLabelBMFont::setColor(const ccColor3B& var)
     }
 }
 
-ccColor3B CCLabelBMFont::getColor()
+const ccColor3B& CCLabelBMFont::getColor()
 {
     return m_tColor;
 }
@@ -1463,7 +1448,7 @@ const char* CCLabelBMFont::getFntFile()
 void CCLabelBMFont::draw()
 {
     CCSpriteBatchNode::draw();
-    CCSize s = this->getContentSize();
+    const CCSize& s = this->getContentSize();
     CCPoint vertices[4]={
         ccp(0,0),ccp(s.width,0),
         ccp(s.width,s.height),ccp(0,s.height),

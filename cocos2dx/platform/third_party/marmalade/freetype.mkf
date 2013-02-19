@@ -8,10 +8,10 @@ options
 	strict=0
 }
 
-if {{ defined __APPLE__ }}
+if {{ sys.platform == 'darwin' }}
 {
-	define FT_CONFIG_OPTION_NO_ASSEMBLER
-	define DARWIN_NO_CARBON
+    define FT_CONFIG_OPTION_NO_ASSEMBLER 
+    define DARWIN_NO_CARBON
 }
 
 files

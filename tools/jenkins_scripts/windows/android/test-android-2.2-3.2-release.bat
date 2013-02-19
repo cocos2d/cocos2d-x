@@ -9,7 +9,7 @@ copy %cd%\ReportManager.py %ANDROID_HOME%\tools
 
 cd ..\..
 set PROJECT_HOME=%cd%
-cd samples\TestCpp\proj.android\bin
+cd samples\Cpp\TestCpp\proj.android\bin
 
 ::Copy test apk to android sdk tools directory.
 copy %cd%\TestCpp-release-8.apk %ANDROID_HOME%\tools

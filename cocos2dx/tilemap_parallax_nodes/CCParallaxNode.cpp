@@ -65,11 +65,6 @@ CCParallaxNode::~CCParallaxNode()
     }
 }
 
-CCParallaxNode * CCParallaxNode::node()
-{
-    return CCParallaxNode::create();
-}
-
 CCParallaxNode * CCParallaxNode::create()
 {
     CCParallaxNode *pRet = new CCParallaxNode();

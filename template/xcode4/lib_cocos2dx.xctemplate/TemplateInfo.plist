@@ -532,6 +532,19 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
+		<key>libs/cocos2dx/cocoa/CCBool.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>cocoa</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/cocoa/CCBool.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
 		<key>libs/cocos2dx/cocoa/CCDictionary.cpp</key>
 		<dict>
 			<key>Group</key>
@@ -553,6 +566,32 @@
 			</array>
 			<key>Path</key>
 			<string>libs/cocos2dx/cocoa/CCDictionary.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2dx/cocoa/CCDouble.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>cocoa</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/cocoa/CCDouble.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2dx/cocoa/CCFloat.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>cocoa</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/cocoa/CCFloat.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
@@ -3742,8 +3781,11 @@
 		<string>libs/cocos2dx/cocoa/CCArray.h</string>
 		<string>libs/cocos2dx/cocoa/CCAutoreleasePool.cpp</string>
 		<string>libs/cocos2dx/cocoa/CCAutoreleasePool.h</string>
+		<string>libs/cocos2dx/cocoa/CCBool.h</string>
 		<string>libs/cocos2dx/cocoa/CCDictionary.cpp</string>
 		<string>libs/cocos2dx/cocoa/CCDictionary.h</string>
+		<string>libs/cocos2dx/cocoa/CCDouble.h</string>
+		<string>libs/cocos2dx/cocoa/CCFloat.h</string>
 		<string>libs/cocos2dx/cocoa/CCGeometry.cpp</string>
 		<string>libs/cocos2dx/cocoa/CCGeometry.h</string>
 		<string>libs/cocos2dx/cocoa/CCInteger.h</string>

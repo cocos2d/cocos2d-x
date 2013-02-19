@@ -58,10 +58,6 @@ CCParticleBatchNode::~CCParticleBatchNode()
 /*
  * creation with CCTexture2D
  */
-CCParticleBatchNode* CCParticleBatchNode::batchNodeWithTexture(CCTexture2D *tex, unsigned int capacity/* = kCCParticleDefaultCapacity*/)
-{
-    return CCParticleBatchNode::createWithTexture(tex, capacity);
-}
 
 CCParticleBatchNode* CCParticleBatchNode::createWithTexture(CCTexture2D *tex, unsigned int capacity/* = kCCParticleDefaultCapacity*/)
 {
@@ -78,10 +74,6 @@ CCParticleBatchNode* CCParticleBatchNode::createWithTexture(CCTexture2D *tex, un
 /*
  * creation with File Image
  */
-CCParticleBatchNode* CCParticleBatchNode::batchNodeWithFile(const char* imageFile, unsigned int capacity/* = kCCParticleDefaultCapacity*/)
-{
-    return CCParticleBatchNode::create(imageFile, capacity);
-}
 
 CCParticleBatchNode* CCParticleBatchNode::create(const char* imageFile, unsigned int capacity/* = kCCParticleDefaultCapacity*/)
 {

@@ -126,8 +126,6 @@ local CCObjectTypes = {
     "CCTransitionMoveInR",
     "CCTransitionMoveInT",
     "CCTransitionPageTurn",
-    "CCTransitionRadialCCW",
-    "CCTransitionRadialCW",
     "CCTransitionRotoZoom",
     "CCTransitionSceneOriented",
     "CCTransitionFlipAngular",

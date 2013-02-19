@@ -66,13 +66,13 @@ static const ccPVRTexturePixelFormatInfo PVRTableFormats[] = {
 	
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 	// 9: PVRTC 2BPP RGB
-	{GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG, -1, -1, 2, true, false, kCCTexture2DPixelFormat_PVRTC2},
+	{GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG, 0xFFFFFFFF, 0xFFFFFFFF, 2, true, false, kCCTexture2DPixelFormat_PVRTC2},
 	// 10: PVRTC 2BPP RGBA
-	{GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG, -1, -1, 2, true, true, kCCTexture2DPixelFormat_PVRTC2},
+	{GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG, 0xFFFFFFFF, 0xFFFFFFFF, 2, true, true, kCCTexture2DPixelFormat_PVRTC2},
 	// 11: PVRTC 4BPP RGB
-	{GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG, -1, -1, 4, true, false, kCCTexture2DPixelFormat_PVRTC4},
+	{GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG, 0xFFFFFFFF, 0xFFFFFFFF, 4, true, false, kCCTexture2DPixelFormat_PVRTC4},
 	// 12: PVRTC 4BPP RGBA
-	{GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG, -1, -1, 4, true, true, kCCTexture2DPixelFormat_PVRTC4},
+	{GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG, 0xFFFFFFFF, 0xFFFFFFFF, 4, true, true, kCCTexture2DPixelFormat_PVRTC4},
 #endif // (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 };
 
@@ -114,24 +114,22 @@ typedef enum
 } ccPVR2TexturePixelFormat;
 
 // v3
-typedef enum {
-	/* supported predefined formats */
-	kPVR3TexturePixelFormat_PVRTC_2BPP_RGB = 0,
-	kPVR3TexturePixelFormat_PVRTC_2BPP_RGBA = 1,
-	kPVR3TexturePixelFormat_PVRTC_4BPP_RGB = 2,
-	kPVR3TexturePixelFormat_PVRTC_4BPP_RGBA = 3,
+/* supported predefined formats */
+#define kPVR3TexturePixelFormat_PVRTC_2BPP_RGB   0
+#define kPVR3TexturePixelFormat_PVRTC_2BPP_RGBA  1
+#define kPVR3TexturePixelFormat_PVRTC_4BPP_RGB   2
+#define kPVR3TexturePixelFormat_PVRTC_4BPP_RGBA  3
 	
-	/* supported channel type formats */
-	kPVR3TexturePixelFormat_BGRA_8888 = 0x0808080861726762,
-	kPVR3TexturePixelFormat_RGBA_8888 = 0x0808080861626772,
-	kPVR3TexturePixelFormat_RGBA_4444 = 0x0404040461626772,
-	kPVR3TexturePixelFormat_RGBA_5551 = 0x0105050561626772,
-	kPVR3TexturePixelFormat_RGB_565 = 0x0005060500626772,
-	kPVR3TexturePixelFormat_RGB_888 = 0x0008080800626772,
-	kPVR3TexturePixelFormat_A_8 = 0x0000000800000061,
-	kPVR3TexturePixelFormat_L_8 = 0x000000080000006c,
-	kPVR3TexturePixelFormat_LA_88 = 0x000008080000616c,
-} ccPVR3TexturePixelFormat;
+/* supported channel type formats */
+#define kPVR3TexturePixelFormat_BGRA_8888  0x0808080861726762ULL
+#define kPVR3TexturePixelFormat_RGBA_8888  0x0808080861626772ULL
+#define kPVR3TexturePixelFormat_RGBA_4444  0x0404040461626772ULL
+#define kPVR3TexturePixelFormat_RGBA_5551  0x0105050561626772ULL
+#define kPVR3TexturePixelFormat_RGB_565    0x0005060500626772ULL
+#define kPVR3TexturePixelFormat_RGB_888    0x0008080800626772ULL
+#define kPVR3TexturePixelFormat_A_8        0x0000000800000061ULL
+#define kPVR3TexturePixelFormat_L_8        0x000000080000006cULL
+#define kPVR3TexturePixelFormat_LA_88      0x000008080000616cULL
 
 
 // v2
@@ -442,9 +440,9 @@ bool CCTexturePVR::unpackPVRv3Data(unsigned char* dataPointer, unsigned int data
 	bytes = dataPointer;
 	
 	m_uNumberOfMipmaps = header->numberOfMipmaps;
-	CCAssert(m_uNumberOfMipmaps < CC_PVRMIPMAP_MAX, @"TexturePVR: Maximum number of mimpaps reached. Increate the CC_PVRMIPMAP_MAX value");
+	CCAssert(m_uNumberOfMipmaps < CC_PVRMIPMAP_MAX, "TexturePVR: Maximum number of mimpaps reached. Increate the CC_PVRMIPMAP_MAX value");
     
-	for (int i = 0; i < m_uNumberOfMipmaps; i++)
+	for (unsigned int i = 0; i < m_uNumberOfMipmaps; i++)
     {	
 		switch (pixelFormat)
         {
@@ -632,11 +630,6 @@ bool CCTexturePVR::initWithContentsOfFile(const char* path)
     CC_SAFE_DELETE_ARRAY(pvrdata);
     
     return true;
-}
-
-CCTexturePVR * CCTexturePVR::pvrTextureWithContentsOfFile(const char* path)
-{
-    return CCTexturePVR::create(path);
 }
 
 CCTexturePVR * CCTexturePVR::create(const char* path)

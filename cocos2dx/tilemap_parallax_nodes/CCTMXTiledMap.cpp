@@ -32,10 +32,6 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 // implementation CCTMXTiledMap
-CCTMXTiledMap * CCTMXTiledMap::tiledMapWithTMXFile(const char *tmxFile)
-{
-    return CCTMXTiledMap::create(tmxFile);
-}
 
 CCTMXTiledMap * CCTMXTiledMap::create(const char *tmxFile)
 {
@@ -47,11 +43,6 @@ CCTMXTiledMap * CCTMXTiledMap::create(const char *tmxFile)
     }
     CC_SAFE_DELETE(pRet);
     return NULL;
-}
-
-CCTMXTiledMap* CCTMXTiledMap::tiledMapWithXML(const char* tmxString, const char* resourcePath)
-{
-    return CCTMXTiledMap::createWithXML(tmxString, resourcePath);
 }
 
 CCTMXTiledMap* CCTMXTiledMap::createWithXML(const char* tmxString, const char* resourcePath)
@@ -227,7 +218,7 @@ void CCTMXTiledMap::buildWithMapInfo(CCTMXMapInfo* mapInfo)
                 addChild((CCNode*)child, idx, idx);
 
                 // update content size with the max size
-                CCSize childSize = child->getContentSize();
+                const CCSize& childSize = child->getContentSize();
                 CCSize currentSize = this->getContentSize();
                 currentSize.width = MAX( currentSize.width, childSize.width );
                 currentSize.height = MAX( currentSize.height, childSize.height );

@@ -37,8 +37,8 @@ NS_CC_BEGIN
  */
 typedef struct _ccColor3B
 {
-    GLubyte    r;
-    GLubyte    g;
+    GLubyte r;
+    GLubyte g;
     GLubyte b;
 } ccColor3B;
 
@@ -210,21 +210,6 @@ typedef struct _ccQuad3 {
     ccVertex3F        tl;
     ccVertex3F        tr;
 } ccQuad3;
-
-//! A 2D grid size
-typedef struct _ccGridSize
-{
-    int    x;
-    int    y;
-} ccGridSize;
-
-//! helper function to create a ccGridSize
-static inline ccGridSize
-ccg(const int x, const int y)
-{
-    ccGridSize v = {x, y};
-    return v;
-}
 
 //! a Point with a vertex point, a tex coord point and a color 4B
 typedef struct _ccV2F_C4B_T2F

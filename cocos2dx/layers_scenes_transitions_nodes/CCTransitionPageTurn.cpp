@@ -40,11 +40,6 @@ CCTransitionPageTurn::~CCTransitionPageTurn()
 {
 }
 
-CCTransitionPageTurn * CCTransitionPageTurn::transitionWithDuration(float t, CCScene *scene, bool backwards)
-{
-    return CCTransitionPageTurn::create(t,scene,backwards);
-}
-
 /** creates a base transition with duration and incoming scene */
 CCTransitionPageTurn * CCTransitionPageTurn::create(float t, CCScene *scene, bool backwards)
 {
@@ -88,7 +83,7 @@ void CCTransitionPageTurn::onEnter()
         y=16;
     }
 
-    CCActionInterval *action  = this->actionWithSize(ccg(x,y));
+    CCActionInterval *action  = this->actionWithSize(CCSizeMake(x,y));
 
     if(! m_bBack )
     {
@@ -122,20 +117,20 @@ void CCTransitionPageTurn::onEnter()
 }
 
 
-CCActionInterval* CCTransitionPageTurn:: actionWithSize(const ccGridSize& vector)
+CCActionInterval* CCTransitionPageTurn:: actionWithSize(const CCSize& vector)
 {
     if( m_bBack )
     {
         // Get hold of the PageTurn3DAction
         return CCReverseTime::create
         (
-            CCPageTurn3D::create(vector, m_fDuration)
+            CCPageTurn3D::create(m_fDuration, vector)
         );
     }
     else
     {
         // Get hold of the PageTurn3DAction
-        return CCPageTurn3D::create(vector, m_fDuration);
+        return CCPageTurn3D::create(m_fDuration, vector);
     }
 }
 

@@ -208,7 +208,7 @@ class JS_FRIEND_API(DirectWrapper) : public Wrapper, public DirectProxyHandler
     virtual bool construct(JSContext *cx, JSObject *wrapper, unsigned argc, Value *argv, Value *rval) MOZ_OVERRIDE;
     virtual bool nativeCall(JSContext *cx, IsAcceptableThis test, NativeImpl impl,
                             CallArgs args) MOZ_OVERRIDE;
-    virtual bool hasInstance(JSContext *cx, JSObject *wrapper, const Value *vp, bool *bp) MOZ_OVERRIDE;
+    virtual bool hasInstance(JSContext *cx, HandleObject wrapper, MutableHandleValue v, bool *bp) MOZ_OVERRIDE;
     virtual JSString *obj_toString(JSContext *cx, JSObject *wrapper) MOZ_OVERRIDE;
     virtual JSString *fun_toString(JSContext *cx, JSObject *wrapper, unsigned indent) MOZ_OVERRIDE;
     virtual bool defaultValue(JSContext *cx, JSObject *wrapper_, JSType hint,
@@ -253,12 +253,13 @@ class JS_FRIEND_API(CrossCompartmentWrapper) : public DirectWrapper
     virtual bool construct(JSContext *cx, JSObject *wrapper, unsigned argc, Value *argv, Value *rval) MOZ_OVERRIDE;
     virtual bool nativeCall(JSContext *cx, IsAcceptableThis test, NativeImpl impl,
                             CallArgs args) MOZ_OVERRIDE;
-    virtual bool hasInstance(JSContext *cx, JSObject *wrapper, const Value *vp, bool *bp) MOZ_OVERRIDE;
+    virtual bool hasInstance(JSContext *cx, HandleObject wrapper, MutableHandleValue v, bool *bp) MOZ_OVERRIDE;
     virtual JSString *obj_toString(JSContext *cx, JSObject *wrapper) MOZ_OVERRIDE;
     virtual JSString *fun_toString(JSContext *cx, JSObject *wrapper, unsigned indent) MOZ_OVERRIDE;
     virtual bool regexp_toShared(JSContext *cx, JSObject *proxy, RegExpGuard *g) MOZ_OVERRIDE;
     virtual bool defaultValue(JSContext *cx, JSObject *wrapper, JSType hint, Value *vp) MOZ_OVERRIDE;
     virtual bool iteratorNext(JSContext *cx, JSObject *wrapper, Value *vp);
+    virtual bool getPrototypeOf(JSContext *cx, JSObject *proxy, JSObject **protop);
 
     static CrossCompartmentWrapper singleton;
     static CrossCompartmentWrapper singletonWithPrototype;
@@ -311,7 +312,7 @@ class JS_FRIEND_API(DeadObjectProxy) : public BaseProxyHandler
     virtual bool construct(JSContext *cx, JSObject *proxy, unsigned argc, Value *argv, Value *rval);
     virtual bool nativeCall(JSContext *cx, IsAcceptableThis test, NativeImpl impl,
                             CallArgs args) MOZ_OVERRIDE;
-    virtual bool hasInstance(JSContext *cx, JSObject *proxy, const Value *vp, bool *bp);
+    virtual bool hasInstance(JSContext *cx, HandleObject proxy, MutableHandleValue v, bool *bp);
     virtual bool objectClassIs(JSObject *obj, ESClassValue classValue, JSContext *cx);
     virtual JSString *obj_toString(JSContext *cx, JSObject *proxy);
     virtual JSString *fun_toString(JSContext *cx, JSObject *proxy, unsigned indent);
@@ -320,7 +321,7 @@ class JS_FRIEND_API(DeadObjectProxy) : public BaseProxyHandler
     virtual bool iteratorNext(JSContext *cx, JSObject *proxy, Value *vp);
     virtual bool getElementIfPresent(JSContext *cx, JSObject *obj, JSObject *receiver,
                                      uint32_t index, Value *vp, bool *present);
-
+    virtual bool getPrototypeOf(JSContext *cx, JSObject *proxy, JSObject **protop);
 
     static DeadObjectProxy singleton;
 };
@@ -351,12 +352,12 @@ UnwrapObject(JSObject *obj, bool stopAtOuter = true, unsigned *flagsp = NULL);
 // code should never be unwrapping outer window wrappers, we always stop at
 // outer windows.
 JS_FRIEND_API(JSObject *)
-UnwrapObjectChecked(JSContext *cx, JSObject *obj);
+UnwrapObjectChecked(JSContext *cx, RawObject obj);
 
 // Unwrap only the outermost security wrapper, with the same semantics as
 // above. This is the checked version of Wrapper::wrappedObject.
 JS_FRIEND_API(JSObject *)
-UnwrapOneChecked(JSContext *cx, JSObject *obj);
+UnwrapOneChecked(JSContext *cx, HandleObject obj);
 
 JS_FRIEND_API(bool)
 IsCrossCompartmentWrapper(RawObject obj);
@@ -365,7 +366,7 @@ JSObject *
 NewDeadProxyObject(JSContext *cx, JSObject *parent);
 
 void
-NukeCrossCompartmentWrapper(JSObject *wrapper);
+NukeCrossCompartmentWrapper(JSContext *cx, JSObject *wrapper);
 
 bool
 RemapWrapper(JSContext *cx, JSObject *wobj, JSObject *newTarget);

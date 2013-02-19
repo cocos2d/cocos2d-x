@@ -55,21 +55,9 @@ void CCPoint::setPoint(float x, float y)
     this->y = y;
 }
 
-CCObject* CCPoint::copyWithZone(CCZone* pZone)
-{
-    CCPoint* pRet = new CCPoint();
-    pRet->setPoint(this->x, this->y);
-    return pRet;
-}
-
 bool CCPoint::equals(const CCPoint& target) const
 {
     return ((x == target.x) && (y == target.y));
-}
-
-bool CCPoint::CCPointEqualToPoint(const CCPoint& point1, const CCPoint& point2)
-{
-    return point1.equals(point2);
 }
 
 // implementation of CCSize
@@ -101,22 +89,9 @@ void CCSize::setSize(float width, float height)
     this->height = height;
 }
 
-CCObject* CCSize::copyWithZone(CCZone* pZone)
-{
-    CCSize* pRet = new CCSize();
-    pRet->setSize(this->width, this->width);
-    return pRet;
-}
-
 bool CCSize::equals(const CCSize& target) const
 {
     return ((width == target.width) && (height == target.height));
-}
-
-
-bool CCSize::CCSizeEqualToSize(const CCSize& size1, const CCSize& size2)
-{
-    return size1.equals(size2);
 }
 
 // implementation of CCRect
@@ -144,21 +119,14 @@ CCRect& CCRect::operator= (const CCRect& other)
 
 void CCRect::setRect(float x, float y, float width, float height)
 {
-    // Only support that, the width and height > 0
-    CCAssert(width >= 0.0f && height >= 0.0f, "width and height of Rect must not less than 0.");
+    // CGRect can support width<0 or height<0
+    // CCAssert(width >= 0.0f && height >= 0.0f, "width and height of Rect must not less than 0.");
 
     origin.x = x;
     origin.y = y;
 
     size.width = width;
     size.height = height;
-}
-
-CCObject* CCRect::copyWithZone(CCZone* pZone)
-{
-    CCRect* pRet = new CCRect();
-    pRet->setRect(this->origin.x, this->origin.y, this->size.width, this->size.height);
-    return pRet;
 }
 
 bool CCRect::equals(const CCRect& rect) const
@@ -216,27 +184,6 @@ bool CCRect::intersectsRect(const CCRect& rect) const
              rect.getMaxX() <      getMinX() ||
                   getMaxY() < rect.getMinY() ||
              rect.getMaxY() <      getMinY());
-}
-
-bool CCRect::CCRectEqualToRect(const CCRect& rect1, const CCRect& rect2)
-{
-    return rect1.equals(rect2);
-}
-
-bool CCRect::CCRectContainsPoint(const CCRect& rect, const CCPoint& point)
-{
-    return rect.containsPoint(point);
-}
-
-bool CCRect::CCRectIntersectsRect(const CCRect& rectA, const CCRect& rectB)
-{
-    /*
-    return !(CCRectGetMaxX(rectA) < CCRectGetMinX(rectB)||
-            CCRectGetMaxX(rectB) < CCRectGetMinX(rectA)||
-            CCRectGetMaxY(rectA) < CCRectGetMinY(rectB)||
-            CCRectGetMaxY(rectB) < CCRectGetMinY(rectA));
-     */
-    return rectA.intersectsRect(rectB);
 }
 
 NS_CC_END
