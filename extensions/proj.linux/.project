@@ -1,14 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>TestLua</name>
+	<name>libextension</name>
 	<comment></comment>
 	<projects>
-		<project>libBox2D</project>
-		<project>libChipmunk</project>
-		<project>libcocos2d</project>
-		<project>libCocosDenshion</project>
-		<project>libextension</project>
-		<project>liblua</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
@@ -32,14 +26,39 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>Classes</name>
+			<name>CCBReader</name>
 			<type>2</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Classes</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/CCBReader</locationURI>
 		</link>
 		<link>
-			<name>cocos2dx_support</name>
+			<name>ExtensionMacros.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/ExtensionMacros.h</locationURI>
+		</link>
+		<link>
+			<name>GUI</name>
 			<type>2</type>
-			<locationURI>PARENT-4-PROJECT_LOC/scripting/lua/cocos2dx_support</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/GUI</locationURI>
+		</link>
+		<link>
+			<name>LocalStorage</name>
+			<type>2</type>
+			<locationURI>PARENT-1-PROJECT_LOC/LocalStorage</locationURI>
+		</link>
+		<link>
+			<name>cocos-ext.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/cocos-ext.h</locationURI>
+		</link>
+		<link>
+			<name>network</name>
+			<type>2</type>
+			<locationURI>PARENT-1-PROJECT_LOC/network</locationURI>
+		</link>
+		<link>
+			<name>physics_nodes</name>
+			<type>2</type>
+			<locationURI>PARENT-1-PROJECT_LOC/physics_nodes</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>

@@ -3,10 +3,11 @@
 	<name>HelloCpp</name>
 	<comment></comment>
 	<projects>
-		<project>libcocos2d</project>
-		<project>libCocosDenshion</project>
 		<project>libBox2D</project>
 		<project>libChipmunk</project>
+		<project>libcocos2d</project>
+		<project>libCocosDenshion</project>
+		<project>libextension</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
@@ -94,22 +95,8 @@
 			<type>2</type>
 			<locationURI>PARENT-1-PROJECT_LOC/Classes</locationURI>
 		</link>
-		<link>
-			<name>extensions</name>
-			<type>2</type>
-			<locationURI>PARENT-4-PROJECT_LOC/extensions</locationURI>
-		</link>
 	</linkedResources>
 	<filteredResources>
-		<filter>
-			<id>1345105423456</id>
-			<name>extensions</name>
-			<type>10</type>
-			<matcher>
-				<id>org.eclipse.ui.ide.multiFilter</id>
-				<arguments>1.0-name-matches-true-false-proj.win32</arguments>
-			</matcher>
-		</filter>
 		<filter>
 			<id>1345106176896</id>
 			<name>Classes/ExtensionsTest</name>
@@ -117,15 +104,6 @@
 			<matcher>
 				<id>org.eclipse.ui.ide.multiFilter</id>
 				<arguments>1.0-name-matches-true-false-EditBoxTest</arguments>
-			</matcher>
-		</filter>
-		<filter>
-			<id>1345105383081</id>
-			<name>extensions/GUI</name>
-			<type>10</type>
-			<matcher>
-				<id>org.eclipse.ui.ide.multiFilter</id>
-				<arguments>1.0-name-matches-true-false-CCEditBox</arguments>
 			</matcher>
 		</filter>
 	</filteredResources>
