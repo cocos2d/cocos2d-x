@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?fileVersion 4.0.0?>
-
-<cproject storage_type_id="org.eclipse.cdt.core.XmlProjectDescriptionStorage">
+<?fileVersion 4.0.0?><cproject storage_type_id="org.eclipse.cdt.core.XmlProjectDescriptionStorage">
 	<storageModule moduleId="org.eclipse.cdt.core.settings">
 		<cconfiguration id="cdt.managedbuild.config.gnu.exe.debug.684675641">
 			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="cdt.managedbuild.config.gnu.exe.debug.684675641" moduleId="org.eclipse.cdt.core.settings" name="Debug">
@@ -77,6 +75,11 @@
 									<listOptionValue builtIn="false" value="&quot;../../../../../CocosDenshion/proj.linux/${ConfigName}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;../../../../../scripting/lua/proj.linux/${ConfigName}&quot;"/>
 									<listOptionValue builtIn="false" value="../../../../../CocosDenshion/third_party/fmod/api/lib"/>
+								</option>
+								<option id="gnu.cpp.link.option.userobjs.1565549726" superClass="gnu.cpp.link.option.userobjs" valueType="userObjs">
+									<listOptionValue builtIn="false" value="&quot;../../../../../extensions/proj.linux/${ConfigName}/libextension.a&quot;"/>
+									<listOptionValue builtIn="false" value="../../../../../external/chipmunk/proj.linux/${ConfigName}/libchipmunk.a"/>
+									<listOptionValue builtIn="false" value="../../../../../external/Box2D/proj.linux/${ConfigName}/libBox2D.a"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.154309798" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
@@ -172,6 +175,11 @@
 									<listOptionValue builtIn="false" value="&quot;../../../../../scripting/lua/proj.linux/${ConfigName}&quot;"/>
 									<listOptionValue builtIn="false" value="../../../../../CocosDenshion/third_party/fmod/api/lib"/>
 								</option>
+								<option id="gnu.cpp.link.option.userobjs.1420206481" superClass="gnu.cpp.link.option.userobjs" valueType="userObjs">
+									<listOptionValue builtIn="false" value="&quot;../../../../../extensions/proj.linux/${ConfigName}/libextension.a&quot;"/>
+									<listOptionValue builtIn="false" value="../../../../../external/chipmunk/proj.linux/${ConfigName}/libchipmunk.a"/>
+									<listOptionValue builtIn="false" value="../../../../../external/Box2D/proj.linux/${ConfigName}/libBox2D.a"/>
+								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.760339141" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
@@ -260,6 +268,11 @@
 									<listOptionValue builtIn="false" value="&quot;../../../../../CocosDenshion/proj.linux/${ConfigName}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;../../../../../scripting/lua/proj.linux/${ConfigName}&quot;"/>
 									<listOptionValue builtIn="false" value="../../../../../CocosDenshion/third_party/fmod/lib64/api/lib"/>
+								</option>
+								<option id="gnu.cpp.link.option.userobjs.279871009" superClass="gnu.cpp.link.option.userobjs" valueType="userObjs">
+									<listOptionValue builtIn="false" value="&quot;../../../../../extensions/proj.linux/${ConfigName}/libextension.a&quot;"/>
+									<listOptionValue builtIn="false" value="../../../../../external/chipmunk/proj.linux/${ConfigName}/libchipmunk.a"/>
+									<listOptionValue builtIn="false" value="../../../../../external/Box2D/proj.linux/${ConfigName}/libBox2D.a"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.1332538227" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
@@ -354,6 +367,11 @@
 									<listOptionValue builtIn="false" value="&quot;../../../../../CocosDenshion/proj.linux/${ConfigName}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;../../../../../scripting/lua/proj.linux/${ConfigName}&quot;"/>
 									<listOptionValue builtIn="false" value="../../../../../CocosDenshion/third_party/fmod/lib64/api/lib"/>
+								</option>
+								<option id="gnu.cpp.link.option.userobjs.1531265161" superClass="gnu.cpp.link.option.userobjs" valueType="userObjs">
+									<listOptionValue builtIn="false" value="&quot;../../../../../extensions/proj.linux/${ConfigName}/libextension.a&quot;"/>
+									<listOptionValue builtIn="false" value="../../../../../external/chipmunk/proj.linux/${ConfigName}/libchipmunk.a"/>
+									<listOptionValue builtIn="false" value="../../../../../external/Box2D/proj.linux/${ConfigName}/libBox2D.a"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.479170088" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
