@@ -289,6 +289,10 @@
 		41CD6C4715BF7382005E6F29 /* EAGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 41CD6C3415BF7382005E6F29 /* EAGLView.mm */; };
 		469A7DF916C247C8006FFCB2 /* tinyxml2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 469A7DF716C247C8006FFCB2 /* tinyxml2.cpp */; };
 		469A7DFA16C247C8006FFCB2 /* tinyxml2.h in Headers */ = {isa = PBXBuildFile; fileRef = 469A7DF816C247C8006FFCB2 /* tinyxml2.h */; };
+		969A140F16D3073200084057 /* CCKeyboardDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 969A140B16D3073200084057 /* CCKeyboardDelegate.cpp */; };
+		969A141016D3073200084057 /* CCKeyboardDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 969A140C16D3073200084057 /* CCKeyboardDelegate.h */; };
+		969A141116D3073200084057 /* CCKeyboardDispatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 969A140D16D3073200084057 /* CCKeyboardDispatcher.cpp */; };
+		969A141216D3073200084057 /* CCKeyboardDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = 969A140E16D3073200084057 /* CCKeyboardDispatcher.h */; };
 		F4D7A74715F269D10081CE26 /* ccTypeInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = F4D7A74615F269D10081CE26 /* ccTypeInfo.h */; };
 /* End PBXBuildFile section */
 
@@ -579,6 +583,10 @@
 		41CD6C3415BF7382005E6F29 /* EAGLView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = EAGLView.mm; sourceTree = "<group>"; };
 		469A7DF716C247C8006FFCB2 /* tinyxml2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxml2.cpp; sourceTree = "<group>"; };
 		469A7DF816C247C8006FFCB2 /* tinyxml2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tinyxml2.h; sourceTree = "<group>"; };
+		969A140B16D3073200084057 /* CCKeyboardDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCKeyboardDelegate.cpp; sourceTree = "<group>"; };
+		969A140C16D3073200084057 /* CCKeyboardDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCKeyboardDelegate.h; sourceTree = "<group>"; };
+		969A140D16D3073200084057 /* CCKeyboardDispatcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCKeyboardDispatcher.cpp; sourceTree = "<group>"; };
+		969A140E16D3073200084057 /* CCKeyboardDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCKeyboardDispatcher.h; sourceTree = "<group>"; };
 		F4D7A74615F269D10081CE26 /* ccTypeInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccTypeInfo.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -852,6 +860,10 @@
 				1551A415158F2ADE00E66CFE /* CCKeypadDelegate.h */,
 				1551A416158F2ADE00E66CFE /* CCKeypadDispatcher.cpp */,
 				1551A417158F2ADE00E66CFE /* CCKeypadDispatcher.h */,
+				969A140B16D3073200084057 /* CCKeyboardDelegate.cpp */,
+				969A140C16D3073200084057 /* CCKeyboardDelegate.h */,
+				969A140D16D3073200084057 /* CCKeyboardDispatcher.cpp */,
+				969A140E16D3073200084057 /* CCKeyboardDispatcher.h */,
 			);
 			path = keypad_dispatcher;
 			sourceTree = "<group>";
@@ -1367,6 +1379,8 @@
 				1A94D34616C1FF8800D79D09 /* encode.h in Headers */,
 				1A94D34716C1FF8800D79D09 /* types.h in Headers */,
 				469A7DFA16C247C8006FFCB2 /* tinyxml2.h in Headers */,
+				969A141016D3073200084057 /* CCKeyboardDelegate.h in Headers */,
+				969A141216D3073200084057 /* CCKeyboardDispatcher.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1543,6 +1557,8 @@
 				1A950DFC16BB6661003F4508 /* CCFileUtils.cpp in Sources */,
 				1A94D34916C2001000D79D09 /* CCImageCommonWebp.cpp in Sources */,
 				469A7DF916C247C8006FFCB2 /* tinyxml2.cpp in Sources */,
+				969A140F16D3073200084057 /* CCKeyboardDelegate.cpp in Sources */,
+				969A141116D3073200084057 /* CCKeyboardDispatcher.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

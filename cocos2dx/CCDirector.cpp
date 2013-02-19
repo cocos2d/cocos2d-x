@@ -44,6 +44,7 @@ THE SOFTWARE.
 #include "actions/CCActionManager.h"
 #include "CCConfiguration.h"
 #include "keypad_dispatcher/CCKeypadDispatcher.h"
+#include "keypad_dispatcher/CCKeyboardDispatcher.h"
 #include "CCAccelerometer.h"
 #include "sprite_nodes/CCAnimationCache.h"
 #include "touch_dispatcher/CCTouch.h"
@@ -151,6 +152,9 @@ bool CCDirector::init(void)
 
     // Accelerometer
     m_pAccelerometer = new CCAccelerometer();
+    
+    // KeyboardDispatcher
+    m_pKeyboardDispatcher = new CCKeyboardDispatcher();
 
     // create autorelease pool
     CCPoolManager::sharedPoolManager()->push();
@@ -912,6 +916,18 @@ void CCDirector::setAccelerometer(CCAccelerometer* pAccelerometer)
 CCAccelerometer* CCDirector::getAccelerometer()
 {
     return m_pAccelerometer;
+}
+
+void CCDirector::setKeyboardDispatcher(CCKeyboardDispatcher* pKeyboardDispatcher)
+{
+    CC_SAFE_RETAIN(pKeyboardDispatcher);
+    CC_SAFE_RELEASE(m_pKeyboardDispatcher);
+    m_pKeyboardDispatcher = pKeyboardDispatcher;
+}
+
+CCKeyboardDispatcher* CCDirector::getKeyboardDispatcher()
+{
+    return m_pKeyboardDispatcher;
 }
 
 /***************************************************

@@ -32,6 +32,7 @@ THE SOFTWARE.
 #include "touch_dispatcher/CCTouchDelegateProtocol.h"
 #include "platform/CCAccelerometerDelegate.h"
 #include "keypad_dispatcher/CCKeypadDelegate.h"
+#include "keypad_dispatcher/CCKeyboardDelegate.h"
 #include "cocoa/CCArray.h"
 
 NS_CC_BEGIN
@@ -57,7 +58,7 @@ All features from CCNode are valid, plus the following new features:
 - It can receive iPhone Touches
 - It can receive Accelerometer input
 */
-class CC_DLL CCLayer : public CCNode, public CCTouchDelegate, public CCAccelerometerDelegate, public CCKeypadDelegate
+class CC_DLL CCLayer : public CCNode, public CCTouchDelegate, public CCAccelerometerDelegate, public CCKeypadDelegate, public CCKeyboardDelegate
 {
 public:
     CCLayer();
@@ -104,6 +105,11 @@ public:
     /** Unregister script touch events handler */
     virtual void unregisterScriptTouchHandler(void);
 
+    /** Register for Keyboard events handler */
+    virtual void registerWithKeyboardDispatcher(void);
+    /** Unregister for Keyboard events handler */
+    virtual void unregisterWithKeyboardDispatcher(void);
+    
     /** whether or not it will receive Touch events.
     You can enable / disable touch events with this property.
     Only the touches of this node will be affected. This "method" is not propagated to it's children.
@@ -145,10 +151,17 @@ public:
     inline CCTouchScriptHandlerEntry* getScriptTouchHandlerEntry() { return m_pScriptTouchHandlerEntry; };
     inline CCScriptHandlerEntry* getScriptKeypadHandlerEntry() { return m_pScriptKeypadHandlerEntry; };
     inline CCScriptHandlerEntry* getScriptAccelerateHandlerEntry() { return m_pScriptAccelerateHandlerEntry; };
+    
+    virtual bool isKeyboardEnabled();
+    virtual void setKeyboardEnabled(bool value);
+    virtual void ccKeyDown(CCKeyboardEvent event) {};
+    virtual void ccKeyUp(CCKeyboardEvent event) {};
+    virtual void ccKeyFlagsChanged(CCKeyboardEvent event) {};
 protected:   
     bool m_bTouchEnabled;
     bool m_bAccelerometerEnabled;
     bool m_bKeypadEnabled;
+    bool m_bKeyboardEnabled;
     
 private:
     // Script touch events handler

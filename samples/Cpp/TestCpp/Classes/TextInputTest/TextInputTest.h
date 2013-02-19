@@ -93,6 +93,22 @@ public:
     virtual bool onDraw(CCTextFieldTTF * pSender);
 };
 
+//////////////////////////////////////////////////////////////////////////
+// TextFieldTTFKeyboardTest for test TextFieldTTF keyboard behavior.
+//////////////////////////////////////////////////////////////////////////
+
+class TextFieldTTFKeyboardTest : public KeyboardNotificationLayer
+{
+public:
+    TextFieldTTFKeyboardTest(); // KeyboardNotificationLayer
+    virtual std::string subtitle();
+    virtual void onClickTrackNode(bool bClicked);
+    virtual void ccKeyDown(CCKeyboardEvent event);
+    
+    // CCLayer
+    virtual void onEnter();
+};
+
 class TextInputTestScene : public TestScene
 {
 public:

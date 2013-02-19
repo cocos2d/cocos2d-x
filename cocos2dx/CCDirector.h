@@ -72,6 +72,7 @@ class CCScheduler;
 class CCActionManager;
 class CCTouchDispatcher;
 class CCKeypadDispatcher;
+class CCKeyboardDispatcher;
 class CCAccelerometer;
 
 /**
@@ -322,6 +323,11 @@ public:
      @since v2.0
      */
     CC_PROPERTY(CCAccelerometer*, m_pAccelerometer, Accelerometer);
+    
+    /** CCKeypadDispatcher associated with this director
+     @since v2.1.1
+     */
+    CC_PROPERTY(CCKeyboardDispatcher*, m_pKeyboardDispatcher, KeyboardDispatcher);
 
     /** returns a shared instance of the director */
     static CCDirector* sharedDirector(void);

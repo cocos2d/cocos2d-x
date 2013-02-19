@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include "CCLayer.h"
 #include "touch_dispatcher/CCTouchDispatcher.h"
 #include "keypad_dispatcher/CCKeypadDispatcher.h"
+#include "keypad_dispatcher/CCKeyboardDispatcher.h"
 #include "CCAccelerometer.h"
 #include "CCDirector.h"
 #include "support/CCPointExtension.h"
@@ -46,9 +47,10 @@ CCLayer::CCLayer()
 : m_bTouchEnabled(false)
 , m_bAccelerometerEnabled(false)
 , m_bKeypadEnabled(false)
-,m_pScriptTouchHandlerEntry(NULL)
-,m_pScriptKeypadHandlerEntry(NULL)
-,m_pScriptAccelerateHandlerEntry(NULL)
+, m_bKeyboardEnabled(false)
+, m_pScriptTouchHandlerEntry(NULL)
+, m_pScriptKeypadHandlerEntry(NULL)
+, m_pScriptAccelerateHandlerEntry(NULL)
 , m_eTouchMode(kCCTouchesAllAtOnce)
 , m_nTouchPriority(0)
 {
@@ -71,8 +73,6 @@ bool CCLayer::init()
         CCDirector * pDirector;
         CC_BREAK_IF(!(pDirector = CCDirector::sharedDirector()));
         this->setContentSize(pDirector->getWinSize());
-        m_bTouchEnabled = false;
-        m_bAccelerometerEnabled = false;
         // success
         bRet = true;
     } while(0);
@@ -328,6 +328,44 @@ void CCLayer::keyMenuClicked(void)
     }
 }
 
+/// isKeyboardEnabled getter
+bool CCLayer::isKeyboardEnabled()
+{
+    return m_bKeypadEnabled;
+}
+/// isKeyboardEnabled setter
+void CCLayer::setKeyboardEnabled(bool enabled)
+{
+    if (enabled != m_bKeyboardEnabled)
+    {
+        m_bKeyboardEnabled = enabled;
+        
+        if (m_bRunning)
+        {
+            if (enabled)
+            {
+                registerWithKeyboardDispatcher();
+            }
+            else
+            {
+                unregisterWithKeyboardDispatcher();
+            }
+        }
+    }
+}
+
+void CCLayer::registerWithKeyboardDispatcher()
+{
+    CCKeyboardDispatcher* pDispatcher = CCDirector::sharedDirector()->getKeyboardDispatcher();
+    pDispatcher->addDelegate(this);
+}
+
+void CCLayer::unregisterWithKeyboardDispatcher()
+{
+    CCKeyboardDispatcher* pDispatcher = CCDirector::sharedDirector()->getKeyboardDispatcher();
+    pDispatcher->removeDelegate(this);
+}
+
 /// Callbacks
 void CCLayer::onEnter()
 {
@@ -339,6 +377,11 @@ void CCLayer::onEnter()
         this->registerWithTouchDispatcher();
     }
 
+    if (m_bKeyboardEnabled)
+    {
+        this->registerWithKeyboardDispatcher();
+    }
+    
     // then iterate over all the children
     CCNode::onEnter();
 

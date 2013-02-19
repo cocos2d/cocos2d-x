@@ -155,6 +155,7 @@ protected:
 
     virtual bool canAttachWithIME();
     virtual bool canDetachWithIME();
+public:
     virtual void insertText(const char * text, int len);
     virtual void deleteBackward();
     virtual const char * getContentText();

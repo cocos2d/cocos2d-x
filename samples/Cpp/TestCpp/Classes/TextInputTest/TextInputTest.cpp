@@ -10,6 +10,7 @@ enum
 {
     kTextFieldTTFDefaultTest = 0,
     kTextFieldTTFActionTest,
+    kTextFieldTTFKeyBoardTest,
     kTextInputTestsCount,
 }; 
 
@@ -24,6 +25,7 @@ KeyboardNotificationLayer* createTextInputTest(int nIndex)
     {
     case kTextFieldTTFDefaultTest: return new TextFieldTTFDefaultTest();
     case kTextFieldTTFActionTest: return new TextFieldTTFActionTest();
+    case kTextFieldTTFKeyBoardTest: return new TextFieldTTFKeyboardTest();
     default: return 0;
     }
 }
@@ -465,6 +467,56 @@ bool TextFieldTTFActionTest::onDraw(CCTextFieldTTF * pSender)
 void TextFieldTTFActionTest::callbackRemoveNodeWhenDidAction(CCNode * pNode)
 {
     this->removeChild(pNode, true);
+}
+
+//////////////////////////////////////////////////////////////////////////
+// implement TextFieldTTFDefaultTest
+//////////////////////////////////////////////////////////////////////////
+
+TextFieldTTFKeyboardTest::TextFieldTTFKeyboardTest() {
+    m_bKeyboardEnabled = true;
+}
+
+std::string TextFieldTTFKeyboardTest::subtitle()
+{
+    return "TextFieldTTF with keyboard behavior test";
+}
+
+void TextFieldTTFKeyboardTest::onEnter()
+{
+    KeyboardNotificationLayer::onEnter();
+    
+    // add CCTextFieldTTF
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    
+    CCTextFieldTTF * pTextField = CCTextFieldTTF::textFieldWithPlaceHolder("<type into keyboard for input>",
+                                                                           FONT_NAME,
+                                                                           FONT_SIZE);
+    addChild(pTextField);
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    // on android, CCTextFieldTTF cannot auto adjust its position when soft-keyboard pop up
+    // so we had to set a higher position to make it visable
+    pTextField->setPosition(ccp(s.width / 2, s.height/2 + 50));
+#else
+    pTextField->setPosition(ccp(s.width / 2, s.height / 2));
+#endif
+    
+    m_pTrackNode = pTextField;
+}
+
+void TextFieldTTFKeyboardTest::onClickTrackNode(bool bClicked) {}
+
+void TextFieldTTFKeyboardTest::ccKeyDown(CCKeyboardEvent event) {
+    CCTextFieldTTF * pTextField = (CCTextFieldTTF*)m_pTrackNode;
+    switch (event.keyCode) {
+        case 51:
+            pTextField->deleteBackward();
+            break;
+        default:
+            pTextField->insertText(&event.alpha, 1);
+            break;
+    }
 }
 
 //////////////////////////////////////////////////////////////////////////
