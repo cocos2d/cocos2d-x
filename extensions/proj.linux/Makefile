@@ -4,6 +4,7 @@ AR      = ar
 TARGET	= libextension.a
 CCFLAGS = -Wall
 CXXFLAGS = -Wall
+ARFLAGS = cr
 
 COCOS2DX_ROOT=../..
 
@@ -24,7 +25,7 @@ INCLUDES =  -I$(COCOS2DX_ROOT)/cocos2dx \
 			-I../network 
 
 DEFINES = -DLINUX
-DEFINES += -D__CC_PLATFORM_FILEUTILS_CPP__
+DEFINES += -DCC_ENABLE_CHIPMUNK_INTEGRATION=1
 DEFINES += -D__CC_PLATFORM_IMAGE_CPP__
 
 OBJECTS = ../CCBReader/CCBFileLoader.o \
