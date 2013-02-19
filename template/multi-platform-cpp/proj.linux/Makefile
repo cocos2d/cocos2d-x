@@ -50,9 +50,9 @@ STATICLIBS = $(STATICLIBS_DIR)/libfreetype.a \
 				$(STATICLIBS_DIR)/libpng.a \
 				$(STATICLIBS_DIR)/libjpeg.a \
 				$(STATICLIBS_DIR)/libtiff.a \
+				../../../lib/linux/Debug/libextension.a \
 				../../../lib/linux/Debug/libbox2d.a \
-				../../../lib/linux/Debug/libchipmunk.a \
-				../../../lib/linux/Debug/libextension.a 
+				../../../lib/linux/Debug/libchipmunk.a 
 
 SHAREDLIBS = 
 ifeq ($(LBITS),64)
@@ -72,14 +72,14 @@ BIN_DIR = BIN_DIR_ROOT
 debug: SHAREDLIBS += -L../../../lib/linux/Debug -lcocos2d -lrt -lz -lcocosdenshion -Wl,-rpath,../../../../../lib/linux/Debug
 debug: CCFLAGS += -g3 -O0
 debug: CXXFLAGS += -g3 -O0
-debug: DEFINES += -DDEBUG -DCC_ENABLE_CHIPMUNK_INTEGRATION -DCOCOS2D_DEBUG=1
+debug: DEFINES += -DDEBUG -DCC_ENABLE_CHIPMUNK_INTEGRATION=1 -DCOCOS2D_DEBUG=1
 debug: BIN_DIR = $(BIN_DIR_ROOT)/debug
 debug: $(TARGET)
 
 release: SHAREDLIBS += -L../../../lib/linux/Release -lcocos2d -lrt -lz -lcocosdenshion -Wl,-rpath,../../../../../lib/linux/Release
 release: CCFLAGS += -O3
 release: CXXFLAGS += -O3
-release: DEFINES += -DNDEBUG -DCC_ENABLE_CHIPMUNK_INTEGRATION
+release: DEFINES += -DNDEBUG -DCC_ENABLE_CHIPMUNK_INTEGRATION=1
 release: BIN_DIR = $(BIN_DIR_ROOT)/release
 release: $(TARGET)
 
