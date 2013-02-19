@@ -22,7 +22,7 @@ INCLUDES =  -I../ \
 			-I../../../../CocosDenshion/include \
 			-I../../../../extensions/ \
 			-I../../../../external/ \
-			-I../../../../external/chipmunk/include/chipmunk \
+			-I../../../../external/chipmunk/include/chipmunk
 
 
 LBITS := $(shell getconf LONG_BIT)
@@ -145,6 +145,7 @@ STATICLIBS = $(STATICLIBS_DIR)/libfreetype.a \
 				$(STATICLIBS_DIR)/libtiff.a \
 				../../../../lib/linux/Debug/libbox2d.a \
 				../../../../lib/linux/Debug/libchipmunk.a \
+				../../../../lib/linux/Debug/libextension.a 
 
 SHAREDLIBS = 
 ifeq ($(LBITS),64)
@@ -155,12 +156,8 @@ SHAREDLIBS_DIR = ../../../../CocosDenshion/third_party/fmod/api/lib
 SHAREDLIBS = -L$(SHAREDLIBS_DIR) -lfmodex
 endif
 
-SHAREDLIBS += -lglfw 
-#SHAREDLIBS += -L../../../../lib/linux/Debug -lcocos2d -lrt -lz -lcocosdenshion -Wl,-rpath,../../../../../lib/linux/Debug/ 
+SHAREDLIBS += -lglfw -lGLEW
 SHAREDLIBS += -Wl,-rpath,../../$(SHAREDLIBS_DIR)
-#SHAREDLIBS += -Wl,-rpath,../../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib
-SHAREDLIBS += -L../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib -lGLEW
-SHAREDLIBS += -Wl,-rpath,../../../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib
 
 
 SHAREDLIBS += -Wl,-rpath,../$(STATICLIBS_DIR)

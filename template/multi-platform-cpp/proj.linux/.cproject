@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?fileVersion 4.0.0?>
-
-<cproject storage_type_id="org.eclipse.cdt.core.XmlProjectDescriptionStorage">
+<?fileVersion 4.0.0?><cproject storage_type_id="org.eclipse.cdt.core.XmlProjectDescriptionStorage">
 	<storageModule moduleId="org.eclipse.cdt.core.settings">
 		<cconfiguration id="cdt.managedbuild.config.gnu.exe.debug.699705174">
 			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="cdt.managedbuild.config.gnu.exe.debug.699705174" moduleId="org.eclipse.cdt.core.settings" name="Debug">
@@ -74,6 +72,7 @@
 									<listOptionValue builtIn="false" value="../../../../CocosDenshion/third_party/fmod/api/lib"/>
 								</option>
 								<option id="gnu.cpp.link.option.userobjs.1021852674" name="Other objects" superClass="gnu.cpp.link.option.userobjs" valueType="userObjs">
+									<listOptionValue builtIn="false" value="&quot;../../../../extensions/proj.linux/${ConfigName}/libextension.a&quot;"/>
 									<listOptionValue builtIn="false" value="../../../../external/chipmunk/proj.linux/${ConfigName}/libchipmunk.a"/>
 									<listOptionValue builtIn="false" value="../../../../external/Box2D/proj.linux/${ConfigName}/libBox2D.a"/>
 								</option>
@@ -165,6 +164,7 @@
 									<listOptionValue builtIn="false" value="../../../../CocosDenshion/third_party/fmod/api/lib"/>
 								</option>
 								<option id="gnu.cpp.link.option.userobjs.1558283777" name="Other objects" superClass="gnu.cpp.link.option.userobjs" valueType="userObjs">
+									<listOptionValue builtIn="false" value="&quot;../../../../extensions/proj.linux/${ConfigName}/libextension.a&quot;"/>
 									<listOptionValue builtIn="false" value="../../../../external/chipmunk/proj.linux/${ConfigName}/libchipmunk.a"/>
 									<listOptionValue builtIn="false" value="../../../../external/Box2D/proj.linux/${ConfigName}/libBox2D.a"/>
 								</option>
@@ -259,6 +259,7 @@
 									<listOptionValue builtIn="false" value="../../../../CocosDenshion/third_party/fmod/lib64/api/lib"/>
 								</option>
 								<option id="gnu.cpp.link.option.userobjs.300798233" name="Other objects" superClass="gnu.cpp.link.option.userobjs" valueType="userObjs">
+									<listOptionValue builtIn="false" value="&quot;../../../../extensions/proj.linux/${ConfigName}/libextension.a&quot;"/>
 									<listOptionValue builtIn="false" value="../../../../external/chipmunk/proj.linux/${ConfigName}/libchipmunk.a"/>
 									<listOptionValue builtIn="false" value="../../../../external/Box2D/proj.linux/${ConfigName}/libBox2D.a"/>
 								</option>
@@ -349,6 +350,7 @@
 									<listOptionValue builtIn="false" value="../../../../CocosDenshion/third_party/fmod/lib64/api/lib"/>
 								</option>
 								<option id="gnu.cpp.link.option.userobjs.521099390" name="Other objects" superClass="gnu.cpp.link.option.userobjs" valueType="userObjs">
+									<listOptionValue builtIn="false" value="&quot;../../../../extensions/proj.linux/${ConfigName}/libextension.a&quot;"/>
 									<listOptionValue builtIn="false" value="../../../../external/chipmunk/proj.linux/${ConfigName}/libchipmunk.a"/>
 									<listOptionValue builtIn="false" value="../../../../external/Box2D/proj.linux/${ConfigName}/libBox2D.a"/>
 								</option>
