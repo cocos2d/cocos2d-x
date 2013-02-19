@@ -464,6 +464,7 @@ JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* c
 
         rpath = tmp;
     } else {
+        cocos2d::CCFileUtils * futil = cocos2d::CCFileUtils::sharedFileUtils();
         rpath = futil->fullPathForFilename(path);
     }
 
