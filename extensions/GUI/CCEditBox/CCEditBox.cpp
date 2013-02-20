@@ -124,6 +124,17 @@ const char* CCEditBox::getText(void)
     return NULL;
 }
 
+void CCEditBox::setFont(const char* pFontName, int fontSize)
+{
+    if (pFontName != NULL)
+    {
+        if (m_pEditBoxImpl != NULL)
+        {
+            m_pEditBoxImpl->setFont(pFontName, fontSize);
+        }
+    }
+}
+
 void CCEditBox::setFontColor(const ccColor3B& color)
 {
     m_colText = color;
@@ -219,6 +230,15 @@ void CCEditBox::setContentSize(const CCSize& size)
     }
 }
 
+void CCEditBox::setAnchorPoint(const CCPoint& anchorPoint)
+{
+    CCControlButton::setAnchorPoint(anchorPoint);
+    if (m_pEditBoxImpl != NULL)
+    {
+        m_pEditBoxImpl->setAnchorPoint(anchorPoint);
+    }
+}
+
 void CCEditBox::visit(void)
 {
     CCControlButton::visit();
@@ -240,11 +260,8 @@ void CCEditBox::onExit(void)
 
 static CCRect getRect(CCNode * pNode)
 {
-    CCRect rc;
-    rc.origin = pNode->getPosition();
-    rc.size = pNode->getContentSize();
-    rc.origin.x -= rc.size.width / 2;
-    rc.origin.y -= rc.size.height / 2;
+	CCRect rc = pNode->boundingBox();
+	rc.origin.y -= 4;
     return rc;
 }
 
