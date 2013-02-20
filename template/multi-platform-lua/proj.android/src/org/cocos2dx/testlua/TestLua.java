@@ -29,7 +29,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.KeyEvent;
 
-public class TestLua extends Cocos2dxActivity{
+public class HelloLua extends Cocos2dxActivity{
 	protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 	}

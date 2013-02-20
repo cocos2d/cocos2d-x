@@ -42,7 +42,7 @@ END
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDR_MAINFRAME           ICON                    "res\\TestLua.ico"
+IDR_MAINFRAME           ICON                    "res\\HelloLua.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -67,12 +67,12 @@ BEGIN
         BLOCK "040904B0"
         BEGIN
             VALUE "CompanyName", "\0"
-            VALUE "FileDescription", "TestLua Module\0"
+            VALUE "FileDescription", "HelloLua Module\0"
             VALUE "FileVersion", "1, 0, 0, 1\0"
-            VALUE "InternalName", "TestLua\0"
+            VALUE "InternalName", "HelloLua\0"
             VALUE "LegalCopyright", "Copyright \0"
-            VALUE "OriginalFilename", "TestLua.exe\0"
-            VALUE "ProductName", "TestLua Module\0"
+            VALUE "OriginalFilename", "HelloLua.exe\0"
+            VALUE "ProductName", "HelloLua Module\0"
             VALUE "ProductVersion", "1, 0, 0, 1\0"
         END
     END
