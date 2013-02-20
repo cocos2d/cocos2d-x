@@ -66,12 +66,12 @@
       <MkTypLibCompatible>false</MkTypLibCompatible>
       <TargetEnvironment>Win32</TargetEnvironment>
       <GenerateStublessProxies>true</GenerateStublessProxies>
-      <TypeLibraryName>$(IntDir)testjs.tlb</TypeLibraryName>
-      <HeaderFileName>testjs.h</HeaderFileName>
+      <TypeLibraryName>$(IntDir)game.tlb</TypeLibraryName>
+      <HeaderFileName>game.h</HeaderFileName>
       <DllDataFileName>
       </DllDataFileName>
-      <InterfaceIdentifierFileName>testjs_i.c</InterfaceIdentifierFileName>
-      <ProxyFileName>testjs_p.c</ProxyFileName>
+      <InterfaceIdentifierFileName>game_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>game_p.c</ProxyFileName>
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
@@ -120,12 +120,12 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\HelloJavascriptRes\" /e /Y</Command
       <MkTypLibCompatible>false</MkTypLibCompatible>
       <TargetEnvironment>Win32</TargetEnvironment>
       <GenerateStublessProxies>true</GenerateStublessProxies>
-      <TypeLibraryName>$(IntDir)testjs.tlb</TypeLibraryName>
-      <HeaderFileName>testjs.h</HeaderFileName>
+      <TypeLibraryName>$(IntDir)game.tlb</TypeLibraryName>
+      <HeaderFileName>game.h</HeaderFileName>
       <DllDataFileName>
       </DllDataFileName>
-      <InterfaceIdentifierFileName>testjs_i.c</InterfaceIdentifierFileName>
-      <ProxyFileName>testjs_p.c</ProxyFileName>
+      <InterfaceIdentifierFileName>game_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>game_p.c</ProxyFileName>
     </Midl>
     <ClCompile>
       <AdditionalIncludeDirectories>$(ProjectDir)..\Classes;$(ProjectDir)..\..\..\scripting\javascript\spidermonkey-win32\include;$(ProjectDir)..\..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\..\extensions;$(ProjectDir)..\..\..\scripting\javascript\bindings;$(ProjectDir)..\..\..\cocos2dx;$(ProjectDir)..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\..\cocos2dx\platform\win32;$(ProjectDir)..\..\..\cocos2dx\platform\third_party\win32;$(ProjectDir)..\..\..\cocos2dx\platform\third_party\win32\OGLES;$(ProjectDir)..\..\..\CocosDenshion\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -175,10 +175,10 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\HelloJavascriptRes\" /e /Y</Command
     <ClInclude Include="..\Classes\AppDelegate.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\testjs.ico" />
+    <None Include="res\game.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="testjs.rc" />
+    <ResourceCompile Include="game.rc" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\cocos2dx\proj.win32\cocos2d.vcxproj">

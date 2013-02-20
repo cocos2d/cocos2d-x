@@ -32,12 +32,12 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\testjs.ico">
+    <None Include="res\game.ico">
       <Filter>resource</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="testjs.rc">
+    <ResourceCompile Include="game.rc">
       <Filter>resource</Filter>
     </ResourceCompile>
   </ItemGroup>
