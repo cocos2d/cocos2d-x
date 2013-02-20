@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.92 on Tue Feb 19 10:06:47 2013.
+** Generated automatically by tolua++-1.0.92 on Wed Feb 20 12:05:07 2013.
 */
 
 /****************************************************************************
@@ -57173,10 +57173,6 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"formatWithTMXFile",tolua_Cocos2d_CCTMXMapInfo_formatWithTMXFile00);
    tolua_function(tolua_S,"formatWithXML",tolua_Cocos2d_CCTMXMapInfo_formatWithXML00);
   tolua_endmodule(tolua_S);
-  tolua_constant(tolua_S,"CCTOUCHBEGAN",CCTOUCHBEGAN);
-  tolua_constant(tolua_S,"CCTOUCHMOVED",CCTOUCHMOVED);
-  tolua_constant(tolua_S,"CCTOUCHENDED",CCTOUCHENDED);
-  tolua_constant(tolua_S,"CCTOUCHCANCELLED",CCTOUCHCANCELLED);
   tolua_cclass(tolua_S,"CCTouch","CCTouch","CCObject",NULL);
   tolua_beginmodule(tolua_S,"CCTouch");
    tolua_function(tolua_S,"getLocation",tolua_Cocos2d_CCTouch_getLocation00);
