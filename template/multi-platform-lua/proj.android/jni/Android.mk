@@ -2,11 +2,11 @@ LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
 
-LOCAL_MODULE := testlua_shared
+LOCAL_MODULE := cocos2dlua_shared
 
-LOCAL_MODULE_FILENAME := libtestlua
+LOCAL_MODULE_FILENAME := libcocos2dlua
 
-LOCAL_SRC_FILES := testlua/main.cpp \
+LOCAL_SRC_FILES := hellolua/main.cpp \
                    ../../Classes/AppDelegate.cpp
 
 
