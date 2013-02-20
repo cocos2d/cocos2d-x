@@ -31,8 +31,10 @@ def dumpUsage():
     print "  -package   PACKAGE_NAME          Package name, for example: com.MyCompany.MyAwesomeGame"
     print "  -language  PROGRAMING_LANGUAGE   Major programing lanauge you want to used, should be cpp | lua | javascript"
     print "                                   If this param is nil, we will create a cpp project by default"
-    print "Sample 1: ./create-project.py -project MyGame -package com.MyCompany.AwesomeGame"
-    print "Sample 2: ./create-project.py -project MyGame -package com.MyCompany.AwesomeGame -language javascript"
+    print ""
+    print "Sample 1: ./create_project.py -project MyGame -package com.MyCompany.AwesomeGame"
+    print "Sample 2: ./create_project.py -project MyGame -package com.MyCompany.AwesomeGame -language javascript"
+    print ""
 
 def checkParams(context):
     # generate our internal params
