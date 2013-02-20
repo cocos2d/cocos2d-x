@@ -51,8 +51,9 @@ fi
 pushd "$GENERATED_WORKTREE"
 
 git checkout -f
-git checkout master
-git pull origin master
+git clean -fdx
+git fetch origin
+git checkout -B master origin/master
 
 popd
 
