@@ -11,15 +11,7 @@ import shutil
 def handle_project_files(context):    
     # determine proj_path
     proj_path = context["dst_project_path"] + "/proj.android/"
-    
-    # determine src_package_name & dst_package_name
-    if ("cpp" == context["language"]):
-        context["src_package_name"] = "org.cocos2dx.hellocpp"
-    elif ("lua" == context["language"]):
-        context["src_package_name"] = "org.cocos2dx.hellolua"
-    elif ("javascript" == context["language"]):
-        context["src_package_name"] = "org.cocos2dx.hellojavascript"
-                  
+                     
     # rename files and folders
     src_pkg = context["src_package_name"].split('.')
     dst_pkg = context["dst_package_name"].split('.')
