@@ -42,9 +42,9 @@ STATICLIBS = $(STATICLIBS_DIR)/libfreetype.a \
 				$(STATICLIBS_DIR)/libpng.a \
 				$(STATICLIBS_DIR)/libjpeg.a \
 				$(STATICLIBS_DIR)/libtiff.a \
-#				$(STATICLIBS_DIR)/libGLEW.a \
+				../../../../lib/linux/Debug/libextension.a \
 				../../../../lib/linux/Debug/libbox2d.a \
-				../../../../lib/linux/Debug/libchipmunk.a
+				../../../../lib/linux/Debug/libchipmunk.a 
 
 SHAREDLIBS += -lglfw -lcurl -llua -lGLEW
 SHAREDLIBS += -Wl,-rpath,../../../../../../lib/linux/Debug

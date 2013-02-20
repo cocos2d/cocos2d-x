@@ -3,10 +3,11 @@
 	<name>TestCpp</name>
 	<comment></comment>
 	<projects>
-		<project>libcocos2d</project>
-		<project>libCocosDenshion</project>
 		<project>libBox2D</project>
 		<project>libChipmunk</project>
+		<project>libcocos2d</project>
+		<project>libCocosDenshion</project>
+		<project>libextension</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
