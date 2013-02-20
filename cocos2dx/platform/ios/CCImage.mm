@@ -23,6 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 #import "CCImage.h"
 #import "CCFileUtils.h"
+#import "CCCommon.h"
 #import <string>
 
 #import <Foundation/Foundation.h>
@@ -220,6 +221,7 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
         }      
         else
         {
+            CCLOGERROR("Error! Failed to load the font '%s'! A default system font will be used instead.", pFontName);
             fntName = _isValidFontName(pFontName) ? fntName : @"MarkerFelt-Wide";
             font = [UIFont fontWithName:fntName size:nSize];
                 
