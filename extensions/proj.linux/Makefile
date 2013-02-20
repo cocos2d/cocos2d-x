@@ -1,4 +1,34 @@
-EXTENSIONS_OBJECTS = ../CCBReader/CCBFileLoader.o \
+CC      = gcc
+CXX     = g++
+AR      = ar
+TARGET	= libextension.a
+CCFLAGS = -Wall
+CXXFLAGS = -Wall
+ARFLAGS = cr
+
+COCOS2DX_ROOT=../..
+
+INCLUDES =  -I$(COCOS2DX_ROOT)/cocos2dx \
+			-I$(COCOS2DX_ROOT)/cocos2dx/platform/third_party/linux/libfreetype2 \
+			-I$(COCOS2DX_ROOT)/cocos2dx/include \
+			-I$(COCOS2DX_ROOT)/cocos2dx/kazmath/include \
+			-I$(COCOS2DX_ROOT)/cocos2dx/platform/linux \
+			-I$(COCOS2DX_ROOT)/cocos2dx/platform/third_party/linux/libpng \
+			-I$(COCOS2DX_ROOT)/cocos2dx/platform/third_party/linux/libjpeg \
+			-I$(COCOS2DX_ROOT)/cocos2dx/platform/third_party/linux/libtiff/include \
+			-I$(COCOS2DX_ROOT)/cocos2dx/platform/third_party/linux/libwebp \
+			-I$(COCOS2DX_ROOT)/external \
+			-I$(COCOS2DX_ROOT)/external/chipmunk/include/chipmunk \
+			-I.. \
+			-I../CCBReader \
+			-I../GUI/CCControlExtension \
+			-I../network 
+
+DEFINES = -DLINUX
+DEFINES += -DCC_ENABLE_CHIPMUNK_INTEGRATION=1
+DEFINES += -D__CC_PLATFORM_IMAGE_CPP__
+
+OBJECTS = ../CCBReader/CCBFileLoader.o \
 ../CCBReader/CCMenuItemImageLoader.o \
 ../CCBReader/CCBReader.o \
 ../CCBReader/CCMenuItemLoader.o \
@@ -41,3 +71,30 @@ EXTENSIONS_OBJECTS = ../CCBReader/CCBFileLoader.o \
 ../network/HttpClient.o \
 ../physics_nodes/CCPhysicsDebugNode.o \
 ../physics_nodes/CCPhysicsSprite.o 
+
+
+debug: CCFLAGS += -g3 -O0
+debug: CXXFLAGS += -g3 -O0
+debug: DEFINES += -DDEBUG
+debug: $(TARGET)
+
+release: CCFLAGS += -O3
+release: CXXFLAGS += -O3
+release: DEFINES += -DNDEBUG
+release: $(TARGET)
+
+####### Build rules
+$(TARGET): $(OBJECTS) 
+	$(AR) $(ARFLAGS) $(TARGET) $(OBJECTS)  
+
+####### Compile
+%.o: %.cpp
+	$(CXX) $(CXXFLAGS) $(INCLUDES) $(DEFINES) -c $< -o $@
+
+%.o: %.c
+	$(CC) $(CCFLAGS) $(INCLUDES) $(DEFINES) -c $< -o $@
+
+clean: 
+	rm -f $(OBJECTS) $(TARGET) core
+
+
