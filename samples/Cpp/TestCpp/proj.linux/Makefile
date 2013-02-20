@@ -22,7 +22,7 @@ INCLUDES =  -I../ \
 			-I../../../../CocosDenshion/include \
 			-I../../../../extensions/ \
 			-I../../../../external/ \
-			-I../../../../external/chipmunk/include/chipmunk \
+			-I../../../../external/chipmunk/include/chipmunk
 
 
 LBITS := $(shell getconf LONG_BIT)
@@ -128,9 +128,6 @@ OBJECTS = ../Classes/AccelerometerTest/AccelerometerTest.o \
 			../Classes/VisibleRect.o \
 			./main.o 
 
-include $(COCOS2DX_PATH)/../extensions/proj.linux/Makefile
-OBJECTS += $(addprefix ../../../../extensions/proj.linux/, $(EXTENSIONS_OBJECTS))
-
 ifeq ($(LBITS),64)
 STATICLIBS_DIR = ../../../../cocos2dx/platform/third_party/linux/libraries/lib64
 else
@@ -143,8 +140,10 @@ STATICLIBS = $(STATICLIBS_DIR)/libfreetype.a \
 				$(STATICLIBS_DIR)/libpng.a \
 				$(STATICLIBS_DIR)/libjpeg.a \
 				$(STATICLIBS_DIR)/libtiff.a \
+				../../../../lib/linux/Debug/libextension.a \
 				../../../../lib/linux/Debug/libbox2d.a \
-				../../../../lib/linux/Debug/libchipmunk.a \
+				../../../../lib/linux/Debug/libchipmunk.a 
+				 
 
 SHAREDLIBS = 
 ifeq ($(LBITS),64)
@@ -155,12 +154,8 @@ SHAREDLIBS_DIR = ../../../../CocosDenshion/third_party/fmod/api/lib
 SHAREDLIBS = -L$(SHAREDLIBS_DIR) -lfmodex
 endif
 
-SHAREDLIBS += -lglfw 
-#SHAREDLIBS += -L../../../../lib/linux/Debug -lcocos2d -lrt -lz -lcocosdenshion -Wl,-rpath,../../../../../lib/linux/Debug/ 
+SHAREDLIBS += -lglfw -lGLEW
 SHAREDLIBS += -Wl,-rpath,../../$(SHAREDLIBS_DIR)
-#SHAREDLIBS += -Wl,-rpath,../../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib
-SHAREDLIBS += -L../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib -lGLEW
-SHAREDLIBS += -Wl,-rpath,../../../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib
 
 
 SHAREDLIBS += -Wl,-rpath,../$(STATICLIBS_DIR)
@@ -172,14 +167,14 @@ BIN_DIR = BIN_DIR_ROOT
 debug: SHAREDLIBS += -L../../../../lib/linux/Debug -lcocos2d -lrt -lz -lcocosdenshion -Wl,-rpath,../../../../../../lib/linux/Debug
 debug: CCFLAGS += -g3 -O0
 debug: CXXFLAGS += -g3 -O0
-debug: DEFINES += -DDEBUG -DCC_ENABLE_CHIPMUNK_INTEGRATION -DCOCOS2D_DEBUG=1
+debug: DEFINES += -DDEBUG -DCC_ENABLE_CHIPMUNK_INTEGRATION=1 -DCOCOS2D_DEBUG=1
 debug: BIN_DIR = $(BIN_DIR_ROOT)/debug
 debug: $(TARGET)
 
 release: SHAREDLIBS += -L../../../../lib/linux/Release -lcocos2d -lrt -lz -lcocosdenshion -Wl,-rpath,../../../../../../lib/linux/Release
 release: CCFLAGS += -O3
 release: CXXFLAGS += -O3
-release: DEFINES += -DNDEBUG -DCC_ENABLE_CHIPMUNK_INTEGRATION
+release: DEFINES += -DNDEBUG -DCC_ENABLE_CHIPMUNK_INTEGRATION=1
 release: BIN_DIR = $(BIN_DIR_ROOT)/release
 release: $(TARGET)
 
