@@ -11,15 +11,7 @@ import shutil
 def handle_project_files(context):
     # determine proj_path
     proj_path = context["dst_project_path"] + "/proj.ios/"
-    
-    # determine src_package_name & dst_package_name
-    if ("cpp" == context["language"]):
-        context["src_package_name"] = "org.cocos2d-x.HelloCpp"
-    elif ("lua" == context["language"]):
-        context["src_package_name"] = "org.cocos2d-x.HelloLua"
-    elif ("javascript" == context["language"]):
-        context["src_package_name"] = "org.cocos2d-x.HelloJavascript"
-    
+        
     # rename files and folders
     os.rename(proj_path + context["src_project_name"] + ".xcodeproj",
               proj_path + context["dst_project_name"] + ".xcodeproj" )

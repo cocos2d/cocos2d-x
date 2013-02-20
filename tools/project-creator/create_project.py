@@ -31,8 +31,10 @@ def dumpUsage():
     print "  -package   PACKAGE_NAME          Package name, for example: com.MyCompany.MyAwesomeGame"
     print "  -language  PROGRAMING_LANGUAGE   Major programing lanauge you want to used, should be cpp | lua | javascript"
     print "                                   If this param is nil, we will create a cpp project by default"
-    print "Sample 1: ./create-project.py -project MyGame -package com.MyCompany.AwesomeGame"
-    print "Sample 2: ./create-project.py -project MyGame -package com.MyCompany.AwesomeGame -language javascript"
+    print ""
+    print "Sample 1: ./create_project.py -project MyGame -package com.MyCompany.AwesomeGame"
+    print "Sample 2: ./create_project.py -project MyGame -package com.MyCompany.AwesomeGame -language javascript"
+    print ""
 
 def checkParams(context):
     # generate our internal params
@@ -63,22 +65,25 @@ def checkParams(context):
     # fill in src_project_name and src_package_name according to "language"
     if ("cpp" == context["language"]):
         context["src_project_name"] = "HelloCpp"
+        context["src_package_name"] = "org.cocos2dx.hellocpp"
         context["src_project_path"] = os.getcwd() + "/../../template/multi-platform-cpp"
         print "Creating multi-platform cpp projects haven't been supported in this python script yet"
         sys.exit()
     elif ("lua" == context["language"]):
         context["src_project_name"] = "HelloLua"
+        context["src_package_name"] = "org.cocos2dx.hellolua"
         context["src_project_path"] = os.getcwd() + "/../../template/multi-platform-lua"
         print "Creating multi-platform lua projects haven't been supported in this python script yet"
         sys.exit()
     elif ("javascript" == context["language"]):
         context["src_project_name"] = "HelloJavascript"
         context["src_project_path"] = os.getcwd() + "/../../template/multi-platform-js"
+        context["src_package_name"] = "org.cocos2dx.hellojavascript"
 
     # decide the modules to remove
     # context["modules_to_remove"] = list(set(context["modules_all"]) - set(context["modules_reserved"]))
 
-#end of checkParams(context) function
+# end of checkParams(context) function
 
 
 # -------------- main --------------
