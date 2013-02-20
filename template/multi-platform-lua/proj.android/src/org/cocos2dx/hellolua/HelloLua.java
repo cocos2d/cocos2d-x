@@ -21,7 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-package org.cocos2dx.testlua;
+package org.cocos2dx.hellolua;
 import org.cocos2dx.lib.Cocos2dxActivity;
 import org.cocos2dx.lib.Cocos2dxGLSurfaceView;
 
@@ -29,7 +29,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.KeyEvent;
 
-public class TestLua extends Cocos2dxActivity{
+public class HelloLua extends Cocos2dxActivity{
 	protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 	}
@@ -39,7 +39,7 @@ public class TestLua extends Cocos2dxActivity{
     }
 
     static {
-        System.loadLibrary("testlua");
+        System.loadLibrary("cocos2dlua");
     }
 }
 
