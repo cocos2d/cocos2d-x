@@ -74,15 +74,18 @@ particle_nodes/CCParticleExamples.cpp \
 particle_nodes/CCParticleSystem.cpp \
 particle_nodes/CCParticleBatchNode.cpp \
 particle_nodes/CCParticleSystemQuad.cpp \
+platform/CCImageCommonWebp.cpp \
 platform/CCSAXParser.cpp \
 platform/CCThread.cpp \
+platform/CCFileUtils.cpp \
 platform/platform.cpp \
 platform/CCEGLViewProtocol.cpp \
+platform/android/CCDevice.cpp \
 platform/android/CCEGLView.cpp \
 platform/android/CCAccelerometer.cpp \
 platform/android/CCApplication.cpp \
 platform/android/CCCommon.cpp \
-platform/android/CCFileUtils.cpp \
+platform/android/CCFileUtilsAndroid.cpp \
 platform/android/CCImage.cpp \
 platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxBitmap.cpp \
 platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxHelper.cpp \
@@ -91,6 +94,7 @@ platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxAccelerometer.cpp \
 platform/android/jni/JniHelper.cpp \
 platform/android/jni/IMEJni.cpp \
 platform/android/jni/TouchesJni.cpp \
+platform/android/jni/DPIJni.cpp \
 script_support/CCScriptSupport.cpp \
 shaders/ccShaders.cpp \
 shaders/CCGLProgram.cpp \
@@ -112,6 +116,7 @@ support/ccUtils.cpp \
 support/CCVertex.cpp \
 support/data_support/ccCArray.cpp \
 support/image_support/TGAlib.cpp \
+support/tinyxml2/tinyxml2.cpp \
 support/zip_support/ZipUtils.cpp \
 support/zip_support/ioapi.cpp \
 support/zip_support/unzip.cpp \
@@ -149,14 +154,15 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH) \
 LOCAL_LDLIBS := -lGLESv2 \
                 -lEGL \
                 -llog \
-                -lz 
+                -lz
 
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos_libpng_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_jpeg_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_libxml2_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_libtiff_static
+LOCAL_WHOLE_STATIC_LIBRARIES += cocos_libwebp_static
 
-# define the macro to compile through support/zip_support/ioapi.c                
+# define the macro to compile through support/zip_support/ioapi.c
 LOCAL_CFLAGS := -Wno-psabi -DUSE_FILE32API
 LOCAL_EXPORT_CFLAGS := -Wno-psabi -DUSE_FILE32API
 
@@ -164,5 +170,5 @@ include $(BUILD_STATIC_LIBRARY)
 
 $(call import-module,libjpeg)
 $(call import-module,libpng)
-$(call import-module,libxml2)
 $(call import-module,libtiff)
+$(call import-module,libwebp)

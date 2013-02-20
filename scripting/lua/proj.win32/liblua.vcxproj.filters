@@ -132,6 +132,15 @@
     <ClCompile Include="..\cocos2dx_support\tolua_fix.c">
       <Filter>cocos2dx_support</Filter>
     </ClCompile>
+    <ClCompile Include="..\cocos2dx_support\CCLuaBridge.cpp">
+      <Filter>cocos2dx_support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\cocos2dx_support\CCLuaStack.cpp">
+      <Filter>cocos2dx_support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\cocos2dx_support\CCLuaValue.cpp">
+      <Filter>cocos2dx_support</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\lua\lapi.h">
@@ -219,6 +228,15 @@
       <Filter>cocos2dx_support</Filter>
     </ClInclude>
     <ClInclude Include="..\cocos2dx_support\tolua_fix.h">
+      <Filter>cocos2dx_support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\cocos2dx_support\CCLuaBridge.h">
+      <Filter>cocos2dx_support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\cocos2dx_support\CCLuaStack.h">
+      <Filter>cocos2dx_support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\cocos2dx_support\CCLuaValue.h">
       <Filter>cocos2dx_support</Filter>
     </ClInclude>
   </ItemGroup>

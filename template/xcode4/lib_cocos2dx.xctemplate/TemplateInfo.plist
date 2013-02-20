@@ -1877,6 +1877,19 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
+		<key>libs/cocos2dx/platform/CCDevice.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>platform</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/platform/CCDevice.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
 		<key>libs/cocos2dx/platform/CCEGLViewProtocol.cpp</key>
 		<dict>
 			<key>Group</key>
@@ -1900,6 +1913,17 @@
 			<string>libs/cocos2dx/platform/CCEGLViewProtocol.h</string>
 			<key>TargetIndices</key>
 			<array/>
+		</dict>
+		<key>libs/cocos2dx/platform/CCFileUtils.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>platform</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/platform/CCFileUtils.cpp</string>
 		</dict>
 		<key>libs/cocos2dx/platform/CCFileUtils.h</key>
 		<dict>
@@ -1926,6 +1950,17 @@
 			<string>libs/cocos2dx/platform/CCImage.h</string>
 			<key>TargetIndices</key>
 			<array/>
+		</dict>
+		<key>libs/cocos2dx/platform/CCImageCommonWebp.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>platform</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/platform/CCImageCommonWebp.cpp</string>
 		</dict>
 		<key>libs/cocos2dx/platform/CCPlatformConfig.h</key>
 		<dict>
@@ -2080,6 +2115,18 @@
 			<key>Path</key>
 			<string>libs/cocos2dx/platform/ios/CCCommon.mm</string>
 		</dict>
+		<key>libs/cocos2dx/platform/ios/CCDevice.mm</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>platform</string>
+				<string>ios</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/platform/ios/CCDevice.mm</string>
+		</dict>
 		<key>libs/cocos2dx/platform/ios/CCDirectorCaller.h</key>
 		<dict>
 			<key>Group</key>
@@ -2172,7 +2219,7 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>libs/cocos2dx/platform/ios/CCFileUtils.mm</key>
+		<key>libs/cocos2dx/platform/ios/CCFileUtilsIOS.h</key>
 		<dict>
 			<key>Group</key>
 			<array>
@@ -2182,7 +2229,21 @@
 				<string>ios</string>
 			</array>
 			<key>Path</key>
-			<string>libs/cocos2dx/platform/ios/CCFileUtils.mm</string>
+			<string>libs/cocos2dx/platform/ios/CCFileUtilsIOS.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2dx/platform/ios/CCFileUtilsIOS.mm</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>platform</string>
+				<string>ios</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/platform/ios/CCFileUtilsIOS.mm</string>
 		</dict>
 		<key>libs/cocos2dx/platform/ios/CCGL.h</key>
 		<dict>
@@ -2525,6 +2586,68 @@
 			</array>
 			<key>Path</key>
 			<string>libs/cocos2dx/platform/third_party/ios/libraries/libcurl.a</string>
+		</dict>
+		<key>libs/cocos2dx/platform/third_party/ios/libraries/libwebp.a</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>platform</string>
+				<string>third_party</string>
+				<string>ios</string>
+				<string>libraries</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/platform/third_party/ios/libraries/libwebp.a</string>
+		</dict>
+		<key>libs/cocos2dx/platform/third_party/ios/webp/decode.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>platform</string>
+				<string>third_party</string>
+				<string>ios</string>
+				<string>webp</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/platform/third_party/ios/webp/decode.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2dx/platform/third_party/ios/webp/encode.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>platform</string>
+				<string>third_party</string>
+				<string>ios</string>
+				<string>webp</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/platform/third_party/ios/webp/encode.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2dx/platform/third_party/ios/webp/types.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>platform</string>
+				<string>third_party</string>
+				<string>ios</string>
+				<string>webp</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/platform/third_party/ios/webp/types.h</string>
+			<key>TargetIndices</key>
+			<array/>
 		</dict>
 		<key>libs/cocos2dx/script_support/CCScriptSupport.cpp</key>
 		<dict>
@@ -3246,6 +3369,32 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
+		<key>libs/cocos2dx/support/tinyxml2/tinyxml2.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>support</string>
+				<string>tinyxml2</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/support/tinyxml2/tinyxml2.cpp</string>
+		</dict>
+		<key>libs/cocos2dx/support/tinyxml2/tinyxml2.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>support</string>
+				<string>tinyxml2</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/support/tinyxml2/tinyxml2.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
 		<key>libs/cocos2dx/support/TransformUtils.cpp</key>
 		<dict>
 			<key>Group</key>
@@ -3888,10 +4037,13 @@
 		<string>libs/cocos2dx/platform/CCAccelerometerDelegate.h</string>
 		<string>libs/cocos2dx/platform/CCApplicationProtocol.h</string>
 		<string>libs/cocos2dx/platform/CCCommon.h</string>
+		<string>libs/cocos2dx/platform/CCDevice.h</string>
 		<string>libs/cocos2dx/platform/CCEGLViewProtocol.cpp</string>
 		<string>libs/cocos2dx/platform/CCEGLViewProtocol.h</string>
+		<string>libs/cocos2dx/platform/CCFileUtils.cpp</string>
 		<string>libs/cocos2dx/platform/CCFileUtils.h</string>
 		<string>libs/cocos2dx/platform/CCImage.h</string>
+		<string>libs/cocos2dx/platform/CCImageCommonWebp.cpp</string>
 		<string>libs/cocos2dx/platform/CCPlatformConfig.h</string>
 		<string>libs/cocos2dx/platform/CCPlatformMacros.h</string>
 		<string>libs/cocos2dx/platform/CCSAXParser.cpp</string>
@@ -3904,6 +4056,7 @@
 		<string>libs/cocos2dx/platform/ios/CCApplication.h</string>
 		<string>libs/cocos2dx/platform/ios/CCApplication.mm</string>
 		<string>libs/cocos2dx/platform/ios/CCCommon.mm</string>
+		<string>libs/cocos2dx/platform/ios/CCDevice.mm</string>
 		<string>libs/cocos2dx/platform/ios/CCDirectorCaller.h</string>
 		<string>libs/cocos2dx/platform/ios/CCDirectorCaller.mm</string>
 		<string>libs/cocos2dx/platform/ios/CCEGLView.h</string>
@@ -3911,7 +4064,8 @@
 		<string>libs/cocos2dx/platform/ios/CCES2Renderer.h</string>
 		<string>libs/cocos2dx/platform/ios/CCES2Renderer.m</string>
 		<string>libs/cocos2dx/platform/ios/CCESRenderer.h</string>
-		<string>libs/cocos2dx/platform/ios/CCFileUtils.mm</string>
+		<string>libs/cocos2dx/platform/ios/CCFileUtilsIOS.h</string>
+		<string>libs/cocos2dx/platform/ios/CCFileUtilsIOS.mm</string>
 		<string>libs/cocos2dx/platform/ios/CCGL.h</string>
 		<string>libs/cocos2dx/platform/ios/CCImage.mm</string>
 		<string>libs/cocos2dx/platform/ios/CCLock.cpp</string>
@@ -3936,6 +4090,10 @@
 		<string>libs/cocos2dx/platform/third_party/ios/curl/stdcheaders.h</string>
 		<string>libs/cocos2dx/platform/third_party/ios/curl/typecheck-gcc.h</string>
 		<string>libs/cocos2dx/platform/third_party/ios/libraries/libcurl.a</string>
+		<string>libs/cocos2dx/platform/third_party/ios/libraries/libwebp.a</string>
+		<string>libs/cocos2dx/platform/third_party/ios/webp/decode.h</string>
+		<string>libs/cocos2dx/platform/third_party/ios/webp/encode.h</string>
+		<string>libs/cocos2dx/platform/third_party/ios/webp/types.h</string>
 		<string>libs/cocos2dx/script_support/CCScriptSupport.cpp</string>
 		<string>libs/cocos2dx/script_support/CCScriptSupport.h</string>
 		<string>libs/cocos2dx/shaders/CCGLProgram.cpp</string>
@@ -3994,6 +4152,8 @@
 		<string>libs/cocos2dx/support/data_support/utlist.h</string>
 		<string>libs/cocos2dx/support/image_support/TGAlib.cpp</string>
 		<string>libs/cocos2dx/support/image_support/TGAlib.h</string>
+		<string>libs/cocos2dx/support/tinyxml2/tinyxml2.cpp</string>
+		<string>libs/cocos2dx/support/tinyxml2/tinyxml2.h</string>
 		<string>libs/cocos2dx/support/TransformUtils.cpp</string>
 		<string>libs/cocos2dx/support/TransformUtils.h</string>
 		<string>libs/cocos2dx/support/zip_support/ioapi.cpp</string>

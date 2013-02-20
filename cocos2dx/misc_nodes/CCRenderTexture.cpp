@@ -249,7 +249,7 @@ bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CCTexture2DPixelForma
 
 bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CCTexture2DPixelFormat eFormat, GLuint uDepthStencilFormat)
 {
-    CCAssert(m_ePixelFormat != kCCTexture2DPixelFormat_A8, "only RGB and RGBA formats are valid for a render texture");
+    CCAssert(eFormat != kCCTexture2DPixelFormat_A8, "only RGB and RGBA formats are valid for a render texture");
 
     bool bRet = false;
     void *data = NULL;
@@ -313,7 +313,7 @@ bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CCTexture2DPixelForma
         // associate texture with FBO
         glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_pTexture->getName(), 0);
 
-        if (m_uDepthRenderBufffer != 0) 
+        if (uDepthStencilFormat != 0)
         {
             //create and attach depth buffer
             glGenRenderbuffers(1, &m_uDepthRenderBufffer);
@@ -630,7 +630,7 @@ bool CCRenderTexture::saveToFile(const char *fileName, tCCImageFormat format)
     CCImage *pImage = newCCImage(true);
     if (pImage)
     {
-        std::string fullpath = CCFileUtils::sharedFileUtils()->getWriteablePath() + fileName;
+        std::string fullpath = CCFileUtils::sharedFileUtils()->getWritablePath() + fileName;
         
         bRet = pImage->saveToFile(fullpath.c_str(), true);
     }

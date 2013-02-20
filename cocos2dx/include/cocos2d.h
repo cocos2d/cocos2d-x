@@ -123,7 +123,7 @@ THE SOFTWARE.
 #include "particle_nodes/CCParticleSystemQuad.h"
 
 // platform
-
+#include "platform/CCDevice.h"
 #include "platform/CCCommon.h"
 #include "platform/CCFileUtils.h"
 #include "platform/CCImage.h"
@@ -215,6 +215,7 @@ THE SOFTWARE.
 #include "support/CCProfiling.h"
 #include "support/CCUserDefault.h"
 #include "support/CCVertex.h"
+#include "support/tinyxml2/tinyxml2.h"
 
 // text_input_node
 #include "text_input_node/CCIMEDelegate.h"

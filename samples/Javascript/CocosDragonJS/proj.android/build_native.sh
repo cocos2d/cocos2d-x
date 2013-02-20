@@ -49,7 +49,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 COCOS2DX_ROOT="$DIR/../../../.."
 APP_ROOT="$DIR/.."
 APP_ANDROID_ROOT="$DIR"
-RESROUCE_ROOT="$APP_ROOT/../Shared/games/CocosDragonJS/Published files iOS"
+RESROUCE_ROOT="$APP_ROOT/../Shared/games/CocosDragonJS/Published files Android"
 BINDINGS_JS_ROOT="$APP_ROOT/../../../scripting/javascript/bindings/js"
 
 echo

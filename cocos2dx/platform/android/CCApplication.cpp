@@ -120,6 +120,14 @@ ccLanguageType CCApplication::getCurrentLanguage()
     {
         ret = kLanguageHungarian;
     }
+    else if (0 == strcmp("pt", pLanguageName))
+    {
+        ret = kLanguagePortuguese;
+    }
+    else if (0 == strcmp("ar", pLanguageName))
+    {
+        ret = kLanguageArabic;
+    }
     
     return ret;
 }

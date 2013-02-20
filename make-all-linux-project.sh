@@ -88,6 +88,18 @@ check_make_result
 cp $COCOS2DX20_TRUNK/CocosDenshion/proj.linux/libcocosdenshion.so $OUTPUT_RELEASE
 rm $COCOS2DX20_TRUNK/CocosDenshion/proj.linux/libcocosdenshion.so
 
+make -C $COCOS2DX20_TRUNK/extensions/proj.linux clean
+make -C $COCOS2DX20_TRUNK/extensions/proj.linux debug
+check_make_result
+cp $COCOS2DX20_TRUNK/extensions/proj.linux/libextension.a $OUTPUT_DEBUG
+rm $COCOS2DX20_TRUNK/extensions/proj.linux/libextension.a
+
+make -C $COCOS2DX20_TRUNK/extensions/proj.linux clean
+make -C $COCOS2DX20_TRUNK/extensions/proj.linux release
+check_make_result
+cp $COCOS2DX20_TRUNK/extensions/proj.linux/libextension.a $OUTPUT_RELEASE
+rm $COCOS2DX20_TRUNK/extensions/proj.linux/libextension.a
+
 make -C $COCOS2DX20_TRUNK/scripting/lua/proj.linux clean
 make -C $COCOS2DX20_TRUNK/scripting/lua/proj.linux debug
 check_make_result

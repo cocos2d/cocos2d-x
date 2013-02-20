@@ -244,7 +244,8 @@ static int tolua_bnd_cast (lua_State* L)
 */
 static int tolua_bnd_isnulluserdata (lua_State* L) {
     void **ud = (void**)lua_touserdata(L, -1);
-    return ud == NULL || *ud == NULL;
+    tolua_pushboolean(L, ud == NULL || *ud == NULL);
+    return 1;
 }
 
 /* Inheritance

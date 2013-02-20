@@ -77,6 +77,7 @@ static CCTouch *s_pTouches[MAX_TOUCHES] = { NULL };
 static CCEGLView* s_pInstance = NULL;
 
 CCEGLView::CCEGLView()
+	: m_pEventHandler(NULL)
 {
 	m_eglDisplay = EGL_NO_DISPLAY;
 	m_eglContext = EGL_NO_CONTEXT;
@@ -103,7 +104,16 @@ CCEGLView::CCEGLView()
 
 CCEGLView::~CCEGLView()
 {
+}
 
+void CCEGLView::setEventHandler(EventHandler* pHandler)
+{
+	m_pEventHandler = pHandler;
+}
+
+const char* CCEGLView::getWindowGroupId() const
+{
+	return m_windowGroupID;
 }
 
 void CCEGLView::release()
@@ -345,7 +355,7 @@ bool CCEGLView::initGL()
     };
 
     // Create the screen context.
-    rc = screen_create_context(&m_screenContext, 0);
+    rc = screen_create_context(&m_screenContext, SCREEN_APPLICATION_CONTEXT);
     if (rc)
     {
         perror("screen_create_context");
@@ -360,6 +370,12 @@ bool CCEGLView::initGL()
         return false;
     }
 
+    rc = screen_create_window_group(m_screenWindow, m_windowGroupID);
+	if (rc)
+	{
+		perror("screen_create_window_group");
+		return false;
+	}
     // Set/get any window prooperties.
     rc = screen_set_window_property_iv(m_screenWindow, SCREEN_PROPERTY_FORMAT, &screenFormat);
     if (rc)
@@ -385,18 +401,23 @@ bool CCEGLView::initGL()
 		screen_res[0] = atoi(width_str);
 		screen_res[1] = atoi(height_str);
 
-		int rc = screen_set_window_property_iv(m_screenWindow, SCREEN_PROPERTY_BUFFER_SIZE, screen_res);
+		rc = screen_set_window_property_iv(m_screenWindow, SCREEN_PROPERTY_BUFFER_SIZE, screen_res);
 		if (rc)
 		{
 			fprintf(stderr, "screen_set_window_property_iv(SCREEN_PROPERTY_BUFFER_SIZE)");
 			return false;
 		}
+
+        rc = screen_get_window_property_pv(m_screenWindow, SCREEN_PROPERTY_DISPLAY, (void **)&m_screen_display);
+        if (rc)
+        {
+            perror("screen_get_window_property_pv(SCREEN_PROPERTY_DISPLAY)");
+            return false;
+        }
 	}
 	else
 	{
-
-	    screen_display_t screen_display;
-	    rc = screen_get_window_property_pv(m_screenWindow, SCREEN_PROPERTY_DISPLAY, (void **)&screen_display);
+	    rc = screen_get_window_property_pv(m_screenWindow, SCREEN_PROPERTY_DISPLAY, (void **)&m_screen_display);
 	    if (rc)
 	    {
 	        perror("screen_get_window_property_pv(SCREEN_PROPERTY_DISPLAY)");
@@ -404,7 +425,7 @@ bool CCEGLView::initGL()
 	    }
 
 	    screen_display_mode_t screen_mode;
-	    rc = screen_get_display_property_pv(screen_display, SCREEN_PROPERTY_MODE, (void**)&screen_mode);
+	    rc = screen_get_display_property_pv(m_screen_display, SCREEN_PROPERTY_MODE, (void**)&screen_mode);
 	    if (rc)
 	    {
 	        perror("screen_get_display_property_pv(SCREEN_PROPERTY_MODE)");
@@ -575,6 +596,9 @@ bool CCEGLView::handleEvents()
 		// break if no more events
 		if (event == NULL)
 			break;
+			
+		if (m_pEventHandler && m_pEventHandler->HandleBPSEvent(event))
+			continue;
 
 		domain = bps_event_get_domain(event);
 
@@ -772,6 +796,11 @@ bool CCEGLView::handleEvents()
 	}
 
 	return true;
+}
+
+screen_display_t CCEGLView::getScreenDisplay() const
+{
+    return m_screen_display;
 }
 
 NS_CC_END

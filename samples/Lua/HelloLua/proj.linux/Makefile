@@ -26,11 +26,7 @@ INCLUDES =  -I../ \
 DEFINES = -DLINUX
 
 OBJECTS = ./main.o \
-        ../Classes/AppDelegate.o \
-        ../../../../scripting/lua/cocos2dx_support/CCLuaEngine.o \
-        ../../../../scripting/lua/cocos2dx_support/Cocos2dxLuaLoader.o \
-        ../../../../scripting/lua/cocos2dx_support/LuaCocos2d.o \
-        ../../../../scripting/lua/cocos2dx_support/tolua_fix.o
+        ../Classes/AppDelegate.o
 
 LBITS := $(shell getconf LONG_BIT)
 ifeq ($(LBITS),64)
@@ -46,9 +42,7 @@ STATICLIBS = $(STATICLIBS_DIR)/libfreetype.a \
 				$(STATICLIBS_DIR)/libtiff.a \
 #				$(STATICLIBS_DIR)/libGLEW.a \
 
-SHAREDLIBS += -lglfw -lcurl -llua
-SHAREDLIBS += -Wl,-rpath,../../../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib
-SHAREDLIBS += -L../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib -lGLEW
+SHAREDLIBS += -lglfw -lcurl -llua -lGLEW
 SHAREDLIBS += -Wl,-rpath,../../../../../../lib/linux/Debug
 
 ifeq ($(LBITS),64)

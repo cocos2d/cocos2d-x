@@ -108,7 +108,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\scripting\javascript\spidermonkey-win32\li
 if exist "$(OutDir)\CocosDragonJSRes" rd /s /q "$(OutDir)\CocosDragonJSRes"
 mkdir "$(OutDir)\CocosDragonJSRes"
 xcopy "$(ProjectDir)..\..\..\..\scripting\javascript\bindings\js\*.js" "$(OutDir)\CocosDragonJSRes" /e /Y
-xcopy "$(ProjectDir)..\..\Shared\games\CocosDragonJS\Published files iOS" "$(OutDir)\CocosDragonJSRes\" /e /Y</Command>
+xcopy "$(ProjectDir)..\..\Shared\games\CocosDragonJS\Published files Android" "$(OutDir)\CocosDragonJSRes\" /e /Y</Command>
     </PreBuildEvent>
     <PreBuildEvent>
       <Message>Copy js and resource files.</Message>
@@ -161,7 +161,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\scripting\javascript\spidermonkey-win32\li
 if exist "$(OutDir)\CocosDragonJSRes" rd /s /q "$(OutDir)\CocosDragonJSRes"
 mkdir "$(OutDir)\CocosDragonJSRes"
 xcopy "$(ProjectDir)..\..\..\..\scripting\javascript\bindings\js\*.js" "$(OutDir)\CocosDragonJSRes" /e /Y
-xcopy "$(ProjectDir)..\..\Shared\games\CocosDragonJS\Published files iOS" "$(OutDir)\CocosDragonJSRes\" /e /Y</Command>
+xcopy "$(ProjectDir)..\..\Shared\games\CocosDragonJS\Published files Android" "$(OutDir)\CocosDragonJSRes\" /e /Y</Command>
       <Message>Copy js and resource files.</Message>
     </PreBuildEvent>
   </ItemDefinitionGroup>

@@ -12,6 +12,9 @@ Developers:
     Rolando Abarca
         Javascript Binding and testjs
 
+    benjamesward
+        add Portuguese and Arabic language support
+
     Victor K(fnz)
         fix memory leak of CCTextureCache::addImageAsync() on iOS
 
@@ -52,11 +55,14 @@ Developers:
          Touch priority can't be set to the value specified by a call to CCMenu::setTouchPriority(int).
          CCTableView crashes if a CCTableViewDelegate is not provided.
 
-    Weeds 
-         use fontconfig to enhance font rendering on linux
+    Weeds (Andre Rudlaff)
+        Used fontconfig to enhance font rendering on linux.
+        Fixed a bug about missing horizontal alignment for Custom TTF fonts on linux.
+        Fixed a bug that the truetype fonts from resource directory can't be found on linux.	
 
     Nat Weiss (iphonegamekit.com)
         author of Mac port
+        add TMX polygon parsing
 
     XiaoLong Zhang (Chukong Inc)
     Mike McGary (Zynga)
@@ -71,6 +77,7 @@ Developers:
 
     Surith Thekkiam (folecr, Zynga)
         contribute for Android module building
+        Simpler, correct handling of spritesheet sources for CCScale9Sprite.
 
     Nicolas Gramlich (nicolasgramlich, Zynga)
         fixed CCDirector to use CCLabelBMFont instead of CCLabelTTF
@@ -98,8 +105,9 @@ Developers:
         use ant to generate LuaCocos2d.cpp and lua projects
 
     Marat Yakupov (moadib)
-        add ability of simulating android enter/resume background on win32
-        add ability of simulating android back/menu key on win32
+        Adds ability of simulating android enter/resume background on win32
+        Adds ability of simulating android back/menu key on win32
+        Adds support for multiple background music sources to CocosDenshion for Blackberry
 
     Eli Yukelzon (reflog)
         add a helper method to draw filled polygons
@@ -168,6 +176,7 @@ Developers:
     Peter Farkas (fape)
         contributes Marmalade port for gles20 branch
         add Hungarian language support
+        fixed compilation errors after adding support of webp image format.
 
     Tomoaki Shimizu (tks2shimizu)
 	Adding randomObject to CCDictionary.
@@ -180,6 +189,15 @@ Developers:
 
     tiantian20007
         Fix crash for call runAnimation() in CCBAnimationManagerDelegate::completedAnimationSequenceNamed.
+
+    xyhl515
+        Fixed a bug that CCControlSwitch::setOn(isOn,false) doesn't work.
+
+    DarraghCoy
+        Fix for unaligned memory access crash in CCBReader::readFloat().
+
+    Sergej Tatarincev (SevInf)
+        Making ScriptingCore.cpp compiled fine with C++11 on iOS.
 
 Retired Core Developers:
     WenSheng Yang

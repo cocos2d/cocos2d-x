@@ -101,7 +101,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     CCEGLView::sharedOpenGLView()->setDesignResolutionSize(designSize.width, designSize.height, kResolutionNoBorder);
 
     std::vector<std::string> searchPaths = pFileUtils->getSearchPaths();
-    searchPaths.insert(searchPaths.begin(), pFileUtils->getWriteablePath());
+    searchPaths.insert(searchPaths.begin(), pFileUtils->getWritablePath());
     pFileUtils->setSearchPaths(searchPaths);
 
     PlayerStatus::setDeviceResolution(res);

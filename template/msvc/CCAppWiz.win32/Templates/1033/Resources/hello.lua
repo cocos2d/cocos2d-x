@@ -111,7 +111,7 @@ local function main()
         end
 
         local function onTouchMoved(x, y)
-            -- cclog("onTouchMoved: %0.2f, %0.2f", x, y)
+            cclog("onTouchMoved: %0.2f, %0.2f", x, y)
             if touchBeginPoint then
                 local cx, cy = layerFarm:getPosition()
                 layerFarm:setPosition(cx + x - touchBeginPoint.x,
@@ -127,9 +127,9 @@ local function main()
         end
 
         local function onTouch(eventType, x, y)
-            if eventType == CCTOUCHBEGAN then
+            if eventType == "began" then   
                 return onTouchBegan(x, y)
-            elseif eventType == CCTOUCHMOVED then
+            elseif eventType == "moved" then
                 return onTouchMoved(x, y)
             else
                 return onTouchEnded(x, y)
@@ -157,7 +157,7 @@ local function main()
 
         local function menuCallbackOpenPopup()
             -- loop test sound effect
-            local effectPath = CCFileUtils:sharedFileUtils():fullPathFromRelativePath("effect1.wav")
+            local effectPath = CCFileUtils:sharedFileUtils():fullPathForFilename("effect1.wav")
             effectID = SimpleAudioEngine:sharedEngine():playEffect(effectPath)
             menuPopup:setVisible(true)
         end
@@ -187,10 +187,10 @@ local function main()
     -- play background music, preload effect
 
     -- uncomment below for the BlackBerry version
-    -- local bgMusicPath = CCFileUtils:sharedFileUtils():fullPathFromRelativePath("background.ogg")
-    local bgMusicPath = CCFileUtils:sharedFileUtils():fullPathFromRelativePath("background.mp3")
+    -- local bgMusicPath = CCFileUtils:sharedFileUtils():fullPathForFilename("background.ogg")
+    local bgMusicPath = CCFileUtils:sharedFileUtils():fullPathForFilename("background.mp3")
     SimpleAudioEngine:sharedEngine():playBackgroundMusic(bgMusicPath, true)
-    local effectPath = CCFileUtils:sharedFileUtils():fullPathFromRelativePath("effect1.wav")
+    local effectPath = CCFileUtils:sharedFileUtils():fullPathForFilename("effect1.wav")
     SimpleAudioEngine:sharedEngine():preloadEffect(effectPath)
 
     -- run

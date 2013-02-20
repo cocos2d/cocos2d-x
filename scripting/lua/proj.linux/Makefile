@@ -9,6 +9,21 @@ LBITS := $(shell getconf LONG_BIT)
 INCLUDES = -I../lua \
            -I../tolua \
 
+COCOS2DX_PATH = ../../../cocos2dx
+INCLUDES +=  -I../ \
+			-I../Classes \
+			-I$(COCOS2DX_PATH) \
+			-I$(COCOS2DX_PATH)/platform/third_party/linux \
+			-I$(COCOS2DX_PATH)/platform/third_party/linux/libfreetype2 \
+			-I$(COCOS2DX_PATH)/cocoa \
+			-I$(COCOS2DX_PATH)/include \
+			-I$(COCOS2DX_PATH)/platform/linux \
+			-I$(COCOS2DX_PATH)/kazmath/include \
+			-I$(COCOS2DX_PATH)/platform/third_party/linux/libxml2 \
+			-I$(COCOS2DX_PATH)/platform/third_party/linux/libjpeg \
+			-I../../../CocosDenshion/include 
+
+
 DEFINES = -DLINUX
 
 OBJECTS = ../lua/lapi.o \
@@ -46,7 +61,14 @@ OBJECTS = ../lua/lapi.o \
           ../tolua/tolua_is.o \
           ../tolua/tolua_map.o \
           ../tolua/tolua_push.o \
-          ../tolua/tolua_to.o
+          ../tolua/tolua_to.o \
+          ../cocos2dx_support/tolua_fix.o \
+          ../cocos2dx_support/CCLuaBridge.o \
+          ../cocos2dx_support/CCLuaEngine.o \
+          ../cocos2dx_support/CCLuaStack.o \
+          ../cocos2dx_support/CCLuaValue.o \
+          ../cocos2dx_support/Cocos2dxLuaLoader.o \
+          ../cocos2dx_support/LuaCocos2d.o 
 
 STATICLIBS = 
 

@@ -19,10 +19,10 @@ INCLUDES =  -I.. \
             -I../../external/chipmunk/include/chipmunk \
 			-I../../extensions/network \
 			-I../platform/linux \
-			-I../platform/third_party/linux/libxml2 \
 			-I../platform/third_party/linux/libpng \
 			-I../platform/third_party/linux/libjpeg \
-			-I../platform/third_party/linux/libtiff/include
+			-I../platform/third_party/linux/libtiff/include \
+			-I../platform/third_party/linux/libwebp 
 
 LBITS := $(shell getconf LONG_BIT)
 ifeq ($(LBITS),64)
@@ -87,13 +87,16 @@ OBJECTS = ../actions/CCAction.o \
 ../platform/CCSAXParser.o \
 ../platform/CCThread.o \
 ../platform/platform.o \
+../platform/CCImageCommonWebp.o \
 ../platform/CCEGLViewProtocol.o \
+../platform/CCFileUtils.o \
 ../platform/linux/CCStdC.o \
-../platform/linux/CCFileUtils.o \
+../platform/linux/CCFileUtilsLinux.o \
 ../platform/linux/CCCommon.o \
 ../platform/linux/CCApplication.o \
 ../platform/linux/CCEGLView.o \
 ../platform/linux/CCImage.o \
+../platform/linux/CCDevice.o \
 ../script_support/CCScriptSupport.o \
 ../sprite_nodes/CCAnimation.o \
 ../sprite_nodes/CCAnimationCache.o \
@@ -110,6 +113,7 @@ OBJECTS = ../actions/CCAction.o \
 ../support/CCVertex.o \
 ../support/CCNotificationCenter.o \
 ../support/image_support/TGAlib.o \
+../support/tinyxml2/tinyxml2.o \
 ../support/zip_support/ZipUtils.o \
 ../support/zip_support/ioapi.o \
 ../support/zip_support/unzip.o \
@@ -160,21 +164,21 @@ STATICLIBS_DIR = ../platform/third_party/linux/libraries
 endif
 STATICLIBS = 
 STATICLIBS = $(STATICLIBS_DIR)/libfreetype.a \
-				$(STATICLIBS_DIR)/libxml2.a \
 				$(STATICLIBS_DIR)/libpng.a \
 				$(STATICLIBS_DIR)/libjpeg.a \
-				$(STATICLIBS_DIR)/libtiff.a 
+				$(STATICLIBS_DIR)/libtiff.a \
+				$(STATICLIBS_DIR)/libwebp.a
 
-SHAREDLIBS = -lglfw -lcurl -lfontconfig -lGLEW
+SHAREDLIBS = -lglfw -lcurl -lfontconfig -lGLEW 
 
-debug: CCFLAGS += -g3 -O0
+debug: CCFLAGS += -g3 -O0 
 debug: CXXFLAGS += -g3 -O0
-debug: DEFINES += -DDEBUG -DCC_ENABLE_CHIPMUNK_INTEGRATION -DCOCOS2D_DEBUG=1
+debug: DEFINES += -DDEBUG -DCC_ENABLE_CHIPMUNK_INTEGRATION=1 -DCOCOS2D_DEBUG=1
 debug: $(TARGET)
 
 release: CCFLAGS += -O3
 release: CXXFLAGS += -O3
-release: DEFINES += -DNDEBUG -DCC_ENABLE_CHIPMUNK_INTEGRATION
+release: DEFINES += -DNDEBUG -DCC_ENABLE_CHIPMUNK_INTEGRATION=1
 release: $(TARGET)
 
 ####### Build rules
