@@ -6,6 +6,7 @@
 # Android
 
 import os
+import shutil
 
 def handle_project_files(context):    
     # determine proj_path
@@ -34,12 +35,17 @@ def handle_project_files(context):
 
     dst_java_file_path = proj_path + "src/" + dst_pkg[0] + "/" + dst_pkg[1] + "/" + dst_pkg[2] + "/" + context["dst_project_name"] + ".java"
       
-    
     # remove useless files.
-    os.popen("rm -rf " + proj_path + "assets")
-    os.popen("rm -rf " + proj_path + "bin")
-    os.popen("rm -rf " + proj_path + "gen")
-    os.popen("rm -rf " + proj_path + "obj")
+    removes = [
+        "assets",
+        "bin",
+        "libs",
+        "gen",
+        "obj",
+    ]
+    for i in range(0, len(removes)):
+        if (os.path.exists(proj_path + removes[i]) == True):
+            shutil.rmtree(proj_path + removes[i])
 
     # replaceString function is implemented in ../create-project.py
     import replaces

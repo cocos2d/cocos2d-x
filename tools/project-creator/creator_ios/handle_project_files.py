@@ -6,6 +6,7 @@
 # iOS
 
 import os
+import shutil
 
 def handle_project_files(context):
     # determine proj_path
@@ -24,10 +25,14 @@ def handle_project_files(context):
               proj_path + context["dst_project_name"] + ".xcodeproj" )
               
     # remove useless files.
-    os.popen("rm -rf " + proj_path + context["dst_project_name"] + ".xcodeproj/project.xcworkspace")
-    os.popen("rm -rf " + proj_path + context["dst_project_name"] + ".xcodeproj/xcuserdata" )
-    os.popen("rm -rf " + proj_path + "build" )
-
+    removes = [
+        context["dst_project_name"] + ".xcodeproj/project.xcworkspace",
+        context["dst_project_name"] + ".xcodeproj/xcuserdata",
+    ]
+    for i in range(0, len(removes)):
+        if (os.path.exists(proj_path + removes[i]) == True):
+            shutil.rmtree(proj_path + removes[i])
+ 
     # replaceString function is implemented in ../create-project.py
     import replaces
     # package_name should be replaced at first. Don't change this sequence
