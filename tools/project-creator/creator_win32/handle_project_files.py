@@ -18,6 +18,8 @@ def handle_project_files(context):
               proj_path + context["dst_project_name"] + ".vcxproj.filters")
     os.rename(proj_path + context["src_project_name"] + ".vcxproj.user",
               proj_path + context["dst_project_name"] + ".vcxproj.user")
+    os.rename(proj_path + context["src_project_name"] + ".sln",
+              proj_path + context["dst_project_name"] + ".sln")          
     
     # replaceString function is implemented in ../create-project.py
     import replaces
@@ -25,6 +27,7 @@ def handle_project_files(context):
     replaces.replaceString(proj_path + context["dst_project_name"] + ".vcxproj",         context["src_project_name"], context["dst_project_name"])
     replaces.replaceString(proj_path + context["dst_project_name"] + ".vcxproj.filters", context["src_project_name"], context["dst_project_name"])
     replaces.replaceString(proj_path + context["dst_project_name"] + ".vcxproj.user",    context["src_project_name"], context["dst_project_name"])
+    replaces.replaceString(proj_path + context["dst_project_name"] + ".sln",             context["src_project_name"], context["dst_project_name"])
     replaces.replaceString(proj_path + "main.cpp",    context["src_project_name"], context["dst_project_name"])
     # done!
     print "proj.win32       : Done!"

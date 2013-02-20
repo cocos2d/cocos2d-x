@@ -108,6 +108,6 @@ for platform in platforms_list:
     exec "import creator_%s.handle_project_files" % (platform)
     exec "creator_%s.handle_project_files.handle_project_files(context)" % (platform)
 
-print "New project has been created in this path: " + context["dst_project_path"]
+print "New project has been created in this path: " + context["dst_project_path"].replace("/tools/project-creator/../..", "")
 print "Have Fun!"
 
