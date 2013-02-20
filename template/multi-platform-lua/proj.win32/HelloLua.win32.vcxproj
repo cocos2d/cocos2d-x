@@ -99,8 +99,10 @@
       </DllDataFileName>
     </Midl>
     <PreBuildEvent>
-      <Command>xcopy "$(ProjectDir)..\..\Cpp\TestCpp\Resources" "$(ProjectDir)..\..\HelloLua\Resources" /e /Y</Command>
-      <Message>copy files from TestCpp to HelloLua</Message>
+      <Command>
+      </Command>
+      <Message>
+      </Message>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -141,8 +143,10 @@
       </DllDataFileName>
     </Midl>
     <PreBuildEvent>
-      <Command>xcopy "$(ProjectDir)..\..\Cpp\TestCpp\Resources" "$(ProjectDir)..\..\HelloLua\Resources" /e /Y</Command>
-      <Message>copy files from TestCpp to HelloLua</Message>
+      <Command>
+      </Command>
+      <Message>
+      </Message>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
