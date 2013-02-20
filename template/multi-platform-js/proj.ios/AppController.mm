@@ -1,10 +1,4 @@
-//
-//  testjsAppController.mm
-//  testjs
-//
-//  Created by Rolando Abarca on 3/19/12.
-//  Copyright __MyCompanyName__ 2012. All rights reserved.
-//
+
 #import <UIKit/UIKit.h>
 #import "AppController.h"
 #import "cocos2d.h"

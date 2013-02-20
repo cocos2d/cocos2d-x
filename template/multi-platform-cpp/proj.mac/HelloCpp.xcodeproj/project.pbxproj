@@ -459,8 +459,8 @@
 		41BC70DF15BF81A5006A0A6C /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = MainMenu.xib; sourceTree = "<group>"; };
 		41BC70E015BF81A5006A0A6C /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = SOURCE_ROOT; };
 		41BC70E115BF81A5006A0A6C /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = SOURCE_ROOT; };
-		41BC70E215BF81A5006A0A6C /* HelloCpp-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "HelloCpp-Info.plist"; sourceTree = SOURCE_ROOT; };
-		41BC70E315BF81A5006A0A6C /* HelloCpp_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelloCpp_Prefix.pch; sourceTree = SOURCE_ROOT; };
+		41BC70E215BF81A5006A0A6C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
+		41BC70E315BF81A5006A0A6C /* Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = SOURCE_ROOT; };
 		8C583FA8169DB6D500F63A10 /* CCEditBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCEditBox.cpp; path = CCEditBox/CCEditBox.cpp; sourceTree = "<group>"; };
 		8C583FA9169DB6D500F63A10 /* CCEditBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCEditBox.h; path = CCEditBox/CCEditBox.h; sourceTree = "<group>"; };
 		8C583FAA169DB6D500F63A10 /* CCEditBoxImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCEditBoxImpl.h; path = CCEditBox/CCEditBoxImpl.h; sourceTree = "<group>"; };
@@ -1019,8 +1019,8 @@
 				41BC70DB15BF81A5006A0A6C /* en.lproj */,
 				41BC70E015BF81A5006A0A6C /* Icon.icns */,
 				41BC70E115BF81A5006A0A6C /* main.m */,
-				41BC70E215BF81A5006A0A6C /* HelloCpp-Info.plist */,
-				41BC70E315BF81A5006A0A6C /* HelloCpp_Prefix.pch */,
+				41BC70E215BF81A5006A0A6C /* Info.plist */,
+				41BC70E315BF81A5006A0A6C /* Prefix.pch */,
 			);
 			name = mac;
 			path = ../Resources;
@@ -1320,7 +1320,7 @@
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = HelloCpp_Prefix.pch;
+				GCC_PREFIX_HEADER = Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					USE_FILE32API,
 					CC_TARGET_OS_MAC,
@@ -1339,7 +1339,7 @@
 					"\"$(SRCROOT)/../../../cocos2dx/include\"",
 					"\"$(SRCROOT)/../../../cocos2dx/platform/mac\"",
 				);
-				INFOPLIST_FILE = "HelloCpp-Info.plist";
+				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../../cocos2dx/platform/third_party/mac/libraries\"";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
@@ -1362,7 +1362,7 @@
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = HelloCpp_Prefix.pch;
+				GCC_PREFIX_HEADER = Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					CC_TARGET_OS_MAC,
 					USE_FILE32API,
@@ -1380,7 +1380,7 @@
 					"\"$(SRCROOT)/../../../cocos2dx/include\"",
 					"\"$(SRCROOT)/../../../cocos2dx/platform/mac\"",
 				);
-				INFOPLIST_FILE = "HelloCpp-Info.plist";
+				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../../cocos2dx/platform/third_party/mac/libraries\"";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;

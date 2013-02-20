@@ -42,7 +42,7 @@ END
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDR_MAINFRAME           ICON                    "res\\testjs.ico"
+IDR_MAINFRAME           ICON                    "res\\game.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -67,12 +67,12 @@ BEGIN
         BLOCK "040904B0"
         BEGIN
             VALUE "CompanyName", "\0"
-            VALUE "FileDescription", "testjs Module\0"
+            VALUE "FileDescription", "game Module\0"
             VALUE "FileVersion", "1, 0, 0, 1\0"
-            VALUE "InternalName", "testjs\0"
+            VALUE "InternalName", "game\0"
             VALUE "LegalCopyright", "Copyright \0"
-            VALUE "OriginalFilename", "testjs.exe\0"
-            VALUE "ProductName", "testjs Module\0"
+            VALUE "OriginalFilename", "game.exe\0"
+            VALUE "ProductName", "game Module\0"
             VALUE "ProductVersion", "1, 0, 0, 1\0"
         END
     END

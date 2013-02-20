@@ -20,7 +20,7 @@
 		<string>Icon-144.png</string>
 	</array>
 	<key>CFBundleIdentifier</key>
-	<string>org.cocos2d-x.${PRODUCT_NAME:rfc1034identifier}</string>
+	<string>org.cocos2dx.hellocpp</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -36,14 +36,7 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UIAppFonts</key>
-	<array>
-		<string>fonts/A Damn Mess.ttf</string>
-		<string>fonts/Abberancy.ttf</string>
-		<string>fonts/Abduction.ttf</string>
-		<string>fonts/Paint Boy.ttf</string>
-		<string>fonts/Schwarzwald Regular.ttf</string>
-		<string>fonts/Scissor Cuts.ttf</string>
-	</array>
+	<array/>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
