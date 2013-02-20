@@ -6,8 +6,7 @@
 //  Copyright 2010 __MyCompanyName__. All rights reserved.
 //
 
-#import "testsAppDelegate.h"
-
+#import "AppController.h"
 #import "EAGLView.h"
 #import "cocos2d.h"
 #import "AppDelegate.h"

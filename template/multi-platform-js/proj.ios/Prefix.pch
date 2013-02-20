@@ -1,5 +1,5 @@
 //
-// Prefix header for all source files of the 'testjs' target in the 'testjs' project
+// Prefix header for all source files of the 'HelloJavascript' target in the 'HelloJavascript' project
 //
 
 #ifdef __OBJC__
