@@ -88,7 +88,10 @@ def checkParams(context):
         context["src_project_path"] = os.getcwd() + "/../../template/multi-platform-lua"
         platforms_list = ["ios",
                           "android",
-                          "win32"]
+                          "win32",
+                          "blackberry",
+                          "linux",
+                          "marmalade"]
     elif ("javascript" == context["language"]):
         context["src_project_name"] = "HelloJavascript"
         context["src_package_name"] = "org.cocos2dx.hellojavascript"
