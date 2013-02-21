@@ -1259,7 +1259,7 @@ public:
 	/**
      * Additional a transformation matrix, Used in is not parent-child relationship but we still need to maintain transformation  parent-child  
      */
-	void translateFormOtherNode(CCAffineTransform &transform);
+	void translateFromOtherNode(CCAffineTransform &transform);
     /// @} end of Coordinate Converters
 
 private:

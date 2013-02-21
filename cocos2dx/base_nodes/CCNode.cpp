@@ -1165,7 +1165,7 @@ CCAffineTransform CCNode::nodeToParentTransform(void)
 
     return m_sTransform;
 }
-void CCNode::translateFormOtherNode(CCAffineTransform &transform)
+void CCNode::translateFromOtherNode(CCAffineTransform &transform)
 {
 	m_sOtherTransform  = CCAffineTransformMake(transform.a, transform.b, transform.c, transform.d, transform.tx, transform.ty);
 	m_bTransformDirty = true;
