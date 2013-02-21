@@ -69,6 +69,7 @@
         if (!textField_) break;
         [textField_ setTextColor:[UIColor whiteColor]];
         textField_.font = [UIFont systemFontOfSize:frameRect.size.height*2/3]; //TODO need to delete hard code here.
+		textField_.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
         textField_.backgroundColor = [UIColor clearColor];
         textField_.borderStyle = UITextBorderStyleNone;
         textField_.delegate = self;
@@ -212,6 +213,7 @@ CCEditBoxImpl* __createSystemEditBox(CCEditBox* pEditBox)
 CCEditBoxImplIOS::CCEditBoxImplIOS(CCEditBox* pEditText)
 : CCEditBoxImpl(pEditText)
 , m_systemControl(NULL)
+, m_obAnchorPoint(ccp(0.5f, 0.5f))
 , m_nMaxTextLength(-1)
 {
     m_bInRetinaMode = [[EAGLView sharedEGLView] contentScaleFactor] == 2.0f ? true : false;
@@ -251,6 +253,16 @@ bool CCEditBoxImplIOS::initWithSize(const CCSize& size)
     }while (0);
     
     return false;
+}
+
+void CCEditBoxImplIOS::setFont(const char* pFontName, int fontSize)
+{
+	if(pFontName == NULL)
+		return;
+	NSString * fntName = [NSString stringWithUTF8String:pFontName];
+	UIFont *textFont = [UIFont fontWithName:fntName size:fontSize];
+	if(textFont != nil)
+		[m_systemControl.textField setFont:textFont];
 }
 
 void CCEditBoxImplIOS::setFontColor(const ccColor3B& color)
@@ -387,14 +399,22 @@ static CGPoint convertDesignCoordToScreenCoord(const CCPoint& designCoord, bool 
 
 void CCEditBoxImplIOS::setPosition(const CCPoint& pos)
 {
-    //TODO should consider anchor point, the default value is (0.5, 0,5)
-    [m_systemControl setPosition:convertDesignCoordToScreenCoord(ccp(pos.x-m_tContentSize.width/2, pos.y+m_tContentSize.height/2), m_bInRetinaMode)];
+	m_obPosition = pos;
+	CCPoint designCoord = ccp(pos.x - m_tContentSize.width * m_obAnchorPoint.x, pos.y + m_tContentSize.height * (1 - m_obAnchorPoint.y));
+    [m_systemControl setPosition:convertDesignCoordToScreenCoord(designCoord, m_bInRetinaMode)];
 }
 
 void CCEditBoxImplIOS::setContentSize(const CCSize& size)
 {
     m_tContentSize = size;
     CCLOG("[Edit text] content size = (%f, %f)", size.width, size.height);
+}
+
+void CCEditBoxImplIOS::setAnchorPoint(const CCPoint& anchorPoint)
+{
+    CCLOG("[Edit text] anchor point = (%f, %f)", anchorPoint.x, anchorPoint.y);
+	m_obAnchorPoint = anchorPoint;
+	setPosition(m_obPosition);
 }
 
 void CCEditBoxImplIOS::visit(void)

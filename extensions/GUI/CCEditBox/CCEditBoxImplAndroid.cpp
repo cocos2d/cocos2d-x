@@ -72,20 +72,35 @@ bool CCEditBoxImplAndroid::initWithSize(const CCSize& size)
 {
     int fontSize = getFontSizeAccordingHeightJni(size.height-12);
     m_pLabel = CCLabelTTF::create("", "", size.height-12);
-    m_pLabel->setAnchorPoint(ccp(0, 0));
-    m_pLabel->setPosition(ccp(5, 2));
+	// align the text vertically center
+    m_pLabel->setAnchorPoint(ccp(0, 0.5f));
+    m_pLabel->setPosition(ccp(5, size.height / 2.0f));
     m_pLabel->setColor(m_colText);
     m_pEditBox->addChild(m_pLabel);
 
     m_pLabelPlaceHolder = CCLabelTTF::create("", "", size.height-12);
-    m_pLabelPlaceHolder->setAnchorPoint(ccp(0, 0));
-    m_pLabelPlaceHolder->setPosition(ccp(5, 2));
+	// align the text vertically center
+    m_pLabelPlaceHolder->setAnchorPoint(ccp(0, 0.5f));
+    m_pLabelPlaceHolder->setPosition(ccp(5, size.height / 2.0f));
     m_pLabelPlaceHolder->setVisible(false);
     m_pLabelPlaceHolder->setColor(m_colPlaceHolder);
     m_pEditBox->addChild(m_pLabelPlaceHolder);
     
     m_EditSize = size;
     return true;
+}
+
+void CCEditBoxImplAndroid::setFont(const char* pFontName, int fontSize)
+{
+	if(m_pLabel != NULL) {
+		m_pLabel->setFontName(pFontName);
+		m_pLabel->setFontSize(fontSize);
+	}
+	
+	if(m_pLabelPlaceHolder != NULL) {
+		m_pLabelPlaceHolder->setFontName(pFontName);
+		m_pLabelPlaceHolder->setFontSize(fontSize);
+	}
 }
 
 void CCEditBoxImplAndroid::setFontColor(const ccColor3B& color)
@@ -194,6 +209,11 @@ void CCEditBoxImplAndroid::setPosition(const CCPoint& pos)
 void CCEditBoxImplAndroid::setContentSize(const CCSize& size)
 { // don't need to be implemented on android platform.
 
+}
+
+void CCEditBoxImplAndroid::setAnchorPoint(const CCPoint& anchorPoint)
+{ // don't need to be implemented on android platform.
+	
 }
 
 void CCEditBoxImplAndroid::visit(void)
