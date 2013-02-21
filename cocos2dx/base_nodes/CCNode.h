@@ -1256,10 +1256,6 @@ public:
      */
     CCPoint convertTouchToNodeSpaceAR(CCTouch * touch);
     
-	/**
-     * Additional a transformation matrix, Used in is not parent-child relationship but we still need to maintain transformation  parent-child  
-     */
-	void translateFormOtherNode(CCAffineTransform &transform);
     /// @} end of Coordinate Converters
 
 private:
@@ -1294,7 +1290,6 @@ protected:
     
     CCSize m_obContentSize;             ///< untransformed size of the node
     
-	CCAffineTransform m_sOtherTransform;///< transform
     CCAffineTransform m_sTransform;     ///< transform
     CCAffineTransform m_sInverse;       ///< transform
     
