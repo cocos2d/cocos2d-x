@@ -65,12 +65,6 @@ bool CCTMXLayer::initWithTilesetInfo(CCTMXTilesetInfo *tilesetInfo, CCTMXLayerIn
 		}
         else
 		{
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-            if (tilesetInfo->m_sSourceImage[0] == '/')
-			{
-                tilesetInfo->m_sSourceImage.erase(tilesetInfo->m_sSourceImage.begin());
-			}
-#endif
             texture = CCTextureCache::sharedTextureCache()->addImage(tilesetInfo->m_sSourceImage.c_str());
 		}
 	}
