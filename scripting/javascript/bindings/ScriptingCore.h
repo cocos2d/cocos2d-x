@@ -41,11 +41,11 @@ class ScriptingCore : public CCScriptEngineProtocol
 	JSObject  *global_;
 	JSObject  *debugGlobal_;
 	SimpleRunLoop* runLoop;
-	
+
 	ScriptingCore();
 public:
 	~ScriptingCore();
-	
+
 	static ScriptingCore *getInstance() {
 		static ScriptingCore* pInstance = NULL;
         if (pInstance == NULL) {
@@ -55,7 +55,7 @@ public:
 	};
 
     virtual ccScriptType getScriptType() { return kScriptTypeJavascript; };
-    
+
     /**
      @brief Remove CCObject from lua state
      @param object to remove
@@ -78,7 +78,7 @@ public:
      @param filename String object holding the filename of the script file that is to be executed
      */
     virtual  int executeScriptFile(const char* filename) { return 0; }
-    
+
     /**
      @brief Execute a scripted global function.
      @brief The function should not take any parameters and should return an integer.
@@ -100,7 +100,7 @@ public:
 
     bool executeFunctionWithObjectData(CCNode *self, const char *name, JSObject *obj);
     int executeFunctionWithOwner(jsval owner, const char *name, jsval data);
-        
+
     void executeJSFunctionWithThisObj(jsval thisObj, jsval callback, jsval *data);
 
 	/**
@@ -110,7 +110,7 @@ public:
 	 * Can be NULL.
 	 */
 	JSBool evalString(const char *string, jsval *outVal, const char *filename = NULL, JSContext* cx = NULL, JSObject* global = NULL);
-	
+
 	/**
 	 * will run the specified string
 	 * @param string The path of the script to be run
@@ -123,6 +123,16 @@ public:
 	void start();
 
 	/**
+	 * cleanup everything
+	 */
+	void cleanup();
+
+	/**
+	 * cleanup everything then initialize everything
+	 */
+	void reset();
+
+	/**
 	 * will add the register_sth callback to the list of functions that need to be called
 	 * after the creation of the context
 	 */
@@ -133,15 +143,15 @@ public:
 	 * and create a new one.
 	 */
 	void createGlobalContext();
-    
+
     static void removeAllRoots(JSContext *cx);
-	
-    
-    int executeCustomTouchEvent(int eventType, 
+
+
+    int executeCustomTouchEvent(int eventType,
                                 CCTouch *pTouch, JSObject *obj, jsval &retval);
-    int executeCustomTouchEvent(int eventType, 
+    int executeCustomTouchEvent(int eventType,
                                 CCTouch *pTouch, JSObject *obj);
-    int executeCustomTouchesEvent(int eventType, 
+    int executeCustomTouchesEvent(int eventType,
                                   CCSet *pTouches, JSObject *obj);
 	/**
 	 * @return the global context
@@ -149,14 +159,14 @@ public:
 	JSContext* getGlobalContext() {
 		return cx_;
 	};
-	
+
 	/**
 	 * @param cx
 	 * @param message
 	 * @param report
 	 */
 	static void reportError(JSContext *cx, const char *message, JSErrorReport *report);
-	
+
 	/**
 	 * Log something using CCLog
 	 * @param cx
@@ -164,14 +174,14 @@ public:
 	 * @param vp
 	 */
 	static JSBool log(JSContext *cx, uint32_t argc, jsval *vp);
-	
+
 	JSBool setReservedSpot(uint32_t i, JSObject *obj, jsval value);
-	
+
 	/**
 	 * run a script from script :)
 	 */
 	static JSBool executeScript(JSContext *cx, uint32_t argc, jsval *vp);
-	
+
 	/**
 	 * Force a cycle of GC
 	 * @param cx
@@ -189,7 +199,7 @@ public:
 	void debugProcessInput(string str);
 	void enableDebugger();
 	JSObject* getDebugGlobal() { return debugGlobal_; }
-	
+
  private:
     void string_report(jsval val);
 };
