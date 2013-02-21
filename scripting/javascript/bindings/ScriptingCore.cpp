@@ -413,13 +413,11 @@ void ScriptingCore::removeAllRoots(JSContext *cx) {
 
 void ScriptingCore::createGlobalContext() {
     if (this->cx_ && this->rt_) {
-		CCLOG("Destroying old JS Context.");
         ScriptingCore::removeAllRoots(this->cx_);
         JS_DestroyContext(this->cx_);
         JS_DestroyRuntime(this->rt_);
         this->cx_ = NULL;
         this->rt_ = NULL;
-		CCLOG("Old JS Context destroyed.");
     }
     //JS_SetCStringsAreUTF8();
     this->rt_ = JS_NewRuntime(10 * 1024 * 1024);
@@ -511,21 +509,17 @@ void ScriptingCore::reset()
 
 void ScriptingCore::cleanup()
 {
-	CCLOG("ScriptingCore::cleanup start");
     localStorageFree();
     removeAllRoots(cx_);
 	if (cx_) {
-		CCLOG("ScriptingCore::cleanup JS_DestroyContextNoGC");
 		JS_DestroyContextNoGC(cx_);
 		cx_ = NULL;
 	}
 	if (rt_)
 	{
-		CCLOG("ScriptingCore::cleanup JS_DestroyRuntime");
 		JS_DestroyRuntime(rt_);
 		rt_ = NULL;
 	}
-	CCLOG("ScriptingCore::cleanup JS_ShutDown");
     JS_ShutDown();
     if (_js_log_buf) {
         free(_js_log_buf);
