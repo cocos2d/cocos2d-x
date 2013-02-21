@@ -131,7 +131,14 @@ void CCTableView::reloadData()
 
 CCTableViewCell *CCTableView::cellAtIndex(unsigned int idx)
 {
-    return this->_cellWithIndex(idx);
+    CCTableViewCell *found = NULL;
+    
+    if (m_pIndices->find(idx) != m_pIndices->end())
+    {
+        found = (CCTableViewCell *)m_pCellsUsed->objectWithObjectID(idx);
+    }
+    
+    return found;
 }
 
 void CCTableView::updateCellAtIndex(unsigned int idx)
@@ -146,7 +153,7 @@ void CCTableView::updateCellAtIndex(unsigned int idx)
         return;
     }
 
-    CCTableViewCell* cell = this->_cellWithIndex(idx);
+    CCTableViewCell* cell = this->cellAtIndex(idx);
     if (cell)
     {
         this->_moveCellOutOfSight(cell);
@@ -206,10 +213,9 @@ void CCTableView::removeCellAtIndex(unsigned int idx)
         return;
     }
 
-    CCTableViewCell* cell = NULL;
     unsigned int newIdx = 0;
     
-    cell = this->_cellWithIndex(idx);
+    CCTableViewCell* cell = this->cellAtIndex(idx);
     if (!cell) {
         return;
     }
@@ -348,21 +354,6 @@ int CCTableView::__indexFromOffset(CCPoint offset)
     }
     
     return index;
-}
-
-CCTableViewCell* CCTableView::_cellWithIndex(unsigned int cellIndex)
-{
-    CCTableViewCell *found;
-    
-    found = NULL;
-    
-//     if ([m_pIndices containsIndex:cellIndex])
-    if (m_pIndices->find(cellIndex) != m_pIndices->end())
-    {
-        found = (CCTableViewCell *)m_pCellsUsed->objectWithObjectID(cellIndex);
-    }
-    
-    return found;
 }
 
 void CCTableView::_moveCellOutOfSight(CCTableViewCell *cell)
@@ -532,7 +523,7 @@ bool CCTableView::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
         }
         
         index = this->_indexFromOffset(point);
-        m_pTouchedCell  = this->_cellWithIndex(index);
+        m_pTouchedCell  = this->cellAtIndex(index);
         
         if (m_pTouchedCell && m_pTableViewDelegate != NULL) {
             m_pTableViewDelegate->tableCellHighlight(this, m_pTouchedCell);
