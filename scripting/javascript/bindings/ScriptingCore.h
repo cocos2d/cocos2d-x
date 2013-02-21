@@ -126,6 +126,16 @@ public:
 	void start();
 
 	/**
+	 * cleanup everything
+	 */
+	void cleanup();
+
+	/**
+	 * cleanup everything then initialize everything
+	 */
+	void reset();
+
+	/**
 	 * will add the register_sth callback to the list of functions that need to be called
 	 * after the creation of the context
 	 */
