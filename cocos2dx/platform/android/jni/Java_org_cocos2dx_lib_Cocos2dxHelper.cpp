@@ -29,12 +29,6 @@ extern "C" {
         return g_apkPath.c_str();
     }
 
-    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxHelper_nativeSetExternalAssetPath(JNIEnv*  env, jobject thiz, jstring externalAssetPath) {
-        const char* externalAssetPathChars = env->GetStringUTFChars(externalAssetPath, NULL);
-        cocos2d::JniHelper::setExternalAssetPath(externalAssetPathChars);
-        env->ReleaseStringUTFChars(externalAssetPath, externalAssetPathChars);
-    }
-
     void showDialogJNI(const char * pszMsg, const char * pszTitle) {
         if (!pszMsg) {
             return;
