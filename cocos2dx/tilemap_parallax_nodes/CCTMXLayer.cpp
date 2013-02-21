@@ -57,10 +57,23 @@ bool CCTMXLayer::initWithTilesetInfo(CCTMXTilesetInfo *tilesetInfo, CCTMXLayerIn
     float capacity = totalNumberOfTiles * 0.35f + 1; // 35 percent is occupied ?
 
     CCTexture2D *texture = NULL;
-    if( tilesetInfo )
-    {
-        texture = CCTextureCache::sharedTextureCache()->addImage(tilesetInfo->m_sSourceImage.c_str());
-    }
+	if( tilesetInfo )
+	{
+        if (tilesetInfo->m_pTexture != NULL)
+		{
+			texture = tilesetInfo->m_pTexture;
+		}
+        else
+		{
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+            if (tilesetInfo->m_sSourceImage[0] == '/')
+			{
+                tilesetInfo->m_sSourceImage.erase(tilesetInfo->m_sSourceImage.begin());
+			}
+#endif
+            texture = CCTextureCache::sharedTextureCache()->addImage(tilesetInfo->m_sSourceImage.c_str());
+		}
+	}
 
     if (CCSpriteBatchNode::initWithTexture(texture, (unsigned int)capacity))
     {

@@ -32,6 +32,7 @@ THE SOFTWARE.
 #include "cocoa/CCDictionary.h"
 #include "cocoa/CCGeometry.h"
 #include "platform/CCSAXParser.h"
+#include "textures/CCTexture2D.h"
 
 #include <string>
 
@@ -126,6 +127,7 @@ public:
     std::string        m_sSourceImage;
     //! size in pixels of the image
     CCSize            m_tImageSize;
+	CCTexture2D       *m_pTexture;
 public:
     CCTMXTilesetInfo();
     virtual ~CCTMXTilesetInfo();
