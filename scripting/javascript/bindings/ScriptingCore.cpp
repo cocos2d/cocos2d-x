@@ -202,9 +202,9 @@ JSBool JSBCore_platform(JSContext *cx, uint32_t argc, jsval *vp)
         JS_ReportError(cx, "Invalid number of arguments in __getPlatform");
         return JS_FALSE;
     }
-    
+
 	JSString * platform;
-    
+
     // config.deviceType: Device Type
     // 'mobile' for any kind of mobile devices, 'desktop' for PCs, 'browser' for Web Browsers
     // #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
@@ -212,11 +212,11 @@ JSBool JSBCore_platform(JSContext *cx, uint32_t argc, jsval *vp)
     // #else
     platform = JS_InternString(cx, "mobile");
     // #endif
-    
+
 	jsval ret = STRING_TO_JSVAL(platform);
-    
+
 	JS_SET_RVAL(cx, vp, ret);
-    
+
 	return JS_TRUE;
 };
 
@@ -227,14 +227,14 @@ JSBool JSBCore_version(JSContext *cx, uint32_t argc, jsval *vp)
         JS_ReportError(cx, "Invalid number of arguments in __getVersion");
         return JS_FALSE;
     }
-	
+
 	char version[256];
 	snprintf(version, sizeof(version)-1, "%s - %s", cocos2dVersion(), JSB_version);
 	JSString * js_version = JS_InternString(cx, version);
-	
+
 	jsval ret = STRING_TO_JSVAL(js_version);
 	JS_SET_RVAL(cx, vp, ret);
-	
+
 	return JS_TRUE;
 };
 
@@ -245,9 +245,9 @@ JSBool JSBCore_os(JSContext *cx, uint32_t argc, jsval *vp)
         JS_ReportError(cx, "Invalid number of arguments in __getOS");
         return JS_FALSE;
     }
-	
+
 	JSString * os;
-    
+
     // osx, ios, android, windows, linux, etc..
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     os = JS_InternString(cx, "ios");
@@ -268,10 +268,10 @@ JSBool JSBCore_os(JSContext *cx, uint32_t argc, jsval *vp)
 #else
     os = JS_InternString(cx, "unknown");
 #endif
-	
+
 	jsval ret = STRING_TO_JSVAL(os);
 	JS_SET_RVAL(cx, vp, ret);
-	
+
 	return JS_TRUE;
 };
 
@@ -307,7 +307,7 @@ void registerDefaultClasses(JSContext* cx, JSObject* global) {
     JS_DefineFunction(cx, global, "log", ScriptingCore::log, 0, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, global, "executeScript", ScriptingCore::executeScript, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, global, "forceGC", ScriptingCore::forceGC, 0, JSPROP_READONLY | JSPROP_PERMANENT);
-    
+
     JS_DefineFunction(cx, global, "__getPlatform", JSBCore_platform, 0, JSPROP_READONLY | JSPROP_PERMANENT);
 	JS_DefineFunction(cx, global, "__getOS", JSBCore_os, 0, JSPROP_READONLY | JSPROP_PERMANENT);
 	JS_DefineFunction(cx, global, "__getVersion", JSBCore_version, 0, JSPROP_READONLY | JSPROP_PERMANENT);
@@ -481,12 +481,31 @@ JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* c
     return evaluatedOK;
 }
 
+void ScriptingCore::reset()
+{
+    cleanup();
+    start();
+}
+
 ScriptingCore::~ScriptingCore()
+{
+    cleanup();
+}
+
+void ScriptingCore::cleanup()
 {
     localStorageFree();
     removeAllRoots(cx_);
-    JS_DestroyContext(cx_);
-    JS_DestroyRuntime(rt_);
+    if (cx_)
+    {
+        JS_DestroyContext(cx_);
+        cx_ = NULL;
+    }
+    if (rt_)
+    {
+        JS_DestroyRuntime(rt_);
+        rt_ = NULL;
+    }
     JS_ShutDown();
     if (_js_log_buf) {
         free(_js_log_buf);
@@ -645,12 +664,12 @@ void ScriptingCore::resumeSchedulesAndActions(CCNode *node) {
 }
 
 void ScriptingCore::cleanupSchedulesAndActions(CCNode *node) {
- 
+
     CCArray * arr = JSCallFuncWrapper::getTargetForNativeNode(node);
     if(arr) {
         arr->removeAllObjects();
     }
-    
+
     arr = JSScheduleWrapper::getTargetForNativeNode(node);
     if(arr) {
         CCScheduler* pScheduler = CCDirector::sharedDirector()->getScheduler();
@@ -733,14 +752,14 @@ int ScriptingCore::executeSchedule(int nHandler, float dt, CCNode* pNode/* = NUL
 {
     js_proxy_t * p;
     JS_GET_PROXY(p, pNode);
-    
+
     if (!p) return 0;
-    
+
     jsval retval;
     jsval dataVal = DOUBLE_TO_JSVAL(dt);
-    
+
     executeJSFunctionWithName(this->cx_, p->obj, "update", dataVal, retval);
-    
+
     return 1;
 }
 
@@ -777,14 +796,14 @@ int ScriptingCore::executeLayerTouchEvent(CCLayer* pLayer, int eventType, CCTouc
 {
     std::string funcName = "";
     getTouchFuncName(eventType, funcName);
-    
+
     jsval jsret;
     getJSTouchObject(this->getGlobalContext(), pTouch, jsret);
     JSObject *jsObj = JSVAL_TO_OBJECT(jsret);
     bool retval = executeFunctionWithObjectData(pLayer,  funcName.c_str(), jsObj);
-    
+
     removeJSTouchObject(this->getGlobalContext(), pTouch, jsret);
-    
+
     return retval;
 }
 
@@ -793,7 +812,7 @@ bool ScriptingCore::executeFunctionWithObjectData(CCNode *self, const char *name
     js_proxy_t * p;
     JS_GET_PROXY(p, self);
     if (!p) return false;
-    
+
     jsval retval;
     jsval dataVal = OBJECT_TO_JSVAL(obj);
 
@@ -819,9 +838,9 @@ int ScriptingCore::executeAccelerometerEvent(CCLayer *pLayer, CCAcceleration *pA
 
     jsval value = ccacceleration_to_jsval(this->getGlobalContext(), *pAccelerationValue);
     JS_AddValueRoot(this->getGlobalContext(), &value);
-    
+
     executeFunctionWithObjectData(pLayer, "onAccelerometer", JSVAL_TO_OBJECT(value));
-    
+
     JS_RemoveValueRoot(this->getGlobalContext(), &value);
     return 1;
 }
@@ -911,7 +930,7 @@ JSBool jsval_to_int32( JSContext *cx, jsval vp, int32_t *outval )
     JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
 
     *outval = (int32_t)dp;
-    
+
 	return ok;
 }
 
@@ -923,9 +942,9 @@ JSBool jsval_to_uint32( JSContext *cx, jsval vp, uint32_t *outval )
     JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
     ok &= !isnan(dp);
     JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
-    
+
     *outval = (uint32_t)dp;
-    
+
 	return ok;
 }
 
@@ -937,9 +956,9 @@ JSBool jsval_to_uint16( JSContext *cx, jsval vp, uint16_t *outval )
     JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
     ok &= !isnan(dp);
     JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
-    
+
     *outval = (uint16_t)dp;
-    
+
 	return ok;
 }
 
@@ -957,7 +976,7 @@ JSBool jsval_to_long_long(JSContext *cx, jsval v, long long* ret) {
 JSBool jsval_to_std_string(JSContext *cx, jsval v, std::string* ret) {
     JSString *tmp = JS_ValueToString(cx, v);
     JSB_PRECONDITION2(tmp, cx, JS_FALSE, "Error processing arguments");
-    
+
 	JSStringWrapper str(tmp);
     *ret = str.get();
     return JS_TRUE;
@@ -993,9 +1012,9 @@ JSBool jsval_to_ccacceleration(JSContext* cx,jsval v, CCAcceleration* ret) {
     JS_ValueToNumber(cx, jsy, &y) &&
     JS_ValueToNumber(cx, jsz, &z) &&
     JS_ValueToNumber(cx, jstimestamp, &timestamp);
-    
+
     JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
-    
+
     ret->x = x;
     ret->y = y;
     ret->z = z;
@@ -1055,7 +1074,7 @@ JSBool jsval_to_ccrect(JSContext *cx, jsval v, CCRect* ret) {
         JS_ValueToNumber(cx, jsheight, &height);
 
     JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
-    
+
     ret->origin.x = x;
     ret->origin.y = y;
     ret->size.width = width;
@@ -1072,7 +1091,7 @@ JSBool jsval_to_ccsize(JSContext *cx, jsval v, CCSize* ret) {
         JS_GetProperty(cx, tmp, "height", &jsh) &&
         JS_ValueToNumber(cx, jsw, &w) &&
         JS_ValueToNumber(cx, jsh, &h);
-    
+
     JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
     ret->width = w;
     ret->height = h;
@@ -1092,7 +1111,7 @@ JSBool jsval_to_cccolor4b(JSContext *cx, jsval v, ccColor4B* ret) {
         JS_ValueToNumber(cx, jsg, &g) &&
         JS_ValueToNumber(cx, jsb, &b) &&
         JS_ValueToNumber(cx, jsa, &a);
-    
+
     JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
 
     ret->r = r;
@@ -1115,7 +1134,7 @@ JSBool jsval_to_cccolor4f(JSContext *cx, jsval v, ccColor4F* ret) {
         JS_ValueToNumber(cx, jsg, &g) &&
         JS_ValueToNumber(cx, jsb, &b) &&
         JS_ValueToNumber(cx, jsa, &a);
-    
+
     JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
     ret->r = r;
     ret->g = g;
@@ -1135,9 +1154,9 @@ JSBool jsval_to_cccolor3b(JSContext *cx, jsval v, ccColor3B* ret) {
         JS_ValueToNumber(cx, jsr, &r) &&
         JS_ValueToNumber(cx, jsg, &g) &&
         JS_ValueToNumber(cx, jsb, &b);
-    
+
     JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
-    
+
     ret->r = r;
     ret->g = g;
     ret->b = b;
@@ -1187,7 +1206,7 @@ JSBool jsval_to_ccarray(JSContext* cx, jsval v, CCArray** ret) {
             js_proxy_t *proxy;
             JS_GET_NATIVE_PROXY(proxy, elto);
             JSB_PRECONDITION2( proxy, cx, JS_FALSE, "Error getting proxy.");
-            
+
             arr->addObject((CCObject *)proxy->ptr);
         }
     }
@@ -1197,18 +1216,18 @@ JSBool jsval_to_ccarray(JSContext* cx, jsval v, CCArray** ret) {
 
 
 jsval ccarray_to_jsval(JSContext* cx, CCArray *arr) {
-    
+
     JSObject *jsretArr = JS_NewArrayObject(cx, 0, NULL);
-    
+
     for(unsigned int i = 0; i < arr->count(); ++i) {
         jsval arrElement;
         CCObject *obj = arr->objectAtIndex(i);
-        
+
         CCString *testString = dynamic_cast<cocos2d::CCString *>(obj);
         CCDictionary* testDict = NULL;
         CCArray* testArray = NULL;
         // XXX: Only supports string, since all data read from plist files will be stored as string in cocos2d-x
-        // Do we need to convert string to js base type ? 
+        // Do we need to convert string to js base type ?
         if(testString) {
             arrElement = c_string_to_jsval(cx, testString->getCString());
         } else if ((testDict = dynamic_cast<cocos2d::CCDictionary*>(obj))) {
@@ -1219,7 +1238,7 @@ jsval ccarray_to_jsval(JSContext* cx, CCArray *arr) {
             js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::CCObject>(cx, obj);
             arrElement = OBJECT_TO_JSVAL(proxy->obj);
         }
-        
+
         if(!JS_SetElement(cx, jsretArr, i, &arrElement)) {
             break;
         }
@@ -1240,7 +1259,7 @@ jsval ccdictionary_to_jsval(JSContext* cx, CCDictionary* dict)
         CCDictionary* testDict = NULL;
         CCArray* testArray = NULL;
         // XXX: Only supports string, since all data read from plist files will be stored as string in cocos2d-x
-        // Do we need to convert string to js base type ? 
+        // Do we need to convert string to js base type ?
         if(testString) {
             dictElement = c_string_to_jsval(cx, testString->getCString());
         } else if ((testDict = dynamic_cast<cocos2d::CCDictionary*>(obj))) {
@@ -1251,7 +1270,7 @@ jsval ccdictionary_to_jsval(JSContext* cx, CCDictionary* dict)
             js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::CCObject>(cx, obj);
             dictElement = OBJECT_TO_JSVAL(proxy->obj);
         }
-        
+
         const char* key = pElement->getStrKey();
         if (key && strlen(key) > 0)
         {
@@ -1262,22 +1281,22 @@ jsval ccdictionary_to_jsval(JSContext* cx, CCDictionary* dict)
 }
 
 JSBool jsval_to_ccdictionary(JSContext* cx, jsval v, CCDictionary** ret) {
-    
+
     JSObject *itEl = JS_NewPropertyIterator(cx, JSVAL_TO_OBJECT(v));
     JSBool ok = JS_TRUE;
     CCDictionary* dict = NULL;
     jsid propId;
     do {
-        
+
         jsval prop;
         JS_GetPropertyById(cx, JSVAL_TO_OBJECT(v), propId, &prop);
-                
+
         js_proxy_t *proxy;
         JSObject *tmp = JSVAL_TO_OBJECT(prop);
         JS_GET_NATIVE_PROXY(proxy, tmp);
         cocos2d::CCObject* cobj = (cocos2d::CCObject *)(proxy ? proxy->ptr : NULL);
         TEST_NATIVE_OBJECT(cx, cobj)
-        
+
         jsval key;
         std::string keyStr;
         if(JSID_IS_STRING(propId)) {
@@ -1285,14 +1304,14 @@ JSBool jsval_to_ccdictionary(JSContext* cx, jsval v, CCDictionary** ret) {
             ok &= jsval_to_std_string(cx, key, &keyStr);
             JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
         }
-        
+
         if(JSVAL_IS_NULL(key)) continue;
-        
+
         if(!dict) {
             dict = CCDictionary::create();
         }
         dict->setObject(cobj, keyStr);
-        
+
     } while(JS_NextProperty(cx, itEl, &propId));
     *ret = dict;
     return JS_TRUE;
@@ -1449,7 +1468,7 @@ void ScriptingCore::enableDebugger() {
 		JS_DefineFunction(cx_, debugGlobal_, "_bufferRead", JSBDebug_BufferRead, 0, JSPROP_READONLY | JSPROP_PERMANENT);
 		JS_DefineFunction(cx_, debugGlobal_, "_lockVM", JSBDebug_LockExecution, 2, JSPROP_READONLY | JSPROP_PERMANENT);
 		JS_DefineFunction(cx_, debugGlobal_, "_unlockVM", JSBDebug_UnlockExecution, 0, JSPROP_READONLY | JSPROP_PERMANENT);
-		
+
 		runScript("jsb_debugger.js", debugGlobal_);
 
 		// prepare the debugger
@@ -1463,7 +1482,7 @@ void ScriptingCore::enableDebugger() {
 		JS_DefineFunction(cx_, global_, "startDebugger", JSBDebug_StartDebugger, 3, JSPROP_READONLY | JSPROP_PERMANENT);
 		// start bg thread
 		pthread_create(&debugThread, NULL, serverEntryPoint, NULL);
-		
+
 		CCScheduler* scheduler = CCDirector::sharedDirector()->getScheduler();
 		scheduler->scheduleUpdateForTarget(this->runLoop, 0, false);
 	}
@@ -1583,13 +1602,13 @@ JSBool JSBDebug_BufferWrite(JSContext* cx, unsigned argc, jsval* vp)
     if (argc == 1) {
         jsval* argv = JS_ARGV(cx, vp);
         const char* str;
-		
+
         JSString* jsstr = JS_ValueToString(cx, argv[0]);
         str = JS_EncodeString(cx, jsstr);
-		
+
 		// this is safe because we're already inside a lock (from clearBuffers)
 		outData.append(str);
-		
+
         JS_free(cx, (void*)str);
     }
     return JS_TRUE;
@@ -1666,7 +1685,7 @@ void* serverEntryPoint(void*)
 	memset(&hints, 0, sizeof(struct addrinfo));
 	hints.ai_family = AF_INET;
 	hints.ai_socktype = SOCK_STREAM; // TCP
-	
+
 	int err;
 	stringstream portstr;
 	portstr << JSB_DEBUGGER_PORT;
@@ -1674,7 +1693,7 @@ void* serverEntryPoint(void*)
 	if ((err = getaddrinfo(NULL, tmp, &hints, &result)) != 0) {
 		printf("error: %s\n", gai_strerror(err));
 	}
-	
+
 	for (rp = result; rp != NULL; rp = rp->ai_next) {
 		if ((s = socket(rp->ai_family, rp->ai_socktype, 0)) < 0) {
 			continue;
@@ -1695,9 +1714,9 @@ void* serverEntryPoint(void*)
 		LOGD("error creating/binding socket");
 		return NULL;
 	}
-	
+
 	freeaddrinfo(result);
-	
+
 	listen(s, 1);
 	while (serverAlive && (clientSocket = accept(s, NULL, NULL)) > 0) {
 		// read/write data
