@@ -69,7 +69,6 @@ public class Cocos2dxHelper {
 		Cocos2dxHelper.sPackageName = applicationInfo.packageName;
 		Cocos2dxHelper.sFileDirectory = pContext.getFilesDir().getAbsolutePath();
 		Cocos2dxHelper.nativeSetApkPath(applicationInfo.sourceDir);
-		Cocos2dxHelper.nativeSetExternalAssetPath(Cocos2dxHelper.getAbsolutePathOnExternalStorage(applicationInfo, "assets/"));
 
 		Cocos2dxHelper.sCocos2dxAccelerometer = new Cocos2dxAccelerometer(pContext);
 		Cocos2dxHelper.sCocos2dMusic = new Cocos2dxMusic(pContext);
@@ -91,8 +90,6 @@ public class Cocos2dxHelper {
 	// ===========================================================
 
 	private static native void nativeSetApkPath(final String pApkPath);
-
-	private static native void nativeSetExternalAssetPath(final String pExternalAssetPath);
 
 	private static native void nativeSetEditTextDialogResult(final byte[] pBytes);
 
@@ -253,10 +250,6 @@ public class Cocos2dxHelper {
 		} catch (UnsupportedEncodingException pUnsupportedEncodingException) {
 			/* Nothing. */
 		}
-	}
-
-	private static String getAbsolutePathOnExternalStorage(final ApplicationInfo pApplicationInfo, final String pPath) {
-		return Environment.getExternalStorageDirectory() + "/Android/data/" + pApplicationInfo.packageName + "/files/" + pPath;
 	}
 
     public static int getDPI()
