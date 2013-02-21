@@ -22,7 +22,7 @@ def handle_project_files(context):
               proj_path + "src/" + dst_pkg[0] + "/" + dst_pkg[1])
     os.rename(proj_path + "src/" + dst_pkg[0] + "/" + dst_pkg[1] + "/" + src_pkg[2],
               proj_path + "src/" + dst_pkg[0] + "/" + dst_pkg[1] + "/" + dst_pkg[2])
-    os.rename(proj_path + "src/" + dst_pkg[0] + "/" + dst_pkg[1] + "/" + dst_pkg[2] + "/HelloJavascript.java",
+    os.rename(proj_path + "src/" + dst_pkg[0] + "/" + dst_pkg[1] + "/" + dst_pkg[2] + "/" + context["src_project_name"] + ".java",
               proj_path + "src/" + dst_pkg[0] + "/" + dst_pkg[1] + "/" + dst_pkg[2] + "/" + context["dst_project_name"] + ".java")
 
     dst_java_file_path = proj_path + "src/" + dst_pkg[0] + "/" + dst_pkg[1] + "/" + dst_pkg[2] + "/" + context["dst_project_name"] + ".java"
@@ -43,14 +43,12 @@ def handle_project_files(context):
     import replaces
     # package_name should be replaced at first. Don't change this sequence
     replaces.replaceString(proj_path + "AndroidManifest.xml",   context["src_package_name"], context["dst_package_name"])
-    replaces.replaceString(proj_path + "ndkgdb.sh",             context["src_package_name"], context["dst_package_name"])
     replaces.replaceString(dst_java_file_path,  context["src_package_name"], context["dst_package_name"])     
      
     replaces.replaceString(proj_path + ".project",              context["src_project_name"], context["dst_project_name"])
     replaces.replaceString(proj_path + "AndroidManifest.xml",   context["src_project_name"], context["dst_project_name"])
     replaces.replaceString(proj_path + "build.xml",             context["src_project_name"], context["dst_project_name"])
     replaces.replaceString(proj_path + "build_native.sh",       context["src_project_name"], context["dst_project_name"])
-    replaces.replaceString(proj_path + "ndkgdb.sh",             context["src_project_name"], context["dst_project_name"])
     replaces.replaceString(proj_path + "res/values/strings.xml",context["src_project_name"], context["dst_project_name"])
     replaces.replaceString(dst_java_file_path,  context["src_project_name"], context["dst_project_name"])
     # done!
