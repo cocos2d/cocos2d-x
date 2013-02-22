@@ -69,20 +69,34 @@ public:
      */
     virtual bool checkUpdate();
     
+    /* @brief Download new package if there is a new version, and uncompress downloaded zip file.
+     *        Ofcourse it will set search path that stores downloaded files.
+     */
     virtual void update();
     
     /* @brief Gets url of package.
      */
     const char* getPackageUrl() const;
     
-    /* @brief Sets url of package.
-     *
-     * @param packageUrl Package url.
+    /* @brief Sets package url.
      */
     void setPackageUrl(const char* packageUrl);
     
+    /* @brief Gets version file url.
+     */
     const char* getVersionFileUrl() const;
+    
+    /* @brief Gets version file url.
+     */
     void setVersionFileUrl(const char* versionFileUrl);
+    
+    /* @brief Gets current version code.
+     */
+    std::string getVersion();
+    
+    /* @brief Deletes recorded version code.
+     */
+    void deleteVersion();
     
     /* @brief Gets storage path.
      */
@@ -91,6 +105,7 @@ public:
     /* @brief Sets storage path.
      *
      * @param storagePath The path to store downloaded resources.
+     * @warm The path should be a valid path.
      */
     void setStoragePath(const char* storagePath);
     
