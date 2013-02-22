@@ -1257,9 +1257,54 @@ public:
     CCPoint convertTouchToNodeSpaceAR(CCTouch * touch);
     
 	/**
-     * Additional a transformation matrix, Used in is not parent-child relationship but we still need to maintain transformation  parent-child  
+     *  Sets the additional transform.
+     *
+     *  @note The additional transform will be concatenated at the end of nodeToParentTransform.
+     *        It could be used to simulate `parent-child` relationship between two nodes (e.g. one is in BatchNode, another isn't).
+     *  @code
+        // create a batchNode
+        CCSpriteBatchNode* batch= CCSpriteBatchNode::create("Icon-114.png");
+        this->addChild(batch);
+     
+        // create two sprites, spriteA will be added to batchNode, they are using different textures.
+        CCSprite* spriteA = CCSprite::createWithTexture(batch->getTexture());
+        CCSprite* spriteB = CCSprite::create("Icon-72.png");
+
+        batch->addChild(spriteA); 
+     
+        // We can't make spriteB as spriteA's child since they use different textures. So just add it to layer.
+        // But we want to simulate `parent-child` relationship for these two node.
+        this->addChild(spriteB); 
+
+        //position
+        spriteA->setPosition(ccp(200, 200));
+     
+        // Gets the spriteA's transform.
+        CCAffineTransform t = spriteA->nodeToParentTransform();
+     
+        // Sets the additional transform to spriteB, spriteB's postion will based on its pseudo parent i.e. spriteA.
+        spriteB->setAdditionalTransform(t);
+
+        //scale
+        spriteA->setScale(2);
+     
+        // Gets the spriteA's transform.
+        t = spriteA->nodeToParentTransform();
+     
+        // Sets the additional transform to spriteB, spriteB's scale will based on its pseudo parent i.e. spriteA.
+        spriteB->setAdditionalTransform(t);
+
+        //rotation
+        spriteA->setRotation(20);
+     
+        // Gets the spriteA's transform.
+        t = spriteA->nodeToParentTransform();
+     
+        // Sets the additional transform to spriteB, spriteB's rotation will based on its pseudo parent i.e. spriteA.
+        spriteB->setAdditionalTransform(t);
+     *  @endcode
      */
-	void translateFormOtherNode(CCAffineTransform &transform);
+	void setAdditionalTransform(const CCAffineTransform& additionalTransform);
     /// @} end of Coordinate Converters
 
 private:
@@ -1294,7 +1339,8 @@ protected:
     
     CCSize m_obContentSize;             ///< untransformed size of the node
     
-	CCAffineTransform m_sOtherTransform;///< transform
+    
+	CCAffineTransform m_sAdditionalTransform; ///< transform
     CCAffineTransform m_sTransform;     ///< transform
     CCAffineTransform m_sInverse;       ///< transform
     
@@ -1326,7 +1372,7 @@ protected:
     
     bool m_bTransformDirty;             ///< transform dirty flag
     bool m_bInverseDirty;               ///< transform dirty flag
-    
+    bool m_bAdditionalTransformDirty;   ///< The flag to check whether the additional transform is dirty
     bool m_bVisible;                    ///< is this node visible
     
     bool m_bIgnoreAnchorPointForPosition; ///< true if the Anchor Point will be (0,0) when you position the CCNode, false otherwise.
