@@ -86,6 +86,7 @@ CCNode::CCNode(void)
 , m_uOrderOfArrival(0)
 , m_eGLServerState(ccGLServerState(0))
 , m_bReorderChildDirty(false)
+, m_sOtherTransform(CCAffineTransformMakeIdentity())
 {
     // set default scheduler and actionManager
     CCDirector *director = CCDirector::sharedDirector();
@@ -1158,13 +1159,17 @@ CCAffineTransform CCNode::nodeToParentTransform(void)
                 m_sTransform = CCAffineTransformTranslate(m_sTransform, -m_obAnchorPointInPoints.x, -m_obAnchorPointInPoints.y);
             }
         }
-
+		m_sTransform = CCAffineTransformConcat(m_sTransform, m_sOtherTransform);
         m_bTransformDirty = false;
     }
 
     return m_sTransform;
 }
-
+void CCNode::translateFormOtherNode(CCAffineTransform &transform)
+{
+	m_sOtherTransform  = CCAffineTransformMake(transform.a, transform.b, transform.c, transform.d, transform.tx, transform.ty);
+	m_bTransformDirty = true;
+}
 CCAffineTransform CCNode::parentToNodeTransform(void)
 {
     if ( m_bInverseDirty ) {
