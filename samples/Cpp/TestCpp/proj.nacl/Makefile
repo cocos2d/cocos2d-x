@@ -156,6 +156,7 @@ package: all
 	/bin/cp res/package_index.html $(PACKAGE_ROOT)/index.html
 
 zipfile: package
+	rm -f $(OUT_DIR)/$(APP_NAME).zip
 	cd $(PACKAGE_ROOT) && zip -r ../$(APP_NAME).zip .
 
 run: all
