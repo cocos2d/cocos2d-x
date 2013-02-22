@@ -29,12 +29,6 @@ extern "C" {
         return g_apkPath.c_str();
     }
 
-    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxHelper_nativeSetExternalAssetPath(JNIEnv*  env, jobject thiz, jstring externalAssetPath) {
-        const char* externalAssetPathChars = env->GetStringUTFChars(externalAssetPath, NULL);
-        cocos2d::JniHelper::setExternalAssetPath(externalAssetPathChars);
-        env->ReleaseStringUTFChars(externalAssetPath, externalAssetPathChars);
-    }
-
     void showDialogJNI(const char * pszMsg, const char * pszTitle) {
         if (!pszMsg) {
             return;
@@ -131,22 +125,6 @@ extern "C" {
         return 0;
     }
 
-   const char* getCacheDirectoryJNI() {
-        JniMethodInfo t;
-
-        if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "getCocos2dxCacheDirectory", "()Ljava/lang/String;")) {
-            jstring str = (jstring)t.env->CallStaticObjectMethod(t.classID, t.methodID);
-            t.env->DeleteLocalRef(t.classID);
-            CCString *ret = new CCString(JniHelper::jstring2string(str).c_str());
-            ret->autorelease();
-            t.env->DeleteLocalRef(str);
-
-            return ret->m_sString.c_str();
-        }
-
-        return 0;
-    }
-    
     const char * getFileDirectoryJNI() {
         JniMethodInfo t;
         
