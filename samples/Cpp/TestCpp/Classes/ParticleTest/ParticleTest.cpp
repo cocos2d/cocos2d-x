@@ -969,7 +969,7 @@ enum
 
 static int sceneIdx = -1; 
 
-#define MAX_LAYER    43
+#define MAX_LAYER    44
 
 CCLayer* createParticleLayer(int nIndex)
 {
@@ -1007,18 +1007,19 @@ CCLayer* createParticleLayer(int nIndex)
         case 29: return new DemoParticleFromFile("Spiral");
         case 30: return new DemoParticleFromFile("Galaxy");
         case 31: return new DemoParticleFromFile("Phoenix");
-        case 32: return new RadiusMode1();
-        case 33: return new RadiusMode2();
-        case 34: return new Issue704();
-        case 35: return new Issue870();
-        case 36: return new Issue1201();
+        case 32: return new DemoParticleFromFile("lines");
+        case 33: return new RadiusMode1();
+        case 34: return new RadiusMode2();
+        case 35: return new Issue704();
+        case 36: return new Issue870();
+        case 37: return new Issue1201();
         // v1.1 tests
-        case 37: return new MultipleParticleSystems();
-        case 38: return new MultipleParticleSystemsBatched();
-        case 39: return new AddAndDeleteParticleSystems();
-        case 40: return new ReorderParticleSystems();
-        case 41: return new PremultipliedAlphaTest();
-        case 42: return new PremultipliedAlphaTest2();
+        case 38: return new MultipleParticleSystems();
+        case 39: return new MultipleParticleSystemsBatched();
+        case 40: return new AddAndDeleteParticleSystems();
+        case 41: return new ReorderParticleSystems();
+        case 42: return new PremultipliedAlphaTest();
+        case 43: return new PremultipliedAlphaTest2();
         default:
             break;
     }
