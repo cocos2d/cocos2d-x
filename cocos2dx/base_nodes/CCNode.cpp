@@ -1158,7 +1158,6 @@ CCAffineTransform CCNode::nodeToParentTransform(void)
                 m_sTransform = CCAffineTransformTranslate(m_sTransform, -m_obAnchorPointInPoints.x, -m_obAnchorPointInPoints.y);
             }
         }
-
         m_bTransformDirty = false;
     }
 

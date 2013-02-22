@@ -87,6 +87,26 @@ bool CCTMXTiledMap::initWithXML(const char* tmxString, const char* resourcePath)
     return true;
 }
 
+bool CCTMXTiledMap::initWithXMLAndTexture(const char *tmxString, cocos2d::CCTexture2D *texture)
+{
+    setContentSize(CCSizeZero);
+    CCTMXMapInfo *mapInfo = CCTMXMapInfo::formatWithXML(tmxString, NULL);
+    CCAssert( mapInfo->getTilesets()->count() != 0, "TMXTiledMap: Map not found. Please check the filename.");
+    CCArray* tilesets = mapInfo->getTilesets();
+    CCObject* pObj = NULL;
+    CCARRAY_FOREACH(tilesets, pObj)
+    {
+		CCTMXTilesetInfo *tileset = (CCTMXTilesetInfo*)pObj;
+		if (tileset)
+		{
+			tileset->m_pTexture = texture;
+        }
+    }
+    buildWithMapInfo(mapInfo);
+    return true;
+}
+
+
 CCTMXTiledMap::CCTMXTiledMap()
     :m_tMapSize(CCSizeZero)
     ,m_tTileSize(CCSizeZero)        

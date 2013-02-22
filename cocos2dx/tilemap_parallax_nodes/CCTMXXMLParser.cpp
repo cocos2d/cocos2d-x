@@ -103,6 +103,7 @@ CCTMXTilesetInfo::CCTMXTilesetInfo()
     ,m_uSpacing(0)
     ,m_uMargin(0)
     ,m_tImageSize(CCSizeZero)
+    ,m_pTexture(NULL)
 {
 }
 CCTMXTilesetInfo::~CCTMXTilesetInfo()

@@ -28,6 +28,7 @@ THE SOFTWARE.
 
 #include "base_nodes/CCNode.h"
 #include "CCTMXObjectGroup.h"
+#include "textures/CCTexture2D.h"
 
 NS_CC_BEGIN
 
@@ -134,6 +135,9 @@ public:
     /** initializes a TMX Tiled Map with a TMX formatted XML string and a path to TMX resources */
     bool initWithXML(const char* tmxString, const char* resourcePath);
 
+	/** initializes a TMX Tiled Map with a TMX formatted XML string and a texture buffer*/
+    bool initWithXMLAndTexture(const char* tmxString, CCTexture2D *texture);
+	
     /** return the TMXLayer for the specific layer */
     CCTMXLayer* layerNamed(const char *layerName);
 
