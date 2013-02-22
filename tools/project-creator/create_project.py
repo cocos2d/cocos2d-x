@@ -24,7 +24,7 @@ import json
 import shutil
 
 def dumpUsage():
-    print "Usage: create-project.py -project PROJECT_NAME -package PACKAGE_NAME -language PROGRAMING_LANGUAGE"
+    print "Usage: create_project.py -project PROJECT_NAME -package PACKAGE_NAME -language PROGRAMING_LANGUAGE"
     print "Options:"
     print "  -project   PROJECT_NAME          Project name, for example: MyGame"
     print "  -package   PACKAGE_NAME          Package name, for example: com.MyCompany.MyAwesomeGame"
