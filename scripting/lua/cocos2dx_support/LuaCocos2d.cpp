@@ -26464,7 +26464,7 @@ static int tolua_Cocos2d_CCRepeat_create00(lua_State* tolua_S)
  tolua_Error tolua_err;
  if (
      !tolua_isusertable(tolua_S,1,"CCRepeat",0,&tolua_err) ||
-     !tolua_isusertype(tolua_S,2,"CCActionInterval",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCFiniteTimeAction",0,&tolua_err) ||
      !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,4,&tolua_err)
  )
@@ -26472,7 +26472,7 @@ static int tolua_Cocos2d_CCRepeat_create00(lua_State* tolua_S)
  else
 #endif
  {
-  CCActionInterval* pAction = ((CCActionInterval*)  tolua_tousertype(tolua_S,2,0));
+  CCFiniteTimeAction* pAction = ((CCFiniteTimeAction*)  tolua_tousertype(tolua_S,2,0));
   unsigned int times = ((unsigned int)  tolua_tonumber(tolua_S,3,0));
   {
    CCRepeat* tolua_ret = (CCRepeat*)  CCRepeat::create(pAction,times);
