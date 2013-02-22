@@ -182,13 +182,11 @@ checkParams(context)
 
 # copy "lauguage"(cpp/lua/javascript) platform.proj into cocos2d-x/projects/<project_name>/folder
 if (os.path.exists(context["dst_project_path"]) == True):
-    shutil.rmtree(context["dst_project_path"])
-    #print "Error:" + context["dst_project_path"] + " folder is already existing"
-    #print "Please remove the old project or choose a new PROJECT_NAME in -project parameter"
-    #sys.exit()
-#else:
-
-shutil.copytree(context["src_project_path"], context["dst_project_path"], True)
+    print "Error:" + context["dst_project_path"] + " folder is already existing"
+    print "Please remove the old project or choose a new PROJECT_NAME in -project parameter"
+    sys.exit()
+else:
+    shutil.copytree(context["src_project_path"], context["dst_project_path"], True)
 
 # call process_proj from each platform's script folder          
 for platform in platforms_list:
