@@ -11,7 +11,7 @@
 
 #include "CCApplication.h"
 #include "cocos2d.h"
-#include "cocos-ext.h"
+#include "AssetsManager/AssetsManager.h"
 
 /**
 @brief    The cocos2d Application.
@@ -55,10 +55,13 @@ public:
     void update(cocos2d::CCObject *pSender);
     
 private:
-    AssetsManager *pAssetManager;
+    AssetsManager* getAssetsManager();
+    
     cocos2d::CCMenuItemFont *pItemEnter;
     cocos2d::CCMenuItemFont *pItemReset;
     cocos2d::CCMenuItemFont *pItemUpdate;
+    std::string pathToSave;
+    bool isUpdateItemClicked;
 };
 
 #endif // _APP_DELEGATE_H_

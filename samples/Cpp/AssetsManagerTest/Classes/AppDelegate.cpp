@@ -2,9 +2,6 @@
 //  AssetsManagerTestAppDelegate.cpp
 //  AssetsManagerTest
 //
-//  Created by minggo on 2/5/13.
-//  Copyright __MyCompanyName__ 2013. All rights reserved.
-//
 
 #include "AppDelegate.h"
 
@@ -16,6 +13,11 @@
 #include "js_bindings_chipmunk_registration.h"
 #include "js_bindings_system_registration.h"
 #include "js_bindings_ccbreader.h"
+
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_W32)
+#include <dirent.h>
+#include <sys/stat.h>
+#endif
 
 USING_NS_CC;
 using namespace CocosDenshion;
@@ -77,46 +79,73 @@ void AppDelegate::applicationWillEnterForeground()
 }
 
 UpdateLayer::UpdateLayer()
-: pAssetManager(NULL)
-, pItemEnter(NULL)
+: pItemEnter(NULL)
 , pItemReset(NULL)
 , pItemUpdate(NULL)
+, isUpdateItemClicked(false)
 {
     init();
 }
 
 UpdateLayer::~UpdateLayer()
 {
-    CC_SAFE_DELETE(pAssetManager);
+    AssetsManager *pAssetsManager = getAssetsManager();
+    CC_SAFE_DELETE(pAssetsManager);
 }
 
 void UpdateLayer::update(cocos2d::CCObject *pSender)
 {
     // update resources
-    pAssetManager = new AssetsManager("http://localhost/package.zip", "http://localhost/version");
-    pAssetManager->update();
-    delete pAssetManager;
-    pAssetManager = NULL;
+    getAssetsManager()->update();
     
-    // Run new version
+    isUpdateItemClicked = true;
+}
+
+void UpdateLayer::reset(cocos2d::CCObject *pSender)
+{
+    // Remove downloaded files
+    
+    string command = "rm -r ";
+    // Path may include space.
+    command +=  + "\"" + pathToSave + "\"";
+    system(command.c_str());
+    
+    // Delete recorded version codes.
+    getAssetsManager()->deleteVersion();
+}
+
+void UpdateLayer::enter(cocos2d::CCObject *pSender)
+{
+    // Should set search resource path before running script if "update" is not clicked.
+    // Because AssetsManager will set 
+    if (! isUpdateItemClicked)
+    {
+        vector<string> searchPaths = CCFileUtils::sharedFileUtils()->getSearchPaths();
+        searchPaths.insert(searchPaths.begin(), pathToSave);
+        CCFileUtils::sharedFileUtils()->setSearchPaths(searchPaths);
+    }
+    
     CCScriptEngineProtocol *pEngine = ScriptingCore::getInstance();
     CCScriptEngineManager::sharedManager()->setScriptEngine(pEngine);
     ScriptingCore::getInstance()->runScript("main.js");
 }
 
-void UpdateLayer::reset(cocos2d::CCObject *pSender)
-{
-    
-}
-
-void UpdateLayer::enter(cocos2d::CCObject *pSender)
-{
-    
-}
-
 bool UpdateLayer::init()
 {
     CCLayer::init();
+    
+    pathToSave = CCFileUtils::sharedFileUtils()->getWritablePath();
+    pathToSave += "tmpdir";
+    // Create the folder if it doesn't exist
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_W32)
+    DIR *pDir = NULL;
+    
+    pDir = opendir (pathToSave.c_str());
+    if (! pDir)
+    {
+        mkdir(pathToSave.c_str(), S_IRWXU | S_IRWXG | S_IRWXO);
+    }
+#endif
     
     CCSize size = CCDirector::sharedDirector()->getWinSize();
 
@@ -133,4 +162,16 @@ bool UpdateLayer::init()
     addChild(menu);
     
     return true;
+}
+
+AssetsManager* UpdateLayer::getAssetsManager()
+{
+    static AssetsManager *pAssetsManager = NULL;
+    
+    if (! pAssetsManager)
+    {
+        pAssetsManager = new AssetsManager("http://localhost/package.zip", "http://localhost/version", pathToSave.c_str());
+    }
+    
+    return pAssetsManager;
 }

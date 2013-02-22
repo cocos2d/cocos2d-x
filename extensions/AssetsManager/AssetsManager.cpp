@@ -394,3 +394,13 @@ void AssetsManager::setVersionFileUrl(const char *versionFileUrl)
 {
     _versionFileUrl = versionFileUrl;
 }
+
+string AssetsManager::getVersion()
+{
+    return CCUserDefault::sharedUserDefault()->getStringForKey(KEY_OF_VERSION);
+}
+
+void AssetsManager::deleteVersion()
+{
+    CCUserDefault::sharedUserDefault()->setStringForKey(KEY_OF_VERSION, "");
+}

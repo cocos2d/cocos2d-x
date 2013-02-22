@@ -1224,7 +1224,7 @@
 					"$(SRCROOT)/../../../../scripting/javascript/spidermonkey-ios/include",
 					"$(SRCROOT)/../../../../scripting/javascript/bindings",
 					"$(SRCROOT)/../../../../external/chipmunk/include/**",
-					"$(SRCROOT)/../../../../extension",
+					"$(SRCROOT)/../../../../extensions",
 				);
 				INFOPLIST_FILE = Info.plist;
 				LIBRARY_SEARCH_PATHS = (
@@ -1269,7 +1269,7 @@
 					"$(SRCROOT)/../../../../scripting/javascript/spidermonkey-ios/include",
 					"$(SRCROOT)/../../../../scripting/javascript/bindings",
 					"$(SRCROOT)/../../../../external/chipmunk/include/**",
-					"$(SRCROOT)/../../../../extension",
+					"$(SRCROOT)/../../../../extensions",
 				);
 				INFOPLIST_FILE = Info.plist;
 				LIBRARY_SEARCH_PATHS = (
