@@ -52,20 +52,6 @@ void CCApplication::setAnimationInterval(double interval)
     }
 }
 
-CCApplication::Orientation CCApplication::setOrientation(Orientation orientation)
-{
-    return orientation;
-}
-
-//void CCApplication::statusBarFrame(CCRect * rect)
-//{
-//    if (rect)
-//    {
-//        // android doesn't have status bar.
-//        *rect = CCRectMake(0, 0, 0, 0);
-//    }
-//}
-
 //////////////////////////////////////////////////////////////////////////
 // static member function
 //////////////////////////////////////////////////////////////////////////
