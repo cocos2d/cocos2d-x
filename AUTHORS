@@ -82,6 +82,7 @@ Developers:
     Nicolas Gramlich (nicolasgramlich, Zynga)
         fixed CCDirector to use CCLabelBMFont instead of CCLabelTTF
         added CCBReader (CCBI format)
+        Added cleanup and reset methods to ScriptingCore.
     
     Rohan Kuruvilla (rohankuruvilla, Zynga)
         Improvements to JS Bindings.
