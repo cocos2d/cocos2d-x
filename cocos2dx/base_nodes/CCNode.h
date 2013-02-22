@@ -1340,7 +1340,7 @@ protected:
     CCSize m_obContentSize;             ///< untransformed size of the node
     
     
-	CCAffineTransform m_sAdditionalTransform; ///< transform
+    CCAffineTransform m_sAdditionalTransform; ///< transform
     CCAffineTransform m_sTransform;     ///< transform
     CCAffineTransform m_sInverse;       ///< transform
     
