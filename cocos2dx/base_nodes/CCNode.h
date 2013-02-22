@@ -1304,7 +1304,7 @@ public:
         spriteB->setAdditionalTransform(t);
      *  @endcode
      */
-	void setAdditionalTransform(const CCAffineTransform& additionalTransform);
+    void setAdditionalTransform(const CCAffineTransform& additionalTransform);
     /// @} end of Coordinate Converters
 
 private:
