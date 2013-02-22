@@ -75,11 +75,6 @@ void CCApplication::setAnimationInterval(double interval)
 	m_animationInterval = (long)(interval * 1000);
 }
 
-CCApplication::Orientation CCApplication::setOrientation(Orientation orientation)
-{
-    return orientation;
-}
-
 void CCApplication::setResourceRootPath(const std::string& rootResDir)
 {
     m_resourceRootPath = rootResDir;
