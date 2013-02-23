@@ -73,7 +73,7 @@ class CCRepeat : public CCActionInterval
 	bool isDone(void);
 	CCActionInterval* reverse(void);
 
-    static CCRepeat* create(CCActionInterval *pAction, unsigned int times);
+    static CCRepeat* create(CCFiniteTimeAction *pAction, unsigned int times);
 };
 
 class CCRepeatForever : public CCActionInterval
