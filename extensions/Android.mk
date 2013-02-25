@@ -5,7 +5,8 @@ LOCAL_MODULE    := cocos_extension_static
 
 LOCAL_MODULE_FILENAME := libextension
 
-LOCAL_SRC_FILES := CCBReader/CCBFileLoader.cpp \
+LOCAL_SRC_FILES := AssetsManager/AssetsManager.cpp \
+CCBReader/CCBFileLoader.cpp \
 CCBReader/CCBReader.cpp \
 CCBReader/CCControlButtonLoader.cpp \
 CCBReader/CCControlLoader.cpp \
