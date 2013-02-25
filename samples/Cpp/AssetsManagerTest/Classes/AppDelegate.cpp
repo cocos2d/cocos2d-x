@@ -14,7 +14,7 @@
 #include "js_bindings_system_registration.h"
 #include "js_bindings_ccbreader.h"
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_W32)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
 #include <dirent.h>
 #include <sys/stat.h>
 #endif
@@ -104,12 +104,17 @@ void UpdateLayer::update(cocos2d::CCObject *pSender)
 void UpdateLayer::reset(cocos2d::CCObject *pSender)
 {
     // Remove downloaded files
-    
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
     string command = "rm -r ";
     // Path may include space.
-    command +=  + "\"" + pathToSave + "\"";
+    command += "\"" + pathToSave + "\"";
     system(command.c_str());
-    
+#else
+    string command = "rd /s /q ";
+    // Path may include space.
+    command += "\"" + pathToSave + "\"";
+    system(command.c_str());
+#endif
     // Delete recorded version codes.
     getAssetsManager()->deleteVersion();
 }
@@ -137,7 +142,7 @@ bool UpdateLayer::init()
     pathToSave = CCFileUtils::sharedFileUtils()->getWritablePath();
     pathToSave += "tmpdir";
     // Create the folder if it doesn't exist
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_W32)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
     DIR *pDir = NULL;
     
     pDir = opendir (pathToSave.c_str());
@@ -145,6 +150,11 @@ bool UpdateLayer::init()
     {
         mkdir(pathToSave.c_str(), S_IRWXU | S_IRWXG | S_IRWXO);
     }
+#else
+	if ((GetFileAttributesA(pathToSave.c_str())) == INVALID_FILE_ATTRIBUTES)
+	{
+		CreateDirectoryA(pathToSave.c_str(), 0);
+	}
 #endif
     
     CCSize size = CCDirector::sharedDirector()->getWinSize();
