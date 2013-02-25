@@ -607,7 +607,7 @@ JSBool js_cocos2dx_CCAnimation_create(JSContext *cx, uint32_t argc, jsval *vp)
 		} else if (argc == 3) {
 			unsigned int loops;
 			ok &= JS_ValueToNumber(cx, argv[1], &arg1);
-			ok &= jsval_to_uint32(cx, argv[1], &loops);
+			ok &= jsval_to_uint32(cx, argv[2], &loops);
             JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
 			ret = cocos2d::CCAnimation::create(arg0, arg1, loops);
 		} else if (argc == 1) {
