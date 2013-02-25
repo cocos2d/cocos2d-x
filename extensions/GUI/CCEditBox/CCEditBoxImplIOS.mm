@@ -270,6 +270,11 @@ void CCEditBoxImplIOS::setFontColor(const ccColor3B& color)
     m_systemControl.textField.textColor = [UIColor colorWithRed:color.r / 255.0f green:color.g / 255.0f blue:color.b / 255.0f alpha:1.0f];
 }
 
+void CCEditBoxImplIOS::setPlaceholderFont(const char* pFontName, int fontSize)
+{
+	// TODO need to be implemented.
+}
+
 void CCEditBoxImplIOS::setPlaceholderFontColor(const ccColor3B& color)
 {
     // TODO need to be implemented.

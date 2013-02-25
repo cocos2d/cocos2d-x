@@ -224,6 +224,13 @@ public:
      */
     void setFontColor(const ccColor3B& color);
     
+	/**
+	 * Set the placeholder's font.
+	 * @param pFontName The font name.
+	 * @param fontSize The font size.
+	 */
+	void setPlaceholderFont(const char* pFontName, int fontSize);
+    
     /**
      * Set the font color of the placeholder text when the edit box is empty.
      * Not supported on IOS.
