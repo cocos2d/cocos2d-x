@@ -101,7 +101,7 @@ static void setValueForKey(const char* pKey, const char* pValue)
 	// find the node
 	node = getXMLNodeForKey(pKey, &rootNode, &doc);
 	// if node exist, change the content
-	if (node)
+	if (node && node->FirstChild())
 	{
 		node->FirstChild()->SetValue(pValue);
 	}
@@ -275,7 +275,7 @@ string CCUserDefault::getStringForKey(const char* pKey, const std::string & defa
 	tinyxml2::XMLElement* node;
 	node =  getXMLNodeForKey(pKey, &rootNode, &doc);
 	// find the node
-	if (node)
+	if (node && node->FirstChild())
 	{
         value = (const char*)(node->FirstChild()->Value());
 	}
