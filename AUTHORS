@@ -206,6 +206,12 @@ Developers:
     ThePickleMan
         Adding 'rotationIsDir' property to ParticleSystem.
 
+    Jianghua (jxhgzs)
+        Adding an additional transform for CCNode.
+
+    giginet
+        Fix CCRepeat#create is recieved bad argument on Lua binding.
+
 Retired Core Developers:
     WenSheng Yang
 	Author of windows port, CCTextField, 
