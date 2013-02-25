@@ -55,9 +55,9 @@ EditBoxTest::EditBoxTest()
     m_pEditPassword = CCEditBox::create(editBoxSize, CCScale9Sprite::create("extensions/orange_edit.png"));
     m_pEditPassword->setPosition(ccp(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/2));
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-	m_pEditPassword->setFont("A Damn Mess", 30);
+	m_pEditPassword->setFont("American Typewriter", 30);
 #else
-	m_pEditPassword->setFont("fonts/A Damn Mess.ttf", 30);
+	m_pEditPassword->setFont("fonts/American Typewriter.ttf", 30);
 #endif
     m_pEditPassword->setFontColor(ccGREEN);
     m_pEditPassword->setPlaceHolder("Password:");
