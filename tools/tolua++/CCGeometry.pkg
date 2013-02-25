@@ -1,5 +1,5 @@
 
-struct CCPoint
+class CCPoint
 {
     float x;
     float y;
@@ -9,7 +9,7 @@ struct CCPoint
     bool equals(const CCPoint & target) const ;
 };
 
-struct CCSize
+class CCSize
 {
     float width;
     float height;
@@ -19,7 +19,7 @@ struct CCSize
     bool equals(const CCSize & target) const;
 };
 
-struct CCRect
+class CCRect
 {
     CCPoint origin;
     CCSize  size;
