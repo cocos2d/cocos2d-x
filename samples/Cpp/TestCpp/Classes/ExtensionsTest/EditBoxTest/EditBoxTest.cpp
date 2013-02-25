@@ -38,7 +38,7 @@ EditBoxTest::EditBoxTest()
     // top
     m_pEditName = CCEditBox::create(editBoxSize, CCScale9Sprite::create("extensions/green_edit.png"));
     m_pEditName->setPosition(ccp(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height*3/4));
-#ifdef CC_TARGET_OS_IPHONE
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 	m_pEditName->setFont("Paint Boy", 25);
 #else
 	m_pEditName->setFont("fonts/Paint Boy.ttf", 25);
@@ -54,7 +54,7 @@ EditBoxTest::EditBoxTest()
     // middle
     m_pEditPassword = CCEditBox::create(editBoxSize, CCScale9Sprite::create("extensions/orange_edit.png"));
     m_pEditPassword->setPosition(ccp(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/2));
-#ifdef CC_TARGET_OS_IPHONE
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 	m_pEditPassword->setFont("A Damn Mess", 30);
 #else
 	m_pEditPassword->setFont("fonts/A Damn Mess.ttf", 30);
