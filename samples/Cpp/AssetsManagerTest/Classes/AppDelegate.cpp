@@ -170,7 +170,9 @@ AssetsManager* UpdateLayer::getAssetsManager()
     
     if (! pAssetsManager)
     {
-        pAssetsManager = new AssetsManager("http://localhost/package.zip", "http://localhost/version", pathToSave.c_str());
+        pAssetsManager = new AssetsManager("https://raw.github.com/minggo/AssetsManagerTest/master/package.zip",
+                                           "https://raw.github.com/minggo/AssetsManagerTest/master/version",
+                                           pathToSave.c_str());
     }
     
     return pAssetsManager;
