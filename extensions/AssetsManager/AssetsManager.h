@@ -28,7 +28,7 @@
 #include <string>
 #include <curl/curl.h>
 
-class AssetsManagerProtocol;
+class AssetsManagerDelegate;
 
 /* 
  *  This class is used to auto update resources, such as pictures or scripts.
@@ -126,14 +126,14 @@ private:
     std::string _packageUrl;
     std::string _versionFileUrl;
     
-    AssetsManagerProtocol* _delegate;
+    AssetsManagerDelegate* _delegate;
     
     CURL *_curl;
 };
 
 /* @brief This class is used as base class of the delegate of AssetsManager.
  */
-class AssetsManagerProtocol
+class AssetsManagerDelegate
 {
 public:
     /* @brief When an error happens in updating resources, AssetsManager will invoke its delegate's onError().
