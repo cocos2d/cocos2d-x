@@ -264,11 +264,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				DSTROOT = /tmp/SPII.dst;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/SPII/libs/IAP/IAP_IOS_91/Lib/framework5/framework\"",
-					"\"$(SRCROOT)/SPII/libs/IAP/IAP_IOS_91/Lib/framework5\"",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
@@ -276,27 +272,11 @@
 				GCC_PREFIX_HEADER = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
-					USE_FILE32API,
-					TARGET_OS_IPHONE,
 					"COCOS2D_DEBUG=1",
-					VITNET,
-					SPIDERMONKEY,
-					_WIN32,
 					CC_TARGET_OS_IPHONE,
 				);
 				GENERATE_PKGINFO_FILE = NO;
-				HEADER_SEARCH_PATHS = (
-					"\"$(SDKROOT)/usr/include/libxml2\"",
-					../,
-					../include,
-					../platform,
-					../platform/ios,
-					"$(SRCROOT)/SPII/libs",
-					../kazmath/include,
-					"\"$(SRCROOT)/SPII/libs/OIS/iPhone/OIS_iPhone.xcodeproj\"/**",
-					"$(SRCROOT)/SPII/libs/Box2D/proj.ios/box2d.xcodeproj/**",
-					../include/Platforms/iOS,
-				);
+				HEADER_SEARCH_PATHS = "\"$(SDKROOT)/usr/include/libxml2\"";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -333,37 +313,15 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				DSTROOT = /tmp/SPII.dst;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/SPII/libs/IAP/IAP_IOS_91/Lib/framework5/framework\"",
-					"\"$(SRCROOT)/SPII/libs/IAP/IAP_IOS_91/Lib/framework5\"",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					USE_FILE32API,
-					TARGET_OS_IPHONE,
-					VITNET,
-					SPIDERMONKEY,
-					_WIN32,
-					CC_TARGET_OS_IPHONE,
-				);
+				GCC_PREPROCESSOR_DEFINITIONS = CC_TARGET_OS_IPHONE;
 				GENERATE_PKGINFO_FILE = NO;
-				HEADER_SEARCH_PATHS = (
-					"\"$(SDKROOT)/usr/include/libxml2\"",
-					../,
-					../include,
-					../platform,
-					../platform/ios,
-					"$(SRCROOT)/SPII/libs",
-					../kazmath/include,
-					"\"$(SRCROOT)/SPII/libs/OIS/iPhone/OIS_iPhone.xcodeproj\"/**",
-					"$(SRCROOT)/SPII/libs/Box2D/proj.ios/box2d.xcodeproj/**",
-					../include/Platforms/iOS,
-				);
+				HEADER_SEARCH_PATHS = "\"$(SDKROOT)/usr/include/libxml2\"";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
