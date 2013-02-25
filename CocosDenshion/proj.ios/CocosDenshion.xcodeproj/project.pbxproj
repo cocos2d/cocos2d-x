@@ -278,26 +278,7 @@
 				GENERATE_PKGINFO_FILE = NO;
 				HEADER_SEARCH_PATHS = "\"$(SDKROOT)/usr/include/libxml2\"";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/SPII/Script/Spidermonkey/JSBind/include\"",
-					"\"$(SRCROOT)/SPII/Script/Spidermonkey/JSBind/ios \"$(SRCROOT)/SPII/Script/Spidermonkey/JSBind\" \"$(SRCROOT)/JsbindTest\" \"$(SRCROOT)/SPII/libs/Script/Spidermonkey/JSBind/lib\" \"$(SRCROOT)/SPII/libs/Flurry/Flurry",
-					iPhone,
-					SDK,
-					"v3.0.9/FlurryAnalytics\" \"$(SRCROOT)/SPII/libs/GoogleAdMobAdsSDK\" \"$(SRCROOT)/SPII/libs/PunchBox\" \"$(SRCROOT)/../Example/SDK/SPII/libs/VitClientSDK\" \"$(SRCROOT)/SPII/libs/VitClientSDK\" \"$(SRCROOT)/SPII/libs/cocos2dx/platform/third_party/android/prebuilt/libcurl/libs/armeabi\" \"$(SRCROOT)/SPII/libs/cocos2dx/platform/third_party/android/prebuilt/libcurl/libs/armeabi-v7a\" \"$(SRCROOT)/SPII/libs/cocos2dx/platform/third_party/android/prebuilt/libcurl/libs/x86\" \"$(SRCROOT)/SPII/libs/cocos2dx/platform/third_party/android/prebuilt/libjpeg/libs/armeabi\" \"$(SRCROOT)/SPII/libs/cocos2dx/platform/third_party/android/prebuilt/libjpeg/libs/armeabi-v7a\" \"$(SRCROOT)/SPII/libs/cocos2dx/platform/third_party/android/prebuilt/libjpeg/libs/x86\" \"$(SRCROOT)/SPII/libs/cocos2dx/platform/third_party/android/prebuilt/libpng/libs/armeabi\" \"$(SRCROOT)/SPII/libs/cocos2dx/platform/third_party/android/prebuilt/libpng/libs/armeabi-v7a\" \"$(SRCROOT)/SPII/libs/cocos2dx/platform/third_party/android/prebuilt/libpng/libs/x86\" \"$(SRCROOT)/SPII/libs/cocos2dx/platform/third_party/android/prebuilt/libprofiler/libs/armeabi\" \"$(SRCROOT)/SPII/libs/cocos2dx/platform/third_party/android/prebuilt/libprofiler/libs/armeabi-v7a\" \"$(SRCROOT)/SPII/libs/cocos2dx/platform/third_party/android/prebuilt/libtiff/libs/armeabi\" \"$(SRCROOT)/SPII/libs/cocos2dx/platform/third_party/android/prebuilt/libtiff/libs/armeabi-v7a\" \"$(SRCROOT)/SPII/libs/cocos2dx/platform/third_party/android/prebuilt/libtiff/libs/x86\" \"$(SRCROOT)/SPII/libs/cocos2dx/platform/third_party/android/prebuilt/libxml2/libs/armeabi\" \"$(SRCROOT)/SPII/libs/cocos2dx/platform/third_party/android/prebuilt/libxml2/libs/armeabi-v7a\" \"$(SRCROOT)/SPII/libs/cocos2dx/platform/third_party/android/prebuilt/libxml2/libs/x86\" \"$(SRCROOT)/SPII/libs/cocos2dx/platform/third_party/ios/libraries\" \"$(SRCROOT)/SPII/libs/cocos2dx/platform/third_party/win32/libraries\" \"$(SRCROOT)/SPII/libs/Flurry/Flurry",
-					iPhone,
-					SDK,
-					"v4.0.0/Flurry\" \"$(SRCROOT)/SPII/libs/Flurry/Flurry",
-					iPhone,
-					SDK,
-					"v4.0.0/FlurryAds\" \"$(SRCROOT)/SPII/libs/Script/Spidermonkey/ios/lib\" \"$(SRCROOT)/SPII/libs/GoogleAdMobAdsSDK\" \"$(SRCROOT)/SPII/libs/PunchBox\" \"$(SRCROOT)/SPII/libs/Flurry/Flurry",
-					iPhone,
-					SDK,
-					"v3.0.9/FlurryAnalytics\" \"$(SRCROOT)/SPII/libs/Script/Spidermonkey/android/libs\" \"$(SRCROOT)/SPII/libs/Script/Spidermonkey/ios/lib\" \"$(SRCROOT)/SPII/libs/Script/Spidermonkey/win32/lib\" \"$(SRCROOT)/SPII/libs/cocos2dx/platform/ios\" \"$(SRCROOT)/SPII/libs/Flurry/Flurry",
-					iPhone,
-					SDK,
-					"v3.0.9/FlurryAnalytics\" \"$(SRCROOT)/SPII/libs/Script/Spidermonkey/ios/lib\" \"$(SRCROOT)/SPII/libs/Network/socketio\" \"$(SRCROOT)/SPII/libs/Network/socketio/libs\" \"$(SRCROOT)/SPII/libs/Network/socketio/libs\" \"$(SRCROOT)/../Dependences/Script/Spidermonkey/android/libs\" \"$(SRCROOT)/../Dependences/Script/Spidermonkey/ios/lib\" \"$(SRCROOT)/../Dependences/Script/Spidermonkey/win32/lib\" \"$(SRCROOT)/../Dependences/Script/Spidermonkey/win32/lib\" \"$(SRCROOT)/../Dependences/Script/v8/win32/lib/debug\" \"$(SRCROOT)/../Dependences/Script/v8/win32/lib/debug\" \"$(SRCROOT)/../Dependences/Script/v8/win32/lib/debug\" \"$(SRCROOT)/../Dependences/Script/v8/win32/lib/release\" \"$(SRCROOT)/../Dependences/Script/v8/win32/lib/release\" \"$(SRCROOT)/../Dependences/Script/v8/win32/lib/release\" \"$(SRCROOT)/../Dependences/Script/Spidermonkey/ios/lib\" \"$(SRCROOT)/../Dependences/Script/Spidermonkey/ios/lib\" \"$(SRCROOT)/../Dependences/Script/Spidermonkey/win32/lib\" \"$(SRCROOT)/../Dependences/Script/Spidermonkey/win32/lib\" \"$(SRCROOT)/../Dependences/Vld/lib\" \"$(SRCROOT)/../Dependences/Script/Spidermonkey/ios/lib\"",
-				);
+				LIBRARY_SEARCH_PATHS = "";
 				OTHER_LDFLAGS = "-ObjC";
 				PRIVATE_HEADERS_FOLDER_PATH = /usr/local/include;
 				PRODUCT_NAME = CocosDenshion;
@@ -323,26 +304,7 @@
 				GENERATE_PKGINFO_FILE = NO;
 				HEADER_SEARCH_PATHS = "\"$(SDKROOT)/usr/include/libxml2\"";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/SPII/Script/Spidermonkey/JSBind/include\"",
-					"\"$(SRCROOT)/SPII/Script/Spidermonkey/JSBind/ios \"$(SRCROOT)/SPII/Script/Spidermonkey/JSBind\" \"$(SRCROOT)/JsbindTest\" \"$(SRCROOT)/SPII/libs/Script/Spidermonkey/JSBind/lib\" \"$(SRCROOT)/SPII/libs/Flurry/Flurry",
-					iPhone,
-					SDK,
-					"v3.0.9/FlurryAnalytics\" \"$(SRCROOT)/SPII/libs/GoogleAdMobAdsSDK\" \"$(SRCROOT)/SPII/libs/PunchBox\" \"$(SRCROOT)/../Example/SDK/SPII/libs/VitClientSDK\" \"$(SRCROOT)/SPII/libs/VitClientSDK\" \"$(SRCROOT)/SPII/libs/cocos2dx/platform/third_party/android/prebuilt/libcurl/libs/armeabi\" \"$(SRCROOT)/SPII/libs/cocos2dx/platform/third_party/android/prebuilt/libcurl/libs/armeabi-v7a\" \"$(SRCROOT)/SPII/libs/cocos2dx/platform/third_party/android/prebuilt/libcurl/libs/x86\" \"$(SRCROOT)/SPII/libs/cocos2dx/platform/third_party/android/prebuilt/libjpeg/libs/armeabi\" \"$(SRCROOT)/SPII/libs/cocos2dx/platform/third_party/android/prebuilt/libjpeg/libs/armeabi-v7a\" \"$(SRCROOT)/SPII/libs/cocos2dx/platform/third_party/android/prebuilt/libjpeg/libs/x86\" \"$(SRCROOT)/SPII/libs/cocos2dx/platform/third_party/android/prebuilt/libpng/libs/armeabi\" \"$(SRCROOT)/SPII/libs/cocos2dx/platform/third_party/android/prebuilt/libpng/libs/armeabi-v7a\" \"$(SRCROOT)/SPII/libs/cocos2dx/platform/third_party/android/prebuilt/libpng/libs/x86\" \"$(SRCROOT)/SPII/libs/cocos2dx/platform/third_party/android/prebuilt/libprofiler/libs/armeabi\" \"$(SRCROOT)/SPII/libs/cocos2dx/platform/third_party/android/prebuilt/libprofiler/libs/armeabi-v7a\" \"$(SRCROOT)/SPII/libs/cocos2dx/platform/third_party/android/prebuilt/libtiff/libs/armeabi\" \"$(SRCROOT)/SPII/libs/cocos2dx/platform/third_party/android/prebuilt/libtiff/libs/armeabi-v7a\" \"$(SRCROOT)/SPII/libs/cocos2dx/platform/third_party/android/prebuilt/libtiff/libs/x86\" \"$(SRCROOT)/SPII/libs/cocos2dx/platform/third_party/android/prebuilt/libxml2/libs/armeabi\" \"$(SRCROOT)/SPII/libs/cocos2dx/platform/third_party/android/prebuilt/libxml2/libs/armeabi-v7a\" \"$(SRCROOT)/SPII/libs/cocos2dx/platform/third_party/android/prebuilt/libxml2/libs/x86\" \"$(SRCROOT)/SPII/libs/cocos2dx/platform/third_party/ios/libraries\" \"$(SRCROOT)/SPII/libs/cocos2dx/platform/third_party/win32/libraries\" \"$(SRCROOT)/SPII/libs/Flurry/Flurry",
-					iPhone,
-					SDK,
-					"v4.0.0/Flurry\" \"$(SRCROOT)/SPII/libs/Flurry/Flurry",
-					iPhone,
-					SDK,
-					"v4.0.0/FlurryAds\" \"$(SRCROOT)/SPII/libs/Script/Spidermonkey/ios/lib\" \"$(SRCROOT)/SPII/libs/GoogleAdMobAdsSDK\" \"$(SRCROOT)/SPII/libs/PunchBox\" \"$(SRCROOT)/SPII/libs/Flurry/Flurry",
-					iPhone,
-					SDK,
-					"v3.0.9/FlurryAnalytics\" \"$(SRCROOT)/SPII/libs/Script/Spidermonkey/android/libs\" \"$(SRCROOT)/SPII/libs/Script/Spidermonkey/ios/lib\" \"$(SRCROOT)/SPII/libs/Script/Spidermonkey/win32/lib\" \"$(SRCROOT)/SPII/libs/cocos2dx/platform/ios\" \"$(SRCROOT)/SPII/libs/Flurry/Flurry",
-					iPhone,
-					SDK,
-					"v3.0.9/FlurryAnalytics\" \"$(SRCROOT)/SPII/libs/Script/Spidermonkey/ios/lib\" \"$(SRCROOT)/SPII/libs/Network/socketio\" \"$(SRCROOT)/SPII/libs/Network/socketio/libs\" \"$(SRCROOT)/SPII/libs/Network/socketio/libs\" \"$(SRCROOT)/../Dependences/Script/Spidermonkey/android/libs\" \"$(SRCROOT)/../Dependences/Script/Spidermonkey/ios/lib\" \"$(SRCROOT)/../Dependences/Script/Spidermonkey/win32/lib\" \"$(SRCROOT)/../Dependences/Script/Spidermonkey/win32/lib\" \"$(SRCROOT)/../Dependences/Script/v8/win32/lib/debug\" \"$(SRCROOT)/../Dependences/Script/v8/win32/lib/debug\" \"$(SRCROOT)/../Dependences/Script/v8/win32/lib/debug\" \"$(SRCROOT)/../Dependences/Script/v8/win32/lib/release\" \"$(SRCROOT)/../Dependences/Script/v8/win32/lib/release\" \"$(SRCROOT)/../Dependences/Script/v8/win32/lib/release\" \"$(SRCROOT)/../Dependences/Script/Spidermonkey/ios/lib\" \"$(SRCROOT)/../Dependences/Script/Spidermonkey/ios/lib\" \"$(SRCROOT)/../Dependences/Script/Spidermonkey/win32/lib\" \"$(SRCROOT)/../Dependences/Script/Spidermonkey/win32/lib\" \"$(SRCROOT)/../Dependences/Vld/lib\" \"$(SRCROOT)/../Dependences/Script/Spidermonkey/ios/lib\"",
-				);
+				LIBRARY_SEARCH_PATHS = "";
 				OTHER_LDFLAGS = "-ObjC";
 				PRIVATE_HEADERS_FOLDER_PATH = /usr/local/include;
 				PRODUCT_NAME = CocosDenshion;
