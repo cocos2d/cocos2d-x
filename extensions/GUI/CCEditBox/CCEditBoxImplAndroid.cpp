@@ -109,6 +109,14 @@ void CCEditBoxImplAndroid::setFontColor(const ccColor3B& color)
     m_pLabel->setColor(color);
 }
 
+void CCEditBoxImplAndroid::setPlaceholderFont(const char* pFontName, int fontSize)
+{
+	if(m_pLabelPlaceHolder != NULL) {
+		m_pLabelPlaceHolder->setFontName(pFontName);
+		m_pLabelPlaceHolder->setFontSize(fontSize);
+	}
+}
+
 void CCEditBoxImplAndroid::setPlaceholderFontColor(const ccColor3B& color)
 {
     m_colPlaceHolder = color;
