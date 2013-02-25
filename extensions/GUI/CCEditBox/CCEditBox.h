@@ -211,11 +211,25 @@ public:
      * @return The text entered in the edit box.
      */
     const char* getText(void);
+	
+	/**
+	 * Set the font.
+	 * @param pFontName The font name.
+	 * @param fontSize The font size.
+	 */
+	void setFont(const char* pFontName, int fontSize);
     
     /**
      * Set the font color of the widget's text.
      */
     void setFontColor(const ccColor3B& color);
+    
+	/**
+	 * Set the placeholder's font.
+	 * @param pFontName The font name.
+	 * @param fontSize The font size.
+	 */
+	void setPlaceholderFont(const char* pFontName, int fontSize);
     
     /**
      * Set the font color of the placeholder text when the edit box is empty.
@@ -273,6 +287,7 @@ public:
     /* override functions */
     virtual void setPosition(const CCPoint& pos);
     virtual void setContentSize(const CCSize& size);
+	virtual void setAnchorPoint(const CCPoint& anchorPoint);
     virtual void visit(void);
     virtual void onExit(void);
     virtual void keyboardWillShow(CCIMEKeyboardNotificationInfo& info);
