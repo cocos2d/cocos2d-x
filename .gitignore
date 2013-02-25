@@ -62,6 +62,7 @@ xcschememanagement.plist
 build/
 .DS_Store
 xcuserdata/
+DerivedData/
 
 # Ignore files built by bada
 .Simulator-Debug/
