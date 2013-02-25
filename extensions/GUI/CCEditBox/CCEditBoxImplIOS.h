@@ -74,7 +74,9 @@ public:
     virtual ~CCEditBoxImplIOS();
     
     virtual bool initWithSize(const CCSize& size);
+    virtual void setFont(const char* pFontName, int fontSize);
     virtual void setFontColor(const ccColor3B& color);
+    virtual void setPlaceholderFont(const char* pFontName, int fontSize);
     virtual void setPlaceholderFontColor(const ccColor3B& color);
     virtual void setInputMode(EditBoxInputMode inputMode);
     virtual void setInputFlag(EditBoxInputFlag inputFlag);
@@ -88,6 +90,7 @@ public:
     virtual void setPlaceHolder(const char* pText);
     virtual void setPosition(const CCPoint& pos);
     virtual void setContentSize(const CCSize& size);
+	virtual void setAnchorPoint(const CCPoint& anchorPoint);
     virtual void visit(void);
     virtual void doAnimationWhenKeyboardMove(float duration, float distance);
     virtual void openKeyboard();
@@ -95,6 +98,8 @@ public:
     
 private:
     CCSize          m_tContentSize;
+    CCPoint         m_obPosition;
+    CCPoint         m_obAnchorPoint;
     EditBoxImplIOS* m_systemControl;
     int             m_nMaxTextLength;
     bool            m_bInRetinaMode;

@@ -208,7 +208,8 @@ CCEditBoxImpl* __createSystemEditBox(CCEditBox* pEditBox)
 #define GET_IMPL ((EditBoxImplMac*)m_pSysEdit)
 
 CCEditBoxImplMac::CCEditBoxImplMac(CCEditBox* pEditText)
-    : CCEditBoxImpl(pEditText), m_pSysEdit(NULL), m_nMaxTextLength(-1)
+: CCEditBoxImpl(pEditText), m_pSysEdit(NULL), m_nMaxTextLength(-1)
+, m_obAnchorPoint(ccp(0.5f, 0.5f))
 {
     //! TODO: Retina on Mac
     //! m_bInRetinaMode = [[EAGLView sharedEGLView] contentScaleFactor] == 2.0f ? true : false;
@@ -243,6 +244,22 @@ bool CCEditBoxImplMac::initWithSize(const CCSize& size)
         return false;
     
     return true;
+}
+
+void CCEditBoxImplMac::setFont(const char* pFontName, int fontSize)
+{
+    //TODO:
+//	if(pFontName == NULL)
+//		return;
+//	NSString * fntName = [NSString stringWithUTF8String:pFontName];
+//	UIFont *textFont = [UIFont fontWithName:fntName size:fontSize];
+//	if(textFont != nil)
+//		[GET_IMPL.textField setFont:textFont];
+}
+
+void CCEditBoxImplMac::setPlaceholderFont(const char* pFontName, int fontSize)
+{
+	// TODO need to be implemented.
 }
 
 void CCEditBoxImplMac::setFontColor(const ccColor3B& color)
@@ -317,25 +334,28 @@ static NSPoint convertDesignCoordToScreenCoord(const CCPoint& designCoord, bool 
     return screenPos;
 }
 
-void CCEditBoxImplMac::setPosition(const CCPoint& newPos)
+void CCEditBoxImplMac::setPosition(const CCPoint& pos)
 {
-    CCPoint pos = newPos;
-    
-    //CCPoint pos = m_pEditBox->convertToWorldSpace(newPos);
-    
-    //CCPoint worldPoint = m_pEditBox->convertToWorldSpace(newPos);
-    //CCPoint pos = CCDirector::sharedDirector()->convertToUI(worldPoint);
-    
-    //TODO should consider anchor point, the default value is (0.5, 0,5)
+    m_obPosition = pos;
     NSRect frame = [GET_IMPL.textField frame];
     CGFloat height = frame.size.height;
-    [GET_IMPL setPosition:convertDesignCoordToScreenCoord(ccp(pos.x-m_tContentSize.width/2, pos.y+m_tContentSize.height/2-height), m_bInRetinaMode)];
+
+	CCPoint designCoord = ccp(pos.x - m_tContentSize.width * m_obAnchorPoint.x, pos.y + m_tContentSize.height * (1 - m_obAnchorPoint.y)-height);
+    [GET_IMPL setPosition:convertDesignCoordToScreenCoord(designCoord, m_bInRetinaMode)];
+
 }
 
 void CCEditBoxImplMac::setContentSize(const CCSize& size)
 {
     m_tContentSize = size;
     CCLOG("[Edit text] content size = (%f, %f)", size.width, size.height);
+}
+
+void CCEditBoxImplMac::setAnchorPoint(const CCPoint& anchorPoint)
+{
+    CCLOG("[Edit text] anchor point = (%f, %f)", anchorPoint.x, anchorPoint.y);
+	m_obAnchorPoint = anchorPoint;
+	setPosition(m_obPosition);
 }
 
 void CCEditBoxImplMac::visit(void)
