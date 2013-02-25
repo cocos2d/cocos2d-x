@@ -130,6 +130,8 @@ bool AssetsManager::checkUpdate()
         return false;
     }
     
+    CCLOG("there is a new version: %s", _version.c_str());
+    
     return true;
 }
 
@@ -202,6 +204,8 @@ bool AssetsManager::uncompress()
     
     // Buffer to hold data read from the zip file
     char readBuffer[BUFFER_SIZE];
+    
+    CCLOG("start uncompressing");
     
     // Loop to extract all files.
     uLong i;
@@ -338,7 +342,7 @@ static size_t downLoadPackage(void *ptr, size_t size, size_t nmemb, void *userda
 
 bool AssetsManager::downLoad()
 {
-    // Create file to save package.
+    // Create a file to save package.
     string outFileName = _storagePath + TEMP_PACKAGE_FILE_NAME;
     FILE *fp = fopen(outFileName.c_str(), "wb");
     if (! fp)
@@ -347,7 +351,7 @@ bool AssetsManager::downLoad()
         return false;
     }
     
-    // download pacakge
+    // Download pacakge
     CURLcode res;
     curl_easy_setopt(_curl, CURLOPT_URL, _packageUrl.c_str());
     curl_easy_setopt(_curl, CURLOPT_WRITEFUNCTION, downLoadPackage);
