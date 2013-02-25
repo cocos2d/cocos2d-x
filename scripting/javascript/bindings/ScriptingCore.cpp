@@ -1283,6 +1283,12 @@ jsval ccdictionary_to_jsval(JSContext* cx, CCDictionary* dict)
 
 JSBool jsval_to_ccdictionary(JSContext* cx, jsval v, CCDictionary** ret) {
 
+    if(JSVAL_IS_NULL(v) || JSVAL_IS_VOID(v))
+    {
+        *ret = NULL;
+        return JS_TRUE;
+    }
+    
     JSObject *itEl = JS_NewPropertyIterator(cx, JSVAL_TO_OBJECT(v));
     JSBool ok = JS_TRUE;
     CCDictionary* dict = NULL;
