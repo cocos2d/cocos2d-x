@@ -213,6 +213,9 @@ Developers:
     giginet
         Fix CCRepeat#create is recieved bad argument on Lua binding.
 
+    neokim
+        Adds 'setFont' and 'setAnchorPoint' to CCEditBox.
+
 Retired Core Developers:
     WenSheng Yang
 	Author of windows port, CCTextField, 
