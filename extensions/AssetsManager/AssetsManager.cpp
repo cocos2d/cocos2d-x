@@ -107,6 +107,9 @@ bool AssetsManager::checkUpdate()
         return false;
     }
     
+    // Clear _version before assign new value.
+    _version.clear();
+    
     CURLcode res;
     curl_easy_setopt(_curl, CURLOPT_URL, _versionFileUrl.c_str());
     curl_easy_setopt(_curl, CURLOPT_SSL_VERIFYPEER, 0L);
@@ -340,6 +343,12 @@ static size_t downLoadPackage(void *ptr, size_t size, size_t nmemb, void *userda
     return written;
 }
 
+static int progressFunc(void *ptr, double totalToDownload, double nowDownloaded, double totalToUpLoad, double nowUpLoaded)
+{
+    cocos2d::CCLog("progress %d", int(nowDownloaded/totalToDownload));
+    return 0;
+}
+
 bool AssetsManager::downLoad()
 {
     // Create a file to save package.
@@ -356,6 +365,8 @@ bool AssetsManager::downLoad()
     curl_easy_setopt(_curl, CURLOPT_URL, _packageUrl.c_str());
     curl_easy_setopt(_curl, CURLOPT_WRITEFUNCTION, downLoadPackage);
     curl_easy_setopt(_curl, CURLOPT_WRITEDATA, fp);
+    curl_easy_setopt(_curl, CURLOPT_NOPROGRESS, false);
+    curl_easy_setopt(_curl, CURLOPT_PROGRESSFUNCTION, progressFunc);
     res = curl_easy_perform(_curl);
     curl_easy_cleanup(_curl);
     if (res != 0)
