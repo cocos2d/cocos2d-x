@@ -30,7 +30,7 @@ bool TableViewTestLayer::init()
     this->addChild(tableView);
     tableView->reloadData();
 
-	tableView = CCTableView::create(this, CCSizeMake(60, 280));
+	tableView = CCTableView::create(this, CCSizeMake(60, 250));
 	tableView->setDirection(kCCScrollViewDirectionVertical);
 	tableView->setPosition(ccp(winSize.width-150,winSize.height/2-120));
 	tableView->setDelegate(this);
