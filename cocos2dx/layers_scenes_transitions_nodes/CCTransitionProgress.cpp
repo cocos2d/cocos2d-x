@@ -108,7 +108,7 @@ void CCTransitionProgress::onEnter()
 void CCTransitionProgress::onExit()
 {
     // remove our layer and release all containing objects
-    removeChildByTag(kCCSceneRadial, false);
+    removeChildByTag(kCCSceneRadial, true);
     CCTransitionScene::onExit();
 }
 
