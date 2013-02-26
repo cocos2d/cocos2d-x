@@ -56,7 +56,7 @@ public:
     void update(cocos2d::CCObject *pSender);
     
 private:
-    AssetsManager* getAssetsManager();
+    cocos2d::extension::AssetsManager* getAssetsManager();
     void createDownloadedDir();
     
     cocos2d::CCMenuItemFont *pItemEnter;
