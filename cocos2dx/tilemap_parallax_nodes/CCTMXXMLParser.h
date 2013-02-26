@@ -90,15 +90,15 @@ class CC_DLL CCTMXLayerInfo : public CCObject
 {
     CC_PROPERTY(CCDictionary*, m_pProperties, Properties);
 public:
-    std::string            m_sName;
-    CCSize                m_tLayerSize;
+    std::string         m_sName;
+    CCSize              m_tLayerSize;
     unsigned int        *m_pTiles;
     bool                m_bVisible;
-    unsigned char        m_cOpacity;
+    unsigned char       m_cOpacity;
     bool                m_bOwnTiles;
     unsigned int        m_uMinGID;
     unsigned int        m_uMaxGID;
-    CCPoint                m_tOffset;
+    CCPoint             m_tOffset;
 public:
     CCTMXLayerInfo();
     virtual ~CCTMXLayerInfo();
@@ -117,15 +117,15 @@ This information is obtained from the TMX file.
 class CC_DLL CCTMXTilesetInfo : public CCObject
 {
 public:
-    std::string        m_sName;
+    std::string     m_sName;
     unsigned int    m_uFirstGid;
-    CCSize            m_tTileSize;
+    CCSize          m_tTileSize;
     unsigned int    m_uSpacing;
     unsigned int    m_uMargin;
     //! filename containing the tiles (should be spritesheet / texture atlas)
-    std::string        m_sSourceImage;
+    std::string     m_sSourceImage;
     //! size in pixels of the image
-    CCSize            m_tImageSize;
+    CCSize          m_tImageSize;
 public:
     CCTMXTilesetInfo();
     virtual ~CCTMXTilesetInfo();
@@ -209,6 +209,7 @@ protected:
     std::string m_sCurrentString;
     //! tile properties
     CCDictionary* m_pTileProperties;
+    unsigned int m_uCurrentFirstGID;
 };
 
 // end of tilemap_parallax_nodes group
