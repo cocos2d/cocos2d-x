@@ -50,12 +50,14 @@ public:
     UpdateLayer();
     ~UpdateLayer();
     virtual bool init();
+    
     void enter(cocos2d::CCObject *pSender);
     void reset(cocos2d::CCObject *pSender);
     void update(cocos2d::CCObject *pSender);
     
 private:
     AssetsManager* getAssetsManager();
+    void createDownloadedDir();
     
     cocos2d::CCMenuItemFont *pItemEnter;
     cocos2d::CCMenuItemFont *pItemReset;
