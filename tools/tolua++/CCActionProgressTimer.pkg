@@ -1,14 +1,10 @@
 
 class CCProgressTo : public CCActionInterval
 {
-	CCObject* copyWithZone(CCZone* pZone);
-
     static CCProgressTo* create(float duration, float fPercent);
 };
 
 class CCProgressFromTo : public CCActionInterval
 {
-	CCObject* copyWithZone(CCZone* pZone);
-
     static CCProgressFromTo* create(float duration, float fFromPercentage, float fToPercentage);
 };
