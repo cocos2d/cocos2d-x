@@ -20,6 +20,7 @@
 #endif
 
 USING_NS_CC;
+USING_NS_CC_EXT;
 using namespace CocosDenshion;
 
 AppDelegate::AppDelegate()

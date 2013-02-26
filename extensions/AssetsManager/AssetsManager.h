@@ -29,6 +29,9 @@
 #include <curl/curl.h>
 
 #include "cocos2d.h"
+#include "ExtensionMacros.h"
+
+NS_CC_EXT_BEGIN
 
 /* 
  *  This class is used to auto update resources, such as pictures or scripts.
@@ -128,5 +131,7 @@ private:
     
     CURL *_curl;
 };
+
+NS_CC_EXT_END;
 
 #endif /* defined(__AssetsManager__) */
