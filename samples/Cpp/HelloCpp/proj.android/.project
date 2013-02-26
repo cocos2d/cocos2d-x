@@ -124,10 +124,5 @@
 			<type>2</type>
 			<location>COCOS2DX/extensions</location>
 		</link>
-		<link>
-			<name>scripting</name>
-			<type>2</type>
-			<locationURI>COCOS2DX/scripting</locationURI>
-		</link>
 	</linkedResources>
 </projectDescription>
