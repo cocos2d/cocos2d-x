@@ -41,6 +41,8 @@
 using namespace cocos2d;
 using namespace std;
 
+NS_CC_EXT_BEGIN;
+
 #define KEY_OF_VERSION   "current-version-code"
 #define KEY_OF_DOWNLOADED_VERSION    "downloaded-version-code"
 #define TEMP_PACKAGE_FILE_NAME    "cocos2dx-update-temp-package.zip"
@@ -426,3 +428,5 @@ void AssetsManager::deleteVersion()
 {
     CCUserDefault::sharedUserDefault()->setStringForKey(KEY_OF_VERSION, "");
 }
+
+NS_CC_EXT_END;
