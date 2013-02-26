@@ -28,7 +28,7 @@
 #include <string>
 #include <curl/curl.h>
 
-class AssetsManagerDelegate;
+#include "cocos2d.h"
 
 /* 
  *  This class is used to auto update resources, such as pictures or scripts.
@@ -126,25 +126,7 @@ private:
     std::string _packageUrl;
     std::string _versionFileUrl;
     
-    AssetsManagerDelegate* _delegate;
-    
     CURL *_curl;
 };
-
-/* @brief This class is used as base class of the delegate of AssetsManager.
- */
-class AssetsManagerDelegate
-{
-public:
-    /* @brief When an error happens in updating resources, AssetsManager will invoke its delegate's onError().
-     *
-     * @param errorCode The pointer to record error code.
-     *                  The value will be set by AssetsManager.
-     */
-    virtual void onError(AssetsManager::ErrorCode* errorCode) = 0;
-    
-    virtual void onUpdate(float* percent) = 0;
-};
-
 
 #endif /* defined(__AssetsManager__) */

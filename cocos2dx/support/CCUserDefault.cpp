@@ -101,28 +101,32 @@ static void setValueForKey(const char* pKey, const char* pValue)
 	// find the node
 	node = getXMLNodeForKey(pKey, &rootNode, &doc);
 	// if node exist, change the content
-	if (node && node->FirstChild())
+	if (node)
 	{
-		node->FirstChild()->SetValue(pValue);
+        if (node->FirstChild())
+        {
+            node->FirstChild()->SetValue(pValue);
+        }
+        else
+        {
+            tinyxml2::XMLText* content = doc->NewText(pValue);
+            node->LinkEndChild(content);
+        }
 	}
 	else
 	{
 		if (rootNode)
 		{
-			
 			tinyxml2::XMLElement* tmpNode = doc->NewElement(pKey);//new tinyxml2::XMLElement(pKey);
 			rootNode->LinkEndChild(tmpNode);
 			tinyxml2::XMLText* content = doc->NewText(pValue);//new tinyxml2::XMLText(pValue);
 			tmpNode->LinkEndChild(content);
-			
 		}	
 	}
 
-
-		// save file and free doc
+    // save file and free doc
 	if (doc)
 	{
-		
 		doc->SaveFile(CCUserDefault::sharedUserDefault()->getXMLFilePath().c_str());
 		delete doc;
 	}
@@ -169,7 +173,7 @@ bool CCUserDefault::getBoolForKey(const char* pKey, bool defaultValue)
 	tinyxml2::XMLElement* node;
 	node =  getXMLNodeForKey(pKey, &rootNode, &doc);
 	// find the node
-	if (node)
+	if (node && node->FirstChild())
 	{
         value = (const char*)(node->FirstChild()->Value());
 	}
@@ -199,7 +203,7 @@ int CCUserDefault::getIntegerForKey(const char* pKey, int defaultValue)
 	tinyxml2::XMLElement* node;
 	node =  getXMLNodeForKey(pKey, &rootNode, &doc);
 	// find the node
-	if (node)
+	if (node && node->FirstChild())
 	{
         value = (const char*)(node->FirstChild()->Value());
 	}
@@ -245,7 +249,7 @@ double CCUserDefault::getDoubleForKey(const char* pKey, double defaultValue)
 	tinyxml2::XMLElement* node;
 	node =  getXMLNodeForKey(pKey, &rootNode, &doc);
 	// find the node
-	if (node)
+	if (node && node->FirstChild())
 	{
         value = (const char*)(node->FirstChild()->Value());
 	}
