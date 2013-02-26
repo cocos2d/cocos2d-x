@@ -52,7 +52,6 @@ AssetsManager::AssetsManager()
 , _versionFileUrl("")
 , _version("")
 , _curl(NULL)
-, _delegate(NULL)
 {
     _storagePath = CCFileUtils::sharedFileUtils()->getWritablePath();
     checkStoragePath();
@@ -62,7 +61,6 @@ AssetsManager::AssetsManager(const char* packageUrl, const char* versionFileUrl)
 : _packageUrl(packageUrl)
 , _version("")
 , _versionFileUrl(versionFileUrl)
-, _delegate(NULL)
 , _curl(NULL)
 {
     _storagePath = CCFileUtils::sharedFileUtils()->getWritablePath();
@@ -74,7 +72,6 @@ AssetsManager::AssetsManager(const char* packageUrl, const char* versionFileUrl,
 , _version("")
 , _versionFileUrl(versionFileUrl)
 , _storagePath(storagePath)
-, _delegate(NULL)
 , _curl(NULL)
 {
     checkStoragePath();
@@ -119,7 +116,7 @@ bool AssetsManager::checkUpdate()
     
     if (res != 0)
     {
-        CCLOG("can not get version file content");
+        CCLOG("can not get version file content, error code is %d", res);
         curl_easy_cleanup(_curl);
         return false;
     }
@@ -275,7 +272,7 @@ bool AssetsManager::uncompress()
                 error = unzReadCurrentFile(zipfile, readBuffer, BUFFER_SIZE);
                 if (error < 0)
                 {
-                    CCLOG("error when read zip file %s, error code is %d", fileName, error);
+                    CCLOG("can not read zip file %s, error code is %d", fileName, error);
                     unzCloseCurrentFile(zipfile);
                     unzClose(zipfile);
                     return false;
@@ -303,6 +300,8 @@ bool AssetsManager::uncompress()
             }
         }
     }
+    
+    CCLOG("end uncompressing");
     
     return true;
 }
@@ -349,7 +348,8 @@ static size_t downLoadPackage(void *ptr, size_t size, size_t nmemb, void *userda
 
 static int progressFunc(void *ptr, double totalToDownload, double nowDownloaded, double totalToUpLoad, double nowUpLoaded)
 {
-    cocos2d::CCLog("progress %d", int(nowDownloaded/totalToDownload));
+    CCLOG("downloading... %d%%", (int)(nowDownloaded/totalToDownload*100));
+    
     return 0;
 }
 
@@ -379,6 +379,8 @@ bool AssetsManager::downLoad()
         fclose(fp);
         return false;
     }
+    
+    CCLOG("succeed downloading package %s", _packageUrl.c_str());
     
     fclose(fp);
     return true;
