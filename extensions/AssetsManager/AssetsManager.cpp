@@ -52,7 +52,6 @@ AssetsManager::AssetsManager()
 , _versionFileUrl("")
 , _version("")
 , _curl(NULL)
-, _delegate(NULL)
 {
     _storagePath = CCFileUtils::sharedFileUtils()->getWritablePath();
     checkStoragePath();
@@ -62,7 +61,6 @@ AssetsManager::AssetsManager(const char* packageUrl, const char* versionFileUrl)
 : _packageUrl(packageUrl)
 , _version("")
 , _versionFileUrl(versionFileUrl)
-, _delegate(NULL)
 , _curl(NULL)
 {
     _storagePath = CCFileUtils::sharedFileUtils()->getWritablePath();
@@ -74,7 +72,6 @@ AssetsManager::AssetsManager(const char* packageUrl, const char* versionFileUrl,
 , _version("")
 , _versionFileUrl(versionFileUrl)
 , _storagePath(storagePath)
-, _delegate(NULL)
 , _curl(NULL)
 {
     checkStoragePath();
@@ -107,6 +104,9 @@ bool AssetsManager::checkUpdate()
         return false;
     }
     
+    // Clear _version before assign new value.
+    _version.clear();
+    
     CURLcode res;
     curl_easy_setopt(_curl, CURLOPT_URL, _versionFileUrl.c_str());
     curl_easy_setopt(_curl, CURLOPT_SSL_VERIFYPEER, 0L);
@@ -116,7 +116,7 @@ bool AssetsManager::checkUpdate()
     
     if (res != 0)
     {
-        CCLOG("can not get version file content");
+        CCLOG("can not get version file content, error code is %d", res);
         curl_easy_cleanup(_curl);
         return false;
     }
@@ -272,7 +272,7 @@ bool AssetsManager::uncompress()
                 error = unzReadCurrentFile(zipfile, readBuffer, BUFFER_SIZE);
                 if (error < 0)
                 {
-                    CCLOG("error when read zip file %s, error code is %d", fileName, error);
+                    CCLOG("can not read zip file %s, error code is %d", fileName, error);
                     unzCloseCurrentFile(zipfile);
                     unzClose(zipfile);
                     return false;
@@ -300,6 +300,8 @@ bool AssetsManager::uncompress()
             }
         }
     }
+    
+    CCLOG("end uncompressing");
     
     return true;
 }
@@ -344,6 +346,13 @@ static size_t downLoadPackage(void *ptr, size_t size, size_t nmemb, void *userda
     return written;
 }
 
+static int progressFunc(void *ptr, double totalToDownload, double nowDownloaded, double totalToUpLoad, double nowUpLoaded)
+{
+    CCLOG("downloading... %d%%", (int)(nowDownloaded/totalToDownload*100));
+    
+    return 0;
+}
+
 bool AssetsManager::downLoad()
 {
     // Create a file to save package.
@@ -360,6 +369,8 @@ bool AssetsManager::downLoad()
     curl_easy_setopt(_curl, CURLOPT_URL, _packageUrl.c_str());
     curl_easy_setopt(_curl, CURLOPT_WRITEFUNCTION, downLoadPackage);
     curl_easy_setopt(_curl, CURLOPT_WRITEDATA, fp);
+    curl_easy_setopt(_curl, CURLOPT_NOPROGRESS, false);
+    curl_easy_setopt(_curl, CURLOPT_PROGRESSFUNCTION, progressFunc);
     res = curl_easy_perform(_curl);
     curl_easy_cleanup(_curl);
     if (res != 0)
@@ -368,6 +379,8 @@ bool AssetsManager::downLoad()
         fclose(fp);
         return false;
     }
+    
+    CCLOG("succeed downloading package %s", _packageUrl.c_str());
     
     fclose(fp);
     return true;
