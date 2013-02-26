@@ -95,16 +95,26 @@ bool FileUtilsAndroid::isFileExist(const std::string& strFilePath)
     // Check whether file exists in apk.
     if (strFilePath[0] != '/')
     {
-        std::string strPath = strFilePath;
-        if (strPath.find(_defaultResRootPath) != 0)
-        {// Didn't find "assets/" at the beginning of the path, adding it.
-            strPath.insert(0, _defaultResRootPath);
+        const char* s = strFilePath.c_str();
+
+        if (strFilePath.find(_defaultResRootPath) != 0)
+        {
+            // Didn't find "assets/" at the beginning of the path
+        } else {
+            // Found "assets/" at the beginning of the path and we don't want it
+            s += strlen("assets/");
         }
 
-        if (s_pZipFile->fileExists(strPath))
-        {
-            bFound = true;
-        } 
+        if (s_assetmanager) {
+            AAsset* aa = AAssetManager_open(s_assetmanager, s, AASSET_MODE_UNKNOWN);
+            if (aa)
+            {
+                bFound = true;
+                AAsset_close(aa);
+            } else {
+                // CCLOG("[AssetManager] ... in APK %s, found = false!", strFilePath.c_str());
+            }
+        }
     }
     else
     {
