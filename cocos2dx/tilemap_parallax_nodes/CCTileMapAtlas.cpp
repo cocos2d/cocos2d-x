@@ -135,11 +135,11 @@ void CCTileMapAtlas::loadTGAfile(const char *file)
 // CCTileMapAtlas - Atlas generation / updates
 void CCTileMapAtlas::setTile(const ccColor3B& tile, const CCPoint& position)
 {
-    CCAssert( m_pTGAInfo != NULL, "tgaInfo must not be nil");
-    CCAssert( m_pPosToAtlasIndex != NULL, "posToAtlasIndex must not be nil");
-    CCAssert( position.x < m_pTGAInfo->width, "Invalid position.x");
-    CCAssert( position.y < m_pTGAInfo->height, "Invalid position.x");
-    CCAssert( tile.r != 0, "R component must be non 0");
+    CCAssert(m_pTGAInfo != NULL, "tgaInfo must not be nil");
+    CCAssert(m_pPosToAtlasIndex != NULL, "posToAtlasIndex must not be nil");
+    CCAssert(position.x < m_pTGAInfo->width, "Invalid position.x");
+    CCAssert(position.y < m_pTGAInfo->height, "Invalid position.x");
+    CCAssert(tile.r != 0, "R component must be non 0");
 
     ccColor3B *ptr = (ccColor3B*)m_pTGAInfo->imageData;
     ccColor3B value = ptr[(unsigned int)(position.x + position.y * m_pTGAInfo->width)];
