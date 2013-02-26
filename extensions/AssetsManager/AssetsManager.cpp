@@ -323,8 +323,12 @@ bool AssetsManager::createDirectory(const char *path)
     
     return true;
 #else
-    //@todo create a direcotry on win32
-    return false;
+    BOOL ret = CreateDirectoryA(path, NULL);
+	if (!ret && ERROR_ALREADY_EXISTS != GetLastError())
+	{
+		return false;
+	}
+    return true;
 #endif
 }
 
