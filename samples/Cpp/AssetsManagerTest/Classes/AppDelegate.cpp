@@ -117,6 +117,8 @@ void UpdateLayer::reset(cocos2d::CCObject *pSender)
 #endif
     // Delete recorded version codes.
     getAssetsManager()->deleteVersion();
+    
+    createDownloadedDir();
 }
 
 void UpdateLayer::enter(cocos2d::CCObject *pSender)
@@ -139,23 +141,7 @@ bool UpdateLayer::init()
 {
     CCLayer::init();
     
-    pathToSave = CCFileUtils::sharedFileUtils()->getWritablePath();
-    pathToSave += "tmpdir";
-    // Create the folder if it doesn't exist
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
-    DIR *pDir = NULL;
-    
-    pDir = opendir (pathToSave.c_str());
-    if (! pDir)
-    {
-        mkdir(pathToSave.c_str(), S_IRWXU | S_IRWXG | S_IRWXO);
-    }
-#else
-	if ((GetFileAttributesA(pathToSave.c_str())) == INVALID_FILE_ATTRIBUTES)
-	{
-		CreateDirectoryA(pathToSave.c_str(), 0);
-	}
-#endif
+    createDownloadedDir();
     
     CCSize size = CCDirector::sharedDirector()->getWinSize();
 
@@ -186,4 +172,26 @@ AssetsManager* UpdateLayer::getAssetsManager()
     }
     
     return pAssetsManager;
+}
+
+void UpdateLayer::createDownloadedDir()
+{
+    pathToSave = CCFileUtils::sharedFileUtils()->getWritablePath();
+    pathToSave += "tmpdir";
+    
+    // Create the folder if it doesn't exist
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
+    DIR *pDir = NULL;
+    
+    pDir = opendir (pathToSave.c_str());
+    if (! pDir)
+    {
+        mkdir(pathToSave.c_str(), S_IRWXU | S_IRWXG | S_IRWXO);
+    }
+#else
+	if ((GetFileAttributesA(pathToSave.c_str())) == INVALID_FILE_ATTRIBUTES)
+	{
+		CreateDirectoryA(pathToSave.c_str(), 0);
+	}
+#endif
 }
