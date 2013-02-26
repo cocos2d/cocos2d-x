@@ -280,7 +280,10 @@ void CCEditBox::keyboardWillShow(CCIMEKeyboardNotificationInfo& info)
     CCRect rectTracked = getRect(this);
 	// some adjustment for margin between the keyboard and the edit box.
 	rectTracked.origin.y -= 4;
-    
+    if (m_pParent != NULL)
+    {
+        rectTracked.origin = m_pParent->convertToWorldSpace(rectTracked.origin);
+    }
     // if the keyboard area doesn't intersect with the tracking node area, nothing needs to be done.
     if (!rectTracked.intersectsRect(info.end))
     {

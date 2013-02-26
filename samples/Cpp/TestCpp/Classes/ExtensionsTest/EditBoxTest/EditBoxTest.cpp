@@ -75,6 +75,8 @@ EditBoxTest::EditBoxTest()
     m_pEditEmail->setInputMode(kEditBoxInputModeEmailAddr);
     m_pEditEmail->setDelegate(this);
     addChild(m_pEditEmail);
+    
+    this->setPosition(ccp(10, 20));
 }
 
 EditBoxTest::~EditBoxTest()

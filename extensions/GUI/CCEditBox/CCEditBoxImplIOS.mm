@@ -404,9 +404,12 @@ static CGPoint convertDesignCoordToScreenCoord(const CCPoint& designCoord, bool 
 
 void CCEditBoxImplIOS::setPosition(const CCPoint& pos)
 {
-	m_obPosition = pos;
-	CCPoint designCoord = ccp(pos.x - m_tContentSize.width * m_obAnchorPoint.x, pos.y + m_tContentSize.height * (1 - m_obAnchorPoint.y));
-    [m_systemControl setPosition:convertDesignCoordToScreenCoord(designCoord, m_bInRetinaMode)];
+    if (!m_obPosition.equals(pos))
+    {
+        m_obPosition = pos;
+        CCPoint designCoord = ccp(pos.x - m_tContentSize.width * m_obAnchorPoint.x, pos.y + m_tContentSize.height * (1 - m_obAnchorPoint.y));
+        [m_systemControl setPosition:convertDesignCoordToScreenCoord(designCoord, m_bInRetinaMode)];
+    }
 }
 
 void CCEditBoxImplIOS::setContentSize(const CCSize& size)
@@ -424,7 +427,12 @@ void CCEditBoxImplIOS::setAnchorPoint(const CCPoint& anchorPoint)
 
 void CCEditBoxImplIOS::visit(void)
 {
-    
+    if(getCCEditBox()->getParent()) {
+        CCPoint p = getCCEditBox()->getParent()->convertToWorldSpace(getCCEditBox()->getPosition());
+        setPosition(p);
+    } else {
+        setPosition(getCCEditBox()->getPosition());
+    }
 }
 
 void CCEditBoxImplIOS::openKeyboard()
