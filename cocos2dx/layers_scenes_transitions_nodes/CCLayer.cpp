@@ -488,7 +488,95 @@ void CCLayer::ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent)
     CC_UNUSED_PARAM(pEvent);
 }
 
-/// ColorLayer
+// LayerRGBA
+
+bool CCLayerRGBA::init()
+{
+	if ( (self=[super init]) ) {
+        _displayedOpacity = _realOpacity = 255;
+        _displayedColor = _realColor = ccWHITE;
+		self.cascadeOpacityEnabled = NO;
+		self.cascadeColorEnabled = NO;
+    }
+    return self;
+}
+
+-(GLubyte) opacity
+{
+	return _realOpacity;
+}
+
+-(GLubyte) displayedOpacity
+{
+	return _displayedOpacity;
+}
+
+/** Override synthesized setOpacity to recurse items */
+- (void) setOpacity:(GLubyte)opacity
+{
+	_displayedOpacity = _realOpacity = opacity;
+    
+	if( _cascadeOpacityEnabled ) {
+		GLubyte parentOpacity = 255;
+		if( [_parent conformsToProtocol:@protocol(CCRGBAProtocol)] && [(id<CCRGBAProtocol>)_parent isCascadeOpacityEnabled] )
+			parentOpacity = [(id<CCRGBAProtocol>)_parent displayedOpacity];
+            [self updateDisplayedOpacity:parentOpacity];
+	}
+}
+
+-(ccColor3B) color
+{
+	return _realColor;
+}
+
+-(ccColor3B) displayedColor
+{
+	return _displayedColor;
+}
+
+- (void) setColor:(ccColor3B)color
+{
+	_displayedColor = _realColor = color;
+	
+	if( _cascadeColorEnabled ) {
+		ccColor3B parentColor = ccWHITE;
+		if( [_parent conformsToProtocol:@protocol(CCRGBAProtocol)] && [(id<CCRGBAProtocol>)_parent isCascadeColorEnabled] )
+			parentColor = [(id<CCRGBAProtocol>)_parent displayedColor];
+            [self updateDisplayedColor:parentColor];
+	}
+}
+
+- (void)updateDisplayedOpacity:(GLubyte)parentOpacity
+{
+	_displayedOpacity = _realOpacity * parentOpacity/255.0;
+    
+    if (_cascadeOpacityEnabled) {
+        id<CCRGBAProtocol> item;
+        CCARRAY_FOREACH(_children, item) {
+            if ([item conformsToProtocol:@protocol(CCRGBAProtocol)]) {
+                [item updateDisplayedOpacity:_displayedOpacity];
+            }
+        }
+    }
+}
+
+- (void)updateDisplayedColor:(ccColor3B)parentColor
+{
+	_displayedColor.r = _realColor.r * parentColor.r/255.0;
+	_displayedColor.g = _realColor.g * parentColor.g/255.0;
+	_displayedColor.b = _realColor.b * parentColor.b/255.0;
+    
+    if (_cascadeColorEnabled) {
+        id<CCRGBAProtocol> item;
+        CCARRAY_FOREACH(_children, item) {
+            if ([item conformsToProtocol:@protocol(CCRGBAProtocol)]) {
+                [item updateDisplayedColor:_displayedColor];
+            }
+        }
+    }
+}
+
+/// CCLayerColor
 
 CCLayerColor::CCLayerColor()
 : m_cOpacity(0)
