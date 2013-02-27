@@ -22,7 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "CCFileUtilsAndroid.h"
-#include "support/zip_support/ZipUtils.h"
 #include "platform/CCCommon.h"
 #include "jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
 #include "android/asset_manager.h"
@@ -55,17 +54,12 @@ extern "C" {
 
 NS_CC_BEGIN
 
-// record the zip on the resource path
-static ZipFile *s_pZipFile = NULL;
-
 FileUtils* FileUtils::sharedFileUtils()
 {
     if (s_sharedFileUtils == NULL)
     {
         s_sharedFileUtils = new FileUtilsAndroid();
         s_sharedFileUtils->init();
-        std::string resourcePath = getApkPath();
-        s_pZipFile = new ZipFile(resourcePath, "assets/");
     }
     return s_sharedFileUtils;
 }
@@ -76,7 +70,6 @@ FileUtilsAndroid::FileUtilsAndroid()
 
 FileUtilsAndroid::~FileUtilsAndroid()
 {
-    CC_SAFE_DELETE(s_pZipFile);
 }
 
 bool FileUtilsAndroid::init()
