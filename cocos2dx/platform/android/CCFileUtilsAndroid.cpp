@@ -28,6 +28,8 @@ THE SOFTWARE.
 #include "android/asset_manager.h"
 #include "android/asset_manager_jni.h"
 
+#include <stdlib.h>
+
 #define  LOG_TAG    "CCFileUtilsAndroid.cpp"
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
 
@@ -167,11 +169,44 @@ unsigned char* FileUtilsAndroid::doGetFileData(const char* pszFileName, const ch
     {
         if (forAsync)
         {
-            pData = s_pZipFile->getFileData(fullPath.c_str(), pSize, s_pZipFile->_dataThread);
+            // pData = s_pZipFile->getFileData(fullPath.c_str(), pSize, s_pZipFile->_dataThread);
+            abort();
         }
         else
         {
-            pData = s_pZipFile->getFileData(fullPath.c_str(), pSize);
+        string fullPath = fullPathForFilename(pszFileName);
+
+        const char* relativepath = fullPath.c_str();
+
+        // "assets/" is at the beginning of the path and we don't want it
+        relativepath += strlen("assets/");
+
+        if (NULL == s_assetmanager) {
+            LOGD("... s_assetmanager is NULL");
+            return NULL;
+        }
+
+        // read asset data
+        AAsset* asset =
+            AAssetManager_open(s_assetmanager,
+                               relativepath,
+                               AASSET_MODE_UNKNOWN);
+        if (NULL == asset) {
+            LOGD("asset : is NULL");
+            return NULL;
+        }
+
+        off_t size = AAsset_getLength(asset);
+
+        pData = new unsigned char[size];
+
+        int bytesread = AAsset_read(asset, (void*)pData, size);
+        if (pSize)
+        {
+            *pSize = bytesread;
+        }
+
+        AAsset_close(asset);
         }
     }
     else
