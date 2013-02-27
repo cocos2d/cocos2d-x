@@ -324,8 +324,10 @@ void CCDirector::setOpenGLView(CCEGLView *pobOpenGLView)
 
 void CCDirector::setViewport()
 {
-    CCSize size = CCSizeMake(m_obWinSizeInPoints.width * m_fContentScaleFactor, m_obWinSizeInPoints.height * m_fContentScaleFactor);
-	glViewport(0, 0, size.width, size.height );
+    if (m_pobOpenGLView)
+    {
+        m_pobOpenGLView->setViewPortInPoints(0, 0, m_obWinSizeInPoints.width, m_obWinSizeInPoints.height);
+    }
 }
 
 void CCDirector::setNextDeltaTimeZero(bool bNextDeltaTimeZero)
@@ -337,10 +339,7 @@ void CCDirector::setProjection(ccDirectorProjection kProjection)
 {
     CCSize size = m_obWinSizeInPoints;
 
-    if (m_pobOpenGLView)
-    {
-        m_pobOpenGLView->setViewPortInPoints(0, 0, size.width, size.height);
-    }
+    setViewport();
 
     switch (kProjection)
     {
