@@ -332,7 +332,8 @@ ScriptingCore::ScriptingCore()
 , debugGlobal_(NULL)
 {
     // set utf8 strings internally (we don't need utf16)
-    JS_SetCStringsAreUTF8();
+    // XXX: Removed in SpiderMonkey 19.0
+    //JS_SetCStringsAreUTF8();
     this->addRegisterCallback(registerDefaultClasses);
     this->runLoop = new SimpleRunLoop();
 }
@@ -417,7 +418,7 @@ void ScriptingCore::createGlobalContext() {
         this->rt_ = NULL;
     }
     //JS_SetCStringsAreUTF8();
-    this->rt_ = JS_NewRuntime(10 * 1024 * 1024);
+    this->rt_ = JS_NewRuntime(10 * 1024 * 1024, JS_NO_HELPER_THREADS);
     this->cx_ = JS_NewContext(rt_, 10240);
     JS_SetOptions(this->cx_, JSOPTION_TYPE_INFERENCE);
     JS_SetVersion(this->cx_, JSVERSION_LATEST);
@@ -466,7 +467,13 @@ JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* c
     contentSize = strlen((char*)content);
     JSScript* script = JS_CompileScript(cx, global, (char*)content, contentSize, path, 1);
 #else
-    JSScript* script = JS_CompileUTF8File(cx, global, rpath.c_str());
+    // Removed in SpiderMonkey 19.0
+    //JSScript* script = JS_CompileUTF8File(cx, global, rpath.c_str());
+    
+    js::RootedObject obj(cx, global);
+	JS::CompileOptions options(cx);
+	options.setUTF8(true).setFileAndLine(rpath.c_str(), 1);
+	JSScript *script = JS::Compile(cx, obj, options, rpath.c_str());
 #endif
     JSBool evaluatedOK = false;
     if (script) {
@@ -963,15 +970,20 @@ JSBool jsval_to_uint16( JSContext *cx, jsval vp, uint16_t *outval )
     return ok;
 }
 
-JSBool jsval_to_long_long(JSContext *cx, jsval v, long long* ret) {
-    JSBool ok = JS_TRUE;
-    JSObject *tmp = JSVAL_TO_OBJECT(v);
-    ok &= JS_IsTypedArrayObject(tmp, cx) && JS_GetTypedArrayByteLength(tmp, cx) == 8;
-    JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
-
-    uint32_t *data = (uint32_t *)JS_GetUint32ArrayData(tmp, cx);
-    *ret = (long long)(*data);
-    return ok;
+JSBool jsval_to_long_long(JSContext *cx, jsval vp, long long* r) {
+	JSObject *tmp_arg;
+	JSBool ok = JS_ValueToObject( cx, vp, &tmp_arg );
+	JSB_PRECONDITION2( ok, cx, JS_FALSE, "Error converting value to object");
+	JSB_PRECONDITION2( tmp_arg && JS_IsTypedArrayObject( tmp_arg ), cx, JS_FALSE, "Not a TypedArray object");
+	JSB_PRECONDITION2( JS_GetTypedArrayByteLength( tmp_arg ) == sizeof(long long), cx, JS_FALSE, "Invalid Typed Array length");
+	
+	uint32_t* arg_array = (uint32_t*)JS_GetArrayBufferViewData( tmp_arg );
+	long long ret =  arg_array[0];
+	ret = ret << 32;
+	ret |= arg_array[1];
+	
+	*r = ret;
+	return JS_TRUE;
 }
 
 JSBool jsval_to_std_string(JSContext *cx, jsval v, std::string* ret) {
@@ -1337,7 +1349,7 @@ jsval uint32_to_jsval( JSContext *cx, uint32_t number )
 
 jsval long_long_to_jsval(JSContext* cx, long long v) {
     JSObject *tmp = JS_NewUint32Array(cx, 2);
-    uint32_t *data = (uint32_t *)JS_GetArrayBufferViewData(tmp, cx);
+    uint32_t *data = (uint32_t *)JS_GetArrayBufferViewData(tmp);
     data[0] = ((uint32_t *)(&v))[0];
     data[1] = ((uint32_t *)(&v))[1];
     return OBJECT_TO_JSVAL(tmp);
@@ -1611,12 +1623,12 @@ JSBool JSBDebug_BufferWrite(JSContext* cx, unsigned argc, jsval* vp)
         const char* str;
 
         JSString* jsstr = JS_ValueToString(cx, argv[0]);
-        str = JS_EncodeString(cx, jsstr);
-
+        // Not supported in SpiderMonkey v19
+        //str = JS_EncodeString(cx, jsstr);
+        JSStringWrapper strWrapper(jsstr);
+        
         // this is safe because we're already inside a lock (from clearBuffers)
-        outData.append(str);
-
-        JS_free(cx, (void*)str);
+        outData.append(strWrapper.get());
     }
     return JS_TRUE;
 }
