@@ -336,7 +336,8 @@ protected:
     void showStats();
     void createStatsLabel();
     void calculateMPF();
-
+    void getFPSImageData(unsigned char** datapointer, unsigned int* length);
+    
     /** calculates delta time since last time it was called */    
     void calculateDeltaTime();
 protected:
@@ -353,9 +354,9 @@ protected:
     float m_fAccumDt;
     float m_fFrameRate;
     
-    CCLabelTTF *m_pFPSLabel;
-    CCLabelTTF *m_pSPFLabel;
-    CCLabelTTF *m_pDrawsLabel;
+    CCLabelAtlas *m_pFPSLabel;
+    CCLabelAtlas *m_pSPFLabel;
+    CCLabelAtlas *m_pDrawsLabel;
     
     /** Whether or not the Director is paused */
     bool m_bPaused;

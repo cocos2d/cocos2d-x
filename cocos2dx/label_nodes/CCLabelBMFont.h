@@ -181,10 +181,9 @@ http://www.angelcode.com/products/bmfont/ (Free, Windows only)
 
 class CC_DLL CCLabelBMFont : public CCSpriteBatchNode, public CCLabelProtocol, public CCRGBAProtocol
 {
-    /** conforms to CCRGBAProtocol protocol */
-    CC_PROPERTY(GLubyte, m_cOpacity, Opacity)
-    /** conforms to CCRGBAProtocol protocol */
-    CC_PROPERTY_PASS_BY_REF(ccColor3B, m_tColor, Color)
+	GLubyte		m_cDisplayedOpacity, m_cRealOpacity;
+	ccColor3B	m_tDisplayedColor, m_tRealColor;
+	bool		m_bCascadeColorEnabled, m_bCascadeOpacityEnabled;
     /** conforms to CCRGBAProtocol protocol */
     bool m_bIsOpacityModifyRGB;
     

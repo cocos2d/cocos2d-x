@@ -34,6 +34,19 @@ THE SOFTWARE.
  cocos2d (cc) configuration file
 */
 
+/** @def CC_ENABLE_STACKABLE_ACTIONS
+ If enabled, actions that alter the position property (eg: CCMoveBy, CCJumpBy, CCBezierBy, etc..) will be stacked.
+ If you run 2 or more 'position' actions at the same time on a node, then end position will be the sum of all the positions.
+ If disabled, only the last run action will take effect.
+ 
+ Enabled by default. Disable to be compatible with v2.0 and older versions.
+ 
+ @since v2.1
+ */
+#ifndef CC_ENABLE_STACKABLE_ACTIONS
+#define CC_ENABLE_STACKABLE_ACTIONS 1
+#endif
+
 /** @def CC_ENABLE_GL_STATE_CACHE
  If enabled, cocos2d will maintain an OpenGL state cache internally to avoid unnecessary switches.
  In order to use them, you have to use the following functions, instead of the the GL ones:
@@ -45,7 +58,9 @@ THE SOFTWARE.
 
  It is recommended to enable whenever possible to improve speed.
  If you are migrating your code from GL ES 1.1, then keep it disabled. Once all your code works as expected, turn it on.
-
+ 
+ Default value: Enabled by default
+ 
  @since v2.0.0
  */
 #ifndef CC_ENABLE_GL_STATE_CACHE

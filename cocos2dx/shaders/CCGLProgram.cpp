@@ -330,6 +330,14 @@ bool CCGLProgram::updateUniformLocation(GLint location, GLvoid* data, unsigned i
     return updated;
 }
 
+GLint CCGLProgram::getUniformLocationForName(const char* name)
+{
+    CCAssert(name != NULL, "Invalid uniform name" );
+    CCAssert(m_uProgram != 0, "Invalid operation. Cannot get uniform location when program is not initialized");
+    
+    return glGetUniformLocation(m_uProgram, name);
+}
+
 void CCGLProgram::setUniformLocationWith1i(GLint location, GLint i1)
 {
     bool updated =  updateUniformLocation(location, &i1, sizeof(i1)*1);
