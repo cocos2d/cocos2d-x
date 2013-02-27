@@ -36,6 +36,7 @@
 #include "shaders/CCGLProgram.h"
 #include "kazmath/kazmath.h"
 #include "script_support/CCScriptSupport.h"
+#include "CCProtocols.h"
 
 NS_CC_BEGIN
 
@@ -138,6 +139,11 @@ public:
      */
     virtual ~CCNode(void);
     
+    /**
+     *  Initializes the instance of CCNode
+     *  @return Whether the initialization was successful.
+     */
+    virtual bool init();
 	/**
      * Allocates and initializes a node.
      * @return A initialized node which is marked as "autorelease".
@@ -1383,6 +1389,34 @@ protected:
     int m_nScriptHandler;               ///< script handler for onEnter() & onExit(), used in Javascript binding and Lua binding.
     int m_nUpdateScriptHandler;         ///< script handler for update() callback per frame, which is invoked from lua & javascript.
     ccScriptType m_eScriptType;         ///< type of script binding, lua or javascript
+};
+
+//#pragma mark - CCNodeRGBA
+
+/** CCNodeRGBA is a subclass of CCNode that implements the CCRGBAProtocol protocol.
+ 
+ All features from CCNode are valid, plus the following new features:
+ - opacity
+ - RGB colors
+ 
+ Opacity/Color propagates into children that conform to the CCRGBAProtocol if cascadeOpacity/cascadeColor is enabled.
+ @since v2.1
+ */
+class CC_DLL CCNodeRGBA : public CCNode, public CCRGBAProtocol
+{
+public:
+    virtual bool init();
+    virtual void setColor(const ccColor3B& color);
+    virtual const ccColor3B& getColor(void);
+    virtual GLubyte getDisplayedOpacity(void);
+    virtual GLubyte getOpacity(void);
+    virtual void setOpacity(GLubyte opacity);
+    virtual void setOpacityModifyRGB(bool bValue);
+    virtual bool isOpacityModifyRGB(void);
+protected:
+	GLubyte		m_cDisplayedOpacity, m_cRealOpacity;
+	ccColor3B	m_tDisplayedColor, m_tRealColor;
+	bool		m_bCascadeColorEnabled, m_bCascadeOpacityEnabled;
 };
 
 // end of base_node group
