@@ -304,18 +304,18 @@ bool CCParticleSun::initWithTotalParticles(unsigned int numberOfParticles)
         m_fDuration = kCCParticleDurationInfinity;
 
         // Gravity Mode
-        m_nEmitterMode = kCCParticleModeGravity;
+        setEmitterMode(kCCParticleModeGravity);
 
         // Gravity Mode: gravity
-        modeA.gravity = ccp(0,0);
+        setGravity(ccp(0,0));
 
         // Gravity mode: radial acceleration
-        modeA.radialAccel = 0;
-        modeA.radialAccelVar = 0;
+        setRadialAccel(0);
+        setRadialAccelVar(0);
 
         // Gravity mode: speed of particles
-        modeA.speed = 20;
-        modeA.speedVar = 5;
+        setSpeed(20);
+        setSpeedVar(5);
 
 
         // angle
@@ -325,7 +325,7 @@ bool CCParticleSun::initWithTotalParticles(unsigned int numberOfParticles)
         // emitter position
         CCSize winSize = CCDirector::sharedDirector()->getWinSize();
         this->setPosition(ccp(winSize.width/2, winSize.height/2));
-        m_tPosVar = CCPointZero;
+        setPosVar(CCPointZero);
 
         // life of particles
         m_fLife = 1;
@@ -408,22 +408,22 @@ bool CCParticleGalaxy::initWithTotalParticles(unsigned int numberOfParticles)
         m_fDuration = kCCParticleDurationInfinity;
 
         // Gravity Mode
-        m_nEmitterMode = kCCParticleModeGravity;
+        setEmitterMode(kCCParticleModeGravity);
 
         // Gravity Mode: gravity
-        modeA.gravity = ccp(0,0);
+        setGravity(ccp(0,0));
 
         // Gravity Mode: speed of particles
-        modeA.speed = 60;
-        modeA.speedVar = 10;
+        setSpeed(60);
+        setSpeedVar(10);
 
         // Gravity Mode: radial
-        modeA.radialAccel = -80;
-        modeA.radialAccelVar = 0;
+        setRadialAccel(-80);
+        setRadialAccelVar(0);
 
         // Gravity Mode: tangential
-        modeA.tangentialAccel = 80;
-        modeA.tangentialAccelVar = 0;
+        setTangentialAccel(80);
+        setTangentialAccelVar(0);
 
         // angle
         m_fAngle = 90;
@@ -432,7 +432,7 @@ bool CCParticleGalaxy::initWithTotalParticles(unsigned int numberOfParticles)
         // emitter position
         CCSize winSize = CCDirector::sharedDirector()->getWinSize();
         this->setPosition(ccp(winSize.width/2, winSize.height/2));
-        m_tPosVar = CCPointZero;
+        setPosVar(CCPointZero);
 
         // life of particles
         m_fLife = 4;
@@ -517,22 +517,22 @@ bool CCParticleFlower::initWithTotalParticles(unsigned int numberOfParticles)
         m_fDuration = kCCParticleDurationInfinity;
 
         // Gravity Mode
-        m_nEmitterMode = kCCParticleModeGravity;
+        setEmitterMode(kCCParticleModeGravity);
 
         // Gravity Mode: gravity
-        modeA.gravity = ccp(0,0);
+        setGravity(ccp(0,0));
 
         // Gravity Mode: speed of particles
-        modeA.speed = 80;
-        modeA.speedVar = 10;
+        setSpeed(80);
+        setSpeedVar(10);
 
         // Gravity Mode: radial
-        modeA.radialAccel = -60;
-        modeA.radialAccelVar = 0;
+        setRadialAccel(-60);
+        setRadialAccelVar(0);
 
         // Gravity Mode: tangential
-        modeA.tangentialAccel = 15;
-        modeA.tangentialAccelVar = 0;
+        setTangentialAccel(15);
+        setTangentialAccelVar(0);
 
         // angle
         m_fAngle = 90;
@@ -541,7 +541,7 @@ bool CCParticleFlower::initWithTotalParticles(unsigned int numberOfParticles)
         // emitter position
         CCSize winSize = CCDirector::sharedDirector()->getWinSize();
         this->setPosition(ccp(winSize.width/2, winSize.height/2));
-        m_tPosVar = CCPointZero;
+        setPosVar(CCPointZero);
 
         // life of particles
         m_fLife = 4;
@@ -625,22 +625,22 @@ bool CCParticleMeteor::initWithTotalParticles(unsigned int numberOfParticles)
         m_fDuration = kCCParticleDurationInfinity;
 
         // Gravity Mode
-        m_nEmitterMode = kCCParticleModeGravity;
+        setEmitterMode(kCCParticleModeGravity);
 
         // Gravity Mode: gravity
-        modeA.gravity = ccp(-200,200);
+        setGravity(ccp(-200,200));
 
         // Gravity Mode: speed of particles
-        modeA.speed = 15;
-        modeA.speedVar = 5;
+        setSpeed(15);
+        setSpeedVar(5);
 
         // Gravity Mode: radial
-        modeA.radialAccel = 0;
-        modeA.radialAccelVar = 0;
+        setRadialAccel(0);
+        setRadialAccelVar(0);
 
         // Gravity Mode: tangential
-        modeA.tangentialAccel = 0;
-        modeA.tangentialAccelVar = 0;
+        setTangentialAccel(0);
+        setTangentialAccelVar(0);
 
         // angle
         m_fAngle = 90;
@@ -649,7 +649,7 @@ bool CCParticleMeteor::initWithTotalParticles(unsigned int numberOfParticles)
         // emitter position
         CCSize winSize = CCDirector::sharedDirector()->getWinSize();
         this->setPosition(ccp(winSize.width/2, winSize.height/2));
-        m_tPosVar = CCPointZero;
+        setPosVar(CCPointZero);
 
         // life of particles
         m_fLife = 2;
@@ -734,22 +734,22 @@ bool CCParticleSpiral::initWithTotalParticles(unsigned int numberOfParticles)
         m_fDuration = kCCParticleDurationInfinity;
 
         // Gravity Mode
-        m_nEmitterMode = kCCParticleModeGravity;
+        setEmitterMode(kCCParticleModeGravity);
 
         // Gravity Mode: gravity
-        modeA.gravity = ccp(0,0);
+        setGravity(ccp(0,0));
 
         // Gravity Mode: speed of particles
-        modeA.speed = 150;
-        modeA.speedVar = 0;
+        setSpeed(150);
+        setSpeedVar(0);
 
         // Gravity Mode: radial
-        modeA.radialAccel = -380;
-        modeA.radialAccelVar = 0;
+        setRadialAccel(-380);
+        setRadialAccelVar(0);
 
         // Gravity Mode: tangential
-        modeA.tangentialAccel = 45;
-        modeA.tangentialAccelVar = 0;
+        setTangentialAccel(45);
+        setTangentialAccelVar(0);
 
         // angle
         m_fAngle = 90;
@@ -758,7 +758,7 @@ bool CCParticleSpiral::initWithTotalParticles(unsigned int numberOfParticles)
         // emitter position
         CCSize winSize = CCDirector::sharedDirector()->getWinSize();
         this->setPosition(ccp(winSize.width/2, winSize.height/2));
-        m_tPosVar = CCPointZero;
+        setPosVar(CCPointZero);
 
         // life of particles
         m_fLife = 12;
@@ -842,22 +842,22 @@ bool CCParticleExplosion::initWithTotalParticles(unsigned int numberOfParticles)
         // duration
         m_fDuration = 0.1f;
 
-        m_nEmitterMode = kCCParticleModeGravity;
+        setEmitterMode(kCCParticleModeGravity);
 
         // Gravity Mode: gravity
-        modeA.gravity = ccp(0,0);
+        setGravity(ccp(0,0));
 
         // Gravity Mode: speed of particles
-        modeA.speed = 70;
-        modeA.speedVar = 40;
+        setSpeed(70);
+        setSpeedVar(40);
 
         // Gravity Mode: radial
-        modeA.radialAccel = 0;
-        modeA.radialAccelVar = 0;
+        setRadialAccel(0);
+        setRadialAccelVar(0);
 
         // Gravity Mode: tangential
-        modeA.tangentialAccel = 0;
-        modeA.tangentialAccelVar = 0;
+        setTangentialAccel(0);
+        setTangentialAccelVar(0);
 
         // angle
         m_fAngle = 90;
@@ -866,7 +866,7 @@ bool CCParticleExplosion::initWithTotalParticles(unsigned int numberOfParticles)
         // emitter position
         CCSize winSize = CCDirector::sharedDirector()->getWinSize();
         this->setPosition(ccp(winSize.width/2, winSize.height/2));
-        m_tPosVar = CCPointZero;
+        setPosVar(CCPointZero);
 
         // life of particles
         m_fLife = 5.0f;
@@ -951,18 +951,18 @@ bool CCParticleSmoke::initWithTotalParticles(unsigned int numberOfParticles)
         m_fDuration = kCCParticleDurationInfinity;
 
         // Emitter mode: Gravity Mode
-        m_nEmitterMode = kCCParticleModeGravity;
+        setEmitterMode(kCCParticleModeGravity);
 
         // Gravity Mode: gravity
-        modeA.gravity = ccp(0,0);
+        setGravity(ccp(0,0));
 
         // Gravity Mode: radial acceleration
-        modeA.radialAccel = 0;
-        modeA.radialAccelVar = 0;
+        setRadialAccel(0);
+        setRadialAccelVar(0);
 
         // Gravity Mode: speed of particles
-        modeA.speed = 25;
-        modeA.speedVar = 10;
+        setSpeed(25);
+        setSpeedVar(10);
 
         // angle
         m_fAngle = 90;
@@ -971,7 +971,7 @@ bool CCParticleSmoke::initWithTotalParticles(unsigned int numberOfParticles)
         // emitter position
         CCSize winSize = CCDirector::sharedDirector()->getWinSize();
         this->setPosition(ccp(winSize.width/2, 0));
-        m_tPosVar = ccp(20, 0);
+        setPosVar(ccp(20, 0));
 
         // life of particles
         m_fLife = 4;
@@ -1056,27 +1056,27 @@ bool CCParticleSnow::initWithTotalParticles(unsigned int numberOfParticles)
         m_fDuration = kCCParticleDurationInfinity;
 
         // set gravity mode.
-        m_nEmitterMode = kCCParticleModeGravity;
+        setEmitterMode(kCCParticleModeGravity);
 
         // Gravity Mode: gravity
-        modeA.gravity = ccp(0,-1);
+        setGravity(ccp(0,-1));
 
         // Gravity Mode: speed of particles
-        modeA.speed = 5;
-        modeA.speedVar = 1;
+        setSpeed(5);
+        setSpeedVar(1);
 
         // Gravity Mode: radial
-        modeA.radialAccel = 0;
-        modeA.radialAccelVar = 1;
+        setRadialAccel(0);
+        setRadialAccelVar(1);
 
         // Gravity mode: tangential
-        modeA.tangentialAccel = 0;
-        modeA.tangentialAccelVar = 1;
+        setTangentialAccel(0);
+        setTangentialAccelVar(1);
 
         // emitter position
         CCSize winSize = CCDirector::sharedDirector()->getWinSize();
         this->setPosition(ccp(winSize.width/2, winSize.height + 10));
-        m_tPosVar = ccp( winSize.width/2, 0 );
+        setPosVar(ccp(winSize.width/2, 0));
 
         // angle
         m_fAngle = -90;
@@ -1163,22 +1163,22 @@ bool CCParticleRain::initWithTotalParticles(unsigned int numberOfParticles)
         // duration
         m_fDuration = kCCParticleDurationInfinity;
 
-        m_nEmitterMode = kCCParticleModeGravity;
+        setEmitterMode(kCCParticleModeGravity);
 
         // Gravity Mode: gravity
-        modeA.gravity = ccp(10,-10);
+        setGravity(ccp(10,-10));
 
         // Gravity Mode: radial
-        modeA.radialAccel = 0;
-        modeA.radialAccelVar = 1;
+        setRadialAccel(0);
+        setRadialAccelVar(1);
 
         // Gravity Mode: tangential
-        modeA.tangentialAccel = 0;
-        modeA.tangentialAccelVar = 1;
+        setTangentialAccel(0);
+        setTangentialAccelVar(1);
 
         // Gravity Mode: speed of particles
-        modeA.speed = 130;
-        modeA.speedVar = 30;
+        setSpeed(130);
+        setSpeedVar(30);
 
         // angle
         m_fAngle = -90;
@@ -1188,7 +1188,7 @@ bool CCParticleRain::initWithTotalParticles(unsigned int numberOfParticles)
         // emitter position
         CCSize winSize = CCDirector::sharedDirector()->getWinSize();
         this->setPosition(ccp(winSize.width/2, winSize.height));
-        m_tPosVar = ccp( winSize.width/2, 0 );
+        setPosVar(ccp(winSize.width/2, 0));
 
         // life of particles
         m_fLife = 4.5f;
