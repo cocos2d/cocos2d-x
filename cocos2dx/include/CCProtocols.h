@@ -106,16 +106,18 @@ public:
      *  whether or not color should be propagated to its children.
      */
     virtual bool isCascadeColorEnabled(void) = 0;
+    virtual void setCascadeColorEnabled(bool cascadeColorEnabled) = 0;
     
     /** 
      *  recursive method that updates display color 
      */
-    virtual void updateDisplayedColor(ccColor3B color) = 0;
+    virtual void updateDisplayedColor(const ccColor3B& color) = 0;
     
     /** 
      *  whether or not opacity should be propagated to its children.
      */
     virtual bool isCascadeOpacityEnabled(void) = 0;
+    virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled) = 0;
     
     /**
      *  recursive method that updates the displayed opacity.
