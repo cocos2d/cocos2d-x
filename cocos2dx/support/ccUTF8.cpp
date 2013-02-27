@@ -482,7 +482,7 @@ cc_utf16_to_utf8 (const unsigned short  *str,
     /* At this point, everything is valid, and we just need to convert
      */
     /********** DIFFERENT for UTF8/UCS4 **********/
-    result = (char*)malloc (n_bytes + 1);
+    result = new char[n_bytes + 1];
     
     high_surrogate = 0;
     out = result;

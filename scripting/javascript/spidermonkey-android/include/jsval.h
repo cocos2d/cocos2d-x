@@ -14,8 +14,6 @@
 
 #include "js/Utility.h"
 
-JS_BEGIN_EXTERN_C
-
 /*
  * Try to get jsvals 64-bit aligned. We could almost assert that all values are
  * aligned, but MSVC and GCC occasionally break alignment.
@@ -834,8 +832,6 @@ JS_CANONICALIZE_NAN(double d)
     }
     return d;
 }
-
-JS_END_EXTERN_C
 
 #ifdef __cplusplus
 static jsval_layout JSVAL_TO_IMPL(JS::Value);

@@ -457,22 +457,24 @@ JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* c
         cx = cx_;
     }
 
+    js::RootedObject obj(cx, global);
+	JS::CompileOptions options(cx);
+	options.setUTF8(true).setFileAndLine(rpath.c_str(), 1);
+    
     // this will always compile the script, we can actually check if the script
     // was compiled before, because it can be in the global map
-#ifdef ANDROID
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     unsigned char *content = NULL;
     unsigned long contentSize = 0;
 
     content = (unsigned char*)CCString::createWithContentsOfFile(rpath.c_str())->getCString();
     contentSize = strlen((char*)content);
-    JSScript* script = JS_CompileScript(cx, global, (char*)content, contentSize, path, 1);
+    // Not supported in SpiderMonkey 19.0
+    //JSScript* script = JS_CompileScript(cx, global, (char*)content, contentSize, path, 1);
+    JSScript *script = JS::Compile(cx, obj, options, (char*)content, contentSize);
 #else
     // Removed in SpiderMonkey 19.0
     //JSScript* script = JS_CompileUTF8File(cx, global, rpath.c_str());
-    
-    js::RootedObject obj(cx, global);
-	JS::CompileOptions options(cx);
-	options.setUTF8(true).setFileAndLine(rpath.c_str(), 1);
 	JSScript *script = JS::Compile(cx, obj, options, rpath.c_str());
 #endif
     JSBool evaluatedOK = false;

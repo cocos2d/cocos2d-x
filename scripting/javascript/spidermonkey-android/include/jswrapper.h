@@ -18,36 +18,24 @@ namespace js {
 class DummyFrameGuard;
 
 /*
- * A wrapper is essentially a proxy that restricts access to certain traps. The
- * way in which a wrapper restricts access to its traps depends on the
- * particular policy for that wrapper. To allow a wrapper's policy to be
- * customized, the Wrapper base class contains two functions, enter/leave, which
- * are called as a policy enforcement check before/after each trap is forwarded.
- *
- * To minimize code duplication, a set of abstract wrapper classes is
- * provided, from which other wrappers may inherit. These abstract classes are
- * organized in the following hierarchy:
- *
- * BaseProxyHandler Wrapper
- * |                    | |
- * IndirectProxyHandler | |
- * |                  | | |
- * |      IndirectWrapper |
- * |                      |
- * DirectProxyHandler     |
- *                  |     |
- *            DirectWrapper
+ * A wrapper is a proxy with a target object to which it generally forwards
+ * operations, but may restrict access to certain operations or instrument
+ * the trap operations in various ways. A wrapper is distinct from a Direct Proxy
+ * Handler in the sense that it can be "unwrapped" in C++, exposing the underlying
+ * object (Direct Proxy Handlers have an underlying target object, but don't
+ * expect to expose this object via any kind of unwrapping operation). Callers
+ * should be careful to avoid unwrapping security wrappers in the wrong context.
  */
-class JS_FRIEND_API(Wrapper)
+class JS_FRIEND_API(Wrapper) : public DirectProxyHandler
 {
     unsigned mFlags;
+    bool mSafeToUnwrap;
 
   public:
     enum Action {
         GET,
         SET,
-        CALL,
-        PUNCTURE
+        CALL
     };
 
     enum Flags {
@@ -55,38 +43,27 @@ class JS_FRIEND_API(Wrapper)
         LAST_USED_FLAG = CROSS_COMPARTMENT
     };
 
-    typedef enum {
-        PermitObjectAccess,
-        PermitPropertyAccess,
-        DenyAccess
-    } Permission;
+    /*
+     * Wrappers can explicitly specify that they are unsafe to unwrap from a
+     * security perspective (as is the case for SecurityWrappers). If a wrapper
+     * is not safe to unwrap, operations requiring full access to the underlying
+     * object (via UnwrapObjectChecked) will throw. Otherwise, they will succeed.
+     */
+    void setSafeToUnwrap(bool safe) { mSafeToUnwrap = safe; };
+    bool isSafeToUnwrap() { return mSafeToUnwrap; };
 
     static JSObject *New(JSContext *cx, JSObject *obj, JSObject *proto,
                          JSObject *parent, Wrapper *handler);
+
+    static JSObject *Renew(JSContext *cx, JSObject *existing, JSObject *obj, Wrapper *handler);
 
     static Wrapper *wrapperHandler(RawObject wrapper);
 
     static JSObject *wrappedObject(RawObject wrapper);
 
-    explicit Wrapper(unsigned flags);
-
     unsigned flags() const {
         return mFlags;
     }
-
-    /*
-     * The function Wrapper::New takes a pointer to a Wrapper as the handler
-     * object. It then passes it on to the function NewProxyObject, which
-     * expects a pointer to a BaseProxyHandler as the handler object. We don't
-     * want to change Wrapper::New to take a pointer to a BaseProxyHandler,
-     * because that would allow the creation of wrappers with non-wrapper
-     * handlers. Unfortunately, we can't inherit Wrapper from BaseProxyHandler,
-     * since that would create a dreaded diamond, and we can't use dynamic_cast
-     * to cast Wrapper to BaseProxyHandler, since that would require us to
-     * compile with run time type information. Hence the need for this virtual
-     * function.
-     */
-    virtual BaseProxyHandler *toBaseProxyHandler() = 0;
 
     /* Policy enforcement traps.
      *
@@ -94,89 +71,14 @@ class JS_FRIEND_API(Wrapper)
      * on the underlying object's |id| property. In the case when |act| is CALL,
      * |id| is generally JSID_VOID.
      *
-     * The |act| parameter to enter() specifies the action being performed. GET,
-     * SET, and CALL are self-explanatory, but PUNCTURE requires more
-     * explanation:
-     *
-     * GET and SET allow for a very fine-grained security membrane, through
-     * which access can be granted or denied on a per-property, per-object, and
-     * per-action basis. Sometimes though, we just want to asks if we can access
-     * _everything_ behind the wrapper barrier. For example, when the structured
-     * clone algorithm runs up against a cross-compartment wrapper, it needs to
-     * know whether it can enter the compartment and keep cloning, or whether it
-     * should throw. This is the role of PUNCTURE.
-     *
-     * PUNCTURE allows the policy to specify whether the wrapper barrier may
-     * be lifted - that is to say, whether the caller is allowed to access
-     * anything that the wrapped object could access. This is a very powerful
-     * permission, and thus should generally be denied for security wrappers
-     * except under very special circumstances. When |act| is PUNCTURE, |id|
-     * should be JSID_VOID.
+     * The |act| parameter to enter() specifies the action being performed.
      */
     virtual bool enter(JSContext *cx, JSObject *wrapper, jsid id, Action act,
                        bool *bp);
-};
 
-/*
- * IndirectWrapper forwards its traps by forwarding them to
- * IndirectProxyHandler. In effect, IndirectWrapper behaves the same as
- * IndirectProxyHandler, except that it adds policy enforcement checks to each
- * fundamental trap.
- */
-class JS_FRIEND_API(IndirectWrapper) : public Wrapper,
-                                       public IndirectProxyHandler
-{
-  public:
-    explicit IndirectWrapper(unsigned flags);
+    explicit Wrapper(unsigned flags, bool hasPrototype = false);
 
-    virtual BaseProxyHandler* toBaseProxyHandler() {
-        return this;
-    }
-
-    virtual Wrapper *toWrapper() {
-        return this;
-    }
-
-    /* ES5 Harmony fundamental wrapper traps. */
-    virtual bool getPropertyDescriptor(JSContext *cx, JSObject *wrapper,
-                                       jsid id, bool set,
-                                       PropertyDescriptor *desc) MOZ_OVERRIDE;
-    virtual bool getOwnPropertyDescriptor(JSContext *cx, JSObject *wrapper,
-                                          jsid id, bool set,
-                                          PropertyDescriptor *desc) MOZ_OVERRIDE;
-    virtual bool defineProperty(JSContext *cx, JSObject *wrapper, jsid id,
-                                PropertyDescriptor *desc) MOZ_OVERRIDE;
-    virtual bool getOwnPropertyNames(JSContext *cx, JSObject *wrapper,
-                                     AutoIdVector &props) MOZ_OVERRIDE;
-    virtual bool delete_(JSContext *cx, JSObject *wrapper, jsid id,
-                         bool *bp) MOZ_OVERRIDE;
-    virtual bool enumerate(JSContext *cx, JSObject *wrapper,
-                           AutoIdVector &props) MOZ_OVERRIDE;
-
-    /* Spidermonkey extensions. */
-    virtual bool defaultValue(JSContext *cx, JSObject *wrapper_, JSType hint,
-                              Value *vp) MOZ_OVERRIDE;
-};
-
-/*
- * DirectWrapper forwards its traps by forwarding them to DirectProxyHandler.
- * In effect, DirectWrapper behaves the same as DirectProxyHandler, except that
- * it adds policy enforcement checks to each trap.
- */
-class JS_FRIEND_API(DirectWrapper) : public Wrapper, public DirectProxyHandler
-{
-  public:
-    explicit DirectWrapper(unsigned flags, bool hasPrototype = false);
-
-    virtual ~DirectWrapper();
-
-    virtual BaseProxyHandler* toBaseProxyHandler() {
-        return this;
-    }
-
-    virtual Wrapper *toWrapper() {
-        return this;
-    }
+    virtual ~Wrapper();
 
     /* ES5 Harmony fundamental wrapper traps. */
     virtual bool getPropertyDescriptor(JSContext *cx, JSObject *wrapper,
@@ -214,14 +116,14 @@ class JS_FRIEND_API(DirectWrapper) : public Wrapper, public DirectProxyHandler
     virtual bool defaultValue(JSContext *cx, JSObject *wrapper_, JSType hint,
                               Value *vp) MOZ_OVERRIDE;
 
-    static DirectWrapper singleton;
-    static DirectWrapper singletonWithPrototype;
+    static Wrapper singleton;
+    static Wrapper singletonWithPrototype;
 
     static void *getWrapperFamily();
 };
 
 /* Base class for all cross compartment wrapper handlers. */
-class JS_FRIEND_API(CrossCompartmentWrapper) : public DirectWrapper
+class JS_FRIEND_API(CrossCompartmentWrapper) : public Wrapper
 {
   public:
     CrossCompartmentWrapper(unsigned flags, bool hasPrototype = false);
@@ -280,13 +182,22 @@ class JS_FRIEND_API(SecurityWrapper) : public Base
   public:
     SecurityWrapper(unsigned flags);
 
+    virtual bool enter(JSContext *cx, JSObject *wrapper, jsid id, Wrapper::Action act,
+                       bool *bp) MOZ_OVERRIDE;
     virtual bool nativeCall(JSContext *cx, IsAcceptableThis test, NativeImpl impl,
                             CallArgs args) MOZ_OVERRIDE;
     virtual bool objectClassIs(JSObject *obj, ESClassValue classValue, JSContext *cx) MOZ_OVERRIDE;
     virtual bool regexp_toShared(JSContext *cx, JSObject *proxy, RegExpGuard *g) MOZ_OVERRIDE;
+
+    /*
+     * Allow our subclasses to select the superclass behavior they want without
+     * needing to specify an exact superclass.
+     */
+    typedef Base Permissive;
+    typedef SecurityWrapper<Base> Restrictive;
 };
 
-typedef SecurityWrapper<DirectWrapper> SameCompartmentSecurityWrapper;
+typedef SecurityWrapper<Wrapper> SameCompartmentSecurityWrapper;
 typedef SecurityWrapper<CrossCompartmentWrapper> CrossCompartmentSecurityWrapper;
 
 class JS_FRIEND_API(DeadObjectProxy) : public BaseProxyHandler
@@ -327,7 +238,8 @@ class JS_FRIEND_API(DeadObjectProxy) : public BaseProxyHandler
 };
 
 extern JSObject *
-TransparentObjectWrapper(JSContext *cx, JSObject *obj, JSObject *wrappedProto, JSObject *parent,
+TransparentObjectWrapper(JSContext *cx, JSObject *existing, JSObject *obj,
+                         JSObject *wrappedProto, JSObject *parent,
                          unsigned flags);
 
 // Proxy family for wrappers. Public so that IsWrapper() can be fully inlined by
@@ -352,15 +264,18 @@ UnwrapObject(JSObject *obj, bool stopAtOuter = true, unsigned *flagsp = NULL);
 // code should never be unwrapping outer window wrappers, we always stop at
 // outer windows.
 JS_FRIEND_API(JSObject *)
-UnwrapObjectChecked(JSContext *cx, RawObject obj);
+UnwrapObjectChecked(RawObject obj);
 
 // Unwrap only the outermost security wrapper, with the same semantics as
 // above. This is the checked version of Wrapper::wrappedObject.
 JS_FRIEND_API(JSObject *)
-UnwrapOneChecked(JSContext *cx, HandleObject obj);
+UnwrapOneChecked(RawObject obj);
 
 JS_FRIEND_API(bool)
 IsCrossCompartmentWrapper(RawObject obj);
+
+bool
+IsDeadProxyObject(RawObject obj);
 
 JSObject *
 NewDeadProxyObject(JSContext *cx, JSObject *parent);
@@ -380,6 +295,34 @@ RemapAllWrappersForObject(JSContext *cx, JSObject *oldTarget,
 JS_FRIEND_API(bool)
 RecomputeWrappers(JSContext *cx, const CompartmentFilter &sourceFilter,
                   const CompartmentFilter &targetFilter);
+
+/*
+ * This auto class should be used around any code, such as brain transplants,
+ * that may touch dead compartments. Brain transplants can cause problems
+ * because they operate on all compartments, whether live or dead. A brain
+ * transplant can cause a formerly dead object to be "reanimated" by causing a
+ * read or write barrier to be invoked on it during the transplant. In this way,
+ * a compartment becomes a zombie, kept alive by repeatedly consuming
+ * (transplanted) brains.
+ *
+ * To work around this issue, we observe when mark bits are set on objects in
+ * dead compartments. If this happens during a brain transplant, we do a full,
+ * non-incremental GC at the end of the brain transplant. This will clean up any
+ * objects that were improperly marked.
+ */
+struct JS_FRIEND_API(AutoMaybeTouchDeadCompartments)
+{
+    // The version that takes an object just uses it for its runtime.
+    AutoMaybeTouchDeadCompartments(JSContext *cx);
+    AutoMaybeTouchDeadCompartments(JSObject *obj);
+    ~AutoMaybeTouchDeadCompartments();
+
+  private:
+    JSRuntime *runtime;
+    unsigned markCount;
+    bool inIncremental;
+    bool manipulatingDeadCompartments;
+};
 
 } /* namespace js */
 

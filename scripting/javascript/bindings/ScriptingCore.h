@@ -268,7 +268,7 @@ public:
 	~JSStringWrapper() {
 		if (buffer) {
 //			JS_free(ScriptingCore::getInstance()->getGlobalContext(), (void*)buffer);
-            free((void*)buffer);
+            CC_SAFE_DELETE_ARRAY(buffer);
 		}
 	}
 	void set(jsval val, JSContext* cx) {
