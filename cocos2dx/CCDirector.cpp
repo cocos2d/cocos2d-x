@@ -322,6 +322,12 @@ void CCDirector::setOpenGLView(CCEGLView *pobOpenGLView)
     }
 }
 
+void CCDirector::setViewport()
+{
+    CCSize size = CCSizeMake(m_obWinSizeInPoints.width * m_fContentScaleFactor, m_obWinSizeInPoints.height * m_fContentScaleFactor);
+	glViewport(0, 0, size.width, size.height );
+}
+
 void CCDirector::setNextDeltaTimeZero(bool bNextDeltaTimeZero)
 {
     m_bNextDeltaTimeZero = bNextDeltaTimeZero;

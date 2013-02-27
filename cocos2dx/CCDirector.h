@@ -141,6 +141,9 @@ public:
      */
     inline ccDirectorProjection getProjection(void) { return m_eProjection; }
     void setProjection(ccDirectorProjection kProjection);
+    
+    /** Sets the glViewport*/
+    void setViewport();
 
     /** How many frames were called since the director started */
     
