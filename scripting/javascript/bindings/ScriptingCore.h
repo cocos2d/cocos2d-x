@@ -288,7 +288,7 @@ public:
         
         const jschar *chars = JS_GetStringCharsZ(cx, string);
         size_t l = JS_GetStringLength(string);
-        char* pUTF8Str = cc_utf16_to_utf8(chars, l, NULL, NULL);
+        char* pUTF8Str = cc_utf16_to_utf8((const unsigned short*)chars, l, NULL, NULL);
         buffer = pUTF8Str;
         
 	}

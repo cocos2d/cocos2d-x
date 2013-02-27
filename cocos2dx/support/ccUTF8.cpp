@@ -212,7 +212,7 @@ void cc_utf8_trim_ws(std::vector<unsigned short>* str)
 }
 
 /*
- * g_utf8_strlen:
+ * cc_utf8_strlen:
  * @p: pointer to the start of a UTF-8 encoded string.
  * @max: the maximum number of bytes to examine. If @max
  *       is less than 0, then the string is assumed to be

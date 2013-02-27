@@ -29,8 +29,6 @@
 #include "js/Vector.h"
 #endif
 
-JS_BEGIN_EXTERN_C
-
 /*
  * Convenience constants.
  */
@@ -129,7 +127,7 @@ class ScriptFrameIter;
 
 class Proxy;
 class JS_FRIEND_API(BaseProxyHandler);
-class JS_FRIEND_API(DirectWrapper);
+class JS_FRIEND_API(Wrapper);
 class JS_FRIEND_API(CrossCompartmentWrapper);
 
 class TempAllocPolicy;
@@ -379,16 +377,5 @@ typedef JSObject *
 typedef JSObject *
 (* JSIteratorOp)(JSContext *cx, JSHandleObject obj, JSBool keysonly);
 
-/*
- * The following determines whether JS_EncodeCharacters and JS_DecodeBytes
- * treat char[] as utf-8 or simply as bytes that need to be inflated/deflated.
- */
-#ifdef JS_C_STRINGS_ARE_UTF8
-# define js_CStringsAreUTF8 JS_TRUE
-#else
-extern JSBool js_CStringsAreUTF8;
-#endif
-
-JS_END_EXTERN_C
 
 #endif /* jsprvtd_h___ */
