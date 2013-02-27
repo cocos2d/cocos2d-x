@@ -1266,35 +1266,45 @@ void CCNode::updateTransform()
 }
 
 // CCNodeRGBA
+CCNodeRGBA::CCNodeRGBA()
+: _displayedOpacity (0)
+, _realOpacity(0)
+, _displayedColor(ccc3(0,0,0))
+, _realColor(ccc3(0,0,0))
+, _cascadeColorEnabled(false)
+, _cascadeOpacityEnabled(false)
+{}
+
+CCNodeRGBA::~CCNodeRGBA() {}
 
 bool CCNodeRGBA::init()
 {
     if (CCNode::init())
     {
-        m_cDisplayedOpacity = m_cRealOpacity = 255;
-        m_tDisplayedColor = m_tRealColor = ccWHITE;
-        m_bCascadeOpacityEnabled = m_bCascadeColorEnabled = false;
+        _displayedOpacity = _realOpacity = 255;
+        _displayedColor = _realColor = ccWHITE;
+        _cascadeOpacityEnabled = _cascadeColorEnabled = false;
         return true;
     }
     return false;
-
 }
 
 GLubyte CCNodeRGBA::getOpacity(void)
 {
-	return m_cRealOpacity;
+	return _realOpacity;
 }
 
 GLubyte CCNodeRGBA::getDisplayedOpacity(void)
 {
-	return m_cDisplayedOpacity;
+	return _displayedOpacity;
 }
 
 void CCNodeRGBA::setOpacity(GLubyte opacity)
 {
-    m_cDisplayedOpacity = m_cRealOpacity = opacity;
+    _displayedOpacity = _realOpacity = opacity;
     
-	if( m_bCascadeOpacityEnabled ) {
+	if (_cascadeOpacityEnabled)
+    {
 		GLubyte parentOpacity = 255;
         CCRGBAProtocol* pParent = dynamic_cast<CCRGBAProtocol*>(m_pParent);
         if (pParent && pParent->isCascadeOpacityEnabled())
@@ -1307,14 +1317,17 @@ void CCNodeRGBA::setOpacity(GLubyte opacity)
 
 void CCNodeRGBA::updateDisplayedOpacity(GLubyte parentOpacity)
 {
-	m_cDisplayedOpacity = m_cRealOpacity * parentOpacity/255.0;
+	_displayedOpacity = _realOpacity * parentOpacity/255.0;
 	
-    if (m_bCascadeOpacityEnabled) {
+    if (m_bCascadeOpacityEnabled)
+    {
         CCObject* pObj;
-        CCARRAY_FOREACH(m_pChildren, pObj) {
-            CCRGBAProtocol*
-            if ([item conformsToProtocol:@protocol(CCRGBAProtocol)]) {
-                [item updateDisplayedOpacity:_displayedOpacity];
+        CCARRAY_FOREACH(m_pChildren, pObj)
+        {
+            CCRGBAProtocol* item = dynamic_cast<CCRGBAProtocol*>(pObj);
+            if (item)
+            {
+                item->updateDisplayedOpacity(_displayedOpacity);
             }
         }
     }
@@ -1325,7 +1338,7 @@ const ccColor3B& CCNodeRGBA::getColor(void)
 	return _realColor;
 }
 
--(ccColor3B) CCNodeRGBA::displayedColor
+const ccColor3B& CCNodeRGBA::getDisplayedColor()
 {
 	return _displayedColor;
 }
@@ -1334,25 +1347,33 @@ void CCNodeRGBA::setColor(const ccColor3B& color)
 {
 	_displayedColor = _realColor = color;
 	
-	if( _cascadeColorEnabled ) {
+	if (_cascadeColorEnabled)
+    {
 		ccColor3B parentColor = ccWHITE;
-		if( [_parent conformsToProtocol:@protocol(CCRGBAProtocol)] && [(id<CCRGBAProtocol>)_parent isCascadeColorEnabled] )
-			parentColor = [(id<CCRGBAProtocol>)_parent displayedColor];
-            [self updateDisplayedColor:parentColor];
+        CCRGBAProtocol *parent = dynamic_cast<CCRGBAProtocol*>(m_pParent);
+		if (parent && parent->isCascadeColorEnabled())
+        {
+            parentColor = parent->getDisplayedColor();
+            CCRGBAProtocol::updateDisplayedColor(parentColor);
+        }
 	}
 }
 
-void CCNodeRGBA::updateDisplayedColor(ccColor3B parentColor)
+void CCNodeRGBA::updateDisplayedColor(const ccColor3B& parentColor)
 {
 	_displayedColor.r = _realColor.r * parentColor.r/255.0;
 	_displayedColor.g = _realColor.g * parentColor.g/255.0;
 	_displayedColor.b = _realColor.b * parentColor.b/255.0;
     
-    if (_cascadeColorEnabled) {
-        id<CCRGBAProtocol> item;
-        CCARRAY_FOREACH(_children, item) {
-            if ([item conformsToProtocol:@protocol(CCRGBAProtocol)]) {
-                [item updateDisplayedColor:_displayedColor];
+    if (_cascadeColorEnabled)
+    {
+        CCObject *obj = NULL;
+        CCARRAY_FOREACH(m_pChildren, obj)
+        {
+            CCRGBAProtocol *item = dynamic_cast<CCRGBAProtocol*>(obj);
+            if (item)
+            {
+                item->updateDisplayedColor(_displayedColor);
             }
         }
     }
