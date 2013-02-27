@@ -1405,18 +1405,28 @@ protected:
 class CC_DLL CCNodeRGBA : public CCNode, public CCRGBAProtocol
 {
 public:
+    CCNodeRGBA();
+    virtual ~CCNodeRGBA();
+    
     virtual bool init();
-    virtual void setColor(const ccColor3B& color);
-    virtual const ccColor3B& getColor(void);
-    virtual GLubyte getDisplayedOpacity(void);
+    
     virtual GLubyte getOpacity(void);
+    virtual GLubyte getDisplayedOpacity();
     virtual void setOpacity(GLubyte opacity);
-    virtual void setOpacityModifyRGB(bool bValue);
-    virtual bool isOpacityModifyRGB(void);
+    virtual void updateDisplayedOpacity(GLubyte parentOpacity);
+    
+    virtual const ccColor3B& getColor(void);
+    virtual const ccColor3B& getDisplayedColor();
+    virtual void setColor(const ccColor3B& color);
+    virtual void updateDisplayedColor(const ccColor3B& parentColor);
+
 protected:
-	GLubyte		m_cDisplayedOpacity, m_cRealOpacity;
-	ccColor3B	m_tDisplayedColor, m_tRealColor;
-	bool		m_bCascadeColorEnabled, m_bCascadeOpacityEnabled;
+	GLubyte		_displayedOpacity;
+    GLubyte     _realOpacity;
+	ccColor3B	_displayedColor;
+    ccColor3B   _realColor;
+	bool		_cascadeColorEnabled;
+    bool        _cascadeOpacityEnabled;
 };
 
 // end of base_node group
