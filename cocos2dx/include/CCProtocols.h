@@ -123,14 +123,6 @@ public:
      *  recursive method that updates the displayed opacity.
      */
     virtual void updateDisplayedOpacity(GLubyte opacity) = 0;
-    
-protected:
-    ccColor3B m_color;
-    ccColor3B m_displayedColor;
-    bool m_bCascadeColorEnabled;
-    GLubyte m_opacity;
-    GLubyte m_displayedOpacity;
-    bool m_bCascadeOpacityEnabled;
 };
 
 /**

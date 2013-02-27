@@ -1319,7 +1319,7 @@ void CCNodeRGBA::updateDisplayedOpacity(GLubyte parentOpacity)
 {
 	_displayedOpacity = _realOpacity * parentOpacity/255.0;
 	
-    if (m_bCascadeOpacityEnabled)
+    if (_cascadeOpacityEnabled)
     {
         CCObject* pObj;
         CCARRAY_FOREACH(m_pChildren, pObj)
@@ -1363,9 +1363,10 @@ void CCNodeRGBA::setColor(const ccColor3B& color)
         CCRGBAProtocol *parent = dynamic_cast<CCRGBAProtocol*>(m_pParent);
 		if (parent && parent->isCascadeColorEnabled())
         {
-            parentColor = parent->getDisplayedColor();
-            CCRGBAProtocol::updateDisplayedColor(parentColor);
+            parentColor = parent->getDisplayedColor(); 
         }
+        
+        CCRGBAProtocol::updateDisplayedColor(parentColor);
 	}
 }
 

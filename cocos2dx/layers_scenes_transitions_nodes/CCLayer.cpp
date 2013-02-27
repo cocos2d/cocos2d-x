@@ -492,85 +492,108 @@ void CCLayer::ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent)
 
 bool CCLayerRGBA::init()
 {
-	if ( (self=[super init]) ) {
+	if (CCLayer::init())
+    {
         _displayedOpacity = _realOpacity = 255;
         _displayedColor = _realColor = ccWHITE;
-		self.cascadeOpacityEnabled = NO;
-		self.cascadeColorEnabled = NO;
+        setCascadeOpacityEnabled(false);
+        setCascadeColorEnabled(false);
+        
+        return true;
     }
-    return self;
+    else
+    {
+        return false;
+    }
 }
 
--(GLubyte) opacity
+GLubyte CCLayerRGBA::getOpacity()
 {
 	return _realOpacity;
 }
 
--(GLubyte) displayedOpacity
+GLubyte CCLayerRGBA::getDisplayedOpacity()
 {
 	return _displayedOpacity;
 }
 
 /** Override synthesized setOpacity to recurse items */
-- (void) setOpacity:(GLubyte)opacity
+void CCLayerRGBA::setOpacity(GLubyte opacity)
 {
 	_displayedOpacity = _realOpacity = opacity;
     
-	if( _cascadeOpacityEnabled ) {
+	if( _cascadeOpacityEnabled )
+    {
 		GLubyte parentOpacity = 255;
-		if( [_parent conformsToProtocol:@protocol(CCRGBAProtocol)] && [(id<CCRGBAProtocol>)_parent isCascadeOpacityEnabled] )
-			parentOpacity = [(id<CCRGBAProtocol>)_parent displayedOpacity];
-            [self updateDisplayedOpacity:parentOpacity];
+        CCRGBAProtocol *parent = dynamic_cast<CCRGBAProtocol*>(m_pParent);
+        if (parent && parent->isCascadeOpacityEnabled())
+        {
+            parentOpacity = parent->getDisplayedOpacity();
+        }
+        CCRGBAProtocol::updateDisplayedOpacity(parentOpacity);
 	}
 }
 
--(ccColor3B) color
+const ccColor3B& CCLayerRGBA::getColor()
 {
 	return _realColor;
 }
 
--(ccColor3B) displayedColor
+const ccColor3B& CCLayerRGBA::getDisplayedColor()
 {
 	return _displayedColor;
 }
 
-- (void) setColor:(ccColor3B)color
+void CCLayerRGBA::setColor(const ccColor3B& color)
 {
 	_displayedColor = _realColor = color;
 	
-	if( _cascadeColorEnabled ) {
+	if (_cascadeColorEnabled)
+    {
 		ccColor3B parentColor = ccWHITE;
-		if( [_parent conformsToProtocol:@protocol(CCRGBAProtocol)] && [(id<CCRGBAProtocol>)_parent isCascadeColorEnabled] )
-			parentColor = [(id<CCRGBAProtocol>)_parent displayedColor];
-            [self updateDisplayedColor:parentColor];
+        CCRGBAProtocol* parent = dynamic_cast<CCRGBAProtocol*>(m_pParent);
+		if (parent && parent->isCascadeColorEnabled())
+        {
+            parentColor = parent->getDisplayedColor();
+        }
+
+        CCRGBAProtocol::updateDisplayedColor(parentColor);
 	}
 }
 
-- (void)updateDisplayedOpacity:(GLubyte)parentOpacity
+void CCLayerRGBA::updateDisplayedOpacity(GLubyte parentOpacity)
 {
 	_displayedOpacity = _realOpacity * parentOpacity/255.0;
     
-    if (_cascadeOpacityEnabled) {
-        id<CCRGBAProtocol> item;
-        CCARRAY_FOREACH(_children, item) {
-            if ([item conformsToProtocol:@protocol(CCRGBAProtocol)]) {
-                [item updateDisplayedOpacity:_displayedOpacity];
+    if (_cascadeOpacityEnabled)
+    {
+        CCObject *obj = NULL;
+        CCARRAY_FOREACH(m_pChildren, obj)
+        {
+            CCRGBAProtocol *item = dynamic_cast<CCRGBAProtocol*>(obj);
+            if (item)
+            {
+                item->updateDisplayedOpacity(_displayedOpacity);
             }
         }
     }
 }
 
-- (void)updateDisplayedColor:(ccColor3B)parentColor
+void CCLayerRGBA::updateDisplayedColor(const ccColor3B& parentColor)
 {
 	_displayedColor.r = _realColor.r * parentColor.r/255.0;
 	_displayedColor.g = _realColor.g * parentColor.g/255.0;
 	_displayedColor.b = _realColor.b * parentColor.b/255.0;
     
-    if (_cascadeColorEnabled) {
-        id<CCRGBAProtocol> item;
-        CCARRAY_FOREACH(_children, item) {
-            if ([item conformsToProtocol:@protocol(CCRGBAProtocol)]) {
-                [item updateDisplayedColor:_displayedColor];
+    if (_cascadeColorEnabled)
+    {
+        CCObject *obj = NULL;
+        CCARRAY_FOREACH(m_pChildren, obj)
+        {
+            CCRGBAProtocol *item = dynamic_cast<CCRGBAProtocol*>(obj);
+            if (item)
+            {
+                item->updateDisplayedColor(_displayedColor);
             }
         }
     }
@@ -579,8 +602,6 @@ bool CCLayerRGBA::init()
 /// CCLayerColor
 
 CCLayerColor::CCLayerColor()
-: m_cOpacity(0)
-, m_tColor( ccc3(0,0,0) )
 {
     // default blend function
     m_tBlendFunc.src = CC_BLEND_SRC;
@@ -590,33 +611,6 @@ CCLayerColor::CCLayerColor()
 CCLayerColor::~CCLayerColor()
 {
 }
-
-// Opacity and RGB color protocol
-/// opacity getter
-GLubyte CCLayerColor::getOpacity()
-{
-    return m_cOpacity;
-}
-/// opacity setter
-void CCLayerColor::setOpacity(GLubyte var)
-{
-    m_cOpacity = var;
-    updateColor();
-}
-
-/// color getter
-const ccColor3B& CCLayerColor::getColor()
-{
-    return m_tColor;
-}
-
-/// color setter
-void CCLayerColor::setColor(const ccColor3B& var)
-{
-    m_tColor = var;
-    updateColor();
-}
-
 
 /// blendFunc getter
 ccBlendFunc CCLayerColor::getBlendFunc()
@@ -680,18 +674,20 @@ bool CCLayerColor::init()
 
 bool CCLayerColor::initWithColor(const ccColor4B& color, GLfloat w, GLfloat h)
 {
-    if( CCLayer::init() ) {
+    if (CCLayer::init())
+    {
 
         // default blend function
         m_tBlendFunc.src = GL_SRC_ALPHA;
         m_tBlendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
 
-        m_tColor.r = color.r;
-        m_tColor.g = color.g;
-        m_tColor.b = color.b;
-        m_cOpacity = color.a;
+        _displayedColor.r = _realColor.r = color.r;
+        _displayedColor.g = _realColor.g = color.g;
+        _displayedColor.b = _realColor.b = color.b;
+        _displayedOpacity = color.a;
 
-        for (int i = 0; i<sizeof(m_pSquareVertices) / sizeof( m_pSquareVertices[0]); i++ ) {
+        for (int i = 0; i<sizeof(m_pSquareVertices) / sizeof( m_pSquareVertices[0]); i++ )
+        {
             m_pSquareVertices[i].x = 0.0f;
             m_pSquareVertices[i].y = 0.0f;
         }
@@ -741,10 +737,10 @@ void CCLayerColor::updateColor()
 {
     for( unsigned int i=0; i < 4; i++ )
     {
-        m_pSquareColors[i].r = m_tColor.r / 255.0f;
-        m_pSquareColors[i].g = m_tColor.g / 255.0f;
-        m_pSquareColors[i].b = m_tColor.b / 255.0f;
-        m_pSquareColors[i].a = m_cOpacity / 255.0f;
+        m_pSquareColors[i].r = _displayedColor.r / 255.0f;
+        m_pSquareColors[i].g = _displayedColor.g / 255.0f;
+        m_pSquareColors[i].b = _displayedColor.b / 255.0f;
+        m_pSquareColors[i].a = _displayedOpacity / 255.0f;
     }
 }
 
@@ -765,6 +761,18 @@ void CCLayerColor::draw()
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 
     CC_INCREMENT_GL_DRAWS(1);
+}
+
+void CCLayerColor::setColor(const ccColor3B &color)
+{
+    CCLayerRGBA::setColor(color);
+    updateColor();
+}
+
+void CCLayerColor::setOpacity(GLubyte opacity)
+{
+    CCLayerRGBA::setOpacity(opacity);
+    updateColor();
 }
 
 //
@@ -857,12 +865,12 @@ void CCLayerGradient::updateColor()
         u = ccpMult(u, h2 * (float)c);
     }
 
-    float opacityf = (float)m_cOpacity / 255.0f;
+    float opacityf = (float)_displayedOpacity / 255.0f;
 
     ccColor4F S = {
-        m_tColor.r / 255.0f,
-        m_tColor.g / 255.0f,
-        m_tColor.b / 255.0f,
+        _displayedColor.r / 255.0f,
+        _displayedColor.g / 255.0f,
+        _displayedColor.b / 255.0f,
         m_cStartOpacity * opacityf / 255.0f
     };
 
@@ -897,7 +905,7 @@ void CCLayerGradient::updateColor()
 
 const ccColor3B& CCLayerGradient::getStartColor()
 {
-    return m_tColor;
+    return _realColor;
 }
 
 void CCLayerGradient::setStartColor(const ccColor3B& color)
@@ -992,11 +1000,6 @@ CCLayerMultiplex * CCLayerMultiplex::create(CCLayer * layer, ...)
 CCLayerMultiplex * CCLayerMultiplex::createWithLayer(CCLayer* layer)
 {
     return CCLayerMultiplex::create(layer, NULL);
-}
-
-CCLayerMultiplex* CCLayerMultiplex::node()
-{
-    return CCLayerMultiplex::create();
 }
 
 CCLayerMultiplex* CCLayerMultiplex::create()
