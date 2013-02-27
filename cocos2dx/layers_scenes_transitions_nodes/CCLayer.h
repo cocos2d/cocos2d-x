@@ -176,11 +176,31 @@ private:
 class CC_DLL CCLayerRGBA : public CCLayer, public CCRGBAProtocol
 {
 public:
-    bool init();
+    CCLayerRGBA();
+    virtual ~CCLayerRGBA();
+    
+    virtual bool init();
+    
+    virtual GLubyte getOpacity();
+    virtual GLubyte getDisplayedOpacity();
+    virtual void setOpacity(GLubyte opacity);
+    virtual void updateDisplayedOpacity(GLubyte parentOpacity);
+    virtual bool isCascadeOpacityEnabled();
+    virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled);
+    
+    virtual const ccColor3B& getColor();
+    virtual const ccColor3B& getDisplayedColor();
+    virtual void setColor(const ccColor3B& color);
+    virtual void updateDisplayedColor(const ccColor3B& parentColor);
+    virtual bool isCascadeColorEnabled();
+    virtual void setCascadeColorEnabled(bool cascadeColorEnabled);
+    
+    virtual void setOpacityModifyRGB(bool bValue) = 0;
+    virtual bool isOpacityModifyRGB() = 0;
 protected:
-	GLubyte		m_cDisplayedOpacity, m_cRealOpacity;
-	ccColor3B	m_tDisplayedColor, m_tRealColor;
-	bool		m_bCascadeOpacityEnabled, m_bCascadeColorEnabled;
+	GLubyte		_displayedOpacity, _realOpacity;
+	ccColor3B	_displayedColor, _realColor;
+	bool		_cascadeOpacityEnabled, _cascadeColorEnabled;
 };
 
 //
@@ -235,6 +255,8 @@ public:
 
     virtual void setOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
     virtual bool isOpacityModifyRGB(void) { return false;}
+    virtual void setColor(const ccColor3B &color);
+    virtual void setOpacity(GLubyte opacity);
 
 protected:
     virtual void updateColor();
@@ -317,6 +339,13 @@ protected:
 public:
     CCLayerMultiplex();
     virtual ~CCLayerMultiplex();
+    
+    static CCLayerMultiplex* create();
+    
+    /** creates a CCMultiplexLayer with an array of layers.
+     @since v2.1
+     */
+    static CCLayerMultiplex* createWithArray(CCArray* arrayOfLayers);
 
     /** creates a CCLayerMultiplex with one or more layers using a variable argument list. */
     static CCLayerMultiplex * create(CCLayer* layer, ... );
@@ -345,15 +374,6 @@ public:
     The current (old) layer will be removed from it's parent with 'cleanup:YES'.
     */
     void switchToAndReleaseMe(unsigned int n);
-    
-    //@deprecated: This interface will be deprecated sooner or later.
-    static CCLayerMultiplex* node();
-    
-    static CCLayerMultiplex* create();
-    /** creates a CCMultiplexLayer with an array of layers.
-    @since v2.1
-    */
-    static CCLayerMultiplex* createWithArray(CCArray* arrayOfLayers);
 };
 
 

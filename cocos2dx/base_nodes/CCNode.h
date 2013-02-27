@@ -1410,22 +1410,22 @@ public:
     
     virtual bool init();
     
-    virtual GLubyte getOpacity(void);
+    virtual GLubyte getOpacity();
     virtual GLubyte getDisplayedOpacity();
     virtual void setOpacity(GLubyte opacity);
     virtual void updateDisplayedOpacity(GLubyte parentOpacity);
-    virtual bool isCascadeOpacityEnabled(void);
+    virtual bool isCascadeOpacityEnabled();
     virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled);
     
     virtual const ccColor3B& getColor(void);
     virtual const ccColor3B& getDisplayedColor();
     virtual void setColor(const ccColor3B& color);
     virtual void updateDisplayedColor(const ccColor3B& parentColor);
-    virtual bool isCascadeColorEnabled(void);
+    virtual bool isCascadeColorEnabled();
     virtual void setCascadeColorEnabled(bool cascadeColorEnabled);
     
     virtual void setOpacityModifyRGB(bool bValue) = 0;
-    virtual bool isOpacityModifyRGB(void) = 0;
+    virtual bool isOpacityModifyRGB() = 0;
 
 protected:
 	GLubyte		_displayedOpacity;
