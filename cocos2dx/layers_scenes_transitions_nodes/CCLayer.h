@@ -163,6 +163,26 @@ private:
     int  excuteScriptTouchHandler(int nEventType, CCSet *pTouches);
 };
 
+#pragma mark -
+#pragma mark CCLayerRGBA
+
+/** CCLayerRGBA is a subclass of CCLayer that implements the CCRGBAProtocol protocol using a solid color as the background.
+ 
+ All features from CCLayer are valid, plus the following new features that propagate into children that conform to the CCRGBAProtocol:
+ - opacity
+ - RGB colors
+ @since 2.1
+ */
+class CC_DLL CCLayerRGBA : public CCLayer, public CCRGBAProtocol
+{
+public:
+    bool init();
+protected:
+	GLubyte		m_cDisplayedOpacity, m_cRealOpacity;
+	ccColor3B	m_tDisplayedColor, m_tRealColor;
+	bool		m_bCascadeOpacityEnabled, m_bCascadeColorEnabled;
+};
+
 //
 // CCLayerColor
 //
@@ -172,7 +192,7 @@ All features from CCLayer are valid, plus the following new features:
 - opacity
 - RGB colors
 */
-class CC_DLL CCLayerColor : public CCLayer , public CCRGBAProtocol, public CCBlendProtocol
+class CC_DLL CCLayerColor : public CCLayerRGBA, public CCBlendProtocol
 {
 protected:
     ccVertex2F m_pSquareVertices[4];
@@ -210,10 +230,6 @@ public:
     */
     void changeWidthAndHeight(GLfloat w ,GLfloat h);
 
-    /** Opacity: conforms to CCRGBAProtocol protocol */
-    CC_PROPERTY(GLubyte, m_cOpacity, Opacity)
-    /** Color: conforms to CCRGBAProtocol protocol */
-    CC_PROPERTY_PASS_BY_REF(ccColor3B, m_tColor, Color)
     /** BlendFunction. Conforms to CCBlendProtocol protocol */
     CC_PROPERTY(ccBlendFunc, m_tBlendFunc, BlendFunc)
 

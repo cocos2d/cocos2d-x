@@ -74,6 +74,10 @@ public:
      @since v2.0
      */
     bool initWithString(const char *string, const char *fntFile);
+    
+    /** initializes the CCLabelAtlas with a string, a texture, the width and height in points of each element and the starting char of the atlas */
+    bool initWithString(const char* string, CCTexture2D* texture, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap);
+    
     // super methods
     virtual void updateAtlasValues();
     virtual void setString(const char *label);

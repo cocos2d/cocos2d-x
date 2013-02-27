@@ -24,6 +24,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "CCDirector.h"
+#include "ccFPSImages.h"
+#include "draw_nodes/CCDrawingPrimitives.h"
+#include "CCConfiguration.h"
 #include "cocoa/CCNS.h"
 #include "layers_scenes_transitions_nodes/CCScene.h"
 #include "cocoa/CCArray.h"
@@ -635,6 +638,7 @@ void CCDirector::purgeDirector()
     CCLabelBMFont::purgeCachedData();
 
     // purge all managed caches
+    ccDrawFree();
     CCAnimationCache::purgeSharedAnimationCache();
     CCSpriteFrameCache::purgeSharedSpriteFrameCache();
     CCTextureCache::purgeSharedTextureCache();
@@ -771,14 +775,24 @@ void CCDirector::calculateMPF()
     m_fSecondsPerFrame = (now.tv_sec - m_pLastUpdate->tv_sec) + (now.tv_usec - m_pLastUpdate->tv_usec) / 1000000.0f;
 }
 
+// returns the FPS image data pointer and len
+void CCDirector::getFPSImageData(unsigned char** datapointer, unsigned int* length)
+{
+    *datapointer = cc_fps_images_png;
+	*length = cc_fps_images_len();
+}
+
 void CCDirector::createStatsLabel()
 {
+    CCTexture2D *texture;
+	CCTextureCache *textureCache = CCTextureCache::sharedTextureCache();
+    
     if( m_pFPSLabel && m_pSPFLabel ) 
     {
         CC_SAFE_RELEASE_NULL(m_pFPSLabel);
         CC_SAFE_RELEASE_NULL(m_pSPFLabel);
         CC_SAFE_RELEASE_NULL(m_pDrawsLabel);
-
+        textureCache->removeTextureForKey("cc_fps_images");
         CCFileUtils::sharedFileUtils()->purgeCachedEntries();
     }
 
@@ -792,11 +806,11 @@ void CCDirector::createStatsLabel()
         fontSize = (int)(m_obWinSizeInPoints.width / 320.0f * 24);
     }
     
-    m_pFPSLabel = CCLabelTTF::create("00.0", "Arial", fontSize);
+    m_pFPSLabel = CCLabelAtlas::create("00.0", texture, 12, 32, '.');
     m_pFPSLabel->retain();
-    m_pSPFLabel = CCLabelTTF::create("0.000", "Arial", fontSize);
+    m_pSPFLabel = CCLabelAtlas::create("0.000", texture, 12, 32, '.');
     m_pSPFLabel->retain();
-    m_pDrawsLabel = CCLabelTTF::create("000", "Arial", fontSize);
+    m_pDrawsLabel = CCLabelAtlas::create("000", texture, 12, 32, '.');
     m_pDrawsLabel->retain();
 
     CCSize contentSize = m_pDrawsLabel->getContentSize();

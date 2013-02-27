@@ -290,6 +290,8 @@
 		1A31963116C0DDE800207637 /* encode.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A3191B716C0DDE700207637 /* encode.h */; };
 		1A31963216C0DDE800207637 /* types.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A3191B816C0DDE700207637 /* types.h */; };
 		1A3199AE16C0E3A200207637 /* libwebp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A3199AD16C0E3A200207637 /* libwebp.a */; };
+		1A4646DA16DC8FB700DE131F /* ccFPSImages.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A4646D816DC8FB700DE131F /* ccFPSImages.h */; };
+		1A4646DC16DC901A00DE131F /* ccFPSImages.c in Sources */ = {isa = PBXBuildFile; fileRef = 1A4646DB16DC901900DE131F /* ccFPSImages.c */; };
 		1AA6226016CF6BD00028C05E /* CCDevice.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1AA6225F16CF6BD00028C05E /* CCDevice.mm */; };
 		1AA6226216CF6BDF0028C05E /* CCDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AA6226116CF6BDF0028C05E /* CCDevice.h */; };
 		1AC6CE8116B9075B00330EFD /* CCFileUtilsIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AC6CE8016B9075B00330EFD /* CCFileUtilsIOS.h */; };
@@ -588,6 +590,8 @@
 		1A3191B716C0DDE700207637 /* encode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = encode.h; sourceTree = "<group>"; };
 		1A3191B816C0DDE700207637 /* types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = types.h; sourceTree = "<group>"; };
 		1A3199AD16C0E3A200207637 /* libwebp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebp.a; path = ../platform/third_party/ios/libraries/libwebp.a; sourceTree = "<group>"; };
+		1A4646D816DC8FB700DE131F /* ccFPSImages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccFPSImages.h; sourceTree = "<group>"; };
+		1A4646DB16DC901900DE131F /* ccFPSImages.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ccFPSImages.c; sourceTree = "<group>"; };
 		1AA6225F16CF6BD00028C05E /* CCDevice.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCDevice.mm; sourceTree = "<group>"; };
 		1AA6226116CF6BDF0028C05E /* CCDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDevice.h; sourceTree = "<group>"; };
 		1AC6CE8016B9075B00330EFD /* CCFileUtilsIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFileUtilsIOS.h; sourceTree = "<group>"; };
@@ -642,18 +646,20 @@
 		1551A353158F2ADE00E66CFE /* cocos2dx */ = {
 			isa = PBXGroup;
 			children = (
-				1551A375158F2ADE00E66CFE /* CCCamera.cpp */,
-				1551A377158F2ADE00E66CFE /* CCConfiguration.cpp */,
-				1551A379158F2ADE00E66CFE /* CCDirector.cpp */,
-				1551A37D158F2ADE00E66CFE /* CCScheduler.cpp */,
-				1551A395158F2ADE00E66CFE /* cocos2d.cpp */,
-				1551A376158F2ADE00E66CFE /* CCCamera.h */,
-				1551A378158F2ADE00E66CFE /* CCConfiguration.h */,
-				1551A37A158F2ADE00E66CFE /* CCDirector.h */,
-				1551A37E158F2ADE00E66CFE /* CCScheduler.h */,
 				1551A354158F2ADE00E66CFE /* actions */,
 				1551A370158F2ADE00E66CFE /* base_nodes */,
+				1551A375158F2ADE00E66CFE /* CCCamera.cpp */,
+				1551A376158F2ADE00E66CFE /* CCCamera.h */,
+				1551A377158F2ADE00E66CFE /* CCConfiguration.cpp */,
+				1551A378158F2ADE00E66CFE /* CCConfiguration.h */,
+				1551A379158F2ADE00E66CFE /* CCDirector.cpp */,
+				1551A37A158F2ADE00E66CFE /* CCDirector.h */,
+				1A4646DB16DC901900DE131F /* ccFPSImages.c */,
+				1A4646D816DC8FB700DE131F /* ccFPSImages.h */,
+				1551A37D158F2ADE00E66CFE /* CCScheduler.cpp */,
+				1551A37E158F2ADE00E66CFE /* CCScheduler.h */,
 				1551A37F158F2ADE00E66CFE /* cocoa */,
+				1551A395158F2ADE00E66CFE /* cocos2d.cpp */,
 				15FBEE65164BBA97008CB2C3 /* draw_nodes */,
 				1551A396158F2ADE00E66CFE /* effects */,
 				1551A3E8158F2ADE00E66CFE /* include */,
@@ -1397,6 +1403,7 @@
 				1A31963216C0DDE800207637 /* types.h in Headers */,
 				469A7DF416C24787006FFCB2 /* tinyxml2.h in Headers */,
 				1AA6226216CF6BDF0028C05E /* CCDevice.h in Headers */,
+				1A4646DA16DC8FB700DE131F /* ccFPSImages.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1577,6 +1584,7 @@
 				1A3187F416C0B30600207637 /* CCImageCommonWebp.cpp in Sources */,
 				469A7DF316C24787006FFCB2 /* tinyxml2.cpp in Sources */,
 				1AA6226016CF6BD00028C05E /* CCDevice.mm in Sources */,
+				1A4646DC16DC901A00DE131F /* ccFPSImages.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
