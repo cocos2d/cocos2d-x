@@ -126,6 +126,10 @@ class WeakPtr
       return ref->get();
     }
 
+    T* get() const {
+      return ref->get();
+    }
+
   private:
     friend class SupportsWeakPtr<T>;
 

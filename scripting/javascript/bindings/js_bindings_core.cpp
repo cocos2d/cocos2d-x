@@ -28,6 +28,7 @@
 
 // cocos2d + chipmunk registration files
 #include "js_bindings_chipmunk_registration.h"
+#include "ScriptingCore.h"
 
 #pragma mark - Hash
 
@@ -80,8 +81,10 @@ JSBool JSBCore_log(JSContext *cx, uint32_t argc, jsval *vp)
 		JSString *string = NULL;
 		JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "S", &string);
 		if (string) {
-			char *cstr = JS_EncodeString(cx, string);
-			fprintf(stderr, "%s\n", cstr);
+            // Not supported in SpiderMonkey v19
+            //char *cstr = JS_EncodeString(cx, string);
+            JSStringWrapper strWrapper(string);
+            CCLOG(strWrapper.get().c_str());
 		}
 		
 		return JS_TRUE;
