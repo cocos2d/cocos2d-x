@@ -150,49 +150,54 @@ bool CCSprite::init(void)
 // designated initializer
 bool CCSprite::initWithTexture(CCTexture2D *pTexture, const CCRect& rect, bool rotated)
 {
-    m_pobBatchNode = NULL;
-    // shader program
-    setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor));
-
-    m_bRecursiveDirty = false;
-    setDirty(false);
-
-    m_bOpacityModifyRGB = true;
-    m_nOpacity = 255;
-    m_sColor = m_sColorUnmodified = ccWHITE;
-
-    m_sBlendFunc.src = CC_BLEND_SRC;
-    m_sBlendFunc.dst = CC_BLEND_DST;
-
-    m_bFlipX = m_bFlipY = false;
-
-    // default transform anchor: center
-    setAnchorPoint(ccp(0.5f, 0.5f));
-
-    // zwoptex default values
-    m_obOffsetPosition = CCPointZero;
-
-    m_bHasChildren = false;
-    
-    // clean the Quad
-    memset(&m_sQuad, 0, sizeof(m_sQuad));
-
-    // Atlas: Color
-    ccColor4B tmpColor = { 255, 255, 255, 255 };
-    m_sQuad.bl.colors = tmpColor;
-    m_sQuad.br.colors = tmpColor;
-    m_sQuad.tl.colors = tmpColor;
-    m_sQuad.tr.colors = tmpColor;
-
-    // update texture (calls updateBlendFunc)
-    setTexture(pTexture);
-    setTextureRect(rect, rotated, rect.size);
-
-    // by default use "Self Render".
-    // if the sprite is added to a batchnode, then it will automatically switch to "batchnode Render"
-    setBatchNode(NULL);
-
-    return true;
+    if (CCNodeRGBA::init())
+    {
+        m_pobBatchNode = NULL;
+        // shader program
+        setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor));
+        
+        m_bRecursiveDirty = false;
+        setDirty(false);
+        
+        m_bOpacityModifyRGB = true;
+        
+        m_sBlendFunc.src = CC_BLEND_SRC;
+        m_sBlendFunc.dst = CC_BLEND_DST;
+        
+        m_bFlipX = m_bFlipY = false;
+        
+        // default transform anchor: center
+        setAnchorPoint(ccp(0.5f, 0.5f));
+        
+        // zwoptex default values
+        m_obOffsetPosition = CCPointZero;
+        
+        m_bHasChildren = false;
+        
+        // clean the Quad
+        memset(&m_sQuad, 0, sizeof(m_sQuad));
+        
+        // Atlas: Color
+        ccColor4B tmpColor = { 255, 255, 255, 255 };
+        m_sQuad.bl.colors = tmpColor;
+        m_sQuad.br.colors = tmpColor;
+        m_sQuad.tl.colors = tmpColor;
+        m_sQuad.tr.colors = tmpColor;
+        
+        // update texture (calls updateBlendFunc)
+        setTexture(pTexture);
+        setTextureRect(rect, rotated, rect.size);
+        
+        // by default use "Self Render".
+        // if the sprite is added to a batchnode, then it will automatically switch to "batchnode Render"
+        setBatchNode(NULL);
+        
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 bool CCSprite::initWithTexture(CCTexture2D *pTexture, const CCRect& rect)
@@ -887,7 +892,15 @@ bool CCSprite::isFlipY(void)
 
 void CCSprite::updateColor(void)
 {
-    ccColor4B color4 = { m_sColor.r, m_sColor.g, m_sColor.b, m_nOpacity };
+    ccColor4B color4 = { _displayedColor.r, _displayedColor.g, _displayedColor.b, _displayedOpacity };
+    
+    // special opacity for premultiplied textures
+	if (m_bOpacityModifyRGB)
+    {
+		color4.r *= _displayedOpacity/255.0f;
+		color4.g *= _displayedOpacity/255.0f;
+		color4.b *= _displayedOpacity/255.0f;
+    }
 
     m_sQuad.bl.colors = color4;
     m_sQuad.br.colors = color4;
@@ -915,51 +928,44 @@ void CCSprite::updateColor(void)
 
 void CCSprite::setOpacity(GLubyte opacity)
 {
-    m_nOpacity = opacity;
-
-    // special opacity for premultiplied textures
-    if (m_bOpacityModifyRGB)
-    {
-        setColor(m_sColorUnmodified);
-    }
+    CCNodeRGBA::setOpacity(opacity);
 
     updateColor();
-}
-
-const ccColor3B& CCSprite::getColor(void)
-{
-    if (m_bOpacityModifyRGB)
-    {
-        return m_sColorUnmodified;
-    }
-
-    return m_sColor;
 }
 
 void CCSprite::setColor(const ccColor3B& color3)
 {
-    m_sColor = m_sColorUnmodified = color3;
-
-    if (m_bOpacityModifyRGB)
-    {
-        m_sColor.r = color3.r * m_nOpacity/255.0f;
-        m_sColor.g = color3.g * m_nOpacity/255.0f;
-        m_sColor.b = color3.b * m_nOpacity/255.0f;
-    }
+    CCNodeRGBA::setColor(color3);
 
     updateColor();
 }
 
-void CCSprite::setOpacityModifyRGB(bool bValue)
+void CCSprite::setOpacityModifyRGB(bool modify)
 {
-    ccColor3B oldColor = m_sColor;
-    m_bOpacityModifyRGB = bValue;
-    m_sColor = oldColor;
+    if (m_bOpacityModifyRGB != modify)
+    {
+        m_bOpacityModifyRGB = modify;
+        updateColor();
+    }
 }
 
 bool CCSprite::isOpacityModifyRGB(void)
 {
     return m_bOpacityModifyRGB;
+}
+
+void CCSprite::updateDisplayedColor(const ccColor3B& parentColor)
+{
+    CCNodeRGBA::updateDisplayedColor(parentColor);
+    
+    updateColor();
+}
+
+void CCSprite::updateDisplayedOpacity(GLubyte opacity)
+{
+    CCNodeRGBA::updateDisplayedOpacity(opacity);
+    
+    updateColor();
 }
 
 // Frames

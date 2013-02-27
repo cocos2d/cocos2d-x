@@ -1333,6 +1333,16 @@ void CCNodeRGBA::updateDisplayedOpacity(GLubyte parentOpacity)
     }
 }
 
+bool CCNodeRGBA::isCascadeOpacityEnabled(void)
+{
+    return _cascadeOpacityEnabled;
+}
+
+void CCNodeRGBA::setCascadeOpacityEnabled(bool cascadeOpacityEnabled)
+{
+    _cascadeOpacityEnabled = cascadeOpacityEnabled;
+}
+
 const ccColor3B& CCNodeRGBA::getColor(void)
 {
 	return _realColor;
@@ -1377,6 +1387,16 @@ void CCNodeRGBA::updateDisplayedColor(const ccColor3B& parentColor)
             }
         }
     }
+}
+
+bool CCNodeRGBA::isCascadeColorEnabled(void)
+{
+    return _cascadeColorEnabled;
+}
+
+void CCNodeRGBA::setCascadeColorEnabled(bool cascadeColorEnabled)
+{
+    _cascadeColorEnabled = cascadeColorEnabled;
 }
 
 NS_CC_END
