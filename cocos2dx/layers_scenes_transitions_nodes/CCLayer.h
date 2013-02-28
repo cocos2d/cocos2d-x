@@ -176,6 +176,8 @@ private:
 class CC_DLL CCLayerRGBA : public CCLayer, public CCRGBAProtocol
 {
 public:
+    CREATE_FUNC(CCLayerRGBA);
+    
     CCLayerRGBA();
     virtual ~CCLayerRGBA();
     
@@ -195,8 +197,8 @@ public:
     virtual bool isCascadeColorEnabled();
     virtual void setCascadeColorEnabled(bool cascadeColorEnabled);
     
-    virtual void setOpacityModifyRGB(bool bValue) = 0;
-    virtual bool isOpacityModifyRGB() = 0;
+    virtual void setOpacityModifyRGB(bool bValue) {}
+    virtual bool isOpacityModifyRGB() { return false; }
 protected:
 	GLubyte		_displayedOpacity, _realOpacity;
 	ccColor3B	_displayedColor, _realColor;
