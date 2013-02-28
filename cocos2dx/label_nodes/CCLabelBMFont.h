@@ -181,35 +181,6 @@ http://www.angelcode.com/products/bmfont/ (Free, Windows only)
 
 class CC_DLL CCLabelBMFont : public CCSpriteBatchNode, public CCLabelProtocol, public CCRGBAProtocol
 {
-	GLubyte		m_cDisplayedOpacity, m_cRealOpacity;
-	ccColor3B	m_tDisplayedColor, m_tRealColor;
-	bool		m_bCascadeColorEnabled, m_bCascadeOpacityEnabled;
-    /** conforms to CCRGBAProtocol protocol */
-    bool m_bIsOpacityModifyRGB;
-    
-protected:
-    // string to render
-    unsigned short* m_sString;
-    
-    // name of fntFile
-    std::string m_sFntFile;
-    
-    // initial string without line breaks
-    std::string m_sInitialString;
-    // alignment of all lines
-    CCTextAlignment m_pAlignment;
-    // max width until a line break is added
-    float m_fWidth;
-    
-    CCBMFontConfiguration *m_pConfiguration;
-    
-    bool m_bLineBreakWithoutSpaces;
-    // offset of the texture atlas
-    CCPoint    m_tImageOffset;
-    
-    // reused char
-    CCSprite *m_pReusedChar;
-    
 public:
     CCLabelBMFont();
 
@@ -254,8 +225,20 @@ public:
     virtual void setScaleX(float scaleX);
     virtual void setScaleY(float scaleY);
     
+    // CCRGBAProtocol 
     virtual bool isOpacityModifyRGB();
-    virtual void setOpacityModifyRGB(bool isOpacityModifyRGB);
+    virtual void setOpacityModifyRGB(bool isOpacityModifyRGB); virtual GLubyte getOpacity();
+    virtual GLubyte getDisplayedOpacity();
+    virtual void setOpacity(GLubyte opacity);
+    virtual void updateDisplayedOpacity(GLubyte parentOpacity);
+    virtual bool isCascadeOpacityEnabled();
+    virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled);
+    virtual const ccColor3B& getColor(void);
+    virtual const ccColor3B& getDisplayedColor();
+    virtual void setColor(const ccColor3B& color);
+    virtual void updateDisplayedColor(const ccColor3B& parentColor);
+    virtual bool isCascadeColorEnabled();
+    virtual void setCascadeColorEnabled(bool cascadeColorEnabled);
 
     void setFntFile(const char* fntFile);
     const char* getFntFile();
@@ -267,6 +250,36 @@ private:
     int kerningAmountForFirst(unsigned short first, unsigned short second);
     float getLetterPosXLeft( CCSprite* characterSprite );
     float getLetterPosXRight( CCSprite* characterSprite );
+    
+protected:
+    // string to render
+    unsigned short* m_sString;
+    
+    // name of fntFile
+    std::string m_sFntFile;
+    
+    // initial string without line breaks
+    std::string m_sInitialString;
+    // alignment of all lines
+    CCTextAlignment m_pAlignment;
+    // max width until a line break is added
+    float m_fWidth;
+    
+    CCBMFontConfiguration *m_pConfiguration;
+    
+    bool m_bLineBreakWithoutSpaces;
+    // offset of the texture atlas
+    CCPoint    m_tImageOffset;
+    
+    // reused char
+    CCSprite *m_pReusedChar;
+    
+    // texture RGBA
+    GLubyte		m_cDisplayedOpacity, m_cRealOpacity;
+	ccColor3B	m_tDisplayedColor, m_tRealColor;
+	bool		m_bCascadeColorEnabled, m_bCascadeOpacityEnabled;
+    /** conforms to CCRGBAProtocol protocol */
+    bool        m_bIsOpacityModifyRGB;
 
 };
 
