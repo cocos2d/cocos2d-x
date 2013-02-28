@@ -164,7 +164,7 @@ end
 --  ShakyTiles3DDemo
 --------------------------------------
 local function ShakyTiles3DDemo(t)
-	return CCShakyTiles3D:create(t, CCSizeMake(16,12), 5, false) ;
+    return CCShakyTiles3D:create(t, CCSizeMake(16,12), 5, false);
 end
 
 --------------------------------------
