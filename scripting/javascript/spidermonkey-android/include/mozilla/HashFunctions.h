@@ -351,7 +351,7 @@ HashString(const wchar_t* str, size_t length)
  * same result out of HashBytes as you would out of HashString.
  */
 MOZ_WARN_UNUSED_RESULT
-extern MFBT_API(uint32_t)
+extern MFBT_API uint32_t
 HashBytes(const void* bytes, size_t length);
 
 } /* namespace mozilla */

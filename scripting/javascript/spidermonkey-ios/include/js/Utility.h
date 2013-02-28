@@ -21,7 +21,6 @@
 
 #include "jstypes.h"
 
-#ifdef __cplusplus
 # include "js/TemplateLib.h"
 # include "mozilla/Scoped.h"
 
@@ -36,12 +35,8 @@ namespace js {
 
 /* The private namespace is a superset of the public/shared namespaces. */
 using namespace JS;
-using namespace mozilla;
 
 }  /* namespace js */
-#endif  /* __cplusplus */
-
-JS_BEGIN_EXTERN_C
 
 /*
  * Pattern used to overwrite freed memory. If you are accessing an object with
@@ -103,7 +98,7 @@ PrintBacktrace()
     int32_t OOM_traceIdx = 0;
     OOM_traceSize = backtrace(OOM_trace, JS_OOM_BACKTRACE_SIZE);
     OOM_traceSymbols = backtrace_symbols(OOM_trace, OOM_traceSize);
-    
+
     if (!OOM_traceSymbols)
         return;
 
@@ -170,6 +165,8 @@ static JS_INLINE void js_free(void* p)
     free(p);
 }
 #endif/* JS_USE_CUSTOM_ALLOCATOR */
+
+JS_BEGIN_EXTERN_C
 
 /*
  * Replace bit-scanning code sequences with CPU-specific instructions to
@@ -330,6 +327,8 @@ JS_PUBLIC_API(size_t) js_FloorLog2wImpl(size_t n);
 # error "NOT SUPPORTED"
 #endif
 
+JS_END_EXTERN_C
+
 /*
  * Internal function.
  * Compute the log of the least power of 2 greater than or equal to n. This is
@@ -371,9 +370,6 @@ JS_FLOOR_LOG2W(size_t n)
 #define JS_ROTATE_LEFT32(a, bits) (((a) << (bits)) | ((a) >> (32 - (bits))))
 #endif
 
-JS_END_EXTERN_C
-
-#ifdef __cplusplus
 #include <new>
 
 /*
@@ -902,8 +898,6 @@ inline bool IsPoisonedPtr(T *v)
 }
 
 }
-
-#endif /* defined(__cplusplus) */
 
 /*
  * This is SpiderMonkey's equivalent to |nsMallocSizeOfFun|.

@@ -290,6 +290,8 @@
 		1A31963116C0DDE800207637 /* encode.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A3191B716C0DDE700207637 /* encode.h */; };
 		1A31963216C0DDE800207637 /* types.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A3191B816C0DDE700207637 /* types.h */; };
 		1A3199AE16C0E3A200207637 /* libwebp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A3199AD16C0E3A200207637 /* libwebp.a */; };
+		1A4646E116DDD4E300DE131F /* ccUTF8.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A4646DF16DDD4E300DE131F /* ccUTF8.h */; };
+		1A4646E316DDD58500DE131F /* ccUTF8.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A4646E216DDD58500DE131F /* ccUTF8.cpp */; };
 		1AA6226016CF6BD00028C05E /* CCDevice.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1AA6225F16CF6BD00028C05E /* CCDevice.mm */; };
 		1AA6226216CF6BDF0028C05E /* CCDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AA6226116CF6BDF0028C05E /* CCDevice.h */; };
 		1AC6CE8116B9075B00330EFD /* CCFileUtilsIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AC6CE8016B9075B00330EFD /* CCFileUtilsIOS.h */; };
@@ -588,6 +590,8 @@
 		1A3191B716C0DDE700207637 /* encode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = encode.h; sourceTree = "<group>"; };
 		1A3191B816C0DDE700207637 /* types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = types.h; sourceTree = "<group>"; };
 		1A3199AD16C0E3A200207637 /* libwebp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebp.a; path = ../platform/third_party/ios/libraries/libwebp.a; sourceTree = "<group>"; };
+		1A4646DF16DDD4E300DE131F /* ccUTF8.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccUTF8.h; sourceTree = "<group>"; };
+		1A4646E216DDD58500DE131F /* ccUTF8.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ccUTF8.cpp; sourceTree = "<group>"; };
 		1AA6225F16CF6BD00028C05E /* CCDevice.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCDevice.mm; sourceTree = "<group>"; };
 		1AA6226116CF6BDF0028C05E /* CCDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDevice.h; sourceTree = "<group>"; };
 		1AC6CE8016B9075B00330EFD /* CCFileUtilsIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFileUtilsIOS.h; sourceTree = "<group>"; };
@@ -1063,23 +1067,25 @@
 		1551A5E7158F2ADE00E66CFE /* support */ = {
 			isa = PBXGroup;
 			children = (
-				469A7DF016C24787006FFCB2 /* tinyxml2 */,
-				154269DA15B5653000712A7F /* CCNotificationCenter.cpp */,
-				154269DB15B5653000712A7F /* CCNotificationCenter.h */,
 				1551A5E8158F2ADE00E66CFE /* base64.cpp */,
 				1551A5E9158F2ADE00E66CFE /* base64.h */,
+				154269DA15B5653000712A7F /* CCNotificationCenter.cpp */,
+				154269DB15B5653000712A7F /* CCNotificationCenter.h */,
 				1551A5EA158F2ADE00E66CFE /* CCPointExtension.cpp */,
 				1551A5EB158F2ADE00E66CFE /* CCPointExtension.h */,
 				1551A5EC158F2ADE00E66CFE /* CCProfiling.cpp */,
 				1551A5ED158F2ADE00E66CFE /* CCProfiling.h */,
 				1551A5EE158F2ADE00E66CFE /* CCUserDefault.cpp */,
 				1551A5EF158F2ADE00E66CFE /* CCUserDefault.h */,
+				1A4646E216DDD58500DE131F /* ccUTF8.cpp */,
+				1A4646DF16DDD4E300DE131F /* ccUTF8.h */,
 				1551A5F0158F2ADE00E66CFE /* ccUtils.cpp */,
 				1551A5F1158F2ADE00E66CFE /* ccUtils.h */,
 				1551A5F2158F2ADE00E66CFE /* CCVertex.cpp */,
 				1551A5F3158F2ADE00E66CFE /* CCVertex.h */,
 				1551A5F4158F2ADE00E66CFE /* data_support */,
 				1551A5F9158F2ADE00E66CFE /* image_support */,
+				469A7DF016C24787006FFCB2 /* tinyxml2 */,
 				1551A5FC158F2ADE00E66CFE /* TransformUtils.cpp */,
 				1551A5FD158F2ADE00E66CFE /* TransformUtils.h */,
 				1551A5FE158F2ADE00E66CFE /* zip_support */,
@@ -1397,6 +1403,7 @@
 				1A31963216C0DDE800207637 /* types.h in Headers */,
 				469A7DF416C24787006FFCB2 /* tinyxml2.h in Headers */,
 				1AA6226216CF6BDF0028C05E /* CCDevice.h in Headers */,
+				1A4646E116DDD4E300DE131F /* ccUTF8.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1577,6 +1584,7 @@
 				1A3187F416C0B30600207637 /* CCImageCommonWebp.cpp in Sources */,
 				469A7DF316C24787006FFCB2 /* tinyxml2.cpp in Sources */,
 				1AA6226016CF6BD00028C05E /* CCDevice.mm in Sources */,
+				1A4646E316DDD58500DE131F /* ccUTF8.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

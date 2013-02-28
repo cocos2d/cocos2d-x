@@ -14,9 +14,8 @@
 #include "mozilla/Attributes.h"
 #include "mozilla/FloatingPoint.h"
 #include "mozilla/StandardInteger.h"
-#ifdef __cplusplus
-# include "mozilla/ThreadLocal.h"
-#endif
+#include "mozilla/RangedPtr.h"
+#include "mozilla/ThreadLocal.h"
 
 #include <stddef.h>
 #include <stdio.h>
@@ -28,12 +27,10 @@
 #include "js/Utility.h"
 #include "gc/Root.h"
 
-#ifdef __cplusplus
 #include <limits> /* for std::numeric_limits */
 
 #include "jsalloc.h"
 #include "js/Vector.h"
-#endif
 
 /************************************************************************/
 
@@ -44,8 +41,19 @@
 
 /************************************************************************/
 
-#ifdef __cplusplus
 namespace JS {
+
+typedef mozilla::RangedPtr<const jschar> CharPtr;
+
+class StableCharPtr : public CharPtr {
+  public:
+    StableCharPtr(const StableCharPtr &s) : CharPtr(s) {}
+    StableCharPtr(const mozilla::RangedPtr<const jschar> &s) : CharPtr(s) {}
+    StableCharPtr(const jschar *s, size_t len) : CharPtr(s, len) {}
+    StableCharPtr(const jschar *pos, const jschar *start, size_t len)
+      : CharPtr(pos, start, len)
+    {}
+};
 
 /*
  * Protecting non-jsval, non-JSObject *, non-JSString * values from collection
@@ -1034,6 +1042,7 @@ class JS_PUBLIC_API(AutoGCRooter) {
     /* Implemented in jsgc.cpp. */
     inline void trace(JSTracer *trc);
     static void traceAll(JSTracer *trc);
+    static void traceAllWrappers(JSTracer *trc);
 
   protected:
     AutoGCRooter * const down;
@@ -1074,7 +1083,9 @@ class JS_PUBLIC_API(AutoGCRooter) {
         NAMEVECTOR =  -26, /* js::AutoNameVector */
         HASHABLEVALUE=-27,
         IONMASM =     -28, /* js::ion::MacroAssembler */
-        IONALLOC =    -29  /* js::ion::AutoTempAllocatorRooter */
+        IONALLOC =    -29, /* js::ion::AutoTempAllocatorRooter */
+        WRAPVECTOR =  -30, /* js::AutoWrapperVector */
+        WRAPPER =     -31  /* js::AutoWrapperRooter */
     };
 
   private:
@@ -1587,30 +1598,6 @@ struct JSValueAlignmentTester { char c; JS::Value v; };
 JS_STATIC_ASSERT(sizeof(JSValueAlignmentTester) == 16);
 #endif /* DEBUG */
 
-#else  /* defined(__cplusplus) */
-
-/*
- * For SpiderMonkey C clients, there is no JS::Value class, only the
- * traditional jsval with the traditional JSVAL_* operations. Since
- * SpiderMonkey itself is always compiled as C++, this relies on the binary
- * compatibility of jsval_layout and JS::Value (statically asserted below).
- */
-typedef union jsval_layout jsval;
-
-static JS_ALWAYS_INLINE jsval_layout
-JSVAL_TO_IMPL(jsval v)
-{
-    return v;
-}
-
-static JS_ALWAYS_INLINE jsval
-IMPL_TO_JSVAL(jsval_layout l)
-{
-    return l;
-}
-
-#endif  /* defined(__cplusplus) */
-
 #ifdef DEBUG
 typedef struct { char c; jsval_layout l; } JSLayoutAlignmentTester;
 JS_STATIC_ASSERT(sizeof(JSLayoutAlignmentTester) == 16);
@@ -1619,8 +1606,6 @@ JS_STATIC_ASSERT(sizeof(JSLayoutAlignmentTester) == 16);
 JS_STATIC_ASSERT(sizeof(jsval_layout) == sizeof(jsval));
 
 /************************************************************************/
-
-#ifdef __cplusplus
 
 typedef JS::Handle<JSObject*> JSHandleObject;
 typedef JS::Handle<JSString*> JSHandleString;
@@ -1640,43 +1625,6 @@ typedef JS::RawScript   JSRawScript;
 typedef JS::RawString   JSRawString;
 typedef JS::RawId       JSRawId;
 typedef JS::RawValue    JSRawValue;
-
-#else
-
-/*
- * Handle support for C API users. Handles must be destroyed in the reverse
- * order that they were created (as in a stack).
- */
-
-typedef struct { JSObject **_; } JSHandleObject;
-typedef struct { JSString **_; } JSHandleString;
-typedef struct { jsval     *_; } JSHandleValue;
-typedef struct { jsid      *_; } JSHandleId;
-
-typedef struct { JSObject   **_; } JSMutableHandleObject;
-typedef struct { JSFunction **_; } JSMutableHandleFunction;
-typedef struct { JSScript   **_; } JSMutableHandleScript;
-typedef struct { JSString   **_; } JSMutableHandleString;
-typedef struct { jsval       *_; } JSMutableHandleValue;
-typedef struct { jsid        *_; } JSMutableHandleId;
-
-typedef JSObject   *JSRawObject;
-typedef JSFunction *JSRawFunction;
-typedef JSScript   *JSRawScript;
-typedef JSString   *JSRawString;
-typedef jsid       *JSRawId;
-typedef jsval      *JSRawValue;
-
-JSBool JS_CreateHandleObject(JSContext *cx, JSObject *obj, JSHandleObject *phandle);
-void JS_DestroyHandleObject(JSContext *cx, JSHandleObject handle);
-
-JSBool JS_CreateMutableHandleObject(JSContext *cx, JSObject *obj, JSMutableHandleObject *phandle);
-void JS_DestroyMutableHandleObject(JSContext *cx, JSMutableHandleObject handle);
-
-JSBool JS_CreateHandleId(JSContext *cx, jsid id, JSHandleId *phandle);
-void JS_DestroyHandleId(JSContext *cx, JSHandleId handle);
-
-#endif
 
 /* JSClass operation signatures. */
 
@@ -1792,9 +1740,6 @@ typedef JSType
 typedef struct JSFreeOp JSFreeOp;
 
 struct JSFreeOp {
-#ifndef __cplusplus
-    JSRuntime   *runtime;
-#else
   private:
     JSRuntime   *runtime_;
 
@@ -1806,7 +1751,6 @@ struct JSFreeOp {
     JSRuntime *runtime() const {
         return runtime_;
     }
-#endif
 };
 
 /*
@@ -1965,7 +1909,7 @@ typedef enum JSExnType {
 } JSExnType;
 
 typedef struct JSErrorFormatString {
-    /* The error format string (UTF-8 if js_CStringsAreUTF8). */
+    /* The error format string in ASCII. */
     const char *format;
 
     /* The number of arguments to expand in the formatted error message. */
@@ -2009,10 +1953,15 @@ typedef JSBool
 /*
  * Callback used to ask the embedding for the cross compartment wrapper handler
  * that implements the desired prolicy for this kind of object in the
- * destination compartment.
+ * destination compartment. |obj| is the object to be wrapped. If |existing| is
+ * non-NULL, it will point to an existing wrapper object that should be re-used
+ * if possible. |existing| is guaranteed to be a cross-compartment wrapper with
+ * a lazily-defined prototype and the correct global. It is guaranteed not to
+ * wrap a function.
  */
 typedef JSObject *
-(* JSWrapObjectCallback)(JSContext *cx, JSObject *obj, JSObject *proto, JSObject *parent,
+(* JSWrapObjectCallback)(JSContext *cx, JSObject *existing, JSObject *obj,
+                         JSObject *proto, JSObject *parent,
                          unsigned flags);
 
 /*
@@ -2077,8 +2026,6 @@ typedef JSBool (*WriteStructuredCloneOp)(JSContext *cx, JSStructuredCloneWriter 
 typedef void (*StructuredCloneErrorOp)(JSContext *cx, uint32_t errorid);
 
 /************************************************************************/
-
-JS_BEGIN_EXTERN_C
 
 /*
  * Silence warning about returning JS::Value (aka jsval) from functions with C
@@ -2463,8 +2410,6 @@ JSVAL_IS_UNIVERSAL(jsval v)
     return !JSVAL_IS_GCTHING(v);
 }
 
-#ifdef __cplusplus
-
 namespace JS {
 
 class AutoIdRooter : private AutoGCRooter
@@ -2494,8 +2439,6 @@ class AutoIdRooter : private AutoGCRooter
 
 } /* namespace JS */
 
-#endif /* __cplusplus */
-
 /************************************************************************/
 
 /* Property attributes, set in JSPropertySpec and passed to API functions. */
@@ -2505,6 +2448,8 @@ class AutoIdRooter : private AutoGCRooter
                                            JSPROP_GETTER nor JSPROP_SETTER is
                                            set. */
 #define JSPROP_PERMANENT        0x04    /* property cannot be deleted */
+#define JSPROP_NATIVE_ACCESSORS 0x08    /* set in JSPropertyDescriptor.flags
+                                           if getters/setters are JSNatives */
 #define JSPROP_GETTER           0x10    /* property holds getter function */
 #define JSPROP_SETTER           0x20    /* property holds setter function */
 #define JSPROP_SHARED           0x40    /* don't allocate a value slot for this
@@ -2513,52 +2458,29 @@ class AutoIdRooter : private AutoGCRooter
                                            object that delegates to a prototype
                                            containing this property */
 #define JSPROP_INDEX            0x80    /* name is actually (int) index */
-#define JSPROP_SHORTID          0x100   /* set in JS_DefineProperty attrs
+#define JSPROP_SHORTID         0x100    /* set in JS_DefineProperty attrs
                                            if getters/setters use a shortid */
-#define JSPROP_NATIVE_ACCESSORS 0x08    /* set in JSPropertyDescriptor.flags
-                                           if getters/setters are JSNatives */
 
-/* Function flags, internal use only, returned by JS_GetFunctionFlags. */
-#define JSFUN_LAMBDA            0x08    /* expressed, not declared, function */
-
-#define JSFUN_SELF_HOSTED       0x20    /* function is self-hosted builtin and
-                                           must not be decompilable nor
-                                           constructible. */
-
-#define JSFUN_SELF_HOSTED_CTOR  0x40    /* function is self-hosted builtin
-                                           constructor and must be constructible
-                                           but not decompilable. */
-
-#define JSFUN_HEAVYWEIGHT       0x80    /* activation requires a Call object */
-
-#define JSFUN_HEAVYWEIGHT_TEST(f)  ((f) & JSFUN_HEAVYWEIGHT)
-
-#define JSFUN_HAS_REST          0x0100  /* function has a rest (...) parameter */
-#define JSFUN_CONSTRUCTOR       0x0200  /* native that can be called as a ctor
-                                           without creating a this object */
-#define JSFUN_HAS_DEFAULTS      0x0400  /* function has at least one default
-                                           parameter */
-
-#define JSFUN_FLAGS_MASK        0x07f8  /* overlay JSFUN_* attributes --
-                                           bits 12-15 are used internally to
-                                           flag interpreted functions */
-
-#define JSFUN_STUB_GSOPS        0x1000  /* use JS_PropertyStub getter/setter
+#define JSFUN_STUB_GSOPS       0x200    /* use JS_PropertyStub getter/setter
                                            instead of defaulting to class gsops
                                            for property holding function */
 
+#define JSFUN_CONSTRUCTOR      0x400    /* native that can be called as a ctor */
+
+
 /*
- * Re-use JSFUN_LAMBDA, which applies only to scripted functions, for use in
- * JSFunctionSpec arrays that specify generic native prototype methods, i.e.,
- * methods of a class prototype that are exposed as static methods taking an
- * extra leading argument: the generic |this| parameter.
+ * Specify a generic native prototype methods, i.e., methods of a class
+ * prototype that are exposed as static methods taking an extra leading
+ * argument: the generic |this| parameter.
  *
  * If you set this flag in a JSFunctionSpec struct's flags initializer, then
  * that struct must live at least as long as the native static method object
  * created due to this flag by JS_DefineFunctions or JS_InitClass.  Typically
  * JSFunctionSpec structs are allocated in static arrays.
  */
-#define JSFUN_GENERIC_NATIVE    JSFUN_LAMBDA
+#define JSFUN_GENERIC_NATIVE   0x800
+
+#define JSFUN_FLAGS_MASK       0xe00    /* | of all the JSFUN_* flags */
 
 /*
  * The first call to JS_CallOnce by any thread in a process will call 'func'.
@@ -2654,7 +2576,6 @@ JS_ValueToSource(JSContext *cx, jsval v);
 extern JS_PUBLIC_API(JSBool)
 JS_ValueToNumber(JSContext *cx, jsval v, double *dp);
 
-#ifdef __cplusplus
 namespace js {
 /*
  * DO NOT CALL THIS.  Use JS::ToNumber
@@ -2710,7 +2631,6 @@ ToBoolean(const Value &v)
 }
 
 } /* namespace JS */
-#endif /* __cplusplus */
 
 extern JS_PUBLIC_API(JSBool)
 JS_DoubleIsInt32(double d, int32_t *ip);
@@ -2742,7 +2662,6 @@ JS_ValueToInt64(JSContext *cx, jsval v, int64_t *ip);
 extern JS_PUBLIC_API(JSBool)
 JS_ValueToUint64(JSContext *cx, jsval v, uint64_t *ip);
 
-#ifdef __cplusplus
 namespace js {
 /* DO NOT CALL THIS.  Use JS::ToInt16. */
 extern JS_PUBLIC_API(bool)
@@ -2857,7 +2776,6 @@ ToUint64(JSContext *cx, const js::Value &v, uint64_t *out)
 
 
 } /* namespace JS */
-#endif /* __cplusplus */
 
 /*
  * Convert a value to a number, then to a uint32_t, according to the ECMA rules
@@ -2915,16 +2833,15 @@ JS_IsBuiltinFunctionConstructor(JSFunction *fun);
  * single-threaded fashion, otherwise the behavior of the library is undefined.
  * See: http://developer.mozilla.org/en/docs/Category:JSAPI_Reference
  */
-#define JS_NewRuntime       JS_Init
-#define JS_DestroyRuntime   JS_Finish
-#define JS_LockRuntime      JS_Lock
-#define JS_UnlockRuntime    JS_Unlock
+
+typedef enum JSUseHelperThreads
+{
+    JS_NO_HELPER_THREADS,
+    JS_USE_HELPER_THREADS
+} JSUseHelperThreads;
 
 extern JS_PUBLIC_API(JSRuntime *)
-JS_NewRuntime(uint32_t maxbytes);
-
-/* Deprecated. */
-#define JS_CommenceRuntimeShutDown(rt) ((void) 0)
+JS_NewRuntime(uint32_t maxbytes, JSUseHelperThreads useHelperThreads);
 
 extern JS_PUBLIC_API(void)
 JS_DestroyRuntime(JSRuntime *rt);
@@ -2950,12 +2867,7 @@ JS_EndRequest(JSContext *cx);
 extern JS_PUBLIC_API(JSBool)
 JS_IsInRequest(JSRuntime *rt);
 
-#ifdef __cplusplus
-JS_END_EXTERN_C
-
 namespace JS {
-
-extern mozilla::ThreadLocal<JSRuntime *> TlsRuntime;
 
 inline bool
 IsPoisonedId(jsid iden)
@@ -3025,9 +2937,6 @@ class JSAutoCheckRequest {
 #endif
     JS_DECL_USE_GUARD_OBJECT_NOTIFIER
 };
-
-JS_BEGIN_EXTERN_C
-#endif
 
 extern JS_PUBLIC_API(JSContextCallback)
 JS_SetContextCallback(JSRuntime *rt, JSContextCallback cxCallback);
@@ -3113,11 +3022,8 @@ JS_StringToVersion(const char *string);
                                                    being converted to error
                                                    reports */
 
-#define JSOPTION_RELIMIT        JS_BIT(9)       /* Throw exception on any
-                                                   regular expression which
-                                                   backtracks more than n^3
-                                                   times, where n is length
-                                                   of the input string */
+/* JS_BIT(9) is currently unused. */
+
 /* JS_BIT(10) is currently unused. */
 
 /* JS_BIT(11) is currently unused. */
@@ -3242,9 +3148,6 @@ JS_RefreshCrossCompartmentWrappers(JSContext *cx, JSObject *ob);
  * the corresponding JS_LeaveCompartment call.
  */
 
-#ifdef __cplusplus
-JS_END_EXTERN_C
-
 class JS_PUBLIC_API(JSAutoCompartment)
 {
     JSContext *cx_;
@@ -3256,9 +3159,6 @@ class JS_PUBLIC_API(JSAutoCompartment)
     JSAutoCompartment(JSContext *cx, JSString *target);
     ~JSAutoCompartment();
 };
-
-JS_BEGIN_EXTERN_C
-#endif
 
 /* NB: This API is infallible; a NULL return value does not indicate error. */
 extern JS_PUBLIC_API(JSCompartment *)
@@ -3456,14 +3356,12 @@ JS_EnumerateDiagnosticMemoryRegions(JSEnumerateDiagnosticMemoryCallback callback
 extern JS_PUBLIC_API(jsval)
 JS_ComputeThis(JSContext *cx, jsval *vp);
 
-#ifdef __cplusplus
 #undef JS_THIS
 static inline jsval
 JS_THIS(JSContext *cx, jsval *vp)
 {
     return JSVAL_IS_PRIMITIVE(vp[1]) ? JS_ComputeThis(cx, vp) : vp[1];
 }
-#endif
 
 /*
  * |this| is passed to functions in ES5 without change.  Functions themselves
@@ -3622,55 +3520,10 @@ js_RemoveRoot(JSRuntime *rt, void *rp);
 extern JS_NEVER_INLINE JS_PUBLIC_API(void)
 JS_AnchorPtr(void *p);
 
-/*
- * This symbol may be used by embedders to detect the change from the old
- * JS_AddRoot(JSContext *, void *) APIs to the new ones above.
- */
-#define JS_TYPED_ROOTING_API
-
-/* Obsolete rooting APIs. */
-#define JS_EnterLocalRootScope(cx) (JS_TRUE)
-#define JS_LeaveLocalRootScope(cx) ((void) 0)
-#define JS_LeaveLocalRootScopeWithResult(cx, rval) ((void) 0)
-#define JS_ForgetLocalRoot(cx, thing) ((void) 0)
-
 typedef enum JSGCRootType {
     JS_GC_ROOT_VALUE_PTR,
     JS_GC_ROOT_GCTHING_PTR
 } JSGCRootType;
-
-#ifdef DEBUG
-extern JS_PUBLIC_API(void)
-JS_DumpNamedRoots(JSRuntime *rt,
-                  void (*dump)(const char *name, void *rp, JSGCRootType type, void *data),
-                  void *data);
-#endif
-
-/*
- * Call JS_MapGCRoots to map the GC's roots table using map(rp, name, data).
- * The root is pointed at by rp; if the root is unnamed, name is null; data is
- * supplied from the third parameter to JS_MapGCRoots.
- *
- * The map function should return JS_MAP_GCROOT_REMOVE to cause the currently
- * enumerated root to be removed.  To stop enumeration, set JS_MAP_GCROOT_STOP
- * in the return value.  To keep on mapping, return JS_MAP_GCROOT_NEXT.  These
- * constants are flags; you can OR them together.
- *
- * The JSGCRootType parameter indicates whether rp is a pointer to a Value
- * (which is obtained by '(Value *)rp') or a pointer to a GC-thing pointer
- * (which is obtained by '(void **)rp').
- *
- * JS_MapGCRoots returns the count of roots that were successfully mapped.
- */
-#define JS_MAP_GCROOT_NEXT      0       /* continue mapping entries */
-#define JS_MAP_GCROOT_STOP      1       /* stop mapping entries */
-#define JS_MAP_GCROOT_REMOVE    2       /* remove and free the current entry */
-
-typedef int
-(* JSGCRootMapFun)(void *rp, JSGCRootType type, const char *name, void *data);
-
-extern JS_PUBLIC_API(uint32_t)
-JS_MapGCRoots(JSRuntime *rt, JSGCRootMapFun map, void *data);
 
 extern JS_PUBLIC_API(JSBool)
 JS_LockGCThing(JSContext *cx, void *thing);
@@ -4119,11 +3972,9 @@ struct JSClass {
 #define JSCLASS_FREEZE_PROTO            (1<<(JSCLASS_HIGH_FLAGS_SHIFT+4))
 #define JSCLASS_FREEZE_CTOR             (1<<(JSCLASS_HIGH_FLAGS_SHIFT+5))
 
-#define JSCLASS_XPCONNECT_GLOBAL        (1<<(JSCLASS_HIGH_FLAGS_SHIFT+6))
-
 /* Reserved for embeddings. */
-#define JSCLASS_USERBIT2                (1<<(JSCLASS_HIGH_FLAGS_SHIFT+7))
-#define JSCLASS_USERBIT3                (1<<(JSCLASS_HIGH_FLAGS_SHIFT+8))
+#define JSCLASS_USERBIT2                (1<<(JSCLASS_HIGH_FLAGS_SHIFT+6))
+#define JSCLASS_USERBIT3                (1<<(JSCLASS_HIGH_FLAGS_SHIFT+7))
 
 /*
  * Bits 26 through 31 are reserved for the CACHED_PROTO_KEY mechanism, see
@@ -4144,7 +3995,7 @@ struct JSClass {
  * with the following flags. Failure to use JSCLASS_GLOBAL_FLAGS was
  * prevously allowed, but is now an ES5 violation and thus unsupported.
  */
-#define JSCLASS_GLOBAL_SLOT_COUNT      (JSProto_LIMIT * 3 + 23)
+#define JSCLASS_GLOBAL_SLOT_COUNT      (JSProto_LIMIT * 3 + 26)
 #define JSCLASS_GLOBAL_FLAGS_WITH_SLOTS(n)                                    \
     (JSCLASS_IS_GLOBAL | JSCLASS_HAS_RESERVED_SLOTS(JSCLASS_GLOBAL_SLOT_COUNT + (n)))
 #define JSCLASS_GLOBAL_FLAGS                                                  \
@@ -4175,8 +4026,6 @@ JS_IdArrayGet(JSContext *cx, JSIdArray *ida, int index);
 
 extern JS_PUBLIC_API(void)
 JS_DestroyIdArray(JSContext *cx, JSIdArray *ida);
-
-#ifdef __cplusplus
 
 namespace JS {
 
@@ -4225,8 +4074,6 @@ class AutoIdArray : private AutoGCRooter {
 };
 
 } /* namespace JS */
-
-#endif /* __cplusplus */
 
 extern JS_PUBLIC_API(JSBool)
 JS_ValueToId(JSContext *cx, jsval v, jsid *idp);
@@ -4545,6 +4392,10 @@ struct JSPropertyDescriptor {
     JSPropertyOp       getter;
     JSStrictPropertyOp setter;
     jsval              value;
+
+    JSPropertyDescriptor() : obj(NULL), attrs(0), shortid(0), getter(NULL),
+                             setter(NULL), value(JSVAL_VOID)
+    {}
 };
 
 /*
@@ -4829,7 +4680,6 @@ struct JSPrincipals {
     uint32_t    debugToken;
 #endif
 
-#ifdef __cplusplus
     void setDebugToken(uint32_t token) {
 # ifdef DEBUG
         debugToken = token;
@@ -4841,7 +4691,6 @@ struct JSPrincipals {
      * embedding.
      */
     JS_PUBLIC_API(void) dump();
-#endif
 };
 
 extern JS_PUBLIC_API(void)
@@ -4924,12 +4773,6 @@ extern JS_PUBLIC_API(JSString *)
 JS_GetFunctionDisplayId(JSFunction *fun);
 
 /*
- * Return JSFUN_* flags for fun.
- */
-extern JS_PUBLIC_API(unsigned)
-JS_GetFunctionFlags(JSFunction *fun);
-
-/*
  * Return the arity (length) of fun.
  */
 extern JS_PUBLIC_API(uint16_t)
@@ -4949,6 +4792,10 @@ JS_ObjectIsCallable(JSContext *cx, JSRawObject obj);
 
 extern JS_PUBLIC_API(JSBool)
 JS_IsNativeFunction(JSRawObject funobj, JSNative call);
+
+/* Return whether the given function is a valid constructor. */
+extern JS_PUBLIC_API(JSBool)
+JS_IsConstructor(JSFunction *fun);
 
 /*
  * Bind the given callable to use the given object as "this".
@@ -4989,26 +4836,18 @@ JS_CloneFunctionObject(JSContext *cx, JSObject *funobj, JSRawObject parent);
  * the compiler.
  */
 extern JS_PUBLIC_API(JSBool)
-JS_BufferIsCompilableUnit(JSContext *cx, JSBool bytes_are_utf8,
-                          JSObject *obj, const char *bytes, size_t length);
+JS_BufferIsCompilableUnit(JSContext *cx, JSObject *obj, const char *utf8, size_t length);
 
 extern JS_PUBLIC_API(JSScript *)
 JS_CompileScript(JSContext *cx, JSObject *obj,
-                 const char *bytes, size_t length,
+                 const char *ascii, size_t length,
                  const char *filename, unsigned lineno);
 
 extern JS_PUBLIC_API(JSScript *)
 JS_CompileScriptForPrincipals(JSContext *cx, JSObject *obj,
                               JSPrincipals *principals,
-                              const char *bytes, size_t length,
+                              const char *ascii, size_t length,
                               const char *filename, unsigned lineno);
-
-extern JS_PUBLIC_API(JSScript *)
-JS_CompileScriptForPrincipalsVersion(JSContext *cx, JSObject *obj,
-                                     JSPrincipals *principals,
-                                     const char *bytes, size_t length,
-                                     const char *filename, unsigned lineno,
-                                     JSVersion version);
 
 extern JS_PUBLIC_API(JSScript *)
 JS_CompileUCScript(JSContext *cx, JSObject *obj,
@@ -5020,42 +4859,6 @@ JS_CompileUCScriptForPrincipals(JSContext *cx, JSObject *obj,
                                 JSPrincipals *principals,
                                 const jschar *chars, size_t length,
                                 const char *filename, unsigned lineno);
-
-extern JS_PUBLIC_API(JSScript *)
-JS_CompileUCScriptForPrincipalsVersion(JSContext *cx, JSObject *obj,
-                                       JSPrincipals *principals,
-                                       const jschar *chars, size_t length,
-                                       const char *filename, unsigned lineno,
-                                       JSVersion version);
-/*
- * If originPrincipals is null, then the value of principals is used as origin
- * principals for the compiled script.
- */
-extern JS_PUBLIC_API(JSScript *)
-JS_CompileUCScriptForPrincipalsVersionOrigin(JSContext *cx, JSObject *obj,
-                                             JSPrincipals *principals,
-                                             JSPrincipals *originPrincipals,
-                                             const jschar *chars, size_t length,
-                                             const char *filename, unsigned lineno,
-                                             JSVersion version);
-
-extern JS_PUBLIC_API(JSScript *)
-JS_CompileUTF8File(JSContext *cx, JSObject *obj, const char *filename);
-
-extern JS_PUBLIC_API(JSScript *)
-JS_CompileUTF8FileHandle(JSContext *cx, JSObject *obj, const char *filename,
-                         FILE *fh);
-
-extern JS_PUBLIC_API(JSScript *)
-JS_CompileUTF8FileHandleForPrincipals(JSContext *cx, JSObject *obj,
-                                      const char *filename, FILE *fh,
-                                      JSPrincipals *principals);
-
-extern JS_PUBLIC_API(JSScript *)
-JS_CompileUTF8FileHandleForPrincipalsVersion(JSContext *cx, JSObject *obj,
-                                             const char *filename, FILE *fh,
-                                             JSPrincipals *principals,
-                                             JSVersion version);
 
 extern JS_PUBLIC_API(JSObject *)
 JS_GetGlobalFromScript(JSScript *script);
@@ -5078,24 +4881,6 @@ JS_CompileUCFunction(JSContext *cx, JSObject *obj, const char *name,
                      unsigned nargs, const char **argnames,
                      const jschar *chars, size_t length,
                      const char *filename, unsigned lineno);
-
-extern JS_PUBLIC_API(JSFunction *)
-JS_CompileUCFunctionForPrincipals(JSContext *cx, JSObject *obj,
-                                  JSPrincipals *principals, const char *name,
-                                  unsigned nargs, const char **argnames,
-                                  const jschar *chars, size_t length,
-                                  const char *filename, unsigned lineno);
-
-extern JS_PUBLIC_API(JSFunction *)
-JS_CompileUCFunctionForPrincipalsVersion(JSContext *cx, JSObject *obj,
-                                         JSPrincipals *principals, const char *name,
-                                         unsigned nargs, const char **argnames,
-                                         const jschar *chars, size_t length,
-                                         const char *filename, unsigned lineno,
-                                         JSVersion version);
-
-#ifdef __cplusplus
-JS_END_EXTERN_C
 
 namespace JS {
 
@@ -5156,9 +4941,6 @@ CompileFunction(JSContext *cx, JSHandleObject obj, CompileOptions options,
                 const jschar *chars, size_t length);
 
 } /* namespace JS */
-
-JS_BEGIN_EXTERN_C
-#endif /* __cplusplus */
 
 extern JS_PUBLIC_API(JSString *)
 JS_DecompileScript(JSContext *cx, JSScript *script, const char *name, unsigned indent);
@@ -5279,9 +5061,6 @@ JS_EvaluateUCScriptForPrincipalsVersionOrigin(JSContext *cx, JSObject *obj,
                                               const char *filename, unsigned lineno,
                                               jsval *rval, JSVersion version);
 
-#ifdef __cplusplus
-JS_END_EXTERN_C
-
 namespace JS {
 
 extern JS_PUBLIC_API(bool)
@@ -5298,9 +5077,6 @@ Evaluate(JSContext *cx, JSHandleObject obj, CompileOptions options,
 
 } /* namespace JS */
 
-JS_BEGIN_EXTERN_C
-#endif
-
 extern JS_PUBLIC_API(JSBool)
 JS_CallFunction(JSContext *cx, JSObject *obj, JSFunction *fun, unsigned argc,
                 jsval *argv, jsval *rval);
@@ -5312,9 +5088,6 @@ JS_CallFunctionName(JSContext *cx, JSObject *obj, const char *name, unsigned arg
 extern JS_PUBLIC_API(JSBool)
 JS_CallFunctionValue(JSContext *cx, JSObject *obj, jsval fval, unsigned argc,
                      jsval *argv, jsval *rval);
-
-#ifdef __cplusplus
-JS_END_EXTERN_C
 
 namespace JS {
 
@@ -5342,9 +5115,6 @@ Call(JSContext *cx, jsval thisv, JSObject *funObj, unsigned argc, jsval *argv, j
 }
 
 } /* namespace JS */
-
-JS_BEGIN_EXTERN_C
-#endif /* __cplusplus */
 
 /*
  * These functions allow setting an operation callback that will be called
@@ -5578,54 +5348,21 @@ extern JS_PUBLIC_API(const jschar *)
 JS_UndependString(JSContext *cx, JSString *str);
 
 /*
- * Return JS_TRUE if C (char []) strings passed via the API and internally
- * are UTF-8.
- */
-JS_PUBLIC_API(JSBool)
-JS_CStringsAreUTF8(void);
-
-/*
- * Update the value to be returned by JS_CStringsAreUTF8(). Once set, it
- * can never be changed. This API must be called before the first call to
- * JS_NewRuntime.
- */
-JS_PUBLIC_API(void)
-JS_SetCStringsAreUTF8(void);
-
-/*
- * Character encoding support.
- *
- * For both JS_EncodeCharacters and JS_DecodeBytes, set *dstlenp to the size
- * of the destination buffer before the call; on return, *dstlenp contains the
- * number of bytes (JS_EncodeCharacters) or jschars (JS_DecodeBytes) actually
- * stored.  To determine the necessary destination buffer size, make a sizing
- * call that passes NULL for dst.
+ * For JS_DecodeBytes, set *dstlenp to the size of the destination buffer before
+ * the call; on return, *dstlenp contains the number of jschars actually stored.
+ * To determine the necessary destination buffer size, make a sizing call that
+ * passes NULL for dst.
  *
  * On errors, the functions report the error. In that case, *dstlenp contains
  * the number of characters or bytes transferred so far.  If cx is NULL, no
  * error is reported on failure, and the functions simply return JS_FALSE.
  *
- * NB: Neither function stores an additional zero byte or jschar after the
+ * NB: This function does not store an additional zero byte or jschar after the
  * transcoded string.
- *
- * If JS_CStringsAreUTF8() is true then JS_EncodeCharacters encodes to
- * UTF-8, and JS_DecodeBytes decodes from UTF-8, which may create additional
- * errors if the character sequence is malformed.  If UTF-8 support is
- * disabled, the functions deflate and inflate, respectively.
- *
- * JS_DecodeUTF8() always behaves the same independently of JS_CStringsAreUTF8().
  */
-JS_PUBLIC_API(JSBool)
-JS_EncodeCharacters(JSContext *cx, const jschar *src, size_t srclen, char *dst,
-                    size_t *dstlenp);
-
 JS_PUBLIC_API(JSBool)
 JS_DecodeBytes(JSContext *cx, const char *src, size_t srclen, jschar *dst,
                size_t *dstlenp);
-
-JS_PUBLIC_API(JSBool)
-JS_DecodeUTF8(JSContext *cx, const char *src, size_t srclen, jschar *dst,
-              size_t *dstlenp);
 
 /*
  * A variation on JS_EncodeCharacters where a null terminated string is
@@ -5649,16 +5386,9 @@ JS_GetStringEncodingLength(JSContext *cx, JSString *str);
  * of bytes that are necessary to encode the string. If that exceeds the
  * length parameter, the string will be cut and only length bytes will be
  * written into the buffer.
- *
- * If JS_CStringsAreUTF8() is true, the string does not fit into the buffer
- * and the the first length bytes ends in the middle of utf-8 encoding for
- * some character, then such partial utf-8 encoding is replaced by zero bytes.
- * This way the result always represents the valid UTF-8 sequence.
  */
 JS_PUBLIC_API(size_t)
 JS_EncodeStringToBuffer(JSString *str, char *buffer, size_t length);
-
-#ifdef __cplusplus
 
 class JSAutoByteString {
   public:
@@ -5711,8 +5441,6 @@ class JSAutoByteString {
     JSAutoByteString(const JSAutoByteString &another);
     JSAutoByteString &operator=(const JSAutoByteString &another);
 };
-
-#endif
 
 /************************************************************************/
 /*
@@ -5777,9 +5505,6 @@ JS_StructuredClone(JSContext *cx, jsval v, jsval *vp,
                    const JSStructuredCloneCallbacks *optionalCallbacks,
                    void *closure);
 
-#ifdef __cplusplus
-JS_END_EXTERN_C
-
 /* RAII sugar for JS_WriteStructuredClone. */
 class JS_PUBLIC_API(JSAutoStructuredCloneBuffer) {
     uint64_t *data_;
@@ -5837,9 +5562,6 @@ class JS_PUBLIC_API(JSAutoStructuredCloneBuffer) {
     JSAutoStructuredCloneBuffer(const JSAutoStructuredCloneBuffer &other);
     JSAutoStructuredCloneBuffer &operator=(const JSAutoStructuredCloneBuffer &other);
 };
-
-JS_BEGIN_EXTERN_C
-#endif
 
 /* API for implementing custom serialization behavior (for ImageData, File, etc.) */
 
@@ -5931,6 +5653,11 @@ JS_ReportErrorNumberVA(JSContext *cx, JSErrorCallback errorCallback,
 extern JS_PUBLIC_API(void)
 JS_ReportErrorNumberUC(JSContext *cx, JSErrorCallback errorCallback,
                      void *userRef, const unsigned errorNumber, ...);
+
+extern JS_PUBLIC_API(void)
+JS_ReportErrorNumberUCArray(JSContext *cx, JSErrorCallback errorCallback,
+                            void *userRef, const unsigned errorNumber,
+                            const jschar **args);
 
 /*
  * As above, but report a warning instead (JSREPORT_IS_WARNING(report.flags)).
@@ -6175,9 +5902,6 @@ JS_ClearRuntimeThread(JSRuntime *rt);
 extern JS_PUBLIC_API(void)
 JS_SetRuntimeThread(JSRuntime *rt);
 
-#ifdef __cplusplus
-JS_END_EXTERN_C
-
 class JSAutoSetRuntimeThread
 {
     JSRuntime *runtime;
@@ -6191,9 +5915,6 @@ class JSAutoSetRuntimeThread
         JS_ClearRuntimeThread(runtime);
     }
 };
-
-JS_BEGIN_EXTERN_C
-#endif
 
 /************************************************************************/
 
@@ -6211,7 +5932,7 @@ JS_IsConstructing(JSContext *cx, const jsval *vp)
     JSObject *callee = JSVAL_TO_OBJECT(JS_CALLEE(cx, vp));
     if (JS_ObjectIsFunction(cx, callee)) {
         JSFunction *fun = JS_ValueToFunction(cx, JS_CALLEE(cx, vp));
-        JS_ASSERT((JS_GetFunctionFlags(fun) & JSFUN_CONSTRUCTOR) != 0);
+        JS_ASSERT(JS_IsConstructor(fun));
     } else {
         JS_ASSERT(JS_GetClass(callee)->construct != NULL);
     }
@@ -6279,7 +6000,5 @@ JS_DecodeScript(JSContext *cx, const void *data, uint32_t length,
 extern JS_PUBLIC_API(JSObject *)
 JS_DecodeInterpretedFunction(JSContext *cx, const void *data, uint32_t length,
                              JSPrincipals *principals, JSPrincipals *originPrincipals);
-
-JS_END_EXTERN_C
 
 #endif /* jsapi_h___ */
