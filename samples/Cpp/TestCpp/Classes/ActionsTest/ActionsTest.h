@@ -306,6 +306,63 @@ public:
     virtual std::string subtitle();
 };
 
+class ActionStacked : public ActionsDemo
+{
+public:
+    virtual void onEnter();
+    virtual std::string title();
+    virtual std::string subtitle();
+    virtual void addNewSpriteWithCoords(CCPoint p);
+    virtual void runActionsInSprite(CCSprite* sprite);
+    virtual void ccTouchesEnded(CCSet* touches, CCEvent* event);
+};
+
+class ActionMoveStacked : public ActionStacked
+{
+public:
+    virtual std::string title();
+    virtual void runActionsInSprite(CCSprite* sprite);
+};
+
+class ActionMoveJumpStacked : public ActionStacked
+{
+public:
+    virtual std::string title();
+    virtual void runActionsInSprite(CCSprite* sprite);
+};
+
+class ActionMoveBezierStacked : public ActionStacked
+{
+public:
+    virtual std::string title();
+    virtual void runActionsInSprite(CCSprite* sprite);
+};
+
+class ActionCatmullRomStacked : public ActionsDemo
+{
+public:
+    virtual ~ActionCatmullRomStacked();
+    virtual void draw();
+    virtual void onEnter();
+    virtual std::string title();
+    virtual std::string subtitle();
+private:
+    CCPointArray* _array1;
+    CCPointArray* _array2;
+};
+
+class ActionCardinalSplineStacked : public ActionsDemo
+{
+public:
+    virtual ~ActionCardinalSplineStacked();
+    virtual void draw();
+    virtual void onEnter();
+    virtual std::string title();
+    virtual std::string subtitle();
+private:
+    CCPointArray* _array;
+};
+
 class Issue1305 : public ActionsDemo
 {
 public:

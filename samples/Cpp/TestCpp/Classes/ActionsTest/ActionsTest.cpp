@@ -2,141 +2,141 @@
 #include "../testResource.h"
 #include "cocos2d.h"
 
+TESTLAYER_CREATE_FUNC(ActionManual);
+TESTLAYER_CREATE_FUNC(ActionMove);
+TESTLAYER_CREATE_FUNC(ActionRotate);
+TESTLAYER_CREATE_FUNC(ActionScale);
+TESTLAYER_CREATE_FUNC(ActionSkew);
+TESTLAYER_CREATE_FUNC(ActionRotationalSkew);
+TESTLAYER_CREATE_FUNC(ActionRotationalSkewVSStandardSkew);
+TESTLAYER_CREATE_FUNC(ActionSkewRotateScale);
+TESTLAYER_CREATE_FUNC(ActionJump);
+TESTLAYER_CREATE_FUNC(ActionCardinalSpline);
+TESTLAYER_CREATE_FUNC(ActionCatmullRom);
+TESTLAYER_CREATE_FUNC(ActionBezier);
+TESTLAYER_CREATE_FUNC(ActionBlink);
+TESTLAYER_CREATE_FUNC(ActionFade);
+TESTLAYER_CREATE_FUNC(ActionTint);
+TESTLAYER_CREATE_FUNC(ActionAnimate);
+TESTLAYER_CREATE_FUNC(ActionSequence);
+TESTLAYER_CREATE_FUNC(ActionSequence2);
+TESTLAYER_CREATE_FUNC(ActionSpawn);
+TESTLAYER_CREATE_FUNC(ActionReverse);
+TESTLAYER_CREATE_FUNC(ActionDelayTime);
+TESTLAYER_CREATE_FUNC(ActionRepeat);
+TESTLAYER_CREATE_FUNC(ActionRepeatForever);
+TESTLAYER_CREATE_FUNC(ActionRotateToRepeat);
+TESTLAYER_CREATE_FUNC(ActionRotateJerk);
+TESTLAYER_CREATE_FUNC(ActionCallFunc);
+TESTLAYER_CREATE_FUNC(ActionCallFuncND);
+TESTLAYER_CREATE_FUNC(ActionReverseSequence);
+TESTLAYER_CREATE_FUNC(ActionReverseSequence2);
+TESTLAYER_CREATE_FUNC(ActionOrbit);
+TESTLAYER_CREATE_FUNC(ActionFollow);
+TESTLAYER_CREATE_FUNC(ActionTargeted);
+TESTLAYER_CREATE_FUNC(ActionMoveStacked);
+TESTLAYER_CREATE_FUNC(ActionMoveJumpStacked);
+TESTLAYER_CREATE_FUNC(ActionMoveBezierStacked);
+TESTLAYER_CREATE_FUNC(ActionCardinalSplineStacked);
+TESTLAYER_CREATE_FUNC(ActionCatmullRomStacked);
+TESTLAYER_CREATE_FUNC(PauseResumeActions);
+TESTLAYER_CREATE_FUNC(Issue1305);
+TESTLAYER_CREATE_FUNC(Issue1305_2);
+TESTLAYER_CREATE_FUNC(Issue1288);
+TESTLAYER_CREATE_FUNC(Issue1288_2);
+TESTLAYER_CREATE_FUNC(Issue1327);
+TESTLAYER_CREATE_FUNC(Issue1398);
 
-CCLayer* NextAction();
-CCLayer* BackAction();
-CCLayer* RestartAction();
 
-static int s_nActionIdx = -1;
+static NEWTESTFUNC createFunctions[] = {
+    CF(ActionManual),
+    CF(ActionMove),
+    CF(ActionRotate),
+    CF(ActionScale),
+    CF(ActionSkew),
+    CF(ActionRotationalSkew),
+    CF(ActionRotationalSkewVSStandardSkew),
+    CF(ActionSkewRotateScale),
+    CF(ActionJump),
+    CF(ActionCardinalSpline),
+    CF(ActionCatmullRom),
+    CF(ActionBezier),
+    CF(ActionBlink),
+    CF(ActionFade),
+    CF(ActionTint),
+    CF(ActionAnimate),
+    CF(ActionSequence),
+    CF(ActionSequence2),
+    CF(ActionSpawn),
+    CF(ActionReverse),
+    CF(ActionDelayTime),
+    CF(ActionRepeat),
+    CF(ActionRepeatForever),
+    CF(ActionRotateToRepeat),
+    CF(ActionRotateJerk),
+    CF(ActionCallFunc),
+    CF(ActionCallFuncND),
+    CF(ActionReverseSequence),
+    CF(ActionReverseSequence2),
+    CF(ActionOrbit),
+    CF(ActionFollow),
+    CF(ActionTargeted),
+    CF(ActionMoveStacked),
+    CF(ActionMoveJumpStacked),
+    CF(ActionMoveBezierStacked),
+    CF(ActionCardinalSplineStacked),
+    CF(ActionCatmullRomStacked),
+    CF(PauseResumeActions),
+    CF(Issue1305),
+    CF(Issue1305_2),
+    CF(Issue1288),
+    CF(Issue1288_2),
+    CF(Issue1327),
+    CF(Issue1398)
+};
 
-CCLayer* CreateLayer(int nIndex)
+static int sceneIdx=-1;
+#define MAX_LAYER (sizeof(createFunctions) / sizeof(createFunctions[0]))
+
+static CCLayer* nextAction()
 {
-    CCLayer * pLayer = NULL;
-
-    switch (nIndex)
-    {
-        case ACTION_MANUAL_LAYER:
-            pLayer = new ActionManual(); break;
-        case ACTION_MOVE_LAYER:
-            pLayer = new ActionMove(); break;
-        case ACTION_SCALE_LAYER:
-            pLayer = new ActionScale(); break;
-        case ACTION_ROTATE_LAYER:
-            pLayer = new ActionRotate(); break;
-        case ACTION_SKEW_LAYER:
-            pLayer = new ActionSkew(); break;
-        case ACTION_ROTATIONAL_SKEW_LAYER:
-            pLayer = new ActionRotationalSkew(); break;
-        case ACTION_ROTATIONAL_SKEW_VS_STANDARD_SKEW_LAYER:
-            pLayer = new ActionRotationalSkewVSStandardSkew(); break;
-        case ACTION_SKEWROTATE_LAYER:
-            pLayer = new ActionSkewRotateScale(); break;
-        case ACTION_JUMP_LAYER:
-            pLayer = new ActionJump(); break;
-        case ACTION_BEZIER_LAYER:
-            pLayer = new ActionBezier(); break;
-        case ACTION_BLINK_LAYER:
-            pLayer = new ActionBlink(); break;
-        case ACTION_FADE_LAYER:
-            pLayer = new ActionFade(); break;
-        case ACTION_TINT_LAYER:
-            pLayer = new ActionTint(); break;
-        case ACTION_ANIMATE_LAYER:
-            pLayer = new ActionAnimate(); break;
-        case ACTION_SEQUENCE_LAYER:
-            pLayer = new ActionSequence(); break;
-        case ACTION_SEQUENCE2_LAYER:
-            pLayer = new ActionSequence2(); break;
-        case ACTION_SPAWN_LAYER:
-            pLayer = new ActionSpawn(); break;
-        case ACTION_REVERSE:
-            pLayer = new ActionReverse(); break;
-        case ACTION_DELAYTIME_LAYER:
-            pLayer = new ActionDelayTime(); break;
-        case ACTION_REPEAT_LAYER:
-            pLayer = new ActionRepeat(); break;
-        case ACTION_REPEATEFOREVER_LAYER:
-            pLayer = new ActionRepeatForever(); break;
-        case ACTION_ROTATETOREPEATE_LAYER:
-            pLayer = new ActionRotateToRepeat(); break;
-        case ACTION_ROTATEJERK_LAYER:
-            pLayer = new ActionRotateJerk(); break;    
-        case ACTION_CALLFUNC_LAYER:
-            pLayer = new ActionCallFunc(); break;
-        case ACTION_CALLFUNCND_LAYER:
-            pLayer = new ActionCallFuncND(); break;
-        case ACTION_REVERSESEQUENCE_LAYER:
-            pLayer = new ActionReverseSequence(); break;
-        case ACTION_REVERSESEQUENCE2_LAYER:
-            pLayer = new ActionReverseSequence2(); break;
-        case ACTION_ORBIT_LAYER:
-            pLayer = new ActionOrbit(); break;
-        case ACTION_FLLOW_LAYER:
-            pLayer = new ActionFollow(); break;
-        case ACTION_TARGETED_LAYER:
-            pLayer = new ActionTargeted(); break;
-        case ACTION_ISSUE1305_LAYER:
-            pLayer = new Issue1305(); break;
-        case ACTION_ISSUE1305_2_LAYER:
-            pLayer = new Issue1305_2(); break;
-        case ACTION_ISSUE1288_LAYER:
-            pLayer = new Issue1288(); break;
-        case ACTION_ISSUE1288_2_LAYER:
-            pLayer = new Issue1288_2(); break;
-        case ACTION_ISSUE1327_LAYER:
-            pLayer = new Issue1327(); break;
-        case ACTION_ISSUE1398_LAYER:
-            pLayer = new Issue1398(); break;
-        case ACTION_CARDINALSPLINE_LAYER:
-            pLayer = new ActionCardinalSpline(); break;
-        case ACTION_CATMULLROM_LAYER:
-            pLayer = new ActionCatmullRom(); break;
-        case PAUSERESUMEACTIONS_LAYER:
-            pLayer = new PauseResumeActions(); break;
-
-    default:
-        break;
-    }
-
-    return pLayer;
-}
-
-CCLayer* NextAction()
-{
-    ++s_nActionIdx;
-    s_nActionIdx = s_nActionIdx % ACTION_LAYER_COUNT;
-
-    CCLayer* pLayer = CreateLayer(s_nActionIdx);
+    sceneIdx++;
+    sceneIdx = sceneIdx % MAX_LAYER;
+    
+    CCLayer* pLayer = (createFunctions[sceneIdx])();
+    pLayer->init();
     pLayer->autorelease();
-
+    
     return pLayer;
 }
 
-CCLayer* BackAction()
+static CCLayer* backAction()
 {
-    --s_nActionIdx;
-    if( s_nActionIdx < 0 )
-        s_nActionIdx += ACTION_LAYER_COUNT;    
-
-    CCLayer* pLayer = CreateLayer(s_nActionIdx);
+    sceneIdx--;
+    int total = MAX_LAYER;
+    if( sceneIdx < 0 )
+        sceneIdx += total;
+    
+    CCLayer* pLayer = (createFunctions[sceneIdx])();
+    pLayer->init();
     pLayer->autorelease();
-
+    
     return pLayer;
 }
 
-CCLayer* RestartAction()
+static CCLayer* restartAction()
 {
-    CCLayer* pLayer = CreateLayer(s_nActionIdx);
+    CCLayer* pLayer = (createFunctions[sceneIdx])();
+    pLayer->init();
     pLayer->autorelease();
-
+    
     return pLayer;
 }
-
 
 void ActionsTestScene::runThisTest()
 {
-    s_nActionIdx = -1;
-    addChild(NextAction());
+    sceneIdx = -1;
+    addChild(nextAction());
 
     CCDirector::sharedDirector()->replaceScene(this);
 }
@@ -216,7 +216,7 @@ void ActionsDemo::onExit()
 void ActionsDemo::restartCallback(CCObject* pSender)
 {
     CCScene* s = new ActionsTestScene();
-    s->addChild( RestartAction() );
+    s->addChild( restartAction() );
     CCDirector::sharedDirector()->replaceScene(s);
     s->release();
 }
@@ -224,7 +224,7 @@ void ActionsDemo::restartCallback(CCObject* pSender)
 void ActionsDemo::nextCallback(CCObject* pSender)
 {
     CCScene* s = new ActionsTestScene();
-    s->addChild( NextAction() );
+    s->addChild( nextAction() );
     CCDirector::sharedDirector()->replaceScene(s);
     s->release();
 }
@@ -232,7 +232,7 @@ void ActionsDemo::nextCallback(CCObject* pSender)
 void ActionsDemo::backCallback(CCObject* pSender)
 {
     CCScene* s = new ActionsTestScene();
-    s->addChild( BackAction() );
+    s->addChild( backAction() );
     CCDirector::sharedDirector()->replaceScene(s);
     s->release();
 }
@@ -743,9 +743,9 @@ void ActionAnimate::onEnter()
 // TODO:
 //     observer_ = [[NSNotificationCenter defaultCenter] addObserverForName:CCAnimationFrameDisplayedNotification object:nil queue:nil usingBlock:^(NSNotification* notification) {
 // 
-//         NSDictionary *userInfo = [notification userInfo];
-//         NSLog(@"object %@ with data %@", [notification object], userInfo );
-//     }];
+//         NSDictionary *userInfo = [notification userInfo);
+//         NSLog(@"object %@ with data %@", [notification object), userInfo );
+//     });
 
 
     //
@@ -763,7 +763,7 @@ void ActionAnimate::onEnter()
 void ActionAnimate::onExit()
 {
     ActionsDemo::onExit();
-    //TODO:[[NSNotificationCenter defaultCenter] removeObserver:observer_];
+    //TODO:[[NSNotificationCenter defaultCenter] removeObserver:observer_);
 }
 
 std::string ActionAnimate::title()
@@ -1317,6 +1317,368 @@ std::string ActionTargeted::subtitle()
     return "Action that runs on another target. Useful for sequences";
 }
 
+//#pragma mark - ActionStacked
+
+void ActionStacked::onEnter()
+{
+    ActionsDemo::onEnter();
+        
+    this->centerSprites(0);
+    
+    this->setTouchEnabled(true);
+    
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    this->addNewSpriteWithCoords(ccp(s.width/2, s.height/2));
+}
+
+void ActionStacked::addNewSpriteWithCoords(CCPoint p)
+{
+    int idx = CCRANDOM_0_1() * 1400 / 100;
+    int x = (idx%5) * 85;
+    int y = (idx/5) * 121;
+    
+    
+    CCSprite *sprite = CCSprite::create("Images/grossini_dance_atlas.png", CCRectMake(x,y,85,121));
+    
+    sprite->setPosition(p);
+    this->addChild(sprite);
+    
+    this->runActionsInSprite(sprite);
+}
+
+void ActionStacked::runActionsInSprite(CCSprite *sprite)
+{
+    // override me
+}
+
+void ActionStacked::ccTouchesEnded(CCSet* touches, CCEvent* event)
+{
+    CCSetIterator it;
+    CCTouch* touch;
+
+    for( it = touches->begin(); it != touches->end(); it++)
+    {
+        touch = (CCTouch*)(*it);
+
+        if(!touch)
+            break;
+
+        CCPoint location = touch->getLocation();
+
+        addNewSpriteWithCoords( location );
+    }
+}
+
+std::string ActionStacked::title()
+{
+    return "Override me";
+}
+
+std::string ActionStacked::subtitle()
+{
+    return "Tap screen";
+}
+
+//#pragma mark - ActionMoveStacked
+
+
+void ActionMoveStacked::runActionsInSprite(CCSprite *sprite)
+{
+    sprite->runAction(
+        CCRepeatForever::create(
+                CCSequence::create(
+                CCMoveBy::create(0.05, ccp(10,10)),
+                CCMoveBy::create(0.05, ccp(-10,-10)),
+       NULL)));
+    
+    CCMoveBy* action = CCMoveBy::create(2, ccp(400,0));
+    CCMoveBy* action_back = (CCMoveBy*)action->reverse();
+    
+    sprite->runAction(
+      CCRepeatForever::create(
+        CCSequence::create(action, action_back, NULL)
+      ));
+}
+
+
+std::string ActionMoveStacked::title()
+{
+    return "Stacked CCMoveBy/To actions";
+}
+
+//#pragma mark - ActionMoveJumpStacked
+
+void ActionMoveJumpStacked::runActionsInSprite(CCSprite *sprite)
+{
+    sprite->runAction(
+          CCRepeatForever::create(
+            CCSequence::create(
+             CCMoveBy::create(0.05, ccp(10,2)),
+             CCMoveBy::create(0.05, ccp(-10,-2)),
+             NULL)));
+    
+    CCJumpBy* jump = CCJumpBy::create(2, ccp(400,0), 100, 5);
+    CCJumpBy* jump_back = (CCJumpBy*)jump->reverse();
+    
+    sprite->runAction(
+      CCRepeatForever::create(
+          CCSequence::create(jump, jump_back, NULL)
+          ));
+}
+
+std::string ActionMoveJumpStacked::title()
+{
+    return "tacked Move + Jump actions";
+}
+
+//#pragma mark - ActionMoveBezierStacked
+
+void ActionMoveBezierStacked::runActionsInSprite(CCSprite *sprite)
+{
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    
+    // sprite 1
+    ccBezierConfig bezier;
+    bezier.controlPoint_1 = ccp(0, s.height/2);
+    bezier.controlPoint_2 = ccp(300, -s.height/2);
+    bezier.endPosition = ccp(300,100);
+    
+    CCBezierBy* bezierForward = CCBezierBy::create(3, bezier);
+    CCBezierBy* bezierBack = (CCBezierBy*)bezierForward->reverse();
+    CCSequence* seq = CCSequence::create(bezierForward, bezierBack, NULL);
+    CCRepeatForever* rep = CCRepeatForever::create(seq);
+    sprite->runAction(rep);
+    
+    sprite->runAction(
+     CCRepeatForever::create(
+      CCSequence::create(
+       CCMoveBy::create(0.05, ccp(10,0)),
+       CCMoveBy::create(0.05, ccp(-10,0)),
+       NULL)));
+}
+
+std::string ActionMoveBezierStacked::title()
+{
+    return "Stacked Move + Bezier actions";
+}
+
+
+//#pragma mark - ActionCatmullRomStacked
+
+void ActionCatmullRomStacked::onEnter()
+{
+    ActionsDemo::onEnter();
+    
+    this->centerSprites(2);
+    
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    
+    //
+    // sprite 1 (By)
+    //
+    // startPosition can be any coordinate, but since the movement
+    // is relative to the Catmull Rom curve, it is better to start with (0,0).
+    //
+    
+    m_tamara->setPosition(ccp(50,50));
+    
+    CCPointArray *array = CCPointArray::create(20);
+    
+    array->addControlPoint(ccp(0,0));
+    array->addControlPoint(ccp(80,80));
+    array->addControlPoint(ccp(s.width-80,80));
+    array->addControlPoint(ccp(s.width-80,s.height-80));
+    array->addControlPoint(ccp(80,s.height-80));
+    array->addControlPoint(ccp(80,80));
+    array->addControlPoint(ccp(s.width/2, s.height/2));
+    
+    CCCatmullRomBy *action = CCCatmullRomBy::create(3, array);
+    CCCatmullRomBy* reverse = (CCCatmullRomBy*)action->reverse();
+    
+    CCSequence *seq = CCSequence::create(action, reverse, NULL);
+    
+    m_tamara->runAction(seq);
+    
+    
+    m_tamara->runAction(
+     CCRepeatForever::create(
+      CCSequence::create(
+       CCMoveBy::create(0.05, ccp(10,0)),
+       CCMoveBy::create(0.05, ccp(-10,0)),
+       NULL)));
+    
+    
+    //
+    // sprite 2 (To)
+    //
+    // The startPosition is not important here, because it uses a "To" action.
+    // The initial position will be the 1st point of the Catmull Rom path
+    //
+    
+    CCPointArray *array2 = CCPointArray::create(20);
+    
+    array2->addControlPoint(ccp(s.width/2, 30));
+    array2->addControlPoint(ccp(s.width-80,30));
+    array2->addControlPoint(ccp(s.width-80,s.height-80));
+    array2->addControlPoint(ccp(s.width/2,s.height-80));
+    array2->addControlPoint(ccp(s.width/2, 30));
+    
+    
+    CCCatmullRomTo *action2 = CCCatmullRomTo::create(3, array2);
+    CCCatmullRomTo* reverse2 = (CCCatmullRomTo*)action2->reverse();
+    
+    CCSequence *seq2 = CCSequence::create(action2, reverse2, NULL);
+    
+    m_kathia->runAction(seq2);
+    
+    
+    m_kathia->runAction(
+     CCRepeatForever::create(
+      CCSequence::create(
+       CCMoveBy::create(0.05, ccp(10,0)),
+       CCMoveBy::create(0.05, ccp(-10,0)),
+       NULL)));
+    
+    
+    array->retain();
+    _array1 = array;
+    array2->retain();
+    _array2 = array2;
+}
+
+ActionCatmullRomStacked::~ActionCatmullRomStacked()
+{
+    CC_SAFE_RELEASE(_array1);
+    CC_SAFE_RELEASE(_array2);
+}
+
+void ActionCatmullRomStacked::draw()
+{
+    ActionsDemo::draw();
+    
+    // move to 50,50 since the "by" path will start at 50,50
+    kmGLPushMatrix();
+    kmGLTranslatef(50, 50, 0);
+    ccDrawCatmullRom(_array1,50);
+    kmGLPopMatrix();
+    
+    ccDrawCatmullRom(_array2,50);
+}
+
+std::string ActionCatmullRomStacked::title()
+{
+    return "Stacked MoveBy + CatmullRom actions";
+}
+
+std::string ActionCatmullRomStacked::subtitle()
+{
+    return "MoveBy + CatmullRom at the same time in the same sprite";
+}
+
+
+//#pragma mark - ActionCardinalSplineStacked
+
+void ActionCardinalSplineStacked::onEnter()
+{
+    ActionsDemo::onEnter();
+    
+    this->centerSprites(2);
+    
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    
+    CCPointArray *array = CCPointArray::create(20);
+    
+    array->addControlPoint(ccp(0, 0));
+    array->addControlPoint(ccp(s.width/2-30,0));
+    array->addControlPoint(ccp(s.width/2-30,s.height-80));
+    array->addControlPoint(ccp(0, s.height-80));
+    array->addControlPoint(ccp(0, 0));
+    
+    
+    //
+    // sprite 1 (By)
+    //
+    // Spline with no tension (tension==0)
+    //
+    
+    
+    CCCatmullRomBy *action = (CCCatmullRomBy*)CCCardinalSplineBy::create(3, array, 0);
+    CCCatmullRomBy* reverse = (CCCatmullRomBy*)action->reverse();
+    
+    CCSequence *seq = CCSequence::create(action, reverse, NULL);
+    
+    m_tamara->setPosition(ccp(50,50));
+    m_tamara->runAction(seq);
+    
+    m_tamara->runAction(
+     CCRepeatForever::create(
+      CCSequence::create(
+       CCMoveBy::create(0.05, ccp(10,0)),
+       CCMoveBy::create(0.05, ccp(-10,0)),
+       NULL)));
+    
+    
+    //
+    // sprite 2 (By)
+    //
+    // Spline with high tension (tension==1)
+    //
+    
+    CCCatmullRomBy *action2 = (CCCatmullRomBy*)CCCardinalSplineBy::create(3, array, 1);
+    CCCatmullRomBy* reverse2 = (CCCatmullRomBy*)action2->reverse();
+    
+    CCSequence *seq2 = CCSequence::create(action2, reverse2, NULL);
+    
+    m_kathia->setPosition(ccp(s.width/2,50));
+    
+    m_kathia->runAction(seq2);
+    
+    m_kathia->runAction(
+     CCRepeatForever::create(
+      CCSequence::create(
+       CCMoveBy::create(0.05, ccp(10,0)),
+       CCMoveBy::create(0.05, ccp(-10,0)),
+       NULL)));
+    
+    
+    array->retain();
+    _array = array;
+}
+
+ActionCardinalSplineStacked::~ActionCardinalSplineStacked()
+{
+    CC_SAFE_RELEASE(_array);
+}
+
+void ActionCardinalSplineStacked::draw()
+{
+    ActionsDemo::draw();
+    
+    // move to 50,50 since the "by" path will start at 50,50
+    kmGLPushMatrix();
+    kmGLTranslatef(50, 50, 0);
+    ccDrawCardinalSpline(_array, 0, 100);
+    kmGLPopMatrix();
+    
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    
+    kmGLPushMatrix();
+    kmGLTranslatef(s.width/2, 50, 0);
+    ccDrawCardinalSpline(_array, 1, 100);
+    kmGLPopMatrix();
+}
+
+std::string ActionCardinalSplineStacked::title()
+{
+    return "Stacked MoveBy + CardinalSpline actions";
+}
+
+std::string ActionCardinalSplineStacked::subtitle()
+{
+    return "CCMoveBy + CCCardinalSplineBy/To at the same time";
+}
+
+// Issue1305
 void Issue1305::onEnter()
 {
     ActionsDemo::onEnter();
@@ -1326,7 +1688,7 @@ void Issue1305::onEnter()
     /* c++ can't support block, so we use CCCallFuncN instead.
     [spriteTmp_ runAction:[CCCallBlockN actionWithBlock:^(CCNode* node) {
         NSLog(@"This message SHALL ONLY appear when the sprite is added to the scene, NOT BEFORE");
-    }] ];
+    }] );
     */
 
     m_pSpriteTmp->runAction(CCCallFuncN::create(this, callfuncN_selector(Issue1305::log)));
@@ -1376,19 +1738,19 @@ void Issue1305_2::onEnter()
     /* c++ can't support block, so we use CCCallFuncN instead.
     id act2 = [CCCallBlock actionWithBlock:^{
         NSLog(@"1st block");
-    }];
-    id act3 = [CCMoveBy create:2 position:ccp(0, -100)];
+    });
+    id act3 = [CCMoveBy create:2, ccp(0, -100));
     id act4 = [CCCallBlock actionWithBlock:^{
         NSLog(@"2nd block");
-    }];
-    id act5 = [CCMoveBy create:2 position:ccp(100, -100)];
+    });
+    id act5 = [CCMoveBy create:2, ccp(100, -100));
     id act6 = [CCCallBlock actionWithBlock:^{
         NSLog(@"3rd block");
-    }];
-    id act7 = [CCMoveBy create:2 position:ccp(-100, 0)];
+    });
+    id act7 = [CCMoveBy create:2, ccp(-100, 0));
     id act8 = [CCCallBlock actionWithBlock:^{
         NSLog(@"4th block");
-    }];
+    });
     */
 
     CCCallFunc* act2 = CCCallFunc::create(this, callfunc_selector(Issue1305_2::printLog1));
@@ -1401,7 +1763,7 @@ void Issue1305_2::onEnter()
 
     CCFiniteTimeAction* actF = CCSequence::create(act1, act2, act3, act4, act5, act6, act7, act8, NULL);
 
-    //    [spr runAction:actF];
+    //    [spr runAction:actF);
     CCDirector::sharedDirector()->getActionManager()->addAction(actF ,spr, false);
 
 }
@@ -1579,15 +1941,15 @@ void ActionCatmullRom::onEnter()
     
     CCSize s = CCDirector::sharedDirector()->getWinSize();
     
-	//
-	// sprite 1 (By)
-	//
-	// startPosition can be any coordinate, but since the movement
-	// is relative to the Catmull Rom curve, it is better to start with (0,0).
-	//
-	
+    //
+    // sprite 1 (By)
+    //
+    // startPosition can be any coordinate, but since the movement
+    // is relative to the Catmull Rom curve, it is better to start with (0,0).
+    //
+    
     m_tamara->setPosition(ccp(50, 50));
-	
+    
     CCPointArray *array = CCPointArray::create(20);
     
     array->addControlPoint(ccp(0, 0));
@@ -1600,18 +1962,18 @@ void ActionCatmullRom::onEnter()
     
     CCCatmullRomBy *action = CCCatmullRomBy::create(3, array);
     CCFiniteTimeAction *reverse = action->reverse();
-	
+    
     CCFiniteTimeAction *seq = CCSequence::create(action, reverse, NULL);
-	
+    
     m_tamara->runAction(seq);
-	
-	
-	//
-	// sprite 2 (To)
-	//
-	// The startPosition is not important here, because it uses a "To" action.
-	// The initial position will be the 1st point of the Catmull Rom path
-	//    
+    
+    
+    //
+    // sprite 2 (To)
+    //
+    // The startPosition is not important here, because it uses a "To" action.
+    // The initial position will be the 1st point of the Catmull Rom path
+    //    
     
     CCPointArray *array2 = CCPointArray::create(20);
     
@@ -1623,9 +1985,9 @@ void ActionCatmullRom::onEnter()
     
     CCCatmullRomTo *action2 = CCCatmullRomTo::create(3, array2);
     CCFiniteTimeAction *reverse2 = action2->reverse();
-	
+    
     CCFiniteTimeAction *seq2 = CCSequence::create(action2, reverse2, NULL);
-	
+    
     m_kathia->runAction(seq2);
     
     m_pArray1 = array;
@@ -1644,13 +2006,13 @@ void ActionCatmullRom::draw()
 {
     ActionsDemo::draw();
     
-	// move to 50,50 since the "by" path will start at 50,50
-	kmGLPushMatrix();
-	kmGLTranslatef(50, 50, 0);
-	ccDrawCatmullRom(m_pArray1, 50);
-	kmGLPopMatrix();
+    // move to 50,50 since the "by" path will start at 50,50
+    kmGLPushMatrix();
+    kmGLTranslatef(50, 50, 0);
+    ccDrawCatmullRom(m_pArray1, 50);
+    kmGLPopMatrix();
     
-	ccDrawCatmullRom(m_pArray2,50);
+    ccDrawCatmullRom(m_pArray2,50);
 }
 
 string ActionCatmullRom::title()
@@ -1668,9 +2030,9 @@ string ActionCatmullRom::subtitle()
 void ActionCardinalSpline::onEnter()
 {
     ActionsDemo::onEnter();
-	
+    
     this->centerSprites(2);
-	
+    
     CCSize s = CCDirector::sharedDirector()->getWinSize();
     
     CCPointArray *array = CCPointArray::create(20);
@@ -1681,34 +2043,34 @@ void ActionCardinalSpline::onEnter()
     array->addControlPoint(ccp(0, s.height-80));
     array->addControlPoint(ccp(0, 0));
     
-	//
-	// sprite 1 (By)
-	//
-	// Spline with no tension (tension==0)
-	//
+    //
+    // sprite 1 (By)
+    //
+    // Spline with no tension (tension==0)
+    //
     
     CCCardinalSplineBy *action = CCCardinalSplineBy::create(3, array, 0);
     CCActionInterval *reverse = action->reverse();
-	
+    
     CCFiniteTimeAction *seq = CCSequence::create(action, reverse, NULL);
-	
+    
     m_tamara->setPosition(ccp(50, 50));
     m_tamara->runAction(seq);
-	
-	//
-	// sprite 2 (By)
-	//
-	// Spline with high tension (tension==1)
-	//
+    
+    //
+    // sprite 2 (By)
+    //
+    // Spline with high tension (tension==1)
+    //
     
     CCCardinalSplineBy *action2 = CCCardinalSplineBy::create(3, array, 1);
     CCActionInterval *reverse2 = action2->reverse();
-	
+    
     CCFiniteTimeAction *seq2 = CCSequence::create(action2, reverse2, NULL);
-	
+    
     m_kathia->setPosition(ccp(s.width/2, 50));
     m_kathia->runAction(seq2);
-	
+    
     m_pArray = array;
     array->retain();
 }
@@ -1721,24 +2083,24 @@ ActionCardinalSpline::~ActionCardinalSpline()
 void ActionCardinalSpline::draw()
 {
     ActionsDemo::draw();
-	
-	// move to 50,50 since the "by" path will start at 50,50
-	kmGLPushMatrix();
-	kmGLTranslatef(50, 50, 0);
-	ccDrawCardinalSpline(m_pArray, 0, 100);
-	kmGLPopMatrix();
+    
+    // move to 50,50 since the "by" path will start at 50,50
+    kmGLPushMatrix();
+    kmGLTranslatef(50, 50, 0);
+    ccDrawCardinalSpline(m_pArray, 0, 100);
+    kmGLPopMatrix();
     
     CCSize s = CCDirector::sharedDirector()->getWinSize();
     
-	kmGLPushMatrix();
-	kmGLTranslatef(s.width/2, 50, 0);
-	ccDrawCardinalSpline(m_pArray, 1, 100);
-	kmGLPopMatrix();
+    kmGLPushMatrix();
+    kmGLTranslatef(s.width/2, 50, 0);
+    ccDrawCardinalSpline(m_pArray, 1, 100);
+    kmGLPopMatrix();
 }
 
 string ActionCardinalSpline::title()
 {
-    return "CardinalSplineBy / CardinalSplineAt";
+    return "CardinalSplineBy / CardinalSplineTo";
 }
 
 string ActionCardinalSpline::subtitle()
@@ -1763,7 +2125,7 @@ PauseResumeActions::~PauseResumeActions()
 void PauseResumeActions::onEnter()
 {
     ActionsDemo::onEnter();
-	
+    
     this->centerSprites(2);
     
     m_tamara->runAction(CCRepeatForever::create(CCRotateBy::create(3, 360)));
