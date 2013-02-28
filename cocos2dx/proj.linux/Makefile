@@ -104,6 +104,7 @@ OBJECTS = ../actions/CCAction.o \
 ../sprite_nodes/CCSpriteBatchNode.o \
 ../sprite_nodes/CCSpriteFrame.o \
 ../sprite_nodes/CCSpriteFrameCache.o \
+../support/ccUTF8.o \
 ../support/CCPointExtension.o \
 ../support/CCProfiling.o \
 ../support/CCUserDefault.o \
