@@ -1267,8 +1267,8 @@ void CCNode::updateTransform()
 
 // CCNodeRGBA
 CCNodeRGBA::CCNodeRGBA()
-: _displayedOpacity (0)
-, _realOpacity(0)
+: _displayedOpacity (255)
+, _realOpacity(255)
 , _displayedColor(ccc3(0,0,0))
 , _realColor(ccc3(0,0,0))
 , _cascadeColorEnabled(false)
@@ -1366,7 +1366,7 @@ void CCNodeRGBA::setColor(const ccColor3B& color)
             parentColor = parent->getDisplayedColor(); 
         }
         
-        CCRGBAProtocol::updateDisplayedColor(parentColor);
+        updateDisplayedColor(parentColor);
 	}
 }
 

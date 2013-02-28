@@ -788,16 +788,12 @@ void CCDirector::getFPSImageData(unsigned char** datapointer, unsigned int* leng
 }
 
 void CCDirector::createStatsLabel()
-{
-    CCTexture2D *texture;
-	CCTextureCache *textureCache = CCTextureCache::sharedTextureCache();
-    
+{    
     if( m_pFPSLabel && m_pSPFLabel ) 
     {
         CC_SAFE_RELEASE_NULL(m_pFPSLabel);
         CC_SAFE_RELEASE_NULL(m_pSPFLabel);
         CC_SAFE_RELEASE_NULL(m_pDrawsLabel);
-        textureCache->removeTextureForKey("cc_fps_images");
         CCFileUtils::sharedFileUtils()->purgeCachedEntries();
     }
 
@@ -811,11 +807,11 @@ void CCDirector::createStatsLabel()
         fontSize = (int)(m_obWinSizeInPoints.width / 320.0f * 24);
     }
     
-    m_pFPSLabel = CCLabelAtlas::create("00.0", texture, 12, 32, '.');
+    m_pFPSLabel = CCLabelTTF::create("00.0", "Arial", fontSize);
     m_pFPSLabel->retain();
-    m_pSPFLabel = CCLabelAtlas::create("0.000", texture, 12, 32, '.');
+    m_pSPFLabel = CCLabelTTF::create("0.000", "Arial", fontSize);
     m_pSPFLabel->retain();
-    m_pDrawsLabel = CCLabelAtlas::create("000", texture, 12, 32, '.');
+    m_pDrawsLabel = CCLabelTTF::create("000", "Arial", fontSize);
     m_pDrawsLabel->retain();
 
     CCSize contentSize = m_pDrawsLabel->getContentSize();

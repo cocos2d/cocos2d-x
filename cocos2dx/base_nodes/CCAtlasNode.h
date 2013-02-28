@@ -68,8 +68,6 @@ protected:
 
     // protocol variables
     bool m_bIsOpacityModifyRGB;
-    bool isOpacityModifyRGB();
-    void setOpacityModifyRGB(bool isOpacityModifyRGB);
     
     CC_PROPERTY(ccBlendFunc, m_tBlendFunc, BlendFunc);
 
@@ -105,6 +103,12 @@ public:
 
     /** sets a new texture. it will be retained*/
     virtual void setTexture(CCTexture2D *texture);
+    
+    virtual bool isOpacityModifyRGB();
+    virtual void setOpacityModifyRGB(bool isOpacityModifyRGB);
+    virtual const ccColor3B& getColor(void);
+    virtual void setColor(const ccColor3B& color);
+    virtual void setOpacity(GLubyte opacity);
 
 private :
     void calculateMaxItems();
