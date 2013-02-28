@@ -3265,6 +3265,30 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
+		<key>libs/cocos2dx/support/ccUTF8.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>support</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/support/ccUTF8.cpp</string>
+		</dict>
+		<key>libs/cocos2dx/support/ccUTF8.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>support</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/support/ccUTF8.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
 		<key>libs/cocos2dx/support/CCVertex.cpp</key>
 		<dict>
 			<key>Group</key>
@@ -4144,6 +4168,8 @@
 		<string>libs/cocos2dx/support/CCUserDefault.h</string>
 		<string>libs/cocos2dx/support/ccUtils.cpp</string>
 		<string>libs/cocos2dx/support/ccUtils.h</string>
+		<string>libs/cocos2dx/support/ccUTF8.cpp</string>
+		<string>libs/cocos2dx/support/ccUTF8.h</string>
 		<string>libs/cocos2dx/support/CCVertex.cpp</string>
 		<string>libs/cocos2dx/support/CCVertex.h</string>
 		<string>libs/cocos2dx/support/data_support/ccCArray.cpp</string>
