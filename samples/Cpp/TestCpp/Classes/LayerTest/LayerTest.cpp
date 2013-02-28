@@ -6,62 +6,75 @@ enum
     kTagLayer = 1,
 };
 
-CCLayer* nextTestAction();
-CCLayer* backTestAction();
-CCLayer* restartTestAction();
+TESTLAYER_CREATE_FUNC(LayerTestCascadingOpacityA);
+TESTLAYER_CREATE_FUNC(LayerTestCascadingOpacityB);
+TESTLAYER_CREATE_FUNC(LayerTestCascadingOpacityC);
+TESTLAYER_CREATE_FUNC(LayerTestCascadingColorA);
+TESTLAYER_CREATE_FUNC(LayerTestCascadingColorB);
+TESTLAYER_CREATE_FUNC(LayerTestCascadingColorC);
+TESTLAYER_CREATE_FUNC(LayerTest1);
+TESTLAYER_CREATE_FUNC(LayerTest2);
+TESTLAYER_CREATE_FUNC(LayerTestBlend);
+TESTLAYER_CREATE_FUNC(LayerGradient);
+TESTLAYER_CREATE_FUNC(LayerIgnoreAnchorPointPos);
+TESTLAYER_CREATE_FUNC(LayerIgnoreAnchorPointRot);
+TESTLAYER_CREATE_FUNC(LayerIgnoreAnchorPointScale);
+TESTLAYER_CREATE_FUNC(LayerExtendedBlendOpacityTest);
 
-static int sceneIdx = -1; 
+static NEWTESTFUNC createFunctions[] = {
+    CF(LayerTestCascadingOpacityA),
+    CF(LayerTestCascadingOpacityB),
+    CF(LayerTestCascadingOpacityC),
+    CF(LayerTestCascadingColorA),
+    CF(LayerTestCascadingColorB),
+    CF(LayerTestCascadingColorC),
+    CF(LayerTest1),
+    CF(LayerTest2),
+    CF(LayerTestBlend),
+    CF(LayerGradient),
+    CF(LayerIgnoreAnchorPointPos),
+    CF(LayerIgnoreAnchorPointRot),
+    CF(LayerIgnoreAnchorPointScale),
+    CF(LayerExtendedBlendOpacityTest)
+};
 
-#define MAX_LAYER    8
+static int sceneIdx=-1;
+#define MAX_LAYER (sizeof(createFunctions) / sizeof(createFunctions[0]))
 
-CCLayer* createTestLayer(int nIndex)
-{
-    switch(nIndex)
-    {
-        case 0: return new LayerTest1();
-        case 1: return new LayerTest2();
-        case 2: return new LayerTestBlend();
-        case 3: return new LayerGradient();
-        case 4: return new LayerIgnoreAnchorPointPos();
-        case 5: return new LayerIgnoreAnchorPointRot();
-        case 6: return new LayerIgnoreAnchorPointScale();
-        case 7: return new LayerExtendedBlendOpacityTest();
-    }
-
-    return NULL;
-}
-
-CCLayer* nextTestAction()
+static CCLayer* nextAction()
 {
     sceneIdx++;
     sceneIdx = sceneIdx % MAX_LAYER;
-
-    CCLayer* pLayer = createTestLayer(sceneIdx);
+    
+    CCLayer* pLayer = (createFunctions[sceneIdx])();
+    pLayer->init();
     pLayer->autorelease();
-
+    
     return pLayer;
 }
 
-CCLayer* backTestAction()
+static CCLayer* backAction()
 {
     sceneIdx--;
     int total = MAX_LAYER;
     if( sceneIdx < 0 )
-        sceneIdx += total;    
+        sceneIdx += total;
     
-    CCLayer* pLayer = createTestLayer(sceneIdx);
+    CCLayer* pLayer = (createFunctions[sceneIdx])();
+    pLayer->init();
     pLayer->autorelease();
-
+    
     return pLayer;
 }
 
-CCLayer* restartTestAction()
+static CCLayer* restartAction()
 {
-    CCLayer* pLayer = createTestLayer(sceneIdx);
+    CCLayer* pLayer = (createFunctions[sceneIdx])();
+    pLayer->init();
     pLayer->autorelease();
-
+    
     return pLayer;
-} 
+}
 
 //------------------------------------------------------------------
 //
@@ -122,7 +135,7 @@ void LayerTest::onEnter()
 void LayerTest::restartCallback(CCObject* pSender)
 {
     CCScene* s = new LayerTestScene();
-    s->addChild(restartTestAction()); 
+    s->addChild(restartAction());
 
     CCDirector::sharedDirector()->replaceScene(s);
     s->release();
@@ -131,7 +144,7 @@ void LayerTest::restartCallback(CCObject* pSender)
 void LayerTest::nextCallback(CCObject* pSender)
 {
     CCScene* s = new LayerTestScene();
-    s->addChild( nextTestAction() );
+    s->addChild( nextAction() );
     CCDirector::sharedDirector()->replaceScene(s);
     s->release();
 }
@@ -139,10 +152,336 @@ void LayerTest::nextCallback(CCObject* pSender)
 void LayerTest::backCallback(CCObject* pSender)
 {
     CCScene* s = new LayerTestScene();
-    s->addChild( backTestAction() );
+    s->addChild( backAction() );
     CCDirector::sharedDirector()->replaceScene(s);
     s->release();
 } 
+
+//#pragma mark - Cascading support extensions
+
+static void setEnableRecursiveCascading(CCNode* node, bool enable)
+{
+    CCRGBAProtocol* rgba = dynamic_cast<CCRGBAProtocol*>(node);
+    if (rgba)
+    {
+        rgba->setCascadeColorEnabled(enable);
+        rgba->setCascadeOpacityEnabled(enable);
+    }
+    
+    CCObject* obj;
+    CCArray* children = node->getChildren();
+    CCARRAY_FOREACH(children, obj)
+    {
+        CCNode* child = (CCNode*)obj;
+        setEnableRecursiveCascading(child, enable);
+    }
+}
+
+// LayerTestCascadingOpacityA
+void LayerTestCascadingOpacityA::onEnter()
+{
+    LayerTest::onEnter();
+    
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    CCLayerRGBA* layer1 = CCLayerRGBA::create();
+    
+    CCSprite *sister1 = CCSprite::create("Images/grossinis_sister1.png");
+    CCSprite *sister2 = CCSprite::create("Images/grossinis_sister2.png");
+    CCLabelBMFont *label = CCLabelBMFont::create("Test", "fonts/bitmapFontTest.fnt");
+    
+    layer1->addChild(sister1);
+    layer1->addChild(sister2);
+    layer1->addChild(label);
+    this->addChild( layer1, 0, kTagLayer);
+    
+    sister1->setPosition( ccp( s.width*1/3, s.height/2));
+    sister2->setPosition( ccp( s.width*2/3, s.height/2));
+    label->setPosition( ccp( s.width/2, s.height/2));
+    
+    layer1->runAction(
+     CCRepeatForever::create(
+      CCSequence::create(
+       CCFadeTo::create(4, 0),
+       CCFadeTo::create(4, 255),
+       CCDelayTime::create(1),
+       NULL)));
+    
+    sister1->runAction(
+     CCRepeatForever::create(
+      CCSequence::create(
+       CCFadeTo::create(2, 0),
+       CCFadeTo::create(2, 255),
+       CCFadeTo::create(2, 0),
+       CCFadeTo::create(2, 255),
+       CCDelayTime::create(1),
+       NULL)));
+    
+    
+    // Enable cascading in scene
+    setEnableRecursiveCascading(this, true);
+}
+
+std::string LayerTestCascadingOpacityA::title()
+{
+    return "LayerRGBA: cascading opacity";
+}
+
+
+//  LayerTestCascadingOpacityB
+void LayerTestCascadingOpacityB::onEnter()
+{
+    LayerTest::onEnter();
+        
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    CCLayerColor* layer1 = CCLayerColor::create(ccc4(192, 0, 0, 255), s.width, s.height/2);
+    layer1->setCascadeColorEnabled(false);
+    
+    layer1->setPosition( ccp(0, s.height/2));
+    
+    CCSprite *sister1 = CCSprite::create("Images/grossinis_sister1.png");
+    CCSprite *sister2 = CCSprite::create("Images/grossinis_sister2.png");
+    CCLabelBMFont *label = CCLabelBMFont::create("Test", "fonts/bitmapFontTest.fnt");
+    
+    layer1->addChild(sister1);
+    layer1->addChild(sister2);
+    layer1->addChild(label);
+    this->addChild( layer1, 0, kTagLayer);
+    
+    sister1->setPosition( ccp( s.width*1/3, 0));
+    sister2->setPosition( ccp( s.width*2/3, 0));
+    label->setPosition( ccp( s.width/2, 0));
+    
+    layer1->runAction(
+     CCRepeatForever::create(
+      CCSequence::create(
+       CCFadeTo::create(4, 0),
+       CCFadeTo::create(4, 255),
+       CCDelayTime::create(1),
+       NULL)));
+    
+    sister1->runAction(
+     CCRepeatForever::create(
+      CCSequence::create(
+       CCFadeTo::create(2, 0),
+       CCFadeTo::create(2, 255),
+       CCFadeTo::create(2, 0),
+       CCFadeTo::create(2, 255),
+       CCDelayTime::create(1),
+       NULL)));
+    
+    // Enable cascading in scene
+    setEnableRecursiveCascading(this, true);
+}
+
+std::string LayerTestCascadingOpacityB::title()
+{
+    return "CCLayerColor: cascading opacity";
+}
+
+
+// LayerTestCascadingOpacityC
+void LayerTestCascadingOpacityC::onEnter()
+{
+    LayerTest::onEnter();
+    
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    CCLayerColor* layer1 = CCLayerColor::create(ccc4(192, 0, 0, 255), s.width, s.height/2);
+    layer1->setCascadeColorEnabled(false);
+    layer1->setCascadeOpacityEnabled(false);
+    
+    layer1->setPosition( ccp(0, s.height/2));
+    
+    CCSprite *sister1 = CCSprite::create("Images/grossinis_sister1.png");
+    CCSprite *sister2 = CCSprite::create("Images/grossinis_sister2.png");
+    CCLabelBMFont *label = CCLabelBMFont::create("Test", "fonts/bitmapFontTest.fnt");
+    
+    layer1->addChild(sister1);
+    layer1->addChild(sister2);
+    layer1->addChild(label);
+    this->addChild( layer1, 0, kTagLayer);
+    
+    sister1->setPosition( ccp( s.width*1/3, 0));
+    sister2->setPosition( ccp( s.width*2/3, 0));
+    label->setPosition( ccp( s.width/2, 0));
+    
+    layer1->runAction(
+     CCRepeatForever::create(
+      CCSequence::create(
+       CCFadeTo::create(4, 0),
+       CCFadeTo::create(4, 255),
+       CCDelayTime::create(1),
+       NULL)));
+    
+    sister1->runAction(
+     CCRepeatForever::create(
+      CCSequence::create(
+       CCFadeTo::create(2, 0),
+       CCFadeTo::create(2, 255),
+       CCFadeTo::create(2, 0),
+       CCFadeTo::create(2, 255),
+       CCDelayTime::create(1),
+       NULL)));
+}
+
+std::string LayerTestCascadingOpacityC::title()
+{
+    return "CCLayerColor: non-cascading opacity";
+}
+
+
+//#pragma mark Example LayerTestCascadingColor
+
+// LayerTestCascadingColorA
+void LayerTestCascadingColorA::onEnter()
+{
+    LayerTest::onEnter();
+    
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    CCLayerRGBA* layer1 = CCLayerRGBA::create();
+    
+    CCSprite *sister1 = CCSprite::create("Images/grossinis_sister1.png");
+    CCSprite *sister2 = CCSprite::create("Images/grossinis_sister2.png");
+    CCLabelBMFont *label = CCLabelBMFont::create("Test", "fonts/bitmapFontTest.fnt");
+    
+    layer1->addChild(sister1);
+    layer1->addChild(sister2);
+    layer1->addChild(label);
+    this->addChild( layer1, 0, kTagLayer);
+    
+    sister1->setPosition( ccp( s.width*1/3, s.height/2));
+    sister2->setPosition( ccp( s.width*2/3, s.height/2));
+    label->setPosition( ccp( s.width/2, s.height/2));
+    
+    layer1->runAction(
+     CCRepeatForever::create(
+      CCSequence::create(
+       CCTintTo::create(6, 255, 0, 255),
+       CCTintTo::create(6, 255, 255, 255),
+       CCDelayTime::create(1),
+       NULL)));
+    
+    sister1->runAction(
+     CCRepeatForever::create(
+      CCSequence::create(
+       CCTintTo::create(2, 255, 255, 0),
+       CCTintTo::create(2, 255, 255, 255),
+       CCTintTo::create(2, 0, 255, 255),
+       CCTintTo::create(2, 255, 255, 255),
+       CCTintTo::create(2, 255, 0, 255),
+       CCTintTo::create(2, 255, 255, 255),
+       CCDelayTime::create(1),
+       NULL)));
+    
+    // Enable cascading in scene
+    setEnableRecursiveCascading(this, true);
+     
+}
+
+std::string LayerTestCascadingColorA::title()
+{
+    return "LayerRGBA: cascading color";
+}
+
+
+// LayerTestCascadingColorB
+void LayerTestCascadingColorB::onEnter()
+{
+    LayerTest::onEnter();
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    CCLayerColor* layer1 = CCLayerColor::create(ccc4(255, 255, 255, 255), s.width, s.height/2);
+    
+    layer1->setPosition( ccp(0, s.height/2));
+    
+    CCSprite *sister1 = CCSprite::create("Images/grossinis_sister1.png");
+    CCSprite *sister2 = CCSprite::create("Images/grossinis_sister2.png");
+    CCLabelBMFont *label = CCLabelBMFont::create("Test", "fonts/bitmapFontTest.fnt");
+    
+    layer1->addChild(sister1);
+    layer1->addChild(sister2);
+    layer1->addChild(label);
+    this->addChild( layer1, 0, kTagLayer);
+    
+    sister1->setPosition( ccp( s.width*1/3, 0));
+    sister2->setPosition( ccp( s.width*2/3, 0));
+    label->setPosition( ccp( s.width/2, 0));
+    
+    layer1->runAction(
+     CCRepeatForever::create(
+      CCSequence::create(
+       CCTintTo::create(6, 255, 0, 255),
+       CCTintTo::create(6, 255, 255, 255),
+       CCDelayTime::create(1),
+       NULL)));
+    
+    sister1->runAction(
+     CCRepeatForever::create(
+      CCSequence::create(
+       CCTintTo::create(2, 255, 255, 0),
+       CCTintTo::create(2, 255, 255, 255),
+       CCTintTo::create(2, 0, 255, 255),
+       CCTintTo::create(2, 255, 255, 255),
+       CCTintTo::create(2, 255, 0, 255),
+       CCTintTo::create(2, 255, 255, 255),
+       CCDelayTime::create(1),
+       NULL)));
+    
+    // Enable cascading in scene
+    setEnableRecursiveCascading(this, true);
+}
+
+std::string LayerTestCascadingColorB::title()
+{
+    return "CCLayerColor: cascading color";
+}
+
+
+// LayerTestCascadingColorC
+void LayerTestCascadingColorC::onEnter()
+{
+    LayerTest::onEnter();
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    CCLayerColor* layer1 = CCLayerColor::create(ccc4(255, 255, 255, 255), s.width, s.height/2);
+    layer1->setCascadeColorEnabled(false);
+    layer1->setPosition( ccp(0, s.height/2));
+    
+    CCSprite *sister1 = CCSprite::create("Images/grossinis_sister1.png");
+    CCSprite *sister2 = CCSprite::create("Images/grossinis_sister2.png");
+    CCLabelBMFont *label = CCLabelBMFont::create("Test", "fonts/bitmapFontTest.fnt");
+    
+    layer1->addChild(sister1);
+    layer1->addChild(sister2);
+    layer1->addChild(label);
+    this->addChild( layer1, 0, kTagLayer);
+    
+    sister1->setPosition( ccp( s.width*1/3, 0));
+    sister2->setPosition( ccp( s.width*2/3, 0));
+    label->setPosition( ccp( s.width/2, 0));
+    
+    layer1->runAction(
+     CCRepeatForever::create(
+      CCSequence::create(
+       CCTintTo::create(6, 255, 0, 255),
+       CCTintTo::create(6, 255, 255, 255),
+       CCDelayTime::create(1),
+       NULL)));
+    
+    sister1->runAction(
+     CCRepeatForever::create(
+      CCSequence::create(
+       CCTintTo::create(2, 255, 255, 0),
+       CCTintTo::create(2, 255, 255, 255),
+       CCTintTo::create(2, 0, 255, 255),
+       CCTintTo::create(2, 255, 255, 255),
+       CCTintTo::create(2, 255, 0, 255),
+       CCTintTo::create(2, 255, 255, 255),
+       CCDelayTime::create(1),
+       NULL)));
+}
+
+std::string LayerTestCascadingColorC::title()
+{
+    return "CCLayerColor: non-cascading color";
+}
 
 //------------------------------------------------------------------
 //
@@ -366,7 +705,7 @@ void LayerIgnoreAnchorPointPos::onEnter()
     CCSize lsize = l->getContentSize();
     child->setPosition(ccp(lsize.width/2, lsize.height/2));
 
-    CCMenuItemFont *item = CCMenuItemFont::create("Toogle ignore anchor point", this, menu_selector(LayerIgnoreAnchorPointPos::onToggle));
+    CCMenuItemFont *item = CCMenuItemFont::create("Toggle ignore anchor point", this, menu_selector(LayerIgnoreAnchorPointPos::onToggle));
 
     CCMenu *menu = CCMenu::create(item, NULL);
     this->addChild(menu);
@@ -492,7 +831,8 @@ std::string LayerIgnoreAnchorPointScale::subtitle()
 
 void LayerTestScene::runThisTest()
 {
-    CCLayer* pLayer = nextTestAction();
+    sceneIdx = -1;
+    CCLayer* pLayer = nextAction();
     addChild(pLayer);
 
     CCDirector::sharedDirector()->replaceScene(this);
