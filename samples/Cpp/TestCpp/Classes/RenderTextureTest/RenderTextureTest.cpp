@@ -1,34 +1,37 @@
 #include "CCConfiguration.h"
 #include "RenderTextureTest.h"
+#include "testBasic.h"
 
 // Test #1 by Jason Booth (slipster216)
 // Test #3 by David Deaco (ddeaco)
 
+
+
+TESTLAYER_CREATE_FUNC(RenderTextureSave);
+TESTLAYER_CREATE_FUNC(RenderTextureIssue937);
+TESTLAYER_CREATE_FUNC(RenderTextureZbuffer);
+TESTLAYER_CREATE_FUNC(RenderTextureTestDepthStencil);
+TESTLAYER_CREATE_FUNC(RenderTextureTargetNode);
+TESTLAYER_CREATE_FUNC(SpriteRenderTextureBug);
+
+static NEWTESTFUNC createFunctions[] = {
+    CF(RenderTextureSave),
+    CF(RenderTextureIssue937),
+    CF(RenderTextureZbuffer),
+    CF(RenderTextureTestDepthStencil),
+    CF(RenderTextureTargetNode),
+    CF(SpriteRenderTextureBug),
+};
+
+#define MAX_LAYER   sizeof(createFunctions)/sizeof(createFunctions[0])
 static int sceneIdx = -1; 
-
-#define MAX_LAYER    5
-
-CCLayer* createTestCase(int nIndex)
-{
-
-    switch(nIndex)
-    {
-    case 0: return new RenderTextureSave();
-    case 1: return new RenderTextureIssue937();
-    case 2: return new RenderTextureZbuffer();    
-    case 3: return new RenderTextureTestDepthStencil();
-    case 4: return new RenderTextureTargetNode();
-    }
-
-    return NULL;
-}
 
 CCLayer* nextTestCase()
 {
     sceneIdx++;
     sceneIdx = sceneIdx % MAX_LAYER;
 
-    CCLayer* pLayer = createTestCase(sceneIdx);
+    CCLayer* pLayer = (createFunctions[sceneIdx])();
     pLayer->autorelease();
 
     return pLayer;
@@ -41,7 +44,7 @@ CCLayer* backTestCase()
     if( sceneIdx < 0 )
         sceneIdx += total;    
 
-    CCLayer* pLayer = createTestCase(sceneIdx);
+    CCLayer* pLayer = (createFunctions[sceneIdx])();
     pLayer->autorelease();
 
     return pLayer;
@@ -49,7 +52,7 @@ CCLayer* backTestCase()
 
 CCLayer* restartTestCase()
 {
-    CCLayer* pLayer = createTestCase(sceneIdx);
+    CCLayer* pLayer = (createFunctions[sceneIdx])();
     pLayer->autorelease();
 
     return pLayer;
@@ -601,3 +604,126 @@ string RenderTextureTargetNode::subtitle()
     return "Sprites should be equal and move with each frame";
 }
 
+// SpriteRenderTextureBug
+
+SpriteRenderTextureBug::SimpleSprite::SimpleSprite() : rt(NULL) {}
+
+SpriteRenderTextureBug::SimpleSprite* SpriteRenderTextureBug::SimpleSprite::create(const char* filename, const CCRect &rect)
+{
+    SimpleSprite *sprite = new SimpleSprite();
+    if (sprite && sprite->initWithFile(filename, rect))
+    {
+        sprite->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(sprite);
+    }
+    
+    return sprite;
+}
+
+void SpriteRenderTextureBug::SimpleSprite::draw()
+{
+    if (rt == NULL)
+    {
+		CCSize s = CCDirector::sharedDirector()->getWinSize();
+        rt = new CCRenderTexture();
+        rt->initWithWidthAndHeight(s.width, s.height, kCCTexture2DPixelFormat_RGBA8888);
+	}
+	rt->beginWithClear(0.0f, 0.0f, 0.0f, 1.0f);
+	rt->end();
+    
+	CC_NODE_DRAW_SETUP();
+    
+	ccBlendFunc blend = getBlendFunc();
+	ccGLBlendFunc(blend.src, blend.dst);
+    
+    ccGLBindTexture2D(getTexture()->getName());
+    
+	//
+	// Attributes
+	//
+    
+	ccGLEnableVertexAttribs(kCCVertexAttribFlag_PosColorTex);
+    
+#define kQuadSize sizeof(m_sQuad.bl)
+	long offset = (long)&m_sQuad;
+    
+	// vertex
+	int diff = offsetof( ccV3F_C4B_T2F, vertices);
+	glVertexAttribPointer(kCCVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
+    
+	// texCoods
+	diff = offsetof( ccV3F_C4B_T2F, texCoords);
+	glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
+    
+	// color
+	diff = offsetof( ccV3F_C4B_T2F, colors);
+	glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
+    
+	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+}
+
+SpriteRenderTextureBug::SpriteRenderTextureBug()
+{
+    setTouchEnabled(true);
+    
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    addNewSpriteWithCoords(ccp(s.width/2, s.height/2));
+}
+
+SpriteRenderTextureBug::SimpleSprite* SpriteRenderTextureBug::addNewSpriteWithCoords(const CCPoint& p)
+{
+    int idx = CCRANDOM_0_1() * 1400 / 100;
+	int x = (idx%5) * 85;
+	int y = (idx/5) * 121;
+    
+    SpriteRenderTextureBug::SimpleSprite *sprite = SpriteRenderTextureBug::SimpleSprite::create("Images/grossini_dance_atlas.png",
+                                                                                                CCRectMake(x,y,85,121));
+    addChild(sprite);
+    
+    sprite->setPosition(p);
+    
+	CCFiniteTimeAction *action = NULL;
+	float rd = CCRANDOM_0_1();
+    
+	if (rd < 0.20)
+        action = CCScaleBy::create(3, 2);
+	else if (rd < 0.40)
+		action = CCRotateBy::create(3, 360);
+	else if (rd < 0.60)
+		action = CCBlink::create(1, 3);
+	else if (rd < 0.8 )
+		action = CCTintBy::create(2, 0, -255, -255);
+	else
+		action = CCFadeOut::create(2);
+    
+    CCFiniteTimeAction *action_back = action->reverse();
+    CCSequence *seq = CCSequence::create(action, action_back, NULL);
+    
+    sprite->runAction(CCRepeatForever::create(seq));
+    
+    //return sprite;
+    return NULL;
+}
+
+void SpriteRenderTextureBug::ccTouchesEnded(CCSet* touches, CCEvent* event)
+{
+    CCSetIterator iter = touches->begin();
+    for(; iter != touches->end(); ++iter)
+    {
+        CCPoint location = ((CCTouch*)(*iter))->getLocation();
+        addNewSpriteWithCoords(location);
+    }
+}
+
+std::string SpriteRenderTextureBug::title()
+{
+    return "SpriteRenderTextureBug";
+}
+
+std::string SpriteRenderTextureBug::subtitle()
+{
+    return "Touch the screen. Sprite should appear on under the touch";
+}

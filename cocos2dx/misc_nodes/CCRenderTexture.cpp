@@ -464,7 +464,6 @@ void CCRenderTexture::end()
     CCDirector *director = CCDirector::sharedDirector();
     
     glBindFramebuffer(GL_FRAMEBUFFER, m_nOldFBO);
-    kmGLPopMatrix();
 
     // restore viewport
     director->setViewport();
