@@ -284,7 +284,7 @@
 				PRODUCT_NAME = CocosDenshion;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "../../cocos2dx ../../cocos2dx/platform ../../cocos2dx/platform/ios ../../cocos2dx/include ../../cocos2dx/cocoa ../../cocos2dx/kazmath/include ../../cocos2dx/sprite_nodes ../../cocos2dx/support ../../cocos2dx/script_support ../../cocos2dx/layers_scenes_transitions_nodes ../../CocosDenshion/include ../../cocos2dx/textures ../../cocos2dx/tileMap_parallax_nodes ../../cocos2dx/particle_nodes ../../cocos2dx/extensions/GUI/CCScrollView ../../cocos2dx/extensions/GUI/CCControlExtension ../../cocos2dx/extensions/GUI/CCEditBox ../../cocos2dx/extensions ../../cocos2dx/include";
+				USER_HEADER_SEARCH_PATHS = "../../cocos2dx/platform/ios ../../cocos2dx/include ../../cocos2dx/kazmath/include ../../cocos2dx/";
 				VALID_ARCHS = armv7;
 			};
 			name = Debug;
@@ -310,7 +310,7 @@
 				PRODUCT_NAME = CocosDenshion;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "../../cocos2dx ../../cocos2dx/platform ../../cocos2dx/platform/ios ../../cocos2dx/include ../../cocos2dx/cocoa ../../cocos2dx/kazmath/include ../../cocos2dx/sprite_nodes ../../cocos2dx/support ../../cocos2dx/script_support ../../cocos2dx/layers_scenes_transitions_nodes ../../CocosDenshion/include ../../cocos2dx/textures ../../cocos2dx/tileMap_parallax_nodes ../../cocos2dx/particle_nodes ../../cocos2dx/extensions/GUI/CCScrollView ../../cocos2dx/extensions/GUI/CCControlExtension ../../cocos2dx/extensions/GUI/CCEditBox ../../cocos2dx/extensions ../../cocos2dx/include";
+				USER_HEADER_SEARCH_PATHS = "../../cocos2dx/platform/ios ../../cocos2dx/include ../../cocos2dx/kazmath/include ../../cocos2dx/";
 				VALID_ARCHS = armv7;
 			};
 			name = Release;
