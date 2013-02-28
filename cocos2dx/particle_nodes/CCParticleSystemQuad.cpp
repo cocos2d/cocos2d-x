@@ -56,7 +56,7 @@ bool CCParticleSystemQuad::initWithTotalParticles(unsigned int numberOfParticles
             return false;
         }
 
-        setupIndices();
+        initIndices();
 #if CC_TEXTURE_ATLAS_USE_VAO
         setupVBOandVAO();
 #else

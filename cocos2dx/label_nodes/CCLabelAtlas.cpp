@@ -25,6 +25,7 @@ THE SOFTWARE.
 ****************************************************************************/
 #include "CCLabelAtlas.h"
 #include "textures/CCTextureAtlas.h"
+#include "textures/CCTextureCache.h"
 #include "support/CCPointExtension.h"
 #include "draw_nodes/CCDrawingPrimitives.h"
 #include "ccConfig.h"
@@ -165,7 +166,7 @@ void CCLabelAtlas::updateAtlasValues()
         quad.tr.vertices.y = (float)(m_uItemHeight);
         quad.tr.vertices.z = 0.0f;
         
-        ccColor4B c = { m_tDisplayedColor.r, m_tDisplayedColor.g, m_tDisplayedColor.b, m_cDisplayedOpacity };
+        ccColor4B c = { _displayedColor.r, _displayedColor.g, _displayedColor.b, _displayedOpacity };
         quad.tl.colors = c;
         quad.tr.colors = c;
         quad.bl.colors = c;

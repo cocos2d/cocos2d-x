@@ -489,6 +489,16 @@ void CCLayer::ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent)
 }
 
 // LayerRGBA
+CCLayerRGBA::CCLayerRGBA()
+: _displayedOpacity(255)
+, _realOpacity (255)
+, _displayedColor(ccWHITE)
+, _realColor(ccWHITE)
+, _cascadeColorEnabled(false)
+, _cascadeOpacityEnabled(false)
+{}
+
+CCLayerRGBA::~CCLayerRGBA() {}
 
 bool CCLayerRGBA::init()
 {
@@ -530,7 +540,7 @@ void CCLayerRGBA::setOpacity(GLubyte opacity)
         {
             parentOpacity = parent->getDisplayedOpacity();
         }
-        CCRGBAProtocol::updateDisplayedOpacity(parentOpacity);
+        updateDisplayedOpacity(parentOpacity);
 	}
 }
 
@@ -557,7 +567,7 @@ void CCLayerRGBA::setColor(const ccColor3B& color)
             parentColor = parent->getDisplayedColor();
         }
 
-        CCRGBAProtocol::updateDisplayedColor(parentColor);
+        updateDisplayedColor(parentColor);
 	}
 }
 
@@ -597,6 +607,26 @@ void CCLayerRGBA::updateDisplayedColor(const ccColor3B& parentColor)
             }
         }
     }
+}
+
+bool CCLayerRGBA::isCascadeOpacityEnabled()
+{
+    return _cascadeOpacityEnabled;
+}
+
+void CCLayerRGBA::setCascadeOpacityEnabled(bool cascadeOpacityEnabled)
+{
+    _cascadeOpacityEnabled = cascadeOpacityEnabled;
+}
+
+bool CCLayerRGBA::isCascadeColorEnabled()
+{
+    return _cascadeColorEnabled;
+}
+
+void CCLayerRGBA::setCascadeColorEnabled(bool cascadeColorEnabled)
+{
+    _cascadeColorEnabled = cascadeColorEnabled;
 }
 
 /// CCLayerColor

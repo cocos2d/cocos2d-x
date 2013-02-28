@@ -26,6 +26,7 @@ THE SOFTWARE.
 
 #include "CCAtlasNode.h"
 #include "textures/CCTextureAtlas.h"
+#include "textures/CCTextureCache.h"
 #include "CCDirector.h"
 #include "shaders/CCGLProgram.h"
 #include "shaders/CCShaderCache.h"
@@ -136,7 +137,7 @@ void CCAtlasNode::draw(void)
 
     ccGLBlendFunc( m_tBlendFunc.src, m_tBlendFunc.dst );
 
-    GLfloat colors[4] = {m_tColor.r / 255.0f, m_tColor.g / 255.0f, m_tColor.b / 255.0f, m_cOpacity / 255.0f};
+    GLfloat colors[4] = {_displayedColor.r / 255.0f, _displayedColor.g / 255.0f, _displayedColor.b / 255.0f, _displayedOpacity / 255.0f};
     getShaderProgram()->setUniformLocationWith4fv(m_nUniformColor, colors, 1);
 
     m_pTextureAtlas->drawNumberOfQuads(m_uQuadsToDraw, 0);
@@ -144,7 +145,7 @@ void CCAtlasNode::draw(void)
 
 // CCAtlasNode - RGBA protocol
 
-const ccColor3B& CCAtlasNode:: getColor()
+const ccColor3B& CCAtlasNode::getColor()
 {
     if(m_bIsOpacityModifyRGB)
     {
@@ -160,9 +161,9 @@ void CCAtlasNode::setColor(const ccColor3B& color3)
 
     if( m_bIsOpacityModifyRGB )
     {
-        tmp.r = tmp.r * m_displayedOpacity/255;
-        tmp.g = tmp.g * m_displayedOpacity/255;
-        tmp.b = tmp.b * m_displayedOpacity/255;
+        tmp.r = tmp.r * _displayedOpacity/255;
+        tmp.g = tmp.g * _displayedOpacity/255;
+        tmp.b = tmp.b * _displayedOpacity/255;
     }
     CCNodeRGBA::setColor(tmp);
 }

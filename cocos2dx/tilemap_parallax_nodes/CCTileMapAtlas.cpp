@@ -56,7 +56,6 @@ bool CCTileMapAtlas::initWithTileFile(const char *tile, const char *mapFile, int
 
     if( CCAtlasNode::initWithTileFile(tile, tileWidth, tileHeight, m_nItemsToRender) )
     {
-        m_tColor = ccWHITE;
         m_pPosToAtlasIndex = new CCDictionary();
         this->updateAtlasValues();
         this->setContentSize(CCSizeMake((float)(m_pTGAInfo->width*m_uItemWidth),
@@ -221,7 +220,7 @@ void CCTileMapAtlas::updateAtlasValueAt(const CCPoint& pos, const ccColor3B& val
     quad.tr.vertices.y = (float)(y * m_uItemHeight + m_uItemHeight);
     quad.tr.vertices.z = 0.0f;
 
-    ccColor4B color = { m_tColor.r, m_tColor.g, m_tColor.b, m_cOpacity };
+    ccColor4B color = { _displayedColor.r, _displayedColor.g, _displayedColor.b, _displayedOpacity };
     quad.tr.colors = color;
     quad.tl.colors = color;
     quad.br.colors = color;
