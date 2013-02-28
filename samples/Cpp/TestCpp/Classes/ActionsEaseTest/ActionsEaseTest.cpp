@@ -497,9 +497,9 @@ void SpeedTest::altertime(float dt)
     CCSpeed* action2 = (CCSpeed*)(m_tamara->getActionByTag(kTagAction1));
     CCSpeed* action3 = (CCSpeed*)(m_kathia->getActionByTag(kTagAction1));
     
-    action1->setSpeed( CCRANDOM_0_1() * 2 );
-    action2->setSpeed( CCRANDOM_0_1() * 2 );
-    action3->setSpeed( CCRANDOM_0_1() * 2 );
+    action1->setSpeed( CCRANDOM_MINUS1_1() * 2 );
+    action2->setSpeed( CCRANDOM_MINUS1_1() * 2 );
+    action3->setSpeed( CCRANDOM_MINUS1_1() * 2 );
 }
 
 std::string SpeedTest::title()
