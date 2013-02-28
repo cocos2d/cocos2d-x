@@ -242,7 +242,7 @@ class Vector : private AllocPolicy
     size_t mReserved;   /* Max elements of reserved or used space in this vector. */
 #endif
 
-    AlignedStorage<sInlineBytes> storage;
+    mozilla::AlignedStorage<sInlineBytes> storage;
 
 #ifdef DEBUG
     friend class ReentrancyGuard;
@@ -255,7 +255,11 @@ class Vector : private AllocPolicy
     /* private accessors */
 
     bool usingInlineStorage() const {
-        return mBegin == (T *)storage.addr();
+        return mBegin == inlineStorage();
+    }
+
+    T *inlineStorage() const {
+        return (T *)storage.addr();
     }
 
     T *beginNoCheck() const {
@@ -427,7 +431,7 @@ class Vector : private AllocPolicy
         internalAppendN(t, n);
     }
     template <class U> void infallibleAppend(const U *begin, const U *end) {
-        internalAppend(begin, PointerRangeSize(begin, end));
+        internalAppend(begin, mozilla::PointerRangeSize(begin, end));
     }
     template <class U> void infallibleAppend(const U *begin, size_t length) {
         internalAppend(begin, length);
@@ -479,6 +483,8 @@ class Vector : private AllocPolicy
      * object (which must be heap-allocated) itself.
      */
     size_t sizeOfIncludingThis(JSMallocSizeOfFun mallocSizeOf) const;
+
+    void swap(Vector &other);
 };
 
 /* This does the re-entrancy check plus several other sanity checks. */
@@ -506,6 +512,9 @@ template <class T, size_t N, class AllocPolicy>
 JS_ALWAYS_INLINE
 Vector<T, N, AllocPolicy>::Vector(MoveRef<Vector> rhs)
     : AllocPolicy(rhs)
+#ifdef DEBUG
+    , entered(false)
+#endif
 {
     mLength = rhs->mLength;
     mCapacity = rhs->mCapacity;
@@ -856,7 +865,7 @@ JS_ALWAYS_INLINE bool
 Vector<T,N,AP>::append(const U *insBegin, const U *insEnd)
 {
     REENTRANCY_GUARD_ET_AL;
-    size_t needed = PointerRangeSize(insBegin, insEnd);
+    size_t needed = mozilla::PointerRangeSize(insBegin, insEnd);
     if (mLength + needed > mCapacity && !growStorageBy(needed))
         return false;
 
@@ -993,6 +1002,33 @@ inline size_t
 Vector<T,N,AP>::sizeOfIncludingThis(JSMallocSizeOfFun mallocSizeOf) const
 {
     return mallocSizeOf(this) + sizeOfExcludingThis(mallocSizeOf);
+}
+
+template <class T, size_t N, class AP>
+inline void
+Vector<T,N,AP>::swap(Vector &other)
+{
+    // TODO Implement N != 0
+    JS_STATIC_ASSERT(N == 0);
+
+    // This only works when inline storage is always empty.
+    if (!usingInlineStorage() && other.usingInlineStorage()) {
+        other.mBegin = mBegin;
+        mBegin = inlineStorage();
+    } else if (usingInlineStorage() && !other.usingInlineStorage()) {
+        mBegin = other.mBegin;
+        other.mBegin = other.inlineStorage();
+    } else if (!usingInlineStorage() && !other.usingInlineStorage()) {
+        Swap(mBegin, other.mBegin);
+    } else {
+        // This case is a no-op, since we'd set both to use their inline storage.
+    }
+
+    Swap(mLength, other.mLength);
+    Swap(mCapacity, other.mCapacity);
+#ifdef DEBUG
+    Swap(mReserved, other.mReserved);
+#endif
 }
 
 }  /* namespace js */

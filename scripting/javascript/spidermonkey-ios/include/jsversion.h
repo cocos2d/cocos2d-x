@@ -170,4 +170,7 @@
      MOZ_NOT_REACHED("don't call this!  to be used in the new object representation")
 #endif
 
+/* ECMAScript Internationalization API isn't fully implemented yet. */
+#define ENABLE_INTL_API 0
+
 #endif /* jsversion_h___ */
