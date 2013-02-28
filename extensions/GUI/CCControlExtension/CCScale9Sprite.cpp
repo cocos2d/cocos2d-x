@@ -47,7 +47,6 @@ CCScale9Sprite::CCScale9Sprite()
 , m_insetTop(0)
 , m_insetRight(0)
 , m_insetBottom(0)
-, m_cOpacity(0)
 , m_bSpritesGenerated(false)
 , m_bSpriteFrameRotated(false)
 , m_positionsAreDirty(false)
@@ -110,8 +109,8 @@ bool CCScale9Sprite::initWithBatchNode(CCSpriteBatchNode* batchnode, CCRect rect
 
 bool CCScale9Sprite::updateWithBatchNode(CCSpriteBatchNode* batchnode, CCRect rect, bool rotated, CCRect capInsets)
 {
-    GLubyte opacity = m_cOpacity;
-    ccColor3B color = m_tColor;
+    GLubyte opacity = getOpacity();
+    ccColor3B color = getColor();
 
     // Release old sprites
     this->removeAllChildrenWithCleanup(true);
@@ -636,56 +635,10 @@ CCScale9Sprite* CCScale9Sprite::create()
     return NULL;
 }
 
-
-//LabelBMFont - CCRGBAProtocol protocol
-void CCScale9Sprite::setColor(const ccColor3B& color3)
-{
-    m_tColor = color3;
-    if (scale9Image->getChildren() && scale9Image->getChildren()->count() != 0)
-    {
-        CCObject* child;
-        CCARRAY_FOREACH(scale9Image->getChildren(), child)
-        {
-            CCRGBAProtocol* pNode = dynamic_cast<CCRGBAProtocol*>(child);        
-            if (pNode)
-            {
-                pNode->setColor(m_tColor);
-            }
-        }
-    }
-}
-
-const ccColor3B& CCScale9Sprite::getColor(void)
-{
-    return m_tColor;
-}
-
-void CCScale9Sprite::setOpacity(GLubyte var)
-{
-    m_cOpacity = var;
-
-    if (scale9Image->getChildren() && scale9Image->getChildren()->count() != 0)
-    {
-        CCObject* child;
-        CCARRAY_FOREACH(scale9Image->getChildren(), child)
-        {
-            CCRGBAProtocol* pNode = dynamic_cast<CCRGBAProtocol*>(child);
-            if (pNode)
-            {
-                pNode->setOpacity(m_cOpacity);
-            }
-        }
-    }
-}
-
 /** sets the opacity.
  @warning If the the texture has premultiplied alpha then, the R, G and B channels will be modifed.
  Values goes from 0 to 255, where 255 means fully opaque.
  */
-GLubyte CCScale9Sprite::getOpacity()
-{
-    return m_cOpacity;
-}
 
 void CCScale9Sprite::setPreferredSize(CCSize preferedSize)
 {

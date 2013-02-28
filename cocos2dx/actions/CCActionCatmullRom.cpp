@@ -329,6 +329,7 @@ void CCCardinalSplineTo::update(float time)
 	
     CCPoint newPos = ccCardinalSplineAt(pp0, pp1, pp2, pp3, m_fTension, lt);
 	
+#if CC_ENABLE_STACKABLE_ACTIONS
     // Support for stacked actions
     CCNode *node = m_pTarget;
     CCPoint diff = ccpSub( node->getPosition(), m_previousPosition);
@@ -336,7 +337,8 @@ void CCCardinalSplineTo::update(float time)
         m_accumulatedDiff = ccpAdd( m_accumulatedDiff, diff);
         newPos = ccpAdd( newPos, m_accumulatedDiff);
     }
-
+#endif
+    
     this->updatePosition(newPos);
 }
 

@@ -38,7 +38,6 @@ CCMotionStreak::CCMotionStreak()
 : m_bFastMode(false)
 , m_pTexture(NULL)
 , m_tPositionR(CCPointZero)
-, m_tColor(ccc3(0,0,0))
 , m_fStroke(0.0f)
 , m_fFadeDelta(0.0f)
 , m_fMinSeg(0.0f)
@@ -180,16 +179,6 @@ ccBlendFunc CCMotionStreak::getBlendFunc(void)
     return m_tBlendFunc;
 }
 
-void CCMotionStreak::setColor(const ccColor3B& color)
-{
-    m_tColor = color;
-}
-
-const ccColor3B& CCMotionStreak::getColor(void)
-{
-    return m_tColor;
-}
-
 void CCMotionStreak::setOpacity(GLubyte opacity)
 {
     CCAssert(false, "Set opacity no supported");
@@ -291,8 +280,8 @@ void CCMotionStreak::update(float delta)
 
         // Color assignment
         const unsigned int offset = m_uNuPoints*8;
-        *((ccColor3B*)(m_pColorPointer + offset)) = m_tColor;
-        *((ccColor3B*)(m_pColorPointer + offset+4)) = m_tColor;
+        *((ccColor3B*)(m_pColorPointer + offset)) = _displayedColor;
+        *((ccColor3B*)(m_pColorPointer + offset+4)) = _displayedColor;
 
         // Opacity
         m_pColorPointer[offset+3] = 255;

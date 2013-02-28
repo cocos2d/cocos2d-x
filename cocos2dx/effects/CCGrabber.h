@@ -50,7 +50,7 @@ public:
     void afterRender(CCTexture2D *pTexture);
 
 protected:
-    GLuint m_fbo;
+    GLuint m_FBO;
     GLint m_oldFBO;
     GLfloat    m_oldClearColor[4];
 };
