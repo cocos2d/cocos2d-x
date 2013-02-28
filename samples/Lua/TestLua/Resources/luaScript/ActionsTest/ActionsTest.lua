@@ -213,7 +213,9 @@ local function ActionRotate()
     local actionByBack = actionBy:reverse()
     grossini:runAction(CCSequence:createWithTwoActions(actionBy, actionByBack))
 
-    kathia:runAction(CCSequence:createWithTwoActions(actionTo2, actionTo0:copy():autorelease()))
+    local action0Retain = CCRotateTo:create(2 , 0)
+
+    kathia:runAction(CCSequence:createWithTwoActions(actionTo2, action0Retain))
 
 	subtitleLabel:setString("RotateTo / RotateBy")
 	return layer
@@ -699,7 +701,9 @@ local function ActionRepeat()
 
     local a1 = CCMoveBy:create(1, ccp(150,0))
     local action1 = CCRepeat:create(CCSequence:createWithTwoActions(CCPlace:create(ccp(60,60)), a1), 3)
-    local action2 = CCRepeatForever:create(CCSequence:createWithTwoActions(a1:copy():autorelease(), a1:reverse()))
+
+    local a2 = CCMoveBy:create(1, ccp(150,0))
+    local action2 = CCRepeatForever:create(CCSequence:createWithTwoActions(a2, a1:reverse()))
 
     kathia:runAction(action1)
     tamara:runAction(action2)
@@ -746,7 +750,8 @@ local function ActionRotateToRepeat()
     local act2 = CCRotateTo:create(1, 0)
     local seq  = CCSequence:createWithTwoActions(act1, act2)
     local rep1 = CCRepeatForever:create(seq)
-    local rep2 = CCRepeat:create(seq:copy():autorelease(), 10)
+    local seq2 = CCSequence:createWithTwoActions(act1, act2)
+    local rep2 = CCRepeat:create(seq2, 10)
 
     tamara:runAction(rep1)
     kathia:runAction(rep2)
@@ -770,7 +775,12 @@ local function ActionRotateJerk()
         CCRotateTo:create(0.5, 20))
 
     local rep1 = CCRepeat:create(seq, 10)
-    local rep2 = CCRepeatForever:create(seq:copy():autorelease())
+
+    local seq2 = CCSequence:createWithTwoActions(
+        CCRotateTo:create(0.5, -20),
+        CCRotateTo:create(0.5, 20))
+
+    local rep2 = CCRepeatForever:create(seq2)
 
     tamara:runAction(rep1)
     kathia:runAction(rep2)
@@ -932,8 +942,12 @@ local function ActionOrbit()
     local seq = CCSequence:createWithTwoActions(move, move_back)
     local rfe = CCRepeatForever:create(seq)
     kathia:runAction(rfe)
-    tamara:runAction(rfe:copy():autorelease())
-    grossini:runAction(rfe:copy():autorelease())
+
+    local rfe2 = CCRepeatForever:create(seq)
+    tamara:runAction(rfe2)
+
+    local rfe3 = CCRepeatForever:create(seq)
+    grossini:runAction(rfe3)
 
 
 	subtitleLabel:setString("OrbitCamera action")
@@ -973,9 +987,9 @@ local function ActionTargeted()
 	centerSprites(2)
 
 	local jump1 = CCJumpBy:create(2, ccp(0, 0), 100, 3)
-    local jump2 = jump1:copy():autorelease()
+    local jump2 = CCJumpBy:create(2, ccp(0, 0), 100, 3)
     local rot1  = CCRotateBy:create(1, 360)
-    local rot2  = rot1:copy():autorelease()
+    local rot2  = CCRotateBy:create(1, 360)
 
     local t1 = CCTargetedAction:create(kathia, jump2)
     local t2 = CCTargetedAction:create(kathia, rot2)

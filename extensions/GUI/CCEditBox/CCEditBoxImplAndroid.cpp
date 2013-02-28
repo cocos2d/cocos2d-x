@@ -31,11 +31,6 @@
 #include "jni/Java_org_cocos2dx_lib_Cocos2dxBitmap.h"
 #include "jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
 
-// This function is implemented in CCLabelBMFont.cpp
-
-NS_CC_BEGIN
-extern long cc_utf8_strlen (const char * p, int max);
-NS_CC_END
 
 NS_CC_EXT_BEGIN
 

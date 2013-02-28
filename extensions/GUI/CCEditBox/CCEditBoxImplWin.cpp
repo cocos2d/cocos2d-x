@@ -29,10 +29,6 @@
 #include "CCEditBox.h"
 #include "proj.win32/Win32InputBox.h"
 
-NS_CC_BEGIN
-extern CC_DLL long cc_utf8_strlen (const char * p, int max);
-NS_CC_END
-
 NS_CC_EXT_BEGIN
 
 CCEditBoxImpl* __createSystemEditBox(CCEditBox* pEditBox)
