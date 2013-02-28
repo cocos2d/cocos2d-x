@@ -385,13 +385,13 @@ IsSubValid(T x, T y)
 }
 
 template<typename T,
-         bool IsSigned = IsSigned<T>::value,
+         bool IsTSigned = IsSigned<T>::value,
          bool TwiceBiggerTypeIsSupported =
            IsSupported<typename TwiceBiggerType<T>::Type>::value>
 struct IsMulValidImpl {};
 
-template<typename T, bool IsSigned>
-struct IsMulValidImpl<T, IsSigned, true>
+template<typename T, bool IsTSigned>
+struct IsMulValidImpl<T, IsTSigned, true>
 {
     static bool run(T x, T y)
     {
@@ -451,7 +451,7 @@ IsDivValid(T x, T y)
 }
 
 // This is just to shut up msvc warnings about negating unsigned ints.
-template<typename T, bool IsSigned = IsSigned<T>::value>
+template<typename T, bool IsTSigned = IsSigned<T>::value>
 struct OppositeIfSignedImpl
 {
     static T run(T x) { return -x; }

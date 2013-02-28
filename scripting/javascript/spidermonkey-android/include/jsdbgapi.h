@@ -13,7 +13,6 @@
 #include "jsapi.h"
 #include "jsprvtd.h"
 
-#if defined(__cplusplus)
 namespace JS {
 
 struct FrameDescription
@@ -47,9 +46,6 @@ JS_FRIEND_API(void) js_DumpValue(const js::Value &val);
 JS_FRIEND_API(void) js_DumpId(jsid id);
 JS_FRIEND_API(void) js_DumpStackFrame(JSContext *cx, js::StackFrame *start = NULL);
 # endif
-#endif
-
-JS_BEGIN_EXTERN_C
 
 JS_FRIEND_API(void)
 js_DumpBacktrace(JSContext *cx);
@@ -431,7 +427,5 @@ JS_UnwrapObjectAndInnerize(JSObject *obj);
 /* Call the context debug handler on the topmost scripted frame. */
 extern JS_FRIEND_API(JSBool)
 js_CallContextDebugHandler(JSContext *cx);
-
-JS_END_EXTERN_C
 
 #endif /* jsdbgapi_h___ */

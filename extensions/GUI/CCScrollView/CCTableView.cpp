@@ -101,6 +101,7 @@ CCTableViewVerticalFillOrder CCTableView::getVerticalFillOrder()
 
 void CCTableView::reloadData()
 {
+    m_eOldDirection = kCCScrollViewDirectionNone;
     CCObject* pObj = NULL;
     CCARRAY_FOREACH(m_pCellsUsed, pObj)
     {

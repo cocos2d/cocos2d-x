@@ -20,7 +20,7 @@
 #  endif
 #elif defined(__GNUC__)
 #  if defined(_GXX_EXPERIMENTAL_CXX0X__) || __cplusplus >= 201103L
-#    if (__GNUC__ * 1000 + __GNU_MINOR__) >= 4006
+#    if (__GNUC__ * 1000 + __GNUC_MINOR__) >= 4006
 #      define MOZ_HAVE_CXX11_NULLPTR
 #    endif
 #  endif
