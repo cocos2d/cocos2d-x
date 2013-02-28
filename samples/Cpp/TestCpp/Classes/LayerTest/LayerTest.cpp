@@ -6,62 +6,75 @@ enum
     kTagLayer = 1,
 };
 
-CCLayer* nextTestAction();
-CCLayer* backTestAction();
-CCLayer* restartTestAction();
+TESTLAYER_CREATE_FUNC(LayerTestCascadingOpacityA);
+TESTLAYER_CREATE_FUNC(LayerTestCascadingOpacityB);
+TESTLAYER_CREATE_FUNC(LayerTestCascadingOpacityC);
+TESTLAYER_CREATE_FUNC(LayerTestCascadingColorA);
+TESTLAYER_CREATE_FUNC(LayerTestCascadingColorB);
+TESTLAYER_CREATE_FUNC(LayerTestCascadingColorC);
+TESTLAYER_CREATE_FUNC(LayerTest1);
+TESTLAYER_CREATE_FUNC(LayerTest2);
+TESTLAYER_CREATE_FUNC(LayerTestBlend);
+TESTLAYER_CREATE_FUNC(LayerGradient);
+TESTLAYER_CREATE_FUNC(LayerIgnoreAnchorPointPos);
+TESTLAYER_CREATE_FUNC(LayerIgnoreAnchorPointRot);
+TESTLAYER_CREATE_FUNC(LayerIgnoreAnchorPointScale);
+TESTLAYER_CREATE_FUNC(LayerExtendedBlendOpacityTest);
 
-static int sceneIdx = -1; 
+static NEWTESTFUNC createFunctions[] = {
+    CF(LayerTestCascadingOpacityA),
+    CF(LayerTestCascadingOpacityB),
+    CF(LayerTestCascadingOpacityC),
+    CF(LayerTestCascadingColorA),
+    CF(LayerTestCascadingColorB),
+    CF(LayerTestCascadingColorC),
+    CF(LayerTest1),
+    CF(LayerTest2),
+    CF(LayerTestBlend),
+    CF(LayerGradient),
+    CF(LayerIgnoreAnchorPointPos),
+    CF(LayerIgnoreAnchorPointRot),
+    CF(LayerIgnoreAnchorPointScale),
+    CF(LayerExtendedBlendOpacityTest)
+};
 
-#define MAX_LAYER    8
+static int sceneIdx=-1;
+#define MAX_LAYER (sizeof(createFunctions) / sizeof(createFunctions[0]))
 
-CCLayer* createTestLayer(int nIndex)
-{
-    switch(nIndex)
-    {
-        case 0: return new LayerTest1();
-        case 1: return new LayerTest2();
-        case 2: return new LayerTestBlend();
-        case 3: return new LayerGradient();
-        case 4: return new LayerIgnoreAnchorPointPos();
-        case 5: return new LayerIgnoreAnchorPointRot();
-        case 6: return new LayerIgnoreAnchorPointScale();
-        case 7: return new LayerExtendedBlendOpacityTest();
-    }
-
-    return NULL;
-}
-
-CCLayer* nextTestAction()
+static CCLayer* nextAction()
 {
     sceneIdx++;
     sceneIdx = sceneIdx % MAX_LAYER;
-
-    CCLayer* pLayer = createTestLayer(sceneIdx);
+    
+    CCLayer* pLayer = (createFunctions[sceneIdx])();
+    pLayer->init();
     pLayer->autorelease();
-
+    
     return pLayer;
 }
 
-CCLayer* backTestAction()
+static CCLayer* backAction()
 {
     sceneIdx--;
     int total = MAX_LAYER;
     if( sceneIdx < 0 )
-        sceneIdx += total;    
+        sceneIdx += total;
     
-    CCLayer* pLayer = createTestLayer(sceneIdx);
+    CCLayer* pLayer = (createFunctions[sceneIdx])();
+    pLayer->init();
     pLayer->autorelease();
-
+    
     return pLayer;
 }
 
-CCLayer* restartTestAction()
+static CCLayer* restartAction()
 {
-    CCLayer* pLayer = createTestLayer(sceneIdx);
+    CCLayer* pLayer = (createFunctions[sceneIdx])();
+    pLayer->init();
     pLayer->autorelease();
-
+    
     return pLayer;
-} 
+}
 
 //------------------------------------------------------------------
 //
@@ -122,7 +135,7 @@ void LayerTest::onEnter()
 void LayerTest::restartCallback(CCObject* pSender)
 {
     CCScene* s = new LayerTestScene();
-    s->addChild(restartTestAction()); 
+    s->addChild(restartAction());
 
     CCDirector::sharedDirector()->replaceScene(s);
     s->release();
@@ -131,7 +144,7 @@ void LayerTest::restartCallback(CCObject* pSender)
 void LayerTest::nextCallback(CCObject* pSender)
 {
     CCScene* s = new LayerTestScene();
-    s->addChild( nextTestAction() );
+    s->addChild( nextAction() );
     CCDirector::sharedDirector()->replaceScene(s);
     s->release();
 }
@@ -139,10 +152,351 @@ void LayerTest::nextCallback(CCObject* pSender)
 void LayerTest::backCallback(CCObject* pSender)
 {
     CCScene* s = new LayerTestScene();
-    s->addChild( backTestAction() );
+    s->addChild( backAction() );
     CCDirector::sharedDirector()->replaceScene(s);
     s->release();
 } 
+
+#pragma mark - Cascading support extensions
+
+@interface CCNode (cascading)
+@end
+@implementation CCNode (cascading)
+-(void) setEnableRecursiveCascading:(BOOL)enable
+{
+	if( [self conformsToProtocol:@protocol(CCRGBAProtocol)] ) {
+		[(id<CCRGBAProtocol>)self setCascadeColorEnabled:enable];
+		[(id<CCRGBAProtocol>)self setCascadeOpacityEnabled:enable];
+		
+	}
+	for( CCNode* child in self.children)
+		[child setEnableRecursiveCascading:enable];
+}
+@end
+
+#pragma mark - Example LayerTestCascadingOpacity
+
+@implementation LayerTestCascadingOpacityA
+-(id) init
+{
+	if( (self=[super init] )) {
+        
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		CCLayerRGBA* layer1 = [CCLayerRGBA node];
+        
+		CCSprite *sister1 = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
+		CCSprite *sister2 = [CCSprite spriteWithFile:@"grossinis_sister2.png"];
+		CCLabelBMFont *label = [CCLabelBMFont labelWithString:@"Test" fntFile:@"bitmapFontTest.fnt"];
+        
+		[layer1 addChild:sister1];
+		[layer1 addChild:sister2];
+		[layer1 addChild:label];
+		[self addChild: layer1 z:0 tag:kTagLayer];
+        
+		sister1.position = ccp( s.width*1/3, s.height/2);
+		sister2.position = ccp( s.width*2/3, s.height/2);
+		label.position = ccp( s.width/2, s.height/2);
+        
+        [layer1 runAction:
+         [CCRepeatForever actionWithAction:
+          [CCSequence actions:
+           [CCFadeTo actionWithDuration:4 opacity:0],
+           [CCFadeTo actionWithDuration:4 opacity:255],
+           [CCDelayTime actionWithDuration:1],
+           nil]]];
+        
+        [sister1 runAction:
+         [CCRepeatForever actionWithAction:
+          [CCSequence actions:
+           [CCFadeTo actionWithDuration:2 opacity:0],
+           [CCFadeTo actionWithDuration:2 opacity:255],
+           [CCFadeTo actionWithDuration:2 opacity:0],
+           [CCFadeTo actionWithDuration:2 opacity:255],
+           [CCDelayTime actionWithDuration:1],
+           nil]]];
+        
+        
+		// Enable cascading in scene
+		[self setEnableRecursiveCascading:YES];
+    }
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"LayerRGBA: cascading opacity";
+}
+@end
+
+@implementation LayerTestCascadingOpacityB
+-(id) init
+{
+	if( (self=[super init] )) {
+        
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		CCLayerColor* layer1 = [CCLayerColor layerWithColor:ccc4(192, 0, 0, 255) width:s.width height:s.height/2];
+        layer1.cascadeColorEnabled = NO;
+        
+        layer1.position = ccp(0, s.height/2);
+        
+		CCSprite *sister1 = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
+		CCSprite *sister2 = [CCSprite spriteWithFile:@"grossinis_sister2.png"];
+		CCLabelBMFont *label = [CCLabelBMFont labelWithString:@"Test" fntFile:@"bitmapFontTest.fnt"];
+		
+		[layer1 addChild:sister1];
+		[layer1 addChild:sister2];
+		[layer1 addChild:label];
+		[self addChild: layer1 z:0 tag:kTagLayer];
+		
+		sister1.position = ccp( s.width*1/3, 0);
+		sister2.position = ccp( s.width*2/3, 0);
+		label.position = ccp( s.width/2, 0);
+        
+        [layer1 runAction:
+         [CCRepeatForever actionWithAction:
+          [CCSequence actions:
+           [CCFadeTo actionWithDuration:4 opacity:0],
+           [CCFadeTo actionWithDuration:4 opacity:255],
+           [CCDelayTime actionWithDuration:1],
+           nil]]];
+        
+        [sister1 runAction:
+         [CCRepeatForever actionWithAction:
+          [CCSequence actions:
+           [CCFadeTo actionWithDuration:2 opacity:0],
+           [CCFadeTo actionWithDuration:2 opacity:255],
+           [CCFadeTo actionWithDuration:2 opacity:0],
+           [CCFadeTo actionWithDuration:2 opacity:255],
+           [CCDelayTime actionWithDuration:1],
+           nil]]];
+		
+		// Enable cascading in scene
+		[self setEnableRecursiveCascading:YES];
+	}
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"CCLayerColor: cascading opacity";
+}
+@end
+
+@implementation LayerTestCascadingOpacityC
+-(id) init
+{
+	if( (self=[super init] )) {
+        
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		CCLayerColor* layer1 = [CCLayerColor layerWithColor:ccc4(192, 0, 0, 255) width:s.width height:s.height/2];
+        layer1.cascadeColorEnabled = NO;
+        layer1.cascadeOpacityEnabled = NO;
+        
+        layer1.position = ccp(0, s.height/2);
+        
+		CCSprite *sister1 = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
+		CCSprite *sister2 = [CCSprite spriteWithFile:@"grossinis_sister2.png"];
+		CCLabelBMFont *label = [CCLabelBMFont labelWithString:@"Test" fntFile:@"bitmapFontTest.fnt"];
+		
+		[layer1 addChild:sister1];
+		[layer1 addChild:sister2];
+		[layer1 addChild:label];
+		[self addChild: layer1 z:0 tag:kTagLayer];
+		
+		sister1.position = ccp( s.width*1/3, 0);
+		sister2.position = ccp( s.width*2/3, 0);
+		label.position = ccp( s.width/2, 0);
+        
+        [layer1 runAction:
+         [CCRepeatForever actionWithAction:
+          [CCSequence actions:
+           [CCFadeTo actionWithDuration:4 opacity:0],
+           [CCFadeTo actionWithDuration:4 opacity:255],
+           [CCDelayTime actionWithDuration:1],
+           nil]]];
+        
+        [sister1 runAction:
+         [CCRepeatForever actionWithAction:
+          [CCSequence actions:
+           [CCFadeTo actionWithDuration:2 opacity:0],
+           [CCFadeTo actionWithDuration:2 opacity:255],
+           [CCFadeTo actionWithDuration:2 opacity:0],
+           [CCFadeTo actionWithDuration:2 opacity:255],
+           [CCDelayTime actionWithDuration:1],
+           nil]]];
+	}
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"CCLayerColor: non-cascading opacity";
+}
+@end
+
+#pragma mark -
+#pragma mark Example LayerTestCascadingColor
+
+@implementation LayerTestCascadingColorA
+-(id) init
+{
+	if( (self=[super init] )) {
+        
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		CCLayerRGBA* layer1 = [CCLayerRGBA node];
+        
+		CCSprite *sister1 = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
+		CCSprite *sister2 = [CCSprite spriteWithFile:@"grossinis_sister2.png"];
+		CCLabelBMFont *label = [CCLabelBMFont labelWithString:@"Test" fntFile:@"bitmapFontTest.fnt"];
+		
+		[layer1 addChild:sister1];
+		[layer1 addChild:sister2];
+		[layer1 addChild:label];
+		[self addChild: layer1 z:0 tag:kTagLayer];
+		
+		sister1.position = ccp( s.width*1/3, s.height/2);
+		sister2.position = ccp( s.width*2/3, s.height/2);
+		label.position = ccp( s.width/2, s.height/2);
+        
+        [layer1 runAction:
+         [CCRepeatForever actionWithAction:
+          [CCSequence actions:
+           [CCTintTo actionWithDuration:6 red:255 green:0 blue:255],
+           [CCTintTo actionWithDuration:6 red:255 green:255 blue:255],
+           [CCDelayTime actionWithDuration:1],
+           nil]]];
+        
+        [sister1 runAction:
+         [CCRepeatForever actionWithAction:
+          [CCSequence actions:
+           [CCTintTo actionWithDuration:2 red:255 green:255 blue:0],
+           [CCTintTo actionWithDuration:2 red:255 green:255 blue:255],
+           [CCTintTo actionWithDuration:2 red:0 green:255 blue:255],
+           [CCTintTo actionWithDuration:2 red:255 green:255 blue:255],
+           [CCTintTo actionWithDuration:2 red:255 green:0 blue:255],
+           [CCTintTo actionWithDuration:2 red:255 green:255 blue:255],
+           [CCDelayTime actionWithDuration:1],
+           nil]]];
+        
+		// Enable cascading in scene
+		[self setEnableRecursiveCascading:YES];
+        
+    }
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"LayerRGBA: cascading color";
+}
+@end
+
+@implementation LayerTestCascadingColorB
+-(id) init
+{
+	if( (self=[super init] )) {
+        
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		CCLayerColor* layer1 = [CCLayerColor layerWithColor:ccc4(255, 255, 255, 255) width:s.width height:s.height/2];
+        
+        layer1.position = ccp(0, s.height/2);
+        
+		CCSprite *sister1 = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
+		CCSprite *sister2 = [CCSprite spriteWithFile:@"grossinis_sister2.png"];
+		CCLabelBMFont *label = [CCLabelBMFont labelWithString:@"Test" fntFile:@"bitmapFontTest.fnt"];
+		
+		[layer1 addChild:sister1];
+		[layer1 addChild:sister2];
+		[layer1 addChild:label];
+		[self addChild: layer1 z:0 tag:kTagLayer];
+		
+		sister1.position = ccp( s.width*1/3, 0);
+		sister2.position = ccp( s.width*2/3, 0);
+		label.position = ccp( s.width/2, 0);
+        
+        [layer1 runAction:
+         [CCRepeatForever actionWithAction:
+          [CCSequence actions:
+           [CCTintTo actionWithDuration:6 red:255 green:0 blue:255],
+           [CCTintTo actionWithDuration:6 red:255 green:255 blue:255],
+           [CCDelayTime actionWithDuration:1],
+           nil]]];
+        
+        [sister1 runAction:
+         [CCRepeatForever actionWithAction:
+          [CCSequence actions:
+           [CCTintTo actionWithDuration:2 red:255 green:255 blue:0],
+           [CCTintTo actionWithDuration:2 red:255 green:255 blue:255],
+           [CCTintTo actionWithDuration:2 red:0 green:255 blue:255],
+           [CCTintTo actionWithDuration:2 red:255 green:255 blue:255],
+           [CCTintTo actionWithDuration:2 red:255 green:0 blue:255],
+           [CCTintTo actionWithDuration:2 red:255 green:255 blue:255],
+           [CCDelayTime actionWithDuration:1],
+           nil]]];
+		
+		// Enable cascading in scene
+		[self setEnableRecursiveCascading:YES];
+	}
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"CCLayerColor: cascading color";
+}
+@end
+
+@implementation LayerTestCascadingColorC
+-(id) init
+{
+	if( (self=[super init] )) {
+        
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		CCLayerColor* layer1 = [CCLayerColor layerWithColor:ccc4(255, 255, 255, 255) width:s.width height:s.height/2];
+        layer1.cascadeColorEnabled = NO;
+        layer1.position = ccp(0, s.height/2);
+        
+		CCSprite *sister1 = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
+		CCSprite *sister2 = [CCSprite spriteWithFile:@"grossinis_sister2.png"];
+		CCLabelBMFont *label = [CCLabelBMFont labelWithString:@"Test" fntFile:@"bitmapFontTest.fnt"];
+		
+		[layer1 addChild:sister1];
+		[layer1 addChild:sister2];
+		[layer1 addChild:label];
+		[self addChild: layer1 z:0 tag:kTagLayer];
+		
+		sister1.position = ccp( s.width*1/3, 0);
+		sister2.position = ccp( s.width*2/3, 0);
+		label.position = ccp( s.width/2, 0);
+        
+        [layer1 runAction:
+         [CCRepeatForever actionWithAction:
+          [CCSequence actions:
+           [CCTintTo actionWithDuration:6 red:255 green:0 blue:255],
+           [CCTintTo actionWithDuration:6 red:255 green:255 blue:255],
+           [CCDelayTime actionWithDuration:1],
+           nil]]];
+        
+        [sister1 runAction:
+         [CCRepeatForever actionWithAction:
+          [CCSequence actions:
+           [CCTintTo actionWithDuration:2 red:255 green:255 blue:0],
+           [CCTintTo actionWithDuration:2 red:255 green:255 blue:255],
+           [CCTintTo actionWithDuration:2 red:0 green:255 blue:255],
+           [CCTintTo actionWithDuration:2 red:255 green:255 blue:255],
+           [CCTintTo actionWithDuration:2 red:255 green:0 blue:255],
+           [CCTintTo actionWithDuration:2 red:255 green:255 blue:255],
+           [CCDelayTime actionWithDuration:1],
+           nil]]];
+	}
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"CCLayerColor: non-cascading color";
+}
+@end
 
 //------------------------------------------------------------------
 //
@@ -366,7 +720,7 @@ void LayerIgnoreAnchorPointPos::onEnter()
     CCSize lsize = l->getContentSize();
     child->setPosition(ccp(lsize.width/2, lsize.height/2));
 
-    CCMenuItemFont *item = CCMenuItemFont::create("Toogle ignore anchor point", this, menu_selector(LayerIgnoreAnchorPointPos::onToggle));
+    CCMenuItemFont *item = CCMenuItemFont::create("Toggle ignore anchor point", this, menu_selector(LayerIgnoreAnchorPointPos::onToggle));
 
     CCMenu *menu = CCMenu::create(item, NULL);
     this->addChild(menu);
@@ -492,7 +846,8 @@ std::string LayerIgnoreAnchorPointScale::subtitle()
 
 void LayerTestScene::runThisTest()
 {
-    CCLayer* pLayer = nextTestAction();
+    sceneIdx = -1;
+    CCLayer* pLayer = nextAction();
     addChild(pLayer);
 
     CCDirector::sharedDirector()->replaceScene(this);
