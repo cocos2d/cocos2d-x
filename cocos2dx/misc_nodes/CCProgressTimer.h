@@ -50,7 +50,7 @@ typedef enum {
  The progress can be Radial, Horizontal or vertical.
  @since v0.99.1
  */
-class CC_DLL CCProgressTimer : public CCNode, public CCRGBAProtocol
+class CC_DLL CCProgressTimer : public CCNodeRGBA
 {
 public:
     CCProgressTimer();
@@ -76,10 +76,6 @@ public:
     virtual void draw(void);
     void setAnchorPoint(CCPoint anchorPoint);
 
-    virtual void setColor(const ccColor3B& color);
-    virtual const ccColor3B& getColor(void);
-    virtual GLubyte getOpacity(void);
-    virtual void setOpacity(GLubyte opacity);
     virtual void setOpacityModifyRGB(bool bValue);
     virtual bool isOpacityModifyRGB(void);
     

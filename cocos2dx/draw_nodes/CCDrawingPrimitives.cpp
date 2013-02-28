@@ -68,7 +68,8 @@ static void lazy_init( void )
         // Position and 1 color passed as a uniform (to simulate glColor4ub )
         //
         s_pShader = CCShaderCache::sharedShaderCache()->programForKey(kCCShader_Position_uColor);
-
+        s_pShader->retain();
+        
         s_nColorLocation = glGetUniformLocation( s_pShader->getProgram(), "u_color");
     CHECK_GL_ERROR_DEBUG();
         s_nPointSizeLocation = glGetUniformLocation( s_pShader->getProgram(), "u_pointSize");
@@ -81,7 +82,13 @@ static void lazy_init( void )
 // When switching from backround to foreground on android, we want the params to be initialized again
 void ccDrawInit()
 {
-    s_bInitialized = false;
+    lazy_init();
+}
+
+void ccDrawFree()
+{
+	CC_SAFE_RELEASE_NULL(s_pShader);
+	s_bInitialized = false;
 }
 
 void ccDrawPoint( const CCPoint& point )

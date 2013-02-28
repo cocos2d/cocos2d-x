@@ -51,7 +51,20 @@ public:
      * @return The ccColor3B contains R,G,B bytes.
      */
     virtual const ccColor3B& getColor(void) = 0;
-
+    
+    /**
+     * Returns the displayed color.
+     *
+     * @return The ccColor3B contains R,G,B bytes.
+     */
+    virtual const ccColor3B& getDisplayedColor(void) = 0;
+    
+    /**
+     * Returns the displayed opacity.
+     *
+     * @return  The opacity of sprite, from 0 ~ 255
+     */
+    virtual GLubyte getDisplayedOpacity(void) = 0;
     /**
      * Returns the opacity.
      *
@@ -88,6 +101,28 @@ public:
      * @return  Returns opacity modify flag.
      */
     virtual bool isOpacityModifyRGB(void) = 0;
+    
+    /**
+     *  whether or not color should be propagated to its children.
+     */
+    virtual bool isCascadeColorEnabled(void) = 0;
+    virtual void setCascadeColorEnabled(bool cascadeColorEnabled) = 0;
+    
+    /** 
+     *  recursive method that updates display color 
+     */
+    virtual void updateDisplayedColor(const ccColor3B& color) = 0;
+    
+    /** 
+     *  whether or not opacity should be propagated to its children.
+     */
+    virtual bool isCascadeOpacityEnabled(void) = 0;
+    virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled) = 0;
+    
+    /**
+     *  recursive method that updates the displayed opacity.
+     */
+    virtual void updateDisplayedOpacity(GLubyte opacity) = 0;
 };
 
 /**
