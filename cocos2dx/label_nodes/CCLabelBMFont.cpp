@@ -792,21 +792,26 @@ bool CCLabelBMFont::initWithString(const char *theString, const char *fntFile, f
 
     if (CCSpriteBatchNode::initWithTexture(texture, strlen(theString)))
     {
+        m_fWidth = width;
         m_pAlignment = alignment;
-        m_tImageOffset = imageOffset;
+        
         m_cDisplayedOpacity = m_cRealOpacity = 255;
 		m_tDisplayedColor = m_tRealColor = ccWHITE;
         m_bCascadeOpacityEnabled = true;
         m_bCascadeColorEnabled = true;
+        
         m_obContentSize = CCSizeZero;
+        
         m_bIsOpacityModifyRGB = m_pobTextureAtlas->getTexture()->hasPremultipliedAlpha();
         m_obAnchorPoint = ccp(0.5f, 0.5f);
+        
+        m_tImageOffset = imageOffset;
         
         m_pReusedChar = new CCSprite();
         m_pReusedChar->initWithTexture(m_pobTextureAtlas->getTexture(), CCRectMake(0, 0, 0, 0), false);
         m_pReusedChar->setBatchNode(this);
         
-        this->setString(theString);
+        this->setString(theString, true);
         
         return true;
     }
@@ -1091,7 +1096,7 @@ GLubyte CCLabelBMFont::getDisplayedOpacity(void)
 }
 
 /** Override synthesized setOpacity to recurse items */
-void CCLabelBMFont::setOpacity(GLubyte var)
+void CCLabelBMFont::setOpacity(GLubyte opacity)
 {
 	m_cDisplayedOpacity = m_cRealOpacity = opacity;
     
@@ -1104,11 +1109,6 @@ void CCLabelBMFont::setOpacity(GLubyte var)
         }
         this->updateDisplayedOpacity(parentOpacity);
 	}
-}
-
-GLubyte CCLabelBMFont::getOpacity()
-{
-    return m_cOpacity;
 }
 
 void CCLabelBMFont::setOpacityModifyRGB(bool var)
@@ -1141,25 +1141,45 @@ void CCLabelBMFont::updateDisplayedOpacity(GLubyte parentOpacity)
 	m_cDisplayedOpacity = m_cRealOpacity * parentOpacity/255.0;
     
 	CCObject* pObj;
-	CCARRAY_FOREACH(_children, pObj)
+	CCARRAY_FOREACH(m_pChildren, pObj)
     {
         CCSprite *item = (CCSprite*)pObj;
 		item->updateDisplayedOpacity(m_cDisplayedOpacity);
 	}
 }
 
-void CCLabelBMFont::updateDisplayedColor(ccColor3B parentColor)
+void CCLabelBMFont::updateDisplayedColor(const ccColor3B& parentColor)
 {
 	m_tDisplayedColor.r = m_tRealColor.r * parentColor.r/255.0;
 	m_tDisplayedColor.g = m_tRealColor.g * parentColor.g/255.0;
 	m_tDisplayedColor.b = m_tRealColor.b * parentColor.b/255.0;
     
     CCObject* pObj;
-	CCARRAY_FOREACH(_children, pObj)
+	CCARRAY_FOREACH(m_pChildren, pObj)
     {
         CCSprite *item = (CCSprite*)pObj;
 		item->updateDisplayedColor(m_tDisplayedColor);
 	}
+}
+
+bool CCLabelBMFont::isCascadeColorEnabled()
+{
+    return false;
+}
+
+void CCLabelBMFont::setCascadeColorEnabled(bool cascadeColorEnabled)
+{
+    m_bCascadeColorEnabled = cascadeColorEnabled;
+}
+
+bool CCLabelBMFont::isCascadeOpacityEnabled()
+{
+    return false;
+}
+
+void CCLabelBMFont::setCascadeOpacityEnabled(bool cascadeOpacityEnabled)
+{
+    m_bCascadeOpacityEnabled = cascadeOpacityEnabled;
 }
 
 // LabelBMFont - AnchorPoint
