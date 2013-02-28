@@ -320,42 +320,42 @@ public:
 class ActionMoveStacked : public ActionStacked
 {
 public:
-    virtual void onEnter();
     virtual std::string title();
-    virtual std::string subtitle();
     virtual void runActionsInSprite(CCSprite* sprite);
 };
 
 class ActionMoveJumpStacked : public ActionStacked
 {
 public:
-    virtual void onEnter();
     virtual std::string title();
-    virtual std::string subtitle();
+    virtual void runActionsInSprite(CCSprite* sprite);
 };
 
 class ActionMoveBezierStacked : public ActionStacked
 {
 public:
-    virtual void onEnter();
     virtual std::string title();
-    virtual std::string subtitle();
+    virtual void runActionsInSprite(CCSprite* sprite);
 };
 
 class ActionCatmullRomStacked : public ActionsDemo
 {
 public:
+    virtual ~ActionCatmullRomStacked();
+    virtual void draw();
     virtual void onEnter();
     virtual std::string title();
     virtual std::string subtitle();
 private:
     CCPointArray* _array1;
-	CCPointArray* _array2;
+    CCPointArray* _array2;
 };
 
 class ActionCardinalSplineStacked : public ActionsDemo
 {
 public:
+    virtual ~ActionCardinalSplineStacked();
+    virtual void draw();
     virtual void onEnter();
     virtual std::string title();
     virtual std::string subtitle();
