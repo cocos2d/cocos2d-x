@@ -783,8 +783,9 @@ void CCDirector::calculateMPF()
 // returns the FPS image data pointer and len
 void CCDirector::getFPSImageData(unsigned char** datapointer, unsigned int* length)
 {
-    *datapointer = cc_fps_images_png;
-	*length = cc_fps_images_len();
+    // XXX fixed me if it should be used 
+//    *datapointer = cc_fps_images_png;
+//	*length = cc_fps_images_len();
 }
 
 void CCDirector::createStatsLabel()
