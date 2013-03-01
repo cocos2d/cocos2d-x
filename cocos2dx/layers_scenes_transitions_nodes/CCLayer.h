@@ -226,9 +226,6 @@ public:
 
     virtual void draw();
     virtual void setContentSize(const CCSize & var);
-
-    //@deprecated: This interface will be deprecated sooner or later.
-    static CCLayerColor* node();
     
     static CCLayerColor* create();
     
@@ -317,9 +314,6 @@ protected:
 public:
     virtual void setCompressedInterpolation(bool bCompressedInterpolation);
     virtual bool isCompressedInterpolation();
-
-    //@deprecated: This interface will be deprecated sooner or later.
-    static CCLayerGradient* node();
     
     static CCLayerGradient* create();
 
