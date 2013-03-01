@@ -177,14 +177,14 @@ void ActionsDemo::onEnter()
     // add title and subtitle
     std::string str = title();
     const char * pTitle = str.c_str();
-    CCLabelTTF* label = CCLabelTTF::create(pTitle, "Arial", 18);
+    CCLabelTTF* label = CCLabelTTF::create(pTitle, "Arial", 32);
     addChild(label, 1);
     label->setPosition( ccp(VisibleRect::center().x, VisibleRect::top().y - 30) );
 
     std::string strSubtitle = subtitle();
     if( ! strSubtitle.empty() ) 
     {
-        CCLabelTTF* l = CCLabelTTF::create(strSubtitle.c_str(), "Thonburi", 22);
+        CCLabelTTF* l = CCLabelTTF::create(strSubtitle.c_str(), "Thonburi", 16);
         addChild(l, 1);
         l->setPosition( ccp(VisibleRect::center().x, VisibleRect::top().y - 60) );
     }    
@@ -1281,6 +1281,17 @@ void ActionFollow::onEnter()
     this->runAction(CCFollow::create(m_grossini, CCRectMake(0, 0, s.width * 2 - 100, s.height)));
 }
 
+void ActionFollow::draw()
+{
+    CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+    
+	float x = winSize.width*2 - 100;
+	float y = winSize.height;
+    
+	CCPoint vertices[] = { ccp(5,5), ccp(x-5,5), ccp(x-5,y-5), ccp(5,y-5) };
+	ccDrawPoly(vertices, 4, true);
+}
+
 std::string ActionFollow::subtitle()
 {
     return "Follow action";
@@ -2126,7 +2137,7 @@ void PauseResumeActions::onEnter()
 {
     ActionsDemo::onEnter();
     
-    this->centerSprites(2);
+    this->centerSprites(3);
     
     m_tamara->runAction(CCRepeatForever::create(CCRotateBy::create(3, 360)));
     m_grossini->runAction(CCRepeatForever::create(CCRotateBy::create(3, -360)));
