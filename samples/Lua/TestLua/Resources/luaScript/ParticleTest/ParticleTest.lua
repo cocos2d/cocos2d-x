@@ -73,7 +73,8 @@ end
 
 local function setEmitterPosition()
     if emitter ~= nil then
-		emitter:setPosition(s.width / 2, s.height / 2)
+        nodeEmitter = tolua.cast(emitter, "CCNode")
+		nodeEmitter:setPosition(s.width / 2, s.height / 2)
 	end
 end
 
@@ -133,7 +134,7 @@ local function getBaseLayer()
 
     layer:addChild(menu, 100)
 
-    labelAtlas = CCLabelAtlas:create("0000", "fps_images.png", 12, 32, '.')
+    labelAtlas = CCLabelAtlas:create("0000", "fps_images.png", 12, 32, string.byte('.'))
     layer:addChild(labelAtlas, 100)
     labelAtlas:setPosition(ccp(s.width - 66, 50))
 
@@ -146,8 +147,6 @@ local function getBaseLayer()
     local move_back = move:reverse()
     local seq = CCSequence:createWithTwoActions(move, move_back)
     background:runAction(CCRepeatForever:create(seq))
-
-    layer:scheduleUpdate()
 
 	local function onTouchEnded(x, y)
 		local pos = CCPointMake(0, 0)
@@ -379,7 +378,7 @@ local function DemoFlower()
 
 	emitter = CCParticleFlower:create()
 	-- emitter:retain()
-    background:addChild(emitter, 10)
+    background:addChild(tolua.cast(emitter, "CCNode"), 10)
     emitter:setTexture(CCTextureCache:sharedTextureCache():addImage(s_stars1))
 
     setEmitterPosition()
@@ -396,7 +395,7 @@ local function DemoGalaxy()
 
 	emitter = CCParticleGalaxy:create()
     -- emitter:retain()
-    background:addChild(emitter, 10)
+    background:addChild(tolua.cast(emitter,"CCNode"), 10)
 
     emitter:setTexture(CCTextureCache:sharedTextureCache():addImage(s_fire))
 
@@ -414,7 +413,7 @@ local function DemoFirework()
 
 	emitter = CCParticleFireworks:create()
     -- emitter:retain()
-    background:addChild(emitter, 10)
+    background:addChild(tolua.cast(emitter,"CCNode"), 10)
 
     emitter:setTexture(CCTextureCache:sharedTextureCache():addImage(s_stars1))
 
@@ -432,7 +431,7 @@ local function DemoSpiral()
 
 	emitter = CCParticleSpiral:create()
     -- emitter:retain()
-    background:addChild(emitter, 10)
+    background:addChild(tolua.cast(emitter,"CCNode"), 10)
 
     emitter:setTexture(CCTextureCache:sharedTextureCache():addImage(s_fire))
 
@@ -450,7 +449,7 @@ local function DemoSun()
 
 	emitter = CCParticleSun:create()
     -- emitter:retain()
-    background:addChild(emitter, 10)
+    background:addChild(tolua.cast(emitter,"CCNode"), 10)
 
     emitter:setTexture(CCTextureCache:sharedTextureCache():addImage(s_fire))
 
@@ -468,7 +467,7 @@ local function DemoMeteor()
 
 	emitter = CCParticleMeteor:create()
     -- emitter:retain()
-    background:addChild(emitter, 10)
+    background:addChild(tolua.cast(emitter,"CCNode"), 10)
 
     emitter:setTexture(CCTextureCache:sharedTextureCache():addImage(s_fire))
 
@@ -486,11 +485,11 @@ local function DemoFire()
 
 	emitter = CCParticleFire:create()
     -- emitter:retain()
-    background:addChild(emitter, 10)
+    background:addChild(tolua.cast(emitter,"CCNode"), 10)
 
     emitter:setTexture(CCTextureCache:sharedTextureCache():addImage(s_fire))
-    local pos_x, pos_y = emitter:getPosition()
-    emitter:setPosition(pos_x, 100)
+    local pos_x, pos_y = tolua.cast(emitter,"CCNode"):getPosition()
+    tolua.cast(emitter,"CCNode"):setPosition(pos_x, 100)
 
 	titleLabel:setString("ParticleFire")
 	return layer
@@ -504,11 +503,11 @@ local function DemoSmoke()
 
 	emitter = CCParticleSmoke:create()
     -- emitter:retain()
-    background:addChild(emitter, 10)
+    background:addChild(tolua.cast(emitter,"CCNode"), 10)
     emitter:setTexture(CCTextureCache:sharedTextureCache():addImage(s_fire))
 
-    local pos_x, pos_y = emitter:getPosition()
-    emitter:setPosition(pos_x, 100)
+    local pos_x, pos_y = tolua.cast(emitter,"CCNode"):getPosition()
+    tolua.cast(emitter,"CCNode"):setPosition(pos_x, 100)
 
     setEmitterPosition()
 
@@ -524,11 +523,11 @@ local function DemoExplosion()
 
 	emitter = CCParticleExplosion:create()
     -- emitter:retain()
-    background:addChild(emitter, 10)
+    background:addChild(tolua.cast(emitter,"CCNode"), 10)
 
     emitter:setTexture(CCTextureCache:sharedTextureCache():addImage(s_stars1))
 
-    emitter:setAutoRemoveOnFinish(true)
+    tolua.cast(emitter, "CCParticleSystem"):setAutoRemoveOnFinish(true)
 
     setEmitterPosition()
 
@@ -544,33 +543,36 @@ local function DemoSnow()
 
 	emitter = CCParticleSnow:create()
     -- emitter:retain()
-    background:addChild(emitter, 10)
+    local nodeEmitter = tolua.cast(emitter, "CCNode")
+    background:addChild(nodeEmitter, 10)
 
-    local pos_x, pos_y = emitter:getPosition()
-    emitter:setPosition(pos_x, pos_y - 110)
-    emitter:setLife(3)
-    emitter:setLifeVar(1)
+    local pos_x, pos_y = nodeEmitter:getPosition()
+    nodeEmitter:setPosition(pos_x, pos_y - 110)
+
+    local systemEmitter = tolua.cast(emitter, "CCParticleSystem")
+    systemEmitter:setLife(3)
+    systemEmitter:setLifeVar(1)
 
     -- gravity
-    emitter:setGravity(CCPointMake(0, -10))
+    systemEmitter:setGravity(CCPointMake(0, -10))
 
     -- speed of particles
-    emitter:setSpeed(130)
-    emitter:setSpeedVar(30)
+    systemEmitter:setSpeed(130)
+    systemEmitter:setSpeedVar(30)
 
-    local startColor = emitter:getStartColor()
+    local startColor = systemEmitter:getStartColor()
     startColor.r = 0.9
     startColor.g = 0.9
     startColor.b = 0.9
-    emitter:setStartColor(startColor)
+    systemEmitter:setStartColor(startColor)
 
-    local startColorVar = emitter:getStartColorVar()
+    local startColorVar = systemEmitter:getStartColorVar()
     startColorVar.b = 0.1
-    emitter:setStartColorVar(startColorVar)
+    systemEmitter:setStartColorVar(startColorVar)
 
-    emitter:setEmissionRate(emitter:getTotalParticles() / emitter:getLife())
+    systemEmitter:setEmissionRate(systemEmitter:getTotalParticles() / systemEmitter:getLife())
 
-    emitter:setTexture(CCTextureCache:sharedTextureCache():addImage(s_snow))
+    systemEmitter:setTexture(CCTextureCache:sharedTextureCache():addImage(s_snow))
 
     setEmitterPosition()
 
@@ -586,11 +588,13 @@ local function DemoRain()
 
 	emitter = CCParticleRain:create()
     -- emitter:retain()
-    background:addChild(emitter, 10)
 
-    local pos_x, pos_y = emitter:getPosition()
-    emitter:setPosition(pos_x, pos_y - 100)
-    emitter:setLife(4)
+    local nodeEmitter = tolua.cast(emitter, "CCNode")
+    background:addChild(nodeEmitter, 10)
+
+    local pos_x, pos_y = nodeEmitter:getPosition()
+    nodeEmitter:setPosition(pos_x, pos_y - 100)
+    tolua.cast(emitter, "CCParticleSystem"):setLife(4)
 
     emitter:setTexture(CCTextureCache:sharedTextureCache():addImage(s_fire))
 
@@ -823,14 +827,17 @@ local function DemoRing()
 	emitter = CCParticleFlower:create()
     -- emitter:retain()
 
-    background:addChild(emitter, 10)
+    local nodeEmitter = tolua.cast(emitter, "CCNode")
+    background:addChild(nodeEmitter, 10)
 
     emitter:setTexture(CCTextureCache:sharedTextureCache():addImage(s_stars1))
-    emitter:setLifeVar(0)
-    emitter:setLife(10)
-    emitter:setSpeed(100)
-    emitter:setSpeedVar(0)
-    emitter:setEmissionRate(10000)
+
+    local systemEmitter = tolua.cast(emitter, "CCParticleSystem")
+    systemEmitter:setLifeVar(0)
+    systemEmitter:setLife(10)
+    systemEmitter:setSpeed(100)
+    systemEmitter:setSpeedVar(0)
+    systemEmitter:setEmissionRate(10000)
 
     setEmitterPosition()
 
@@ -860,11 +867,12 @@ local function ParallaxParticle()
     -- emitter:retain()
     emitter:setTexture(CCTextureCache:sharedTextureCache():addImage(s_fire))
 
-    p1:addChild(emitter, 10)
-    emitter:setPosition(250, 200)
+    local nodeEmitter = tolua.cast(emitter, "CCNode")
+    p1:addChild(nodeEmitter, 10)
+    nodeEmitter:setPosition(250, 200)
 
     local par = CCParticleSun:create()
-    p2:addChild(par, 10)
+    p2:addChild(tolua.cast(par,"CCNode"), 10)
     par:setTexture(CCTextureCache:sharedTextureCache():addImage(s_fire))
 
     local move = CCMoveBy:create(4, CCPointMake(300,0))
