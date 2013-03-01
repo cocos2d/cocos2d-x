@@ -1281,6 +1281,17 @@ void ActionFollow::onEnter()
     this->runAction(CCFollow::create(m_grossini, CCRectMake(0, 0, s.width * 2 - 100, s.height)));
 }
 
+void ActionFollow::draw()
+{
+    CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+    
+	float x = winSize.width*2 - 100;
+	float y = winSize.height;
+    
+	CCPoint vertices[] = { ccp(5,5), ccp(x-5,5), ccp(x-5,y-5), ccp(5,y-5) };
+	ccDrawPoly(vertices, 4, true);
+}
+
 std::string ActionFollow::subtitle()
 {
     return "Follow action";
