@@ -84,6 +84,8 @@ bool CCTransitionScene::initWithDuration(float t, CCScene *scene)
         m_pOutScene->retain();
 
         CCAssert( m_pInScene != m_pOutScene, "Incoming scene must be different from the outgoing scene" );
+        
+        sceneOrder();
 
         return true;
     }
