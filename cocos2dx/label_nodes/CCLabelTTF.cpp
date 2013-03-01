@@ -53,11 +53,6 @@ CCLabelTTF::~CCLabelTTF()
     CC_SAFE_DELETE(m_pFontName);
 }
 
-CCLabelTTF * CCLabelTTF::node()
-{
-    return CCLabelTTF::create();
-}
-
 CCLabelTTF * CCLabelTTF::create()
 {
     CCLabelTTF * pRet = new CCLabelTTF();

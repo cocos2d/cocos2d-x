@@ -653,11 +653,6 @@ void CCLayerColor::setBlendFunc(ccBlendFunc var)
     m_tBlendFunc = var;
 }
 
-CCLayerColor* CCLayerColor::node()
-{
-    return CCLayerColor::create();
-}
-
 CCLayerColor* CCLayerColor::create()
 {
     CCLayerColor* pRet = new CCLayerColor();
@@ -831,11 +826,6 @@ CCLayerGradient* CCLayerGradient::create(const ccColor4B& start, const ccColor4B
     }
     CC_SAFE_DELETE(pLayer);
     return NULL;
-}
-
-CCLayerGradient* CCLayerGradient::node()
-{
-    return CCLayerGradient::create();
 }
 
 CCLayerGradient* CCLayerGradient::create()
