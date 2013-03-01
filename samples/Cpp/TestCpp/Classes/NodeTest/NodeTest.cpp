@@ -405,7 +405,7 @@ void StressTest1::shouldNotCrash(float dt)
 // remove
 void StressTest1::removeMe(CCNode* node)
 {    
-    m_pParent->removeChild(node, true);
+    getParent()->removeChild(node, true);
     nextCallback(this);
 }
 

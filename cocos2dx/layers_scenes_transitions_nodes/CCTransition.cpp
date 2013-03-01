@@ -85,11 +85,6 @@ bool CCTransitionScene::initWithDuration(float t, CCScene *scene)
 
         CCAssert( m_pInScene != m_pOutScene, "Incoming scene must be different from the outgoing scene" );
 
-        // disable events while transitions
-        CCDirector* pDirector = CCDirector::sharedDirector();
-        pDirector->getTouchDispatcher()->setDispatchEvents(false);
-        this->sceneOrder();
-
         return true;
     }
     else
@@ -139,16 +134,15 @@ void CCTransitionScene::finish()
 void CCTransitionScene::setNewScene(float dt)
 {    
     CC_UNUSED_PARAM(dt);
-    // [self unschedule:_cmd]; 
-    // "_cmd" is a local variable automatically defined in a method 
-    // that contains the selector for the method
+
     this->unschedule(schedule_selector(CCTransitionScene::setNewScene));
-    CCDirector *director = CCDirector::sharedDirector();
+    
     // Before replacing, save the "send cleanup to scene"
+    CCDirector *director = CCDirector::sharedDirector();
     m_bIsSendCleanupToScene = director->isSendCleanupToScene();
+    
     director->replaceScene(m_pInScene);
-    // enable events while transitions
-    director->getTouchDispatcher()->setDispatchEvents(true);
+    
     // issue #267
     m_pOutScene->setVisible(true);
 }
@@ -164,17 +158,28 @@ void CCTransitionScene::hideOutShowIn()
 void CCTransitionScene::onEnter()
 {
     CCScene::onEnter();
-    m_pInScene->onEnter();
+    
+    // disable events while transitions
+    CCDirector::sharedDirector()->getTouchDispatcher()->setDispatchEvents(false);
+    
     // outScene should not receive the onEnter callback
+    // only the onExitTransitionDidStart
+    m_pOutScene->onExitTransitionDidStart();
+    
+    m_pInScene->onEnter();
 }
 
 // custom onExit
 void CCTransitionScene::onExit()
 {
     CCScene::onExit();
+    
+    // enable events while transitions
+    CCDirector::sharedDirector()->getTouchDispatcher()->setDispatchEvents(true);
+    
     m_pOutScene->onExit();
 
-    // inScene should not receive the onExit callback
+    // m_pInScene should not receive the onEnter callback
     // only the onEnterTransitionDidFinish
     m_pInScene->onEnterTransitionDidFinish();
 }

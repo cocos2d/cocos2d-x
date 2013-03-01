@@ -75,8 +75,11 @@ NS_CC_BEGIN
 
 class CCPointArray;
 
-/** initialize context */
+/** Initializes the drawing primitives */
 void CC_DLL ccDrawInit();
+
+/** Frees allocated resources by the drawing primitives */
+void CC_DLL ccDrawFree();
 
 /** draws a point given x and y coordinate measured in points */
 void CC_DLL ccDrawPoint( const CCPoint& point );

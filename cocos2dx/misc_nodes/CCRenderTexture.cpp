@@ -361,13 +361,17 @@ bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CCTexture2DPixelForma
 
 void CCRenderTexture::begin()
 {
-    // Save the current matrix
+    kmGLMatrixMode(KM_GL_PROJECTION);
+	kmGLPushMatrix();
+	kmGLMatrixMode(KM_GL_MODELVIEW);
     kmGLPushMatrix();
+    
+    CCDirector *director = CCDirector::sharedDirector();
+    director->setProjection(director->getProjection());
 
     const CCSize& texSize = m_pTexture->getContentSizeInPixels();
 
     // Calculate the adjustment ratios based on the old and new projections
-    CCDirector *director = CCDirector::sharedDirector();
     CCSize size = director->getWinSizeInPixels();
     float widthRatio = size.width / texSize.width;
     float heightRatio = size.height / texSize.height;
@@ -457,23 +461,17 @@ void CCRenderTexture::beginWithClear(float r, float g, float b, float a, float d
 
 void CCRenderTexture::end()
 {
-    glBindFramebuffer(GL_FRAMEBUFFER, m_nOldFBO);
-    kmGLPopMatrix();
-
     CCDirector *director = CCDirector::sharedDirector();
-
-    CCSize size = director->getWinSizeInPixels();
+    
+    glBindFramebuffer(GL_FRAMEBUFFER, m_nOldFBO);
 
     // restore viewport
-    glViewport(0, 0, GLsizei(size.width * CC_CONTENT_SCALE_FACTOR()), GLsizei(size.height * CC_CONTENT_SCALE_FACTOR()));
+    director->setViewport();
 
-    // special viewport for 3d projection + retina display
-    if ( director->getProjection() == kCCDirectorProjection3D && CC_CONTENT_SCALE_FACTOR() != 1 )
-    {
-        glViewport((GLsizei)(-size.width/2), (GLsizei)(-size.height/2), (GLsizei)(size.width * CC_CONTENT_SCALE_FACTOR()), (GLsizei)(size.height * CC_CONTENT_SCALE_FACTOR()));
-    }
-
-    director->setProjection(director->getProjection());
+    kmGLMatrixMode(KM_GL_PROJECTION);
+	kmGLPopMatrix();
+	kmGLMatrixMode(KM_GL_MODELVIEW);
+	kmGLPopMatrix();
 }
 
 void CCRenderTexture::clear(float r, float g, float b, float a)

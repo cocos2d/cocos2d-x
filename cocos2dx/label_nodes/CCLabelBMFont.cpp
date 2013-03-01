@@ -491,20 +491,26 @@ bool CCLabelBMFont::initWithString(const char *theString, const char *fntFile, f
 
     if (CCSpriteBatchNode::initWithTexture(texture, strlen(theString)))
     {
-        m_pAlignment = alignment;
-        m_tImageOffset = imageOffset;
         m_fWidth = width;
-        m_cOpacity = 255;
-        m_tColor = ccWHITE;
+        m_pAlignment = alignment;
+        
+        m_cDisplayedOpacity = m_cRealOpacity = 255;
+		m_tDisplayedColor = m_tRealColor = ccWHITE;
+        m_bCascadeOpacityEnabled = true;
+        m_bCascadeColorEnabled = true;
+        
         m_obContentSize = CCSizeZero;
+        
         m_bIsOpacityModifyRGB = m_pobTextureAtlas->getTexture()->hasPremultipliedAlpha();
         m_obAnchorPoint = ccp(0.5f, 0.5f);
+        
+        m_tImageOffset = imageOffset;
         
         m_pReusedChar = new CCSprite();
         m_pReusedChar->initWithTexture(m_pobTextureAtlas->getTexture(), CCRectMake(0, 0, 0, 0), false);
         m_pReusedChar->setBatchNode(this);
         
-        this->setString(theString);
+        this->setString(theString, true);
         
         return true;
     }
@@ -512,7 +518,12 @@ bool CCLabelBMFont::initWithString(const char *theString, const char *fntFile, f
 }
 
 CCLabelBMFont::CCLabelBMFont()
-: m_cOpacity(0)           
+: m_cDisplayedOpacity(255)
+, m_cRealOpacity(255)
+, m_tDisplayedColor(ccWHITE)
+, m_tRealColor(ccWHITE)
+, m_bCascadeOpacityEnabled(true)
+, m_bCascadeColorEnabled(true)
 , m_bIsOpacityModifyRGB(false)
 , m_pConfiguration(NULL)
 , m_sString(NULL)
@@ -548,7 +559,7 @@ void CCLabelBMFont::createFontChars()
 {
     int nextFontPositionX = 0;
     int nextFontPositionY = 0;
-    //unsigned short prev = -1;
+    unsigned short prev = -1;
     int kerningAmount = 0;
 
     CCSize tmpSize = CCSizeZero;
@@ -593,10 +604,12 @@ void CCLabelBMFont::createFontChars()
         
         if (charSet->find(c) == charSet->end())
         {
-            CCLOG("CCLabelBMFont: Attempted to use character not defined in this bitmap: %d", c);
+            CCLOGWARN("cocos2d::CCLabelBMFont: Attempted to use character not defined in this bitmap: %d", c);
             continue;      
         }
 
+        kerningAmount = this->kerningAmountForFirst(prev, c);
+        
         tCCFontDefHashElement *element = NULL;
 
         // unichar is a short, and an int is needed on HASH_FIND_INT
@@ -604,7 +617,7 @@ void CCLabelBMFont::createFontChars()
         HASH_FIND_INT(m_pConfiguration->m_pFontDefDictionary, &key, element);
         if (! element)
         {
-            CCLOG("cocos2d: LabelBMFont: characer not found %d", c);
+            CCLOGWARN("cocos2d::CCLabelBMFont: characer not found %d", c);
             continue;
         }
 
@@ -620,8 +633,14 @@ void CCLabelBMFont::createFontChars()
 
         bool hasSprite = true;
         fontChar = (CCSprite*)(this->getChildByTag(i));
-        if( ! fontChar )
+        if(fontChar )
         {
+            // Reusing previous Sprite
+			fontChar->setVisible(true);
+        }
+        else
+        {
+            // New Sprite ? Set correct color, opacity, etc...
             if( 0 )
             {
 				/* WIP: Doesn't support many features yet.
@@ -639,16 +658,17 @@ void CCLabelBMFont::createFontChars()
                 addChild(fontChar, i, i);
                 fontChar->release();
 			}
+            
+            // Apply label properties
+			fontChar->setOpacityModifyRGB(m_bIsOpacityModifyRGB);
+            
+			// Color MUST be set before opacity, since opacity might change color if OpacityModifyRGB is on
+			fontChar->updateDisplayedColor(m_tDisplayedColor);
+			fontChar->updateDisplayedOpacity(m_cDisplayedOpacity);
         }
-        else
-        {
-            // updating previous sprite
-            fontChar->setTextureRect(rect, false, rect.size);
 
-            // restore to default in case they were modified
-            fontChar->setVisible(true);
-            fontChar->setOpacity(255);
-        }
+        // updating previous sprite
+        fontChar->setTextureRect(rect, false, rect.size);
 
         // See issue 1343. cast( signed short + unsigned integer ) == unsigned integer (sign is lost!)
         int yOffset = m_pConfiguration->m_nCommonHeight - fontDef.yOffset;
@@ -658,19 +678,7 @@ void CCLabelBMFont::createFontChars()
 
         // update kerning
         nextFontPositionX += fontDef.xAdvance + kerningAmount;
-        //prev = c;
-
-        // Apply label properties
-        fontChar->setOpacityModifyRGB(m_bIsOpacityModifyRGB);
-        // Color MUST be set before opacity, since opacity might change color if OpacityModifyRGB is on
-        fontChar->setColor(m_tColor);
-
-        // only apply opacity if it is different than 255 )
-        // to prevent modifying the color too (issue #610)
-        if( m_cOpacity != 255 )
-        {
-            fontChar->setOpacity(m_cOpacity);
-        }
+        prev = c;
 
         if (longestLine < nextFontPositionX)
         {
@@ -751,53 +759,57 @@ void CCLabelBMFont::setCString(const char *label)
 }
 
 //LabelBMFont - CCRGBAProtocol protocol
-void CCLabelBMFont::setColor(const ccColor3B& var)
-{
-    m_tColor = var;
-    if (m_pChildren && m_pChildren->count() != 0)
-    {
-        CCObject* child;
-        CCARRAY_FOREACH(m_pChildren, child)
-        {
-            CCSprite* pNode = (CCSprite*) child;
-            if (pNode)
-            {
-                pNode->setColor(m_tColor);
-            }
-        }
-    }
-}
-
 const ccColor3B& CCLabelBMFont::getColor()
 {
-    return m_tColor;
+    return m_tRealColor;
 }
 
-void CCLabelBMFont::setOpacity(GLubyte var)
+const ccColor3B& CCLabelBMFont::getDisplayedColor()
 {
-    m_cOpacity = var;
+    return m_tDisplayedColor;
+}
 
-    if (m_pChildren && m_pChildren->count() != 0)
-    {
-        CCObject* child;
-        CCARRAY_FOREACH(m_pChildren, child)
+void CCLabelBMFont::setColor(const ccColor3B& color)
+{
+	m_tDisplayedColor = m_tRealColor = color;
+	
+	if( m_bCascadeColorEnabled ) {
+		ccColor3B parentColor = ccWHITE;
+        CCRGBAProtocol* pParent = dynamic_cast<CCRGBAProtocol*>(m_pParent);
+        if (pParent && pParent->isCascadeColorEnabled())
         {
-            CCNode* pNode = (CCNode*) child;
-            if (pNode)
-            {
-                CCRGBAProtocol *pRGBAProtocol = dynamic_cast<CCRGBAProtocol*>(pNode);
-                if (pRGBAProtocol)
-                {
-                    pRGBAProtocol->setOpacity(m_cOpacity);
-                }
-            }
+            parentColor = pParent->getDisplayedColor();
         }
-    }
+        this->updateDisplayedColor(parentColor);
+	}
 }
-GLubyte CCLabelBMFont::getOpacity()
+
+GLubyte CCLabelBMFont::getOpacity(void)
 {
-    return m_cOpacity;
+    return m_cRealOpacity;
 }
+
+GLubyte CCLabelBMFont::getDisplayedOpacity(void)
+{
+    return m_cDisplayedOpacity;
+}
+
+/** Override synthesized setOpacity to recurse items */
+void CCLabelBMFont::setOpacity(GLubyte opacity)
+{
+	m_cDisplayedOpacity = m_cRealOpacity = opacity;
+    
+	if( m_bCascadeOpacityEnabled ) {
+		GLubyte parentOpacity = 255;
+        CCRGBAProtocol* pParent = dynamic_cast<CCRGBAProtocol*>(m_pParent);
+        if (pParent && pParent->isCascadeOpacityEnabled())
+        {
+            parentOpacity = pParent->getDisplayedOpacity();
+        }
+        this->updateDisplayedOpacity(parentOpacity);
+	}
+}
+
 void CCLabelBMFont::setOpacityModifyRGB(bool var)
 {
     m_bIsOpacityModifyRGB = var;
@@ -821,6 +833,52 @@ void CCLabelBMFont::setOpacityModifyRGB(bool var)
 bool CCLabelBMFont::isOpacityModifyRGB()
 {
     return m_bIsOpacityModifyRGB;
+}
+
+void CCLabelBMFont::updateDisplayedOpacity(GLubyte parentOpacity)
+{
+	m_cDisplayedOpacity = m_cRealOpacity * parentOpacity/255.0;
+    
+	CCObject* pObj;
+	CCARRAY_FOREACH(m_pChildren, pObj)
+    {
+        CCSprite *item = (CCSprite*)pObj;
+		item->updateDisplayedOpacity(m_cDisplayedOpacity);
+	}
+}
+
+void CCLabelBMFont::updateDisplayedColor(const ccColor3B& parentColor)
+{
+	m_tDisplayedColor.r = m_tRealColor.r * parentColor.r/255.0;
+	m_tDisplayedColor.g = m_tRealColor.g * parentColor.g/255.0;
+	m_tDisplayedColor.b = m_tRealColor.b * parentColor.b/255.0;
+    
+    CCObject* pObj;
+	CCARRAY_FOREACH(m_pChildren, pObj)
+    {
+        CCSprite *item = (CCSprite*)pObj;
+		item->updateDisplayedColor(m_tDisplayedColor);
+	}
+}
+
+bool CCLabelBMFont::isCascadeColorEnabled()
+{
+    return false;
+}
+
+void CCLabelBMFont::setCascadeColorEnabled(bool cascadeColorEnabled)
+{
+    m_bCascadeColorEnabled = cascadeColorEnabled;
+}
+
+bool CCLabelBMFont::isCascadeOpacityEnabled()
+{
+    return false;
+}
+
+void CCLabelBMFont::setCascadeOpacityEnabled(bool cascadeOpacityEnabled)
+{
+    m_bCascadeOpacityEnabled = cascadeOpacityEnabled;
 }
 
 // LabelBMFont - AnchorPoint
@@ -857,10 +915,15 @@ void CCLabelBMFont::updateLabel()
         for (unsigned int j = 0; j < children->count(); j++)
         {
             CCSprite* characterSprite;
-
-            while (!(characterSprite = (CCSprite*)this->getChildByTag(j + skip)))
-                skip++;
-
+            unsigned int justSkipped = 0;
+            
+            while (!(characterSprite = (CCSprite*)this->getChildByTag(j + skip + justSkipped)))
+            {
+                justSkipped++;
+            }
+            
+            skip += justSkipped;
+            
             if (!characterSprite->isVisible())
                 continue;
 
@@ -892,7 +955,7 @@ void CCLabelBMFont::updateLabel()
                 start_line = false;
                 startOfWord = -1;
                 startOfLine = -1;
-                i++;
+                i+=justSkipped;
                 line++;
 
                 if (i >= stringLength)

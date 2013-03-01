@@ -36,6 +36,7 @@
 #include "shaders/CCGLProgram.h"
 #include "kazmath/kazmath.h"
 #include "script_support/CCScriptSupport.h"
+#include "CCProtocols.h"
 
 NS_CC_BEGIN
 
@@ -138,6 +139,11 @@ public:
      */
     virtual ~CCNode(void);
     
+    /**
+     *  Initializes the instance of CCNode
+     *  @return Whether the initialization was successful.
+     */
+    virtual bool init();
 	/**
      * Allocates and initializes a node.
      * @return A initialized node which is marked as "autorelease".
@@ -1383,6 +1389,51 @@ protected:
     int m_nScriptHandler;               ///< script handler for onEnter() & onExit(), used in Javascript binding and Lua binding.
     int m_nUpdateScriptHandler;         ///< script handler for update() callback per frame, which is invoked from lua & javascript.
     ccScriptType m_eScriptType;         ///< type of script binding, lua or javascript
+};
+
+//#pragma mark - CCNodeRGBA
+
+/** CCNodeRGBA is a subclass of CCNode that implements the CCRGBAProtocol protocol.
+ 
+ All features from CCNode are valid, plus the following new features:
+ - opacity
+ - RGB colors
+ 
+ Opacity/Color propagates into children that conform to the CCRGBAProtocol if cascadeOpacity/cascadeColor is enabled.
+ @since v2.1
+ */
+class CC_DLL CCNodeRGBA : public CCNode, public CCRGBAProtocol
+{
+public:
+    CCNodeRGBA();
+    virtual ~CCNodeRGBA();
+    
+    virtual bool init();
+    
+    virtual GLubyte getOpacity();
+    virtual GLubyte getDisplayedOpacity();
+    virtual void setOpacity(GLubyte opacity);
+    virtual void updateDisplayedOpacity(GLubyte parentOpacity);
+    virtual bool isCascadeOpacityEnabled();
+    virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled);
+    
+    virtual const ccColor3B& getColor(void);
+    virtual const ccColor3B& getDisplayedColor();
+    virtual void setColor(const ccColor3B& color);
+    virtual void updateDisplayedColor(const ccColor3B& parentColor);
+    virtual bool isCascadeColorEnabled();
+    virtual void setCascadeColorEnabled(bool cascadeColorEnabled);
+    
+    virtual void setOpacityModifyRGB(bool bValue) = 0;
+    virtual bool isOpacityModifyRGB() = 0;
+
+protected:
+	GLubyte		_displayedOpacity;
+    GLubyte     _realOpacity;
+	ccColor3B	_displayedColor;
+    ccColor3B   _realColor;
+	bool		_cascadeColorEnabled;
+    bool        _cascadeOpacityEnabled;
 };
 
 // end of base_node group

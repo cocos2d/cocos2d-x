@@ -210,17 +210,22 @@ void CCPhysicsSprite::setRotation(float fRotation)
 // returns the transform matrix according the Chipmunk Body values
 CCAffineTransform CCPhysicsSprite::nodeToParentTransform()
 {
-    cpVect rot = (m_bIgnoreBodyRotation ? cpvforangle(-CC_DEGREES_TO_RADIANS(m_fRotationX)) : m_pCPBody->rot);
-    float x = m_pCPBody->p.x + rot.x*(-m_obAnchorPointInPoints.x) - rot.y*(-m_obAnchorPointInPoints.y);
-    float y = m_pCPBody->p.y + rot.y*(-m_obAnchorPointInPoints.x) + rot.x*(-m_obAnchorPointInPoints.y);
-    
-    if (m_bIgnoreAnchorPointForPosition)
+    // Although scale is not used by physics engines, it is calculated just in case
+	// the sprite is animated (scaled up/down) using actions.
+	// For more info see: http://www.cocos2d-iphone.org/forum/topic/68990
+	cpVect rot = (m_bIgnoreBodyRotation ? cpvforangle(-CC_DEGREES_TO_RADIANS(m_fRotationX)) : m_pCPBody->rot);
+	float x = m_pCPBody->p.x + rot.x * -m_obAnchorPointInPoints.x * m_fScaleX - rot.y * -m_obAnchorPointInPoints.y * m_fScaleY;
+	float y = m_pCPBody->p.y + rot.y * -m_obAnchorPointInPoints.x * m_fScaleX + rot.x * -m_obAnchorPointInPoints.y * m_fScaleY;
+	
+	if (m_bIgnoreAnchorPointForPosition)
     {
-        x += m_obAnchorPointInPoints.x;
-        y += m_obAnchorPointInPoints.y;
-    }
-    
-    return (m_sTransform = CCAffineTransformMake(rot.x, rot.y, -rot.y, rot.x, x, y));
+		x += m_obAnchorPointInPoints.x;
+		y += m_obAnchorPointInPoints.y;
+	}
+	
+	return (m_sTransform = CCAffineTransformMake(rot.x * m_fScaleX, rot.y * m_fScaleX,
+                                                 -rot.y * m_fScaleY, rot.x * m_fScaleY,
+                                                 x,	y));
 }
 
 #elif CC_ENABLE_BOX2D_INTEGRATION
@@ -285,34 +290,37 @@ void CCPhysicsSprite::setRotation(float fRotation)
 // returns the transform matrix according the Box2D Body values
 CCAffineTransform CCPhysicsSprite::nodeToParentTransform()
 {
-    b2Vec2 pos = m_pB2Body->GetPosition();
-    
-    float x = pos.x * m_fPTMRatio;
-    float y = pos.y * m_fPTMRatio;
-    
-    if (m_bIgnoreAnchorPointForPosition)
+    b2Vec2 pos  = _b2Body->GetPosition();
+	
+	float x = pos.x * m_fPTMRatio;
+	float y = pos.y * m_fPTMRatio;
+	
+	if (m_bIgnoreAnchorPointForPosition)
     {
-        x += m_obAnchorPointInPoints.x;
-        y += m_obAnchorPointInPoints.y;
-    }
-    
-    // Make matrix
-    float radians = m_pB2Body->GetAngle();
-    float c = cosf(radians);
-    float s = sinf(radians);
-    
-    if (! m_obAnchorPointInPoints.equals(CCPointZero))
+		x += m_obAnchorPointInPoints.x;
+		y += m_obAnchorPointInPoints.y;
+	}
+	
+	// Make matrix
+	float radians = m_pB2Body->GetAngle();
+	float c = cosf(radians);
+	float s = sinf(radians);
+	
+	// Although scale is not used by physics engines, it is calculated just in case
+	// the sprite is animated (scaled up/down) using actions.
+	// For more info see: http://www.cocos2d-iphone.org/forum/topic/68990
+	if (! (m_obAnchorPointInPoints.equals(CCPointZero))
     {
-        x += c*(-m_obAnchorPointInPoints.x) + -s*(-m_obAnchorPointInPoints.y);
-        y += s*(-m_obAnchorPointInPoints.x) + c*(-m_obAnchorPointInPoints.y);
-    }
+		x += ((c * -m_obAnchorPointInPoints.x * m_fScaleX) + (-s * -m_obAnchorPointInPoints.y * m_fScaleY));
+		y += ((s * -m_obAnchorPointInPoints.x * m_fScaleX) + (c * -m_obAnchorPointInPoints.y * m_fScaleY));
+	}
     
-    // Rot, Transition Matrix
-    m_sTransform = CCAffineTransformMake(c, s,
-                                         -s, c,
-                                         x, y);
-    
-    return m_sTransform;
+	// Rot, Translate Matrix
+	m_sTransform = CCAffineTransformMake( c * m_fScaleX,	s * m_fScaleX,
+									     -s * m_fScaleY,	c * m_fScaleY,
+									     x,	y );
+	
+	return m_sTransform;
 }
 
 #endif

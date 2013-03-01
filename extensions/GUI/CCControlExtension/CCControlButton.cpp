@@ -689,18 +689,20 @@ void CCControlButton::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
 
 void CCControlButton::setOpacity(GLubyte opacity)
 {
-    m_cOpacity = opacity;
-    
-    CCObject* child;
-    CCArray* children=getChildren();
-    CCARRAY_FOREACH(children, child)
-    {
-        CCRGBAProtocol* pNode = dynamic_cast<CCRGBAProtocol*>(child);        
-        if (pNode)
-        {
-            pNode->setOpacity(opacity);
-        }
-    }
+    // XXX fixed me if not correct
+    CCControl::setOpacity(opacity);
+//    m_cOpacity = opacity;
+//    
+//    CCObject* child;
+//    CCArray* children=getChildren();
+//    CCARRAY_FOREACH(children, child)
+//    {
+//        CCRGBAProtocol* pNode = dynamic_cast<CCRGBAProtocol*>(child);        
+//        if (pNode)
+//        {
+//            pNode->setOpacity(opacity);
+//        }
+//    }
     CCDictElement * item = NULL;
     CCDICT_FOREACH(m_backgroundSpriteDispatchTable, item)
     {
@@ -711,7 +713,7 @@ void CCControlButton::setOpacity(GLubyte opacity)
 
 GLubyte CCControlButton::getOpacity()
 {
-    return m_cOpacity;
+    return _realOpacity;
 }
 
 void CCControlButton::ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent)

@@ -368,7 +368,15 @@ void CCSequence::update(float t)
             m_pActions[0]->stop();
         }
     }
-
+	else if(found==0 && m_last==1 )
+	{
+		// Reverse mode ?
+		// XXX: Bug. this case doesn't contemplate when _last==-1, found=0 and in "reverse mode"
+		// since it will require a hack to know if an action is on reverse mode or not.
+		// "step" should be overriden, and the "reverseMode" value propagated to inner Sequences.
+		m_pActions[1]->update(0);
+		m_pActions[1]->stop();
+	}
     // Last action found and it is done.
     if( found == m_last && m_pActions[found]->isDone() )
     {
@@ -1056,12 +1064,16 @@ void CCMoveBy::update(float t)
 {
     if (m_pTarget)
     {
+#if CC_ENABLE_STACKABLE_ACTIONS
         CCPoint currentPos = m_pTarget->getPosition();
         CCPoint diff = ccpSub(currentPos, m_previousPosition);
         m_startPosition = ccpAdd( m_startPosition, diff);
         CCPoint newPos =  ccpAdd( m_startPosition, ccpMult(m_positionDelta, t) );
         m_pTarget->setPosition(newPos);
         m_previousPosition = newPos;
+#else
+        m_pTarget->setPosition(ccpAdd( m_startPosition, ccpMult(m_positionDelta, t)));
+#endif // CC_ENABLE_STACKABLE_ACTIONS
     }
 }
 
@@ -1361,7 +1373,7 @@ void CCJumpBy::update(float t)
         y += m_delta.y * t;
 
         float x = m_delta.x * t;
-
+#if CC_ENABLE_STACKABLE_ACTIONS
         CCPoint currentPos = m_pTarget->getPosition();
 
         CCPoint diff = ccpSub( currentPos, m_previousPos );
@@ -1371,6 +1383,9 @@ void CCJumpBy::update(float t)
         m_pTarget->setPosition(newPos);
 
         m_previousPos = newPos;
+#else
+        m_pTarget->setPosition(ccpAdd( m_startPosition, ccp(x,y)));
+#endif // !CC_ENABLE_STACKABLE_ACTIONS
     }
 }
 
@@ -1504,6 +1519,7 @@ void CCBezierBy::update(float time)
         float x = bezierat(xa, xb, xc, xd, time);
         float y = bezierat(ya, yb, yc, yd, time);
 
+#if CC_ENABLE_STACKABLE_ACTIONS
         CCPoint currentPos = m_pTarget->getPosition();
         CCPoint diff = ccpSub(currentPos, m_previousPosition);
         m_startPosition = ccpAdd( m_startPosition, diff);
@@ -1512,6 +1528,9 @@ void CCBezierBy::update(float time)
         m_pTarget->setPosition(newPos);
 
         m_previousPosition = newPos;
+#else
+        m_pTarget->setPosition(ccpAdd( m_startPosition, ccp(x,y)));
+#endif // !CC_ENABLE_STACKABLE_ACTIONS
     }
 }
 
