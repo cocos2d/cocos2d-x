@@ -83,6 +83,10 @@ release: DEFINES += -DNDEBUG -DCC_ENABLE_CHIPMUNK_INTEGRATION=1
 release: BIN_DIR = $(BIN_DIR_ROOT)/release
 release: $(TARGET)
 
+####### Dependencies
+DEPFLAGS = -MMD -MP -MF"$*.d" -MT"$*.o"
+DEPS = $(OBJECTS:.o=.d)
+
 ####### Build rules
 $(TARGET): $(OBJECTS)
 	mkdir -p $(BIN_DIR)
@@ -91,11 +95,12 @@ $(TARGET): $(OBJECTS)
 
 ####### Compile
 %.o: %.cpp
-	$(CXX) $(CXXFLAGS) $(INCLUDES) $(DEFINES) $(VISIBILITY) -c $< -o $@
+	$(CXX) $(CXXFLAGS) $(INCLUDES) $(DEFINES) $(VISIBILITY) $(DEPFLAGS) -c -o $@ $<
 
 %.o: %.c
-	$(CC) $(CCFLAGS) $(INCLUDES) $(DEFINES) $(VISIBILITY) -c $< -o $@
+	$(CC) $(CCFLAGS) $(INCLUDES) $(DEFINES) $(VISIBILITY) $(DEPFLAGS) -c -o $@ $<
 
+-include $(DEPS)
 
 clean: 
-	rm -f $(OBJECTS) $(TARGET) core
+	rm -f $(OBJECTS) $(DEPS) $(TARGET) core
