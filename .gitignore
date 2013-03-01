@@ -1,6 +1,6 @@
-#ignore thumbnails created by windows
+# Ignore thumbnails created by windows
 Thumbs.db
-#Ignore files build by Visual Studio
+# Ignore files build by Visual Studio
 *.obj
 *.exe
 *.pdb
@@ -36,13 +36,18 @@ bin/
 obj/
 gen/
 assets/
-#.classpath
-#.project
-#.cproject
 local.properties
 
 # Ignore files build by linux
 *.o
+
+# Ignore files built by NaCl
+samples/Cpp/HelloCpp/proj.nacl/Resources/
+samples/Cpp/TestCpp/proj.nacl/Resources/
+samples/Cpp/TestCpp/proj.nacl/out/
+samples/Cpp/SimpleGame/proj.nacl/Resources/
+samples/Lua/HelloLua/proj.nacl/Resources/
+samples/Lua/TestLua/proj.nacl/Resources/
 
 # Ignore python compiled files
 *.pyc
