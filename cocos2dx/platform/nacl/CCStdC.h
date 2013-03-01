@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2013 The Chromium Authors
 
 http://www.cocos2d-x.org
 
@@ -22,39 +22,33 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __PLATFORM_H__
-#define __PLATFORM_H__
+#ifndef __CC_STD_C_H__
+#define __CC_STD_C_H__
 
-#include "CCThread.h"
-#include "CCPlatformMacros.h"
+#include "platform/CCPlatformMacros.h"
 
-NS_CC_BEGIN
+#include <float.h>
+#include <math.h>
+#include <string.h>
+#include <stdarg.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <sys/time.h>
+#include <stdint.h>
 
-/**
- * @addtogroup platform
- * @{
- */
+#ifndef MIN
+#define MIN(x,y) (((x) > (y)) ? (y) : (x))
+#endif  // MIN
 
-struct CC_DLL cc_timeval
-{
-#ifdef __native_client__
-    time_t    tv_sec;        // seconds
-#else
-    long    tv_sec;        // seconds
-#endif
-    long    tv_usec;    // microSeconds
-};
+#ifndef MAX
+#define MAX(x,y) (((x) < (y)) ? (y) : (x))
+#endif  // MAX
 
-class CC_DLL CCTime
-{
-public:
-    static int gettimeofdayCocos2d(struct cc_timeval *tp, void *tzp);
-    static double timersubCocos2d(struct cc_timeval *start, struct cc_timeval *end);
-};
+// some function linux do not have
+#define tanf tan
+#define sqrtf sqrt
+#define cosf cos
+#define sinf sin
 
-// end of platform group
-/// @}
-
-NS_CC_END
-
-#endif // __PLATFORM_H__
+#endif  // __CC_STD_C_H__

@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2013 The Chromium Authors
 
 http://www.cocos2d-x.org
 
@@ -22,39 +22,27 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __PLATFORM_H__
-#define __PLATFORM_H__
+#ifndef __CCACCELEROMETER_H__
+#define __CCACCELEROMETER_H__
 
-#include "CCThread.h"
-#include "CCPlatformMacros.h"
+#include "platform/CCAccelerometerDelegate.h"
 
-NS_CC_BEGIN
+namespace   cocos2d {
 
-/**
- * @addtogroup platform
- * @{
- */
-
-struct CC_DLL cc_timeval
-{
-#ifdef __native_client__
-    time_t    tv_sec;        // seconds
-#else
-    long    tv_sec;        // seconds
-#endif
-    long    tv_usec;    // microSeconds
-};
-
-class CC_DLL CCTime
+class CCAccelerometer
 {
 public:
-    static int gettimeofdayCocos2d(struct cc_timeval *tp, void *tzp);
-    static double timersubCocos2d(struct cc_timeval *start, struct cc_timeval *end);
+    CCAccelerometer(){}
+    ~CCAccelerometer(){}
+
+    static CCAccelerometer* sharedAccelerometer() { return NULL; };
+
+    void removeDelegate(CCAccelerometerDelegate* pDelegate) {CC_UNUSED_PARAM(pDelegate);};
+    void addDelegate(CCAccelerometerDelegate* pDelegate) {CC_UNUSED_PARAM(pDelegate);};
+    void setDelegate(CCAccelerometerDelegate* pDelegate) {CC_UNUSED_PARAM(pDelegate);};
+    void setAccelerometerInterval(float interval) {CC_UNUSED_PARAM(interval);};
 };
 
-// end of platform group
-/// @}
+}
 
-NS_CC_END
-
-#endif // __PLATFORM_H__
+#endif /* __CCACCELEROMETER_H__ */

@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2013 The Chromium Authors
 
 http://www.cocos2d-x.org
 
@@ -22,39 +22,33 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __PLATFORM_H__
-#define __PLATFORM_H__
-
-#include "CCThread.h"
-#include "CCPlatformMacros.h"
+#include "platform/CCCommon.h"
+#include "CCStdC.h"
 
 NS_CC_BEGIN
 
-/**
- * @addtogroup platform
- * @{
- */
+#define MAX_LEN (cocos2d::kMaxLogLen + 1)
 
-struct CC_DLL cc_timeval
+void CCLog(const char * pszFormat, ...)
 {
-#ifdef __native_client__
-    time_t    tv_sec;        // seconds
-#else
-    long    tv_sec;        // seconds
-#endif
-    long    tv_usec;    // microSeconds
-};
+    char szBuf[MAX_LEN];
 
-class CC_DLL CCTime
+    va_list ap;
+    va_start(ap, pszFormat);
+    vsnprintf( szBuf, MAX_LEN, pszFormat, ap);
+    va_end(ap);
+
+    fprintf(stderr, "cocos2d-x debug info [%s]\n",  szBuf);
+}
+
+void CCMessageBox(const char * pszMsg, const char * pszTitle)
 {
-public:
-    static int gettimeofdayCocos2d(struct cc_timeval *tp, void *tzp);
-    static double timersubCocos2d(struct cc_timeval *start, struct cc_timeval *end);
-};
+    CCLog("%s: %s", pszTitle, pszMsg);
+}
 
-// end of platform group
-/// @}
+void CCLuaLog(const char * pszFormat)
+{
+    CCLog(pszFormat);
+}
 
 NS_CC_END
-
-#endif // __PLATFORM_H__

@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2013 The Chromium Authors
 
 http://www.cocos2d-x.org
 
@@ -22,39 +22,54 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __PLATFORM_H__
-#define __PLATFORM_H__
+#ifndef __CCAPLICATION_H__
+#define __CCAPLICATION_H__
 
-#include "CCThread.h"
-#include "CCPlatformMacros.h"
+#include "platform/CCCommon.h"
+#include "platform/CCApplicationProtocol.h"
 
 NS_CC_BEGIN
+class CCRect;
 
-/**
- * @addtogroup platform
- * @{
- */
-
-struct CC_DLL cc_timeval
-{
-#ifdef __native_client__
-    time_t    tv_sec;        // seconds
-#else
-    long    tv_sec;        // seconds
-#endif
-    long    tv_usec;    // microSeconds
-};
-
-class CC_DLL CCTime
+class CCApplication : public CCApplicationProtocol
 {
 public:
-    static int gettimeofdayCocos2d(struct cc_timeval *tp, void *tzp);
-    static double timersubCocos2d(struct cc_timeval *start, struct cc_timeval *end);
-};
+    CCApplication();
+    virtual ~CCApplication();
 
-// end of platform group
-/// @}
+    /**
+     @brief Callback by CCDirector for limit FPS.
+     @interval       The time, which expressed in second in second, between current frame and next.
+     */
+    void setAnimationInterval(double interval);
+
+    /**
+     @brief Run the message loop.
+     */
+    int run();
+
+    /**
+     @brief Get current applicaiton instance.
+     @return Current application instance pointer.
+     */
+    static CCApplication* sharedApplication();
+
+    /* override functions */
+    virtual ccLanguageType getCurrentLanguage();
+
+    /**
+     @brief Get target platform
+     */
+    virtual TargetPlatform getTargetPlatform();
+
+    static bool isRunning() { return s_running; }
+protected:
+    long m_nAnimationInterval;  // microseconds
+
+    static bool s_running; // is the application running
+    static CCApplication* sm_pSharedApplication;
+};
 
 NS_CC_END
 
-#endif // __PLATFORM_H__
+#endif /* __CCAPLICATION_H__ */

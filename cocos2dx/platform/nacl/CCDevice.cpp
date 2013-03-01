@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2013 The Chromium Authors
 
 http://www.cocos2d-x.org
 
@@ -22,39 +22,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __PLATFORM_H__
-#define __PLATFORM_H__
-
-#include "CCThread.h"
-#include "CCPlatformMacros.h"
+#include "platform/CCDevice.h"
 
 NS_CC_BEGIN
 
-/**
- * @addtogroup platform
- * @{
- */
-
-struct CC_DLL cc_timeval
+int CCDevice::getDPI()
 {
-#ifdef __native_client__
-    time_t    tv_sec;        // seconds
-#else
-    long    tv_sec;        // seconds
-#endif
-    long    tv_usec;    // microSeconds
-};
-
-class CC_DLL CCTime
-{
-public:
-    static int gettimeofdayCocos2d(struct cc_timeval *tp, void *tzp);
-    static double timersubCocos2d(struct cc_timeval *start, struct cc_timeval *end);
-};
-
-// end of platform group
-/// @}
+    //TODO(sbc):
+    return 160;
+}
 
 NS_CC_END
-
-#endif // __PLATFORM_H__
