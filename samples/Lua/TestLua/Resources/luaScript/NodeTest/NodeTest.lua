@@ -212,10 +212,10 @@ local function delay4(dt)
 end
 
 local function Test4_onEnterOrExit(tag)
-	if tag == 0 then
+	if tag == "enter" then
 		Test4_delay2Entry = scheduler:scheduleScriptFunc(delay2, 2.0, false)
 		Test4_delay4Entry = scheduler:scheduleScriptFunc(delay4, 4.0, false)
-	elseif tag == 1 then
+	elseif tag == "exit" then
 		scheduler:unscheduleScriptEntry(Test4_delay2Entry)
 		scheduler:unscheduleScriptEntry(Test4_delay4Entry)
 	end
@@ -281,7 +281,10 @@ local function Test5()
     local rot = CCRotateBy:create(2, 360)
     local rot_back = rot:reverse()
     local forever = CCRepeatForever:create(CCSequence:createWithTwoActions(rot, rot_back))
-	local forever2 = CCRepeatForever:create(CCSequence:createWithTwoActions(rot:copy():autorelease(), rot_back:copy():autorelease()))
+
+	local rot2 = CCRotateBy:create(2, 360)
+	local rot2_back = rot2:reverse()
+	local forever2 = CCRepeatForever:create(CCSequence:createWithTwoActions(rot2, rot2_back))
 
 	forever:setTag(101)
     forever2:setTag(102)
@@ -344,10 +347,10 @@ local function Test6()
     local rot = CCRotateBy:create(2, 360)
     local rot_back = rot:reverse()
     local forever1 = CCRepeatForever:create(CCSequence:createWithTwoActions(rot, rot_back))
-    local forever11 = forever1:copy():autorelease()
+    local forever11 = CCRepeatForever:create(CCSequence:createWithTwoActions(rot, rot_back))
 
-    local forever2 = forever1:copy():autorelease()
-    local forever21 = forever1:copy():autorelease()
+    local forever2 = CCRepeatForever:create(CCSequence:createWithTwoActions(rot, rot_back))
+    local forever21 = CCRepeatForever:create(CCSequence:createWithTwoActions(rot, rot_back))
 
     Test6_layer:addChild(sp1, 0, kTagSprite1)
     sp1:addChild(sp11)
@@ -444,7 +447,7 @@ local function StressTest2()
     sp1:setPosition(CCPointMake(80, s.height / 2))
 
     local move = CCMoveBy:create(3, CCPointMake(350, 0))
-    local move_ease_inout3 = CCEaseInOut:create(move:copy():autorelease(), 2.0)
+    local move_ease_inout3 = CCEaseInOut:create(CCMoveBy:create(3, CCPointMake(350, 0)), 2.0)
     local move_ease_inout_back3 = move_ease_inout3:reverse()
     local seq3 = CCSequence:createWithTwoActions(move_ease_inout3, move_ease_inout_back3)
     sp1:runAction(CCRepeatForever:create(seq3))
@@ -452,9 +455,10 @@ local function StressTest2()
 
     local fire = CCParticleFire:create()
     fire:setTexture(CCTextureCache:sharedTextureCache():addImage("Images/fire.png"))
+	fire = tolua.cast(fire, "CCNode")
     fire:setPosition(80, s.height / 2 - 50)
 
-    local copy_seq3 = seq3:copy():autorelease()
+    local copy_seq3 = CCSequence:createWithTwoActions(move_ease_inout3, move_ease_inout_back3)
     fire:runAction(CCRepeatForever:create(copy_seq3))
     sublayer:addChild(fire, 2)
 
@@ -610,7 +614,7 @@ local function CameraZoomTest()
     CameraZoomTest_layer:addChild(sprite, 0, 20)
     sprite:setPosition(ccp(s.width / 4 * 3, s.height / 2))
 
-    CameraZoomTest_layer:scheduleUpdate()
+	CameraZoomTest_layer:scheduleUpdateWithPriorityLua(CameraZoomTest_update, 0)
 	CameraZoomTest_layer:registerScriptHandler(CameraZoomTest_onEnterOrExit)
 
 	titleLabel:setString("Camera Zoom test")
@@ -646,8 +650,7 @@ local function ConvertToNode()
 
         point:setPosition(sprite:getPosition())
 
-        local copy = action:copy()
-        copy:autorelease()
+        local copy = CCRepeatForever:create(rotate)
         sprite:runAction(copy)
         ConvertToNode_layer:addChild(sprite, i)
     end
