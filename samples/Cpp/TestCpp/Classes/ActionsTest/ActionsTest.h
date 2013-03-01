@@ -295,6 +295,7 @@ class ActionFollow : public ActionsDemo
 {
 public:
     virtual void onEnter();
+    virtual void draw();
     virtual std::string subtitle();
 };
 
