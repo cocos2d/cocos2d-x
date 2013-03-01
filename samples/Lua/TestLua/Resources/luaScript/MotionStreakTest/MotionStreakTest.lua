@@ -192,9 +192,9 @@ local function MotionStreakTest2()
     end
 
     local function onTouch(eventType, x, y)
-		if eventType == CCTOUCHBEGAN then
+		if eventType == "began" then
 			return true
-        elseif eventType == CCTOUCHMOVED then
+        elseif eventType == "moved" then
             return onTouchMoved(x, y)
         end
     end
@@ -227,9 +227,9 @@ local function Issue1358_update(dt)
 end
 
 local function Issue1358_onEnterOrExit(tag)
-	if tag == 0 then
+	if tag == "enter" then
 		Issue1358_entry = scheduler:scheduleScriptFunc(Issue1358_update, 0, false)
-	elseif tag == 1 then
+	elseif tag == "exit" then
 		scheduler:unscheduleScriptEntry(Issue1358_entry)
 	end
 end
@@ -266,7 +266,6 @@ function CreateMotionLayer()
 end
 
 function MotionStreakTest()
-	cclog("MotionStreakTest")
 	local scene = CCScene:create()
 
 	SceneIdx = -1

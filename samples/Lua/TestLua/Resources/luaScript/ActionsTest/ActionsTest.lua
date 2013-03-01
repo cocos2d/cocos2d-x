@@ -942,12 +942,8 @@ local function ActionOrbit()
     local seq = CCSequence:createWithTwoActions(move, move_back)
     local rfe = CCRepeatForever:create(seq)
     kathia:runAction(rfe)
-
-    local rfe2 = CCRepeatForever:create(seq)
-    tamara:runAction(rfe2)
-
-    local rfe3 = CCRepeatForever:create(seq)
-    grossini:runAction(rfe3)
+    tamara:runAction(tolua.cast(rfe:copy():autorelease(), "CCActionInterval"))
+    grossini:runAction(tolua.cast(rfe:copy():autorelease(), "CCActionInterval"))
 
 
 	subtitleLabel:setString("OrbitCamera action")

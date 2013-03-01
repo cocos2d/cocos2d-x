@@ -193,9 +193,9 @@ function CreateTestMenu()
     end
 
     local function onTouch(eventType, x, y)
-        if eventType == CCTOUCHBEGAN then
+        if eventType == "began" then
             return onTouchBegan(x, y)
-        elseif eventType == CCTOUCHMOVED then
+        elseif eventType == "moved" then
             return onTouchMoved(x, y)
         end
     end
