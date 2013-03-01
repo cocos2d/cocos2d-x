@@ -112,7 +112,7 @@
 		<link>
 			<name>Classes</name>
 			<type>2</type>
-			<location>COCOS2DX/samples/Cpp/MoonWarriors/Classes</location>
+			<location>COCOS2DX/samples/Javascript/MoonWarriors/Classes</location>
 		</link>
 		<link>
 			<name>cocos2dx</name>
