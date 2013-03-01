@@ -1267,10 +1267,10 @@ void CCNode::updateTransform()
 
 // CCNodeRGBA
 CCNodeRGBA::CCNodeRGBA()
-: _displayedOpacity (255)
+: _displayedOpacity(255)
 , _realOpacity(255)
-, _displayedColor(ccc3(0,0,0))
-, _realColor(ccc3(0,0,0))
+, _displayedColor(ccWHITE)
+, _realColor(ccWHITE)
 , _cascadeColorEnabled(false)
 , _cascadeOpacityEnabled(false)
 {}
