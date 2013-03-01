@@ -23,10 +23,10 @@ static NEWTESTFUNC createFunctions[] = {
     CF(SpriteRenderTextureBug),
 };
 
-#define MAX_LAYER   sizeof(createFunctions)/sizeof(createFunctions[0])
+#define MAX_LAYER   (sizeof(createFunctions)/sizeof(createFunctions[0]))
 static int sceneIdx = -1; 
 
-CCLayer* nextTestCase()
+static CCLayer* nextTestCase()
 {
     sceneIdx++;
     sceneIdx = sceneIdx % MAX_LAYER;
@@ -37,7 +37,7 @@ CCLayer* nextTestCase()
     return pLayer;
 }
 
-CCLayer* backTestCase()
+static CCLayer* backTestCase()
 {
     sceneIdx--;
     int total = MAX_LAYER;
@@ -50,7 +50,7 @@ CCLayer* backTestCase()
     return pLayer;
 }
 
-CCLayer* restartTestCase()
+static CCLayer* restartTestCase()
 {
     CCLayer* pLayer = (createFunctions[sceneIdx])();
     pLayer->autorelease();
