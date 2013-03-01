@@ -126,6 +126,11 @@ CCActionInterval* CCActionEase::reverse(void)
     return CCActionEase::create(m_pInner->reverse());
 }
 
+CCActionInterval* CCActionEase::getInnerAction()
+{
+    return m_pInner;
+}
+
 //
 // EaseRateAction
 //
@@ -286,6 +291,7 @@ CCObject* CCEaseOut::copyWithZone(CCZone *pZone)
 
 void CCEaseOut::update(float time)
 {
+    CCLog("CCEaseOut %f", time);
     m_pInner->update(powf(time, 1 / m_fRate));
 }
 
