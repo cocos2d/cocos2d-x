@@ -568,7 +568,7 @@ void CCLabelBMFont::createFontChars()
     unsigned int totalHeight = 0;
 
     unsigned int quantityOfLines = 1;
-    unsigned int stringLen = cc_wcslen(m_sString);
+    unsigned int stringLen = m_sString ? cc_wcslen(m_sString) : 0;
     if (stringLen == 0)
     {
         return;
@@ -714,17 +714,20 @@ void CCLabelBMFont::setString(const char *newString)
 }
 
 void CCLabelBMFont::setString(const char *newString, bool fromUpdate)
-{
-    CC_SAFE_DELETE_ARRAY(m_sString);
-    m_sString = cc_utf8_to_utf16(newString);
-
-    // MARMALADE CHANGE
-    // THE ASSIGMENT OF STRINGS BELOW PERFORMS AN OVERLAPPING MEMCPY, WHEN fromUpdate IS TRUE
-    // ADDED THE "IF" LINE TO AVOID THIS
-    if (strcmp(m_sInitialString.c_str(), newString))
-	{
-        m_sInitialString = newString;
-	}
+{    
+    if (! fromUpdate)
+    {
+        CC_SAFE_DELETE_ARRAY(m_sString);
+        m_sString = cc_utf8_to_utf16(newString);
+    }
+    else
+    {
+        if (strcmp(m_sInitialString.c_str(), newString))
+        {
+            m_sInitialString = newString;
+        }
+    }
+    
     updateString(fromUpdate);
 }
 
@@ -744,7 +747,7 @@ void CCLabelBMFont::updateString(bool fromUpdate)
     }
     this->createFontChars();
 
-    if (!fromUpdate)
+    if (fromUpdate)
         updateLabel();
 }
 
@@ -894,7 +897,7 @@ void CCLabelBMFont::setAnchorPoint(const CCPoint& point)
 // LabelBMFont - Alignment
 void CCLabelBMFont::updateLabel()
 {
-    this->setString(m_sInitialString.c_str(), true);
+    this->setString(m_sInitialString.c_str(), false);
 
     if (m_fWidth > 0)
     {
@@ -1063,7 +1066,7 @@ void CCLabelBMFont::updateLabel()
 
         CC_SAFE_DELETE_ARRAY(m_sString);
         m_sString = str_new;
-        updateString(true);
+        updateString(false);
     }
 
     // Step 2: Make alignment
