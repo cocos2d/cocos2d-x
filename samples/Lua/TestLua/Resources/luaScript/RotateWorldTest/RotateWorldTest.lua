@@ -33,11 +33,16 @@ local function CreateSpriteLayer()
     local rot1 = CCRotateBy:create(4, 360 * 2)
     local rot2 = rot1:reverse()
 
+    local jump3 = CCJumpBy:create(4, CCPointMake(-400, 0), 100, 4)
+    local jump4 = jump3:reverse()
+    local rot3 = CCRotateBy:create(4, 360 * 2)
+    local rot4 = rot3:reverse()
+
     spriteSister1:runAction(CCRepeat:create(CCSequence:createWithTwoActions(jump2, jump1), 5))
-    spriteSister2:runAction(CCRepeat:create(CCSequence:createWithTwoActions(jump1:copy():autorelease(), jump2:copy():autorelease()), 5))
+    spriteSister2:runAction(CCRepeat:create(CCSequence:createWithTwoActions(jump3, jump4), 5))
 
     spriteSister1:runAction(CCRepeat:create(CCSequence:createWithTwoActions(rot1, rot2), 5))
-    spriteSister2:runAction(CCRepeat:create(CCSequence:createWithTwoActions(rot2:copy():autorelease(), rot1:copy():autorelease()), 5))
+    spriteSister2:runAction(CCRepeat:create(CCSequence:createWithTwoActions(rot4, rot3), 5))
 
 	return layer
 end
@@ -90,11 +95,14 @@ local function CreateRotateWorldLayer()
     layer:addChild(red)
 
     local rot = CCRotateBy:create(8, 720)
+    local rot1 = CCRotateBy:create(8, 720)
+    local rot2 = CCRotateBy:create(8, 720)
+    local rot3 = CCRotateBy:create(8, 720)
 
     blue:runAction(rot)
-    red:runAction(rot:copy():autorelease())
-    green:runAction(rot:copy():autorelease())
-    white:runAction(rot:copy():autorelease())
+    red:runAction(rot1)
+    green:runAction(rot2)
+    white:runAction(rot3)
 
 	return layer
 end
