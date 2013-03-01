@@ -1556,7 +1556,7 @@ void MultipleParticleSystems::update(float dt)
     unsigned int count = 0; 
     
     CCObject* pObj = NULL;
-    CCARRAY_FOREACH(m_pChildren, pObj)
+    CCARRAY_FOREACH(getChildren(), pObj)
     {
         CCParticleSystem* item = dynamic_cast<CCParticleSystem*>(pObj);
         if (item != NULL)

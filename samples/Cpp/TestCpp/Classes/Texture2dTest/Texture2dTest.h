@@ -431,4 +431,15 @@ private:
     CCSprite *m_pBackground;
 };
 
+class TexturePVRv3Premult : public TextureDemo
+{
+public:
+    TexturePVRv3Premult();
+    
+    virtual std::string title();
+    virtual std::string subtitle();
+    
+    void transformSprite(cocos2d::CCSprite *sprite);
+};
+
 #endif // __TEXTURE2D_TEST_H__

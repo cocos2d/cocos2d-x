@@ -24,6 +24,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "CCDirector.h"
+#include "ccFPSImages.h"
+#include "draw_nodes/CCDrawingPrimitives.h"
+#include "CCConfiguration.h"
 #include "cocoa/CCNS.h"
 #include "layers_scenes_transitions_nodes/CCScene.h"
 #include "cocoa/CCArray.h"
@@ -319,6 +322,14 @@ void CCDirector::setOpenGLView(CCEGLView *pobOpenGLView)
     }
 }
 
+void CCDirector::setViewport()
+{
+    if (m_pobOpenGLView)
+    {
+        m_pobOpenGLView->setViewPortInPoints(0, 0, m_obWinSizeInPoints.width, m_obWinSizeInPoints.height);
+    }
+}
+
 void CCDirector::setNextDeltaTimeZero(bool bNextDeltaTimeZero)
 {
     m_bNextDeltaTimeZero = bNextDeltaTimeZero;
@@ -328,10 +339,7 @@ void CCDirector::setProjection(ccDirectorProjection kProjection)
 {
     CCSize size = m_obWinSizeInPoints;
 
-    if (m_pobOpenGLView)
-    {
-        m_pobOpenGLView->setViewPortInPoints(0, 0, size.width, size.height);
-    }
+    setViewport();
 
     switch (kProjection)
     {
@@ -635,6 +643,7 @@ void CCDirector::purgeDirector()
     CCLabelBMFont::purgeCachedData();
 
     // purge all managed caches
+    ccDrawFree();
     CCAnimationCache::purgeSharedAnimationCache();
     CCSpriteFrameCache::purgeSharedSpriteFrameCache();
     CCTextureCache::purgeSharedTextureCache();
@@ -771,14 +780,20 @@ void CCDirector::calculateMPF()
     m_fSecondsPerFrame = (now.tv_sec - m_pLastUpdate->tv_sec) + (now.tv_usec - m_pLastUpdate->tv_usec) / 1000000.0f;
 }
 
-void CCDirector::createStatsLabel()
+// returns the FPS image data pointer and len
+void CCDirector::getFPSImageData(unsigned char** datapointer, unsigned int* length)
 {
+    *datapointer = cc_fps_images_png;
+	*length = cc_fps_images_len();
+}
+
+void CCDirector::createStatsLabel()
+{    
     if( m_pFPSLabel && m_pSPFLabel ) 
     {
         CC_SAFE_RELEASE_NULL(m_pFPSLabel);
         CC_SAFE_RELEASE_NULL(m_pSPFLabel);
         CC_SAFE_RELEASE_NULL(m_pDrawsLabel);
-
         CCFileUtils::sharedFileUtils()->purgeCachedEntries();
     }
 
