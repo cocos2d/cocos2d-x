@@ -47,7 +47,6 @@ static CCLayer* nextAction()
     sceneIdx = sceneIdx % MAX_LAYER;
     
     CCLayer* pLayer = (createFunctions[sceneIdx])();
-    pLayer->init();
     pLayer->autorelease();
     
     return pLayer;
@@ -61,7 +60,6 @@ static CCLayer* backAction()
         sceneIdx += total;
     
     CCLayer* pLayer = (createFunctions[sceneIdx])();
-    pLayer->init();
     pLayer->autorelease();
     
     return pLayer;
@@ -70,7 +68,6 @@ static CCLayer* backAction()
 static CCLayer* restartAction()
 {
     CCLayer* pLayer = (createFunctions[sceneIdx])();
-    pLayer->init();
     pLayer->autorelease();
     
     return pLayer;
