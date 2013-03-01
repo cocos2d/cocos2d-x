@@ -28,7 +28,6 @@ class CCActionInterval : public CCFiniteTimeAction
     bool isDone(void);
     void setAmplitudeRate(float amp);
     float getAmplitudeRate(void);
-    CCObject* copyWithZone(CCZone* pZone);
     CCActionInterval* reverse(void);
 
     CCActionInterval* create(float d);

@@ -38,9 +38,9 @@ local function initWithLayer()
     end
 
     local function onTouch(eventType, x, y)
-		if eventType == CCTOUCHBEGAN then
+		if eventType == "began" then
 			return true
-        elseif eventType == CCTOUCHENDED then
+        elseif eventType == "ended" then
             return onTouchEnded(x, y)
         end
     end
