@@ -323,6 +323,9 @@ public:
      */
     CC_PROPERTY(CCAccelerometer*, m_pAccelerometer, Accelerometer);
 
+    /* delta time since last tick to main loop */
+	CC_PROPERTY_READONLY(float, m_fDeltaTime, DeltaTime);
+	
     /** returns a shared instance of the director */
     static CCDirector* sharedDirector(void);
 
@@ -380,9 +383,6 @@ protected:
     
     /* last time the main loop was updated */
     struct cc_timeval *m_pLastUpdate;
-
-    /* delta time since last tick to main loop */
-    float m_fDeltaTime;
 
     /* whether or not the next delta time will be zero */
     bool m_bNextDeltaTimeZero;
