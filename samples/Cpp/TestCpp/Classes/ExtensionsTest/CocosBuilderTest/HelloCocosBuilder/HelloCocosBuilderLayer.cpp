@@ -78,6 +78,7 @@ SEL_CCControlHandler HelloCocosBuilderLayer::onResolveCCBCCControlSelector(CCObj
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onAnimationsTestClicked", HelloCocosBuilderLayer::onAnimationsTestClicked);
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onParticleSystemTestClicked", HelloCocosBuilderLayer::onParticleSystemTestClicked);
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onScrollViewTestClicked", HelloCocosBuilderLayer::onScrollViewTestClicked);
+    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onMenuScrollClicked", HelloCocosBuilderLayer::onMenuScrollClicked);
 
     return NULL;
 }
@@ -150,4 +151,9 @@ void HelloCocosBuilderLayer::onParticleSystemTestClicked(CCObject * pSender, coc
 void HelloCocosBuilderLayer::onScrollViewTestClicked(CCObject * pSender, cocos2d::extension::CCControlEvent pCCControlEvent)
 {
     this->openTest("ccb/ccb/TestScrollViews.ccbi", "TestScrollViewsLayer", ScrollViewTestLayerLoader::loader());
+}
+
+void HelloCocosBuilderLayer::onMenuScrollClicked(CCObject * pSender, cocos2d::extension::CCControlEvent pCCControlEvent)
+{
+    this->openTest("ccb/ccb/TestScrollViewWithMenu.ccbi", "TestScrollViewWithMenu", nil);
 }
