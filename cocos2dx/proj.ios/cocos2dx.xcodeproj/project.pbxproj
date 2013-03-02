@@ -260,18 +260,6 @@
 		1551A85E158F2ADF00E66CFE /* CCTextureCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A611158F2ADE00E66CFE /* CCTextureCache.h */; };
 		1551A85F158F2ADF00E66CFE /* CCTexturePVR.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1551A612158F2ADE00E66CFE /* CCTexturePVR.cpp */; };
 		1551A860158F2ADF00E66CFE /* CCTexturePVR.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A613158F2ADE00E66CFE /* CCTexturePVR.h */; };
-		1551A861158F2ADF00E66CFE /* CCParallaxNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1551A615158F2ADE00E66CFE /* CCParallaxNode.cpp */; };
-		1551A862158F2ADF00E66CFE /* CCParallaxNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A616158F2ADE00E66CFE /* CCParallaxNode.h */; };
-		1551A863158F2ADF00E66CFE /* CCTileMapAtlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1551A617158F2ADE00E66CFE /* CCTileMapAtlas.cpp */; };
-		1551A864158F2ADF00E66CFE /* CCTileMapAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A618158F2ADE00E66CFE /* CCTileMapAtlas.h */; };
-		1551A865158F2ADF00E66CFE /* CCTMXLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1551A619158F2ADE00E66CFE /* CCTMXLayer.cpp */; };
-		1551A866158F2ADF00E66CFE /* CCTMXLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A61A158F2ADE00E66CFE /* CCTMXLayer.h */; };
-		1551A867158F2ADF00E66CFE /* CCTMXObjectGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1551A61B158F2ADE00E66CFE /* CCTMXObjectGroup.cpp */; };
-		1551A868158F2ADF00E66CFE /* CCTMXObjectGroup.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A61C158F2ADE00E66CFE /* CCTMXObjectGroup.h */; };
-		1551A869158F2ADF00E66CFE /* CCTMXTiledMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1551A61D158F2ADE00E66CFE /* CCTMXTiledMap.cpp */; };
-		1551A86A158F2ADF00E66CFE /* CCTMXTiledMap.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A61E158F2ADE00E66CFE /* CCTMXTiledMap.h */; };
-		1551A86B158F2ADF00E66CFE /* CCTMXXMLParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1551A61F158F2ADE00E66CFE /* CCTMXXMLParser.cpp */; };
-		1551A86C158F2ADF00E66CFE /* CCTMXXMLParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A620158F2ADE00E66CFE /* CCTMXXMLParser.h */; };
 		1551A86D158F2ADF00E66CFE /* CCTouch.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A622158F2ADE00E66CFE /* CCTouch.h */; };
 		1551A86E158F2ADF00E66CFE /* CCTouchDelegateProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A623158F2ADE00E66CFE /* CCTouchDelegateProtocol.h */; };
 		1551A86F158F2ADF00E66CFE /* CCTouchDispatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1551A624158F2ADE00E66CFE /* CCTouchDispatcher.cpp */; };
@@ -302,6 +290,18 @@
 		2628297A15EC7064002C4240 /* ccTypeInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 2628297915EC7064002C4240 /* ccTypeInfo.h */; };
 		469A7DF316C24787006FFCB2 /* tinyxml2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 469A7DF116C24787006FFCB2 /* tinyxml2.cpp */; };
 		469A7DF416C24787006FFCB2 /* tinyxml2.h in Headers */ = {isa = PBXBuildFile; fileRef = 469A7DF216C24787006FFCB2 /* tinyxml2.h */; };
+		4EF8999016E207E70040A527 /* CCParallaxNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4EF8998416E207E70040A527 /* CCParallaxNode.cpp */; };
+		4EF8999116E207E70040A527 /* CCParallaxNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EF8998516E207E70040A527 /* CCParallaxNode.h */; };
+		4EF8999216E207E70040A527 /* CCTileMapAtlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4EF8998616E207E70040A527 /* CCTileMapAtlas.cpp */; };
+		4EF8999316E207E70040A527 /* CCTileMapAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EF8998716E207E70040A527 /* CCTileMapAtlas.h */; };
+		4EF8999416E207E70040A527 /* CCTMXLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4EF8998816E207E70040A527 /* CCTMXLayer.cpp */; };
+		4EF8999516E207E70040A527 /* CCTMXLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EF8998916E207E70040A527 /* CCTMXLayer.h */; };
+		4EF8999616E207E70040A527 /* CCTMXObjectGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4EF8998A16E207E70040A527 /* CCTMXObjectGroup.cpp */; };
+		4EF8999716E207E70040A527 /* CCTMXObjectGroup.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EF8998B16E207E70040A527 /* CCTMXObjectGroup.h */; };
+		4EF8999816E207E70040A527 /* CCTMXTiledMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4EF8998C16E207E70040A527 /* CCTMXTiledMap.cpp */; };
+		4EF8999916E207E70040A527 /* CCTMXTiledMap.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EF8998D16E207E70040A527 /* CCTMXTiledMap.h */; };
+		4EF8999A16E207E70040A527 /* CCTMXXMLParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4EF8998E16E207E70040A527 /* CCTMXXMLParser.cpp */; };
+		4EF8999B16E207E70040A527 /* CCTMXXMLParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EF8998F16E207E70040A527 /* CCTMXXMLParser.h */; };
 		D43F7F8A15C7D8BA00D713FC /* CCTouch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D43F7F8915C7D8BA00D713FC /* CCTouch.cpp */; };
 /* End PBXBuildFile section */
 
@@ -562,18 +562,6 @@
 		1551A611158F2ADE00E66CFE /* CCTextureCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTextureCache.h; sourceTree = "<group>"; };
 		1551A612158F2ADE00E66CFE /* CCTexturePVR.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTexturePVR.cpp; sourceTree = "<group>"; };
 		1551A613158F2ADE00E66CFE /* CCTexturePVR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTexturePVR.h; sourceTree = "<group>"; };
-		1551A615158F2ADE00E66CFE /* CCParallaxNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCParallaxNode.cpp; sourceTree = "<group>"; };
-		1551A616158F2ADE00E66CFE /* CCParallaxNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCParallaxNode.h; sourceTree = "<group>"; };
-		1551A617158F2ADE00E66CFE /* CCTileMapAtlas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTileMapAtlas.cpp; sourceTree = "<group>"; };
-		1551A618158F2ADE00E66CFE /* CCTileMapAtlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTileMapAtlas.h; sourceTree = "<group>"; };
-		1551A619158F2ADE00E66CFE /* CCTMXLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTMXLayer.cpp; sourceTree = "<group>"; };
-		1551A61A158F2ADE00E66CFE /* CCTMXLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTMXLayer.h; sourceTree = "<group>"; };
-		1551A61B158F2ADE00E66CFE /* CCTMXObjectGroup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTMXObjectGroup.cpp; sourceTree = "<group>"; };
-		1551A61C158F2ADE00E66CFE /* CCTMXObjectGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTMXObjectGroup.h; sourceTree = "<group>"; };
-		1551A61D158F2ADE00E66CFE /* CCTMXTiledMap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTMXTiledMap.cpp; sourceTree = "<group>"; };
-		1551A61E158F2ADE00E66CFE /* CCTMXTiledMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTMXTiledMap.h; sourceTree = "<group>"; };
-		1551A61F158F2ADE00E66CFE /* CCTMXXMLParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTMXXMLParser.cpp; sourceTree = "<group>"; };
-		1551A620158F2ADE00E66CFE /* CCTMXXMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTMXXMLParser.h; sourceTree = "<group>"; };
 		1551A622158F2ADE00E66CFE /* CCTouch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTouch.h; sourceTree = "<group>"; };
 		1551A623158F2ADE00E66CFE /* CCTouchDelegateProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTouchDelegateProtocol.h; sourceTree = "<group>"; };
 		1551A624158F2ADE00E66CFE /* CCTouchDispatcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTouchDispatcher.cpp; sourceTree = "<group>"; };
@@ -604,6 +592,18 @@
 		2628297915EC7064002C4240 /* ccTypeInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccTypeInfo.h; sourceTree = "<group>"; };
 		469A7DF116C24787006FFCB2 /* tinyxml2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxml2.cpp; sourceTree = "<group>"; };
 		469A7DF216C24787006FFCB2 /* tinyxml2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tinyxml2.h; sourceTree = "<group>"; };
+		4EF8998416E207E70040A527 /* CCParallaxNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCParallaxNode.cpp; sourceTree = "<group>"; };
+		4EF8998516E207E70040A527 /* CCParallaxNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCParallaxNode.h; sourceTree = "<group>"; };
+		4EF8998616E207E70040A527 /* CCTileMapAtlas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTileMapAtlas.cpp; sourceTree = "<group>"; };
+		4EF8998716E207E70040A527 /* CCTileMapAtlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTileMapAtlas.h; sourceTree = "<group>"; };
+		4EF8998816E207E70040A527 /* CCTMXLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTMXLayer.cpp; sourceTree = "<group>"; };
+		4EF8998916E207E70040A527 /* CCTMXLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTMXLayer.h; sourceTree = "<group>"; };
+		4EF8998A16E207E70040A527 /* CCTMXObjectGroup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTMXObjectGroup.cpp; sourceTree = "<group>"; };
+		4EF8998B16E207E70040A527 /* CCTMXObjectGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTMXObjectGroup.h; sourceTree = "<group>"; };
+		4EF8998C16E207E70040A527 /* CCTMXTiledMap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTMXTiledMap.cpp; sourceTree = "<group>"; };
+		4EF8998D16E207E70040A527 /* CCTMXTiledMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTMXTiledMap.h; sourceTree = "<group>"; };
+		4EF8998E16E207E70040A527 /* CCTMXXMLParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTMXXMLParser.cpp; sourceTree = "<group>"; };
+		4EF8998F16E207E70040A527 /* CCTMXXMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTMXXMLParser.h; sourceTree = "<group>"; };
 		D43F7F8915C7D8BA00D713FC /* CCTouch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTouch.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -681,7 +681,7 @@
 				1551A5E7158F2ADE00E66CFE /* support */,
 				1551A605158F2ADE00E66CFE /* text_input_node */,
 				1551A60B158F2ADE00E66CFE /* textures */,
-				1551A614158F2ADE00E66CFE /* tileMap_parallax_nodes */,
+				1551A614158F2ADE00E66CFE /* tilemap_parallax_nodes */,
 				1551A621158F2ADE00E66CFE /* touch_dispatcher */,
 			);
 			name = cocos2dx;
@@ -1159,23 +1159,23 @@
 			path = textures;
 			sourceTree = "<group>";
 		};
-		1551A614158F2ADE00E66CFE /* tileMap_parallax_nodes */ = {
+		1551A614158F2ADE00E66CFE /* tilemap_parallax_nodes */ = {
 			isa = PBXGroup;
 			children = (
-				1551A615158F2ADE00E66CFE /* CCParallaxNode.cpp */,
-				1551A616158F2ADE00E66CFE /* CCParallaxNode.h */,
-				1551A617158F2ADE00E66CFE /* CCTileMapAtlas.cpp */,
-				1551A618158F2ADE00E66CFE /* CCTileMapAtlas.h */,
-				1551A619158F2ADE00E66CFE /* CCTMXLayer.cpp */,
-				1551A61A158F2ADE00E66CFE /* CCTMXLayer.h */,
-				1551A61B158F2ADE00E66CFE /* CCTMXObjectGroup.cpp */,
-				1551A61C158F2ADE00E66CFE /* CCTMXObjectGroup.h */,
-				1551A61D158F2ADE00E66CFE /* CCTMXTiledMap.cpp */,
-				1551A61E158F2ADE00E66CFE /* CCTMXTiledMap.h */,
-				1551A61F158F2ADE00E66CFE /* CCTMXXMLParser.cpp */,
-				1551A620158F2ADE00E66CFE /* CCTMXXMLParser.h */,
+				4EF8998416E207E70040A527 /* CCParallaxNode.cpp */,
+				4EF8998516E207E70040A527 /* CCParallaxNode.h */,
+				4EF8998616E207E70040A527 /* CCTileMapAtlas.cpp */,
+				4EF8998716E207E70040A527 /* CCTileMapAtlas.h */,
+				4EF8998816E207E70040A527 /* CCTMXLayer.cpp */,
+				4EF8998916E207E70040A527 /* CCTMXLayer.h */,
+				4EF8998A16E207E70040A527 /* CCTMXObjectGroup.cpp */,
+				4EF8998B16E207E70040A527 /* CCTMXObjectGroup.h */,
+				4EF8998C16E207E70040A527 /* CCTMXTiledMap.cpp */,
+				4EF8998D16E207E70040A527 /* CCTMXTiledMap.h */,
+				4EF8998E16E207E70040A527 /* CCTMXXMLParser.cpp */,
+				4EF8998F16E207E70040A527 /* CCTMXXMLParser.h */,
 			);
-			path = tileMap_parallax_nodes;
+			path = tilemap_parallax_nodes;
 			sourceTree = "<group>";
 		};
 		1551A621158F2ADE00E66CFE /* touch_dispatcher */ = {
@@ -1386,12 +1386,6 @@
 				1551A85C158F2ADF00E66CFE /* CCTextureAtlas.h in Headers */,
 				1551A85E158F2ADF00E66CFE /* CCTextureCache.h in Headers */,
 				1551A860158F2ADF00E66CFE /* CCTexturePVR.h in Headers */,
-				1551A862158F2ADF00E66CFE /* CCParallaxNode.h in Headers */,
-				1551A864158F2ADF00E66CFE /* CCTileMapAtlas.h in Headers */,
-				1551A866158F2ADF00E66CFE /* CCTMXLayer.h in Headers */,
-				1551A868158F2ADF00E66CFE /* CCTMXObjectGroup.h in Headers */,
-				1551A86A158F2ADF00E66CFE /* CCTMXTiledMap.h in Headers */,
-				1551A86C158F2ADF00E66CFE /* CCTMXXMLParser.h in Headers */,
 				1551A86D158F2ADF00E66CFE /* CCTouch.h in Headers */,
 				1551A86E158F2ADF00E66CFE /* CCTouchDelegateProtocol.h in Headers */,
 				1551A870158F2ADF00E66CFE /* CCTouchDispatcher.h in Headers */,
@@ -1411,6 +1405,12 @@
 				1AA6226216CF6BDF0028C05E /* CCDevice.h in Headers */,
 				1A4646DA16DC8FB700DE131F /* ccFPSImages.h in Headers */,
 				1A2802B116DF1C5B00189CBF /* ccUTF8.h in Headers */,
+				4EF8999116E207E70040A527 /* CCParallaxNode.h in Headers */,
+				4EF8999316E207E70040A527 /* CCTileMapAtlas.h in Headers */,
+				4EF8999516E207E70040A527 /* CCTMXLayer.h in Headers */,
+				4EF8999716E207E70040A527 /* CCTMXObjectGroup.h in Headers */,
+				4EF8999916E207E70040A527 /* CCTMXTiledMap.h in Headers */,
+				4EF8999B16E207E70040A527 /* CCTMXXMLParser.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1574,12 +1574,6 @@
 				1551A85B158F2ADF00E66CFE /* CCTextureAtlas.cpp in Sources */,
 				1551A85D158F2ADF00E66CFE /* CCTextureCache.cpp in Sources */,
 				1551A85F158F2ADF00E66CFE /* CCTexturePVR.cpp in Sources */,
-				1551A861158F2ADF00E66CFE /* CCParallaxNode.cpp in Sources */,
-				1551A863158F2ADF00E66CFE /* CCTileMapAtlas.cpp in Sources */,
-				1551A865158F2ADF00E66CFE /* CCTMXLayer.cpp in Sources */,
-				1551A867158F2ADF00E66CFE /* CCTMXObjectGroup.cpp in Sources */,
-				1551A869158F2ADF00E66CFE /* CCTMXTiledMap.cpp in Sources */,
-				1551A86B158F2ADF00E66CFE /* CCTMXXMLParser.cpp in Sources */,
 				1551A86F158F2ADF00E66CFE /* CCTouchDispatcher.cpp in Sources */,
 				1551A871158F2ADF00E66CFE /* CCTouchHandler.cpp in Sources */,
 				154269DC15B5653000712A7F /* CCNotificationCenter.cpp in Sources */,
@@ -1593,6 +1587,12 @@
 				1AA6226016CF6BD00028C05E /* CCDevice.mm in Sources */,
 				1A4646DC16DC901A00DE131F /* ccFPSImages.c in Sources */,
 				1A2802B016DF1C5B00189CBF /* ccUTF8.cpp in Sources */,
+				4EF8999016E207E70040A527 /* CCParallaxNode.cpp in Sources */,
+				4EF8999216E207E70040A527 /* CCTileMapAtlas.cpp in Sources */,
+				4EF8999416E207E70040A527 /* CCTMXLayer.cpp in Sources */,
+				4EF8999616E207E70040A527 /* CCTMXObjectGroup.cpp in Sources */,
+				4EF8999816E207E70040A527 /* CCTMXTiledMap.cpp in Sources */,
+				4EF8999A16E207E70040A527 /* CCTMXXMLParser.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
