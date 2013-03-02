@@ -291,7 +291,10 @@ void CCDirector::calculateDeltaTime(void)
 
     *m_pLastUpdate = now;
 }
-
+float CCDirector::getDeltaTime()
+{
+	return m_fDeltaTime;
+}
 void CCDirector::setOpenGLView(CCEGLView *pobOpenGLView)
 {
     CCAssert(pobOpenGLView, "opengl view should not be null");
