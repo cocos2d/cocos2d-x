@@ -48,7 +48,7 @@ echo. * Check the cocos2d-win32 application "TestCpp.exe" ...
 echo. */
 echo.
 
-cd ".\Release.win32\"
+pushd ".\Release.win32\"
 
 set CC_TEST_BIN=TestCpp.exe
 
@@ -85,6 +85,7 @@ if not exist "%CC_TEST_BIN%" (
 )
 
 call "%CC_TEST_BIN%"
+popd
 start http://www.cocos2d-x.org/projects/cocos2d-x/wiki/Cocos2d-x_Application_Wizard_for_Visual_Studio_User_Guide
 goto EOF
 
