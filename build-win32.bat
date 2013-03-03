@@ -1,8 +1,8 @@
 @echo off
 
 echo./*
-echo.* Check VC++ environment...
-echo.*/
+echo. * Check VC++ environment...
+echo. */
 echo.
 
 if defined VS110COMNTOOLS (
@@ -26,8 +26,8 @@ if not defined VSVARS (
 )
 
 echo./*
-echo.* Building cocos2d-x library binary, please wait a while...
-echo.*/
+echo. * Building cocos2d-x library binary, please wait a while...
+echo. */
 echo.
 
 call %VSVARS%
@@ -44,8 +44,8 @@ if %VC_VER%==100 (
 )
 
 echo./*
-echo.* Check the cocos2d-win32 application "TestCpp.exe" ...
-echo.*/
+echo. * Check the cocos2d-win32 application "TestCpp.exe" ...
+echo. */
 echo.
 
 cd ".\Release.win32\"
@@ -65,8 +65,8 @@ set CC_WATERMELONWITHME_RES=..\samples\Javascript\Shared\games\WatermelonWithMe
 
 
 echo./*
-echo.* Run cocos2d-win32 tests.exe and view Cocos2d-x Application Wizard for Visual Studio User Guide.
-echo.*/
+echo. * Run cocos2d-win32 tests.exe and view Cocos2d-x Application Wizard for Visual Studio User Guide.
+echo. */
 echo.
 xcopy  /E /Y /Q "%CC_TEST_RES%" .
 xcopy  /E /Y /Q "%CC_HELLOWORLD_RES%" .
