@@ -173,7 +173,7 @@ void FmodAudioPlayer::playBackgroundMusic(const char* pszFilePath, bool bLoop) {
 	FMOD_RESULT result = pSystem->playSound(FMOD_CHANNEL_FREE, pMusic, true,
 			&pBGMChannel);
 	if (!ERRCHECK(result)) {
-		pBGMChannel->setLoopCount((bLoop) ? -1 : 1);
+		pBGMChannel->setLoopCount((bLoop) ? -1 : 0);
 		result = pBGMChannel->setPaused(false);
 	}
 }
@@ -274,6 +274,7 @@ float FmodAudioPlayer::getEffectsVolume() {
 	pSystem->update();
 	FMOD_RESULT result = pChannelGroup->getVolume(&fVolumn);
 	ERRCHECKWITHEXIT(result);
+	return fVolumn;
 }
 
 void FmodAudioPlayer::setEffectsVolume(float volume) {
@@ -313,7 +314,7 @@ unsigned int FmodAudioPlayer::playEffect(const char* pszFilePath, bool bLoop) {
 		pChannel->setChannelGroup(pChannelGroup);
 
 		//set its loop
-		pChannel->setLoopCount((bLoop) ? -1 : 1);
+		pChannel->setLoopCount((bLoop) ? -1 : 0);
 		result = pChannel->setPaused(false);
 
 		mapEffectSoundChannel[iSoundChannelCount] = pChannel;
