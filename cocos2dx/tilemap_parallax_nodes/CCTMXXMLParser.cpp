@@ -517,7 +517,7 @@ void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         // Parse everything automatically
         const char* pArray[] = {"name", "type", "width", "height", "gid"};
         
-        for( int i = 0; i < sizeof(pArray)/sizeof(pArray[0]); ++i )
+        for(size_t i = 0; i < sizeof(pArray)/sizeof(pArray[0]); ++i )
         {
             const char* key = pArray[i];
             CCString* obj = new CCString(valueForKey(key, attributeDict));
