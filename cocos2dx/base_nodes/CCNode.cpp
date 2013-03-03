@@ -1094,10 +1094,39 @@ void CCNode::resumeSchedulerAndActions()
     m_pActionManager->resumeTarget(this);
 }
 
+void CCNode::resumeSchedulerAndActions(bool applayToChildren)
+{
+	resumeSchedulerAndActions();
+	if(applayToChildren == false)
+		return;
+
+	CCObject * pObject;
+	CCARRAY_FOREACH(getChildren(), pObject)
+	{
+		CCNode* pNode = (CCNode*)pObject;
+		pNode->resumeSchedulerAndActions(true);
+	}
+}
+
 void CCNode::pauseSchedulerAndActions()
 {
     m_pScheduler->pauseTarget(this);
     m_pActionManager->pauseTarget(this);
+}
+
+void CCNode::pauseSchedulerAndActions(bool applayToChildren)
+{
+	pauseSchedulerAndActions();
+
+	if(applayToChildren == false)
+		return;
+
+	CCObject* pObject;
+	CCARRAY_FOREACH(getChildren(), pObject)
+	{
+		CCNode* pNode = (CCNode*)pObject;
+		pNode->pauseSchedulerAndActions(true);
+	}
 }
 
 // override me
