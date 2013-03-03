@@ -64,13 +64,13 @@ CCBReader::CCBReader(CCNodeLoaderLibrary * pCCNodeLoaderLibrary, CCBMemberVariab
 , mCurrentBit(-1)
 , mOwner(NULL)
 , mActionManager(NULL)
-, mAnimatedProps(NULL)
-, hasScriptingOwner(false)
 , mActionManagers(NULL)
+, mAnimatedProps(NULL)
+, mOwnerOutletNodes(NULL)
 , mNodesWithAnimationManagers(NULL)
 , mAnimationManagersForNodes(NULL)
-, mOwnerOutletNodes(NULL)
 , mOwnerCallbackNodes(NULL)
+, hasScriptingOwner(false)
 {
     this->mCCNodeLoaderLibrary = pCCNodeLoaderLibrary;
     this->mCCNodeLoaderLibrary->retain();
@@ -87,13 +87,13 @@ CCBReader::CCBReader(CCBReader * pCCBReader)
 , mCurrentBit(-1)
 , mOwner(NULL)
 , mActionManager(NULL)
-, mAnimatedProps(NULL)
-, hasScriptingOwner(false)
 , mActionManagers(NULL)
+, mAnimatedProps(NULL)
+, mOwnerOutletNodes(NULL)
 , mNodesWithAnimationManagers(NULL)
 , mAnimationManagersForNodes(NULL)
-, mOwnerOutletNodes(NULL)
 , mOwnerCallbackNodes(NULL)
+, hasScriptingOwner(false)
 {
     this->mLoadedSpriteSheets = pCCBReader->mLoadedSpriteSheets;
     this->mCCNodeLoaderLibrary = pCCBReader->mCCNodeLoaderLibrary;
@@ -119,15 +119,14 @@ CCBReader::CCBReader()
 , mCurrentBit(-1)
 , mOwner(NULL)
 , mActionManager(NULL)
+, mActionManagers(NULL)
 , mCCNodeLoaderLibrary(NULL)
 , mCCNodeLoaderListener(NULL)
 , mCCBMemberVariableAssigner(NULL)
 , mCCBSelectorResolver(NULL)
-, mAnimatedProps(NULL)
-, hasScriptingOwner(false)
-, mActionManagers(NULL)
 , mNodesWithAnimationManagers(NULL)
 , mAnimationManagersForNodes(NULL)
+, hasScriptingOwner(false)
 {
     init();
 }
@@ -862,7 +861,7 @@ bool CCBReader::readSequences()
 
 std::string CCBReader::lastPathComponent(const char* pPath) {
     std::string path(pPath);
-    int slashPos = path.find_last_of("/");
+    size_t slashPos = path.find_last_of("/");
     if(slashPos != std::string::npos) {
         return path.substr(slashPos + 1, path.length() - slashPos);
     }
@@ -871,7 +870,7 @@ std::string CCBReader::lastPathComponent(const char* pPath) {
 
 std::string CCBReader::deletePathExtension(const char* pPath) {
     std::string path(pPath);
-    int dotPos = path.find_last_of(".");
+    size_t dotPos = path.find_last_of(".");
     if(dotPos != std::string::npos) {
         return path.substr(0, dotPos);
     }

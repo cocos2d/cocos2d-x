@@ -45,7 +45,6 @@ void FmodAudioPlayer::init() {
 	FMOD_RESULT result;
 	FMOD::ChannelGroup *masterChannelGroup;
 
-	unsigned int version;
 	/*
 	 Create a System object and initialize.
 	 */

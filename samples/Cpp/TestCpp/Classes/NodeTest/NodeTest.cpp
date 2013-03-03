@@ -471,16 +471,16 @@ std::string StressTest2::title()
 SchedulerTest1::SchedulerTest1()
 {
     CCLayer*layer = CCLayer::create();
-    //UXLOG("retain count after init is %d", layer->retainCount());                // 1
+    //CCLOG("retain count after init is %d", layer->retainCount());                // 1
     
     addChild(layer, 0);
-    //UXLOG("retain count after addChild is %d", layer->retainCount());      // 2
+    //CCLOG("retain count after addChild is %d", layer->retainCount());      // 2
     
     layer->schedule( schedule_selector(SchedulerTest1::doSomething) );
-    //UXLOG("retain count after schedule is %d", layer->retainCount());      // 3 : (object-c viersion), but win32 version is still 2, because CCTimer class don't save target.
+    //CCLOG("retain count after schedule is %d", layer->retainCount());      // 3 : (object-c viersion), but win32 version is still 2, because CCTimer class don't save target.
     
     layer->unschedule(schedule_selector(SchedulerTest1::doSomething));
-    //UXLOG("retain count after unschedule is %d", layer->retainCount());        // STILL 3!  (win32 is '2')
+    //CCLOG("retain count after unschedule is %d", layer->retainCount());        // STILL 3!  (win32 is '2')
 }
 
 void SchedulerTest1::doSomething(float dt)
@@ -560,7 +560,6 @@ CameraOrbitTest::CameraOrbitTest()
     
     CCSprite* sprite;
     CCOrbitCamera* orbit;
-    CCCamera* cam;
     CCSize ss;
 
     // LEFT
@@ -569,7 +568,6 @@ CameraOrbitTest::CameraOrbitTest()
     sprite->setScale(0.5f);
     p->addChild(sprite, 0);        
     sprite->setPosition( ccp(s.width/4*1, s.height/2) );
-    cam = sprite->getCamera();
     orbit = CCOrbitCamera::create(2, 1, 0, 0, 360, 0, 0);
     sprite->runAction( CCRepeatForever::create( orbit ) );
     

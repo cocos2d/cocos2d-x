@@ -225,16 +225,16 @@ typedef struct {
 
 
 CCTexturePVR::CCTexturePVR() 
-: m_pPixelFormatInfo(NULL)
-, m_uNumberOfMipmaps(0)
+: m_uNumberOfMipmaps(0)
 , m_uWidth(0)
 , m_uHeight(0)
-, m_bRetainName(false)
-, m_bHasAlpha(false)
 , m_uName(0)
-, m_eFormat(kCCTexture2DPixelFormat_Default)
+, m_bHasAlpha(false)
 , m_bHasPremultipliedAlpha(false)
 , m_bForcePremultipliedAlpha(false)
+, m_bRetainName(false)
+, m_eFormat(kCCTexture2DPixelFormat_Default)
+, m_pPixelFormatInfo(NULL)
 {
 }
 
@@ -415,7 +415,7 @@ bool CCTexturePVR::unpackPVRv3Data(unsigned char* dataPointer, unsigned int data
 	
 	bool infoValid = false;
 	
-	for(int i = 0; i < PVR3_MAX_TABLE_ELEMENTS; i++)
+	for(unsigned int i = 0; i < PVR3_MAX_TABLE_ELEMENTS; i++)
     {
 		if( v3_pixel_formathash[i].pixelFormat == pixelFormat )
         {
