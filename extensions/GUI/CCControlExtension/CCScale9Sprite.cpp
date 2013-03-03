@@ -308,7 +308,7 @@ bool CCScale9Sprite::updateWithBatchNode(CCSpriteBatchNode* batchnode, CCRect re
         CCRect rotatedcentertopbounds = centertopbounds;
         
         t = CCAffineTransformTranslate(t, rect.size.height+rect.origin.x, rect.origin.y);
-        t = CCAffineTransformRotate(t, 1.57079633);
+        t = CCAffineTransformRotate(t, 1.57079633f);
         
         centerbounds = CCRectApplyAffineTransform(centerbounds, t);
         rightbottombounds = CCRectApplyAffineTransform(rightbottombounds, t);
