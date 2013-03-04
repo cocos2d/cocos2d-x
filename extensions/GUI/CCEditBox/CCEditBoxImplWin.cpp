@@ -206,6 +206,10 @@ void CCEditBoxImplWin::setPosition(const CCPoint& pos)
 	//m_pLabelPlaceHolder->setPosition(pos);
 }
 
+void CCEditBoxImplWin::setVisible(bool visible)
+{ // don't need to be implemented on win32 platform.
+}
+
 void CCEditBoxImplWin::setContentSize(const CCSize& size)
 {
 }
