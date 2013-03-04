@@ -265,10 +265,10 @@ bool CCTexturePVR::unpackPVRv2Data(unsigned char* data, unsigned int len)
     //Make sure that tag is in correct formatting
     pvrTag = CC_SWAP_INT32_LITTLE_TO_HOST(header->pvrTag);
 
-    if (gPVRTexIdentifier[0] != ((pvrTag >>  0) & 0xff) ||
-        gPVRTexIdentifier[1] != ((pvrTag >>  8) & 0xff) ||
-        gPVRTexIdentifier[2] != ((pvrTag >> 16) & 0xff) ||
-        gPVRTexIdentifier[3] != ((pvrTag >> 24) & 0xff))
+    if (gPVRTexIdentifier[0] != (char)(((pvrTag >>  0) & 0xff)) ||
+        gPVRTexIdentifier[1] != (char)(((pvrTag >>  8) & 0xff)) ||
+        gPVRTexIdentifier[2] != (char)(((pvrTag >> 16) & 0xff)) ||
+        gPVRTexIdentifier[3] != (char)(((pvrTag >> 24) & 0xff)))
     {
         return false;
     }

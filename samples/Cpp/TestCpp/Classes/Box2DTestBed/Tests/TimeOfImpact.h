@@ -38,6 +38,7 @@ public:
         Test::Step(settings);
 
         b2Sweep sweepA;
+        sweepA.alpha0 = 0;
         sweepA.c0.Set(24.0f, -60.0f);
         sweepA.a0 = 2.95f;
         sweepA.c = sweepA.c0;
@@ -45,6 +46,7 @@ public:
         sweepA.localCenter.SetZero();
 
         b2Sweep sweepB;
+        sweepB.alpha0 = 0;
         sweepB.c0.Set(53.474274f, -50.252514f);
         sweepB.a0 = 513.36676f; // - 162.0f * b2_pi;
         sweepB.c.Set(54.595478f, -51.083473f);

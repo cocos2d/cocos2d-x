@@ -44,7 +44,7 @@ private:
     CCFileUtilsNaCl() {}
 public:
     /* override funtions */
-    bool init() {}
+    bool init() { return true; }
     virtual std::string getWritablePath();
     virtual bool isFileExist(const std::string& strFilePath);
 };
