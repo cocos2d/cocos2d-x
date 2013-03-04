@@ -9,9 +9,9 @@ NACL_ARCH ?= x86_64
 NACL_AR ?= $(NACL_ARCH)-nacl-ar
 NACL_CC ?= $(NACL_ARCH)-nacl-gcc
 NACL_CXX ?= $(NACL_ARCH)-nacl-g++
-CCFLAGS ?= -Wall -Werror
-CXXFLAGS ?= -Wall -Werror
-ARFLAGS ?= cr
+CCFLAGS += -Wall -Werror
+CXXFLAGS += -Wall -Werror
+ARFLAGS = cr
 
 THIS_MAKEFILE := $(CURDIR)/$(word $(words $(MAKEFILE_LIST)),$(MAKEFILE_LIST))
 
@@ -77,6 +77,12 @@ LDFLAGS += -L$(NACLPORTS_ROOT)/lib/$(MULTILIB_SUFFIX)
 # Some cococs sources use #pragma mark
 CCFLAGS += -Wno-unknown-pragmas
 CXXFLAGS += -Wno-unknown-pragmas
+
+ifeq ($(NACL_ARCH),arm)
+# Don't warn about mangling of 'va_list' on arm builds
+CCFLAGS += -Wno-psabi
+CXXFLAGS += -Wno-psabi
+endif
 
 ifdef NACL_MOUNTS
 DEFINES += -DOLD_NACL_MOUNTS
