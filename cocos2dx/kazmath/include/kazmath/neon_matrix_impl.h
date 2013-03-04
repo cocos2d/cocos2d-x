@@ -25,7 +25,7 @@
 #define __NEON_MATRIX_IMPL_H__
 
 #ifdef __arm__
-#if defined(__QNX__) || defined(ANDROID) || defined(I3D_ARCH_ARM) // MARMALADE CHANGE: Added for Marmalade support
+#if defined(__QNX__) || defined(ANDROID) || defined(I3D_ARCH_ARM) || defined(__native_client__) // MARMALADE CHANGE: Added for Marmalade support
 // blackberry and android don't have arm/arch.h but it defines __arm__
 #else
 #include "arm/arch.h"
