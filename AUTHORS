@@ -219,6 +219,9 @@ Developers:
     Sam Clegg (sbc100)
         Author of Native Client port.
 
+    Peter Young (young40)
+        Implements setVisible() for CCEditBox
+
 Retired Core Developers:
     WenSheng Yang
         Author of windows port, CCTextField,
