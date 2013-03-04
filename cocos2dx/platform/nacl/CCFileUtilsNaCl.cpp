@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2013 The Chromium Authors
 
 http://www.cocos2d-x.org
 
@@ -22,39 +22,40 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __PLATFORM_H__
-#define __PLATFORM_H__
+#include "CCFileUtilsNaCl.h"
 
-#include "CCThread.h"
-#include "CCPlatformMacros.h"
+#include <sys/stat.h>
+
+using namespace std;
 
 NS_CC_BEGIN
 
-/**
- * @addtogroup platform
- * @{
- */
-
-struct CC_DLL cc_timeval
+CCFileUtils* CCFileUtils::sharedFileUtils()
 {
-#ifdef __native_client__
-    time_t    tv_sec;        // seconds
-#else
-    long    tv_sec;        // seconds
-#endif
-    long    tv_usec;    // microSeconds
-};
+    if (s_sharedFileUtils == NULL)
+    {
+        s_sharedFileUtils = new CCFileUtilsNaCl();
+        s_sharedFileUtils->init();
+    }
+    return s_sharedFileUtils;
+}
 
-class CC_DLL CCTime
+std::string CCFileUtilsNaCl::getWritablePath()
 {
-public:
-    static int gettimeofdayCocos2d(struct cc_timeval *tp, void *tzp);
-    static double timersubCocos2d(struct cc_timeval *start, struct cc_timeval *end);
-};
+    //return current resource path
+    return "";
+}
 
-// end of platform group
-/// @}
+bool CCFileUtilsNaCl::isFileExist(const std::string& strFilePath)
+{
+    std::string strPath = strFilePath;
+    if (!isAbsolutePath(strPath))
+    { // Not absolute path, add the default root path at the beginning.
+        strPath.insert(0, m_strDefaultResRootPath);
+    }
+
+    struct stat sts;
+    return (stat(strPath.c_str(), &sts) != -1) ? true : false;
+}
 
 NS_CC_END
-
-#endif // __PLATFORM_H__

@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2013 The Chromium Authors
 
 http://www.cocos2d-x.org
 
@@ -22,39 +22,46 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __PLATFORM_H__
-#define __PLATFORM_H__
+#ifndef __CC_INSTANCE_H__
+#define __CC_INSTANCE_H__
 
-#include "CCThread.h"
-#include "CCPlatformMacros.h"
+#include <ppapi/cpp/instance.h>
+#include <ppapi/cpp/input_event.h>
+#include <pthread.h>
 
-NS_CC_BEGIN
-
-/**
- * @addtogroup platform
- * @{
- */
-
-struct CC_DLL cc_timeval
-{
-#ifdef __native_client__
-    time_t    tv_sec;        // seconds
-#else
-    long    tv_sec;        // seconds
+#ifdef OLD_NACL_MOUNTS
+#include "nacl-mounts/base/MainThreadRunner.h"
 #endif
-    long    tv_usec;    // microSeconds
-};
 
-class CC_DLL CCTime
-{
+extern "C" void* cocos_main(void* arg);
+
+class CocosPepperInstance : public pp::Instance {
 public:
-    static int gettimeofdayCocos2d(struct cc_timeval *tp, void *tzp);
-    static double timersubCocos2d(struct cc_timeval *start, struct cc_timeval *end);
+    explicit CocosPepperInstance(PP_Instance instance);
+
+    virtual ~CocosPepperInstance()
+    {
+#ifdef OLD_NACL_MOUNTS
+        if (m_runner)
+            delete m_runner;
+#endif
+    }
+
+    virtual bool Init(uint32_t argc, const char* argn[], const char* argv[]);
+
+    void DidChangeView(const pp::View& view);
+
+    bool HandleInputEvent(const pp::InputEvent& event);
+
+    pp::Size Size() { return m_size; }
+
+#ifdef OLD_NACL_MOUNTS
+    MainThreadRunner* m_runner;
+#endif
+private:
+    pp::Size m_size;
+    pthread_t m_cocos_thread;
+    bool m_running;
 };
 
-// end of platform group
-/// @}
-
-NS_CC_END
-
-#endif // __PLATFORM_H__
+#endif /* __CC_INSTANCE_H__ */

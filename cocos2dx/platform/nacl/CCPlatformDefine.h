@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2013 The Chromium Authors
 
 http://www.cocos2d-x.org
 
@@ -22,39 +22,29 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __PLATFORM_H__
-#define __PLATFORM_H__
+#ifndef __CCPLATFORMDEFINE_H__
+#define __CCPLATFORMDEFINE_H__
 
-#include "CCThread.h"
-#include "CCPlatformMacros.h"
+#include <string.h>
+#include <time.h>
 
-NS_CC_BEGIN
-
-/**
- * @addtogroup platform
- * @{
- */
-
-struct CC_DLL cc_timeval
-{
-#ifdef __native_client__
-    time_t    tv_sec;        // seconds
-#else
-    long    tv_sec;        // seconds
+#if defined(_USRDLL)
+#define CC_DLL __attribute__ ((visibility ("default")))
+#else         /* use a DLL library */
+#define CC_DLL __attribute__ ((visibility ("default")))
 #endif
-    long    tv_usec;    // microSeconds
-};
 
-class CC_DLL CCTime
-{
-public:
-    static int gettimeofdayCocos2d(struct cc_timeval *tp, void *tzp);
-    static double timersubCocos2d(struct cc_timeval *start, struct cc_timeval *end);
-};
+#include <assert.h>
+#define CC_ASSERT(cond)    assert(cond)
+#define CC_UNUSED_PARAM(unusedparam) (void)unusedparam
 
-// end of platform group
-/// @}
+/* Define NULL pointer value */
+#ifndef NULL
+#ifdef __cplusplus
+#define NULL    0
+#else
+#define NULL    ((void *)0)
+#endif
+#endif
 
-NS_CC_END
-
-#endif // __PLATFORM_H__
+#endif /* __CCPLATFORMDEFINE_H__*/
