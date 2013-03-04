@@ -64,22 +64,12 @@ include $(COCOS_ROOT)/cocos2dx/proj.nacl/cocos2dx.mk
 
 TARGET = $(LIB_DIR)/libbox2d.a
 
-####### Build rules
+all: $(TARGET)
+
 $(TARGET): $(OBJECTS)
 	@mkdir -p $(@D)
-	$(NACL_AR) $(ARFLAGS) $(TARGET) $(OBJECTS)
+	$(LOG_AR)$(NACL_AR) $(ARFLAGS) $(TARGET) $(OBJECTS)
 
-####### Compile
 $(OBJ_DIR)/%.o: ../%.cpp
 	@mkdir -p $(@D)
-	$(NACL_CXX) -MMD $(CXXFLAGS) $(INCLUDES) $(DEFINES) $(VISIBILITY) -c $< -o $@
-
-$(OBJ_DIR)/%.o: ../%.c
-	@mkdir -p $(@D)
-	$(NALC_CC) -MMD $(CCFLAGS) $(INCLUDES) $(DEFINES) $(VISIBILITY) -c $< -o $@
-
-clean:
-	rm -rf $(OBJ_DIR)
-	rm -f $(TARGET) core
-
--include $(DEPS)
+	$(LOG_CXX)$(NACL_CXX) -MMD $(CXXFLAGS) $(INCLUDES) $(DEFINES) $(VISIBILITY) -c $< -o $@

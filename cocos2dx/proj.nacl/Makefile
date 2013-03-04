@@ -133,27 +133,22 @@ SOURCES = ../actions/CCAction.cpp \
 
 include cocos2dx.mk
 
+CXXFLAGS += -Wno-sequence-point
+
 TARGET = $(LIB_DIR)/libcocos2d.a
 
 DEFINES += -DCC_ENABLE_CHIPMUNK_INTEGRATION
 
 all: $(TARGET)
 
-####### Build rules
-$(TARGET): $(OBJECTS)
+$(TARGET): $(OBJECTS) $(CORE_MAKEFILE_LIST)
 	@mkdir -p $(@D)
-	$(NACL_AR) $(ARFLAGS) $@ $^
+	$(LOG_AR)$(NACL_AR) $(ARFLAGS) $@ $(OBJECTS)
 
-####### Compile
-$(OBJ_DIR)/%.o: ../%.cpp
+$(OBJ_DIR)/%.o: ../%.cpp $(CORE_MAKEFILE_LIST)
 	@mkdir -p $(@D)
-	$(NACL_CXX) -MMD $(CXXFLAGS) $(INCLUDES) $(DEFINES) -c $< -o $@
+	$(LOG_CXX)$(NACL_CXX) -MMD $(CXXFLAGS) $(INCLUDES) $(DEFINES) -c $< -o $@
 
-$(OBJ_DIR)/%.o: ../%.c
+$(OBJ_DIR)/%.o: ../%.c $(CORE_MAKEFILE_LIST)
 	@mkdir -p $(@D)
-	$(NACL_CC) -MMD $(CCFLAGS) $(INCLUDES) $(DEFINES) -c $< -o $@
-
-clean:
-	rm -f $(OBJECTS) $(TARGET) $(DEPS) core
-
--include $(DEPS)
+	$(LOG_CC)$(NACL_CC) -MMD $(CCFLAGS) $(INCLUDES) $(DEFINES) -c $< -o $@
