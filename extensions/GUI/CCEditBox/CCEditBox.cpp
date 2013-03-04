@@ -232,6 +232,15 @@ void CCEditBox::setPosition(const CCPoint& pos)
     }
 }
 
+void CCEditBox::setVisible(bool visible)
+{
+    CCControlButton::setVisible(visible);
+    if (m_pEditBoxImpl != NULL)
+    {
+        m_pEditBoxImpl->setVisible(visible);
+    }
+}
+
 void CCEditBox::setContentSize(const CCSize& size)
 {
     CCControlButton::setContentSize(size);

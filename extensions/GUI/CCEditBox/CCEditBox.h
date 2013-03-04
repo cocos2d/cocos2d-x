@@ -286,6 +286,7 @@ public:
     
     /* override functions */
     virtual void setPosition(const CCPoint& pos);
+    virtual void setVisible(bool visible);
     virtual void setContentSize(const CCSize& size);
 	virtual void setAnchorPoint(const CCPoint& anchorPoint);
     virtual void visit(void);

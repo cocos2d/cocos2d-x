@@ -345,6 +345,11 @@ void CCEditBoxImplMac::setPosition(const CCPoint& pos)
 
 }
 
+void CCEditBoxImplMac::setVisible(bool visible)
+{
+    [GET_IMPL.textField setHidden:!visible];
+}
+
 void CCEditBoxImplMac::setContentSize(const CCSize& size)
 {
     m_tContentSize = size;

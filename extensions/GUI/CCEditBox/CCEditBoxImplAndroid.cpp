@@ -209,6 +209,11 @@ void CCEditBoxImplAndroid::setPosition(const CCPoint& pos)
 
 }
 
+void CCEditBoxImplAndroid::setVisible(bool visible)
+{ // don't need to be implemented on android platform.
+
+}
+
 void CCEditBoxImplAndroid::setContentSize(const CCSize& size)
 { // don't need to be implemented on android platform.
 
