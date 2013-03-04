@@ -1,13 +1,3 @@
-NACL_ARCH ?= x86_64
-NACL_LIBC = newlib
-NACL_AR ?= $(NACL_ARCH)-nacl-ar
-NACL_CC ?= $(NACL_ARCH)-nacl-gcc
-NACL_CXX ?= $(NACL_ARCH)-nacl-g++
-CCFLAGS = -Wall -std=gnu99
-CXXFLAGS = -Wall
-VISIBILITY =
-ARFLAGS = cr
-
 LIBS =
 
 INCLUDES = -I../..
@@ -62,14 +52,21 @@ COCOS_ROOT = ../../../
 
 include $(COCOS_ROOT)/cocos2dx/proj.nacl/cocos2dx.mk
 
+ifeq ($(NACL_ARCH),arm)
+# The arm compiler in nacl is more recent and more fussy than the X86 ones.
+CXXFLAGS += -Wno-unused-but-set-variable -Wno-maybe-uninitialized
+else
+CXXFLAGS += -Wno-uninitialized
+endif
+
 TARGET = $(LIB_DIR)/libbox2d.a
 
 all: $(TARGET)
 
-$(TARGET): $(OBJECTS)
+$(TARGET): $(OBJECTS) $(CORE_MAKEFILE_LIST)
 	@mkdir -p $(@D)
 	$(LOG_AR)$(NACL_AR) $(ARFLAGS) $(TARGET) $(OBJECTS)
 
-$(OBJ_DIR)/%.o: ../%.cpp
+$(OBJ_DIR)/%.o: ../%.cpp $(CORE_MAKEFILE_LIST)
 	@mkdir -p $(@D)
 	$(LOG_CXX)$(NACL_CXX) -MMD $(CXXFLAGS) $(INCLUDES) $(DEFINES) $(VISIBILITY) -c $< -o $@
