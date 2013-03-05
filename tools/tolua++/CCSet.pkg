@@ -1,0 +1,10 @@
+class CCSet : public CCObject
+{
+    CCSet* copy();
+    int count();
+    void addObject(CCObject *pObject);
+    void removeObject(CCObject *pObject);
+    void removeAllObjects();
+    bool containsObject(CCObject *pObject);
+    CCObject* anyObject();
+};
