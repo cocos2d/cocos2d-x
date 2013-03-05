@@ -2,6 +2,16 @@
 # when building for Native Client.  It defines a set of variables that all
 # cocos2dx projects have in common.
 
+ifeq ($(NACL_SDK_ROOT),)
+  $(error $$NACL_SDK_ROOT not set)
+endif
+
+NACL_SDK_VERSION_MIN=27.186236
+VERSION_CHECK:=$(shell $(NACL_SDK_ROOT)/tools/getos.py --check-version=$(NACL_SDK_VERSION_MIN) 2>&1)
+ifneq ($(VERSION_CHECK),)
+  $(error $(VERSION_CHECK))
+endif
+
 all:
 
 NACL_LIBC = newlib
@@ -95,16 +105,9 @@ CCFLAGS += -Wno-psabi
 CXXFLAGS += -Wno-psabi
 endif
 
-ifdef NACL_MOUNTS
-DEFINES += -DOLD_NACL_MOUNTS
-STATICLIBS += -lnacl-mounts
-else
-STATICLIBS += -lnacl_io
-endif
-
 SOUNDLIBS := -lalut -lopenal -lvorbisfile -lvorbis -logg
 STATICLIBS += $(SOUNDLIBS) -lfreetype -lxml2 -lwebp -lpng -ljpeg -ltiff -llua -lchipmunk
-STATICLIBS += -lppapi_gles2 -lppapi -lppapi_cpp -lnosys
+STATICLIBS += -lnacl_io -lppapi_gles2 -lppapi -lppapi_cpp -lnosys
 SHAREDLIBS += -lpthread -lcocosdenshion -lcocos2d -lz
 
 OBJECTS := $(SOURCES:.cpp=.o)
