@@ -12,6 +12,9 @@ Developers:
     Rolando Abarca
         Javascript Binding and testjs
 
+    Waiter
+        fix an error that OpenSLEngine can't load resources from SD card
+
     billy1380
         make CCLens3d support concave effect
 
