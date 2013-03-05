@@ -14,9 +14,9 @@ local entry      = nil
 
 local function onEnterOrExit(tag)
 	local scheduler = CCDirector:sharedDirector():getScheduler()
-	if tag == 0 then
+	if tag == "enter" then
 		entry = scheduler:scheduleScriptFunc(checkAnim, 0, false)
-	elseif tag == 1 then
+	elseif tag == "exit" then
 		scheduler:unscheduleScriptEntry(entry)
 	end
 end
