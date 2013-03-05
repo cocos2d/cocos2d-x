@@ -228,14 +228,15 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
         }
         else
         {
-            CCLOGERROR("Error! Failed to load the font '%s'! A default system font will be used instead.", pFontName);
+            if (!_isValidFontName(pFontName))
+            {
+                // Attempted to load a non system font. Attempt this fallback first before the default system font:
+                CCLOGERROR("Error! Failed to load the custom font '%s'! A default font will be used instead.", pFontName);
+                font = [UIFont fontWithName: @"MarkerFelt-Wide" size:nSize];
+            }
             
-            // Try this font first
-            font = [UIFont fontWithName: @"MarkerFelt-Wide" size:nSize];
-                
             if (!font)
             {
-                // If that fails then just try a plain system font
                 font = [UIFont systemFontOfSize:nSize];
             }
                 
