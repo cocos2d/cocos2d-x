@@ -52,6 +52,7 @@ public:
     virtual void step(float dt);
     virtual std::string title();
     virtual std::string subtitle();
+    void actionFinishCallback();
 };
 
 class LabelTTFAlignment : public AtlasDemo

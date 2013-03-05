@@ -76,6 +76,13 @@ cc.MENU_STATE_TRACKING_TOUCH = 1;
 cc.MENU_HANDLER_PRIORITY = -128;
 cc.DEFAULT_PADDING = 5;
 
+cc.SCROLLVIEW_DIRECTION_NONE = -1;
+cc.SCROLLVIEW_DIRECTION_HORIZONTAL = 0;
+cc.SCROLLVIEW_DIRECTION_VERTICAL = 1;
+cc.SCROLLVIEW_DIRECTION_BOTH = 2;
+cc.TABLEVIEW_FILL_TOPDOWN = 0;
+cc.TABLEVIEW_FILL_BOTTOMUP = 1;
+
 // reusable objects
 cc._reuse_p = [ {x:0, y:0}, {x:0,y:0}, {x:0,y:0}, {x:0,y:0} ];
 cc._reuse_p_index = 0;
@@ -526,3 +533,7 @@ cc.Sprite.extend = cc.Class.extend;
 cc.MenuItemFont.extend = cc.Class.extend;
 cc.Scene.extend = cc.Class.extend;
 cc.DrawNode.extend = cc.Class.extend;
+cc.ScrollView.extend = cc.Class.extend;
+cc.TableView.extend = cc.Class.extend;
+cc.TableViewCell.extend = cc.Class.extend;
+

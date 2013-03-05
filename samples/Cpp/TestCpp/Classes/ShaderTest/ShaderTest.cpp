@@ -555,14 +555,15 @@ void SpriteBlur::initProgram()
 void SpriteBlur::draw()
 {
     ccGLEnableVertexAttribs(kCCVertexAttribFlag_PosColorTex );
-    ccGLBlendFunc( m_sBlendFunc.src, m_sBlendFunc.dst );
+    ccBlendFunc blend = getBlendFunc();
+    ccGLBlendFunc(blend.src, blend.dst);
 
     getShaderProgram()->use();
     getShaderProgram()->setUniformsForBuiltins();
     getShaderProgram()->setUniformLocationWith2f(blurLocation, blur_.x, blur_.y);
     getShaderProgram()->setUniformLocationWith4fv(subLocation, sub_, 1);
 
-    ccGLBindTexture2D(  getTexture()->getName() );
+    ccGLBindTexture2D( getTexture()->getName());
 
     //
     // Attributes

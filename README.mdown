@@ -12,6 +12,7 @@ Supported Platforms
    * Bada: cocos2d-x v1.x supports Bada SDK 1.0 & 2.0. Bada support was deprecated since cocos2d-x v2.0.
    * BlackBerry: stable, contribued by staffs in RIM, supports Playbook & BB10.
    * Marmalade: stable since cocos2d-x v0.11.0, contributed by Marmalade's staff.
+   * Native Client (NaCl): contributed by the Native Client authors.
    * Windows: stable, well tested on WinXP/Vista/Win7. Please upgrde the drive of your video card if you meet problems on OpenGL functions
    * Linux: support but not very stable.
 

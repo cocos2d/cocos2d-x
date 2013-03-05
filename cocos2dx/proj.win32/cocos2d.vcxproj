@@ -215,6 +215,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\support\CCPointExtension.cpp" />
     <ClCompile Include="..\support\CCProfiling.cpp" />
     <ClCompile Include="..\support\CCUserDefault.cpp" />
+    <ClCompile Include="..\support\ccUTF8.cpp" />
     <ClCompile Include="..\support\ccUtils.cpp" />
     <ClCompile Include="..\support\CCVertex.cpp" />
     <ClCompile Include="..\support\tinyxml2\tinyxml2.cpp" />
@@ -366,6 +367,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\support\CCPointExtension.h" />
     <ClInclude Include="..\support\CCProfiling.h" />
     <ClInclude Include="..\support\CCUserDefault.h" />
+    <ClInclude Include="..\support\ccUTF8.h" />
     <ClInclude Include="..\support\ccUtils.h" />
     <ClInclude Include="..\support\CCVertex.h" />
     <ClInclude Include="..\support\tinyxml2\tinyxml2.h" />

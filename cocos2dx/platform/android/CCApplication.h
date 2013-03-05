@@ -20,25 +20,6 @@ public:
     */
     void setAnimationInterval(double interval);
 
-    typedef enum
-    {
-        /// Device oriented vertically, home button on the bottom
-        kOrientationPortrait = 0,
-        /// Device oriented vertically, home button on the top
-        kOrientationPortraitUpsideDown = 1,
-        /// Device oriented horizontally, home button on the right
-        kOrientationLandscapeLeft = 2,
-        /// Device oriented horizontally, home button on the left
-        kOrientationLandscapeRight = 3,
-    } Orientation;
-
-    /**
-    @brief    Callback by CCDirector to change device orientation.
-    @orientation    The desired orientation.
-    @return         The actual orientation of the application.
-    */
-    Orientation setOrientation(Orientation orientation);
-
     /**
     @brief    Run the message loop.
     */

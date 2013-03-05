@@ -9,6 +9,25 @@
 
 namespace mozilla {
 
+namespace detail {
+
+/**
+ * The trickery used to implement IsBaseOf here makes it possible to use it for
+ * the cases of private and multiple inheritance.  This code was inspired by the
+ * sample code here:
+ *
+ * http://stackoverflow.com/questions/2910979/how-is-base-of-works
+ */
+template<class Base, class Derived>
+class IsBaseOfHelper
+{
+  public:
+    operator Base*() const;
+    operator Derived*();
+};
+
+} /* namespace detail */
+
 /*
  * IsBaseOf allows to know whether a given class is derived from another.
  *
@@ -25,12 +44,47 @@ template<class Base, class Derived>
 class IsBaseOf
 {
   private:
-    static char test(Base* b);
-    static int test(...);
+    template<class T>
+    static char test(Derived*, T);
+    static int test(Base*, int);
 
   public:
     static const bool value =
-      sizeof(test(static_cast<Derived*>(0))) == sizeof(char);
+      sizeof(test(detail::IsBaseOfHelper<Base, Derived>(), int())) == sizeof(char);
+};
+
+template<class Base, class Derived>
+class IsBaseOf<Base, const Derived>
+{
+  private:
+    template<class T>
+    static char test(Derived*, T);
+    static int test(Base*, int);
+
+  public:
+    static const bool value =
+      sizeof(test(detail::IsBaseOfHelper<Base, Derived>(), int())) == sizeof(char);
+};
+
+template<class Base, class Derived>
+class IsBaseOf<Base&, Derived&>
+{
+  public:
+    static const bool value = false;
+};
+
+template<class Type>
+class IsBaseOf<Type, Type>
+{
+  public:
+    static const bool value = true;
+};
+
+template<class Type>
+class IsBaseOf<Type, const Type>
+{
+  public:
+    static const bool value = true;
 };
 
 /*

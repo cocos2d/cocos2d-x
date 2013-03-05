@@ -36,9 +36,7 @@
 NS_CC_EXT_BEGIN
 
 CCControl::CCControl()
-: m_cOpacity(0)
-, m_tColor(ccBLACK)
-, m_bIsOpacityModifyRGB(false)
+: m_bIsOpacityModifyRGB(false)
 , m_nDefaultTouchPriority(0)
 , m_eState(CCControlStateNormal)
 , m_hasVisibleParents(false)
@@ -224,50 +222,6 @@ void CCControl::removeTargetWithActionForControlEvent(CCObject* target, SEL_CCCo
 
 
 //CRGBA protocol
-void CCControl::setColor(const ccColor3B& color)
-{
-    m_tColor=color;
-    CCObject* child;
-    CCArray* children=getChildren();
-    CCARRAY_FOREACH(children, child)
-    {
-        CCRGBAProtocol* pNode = dynamic_cast<CCRGBAProtocol*>(child);        
-        if (pNode)
-        {
-            pNode->setColor(m_tColor);
-        }
-    }
-}
-
-const ccColor3B& CCControl::getColor(void)
-{
-    return m_tColor;
-}
-
-
-void CCControl::setOpacity(GLubyte opacity)
-{
-    m_cOpacity = opacity;
-    
-    CCObject* child;
-    CCArray* children=getChildren();
-    CCARRAY_FOREACH(children, child)
-    {
-        CCRGBAProtocol* pNode = dynamic_cast<CCRGBAProtocol*>(child);        
-        if (pNode)
-        {
-            pNode->setOpacity(opacity);
-        }
-    }
-
-}
-
-GLubyte CCControl::getOpacity()
-{
-    return m_cOpacity;
-}
-
-
 void CCControl::setOpacityModifyRGB(bool bOpacityModifyRGB)
 {
     m_bIsOpacityModifyRGB=bOpacityModifyRGB;

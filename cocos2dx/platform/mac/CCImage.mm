@@ -450,7 +450,11 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
 		[[NSGraphicsContext currentContext] setShouldAntialias:NO];	
 		
 		NSImage *image = [[NSImage alloc] initWithSize:NSMakeSize(POTWide, POTHigh)];
-		[image lockFocus];	
+        
+		[image lockFocus];
+        
+        // patch for mac retina display and lableTTF
+        [[NSAffineTransform transform] set];
 		
 		//[stringWithAttributes drawAtPoint:NSMakePoint(xPadding, offsetY)]; // draw at offset position	
 		[stringWithAttributes drawInRect:textRect];

@@ -450,6 +450,9 @@
     <ClCompile Include="..\platform\win32\CCDevice.cpp">
       <Filter>platform\win32</Filter>
     </ClCompile>
+    <ClCompile Include="..\support\ccUTF8.cpp">
+      <Filter>support</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\base_nodes\CCAtlasNode.h">
@@ -901,5 +904,8 @@
       <Filter>platform\win32</Filter>
     </ClInclude>
     <ClInclude Include="..\support\tinyxml2\tinyxml2.h" />
+    <ClInclude Include="..\support\ccUTF8.h">
+      <Filter>support</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

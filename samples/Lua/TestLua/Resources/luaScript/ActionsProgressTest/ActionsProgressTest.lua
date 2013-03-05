@@ -190,7 +190,7 @@ local function SpriteProgressToRadialMidpointChanged()
     left:setType(kCCProgressTimerTypeRadial)
     left:setMidpoint(CCPointMake(0.25, 0.75))
     left:setPosition(CCPointMake(100, s.height / 2))
-    left:runAction(CCRepeatForever:create(action:copy():autorelease()))
+    left:runAction(CCRepeatForever:create(CCProgressTo:create(2, 100)))
 	layer:addChild(left)
 
 	-- Our image on the left should be a radial progress indicator, counter clockwise
@@ -203,7 +203,7 @@ local function SpriteProgressToRadialMidpointChanged()
        we get a counter clockwise progress.
 	]]
     right:setPosition(CCPointMake(s.width - 100, s.height / 2))
-    right:runAction(CCRepeatForever:create(action:copy():autorelease()))
+    right:runAction(CCRepeatForever:create(CCProgressTo:create(2, 100)))
     layer:addChild(right)
 
 	subtitleLabel:setString("Radial w/ Different Midpoints")
@@ -227,7 +227,7 @@ local function SpriteProgressBarVarious()
     -- Setup for a vertical bar since the bar change rate is 0 for x meaning no horizontal change
     left:setBarChangeRate(CCPointMake(1, 0))
     left:setPosition(CCPointMake(100, s.height / 2))
-    left:runAction(CCRepeatForever:create(to:copy():autorelease()))
+    left:runAction(CCRepeatForever:create(CCProgressTo:create(2, 100)))
 	layer:addChild(left)
 
     local middle = CCProgressTimer:create(CCSprite:create(s_pPathSister2))
@@ -237,7 +237,7 @@ local function SpriteProgressBarVarious()
     -- Setup for a vertical bar since the bar change rate is 0 for x meaning no horizontal change
     middle:setBarChangeRate(CCPointMake(1, 1))
     middle:setPosition(CCPointMake(s.width/2, s.height/2))
-    middle:runAction(CCRepeatForever:create(to:copy():autorelease()))
+    middle:runAction(CCRepeatForever:create(CCProgressTo:create(2, 100)))
 	layer:addChild(middle)
 
     local right = CCProgressTimer:create(CCSprite:create(s_pPathSister2))
@@ -247,7 +247,7 @@ local function SpriteProgressBarVarious()
     -- Setup for a vertical bar since the bar change rate is 0 for x meaning no horizontal change
     right:setBarChangeRate(CCPointMake(0, 1))
     right:setPosition(CCPointMake(s.width-100, s.height/2))
-    right:runAction(CCRepeatForever:create(to:copy():autorelease()))
+    right:runAction(CCRepeatForever:create(CCProgressTo:create(2, 100)))
 	layer:addChild(right)
 
 	subtitleLabel:setString("ProgressTo Bar Mid")
@@ -279,8 +279,8 @@ local function SpriteProgressBarTintAndFade()
     -- Setup for a vertical bar since the bar change rate is 0 for x meaning no horizontal change
     left:setBarChangeRate(CCPointMake(1, 0))
     left:setPosition(CCPointMake(100, s.height / 2))
-    left:runAction(CCRepeatForever:create(to:copy():autorelease()))
-    left:runAction(CCRepeatForever:create(tint:copy():autorelease()))
+    left:runAction(CCRepeatForever:create(CCProgressTo:create(6, 100)))
+    left:runAction(CCRepeatForever:create(CCSequence:create(array)))
 	layer:addChild(left)
 
     left:addChild(CCLabelTTF:create("Tint", "Marker Felt", 20.0))
@@ -292,8 +292,12 @@ local function SpriteProgressBarTintAndFade()
     -- Setup for a vertical bar since the bar change rate is 0 for x meaning no horizontal change
     middle:setBarChangeRate(CCPointMake(1, 1))
     middle:setPosition(CCPointMake(s.width / 2, s.height / 2))
-    middle:runAction(CCRepeatForever:create(to:copy():autorelease()))
-    middle:runAction(CCRepeatForever:create(fade:copy():autorelease()))
+    middle:runAction(CCRepeatForever:create(CCProgressTo:create(6, 100)))
+
+    local fade2 = CCSequence:createWithTwoActions(
+		CCFadeTo:create(1.0, 0),
+		CCFadeTo:create(1.0, 255))
+    middle:runAction(CCRepeatForever:create(fade2))
 	layer:addChild(middle)
 
     middle:addChild(CCLabelTTF:create("Fade", "Marker Felt", 20.0))
@@ -305,9 +309,11 @@ local function SpriteProgressBarTintAndFade()
     -- Setup for a vertical bar since the bar change rate is 0 for x meaning no horizontal change
     right:setBarChangeRate(CCPointMake(0, 1))
     right:setPosition(CCPointMake(s.width - 100, s.height / 2))
-    right:runAction(CCRepeatForever:create(to:copy():autorelease()))
-    right:runAction(CCRepeatForever:create(tint:copy():autorelease()))
-    right:runAction(CCRepeatForever:create(fade:copy():autorelease()))
+    right:runAction(CCRepeatForever:create(CCProgressTo:create(6, 100)))
+    right:runAction(CCRepeatForever:create(CCSequence:create(array)))
+    right:runAction(CCRepeatForever:create(CCSequence:createWithTwoActions(
+		CCFadeTo:create(1.0, 0),
+		CCFadeTo:create(1.0, 255))))
 	layer:addChild(right)
 
     right:addChild(CCLabelTTF:create("Tint and Fade", "Marker Felt", 20.0))
@@ -334,7 +340,7 @@ local function SpriteProgressWithSpriteFrame()
     -- Setup for a vertical bar since the bar change rate is 0 for x meaning no horizontal change
     left:setBarChangeRate(CCPointMake(1, 0))
     left:setPosition(CCPointMake(100, s.height / 2))
-    left:runAction(CCRepeatForever:create(to:copy():autorelease()))
+    left:runAction(CCRepeatForever:create(CCProgressTo:create(6, 100)))
 	layer:addChild(left)
 
     local middle = CCProgressTimer:create(CCSprite:createWithSpriteFrameName("grossini_dance_02.png"))
@@ -344,7 +350,7 @@ local function SpriteProgressWithSpriteFrame()
     -- Setup for a vertical bar since the bar change rate is 0 for x meaning no horizontal change
     middle:setBarChangeRate(CCPointMake(1, 1))
     middle:setPosition(CCPointMake(s.width / 2, s.height / 2))
-    middle:runAction(CCRepeatForever:create(to:copy():autorelease()))
+    middle:runAction(CCRepeatForever:create(CCProgressTo:create(6, 100)))
 	layer:addChild(middle)
 
     local right = CCProgressTimer:create(CCSprite:createWithSpriteFrameName("grossini_dance_03.png"))
@@ -354,7 +360,7 @@ local function SpriteProgressWithSpriteFrame()
     -- Setup for a vertical bar since the bar change rate is 0 for x meaning no horizontal change
     right:setBarChangeRate(CCPointMake(0, 1))
     right:setPosition(CCPointMake(s.width - 100, s.height / 2))
-    right:runAction(CCRepeatForever:create(to:copy():autorelease()))
+    right:runAction(CCRepeatForever:create(CCProgressTo:create(6, 100)))
 	layer:addChild(right)
 
 	subtitleLabel:setString("Progress With Sprite Frame")

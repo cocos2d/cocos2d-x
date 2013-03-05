@@ -274,6 +274,7 @@ float FmodAudioPlayer::getEffectsVolume() {
 	pSystem->update();
 	FMOD_RESULT result = pChannelGroup->getVolume(&fVolumn);
 	ERRCHECKWITHEXIT(result);
+	return fVolumn;
 }
 
 void FmodAudioPlayer::setEffectsVolume(float volume) {

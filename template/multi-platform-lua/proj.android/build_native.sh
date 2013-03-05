@@ -11,8 +11,8 @@ usage: $0 [options]
 Build C/C++ code for $APPNAME using Android NDK
 
 OPTIONS:
--s	Build externals from source
--h	this help
+-s  Build externals from source
+-h  this help
 EOF
 }
 
@@ -30,23 +30,16 @@ done
 
 # paths
 
-if [ -z "${NDK_ROOT+aaa}" ]; then
-# ... if NDK_ROOT is not set, use "$HOME/bin/android-ndk"
-    NDK_ROOT="$HOME/bin/android-ndk"
+if [ -z "${NDK_ROOT+aaa}" ];then
+echo "please define NDK_ROOT"
+exit 1
 fi
 
-if [ -z "${COCOS2DX_ROOT+aaa}" ]; then
-# ... if COCOS2DX_ROOT is not set
-# ... find current working directory
-    DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # ... use paths relative to current directory
-    COCOS2DX_ROOT="$DIR/../../.."
-    APP_ROOT="$DIR/.."
-    APP_ANDROID_ROOT="$DIR"
-else
-    APP_ROOT="$COCOS2DX_ROOT"/samples/Lua/"$APPNAME"
-    APP_ANDROID_ROOT="$COCOS2DX_ROOT"/samples/Lua/"$APPNAME"/proj.android
-fi
+COCOS2DX_ROOT="$DIR/../../.."
+APP_ROOT="$DIR/.."
+APP_ANDROID_ROOT="$DIR"
 
 echo "NDK_ROOT = $NDK_ROOT"
 echo "COCOS2DX_ROOT = $COCOS2DX_ROOT"
@@ -61,18 +54,6 @@ fi
 mkdir "$APP_ANDROID_ROOT"/assets
 
 # copy resources
-for file in "$APP_ROOT"/../../Cpp/TestCpp/Resources/*
-do
-if [ -d "$file" ]; then
-    cp -rf "$file" "$APP_ANDROID_ROOT"/assets
-fi
-
-if [ -f "$file" ]; then
-    cp "$file" "$APP_ANDROID_ROOT"/assets
-fi
-done
-
-# copy luaScript
 for file in "$APP_ROOT"/Resources/*
 do
 if [ -d "$file" ]; then
@@ -83,13 +64,6 @@ if [ -f "$file" ]; then
     cp "$file" "$APP_ANDROID_ROOT"/assets
 fi
 done
-
-# remove test_image_rgba4444.pvr.gz
-rm -f "$APP_ANDROID_ROOT"/assets/Images/test_image_rgba4444.pvr.gz
-rm -f "$APP_ANDROID_ROOT"/assets/Images/test_1021x1024_rgba8888.pvr.gz
-rm -f "$APP_ANDROID_ROOT"/assets/Images/test_1021x1024_rgb888.pvr.gz
-rm -f "$APP_ANDROID_ROOT"/assets/Images/test_1021x1024_rgba4444.pvr.gz
-rm -f "$APP_ANDROID_ROOT"/assets/Images/test_1021x1024_a8.pvr.gz
 
 if [[ "$buildexternalsfromsource" ]]; then
     echo "Building external dependencies from source"

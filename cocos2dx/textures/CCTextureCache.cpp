@@ -402,14 +402,17 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
     
     //pthread_mutex_lock(m_pDictLock);
 
-    // remove possible -HD suffix to prevent caching the same image twice (issue #1040)
     std::string pathKey = path;
 
     pathKey = CCFileUtils::sharedFileUtils()->fullPathForFilename(pathKey.c_str());
+    if (pathKey.size() == 0)
+    {
+        return NULL;
+    }
     texture = (CCTexture2D*)m_pTextures->objectForKey(pathKey.c_str());
 
     std::string fullpath = pathKey; // (CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(path));
-    if( ! texture ) 
+    if (! texture) 
     {
         std::string lowerCase(pathKey);
         for (unsigned int i = 0; i < lowerCase.length(); ++i)
@@ -467,7 +470,7 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
                 }
                 else
                 {
-                    CCLOG("cocos2d: Couldn't add image:%s in CCTextureCache", path);
+                    CCLOG("cocos2d: Couldn't create texture for file:%s in CCTextureCache", path);
                 }
             }
         } while (0);

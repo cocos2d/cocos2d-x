@@ -203,13 +203,6 @@ public:
     void setTouchEnabled(bool e);
 private:
     /**
-     * Init this object with a given size to clip its content.
-     *
-     * @param size view size
-     * @return initialized scroll view object
-     */
-    bool initWithViewSize(CCSize size);
-    /**
      * Relocates the container at the proper offset, in bounds of max/min offsets.
      *
      * @param animated If YES, relocation is animated

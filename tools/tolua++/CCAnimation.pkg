@@ -3,7 +3,6 @@ class CCAnimationFrame : public CCObject
 {
     CCAnimationFrame();
     ~CCAnimationFrame();
-	CCObject* copyWithZone(CCZone* pZone);
 
     bool initWithSpriteFrame(CCSpriteFrame* spriteFrame, float delayUnits, CCDictionary* userInfo);
 
