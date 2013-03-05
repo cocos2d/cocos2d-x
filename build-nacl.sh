@@ -9,8 +9,9 @@
 # and add the NaCl compiler bin folder to your path.
 #
 # There are several libraries from naclports that are
-# prerequisite for building cocos2dx on NaCl.  The simplest
-# way to build them is to checkout naclports and run:
+# prerequisite for building cocos2dx on NaCl.  These ship
+# with recent versions of the NaCl SDK or you can build
+# them yourself by checking out naclports and running:
 # $ make png tiff freetype xml2 freealut jpeg vorbis ogg
 
 if [ -z "$NACL_SDK_ROOT" ]; then
