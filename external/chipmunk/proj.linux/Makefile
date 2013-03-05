@@ -50,16 +50,22 @@ release: CXXFLAGS += -O3
 release: DEFINES += -DNDEBIG
 release: $(TARGET)
 
+####### Dependencies
+DEPFLAGS = -MMD -MP -MF"$*.d" -MT"$*.o"
+DEPS = $(OBJECTS:.o=.d)
+
 ####### Build rules
 $(TARGET): $(OBJECTS) 
 	$(AR) $(ARFLAGS) $(TARGET) $(OBJECTS)  
 
 ####### Compile
 %.o: %.cpp
-	$(CXX) $(CXXFLAGS) $(INCLUDES) $(DEFINES) -c $< -o $@
+	$(CXX) $(CXXFLAGS) $(INCLUDES) $(DEFINES) $(DEPFLAGS) -c -o $@ $<
 
 %.o: %.c
-	$(CC) $(CCFLAGS) $(INCLUDES) $(DEFINES) -c $< -o $@
+	$(CC) $(CCFLAGS) $(INCLUDES) $(DEFINES) $(DEPFLAGS) -c -o $@ $<
 
-clean: 
-	rm -f $(OBJECTS) $(TARGET) core
+-include $(DEPS)
+
+clean:
+	rm -f $(OBJECTS) $(DEPS) $(TARGET) core
