@@ -288,8 +288,10 @@
 		2628297A15EC7064002C4240 /* ccTypeInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 2628297915EC7064002C4240 /* ccTypeInfo.h */; };
 		469A7DF316C24787006FFCB2 /* tinyxml2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 469A7DF116C24787006FFCB2 /* tinyxml2.cpp */; };
 		469A7DF416C24787006FFCB2 /* tinyxml2.h in Headers */ = {isa = PBXBuildFile; fileRef = 469A7DF216C24787006FFCB2 /* tinyxml2.h */; };
-		46A393E416E5C3B900210B16 /* CCUserDefault.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46A393E216E5C3B900210B16 /* CCUserDefault.mm */; };
-		46A393E516E5C3B900210B16 /* CCUserDefault.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A393E316E5C3B900210B16 /* CCUserDefault.h */; };
+		46A393F616E5D01B00210B16 /* CCUserDefault.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A393F216E5D01B00210B16 /* CCUserDefault.cpp */; };
+		46A393F716E5D01B00210B16 /* CCUserDefault.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A393F316E5D01B00210B16 /* CCUserDefault.h */; };
+		46A393F816E5D01B00210B16 /* CCUserDefault.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46A393F416E5D01B00210B16 /* CCUserDefault.mm */; };
+		46A393F916E5D01B00210B16 /* CCUserDefaultAndroid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A393F516E5D01B00210B16 /* CCUserDefaultAndroid.cpp */; };
 		4EF8999016E207E70040A527 /* CCParallaxNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4EF8998416E207E70040A527 /* CCParallaxNode.cpp */; };
 		4EF8999116E207E70040A527 /* CCParallaxNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EF8998516E207E70040A527 /* CCParallaxNode.h */; };
 		4EF8999216E207E70040A527 /* CCTileMapAtlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4EF8998616E207E70040A527 /* CCTileMapAtlas.cpp */; };
@@ -590,8 +592,10 @@
 		2628297915EC7064002C4240 /* ccTypeInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccTypeInfo.h; sourceTree = "<group>"; };
 		469A7DF116C24787006FFCB2 /* tinyxml2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxml2.cpp; sourceTree = "<group>"; };
 		469A7DF216C24787006FFCB2 /* tinyxml2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tinyxml2.h; sourceTree = "<group>"; };
-		46A393E216E5C3B900210B16 /* CCUserDefault.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCUserDefault.mm; sourceTree = "<group>"; };
-		46A393E316E5C3B900210B16 /* CCUserDefault.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCUserDefault.h; sourceTree = "<group>"; };
+		46A393F216E5D01B00210B16 /* CCUserDefault.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCUserDefault.cpp; sourceTree = "<group>"; };
+		46A393F316E5D01B00210B16 /* CCUserDefault.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCUserDefault.h; sourceTree = "<group>"; };
+		46A393F416E5D01B00210B16 /* CCUserDefault.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCUserDefault.mm; sourceTree = "<group>"; };
+		46A393F516E5D01B00210B16 /* CCUserDefaultAndroid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCUserDefaultAndroid.cpp; sourceTree = "<group>"; };
 		4EF8998416E207E70040A527 /* CCParallaxNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCParallaxNode.cpp; sourceTree = "<group>"; };
 		4EF8998516E207E70040A527 /* CCParallaxNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCParallaxNode.h; sourceTree = "<group>"; };
 		4EF8998616E207E70040A527 /* CCTileMapAtlas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTileMapAtlas.cpp; sourceTree = "<group>"; };
@@ -1089,10 +1093,10 @@
 				1551A5F1158F2ADE00E66CFE /* ccUtils.h */,
 				1551A5F3158F2ADE00E66CFE /* CCVertex.h */,
 				1551A5FD158F2ADE00E66CFE /* TransformUtils.h */,
-				46A393DC16E5BE8900210B16 /* CCUserDefault */,
 				1551A5F4158F2ADE00E66CFE /* data_support */,
 				1551A5F9158F2ADE00E66CFE /* image_support */,
 				469A7DF016C24787006FFCB2 /* tinyxml2 */,
+				46A393F116E5D01B00210B16 /* user_default */,
 				1551A5FE158F2ADE00E66CFE /* zip_support */,
 			);
 			path = support;
@@ -1237,13 +1241,15 @@
 			path = tinyxml2;
 			sourceTree = "<group>";
 		};
-		46A393DC16E5BE8900210B16 /* CCUserDefault */ = {
+		46A393F116E5D01B00210B16 /* user_default */ = {
 			isa = PBXGroup;
 			children = (
-				46A393E216E5C3B900210B16 /* CCUserDefault.mm */,
-				46A393E316E5C3B900210B16 /* CCUserDefault.h */,
+				46A393F216E5D01B00210B16 /* CCUserDefault.cpp */,
+				46A393F316E5D01B00210B16 /* CCUserDefault.h */,
+				46A393F416E5D01B00210B16 /* CCUserDefault.mm */,
+				46A393F516E5D01B00210B16 /* CCUserDefaultAndroid.cpp */,
 			);
-			path = CCUserDefault;
+			path = user_default;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1418,7 +1424,7 @@
 				4EF8999716E207E70040A527 /* CCTMXObjectGroup.h in Headers */,
 				4EF8999916E207E70040A527 /* CCTMXTiledMap.h in Headers */,
 				4EF8999B16E207E70040A527 /* CCTMXXMLParser.h in Headers */,
-				46A393E516E5C3B900210B16 /* CCUserDefault.h in Headers */,
+				46A393F716E5D01B00210B16 /* CCUserDefault.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1600,7 +1606,9 @@
 				4EF8999616E207E70040A527 /* CCTMXObjectGroup.cpp in Sources */,
 				4EF8999816E207E70040A527 /* CCTMXTiledMap.cpp in Sources */,
 				4EF8999A16E207E70040A527 /* CCTMXXMLParser.cpp in Sources */,
-				46A393E416E5C3B900210B16 /* CCUserDefault.mm in Sources */,
+				46A393F616E5D01B00210B16 /* CCUserDefault.cpp in Sources */,
+				46A393F816E5D01B00210B16 /* CCUserDefault.mm in Sources */,
+				46A393F916E5D01B00210B16 /* CCUserDefaultAndroid.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

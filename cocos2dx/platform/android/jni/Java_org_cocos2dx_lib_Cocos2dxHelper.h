@@ -39,6 +39,17 @@ extern "C" {
     extern void enableAccelerometerJNI();
     extern void disableAccelerometerJNI();
     extern void setAccelerometerIntervalJNI(float interval);
+    // functions for CCUserDefault
+    extern bool getBoolForKeyJNI(const char* pKey);
+    extern int getIntegerForKeyJNI(const char* pKey);
+    extern float getFloatForKeyJNI(const char* pKey);
+    extern double getDoubleForKeyJNI(const char* pKey);
+    extern const char* getStringForKeyJNI(const char* pKey);
+    extern void setBoolForKeyJNI(const char* pKey, bool value);
+    extern void setIntegerForKeyJNI(const char* pKey, int value);
+    extern void setFloatForKeyJNI(const char* pKey, float value);
+    extern void setDoubleForKeyJNI(const char* pKey, double value);
+    extern void setStringForKeyJNI(const char* pKey, const char* value);
 }
 
 #endif
