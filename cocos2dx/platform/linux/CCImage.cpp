@@ -56,7 +56,7 @@ public:
 		iMaxLineHeight = 0;
         //Free all text lines
         size_t size = vLines.size();
-        for (int i=0; i<size; ++i) {
+        for (size_t i=0; i<size; ++i) {
             TextLine line = vLines[i];
             free(line.text);
         }
@@ -106,7 +106,7 @@ public:
         oTempLine.text = text;
 
 		//get last glyph
-        int iError = FT_Load_Char(face, cLastChar, FT_LOAD_DEFAULT);
+        FT_Load_Char(face, cLastChar, FT_LOAD_DEFAULT);
 
         oTempLine.iLineWidth = iCurXCursor;// - SHIFT6((face->glyph->metrics.horiAdvance + face->glyph->metrics.horiBearingX - face->glyph->metrics.width))/*-iInterval*/;//TODO interval
 		iMaxLineWidth = MAX(iMaxLineWidth, oTempLine.iLineWidth);
@@ -116,7 +116,7 @@ public:
 
 	bool divideString(FT_Face face, const char* sText, int iMaxWidth, int iMaxHeight) {
 		int iError = 0;
-		int iCurXCursor, iCurYCursor;
+		int iCurXCursor;
 		const char* pText = sText;
 
         FT_UInt unicode = utf8((char**)&pText);
@@ -131,7 +131,7 @@ public:
         pText = sText;
         size_t text_len = 0;
         wchar_t* text_buf = (wchar_t*) malloc(sizeof(wchar_t) * strlen(sText));
-        while (unicode=utf8((char**)&pText)) {
+        while ((unicode=utf8((char**)&pText))) {
             if (unicode == '\n') {
 				buildLine(text_buf, text_len, face, iCurXCursor, cLastCh);
                 text_len = 0;
