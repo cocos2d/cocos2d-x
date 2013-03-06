@@ -180,11 +180,13 @@ static int io_popen (lua_State *L) {
 }
 
 
+#ifndef __native_client__
 static int io_tmpfile (lua_State *L) {
   FILE **pf = newfile(L);
   *pf = tmpfile();
   return (*pf == NULL) ? pushresult(L, 0, NULL) : 1;
 }
+#endif
 
 
 static FILE *getiofile (lua_State *L, int findex) {
@@ -486,7 +488,9 @@ static const luaL_Reg iolib[] = {
   {"output", io_output},
   {"popen", io_popen},
   {"read", io_read},
+#ifndef __native_client__
   {"tmpfile", io_tmpfile},
+#endif
   {"type", io_type},
   {"write", io_write},
   {NULL, NULL}
