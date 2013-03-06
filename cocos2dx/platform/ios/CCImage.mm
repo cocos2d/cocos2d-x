@@ -23,6 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 #import "CCImage.h"
 #import "CCFileUtils.h"
+#import "CCCommon.h"
 #import <string>
 
 #import <Foundation/Foundation.h>
@@ -211,19 +212,30 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
         constrainSize.width = pInfo->width;
         constrainSize.height = pInfo->height;
         
+        // On iOS custom fonts must be listed beforehand in the App info.plist (in order to be usable) and referenced only the by the font family name itself when
+        // calling [UIFont fontWithName]. Therefore even if the developer adds 'SomeFont.ttf' or 'fonts/SomeFont.ttf' to the App .plist, the font must
+        // be referenced as 'SomeFont' when calling [UIFont fontWithName]. Hence we strip out the folder path components and the extension here in order to get just
+        // the font family name itself. This stripping step is required especially for references to user fonts stored in CCB files; CCB files appear to store
+        // the '.ttf' extensions when referring to custom fonts.
+        fntName = [[fntName lastPathComponent] stringByDeletingPathExtension];
+        
         // create the font   
-        id font;
-        font = [UIFont fontWithName:fntName size:nSize];  
+        id font = [UIFont fontWithName:fntName size:nSize];
+        
         if (font)
         {
             dim = _calculateStringSize(str, font, &constrainSize);
-        }      
+        }
         else
         {
-            fntName = _isValidFontName(pFontName) ? fntName : @"MarkerFelt-Wide";
-            font = [UIFont fontWithName:fntName size:nSize];
-                
-            if (! font) 
+            if (!_isValidFontName(pFontName))
+            {
+                // Attempted to load a non system font. Attempt this fallback first before the default system font:
+                CCLOGERROR("Error! Failed to load the custom font '%s'! A default font will be used instead.", pFontName);
+                font = [UIFont fontWithName: @"MarkerFelt-Wide" size:nSize];
+            }
+            
+            if (!font)
             {
                 font = [UIFont systemFontOfSize:nSize];
             }
@@ -231,7 +243,7 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
             if (font)
             {
                 dim = _calculateStringSize(str, font, &constrainSize);
-            }  
+            }
         }
 
         CC_BREAK_IF(! font);
