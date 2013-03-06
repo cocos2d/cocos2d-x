@@ -12,6 +12,9 @@ Developers:
     Rolando Abarca
         Javascript Binding and testjs
 
+    DarraghCoy
+        fix for loading custom fonts on iOS when referenced from a CCB file
+
     Waiter
         fix an error that OpenSLEngine can't load resources from SD card
 
