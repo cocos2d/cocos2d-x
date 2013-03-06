@@ -196,6 +196,7 @@ private:
     std::vector<std::string> mOwnerCallbackNames;
     CCArray* mOwnerCallbackNodes;
     std::string mCCBRootPath;
+    bool hasScriptingOwner;    
     bool init();
 public:
     CCBReader(CCNodeLoaderLibrary *pCCNodeLoaderLibrary, CCBMemberVariableAssigner *pCCBMemberVariableAssigner = NULL, CCBSelectorResolver *pCCBSelectorResolver = NULL, CCNodeLoaderListener *pCCNodeLoaderListener = NULL);
@@ -262,7 +263,6 @@ public:
     static float getResolutionScale();
     
     CCNode* readFileWithCleanUp(bool bCleanUp, CCDictionary* am);
-    bool hasScriptingOwner;    
 
 private:
     void cleanUpNodeGraph(CCNode *pNode);
