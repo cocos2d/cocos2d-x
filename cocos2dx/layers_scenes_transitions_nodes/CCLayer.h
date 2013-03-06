@@ -163,8 +163,10 @@ private:
     int  excuteScriptTouchHandler(int nEventType, CCSet *pTouches);
 };
 
+#ifdef __apple__
 #pragma mark -
 #pragma mark CCLayerRGBA
+#endif
 
 /** CCLayerRGBA is a subclass of CCLayer that implements the CCRGBAProtocol protocol using a solid color as the background.
  

@@ -55,8 +55,8 @@ CCControlButton::CCControlButton()
 , m_titleColorDispatchTable(NULL)
 , m_titleLabelDispatchTable(NULL)
 , m_backgroundSpriteDispatchTable(NULL)
-, m_marginH(CCControlButtonMarginLR)
 , m_marginV(CCControlButtonMarginTB)
+, m_marginH(CCControlButtonMarginLR)
 {
 
 }

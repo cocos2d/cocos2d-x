@@ -227,13 +227,15 @@ void TestSearchPath::onEnter()
     // Gets external.txt from writable path
     string fullPath = sharedFileUtils->fullPathForFilename("external.txt");
     CCLog("\nexternal file path = %s\n", fullPath.c_str());
-    if (fullPath.length() > 0) {
+    if (fullPath.length() > 0)
+    {
         fp = fopen(fullPath.c_str(), "rb");
         if (fp)
         {
             char szReadBuf[100] = {0};
-            fread(szReadBuf, 1, strlen(szBuf), fp);
-            CCLog("The content of file from writable path: %s", szReadBuf);
+            int read = fread(szReadBuf, 1, strlen(szBuf), fp);
+            if (read > 0)
+                CCLog("The content of file from writable path: %s", szReadBuf);
             fclose(fp);
         }
     }

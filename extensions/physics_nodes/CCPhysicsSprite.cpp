@@ -290,7 +290,7 @@ void CCPhysicsSprite::setRotation(float fRotation)
 // returns the transform matrix according the Box2D Body values
 CCAffineTransform CCPhysicsSprite::nodeToParentTransform()
 {
-    b2Vec2 pos  = _b2Body->GetPosition();
+    b2Vec2 pos  = m_pB2Body->GetPosition();
 	
 	float x = pos.x * m_fPTMRatio;
 	float y = pos.y * m_fPTMRatio;
@@ -309,7 +309,7 @@ CCAffineTransform CCPhysicsSprite::nodeToParentTransform()
 	// Although scale is not used by physics engines, it is calculated just in case
 	// the sprite is animated (scaled up/down) using actions.
 	// For more info see: http://www.cocos2d-iphone.org/forum/topic/68990
-	if (! (m_obAnchorPointInPoints.equals(CCPointZero))
+	if (!m_obAnchorPointInPoints.equals(CCPointZero))
     {
 		x += ((c * -m_obAnchorPointInPoints.x * m_fScaleX) + (-s * -m_obAnchorPointInPoints.y * m_fScaleY));
 		y += ((s * -m_obAnchorPointInPoints.x * m_fScaleX) + (c * -m_obAnchorPointInPoints.y * m_fScaleY));

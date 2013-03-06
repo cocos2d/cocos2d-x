@@ -100,7 +100,8 @@ void ExtensionsMainLayer::menuCallback(CCObject* pSender)
         }
         break;
 #endif
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)	// MARMALADE CHANGE: Not yet avaiable on Marmalade
+// MARMALADE CHANGE: Not yet avaiable on Marmalade
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE && CC_TARGET_PLATFORM != CC_PLATFORM_NACL)
     case TEST_HTTPCLIENT:
         {
             runHttpClientTest();

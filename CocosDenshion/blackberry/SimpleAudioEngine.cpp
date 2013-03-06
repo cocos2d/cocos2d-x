@@ -208,7 +208,6 @@ namespace CocosDenshion
 		ALenum 			format;
 		int 			result;
 		int 			section;
-		int				err;
 		unsigned int 	size = 0;
 
 		if (ov_fopen(pszFilePath, &ogg_file) < 0)

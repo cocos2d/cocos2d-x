@@ -16,10 +16,6 @@ enum {
 };
 
 // callback to remove Shapes from the Space
-static void removeShape( cpBody *body, cpShape *shape, void *data )
-{
-    cpShapeFree( shape );
-}
 
 ChipmunkTestLayer::ChipmunkTestLayer()
 {

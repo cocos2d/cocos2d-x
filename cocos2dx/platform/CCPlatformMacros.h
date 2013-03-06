@@ -244,4 +244,10 @@ public: virtual void set##funName(varType var)   \
     #define CC_DEPRECATED_ATTRIBUTE
 #endif 
 
+#ifdef __GNUC__
+#define CC_UNUSED __attribute__ ((unused))
+#else
+#define CC_UNUSED
+#endif
+
 #endif // __CC_PLATFORM_MACROS_H__

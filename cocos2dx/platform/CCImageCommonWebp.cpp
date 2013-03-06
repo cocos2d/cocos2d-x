@@ -24,7 +24,13 @@
 
 #include "platform/CCImage.h"
 #include "textures/CCTexture2D.h"
+#ifdef __native_client__
+// TODO(sbc): I'm pretty sure all platforms should be including
+// webph headers in this way.
+#include "webp/decode.h"
+#else
 #include "decode.h"
+#endif
 #include "ccMacros.h"
 #include <stdlib.h>
 #include <stdio.h>
