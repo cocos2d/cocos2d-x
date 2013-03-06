@@ -125,9 +125,9 @@ local function MotionStreakTest1_update(dt)
 end
 
 local function MotionStreakTest1_onEnterOrExit(tag)
-	if tag == 0 then
+	if tag == "enter" then
 		MotionStreakTest1_entry = scheduler:scheduleScriptFunc(MotionStreakTest1_update, 0, false)
-	elseif tag == 1 then
+	elseif tag == "exit" then
 		scheduler:unscheduleScriptEntry(MotionStreakTest1_entry)
 	end
 end
