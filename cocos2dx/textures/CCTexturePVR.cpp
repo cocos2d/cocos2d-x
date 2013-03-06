@@ -225,16 +225,16 @@ typedef struct {
 
 
 CCTexturePVR::CCTexturePVR() 
-: m_pPixelFormatInfo(NULL)
-, m_uNumberOfMipmaps(0)
+: m_uNumberOfMipmaps(0)
 , m_uWidth(0)
 , m_uHeight(0)
-, m_bRetainName(false)
-, m_bHasAlpha(false)
 , m_uName(0)
-, m_eFormat(kCCTexture2DPixelFormat_Default)
+, m_bHasAlpha(false)
 , m_bHasPremultipliedAlpha(false)
 , m_bForcePremultipliedAlpha(false)
+, m_bRetainName(false)
+, m_eFormat(kCCTexture2DPixelFormat_Default)
+, m_pPixelFormatInfo(NULL)
 {
 }
 
@@ -265,10 +265,10 @@ bool CCTexturePVR::unpackPVRv2Data(unsigned char* data, unsigned int len)
     //Make sure that tag is in correct formatting
     pvrTag = CC_SWAP_INT32_LITTLE_TO_HOST(header->pvrTag);
 
-    if (gPVRTexIdentifier[0] != ((pvrTag >>  0) & 0xff) ||
-        gPVRTexIdentifier[1] != ((pvrTag >>  8) & 0xff) ||
-        gPVRTexIdentifier[2] != ((pvrTag >> 16) & 0xff) ||
-        gPVRTexIdentifier[3] != ((pvrTag >> 24) & 0xff))
+    if (gPVRTexIdentifier[0] != (char)(((pvrTag >>  0) & 0xff)) ||
+        gPVRTexIdentifier[1] != (char)(((pvrTag >>  8) & 0xff)) ||
+        gPVRTexIdentifier[2] != (char)(((pvrTag >> 16) & 0xff)) ||
+        gPVRTexIdentifier[3] != (char)(((pvrTag >> 24) & 0xff)))
     {
         return false;
     }
@@ -415,7 +415,7 @@ bool CCTexturePVR::unpackPVRv3Data(unsigned char* dataPointer, unsigned int data
 	
 	bool infoValid = false;
 	
-	for(int i = 0; i < PVR3_MAX_TABLE_ELEMENTS; i++)
+	for(unsigned int i = 0; i < PVR3_MAX_TABLE_ELEMENTS; i++)
     {
 		if( v3_pixel_formathash[i].pixelFormat == pixelFormat )
         {

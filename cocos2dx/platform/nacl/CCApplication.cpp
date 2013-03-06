@@ -34,6 +34,7 @@ NS_CC_BEGIN
 CCApplication* CCApplication::sm_pSharedApplication = 0;
 bool CCApplication::s_running = false;
 
+/*
 static long getCurrentMillSecond()
 {
     long lLastTime;
@@ -43,6 +44,7 @@ static long getCurrentMillSecond()
     lLastTime = stCurrentTime.tv_sec * 1000 + stCurrentTime.tv_usec * 0.001;
     return lLastTime;
 }
+*/
 
 CCApplication::CCApplication()
 {

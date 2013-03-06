@@ -123,24 +123,6 @@ static const char *const g_utf8_skip = utf8_skip_data;
 
 /*
  * @str:    the string to search through.
- * @c:        the character to find.
- *
- * Returns the index of the first occurrence of the character, if found.  Otherwise -1 is returned.
- *
- * Return value: the index of the first occurrence of the character if found or -1 otherwise.
- * */
-static unsigned int cc_utf8_find_char(std::vector<unsigned short> str, unsigned short c)
-{
-    unsigned int len = str.size();
-    
-    for (unsigned int i = 0; i < len; ++i)
-        if (str[i] == c) return i;
-    
-    return -1;
-}
-
-/*
- * @str:    the string to search through.
  * @c:        the character to not look for.
  *
  * Return value: the index of the last character that is not c.

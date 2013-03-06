@@ -71,15 +71,15 @@ typedef struct _hashSelectorEntry
 // implementation CCTimer
 
 CCTimer::CCTimer()
-: m_pfnSelector(NULL)
-, m_fInterval(0.0f)
-, m_pTarget(NULL)
+: m_pTarget(NULL)
 , m_fElapsed(-1)
 , m_bRunForever(false)
 , m_bUseDelay(false)
 , m_uTimesExecuted(0)
 , m_uRepeat(0)
 , m_fDelay(0.0f)
+, m_fInterval(0.0f)
+, m_pfnSelector(NULL)
 , m_nScriptHandler(0)
 {
 }
@@ -243,8 +243,8 @@ CCScheduler::CCScheduler(void)
 , m_pHashForTimers(NULL)
 , m_pCurrentTarget(NULL)
 , m_bCurrentTargetSalvaged(false)
-, m_pScriptHandlerEntries(NULL)
 , m_bUpdateHashLocked(false)
+, m_pScriptHandlerEntries(NULL)
 {
 
 }
@@ -635,7 +635,7 @@ void CCScheduler::unscheduleScriptEntry(unsigned int uScheduleScriptEntryID)
     for (int i = m_pScriptHandlerEntries->count() - 1; i >= 0; i--)
     {
         CCSchedulerScriptHandlerEntry* pEntry = static_cast<CCSchedulerScriptHandlerEntry*>(m_pScriptHandlerEntries->objectAtIndex(i));
-        if (pEntry->getEntryId() == uScheduleScriptEntryID)
+        if (pEntry->getEntryId() == (int)uScheduleScriptEntryID)
         {
             pEntry->markedForDeletion();
             break;
