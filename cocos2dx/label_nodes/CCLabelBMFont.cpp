@@ -518,17 +518,17 @@ bool CCLabelBMFont::initWithString(const char *theString, const char *fntFile, f
 }
 
 CCLabelBMFont::CCLabelBMFont()
-: m_cDisplayedOpacity(255)
+:  m_sString(NULL)
+, m_pConfiguration(NULL)
+, m_bLineBreakWithoutSpaces(false)
+, m_tImageOffset(CCPointZero)
+, m_cDisplayedOpacity(255)
 , m_cRealOpacity(255)
 , m_tDisplayedColor(ccWHITE)
 , m_tRealColor(ccWHITE)
-, m_bCascadeOpacityEnabled(true)
 , m_bCascadeColorEnabled(true)
+, m_bCascadeOpacityEnabled(true)
 , m_bIsOpacityModifyRGB(false)
-, m_pConfiguration(NULL)
-, m_sString(NULL)
-, m_bLineBreakWithoutSpaces(false)
-, m_tImageOffset(CCPointZero)
 {
 
 }

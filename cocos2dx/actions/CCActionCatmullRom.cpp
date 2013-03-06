@@ -261,8 +261,8 @@ CCCardinalSplineTo::~CCCardinalSplineTo()
 
 CCCardinalSplineTo::CCCardinalSplineTo()
 : m_pPoints(NULL)
-, m_fTension(0.f)
 , m_fDeltaT(0.f)
+, m_fTension(0.f)
 {
 }
 

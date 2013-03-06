@@ -52,11 +52,12 @@ void downloadFiles(MainThreadRunner* runner, const char** filenames, int num_fil
 
 void* cocos_main(void* arg)
 {
-    CocosPepperInstance* instance = (CocosPepperInstance*)arg;
     fprintf(stderr, "in cocos_main\n");
 
 #ifdef OLD_NACL_MOUNTS
     // TODO(sbc): remove this hack an replace with some kind of URL mount
+    CocosPepperInstance* instance = (CocosPepperInstance*)arg;
+
     mkdir("ipad", S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
     mkdir("iphone", S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
     mkdir("fonts", S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
@@ -71,7 +72,6 @@ void* cocos_main(void* arg)
     downloadFiles(instance->m_runner, filenames, sizeof(filenames)/sizeof(char*));
 #endif
 
-    CCEGLView* eglView = CCEGLView::sharedOpenGLView();
     fprintf(stderr, "calling application->run\n");
     int rtn = CCApplication::sharedApplication()->run();
     fprintf(stderr, "app run returned: %d\n", rtn);
