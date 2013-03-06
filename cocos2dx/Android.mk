@@ -111,7 +111,7 @@ support/CCNotificationCenter.cpp \
 support/CCProfiling.cpp \
 support/CCPointExtension.cpp \
 support/TransformUtils.cpp \
-support/CCUserDefault.cpp \
+support/user_default/CCUserDefault.cpp \
 support/base64.cpp \
 support/ccUtils.cpp \
 support/CCVertex.cpp \

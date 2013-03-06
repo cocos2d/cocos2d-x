@@ -221,7 +221,7 @@ THE SOFTWARE.
 #include "support/CCNotificationCenter.h"
 #include "support/CCPointExtension.h"
 #include "support/CCProfiling.h"
-#include "support/CCUserDefault/CCUserDefault.h"
+#include "support/user_default/CCUserDefault.h"
 #include "support/CCVertex.h"
 #include "support/tinyxml2/tinyxml2.h"
 
