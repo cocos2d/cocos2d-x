@@ -45,7 +45,6 @@ void FmodAudioPlayer::init() {
 	FMOD_RESULT result;
 	FMOD::ChannelGroup *masterChannelGroup;
 
-	unsigned int version;
 	/*
 	 Create a System object and initialize.
 	 */
@@ -274,6 +273,7 @@ float FmodAudioPlayer::getEffectsVolume() {
 	pSystem->update();
 	FMOD_RESULT result = pChannelGroup->getVolume(&fVolumn);
 	ERRCHECKWITHEXIT(result);
+	return fVolumn;
 }
 
 void FmodAudioPlayer::setEffectsVolume(float volume) {

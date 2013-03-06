@@ -86,12 +86,10 @@ static TestScene* CreateTestScene(int nIdx)
         pScene = new PerformanceTestScene(); break;
     case TEST_ZWOPTEX:
         pScene = new ZwoptexTestScene(); break;
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
 // bada don't support libcurl
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA && CC_TARGET_PLATFORM != CC_PLATFORM_NACL && CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
     case TEST_CURL:
         pScene = new CurlTestScene(); break;
-#endif
 #endif
     case TEST_USERDEFAULT:
         pScene = new UserDefaultTestScene(); break;
@@ -105,9 +103,7 @@ static TestScene* CreateTestScene(int nIdx)
     case TEST_TEXTURECACHE: pScene = new TextureCacheTestScene(); break;
 #endif
     case TEST_EXTENSIONS:
-        {
-            pScene = new ExtensionsTestScene();
-        }
+        pScene = new ExtensionsTestScene();
         break;
     case TEST_SHADER:
         pScene = new ShaderTestScene();

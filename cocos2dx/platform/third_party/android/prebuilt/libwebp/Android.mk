@@ -14,4 +14,4 @@ endif
 
 include $(PREBUILT_STATIC_LIBRARY)
 
-$(call import-module,cpufeatures)
+$(call import-module, android/cpufeatures)

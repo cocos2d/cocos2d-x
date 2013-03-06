@@ -40,7 +40,7 @@ SceneTestLayer1::SceneTestLayer1()
 
 void SceneTestLayer1::testDealloc(float dt)
 {
-    //UXLOG("SceneTestLayer1:testDealloc");
+    //CCLOG("SceneTestLayer1:testDealloc");
 }
 
 void SceneTestLayer1::onEnter()

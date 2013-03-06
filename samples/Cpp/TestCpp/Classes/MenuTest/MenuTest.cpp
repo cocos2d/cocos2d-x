@@ -362,14 +362,14 @@ void MenuLayer3::menuCallback(CCObject* sender)
 
 void MenuLayer3::menuCallback2(CCObject* sender)
 {
-    //UXLOG("Label clicked. Toogling AtlasSprite");
+    //CCLOG("Label clicked. Toogling AtlasSprite");
     m_disabledItem->setEnabled( ! m_disabledItem->isEnabled() );
     m_disabledItem->stopAllActions();
 }
 
 void MenuLayer3::menuCallback3(CCObject* sender)
 {
-    //UXLOG("MenuItemSprite clicked");
+    //CCLOG("MenuItemSprite clicked");
 }
 
 //------------------------------------------------------------------
@@ -466,7 +466,7 @@ MenuLayer4::~MenuLayer4()
 
 void MenuLayer4::menuCallback(CCObject* sender)
 {
-    //UXLOG("selected item: %x index:%d", dynamic_cast<CCMenuItemToggle*>(sender)->selectedItem(), dynamic_cast<CCMenuItemToggle*>(sender)->selectedIndex() ); 
+    //CCLOG("selected item: %x index:%d", dynamic_cast<CCMenuItemToggle*>(sender)->selectedItem(), dynamic_cast<CCMenuItemToggle*>(sender)->selectedIndex() ); 
 }
 
 void MenuLayer4::backCallback(CCObject* sender)

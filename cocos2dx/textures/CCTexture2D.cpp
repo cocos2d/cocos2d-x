@@ -61,14 +61,14 @@ static CCTexture2DPixelFormat g_defaultAlphaPixelFormat = kCCTexture2DPixelForma
 static bool PVRHaveAlphaPremultiplied_ = false;
 
 CCTexture2D::CCTexture2D()
-: m_uPixelsWide(0)
+: m_bPVRHaveAlphaPremultiplied(true)
+, m_uPixelsWide(0)
 , m_uPixelsHigh(0)
 , m_uName(0)
 , m_fMaxS(0.0)
 , m_fMaxT(0.0)
 , m_bHasPremultipliedAlpha(false)
 , m_bHasMipmaps(false)
-, m_bPVRHaveAlphaPremultiplied(true)
 , m_pShaderProgram(NULL)
 {
 }
@@ -445,6 +445,7 @@ bool CCTexture2D::initWithString(const char *text, const char *fontName, float f
     else
     {
         CCAssert(false, "Not supported alignment format!");
+        return false;
     }
     
     do 
