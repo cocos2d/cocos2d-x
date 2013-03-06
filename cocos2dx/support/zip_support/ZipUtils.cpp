@@ -407,8 +407,7 @@ unsigned char *ZipFile::getFileData(const std::string &fileName, unsigned long *
         CC_BREAK_IF(UNZ_OK != nRet);
 
         pBuffer = new unsigned char[fileInfo.uncompressed_size];
-        int nSize = 0;
-        nSize = unzReadCurrentFile(m_data->zipFile, pBuffer, fileInfo.uncompressed_size);
+        int CC_UNUSED nSize = unzReadCurrentFile(m_data->zipFile, pBuffer, fileInfo.uncompressed_size);
         CCAssert(nSize == 0 || nSize == (int)fileInfo.uncompressed_size, "the file size is wrong");
 
         if (pSize)
