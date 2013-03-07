@@ -1,21 +1,4 @@
-NACL_ARCH ?= x86_64
-NACL_LIBC = newlib
-NACL_AR ?= $(NACL_ARCH)-nacl-ar
-NACL_CC ?= $(NACL_ARCH)-nacl-gcc
-NACL_CXX ?= $(NACL_ARCH)-nacl-g++
-CCFLAGS = -Wall
-CXXFLAGS = -Wall
-VISIBILITY =
-ARFLAGS = cr
-
-LIBS =
-
 INCLUDES = -I.. -I../lua
-
-NACLPORTS_INCLUDE ?= $(NACL_SDK_ROOT)/toolchain/linux_x86_$(NACL_LIBC)/$(NACL_ARCH)-nacl/usr/include
-INCLUDES += -I$(NACL_SDK_ROOT)/include
-INCLUDES += -I$(NACLPORTS_INCLUDE)
-
 
 SOURCES = ../lua/lapi.c \
           ../lua/lauxlib.c \
@@ -43,7 +26,6 @@ SOURCES = ../lua/lapi.c \
           ../lua/ltable.c \
           ../lua/ltablib.c \
           ../lua/ltm.c \
-          ../lua/lua.c \
           ../lua/lundump.c \
           ../lua/lvm.c \
           ../lua/lzio.c \
@@ -58,19 +40,14 @@ COCOS_ROOT = ../../..
 
 include $(COCOS_ROOT)/cocos2dx/proj.nacl/cocos2dx.mk
 
-TARGET	= $(LIB_DIR)/liblua.a
+CCFLAGS = -Wno-uninitialized
 
-####### Build rules
-$(TARGET): $(OBJECTS)
-	$(NACL_AR) $(ARFLAGS) $(TARGET) $(OBJECTS)
+TARGET = $(LIB_DIR)/liblua.a
+all: $(TARGET)
 
-####### Compile
-$(OBJ_DIR)/%.o: ../%.c
+$(TARGET): $(OBJECTS) $(CORE_MAKEFILE_LIST)
+	$(LOG_AR)$(NACL_AR) $(ARFLAGS) $(TARGET) $(OBJECTS)
+
+$(OBJ_DIR)/%.o: ../%.c $(CORE_MAKEFILE_LIST)
 	@mkdir -p $(@D)
-	$(NACL_CC) -MMD $(CCFLAGS) $(INCLUDES) $(DEFINES) $(VISIBILITY) -c $< -o $@
-
-clean:
-	rm -rf $(OBJ_DIR)
-	rm -f $(TARGET) core
-
--include $(DEPS)
+	$(LOG_CC)$(NACL_CC) -MMD $(CCFLAGS) $(INCLUDES) $(DEFINES) $(VISIBILITY) -c $< -o $@
