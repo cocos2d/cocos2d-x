@@ -28,31 +28,25 @@ NMF = $(BIN_DIR)/$(APP_NAME).nmf
 
 all: $(NMF)
 
-####### Build rules
 $(TARGET): $(OBJECTS) $(LIB_DIR)/libcocos2d.a
 	@mkdir -p $(@D)
-	$(NACL_CXX) $(CXXFLAGS) $(LDFLAGS) $(OBJECTS) -o $@ $(SHAREDLIBS) $(STATICLIBS)
+	$(LOG_LINK)$(NACL_CXX) $(CXXFLAGS) $(LDFLAGS) $(OBJECTS) -o $@ $(SHAREDLIBS) $(STATICLIBS)
 
-####### Compile
 $(OBJ_DIR)/%.o: %.cpp
 	@mkdir -p $(@D)
-	$(NACL_CXX) -MMD $(CXXFLAGS) $(INCLUDES) $(DEFINES) -c $< -o $@
+	$(LOG_CXX)$(NACL_CXX) -MMD $(CXXFLAGS) $(INCLUDES) $(DEFINES) -c $< -o $@
 
 $(OBJ_DIR)/%.o: ../%.cpp
 	@mkdir -p $(@D)
-	$(NACL_CXX) -MMD $(CXXFLAGS) $(INCLUDES) $(DEFINES) -c $< -o $@
+	$(LOG_CXX)$(NACL_CXX) -MMD $(CXXFLAGS) $(INCLUDES) $(DEFINES) -c $< -o $@
 
 $(OBJ_DIR)/%.o: $(COCOS_ROOT)/%.cpp
 	@mkdir -p $(@D)
-	$(NACL_CXX) -MMD $(CXXFLAGS) $(INCLUDES) $(DEFINES) -c $< -o $@
+	$(LOG_CXX)$(NACL_CXX) -MMD $(CXXFLAGS) $(INCLUDES) $(DEFINES) -c $< -o $@
 
 $(OBJ_DIR)/%.o: $(COCOS_ROOT)/%.c
 	@mkdir -p $(@D)
-	$(NACL_CC) -MMD $(CCFLAGS) $(INCLUDES) $(DEFINES) -c $< -o $@
-
-clean:
-	rm -f $(OBJECTS) $(TARGET) $(DEPS) core
-
+	$(LOG_CC)$(NACL_CC) -MMD $(CCFLAGS) $(INCLUDES) $(DEFINES) -c $< -o $@
 
 $(NMF): $(TARGET)
 	$(NACL_SDK_ROOT)/tools/create_nmf.py -o $@ $(BIN_DIR)/*.nexe --objdump=i686-nacl-objdump -L$(NACL_SDK_ROOT)/toolchain/linux_x86_newlib/x86_64-nacl/lib/ -s $(BIN_DIR)
@@ -60,7 +54,3 @@ $(NMF): $(TARGET)
 run: all
 	/bin/cp -ar ../Resources/ .
 	$(NACL_SDK_ROOT)/tools/httpd.py --no_dir_check
-
--include $(DEPS)
-
-.PHONY: run clean run

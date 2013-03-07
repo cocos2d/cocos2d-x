@@ -18,7 +18,6 @@ if [ -z "$NACL_SDK_ROOT" ]; then
    exit 1
 fi
 
-MAKEFLAGS=-j10
 SCRIPT_DIR=$(dirname ${BASH_SOURCE})
 OUTPUT_DEBUG=lib/nacl/Debug/
 OUTPUT_RELEASE=lib/nacl/Release/
@@ -31,45 +30,13 @@ cd $SCRIPT_DIR
 mkdir -p $OUTPUT_DEBUG
 mkdir -p $OUTPUT_RELEASE
 
-
-clean()
-{
-    make $MAKEFLAGS -C cocos2dx/proj.nacl $1 clean
-    make $MAKEFLAGS -C CocosDenshion/proj.nacl $1 clean
-    make $MAKEFLAGS -C external/chipmunk/proj.nacl $1 clean
-    make $MAKEFLAGS -C external/Box2D/proj.nacl $1 clean
-    make $MAKEFLAGS -C scripting/lua/proj.nacl $1 clean
-    make $MAKEFLAGS -C samples/Cpp/HelloCpp/proj.nacl $1 clean
-    make $MAKEFLAGS -C samples/Lua/HelloLua/proj.nacl $1 clean
-    make $MAKEFLAGS -C samples/Cpp/TestCpp/proj.nacl $1 clean
-    make $MAKEFLAGS -C samples/Lua/TestLua/proj.nacl $1 clean
-    make $MAKEFLAGS -C samples/Cpp/SimpleGame/proj.nacl $1 clean
-}
+export MAKEFLAGS="-j10 PLATFORM=nacl"
 
 if [ "$1" = "clean" ]; then
-    clean DEBUG=1
-    clean DEBUG=0
+    make DEBUG=1 clean
+    make DEBUG=0 clean
     exit 0
 fi
 
-make $MAKEFLAGS -C cocos2dx/proj.nacl DEBUG=1
-make $MAKEFLAGS -C CocosDenshion/proj.nacl DEBUG=1
-make $MAKEFLAGS -C external/chipmunk/proj.nacl DEBUG=1
-make $MAKEFLAGS -C external/Box2D/proj.nacl DEBUG=1
-make $MAKEFLAGS -C scripting/lua/proj.nacl DEBUG=1
-make $MAKEFLAGS -C samples/Cpp/HelloCpp/proj.nacl DEBUG=1
-make $MAKEFLAGS -C samples/Lua/HelloLua/proj.nacl DEBUG=1
-make $MAKEFLAGS -C samples/Cpp/TestCpp/proj.nacl DEBUG=1
-make $MAKEFLAGS -C samples/Lua/TestLua/proj.nacl DEBUG=1
-make $MAKEFLAGS -C samples/Cpp/SimpleGame/proj.nacl DEBUG=1
-
-make $MAKEFLAGS -C cocos2dx/proj.nacl DEBUG=0
-make $MAKEFLAGS -C CocosDenshion/proj.nacl DEBUG=0
-make $MAKEFLAGS -C external/chipmunk/proj.nacl DEBUG=0
-make $MAKEFLAGS -C external/Box2D/proj.nacl DEBUG=0
-make $MAKEFLAGS -C scripting/lua/proj.nacl DEBUG=0
-make $MAKEFLAGS -C samples/Cpp/HelloCpp/proj.nacl DEBUG=0
-make $MAKEFLAGS -C samples/Lua/HelloLua/proj.nacl DEBUG=0
-make $MAKEFLAGS -C samples/Cpp/TestCpp/proj.nacl DEBUG=0
-make $MAKEFLAGS -C samples/Lua/TestLua/proj.nacl DEBUG=0
-make $MAKEFLAGS -C samples/Cpp/SimpleGame/proj.nacl DEBUG=0
+make DEBUG=1 all
+make DEBUG=0 all

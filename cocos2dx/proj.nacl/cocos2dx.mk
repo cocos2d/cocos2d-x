@@ -2,14 +2,16 @@
 # when building for Native Client.  It defines a set of variables that all
 # cocos2dx projects have in common.
 
+all:
+
 NACL_LIBC = newlib
 NACL_ARCH ?= x86_64
 NACL_AR ?= $(NACL_ARCH)-nacl-ar
 NACL_CC ?= $(NACL_ARCH)-nacl-gcc
 NACL_CXX ?= $(NACL_ARCH)-nacl-g++
-CCFLAGS ?= -Wall
-CXXFLAGS ?= -Wall
-ARFLAGS ?= cr
+CCFLAGS += -Wall -Werror
+CXXFLAGS += -Wall -Werror
+ARFLAGS = cr
 
 THIS_MAKEFILE := $(CURDIR)/$(word $(words $(MAKEFILE_LIST)),$(MAKEFILE_LIST))
 
@@ -27,7 +29,7 @@ endif
 
 NACLPORTS_ROOT ?= $(NACL_SDK_ROOT)/ports
 NACLPORTS_INCLUDE ?= $(NACLPORTS_ROOT)/include
-OUT_DIR ?= out
+OUT_DIR ?= obj
 OBJ_DIR ?= $(OUT_DIR)/$(NACL_ARCH)
 LIB_DIR ?= $(COCOS_ROOT)/lib/nacl/$(ARCH_DIR)
 
@@ -38,8 +40,8 @@ INCLUDES += -I$(COCOS_SRC) \
 	-I$(COCOS_SRC)/platform \
 	-I$(COCOS_SRC)/platform/nacl \
 	-I$(NACL_SDK_ROOT)/include \
-	-I$(NACLPORTS_INCLUDE) \
-	-I$(NACLPORTS_INCLUDE)/libxml2
+	-isystem $(NACLPORTS_INCLUDE) \
+	-isystem $(NACLPORTS_INCLUDE)/libxml2
 
 ifeq ($(DEBUG), 1)
 BIN_DIR = bin/debug
@@ -59,6 +61,13 @@ MULTILIB_SUFFIX := $(ARCH_DIR)/Release
 DEFINES += -DNDEBUG
 endif
 
+ifndef V
+LOG_CC = @echo " CC $@";
+LOG_CXX = @echo " CXX $@";
+LOG_AR = @echo " AR $@";
+LOG_LINK = @echo " LINK $@";
+endif
+
 # The default library search path consists of the cocos2dx library path, the
 # main nacl sdk library path and the naclports library path.
 LDFLAGS += -L$(LIB_DIR)
@@ -68,6 +77,12 @@ LDFLAGS += -L$(NACLPORTS_ROOT)/lib/$(MULTILIB_SUFFIX)
 # Some cococs sources use #pragma mark
 CCFLAGS += -Wno-unknown-pragmas
 CXXFLAGS += -Wno-unknown-pragmas
+
+ifeq ($(NACL_ARCH),arm)
+# Don't warn about mangling of 'va_list' on arm builds
+CCFLAGS += -Wno-psabi
+CXXFLAGS += -Wno-psabi
+endif
 
 ifdef NACL_MOUNTS
 DEFINES += -DOLD_NACL_MOUNTS
@@ -87,3 +102,11 @@ OBJECTS := $(subst ../,,$(OBJECTS))
 OBJECTS := $(subst $(COCOS_ROOT)/,,$(OBJECTS))
 OBJECTS := $(addprefix $(OBJ_DIR)/, $(OBJECTS))
 DEPS = $(OBJECTS:.o=.d)
+CORE_MAKEFILE_LIST := $(MAKEFILE_LIST)
+-include $(DEPS)
+
+clean:
+	rm -rf $(OBJ_DIR)
+	rm -f $(TARGET) core
+
+.PHONY: all clean
