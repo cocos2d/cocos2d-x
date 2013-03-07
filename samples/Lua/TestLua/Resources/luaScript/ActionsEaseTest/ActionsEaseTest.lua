@@ -124,9 +124,9 @@ local function testStopAction(dt)
 end
 
 local function SpriteEase_onEnterOrExit(tag)
-	if tag == 0 then
+	if tag == "enter" then
 		SpriteEase_entry = scheduler:scheduleScriptFunc(testStopAction, 6.25, false)
-	elseif tag == 1 then
+	elseif tag == "exit" then
 		scheduler:unscheduleScriptEntry(SpriteEase_entry)
 	end
 end
@@ -697,10 +697,10 @@ local function SpeedTest()
     local spawn = CCSpawn:createWithTwoActions(seq3_1, seq3_2)
     SpeedTest_action1 = CCSpeed:create(CCRepeatForever:create(spawn), 1.0)
 
-	local spawn2 = CCSpawn:createWithTwoActions(seq3_1, seq3_2)
+	local spawn2 = tolua.cast(spawn:copy():autorelease(), "CCSpawn")
     SpeedTest_action2 = CCSpeed:create(CCRepeatForever:create(spawn2), 1.0)
 
-	local spawn3 = CCSpawn:createWithTwoActions(seq3_1, seq3_2)
+	local spawn3 = tolua.cast(spawn:copy():autorelease(), "CCSpawn")
 	SpeedTest_action3 = CCSpeed:create(CCRepeatForever:create(spawn3), 1.0)
 
     grossini:runAction(SpeedTest_action2)
