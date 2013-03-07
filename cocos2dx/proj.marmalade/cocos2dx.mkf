@@ -46,7 +46,8 @@ includepaths
 	"../script_support"
 	"../sprite_nodes"
 	"../support"
-        "../support/tinyxml2"
+  "../support/tinyxml2"
+  "../support/user_default/"
 	"../text_input_node"
 	"../textures"
        "../tileMap_parallax_nodes"
@@ -174,6 +175,11 @@ files
 
     ("../support/tinyxml2")
     [support/tinyxml2]
+    "*.h"
+    "*.cpp"
+    
+    ("../support/user_default")
+    [support/user_default]
     "*.h"
     "*.cpp"
 
