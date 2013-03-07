@@ -224,6 +224,7 @@ Developers:
 
     Sam Clegg (sbc100)
         Author of Native Client port.
+        Refactor linux build system and fix many warnings.
 
     Peter Young (young40)
         Implements setVisible() for CCEditBox

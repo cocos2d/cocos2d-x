@@ -1,196 +1,133 @@
-CC      = gcc
-CXX     = g++
-TARGET	= TestCpp
-CCFLAGS = -Wall
-CXXFLAGS = -Wall
-VISIBILITY = 
-LIBS = 
+TARGET = TestCpp
 
-COCOS2DX_PATH = ../../../../cocos2dx
-INCLUDES =  -I../ \
-			-I../../ \
-			-I../Classes \
-			-I$(COCOS2DX_PATH) \
-			-I$(COCOS2DX_PATH)/platform/third_party/linux/libfreetype2 \
-			-I$(COCOS2DX_PATH)/cocoa \
-			-I$(COCOS2DX_PATH)/include \
-			-I$(COCOS2DX_PATH)/kazmath/include \
-			-I$(COCOS2DX_PATH)/platform \
-			-I$(COCOS2DX_PATH)/platform/linux \
-			-I$(COCOS2DX_PATH)/platform/third_party/linux/libxml2 \
-			-I$(COCOS2DX_PATH)/platform/third_party/linux/libjpeg  \
-			-I../../../../CocosDenshion/include \
-			-I../../../../extensions/ \
-			-I../../../../external/ \
-			-I../../../../external/chipmunk/include/chipmunk
+SOURCES = ../Classes/AccelerometerTest/AccelerometerTest.cpp \
+	../Classes/ActionManagerTest/ActionManagerTest.cpp \
+	../Classes/ActionsEaseTest/ActionsEaseTest.cpp \
+	../Classes/ActionsProgressTest/ActionsProgressTest.cpp \
+	../Classes/ActionsTest/ActionsTest.cpp \
+	../Classes/Box2DTest/Box2dTest.cpp \
+	../Classes/Box2DTestBed/Box2dView.cpp \
+	../Classes/Box2DTestBed/GLES-Render.cpp \
+	../Classes/Box2DTestBed/Test.cpp \
+	../Classes/Box2DTestBed/TestEntries.cpp \
+	../Classes/BugsTest/Bug-1159.cpp \
+	../Classes/BugsTest/Bug-1174.cpp \
+	../Classes/BugsTest/Bug-350.cpp \
+	../Classes/BugsTest/Bug-422.cpp \
+	../Classes/BugsTest/Bug-458/Bug-458.cpp \
+	../Classes/BugsTest/Bug-458/QuestionContainerSprite.cpp \
+	../Classes/BugsTest/Bug-624.cpp \
+	../Classes/BugsTest/Bug-886.cpp \
+	../Classes/BugsTest/Bug-899.cpp \
+	../Classes/BugsTest/Bug-914.cpp \
+	../Classes/BugsTest/BugsTest.cpp \
+	../Classes/ChipmunkTest/ChipmunkTest.cpp \
+	../Classes/ClickAndMoveTest/ClickAndMoveTest.cpp \
+	../Classes/ClippingNodeTest/ClippingNodeTest.cpp \
+	../Classes/CocosDenshionTest/CocosDenshionTest.cpp \
+	../Classes/CurlTest/CurlTest.cpp \
+	../Classes/CurrentLanguageTest/CurrentLanguageTest.cpp \
+	../Classes/DrawPrimitivesTest/DrawPrimitivesTest.cpp \
+	../Classes/EffectsAdvancedTest/EffectsAdvancedTest.cpp \
+	../Classes/EffectsTest/EffectsTest.cpp \
+	../Classes/ExtensionsTest/CocosBuilderTest/ButtonTest/ButtonTestLayer.cpp \
+	../Classes/ExtensionsTest/CocosBuilderTest/CocosBuilderTest.cpp \
+	../Classes/ExtensionsTest/CocosBuilderTest/HelloCocosBuilder/HelloCocosBuilderLayer.cpp \
+	../Classes/ExtensionsTest/CocosBuilderTest/AnimationsTest/AnimationsTestLayer.cpp \
+	../Classes/ExtensionsTest/CocosBuilderTest/MenuTest/MenuTestLayer.cpp \
+	../Classes/ExtensionsTest/CocosBuilderTest/TestHeader/TestHeaderLayer.cpp \
+	../Classes/ExtensionsTest/ControlExtensionTest/CCControlButtonTest/CCControlButtonTest.cpp \
+	../Classes/ExtensionsTest/ControlExtensionTest/CCControlColourPicker/CCControlColourPickerTest.cpp \
+	../Classes/ExtensionsTest/ControlExtensionTest/CCControlScene.cpp \
+	../Classes/ExtensionsTest/ControlExtensionTest/CCControlSceneManager.cpp \
+	../Classes/ExtensionsTest/ControlExtensionTest/CCControlSliderTest/CCControlSliderTest.cpp \
+	../Classes/ExtensionsTest/ControlExtensionTest/CCControlSwitchTest/CCControlSwitchTest.cpp \
+	../Classes/ExtensionsTest/ControlExtensionTest/CCControlPotentiometerTest/CCControlPotentiometerTest.cpp \
+	../Classes/ExtensionsTest/ControlExtensionTest/CCControlStepperTest/CCControlStepperTest.cpp \
+	../Classes/ExtensionsTest/TableViewTest/TableViewTestScene.cpp \
+	../Classes/ExtensionsTest/TableViewTest/CustomTableViewCell.cpp \
+	../Classes/ExtensionsTest/ExtensionsTest.cpp \
+	../Classes/ExtensionsTest/NotificationCenterTest/NotificationCenterTest.cpp \
+	../Classes/ExtensionsTest/NetworkTest/HttpClientTest.cpp \
+	../Classes/FontTest/FontTest.cpp \
+	../Classes/IntervalTest/IntervalTest.cpp \
+	../Classes/KeypadTest/KeypadTest.cpp \
+	../Classes/LabelTest/LabelTest.cpp \
+	../Classes/LayerTest/LayerTest.cpp \
+	../Classes/MenuTest/MenuTest.cpp \
+	../Classes/MotionStreakTest/MotionStreakTest.cpp \
+	../Classes/MutiTouchTest/MutiTouchTest.cpp \
+	../Classes/NodeTest/NodeTest.cpp \
+	../Classes/ParallaxTest/ParallaxTest.cpp \
+	../Classes/ParticleTest/ParticleTest.cpp \
+	../Classes/PerformanceTest/PerformanceNodeChildrenTest.cpp \
+	../Classes/PerformanceTest/PerformanceParticleTest.cpp \
+	../Classes/PerformanceTest/PerformanceSpriteTest.cpp \
+	../Classes/PerformanceTest/PerformanceTest.cpp \
+	../Classes/PerformanceTest/PerformanceTextureTest.cpp \
+	../Classes/PerformanceTest/PerformanceTouchesTest.cpp \
+	../Classes/RenderTextureTest/RenderTextureTest.cpp \
+	../Classes/RotateWorldTest/RotateWorldTest.cpp \
+	../Classes/SceneTest/SceneTest.cpp \
+	../Classes/SchedulerTest/SchedulerTest.cpp \
+	../Classes/ShaderTest/ShaderTest.cpp \
+	../Classes/SpriteTest/SpriteTest.cpp \
+	../Classes/TextInputTest/TextInputTest.cpp \
+	../Classes/Texture2dTest/Texture2dTest.cpp \
+	../Classes/TextureCacheTest/TextureCacheTest.cpp \
+	../Classes/TileMapTest/TileMapTest.cpp \
+	../Classes/TouchesTest/Ball.cpp \
+	../Classes/TouchesTest/Paddle.cpp \
+	../Classes/TouchesTest/TouchesTest.cpp \
+	../Classes/TransitionsTest/TransitionsTest.cpp \
+	../Classes/UserDefaultTest/UserDefaultTest.cpp \
+	../Classes/ZwoptexTest/ZwoptexTest.cpp \
+	../Classes/FileUtilsTest/FileUtilsTest.cpp \
+	../Classes/controller.cpp \
+	../Classes/testBasic.cpp \
+	../Classes/AppDelegate.cpp \
+	../Classes/VisibleRect.cpp \
+	main.cpp
 
+SHAREDLIBS = -lcocos2d -lcocosdenshion
+COCOS_LIBS = $(LIB_DIR)/libcocos2d.so $(LIB_DIR)/libcocosdenshion.so
 
-LBITS := $(shell getconf LONG_BIT)
-ifeq ($(LBITS),64)
-INCLUDES += -I$(COCOS2DX_PATH)/platform/third_party/linux/include64
-else
-INCLUDES += -I$(COCOS2DX_PATH)/platform/third_party/linux
-endif
-
-
-#CCFLAGS += -fno-tree-scev-cprop
-#CXXFLAGS = -fno-tree-scev-cprop
-
-DEFINES = -DLINUX
-#DEFINES += -D__LP64__
-
-OBJECTS = ../Classes/AccelerometerTest/AccelerometerTest.o \
-			../Classes/ActionManagerTest/ActionManagerTest.o \
-			../Classes/ActionsEaseTest/ActionsEaseTest.o \
-			../Classes/ActionsProgressTest/ActionsProgressTest.o \
-			../Classes/ActionsTest/ActionsTest.o \
-			../Classes/Box2DTest/Box2dTest.o \
-			../Classes/Box2DTestBed/Box2dView.o \
-			../Classes/Box2DTestBed/GLES-Render.o \
-			../Classes/Box2DTestBed/Test.o \
-			../Classes/Box2DTestBed/TestEntries.o \
-			../Classes/BugsTest/Bug-1159.o \
-			../Classes/BugsTest/Bug-1174.o \
-			../Classes/BugsTest/Bug-350.o \
-			../Classes/BugsTest/Bug-422.o \
-			../Classes/BugsTest/Bug-458/Bug-458.o \
-			../Classes/BugsTest/Bug-458/QuestionContainerSprite.o \
-			../Classes/BugsTest/Bug-624.o \
-			../Classes/BugsTest/Bug-886.o \
-			../Classes/BugsTest/Bug-899.o \
-			../Classes/BugsTest/Bug-914.o \
-			../Classes/BugsTest/BugsTest.o \
-			../Classes/ChipmunkTest/ChipmunkTest.o \
-			../Classes/ClickAndMoveTest/ClickAndMoveTest.o \
-                        ../Classes/ClippingNodeTest/ClippingNodeTest.o \
-			../Classes/CocosDenshionTest/CocosDenshionTest.o \
-			../Classes/CurlTest/CurlTest.o \
-			../Classes/CurrentLanguageTest/CurrentLanguageTest.o \
-			../Classes/DrawPrimitivesTest/DrawPrimitivesTest.o \
-			../Classes/EffectsAdvancedTest/EffectsAdvancedTest.o \
-			../Classes/EffectsTest/EffectsTest.o \
-			../Classes/ExtensionsTest/CocosBuilderTest/ButtonTest/ButtonTestLayer.o \
-			../Classes/ExtensionsTest/CocosBuilderTest/CocosBuilderTest.o \
-			../Classes/ExtensionsTest/CocosBuilderTest/HelloCocosBuilder/HelloCocosBuilderLayer.o \
-                        ../Classes/ExtensionsTest/CocosBuilderTest/AnimationsTest/AnimationsTestLayer.o \
-			../Classes/ExtensionsTest/CocosBuilderTest/MenuTest/MenuTestLayer.o \
-			../Classes/ExtensionsTest/CocosBuilderTest/TestHeader/TestHeaderLayer.o \
-			../Classes/ExtensionsTest/ControlExtensionTest/CCControlButtonTest/CCControlButtonTest.o \
-			../Classes/ExtensionsTest/ControlExtensionTest/CCControlColourPicker/CCControlColourPickerTest.o \
-			../Classes/ExtensionsTest/ControlExtensionTest/CCControlScene.o \
-			../Classes/ExtensionsTest/ControlExtensionTest/CCControlSceneManager.o \
-			../Classes/ExtensionsTest/ControlExtensionTest/CCControlSliderTest/CCControlSliderTest.o \
-			../Classes/ExtensionsTest/ControlExtensionTest/CCControlSwitchTest/CCControlSwitchTest.o \
-			../Classes/ExtensionsTest/ControlExtensionTest/CCControlPotentiometerTest/CCControlPotentiometerTest.o \
-			../Classes/ExtensionsTest/ControlExtensionTest/CCControlStepperTest/CCControlStepperTest.o \
-			../Classes/ExtensionsTest/TableViewTest/TableViewTestScene.o \
-			../Classes/ExtensionsTest/TableViewTest/CustomTableViewCell.o \
-			../Classes/ExtensionsTest/ExtensionsTest.o \
-			../Classes/ExtensionsTest/NotificationCenterTest/NotificationCenterTest.o \
-			../Classes/ExtensionsTest/NetworkTest/HttpClientTest.o \
-			../Classes/FontTest/FontTest.o \
-			../Classes/IntervalTest/IntervalTest.o \
-			../Classes/KeypadTest/KeypadTest.o \
-			../Classes/LabelTest/LabelTest.o \
-			../Classes/LayerTest/LayerTest.o \
-			../Classes/MenuTest/MenuTest.o \
-			../Classes/MotionStreakTest/MotionStreakTest.o \
-			../Classes/MutiTouchTest/MutiTouchTest.o \
-			../Classes/NodeTest/NodeTest.o \
-			../Classes/ParallaxTest/ParallaxTest.o \
-			../Classes/ParticleTest/ParticleTest.o \
-			../Classes/PerformanceTest/PerformanceNodeChildrenTest.o \
-			../Classes/PerformanceTest/PerformanceParticleTest.o \
-			../Classes/PerformanceTest/PerformanceSpriteTest.o \
-			../Classes/PerformanceTest/PerformanceTest.o \
-			../Classes/PerformanceTest/PerformanceTextureTest.o \
-			../Classes/PerformanceTest/PerformanceTouchesTest.o \
-			../Classes/RenderTextureTest/RenderTextureTest.o \
-			../Classes/RotateWorldTest/RotateWorldTest.o \
-			../Classes/SceneTest/SceneTest.o \
-			../Classes/SchedulerTest/SchedulerTest.o \
-			../Classes/ShaderTest/ShaderTest.o \
-			../Classes/SpriteTest/SpriteTest.o \
-			../Classes/TextInputTest/TextInputTest.o \
-			../Classes/Texture2dTest/Texture2dTest.o \
-			../Classes/TextureCacheTest/TextureCacheTest.o \
-			../Classes/TileMapTest/TileMapTest.o \
-			../Classes/TouchesTest/Ball.o \
-			../Classes/TouchesTest/Paddle.o \
-			../Classes/TouchesTest/TouchesTest.o \
-			../Classes/TransitionsTest/TransitionsTest.o \
-			../Classes/UserDefaultTest/UserDefaultTest.o \
-			../Classes/ZwoptexTest/ZwoptexTest.o \
-			../Classes/FileUtilsTest/FileUtilsTest.o \
-			../Classes/controller.o \
-			../Classes/testBasic.o \
-			../Classes/AppDelegate.o \
-			../Classes/VisibleRect.o \
-			./main.o 
-
-ifeq ($(LBITS),64)
-STATICLIBS_DIR = ../../../../cocos2dx/platform/third_party/linux/libraries/lib64
-else
-STATICLIBS_DIR = ../../../../cocos2dx/platform/third_party/linux/libraries
-endif
-STATICLIBS = 
-STATICLIBS = $(STATICLIBS_DIR)/libfreetype.a \
-				$(STATICLIBS_DIR)/libcurl.a \
-				$(STATICLIBS_DIR)/libxml2.a \
-				$(STATICLIBS_DIR)/libpng.a \
-				$(STATICLIBS_DIR)/libjpeg.a \
-				$(STATICLIBS_DIR)/libtiff.a \
-				../../../../lib/linux/Debug/libextension.a \
-				../../../../lib/linux/Debug/libbox2d.a \
-				../../../../lib/linux/Debug/libchipmunk.a 
-				 
-
-SHAREDLIBS = 
-ifeq ($(LBITS),64)
-SHAREDLIBS_DIR = ../../../../CocosDenshion/third_party/fmod/lib64/api/lib
-SHAREDLIBS = -L$(SHAREDLIBS_DIR) -lfmodex64
-else
-SHAREDLIBS_DIR = ../../../../CocosDenshion/third_party/fmod/api/lib
-SHAREDLIBS = -L$(SHAREDLIBS_DIR) -lfmodex
-endif
-
-SHAREDLIBS += -lglfw -lGLEW
-SHAREDLIBS += -Wl,-rpath,../../$(SHAREDLIBS_DIR)
+include ../../../../cocos2dx/proj.linux/cocos2dx.mk
 
 
-SHAREDLIBS += -Wl,-rpath,../$(STATICLIBS_DIR)
-SHAREDLIBS += -lcurl
+INCLUDES +=  -I../ \
+    -I../../ \
+    -I../Classes \
+    -I$(COCOS_ROOT)/CocosDenshion/include \
+    -I$(COCOS_ROOT)/extensions/ \
+    -I$(COCOS_ROOT)/external/ \
+    -I$(COCOS_ROOT)/external/chipmunk/include/chipmunk
 
-BIN_DIR_ROOT=bin
-BIN_DIR = BIN_DIR_ROOT
+STATICLIBS += \
+    $(STATICLIBS_DIR)/libcurl.a \
+    $(LIB_DIR)/libextension.a \
+    $(LIB_DIR)/libbox2d.a \
+    $(LIB_DIR)/libchipmunk.a
 
-debug: SHAREDLIBS += -L../../../../lib/linux/Debug -lcocos2d -lrt -lz -lcocosdenshion -Wl,-rpath,../../../../../../lib/linux/Debug
-debug: CCFLAGS += -g3 -O0
-debug: CXXFLAGS += -g3 -O0
-debug: DEFINES += -DDEBUG -DCC_ENABLE_CHIPMUNK_INTEGRATION=1 -DCOCOS2D_DEBUG=1
-debug: BIN_DIR = $(BIN_DIR_ROOT)/debug
-debug: $(TARGET)
+DEFINES += -DCC_ENABLE_CHIPMUNK_INTEGRATION=1
 
-release: SHAREDLIBS += -L../../../../lib/linux/Release -lcocos2d -lrt -lz -lcocosdenshion -Wl,-rpath,../../../../../../lib/linux/Release
-release: CCFLAGS += -O3
-release: CXXFLAGS += -O3
-release: DEFINES += -DNDEBUG -DCC_ENABLE_CHIPMUNK_INTEGRATION=1
-release: BIN_DIR = $(BIN_DIR_ROOT)/release
-release: $(TARGET)
+TARGET := $(BIN_DIR)/$(TARGET)
+all: $(TARGET)
 
 ####### Build rules
-$(TARGET): $(OBJECTS)
-	mkdir -p $(BIN_DIR)
-	$(CXX) $(CXXFLAGS) $(INCLUDES) $(DEFINES) $(OBJECTS) -o $(BIN_DIR)/$(TARGET) $(SHAREDLIBS) $(STATICLIBS) $(LIBS)
-
+$(TARGET): $(OBJECTS) $(STATICLIBS) $(COCOS_LIBS) $(CORE_MAKEFILE_LIST)
+	@mkdir -p $(@D)
+	$(LOG_LINK)$(CXX) $(CXXFLAGS) $(OBJECTS) -o $@ $(SHAREDLIBS) $(STATICLIBS) $(LIBS)
 
 ####### Compile
-%.o: %.cpp
-	$(CXX) $(CXXFLAGS) $(INCLUDES) $(DEFINES) $(VISIBILITY) -c $< -o $@
+$(OBJ_DIR)/%.o: ../%.cpp $(CORE_MAKEFILE_LIST)
+	@mkdir -p $(@D)
+	$(LOG_CXX)$(CXX) $(CXXFLAGS) $(INCLUDES) $(DEFINES) -c $< -o $@
 
-%.o: %.c
-	$(CC) $(CCFLAGS) $(INCLUDES) $(DEFINES) $(VISIBILITY) -c $< -o $@
+$(OBJ_DIR)/%.o: %.cpp $(CORE_MAKEFILE_LIST)
+	@mkdir -p $(@D)
+	$(LOG_CXX)$(CXX) $(CXXFLAGS) $(INCLUDES) $(DEFINES) -c $< -o $@
 
-
-clean: 
-	rm -f $(OBJECTS) $(TARGET) core
+$(OBJ_DIR)/%.o: %.c $(CORE_MAKEFILE_LIST)
+	@mkdir -p $(@D)
+	$(LOG_CC)$(CC) $(CCFLAGS) $(INCLUDES) $(DEFINES) -c $< -o $@
