@@ -66,12 +66,12 @@ bool CCTableView::initWithViewSize(CCSize size, CCNode* container/* = NULL*/)
 }
 
 CCTableView::CCTableView()
-: m_pIndices(NULL)
+: m_pTouchedCell(NULL)
+, m_pIndices(NULL)
 , m_pCellsUsed(NULL)
 , m_pCellsFreed(NULL)
 , m_pDataSource(NULL)
 , m_pTableViewDelegate(NULL)
-, m_pTouchedCell(NULL)
 , m_eOldDirection(kCCScrollViewDirectionNone)
 {
 

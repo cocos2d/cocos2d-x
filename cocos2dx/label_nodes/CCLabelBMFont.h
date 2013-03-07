@@ -275,9 +275,12 @@ protected:
     CCSprite *m_pReusedChar;
     
     // texture RGBA
-    GLubyte		m_cDisplayedOpacity, m_cRealOpacity;
-	ccColor3B	m_tDisplayedColor, m_tRealColor;
-	bool		m_bCascadeColorEnabled, m_bCascadeOpacityEnabled;
+    GLubyte m_cDisplayedOpacity;
+    GLubyte m_cRealOpacity;
+    ccColor3B m_tDisplayedColor;
+    ccColor3B m_tRealColor;
+    bool m_bCascadeColorEnabled;
+    bool m_bCascadeOpacityEnabled;
     /** conforms to CCRGBAProtocol protocol */
     bool        m_bIsOpacityModifyRGB;
 

@@ -46,11 +46,11 @@ CCLayer::CCLayer()
 : m_bTouchEnabled(false)
 , m_bAccelerometerEnabled(false)
 , m_bKeypadEnabled(false)
-,m_pScriptTouchHandlerEntry(NULL)
-,m_pScriptKeypadHandlerEntry(NULL)
-,m_pScriptAccelerateHandlerEntry(NULL)
-, m_eTouchMode(kCCTouchesAllAtOnce)
+, m_pScriptTouchHandlerEntry(NULL)
+, m_pScriptKeypadHandlerEntry(NULL)
+, m_pScriptAccelerateHandlerEntry(NULL)
 , m_nTouchPriority(0)
+, m_eTouchMode(kCCTouchesAllAtOnce)
 {
     m_bIgnoreAnchorPointForPosition = true;
     setAnchorPoint(ccp(0.5f, 0.5f));
@@ -494,8 +494,8 @@ CCLayerRGBA::CCLayerRGBA()
 , _realOpacity (255)
 , _displayedColor(ccWHITE)
 , _realColor(ccWHITE)
-, _cascadeColorEnabled(false)
 , _cascadeOpacityEnabled(false)
+, _cascadeColorEnabled(false)
 {}
 
 CCLayerRGBA::~CCLayerRGBA() {}
@@ -711,7 +711,7 @@ bool CCLayerColor::initWithColor(const ccColor4B& color, GLfloat w, GLfloat h)
         _displayedColor.b = _realColor.b = color.b;
         _displayedOpacity = color.a;
 
-        for (int i = 0; i<sizeof(m_pSquareVertices) / sizeof( m_pSquareVertices[0]); i++ )
+        for (size_t i = 0; i<sizeof(m_pSquareVertices) / sizeof( m_pSquareVertices[0]); i++ )
         {
             m_pSquareVertices[i].x = 0.0f;
             m_pSquareVertices[i].y = 0.0f;
