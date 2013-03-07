@@ -63,7 +63,7 @@ void* cocos_main(void* arg)
                                "zwoptex", "Particles", "Shaders", "luaScript",
                                "luaScript/ActionsTest" };
 
-    for (int i = 0; i < sizeof(dirnames)/sizeof(char*); i++)
+    for (size_t i = 0; i < sizeof(dirnames)/sizeof(char*); i++)
         mkdir(dirnames[i], S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
 
     const char* filenames[] = { "Images/grossini.png",
