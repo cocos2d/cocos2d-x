@@ -25,11 +25,31 @@ THE SOFTWARE.
 #include "support/zip_support/ZipUtils.h"
 #include "platform/CCCommon.h"
 #include "jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
+#include "android/asset_manager.h"
+#include "android/asset_manager_jni.h"
 
 #define  LOG_TAG    "CCFileUtilsAndroid.cpp"
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
 
 using namespace std;
+
+static AAssetManager* s_assetmanager;
+
+extern "C" {
+    JNIEXPORT void JNICALL
+    Java_org_cocos2dx_lib_Cocos2dxHelper_nativeSetAssetManager(JNIEnv* env,
+                                                               jobject thiz,
+                                                               jobject java_assetmanager) {
+        AAssetManager* assetmanager =
+            AAssetManager_fromJava(env, java_assetmanager);
+        if (NULL == assetmanager) {
+            LOGD("assetmanager : is NULL");
+            return;
+        }
+
+        s_assetmanager = assetmanager;
+    }
+}
 
 NS_CC_BEGIN
 
