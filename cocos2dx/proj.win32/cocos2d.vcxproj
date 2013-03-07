@@ -214,7 +214,6 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\support\CCNotificationCenter.cpp" />
     <ClCompile Include="..\support\CCPointExtension.cpp" />
     <ClCompile Include="..\support\CCProfiling.cpp" />
-    <ClCompile Include="..\support\CCUserDefault.cpp" />
     <ClCompile Include="..\support\ccUTF8.cpp" />
     <ClCompile Include="..\support\ccUtils.cpp" />
     <ClCompile Include="..\support\CCVertex.cpp" />
@@ -222,6 +221,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\support\TransformUtils.cpp" />
     <ClCompile Include="..\support\data_support\ccCArray.cpp" />
     <ClCompile Include="..\support\image_support\TGAlib.cpp" />
+    <ClCompile Include="..\support\user_default\CCUserDefault.cpp" />
     <ClCompile Include="..\support\zip_support\ioapi.cpp" />
     <ClCompile Include="..\support\zip_support\unzip.cpp" />
     <ClCompile Include="..\support\zip_support\ZipUtils.cpp" />
@@ -366,7 +366,6 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\support\CCNotificationCenter.h" />
     <ClInclude Include="..\support\CCPointExtension.h" />
     <ClInclude Include="..\support\CCProfiling.h" />
-    <ClInclude Include="..\support\CCUserDefault.h" />
     <ClInclude Include="..\support\ccUTF8.h" />
     <ClInclude Include="..\support\ccUtils.h" />
     <ClInclude Include="..\support\CCVertex.h" />
@@ -376,6 +375,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\support\data_support\uthash.h" />
     <ClInclude Include="..\support\data_support\utlist.h" />
     <ClInclude Include="..\support\image_support\TGAlib.h" />
+    <ClInclude Include="..\support\user_default\CCUserDefault.h" />
     <ClInclude Include="..\support\zip_support\ioapi.h" />
     <ClInclude Include="..\support\zip_support\unzip.h" />
     <ClInclude Include="..\support\zip_support\ZipUtils.h" />
