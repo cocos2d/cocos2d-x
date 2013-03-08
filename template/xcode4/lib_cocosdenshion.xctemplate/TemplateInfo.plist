@@ -158,6 +158,18 @@
 			<key>Path</key>
 			<string>libs/CocosDenshion/ios/SimpleAudioEngine_objc.m</string>
 		</dict>
+		<key>libs/CocosDenshion/proj.ios/CocosDenshion.xcodeproj/project.pbxproj</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>CocosDenshion</string>
+				<string>proj.ios</string>
+				<string>CocosDenshion.xcodeproj</string>
+			</array>
+			<key>Path</key>
+			<string>libs/CocosDenshion/proj.ios/CocosDenshion.xcodeproj/project.pbxproj</string>
+		</dict>
 	</dict>
 	<key>Nodes</key>
 	<array>
@@ -173,6 +185,7 @@
 		<string>libs/CocosDenshion/ios/SimpleAudioEngine.mm</string>
 		<string>libs/CocosDenshion/ios/SimpleAudioEngine_objc.h</string>
 		<string>libs/CocosDenshion/ios/SimpleAudioEngine_objc.m</string>
+		<string>libs/CocosDenshion/proj.ios/CocosDenshion.xcodeproj/project.pbxproj</string>
 	</array>
 </dict>
 </plist>

@@ -9,8 +9,9 @@ require "luaScript/RotateWorldTest/RotateWorldTest"
 require "luaScript/ParticleTest/ParticleTest"
 require "luaScript/ActionsEaseTest/ActionsEaseTest"
 require "luaScript/MotionStreakTest/MotionStreakTest"
---require "luaScript/DrawPrimitivesTest/DrawPrimitivesTest"
+require "luaScript/DrawPrimitivesTest/DrawPrimitivesTest"
 require "luaScript/NodeTest/NodeTest"
+require "luaScript/TouchesTest/TouchesTest"
 
 require "luaScript/PerformanceTest/PerformanceTest"
 
