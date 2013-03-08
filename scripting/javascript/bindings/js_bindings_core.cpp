@@ -80,8 +80,11 @@ JSBool JSBCore_log(JSContext *cx, uint32_t argc, jsval *vp)
 		JSString *string = NULL;
 		JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "S", &string);
 		if (string) {
-            JSAutoByteString log_str(cx, string);
-			CCLOG(log_str.ptr());
+            char* log_str = JS_EncodeString(cx, string);
+			if (log_str) {
+				CCLOG(log_str);
+				JS_free(cx, (void*)log_str);
+			}
 		}
 		
 		return JS_TRUE;
