@@ -12,6 +12,12 @@ Developers:
     Rolando Abarca
         Javascript Binding and testjs
 
+    Jimmy Sambuo
+        fix the bug that SimpleAudioEngine::playEffect() and playBackgroundMusic() play twice on linux
+
+    DarraghCoy
+        fix for loading custom fonts on iOS when referenced from a CCB file
+
     Waiter
         fix an error that OpenSLEngine can't load resources from SD card
 
@@ -221,6 +227,7 @@ Developers:
 
     Sam Clegg (sbc100)
         Author of Native Client port.
+        Refactor linux build system and fix many warnings.
 
     Peter Young (young40)
         Implements setVisible() for CCEditBox
