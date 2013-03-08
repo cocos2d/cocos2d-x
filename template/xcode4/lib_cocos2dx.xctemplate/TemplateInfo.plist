@@ -438,6 +438,28 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
+		<key>libs/cocos2dx/ccFPSImages.c</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/ccFPSImages.c</string>
+		</dict>
+		<key>libs/cocos2dx/ccFPSImages.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/ccFPSImages.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
 		<key>libs/cocos2dx/CCScheduler.cpp</key>
 		<dict>
 			<key>Group</key>
@@ -3217,7 +3239,7 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>libs/cocos2dx/support/CCUserDefault.cpp</key>
+		<key>libs/cocos2dx/support/ccUTF8.cpp</key>
 		<dict>
 			<key>Group</key>
 			<array>
@@ -3226,9 +3248,9 @@
 				<string>support</string>
 			</array>
 			<key>Path</key>
-			<string>libs/cocos2dx/support/CCUserDefault.cpp</string>
+			<string>libs/cocos2dx/support/ccUTF8.cpp</string>
 		</dict>
-		<key>libs/cocos2dx/support/CCUserDefault.h</key>
+		<key>libs/cocos2dx/support/ccUTF8.h</key>
 		<dict>
 			<key>Group</key>
 			<array>
@@ -3237,7 +3259,7 @@
 				<string>support</string>
 			</array>
 			<key>Path</key>
-			<string>libs/cocos2dx/support/CCUserDefault.h</string>
+			<string>libs/cocos2dx/support/ccUTF8.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
@@ -3262,30 +3284,6 @@
 			</array>
 			<key>Path</key>
 			<string>libs/cocos2dx/support/ccUtils.h</string>
-			<key>TargetIndices</key>
-			<array/>
-		</dict>
-		<key>libs/cocos2dx/support/ccUTF8.cpp</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>cocos2dx</string>
-				<string>support</string>
-			</array>
-			<key>Path</key>
-			<string>libs/cocos2dx/support/ccUTF8.cpp</string>
-		</dict>
-		<key>libs/cocos2dx/support/ccUTF8.h</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>cocos2dx</string>
-				<string>support</string>
-			</array>
-			<key>Path</key>
-			<string>libs/cocos2dx/support/ccUTF8.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
@@ -3442,6 +3440,32 @@
 			<string>libs/cocos2dx/support/TransformUtils.h</string>
 			<key>TargetIndices</key>
 			<array/>
+		</dict>
+		<key>libs/cocos2dx/support/user_default/CCUserDefault.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>support</string>
+				<string>user_default</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/support/user_default/CCUserDefault.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2dx/support/user_default/CCUserDefault.mm</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>support</string>
+				<string>user_default</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/support/user_default/CCUserDefault.mm</string>
 		</dict>
 		<key>libs/cocos2dx/support/zip_support/ioapi.cpp</key>
 		<dict>
@@ -3946,6 +3970,8 @@
 		<string>libs/cocos2dx/CCConfiguration.h</string>
 		<string>libs/cocos2dx/CCDirector.cpp</string>
 		<string>libs/cocos2dx/CCDirector.h</string>
+		<string>libs/cocos2dx/ccFPSImages.c</string>
+		<string>libs/cocos2dx/ccFPSImages.h</string>
 		<string>libs/cocos2dx/CCScheduler.cpp</string>
 		<string>libs/cocos2dx/CCScheduler.h</string>
 		<string>libs/cocos2dx/cocoa/CCAffineTransform.cpp</string>
@@ -4164,12 +4190,10 @@
 		<string>libs/cocos2dx/support/CCPointExtension.h</string>
 		<string>libs/cocos2dx/support/CCProfiling.cpp</string>
 		<string>libs/cocos2dx/support/CCProfiling.h</string>
-		<string>libs/cocos2dx/support/CCUserDefault.cpp</string>
-		<string>libs/cocos2dx/support/CCUserDefault.h</string>
-		<string>libs/cocos2dx/support/ccUtils.cpp</string>
-		<string>libs/cocos2dx/support/ccUtils.h</string>
 		<string>libs/cocos2dx/support/ccUTF8.cpp</string>
 		<string>libs/cocos2dx/support/ccUTF8.h</string>
+		<string>libs/cocos2dx/support/ccUtils.cpp</string>
+		<string>libs/cocos2dx/support/ccUtils.h</string>
 		<string>libs/cocos2dx/support/CCVertex.cpp</string>
 		<string>libs/cocos2dx/support/CCVertex.h</string>
 		<string>libs/cocos2dx/support/data_support/ccCArray.cpp</string>
@@ -4182,6 +4206,8 @@
 		<string>libs/cocos2dx/support/tinyxml2/tinyxml2.h</string>
 		<string>libs/cocos2dx/support/TransformUtils.cpp</string>
 		<string>libs/cocos2dx/support/TransformUtils.h</string>
+		<string>libs/cocos2dx/support/user_default/CCUserDefault.h</string>
+		<string>libs/cocos2dx/support/user_default/CCUserDefault.mm</string>
 		<string>libs/cocos2dx/support/zip_support/ioapi.cpp</string>
 		<string>libs/cocos2dx/support/zip_support/ioapi.h</string>
 		<string>libs/cocos2dx/support/zip_support/unzip.cpp</string>
