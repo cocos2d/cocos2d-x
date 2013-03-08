@@ -267,8 +267,7 @@ public:
 	}
 	~JSStringWrapper() {
 		if (buffer) {
-//			JS_free(ScriptingCore::getInstance()->getGlobalContext(), (void*)buffer);
-            CC_SAFE_DELETE_ARRAY(buffer);
+			JS_free(ScriptingCore::getInstance()->getGlobalContext(), (void*)buffer);
 		}
 	}
 	void set(jsval val, JSContext* cx) {
@@ -283,14 +282,7 @@ public:
 		if (!cx) {
 			cx = ScriptingCore::getInstance()->getGlobalContext();
 		}
-		// Not suppored in SpiderMonkey v19
-        //buffer = JS_EncodeString(cx, string);
-        
-        const jschar *chars = JS_GetStringCharsZ(cx, string);
-        size_t l = JS_GetStringLength(string);
-        char* pUTF8Str = cc_utf16_to_utf8((const unsigned short*)chars, l, NULL, NULL);
-        buffer = pUTF8Str;
-        
+        buffer = JS_EncodeString(cx, string);
 	}
 	std::string get() {
         return buffer;
