@@ -294,6 +294,10 @@ public:
 	operator char*() {
 		return (char*)buffer;
 	}
+private:
+	/* Copy and assignment are not supported. */
+    JSStringWrapper(const JSStringWrapper &another);
+    JSStringWrapper &operator=(const JSStringWrapper &another);
 };
 
 JSBool jsb_set_reserved_slot(JSObject *obj, uint32_t idx, jsval value);
