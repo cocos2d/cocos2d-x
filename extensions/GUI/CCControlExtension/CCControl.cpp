@@ -97,7 +97,7 @@ CCControl::~CCControl()
     //Menu - Events
 void CCControl::registerWithTouchDispatcher()
 {
-    CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, m_nDefaultTouchPriority, true);
+    CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, getTouchPriority(), true);
 }
 
 void CCControl::onEnter()

@@ -84,7 +84,7 @@ SOURCES = ../actions/CCAction.cpp \
 ../support/ccUTF8.cpp \
 ../support/CCPointExtension.cpp \
 ../support/CCProfiling.cpp \
-../support/CCUserDefault.cpp \
+../support/user_default/CCUserDefault.cpp \
 ../support/TransformUtils.cpp \
 ../support/base64.cpp \
 ../support/ccUtils.cpp \
