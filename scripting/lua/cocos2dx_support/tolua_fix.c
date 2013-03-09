@@ -94,7 +94,7 @@ TOLUA_API int toluafix_remove_ccobject_by_refid(lua_State* L, int refid)
     if (lua_isnil(L, -1))
     {
         lua_pop(L, 2);
-        printf("[LUA ERROR] remove CCObject with NULL type, refid: %d, ptr: %x\n", refid, (int)ptr);
+        printf("[LUA ERROR] remove CCObject with NULL type, refid: %d, ptr: %p\n", refid, ptr);
         return -1;
     }
     
@@ -133,7 +133,7 @@ TOLUA_API int toluafix_remove_ccobject_by_refid(lua_State* L, int refid)
     lua_pop(L, 1);                                                  /* stack: mt ubox */
     if (ud == NULL)
     {
-        printf("[LUA ERROR] remove CCObject with NULL userdata, refid: %d, ptr: %x, type: %s\n", refid, (int)ptr, type);
+        printf("[LUA ERROR] remove CCObject with NULL userdata, refid: %d, ptr: %p, type: %s\n", refid, ptr, type);
         lua_pop(L, 2);
         return -1;
     }

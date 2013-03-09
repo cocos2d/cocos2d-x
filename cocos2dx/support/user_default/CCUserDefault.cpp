@@ -24,7 +24,9 @@ THE SOFTWARE.
 #include "CCUserDefault.h"
 #include "platform/CCCommon.h"
 #include "platform/CCFileUtils.h"
-#include "tinyxml2/tinyxml2.h"
+#include "../tinyxml2/tinyxml2.h"
+
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS && CC_PLATFORM != CC_PLATFORM_ANDROID)
 
 // root name of xml
 #define USERDEFAULT_ROOT_NAME    "userDefaultRoot"
@@ -441,3 +443,5 @@ void CCUserDefault::flush()
 }
 
 NS_CC_END
+
+#endif // (CC_TARGET_PLATFORM != CC_PLATFORM_IOS && CC_PLATFORM != CC_PLATFORM_ANDROID)

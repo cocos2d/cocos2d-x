@@ -1,100 +1,77 @@
-CC      = gcc
-CXX     = g++
-AR      = ar
-TARGET	= libextension.a
-CCFLAGS = -Wall
-CXXFLAGS = -Wall
-ARFLAGS = cr
+TARGET = libextension.a
 
-COCOS2DX_ROOT=../..
+COCOS_ROOT=../..
 
-INCLUDES =  -I$(COCOS2DX_ROOT)/cocos2dx \
-			-I$(COCOS2DX_ROOT)/cocos2dx/platform/third_party/linux/libfreetype2 \
-			-I$(COCOS2DX_ROOT)/cocos2dx/include \
-			-I$(COCOS2DX_ROOT)/cocos2dx/kazmath/include \
-			-I$(COCOS2DX_ROOT)/cocos2dx/platform/linux \
-			-I$(COCOS2DX_ROOT)/cocos2dx/platform/third_party/linux/libpng \
-			-I$(COCOS2DX_ROOT)/cocos2dx/platform/third_party/linux/libjpeg \
-			-I$(COCOS2DX_ROOT)/cocos2dx/platform/third_party/linux/libtiff/include \
-			-I$(COCOS2DX_ROOT)/cocos2dx/platform/third_party/linux/libwebp \
-			-I$(COCOS2DX_ROOT)/external \
-			-I$(COCOS2DX_ROOT)/external/chipmunk/include/chipmunk \
-			-I.. \
-			-I../CCBReader \
-			-I../GUI/CCControlExtension \
-			-I../network 
+INCLUDES = -I$(COCOS_ROOT)/external \
+	-I$(COCOS_ROOT)/external/chipmunk/include/chipmunk \
+	-I.. \
+	-I../CCBReader \
+	-I../GUI/CCControlExtension \
+	-I../network
 
-DEFINES = -DLINUX
 DEFINES += -DCC_ENABLE_CHIPMUNK_INTEGRATION=1
 DEFINES += -D__CC_PLATFORM_IMAGE_CPP__
 
-OBJECTS = ../CCBReader/CCBFileLoader.o \
-../CCBReader/CCMenuItemImageLoader.o \
-../CCBReader/CCBReader.o \
-../CCBReader/CCMenuItemLoader.o \
-../CCBReader/CCControlButtonLoader.o \
-../CCBReader/CCNodeLoader.o \
-../CCBReader/CCControlLoader.o \
-../CCBReader/CCNodeLoaderLibrary.o \
-../CCBReader/CCLabelBMFontLoader.o \
-../CCBReader/CCParticleSystemQuadLoader.o \
-../CCBReader/CCLabelTTFLoader.o \
-../CCBReader/CCScale9SpriteLoader.o \
-../CCBReader/CCLayerColorLoader.o \
-../CCBReader/CCScrollViewLoader.o \
-../CCBReader/CCLayerGradientLoader.o \
-../CCBReader/CCSpriteLoader.o \
-../CCBReader/CCLayerLoader.o \
-../CCBReader/CCBAnimationManager.o \
-../CCBReader/CCBKeyframe.o \
-../CCBReader/CCBSequence.o \
-../CCBReader/CCBSequenceProperty.o \
-../CCBReader/CCBValue.o \
-../CCBReader/CCData.o \
-../CCBReader/CCNode+CCBRelativePositioning.o \
-../GUI/CCScrollView/CCScrollView.o \
-../GUI/CCScrollView/CCSorting.o \
-../GUI/CCScrollView/CCTableView.o \
-../GUI/CCScrollView/CCTableViewCell.o \
-../GUI/CCControlExtension/CCControlButton.o \
-../GUI/CCControlExtension/CCControlColourPicker.o \
-../GUI/CCControlExtension/CCControl.o \
-../GUI/CCControlExtension/CCControlHuePicker.o \
-../GUI/CCControlExtension/CCControlSaturationBrightnessPicker.o \
-../GUI/CCControlExtension/CCControlSlider.o \
-../GUI/CCControlExtension/CCControlSwitch.o \
-../GUI/CCControlExtension/CCControlUtils.o \
-../GUI/CCControlExtension/CCInvocation.o \
-../GUI/CCControlExtension/CCScale9Sprite.o \
-../GUI/CCControlExtension/CCControlPotentiometer.o \
-../GUI/CCControlExtension/CCControlStepper.o \
-../network/HttpClient.o \
-../physics_nodes/CCPhysicsDebugNode.o \
-../physics_nodes/CCPhysicsSprite.o 
+SOURCES = ../CCBReader/CCBFileLoader.cpp \
+../CCBReader/CCMenuItemImageLoader.cpp \
+../CCBReader/CCBReader.cpp \
+../CCBReader/CCMenuItemLoader.cpp \
+../CCBReader/CCControlButtonLoader.cpp \
+../CCBReader/CCNodeLoader.cpp \
+../CCBReader/CCControlLoader.cpp \
+../CCBReader/CCNodeLoaderLibrary.cpp \
+../CCBReader/CCLabelBMFontLoader.cpp \
+../CCBReader/CCParticleSystemQuadLoader.cpp \
+../CCBReader/CCLabelTTFLoader.cpp \
+../CCBReader/CCScale9SpriteLoader.cpp \
+../CCBReader/CCLayerColorLoader.cpp \
+../CCBReader/CCScrollViewLoader.cpp \
+../CCBReader/CCLayerGradientLoader.cpp \
+../CCBReader/CCSpriteLoader.cpp \
+../CCBReader/CCLayerLoader.cpp \
+../CCBReader/CCBAnimationManager.cpp \
+../CCBReader/CCBKeyframe.cpp \
+../CCBReader/CCBSequence.cpp \
+../CCBReader/CCBSequenceProperty.cpp \
+../CCBReader/CCBValue.cpp \
+../CCBReader/CCData.cpp \
+../CCBReader/CCNode+CCBRelativePositioning.cpp \
+../GUI/CCScrollView/CCScrollView.cpp \
+../GUI/CCScrollView/CCSorting.cpp \
+../GUI/CCScrollView/CCTableView.cpp \
+../GUI/CCScrollView/CCTableViewCell.cpp \
+../GUI/CCControlExtension/CCControlButton.cpp \
+../GUI/CCControlExtension/CCControlColourPicker.cpp \
+../GUI/CCControlExtension/CCControl.cpp \
+../GUI/CCControlExtension/CCControlHuePicker.cpp \
+../GUI/CCControlExtension/CCControlSaturationBrightnessPicker.cpp \
+../GUI/CCControlExtension/CCControlSlider.cpp \
+../GUI/CCControlExtension/CCControlSwitch.cpp \
+../GUI/CCControlExtension/CCControlUtils.cpp \
+../GUI/CCControlExtension/CCInvocation.cpp \
+../GUI/CCControlExtension/CCScale9Sprite.cpp \
+../GUI/CCControlExtension/CCControlPotentiometer.cpp \
+../GUI/CCControlExtension/CCControlStepper.cpp \
+../network/HttpClient.cpp \
+../physics_nodes/CCPhysicsDebugNode.cpp \
+../physics_nodes/CCPhysicsSprite.cpp
 
+include $(COCOS_ROOT)/cocos2dx/proj.linux/cocos2dx.mk
 
-debug: CCFLAGS += -g3 -O0
-debug: CXXFLAGS += -g3 -O0
-debug: DEFINES += -DDEBUG
-debug: $(TARGET)
+CXXFLAGS += -Wno-multichar
 
-release: CCFLAGS += -O3
-release: CXXFLAGS += -O3
-release: DEFINES += -DNDEBUG
-release: $(TARGET)
+TARGET := $(LIB_DIR)/$(TARGET)
 
-####### Build rules
-$(TARGET): $(OBJECTS) 
-	$(AR) $(ARFLAGS) $(TARGET) $(OBJECTS)  
+all: $(TARGET)
 
-####### Compile
-%.o: %.cpp
-	$(CXX) $(CXXFLAGS) $(INCLUDES) $(DEFINES) -c $< -o $@
+$(TARGET): $(OBJECTS) $(CORE_MAKEFILE_LIST)
+	@mkdir -p $(@D)
+	$(LOG_AR)$(AR) $(ARFLAGS) $@ $(OBJECTS)
 
-%.o: %.c
-	$(CC) $(CCFLAGS) $(INCLUDES) $(DEFINES) -c $< -o $@
+$(OBJ_DIR)/%.o: ../%.cpp $(CORE_MAKEFILE_LIST)
+	@mkdir -p $(@D)
+	$(LOG_CXX)$(CXX) $(CXXFLAGS) $(INCLUDES) $(DEFINES) -c $< -o $@
 
-clean: 
-	rm -f $(OBJECTS) $(TARGET) core
-
-
+$(OBJ_DIR)/%.o: ../%.c $(CORE_MAKEFILE_LIST)
+	@mkdir -p $(@D)
+	$(LOG_CC)$(CC) $(CCFLAGS) $(INCLUDES) $(DEFINES) -c $< -o $@

@@ -216,7 +216,7 @@ int getFileDescriptor(const char * filename, off_t & start, off_t & length)
 	AAsset* Asset = AAssetManager_open(mgr, filename, AASSET_MODE_UNKNOWN);
 	if (NULL == Asset)
 	{
-		LOGD("file not found! Stop preload file: %s", filename);
+		//LOGD("file not found! Stop preload file: %s", filename);
 		return FILE_NOT_FOUND;
 	}
 
@@ -285,6 +285,14 @@ bool initAudioPlayer(AudioPlayer* player, const char* filename)
 	int fd = getFileDescriptor(filename, start, length);
 	if (FILE_NOT_FOUND == fd)
 	{
+		FILE* fp = fopen(filename , "rb");
+		if(fp){
+			SLDataLocator_URI loc_fd = {SL_DATALOCATOR_URI , (SLchar*)filename};
+			SLDataFormat_MIME format_mime = {SL_DATAFORMAT_MIME, NULL, SL_CONTAINERTYPE_UNSPECIFIED};
+			(player->audioSrc) = {&loc_fd, &format_mime};
+			return createAudioPlayerBySource(player);
+		}
+		LOGD("file not found! Stop preload file: %s", filename);
 		return false;
 	}
 	SLDataLocator_AndroidFD loc_fd = {SL_DATALOCATOR_ANDROIDFD, fd, start, length};

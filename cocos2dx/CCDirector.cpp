@@ -50,7 +50,7 @@ THE SOFTWARE.
 #include "CCAccelerometer.h"
 #include "sprite_nodes/CCAnimationCache.h"
 #include "touch_dispatcher/CCTouch.h"
-#include "support/CCUserDefault.h"
+#include "support/user_default/CCUserDefault.h"
 #include "shaders/ccGLStateCache.h"
 #include "shaders/CCShaderCache.h"
 #include "kazmath/kazmath.h"
@@ -198,7 +198,7 @@ void CCDirector::setGLDefaultValues(void)
     setAlphaBlending(true);
     // XXX: Fix me, should enable/disable depth test according the depth format as cocos2d-iphone did
     // [self setDepthTest: view_.depthFormat];
-    setDepthTest(true);
+    setDepthTest(false);
     setProjection(m_eProjection);
 
     // set other opengl default values
