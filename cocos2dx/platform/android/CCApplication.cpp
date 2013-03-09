@@ -63,7 +63,8 @@ CCApplication* CCApplication::sharedApplication()
 
 ccLanguageType CCApplication::getCurrentLanguage()
 {
-    const char *pLanguageName = getCurrentLanguageJNI();
+    std::string languageName = getCurrentLanguageJNI();
+    const char* pLanguageName = languageName.c_str();
     ccLanguageType ret = kLanguageEnglish;
 
     if (0 == strcmp("zh", pLanguageName))

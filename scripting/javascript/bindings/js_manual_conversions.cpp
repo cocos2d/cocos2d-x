@@ -199,8 +199,6 @@ JSBool jsval_to_charptr( JSContext *cx, jsval vp, const char **ret )
     // root it
     vp = STRING_TO_JSVAL(jsstr);
 
-    // Not supported in SpiderMonkey v19
-    //char *ptr = JS_EncodeString(cx, jsstr);
     JSStringWrapper strWrapper(jsstr);
     
     // XXX: It is converted to CCString and then back to char* to autorelease the created object.

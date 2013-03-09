@@ -36,6 +36,7 @@ NS_CC_BEGIN
 
 CCMotionStreak::CCMotionStreak()
 : m_bFastMode(false)
+, m_bStartingPositionInitialized(false)
 , m_pTexture(NULL)
 , m_tPositionR(CCPointZero)
 , m_fStroke(0.0f)
@@ -49,7 +50,6 @@ CCMotionStreak::CCMotionStreak()
 , m_pVertices(NULL)
 , m_pColorPointer(NULL)
 , m_pTexCoords(NULL)
-, m_bStartingPositionInitialized(false)
 {
     m_tBlendFunc.src = GL_SRC_ALPHA;
     m_tBlendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
