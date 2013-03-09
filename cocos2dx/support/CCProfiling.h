@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2010      Stuart Carnie
 
 http://www.cocos2d-x.org
@@ -26,55 +26,83 @@ THE SOFTWARE.
 #define __SUPPORT_CCPROFILING_H__
 
 #include "ccConfig.h"
-
-#if CC_ENABLE_PROFILERS
-
+#include "cocoa/CCObject.h"
+#include "platform/platform.h"
+#include "cocoa/CCDictionary.h"
 #include <string>
 
-#include "CCObject.h"
-#include "platform/platform.h"
-#include "CCArray.h"
+NS_CC_BEGIN
 
-namespace cocos2d
+/**
+ * @addtogroup global
+ * @{
+ */
+
+class CCProfilingTimer;
+
+/** CCProfiler
+ cocos2d builtin profiler.
+
+ To use it, enable set the CC_ENABLE_PROFILERS=1 in the ccConfig.h file
+ */
+
+class CC_DLL CCProfiler : public CCObject
 {
-	class CCProfilingTimer;
+public:
+    ~CCProfiler(void);
+    /** display the timers */
+    void displayTimers(void);
+    bool init(void);
 
-	class CC_DLL CCProfiler : public CCObject
-	{
-	public:
-		~CCProfiler(void);
-		void displayTimers(void);
-		bool init(void);
+public:
+    static CCProfiler* sharedProfiler(void);
+    /** Creates and adds a new timer */
+    CCProfilingTimer* createAndAddTimerWithName(const char* timerName);
+    /** releases a timer */
+    void releaseTimer(const char* timerName);
+    /** releases all timers */
+    void releaseAllTimers();
 
-	public:
-		static CCProfiler* sharedProfiler(void);
-		static CCProfilingTimer* timerWithName(const char *pszTimerName, CCObject *pInstance);
-		static void releaseTimer(CCProfilingTimer *pTimer);
+    CCDictionary* m_pActiveTimers;
+};
 
-	protected:
-		CCArray *m_pActiveTimers;
-	};
+class CCProfilingTimer : public CCObject
+{
+public:
+    bool initWithName(const char* timerName);
+    ~CCProfilingTimer(void);
+    const char* description(void);
+    inline struct cc_timeval * getStartTime(void) { return &m_sStartTime; };
+    inline void setAverageTime(double value) { m_dAverageTime = value; }
+    inline double getAverageTime(void) { return m_dAverageTime; }
+    /** resets the timer properties */
+    void reset();
 
-	class CCProfilingTimer : public CCObject
-	{
-	public:
-		bool initWithName(const char* pszTimerName, CCObject *pInstance);
-		~CCProfilingTimer(void);
-		char* description(void);
-		inline struct cc_timeval * getStartTime(void) { return &m_sStartTime; };
-		inline void setAverageTime(double value) { m_dAverageTime = value; }
-		inline double getAverageTime(void) { return m_dAverageTime; }
+    std::string m_NameStr;
+    struct cc_timeval m_sStartTime;
+    double m_dAverageTime;
+    double            minTime;
+    double            maxTime;
+    double            totalTime;
+    unsigned int    numberOfCalls;
+};
 
-	protected:
-		std::string m_NameStr;
-        struct cc_timeval m_sStartTime;
-		double m_dAverageTime;
-	};
+extern void CCProfilingBeginTimingBlock(const char *timerName);
+extern void CCProfilingEndTimingBlock(const char *timerName);
+extern void CCProfilingResetTimingBlock(const char *timerName);
 
-	void CC_DLL CCProfilingBeginTimingBlock(CCProfilingTimer *pTimer);
-	void CC_DLL CCProfilingEndTimingBlock(CCProfilingTimer *pTimer);
+/*
+ * cocos2d profiling categories
+ * used to enable / disable profilers with granularity
+ */
 
-} // end of namespace cocos2d
+extern bool kCCProfilerCategorySprite;
+extern bool kCCProfilerCategoryBatchSprite;
+extern bool kCCProfilerCategoryParticles;
 
-#endif // CC_ENABLE_PROFILERS
+// end of global group
+/// @}
+
+NS_CC_END
+
 #endif // __SUPPORT_CCPROFILING_H__

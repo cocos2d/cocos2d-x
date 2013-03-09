@@ -26,42 +26,33 @@ THE SOFTWARE.
 #define __CC_PLATFORM_THREAD_H__
 
 #include "CCCommon.h"
+#include "CCPlatformMacros.h"
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
-#if CC_SUPPORT_MULTITHREAD
 /**
-@brief	The object for mutual-exclusion synchronization.
+ * @addtogroup platform
+ * @{
+ */
 
-@warning Don't enter a CCLock twice in the same thread.
-*/
-class CC_DLL CCLock
+/* On iOS, should create autorelease pool when create a new thread
+ * and release it when the thread end.
+ */
+class CC_DLL CCThread
 {
 public:
-    CCLock();
-    ~CCLock();
+    CCThread() : m_pAutoreasePool(0) {}
+    ~CCThread();
 
-    void lock();
-    void unlock();
+    void createAutoreleasePool();
 
 private:
-    class Impl;
-    CCLock::Impl * m_pImp;
-};
-#else   // CC_SUPPORT_MULTITHREAD
-
-class CC_DLL CCLock
-{
-public:
-    CCLock() {}
-    ~CCLock() {}
-
-    void lock() {}
-    void unlock() {}
+    void *m_pAutoreasePool;
 };
 
-#endif  // CC_SUPPORT_MULTITHREAD
+// end of platform group
+/// @}
 
-NS_CC_END;
+NS_CC_END
 
-#endif	// __CC_PLATFORM_THREAD_H__
+#endif    // __CC_PLATFORM_THREAD_H__

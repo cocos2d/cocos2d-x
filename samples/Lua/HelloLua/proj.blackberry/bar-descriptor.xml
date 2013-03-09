@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<qnx xmlns="http://www.qnx.com/schemas/application/1.0">
+
+<!-- BlackBerry Tablet OS application descriptor file.
+
+    Specifies parameters for identifying, installing, and launching native applications on BlackBerry Tablet OS.
+
+-->
+
+    <!-- A universally unique application identifier. Must be unique across all BlackBerry Tablet OS applications.
+         Using a reverse DNS-style name as the id is recommended. (Eg. com.example.ExampleApplication.) Required. -->
+    <id>org.cocos2dx.HelloLua</id>
+
+    <!-- The name that is displayed in the BlackBerry Tablet OS application installer. 
+         May have multiple values for each language. See samples or xsd schema file. Optional. -->
+    <name>HelloLua</name>
+    
+    <!-- A string value of the format <0-999>.<0-999>.<0-999> that represents application version which can be used to check for application upgrade. 
+         Values can also be 1-part or 2-part. It is not necessary to have a 3-part value.
+         An updated version of application must have a versionNumber value higher than the previous version. Required. -->
+    <versionNumber>1.0.0</versionNumber>
+
+    <!-- Fourth digit segment of the package version. First three segments are taken from the 
+         <versionNumber> element.  Must be an integer from 0 to 2^16-1 -->
+    <buildId>1</buildId>
+                 
+    <!-- A string value (such as "v1", "2.5", or "Alpha 1") that represents the version of the application, as it should be shown to users. Optional. -->
+    <!-- <versionLabel></versionLabel> -->
+
+    <!-- Description, displayed in the BlackBerry Tablet OS application installer.
+         May have multiple values for each language. See samples or xsd schema file. Optional. -->
+    <description>The HelloLua application</description>
+
+    <!-- Copyright information. Optional. -->
+    <!-- <copyright></copyright> -->
+
+    <!--  Name of author which is used for signing. Must match the developer name of your development certificate. -->
+    <author>Example Inc.</author>
+    <icon>
+       <image>icon.png</image>
+    </icon>
+    
+    <!--  Unique author ID assigned by signing authority. Required if using debug tokens. -->
+    <!-- <authorId>ABC1234YjsnUk235h</authorId> -->
+   
+    <initialWindow>
+        <systemChrome>none</systemChrome>
+        <transparent>false</transparent>
+    </initialWindow>
+    
+    <!--  The category where the application appears. Either core.games or core.media. -->
+    <category>core.games</category>
+    <asset path="icon.png">icon.png</asset>
+    
+    <!-- the variable 'worksparce_loc' is not supported in bbndk2.0, so we create an empty folder to make the relative path work. -->
+    <asset path="../Resources">Resources</asset>
+    
+    <!-- the path of the three shared libraries as follows in bbndk2.0 is different from bbndk1.0, so if the version of bbndk you use is 1.0, just uncomment the next three lines and comment the following three lines-->
+    
+    <!-- used for bbndk1.0 -->
+    <!--<asset path="${QNX_TARGET}/../target-override/${CPUVARDIR}/usr/lib/libbps.so" type="Qnx/Elf">lib/libbps.so.1</asset>-->
+    <!--<asset path="${QNX_TARGET}/../target-override/${CPUVARDIR}/usr/lib/libOpenAL.so" type="Qnx/Elf">lib/libOpenAL.so.1</asset>-->
+    <!--<asset path="${QNX_TARGET}/../target-override/${CPUVARDIR}/usr/lib/libalut.so" type="Qnx/Elf">lib/libalut.so.1</asset>-->
+      
+    <!-- used for bbndk2.0 -->
+    
+    <configuration id="com.qnx.qcc.configuration.exe.debug.446234419" name="Device-Debug">
+       <platformArchitecture>armle-v7</platformArchitecture>
+       <asset path="empty/../../../../../CocosDenshion/proj.blackberry/Device-Debug/libCocosDenshion.so" type="Qnx/Elf">lib/libCocosDenshion.so</asset>
+       <asset path="Device-Debug/HelloLua" entry="true" type="Qnx/Elf">HelloLua</asset>
+    </configuration>
+    <configuration id="com.qnx.qcc.configuration.exe.release.1265921422" name="Device-Release">
+       <platformArchitecture>armle-v7</platformArchitecture>
+       <asset path="empty/../../../../../CocosDenshion/proj.blackberry/Device-Release/libCocosDenshion.so" type="Qnx/Elf">lib/libCocosDenshion.so</asset>
+       <asset path="Device-Release/HelloLua" entry="true" type="Qnx/Elf">HelloLua</asset>
+    </configuration>
+    <configuration id="com.qnx.qcc.configuration.exe.profile.1761000041" name="Device-Profile">
+       <platformArchitecture>armle-v7</platformArchitecture>
+       <asset path="empty/../../../../../CocosDenshion/proj.blackberry/Device-Profile/libCocosDenshion.so" type="Qnx/Elf">lib/libCocosDenshion.so</asset>
+       <asset path="Device-Profile/HelloLua" entry="true" type="Qnx/Elf">HelloLua</asset>
+    </configuration>
+    <configuration id="com.qnx.qcc.configuration.exe.profile.coverage.1771167181" name="Device-Coverage">
+       <platformArchitecture>armle-v7</platformArchitecture>
+       <asset path="empty/../../../../../CocosDenshion/proj.blackberry/Device-Coverage/libCocosDenshion.so" type="Qnx/Elf">lib/libCocosDenshion.so</asset>
+       <asset path="Device-Coverage/HelloLua" entry="true" type="Qnx/Elf">HelloLua</asset>
+    </configuration>
+    <configuration id="com.qnx.qcc.configuration.exe.debug.660208940" name="Simulator">
+       <platformArchitecture>x86</platformArchitecture>
+       <asset path="empty/../../../../../CocosDenshion/proj.blackberry/Simulator/libCocosDenshion.so" type="Qnx/Elf">lib/libCocosDenshion.so</asset>
+       <asset path="Simulator/HelloLua" entry="true" type="Qnx/Elf">HelloLua</asset>
+    </configuration>
+    <configuration id="com.qnx.qcc.configuration.exe.profile.1237484173" name="Simulator-Profile">
+       <platformArchitecture>x86</platformArchitecture>
+       <asset path="empty/../../../../../CocosDenshion/proj.blackberry/Simulator-Profile/libCocosDenshion.so" type="Qnx/Elf">lib/libCocosDenshion.so</asset>
+       <asset path="Simulator-Profile/HelloLua" entry="true" type="Qnx/Elf">HelloLua</asset>
+    </configuration>
+    <configuration id="com.qnx.qcc.configuration.exe.profile.coverage.181538713" name="Simulator-Coverage">
+       <platformArchitecture>x86</platformArchitecture>
+
+       <asset path="Simulator-Coverage/HelloLua" entry="true" type="Qnx/Elf">HelloLua</asset>
+    </configuration>
+    
+    <!--  The icon for the application, which should be 86x86. -->
+    
+    <!--  The splash screen that will appear when your application is launching. Should be 1024x600. -->
+    <!-- <splashscreen></splashscreen> -->
+
+    <!-- Request permission to execute native code.  Required for native applications. -->
+    <action system="true">run_native</action>
+    
+    <!--  The permissions requested by your application. -->
+    <!--  <action>access_shared</action> -->
+    <!--  <action>record_audio</action> -->
+    <!--  <action>read_geolocation</action> -->
+    <!--  <action>use_camera</action> -->
+    <!--  <action>access_internet</action> -->
+    <!--  <action>play_audio</action> -->
+    <!--  <action>post_notification</action> -->
+    <!--  <action>set_audio_volume</action> -->
+    <!--  <action>read_device_identifying_information</action> -->
+
+    <!-- Ensure that shared libraries in the package are found at run-time. -->
+    <env var="LD_LIBRARY_PATH" value="app/native/lib"/>
+    
+</qnx>

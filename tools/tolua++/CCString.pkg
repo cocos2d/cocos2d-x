@@ -1,16 +1,19 @@
 
-namespace cocos2d {
+class CCString : public CCObject
+{
+    int intValue() const;
+    unsigned int uintValue() const;
+    float floatValue() const;
+    double doubleValue() const;
+    bool boolValue() const;
+    const char* getCString() const;
+    unsigned int length() const;
 
-	class  CCString : public CCObject
-	{
+	int compare(const char* str) const;
+    bool isEqual(const CCObject* pObject);
 
-		CCString();
-		CCString(const char * str);
-		~CCString();
-		int toInt();
-		unsigned int toUInt();
-		float toFloat();
+    static CCString* create(const char* pStr);
+    static CCString* createWithData(unsigned char* pData, unsigned long nLen);
+    static CCString* createWithContentsOfFile(const char* pszFileName);
+};
 
-		bool isEmpty();
-	};
-}// namespace cocos2d

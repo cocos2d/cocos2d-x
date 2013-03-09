@@ -1,75 +1,19 @@
-namespace   cocos2d {
 
 class CCTimer : public CCObject
 {
+    float getInterval(void);
+    void setInterval(float fInterval);
+    void update(float dt);
 
-	CCTimer(void);
-
-	
-	ccTime getInterval(void);
-
-	void setInterval(ccTime fInterval);
-
-	//bool initWithTarget(SelectorProtocol *pTarget, SEL_SCHEDULE pfnSelector);
-
-    //bool initWithTarget(SelectorProtocol *pTarget, SEL_SCHEDULE pfnSelector, ccTime fSeconds);
-
-	void update(ccTime dt);
-
-	//static CCTimer* timerWithTarget(SelectorProtocol *pTarget, SEL_SCHEDULE pfnSelector);
-
-	//static CCTimer* timerWithTarget(SelectorProtocol *pTarget, SEL_SCHEDULE pfnSelector, ccTime fSeconds);
-	
-	bool initWithScriptFuncName(const char *pszFuncName, ccTime fSeconds);
-	bool initWithScriptFuncName(const char *pszFuncName, ccTime fSeconds);
-
-	//SEL_SCHEDULE m_pfnSelector;
-	ccTime m_fInterval;
-	std::string m_scriptFunc;
-
+	static CCTimer* timerWithScriptHandler(LUA_FUNCTION funcID, float fSeconds);
 };
-
 
 class CCScheduler : public CCObject
 {
-    ~CCScheduler(void);
-	
-	ccTime getTimeScale(void);
-
-	void setTimeScale(ccTime fTimeScale);
+    float getTimeScale(void);
+    void setTimeScale(float fTimeScale);
 
 
-	void tick(ccTime dt);
-
-	void scheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol *pTarget, ccTime fInterval, bool bPaused);
-	void scheduleScriptFunc(const char *pszFuncName, ccTime fInterval, bool bPaused);
-	void unscheduleScriptFunc(const char *pszFuncName);
-	void scheduleUpdateForTarget(SelectorProtocol *pTarget, int nPriority, bool bPaused);
-
-	void unscheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol *pTarget);
-
-	void unscheduleUpdateForTarget(const SelectorProtocol *pTarget);
-
-	void unscheduleAllSelectorsForTarget(SelectorProtocol *pTarget);
-	
-	void unscheduleAllSelectors(void);
-
-
-	void pauseTarget(SelectorProtocol *pTarget);
-
-	void resumeTarget(SelectorProtocol *pTarget);
-
-	bool isTargetPaused(SelectorProtocol *pTarget);
-
-	static CCScheduler* sharedScheduler(void);
-
-	/** purges the shared scheduler. It releases the retained instance.
-	 @since v0.99.0
-	 */
-	static void purgeSharedScheduler(void);
-
-
+    unsigned int scheduleScriptFunc(LUA_FUNCTION funcID, float fInterval, bool bPaused);
+    void unscheduleScriptEntry(unsigned int uScheduleScriptEntryID);
 };
-}//namespace   cocos2d 
-
-

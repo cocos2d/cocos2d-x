@@ -56,7 +56,7 @@ typedef void* iconv_t;
    ourselves. */
 #ifndef EILSEQ
 /* Igor: called upon EILSEQ from glibc, since autogeneration of this header
-	on Windows didn't do the job. */
+    on Windows didn't do the job. */
 /* #define EILSEQ @EILSEQ@ */
 #define EILSEQ 84
 #endif
@@ -121,7 +121,7 @@ extern void iconvlist (int (*do_one) (unsigned int namescount,
    prefixes should be directory names without trailing slash (i.e. use ""
    instead of "/").  */
 extern void libiconv_set_relocation_prefix (const char *orig_prefix,
-					    const char *curr_prefix);
+                        const char *curr_prefix);
 
 #endif
 

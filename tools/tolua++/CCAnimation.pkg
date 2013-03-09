@@ -1,45 +1,49 @@
 
-#include "CCPlatformConfig.h"
-#include "CCObject.h"
-#include "CCMutableArray.h"
-#include "CCGeometry.h"
-#include <string>
+class CCAnimationFrame : public CCObject
+{
+    CCAnimationFrame();
+    ~CCAnimationFrame();
 
-namespace   cocos2d {
+    bool initWithSpriteFrame(CCSpriteFrame* spriteFrame, float delayUnits, CCDictionary* userInfo);
 
-	class CCSpriteFrame;
-    class CCTexture2D;
-	
-	class  CCAnimation : public CCObject
-	{
-	
-	
-		 const char* getName(void);
-		 void setName(const char *pszName);
-		 float getDelay(void);
-		 void setDelay(float fDelay);
-		 CCMutableArray<CCSpriteFrame*>* getFrames(void);
-		 void setFrames(CCMutableArray<CCSpriteFrame*> *pFrames);
-	
-		bool initWithFrames(CCMutableArray<CCSpriteFrame*> *pFrames);
-		
-		bool initWithFrames(CCMutableArray<CCSpriteFrame*> *pFrames, float delay);
-		
-		void addFrame(CCSpriteFrame *pFrame);
+    CCSpriteFrame* getSpriteFrame();
+    void setSpriteFrame(CCSpriteFrame* pSpFrame);
 
-		void addFrameWithFileName(const char *pszFileName);
-	
-		void addFrameWithTexture(CCTexture2D* pobTexture, CCRect rect);
+    float getDelayUnits();
+    void setDelayUnits(float fDelayUnits);
 
-		bool init(void);
+    CCDictionary*  getUserInfo();
+    void setUserInfo(CCDictionary* pDict);
+};
 
-	public:
-	
-        static CCAnimation* animation(void);
 
-		static CCAnimation* animationWithFrames(CCMutableArray<CCSpriteFrame*> *frames);
+class CCAnimation : public CCObject
+{
+    static CCAnimation* create(CCArray *arrayOfAnimationFrameNames, float delayPerUnit, unsigned int loops);
+    static CCAnimation* create(void);
+    static CCAnimation* createWithSpriteFrames(CCArray* arrayOfSpriteFrameNames, float delay);
+    static CCAnimation* createWithSpriteFrames(CCArray* arrayOfSpriteFrameNames);
 
-		static CCAnimation* animationWithFrames(CCMutableArray<CCSpriteFrame*> *frames, float delay);
-	};
-} // end of name sapce cocos2d
+    void addSpriteFrame(CCSpriteFrame *pFrame);
+    void addSpriteFrameWithFileName(const char *pszFileName);
+    void addSpriteFrameWithTexture(CCTexture2D* pobTexture, const CCRect& rect);
 
+    float getTotalDelayUnits();
+
+    float getDelayPerUnit();
+    void setDelayPerUnit(float fDelayPerUnits);
+
+    float getDuration();
+
+	CCAnimation* copy();
+
+    CCArray* getFrames();
+    void setFrames(CCArray* pFrames);
+
+
+    bool getRestoreOriginalFrame();
+    void setRestoreOriginalFrame(bool bRestoreFrame);
+
+    unsigned int getLoops();
+    void setLoops(unsigned int uLoops);
+};

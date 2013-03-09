@@ -22,10 +22,10 @@
 
 /* Define "boolean" as unsigned char, not int, on Windows systems. */
 #ifdef _WIN32
-#ifndef __RPCNDR_H__		/* don't conflict if rpcndr.h already read */
+#ifndef __RPCNDR_H__        /* don't conflict if rpcndr.h already read */
 typedef unsigned char boolean;
 #endif
-#define HAVE_BOOLEAN		/* prevent jmorecfg.h from redefining it */
+#define HAVE_BOOLEAN        /* prevent jmorecfg.h from redefining it */
 #endif
 
 #ifdef JPEG_INTERNALS
@@ -40,11 +40,11 @@ typedef unsigned char boolean;
 
 #ifdef JPEG_CJPEG_DJPEG
 
-#define BMP_SUPPORTED		/* BMP image file format */
-#define GIF_SUPPORTED		/* GIF image file format */
-#define PPM_SUPPORTED		/* PBMPLUS PPM/PGM image file format */
+#define BMP_SUPPORTED        /* BMP image file format */
+#define GIF_SUPPORTED        /* GIF image file format */
+#define PPM_SUPPORTED        /* PBMPLUS PPM/PGM image file format */
 /* #undef RLE_SUPPORTED */
-#define TARGA_SUPPORTED		/* Targa image file format */
+#define TARGA_SUPPORTED        /* Targa image file format */
 
 /* #undef TWO_FILE_COMMANDLINE */
 /* #undef NEED_SIGNAL_CATCHER */

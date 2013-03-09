@@ -1,0 +1,215 @@
+debug_define COCOS2D_DEBUG = 1
+debug_define _DEBUG = 1
+
+defines
+{	
+MARMALADE = 1
+CC_UNDER_MARMALADE = 1
+}
+
+options
+{
+	module_path="../platform/third_party/marmalade/"
+}
+
+subprojects
+{
+	zlib
+	libpng
+	freetype
+	libjpeg
+	libtiff
+	libwebp
+}
+includepaths
+{
+	.
+	"../"
+	"../include"
+	"../platform"
+	"../platform/marmalade"
+	"../actions"
+	"../base_nodes"
+	"../cocoa"
+	"../draw_nodes"
+	"../effects"
+	"../kazmath/include"
+#	"../keyboard_dispatcher"
+	"../keypad_dispatcher"
+	"../label_nodes"
+	"../layers_scenes_transitions_nodes"
+	"../menu_nodes"
+	"../misc_nodes"
+	"../particle_nodes"
+	"../physics_nodes"
+	"../shaders"
+	"../script_support"
+	"../sprite_nodes"
+	"../support"
+  "../support/tinyxml2"
+  "../support/user_default/"
+	"../text_input_node"
+	"../textures"
+       "../tileMap_parallax_nodes"
+	"../touch_dispatcher"
+}
+
+files
+{
+	("../")
+	"*.h"
+	"*.cpp"
+
+	(.)
+	["docs"]
+	cocos2dx_public.defines.txt
+
+	("../actions")
+	[actions]
+	"*.h"
+	"*.cpp"
+
+	("../base_nodes")
+	[base_nodes]
+	"*.h"
+	"*.cpp"
+	
+	("../cocoa")
+	[cocoa]
+	"*.h"
+	"*.cpp"
+	
+	("../draw_nodes")
+	[draw_nodes]
+	"*.h"
+	"*.cpp"
+
+	("../effects")
+	[effects]
+	"*.h"
+	"*.cpp"
+
+    ("../include")
+	[include]
+	"*.h"
+
+	[kazmath]
+	("../kazmath/include/kazmath")
+	"*.h"
+	("../kazmath/include/kazmath/gl")
+	"*.h"
+	("../kazmath/src")
+	"*.c"
+	("../kazmath/src/gl")
+	"*.c"
+	
+	("../keypad_dispatcher")
+	[keypad_dispatcher]
+	"*.h"
+	"*.cpp"
+	
+	("../label_nodes")
+	[label_nodes]
+	"*.h"
+	"*.cpp"
+	
+	("../layers_scenes_transitions_nodes")
+	[layers_scenes_transitions_nodes]
+	"*.h"
+	"*.cpp"
+	
+	("../menu_nodes")
+	[menu_nodes]
+	"*.h"
+	"*.cpp"
+	
+	("../misc_nodes")
+	[misc_nodes]
+	"*.h"
+	"*.cpp"
+	
+	("../particle_nodes")
+	[particle_nodes]
+	"*.h"
+	"*.cpp"
+
+	("../platform")
+	[platforms]
+	"*.h"
+    "*.cpp"
+
+	("../platform/marmalade")
+	[platforms/marmalade]
+	"*.h"
+	"*.cpp"
+
+	("../script_support")
+	[script_support]
+	"*.h"
+	"*.cpp"
+	
+	("../shaders")
+	[shaders]
+	"*.h"
+	"*.cpp"
+	
+	("../sprite_nodes")
+	[sprite_nodes]
+	"*.h"
+	"*.cpp"
+
+	("../support")
+	[support]
+	"*.h"
+	"*.cpp"
+
+	("../support/data_support")
+	[support/data_support]
+	"*.cpp"			# MH: Many ccCArray linker errors without ccCArray.cpp
+	"*.h"
+
+    ("../support/image_support")
+    [support/image_support]
+	"*.h"
+	"*.cpp"
+
+    ("../support/tinyxml2")
+    [support/tinyxml2]
+    "*.h"
+    "*.cpp"
+    
+    ("../support/user_default")
+    [support/user_default]
+    "*.h"
+    "*.cpp"
+
+	("../support/zip_support")
+	[support/zip_support]
+	"*.h"
+	"*.cpp"
+	
+	("../text_input_node")
+	[text_input_node]
+	"*.cpp"
+
+	("../text_input_node")
+	[text_input_node]
+	"*.h"
+	"*.cpp"
+	
+	("../textures")
+	[textures]
+	"*.h"
+	"*.cpp"
+	
+	("../tileMap_parallax_nodes")
+	[tileMap_parallax_nodes]
+	"*.h"
+	"*.cpp"
+	
+	("../touch_dispatcher")
+	[touch_dispatcher]
+	"*.h"
+	"*.cpp"
+}
+

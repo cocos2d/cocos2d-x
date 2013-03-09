@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2010      Steve Oldmeadow
 
 http://www.cocos2d-x.org
@@ -26,20 +26,48 @@ THE SOFTWARE.
 #ifndef _SIMPLE_AUDIO_ENGINE_H_
 #define _SIMPLE_AUDIO_ENGINE_H_
 
-#include "Export.h"
 #include <stddef.h>
+#include "Export.h"
+#include <typeinfo>
+#include <ctype.h>
+#include <string.h>
 
 namespace CocosDenshion {
 
+class TypeInfo
+{
+public:
+    virtual long getClassTypeInfo() = 0;
+};
+
+static inline unsigned int getHashCodeByString(const char *key)
+{
+	unsigned int len = strlen(key);
+	const char *end=key+len;
+	unsigned int hash;
+
+	for (hash = 0; key < end; key++)
+	{
+		hash *= 16777619;
+		hash ^= (unsigned int) (unsigned char) toupper(*key);
+	}
+	return (hash);
+}
+
 /**
 @class          SimpleAudioEngine
-@brief  		offer a VERY simple interface to play background music & sound effect
+@brief          offer a VERY simple interface to play background music & sound effect
 */
-class EXPORT_DLL SimpleAudioEngine
+
+class EXPORT_DLL SimpleAudioEngine : public TypeInfo
 {
 public:
     SimpleAudioEngine();
     ~SimpleAudioEngine();
+
+    virtual long getClassTypeInfo() {
+        return getHashCodeByString(typeid(CocosDenshion::SimpleAudioEngine).name());
+    }
 
     /**
     @brief Get the shared Engine object,it will new one when first time be called
@@ -50,13 +78,7 @@ public:
     @brief Release the shared Engine object
     @warning It must be called before the application exit, or a memroy leak will be casued.
     */
-	static void end();
-
-    /**
-    @brief  Set the zip file name
-    @param pszZipFileName The relative path of the .zip file
-    */
-    static void setResource(const char* pszZipFileName);
+    static void end();
 
     /**
      @brief Preload background music
@@ -69,13 +91,19 @@ public:
     @param pszFilePath The path of the background music file,or the FileName of T_SoundResInfo
     @param bLoop Whether the background music loop or not
     */
-    void playBackgroundMusic(const char* pszFilePath, bool bLoop = false);
+    void playBackgroundMusic(const char* pszFilePath, bool bLoop);
+    void playBackgroundMusic(const char* pszFilePath) {
+    	this->playBackgroundMusic(pszFilePath, false);
+    }
 
     /**
     @brief Stop playing background music
     @param bReleaseData If release the background music data or not.As default value is false
     */
-    void stopBackgroundMusic(bool bReleaseData = false);
+    void stopBackgroundMusic(bool bReleaseData);
+    void stopBackgroundMusic() {
+    	this->stopBackgroundMusic(false);
+    }
 
     /**
     @brief Pause playing background music
@@ -127,9 +155,36 @@ public:
     /**
     @brief Play sound effect
     @param pszFilePath The path of the effect file,or the FileName of T_SoundResInfo
-	@bLoop Whether to loop the effect playing, default value is false
+    @bLoop Whether to loop the effect playing, default value is false
     */
-    unsigned int playEffect(const char* pszFilePath, bool bLoop = false);
+    unsigned int playEffect(const char* pszFilePath, bool bLoop);
+    unsigned int playEffect(const char* pszFilePath) {
+    	return this->playEffect(pszFilePath, false);
+    }
+
+    /**
+    @brief Pause playing sound effect
+    @param nSoundId The return value of function playEffect
+    */
+    void pauseEffect(unsigned int nSoundId);
+
+    /**
+    @brief Pause all playing sound effect
+    @param nSoundId The return value of function playEffect
+    */
+    void pauseAllEffects();
+
+    /**
+    @brief Resume playing sound effect
+    @param nSoundId The return value of function playEffect
+    */
+    void resumeEffect(unsigned int nSoundId);
+
+    /**
+    @brief Resume all playing sound effect
+    @param nSoundId The return value of function playEffect
+    */
+    void resumeAllEffects();
 
     /**
     @brief Stop playing sound effect
@@ -138,15 +193,20 @@ public:
     void stopEffect(unsigned int nSoundId);
 
     /**
-    @brief  		preload a compressed audio file
-    @details	    the compressed audio will be decode to wave, then write into an 
+    @brief Stop all playing sound effects
+    */
+    void stopAllEffects();
+
+    /**
+    @brief          preload a compressed audio file
+    @details        the compressed audio will be decode to wave, then write into an 
     internal buffer in SimpleaudioEngine
     */
     void preloadEffect(const char* pszFilePath);
 
     /**
-    @brief  		unload the preloaded effect from internal buffer
-    @param[in]		pszFilePath		The path of the effect file,or the FileName of T_SoundResInfo
+    @brief          unload the preloaded effect from internal buffer
+    @param[in]        pszFilePath        The path of the effect file,or the FileName of T_SoundResInfo
     */
     void unloadEffect(const char* pszFilePath);
 };
@@ -154,3 +214,4 @@ public:
 } // end of namespace CocosDenshion
 
 #endif // _SIMPLE_AUDIO_ENGINE_H_
+

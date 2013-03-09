@@ -22,66 +22,39 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "IMEJni.h"
-#include "CCIMEDispatcher.h"
+#include "text_input_node/CCIMEDispatcher.h"
 #include "JniHelper.h"
 
 #include <android/log.h>
 #include <string.h>
 #include <jni.h>
 
-#if 0
-#define  LOG_TAG    "IMEJni"
-#define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
-#else
-#define  LOGD(...) 
-#endif
-
 using namespace cocos2d;
 
-extern "C"
-{
-    //////////////////////////////////////////////////////////////////////////
-    // handle IME message
-    //////////////////////////////////////////////////////////////////////////
-
-    void setKeyboardStateJNI(int bOpen)
-    {
-		JniMethodInfo t;
-
-		if (JniHelper::getStaticMethodInfo(t, 
-			"org/cocos2dx/lib/Cocos2dxGLSurfaceView",
-			(bOpen) ? "openIMEKeyboard" : "closeIMEKeyboard",
-			"()V"))
-		{
-			t.env->CallStaticVoidMethod(t.classID, t.methodID);
-		}
-    }
-
-    void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeInsertText(JNIEnv* env, jobject thiz, jstring text)
-    {
-        jboolean isCopy = 0;
-        const char* pszText = env->GetStringUTFChars(text, &isCopy);
-        if (isCopy) 
-        {
-            cocos2d::CCIMEDispatcher::sharedDispatcher()->dispatchInsertText(pszText, strlen(pszText));
-            env->ReleaseStringUTFChars(text, pszText);
+extern "C" {
+    void setKeyboardStateJNI(int bOpen) {
+        if (bOpen) {
+            openKeyboardJNI();
+        } else {
+            closeKeyboardJNI();
         }
     }
 
-    void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeDeleteBackward(JNIEnv* env, jobject thiz)
-    {
-        cocos2d::CCIMEDispatcher::sharedDispatcher()->dispatchDeleteBackward();
+    void openKeyboardJNI() {
+        JniMethodInfo t;
+
+        if (JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/Cocos2dxGLSurfaceView", "openIMEKeyboard", "()V")) {
+            t.env->CallStaticVoidMethod(t.classID, t.methodID);
+            t.env->DeleteLocalRef(t.classID);
+        }
     }
 
-    jstring Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeGetContentText()
-    {
-        JNIEnv * env = 0;
+    void closeKeyboardJNI() {
+        JniMethodInfo t;
 
-        if (JniHelper::getJavaVM()->GetEnv((void**)&env, JNI_VERSION_1_4) != JNI_OK || ! env)
-        {
-            return 0;
+        if (JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/Cocos2dxGLSurfaceView", "closeIMEKeyboard", "()V")) {
+            t.env->CallStaticVoidMethod(t.classID, t.methodID);
+            t.env->DeleteLocalRef(t.classID);
         }
-        const char * pszText = cocos2d::CCIMEDispatcher::sharedDispatcher()->getContentText();
-        return env->NewStringUTF(pszText);
     }
 }

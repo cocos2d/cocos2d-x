@@ -1,72 +1,37 @@
 
-#include "CCSpriteBatchNode.h"
-namespace cocos2d{
+enum {
+    kCCLabelAutomaticWidth = -1,
+};
 
-	struct _KerningHashElement;
+class CCLabelBMFont : public CCNode
+{
+    void setString(const char *label);
+	void setString(const char *label, bool fromUpdate);
+    void setCString(const char *label);
+	const char* getString(void);
+	void updateString(bool fromUpdate);
 
+	void setAnchorPoint(const CCPoint & var);
+	void setAlignment(CCTextAlignment alignment);
+	void setWidth(float width);
+	void setLineBreakWithoutSpace(bool breakWithoutSpace);
+	void setScale(float scale);
+	void setScaleX(float scaleX);
+	void setScaleY(float scaleY);
 
-	typedef struct _BMFontDef {
+	void setFntFile(const char* fntFile);
+	const char* getFntFile();
 
-		unsigned int charID;
+    void setColor(const ccColor3B& color);
+    const ccColor3B& getColor(void);
 
-		CCRect rect;
+    GLubyte getOpacity(void);
+    void setOpacity(GLubyte opacity);
 
-		int xOffset;
-		//! The Y amount the image should be offset when drawing the image (in pixels)
-		int yOffset;
-		//! The amount to move the current position after drawing the character (in pixels)
-		int xAdvance;
-	} ccBMFontDef;
+	bool isOpacityModifyRGB();
+    void setOpacityModifyRGB(bool isOpacityModifyRGB);
 
-
-	typedef struct _BMFontPadding {
-		/// padding left
-		int	left;
-		/// padding top
-		int top;
-		/// padding right
-		int right;
-		/// padding bottom
-		int bottom;
-	} ccBMFontPadding;
-
-	enum {
-		// how many characters are supported
-		kCCBMFontMaxChars = 2048, //256,
-	};
-
-
-	class CCBMFontConfiguration : public CCObject
-	{	
-		CCBMFontConfiguration();	
-		char * description();
-		static CCBMFontConfiguration * configurationWithFNTFile(const char *FNTfile);		
-		bool initWithFNTfile(const char *FNTfile);
-	};
-
-
-	class CCLabelBMFont : public CCSpriteBatchNode, public CCLabelProtocol, public CCRGBAProtocol
-	{
-
-		CCLabelBMFont();	
-		static void purgeCachedData();		
-		static CCLabelBMFont * labelWithString(const char *str, const char *fntFile);       
-		bool initWithString(const char *str, const char *fntFile);		
-		void createFontChars();	
-		void setString(const char *label);
-		const char* getString(void);
-		void setCString(const char *label);
-		void setAnchorPoint(CCPoint var);
-		CCRGBAProtocol* convertToRGBAProtocol();
-		CCLabelProtocol* convertToLabelProtocol();
-		void draw();
-	};
-
-
-	CCBMFontConfiguration * FNTConfigLoadFile( const char *file );
-
-	void FNTConfigRemoveCache( void );
-
-}// namespace cocos2d
-
-
+    static void purgeCachedData();
+    static CCLabelBMFont * create(const char *str, const char *fntFile, float width = kCCLabelAutomaticWidth, CCTextAlignment alignment = kCCTextAlignmentLeft, CCPoint imageOffset = CCPointMake(0, 0));
+	static CCLabelBMFont * create();
+};

@@ -1,0 +1,206 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{21B2C324-891F-48EA-AD1A-5AE13DE12E28}</ProjectGuid>
+    <RootNamespace>Extensions.win32</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '10.0'">v100</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0'">v110</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v110_xp</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '10.0'">v100</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0'">v110</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v110_xp</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)$(Configuration).win32\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration).win32\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)$(Configuration).win32\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration).win32\</IntDir>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LibraryPath>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LibraryPath>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;$(ProjectDir)..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\external\sqlite3\include;$(ProjectDir)..\..\external;$(ProjectDir)..\..\cocos2dx;$(ProjectDir)..\..\cocos2dx\include;$(ProjectDir)..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\cocos2dx\platform\win32;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32\pthread;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32\OGLES;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32\zlib;..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;_LIB;COCOS2D_DEBUG=1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <DisableSpecificWarnings>4267;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;$(ProjectDir)..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\external\sqlite3\include;$(ProjectDir)..\..\external;$(ProjectDir)..\..\cocos2dx;$(ProjectDir)..\..\cocos2dx\include;$(ProjectDir)..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\cocos2dx\platform\win32;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32\pthread;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32\OGLES;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32\zlib;..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_LIB;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4267;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\AssetsManager\AssetsManager.cpp" />
+    <ClCompile Include="..\CCBReader\CCBAnimationManager.cpp" />
+    <ClCompile Include="..\CCBReader\CCBFileLoader.cpp" />
+    <ClCompile Include="..\CCBReader\CCBKeyframe.cpp" />
+    <ClCompile Include="..\CCBReader\CCBReader.cpp" />
+    <ClCompile Include="..\CCBReader\CCBSequence.cpp" />
+    <ClCompile Include="..\CCBReader\CCBSequenceProperty.cpp" />
+    <ClCompile Include="..\CCBReader\CCBValue.cpp" />
+    <ClCompile Include="..\CCBReader\CCControlButtonLoader.cpp" />
+    <ClCompile Include="..\CCBReader\CCControlLoader.cpp" />
+    <ClCompile Include="..\CCBReader\CCData.cpp" />
+    <ClCompile Include="..\CCBReader\CCLabelBMFontLoader.cpp" />
+    <ClCompile Include="..\CCBReader\CCLabelTTFLoader.cpp" />
+    <ClCompile Include="..\CCBReader\CCLayerColorLoader.cpp" />
+    <ClCompile Include="..\CCBReader\CCLayerGradientLoader.cpp" />
+    <ClCompile Include="..\CCBReader\CCLayerLoader.cpp" />
+    <ClCompile Include="..\CCBReader\CCMenuItemImageLoader.cpp" />
+    <ClCompile Include="..\CCBReader\CCMenuItemLoader.cpp" />
+    <ClCompile Include="..\CCBReader\CCNode+CCBRelativePositioning.cpp" />
+    <ClCompile Include="..\CCBReader\CCNodeLoader.cpp" />
+    <ClCompile Include="..\CCBReader\CCNodeLoaderLibrary.cpp" />
+    <ClCompile Include="..\CCBReader\CCParticleSystemQuadLoader.cpp" />
+    <ClCompile Include="..\CCBReader\CCScale9SpriteLoader.cpp" />
+    <ClCompile Include="..\CCBReader\CCScrollViewLoader.cpp" />
+    <ClCompile Include="..\CCBReader\CCSpriteLoader.cpp" />
+    <ClCompile Include="..\GUI\CCControlExtension\CCControl.cpp" />
+    <ClCompile Include="..\GUI\CCControlExtension\CCControlButton.cpp" />
+    <ClCompile Include="..\GUI\CCControlExtension\CCControlColourPicker.cpp" />
+    <ClCompile Include="..\GUI\CCControlExtension\CCControlHuePicker.cpp" />
+    <ClCompile Include="..\GUI\CCControlExtension\CCControlPotentiometer.cpp" />
+    <ClCompile Include="..\GUI\CCControlExtension\CCControlSaturationBrightnessPicker.cpp" />
+    <ClCompile Include="..\GUI\CCControlExtension\CCControlSlider.cpp" />
+    <ClCompile Include="..\GUI\CCControlExtension\CCControlStepper.cpp" />
+    <ClCompile Include="..\GUI\CCControlExtension\CCControlSwitch.cpp" />
+    <ClCompile Include="..\GUI\CCControlExtension\CCControlUtils.cpp" />
+    <ClCompile Include="..\GUI\CCControlExtension\CCInvocation.cpp" />
+    <ClCompile Include="..\GUI\CCControlExtension\CCScale9Sprite.cpp" />
+    <ClCompile Include="..\GUI\CCEditBox\CCEditBox.cpp" />
+    <ClCompile Include="..\GUI\CCEditBox\CCEditBoxImplWin.cpp" />
+    <ClCompile Include="..\GUI\CCScrollView\CCScrollView.cpp" />
+    <ClCompile Include="..\GUI\CCScrollView\CCSorting.cpp" />
+    <ClCompile Include="..\GUI\CCScrollView\CCTableView.cpp" />
+    <ClCompile Include="..\GUI\CCScrollView\CCTableViewCell.cpp" />
+    <ClCompile Include="..\LocalStorage\LocalStorage.cpp" />
+    <ClCompile Include="..\network\HttpClient.cpp" />
+    <ClCompile Include="..\physics_nodes\CCPhysicsDebugNode.cpp" />
+    <ClCompile Include="..\physics_nodes\CCPhysicsSprite.cpp" />
+    <ClCompile Include="Win32InputBox.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\AssetsManager\AssetsManager.h" />
+    <ClInclude Include="..\CCBReader\CCBAnimationManager.h" />
+    <ClInclude Include="..\CCBReader\CCBFileLoader.h" />
+    <ClInclude Include="..\CCBReader\CCBKeyframe.h" />
+    <ClInclude Include="..\CCBReader\CCBMemberVariableAssigner.h" />
+    <ClInclude Include="..\CCBReader\CCBReader.h" />
+    <ClInclude Include="..\CCBReader\CCBSelectorResolver.h" />
+    <ClInclude Include="..\CCBReader\CCBSequence.h" />
+    <ClInclude Include="..\CCBReader\CCBSequenceProperty.h" />
+    <ClInclude Include="..\CCBReader\CCBValue.h" />
+    <ClInclude Include="..\CCBReader\CCControlButtonLoader.h" />
+    <ClInclude Include="..\CCBReader\CCControlLoader.h" />
+    <ClInclude Include="..\CCBReader\CCData.h" />
+    <ClInclude Include="..\CCBReader\CCLabelBMFontLoader.h" />
+    <ClInclude Include="..\CCBReader\CCLabelTTFLoader.h" />
+    <ClInclude Include="..\CCBReader\CCLayerColorLoader.h" />
+    <ClInclude Include="..\CCBReader\CCLayerGradientLoader.h" />
+    <ClInclude Include="..\CCBReader\CCLayerLoader.h" />
+    <ClInclude Include="..\CCBReader\CCMenuItemImageLoader.h" />
+    <ClInclude Include="..\CCBReader\CCMenuItemLoader.h" />
+    <ClInclude Include="..\CCBReader\CCMenuLoader.h" />
+    <ClInclude Include="..\CCBReader\CCNode+CCBRelativePositioning.h" />
+    <ClInclude Include="..\CCBReader\CCNodeLoader.h" />
+    <ClInclude Include="..\CCBReader\CCNodeLoaderLibrary.h" />
+    <ClInclude Include="..\CCBReader\CCNodeLoaderListener.h" />
+    <ClInclude Include="..\CCBReader\CCParticleSystemQuadLoader.h" />
+    <ClInclude Include="..\CCBReader\CCScale9SpriteLoader.h" />
+    <ClInclude Include="..\CCBReader\CCScrollViewLoader.h" />
+    <ClInclude Include="..\CCBReader\CCSpriteLoader.h" />
+    <ClInclude Include="..\GUI\CCControlExtension\CCControl.h" />
+    <ClInclude Include="..\GUI\CCControlExtension\CCControlButton.h" />
+    <ClInclude Include="..\GUI\CCControlExtension\CCControlColourPicker.h" />
+    <ClInclude Include="..\GUI\CCControlExtension\CCControlExtensions.h" />
+    <ClInclude Include="..\GUI\CCControlExtension\CCControlHuePicker.h" />
+    <ClInclude Include="..\GUI\CCControlExtension\CCControlPotentiometer.h" />
+    <ClInclude Include="..\GUI\CCControlExtension\CCControlSaturationBrightnessPicker.h" />
+    <ClInclude Include="..\GUI\CCControlExtension\CCControlSlider.h" />
+    <ClInclude Include="..\GUI\CCControlExtension\CCControlStepper.h" />
+    <ClInclude Include="..\GUI\CCControlExtension\CCControlSwitch.h" />
+    <ClInclude Include="..\GUI\CCControlExtension\CCControlUtils.h" />
+    <ClInclude Include="..\GUI\CCControlExtension\CCInvocation.h" />
+    <ClInclude Include="..\GUI\CCControlExtension\CCScale9Sprite.h" />
+    <ClInclude Include="..\GUI\CCEditBox\CCEditBox.h" />
+    <ClInclude Include="..\GUI\CCEditBox\CCEditBoxImpl.h" />
+    <ClInclude Include="..\GUI\CCEditBox\CCEditBoxImplWin.h" />
+    <ClInclude Include="..\GUI\CCScrollView\CCScrollView.h" />
+    <ClInclude Include="..\cocos-ext.h" />
+    <ClInclude Include="..\ExtensionMacros.h" />
+    <ClInclude Include="..\GUI\CCScrollView\CCSorting.h" />
+    <ClInclude Include="..\GUI\CCScrollView\CCTableView.h" />
+    <ClInclude Include="..\GUI\CCScrollView\CCTableViewCell.h" />
+    <ClInclude Include="..\LocalStorage\LocalStorage.h" />
+    <ClInclude Include="..\network\HttpClient.h" />
+    <ClInclude Include="..\network\HttpRequest.h" />
+    <ClInclude Include="..\network\HttpResponse.h" />
+    <ClInclude Include="..\physics_nodes\CCPhysicsDebugNode.h" />
+    <ClInclude Include="..\physics_nodes\CCPhysicsSprite.h" />
+    <ClInclude Include="Win32InputBox.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

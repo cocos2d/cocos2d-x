@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2009      Valentin Milea
 
 http://www.cocos2d-x.org
@@ -26,7 +26,7 @@ THE SOFTWARE.
 #ifndef __SUPPORT_TRANSFORM_UTILS_H__
 #define __SUPPORT_TRANSFORM_UTILS_H__
 
-///@todo
+// todo:
 // when in MAC or windows, it includes <OpenGL/gl.h>
 #include "CCGL.h"
 

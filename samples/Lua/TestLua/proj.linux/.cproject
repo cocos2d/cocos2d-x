@@ -1,0 +1,429 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?fileVersion 4.0.0?><cproject storage_type_id="org.eclipse.cdt.core.XmlProjectDescriptionStorage">
+	<storageModule moduleId="org.eclipse.cdt.core.settings">
+		<cconfiguration id="cdt.managedbuild.config.gnu.exe.debug.684675641">
+			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="cdt.managedbuild.config.gnu.exe.debug.684675641" moduleId="org.eclipse.cdt.core.settings" name="Debug">
+				<externalSettings/>
+				<extensions>
+					<extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>
+					<extension id="org.eclipse.cdt.core.GmakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.CWDLocator" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GCCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GASErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GLDErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+				</extensions>
+			</storageModule>
+			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
+				<configuration artifactName="${ProjName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.gnu.exe.debug.684675641" name="Debug" parent="cdt.managedbuild.config.gnu.exe.debug" prebuildStep="mkdir -p bin &amp;&amp; cp -R -n ../../../../../samples/Cpp/TestCpp/Resources ../../../../../samples/Lua/TestLua/">
+					<folderInfo id="cdt.managedbuild.config.gnu.exe.debug.684675641." name="/" resourcePath="">
+						<toolChain id="cdt.managedbuild.toolchain.gnu.exe.debug.1168665521" name="Linux GCC" superClass="cdt.managedbuild.toolchain.gnu.exe.debug">
+							<targetPlatform id="cdt.managedbuild.target.gnu.platform.exe.debug.2039781202" name="Debug Platform" superClass="cdt.managedbuild.target.gnu.platform.exe.debug"/>
+							<builder buildPath="${workspace_loc:/TestLua/Debug}" id="cdt.managedbuild.target.gnu.builder.exe.debug.102570384" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Gnu Make Builder" superClass="cdt.managedbuild.target.gnu.builder.exe.debug"/>
+							<tool id="cdt.managedbuild.tool.gnu.archiver.base.751250359" name="GCC Archiver" superClass="cdt.managedbuild.tool.gnu.archiver.base"/>
+							<tool id="cdt.managedbuild.tool.gnu.cpp.compiler.exe.debug.889157849" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.exe.debug">
+								<option id="gnu.cpp.compiler.exe.debug.option.optimization.level.267147213" name="Optimization Level" superClass="gnu.cpp.compiler.exe.debug.option.optimization.level" value="gnu.cpp.compiler.optimization.level.none" valueType="enumerated"/>
+								<option id="gnu.cpp.compiler.exe.debug.option.debugging.level.1198800325" name="Debug Level" superClass="gnu.cpp.compiler.exe.debug.option.debugging.level" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
+								<option id="gnu.cpp.compiler.option.preprocessor.def.1970386575" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="LINUX"/>
+								</option>
+								<option id="gnu.cpp.compiler.option.include.paths.1761931224" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
+									<listOptionValue builtIn="false" value="../../Classes"/>
+									<listOptionValue builtIn="false" value="../../../"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/include"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/kazmath/include"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/linux"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/linux"/>
+									<listOptionValue builtIn="false" value="../../../../../CocosDenshion/include"/>
+									<listOptionValue builtIn="false" value="../../../../../scripting/lua/cocos2dx_support"/>
+									<listOptionValue builtIn="false" value="../../../../../scripting/lua/lua"/>
+									<listOptionValue builtIn="false" value="../../../../../scripting/lua/tolua"/>
+								</option>
+								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.103685015" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.c.compiler.exe.debug.1377495991" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.exe.debug">
+								<option defaultValue="gnu.c.optimization.level.none" id="gnu.c.compiler.exe.debug.option.optimization.level.868044462" name="Optimization Level" superClass="gnu.c.compiler.exe.debug.option.optimization.level" valueType="enumerated"/>
+								<option id="gnu.c.compiler.exe.debug.option.debugging.level.234553092" name="Debug Level" superClass="gnu.c.compiler.exe.debug.option.debugging.level" value="gnu.c.debugging.level.max" valueType="enumerated"/>
+								<option id="gnu.c.compiler.option.include.paths.2130120472" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
+									<listOptionValue builtIn="false" value="../../Classes"/>
+									<listOptionValue builtIn="false" value="../../../"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/include"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/kazmath/include"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/linux"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/linux"/>
+									<listOptionValue builtIn="false" value="../../../../../CocosDenshion/include"/>
+									<listOptionValue builtIn="false" value="../../../../../scripting/lua/cocos2dx_support"/>
+									<listOptionValue builtIn="false" value="../../../../../scripting/lua/lua"/>
+									<listOptionValue builtIn="false" value="../../../../../scripting/lua/tolua"/>
+								</option>
+								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1540019914" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.c.linker.exe.debug.1450392108" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.exe.debug"/>
+							<tool commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} bin/${OUTPUT_PREFIX}${OUTPUT} ${INPUTS} -Wl,-rpath,${ProjDirPath}/../../../../cocos2dx/proj.linux/${ConfigName} -Wl,-rpath,${ProjDirPath}/../../../../CocosDenshion/proj.linux/${ConfigName} -Wl,-rpath,${ProjDirPath}/../../../../CocosDenshion/third_party/fmod/api/lib  -Wl,-rpath,../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib -Wl,-rpath,${ProjDirPath}/../../../../scripting/lua/proj.linux/${ConfigName}" id="cdt.managedbuild.tool.gnu.cpp.linker.exe.debug.127674845" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.exe.debug">
+								<option id="gnu.cpp.link.option.libs.1672912039" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
+									<listOptionValue builtIn="false" value="cocos2d"/>
+									<listOptionValue builtIn="false" value="cocosdenshion"/>
+									<listOptionValue builtIn="false" value="GLEW"/>
+									<listOptionValue builtIn="false" value="rt"/>
+									<listOptionValue builtIn="false" value="z"/>
+									<listOptionValue builtIn="false" value="lua"/>
+									<listOptionValue builtIn="false" value="fmodex"/>
+								</option>
+								<option id="gnu.cpp.link.option.paths.1982163393" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
+									<listOptionValue builtIn="false" value="&quot;../../../../../cocos2dx/proj.linux/${ConfigName}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;../../../../../CocosDenshion/proj.linux/${ConfigName}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;../../../../../scripting/lua/proj.linux/${ConfigName}&quot;"/>
+									<listOptionValue builtIn="false" value="../../../../../CocosDenshion/third_party/fmod/api/lib"/>
+								</option>
+								<option id="gnu.cpp.link.option.userobjs.1565549726" superClass="gnu.cpp.link.option.userobjs" valueType="userObjs">
+									<listOptionValue builtIn="false" value="&quot;../../../../../extensions/proj.linux/${ConfigName}/libextension.a&quot;"/>
+									<listOptionValue builtIn="false" value="../../../../../external/chipmunk/proj.linux/${ConfigName}/libchipmunk.a"/>
+									<listOptionValue builtIn="false" value="../../../../../external/Box2D/proj.linux/${ConfigName}/libBox2D.a"/>
+								</option>
+								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.154309798" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
+									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
+									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
+								</inputType>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.assembler.exe.debug.172675447" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.exe.debug">
+								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.2124631163" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
+							</tool>
+						</toolChain>
+					</folderInfo>
+					<sourceEntries>
+						<entry excluding="cocos2dx_support|Classes" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Classes"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="cocos2dx_support"/>
+					</sourceEntries>
+				</configuration>
+			</storageModule>
+			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+		</cconfiguration>
+		<cconfiguration id="cdt.managedbuild.config.gnu.exe.release.890968076">
+			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="cdt.managedbuild.config.gnu.exe.release.890968076" moduleId="org.eclipse.cdt.core.settings" name="Release">
+				<externalSettings/>
+				<extensions>
+					<extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>
+					<extension id="org.eclipse.cdt.core.GmakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.CWDLocator" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GCCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GASErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GLDErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+				</extensions>
+			</storageModule>
+			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
+				<configuration artifactName="${ProjName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.gnu.exe.release.890968076" name="Release" parent="cdt.managedbuild.config.gnu.exe.release" prebuildStep="mkdir -p bin &amp;&amp; cp -R -n ../../../../../samples/Cpp/TestCpp/Resources ../../../../../samples/Lua/TestLua/">
+					<folderInfo id="cdt.managedbuild.config.gnu.exe.release.890968076." name="/" resourcePath="">
+						<toolChain id="cdt.managedbuild.toolchain.gnu.exe.release.720811514" name="Linux GCC" superClass="cdt.managedbuild.toolchain.gnu.exe.release">
+							<targetPlatform id="cdt.managedbuild.target.gnu.platform.exe.release.962949232" name="Debug Platform" superClass="cdt.managedbuild.target.gnu.platform.exe.release"/>
+							<builder buildPath="${workspace_loc:/TestLua/Release}" id="cdt.managedbuild.target.gnu.builder.exe.release.1121553297" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Gnu Make Builder" superClass="cdt.managedbuild.target.gnu.builder.exe.release"/>
+							<tool id="cdt.managedbuild.tool.gnu.archiver.base.25255351" name="GCC Archiver" superClass="cdt.managedbuild.tool.gnu.archiver.base"/>
+							<tool id="cdt.managedbuild.tool.gnu.cpp.compiler.exe.release.317133341" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.exe.release">
+								<option id="gnu.cpp.compiler.exe.release.option.optimization.level.1020508288" name="Optimization Level" superClass="gnu.cpp.compiler.exe.release.option.optimization.level" value="gnu.cpp.compiler.optimization.level.most" valueType="enumerated"/>
+								<option id="gnu.cpp.compiler.exe.release.option.debugging.level.200368394" name="Debug Level" superClass="gnu.cpp.compiler.exe.release.option.debugging.level" value="gnu.cpp.compiler.debugging.level.none" valueType="enumerated"/>
+								<option id="gnu.cpp.compiler.option.include.paths.717016654" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
+									<listOptionValue builtIn="false" value="../../Classes"/>
+									<listOptionValue builtIn="false" value="../../../"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/include"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/kazmath/include"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/linux"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/linux"/>
+									<listOptionValue builtIn="false" value="../../../../../CocosDenshion/include"/>
+									<listOptionValue builtIn="false" value="../../../../../scripting/lua/cocos2dx_support"/>
+									<listOptionValue builtIn="false" value="../../../../../scripting/lua/lua"/>
+									<listOptionValue builtIn="false" value="../../../../../scripting/lua/tolua"/>
+								</option>
+								<option id="gnu.cpp.compiler.option.preprocessor.def.48956079" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="LINUX"/>
+								</option>
+								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.1669186843" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.c.compiler.exe.release.279374166" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.exe.release">
+								<option defaultValue="gnu.c.optimization.level.most" id="gnu.c.compiler.exe.release.option.optimization.level.513797541" name="Optimization Level" superClass="gnu.c.compiler.exe.release.option.optimization.level" valueType="enumerated"/>
+								<option id="gnu.c.compiler.exe.release.option.debugging.level.1785407921" name="Debug Level" superClass="gnu.c.compiler.exe.release.option.debugging.level" value="gnu.c.debugging.level.none" valueType="enumerated"/>
+								<option id="gnu.c.compiler.option.include.paths.606181663" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
+									<listOptionValue builtIn="false" value="../../Classes"/>
+									<listOptionValue builtIn="false" value="../../../"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/include"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/kazmath/include"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/linux"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/linux"/>
+									<listOptionValue builtIn="false" value="../../../../../CocosDenshion/include"/>
+									<listOptionValue builtIn="false" value="../../../../../scripting/lua/cocos2dx_support"/>
+									<listOptionValue builtIn="false" value="../../../../../scripting/lua/lua"/>
+									<listOptionValue builtIn="false" value="../../../../../scripting/lua/tolua"/>
+								</option>
+								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1951510828" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.c.linker.exe.release.1196338383" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.exe.release"/>
+							<tool commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} bin/${OUTPUT_PREFIX}${OUTPUT} ${INPUTS} -Wl,-rpath,${ProjDirPath}/../../../../cocos2dx/proj.linux/${ConfigName} -Wl,-rpath,${ProjDirPath}/../../../../CocosDenshion/proj.linux/${ConfigName} -Wl,-rpath,${ProjDirPath}/../../../../CocosDenshion/third_party/fmod/api/lib  -Wl,-rpath,../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib -Wl,-rpath,${ProjDirPath}/../../../../scripting/lua/proj.linux/${ConfigName}" id="cdt.managedbuild.tool.gnu.cpp.linker.exe.release.968523880" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.exe.release">
+								<option id="gnu.cpp.link.option.libs.841434875" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
+									<listOptionValue builtIn="false" value="cocos2d"/>
+									<listOptionValue builtIn="false" value="cocosdenshion"/>
+									<listOptionValue builtIn="false" value="GLEW"/>
+									<listOptionValue builtIn="false" value="rt"/>
+									<listOptionValue builtIn="false" value="z"/>
+									<listOptionValue builtIn="false" value="lua"/>
+									<listOptionValue builtIn="false" value="fmodex"/>
+								</option>
+								<option id="gnu.cpp.link.option.paths.815635762" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
+									<listOptionValue builtIn="false" value="&quot;../../../../../cocos2dx/proj.linux/${ConfigName}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;../../../../../CocosDenshion/proj.linux/${ConfigName}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;../../../../../scripting/lua/proj.linux/${ConfigName}&quot;"/>
+									<listOptionValue builtIn="false" value="../../../../../CocosDenshion/third_party/fmod/api/lib"/>
+								</option>
+								<option id="gnu.cpp.link.option.userobjs.1420206481" superClass="gnu.cpp.link.option.userobjs" valueType="userObjs">
+									<listOptionValue builtIn="false" value="&quot;../../../../../extensions/proj.linux/${ConfigName}/libextension.a&quot;"/>
+									<listOptionValue builtIn="false" value="../../../../../external/chipmunk/proj.linux/${ConfigName}/libchipmunk.a"/>
+									<listOptionValue builtIn="false" value="../../../../../external/Box2D/proj.linux/${ConfigName}/libBox2D.a"/>
+								</option>
+								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.760339141" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
+									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
+									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
+								</inputType>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.assembler.exe.release.1526892084" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.exe.release">
+								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.569443221" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
+							</tool>
+						</toolChain>
+					</folderInfo>
+				</configuration>
+			</storageModule>
+			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+		</cconfiguration>
+		<cconfiguration id="cdt.managedbuild.config.gnu.exe.debug.684675641.877862202">
+			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="cdt.managedbuild.config.gnu.exe.debug.684675641.877862202" moduleId="org.eclipse.cdt.core.settings" name="Debug64">
+				<externalSettings/>
+				<extensions>
+					<extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>
+					<extension id="org.eclipse.cdt.core.GmakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.CWDLocator" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GCCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GASErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GLDErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+				</extensions>
+			</storageModule>
+			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
+				<configuration artifactName="${ProjName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.gnu.exe.debug.684675641.877862202" name="Debug64" parent="cdt.managedbuild.config.gnu.exe.debug" prebuildStep="mkdir -p bin &amp;&amp; cp -R -n ../../../../../samples/Cpp/TestCpp/Resources ../../../../../samples/Lua/TestLua/">
+					<folderInfo id="cdt.managedbuild.config.gnu.exe.debug.684675641.877862202." name="/" resourcePath="">
+						<toolChain id="cdt.managedbuild.toolchain.gnu.exe.debug.1546937154" name="Linux GCC" superClass="cdt.managedbuild.toolchain.gnu.exe.debug">
+							<targetPlatform id="cdt.managedbuild.target.gnu.platform.exe.debug.1457614998" name="Debug Platform" superClass="cdt.managedbuild.target.gnu.platform.exe.debug"/>
+							<builder buildPath="${workspace_loc:/TestLua/Debug}" id="cdt.managedbuild.target.gnu.builder.exe.debug.1642448091" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Gnu Make Builder" superClass="cdt.managedbuild.target.gnu.builder.exe.debug"/>
+							<tool id="cdt.managedbuild.tool.gnu.archiver.base.1085994279" name="GCC Archiver" superClass="cdt.managedbuild.tool.gnu.archiver.base"/>
+							<tool id="cdt.managedbuild.tool.gnu.cpp.compiler.exe.debug.1579483265" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.exe.debug">
+								<option id="gnu.cpp.compiler.exe.debug.option.optimization.level.1548210708" name="Optimization Level" superClass="gnu.cpp.compiler.exe.debug.option.optimization.level" value="gnu.cpp.compiler.optimization.level.none" valueType="enumerated"/>
+								<option id="gnu.cpp.compiler.exe.debug.option.debugging.level.1171461588" name="Debug Level" superClass="gnu.cpp.compiler.exe.debug.option.debugging.level" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
+								<option id="gnu.cpp.compiler.option.preprocessor.def.1238945763" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="LINUX"/>
+								</option>
+								<option id="gnu.cpp.compiler.option.include.paths.258605402" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
+									<listOptionValue builtIn="false" value="../../Classes"/>
+									<listOptionValue builtIn="false" value="../../../"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/include"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/kazmath/include"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/linux"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/linux"/>
+									<listOptionValue builtIn="false" value="../../../../../CocosDenshion/include"/>
+									<listOptionValue builtIn="false" value="../../../../../scripting/lua/cocos2dx_support"/>
+									<listOptionValue builtIn="false" value="../../../../../scripting/lua/lua"/>
+									<listOptionValue builtIn="false" value="../../../../../scripting/lua/tolua"/>
+								</option>
+								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.601282888" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.c.compiler.exe.debug.470861430" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.exe.debug">
+								<option defaultValue="gnu.c.optimization.level.none" id="gnu.c.compiler.exe.debug.option.optimization.level.827823720" name="Optimization Level" superClass="gnu.c.compiler.exe.debug.option.optimization.level" valueType="enumerated"/>
+								<option id="gnu.c.compiler.exe.debug.option.debugging.level.930288569" name="Debug Level" superClass="gnu.c.compiler.exe.debug.option.debugging.level" value="gnu.c.debugging.level.max" valueType="enumerated"/>
+								<option id="gnu.c.compiler.option.include.paths.813300398" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
+									<listOptionValue builtIn="false" value="../../Classes"/>
+									<listOptionValue builtIn="false" value="../../../"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/include"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/kazmath/include"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/linux"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/linux"/>
+									<listOptionValue builtIn="false" value="../../../../../CocosDenshion/include"/>
+									<listOptionValue builtIn="false" value="../../../../../scripting/lua/cocos2dx_support"/>
+									<listOptionValue builtIn="false" value="../../../../../scripting/lua/lua"/>
+									<listOptionValue builtIn="false" value="../../../../../scripting/lua/tolua"/>
+								</option>
+								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1965017009" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.c.linker.exe.debug.816162891" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.exe.debug"/>
+							<tool commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} bin/${OUTPUT_PREFIX}${OUTPUT} ${INPUTS} -Wl,-rpath,${ProjDirPath}/../../../../cocos2dx/proj.linux/${ConfigName} -Wl,-rpath,${ProjDirPath}/../../../../CocosDenshion/proj.linux/${ConfigName} -Wl,-rpath,${ProjDirPath}/../../../../CocosDenshion/third_party/fmod/lib64/api/lib  -Wl,-rpath,../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib -Wl,-rpath,${ProjDirPath}/../../../../scripting/lua/proj.linux/${ConfigName}" id="cdt.managedbuild.tool.gnu.cpp.linker.exe.debug.1045882812" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.exe.debug">
+								<option id="gnu.cpp.link.option.libs.67248046" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
+									<listOptionValue builtIn="false" value="cocos2d"/>
+									<listOptionValue builtIn="false" value="cocosdenshion"/>
+									<listOptionValue builtIn="false" value="GLEW"/>
+									<listOptionValue builtIn="false" value="rt"/>
+									<listOptionValue builtIn="false" value="z"/>
+									<listOptionValue builtIn="false" value="lua"/>
+									<listOptionValue builtIn="false" value="fmodex64"/>
+								</option>
+								<option id="gnu.cpp.link.option.paths.668737399" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
+									<listOptionValue builtIn="false" value="&quot;../../../../../cocos2dx/proj.linux/${ConfigName}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;../../../../../CocosDenshion/proj.linux/${ConfigName}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;../../../../../scripting/lua/proj.linux/${ConfigName}&quot;"/>
+									<listOptionValue builtIn="false" value="../../../../../CocosDenshion/third_party/fmod/lib64/api/lib"/>
+								</option>
+								<option id="gnu.cpp.link.option.userobjs.279871009" superClass="gnu.cpp.link.option.userobjs" valueType="userObjs">
+									<listOptionValue builtIn="false" value="&quot;../../../../../extensions/proj.linux/${ConfigName}/libextension.a&quot;"/>
+									<listOptionValue builtIn="false" value="../../../../../external/chipmunk/proj.linux/${ConfigName}/libchipmunk.a"/>
+									<listOptionValue builtIn="false" value="../../../../../external/Box2D/proj.linux/${ConfigName}/libBox2D.a"/>
+								</option>
+								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.1332538227" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
+									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
+									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
+								</inputType>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.assembler.exe.debug.946129111" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.exe.debug">
+								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.1555200269" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
+							</tool>
+						</toolChain>
+					</folderInfo>
+					<sourceEntries>
+						<entry excluding="cocos2dx_support|Classes" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Classes"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="cocos2dx_support"/>
+					</sourceEntries>
+				</configuration>
+			</storageModule>
+			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+		</cconfiguration>
+		<cconfiguration id="cdt.managedbuild.config.gnu.exe.release.890968076.613854536">
+			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="cdt.managedbuild.config.gnu.exe.release.890968076.613854536" moduleId="org.eclipse.cdt.core.settings" name="Release64">
+				<externalSettings/>
+				<extensions>
+					<extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>
+					<extension id="org.eclipse.cdt.core.GmakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.CWDLocator" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GCCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GASErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GLDErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+				</extensions>
+			</storageModule>
+			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
+				<configuration artifactName="${ProjName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.gnu.exe.release.890968076.613854536" name="Release64" parent="cdt.managedbuild.config.gnu.exe.release" prebuildStep="mkdir -p bin &amp;&amp; cp -R -n ../../../../../samples/Cpp/TestCpp/Resources ../../../../../samples/Lua/TestLua/">
+					<folderInfo id="cdt.managedbuild.config.gnu.exe.release.890968076.613854536." name="/" resourcePath="">
+						<toolChain id="cdt.managedbuild.toolchain.gnu.exe.release.965057447" name="Linux GCC" superClass="cdt.managedbuild.toolchain.gnu.exe.release">
+							<targetPlatform id="cdt.managedbuild.target.gnu.platform.exe.release.864921619" name="Debug Platform" superClass="cdt.managedbuild.target.gnu.platform.exe.release"/>
+							<builder buildPath="${workspace_loc:/TestLua/Release}" id="cdt.managedbuild.target.gnu.builder.exe.release.1213155948" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Gnu Make Builder" superClass="cdt.managedbuild.target.gnu.builder.exe.release"/>
+							<tool id="cdt.managedbuild.tool.gnu.archiver.base.384004806" name="GCC Archiver" superClass="cdt.managedbuild.tool.gnu.archiver.base"/>
+							<tool id="cdt.managedbuild.tool.gnu.cpp.compiler.exe.release.1425682468" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.exe.release">
+								<option id="gnu.cpp.compiler.exe.release.option.optimization.level.275939898" name="Optimization Level" superClass="gnu.cpp.compiler.exe.release.option.optimization.level" value="gnu.cpp.compiler.optimization.level.most" valueType="enumerated"/>
+								<option id="gnu.cpp.compiler.exe.release.option.debugging.level.875155814" name="Debug Level" superClass="gnu.cpp.compiler.exe.release.option.debugging.level" value="gnu.cpp.compiler.debugging.level.none" valueType="enumerated"/>
+								<option id="gnu.cpp.compiler.option.include.paths.469853764" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
+									<listOptionValue builtIn="false" value="../../Classes"/>
+									<listOptionValue builtIn="false" value="../../../"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/include"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/kazmath/include"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/linux"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/linux"/>
+									<listOptionValue builtIn="false" value="../../../../../CocosDenshion/include"/>
+									<listOptionValue builtIn="false" value="../../../../../scripting/lua/cocos2dx_support"/>
+									<listOptionValue builtIn="false" value="../../../../../scripting/lua/lua"/>
+									<listOptionValue builtIn="false" value="../../../../../scripting/lua/tolua"/>
+								</option>
+								<option id="gnu.cpp.compiler.option.preprocessor.def.1576260448" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="LINUX"/>
+								</option>
+								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.1170792696" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.c.compiler.exe.release.1319721895" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.exe.release">
+								<option defaultValue="gnu.c.optimization.level.most" id="gnu.c.compiler.exe.release.option.optimization.level.1298061509" name="Optimization Level" superClass="gnu.c.compiler.exe.release.option.optimization.level" valueType="enumerated"/>
+								<option id="gnu.c.compiler.exe.release.option.debugging.level.512643130" name="Debug Level" superClass="gnu.c.compiler.exe.release.option.debugging.level" value="gnu.c.debugging.level.none" valueType="enumerated"/>
+								<option id="gnu.c.compiler.option.include.paths.310752920" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
+									<listOptionValue builtIn="false" value="../../Classes"/>
+									<listOptionValue builtIn="false" value="../../../"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/include"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/kazmath/include"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/linux"/>
+									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/linux"/>
+									<listOptionValue builtIn="false" value="../../../../../CocosDenshion/include"/>
+									<listOptionValue builtIn="false" value="../../../../../scripting/lua/cocos2dx_support"/>
+									<listOptionValue builtIn="false" value="../../../../../scripting/lua/lua"/>
+									<listOptionValue builtIn="false" value="../../../../../scripting/lua/tolua"/>
+								</option>
+								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1641154835" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.c.linker.exe.release.244210697" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.exe.release"/>
+							<tool commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} bin/${OUTPUT_PREFIX}${OUTPUT} ${INPUTS} -Wl,-rpath,${ProjDirPath}/../../../../cocos2dx/proj.linux/${ConfigName} -Wl,-rpath,${ProjDirPath}/../../../../CocosDenshion/proj.linux/${ConfigName} -Wl,-rpath,${ProjDirPath}/../../../../CocosDenshion/third_party/fmod/lib64/api/lib  -Wl,-rpath,../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib -Wl,-rpath,${ProjDirPath}/../../../../scripting/lua/proj.linux/${ConfigName}" id="cdt.managedbuild.tool.gnu.cpp.linker.exe.release.517803425" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.exe.release">
+								<option id="gnu.cpp.link.option.libs.966243361" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
+									<listOptionValue builtIn="false" value="cocos2d"/>
+									<listOptionValue builtIn="false" value="cocosdenshion"/>
+									<listOptionValue builtIn="false" value="GLEW"/>
+									<listOptionValue builtIn="false" value="rt"/>
+									<listOptionValue builtIn="false" value="z"/>
+									<listOptionValue builtIn="false" value="lua"/>
+									<listOptionValue builtIn="false" value="fmodex64"/>
+								</option>
+								<option id="gnu.cpp.link.option.paths.1908709804" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
+									<listOptionValue builtIn="false" value="&quot;../../../../../cocos2dx/proj.linux/${ConfigName}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;../../../../../CocosDenshion/proj.linux/${ConfigName}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;../../../../../scripting/lua/proj.linux/${ConfigName}&quot;"/>
+									<listOptionValue builtIn="false" value="../../../../../CocosDenshion/third_party/fmod/lib64/api/lib"/>
+								</option>
+								<option id="gnu.cpp.link.option.userobjs.1531265161" superClass="gnu.cpp.link.option.userobjs" valueType="userObjs">
+									<listOptionValue builtIn="false" value="&quot;../../../../../extensions/proj.linux/${ConfigName}/libextension.a&quot;"/>
+									<listOptionValue builtIn="false" value="../../../../../external/chipmunk/proj.linux/${ConfigName}/libchipmunk.a"/>
+									<listOptionValue builtIn="false" value="../../../../../external/Box2D/proj.linux/${ConfigName}/libBox2D.a"/>
+								</option>
+								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.479170088" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
+									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
+									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
+								</inputType>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.assembler.exe.release.1304966385" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.exe.release">
+								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.2085068310" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
+							</tool>
+						</toolChain>
+					</folderInfo>
+				</configuration>
+			</storageModule>
+			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+		</cconfiguration>
+	</storageModule>
+	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
+		<project id="TestLua.cdt.managedbuild.target.gnu.exe.1639529943" name="Executable" projectType="cdt.managedbuild.target.gnu.exe"/>
+	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
+	<storageModule moduleId="refreshScope" versionNumber="2">
+		<configuration configurationName="Release">
+			<resource resourceType="PROJECT" workspacePath="/TestLua"/>
+		</configuration>
+		<configuration configurationName="Debug64">
+			<resource resourceType="PROJECT" workspacePath="/TestLua"/>
+		</configuration>
+		<configuration configurationName="Release64"/>
+		<configuration configurationName="Debug">
+			<resource resourceType="PROJECT" workspacePath="/TestLua"/>
+		</configuration>
+	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
+	<storageModule moduleId="scannerConfiguration">
+		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.exe.debug.684675641;cdt.managedbuild.config.gnu.exe.debug.684675641.;cdt.managedbuild.tool.gnu.cpp.compiler.exe.debug.889157849;cdt.managedbuild.tool.gnu.cpp.compiler.input.103685015">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.exe.debug.684675641.877862202;cdt.managedbuild.config.gnu.exe.debug.684675641.877862202.;cdt.managedbuild.tool.gnu.cpp.compiler.exe.debug.1579483265;cdt.managedbuild.tool.gnu.cpp.compiler.input.601282888">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileCPP"/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.exe.release.890968076;cdt.managedbuild.config.gnu.exe.release.890968076.;cdt.managedbuild.tool.gnu.cpp.compiler.exe.release.317133341;cdt.managedbuild.tool.gnu.cpp.compiler.input.1669186843">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.exe.release.890968076;cdt.managedbuild.config.gnu.exe.release.890968076.;cdt.managedbuild.tool.gnu.c.compiler.exe.release.279374166;cdt.managedbuild.tool.gnu.c.compiler.input.1951510828">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.exe.debug.684675641.877862202;cdt.managedbuild.config.gnu.exe.debug.684675641.877862202.;cdt.managedbuild.tool.gnu.c.compiler.exe.debug.470861430;cdt.managedbuild.tool.gnu.c.compiler.input.1965017009">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileC"/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.exe.debug.684675641;cdt.managedbuild.config.gnu.exe.debug.684675641.;cdt.managedbuild.tool.gnu.c.compiler.exe.debug.1377495991;cdt.managedbuild.tool.gnu.c.compiler.input.1540019914">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		</scannerConfigBuildInfo>
+	</storageModule>
+</cproject>

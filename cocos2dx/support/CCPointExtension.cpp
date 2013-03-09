@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2007      Scott Lembcke
 Copyright (c) 2010      Lam Pham
 
@@ -27,101 +27,99 @@ THE SOFTWARE.
 #include "CCPointExtension.h"
 #include "ccMacros.h" // FLT_EPSILON
 #include <stdio.h>
-namespace   cocos2d {
+
+NS_CC_BEGIN
 
 #define kCCPointEpsilon FLT_EPSILON
 
-CGFloat
+float
 ccpLength(const CCPoint& v)
 {
-	return sqrtf(ccpLengthSQ(v));
+    return sqrtf(ccpLengthSQ(v));
 }
 
-CGFloat
+float
 ccpDistance(const CCPoint& v1, const CCPoint& v2)
 {
-	return ccpLength(ccpSub(v1, v2));
+    return ccpLength(ccpSub(v1, v2));
 }
 
 CCPoint
 ccpNormalize(const CCPoint& v)
 {
-	return ccpMult(v, 1.0f/ccpLength(v));
+    return ccpMult(v, 1.0f/ccpLength(v));
 }
 
 CCPoint
-ccpForAngle(const CGFloat a)
+ccpForAngle(const float a)
 {
-	return ccp(cosf(a), sinf(a));
+    return ccp(cosf(a), sinf(a));
 }
 
-CGFloat
+float
 ccpToAngle(const CCPoint& v)
 {
-	return atan2f(v.y, v.x);
+    return atan2f(v.y, v.x);
 }
 
 CCPoint ccpLerp(const CCPoint& a, const CCPoint& b, float alpha)
 {
-	return ccpAdd(ccpMult(a, 1.f - alpha), ccpMult(b, alpha));
+    return ccpAdd(ccpMult(a, 1.f - alpha), ccpMult(b, alpha));
 }
 
 float clampf(float value, float min_inclusive, float max_inclusive)
 {
-	if (min_inclusive > max_inclusive) {
-		float ftmp;
-		ftmp = min_inclusive;
-		min_inclusive = max_inclusive;
-		max_inclusive = min_inclusive;
-	}
-	return value < min_inclusive ? min_inclusive : value < max_inclusive? value : max_inclusive;
+    if (min_inclusive > max_inclusive) {
+        CC_SWAP(min_inclusive, max_inclusive, float);
+    }
+    return value < min_inclusive ? min_inclusive : value < max_inclusive? value : max_inclusive;
 }
 
 CCPoint ccpClamp(const CCPoint& p, const CCPoint& min_inclusive, const CCPoint& max_inclusive)
 {
-	return ccp(clampf(p.x,min_inclusive.x,max_inclusive.x), clampf(p.y, min_inclusive.y, max_inclusive.y));
+    return ccp(clampf(p.x,min_inclusive.x,max_inclusive.x), clampf(p.y, min_inclusive.y, max_inclusive.y));
 }
 
 CCPoint ccpFromSize(const CCSize& s)
 {
-	return ccp(s.width, s.height);
+    return ccp(s.width, s.height);
 }
 
 CCPoint ccpCompOp(const CCPoint& p, float (*opFunc)(float))
 {
-	return ccp(opFunc(p.x), opFunc(p.y));
+    return ccp(opFunc(p.x), opFunc(p.y));
 }
 
 bool ccpFuzzyEqual(const CCPoint& a, const CCPoint& b, float var)
 {
-	if(a.x - var <= b.x && b.x <= a.x + var)
-		if(a.y - var <= b.y && b.y <= a.y + var)
-			return true;
-	return false;
+    if(a.x - var <= b.x && b.x <= a.x + var)
+        if(a.y - var <= b.y && b.y <= a.y + var)
+            return true;
+    return false;
 }
 
 CCPoint ccpCompMult(const CCPoint& a, const CCPoint& b)
 {
-	return ccp(a.x * b.x, a.y * b.y);
+    return ccp(a.x * b.x, a.y * b.y);
 }
 
 float ccpAngleSigned(const CCPoint& a, const CCPoint& b)
 {
-	CCPoint a2 = ccpNormalize(a);
+    CCPoint a2 = ccpNormalize(a);
     CCPoint b2 = ccpNormalize(b);
-	float angle = atan2f(a2.x * b2.y - a2.y * b2.x, ccpDot(a2, b2));
-	if( fabs(angle) < kCCPointEpsilon ) return 0.f;
-	return angle;
+    float angle = atan2f(a2.x * b2.y - a2.y * b2.x, ccpDot(a2, b2));
+    if( fabs(angle) < kCCPointEpsilon ) return 0.f;
+    return angle;
 }
 
 CCPoint ccpRotateByAngle(const CCPoint& v, const CCPoint& pivot, float angle)
 {
-	CCPoint r = ccpSub(v, pivot);
+    CCPoint r = ccpSub(v, pivot);
     float cosa = cosf(angle), sina = sinf(angle);
-	float t = r.x;
+    float t = r.x;
     r.x = t*cosa - r.y*sina + pivot.x;
     r.y = t*sina + r.y*cosa + pivot.y;
-	return r;
+    return r;
 }
 
 
@@ -153,8 +151,8 @@ CCPoint ccpIntersectPoint(const CCPoint& A, const CCPoint& B, const CCPoint& C, 
 }
 
 bool ccpLineIntersect(const CCPoint& A, const CCPoint& B, 
-					  const CCPoint& C, const CCPoint& D,
-					  float *S, float *T)
+                      const CCPoint& C, const CCPoint& D,
+                      float *S, float *T)
 {
     // FAIL: Line undefined
     if ( (A.x==B.x && A.y==B.y) || (C.x==D.x && C.y==D.y) )
@@ -197,8 +195,9 @@ bool ccpLineIntersect(const CCPoint& A, const CCPoint& B,
 
 float ccpAngle(const CCPoint& a, const CCPoint& b)
 {
-	float angle = acosf(ccpDot(ccpNormalize(a), ccpNormalize(b)));
-	if( fabs(angle) < kCCPointEpsilon ) return 0.f;
-	return angle;
+    float angle = acosf(ccpDot(ccpNormalize(a), ccpNormalize(b)));
+    if( fabs(angle) < kCCPointEpsilon ) return 0.f;
+    return angle;
 }
-}//namespace   cocos2d 
+
+NS_CC_END

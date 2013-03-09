@@ -1,48 +1,23 @@
-1. The usage of tolua++
-    You can use the command to generate the LuaCocos2d.cpp:
-tolua++.exe -tCocos2d -o LuaCocos2d.cpp Cocos2d.pkg
+1. Generating the lua<-->C bindings with tolua++
 
-2. Modify the generated file
-After you run the command, the generated file under the
-directory the same as tolua++.exe. cocos2dx/lua_support/LuaCocos2d.cpp
-is generate by this way. But here are some differents between them, because
-tolua++.exe generates some error codes about the template. The errors are:
+    Build scripts for windows (build.bat) and unix (build.sh) are provided
+    to generate the relevant files after modifying the .pkg files.  These
+    scripts basically run the following command:
 
--------------------------------------------------------------------------------------------
-               genereated code               |            correct code                    |
--------------------------------------------------------------------------------------------
-CCMutableArray<cocos2d::CCSpriteFrame*>      | cocos2d::CCMutableArray<CCSpriteFrame*>    |
--------------------------------------------------------------------------------------------
-CCMutableArray<cocos2d::CCFiniteTimeAction*> | cocos2d::CCMutableArray<CCFiniteTimeAction*>|
---------------------------------------------------------------------------------------------
-CCMutableArray<cocos2d::CCObject*>	     | cocos2d::CCMutableArray<CCObject*>          |
---------------------------------------------------------------------------------------------
+        tolua++.exe -L basic.lua -o LuaCocos2d.cpp Cocos2d.pkg
 
-Manually add tolua_get_cocos2d__CCLayer___CCNode__, otherwise layer.__CCNode__:fun call will failed
-/* get function: __CCNode__ of class  cocos2d::CCLayer */
-#ifndef TOLUA_DISABLE_tolua_get_cocos2d__CCLayer___CCNode__
-static int tolua_get_cocos2d__CCLayer___CCNode__(lua_State* tolua_S)
-{
-    cocos2d::CCLayer* self = (cocos2d::CCLayer*)  tolua_tousertype(tolua_S,1,0);
-#ifndef TOLUA_RELEASE
-    if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable '__CCNode__'",NULL);
-#endif
-#ifdef __cplusplus
-    tolua_pushusertype(tolua_S,(void*)static_cast<cocos2d::CCNode*>(self), "cocos2d::CCNode");
-#else
-    tolua_pushusertype(tolua_S,(void*)((cocos2d::CCNode*)self), "cocos2d::CCNode");
-#endif
-    return 1;
-}
-#endif //#ifndef TOLUA_DISABLE
+    This will generate the bindings file and patch it with come cocos2dx
+    specific modifications.
 
-tolua_variable(tolua_S,"__CCNode__",tolua_get_cocos2d__CCLayer___CCNode__,NULL);
+    On POSIX systems you can also just run "make" to build the bindings
+    if/when you change .pkg files.
 
-3. The regular to write .pkg
-1) enum keeps the same
-2) remove CC_DLL for the class defines, pay attention to multi inherites
-3) remove inline keyword for declaration and implementation
-4) remove public protect and private
-5) remove the decalration of class member variable
-6) keep static keyword
-7) remove memeber functions that declared as private or protected 
+2. Writing .pkg files
+
+    1) enum keeps the same
+    2) remove CC_DLL for the class defines, pay attention to multi inherites
+    3) remove inline keyword for declaration and implementation
+    4) remove public protect and private
+    5) remove the decalration of class member variable
+    6) keep static keyword
+    7) remove memeber functions that declared as private or protected 

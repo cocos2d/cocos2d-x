@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2011      Zynga Inc.
 
@@ -25,16 +25,15 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCScene.h"
-#include "CCPointExtension.h"
+#include "support/CCPointExtension.h"
 #include "CCDirector.h"
 
-namespace   cocos2d {
+NS_CC_BEGIN
 
 CCScene::CCScene()
 {
-	m_bIsRelativeAnchorPoint = false;
-	setAnchorPoint(ccp(0.5f, 0.5f));
-	m_eSceneType = ccNormalScene;
+    m_bIgnoreAnchorPointForPosition = true;
+    setAnchorPoint(ccp(0.5f, 0.5f));
 }
 
 CCScene::~CCScene()
@@ -43,30 +42,31 @@ CCScene::~CCScene()
 
 bool CCScene::init()
 {
-	bool bRet = false;
- 	do 
- 	{
- 		CCDirector * pDirector;
- 		CC_BREAK_IF( ! (pDirector = CCDirector::sharedDirector()) );
- 		this->setContentSize(pDirector->getWinSize());
- 		// success
- 		bRet = true;
- 	} while (0);
- 	return bRet;
+    bool bRet = false;
+     do 
+     {
+         CCDirector * pDirector;
+         CC_BREAK_IF( ! (pDirector = CCDirector::sharedDirector()) );
+         this->setContentSize(pDirector->getWinSize());
+         // success
+         bRet = true;
+     } while (0);
+     return bRet;
 }
 
-CCScene *CCScene::node()
+CCScene *CCScene::create()
 {
-	CCScene *pRet = new CCScene();
-	if (pRet && pRet->init())
-	{
-		pRet->autorelease();
-		return pRet;
-	}
+    CCScene *pRet = new CCScene();
+    if (pRet && pRet->init())
+    {
+        pRet->autorelease();
+        return pRet;
+    }
     else
     {
-	    CC_SAFE_DELETE(pRet)
-	    return NULL;
+        CC_SAFE_DELETE(pRet);
+        return NULL;
     }
 }
-}//namespace   cocos2d 
+
+NS_CC_END

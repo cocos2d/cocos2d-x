@@ -24,18 +24,21 @@ THE SOFTWARE.
 
 #include "CCThread.h"
 
-#if CC_SUPPORT_MULTITHREAD
+// iOS and Mac already has a CCThread.mm
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS && CC_TARGET_PLATFORM != CC_PLATFORM_MAC)
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-#include "win32/CCThread_win32.cpp"
-#endif // CC_PLATFORM_WIN32
+NS_CC_BEGIN
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WOPHONE)
-#include "wophone/CCThread_wophone.cpp"
-#endif // CC_PLATFORM_WOPHONE
+CCThread::~CCThread()
+{
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-#include "android/CCThread_android.cpp"
-#endif // CC_PLATFORM_ANDROID
+}
 
-#endif  // CC_SUPPORT_MULTITHREAD
+void CCThread::createAutoreleasePool()
+{
+
+}
+
+NS_CC_END
+
+#endif

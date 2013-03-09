@@ -33,20 +33,20 @@ typedef xmlModule *xmlModulePtr;
  * enumeration of options that can be passed down to xmlModuleOpen()
  */
 typedef enum {
-    XML_MODULE_LAZY = 1,	/* lazy binding */
-    XML_MODULE_LOCAL= 2		/* local binding */
+    XML_MODULE_LAZY = 1,    /* lazy binding */
+    XML_MODULE_LOCAL= 2        /* local binding */
 } xmlModuleOption;
 
-XMLPUBFUN xmlModulePtr XMLCALL xmlModuleOpen	(const char *filename,
-						 int options);
+XMLPUBFUN xmlModulePtr XMLCALL xmlModuleOpen    (const char *filename,
+                         int options);
 
-XMLPUBFUN int XMLCALL xmlModuleSymbol		(xmlModulePtr module,
-						 const char* name,
-						 void **result);
+XMLPUBFUN int XMLCALL xmlModuleSymbol        (xmlModulePtr module,
+                         const char* name,
+                         void **result);
 
-XMLPUBFUN int XMLCALL xmlModuleClose		(xmlModulePtr module);
+XMLPUBFUN int XMLCALL xmlModuleClose        (xmlModulePtr module);
 
-XMLPUBFUN int XMLCALL xmlModuleFree		(xmlModulePtr module);
+XMLPUBFUN int XMLCALL xmlModuleFree        (xmlModulePtr module);
 
 #ifdef __cplusplus
 }

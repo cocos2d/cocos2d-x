@@ -1,29 +1,24 @@
 
-#include "CCNode.h"
-#include "CCProtocols.h"
-#include "ccTypes.h"
+class CCAtlasNode : public CCNode
+{
+	CCTextureAtlas* getTextureAtlas();
+	void setTextureAtlas(CCTextureAtlas* atlas);
 
-namespace   cocos2d {
-	class CCTextureAtlas;
+	CCTexture2D* getTexture(void);
+    void setTexture(CCTexture2D *texture);
 
-	class  CCAtlasNode : public CCNode, public CCRGBAProtocol, public CCTextureProtocol
-	{
+	ccColor3B getColor();
+	void setColor(ccColor3B color);
 
-		CCAtlasNode();
+	unsigned int getQuadsToDraw();
+	void setQuadsToDraw(unsigned int quadsToDraw);
 
-		static CCAtlasNode * atlasWithTileFile(const char* tile,unsigned int tileWidth, unsigned int tileHeight, unsigned int itemsToRender);
-		bool initWithTileFile(const char* tile, unsigned int tileWidth, unsigned int tileHeight, unsigned int itemsToRender);
+	GLubyte getOpacity();
+	void setOpacity(GLubyte opacity);
 
-		void updateAtlasValues();
+    void updateAtlasValues();
+	bool isOpacityModifyRGB();
+	void setOpacityModifyRGB(bool isOpacityModifyRGB);
 
-		void draw();
-		CCRGBAProtocol* convertToRGBAProtocol();	
-		CCTexture2D* getTexture(void);	
-		void setTexture(CCTexture2D *texture);
-
-
-	};
-}//namespace   cocos2d 
-
-
-
+    static CCAtlasNode * create(const char* tile, unsigned int tileWidth, unsigned int tileHeight, unsigned int itemsToRender);
+};

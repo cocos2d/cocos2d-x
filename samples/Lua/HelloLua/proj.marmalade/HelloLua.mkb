@@ -1,0 +1,51 @@
+options
+{
+	module_path="../../../../cocos2dx/proj.marmalade/;../../../../CocosDenshion/proj.marmalade/;../../../../scripting/lua/proj.marmalade/"
+	s3e-data-dir = "../Resources/"
+}
+
+includepaths
+{
+	../Classes
+}
+subprojects
+{
+	IwGL
+	cocos2dx
+	CocosDenshion
+	lua
+}
+
+assets
+{
+	(../Resources)
+	background.mp3
+	background.ogg
+	effect1.wav
+	crop.png
+	dog.png
+	land.png
+	menu1.png
+	menu2.png
+	farm.jpg
+	hello.lua
+	hello2.lua
+
+	fonts
+
+}
+
+
+files
+{
+	[Main]
+	(src)
+	Main.h
+	Main.cpp
+
+	(../Classes)
+	AppDelegate.h
+	AppDelegate.cpp
+}
+
+

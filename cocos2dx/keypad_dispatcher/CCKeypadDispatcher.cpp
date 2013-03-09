@@ -25,9 +25,8 @@ THE SOFTWARE.
 #include "CCKeypadDispatcher.h"
 #include "support/data_support/ccCArray.h"
 
-namespace   cocos2d {
+NS_CC_BEGIN
 
-static CCKeypadDispatcher* s_KeypadDispatcher = NULL;
 //------------------------------------------------------------------
 //
 // CCKeypadDispatcher
@@ -38,7 +37,8 @@ CCKeypadDispatcher::CCKeypadDispatcher()
 , m_bToAdd(false)
 , m_bToRemove(false)
 {
-    m_pDelegates = new KeypadDelegateArray;
+    m_pDelegates = CCArray::create();
+    m_pDelegates->retain();
 
     m_pHandlersToAdd    = ccCArrayNew(8);
     m_pHandlersToRemove = ccCArrayNew(8);
@@ -46,35 +46,16 @@ CCKeypadDispatcher::CCKeypadDispatcher()
 
 CCKeypadDispatcher::~CCKeypadDispatcher()
 {
-	CC_SAFE_RELEASE(m_pDelegates);
-	if (m_pHandlersToAdd)
-	{
-		ccCArrayFree(m_pHandlersToAdd);
-	}
+    CC_SAFE_RELEASE(m_pDelegates);
+    if (m_pHandlersToAdd)
+    {
+        ccCArrayFree(m_pHandlersToAdd);
+    }
     
-	if (m_pHandlersToRemove)
-	{
-		ccCArrayFree(m_pHandlersToRemove);
-	}    
-}
-
-CCKeypadDispatcher* CCKeypadDispatcher::sharedDispatcher()
-{
-    if (! s_KeypadDispatcher)
+    if (m_pHandlersToRemove)
     {
-        s_KeypadDispatcher = new CCKeypadDispatcher;
-    }
-
-    return s_KeypadDispatcher;
-}
-
-void CCKeypadDispatcher::purgeSharedDispatcher()
-{
-    if (s_KeypadDispatcher)
-    {
-        s_KeypadDispatcher->release();
-        s_KeypadDispatcher = NULL;
-    }
+        ccCArrayFree(m_pHandlersToRemove);
+    }    
 }
 
 void CCKeypadDispatcher::removeDelegate(CCKeypadDelegate* pDelegate)
@@ -124,12 +105,11 @@ void CCKeypadDispatcher::forceAddDelegate(CCKeypadDelegate* pDelegate)
 
 void CCKeypadDispatcher::forceRemoveDelegate(CCKeypadDelegate* pDelegate)
 {
-    CCKeypadHandler  *pHandler;
-    CCMutableArray<CCKeypadHandler*>::CCMutableArrayIterator  iter;
-
-    for (iter = m_pDelegates->begin(); iter != m_pDelegates->end(); ++iter)
+    CCKeypadHandler* pHandler = NULL;
+    CCObject* pObj = NULL;
+    CCARRAY_FOREACH(m_pDelegates, pObj)
     {
-        pHandler = *iter;
+        pHandler = (CCKeypadHandler*)pObj;
         if (pHandler && pHandler->getDelegate() == pDelegate)
         {
             m_pDelegates->removeObject(pHandler);
@@ -140,19 +120,19 @@ void CCKeypadDispatcher::forceRemoveDelegate(CCKeypadDelegate* pDelegate)
 
 bool CCKeypadDispatcher::dispatchKeypadMSG(ccKeypadMSGType nMsgType)
 {
-    CCKeypadHandler  *pHandler;
-    CCKeypadDelegate *pDelegate;
-    CCMutableArray<CCKeypadHandler*>::CCMutableArrayIterator  iter;
+    CCKeypadHandler*  pHandler = NULL;
+    CCKeypadDelegate* pDelegate = NULL;
 
     m_bLocked = true;
 
     if (m_pDelegates->count() > 0)
     {
-        for (iter = m_pDelegates->begin(); iter != m_pDelegates->end(); ++iter)
+        CCObject* pObj = NULL;
+        CCARRAY_FOREACH(m_pDelegates, pObj)
         {
-            CC_BREAK_IF(!(*iter));
+            CC_BREAK_IF(!pObj);
 
-            pHandler = *iter;
+            pHandler = (CCKeypadHandler*)pObj;
             pDelegate = pHandler->getDelegate();
 
             switch (nMsgType)
@@ -193,4 +173,4 @@ bool CCKeypadDispatcher::dispatchKeypadMSG(ccKeypadMSGType nMsgType)
     return true;
 }
 
-}
+NS_CC_END

@@ -26,7 +26,7 @@ THE SOFTWARE.
 
 using namespace std;
 
-namespace   cocos2d {
+NS_CC_BEGIN
 
 CCSet::CCSet(void)
 {
@@ -37,85 +37,88 @@ CCSet::CCSet(const CCSet &rSetObject)
 {
     m_pSet = new set<CCObject *>(*rSetObject.m_pSet);
 
-	// call retain of members
-	CCSetIterator iter;
-	for (iter = m_pSet->begin(); iter != m_pSet->end(); ++iter)
-	{
-		if (! (*iter))
-		{
-			break;
-		}
+    // call retain of members
+    CCSetIterator iter;
+    for (iter = m_pSet->begin(); iter != m_pSet->end(); ++iter)
+    {
+        if (! (*iter))
+        {
+            break;
+        }
 
-		(*iter)->retain();
-	}
+        (*iter)->retain();
+    }
 }
 
 CCSet::~CCSet(void)
 {
-	// call release() of elements
-	CCSetIterator iter;
-	for (iter = m_pSet->begin(); iter != m_pSet->end(); ++iter)
-	{
-		if (! (*iter))
-		{
-			break;
-		}
-
-		(*iter)->release();
-	}
-
-	CC_SAFE_DELETE(m_pSet);
+    removeAllObjects();
+    CC_SAFE_DELETE(m_pSet);
 }
 
 CCSet* CCSet::copy(void)
 {
-	CCSet *pSet = new CCSet(*this);
+    CCSet *pSet = new CCSet(*this);
 
-	return pSet;
+    return pSet;
 }
 
 CCSet* CCSet::mutableCopy(void)
 {
-	return copy();
+    return copy();
 }
 
 int CCSet::count(void)
 {
-	return (int)m_pSet->size();
+    return (int)m_pSet->size();
 }
 
 void CCSet::addObject(CCObject *pObject)
 {
-	CC_SAFE_RETAIN(pObject);
-	m_pSet->insert(pObject);
+    CC_SAFE_RETAIN(pObject);
+    m_pSet->insert(pObject);
 }
 
 void CCSet::removeObject(CCObject *pObject)
 {
-	m_pSet->erase(pObject);
-	CC_SAFE_RELEASE(pObject);
+    m_pSet->erase(pObject);
+    CC_SAFE_RELEASE(pObject);
+}
+
+void CCSet::removeAllObjects()
+{
+    CCSetIterator it;
+    for (it = m_pSet->begin(); it != m_pSet->end(); ++it)
+    {
+        if (! (*it))
+        {
+            break;
+        }
+
+        (*it)->release();
+    }
 }
 
 bool CCSet::containsObject(CCObject *pObject)
 {
-	return m_pSet->find(pObject) != m_pSet->end();
+    return m_pSet->find(pObject) != m_pSet->end();
 }
 
 CCSetIterator CCSet::begin(void)
 {
-	return m_pSet->begin();
+    return m_pSet->begin();
 }
 
 CCSetIterator CCSet::end(void)
 {
-	return m_pSet->end();
+    return m_pSet->end();
 }
 
 CCObject* CCSet::anyObject()
 {
     if (!m_pSet || m_pSet->empty())
     {
-        return NULL;
+        return 0;
     }
     
     CCSetIterator it;
@@ -128,7 +131,7 @@ CCObject* CCSet::anyObject()
         }
     }
 
-    return NULL;
+    return 0;
 }
 
-}//namespace   cocos2d 
+NS_CC_END

@@ -1,0 +1,474 @@
+options
+{
+	module_path="../../../../cocos2dx/proj.marmalade/;../../../../CocosDenshion/proj.marmalade/;../../../../extensions/proj.marmalade/;../../../../external/chipmunk/proj.marmalade/;../../../../external/Box2D/proj.marmalade/"
+	s3e-data-dir = "../Resources/"
+}
+
+includepaths
+{
+	../Classes
+}
+subprojects
+{
+	IwGL
+	cocos2dx
+	cocos2dx-ext
+	Box2D
+	CocosDenshion
+#	chipmunk
+}
+
+defines
+{
+	CC_ENABLE_BOX2D_INTEGRATION=1
+}
+assets
+{
+	(../Resources)
+}
+
+files
+{
+	[Main]
+	(src)
+	Main.h
+	Main.cpp
+
+	(../Classes)
+	AppDelegate.cpp
+	AppDelegate.h
+	controller.cpp
+	controller.h
+	testBasic.cpp
+	testBasic.h
+	testResource.h
+	tests.h
+	VisibleRect.cpp
+	VisibleRect.h
+
+	[Test/AccelerometerTest]
+	(../Classes/AccelerometerTest)
+	AccelerometerTest.cpp
+	AccelerometerTest.h
+
+	[Test/ActionManagerTest]
+	(../Classes/ActionManagerTest)
+	ActionManagerTest.cpp
+	ActionManagerTest.h
+
+	[Test/ActionsEaseTest]
+	(../Classes/ActionsEaseTest)
+	ActionsEaseTest.cpp
+	ActionsEaseTest.h
+
+	[Test/ActionsProgressTest]
+	(../Classes/ActionsProgressTest)
+	ActionsProgressTest.cpp
+	ActionsProgressTest.h
+
+	[Test/ActionsTest]
+	(../Classes/ActionsTest)
+	ActionsTest.cpp
+	ActionsTest.h
+
+	[Test/Box2DTest]
+	(../Classes/Box2DTest)
+	Box2dTest.cpp
+	Box2dTest.h
+
+	[Test/Box2DTestBed]
+	(../Classes/Box2DTestBed)
+	Box2dView.cpp
+	Box2dView.h
+	GLES-Render.cpp
+	GLES-Render.h
+	Test.cpp
+	Test.h
+	TestEntries.cpp
+
+	[Test/Box2DTestBed/Tests]
+	(../Classes/Box2DTestBed/Tests)
+	AddPair.h
+	ApplyForce.h
+	BodyTypes.h
+	Breakable.h
+	Bridge.h
+	BulletTest.h
+	Cantilever.h
+	Car.h
+	Chain.h
+	CharacterCollision.h
+	CollisionFiltering.h
+	CollisionProcessing.h
+	CompoundShapes.h
+	Confined.h
+	ContinuousTest.h
+	DistanceTest.h
+	Dominos.h
+	DumpShell.h
+	DynamicTreeTest.h
+	EdgeShapes.h
+	EdgeTest.h
+	Gears.h
+	OneSidedPlatform.h
+	Pinball.h
+	PolyCollision.h
+	PolyShapes.h
+	Prismatic.h
+	Pulleys.h
+	Pyramid.h
+	RayCast.h
+	Revolute.h
+	Rope.h
+	RopeJoint.h
+	SensorTest.h
+	ShapeEditing.h
+	SliderCrank.h
+	SphereStack.h
+	TheoJansen.h
+	Tiles.h
+	TimeOfImpact.h
+	Tumbler.h
+	VaryingFriction.h
+	VaryingRestitution.h
+	VerticalStack.h
+	Web.h
+
+	[Test/BugsTest]
+	(../Classes/BugsTest)
+	Bug-1159.cpp
+	Bug-1159.h
+	Bug-1174.cpp
+	Bug-1174.h
+	Bug-350.cpp
+	Bug-350.h
+	Bug-422.cpp
+	Bug-422.h
+	Bug-624.cpp
+	Bug-624.h
+	Bug-886.cpp
+	Bug-886.h
+	Bug-899.cpp
+	Bug-899.h
+	Bug-914.cpp
+	Bug-914.h
+	BugsTest.cpp
+	BugsTest.h
+
+	[Test/BugsTest/Bug-458]
+	(../Classes/BugsTest/Bug-458)
+	Bug-458.cpp
+	Bug-458.h
+	QuestionContainerSprite.cpp
+	QuestionContainerSprite.h
+
+#	[Test/ChipmunkAccelTouchTest]
+#	(../Classes/ChipmunkAccelTouchTest)
+#	ChipmunkAccelTouchTest.cpp
+#	ChipmunkAccelTouchTest.h
+
+	[Test/ClickAndMoveTest]
+	(../Classes/ClickAndMoveTest)
+	ClickAndMoveTest.cpp
+	ClickAndMoveTest.h
+
+	[Test/CocosDenshionTest]
+	(../Classes/CocosDenshionTest)
+	CocosDenshionTest.cpp
+	CocosDenshionTest.h
+
+#	[Test/CurlTest]
+#	(../Classes/CurlTest)
+#	CurlTest.cpp
+#	CurlTest.h
+
+	[Test/CurrentLanguageTest]
+	(../Classes/CurrentLanguageTest)
+	CurrentLanguageTest.cpp
+	CurrentLanguageTest.h
+
+	[Test/DrawPrimitivesTest]
+	(../Classes/DrawPrimitivesTest)
+	DrawPrimitivesTest.cpp
+	DrawPrimitivesTest.h
+
+	[Test/EffectsAdvancedTest]
+	(../Classes/EffectsAdvancedTest)
+	EffectsAdvancedTest.cpp
+	EffectsAdvancedTest.h
+
+	[Test/EffectsTest]
+	(../Classes/EffectsTest)
+	EffectsTest.cpp
+	EffectsTest.h
+
+	[Test/ExtensionsTest]
+	(../Classes/ExtensionsTest)
+	ExtensionsTest.cpp
+	ExtensionsTest.h
+
+#	[Test/ExtensionsTest/CocosBuilderTest]
+#	(../Classes/ExtensionsTest/CocosBuilderTest)
+#	CocosBuilderTest.cpp
+#	CocosBuilderTest.h
+#
+#	[Test/ExtensionsTest/CocosBuilderTest/AnimationsTest]
+#	(../Classes/ExtensionsTest/CocosBuilderTest/AnimationsTest)
+#	AnimationsLayerLoader.h
+#	AnimationsTestLayer.cpp
+#	AnimationsTestLayer.h
+#
+#	[Test/ExtensionsTest/CocosBuilderTest/ButtonTest]
+#	(../Classes/ExtensionsTest/CocosBuilderTest/ButtonTest)
+#	ButtonTestLayer.cpp
+#	ButtonTestLayer.h
+#	ButtonTestLayerLoader.h
+#
+#	[Test/ExtensionsTest/CocosBuilderTest/HelloCocosBuilder]
+#	(../Classes/ExtensionsTest/CocosBuilderTest/HelloCocosBuilder)
+#	HelloCocosBuilderLayer.cpp
+#	HelloCocosBuilderLayer.h
+#	HelloCocosBuilderLayerLoader.h
+#
+#	[Test/ExtensionsTest/CocosBuilderTest/LabelTest]
+#	(../Classes/ExtensionsTest/CocosBuilderTest/LabelTest)
+#	LabelTestLayer.h
+#	LabelTestLayerLoader.h
+#
+#	[Test/ExtensionsTest/CocosBuilderTest/MenuTest]
+#	(../Classes/ExtensionsTest/CocosBuilderTest/MenuTest)
+#	MenuTestLayer.cpp
+#	MenuTestLayer.h
+#	MenuTestLayerLoader.h
+#
+#	[Test/ExtensionsTest/CocosBuilderTest/ParticleSystemTest]
+#	(../Classes/ExtensionsTest/CocosBuilderTest/ParticleSystemTest)
+#	ParticleSystemTestLayer.h
+#	ParticleSystemTestLayerLoader.h
+#
+#	[Test/ExtensionsTest/CocosBuilderTest/ScrollViewTest]
+#	(../Classes/ExtensionsTest/CocosBuilderTest/ScrollViewTest)
+#	ScrollViewTestLayer.h
+#	ScrollViewTestLayerLoader.h
+#
+#	[Test/ExtensionsTest/CocosBuilderTest/SpriteTest]
+#	(../Classes/ExtensionsTest/CocosBuilderTest/SpriteTest)
+#	SpriteTestLayer.h
+#	SpriteTestLayerLoader.h
+#
+#	[Test/ExtensionsTest/CocosBuilderTest/TestHeader]
+#	(../Classes/ExtensionsTest/CocosBuilderTest/TestHeader)
+#	TestHeaderLayer.cpp
+#	TestHeaderLayer.h
+#	TestHeaderLayerLoader.h
+
+	[Test/ExtensionsTest/ControlExtensionTest]
+	(../Classes/ExtensionsTest/ControlExtensionTest)
+	CCControlScene.cpp
+	CCControlScene.h
+	CCControlSceneManager.cpp
+	CCControlSceneManager.h
+
+	[Test/ExtensionsTest/ControlExtensionTest/CCControlButtonTest]
+	(../Classes/ExtensionsTest/ControlExtensionTest/CCControlButtonTest)
+	CCControlButtonTest.cpp
+	CCControlButtonTest.h
+
+	[Test/ExtensionsTest/ControlExtensionTest/CCControlColourPicker]
+	(../Classes/ExtensionsTest/ControlExtensionTest/CCControlColourPicker)
+	CCControlColourPickerTest.cpp
+	CCControlColourPickerTest.h
+
+	[Test/ExtensionsTest/ControlExtensionTest/CCControlPotentiometerTest]
+	(../Classes/ExtensionsTest/ControlExtensionTest/CCControlPotentiometerTest)
+	CCControlPotentiometerTest.cpp
+	CCControlPotentiometerTest.h
+
+	[Test/ExtensionsTest/ControlExtensionTest/CCControlSliderTest]
+	(../Classes/ExtensionsTest/ControlExtensionTest/CCControlSliderTest)
+	CCControlSliderTest.cpp
+	CCControlSliderTest.h
+
+	[Test/ExtensionsTest/ControlExtensionTest/CCControlStepperTest]
+	(../Classes/ExtensionsTest/ControlExtensionTest/CCControlStepperTest)
+	CCControlStepperTest.cpp
+	CCControlStepperTest.h
+
+	[Test/ExtensionsTest/ControlExtensionTest/CCControlSwitchTest]
+	(../Classes/ExtensionsTest/ControlExtensionTest/CCControlSwitchTest)
+	CCControlSwitchTest.cpp
+	CCControlSwitchTest.h
+
+#	[Test/ExtensionsTest/EditBoxTest]
+#	(../Classes/ExtensionsTest/EditBoxTest)
+#	EditBoxTest.cpp
+#	EditBoxTest.h
+
+#	[Test/ExtensionsTest/NetworkTest]
+#	(../Classes/ExtensionsTest/NetworkTest)
+#	HttpClientTest.cpp
+#	HttpClientTest.h
+
+#	[Test/ExtensionsTest/NotificationCenterTest]
+#	(../Classes/ExtensionsTest/NotificationCenterTest)
+#	NotificationCenterTest.cpp
+#	NotificationCenterTest.h
+
+	[Test/ExtensionsTest/TableViewTest]
+	(../Classes/ExtensionsTest/TableViewTest)
+	CustomTableViewCell.cpp
+	CustomTableViewCell.h
+	TableViewTestScene.cpp
+	TableViewTestScene.h
+
+	[Test/FontTest]
+	(../Classes/FontTest)
+	FontTest.cpp
+	FontTest.h
+
+	[Test/IntervalTest]
+	(../Classes/IntervalTest)
+	IntervalTest.cpp
+	IntervalTest.h
+
+	[Test/KeypadTest]
+	(../Classes/KeypadTest)
+	KeypadTest.cpp
+	KeypadTest.h
+
+	[Test/LabelTest]
+	(../Classes/LabelTest)
+	LabelTest.cpp
+	LabelTest.h
+
+	[Test/LayerTest]
+	(../Classes/LayerTest)
+	LayerTest.cpp
+	LayerTest.h
+
+	[Test/MenuTest]
+	(../Classes/MenuTest)
+	MenuTest.cpp
+	MenuTest.h
+
+	[Test/MotionStreakTest]
+	(../Classes/MotionStreakTest)
+	MotionStreakTest.cpp
+	MotionStreakTest.h
+
+	[Test/MutiTouchTest]
+	(../Classes/MutiTouchTest)
+	MutiTouchTest.cpp
+	MutiTouchTest.h
+
+	[Test/NodeTest]
+	(../Classes/NodeTest)
+	NodeTest.cpp
+	NodeTest.h
+
+	[Test/ParallaxTest]
+	(../Classes/ParallaxTest)
+	ParallaxTest.cpp
+	ParallaxTest.h
+
+	[Test/ParticleTest]
+	(../Classes/ParticleTest)
+	ParticleTest.cpp
+	ParticleTest.h
+
+	[Test/PerformanceTest]
+	(../Classes/PerformanceTest)
+	PerformanceNodeChildrenTest.cpp
+	PerformanceNodeChildrenTest.h
+	PerformanceParticleTest.cpp
+	PerformanceParticleTest.h
+	PerformanceSpriteTest.cpp
+	PerformanceSpriteTest.h
+	PerformanceTest.cpp
+	PerformanceTest.h
+	PerformanceTextureTest.cpp
+	PerformanceTextureTest.h
+	PerformanceTouchesTest.cpp
+	PerformanceTouchesTest.h
+
+	[Test/RenderTextureTest]
+	(../Classes/RenderTextureTest)
+	RenderTextureTest.cpp
+	RenderTextureTest.h
+
+	[Test/RotateWorldTest]
+	(../Classes/RotateWorldTest)
+	RotateWorldTest.cpp
+	RotateWorldTest.h
+
+	[Test/SceneTest]
+	(../Classes/SceneTest)
+	SceneTest.cpp
+	SceneTest.h
+
+	[Test/SchedulerTest]
+	(../Classes/SchedulerTest)
+	SchedulerTest.cpp
+	SchedulerTest.h
+
+	[Test/ShaderTest]
+	(../Classes/ShaderTest)
+	ShaderTest.cpp
+	ShaderTest.h
+
+	[Test/SpriteTest]
+	(../Classes/SpriteTest)
+	SpriteTest.cpp
+	SpriteTest.h
+
+	[Test/TextInputTest]
+	(../Classes/TextInputTest)
+	TextInputTest.cpp
+	TextInputTest.h
+
+	[Test/Texture2dTest]
+	(../Classes/Texture2dTest)
+	Texture2dTest.cpp
+	Texture2dTest.h
+
+	[Test/TextureCacheTest]
+	(../Classes/TextureCacheTest)
+	TextureCacheTest.cpp
+	TextureCacheTest.h
+
+	[Test/TileMapTest]
+	(../Classes/TileMapTest)
+	TileMapTest.cpp
+	TileMapTest.h
+
+	[Test/TouchesTest]
+	(../Classes/TouchesTest)
+	Ball.cpp
+	Ball.h
+	Paddle.cpp
+	Paddle.h
+	TouchesTest.cpp
+	TouchesTest.h
+
+	[Test/TransitionsTest]
+	(../Classes/TransitionsTest)
+	TransitionsTest.cpp
+	TransitionsTest.h
+
+	[Test/UserDefaultTest]
+	(../Classes/UserDefaultTest)
+	UserDefaultTest.cpp
+	UserDefaultTest.h
+
+	[Test/ZwoptexTest]
+	(../Classes/ZwoptexTest)
+	ZwoptexTest.cpp
+	ZwoptexTest.h
+
+	[Test/FileUtilsTest]
+	(../Classes/FileUtilsTest)
+	FileUtilsTest.cpp
+	FileUtilsTest.h
+}
+
+

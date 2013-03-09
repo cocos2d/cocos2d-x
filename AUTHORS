@@ -1,36 +1,250 @@
-cocos2d-x authors 
+cocos2d-x authors & contributors
 
 (ordered by the join in time)
 
 Core Developers:
-    Walzer Wang
-    Minggo Zhang
-    WenSheng Yang
-    Bin Zhang
-    RongHong Huang
+    Zhe Wang (Walzer)
+    XiaoMing Zhang (Minggo)
+    JianHua Chen (Dumganhar)
 
 Developers:
+    Ricardo Quesada
+    Rolando Abarca
+        Javascript Binding and testjs
+
+    Jimmy Sambuo
+        fix the bug that SimpleAudioEngine::playEffect() and playBackgroundMusic() play twice on linux
+
+    DarraghCoy
+        fix for loading custom fonts on iOS when referenced from a CCB file
+
+    Waiter
+        fix an error that OpenSLEngine can't load resources from SD card
+
+    billy1380
+        make CCLens3d support concave effect
+
+    benjamesward
+        add Portuguese and Arabic language support
+
+    Victor K(fnz)
+        fix memory leak of CCTextureCache::addImageAsync() on iOS
+
+    tks2shimizu
+        add CCFloat, CCDouble and CCBool
+
+    chenium
+        fix a bug that CCRenderTexture can not work when coming to foreground on Android
+
+    9re(Taro Kobayashi)
+        add Japanese language support
+
+    mingulov
+        improve the speed of accessing to files from apk
+
+    sburavtsov
+        fix for correct unscheduling and instance destruction of extensions/network/HttpClient.cpp
+
+    wenbin wang
+        add error handler when read image data using libjpeg
+        add korean language support
+        fix getDeviceModel bug in android CocosDenshion
+
+    Horcruxes
+        fix the bug that CCArray::createWithContentsOfFile() may not read file data on iOS
+
+    Hu Kaiou
+        contribute the new version of libcurl to support both armv7 & armv7s on iOS
+        fix some memory leak
+
+    ByungChoi
+         modify linux makefiles to fix compiling errors
+
+    edbartley
+         update MSVS and MAC projects to use project-relative path
+         CCControl* should not respond to touches if the control is not visible
+         Some improvements for CCScrollView and CCTableView.
+         Touch priority can't be set to the value specified by a call to CCMenu::setTouchPriority(int).
+         CCTableView crashes if a CCTableViewDelegate is not provided.
+
+    Weeds (Andre Rudlaff)
+        Used fontconfig to enhance font rendering on linux.
+        Fixed a bug about missing horizontal alignment for Custom TTF fonts on linux.
+        Fixed a bug that the truetype fonts from resource directory can't be found on linux.
+
+    Nat Weiss (iphonegamekit.com)
+        author of Mac port
+        add TMX polygon parsing
+
+    XiaoLong Zhang (Chukong Inc)
+    Mike McGary (Zynga)
+    Di Wu (Zynga China)
+        CCBReader and cpp reflection mechanic
+
+    Angus Comrie
+        contributes cocos2d-x port of CCControlExtension.
+
+    Yannick Loriot
+        author of CCControlExtension in cocos2d-iphone.
+
+    Surith Thekkiam (folecr, Zynga)
+        contribute for Android module building
+        Simpler, correct handling of spritesheet sources for CCScale9Sprite.
+
+    Nicolas Gramlich (nicolasgramlich, Zynga)
+        fixed CCDirector to use CCLabelBMFont instead of CCLabelTTF
+        added CCBReader (CCBI format)
+        Added cleanup and reset methods to ScriptingCore.
+
+    Rohan Kuruvilla (rohankuruvilla, Zynga)
+        Improvements to JS Bindings.
+
+    Jianfeng Zou (NetDragon Inc)
+        contributes CCListView and CCTextureWatcher.
+
+    dducharme
+        author of blackberry port
+
+    ImperialPenguin
+        Added TTF support for blackberry port.
+
+    HuaXu Cai (Kongzhong Corporation)
+        author of linux port
+
+    ciaranj
+        add a build file that correctly generates LuaCocos2d.cpp
+        add a lua template
+        add particle systems to lua bindings
+        use ant to generate LuaCocos2d.cpp and lua projects
+
+    Marat Yakupov (moadib)
+        Adds ability of simulating android enter/resume background on win32
+        Adds ability of simulating android back/menu key on win32
+        Adds support for multiple background music sources to CocosDenshion for Blackberry
+
+    Eli Yukelzon (reflog)
+        add a helper method to draw filled polygons
+        improvements to CCUserDefaults
+
     ZhuoShi Shun
-	contribute the lua binding of CocosDenshion
+        contribute the lua binding of CocosDenshion
 
     Jirka Fajfr
     Chris Calm
         authors of CCTexturePVR
 
-    RuiXiang Zhou
-    XiDi Peng
-    AiYu Ye
+    RuiXiang Zhou (NetDragon)
+    XiDi Peng (NetDragon)
+    AiYu Ye (NetDragon)
         authors of lua binding
 
     Max Aksenov
-        author and maintainer of Marmalade(Airplay) port
+        author and maintainer of Airplay port
+
+    Giovanni Zito
+    Francis Styck
+        authors of Marmalade port
+
+    Mat Hopwood( Marmalade official engineer )
+        Marmalade support for gles20 branch
 
     Carlos Sessa
-	implement the accelerometer module onto Android
+        implement the accelerometer module for Android port
 
-    Dumganhar
+    James Chen(dumganhar)
         author of Bada port
 
+    Erawppa
+        implement CCNotificationCenter
+
+    YuLei Liao(dualface)
+        contribute the factor of lua binding
+
+    jreitman
+        fix the bug of asynchronous loading resources for iOS
+
+    Nat Weiss
+        minor enhancements to the Cocos2D-X codebase and Android build scripts
+
+    Qingyun Huang (greathqy)
+        implement CCHttpRequest
+
+    donaldalanmorrison
+        fix some warnings and memory leaks
+
+    Yinghui Peng(mustime)
+        use OpenSL ES to play effects
+        add TestLua sample
+
+    Dongyang Cai(John-cdy)
+        add automatically test tools
+
+    Sergey Vikhirev(BorMor)
+        Remove retina specific methods and logic.
+
+    johnangel
+        OpenGL framebuffer access violation fix.
+        Enable Windows XP support in Visual Studio 2012 Update 1.
+
+    Peter Farkas (fape)
+        contributes Marmalade port for gles20 branch
+        add Hungarian language support
+        fixed compilation errors after adding support of webp image format.
+
+    Tomoaki Shimizu (tks2shimizu)
+        Adding randomObject to CCDictionary.
+
+    Igor Zavorotkin (ivzave)
+        Adding lua support for linux platform.
+
+    Jozef Prídavok (jpridavok)
+        Adding CCEditBox implementation for Mac OSX.
+
+    tiantian20007
+        Fix crash for call runAnimation() in CCBAnimationManagerDelegate::completedAnimationSequenceNamed.
+
+    xyhl515
+        Fixed a bug that CCControlSwitch::setOn(isOn,false) doesn't work.
+        Adds VS2012 Express template installing support.
+
+    DarraghCoy
+        Fix for unaligned memory access crash in CCBReader::readFloat().
+
+    Sergej Tatarincev (SevInf)
+        Making ScriptingCore.cpp compiled fine with C++11 on iOS.
+
+    ThePickleMan
+        Adding 'rotationIsDir' property to ParticleSystem.
+
+    Jianghua (jxhgzs)
+        Adding an additional transform for CCNode.
+
+    giginet
+        Fix CCRepeat#create is recieved bad argument on Lua binding.
+
+    neokim
+        Adds 'setFont' and 'setAnchorPoint' to CCEditBox.
+
+    Sam Clegg (sbc100)
+        Author of Native Client port.
+        Refactor linux build system and fix many warnings.
+
+    Peter Young (young40)
+        Implements setVisible() for CCEditBox
+
+Retired Core Developers:
+    WenSheng Yang
+        Author of windows port, CCTextField,
+        Designer of CCApplication/CCEGLView/platform structure.
+        He's working together with 2dx core team but leading FishingJoy game
+
+    Bin Zhang
+        core-team member but put himself in FishingJoy game since 2012.
+
+    RongHong Huang (flyingpaper)
+        Author of cocos2d-xna and spent all his time on wp7.
+
+
 Cocos2d-x can not grow so fast without the active community.
-Thanks to all developers who report & trace bugs, dicuss the engine usage in forum & QQ groups!
+Thanks to all developers who report & trace bugs, discuss the engine usage in forum & QQ groups!
 Special thanks to Ricardo Quesada for giving us lots of guidances & suggestions.

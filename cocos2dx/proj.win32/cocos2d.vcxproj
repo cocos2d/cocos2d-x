@@ -1,0 +1,424 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectName>libcocos2d</ProjectName>
+    <ProjectGuid>{98A51BA8-FC3A-415B-AC8F-8C7BD464E93E}</ProjectGuid>
+    <RootNamespace>cocos2d-x.win32</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '10.0'">v100</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0'">v110</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v110_xp</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '10.0'">v100</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0'">v110</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v110_xp</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)$(Configuration).win32\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration).win32\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)$(Configuration).win32\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration).win32\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LibraryPath>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LibraryPath>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;$(ProjectDir)..;$(ProjectDir)..\platform\win32;$(ProjectDir)..\platform\third_party\win32\iconv;$(ProjectDir)..\platform\third_party\win32\zlib;$(ProjectDir)..\platform\third_party\win32\libpng;$(ProjectDir)..\platform\third_party\win32\libjpeg;$(ProjectDir)..\platform\third_party\win32\libtiff;$(ProjectDir)..\platform\third_party\win32\libwebp;$(ProjectDir)..\platform\third_party\win32\pthread;$(ProjectDir)..\platform\third_party\win32\OGLES;..\include;$(ProjectDir)..\kazmath\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <DisableSpecificWarnings>4267;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <PreLinkEvent>
+      <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
+xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir)"
+</Command>
+    </PreLinkEvent>
+    <Link>
+      <AdditionalDependencies>opengl32.lib;glew32.lib;libzlib.lib;libpng.lib;libjpeg.lib;libtiff.lib;libwebp.lib;libiconv.lib;pthreadVCE2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)$(ProjectName).dll</OutputFile>
+      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <IgnoreSpecificDefaultLibraries> ;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <ImportLibrary>$(TargetDir)$(TargetName).lib</ImportLibrary>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;$(ProjectDir)..;$(ProjectDir)..\platform\win32;$(ProjectDir)..\platform\third_party\win32\iconv;$(ProjectDir)..\platform\third_party\win32\zlib;$(ProjectDir)..\platform\third_party\win32\libpng;$(ProjectDir)..\platform\third_party\win32\libjpeg;$(ProjectDir)..\platform\third_party\win32\libtiff;$(ProjectDir)..\platform\third_party\win32\libwebp;$(ProjectDir)..\platform\third_party\win32\pthread;$(ProjectDir)..\platform\third_party\win32\OGLES;..\include;$(ProjectDir)..\kazmath\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4267;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <PreLinkEvent>
+      <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
+xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir)"
+</Command>
+    </PreLinkEvent>
+    <Link>
+      <AdditionalDependencies>opengl32.lib;glew32.lib;libzlib.lib;libpng.lib;libjpeg.lib;libtiff.lib;libwebp.lib;libiconv.lib;pthreadVCE2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)$(ProjectName).dll</OutputFile>
+      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries> ;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <ImportLibrary>$(TargetDir)$(TargetName).lib</ImportLibrary>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\base_nodes\CCAtlasNode.cpp" />
+    <ClCompile Include="..\base_nodes\CCNode.cpp" />
+    <ClCompile Include="..\cocoa\CCAffineTransform.cpp" />
+    <ClCompile Include="..\cocoa\CCArray.cpp" />
+    <ClCompile Include="..\cocoa\CCAutoreleasePool.cpp" />
+    <ClCompile Include="..\cocoa\CCDictionary.cpp" />
+    <ClCompile Include="..\cocoa\CCGeometry.cpp" />
+    <ClCompile Include="..\cocoa\CCNS.cpp" />
+    <ClCompile Include="..\cocoa\CCObject.cpp" />
+    <ClCompile Include="..\cocoa\CCSet.cpp" />
+    <ClCompile Include="..\cocoa\CCString.cpp" />
+    <ClCompile Include="..\cocoa\CCZone.cpp" />
+    <ClCompile Include="..\draw_nodes\CCDrawingPrimitives.cpp" />
+    <ClCompile Include="..\draw_nodes\CCDrawNode.cpp" />
+    <ClCompile Include="..\effects\CCGrabber.cpp" />
+    <ClCompile Include="..\effects\CCGrid.cpp" />
+    <ClCompile Include="..\actions\CCAction.cpp" />
+    <ClCompile Include="..\actions\CCActionCamera.cpp" />
+    <ClCompile Include="..\actions\CCActionCatmullRom.cpp" />
+    <ClCompile Include="..\actions\CCActionEase.cpp" />
+    <ClCompile Include="..\actions\CCActionGrid.cpp" />
+    <ClCompile Include="..\actions\CCActionGrid3D.cpp" />
+    <ClCompile Include="..\actions\CCActionInstant.cpp" />
+    <ClCompile Include="..\actions\CCActionInterval.cpp" />
+    <ClCompile Include="..\actions\CCActionManager.cpp" />
+    <ClCompile Include="..\actions\CCActionPageTurn3D.cpp" />
+    <ClCompile Include="..\actions\CCActionProgressTimer.cpp" />
+    <ClCompile Include="..\actions\CCActionTiledGrid.cpp" />
+    <ClCompile Include="..\actions\CCActionTween.cpp" />
+    <ClCompile Include="..\label_nodes\CCLabelAtlas.cpp" />
+    <ClCompile Include="..\label_nodes\CCLabelBMFont.cpp" />
+    <ClCompile Include="..\label_nodes\CCLabelTTF.cpp" />
+    <ClCompile Include="..\layers_scenes_transitions_nodes\CCLayer.cpp" />
+    <ClCompile Include="..\layers_scenes_transitions_nodes\CCScene.cpp" />
+    <ClCompile Include="..\layers_scenes_transitions_nodes\CCTransition.cpp" />
+    <ClCompile Include="..\layers_scenes_transitions_nodes\CCTransitionPageTurn.cpp" />
+    <ClCompile Include="..\layers_scenes_transitions_nodes\CCTransitionProgress.cpp" />
+    <ClCompile Include="..\menu_nodes\CCMenu.cpp" />
+    <ClCompile Include="..\menu_nodes\CCMenuItem.cpp" />
+    <ClCompile Include="..\misc_nodes\CCClippingNode.cpp" />
+    <ClCompile Include="..\misc_nodes\CCMotionStreak.cpp" />
+    <ClCompile Include="..\misc_nodes\CCProgressTimer.cpp" />
+    <ClCompile Include="..\misc_nodes\CCRenderTexture.cpp" />
+    <ClCompile Include="..\particle_nodes\CCParticleBatchNode.cpp" />
+    <ClCompile Include="..\particle_nodes\CCParticleExamples.cpp" />
+    <ClCompile Include="..\particle_nodes\CCParticleSystem.cpp" />
+    <ClCompile Include="..\particle_nodes\CCParticleSystemQuad.cpp" />
+    <ClCompile Include="..\platform\CCEGLViewProtocol.cpp" />
+    <ClCompile Include="..\platform\CCFileUtils.cpp" />
+    <ClCompile Include="..\platform\CCImageCommonWebp.cpp" />
+    <ClCompile Include="..\platform\CCSAXParser.cpp" />
+    <ClCompile Include="..\platform\CCThread.cpp" />
+    <ClCompile Include="..\platform\platform.cpp" />
+    <ClCompile Include="..\platform\win32\CCAccelerometer.cpp" />
+    <ClCompile Include="..\platform\win32\CCApplication.cpp" />
+    <ClCompile Include="..\platform\win32\CCCommon.cpp" />
+    <ClCompile Include="..\platform\win32\CCDevice.cpp" />
+    <ClCompile Include="..\platform\win32\CCEGLView.cpp" />
+    <ClCompile Include="..\platform\win32\CCFileUtilsWin32.cpp" />
+    <ClCompile Include="..\platform\win32\CCImage.cpp" />
+    <ClCompile Include="..\platform\win32\CCStdC.cpp" />
+    <ClCompile Include="..\shaders\CCGLProgram.cpp" />
+    <ClCompile Include="..\shaders\ccGLStateCache.cpp" />
+    <ClCompile Include="..\shaders\CCShaderCache.cpp" />
+    <ClCompile Include="..\shaders\ccShaders.cpp" />
+    <ClCompile Include="..\sprite_nodes\CCAnimation.cpp" />
+    <ClCompile Include="..\sprite_nodes\CCAnimationCache.cpp" />
+    <ClCompile Include="..\sprite_nodes\CCSprite.cpp" />
+    <ClCompile Include="..\sprite_nodes\CCSpriteBatchNode.cpp" />
+    <ClCompile Include="..\sprite_nodes\CCSpriteFrame.cpp" />
+    <ClCompile Include="..\sprite_nodes\CCSpriteFrameCache.cpp" />
+    <ClCompile Include="..\support\base64.cpp" />
+    <ClCompile Include="..\support\CCNotificationCenter.cpp" />
+    <ClCompile Include="..\support\CCPointExtension.cpp" />
+    <ClCompile Include="..\support\CCProfiling.cpp" />
+    <ClCompile Include="..\support\ccUTF8.cpp" />
+    <ClCompile Include="..\support\ccUtils.cpp" />
+    <ClCompile Include="..\support\CCVertex.cpp" />
+    <ClCompile Include="..\support\tinyxml2\tinyxml2.cpp" />
+    <ClCompile Include="..\support\TransformUtils.cpp" />
+    <ClCompile Include="..\support\data_support\ccCArray.cpp" />
+    <ClCompile Include="..\support\image_support\TGAlib.cpp" />
+    <ClCompile Include="..\support\user_default\CCUserDefault.cpp" />
+    <ClCompile Include="..\support\zip_support\ioapi.cpp" />
+    <ClCompile Include="..\support\zip_support\unzip.cpp" />
+    <ClCompile Include="..\support\zip_support\ZipUtils.cpp" />
+    <ClCompile Include="..\textures\CCTexture2D.cpp" />
+    <ClCompile Include="..\textures\CCTextureAtlas.cpp" />
+    <ClCompile Include="..\textures\CCTextureCache.cpp" />
+    <ClCompile Include="..\textures\CCTexturePVR.cpp" />
+    <ClCompile Include="..\tileMap_parallax_nodes\CCParallaxNode.cpp" />
+    <ClCompile Include="..\tileMap_parallax_nodes\CCTileMapAtlas.cpp" />
+    <ClCompile Include="..\tileMap_parallax_nodes\CCTMXLayer.cpp" />
+    <ClCompile Include="..\tileMap_parallax_nodes\CCTMXObjectGroup.cpp" />
+    <ClCompile Include="..\tileMap_parallax_nodes\CCTMXTiledMap.cpp" />
+    <ClCompile Include="..\tileMap_parallax_nodes\CCTMXXMLParser.cpp" />
+    <ClCompile Include="..\touch_dispatcher\CCTouch.cpp" />
+    <ClCompile Include="..\touch_dispatcher\CCTouchDispatcher.cpp" />
+    <ClCompile Include="..\touch_dispatcher\CCTouchHandler.cpp" />
+    <ClCompile Include="..\keypad_dispatcher\CCKeypadDelegate.cpp" />
+    <ClCompile Include="..\keypad_dispatcher\CCKeypadDispatcher.cpp" />
+    <ClCompile Include="..\text_input_node\CCIMEDispatcher.cpp" />
+    <ClCompile Include="..\text_input_node\CCTextFieldTTF.cpp" />
+    <ClCompile Include="..\script_support\CCScriptSupport.cpp" />
+    <ClCompile Include="..\kazmath\src\aabb.c" />
+    <ClCompile Include="..\kazmath\src\mat3.c" />
+    <ClCompile Include="..\kazmath\src\mat4.c" />
+    <ClCompile Include="..\kazmath\src\neon_matrix_impl.c" />
+    <ClCompile Include="..\kazmath\src\plane.c" />
+    <ClCompile Include="..\kazmath\src\quaternion.c" />
+    <ClCompile Include="..\kazmath\src\ray2.c" />
+    <ClCompile Include="..\kazmath\src\utility.c" />
+    <ClCompile Include="..\kazmath\src\vec2.c" />
+    <ClCompile Include="..\kazmath\src\vec3.c" />
+    <ClCompile Include="..\kazmath\src\vec4.c" />
+    <ClCompile Include="..\kazmath\src\GL\mat4stack.c" />
+    <ClCompile Include="..\kazmath\src\GL\matrix.c" />
+    <ClCompile Include="..\CCCamera.cpp" />
+    <ClCompile Include="..\CCConfiguration.cpp" />
+    <ClCompile Include="..\CCDirector.cpp" />
+    <ClCompile Include="..\CCScheduler.cpp" />
+    <ClCompile Include="..\cocos2d.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\base_nodes\CCAtlasNode.h" />
+    <ClInclude Include="..\base_nodes\CCNode.h" />
+    <ClInclude Include="..\cocoa\CCAffineTransform.h" />
+    <ClInclude Include="..\cocoa\CCArray.h" />
+    <ClInclude Include="..\cocoa\CCAutoreleasePool.h" />
+    <ClInclude Include="..\cocoa\CCDictionary.h" />
+    <ClInclude Include="..\cocoa\CCGeometry.h" />
+    <ClInclude Include="..\cocoa\CCInteger.h" />
+    <ClInclude Include="..\cocoa\CCNS.h" />
+    <ClInclude Include="..\cocoa\CCObject.h" />
+    <ClInclude Include="..\cocoa\CCSet.h" />
+    <ClInclude Include="..\cocoa\CCString.h" />
+    <ClInclude Include="..\cocoa\CCZone.h" />
+    <ClInclude Include="..\draw_nodes\CCDrawingPrimitives.h" />
+    <ClInclude Include="..\draw_nodes\CCDrawNode.h" />
+    <ClInclude Include="..\effects\CCGrabber.h" />
+    <ClInclude Include="..\effects\CCGrid.h" />
+    <ClInclude Include="..\actions\CCAction.h" />
+    <ClInclude Include="..\actions\CCActionCamera.h" />
+    <ClInclude Include="..\actions\CCActionCatmullRom.h" />
+    <ClInclude Include="..\actions\CCActionEase.h" />
+    <ClInclude Include="..\actions\CCActionGrid.h" />
+    <ClInclude Include="..\actions\CCActionGrid3D.h" />
+    <ClInclude Include="..\actions\CCActionInstant.h" />
+    <ClInclude Include="..\actions\CCActionInterval.h" />
+    <ClInclude Include="..\actions\CCActionManager.h" />
+    <ClInclude Include="..\actions\CCActionPageTurn3D.h" />
+    <ClInclude Include="..\actions\CCActionProgressTimer.h" />
+    <ClInclude Include="..\actions\CCActionTiledGrid.h" />
+    <ClInclude Include="..\actions\CCActionTween.h" />
+    <ClInclude Include="..\include\ccConfig.h" />
+    <ClInclude Include="..\include\CCEventType.h" />
+    <ClInclude Include="..\include\ccMacros.h" />
+    <ClInclude Include="..\include\CCProtocols.h" />
+    <ClInclude Include="..\include\ccTypes.h" />
+    <ClInclude Include="..\include\cocos2d.h" />
+    <ClInclude Include="..\label_nodes\CCLabelAtlas.h" />
+    <ClInclude Include="..\label_nodes\CCLabelBMFont.h" />
+    <ClInclude Include="..\label_nodes\CCLabelTTF.h" />
+    <ClInclude Include="..\layers_scenes_transitions_nodes\CCLayer.h" />
+    <ClInclude Include="..\layers_scenes_transitions_nodes\CCScene.h" />
+    <ClInclude Include="..\layers_scenes_transitions_nodes\CCTransition.h" />
+    <ClInclude Include="..\layers_scenes_transitions_nodes\CCTransitionPageTurn.h" />
+    <ClInclude Include="..\layers_scenes_transitions_nodes\CCTransitionProgress.h" />
+    <ClInclude Include="..\menu_nodes\CCMenu.h" />
+    <ClInclude Include="..\menu_nodes\CCMenuItem.h" />
+    <ClInclude Include="..\misc_nodes\CCClippingNode.h" />
+    <ClInclude Include="..\misc_nodes\CCMotionStreak.h" />
+    <ClInclude Include="..\misc_nodes\CCProgressTimer.h" />
+    <ClInclude Include="..\misc_nodes\CCRenderTexture.h" />
+    <ClInclude Include="..\particle_nodes\CCParticleBatchNode.h" />
+    <ClInclude Include="..\particle_nodes\CCParticleExamples.h" />
+    <ClInclude Include="..\particle_nodes\CCParticleSystem.h" />
+    <ClInclude Include="..\particle_nodes\CCParticleSystemQuad.h" />
+    <ClInclude Include="..\platform\CCAccelerometerDelegate.h" />
+    <ClInclude Include="..\platform\CCApplicationProtocol.h" />
+    <ClInclude Include="..\platform\CCCommon.h" />
+    <ClInclude Include="..\platform\CCEGLViewProtocol.h" />
+    <ClInclude Include="..\platform\CCFileUtils.h" />
+    <ClInclude Include="..\platform\CCImage.h" />
+    <ClInclude Include="..\platform\CCImageCommon_cpp.h" />
+    <ClInclude Include="..\platform\CCPlatformConfig.h" />
+    <ClInclude Include="..\platform\CCPlatformMacros.h" />
+    <ClInclude Include="..\platform\CCSAXParser.h" />
+    <ClInclude Include="..\platform\CCThread.h" />
+    <ClInclude Include="..\platform\platform.h" />
+    <ClInclude Include="..\platform\win32\CCAccelerometer.h" />
+    <ClInclude Include="..\platform\win32\CCApplication.h" />
+    <ClInclude Include="..\platform\win32\CCEGLView.h" />
+    <ClInclude Include="..\platform\win32\CCFileUtilsWin32.h" />
+    <ClInclude Include="..\platform\win32\CCGL.h" />
+    <ClInclude Include="..\platform\win32\CCPlatformDefine.h" />
+    <ClInclude Include="..\platform\win32\CCStdC.h" />
+    <ClInclude Include="..\shaders\CCGLProgram.h" />
+    <ClInclude Include="..\shaders\ccGLStateCache.h" />
+    <ClInclude Include="..\shaders\CCShaderCache.h" />
+    <ClInclude Include="..\shaders\ccShaderEx_SwitchMask_frag.h" />
+    <ClInclude Include="..\shaders\ccShaders.h" />
+    <ClInclude Include="..\shaders\ccShader_PositionColorLengthTexture_frag.h" />
+    <ClInclude Include="..\shaders\ccShader_PositionColorLengthTexture_vert.h" />
+    <ClInclude Include="..\shaders\ccShader_PositionColor_frag.h" />
+    <ClInclude Include="..\shaders\ccShader_PositionColor_vert.h" />
+    <ClInclude Include="..\shaders\ccShader_PositionTextureA8Color_frag.h" />
+    <ClInclude Include="..\shaders\ccShader_PositionTextureA8Color_vert.h" />
+    <ClInclude Include="..\shaders\ccShader_PositionTextureColorAlphaTest_frag.h" />
+    <ClInclude Include="..\shaders\ccShader_PositionTextureColor_frag.h" />
+    <ClInclude Include="..\shaders\ccShader_PositionTextureColor_vert.h" />
+    <ClInclude Include="..\shaders\ccShader_PositionTexture_frag.h" />
+    <ClInclude Include="..\shaders\ccShader_PositionTexture_uColor_frag.h" />
+    <ClInclude Include="..\shaders\ccShader_PositionTexture_uColor_vert.h" />
+    <ClInclude Include="..\shaders\ccShader_PositionTexture_vert.h" />
+    <ClInclude Include="..\shaders\ccShader_Position_uColor_frag.h" />
+    <ClInclude Include="..\shaders\ccShader_Position_uColor_vert.h" />
+    <ClInclude Include="..\sprite_nodes\CCAnimation.h" />
+    <ClInclude Include="..\sprite_nodes\CCAnimationCache.h" />
+    <ClInclude Include="..\sprite_nodes\CCSprite.h" />
+    <ClInclude Include="..\sprite_nodes\CCSpriteBatchNode.h" />
+    <ClInclude Include="..\sprite_nodes\CCSpriteFrame.h" />
+    <ClInclude Include="..\sprite_nodes\CCSpriteFrameCache.h" />
+    <ClInclude Include="..\support\base64.h" />
+    <ClInclude Include="..\support\CCNotificationCenter.h" />
+    <ClInclude Include="..\support\CCPointExtension.h" />
+    <ClInclude Include="..\support\CCProfiling.h" />
+    <ClInclude Include="..\support\ccUTF8.h" />
+    <ClInclude Include="..\support\ccUtils.h" />
+    <ClInclude Include="..\support\CCVertex.h" />
+    <ClInclude Include="..\support\tinyxml2\tinyxml2.h" />
+    <ClInclude Include="..\support\TransformUtils.h" />
+    <ClInclude Include="..\support\data_support\ccCArray.h" />
+    <ClInclude Include="..\support\data_support\uthash.h" />
+    <ClInclude Include="..\support\data_support\utlist.h" />
+    <ClInclude Include="..\support\image_support\TGAlib.h" />
+    <ClInclude Include="..\support\user_default\CCUserDefault.h" />
+    <ClInclude Include="..\support\zip_support\ioapi.h" />
+    <ClInclude Include="..\support\zip_support\unzip.h" />
+    <ClInclude Include="..\support\zip_support\ZipUtils.h" />
+    <ClInclude Include="..\textures\CCTexture2D.h" />
+    <ClInclude Include="..\textures\CCTextureAtlas.h" />
+    <ClInclude Include="..\textures\CCTextureCache.h" />
+    <ClInclude Include="..\textures\CCTexturePVR.h" />
+    <ClInclude Include="..\tileMap_parallax_nodes\CCParallaxNode.h" />
+    <ClInclude Include="..\tileMap_parallax_nodes\CCTileMapAtlas.h" />
+    <ClInclude Include="..\tileMap_parallax_nodes\CCTMXLayer.h" />
+    <ClInclude Include="..\tileMap_parallax_nodes\CCTMXObjectGroup.h" />
+    <ClInclude Include="..\tileMap_parallax_nodes\CCTMXTiledMap.h" />
+    <ClInclude Include="..\tileMap_parallax_nodes\CCTMXXMLParser.h" />
+    <ClInclude Include="..\touch_dispatcher\CCTouch.h" />
+    <ClInclude Include="..\touch_dispatcher\CCTouchDelegateProtocol.h" />
+    <ClInclude Include="..\touch_dispatcher\CCTouchDispatcher.h" />
+    <ClInclude Include="..\touch_dispatcher\CCTouchHandler.h" />
+    <ClInclude Include="..\keypad_dispatcher\CCKeypadDelegate.h" />
+    <ClInclude Include="..\keypad_dispatcher\CCKeypadDispatcher.h" />
+    <ClInclude Include="..\text_input_node\CCIMEDelegate.h" />
+    <ClInclude Include="..\text_input_node\CCIMEDispatcher.h" />
+    <ClInclude Include="..\text_input_node\CCTextFieldTTF.h" />
+    <ClInclude Include="..\script_support\CCScriptSupport.h" />
+    <ClInclude Include="..\kazmath\include\kazmath\aabb.h" />
+    <ClInclude Include="..\kazmath\include\kazmath\kazmath.h" />
+    <ClInclude Include="..\kazmath\include\kazmath\mat3.h" />
+    <ClInclude Include="..\kazmath\include\kazmath\mat4.h" />
+    <ClInclude Include="..\kazmath\include\kazmath\neon_matrix_impl.h" />
+    <ClInclude Include="..\kazmath\include\kazmath\plane.h" />
+    <ClInclude Include="..\kazmath\include\kazmath\quaternion.h" />
+    <ClInclude Include="..\kazmath\include\kazmath\ray2.h" />
+    <ClInclude Include="..\kazmath\include\kazmath\utility.h" />
+    <ClInclude Include="..\kazmath\include\kazmath\vec2.h" />
+    <ClInclude Include="..\kazmath\include\kazmath\vec3.h" />
+    <ClInclude Include="..\kazmath\include\kazmath\vec4.h" />
+    <ClInclude Include="..\kazmath\include\kazmath\GL\mat4stack.h" />
+    <ClInclude Include="..\kazmath\include\kazmath\GL\matrix.h" />
+    <ClInclude Include="..\CCCamera.h" />
+    <ClInclude Include="..\CCConfiguration.h" />
+    <ClInclude Include="..\CCDirector.h" />
+    <ClInclude Include="..\CCScheduler.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

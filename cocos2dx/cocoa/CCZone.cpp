@@ -23,10 +23,12 @@ THE SOFTWARE.
 ****************************************************************************/
 #include "CCZone.h"
 #include "CCObject.h"
-namespace   cocos2d {
+
+NS_CC_BEGIN
 
 CCZone::CCZone(CCObject *pObject)
 {
-	m_pCopyObject = pObject;
+    m_pCopyObject = pObject;
 }
-}//namespace   cocos2d 
+
+NS_CC_END

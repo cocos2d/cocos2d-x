@@ -1,0 +1,91 @@
+
+enum ResolutionPolicy
+{
+    // The entire application is visible in the specified area without trying to preserve the original aspect ratio.
+    // Distortion can occur, and the application may appear stretched or compressed.
+    kResolutionExactFit,
+    // The entire application fills the specified area, without distortion but possibly with some cropping,
+    // while maintaining the original aspect ratio of the application.
+    kResolutionNoBorder,
+    // The entire application is visible in the specified area without distortion while maintaining the original
+    // aspect ratio of the application. Borders can appear on two sides of the application.
+    kResolutionShowAll,
+
+    kResolutionUnKnown,
+};
+
+class CCEGLViewProtocol
+{
+    /**
+     * Get the frame size of EGL view.
+     * In general, it returns the screen size since the EGL view is a fullscreen view.
+     */
+    const CCSize& getFrameSize() const;
+
+    /**
+     * Set the frame size of EGL view.
+     */
+    void setFrameSize(float width, float height);
+
+    /**
+     * Get the visible area size of opengl viewport.
+     */
+    CCSize getVisibleSize() const;
+
+    /**
+     * Get the visible origin point of opengl viewport.
+     */
+    CCPoint getVisibleOrigin() const;
+
+    /**
+     * Set the design resolutin size.
+     * You can't use it with enableRetina together.
+     * @param width Design resolution width.
+     * @param height Design resolution height.
+     * @param resolutionPolicy The resolution policy you need, there are:
+     *                         [1] kResolutionExactFit Fill screen, if the design resolution ratio of width and height is different from the screen resolution ratio, your game view will be stretched.
+     *                         [2] kResolutionNoBorder Full screen without black border, if the design resolution ratio of width and height is different from the screen resolution ratio, two areas of your game view will be cut.
+     *                         [3] kResolutionShowAll  Full screen with black border, if the design resolution ratio of width and height is different from the screen resolution ratio, two black border will be shown on the screen;
+     */
+    void setDesignResolutionSize(float width, float height, ResolutionPolicy resolutionPolicy);
+    
+    /** Get design resolution size.
+     *  Default resolution size is the same as 'getFrameSize'.
+     */
+    virtual const CCSize&  getDesignResolutionSize() const;
+
+    /** Set touch delegate */
+    void setTouchDelegate(EGLTouchDelegate * pDelegate);
+
+    /**
+     * Set opengl view port rectangle with points.
+     */
+    void setViewPortInPoints(float x , float y , float w , float h);
+
+    /**
+     * Set Scissor rectangle with points.
+     */
+    void setScissorInPoints(float x , float y , float w , float h);
+
+    /**
+     * Get opengl view port rectangle.
+     */
+    const CCRect& getViewPortRect() const;
+
+    /**
+     * Get the scale factor of horizontal direction.
+     *
+     */
+    float getScaleX() const;
+
+    /**
+     * Get the scale factor of vertical direction.
+     */
+    float getScaleY() const;
+};
+
+class CCEGLView : public CCEGLViewProtocol
+{
+    static CCEGLView* sharedOpenGLView(void);
+};
+

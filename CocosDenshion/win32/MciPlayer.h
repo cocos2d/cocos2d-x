@@ -1,7 +1,7 @@
 #ifndef _MCI_PLAYER_WIN32_H_
 #define _MCI_PLAYER_WIN32_H_
 
-#include<windows.h>
+#include "CCStdC.h"
 #include <mmsystem.h>
 
 namespace CocosDenshion {
@@ -21,7 +21,7 @@ public:
     */
     void Open(const char* pFileName, UINT uId);
 
-	void Play(UINT uTimes = 1);
+    void Play(UINT uTimes = 1);
 
     /**
     @brief ‘›Õ£≤•∑≈…˘“Ù
@@ -55,15 +55,15 @@ public:
     UINT GetSoundID();
 
 private:
-	friend LRESULT WINAPI _SoundPlayProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam);
+    friend LRESULT WINAPI _SoundPlayProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam);
 
-	void _SendGenericCommand(int nCommand);
+    void _SendGenericCommand(int nCommand);
 
-	HWND		m_hWnd;
-	MCIDEVICEID m_hDev;
-	UINT		m_nSoundID;
-	UINT		m_uTimes;
-	bool		m_bPlaying;
+    HWND        m_hWnd;
+    MCIDEVICEID m_hDev;
+    UINT        m_nSoundID;
+    UINT        m_uTimes;
+    bool        m_bPlaying;
 };
 
 } // end of namespace CocosDenshion

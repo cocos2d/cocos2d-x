@@ -1,142 +1,133 @@
-#include "CCNode.h"
-#include "CCProtocols.h"
-#include "selector_protocol.h"
 
-namespace cocos2d{
+class CCMenuItem : public CCNode
+{
+    CCRect rect();
+    void activate();
+    void selected();
+    void unselected();
+    void setEnabled(bool enabled);
+    bool isEnabled();
+    bool isSelected();
 
-	class CCLabelTTF;
-	class CCLabelAtlas;
-	class CCSprite;
+    void registerScriptTapHandler(LUA_FUNCTION funcID);
+    void unregisterScriptTapHandler(void);
+};
 
+class CCMenuItemLabel : public CCMenuItem
+{
+    void setString(const char*  label);
 
-	class CCMenuItem : public CCNode
-	{				 
+    void setOpacity(GLubyte opacity);
+    GLubyte getOpacity();
+    void setColor(ccColor3B color);
+    ccColor3B getColor();
+	void setDisabledColor(const ccColor3B & color);
+	const ccColor3B & getDisabledColor();
+	void setLabel(CCNode* pLabel);
+	CCNode* getLabel();
 
-	public:
-		CCMenuItem();
+	void activate();
+    void selected();
+    void unselected();
+    void setEnabled(bool enabled);
 
-		static CCMenuItem * itemWithTarget(SelectorProtocol *rec, SEL_MenuHandler selector);		
-		bool initWithTarget(SelectorProtocol *rec, SEL_MenuHandler selector);
+	void setOpacityModifyRGB(bool bValue);
+    bool isOpacityModifyRGB(void);
 
-		CCRect rect();
-		void activate();		
-		void selected();		
-		void unselected();
-		
-		void registerScriptHandler(const char* pszFunctionName);
+    static CCMenuItemLabel* create(CCNode* label);
+};
 
-	};
+class CCMenuItemAtlasFont : public CCMenuItemLabel
+{
+    static CCMenuItemAtlasFont* create(const char* value,
+                                               const char* charMapFile,
+                                               int itemWidth,
+                                               int itemHeight,
+                                               char startCharMap);
+};
 
-	class  CCMenuItemLabel : public CCMenuItem, public CCRGBAProtocol
-	{
+class CCMenuItemFont : public CCMenuItemLabel
+{
+    static void setFontSize(int s);
+    static unsigned int fontSize();
+    static void setFontName(const char* name);
+    static const char* fontName();
+	void setFontSizeObj(unsigned int s);
+    unsigned int fontSizeObj();
+    void setFontNameObj(const char* name);
+    const char* fontNameObj();
 
-	public:
-		CCMenuItemLabel();		
+    static CCMenuItemFont * create(const char* value);
+};
 
-		static CCMenuItemLabel * itemWithLabel(CCNode*label, SelectorProtocol* target, SEL_MenuHandler selector);
-		static CCMenuItemLabel* itemWithLabel(CCNode *label);
+class CCMenuItemSprite : public CCMenuItem
+{
+    void setColor(ccColor3B color);
+    ccColor3B getColor();
+    void setOpacity(GLubyte opacity);
+    GLubyte getOpacity();
 
-		bool initWithLabel(CCNode* label, SelectorProtocol* target, SEL_MenuHandler selector);
+	void setNormalImage(CCNode* pImage);
+	CCNode* getNormalImage();
+	void setSelectedImage(CCNode* pImage);
+	CCNode* getSelectedImage();
+	void setDisabledImage(CCNode* pImage);
+	CCNode* getDisabledImage();
 
-		void setString(const char * label);
+	void selected();
+    void unselected();
+    void setEnabled(bool bEnabled);
 
-		virtual void activate();
-		virtual void selected();
-		virtual void unselected();		
-		virtual void setIsEnabled(bool enabled);
-		virtual void setOpacity(GLubyte opacity);
-		virtual GLubyte getOpacity();
-		virtual void setColor(ccColor3B color);
-		virtual ccColor3B getColor();
-		virtual CCRGBAProtocol* convertToRGBAProtocol();
+    void setOpacityModifyRGB(bool bValue);
+    bool isOpacityModifyRGB(void);
 
-	};
+    static CCMenuItemSprite * create(CCNode* normalSprite,
+                                                   CCNode* selectedSprite,
+                                                   CCNode* disabledSprite);
+    static CCMenuItemSprite * create(CCNode* normalSprite,
+                                                   CCNode* selectedSprite);
+};
 
-	/** @brief A CCMenuItemAtlasFont
-	Helper class that creates a MenuItemLabel class with a LabelAtlas
-	*/
-	class  CCMenuItemAtlasFont : public CCMenuItemLabel
-	{
+class CCMenuItemImage : public CCMenuItemSprite
+{
+    void setColor(ccColor3B color);
+    ccColor3B getColor();
+    void setOpacity(GLubyte opacity);
+    GLubyte getOpacity();
 
-		CCMenuItemAtlasFont();		
-		static CCMenuItemAtlasFont* itemFromString(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap);
-		/** creates a menu item from a string and atlas. Use it with MenuItemToggle */
-		static CCMenuItemAtlasFont* itemFromString(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap, SelectorProtocol* target, SEL_MenuHandler selector);
-		/** initializes a menu item from a string and atlas with a target/selector */
-		bool initFromString(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap, SelectorProtocol* target, SEL_MenuHandler selector);
-	};
+	void setNormalSpriteFrame(CCSpriteFrame* frame);
+    void setSelectedSpriteFrame(CCSpriteFrame* frame);
+    void setDisabledSpriteFrame(CCSpriteFrame* frame);
 
-	class  CCMenuItemFont : public CCMenuItemLabel
-	{
+    static CCMenuItemImage* create(const char* normalImage,
+                                                const char* selectedImage,
+                                                const char* disabledImage);
+    static CCMenuItemImage* create(const char* normalImage,
+                                                const char* selectedImage);
+    static CCMenuItemImage* create();
+};
 
-		CCMenuItemFont();
+class CCMenuItemToggle : public CCMenuItem
+{
+    void setColor(ccColor3B color);
+    ccColor3B getColor();
+    void setOpacity(GLubyte opacity);
+    GLubyte getOpacity();
+	void setSelectedIndex(unsigned int index);
+	unsigned int getSelectedIndex();
+	void setSubItems(CCArray* pArrayOfItems);
+	CCArray* getSubItems();
 
-		static void setFontSize(int s);
-		static int fontSize();
-		/** set the font name */
-		static void setFontName(const char *name);
-		/** get the font name */
-		static const char *fontName();
-		/** creates a menu item from a string without target/selector. To be used with CCMenuItemToggle */
-		static CCMenuItemFont * itemFromString(const char *value);
-		/** creates a menu item from a string with a target/selector */
-		static CCMenuItemFont * itemFromString(const char *value, SelectorProtocol* target, SEL_MenuHandler selector);
-		/** initializes a menu item from a string with a target/selector */
-		bool initFromString(const char *value, SelectorProtocol* target, SEL_MenuHandler selector);
-	};
+	void addSubItem(CCMenuItem *item);
+    CCMenuItem* selectedItem();
 
+	void activate();
+    void selected();
+    void unselected();
+    void setEnabled(bool var);
 
-	class  CCMenuItemSprite : public CCMenuItem, public CCRGBAProtocol
-	{
-		CCMenuItemSprite();		
-		static CCMenuItemSprite * itemFromNormalSprite(CCNode* normalSprite, CCNode* selectedSprite);		
-		static CCMenuItemSprite * itemFromNormalSprite(CCNode* normalSprite, CCNode* selectedSprite, SelectorProtocol* target, SEL_MenuHandler selector);		
-		static CCMenuItemSprite * itemFromNormalSprite(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite, SelectorProtocol* target, SEL_MenuHandler selector);
-		bool initFromNormalSprite(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite, SelectorProtocol* target, SEL_MenuHandler selector);
-		void setColor(ccColor3B color);
-		ccColor3B getColor();
-		void setOpacity(GLubyte opacity);
-		GLubyte getOpacity();      
-		void selected();
-		void unselected();
-		void setIsEnabled(bool bEnabled);
-		CCRGBAProtocol* convertToRGBAProtocol();
-	};
+    void setOpacityModifyRGB(bool bValue);
+    bool isOpacityModifyRGB(void);
 
-
-	class  CCMenuItemImage : public CCMenuItemSprite
-	{
-
-		CCMenuItemImage();	
-		static CCMenuItemImage* itemFromNormalImage(const char *normalImage, const char *selectedImage);		
-		static CCMenuItemImage* itemFromNormalImage(const char *normalImage, const char *selectedImage, const char *disabledImage);		
-		static CCMenuItemImage* itemFromNormalImage(const char *normalImage, const char *selectedImage, SelectorProtocol* target, SEL_MenuHandler selector);		
-		static CCMenuItemImage* itemFromNormalImage(const char *normalImage, const char *selectedImage, const char *disabledImage, SelectorProtocol* target, SEL_MenuHandler selector);
-		bool initFromNormalImage(const char *normalImage, const char *selectedImage, const char *disabledImage, SelectorProtocol* target, SEL_MenuHandler selector);
-		void setColor(ccColor3B color);
-		ccColor3B getColor();
-		void setOpacity(GLubyte opacity);
-		GLubyte getOpacity();
-	};
-
-
-	class  CCMenuItemToggle : public CCMenuItem, public CCRGBAProtocol
-	{
-
-		CCMenuItemToggle();
-		
-		static CCMenuItemToggle* itemWithItem(CCMenuItem *item);
-		bool initWithItem(CCMenuItem *item);
-		void addSubItem(CCMenuItem *item);
-		
-		CCMenuItem* selectedItem();
-		// super methods
-		virtual void activate();
-		virtual void selected();
-		virtual void unselected();
-		void setIsEnabled(bool var);
-		CCRGBAProtocol* convertToRGBAProtocol();
-	};
-
-}
-
+    static CCMenuItemToggle* create(CCMenuItem *item);
+};

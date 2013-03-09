@@ -1,3 +1,33 @@
 
-#include "platform/CCApplication_platform.h"
+typedef enum LanguageType
+{
+    kLanguageEnglish = 0,
+    kLanguageChinese,
+    kLanguageFrench,
+    kLanguageItalian,
+    kLanguageGerman,
+    kLanguageSpanish,
+    kLanguageRussian,
+    kLanguageKorean,
+    kLanguageJapanese,
+    kLanguageHungarian
+} ccLanguageType;
 
+enum TargetPlatform
+{
+    kTargetWindows,
+    kTargetLinux,
+    kTargetMacOS,
+    kTargetAndroid,
+    kTargetIphone,
+    kTargetIpad,
+    kTargetBlackBerry,
+};
+
+class CCApplication
+{
+    ~CCApplication();
+    static CCApplication* sharedApplication();
+    ccLanguageType getCurrentLanguage();
+    TargetPlatform getTargetPlatform();
+};

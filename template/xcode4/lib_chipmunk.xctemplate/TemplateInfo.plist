@@ -288,20 +288,6 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>libs/chipmunk/include/chipmunk/cpArray.h</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>chipmunk</string>
-				<string>include</string>
-				<string>chipmunk</string>
-			</array>
-			<key>Path</key>
-			<string>libs/chipmunk/include/chipmunk/cpArray.h</string>
-			<key>TargetIndices</key>
-			<array/>
-		</dict>
 		<key>libs/chipmunk/include/chipmunk/cpBB.h</key>
 		<dict>
 			<key>Group</key>
@@ -327,34 +313,6 @@
 			</array>
 			<key>Path</key>
 			<string>libs/chipmunk/include/chipmunk/cpBody.h</string>
-			<key>TargetIndices</key>
-			<array/>
-		</dict>
-		<key>libs/chipmunk/include/chipmunk/cpCollision.h</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>chipmunk</string>
-				<string>include</string>
-				<string>chipmunk</string>
-			</array>
-			<key>Path</key>
-			<string>libs/chipmunk/include/chipmunk/cpCollision.h</string>
-			<key>TargetIndices</key>
-			<array/>
-		</dict>
-		<key>libs/chipmunk/include/chipmunk/cpHashSet.h</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>chipmunk</string>
-				<string>include</string>
-				<string>chipmunk</string>
-			</array>
-			<key>Path</key>
-			<string>libs/chipmunk/include/chipmunk/cpHashSet.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
@@ -400,7 +358,7 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>libs/chipmunk/include/chipmunk/cpSpaceHash.h</key>
+		<key>libs/chipmunk/include/chipmunk/cpSpatialIndex.h</key>
 		<dict>
 			<key>Group</key>
 			<array>
@@ -410,7 +368,7 @@
 				<string>chipmunk</string>
 			</array>
 			<key>Path</key>
-			<string>libs/chipmunk/include/chipmunk/cpSpaceHash.h</string>
+			<string>libs/chipmunk/include/chipmunk/cpSpatialIndex.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
@@ -641,6 +599,17 @@
 			<key>Path</key>
 			<string>libs/chipmunk/src/cpBB.c</string>
 		</dict>
+		<key>libs/chipmunk/src/cpBBTree.c</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>chipmunk</string>
+				<string>src</string>
+			</array>
+			<key>Path</key>
+			<string>libs/chipmunk/src/cpBBTree.c</string>
+		</dict>
 		<key>libs/chipmunk/src/cpBody.c</key>
 		<dict>
 			<key>Group</key>
@@ -751,6 +720,28 @@
 			<key>Path</key>
 			<string>libs/chipmunk/src/cpSpaceStep.c</string>
 		</dict>
+		<key>libs/chipmunk/src/cpSpatialIndex.c</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>chipmunk</string>
+				<string>src</string>
+			</array>
+			<key>Path</key>
+			<string>libs/chipmunk/src/cpSpatialIndex.c</string>
+		</dict>
+		<key>libs/chipmunk/src/cpSweep1D.c</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>chipmunk</string>
+				<string>src</string>
+			</array>
+			<key>Path</key>
+			<string>libs/chipmunk/src/cpSweep1D.c</string>
+		</dict>
 		<key>libs/chipmunk/src/cpVect.c</key>
 		<dict>
 			<key>Group</key>
@@ -797,15 +788,12 @@
 		<string>libs/chipmunk/include/chipmunk/constraints/cpSlideJoint.h</string>
 		<string>libs/chipmunk/include/chipmunk/constraints/util.h</string>
 		<string>libs/chipmunk/include/chipmunk/cpArbiter.h</string>
-		<string>libs/chipmunk/include/chipmunk/cpArray.h</string>
 		<string>libs/chipmunk/include/chipmunk/cpBB.h</string>
 		<string>libs/chipmunk/include/chipmunk/cpBody.h</string>
-		<string>libs/chipmunk/include/chipmunk/cpCollision.h</string>
-		<string>libs/chipmunk/include/chipmunk/cpHashSet.h</string>
 		<string>libs/chipmunk/include/chipmunk/cpPolyShape.h</string>
 		<string>libs/chipmunk/include/chipmunk/cpShape.h</string>
 		<string>libs/chipmunk/include/chipmunk/cpSpace.h</string>
-		<string>libs/chipmunk/include/chipmunk/cpSpaceHash.h</string>
+		<string>libs/chipmunk/include/chipmunk/cpSpatialIndex.h</string>
 		<string>libs/chipmunk/include/chipmunk/cpVect.h</string>
 		<string>libs/chipmunk/LICENSE.txt</string>
 		<string>libs/chipmunk/README.txt</string>
@@ -825,6 +813,7 @@
 		<string>libs/chipmunk/src/cpArbiter.c</string>
 		<string>libs/chipmunk/src/cpArray.c</string>
 		<string>libs/chipmunk/src/cpBB.c</string>
+		<string>libs/chipmunk/src/cpBBTree.c</string>
 		<string>libs/chipmunk/src/cpBody.c</string>
 		<string>libs/chipmunk/src/cpCollision.c</string>
 		<string>libs/chipmunk/src/cpHashSet.c</string>
@@ -835,6 +824,8 @@
 		<string>libs/chipmunk/src/cpSpaceHash.c</string>
 		<string>libs/chipmunk/src/cpSpaceQuery.c</string>
 		<string>libs/chipmunk/src/cpSpaceStep.c</string>
+		<string>libs/chipmunk/src/cpSpatialIndex.c</string>
+		<string>libs/chipmunk/src/cpSweep1D.c</string>
 		<string>libs/chipmunk/src/cpVect.c</string>
 		<string>libs/chipmunk/src/prime.h</string>
 	</array>

@@ -1,0 +1,15 @@
+/android/bin
+/android/gen
+/android/libs
+/android/obj
+/android/assets
+
+# xcode noise.
+/ios/build/*
+*.pbxuser
+*.mode1v3
+xcuserdata/
+
+# osx noise
+.DS_Store
+profile

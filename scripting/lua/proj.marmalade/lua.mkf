@@ -1,0 +1,25 @@
+includepaths
+{
+    ../lua/
+    ../tolua/
+    ../cocos2dx_support/
+}
+
+files
+{
+	[lua]
+	("../lua")
+	"*.h"
+	"*.c"
+	
+	[tolua]
+	("../tolua")
+	"*.h"
+	"*.c"
+	
+	[cocos2dxSupport]
+	("../cocos2dx_support")
+	"*.h"
+	"*.c"
+	"*.cpp"
+}

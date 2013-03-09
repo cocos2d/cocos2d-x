@@ -1,0 +1,55 @@
+
+class CCParticleFire : public CCParticleSystemQuad
+{
+    static CCParticleFire * create();
+};
+
+class CCParticleFireworks : public CCParticleSystemQuad
+{
+	static CCParticleFireworks * create();
+};
+
+class CCParticleSun : public CCParticleSystemQuad
+{
+    static CCParticleSun * create();
+};
+
+class CCParticleGalaxy : public CCParticleSystemQuad
+{
+    static CCParticleGalaxy * create();
+};
+
+class CCParticleFlower : public CCParticleSystemQuad
+{
+    static CCParticleFlower * create();
+};
+
+class CCParticleMeteor : public CCParticleSystemQuad
+{
+    static CCParticleMeteor * create();
+};
+
+class CCParticleSpiral : public CCParticleSystemQuad
+{
+    static CCParticleSpiral * create();
+};
+
+class CCParticleExplosion : public CCParticleSystemQuad
+{
+    static CCParticleExplosion * create();
+};
+
+class CCParticleSmoke : public CCParticleSystemQuad
+{
+    static CCParticleSmoke * create();
+};
+
+class CCParticleSnow : public CCParticleSystemQuad
+{
+    static CCParticleSnow * create();
+};
+
+class CCParticleRain : public CCParticleSystemQuad
+{
+    static CCParticleRain * create();
+};

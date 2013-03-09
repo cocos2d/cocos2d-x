@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'cocos2dx' target in the 'cocos2dx' project
+//
+
+#ifdef __OBJC__
+    #import <Foundation/Foundation.h>
+#endif

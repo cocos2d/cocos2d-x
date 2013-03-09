@@ -33,7 +33,7 @@ function main() {
     // Decode command line arguments
     var bDebug = false;
     var bQuiet = false;
-    var bElevated = false;
+    var bElevated = true;
     var Args = WScript.Arguments;
     for (var i = 0; i < Args.length; i++) {
         if (Args(i) == "/debug")
@@ -99,11 +99,10 @@ function main() {
     }
 
     // Wizard Info
-    var nNumWizards = 2;
+    var nNumWizards = 1;
 
     var astrWizardName = new Array();
     astrWizardName[0] = "CCAppWiz.win32";
-    astrWizardName[1] = "CCAppWiz.wophone";
 
     var nCntr;
     for (nCntr = 0; nCntr < nNumWizards; nCntr++) {
@@ -197,7 +196,7 @@ function main() {
         return;
     }
 
-    // Read and write additional CCAppWiz.vsdir and CCAppWiz.uphone.vsdir, add path to the wizard location
+    // Read and write additional CCAppWiz.vsdir, add path to the wizard location
     try {
         var strDest = FileSys.BuildPath(strDestCCFolder, "Cocos2d-x.vsdir");
 
