@@ -1,51 +1,56 @@
-
-#include "support/data_support/ccCArray.h"
-
-
-
-namespace cocos2d
+class CCArray : public CCObject
 {
+    static CCArray* create();
 
-	class  CCArray : public CCObject
-	{
+	static CCArray* createWithObject(CCObject* pObject);
+	static CCArray* createWithArray(CCArray* otherArray);
+    static CCArray* createWithCapacity(unsigned int capacity);
+	static CCArray* createWithContentsOfFile(const char* pFileName);
 
-		static CCArray* array();
-		static CCArray* arrayWithCapacity(unsigned int capacity);
-		static CCArray* arrayWithArray(CCArray* otherArray);
+    unsigned int count();
 
-		bool init();
-		bool initWithCapacity(unsigned int capacity);
-		bool initWithArray(CCArray* otherArray);
+    unsigned int capacity();
 
-		unsigned int count();
-		unsigned int capacity();
-		unsigned int indexOfObject(CCObject* object);
-		CCObject* objectAtIndex(unsigned int index);
-		CCObject* lastObject();
-		CCObject* randomObject();
-		bool containsObject(CCObject* object);
+    unsigned int indexOfObject(CCObject* object);
 
-		void addObject(CCObject* object);
-		void addObjectsFromArray(CCArray* otherArray);
-		void insertObject(CCObject* object, unsigned int index);
+    CCObject* objectAtIndex(unsigned int index);
 
-		void removeLastObject();
-		void removeObject(CCObject* object);
-		void removeObjectAtIndex(unsigned int index);
-		void removeObjectsInArray(CCArray* otherArray);
-		void removeAllObjects();
-		void fastRemoveObject(CCObject* object);
-		void fastRemoveObjectAtIndex(unsigned int index);
-		
+    CCObject* lastObject();
+
+    CCObject* randomObject();
+
+	bool isEqualToArray(CCArray* pOtherArray);
+
+    bool containsObject(CCObject* object);
+
+    void addObject(CCObject* object);
+
+    void addObjectsFromArray(CCArray* otherArray);
+
+    void insertObject(CCObject* object, unsigned int index);
+
+    void removeLastObject(bool bReleaseObj = true);
+
+    void removeObject(CCObject* object, bool bReleaseObj = true);
+
+    void removeObjectAtIndex(unsigned int index, bool bReleaseObj = true);
+
+    void removeObjectsInArray(CCArray* otherArray);
+
+    void removeAllObjects();
+
+    void fastRemoveObject(CCObject* object);
+
+    void fastRemoveObjectAtIndex(unsigned int index);
+
     void exchangeObject(CCObject* object1, CCObject* object2);
+
     void exchangeObjectAtIndex(unsigned int index1, unsigned int index2);
+
     void reverseObjects();
+
     void reduceMemoryFootprint();
 
-	public:
-		ccArray* data;
-	};
+    void replaceObjectAtIndex(unsigned int uIndex, CCObject* pObject, bool bReleaseObject = true);
 
-}
-
-
+};

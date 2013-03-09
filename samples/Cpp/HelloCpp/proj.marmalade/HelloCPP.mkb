@@ -1,0 +1,43 @@
+options
+{
+	module_path="../../../../cocos2dx/proj.marmalade/"
+	s3e-data-dir = "../Resources"
+}
+
+includepaths
+{
+	../Classes
+}
+subprojects
+{
+	IwGL
+	cocos2dx
+}
+
+assets
+{
+	(../Resources)
+	fonts
+	ipad
+	ipadhd
+	iphone
+}
+
+
+
+files
+{
+	[Main]
+	(src)
+	Main.h
+	Main.cpp
+
+	(../Classes)
+	AppDelegate.h
+	AppDelegate.cpp
+	AppMacros.h
+	HelloWorldScene.h
+	HelloWorldScene.cpp
+}
+
+

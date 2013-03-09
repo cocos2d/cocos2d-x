@@ -1,29 +1,26 @@
 
-#include "CCSprite.h"
-#include "CCTexture2D.h"
+class CCLabelTTF : public CCSprite
+{
+    void setString(const char *label);
+    const char* getString(void);
 
-namespace cocos2d{
-	class  CCLabelTTF : public CCSprite, public CCLabelProtocol
-	{
-		CCLabelTTF();
-		~CCLabelTTF();
-		char * description();
+	CCTextAlignment getHorizontalAlignment();
+    void setHorizontalAlignment(CCTextAlignment alignment);
 
-		static CCLabelTTF * labelWithString(const char *label, CCSize dimensions, CCTextAlignment alignment, const char *fontName, float fontSize);
+    CCVerticalTextAlignment getVerticalAlignment();
+    void setVerticalAlignment(CCVerticalTextAlignment verticalAlignment);
 
-		static CCLabelTTF * labelWithString(const char *label, const char *fontName, float fontSize);
-	
-		bool initWithString(const char *label, CCSize dimensions, CCTextAlignment alignment, const char *fontName, float fontSize);
-	
-		bool initWithString(const char *label, const char *fontName, float fontSize);
+    CCSize getDimensions();
+    void setDimensions(CCSize &dim);
 
-	
-		void setString(const char *label);
-		const char* getString(void);
+    float getFontSize();
+    void setFontSize(float fontSize);
 
-		CCLabelProtocol* convertToLabelProtocol();
+    const char* getFontName();
+    void setFontName(const char *fontName);
 
-	};
-
-} //namespace cocos2d
-
+    static CCLabelTTF * create(const char *str, const char *fontName, float fontSize, const CCSize& dimensions, CCTextAlignment hAlignment, CCVerticalTextAlignment vAlignment);
+    static CCLabelTTF * create(const char *str, const char *fontName, float fontSize, const CCSize& dimensions, CCTextAlignment hAlignment);
+    static CCLabelTTF * create(const char *str, const char *fontName, float fontSize);
+	static CCLabelTTF * create();
+};

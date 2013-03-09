@@ -31,62 +31,62 @@ extern "C" {
 typedef struct _xmlURI xmlURI;
 typedef xmlURI *xmlURIPtr;
 struct _xmlURI {
-    char *scheme;	/* the URI scheme */
-    char *opaque;	/* opaque part */
-    char *authority;	/* the authority part */
-    char *server;	/* the server part */
-    char *user;		/* the user part */
-    int port;		/* the port number */
-    char *path;		/* the path string */
-    char *query;	/* the query string (deprecated - use with caution) */
-    char *fragment;	/* the fragment identifier */
-    int  cleanup;	/* parsing potentially unclean URI */
-    char *query_raw;	/* the query string (as it appears in the URI) */
+    char *scheme;    /* the URI scheme */
+    char *opaque;    /* opaque part */
+    char *authority;    /* the authority part */
+    char *server;    /* the server part */
+    char *user;        /* the user part */
+    int port;        /* the port number */
+    char *path;        /* the path string */
+    char *query;    /* the query string (deprecated - use with caution) */
+    char *fragment;    /* the fragment identifier */
+    int  cleanup;    /* parsing potentially unclean URI */
+    char *query_raw;    /* the query string (as it appears in the URI) */
 };
 
 /*
  * This function is in tree.h:
- * xmlChar *	xmlNodeGetBase	(xmlDocPtr doc,
+ * xmlChar *    xmlNodeGetBase    (xmlDocPtr doc,
  *                               xmlNodePtr cur);
  */
 XMLPUBFUN xmlURIPtr XMLCALL
-		xmlCreateURI		(void);
+        xmlCreateURI        (void);
 XMLPUBFUN xmlChar * XMLCALL
-		xmlBuildURI		(const xmlChar *URI,
-					 const xmlChar *base);
+        xmlBuildURI        (const xmlChar *URI,
+                     const xmlChar *base);
 XMLPUBFUN xmlChar * XMLCALL
-		xmlBuildRelativeURI	(const xmlChar *URI,
-					 const xmlChar *base);
+        xmlBuildRelativeURI    (const xmlChar *URI,
+                     const xmlChar *base);
 XMLPUBFUN xmlURIPtr XMLCALL
-		xmlParseURI		(const char *str);
+        xmlParseURI        (const char *str);
 XMLPUBFUN xmlURIPtr XMLCALL
-		xmlParseURIRaw		(const char *str,
-					 int raw);
+        xmlParseURIRaw        (const char *str,
+                     int raw);
 XMLPUBFUN int XMLCALL
-		xmlParseURIReference	(xmlURIPtr uri,
-					 const char *str);
+        xmlParseURIReference    (xmlURIPtr uri,
+                     const char *str);
 XMLPUBFUN xmlChar * XMLCALL
-		xmlSaveUri		(xmlURIPtr uri);
+        xmlSaveUri        (xmlURIPtr uri);
 XMLPUBFUN void XMLCALL
-		xmlPrintURI		(FILE *stream,
-					 xmlURIPtr uri);
+        xmlPrintURI        (FILE *stream,
+                     xmlURIPtr uri);
 XMLPUBFUN xmlChar * XMLCALL
-		xmlURIEscapeStr         (const xmlChar *str,
-					 const xmlChar *list);
+        xmlURIEscapeStr         (const xmlChar *str,
+                     const xmlChar *list);
 XMLPUBFUN char * XMLCALL
-		xmlURIUnescapeString	(const char *str,
-					 int len,
-					 char *target);
+        xmlURIUnescapeString    (const char *str,
+                     int len,
+                     char *target);
 XMLPUBFUN int XMLCALL
-		xmlNormalizeURIPath	(char *path);
+        xmlNormalizeURIPath    (char *path);
 XMLPUBFUN xmlChar * XMLCALL
-		xmlURIEscape		(const xmlChar *str);
+        xmlURIEscape        (const xmlChar *str);
 XMLPUBFUN void XMLCALL
-		xmlFreeURI		(xmlURIPtr uri);
+        xmlFreeURI        (xmlURIPtr uri);
 XMLPUBFUN xmlChar* XMLCALL
-		xmlCanonicPath		(const xmlChar *path);
+        xmlCanonicPath        (const xmlChar *path);
 XMLPUBFUN xmlChar* XMLCALL
-		xmlPathToURI		(const xmlChar *path);
+        xmlPathToURI        (const xmlChar *path);
 
 #ifdef __cplusplus
 }

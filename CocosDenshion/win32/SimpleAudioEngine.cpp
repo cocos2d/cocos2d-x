@@ -4,6 +4,8 @@
 #include <cstdlib>
 
 #include "MciPlayer.h"
+#include "cocos2d.h"
+USING_NS_CC;
 
 using namespace std;
 
@@ -16,7 +18,7 @@ static char     s_szRootPath[MAX_PATH];
 static DWORD    s_dwRootLen;
 static char     s_szFullPath[MAX_PATH];
 
-static const char * _FullPath(const char * szPath);
+static std::string _FullPath(const char * szPath);
 static unsigned int _Hash(const char *key);
 
 #define BREAK_IF(cond)  if (cond) break;
@@ -51,19 +53,15 @@ void SimpleAudioEngine::end()
 {
     sharedMusic().Close();
 
-	EffectList::iterator p = sharedList().begin();
-	while (p != sharedList().end())
-	{
-		delete p->second;
-		p->second = NULL;
-		p++;
-	}   
+    EffectList::iterator p = sharedList().begin();
+    while (p != sharedList().end())
+    {
+        delete p->second;
+        p->second = NULL;
+        p++;
+    }   
     sharedList().clear();
     return;
-}
-
-void SimpleAudioEngine::setResource(const char* pszZipFileName)
-{
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -77,7 +75,7 @@ void SimpleAudioEngine::playBackgroundMusic(const char* pszFilePath, bool bLoop)
         return;
     }
 
-    sharedMusic().Open(_FullPath(pszFilePath), _Hash(pszFilePath));
+    sharedMusic().Open(_FullPath(pszFilePath).c_str(), _Hash(pszFilePath));
     sharedMusic().Play((bLoop) ? -1 : 1);
 }
 
@@ -159,13 +157,58 @@ void SimpleAudioEngine::preloadEffect(const char* pszFilePath)
 
         sharedList().insert(Effect(nRet, new MciPlayer()));
         MciPlayer * pPlayer = sharedList()[nRet];
-        pPlayer->Open(_FullPath(pszFilePath), nRet);
+        pPlayer->Open(_FullPath(pszFilePath).c_str(), nRet);
 
         BREAK_IF(nRet == pPlayer->GetSoundID());
 
         sharedList().erase(nRet);
         nRet = 0;
     } while (0);
+}
+
+void SimpleAudioEngine::pauseEffect(unsigned int nSoundId)
+{
+    EffectList::iterator p = sharedList().find(nSoundId);
+    if (p != sharedList().end())
+    {
+        p->second->Pause();
+    }
+}
+
+void SimpleAudioEngine::pauseAllEffects()
+{
+    EffectList::iterator iter;
+    for (iter = sharedList().begin(); iter != sharedList().end(); iter++)
+    {
+        iter->second->Pause();
+    }
+}
+
+void SimpleAudioEngine::resumeEffect(unsigned int nSoundId)
+{
+    EffectList::iterator p = sharedList().find(nSoundId);
+    if (p != sharedList().end())
+    {
+        p->second->Resume();
+    }
+}
+
+void SimpleAudioEngine::resumeAllEffects()
+{
+    EffectList::iterator iter;
+    for (iter = sharedList().begin(); iter != sharedList().end(); iter++)
+    {
+        iter->second->Resume();
+    }
+}
+
+void SimpleAudioEngine::stopAllEffects()
+{
+    EffectList::iterator iter;
+    for (iter = sharedList().begin(); iter != sharedList().end(); iter++)
+    {
+        iter->second->Stop();
+    }
 }
 
 void SimpleAudioEngine::preloadBackgroundMusic(const char* pszFilePath)
@@ -177,13 +220,13 @@ void SimpleAudioEngine::unloadEffect(const char* pszFilePath)
 {
     unsigned int nID = _Hash(pszFilePath);
 
-	EffectList::iterator p = sharedList().find(nID);
-	if (p != sharedList().end())
-	{
-		delete p->second;
-		p->second = NULL;
-		sharedList().erase(nID);
-	}    
+    EffectList::iterator p = sharedList().find(nID);
+    if (p != sharedList().end())
+    {
+        delete p->second;
+        p->second = NULL;
+        sharedList().erase(nID);
+    }    
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -212,29 +255,9 @@ void SimpleAudioEngine::setEffectsVolume(float volume)
 // static function
 //////////////////////////////////////////////////////////////////////////
 
-const char * _FullPath(const char * szPath)
+static std::string _FullPath(const char * szPath)
 {
-    if (! s_szRootPath[0])
-    {
-        WCHAR  wszPath[MAX_PATH];
-        s_dwRootLen = WideCharToMultiByte(CP_ACP, 0, wszPath, 
-            GetCurrentDirectoryW(sizeof(wszPath), wszPath), 
-            s_szRootPath, MAX_PATH, NULL, NULL);
-        s_szRootPath[s_dwRootLen] = '\\';
-        s_szRootPath[s_dwRootLen + 1] = 0;
-        strcpy_s(s_szFullPath, sizeof(s_szFullPath), s_szRootPath);
-        ++s_dwRootLen;
-    }
-
-    if (0 != szPath[0] && ':' != szPath[1])
-    {
-        strcpy_s(s_szFullPath + s_dwRootLen, sizeof(s_szFullPath) - s_dwRootLen, szPath);
-        return s_szFullPath;
-    }
-    else
-    {
-        return szPath;
-    }
+    return CCFileUtils::sharedFileUtils()->fullPathForFilename(szPath);
 }
 
 unsigned int _Hash(const char *key)

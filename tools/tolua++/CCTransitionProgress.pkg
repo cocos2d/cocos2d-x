@@ -1,0 +1,35 @@
+class CCTransitionProgress : public CCTransitionScene
+{
+	static CCTransitionProgress* create(float t, CCScene* scene);
+};
+
+class CCTransitionProgressRadialCCW : public CCTransitionProgress
+{
+	static CCTransitionProgressRadialCCW* create(float t, CCScene* scene);
+};
+
+class CCTransitionProgressRadialCW : public CCTransitionProgress
+{
+	static CCTransitionProgressRadialCW* create(float t, CCScene* scene);
+};
+
+class CCTransitionProgressHorizontal : public CCTransitionProgress
+{
+	static CCTransitionProgressHorizontal* create(float t, CCScene* scene);
+};
+
+class CCTransitionProgressVertical : public CCTransitionProgress
+{
+	static CCTransitionProgressVertical* create(float t, CCScene* scene);
+};
+
+class CCTransitionProgressInOut : public CCTransitionProgress
+{
+	static CCTransitionProgressInOut* create(float t, CCScene* scene);
+};
+
+class CCTransitionProgressOutIn : public CCTransitionProgress
+{
+	static CCTransitionProgressOutIn* create(float t, CCScene* scene);
+};
+

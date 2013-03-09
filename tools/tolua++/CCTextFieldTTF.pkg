@@ -1,79 +1,18 @@
-namespace cocos2d {
 
-
-class CCTextFieldDelegate
+class CCTextFieldTTF : public CCLabelTTF
 {
-
-    /**
-    @brief	If the sender doesn't want to attach with IME, return true;
-    */
-    bool onTextFieldAttachWithIME(CCTextFieldTTF * sender);
-
-    /**
-    @brief	If the sender doesn't want to detach with IME, return true;
-    */
-    bool onTextFieldDetachWithIME(CCTextFieldTTF * sender);
-
-    /**
-    @brief	If the sender doesn't want to insert the text, return true;
-    */
-    bool onTextFieldInsertText(CCTextFieldTTF * sender, const char * text, int nLen);
-
-    /**
-    @brief	If the sender doesn't want to delete the delText, return true;
-    */
-    bool onTextFieldDeleteBackward(CCTextFieldTTF * sender, const char * delText, int nLen);
-    /**
-    @brief	If doesn't want draw sender as default, return true.
-    */
-    bool onDraw(CCTextFieldTTF * sender);
-};
-
-/**
-@brief	A simple text input field with TTF font.
-*/
-class CCTextFieldTTF : public CCLabelTTF, public CCIMEDelegate
-{
-    CCTextFieldTTF();
-    ~CCTextFieldTTF();
-
-    //char * description();
-
-    /** creates a CCTextFieldTTF from a fontname, alignment, dimension and font size */
-    static CCTextFieldTTF * textFieldWithPlaceHolder(const char *placeholder, CCSize dimensions, CCTextAlignment alignment, const char *fontName, float fontSize);
-    /** creates a CCLabelTTF from a fontname and font size */
-    static CCTextFieldTTF * textFieldWithPlaceHolder(const char *placeholder, const char *fontName, float fontSize);
-    /** initializes the CCTextFieldTTF with a font name, alignment, dimension and font size */
-    bool initWithPlaceHolder(const char *placeholder, CCSize dimensions, CCTextAlignment alignment, const char *fontName, float fontSize);
-    /** initializes the CCTextFieldTTF with a font name and font size */
-    bool initWithPlaceHolder(const char *placeholder, const char *fontName, float fontSize);
-
-    /**
-    @brief	Open keyboard and receive input text.
-    */
     bool attachWithIME();
-
-    /**
-    @brief	End text input  and close keyboard.
-    */
     bool detachWithIME();
 
-    //////////////////////////////////////////////////////////////////////////
-    // properties
-    //////////////////////////////////////////////////////////////////////////
-    
-    CCTextFieldDelegate* getDelegate();
-    void setDelegate(CCTextFieldDelegate *pVal);
-    
     int getCharCount();
-    ccColor3B getColorSpaceHolder();
     void setColorSpaceHolder(ccColor3B val);
-    // input text property
+    ccColor3B getColorSpaceHolder();
     void setString(const char *text);
     const char* getString(void);
 
     void setPlaceHolder(const char * text);
     const char * getPlaceHolder(void);
 
+    static CCTextFieldTTF * textFieldWithPlaceHolder(const char *placeholder, CCSize dimensions, CCTextAlignment alignment, const char *fontName, float fontSize);
+    static CCTextFieldTTF * textFieldWithPlaceHolder(const char *placeholder, const char *fontName, float fontSize);
 };
-}

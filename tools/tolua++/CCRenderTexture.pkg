@@ -1,55 +1,31 @@
 
-namespace cocos2d {
-
 typedef enum eImageFormat
 {
-	kCCImageFormatJPG       = 0,
-	kCCImageFormatPNG       = 1,
-    kCCImageFormatRawData   = 2
+    kCCImageFormatJPEG       = 0,
+    kCCImageFormatPNG       = 1,
 } tImageFormat;
 
-class CCRenderTexture : public CCNode 
+class CCRenderTexture : public CCNode
 {
-    /** The CCSprite being used.
-    The sprite, by default, will use the following blending function: GL_ONE, GL_ONE_MINUS_SRC_ALPHA.
-    The blending function can be changed in runtime by calling:
-    - [[renderTexture sprite] setBlendFunc:(ccBlendFunc){GL_ONE, GL_ONE_MINUS_SRC_ALPHA}];
-    */
-	CCSprite* getSprite();
-	void setSprite(CCSprite* psprite);
+    CCSprite* getSprite();
+    void setSprite(CCSprite* psprite);
 
-	CCRenderTexture();
-	~CCRenderTexture();
-    /** creates a RenderTexture object with width and height in Points and a pixel format, only RGB and RGBA formats are valid */
-    static CCRenderTexture * renderTextureWithWidthAndHeight(int w, int h, CCTexture2DPixelFormat eFormat);
-
-    /** creates a RenderTexture object with width and height in Points, pixel format is RGBA8888 */
-    static CCRenderTexture * renderTextureWithWidthAndHeight(int w, int h);
-
-    /** initializes a RenderTexture object with width and height in Points and a pixel format, only RGB and RGBA formats are valid */
-    bool initWithWidthAndHeight(int w, int h, CCTexture2DPixelFormat eFormat);
-
-    /** starts grabbing */
-	void begin();
-
-    /** starts rendering to the texture while clearing the texture first.
-    This is more efficient then calling -clear first and then -begin */
+    void begin();
+    void end @ endToLua ();
     void beginWithClear(float r, float g, float b, float a);
+    void beginWithClear(float r, float g, float b, float a, float depthValue);
+    void beginWithClear(float r, float g, float b, float a, float depthValue, int stencilValue);
 
-    /** ends grabbing */
-    void endToLua();
-
-    /** clears the texture with a color */
     void clear(float r, float g, float b, float a);
+    void clearDepth(float depthValue);
+    void clearStencil(int stencilValue);
 
-	/** saves the texture into a file */
-	bool saveBuffer(const char *name);
-	/** saves the texture into a file. The format can be JPG or PNG */
-	bool saveBuffer(const char *name, int format);
+    CCImage* newCCImage();
 
-    /* get buffer as UIImage, can only save a render buffer which has a RGBA8888 pixel format */
-    CCData *getUIImageAsDataFromBuffer(int format);
+    bool saveToFile(const char *szFilePath);
+    bool saveToFile(const char *name, tCCImageFormat format);
 
+		static CCRenderTexture * create(int w ,int h, CCTexture2DPixelFormat eFormat, GLuint uDepthStencilFormat);
+    static CCRenderTexture * create(int w, int h, CCTexture2DPixelFormat eFormat);
+    static CCRenderTexture * create(int w, int h);
 };
-
-} // namespace cocos2d

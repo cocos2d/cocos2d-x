@@ -21,7 +21,7 @@
 #ifndef _ZLIBIOAPI64_H
 #define _ZLIBIOAPI64_H
 
-#include "CCPlatformConfig.h"
+#include "platform/CCPlatformConfig.h"
 
 #if (!defined(_WIN32)) && (!defined(WIN32))
 
@@ -80,7 +80,7 @@ namespace cocos2d {
 #include "mz64conf.h"
 #endif
 
-/* a type choosen by DEFINE */
+/* a type chosen by DEFINE */
 #ifdef HAVE_64BIT_INT_CUSTOM
 typedef  64BIT_INT_CUSTOM_TYPE ZPOS64_T;
 #else

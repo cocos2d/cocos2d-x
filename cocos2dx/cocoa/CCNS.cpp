@@ -24,12 +24,17 @@ THE SOFTWARE.
 #include "CCNS.h"
 #include <string>
 #include <vector>
+#include <string.h>
 #include <stdlib.h>
+
+using namespace std;
+
+NS_CC_BEGIN
 
 typedef std::vector<std::string> strArray;
 
 // string toolkit
-void split(std::string src, const char* token, strArray& vect)
+static inline void split(std::string src, const char* token, strArray& vect)
 {
     int nend=0;
     int nbegin=0;
@@ -45,10 +50,10 @@ void split(std::string src, const char* token, strArray& vect)
 }
 
 // first, judge whether the form of the string like this: {x,y}
-// if the form is right,the string will be splited into the parameter strs;
+// if the form is right,the string will be split into the parameter strs;
 // or the parameter strs will be empty.
 // if the form is right return true,else return false.
-bool splitWithForm(const char* pStr, strArray& strs)
+static bool splitWithForm(const char* pStr, strArray& strs)
 {
     bool bRet = false;
 
@@ -91,90 +96,90 @@ bool splitWithForm(const char* pStr, strArray& strs)
 }
 
 // implement the functions
-namespace cocos2d
+
+CCRect CCRectFromString(const char* pszContent)
 {
-    CCRect CCRectFromString(const char* pszContent)
+    CCRect result = CCRectZero;
+
+    do 
     {
-        CCRect result = CCRectZero;
+        CC_BREAK_IF(!pszContent);
+        std::string content = pszContent;
 
-        do 
+        // find the first '{' and the third '}'
+        int nPosLeft  = content.find('{');
+        int nPosRight = content.find('}');
+        for (int i = 1; i < 3; ++i)
         {
-            CC_BREAK_IF(!pszContent);
-            std::string content = pszContent;
-
-            // find the first '{' and the third '}'
-            int nPosLeft  = content.find('{');
-            int nPosRight = content.find('}');
-            for (int i = 1; i < 3; ++i)
+            if (nPosRight == (int)std::string::npos)
             {
-                if (nPosRight == (int)std::string::npos)
-                {
-                    break;
-                }
-                nPosRight = content.find('}', nPosRight + 1);
+                break;
             }
-            CC_BREAK_IF(nPosLeft == (int)std::string::npos || nPosRight == (int)std::string::npos);
+            nPosRight = content.find('}', nPosRight + 1);
+        }
+        CC_BREAK_IF(nPosLeft == (int)std::string::npos || nPosRight == (int)std::string::npos);
 
-            content = content.substr(nPosLeft + 1, nPosRight - nPosLeft - 1);
-            int nPointEnd = content.find('}');
-            CC_BREAK_IF(nPointEnd == (int)std::string::npos);
-            nPointEnd = content.find(',', nPointEnd);
-            CC_BREAK_IF(nPointEnd == (int)std::string::npos);
+        content = content.substr(nPosLeft + 1, nPosRight - nPosLeft - 1);
+        int nPointEnd = content.find('}');
+        CC_BREAK_IF(nPointEnd == (int)std::string::npos);
+        nPointEnd = content.find(',', nPointEnd);
+        CC_BREAK_IF(nPointEnd == (int)std::string::npos);
 
-            // get the point string and size string
-            std::string pointStr = content.substr(0, nPointEnd);
-            std::string sizeStr  = content.substr(nPointEnd + 1, content.length() - nPointEnd);
+        // get the point string and size string
+        std::string pointStr = content.substr(0, nPointEnd);
+        std::string sizeStr  = content.substr(nPointEnd + 1, content.length() - nPointEnd);
 
-            // split the string with ','
-            strArray pointInfo;
-            CC_BREAK_IF(!splitWithForm(pointStr.c_str(), pointInfo));
-            strArray sizeInfo;
-            CC_BREAK_IF(!splitWithForm(sizeStr.c_str(), sizeInfo));
+        // split the string with ','
+        strArray pointInfo;
+        CC_BREAK_IF(!splitWithForm(pointStr.c_str(), pointInfo));
+        strArray sizeInfo;
+        CC_BREAK_IF(!splitWithForm(sizeStr.c_str(), sizeInfo));
 
-            float x = (float) atof(pointInfo[0].c_str());
-            float y = (float) atof(pointInfo[1].c_str());
-            float width  = (float) atof(sizeInfo[0].c_str());
-            float height = (float) atof(sizeInfo[1].c_str());
+        float x = (float) atof(pointInfo[0].c_str());
+        float y = (float) atof(pointInfo[1].c_str());
+        float width  = (float) atof(sizeInfo[0].c_str());
+        float height = (float) atof(sizeInfo[1].c_str());
 
-            result = CCRectMake(x, y, width, height);
-        } while (0);
+        result = CCRectMake(x, y, width, height);
+    } while (0);
 
-        return result;
-    }
-
-    CCPoint CCPointFromString(const char* pszContent)
-    {
-        CCPoint ret = CCPointZero;
-
-        do 
-        {
-            strArray strs;
-            CC_BREAK_IF(!splitWithForm(pszContent, strs));
-
-            float x = (float) atof(strs[0].c_str());
-            float y = (float) atof(strs[1].c_str());
-
-            ret = CCPointMake(x, y);
-        } while (0);
-
-        return ret;
-    }
-
-    CCSize CCSizeFromString(const char* pszContent)
-    {
-        CCSize ret = CCSizeZero;
-
-        do 
-        {
-            strArray strs;
-            CC_BREAK_IF(!splitWithForm(pszContent, strs));
-
-            float width  = (float) atof(strs[0].c_str());
-            float height = (float) atof(strs[1].c_str());
-
-            ret = CCSizeMake(width, height);
-        } while (0);
-
-        return ret;
-    }
+    return result;
 }
+
+CCPoint CCPointFromString(const char* pszContent)
+{
+    CCPoint ret = CCPointZero;
+
+    do 
+    {
+        strArray strs;
+        CC_BREAK_IF(!splitWithForm(pszContent, strs));
+
+        float x = (float) atof(strs[0].c_str());
+        float y = (float) atof(strs[1].c_str());
+
+        ret = CCPointMake(x, y);
+    } while (0);
+
+    return ret;
+}
+
+CCSize CCSizeFromString(const char* pszContent)
+{
+    CCSize ret = CCSizeZero;
+
+    do 
+    {
+        strArray strs;
+        CC_BREAK_IF(!splitWithForm(pszContent, strs));
+
+        float width  = (float) atof(strs[0].c_str());
+        float height = (float) atof(strs[1].c_str());
+
+        ret = CCSizeMake(width, height);
+    } while (0);
+
+    return ret;
+}
+
+NS_CC_END

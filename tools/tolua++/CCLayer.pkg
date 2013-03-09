@@ -1,125 +1,78 @@
-#include "CCNode.h"
-#include "CCProtocols.h"
-#include "CCTouchDelegateProtocol.h"
-#include "CCAccelerometerDelegate.h"
-#include "CCKeypadDelegate.h"
 
-namespace   cocos2d {
+class CCLayer : public CCNode
+{
+    void setTouchEnabled(bool bValue);
+    bool isTouchEnabled();
 
-	class CCLayer : public CCNode, public CCTouchDelegate, public CCAccelerometerDelegate, public CCKeypadDelegate
-	{
-	public:
-		CCLayer();	
-		bool init();
-		static CCLayer *node(void);
-		void onEnter();
-		void onExit();
-		void onEnterTransitionDidFinish();
-		bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
-		void destroy(void);
-		void keep(void);
+    void setAccelerometerEnabled(bool bValue);
+    bool isAccelerometerEnabled();
 
-		void didAccelerate(CCAcceleration* pAccelerationValue) {}
-		void AccelerometerDestroy(void);
-		void AccelerometerKeep(void);
+    void setKeypadEnabled(bool bValue);
+    bool isKeypadEnabled();
 
-		void KeypadDestroy();
-		void KeypadKeep();
-		void registerWithTouchDispatcher(void);
+    void registerScriptTouchHandler(LUA_FUNCTION nHandler,
+                                    bool bIsMultiTouches = false,
+                                    int nPriority = 0,
+                                    bool bSwallowsTouches = false);
+    void unregisterScriptTouchHandler();
 
-		void setIsTouchEnabled(bool bValue);
-		bool getIsTouchEnabled();
+    void registerScriptKeypadHandler(LUA_FUNCTION nHandler);
+    void unregisterScriptKeypadHandler(void);
 
-		void setIsAccelerometerEnabled(bool bValue);
-		bool getIsAccelerometerEnabled();
+    void registerScriptAccelerateHandler(LUA_FUNCTION nHandler);
+    void unregisterScriptAccelerateHandler(void);
 
-		void setIsKeypadEnabled(bool bValue);
-		bool getIsKeypadEnabled();
-		
-		void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
-	        void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent);
-	        void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent);
-	        void ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent);
-	};
+    static CCLayer *create(void);
+};
 
-	class  CCLayerColor : public CCLayer , public CCRGBAProtocol, public CCBlendProtocol
-	{
+class CCLayerColor : public CCLayer
+{
+    void changeWidth(GLfloat w);
+    void changeHeight(GLfloat h);
+    void changeWidthAndHeight(GLfloat w ,GLfloat h);
 
+	void setContentSize(const CCSize & var);
 
+    void setOpacity(GLubyte var);
+    GLubyte getOpacity(void);
+    void setColor(ccColor3B Value);
+    ccColor3B getColor(void);
+    void setBlendFunc(ccBlendFunc Value);
+    ccBlendFunc getBlendFunc(void);
 
-		CCLayerColor();
-		void draw();
-		void setContentSize(CCSize var);
-		static CCLayerColor * layerWithColorWidthHeight(ccColor4B color, GLfloat width, GLfloat height);
-		static CCLayerColor * layerWithColor(ccColor4B color);	
-		bool initWithColorWidthHeight(ccColor4B color, GLfloat width, GLfloat height);	
-		bool initWithColor(ccColor4B color);
-		void changeWidth(GLfloat w);
-		void changeHeight(GLfloat h);
-		void changeWidthAndHeight(GLfloat w ,GLfloat h);
+	void setOpacityModifyRGB(bool bValue);
+    bool isOpacityModifyRGB(void);
 
+    static CCLayerColor * create(ccColor4B color, GLfloat width, GLfloat height);
+    static CCLayerColor * create(ccColor4B color);
+};
 
-		GLubyte getOpacity(void);
-		void setOpacity(GLubyte var);
+class CCLayerGradient : public CCLayerColor
+{
+    void setStartColor(ccColor3B colors);
+    ccColor3B getStartColor();
+    void setEndColor(ccColor3B Value);
+    ccColor3B getEndColor(void);
+    void setStartOpacity(GLubyte Value);
+    GLubyte getStartOpacity(void);
+    void setEndOpacity(GLubyte Value);
+    GLubyte getEndOpacity(void);
+    void setVector(CCPoint Value);
+    CCPoint getVector(void);
 
+    void setCompressedInterpolation(bool Value);
+    bool isCompressedInterpolation(void);
 
+    static CCLayerGradient* create(ccColor4B start, ccColor4B end, CCPoint v);
+    static CCLayerGradient* create(ccColor4B start, ccColor4B end);
+};
 
-		void setColor(ccColor3B Value);
-		ccColor3B getColor(void);
+class CCLayerMultiplex : public CCLayer
+{
+    void addLayer(CCLayer* layer);
+    void switchTo(unsigned int n);
+    void switchToAndReleaseMe(unsigned int n);
 
-		void setBlendFunc(ccBlendFunc Value);
-		ccBlendFunc getBlendFunc(void); 
-
-		CCRGBAProtocol* convertToRGBAProtocol();
-
-	};
-
-	class  CCLayerGradient : public CCLayerColor
-	{
-
-
-		static CCLayerGradient* layerWithColor(ccColor4B start, ccColor4B end);
-
-		/** Creates a full-screen CCLayer with a gradient between start and end in the direction of v. */
-		static CCLayerGradient* layerWithColor(ccColor4B start, ccColor4B end, CCPoint v);
-
-		/** Initializes the CCLayer with a gradient between start and end. */
-		bool initWithColor(ccColor4B start, ccColor4B end);
-
-		/** Initializes the CCLayer with a gradient between start and end in the direction of v. */
-		bool initWithColor(ccColor4B start, ccColor4B end, CCPoint v);
-
-		ccColor3B getStartColor();
-		void      setStartColor(ccColor3B colors);
-
-		void setEndColor(ccColor3B Value);
-		ccColor3B getEndColor(void);
-
-		void setStartOpacity(GLubyte Value);
-		GLubyte getStartOpacity(void);
-
-		void setEndOpacity(GLubyte Value);
-		GLubyte getEndOpacity(void);
-
-		void setVector(CCPoint Value);
-		CCPoint getVector(void);
-		
-		void setIsCompressedInterpolation(bool Value);
-		bool getIsCompressedInterpolation(void);
-
-	};
-
-
-	class  CCLayerMultiplex : public CCLayer
-	{
-		CCLayerMultiplex();		
-		//static CCLayerMultiplex * layerWithLayers(CCLayer* layer, ... );
-		//lua instead with follow func
-		static CCLayerMultiplex * layerWithLayer(CCLayer* layer);
-		void addLayer(CCLayer* layer);
-		bool initWithLayer(CCLayer* layer);
-		bool initWithLayers(CCLayer* layer, va_list params);	
-		void switchTo(unsigned int n);
-		void switchToAndReleaseMe(unsigned int n);
-	};
-}//namespace   cocos2d 
+	static CCLayerMultiplex * create(CCLayer* layer);
+    static CCLayerMultiplex * createWithLayer(CCLayer* layer);
+};

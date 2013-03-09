@@ -8,11 +8,11 @@ CCScene* HelloWorld::scene()
     do 
     {
         // 'scene' is an autorelease object
-        scene = CCScene::node();
+        scene = CCScene::create();
         CC_BREAK_IF(! scene);
 
         // 'layer' is an autorelease object
-        HelloWorld *layer = HelloWorld::node();
+        HelloWorld *layer = HelloWorld::create();
         CC_BREAK_IF(! layer);
 
         // add layer as a child to scene
@@ -42,7 +42,7 @@ bool HelloWorld::init()
         // 1. Add a menu item with "X" image, which is clicked to quit the program.
 
         // Create a "close" menu item with close icon, it's an auto release object.
-        CCMenuItemImage *pCloseItem = CCMenuItemImage::itemFromNormalImage(
+        CCMenuItemImage *pCloseItem = CCMenuItemImage::create(
             "CloseNormal.png",
             "CloseSelected.png",
             this,
@@ -53,7 +53,7 @@ bool HelloWorld::init()
         pCloseItem->setPosition(ccp(CCDirector::sharedDirector()->getWinSize().width - 20, 20));
 
         // Create a menu with the "close" menu item, it's an auto release object.
-        CCMenu* pMenu = CCMenu::menuWithItems(pCloseItem, NULL);
+        CCMenu* pMenu = CCMenu::create(pCloseItem, NULL);
         pMenu->setPosition(CCPointZero);
         CC_BREAK_IF(! pMenu);
 
@@ -63,18 +63,18 @@ bool HelloWorld::init()
         // 2. Add a label shows "Hello World".
 
         // Create a label and initialize with string "Hello World".
-        CCLabelTTF* pLabel = CCLabelTTF::labelWithString("Hello World", "Thonburi", 64);
+        CCLabelTTF* pLabel = CCLabelTTF::create("Hello World", "Arial", 24);
         CC_BREAK_IF(! pLabel);
 
         // Get window size and place the label upper. 
         CCSize size = CCDirector::sharedDirector()->getWinSize();
-        pLabel->setPosition(ccp(size.width / 2, size.height - 20));
+        pLabel->setPosition(ccp(size.width / 2, size.height - 50));
 
         // Add the label to HelloWorld layer as a child layer.
         this->addChild(pLabel, 1);
 
         // 3. Add add a splash screen, show the cocos2d splash image.
-        CCSprite* pSprite = CCSprite::spriteWithFile("HelloWorld.png");
+        CCSprite* pSprite = CCSprite::create("HelloWorld.png");
         CC_BREAK_IF(! pSprite);
 
         // Place the sprite on the center of the screen

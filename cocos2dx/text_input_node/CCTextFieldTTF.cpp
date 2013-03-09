@@ -27,7 +27,7 @@ THE SOFTWARE.
 #include "CCDirector.h"
 #include "CCEGLView.h"
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 static int _calcCharCount(const char * pszText)
 {
@@ -70,7 +70,7 @@ CCTextFieldTTF::~CCTextFieldTTF()
 //////////////////////////////////////////////////////////////////////////
 
 CCTextFieldTTF * CCTextFieldTTF::textFieldWithPlaceHolder(const char *placeholder, const CCSize& dimensions, CCTextAlignment alignment, const char *fontName, float fontSize)
-{		
+{        
     CCTextFieldTTF *pRet = new CCTextFieldTTF();
     if(pRet && pRet->initWithPlaceHolder("", dimensions, alignment, fontName, fontSize))
     {
@@ -112,7 +112,7 @@ bool CCTextFieldTTF::initWithPlaceHolder(const char *placeholder, const CCSize& 
         CC_SAFE_DELETE(m_pPlaceHolder);
         m_pPlaceHolder = new std::string(placeholder);
     }
-    return CCLabelTTF::initWithString(m_pPlaceHolder->c_str(), dimensions, alignment, fontName, fontSize);
+    return CCLabelTTF::initWithString(m_pPlaceHolder->c_str(), fontName, fontSize, dimensions, alignment);
 }
 bool CCTextFieldTTF::initWithPlaceHolder(const char *placeholder, const char *fontName, float fontSize)
 {
@@ -184,7 +184,7 @@ void CCTextFieldTTF::insertText(const char * text, int len)
     {
         if (m_pDelegate && m_pDelegate->onTextFieldInsertText(this, sInsert.c_str(), len))
         {
-            // delegate doesn't want insert text
+            // delegate doesn't want to insert text
             return;
         }
         
@@ -198,13 +198,13 @@ void CCTextFieldTTF::insertText(const char * text, int len)
         return;
     }
     
-    // '\n' has inserted,  let delegate process first
+    // '\n' inserted, let delegate process first
     if (m_pDelegate && m_pDelegate->onTextFieldInsertText(this, "\n", 1))
     {
         return;
     }
     
-    // if delegate hasn't process, detach with ime as default
+    // if delegate hasn't processed, detach from IME by default
     detachWithIME();
 }
 
@@ -227,11 +227,11 @@ void CCTextFieldTTF::deleteBackward()
 
     if (m_pDelegate && m_pDelegate->onTextFieldDeleteBackward(this, m_pInputText->c_str() + nStrLen - nDeleteLen, nDeleteLen))
     {
-        // delegate don't wan't delete backward
+        // delegate doesn't wan't to delete backwards
         return;
     }
 
-    // if delete all text, show space holder string
+    // if all text deleted, show placeholder string
     if (nStrLen <= nDeleteLen)
     {
         CC_SAFE_DELETE(m_pInputText);
@@ -268,6 +268,16 @@ void CCTextFieldTTF::draw()
     setColor(m_ColorSpaceHolder);
     CCLabelTTF::draw();
     setColor(color);
+}
+
+const ccColor3B& CCTextFieldTTF::getColorSpaceHolder()
+{
+    return m_ColorSpaceHolder;
+}
+
+void CCTextFieldTTF::setColorSpaceHolder(const ccColor3B& color)
+{
+    m_ColorSpaceHolder = color;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -321,4 +331,4 @@ const char * CCTextFieldTTF::getPlaceHolder(void)
     return m_pPlaceHolder->c_str();
 }
 
-NS_CC_END;
+NS_CC_END

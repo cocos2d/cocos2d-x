@@ -29,29 +29,84 @@
  */
 #include "ccConfig.h"
 #include "CCPlatformConfig.h"
+#include "CCPlatformDefine.h"
 
-#define MacGLView					void
-#define NSWindow					        void
+/**
+ * define a create function for a specific type, such as CCLayer
+ * @__TYPE__ class type to add create(), such as CCLayer
+ */
+#define CREATE_FUNC(__TYPE__) \
+static __TYPE__* create() \
+{ \
+    __TYPE__ *pRet = new __TYPE__(); \
+    if (pRet && pRet->init()) \
+    { \
+        pRet->autorelease(); \
+        return pRet; \
+    } \
+    else \
+    { \
+        delete pRet; \
+        pRet = NULL; \
+        return NULL; \
+    } \
+}
 
-/** @def CC_ENABLE_CACHE_TEXTTURE_DATA
+/**
+ * define a node function for a specific type, such as CCLayer
+ * @__TYPE__ class type to add node(), such as CCLayer
+ * @deprecated: This interface will be deprecated sooner or later.
+ */
+#define NODE_FUNC(__TYPE__) \
+CC_DEPRECATED_ATTRIBUTE static __TYPE__* node() \
+{ \
+    __TYPE__ *pRet = new __TYPE__(); \
+    if (pRet && pRet->init()) \
+    { \
+        pRet->autorelease(); \
+        return pRet; \
+    } \
+    else \
+    { \
+        delete pRet; \
+        pRet = NULL; \
+        return NULL; \
+    } \
+}
+
+/** @def CC_ENABLE_CACHE_TEXTURE_DATA
 Enable it if you want to cache the texture data.
 Basically,it's only enabled in android
 
 It's new in cocos2d-x since v0.99.5
 */
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    #define CC_ENABLE_CACHE_TEXTTURE_DATA       1
+    #define CC_ENABLE_CACHE_TEXTURE_DATA       1
 #else
-    #define CC_ENABLE_CACHE_TEXTTURE_DATA       0
+    #define CC_ENABLE_CACHE_TEXTURE_DATA       0
 #endif
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+    /* Application will crash in glDrawElements function on some win32 computers and some android devices.
+       Indices should be bound again while drawing to avoid this bug.
+     */
+    #define CC_REBIND_INDICES_BUFFER  1
+#else
+    #define CC_REBIND_INDICES_BUFFER  0
+#endif
 
 // generic macros
 
 // namespace cocos2d {}
-#define NS_CC_BEGIN                     namespace cocos2d {
-#define NS_CC_END                       }
-#define USING_NS_CC                     using namespace cocos2d
+#ifdef __cplusplus
+    #define NS_CC_BEGIN                     namespace cocos2d {
+    #define NS_CC_END                       }
+    #define USING_NS_CC                     using namespace cocos2d
+#else
+    #define NS_CC_BEGIN 
+    #define NS_CC_END 
+    #define USING_NS_CC 
+#endif 
 
 /** CC_PROPERTY_READONLY is used to declare a protected variable.
  We can use getter to read the variable.
@@ -101,11 +156,11 @@ public: virtual void set##funName(const varType& var);
  */
 #define CC_SYNTHESIZE_READONLY(varType, varName, funName)\
 protected: varType varName;\
-public: inline varType get##funName(void) const { return varName; }
+public: virtual varType get##funName(void) const { return varName; }
 
 #define CC_SYNTHESIZE_READONLY_PASS_BY_REF(varType, varName, funName)\
 protected: varType varName;\
-public: inline const varType& get##funName(void) const { return varName; }
+public: virtual const varType& get##funName(void) const { return varName; }
 
 /** CC_SYNTHESIZE is used to declare a protected variable.
  We can use getter to read the variable, and use the setter to change the variable.
@@ -119,72 +174,80 @@ public: inline const varType& get##funName(void) const { return varName; }
  */
 #define CC_SYNTHESIZE(varType, varName, funName)\
 protected: varType varName;\
-public: inline varType get##funName(void) const { return varName; }\
-public: inline void set##funName(varType var){ varName = var; }
+public: virtual varType get##funName(void) const { return varName; }\
+public: virtual void set##funName(varType var){ varName = var; }
 
 #define CC_SYNTHESIZE_PASS_BY_REF(varType, varName, funName)\
 protected: varType varName;\
-public: inline const varType& get##funName(void) const { return varName; }\
-public: inline void set##funName(const varType& var){ varName = var; }
+public: virtual const varType& get##funName(void) const { return varName; }\
+public: virtual void set##funName(const varType& var){ varName = var; }
 
-#define CC_SAFE_DELETE(p)			if(p) { delete p; p = 0; }
-#define CC_SAFE_DELETE_ARRAY(p)    if(p) { delete[] p; p = 0; }
-#define CC_SAFE_FREE(p)			if(p) { free(p); p = 0; }
-#define CC_SAFE_RELEASE(p)			if(p) { p->release(); }
-#define CC_SAFE_RELEASE_NULL(p)	if(p) { p->release(); p = 0; }
-#define CC_SAFE_RETAIN(p)			if(p) { p->retain(); }
-#define CC_BREAK_IF(cond)			if(cond) break;
+#define CC_SYNTHESIZE_RETAIN(varType, varName, funName)    \
+private: varType varName; \
+public: virtual varType get##funName(void) const { return varName; } \
+public: virtual void set##funName(varType var)   \
+{ \
+    if (varName != var) \
+    { \
+        CC_SAFE_RETAIN(var); \
+        CC_SAFE_RELEASE(varName); \
+        varName = var; \
+    } \
+} 
 
+#define CC_SAFE_DELETE(p)            do { if(p) { delete (p); (p) = 0; } } while(0)
+#define CC_SAFE_DELETE_ARRAY(p)     do { if(p) { delete[] (p); (p) = 0; } } while(0)
+#define CC_SAFE_FREE(p)                do { if(p) { free(p); (p) = 0; } } while(0)
+#define CC_SAFE_RELEASE(p)            do { if(p) { (p)->release(); } } while(0)
+#define CC_SAFE_RELEASE_NULL(p)        do { if(p) { (p)->release(); (p) = 0; } } while(0)
+#define CC_SAFE_RETAIN(p)            do { if(p) { (p)->retain(); } } while(0)
+#define CC_BREAK_IF(cond)            if(cond) break
+
+#define __CCLOGWITHFUNCTION(s, ...) \
+    CCLog("%s : %s",__FUNCTION__, CCString::createWithFormat(s, ##__VA_ARGS__)->getCString())
 
 // cocos2d debug
 #if !defined(COCOS2D_DEBUG) || COCOS2D_DEBUG == 0
-#define CCLOG(...)              
-#define CCLOGINFO(...)         
-#define CCLOGERROR(...)         
+#define CCLOG(...)       do {} while (0)
+#define CCLOGINFO(...)   do {} while (0)
+#define CCLOGERROR(...)  do {} while (0)
+#define CCLOGWARN(...)   do {} while (0)
 
 #elif COCOS2D_DEBUG == 1
 #define CCLOG(format, ...)      cocos2d::CCLog(format, ##__VA_ARGS__)
 #define CCLOGERROR(format,...)  cocos2d::CCLog(format, ##__VA_ARGS__)
 #define CCLOGINFO(format,...)   do {} while (0)
+#define CCLOGWARN(...) __CCLOGWITHFUNCTION(__VA_ARGS__)
 
 #elif COCOS2D_DEBUG > 1
 #define CCLOG(format, ...)      cocos2d::CCLog(format, ##__VA_ARGS__)
 #define CCLOGERROR(format,...)  cocos2d::CCLog(format, ##__VA_ARGS__)
 #define CCLOGINFO(format,...)   cocos2d::CCLog(format, ##__VA_ARGS__)
+#define CCLOGWARN(...) __CCLOGWITHFUNCTION(__VA_ARGS__)
 #endif // COCOS2D_DEBUG
 
-// shared library declartor
-#define CC_DLL                 
+// Lua engine debug
+#if !defined(COCOS2D_DEBUG) || COCOS2D_DEBUG == 0 || CC_LUA_ENGINE_DEBUG == 0
+#define LUALOG(...)
+#else
+#define LUALOG(format, ...)     cocos2d::CCLog(format, ##__VA_ARGS__)
+#endif // Lua engine debug
 
-// assertion
-#include <assert.h>
-#define CC_ASSERT(cond)                assert(cond)
-#define CC_UNUSED_PARAM(unusedparam)   (void)unusedparam
+/*
+ * only certain compilers support __attribute__((deprecated))
+ */
+#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
+    #define CC_DEPRECATED_ATTRIBUTE __attribute__((deprecated))
+#elif _MSC_VER >= 1400 //vs 2005 or higher
+    #define CC_DEPRECATED_ATTRIBUTE __declspec(deprecated) 
+#else
+    #define CC_DEPRECATED_ATTRIBUTE
+#endif 
 
-
-
-// platform depended macros
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-
-    #undef CC_DLL
-    #if defined(_USRDLL)
-        #define CC_DLL     __declspec(dllexport)
-    #else 		/* use a DLL library */
-        #define CC_DLL     __declspec(dllimport)
-    #endif
-
-#endif  // CC_PLATFORM_WIN32
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WOPHONE && defined(_TRANZDA_VM_))
-
-    #undef CC_DLL
-    #if defined(SS_MAKEDLL)
-        #define CC_DLL     __declspec(dllexport)
-    #else 		/* use a DLL library */
-        #define CC_DLL     __declspec(dllimport)
-    #endif
-
-#endif  // wophone VM
+#ifdef __GNUC__
+#define CC_UNUSED __attribute__ ((unused))
+#else
+#define CC_UNUSED
+#endif
 
 #endif // __CC_PLATFORM_MACROS_H__

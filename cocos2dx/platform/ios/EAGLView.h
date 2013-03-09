@@ -64,11 +64,11 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import <UIKit/UIKit.h>
 #import <OpenGLES/EAGL.h>
 #import <OpenGLES/EAGLDrawable.h>
-#import <OpenGLES/ES1/gl.h>
-#import <OpenGLES/ES1/glext.h>
+#import <OpenGLES/ES2/gl.h>
+#import <OpenGLES/ES2/glext.h>
 #import <CoreFoundation/CoreFoundation.h>
 
-#import "ESRenderer.h"
+#import "CCESRenderer.h"
 
 //CLASS INTERFACE:
 
@@ -79,24 +79,26 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
  */
 @interface EAGLView : UIView <UIKeyInput, UITextInput>
 {
-    id						<ESRenderer> renderer_;	
-	EAGLContext				*context_; // weak ref
+    id                        <CCESRenderer> renderer_;    
+    EAGLContext                *context_; // weak ref
 
-	NSString				*pixelformat_;
-	GLuint					depthFormat_;
-	BOOL					preserveBackbuffer_;
+    NSString                *pixelformat_;
+    GLuint                    depthFormat_;
+    BOOL                    preserveBackbuffer_;
 
-	CGSize					size_;
-	BOOL					discardFramebufferSupported_;
+    CGSize                    size_;
+    BOOL                    discardFramebufferSupported_;
 
-	//fsaa addition
-	BOOL					multisampling_;
-	unsigned int               requestedSamples_;
+    //fsaa addition
+    BOOL                    multisampling_;
+    unsigned int               requestedSamples_;
+    BOOL                    isUseUITextField;
 @private
-    CFMutableDictionaryRef  touchesIntergerDict;
-    unsigned int               indexBitsUsed;
     NSString *              markedText_;
     CGRect                  caretRect_;
+    CGRect                  originalRect_;
+    NSNotification*         keyboardShowNotification_;
+    BOOL                    isKeyboardShown_;
 }
 
 @property(nonatomic, readonly) UITextPosition *beginningOfDocument;
@@ -106,7 +108,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 @property (nonatomic, copy) NSDictionary *markedTextStyle;
 @property(readwrite, copy) UITextRange *selectedTextRange;
 @property(nonatomic, readonly) id<UITextInputTokenizer> tokenizer;
-
+@property(nonatomic, readonly, getter = isKeyboardShown) BOOL isKeyboardShown;
+@property(nonatomic, copy) NSNotification* keyboardShowNotification;
 /** creates an initializes an EAGLView with a frame and 0-bit depth buffer, and a RGB565 color buffer */
 + (id) viewWithFrame:(CGRect)frame;
 /** creates an initializes an EAGLView with a frame, a color buffer format, and 0-bit depth buffer */
@@ -139,8 +142,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 @property(nonatomic,readwrite) BOOL multiSampling;
 
-@property(readonly) CFMutableDictionaryRef touchesIntergerDict;
-@property(readwrite) unsigned int indexBitsUsed;
 
 /** EAGLView uses double-buffer. This method swaps the buffers */
 -(void) swapBuffers;
@@ -150,7 +151,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 -(int) getWidth;
 -(int) getHeight;
--(int) getUnUsedIndex;
--(void) removeUsedIndexBit:(int) index;
 
+-(void) doAnimationWhenKeyboardMoveWithDuration:(float) duration distance:(float) dis;
+-(void) doAnimationWhenAnotherEditBeClicked;
 @end

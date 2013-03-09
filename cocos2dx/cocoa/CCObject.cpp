@@ -25,81 +25,94 @@ THE SOFTWARE.
 
 #include "CCObject.h"
 #include "CCAutoreleasePool.h"
-#include <assert.h>
-namespace   cocos2d {
+#include "ccMacros.h"
+#include "script_support/CCScriptSupport.h"
+
+NS_CC_BEGIN
 
 CCObject* CCCopying::copyWithZone(CCZone *pZone)
 {
     CC_UNUSED_PARAM(pZone);
-	assert(0);
-	return NULL;
+    CCAssert(0, "not implement");
+    return 0;
 }
 
-
 CCObject::CCObject(void)
+: m_nLuaID(0)
+, m_uReference(1) // when the object is created, the reference count of it is 1
+, m_uAutoReleaseCount(0)
 {
-	static unsigned int uObjectCount = 0;
+    static unsigned int uObjectCount = 0;
 
-	m_uID = ++uObjectCount;
-
-	// when the object is created, the refrence count of it is 1
-	m_uReference = 1;
-	m_bManaged = false;
+    m_uID = ++uObjectCount;
 }
 
 CCObject::~CCObject(void)
 {
-	// if the object is managed, we should remove it
-	// from pool manager
-	if (m_bManaged)
-	{
-		CCPoolManager::getInstance()->removeObject(this);
-	}
+    // if the object is managed, we should remove it
+    // from pool manager
+    if (m_uAutoReleaseCount > 0)
+    {
+        CCPoolManager::sharedPoolManager()->removeObject(this);
+    }
+
+    // if the object is referenced by Lua engine, remove it
+    if (m_nLuaID)
+    {
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptObjectByCCObject(this);
+    }
+    else
+    {
+        CCScriptEngineProtocol* pEngine = CCScriptEngineManager::sharedManager()->getScriptEngine();
+        if (pEngine != NULL && pEngine->getScriptType() == kScriptTypeJavascript)
+        {
+            pEngine->removeScriptObjectByCCObject(this);
+        }
+    }
 }
 
 CCObject* CCObject::copy()
 {
-	return copyWithZone(NULL);
+    return copyWithZone(0);
 }
 
 void CCObject::release(void)
 {
-	assert(m_uReference > 0);
-	--m_uReference;
+    CCAssert(m_uReference > 0, "reference count should greater than 0");
+    --m_uReference;
 
-	if (m_uReference == 0)
-	{
-		delete this;
-	}
+    if (m_uReference == 0)
+    {
+        delete this;
+    }
 }
 
 void CCObject::retain(void)
 {
-	assert(m_uReference > 0);
+    CCAssert(m_uReference > 0, "reference count should greater than 0");
 
-	++m_uReference;
+    ++m_uReference;
 }
 
 CCObject* CCObject::autorelease(void)
 {
-	CCPoolManager::getInstance()->addObject(this);
-
-	m_bManaged = true;
-	return this;
+    CCPoolManager::sharedPoolManager()->addObject(this);
+    return this;
 }
 
-bool CCObject::isSingleRefrence(void)
+bool CCObject::isSingleReference(void)
 {
-	return m_uReference == 1;
+    return m_uReference == 1;
 }
 
 unsigned int CCObject::retainCount(void)
 {
-	return m_uReference;
+    return m_uReference;
 }
 
 bool CCObject::isEqual(const CCObject *pObject)
 {
-	return this == pObject;
+    return this == pObject;
 }
-}//namespace   cocos2d 
+
+NS_CC_END

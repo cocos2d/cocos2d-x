@@ -1,0 +1,738 @@
+------------------------------------------------------------
+revno: 111
+committer: Kazade <kazade@gmail.com>
+branch nick: kazmath
+timestamp: Thu 2010-08-19 12:07:29 +0100
+message:
+  Fix #620352. Fix a reference to kmMat4RotationAxisAngle
+------------------------------------------------------------
+revno: 110
+committer: Carsten Haubld <carstenhaubold@googlemail.com>
+branch nick: kazmath
+timestamp: Wed 2010-04-21 12:55:39 +0200
+message:
+  applied the change to the header files as well
+------------------------------------------------------------
+revno: 109
+committer: Carsten Haubld <carstenhaubold@googlemail.com>
+branch nick: kazmath
+timestamp: Wed 2010-04-21 12:54:06 +0200
+message:
+  fixed kmMat4RotationAxis
+------------------------------------------------------------
+revno: 108 [merge]
+committer: Carsten Haubld <carstenhaubold@googlemail.com>
+branch nick: kazmath
+timestamp: Wed 2010-04-21 12:27:53 +0200
+message:
+  fixed CMake in kazmathxx due to missing utility.h
+------------------------------------------------------------
+revno: 107
+committer: Carsten Haubld <carstenhaubold@googlemail.com>
+branch nick: kazmath
+timestamp: Wed 2010-04-21 12:22:40 +0200
+message:
+  fixed mat4 rotation axis by normalizing the axis first
+------------------------------------------------------------
+revno: 106
+committer: Luke Benstead <kazade@gmail.com>
+branch nick: kazmath
+timestamp: Sat 2010-01-09 16:56:04 +0000
+message:
+  Add cmake module
+------------------------------------------------------------
+revno: 105
+committer: Luke Benstead <luke@Hydrogen>
+branch nick: kazmath
+timestamp: Sat 2010-01-09 16:23:31 +0000
+message:
+  Remove kazmodel - it really should belong in its own repo
+------------------------------------------------------------
+revno: 104
+committer: Luke Benstead <luke@Hydrogen>
+branch nick: kazmath
+timestamp: Fri 2010-01-08 23:03:13 +0000
+message:
+  Reorganize the headers so that the tests can compile in place
+------------------------------------------------------------
+revno: 103
+committer: Carsten Haubld <carstenhaubold@googlemail.com>
+branch nick: kazmath
+timestamp: Mon 2009-08-31 11:21:42 +0200
+message:
+  Operators now inline, constructors fixed
+------------------------------------------------------------
+revno: 102
+committer: Carsten Haubld <carstenhaubold@googlemail.com>
+branch nick: kazmath
+timestamp: Sat 2009-08-29 11:42:59 +0200
+message:
+  fixed some compilation errors - still how do we define operators in headers correctly??
+------------------------------------------------------------
+revno: 101
+committer: Luke Benstead <kazade@gmail.com>
+branch nick: kazmath
+timestamp: Wed 2009-08-26 10:37:52 +0100
+message:
+  Added the header defines
+------------------------------------------------------------
+revno: 100
+committer: Luke Benstead <luke@sidney>
+branch nick: kazmath
+timestamp: Wed 2009-08-26 09:38:47 +0100
+message:
+  Added a V2 for kazmathxx
+------------------------------------------------------------
+revno: 99
+committer: Luke Benstead <kazade@gmail.com>
+branch nick: kazmath
+timestamp: Sun 2009-08-02 08:08:26 +0100
+message:
+  Added missing header file to one of the tests
+------------------------------------------------------------
+revno: 98
+committer: Carsten Haubld <carstenhaubold@googlemail.com>
+branch nick: kazmath
+timestamp: Sat 2009-08-01 12:05:25 +0200
+message:
+  No longer doing self assignment in kmMat4Inverse
+------------------------------------------------------------
+revno: 97
+committer: Carsten Haubld <carstenhaubold@googlemail.com>
+branch nick: kazmath
+timestamp: Sat 2009-08-01 11:15:36 +0200
+message:
+  Fixed kmMat4Inverse
+------------------------------------------------------------
+revno: 96
+committer: Luke Benstead <kazade@gmail.com>
+branch nick: kazmath
+timestamp: Sat 2009-08-01 09:20:33 +0100
+message:
+  Fixed some whitespace issues in plane.c
+------------------------------------------------------------
+revno: 95
+committer: Luke Benstead <kazade@gmail.com>
+branch nick: kazmath
+timestamp: Sat 2009-08-01 09:17:01 +0100
+message:
+  Rename kmAABBPointInBox to kmAABBContainsPoint
+------------------------------------------------------------
+revno: 94
+committer: Luke Benstead <kazade@gmail.com>
+branch nick: kazmath
+timestamp: Sat 2009-08-01 09:16:28 +0100
+message:
+  Implement kmAABBPointInBox
+------------------------------------------------------------
+revno: 93
+committer: Luke Benstead <kazade@gmail.com>
+branch nick: kazmath
+timestamp: Sat 2009-08-01 09:14:00 +0100
+message:
+  Implement kmAABBAssign
+------------------------------------------------------------
+revno: 92
+committer: Luke Benstead <kazade@gmail.com>
+branch nick: kazmath
+timestamp: Sat 2009-08-01 09:10:36 +0100
+message:
+  Fixed some whitespace and added some comments
+------------------------------------------------------------
+revno: 91
+committer: Luke Benstead <kazade@gmail.com>
+branch nick: kazmath
+timestamp: Sat 2009-08-01 08:56:13 +0100
+message:
+  Implemented (untested) kmMat4RotationTranslation to construct a 4x4 matrix from a 3x3 + vec3
+------------------------------------------------------------
+revno: 90
+committer: Luke Benstead <luke@hydrogen>
+branch nick: kazmath
+timestamp: Sun 2009-07-05 07:55:45 +0100
+message:
+  Added kmMat3RotationX, kmMat3RotationY and kmMat3RotationZ
+------------------------------------------------------------
+revno: 89
+committer: Carsten Haubld <carstenhaubold@googlemail.com>
+branch nick: kazmath
+timestamp: Sat 2009-06-27 09:38:20 +0200
+message:
+  Fixed a crash?
+------------------------------------------------------------
+revno: 88
+committer: Luke Benstead <kazade@gmail.com>
+branch nick: kazmath
+timestamp: Tue 2009-04-28 09:52:57 +0100
+message:
+  Added a test for kmMat4Transpose
+------------------------------------------------------------
+revno: 87
+committer: Luke Benstead <kazade@gmail.com>
+branch nick: kazmath
+timestamp: Tue 2009-04-28 08:49:59 +0100
+message:
+  Added a commented test for kmMat4Inverse, however kmMat4Adjugate and kmMat4Determinate need implementing
+------------------------------------------------------------
+revno: 86
+committer: Luke Benstead <kazade@gmail.com>
+branch nick: kazmath
+timestamp: Tue 2009-04-28 08:46:03 +0100
+message:
+  Fixed bug in kmQuaternionRotationMatrix
+------------------------------------------------------------
+revno: 85
+committer: Luke Benstead <kazade@gmail.com>
+branch nick: kazmath
+timestamp: Tue 2009-04-28 08:41:27 +0100
+message:
+  Added missing include to test_mat3.cpp
+------------------------------------------------------------
+revno: 84
+committer: Carsten Haubld <carstenhaubold@googlemail.com>
+branch nick: kazmath
+timestamp: Mon 2009-04-27 22:59:08 +0200
+message:
+  fixed CMakeLists.txt for the tests
+------------------------------------------------------------
+revno: 83
+committer: Luke Benstead <kazade@gmail.com>
+branch nick: kazmath
+timestamp: Mon 2009-04-27 21:34:20 +0100
+message:
+  Added a test for kmMat3Translation
+------------------------------------------------------------
+revno: 82
+committer: Luke Benstead <kazade@gmail.com>
+branch nick: kazmath
+timestamp: Mon 2009-04-27 21:32:19 +0100
+message:
+  Fixed bugs in kmMat3Scaling and kmMat3Translation, added test for kmMat3Scaling
+------------------------------------------------------------
+revno: 81 [merge]
+committer: Luke Benstead <kazade@gmail.com>
+branch nick: kazmath
+timestamp: Mon 2009-04-27 19:04:56 +0100
+message:
+  Merge from upstream. Fixed mismatching prototype in quaternion.c
+------------------------------------------------------------
+revno: 80
+committer: Luke Benstead <kazade@gmail.com>
+branch nick: kazmath
+timestamp: Mon 2009-04-27 19:01:35 +0100
+message:
+  Added a test for kmMat3AreEqual. Fixed a bug in kmMat3AreEqual
+------------------------------------------------------------
+revno: 79
+committer: Luke Benstead <kazade@gmail.com>
+branch nick: kazmath
+timestamp: Mon 2009-04-27 18:57:28 +0100
+message:
+  Added a test for kmMat3IsIdentity
+------------------------------------------------------------
+revno: 78
+committer: Luke Benstead <kazade@gmail.com>
+branch nick: kazmath
+timestamp: Mon 2009-04-27 18:54:48 +0100
+message:
+  Added a test for kmMat3Identity
+------------------------------------------------------------
+revno: 77
+committer: Luke Benstead <kazade@gmail.com>
+branch nick: kazmath
+timestamp: Mon 2009-04-27 18:52:14 +0100
+message:
+  Added a test for kmMat3Fill
+------------------------------------------------------------
+revno: 76
+committer: Luke Benstead <kazade@gmail.com>
+branch nick: kazmath
+timestamp: Mon 2009-04-27 18:46:30 +0100
+message:
+  Added some mat3 unit tests. Fixed a bug in kmMat3AreEqual
+------------------------------------------------------------
+revno: 75
+committer: Luke Benstead <kazade@gmail.com>
+branch nick: kazmath
+timestamp: Mon 2009-04-27 11:08:43 +0100
+message:
+  Added mat4 test stub
+------------------------------------------------------------
+revno: 74
+committer: Luke Benstead <kazade@gmail.com>
+branch nick: kazmath
+timestamp: Mon 2009-04-27 11:06:12 +0100
+message:
+  Enabled unit testing in cmake
+------------------------------------------------------------
+revno: 73
+committer: Luke Benstead <kazade@gmail.com>
+branch nick: kazmath
+timestamp: Mon 2009-04-27 10:44:37 +0100
+message:
+  Added cmakelists.txt to the tests subfolder
+------------------------------------------------------------
+revno: 72
+committer: Luke Benstead <kazade@gmail.com>
+branch nick: kazmath
+timestamp: Mon 2009-04-27 10:37:34 +0100
+message:
+  Added stub mat3 test file
+------------------------------------------------------------
+revno: 71
+committer: Luke Benstead <kazade@gmail.com>
+branch nick: kazmath
+timestamp: Mon 2009-04-27 10:35:48 +0100
+message:
+  Added tests folder for new boost::unit based tests
+------------------------------------------------------------
+revno: 70
+committer: Carsten Haubld <carstenhaubold@googlemail.com>
+branch nick: kazmath
+timestamp: Sun 2009-04-26 14:25:48 +0200
+message:
+  Fixed the new quaternion -> Matrix -> AngleAxis methods and added them to mat4
+------------------------------------------------------------
+revno: 69
+committer: Luke Benstead <kazade@gmail.com>
+branch nick: kazmath
+timestamp: Sun 2009-04-26 12:40:08 +0100
+message:
+  Added kazmodel to the kazlibs repo
+------------------------------------------------------------
+revno: 68 [merge]
+committer: Luke Benstead <kazade@gmail.com>
+branch nick: kazmath
+timestamp: Sun 2009-04-26 12:34:27 +0100
+message:
+  Merge from upstream
+------------------------------------------------------------
+revno: 67
+committer: Luke Benstead <kazade@gmail.com>
+branch nick: kazmath
+timestamp: Sun 2009-04-26 12:33:43 +0100
+message:
+  Reorganized bzr
+------------------------------------------------------------
+revno: 66
+committer: Luke Benstead <kazade@gmail.com>
+branch nick: kazmath
+timestamp: Sun 2009-04-26 10:00:18 +0100
+message:
+  Renamed kmMat3RotationAxis to kmMat3RotationAxisAngle to be more accurate
+------------------------------------------------------------
+revno: 65
+committer: Luke Benstead <kazade@gmail.com>
+branch nick: kazmath
+timestamp: Sun 2009-04-26 09:57:19 +0100
+message:
+  Fixed some compilation errors
+------------------------------------------------------------
+revno: 64
+committer: Luke Benstead <kazade@gmail.com>
+branch nick: kazmath
+timestamp: Sun 2009-04-26 09:54:12 +0100
+message:
+  Added untested implementation of kmMat3RotationToAxisAngle
+------------------------------------------------------------
+revno: 63
+committer: Luke Benstead <kazade@gmail.com>
+branch nick: kazmath
+timestamp: Sun 2009-04-26 09:49:17 +0100
+message:
+  Added stub for kmMat3RotationToAxisAngle()
+------------------------------------------------------------
+revno: 62
+committer: Luke Benstead <kazade@gmail.com>
+branch nick: kazmath
+timestamp: Sun 2009-04-26 09:45:58 +0100
+message:
+  Corrected a typo
+------------------------------------------------------------
+revno: 61
+committer: Luke Benstead <kazade@gmail.com>
+branch nick: kazmath
+timestamp: Sun 2009-04-26 09:44:39 +0100
+message:
+  Fixed broken Quaternion functions
+  Added (untested) kmMat3RotationAxis()
+------------------------------------------------------------
+revno: 60
+committer: Luke Benstead <kazade@gmail.com>
+branch nick: kazmath
+timestamp: Sat 2009-04-18 08:55:29 +0100
+message:
+  Fixed some errors in the quaternion header. 
+  Changed kmQuaternionRotationMatrix to accept a kmMat3 instead of kmMat4
+------------------------------------------------------------
+revno: 59
+committer: Luke Benstead <kazade@gmail.com>
+branch nick: kazmath
+timestamp: Sat 2009-04-18 08:42:38 +0100
+message:
+  Added kmMat3RotationQuaternion
+------------------------------------------------------------
+revno: 58
+committer: Carsten Haubld <carstenhaubold@googlemail.com>
+branch nick: kazmath
+timestamp: Sun 2009-04-05 11:58:29 +0200
+message:
+  Added mat3
+------------------------------------------------------------
+revno: 57 [merge]
+committer: Carsten Haubld <carstenhaubold@googlemail.com>
+branch nick: kazmath
+timestamp: Sun 2009-04-05 11:54:15 +0200
+message:
+  Implemented mat4 and vec4 for kazmathxx
+------------------------------------------------------------
+revno: 56
+committer: Carsten Haubld <carstenhaubold@googlemail.com>
+branch nick: kazmath
+timestamp: Sun 2009-04-05 11:53:07 +0200
+message:
+  Implemented mat4 and vec4 for kazmathxx
+------------------------------------------------------------
+revno: 55
+committer: Carsten Haubld <carstenhaubold@googlemail.com>
+branch nick: kazmath
+timestamp: Fri 2009-03-13 16:46:26 +0100
+message:
+  added km::vec3 to kazmathxx
+------------------------------------------------------------
+revno: 54
+committer: Carsten Haubld <carstenhaubold@googlemail.com>
+branch nick: kazmath
+timestamp: Fri 2009-03-13 16:14:51 +0100
+message:
+  Fixed: kmVec2 is no longer transformed by kmMat4\nAdded km::vec2
+------------------------------------------------------------
+revno: 53
+committer: Carsten Haubld <carstenhaubold@googlemail.com>
+branch nick: kazmath
+timestamp: Fri 2009-03-13 15:38:53 +0100
+message:
+  Added folder for kazmathxx
+------------------------------------------------------------
+revno: 52 [merge]
+committer: Luke Benstead <kazade@gmail.com>
+branch nick: trunk
+timestamp: Fri 2009-03-13 14:04:32 +0000
+message:
+  Merge from upstream
+------------------------------------------------------------
+revno: 51
+committer: Luke Benstead <kazade@gmail.com>
+branch nick: trunk
+timestamp: Fri 2009-03-13 14:00:14 +0000
+message:
+  Fixed for C89
+------------------------------------------------------------
+revno: 50
+committer: Carsten Haubold <CarstenHaubold@googlemail.com>
+timestamp: Tue 2008-12-30 12:45:23 +0100
+message:
+  fixed kmGLTranslate
+------------------------------------------------------------
+revno: 49
+committer: Carsten Haubold <CarstenHaubold@googlemail.com>
+timestamp: Tue 2008-12-30 12:15:27 +0100
+message:
+  fixed some stack memory leaks
+------------------------------------------------------------
+revno: 48
+committer: Carsten Haubold <CarstenHaubold@googlemail.com>
+timestamp: Tue 2008-12-30 11:01:35 +0100
+message:
+  The GL matrix stacks now work as expected - matrix multiplication was the wrong way round
+------------------------------------------------------------
+revno: 47
+committer: Carsten Haubold <CarstenHaubold@googlemail.com>
+timestamp: Tue 2008-12-30 10:52:28 +0100
+message:
+  Debug output
+------------------------------------------------------------
+revno: 46
+committer: Carsten Haubold <CarstenHaubold@googlemail.com>
+timestamp: Mon 2008-12-29 18:32:13 +0100
+message:
+  Fixed some compiler errors
+------------------------------------------------------------
+revno: 45
+committer: Luke <kazade@gmail.com>
+timestamp: Wed 2008-11-19 08:36:47 +0000
+message:
+  Added kmGLTranslatef, kmGLScalef and kmGLRotatef
+------------------------------------------------------------
+revno: 44
+committer: Luke <kazade@gmail.com>
+timestamp: Tue 2008-11-04 20:57:30 +0000
+message:
+  Fixed up kazmathxx
+------------------------------------------------------------
+revno: 43
+committer: Luke <kazade@gmail.com>
+timestamp: Wed 2008-10-29 09:24:32 +0000
+message:
+  Started implementing C++ operators in kazmathxx.h
+------------------------------------------------------------
+revno: 42
+committer: Luke <kazade@gmail.com>
+timestamp: Tue 2008-10-28 18:21:16 +0000
+message:
+  Added kazmathxx.h for C++ usage
+------------------------------------------------------------
+revno: 41
+committer: Luke <kazade@gmail.com>
+timestamp: Tue 2008-10-28 11:00:41 +0000
+message:
+  Added Doxygen documentation
+------------------------------------------------------------
+revno: 40
+committer: Luke <kazade@gmail.com>
+timestamp: Tue 2008-10-28 08:46:19 +0000
+message:
+  Began documenting the kmPlane functions.
+  Changed some assert(0)s to include a not implemented message
+------------------------------------------------------------
+revno: 39
+committer: Luke <kazade@gmail.com>
+timestamp: Tue 2008-10-28 08:42:24 +0000
+message:
+  - Wrote stubs for the AABB functions which raise assertions if used.
+  - Documented the AABB functions
+  - Changed the definition of kmAABBPointInBox so that it actually makes sense
+------------------------------------------------------------
+revno: 38
+committer: Luke <kazade@gmail.com>
+timestamp: Tue 2008-10-28 08:38:48 +0000
+message:
+  - Documented utility.c
+------------------------------------------------------------
+revno: 37
+committer: Luke <kazade@gmail.com>
+timestamp: Tue 2008-10-28 08:36:30 +0000
+message:
+  - Documented vec3.c in detail.
+  - Fixed up a not-implemented assertion.
+  - Changed existing doc strings to C style -  /** */
+------------------------------------------------------------
+revno: 36
+committer: Luke <kazade@gmail.com>
+timestamp: Tue 2008-10-28 08:30:00 +0000
+message:
+  Removed uneccessary files from git
+------------------------------------------------------------
+revno: 35
+committer: Luke <kazade@gmail.com>
+timestamp: Tue 2008-10-28 08:28:49 +0000
+message:
+  - Documented all the functions in mat4.c
+  - Fixed up all asserts in mat4.c to include a message
+  - Tidied up the code. Mat4.c is now done.
+------------------------------------------------------------
+revno: 34
+committer: Luke <kazade@gmail.com>
+timestamp: Mon 2008-10-27 21:52:33 +0000
+message:
+  Added potential 0.1 release binary
+------------------------------------------------------------
+revno: 33
+committer: Luke Benstead <kazade@gmail.com>
+timestamp: Mon 2008-10-27 21:46:55 +0000
+message:
+  Changed the README to include the BSD license
+------------------------------------------------------------
+revno: 32
+committer: Luke Benstead <kazade@gmail.com>
+timestamp: Mon 2008-10-27 21:45:51 +0000
+message:
+  Added the modified BSD license to all source files
+------------------------------------------------------------
+revno: 31
+committer: Luke Benstead <kazade@gmail.com>
+timestamp: Mon 2008-10-27 21:11:51 +0000
+message:
+  Fixed the installation of header files in CMake
+------------------------------------------------------------
+revno: 30
+committer: Luke <kazade@gmail.com>
+timestamp: Mon 2008-10-27 21:05:51 +0000
+message:
+  Added kazmath project files
+------------------------------------------------------------
+revno: 29 [merge]
+committer: Luke <kazade@gmail.com>
+timestamp: Mon 2008-10-27 21:03:22 +0000
+message:
+  Merge branch 'master' of git@github.com:Kazade/kazmath
+------------------------------------------------------------
+revno: 28
+committer: Luke <kazade@gmail.com>
+timestamp: Mon 2008-10-27 21:02:04 +0000
+message:
+  Finally got kazmath compiling on VC++, man that compiler sucks! Have MS not heard of C99?
+------------------------------------------------------------
+revno: 27
+committer: Luke Benstead <kazade@gmail.com>
+timestamp: Sun 2008-10-26 21:35:24 +0000
+message:
+  Changed the readme slightly, we need to change the license everywhere
+------------------------------------------------------------
+revno: 26
+committer: Luke Benstead <kazade@gmail.com>
+timestamp: Sun 2008-10-26 21:21:47 +0000
+message:
+  Implemented the stacks test, fixed the undefined references I was getting
+------------------------------------------------------------
+revno: 25
+committer: Luke Benstead <kazade@gmail.com>
+timestamp: Sun 2008-10-26 20:59:34 +0000
+message:
+  Removed the old matrix stack stuff
+------------------------------------------------------------
+revno: 24
+committer: Luke Benstead <kazade@gmail.com>
+timestamp: Sun 2008-10-26 20:11:58 +0000
+message:
+  Started implementing the matrix stack tests
+------------------------------------------------------------
+revno: 23
+committer: Luke Benstead <kazade@gmail.com>
+timestamp: Sun 2008-10-26 10:56:51 +0000
+message:
+  Started new implementation of the GL matrix stack
+------------------------------------------------------------
+revno: 22
+committer: Carsten Haubold <CarstenHaubold@googlemail.com>
+timestamp: Thu 2008-08-28 12:37:41 +0200
+message:
+  Added kmGLRotation
+------------------------------------------------------------
+revno: 21
+committer: Luke Benstead <luke@helium.(none)>
+timestamp: Thu 2008-08-28 09:24:00 +0100
+message:
+  We now have a working matrix stack
+------------------------------------------------------------
+revno: 20
+committer: Luke Benstead <luke@helium.(none)>
+timestamp: Wed 2008-08-27 13:34:49 +0100
+message:
+  Fixed the stack memory constants
+------------------------------------------------------------
+revno: 19
+committer: Luke Benstead <luke@helium.(none)>
+timestamp: Wed 2008-08-27 13:33:12 +0100
+message:
+  Added the initial gl_utils implementation for replacing the matrix functionality deprecated in OpenGL 3.0
+------------------------------------------------------------
+revno: 18
+committer: Carsten Haubold <dumbo@dumbo-laptop.(none)>
+timestamp: Mon 2008-08-25 12:46:16 +0200
+message:
+  Fixed a bug in kmMat4LookAt
+------------------------------------------------------------
+revno: 17 [merge]
+committer: Carsten Haubold <dumbo@dumbo-laptop.(none)>
+timestamp: Sun 2008-08-24 22:07:49 +0200
+message:
+  Merge branch 'master' of git@github.com:Kazade/kazmath
+------------------------------------------------------------
+revno: 16
+committer: Carsten Haubold <dumbo@dumbo-laptop.(none)>
+timestamp: Sun 2008-08-24 22:06:45 +0200
+message:
+  Added kmMat4LookAt
+------------------------------------------------------------
+revno: 15
+committer: Carsten Haubold <dumbo@dumbo-laptop.(none)>
+timestamp: Wed 2008-08-20 11:18:10 +0200
+message:
+  Added Fill methods for all Vec and Mat structs
+------------------------------------------------------------
+revno: 14
+committer: Carsten Haubold <dumbo@dumbo-laptop.(none)>
+timestamp: Tue 2008-08-19 22:31:55 +0200
+message:
+  Added UnitTests, changed bool to int and fixed some minor bugs
+------------------------------------------------------------
+revno: 13
+committer: Carsten Haubold <dumbo@dumbo-laptop.(none)>
+timestamp: Sun 2008-08-17 23:19:21 +0200
+message:
+  removed .svn entries which did not belong here
+------------------------------------------------------------
+revno: 12
+committer: Carsten Haubold <dumbo@dumbo-laptop.(none)>
+timestamp: Sun 2008-08-17 23:17:07 +0200
+message:
+  some tweaks on matrices and first test-app, PerspectiveProjection is correct !
+------------------------------------------------------------
+revno: 11
+committer: Carsten Haubold <dumbo@dumbo-laptop.(none)>
+timestamp: Sun 2008-08-17 16:04:09 +0200
+message:
+  Renamed cotangent to cotangens
+------------------------------------------------------------
+revno: 10
+committer: Luke Benstead <kazade@gmail.com>
+timestamp: Sat 2008-08-16 21:51:22 +0100
+message:
+  Added kmMat4PerspectiveProjection and kmMat4OrthographicProjection
+------------------------------------------------------------
+revno: 9
+committer: Luke Benstead <kazade@gmail.com>
+timestamp: Thu 2008-08-14 21:15:45 +0100
+message:
+  Added the aabb struct
+------------------------------------------------------------
+revno: 8
+committer: Luke Benstead <kazade@gmail.com>
+timestamp: Thu 2008-08-14 17:57:43 +0100
+message:
+  Added the kmAABB structure
+------------------------------------------------------------
+revno: 7
+committer: Luke Benstead <kazade@gmail.com>
+timestamp: Thu 2008-08-14 14:32:24 +0100
+message:
+  Fixed broken kmMat3Transpose
+------------------------------------------------------------
+revno: 6
+committer: Luke Benstead <kazade@gmail.com>
+timestamp: Thu 2008-08-14 14:21:04 +0100
+message:
+  Fixed broken kmMat4Translation, w component was not set
+------------------------------------------------------------
+revno: 5
+committer: Luke Benstead <kazade@gmail.com>
+timestamp: Thu 2008-08-14 14:01:47 +0100
+message:
+  Added mat3.c and mat3.h to the cmake file
+------------------------------------------------------------
+revno: 4
+committer: Luke Benstead <kazade@gmail.com>
+timestamp: Thu 2008-08-14 13:56:26 +0100
+message:
+  Added the authors section to the readme
+------------------------------------------------------------
+revno: 3
+committer: Luke Benstead <kazade@gmail.com>
+timestamp: Thu 2008-08-14 13:55:41 +0100
+message:
+  Updated the readme file
+------------------------------------------------------------
+revno: 2
+committer: Luke Benstead <kazade@gmail.com>
+timestamp: Thu 2008-08-14 13:53:26 +0100
+message:
+  Added kazmath to git
+------------------------------------------------------------
+revno: 1
+committer: Luke Benstead <kazade@gmail.com>
+timestamp: Thu 2008-08-14 13:47:51 +0100
+message:
+  First commit
+------------------------------------------------------------
+Use --include-merges or -n0 to see merged revisions.

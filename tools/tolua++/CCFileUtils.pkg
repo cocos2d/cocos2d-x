@@ -1,0 +1,19 @@
+
+class CCFileUtils
+{
+    static CCFileUtils* sharedFileUtils();
+    static void purgeFileUtils();
+    
+    void purgeCachedEntries();
+
+    std::string fullPathForFilename(const char *pszFileName);
+    void loadFilenameLookupDictionaryFromFile(const char* filename);
+    const char* fullPathFromRelativeFile(const char *pszFilename, const char *pszRelativeFile);
+    void addSearchResolutionsOrder(const char* order);
+    void addSearchPath(const char* path);
+
+    std::string getWritablePath();
+    
+    void setPopupNotify(bool bNotify);
+    bool isPopupNotify();
+};

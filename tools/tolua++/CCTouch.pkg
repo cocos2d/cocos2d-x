@@ -1,22 +1,16 @@
-namespace cocos2d {
 
 class CCTouch : public CCObject
 {
+	CCPoint getLocation() const;
+    CCPoint getPreviousLocation() const;
+    CCPoint getDelta() const;
+    CCPoint getLocationInView() const;
+    CCPoint getPreviousLocationInView() const;
 
-    CCTouch();
-    CCTouch(int nViewId, float x, float y);
-
-    CCPoint locationInView(int nViewId);
-    CCPoint previousLocationInView(int nViewId);
-    int view() { return m_nViewId; }
-
-    void SetTouchInfo(int nViewId, float x, float y);
+	void setTouchInfo(int id, float x, float y);
+    int getID();
 };
 
 class CCEvent : public CCObject
 {
 };
-
-}       // end of namespace cocos2d
-
-

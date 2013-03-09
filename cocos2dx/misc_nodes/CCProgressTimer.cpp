@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2010      Lam Pham
 
 http://www.cocos2d-x.org
@@ -25,579 +25,503 @@ THE SOFTWARE.
 #include "CCProgressTimer.h"
 
 #include "ccMacros.h"
-#include "CCTextureCache.h"
-#include "CCPointExtension.h"
+#include "textures/CCTextureCache.h"
+#include "support/CCPointExtension.h"
+#include "shaders/CCGLProgram.h"
+#include "shaders/CCShaderCache.h"
+#include "shaders/ccGLStateCache.h"
+#include "CCDirector.h"
+#include "support/TransformUtils.h"
+#include "draw_nodes/CCDrawingPrimitives.h"
+// extern
+#include "kazmath/GL/matrix.h"
 
 #include <float.h>
 
-namespace cocos2d {
+NS_CC_BEGIN
 
 #define kProgressTextureCoordsCount 4
-const char kProgressTextureCoords = 0x1e;
+//  kProgressTextureCoords holds points {0,1} {0,0} {1,0} {1,1} we can represent it as bits
+const char kCCProgressTextureCoords = 0x4b;
 
-CCProgressTimer* CCProgressTimer::progressWithFile(const char *pszFileName)
+
+CCProgressTimer::CCProgressTimer()
+:m_eType(kCCProgressTimerTypeRadial)
+,m_fPercentage(0.0f)
+,m_pSprite(NULL)
+,m_nVertexDataCount(0)
+,m_pVertexData(NULL)
+,m_tMidpoint(0,0)
+,m_tBarChangeRate(0,0)
+,m_bReverseDirection(false)
+{}
+
+CCProgressTimer* CCProgressTimer::create(CCSprite* sp)
 {
-	CCProgressTimer *pProgressTimer = new CCProgressTimer();
-	if (pProgressTimer->initWithFile(pszFileName))
-	{
-		pProgressTimer->autorelease();
-	}
-	else
-	{
+    CCProgressTimer *pProgressTimer = new CCProgressTimer();
+    if (pProgressTimer->initWithSprite(sp))
+    {
+        pProgressTimer->autorelease();
+    }
+    else
+    {
         delete pProgressTimer;
-		pProgressTimer = NULL;
-	}		
+        pProgressTimer = NULL;
+    }        
 
-	return pProgressTimer;
+    return pProgressTimer;
 }
 
-bool CCProgressTimer::initWithFile(const char *pszFileName)
+bool CCProgressTimer::initWithSprite(CCSprite* sp)
 {
-	return this->initWithTexture(CCTextureCache::sharedTextureCache()->addImage(pszFileName));
-}
-
-CCProgressTimer* CCProgressTimer::progressWithTexture(CCTexture2D *pTexture)
-{
-	CCProgressTimer *pProgressTimer = new CCProgressTimer();
-	if (pProgressTimer->initWithTexture(pTexture))
-	{
-		pProgressTimer->autorelease();
-	}
-	else
-	{
-        delete pProgressTimer;
-		pProgressTimer = NULL;
-	}		
-
-	return pProgressTimer;
-}
-
-bool CCProgressTimer::initWithTexture(CCTexture2D *pTexture)
-{
-	m_pSprite = CCSprite::spriteWithTexture(pTexture);
-	CC_SAFE_RETAIN(m_pSprite);
-	m_fPercentage = 0.f;
-	m_pVertexData = NULL;
+    setPercentage(0.0f);
+    m_pVertexData = NULL;
     m_nVertexDataCount = 0;
-	setAnchorPoint(ccp(0.5f, 0.5f));
-	setContentSize(m_pSprite->getContentSize());
-    m_eType = kCCProgressTimerTypeRadialCCW;
 
-	return true;
+    setAnchorPoint(ccp(0.5f,0.5f));
+    m_eType = kCCProgressTimerTypeRadial;
+    m_bReverseDirection = false;
+    setMidpoint(ccp(0.5f, 0.5f));
+    setBarChangeRate(ccp(1,1));
+    setSprite(sp);
+    // shader program
+    setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor));
+    return true;
 }
 
 CCProgressTimer::~CCProgressTimer(void)
 {
-	CC_SAFE_DELETE_ARRAY(m_pVertexData);
-	CC_SAFE_RELEASE(m_pSprite);
+    CC_SAFE_FREE(m_pVertexData);
+    CC_SAFE_RELEASE(m_pSprite);
 }
 
 void CCProgressTimer::setPercentage(float fPercentage)
 {
-	if (m_fPercentage != fPercentage)
-	{
-		m_fPercentage = clampf(fPercentage, 0, 100);
-		updateProgress();
-	}
+    if (m_fPercentage != fPercentage)
+    {
+        m_fPercentage = clampf(fPercentage, 0, 100);
+        updateProgress();
+    }
 }
 
 void CCProgressTimer::setSprite(CCSprite *pSprite)
 {
-	if (m_pSprite != pSprite)
-	{
-		CC_SAFE_RETAIN(pSprite);
-		CC_SAFE_RELEASE(m_pSprite);
-		m_pSprite = pSprite;
+    if (m_pSprite != pSprite)
+    {
+        CC_SAFE_RETAIN(pSprite);
+        CC_SAFE_RELEASE(m_pSprite);
+        m_pSprite = pSprite;
         setContentSize(m_pSprite->getContentSize());
 
-		//	Everytime we set a new sprite, we free the current vertex data
-		if (m_pVertexData)
-		{
-			delete[] m_pVertexData;
-			m_pVertexData = NULL;
-			m_nVertexDataCount = 0;
-		}
-	}		
+        //    Every time we set a new sprite, we free the current vertex data
+        if (m_pVertexData)
+        {
+            CC_SAFE_FREE(m_pVertexData);
+            m_nVertexDataCount = 0;
+        }
+    }        
 }
 
 void CCProgressTimer::setType(CCProgressTimerType type)
 {
-	if (type != m_eType)
-	{
-		//	release all previous information
-		if (m_pVertexData)
-		{
-			delete[] m_pVertexData;
-			m_pVertexData = NULL;
-			m_nVertexDataCount = 0;
-		}
+    if (type != m_eType)
+    {
+        //    release all previous information
+        if (m_pVertexData)
+        {
+            CC_SAFE_FREE(m_pVertexData);
+            m_pVertexData = NULL;
+            m_nVertexDataCount = 0;
+        }
 
-		m_eType = type;
-	}
+        m_eType = type;
+    }
+}
+
+void CCProgressTimer::setReverseProgress(bool reverse)
+{
+    if( m_bReverseDirection != reverse ) {
+        m_bReverseDirection = reverse;
+
+        //    release all previous information
+        CC_SAFE_FREE(m_pVertexData);
+        m_nVertexDataCount = 0;
+    }
+}
+
+void CCProgressTimer::setOpacityModifyRGB(bool bValue)
+{
+    CC_UNUSED_PARAM(bValue);
+}
+
+bool CCProgressTimer::isOpacityModifyRGB(void)
+{
+    return false;
 }
 
 // Interval
 
 ///
-//	@returns the vertex position from the texture coordinate
+//    @returns the vertex position from the texture coordinate
 ///
-ccVertex2F CCProgressTimer::vertexFromTexCoord(const CCPoint& texCoord)
+ccTex2F CCProgressTimer::textureCoordFromAlphaPoint(CCPoint alpha)
 {
-    CCPoint tmp;
-    ccVertex2F ret;
+    ccTex2F ret = {0.0f, 0.0f};
+    if (!m_pSprite) {
+        return ret;
+    }
+    ccV3F_C4B_T2F_Quad quad = m_pSprite->getQuad();
+    CCPoint min = ccp(quad.bl.texCoords.u,quad.bl.texCoords.v);
+    CCPoint max = ccp(quad.tr.texCoords.u,quad.tr.texCoords.v);
+    //  Fix bug #1303 so that progress timer handles sprite frame texture rotation
+    if (m_pSprite->isTextureRectRotated()) {
+        CC_SWAP(alpha.x, alpha.y, float);
+    }
+    return tex2(min.x * (1.f - alpha.x) + max.x * alpha.x, min.y * (1.f - alpha.y) + max.y * alpha.y);
+}
 
-    CCTexture2D *pTexture = m_pSprite->getTexture();
-    if (pTexture)
-    {
-        float fXMax = MAX(m_pSprite->getQuad().br.texCoords.u, m_pSprite->getQuad().bl.texCoords.u);
-        float fXMin = MIN(m_pSprite->getQuad().br.texCoords.u, m_pSprite->getQuad().bl.texCoords.u);
-        float fYMax = MAX(m_pSprite->getQuad().tl.texCoords.v, m_pSprite->getQuad().bl.texCoords.v);
-        float fYMin = MIN(m_pSprite->getQuad().tl.texCoords.v, m_pSprite->getQuad().bl.texCoords.v);
-        CCPoint tMax = ccp(fXMax, fYMax);
-        CCPoint tMin = ccp(fXMin, fYMin);
-
-        CCSize texSize = CCSizeMake(m_pSprite->getQuad().br.vertices.x - m_pSprite->getQuad().bl.vertices.x,
-                                    m_pSprite->getQuad().tl.vertices.y - m_pSprite->getQuad().bl.vertices.y);
-        tmp = ccp(texSize.width * (texCoord.x - tMin.x) / (tMax.x - tMin.x),
-                    texSize.height * (1 - (texCoord.y - tMin.y) / (tMax.y - tMin.y)));
-	}
-	else
-	{
-	    tmp = CCPointZero;
-	}
-
-    ret.x = tmp.x;
-    ret.y = tmp.y;
+ccVertex2F CCProgressTimer::vertexFromAlphaPoint(CCPoint alpha)
+{
+    ccVertex2F ret = {0.0f, 0.0f};
+    if (!m_pSprite) {
+        return ret;
+    }
+    ccV3F_C4B_T2F_Quad quad = m_pSprite->getQuad();
+    CCPoint min = ccp(quad.bl.vertices.x,quad.bl.vertices.y);
+    CCPoint max = ccp(quad.tr.vertices.x,quad.tr.vertices.y);
+    ret.x = min.x * (1.f - alpha.x) + max.x * alpha.x;
+    ret.y = min.y * (1.f - alpha.y) + max.y * alpha.y;
     return ret;
 }
 
 void CCProgressTimer::updateColor(void)
 {
-	GLubyte op = m_pSprite->getOpacity();
-	ccColor3B c3b = m_pSprite->getColor();
+    if (!m_pSprite) {
+        return;
+    }
 
-	ccColor4B color = {c3b.r, c3b.g, c3b.b, op};
-	if (m_pSprite->getTexture()->getHasPremultipliedAlpha())
-	{
-		color.r *= op / 255;
-		color.g *= op / 255;
-		color.b *= op / 255;
-	}
-
-	if (m_pVertexData)
-	{
-		for (int i = 0; i < m_nVertexDataCount; ++i)
-		{
-			m_pVertexData[i].colors = color;
-		}			
-	}
+    if (m_pVertexData)
+    {
+        ccColor4B sc = m_pSprite->getQuad().tl.colors;
+        for (int i = 0; i < m_nVertexDataCount; ++i)
+        {
+            m_pVertexData[i].colors = sc;
+        }            
+    }
 }
 
 void CCProgressTimer::updateProgress(void)
 {
-	switch (m_eType)
-	{
-	case kCCProgressTimerTypeRadialCW:
-	case kCCProgressTimerTypeRadialCCW:
+    switch (m_eType)
+    {
+    case kCCProgressTimerTypeRadial:
         updateRadial();
-		break;
-	case kCCProgressTimerTypeHorizontalBarLR:
-	case kCCProgressTimerTypeHorizontalBarRL:
-	case kCCProgressTimerTypeVerticalBarBT:
-	case kCCProgressTimerTypeVerticalBarTB:
-		updateBar();
-		break;
-	default:
-		break;
-	}
+        break;
+    case kCCProgressTimerTypeBar:
+        updateBar();
+        break;
+    default:
+        break;
+    }
+}
+
+void CCProgressTimer::setAnchorPoint(CCPoint anchorPoint)
+{
+    CCNode::setAnchorPoint(anchorPoint);
+}
+
+CCPoint CCProgressTimer::getMidpoint(void)
+{
+    return m_tMidpoint;
+}
+
+void CCProgressTimer::setMidpoint(CCPoint midPoint)
+{
+    m_tMidpoint = ccpClamp(midPoint, CCPointZero, ccp(1,1));
 }
 
 ///
-//	Update does the work of mapping the texture onto the triangles
-//	It now doesn't occur the cost of free/alloc data every update cycle.
-//	It also only changes the percentage point but no other points if they have not
-//	been modified.
-//	
-//	It now deals with flipped texture. If you run into this problem, just use the
-//	sprite property and enable the methods flipX, flipY.
+//    Update does the work of mapping the texture onto the triangles
+//    It now doesn't occur the cost of free/alloc data every update cycle.
+//    It also only changes the percentage point but no other points if they have not
+//    been modified.
+//    
+//    It now deals with flipped texture. If you run into this problem, just use the
+//    sprite property and enable the methods flipX, flipY.
 ///
 void CCProgressTimer::updateRadial(void)
 {
-	//	Texture Max is the actual max coordinates to deal with non-power of 2 textures
-    float fXMax = MAX(m_pSprite->getQuad().br.texCoords.u, m_pSprite->getQuad().bl.texCoords.u);
-    float fXMin = MIN(m_pSprite->getQuad().br.texCoords.u, m_pSprite->getQuad().bl.texCoords.u);
-    float fYMax = MAX(m_pSprite->getQuad().tl.texCoords.v, m_pSprite->getQuad().bl.texCoords.v);
-    float fYMin = MIN(m_pSprite->getQuad().tl.texCoords.v, m_pSprite->getQuad().bl.texCoords.v);
-    CCPoint tMax = ccp(fXMax, fYMax);
-    CCPoint tMin = ccp(fXMin, fYMin);
+    if (!m_pSprite) {
+        return;
+    }
+    float alpha = m_fPercentage / 100.f;
 
-	//	Grab the midpoint
-	CCPoint midpoint = ccpAdd(tMin, ccpCompMult(m_tAnchorPoint, ccpSub(tMax, tMin)));
+    float angle = 2.f*((float)M_PI) * ( m_bReverseDirection ? alpha : 1.0f - alpha);
 
-	float alpha = m_fPercentage / 100.f;
+    //    We find the vector to do a hit detection based on the percentage
+    //    We know the first vector is the one @ 12 o'clock (top,mid) so we rotate
+    //    from that by the progress angle around the m_tMidpoint pivot
+    CCPoint topMid = ccp(m_tMidpoint.x, 1.f);
+    CCPoint percentagePt = ccpRotateByAngle(topMid, m_tMidpoint, angle);
 
-	//	Otherwise we can get the angle from the alpha
-	float angle = 2.f * ((float)M_PI) * (m_eType == kCCProgressTimerTypeRadialCW ? alpha : 1.f - alpha);
 
-	//	We find the vector to do a hit detection based on the percentage
-	//	We know the first vector is the one @ 12 o'clock (top,mid) so we rotate 
-	//	from that by the progress angle around the midpoint pivot
-	CCPoint topMid = ccp(midpoint.x, tMin.y);
-	CCPoint percentagePt = ccpRotateByAngle(topMid, midpoint, angle);
+    int index = 0;
+    CCPoint hit = CCPointZero;
 
-	int index = 0;
-	CCPoint hit = CCPointZero;
+    if (alpha == 0.f) {
+        //    More efficient since we don't always need to check intersection
+        //    If the alpha is zero then the hit point is top mid and the index is 0.
+        hit = topMid;
+        index = 0;
+    } else if (alpha == 1.f) {
+        //    More efficient since we don't always need to check intersection
+        //    If the alpha is one then the hit point is top mid and the index is 4.
+        hit = topMid;
+        index = 4;
+    } else {
+        //    We run a for loop checking the edges of the texture to find the
+        //    intersection point
+        //    We loop through five points since the top is split in half
 
-	if (alpha == 0.f)
-	{
-		//	More efficient since we don't always need to check intersection
-		//	If the alpha is zero then the hit point is top mid and the index is 0.
-		hit = topMid;
-		index = 0;
-	} else
-	if (alpha == 1.f)
-	{
-		//	More efficient since we don't always need to check intersection
-		//	If the alpha is one then the hit point is top mid and the index is 4.
-		hit = topMid;
-		index = 4;
-	}
-	else
-	{
-		//	We run a for loop checking the edges of the texture to find the
-		//	intersection point
-		//	We loop through five points since the top is split in half
-		
-		float min_t = FLT_MAX;
+        float min_t = FLT_MAX;
 
-		for (int i = 0; i <= kProgressTextureCoordsCount; ++i)
-		{
-			int pIndex = (i + (kProgressTextureCoordsCount - 1)) % kProgressTextureCoordsCount;
+        for (int i = 0; i <= kProgressTextureCoordsCount; ++i) {
+            int pIndex = (i + (kProgressTextureCoordsCount - 1))%kProgressTextureCoordsCount;
 
-			CCPoint edgePtA = ccpAdd(tMin, ccpCompMult(boundaryTexCoord(i % kProgressTextureCoordsCount), ccpSub(tMax, tMin)));
-			CCPoint edgePtB = ccpAdd(tMin, ccpCompMult(boundaryTexCoord(pIndex), ccpSub(tMax, tMin)));
+            CCPoint edgePtA = boundaryTexCoord(i % kProgressTextureCoordsCount);
+            CCPoint edgePtB = boundaryTexCoord(pIndex);
 
-			//	Remember that the top edge is split in half for the 12 o'clock position
-			//	Let's deal with that here by finding the correct endpoints
-			if (i == 0)
-			{
-				edgePtB = ccpLerp(edgePtA, edgePtB, 0.5f);
-			} else
-			if (i == 4)
-			{
-				edgePtA = ccpLerp(edgePtA, edgePtB, 0.5f);
-			}
+            //    Remember that the top edge is split in half for the 12 o'clock position
+            //    Let's deal with that here by finding the correct endpoints
+            if(i == 0){
+                edgePtB = ccpLerp(edgePtA, edgePtB, 1-m_tMidpoint.x);
+            } else if(i == 4){
+                edgePtA = ccpLerp(edgePtA, edgePtB, 1-m_tMidpoint.x);
+            }
 
-			//	s and t are returned by ccpLineIntersect
-			float s = 0;
-			float t = 0;
-			if (ccpLineIntersect(edgePtA, edgePtB, midpoint, percentagePt, &s, &t))
-			{
-				//	Since our hit test is on rays we have to deal with the top edge
-				//	being in split in half so we have to test as a segment
-				if (i == 0 || i == 4)
-				{
-					//	s represents the point between edgePtA--edgePtB
-					if (!(0.f <= s && s <= 1.f))
-					{
-						continue;
-					}
-				}
+            //    s and t are returned by ccpLineIntersect
+            float s = 0, t = 0;
+            if(ccpLineIntersect(edgePtA, edgePtB, m_tMidpoint, percentagePt, &s, &t))
+            {
 
-				//	As long as our t isn't negative we are at least finding a 
-				//	correct hitpoint from midpoint to percentagePt.
-				if (t >= 0.f)
-				{
-					//	Because the percentage line and all the texture edges are
-					//	rays we should only account for the shortest intersection
-					if (t < min_t)
-					{
-						min_t = t;
-						index = i;
-					}
-				}
-			}
-		
-		}
+                //    Since our hit test is on rays we have to deal with the top edge
+                //    being in split in half so we have to test as a segment
+                if ((i == 0 || i == 4)) {
+                    //    s represents the point between edgePtA--edgePtB
+                    if (!(0.f <= s && s <= 1.f)) {
+                        continue;
+                    }
+                }
+                //    As long as our t isn't negative we are at least finding a
+                //    correct hitpoint from m_tMidpoint to percentagePt.
+                if (t >= 0.f) {
+                    //    Because the percentage line and all the texture edges are
+                    //    rays we should only account for the shortest intersection
+                    if (t < min_t) {
+                        min_t = t;
+                        index = i;
+                    }
+                }
+            }
+        }
 
-        //	Now that we have the minimum magnitude we can use that to find our intersection
-		hit = ccpAdd(midpoint, ccpMult(ccpSub(percentagePt, midpoint),min_t));
-	}
+        //    Now that we have the minimum magnitude we can use that to find our intersection
+        hit = ccpAdd(m_tMidpoint, ccpMult(ccpSub(percentagePt, m_tMidpoint),min_t));
 
-    //	The size of the vertex data is the index from the hitpoint
-	//	the 3 is for the midpoint, 12 o'clock point and hitpoint position.
+    }
 
-	bool sameIndexCount = true;
-	if (m_nVertexDataCount != index + 3)
-	{
-		sameIndexCount = false;
-		if (m_pVertexData)
-		{
-			delete[] m_pVertexData;
-			m_pVertexData = NULL;
-			m_nVertexDataCount = 0;
-		}
-	}
 
-	if (! m_pVertexData)
-	{
-		m_nVertexDataCount = index + 3;
-		m_pVertexData = new ccV2F_C4B_T2F[m_nVertexDataCount];
-		assert(m_pVertexData);
+    //    The size of the vertex data is the index from the hitpoint
+    //    the 3 is for the m_tMidpoint, 12 o'clock point and hitpoint position.
 
-		updateColor();
-	}
+    bool sameIndexCount = true;
+    if(m_nVertexDataCount != index + 3){
+        sameIndexCount = false;
+        CC_SAFE_FREE(m_pVertexData);
+        m_nVertexDataCount = 0;
+    }
 
-	if (! sameIndexCount)
-	{
-		//	First we populate the array with the midpoint, then all 
-		//	vertices/texcoords/colors of the 12 'o clock start and edges and the hitpoint
-		m_pVertexData[0].texCoords = tex2(midpoint.x, midpoint.y);
-		m_pVertexData[0].vertices = vertexFromTexCoord(midpoint);
 
-		m_pVertexData[1].texCoords = tex2(midpoint.x, tMin.y);
-		m_pVertexData[1].vertices = vertexFromTexCoord(ccp(midpoint.x, tMin.y));
+    if(!m_pVertexData) {
+        m_nVertexDataCount = index + 3;
+        m_pVertexData = (ccV2F_C4B_T2F*)malloc(m_nVertexDataCount * sizeof(ccV2F_C4B_T2F));
+        CCAssert( m_pVertexData, "CCProgressTimer. Not enough memory");
+    }
+    updateColor();
 
-		for (int i = 0; i < index; ++i)
-		{
-			CCPoint texCoords = ccpAdd(tMin, ccpCompMult(boundaryTexCoord(i), ccpSub(tMax, tMin)));
+    if (!sameIndexCount) {
 
-			m_pVertexData[i+2].texCoords = tex2(texCoords.x, texCoords.y);
-			m_pVertexData[i+2].vertices = vertexFromTexCoord(texCoords);
-		}
+        //    First we populate the array with the m_tMidpoint, then all
+        //    vertices/texcoords/colors of the 12 'o clock start and edges and the hitpoint
+        m_pVertexData[0].texCoords = textureCoordFromAlphaPoint(m_tMidpoint);
+        m_pVertexData[0].vertices = vertexFromAlphaPoint(m_tMidpoint);
 
-		//	Flip the texture coordinates if set
-		if (m_pSprite->isFlipX() || m_pSprite->isFlipY())
-		{
-			for (int i = 0; i < m_nVertexDataCount - 1; ++i)
-			{
-				if (m_pSprite->isFlipX())
-				{
-					m_pVertexData[i].texCoords.u = tMin.x + tMax.x - m_pVertexData[i].texCoords.u;
-				}
+        m_pVertexData[1].texCoords = textureCoordFromAlphaPoint(topMid);
+        m_pVertexData[1].vertices = vertexFromAlphaPoint(topMid);
 
-				if (m_pSprite->isFlipY())
-				{
-					m_pVertexData[i].texCoords.v = tMin.y + tMax.y - m_pVertexData[i].texCoords.v;
-				}
-			}
-		}
-	}
+        for(int i = 0; i < index; ++i){
+            CCPoint alphaPoint = boundaryTexCoord(i);
+            m_pVertexData[i+2].texCoords = textureCoordFromAlphaPoint(alphaPoint);
+            m_pVertexData[i+2].vertices = vertexFromAlphaPoint(alphaPoint);
+        }
+    }
 
-	//	hitpoint will go last
-	m_pVertexData[m_nVertexDataCount - 1].texCoords = tex2(hit.x, hit.y);
-	m_pVertexData[m_nVertexDataCount - 1].vertices = vertexFromTexCoord(hit);
+    //    hitpoint will go last
+    m_pVertexData[m_nVertexDataCount - 1].texCoords = textureCoordFromAlphaPoint(hit);
+    m_pVertexData[m_nVertexDataCount - 1].vertices = vertexFromAlphaPoint(hit);
 
-	if (m_pSprite->isFlipX() || m_pSprite->isFlipY())
-	{
-		if (m_pSprite->isFlipX())
-		{
-			m_pVertexData[m_nVertexDataCount - 1].texCoords.u = tMin.x + tMax.x - m_pVertexData[m_nVertexDataCount - 1].texCoords.u;
-		}
-
-        if (m_pSprite->isFlipY())
-		{
-			m_pVertexData[m_nVertexDataCount - 1].texCoords.v = tMin.y + tMax.y - m_pVertexData[m_nVertexDataCount - 1].texCoords.v;
-		}
-	}
 }
 
 ///
-//	Update does the work of mapping the texture onto the triangles for the bar
-//	It now doesn't occur the cost of free/alloc data every update cycle.
-//	It also only changes the percentage point but no other points if they have not
-//	been modified.
-//	
-//	It now deals with flipped texture. If you run into this problem, just use the
-//	sprite property and enable the methods flipX, flipY.
+//    Update does the work of mapping the texture onto the triangles for the bar
+//    It now doesn't occur the cost of free/alloc data every update cycle.
+//    It also only changes the percentage point but no other points if they have not
+//    been modified.
+//    
+//    It now deals with flipped texture. If you run into this problem, just use the
+//    sprite property and enable the methods flipX, flipY.
 ///
 void CCProgressTimer::updateBar(void)
 {
-	float alpha = m_fPercentage / 100.f;
+    if (!m_pSprite) {
+        return;
+    }
+    float alpha = m_fPercentage / 100.0f;
+    CCPoint alphaOffset = ccpMult(ccp(1.0f * (1.0f - m_tBarChangeRate.x) + alpha * m_tBarChangeRate.x, 1.0f * (1.0f - m_tBarChangeRate.y) + alpha * m_tBarChangeRate.y), 0.5f);
+    CCPoint min = ccpSub(m_tMidpoint, alphaOffset);
+    CCPoint max = ccpAdd(m_tMidpoint, alphaOffset);
 
-    float fXMax = MAX(m_pSprite->getQuad().br.texCoords.u, m_pSprite->getQuad().bl.texCoords.u);
-    float fXMin = MIN(m_pSprite->getQuad().br.texCoords.u, m_pSprite->getQuad().bl.texCoords.u);
-    float fYMax = MAX(m_pSprite->getQuad().tl.texCoords.v, m_pSprite->getQuad().bl.texCoords.v);
-    float fYMin = MIN(m_pSprite->getQuad().tl.texCoords.v, m_pSprite->getQuad().bl.texCoords.v);
-    CCPoint tMax = ccp(fXMax, fYMax);
-    CCPoint tMin = ccp(fXMin, fYMin);
+    if (min.x < 0.f) {
+        max.x += -min.x;
+        min.x = 0.f;
+    }
 
-	unsigned char vIndexes[2] = {0, 0};
-	unsigned char index = 0;
+    if (max.x > 1.f) {
+        min.x -= max.x - 1.f;
+        max.x = 1.f;
+    }
 
-	//	We know vertex data is always equal to the 4 corners
-	//	If we don't have vertex data then we create it here and populate
-	//	the side of the bar vertices that won't ever change.
-	if (! m_pVertexData)
-	{
-		m_nVertexDataCount = kProgressTextureCoordsCount;
-		m_pVertexData = new ccV2F_C4B_T2F[m_nVertexDataCount];
-		assert(m_pVertexData);
+    if (min.y < 0.f) {
+        max.y += -min.y;
+        min.y = 0.f;
+    }
 
-		if (m_eType == kCCProgressTimerTypeHorizontalBarLR)
-		{
-			m_pVertexData[vIndexes[0] = 0].texCoords = tex2(tMin.x, tMin.y);
-			m_pVertexData[vIndexes[1] = 1].texCoords = tex2(tMin.x, tMax.y);
-		} else
-		if (m_eType == kCCProgressTimerTypeHorizontalBarRL)
-		{
-			m_pVertexData[vIndexes[0] = 2].texCoords = tex2(tMax.x, tMax.y);
-			m_pVertexData[vIndexes[1] = 3].texCoords = tex2(tMax.x, tMin.y);
-		} else
-		if (m_eType == kCCProgressTimerTypeVerticalBarBT)
-		{
-			m_pVertexData[vIndexes[0] = 1].texCoords = tex2(tMin.x, tMax.y);
-			m_pVertexData[vIndexes[1] = 3].texCoords = tex2(tMax.x, tMax.y);
-		} else
-		if (m_eType == kCCProgressTimerTypeVerticalBarTB)
-		{
-			m_pVertexData[vIndexes[0] = 0].texCoords = tex2(tMin.x, tMin.y);
-			m_pVertexData[vIndexes[1] = 2].texCoords = tex2(tMax.x, tMin.y);
-		}
+    if (max.y > 1.f) {
+        min.y -= max.y - 1.f;
+        max.y = 1.f;
+    }
 
-		index = vIndexes[0];
-		m_pVertexData[index].vertices = vertexFromTexCoord(ccp(m_pVertexData[index].texCoords.u,
-			                                                   m_pVertexData[index].texCoords.v));
 
-		index = vIndexes[1];
-		m_pVertexData[index].vertices = vertexFromTexCoord(ccp(m_pVertexData[index].texCoords.u,
-			                                                   m_pVertexData[index].texCoords.v));
+    if (!m_bReverseDirection) {
+        if(!m_pVertexData) {
+            m_nVertexDataCount = 4;
+            m_pVertexData = (ccV2F_C4B_T2F*)malloc(m_nVertexDataCount * sizeof(ccV2F_C4B_T2F));
+            CCAssert( m_pVertexData, "CCProgressTimer. Not enough memory");
+        }
+        //    TOPLEFT
+        m_pVertexData[0].texCoords = textureCoordFromAlphaPoint(ccp(min.x,max.y));
+        m_pVertexData[0].vertices = vertexFromAlphaPoint(ccp(min.x,max.y));
 
-		if (m_pSprite->isFlipY() || m_pSprite->isFlipX())
-		{
-			if (m_pSprite->isFlipX())
-			{
-				index = vIndexes[0];
-				m_pVertexData[index].texCoords.u = tMin.x + tMax.x - m_pVertexData[index].texCoords.u;
-				index = vIndexes[1];
-				m_pVertexData[index].texCoords.u = tMin.x + tMax.x - m_pVertexData[index].texCoords.u;
-			}
+        //    BOTLEFT
+        m_pVertexData[1].texCoords = textureCoordFromAlphaPoint(ccp(min.x,min.y));
+        m_pVertexData[1].vertices = vertexFromAlphaPoint(ccp(min.x,min.y));
 
-			if (m_pSprite->isFlipY())
-			{
-				index = vIndexes[0];
-				m_pVertexData[index].texCoords.v = tMin.y + tMax.y - m_pVertexData[index].texCoords.v;
-				index = vIndexes[1];
-				m_pVertexData[index].texCoords.v = tMin.y + tMax.y - m_pVertexData[index].texCoords.v;
-			}
-		}
+        //    TOPRIGHT
+        m_pVertexData[2].texCoords = textureCoordFromAlphaPoint(ccp(max.x,max.y));
+        m_pVertexData[2].vertices = vertexFromAlphaPoint(ccp(max.x,max.y));
 
-		updateColor();
-	}
+        //    BOTRIGHT
+        m_pVertexData[3].texCoords = textureCoordFromAlphaPoint(ccp(max.x,min.y));
+        m_pVertexData[3].vertices = vertexFromAlphaPoint(ccp(max.x,min.y));
+    } else {
+        if(!m_pVertexData) {
+            m_nVertexDataCount = 8;
+            m_pVertexData = (ccV2F_C4B_T2F*)malloc(m_nVertexDataCount * sizeof(ccV2F_C4B_T2F));
+            CCAssert( m_pVertexData, "CCProgressTimer. Not enough memory");
+            //    TOPLEFT 1
+            m_pVertexData[0].texCoords = textureCoordFromAlphaPoint(ccp(0,1));
+            m_pVertexData[0].vertices = vertexFromAlphaPoint(ccp(0,1));
 
-	if(m_eType == kCCProgressTimerTypeHorizontalBarLR)
-	{
-		m_pVertexData[vIndexes[0] = 3].texCoords = tex2(tMin.x + (tMax.x - tMin.x) *alpha, tMax.y);
-		m_pVertexData[vIndexes[1] = 2].texCoords = tex2(tMin.x + (tMax.x - tMin.x) *alpha, tMin.y);
-	} else 
-	if (m_eType == kCCProgressTimerTypeHorizontalBarRL) 
-	{
-		m_pVertexData[vIndexes[0] = 1].texCoords = tex2(tMin.x + (tMax.x - tMin.x) * (1.f - alpha), tMin.y);
-		m_pVertexData[vIndexes[1] = 0].texCoords = tex2(tMin.x + (tMax.x - tMin.x) * (1.f - alpha), tMax.y);
-	} else 
-	if (m_eType == kCCProgressTimerTypeVerticalBarBT) 
-	{
-		m_pVertexData[vIndexes[0] = 0].texCoords = tex2(tMin.x, tMin.y + (tMax.y - tMin.y) * (1.f - alpha));
-		m_pVertexData[vIndexes[1] = 2].texCoords = tex2(tMax.x, tMin.y + (tMax.y - tMin.y) * (1.f - alpha));
-	} else 
-	if (m_eType == kCCProgressTimerTypeVerticalBarTB) 
-	{
-		m_pVertexData[vIndexes[0] = 1].texCoords = tex2(tMin.x, tMin.y + (tMax.y - tMin.y) * alpha);
-		m_pVertexData[vIndexes[1] = 3].texCoords = tex2(tMax.x, tMin.y + (tMax.y - tMin.y) * alpha);
-	}
+            //    BOTLEFT 1
+            m_pVertexData[1].texCoords = textureCoordFromAlphaPoint(ccp(0,0));
+            m_pVertexData[1].vertices = vertexFromAlphaPoint(ccp(0,0));
 
-	index = vIndexes[0];
-	m_pVertexData[index].vertices = vertexFromTexCoord(ccp(m_pVertexData[index].texCoords.u,
-		                                                   m_pVertexData[index].texCoords.v));
-	index = vIndexes[1];
-	m_pVertexData[index].vertices = vertexFromTexCoord(ccp(m_pVertexData[index].texCoords.u,
-		                                                   m_pVertexData[index].texCoords.v));
+            //    TOPRIGHT 2
+            m_pVertexData[6].texCoords = textureCoordFromAlphaPoint(ccp(1,1));
+            m_pVertexData[6].vertices = vertexFromAlphaPoint(ccp(1,1));
 
-	if (m_pSprite->isFlipY() || m_pSprite->isFlipX()) 
-	{
-		if (m_pSprite->isFlipX()) 
-		{
-			index = vIndexes[0];
-			m_pVertexData[index].texCoords.u = tMin.x + tMax.x - m_pVertexData[index].texCoords.u;
-			index = vIndexes[1];
-			m_pVertexData[index].texCoords.u = tMin.x + tMax.x - m_pVertexData[index].texCoords.u;
-		}
+            //    BOTRIGHT 2
+            m_pVertexData[7].texCoords = textureCoordFromAlphaPoint(ccp(1,0));
+            m_pVertexData[7].vertices = vertexFromAlphaPoint(ccp(1,0));
+        }
 
-		if (m_pSprite->isFlipY())
-		{
-			index = vIndexes[0];
-			m_pVertexData[index].texCoords.v = tMin.y + tMax.y - m_pVertexData[index].texCoords.v;
-			index = vIndexes[1];
-			m_pVertexData[index].texCoords.v = tMin.y + tMax.y - m_pVertexData[index].texCoords.v;
-		}
-	}
+        //    TOPRIGHT 1
+        m_pVertexData[2].texCoords = textureCoordFromAlphaPoint(ccp(min.x,max.y));
+        m_pVertexData[2].vertices = vertexFromAlphaPoint(ccp(min.x,max.y));
+
+        //    BOTRIGHT 1
+        m_pVertexData[3].texCoords = textureCoordFromAlphaPoint(ccp(min.x,min.y));
+        m_pVertexData[3].vertices = vertexFromAlphaPoint(ccp(min.x,min.y));
+
+        //    TOPLEFT 2
+        m_pVertexData[4].texCoords = textureCoordFromAlphaPoint(ccp(max.x,max.y));
+        m_pVertexData[4].vertices = vertexFromAlphaPoint(ccp(max.x,max.y));
+
+        //    BOTLEFT 2
+        m_pVertexData[5].texCoords = textureCoordFromAlphaPoint(ccp(max.x,min.y));
+        m_pVertexData[5].vertices = vertexFromAlphaPoint(ccp(max.x,min.y));
+    }
+    updateColor();
 }
 
 CCPoint CCProgressTimer::boundaryTexCoord(char index)
 {
-	if (index < kProgressTextureCoordsCount) 
-	{
-		switch (m_eType) 
-		{
-		case kCCProgressTimerTypeRadialCW:
-			return ccp( (float)((kProgressTextureCoords>>((index<<1)+1))&1), (float)((kProgressTextureCoords>>(index<<1))&1) );
-		case kCCProgressTimerTypeRadialCCW:
-			return ccp( (float)((kProgressTextureCoords>>(7-(index<<1)))&1), (float)((kProgressTextureCoords>>(7-((index<<1)+1)))&1));
-		default:
-			break;
-		}
-	}
-
-	return CCPointZero;
+    if (index < kProgressTextureCoordsCount) {
+        if (m_bReverseDirection) {
+            return ccp((kCCProgressTextureCoords>>(7-(index<<1)))&1,(kCCProgressTextureCoords>>(7-((index<<1)+1)))&1);
+        } else {
+            return ccp((kCCProgressTextureCoords>>((index<<1)+1))&1,(kCCProgressTextureCoords>>(index<<1))&1);
+        }
+    }
+    return CCPointZero;
 }
 
 void CCProgressTimer::draw(void)
 {
-	CCNode::draw();
+    if( ! m_pVertexData || ! m_pSprite)
+        return;
 
-	if(! m_pVertexData) 
-	{
-		return;
-	}
+    CC_NODE_DRAW_SETUP();
 
-	if(! m_pSprite) 
-	{
-		return;
-	}
+    ccGLBlendFunc( m_pSprite->getBlendFunc().src, m_pSprite->getBlendFunc().dst );
 
-	ccBlendFunc bf = m_pSprite->getBlendFunc();
-    bool newBlend = (bf.src != CC_BLEND_SRC || bf.dst != CC_BLEND_DST) ? true : false;
-	if (newBlend) 
-	{
-		glBlendFunc(bf.src, bf.dst);
-	}
-	
-	///	========================================================================
-	//	Replaced [texture_ drawAtPoint:CCPointZero] with my own vertexData
-	//	Everything above me and below me is copied from CCTextureNode's draw
-	glBindTexture(GL_TEXTURE_2D, m_pSprite->getTexture()->getName());
-	glVertexPointer(2, GL_FLOAT, sizeof(ccV2F_C4B_T2F), &m_pVertexData[0].vertices);
-	glTexCoordPointer(2, GL_FLOAT, sizeof(ccV2F_C4B_T2F), &m_pVertexData[0].texCoords);
-	glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(ccV2F_C4B_T2F), &m_pVertexData[0].colors);
-	
-	if(m_eType == kCCProgressTimerTypeRadialCCW || m_eType == kCCProgressTimerTypeRadialCW)
-	{
-		glDrawArrays(GL_TRIANGLE_FAN, 0, m_nVertexDataCount);
-	} else 
-	if (	m_eType == kCCProgressTimerTypeHorizontalBarLR ||
-			m_eType == kCCProgressTimerTypeHorizontalBarRL ||
-			m_eType == kCCProgressTimerTypeVerticalBarBT ||
-			m_eType == kCCProgressTimerTypeVerticalBarTB) 
-	{
-		glDrawArrays(GL_TRIANGLE_STRIP, 0, m_nVertexDataCount);
-	}
-	//glDrawElements(GL_TRIANGLES, indicesCount_, GL_UNSIGNED_BYTE, indices_);
-	///	========================================================================
-	
-	if( newBlend )
+    ccGLEnableVertexAttribs(kCCVertexAttribFlag_PosColorTex );
+
+    ccGLBindTexture2D( m_pSprite->getTexture()->getName() );
+
+    glVertexAttribPointer( kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, sizeof(m_pVertexData[0]) , &m_pVertexData[0].vertices);
+    glVertexAttribPointer( kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, sizeof(m_pVertexData[0]), &m_pVertexData[0].texCoords);
+    glVertexAttribPointer( kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(m_pVertexData[0]), &m_pVertexData[0].colors);
+
+    if(m_eType == kCCProgressTimerTypeRadial)
     {
-		glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
+        glDrawArrays(GL_TRIANGLE_FAN, 0, m_nVertexDataCount);
+    } 
+    else if (m_eType == kCCProgressTimerTypeBar)
+    {
+        if (!m_bReverseDirection) 
+        {
+            glDrawArrays(GL_TRIANGLE_STRIP, 0, m_nVertexDataCount);
+        } 
+        else 
+        {
+            glDrawArrays(GL_TRIANGLE_STRIP, 0, m_nVertexDataCount/2);
+            glDrawArrays(GL_TRIANGLE_STRIP, 4, m_nVertexDataCount/2);
+            // 2 draw calls
+            CC_INCREMENT_GL_DRAWS(1);
+        }
     }
+    CC_INCREMENT_GL_DRAWS(1);
 }
 
-} // namespace cocos2d
+NS_CC_END

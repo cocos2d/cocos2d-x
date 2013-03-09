@@ -27,9 +27,9 @@ THE SOFTWARE.
 
 #ifdef __cplusplus
 extern "C" {
-#endif	
-	
-namespace   cocos2d {
+#endif    
+    
+namespace cocos2d {
 
 /** @file
  base64 helper functions
@@ -44,10 +44,11 @@ namespace   cocos2d {
  @since v0.8.1
  */
 int base64Decode(unsigned char *in, unsigned int inLength, unsigned char **out);
+
 }//namespace   cocos2d 
 
 #ifdef __cplusplus
 }
-#endif	
+#endif    
 
 #endif // __SUPPORT_BASE64_H__

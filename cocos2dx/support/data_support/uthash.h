@@ -1,26 +1,25 @@
-/****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+/*
+Copyright (c) 2003-2010, Troy D. Hanson     http://uthash.sourceforge.net
+All rights reserved.
 
-http://www.cocos2d-x.org
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+    * Redistributions of source code must retain the above copyright
+      notice, this list of conditions and the following disclaimer.
 
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-****************************************************************************/
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
+IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER
+OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*/
 
 #ifndef __SUPPORT_DATA_SUPPORT_UTHASH_H__
 #define __SUPPORT_DATA_SUPPORT_UTHASH_H__
@@ -28,8 +27,6 @@ THE SOFTWARE.
 #include <string.h>   /* memcmp,strlen */
 #include <stddef.h>   /* ptrdiff_t */
 #include <stdlib.h>   /* exit() */
-
-namespace   cocos2d {
 
 /* These macros use decltype or the earlier __typeof GNU extension.
    As decltype is only available in newer compilers (VS2010 or gcc 4.3+
@@ -46,6 +43,12 @@ namespace   cocos2d {
 #define DECLTYPE(x) (__typeof(x))
 #endif
 
+#ifdef ANDROID
+#define NO_DECLTYPE
+#undef  DECLTYPE
+#define DECLTYPE(x)
+#endif
+
 #ifdef NO_DECLTYPE
 #define DECLTYPE_ASSIGN(dst,src)                                                 \
 do {                                                                             \
@@ -59,12 +62,18 @@ do {                                                                            
 } while(0)
 #endif
 
+/* uint32_t next defined will conflict with other libraries and an "error C2872: 'uint32_t' : ambiguous symbol" will appear.
+   so we replace all uint32_t with 'unsigned int'.
+*/
 /* a number of the hash function use uint32_t which isn't defined on win32 */
-#ifdef _MSC_VER
-typedef unsigned int uint32_t;
-#else
-#include <inttypes.h>   /* uint32_t */
-#endif
+
+// #ifdef _MSC_VER
+//     typedef unsigned int uint32_t;
+// #else
+//     #ifndef __QNX__
+//     #include <inttypes.h>   /* uint32_t */
+//     #endif /* __QNX__ */
+// #endif /* _MSC_VER */
 
 #define UTHASH_VERSION 1.9.3
 
@@ -117,10 +126,10 @@ do {                                                                            
 #define HASH_BLOOM_BITTEST(bv,idx) (bv[(idx)/8] & (1U << ((idx)%8)))
 
 #define HASH_BLOOM_ADD(tbl,hashv)                                                \
-  HASH_BLOOM_BITSET((tbl)->bloom_bv, (hashv & (uint32_t)((1ULL << (tbl)->bloom_nbits) - 1)))
+  HASH_BLOOM_BITSET((tbl)->bloom_bv, (hashv & (unsigned int)((1ULL << (tbl)->bloom_nbits) - 1)))
 
 #define HASH_BLOOM_TEST(tbl,hashv)                                               \
-  HASH_BLOOM_BITTEST((tbl)->bloom_bv, (hashv & (uint32_t)((1ULL << (tbl)->bloom_nbits) - 1)))
+  HASH_BLOOM_BITTEST((tbl)->bloom_bv, (hashv & (unsigned int)((1ULL << (tbl)->bloom_nbits) - 1)))
 
 #else
 #define HASH_BLOOM_MAKE(tbl) 
@@ -437,13 +446,13 @@ do {                                                                            
 #endif
 
 #if !defined (get16bits)
-#define get16bits(d) ((((uint32_t)(((const uint8_t *)(d))[1])) << 8)             \
-                       +(uint32_t)(((const uint8_t *)(d))[0]) )
+#define get16bits(d) ((((unsigned int)(((const uint8_t *)(d))[1])) << 8)             \
+                       +(unsigned int)(((const uint8_t *)(d))[0]) )
 #endif
 #define HASH_SFH(key,keylen,num_bkts,hashv,bkt)                                  \
 do {                                                                             \
   char *_sfh_key=(char*)(key);                                                     \
-  uint32_t _sfh_tmp, _sfh_len = keylen;                                          \
+  unsigned int _sfh_tmp, _sfh_len = keylen;                                          \
                                                                                  \
   int _sfh_rem = _sfh_len & 3;                                                   \
   _sfh_len >>= 2;                                                                \
@@ -508,10 +517,10 @@ do {                                                                            
   const int _mur_r = 24;                                                         \
   hashv = 0xcafebabe ^ keylen;                                                   \
   char *_mur_key = (char *)(key);                                                  \
-  uint32_t _mur_tmp, _mur_len = keylen;                                          \
+  unsigned int _mur_tmp, _mur_len = keylen;                                          \
                                                                                  \
   for (;_mur_len >= 4; _mur_len-=4) {                                            \
-    _mur_tmp = *(uint32_t *)_mur_key;                                            \
+    _mur_tmp = *(unsigned int *)_mur_key;                                            \
     _mur_tmp *= _mur_m;                                                          \
     _mur_tmp ^= _mur_tmp >> _mur_r;                                              \
     _mur_tmp *= _mur_m;                                                          \
@@ -542,7 +551,7 @@ do {                                                                            
   const int _mur_r = 24;                                                         \
   hashv = 0xcafebabe ^ (keylen);                                                   \
   char *_mur_key = (char *)(key);                                                  \
-  uint32_t _mur_len = keylen;                                                    \
+  unsigned int _mur_len = keylen;                                                    \
   int _mur_align = (int)_mur_key & 3;                                            \
                                                                                  \
   if (_mur_align && (_mur_len >= 4)) {                                           \
@@ -953,9 +962,9 @@ typedef struct UT_hash_table {
     * the hash will still work, albeit no longer in constant time. */
    unsigned ineff_expands, noexpand;
 
-   uint32_t signature; /* used only to find hash tables in external analysis */
+   unsigned int signature; /* used only to find hash tables in external analysis */
 #ifdef HASH_BLOOM
-   uint32_t bloom_sig; /* used only to test bloom exists in external analysis */
+   unsigned int bloom_sig; /* used only to test bloom exists in external analysis */
    uint8_t *bloom_bv;
    char bloom_nbits;
 #endif
@@ -972,6 +981,5 @@ typedef struct UT_hash_handle {
    unsigned keylen;                  /* enclosing struct's key len     */
    unsigned hashv;                   /* result of hash-fcn(key)        */
 } UT_hash_handle;
-}//namespace   cocos2d 
 
 #endif /* __SUPPORT_DATA_SUPPORT_UTHASH_H__*/

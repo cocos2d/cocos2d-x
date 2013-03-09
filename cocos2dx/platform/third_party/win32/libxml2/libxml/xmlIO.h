@@ -131,7 +131,7 @@ struct _xmlParserInputBuffer {
     
     xmlBufferPtr buffer;    /* Local buffer encoded in UTF-8 */
     xmlBufferPtr raw;       /* if encoder != NULL buffer for raw input */
-    int	compressed;	    /* -1=unknown, 0=not compressed, 1=compressed */
+    int    compressed;        /* -1=unknown, 0=not compressed, 1=compressed */
     int error;
     unsigned long rawconsumed;/* amount consumed from raw */
 };
@@ -155,202 +155,202 @@ struct _xmlOutputBuffer {
 /*
  * Interfaces for input
  */
-XMLPUBFUN void XMLCALL	
-	xmlCleanupInputCallbacks		(void);
+XMLPUBFUN void XMLCALL    
+    xmlCleanupInputCallbacks        (void);
 
 XMLPUBFUN int XMLCALL
-	xmlPopInputCallbacks			(void);
+    xmlPopInputCallbacks            (void);
 
-XMLPUBFUN void XMLCALL	
-	xmlRegisterDefaultInputCallbacks	(void);
+XMLPUBFUN void XMLCALL    
+    xmlRegisterDefaultInputCallbacks    (void);
 XMLPUBFUN xmlParserInputBufferPtr XMLCALL
-	xmlAllocParserInputBuffer		(xmlCharEncoding enc);
+    xmlAllocParserInputBuffer        (xmlCharEncoding enc);
 
 XMLPUBFUN xmlParserInputBufferPtr XMLCALL
-	xmlParserInputBufferCreateFilename	(const char *URI,
+    xmlParserInputBufferCreateFilename    (const char *URI,
                                                  xmlCharEncoding enc);
 XMLPUBFUN xmlParserInputBufferPtr XMLCALL
-	xmlParserInputBufferCreateFile		(FILE *file,
+    xmlParserInputBufferCreateFile        (FILE *file,
                                                  xmlCharEncoding enc);
 XMLPUBFUN xmlParserInputBufferPtr XMLCALL
-	xmlParserInputBufferCreateFd		(int fd,
-	                                         xmlCharEncoding enc);
+    xmlParserInputBufferCreateFd        (int fd,
+                                             xmlCharEncoding enc);
 XMLPUBFUN xmlParserInputBufferPtr XMLCALL
-	xmlParserInputBufferCreateMem		(const char *mem, int size,
-	                                         xmlCharEncoding enc);
+    xmlParserInputBufferCreateMem        (const char *mem, int size,
+                                             xmlCharEncoding enc);
 XMLPUBFUN xmlParserInputBufferPtr XMLCALL
-	xmlParserInputBufferCreateStatic	(const char *mem, int size,
-	                                         xmlCharEncoding enc);
+    xmlParserInputBufferCreateStatic    (const char *mem, int size,
+                                             xmlCharEncoding enc);
 XMLPUBFUN xmlParserInputBufferPtr XMLCALL
-	xmlParserInputBufferCreateIO		(xmlInputReadCallback   ioread,
-						 xmlInputCloseCallback  ioclose,
-						 void *ioctx,
-	                                         xmlCharEncoding enc);
-XMLPUBFUN int XMLCALL	
-	xmlParserInputBufferRead		(xmlParserInputBufferPtr in,
-						 int len);
-XMLPUBFUN int XMLCALL	
-	xmlParserInputBufferGrow		(xmlParserInputBufferPtr in,
-						 int len);
-XMLPUBFUN int XMLCALL	
-	xmlParserInputBufferPush		(xmlParserInputBufferPtr in,
-						 int len,
-						 const char *buf);
-XMLPUBFUN void XMLCALL	
-	xmlFreeParserInputBuffer		(xmlParserInputBufferPtr in);
-XMLPUBFUN char * XMLCALL	
-	xmlParserGetDirectory			(const char *filename);
+    xmlParserInputBufferCreateIO        (xmlInputReadCallback   ioread,
+                         xmlInputCloseCallback  ioclose,
+                         void *ioctx,
+                                             xmlCharEncoding enc);
+XMLPUBFUN int XMLCALL    
+    xmlParserInputBufferRead        (xmlParserInputBufferPtr in,
+                         int len);
+XMLPUBFUN int XMLCALL    
+    xmlParserInputBufferGrow        (xmlParserInputBufferPtr in,
+                         int len);
+XMLPUBFUN int XMLCALL    
+    xmlParserInputBufferPush        (xmlParserInputBufferPtr in,
+                         int len,
+                         const char *buf);
+XMLPUBFUN void XMLCALL    
+    xmlFreeParserInputBuffer        (xmlParserInputBufferPtr in);
+XMLPUBFUN char * XMLCALL    
+    xmlParserGetDirectory            (const char *filename);
 
 XMLPUBFUN int XMLCALL     
-	xmlRegisterInputCallbacks		(xmlInputMatchCallback matchFunc,
-						 xmlInputOpenCallback openFunc,
-						 xmlInputReadCallback readFunc,
-						 xmlInputCloseCallback closeFunc);
+    xmlRegisterInputCallbacks        (xmlInputMatchCallback matchFunc,
+                         xmlInputOpenCallback openFunc,
+                         xmlInputReadCallback readFunc,
+                         xmlInputCloseCallback closeFunc);
 
 xmlParserInputBufferPtr
-	__xmlParserInputBufferCreateFilename(const char *URI,
-										xmlCharEncoding enc);
+    __xmlParserInputBufferCreateFilename(const char *URI,
+                                        xmlCharEncoding enc);
 
 #ifdef LIBXML_OUTPUT_ENABLED
 /*
  * Interfaces for output
  */
-XMLPUBFUN void XMLCALL	
-	xmlCleanupOutputCallbacks		(void);
-XMLPUBFUN void XMLCALL	
-	xmlRegisterDefaultOutputCallbacks(void);
+XMLPUBFUN void XMLCALL    
+    xmlCleanupOutputCallbacks        (void);
+XMLPUBFUN void XMLCALL    
+    xmlRegisterDefaultOutputCallbacks(void);
 XMLPUBFUN xmlOutputBufferPtr XMLCALL
-	xmlAllocOutputBuffer		(xmlCharEncodingHandlerPtr encoder);
-
-XMLPUBFUN xmlOutputBufferPtr XMLCALL
-	xmlOutputBufferCreateFilename	(const char *URI,
-					 xmlCharEncodingHandlerPtr encoder,
-					 int compression);
+    xmlAllocOutputBuffer        (xmlCharEncodingHandlerPtr encoder);
 
 XMLPUBFUN xmlOutputBufferPtr XMLCALL
-	xmlOutputBufferCreateFile	(FILE *file,
-					 xmlCharEncodingHandlerPtr encoder);
+    xmlOutputBufferCreateFilename    (const char *URI,
+                     xmlCharEncodingHandlerPtr encoder,
+                     int compression);
 
 XMLPUBFUN xmlOutputBufferPtr XMLCALL
-	xmlOutputBufferCreateBuffer	(xmlBufferPtr buffer,
-					 xmlCharEncodingHandlerPtr encoder);
+    xmlOutputBufferCreateFile    (FILE *file,
+                     xmlCharEncodingHandlerPtr encoder);
 
 XMLPUBFUN xmlOutputBufferPtr XMLCALL
-	xmlOutputBufferCreateFd		(int fd,
-					 xmlCharEncodingHandlerPtr encoder);
+    xmlOutputBufferCreateBuffer    (xmlBufferPtr buffer,
+                     xmlCharEncodingHandlerPtr encoder);
 
 XMLPUBFUN xmlOutputBufferPtr XMLCALL
-	xmlOutputBufferCreateIO		(xmlOutputWriteCallback   iowrite,
-					 xmlOutputCloseCallback  ioclose,
-					 void *ioctx,
-					 xmlCharEncodingHandlerPtr encoder);
+    xmlOutputBufferCreateFd        (int fd,
+                     xmlCharEncodingHandlerPtr encoder);
 
-XMLPUBFUN int XMLCALL	
-	xmlOutputBufferWrite		(xmlOutputBufferPtr out,
-					 int len,
-					 const char *buf);
-XMLPUBFUN int XMLCALL	
-	xmlOutputBufferWriteString	(xmlOutputBufferPtr out,
-					 const char *str);
-XMLPUBFUN int XMLCALL	
-	xmlOutputBufferWriteEscape	(xmlOutputBufferPtr out,
-					 const xmlChar *str,
-					 xmlCharEncodingOutputFunc escaping);
+XMLPUBFUN xmlOutputBufferPtr XMLCALL
+    xmlOutputBufferCreateIO        (xmlOutputWriteCallback   iowrite,
+                     xmlOutputCloseCallback  ioclose,
+                     void *ioctx,
+                     xmlCharEncodingHandlerPtr encoder);
 
-XMLPUBFUN int XMLCALL	
-	xmlOutputBufferFlush		(xmlOutputBufferPtr out);
-XMLPUBFUN int XMLCALL	
-	xmlOutputBufferClose		(xmlOutputBufferPtr out);
+XMLPUBFUN int XMLCALL    
+    xmlOutputBufferWrite        (xmlOutputBufferPtr out,
+                     int len,
+                     const char *buf);
+XMLPUBFUN int XMLCALL    
+    xmlOutputBufferWriteString    (xmlOutputBufferPtr out,
+                     const char *str);
+XMLPUBFUN int XMLCALL    
+    xmlOutputBufferWriteEscape    (xmlOutputBufferPtr out,
+                     const xmlChar *str,
+                     xmlCharEncodingOutputFunc escaping);
+
+XMLPUBFUN int XMLCALL    
+    xmlOutputBufferFlush        (xmlOutputBufferPtr out);
+XMLPUBFUN int XMLCALL    
+    xmlOutputBufferClose        (xmlOutputBufferPtr out);
 
 XMLPUBFUN int XMLCALL     
-	xmlRegisterOutputCallbacks	(xmlOutputMatchCallback matchFunc,
-					 xmlOutputOpenCallback openFunc,
-					 xmlOutputWriteCallback writeFunc,
-					 xmlOutputCloseCallback closeFunc);
+    xmlRegisterOutputCallbacks    (xmlOutputMatchCallback matchFunc,
+                     xmlOutputOpenCallback openFunc,
+                     xmlOutputWriteCallback writeFunc,
+                     xmlOutputCloseCallback closeFunc);
 
 xmlOutputBufferPtr
-	__xmlOutputBufferCreateFilename(const char *URI,
+    __xmlOutputBufferCreateFilename(const char *URI,
                               xmlCharEncodingHandlerPtr encoder,
                               int compression);
 
 #ifdef LIBXML_HTTP_ENABLED
 /*  This function only exists if HTTP support built into the library  */
-XMLPUBFUN void XMLCALL	
-	xmlRegisterHTTPPostCallbacks	(void );
+XMLPUBFUN void XMLCALL    
+    xmlRegisterHTTPPostCallbacks    (void );
 #endif /* LIBXML_HTTP_ENABLED */
-	
+    
 #endif /* LIBXML_OUTPUT_ENABLED */
 
 XMLPUBFUN xmlParserInputPtr XMLCALL
-	xmlCheckHTTPInput		(xmlParserCtxtPtr ctxt,
-					 xmlParserInputPtr ret);
+    xmlCheckHTTPInput        (xmlParserCtxtPtr ctxt,
+                     xmlParserInputPtr ret);
 
 /*
  * A predefined entity loader disabling network accesses
  */
 XMLPUBFUN xmlParserInputPtr XMLCALL 
-	xmlNoNetExternalEntityLoader	(const char *URL,
-					 const char *ID,
-					 xmlParserCtxtPtr ctxt);
+    xmlNoNetExternalEntityLoader    (const char *URL,
+                     const char *ID,
+                     xmlParserCtxtPtr ctxt);
 
 /* 
  * xmlNormalizeWindowsPath is obsolete, don't use it. 
  * Check xmlCanonicPath in uri.h for a better alternative.
  */
 XMLPUBFUN xmlChar * XMLCALL 
-	xmlNormalizeWindowsPath		(const xmlChar *path);
+    xmlNormalizeWindowsPath        (const xmlChar *path);
 
-XMLPUBFUN int XMLCALL	
-	xmlCheckFilename		(const char *path);
+XMLPUBFUN int XMLCALL    
+    xmlCheckFilename        (const char *path);
 /**
  * Default 'file://' protocol callbacks 
  */
-XMLPUBFUN int XMLCALL	
-	xmlFileMatch 			(const char *filename);
-XMLPUBFUN void * XMLCALL	
-	xmlFileOpen 			(const char *filename);
-XMLPUBFUN int XMLCALL	
-	xmlFileRead 			(void * context, 
-					 char * buffer, 
-					 int len);
-XMLPUBFUN int XMLCALL	
-	xmlFileClose 			(void * context);
+XMLPUBFUN int XMLCALL    
+    xmlFileMatch             (const char *filename);
+XMLPUBFUN void * XMLCALL    
+    xmlFileOpen             (const char *filename);
+XMLPUBFUN int XMLCALL    
+    xmlFileRead             (void * context, 
+                     char * buffer, 
+                     int len);
+XMLPUBFUN int XMLCALL    
+    xmlFileClose             (void * context);
 
 /**
  * Default 'http://' protocol callbacks 
  */
 #ifdef LIBXML_HTTP_ENABLED
-XMLPUBFUN int XMLCALL	
-	xmlIOHTTPMatch 			(const char *filename);
-XMLPUBFUN void * XMLCALL	
-	xmlIOHTTPOpen 			(const char *filename);
+XMLPUBFUN int XMLCALL    
+    xmlIOHTTPMatch             (const char *filename);
+XMLPUBFUN void * XMLCALL    
+    xmlIOHTTPOpen             (const char *filename);
 #ifdef LIBXML_OUTPUT_ENABLED
-XMLPUBFUN void * XMLCALL	
-	xmlIOHTTPOpenW			(const char * post_uri,
-					 int   compression );
+XMLPUBFUN void * XMLCALL    
+    xmlIOHTTPOpenW            (const char * post_uri,
+                     int   compression );
 #endif /* LIBXML_OUTPUT_ENABLED */
-XMLPUBFUN int XMLCALL 	
-	xmlIOHTTPRead			(void * context, 
-					 char * buffer, 
-					 int len);
-XMLPUBFUN int XMLCALL	
-	xmlIOHTTPClose 			(void * context);
+XMLPUBFUN int XMLCALL     
+    xmlIOHTTPRead            (void * context, 
+                     char * buffer, 
+                     int len);
+XMLPUBFUN int XMLCALL    
+    xmlIOHTTPClose             (void * context);
 #endif /* LIBXML_HTTP_ENABLED */
 
 /**
  * Default 'ftp://' protocol callbacks 
  */
 #ifdef LIBXML_FTP_ENABLED 
-XMLPUBFUN int XMLCALL	
-	xmlIOFTPMatch 			(const char *filename);
-XMLPUBFUN void * XMLCALL	
-	xmlIOFTPOpen 			(const char *filename);
-XMLPUBFUN int XMLCALL 	
-	xmlIOFTPRead			(void * context, 
-					 char * buffer, 
-					 int len);
-XMLPUBFUN int XMLCALL 	
-	xmlIOFTPClose 			(void * context);
+XMLPUBFUN int XMLCALL    
+    xmlIOFTPMatch             (const char *filename);
+XMLPUBFUN void * XMLCALL    
+    xmlIOFTPOpen             (const char *filename);
+XMLPUBFUN int XMLCALL     
+    xmlIOFTPRead            (void * context, 
+                     char * buffer, 
+                     int len);
+XMLPUBFUN int XMLCALL     
+    xmlIOFTPClose             (void * context);
 #endif /* LIBXML_FTP_ENABLED */
 
 #ifdef __cplusplus

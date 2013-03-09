@@ -1,24 +1,21 @@
-#include "AppDelegate.h"
-
 #include "cocos2d.h"
-[! if CC_USE_COCOS_DENSHION_SIMPLE_AUDIO_ENGINE]
-#include "SimpleAudioEngine.h"
-using namespace CocosDenshion;
-
-[! endif]
-[! if !CC_USE_LUA]
-
+#include "CCEGLView.h"
+#include "AppDelegate.h"
+[! if CC_USE_LUA]
+#include "CCLuaEngine.h"
+[! else]
 #include "HelloWorldScene.h"
 [! endif]
+[! if CC_USE_COCOS_DENSHION_SIMPLE_AUDIO_ENGINE]
+#include "SimpleAudioEngine.h"
 
-using namespace cocos2d;
+using namespace CocosDenshion;
+[! endif]
+
+USING_NS_CC;
 
 AppDelegate::AppDelegate()
-[! if CC_USE_LUA]
-:m_pLuaEngine(NULL)
-[! endif]
 {
-
 }
 
 AppDelegate::~AppDelegate()
@@ -26,100 +23,36 @@ AppDelegate::~AppDelegate()
 [! if CC_USE_COCOS_DENSHION_SIMPLE_AUDIO_ENGINE]
     SimpleAudioEngine::end();
 [! endif]
-[! if CC_USE_LUA]
-
-    CCScriptEngineManager::sharedScriptEngineManager()->removeScriptEngine();
-    CC_SAFE_DELETE(m_pLuaEngine);
-[! endif]
-}
-
-bool AppDelegate::initInstance()
-{
-    bool bRet = false;
-    do 
-    {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-        // Initialize OpenGLView instance, that release by CCDirector when application terminate.
-        // The HelloWorld is designed as HVGA.
-        CCEGLView * pMainWnd = new CCEGLView();
-        CC_BREAK_IF(! pMainWnd
-            || ! pMainWnd->Create(TEXT("[!output PROJECT_NAME]"), 320, 480));
-#endif  // CC_PLATFORM_WIN32
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-
-        // OpenGLView initialized in testsAppDelegate.mm on ios platform, nothing need to do here.
-
-#endif  // CC_PLATFORM_IOS
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-
-        // Android doesn't need to do anything.
-
-#endif  // CC_PLATFORM_ANDROID
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WOPHONE)
-        // Initialize OpenGLView instance, that release by CCDirector when application terminate.
-        // The HelloWorld is designed as HVGA.
-        // Use GetScreenWidth() and GetScreenHeight() get screen width and height.
-        CCEGLView * pMainWnd = new CCEGLView(this);
-        CC_BREAK_IF(! pMainWnd
-            || ! pMainWnd->Create(320, 480));
-
-#if !defined(_TRANZDA_VM_)
-        // set the resource zip file
-        // on wophone emulator, we copy resources files to Work7/TG3/APP/ folder instead of zip file
-        CCFileUtils::setResource("[!output PROJECT_NAME].zip");
-#endif
-
-#endif  // CC_PLATFORM_WOPHONE
-
-        bRet = true;
-    } while (0);
-    return bRet;
 }
 
 bool AppDelegate::applicationDidFinishLaunching()
 {
     // initialize director
     CCDirector *pDirector = CCDirector::sharedDirector();
-    pDirector->setOpenGLView(&CCEGLView::sharedOpenGLView());
-
-    // sets landscape mode
-    pDirector->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);
+    pDirector->setOpenGLView(CCEGLView::sharedOpenGLView());
 
     // turn on display FPS
-    pDirector->setDisplayFPS(true);
+    pDirector->setDisplayStats(true);
 
     // set FPS. the default value is 1.0/60 if you don't call this
     pDirector->setAnimationInterval(1.0 / 60);
 
 [! if CC_USE_LUA]
     // register lua engine
-    m_pLuaEngine = new LuaEngine; 
-    CCScriptEngineManager::sharedScriptEngineManager()->setScriptEngine(m_pLuaEngine);
+    CCLuaEngine* pEngine = CCLuaEngine::defaultEngine();
+    CCScriptEngineManager::sharedManager()->setScriptEngine(pEngine);
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    unsigned long size;
-    char *pFileContent = (char*)CCFileUtils::getFileData("hello.lua", "r", &size);
-
-    if (pFileContent)
+    CCString* pstrFileContent = CCString::createWithContentsOfFile("hello.lua");
+    if (pstrFileContent)
     {
-        // copy the file contents and add '\0' at the end, or the lua parser can not parse it
-        char *pCodes = new char[size + 1];
-        pCodes[size] = '\0';
-        memcpy(pCodes, pFileContent, size);
-        delete[] pFileContent;
-
-        CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->executeString(pCodes);
-        delete []pCodes;
+        pEngine->executeString(pstrFileContent->getCString());
     }
+#else
+    std::string path = CCFileUtils::sharedFileUtils()->fullPathForFilename("hello.lua");
+    pEngine->addSearchPath(path.substr(0, path.find_last_of("/")).c_str());
+    pEngine->executeScriptFile(path.c_str());
 #endif
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    string path = CCFileUtils::fullPathFromRelativePath("hello.lua");
-    CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->executeScriptFile(path.c_str());
-#endif 
 [! else]
     // create a scene. it's an autorelease object
     CCScene *pScene = HelloWorld::scene();
@@ -133,7 +66,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 // This function will be called when the app is inactive. When comes a phone call,it's be invoked too
 void AppDelegate::applicationDidEnterBackground()
 {
-    CCDirector::sharedDirector()->pause();
+    CCDirector::sharedDirector()->stopAnimation();
 [! if CC_USE_COCOS_DENSHION_SIMPLE_AUDIO_ENGINE]
 
     SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
@@ -143,7 +76,7 @@ void AppDelegate::applicationDidEnterBackground()
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground()
 {
-    CCDirector::sharedDirector()->resume();
+    CCDirector::sharedDirector()->startAnimation();
 [! if CC_USE_COCOS_DENSHION_SIMPLE_AUDIO_ENGINE]
 
     SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();

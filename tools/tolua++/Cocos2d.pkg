@@ -1,117 +1,76 @@
 $#include "LuaCocos2d.h"
-$pfile "CCNode.pkg"
 
+$pfile "matrix.pkg"
+$pfile "ccTypes.pkg"
 $pfile "CCObject.pkg"
-
-$pfile "CCParallaxNode.pkg"
-
+$pfile "CCCommon.pkg"
+$pfile "CCGeometry.pkg"
+$pfile "CCArray.pkg"
+$pfile "CCDictionary.pkg"
+$pfile "CCString.pkg"
 $pfile "CCPointExtension.pkg"
+$pfile "CCEGLViewProtocol.pkg"
 
-$pfile "CCProgressTimer.pkg"
+$pfile "CCFileUtils.pkg"
+$pfile "CCDrawingPrimitives.pkg"
+$pfile "CCAffineTransform.pkg"
+$pfile "CCApplication.pkg"
+$pfile "CCTouchDispatcher.pkg"
+$pfile "CCDirector.pkg"
+$pfile "CCUserDefault.pkg"
+$pfile "CCNotificationCenter.pkg"
+$pfile "CCKeypadDispatcher.pkg"
 
+$pfile "CCNode.pkg"
+$pfile "CCTexture2D.pkg"
+$pfile "CCTextureAtlas.pkg"
+$pfile "CCTextureCache.pkg"
 $pfile "CCRenderTexture.pkg"
-
-$pfile "CCRibbon.pkg"
-
+$pfile "CCSprite.pkg"
+$pfile "CCSpriteBatchNode.pkg"
+$pfile "CCSpriteFrame.pkg"
+$pfile "CCSpriteFrameCache.pkg"
+$pfile "CCLayer.pkg"
 $pfile "CCScene.pkg"
+$pfile "CCTransition.pkg"
+$pfile "CCTransitionProgress.pkg"
 
 $pfile "CCScheduler.pkg"
 
-$pfile "CCSprite.pkg"
-
-$pfile "CCSpriteBatchNode.pkg"
-
-$pfile "CCSpriteFrame.pkg"
-
-$pfile "CCSpriteFrameCache.pkg"
-
-$pfile "CCString.pkg"
-
-$pfile "CCTextFieldTTF.pkg"
-
-$pfile "CCTexture2D.pkg"
-
-$pfile "CCTextureAtlas.pkg"
-
-$pfile "CCTextureCache.pkg"
-
-$pfile "CCTileMapAtlas.pkg"
-
-$pfile "CCTMXLayer.pkg"
-
-$pfile "CCTMXObjectGroup.pkg"
-
-$pfile "CCTMXTiledMap.pkg"
-
-$pfile "CCTMXXMLParser.pkg"
-
-$pfile "CCTouch.pkg"
-
-$pfile "CCTouchDispatcher.pkg"
-
-$pfile "CCTransition.pkg"
-
-$pfile "CCTransitionPageTurn.pkg"
-
-$pfile "CCTransitionRadial.pkg"
-
-$pfile "ccTypes.pkg"
-
-$pfile "CCUserDefault.pkg"
-
-$pfile "CCAccelerometer.pkg"
-
-$pfile "CCAccelerometerDelegate.pkg"
-
 $pfile "CCAction.pkg"
-
-$pfile "CCProtocols.pkg"
-
-$pfile "selector_protocol.pkg"
-$pfile "CCSet.pkg"
-
-$pfile "CCMutableArray.pkg"
-$pfile "CCMutableDictionary.pkg"
-
-
-$pfile "CCTouchDelegateProtocol.pkg"
-
-
-
 $pfile "CCActionCamera.pkg"
+$pfile "CCActionCatmullRom.pkg"
 $pfile "CCActionEase.pkg"
-$pfile "CCActionGrid3D.pkg"
 $pfile "CCActionGrid.pkg"
-$pfile "CCActionInstant.pkg"
-$pfile "CCActionInterval.pkg"
-$pfile "CCActionManager.pkg"
+$pfile "CCActionGrid3D.pkg"
 $pfile "CCActionPageTurn3D.pkg"
 $pfile "CCActionProgressTimer.pkg"
 $pfile "CCActionTiledGrid.pkg"
+$pfile "CCActionManager.pkg"
+$pfile "CCMotionStreak.pkg"
 
 $pfile "CCAnimation.pkg"
 $pfile "CCAnimationCache.pkg"
-$pfile "CCApplication.pkg"
-$pfile "CCArray.pkg"
 $pfile "CCAtlasNode.pkg"
-$pfile "CCAutoreleasePool.pkg"
 $pfile "CCCamera.pkg"
-$pfile "ccConfig.pkg"
-$pfile "CCDirector.pkg"
-$pfile "CCDrawingPrimitives.pkg"
-$pfile "CCEGLView.pkg"
-$pfile "CCGeometry.pkg"
-$pfile "CCGL.pkg"
-$pfile "CCIMEDelegate.pkg"
-$pfile "CCIMEDispatcher.pkg"
-$pfile "CCKeypadDelegate.pkg"
-$pfile "CCKeypadDispatcher.pkg"
 $pfile "CCLabelAtlas.pkg"
 $pfile "CCLabelBMFont.pkg"
 $pfile "CCLabelTTF.pkg"
-$pfile "CCLayer.pkg"
 $pfile "CCMenu.pkg"
 $pfile "CCMenuItem.pkg"
-$pfile "CCMotionStreak.pkg"
+$pfile "CCParallaxNode.pkg"
+$pfile "CCParticleSystem.pkg"
+$pfile "CCParticleExamples.pkg"
+$pfile "CCParticleBatchNode.pkg"
+$pfile "CCProgressTimer.pkg"
+$pfile "CCTextFieldTTF.pkg"
+$pfile "CCTileMapAtlas.pkg"
+$pfile "CCTMXLayer.pkg"
+$pfile "CCTMXObjectGroup.pkg"
+$pfile "CCTMXTiledMap.pkg"
+$pfile "CCTMXXMLParser.pkg"
+$pfile "CCTouch.pkg"
 
-$pfile "CCCommon.pkg"
+$pfile "CCSet.pkg"
+
+$pfile "SimpleAudioEngine.pkg"

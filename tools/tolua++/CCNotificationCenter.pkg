@@ -1,0 +1,8 @@
+
+class CCNotificationCenter : public CCObject
+{
+    static CCNotificationCenter *sharedNotificationCenter(void);
+    void registerScriptObserver(LUA_FUNCTION handler);
+    void unregisterScriptObserver(void);
+    void postNotification(const char *name);
+};

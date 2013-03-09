@@ -26,11 +26,11 @@ THE SOFTWARE.
 #include <stdlib.h>
 
 #include "TGAlib.h"
-#include "CCFileUtils.h"
+#include "platform/CCFileUtils.h"
 
-namespace   cocos2d {
+namespace cocos2d {
 
-void tgaLoadRLEImageData(FILE *file, tImageTGA *info);
+static bool tgaLoadRLEImageData(unsigned char* Buffer, unsigned long bufSize, tImageTGA *psInfo);
 void tgaFlipImage( tImageTGA *info );
 
 // load the image header field from stream
@@ -105,7 +105,7 @@ bool tgaLoadImageData(unsigned char *Buffer, unsigned long bufSize, tImageTGA *p
     return bRet;
 }
 
-bool tgaLoadRLEImageData(unsigned char* Buffer, unsigned long bufSize, tImageTGA *psInfo)
+static bool tgaLoadRLEImageData(unsigned char* Buffer, unsigned long bufSize, tImageTGA *psInfo)
 {
     unsigned int mode,total,i, index = 0;
     unsigned char aux[4], runlength = 0;
@@ -173,23 +173,23 @@ bool tgaLoadRLEImageData(unsigned char* Buffer, unsigned long bufSize, tImageTGA
 
 void tgaFlipImage( tImageTGA *psInfo )
 {
-	// mode equal the number of components for each pixel
-	int mode = psInfo->pixelDepth / 8;
-	int rowbytes = psInfo->width*mode;
-	unsigned char *row = (unsigned char *)malloc(rowbytes);
-	int y;
-	
-	if (row == NULL) return;
-	
-	for( y = 0; y < (psInfo->height/2); y++ )
-	{
-		memcpy(row, &psInfo->imageData[y*rowbytes],rowbytes);
-		memcpy(&psInfo->imageData[y*rowbytes], &psInfo->imageData[(psInfo->height-(y+1))*rowbytes], rowbytes);
-		memcpy(&psInfo->imageData[(psInfo->height-(y+1))*rowbytes], row, rowbytes);
-	}
-	
-	free(row);
-	psInfo->flipped = 0;
+    // mode equal the number of components for each pixel
+    int mode = psInfo->pixelDepth / 8;
+    int rowbytes = psInfo->width*mode;
+    unsigned char *row = (unsigned char *)malloc(rowbytes);
+    int y;
+    
+    if (row == NULL) return;
+    
+    for( y = 0; y < (psInfo->height/2); y++ )
+    {
+        memcpy(row, &psInfo->imageData[y*rowbytes],rowbytes);
+        memcpy(&psInfo->imageData[y*rowbytes], &psInfo->imageData[(psInfo->height-(y+1))*rowbytes], rowbytes);
+        memcpy(&psInfo->imageData[(psInfo->height-(y+1))*rowbytes], row, rowbytes);
+    }
+    
+    free(row);
+    psInfo->flipped = 0;
 }
 
 // this is the function to call when we want to load an image
@@ -197,9 +197,9 @@ tImageTGA * tgaLoad(const char *pszFilename)
 {
     int mode,total;
     tImageTGA *info = NULL;
-    CCFileData data(pszFilename, "rb");
-    unsigned long nSize = data.getSize();
-    unsigned char* pBuffer = data.getBuffer();
+    
+    unsigned long nSize = 0;
+    unsigned char* pBuffer = CCFileUtils::sharedFileUtils()->getFileData(pszFilename, "rb", &nSize);
 
     do
     {
@@ -270,58 +270,60 @@ tImageTGA * tgaLoad(const char *pszFilename)
         }
     } while(0);
 
+    CC_SAFE_DELETE_ARRAY(pBuffer);
+
     return info;
 }
 
-// converts RGB to greyscale
+// converts RGB to grayscale
 void tgaRGBtogreyscale(tImageTGA *psInfo) {
-	
-	int mode,i,j;
-	
-	unsigned char *newImageData;
-	
-	// if the image is already greyscale do nothing
-	if (psInfo->pixelDepth == 8)
-		return;
-	
-	// compute the number of actual components
-	mode = psInfo->pixelDepth / 8;
-	
-	// allocate an array for the new image data
-	newImageData = (unsigned char *)malloc(sizeof(unsigned char) * 
-										   psInfo->height * psInfo->width);
-	if (newImageData == NULL) {
-		return;
-	}
-	
-	// convert pixels: greyscale = o.30 * R + 0.59 * G + 0.11 * B
-	for (i = 0,j = 0; j < psInfo->width * psInfo->height; i +=mode, j++)
-		newImageData[j] =	
-		(unsigned char)(0.30 * psInfo->imageData[i] + 
-						0.59 * psInfo->imageData[i+1] +
-						0.11 * psInfo->imageData[i+2]);
-	
-	
-	//free old image data
-	free(psInfo->imageData);
-	
-	// reassign pixelDepth and type according to the new image type
-	psInfo->pixelDepth = 8;
-	psInfo->type = 3;
-	// reassing imageData to the new array.
-	psInfo->imageData = newImageData;
+    
+    int mode,i,j;
+    
+    unsigned char *newImageData;
+    
+    // if the image is already grayscale do nothing
+    if (psInfo->pixelDepth == 8)
+        return;
+    
+    // compute the number of actual components
+    mode = psInfo->pixelDepth / 8;
+    
+    // allocate an array for the new image data
+    newImageData = (unsigned char *)malloc(sizeof(unsigned char) * 
+                                           psInfo->height * psInfo->width);
+    if (newImageData == NULL) {
+        return;
+    }
+    
+    // convert pixels: grayscale = o.30 * R + 0.59 * G + 0.11 * B
+    for (i = 0,j = 0; j < psInfo->width * psInfo->height; i +=mode, j++)
+        newImageData[j] =    
+        (unsigned char)(0.30 * psInfo->imageData[i] + 
+                        0.59 * psInfo->imageData[i+1] +
+                        0.11 * psInfo->imageData[i+2]);
+    
+    
+    //free old image data
+    free(psInfo->imageData);
+    
+    // reassign pixelDepth and type according to the new image type
+    psInfo->pixelDepth = 8;
+    psInfo->type = 3;
+    // reassigning imageData to the new array.
+    psInfo->imageData = newImageData;
 }
 
 // releases the memory used for the image
 void tgaDestroy(tImageTGA *psInfo) {
-	
-	if (psInfo != NULL) {
-		if (psInfo->imageData != NULL)
-		{
-			free(psInfo->imageData);
-		}
+    
+    if (psInfo != NULL) {
+        if (psInfo->imageData != NULL)
+        {
+            free(psInfo->imageData);
+        }
 
-		free(psInfo);
-	}
+        free(psInfo);
+    }
 }
 }//namespace   cocos2d 

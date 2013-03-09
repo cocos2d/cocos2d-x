@@ -1,32 +1,10 @@
 
-#include "CCActionInterval.h"
-
-namespace cocos2d
+class CCProgressTo : public CCActionInterval
 {
-	class  CCProgressTo : public CCActionInterval
-	{
-	public:
+    static CCProgressTo* create(float duration, float fPercent);
+};
 
-		bool initWithDuration(ccTime duration, float fPercent);
-
-		CCObject* copyWithZone(CCZone *pZone);
-		void startWithTarget(CCNode *pTarget);
-		void update(ccTime time);
-		static CCProgressTo* actionWithDuration(ccTime duration, float fPercent);
-	};
-
-
-	class  CCProgressFromTo : public CCActionInterval
-	{
-
-		bool initWithDuration(ccTime duration, float fFromPercentage, float fToPercentage);
-		virtual CCObject* copyWithZone(CCZone *pZone);
-		virtual CCActionInterval* reverse(void);
-		virtual void startWithTarget(CCNode *pTarget);
-		virtual void update(ccTime time);
-		static CCProgressFromTo* actionWithDuration(ccTime duration, float fFromPercentage, float fToPercentage);
-
-	};
-
-} // end of namespace cocos2d
-
+class CCProgressFromTo : public CCActionInterval
+{
+    static CCProgressFromTo* create(float duration, float fFromPercentage, float fToPercentage);
+};

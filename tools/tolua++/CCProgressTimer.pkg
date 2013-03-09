@@ -1,46 +1,36 @@
-namespace cocos2d
-{
-
 typedef enum {
-	/// Radial Counter-Clockwise 
-	kCCProgressTimerTypeRadialCCW,
-	/// Radial ClockWise
-	kCCProgressTimerTypeRadialCW,
-	/// Horizontal Left-Right
-	kCCProgressTimerTypeHorizontalBarLR,
-	/// Horizontal Right-Left
-	kCCProgressTimerTypeHorizontalBarRL,
-	/// Vertical Bottom-top
-	kCCProgressTimerTypeVerticalBarBT,
-	/// Vertical Top-Bottom
-	kCCProgressTimerTypeVerticalBarTB,
+    kCCProgressTimerTypeRadial,
+    kCCProgressTimerTypeBar,
 } CCProgressTimerType;
 
-
-class  CCProgressTimer : public CCNode
+class CCProgressTimer : public CCNode
 {
+    CCProgressTimerType getType(void);
 
-	~CCProgressTimer(void);
-	CCProgressTimerType getType(void);
-	float getPercentage(void);
+    float getPercentage(void);
 
-	/** The image to show the progress percentage, retain */
-	CCSprite* getSprite(void);
+    CCSprite* getSprite(void) { return m_pSprite; }
 
-	bool initWithFile(const char *pszFileName);
-	bool initWithTexture(CCTexture2D *pTexture);
+    void setPercentage(float fPercentage);
+    void setSprite(CCSprite *pSprite);
+    void setType(CCProgressTimerType type);
+    void setReverseProgress(bool reverse);
+    void setAnchorPoint(CCPoint anchorPoint);
 
-	void setPercentage(float fPercentage);
-	void setSprite(CCSprite *pSprite);
-	void setType(CCProgressTimerType type);
+    void setColor(const ccColor3B& color);
+    const ccColor3B& getColor(void);
+    GLubyte getOpacity(void);
+    void setOpacity(GLubyte opacity);
+    void setOpacityModifyRGB(bool bValue);
+    bool isOpacityModifyRGB(void);
 
-	void draw(void);
+    static CCProgressTimer* create(CCSprite* sp);
 
-	static CCProgressTimer* progressWithFile(const char *pszFileName);
-	static CCProgressTimer* progressWithTexture(CCTexture2D *pTexture);
+    CCPoint getMidpoint();
+    void setMidpoint(CCPoint pt);
+    CCPoint getBarChangeRate();
+    void setBarChangeRate(CCPoint rate);
 
-
+    bool isReverseDirection();
+    void setReverseDirection(bool bReverseDir);
 };
-
-}
-
