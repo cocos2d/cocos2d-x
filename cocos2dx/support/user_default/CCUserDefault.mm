@@ -23,12 +23,10 @@
  ****************************************************************************/
 
 #import "CCUserDefault.h"
-
 #import <string>
-#import <UIKit/UIKit.h>
 #import "platform/CCPlatformConfig.h"
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 
 NS_CC_BEGIN
 using namespace std;
