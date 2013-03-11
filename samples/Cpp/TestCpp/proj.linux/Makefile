@@ -1,4 +1,4 @@
-TARGET = TestCpp
+EXECUTABLE = TestCpp
 
 SOURCES = ../Classes/AccelerometerTest/AccelerometerTest.cpp \
 	../Classes/ActionManagerTest/ActionManagerTest.cpp \
@@ -110,9 +110,6 @@ STATICLIBS += \
     $(LIB_DIR)/libchipmunk.a
 
 DEFINES += -DCC_ENABLE_CHIPMUNK_INTEGRATION=1
-
-TARGET := $(BIN_DIR)/$(TARGET)
-all: $(TARGET)
 
 ####### Build rules
 $(TARGET): $(OBJECTS) $(STATICLIBS) $(COCOS_LIBS) $(CORE_MAKEFILE_LIST)
