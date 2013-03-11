@@ -1,12 +1,12 @@
 #!/bin/bash
+# This script will perform a clean linux build of all targets in both
+# debug and release configurations.  It will also ensure that all the required
+# packages are installed.  For day-to-day work on the linux port it is
+# faster/better to simply use 'make' either at the top level or in the subpject
+# you are working on.
 
 # Exit of first error.
 set -e
-
-TXTCOLOR_DEFAULT="\033[0;m"
-TXTCOLOR_GREEN="\033[0;32m"
-
-COCOS2DX_ROOT=`pwd`
 
 DEPENDS='libx11-dev'
 DEPENDS+=' libxmu-dev'
@@ -21,16 +21,23 @@ DEPENDS+=' libfontconfig1-dev'
 DEPENDS+=' libsqlite3-dev'
 DEPENDS+=' libglew*-dev'
 
+MISSING=
+echo "Checking for missing packages ..."
 for i in $DEPENDS; do
-    PKG_OK=$(dpkg-query -W --showformat='${Status}\n' $i | grep "install ok installed")
-    echo Checking for $i: $PKG_OK
-    if [ "" == "$PKG_OK" ]; then
-        echo -e $TXTCOLOR_GREEN"No $i. Setting up $i, please enter your password:"$TXTCOLOR_DEFAULT
-        sudo apt-get --force-yes --yes install $i
+    if ! dpkg-query -W --showformat='${Status}\n' $i | grep "install ok installed" > /dev/null; then
+        MISSING+=$i
     fi
 done
 
-cd $COCOS2DX_ROOT
+if [ -n "$MISSING" ]; then
+    TXTCOLOR_DEFAULT="\033[0;m"
+    TXTCOLOR_GREEN="\033[0;32m"
+    echo -e $TXTCOLOR_GREEN"Missing packages: $MISSING.\nYou may be asked for your password for package installation."$TXTCOLOR_DEFAULT
+    sudo apt-get --force-yes --yes install $MISSING
+fi
+
+# Change directory to the location of this script
+cd $(dirname ${BASH_SOURCE[0]})
 
 export MAKEFLAGS=-j10
 
