@@ -76,13 +76,6 @@ cc.MENU_STATE_TRACKING_TOUCH = 1;
 cc.MENU_HANDLER_PRIORITY = -128;
 cc.DEFAULT_PADDING = 5;
 
-cc.SCROLLVIEW_DIRECTION_NONE = -1;
-cc.SCROLLVIEW_DIRECTION_HORIZONTAL = 0;
-cc.SCROLLVIEW_DIRECTION_VERTICAL = 1;
-cc.SCROLLVIEW_DIRECTION_BOTH = 2;
-cc.TABLEVIEW_FILL_TOPDOWN = 0;
-cc.TABLEVIEW_FILL_BOTTOMUP = 1;
-
 // reusable objects
 cc._reuse_p = [ {x:0, y:0}, {x:0,y:0}, {x:0,y:0}, {x:0,y:0} ];
 cc._reuse_p_index = 0;
@@ -323,10 +316,13 @@ cc.dump = function(obj)
 };
 
 // dump config info, but only in debug mode
+var sys = sys || undefined;
 cc.dumpConfig = function()
 {
-    cc.dump(sys);
-    cc.dump(sys.capabilities);
+    if (sys) {
+        cc.dump(sys);
+        cc.dump(sys.capabilities);
+    }
 };
 
 //
@@ -372,28 +368,6 @@ cc.LabelAtlas.create = function( a,b,c,d,e ) {
 };
 
 cc.LayerMultiplex.create = cc.LayerMultiplex.createWithArray;
-
-// PhysicsDebugNode
-cc.PhysicsDebugNode.create = function( space ) {
-    var s = space;
-    if( space.handle !== undefined )
-        s = space.handle;
-    return cc.PhysicsDebugNode._create( s );
-};
-cc.PhysicsDebugNode.prototype.setSpace = function( space ) {
-    var s = space;
-    if( space.handle !== undefined )
-        s = space.handle;
-    return this._setSpace( s );
-};
-
-// PhysicsSprite
-cc.PhysicsSprite.prototype.setBody = function( body ) {
-    var b = body;
-    if( body.handle !== undefined )
-        b = body.handle;
-    return this._setCPBody( b );
-};
 
 
 /**
@@ -533,7 +507,4 @@ cc.Sprite.extend = cc.Class.extend;
 cc.MenuItemFont.extend = cc.Class.extend;
 cc.Scene.extend = cc.Class.extend;
 cc.DrawNode.extend = cc.Class.extend;
-cc.ScrollView.extend = cc.Class.extend;
-cc.TableView.extend = cc.Class.extend;
-cc.TableViewCell.extend = cc.Class.extend;
 
