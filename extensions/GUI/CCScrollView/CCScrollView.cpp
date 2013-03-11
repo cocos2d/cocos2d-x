@@ -135,7 +135,7 @@ bool CCScrollView::init()
 
 void CCScrollView::registerWithTouchDispatcher()
 {
-    CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, 0, false);
+    CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, CCLayer::getTouchPriority(), false);
 }
 
 bool CCScrollView::isNodeVisible(CCNode* node)
@@ -630,13 +630,12 @@ void CCScrollView::ccTouchMoved(CCTouch* touch, CCEvent* event)
 
     if (m_pTouches->containsObject(touch))
     {
-        if (m_pTouches->count() == 1 && m_bDragging)
+        if (m_bTouchMoved && m_pTouches->count() == 1 && m_bDragging)
         { // scrolling
             CCPoint moveDistance, newPoint, maxInset, minInset;
             CCRect  frame;
             float newX, newY;
             
-            m_bTouchMoved  = true;
             CCPoint frameOriginal = this->getParent()->convertToWorldSpace(this->getPosition());
             frame = CCRectMake(frameOriginal.x, frameOriginal.y, m_tViewSize.width, m_tViewSize.height);
 
@@ -673,6 +672,10 @@ void CCScrollView::ccTouchMoved(CCTouch* touch, CCEvent* event)
             const float len = ccpDistance(m_pContainer->convertTouchToNodeSpace((CCTouch*)m_pTouches->objectAtIndex(0)),
                                             m_pContainer->convertTouchToNodeSpace((CCTouch*)m_pTouches->objectAtIndex(1)));
             this->setZoomScale(this->getZoomScale()*len/m_fTouchLength);
+        }
+        else if(ccpDistance(m_tTouchPoint, this->convertTouchToNodeSpace(touch)) > 15)
+        {
+            m_bTouchMoved  = true;
         }
     }
 }
