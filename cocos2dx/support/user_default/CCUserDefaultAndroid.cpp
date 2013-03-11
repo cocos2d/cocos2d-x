@@ -71,7 +71,7 @@ void CCUserDefault::purgeSharedUserDefault()
 
 bool CCUserDefault::getBoolForKey(const char* pKey, bool defaultValue)
 {
-    
+    return getBoolForKeyJNI(pKey);
 }
 
 int CCUserDefault::getIntegerForKey(const char* pKey)
