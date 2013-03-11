@@ -212,6 +212,7 @@ Developers:
 
     Sergej Tatarincev (SevInf)
         Making ScriptingCore.cpp compiled fine with C++11 on iOS.
+        Using shared NodeLoaderLibrary in CCBReader bindings.
 
     ThePickleMan
         Adding 'rotationIsDir' property to ParticleSystem.
