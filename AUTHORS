@@ -229,6 +229,7 @@ Developers:
         Author of Native Client port.
         Refactor linux build system and fix many warnings.
         Fixing a bug where missing packages would cause the script to exit on linux.
+        Adding 'make run' target for linux projects.
 
     Peter Young (young40)
         Implements setVisible() for CCEditBox
