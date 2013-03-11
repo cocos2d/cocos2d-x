@@ -94,7 +94,6 @@ bool CCScale9Sprite::initWithBatchNode(CCSpriteBatchNode* batchnode, CCRect rect
     if(batchnode)
     {
         this->updateWithBatchNode(batchnode, rect, rotated, capInsets);
-        this->setAnchorPoint(ccp(0.5f, 0.5f));
     }
     this->m_positionsAreDirty = true;
     
