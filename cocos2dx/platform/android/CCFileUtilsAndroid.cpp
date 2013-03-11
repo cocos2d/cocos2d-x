@@ -158,9 +158,9 @@ string CCFileUtilsAndroid::getWritablePath()
     // Fix for Nexus 10 (Android 4.2 multi-user environment)
     // the path is retrieved through Java Context.getCacheDir() method
     string dir("");
-    const char *tmp = getFileDirectoryJNI();
+    string tmp = getFileDirectoryJNI();
 
-    if (tmp)
+    if (tmp.length() > 0)
     {
         dir.append(tmp).append("/");
 

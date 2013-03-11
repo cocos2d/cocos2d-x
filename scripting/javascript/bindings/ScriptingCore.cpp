@@ -459,7 +459,9 @@ JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* c
 
     js::RootedObject obj(cx, global);
 	JS::CompileOptions options(cx);
-	options.setUTF8(true).setFileAndLine(rpath.c_str(), 1);
+    options.setFileAndLine(rpath.c_str(), 1);
+    // Don't setUTF8 since it will cause messy string output by cc.log .
+//	options.setUTF8(true).setFileAndLine(rpath.c_str(), 1);
     
     // this will always compile the script, we can actually check if the script
     // was compiled before, because it can be in the global map
@@ -1622,13 +1624,7 @@ JSBool JSBDebug_BufferWrite(JSContext* cx, unsigned argc, jsval* vp)
 {
     if (argc == 1) {
         jsval* argv = JS_ARGV(cx, vp);
-        const char* str;
-
-        JSString* jsstr = JS_ValueToString(cx, argv[0]);
-        // Not supported in SpiderMonkey v19
-        //str = JS_EncodeString(cx, jsstr);
-        JSStringWrapper strWrapper(jsstr);
-        
+        JSStringWrapper strWrapper(argv[0]);
         // this is safe because we're already inside a lock (from clearBuffers)
         outData.append(strWrapper.get());
     }

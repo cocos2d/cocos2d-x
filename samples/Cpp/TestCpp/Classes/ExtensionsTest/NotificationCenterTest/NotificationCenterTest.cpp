@@ -127,7 +127,7 @@ NotificationCenterTest::NotificationCenterTest()
         light->setIsConnectToSwitch(bConnected);
     }
 
-    CCNotificationCenter::sharedNotificationCenter()->postNotification(MSG_SWITCH_STATE, (CCObject*)item->getSelectedIndex());
+    CCNotificationCenter::sharedNotificationCenter()->postNotification(MSG_SWITCH_STATE, (CCObject*)(intptr_t)item->getSelectedIndex());
 }
 
 void NotificationCenterTest::toExtensionsMainLayer(cocos2d::CCObject* sender)
@@ -141,7 +141,7 @@ void NotificationCenterTest::toggleSwitch(CCObject *sender)
 {
     CCMenuItemToggle* item = (CCMenuItemToggle*)sender;
     int index = item->getSelectedIndex();
-    CCNotificationCenter::sharedNotificationCenter()->postNotification(MSG_SWITCH_STATE, (CCObject*)index);
+    CCNotificationCenter::sharedNotificationCenter()->postNotification(MSG_SWITCH_STATE, (CCObject*)(intptr_t)index);
 }
 
 void NotificationCenterTest::connectToSwitch(CCObject *sender)

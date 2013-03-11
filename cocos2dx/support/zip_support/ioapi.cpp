@@ -148,7 +148,7 @@ static ZPOS64_T ZCALLBACK ftell64_file_func (voidpf opaque, voidpf stream)
 {
     ZPOS64_T ret;
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE || CC_TARGET_PLATFORM == CC_PLATFORM_BADA || CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY || CC_TARGET_PLATFORM == CC_PLATFORM_NACL)
-    ret = NULL;
+    ret = 0;
 #else
     ret = ftello64((FILE *)stream);
 #endif
@@ -180,8 +180,10 @@ static long ZCALLBACK fseek_file_func (voidpf  opaque, voidpf stream, uLong offs
 
 static long ZCALLBACK fseek64_file_func (voidpf  opaque, voidpf stream, ZPOS64_T offset, int origin)
 {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE || CC_TARGET_PLATFORM == CC_PLATFORM_BADA || CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY || CC_TARGET_PLATFORM == CC_PLATFORM_NACL)
+    return -1;
+#else
     int fseek_origin=0;
-    long ret;
     switch (origin)
     {
     case ZLIB_FILEFUNC_SEEK_CUR :
@@ -195,15 +197,10 @@ static long ZCALLBACK fseek64_file_func (voidpf  opaque, voidpf stream, ZPOS64_T
         break;
     default: return -1;
     }
-    ret = 0;
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE || CC_TARGET_PLATFORM == CC_PLATFORM_BADA || CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY || CC_TARGET_PLATFORM == CC_PLATFORM_NACL)
-    ret = -1;
-#else
     if(fseeko64((FILE *)stream, offset, fseek_origin) != 0)
-        ret = -1;
+        return -1;
+    return 0;
 #endif
-    return ret;
 }
 
 

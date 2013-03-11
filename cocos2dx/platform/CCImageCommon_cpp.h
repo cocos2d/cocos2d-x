@@ -527,22 +527,22 @@ static uint64 _tiffSeekProc(thandle_t fd, uint64 off, int whence)
     {
         if (whence == SEEK_SET)
         {
-            CC_BREAK_IF(off > isource->size-1);
+            CC_BREAK_IF(off >= (uint64)isource->size);
             ret = isource->offset = (uint32)off;
         }
         else if (whence == SEEK_CUR)
         {
-            CC_BREAK_IF(isource->offset + off > isource->size-1);
+            CC_BREAK_IF(isource->offset + off >= (uint64)isource->size);
             ret = isource->offset += (uint32)off;
         }
         else if (whence == SEEK_END)
         {
-            CC_BREAK_IF(off > isource->size-1);
+            CC_BREAK_IF(off >= (uint64)isource->size);
             ret = isource->offset = (uint32)(isource->size-1 - off);
         }
         else
         {
-            CC_BREAK_IF(off > isource->size-1);
+            CC_BREAK_IF(off >= (uint64)isource->size);
             ret = isource->offset = (uint32)off;
         }
     } while (0);
@@ -620,11 +620,11 @@ bool CCImage::_initWithTiffData(void* pData, int nDataLen)
         {
            if (TIFFReadRGBAImageOriented(tif, w, h, raster, ORIENTATION_TOPLEFT, 0))
            {
+                /* the raster data is pre-multiplied by the alpha component 
+                   after invoking TIFFReadRGBAImageOriented
                 unsigned char* src = (unsigned char*)raster;
                 unsigned int* tmp = (unsigned int*)m_pData;
 
-                /* the raster data is pre-multiplied by the alpha component 
-                   after invoking TIFFReadRGBAImageOriented
                 for(int j = 0; j < m_nWidth * m_nHeight * 4; j += 4)
                 {
                     *tmp++ = CC_RGB_PREMULTIPLY_ALPHA( src[j], src[j + 1], 

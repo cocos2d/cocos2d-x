@@ -294,8 +294,8 @@ CCSprite* CCSprite::initWithCGImage(CGImageRef pImage, const char *pszKey)
 */
 
 CCSprite::CCSprite(void)
-: m_pobTexture(NULL)
-, m_bShouldBeHidden(false)
+: m_bShouldBeHidden(false),
+m_pobTexture(NULL)
 {
 }
 

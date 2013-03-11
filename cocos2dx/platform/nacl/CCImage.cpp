@@ -78,7 +78,8 @@ public:
         iMaxLineHeight = 0;
         //Free all text lines
         size_t size = vLines.size();
-        for (int i=0; i<size; ++i) {
+        for (size_t i=0; i<size; ++i)
+        {
             TextLine line = vLines[i];
             free(line.text);
         }
@@ -330,8 +331,6 @@ public:
     bool getBitmap(const char *text, int nWidth, int nHeight, CCImage::ETextAlign eAlignMask, const char * pFontName, float fontSize)
     {
         FT_Error iError;
-
-        bool bRet = false;
         if (libError)
             return false;
 
@@ -427,7 +426,7 @@ private:
     int openFont(const std::string& fontName, uint fontSize, const std::string& fontNameOrig);
     std::string fileNameExtension(const std::string& pathName);
 
-    int m_cachedSize;
+    uint m_cachedSize;
     FT_Face m_cachedFont;
     std::string m_cachedFontname;
     std::string m_cachedFontnameOrig;

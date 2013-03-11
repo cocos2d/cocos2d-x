@@ -12,6 +12,30 @@
 
 	<key>Definitions</key>
 	<dict>
+		<key>libs/extensions/AssetsManager/AssetsManager.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>AssetsManager</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/AssetsManager/AssetsManager.cpp</string>
+		</dict>
+		<key>libs/extensions/AssetsManager/AssetsManager.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>AssetsManager</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/AssetsManager/AssetsManager.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
 		<key>libs/extensions/CCBReader/CCBAnimationManager.cpp</key>
 		<dict>
 			<key>Group</key>
@@ -1370,6 +1394,8 @@
 	</dict>
 	<key>Nodes</key>
 	<array>
+		<string>libs/extensions/AssetsManager/AssetsManager.cpp</string>
+		<string>libs/extensions/AssetsManager/AssetsManager.h</string>
 		<string>libs/extensions/CCBReader/CCBAnimationManager.cpp</string>
 		<string>libs/extensions/CCBReader/CCBAnimationManager.h</string>
 		<string>libs/extensions/CCBReader/CCBFileLoader.cpp</string>

@@ -11,35 +11,35 @@ LIBS =
 
 INCLUDES = -I../include/chipmunk
 
-SOURCES = ../src/chipmunk.cpp \
-../src/cpBody.cpp \
-../src/cpSpace.cpp \
-../src/cpSpatialIndex.cpp \
-../src/cpArbiter.cpp \
-../src/cpCollision.cpp \
-../src/cpSpaceComponent.cpp \
-../src/cpSweep1D.cpp \
-../src/cpArray.cpp \
-../src/cpHashSet.cpp \
-../src/cpSpaceHash.cpp \
-../src/cpVect.cpp \
-../src/cpBB.cpp \
-../src/cpPolyShape.cpp \
-../src/cpSpaceQuery.cpp \
-../src/cpBBTree.cpp \
-../src/cpShape.cpp \
-../src/cpSpaceStep.cpp \
-../src/constraints/cpConstraint.cpp \
-../src/constraints/cpPivotJoint.cpp \
-../src/constraints/cpDampedRotarySpring.cpp \
-../src/constraints/cpRatchetJoint.cpp \
-../src/constraints/cpDampedSpring.cpp \
-../src/constraints/cpRotaryLimitJoint.cpp \
-../src/constraints/cpGearJoint.cpp \
-../src/constraints/cpSimpleMotor.cpp \
-../src/constraints/cpGrooveJoint.cpp \
-../src/constraints/cpSlideJoint.cpp \
-../src/constraints/cpPinJoint.cpp
+SOURCES = ../src/chipmunk.c \
+../src/cpBody.c \
+../src/cpSpace.c \
+../src/cpSpatialIndex.c \
+../src/cpArbiter.c \
+../src/cpCollision.c \
+../src/cpSpaceComponent.c \
+../src/cpSweep1D.c \
+../src/cpArray.c \
+../src/cpHashSet.c \
+../src/cpSpaceHash.c \
+../src/cpVect.c \
+../src/cpBB.c \
+../src/cpPolyShape.c \
+../src/cpSpaceQuery.c \
+../src/cpBBTree.c \
+../src/cpShape.c \
+../src/cpSpaceStep.c \
+../src/constraints/cpConstraint.c \
+../src/constraints/cpPivotJoint.c \
+../src/constraints/cpDampedRotarySpring.c \
+../src/constraints/cpRatchetJoint.c \
+../src/constraints/cpDampedSpring.c \
+../src/constraints/cpRotaryLimitJoint.c \
+../src/constraints/cpGearJoint.c \
+../src/constraints/cpSimpleMotor.c \
+../src/constraints/cpGrooveJoint.c \
+../src/constraints/cpSlideJoint.c \
+../src/constraints/cpPinJoint.c
 
 COCOS_ROOT = ../../..
 
@@ -49,22 +49,10 @@ TARGET = $(LIB_DIR)/libchipmunk.a
 
 all: $(TARGET)
 
-####### Build rules
-$(TARGET): $(OBJECTS)
+$(TARGET): $(OBJECTS) $(CORE_MAKEFILE_LIST)
 	@mkdir -p $(@D)
-	$(NACL_AR) $(ARFLAGS) $(TARGET) $(OBJECTS)
+	$(LOG_AR)$(NACL_AR) $(ARFLAGS) $(TARGET) $(OBJECTS)
 
-####### Compile
-$(OBJ_DIR)/%.o: ../%.cpp
+$(OBJ_DIR)/%.o: ../%.c $(CORE_MAKEFILE_LIST)
 	@mkdir -p $(@D)
-	$(NACL_CXX) -MMD $(CXXFLAGS) $(INCLUDES) $(DEFINES) $(VISIBILITY) -c $< -o $@
-
-$(OBJ_DIR)/%.o: ../%.c
-	@mkdir -p $(@D)
-	$(NACL_CC) -MMD $(CCFLAGS) $(INCLUDES) $(DEFINES) $(VISIBILITY) -c $< -o $@
-
-clean:
-	rm -rf $(OBJ_DIR)
-	rm -f $(TARGET) core
-
--include $(DEPS)
+	$(LOG_CC)$(NACL_CC) -MMD $(CCFLAGS) $(INCLUDES) $(DEFINES) $(VISIBILITY) -c $< -o $@
