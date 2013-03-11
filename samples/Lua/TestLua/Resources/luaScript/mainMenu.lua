@@ -68,6 +68,7 @@ local function CreateTestScene(nIdx)
     elseif nIdx == Test_Table.TEST_TEXT_INPUT then
 
     elseif nIdx == Test_Table.TEST_SPRITE then
+        scene = SpriteTest()
 
     elseif nIdx == Test_Table.TEST_SCHEDULER then
 
