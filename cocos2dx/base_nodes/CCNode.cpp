@@ -1094,7 +1094,7 @@ void CCNode::resumeSchedulerAndActions()
     m_pActionManager->resumeTarget(this);
 }
 
-void CCNode::resumeSchedulerAndActions(bool applayToChildren)
+void CCNode::resumeSchedulerAndActions(bool applyToChildren)
 {
 	resumeSchedulerAndActions();
 	if(applayToChildren == false)
@@ -1114,7 +1114,7 @@ void CCNode::pauseSchedulerAndActions()
     m_pActionManager->pauseTarget(this);
 }
 
-void CCNode::pauseSchedulerAndActions(bool applayToChildren)
+void CCNode::pauseSchedulerAndActions(bool applyToChildren)
 {
 	pauseSchedulerAndActions();
 
