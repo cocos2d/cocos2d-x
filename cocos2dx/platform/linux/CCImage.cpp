@@ -24,6 +24,9 @@
 
 using namespace std;
 
+// as FcFontMatch is quite an expensive call, cache the results of getFontFile
+std::map<std::string, std::string> fontCache;
+
 struct TextLine {
 	int iLineWidth;
     wchar_t* text;
@@ -231,6 +234,11 @@ public:
     std::string getFontFile(const char* family_name) {
     	std::string fontPath = family_name;
 
+    	std::map<std::string, std::string>::iterator it = fontCache.find(family_name);
+    	if ( it != fontCache.end() ) {
+    		return it->second;
+    	}
+
     	// check if the parameter is a font file shipped with the application
     	std::string lowerCasePath = fontPath;
     	std::transform(lowerCasePath.begin(), lowerCasePath.end(), lowerCasePath.begin(), ::tolower);
@@ -240,6 +248,7 @@ public:
     		FILE *f = fopen(fontPath.c_str(), "r");
     		if ( f ) {
     			fclose(f);
+    			fontCache.insert(std::pair<std::string, std::string>(family_name, fontPath));
     			return fontPath;
     		}
     	}
@@ -259,6 +268,7 @@ public:
     			FcPatternDestroy(font);
     			FcPatternDestroy(pattern);
 
+    			fontCache.insert(std::pair<std::string, std::string>(family_name, fontPath));
     			return fontPath;
     		}
     		FcPatternDestroy(font);
