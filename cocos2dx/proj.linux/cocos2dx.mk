@@ -99,3 +99,16 @@ clean:
 	rm -f $(TARGET) core
 
 .PHONY: all clean
+
+# If the parent Makefile defines $(EXECUTABLE) then define this as the target
+# and create a 'make run' rule to run the app.
+ifdef EXECUTABLE
+TARGET := $(BIN_DIR)/$(EXECUTABLE)
+
+all: $(TARGET)
+
+run: $(TARGET)
+	cd $(dir $^) && ./$(notdir $^)
+
+.PHONY: run
+endif

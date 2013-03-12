@@ -111,7 +111,7 @@ support/CCNotificationCenter.cpp \
 support/CCProfiling.cpp \
 support/CCPointExtension.cpp \
 support/TransformUtils.cpp \
-support/user_default/CCUserDefault.cpp \
+support/user_default/CCUserDefaultAndroid.cpp \
 support/base64.cpp \
 support/ccUtils.cpp \
 support/CCVertex.cpp \

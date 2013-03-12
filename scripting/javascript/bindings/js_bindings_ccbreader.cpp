@@ -274,7 +274,7 @@ JSBool js_cocos2dx_CCBReader_createSceneWithNodeGraphFromFile(JSContext *cx, uin
 JSBool js_CocosBuilder_create(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
-    CCNodeLoaderLibrary * ccNodeLoaderLibrary = CCNodeLoaderLibrary::newDefaultCCNodeLoaderLibrary();
+    CCNodeLoaderLibrary * ccNodeLoaderLibrary = CCNodeLoaderLibrary::sharedCCNodeLoaderLibrary();
     
     ccNodeLoaderLibrary->registerCCNodeLoader("", JSLayerLoader::loader());
     
@@ -300,8 +300,8 @@ JSBool js_CocosBuilder_create(JSContext *cx, uint32_t argc, jsval *vp)
     
 }
 
-extern JSObject* js_cocos2dx_CCBReader_prototype;
-extern JSObject* js_cocos2dx_CCBAnimationManager_prototype;
+extern JSObject* jsb_CCBReader_prototype;
+extern JSObject* jsb_CCBAnimationManager_prototype;
 
 void register_CCBuilderReader(JSContext *cx, JSObject *obj) {
     jsval nsval;
@@ -320,6 +320,6 @@ void register_CCBuilderReader(JSContext *cx, JSObject *obj) {
     JS_DefineFunction(cx, tmpObj, "create", js_CocosBuilder_create, 2, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, tmpObj, "loadScene", js_cocos2dx_CCBReader_createSceneWithNodeGraphFromFile, 2, JSPROP_READONLY | JSPROP_PERMANENT);
     
-    JS_DefineFunction(cx, js_cocos2dx_CCBReader_prototype, "load", js_cocos2dx_CCBReader_readNodeGraphFromFile, 2, JSPROP_READONLY | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, js_cocos2dx_CCBAnimationManager_prototype, "setCompletedAnimationCallback", js_cocos2dx_CCBAnimationManager_animationCompleteCallback, 2, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, jsb_CCBReader_prototype, "load", js_cocos2dx_CCBReader_readNodeGraphFromFile, 2, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, jsb_CCBAnimationManager_prototype, "setCompletedAnimationCallback", js_cocos2dx_CCBAnimationManager_animationCompleteCallback, 2, JSPROP_READONLY | JSPROP_PERMANENT);
 }

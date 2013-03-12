@@ -80,12 +80,11 @@ JSBool JSBCore_log(JSContext *cx, uint32_t argc, jsval *vp)
 		JSString *string = NULL;
 		JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "S", &string);
 		if (string) {
-            // Not supported in SpiderMonkey v19
-            //char *cstr = JS_EncodeString(cx, string);
-            const jschar *chars = JS_GetStringCharsZ(cx, string);
-			size_t l = JS_GetStringLength(string);
-			char* pUTF8Str = cc_utf16_to_utf8((const unsigned short*)chars, l, NULL, NULL);
-			CCLOG(pUTF8Str);
+            char* log_str = JS_EncodeString(cx, string);
+			if (log_str) {
+				CCLOG(log_str);
+				JS_free(cx, (void*)log_str);
+			}
 		}
 		
 		return JS_TRUE;
