@@ -14,4 +14,4 @@ if [ -z "${TOLUA}" ]; then
 fi
 
 cd ${SCRIPT_DIR}
-ant -Dtolua++=${TOLUA}
+${TOLUA} -L basic.lua -o ../../scripting/lua/cocos2dx_support/LuaCocos2d.cpp Cocos2d.pkg

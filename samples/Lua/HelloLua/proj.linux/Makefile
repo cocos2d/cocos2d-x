@@ -1,4 +1,4 @@
-TARGET = HelloLua
+EXECUTABLE = HelloLua
 
 COCOS_ROOT = ../../../..
 INCLUDES =  -I../ -I../Classes -I$(COCOS_ROOT)/CocosDenshion/include \
@@ -11,12 +11,7 @@ SOURCES = main.cpp ../Classes/AppDelegate.cpp
 SHAREDLIBS += -lcocos2d -lcocosdenshion -llua
 COCOS_LIBS = $(LIB_DIR)/libcocos2d.so $(LIB_DIR)/libcocosdenshion.so $(LIB_DIR)/liblua.so
 
-
 include $(COCOS_ROOT)/cocos2dx/proj.linux/cocos2dx.mk
-
-TARGET := $(BIN_DIR)/$(TARGET)
-
-all: $(TARGET)
 
 $(TARGET): $(OBJECTS) $(STATICLIBS) $(COCOS_LIBS) $(CORE_MAKEFILE_LIST)
 	@mkdir -p $(@D)
