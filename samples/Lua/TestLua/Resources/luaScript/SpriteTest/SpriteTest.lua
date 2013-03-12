@@ -1,7 +1,7 @@
 
 
-local ActionIdx = -1
-local MAX_LAYER = 14
+local ActionIdx = 0
+local createFunctionTable = nil
 local size = CCDirector:sharedDirector():getWinSize()
 
 local kTagTileMap = 1
@@ -36,11 +36,17 @@ local function onEnterOrExit(tag)
 	end
 end
 
+local function CreateSpriteTestLayer()
+    local layer = createFunctionTable[ActionIdx]()
+
+    playerLayer = layer
+    return layer
+end
 
 local function backAction()
     ActionIdx = ActionIdx - 1
-    if ActionIdx < 0 then
-        ActionIdx = ActionIdx + MAX_LAYER
+    if ActionIdx <= 0 then
+        ActionIdx = table.getn(createFunctionTable)
     end
 
     return CreateSpriteTestLayer()
@@ -52,7 +58,9 @@ end
 
 local function nextAction()
     ActionIdx = ActionIdx + 1
-    ActionIdx = math.mod(ActionIdx, MAX_LAYER)
+    if ActionIdx > table.getn(createFunctionTable) then
+        ActionIdx = 1
+    end
 
     return CreateSpriteTestLayer()
 end
@@ -826,6 +834,89 @@ end
 -- SpriteBatchNodeOffsetAnchorScale
 --
 --------------------------------------------------------------------
+local SpriteBatchNodeOffsetAnchorScale = {}
+
+function SpriteBatchNodeOffsetAnchorScale.initLayer(layer)
+    local s = CCDirector:sharedDirector():getWinSize()
+
+    local cache = CCSpriteFrameCache:sharedSpriteFrameCache()
+    cache:addSpriteFramesWithFile("animations/grossini.plist")
+    cache:addSpriteFramesWithFile("animations/grossini_gray.plist", "animations/grossini_gray.png")
+
+    local spritesheet = CCSpriteBatchNode:create("animations/grossini.png")
+    layer:addChild(spritesheet)
+
+    for i = 0,2 do
+        -- Animation using Sprite BatchNode
+        local sprite = CCSprite:createWithSpriteFrameName("grossini_dance_01.png")
+        sprite:setPosition(ccp(s.width/4*(i+1), s.height/2))
+
+        local point = CCSprite:create("Images/r1.png")
+        point:setScale(0.25)
+        point:setPosition(sprite:getPosition())
+        layer:addChild(point, 200)
+
+        if i == 0 then
+            sprite:setAnchorPoint(CCPointMake(0,0))
+        elseif i == 1 then
+            sprite:setAnchorPoint(ccp(0.5, 0.5))
+        else
+            sprite:setAnchorPoint(ccp(1, 1))
+        end
+
+        point:setPosition(sprite:getPosition())
+
+        local animFrames = CCArray:createWithCapacity(14)
+        local str
+        for k = 0, 13 do
+            str = string.format("grossini_dance_%02d.png", (k+1))
+            local frame = cache:spriteFrameByName(str)
+            animFrames:addObject(frame)
+        end
+
+        local animation = CCAnimation:createWithSpriteFrames(animFrames, 0.3)
+        sprite:runAction(CCRepeatForever:create(CCAnimate:create(animation)))
+
+        local scale = CCScaleBy:create(2, 2)
+        local scale_back = scale:reverse()
+        local seq_scale = CCSequence:createWithTwoActions(scale, scale_back)
+        sprite:runAction(CCRepeatForever:create(seq_scale))
+
+        spritesheet:addChild(sprite, i)
+    end
+
+    return layer
+end
+
+function SpriteBatchNodeOffsetAnchorScale.onExit()
+    local cache = CCSpriteFrameCache:sharedSpriteFrameCache()
+    cache:removeSpriteFramesFromFile("animations/grossini.plist")
+    cache:removeSpriteFramesFromFile("animations/grossini_gray.plist")
+end
+
+function SpriteBatchNodeOffsetAnchorScale.eventHandler(tag)
+    if tag == "exit" then
+        SpriteBatchNodeOffsetAnchorScale.onExit()
+    end
+end
+
+function SpriteBatchNodeOffsetAnchorScale.create()
+    local layer = CCLayer:create()
+    initWithLayer(layer)
+    layer:registerScriptHandler(SpriteBatchNodeOffsetAnchorScale.eventHandler)
+
+    layer = SpriteBatchNodeOffsetAnchorScale.initLayer(layer)
+    titleLabel:setString("SpriteBatchNode offset + anchor + scale")
+    subtitleLabel:setString("")
+
+    return layer
+end
+
+--------------------------------------------------------------------
+--
+-- SpriteOffsetAnchorSkew
+--
+--------------------------------------------------------------------
 local SpriteOffsetAnchorSkew = {}
 SpriteOffsetAnchorSkew.__index = SpriteOffsetAnchorSkew
 
@@ -1130,50 +1221,29 @@ function SpriteBatchNodeOffsetAnchorRotationalSkew.create()
     return layer
 end
 
-function CreateSpriteTestLayer()
-    local layer = nil
-
-    if(ActionIdx == 0) then
-        layer = Sprite1.create()
-    elseif(ActionIdx == 1) then
-        layer = SpriteBatchNode1.create()
-    elseif(ActionIdx == 2) then
-        layer = SpriteFrameTest.create()
-    elseif(ActionIdx == 3) then
-        layer = SpriteFrameAliasNameTest.create()
-    elseif(ActionIdx == 4) then
-        layer = SpriteAnchorPoint.create()
-    elseif(ActionIdx == 5) then
---      layer = SpriteColorOpacity.create()
-        layer = SpriteBatchNodeAnchorPoint.create()
-    elseif(ActionIdx == 6) then
-        layer = SpriteOffsetAnchorRotation.create()
-    elseif(ActionIdx == 7) then
-        layer = SpriteBatchNodeOffsetAnchorRotation.create()
-    elseif(ActionIdx == 8) then
-        layer = SpriteOffsetAnchorScale.create()
-    elseif(ActionIdx == 9) then
-        layer = SpriteBatchNodeOffsetAnchorScale.create()
-    elseif(ActionIdx == 10) then
-        layer = SpriteOffsetAnchorSkew.create()
-    elseif(ActionIdx == 11) then
-        layer = SpriteOffsetAnchorRotationalSkew.create()
-    elseif(ActionIdx == 12) then
-        layer = SpriteBatchNodeOffsetAnchorSkew.create()
-    elseif(ActionIdx == 13) then
-        layer = SpriteBatchNodeOffsetAnchorRotationalSkew.create()
-    end
-    playerLayer = layer
-    return layer
-end
-
 function SpriteTest()
 	local scene = CCScene:create()
+	
+	createFunctionTable = {
+        Sprite1.create,
+        SpriteBatchNode1.create,
+        SpriteFrameTest.create,
+        SpriteFrameAliasNameTest.create,
+        SpriteAnchorPoint.create,
+        SpriteBatchNodeAnchorPoint.create,
+        SpriteOffsetAnchorRotation.create,
+        SpriteBatchNodeOffsetAnchorRotation.create,
+        SpriteOffsetAnchorScale.create,
+        SpriteBatchNodeOffsetAnchorScale.create,
+        SpriteOffsetAnchorSkew.create,
+        SpriteOffsetAnchorRotationalSkew.create,
+        SpriteBatchNodeOffsetAnchorSkew.create,
+        SpriteBatchNodeOffsetAnchorRotationalSkew.create
+    }
 
-	ActionIdx = -1
+	ActionIdx = 0
 	scene:addChild(nextAction())
 	scene:addChild(CreateBackMenuItem())
 
 	return scene
 end
-
