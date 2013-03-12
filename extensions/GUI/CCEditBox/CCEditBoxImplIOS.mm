@@ -481,7 +481,7 @@ void CCEditBoxImplIOS::setPosition(const CCPoint& pos)
 
 void CCEditBoxImplIOS::setVisible(bool visible)
 {
-    m_systemControl.textField.hidden = !visible;
+//    m_systemControl.textField.hidden = !visible;
 }
 
 void CCEditBoxImplIOS::setContentSize(const CCSize& size)
