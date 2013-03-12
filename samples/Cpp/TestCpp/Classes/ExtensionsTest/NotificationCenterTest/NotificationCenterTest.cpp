@@ -138,7 +138,7 @@ NotificationCenterTest::NotificationCenterTest()
 void NotificationCenterTest::toExtensionsMainLayer(cocos2d::CCObject* sender)
 {
     /* for testing removeAllObservers */
-    int numObserversRemoved = CCNotificationCenter::sharedNotificationCenter()->removeAllObservers(this);
+    int CC_UNUSED numObserversRemoved = CCNotificationCenter::sharedNotificationCenter()->removeAllObservers(this);
     CCAssert(numObserversRemoved >= 3, "All observers were not removed!");
 
     ExtensionsTestScene* pScene = new ExtensionsTestScene();
