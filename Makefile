@@ -9,6 +9,7 @@ define MAKE_TARGET
 	+$(MAKE) -C scripting/lua/proj.$(PLATFORM) $@
 	+$(MAKE) -C samples/Cpp/HelloCpp/proj.$(PLATFORM) $@
 	+$(MAKE) -C samples/Cpp/TestCpp/proj.$(PLATFORM) $@
+	+$(MAKE) -C samples/Cpp/SimpleGame/proj.$(PLATFORM) $@
 	+$(MAKE) -C samples/Lua/HelloLua/proj.$(PLATFORM) $@
 	+$(MAKE) -C samples/Lua/TestLua/proj.$(PLATFORM) $@
 endef

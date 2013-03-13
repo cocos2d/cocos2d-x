@@ -1,6 +1,6 @@
-TARGET = HelloCpp
+EXECUTABLE = HelloCpp
 
-INCLUDES =  -I..  -I../Classes
+INCLUDES = -I.. -I../Classes
 
 SOURCES = main.cpp \
         ../Classes/AppDelegate.cpp \
@@ -11,10 +11,6 @@ include $(COCOS_ROOT)/cocos2dx/proj.linux/cocos2dx.mk
 
 SHAREDLIBS += -lcocos2d
 COCOS_LIBS = $(LIB_DIR)/libcocos2d.so
-
-TARGET := $(BIN_DIR)/$(TARGET)
-
-all: $(TARGET)
 
 $(TARGET): $(OBJECTS) $(STATICLIBS) $(COCOS_LIBS) $(CORE_MAKEFILE_LIST)
 	@mkdir -p $(@D)

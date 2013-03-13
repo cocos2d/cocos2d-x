@@ -329,6 +329,7 @@ void CCDictionary::removeAllObjects()
         HASH_DEL(m_pElements, pElement);
         pElement->m_pObject->release();
         CC_SAFE_DELETE(pElement);
+
     }
 }
 

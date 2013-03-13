@@ -25,7 +25,7 @@ THE SOFTWARE.
 #include "platform/CCPlatformConfig.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-#include "platform/android/jni/JniHelper.h"
+#include "platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
 
 // root name of xml
 #define USERDEFAULT_ROOT_NAME    "userDefaultRoot"
@@ -71,7 +71,7 @@ void CCUserDefault::purgeSharedUserDefault()
 
 bool CCUserDefault::getBoolForKey(const char* pKey, bool defaultValue)
 {
-    
+    return getBoolForKeyJNI(pKey, defaultValue);
 }
 
 int CCUserDefault::getIntegerForKey(const char* pKey)
@@ -81,7 +81,7 @@ int CCUserDefault::getIntegerForKey(const char* pKey)
 
 int CCUserDefault::getIntegerForKey(const char* pKey, int defaultValue)
 {
-	
+	return getIntegerForKeyJNI(pKey, defaultValue);
 }
 
 float CCUserDefault::getFloatForKey(const char* pKey)
@@ -91,9 +91,7 @@ float CCUserDefault::getFloatForKey(const char* pKey)
 
 float CCUserDefault::getFloatForKey(const char* pKey, float defaultValue)
 {
-    float ret = (float)getDoubleForKey(pKey, (double)defaultValue);
- 
-    return ret;
+    return getFloatForKeyJNI(pKey, defaultValue);
 }
 
 double  CCUserDefault::getDoubleForKey(const char* pKey)
@@ -103,7 +101,7 @@ double  CCUserDefault::getDoubleForKey(const char* pKey)
 
 double CCUserDefault::getDoubleForKey(const char* pKey, double defaultValue)
 {
-	
+	return getDoubleForKeyJNI(pKey, defaultValue);
 }
 
 std::string CCUserDefault::getStringForKey(const char* pKey)
@@ -113,31 +111,32 @@ std::string CCUserDefault::getStringForKey(const char* pKey)
 
 string CCUserDefault::getStringForKey(const char* pKey, const std::string & defaultValue)
 {
-    
+    return getStringForKeyJNI(pKey, defaultValue.c_str());
 }
 
 void CCUserDefault::setBoolForKey(const char* pKey, bool value)
 {
-  
+    return setBoolForKeyJNI(pKey, value);
 }
 
 void CCUserDefault::setIntegerForKey(const char* pKey, int value)
 {
-    
+    return setIntegerForKeyJNI(pKey, value);
 }
 
 void CCUserDefault::setFloatForKey(const char* pKey, float value)
 {
-    
+    return setFloatForKeyJNI(pKey, value);
 }
 
 void CCUserDefault::setDoubleForKey(const char* pKey, double value)
 {
-    
+    return setDoubleForKeyJNI(pKey, value);
 }
 
 void CCUserDefault::setStringForKey(const char* pKey, const std::string & value)
 {
+    return setStringForKeyJNI(pKey, value.c_str());
 }
 
 CCUserDefault* CCUserDefault::sharedUserDefault()

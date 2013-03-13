@@ -212,6 +212,7 @@ Developers:
 
     Sergej Tatarincev (SevInf)
         Making ScriptingCore.cpp compiled fine with C++11 on iOS.
+        Using shared NodeLoaderLibrary in CCBReader bindings.
 
     ThePickleMan
         Adding 'rotationIsDir' property to ParticleSystem.
@@ -228,9 +229,17 @@ Developers:
     Sam Clegg (sbc100)
         Author of Native Client port.
         Refactor linux build system and fix many warnings.
+        Fixing a bug where missing packages would cause the script to exit on linux.
+        Adding 'make run' target for linux projects.
 
     Peter Young (young40)
         Implements setVisible() for CCEditBox
+    
+    csy1988525
+        Fixing a bug about display result is wrong when invoking CCControlButton:: setHighlighted.
+
+    Asad ur Rehman (AsadR)
+        Adding CCNotificationCenter::removeAllObservers(CCObject *target).
 
 Retired Core Developers:
     WenSheng Yang
