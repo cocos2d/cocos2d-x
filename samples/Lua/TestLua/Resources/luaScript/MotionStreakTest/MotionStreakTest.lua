@@ -1,7 +1,4 @@
 
-local SceneIdx = 0
-local MAX_LAYER = 3
-
 local streak = nil
 local titleLabel = nil
 local subtitleLabel = nil
@@ -10,26 +7,6 @@ local s = CCDirector:sharedDirector():getWinSize()
 local scheduler = CCDirector:sharedDirector():getScheduler()
 
 local firstTick = nil
-
-local function backAction()
-	SceneIdx = SceneIdx - 1
-    if SceneIdx < 0 then
-        SceneIdx = SceneIdx + MAX_LAYER
-    end
-
-    return CreateMotionLayer()
-end
-
-local function restartAction()
-	return CreateParticleLayer()
-end
-
-local function nextAction()
-	SceneIdx = SceneIdx + 1
-    SceneIdx = math.mod(SceneIdx, MAX_LAYER)
-
-    return CreateMotionLayer()
-end
 
 local function modeCallback(sender)
 	fastMode = streak:isFastMode()
@@ -40,61 +17,8 @@ local function modeCallback(sender)
 	end
 end
 
-local function backCallback(sender)
-	local scene = CCScene:create()
-
-	scene:addChild(backAction())
-	scene:addChild(CreateBackMenuItem())
-
-	CCDirector:sharedDirector():replaceScene(scene)
-end
-
-local function restartCallback(sender)
-	local scene = CCScene:create()
-
-	scene:addChild(restartAction())
-	scene:addChild(CreateBackMenuItem())
-
-	CCDirector:sharedDirector():replaceScene(scene)
-end
-
-local function nextCallback(sender)
-	local scene = CCScene:create()
-
-	scene:addChild(nextAction())
-	scene:addChild(CreateBackMenuItem())
-
-	CCDirector:sharedDirector():replaceScene(scene)
-end
-
 local function getBaseLayer()
 	local layer = CCLayer:create()
-
-	titleLabel = CCLabelTTF:create("", "Arial", 32)
-    layer:addChild(titleLabel, 0)
-    titleLabel:setPosition(s.width / 2, s.height - 50)
-
-	subtitleLabel = CCLabelTTF:create("", "Thonburi", 16)
-	layer:addChild(subtitleLabel, 1)
-    subtitleLabel:setPosition(s.width / 2, s.height - 80)
-
-    local item1 = CCMenuItemImage:create(s_pPathB1, s_pPathB2)
-    local item2 = CCMenuItemImage:create(s_pPathR1, s_pPathR2)
-    local item3 = CCMenuItemImage:create(s_pPathF1, s_pPathF2)
-	item1:registerScriptTapHandler(backCallback)
-	item2:registerScriptTapHandler(restartCallback)
-	item3:registerScriptTapHandler(nextCallback)
-
-    local menu = CCMenu:create()
-	menu:addChild(item1)
-	menu:addChild(item2)
-	menu:addChild(item3)
-
-    menu:setPosition(CCPointMake(0, 0))
-    item1:setPosition(CCPointMake(s.width/2 - item2:getContentSize().width * 2, item2:getContentSize().height / 2))
-    item2:setPosition(CCPointMake(s.width/2, item2:getContentSize().height / 2))
-    item3:setPosition(CCPointMake(s.width/2 + item2:getContentSize().width * 2, item2:getContentSize().height / 2))
-    layer:addChild(menu, 1)
 
     local itemMode = CCMenuItemToggle:create(CCMenuItemFont:create("Use High Quality Mode"))
 	itemMode:addSubItem(CCMenuItemFont:create("Use Fast Mode"))
@@ -103,6 +27,8 @@ local function getBaseLayer()
 	menuMode:addChild(itemMode)
     menuMode:setPosition(ccp(s.width / 2, s.height / 4))
     layer:addChild(menuMode)
+
+    Helper.initWithLayer(layer)
 
 	return layer
 end
@@ -167,7 +93,7 @@ local function MotionStreakTest1()
 	firstTick = true
 	layer:registerScriptHandler(MotionStreakTest1_onEnterOrExit)
 
-	titleLabel:setString("MotionStreak test 1")
+	Helper.titleLabel:setString("MotionStreak test 1")
 	return layer
 end
 
@@ -203,7 +129,7 @@ local function MotionStreakTest2()
 	layer:setTouchEnabled(true)
     layer:registerScriptTouchHandler(onTouch)
 
-	titleLabel:setString("MotionStreak test")
+	Helper.titleLabel:setString("MotionStreak test")
 	return layer
 end
 
@@ -247,29 +173,21 @@ local function Issue1358()
 	firstTick = true
 	layer:registerScriptHandler(Issue1358_onEnterOrExit)
 
-	titleLabel:setString("Issue 1358")
-	subtitleLabel:setString("The tail should use the texture")
+	Helper.titleLabel:setString("Issue 1358")
+	Helper.subtitleLabel:setString("The tail should use the texture")
 	return layer
-end
-
------------------------------------
---  Motion Streak Test
------------------------------------
-function CreateMotionLayer()
-	if SceneIdx == 0 then
-		return MotionStreakTest1()
-	elseif SceneIdx == 1  then
-		return MotionStreakTest2()
-	elseif SceneIdx == 2  then
-		return Issue1358()
-	end
 end
 
 function MotionStreakTest()
 	local scene = CCScene:create()
 
-	SceneIdx = -1
-	scene:addChild(nextAction())
+    Helper.createFunctionTable = {
+        MotionStreakTest1,
+        MotionStreakTest2,
+        Issue1358
+    }
+
+	scene:addChild(MotionStreakTest1())
 	scene:addChild(CreateBackMenuItem())
 
 	return scene

@@ -1,58 +1,7 @@
 require "luaScript/ActionsTest/ActionsName"
 
 
-local ActionIdx = -1
 local size = CCDirector:sharedDirector():getWinSize()
-
-local titleLabel    = nil
-local subtitleLabel = nil
-
-local function BackAction()
-	ActionIdx = ActionIdx - 1
-	if ActionIdx < 0 then
-		ActionIdx = ActionIdx + Action_Table.ACTION_LAYER_COUNT
-	end
-
-	return CreateActionTestLayer()
-end
-
-local function RestartAction()
-	return CreateActionTestLayer()
-end
-
-local function NextAction()
-	ActionIdx = ActionIdx + 1
-	ActionIdx = math.mod(ActionIdx, Action_Table.ACTION_LAYER_COUNT)
-
-	return CreateActionTestLayer()
-end
-
-local function backCallback(sender)
-	local scene = CCScene:create()
-
-	scene:addChild(BackAction())
-	scene:addChild(CreateBackMenuItem())
-
-	CCDirector:sharedDirector():replaceScene(scene)
-end
-
-local function restartCallback(sender)
-	local scene = CCScene:create()
-
-	scene:addChild(RestartAction())
-	scene:addChild(CreateBackMenuItem())
-
-	CCDirector:sharedDirector():replaceScene(scene)
-end
-
-local function nextCallback(sender)
-	local scene = CCScene:create()
-
-	scene:addChild(NextAction())
-	scene:addChild(CreateBackMenuItem())
-
-	CCDirector:sharedDirector():replaceScene(scene)
-end
 
 local function initWithLayer(layer)
 	grossini = CCSprite:create(s_pPathGrossini)
@@ -67,31 +16,7 @@ local function initWithLayer(layer)
 	tamara:setPosition(ccp(size.width / 2, 2 * size.height / 3))
 	kathia:setPosition(ccp(size.width / 2, size.height / 2))
 
-	-- create title and subtitle
-	titleLabel = CCLabelTTF:create("ActionsTest", "Arial", 18)
-	titleLabel:setPosition(size.width/2, size.height - 30)
-	subtitleLabel = CCLabelTTF:create("", "Thonburi", 22)
-	subtitleLabel:setPosition(size.width / 2, size.height - 60)
-	layer:addChild(titleLabel, 1)
-	layer:addChild(subtitleLabel, 1)
-
-	-- add menu
-	local item1 = CCMenuItemImage:create(s_pPathB1, s_pPathB2)
-	local item2 = CCMenuItemImage:create(s_pPathR1, s_pPathR2)
-	local item3 = CCMenuItemImage:create(s_pPathF1, s_pPathF2)
-	item1:registerScriptTapHandler(backCallback)
-	item2:registerScriptTapHandler(restartCallback)
-	item3:registerScriptTapHandler(nextCallback)
-	item1:setPosition(ccp(size.width / 2 - item2:getContentSize().width * 2, item2:getContentSize().height / 2))
-	item2:setPosition(ccp(size.width / 2, item2:getContentSize().height / 2))
-	item3:setPosition(ccp(size.width / 2 + item2:getContentSize().width * 2, item2:getContentSize().height / 2))
-
-	local menu = CCMenu:create()
-	menu:addChild(item1)
-	menu:addChild(item2)
-	menu:addChild(item3)
-	menu:setPosition(ccp(0, 0))
-	layer:addChild(menu, 1)
+	Helper.initWithLayer(layer)
 end
 
 
@@ -151,7 +76,7 @@ local function ActionManual()
 	kathia:setPosition(ccp(size.width - 100, size.height / 2))
 	kathia:setColor(ccc3(0, 0, 255))
 
-	subtitleLabel:setString("Manual Transformation")
+	Helper.subtitleLabel:setString("Manual Transformation")
 	return layer
 end
 
@@ -170,7 +95,7 @@ local function ActionMove()
 	grossini:runAction(CCSequence:createWithTwoActions(actionBy, actionByBack))
 	kathia:runAction(CCMoveTo:create(1, ccp(40, 40)))
 
-	subtitleLabel:setString("MoveTo / MoveBy")
+	Helper.subtitleLabel:setString("MoveTo / MoveBy")
 	return layer
 end
 
@@ -191,7 +116,7 @@ local function ActionScale()
 	tamara:runAction(CCSequence:createWithTwoActions(actionBy, actionBy:reverse()))
 	kathia:runAction(CCSequence:createWithTwoActions(actionBy2, actionBy2:reverse()))
 
-	subtitleLabel:setString("ScaleTo / ScaleBy")
+	Helper.subtitleLabel:setString("ScaleTo / ScaleBy")
 	return layer
 end
 
@@ -217,7 +142,7 @@ local function ActionRotate()
 
     kathia:runAction(CCSequence:createWithTwoActions(actionTo2, action0Retain))
 
-	subtitleLabel:setString("RotateTo / RotateBy")
+	Helper.subtitleLabel:setString("RotateTo / RotateBy")
 	return layer
 end
 
@@ -240,7 +165,7 @@ local function ActionSkew()
     grossini:runAction(CCSequence:createWithTwoActions(actionBy, actionByBack))
     kathia:runAction(CCSequence:createWithTwoActions(actionBy2, actionBy2:reverse()))
 
-	subtitleLabel:setString("SkewTo / SkewBy")
+	Helper.subtitleLabel:setString("SkewTo / SkewBy")
 	return layer
 end
 
@@ -285,7 +210,7 @@ local function ActionRotationalSkewVSStandardSkew()
     seq = CCSequence:createWithTwoActions(actionTo2, actionToBack2)
     box:runAction(seq);
 
-    subtitleLabel:setString("Skew Comparison")
+    Helper.subtitleLabel:setString("Skew Comparison")
     return layer;
 end
 
@@ -333,7 +258,7 @@ local function ActionSkewRotate()
     box:runAction(CCSequence:createWithTwoActions(rotateTo, rotateToBack))
     box:runAction(CCSequence:createWithTwoActions(actionScaleTo, actionScaleToBack))
 
-	subtitleLabel:setString("Skew + Rotate + Scale")
+	Helper.subtitleLabel:setString("Skew + Rotate + Scale")
 	return layer
 end
 
@@ -355,7 +280,7 @@ local function ActionJump()
     grossini:runAction(CCSequence:createWithTwoActions(actionBy, actionByBack))
     kathia:runAction(CCRepeatForever:create(actionUp))
 
-	subtitleLabel:setString("JumpTo / JumpBy")
+	Helper.subtitleLabel:setString("JumpTo / JumpBy")
 	return layer
 end
 
@@ -403,8 +328,8 @@ local function ActionCardinalSpline()
 
 	drawCardinalSpline(array)
 
-	titleLabel:setString("CardinalSplineBy / CardinalSplineAt")
-	subtitleLabel:setString("Cardinal Spline paths.\nTesting different tensions for one array")
+	Helper.titleLabel:setString("CardinalSplineBy / CardinalSplineAt")
+	Helper.subtitleLabel:setString("Cardinal Spline paths.\nTesting different tensions for one array")
 	return layer
 end
 
@@ -456,8 +381,8 @@ local function ActionCatmullRom()
 
 	drawCatmullRom(array, array2)
 
-	titleLabel:setString("CatmullRomBy / CatmullRomTo")
-	subtitleLabel:setString("Catmull Rom spline paths. Testing reverse too")
+	Helper.titleLabel:setString("CatmullRomBy / CatmullRomTo")
+	Helper.subtitleLabel:setString("Catmull Rom spline paths. Testing reverse too")
 	return layer
 end
 
@@ -497,7 +422,7 @@ local function ActionBezier()
     tamara:runAction(bezierTo1)
     kathia:runAction(bezierTo2)
 
-	subtitleLabel:setString("BezierTo / BezierBy")
+	Helper.subtitleLabel:setString("BezierTo / BezierBy")
 	return layer
 end
 
@@ -516,7 +441,7 @@ local function ActionBlink()
     tamara:runAction(action1)
     kathia:runAction(action2)
 
-	subtitleLabel:setString("Blink")
+	Helper.subtitleLabel:setString("Blink")
 
 	return layer
 end
@@ -540,7 +465,7 @@ local function ActionFade()
     tamara:runAction(CCSequence:createWithTwoActions( action1, action1Back))
     kathia:runAction(CCSequence:createWithTwoActions( action2, action2Back))
 
-	subtitleLabel:setString("FadeIn / FadeOut")
+	Helper.subtitleLabel:setString("FadeIn / FadeOut")
 
 	return layer
 end
@@ -561,7 +486,7 @@ local function ActionTint()
     tamara:runAction(action1)
     kathia:runAction(CCSequence:createWithTwoActions(action2, action2Back))
 
-	subtitleLabel:setString("TintTo / TintBy")
+	Helper.subtitleLabel:setString("TintTo / TintBy")
 
 	return layer
 end
@@ -607,8 +532,8 @@ local function ActionAnimate()
     local action3 = CCAnimate:create(animation3)
     kathia:runAction(action3)
 
-	titleLabel:setString("Animation")
-	subtitleLabel:setString("Center: Manual animation. Border: using file format animation")
+	Helper.titleLabel:setString("Animation")
+	Helper.subtitleLabel:setString("Center: Manual animation. Border: using file format animation")
 
 	return layer
 end
@@ -628,7 +553,7 @@ local function ActionSequence()
 
     grossini:runAction(action)
 
-	subtitleLabel:setString("Sequence: Move + Rotate")
+	Helper.subtitleLabel:setString("Sequence: Move + Rotate")
 
 	return layer
 end
@@ -677,7 +602,7 @@ local function ActionSequence2()
 
     grossini:runAction(action)
 
-	subtitleLabel:setString("Sequence of InstantActions")
+	Helper.subtitleLabel:setString("Sequence of InstantActions")
 	return actionSequenceLayer
 end
 
@@ -696,7 +621,7 @@ local function ActionSpawn()
 
     grossini:runAction(action)
 
-	subtitleLabel:setString("Spawn: Jump + Rotate")
+	Helper.subtitleLabel:setString("Spawn: Jump + Rotate")
 
 	return layer
 end
@@ -715,7 +640,7 @@ local function ActionReverse()
 
     grossini:runAction(action)
 
-	subtitleLabel:setString("Reverse an action")
+	Helper.subtitleLabel:setString("Reverse an action")
 
 	return layer
 end
@@ -738,7 +663,7 @@ local function ActionDelaytime()
 
     grossini:runAction(action)
 
-	subtitleLabel:setString("DelayTime: m + delay + m")
+	Helper.subtitleLabel:setString("DelayTime: m + delay + m")
 	return layer
 end
 
@@ -760,7 +685,7 @@ local function ActionRepeat()
     kathia:runAction(action1)
     tamara:runAction(action2)
 
-	subtitleLabel:setString("Repeat / RepeatForever actions")
+	Helper.subtitleLabel:setString("Repeat / RepeatForever actions")
 	return layer
 end
 
@@ -785,7 +710,7 @@ local function ActionRepeatForever()
 
     grossini:runAction(action)
 
-	subtitleLabel:setString("CallFuncN + RepeatForever")
+	Helper.subtitleLabel:setString("CallFuncN + RepeatForever")
 	return layer
 end
 
@@ -807,7 +732,7 @@ local function ActionRotateToRepeat()
     tamara:runAction(rep1)
     kathia:runAction(rep2)
 
-	subtitleLabel:setString("Repeat/RepeatForever + RotateTo")
+	Helper.subtitleLabel:setString("Repeat/RepeatForever + RotateTo")
 
 	return layer
 end
@@ -836,7 +761,7 @@ local function ActionRotateJerk()
     tamara:runAction(rep1)
     kathia:runAction(rep2)
 
-	subtitleLabel:setString("RepeatForever / Repeat + Rotate")
+	Helper.subtitleLabel:setString("RepeatForever / Repeat + Rotate")
 	return layer
 end
 
@@ -892,7 +817,7 @@ local function ActionCallFunc()
 	tamara:runAction(action2)
     kathia:runAction(action3)
 
-	subtitleLabel:setString("Callbacks: CallFunc and friends")
+	Helper.subtitleLabel:setString("Callbacks: CallFunc and friends")
 	return callFuncLayer
 end
 
@@ -908,8 +833,8 @@ local function ActionCallFuncND()
 	centerSprites(1)
 
 
-	titleLabel:setString("CallFuncND + auto remove")
-	subtitleLabel:setString("CallFuncND + removeFromParentAndCleanup. Grossini dissapears in 2s")
+	Helper.titleLabel:setString("CallFuncND + auto remove")
+	Helper.subtitleLabel:setString("CallFuncND + removeFromParentAndCleanup. Grossini dissapears in 2s")
 	return layer
 end
 
@@ -933,7 +858,7 @@ local function ActionReverseSequence()
 
     grossini:runAction(action)
 
-	subtitleLabel:setString("Reverse a sequence")
+	Helper.subtitleLabel:setString("Reverse a sequence")
 	return layer
 end
 
@@ -976,7 +901,7 @@ local function ActionReverseSequence2()
     local seq_back = seq_tamara:reverse()
     tamara:runAction(CCSequence:createWithTwoActions(seq_tamara, seq_back))
 
-	subtitleLabel:setString("Reverse a sequence2")
+	Helper.subtitleLabel:setString("Reverse a sequence2")
 	return layer
 end
 
@@ -1011,7 +936,7 @@ local function ActionOrbit()
     grossini:runAction(tolua.cast(rfe:copy():autorelease(), "CCActionInterval"))
 
 
-	subtitleLabel:setString("OrbitCamera action")
+	Helper.subtitleLabel:setString("OrbitCamera action")
 	return layer
 end
 
@@ -1034,7 +959,7 @@ local function ActionFollow()
 
     layer:runAction(CCFollow:create(grossini, CCRectMake(0, 0, size.width * 2 - 100, size.height)))
 
-	subtitleLabel:setString("Follow action")
+	Helper.subtitleLabel:setString("Follow action")
 	return layer
 end
 
@@ -1065,8 +990,8 @@ local function ActionTargeted()
 
     tamara:runAction(always)
 
-	titleLabel:setString("ActionTargeted")
-	subtitleLabel:setString("Action that runs on another target. Useful for sequences")
+	Helper.titleLabel:setString("ActionTargeted")
+	Helper.subtitleLabel:setString("Action that runs on another target. Useful for sequences")
 	return layer
 end
 
@@ -1125,8 +1050,8 @@ local function PauseResumeActions()
 
 	layer:registerScriptHandler(PauseResumeActions_onEnterOrExit)
 
-	titleLabel:setString("PauseResumeActions")
-	subtitleLabel:setString("All actions pause at 3s and resume at 5s")
+	Helper.titleLabel:setString("PauseResumeActions")
+	Helper.subtitleLabel:setString("All actions pause at 3s and resume at 5s")
 	return layer
 end
 
@@ -1169,8 +1094,8 @@ local function ActionIssue1305()
 
     Issue1305_layer:registerScriptHandler(Issue1305_onEnterOrExit)
 
-	titleLabel:setString("Issue 1305")
-	subtitleLabel:setString("In two seconds you should see a message on the console. NOT BEFORE.")
+	Helper.titleLabel:setString("Issue 1305")
+	Helper.subtitleLabel:setString("In two seconds you should see a message on the console. NOT BEFORE.")
 	return Issue1305_layer
 end
 
@@ -1225,8 +1150,8 @@ local function ActionIssue1305_2()
 
     CCDirector:sharedDirector():getActionManager():addAction(actF ,spr, false)
 
-	titleLabel:setString("Issue 1305 #2")
-	subtitleLabel:setString("See console. You should only see one message for each block")
+	Helper.titleLabel:setString("Issue 1305 #2")
+	Helper.subtitleLabel:setString("See console. You should only see one message for each block")
 	return layer
 end
 
@@ -1250,8 +1175,8 @@ local function ActionIssue1288()
 
     spr:runAction(act4)
 
-	titleLabel:setString("Issue 1288")
-	subtitleLabel:setString("Sprite should end at the position where it started.")
+	Helper.titleLabel:setString("Issue 1288")
+	Helper.subtitleLabel:setString("Sprite should end at the position where it started.")
 	return layer
 end
 
@@ -1271,8 +1196,8 @@ local function ActionIssue1288_2()
     local act1 = CCMoveBy:create(0.5, ccp(100, 0))
     spr:runAction(CCRepeat:create(act1, 1))
 
-	titleLabel:setString("Issue 1288 #2")
-	subtitleLabel:setString("Sprite should move 100 pixels, and stay there")
+	Helper.titleLabel:setString("Issue 1288 #2")
+	Helper.subtitleLabel:setString("Sprite should move 100 pixels, and stay there")
 	return layer
 end
 
@@ -1315,92 +1240,8 @@ local function ActionIssue1327()
 	array:addObject(act9)
     spr:runAction(CCSequence:create(array))
 
-	titleLabel:setString("Issue 1327")
-	subtitleLabel:setString("See console: You should see: 0, 45, 90, 135, 180")
-	return layer
-end
-
--------------------------------------
--- Create Action Test
--------------------------------------
-function CreateActionTestLayer()
-	local layer = nil
-	if ActionIdx == Action_Table.ACTION_MANUAL_LAYER then
-		layer = ActionManual()
-	elseif ActionIdx == Action_Table.ACTION_MOVE_LAYER then
-		layer = ActionMove()
-	elseif ActionIdx == Action_Table.ACTION_SCALE_LAYER then
-		layer = ActionScale()
-	elseif ActionIdx == Action_Table.ACTION_ROTATE_LAYER then
-		layer = ActionRotate()
-	elseif ActionIdx == Action_Table.ACTION_SKEW_LAYER then
-		layer = ActionSkew()
-    elseif ActionIdx == Action_Table.ACTION_SKEW_STANDER then 
-        layer = ActionRotationalSkewVSStandardSkew()
-	elseif ActionIdx == Action_Table.ACTION_SKEWROTATE_LAYER then
-		layer = ActionSkewRotate()
-	elseif ActionIdx == Action_Table.ACTION_JUMP_LAYER then
-		layer = ActionJump()
-	elseif ActionIdx == Action_Table.ACTION_CARDINALSPLINE_LAYER then
-		layer = ActionCardinalSpline()
-    elseif ActionIdx == Action_Table.ACTION_CATMULLROM_LAYER then
-		layer = ActionCatmullRom()
-	elseif ActionIdx == Action_Table.ACTION_BEZIER_LAYER then
-		layer = ActionBezier()
-	elseif ActionIdx == Action_Table.ACTION_BLINK_LAYER then
-		layer = ActionBlink()
-	elseif ActionIdx == Action_Table.ACTION_FADE_LAYER then
-		layer = ActionFade()
-	elseif ActionIdx == Action_Table.ACTION_TINT_LAYER then
-		layer = ActionTint()
-	elseif ActionIdx == Action_Table.ACTION_ANIMATE_LAYER then
-		layer = ActionAnimate()
-	elseif ActionIdx == Action_Table.ACTION_SEQUENCE_LAYER then
-		layer = ActionSequence()
-	elseif ActionIdx == Action_Table.ACTION_SEQUENCE2_LAYER then
-		layer = ActionSequence2()
-	elseif ActionIdx == Action_Table.ACTION_SPAWN_LAYER then
-		layer = ActionSpawn()
-	elseif ActionIdx == Action_Table.ACTION_REVERSE then
-		layer = ActionReverse()
-	elseif ActionIdx == Action_Table.ACTION_DELAYTIME_LAYER then
-		layer = ActionDelaytime()
-	elseif ActionIdx == Action_Table.ACTION_REPEAT_LAYER then
-		layer = ActionRepeat()
-	elseif ActionIdx == Action_Table.ACTION_REPEATEFOREVER_LAYER then
-		layer = ActionRepeatForever()
-    elseif ActionIdx == Action_Table.ACTION_ROTATETOREPEATE_LAYER then
-		layer = ActionRotateToRepeat()
-    elseif ActionIdx == Action_Table.ACTION_ROTATEJERK_LAYER then
-		layer = ActionRotateJerk()
-    elseif ActionIdx == Action_Table.ACTION_CALLFUNC_LAYER then
-		layer = ActionCallFunc()
-    elseif ActionIdx == Action_Table.ACTION_CALLFUNCND_LAYER then
-		layer = ActionCallFuncND()
-    elseif ActionIdx == Action_Table.ACTION_REVERSESEQUENCE_LAYER then
-		layer = ActionReverseSequence()
-    elseif ActionIdx == Action_Table.ACTION_REVERSESEQUENCE2_LAYER then
-		layer = ActionReverseSequence2()
-    elseif ActionIdx == Action_Table.ACTION_ORBIT_LAYER then
-		layer = ActionOrbit()
-    elseif ActionIdx == Action_Table.ACTION_FOLLOW_LAYER then
-		layer = ActionFollow()
-    elseif ActionIdx == Action_Table.ACTION_TARGETED_LAYER then
-		layer = ActionTargeted()
-	elseif ActionIdx == Action_Table.PAUSERESUMEACTIONS_LAYER then
-		layer = PauseResumeActions()
-    elseif ActionIdx == Action_Table.ACTION_ISSUE1305_LAYER then
-		layer = ActionIssue1305()
-    elseif ActionIdx == Action_Table.ACTION_ISSUE1305_2_LAYER then
-		layer = ActionIssue1305_2()
-    elseif ActionIdx == Action_Table.ACTION_ISSUE1288_LAYER then
-		layer = ActionIssue1288()
-    elseif ActionIdx == Action_Table.ACTION_ISSUE1288_2_LAYER then
-		layer = ActionIssue1288_2()
-    elseif ActionIdx == Action_Table.ACTION_ISSUE1327_LAYER then
-		layer = ActionIssue1327()
-	end
-
+	Helper.titleLabel:setString("Issue 1327")
+	Helper.subtitleLabel:setString("See console: You should see: 0, 45, 90, 135, 180")
 	return layer
 end
 
@@ -1408,8 +1249,47 @@ function ActionsTest()
 	cclog("ActionsTest")
 	local scene = CCScene:create()
 
-	ActionIdx = -1
-	scene:addChild(NextAction())
+	Helper.createFunctionTable = {
+		ActionManual,
+		ActionMove,
+		ActionScale,
+		ActionRotate,
+		ActionSkew,
+        ActionRotationalSkewVSStandardSkew,
+		ActionSkewRotate,
+		ActionJump,
+		ActionCardinalSpline,
+		ActionCatmullRom,
+		ActionBezier,
+		ActionBlink,
+		ActionFade,
+        ActionTint,
+		ActionAnimate,
+        ActionSequence,
+		ActionSequence2,
+		ActionSpawn,
+        ActionReverse,
+        ActionDelaytime,
+        ActionRepeat,
+        ActionRepeatForever,
+        ActionRotateToRepeat,
+        ActionRotateJerk,
+        ActionCallFunc,
+        ActionCallFuncND,
+        ActionReverseSequence,
+        ActionReverseSequence2,
+		ActionOrbit,
+		ActionFollow,    
+		ActionTargeted,
+		PauseResumeActions,    
+		ActionIssue1305,    
+		ActionIssue1305_2,    
+		ActionIssue1288,   
+		ActionIssue1288_2,  
+		ActionIssue1327
+    }
+
+	scene:addChild(ActionManual())
 	scene:addChild(CreateBackMenuItem())
 
 	return scene
