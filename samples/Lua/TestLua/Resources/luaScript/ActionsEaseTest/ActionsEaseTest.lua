@@ -1,12 +1,7 @@
-
-local SceneIdx = -1
-local MAX_LAYER = 13
-
 local kTagAction1 = 1
 local kTagAction2 = 2
 local kTagSlider = 1
 
-local titleLabel = nil
 local s = CCDirector:sharedDirector():getWinSize()
 local scheduler = CCDirector:sharedDirector():getScheduler()
 
@@ -16,53 +11,6 @@ end
 
 local function createSimpleDelayTime()
     return CCDelayTime:create(0.25)
-end
-
-local function backAction()
-	SceneIdx = SceneIdx - 1
-    if SceneIdx < 0 then
-        SceneIdx = SceneIdx + MAX_LAYER
-    end
-
-    return CreateActionsEaseLayer()
-end
-
-local function restartAction()
-	return CreateActionsEaseLayer()
-end
-
-local function nextAction()
-	SceneIdx = SceneIdx + 1
-    SceneIdx = math.mod(SceneIdx, MAX_LAYER)
-
-    return CreateActionsEaseLayer()
-end
-
-local function backCallback(sender)
-	local scene = CCScene:create()
-
-	scene:addChild(backAction())
-	scene:addChild(CreateBackMenuItem())
-
-	CCDirector:sharedDirector():replaceScene(scene)
-end
-
-local function restartCallback(sender)
-	local scene = CCScene:create()
-
-	scene:addChild(restartAction())
-	scene:addChild(CreateBackMenuItem())
-
-	CCDirector:sharedDirector():replaceScene(scene)
-end
-
-local function nextCallback(sender)
-	local scene = CCScene:create()
-
-	scene:addChild(nextAction())
-	scene:addChild(CreateBackMenuItem())
-
-	CCDirector:sharedDirector():replaceScene(scene)
 end
 
 local function positionForTwo()
@@ -86,27 +34,7 @@ local function getBaseLayer()
     kathia:setPosition(CCPointMake(60, s.height * 2.5 / 5))
     tamara:setPosition(CCPointMake(60, s.height * 4 / 5))
 
-	titleLabel = CCLabelTTF:create("", "Arial", 32)
-    layer:addChild(titleLabel)
-    titleLabel:setPosition(s.width / 2, s.height - 50)
-
-    local item1 = CCMenuItemImage:create(s_pPathB1, s_pPathB2)
-    local item2 = CCMenuItemImage:create(s_pPathR1, s_pPathR2)
-    local item3 = CCMenuItemImage:create(s_pPathF1, s_pPathF2)
-	item1:registerScriptTapHandler(backCallback)
-	item2:registerScriptTapHandler(restartCallback)
-	item3:registerScriptTapHandler(nextCallback)
-
-    local menu = CCMenu:create()
-	menu:addChild(item1)
-	menu:addChild(item2)
-	menu:addChild(item3)
-
-    menu:setPosition(CCPointMake(0, 0))
-    item1:setPosition(CCPointMake(s.width/2 - item2:getContentSize().width * 2, item2:getContentSize().height / 2))
-    item2:setPosition(CCPointMake(s.width/2, item2:getContentSize().height / 2))
-    item3:setPosition(CCPointMake(s.width/2 + item2:getContentSize().width * 2, item2:getContentSize().height / 2))
-    layer:addChild(menu, 1)
+	Helper.initWithLayer(layer)
 
 	return layer
 end
@@ -175,7 +103,7 @@ local function SpriteEase()
 
 	layer:registerScriptHandler(SpriteEase_onEnterOrExit)
 
-	titleLabel:setString("EaseIn - EaseOut - Stop")
+	Helper.titleLabel:setString("EaseIn - EaseOut - Stop")
 	return layer
 end
 
@@ -223,7 +151,7 @@ local function SpriteEaseInOut()
     kathia:runAction(CCRepeatForever:create(seq2))
     grossini:runAction(CCRepeatForever:create(seq3))
 
-	titleLabel:setString("EaseInOut and rates")
+	Helper.titleLabel:setString("EaseInOut and rates")
 	return layer
 end
 
@@ -274,7 +202,7 @@ local function SpriteEaseExponential()
     tamara:runAction(CCRepeatForever:create(seq2))
     kathia:runAction(CCRepeatForever:create(seq3))
 
-	titleLabel:setString("ExpIn - ExpOut actions")
+	Helper.titleLabel:setString("ExpIn - ExpOut actions")
 	return layer
 end
 
@@ -314,7 +242,7 @@ local function SpriteEaseExponentialInOut()
     grossini:runAction(CCRepeatForever:create(seq1))
     tamara:runAction(CCRepeatForever:create(seq2))
 
-	titleLabel:setString("EaseExponentialInOut action")
+	Helper.titleLabel:setString("EaseExponentialInOut action")
 	return layer
 end
 
@@ -360,7 +288,7 @@ local function SpriteEaseSine()
     tamara:runAction(CCRepeatForever:create(seq2))
     kathia:runAction(CCRepeatForever:create(seq3))
 
-	titleLabel:setString("EaseSineIn - EaseSineOut")
+	Helper.titleLabel:setString("EaseSineIn - EaseSineOut")
 	return layer
 end
 
@@ -397,7 +325,7 @@ local function SpriteEaseSineInOut()
     grossini:runAction(CCRepeatForever:create(seq1))
     tamara:runAction(CCRepeatForever:create(seq2))
 
-	titleLabel:setString("EaseSineInOut action")
+	Helper.titleLabel:setString("EaseSineInOut action")
 	return layer
 end
 
@@ -443,7 +371,7 @@ local function SpriteEaseElastic()
     tamara:runAction(CCRepeatForever:create(seq2))
     kathia:runAction(CCRepeatForever:create(seq3))
 
-	titleLabel:setString("Elastic In - Out actions")
+	Helper.titleLabel:setString("Elastic In - Out actions")
 	return layer
 end
 
@@ -491,7 +419,7 @@ local function SpriteEaseElasticInOut()
     kathia:runAction(CCRepeatForever:create(seq2))
     grossini:runAction(CCRepeatForever:create(seq3))
 
-	titleLabel:setString("EaseElasticInOut action")
+	Helper.titleLabel:setString("EaseElasticInOut action")
 	return layer
 end
 
@@ -537,7 +465,7 @@ local function SpriteEaseBounce()
     tamara:runAction(CCRepeatForever:create(seq2))
     kathia:runAction(CCRepeatForever:create(seq3))
 
-	titleLabel:setString("Bounce In - Out actions")
+	Helper.titleLabel:setString("Bounce In - Out actions")
 	return layer
 end
 
@@ -574,7 +502,7 @@ local function SpriteEaseBounceInOut()
     grossini:runAction(CCRepeatForever:create(seq1))
     tamara:runAction(CCRepeatForever:create(seq2))
 
-	titleLabel:setString("EaseBounceInOut action")
+	Helper.titleLabel:setString("EaseBounceInOut action")
 	return layer
 end
 
@@ -620,7 +548,7 @@ local function SpriteEaseBack()
     tamara:runAction(CCRepeatForever:create(seq2))
     kathia:runAction(CCRepeatForever:create(seq3))
 
-	titleLabel:setString("Back In - Out actions")
+	Helper.titleLabel:setString("Back In - Out actions")
 	return layer
 end
 
@@ -657,7 +585,7 @@ local function SpriteEaseBackInOut()
     grossini:runAction(CCRepeatForever:create(seq1))
     tamara:runAction(CCRepeatForever:create(seq2))
 
-	titleLabel:setString("EaseBackInOut action")
+	Helper.titleLabel:setString("EaseBackInOut action")
 	return layer
 end
 
@@ -709,48 +637,31 @@ local function SpeedTest()
 
 	layer:registerScriptHandler(SpeedTest_onEnterOrExit)
 
-	titleLabel:setString("Speed action")
+	Helper.titleLabel:setString("Speed action")
 	return layer
-end
-
------------------------------------
---  Actions Ease Test
------------------------------------
-function CreateActionsEaseLayer()
-	if SceneIdx == 0 then
-		return SpriteEase()
-	elseif SceneIdx == 1  then
-		return SpriteEaseInOut()
-	elseif SceneIdx == 2  then
-		return SpriteEaseExponential()
-	elseif SceneIdx == 3  then
-		return SpriteEaseExponentialInOut()
-	elseif SceneIdx == 4  then
-		return SpriteEaseSine()
-	elseif SceneIdx == 5  then
-		return SpriteEaseSineInOut()
-	elseif SceneIdx == 6  then
-		return SpriteEaseElastic()
-	elseif SceneIdx == 7  then
-		return SpriteEaseElasticInOut()
-	elseif SceneIdx == 8  then
-		return SpriteEaseBounce()
-	elseif SceneIdx == 9  then
-		return SpriteEaseBounceInOut()
-	elseif SceneIdx == 10 then
-		return SpriteEaseBack()
-	elseif SceneIdx == 11 then
-		return SpriteEaseBackInOut()
-	elseif SceneIdx == 12 then
-		return SpeedTest()
-	end
 end
 
 function EaseActionsTest()
 	local scene = CCScene:create()
+	cclog("EaseActionsTest")
 
-	SceneIdx = -1
-	scene:addChild(nextAction())
+	Helper.createFunctionTable = {
+		SpriteEase,
+		SpriteEaseInOut,
+		SpriteEaseExponential,
+		SpriteEaseExponentialInOut,
+		SpriteEaseSine,
+		SpriteEaseSineInOut,
+		SpriteEaseElastic,
+		SpriteEaseElasticInOut,
+		SpriteEaseBounce,	
+		SpriteEaseBounceInOut,	
+		SpriteEaseBack,	
+		SpriteEaseBackInOut,
+		SpeedTest
+    }
+
+	scene:addChild(SpriteEase())
 	scene:addChild(CreateBackMenuItem())
 
 	return scene
