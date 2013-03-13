@@ -1097,7 +1097,7 @@ void CCNode::resumeSchedulerAndActions()
 void CCNode::resumeSchedulerAndActions(bool applyToChildren)
 {
 	resumeSchedulerAndActions();
-	if(applayToChildren == false)
+	if(applyToChildren == false)
 		return;
 
 	CCObject * pObject;
@@ -1118,7 +1118,7 @@ void CCNode::pauseSchedulerAndActions(bool applyToChildren)
 {
 	pauseSchedulerAndActions();
 
-	if(applayToChildren == false)
+	if(applyToChildren == false)
 		return;
 
 	CCObject* pObject;
