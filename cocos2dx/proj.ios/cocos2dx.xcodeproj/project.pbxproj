@@ -280,6 +280,9 @@
 		1A3199AE16C0E3A200207637 /* libwebp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A3199AD16C0E3A200207637 /* libwebp.a */; };
 		1A4646DA16DC8FB700DE131F /* ccFPSImages.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A4646D816DC8FB700DE131F /* ccFPSImages.h */; };
 		1A4646DC16DC901A00DE131F /* ccFPSImages.c in Sources */ = {isa = PBXBuildFile; fileRef = 1A4646DB16DC901900DE131F /* ccFPSImages.c */; };
+		1A5B48EA16F084CC008568FC /* CCBool.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A5B48E716F084CC008568FC /* CCBool.h */; };
+		1A5B48EB16F084CC008568FC /* CCDouble.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A5B48E816F084CC008568FC /* CCDouble.h */; };
+		1A5B48EC16F084CC008568FC /* CCFloat.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A5B48E916F084CC008568FC /* CCFloat.h */; };
 		1AA6226016CF6BD00028C05E /* CCDevice.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1AA6225F16CF6BD00028C05E /* CCDevice.mm */; };
 		1AA6226216CF6BDF0028C05E /* CCDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AA6226116CF6BDF0028C05E /* CCDevice.h */; };
 		1AC6CE8116B9075B00330EFD /* CCFileUtilsIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AC6CE8016B9075B00330EFD /* CCFileUtilsIOS.h */; };
@@ -584,6 +587,9 @@
 		1A3199AD16C0E3A200207637 /* libwebp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebp.a; path = ../platform/third_party/ios/libraries/libwebp.a; sourceTree = "<group>"; };
 		1A4646D816DC8FB700DE131F /* ccFPSImages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccFPSImages.h; sourceTree = "<group>"; };
 		1A4646DB16DC901900DE131F /* ccFPSImages.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ccFPSImages.c; sourceTree = "<group>"; };
+		1A5B48E716F084CC008568FC /* CCBool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBool.h; sourceTree = "<group>"; };
+		1A5B48E816F084CC008568FC /* CCDouble.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDouble.h; sourceTree = "<group>"; };
+		1A5B48E916F084CC008568FC /* CCFloat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFloat.h; sourceTree = "<group>"; };
 		1AA6225F16CF6BD00028C05E /* CCDevice.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCDevice.mm; sourceTree = "<group>"; };
 		1AA6226116CF6BDF0028C05E /* CCDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDevice.h; sourceTree = "<group>"; };
 		1AC6CE8016B9075B00330EFD /* CCFileUtilsIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFileUtilsIOS.h; sourceTree = "<group>"; };
@@ -745,8 +751,11 @@
 				1551A383158F2ADE00E66CFE /* CCArray.h */,
 				1551A384158F2ADE00E66CFE /* CCAutoreleasePool.cpp */,
 				1551A385158F2ADE00E66CFE /* CCAutoreleasePool.h */,
+				1A5B48E716F084CC008568FC /* CCBool.h */,
 				1551A386158F2ADE00E66CFE /* CCDictionary.cpp */,
 				1551A387158F2ADE00E66CFE /* CCDictionary.h */,
+				1A5B48E816F084CC008568FC /* CCDouble.h */,
+				1A5B48E916F084CC008568FC /* CCFloat.h */,
 				1551A388158F2ADE00E66CFE /* CCGeometry.cpp */,
 				1551A389158F2ADE00E66CFE /* CCGeometry.h */,
 				1551A38A158F2ADE00E66CFE /* CCInteger.h */,
@@ -1425,6 +1434,9 @@
 				4EF8999916E207E70040A527 /* CCTMXTiledMap.h in Headers */,
 				4EF8999B16E207E70040A527 /* CCTMXXMLParser.h in Headers */,
 				46A393F716E5D01B00210B16 /* CCUserDefault.h in Headers */,
+				1A5B48EA16F084CC008568FC /* CCBool.h in Headers */,
+				1A5B48EB16F084CC008568FC /* CCDouble.h in Headers */,
+				1A5B48EC16F084CC008568FC /* CCFloat.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
