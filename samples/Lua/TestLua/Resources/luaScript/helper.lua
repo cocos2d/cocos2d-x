@@ -35,3 +35,73 @@ function CreateBackMenuItem()
 
 	return Menu
 end
+
+Helper = {
+	index = 1,
+	createFunctioinTable = nil,
+	currentLayer = nil,
+	titleLabel = nil,
+	subtitleLabel = nil
+}
+function Helper.nextAction()
+	Helper.index = Helper.index + 1
+	if Helper.index > table.getn(Helper.createFunctionTable) then
+		Helper.index = 1
+	end
+
+	return Helper.newScene()
+end
+
+function  Helper.backAction()
+	Helper.index = Helper.index - 1
+	if Helper.index == 0 then
+		Helper.index = table.getn(Helper.createFunctionTable)
+	end
+
+	return Helper.newScene()
+end
+
+function Helper.restartAction()
+	return Helper.newScene()
+end
+
+function Helper.newScene()
+	local scene = CCScene:create()
+	Helper.currentLayer = Helper.createFunctionTable[Helper.index]()
+	scene:addChild(Helper.currentLayer)
+    scene:addChild(CreateBackMenuItem())
+
+	CCDirector:sharedDirector():replaceScene(scene)
+end
+
+function Helper.initWithLayer(layer)
+	local size = CCDirector:sharedDirector():getWinSize()
+    Helper.titleLabel = CCLabelTTF:create("", "Arial", 28)
+    layer:addChild(Helper.titleLabel, 1)
+    Helper.titleLabel:setPosition(size.width / 2, size.height - 50)
+
+    Helper.subtitleLabel = CCLabelTTF:create("", "Thonburi", 16)
+    layer:addChild(Helper.subtitleLabel, 1)
+    Helper.subtitleLabel:setPosition(size.width / 2, size.height - 80)
+
+    -- menu
+    local item1 = CCMenuItemImage:create(s_pPathB1, s_pPathB2)
+    local item2 = CCMenuItemImage:create(s_pPathR1, s_pPathR2)
+    local item3 = CCMenuItemImage:create(s_pPathF1, s_pPathF2)
+    item1:registerScriptTapHandler(Helper.backAction)
+    item2:registerScriptTapHandler(Helper.restartAction)
+    item3:registerScriptTapHandler(Helper.nextAction)
+
+    local menu = CCMenu:create()
+    menu:addChild(item1)
+    menu:addChild(item2)
+    menu:addChild(item3)
+    menu:setPosition(CCPointMake(0, 0))
+    item1:setPosition(CCPointMake(size.width / 2 - item2:getContentSize().width * 2, item2:getContentSize().height / 2))
+    item2:setPosition(CCPointMake(size.width / 2, item2:getContentSize().height / 2))
+    item3:setPosition(CCPointMake(size.width / 2 + item2:getContentSize().width * 2, item2:getContentSize().height / 2))
+    layer:addChild(menu, 1)
+
+    local background = CCLayer:create()
+    layer:addChild(background, -10)
+end
