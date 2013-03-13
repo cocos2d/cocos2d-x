@@ -25,7 +25,7 @@ MISSING=
 echo "Checking for missing packages ..."
 for i in $DEPENDS; do
     if ! dpkg-query -W --showformat='${Status}\n' $i | grep "install ok installed" > /dev/null; then
-        MISSING+=$i
+        MISSING+="$i "
     fi
 done
 
