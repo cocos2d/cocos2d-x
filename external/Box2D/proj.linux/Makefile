@@ -55,7 +55,9 @@ CXXFLAGS += -Wno-unused-but-set-variable
 CXXFLAGS += -Wno-uninitialized
 
 ifeq ($(DEBUG), 1)
-DEFINES = -DDEBUG
+DEFINES = -D_DEBUG
+else
+DEFINES =
 endif
 
 TARGET := $(LIB_DIR)/$(TARGET)

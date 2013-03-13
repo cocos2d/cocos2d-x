@@ -41,7 +41,7 @@ endif
 ifeq ($(DEBUG), 1)
 CCFLAGS += -g3 -O0
 CXXFLAGS += -g3 -O0
-DEFINES += -DDEBUG -DCOCOS2D_DEBUG=1
+DEFINES += -D_DEBUG -DCOCOS2D_DEBUG=1
 OBJ_DIR := $(OBJ_DIR)/debug
 LIB_DIR := $(LIB_DIR)/debug
 BIN_DIR := $(BIN_DIR)/debug
