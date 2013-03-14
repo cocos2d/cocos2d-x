@@ -634,8 +634,17 @@ function SpriteBatchNodeOffsetAnchorRotation.initLayer(layer)
     return layer
 end
 
+function SpriteBatchNodeOffsetAnchorRotation.eventHandler(tag)
+    if tag == "exit" then
+        local cache = CCSpriteFrameCache::sharedSpriteFrameCache()
+        cache:removeSpriteFramesFromFile("animations/grossini.plist")
+        cache:removeSpriteFramesFromFile("animations/grossini_gray.plist")
+    end
+end
+
 function SpriteBatchNodeOffsetAnchorRotation.create()
     local layer = CCLayer:create()
+    layer:registerScriptHandler(SpriteBatchNodeOffsetAnchorRotation.eventHandler)
     Helper.initWithLayer(layer)
 
     layer = SpriteBatchNodeOffsetAnchorRotation.initLayer(layer)
@@ -703,8 +712,17 @@ function SpriteOffsetAnchorScale.initLayer(layer)
     return layer
 end
 
+function SpriteOffsetAnchorScale.eventHandler(tag)
+    if tag == "exit" then
+        local cache = CCSpriteFrameCache:sharedSpriteFrameCache()
+        cache:removeSpriteFramesFromFile("animations/grossini.plist")
+        cache:removeSpriteFramesFromFile("animations/grossini_gray.plist")
+    end
+end
+
 function SpriteOffsetAnchorScale.create()
     local layer = CCLayer:create()
+    layer:registerScriptHandler(SpriteOffsetAnchorScale.eventHandler)
     Helper.initWithLayer(layer)
 
     layer = SpriteOffsetAnchorScale.initLayer(layer)
@@ -863,9 +881,17 @@ function SpriteOffsetAnchorSkew.initLayer(layer)
     return layer
 end
 
+function SpriteOffsetAnchorSkew.eventHandler(tag)
+     if tag == "exit" then
+        local cache = CCSpriteFrameCache:sharedSpriteFrameCache()
+        cache:removeSpriteFramesFromFile("animations/grossini.plist")
+        cache:removeSpriteFramesFromFile("animations/grossini_gray.plist")
+     end
+end
 
 function SpriteOffsetAnchorSkew.create()
     local layer = CCLayer:create()
+    layer:registerScriptHandler(SpriteOffsetAnchorSkew.eventHandler)
     Helper.initWithLayer(layer)
 
     layer = SpriteOffsetAnchorSkew.initLayer(layer)
@@ -937,8 +963,17 @@ function SpriteOffsetAnchorRotationalSkew.initLayer(layer)
     return layer
 end
 
+function SpriteOffsetAnchorRotationalSkew.eventHandler(tag)
+    if tag == "exit" then
+        local cache = CCSpriteFrameCache:sharedSpriteFrameCache()
+        cache:removeSpriteFramesFromFile("animations/grossini.plist")
+        cache:removeSpriteFramesFromFile("animations/grossini_gray.plist")
+    end
+end
+
 function SpriteOffsetAnchorRotationalSkew.create()
     local layer = CCLayer:create()
+    layer:registerScriptHandler(SpriteOffsetAnchorRotationalSkew.eventHandler)
     Helper.initWithLayer(layer)
 
     layer = SpriteOffsetAnchorRotationalSkew.initLayer(layer)
@@ -950,7 +985,7 @@ end
 
 
 ------------------------------------------------------------
--- SpriteOffsetAnchorRotationalSkew
+-- SpriteBatchNodeOffsetAnchorSkew
 ------------------------------------------------------------
 local SpriteBatchNodeOffsetAnchorSkew = {}
 SpriteBatchNodeOffsetAnchorSkew.__index = SpriteBatchNodeOffsetAnchorSkew
@@ -1016,8 +1051,17 @@ function SpriteBatchNodeOffsetAnchorSkew.initLayer(layer)
     return layer
 end
 
+function SpriteBatchNodeOffsetAnchorSkew.eventHandler(tag)
+    if tag == "exit" then
+        local cache = CCSpriteFrameCache:sharedSpriteFrameCache()
+        cache:removeSpriteFramesFromFile("animations/grossini.plist")
+        cache:removeSpriteFramesFromFile("animations/grossini_gray.plist")
+    end
+end
+
 function SpriteBatchNodeOffsetAnchorSkew.create()
     local layer = CCLayer:create()
+    layer:registerScriptHandler(SpriteBatchNodeOffsetAnchorSkew.eventHandler)
     Helper.initWithLayer(layer)
 
     layer = SpriteBatchNodeOffsetAnchorSkew.initLayer(layer)
@@ -1095,8 +1139,18 @@ function SpriteBatchNodeOffsetAnchorRotationalSkew.initLayer(layer)
     return layer
 end
 
+-- remove resources
+function SpriteBatchNodeOffsetAnchorRotationalSkew.eventHandler(tag)
+    if tag == "exit" then
+        local cache = CCSpriteFrameCache:sharedSpriteFrameCache()
+        cache:removeSpriteFramesFromFile("animations/grossini.plist")
+        cache:removeSpriteFramesFromFile("animations/grossini_gray.plist")
+    end
+end
+
 function SpriteBatchNodeOffsetAnchorRotationalSkew.create()
     local layer = CCLayer:create()
+    layer:registerScriptHandler(SpriteBatchNodeOffsetAnchorRotationalSkew.eventHandler)
     Helper.initWithLayer(layer)
 
     layer = SpriteBatchNodeOffsetAnchorRotationalSkew.initLayer(layer)
@@ -1105,6 +1159,10 @@ function SpriteBatchNodeOffsetAnchorRotationalSkew.create()
 
     return layer
 end
+
+--
+-- SpriteOffsetAnchorSkewScale
+-- 
 
 function SpriteTest()
 	local scene = CCScene:create()
