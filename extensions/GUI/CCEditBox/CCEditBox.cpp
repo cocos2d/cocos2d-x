@@ -84,6 +84,7 @@ bool CCEditBox::initWithSizeAndBackgroundSprite(const CCSize& size, CCScale9Spri
         m_pEditBoxImpl = __createSystemEditBox(this);
         m_pEditBoxImpl->initWithSize(size);
         
+        this->setZoomOnTouchDown(false);
         this->setPreferredSize(size);
         this->setPosition(ccp(0, 0));
         this->addTargetWithActionForControlEvent(this, cccontrol_selector(CCEditBox::touchDownAction), CCControlEventTouchUpInside);
@@ -302,10 +303,7 @@ void CCEditBox::keyboardWillShow(CCIMEKeyboardNotificationInfo& info)
     CCRect rectTracked = getRect(this);
 	// some adjustment for margin between the keyboard and the edit box.
 	rectTracked.origin.y -= 4;
-    if (m_pParent != NULL)
-    {
-        rectTracked.origin = m_pParent->convertToWorldSpace(rectTracked.origin);
-    }
+
     // if the keyboard area doesn't intersect with the tracking node area, nothing needs to be done.
     if (!rectTracked.intersectsRect(info.end))
     {

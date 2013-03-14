@@ -273,7 +273,7 @@ void CCEditBoxImplIOS::initInactiveLabels(const CCSize& size)
 	m_pLabel = CCLabelTTF::create("", pDefaultFontName, fDefaultFontSize);
     m_pLabel->setAnchorPoint(ccp(0, 0.5f));
     m_pLabel->setPosition(ccp(CC_EDIT_BOX_PADDING, size.height / 2.0f + 1));
-    m_pLabel->setColor(ccBLACK);
+    m_pLabel->setColor(ccWHITE);
     m_pLabel->setVisible(false);
     m_pEditBox->addChild(m_pLabel);
 	
