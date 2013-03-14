@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.93 on Fri Mar  8 11:06:58 2013.
+** Generated automatically by tolua++-1.0.92 on Thu Mar 14 15:09:31 2013.
 */
 
 /****************************************************************************
@@ -26533,6 +26533,37 @@ static int tolua_Cocos2d_CCRotateBy_create00(lua_State* tolua_S)
  tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
  return 0;
 #endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: create of class  CCRotateBy */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCRotateBy_create01
+static int tolua_Cocos2d_CCRotateBy_create01(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"CCRotateBy",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,4,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,5,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  float duration = ((float)  tolua_tonumber(tolua_S,2,0));
+  float fDeltaAngleX = ((float)  tolua_tonumber(tolua_S,3,0));
+  float DeltaAngleY = ((float)  tolua_tonumber(tolua_S,4,0));
+  {
+   CCRotateBy* tolua_ret = (CCRotateBy*)  CCRotateBy::create(duration,fDeltaAngleX,DeltaAngleY);
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCRotateBy");
+  }
+ }
+ return 1;
+tolua_lerror:
+ return tolua_Cocos2d_CCRotateBy_create00(tolua_S);
 }
 #endif //#ifndef TOLUA_DISABLE
 
@@ -53125,6 +53156,7 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
   tolua_beginmodule(tolua_S,"CCRotateBy");
    tolua_function(tolua_S,"reverse",tolua_Cocos2d_CCRotateBy_reverse00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCRotateBy_create00);
+   tolua_function(tolua_S,"create",tolua_Cocos2d_CCRotateBy_create01);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCMoveTo","CCMoveTo","CCActionInterval",NULL);
   tolua_beginmodule(tolua_S,"CCMoveTo");
