@@ -8,7 +8,7 @@
 #include "cocos2d.h"
 #include "SimpleAudioEngine.h"
 #include "ScriptingCore.h"
-#include "generated/cocos2dx.hpp"
+#include "generated/jsb_cocos2dx_auto.hpp"
 #include "cocos2d_specifics.hpp"
 #include "js_bindings_chipmunk_registration.h"
 #include "js_bindings_system_registration.h"

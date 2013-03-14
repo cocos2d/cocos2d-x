@@ -1,9 +1,4 @@
-
-
-local ActionIdx = -1
-local MAX_LAYER = 14
 local size = CCDirector:sharedDirector():getWinSize()
-
 local kTagTileMap = 1
 local kTagSpriteBatchNode = 1
 local kTagNode = 2
@@ -21,100 +16,7 @@ local kTagSprite7 = 6
 local kTagSprite8 = 7
 
 local testLayer  = nil
-local titleLabel = nil
 local entry      = nil
-local subtitleLabel = nil
-
-local playerLayer = nil
-
-local function onEnterOrExit(tag)
-	local scheduler = CCDirector:sharedDirector():getScheduler()
-	if tag == "enter" then
---  	entry = scheduler:scheduleScriptFunc(checkAnim, 0, false)
-	elseif tag == "exit" then
---  	scheduler:unscheduleScriptEntry(entry)
-	end
-end
-
-
-local function backAction()
-    ActionIdx = ActionIdx - 1
-    if ActionIdx < 0 then
-        ActionIdx = ActionIdx + MAX_LAYER
-    end
-
-    return CreateSpriteTestLayer()
-end
-
-local function restartAction()
-    return CreateSpriteTestLayer()
-end
-
-local function nextAction()
-    ActionIdx = ActionIdx + 1
-    ActionIdx = math.mod(ActionIdx, MAX_LAYER)
-
-    return CreateSpriteTestLayer()
-end
-
-local function backCallback(sender)
-    local scene = CCScene:create()
-
-    scene:addChild(backAction())
-    scene:addChild(CreateBackMenuItem())
-
-    CCDirector:sharedDirector():replaceScene(scene)
-end
-
-local function restartCallback(sender)
-    local scene = CCScene:create()
-
-    scene:addChild(restartAction())
-    scene:addChild(CreateBackMenuItem())
-
-    CCDirector:sharedDirector():replaceScene(scene)
-end
-
-local function nextCallback(sender)
-    local scene = CCScene:create()
-
-    scene:addChild(nextAction())
-    scene:addChild(CreateBackMenuItem())
-
-    CCDirector:sharedDirector():replaceScene(scene)
-end
-
-
-local function initWithLayer(layer)
-    titleLabel = CCLabelTTF:create("", "Arial", 28)
-    layer:addChild(titleLabel, 1)
-    titleLabel:setPosition(size.width / 2, size.height - 50)
-
-    subtitleLabel = CCLabelTTF:create("", "Thonburi", 16)
-    layer:addChild(subtitleLabel, 1)
-    subtitleLabel:setPosition(size.width / 2, size.height - 80)
-
-    -- menu
-    local item1 = CCMenuItemImage:create(s_pPathB1, s_pPathB2)
-    local item2 = CCMenuItemImage:create(s_pPathR1, s_pPathR2)
-    local item3 = CCMenuItemImage:create(s_pPathF1, s_pPathF2)
-    item1:registerScriptTapHandler(backCallback)
-    item2:registerScriptTapHandler(restartCallback)
-    item3:registerScriptTapHandler(nextCallback)
-
-    local menu = CCMenu:create()
-    menu:addChild(item1)
-    menu:addChild(item2)
-    menu:addChild(item3)
-    menu:setPosition(CCPointMake(0, 0))
-    item1:setPosition(CCPointMake(size.width / 2 - item2:getContentSize().width * 2, item2:getContentSize().height / 2))
-    item2:setPosition(CCPointMake(size.width / 2, item2:getContentSize().height / 2))
-    item3:setPosition(CCPointMake(size.width / 2 + item2:getContentSize().width * 2, item2:getContentSize().height / 2))
-    layer:addChild(menu, 1)
-
-    local background = CCLayer:create()
-    layer:addChild(background, -10)
-end
 
 --------------------------------------------
 ---- test sprite1
@@ -157,7 +59,7 @@ function Sprite1.onTouch(event, x, y)
     if event == "began" then
         return true
     elseif event == "ended" then
-        Sprite1.addNewSpriteWithCoords(playerLayer, ccp(x,y))
+        Sprite1.addNewSpriteWithCoords(Helper.currentLayer, ccp(x,y))
         return true
     end
 end
@@ -165,12 +67,12 @@ end
 function Sprite1.create()
     cclog("sprite1")
     local layer = CCLayer:create()
-    initWithLayer(layer)
+    Helper.initWithLayer(layer)
     Sprite1.addNewSpriteWithCoords(layer, ccp(size.width/2, size.height/2))
     layer:setTouchEnabled(true)
     layer:registerScriptTouchHandler(Sprite1.onTouch)
 
-    titleLabel:setString("Sprite (tap screen)")
+    Helper.titleLabel:setString("Sprite (tap screen)")
 
     return layer
 end
@@ -217,14 +119,14 @@ function SpriteBatchNode1.onTouch(event, x, y)
     if event == "began" then
         return true
     elseif event == "ended" then
-        SpriteBatchNode1.addNewSpriteWithCoords(playerLayer, ccp(x,y))
+        SpriteBatchNode1.addNewSpriteWithCoords(Helper.currentLayer, ccp(x,y))
         return true
     end
 end
 
 function SpriteBatchNode1.create()
     local layer = CCLayer:create()
-    initWithLayer(layer)
+    Helper.initWithLayer(layer)
     local BatchNode = CCSpriteBatchNode:create("Images/grossini_dance_atlas.png", 50)
     layer:addChild(BatchNode, 0, kTagSpriteBatchNode)
 
@@ -233,7 +135,7 @@ function SpriteBatchNode1.create()
     layer:setTouchEnabled(true)
     layer:registerScriptTouchHandler(SpriteBatchNode1.onTouch)
 
-    titleLabel:setString("SpriteBatchNode (tap screen)")
+    Helper.titleLabel:setString("SpriteBatchNode (tap screen)")
 
     return layer
 end
@@ -300,29 +202,29 @@ function SpriteColorOpacity.setLayerSprite(layer)
 end
 
 function SpriteColorOpacity.onEnterOrExit(tag)
-    local schedule = CCDirector:sharedDirector():getScheduler()
     if tag == "enter" then
-        SpriteColorOpacity.entry = scheduler:scheduleScriptFunc(SpriteColorOpacity.removeAndAddSprite, 0, false)
+        SpriteColorOpacity.onEnter()
     elseif tag == "exit" then
-        scheduler:unscheduleScriptEntry(SpriteColorOpacity.entry)
+        SpriteColorOpacity.onExit()
     end
 end
 
 function SpriteColorOpacity.removeAndAddSprite(dt)
-    local sprite = playerLayer:getChildByTag(kTagSprite5)    
+    local sprite = Helper.currentLayer:getChildByTag(kTagSprite5)    
     sprite:retain()
     
-    playerLayer:removeChild(sprite, false)
-    playerLayer:addChild(sprite, 0, kTagSprite5)
+    Helper.currentLayer:removeChild(sprite, false)
+    Helper.currentLayer:addChild(sprite, 0, kTagSprite5)
     
     sprite:release()
 end
 
 function SpriteColorOpacity.create()
     local layer = CCLayer:create()
-    initWithLayer(layer)
+    Helper.initWithLayer(layer)
     SpriteColorOpacity.setLayerSprite(layer)
-    titleLabel:setString("Sprite: Color & Opacity")
+    layer:registerScriptHandler(SpriteColorOpacity.onEnterOrExit)
+    Helper.titleLabel:setString("Sprite: Color & Opacity")
 
     return layer
 end
@@ -350,7 +252,7 @@ function SpriteFrameTest.onEnter()
 
     local spritebatch = CCSpriteBatchNode:create("animations/grossini.png")
     spritebatch:addChild(SpriteFrameTest.m_pSprite1)
-    playerLayer:addChild(spritebatch)
+    Helper.currentLayer:addChild(spritebatch)
 
     local animFrames = CCArray:createWithCapacity(15)
     for i = 1,14 do 
@@ -366,7 +268,7 @@ function SpriteFrameTest.onEnter()
 
     SpriteFrameTest.m_pSprite2 = CCSprite:createWithSpriteFrameName("grossini_dance_01.png")
     SpriteFrameTest.m_pSprite2:setPosition( ccp( s.width/2 + 80, s.height/2) )
-    playerLayer:addChild(SpriteFrameTest.m_pSprite2)
+    Helper.currentLayer:addChild(SpriteFrameTest.m_pSprite2)
 
     local moreFrames = CCArray:createWithCapacity(20)
     for i = 1,14 do
@@ -388,12 +290,8 @@ function SpriteFrameTest.onEnter()
     SpriteFrameTest.m_pSprite2:setFlipY(false)
 
 
-    performWithDelay(playerLayer,SpriteFrameTest.startIn05Secs, 0.5)
+    performWithDelay(Helper.currentLayer,SpriteFrameTest.startIn05Secs, 0.5)
     SpriteFrameTest.m_nCounter = 0
-
-    local scheduler = CCDirector:sharedDirector():getScheduler()
-    scheduler:unscheduleScriptEntry(SpriteFrameTest.entry)
-
 end
 
 function SpriteFrameTest.onExit()
@@ -404,7 +302,7 @@ function SpriteFrameTest.onExit()
 end
 
 function SpriteFrameTest.startIn05Secs(dt)
-    schedule(playerLayer,SpriteFrameTest.flipSprites, 1)
+    schedule(Helper.currentLayer,SpriteFrameTest.flipSprites, 1)
 end
 
 function SpriteFrameTest.flipSprites(dt)
@@ -436,20 +334,19 @@ end
 
 
 function SpriteFrameTest.onEnterOrExit(tag)
-	local scheduler = CCDirector:sharedDirector():getScheduler()
 	if tag == "enter" then
-		SpriteFrameTest.entry = scheduler:scheduleScriptFunc(SpriteFrameTest.onEnter, 0, false)
+		SpriteFrameTest.onEnter()
 	elseif tag == "exit" then
-		scheduler:unscheduleScriptEntry(SpriteFrameTest.entry)
+		SpriteFrameTest.onExit()
 	end
 end
 
 function SpriteFrameTest.create()
     local layer = CCLayer:create()
-    initWithLayer(layer)
+    Helper.initWithLayer(layer)
 
     layer:registerScriptHandler(SpriteFrameTest.onEnterOrExit)
-    titleLabel:setString("Sprite vs. SpriteBatchNode animation")
+    Helper.titleLabel:setString("Sprite vs. SpriteBatchNode animation")
 
     return layer
 end
@@ -475,7 +372,7 @@ function SpriteFrameAliasNameTest.onEnter()
     cclog("spriteBatch = " .. tostring(tolua.isnull(spriteBatch)))
     cclog("sprite = " .. tostring(tolua.isnull(sprite)))
     spriteBatch:addChild(sprite)
-    playerLayer:addChild(spriteBatch)
+    Helper.currentLayer:addChild(spriteBatch)
 
     local animFrames = CCArray:createWithCapacity(15)
     for i = 1,14 do
@@ -486,9 +383,6 @@ function SpriteFrameAliasNameTest.onEnter()
     local animation = CCAnimation:createWithSpriteFrames(animFrames, 0.3)
     -- 14 frames * 1sec = 14 seconds
     sprite:runAction(CCRepeatForever:create(CCAnimate:create(animation)))
-
-    local scheduler = CCDirector:sharedDirector():getScheduler()
-    scheduler:unscheduleScriptEntry(SpriteFrameAliasNameTest.entry)
 end
 
 function SpriteFrameAliasNameTest.onExit()
@@ -496,21 +390,20 @@ function SpriteFrameAliasNameTest.onExit()
 end
 
 function SpriteFrameAliasNameTest.onEnterOrExit(tag)
-	local scheduler = CCDirector:sharedDirector():getScheduler()
 	if tag == "enter" then
-		SpriteFrameAliasNameTest.entry = scheduler:scheduleScriptFunc(SpriteFrameAliasNameTest.onEnter, 0, false)
+		SpriteFrameAliasNameTest.onEnter()
 	elseif tag == "exit" then
-		scheduler:unscheduleScriptEntry(SpriteFrameAliasNameTest.entry)
+		SpriteFrameAliasNameTest.onExit()
 	end
 end
 
 function SpriteFrameAliasNameTest.create()
     local layer = CCLayer:create()
-    initWithLayer(layer)
+    Helper.initWithLayer(layer)
 
     layer:registerScriptHandler(SpriteFrameAliasNameTest.onEnterOrExit)
-    titleLabel:setString("SpriteFrame Alias Name")
-    subtitleLabel:setString("SpriteFrames are obtained using the alias name")
+    Helper.titleLabel:setString("SpriteFrame Alias Name")
+    Helper.subtitleLabel:setString("SpriteFrames are obtained using the alias name")
 
     return layer
 end
@@ -557,11 +450,11 @@ end
 
 function SpriteAnchorPoint.create()
     local layer = CCLayer:create()
-    initWithLayer(layer)
+    Helper.initWithLayer(layer)
 
     layer = SpriteAnchorPoint.initLayer(layer)
-    titleLabel:setString("Sprite: anchor point")
-    subtitleLabel:setString("")
+    Helper.titleLabel:setString("Sprite: anchor point")
+    Helper.subtitleLabel:setString("")
     return layer
 end
 
@@ -610,11 +503,11 @@ end
 
 function SpriteBatchNodeAnchorPoint.create()
     local layer = CCLayer:create()
-    initWithLayer(layer)
+    Helper.initWithLayer(layer)
 
     layer = SpriteBatchNodeAnchorPoint.initLayer(layer)
-    titleLabel:setString("SpriteBatchNode: anchor point")
-    subtitleLabel:setString("")
+    Helper.titleLabel:setString("SpriteBatchNode: anchor point")
+    Helper.subtitleLabel:setString("")
 
     return layer
 end
@@ -674,11 +567,11 @@ end
 
 function SpriteOffsetAnchorRotation.create()
     local layer = CCLayer:create()
-    initWithLayer(layer)
+    Helper.initWithLayer(layer)
 
     layer = SpriteOffsetAnchorRotation.initLayer(layer)
-    titleLabel:setString("Sprite offset + anchor + rot")
-    subtitleLabel:setString("")
+    Helper.titleLabel:setString("Sprite offset + anchor + rot")
+    Helper.subtitleLabel:setString("")
 
     return layer
 end
@@ -743,11 +636,11 @@ end
 
 function SpriteBatchNodeOffsetAnchorRotation.create()
     local layer = CCLayer:create()
-    initWithLayer(layer)
+    Helper.initWithLayer(layer)
 
     layer = SpriteBatchNodeOffsetAnchorRotation.initLayer(layer)
-    titleLabel:setString("SpriteBatchNode offset + anchor + rot")
-    subtitleLabel:setString("")
+    Helper.titleLabel:setString("SpriteBatchNode offset + anchor + rot")
+    Helper.subtitleLabel:setString("")
 
     return layer
 end
@@ -812,11 +705,11 @@ end
 
 function SpriteOffsetAnchorScale.create()
     local layer = CCLayer:create()
-    initWithLayer(layer)
+    Helper.initWithLayer(layer)
 
     layer = SpriteOffsetAnchorScale.initLayer(layer)
-    titleLabel:setString("Sprite offset + anchor + scale")
-    subtitleLabel:setString("")
+    Helper.titleLabel:setString("Sprite offset + anchor + scale")
+    Helper.subtitleLabel:setString("")
 
     return layer
 end
@@ -824,6 +717,89 @@ end
 --------------------------------------------------------------------
 --
 -- SpriteBatchNodeOffsetAnchorScale
+--
+--------------------------------------------------------------------
+local SpriteBatchNodeOffsetAnchorScale = {}
+
+function SpriteBatchNodeOffsetAnchorScale.initLayer(layer)
+    local s = CCDirector:sharedDirector():getWinSize()
+
+    local cache = CCSpriteFrameCache:sharedSpriteFrameCache()
+    cache:addSpriteFramesWithFile("animations/grossini.plist")
+    cache:addSpriteFramesWithFile("animations/grossini_gray.plist", "animations/grossini_gray.png")
+
+    local spritesheet = CCSpriteBatchNode:create("animations/grossini.png")
+    layer:addChild(spritesheet)
+
+    for i = 0,2 do
+        -- Animation using Sprite BatchNode
+        local sprite = CCSprite:createWithSpriteFrameName("grossini_dance_01.png")
+        sprite:setPosition(ccp(s.width/4*(i+1), s.height/2))
+
+        local point = CCSprite:create("Images/r1.png")
+        point:setScale(0.25)
+        point:setPosition(sprite:getPosition())
+        layer:addChild(point, 200)
+
+        if i == 0 then
+            sprite:setAnchorPoint(CCPointMake(0,0))
+        elseif i == 1 then
+            sprite:setAnchorPoint(ccp(0.5, 0.5))
+        else
+            sprite:setAnchorPoint(ccp(1, 1))
+        end
+
+        point:setPosition(sprite:getPosition())
+
+        local animFrames = CCArray:createWithCapacity(14)
+        local str
+        for k = 0, 13 do
+            str = string.format("grossini_dance_%02d.png", (k+1))
+            local frame = cache:spriteFrameByName(str)
+            animFrames:addObject(frame)
+        end
+
+        local animation = CCAnimation:createWithSpriteFrames(animFrames, 0.3)
+        sprite:runAction(CCRepeatForever:create(CCAnimate:create(animation)))
+
+        local scale = CCScaleBy:create(2, 2)
+        local scale_back = scale:reverse()
+        local seq_scale = CCSequence:createWithTwoActions(scale, scale_back)
+        sprite:runAction(CCRepeatForever:create(seq_scale))
+
+        spritesheet:addChild(sprite, i)
+    end
+
+    return layer
+end
+
+function SpriteBatchNodeOffsetAnchorScale.onExit()
+    local cache = CCSpriteFrameCache:sharedSpriteFrameCache()
+    cache:removeSpriteFramesFromFile("animations/grossini.plist")
+    cache:removeSpriteFramesFromFile("animations/grossini_gray.plist")
+end
+
+function SpriteBatchNodeOffsetAnchorScale.eventHandler(tag)
+    if tag == "exit" then
+        SpriteBatchNodeOffsetAnchorScale.onExit()
+    end
+end
+
+function SpriteBatchNodeOffsetAnchorScale.create()
+    local layer = CCLayer:create()
+    Helper.initWithLayer(layer)
+    layer:registerScriptHandler(SpriteBatchNodeOffsetAnchorScale.eventHandler)
+
+    layer = SpriteBatchNodeOffsetAnchorScale.initLayer(layer)
+    Helper.titleLabel:setString("SpriteBatchNode offset + anchor + scale")
+    Helper.subtitleLabel:setString("")
+
+    return layer
+end
+
+--------------------------------------------------------------------
+--
+-- SpriteOffsetAnchorSkew
 --
 --------------------------------------------------------------------
 local SpriteOffsetAnchorSkew = {}
@@ -890,11 +866,11 @@ end
 
 function SpriteOffsetAnchorSkew.create()
     local layer = CCLayer:create()
-    initWithLayer(layer)
+    Helper.initWithLayer(layer)
 
     layer = SpriteOffsetAnchorSkew.initLayer(layer)
-    titleLabel:setString("SpriteBatchNode offset + anchor + scale")
-    subtitleLabel:setString("")
+    Helper.titleLabel:setString("SpriteBatchNode offset + anchor + scale")
+    Helper.subtitleLabel:setString("")
 
     return layer
 end
@@ -963,11 +939,11 @@ end
 
 function SpriteOffsetAnchorRotationalSkew.create()
     local layer = CCLayer:create()
-    initWithLayer(layer)
+    Helper.initWithLayer(layer)
 
     layer = SpriteOffsetAnchorRotationalSkew.initLayer(layer)
-    titleLabel:setString("Sprite offset + anchor + rotational skew")
-    subtitleLabel:setString("")
+    Helper.titleLabel:setString("Sprite offset + anchor + rotational skew")
+    Helper.subtitleLabel:setString("")
 
     return layer
 end
@@ -1042,11 +1018,11 @@ end
 
 function SpriteBatchNodeOffsetAnchorSkew.create()
     local layer = CCLayer:create()
-    initWithLayer(layer)
+    Helper.initWithLayer(layer)
 
     layer = SpriteBatchNodeOffsetAnchorSkew.initLayer(layer)
-    titleLabel:setString("SpriteBatchNode offset + anchor + skew")
-    subtitleLabel:setString("")
+    Helper.titleLabel:setString("SpriteBatchNode offset + anchor + skew")
+    Helper.subtitleLabel:setString("")
 
     return layer
 end
@@ -1121,59 +1097,38 @@ end
 
 function SpriteBatchNodeOffsetAnchorRotationalSkew.create()
     local layer = CCLayer:create()
-    initWithLayer(layer)
+    Helper.initWithLayer(layer)
 
     layer = SpriteBatchNodeOffsetAnchorRotationalSkew.initLayer(layer)
-    titleLabel:setString("SSpriteBatchNode offset + anchor + rot skew")
-    subtitleLabel:setString("")
+    Helper.titleLabel:setString("SSpriteBatchNode offset + anchor + rot skew")
+    Helper.subtitleLabel:setString("")
 
-    return layer
-end
-
-function CreateSpriteTestLayer()
-    local layer = nil
-
-    if(ActionIdx == 0) then
-        layer = Sprite1.create()
-    elseif(ActionIdx == 1) then
-        layer = SpriteBatchNode1.create()
-    elseif(ActionIdx == 2) then
-        layer = SpriteFrameTest.create()
-    elseif(ActionIdx == 3) then
-        layer = SpriteFrameAliasNameTest.create()
-    elseif(ActionIdx == 4) then
-        layer = SpriteAnchorPoint.create()
-    elseif(ActionIdx == 5) then
---      layer = SpriteColorOpacity.create()
-        layer = SpriteBatchNodeAnchorPoint.create()
-    elseif(ActionIdx == 6) then
-        layer = SpriteOffsetAnchorRotation.create()
-    elseif(ActionIdx == 7) then
-        layer = SpriteBatchNodeOffsetAnchorRotation.create()
-    elseif(ActionIdx == 8) then
-        layer = SpriteOffsetAnchorScale.create()
-    elseif(ActionIdx == 9) then
-        layer = SpriteBatchNodeOffsetAnchorScale.create()
-    elseif(ActionIdx == 10) then
-        layer = SpriteOffsetAnchorSkew.create()
-    elseif(ActionIdx == 11) then
-        layer = SpriteOffsetAnchorRotationalSkew.create()
-    elseif(ActionIdx == 12) then
-        layer = SpriteBatchNodeOffsetAnchorSkew.create()
-    elseif(ActionIdx == 13) then
-        layer = SpriteBatchNodeOffsetAnchorRotationalSkew.create()
-    end
-    playerLayer = layer
     return layer
 end
 
 function SpriteTest()
 	local scene = CCScene:create()
+	
+	Helper.createFunctionTable = {
+        Sprite1.create,
+        SpriteBatchNode1.create,
+        SpriteFrameTest.create,
+        SpriteFrameAliasNameTest.create,
+        SpriteAnchorPoint.create,
+        SpriteBatchNodeAnchorPoint.create,
+        SpriteOffsetAnchorRotation.create,
+        SpriteBatchNodeOffsetAnchorRotation.create,
+        SpriteOffsetAnchorScale.create,
+        SpriteBatchNodeOffsetAnchorScale.create,
+        SpriteOffsetAnchorSkew.create,
+        SpriteOffsetAnchorRotationalSkew.create,
+        SpriteBatchNodeOffsetAnchorSkew.create,
+        SpriteBatchNodeOffsetAnchorRotationalSkew.create
+    }
 
-	ActionIdx = -1
-	scene:addChild(nextAction())
+	ActionIdx = 0
+	scene:addChild(Sprite1.create())
 	scene:addChild(CreateBackMenuItem())
 
 	return scene
 end
-
