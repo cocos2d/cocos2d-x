@@ -100,7 +100,7 @@ public:
     virtual bool executeAssert(bool cond, const char *msg = NULL) {return false;}
 
     bool executeFunctionWithObjectData(CCNode *self, const char *name, JSObject *obj);
-    int executeFunctionWithOwner(jsval owner, const char *name, jsval data);
+    JSBool executeFunctionWithOwner(jsval owner, const char *name, uint32_t argc = 0, jsval* vp = NULL, jsval* retVal = NULL);
 
     void executeJSFunctionWithThisObj(jsval thisObj, jsval callback, jsval *data);
 

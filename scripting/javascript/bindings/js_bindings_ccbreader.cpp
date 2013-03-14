@@ -53,11 +53,11 @@ CCBSelectorResolver * CCBScriptCallbackProxy::createNew() {
 }
 
 void CCBScriptCallbackProxy::menuItemCallback(CCObject *pSender) {
-    ScriptingCore::getInstance()->executeFunctionWithOwner(owner, callBackProp.c_str() , JSVAL_NULL);
+    ScriptingCore::getInstance()->executeFunctionWithOwner(owner, callBackProp.c_str() );
 }
 
 void CCBScriptCallbackProxy::controlCallback(CCObject *pSender, CCControlEvent event) {
-    ScriptingCore::getInstance()->executeFunctionWithOwner(owner, callBackProp.c_str() , JSVAL_NULL);
+    ScriptingCore::getInstance()->executeFunctionWithOwner(owner, callBackProp.c_str() );
 }
 
 void CCBScriptCallbackProxy::setCallbackProperty(const char *prop) {
