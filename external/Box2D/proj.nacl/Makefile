@@ -59,6 +59,12 @@ else
 CXXFLAGS += -Wno-uninitialized
 endif
 
+ifeq ($(DEBUG), 1)
+DEFINES = -D_DEBUG
+else
+DEFINES =
+endif
+
 TARGET = $(LIB_DIR)/libbox2d.a
 
 all: $(TARGET)

@@ -200,7 +200,8 @@ public:
 	void debugProcessInput(string str);
 	void enableDebugger();
 	JSObject* getDebugGlobal() { return debugGlobal_; }
-
+    JSObject* getGlobalObject() { return global_; }
+    
  private:
     void string_report(jsval val);
 };

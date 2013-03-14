@@ -1,90 +1,12 @@
 
-local SceneIdx = -1
-local MAX_LAYER = 7
 local s = CCDirector:sharedDirector():getWinSize()
-
-local function nextAction()
-	SceneIdx = SceneIdx + 1
-    SceneIdx = math.mod(SceneIdx, MAX_LAYER)
-    return CreateActionProgressLayer()
-end
-
-local function restartAction()
-	return CreateActionProgressLayer()
-end
-
-local function backAction()
-	SceneIdx = SceneIdx - 1
-    if SceneIdx < 0 then
-		SceneIdx = SceneIdx + MAX_LAYER
-	end
-    return CreateActionProgressLayer()
-end
-
-local function nextCallback(sender)
-	local scene = CCScene:create()
-
-	scene:addChild(nextAction())
-	scene:addChild(CreateBackMenuItem())
-
-	CCDirector:sharedDirector():replaceScene(scene)
-end
-
-local function restartCallback(sender)
-	local scene = CCScene:create()
-
-	scene:addChild(restartAction())
-	scene:addChild(CreateBackMenuItem())
-
-	CCDirector:sharedDirector():replaceScene(scene)
-end
-
-local function backCallback(sender)
-	local scene = CCScene:create()
-
-	scene:addChild(backAction())
-	scene:addChild(CreateBackMenuItem())
-
-	CCDirector:sharedDirector():replaceScene(scene)
-end
-
-local function initWithLayer(layer)
-	titleLabel = CCLabelTTF:create("ActionsProgressTest", "Arial", 18)
-    layer:addChild(titleLabel, 1)
-    titleLabel:setPosition(s.width / 2, s.height - 50)
-
-    subtitleLabel = CCLabelTTF:create("", "Thonburi", 22)
-	layer:addChild(subtitleLabel, 1)
-	subtitleLabel:setPosition(s.width / 2, s.height - 80)
-
-	-- menu
-    local item1 = CCMenuItemImage:create(s_pPathB1, s_pPathB2)
-    local item2 = CCMenuItemImage:create(s_pPathR1, s_pPathR2)
-    local item3 = CCMenuItemImage:create(s_pPathF1, s_pPathF2)
-	item1:registerScriptTapHandler(backCallback)
-	item2:registerScriptTapHandler(restartCallback)
-	item3:registerScriptTapHandler(nextCallback)
-
-    local menu = CCMenu:create()
-	menu:addChild(item1)
-	menu:addChild(item2)
-	menu:addChild(item3)
-	menu:setPosition(CCPointMake(0, 0))
-    item1:setPosition(CCPointMake(s.width / 2 - item2:getContentSize().width * 2, item2:getContentSize().height / 2))
-    item2:setPosition(CCPointMake(s.width / 2, item2:getContentSize().height / 2))
-    item3:setPosition(CCPointMake(s.width / 2 + item2:getContentSize().width * 2, item2:getContentSize().height / 2))
-    layer:addChild(menu, 1)
-
-    local background = CCLayerColor:create(ccc4(255,0,0,255))
-    layer:addChild(background, -10)
-end
 
 ------------------------------------
 --  SpriteProgressToRadial
 ------------------------------------
 local function SpriteProgressToRadial()
 	local layer = CCLayer:create()
-	initWithLayer(layer)
+	Helper.initWithLayer(layer)
 
 	local to1 = CCProgressTo:create(2, 100)
     local to2 = CCProgressTo:create(2, 100)
@@ -103,7 +25,7 @@ local function SpriteProgressToRadial()
     right:runAction(CCRepeatForever:create(to2))
 	layer:addChild(right)
 
-	subtitleLabel:setString("ProgressTo Radial")
+	Helper.subtitleLabel:setString("ProgressTo Radial")
 	return layer
 end
 
@@ -112,7 +34,7 @@ end
 ------------------------------------
 local function SpriteProgressToHorizontal()
 	local layer = CCLayer:create()
-	initWithLayer(layer)
+	Helper.initWithLayer(layer)
 
 	local to1 = CCProgressTo:create(2, 100)
     local to2 = CCProgressTo:create(2, 100)
@@ -137,7 +59,7 @@ local function SpriteProgressToHorizontal()
     right:runAction(CCRepeatForever:create(to2))
 	layer:addChild(right)
 
-	subtitleLabel:setString("ProgressTo Horizontal")
+	Helper.subtitleLabel:setString("ProgressTo Horizontal")
 	return layer
 end
 
@@ -146,7 +68,7 @@ end
 ------------------------------------
 local function SpriteProgressToVertical()
 	local layer = CCLayer:create()
-	initWithLayer(layer)
+	Helper.initWithLayer(layer)
 
 	local to1 = CCProgressTo:create(2, 100)
     local to2 = CCProgressTo:create(2, 100)
@@ -172,7 +94,7 @@ local function SpriteProgressToVertical()
     right:runAction(CCRepeatForever:create(to2))
 	layer:addChild(right)
 
-	subtitleLabel:setString("ProgressTo Vertical")
+	Helper.subtitleLabel:setString("ProgressTo Vertical")
 	return layer
 end
 
@@ -181,7 +103,7 @@ end
 ------------------------------------
 local function SpriteProgressToRadialMidpointChanged()
 	local layer = CCLayer:create()
-	initWithLayer(layer)
+	Helper.initWithLayer(layer)
 
 	local action = CCProgressTo:create(2, 100)
 
@@ -206,7 +128,7 @@ local function SpriteProgressToRadialMidpointChanged()
     right:runAction(CCRepeatForever:create(CCProgressTo:create(2, 100)))
     layer:addChild(right)
 
-	subtitleLabel:setString("Radial w/ Different Midpoints")
+	Helper.subtitleLabel:setString("Radial w/ Different Midpoints")
 	return layer
 end
 
@@ -215,7 +137,7 @@ end
 ------------------------------------
 local function SpriteProgressBarVarious()
 	local layer = CCLayer:create()
-	initWithLayer(layer)
+	Helper.initWithLayer(layer)
 
 	local to = CCProgressTo:create(2, 100)
 
@@ -250,7 +172,7 @@ local function SpriteProgressBarVarious()
     right:runAction(CCRepeatForever:create(CCProgressTo:create(2, 100)))
 	layer:addChild(right)
 
-	subtitleLabel:setString("ProgressTo Bar Mid")
+	Helper.subtitleLabel:setString("ProgressTo Bar Mid")
 	return layer
 end
 
@@ -259,7 +181,7 @@ end
 ------------------------------------
 local function SpriteProgressBarTintAndFade()
 	local layer = CCLayer:create()
-	initWithLayer(layer)
+	Helper.initWithLayer(layer)
 
 	local to = CCProgressTo:create(6, 100)
 	local array = CCArray:create()
@@ -318,7 +240,7 @@ local function SpriteProgressBarTintAndFade()
 
     right:addChild(CCLabelTTF:create("Tint and Fade", "Marker Felt", 20.0))
 
-	subtitleLabel:setString("ProgressTo Bar Mid")
+	Helper.subtitleLabel:setString("ProgressTo Bar Mid")
 	return layer
 end
 
@@ -327,7 +249,7 @@ end
 ------------------------------------
 local function SpriteProgressWithSpriteFrame()
 	local layer = CCLayer:create()
-	initWithLayer(layer)
+	Helper.initWithLayer(layer)
 
 	local to = CCProgressTo:create(6, 100)
 
@@ -363,41 +285,24 @@ local function SpriteProgressWithSpriteFrame()
     right:runAction(CCRepeatForever:create(CCProgressTo:create(6, 100)))
 	layer:addChild(right)
 
-	subtitleLabel:setString("Progress With Sprite Frame")
-	return layer
-end
-
-------------------------------------
--- Entrance
-------------------------------------
-function CreateActionProgressLayer()
-	local layer = nil
-
-	if SceneIdx == 0 then
-		layer = SpriteProgressToRadial()
-	elseif SceneIdx == 1 then
-		layer = SpriteProgressToHorizontal()
-	elseif SceneIdx == 2 then
-		layer = SpriteProgressToVertical()
-	elseif SceneIdx == 3 then
-		layer = SpriteProgressToRadialMidpointChanged()
-	elseif SceneIdx == 4 then
-		layer = SpriteProgressBarVarious()
-	elseif SceneIdx == 5 then
-		layer = SpriteProgressBarTintAndFade()
-	elseif SceneIdx == 6 then
-		layer = SpriteProgressWithSpriteFrame()
-	end
-
+	Helper.subtitleLabel:setString("Progress With Sprite Frame")
 	return layer
 end
 
 function ProgressActionsTest()
-	cclog("ProgressActionsTest")
 	local scene = CCScene:create()
 
-	SceneIdx = -1
-	scene:addChild(nextAction())
+    Helper.createFunctionTable = {
+        SpriteProgressToRadial,
+        SpriteProgressToHorizontal,
+        SpriteProgressToVertical,
+        SpriteProgressToRadialMidpointChanged,
+        SpriteProgressBarVarious,
+        SpriteProgressBarTintAndFade,
+        SpriteProgressWithSpriteFrame
+    }
+
+	scene:addChild(SpriteProgressToRadial())
 	scene:addChild(CreateBackMenuItem())
 
 	CCDirector:sharedDirector():replaceScene(scene)
