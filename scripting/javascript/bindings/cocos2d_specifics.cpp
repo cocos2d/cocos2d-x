@@ -2567,7 +2567,7 @@ JSBool js_cocos2dx_CCFileUtils_getStringFromFile(JSContext *cx, uint32_t argc, j
         unsigned char* ret = cobj->getFileData(arg0, "rb", &size);
         if (ret && size > 0) {
             //JSString* str = JS_NewStringCopyN(cx, (const char*)ret, (size_t)size);
-            jschar* strUTF16 = cc_utf8_to_utf16((char*)ret);
+			jschar* strUTF16 = (jschar*)cc_utf8_to_utf16((char*)ret);
             JSString* str = JS_NewUCStringCopyZ(cx, strUTF16);
             if (str != NULL) {
                 JS_SET_RVAL(cx, vp, STRING_TO_JSVAL(str));
