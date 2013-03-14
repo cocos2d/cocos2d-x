@@ -26,6 +26,8 @@
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 
+#define kLabelZOrder  9999
+
 #include "CCEditBox.h"
 #import "EAGLView.h"
 
@@ -155,6 +157,7 @@ static const int CC_EDIT_BOX_PADDING = 5;
 {
     CCLOG("textFieldShouldEndEditing...");
     editState_ = NO;
+    getEditBoxImplIOS()->setText(getEditBoxImplIOS()->getText());
     
     cocos2d::extension::CCEditBoxDelegate* pDelegate = getEditBoxImplIOS()->getDelegate();
     if (pDelegate != NULL)
@@ -275,14 +278,14 @@ void CCEditBoxImplIOS::initInactiveLabels(const CCSize& size)
     m_pLabel->setPosition(ccp(CC_EDIT_BOX_PADDING, size.height / 2.0f + 1));
     m_pLabel->setColor(ccWHITE);
     m_pLabel->setVisible(false);
-    m_pEditBox->addChild(m_pLabel);
+    m_pEditBox->addChild(m_pLabel, kLabelZOrder);
 	
     m_pLabelPlaceHolder = CCLabelTTF::create("", pDefaultFontName, fDefaultFontSize);
 	// align the text vertically center
     m_pLabelPlaceHolder->setAnchorPoint(ccp(0, 0.5f));
     m_pLabelPlaceHolder->setPosition(ccp(CC_EDIT_BOX_PADDING, size.height / 2.0f + 1));
     m_pLabelPlaceHolder->setColor(ccGRAY);
-    m_pEditBox->addChild(m_pLabelPlaceHolder);
+    m_pEditBox->addChild(m_pLabelPlaceHolder, kLabelZOrder);
 }
 
 void CCEditBoxImplIOS::setInactiveText(const char* pText)
@@ -505,6 +508,10 @@ void CCEditBoxImplIOS::visit(void)
 void CCEditBoxImplIOS::onEnter(void)
 {
     adjustTextFieldPosition();
+    const char* pText = getText();
+    if (pText) {
+        setInactiveText(pText);
+    }
 }
 
 void CCEditBoxImplIOS::adjustTextFieldPosition()
