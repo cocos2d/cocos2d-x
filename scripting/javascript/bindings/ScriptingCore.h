@@ -268,7 +268,8 @@ public:
 	}
 	~JSStringWrapper() {
 		if (buffer) {
-			JS_free(ScriptingCore::getInstance()->getGlobalContext(), (void*)buffer);
+			//JS_free(ScriptingCore::getInstance()->getGlobalContext(), (void*)buffer);
+            delete[] buffer;
 		}
 	}
 	void set(jsval val, JSContext* cx) {
@@ -282,8 +283,12 @@ public:
 		string = str;
 		if (!cx) {
 			cx = ScriptingCore::getInstance()->getGlobalContext();
+            
 		}
-        buffer = JS_EncodeString(cx, string);
+        // JS_EncodeString isn't supported in SpiderMonkey ff19.0.
+        //buffer = JS_EncodeString(cx, string);
+        unsigned short* pStrUTF16 = (unsigned short*)JS_GetStringCharsZ(cx, str);
+        buffer = cc_utf16_to_utf8(pStrUTF16, -1, NULL, NULL);
 	}
 	std::string get() {
         return buffer;

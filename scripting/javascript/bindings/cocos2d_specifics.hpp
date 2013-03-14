@@ -64,7 +64,13 @@ inline js_proxy_t *js_get_or_create_proxy(JSContext *cx, T *native_obj) {
     HASH_FIND_PTR(_native_js_global_ht, &native_obj, proxy);
     if (!proxy) {
         js_type_class_t *typeProxy = js_get_type_from_native<T>(native_obj);
-        assert(typeProxy);
+        // Return NULL if can't find its type rather than making an assert.
+//        assert(typeProxy);
+        if (!typeProxy) {
+            CCLOGWARN("Could not find the type of native object.");
+            return NULL;
+        }
+        
         JSObject* js_obj = JS_NewObject(cx, typeProxy->jsclass, typeProxy->proto, typeProxy->parentProto);
         JS_NEW_PROXY(proxy, native_obj, js_obj);
 #ifdef DEBUG
