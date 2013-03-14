@@ -1517,6 +1517,83 @@ function SpriteBatchNodeOffsetAnchorRotationalSkewScale.create()
     return layer
 end
 
+--
+-- SpriteOffsetAnchorFlip
+--
+local SpriteOffsetAnchorFlip = {}
+function SpriteOffsetAnchorFlip.initLayer(layer)
+    local s = CCDirector:sharedDirector():getWinSize()
+
+    local cache = CCSpriteFrameCache:sharedSpriteFrameCache()
+    cache:addSpriteFramesWithFile("animations/grossini.plist")
+    cache:addSpriteFramesWithFile("animations/grossini_gray.plist", "animations/grossini_gray.png")
+
+    for i = 0, 2 do
+        -- Animation using Sprite batch
+        local sprite = CCSprite:createWithSpriteFrameName("grossini_dance_01.png")
+        sprite:setPosition(ccp(s.width / 4 * (i + 1), s.height / 2))
+
+        local point = CCSprite:create("Images/r1.png")
+        point:setScale(0.25)
+        point:setPosition(sprite:getPosition())
+        layer:addChild(point, 1)
+
+        if i == 0 then
+            sprite:setAnchorPoint(ccp(0, 0))
+        elseif i == 1 then
+            sprite:setAnchorPoint(ccp(0.5, 0.5))
+        else
+            sprite:setAnchorPoint(ccp(1, 1))
+        end
+
+        point:setPosition(sprite:getPosition())
+
+        local animFrames = CCArray:create()
+        for j = 0, 13 do
+            local frame = cache:spriteFrameByName(string.format("grossini_dance_%02d.png", j+1))
+            animFrames:addObject(frame)
+        end
+
+        local animation = CCAnimation:createWithSpriteFrames(animFrames, 0.3)
+        sprite:runAction(CCRepeatForever:create(CCAnimate:create(animation)))
+
+        local flip = CCFlipY:create(true)
+        local flip_back = CCFlipY:create(false)
+        local delay = CCDelayTime:create(1)
+        local delay2 = CCDelayTime:create(1)
+
+        local actionArray = CCArray:create()
+        actionArray:addObject(delay)
+        actionArray:addObject(flip)
+        actionArray:addObject(delay2)
+        actionArray:addObject(flip_back)
+        local seq = CCSequence:create(actionArray)
+        sprite:runAction(CCRepeatForever:create(seq))
+
+        layer:addChild(sprite, 0)
+    end
+end
+
+function SpriteOffsetAnchorFlip.eventHandler(tag)
+    if tag == "exit" then
+        local cache = CCSpriteFrameCache:sharedSpriteFrameCache()
+        cache:removeSpriteFramesFromFile("animations/grossini.plist")
+        cache:removeSpriteFramesFromFile("animations/grossini_gray.plist")
+    end
+end
+
+function SpriteOffsetAnchorFlip.create()
+    local layer = CCLayer:create()
+    layer:registerScriptHandler(SpriteOffsetAnchorFlip.eventHandler)
+    Helper.initWithLayer(layer)
+
+    SpriteOffsetAnchorFlip.initLayer(layer)
+    Helper.titleLabel:setString("Sprite offset + anchor + flip")
+    Helper.subtitleLabel:setString("issue #1078")
+
+    return layer
+end
+
 
 function SpriteTest()
 	local scene = CCScene:create()
@@ -1539,7 +1616,8 @@ function SpriteTest()
         SpriteOffsetAnchorSkewScale.create,
         SpriteOffsetAnchorRotationalSkewScale.create,
         SpriteBatchNodeOffsetAnchorSkewScale.create,
-        SpriteBatchNodeOffsetAnchorRotationalSkewScale.create
+        SpriteBatchNodeOffsetAnchorRotationalSkewScale.create,
+        SpriteOffsetAnchorFlip.create
     }
 
 	scene:addChild(Sprite1.create())
