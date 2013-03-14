@@ -160,27 +160,6 @@ void ScriptingCore::executeJSFunctionWithThisObj(jsval thisObj, jsval callback,
     }
 }
 
-
-static void executeJSFunctionWithName(JSContext *cx, JSObject *obj,
-                                      const char *funcName, jsval &dataVal,
-                                      jsval &retval) {
-    JSBool hasAction;
-    jsval temp_retval;
-
-    if (JS_HasProperty(cx, obj, funcName, &hasAction) && hasAction) {
-        if(!JS_GetProperty(cx, obj, funcName, &temp_retval)) {
-            return;
-        }
-        if(temp_retval == JSVAL_VOID) {
-            return;
-        }
-        JSAutoCompartment ac(cx, obj);
-        JS_CallFunctionName(cx, obj, funcName,
-                            1, &dataVal, &retval);
-    }
-
-}
-
 void js_log(const char *format, ...) {
     if (_js_log_buf == NULL) {
         _js_log_buf = (char *)calloc(sizeof(char), 257);
@@ -707,21 +686,21 @@ int ScriptingCore::executeNodeEvent(CCNode* pNode, int nAction)
 
     if(nAction == kCCNodeOnEnter)
     {
-        executeJSFunctionWithName(this->cx_, p->obj, "onEnter", dataVal, retval);
+        executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onEnter", 1, &dataVal, &retval);
         resumeSchedulesAndActions(pNode);
     }
     else if(nAction == kCCNodeOnExit)
     {
-        executeJSFunctionWithName(this->cx_, p->obj, "onExit", dataVal, retval);
+        executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onExit", 1, &dataVal, &retval);
         pauseSchedulesAndActions(pNode);
     }
     else if(nAction == kCCNodeOnEnterTransitionDidFinish)
     {
-        executeJSFunctionWithName(this->cx_, p->obj, "onEnterTransitionDidFinish", dataVal, retval);
+        executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onEnterTransitionDidFinish", 1, &dataVal, &retval);
     }
     else if(nAction == kCCNodeOnExitTransitionDidStart)
     {
-        executeJSFunctionWithName(this->cx_, p->obj, "onExitTransitionDidStart", dataVal, retval);
+        executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onExitTransitionDidStart", 1, &dataVal, &retval);
     }
     else if(nAction == kCCNodeOnCleanup) {
         cleanupSchedulesAndActions(pNode);
@@ -768,7 +747,7 @@ int ScriptingCore::executeSchedule(int nHandler, float dt, CCNode* pNode/* = NUL
     jsval retval;
     jsval dataVal = DOUBLE_TO_JSVAL(dt);
 
-    executeJSFunctionWithName(this->cx_, p->obj, "update", dataVal, retval);
+    executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "update", 1, &dataVal, &retval);
 
     return 1;
 }
@@ -826,7 +805,7 @@ bool ScriptingCore::executeFunctionWithObjectData(CCNode *self, const char *name
     jsval retval;
     jsval dataVal = OBJECT_TO_JSVAL(obj);
 
-    executeJSFunctionWithName(this->cx_, p->obj, name, dataVal, retval);
+    executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), name, 1, &dataVal, &retval);
     if(JSVAL_IS_NULL(retval)) {
         return false;
     }
@@ -836,12 +815,35 @@ bool ScriptingCore::executeFunctionWithObjectData(CCNode *self, const char *name
     return false;
 }
 
-int ScriptingCore::executeFunctionWithOwner(jsval owner, const char *name, jsval data) {
-    jsval retval;
-
-    executeJSFunctionWithName(this->cx_, JSVAL_TO_OBJECT(owner), name, data, retval);
-
-    return 1;
+JSBool ScriptingCore::executeFunctionWithOwner(jsval owner, const char *name, uint32_t argc /* = 0 */, jsval *vp /* = NULL */, jsval* retVal /* = NULL */)
+{
+    JSBool bRet = JS_FALSE;
+    JSBool hasAction;
+    jsval temp_retval;
+    JSContext* cx = this->cx_;
+    JSObject* obj = JSVAL_TO_OBJECT(owner);
+    
+    do
+    {
+        if (JS_HasProperty(cx, obj, name, &hasAction) && hasAction) {
+            if(!JS_GetProperty(cx, obj, name, &temp_retval)) {
+                break;
+            }
+            if(temp_retval == JSVAL_VOID) {
+                break;
+            }
+            
+            JSAutoCompartment ac(cx, obj);
+            if (retVal) {
+                bRet = JS_CallFunctionName(cx, obj, name, argc, vp, retVal);
+            }
+            else {
+                jsval jsret;
+                bRet = JS_CallFunctionName(cx, obj, name, argc, vp, &jsret);
+            }
+        }
+    }while(0);
+    return bRet;
 }
 
 int ScriptingCore::executeAccelerometerEvent(CCLayer *pLayer, CCAcceleration *pAccelerationValue) {
@@ -880,7 +882,7 @@ int ScriptingCore::executeCustomTouchesEvent(int eventType,
     }
 
     jsval jsretArrVal = OBJECT_TO_JSVAL(jsretArr);
-    executeJSFunctionWithName(this->cx_, obj, funcName.c_str(), jsretArrVal, retval);
+    executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), funcName.c_str(), 1, &jsretArrVal, &retval);
     JS_RemoveObjectRoot(this->cx_, &jsretArr);
 
     for(CCSetIterator it = pTouches->begin(); it != pTouches->end(); ++it, ++count) {
@@ -901,7 +903,7 @@ int ScriptingCore::executeCustomTouchEvent(int eventType,
     jsval jsTouch;
     getJSTouchObject(this->cx_, pTouch, jsTouch);
 
-    executeJSFunctionWithName(this->cx_, obj, funcName.c_str(), jsTouch, retval);
+    executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), funcName.c_str(), 1, &jsTouch, &retval);
 
     // Remove touch object from global hash table and unroot it.
     removeJSTouchObject(this->cx_, pTouch, jsTouch);
@@ -920,7 +922,7 @@ int ScriptingCore::executeCustomTouchEvent(int eventType,
     jsval jsTouch;
     getJSTouchObject(this->cx_, pTouch, jsTouch);
 
-    executeJSFunctionWithName(this->cx_, obj, funcName.c_str(), jsTouch, retval);
+    executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), funcName.c_str(), 1, &jsTouch, &retval);
 
     // Remove touch object from global hash table and unroot it.
     removeJSTouchObject(this->cx_, pTouch, jsTouch);
