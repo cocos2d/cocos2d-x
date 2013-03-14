@@ -290,6 +290,7 @@ public:
     virtual void setContentSize(const CCSize& size);
 	virtual void setAnchorPoint(const CCPoint& anchorPoint);
     virtual void visit(void);
+	virtual void onEnter(void);
     virtual void onExit(void);
     virtual void keyboardWillShow(CCIMEKeyboardNotificationInfo& info);
     virtual void keyboardDidShow(CCIMEKeyboardNotificationInfo& info);
