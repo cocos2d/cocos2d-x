@@ -166,33 +166,6 @@ JSObject* bind_menu_item(JSContext *cx, T* nativeObj, jsval callback, jsval this
 	}
 }
 
-JSBool js_cocos2dx_CCNode_getChildren(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	JSObject *thisObj = JS_THIS_OBJECT(cx, vp);
-	if (thisObj) {
-		js_proxy_t *proxy;
-		JS_GET_NATIVE_PROXY(proxy, thisObj);
-		if (proxy) {
-			cocos2d::CCNode *node = (cocos2d::CCNode *)(proxy->ptr ? proxy->ptr : NULL);
-			cocos2d::CCArray *children = node->getChildren();
-            unsigned int count = children ? children->count() : 0;
-			JSObject *jsarr = JS_NewArrayObject(cx, count, NULL);
-
-			for (unsigned int i=0; i < count; i++) {
-				cocos2d::CCNode *child = (cocos2d::CCNode*)children->objectAtIndex(i);
-				js_proxy_t *childProxy = js_get_or_create_proxy<cocos2d::CCNode>(cx, child);
-				jsval childVal = OBJECT_TO_JSVAL(childProxy->obj);
-				JS_SetElement(cx, jsarr, i, &childVal);
-			}
-
-			JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsarr));
-            return JS_TRUE;
-		}
-	}
-    JS_ReportError(cx, "Error in js_cocos2dx_CCNode_getChildren");
-	return JS_FALSE;
-}
-
 JSBool js_cocos2dx_CCMenu_create(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
@@ -1340,8 +1313,6 @@ JSBool js_CCNode_schedule(JSContext *cx, uint32_t argc, jsval *vp)
 		JS_GET_NATIVE_PROXY(proxy, obj);
 		cocos2d::CCNode *node = (cocos2d::CCNode *)(proxy ? proxy->ptr : NULL);
         CCScheduler *sched = node->getScheduler();
-
-        js_proxy_t *p = js_get_or_create_proxy<cocos2d::CCScheduler>(cx, sched);        
 
         JSScheduleWrapper *tmpCobj = NULL;
 
@@ -2595,19 +2566,29 @@ JSBool js_cocos2dx_CCFileUtils_getStringFromFile(JSContext *cx, uint32_t argc, j
         unsigned long size = 0;
         unsigned char* ret = cobj->getFileData(arg0, "rb", &size);
         if (ret && size > 0) {
-            JSString* str = JS_NewStringCopyN(cx, (const char*)ret, (size_t)size);
+            //JSString* str = JS_NewStringCopyN(cx, (const char*)ret, (size_t)size);
+            jschar* strUTF16 = (jschar*)cc_utf8_to_utf16((char*)ret);
+            JSString* str = JS_NewUCStringCopyZ(cx, strUTF16);
             if (str != NULL) {
                 JS_SET_RVAL(cx, vp, STRING_TO_JSVAL(str));
             }
             else {
                 JS_SET_RVAL(cx, vp, JSVAL_NULL);
             }
+            delete[] strUTF16;
             return JS_TRUE;
         }
         JS_ReportError(cx, "get file(%s) data fails", arg0);
         return JS_FALSE;
     }
     JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 3);
+    return JS_FALSE;
+}
+
+JSBool js_cocos2dx_CCFileUtils_getByteArrayFromFile(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    // TODO:
+    CCAssert(false, "not implemented!");
     return JS_FALSE;
 }
 
@@ -2648,7 +2629,7 @@ void register_cocos2dx_js_extensions(JSContext* cx, JSObject* global)
 	JS_DefineFunction(cx, global, "__getPlatform", js_platform, 0, JSPROP_READONLY | JSPROP_PERMANENT);
 
 	JSObject *tmpObj;
-	JS_DefineFunction(cx, jsb_CCNode_prototype, "getChildren", js_cocos2dx_CCNode_getChildren, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+
 	JS_DefineFunction(cx, jsb_CCNode_prototype, "copy", js_cocos2dx_CCNode_copy, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_CCNode_prototype, "onExit", js_doNothing, 1, JSPROP_ENUMERATE  | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_CCNode_prototype, "onEnter", js_doNothing, 1, JSPROP_ENUMERATE  | JSPROP_PERMANENT);
@@ -2686,6 +2667,8 @@ void register_cocos2dx_js_extensions(JSContext* cx, JSObject* global)
     JS_DefineFunction(cx, jsb_CCFileUtils_prototype, "getSearchPaths", js_cocos2dx_CCFileUtils_getSearchPaths, 0, JSPROP_PERMANENT );
     JS_DefineFunction(cx, jsb_CCFileUtils_prototype, "getSearchResolutionsOrder", js_cocos2dx_CCFileUtils_getSearchResolutionsOrder, 0, JSPROP_PERMANENT );
     JS_DefineFunction(cx, jsb_CCFileUtils_prototype, "getStringFromFile", js_cocos2dx_CCFileUtils_getStringFromFile, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+    
+    JS_DefineFunction(cx, jsb_CCFileUtils_prototype, "getByteArrayFromFile", js_cocos2dx_CCFileUtils_getByteArrayFromFile, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     
     tmpObj = JSVAL_TO_OBJECT(anonEvaluate(cx, global, "(function () { return cc.BezierBy; })()"));
     JS_DefineFunction(cx, tmpObj, "create", JSB_CCBezierBy_actionWithDuration, 2, JSPROP_READONLY | JSPROP_PERMANENT);

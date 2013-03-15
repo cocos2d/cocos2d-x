@@ -71,6 +71,8 @@ Developers:
         Used fontconfig to enhance font rendering on linux.
         Fixed a bug about missing horizontal alignment for Custom TTF fonts on linux.
         Fixed a bug that the truetype fonts from resource directory can't be found on linux.
+        Fixed the size calculations for true type fonts (especially for italic fonts).
+        Added a very simple greedy line break algorithmfor true type labels.
 
     Nat Weiss (iphonegamekit.com)
         author of Mac port
@@ -225,6 +227,7 @@ Developers:
 
     neokim
         Adds 'setFont' and 'setAnchorPoint' to CCEditBox.
+        Workaround for some problems due to UITextField of CCEditBoxImplIOS is attached as a view above OpenGL view.
 
     Sam Clegg (sbc100)
         Author of Native Client port.
@@ -240,6 +243,9 @@ Developers:
 
     Asad ur Rehman (AsadR)
         Adding CCNotificationCenter::removeAllObservers(CCObject *target).
+
+    jedy
+        Fix of CCNode.h's document with doxygen 1.8.3 can't be generated.
 
 Retired Core Developers:
     WenSheng Yang

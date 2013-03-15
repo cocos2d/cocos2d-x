@@ -66,7 +66,7 @@ public:
     virtual void doAnimationWhenKeyboardMove(float duration, float distance);
     virtual void openKeyboard();
     virtual void closeKeyboard();
-    
+    virtual void onEnter(void);
 private:
 
     CCLabelTTF* m_pLabel;

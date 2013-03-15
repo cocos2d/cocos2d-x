@@ -5,72 +5,12 @@ local MAX_LAYER = 2
 local background = nil
 
 local labelAtlas = nil
-local titleLabel = nil
-local subtitleLabel = nil
 local baseLayer_entry = nil
 
 local s = CCDirector:sharedDirector():getWinSize()
 
-
-local function backAction()
-    SceneIdx = SceneIdx - 1
-    if SceneIdx < 0 then
-        SceneIdx = SceneIdx + MAX_LAYER
-    end
-
-    return CreateParticleLayer()
-end
-
-local function restartAction()
-    return CreateParticleLayer()
-end
-
-local function nextAction()
-    SceneIdx = SceneIdx + 1
-    SceneIdx = math.mod(SceneIdx, MAX_LAYER)
-
-    return CreateDrawPrimitivesTestLayer()
-end
-
-local function backCallback(sender)
-    local scene = CCScene:create()
-
-    scene:addChild(backAction())
-    scene:addChild(CreateBackMenuItem())
-
-    CCDirector:sharedDirector():replaceScene(scene)
-end
-
-local function restartCallback(sender)
-    local scene = CCScene:create()
-
-    scene:addChild(restartAction())
-    scene:addChild(CreateBackMenuItem())
-
-    CCDirector:sharedDirector():replaceScene(scene)
-end
-
-local function nextCallback(sender)
-    local scene = CCScene:create()
-
-    scene:addChild(nextAction())
-    scene:addChild(CreateBackMenuItem())
-
-    CCDirector:sharedDirector():replaceScene(scene)
-end
-
-
 local function getBaseLayer()
 	local layer = CCLayer:create()
-
-    titleLabel = CCLabelTTF:create("", "Arial", 28)
-    layer:addChild(titleLabel, 100, 1000)
-    titleLabel:setPosition(s.width / 2, s.height - 50)
-
-    subtitleLabel = CCLabelTTF:create("", "Arial", 16)
-    layer:addChild(subtitleLabel, 100)
-    subtitleLabel:setPosition(s.width / 2, s.height - 80)
-
 
     local item1 = CCMenuItemImage:create(s_pPathB1, s_pPathB2)
     local item2 = CCMenuItemImage:create(s_pPathR1, s_pPathR2)
@@ -82,26 +22,13 @@ local function getBaseLayer()
 	item2:registerScriptTapHandler(restartCallback)
 	item3:registerScriptTapHandler(nextCallback)
 
-    local menu = CCMenu:create()
-	menu:addChild(item1)
-	menu:addChild(item2)
-	menu:addChild(item3)
-	menu:addChild(item4)
-
-    menu:setPosition(CCPointMake(0, 0))
-    item1:setPosition(CCPointMake(s.width/2 - item2:getContentSize().width * 2, item2:getContentSize().height / 2))
-    item2:setPosition(CCPointMake(s.width/2, item2:getContentSize().height / 2))
-    item3:setPosition(CCPointMake(s.width/2 + item2:getContentSize().width * 2, item2:getContentSize().height / 2))
-	item4:setPosition(ccp(0, 100))
-    item4:setAnchorPoint(ccp(0, 0))
-
-    layer:addChild(menu, 100)
-
     labelAtlas = CCLabelAtlas:create("0000", "fps_images.png", 12, 32, string.byte('.'))
     layer:addChild(labelAtlas, 100)
     labelAtlas:setPosition(ccp(s.width - 66, 50))
 
 	layer:setTouchEnabled(false)
+
+    Helper.initWithLayer(layer)
 
 	return layer
 end
@@ -199,8 +126,11 @@ function DrawPrimitivesTest()
 	cclog("DrawPrimitivesTest")
 	local scene = CCScene:create()
 
-	SceneIdx = -1
-	scene:addChild(nextAction())
+    Helper.createFunctionTable = {
+        drawPrimitivesTest
+    }
+
+	scene:addChild(drawPrimitivesTest())
 	scene:addChild(CreateBackMenuItem())
 
 	return scene

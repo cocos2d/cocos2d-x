@@ -48,7 +48,7 @@ CCEditBox::~CCEditBox(void)
 
 
 void CCEditBox::touchDownAction(CCObject *sender, CCControlEvent controlEvent)
-{    
+{
     m_pEditBoxImpl->openKeyboard();
 }
 
@@ -84,6 +84,7 @@ bool CCEditBox::initWithSizeAndBackgroundSprite(const CCSize& size, CCScale9Spri
         m_pEditBoxImpl = __createSystemEditBox(this);
         m_pEditBoxImpl->initWithSize(size);
         
+        this->setZoomOnTouchDown(false);
         this->setPreferredSize(size);
         this->setPosition(ccp(0, 0));
         this->addTargetWithActionForControlEvent(this, cccontrol_selector(CCEditBox::touchDownAction), CCControlEventTouchUpInside);
@@ -118,10 +119,12 @@ const char* CCEditBox::getText(void)
 {
     if (m_pEditBoxImpl != NULL)
     {
-        return m_pEditBoxImpl->getText();
+		const char* pText = m_pEditBoxImpl->getText();
+		if(pText != NULL)
+			return pText;
     }
     
-    return NULL;
+    return "";
 }
 
 void CCEditBox::setFont(const char* pFontName, int fontSize)
@@ -268,6 +271,15 @@ void CCEditBox::visit(void)
     }
 }
 
+void CCEditBox::onEnter(void)
+{
+    CCControlButton::onEnter();
+    if (m_pEditBoxImpl != NULL)
+    {
+        m_pEditBoxImpl->onEnter();
+    }
+}
+
 void CCEditBox::onExit(void)
 {
     CCControlButton::onExit();
@@ -280,7 +292,9 @@ void CCEditBox::onExit(void)
 
 static CCRect getRect(CCNode * pNode)
 {
-    return pNode->boundingBox();
+	CCSize contentSize = pNode->getContentSize();
+	CCRect rect = CCRectMake(0, 0, contentSize.width, contentSize.height);
+	return CCRectApplyAffineTransform(rect, pNode->nodeToWorldTransform());
 }
 
 void CCEditBox::keyboardWillShow(CCIMEKeyboardNotificationInfo& info)
@@ -289,10 +303,7 @@ void CCEditBox::keyboardWillShow(CCIMEKeyboardNotificationInfo& info)
     CCRect rectTracked = getRect(this);
 	// some adjustment for margin between the keyboard and the edit box.
 	rectTracked.origin.y -= 4;
-    if (m_pParent != NULL)
-    {
-        rectTracked.origin = m_pParent->convertToWorldSpace(rectTracked.origin);
-    }
+
     // if the keyboard area doesn't intersect with the tracking node area, nothing needs to be done.
     if (!rectTracked.intersectsRect(info.end))
     {
@@ -312,7 +323,7 @@ void CCEditBox::keyboardWillShow(CCIMEKeyboardNotificationInfo& info)
 
 void CCEditBox::keyboardDidShow(CCIMEKeyboardNotificationInfo& info)
 {
-
+	
 }
 
 void CCEditBox::keyboardWillHide(CCIMEKeyboardNotificationInfo& info)
@@ -326,7 +337,7 @@ void CCEditBox::keyboardWillHide(CCIMEKeyboardNotificationInfo& info)
 
 void CCEditBox::keyboardDidHide(CCIMEKeyboardNotificationInfo& info)
 {
-
+	
 }
 
 
