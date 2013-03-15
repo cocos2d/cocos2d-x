@@ -242,6 +242,9 @@ Developers:
     Asad ur Rehman (AsadR)
         Adding CCNotificationCenter::removeAllObservers(CCObject *target).
 
+    jedy
+        Fix of CCNode.h's document with doxygen 1.8.3 can't be generated.
+
 Retired Core Developers:
     WenSheng Yang
         Author of windows port, CCTextField,
