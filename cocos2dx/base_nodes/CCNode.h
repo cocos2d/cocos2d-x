@@ -125,7 +125,6 @@ enum {
 class CC_DLL CCNode : public CCObject
 {
 public:
-    //////////////////////////////
     /// @{
     /// @name Constructor, Distructor and Initializers
     
@@ -160,7 +159,6 @@ public:
     
     
     
-    ///////////////////////////////////////////////////////
     /// @{
     /// @name Setters & Getters for Graphic Peroperties
     
@@ -549,7 +547,6 @@ public:
     /// @}  end of Setters & Getters for Graphic Peroperties
     
     
-    ///////////////////////////////////////////////////////
     /// @{
     /// @name Children and Parent
     
@@ -705,7 +702,6 @@ public:
     
 
     
-    ////////////////////////////////////
     /// @{
     /// @name Grid object for effects
     
@@ -725,7 +721,6 @@ public:
     /// @} end of Grid
     
     
-    /////////////////////////////////////
     /// @{
     /// @name Tag & User data
     
@@ -814,7 +809,6 @@ public:
     /// @} end of Tag & User Data
     
     
-    ///////////////////////////////
     /// @{
     /// @name Shader Program
     /**
@@ -837,8 +831,6 @@ public:
     virtual void setShaderProgram(CCGLProgram *pShaderProgram);
     /// @} end of Shader Program
     
-    ///////////////////////////////////////
-    ///////////////////////////////////////
     
     /**
      * Returns a camera object that lets you move the node using a gluLookAt
@@ -863,7 +855,6 @@ public:
     virtual bool isRunning();
 
     
-    /////////////////////////////////
     /// @{
     /// @name Script Bindings for lua
 
@@ -912,7 +903,6 @@ public:
     /// @}  end Script Bindings
 
 
-    //////////////////////////
     /// @{
     /// @name Event Callbacks
     
@@ -981,7 +971,6 @@ public:
      */
     CCRect boundingBox(void);
 
-    /////////////////////////////////////////
     /// @{
     /// @name Actions
 
@@ -1053,7 +1042,6 @@ public:
     /// @} end of Actions
     
     
-    //////////////////
     /// @{
     /// @name Scheduler and Timer
 
@@ -1176,9 +1164,9 @@ public:
      * Update method will be called automatically every frame if "scheduleUpdate" is called, and the node is "live"
      */
     virtual void update(float delta);
-    
 
-    ////////////////////////////
+    /// @} end of Scheduler and Timer
+
     /// @{
     /// @name Transformations
     
@@ -1226,7 +1214,6 @@ public:
     /// @} end of Transformations
     
     
-    ///////////////////
     /// @{
     /// @name Coordinate Converters
     

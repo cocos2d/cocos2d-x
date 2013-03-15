@@ -100,7 +100,7 @@ public:
     virtual bool executeAssert(bool cond, const char *msg = NULL) {return false;}
 
     bool executeFunctionWithObjectData(CCNode *self, const char *name, JSObject *obj);
-    int executeFunctionWithOwner(jsval owner, const char *name, jsval data);
+    JSBool executeFunctionWithOwner(jsval owner, const char *name, uint32_t argc = 0, jsval* vp = NULL, jsval* retVal = NULL);
 
     void executeJSFunctionWithThisObj(jsval thisObj, jsval callback, jsval *data);
 
@@ -268,7 +268,8 @@ public:
 	}
 	~JSStringWrapper() {
 		if (buffer) {
-			JS_free(ScriptingCore::getInstance()->getGlobalContext(), (void*)buffer);
+			//JS_free(ScriptingCore::getInstance()->getGlobalContext(), (void*)buffer);
+            delete[] buffer;
 		}
 	}
 	void set(jsval val, JSContext* cx) {
@@ -282,8 +283,12 @@ public:
 		string = str;
 		if (!cx) {
 			cx = ScriptingCore::getInstance()->getGlobalContext();
+            
 		}
-        buffer = JS_EncodeString(cx, string);
+        // JS_EncodeString isn't supported in SpiderMonkey ff19.0.
+        //buffer = JS_EncodeString(cx, string);
+        unsigned short* pStrUTF16 = (unsigned short*)JS_GetStringCharsZ(cx, str);
+        buffer = cc_utf16_to_utf8(pStrUTF16, -1, NULL, NULL);
 	}
 	std::string get() {
         return buffer;

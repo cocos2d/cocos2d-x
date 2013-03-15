@@ -29,7 +29,7 @@
 #include "js_bindings_chipmunk_registration.h"
 
 
-#pragma mark - Hash
+//#pragma mark - Hash
 
 using namespace cocos2d;
 
@@ -63,33 +63,13 @@ static JSClass global_class = {
 	JSCLASS_NO_OPTIONAL_MEMBERS
 };
 
-#pragma mark JSBCore - Helper free functions
+//#pragma mark JSBCore - Helper free functions
 static void reportError(JSContext *cx, const char *message, JSErrorReport *report)
 {
 	fprintf(stderr, "%s:%u:%s\n",  
 			report->filename ? report->filename : "<no filename=\"filename\">",  
 			(unsigned int) report->lineno,  
 			message);
-};
-
-#pragma mark JSBCore - Free JS functions
-
-JSBool JSBCore_log(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	if (argc > 0) {
-		JSString *string = NULL;
-		JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "S", &string);
-		if (string) {
-            char* log_str = JS_EncodeString(cx, string);
-			if (log_str) {
-				CCLOG(log_str);
-				JS_free(cx, (void*)log_str);
-			}
-		}
-		
-		return JS_TRUE;
-	}
-	return JS_FALSE;
 };
 
 
@@ -130,7 +110,7 @@ void jsb_del_proxy_for_jsobject(JSObject *obj)
 	}
 }
 
-#pragma mark Proxy -> JSObject
+//#pragma mark Proxy -> JSObject
 
 // Reverse hash: Proxy -> JSObject
 JSObject* jsb_get_jsobject_for_proxy(void *proxy)
@@ -165,10 +145,10 @@ void jsb_del_jsobject_for_proxy(void* proxy)
 	}	
 }
 
-#pragma mark
+//#pragma mark
 
 
-#pragma mark "C" proxy functions
+//#pragma mark "C" proxy functions
 
 struct jsb_c_proxy_s* jsb_get_c_proxy_for_jsobject( JSObject *jsobj )
 {
@@ -199,7 +179,7 @@ void jsb_set_c_proxy_for_jsobject( JSObject *jsobj, void *handle, unsigned long 
 }
 
 
-#pragma mark Do Nothing - Callbacks
+//#pragma mark Do Nothing - Callbacks
 
 JSBool JSB_do_nothing(JSContext *cx, uint32_t argc, jsval *vp)
 {
