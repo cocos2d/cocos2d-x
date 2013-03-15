@@ -87,6 +87,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libJSBinding", "scripting\j
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CrystalCraze", "samples\Javascript\CrystalCraze\proj.win32\CrystalCraze.vcxproj", "{9A17D9A4-4B11-4E32-94F6-895FF4909EC5}"
+	ProjectSection(ProjectDependencies) = postProject
+		{21B2C324-891F-48EA-AD1A-5AE13DE12E28} = {21B2C324-891F-48EA-AD1A-5AE13DE12E28}
+		{39379840-825A-45A0-B363-C09FFEF864BD} = {39379840-825A-45A0-B363-C09FFEF864BD}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AssetsManagerTest", "samples\Cpp\AssetsManagerTest\proj.win32\AssetsManagerTest.vcxproj", "{6D37505F-A890-441D-BD3F-A61E2C0469CE}"
 EndProject
