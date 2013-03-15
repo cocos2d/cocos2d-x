@@ -21,7 +21,7 @@
 using namespace std;
 
 // as FcFontMatch is quite an expensive call, cache the results of getFontFile
-std::map<std::string, std::string> fontCache;
+static std::map<std::string, std::string> fontCache;
 
 struct LineBreakGlyph {
 	FT_UInt glyphIndex;
