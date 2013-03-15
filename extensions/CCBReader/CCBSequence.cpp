@@ -43,6 +43,28 @@ void CCBSequence::setSequenceId(int nSequenceId)
     mSequenceId = nSequenceId;
 }
 
+CCBSequenceProperty* CCBSequence::getCallbackChannel()
+{
+    return mCallbackChannel;
+}
+
+void CCBSequence::setCallbackChannel(CCBSequenceProperty* callbackChannel)
+{
+    mCallbackChannel = callbackChannel;
+}
+
+
+CCBSequenceProperty* CCBSequence::getSoundChannel()
+{
+    return mSoundChannel;
+}
+
+void CCBSequence::setSoundChannel(CCBSequenceProperty* soundChannel)
+{
+    mSoundChannel = mCallbackChannel;
+}
+
+
 int CCBSequence::getChainedSequenceId()
 {
     return mChainedSequenceId;
