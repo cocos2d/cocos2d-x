@@ -6,6 +6,7 @@
 #include "CCNode+CCBRelativePositioning.h"
 #include <string>
 #include <set>
+#include "SimpleAudioEngine.h"
 
 using namespace cocos2d;
 using namespace std;
@@ -21,6 +22,8 @@ CCBAnimationManager::CCBAnimationManager()
 , mAutoPlaySequenceId(0)
 , mRootNode(NULL)
 , mRootContainerSize(CCSizeZero)
+, mOwner(NULL)
+, jsControlled(false)
 , mDelegate(NULL)
 , mRunningSequence(NULL)
 {
@@ -37,7 +40,9 @@ bool CCBAnimationManager::init()
     mDocumentOutletNodes = new CCArray();
     mDocumentCallbackNames = new CCArray();
     mDocumentCallbackNodes = new CCArray();
-    
+    mKeyframeCallbacks = new CCArray();
+    mKeyframeCallFuncs = new CCDictionary();
+
     mTarget = NULL;
     mAnimationCompleteCallbackFunc = NULL;
     
@@ -69,7 +74,9 @@ CCBAnimationManager::~CCBAnimationManager()
     CC_SAFE_RELEASE(mDocumentOutletNodes);
     CC_SAFE_RELEASE(mDocumentCallbackNames);
     CC_SAFE_RELEASE(mDocumentCallbackNodes);
-
+    
+    CC_SAFE_RELEASE(mKeyframeCallFuncs);
+    CC_SAFE_RELEASE(mKeyframeCallbacks);
     CC_SAFE_RELEASE(mTarget);
 }
 
@@ -147,6 +154,10 @@ CCArray* CCBAnimationManager::getDocumentOutletNodes() {
 
 std::string CCBAnimationManager::getLastCompletedSequenceName() {
     return lastCompletedSequenceName;
+}
+
+CCArray* CCBAnimationManager::getKeyframeCallbacks() {
+    return mKeyframeCallbacks;
 }
 
 const CCSize& CCBAnimationManager::getRootContainerSize()
@@ -345,6 +356,15 @@ CCActionInterval* CCBAnimationManager::getAction(CCBKeyframe *pKeyframe0, CCBKey
         
         return CCScaleTo::create(duration, x, y);
     }
+    else if(strcmp(pPropName, "skew") == 0) 
+    {
+        // Get relative skew
+        CCArray *value = (CCArray*)pKeyframe1->getValue();
+        float x = ((CCBValue*)value->objectAtIndex(0))->getFloatValue();
+        float y = ((CCBValue*)value->objectAtIndex(1))->getFloatValue();
+        
+	return CCSkewTo::create(duration, x, y);
+    }
     else 
     {
         CCLog("CCBReader: Failed to create animation for property: %s", pPropName);
@@ -398,6 +418,17 @@ void CCBAnimationManager::setAnimatedProperty(const char *pPropName, CCNode *pNo
             
             setRelativeScale(pNode, x, y, type, pPropName);
         }
+	else if(strcmp(pPropName, "skew") == 0)
+	{
+            
+            // Get relative scale
+            CCArray *value = (CCArray*)pValue;
+            float x = ((CCBValue*)value->objectAtIndex(0))->getFloatValue();
+            float y = ((CCBValue*)value->objectAtIndex(1))->getFloatValue();
+
+	    pNode->setSkewX(x);
+	    pNode->setSkewY(y);
+	}
         else 
         {
             // [node setValue:value forKey:name];
@@ -525,6 +556,97 @@ CCActionInterval* CCBAnimationManager::getEaseAction(CCActionInterval *pAction, 
     }
 }
 
+CCObject* CCBAnimationManager::actionForCallbackChannel(CCBSequenceProperty* channel) {
+  
+    float lastKeyframeTime = 0;
+    
+    CCArray *actions = CCArray::create();
+    CCArray *keyframes = channel->getKeyframes();
+    int numKeyframes = keyframes->count();
+
+    for (int i = 0; i < numKeyframes - 1; ++i) {
+
+        CCBKeyframe *keyframe = (CCBKeyframe*)keyframes->objectAtIndex(i);
+        float timeSinceLastKeyframe = keyframe->getTime() - lastKeyframeTime;
+	if(timeSinceLastKeyframe > 0) {
+	    actions->addObject(CCDelayTime::create(timeSinceLastKeyframe));
+	}
+	
+	CCArray* keyVal = (CCArray *)keyframe->getValue();
+	std::string selectorName = ((CCString *)keyVal->objectAtIndex(0))->getCString();
+    int selectorTarget = atoi(((CCString *)keyVal->objectAtIndex(0))->getCString());
+	
+	if(jsControlled) {
+
+	    stringstream ss;//create a stringstream
+	    ss << selectorTarget;//add number to the stream
+	    std::string callbackName = ss.str() + ":" + selectorName;
+	    CCCallFuncN *callback = (CCCallFuncN*)mKeyframeCallFuncs->objectForKey(callbackName.c_str());
+
+	    if(callback != NULL) {
+	        actions->addObject(callback);
+	    }
+	} else {
+	  CCObject *target;
+	  if(selectorTarget == kCCBTargetTypeDocumentRoot) target = mRootNode; // CHECK THIS
+	  else if (selectorTarget == kCCBTargetTypeDocumentRoot) target = mOwner;
+        bool selector = true;
+	  // FIX THIS	  SEL selector = getSlectorSomehow;
+	  
+	  if(target && selector) {
+	    // FIX THIS actions->addObject(CCCallFunc::create(this, callfunc_selector(CCBAnimationManager::sequenceCompleted)));
+	  }
+	}
+    }
+
+    if(actions->count() < 1) return NULL;
+    
+    return (CCObject *) CCSequence::create(actions);
+}
+
+CCObject* CCBAnimationManager::actionForSoundChannel(CCBSequenceProperty* channel) {
+    
+    float lastKeyframeTime = 0;
+    
+    CCArray *actions = CCArray::create();
+    CCArray *keyframes = channel->getKeyframes();
+    int numKeyframes = keyframes->count();
+
+    for (int i = 0; i < numKeyframes - 1; ++i) {
+
+        CCBKeyframe *keyframe = (CCBKeyframe*)keyframes->objectAtIndex(i);
+        float timeSinceLastKeyframe = keyframe->getTime() - lastKeyframeTime;
+        if(timeSinceLastKeyframe > 0) {
+            actions->addObject(CCDelayTime::create(timeSinceLastKeyframe));
+        }
+	
+        stringstream ss (stringstream::in | stringstream::out);
+        CCArray* keyVal = (CCArray*)keyframe->getValue();
+        std::string soundFile = ((CCString *)keyVal->objectAtIndex(0))->getCString();
+    
+        float pitch, pan, gain;
+        ss << ((CCString *)keyVal->objectAtIndex(1))->getCString();
+        ss >> pitch;
+        ss.flush();
+    
+        ss << ((CCString *)keyVal->objectAtIndex(2))->getCString();
+        ss >> pan;
+        ss.flush();
+        
+        ss << ((CCString *)keyVal->objectAtIndex(3))->getCString();
+        ss >> gain;
+        ss.flush();
+        
+        actions->addObject(CCBSoundEffect::actionWithSoundFile(soundFile, pitch, pan, gain));
+    }
+
+    if(actions->count() < 1) return NULL;
+    
+    return (CCObject *) CCSequence::create(actions);    
+}
+
+
+
 void CCBAnimationManager::runAction(CCNode *pNode, CCBSequenceProperty *pSeqProp, float fTweenDuration)
 {
     CCArray *keyframes = pSeqProp->getKeyframes();
@@ -638,6 +760,21 @@ void CCBAnimationManager::runAnimationsForSequenceIdTweenDuration(int nSeqId, fl
     mRootNode->runAction(completeAction);
     
     // Set the running scene
+
+    if(seq->getCallbackChannel() != NULL) {
+        CCAction* action = (CCAction *)actionForCallbackChannel(seq->getCallbackChannel());
+	if(action != NULL) {
+	    mRootNode->runAction(action);
+	}
+    } 
+
+    if(seq->getSoundChannel() != NULL) {
+        CCAction* action = (CCAction *)actionForSoundChannel(seq->getSoundChannel());
+	if(action != NULL) {
+	    mRootNode->runAction(action);
+	}
+    } 
+
     mRunningSequence = getSequence(nSeqId);
 }
 
@@ -670,6 +807,10 @@ void CCBAnimationManager::setAnimationCompletedCallback(CCObject *target, SEL_Ca
     
     mTarget = target;
     mAnimationCompleteCallbackFunc = callbackFunc;
+}
+
+void CCBAnimationManager::setCallFunc(CCCallFuncN* callFunc, const std::string &callbackNamed) {
+    mKeyframeCallFuncs->setObject((CCObject*)callFunc, callbackNamed);
 }
 
 void CCBAnimationManager::sequenceCompleted()
@@ -758,6 +899,39 @@ void CCBSetSpriteFrame::update(float time)
 {
     ((CCSprite*)m_pTarget)->setDisplayFrame(mSpriteFrame);
 }
+
+
+
+/************************************************************
+ CCBSoundEffect
+ ************************************************************/
+
+CCBSoundEffect* CCBSoundEffect::actionWithSoundFile(const std::string &filename, float pitch, float pan, float gain) {
+  CCBSoundEffect* pRet = new CCBSoundEffect();
+  if (pRet != NULL && pRet->initWithSoundFile(filename, pitch, pan, gain))
+    {
+      pRet->autorelease();
+    }
+  else
+    {
+      CC_SAFE_DELETE(pRet);
+    }
+  return pRet;
+}
+
+bool CCBSoundEffect::initWithSoundFile(const std::string &filename, float pitch, float pan, float gain) {
+    mSoundFile = filename;
+    mPitch = pitch;
+    mPan = pan;
+    mGain = gain;
+    return true;
+}
+
+void CCBSoundEffect::update(float time)
+{
+    CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect(mSoundFile.c_str());
+}
+
 
 /************************************************************
  CCBRotateTo

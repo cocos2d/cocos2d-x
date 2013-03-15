@@ -10,6 +10,7 @@ NS_CC_EXT_BEGIN
 
 #define PROPERTY_POSITION "position"
 #define PROPERTY_CONTENTSIZE "contentSize"
+#define PROPERTY_SKEW "skew"
 #define PROPERTY_ANCHORPOINT "anchorPoint"
 #define PROPERTY_SCALE "scale"
 #define PROPERTY_ROTATION "rotation"
@@ -80,6 +81,7 @@ class CCNodeLoader : public CCObject {
         virtual BlockData * parsePropTypeBlock(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader);
         virtual BlockCCControlData * parsePropTypeBlockCCControl(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader);
         virtual CCNode * parsePropTypeCCBFile(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader);
+        virtual float * parsePropTypeFloatXY(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader);
 
 
         virtual void onHandlePropTypePosition(CCNode * pNode, CCNode * pParent, const char* pPropertyName, CCPoint pPosition, CCBReader * pCCBReader);
@@ -93,6 +95,8 @@ class CCNodeLoader : public CCObject {
         virtual void onHandlePropTypeInteger(CCNode * pNode, CCNode * pParent, const char* pPropertyName, int pInteger, CCBReader * pCCBReader);
         virtual void onHandlePropTypeIntegerLabeled(CCNode * pNode, CCNode * pParent, const char* pPropertyName, int pIntegerLabeled, CCBReader * pCCBReader);
         virtual void onHandlePropTypeFloatVar(CCNode * pNode, CCNode * pParent, const char* pPropertyName, float * pFoatVar, CCBReader * pCCBReader);
+        virtual void onHandlePropTypeFloatXY(CCNode * pNode, CCNode * pParent, const char* pPropertyName, float * pFoatVar, CCBReader * pCCBReader);
+
         virtual void onHandlePropTypeCheck(CCNode * pNode, CCNode * pParent, const char* pPropertyName, bool pCheck, CCBReader * pCCBReader);
         virtual void onHandlePropTypeSpriteFrame(CCNode * pNode, CCNode * pParent, const char* pPropertyName, CCSpriteFrame * pCCSpriteFrame, CCBReader * pCCBReader);
         virtual void onHandlePropTypeAnimation(CCNode * pNode, CCNode * pParent, const char* pPropertyName, CCAnimation * pCCAnimation, CCBReader * pCCBReader);
