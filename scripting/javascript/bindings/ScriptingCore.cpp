@@ -1282,45 +1282,46 @@ JSBool jsval_to_ccarray(JSContext* cx, jsval v, CCArray** ret) {
 jsval ccarray_to_jsval(JSContext* cx, CCArray *arr)
 {
     JSObject *jsretArr = JS_NewArrayObject(cx, 0, NULL);
+    if (arr && arr->count() > 0) {
+        for(unsigned int i = 0; i < arr->count(); ++i) {
+            jsval arrElement;
+            CCObject *obj = arr->objectAtIndex(i);
 
-    for(unsigned int i = 0; i < arr->count(); ++i) {
-        jsval arrElement;
-        CCObject *obj = arr->objectAtIndex(i);
-
-        //First, check whether object is associated with js object.
-        js_proxy_t* jsproxy = js_get_or_create_proxy<cocos2d::CCObject>(cx, obj);
-        if (jsproxy) {
-            arrElement = OBJECT_TO_JSVAL(jsproxy->obj);
-        }
-        else {
-            CCString* strVal = NULL;
-            CCDictionary* dictVal = NULL;
-            CCArray* arrVal = NULL;
-            CCDouble* doubleVal = NULL;
-            CCBool* boolVal = NULL;
-            CCFloat* floatVal = NULL;
-            CCInteger* intVal = NULL;
-            
-            if((strVal = dynamic_cast<cocos2d::CCString *>(obj))) {
-                arrElement = c_string_to_jsval(cx, strVal->getCString());
-            } else if ((dictVal = dynamic_cast<cocos2d::CCDictionary*>(obj))) {
-                arrElement = ccdictionary_to_jsval(cx, dictVal);
-            } else if ((arrVal = dynamic_cast<cocos2d::CCArray*>(obj))) {
-                arrElement = ccarray_to_jsval(cx, arrVal);
-            } else if ((doubleVal = dynamic_cast<CCDouble*>(obj))) {
-                arrElement = DOUBLE_TO_JSVAL(doubleVal->getValue());
-            } else if ((floatVal = dynamic_cast<CCFloat*>(obj))) {
-                arrElement = DOUBLE_TO_JSVAL(floatVal->getValue());
-            } else if ((intVal = dynamic_cast<CCInteger*>(obj))) {
-                arrElement = INT_TO_JSVAL(intVal->getValue());
-            }  else if ((boolVal = dynamic_cast<CCBool*>(obj))) {
-                arrElement = BOOLEAN_TO_JSVAL(boolVal->getValue() ? JS_TRUE : JS_FALSE);
-            } else {
-                CCAssert(false, "the type isn't suppored.");
+            //First, check whether object is associated with js object.
+            js_proxy_t* jsproxy = js_get_or_create_proxy<cocos2d::CCObject>(cx, obj);
+            if (jsproxy) {
+                arrElement = OBJECT_TO_JSVAL(jsproxy->obj);
             }
-        }
-        if(!JS_SetElement(cx, jsretArr, i, &arrElement)) {
-            break;
+            else {
+                CCString* strVal = NULL;
+                CCDictionary* dictVal = NULL;
+                CCArray* arrVal = NULL;
+                CCDouble* doubleVal = NULL;
+                CCBool* boolVal = NULL;
+                CCFloat* floatVal = NULL;
+                CCInteger* intVal = NULL;
+            
+                if((strVal = dynamic_cast<cocos2d::CCString *>(obj))) {
+                    arrElement = c_string_to_jsval(cx, strVal->getCString());
+                } else if ((dictVal = dynamic_cast<cocos2d::CCDictionary*>(obj))) {
+                    arrElement = ccdictionary_to_jsval(cx, dictVal);
+                } else if ((arrVal = dynamic_cast<cocos2d::CCArray*>(obj))) {
+                    arrElement = ccarray_to_jsval(cx, arrVal);
+                } else if ((doubleVal = dynamic_cast<CCDouble*>(obj))) {
+                    arrElement = DOUBLE_TO_JSVAL(doubleVal->getValue());
+                } else if ((floatVal = dynamic_cast<CCFloat*>(obj))) {
+                    arrElement = DOUBLE_TO_JSVAL(floatVal->getValue());
+                } else if ((intVal = dynamic_cast<CCInteger*>(obj))) {
+                    arrElement = INT_TO_JSVAL(intVal->getValue());
+                }  else if ((boolVal = dynamic_cast<CCBool*>(obj))) {
+                    arrElement = BOOLEAN_TO_JSVAL(boolVal->getValue() ? JS_TRUE : JS_FALSE);
+                } else {
+                    CCAssert(false, "the type isn't suppored.");
+                }
+            }
+            if(!JS_SetElement(cx, jsretArr, i, &arrElement)) {
+                break;
+            }
         }
     }
     return OBJECT_TO_JSVAL(jsretArr);
