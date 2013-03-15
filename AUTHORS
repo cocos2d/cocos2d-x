@@ -71,6 +71,8 @@ Developers:
         Used fontconfig to enhance font rendering on linux.
         Fixed a bug about missing horizontal alignment for Custom TTF fonts on linux.
         Fixed a bug that the truetype fonts from resource directory can't be found on linux.
+        Fixed the size calculations for true type fonts (especially for italic fonts).
+        Added a very simple greedy line break algorithmfor true type labels.
 
     Nat Weiss (iphonegamekit.com)
         author of Mac port
