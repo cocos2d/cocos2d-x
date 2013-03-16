@@ -69,9 +69,9 @@ public:
      @return other if the string is excuted wrongly.
      */
 	virtual int executeString(const char* codes) { return 0; }
-    void pauseSchedulesAndActions(CCNode *node);
-    void resumeSchedulesAndActions(CCNode *node);
-    void cleanupSchedulesAndActions(CCNode *node);
+    void pauseSchedulesAndActions(js_proxy_t* p);
+    void resumeSchedulesAndActions(js_proxy_t* p);
+    void cleanupSchedulesAndActions(js_proxy_t* p);
 
     /**
      @brief Execute a script file.

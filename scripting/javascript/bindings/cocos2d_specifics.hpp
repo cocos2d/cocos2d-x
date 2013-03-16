@@ -16,7 +16,7 @@ typedef struct jsScheduleFunc_proxy {
 } schedFunc_proxy_t;
 
 typedef struct jsScheduleTarget_proxy {
-    CCNode*   nativeObj;
+    JSObject* jsTargetObj;
     CCArray*  targets;
     UT_hash_handle hh;
 } schedTarget_proxy_t;
@@ -29,7 +29,7 @@ typedef struct jsCallFuncTarget_proxy {
 } callfuncTarget_proxy_t;
 
 extern schedFunc_proxy_t *_schedFunc_target_ht;
-extern schedTarget_proxy_t *_schedTarget_native_ht;
+extern schedTarget_proxy_t *_schedObj_target_ht;
 
 extern callfuncTarget_proxy_t *_callfuncTarget_native_ht;
 
@@ -142,19 +142,17 @@ public:
 class JSScheduleWrapper: public JSCallbackWrapper {
     
 public:
-    JSScheduleWrapper() : m_pTarget(NULL) {}
-    virtual ~JSScheduleWrapper() {
-        return;
-    }
+    JSScheduleWrapper() : _pTarget(NULL), _pPureJSTarget(NULL) {}
+    virtual ~JSScheduleWrapper();
 
     static void setTargetForSchedule(jsval sched, JSScheduleWrapper *target);
     static CCArray * getTargetForSchedule(jsval sched);
-    static void setTargetForNativeNode(CCNode *pNode, JSScheduleWrapper *target);
-    static CCArray * getTargetForNativeNode(CCNode *pNode);
-	// Remove all targets by native node from hash table(_schedFunc_target_ht and _schedTarget_native_ht).	
-    static void removeAllTargetsForNatiaveNode(CCNode* pNode);
-	// Remove the target by native node and the wrapper for native schedule.
-    static void removeTargetForNativeNode(CCNode* pNode, JSScheduleWrapper* target);
+    static void setTargetForJSObject(JSObject* jsTargetObj, JSScheduleWrapper *target);
+    static CCArray * getTargetForJSObject(JSObject* jsTargetObj);
+	// Remove all targets by js object from hash table(_schedFunc_target_ht and _schedObj_target_ht).	
+    static void removeAllTargetsForJSObject(JSObject* jsTargetObj);
+	// Remove the target by js object and the wrapper for native schedule.
+    static void removeTargetForJSObject(JSObject* jsTargetObj, JSScheduleWrapper* target);
     static void dump();
 
     void pause();
@@ -162,8 +160,12 @@ public:
     void scheduleFunc(float dt) const;
     CCObject* getTarget();
     void setTarget(CCObject* pTarget);
+    
+    void setPureJSTarget(JSObject* jstarget);
+    JSObject* getPureJSTarget();
 protected:
-    CCObject* m_pTarget;
+    CCObject* _pTarget;
+    JSObject* _pPureJSTarget;
 };
 
 
