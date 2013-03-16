@@ -630,10 +630,12 @@ JSBool ScriptingCore::removeRootJS(JSContext *cx, uint32_t argc, jsval *vp)
     return JS_FALSE;
 }
 
-void ScriptingCore::pauseSchedulesAndActions(CCNode *node) {
-
-    CCArray * arr = JSScheduleWrapper::getTargetForNativeNode(node);
+void ScriptingCore::pauseSchedulesAndActions(js_proxy_t* p)
+{
+    CCArray * arr = JSScheduleWrapper::getTargetForJSObject(p->obj);
     if(! arr) return;
+    
+    CCNode* node = (CCNode*)p->ptr;
     for(unsigned int i = 0; i < arr->count(); ++i) {
         if(arr->objectAtIndex(i)) {
             node->getScheduler()->pauseTarget(arr->objectAtIndex(i));
@@ -642,24 +644,26 @@ void ScriptingCore::pauseSchedulesAndActions(CCNode *node) {
 }
 
 
-void ScriptingCore::resumeSchedulesAndActions(CCNode *node) {
-
-    CCArray * arr = JSScheduleWrapper::getTargetForNativeNode(node);
+void ScriptingCore::resumeSchedulesAndActions(js_proxy_t* p)
+{
+    CCArray * arr = JSScheduleWrapper::getTargetForJSObject(p->obj);
     if(!arr) return;
+    
+    CCNode* node = (CCNode*)p->ptr;
     for(unsigned int i = 0; i < arr->count(); ++i) {
         if(!arr->objectAtIndex(i)) continue;
         node->getScheduler()->resumeTarget(arr->objectAtIndex(i));
     }
 }
 
-void ScriptingCore::cleanupSchedulesAndActions(CCNode *node) {
-
-    CCArray * arr = JSCallFuncWrapper::getTargetForNativeNode(node);
+void ScriptingCore::cleanupSchedulesAndActions(js_proxy_t* p)
+{
+    CCArray * arr = JSCallFuncWrapper::getTargetForNativeNode((CCNode*)p->ptr);
     if(arr) {
         arr->removeAllObjects();
     }
-
-    arr = JSScheduleWrapper::getTargetForNativeNode(node);
+    
+    arr = JSScheduleWrapper::getTargetForJSObject(p->obj);
     if(arr) {
         CCScheduler* pScheduler = CCDirector::sharedDirector()->getScheduler();
         CCObject* pObj = NULL;
@@ -668,7 +672,7 @@ void ScriptingCore::cleanupSchedulesAndActions(CCNode *node) {
             pScheduler->unscheduleAllForTarget(pObj);
         }
 
-        JSScheduleWrapper::removeAllTargetsForNatiaveNode(node);
+        JSScheduleWrapper::removeAllTargetsForJSObject(p->obj);
     }
 }
 
@@ -676,23 +680,20 @@ int ScriptingCore::executeNodeEvent(CCNode* pNode, int nAction)
 {
     js_proxy_t * p;
     JS_GET_PROXY(p, pNode);
-
     if (!p) return 0;
 
     jsval retval;
     jsval dataVal = INT_TO_JSVAL(1);
-    js_proxy_t *proxy;
-    JS_GET_PROXY(proxy, pNode);
 
     if(nAction == kCCNodeOnEnter)
     {
         executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onEnter", 1, &dataVal, &retval);
-        resumeSchedulesAndActions(pNode);
+        resumeSchedulesAndActions(p);
     }
     else if(nAction == kCCNodeOnExit)
     {
         executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onExit", 1, &dataVal, &retval);
-        pauseSchedulesAndActions(pNode);
+        pauseSchedulesAndActions(p);
     }
     else if(nAction == kCCNodeOnEnterTransitionDidFinish)
     {
@@ -703,7 +704,7 @@ int ScriptingCore::executeNodeEvent(CCNode* pNode, int nAction)
         executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onExitTransitionDidStart", 1, &dataVal, &retval);
     }
     else if(nAction == kCCNodeOnCleanup) {
-        cleanupSchedulesAndActions(pNode);
+        cleanupSchedulesAndActions(p);
     }
 
     return 1;
@@ -1282,6 +1283,7 @@ JSBool jsval_to_ccarray(JSContext* cx, jsval v, CCArray** ret) {
 jsval ccarray_to_jsval(JSContext* cx, CCArray *arr)
 {
     JSObject *jsretArr = JS_NewArrayObject(cx, 0, NULL);
+
     if (arr && arr->count() > 0) {
         for(unsigned int i = 0; i < arr->count(); ++i) {
             jsval arrElement;
@@ -1300,7 +1302,7 @@ jsval ccarray_to_jsval(JSContext* cx, CCArray *arr)
                 CCBool* boolVal = NULL;
                 CCFloat* floatVal = NULL;
                 CCInteger* intVal = NULL;
-            
+                
                 if((strVal = dynamic_cast<cocos2d::CCString *>(obj))) {
                     arrElement = c_string_to_jsval(cx, strVal->getCString());
                 } else if ((dictVal = dynamic_cast<cocos2d::CCDictionary*>(obj))) {
