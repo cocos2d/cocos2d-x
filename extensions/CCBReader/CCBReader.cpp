@@ -512,7 +512,7 @@ float CCBReader::readFloat() {
                 /* using a memcpy since the compiler isn't
                  * doing the float ptr math correctly on device.
                  * TODO still applies in C++ ? */
-                float * pF = (float*)(this->mBytes + this->mCurrentByte);
+                unsigned char* pF = (this->mBytes + this->mCurrentByte);
                 float f = 0;
                 
                 // N.B - in order to avoid an unaligned memory access crash on 'memcpy()' the the (void*) casts of the source and
