@@ -34,15 +34,23 @@ void CCLog(const char * pszFormat, ...)
 
     va_list ap;
     va_start(ap, pszFormat);
-    vsnprintf( szBuf, MAX_LEN, pszFormat, ap);
+    vsnprintf(szBuf, MAX_LEN, pszFormat, ap);
     va_end(ap);
 
-	fprintf(stderr, "cocos2d-x debug info [%s]\n",  szBuf);
+    // Strip any trailing newlines from log message.
+    size_t len = strlen(szBuf);
+    while (len && szBuf[len-1] == '\n')
+    {
+      szBuf[len-1] = '\0';
+      len--;
+    }
+
+    fprintf(stderr, "cocos2d-x debug info [%s]\n",  szBuf);
 }
 
 void CCMessageBox(const char * pszMsg, const char * pszTitle)
 {
-	CCLog("%s: %s", pszTitle, pszMsg);
+    CCLog("%s: %s", pszTitle, pszMsg);
 }
 
 void CCLuaLog(const char * pszFormat)
@@ -51,4 +59,3 @@ void CCLuaLog(const char * pszFormat)
 }
 
 NS_CC_END
-
