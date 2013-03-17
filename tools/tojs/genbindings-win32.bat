@@ -5,7 +5,7 @@
 :: Android ndk version must be at least ndk-r8d.
 
 set PYTHON_ROOT=C:/Python27
-set NDK_ROOT=D:/android/android-ndk-r8d
+set NDK_ROOT=C:/android-ndk-r8d
 
 set PATH=%PATH%;%cd%/win32;%PYTHON_ROOT%
 set COCOS2DX_ROOT=%cd%/../..
@@ -14,6 +14,7 @@ set CXX_GENERATOR_ROOT=%COCOS2DX_ROOT%/tools/cxx-generator
 set TO_JS_ROOT=%COCOS2DX_ROOT%/tools/tojs
 set "CXX_GENERATOR_ROOT=%CXX_GENERATOR_ROOT:\=/%"
 set OUTPUT_DIR=%COCOS2DX_ROOT%/scripting/javascript/bindings/generated
+set "OUTPUT_DIR=%OUTPUT_DIR:/=\%"
 set CLANG_ROOT=%NDK_ROOT%/toolchains/llvm-3.1/prebuilt/windows
 
 :: write userconf.ini
