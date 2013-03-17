@@ -30,7 +30,7 @@ echo androidndkdir=%NDK_ROOT% >> %_CONF_INI_FILE%
 echo clangllvmdir=%CLANG_ROOT% >> %_CONF_INI_FILE%
 echo cocosdir=%COCOS2DX_ROOT% >> %_CONF_INI_FILE%
 echo cxxgeneratordir=%CXX_GENERATOR_ROOT% >> %_CONF_INI_FILE%
-echo extra_flag=-D__ARM_EABI__ -D__GNUC__=2 >> %_CONF_INI_FILE%
+echo extra_flags=-D__ARM_EABI__ -D__GNUC__=2 >> %_CONF_INI_FILE%
 echo ---
 
 
