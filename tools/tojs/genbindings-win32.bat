@@ -1,63 +1,68 @@
 @echo off
 
-echo./*
-echo.* Check VC++ environment...
-echo.*/
-echo.
+:: This script is used to generate jsbinding glue codes.
+:: You should modify PYTHON_ROOT and NDK_ROOT to work under your environment.
+:: Android ndk version must be at least ndk-r8d.
 
-set PATH=%PATH%;%cd%
+set PYTHON_ROOT=C:/Python27
+set NDK_ROOT=D:/android/android-ndk-r8d
 
-if defined VS110COMNTOOLS (
-	set VSTOOLS="%VS110COMNTOOLS%"
-) else if defined VS100COMNTOOLS (
-	set VSTOOLS="%VS100COMNTOOLS%"
-)
-
-
-
-set VSTOOLS=%VSTOOLS:"=%
-set "VSTOOLS=%VSTOOLS:\=/%"
-
-set VSVARS="%VSTOOLS%vsvars32.bat"
-
-if not defined VSVARS (
-    echo Can't find VC2010 or VC2012 installed!
-    goto ERROR
-)
-
-
-set VS_ROOT=%VSTOOLS%/../..
-
-:: set vs compilation environment
-call %VSVARS%
-
+set PATH=%PATH%;%cd%/win32;%PYTHON_ROOT%
 set COCOS2DX_ROOT=%cd%/../..
 set "COCOS2DX_ROOT=%COCOS2DX_ROOT:\=/%"
 set CXX_GENERATOR_ROOT=%COCOS2DX_ROOT%/tools/cxx-generator
+set TO_JS_ROOT=%COCOS2DX_ROOT%/tools/tojs
 set "CXX_GENERATOR_ROOT=%CXX_GENERATOR_ROOT:\=/%"
+set OUTPUT_DIR=%COCOS2DX_ROOT%/scripting/javascript/bindings/generated
+set CLANG_ROOT=%NDK_ROOT%/toolchains/llvm-3.1/prebuilt/windows
 
 :: write userconf.ini
 
 set _CONF_INI_FILE=%cd%\userconf.ini
 if exist %_CONF_INI_FILE% del /Q %_CONF_INI_FILE%
 
+
 echo 
 echo generating userconf.ini...
 echo ---
 echo [DEFAULT] > %_CONF_INI_FILE%
+echo androidndkdir=%NDK_ROOT% >> %_CONF_INI_FILE%
+echo clangllvmdir=%CLANG_ROOT% >> %_CONF_INI_FILE%
 echo cocosdir=%COCOS2DX_ROOT% >> %_CONF_INI_FILE%
 echo cxxgeneratordir=%CXX_GENERATOR_ROOT% >> %_CONF_INI_FILE%
-echo vs_headers="%VS_ROOT%/VC/include" >> %_CONF_INI_FILE%
-echo vs_flags= >> %_CONF_INI_FILE%
+echo extra_flag=-D__ARM_EABI__ -D__GNUC__=2 >> %_CONF_INI_FILE%
 echo ---
+
+
 
 :: Generate bindings for cocos2dx
 echo Generating bindings for cocos2dx...
 
-python %CXX_GENERATOR_ROOT%/generator.py cocos2dx-win32.ini -s cocos2d-x -o %COCOS2DX_ROOT%/scripting/javascript/bindings/generated
+python %CXX_GENERATOR_ROOT%/generator.py %TO_JS_ROOT%/cocos2dx.ini -s cocos2d-x -o %OUTPUT_DIR% -n jsb_cocos2dx_auto
+if %errorlevel% neq 0 goto ERROR
 
-echo Generating bindings successfully.
+echo "Generating bindings for cocos2dx_extension..."
+
+python %CXX_GENERATOR_ROOT%/generator.py %TO_JS_ROOT%/cocos2dx_extension.ini -s cocos2dx_extension -o %OUTPUT_DIR% -n jsb_cocos2dx_extension_auto
+if %errorlevel% neq 0 goto ERROR
+
+:: Change the generated file format from DOS to UNIX.
+pushd "%OUTPUT_DIR%"
+dos2unix *
+popd
+
+echo ---------------------------------
+echo Generating bindings succeeds.
+echo ---------------------------------
+
+goto QUIT
 
 :ERROR
+echo ---------------------------------
+echo Generating bindings fails.
+echo ---------------------------------
+
+:QUIT
+
 pause
 
