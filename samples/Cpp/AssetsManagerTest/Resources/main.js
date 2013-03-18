@@ -26,7 +26,7 @@
 // boot code needed for cocos2d + JS bindings.
 // Not needed by cocos2d-html5
 
-require("jsb.js");
+require('jsb_cocos2d.js');
 
 var appFiles = [
     'myApp.js'
