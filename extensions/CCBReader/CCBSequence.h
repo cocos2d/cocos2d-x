@@ -20,7 +20,7 @@ private:
 
 public:
     CCBSequence();
-    
+    ~CCBSequence();
     float getDuration();
     void setDuration(float fDuration);
     
