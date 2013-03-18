@@ -135,5 +135,10 @@
 			<type>2</type>
 			<locationURI>COCOS2DX/scripting</locationURI>
 		</link>
+		<link>
+			<name>cocosdenshion</name>
+			<type>2</type>
+			<locationURI>COCOS2DX/CocosDenshion</locationURI>
+		</link>
 	</linkedResources>
 </projectDescription>
