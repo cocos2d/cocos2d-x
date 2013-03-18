@@ -40,8 +40,13 @@ There are two ways of building Android projects.
    **OR**
 
    Install Eclipse with Java. Add ADT and CDT plugins.
+
+2. Only for Windows
+    1. Install [Cygwin](http://www.cygwin.com/) with make (select make package from the list during the install).
+    2. Add `Cygwin\bin` directory to system PATH variable.
+    3. Add this line `none /cygdrive cygdrive binary,noacl,posix=0,user 0 0` to `Cygwin\etc\fstab` file.
    
-2. Set up Variables: 
+3. Set up Variables: 
 	1. Path Variable `COCOS2DX`: 
 		* Eclipse->Preferences->General->Workspace->**Linked Resources**
 		* Click **New** button to add a Path Variable `COCOS2DX` pointing to the root cocos2d-x directory.
@@ -51,8 +56,9 @@ There are two ways of building Android projects.
 		* Eclipse->Preferences->C/C++->Build->**Environment**.
 		* Click **Add** button and add a new variable `NDK_ROOT` pointing to the root NDK directory.
 		![Example](https://lh3.googleusercontent.com/-AVcY8IAT0_g/UUOYltoRobI/AAAAAAAAsdM/22D2J9u3sig/s400/cocos2d-x-eclipse-ndk.png)
+		* Only for Windows: Add a new variable **CYGWIN** with value `nodosfilewarning`
 		
-3. Import libcocos2dx library project:
+4. Import libcocos2dx library project:
 	1. File->New->Project->Android Project From Existing Code.
 	2. Click **Browse** button and open `cocos2d-x/cocos2dx/platform/android/java` directory.
 	3. Click **Finish** to add project.
