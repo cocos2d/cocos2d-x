@@ -2,6 +2,8 @@
 // Chipmunk defines
 //
 
+require('jsb_chipmunk_constants.js');
+
 var cp = cp || {};
 
 cp.v = cc.p;

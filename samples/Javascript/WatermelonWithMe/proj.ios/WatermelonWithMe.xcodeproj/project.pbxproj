@@ -118,6 +118,10 @@
 		1A82F606169AC9C800C4B13A /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A82F605169AC9C800C4B13A /* libsqlite3.dylib */; };
 		1A82F60B169AC9E000C4B13A /* LocalStorage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A82F608169AC9E000C4B13A /* LocalStorage.cpp */; };
 		1A82F60C169AC9E000C4B13A /* LocalStorageAndroid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A82F60A169AC9E000C4B13A /* LocalStorageAndroid.cpp */; };
+		1AA51ADD16F714D2000FDF05 /* jsb_cocos2d_constants.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AA51ADC16F714D2000FDF05 /* jsb_cocos2d_constants.js */; };
+		1AA51ADE16F714DC000FDF05 /* jsb_cocos2d_constants.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AA51ADC16F714D2000FDF05 /* jsb_cocos2d_constants.js */; };
+		1AA51AE116F715C9000FDF05 /* jsb_chipmunk_constants.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AA51AE016F715C9000FDF05 /* jsb_chipmunk_constants.js */; };
+		1AA51AE216F715D2000FDF05 /* jsb_chipmunk_constants.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AA51AE016F715C9000FDF05 /* jsb_chipmunk_constants.js */; };
 		1AAF0C02169829E200C5F611 /* jsb_chipmunk.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AAF0BFB169829E200C5F611 /* jsb_chipmunk.js */; };
 		1AAF0C03169829E200C5F611 /* jsb_cocos2d.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AAF0BFC169829E200C5F611 /* jsb_cocos2d.js */; };
 		1AAF0C04169829E200C5F611 /* jsb_cocosbuilder.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AAF0BFD169829E200C5F611 /* jsb_cocosbuilder.js */; };
@@ -385,6 +389,8 @@
 		1A82F608169AC9E000C4B13A /* LocalStorage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LocalStorage.cpp; sourceTree = "<group>"; };
 		1A82F609169AC9E000C4B13A /* LocalStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalStorage.h; sourceTree = "<group>"; };
 		1A82F60A169AC9E000C4B13A /* LocalStorageAndroid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LocalStorageAndroid.cpp; sourceTree = "<group>"; };
+		1AA51ADC16F714D2000FDF05 /* jsb_cocos2d_constants.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_cocos2d_constants.js; sourceTree = "<group>"; };
+		1AA51AE016F715C9000FDF05 /* jsb_chipmunk_constants.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_chipmunk_constants.js; sourceTree = "<group>"; };
 		1AAF0BFB169829E200C5F611 /* jsb_chipmunk.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_chipmunk.js; sourceTree = "<group>"; };
 		1AAF0BFC169829E200C5F611 /* jsb_cocos2d.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_cocos2d.js; sourceTree = "<group>"; };
 		1AAF0BFD169829E200C5F611 /* jsb_cocosbuilder.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_cocosbuilder.js; sourceTree = "<group>"; };
@@ -532,6 +538,8 @@
 		15A3D5861682F3BC002FB0C5 /* js */ = {
 			isa = PBXGroup;
 			children = (
+				1AA51AE016F715C9000FDF05 /* jsb_chipmunk_constants.js */,
+				1AA51ADC16F714D2000FDF05 /* jsb_cocos2d_constants.js */,
 				1AAF0C01169829E200C5F611 /* jsb.js */,
 				1AAF0BFB169829E200C5F611 /* jsb_chipmunk.js */,
 				1AAF0BFC169829E200C5F611 /* jsb_cocos2d.js */,
@@ -980,6 +988,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1AA51AE216F715D2000FDF05 /* jsb_chipmunk_constants.js in Resources */,
+				1AA51ADE16F714DC000FDF05 /* jsb_cocos2d_constants.js in Resources */,
 				1A0B932116EDC9830062524A /* jsb_cocos2d_extension.js in Resources */,
 				1AAF0C09169829F200C5F611 /* jsb_chipmunk.js in Resources */,
 				1AAF0C0A169829F200C5F611 /* jsb_cocos2d.js in Resources */,
@@ -1122,6 +1132,8 @@
 				1A0B931E16EDC8730062524A /* jsb_cocos2dx_extension_auto.cpp in Sources */,
 				1A0B932016EDC8870062524A /* jsb_cocos2d_extension.js in Sources */,
 				1A0B932416EDC99B0062524A /* jsb_cocos2dx_extension_manual.cpp in Sources */,
+				1AA51ADD16F714D2000FDF05 /* jsb_cocos2d_constants.js in Sources */,
+				1AA51AE116F715C9000FDF05 /* jsb_chipmunk_constants.js in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
