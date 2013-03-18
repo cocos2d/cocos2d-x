@@ -11,7 +11,14 @@ CCBSequence::CCBSequence()
 , mName("")
 , mSequenceId(0)
 , mChainedSequenceId(0)
+, mCallbackChannel(NULL)
+, mSoundChannel(NULL)
 {}
+
+CCBSequence::~CCBSequence() {
+    CC_SAFE_RELEASE(mCallbackChannel);
+    CC_SAFE_RELEASE(mSoundChannel);
+}
 
 float CCBSequence::getDuration()
 {
@@ -50,7 +57,9 @@ CCBSequenceProperty* CCBSequence::getCallbackChannel()
 
 void CCBSequence::setCallbackChannel(CCBSequenceProperty* callbackChannel)
 {
+    CC_SAFE_RELEASE(mCallbackChannel);
     mCallbackChannel = callbackChannel;
+    CC_SAFE_RETAIN(mCallbackChannel);
 }
 
 
@@ -61,7 +70,9 @@ CCBSequenceProperty* CCBSequence::getSoundChannel()
 
 void CCBSequence::setSoundChannel(CCBSequenceProperty* soundChannel)
 {
-    mSoundChannel = mCallbackChannel;
+    CC_SAFE_RELEASE(mSoundChannel);
+    mSoundChannel = soundChannel;
+    CC_SAFE_RETAIN(mSoundChannel);
 }
 
 
