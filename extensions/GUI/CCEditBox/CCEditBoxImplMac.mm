@@ -205,8 +205,6 @@ CCEditBoxImpl* __createSystemEditBox(CCEditBox* pEditBox)
     return new CCEditBoxImplMac(pEditBox);
 }
 
-#define GET_IMPL ((EditBoxImplMac*)m_pSysEdit)
-
 CCEditBoxImplMac::CCEditBoxImplMac(CCEditBox* pEditText)
 : CCEditBoxImpl(pEditText), m_pSysEdit(NULL), m_nMaxTextLength(-1)
 , m_obAnchorPoint(ccp(0.5f, 0.5f))
@@ -218,13 +216,13 @@ CCEditBoxImplMac::CCEditBoxImplMac(CCEditBox* pEditText)
 
 CCEditBoxImplMac::~CCEditBoxImplMac()
 {
-    [GET_IMPL release];
+    [m_pSysEdit release];
 }
 
 void CCEditBoxImplMac::doAnimationWhenKeyboardMove(float duration, float distance)
 {
-    if ([GET_IMPL isEditState] || distance < 0.0f)
-        [GET_IMPL doAnimationWhenKeyboardMoveWithDuration:duration distance:distance];
+    if ([m_pSysEdit isEditState] || distance < 0.0f)
+        [m_pSysEdit doAnimationWhenKeyboardMoveWithDuration:duration distance:distance];
 }
 
 bool CCEditBoxImplMac::initWithSize(const CCSize& size)
@@ -254,7 +252,7 @@ void CCEditBoxImplMac::setFont(const char* pFontName, int fontSize)
 //	NSString * fntName = [NSString stringWithUTF8String:pFontName];
 //	UIFont *textFont = [UIFont fontWithName:fntName size:fontSize];
 //	if(textFont != nil)
-//		[GET_IMPL.textField setFont:textFont];
+//		[m_pSysEdit.textField setFont:textFont];
 }
 
 void CCEditBoxImplMac::setPlaceholderFont(const char* pFontName, int fontSize)
@@ -264,7 +262,7 @@ void CCEditBoxImplMac::setPlaceholderFont(const char* pFontName, int fontSize)
 
 void CCEditBoxImplMac::setFontColor(const ccColor3B& color)
 {
-    GET_IMPL.textField.textColor = [NSColor colorWithCalibratedRed:color.r / 255.0f green:color.g / 255.0f blue:color.b / 255.0f alpha:1.0f];
+    m_pSysEdit.textField.textColor = [NSColor colorWithCalibratedRed:color.r / 255.0f green:color.g / 255.0f blue:color.b / 255.0f alpha:1.0f];
 }
 
 void CCEditBoxImplMac::setPlaceholderFontColor(const ccColor3B& color)
@@ -297,33 +295,36 @@ void CCEditBoxImplMac::setReturnType(KeyboardReturnType returnType)
 
 bool CCEditBoxImplMac::isEditing()
 {
-    return [GET_IMPL isEditState] ? true : false;
+    return [m_pSysEdit isEditState] ? true : false;
 }
 
 void CCEditBoxImplMac::setText(const char* pText)
 {
-    GET_IMPL.textField.stringValue = [NSString stringWithUTF8String:pText];
+    m_pSysEdit.textField.stringValue = [NSString stringWithUTF8String:pText];
 }
 
 const char*  CCEditBoxImplMac::getText(void)
 {
-    return [GET_IMPL.textField.stringValue UTF8String];
+    return [m_pSysEdit.textField.stringValue UTF8String];
 }
 
 void CCEditBoxImplMac::setPlaceHolder(const char* pText)
 {
-    [[GET_IMPL.textField cell] setPlaceholderString:[NSString stringWithUTF8String:pText]];
+    [[m_pSysEdit.textField cell] setPlaceholderString:[NSString stringWithUTF8String:pText]];
 }
 
-static NSPoint convertDesignCoordToScreenCoord(const CCPoint& designCoord, bool bInRetinaMode)
+NSPoint CCEditBoxImplMac::convertDesignCoordToScreenCoord(const CCPoint& designCoord, bool bInRetinaMode)
 {
-    CCEGLViewProtocol* eglView = CCEGLView::sharedOpenGLView();
-    //float viewH = (float)[[EAGLView sharedEGLView] getHeight];
+    NSRect frame = [m_pSysEdit.textField frame];
+    CGFloat height = frame.size.height;
     
+    CCEGLViewProtocol* eglView = CCEGLView::sharedOpenGLView();
+
     CCPoint visiblePos = ccp(designCoord.x * eglView->getScaleX(), designCoord.y * eglView->getScaleY());
     CCPoint screenGLPos = ccpAdd(visiblePos, eglView->getViewPortRect().origin);
     
-    NSPoint screenPos = NSMakePoint(screenGLPos.x, /*viewH -*/ screenGLPos.y);
+    //TODO: I don't know why here needs to substract `height`.
+    NSPoint screenPos = NSMakePoint(screenGLPos.x, screenGLPos.y-height);
     
     if (bInRetinaMode) {
         screenPos.x = screenPos.x / 2.0f;
@@ -334,20 +335,26 @@ static NSPoint convertDesignCoordToScreenCoord(const CCPoint& designCoord, bool 
     return screenPos;
 }
 
+void CCEditBoxImplMac::adjustTextFieldPosition()
+{
+	CCSize contentSize = m_pEditBox->getContentSize();
+	CCRect rect = CCRectMake(0, 0, contentSize.width, contentSize.height);
+
+    rect = CCRectApplyAffineTransform(rect, m_pEditBox->nodeToWorldTransform());
+	
+	CCPoint designCoord = ccp(rect.origin.x, rect.origin.y + rect.size.height);
+    [m_pSysEdit setPosition:convertDesignCoordToScreenCoord(designCoord, m_bInRetinaMode)];
+}
+
 void CCEditBoxImplMac::setPosition(const CCPoint& pos)
 {
     m_obPosition = pos;
-    NSRect frame = [GET_IMPL.textField frame];
-    CGFloat height = frame.size.height;
-
-	CCPoint designCoord = ccp(pos.x - m_tContentSize.width * m_obAnchorPoint.x, pos.y + m_tContentSize.height * (1 - m_obAnchorPoint.y)-height);
-    [GET_IMPL setPosition:convertDesignCoordToScreenCoord(designCoord, m_bInRetinaMode)];
-
+    adjustTextFieldPosition();
 }
 
 void CCEditBoxImplMac::setVisible(bool visible)
 {
-    [GET_IMPL.textField setHidden:!visible];
+    [m_pSysEdit.textField setHidden:!visible];
 }
 
 void CCEditBoxImplMac::setContentSize(const CCSize& size)
@@ -370,12 +377,17 @@ void CCEditBoxImplMac::visit(void)
 
 void CCEditBoxImplMac::openKeyboard()
 {
-    [GET_IMPL openKeyboard];
+    [m_pSysEdit openKeyboard];
 }
 
 void CCEditBoxImplMac::closeKeyboard()
 {
-    [GET_IMPL closeKeyboard];
+    [m_pSysEdit closeKeyboard];
+}
+
+void CCEditBoxImplMac::onEnter(void)
+{
+    adjustTextFieldPosition();
 }
 
 NS_CC_EXT_END

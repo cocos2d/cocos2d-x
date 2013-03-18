@@ -41,7 +41,7 @@ endif
 ifeq ($(DEBUG), 1)
 CCFLAGS += -g3 -O0
 CXXFLAGS += -g3 -O0
-DEFINES += -DDEBUG -DCOCOS2D_DEBUG=1
+DEFINES += -D_DEBUG -DCOCOS2D_DEBUG=1
 OBJ_DIR := $(OBJ_DIR)/debug
 LIB_DIR := $(LIB_DIR)/debug
 BIN_DIR := $(BIN_DIR)/debug
@@ -99,3 +99,16 @@ clean:
 	rm -f $(TARGET) core
 
 .PHONY: all clean
+
+# If the parent Makefile defines $(EXECUTABLE) then define this as the target
+# and create a 'make run' rule to run the app.
+ifdef EXECUTABLE
+TARGET := $(BIN_DIR)/$(EXECUTABLE)
+
+all: $(TARGET)
+
+run: $(TARGET)
+	cd $(dir $^) && ./$(notdir $^)
+
+.PHONY: run
+endif

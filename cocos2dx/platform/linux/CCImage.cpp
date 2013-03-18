@@ -18,15 +18,38 @@
 
 #include FT_FREETYPE_H
 
-#define szFont_kenning 2
-
-#define SHIFT6(num) (num>>6)
-
 using namespace std;
 
-struct TextLine {
-	int iLineWidth;
-    wchar_t* text;
+// as FcFontMatch is quite an expensive call, cache the results of getFontFile
+static std::map<std::string, std::string> fontCache;
+
+struct LineBreakGlyph {
+	FT_UInt glyphIndex;
+	int paintPosition;
+	int glyphWidth;
+
+	int bearingX;
+	int kerning;
+	int horizAdvance;
+};
+
+struct LineBreakLine {
+	LineBreakLine() : lineWidth(0) {}
+
+	std::vector<LineBreakGlyph> glyphs;
+	int lineWidth;
+
+	void reset() {
+		glyphs.clear();
+		lineWidth = 0;
+	}
+
+	void calculateWidth() {
+		lineWidth = 0;
+		if ( glyphs.empty() == false ) {
+			lineWidth = glyphs.at(glyphs.size() - 1).paintPosition + glyphs.at(glyphs.size() - 1).glyphWidth;
+		}
+	}
 };
 
 NS_CC_BEGIN
@@ -36,7 +59,6 @@ public:
 	BitmapDC() {
 		libError = FT_Init_FreeType( &library );
 		FcInit();
-		iInterval = szFont_kenning;
 		m_pData = NULL;
 		reset();
 	}
@@ -54,13 +76,7 @@ public:
 	void reset() {
 		iMaxLineWidth = 0;
 		iMaxLineHeight = 0;
-        //Free all text lines
-        size_t size = vLines.size();
-        for (size_t i=0; i<size; ++i) {
-            TextLine line = vLines[i];
-            free(line.text);
-        }
-        vLines.clear();
+		textLines.clear();
 	}
 
     int utf8(char **p)
@@ -98,138 +114,168 @@ public:
         return 0;
     }
 
-	void buildLine(wchar_t* buf, size_t buf_len, FT_Face face, int iCurXCursor, FT_UInt cLastChar) {
-		TextLine oTempLine;
-        wchar_t* text = (wchar_t*)malloc(sizeof(wchar_t) * (buf_len+1));
-        memcpy(text, buf, sizeof(wchar_t) * buf_len);
-        text[buf_len] = '\0';
-        oTempLine.text = text;
-
-		//get last glyph
-        FT_Load_Char(face, cLastChar, FT_LOAD_DEFAULT);
-
-        oTempLine.iLineWidth = iCurXCursor;// - SHIFT6((face->glyph->metrics.horiAdvance + face->glyph->metrics.horiBearingX - face->glyph->metrics.width))/*-iInterval*/;//TODO interval
-		iMaxLineWidth = MAX(iMaxLineWidth, oTempLine.iLineWidth);
-
-        vLines.push_back(oTempLine);
-	}
+    bool isBreakPoint(FT_UInt currentCharacter, FT_UInt previousCharacter) {
+    	if ( previousCharacter == '-' || previousCharacter == '/' || previousCharacter == '\\' ) {
+    	   	// we can insert a line break after one of these characters
+    	    return true;
+    	}
+    	return false;
+    }
 
 	bool divideString(FT_Face face, const char* sText, int iMaxWidth, int iMaxHeight) {
-		int iError = 0;
-		int iCurXCursor;
 		const char* pText = sText;
+		textLines.clear();
+		iMaxLineWidth = 0;
 
-        FT_UInt unicode = utf8((char**)&pText);
-        iError = FT_Load_Char(face, unicode, FT_LOAD_DEFAULT);
-		if (iError) {
-			return false;
-		}
-		iCurXCursor = -SHIFT6(face->glyph->metrics.horiBearingX);
+		FT_UInt unicode;
+		FT_UInt prevCharacter = 0;
+		FT_UInt glyphIndex = 0;
+		FT_UInt prevGlyphIndex = 0;
+		FT_Vector delta;
+		LineBreakLine currentLine;
 
-		FT_UInt cLastCh = 0;
-
-        pText = sText;
-        size_t text_len = 0;
-        wchar_t* text_buf = (wchar_t*) malloc(sizeof(wchar_t) * strlen(sText));
+		int currentPaintPosition = 0;
+		int lastBreakIndex = -1;
+		bool hasKerning = FT_HAS_KERNING( face );
         while ((unicode=utf8((char**)&pText))) {
             if (unicode == '\n') {
-				buildLine(text_buf, text_len, face, iCurXCursor, cLastCh);
-                text_len = 0;
-
-                iError = FT_Load_Char(face, unicode, FT_LOAD_DEFAULT);
-				if (iError) {
-                    free(text_buf);
-					return false;
-				}
-				iCurXCursor = -SHIFT6(face->glyph->metrics.horiBearingX);
+				currentLine.calculateWidth();
+				iMaxLineWidth = max(iMaxLineWidth, currentLine.lineWidth);
+				textLines.push_back(currentLine);
+				currentLine.reset();
+				prevGlyphIndex = 0;
+				prevCharacter = 0;
+				lastBreakIndex = -1;
+				currentPaintPosition = 0;
 				continue;
 			}
 
-            iError = FT_Load_Char(face, unicode, FT_LOAD_DEFAULT);
+            if ( isBreakPoint(unicode, prevCharacter) ) {
+            	lastBreakIndex = currentLine.glyphs.size() - 1;
+            }
 
-			if (iError) {
-                free(text_buf);
+			glyphIndex = FT_Get_Char_Index(face, unicode);
+			if (FT_Load_Glyph(face, glyphIndex, FT_LOAD_DEFAULT)) {
 				return false;
 			}
 
-			//check its width
-			//divide it when exceeding
-			if ((iMaxWidth > 0
-							&& iCurXCursor + SHIFT6(face->glyph->metrics.width)
-							> iMaxWidth)) {
-				buildLine(text_buf, text_len, face , iCurXCursor, cLastCh);
-                text_len = 0;
-
-				iCurXCursor = -SHIFT6(face->glyph->metrics.horiBearingX);
+			if (isspace(unicode)) {
+				currentPaintPosition += face->glyph->metrics.horiAdvance >> 6;
+				prevGlyphIndex = glyphIndex;
+				prevCharacter = unicode;
+				lastBreakIndex = currentLine.glyphs.size();
+				continue;
 			}
 
-			cLastCh = unicode;
-            text_buf[text_len] = unicode;
-            ++text_len;
-			iCurXCursor += SHIFT6(face->glyph->metrics.horiAdvance) + iInterval;
-		}
-        
-		if (iError) {
-            free(text_buf);
-			return false;
+			LineBreakGlyph glyph;
+			glyph.glyphIndex = glyphIndex;
+			glyph.glyphWidth = face->glyph->metrics.width >> 6;
+			glyph.bearingX = face->glyph->metrics.horiBearingX >> 6;
+			glyph.horizAdvance = face->glyph->metrics.horiAdvance >> 6;
+			glyph.kerning = 0;
+
+			if (prevGlyphIndex != 0 && hasKerning) {
+				FT_Get_Kerning(face, prevGlyphIndex, glyphIndex, FT_KERNING_DEFAULT, &delta);
+				glyph.kerning = delta.x >> 6;
+			}
+
+			if (iMaxWidth > 0 && currentPaintPosition + glyph.bearingX + glyph.kerning + glyph.glyphWidth > iMaxWidth) {
+
+				int glyphCount = currentLine.glyphs.size();
+				if ( lastBreakIndex >= 0 && lastBreakIndex < glyphCount && currentPaintPosition + glyph.bearingX + glyph.kerning + glyph.glyphWidth - currentLine.glyphs.at(lastBreakIndex).paintPosition < iMaxWidth ) {
+					// we insert a line break at our last break opportunity
+					std::vector<LineBreakGlyph> tempGlyphs;
+					std::vector<LineBreakGlyph>::iterator it = currentLine.glyphs.begin();
+					std::advance(it, lastBreakIndex);
+					tempGlyphs.insert(tempGlyphs.begin(), it, currentLine.glyphs.end());
+					currentLine.glyphs.erase(it, currentLine.glyphs.end());
+					currentLine.calculateWidth();
+					iMaxLineWidth = max(iMaxLineWidth, currentLine.lineWidth);
+					textLines.push_back(currentLine);
+					currentLine.reset();
+					currentPaintPosition = 0;
+					for ( it = tempGlyphs.begin(); it != tempGlyphs.end(); it++ ) {
+						if ( currentLine.glyphs.empty() ) {
+							currentPaintPosition = -(*it).bearingX;
+							(*it).kerning = 0;
+						}
+						(*it).paintPosition = currentPaintPosition + (*it).bearingX + (*it).kerning;
+						currentLine.glyphs.push_back((*it));
+						currentPaintPosition += (*it).kerning + (*it).horizAdvance;
+					}
+				} else {
+					// the current word is too big to fit into one line, insert line break right here
+					currentPaintPosition = 0;
+					glyph.kerning = 0;
+					currentLine.calculateWidth();
+					iMaxLineWidth = max(iMaxLineWidth, currentLine.lineWidth);
+					textLines.push_back(currentLine);
+					currentLine.reset();
+				}
+
+				prevGlyphIndex = 0;
+				prevCharacter = 0;
+				lastBreakIndex = -1;
+			} else {
+				prevGlyphIndex = glyphIndex;
+				prevCharacter = unicode;
+			}
+
+			if ( currentLine.glyphs.empty() ) {
+				currentPaintPosition = -glyph.bearingX;
+			}
+			glyph.paintPosition = currentPaintPosition + glyph.bearingX + glyph.kerning;
+			currentLine.glyphs.push_back(glyph);
+			currentPaintPosition += glyph.kerning + glyph.horizAdvance;
 		}
 
-		buildLine(text_buf, text_len, face, iCurXCursor, cLastCh);
-        free(text_buf);
-
+		if ( currentLine.glyphs.empty() == false ) {
+			currentLine.calculateWidth();
+			iMaxLineWidth = max(iMaxLineWidth, currentLine.lineWidth);
+			textLines.push_back(currentLine);
+		}
 		return true;
 	}
 
 	/**
 	 * compute the start pos of every line
-	 *
-	 * return >0 represent the start x pos of the line
-	 * while -1 means fail
-	 *
 	 */
-	int computeLineStart(FT_Face face, CCImage::ETextAlign eAlignMask, FT_UInt unicode,
-			int iLineIndex) {
-		int iRet;
-        int iError = FT_Load_Char(face, unicode, FT_LOAD_DEFAULT);
-		if (iError) {
-			return -1;
-		}
-
+	int computeLineStart(FT_Face face, CCImage::ETextAlign eAlignMask, int line) {
+				int lineWidth = textLines.at(line).lineWidth;
 		if (eAlignMask == CCImage::kAlignCenter || eAlignMask == CCImage::kAlignTop || eAlignMask == CCImage::kAlignBottom) {
-			iRet = (iMaxLineWidth - vLines[iLineIndex].iLineWidth) / 2
-			- SHIFT6(face->glyph->metrics.horiBearingX );
-
+			return (iMaxLineWidth - lineWidth) / 2;
 		} else if (eAlignMask == CCImage::kAlignRight || eAlignMask == CCImage::kAlignTopRight || eAlignMask == CCImage::kAlignBottomRight) {
-			iRet = (iMaxLineWidth - vLines[iLineIndex].iLineWidth)
-			- SHIFT6(face->glyph->metrics.horiBearingX );
-		} else {
-			// left or other situation
-			iRet = -SHIFT6(face->glyph->metrics.horiBearingX );
+			return (iMaxLineWidth - lineWidth);
 		}
-		return iRet;
+
+		// left or other situation
+		return 0;
 	}
 
 	int computeLineStartY( FT_Face face, CCImage::ETextAlign eAlignMask, int txtHeight, int borderHeight ){
 		int iRet;
-		if (eAlignMask == CCImage::kAlignCenter || eAlignMask == CCImage::kAlignLeft ||
-			eAlignMask == CCImage::kAlignRight ) {
+		if (eAlignMask == CCImage::kAlignCenter || eAlignMask == CCImage::kAlignLeft
+				|| eAlignMask == CCImage::kAlignRight) {
 			//vertical center
-			iRet = (borderHeight - txtHeight)/2 + SHIFT6(face->size->metrics.ascender);
-
-		} else if (eAlignMask == CCImage::kAlignBottomRight || 
-				   eAlignMask == CCImage::kAlignBottom || 
-				   eAlignMask == CCImage::kAlignBottomLeft ) {
+			iRet = (borderHeight - txtHeight) / 2 + (face->size->metrics.ascender >> 6);
+		} else if (eAlignMask == CCImage::kAlignBottomRight || eAlignMask == CCImage::kAlignBottom
+				|| eAlignMask == CCImage::kAlignBottomLeft) {
 			//vertical bottom
-			iRet = borderHeight - txtHeight + SHIFT6(face->size->metrics.ascender);
+			iRet = borderHeight - txtHeight + (face->size->metrics.ascender >> 6);
 		} else {
 			// left or other situation
-			iRet = SHIFT6(face->size->metrics.ascender);
+			iRet = (face->size->metrics.ascender >> 6);
 		}
 		return iRet;
 	}
 
     std::string getFontFile(const char* family_name) {
     	std::string fontPath = family_name;
+
+    	std::map<std::string, std::string>::iterator it = fontCache.find(family_name);
+    	if ( it != fontCache.end() ) {
+    		return it->second;
+    	}
 
     	// check if the parameter is a font file shipped with the application
     	std::string lowerCasePath = fontPath;
@@ -240,6 +286,7 @@ public:
     		FILE *f = fopen(fontPath.c_str(), "r");
     		if ( f ) {
     			fclose(f);
+    			fontCache.insert(std::pair<std::string, std::string>(family_name, fontPath));
     			return fontPath;
     		}
     	}
@@ -259,6 +306,7 @@ public:
     			FcPatternDestroy(font);
     			FcPatternDestroy(pattern);
 
+    			fontCache.insert(std::pair<std::string, std::string>(family_name, fontPath));
     			return fontPath;
     		}
     		FcPatternDestroy(font);
@@ -269,139 +317,100 @@ public:
     }
 
 	bool getBitmap(const char *text, int nWidth, int nHeight, CCImage::ETextAlign eAlignMask, const char * pFontName, float fontSize) {
-		FT_Face face;
-		FT_Error iError;
-
-		//data will be deleted by CCImage
-//		if (m_pData) {
-//			delete m_pData;
-//		}
-
-		int iCurXCursor, iCurYCursor;
-		bool bRet = false;
 		if (libError) {
 			return false;
 		}
-		do {
-            std::string fontfile = getFontFile(pFontName);
-			iError = FT_New_Face( library, fontfile.c_str(), 0, &face );
 
-			if (iError) {
-				//no valid font found use default
-//				CCLog("no valid font, use default %s\n", pFontName);
-				iError = FT_New_Face( library, "/usr/share/fonts/truetype/freefont/FreeSerif.ttf", 0, &face );
+		FT_Face face;
+		std::string fontfile = getFontFile(pFontName);
+		if ( FT_New_Face(library, fontfile.c_str(), 0, &face) ) {
+			//no valid font found use default
+			if ( FT_New_Face(library, "/usr/share/fonts/truetype/freefont/FreeSerif.ttf", 0, &face) ) {
+				return false;
 			}
-			CC_BREAK_IF(iError);
+		}
 
-			//select utf8 charmap
-			iError = FT_Select_Charmap(face,FT_ENCODING_UNICODE);
-			CC_BREAK_IF(iError);
-
-			iError = FT_Set_Pixel_Sizes(face, fontSize,fontSize);
-			CC_BREAK_IF(iError);
-
-			iError = divideString(face, text, nWidth, nHeight)?0:1;
-
-			//compute the final line width
-			iMaxLineWidth = MAX(iMaxLineWidth, nWidth);
-
-			iMaxLineHeight = (face->size->metrics.ascender >> 6) - (face->size->metrics.descender >> 6);
-			iMaxLineHeight *= vLines.size();
-
-			int txtHeight = iMaxLineHeight;
-
-			//compute the final line height
-			iMaxLineHeight = MAX(iMaxLineHeight, nHeight);
-			m_pData = new unsigned char[iMaxLineWidth * iMaxLineHeight*4];
-//			iCurYCursor = SHIFT6(face->size->metrics.ascender);
-			iCurYCursor = computeLineStartY( face, eAlignMask, txtHeight, iMaxLineHeight );
-
-			memset(m_pData,0, iMaxLineWidth * iMaxLineHeight*4);
-
-            size_t lines = vLines.size();
-            for (size_t i = 0; i < lines; i++) {
-                const wchar_t* text_ptr = vLines[i].text;
-
-				//initialize the origin cursor
-				iCurXCursor = computeLineStart(face, eAlignMask, text_ptr[0], i);
-
-                size_t text_len = wcslen(text_ptr);
-                for (size_t i=0; i<text_len; ++i) {
-                    int iError = FT_Load_Char(face, text_ptr[i], FT_LOAD_RENDER);
-					if (iError) {
-						break;
-					}
-
-					//  convert glyph to bitmap with 256 gray
-					//  and get the bitmap
-					FT_Bitmap& bitmap = face->glyph->bitmap;
-
-                    int yoffset = iCurYCursor - (face->glyph->metrics.horiBearingY >> 6);
-                    int xoffset = iCurXCursor + (face->glyph->metrics.horiBearingX >> 6);
-					for (int i = 0; i < bitmap.rows; ++i) {
-						for (int j = 0; j < bitmap.width; ++j) {
-                            unsigned char cTemp = bitmap.buffer[i * bitmap.width + j];
-                            if (cTemp == 0) continue;
-
-							//  if it has gray>0 we set show it as 1, o otherwise
-							int iY = yoffset + i;
-							int iX = xoffset + j;
-
-							if (iY>=iMaxLineHeight) {
-								//exceed the height truncate
-								continue;
-							}
-
-//							m_pData[(iY * iMaxLineWidth + iX) * 4 + 3] =
-//							bitmap.buffer[i * bitmap.width + j] ?
-//							0xff : 0;//alpha
-//							m_pData[(iY * iMaxLineWidth + iX) * 4 + 1] =
-//							bitmap.buffer[i * bitmap.width + j];//R
-//							m_pData[(iY * iMaxLineWidth + iX) * 4 + 2] =
-//							bitmap.buffer[i * bitmap.width + j];//G
-//							m_pData[(iY * iMaxLineWidth + iX) * 4 + 0] =
-//							bitmap.buffer[i * bitmap.width + j];//B
-
-							int iTemp = cTemp << 24 | cTemp << 16 | cTemp << 8 | cTemp;
-							*(int*) &m_pData[(iY * iMaxLineWidth + iX) * 4 + 0] = iTemp;
-						}
-					}
-					//step to next glyph
-					iCurXCursor += (face->glyph->metrics.horiAdvance >> 6) + iInterval;
-
-				}
-				iCurYCursor += (face->size->metrics.ascender >> 6)
-				- (face->size->metrics.descender >> 6);
-			}
-			//print all image bitmap
-//			for (int i = 0; i < iMaxLineHeight; i++) {
-//				for (int j = 0; j < iMaxLineWidth; j++) {
-//					printf("%d",
-//							m_pData[(i * iMaxLineWidth + j) * 4] ? 1 : 0);
-//				}
-//				printf("\n");
-//			}
-
-			//  free face
+		//select utf8 charmap
+		if ( FT_Select_Charmap(face, FT_ENCODING_UNICODE) ) {
 			FT_Done_Face(face);
-			face = NULL;
+			return false;
+		}
 
-			//success;
-			if (iError) {
-				bRet = false;
-			} else
-			bRet = true;
-		}while(0);
+		if ( FT_Set_Pixel_Sizes(face, fontSize, fontSize) ) {
+			FT_Done_Face(face);
+			return false;
+		}
 
-		return bRet;
+		if ( divideString(face, text, nWidth, nHeight) == false ) {
+			FT_Done_Face(face);
+			return false;
+		}
+
+		//compute the final line width
+		iMaxLineWidth = MAX(iMaxLineWidth, nWidth);
+
+		//compute the final line height
+		iMaxLineHeight = (face->size->metrics.ascender >> 6) - (face->size->metrics.descender >> 6);
+		iMaxLineHeight *= textLines.size();
+		int txtHeight = iMaxLineHeight;
+		iMaxLineHeight = MAX(iMaxLineHeight, nHeight);
+
+		m_pData = new unsigned char[iMaxLineWidth * iMaxLineHeight * 4];
+		memset(m_pData,0, iMaxLineWidth * iMaxLineHeight*4);
+
+		int iCurYCursor = computeLineStartY(face, eAlignMask, txtHeight, iMaxLineHeight);
+
+		int lineCount = textLines.size();
+		for (int line = 0; line < lineCount; line++) {
+			int iCurXCursor = computeLineStart(face, eAlignMask, line);
+
+			int glyphCount = textLines.at(line).glyphs.size();
+			for (int i = 0; i < glyphCount; i++) {
+				LineBreakGlyph glyph = textLines.at(line).glyphs.at(i);
+
+				if (FT_Load_Glyph(face, glyph.glyphIndex, FT_LOAD_RENDER)) {
+					continue;
+				}
+
+				FT_Bitmap& bitmap = face->glyph->bitmap;
+				int yoffset = iCurYCursor - (face->glyph->metrics.horiBearingY >> 6);
+				int xoffset = iCurXCursor + glyph.paintPosition;
+
+				for (int y = 0; y < bitmap.rows; ++y) {
+					for (int x = 0; x < bitmap.width; ++x) {
+						unsigned char cTemp = bitmap.buffer[y * bitmap.width + x];
+						if (cTemp == 0) {
+							continue;
+						}
+
+						int iY = yoffset + y;
+						int iX = xoffset + x;
+
+						if (iY>=iMaxLineHeight) {
+							//exceed the height truncate
+							continue;
+						}
+
+						int iTemp = cTemp << 24 | cTemp << 16 | cTemp << 8 | cTemp;
+						*(int*) &m_pData[(iY * iMaxLineWidth + iX) * 4 + 0] = iTemp;
+					}
+				}
+			}
+			// step to next line
+			iCurYCursor += (face->size->metrics.ascender >> 6) - (face->size->metrics.descender >> 6);
+		}
+
+		//  free face
+		FT_Done_Face(face);
+		return true;
 	}
+
 public:
 	FT_Library library;
 
 	unsigned char *m_pData;
 	int libError;
-	vector<TextLine> vLines;
-	int iInterval;
+	std::vector<LineBreakLine> textLines;
 	int iMaxLineWidth;
 	int iMaxLineHeight;
 };

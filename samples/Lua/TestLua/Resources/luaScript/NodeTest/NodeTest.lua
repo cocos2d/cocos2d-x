@@ -1,94 +1,17 @@
-
-local SceneIdx = -1
-local MAX_LAYER = 13
-
 local kTagSprite1 = 1
 local kTagSprite2 = 2
 local kTagSprite3 = 3
 local kTagSlider  = 4
 
-local titleLabel = nil
-local subTitleLabel = nil
 local s = CCDirector:sharedDirector():getWinSize()
 local scheduler = CCDirector:sharedDirector():getScheduler()
-
-local function backAction()
-	SceneIdx = SceneIdx - 1
-    if SceneIdx < 0 then
-        SceneIdx = SceneIdx + MAX_LAYER
-    end
-
-    return CreateNodeTestLayer()
-end
-
-local function restartAction()
-	return CreateNodeTestLayer()
-end
-
-local function nextAction()
-	SceneIdx = SceneIdx + 1
-    SceneIdx = math.mod(SceneIdx, MAX_LAYER)
-
-    return CreateNodeTestLayer()
-end
-
-local function backCallback(sender)
-	local scene = CCScene:create()
-
-	scene:addChild(backAction())
-	scene:addChild(CreateBackMenuItem())
-
-	CCDirector:sharedDirector():replaceScene(scene)
-end
-
-local function restartCallback(sender)
-	local scene = CCScene:create()
-
-	scene:addChild(restartAction())
-	scene:addChild(CreateBackMenuItem())
-
-	CCDirector:sharedDirector():replaceScene(scene)
-end
-
-local function nextCallback(sender)
-	local scene = CCScene:create()
-
-	scene:addChild(nextAction())
-	scene:addChild(CreateBackMenuItem())
-
-	CCDirector:sharedDirector():replaceScene(scene)
-end
 
 local function getBaseLayer()
 	local layer = CCLayer:create()
 
-	titleLabel = CCLabelTTF:create("", "Arial", 32)
-    layer:addChild(titleLabel, 10)
-    titleLabel:setPosition(s.width / 2, s.height - 50)
+	Helper.initWithLayer(layer)
 
-	subTitleLabel = CCLabelTTF:create("", "Thonburi", 16)
-	layer:addChild(subTitleLabel, 1)
-	subTitleLabel:setPosition(s.width / 2, s.height - 80)
-
-    local item1 = CCMenuItemImage:create(s_pPathB1, s_pPathB2)
-    local item2 = CCMenuItemImage:create(s_pPathR1, s_pPathR2)
-    local item3 = CCMenuItemImage:create(s_pPathF1, s_pPathF2)
-	item1:registerScriptTapHandler(backCallback)
-	item2:registerScriptTapHandler(restartCallback)
-	item3:registerScriptTapHandler(nextCallback)
-
-    local menu = CCMenu:create()
-	menu:addChild(item1)
-	menu:addChild(item2)
-	menu:addChild(item3)
-
-    menu:setPosition(CCPointMake(0, 0))
-    item1:setPosition(CCPointMake(s.width / 2 - item2:getContentSize().width * 2, item2:getContentSize().height / 2))
-    item2:setPosition(CCPointMake(s.width / 2, item2:getContentSize().height / 2))
-    item3:setPosition(CCPointMake(s.width / 2 + item2:getContentSize().width * 2, item2:getContentSize().height / 2))
-    layer:addChild(menu, 11)
-
-	return layer
+    return layer
 end
 
 -----------------------------------
@@ -143,8 +66,8 @@ local function CameraCenterTest()
     orbit = CCOrbitCamera:create(10, 1, 0, 0, 360, 0, 0)
     sprite:runAction(CCRepeatForever:create(orbit))
 
-	titleLabel:setString("Camera Center test")
-	subTitleLabel:setString("Sprites should rotate at the same speed")
+	Helper.titleLabel:setString("Camera Center test")
+	Helper.subtitleLabel:setString("Sprites should rotate at the same speed")
 	return layer
 end
 
@@ -189,7 +112,7 @@ local function Test2()
     sp1:runAction(action1)
     sp2:runAction(action2)
 
-	titleLabel:setString("anchorPoint and children")
+	Helper.titleLabel:setString("anchorPoint and children")
 	return layer
 end
 
@@ -234,7 +157,7 @@ local function Test4()
 
     Test4_layer:registerScriptHandler(Test4_onEnterOrExit)
 
-	titleLabel:setString("tags")
+	Helper.titleLabel:setString("tags")
 	return Test4_layer
 end
 
@@ -297,7 +220,7 @@ local function Test5()
 
     Test5_layer:registerScriptHandler(Test5_onEnterOrExit)
 
-	titleLabel:setString("remove and cleanup")
+	Helper.titleLabel:setString("remove and cleanup")
 	return Test5_layer
 end
 
@@ -364,7 +287,7 @@ local function Test6()
 
 	Test6_layer:registerScriptHandler(Test6_onEnterOrExit)
 
-	titleLabel:setString("remove/cleanup with children")
+	Helper.titleLabel:setString("remove/cleanup with children")
 	return Test6_layer
 end
 
@@ -377,7 +300,7 @@ local StressTest1_layer = nil
 local function removeMe(node)
 	local parent = StressTest1_layer:getParent()
 	parent:removeChild(node, true)
-    nextCallback(node)
+    Helper.nextAction()
 end
 
 local function shouldNotCrash(dt)
@@ -413,7 +336,7 @@ local function StressTest1()
 
     StressTest1_layer:registerScriptHandler(StressTest1_onEnterOrExit)
 
-	titleLabel:setString("stress test #1: no crashes")
+	Helper.titleLabel:setString("stress test #1: no crashes")
 	return StressTest1_layer
 end
 
@@ -466,7 +389,7 @@ local function StressTest2()
 
     StressTest2_layer:addChild(sublayer, 0, kTagSprite1)
 
-	titleLabel:setString("stress test #2: no leaks")
+	Helper.titleLabel:setString("stress test #2: no leaks")
 	return StressTest2_layer
 end
 
@@ -502,7 +425,7 @@ local function NodeToWorld()
     local fe2 = CCRepeatForever:create(seq)
     back:runAction(fe2)
 
-	titleLabel:setString("nodeToParent transform")
+	Helper.titleLabel:setString("nodeToParent transform")
 	return layer
 end
 
@@ -558,7 +481,7 @@ local function CameraOrbitTest()
 
     layer:setScale(1)
 
-	titleLabel:setString("Camera Orbit test")
+	Helper.titleLabel:setString("Camera Orbit test")
 	return layer
 end
 
@@ -617,7 +540,7 @@ local function CameraZoomTest()
 	CameraZoomTest_layer:scheduleUpdateWithPriorityLua(CameraZoomTest_update, 0)
 	CameraZoomTest_layer:registerScriptHandler(CameraZoomTest_onEnterOrExit)
 
-	titleLabel:setString("Camera Zoom test")
+	Helper.titleLabel:setString("Camera Zoom test")
 	return CameraZoomTest_layer
 end
 
@@ -677,8 +600,8 @@ local function ConvertToNode()
 	ConvertToNode_layer:setTouchEnabled(true)
     ConvertToNode_layer:registerScriptTouchHandler(onTouch)
 
-	titleLabel:setString("Convert To Node Space")
-	subTitleLabel:setString("testing convertToNodeSpace / AR. Touch and see console")
+	Helper.titleLabel:setString("Convert To Node Space")
+	Helper.subtitleLabel:setString("testing convertToNodeSpace / AR. Touch and see console")
 	return ConvertToNode_layer
 end
 
@@ -698,8 +621,8 @@ local function NodeOpaqueTest()
         layer:addChild(background)
     end
 
-	titleLabel:setString("Node Opaque Test")
-	subTitleLabel:setString("Node rendered with GL_BLEND disabled")
+	Helper.titleLabel:setString("Node Opaque Test")
+	Helper.subtitleLabel:setString("Node rendered with GL_BLEND disabled")
 	return layer
 end
 
@@ -718,50 +641,31 @@ local function NodeNonOpaqueTest()
         background:setAnchorPoint(ccp(0, 0))
         layer:addChild(background)
     end
-	titleLabel:setString("Node Non Opaque Test")
-	subTitleLabel:setString("Node rendered with GL_BLEND enabled")
+	Helper.titleLabel:setString("Node Non Opaque Test")
+	Helper.subtitleLabel:setString("Node rendered with GL_BLEND enabled")
 	return layer
 end
 
------------------------------------
---  Node Test
------------------------------------
-function CreateNodeTestLayer()
-	if SceneIdx == 0 then
-		return CameraCenterTest()
-	elseif SceneIdx == 1  then
-		return Test2()
-	elseif SceneIdx == 2  then
-		return Test4()
-	elseif SceneIdx == 3  then
-		return Test5()
-	elseif SceneIdx == 4  then
-		return Test6()
-	elseif SceneIdx == 5  then
-		return StressTest1()
-	elseif SceneIdx == 6  then
-		return StressTest2()
-	elseif SceneIdx == 7  then
-		return NodeToWorld()
-	elseif SceneIdx == 8  then
-		return CameraOrbitTest()
-	elseif SceneIdx == 9  then
-		return CameraZoomTest()
-	elseif SceneIdx == 10 then
-		return ConvertToNode()
-    elseif SceneIdx == 11 then
-        return NodeOpaqueTest()
-    elseif SceneIdx == 12 then
-        return NodeNonOpaqueTest()
-	end
-end
-
 function CocosNodeTest()
-	cclog("NodeTest")
 	local scene = CCScene:create()
 
-	SceneIdx = -1
-	scene:addChild(nextAction())
+    Helper.createFunctionTable = {
+        CameraCenterTest,
+        Test2,
+        Test4,
+        Test5,
+        Test6,
+        StressTest1,
+        StressTest2,
+        NodeToWorld,
+        CameraOrbitTest,
+        CameraZoomTest,
+        ConvertToNode,
+        NodeOpaqueTest,
+        NodeNonOpaqueTest
+    }
+
+	scene:addChild(CameraCenterTest())
 	scene:addChild(CreateBackMenuItem())
 
 	return scene
