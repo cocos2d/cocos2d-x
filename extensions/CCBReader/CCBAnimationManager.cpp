@@ -7,6 +7,7 @@
 #include <string>
 #include <set>
 #include "SimpleAudioEngine.h"
+#include "CCBSelectorResolver.h"
 
 using namespace cocos2d;
 using namespace std;
@@ -568,37 +569,49 @@ CCObject* CCBAnimationManager::actionForCallbackChannel(CCBSequenceProperty* cha
 
         CCBKeyframe *keyframe = (CCBKeyframe*)keyframes->objectAtIndex(i);
         float timeSinceLastKeyframe = keyframe->getTime() - lastKeyframeTime;
-	if(timeSinceLastKeyframe > 0) {
-	    actions->addObject(CCDelayTime::create(timeSinceLastKeyframe));
-	}
+        if(timeSinceLastKeyframe > 0) {
+            actions->addObject(CCDelayTime::create(timeSinceLastKeyframe));
+        }
 	
-	CCArray* keyVal = (CCArray *)keyframe->getValue();
-	std::string selectorName = ((CCString *)keyVal->objectAtIndex(0))->getCString();
-    int selectorTarget = atoi(((CCString *)keyVal->objectAtIndex(0))->getCString());
+        CCArray* keyVal = (CCArray *)keyframe->getValue();
+        std::string selectorName = ((CCString *)keyVal->objectAtIndex(0))->getCString();
+        int selectorTarget = atoi(((CCString *)keyVal->objectAtIndex(0))->getCString());
 	
-	if(jsControlled) {
+        if(jsControlled) {
 
-	    stringstream ss;//create a stringstream
-	    ss << selectorTarget;//add number to the stream
-	    std::string callbackName = ss.str() + ":" + selectorName;
-	    CCCallFuncN *callback = (CCCallFuncN*)mKeyframeCallFuncs->objectForKey(callbackName.c_str());
+            stringstream ss;//create a stringstream
+            ss << selectorTarget;//add number to the stream
+            std::string callbackName = ss.str() + ":" + selectorName;
+            CCCallFuncN *callback = (CCCallFuncN*)mKeyframeCallFuncs->objectForKey(callbackName.c_str());
 
-	    if(callback != NULL) {
-	        actions->addObject(callback);
-	    }
-	} else {
-	  CCObject *target;
-	  if(selectorTarget == kCCBTargetTypeDocumentRoot) target = mRootNode; // CHECK THIS
-	  else if (selectorTarget == kCCBTargetTypeDocumentRoot) target = mOwner;
-        bool selector = true;
-	  // FIX THIS	  SEL selector = getSlectorSomehow;
-	  
-	  if(target && selector) {
-	    // FIX THIS actions->addObject(CCCallFunc::create(this, callfunc_selector(CCBAnimationManager::sequenceCompleted)));
-	  }
-	}
+            if(callback != NULL) {
+                actions->addObject(callback);
+            }
+        } else {
+            CCObject *target;
+            if(selectorTarget == kCCBTargetTypeDocumentRoot) target = mRootNode;
+            else if (selectorTarget == kCCBTargetTypeOwner) target = mOwner;
+            if(target != NULL) {
+                if(selectorName.length() > 0) {
+                    SEL_CallFuncN selCallFunc = 0;
+                    
+                    CCBSelectorResolver* targetAsCCBSelectorResolver = dynamic_cast<CCBSelectorResolver *>(target);
+                
+                    if(targetAsCCBSelectorResolver != NULL) {
+                        selCallFunc = targetAsCCBSelectorResolver->onResolveCCBCCCallFuncSelector(target, selectorName.c_str    ());
+                    }
+                    if(selCallFunc == 0) {
+                        CCLOG("Skipping selector '%s' since no CCBSelectorResolver is present.", selectorName.c_str());
+                    } else {
+                        CCCallFuncN *callback = CCCallFuncN::create(target, selCallFunc);
+                        actions->addObject(callback);
+                    }
+                } else {
+                    CCLOG("Unexpected empty selector.");
+                }
+            }
+        }
     }
-
     if(actions->count() < 1) return NULL;
     
     return (CCObject *) CCSequence::create(actions);
@@ -763,9 +776,9 @@ void CCBAnimationManager::runAnimationsForSequenceIdTweenDuration(int nSeqId, fl
 
     if(seq->getCallbackChannel() != NULL) {
         CCAction* action = (CCAction *)actionForCallbackChannel(seq->getCallbackChannel());
-	if(action != NULL) {
-	    mRootNode->runAction(action);
-	}
+        if(action != NULL) {
+            mRootNode->runAction(action);
+        }
     } 
 
     if(seq->getSoundChannel() != NULL) {
@@ -919,6 +932,11 @@ CCBSoundEffect* CCBSoundEffect::actionWithSoundFile(const std::string &filename,
   return pRet;
 }
 
+
+CCBSoundEffect::~CCBSoundEffect()
+{
+}
+
 bool CCBSoundEffect::initWithSoundFile(const std::string &filename, float pitch, float pan, float gain) {
     mSoundFile = filename;
     mPitch = pitch;
@@ -926,6 +944,25 @@ bool CCBSoundEffect::initWithSoundFile(const std::string &filename, float pitch,
     mGain = gain;
     return true;
 }
+
+CCObject* CCBSoundEffect::copyWithZone(CCZone *pZone)
+{
+    CCZone *pNewZone = NULL;
+    CCBSoundEffect *pRet = NULL;
+    
+    if (pZone && pZone->m_pCopyObject) {
+        pRet = (CCBSoundEffect*) (pZone->m_pCopyObject);
+    } else {
+        pRet = new CCBSoundEffect();
+        pZone = pNewZone = new CCZone(pRet);
+    }
+    
+    pRet->initWithSoundFile(mSoundFile, mPitch, mPan, mGain);
+    CCActionInstant::copyWithZone(pZone);
+    CC_SAFE_DELETE(pNewZone);
+    return pRet;
+}
+
 
 void CCBSoundEffect::update(float time)
 {
