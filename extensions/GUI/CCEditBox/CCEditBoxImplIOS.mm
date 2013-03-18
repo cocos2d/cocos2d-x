@@ -37,8 +37,9 @@ static const int CC_EDIT_BOX_PADDING = 5;
 
 @implementation CustomUITextField
 - (CGRect)textRectForBounds:(CGRect)bounds {
-    return CGRectMake(bounds.origin.x + CC_EDIT_BOX_PADDING, bounds.origin.y + CC_EDIT_BOX_PADDING,
-                      bounds.size.width - CC_EDIT_BOX_PADDING*2, bounds.size.height - CC_EDIT_BOX_PADDING*2);
+    float padding = CC_EDIT_BOX_PADDING * cocos2d::CCEGLView::sharedOpenGLView()->getScaleX() / [[EAGLView sharedEGLView] contentScaleFactor ];
+    return CGRectMake(bounds.origin.x + padding, bounds.origin.y + padding,
+                      bounds.size.width - padding*2, bounds.size.height - padding*2);
 }
 - (CGRect)editingRectForBounds:(CGRect)bounds {
     return [self textRectForBounds:bounds];
@@ -271,21 +272,23 @@ bool CCEditBoxImplIOS::initWithSize(const CCSize& size)
 void CCEditBoxImplIOS::initInactiveLabels(const CCSize& size)
 {
 	const char* pDefaultFontName = [[m_systemControl.textField.font fontName] UTF8String];
-	float fDefaultFontSize = [m_systemControl.textField.font pointSize];
 
-	m_pLabel = CCLabelTTF::create("", pDefaultFontName, fDefaultFontSize);
+	m_pLabel = CCLabelTTF::create("", "", 0.0f);
     m_pLabel->setAnchorPoint(ccp(0, 0.5f));
-    m_pLabel->setPosition(ccp(CC_EDIT_BOX_PADDING, size.height / 2.0f + 1));
+    m_pLabel->setPosition(ccp(CC_EDIT_BOX_PADDING, size.height / 2.0f));
     m_pLabel->setColor(ccWHITE);
     m_pLabel->setVisible(false);
     m_pEditBox->addChild(m_pLabel, kLabelZOrder);
 	
-    m_pLabelPlaceHolder = CCLabelTTF::create("", pDefaultFontName, fDefaultFontSize);
+    m_pLabelPlaceHolder = CCLabelTTF::create("", "", 0.0f);
 	// align the text vertically center
     m_pLabelPlaceHolder->setAnchorPoint(ccp(0, 0.5f));
-    m_pLabelPlaceHolder->setPosition(ccp(CC_EDIT_BOX_PADDING, size.height / 2.0f + 1));
+    m_pLabelPlaceHolder->setPosition(ccp(CC_EDIT_BOX_PADDING, size.height / 2.0f));
     m_pLabelPlaceHolder->setColor(ccGRAY);
     m_pEditBox->addChild(m_pLabelPlaceHolder, kLabelZOrder);
+    
+    setFont(pDefaultFontName, size.height*2/3);
+    setPlaceholderFont(pDefaultFontName, size.height*2/3);
 }
 
 void CCEditBoxImplIOS::setInactiveText(const char* pText)
@@ -311,12 +314,26 @@ void CCEditBoxImplIOS::setInactiveText(const char* pText)
 
 void CCEditBoxImplIOS::setFont(const char* pFontName, int fontSize)
 {
-	if(pFontName == NULL)
-		return;
+    bool isValidFontName = true;
+	if(pFontName == NULL || strlen(pFontName) == 0) {
+        isValidFontName = false;
+    }
+
+    float retinaFactor = m_bInRetinaMode ? 2.0f : 1.0f;
 	NSString * fntName = [NSString stringWithUTF8String:pFontName];
-	UIFont *textFont = [UIFont fontWithName:fntName size:fontSize];
-	if(textFont != nil)
+    float scaleFactor = CCEGLView::sharedOpenGLView()->getScaleX();
+    UIFont *textFont = nil;
+    if (isValidFontName) {
+        textFont = [UIFont fontWithName:fntName size:fontSize * scaleFactor / retinaFactor];
+    }
+    
+    if (!isValidFontName || textFont == nil){
+        textFont = [UIFont systemFontOfSize:fontSize * scaleFactor / retinaFactor];
+    }
+
+	if(textFont != nil) {
 		[m_systemControl.textField setFont:textFont];
+    }
 
 	m_pLabel->setFontName(pFontName);
 	m_pLabel->setFontSize(fontSize);
