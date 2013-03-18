@@ -1105,7 +1105,7 @@ void CCNode::update(float fDelta)
 {
     if (m_nUpdateScriptHandler)
     {
-        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeSchedule(m_nUpdateScriptHandler, fDelta);
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeSchedule(m_nUpdateScriptHandler, fDelta, this);
     }
 }
 
