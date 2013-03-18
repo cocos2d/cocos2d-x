@@ -155,6 +155,7 @@ public:
     static CCBSoundEffect* actionWithSoundFile(const std::string &file, float pitch, float pan, float gain);
     bool initWithSoundFile(const std::string &file, float pitch, float pan, float gain);
     virtual void update(float time);
+    virtual CCObject* copyWithZone(CCZone *pZone);
 };
 
 
