@@ -52,9 +52,10 @@ APP_ABI := armeabi x86
 ### Run the emulator with the correct library path and options
 
 Make sure to 
- * Set the library path to the directory containing the Open GL library for the emulator
- * Run the x86 version of the emulator
- * Enable GPU use
+ * Set the library path to the directory containing the Open GL library for the emulator (LD_LIBRARY_PATH=...)
+ * Run the x86 version of the emulator (run <android-sdk>/tools/emulator-x86)
+ * Enable GPU use (Use the option "-gpu on")
+ * Also, you need to specify the name of the Android Virtual Device to use (Use the option "-avd <android virtual device name>")
 
 On OS X the command line looks like this
 
