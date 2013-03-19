@@ -67,7 +67,7 @@ inline js_proxy_t *js_get_or_create_proxy(JSContext *cx, T *native_obj) {
         // Return NULL if can't find its type rather than making an assert.
 //        assert(typeProxy);
         if (!typeProxy) {
-            CCLOGWARN("Could not find the type of native object.");
+            CCLOGINFO("Could not find the type of native object.");
             return NULL;
         }
         
