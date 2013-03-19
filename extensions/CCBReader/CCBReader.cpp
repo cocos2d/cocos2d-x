@@ -840,6 +840,7 @@ bool CCBReader::readCallbackKeyframesForSeq(CCBSequence* seq) {
     if(!numKeyframes) return true;
     
     CCBSequenceProperty* channel = new CCBSequenceProperty();
+    channel->autorelease();
 
     for(int i = 0; i < numKeyframes; ++i) {
       
@@ -850,18 +851,17 @@ bool CCBReader::readCallbackKeyframesForSeq(CCBSequence* seq) {
       
         CCArray* value = CCArray::create();
         value->addObject(CCString::create(callbackName));
-        stringstream ss;//create a stringstream
-	    ss << callbackType;//add number to the stream
-        
-        value->addObject(CCString::create(ss.str()));
+        value->addObject(CCString::createWithFormat("%d", callbackType));
         
         CCBKeyframe* keyframe = new CCBKeyframe();
+        keyframe->autorelease();
+        
         keyframe->setTime(time);
         keyframe->setValue(value);
         
         if(jsControlled) {
             string callbackIdentifier;
-            mActionManager->getKeyframeCallbacks()->addObject(CCString::create(ss.str()+":"+callbackName));
+            mActionManager->getKeyframeCallbacks()->addObject(CCString::createWithFormat("%d:%s",callbackType, callbackName.c_str()));
         }
     
         channel->getKeyframes()->addObject(keyframe);
@@ -885,24 +885,13 @@ bool CCBReader::readSoundKeyframesForSeq(CCBSequence* seq) {
         float pitch = readFloat();
         float pan = readFloat();
         float gain = readFloat();
-        
-        int callbackType = readInt(false);
-        
+                
         CCArray* value = CCArray::create();
         
         value->addObject(CCString::create(soundFile));
-        stringstream ss;//create a stringstream
-	    ss << pitch;//add number to the stream
-        
-        value->addObject(CCString::create(ss.str()));
-        
-        ss.flush();
-        ss << pan;
-        value->addObject(CCString::create(ss.str()));
-        
-        ss.flush();
-        ss << gain;
-        value->addObject(CCString::create(ss.str()));
+        value->addObject(CCString::createWithFormat("%f", pitch));
+        value->addObject(CCString::createWithFormat("%f", pan));
+        value->addObject(CCString::createWithFormat("%f", gain));
         
         CCBKeyframe* keyframe = new CCBKeyframe();
         keyframe->setTime(time);
@@ -911,7 +900,7 @@ bool CCBReader::readSoundKeyframesForSeq(CCBSequence* seq) {
         channel->getKeyframes()->addObject(keyframe);
     }
     
-    seq->setCallbackChannel(channel);
+    seq->setSoundChannel(channel);
     
     return true;
 }

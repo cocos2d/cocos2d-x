@@ -158,8 +158,8 @@ void CCNodeLoader::parseProperties(CCNode * pNode, CCNode * pParent, CCBReader *
             }
 	    case kCCBPropTypeFloatXY:
 	      {
-		float * xy =  this->parsePropTypeFloatXY(pNode, pParent, pCCBReader);
-                if(setProp) 
+                float * xy =  this->parsePropTypeFloatXY(pNode, pParent, pCCBReader);
+                if(setProp)
                 {
                     this->onHandlePropTypeFloatXY(pNode, pParent, propertyName.c_str(), xy, pCCBReader);
                 }
