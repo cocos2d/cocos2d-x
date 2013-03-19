@@ -638,6 +638,14 @@ bool CCControlButton::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
         return false;
     }
     
+    for (CCNode *c = this->m_pParent; c != NULL; c = c->getParent())
+    {
+        if (c->isVisible() == false)
+        {
+            return false;
+        }
+    }
+    
     m_isPushed = true;
     this->setHighlighted(true);
     sendActionsForControlEvents(CCControlEventTouchDown);
