@@ -575,14 +575,15 @@ CCObject* CCBAnimationManager::actionForCallbackChannel(CCBSequenceProperty* cha
 	
         CCArray* keyVal = (CCArray *)keyframe->getValue();
         std::string selectorName = ((CCString *)keyVal->objectAtIndex(0))->getCString();
-        int selectorTarget = atoi(((CCString *)keyVal->objectAtIndex(0))->getCString());
+        int selectorTarget = atoi(((CCString *)keyVal->objectAtIndex(1))->getCString());
 	
         if(jsControlled) {
 
             stringstream ss;//create a stringstream
             ss << selectorTarget;//add number to the stream
             std::string callbackName = ss.str() + ":" + selectorName;
-            CCCallFuncN *callback = (CCCallFuncN*)mKeyframeCallFuncs->objectForKey(callbackName.c_str());
+            CCCallFunc *callback = (CCCallFunc*)mKeyframeCallFuncs->objectForKey(callbackName.c_str());
+            callback->retain();
 
             if(callback != NULL) {
                 actions->addObject(callback);
@@ -822,7 +823,7 @@ void CCBAnimationManager::setAnimationCompletedCallback(CCObject *target, SEL_Ca
     mAnimationCompleteCallbackFunc = callbackFunc;
 }
 
-void CCBAnimationManager::setCallFunc(CCCallFuncN* callFunc, const std::string &callbackNamed) {
+void CCBAnimationManager::setCallFunc(CCCallFunc* callFunc, const std::string &callbackNamed) {
     mKeyframeCallFuncs->setObject((CCObject*)callFunc, callbackNamed);
 }
 
