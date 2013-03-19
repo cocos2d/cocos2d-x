@@ -110,7 +110,7 @@ public:
 
     void debug();
     
-    void setCallFunc(CCCallFuncN *callFunc, const std::string &callbackNamed);
+    void setCallFunc(CCCallFunc *callFunc, const std::string &callbackNamed);
 
     CCObject* actionForCallbackChannel(CCBSequenceProperty* channel);
     CCObject* actionForSoundChannel(CCBSequenceProperty* channel);

@@ -885,9 +885,7 @@ bool CCBReader::readSoundKeyframesForSeq(CCBSequence* seq) {
         float pitch = readFloat();
         float pan = readFloat();
         float gain = readFloat();
-        
-        int callbackType = readInt(false);
-        
+                
         CCArray* value = CCArray::create();
         
         value->addObject(CCString::create(soundFile));
@@ -911,7 +909,7 @@ bool CCBReader::readSoundKeyframesForSeq(CCBSequence* seq) {
         channel->getKeyframes()->addObject(keyframe);
     }
     
-    seq->setCallbackChannel(channel);
+    seq->setSoundChannel(channel);
     
     return true;
 }
