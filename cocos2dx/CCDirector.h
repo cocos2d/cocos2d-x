@@ -237,6 +237,10 @@ public:
      * ONLY call it if there is a running scene.
      */
     void replaceScene(CCScene *pScene);
+    
+    /** Give the number of scenes present in the scene stack.
+     */
+    unsigned int getSceneCount();
 
     /** Ends the execution, releases the running scene.
      It doesn't remove the OpenGL view from its parent. You have to do it manually.

@@ -549,6 +549,11 @@ void CCDirector::replaceScene(CCScene *pScene)
     m_pNextScene = pScene;
 }
 
+unsigned int CCDirector::getSceneCount()
+{
+    return m_pobScenesStack->count();
+}
+
 void CCDirector::pushScene(CCScene *pScene)
 {
     CCAssert(pScene, "the scene should not null");
