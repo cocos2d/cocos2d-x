@@ -364,7 +364,7 @@ CCActionInterval* CCBAnimationManager::getAction(CCBKeyframe *pKeyframe0, CCBKey
         float x = ((CCBValue*)value->objectAtIndex(0))->getFloatValue();
         float y = ((CCBValue*)value->objectAtIndex(1))->getFloatValue();
         
-	return CCSkewTo::create(duration, x, y);
+        return CCSkewTo::create(duration, x, y);
     }
     else 
     {
@@ -419,17 +419,16 @@ void CCBAnimationManager::setAnimatedProperty(const char *pPropName, CCNode *pNo
             
             setRelativeScale(pNode, x, y, type, pPropName);
         }
-	else if(strcmp(pPropName, "skew") == 0)
-	{
-            
+        else if(strcmp(pPropName, "skew") == 0)
+        {
             // Get relative scale
             CCArray *value = (CCArray*)pValue;
             float x = ((CCBValue*)value->objectAtIndex(0))->getFloatValue();
             float y = ((CCBValue*)value->objectAtIndex(1))->getFloatValue();
 
-	    pNode->setSkewX(x);
-	    pNode->setSkewY(y);
-	}
+            pNode->setSkewX(x);
+            pNode->setSkewY(y);
+        }
         else 
         {
             // [node setValue:value forKey:name];
@@ -565,24 +564,22 @@ CCObject* CCBAnimationManager::actionForCallbackChannel(CCBSequenceProperty* cha
     CCArray *keyframes = channel->getKeyframes();
     int numKeyframes = keyframes->count();
 
-    for (int i = 0; i < numKeyframes - 1; ++i) {
+    for (int i = 0; i < numKeyframes; ++i) {
 
         CCBKeyframe *keyframe = (CCBKeyframe*)keyframes->objectAtIndex(i);
         float timeSinceLastKeyframe = keyframe->getTime() - lastKeyframeTime;
+        lastKeyframeTime = keyframe->getTime();
         if(timeSinceLastKeyframe > 0) {
             actions->addObject(CCDelayTime::create(timeSinceLastKeyframe));
         }
 	
         CCArray* keyVal = (CCArray *)keyframe->getValue();
         std::string selectorName = ((CCString *)keyVal->objectAtIndex(0))->getCString();
-        int selectorTarget = atoi(((CCString *)keyVal->objectAtIndex(0))->getCString());
+        int selectorTarget = atoi(((CCString *)keyVal->objectAtIndex(1))->getCString());
 	
         if(jsControlled) {
-
-            stringstream ss;//create a stringstream
-            ss << selectorTarget;//add number to the stream
-            std::string callbackName = ss.str() + ":" + selectorName;
-            CCCallFuncN *callback = (CCCallFuncN*)mKeyframeCallFuncs->objectForKey(callbackName.c_str());
+            CCString* callbackName = CCString::createWithFormat("%d:%s", selectorTarget, selectorName.c_str());
+            CCCallFunc *callback = (CCCallFunc*)(mKeyframeCallFuncs->objectForKey(callbackName->getCString()))->copy()->autorelease();
 
             if(callback != NULL) {
                 actions->addObject(callback);
@@ -596,7 +593,7 @@ CCObject* CCBAnimationManager::actionForCallbackChannel(CCBSequenceProperty* cha
                     SEL_CallFuncN selCallFunc = 0;
                     
                     CCBSelectorResolver* targetAsCCBSelectorResolver = dynamic_cast<CCBSelectorResolver *>(target);
-                
+
                     if(targetAsCCBSelectorResolver != NULL) {
                         selCallFunc = targetAsCCBSelectorResolver->onResolveCCBCCCallFuncSelector(target, selectorName.c_str    ());
                     }
@@ -625,10 +622,11 @@ CCObject* CCBAnimationManager::actionForSoundChannel(CCBSequenceProperty* channe
     CCArray *keyframes = channel->getKeyframes();
     int numKeyframes = keyframes->count();
 
-    for (int i = 0; i < numKeyframes - 1; ++i) {
+    for (int i = 0; i < numKeyframes; ++i) {
 
         CCBKeyframe *keyframe = (CCBKeyframe*)keyframes->objectAtIndex(i);
         float timeSinceLastKeyframe = keyframe->getTime() - lastKeyframeTime;
+        lastKeyframeTime = keyframe->getTime();
         if(timeSinceLastKeyframe > 0) {
             actions->addObject(CCDelayTime::create(timeSinceLastKeyframe));
         }
@@ -783,10 +781,10 @@ void CCBAnimationManager::runAnimationsForSequenceIdTweenDuration(int nSeqId, fl
 
     if(seq->getSoundChannel() != NULL) {
         CCAction* action = (CCAction *)actionForSoundChannel(seq->getSoundChannel());
-	if(action != NULL) {
-	    mRootNode->runAction(action);
-	}
-    } 
+        if(action != NULL) {
+            mRootNode->runAction(action);
+        }
+    }
 
     mRunningSequence = getSequence(nSeqId);
 }
@@ -822,7 +820,7 @@ void CCBAnimationManager::setAnimationCompletedCallback(CCObject *target, SEL_Ca
     mAnimationCompleteCallbackFunc = callbackFunc;
 }
 
-void CCBAnimationManager::setCallFunc(CCCallFuncN* callFunc, const std::string &callbackNamed) {
+void CCBAnimationManager::setCallFunc(CCCallFunc* callFunc, const std::string &callbackNamed) {
     mKeyframeCallFuncs->setObject((CCObject*)callFunc, callbackNamed);
 }
 
