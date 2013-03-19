@@ -143,6 +143,7 @@ public:
 };
 
 
+
 class CCBSoundEffect : public CCActionInstant
 {
 private:
@@ -173,6 +174,30 @@ public:
     virtual CCObject* copyWithZone(CCZone *pZone);
     virtual void startWithTarget(CCNode *pNode);
 };
+
+
+class CCBRotateXTo: public CCBRotateTo {
+private:
+    float mStartAngle;
+    float mDstAngle;
+    float mDiffAngle;
+public:
+    virtual void startWithTarget(CCNode *pNode);
+    virtual void update(float time);
+};
+
+
+class CCBRotateYTo: public CCBRotateTo {
+private:
+    float mStartAngle;
+    float mDstAngle;
+    float mDiffAngle;
+    
+public:
+    virtual void startWithTarget(CCNode *pNode);
+    virtual void update(float time);
+};
+
 
 class CCBEaseInstant : public CCActionEase
 {
