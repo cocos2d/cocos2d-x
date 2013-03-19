@@ -29,6 +29,11 @@ SEL_MenuHandler CCBScriptCallbackProxy::onResolveCCBCCMenuItemSelector(cocos2d::
     return menu_selector(CCBScriptCallbackProxy::menuItemCallback);
 }
 
+SEL_CallFuncN CCBScriptCallbackProxy::onResolveCCBCCCallFuncSelector(cocos2d::CCObject * pTarget,
+                                                                  const char * pSelectorName) {
+
+}
+
 SEL_CCControlHandler CCBScriptCallbackProxy::onResolveCCBCCControlSelector(CCObject * pTarget,
                                                                            const char * pSelectorName) {
     

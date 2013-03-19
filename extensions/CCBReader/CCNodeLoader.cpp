@@ -156,6 +156,16 @@ void CCNodeLoader::parseProperties(CCNode * pNode, CCNode * pParent, CCBReader *
                 }
                 break;
             }
+	    case kCCBPropTypeFloatXY:
+	      {
+		float * xy =  this->parsePropTypeFloatXY(pNode, pParent, pCCBReader);
+                if(setProp) 
+                {
+                    this->onHandlePropTypeFloatXY(pNode, pParent, propertyName.c_str(), xy, pCCBReader);
+                }
+                break;
+	      }
+
             case kCCBPropTypeDegrees: 
             {
                 float degrees = this->parsePropTypeDegrees(pNode, pParent, pCCBReader, propertyName.c_str());
@@ -433,6 +443,21 @@ CCSize CCNodeLoader::parsePropTypeSize(CCNode * pNode, CCNode * pParent, CCBRead
     }
     
     return CCSize(width, height);
+}
+
+
+
+float * CCNodeLoader::parsePropTypeFloatXY(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader) {
+    float x = pCCBReader->readFloat();
+    float y = pCCBReader->readFloat();
+
+    int type = pCCBReader->readInt(false);
+
+    float * floatXY = new float[2];
+    floatXY[0] = x;
+    floatXY[1] = y;
+
+    return floatXY;
 }
 
 float * CCNodeLoader::parsePropTypeScaleLock(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader, const char *pPropertyName) {
@@ -858,6 +883,8 @@ CCNode * CCNodeLoader::parsePropTypeCCBFile(CCNode * pNode, CCNode * pParent, CC
     ccbReader->mCurrentBit = 0;
     CC_SAFE_RETAIN(pCCBReader->mOwner);
     ccbReader->mOwner = pCCBReader->mOwner;
+    
+    ccbReader->getAnimationManager()->mOwner = ccbReader->mOwner;
 
     // The assignments below are done in the CCBReader constructor.
 //     ccbReader->mOwnerOutletNames = pCCBReader->mOwnerOutletNames;
@@ -910,6 +937,16 @@ void CCNodeLoader::onHandlePropTypeSize(CCNode * pNode, CCNode * pParent, const 
     }
 }
 
+void CCNodeLoader::onHandlePropTypeFloatXY(CCNode * pNode, CCNode * pParent, const char* pPropertyName, float * pFloat, CCBReader * pCCBReader) {
+    if(strcmp(pPropertyName, PROPERTY_SKEW) == 0) {
+        pNode->setSkewX(pFloat[0]);
+        pNode->setSkewY(pFloat[1]);
+    } else {
+        ASSERT_FAIL_UNEXPECTED_PROPERTY(pPropertyName);
+    }
+}
+
+
 void CCNodeLoader::onHandlePropTypeScaleLock(CCNode * pNode, CCNode * pParent, const char* pPropertyName, float * pScaleLock, CCBReader * pCCBReader) {
     if(strcmp(pPropertyName, PROPERTY_SCALE) == 0) {
         pNode->setScaleX(pScaleLock[0]);
@@ -924,6 +961,7 @@ void CCNodeLoader::onHandlePropTypeFloat(CCNode * pNode, CCNode * pParent, const
     // It may be a custom property, add it to custom property dictionary.
     m_pCustomProperties->setObject(CCBValue::create(pFloat), pPropertyName);
 }
+
 
 void CCNodeLoader::onHandlePropTypeDegrees(CCNode * pNode, CCNode * pParent, const char* pPropertyName, float pDegrees, CCBReader * pCCBReader) {
     if(strcmp(pPropertyName, PROPERTY_ROTATION) == 0) {

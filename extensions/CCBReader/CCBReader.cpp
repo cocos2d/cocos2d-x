@@ -270,14 +270,14 @@ CCNode* CCBReader::readNodeGraphFromData(CCData *pData, CCObject *pOwner, const 
     CC_SAFE_RETAIN(mOwner);
 
     mActionManager->setRootContainerSize(parentSize);
-    
+    mActionManager->mOwner = mOwner;
     mOwnerOutletNodes = new CCArray();
     mOwnerCallbackNodes = new CCArray();
     
     CCDictionary* animationManagers = CCDictionary::create();
     CCNode *pNodeGraph = readFileWithCleanUp(true, animationManagers);
     
-    if (pNodeGraph && mActionManager->getAutoPlaySequenceId() != -1)
+    if (pNodeGraph && mActionManager->getAutoPlaySequenceId() != -1 && !jsControlled)
     {
         // Auto play animations
         mActionManager->runAnimationsForSequenceIdTweenDuration(mActionManager->getAutoPlaySequenceId(), 0);
@@ -400,6 +400,7 @@ bool CCBReader::readHeader()
 
     // Read JS check
     jsControlled = this->readBool();
+    mActionManager->jsControlled = jsControlled;
 
     return true;
 }
@@ -787,7 +788,8 @@ CCBKeyframe* CCBReader::readKeyframe(int type)
     {
         value = CCBValue::create(readFloat());
     }
-    else if (type == kCCBPropTypeScaleLock || type == kCCBPropTypePosition)
+    else if (type == kCCBPropTypeScaleLock || type == kCCBPropTypePosition
+	     || type == kCCBPropTypeFloatXY)
     {
         float a = readFloat();
         float b = readFloat();
@@ -832,6 +834,89 @@ CCBKeyframe* CCBReader::readKeyframe(int type)
     return  keyframe;
 }
 
+
+bool CCBReader::readCallbackKeyframesForSeq(CCBSequence* seq) {
+    int numKeyframes = readInt(false);
+    if(!numKeyframes) return true;
+    
+    CCBSequenceProperty* channel = new CCBSequenceProperty();
+
+    for(int i = 0; i < numKeyframes; ++i) {
+      
+        float time = readFloat();
+        std::string callbackName = readCachedString();
+      
+        int callbackType = readInt(false);
+      
+        CCArray* value = CCArray::create();
+        value->addObject(CCString::create(callbackName));
+        stringstream ss;//create a stringstream
+	    ss << callbackType;//add number to the stream
+        
+        value->addObject(CCString::create(ss.str()));
+        
+        CCBKeyframe* keyframe = new CCBKeyframe();
+        keyframe->setTime(time);
+        keyframe->setValue(value);
+        
+        if(jsControlled) {
+            string callbackIdentifier;
+            mActionManager->getKeyframeCallbacks()->addObject(CCString::create(ss.str()+":"+callbackName));
+        }
+    
+        channel->getKeyframes()->addObject(keyframe);
+    }
+    
+    seq->setCallbackChannel(channel);
+    
+    return true;
+}
+
+bool CCBReader::readSoundKeyframesForSeq(CCBSequence* seq) {
+    int numKeyframes = readInt(false);
+    if(!numKeyframes) return true;
+    
+    CCBSequenceProperty* channel = new CCBSequenceProperty();
+    
+    for(int i = 0; i < numKeyframes; ++i) {
+        
+        float time = readFloat();
+        std::string soundFile = readCachedString();
+        float pitch = readFloat();
+        float pan = readFloat();
+        float gain = readFloat();
+        
+        int callbackType = readInt(false);
+        
+        CCArray* value = CCArray::create();
+        
+        value->addObject(CCString::create(soundFile));
+        stringstream ss;//create a stringstream
+	    ss << pitch;//add number to the stream
+        
+        value->addObject(CCString::create(ss.str()));
+        
+        ss.flush();
+        ss << pan;
+        value->addObject(CCString::create(ss.str()));
+        
+        ss.flush();
+        ss << gain;
+        value->addObject(CCString::create(ss.str()));
+        
+        CCBKeyframe* keyframe = new CCBKeyframe();
+        keyframe->setTime(time);
+        keyframe->setValue(value);
+        
+        channel->getKeyframes()->addObject(keyframe);
+    }
+    
+    seq->setCallbackChannel(channel);
+    
+    return true;
+}
+
+
 CCNode * CCBReader::readNodeGraph() {
     return this->readNodeGraph(NULL);
 }
@@ -851,6 +936,9 @@ bool CCBReader::readSequences()
         seq->setName(readCachedString().c_str());
         seq->setSequenceId(readInt(false));
         seq->setChainedSequenceId(readInt(true));
+        
+        if(!readCallbackKeyframesForSeq(seq)) return false;
+        if(!readSoundKeyframesForSeq(seq)) return false;
         
         sequences->addObject(seq);
     }
