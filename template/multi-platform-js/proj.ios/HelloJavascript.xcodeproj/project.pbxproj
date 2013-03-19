@@ -119,6 +119,12 @@
 		1A82F5F8169AC91400C4B13A /* LocalStorage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A82F5F5169AC91400C4B13A /* LocalStorage.cpp */; };
 		1A82F5F9169AC91400C4B13A /* LocalStorageAndroid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A82F5F7169AC91400C4B13A /* LocalStorageAndroid.cpp */; };
 		1A82F5FB169AC92500C4B13A /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A82F5FA169AC92500C4B13A /* libsqlite3.dylib */; };
+		1AA51AE816F71BA3000FDF05 /* jsb_chipmunk_constants.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AA51AE516F71BA3000FDF05 /* jsb_chipmunk_constants.js */; };
+		1AA51AE916F71BA3000FDF05 /* jsb_cocos2d_constants.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AA51AE616F71BA3000FDF05 /* jsb_cocos2d_constants.js */; };
+		1AA51AEA16F71BA3000FDF05 /* jsb_opengl_constants.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AA51AE716F71BA3000FDF05 /* jsb_opengl_constants.js */; };
+		1AA51AEB16F71C3D000FDF05 /* jsb_chipmunk_constants.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AA51AE516F71BA3000FDF05 /* jsb_chipmunk_constants.js */; };
+		1AA51AEC16F71C3D000FDF05 /* jsb_cocos2d_constants.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AA51AE616F71BA3000FDF05 /* jsb_cocos2d_constants.js */; };
+		1AA51AED16F71C3D000FDF05 /* jsb_opengl_constants.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AA51AE716F71BA3000FDF05 /* jsb_opengl_constants.js */; };
 		1AE4B40316D1FECD003C6D1C /* main.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AE4B40016D1FECD003C6D1C /* main.js */; };
 		1AE4B40416D1FECD003C6D1C /* res in Resources */ = {isa = PBXBuildFile; fileRef = 1AE4B40116D1FECD003C6D1C /* res */; };
 		1AE4B40516D1FECD003C6D1C /* src in Resources */ = {isa = PBXBuildFile; fileRef = 1AE4B40216D1FECD003C6D1C /* src */; };
@@ -377,6 +383,9 @@
 		1A82F5F6169AC91400C4B13A /* LocalStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalStorage.h; sourceTree = "<group>"; };
 		1A82F5F7169AC91400C4B13A /* LocalStorageAndroid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LocalStorageAndroid.cpp; sourceTree = "<group>"; };
 		1A82F5FA169AC92500C4B13A /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		1AA51AE516F71BA3000FDF05 /* jsb_chipmunk_constants.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_chipmunk_constants.js; sourceTree = "<group>"; };
+		1AA51AE616F71BA3000FDF05 /* jsb_cocos2d_constants.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_cocos2d_constants.js; sourceTree = "<group>"; };
+		1AA51AE716F71BA3000FDF05 /* jsb_opengl_constants.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_opengl_constants.js; sourceTree = "<group>"; };
 		1AE4B40016D1FECD003C6D1C /* main.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = main.js; path = ../Resources/main.js; sourceTree = "<group>"; };
 		1AE4B40116D1FECD003C6D1C /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; name = res; path = ../Resources/res; sourceTree = "<group>"; };
 		1AE4B40216D1FECD003C6D1C /* src */ = {isa = PBXFileReference; lastKnownFileType = folder; name = src; path = ../Resources/src; sourceTree = "<group>"; };
@@ -510,11 +519,14 @@
 			children = (
 				1A2757B61697FAAD00504026 /* jsb.js */,
 				1A2757B01697FAAD00504026 /* jsb_chipmunk.js */,
+				1AA51AE516F71BA3000FDF05 /* jsb_chipmunk_constants.js */,
 				1A2757B11697FAAD00504026 /* jsb_cocos2d.js */,
+				1AA51AE616F71BA3000FDF05 /* jsb_cocos2d_constants.js */,
 				1A4B645016EE24900025FE93 /* jsb_cocos2d_extension.js */,
 				1A2757B21697FAAD00504026 /* jsb_cocosbuilder.js */,
 				1A2757B31697FAAD00504026 /* jsb_debugger.js */,
 				1A2757B41697FAAD00504026 /* jsb_opengl.js */,
+				1AA51AE716F71BA3000FDF05 /* jsb_opengl_constants.js */,
 				1A2757B51697FAAD00504026 /* jsb_sys.js */,
 				1A4B645216EE24980025FE93 /* main.debug.js */,
 			);
@@ -957,6 +969,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1AA51AEB16F71C3D000FDF05 /* jsb_chipmunk_constants.js in Resources */,
+				1AA51AEC16F71C3D000FDF05 /* jsb_cocos2d_constants.js in Resources */,
+				1AA51AED16F71C3D000FDF05 /* jsb_opengl_constants.js in Resources */,
 				1A4B645416EE24A80025FE93 /* jsb_cocos2d_extension.js in Resources */,
 				1A4B645516EE24A80025FE93 /* main.debug.js in Resources */,
 				1AE4B40616D1FF4C003C6D1C /* main.js in Resources */,
@@ -1088,6 +1103,9 @@
 				1A4B644F16EE23B30025FE93 /* jsb_cocos2dx_extension_manual.cpp in Sources */,
 				1A4B645116EE24900025FE93 /* jsb_cocos2d_extension.js in Sources */,
 				1A4B645316EE24980025FE93 /* main.debug.js in Sources */,
+				1AA51AE816F71BA3000FDF05 /* jsb_chipmunk_constants.js in Sources */,
+				1AA51AE916F71BA3000FDF05 /* jsb_cocos2d_constants.js in Sources */,
+				1AA51AEA16F71BA3000FDF05 /* jsb_opengl_constants.js in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

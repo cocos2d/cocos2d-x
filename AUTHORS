@@ -12,6 +12,9 @@ Developers:
     Rolando Abarca
         Javascript Binding and testjs
 
+    biteforest
+        fix cc scale9 sprite bug
+
     Jimmy Sambuo
         fix the bug that SimpleAudioEngine::playEffect() and playBackgroundMusic() play twice on linux
 

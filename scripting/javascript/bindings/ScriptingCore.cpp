@@ -255,6 +255,13 @@ JSBool JSBCore_os(JSContext *cx, uint32_t argc, jsval *vp)
     return JS_TRUE;
 };
 
+JSBool JSB_core_restartVM(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	JSB_PRECONDITION2(argc==0, cx, JS_FALSE, "Invalid number of arguments in executeScript");
+    ScriptingCore::getInstance()->reset();
+    JS_SET_RVAL(cx, vp, JSVAL_VOID);
+	return JS_TRUE;
+};
 
 void registerDefaultClasses(JSContext* cx, JSObject* global) {
     // first, try to get the ns
@@ -291,6 +298,7 @@ void registerDefaultClasses(JSContext* cx, JSObject* global) {
     JS_DefineFunction(cx, global, "__getPlatform", JSBCore_platform, 0, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, global, "__getOS", JSBCore_os, 0, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, global, "__getVersion", JSBCore_version, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, global, "__restartVM", JSB_core_restartVM, 0, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
 }
 
 void sc_finalize(JSFreeOp *freeOp, JSObject *obj) {
