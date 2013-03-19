@@ -291,6 +291,16 @@ CCActionInterval* CCBAnimationManager::getAction(CCBKeyframe *pKeyframe0, CCBKey
         CCBValue *value = (CCBValue*)pKeyframe1->getValue();
         return CCBRotateTo::create(duration, value->getFloatValue());
     }
+    else if(strcmp(pPropName, "rotationX") == 0)
+    {
+        CCBValue *value = (CCBValue*)pKeyframe1->getValue();
+        return CCBRotateXTo::create(duration, value->getFloatValue());
+    }
+    else if(strcmp(pPropName, "rotationY") == 0)
+    {
+        CCBValue *value = (CCBValue*)pKeyframe1->getValue();
+        return CCBRotateYTo::create(duration, value->getFloatValue());
+    }
     else if (strcmp(pPropName, "opacity") == 0)
     {
         CCBValue *value = (CCBValue*)pKeyframe1->getValue();
@@ -912,7 +922,6 @@ void CCBSetSpriteFrame::update(float time)
 }
 
 
-
 /************************************************************
  CCBSoundEffect
  ************************************************************/
@@ -1034,6 +1043,50 @@ void CCBRotateTo::update(float time)
     m_pTarget->setRotation(mStartAngle + (mDiffAngle * time))
     ;
 }
+
+
+
+
+/************************************************************
+ CCBRotateXTO
+ ************************************************************/
+
+
+void CCBRotateXTo::startWithTarget(CCNode *pNode)
+{
+    CCActionInterval::startWithTarget(pNode);
+    mStartAngle = m_pTarget->getRotation();
+    mDiffAngle = mDstAngle - mStartAngle;
+}
+
+void CCBRotateXTo::update(float time)
+{
+    m_pTarget->setRotationX(mStartAngle + (mDiffAngle * time))
+    ;
+}
+
+
+
+/************************************************************
+ CCBRotateYTO
+ ************************************************************/
+
+
+
+void CCBRotateYTo::startWithTarget(CCNode *pNode)
+{
+    CCActionInterval::startWithTarget(pNode);
+    mStartAngle = m_pTarget->getRotation();
+    mDiffAngle = mDstAngle - mStartAngle;
+}
+
+void CCBRotateYTo::update(float time)
+{
+    m_pTarget->setRotationY(mStartAngle + (mDiffAngle * time))
+    ;
+}
+
+
 
 /************************************************************
  CCBEaseInstant
