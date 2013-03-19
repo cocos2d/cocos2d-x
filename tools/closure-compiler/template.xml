@@ -7,7 +7,7 @@
     <target name="compile">
         <!--advanced / simple-->
         <jscomp compilationLevel="advanced" warning="quiet"
-                debug="false" output="$PATH_TO_OUTPUT_FILE">
+                debug="false" output="$PATH_TO_OUTPUT">
             <externs dir="$PATH_TO_EXCLUDES">
                 <file name="obfuscate_exclude_cocos2d.js"/>
                 <file name="obfuscate_exclude_chipmunk.js"/>
