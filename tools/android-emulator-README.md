@@ -4,9 +4,11 @@
 
 For a few years the only option was to run the Android emulator by emulating the ARM instruction set on a x86 host machine. While this is still possible, it has two problems
  * it is very, very slow
- * GPU support and OpenGL ES 2.0 is not well supported - so cocos2d-x does not run correctly.
+ * GPU support and OpenGL ES 2.0 is not well supported
 
-The fix is to use virtualization with the x86 version of Android and enable GPU acceleration.
+So cocos2d-x does not run correctly.
+
+The fix is to use virtualization with the x86 version of Android and enable GPU acceleration. With these options enabled, you can successfully use the emulator to develop with cocos2d-x!
 
 ## How-to
 
