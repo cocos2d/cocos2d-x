@@ -585,7 +585,7 @@ CCObject* CCBAnimationManager::actionForCallbackChannel(CCBSequenceProperty* cha
                 actions->addObject(callback);
             }
         } else {
-            CCObject*target = NULL;
+            CCObject* target = NULL;
             if(selectorTarget == kCCBTargetTypeDocumentRoot) target = mRootNode;
             else if (selectorTarget == kCCBTargetTypeOwner) target = mOwner;
             if(target != NULL) {
