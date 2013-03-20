@@ -23,10 +23,10 @@ CCBAnimationManager::CCBAnimationManager()
 , mAutoPlaySequenceId(0)
 , mRootNode(NULL)
 , mRootContainerSize(CCSizeZero)
-, mOwner(NULL)
-, jsControlled(false)
 , mDelegate(NULL)
 , mRunningSequence(NULL)
+, jsControlled(false)
+, mOwner(NULL)
 {
     init();
 }
@@ -286,11 +286,21 @@ CCActionInterval* CCBAnimationManager::getAction(CCBKeyframe *pKeyframe0, CCBKey
 {
     float duration = pKeyframe1->getTime() - (pKeyframe0 ? pKeyframe0->getTime() : 0);
     
-    if (strcmp(pPropName, "rotation") == 0)
+    if (strcmp(pPropName, "rotationX") == 0)
+    {
+        CCBValue *value = (CCBValue*)pKeyframe1->getValue();
+        return CCBRotateXTo::create(duration, value->getFloatValue());
+    }
+    else if(strcmp(pPropName, "rotationY") == 0)
+    {
+        CCBValue *value = (CCBValue*)pKeyframe1->getValue();
+        return CCBRotateYTo::create(duration, value->getFloatValue());
+    }
+    else if (strcmp(pPropName, "rotation") == 0)
     {
         CCBValue *value = (CCBValue*)pKeyframe1->getValue();
         return CCBRotateTo::create(duration, value->getFloatValue());
-    }
+    } 
     else if (strcmp(pPropName, "opacity") == 0)
     {
         CCBValue *value = (CCBValue*)pKeyframe1->getValue();
@@ -438,6 +448,14 @@ void CCBAnimationManager::setAnimatedProperty(const char *pPropName, CCNode *pNo
             {
                 float rotate = ((CCBValue*)pValue)->getFloatValue();
                 pNode->setRotation(rotate);
+            } else if(strcmp(pPropName, "rotationX") == 0)
+            {
+                float rotate = ((CCBValue*)pValue)->getFloatValue();
+                pNode->setRotationX(rotate);
+            }else if(strcmp(pPropName, "rotationY") == 0)
+            {
+                float rotate = ((CCBValue*)pValue)->getFloatValue();
+                pNode->setRotationY(rotate);
             }
             else if (strcmp(pPropName, "opacity") == 0)
             {
@@ -585,7 +603,7 @@ CCObject* CCBAnimationManager::actionForCallbackChannel(CCBSequenceProperty* cha
                 actions->addObject(callback);
             }
         } else {
-            CCObject *target;
+            CCObject* target = NULL;
             if(selectorTarget == kCCBTargetTypeDocumentRoot) target = mRootNode;
             else if (selectorTarget == kCCBTargetTypeOwner) target = mOwner;
             if(target != NULL) {
@@ -912,7 +930,6 @@ void CCBSetSpriteFrame::update(float time)
 }
 
 
-
 /************************************************************
  CCBSoundEffect
  ************************************************************/
@@ -1034,6 +1051,161 @@ void CCBRotateTo::update(float time)
     m_pTarget->setRotation(mStartAngle + (mDiffAngle * time))
     ;
 }
+
+
+
+
+/************************************************************
+ CCBRotateXTO
+ ************************************************************/
+
+
+CCBRotateXTo* CCBRotateXTo::create(float fDuration, float fAngle)
+{
+    CCBRotateXTo *ret = new CCBRotateXTo();
+    if (ret)
+    {
+        if (ret->initWithDuration(fDuration, fAngle))
+        {
+            ret->autorelease();
+        }
+        else
+        {
+            CC_SAFE_DELETE(ret);
+        }
+    }
+    
+    return ret;
+}
+
+bool CCBRotateXTo::initWithDuration(float fDuration, float fAngle)
+{
+    if (CCActionInterval::initWithDuration(fDuration))
+    {
+        mDstAngle = fAngle;
+        
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+
+void CCBRotateXTo::startWithTarget(CCNode *pNode)
+{
+    //CCActionInterval::startWithTarget(pNode);
+    m_pOriginalTarget = pNode;
+    m_pTarget = pNode;
+    m_elapsed = 0.0f;
+    m_bFirstTick = true;
+    mStartAngle = m_pTarget->getRotationX();
+    mDiffAngle = mDstAngle - mStartAngle;
+}
+
+CCObject* CCBRotateXTo::copyWithZone(CCZone *pZone)
+{
+    CCZone *pNewZone = NULL;
+    CCBRotateXTo *pRet = NULL;
+    
+    if (pZone && pZone->m_pCopyObject) {
+        pRet = (CCBRotateXTo*) (pZone->m_pCopyObject);
+    } else {
+        pRet = new CCBRotateXTo();
+        pZone = pNewZone = new CCZone(pRet);
+    }
+    
+    pRet->initWithDuration(m_fDuration, mDstAngle);
+    CCActionInterval::copyWithZone(pZone);
+    CC_SAFE_DELETE(pNewZone);
+    return pRet;
+}
+
+void CCBRotateXTo::update(float time)
+{
+    m_pTarget->setRotationX(mStartAngle + (mDiffAngle * time))
+    ;
+}
+
+
+
+/************************************************************
+ CCBRotateYTO
+ ************************************************************/
+
+
+
+CCBRotateYTo* CCBRotateYTo::create(float fDuration, float fAngle)
+{
+    CCBRotateYTo *ret = new CCBRotateYTo();
+    if (ret)
+    {
+        if (ret->initWithDuration(fDuration, fAngle))
+        {
+            ret->autorelease();
+        }
+        else
+        {
+            CC_SAFE_DELETE(ret);
+        }
+    }
+    
+    return ret;
+}
+
+bool CCBRotateYTo::initWithDuration(float fDuration, float fAngle)
+{
+    if (CCActionInterval::initWithDuration(fDuration))
+    {
+        mDstAngle = fAngle;
+        
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+
+void CCBRotateYTo::startWithTarget(CCNode *pNode)
+{
+ //   CCActionInterval::startWithTarget(pNode);
+    m_pOriginalTarget = pNode;
+    m_pTarget = pNode;
+    m_elapsed = 0.0f;
+    m_bFirstTick = true;
+    mStartAngle = m_pTarget->getRotationY();
+    mDiffAngle = mDstAngle - mStartAngle;
+}
+
+
+CCObject* CCBRotateYTo::copyWithZone(CCZone *pZone)
+{
+    CCZone *pNewZone = NULL;
+    CCBRotateYTo *pRet = NULL;
+    
+    if (pZone && pZone->m_pCopyObject) {
+        pRet = (CCBRotateYTo*) (pZone->m_pCopyObject);
+    } else {
+        pRet = new CCBRotateYTo();
+        pZone = pNewZone = new CCZone(pRet);
+    }
+    
+    pRet->initWithDuration(m_fDuration, mDstAngle);
+    CCActionInterval::copyWithZone(pZone);
+    CC_SAFE_DELETE(pNewZone);
+    return pRet;
+}
+
+void CCBRotateYTo::update(float time)
+{
+    m_pTarget->setRotationY(mStartAngle + (mDiffAngle * time))
+    ;
+}
+
+
 
 /************************************************************
  CCBEaseInstant
