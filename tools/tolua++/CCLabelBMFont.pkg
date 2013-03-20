@@ -9,7 +9,6 @@ class CCLabelBMFont : public CCNode
 	void setString(const char *label, bool fromUpdate);
     void setCString(const char *label);
 	const char* getString(void);
-	void updateString(bool fromUpdate);
 
 	void setAnchorPoint(const CCPoint & var);
 	void setAlignment(CCTextAlignment alignment);
