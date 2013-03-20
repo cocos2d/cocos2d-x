@@ -94,11 +94,20 @@ public:
     virtual void setContentSize(const CCSize& size);
 	virtual void setAnchorPoint(const CCPoint& anchorPoint);
     virtual void visit(void);
+	virtual void onEnter(void);
     virtual void doAnimationWhenKeyboardMove(float duration, float distance);
     virtual void openKeyboard();
     virtual void closeKeyboard();
+	
+	virtual void onEndEditing();
     
 private:
+	void			initInactiveLabels(const CCSize& size);
+	void			setInactiveText(const char* pText);
+	void			adjustTextFieldPosition();
+	
+    CCLabelTTF*     m_pLabel;
+    CCLabelTTF*     m_pLabelPlaceHolder;
     CCSize          m_tContentSize;
     CCPoint         m_obPosition;
     CCPoint         m_obAnchorPoint;

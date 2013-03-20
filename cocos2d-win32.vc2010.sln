@@ -19,6 +19,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "liblua", "scripting\lua\pro
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libExtensions", "extensions\proj.win32\libExtensions.vcxproj", "{21B2C324-891F-48EA-AD1A-5AE13DE12E28}"
+	ProjectSection(ProjectDependencies) = postProject
+		{98A51BA8-FC3A-415B-AC8F-8C7BD464E93E} = {98A51BA8-FC3A-415B-AC8F-8C7BD464E93E}
+		{207BC7A9-CCF1-4F2F-A04D-45F72242AE25} = {207BC7A9-CCF1-4F2F-A04D-45F72242AE25}
+		{F8EDD7FA-9A51-4E80-BAEB-860825D2EAC6} = {F8EDD7FA-9A51-4E80-BAEB-860825D2EAC6}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HelloCpp", "samples\Cpp\HelloCpp\proj.win32\HelloCpp.vcxproj", "{B8BF9E81-35FD-4582-BA1C-B85FA365BABB}"
 EndProject
@@ -92,6 +97,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AssetsManagerTest", "sample
 	EndProjectSection
 EndProject
 Global
+	GlobalSection(DPCodeReviewSolutionGUID) = preSolution
+		DPCodeReviewSolutionGUID = {00000000-0000-0000-0000-000000000000}
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
 		Release|Win32 = Release|Win32
@@ -187,8 +195,5 @@ Global
 		{68ED0B4E-2BCA-45D2-9648-CEABEBD3B9D7} = {68B43009-A1C1-41B2-8AF7-77278B70E897}
 		{39379840-825A-45A0-B363-C09FFEF864BD} = {68B43009-A1C1-41B2-8AF7-77278B70E897}
 		{9A17D9A4-4B11-4E32-94F6-895FF4909EC5} = {68B43009-A1C1-41B2-8AF7-77278B70E897}
-	EndGlobalSection
-	GlobalSection(DPCodeReviewSolutionGUID) = preSolution
-		DPCodeReviewSolutionGUID = {00000000-0000-0000-0000-000000000000}
 	EndGlobalSection
 EndGlobal

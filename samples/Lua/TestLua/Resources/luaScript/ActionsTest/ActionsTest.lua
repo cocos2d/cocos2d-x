@@ -1,6 +1,3 @@
-require "luaScript/ActionsTest/ActionsName"
-
-
 local size = CCDirector:sharedDirector():getWinSize()
 
 local function initWithLayer(layer)

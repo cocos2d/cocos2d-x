@@ -44,6 +44,9 @@ bool AppDelegate::applicationDidFinishLaunching()
     TargetPlatform platform = CCApplication::sharedApplication()->getTargetPlatform();
     if (platform == kTargetIphone || platform == kTargetIpad)
     {
+        std::vector<std::string> searchPaths = CCFileUtils::sharedFileUtils()->getSearchPaths();
+        searchPaths.insert(searchPaths.begin(), "Published files iOS");
+        CCFileUtils::sharedFileUtils()->setSearchPaths(searchPaths);
         if (screenSize.height > 1024)
         {
             resourceSize = CCSizeMake(1536, 2048);

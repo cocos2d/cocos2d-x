@@ -68,6 +68,8 @@ _CONTENTS+="androidndkdir=$NDK_ROOT"'\n'
 _CONTENTS+="clangllvmdir=$CLANG_ROOT"'\n'
 _CONTENTS+="cocosdir=$COCOS2DX_ROOT"'\n'
 _CONTENTS+="cxxgeneratordir=$CXX_GENERATOR_ROOT"'\n'
+_CONTENTS+="extra_flags="'\n'
+
 echo 
 echo "generating userconf.ini..."
 echo ---
