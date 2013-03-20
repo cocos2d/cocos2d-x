@@ -163,6 +163,7 @@ void CCNodeLoader::parseProperties(CCNode * pNode, CCNode * pParent, CCBReader *
                 {
                     this->onHandlePropTypeFloatXY(pNode, pParent, propertyName.c_str(), xy, pCCBReader);
                 }
+                CC_SAFE_DELETE_ARRAY(xy);
                 break;
 	      }
 
@@ -450,8 +451,6 @@ CCSize CCNodeLoader::parsePropTypeSize(CCNode * pNode, CCNode * pParent, CCBRead
 float * CCNodeLoader::parsePropTypeFloatXY(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader) {
     float x = pCCBReader->readFloat();
     float y = pCCBReader->readFloat();
-
-    int type = pCCBReader->readInt(false);
 
     float * floatXY = new float[2];
     floatXY[0] = x;
