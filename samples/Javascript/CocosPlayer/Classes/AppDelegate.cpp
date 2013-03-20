@@ -1,13 +1,16 @@
 #include "AppDelegate.h"
 #include "PlayerStatus.h"
+#include "MainSceneHelper.h"
 #include "cocos2d.h"
 #include "SimpleAudioEngine.h"
 #include "ScriptingCore.h"
 #include "generated/jsb_cocos2dx_auto.hpp"
+#include "generated/jsb_cocos2dx_extension_auto.hpp"
+#include "jsb_cocos2dx_extension_manual.h"
 #include "cocos2d_specifics.hpp"
 #include "js_bindings_chipmunk_registration.h"
 #include "js_bindings_ccbreader.h"
-#include "MainSceneHelper.h"
+#include "js_bindings_system_registration.h"
 
 #ifdef JSLOG
 #undef JSLOG
@@ -110,14 +113,18 @@ bool AppDelegate::applicationDidFinishLaunching()
     
     // set FPS. the default value is 1.0/60 if you don't call this
     pDirector->setAnimationInterval(1.0 / 60);
-
+    
     ScriptingCore* sc = ScriptingCore::getInstance();
     sc->addRegisterCallback(register_all_cocos2dx);
+    sc->addRegisterCallback(register_all_cocos2dx_extension);
     sc->addRegisterCallback(register_cocos2dx_js_extensions);
+    sc->addRegisterCallback(register_all_cocos2dx_extension_manual);
     sc->addRegisterCallback(register_CCBuilderReader);
+    sc->addRegisterCallback(jsb_register_system);
     sc->addRegisterCallback(jsb_register_chipmunk);
     
     sc->start();
+
     CCScriptEngineProtocol *pEngine = ScriptingCore::getInstance();
     CCScriptEngineManager::sharedManager()->setScriptEngine(pEngine);
     runMainScene();
