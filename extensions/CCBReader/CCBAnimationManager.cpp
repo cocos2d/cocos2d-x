@@ -23,10 +23,10 @@ CCBAnimationManager::CCBAnimationManager()
 , mAutoPlaySequenceId(0)
 , mRootNode(NULL)
 , mRootContainerSize(CCSizeZero)
-, mOwner(NULL)
-, jsControlled(false)
 , mDelegate(NULL)
 , mRunningSequence(NULL)
+, jsControlled(false)
+, mOwner(NULL)
 {
     init();
 }
@@ -585,7 +585,7 @@ CCObject* CCBAnimationManager::actionForCallbackChannel(CCBSequenceProperty* cha
                 actions->addObject(callback);
             }
         } else {
-            CCObject *target;
+            CCObject*target = NULL;
             if(selectorTarget == kCCBTargetTypeDocumentRoot) target = mRootNode;
             else if (selectorTarget == kCCBTargetTypeOwner) target = mOwner;
             if(target != NULL) {
