@@ -211,7 +211,7 @@
     <Filter Include="Classes\ExtensionsTest\EditBoxTest">
       <UniqueIdentifier>{18a69e7e-8ca7-475a-bfbb-7296baab16ce}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Classes\TimelineCallbackTest">
+    <Filter Include="Classes\ExtensionsTest\CocosBuilderTest\TimelineCallbackTest">
       <UniqueIdentifier>{0ef55f53-411a-4661-b5d5-13930da52e68}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -484,7 +484,7 @@
       <Filter>Classes\ExtensionsTest\EditBoxTest</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\ExtensionsTest\CocosBuilderTest\TimelineCallbackTest\TimelineCallbackTestLayer.cpp">
-      <Filter>Classes\TimelineCallbackTest</Filter>
+      <Filter>Classes\ExtensionsTest\CocosBuilderTest\TimelineCallbackTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -933,10 +933,10 @@
       <Filter>Classes\ExtensionsTest\EditBoxTest</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\ExtensionsTest\CocosBuilderTest\TimelineCallbackTest\TimelineCallbackLayerLoader.h">
-      <Filter>Classes\TimelineCallbackTest</Filter>
+      <Filter>Classes\ExtensionsTest\CocosBuilderTest\TimelineCallbackTest</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\ExtensionsTest\CocosBuilderTest\TimelineCallbackTest\TimelineCallbackTestLayer.h">
-      <Filter>Classes\TimelineCallbackTest</Filter>
+      <Filter>Classes\ExtensionsTest\CocosBuilderTest\TimelineCallbackTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
