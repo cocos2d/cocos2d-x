@@ -47,6 +47,19 @@ using namespace std;
 
 
 NS_CC_BEGIN
+
+// The return value needs to be deleted by CC_SAFE_DELETE_ARRAY.
+static unsigned short* copyUTF16StringN(unsigned short* str)
+{
+    int length = str ? cc_wcslen(str) : 0;
+    unsigned short* ret = new unsigned short[length+1];
+    for (int i = 0; i < length; ++i) {
+        ret[i] = str[i];
+    }
+    ret[length] = 0;
+    return ret;
+}
+
 //
 //FNTConfig Cache - free functions
 //
@@ -518,10 +531,14 @@ bool CCLabelBMFont::initWithString(const char *theString, const char *fntFile, f
 }
 
 CCLabelBMFont::CCLabelBMFont()
-:  m_sString(NULL)
+: m_sString(NULL)
+, m_sInitialString(NULL)
+, m_pAlignment(kCCTextAlignmentCenter)
+, m_fWidth(-1.0f)
 , m_pConfiguration(NULL)
 , m_bLineBreakWithoutSpaces(false)
 , m_tImageOffset(CCPointZero)
+, m_pReusedChar(NULL)
 , m_cDisplayedOpacity(255)
 , m_cRealOpacity(255)
 , m_tDisplayedColor(ccWHITE)
@@ -536,7 +553,8 @@ CCLabelBMFont::CCLabelBMFont()
 CCLabelBMFont::~CCLabelBMFont()
 {
     CC_SAFE_RELEASE(m_pReusedChar);
-    CC_SAFE_DELETE(m_sString);
+    CC_SAFE_DELETE_ARRAY(m_sString);
+    CC_SAFE_DELETE_ARRAY(m_sInitialString);
     CC_SAFE_RELEASE(m_pConfiguration);
 }
 
@@ -710,29 +728,37 @@ void CCLabelBMFont::createFontChars()
 //LabelBMFont - CCLabelProtocol protocol
 void CCLabelBMFont::setString(const char *newString)
 {
-    this->setString(newString, false);
+    this->setString(newString, true);
 }
 
-void CCLabelBMFont::setString(const char *newString, bool fromUpdate)
-{    
-    if (! fromUpdate)
+void CCLabelBMFont::setString(const char *newString, bool needUpdateLabel)
+{
+    if (newString == NULL) {
+        newString = "";
+    }
+    if (needUpdateLabel) {
+        m_sInitialStringUTF8 = newString;
+    }
+    unsigned short* utf16String = cc_utf8_to_utf16(newString);
+    setString(utf16String, needUpdateLabel);
+    CC_SAFE_DELETE_ARRAY(utf16String);
+ }
+
+void CCLabelBMFont::setString(unsigned short *newString, bool needUpdateLabel)
+{
+    if (!needUpdateLabel)
     {
-        CC_SAFE_DELETE_ARRAY(m_sString);
-        m_sString = cc_utf8_to_utf16(newString);
+        unsigned short* tmp = m_sString;
+        m_sString = copyUTF16StringN(newString);
+        CC_SAFE_DELETE_ARRAY(tmp);
     }
     else
     {
-        if (strcmp(m_sInitialString.c_str(), newString))
-        {
-            m_sInitialString = newString;
-        }
+        unsigned short* tmp = m_sInitialString;
+        m_sInitialString = copyUTF16StringN(newString);
+        CC_SAFE_DELETE_ARRAY(tmp);
     }
     
-    updateString(fromUpdate);
-}
-
-void CCLabelBMFont::updateString(bool fromUpdate)
-{
     if (m_pChildren && m_pChildren->count() != 0)
     {
         CCObject* child;
@@ -746,14 +772,15 @@ void CCLabelBMFont::updateString(bool fromUpdate)
         }
     }
     this->createFontChars();
-
-    if (fromUpdate)
+    
+    if (needUpdateLabel) {
         updateLabel();
+    }
 }
 
 const char* CCLabelBMFont::getString(void)
 {
-    return m_sInitialString.c_str();
+    return m_sInitialStringUTF8.c_str();
 }
 
 void CCLabelBMFont::setCString(const char *label)
@@ -897,7 +924,7 @@ void CCLabelBMFont::setAnchorPoint(const CCPoint& point)
 // LabelBMFont - Alignment
 void CCLabelBMFont::updateLabel()
 {
-    this->setString(m_sInitialString.c_str(), false);
+    this->setString(m_sInitialString, false);
 
     if (m_fWidth > 0)
     {
@@ -1062,11 +1089,11 @@ void CCLabelBMFont::updateLabel()
             str_new[i] = multiline_string[i];
         }
 
-        str_new[size] = 0;
+        str_new[size] = '\0';
 
-        CC_SAFE_DELETE_ARRAY(m_sString);
-        m_sString = str_new;
-        updateString(false);
+        this->setString(str_new, false);
+        
+        CC_SAFE_DELETE_ARRAY(str_new);
     }
 
     // Step 2: Make alignment
