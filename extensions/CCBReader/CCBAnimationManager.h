@@ -176,25 +176,31 @@ public:
 };
 
 
-class CCBRotateXTo: public CCBRotateTo {
+class CCBRotateXTo: public CCActionInterval {
 private:
     float mStartAngle;
     float mDstAngle;
     float mDiffAngle;
 public:
+    static CCBRotateXTo* create(float fDuration, float fAngle);
+    bool initWithDuration(float fDuration, float fAngle);
     virtual void startWithTarget(CCNode *pNode);
+    virtual CCObject* copyWithZone(CCZone *pZone);
     virtual void update(float time);
 };
 
 
-class CCBRotateYTo: public CCBRotateTo {
+class CCBRotateYTo: public CCActionInterval {
 private:
     float mStartAngle;
     float mDstAngle;
     float mDiffAngle;
     
 public:
+    static CCBRotateYTo* create(float fDuration, float fAngle);
+    bool initWithDuration(float fDuration, float fAngle);
     virtual void startWithTarget(CCNode *pNode);
+    virtual CCObject* copyWithZone(CCZone *pZone);
     virtual void update(float time);
 };
 
