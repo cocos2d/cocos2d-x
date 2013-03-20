@@ -965,7 +965,12 @@ void CCNodeLoader::onHandlePropTypeFloat(CCNode * pNode, CCNode * pParent, const
 void CCNodeLoader::onHandlePropTypeDegrees(CCNode * pNode, CCNode * pParent, const char* pPropertyName, float pDegrees, CCBReader * pCCBReader) {
     if(strcmp(pPropertyName, PROPERTY_ROTATION) == 0) {
         pNode->setRotation(pDegrees);
-    } else {
+    } else if(strcmp(pPropertyName, PROPERTY_ROTATIONX) == 0) {
+        pNode->setRotationX(pDegrees);
+    } else if(strcmp(pPropertyName, PROPERTY_ROTATIONY) == 0) {
+        pNode->setRotationY(pDegrees);
+    }
+    else {
         ASSERT_FAIL_UNEXPECTED_PROPERTY(pPropertyName);
     }
 }
