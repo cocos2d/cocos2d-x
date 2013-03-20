@@ -974,8 +974,8 @@ void JSScheduleWrapper::removeAllTargets()
         HASH_ITER(hh, _schedFunc_target_ht, current, tmp) {
             current->targets->removeAllObjects();
             current->targets->release();
-            free(current);
             HASH_DEL(_schedFunc_target_ht, current);
+            free(current);
         }
     }
     
@@ -984,8 +984,8 @@ void JSScheduleWrapper::removeAllTargets()
         HASH_ITER(hh, _schedObj_target_ht, current, tmp) {
             current->targets->removeAllObjects();
             current->targets->release();
-            free(current);
             HASH_DEL(_schedObj_target_ht, current);
+            free(current);
         }
     }
     
