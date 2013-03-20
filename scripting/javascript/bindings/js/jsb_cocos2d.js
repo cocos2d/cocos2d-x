@@ -2,6 +2,8 @@
 // cocos2d constants
 //
 
+require('jsb_cocos2d_constants.js');
+
 var cc = cc || {};
 
 cc.DIRECTOR_PROJECTION_2D = 0;
@@ -59,6 +61,7 @@ cc.GREEN = {r:0, g:255, b:0};
 cc.BLUE = {r:0, g:0, b:255};
 cc.BLACK = {r:0, g:0, b:0};
 cc.WHITE = {r:255, g:255, b:255};
+cc.YELLOW = {r:255, g:255, b:0};
 
 cc.POINT_ZERO = {x:0, y:0};
 

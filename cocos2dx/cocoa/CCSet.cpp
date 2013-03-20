@@ -56,6 +56,18 @@ CCSet::~CCSet(void)
     CC_SAFE_DELETE(m_pSet);
 }
 
+CCSet * CCSet::create()
+{
+    CCSet * pRet = new CCSet();
+    
+    if (pRet != NULL)
+    {
+        pRet->autorelease();
+    }
+    
+    return pRet;
+}
+
 CCSet* CCSet::copy(void)
 {
     CCSet *pSet = new CCSet(*this);

@@ -151,6 +151,7 @@ int CCLuaEngine::executeCallFuncActionEvent(CCCallFunc* pAction, CCObject* pTarg
 
 int CCLuaEngine::executeSchedule(int nHandler, float dt, CCNode* pNode/* = NULL*/)
 {
+    if (!nHandler) return 0;
     m_stack->pushFloat(dt);
     return m_stack->executeFunctionByHandler(nHandler, 1);
 }
