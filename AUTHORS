@@ -103,6 +103,7 @@ Developers:
 
     Rohan Kuruvilla (rohankuruvilla, Zynga)
         Improvements to JS Bindings.
+        Synchronizing CCBReader to version 5.
 
     Jianfeng Zou (NetDragon Inc)
         contributes CCListView and CCTextureWatcher.
@@ -249,6 +250,9 @@ Developers:
 
     jedy
         Fix of CCNode.h's document with doxygen 1.8.3 can't be generated.
+
+    whitegfx
+        Implementation of kEditBoxInputFlagSensitive setting for CCEditBoxImplIOS.
 
 Retired Core Developers:
     WenSheng Yang

@@ -249,6 +249,7 @@
 		15D8B243168318C3006C7997 /* SimpleAudioEngine_objc.m in Sources */ = {isa = PBXBuildFile; fileRef = 15D8B23D168318C3006C7997 /* SimpleAudioEngine_objc.m */; };
 		1A20136415FD90240013D092 /* CustomTableViewCell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A20136015FD90240013D092 /* CustomTableViewCell.cpp */; };
 		1A20136515FD90240013D092 /* TableViewTestScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A20136215FD90240013D092 /* TableViewTestScene.cpp */; };
+		1A75E96016F85FDB00BA80BD /* TimelineCallbackTestLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A75E95E16F85FDB00BA80BD /* TimelineCallbackTestLayer.cpp */; };
 		1AB2D72816B6804D00D72C48 /* FileUtilsTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AB2D72616B6804D00D72C48 /* FileUtilsTest.cpp */; };
 		1AB2D72A16B681F900D72C48 /* Misc in Resources */ = {isa = PBXBuildFile; fileRef = 1AB2D72916B681F900D72C48 /* Misc */; };
 		41BC70E415BF81A5006A0A6C /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 41BC70DA15BF81A5006A0A6C /* AppController.mm */; };
@@ -798,6 +799,9 @@
 		1A20136115FD90240013D092 /* CustomTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTableViewCell.h; sourceTree = "<group>"; };
 		1A20136215FD90240013D092 /* TableViewTestScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TableViewTestScene.cpp; sourceTree = "<group>"; };
 		1A20136315FD90240013D092 /* TableViewTestScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewTestScene.h; sourceTree = "<group>"; };
+		1A75E95D16F85FDB00BA80BD /* TimelineCallbackLayerLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimelineCallbackLayerLoader.h; sourceTree = "<group>"; };
+		1A75E95E16F85FDB00BA80BD /* TimelineCallbackTestLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TimelineCallbackTestLayer.cpp; sourceTree = "<group>"; };
+		1A75E95F16F85FDB00BA80BD /* TimelineCallbackTestLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimelineCallbackTestLayer.h; sourceTree = "<group>"; };
 		1AB2D72616B6804D00D72C48 /* FileUtilsTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileUtilsTest.cpp; sourceTree = "<group>"; };
 		1AB2D72716B6804D00D72C48 /* FileUtilsTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileUtilsTest.h; sourceTree = "<group>"; };
 		1AB2D72916B681F900D72C48 /* Misc */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Misc; sourceTree = "<group>"; };
@@ -1141,14 +1145,14 @@
 		15AA9CBB15B7EC460033D6C2 /* ExtensionsTest */ = {
 			isa = PBXGroup;
 			children = (
-				8C583FA3169DB63A00F63A10 /* EditboxTest */,
-				15CFD0C71612A3EE00BF2188 /* ControlExtensionTest */,
-				1A20135F15FD90240013D092 /* TableViewTest */,
-				D4EFE03415D27336002D3DA0 /* NetworkTest */,
 				15AA9CBC15B7EC460033D6C2 /* CocosBuilderTest */,
+				15CFD0C71612A3EE00BF2188 /* ControlExtensionTest */,
+				8C583FA3169DB63A00F63A10 /* EditboxTest */,
 				15AA9CEC15B7EC460033D6C2 /* ExtensionsTest.cpp */,
 				15AA9CED15B7EC460033D6C2 /* ExtensionsTest.h */,
+				D4EFE03415D27336002D3DA0 /* NetworkTest */,
 				15AA9CEE15B7EC460033D6C2 /* NotificationCenterTest */,
+				1A20135F15FD90240013D092 /* TableViewTest */,
 			);
 			path = ExtensionsTest;
 			sourceTree = "<group>";
@@ -1167,6 +1171,7 @@
 				15AA9CD115B7EC460033D6C2 /* ScrollViewTest */,
 				15AA9CD415B7EC460033D6C2 /* SpriteTest */,
 				15AA9CD715B7EC460033D6C2 /* TestHeader */,
+				1A75E95C16F85FDB00BA80BD /* TimelineCallbackTest */,
 			);
 			path = CocosBuilderTest;
 			sourceTree = "<group>";
@@ -2083,6 +2088,17 @@
 			path = ../../Classes/ExtensionsTest/TableViewTest;
 			sourceTree = "<group>";
 		};
+		1A75E95C16F85FDB00BA80BD /* TimelineCallbackTest */ = {
+			isa = PBXGroup;
+			children = (
+				1A75E95D16F85FDB00BA80BD /* TimelineCallbackLayerLoader.h */,
+				1A75E95E16F85FDB00BA80BD /* TimelineCallbackTestLayer.cpp */,
+				1A75E95F16F85FDB00BA80BD /* TimelineCallbackTestLayer.h */,
+			);
+			name = TimelineCallbackTest;
+			path = ../../../Classes/ExtensionsTest/CocosBuilderTest/TimelineCallbackTest;
+			sourceTree = "<group>";
+		};
 		1AB2D72516B6804D00D72C48 /* FileUtilsTest */ = {
 			isa = PBXGroup;
 			children = (
@@ -2533,6 +2549,7 @@
 				8C583FAD169DB6D500F63A10 /* CCEditBox.cpp in Sources */,
 				8C583FAE169DB6D500F63A10 /* CCEditBoxImplMac.mm in Sources */,
 				1AB2D72816B6804D00D72C48 /* FileUtilsTest.cpp in Sources */,
+				1A75E96016F85FDB00BA80BD /* TimelineCallbackTestLayer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

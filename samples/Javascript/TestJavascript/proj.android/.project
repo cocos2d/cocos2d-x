@@ -40,6 +40,10 @@
 			<triggers>clean,full,incremental,</triggers>
 			<arguments>
 				<dictionary>
+					<key>?children?</key>
+					<value>?name?=outputEntries\|?children?=?name?=entry\\\\\\\|\\\|\||</value>
+				</dictionary>
+				<dictionary>
 					<key>?name?</key>
 					<value></value>
 				</dictionary>
@@ -53,11 +57,15 @@
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.buildArguments</key>
-					<value>-C ${ProjDirPath} NDK_MODULE_PATH=${COCOS2DX_ROOT}:${COCOS2DX_ROOT}/cocos2dx/platform/third_party/android/prebuilt -j2</value>
+					<value>${ProjDirPath}/build_native.sh</value>
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.buildCommand</key>
-					<value>${ProjDirPath}/ANDROID_NDK/ndk-build</value>
+					<value>bash</value>
+				</dictionary>
+				<dictionary>
+					<key>org.eclipse.cdt.make.core.buildLocation</key>
+					<value>${ProjDirPath}</value>
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.cleanBuildTarget</key>
@@ -81,7 +89,7 @@
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.fullBuildTarget</key>
-					<value>all</value>
+					<value></value>
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.stopOnError</key>
@@ -126,6 +134,11 @@
 			<locationURI>COCOS2DX/cocos2dx</locationURI>
 		</link>
 		<link>
+			<name>cocosdenshion</name>
+			<type>2</type>
+			<locationURI>COCOS2DX/CocosDenshion</locationURI>
+		</link>
+		<link>
 			<name>extensions</name>
 			<type>2</type>
 			<locationURI>COCOS2DX/extensions</locationURI>
@@ -134,11 +147,6 @@
 			<name>scripting</name>
 			<type>2</type>
 			<locationURI>COCOS2DX/scripting</locationURI>
-		</link>
-		<link>
-			<name>cocosdenshion</name>
-			<type>2</type>
-			<locationURI>COCOS2DX/CocosDenshion</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>
