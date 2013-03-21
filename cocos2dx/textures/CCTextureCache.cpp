@@ -482,45 +482,6 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
     return texture;
 }
 
-#ifdef CC_SUPPORT_PVRTC
-CCTexture2D* CCTextureCache::addPVRTCImage(const char* path, int bpp, bool hasAlpha, int width)
-{
-    CCAssert(path != NULL, "TextureCache: fileimage MUST not be nil");
-    CCAssert( bpp==2 || bpp==4, "TextureCache: bpp must be either 2 or 4");
-
-    CCTexture2D * texture;
-
-    std::string temp(path);
-    
-    if ( (texture = (CCTexture2D*)m_pTextures->objectForKey(temp.c_str())) )
-    {
-        return texture;
-    }
-    
-    // Split up directory and filename
-    std::string fullpath( CCFileUtils::sharedFileUtils()->fullPathForFilename(path) );
-
-    unsigned long nLen = 0;
-    unsigned char* pData = CCFileUtils::sharedFileUtils()->getFileData(fullpath.c_str(), "rb", &nLen);
-
-    texture = new CCTexture2D();
-    
-    if( texture->initWithPVRTCData(pData, 0, bpp, hasAlpha, width,
-                                   (bpp==2 ? kCCTexture2DPixelFormat_PVRTC2 : kCCTexture2DPixelFormat_PVRTC4)))
-    {
-        m_pTextures->setObject(texture, temp.c_str());
-        texture->autorelease();
-    }
-    else
-    {
-        CCLOG("cocos2d: Couldn't add PVRTCImage:%s in CCTextureCache",path);
-    }
-    CC_SAFE_DELETE_ARRAY(pData);
-
-    return texture;
-}
-#endif // CC_SUPPORT_PVRTC
-
 CCTexture2D * CCTextureCache::addPVRImage(const char* path)
 {
     CCAssert(path != NULL, "TextureCache: fileimage MUST not be nil");
