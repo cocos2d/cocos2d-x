@@ -1,89 +1,74 @@
 <?xml version="1.0"?>
-<project name="Javascript compress project" basedir="." default="compile">
+<project name="Javascript compress project" basedir="../../../" default="compile">
 
     <taskdef name="jscomp" classname="com.google.javascript.jscomp.ant.CompileTask"
-             classpath="../../..//tools/closure-compiler/compiler.jar"/>
+             classpath="${basedir}/tools/closure-compiler/compiler.jar"/>
 
     <target name="compile">
         <!--advanced / simple-->
         <jscomp compilationLevel="advanced" warning="quiet"
-                debug="false" output="/workspace/cocos2d-x/samples/Javascript/TestJavascript/./main.js">
-            <externs dir="../../..//scripting/javascript/bindings/obfuscate">
+                debug="false" output="${basedir}/samples/Javascript/TestJavascript/game.js">
+            <externs dir="${basedir}/scripting/javascript/bindings/obfuscate">
                 <file name="obfuscate_exclude_cocos2d.js"/>
                 <file name="obfuscate_exclude_chipmunk.js"/>
             </externs>
-            <sources dir="./">
-                <file name="../Shared/tests//main.js"/>
-				<file name="../Shared/tests//tests-boot-html5.js"/>
-				<file name="../Shared/tests//tests-boot-jsb.js"/>
-				<file name="../Shared/tests//tests-main.js"/>
-				<file name="../Shared/tests//tests_resources-html5.js"/>
-				<file name="../Shared/tests//tests_resources-jsb.js"/>
-				<file name="../Shared/tests/ActionManagerTest/ActionManagerTest.js"/>
-				<file name="../Shared/tests/ActionsTest/ActionsTest.js"/>
-				<file name="../Shared/tests/BaseTestLayer/BaseTestLayer.js"/>
-				<file name="../Shared/tests/Box2dTest/Box2dTest.js"/>
-				<file name="../Shared/tests/ChipmunkTest/ChipmunkTest.js"/>
-				<file name="../Shared/tests/ClickAndMoveTest/ClickAndMoveTest.js"/>
-				<file name="../Shared/tests/CocosDenshionTest/CocosDenshionTest.js"/>
-				<file name="../Shared/tests/CocosNodeTest/CocosNodeTest.js"/>
-				<file name="../Shared/tests/CurrentLanguageTest/CurrentLanguageTest.js"/>
-				<file name="../Shared/tests/DrawPrimitivesTest/DrawPrimitivesTest.js"/>
-				<file name="../Shared/tests/EaseActionsTest/EaseActionsTest.js"/>
-				<file name="../Shared/tests/EffectsTest/EffectsTest.js"/>
-				<file name="../Shared/tests/EventTest/EventTest.js"/>
-				<file name="../Shared/tests/ExtensionsTest/ExtensionsTest.js"/>
-				<file name="../Shared/tests/ExtensionsTest/CocosBuilderTest/CocosBuilderTest.js"/>
-				<file name="../Shared/tests/ExtensionsTest/CocosBuilderTest/AnimationsTest/AnimationsTestLayer.js"/>
-				<file name="../Shared/tests/ExtensionsTest/CocosBuilderTest/ButtonTest/ButtonTestLayer.js"/>
-				<file name="../Shared/tests/ExtensionsTest/CocosBuilderTest/HelloCocosBuilder/HelloCocosBuilderLayer.js"/>
-				<file name="../Shared/tests/ExtensionsTest/CocosBuilderTest/LabelTest/LabelTestLayer.js"/>
-				<file name="../Shared/tests/ExtensionsTest/CocosBuilderTest/MenuTest/MenuTestLayer.js"/>
-				<file name="../Shared/tests/ExtensionsTest/CocosBuilderTest/ParticleSystemTest/ParticleSystemTestLayer.js"/>
-				<file name="../Shared/tests/ExtensionsTest/CocosBuilderTest/ScrollViewTest/ScrollViewTestLayer.js"/>
-				<file name="../Shared/tests/ExtensionsTest/CocosBuilderTest/SpriteTest/SpriteTestLayer.js"/>
-				<file name="../Shared/tests/ExtensionsTest/CocosBuilderTest/TestHeader/TestHeaderLayer.js"/>
-				<file name="../Shared/tests/ExtensionsTest/ControlExtensionTest/CCControlScene.js"/>
-				<file name="../Shared/tests/ExtensionsTest/ControlExtensionTest/CCControlSceneManager.js"/>
-				<file name="../Shared/tests/ExtensionsTest/ControlExtensionTest/CCControlButtonTest/CCControlButtonTest.js"/>
-				<file name="../Shared/tests/ExtensionsTest/EditBoxTest/EditBoxTest.js"/>
-				<file name="../Shared/tests/ExtensionsTest/S9SpriteTest/S9SpriteTest.js"/>
-				<file name="../Shared/tests/ExtensionsTest/TableViewTest/TableViewTestScene.js"/>
-				<file name="../Shared/tests/FileUtils/FileUtilsTest.js"/>
-				<file name="../Shared/tests/FontTest/FontTest.js"/>
-				<file name="../Shared/tests/IntervalTest/IntervalTest.js"/>
-				<file name="../Shared/tests/LabelTest/LabelTest.js"/>
-				<file name="../Shared/tests/LayerTest/LayerTest.js"/>
-				<file name="../Shared/tests/MenuTest/MenuTest.js"/>
-				<file name="../Shared/tests/OpenGLTest/OpenGLTest.js"/>
-				<file name="../Shared/tests/ParallaxTest/ParallaxTest.js"/>
-				<file name="../Shared/tests/ParticleTest/ParticleTest.js"/>
-				<file name="../Shared/tests/PerformanceTest/PerformanceAnimationTest.js"/>
-				<file name="../Shared/tests/PerformanceTest/PerformanceNodeChildrenTest.js"/>
-				<file name="../Shared/tests/PerformanceTest/PerformanceParticleTest.js"/>
-				<file name="../Shared/tests/PerformanceTest/PerformanceSpriteTest.js"/>
-				<file name="../Shared/tests/PerformanceTest/PerformanceSpriteTest2.js"/>
-				<file name="../Shared/tests/PerformanceTest/PerformanceTest.js"/>
-				<file name="../Shared/tests/PerformanceTest/PerformanceTextureTest.js"/>
-				<file name="../Shared/tests/PerformanceTest/PerformanceTouchesTest.js"/>
-				<file name="../Shared/tests/PerformanceTest/seedrandom.js"/>
-				<file name="../Shared/tests/Presentation/Presentation.js"/>
-				<file name="../Shared/tests/ProgressActionsTest/ProgressActionsTest.js"/>
-				<file name="../Shared/tests/RenderTextureTest/RenderTextureTest.js"/>
-				<file name="../Shared/tests/RotateWorldTest/RotateWorldTest.js"/>
-				<file name="../Shared/tests/SceneTest/SceneTest.js"/>
-				<file name="../Shared/tests/SchedulerTest/SchedulerTest.js"/>
-				<file name="../Shared/tests/SpriteTest/SpriteTest.js"/>
-				<file name="../Shared/tests/SysTest/SysTest.js"/>
-				<file name="../Shared/tests/TextInputTest/TextInputTest.js"/>
-				<file name="../Shared/tests/TextureCacheTest/TextureCacheTest.js"/>
-				<file name="../Shared/tests/TileMapTest/TileMapTest.js"/>
-				<file name="../Shared/tests/TouchesTest/Ball.js"/>
-				<file name="../Shared/tests/TouchesTest/Paddle.js"/>
-				<file name="../Shared/tests/TouchesTest/TouchesTest.js"/>
-				<file name="../Shared/tests/TransitionsTest/TransitionsTest.js"/>
-				<file name="../Shared/tests/UnitTest/UnitTest.js"/>
-				
+            <sources dir="${basedir}/scripting/javascript/bindings/js/">
+                <file name="jsb_cocos2d_constants.js"/>
+                <file name="jsb_cocos2d.js"/>
+                <file name="jsb_cocos2d_extension.js"/>
+                <file name="jsb_chipmunk_constants.js"/>
+                <file name="jsb_chipmunk.js"/>
+                <file name="jsb_opengl_constants.js"/>
+                <file name="jsb_opengl.js"/>
+                <file name="jsb_cocosbuilder.js"/>
+                <file name="jsb_sys.js"/>
+            </sources>
+            <sources dir="${basedir}/samples/Javascript/Shared/tests/">
+                <file name="tests_resources-jsb.js"/>
+                <file name="tests-main.js"/>
+                <file name="BaseTestLayer/BaseTestLayer.js"/>
+                <file name="ActionManagerTest/ActionManagerTest.js"/>
+                <file name="ActionsTest/ActionsTest.js"/>
+                <file name="ChipmunkTest/ChipmunkTest.js"/>
+                <file name="ClickAndMoveTest/ClickAndMoveTest.js"/>
+                <file name="CocosDenshionTest/CocosDenshionTest.js"/>
+                <file name="CocosNodeTest/CocosNodeTest.js"/>
+                <file name="DrawPrimitivesTest/DrawPrimitivesTest.js"/>
+                <file name="EaseActionsTest/EaseActionsTest.js"/>
+                <file name="EffectsTest/EffectsTest.js"/>
+                <file name="EventTest/EventTest.js"/>
+                <file name="FileUtils/FileUtilsTest.js"/>
+                <file name="FontTest/FontTest.js"/>
+                <file name="IntervalTest/IntervalTest.js"/>
+                <file name="LabelTest/LabelTest.js"/>
+                <file name="LayerTest/LayerTest.js"/>
+                <file name="MenuTest/MenuTest.js"/>
+                <file name="ParallaxTest/ParallaxTest.js"/>
+                <file name="ParticleTest/ParticleTest.js"/>
+                <file name="PerformanceTest/PerformanceTest.js"/>
+                <file name="PerformanceTest/PerformanceNodeChildrenTest.js"/>
+                <file name="PerformanceTest/PerformanceParticleTest.js"/>
+                <file name="PerformanceTest/PerformanceSpriteTest.js"/>
+                <file name="PerformanceTest/PerformanceSpriteTest2.js"/>
+                <file name="PerformanceTest/PerformanceTextureTest.js"/>
+                <file name="PerformanceTest/PerformanceTouchesTest.js"/>
+                <file name="PerformanceTest/PerformanceAnimationTest.js"/>
+                <file name="PerformanceTest/seedrandom.js"/>
+                <file name="Presentation/Presentation.js"/>
+                <file name="ProgressActionsTest/ProgressActionsTest.js"/>
+                <file name="RenderTextureTest/RenderTextureTest.js"/>
+                <file name="RotateWorldTest/RotateWorldTest.js"/>
+                <file name="SceneTest/SceneTest.js"/>
+                <file name="SchedulerTest/SchedulerTest.js"/>
+                <file name="SpriteTest/SpriteTest.js"/>
+                <file name="ExtensionsTest/S9SpriteTest/S9SpriteTest.js"/>
+                <file name="ExtensionsTest/ExtensionsTest.js"/>
+                <file name="ExtensionsTest/TableViewTest/TableViewTestScene.js"/>
+                <file name="TileMapTest/TileMapTest.js"/>
+                <file name="TransitionsTest/TransitionsTest.js"/>
+                <file name="UnitTest/UnitTest.js"/>
+                <file name="SysTest/SysTest.js"/>
+                <file name="tests-boot-jsb.js"/>
             </sources>
         </jscomp>
     </target>
