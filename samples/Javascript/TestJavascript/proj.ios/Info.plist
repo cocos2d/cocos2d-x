@@ -48,6 +48,21 @@
 	<string>1.0</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>UIAppFonts</key>
+	<array>
+		<string>res/fonts/A Damn Mess.ttf</string>
+		<string>res/fonts/Abberancy.ttf</string>
+		<string>res/fonts/Abduction.ttf</string>
+		<string>res/fonts/American Typewriter.ttf</string>
+		<string>res/fonts/Courier New.ttf</string>
+		<string>res/fonts/Marker Felt.ttf</string>
+		<string>res/fonts/Paint Boy.ttf</string>
+		<string>res/fonts/Schwarzwald Regular.ttf</string>
+		<string>res/fonts/Scissor Cuts.ttf</string>
+		<string>res/fonts/tahoma.ttf</string>
+		<string>res/fonts/Thonburi.ttf</string>
+		<string>res/fonts/ThonburiBold.ttf</string>
+	</array>
 	<key>UIPrerenderedIcon</key>
 	<true/>
 	<key>UIRequiredDeviceCapabilities</key>

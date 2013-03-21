@@ -45,6 +45,11 @@ public:
     virtual ~CCSet(void);
 
     /**
+    * @brief Create and return a new empty set.
+    */
+    static CCSet * create();
+
+    /**
     *@brief Return a copy of the CCSet, it will copy all the elements.
     */
     CCSet* copy();

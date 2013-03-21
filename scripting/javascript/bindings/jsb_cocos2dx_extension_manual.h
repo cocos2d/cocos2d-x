@@ -1,6 +1,5 @@
 //
 //  jsb_cocos2d_extension_manual.h
-//  MoonWarriors
 //
 //  Created by James Chen on 3/11/13.
 //
