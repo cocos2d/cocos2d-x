@@ -448,16 +448,16 @@ bool CCTexture2D::initWithString(const char *text, const char *fontName, float f
         return false;
     }
     
+    CCImage* pImage = new CCImage();
     do 
     {
-        CCImage* pImage = new CCImage();
         CC_BREAK_IF(NULL == pImage);
         bRet = pImage->initWithString(text, (int)dimensions.width, (int)dimensions.height, eAlign, fontName, (int)fontSize);
         CC_BREAK_IF(!bRet);
         bRet = initWithImage(pImage);
-        CC_SAFE_RELEASE(pImage);
     } while (0);
-    
+    CC_SAFE_RELEASE(pImage);
+
     return bRet;
 }
 
