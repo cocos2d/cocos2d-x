@@ -518,45 +518,6 @@ void CCTexture2D::drawInRect(const CCRect& rect)
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }
 
-#ifdef CC_SUPPORT_PVRTC
-// implementation CCTexture2D (PVRTC);    
-bool CCTexture2D::initWithPVRTCData(const void *data, int level, int bpp, bool hasAlpha, int length, CCTexture2DPixelFormat pixelFormat)
-{
-    if( !(CCConfiguration::sharedConfiguration()->supportsPVRTC()) )
-    {
-        CCLOG("cocos2d: WARNING: PVRTC images is not supported.");
-        return false;
-    }
-
-    glGenTextures(1, &m_uName);
-    glBindTexture(GL_TEXTURE_2D, m_uName);
-
-    this->setAntiAliasTexParameters();
-
-    GLenum format;
-    GLsizei size = length * length * bpp / 8;
-    if(hasAlpha) {
-        format = (bpp == 4) ? GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG : GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG;
-    } else {
-        format = (bpp == 4) ? GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG : GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG;
-    }
-    if(size < 32) {
-        size = 32;
-    }
-    glCompressedTexImage2D(GL_TEXTURE_2D, level, format, length, length, 0, size, data);
-
-    m_tContentSize = CCSizeMake((float)(length), (float)(length));
-    m_uPixelsWide = length;
-    m_uPixelsHigh = length;
-    m_fMaxS = 1.0f;
-    m_fMaxT = 1.0f;
-    m_bHasPremultipliedAlpha = PVRHaveAlphaPremultiplied_;
-    m_ePixelFormat = pixelFormat;
-
-    return true;
-}
-#endif // CC_SUPPORT_PVRTC
-
 bool CCTexture2D::initWithPVRFile(const char* file)
 {
     bool bRet = false;
