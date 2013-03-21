@@ -1,4 +1,5 @@
 #include "TimelineCallbackTestLayer.h"
+#include "SimpleAudioEngine.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
@@ -10,6 +11,7 @@ TimelineCallbackTestLayer::TimelineCallbackTestLayer()
 TimelineCallbackTestLayer::~TimelineCallbackTestLayer()
 {
     CC_SAFE_RELEASE(_helloLabel);
+    CocosDenshion::SimpleAudioEngine::end();
 }
 
 SEL_MenuHandler TimelineCallbackTestLayer::onResolveCCBCCMenuItemSelector(CCObject * pTarget, const char * pSelectorName) {
