@@ -24,10 +24,8 @@ files
 	
 	["CCBReader"]
 	("../CCBReader")
-    CCBReader.h
-#    CCBCustomClass.h
-#    CCBCustomClass.cpp
-#    CCBReader_v1.cpp
+    "*.h"
+    "*.cpp"
 
 	["GUI/CCControlExtension"]
 	("../GUI/CCControlExtension")
@@ -43,16 +41,6 @@ files
 	("../GUI/CCScrollView")
     "*.h"
     "*.cpp"
-
-#	["CCListView"]
-#	("../CCListView")
-#    "*.h"
-#    "*.cpp"
-
-#	["CCTextureWatcher"]
-#	("../CCTextureWatcher")
-#    "*.h"
-#    "*.cpp"
 
 	["PhysicsNodes"]
 	("../physics_nodes")
