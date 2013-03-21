@@ -149,28 +149,6 @@ void CCProgressTimer::setReverseProgress(bool reverse)
     }
 }
 
-void CCProgressTimer::setColor(const ccColor3B& color)
-{
-    m_pSprite->setColor(color);
-    updateColor();
-}
-
-const ccColor3B& CCProgressTimer::getColor(void)
-{
-    return m_pSprite->getColor();
-}
-
-void CCProgressTimer::setOpacity(GLubyte opacity)
-{
-    m_pSprite->setOpacity(opacity);
-    updateColor();
-}
-
-GLubyte CCProgressTimer::getOpacity(void)
-{
-    return m_pSprite->getOpacity();
-}
-
 void CCProgressTimer::setOpacityModifyRGB(bool bValue)
 {
     CC_UNUSED_PARAM(bValue);

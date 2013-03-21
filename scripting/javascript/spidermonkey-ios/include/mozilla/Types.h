@@ -27,63 +27,60 @@
 /* Implement compiler and linker macros needed for APIs. */
 
 /*
- * MOZ_EXPORT_API is used to declare and define a method which is externally
+ * MOZ_EXPORT is used to declare and define a symbol or type which is externally
  * visible to users of the current library.  It encapsulates various decorations
- * needed to properly export the method's symbol.  MOZ_EXPORT_DATA serves the
- * same purpose for data.
+ * needed to properly export the method's symbol.
  *
  *   api.h:
- *     extern MOZ_EXPORT_API(int) MeaningOfLife(void);
- *     extern MOZ_EXPORT_DATA(int) LuggageCombination;
+ *     extern MOZ_EXPORT int MeaningOfLife(void);
+ *     extern MOZ_EXPORT int LuggageCombination;
  *
  *   api.c:
- *     MOZ_EXPORT_API(int) MeaningOfLife(void) { return 42; }
- *     MOZ_EXPORT_DATA(int) LuggageCombination = 12345;
+ *     int MeaningOfLife(void) { return 42; }
+ *     int LuggageCombination = 12345;
  *
  * If you are merely sharing a method across files, just use plain |extern|.
  * These macros are designed for use by library interfaces -- not for normal
  * methods or data used cross-file.
  */
 #if defined(WIN32) || defined(XP_OS2)
-#  define MOZ_EXPORT_API(type)    __declspec(dllexport) type
-#  define MOZ_EXPORT_DATA(type)   __declspec(dllexport) type
+#  define MOZ_EXPORT   __declspec(dllexport)
 #else /* Unix */
 #  ifdef HAVE_VISIBILITY_ATTRIBUTE
-#    define MOZ_EXTERNAL_VIS       __attribute__((visibility("default")))
+#    define MOZ_EXPORT       __attribute__((visibility("default")))
 #  elif defined(__SUNPRO_C) || defined(__SUNPRO_CC)
-#    define MOZ_EXTERNAL_VIS      __global
+#    define MOZ_EXPORT      __global
 #  else
-#    define MOZ_EXTERNAL_VIS
+#    define MOZ_EXPORT /* nothing */
 #  endif
-#  define MOZ_EXPORT_API(type)    MOZ_EXTERNAL_VIS type
-#  define MOZ_EXPORT_DATA(type)   MOZ_EXTERNAL_VIS type
 #endif
 
+
 /*
- * Whereas implementers use MOZ_EXPORT_API and MOZ_EXPORT_DATA to declare and
- * define library symbols, users use MOZ_IMPORT_API and MOZ_IMPORT_DATA to
- * access them.  Most often the implementer of the library will expose an API
- * macro which expands to either the export or import version of the macro,
- * depending upon the compilation mode.
+ * Whereas implementers use MOZ_EXPORT to declare and define library symbols,
+ * users use MOZ_IMPORT_API and MOZ_IMPORT_DATA to access them.  Most often the
+ * implementer of the library will expose an API macro which expands to either
+ * the export or import version of the macro, depending upon the compilation
+ * mode.
  */
 #ifdef _WIN32
 #  if defined(__MWERKS__)
-#    define MOZ_IMPORT_API(x)    x
+#    define MOZ_IMPORT_API /* nothing */
 #  else
-#    define MOZ_IMPORT_API(x)    __declspec(dllimport) x
+#    define MOZ_IMPORT_API __declspec(dllimport)
 #  endif
 #elif defined(XP_OS2)
-#  define MOZ_IMPORT_API(x)     __declspec(dllimport) x
+#  define MOZ_IMPORT_API  __declspec(dllimport)
 #else
-#  define MOZ_IMPORT_API(x)     MOZ_EXPORT_API(x)
+#  define MOZ_IMPORT_API MOZ_EXPORT
 #endif
 
 #if defined(_WIN32) && !defined(__MWERKS__)
-#  define MOZ_IMPORT_DATA(x)     __declspec(dllimport) x
+#  define MOZ_IMPORT_DATA  __declspec(dllimport)
 #elif defined(XP_OS2)
-#  define MOZ_IMPORT_DATA(x)     __declspec(dllimport) x
+#  define MOZ_IMPORT_DATA  __declspec(dllimport)
 #else
-#  define MOZ_IMPORT_DATA(x)     MOZ_EXPORT_DATA(x)
+#  define MOZ_IMPORT_DATA  MOZ_EXPORT
 #endif
 
 /*
@@ -92,19 +89,22 @@
  * declarations when using mfbt.
  */
 #if defined(IMPL_MFBT)
-#  define MFBT_API(type)        MOZ_EXPORT_API(type)
-#  define MFBT_DATA(type)       MOZ_EXPORT_DATA(type)
+#  define MFBT_API     MOZ_EXPORT
+#  define MFBT_DATA    MOZ_EXPORT
 #else
   /*
-   * When mozglue is linked in the program, we need the MFBT API symbols
-   * to be weak.
+   * On linux mozglue is linked in the program and we link libxul.so with
+   * -z,defs. Normally that causes the linker to reject undefined references in
+   * libxul.so, but as a loophole it allows undefined references to weak
+   * symbols. We add the weak attribute to the import version of the MFBT API
+   * macros to exploit this.
    */
 #  if defined(MOZ_GLUE_IN_PROGRAM)
-#    define MFBT_API(type)        __attribute__((weak)) MOZ_IMPORT_API(type)
-#    define MFBT_DATA(type)       __attribute__((weak)) MOZ_IMPORT_DATA(type)
+#    define MFBT_API   __attribute__((weak)) MOZ_IMPORT_API
+#    define MFBT_DATA  __attribute__((weak)) MOZ_IMPORT_DATA
 #  else
-#    define MFBT_API(type)        MOZ_IMPORT_API(type)
-#    define MFBT_DATA(type)       MOZ_IMPORT_DATA(type)
+#    define MFBT_API   MOZ_IMPORT_API
+#    define MFBT_DATA  MOZ_IMPORT_DATA
 #  endif
 #endif
 
@@ -117,7 +117,7 @@
  *
  *   MOZ_BEGIN_EXTERN_C
  *
- *   extern MOZ_EXPORT_API(int) MostRandomNumber(void);
+ *   extern MOZ_EXPORT int MostRandomNumber(void);
  *   ...other declarations...
  *
  *   MOZ_END_EXTERN_C

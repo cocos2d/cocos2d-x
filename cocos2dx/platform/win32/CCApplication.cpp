@@ -2,7 +2,7 @@
 #include "CCEGLView.h"
 #include "CCDirector.h"
 #include <algorithm>
-
+#include "platform/CCFileUtils.h"
 /**
 @brief    This function change the PVRFrame show/hide setting in register.
 @param  bEnable If true show the PVRFrame window, otherwise hide.
@@ -145,6 +145,12 @@ ccLanguageType CCApplication::getCurrentLanguage()
         case LANG_HUNGARIAN:
             ret = kLanguageHungarian;
             break;
+        case LANG_PORTUGUESE:
+            ret = kLanguagePortuguese;
+            break;
+        case LANG_ARABIC:
+            ret = kLanguageArabic;
+            break;
     }
 
     return ret;
@@ -163,6 +169,15 @@ void CCApplication::setResourceRootPath(const std::string& rootResDir)
     {
         m_resourceRootPath += '/';
     }
+    CCFileUtils* pFileUtils = CCFileUtils::sharedFileUtils();
+    std::vector<std::string> searchPaths = pFileUtils->getSearchPaths();
+    searchPaths.insert(searchPaths.begin(), m_resourceRootPath);
+    pFileUtils->setSearchPaths(searchPaths);
+}
+
+const std::string& CCApplication::getResourceRootPath(void)
+{
+    return m_resourceRootPath;
 }
 
 void CCApplication::setStartupScriptFilename(const std::string& startupScriptFile)

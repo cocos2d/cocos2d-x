@@ -205,6 +205,12 @@
     <Filter Include="Classes\ExtensionsTest\CocosBuilderTest\AnimationsTest">
       <UniqueIdentifier>{e8752620-8414-4f43-a572-5fa82650f223}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\FileUtilsTest">
+      <UniqueIdentifier>{a4c2111f-cf9f-492c-884d-3de24715adce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\EditBoxTest">
+      <UniqueIdentifier>{18a69e7e-8ca7-475a-bfbb-7296baab16ce}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -467,6 +473,12 @@
     </ClCompile>
     <ClCompile Include="..\Classes\ClippingNodeTest\ClippingNodeTest.cpp">
       <Filter>Classes\ClippingNodeTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\FileUtilsTest\FileUtilsTest.cpp">
+      <Filter>Classes\FileUtilsTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\EditBoxTest\EditBoxTest.cpp">
+      <Filter>Classes\ExtensionsTest\EditBoxTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -907,6 +919,12 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ClippingNodeTest\ClippingNodeTest.h">
       <Filter>Classes\ClippingNodeTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\FileUtilsTest\FileUtilsTest.h">
+      <Filter>Classes\FileUtilsTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\EditBoxTest\EditBoxTest.h">
+      <Filter>Classes\ExtensionsTest\EditBoxTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

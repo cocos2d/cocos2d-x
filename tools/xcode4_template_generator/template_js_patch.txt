@@ -10,6 +10,8 @@
 					<string>COCOS2D_JAVASCRIPT</string>
                                         <string>CC_ENABLE_CHIPMUNK_INTEGRATION</string>
 				</array>
+                                <key>GCC_OPTIMIZATION_LEVEL</key>
+				<string>1</string>
 			</dict>
 			<key>Release</key>
 			<dict>

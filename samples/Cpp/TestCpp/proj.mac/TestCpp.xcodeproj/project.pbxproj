@@ -200,7 +200,7 @@
 		15C15948168315E500D239F2 /* CCPhysicsSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15C1590B168315E500D239F2 /* CCPhysicsSprite.cpp */; };
 		15C15949168315E500D239F2 /* .cproject in Resources */ = {isa = PBXBuildFile; fileRef = 15C1590E168315E500D239F2 /* .cproject */; };
 		15C1594A168315E500D239F2 /* .project in Resources */ = {isa = PBXBuildFile; fileRef = 15C1590F168315E500D239F2 /* .project */; };
-		15C159531683161A00D239F2 /* libcocos2dx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C156CA1683158700D239F2 /* libcocos2dx.a */; };
+		15C159531683161A00D239F2 /* libcocos2dx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C156CA1683158700D239F2 /* libcocos2dx.a */; settings = {ATTRIBUTES = (Required, ); }; };
 		15C647EC165F2B39007D4F18 /* ClippingNodeTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15C647EA165F2B39007D4F18 /* ClippingNodeTest.cpp */; };
 		15C647F5165F2BC0007D4F18 /* ChipmunkTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15C647F3165F2BC0007D4F18 /* ChipmunkTest.cpp */; };
 		15C64823165F391E007D4F18 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64822165F391E007D4F18 /* Cocoa.framework */; };
@@ -249,6 +249,8 @@
 		15D8B243168318C3006C7997 /* SimpleAudioEngine_objc.m in Sources */ = {isa = PBXBuildFile; fileRef = 15D8B23D168318C3006C7997 /* SimpleAudioEngine_objc.m */; };
 		1A20136415FD90240013D092 /* CustomTableViewCell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A20136015FD90240013D092 /* CustomTableViewCell.cpp */; };
 		1A20136515FD90240013D092 /* TableViewTestScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A20136215FD90240013D092 /* TableViewTestScene.cpp */; };
+		1AB2D72816B6804D00D72C48 /* FileUtilsTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AB2D72616B6804D00D72C48 /* FileUtilsTest.cpp */; };
+		1AB2D72A16B681F900D72C48 /* Misc in Resources */ = {isa = PBXBuildFile; fileRef = 1AB2D72916B681F900D72C48 /* Misc */; };
 		41BC70E415BF81A5006A0A6C /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 41BC70DA15BF81A5006A0A6C /* AppController.mm */; };
 		41BC70E515BF81A5006A0A6C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 41BC70DC15BF81A5006A0A6C /* InfoPlist.strings */; };
 		41BC70E615BF81A5006A0A6C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41BC70DE15BF81A5006A0A6C /* MainMenu.xib */; };
@@ -796,6 +798,9 @@
 		1A20136115FD90240013D092 /* CustomTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTableViewCell.h; sourceTree = "<group>"; };
 		1A20136215FD90240013D092 /* TableViewTestScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TableViewTestScene.cpp; sourceTree = "<group>"; };
 		1A20136315FD90240013D092 /* TableViewTestScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewTestScene.h; sourceTree = "<group>"; };
+		1AB2D72616B6804D00D72C48 /* FileUtilsTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileUtilsTest.cpp; sourceTree = "<group>"; };
+		1AB2D72716B6804D00D72C48 /* FileUtilsTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileUtilsTest.h; sourceTree = "<group>"; };
+		1AB2D72916B681F900D72C48 /* Misc */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Misc; sourceTree = "<group>"; };
 		1D6058910D05DD3D006BFB54 /* TestCpp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestCpp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		41BC70D915BF81A5006A0A6C /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = SOURCE_ROOT; };
 		41BC70DA15BF81A5006A0A6C /* AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppController.mm; sourceTree = SOURCE_ROOT; };
@@ -880,6 +885,7 @@
 				15AA9CB515B7EC460033D6C2 /* EffectsAdvancedTest */,
 				15AA9CB815B7EC460033D6C2 /* EffectsTest */,
 				15AA9CBB15B7EC460033D6C2 /* ExtensionsTest */,
+				1AB2D72516B6804D00D72C48 /* FileUtilsTest */,
 				15AA9CF115B7EC460033D6C2 /* FontTest */,
 				15AA9CF415B7EC460033D6C2 /* IntervalTest */,
 				15AA9CF715B7EC460033D6C2 /* KeypadTest */,
@@ -2077,6 +2083,16 @@
 			path = ../../Classes/ExtensionsTest/TableViewTest;
 			sourceTree = "<group>";
 		};
+		1AB2D72516B6804D00D72C48 /* FileUtilsTest */ = {
+			isa = PBXGroup;
+			children = (
+				1AB2D72616B6804D00D72C48 /* FileUtilsTest.cpp */,
+				1AB2D72716B6804D00D72C48 /* FileUtilsTest.h */,
+			);
+			name = FileUtilsTest;
+			path = ../Classes/FileUtilsTest;
+			sourceTree = "<group>";
+		};
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
@@ -2139,25 +2155,26 @@
 			isa = PBXGroup;
 			children = (
 				15D2552415E60029000D5E89 /* animations */,
-				15D2552515E60029000D5E89 /* background.mp3 */,
-				15D2552615E60029000D5E89 /* background.ogg */,
 				15D2552715E60029000D5E89 /* ccb */,
-				15D2552815E60029000D5E89 /* effect1.raw */,
-				15D2552915E60029000D5E89 /* effect1.wav */,
-				15D2552A15E60029000D5E89 /* effect2.ogg */,
 				15D2552B15E60029000D5E89 /* extensions */,
 				15D2552C15E60029000D5E89 /* fonts */,
-				15D2552D15E60029000D5E89 /* fps_images.png */,
 				15D2552E15E60029000D5E89 /* hd */,
-				15D2552F15E60029000D5E89 /* Hello.png */,
 				15D2553015E60029000D5E89 /* Images */,
 				15D2553115E60029000D5E89 /* ipad */,
 				15D2553215E60029000D5E89 /* ipadhd */,
-				15D2553315E60029000D5E89 /* music.mid */,
+				1AB2D72916B681F900D72C48 /* Misc */,
 				15D2553415E60029000D5E89 /* Particles */,
 				15D2553515E60029000D5E89 /* Shaders */,
 				15D2553615E60029000D5E89 /* TileMaps */,
 				15D2553715E60029000D5E89 /* zwoptex */,
+				15D2553315E60029000D5E89 /* music.mid */,
+				15D2552515E60029000D5E89 /* background.mp3 */,
+				15D2552615E60029000D5E89 /* background.ogg */,
+				15D2552A15E60029000D5E89 /* effect2.ogg */,
+				15D2552D15E60029000D5E89 /* fps_images.png */,
+				15D2552F15E60029000D5E89 /* Hello.png */,
+				15D2552815E60029000D5E89 /* effect1.raw */,
+				15D2552915E60029000D5E89 /* effect1.wav */,
 			);
 			name = Resources;
 			path = ../Resources;
@@ -2290,6 +2307,7 @@
 				15C157DA168315B300D239F2 /* CMakeLists.txt in Resources */,
 				15C15949168315E500D239F2 /* .cproject in Resources */,
 				15C1594A168315E500D239F2 /* .project in Resources */,
+				1AB2D72A16B681F900D72C48 /* Misc in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2514,6 +2532,7 @@
 				8C583FA6169DB64700F63A10 /* EditBoxTest.cpp in Sources */,
 				8C583FAD169DB6D500F63A10 /* CCEditBox.cpp in Sources */,
 				8C583FAE169DB6D500F63A10 /* CCEditBoxImplMac.mm in Sources */,
+				1AB2D72816B6804D00D72C48 /* FileUtilsTest.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2579,11 +2598,7 @@
 				);
 				INFOPLIST_FILE = Test_Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
-				LIBRARY_SEARCH_PATHS = (
-					"\"$(SRCROOT)/../../../../cocos2dx/platform/third_party/ios/libraries\"",
-					"\"$(SRCROOT)/../../../../CocosDenshion/third_party/blackberry/libraries/armle-v7\"",
-					"\"$(SRCROOT)/../../../../CocosDenshion/third_party/blackberry/libraries/x86\"",
-				);
+				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../../../cocos2dx/platform/third_party/mac/libraries\"";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OTHER_CFLAGS = "-O2";
 				PRODUCT_NAME = TestCpp;
@@ -2624,11 +2639,7 @@
 				);
 				INFOPLIST_FILE = Test_Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
-				LIBRARY_SEARCH_PATHS = (
-					"\"$(SRCROOT)/../../../../cocos2dx/platform/third_party/ios/libraries\"",
-					"\"$(SRCROOT)/../../../../CocosDenshion/third_party/blackberry/libraries/armle-v7\"",
-					"\"$(SRCROOT)/../../../../CocosDenshion/third_party/blackberry/libraries/x86\"",
-				);
+				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../../../cocos2dx/platform/third_party/mac/libraries\"";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_NAME = TestCpp;
 				SDKROOT = macosx;

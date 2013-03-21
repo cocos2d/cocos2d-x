@@ -329,13 +329,19 @@ LabelAtlasColorTest::LabelAtlasColorTest()
 
     CCActionInterval* fade = CCFadeOut::create(1.0f);
     CCActionInterval* fade_in = fade->reverse();
-    CCSequence* seq = CCSequence::create(fade, fade_in, NULL);
+    CCCallFunc* cb = CCCallFunc::create(this, callfunc_selector(LabelAtlasColorTest::actionFinishCallback));
+    CCSequence* seq = CCSequence::create(fade, fade_in, cb, NULL);
     CCAction* repeat = CCRepeatForever::create( seq );
     label2->runAction( repeat );    
 
     m_time = 0;
     
     schedule( schedule_selector(LabelAtlasColorTest::step) ); //:@selector(step:)];
+}
+
+void LabelAtlasColorTest::actionFinishCallback()
+{
+    CCLOG("Action finished");
 }
 
 void LabelAtlasColorTest::step(float dt)
@@ -445,9 +451,7 @@ Atlas3::Atlas3()
     // testing anchors
     label3->setAnchorPoint( ccp(1,1) );
     addChild(label3, 0, kTagBitmapAtlas3);
-    
-    
-    CCSize s = CCDirector::sharedDirector()->getWinSize();    
+       
     label1->setPosition( VisibleRect::leftBottom() );
     label2->setPosition( VisibleRect::center() );
     label3->setPosition( VisibleRect::rightTop() );
@@ -937,6 +941,7 @@ std::string LabelGlyphDesigner::subtitle()
 
 void AtlasTestScene::runThisTest()
 {
+    sceneIdx = -1;
     CCLayer* pLayer = nextAtlasAction();
     addChild(pLayer);
 

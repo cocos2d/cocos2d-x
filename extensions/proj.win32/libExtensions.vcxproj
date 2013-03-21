@@ -63,7 +63,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;$(ProjectDir)..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\external\sqlite3\include;$(ProjectDir)..\..\external;$(ProjectDir)..\..\cocos2dx;$(ProjectDir)..\..\cocos2dx\include;$(ProjectDir)..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\cocos2dx\platform\win32;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32\pthread;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32\OGLES;..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;$(ProjectDir)..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\external\sqlite3\include;$(ProjectDir)..\..\external;$(ProjectDir)..\..\cocos2dx;$(ProjectDir)..\..\cocos2dx\include;$(ProjectDir)..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\cocos2dx\platform\win32;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32\pthread;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32\OGLES;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32\zlib;..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;_LIB;COCOS2D_DEBUG=1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -79,7 +79,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;$(ProjectDir)..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\external\sqlite3\include;$(ProjectDir)..\..\external;$(ProjectDir)..\..\cocos2dx;$(ProjectDir)..\..\cocos2dx\include;$(ProjectDir)..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\cocos2dx\platform\win32;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32\pthread;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32\OGLES;..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;$(ProjectDir)..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\external\sqlite3\include;$(ProjectDir)..\..\external;$(ProjectDir)..\..\cocos2dx;$(ProjectDir)..\..\cocos2dx\include;$(ProjectDir)..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\cocos2dx\platform\win32;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32\pthread;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32\OGLES;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32\zlib;..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_LIB;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -91,6 +91,7 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\AssetsManager\AssetsManager.cpp" />
     <ClCompile Include="..\CCBReader\CCBAnimationManager.cpp" />
     <ClCompile Include="..\CCBReader\CCBFileLoader.cpp" />
     <ClCompile Include="..\CCBReader\CCBKeyframe.cpp" />
@@ -127,6 +128,8 @@
     <ClCompile Include="..\GUI\CCControlExtension\CCControlUtils.cpp" />
     <ClCompile Include="..\GUI\CCControlExtension\CCInvocation.cpp" />
     <ClCompile Include="..\GUI\CCControlExtension\CCScale9Sprite.cpp" />
+    <ClCompile Include="..\GUI\CCEditBox\CCEditBox.cpp" />
+    <ClCompile Include="..\GUI\CCEditBox\CCEditBoxImplWin.cpp" />
     <ClCompile Include="..\GUI\CCScrollView\CCScrollView.cpp" />
     <ClCompile Include="..\GUI\CCScrollView\CCSorting.cpp" />
     <ClCompile Include="..\GUI\CCScrollView\CCTableView.cpp" />
@@ -135,8 +138,10 @@
     <ClCompile Include="..\network\HttpClient.cpp" />
     <ClCompile Include="..\physics_nodes\CCPhysicsDebugNode.cpp" />
     <ClCompile Include="..\physics_nodes\CCPhysicsSprite.cpp" />
+    <ClCompile Include="Win32InputBox.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\AssetsManager\AssetsManager.h" />
     <ClInclude Include="..\CCBReader\CCBAnimationManager.h" />
     <ClInclude Include="..\CCBReader\CCBFileLoader.h" />
     <ClInclude Include="..\CCBReader\CCBKeyframe.h" />
@@ -178,6 +183,9 @@
     <ClInclude Include="..\GUI\CCControlExtension\CCControlUtils.h" />
     <ClInclude Include="..\GUI\CCControlExtension\CCInvocation.h" />
     <ClInclude Include="..\GUI\CCControlExtension\CCScale9Sprite.h" />
+    <ClInclude Include="..\GUI\CCEditBox\CCEditBox.h" />
+    <ClInclude Include="..\GUI\CCEditBox\CCEditBoxImpl.h" />
+    <ClInclude Include="..\GUI\CCEditBox\CCEditBoxImplWin.h" />
     <ClInclude Include="..\GUI\CCScrollView\CCScrollView.h" />
     <ClInclude Include="..\cocos-ext.h" />
     <ClInclude Include="..\ExtensionMacros.h" />
@@ -190,6 +198,7 @@
     <ClInclude Include="..\network\HttpResponse.h" />
     <ClInclude Include="..\physics_nodes\CCPhysicsDebugNode.h" />
     <ClInclude Include="..\physics_nodes\CCPhysicsSprite.h" />
+    <ClInclude Include="Win32InputBox.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

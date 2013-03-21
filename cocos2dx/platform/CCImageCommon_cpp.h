@@ -94,7 +94,8 @@ bool CCImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = e
 {
     bool bRet = false;
     unsigned long nSize = 0;
-    unsigned char* pBuffer = CCFileUtils::sharedFileUtils()->getFileData(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(strPath), "rb", &nSize);
+    std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(strPath);
+    unsigned char* pBuffer = CCFileUtils::sharedFileUtils()->getFileData(fullPath.c_str(), "rb", &nSize);
     if (pBuffer != NULL && nSize > 0)
     {
         bRet = initWithImageData(pBuffer, nSize, eImgFmt);
@@ -141,6 +142,11 @@ bool CCImage::initWithImageData(void * pData,
         else if (kFmtTiff == eFmt)
         {
             bRet = _initWithTiffData(pData, nDataLen);
+            break;
+        }
+        else if (kFmtWebp == eFmt)
+        {
+            bRet = _initWithWebpData(pData, nDataLen);
             break;
         }
         else if (kFmtRawData == eFmt)
@@ -364,7 +370,7 @@ bool CCImage::_initWithPngData(void * pData, int nDatalen)
         info_ptr = png_create_info_struct(png_ptr);
         CC_BREAK_IF(!info_ptr);
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA && CC_TARGET_PLATFORM != CC_PLATFORM_NACL)
         CC_BREAK_IF(setjmp(png_jmpbuf(png_ptr)));
 #endif
 
@@ -521,22 +527,22 @@ static uint64 _tiffSeekProc(thandle_t fd, uint64 off, int whence)
     {
         if (whence == SEEK_SET)
         {
-            CC_BREAK_IF(off > isource->size-1);
+            CC_BREAK_IF(off >= (uint64)isource->size);
             ret = isource->offset = (uint32)off;
         }
         else if (whence == SEEK_CUR)
         {
-            CC_BREAK_IF(isource->offset + off > isource->size-1);
+            CC_BREAK_IF(isource->offset + off >= (uint64)isource->size);
             ret = isource->offset += (uint32)off;
         }
         else if (whence == SEEK_END)
         {
-            CC_BREAK_IF(off > isource->size-1);
+            CC_BREAK_IF(off >= (uint64)isource->size);
             ret = isource->offset = (uint32)(isource->size-1 - off);
         }
         else
         {
-            CC_BREAK_IF(off > isource->size-1);
+            CC_BREAK_IF(off >= (uint64)isource->size);
             ret = isource->offset = (uint32)off;
         }
     } while (0);
@@ -614,11 +620,11 @@ bool CCImage::_initWithTiffData(void* pData, int nDataLen)
         {
            if (TIFFReadRGBAImageOriented(tif, w, h, raster, ORIENTATION_TOPLEFT, 0))
            {
+                /* the raster data is pre-multiplied by the alpha component 
+                   after invoking TIFFReadRGBAImageOriented
                 unsigned char* src = (unsigned char*)raster;
                 unsigned int* tmp = (unsigned int*)m_pData;
 
-                /* the raster data is pre-multiplied by the alpha component 
-                   after invoking TIFFReadRGBAImageOriented
                 for(int j = 0; j < m_nWidth * m_nHeight * 4; j += 4)
                 {
                     *tmp++ = CC_RGB_PREMULTIPLY_ALPHA( src[j], src[j + 1], 
@@ -732,7 +738,7 @@ bool CCImage::_saveImageToPNG(const char * pszFilePath, bool bIsToRGB)
             png_destroy_write_struct(&png_ptr, NULL);
             break;
         }
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA && CC_TARGET_PLATFORM != CC_PLATFORM_NACL)
         if (setjmp(png_jmpbuf(png_ptr)))
         {
             fclose(fp);

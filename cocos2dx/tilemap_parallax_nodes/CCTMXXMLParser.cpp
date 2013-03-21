@@ -26,6 +26,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include <map>
+#include <sstream>
 #include "CCTMXXMLParser.h"
 #include "CCTMXTiledMap.h"
 #include "ccMacros.h"
@@ -65,15 +66,16 @@ static const char* valueForKey(const char *key, std::map<std::string, std::strin
 }
 // implementation CCTMXLayerInfo
 CCTMXLayerInfo::CCTMXLayerInfo()
-    : m_sName("")
-    , m_pTiles(NULL)
-    , m_bOwnTiles(true)
-    , m_uMinGID(100000)
-    , m_uMaxGID(0)        
-    , m_tOffset(CCPointZero)
+: m_sName("")
+, m_pTiles(NULL)
+, m_bOwnTiles(true)
+, m_uMinGID(100000)
+, m_uMaxGID(0)        
+, m_tOffset(CCPointZero)
 {
     m_pProperties= new CCDictionary();;
 }
+
 CCTMXLayerInfo::~CCTMXLayerInfo()
 {
     CCLOGINFO("cocos2d: deallocing.");
@@ -157,7 +159,7 @@ void CCTMXMapInfo::internalInit(const char* tmxFileName, const char* resourcePat
 
     if (tmxFileName != NULL)
     {
-        m_sTMXFileName = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(tmxFileName);
+        m_sTMXFileName = CCFileUtils::sharedFileUtils()->fullPathForFilename(tmxFileName);
     }
     
     if (resourcePath != NULL)
@@ -176,6 +178,7 @@ void CCTMXMapInfo::internalInit(const char* tmxFileName, const char* resourcePat
     m_bStoringCharacters = false;
     m_nLayerAttribs = TMXLayerAttribNone;
     m_nParentElement = TMXPropertyNone;
+    m_uCurrentFirstGID = 0;
 }
 bool CCTMXMapInfo::initWithXML(const char* tmxString, const char* resourcePath)
 {
@@ -190,17 +193,19 @@ bool CCTMXMapInfo::initWithTMXFile(const char *tmxFile)
 }
 
 CCTMXMapInfo::CCTMXMapInfo()
-    :m_tMapSize(CCSizeZero)    
-    ,m_tTileSize(CCSizeZero)
-    ,m_pLayers(NULL)
-    ,m_pTilesets(NULL)
-    ,m_pObjectGroups(NULL)
-    ,m_nLayerAttribs(0)
-    ,m_bStoringCharacters(false)        
-    ,m_pProperties(NULL)
-    ,m_pTileProperties(NULL)
+: m_tMapSize(CCSizeZero)    
+, m_tTileSize(CCSizeZero)
+, m_pLayers(NULL)
+, m_pTilesets(NULL)
+, m_pObjectGroups(NULL)
+, m_nLayerAttribs(0)
+, m_bStoringCharacters(false)
+, m_pProperties(NULL)
+, m_pTileProperties(NULL)
+, m_uCurrentFirstGID(0)
 {
 }
+
 CCTMXMapInfo::~CCTMXMapInfo()
 {
     CCLOGINFO("cocos2d: deallocing.");
@@ -210,40 +215,48 @@ CCTMXMapInfo::~CCTMXMapInfo()
     CC_SAFE_RELEASE(m_pTileProperties);
     CC_SAFE_RELEASE(m_pObjectGroups);
 }
+
 CCArray* CCTMXMapInfo::getLayers()
 {
     return m_pLayers;
 }
+
 void CCTMXMapInfo::setLayers(CCArray* var)
 {
     CC_SAFE_RETAIN(var);
     CC_SAFE_RELEASE(m_pLayers);
     m_pLayers = var;
 }
+
 CCArray* CCTMXMapInfo::getTilesets()
 {
     return m_pTilesets;
 }
+
 void CCTMXMapInfo::setTilesets(CCArray* var)
 {
     CC_SAFE_RETAIN(var);
     CC_SAFE_RELEASE(m_pTilesets);
     m_pTilesets = var;
 }
+
 CCArray* CCTMXMapInfo::getObjectGroups()
 {
     return m_pObjectGroups;
 }
+
 void CCTMXMapInfo::setObjectGroups(CCArray* var)
 {
     CC_SAFE_RETAIN(var);
     CC_SAFE_RELEASE(m_pObjectGroups);
     m_pObjectGroups = var;
 }
+
 CCDictionary * CCTMXMapInfo::getProperties()
 {
     return m_pProperties;
 }
+
 void CCTMXMapInfo::setProperties(CCDictionary* var)
 {
     CC_SAFE_RETAIN(var);
@@ -294,7 +307,7 @@ bool CCTMXMapInfo::parseXMLFile(const char *xmlFilename)
     
     parser.setDelegator(this);
 
-    return parser.parse(xmlFilename);    
+    return parser.parse(CCFileUtils::sharedFileUtils()->fullPathForFilename(xmlFilename).c_str());
 }
 
 
@@ -305,7 +318,7 @@ void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
     CCTMXMapInfo *pTMXMapInfo = this;
     std::string elementName = (char*)name;
     std::map<std::string, std::string> *attributeDict = new std::map<std::string, std::string>();
-    if(atts && atts[0])
+    if (atts && atts[0])
     {
         for(int i = 0; atts[i]; i += 2) 
         {
@@ -314,7 +327,7 @@ void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
             attributeDict->insert(pair<std::string, std::string>(key, value));
         }
     }
-    if(elementName == "map")
+    if (elementName == "map")
     {
         std::string version = valueForKey("version", attributeDict);
         if ( version != "1.0")
@@ -322,11 +335,11 @@ void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
             CCLOG("cocos2d: TMXFormat: Unsupported TMX version: %@", version.c_str());
         }
         std::string orientationStr = valueForKey("orientation", attributeDict);
-        if( orientationStr == "orthogonal")
+        if (orientationStr == "orthogonal")
             pTMXMapInfo->setOrientation(CCTMXOrientationOrtho);
-        else if ( orientationStr  == "isometric")
+        else if (orientationStr  == "isometric")
             pTMXMapInfo->setOrientation(CCTMXOrientationIso);
-        else if( orientationStr == "hexagonal")
+        else if(orientationStr == "hexagonal")
             pTMXMapInfo->setOrientation(CCTMXOrientationHex);
         else
             CCLOG("cocos2d: TMXFomat: Unsupported orientation: %d", pTMXMapInfo->getOrientation());
@@ -343,12 +356,13 @@ void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         // The parent element is now "map"
         pTMXMapInfo->setParentElement(TMXPropertyMap);
     } 
-    else if(elementName == "tileset") 
+    else if (elementName == "tileset") 
     {
         // If this is an external tileset then start parsing that
         std::string externalTilesetFilename = valueForKey("source", attributeDict);
         if (externalTilesetFilename != "")
         {
+            // Tileset file will be relative to the map file. So we need to convert it to an absolute path
             if (m_sTMXFileName.find_last_of("/") != string::npos)
             {
                 string dir = m_sTMXFileName.substr(0, m_sTMXFileName.find_last_of("/") + 1);
@@ -358,7 +372,9 @@ void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
             {
                 externalTilesetFilename = m_sResources + "/" + externalTilesetFilename;
             }
-            externalTilesetFilename = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(externalTilesetFilename.c_str());
+            externalTilesetFilename = CCFileUtils::sharedFileUtils()->fullPathForFilename(externalTilesetFilename.c_str());
+            
+            m_uCurrentFirstGID = (unsigned int)atoi(valueForKey("firstgid", attributeDict));
             
             pTMXMapInfo->parseXMLFile(externalTilesetFilename.c_str());
         }
@@ -366,7 +382,15 @@ void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         {
             CCTMXTilesetInfo *tileset = new CCTMXTilesetInfo();
             tileset->m_sName = valueForKey("name", attributeDict);
-            tileset->m_uFirstGid = (unsigned int)atoi(valueForKey("firstgid", attributeDict));
+            if (m_uCurrentFirstGID == 0)
+            {
+                tileset->m_uFirstGid = (unsigned int)atoi(valueForKey("firstgid", attributeDict));
+            }
+            else
+            {
+                tileset->m_uFirstGid = m_uCurrentFirstGID;
+                m_uCurrentFirstGID = 0;
+            }
             tileset->m_uSpacing = (unsigned int)atoi(valueForKey("spacing", attributeDict));
             tileset->m_uMargin = (unsigned int)atoi(valueForKey("margin", attributeDict));
             CCSize s;
@@ -378,7 +402,7 @@ void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
             tileset->release();
         }
     }
-    else if(elementName == "tile")
+    else if (elementName == "tile")
     {
         CCTMXTilesetInfo* info = (CCTMXTilesetInfo*)pTMXMapInfo->getTilesets()->lastObject();
         CCDictionary *dict = new CCDictionary();
@@ -389,7 +413,7 @@ void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         pTMXMapInfo->setParentElement(TMXPropertyTile);
 
     }
-    else if(elementName == "layer")
+    else if (elementName == "layer")
     {
         CCTMXLayerInfo *layer = new CCTMXLayerInfo();
         layer->m_sName = valueForKey("name", attributeDict);
@@ -423,7 +447,7 @@ void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         pTMXMapInfo->setParentElement(TMXPropertyLayer);
 
     } 
-    else if(elementName == "objectgroup")
+    else if (elementName == "objectgroup")
     {
         CCTMXObjectGroup *objectGroup = new CCTMXObjectGroup();
         objectGroup->setGroupName(valueForKey("name", attributeDict));
@@ -439,7 +463,7 @@ void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         pTMXMapInfo->setParentElement(TMXPropertyObjectGroup);
 
     }
-    else if(elementName == "image")
+    else if (elementName == "image")
     {
         CCTMXTilesetInfo* tileset = (CCTMXTilesetInfo*)pTMXMapInfo->getTilesets()->lastObject();
 
@@ -456,7 +480,7 @@ void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
             tileset->m_sSourceImage = m_sResources + (m_sResources.size() ? "/" : "") + imagename;
         }
     } 
-    else if(elementName == "data")
+    else if (elementName == "data")
     {
         std::string encoding = valueForKey("encoding", attributeDict);
         std::string compression = valueForKey("compression", attributeDict);
@@ -482,7 +506,7 @@ void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         CCAssert( pTMXMapInfo->getLayerAttribs() != TMXLayerAttribNone, "TMX tile map: Only base64 and/or gzip/zlib maps are supported" );
 
     } 
-    else if(elementName == "object")
+    else if (elementName == "object")
     {
         char buffer[32] = {0};
         CCTMXObjectGroup* objectGroup = (CCTMXObjectGroup*)pTMXMapInfo->getObjectGroups()->lastObject();
@@ -493,7 +517,7 @@ void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         // Parse everything automatically
         const char* pArray[] = {"name", "type", "width", "height", "gid"};
         
-        for( int i = 0; i < sizeof(pArray)/sizeof(pArray[0]); ++i )
+        for(size_t i = 0; i < sizeof(pArray)/sizeof(pArray[0]); ++i )
         {
             const char* key = pArray[i];
             CCString* obj = new CCString(valueForKey(key, attributeDict));
@@ -508,7 +532,7 @@ void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         // X
 
         const char* value = valueForKey("x", attributeDict);
-        if( value ) 
+        if (value) 
         {
             int x = atoi(value) + (int)objectGroup->getPositionOffset().x;
             sprintf(buffer, "%d", x);
@@ -519,7 +543,7 @@ void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
 
         // Y
         value = valueForKey("y", attributeDict);
-        if( value )  {
+        if (value)  {
             int y = atoi(value) + (int)objectGroup->getPositionOffset().y;
 
             // Correct y position. (Tiled uses Flipped, cocos2d uses Standard)
@@ -538,7 +562,7 @@ void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
          pTMXMapInfo->setParentElement(TMXPropertyObject);
 
     } 
-    else if(elementName == "property")
+    else if (elementName == "property")
     {
         if ( pTMXMapInfo->getParentElement() == TMXPropertyNone ) 
         {
@@ -599,10 +623,55 @@ void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
     else if (elementName == "polygon") 
     {
         // find parent object's dict and add polygon-points to it
-        // CCTMXObjectGroup* objectGroup = (CCTMXObjectGroup*)m_pObjectGroups->lastObject();
-        // CCDictionary* dict = (CCDictionary*)objectGroup->getObjects()->lastObject();
-        // TODO: dict->setObject(attributeDict objectForKey:@"points"] forKey:@"polygonPoints"];
+        CCTMXObjectGroup* objectGroup = (CCTMXObjectGroup*)m_pObjectGroups->lastObject();
+        CCDictionary* dict = (CCDictionary*)objectGroup->getObjects()->lastObject();
 
+        // get points value string
+        const char* value = valueForKey("points", attributeDict);
+        if(value)
+        {
+            CCArray* pPointsArray = new CCArray;
+
+            // parse points string into a space-separated set of points
+            stringstream pointsStream(value);
+            string pointPair;
+            while(std::getline(pointsStream, pointPair, ' '))
+            {
+                // parse each point combo into a comma-separated x,y point
+                stringstream pointStream(pointPair);
+                string xStr,yStr;
+                char buffer[32] = {0};
+                
+                CCDictionary* pPointDict = new CCDictionary;
+
+                // set x
+                if(std::getline(pointStream, xStr, ','))
+                {
+                    int x = atoi(xStr.c_str()) + (int)objectGroup->getPositionOffset().x;
+                    sprintf(buffer, "%d", x);
+                    CCString* pStr = new CCString(buffer);
+                    pStr->autorelease();
+                    pPointDict->setObject(pStr, "x");
+                }
+
+                // set y
+                if(std::getline(pointStream, yStr, ','))
+                {
+                    int y = atoi(yStr.c_str()) + (int)objectGroup->getPositionOffset().y;
+                    sprintf(buffer, "%d", y);
+                    CCString* pStr = new CCString(buffer);
+                    pStr->autorelease();
+                    pPointDict->setObject(pStr, "y");
+                }
+                
+                // add to points array
+                pPointsArray->addObject(pPointDict);
+                pPointDict->release();
+            }
+            
+            dict->setObject(pPointsArray, "points");
+            pPointsArray->release();
+        }
     } 
     else if (elementName == "polyline")
     {

@@ -104,7 +104,7 @@ static EAGLView *view;
 	view = self;
     
     [super initWithFrame:frameRect pixelFormat:format];
-    
+
     return self;
 }
 
@@ -168,11 +168,11 @@ static EAGLView *view;
 
 	[self lockOpenGLContext];
 	
-	NSRect rect = [self bounds];
+//	NSRect rect = [self bounds];
 	
 	cocos2d::CCDirector *director = cocos2d::CCDirector::sharedDirector();
-	CGSize size = NSSizeToCGSize(rect.size);
-	cocos2d::CCSize ccsize = cocos2d::CCSizeMake(size.width, size.height);
+//	CGSize size = NSSizeToCGSize(rect.size);
+//	cocos2d::CCSize ccsize = cocos2d::CCSizeMake(size.width, size.height);
 	//director->reshapeProjection(ccsize);
 	
 	// avoid flicker

@@ -25,7 +25,7 @@
 #import "CCApplication.h"
 #import <Cocoa/Cocoa.h>
 #include <algorithm>
-
+#include "platform/CCFileUtils.h"
 #include "CCGeometry.h"
 #include "CCDirector.h"
 #import "CCDirectorCaller.h"
@@ -119,6 +119,14 @@ ccLanguageType CCApplication::getCurrentLanguage()
     else if ([languageCode isEqualToString:@"hu"]){
         ret = kLanguageHungarian;
     }
+    else if ([languageCode isEqualToString:@"pt"])
+    {
+        ret = kLanguagePortuguese;
+    }
+    else if ([languageCode isEqualToString:@"ar"])
+    {
+        ret = kLanguageArabic;
+    }
     
     return ret;
 }
@@ -126,11 +134,14 @@ ccLanguageType CCApplication::getCurrentLanguage()
 void CCApplication::setResourceRootPath(const std::string& rootResDir)
 {
     m_resourceRootPath = rootResDir;
-    std::replace(m_resourceRootPath.begin(), m_resourceRootPath.end(), '\\', '/');
     if (m_resourceRootPath[m_resourceRootPath.length() - 1] != '/')
     {
         m_resourceRootPath += '/';
     }
+    CCFileUtils* pFileUtils = CCFileUtils::sharedFileUtils();
+    std::vector<std::string> searchPaths = pFileUtils->getSearchPaths();
+    searchPaths.insert(searchPaths.begin(), m_resourceRootPath);
+    pFileUtils->setSearchPaths(searchPaths);
 }
 
 const std::string& CCApplication::getResourceRootPath(void)

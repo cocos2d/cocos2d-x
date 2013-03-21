@@ -524,7 +524,7 @@ bool SpriteBlur::initWithTexture(CCTexture2D* texture, const CCRect& rect)
 void SpriteBlur::initProgram()
 {
     GLchar * fragSource = (GLchar*) CCString::createWithContentsOfFile(
-                                CCFileUtils::sharedFileUtils()->fullPathFromRelativePath("Shaders/example_Blur.fsh"))->getCString();
+                                CCFileUtils::sharedFileUtils()->fullPathForFilename("Shaders/example_Blur.fsh").c_str())->getCString();
     CCGLProgram* pProgram = new CCGLProgram();
     pProgram->initWithVertexShaderByteArray(ccPositionTextureColor_vert, fragSource);
     setShaderProgram(pProgram);
@@ -555,14 +555,15 @@ void SpriteBlur::initProgram()
 void SpriteBlur::draw()
 {
     ccGLEnableVertexAttribs(kCCVertexAttribFlag_PosColorTex );
-    ccGLBlendFunc( m_sBlendFunc.src, m_sBlendFunc.dst );
+    ccBlendFunc blend = getBlendFunc();
+    ccGLBlendFunc(blend.src, blend.dst);
 
     getShaderProgram()->use();
     getShaderProgram()->setUniformsForBuiltins();
     getShaderProgram()->setUniformLocationWith2f(blurLocation, blur_.x, blur_.y);
     getShaderProgram()->setUniformLocationWith4fv(subLocation, sub_, 1);
 
-    ccGLBindTexture2D(  getTexture()->getName() );
+    ccGLBindTexture2D( getTexture()->getName());
 
     //
     // Attributes
@@ -674,7 +675,7 @@ bool ShaderRetroEffect::init()
 {
     if( ShaderTestDemo::init() ) {
 
-        GLchar * fragSource = (GLchar*) CCString::createWithContentsOfFile(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath("Shaders/example_HorizontalColor.fsh"))->getCString();
+        GLchar * fragSource = (GLchar*) CCString::createWithContentsOfFile(CCFileUtils::sharedFileUtils()->fullPathForFilename("Shaders/example_HorizontalColor.fsh").c_str())->getCString();
         CCGLProgram *p = new CCGLProgram();
         p->initWithVertexShaderByteArray(ccPositionTexture_vert, fragSource);
 

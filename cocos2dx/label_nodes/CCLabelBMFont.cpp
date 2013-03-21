@@ -41,313 +41,12 @@ http://www.angelcode.com/products/bmfont/ (Free, Windows only)
 #include "platform/CCFileUtils.h"
 #include "CCDirector.h"
 #include "textures/CCTextureCache.h"
+#include "support/ccUTF8.h"
 
 using namespace std;
 
 
 NS_CC_BEGIN
-
-static int cc_wcslen(const unsigned short* str)
-{
-    int i=0;
-    while(*str++) i++;
-    return i;
-}
-
-/* Code from GLIB gutf8.c starts here. */
-
-#define UTF8_COMPUTE(Char, Mask, Len)        \
-  if (Char < 128)                \
-    {                        \
-      Len = 1;                    \
-      Mask = 0x7f;                \
-    }                        \
-  else if ((Char & 0xe0) == 0xc0)        \
-    {                        \
-      Len = 2;                    \
-      Mask = 0x1f;                \
-    }                        \
-  else if ((Char & 0xf0) == 0xe0)        \
-    {                        \
-      Len = 3;                    \
-      Mask = 0x0f;                \
-    }                        \
-  else if ((Char & 0xf8) == 0xf0)        \
-    {                        \
-      Len = 4;                    \
-      Mask = 0x07;                \
-    }                        \
-  else if ((Char & 0xfc) == 0xf8)        \
-    {                        \
-      Len = 5;                    \
-      Mask = 0x03;                \
-    }                        \
-  else if ((Char & 0xfe) == 0xfc)        \
-    {                        \
-      Len = 6;                    \
-      Mask = 0x01;                \
-    }                        \
-  else                        \
-    Len = -1;
-
-#define UTF8_LENGTH(Char)            \
-  ((Char) < 0x80 ? 1 :                \
-   ((Char) < 0x800 ? 2 :            \
-    ((Char) < 0x10000 ? 3 :            \
-     ((Char) < 0x200000 ? 4 :            \
-      ((Char) < 0x4000000 ? 5 : 6)))))
-
-
-#define UTF8_GET(Result, Chars, Count, Mask, Len)    \
-  (Result) = (Chars)[0] & (Mask);            \
-  for ((Count) = 1; (Count) < (Len); ++(Count))        \
-    {                            \
-      if (((Chars)[(Count)] & 0xc0) != 0x80)        \
-    {                        \
-      (Result) = -1;                \
-      break;                    \
-    }                        \
-      (Result) <<= 6;                    \
-      (Result) |= ((Chars)[(Count)] & 0x3f);        \
-    }
-
-#define UNICODE_VALID(Char)            \
-  ((Char) < 0x110000 &&                \
-   (((Char) & 0xFFFFF800) != 0xD800) &&        \
-   ((Char) < 0xFDD0 || (Char) > 0xFDEF) &&    \
-   ((Char) & 0xFFFE) != 0xFFFE)
-
-
-static const char utf8_skip_data[256] = {
-  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-  1, 1, 1, 1, 1, 1, 1,
-  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-  1, 1, 1, 1, 1, 1, 1,
-  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-  1, 1, 1, 1, 1, 1, 1,
-  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-  1, 1, 1, 1, 1, 1, 1,
-  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-  1, 1, 1, 1, 1, 1, 1,
-  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-  1, 1, 1, 1, 1, 1, 1,
-  2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
-  2, 2, 2, 2, 2, 2, 2,
-  3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 5,
-  5, 5, 5, 6, 6, 1, 1
-};
-
-static const char *const g_utf8_skip = utf8_skip_data;
-
-#define cc_utf8_next_char(p) (char *)((p) + g_utf8_skip[*(unsigned char *)(p)])
-
-/*
- * @str:    the string to search through.
- * @c:        the character to find.
- * 
- * Returns the index of the first occurrence of the character, if found.  Otherwise -1 is returned.
- * 
- * Return value: the index of the first occurrence of the character if found or -1 otherwise.
- * */
-static unsigned int cc_utf8_find_char(std::vector<unsigned short> str, unsigned short c)
-{
-    unsigned int len = str.size();
-
-    for (unsigned int i = 0; i < len; ++i)
-        if (str[i] == c) return i;
-
-    return -1;
-}
-
-/*
- * @str:    the string to search through.
- * @c:        the character to not look for.
- * 
- * Return value: the index of the last character that is not c.
- * */
-static unsigned int cc_utf8_find_last_not_char(std::vector<unsigned short> str, unsigned short c)
-{
-    int len = str.size();
-
-    int i = len - 1;
-    for (; i >= 0; --i)
-        if (str[i] != c) return i;
-
-    return i;
-}
-
-/*
- * @str:    the string to trim
- * @index:    the index to start trimming from.
- * 
- * Trims str st str=[0, index) after the operation.
- * 
- * Return value: the trimmed string.
- * */
-static void cc_utf8_trim_from(std::vector<unsigned short>* str, int index)
-{
-    int size = str->size();
-    if (index >= size || index < 0)
-        return;
-
-    str->erase(str->begin() + index, str->begin() + size);
-}
-
-/*
- * @ch is the unicode character whitespace?
- * 
- * Reference: http://en.wikipedia.org/wiki/Whitespace_character#Unicode
- * 
- * Return value: weather the character is a whitespace character.
- * */
-static bool isspace_unicode(unsigned short ch)
-{
-    return  (ch >= 0x0009 && ch <= 0x000D) || ch == 0x0020 || ch == 0x0085 || ch == 0x00A0 || ch == 0x1680
-        || (ch >= 0x2000 && ch <= 0x200A) || ch == 0x2028 || ch == 0x2029 || ch == 0x202F
-        ||  ch == 0x205F || ch == 0x3000;
-}
-
-static void cc_utf8_trim_ws(std::vector<unsigned short>* str)
-{
-    int len = str->size();
-
-    if ( len <= 0 )
-        return;
-
-    int last_index = len - 1;
-
-    // Only start trimming if the last character is whitespace..
-    if (isspace_unicode((*str)[last_index]))
-    {
-        for (int i = last_index - 1; i >= 0; --i)
-        {
-            if (isspace_unicode((*str)[i]))
-                last_index = i;
-            else
-                break;
-        }
-
-        cc_utf8_trim_from(str, last_index);
-    }
-}
-
-/*
- * g_utf8_strlen:
- * @p: pointer to the start of a UTF-8 encoded string.
- * @max: the maximum number of bytes to examine. If @max
- *       is less than 0, then the string is assumed to be
- *       null-terminated. If @max is 0, @p will not be examined and
- *       may be %NULL.
- *
- * Returns the length of the string in characters.
- *
- * Return value: the length of the string in characters
- **/
-long
-cc_utf8_strlen (const char * p, int max)
-{
-    long len = 0;
-    const char *start = p;
-
-    if (!(p != NULL || max == 0))
-    {
-        return 0;
-    }
-
-    if (max < 0)
-    {
-        while (*p)
-        {
-            p = cc_utf8_next_char (p);
-            ++len;
-        }
-    }
-    else
-    {
-        if (max == 0 || !*p)
-            return 0;
-
-        p = cc_utf8_next_char (p);
-
-        while (p - start < max && *p)
-        {
-             ++len;
-             p = cc_utf8_next_char (p);
-        }
-
-        /* only do the last len increment if we got a complete
-        * char (don't count partial chars)
-        */
-        if (p - start == max)
-            ++len;
-    }
-
-    return len;
-}
-
-/*
- * g_utf8_get_char:
- * @p: a pointer to Unicode character encoded as UTF-8
- *
- * Converts a sequence of bytes encoded as UTF-8 to a Unicode character.
- * If @p does not point to a valid UTF-8 encoded character, results are
- * undefined. If you are not sure that the bytes are complete
- * valid Unicode characters, you should use g_utf8_get_char_validated()
- * instead.
- *
- * Return value: the resulting character
- **/
-static unsigned int
-cc_utf8_get_char (const char * p)
-{
-  int i, mask = 0, len;
-  unsigned int result;
-  unsigned char c = (unsigned char) *p;
-
-  UTF8_COMPUTE (c, mask, len);
-  if (len == -1)
-    return (unsigned int) - 1;
-  UTF8_GET (result, p, i, mask, len);
-
-  return result;
-}
-
-/*
- * cc_utf16_from_utf8:
- * @str_old: pointer to the start of a C string.
- * 
- * Creates a utf8 string from a cstring.
- *
- * Return value: the newly created utf8 string.
- * */
-static unsigned short* cc_utf16_from_utf8(const char* str_old)
-{
-    int len = cc_utf8_strlen(str_old, -1);
-
-    unsigned short* str_new = new unsigned short[len + 1];
-    str_new[len] = 0;
-
-    for (int i = 0; i < len; ++i)
-    {
-        str_new[i] = cc_utf8_get_char(str_old);
-        str_old = cc_utf8_next_char(str_old);
-    }
-
-    return str_new;
-}
-
-static std::vector<unsigned short> cc_utf16_vec_from_utf16_str(const unsigned short* str)
-{
-    int len = cc_wcslen(str);
-    std::vector<unsigned short> str_new;
-
-    for (int i = 0; i < len; ++i)
-    {
-        str_new.push_back(str[i]);
-    }
-    return str_new;
-}
-
 //
 //FNTConfig Cache - free functions
 //
@@ -472,7 +171,7 @@ void CCBMFontConfiguration::purgeFontDefDictionary()
 
 std::set<unsigned int>* CCBMFontConfiguration::parseConfigFile(const char *controlFile)
 {    
-    std::string fullpath = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(controlFile);
+    std::string fullpath = CCFileUtils::sharedFileUtils()->fullPathForFilename(controlFile);
     CCString *contents = CCString::createWithContentsOfFile(fullpath.c_str());
 
     CCAssert(contents, "CCBMFontConfiguration::parseConfigFile | Open file error.");
@@ -792,20 +491,26 @@ bool CCLabelBMFont::initWithString(const char *theString, const char *fntFile, f
 
     if (CCSpriteBatchNode::initWithTexture(texture, strlen(theString)))
     {
-        m_pAlignment = alignment;
-        m_tImageOffset = imageOffset;
         m_fWidth = width;
-        m_cOpacity = 255;
-        m_tColor = ccWHITE;
+        m_pAlignment = alignment;
+        
+        m_cDisplayedOpacity = m_cRealOpacity = 255;
+		m_tDisplayedColor = m_tRealColor = ccWHITE;
+        m_bCascadeOpacityEnabled = true;
+        m_bCascadeColorEnabled = true;
+        
         m_obContentSize = CCSizeZero;
+        
         m_bIsOpacityModifyRGB = m_pobTextureAtlas->getTexture()->hasPremultipliedAlpha();
         m_obAnchorPoint = ccp(0.5f, 0.5f);
+        
+        m_tImageOffset = imageOffset;
         
         m_pReusedChar = new CCSprite();
         m_pReusedChar->initWithTexture(m_pobTextureAtlas->getTexture(), CCRectMake(0, 0, 0, 0), false);
         m_pReusedChar->setBatchNode(this);
         
-        this->setString(theString);
+        this->setString(theString, true);
         
         return true;
     }
@@ -813,12 +518,17 @@ bool CCLabelBMFont::initWithString(const char *theString, const char *fntFile, f
 }
 
 CCLabelBMFont::CCLabelBMFont()
-: m_cOpacity(0)           
-, m_bIsOpacityModifyRGB(false)
+:  m_sString(NULL)
 , m_pConfiguration(NULL)
-, m_sString(NULL)
 , m_bLineBreakWithoutSpaces(false)
 , m_tImageOffset(CCPointZero)
+, m_cDisplayedOpacity(255)
+, m_cRealOpacity(255)
+, m_tDisplayedColor(ccWHITE)
+, m_tRealColor(ccWHITE)
+, m_bCascadeColorEnabled(true)
+, m_bCascadeOpacityEnabled(true)
+, m_bIsOpacityModifyRGB(false)
 {
 
 }
@@ -849,7 +559,7 @@ void CCLabelBMFont::createFontChars()
 {
     int nextFontPositionX = 0;
     int nextFontPositionY = 0;
-    //unsigned short prev = -1;
+    unsigned short prev = -1;
     int kerningAmount = 0;
 
     CCSize tmpSize = CCSizeZero;
@@ -858,7 +568,7 @@ void CCLabelBMFont::createFontChars()
     unsigned int totalHeight = 0;
 
     unsigned int quantityOfLines = 1;
-    unsigned int stringLen = cc_wcslen(m_sString);
+    unsigned int stringLen = m_sString ? cc_wcslen(m_sString) : 0;
     if (stringLen == 0)
     {
         return;
@@ -894,10 +604,12 @@ void CCLabelBMFont::createFontChars()
         
         if (charSet->find(c) == charSet->end())
         {
-            CCLOG("CCLabelBMFont: Attempted to use character not defined in this bitmap: %d", c);
+            CCLOGWARN("cocos2d::CCLabelBMFont: Attempted to use character not defined in this bitmap: %d", c);
             continue;      
         }
 
+        kerningAmount = this->kerningAmountForFirst(prev, c);
+        
         tCCFontDefHashElement *element = NULL;
 
         // unichar is a short, and an int is needed on HASH_FIND_INT
@@ -905,7 +617,7 @@ void CCLabelBMFont::createFontChars()
         HASH_FIND_INT(m_pConfiguration->m_pFontDefDictionary, &key, element);
         if (! element)
         {
-            CCLOG("cocos2d: LabelBMFont: characer not found %d", c);
+            CCLOGWARN("cocos2d::CCLabelBMFont: characer not found %d", c);
             continue;
         }
 
@@ -921,8 +633,14 @@ void CCLabelBMFont::createFontChars()
 
         bool hasSprite = true;
         fontChar = (CCSprite*)(this->getChildByTag(i));
-        if( ! fontChar )
+        if(fontChar )
         {
+            // Reusing previous Sprite
+			fontChar->setVisible(true);
+        }
+        else
+        {
+            // New Sprite ? Set correct color, opacity, etc...
             if( 0 )
             {
 				/* WIP: Doesn't support many features yet.
@@ -940,16 +658,17 @@ void CCLabelBMFont::createFontChars()
                 addChild(fontChar, i, i);
                 fontChar->release();
 			}
+            
+            // Apply label properties
+			fontChar->setOpacityModifyRGB(m_bIsOpacityModifyRGB);
+            
+			// Color MUST be set before opacity, since opacity might change color if OpacityModifyRGB is on
+			fontChar->updateDisplayedColor(m_tDisplayedColor);
+			fontChar->updateDisplayedOpacity(m_cDisplayedOpacity);
         }
-        else
-        {
-            // updating previous sprite
-            fontChar->setTextureRect(rect, false, rect.size);
 
-            // restore to default in case they were modified
-            fontChar->setVisible(true);
-            fontChar->setOpacity(255);
-        }
+        // updating previous sprite
+        fontChar->setTextureRect(rect, false, rect.size);
 
         // See issue 1343. cast( signed short + unsigned integer ) == unsigned integer (sign is lost!)
         int yOffset = m_pConfiguration->m_nCommonHeight - fontDef.yOffset;
@@ -959,19 +678,7 @@ void CCLabelBMFont::createFontChars()
 
         // update kerning
         nextFontPositionX += fontDef.xAdvance + kerningAmount;
-        //prev = c;
-
-        // Apply label properties
-        fontChar->setOpacityModifyRGB(m_bIsOpacityModifyRGB);
-        // Color MUST be set before opacity, since opacity might change color if OpacityModifyRGB is on
-        fontChar->setColor(m_tColor);
-
-        // only apply opacity if it is different than 255 )
-        // to prevent modifying the color too (issue #610)
-        if( m_cOpacity != 255 )
-        {
-            fontChar->setOpacity(m_cOpacity);
-        }
+        prev = c;
 
         if (longestLine < nextFontPositionX)
         {
@@ -1007,17 +714,20 @@ void CCLabelBMFont::setString(const char *newString)
 }
 
 void CCLabelBMFont::setString(const char *newString, bool fromUpdate)
-{
-    CC_SAFE_DELETE_ARRAY(m_sString);
-    m_sString = cc_utf16_from_utf8(newString);
-
-    // MARMALADE CHANGE
-    // THE ASSIGMENT OF STRINGS BELOW PERFORMS AN OVERLAPPING MEMCPY, WHEN fromUpdate IS TRUE
-    // ADDED THE "IF" LINE TO AVOID THIS
-    if (strcmp(m_sInitialString.c_str(), newString))
-	{
-        m_sInitialString = newString;
-	}
+{    
+    if (! fromUpdate)
+    {
+        CC_SAFE_DELETE_ARRAY(m_sString);
+        m_sString = cc_utf8_to_utf16(newString);
+    }
+    else
+    {
+        if (strcmp(m_sInitialString.c_str(), newString))
+        {
+            m_sInitialString = newString;
+        }
+    }
+    
     updateString(fromUpdate);
 }
 
@@ -1037,7 +747,7 @@ void CCLabelBMFont::updateString(bool fromUpdate)
     }
     this->createFontChars();
 
-    if (!fromUpdate)
+    if (fromUpdate)
         updateLabel();
 }
 
@@ -1052,53 +762,57 @@ void CCLabelBMFont::setCString(const char *label)
 }
 
 //LabelBMFont - CCRGBAProtocol protocol
-void CCLabelBMFont::setColor(const ccColor3B& var)
-{
-    m_tColor = var;
-    if (m_pChildren && m_pChildren->count() != 0)
-    {
-        CCObject* child;
-        CCARRAY_FOREACH(m_pChildren, child)
-        {
-            CCSprite* pNode = (CCSprite*) child;
-            if (pNode)
-            {
-                pNode->setColor(m_tColor);
-            }
-        }
-    }
-}
-
 const ccColor3B& CCLabelBMFont::getColor()
 {
-    return m_tColor;
+    return m_tRealColor;
 }
 
-void CCLabelBMFont::setOpacity(GLubyte var)
+const ccColor3B& CCLabelBMFont::getDisplayedColor()
 {
-    m_cOpacity = var;
+    return m_tDisplayedColor;
+}
 
-    if (m_pChildren && m_pChildren->count() != 0)
-    {
-        CCObject* child;
-        CCARRAY_FOREACH(m_pChildren, child)
+void CCLabelBMFont::setColor(const ccColor3B& color)
+{
+	m_tDisplayedColor = m_tRealColor = color;
+	
+	if( m_bCascadeColorEnabled ) {
+		ccColor3B parentColor = ccWHITE;
+        CCRGBAProtocol* pParent = dynamic_cast<CCRGBAProtocol*>(m_pParent);
+        if (pParent && pParent->isCascadeColorEnabled())
         {
-            CCNode* pNode = (CCNode*) child;
-            if (pNode)
-            {
-                CCRGBAProtocol *pRGBAProtocol = dynamic_cast<CCRGBAProtocol*>(pNode);
-                if (pRGBAProtocol)
-                {
-                    pRGBAProtocol->setOpacity(m_cOpacity);
-                }
-            }
+            parentColor = pParent->getDisplayedColor();
         }
-    }
+        this->updateDisplayedColor(parentColor);
+	}
 }
-GLubyte CCLabelBMFont::getOpacity()
+
+GLubyte CCLabelBMFont::getOpacity(void)
 {
-    return m_cOpacity;
+    return m_cRealOpacity;
 }
+
+GLubyte CCLabelBMFont::getDisplayedOpacity(void)
+{
+    return m_cDisplayedOpacity;
+}
+
+/** Override synthesized setOpacity to recurse items */
+void CCLabelBMFont::setOpacity(GLubyte opacity)
+{
+	m_cDisplayedOpacity = m_cRealOpacity = opacity;
+    
+	if( m_bCascadeOpacityEnabled ) {
+		GLubyte parentOpacity = 255;
+        CCRGBAProtocol* pParent = dynamic_cast<CCRGBAProtocol*>(m_pParent);
+        if (pParent && pParent->isCascadeOpacityEnabled())
+        {
+            parentOpacity = pParent->getDisplayedOpacity();
+        }
+        this->updateDisplayedOpacity(parentOpacity);
+	}
+}
+
 void CCLabelBMFont::setOpacityModifyRGB(bool var)
 {
     m_bIsOpacityModifyRGB = var;
@@ -1124,6 +838,52 @@ bool CCLabelBMFont::isOpacityModifyRGB()
     return m_bIsOpacityModifyRGB;
 }
 
+void CCLabelBMFont::updateDisplayedOpacity(GLubyte parentOpacity)
+{
+	m_cDisplayedOpacity = m_cRealOpacity * parentOpacity/255.0;
+    
+	CCObject* pObj;
+	CCARRAY_FOREACH(m_pChildren, pObj)
+    {
+        CCSprite *item = (CCSprite*)pObj;
+		item->updateDisplayedOpacity(m_cDisplayedOpacity);
+	}
+}
+
+void CCLabelBMFont::updateDisplayedColor(const ccColor3B& parentColor)
+{
+	m_tDisplayedColor.r = m_tRealColor.r * parentColor.r/255.0;
+	m_tDisplayedColor.g = m_tRealColor.g * parentColor.g/255.0;
+	m_tDisplayedColor.b = m_tRealColor.b * parentColor.b/255.0;
+    
+    CCObject* pObj;
+	CCARRAY_FOREACH(m_pChildren, pObj)
+    {
+        CCSprite *item = (CCSprite*)pObj;
+		item->updateDisplayedColor(m_tDisplayedColor);
+	}
+}
+
+bool CCLabelBMFont::isCascadeColorEnabled()
+{
+    return false;
+}
+
+void CCLabelBMFont::setCascadeColorEnabled(bool cascadeColorEnabled)
+{
+    m_bCascadeColorEnabled = cascadeColorEnabled;
+}
+
+bool CCLabelBMFont::isCascadeOpacityEnabled()
+{
+    return false;
+}
+
+void CCLabelBMFont::setCascadeOpacityEnabled(bool cascadeOpacityEnabled)
+{
+    m_bCascadeOpacityEnabled = cascadeOpacityEnabled;
+}
+
 // LabelBMFont - AnchorPoint
 void CCLabelBMFont::setAnchorPoint(const CCPoint& point)
 {
@@ -1137,7 +897,7 @@ void CCLabelBMFont::setAnchorPoint(const CCPoint& point)
 // LabelBMFont - Alignment
 void CCLabelBMFont::updateLabel()
 {
-    this->setString(m_sInitialString.c_str(), true);
+    this->setString(m_sInitialString.c_str(), false);
 
     if (m_fWidth > 0)
     {
@@ -1158,10 +918,15 @@ void CCLabelBMFont::updateLabel()
         for (unsigned int j = 0; j < children->count(); j++)
         {
             CCSprite* characterSprite;
-
-            while (!(characterSprite = (CCSprite*)this->getChildByTag(j + skip)))
-                skip++;
-
+            unsigned int justSkipped = 0;
+            
+            while (!(characterSprite = (CCSprite*)this->getChildByTag(j + skip + justSkipped)))
+            {
+                justSkipped++;
+            }
+            
+            skip += justSkipped;
+            
             if (!characterSprite->isVisible())
                 continue;
 
@@ -1193,7 +958,7 @@ void CCLabelBMFont::updateLabel()
                 start_line = false;
                 startOfWord = -1;
                 startOfLine = -1;
-                i++;
+                i+=justSkipped;
                 line++;
 
                 if (i >= stringLength)
@@ -1301,7 +1066,7 @@ void CCLabelBMFont::updateLabel()
 
         CC_SAFE_DELETE_ARRAY(m_sString);
         m_sString = str_new;
-        updateString(true);
+        updateString(false);
     }
 
     // Step 2: Make alignment

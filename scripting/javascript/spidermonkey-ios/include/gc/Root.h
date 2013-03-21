@@ -77,7 +77,13 @@ class MutableHandleBase {};
 
 namespace JS {
 
+class AutoAssertNoGC;
+
 template <typename T> class MutableHandle;
+
+JS_FRIEND_API(void) EnterAssertNoGCScope();
+JS_FRIEND_API(void) LeaveAssertNoGCScope();
+JS_FRIEND_API(bool) InNoGCScope();
 
 /*
  * Handle provides an implicit constructor for NullPtr so that, given:
@@ -316,6 +322,169 @@ class InternalHandle<T*>
     }
 };
 
+#ifdef DEBUG
+template <typename T>
+class IntermediateNoGC
+{
+    T t_;
+
+  public:
+    IntermediateNoGC(const T &t) : t_(t) {
+        EnterAssertNoGCScope();
+    }
+    IntermediateNoGC(const IntermediateNoGC &) {
+        EnterAssertNoGCScope();
+    }
+    ~IntermediateNoGC() {
+        LeaveAssertNoGCScope();
+    }
+
+    const T &operator->() { return t_; }
+    operator const T &() { return t_; }
+};
+#endif
+
+/*
+ * Return<T> wraps GC things that are returned from accessor methods.  The
+ * wrapper helps to ensure correct rooting of the returned pointer and safe
+ * access while unrooted.
+ *
+ * Example usage in a method declaration:
+ *
+ *     class Foo {
+ *         HeapPtrScript script_;
+ *         ...
+ *       public:
+ *          Return<JSScript*> script() { return script_; }
+ *     };
+ *
+ * Example usage of method (1):
+ *
+ *     Foo foo(...);
+ *     RootedScript script(cx, foo->script());
+ *
+ * Example usage of method (2):
+ *
+ *     Foo foo(...);
+ *     foo->script()->needsArgsObj();
+ *
+ * The purpose of this class is to assert eagerly on incorrect use of GC thing
+ * pointers. For example:
+ *
+ *    RootedShape shape(cx, ...);
+ *    shape->parent.init(js_NewGCThing<Shape*>(cx, ...));
+ *
+ * In this expression, C++ is allowed to order these calls as follows:
+ *
+ *   Call                           Effect
+ *   ----                           ------
+ *   1) RootedShape::operator->     Stores shape::ptr_ to stack.
+ *   2) js_NewGCThing<Shape*>       Triggers GC and compaction of shapes. This
+ *                                  moves shape::ptr_ to a new location.
+ *   3) HeapPtrObject::init         This call takes the relocated shape::ptr_
+ *                                  as |this|, crashing or, worse, corrupting
+ *                                  the program's state on the first access
+ *                                  to a member variable.
+ *
+ * If Shape::parent were an accessor function returning a Return<Shape*>, this
+ * could not happen: Return ensures either immediate rooting or no GC within
+ * the same expression.
+ */
+template <typename T>
+class Return
+{
+    friend class Rooted<T>;
+
+    const T ptr_;
+
+  public:
+    template <typename S>
+    Return(const S &ptr,
+           typename mozilla::EnableIf<mozilla::IsConvertible<S, T>::value, int>::Type dummy = 0)
+      : ptr_(ptr)
+    {}
+
+    Return(NullPtr) : ptr_(NULL) {}
+
+    /*
+     * |get(AutoAssertNoGC &)| is the safest way to access a Return<T> without
+     * rooting it first: it is impossible to call this method without an
+     * AutoAssertNoGC in scope, so the compiler will automatically catch any
+     * incorrect usage.
+     *
+     * Example:
+     *     AutoAssertNoGC nogc;
+     *     RawScript script = fun->script().get(nogc);
+     */
+    const T &get(AutoAssertNoGC &) const {
+        return ptr_;
+    }
+
+    /*
+     * |operator->|'s result cannot be stored in a local variable, so it is safe
+     * to use in a CanGC context iff no GC can occur anywhere within the same
+     * expression (generally from one |;| to the next). |operator->| uses a
+     * temporary object as a guard and will assert if a CanGC context is
+     * encountered before the next C++ Sequence Point.
+     *
+     * INCORRECT:
+     *    fun->script()->bindings = myBindings->clone(cx, ...);
+     *
+     * The compiler is allowed to reorder |fun->script()::operator->()| above
+     * the call to |clone(cx, ...)|. In this case, the RawScript C++ stores on
+     * the stack may be corrupted by a GC under |clone|. The subsequent
+     * dereference of this pointer to get |bindings| will result in an invalid
+     * access. This wrapper ensures that such usage asserts in DEBUG builds when
+     * it encounters this situation. Without this assertion, it is possible for
+     * such access to corrupt program state instead of crashing immediately.
+     *
+     * CORRECT:
+     *    RootedScript clone(cx, myBindings->clone(cx, ...));
+     *    fun->script()->bindings = clone;
+     */
+#ifdef DEBUG
+    IntermediateNoGC<T> operator->() const {
+        return IntermediateNoGC<T>(ptr_);
+    }
+#else
+    const T &operator->() const {
+        return ptr_;
+    }
+#endif
+
+    /*
+     * |unsafeGet()| is unsafe for most uses.  Although it performs similar
+     * checking to |operator->|, its result can be stored to a local variable.
+     * For this reason, it should only be used when it would be incorrect or
+     * absurd to create a new Rooted for its use: e.g. for assertions.
+     */
+#ifdef DEBUG
+    IntermediateNoGC<T> unsafeGet() const {
+        return IntermediateNoGC<T>(ptr_);
+    }
+#else
+    const T &unsafeGet() const {
+        return ptr_;
+    }
+#endif
+
+    /*
+     * |operator==| is safe to use in any context.  It is present to allow:
+     *     JS_ASSERT(myScript == fun->script().unsafeGet());
+     *
+     * To be rewritten as:
+     *     JS_ASSERT(fun->script() == myScript);
+     *
+     * Note: the new order tells C++ to use |Return<JSScript*>::operator=|
+     *       instead of direct pointer comparison.
+     */
+    bool operator==(const T &other) { return ptr_ == other; }
+    bool operator!=(const T &other) { return ptr_ != other; }
+    bool operator==(const Return<T> &other) { return ptr_ == other.ptr_; }
+    bool operator==(const JS::Handle<T> &other) { return ptr_ == other.get(); }
+    inline bool operator==(const Rooted<T> &other);
+};
+
 /*
  * By default, pointers should use the inheritance hierarchy to find their
  * ThingRootKind. Some pointer types are explicitly set in jspubtd.h so that
@@ -331,12 +500,6 @@ struct RootMethods<T *>
     static ThingRootKind kind() { return RootKind<T *>::rootKind(); }
     static bool poisoned(T *v) { return IsPoisonedPtr(v); }
 };
-
-#if !(defined(JSGC_ROOT_ANALYSIS) || defined(JSGC_USE_EXACT_ROOTING))
-// Defined in vm/String.h.
-template <>
-class Rooted<JSStableString *>;
-#endif
 
 template <typename T>
 class RootedBase {};
@@ -356,27 +519,23 @@ class Rooted : public RootedBase<T>
     {
 #if defined(JSGC_ROOT_ANALYSIS) || defined(JSGC_USE_EXACT_ROOTING)
         ContextFriendFields *cx = ContextFriendFields::get(cxArg);
-
-        ThingRootKind kind = RootMethods<T>::kind();
-        this->stack = reinterpret_cast<Rooted<T>**>(&cx->thingGCRooters[kind]);
-        this->prev = *stack;
-        *stack = this;
-
-        JS_ASSERT(!RootMethods<T>::poisoned(ptr));
+        commonInit(cx->thingGCRooters);
 #endif
     }
 
     void init(JSRuntime *rtArg)
     {
 #if defined(JSGC_ROOT_ANALYSIS) || defined(JSGC_USE_EXACT_ROOTING)
-        RuntimeFriendFields *rt = const_cast<RuntimeFriendFields *>(RuntimeFriendFields::get(rtArg));
+        PerThreadDataFriendFields *pt = PerThreadDataFriendFields::getMainThread(rtArg);
+        commonInit(pt->thingGCRooters);
+#endif
+    }
 
-        ThingRootKind kind = RootMethods<T>::kind();
-        this->stack = reinterpret_cast<Rooted<T>**>(&rt->thingGCRooters[kind]);
-        this->prev = *stack;
-        *stack = this;
-
-        JS_ASSERT(!RootMethods<T>::poisoned(ptr));
+    void init(js::PerThreadData *ptArg)
+    {
+#if defined(JSGC_ROOT_ANALYSIS) || defined(JSGC_USE_EXACT_ROOTING)
+        PerThreadDataFriendFields *pt = PerThreadDataFriendFields::get(ptArg);
+        commonInit(pt->thingGCRooters);
 #endif
     }
 
@@ -413,6 +572,40 @@ class Rooted : public RootedBase<T>
         init(cx);
     }
 
+    Rooted(js::PerThreadData *pt
+           MOZ_GUARD_OBJECT_NOTIFIER_PARAM)
+      : ptr(RootMethods<T>::initial())
+    {
+        MOZ_GUARD_OBJECT_NOTIFIER_INIT;
+        init(pt);
+    }
+
+    Rooted(js::PerThreadData *pt, T initial
+           MOZ_GUARD_OBJECT_NOTIFIER_PARAM)
+      : ptr(initial)
+    {
+        MOZ_GUARD_OBJECT_NOTIFIER_INIT;
+        init(pt);
+    }
+
+    template <typename S>
+    Rooted(JSContext *cx, const Return<S> &initial
+           MOZ_GUARD_OBJECT_NOTIFIER_PARAM)
+      : ptr(initial.ptr_)
+    {
+        MOZ_GUARD_OBJECT_NOTIFIER_INIT;
+        init(cx);
+    }
+
+    template <typename S>
+    Rooted(js::PerThreadData *pt, const Return<S> &initial
+           MOZ_GUARD_OBJECT_NOTIFIER_PARAM)
+      : ptr(initial.ptr_)
+    {
+        MOZ_GUARD_OBJECT_NOTIFIER_INIT;
+        init(pt);
+    }
+
     ~Rooted()
     {
 #if defined(JSGC_ROOT_ANALYSIS) || defined(JSGC_USE_EXACT_ROOTING)
@@ -445,7 +638,25 @@ class Rooted : public RootedBase<T>
         return ptr;
     }
 
+    template <typename S>
+    T & operator =(const Return<S> &value)
+    {
+        ptr = value.ptr_;
+        return ptr;
+    }
+
   private:
+    void commonInit(Rooted<void*> **thingGCRooters) {
+#if defined(JSGC_ROOT_ANALYSIS) || defined(JSGC_USE_EXACT_ROOTING)
+        ThingRootKind kind = RootMethods<T>::kind();
+        this->stack = reinterpret_cast<Rooted<T>**>(&thingGCRooters[kind]);
+        this->prev = *stack;
+        *stack = this;
+
+        JS_ASSERT(!RootMethods<T>::poisoned(ptr));
+#endif
+    }
+
 #if defined(JSGC_ROOT_ANALYSIS) || defined(JSGC_USE_EXACT_ROOTING)
     Rooted<T> **stack, *prev;
 #endif
@@ -454,6 +665,19 @@ class Rooted : public RootedBase<T>
 
     Rooted(const Rooted &) MOZ_DELETE;
 };
+
+#if !(defined(JSGC_ROOT_ANALYSIS) || defined(JSGC_USE_EXACT_ROOTING))
+// Defined in vm/String.h.
+template <>
+class Rooted<JSStableString *>;
+#endif
+
+template <typename T>
+bool
+Return<T>::operator==(const Rooted<T> &other)
+{
+    return ptr_ == other.get();
+}
 
 typedef Rooted<JSObject*>    RootedObject;
 typedef Rooted<JSFunction*>  RootedFunction;
@@ -550,10 +774,6 @@ MutableHandle<T>::MutableHandle(js::Rooted<S> *root,
     ptr = root->address();
 }
 
-JS_FRIEND_API(void) EnterAssertNoGCScope();
-JS_FRIEND_API(void) LeaveAssertNoGCScope();
-JS_FRIEND_API(bool) InNoGCScope();
-
 /*
  * The scoped guard object AutoAssertNoGC forces the GC to assert if a GC is
  * attempted while the guard object is live.  If you have a GC-unsafe operation
@@ -581,15 +801,11 @@ public:
 /*
  * AssertCanGC will assert if it is called inside of an AutoAssertNoGC region.
  */
-#ifdef DEBUG
 JS_ALWAYS_INLINE void
 AssertCanGC()
 {
     JS_ASSERT(!InNoGCScope());
 }
-#else
-# define AssertCanGC()
-#endif
 
 #if defined(DEBUG) && defined(JS_GC_ZEAL) && defined(JSGC_ROOT_ANALYSIS) && !defined(JS_THREADSAFE)
 extern void

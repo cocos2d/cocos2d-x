@@ -141,6 +141,9 @@ public:
      */
     inline ccDirectorProjection getProjection(void) { return m_eProjection; }
     void setProjection(ccDirectorProjection kProjection);
+    
+    /** Sets the glViewport*/
+    void setViewport();
 
     /** How many frames were called since the director started */
     
@@ -336,7 +339,8 @@ protected:
     void showStats();
     void createStatsLabel();
     void calculateMPF();
-
+    void getFPSImageData(unsigned char** datapointer, unsigned int* length);
+    
     /** calculates delta time since last time it was called */    
     void calculateDeltaTime();
 protected:

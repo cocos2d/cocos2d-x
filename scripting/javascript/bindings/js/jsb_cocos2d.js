@@ -316,10 +316,13 @@ cc.dump = function(obj)
 };
 
 // dump config info, but only in debug mode
+var sys = sys || undefined;
 cc.dumpConfig = function()
 {
-    cc.dump(sys);
-    cc.dump(sys.capabilities);
+    if (sys) {
+        cc.dump(sys);
+        cc.dump(sys.capabilities);
+    }
 };
 
 //
@@ -365,28 +368,6 @@ cc.LabelAtlas.create = function( a,b,c,d,e ) {
 };
 
 cc.LayerMultiplex.create = cc.LayerMultiplex.createWithArray;
-
-// PhysicsDebugNode
-cc.PhysicsDebugNode.create = function( space ) {
-    var s = space;
-    if( space.handle !== undefined )
-        s = space.handle;
-    return cc.PhysicsDebugNode._create( s );
-};
-cc.PhysicsDebugNode.prototype.setSpace = function( space ) {
-    var s = space;
-    if( space.handle !== undefined )
-        s = space.handle;
-    return this._setSpace( s );
-};
-
-// PhysicsSprite
-cc.PhysicsSprite.prototype.setBody = function( body ) {
-    var b = body;
-    if( body.handle !== undefined )
-        b = body.handle;
-    return this._setCPBody( b );
-};
 
 
 /**
@@ -526,3 +507,4 @@ cc.Sprite.extend = cc.Class.extend;
 cc.MenuItemFont.extend = cc.Class.extend;
 cc.Scene.extend = cc.Class.extend;
 cc.DrawNode.extend = cc.Class.extend;
+

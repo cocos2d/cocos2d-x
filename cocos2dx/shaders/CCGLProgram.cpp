@@ -122,8 +122,8 @@ bool CCGLProgram::initWithVertexShaderByteArray(const GLchar* vShaderByteArray, 
 
 bool CCGLProgram::initWithVertexShaderFilename(const char* vShaderFilename, const char* fShaderFilename)
 {
-    const GLchar * vertexSource = (GLchar*) CCString::createWithContentsOfFile(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(vShaderFilename))->getCString();
-    const GLchar * fragmentSource = (GLchar*) CCString::createWithContentsOfFile(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(fShaderFilename))->getCString();
+    const GLchar * vertexSource = (GLchar*) CCString::createWithContentsOfFile(CCFileUtils::sharedFileUtils()->fullPathForFilename(vShaderFilename).c_str())->getCString();
+    const GLchar * fragmentSource = (GLchar*) CCString::createWithContentsOfFile(CCFileUtils::sharedFileUtils()->fullPathForFilename(fShaderFilename).c_str())->getCString();
 
     return initWithVertexShaderByteArray(vertexSource, fragmentSource);
 }
@@ -328,6 +328,14 @@ bool CCGLProgram::updateUniformLocation(GLint location, GLvoid* data, unsigned i
     }
 
     return updated;
+}
+
+GLint CCGLProgram::getUniformLocationForName(const char* name)
+{
+    CCAssert(name != NULL, "Invalid uniform name" );
+    CCAssert(m_uProgram != 0, "Invalid operation. Cannot get uniform location when program is not initialized");
+    
+    return glGetUniformLocation(m_uProgram, name);
 }
 
 void CCGLProgram::setUniformLocationWith1i(GLint location, GLint i1)

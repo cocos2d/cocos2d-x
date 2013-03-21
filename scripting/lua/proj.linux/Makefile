@@ -1,75 +1,65 @@
-CC      = gcc
-CXX     = g++
-TARGET	= liblua.so
-CCFLAGS = -Wall -fPIC
-CXXFLAGS = -Wall -fPIC
-VISIBILITY = 
+TARGET = liblua.so
 
-LBITS := $(shell getconf LONG_BIT)
-INCLUDES = -I../lua \
-           -I../tolua \
+INCLUDES += -I.. -I../lua -I../tolua \
+        -I../Classes -I../../../CocosDenshion/include
 
-DEFINES = -DLINUX
+SOURCES = ../lua/lapi.o \
+          ../lua/lauxlib.c \
+          ../lua/lbaselib.c \
+          ../lua/lcode.c \
+          ../lua/ldblib.c \
+          ../lua/ldebug.c \
+          ../lua/ldo.c \
+          ../lua/ldump.c \
+          ../lua/lfunc.c \
+          ../lua/lgc.c \
+          ../lua/linit.c \
+          ../lua/liolib.c \
+          ../lua/llex.c \
+          ../lua/lmathlib.c \
+          ../lua/lmem.c \
+          ../lua/loadlib.c \
+          ../lua/lobject.c \
+          ../lua/lopcodes.c \
+          ../lua/loslib.c \
+          ../lua/lparser.c \
+          ../lua/lstate.c \
+          ../lua/lstring.c \
+          ../lua/lstrlib.c \
+          ../lua/ltable.c \
+          ../lua/ltablib.c \
+          ../lua/ltm.c \
+          ../lua/lundump.c \
+          ../lua/lvm.c \
+          ../lua/lzio.c \
+          ../lua/print.c \
+          ../tolua/tolua_event.c \
+          ../tolua/tolua_is.c \
+          ../tolua/tolua_map.c \
+          ../tolua/tolua_push.c \
+          ../tolua/tolua_to.c \
+          ../cocos2dx_support/tolua_fix.c \
+          ../cocos2dx_support/CCLuaBridge.cpp \
+          ../cocos2dx_support/CCLuaEngine.cpp \
+          ../cocos2dx_support/CCLuaStack.cpp \
+          ../cocos2dx_support/CCLuaValue.cpp \
+          ../cocos2dx_support/Cocos2dxLuaLoader.cpp \
+          ../cocos2dx_support/LuaCocos2d.cpp
 
-OBJECTS = ../lua/lapi.o \
-          ../lua/lauxlib.o \
-          ../lua/lbaselib.o \
-          ../lua/lcode.o \
-          ../lua/ldblib.o \
-          ../lua/ldebug.o \
-          ../lua/ldo.o \
-          ../lua/ldump.o \
-          ../lua/lfunc.o \
-          ../lua/lgc.o \
-          ../lua/linit.o \
-          ../lua/liolib.o \
-          ../lua/llex.o \
-          ../lua/lmathlib.o \
-          ../lua/lmem.o \
-          ../lua/loadlib.o \
-          ../lua/lobject.o \
-          ../lua/lopcodes.o \
-          ../lua/loslib.o \
-          ../lua/lparser.o \
-          ../lua/lstate.o \
-          ../lua/lstring.o \
-          ../lua/lstrlib.o \
-          ../lua/ltable.o \
-          ../lua/ltablib.o \
-          ../lua/ltm.o \
-          ../lua/lua.o \
-          ../lua/lundump.o \
-          ../lua/lvm.o \
-          ../lua/lzio.o \
-          ../lua/print.o \
-          ../tolua/tolua_event.o \
-          ../tolua/tolua_is.o \
-          ../tolua/tolua_map.o \
-          ../tolua/tolua_push.o \
-          ../tolua/tolua_to.o
+include ../../../cocos2dx/proj.linux/cocos2dx.mk
 
-STATICLIBS = 
+TARGET := $(LIB_DIR)/$(TARGET)
 
-debug: CCFLAGS += -g3 -O0
-debug: CXXFLAGS += -g3 -O0
-debug: DEFINES += -DDEBUG
-debug: $(TARGET)
+all: $(TARGET)
 
-release: CCFLAGS += -O3
-release: CXXFLAGS += -O3
-release: DEFINES += -DNDEBUG
-release: $(TARGET)
+$(TARGET): $(OBJECTS) $(CORE_MAKEFILE_LIST)
+	@mkdir -p $(@D)
+	$(LOG_LINK)$(CXX) $(CXXFLAGS) $(OBJECTS) -shared -o $@ $(SHAREDLIBS) $(STATICLIBS)
 
-####### Build rules
-$(TARGET): $(OBJECTS) 
-	$(CXX) $(CXXFLAGS) $(INCLUDES) $(DEFINES) $(OBJECTS) -shared -o $(TARGET) $(SHAREDLIBS) $(STATICLIBS)
+$(OBJ_DIR)/%.o: ../%.cpp $(CORE_MAKEFILE_LIST)
+	@mkdir -p $(@D)
+	$(LOG_CXX)$(CXX) $(CXXFLAGS) $(INCLUDES) $(DEFINES) -c $< -o $@
 
-####### Compile
-%.o: %.cpp
-	$(CXX) $(CXXFLAGS) $(INCLUDES) $(DEFINES) $(VISIBILITY) -c $< -o $@
-
-%.o: %.c
-	$(CC) $(CCFLAGS) $(INCLUDES) $(DEFINES) $(VISIBILITY) -c $< -o $@
-
-clean: 
-	rm -f $(OBJECTS) $(TARGET) core
+$(OBJ_DIR)/%.o: ../%.c $(CORE_MAKEFILE_LIST)
+	@mkdir -p $(@D)
+	$(LOG_CC)$(CC) $(CCFLAGS) $(INCLUDES) $(DEFINES) -c $< -o $@

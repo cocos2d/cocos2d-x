@@ -213,7 +213,9 @@ local function ActionRotate()
     local actionByBack = actionBy:reverse()
     grossini:runAction(CCSequence:createWithTwoActions(actionBy, actionByBack))
 
-    kathia:runAction(CCSequence:createWithTwoActions(actionTo2, actionTo0:copy():autorelease()))
+    local action0Retain = CCRotateTo:create(2 , 0)
+
+    kathia:runAction(CCSequence:createWithTwoActions(actionTo2, action0Retain))
 
 	subtitleLabel:setString("RotateTo / RotateBy")
 	return layer
@@ -240,6 +242,51 @@ local function ActionSkew()
 
 	subtitleLabel:setString("SkewTo / SkewBy")
 	return layer
+end
+
+--ActionRotationalSkewVSStandardSkew
+local function ActionRotationalSkewVSStandardSkew()
+
+    local layer = CCLayer:create()
+	initWithLayer(layer)
+
+    tamara:removeFromParentAndCleanup(true);
+    grossini:removeFromParentAndCleanup(true);
+    kathia:removeFromParentAndCleanup(true);
+
+    local s = CCDirector:sharedDirector():getWinSize();
+    local boxSize = CCSizeMake(100.0, 100.0);
+    local box = CCLayerColor:create(ccc4(255,255,0,255));
+    box:setAnchorPoint(ccp(0.5,0.5));
+    box:setContentSize( boxSize );
+    box:ignoreAnchorPointForPosition(false);
+    box:setPosition(ccp(s.width/2, s.height - 100 - box:getContentSize().height/2));
+    layer:addChild(box);
+    local label = CCLabelTTF:create("Standard cocos2d Skew", "Marker Felt", 16);
+    label:setPosition(ccp(s.width/2, s.height - 100 + label:getContentSize().height));
+    layer:addChild(label);
+    local actionTo = CCSkewBy:create(2, 360, 0);
+    local actionToBack = CCSkewBy:create(2, -360, 0);
+    local seq = CCSequence:createWithTwoActions(actionTo, actionToBack)
+
+    box:runAction(seq);
+
+    box = CCLayerColor:create(ccc4(255,255,0,255));
+    box:setAnchorPoint(ccp(0.5,0.5));
+    box:setContentSize(boxSize);
+    box:ignoreAnchorPointForPosition(false);
+    box:setPosition(ccp(s.width/2, s.height - 250 - box:getContentSize().height/2));
+    layer:addChild(box);
+    label = CCLabelTTF:create("Rotational Skew", "Marker Felt", 16);
+    label:setPosition(ccp(s.width/2, s.height - 250 + label:getContentSize().height/2));
+    layer:addChild(label);
+    local actionTo2 = CCRotateBy:create(2, 360);
+    local actionToBack2 = CCRotateBy:create(2, -360);
+    seq = CCSequence:createWithTwoActions(actionTo2, actionToBack2)
+    box:runAction(seq);
+
+    subtitleLabel:setString("Skew Comparison")
+    return layer;
 end
 
 --------------------------------------
@@ -553,10 +600,9 @@ local function ActionAnimate()
     local action2 = CCAnimate:create(animation2)
     tamara:runAction(CCSequence:createWithTwoActions(action2, action2:reverse()))
 
-	local animation3 = animation2:copy()
-	animation3:autorelease()
+	local animation3 = animation2:copy():autorelease()
 	-- problem
-    animation3:setLoops(4)
+    tolua.cast(animation3,"CCAnimation"):setLoops(4)
 
     local action3 = CCAnimate:create(animation3)
     kathia:runAction(action3)
@@ -603,7 +649,14 @@ local function ActionSequenceCallback2(sender)
 	local label = CCLabelTTF:create("callback 2 called", "Marker Felt", 16)
     label:setPosition(ccp(size.width / 4 * 2, size.height / 2))
 
-    sender:addChild(label)
+    actionSequenceLayer:addChild(label)
+end
+
+local function ActionSequenceCallback3(sender)
+	local label = CCLabelTTF:create("callback 3 called", "Marker Felt", 16)
+    label:setPosition(ccp(size.width / 4 * 3, size.height / 2))
+
+    actionSequenceLayer:addChild(label)
 end
 
 local function ActionSequence2()
@@ -619,6 +672,7 @@ local function ActionSequence2()
 	array:addObject(CCMoveBy:create(1, ccp(100,0)))
 	array:addObject(CCCallFunc:create(ActionSequenceCallback1))
 	array:addObject(CCCallFuncN:create(ActionSequenceCallback2))
+	array:addObject(CCCallFuncN:create(ActionSequenceCallback3))
 	local action = CCSequence:create(array)
 
     grossini:runAction(action)
@@ -699,7 +753,9 @@ local function ActionRepeat()
 
     local a1 = CCMoveBy:create(1, ccp(150,0))
     local action1 = CCRepeat:create(CCSequence:createWithTwoActions(CCPlace:create(ccp(60,60)), a1), 3)
-    local action2 = CCRepeatForever:create(CCSequence:createWithTwoActions(a1:copy():autorelease(), a1:reverse()))
+
+    local a2 = CCMoveBy:create(1, ccp(150,0))
+    local action2 = CCRepeatForever:create(CCSequence:createWithTwoActions(a2, a1:reverse()))
 
     kathia:runAction(action1)
     tamara:runAction(action2)
@@ -746,7 +802,7 @@ local function ActionRotateToRepeat()
     local act2 = CCRotateTo:create(1, 0)
     local seq  = CCSequence:createWithTwoActions(act1, act2)
     local rep1 = CCRepeatForever:create(seq)
-    local rep2 = CCRepeat:create(seq:copy():autorelease(), 10)
+    local rep2 = CCRepeat:create(tolua.cast(seq:copy():autorelease(), "CCSequence"), 10)
 
     tamara:runAction(rep1)
     kathia:runAction(rep2)
@@ -770,7 +826,12 @@ local function ActionRotateJerk()
         CCRotateTo:create(0.5, 20))
 
     local rep1 = CCRepeat:create(seq, 10)
-    local rep2 = CCRepeatForever:create(seq:copy():autorelease())
+
+    local seq2 = CCSequence:createWithTwoActions(
+        CCRotateTo:create(0.5, -20),
+        CCRotateTo:create(0.5, 20))
+
+    local rep2 = CCRepeatForever:create(seq2)
 
     tamara:runAction(rep1)
     kathia:runAction(rep2)
@@ -793,7 +854,14 @@ end
 
 local function CallFucnCallback2(sender)
 	local label = CCLabelTTF:create("callback 2 called", "Marker Felt", 16)
-    label:setPosition(size.width / 2, size.height / 2)
+    label:setPosition(size.width / 4 * 2, size.height / 2)
+
+    callFuncLayer:addChild(label)
+end
+
+local function CallFucnCallback3(sender)
+	local label = CCLabelTTF:create("callback 3 called", "Marker Felt", 16)
+    label:setPosition(size.width / 4 * 3, size.height / 2)
 
     callFuncLayer:addChild(label)
 end
@@ -802,7 +870,7 @@ local function ActionCallFunc()
 	callFuncLayer = CCLayer:create()
 	initWithLayer(callFuncLayer)
 
-	centerSprites(2)
+	centerSprites(3)
 
 	local action = CCSequence:createWithTwoActions(
         CCMoveBy:create(2, ccp(200,0)),
@@ -814,8 +882,15 @@ local function ActionCallFunc()
 	array:addObject(CCCallFuncN:create(CallFucnCallback2))
     local action2 = CCSequence:create(array)
 
-    kathia:runAction(action)
+    local array2 = CCArray:create()
+    array2:addObject(CCRotateBy:create(3 , 360))
+    array2:addObject(CCFadeOut:create(2))
+    array2:addObject(CCCallFuncN:create(CallFucnCallback3))
+    local action3 = CCSequence:create(array2)
+
+    grossini:runAction(action)
 	tamara:runAction(action2)
+    kathia:runAction(action3)
 
 	subtitleLabel:setString("Callbacks: CallFunc and friends")
 	return callFuncLayer
@@ -932,8 +1007,8 @@ local function ActionOrbit()
     local seq = CCSequence:createWithTwoActions(move, move_back)
     local rfe = CCRepeatForever:create(seq)
     kathia:runAction(rfe)
-    tamara:runAction(rfe:copy():autorelease())
-    grossini:runAction(rfe:copy():autorelease())
+    tamara:runAction(tolua.cast(rfe:copy():autorelease(), "CCActionInterval"))
+    grossini:runAction(tolua.cast(rfe:copy():autorelease(), "CCActionInterval"))
 
 
 	subtitleLabel:setString("OrbitCamera action")
@@ -973,9 +1048,9 @@ local function ActionTargeted()
 	centerSprites(2)
 
 	local jump1 = CCJumpBy:create(2, ccp(0, 0), 100, 3)
-    local jump2 = jump1:copy():autorelease()
+    local jump2 = CCJumpBy:create(2, ccp(0, 0), 100, 3)
     local rot1  = CCRotateBy:create(1, 360)
-    local rot2  = rot1:copy():autorelease()
+    local rot2  = CCRotateBy:create(1, 360)
 
     local t1 = CCTargetedAction:create(kathia, jump2)
     local t2 = CCTargetedAction:create(kathia, rot2)
@@ -1011,6 +1086,7 @@ local function ActionPause(dt)
 
 	local director = CCDirector:sharedDirector()
     pausedTargets = director:getActionManager():pauseAllRunningActions()
+    pausedTargets:retain()
 end
 
 local function ActionResume(dt)
@@ -1023,15 +1099,16 @@ local function ActionResume(dt)
 	if pausedTargets ~= nil then
 		-- problem: will crash here. Try fixing me!
 		director:getActionManager():resumeTargets(pausedTargets)
+        pausedTargets:release()
 	end
 end
 
 local function PauseResumeActions_onEnterOrExit(tag)
 	local scheduler = CCDirector:sharedDirector():getScheduler()
-	if tag == 0 then
+	if tag == "enter" then
 		PauseResumeActions_pauseEntry = scheduler:scheduleScriptFunc(ActionPause, 3, false)
 		PauseResumeActions_resumeEntry = scheduler:scheduleScriptFunc(ActionResume, 5, false)
-	elseif tag == 1 then
+	elseif tag == "exit" then
 		scheduler:unscheduleScriptEntry(PauseResumeActions_pauseEntry)
 		scheduler:unscheduleScriptEntry(PauseResumeActions_resumeEntry)
 	end
@@ -1068,15 +1145,15 @@ local function addSprite(dt)
 	local scheduler = CCDirector:sharedDirector():getScheduler()
 	scheduler:unscheduleScriptEntry(Issue1305_entry)
 
-	spriteTmp:setPosition(ccp(250, 150))
+	spriteTmp:setPosition(ccp(250, 250))
     Issue1305_layer:addChild(spriteTmp)
 end
 
 local function Issue1305_onEnterOrExit(tag)
 	local scheduler = CCDirector:sharedDirector():getScheduler()
-	if tag == 0 then
+	if tag == "enter" then
 		Issue1305_entry = scheduler:scheduleScriptFunc(addSprite, 2, false)
-	elseif tag == 1 then
+	elseif tag == "exit" then
 		scheduler:unscheduleScriptEntry(Issue1305_entry)
 	end
 end
@@ -1258,6 +1335,8 @@ function CreateActionTestLayer()
 		layer = ActionRotate()
 	elseif ActionIdx == Action_Table.ACTION_SKEW_LAYER then
 		layer = ActionSkew()
+    elseif ActionIdx == Action_Table.ACTION_SKEW_STANDER then 
+        layer = ActionRotationalSkewVSStandardSkew()
 	elseif ActionIdx == Action_Table.ACTION_SKEWROTATE_LAYER then
 		layer = ActionSkewRotate()
 	elseif ActionIdx == Action_Table.ACTION_JUMP_LAYER then

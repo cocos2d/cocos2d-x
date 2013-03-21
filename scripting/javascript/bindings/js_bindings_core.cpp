@@ -21,13 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
 #include "js_bindings_config.h"
 #include "js_bindings_core.h"
 
 
 // cocos2d + chipmunk registration files
 #include "js_bindings_chipmunk_registration.h"
+
 
 #pragma mark - Hash
 
@@ -80,8 +80,11 @@ JSBool JSBCore_log(JSContext *cx, uint32_t argc, jsval *vp)
 		JSString *string = NULL;
 		JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "S", &string);
 		if (string) {
-			char *cstr = JS_EncodeString(cx, string);
-			fprintf(stderr, "%s\n", cstr);
+            char* log_str = JS_EncodeString(cx, string);
+			if (log_str) {
+				CCLOG(log_str);
+				JS_free(cx, (void*)log_str);
+			}
 		}
 		
 		return JS_TRUE;

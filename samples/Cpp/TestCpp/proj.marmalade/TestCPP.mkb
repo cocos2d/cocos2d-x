@@ -46,37 +46,37 @@ files
 	VisibleRect.cpp
 	VisibleRect.h
 
-	[AccelerometerTest]
+	[Test/AccelerometerTest]
 	(../Classes/AccelerometerTest)
 	AccelerometerTest.cpp
 	AccelerometerTest.h
 
-	[ActionManagerTest]
+	[Test/ActionManagerTest]
 	(../Classes/ActionManagerTest)
 	ActionManagerTest.cpp
 	ActionManagerTest.h
 
-	[ActionsEaseTest]
+	[Test/ActionsEaseTest]
 	(../Classes/ActionsEaseTest)
 	ActionsEaseTest.cpp
 	ActionsEaseTest.h
 
-	[ActionsProgressTest]
+	[Test/ActionsProgressTest]
 	(../Classes/ActionsProgressTest)
 	ActionsProgressTest.cpp
 	ActionsProgressTest.h
 
-	[ActionsTest]
+	[Test/ActionsTest]
 	(../Classes/ActionsTest)
 	ActionsTest.cpp
 	ActionsTest.h
 
-	[Box2DTest]
+	[Test/Box2DTest]
 	(../Classes/Box2DTest)
 	Box2dTest.cpp
 	Box2dTest.h
 
-	[Box2DTestBed]
+	[Test/Box2DTestBed]
 	(../Classes/Box2DTestBed)
 	Box2dView.cpp
 	Box2dView.h
@@ -86,7 +86,7 @@ files
 	Test.h
 	TestEntries.cpp
 
-	[Box2DTestBed/Tests]
+	[Test/Box2DTestBed/Tests]
 	(../Classes/Box2DTestBed/Tests)
 	AddPair.h
 	ApplyForce.h
@@ -134,7 +134,7 @@ files
 	VerticalStack.h
 	Web.h
 
-	[BugsTest]
+	[Test/BugsTest]
 	(../Classes/BugsTest)
 	Bug-1159.cpp
 	Bug-1159.h
@@ -155,228 +155,228 @@ files
 	BugsTest.cpp
 	BugsTest.h
 
-	[BugsTest/Bug-458]
+	[Test/BugsTest/Bug-458]
 	(../Classes/BugsTest/Bug-458)
 	Bug-458.cpp
 	Bug-458.h
 	QuestionContainerSprite.cpp
 	QuestionContainerSprite.h
 
-#	[ChipmunkAccelTouchTest]
+#	[Test/ChipmunkAccelTouchTest]
 #	(../Classes/ChipmunkAccelTouchTest)
 #	ChipmunkAccelTouchTest.cpp
 #	ChipmunkAccelTouchTest.h
 
-	[ClickAndMoveTest]
+	[Test/ClickAndMoveTest]
 	(../Classes/ClickAndMoveTest)
 	ClickAndMoveTest.cpp
 	ClickAndMoveTest.h
 
-	[CocosDenshionTest]
+	[Test/CocosDenshionTest]
 	(../Classes/CocosDenshionTest)
 	CocosDenshionTest.cpp
 	CocosDenshionTest.h
 
-#	[CurlTest]
+#	[Test/CurlTest]
 #	(../Classes/CurlTest)
 #	CurlTest.cpp
 #	CurlTest.h
 
-	[CurrentLanguageTest]
+	[Test/CurrentLanguageTest]
 	(../Classes/CurrentLanguageTest)
 	CurrentLanguageTest.cpp
 	CurrentLanguageTest.h
 
-	[DrawPrimitivesTest]
+	[Test/DrawPrimitivesTest]
 	(../Classes/DrawPrimitivesTest)
 	DrawPrimitivesTest.cpp
 	DrawPrimitivesTest.h
 
-	[EffectsAdvancedTest]
+	[Test/EffectsAdvancedTest]
 	(../Classes/EffectsAdvancedTest)
 	EffectsAdvancedTest.cpp
 	EffectsAdvancedTest.h
 
-	[EffectsTest]
+	[Test/EffectsTest]
 	(../Classes/EffectsTest)
 	EffectsTest.cpp
 	EffectsTest.h
 
-	[ExtensionsTest]
+	[Test/ExtensionsTest]
 	(../Classes/ExtensionsTest)
 	ExtensionsTest.cpp
 	ExtensionsTest.h
 
-#	[ExtensionsTest/CocosBuilderTest]
+#	[Test/ExtensionsTest/CocosBuilderTest]
 #	(../Classes/ExtensionsTest/CocosBuilderTest)
 #	CocosBuilderTest.cpp
 #	CocosBuilderTest.h
 #
-#	[ExtensionsTest/CocosBuilderTest/AnimationsTest]
+#	[Test/ExtensionsTest/CocosBuilderTest/AnimationsTest]
 #	(../Classes/ExtensionsTest/CocosBuilderTest/AnimationsTest)
 #	AnimationsLayerLoader.h
 #	AnimationsTestLayer.cpp
 #	AnimationsTestLayer.h
 #
-#	[ExtensionsTest/CocosBuilderTest/ButtonTest]
+#	[Test/ExtensionsTest/CocosBuilderTest/ButtonTest]
 #	(../Classes/ExtensionsTest/CocosBuilderTest/ButtonTest)
 #	ButtonTestLayer.cpp
 #	ButtonTestLayer.h
 #	ButtonTestLayerLoader.h
 #
-#	[ExtensionsTest/CocosBuilderTest/HelloCocosBuilder]
+#	[Test/ExtensionsTest/CocosBuilderTest/HelloCocosBuilder]
 #	(../Classes/ExtensionsTest/CocosBuilderTest/HelloCocosBuilder)
 #	HelloCocosBuilderLayer.cpp
 #	HelloCocosBuilderLayer.h
 #	HelloCocosBuilderLayerLoader.h
 #
-#	[ExtensionsTest/CocosBuilderTest/LabelTest]
+#	[Test/ExtensionsTest/CocosBuilderTest/LabelTest]
 #	(../Classes/ExtensionsTest/CocosBuilderTest/LabelTest)
 #	LabelTestLayer.h
 #	LabelTestLayerLoader.h
 #
-#	[ExtensionsTest/CocosBuilderTest/MenuTest]
+#	[Test/ExtensionsTest/CocosBuilderTest/MenuTest]
 #	(../Classes/ExtensionsTest/CocosBuilderTest/MenuTest)
 #	MenuTestLayer.cpp
 #	MenuTestLayer.h
 #	MenuTestLayerLoader.h
 #
-#	[ExtensionsTest/CocosBuilderTest/ParticleSystemTest]
+#	[Test/ExtensionsTest/CocosBuilderTest/ParticleSystemTest]
 #	(../Classes/ExtensionsTest/CocosBuilderTest/ParticleSystemTest)
 #	ParticleSystemTestLayer.h
 #	ParticleSystemTestLayerLoader.h
 #
-#	[ExtensionsTest/CocosBuilderTest/ScrollViewTest]
+#	[Test/ExtensionsTest/CocosBuilderTest/ScrollViewTest]
 #	(../Classes/ExtensionsTest/CocosBuilderTest/ScrollViewTest)
 #	ScrollViewTestLayer.h
 #	ScrollViewTestLayerLoader.h
 #
-#	[ExtensionsTest/CocosBuilderTest/SpriteTest]
+#	[Test/ExtensionsTest/CocosBuilderTest/SpriteTest]
 #	(../Classes/ExtensionsTest/CocosBuilderTest/SpriteTest)
 #	SpriteTestLayer.h
 #	SpriteTestLayerLoader.h
 #
-#	[ExtensionsTest/CocosBuilderTest/TestHeader]
+#	[Test/ExtensionsTest/CocosBuilderTest/TestHeader]
 #	(../Classes/ExtensionsTest/CocosBuilderTest/TestHeader)
 #	TestHeaderLayer.cpp
 #	TestHeaderLayer.h
 #	TestHeaderLayerLoader.h
 
-	[ExtensionsTest/ControlExtensionTest]
+	[Test/ExtensionsTest/ControlExtensionTest]
 	(../Classes/ExtensionsTest/ControlExtensionTest)
 	CCControlScene.cpp
 	CCControlScene.h
 	CCControlSceneManager.cpp
 	CCControlSceneManager.h
 
-	[ExtensionsTest/ControlExtensionTest/CCControlButtonTest]
+	[Test/ExtensionsTest/ControlExtensionTest/CCControlButtonTest]
 	(../Classes/ExtensionsTest/ControlExtensionTest/CCControlButtonTest)
 	CCControlButtonTest.cpp
 	CCControlButtonTest.h
 
-	[ExtensionsTest/ControlExtensionTest/CCControlColourPicker]
+	[Test/ExtensionsTest/ControlExtensionTest/CCControlColourPicker]
 	(../Classes/ExtensionsTest/ControlExtensionTest/CCControlColourPicker)
 	CCControlColourPickerTest.cpp
 	CCControlColourPickerTest.h
 
-	[ExtensionsTest/ControlExtensionTest/CCControlPotentiometerTest]
+	[Test/ExtensionsTest/ControlExtensionTest/CCControlPotentiometerTest]
 	(../Classes/ExtensionsTest/ControlExtensionTest/CCControlPotentiometerTest)
 	CCControlPotentiometerTest.cpp
 	CCControlPotentiometerTest.h
 
-	[ExtensionsTest/ControlExtensionTest/CCControlSliderTest]
+	[Test/ExtensionsTest/ControlExtensionTest/CCControlSliderTest]
 	(../Classes/ExtensionsTest/ControlExtensionTest/CCControlSliderTest)
 	CCControlSliderTest.cpp
 	CCControlSliderTest.h
 
-	[ExtensionsTest/ControlExtensionTest/CCControlStepperTest]
+	[Test/ExtensionsTest/ControlExtensionTest/CCControlStepperTest]
 	(../Classes/ExtensionsTest/ControlExtensionTest/CCControlStepperTest)
 	CCControlStepperTest.cpp
 	CCControlStepperTest.h
 
-	[ExtensionsTest/ControlExtensionTest/CCControlSwitchTest]
+	[Test/ExtensionsTest/ControlExtensionTest/CCControlSwitchTest]
 	(../Classes/ExtensionsTest/ControlExtensionTest/CCControlSwitchTest)
 	CCControlSwitchTest.cpp
 	CCControlSwitchTest.h
 
-#	[ExtensionsTest/EditBoxTest]
+#	[Test/ExtensionsTest/EditBoxTest]
 #	(../Classes/ExtensionsTest/EditBoxTest)
 #	EditBoxTest.cpp
 #	EditBoxTest.h
 
-#	[ExtensionsTest/NetworkTest]
+#	[Test/ExtensionsTest/NetworkTest]
 #	(../Classes/ExtensionsTest/NetworkTest)
 #	HttpClientTest.cpp
 #	HttpClientTest.h
 
-#	[ExtensionsTest/NotificationCenterTest]
+#	[Test/ExtensionsTest/NotificationCenterTest]
 #	(../Classes/ExtensionsTest/NotificationCenterTest)
 #	NotificationCenterTest.cpp
 #	NotificationCenterTest.h
 
-	[ExtensionsTest/TableViewTest]
+	[Test/ExtensionsTest/TableViewTest]
 	(../Classes/ExtensionsTest/TableViewTest)
 	CustomTableViewCell.cpp
 	CustomTableViewCell.h
 	TableViewTestScene.cpp
 	TableViewTestScene.h
 
-	[FontTest]
+	[Test/FontTest]
 	(../Classes/FontTest)
 	FontTest.cpp
 	FontTest.h
 
-	[IntervalTest]
+	[Test/IntervalTest]
 	(../Classes/IntervalTest)
 	IntervalTest.cpp
 	IntervalTest.h
 
-	[KeypadTest]
+	[Test/KeypadTest]
 	(../Classes/KeypadTest)
 	KeypadTest.cpp
 	KeypadTest.h
 
-	[LabelTest]
+	[Test/LabelTest]
 	(../Classes/LabelTest)
 	LabelTest.cpp
 	LabelTest.h
 
-	[LayerTest]
+	[Test/LayerTest]
 	(../Classes/LayerTest)
 	LayerTest.cpp
 	LayerTest.h
 
-	[MenuTest]
+	[Test/MenuTest]
 	(../Classes/MenuTest)
 	MenuTest.cpp
 	MenuTest.h
 
-	[MotionStreakTest]
+	[Test/MotionStreakTest]
 	(../Classes/MotionStreakTest)
 	MotionStreakTest.cpp
 	MotionStreakTest.h
 
-	[MutiTouchTest]
+	[Test/MutiTouchTest]
 	(../Classes/MutiTouchTest)
 	MutiTouchTest.cpp
 	MutiTouchTest.h
 
-	[NodeTest]
+	[Test/NodeTest]
 	(../Classes/NodeTest)
 	NodeTest.cpp
 	NodeTest.h
 
-	[ParallaxTest]
+	[Test/ParallaxTest]
 	(../Classes/ParallaxTest)
 	ParallaxTest.cpp
 	ParallaxTest.h
 
-	[ParticleTest]
+	[Test/ParticleTest]
 	(../Classes/ParticleTest)
 	ParticleTest.cpp
 	ParticleTest.h
 
-	[PerformanceTest]
+	[Test/PerformanceTest]
 	(../Classes/PerformanceTest)
 	PerformanceNodeChildrenTest.cpp
 	PerformanceNodeChildrenTest.h
@@ -391,57 +391,57 @@ files
 	PerformanceTouchesTest.cpp
 	PerformanceTouchesTest.h
 
-	[RenderTextureTest]
+	[Test/RenderTextureTest]
 	(../Classes/RenderTextureTest)
 	RenderTextureTest.cpp
 	RenderTextureTest.h
 
-	[RotateWorldTest]
+	[Test/RotateWorldTest]
 	(../Classes/RotateWorldTest)
 	RotateWorldTest.cpp
 	RotateWorldTest.h
 
-	[SceneTest]
+	[Test/SceneTest]
 	(../Classes/SceneTest)
 	SceneTest.cpp
 	SceneTest.h
 
-	[SchedulerTest]
+	[Test/SchedulerTest]
 	(../Classes/SchedulerTest)
 	SchedulerTest.cpp
 	SchedulerTest.h
 
-	[ShaderTest]
+	[Test/ShaderTest]
 	(../Classes/ShaderTest)
 	ShaderTest.cpp
 	ShaderTest.h
 
-	[SpriteTest]
+	[Test/SpriteTest]
 	(../Classes/SpriteTest)
 	SpriteTest.cpp
 	SpriteTest.h
 
-	[TextInputTest]
+	[Test/TextInputTest]
 	(../Classes/TextInputTest)
 	TextInputTest.cpp
 	TextInputTest.h
 
-	[Texture2dTest]
+	[Test/Texture2dTest]
 	(../Classes/Texture2dTest)
 	Texture2dTest.cpp
 	Texture2dTest.h
 
-	[TextureCacheTest]
+	[Test/TextureCacheTest]
 	(../Classes/TextureCacheTest)
 	TextureCacheTest.cpp
 	TextureCacheTest.h
 
-	[TileMapTest]
+	[Test/TileMapTest]
 	(../Classes/TileMapTest)
 	TileMapTest.cpp
 	TileMapTest.h
 
-	[TouchesTest]
+	[Test/TouchesTest]
 	(../Classes/TouchesTest)
 	Ball.cpp
 	Ball.h
@@ -450,21 +450,25 @@ files
 	TouchesTest.cpp
 	TouchesTest.h
 
-	[TransitionsTest]
+	[Test/TransitionsTest]
 	(../Classes/TransitionsTest)
 	TransitionsTest.cpp
 	TransitionsTest.h
 
-	[UserDefaultTest]
+	[Test/UserDefaultTest]
 	(../Classes/UserDefaultTest)
 	UserDefaultTest.cpp
 	UserDefaultTest.h
 
-	[ZwoptexTest]
+	[Test/ZwoptexTest]
 	(../Classes/ZwoptexTest)
 	ZwoptexTest.cpp
 	ZwoptexTest.h
 
+	[Test/FileUtilsTest]
+	(../Classes/FileUtilsTest)
+	FileUtilsTest.cpp
+	FileUtilsTest.h
 }
 
 

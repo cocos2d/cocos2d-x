@@ -750,7 +750,7 @@ SpriteBatchNodeReorder::SpriteBatchNodeReorder()
         }
     }
     
-    int prev = -1;
+    int CC_UNUSED prev = -1;
     CCArray* children = asmtest->getChildren();
     CCSprite* child;
     CCObject* pObject = NULL;
@@ -762,7 +762,7 @@ SpriteBatchNodeReorder::SpriteBatchNodeReorder()
 
         int currentIndex = child->getAtlasIndex();
         CCAssert( prev == currentIndex-1, "Child order failed");
-        ////----UXLOG("children %x - atlasIndex:%d", child, currentIndex);
+        ////----CCLOG("children %x - atlasIndex:%d", child, currentIndex);
         prev = currentIndex;
     }
     
@@ -776,7 +776,7 @@ SpriteBatchNodeReorder::SpriteBatchNodeReorder()
 
         int currentIndex = child->getAtlasIndex();
         CCAssert( prev == currentIndex-1, "Child order failed");
-        ////----UXLOG("descendant %x - atlasIndex:%d", child, currentIndex);
+        ////----CCLOG("descendant %x - atlasIndex:%d", child, currentIndex);
         prev = currentIndex;
     }
 }
@@ -2314,7 +2314,7 @@ void SpriteHybrid::reparentSprite(float dt)
     if( m_usingSpriteBatchNode )
         CC_SWAP(p1,p2, CCNode*);
 
-    ////----UXLOG("New parent is: %x", p2);
+    ////----CCLOG("New parent is: %x", p2);
     
     CCNode* node;
     CCObject* pObject;
@@ -4525,10 +4525,10 @@ SpriteBatchNodeOffsetAnchorRotationalSkew::SpriteBatchNodeOffsetAnchorRotational
         point->setPosition(sprite->getPosition());
         
         CCArray *animFrames = CCArray::create();
-        for(int i = 0; i < 14; i++)
+        for(int j = 0; j < 14; j++)
         {
             char pngName[30];
-            snprintf(pngName, 30, "grossini_dance_%02d.png", (i+1));
+            snprintf(pngName, 30, "grossini_dance_%02d.png", (j+1));
             CCSpriteFrame *frame = cache->spriteFrameByName(pngName);
             animFrames->addObject(frame);
         }
@@ -4598,10 +4598,10 @@ SpriteOffsetAnchorRotationalSkewScale::SpriteOffsetAnchorRotationalSkewScale()
         point->setPosition(sprite->getPosition());
         
         CCArray *animFrames = CCArray::create();
-        for(int i = 0; i < 14; i++)
+        for(int j = 0; j < 14; j++)
         {
             char pngName[30];
-            snprintf(pngName, 30, "grossini_dance_%02d.png", (i+1));
+            snprintf(pngName, 30, "grossini_dance_%02d.png", (j+1));
             CCSpriteFrame *frame = cache->spriteFrameByName(pngName);
             animFrames->addObject(frame);
         }
@@ -4681,10 +4681,10 @@ SpriteBatchNodeOffsetAnchorRotationalSkewScale::SpriteBatchNodeOffsetAnchorRotat
         point->setPosition(sprite->getPosition());
         
         CCArray *animFrames = CCArray::create();
-        for(int i = 0; i < 14; i++)
+        for(int j = 0; j < 14; j++)
         {
             char pngName[30];
-            snprintf(pngName, 30, "grossini_dance_%02d.png", (i+1));
+            snprintf(pngName, 30, "grossini_dance_%02d.png", (j+1));
             CCSpriteFrame *frame = cache->spriteFrameByName(pngName);
             animFrames->addObject(frame);
         }

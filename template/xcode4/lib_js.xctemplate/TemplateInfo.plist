@@ -22,6 +22,8 @@
 					<string>COCOS2D_JAVASCRIPT</string>
                                         <string>CC_ENABLE_CHIPMUNK_INTEGRATION</string>
 				</array>
+                                <key>GCC_OPTIMIZATION_LEVEL</key>
+				<string>1</string>
 			</dict>
 			<key>Release</key>
 			<dict>
@@ -83,7 +85,7 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>libs/javascript/bindings/generated/cocos2dx.cpp</key>
+		<key>libs/javascript/bindings/generated/jsb_cocos2dx_auto.cpp</key>
 		<dict>
 			<key>Group</key>
 			<array>
@@ -93,9 +95,9 @@
 				<string>generated</string>
 			</array>
 			<key>Path</key>
-			<string>libs/javascript/bindings/generated/cocos2dx.cpp</string>
+			<string>libs/javascript/bindings/generated/jsb_cocos2dx_auto.cpp</string>
 		</dict>
-		<key>libs/javascript/bindings/generated/cocos2dx.hpp</key>
+		<key>libs/javascript/bindings/generated/jsb_cocos2dx_auto.hpp</key>
 		<dict>
 			<key>Group</key>
 			<array>
@@ -105,9 +107,9 @@
 				<string>generated</string>
 			</array>
 			<key>Path</key>
-			<string>libs/javascript/bindings/generated/cocos2dx.hpp</string>
+			<string>libs/javascript/bindings/generated/jsb_cocos2dx_auto.hpp</string>
 		</dict>
-		<key>libs/javascript/bindings/generated/cocos2dxapi.js</key>
+		<key>libs/javascript/bindings/generated/jsb_cocos2dx_auto_api.js</key>
 		<dict>
 			<key>Group</key>
 			<array>
@@ -117,7 +119,43 @@
 				<string>generated</string>
 			</array>
 			<key>Path</key>
-			<string>libs/javascript/bindings/generated/cocos2dxapi.js</string>
+			<string>libs/javascript/bindings/generated/jsb_cocos2dx_auto_api.js</string>
+		</dict>
+		<key>libs/javascript/bindings/generated/jsb_cocos2dx_extension_auto.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>javascript</string>
+				<string>bindings</string>
+				<string>generated</string>
+			</array>
+			<key>Path</key>
+			<string>libs/javascript/bindings/generated/jsb_cocos2dx_extension_auto.cpp</string>
+		</dict>
+		<key>libs/javascript/bindings/generated/jsb_cocos2dx_extension_auto.hpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>javascript</string>
+				<string>bindings</string>
+				<string>generated</string>
+			</array>
+			<key>Path</key>
+			<string>libs/javascript/bindings/generated/jsb_cocos2dx_extension_auto.hpp</string>
+		</dict>
+		<key>libs/javascript/bindings/generated/jsb_cocos2dx_extension_auto_api.js</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>javascript</string>
+				<string>bindings</string>
+				<string>generated</string>
+			</array>
+			<key>Path</key>
+			<string>libs/javascript/bindings/generated/jsb_cocos2dx_extension_auto_api.js</string>
 		</dict>
 		<key>libs/javascript/bindings/generated/README</key>
 		<dict>
@@ -167,6 +205,18 @@
 			<key>Path</key>
 			<string>libs/javascript/bindings/js/jsb_cocos2d.js</string>
 		</dict>
+		<key>libs/javascript/bindings/js/jsb_cocos2d_extension.js</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>javascript</string>
+				<string>bindings</string>
+				<string>js</string>
+			</array>
+			<key>Path</key>
+			<string>libs/javascript/bindings/js/jsb_cocos2d_extension.js</string>
+		</dict>
 		<key>libs/javascript/bindings/js/jsb_cocosbuilder.js</key>
 		<dict>
 			<key>Group</key>
@@ -214,6 +264,18 @@
 			</array>
 			<key>Path</key>
 			<string>libs/javascript/bindings/js/jsb_sys.js</string>
+		</dict>
+		<key>libs/javascript/bindings/js/main.debug.js</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>javascript</string>
+				<string>bindings</string>
+				<string>js</string>
+			</array>
+			<key>Path</key>
+			<string>libs/javascript/bindings/js/main.debug.js</string>
 		</dict>
 		<key>libs/javascript/bindings/js_bindings_ccbreader.cpp</key>
 		<dict>
@@ -483,6 +545,30 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
+		<key>libs/javascript/bindings/jsb_cocos2dx_extension_manual.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>javascript</string>
+				<string>bindings</string>
+			</array>
+			<key>Path</key>
+			<string>libs/javascript/bindings/jsb_cocos2dx_extension_manual.cpp</string>
+		</dict>
+		<key>libs/javascript/bindings/jsb_cocos2dx_extension_manual.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>javascript</string>
+				<string>bindings</string>
+			</array>
+			<key>Path</key>
+			<string>libs/javascript/bindings/jsb_cocos2dx_extension_manual.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
 		<key>libs/javascript/bindings/ScriptingCore.cpp</key>
 		<dict>
 			<key>Group</key>
@@ -540,17 +626,22 @@
 		<string>libs/javascript/bindings/cocos2d_specifics.hpp</string>
 		<string>libs/javascript/bindings/cocosjs_manual_conversions.cpp</string>
 		<string>libs/javascript/bindings/cocosjs_manual_conversions.h</string>
-		<string>libs/javascript/bindings/generated/cocos2dx.cpp</string>
-		<string>libs/javascript/bindings/generated/cocos2dx.hpp</string>
-		<string>libs/javascript/bindings/generated/cocos2dxapi.js</string>
+		<string>libs/javascript/bindings/generated/jsb_cocos2dx_auto.cpp</string>
+		<string>libs/javascript/bindings/generated/jsb_cocos2dx_auto.hpp</string>
+		<string>libs/javascript/bindings/generated/jsb_cocos2dx_auto_api.js</string>
+		<string>libs/javascript/bindings/generated/jsb_cocos2dx_extension_auto.cpp</string>
+		<string>libs/javascript/bindings/generated/jsb_cocos2dx_extension_auto.hpp</string>
+		<string>libs/javascript/bindings/generated/jsb_cocos2dx_extension_auto_api.js</string>
 		<string>libs/javascript/bindings/generated/README</string>
 		<string>libs/javascript/bindings/js/jsb.js</string>
 		<string>libs/javascript/bindings/js/jsb_chipmunk.js</string>
 		<string>libs/javascript/bindings/js/jsb_cocos2d.js</string>
+		<string>libs/javascript/bindings/js/jsb_cocos2d_extension.js</string>
 		<string>libs/javascript/bindings/js/jsb_cocosbuilder.js</string>
 		<string>libs/javascript/bindings/js/jsb_debugger.js</string>
 		<string>libs/javascript/bindings/js/jsb_opengl.js</string>
 		<string>libs/javascript/bindings/js/jsb_sys.js</string>
+		<string>libs/javascript/bindings/js/main.debug.js</string>
 		<string>libs/javascript/bindings/js_bindings_ccbreader.cpp</string>
 		<string>libs/javascript/bindings/js_bindings_ccbreader.h</string>
 		<string>libs/javascript/bindings/js_bindings_chipmunk_auto_classes.cpp</string>
@@ -573,6 +664,8 @@
 		<string>libs/javascript/bindings/js_bindings_system_registration.h</string>
 		<string>libs/javascript/bindings/js_manual_conversions.cpp</string>
 		<string>libs/javascript/bindings/js_manual_conversions.h</string>
+		<string>libs/javascript/bindings/jsb_cocos2dx_extension_manual.cpp</string>
+		<string>libs/javascript/bindings/jsb_cocos2dx_extension_manual.h</string>
 		<string>libs/javascript/bindings/ScriptingCore.cpp</string>
 		<string>libs/javascript/bindings/ScriptingCore.h</string>
 		<string>libs/javascript/bindings/spidermonkey_specifics.h</string>

@@ -266,18 +266,18 @@ void JSB_cpConstraint_createClass(JSContext *cx, JSObject* globalObj, const char
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("activateBodies", JSB_cpConstraint_activateBodies, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("destroy", JSB_cpConstraint_destroy, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getA", JSB_cpConstraint_getA, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getB", JSB_cpConstraint_getB, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getErrorBias", JSB_cpConstraint_getErrorBias, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getImpulse", JSB_cpConstraint_getImpulse, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getMaxBias", JSB_cpConstraint_getMaxBias, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getMaxForce", JSB_cpConstraint_getMaxForce, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getSpace", JSB_cpConstraint_getSpace, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setErrorBias", JSB_cpConstraint_setErrorBias, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setMaxBias", JSB_cpConstraint_setMaxBias, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setMaxForce", JSB_cpConstraint_setMaxForce, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("activateBodies", JSB_cpConstraint_activateBodies, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("destroy", JSB_cpConstraint_destroy, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getA", JSB_cpConstraint_getA, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getB", JSB_cpConstraint_getB, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getErrorBias", JSB_cpConstraint_getErrorBias, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getImpulse", JSB_cpConstraint_getImpulse, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getMaxBias", JSB_cpConstraint_getMaxBias, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getMaxForce", JSB_cpConstraint_getMaxForce, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getSpace", JSB_cpConstraint_getSpace, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("setErrorBias", JSB_cpConstraint_setErrorBias, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("setMaxBias", JSB_cpConstraint_setMaxBias, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("setMaxForce", JSB_cpConstraint_setMaxForce, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
@@ -469,12 +469,12 @@ void JSB_cpGrooveJoint_createClass(JSContext *cx, JSObject* globalObj, const cha
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("getAnchr2", JSB_cpGrooveJoint_getAnchr2, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getGrooveA", JSB_cpGrooveJoint_getGrooveA, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getGrooveB", JSB_cpGrooveJoint_getGrooveB, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setAnchr2", JSB_cpGrooveJoint_setAnchr2, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setGrooveA", JSB_cpGrooveJoint_setGrooveA, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setGrooveB", JSB_cpGrooveJoint_setGrooveB, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getAnchr2", JSB_cpGrooveJoint_getAnchr2, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getGrooveA", JSB_cpGrooveJoint_getGrooveA, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getGrooveB", JSB_cpGrooveJoint_getGrooveB, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("setAnchr2", JSB_cpGrooveJoint_setAnchr2, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("setGrooveA", JSB_cpGrooveJoint_setGrooveA, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("setGrooveB", JSB_cpGrooveJoint_setGrooveB, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
@@ -585,8 +585,8 @@ void JSB_cpSimpleMotor_createClass(JSContext *cx, JSObject* globalObj, const cha
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("getRate", JSB_cpSimpleMotor_getRate, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setRate", JSB_cpSimpleMotor_setRate, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getRate", JSB_cpSimpleMotor_getRate, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("setRate", JSB_cpSimpleMotor_setRate, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
@@ -738,10 +738,10 @@ void JSB_cpPivotJoint_createClass(JSContext *cx, JSObject* globalObj, const char
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("getAnchr1", JSB_cpPivotJoint_getAnchr1, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getAnchr2", JSB_cpPivotJoint_getAnchr2, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setAnchr1", JSB_cpPivotJoint_setAnchr1, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setAnchr2", JSB_cpPivotJoint_setAnchr2, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getAnchr1", JSB_cpPivotJoint_getAnchr1, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getAnchr2", JSB_cpPivotJoint_getAnchr2, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("setAnchr1", JSB_cpPivotJoint_setAnchr1, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("setAnchr2", JSB_cpPivotJoint_setAnchr2, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
@@ -929,12 +929,12 @@ void JSB_cpPinJoint_createClass(JSContext *cx, JSObject* globalObj, const char* 
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("getAnchr1", JSB_cpPinJoint_getAnchr1, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getAnchr2", JSB_cpPinJoint_getAnchr2, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getDist", JSB_cpPinJoint_getDist, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setAnchr1", JSB_cpPinJoint_setAnchr1, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setAnchr2", JSB_cpPinJoint_setAnchr2, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setDist", JSB_cpPinJoint_setDist, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getAnchr1", JSB_cpPinJoint_getAnchr1, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getAnchr2", JSB_cpPinJoint_getAnchr2, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getDist", JSB_cpPinJoint_getDist, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("setAnchr1", JSB_cpPinJoint_setAnchr1, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("setAnchr2", JSB_cpPinJoint_setAnchr2, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("setDist", JSB_cpPinJoint_setDist, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
@@ -1159,14 +1159,14 @@ void JSB_cpSlideJoint_createClass(JSContext *cx, JSObject* globalObj, const char
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("getAnchr1", JSB_cpSlideJoint_getAnchr1, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getAnchr2", JSB_cpSlideJoint_getAnchr2, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getMax", JSB_cpSlideJoint_getMax, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getMin", JSB_cpSlideJoint_getMin, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setAnchr1", JSB_cpSlideJoint_setAnchr1, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setAnchr2", JSB_cpSlideJoint_setAnchr2, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setMax", JSB_cpSlideJoint_setMax, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setMin", JSB_cpSlideJoint_setMin, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getAnchr1", JSB_cpSlideJoint_getAnchr1, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getAnchr2", JSB_cpSlideJoint_getAnchr2, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getMax", JSB_cpSlideJoint_getMax, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getMin", JSB_cpSlideJoint_getMin, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("setAnchr1", JSB_cpSlideJoint_setAnchr1, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("setAnchr2", JSB_cpSlideJoint_setAnchr2, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("setMax", JSB_cpSlideJoint_setMax, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("setMin", JSB_cpSlideJoint_setMin, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
@@ -1313,10 +1313,10 @@ void JSB_cpGearJoint_createClass(JSContext *cx, JSObject* globalObj, const char*
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("getPhase", JSB_cpGearJoint_getPhase, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getRatio", JSB_cpGearJoint_getRatio, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setPhase", JSB_cpGearJoint_setPhase, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setRatio", JSB_cpGearJoint_setRatio, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getPhase", JSB_cpGearJoint_getPhase, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getRatio", JSB_cpGearJoint_getRatio, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("setPhase", JSB_cpGearJoint_setPhase, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("setRatio", JSB_cpGearJoint_setRatio, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
@@ -1499,12 +1499,12 @@ void JSB_cpDampedRotarySpring_createClass(JSContext *cx, JSObject* globalObj, co
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("getDamping", JSB_cpDampedRotarySpring_getDamping, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getRestAngle", JSB_cpDampedRotarySpring_getRestAngle, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getStiffness", JSB_cpDampedRotarySpring_getStiffness, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setDamping", JSB_cpDampedRotarySpring_setDamping, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setRestAngle", JSB_cpDampedRotarySpring_setRestAngle, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setStiffness", JSB_cpDampedRotarySpring_setStiffness, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getDamping", JSB_cpDampedRotarySpring_getDamping, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getRestAngle", JSB_cpDampedRotarySpring_getRestAngle, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getStiffness", JSB_cpDampedRotarySpring_getStiffness, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("setDamping", JSB_cpDampedRotarySpring_setDamping, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("setRestAngle", JSB_cpDampedRotarySpring_setRestAngle, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("setStiffness", JSB_cpDampedRotarySpring_setStiffness, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
@@ -1765,16 +1765,16 @@ void JSB_cpDampedSpring_createClass(JSContext *cx, JSObject* globalObj, const ch
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("getAnchr1", JSB_cpDampedSpring_getAnchr1, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getAnchr2", JSB_cpDampedSpring_getAnchr2, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getDamping", JSB_cpDampedSpring_getDamping, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getRestLength", JSB_cpDampedSpring_getRestLength, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getStiffness", JSB_cpDampedSpring_getStiffness, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setAnchr1", JSB_cpDampedSpring_setAnchr1, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setAnchr2", JSB_cpDampedSpring_setAnchr2, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setDamping", JSB_cpDampedSpring_setDamping, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setRestLength", JSB_cpDampedSpring_setRestLength, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setStiffness", JSB_cpDampedSpring_setStiffness, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getAnchr1", JSB_cpDampedSpring_getAnchr1, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getAnchr2", JSB_cpDampedSpring_getAnchr2, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getDamping", JSB_cpDampedSpring_getDamping, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getRestLength", JSB_cpDampedSpring_getRestLength, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getStiffness", JSB_cpDampedSpring_getStiffness, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("setAnchr1", JSB_cpDampedSpring_setAnchr1, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("setAnchr2", JSB_cpDampedSpring_setAnchr2, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("setDamping", JSB_cpDampedSpring_setDamping, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("setRestLength", JSB_cpDampedSpring_setRestLength, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("setStiffness", JSB_cpDampedSpring_setStiffness, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
@@ -1956,12 +1956,12 @@ void JSB_cpRatchetJoint_createClass(JSContext *cx, JSObject* globalObj, const ch
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("getAngle", JSB_cpRatchetJoint_getAngle, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getPhase", JSB_cpRatchetJoint_getPhase, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getRatchet", JSB_cpRatchetJoint_getRatchet, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setAngle", JSB_cpRatchetJoint_setAngle, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setPhase", JSB_cpRatchetJoint_setPhase, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setRatchet", JSB_cpRatchetJoint_setRatchet, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getAngle", JSB_cpRatchetJoint_getAngle, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getPhase", JSB_cpRatchetJoint_getPhase, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getRatchet", JSB_cpRatchetJoint_getRatchet, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("setAngle", JSB_cpRatchetJoint_setAngle, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("setPhase", JSB_cpRatchetJoint_setPhase, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("setRatchet", JSB_cpRatchetJoint_setRatchet, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
@@ -2108,10 +2108,10 @@ void JSB_cpRotaryLimitJoint_createClass(JSContext *cx, JSObject* globalObj, cons
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("getMax", JSB_cpRotaryLimitJoint_getMax, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getMin", JSB_cpRotaryLimitJoint_getMin, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setMax", JSB_cpRotaryLimitJoint_setMax, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setMin", JSB_cpRotaryLimitJoint_setMin, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getMax", JSB_cpRotaryLimitJoint_getMax, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getMin", JSB_cpRotaryLimitJoint_getMin, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("setMax", JSB_cpRotaryLimitJoint_setMax, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("setMin", JSB_cpRotaryLimitJoint_setMin, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
@@ -2446,23 +2446,23 @@ void JSB_cpArbiter_createClass(JSContext *cx, JSObject* globalObj, const char* n
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("getCount", JSB_cpArbiter_getCount, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getDepth", JSB_cpArbiter_getDepth, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getElasticity", JSB_cpArbiter_getElasticity, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getFriction", JSB_cpArbiter_getFriction, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getNormal", JSB_cpArbiter_getNormal, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getPoint", JSB_cpArbiter_getPoint, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getSurfaceVelocity", JSB_cpArbiter_getSurfaceVelocity, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("ignore", JSB_cpArbiter_ignore, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("isFirstContact", JSB_cpArbiter_isFirstContact, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setElasticity", JSB_cpArbiter_setElasticity, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setFriction", JSB_cpArbiter_setFriction, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setSurfaceVelocity", JSB_cpArbiter_setSurfaceVelocity, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("totalImpulse", JSB_cpArbiter_totalImpulse, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("totalImpulseWithFriction", JSB_cpArbiter_totalImpulseWithFriction, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("totalKE", JSB_cpArbiter_totalKE, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getShapes", JSB_cpArbiter_getShapes, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getBodies", JSB_cpArbiter_getBodies, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getCount", JSB_cpArbiter_getCount, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getDepth", JSB_cpArbiter_getDepth, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getElasticity", JSB_cpArbiter_getElasticity, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getFriction", JSB_cpArbiter_getFriction, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getNormal", JSB_cpArbiter_getNormal, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getPoint", JSB_cpArbiter_getPoint, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getSurfaceVelocity", JSB_cpArbiter_getSurfaceVelocity, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("ignore", JSB_cpArbiter_ignore, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("isFirstContact", JSB_cpArbiter_isFirstContact, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("setElasticity", JSB_cpArbiter_setElasticity, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("setFriction", JSB_cpArbiter_setFriction, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("setSurfaceVelocity", JSB_cpArbiter_setSurfaceVelocity, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("totalImpulse", JSB_cpArbiter_totalImpulse, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("totalImpulseWithFriction", JSB_cpArbiter_totalImpulseWithFriction, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("totalKE", JSB_cpArbiter_totalKE, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getShapes", JSB_cpArbiter_getShapes, 2, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getBodies", JSB_cpArbiter_getBodies, 2, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
@@ -3116,49 +3116,49 @@ void JSB_cpSpace_createClass(JSContext *cx, JSObject* globalObj, const char* nam
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("activateShapesTouchingShape", JSB_cpSpace_activateShapesTouchingShape, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("containsBody", JSB_cpSpace_containsBody, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("containsConstraint", JSB_cpSpace_containsConstraint, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("containsShape", JSB_cpSpace_containsShape, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("destroy", JSB_cpSpace_destroy, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getCollisionBias", JSB_cpSpace_getCollisionBias, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getCollisionPersistence", JSB_cpSpace_getCollisionPersistence, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getCollisionSlop", JSB_cpSpace_getCollisionSlop, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getCurrentTimeStep", JSB_cpSpace_getCurrentTimeStep, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getDamping", JSB_cpSpace_getDamping, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getEnableContactGraph", JSB_cpSpace_getEnableContactGraph, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getGravity", JSB_cpSpace_getGravity, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getIdleSpeedThreshold", JSB_cpSpace_getIdleSpeedThreshold, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getIterations", JSB_cpSpace_getIterations, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getSleepTimeThreshold", JSB_cpSpace_getSleepTimeThreshold, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getStaticBody", JSB_cpSpace_getStaticBody, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("init", JSB_cpSpace_init, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("isLocked", JSB_cpSpace_isLocked, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("pointQueryFirst", JSB_cpSpace_pointQueryFirst, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("reindexShape", JSB_cpSpace_reindexShape, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("reindexShapesForBody", JSB_cpSpace_reindexShapesForBody, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("reindexStatic", JSB_cpSpace_reindexStatic, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setCollisionBias", JSB_cpSpace_setCollisionBias, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setCollisionPersistence", JSB_cpSpace_setCollisionPersistence, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setCollisionSlop", JSB_cpSpace_setCollisionSlop, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setDamping", JSB_cpSpace_setDamping, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setEnableContactGraph", JSB_cpSpace_setEnableContactGraph, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setGravity", JSB_cpSpace_setGravity, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setIdleSpeedThreshold", JSB_cpSpace_setIdleSpeedThreshold, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setIterations", JSB_cpSpace_setIterations, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setSleepTimeThreshold", JSB_cpSpace_setSleepTimeThreshold, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("step", JSB_cpSpace_step, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("useSpatialHash", JSB_cpSpace_useSpatialHash, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("addShape", JSB_cpSpace_addShape, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("addCollisionHandler", JSB_cpSpace_addCollisionHandler, 7, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("addStaticShape", JSB_cpSpace_addStaticShape, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("removeConstraint", JSB_cpSpace_removeConstraint, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("removeBody", JSB_cpSpace_removeBody, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("removeCollisionHandler", JSB_cpSpace_removeCollisionHandler, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("removeStaticShape", JSB_cpSpace_removeStaticShape, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("addConstraint", JSB_cpSpace_addConstraint, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("addBody", JSB_cpSpace_addBody, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("removeShape", JSB_cpSpace_removeShape, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("activateShapesTouchingShape", JSB_cpSpace_activateShapesTouchingShape, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("containsBody", JSB_cpSpace_containsBody, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("containsConstraint", JSB_cpSpace_containsConstraint, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("containsShape", JSB_cpSpace_containsShape, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("destroy", JSB_cpSpace_destroy, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getCollisionBias", JSB_cpSpace_getCollisionBias, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getCollisionPersistence", JSB_cpSpace_getCollisionPersistence, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getCollisionSlop", JSB_cpSpace_getCollisionSlop, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getCurrentTimeStep", JSB_cpSpace_getCurrentTimeStep, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getDamping", JSB_cpSpace_getDamping, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getEnableContactGraph", JSB_cpSpace_getEnableContactGraph, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getGravity", JSB_cpSpace_getGravity, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getIdleSpeedThreshold", JSB_cpSpace_getIdleSpeedThreshold, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getIterations", JSB_cpSpace_getIterations, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getSleepTimeThreshold", JSB_cpSpace_getSleepTimeThreshold, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getStaticBody", JSB_cpSpace_getStaticBody, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("init", JSB_cpSpace_init, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("isLocked", JSB_cpSpace_isLocked, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("pointQueryFirst", JSB_cpSpace_pointQueryFirst, 3, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("reindexShape", JSB_cpSpace_reindexShape, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("reindexShapesForBody", JSB_cpSpace_reindexShapesForBody, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("reindexStatic", JSB_cpSpace_reindexStatic, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("setCollisionBias", JSB_cpSpace_setCollisionBias, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("setCollisionPersistence", JSB_cpSpace_setCollisionPersistence, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("setCollisionSlop", JSB_cpSpace_setCollisionSlop, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("setDamping", JSB_cpSpace_setDamping, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("setEnableContactGraph", JSB_cpSpace_setEnableContactGraph, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("setGravity", JSB_cpSpace_setGravity, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("setIdleSpeedThreshold", JSB_cpSpace_setIdleSpeedThreshold, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("setIterations", JSB_cpSpace_setIterations, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("setSleepTimeThreshold", JSB_cpSpace_setSleepTimeThreshold, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("step", JSB_cpSpace_step, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("useSpatialHash", JSB_cpSpace_useSpatialHash, 2, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("addShape", JSB_cpSpace_addShape, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("addCollisionHandler", JSB_cpSpace_addCollisionHandler, 7, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("addStaticShape", JSB_cpSpace_addStaticShape, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("removeConstraint", JSB_cpSpace_removeConstraint, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("removeBody", JSB_cpSpace_removeBody, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("removeCollisionHandler", JSB_cpSpace_removeCollisionHandler, 2, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("removeStaticShape", JSB_cpSpace_removeStaticShape, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("addConstraint", JSB_cpSpace_addConstraint, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("addBody", JSB_cpSpace_addBody, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("removeShape", JSB_cpSpace_removeShape, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
@@ -3986,50 +3986,50 @@ void JSB_cpBody_createClass(JSContext *cx, JSObject* globalObj, const char* name
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("activate", JSB_cpBody_activate, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("activateStatic", JSB_cpBody_activateStatic, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("applyForce", JSB_cpBody_applyForce, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("applyImpulse", JSB_cpBody_applyImpulse, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("destroy", JSB_cpBody_destroy, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getAngVel", JSB_cpBody_getAngVel, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getAngVelLimit", JSB_cpBody_getAngVelLimit, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getAngle", JSB_cpBody_getAngle, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getForce", JSB_cpBody_getForce, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getMass", JSB_cpBody_getMass, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getMoment", JSB_cpBody_getMoment, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getPos", JSB_cpBody_getPos, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getRot", JSB_cpBody_getRot, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getSpace", JSB_cpBody_getSpace, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getTorque", JSB_cpBody_getTorque, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getVel", JSB_cpBody_getVel, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getVelAtLocalPoint", JSB_cpBody_getVelAtLocalPoint, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getVelAtWorldPoint", JSB_cpBody_getVelAtWorldPoint, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getVelLimit", JSB_cpBody_getVelLimit, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("init", JSB_cpBody_init, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("initStatic", JSB_cpBody_initStatic, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("isRogue", JSB_cpBody_isRogue, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("isSleeping", JSB_cpBody_isSleeping, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("isStatic", JSB_cpBody_isStatic, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("kineticEnergy", JSB_cpBody_kineticEnergy, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("local2World", JSB_cpBody_local2World, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("resetForces", JSB_cpBody_resetForces, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setAngVel", JSB_cpBody_setAngVel, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setAngVelLimit", JSB_cpBody_setAngVelLimit, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setAngle", JSB_cpBody_setAngle, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setForce", JSB_cpBody_setForce, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setMass", JSB_cpBody_setMass, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setMoment", JSB_cpBody_setMoment, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setPos", JSB_cpBody_setPos, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setTorque", JSB_cpBody_setTorque, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setVel", JSB_cpBody_setVel, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setVelLimit", JSB_cpBody_setVelLimit, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("sleep", JSB_cpBody_sleep, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("sleepWithGroup", JSB_cpBody_sleepWithGroup, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("updatePosition", JSB_cpBody_updatePosition, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("updateVelocity", JSB_cpBody_updateVelocity, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("world2Local", JSB_cpBody_world2Local, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setUserData", JSB_cpBody_setUserData, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getUserData", JSB_cpBody_getUserData, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("activate", JSB_cpBody_activate, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("activateStatic", JSB_cpBody_activateStatic, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("applyForce", JSB_cpBody_applyForce, 2, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("applyImpulse", JSB_cpBody_applyImpulse, 2, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("destroy", JSB_cpBody_destroy, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getAngVel", JSB_cpBody_getAngVel, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getAngVelLimit", JSB_cpBody_getAngVelLimit, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getAngle", JSB_cpBody_getAngle, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getForce", JSB_cpBody_getForce, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getMass", JSB_cpBody_getMass, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getMoment", JSB_cpBody_getMoment, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getPos", JSB_cpBody_getPos, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getRot", JSB_cpBody_getRot, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getSpace", JSB_cpBody_getSpace, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getTorque", JSB_cpBody_getTorque, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getVel", JSB_cpBody_getVel, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getVelAtLocalPoint", JSB_cpBody_getVelAtLocalPoint, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getVelAtWorldPoint", JSB_cpBody_getVelAtWorldPoint, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getVelLimit", JSB_cpBody_getVelLimit, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("init", JSB_cpBody_init, 2, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("initStatic", JSB_cpBody_initStatic, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("isRogue", JSB_cpBody_isRogue, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("isSleeping", JSB_cpBody_isSleeping, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("isStatic", JSB_cpBody_isStatic, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("kineticEnergy", JSB_cpBody_kineticEnergy, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("local2World", JSB_cpBody_local2World, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("resetForces", JSB_cpBody_resetForces, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("setAngVel", JSB_cpBody_setAngVel, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("setAngVelLimit", JSB_cpBody_setAngVelLimit, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("setAngle", JSB_cpBody_setAngle, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("setForce", JSB_cpBody_setForce, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("setMass", JSB_cpBody_setMass, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("setMoment", JSB_cpBody_setMoment, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("setPos", JSB_cpBody_setPos, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("setTorque", JSB_cpBody_setTorque, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("setVel", JSB_cpBody_setVel, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("setVelLimit", JSB_cpBody_setVelLimit, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("sleep", JSB_cpBody_sleep, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("sleepWithGroup", JSB_cpBody_sleepWithGroup, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("updatePosition", JSB_cpBody_updatePosition, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("updateVelocity", JSB_cpBody_updateVelocity, 3, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("world2Local", JSB_cpBody_world2Local, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("setUserData", JSB_cpBody_setUserData, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getUserData", JSB_cpBody_getUserData, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
@@ -4498,28 +4498,28 @@ void JSB_cpShape_createClass(JSContext *cx, JSObject* globalObj, const char* nam
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("cacheBB", JSB_cpShape_cacheBB, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("destroy", JSB_cpShape_destroy, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getBB", JSB_cpShape_getBB, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getBody", JSB_cpShape_getBody, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getCollisionType", JSB_cpShape_getCollisionType, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getElasticity", JSB_cpShape_getElasticity, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getFriction", JSB_cpShape_getFriction, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getGroup", JSB_cpShape_getGroup, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getLayers", JSB_cpShape_getLayers, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getSensor", JSB_cpShape_getSensor, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getSpace", JSB_cpShape_getSpace, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getSurfaceVelocity", JSB_cpShape_getSurfaceVelocity, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("pointQuery", JSB_cpShape_pointQuery, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setBody", JSB_cpShape_setBody, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setCollisionType", JSB_cpShape_setCollisionType, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setElasticity", JSB_cpShape_setElasticity, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setFriction", JSB_cpShape_setFriction, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setGroup", JSB_cpShape_setGroup, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setLayers", JSB_cpShape_setLayers, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setSensor", JSB_cpShape_setSensor, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setSurfaceVelocity", JSB_cpShape_setSurfaceVelocity, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("update", JSB_cpShape_update, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("cacheBB", JSB_cpShape_cacheBB, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("destroy", JSB_cpShape_destroy, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getBB", JSB_cpShape_getBB, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getBody", JSB_cpShape_getBody, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getCollisionType", JSB_cpShape_getCollisionType, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getElasticity", JSB_cpShape_getElasticity, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getFriction", JSB_cpShape_getFriction, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getGroup", JSB_cpShape_getGroup, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getLayers", JSB_cpShape_getLayers, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getSensor", JSB_cpShape_getSensor, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getSpace", JSB_cpShape_getSpace, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getSurfaceVelocity", JSB_cpShape_getSurfaceVelocity, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("pointQuery", JSB_cpShape_pointQuery, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("setBody", JSB_cpShape_setBody, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("setCollisionType", JSB_cpShape_setCollisionType, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("setElasticity", JSB_cpShape_setElasticity, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("setFriction", JSB_cpShape_setFriction, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("setGroup", JSB_cpShape_setGroup, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("setLayers", JSB_cpShape_setLayers, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("setSensor", JSB_cpShape_setSensor, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("setSurfaceVelocity", JSB_cpShape_setSurfaceVelocity, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("update", JSB_cpShape_update, 2, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
@@ -4628,8 +4628,8 @@ void JSB_cpCircleShape_createClass(JSContext *cx, JSObject* globalObj, const cha
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("getOffset", JSB_cpCircleShape_getOffset, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getRadius", JSB_cpCircleShape_getRadius, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getOffset", JSB_cpCircleShape_getOffset, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getRadius", JSB_cpCircleShape_getRadius, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
@@ -4796,11 +4796,11 @@ void JSB_cpSegmentShape_createClass(JSContext *cx, JSObject* globalObj, const ch
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("getA", JSB_cpSegmentShape_getA, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getB", JSB_cpSegmentShape_getB, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getNormal", JSB_cpSegmentShape_getNormal, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getRadius", JSB_cpSegmentShape_getRadius, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setNeighbors", JSB_cpSegmentShape_setNeighbors, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getA", JSB_cpSegmentShape_getA, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getB", JSB_cpSegmentShape_getB, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getNormal", JSB_cpSegmentShape_getNormal, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getRadius", JSB_cpSegmentShape_getRadius, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("setNeighbors", JSB_cpSegmentShape_setNeighbors, 2, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
@@ -4893,8 +4893,8 @@ void JSB_cpPolyShape_createClass(JSContext *cx, JSObject* globalObj, const char*
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("getNumVerts", JSB_cpPolyShape_getNumVerts, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getVert", JSB_cpPolyShape_getVert, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getNumVerts", JSB_cpPolyShape_getNumVerts, 0, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
+		JS_FN("getVert", JSB_cpPolyShape_getVert, 1, JSPROP_PERMANENT  | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {

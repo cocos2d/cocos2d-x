@@ -80,15 +80,15 @@ end
 local function update(dt)
 	if emitter ~= nil then
 		local str = "" .. emitter:getParticleCount()
-		labelAtlas:setString("" .. str)
+--  	labelAtlas:setString("" .. str)
     end
 end
 
 local function baseLayer_onEnterOrExit(tag)
 	local scheduler = CCDirector:sharedDirector():getScheduler()
-	if tag == 0 then
+	if tag == "enter" then
 		baseLayer_entry = scheduler:scheduleScriptFunc(update, 0, false)
-	elseif tag == 1 then
+	elseif tag == "exit" then
 		scheduler:unscheduleScriptEntry(baseLayer_entry)
 	end
 end
@@ -133,7 +133,7 @@ local function getBaseLayer()
 
     layer:addChild(menu, 100)
 
-    labelAtlas = CCLabelAtlas:create("0000", "fps_images.png", 12, 32, '.')
+    labelAtlas = CCLabelAtlas:create("0000", "fps_images.png", 12, 32, string.byte('.'))
     layer:addChild(labelAtlas, 100)
     labelAtlas:setPosition(ccp(s.width - 66, 50))
 
@@ -146,8 +146,6 @@ local function getBaseLayer()
     local move_back = move:reverse()
     local seq = CCSequence:createWithTwoActions(move, move_back)
     background:runAction(CCRepeatForever:create(seq))
-
-    layer:scheduleUpdate()
 
 	local function onTouchEnded(x, y)
 		local pos = CCPointMake(0, 0)
@@ -162,7 +160,7 @@ local function getBaseLayer()
 	end
 
     local function onTouch(eventType, x, y)
-        if eventType == CCTOUCHBEGAN then
+        if eventType == "began" then
             return true
         else
             return onTouchEnded(x, y)
@@ -214,9 +212,9 @@ end
 
 local function ParticleReorder_onEnterOrExit(tag)
 	local scheduler = CCDirector:sharedDirector():getScheduler()
-	if tag == 0 then
+	if tag == "enter" then
 		ParticleReorder_entry = scheduler:scheduleScriptFunc(reorderParticles, 1.0, false)
-	elseif tag == 1 then
+	elseif tag == "exit" then
 		scheduler:unscheduleScriptEntry(ParticleReorder_entry)
 	end
 end
@@ -304,9 +302,9 @@ end
 
 local function ParticleBatchHybrid_onEnterOrExit(tag)
 	local scheduler = CCDirector:sharedDirector():getScheduler()
-	if tag == 0 then
+	if tag == "enter" then
 		ParticleBatchHybrid_entry = scheduler:scheduleScriptFunc(switchRender, 2.0, false)
-	elseif tag == 1 then
+	elseif tag == "exit" then
 		scheduler:unscheduleScriptEntry(ParticleBatchHybrid_entry)
 		--emitter:release()
 	end
@@ -1130,9 +1128,9 @@ end
 
 local function Issue870_onEnterOrExit(tag)
 	local scheduler = CCDirector:sharedDirector():getScheduler()
-	if tag == 0 then
+	if tag == "enter" then
 		Issue870_entry = scheduler:scheduleScriptFunc(updateQuads, 2.0, false)
-	elseif tag == 1 then
+	elseif tag == "exit" then
 		scheduler:unscheduleScriptEntry(Issue870_entry)
 	end
 end
@@ -1242,9 +1240,9 @@ end
 
 local function AddAndDeleteParticleSystems_onEnterOrExit(tag)
 	local scheduler = CCDirector:sharedDirector():getScheduler()
-	if tag == 0 then
+	if tag == "enter" then
 		AddAndDeleteParticleSystems_entry = scheduler:scheduleScriptFunc(removeSystem, 2.0, false)
-	elseif tag == 1 then
+	elseif tag == "exit" then
 		scheduler:unscheduleScriptEntry(AddAndDeleteParticleSystems_entry)
 	end
 end
@@ -1300,9 +1298,9 @@ end
 
 local function ReorderParticleSystems_onEnterOrExit(tag)
 	local scheduler = CCDirector:sharedDirector():getScheduler()
-	if tag == 0 then
+	if tag == "enter" then
 		ReorderParticleSystems_entry = scheduler:scheduleScriptFunc(reorderSystem, 2.0, false)
-	elseif tag == 1 then
+	elseif tag == "exit" then
 		scheduler:unscheduleScriptEntry(ReorderParticleSystems_entry)
 	end
 end
@@ -1486,18 +1484,19 @@ function CreateParticleLayer()
 	elseif SceneIdx == 29 then return DemoParticleFromFile("Spiral")
 	elseif SceneIdx == 30 then return DemoParticleFromFile("Galaxy")
 	elseif SceneIdx == 31 then return DemoParticleFromFile("Phoenix")
-	elseif SceneIdx == 32 then return RadiusMode1()
-	elseif SceneIdx == 33 then return RadiusMode2()
-	elseif SceneIdx == 34 then return Issue704()
-	elseif SceneIdx == 35 then return Issue870()
+    elseif SceneIdx == 32 then return DemoParticleFromFile("lines")
+	elseif SceneIdx == 33 then return RadiusMode1()
+	elseif SceneIdx == 34 then return RadiusMode2()
+	elseif SceneIdx == 35 then return Issue704()
+	elseif SceneIdx == 36 then return Issue870()
 	--elseif SceneIdx == 36 then return Issue1201()
 	-- v1.1 tests
-	elseif SceneIdx == 36 then return MultipleParticleSystems()
-	elseif SceneIdx == 37 then return MultipleParticleSystemsBatched()
-	elseif SceneIdx == 38 then return AddAndDeleteParticleSystems()
-	elseif SceneIdx == 39 then return ReorderParticleSystems()
-	elseif SceneIdx == 40 then return PremultipliedAlphaTest()
-	elseif SceneIdx == 41 then return PremultipliedAlphaTest2()
+	elseif SceneIdx == 37 then return MultipleParticleSystems()
+	elseif SceneIdx == 38 then return MultipleParticleSystemsBatched()
+	elseif SceneIdx == 39 then return AddAndDeleteParticleSystems()
+	elseif SceneIdx == 40 then return ReorderParticleSystems()
+	elseif SceneIdx == 41 then return PremultipliedAlphaTest()
+	elseif SceneIdx == 42 then return PremultipliedAlphaTest2()
 	end
 end
 

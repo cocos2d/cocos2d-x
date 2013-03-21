@@ -124,12 +124,34 @@ const char* CCEditBox::getText(void)
     return NULL;
 }
 
+void CCEditBox::setFont(const char* pFontName, int fontSize)
+{
+    if (pFontName != NULL)
+    {
+        if (m_pEditBoxImpl != NULL)
+        {
+            m_pEditBoxImpl->setFont(pFontName, fontSize);
+        }
+    }
+}
+
 void CCEditBox::setFontColor(const ccColor3B& color)
 {
     m_colText = color;
     if (m_pEditBoxImpl != NULL)
     {
         m_pEditBoxImpl->setFontColor(color);
+    }
+}
+
+void CCEditBox::setPlaceholderFont(const char* pFontName, int fontSize)
+{
+    if (pFontName != NULL)
+    {
+        if (m_pEditBoxImpl != NULL)
+        {
+            m_pEditBoxImpl->setPlaceholderFont(pFontName, fontSize);
+        }
     }
 }
 
@@ -210,12 +232,30 @@ void CCEditBox::setPosition(const CCPoint& pos)
     }
 }
 
+void CCEditBox::setVisible(bool visible)
+{
+    CCControlButton::setVisible(visible);
+    if (m_pEditBoxImpl != NULL)
+    {
+        m_pEditBoxImpl->setVisible(visible);
+    }
+}
+
 void CCEditBox::setContentSize(const CCSize& size)
 {
     CCControlButton::setContentSize(size);
     if (m_pEditBoxImpl != NULL)
     {
         m_pEditBoxImpl->setContentSize(size);
+    }
+}
+
+void CCEditBox::setAnchorPoint(const CCPoint& anchorPoint)
+{
+    CCControlButton::setAnchorPoint(anchorPoint);
+    if (m_pEditBoxImpl != NULL)
+    {
+        m_pEditBoxImpl->setAnchorPoint(anchorPoint);
     }
 }
 
@@ -240,19 +280,19 @@ void CCEditBox::onExit(void)
 
 static CCRect getRect(CCNode * pNode)
 {
-    CCRect rc;
-    rc.origin = pNode->getPosition();
-    rc.size = pNode->getContentSize();
-    rc.origin.x -= rc.size.width / 2;
-    rc.origin.y -= rc.size.height / 2;
-    return rc;
+    return pNode->boundingBox();
 }
 
 void CCEditBox::keyboardWillShow(CCIMEKeyboardNotificationInfo& info)
 {
     // CCLOG("CCEditBox::keyboardWillShow");
     CCRect rectTracked = getRect(this);
-    
+	// some adjustment for margin between the keyboard and the edit box.
+	rectTracked.origin.y -= 4;
+    if (m_pParent != NULL)
+    {
+        rectTracked.origin = m_pParent->convertToWorldSpace(rectTracked.origin);
+    }
     // if the keyboard area doesn't intersect with the tracking node area, nothing needs to be done.
     if (!rectTracked.intersectsRect(info.end))
     {

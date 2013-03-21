@@ -24,7 +24,7 @@
 #include <vector>
 #include <string>
 #include <sstream> 
-
+#include <algorithm>
 #include "CCImage.h"
 #include "CCCommon.h"
 #include "CCStdC.h"
@@ -522,7 +522,7 @@ bool CCImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = e
 	IW_CALLSTACK("UIImage::initWithImageFile");
     bool bRet = false;
     unsigned long nSize = 0;
-    unsigned char* pBuffer = CCFileUtils::sharedFileUtils()->getFileData(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(strPath), "rb", &nSize);
+    unsigned char* pBuffer = CCFileUtils::sharedFileUtils()->getFileData(strPath, "rb", &nSize);
     if (pBuffer != NULL && nSize > 0)
     {
         bRet = initWithImageData(pBuffer, nSize, eImgFmt);
@@ -570,6 +570,11 @@ bool CCImage::initWithImageData(void * pData,
         else if (kFmtTiff == eFmt)
         {
             bRet = _initWithTiffData(pData, nDataLen);
+            break;
+        }
+        else if (kFmtWebp == eFmt)
+        {
+            bRet = _initWithWebpData(pData, nDataLen);
             break;
         }
         else if (kFmtRawData == eFmt)
@@ -863,10 +868,15 @@ bool CCImage::initWithString(
 
 		BitmapDC &dc = sharedBitmapDC();
 
-//		const char* pFullFontName = CCFileUtils::fullPathFromRelativePath(pFontName);						// MH: Cocos2d 2.0.3 no longer supports the statsic method CCFileUtils::fullPathFromRelativePath
-		const char* pFullFontName = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(pFontName);	// MB: Cocos2d 2.0.3 seems to now use CCFileUtils::sharedFileUtils()->fullPathFromRelativePath
+        std::string fullFontName = pFontName;
+    	std::string lowerCasePath = fullFontName;
+    	std::transform(lowerCasePath.begin(), lowerCasePath.end(), lowerCasePath.begin(), ::tolower);
+        
+    	if ( lowerCasePath.find(".ttf") != std::string::npos ) {
+    		fullFontName = CCFileUtils::sharedFileUtils()->fullPathForFilename(pFontName);
+    	}
 
-		CC_BREAK_IF(! dc.getBitmap(pText, nWidth, nHeight, eAlignMask, pFullFontName, nSize));
+		CC_BREAK_IF(! dc.getBitmap(pText, nWidth, nHeight, eAlignMask, fullFontName.c_str(), nSize));
 
 		// assign the dc.m_pData to m_pData in order to save time
 		m_pData = dc.m_pData;

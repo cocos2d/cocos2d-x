@@ -3,9 +3,10 @@
 #include "cocos2d.h"
 #include "SimpleAudioEngine.h"
 #include "ScriptingCore.h"
-#include "generated/cocos2dx.hpp"
+#include "generated/jsb_cocos2dx_auto.hpp"
+#include "generated/jsb_cocos2dx_extension_auto.hpp"
+#include "jsb_cocos2dx_extension_manual.h"
 #include "cocos2d_specifics.hpp"
-#include "js_bindings_chipmunk_registration.h"
 #include "js_bindings_ccbreader.h"
 #include "js_bindings_system_registration.h"
 
@@ -34,30 +35,61 @@ bool AppDelegate::applicationDidFinishLaunching()
     CCSize designSize = CCSizeMake(320, 480);
     CCSize resourceSize = CCSizeMake(320, 480);
     
-    if (screenSize.height > 1024)
-    {
-        resourceSize = CCSizeMake(1536, 2048);
-        CCFileUtils::sharedFileUtils()->setResourceDirectory("resources-ipadhd");
-    }
-     else if (screenSize.height > 960)
-    {
-        resourceSize = CCSizeMake(768, 1536);
-        CCFileUtils::sharedFileUtils()->setResourceDirectory("resources-ipad");
-    }
-    else if (screenSize.height > 480)
-    {
-        resourceSize = CCSizeMake(640, 960);
-        CCFileUtils::sharedFileUtils()->setResourceDirectory("resources-iphonehd");
-        
-    }
-    else
-    {
-        CCFileUtils::sharedFileUtils()->setResourceDirectory("resources-iphone");
-    }
+    std::vector<std::string> searchPaths;
+    std::vector<std::string> resDirOrders;
     
-    pDirector->setContentScaleFactor(resourceSize.height/designSize.height);
+    TargetPlatform platform = CCApplication::sharedApplication()->getTargetPlatform();
+    if (platform == kTargetIphone || platform == kTargetIpad)
+    {
+        searchPaths.push_back("Published-iOS"); // Resources/Published-iOS
+        CCFileUtils::sharedFileUtils()->setSearchPaths(searchPaths);
 
-    CCEGLView::sharedOpenGLView()->setDesignResolutionSize(designSize.width, designSize.height, kResolutionNoBorder);
+        if (screenSize.height > 480)
+        {
+            resourceSize = CCSizeMake(640, 960);
+            resDirOrders.push_back("resources-iphonehd");
+        }
+        else
+        {
+            resDirOrders.push_back("resources-iphone");
+        }
+        
+        CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(resDirOrders);
+    }
+    else if (platform == kTargetAndroid || platform == kTargetWindows)
+    {
+        // Comments it since opengles2.0 only supports texture size within 2048x2048.
+//        if (screenSize.height > 1024)
+//        {
+//            resourceSize = CCSizeMake(1280, 1920);
+//            resDirOrders.push_back("resources-xlarge");
+//            resDirOrders.push_back("");
+//        }
+//        else 
+        if (screenSize.height > 960)
+        {
+            resourceSize = CCSizeMake(640, 960);
+            resDirOrders.push_back("resources-large");
+            resDirOrders.push_back("resources-medium");
+            resDirOrders.push_back("resources-small");
+        }
+        else if (screenSize.height > 480)
+        {
+            resourceSize = CCSizeMake(480, 720);
+            resDirOrders.push_back("resources-medium");
+            resDirOrders.push_back("resources-small");
+        }
+        else
+        {
+            resourceSize = CCSizeMake(320, 568);
+            resDirOrders.push_back("resources-small");
+        }
+        
+        CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(resDirOrders);
+    }
+    pDirector->setContentScaleFactor(resourceSize.width/designSize.width);
+
+    CCEGLView::sharedOpenGLView()->setDesignResolutionSize(designSize.width, designSize.height, kResolutionShowAll);
     
     // turn on display FPS
     pDirector->setDisplayStats(true);
@@ -67,9 +99,10 @@ bool AppDelegate::applicationDidFinishLaunching()
     
     ScriptingCore* sc = ScriptingCore::getInstance();
     sc->addRegisterCallback(register_all_cocos2dx);
+    sc->addRegisterCallback(register_all_cocos2dx_extension);
     sc->addRegisterCallback(register_cocos2dx_js_extensions);
+    sc->addRegisterCallback(register_all_cocos2dx_extension_manual);
     sc->addRegisterCallback(register_CCBuilderReader);
-    sc->addRegisterCallback(jsb_register_chipmunk);
     sc->addRegisterCallback(jsb_register_system);
     
     sc->start();

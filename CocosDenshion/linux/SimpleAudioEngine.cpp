@@ -1,5 +1,7 @@
 #include "SimpleAudioEngine.h"
 #include "FmodAudioPlayer.h"
+#include "cocos2d.h"
+USING_NS_CC;
 
 namespace CocosDenshion {
 
@@ -19,22 +21,7 @@ SimpleAudioEngine* SimpleAudioEngine::sharedEngine() {
 
 void SimpleAudioEngine::end() {
 	oAudioPlayer->close();
-
-//    sharedMusic().Close();
-//
-//	EffectList::iterator p = sharedList().begin();
-//	while (p != sharedList().end())
-//	{
-//		delete p->second;
-//		p->second = NULL;
-//		p++;
-//	}
-//    sharedList().clear();
-//    return;
 }
-
-//void SimpleAudioEngine::setResource(const char* pszZipFileName) {
-//}
 
 //////////////////////////////////////////////////////////////////////////
 // BackgroundMusic
@@ -42,7 +29,9 @@ void SimpleAudioEngine::end() {
 
 void SimpleAudioEngine::playBackgroundMusic(const char* pszFilePath,
 		bool bLoop) {
-	oAudioPlayer->playBackgroundMusic(pszFilePath, bLoop);
+	// Changing file path to full path
+	std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
+	oAudioPlayer->playBackgroundMusic(fullPath.c_str(), bLoop);
 }
 
 void SimpleAudioEngine::stopBackgroundMusic(bool bReleaseData) {
@@ -70,7 +59,9 @@ bool SimpleAudioEngine::isBackgroundMusicPlaying() {
 }
 
 void SimpleAudioEngine::preloadBackgroundMusic(const char* pszFilePath) {
-	return oAudioPlayer->preloadBackgroundMusic(pszFilePath);
+	// Changing file path to full path
+	std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
+	return oAudioPlayer->preloadBackgroundMusic(fullPath.c_str());
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -79,7 +70,9 @@ void SimpleAudioEngine::preloadBackgroundMusic(const char* pszFilePath) {
 
 unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath,
 		bool bLoop) {
-	return oAudioPlayer->playEffect(pszFilePath, bLoop);
+	// Changing file path to full path
+	std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
+	return oAudioPlayer->playEffect(fullPath.c_str(), bLoop);
 }
 
 void SimpleAudioEngine::stopEffect(unsigned int nSoundId) {
@@ -87,11 +80,15 @@ void SimpleAudioEngine::stopEffect(unsigned int nSoundId) {
 }
 
 void SimpleAudioEngine::preloadEffect(const char* pszFilePath) {
-	return oAudioPlayer->preloadEffect(pszFilePath);
+	// Changing file path to full path
+	std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
+	return oAudioPlayer->preloadEffect(fullPath.c_str());
 }
 
 void SimpleAudioEngine::unloadEffect(const char* pszFilePath) {
-	return oAudioPlayer->unloadEffect(pszFilePath);
+	// Changing file path to full path
+	std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
+	return oAudioPlayer->unloadEffect(fullPath.c_str());
 }
 
 void SimpleAudioEngine::pauseEffect(unsigned int uSoundId) {
@@ -129,31 +126,12 @@ void SimpleAudioEngine::setBackgroundMusicVolume(float volume) {
 }
 
 float SimpleAudioEngine::getEffectsVolume() {
-	return oAudioPlayer->getBackgroundMusicVolume();
+	return oAudioPlayer->getEffectsVolume();
 }
 
 void SimpleAudioEngine::setEffectsVolume(float volume) {
 	return oAudioPlayer->setEffectsVolume(volume);
 }
 
-//////////////////////////////////////////////////////////////////////////
-// static function
-//////////////////////////////////////////////////////////////////////////
-
-const char * _FullPath(const char * szPath) {
-}
-
-unsigned int _Hash(const char *key) {
-//    unsigned int len = strlen(key);
-//    const char *end=key+len;
-//    unsigned int hash;
-//
-//    for (hash = 0; key < end; key++)
-//    {
-//        hash *= 16777619;
-//        hash ^= (unsigned int) (unsigned char) toupper(*key);
-//    }
-//    return (hash);
-}
 
 } // end of namespace CocosDenshion
