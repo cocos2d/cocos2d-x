@@ -51,12 +51,12 @@ There are two ways of building Android projects.
 		* Eclipse->Preferences->General->Workspace->**Linked Resources**
 		* Click **New** button to add a Path Variable `COCOS2DX` pointing to the root cocos2d-x directory.
 		![Example](https://lh5.googleusercontent.com/-oPpk9kg3e5w/UUOYlq8n7aI/AAAAAAAAsdQ/zLA4eghBH9U/s400/cocos2d-x-eclipse-vars.png)
-		* Only for Windows: Add a new variable **CYGWIN** with value `nodosfilewarning`
 
 	2. C/C++ Environment Variable `NDK_ROOT`: 
 		* Eclipse->Preferences->C/C++->Build->**Environment**.
 		* Click **Add** button and add a new variable `NDK_ROOT` pointing to the root NDK directory.
 		![Example](https://lh3.googleusercontent.com/-AVcY8IAT0_g/UUOYltoRobI/AAAAAAAAsdM/22D2J9u3sig/s400/cocos2d-x-eclipse-ndk.png)
+		* Only for Windows: Add new variables **CYGWIN** with value `nodosfilewarning` and **SHELLOPTS** with value `igncr`
 		
 4. Import libcocos2dx library project:
 	1. File->New->Project->Android Project From Existing Code.
@@ -85,7 +85,3 @@ If the last command results in sdk.dir missing error then do:
     $ android list target
     $ android update project -p . -t (id from step 6)
     $ android update project -p cocos2d-x/cocos2dx/platform/android/java/ -t (id from step 6)
-
-
-
-
