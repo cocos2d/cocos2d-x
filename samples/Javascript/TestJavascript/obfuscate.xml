@@ -68,7 +68,7 @@
                 <file name="TransitionsTest/TransitionsTest.js"/>
                 <file name="UnitTest/UnitTest.js"/>
                 <file name="SysTest/SysTest.js"/>
-                <file name="tests-boot-jsb.js"/>
+                <file name="tests-boot-jsb-for-obfuscation.js"/>
             </sources>
         </jscomp>
     </target>
