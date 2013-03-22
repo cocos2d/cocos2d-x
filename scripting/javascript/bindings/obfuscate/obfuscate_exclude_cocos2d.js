@@ -694,6 +694,7 @@ CSSProperties.prototype.ATTRIBUTE_NAME_TEX_COORD;
 CSSProperties.prototype.HashUniformEntry;
 CSSProperties.prototype.GLProgram;
 CSSProperties.prototype.create;
+CSSProperties.prototype._create;
 CSSProperties.prototype.destroyProgram;
 CSSProperties.prototype.initWithVertexShaderByteArray;
 CSSProperties.prototype.initWithString;
