@@ -140,34 +140,6 @@ static bool _initWithData(void * pBuffer, int length, tImageInfo *pImageinfo)
     return ret;
 }
 
-static bool _isValidFontName(const char *fontName)
-{
-    bool ret = false;
-    
-    NSString *fontNameNS = [NSString stringWithUTF8String:fontName];
-    
-    for (NSString *familiName in [UIFont familyNames]) 
-    {
-        if ([familiName isEqualToString:fontNameNS]) 
-        {
-            ret = true;
-            goto out;
-        }
-        
-        for(NSString *font in [UIFont fontNamesForFamilyName: familiName])
-        {
-            if ([font isEqualToString: fontNameNS])
-            {
-                ret = true;
-                goto out;
-            }
-        }
-    }
-    
-    out:
-    return ret;
-}
-
 static CGSize _calculateStringSize(NSString *str, id font, CGSize *constrainSize)
 {
     NSArray *listItems = [str componentsSeparatedByString: @"\n"];
@@ -228,13 +200,6 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
         }
         else
         {
-            if (!_isValidFontName(pFontName))
-            {
-                // Attempted to load a non system font. Attempt this fallback first before the default system font:
-                CCLOGERROR("Error! Failed to load the custom font '%s'! A default font will be used instead.", pFontName);
-                font = [UIFont fontWithName: @"MarkerFelt-Wide" size:nSize];
-            }
-            
             if (!font)
             {
                 font = [UIFont systemFontOfSize:nSize];
