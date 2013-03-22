@@ -31,20 +31,21 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/../../include \
                     $(LOCAL_PATH)/../../kazmath/include
 
-LOCAL_LDLIBS := -lGLESv2 \
+LOCAL_LDLIBS := -lGLESv1_CM \
+                -lGLESv2 \
                 -lEGL \
                 -llog \
                 -lz \
                 -landroid
 
-LOCAL_EXPORT_LDLIBS := -lGLESv2 \
+LOCAL_EXPORT_LDLIBS := -lGLESv1_CM \
+                       -lGLESv2 \
                        -lEGL \
                        -llog \
                        -lz \
                        -landroid
 
-LOCAL_STATIC_LIBRARIES 	:= android_native_app_glue \
-                           cocos_libpng_static cocos_jpeg_static cocos_libxml2_static cocos_libtiff_static cocos_libwebp_static
+LOCAL_WHOLE_STATIC_LIBRARIES	:= android_native_app_glue cocos_libpng_static cocos_jpeg_static cocos_libxml2_static cocos_libtiff_static cocos_libwebp_static
 
 
 include $(BUILD_STATIC_LIBRARY)
