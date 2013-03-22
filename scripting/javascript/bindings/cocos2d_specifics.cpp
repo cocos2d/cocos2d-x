@@ -3104,18 +3104,11 @@ JSBool js_cocos2dx_CCFileUtils_getStringFromFile(JSContext *cx, uint32_t argc, j
         std::string arg0_tmp; ok &= jsval_to_std_string(cx, argv[0], &arg0_tmp); arg0 = arg0_tmp.c_str();
         JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
         unsigned long size = 0;
-        unsigned char* ret = cobj->getFileData(arg0, "rb", &size);
-        if (ret && size > 0) {
+        unsigned char* data = cobj->getFileData(arg0, "rb", &size);
+        if (data && size > 0) {
             //JSString* str = JS_NewStringCopyN(cx, (const char*)ret, (size_t)size);
-            jschar* strUTF16 = (jschar*)cc_utf8_to_utf16((char*)ret);
-            JSString* str = JS_NewUCStringCopyZ(cx, strUTF16);
-            if (str != NULL) {
-                JS_SET_RVAL(cx, vp, STRING_TO_JSVAL(str));
-            }
-            else {
-                JS_SET_RVAL(cx, vp, JSVAL_NULL);
-            }
-            delete[] strUTF16;
+            jsval jsret = c_string_to_jsval(cx, (char*)data);
+            JS_SET_RVAL(cx, vp, jsret);
             return JS_TRUE;
         }
         JS_ReportError(cx, "get file(%s) data fails", arg0);
