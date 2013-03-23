@@ -52,9 +52,11 @@ static int engine_init_display(struct engine* engine) {
      */
     const EGLint attribs[] = {
             EGL_SURFACE_TYPE, EGL_WINDOW_BIT,
-            EGL_BLUE_SIZE, 8,
-            EGL_GREEN_SIZE, 8,
-            EGL_RED_SIZE, 8,
+            EGL_BLUE_SIZE, 5,
+            EGL_GREEN_SIZE, 6,
+            EGL_RED_SIZE, 5,
+            EGL_DEPTH_SIZE, 16,
+            EGL_STENCIL_SIZE, 8,
             EGL_NONE
     };
     EGLint w, h, dummy, format;
