@@ -77,7 +77,7 @@ bool CCControl::init()
 
         // Set the touch dispatcher priority by default to 1
         setDefaultTouchPriority(1);
-        this->setDefaultTouchPriority(m_nDefaultTouchPriority);
+        this->setTouchPriority(m_nDefaultTouchPriority);
         // Initialise the tables
         m_pDispatchTable = new CCDictionary(); 
 
