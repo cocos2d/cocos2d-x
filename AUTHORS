@@ -25,7 +25,8 @@ Developers:
         fix an error that OpenSLEngine can't load resources from SD card
 
     billy1380
-        make CCLens3d support concave effect
+        make CCLens3d support concave effect.
+        Adding 64bit target for Mac project.
 
     benjamesward
         add Portuguese and Arabic language support
