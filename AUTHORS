@@ -255,6 +255,9 @@ Developers:
     whitegfx
         Implementation of kEditBoxInputFlagSensitive setting for CCEditBoxImplIOS.
 
+    Zecken (gelldur)
+        Fixing a profiling compilation error in CCParticleBatchNode.
+
 Retired Core Developers:
     WenSheng Yang
         Author of windows port, CCTextField,
