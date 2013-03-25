@@ -26,6 +26,7 @@ package org.cocos2dx.cocosplayer;
 import org.cocos2dx.lib.Cocos2dxActivity;
 
 import android.os.Bundle;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.ContextWrapper;
 import android.content.Context;
@@ -33,12 +34,20 @@ import android.content.Context;
 public class CocosPlayer extends Cocos2dxActivity{
 
     public static Context c;
-    protected void onCreate(Bundle savedInstanceState){
-	super.onCreate(savedInstanceState);
-	c = getApplicationContext();
+    
+    public static Activity activity;
+    
+	public static void setOrientation(int orient) {
+		activity.setRequestedOrientation(orient);
+	}
+    
+    protected void onCreate(Bundle savedInstanceState){    	
+    	super.onCreate(savedInstanceState);
+    	activity = this;
+		c = getApplicationContext();
     }
 	
     static {
-	System.loadLibrary("cocosplayer");
+    	System.loadLibrary("cocosplayer");
     }
 }
