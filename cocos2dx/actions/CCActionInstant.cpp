@@ -191,24 +191,29 @@ CCObject* CCToggleVisibility::copyWithZone(CCZone *pZone)
 //
 // Remove Self
 //
-CCRemoveSelf * CCRemoveSelf::create() 
+CCRemoveSelf * CCRemoveSelf::create(bool isNeedCleanUp /*= true*/) 
 {
 	CCRemoveSelf *pRet = new CCRemoveSelf();
 
-	if (pRet) {
+	if (pRet && pRet->init(isNeedCleanUp)) {
 		pRet->autorelease();
 	}
 
 	return pRet;
 }
 
+bool CCRemoveSelf::init(bool isNeedCleanUp) {
+	m_bIsNeedCleanUp = isNeedCleanUp;
+	return true;
+}
+
 void CCRemoveSelf::update(float time) {
 	CC_UNUSED_PARAM(time);
-	m_pTarget->removeFromParentAndCleanup(true);
+	m_pTarget->removeFromParentAndCleanup(m_bIsNeedCleanUp);
 }
 
 CCFiniteTimeAction *CCRemoveSelf::reverse() {
-	return (CCFiniteTimeAction*) (CCRemoveSelf::create());
+	return (CCFiniteTimeAction*) (CCRemoveSelf::create(m_bIsNeedCleanUp));
 }
 
 CCObject* CCRemoveSelf::copyWithZone(CCZone *pZone) {
@@ -223,6 +228,7 @@ CCObject* CCRemoveSelf::copyWithZone(CCZone *pZone) {
 	}
 
 	CCActionInstant::copyWithZone(pZone);
+	pRet->init(m_bIsNeedCleanUp);
 	CC_SAFE_DELETE(pNewZone);
 	return pRet;
 }
