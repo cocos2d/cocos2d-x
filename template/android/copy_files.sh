@@ -99,7 +99,7 @@ copy_resouces
 copy_src_and_jni
 copy_build_native
 copy_ndkgdb
-modify_project_classpath
+#modify_project_classpath
 modify_androidmanifest
 modify_applicationdemo
 modify_layout

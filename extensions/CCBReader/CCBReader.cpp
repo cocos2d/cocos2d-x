@@ -877,7 +877,8 @@ bool CCBReader::readSoundKeyframesForSeq(CCBSequence* seq) {
     if(!numKeyframes) return true;
     
     CCBSequenceProperty* channel = new CCBSequenceProperty();
-    
+    channel->autorelease();
+
     for(int i = 0; i < numKeyframes; ++i) {
         
         float time = readFloat();
@@ -896,8 +897,8 @@ bool CCBReader::readSoundKeyframesForSeq(CCBSequence* seq) {
         CCBKeyframe* keyframe = new CCBKeyframe();
         keyframe->setTime(time);
         keyframe->setValue(value);
-        
         channel->getKeyframes()->addObject(keyframe);
+        keyframe->release();
     }
     
     seq->setSoundChannel(channel);

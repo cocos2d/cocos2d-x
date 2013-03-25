@@ -58,7 +58,6 @@ Config of cocos2d-x project, per target platform.
 #if defined(CC_TARGET_OS_IPHONE)
     #undef  CC_TARGET_PLATFORM
     #define CC_TARGET_PLATFORM         CC_PLATFORM_IOS
-    #define CC_SUPPORT_PVRTC
 #endif
 
 // android

@@ -1505,13 +1505,23 @@ jsval long_long_to_jsval(JSContext* cx, long long v) {
 }
 
 jsval std_string_to_jsval(JSContext* cx, std::string& v) {
-    JSString *str = JS_NewStringCopyZ(cx, v.c_str());
-    return STRING_TO_JSVAL(str);
+    return c_string_to_jsval(cx, v.c_str());
 }
 
 jsval c_string_to_jsval(JSContext* cx, const char* v) {
-    JSString *str = JS_NewStringCopyZ(cx, v);
-    return STRING_TO_JSVAL(str);
+    if (v == NULL) {
+        return JSVAL_NULL;
+    }
+    jsval ret = JSVAL_NULL;
+    jschar* strUTF16 = (jschar*)cc_utf8_to_utf16(v);
+    if (strUTF16) {
+        JSString* str = JS_NewUCStringCopyZ(cx, strUTF16);
+        if (str) {
+            ret = STRING_TO_JSVAL(str);
+        }
+        delete[] strUTF16;
+    }
+    return ret;
 }
 
 jsval ccpoint_to_jsval(JSContext* cx, CCPoint& v) {
