@@ -293,7 +293,7 @@ const char*  IterateSpriteSheetCArray::profilerName()
 ////////////////////////////////////////////////////////
 AddRemoveSpriteSheet::~AddRemoveSpriteSheet()
 {
-    _profilingTimer = NULL;
+
 }
 
 void AddRemoveSpriteSheet::initWithQuantityOfNodes(unsigned int nNodes)
