@@ -64,6 +64,7 @@ build_*_vc10/
 xcschememanagement.plist
 build/
 .DS_Store
+._.*
 xcuserdata/
 DerivedData/
 

@@ -193,6 +193,18 @@
 			<key>Path</key>
 			<string>libs/javascript/bindings/js/jsb_chipmunk.js</string>
 		</dict>
+		<key>libs/javascript/bindings/js/jsb_chipmunk_constants.js</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>javascript</string>
+				<string>bindings</string>
+				<string>js</string>
+			</array>
+			<key>Path</key>
+			<string>libs/javascript/bindings/js/jsb_chipmunk_constants.js</string>
+		</dict>
 		<key>libs/javascript/bindings/js/jsb_cocos2d.js</key>
 		<dict>
 			<key>Group</key>
@@ -204,6 +216,18 @@
 			</array>
 			<key>Path</key>
 			<string>libs/javascript/bindings/js/jsb_cocos2d.js</string>
+		</dict>
+		<key>libs/javascript/bindings/js/jsb_cocos2d_constants.js</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>javascript</string>
+				<string>bindings</string>
+				<string>js</string>
+			</array>
+			<key>Path</key>
+			<string>libs/javascript/bindings/js/jsb_cocos2d_constants.js</string>
 		</dict>
 		<key>libs/javascript/bindings/js/jsb_cocos2d_extension.js</key>
 		<dict>
@@ -252,6 +276,18 @@
 			</array>
 			<key>Path</key>
 			<string>libs/javascript/bindings/js/jsb_opengl.js</string>
+		</dict>
+		<key>libs/javascript/bindings/js/jsb_opengl_constants.js</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>javascript</string>
+				<string>bindings</string>
+				<string>js</string>
+			</array>
+			<key>Path</key>
+			<string>libs/javascript/bindings/js/jsb_opengl_constants.js</string>
 		</dict>
 		<key>libs/javascript/bindings/js/jsb_sys.js</key>
 		<dict>
@@ -635,11 +671,14 @@
 		<string>libs/javascript/bindings/generated/README</string>
 		<string>libs/javascript/bindings/js/jsb.js</string>
 		<string>libs/javascript/bindings/js/jsb_chipmunk.js</string>
+		<string>libs/javascript/bindings/js/jsb_chipmunk_constants.js</string>
 		<string>libs/javascript/bindings/js/jsb_cocos2d.js</string>
+		<string>libs/javascript/bindings/js/jsb_cocos2d_constants.js</string>
 		<string>libs/javascript/bindings/js/jsb_cocos2d_extension.js</string>
 		<string>libs/javascript/bindings/js/jsb_cocosbuilder.js</string>
 		<string>libs/javascript/bindings/js/jsb_debugger.js</string>
 		<string>libs/javascript/bindings/js/jsb_opengl.js</string>
+		<string>libs/javascript/bindings/js/jsb_opengl_constants.js</string>
 		<string>libs/javascript/bindings/js/jsb_sys.js</string>
 		<string>libs/javascript/bindings/js/main.debug.js</string>
 		<string>libs/javascript/bindings/js_bindings_ccbreader.cpp</string>

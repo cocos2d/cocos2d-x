@@ -94,9 +94,10 @@ class CCRotateTo : public CCActionInterval
 
 class CCRotateBy : public CCActionInterval
 {
-	CCActionInterval* reverse(void);
+	  CCActionInterval* reverse(void);
 
     static CCRotateBy* create(float duration, float fDeltaAngle);
+    static CCRotateBy* create(float duration, float fDeltaAngleX, float DeltaAngleY);
 };
 
 class CCMoveTo : public CCActionInterval
