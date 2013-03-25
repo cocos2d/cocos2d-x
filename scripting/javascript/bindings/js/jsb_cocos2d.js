@@ -2,8 +2,6 @@
 // cocos2d constants
 //
 
-require('jsb_cocos2d_constants.js');
-
 var cc = cc || {};
 
 cc.DIRECTOR_PROJECTION_2D = 0;
@@ -383,8 +381,8 @@ cc.associateWithNative = function( jsobj, superclass_or_instance ) {
 
     try {
         // Used when subclassing using the "extend" method
-        var native = new superclass_or_instance();
-        __associateObjWithNative( jsobj, native );
+        var nativeObj = new superclass_or_instance();
+        __associateObjWithNative( jsobj, nativeObj );
     } catch(err) {
         // Used when subclassing using the goog.inherits method
        __associateObjWithNative( jsobj, superclass_or_instance );
