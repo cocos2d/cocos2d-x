@@ -122,9 +122,12 @@ public:
 	virtual CCFiniteTimeAction * reverse(void);
 	virtual CCObject* copyWithZone(CCZone *pZone);
 public:
-
-	/** Allocates and initializes the action */
-	static CCRemoveSelf * create();
+	/** create the action */
+	static CCRemoveSelf * create(bool isNeedCleanUp = true);
+	/** init the action */
+	bool init(bool isNeedCleanUp);
+protected:
+	bool m_bIsNeedCleanUp;
 };
 
 /** 
