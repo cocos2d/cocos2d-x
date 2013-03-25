@@ -208,7 +208,7 @@ void CCRemoveSelf::update(float time) {
 }
 
 CCFiniteTimeAction *CCRemoveSelf::reverse() {
-	return (CCFiniteTimeAction*) (CCShow::create());
+	return (CCFiniteTimeAction*) (CCRemoveSelf::create());
 }
 
 CCObject* CCRemoveSelf::copyWithZone(CCZone *pZone) {
