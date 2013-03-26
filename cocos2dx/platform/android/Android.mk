@@ -17,7 +17,6 @@ CCImage.cpp \
 jni/nativeactivity.cpp \
 jni/Java_org_cocos2dx_lib_Cocos2dxBitmap.cpp \
 jni/Java_org_cocos2dx_lib_Cocos2dxHelper.cpp \
-jni/Java_org_cocos2dx_lib_Cocos2dxRenderer.cpp \
 jni/Java_org_cocos2dx_lib_Cocos2dxAccelerometer.cpp \
 jni/JniHelper.cpp \
 jni/IMEJni.cpp \
