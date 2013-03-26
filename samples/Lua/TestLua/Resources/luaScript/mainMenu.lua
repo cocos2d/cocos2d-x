@@ -64,7 +64,7 @@ local function CreateTestScene(nIdx)
 --#endif
 --#endif
     elseif nIdx == Test_Table.TEST_LABEL then
-
+        scene = LabelTest()
     elseif nIdx == Test_Table.TEST_TEXT_INPUT then
 
     elseif nIdx == Test_Table.TEST_SPRITE then
