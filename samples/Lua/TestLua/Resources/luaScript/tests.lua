@@ -15,7 +15,7 @@ require "luaScript/TouchesTest/TouchesTest"
 require "luaScript/SpriteTest/SpriteTest"
 
 require "luaScript/PerformanceTest/PerformanceTest"
-
+require "luaScript/LabelTest/LabelTest"
 ----------------------------------------------------
 
 -- tests scene
@@ -41,7 +41,7 @@ Test_Table =
 --  "TEST_TILE_MAP",
 --  "TEST_INTERVAL",
 --  "TEST_CHIPMUNKACCELTOUCH",
---  "TEST_LABEL",
+	"TEST_LABEL",
 --  "TEST_TEXT_INPUT",
     "TEST_SPRITE",
 --  "TEST_SCHEDULER",
@@ -91,7 +91,7 @@ Test_Name =
 --  "TileMapTest",
 --  "IntervalTest",
 --  "ChipmunkAccelTouchTest",
---  "LabelTest",
+	"LabelTest",
 --  "TextInputTest",
     "SpriteTest",
 --  "SchdulerTest",
