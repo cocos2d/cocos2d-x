@@ -8,8 +8,13 @@
 #include <android/log.h>
 #include <android_native_app_glue.h>
 
-#define LOGI(...) ((void)__android_log_print(ANDROID_LOG_INFO, "cocos2dx/nativeactivity.c", __VA_ARGS__))
-#define LOGW(...) ((void)__android_log_print(ANDROID_LOG_WARN, "cocos2dx/nativeactivity.c", __VA_ARGS__))
+#include "CCDirector.h"
+#include "../CCApplication.h"
+#include "CCEventType.h"
+#include "support/CCNotificationCenter.h"
+
+#define LOGI(...) ((void)__android_log_print(ANDROID_LOG_INFO, "cocos2dx/nativeactivity.cpp", __VA_ARGS__))
+#define LOGW(...) ((void)__android_log_print(ANDROID_LOG_WARN, "cocos2dx/nativeactivity.cpp", __VA_ARGS__))
 
 /**
  * Our saved state data.
@@ -118,10 +123,12 @@ static void engine_draw_frame(struct engine* engine) {
         return;
     }
 
-    // Just fill the screen with a color.
-    glClearColor(((float)engine->state.x)/engine->width, engine->state.angle,
-            ((float)engine->state.y)/engine->height, 1);
-    glClear(GL_COLOR_BUFFER_BIT);
+    cocos2d::CCDirector::sharedDirector()->mainLoop();
+
+    /* // Just fill the screen with a color. */
+    /* glClearColor(((float)engine->state.x)/engine->width, engine->state.angle, */
+    /*         ((float)engine->state.y)/engine->height, 1); */
+    /* glClear(GL_COLOR_BUFFER_BIT); */
 
     eglSwapBuffers(engine->display, engine->surface);
 }
@@ -192,6 +199,11 @@ static void engine_handle_cmd(struct android_app* app, int32_t cmd) {
                 ASensorEventQueue_setEventRate(engine->sensorEventQueue,
                         engine->accelerometerSensor, (1000L/60)*1000);
             }
+
+            if (cocos2d::CCDirector::sharedDirector()->getOpenGLView()) {
+                cocos2d::CCApplication::sharedApplication()->applicationWillEnterForeground();
+            }
+
             break;
         case APP_CMD_LOST_FOCUS:
             // When our app loses focus, we stop monitoring the accelerometer.
@@ -200,6 +212,10 @@ static void engine_handle_cmd(struct android_app* app, int32_t cmd) {
                 ASensorEventQueue_disableSensor(engine->sensorEventQueue,
                         engine->accelerometerSensor);
             }
+
+            cocos2d::CCApplication::sharedApplication()->applicationDidEnterBackground();
+            cocos2d::CCNotificationCenter::sharedNotificationCenter()->postNotification(EVENT_COME_TO_BACKGROUND, NULL);
+
             // Also stop animating.
             engine->animating = 0;
             engine_draw_frame(engine);
