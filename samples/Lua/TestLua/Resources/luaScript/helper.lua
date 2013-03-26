@@ -75,6 +75,8 @@ function Helper.newScene()
 end
 
 function Helper.initWithLayer(layer)
+	Helper.currentLayer = layer
+
 	local size = CCDirector:sharedDirector():getWinSize()
     Helper.titleLabel = CCLabelTTF:create("", "Arial", 28)
     layer:addChild(Helper.titleLabel, 1)
