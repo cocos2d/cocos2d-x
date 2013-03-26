@@ -258,6 +258,9 @@ Developers:
     Zecken (gelldur)
         Fixing a profiling compilation error in CCParticleBatchNode.
 
+    flamingo (flaming0)
+        Null pointer check in order to prevent crashes.
+
 Retired Core Developers:
     WenSheng Yang
         Author of windows port, CCTextField,
