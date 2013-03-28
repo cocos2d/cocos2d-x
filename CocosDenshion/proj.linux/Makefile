@@ -2,14 +2,22 @@ TARGET = libcocosdenshion.so
 
 INCLUDES += -I.. -I../include
 
+ifeq ($(OPENAL),1)
+SOURCES = \
+  ../linux/SimpleAudioEngineOpenAL.cpp 
+SHAREDLIBS += -lopenal -lalut -logg -lvorbis -lvorbisfile
+else
+SOURCES = \
+  ../linux/SimpleAudioEngineFMOD.cpp \
+  ../linux/FmodAudioPlayer.cpp   
+  
 ifeq ($(LBITS),64)
 INCLUDES += -I../third_party/fmod/lib64/api/inc
 else
 INCLUDES += -I../third_party/fmod/api/inc
 endif
-
-SOURCES = ../linux/FmodAudioPlayer.cpp \
-          ../linux/SimpleAudioEngine.cpp \
+    
+endif
 
 COCOS_ROOT = ../..
 include $(COCOS_ROOT)/cocos2dx/proj.linux/cocos2dx.mk
