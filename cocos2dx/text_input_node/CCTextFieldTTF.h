@@ -145,6 +145,11 @@ public:
 protected:
     std::string * m_pPlaceHolder;
     ccColor3B m_ColorSpaceHolder;
+public:
+	virtual void setSecureTextEntry(bool value);
+	virtual bool getSecureTextEntry();
+protected:
+	bool m_pSecureTextEntry;
 protected:
 
     virtual void draw();
