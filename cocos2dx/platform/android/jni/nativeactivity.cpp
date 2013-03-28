@@ -282,7 +282,7 @@ void android_main(struct android_app* state) {
                     ASensorEvent event;
                     while (ASensorEventQueue_getEvents(engine.sensorEventQueue,
                             &event, 1) > 0) {
-                        LOGI("accelerometer: x=%f y=%f z=%f",
+                        LOG_RENDER_DEBUG("accelerometer: x=%f y=%f z=%f",
                                 event.acceleration.x, event.acceleration.y,
                                 event.acceleration.z);
                     }
