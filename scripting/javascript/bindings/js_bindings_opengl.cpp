@@ -115,7 +115,7 @@ void js_register_cocos2dx_GLNode(JSContext *cx, JSObject *global) {
 					      st_funcs);
   // make the class enumerable in the registered namespace
   JSBool found;
-  JS_SetPropertyAttributes(cx, global, "FiniteTimeAction", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+  JS_SetPropertyAttributes(cx, global, "GLNode", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
     
   // add the proto and JSClass to the type->js info hash table
   TypeTest<GLNode> t;
