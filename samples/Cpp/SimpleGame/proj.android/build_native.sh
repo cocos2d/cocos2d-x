@@ -2,6 +2,8 @@ APPNAME="SimpleGame"
 
 # options
 
+debugndkbuild=
+
 usage(){
 cat << EOF
 usage: $0 [options]
@@ -9,12 +11,16 @@ usage: $0 [options]
 Build C/C++ code for $APPNAME using Android NDK
 
 OPTIONS:
+-d	debug build of NDK sources
 -h	this help
 EOF
 }
 
-while getopts "sh" OPTION; do
+while getopts "dh" OPTION; do
 case "$OPTION" in
+d)
+debugndkbuild=1
+;;
 h)
 usage
 exit 0
@@ -102,12 +108,12 @@ if [ -f "$file" ]; then
 fi
 
 
-if [[ "$buildexternalsfromsource" ]]; then
-    echo "Building external dependencies from source"
-    "$NDK_ROOT"/ndk-build -C "$APP_ANDROID_ROOT" $* \
-        "NDK_MODULE_PATH=${COCOS2DX_ROOT}:${COCOS2DX_ROOT}/cocos2dx/platform/third_party/android/source"
+if [[ "$debugndkbuild" ]]; then
+    echo "Building in debug"
+    "$NDK_ROOT"/ndk-build NDK_DEBUG=1 -C "$APP_ANDROID_ROOT" \
+        "NDK_MODULE_PATH=${COCOS2DX_ROOT}:${COCOS2DX_ROOT}/cocos2dx/platform/third_party/android/prebuilt"
 else
-    echo "Using prebuilt externals"
-    "$NDK_ROOT"/ndk-build -C "$APP_ANDROID_ROOT" $* \
+    echo "Building in release"
+    "$NDK_ROOT"/ndk-build -C "$APP_ANDROID_ROOT" \
         "NDK_MODULE_PATH=${COCOS2DX_ROOT}:${COCOS2DX_ROOT}/cocos2dx/platform/third_party/android/prebuilt"
 fi
