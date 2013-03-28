@@ -2,8 +2,6 @@ APPNAME="SimpleGame"
 
 # options
 
-buildexternalsfromsource=
-
 usage(){
 cat << EOF
 usage: $0 [options]
@@ -11,16 +9,12 @@ usage: $0 [options]
 Build C/C++ code for $APPNAME using Android NDK
 
 OPTIONS:
--s	Build externals from source
 -h	this help
 EOF
 }
 
 while getopts "sh" OPTION; do
 case "$OPTION" in
-s)
-buildexternalsfromsource=1
-;;
 h)
 usage
 exit 0
@@ -36,8 +30,8 @@ then
     [ -r "$_LOCALPROPERTIES_FILE" ] || die "Fatal Error: $_LOCALPROPERTIES_FILE exists but is unreadable"
 
     # strip out entries with a "." because Bash cannot process variables with a "."
-    _PROPERTIES=`sed '/\./d' "$_LOCALPROPERTIES_FILE"`
-    for line in "$_PROPERTIES"; do
+    _PROPERTIES=$(sed '/\./d' "$_LOCALPROPERTIES_FILE")
+    for line in $_PROPERTIES; do
         declare "$line";
     done
 fi
