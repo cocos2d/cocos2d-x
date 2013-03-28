@@ -8,7 +8,6 @@
  * OpenGL ES 2.0 doesn't have "objects" concepts: Instead it uses ids (GLints). So, these objects are emulated in this thin wrapper.
  */
 
-require('jsb_opengl_constants.js');
 
 var gl = gl || {};
 
