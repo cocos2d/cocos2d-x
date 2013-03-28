@@ -68,14 +68,14 @@ public class Cocos2dxHelper {
 
 		Cocos2dxHelper.sPackageName = applicationInfo.packageName;
 		Cocos2dxHelper.sFileDirectory = pContext.getFilesDir().getAbsolutePath();
-		Cocos2dxHelper.nativeSetApkPath(applicationInfo.sourceDir);
+		//Cocos2dxHelper.nativeSetApkPath(applicationInfo.sourceDir);
 
 		Cocos2dxHelper.sCocos2dxAccelerometer = new Cocos2dxAccelerometer(pContext);
 		Cocos2dxHelper.sCocos2dMusic = new Cocos2dxMusic(pContext);
 		Cocos2dxHelper.sCocos2dSound = new Cocos2dxSound(pContext);
 		Cocos2dxHelper.sAssetManager = pContext.getAssets();
 
-		Cocos2dxHelper.nativeSetAssetManager(sAssetManager);
+		//Cocos2dxHelper.nativeSetAssetManager(sAssetManager);
 		Cocos2dxBitmap.setContext(pContext);
         Cocos2dxETCLoader.setContext(pContext);
 	}
@@ -92,11 +92,7 @@ public class Cocos2dxHelper {
 	// Methods
 	// ===========================================================
 
-	private static native void nativeSetApkPath(final String pApkPath);
-
 	private static native void nativeSetEditTextDialogResult(final byte[] pBytes);
-
-    private static native void nativeSetAssetManager(AssetManager a);
 
 	public static String getCocos2dxPackageName() {
 		return Cocos2dxHelper.sPackageName;
