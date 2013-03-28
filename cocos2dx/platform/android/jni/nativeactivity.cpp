@@ -16,6 +16,9 @@
 #define LOGI(...) ((void)__android_log_print(ANDROID_LOG_INFO, "cocos2dx/nativeactivity.cpp", __VA_ARGS__))
 #define LOGW(...) ((void)__android_log_print(ANDROID_LOG_WARN, "cocos2dx/nativeactivity.cpp", __VA_ARGS__))
 
+#define LOG_RENDER_DEBUG(...)
+// #define LOG_RENDER_DEBUG(...)  ((void)__android_log_print(ANDROID_LOG_WARN, "cocos2dx/nativeactivity.cpp", __VA_ARGS__))
+
 /**
  * Our saved state data.
  */
@@ -120,10 +123,12 @@ static int engine_init_display(struct engine* engine) {
 static void engine_draw_frame(struct engine* engine) {
     if (engine->display == NULL) {
         // No display.
+        LOGW("engine_draw_frame : No display.");
         return;
     }
 
     cocos2d::CCDirector::sharedDirector()->mainLoop();
+    LOG_RENDER_DEBUG("engine_draw_frame : just called cocos' mainLoop()");
 
     /* // Just fill the screen with a color. */
     /* glClearColor(((float)engine->state.x)/engine->width, engine->state.angle, */
@@ -300,7 +305,10 @@ void android_main(struct android_app* state) {
 
             // Drawing is throttled to the screen update rate, so there
             // is no need to do timing here.
+            LOG_RENDER_DEBUG("android_main : engine.animating");
             engine_draw_frame(&engine);
+        } else {
+            LOG_RENDER_DEBUG("android_main : !engine.animating");
         }
     }
 }
