@@ -159,6 +159,18 @@
 		1AB1F48516EDBDB700FEB62A /* jsb_cocos2dx_extension_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AB1F48016EDBDB700FEB62A /* jsb_cocos2dx_extension_auto.cpp */; };
 		1AB1F48816EDBF2700FEB62A /* jsb_cocos2d_extension.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AB1F48616EDBEF100FEB62A /* jsb_cocos2d_extension.js */; };
 		1AB1F48B16EDC09700FEB62A /* jsb_cocos2dx_extension_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AB1F48916EDC09700FEB62A /* jsb_cocos2dx_extension_manual.cpp */; };
+		1AF3E99B1704313B00570E30 /* js_bindings_opengl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 263034AE17041277004A749B /* js_bindings_opengl.cpp */; };
+		1AF3E99C1704313B00570E30 /* jsb_opengl_functions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 263034AF17041277004A749B /* jsb_opengl_functions.cpp */; };
+		1AF3E99D1704313B00570E30 /* jsb_opengl_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 263034B017041277004A749B /* jsb_opengl_manual.cpp */; };
+		1AF3E99E1704313B00570E30 /* js_bindings_opengl.h in Sources */ = {isa = PBXBuildFile; fileRef = 263034B117041277004A749B /* js_bindings_opengl.h */; };
+		1AF3E99F1704313B00570E30 /* jsb_opengl_registration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 263034B217041277004A749B /* jsb_opengl_registration.cpp */; };
+		1AF3E9A01704313B00570E30 /* jsb_opengl_functions.h in Sources */ = {isa = PBXBuildFile; fileRef = 263034B317041277004A749B /* jsb_opengl_functions.h */; };
+		1AF3E9A11704313B00570E30 /* jsb_opengl_registration.h in Sources */ = {isa = PBXBuildFile; fileRef = 263034B417041277004A749B /* jsb_opengl_registration.h */; };
+		1AF3E9A21704313B00570E30 /* jsb_opengl_manual.h in Sources */ = {isa = PBXBuildFile; fileRef = 263034B517041277004A749B /* jsb_opengl_manual.h */; };
+		1AF3E9A31704313B00570E30 /* cocos2d_specifics.hpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A3D2FB1682F0A0002FB0C5 /* cocos2d_specifics.hpp */; };
+		1AF3E9A41704313B00570E30 /* cocosjs_manual_conversions.h in Sources */ = {isa = PBXBuildFile; fileRef = 15A3D2FD1682F0A0002FB0C5 /* cocosjs_manual_conversions.h */; };
+		1AF3E9A51704313B00570E30 /* jsb_cocos2dx_auto.hpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AB1F47E16EDBDB700FEB62A /* jsb_cocos2dx_auto.hpp */; };
+		1AF3E9A61704313B00570E30 /* jsb_cocos2dx_extension_auto.hpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AB1F48116EDBDB700FEB62A /* jsb_cocos2dx_extension_auto.hpp */; };
 		263034B617041277004A749B /* js_bindings_opengl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 263034AE17041277004A749B /* js_bindings_opengl.cpp */; };
 		263034B717041277004A749B /* jsb_opengl_functions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 263034AF17041277004A749B /* jsb_opengl_functions.cpp */; };
 		263034B817041277004A749B /* jsb_opengl_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 263034B017041277004A749B /* jsb_opengl_manual.cpp */; };
@@ -1517,6 +1529,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1AF3E99B1704313B00570E30 /* js_bindings_opengl.cpp in Sources */,
+				1AF3E99C1704313B00570E30 /* jsb_opengl_functions.cpp in Sources */,
+				1AF3E99D1704313B00570E30 /* jsb_opengl_manual.cpp in Sources */,
+				1AF3E99E1704313B00570E30 /* js_bindings_opengl.h in Sources */,
+				1AF3E99F1704313B00570E30 /* jsb_opengl_registration.cpp in Sources */,
+				1AF3E9A01704313B00570E30 /* jsb_opengl_functions.h in Sources */,
+				1AF3E9A11704313B00570E30 /* jsb_opengl_registration.h in Sources */,
+				1AF3E9A21704313B00570E30 /* jsb_opengl_manual.h in Sources */,
+				1AF3E9A31704313B00570E30 /* cocos2d_specifics.hpp in Sources */,
+				1AF3E9A41704313B00570E30 /* cocosjs_manual_conversions.h in Sources */,
+				1AF3E9A51704313B00570E30 /* jsb_cocos2dx_auto.hpp in Sources */,
+				1AF3E9A61704313B00570E30 /* jsb_cocos2dx_extension_auto.hpp in Sources */,
 				D401B60E16FB637400F2529D /* AppController.mm in Sources */,
 				D401B60F16FB637400F2529D /* main.m in Sources */,
 				D401B61016FB637400F2529D /* RootViewController.mm in Sources */,
