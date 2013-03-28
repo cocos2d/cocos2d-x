@@ -77,6 +77,7 @@ Developers:
         Fixed a bug that the truetype fonts from resource directory can't be found on linux.
         Fixed the size calculations for true type fonts (especially for italic fonts).
         Added a very simple greedy line break algorithmfor true type labels.
+        Fixed font rendering crash for certain fonts on linux.
 
     Nat Weiss (iphonegamekit.com)
         author of Mac port
