@@ -55,6 +55,7 @@ CCTextFieldTTF::CCTextFieldTTF()
 , m_nCharCount(0)
 , m_pInputText(new std::string)
 , m_pPlaceHolder(new std::string)   // prevent CCLabelTTF initWithString assertion
+, m_pSecureTextEntry(false)
 {
     m_ColorSpaceHolder.r = m_ColorSpaceHolder.g = m_ColorSpaceHolder.b = 127;
 }
@@ -287,11 +288,25 @@ void CCTextFieldTTF::setColorSpaceHolder(const ccColor3B& color)
 // input text property
 void CCTextFieldTTF::setString(const char *text)
 {
+	std::string displayText;
+	int length;
+	
     CC_SAFE_DELETE(m_pInputText);
 
     if (text)
     {
         m_pInputText = new std::string(text);
+		displayText = *m_pInputText;
+		if (m_pSecureTextEntry)
+		{
+			displayText = "";
+			length = m_pInputText->length();
+			while (length)
+			{
+				displayText.append("•");
+				--length;
+			}
+		}
     }
     else
     {
@@ -305,7 +320,7 @@ void CCTextFieldTTF::setString(const char *text)
     }
     else
     {
-        CCLabelTTF::setString(m_pInputText->c_str());
+        CCLabelTTF::setString(displayText.c_str());
     }
     m_nCharCount = _calcCharCount(m_pInputText->c_str());
 }
@@ -329,6 +344,21 @@ void CCTextFieldTTF::setPlaceHolder(const char * text)
 const char * CCTextFieldTTF::getPlaceHolder(void)
 {
     return m_pPlaceHolder->c_str();
+}
+
+// secureTextEntry
+void CCTextFieldTTF::setSecureTextEntry(bool value)
+{
+	if (m_pSecureTextEntry != value)
+	{
+		m_pSecureTextEntry = value;
+		setString(getString());
+	}
+}
+
+bool CCTextFieldTTF::getSecureTextEntry()
+{
+	return m_pSecureTextEntry;
 }
 
 NS_CC_END
