@@ -81,12 +81,14 @@ STATICLIBS = $(STATICLIBS_DIR)/libfreetype.a \
     $(STATICLIBS_DIR)/libtiff.a \
     $(STATICLIBS_DIR)/libwebp.a
 
+ifneq ($(OPENAL),1)
 ifeq ($(LBITS),64)
 FMOD_LIBDIR = $(COCOS_ROOT)/CocosDenshion/third_party/fmod/lib64/api/lib
 SHAREDLIBS += -lfmodex64
 else
 FMOD_LIBDIR = $(COCOS_ROOT)/CocosDenshion/third_party/fmod/api/lib
 SHAREDLIBS += -lfmodex
+endif
 endif
 
 SHAREDLIBS += -lglfw -lGLEW -lfontconfig
