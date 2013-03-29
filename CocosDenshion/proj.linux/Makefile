@@ -9,6 +9,7 @@ SHAREDLIBS += -lopenal -lalut
 
 ifneq ($(NOVORBIS),1)
 SHAREDLIBS += -logg -lvorbis -lvorbisfile
+else
 DEFINES += -DDISABLE_VORBIS
 endif
 
