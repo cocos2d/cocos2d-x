@@ -211,6 +211,7 @@ Developers:
 
     tiantian20007
         Fix crash for call runAnimation() in CCBAnimationManagerDelegate::completedAnimationSequenceNamed.
+        Fixing a bug that CCControl's touch priority is not set correctly; m_nDefaultTouchPriority is never used.
 
     xyhl515
         Fixed a bug that CCControlSwitch::setOn(isOn,false) doesn't work.
