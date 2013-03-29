@@ -25,7 +25,7 @@
 
 #ifndef __jsb_opengl_manual
 #define __jsb_opengl_manual
-#define JSB_INCLUDE_OPENGL
+
 #include "js_bindings_config.h"
 #ifdef JSB_INCLUDE_OPENGL
 
