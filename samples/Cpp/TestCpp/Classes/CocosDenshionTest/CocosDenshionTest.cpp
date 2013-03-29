@@ -5,7 +5,7 @@
 // android effect only support ogg
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     #define EFFECT_FILE        "effect2.ogg"
-#elif( CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE )
+#elif( CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
     #define EFFECT_FILE        "effect1.raw"
 #else
     #define EFFECT_FILE        "effect1.wav"
