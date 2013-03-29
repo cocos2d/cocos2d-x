@@ -736,8 +736,55 @@ int ScriptingCore::executeMenuItemEvent(CCMenuItem* pMenuItem)
     return 1;
 }
 
-int ScriptingCore::executeNotificationEvent(CCNotificationCenter* pNotificationCenter, const char* pszName)
+int ScriptingCore::executeNotificationEvent(CCNotificationCenter* pNotificationCenter, const char* pszName, CCObject *object)
 {
+    jsval cc;
+    JSContext *cx = this->cx_;
+    JSObject *global = this->global_;
+    // get global var cc
+    JS_GetProperty(cx, global, "cc", &cc);
+    if (cc == JSVAL_VOID)
+        return 0;
+    
+    // get cc.NotificationCenter: a pure js object
+    jsval owner;
+    JS_GetProperty(cx, &cc.toObject(), "NotificationCenter", &owner);
+    
+    if(owner == JSVAL_VOID)
+        return 0;
+    
+    jsval parameter1 = c_string_to_jsval(cx, pszName);
+    jsval retval;
+    if (object)
+    {
+        jsval parameter2;
+        // no proxy for CCString*, handle it manully
+        CCString *str = dynamic_cast<CCString *>(object);
+        if (str)
+            parameter2 = c_string_to_jsval(cx, str->getCString());
+        else
+        {
+            js_proxy_t *proxy;
+            JS_GET_NATIVE_PROXY(proxy, object);
+            if (!proxy)
+            {
+                js_log("can't get proxy for parameter object when executeNotificationEvent: %s", pszName);
+                return 0;
+            }
+            JSObject *tmpObject = proxy->obj;
+            parameter2 = OBJECT_TO_JSVAL(tmpObject);
+        }
+        
+        jsval argv[2] = {
+            parameter1,
+            parameter2,
+        };
+        
+        executeFunctionWithOwner(owner, "postNotification", 2, argv, &retval);
+    }
+    else
+        executeFunctionWithOwner(owner, "postNotification", 1, &parameter1, &retval);
+    
     return 1;
 }
 
