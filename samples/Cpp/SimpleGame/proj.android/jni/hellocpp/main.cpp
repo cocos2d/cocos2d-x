@@ -14,4 +14,3 @@ void cocos_android_app_init (void) {
     LOGD("cocos_android_app_init");
     simplegame::AppDelegate *pAppDelegate = new simplegame::AppDelegate();
 }
-
