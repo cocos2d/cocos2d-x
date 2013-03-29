@@ -91,8 +91,6 @@ class CCControl : public CCLayerRGBA
     //CCRGBAProtocol
     bool m_bIsOpacityModifyRGB;
     
-    /** Changes the priority of the button. The lower the number, the higher the priority. */
-    CC_SYNTHESIZE(int, m_nDefaultTouchPriority, DefaultTouchPriority);
     /** The current control state constant. */
     CC_SYNTHESIZE_READONLY(CCControlState, m_eState, State);
 
