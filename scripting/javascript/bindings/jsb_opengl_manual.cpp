@@ -199,10 +199,11 @@ JSBool JSB_glGetProgramInfoLog(JSContext *cx, uint32_t argc, jsval *vp)
 
 	GLsizei length;
 	glGetProgramiv(arg0, GL_INFO_LOG_LENGTH, &length);
-	GLchar src[length];
+	GLchar* src = new GLchar[length];
 	glGetProgramInfoLog(arg0, length, NULL, src);
-
+	
 	JS_SET_RVAL(cx, vp, charptr_to_jsval(cx, src));
+	CC_SAFE_DELETE_ARRAY(src);
 	return JS_TRUE;
 }
 
@@ -219,10 +220,11 @@ JSBool JSB_glGetShaderInfoLog(JSContext *cx, uint32_t argc, jsval *vp)
 
 	GLsizei length;
 	glGetShaderiv(arg0, GL_INFO_LOG_LENGTH, &length);
-	GLchar src[length];
+	GLchar* src = new GLchar[length];
 	glGetShaderInfoLog(arg0, length, NULL, src);
-
+	
 	JS_SET_RVAL(cx, vp, charptr_to_jsval(cx, src));
+	CC_SAFE_DELETE_ARRAY(src);
 	return JS_TRUE;
 }
 
@@ -239,10 +241,11 @@ JSBool JSB_glGetShaderSource(JSContext *cx, uint32_t argc, jsval *vp)
 
 	GLsizei length;
 	glGetShaderiv(arg0, GL_SHADER_SOURCE_LENGTH, &length);
-	GLchar src[length];
+	GLchar* src = new GLchar[length];
 	glGetShaderSource(arg0, length, NULL, src);
 
 	JS_SET_RVAL(cx, vp, charptr_to_jsval(cx, src));
+	CC_SAFE_DELETE_ARRAY(src);
 	return JS_TRUE;
 }
 
@@ -264,7 +267,7 @@ JSBool JSB_glGetActiveAttrib(JSContext *cx, uint32_t argc, jsval *vp)
 
 	GLsizei length;
 	glGetProgramiv(arg0, GL_ACTIVE_ATTRIBUTE_MAX_LENGTH, &length);
-	GLchar buffer[length];
+	GLchar* buffer = new GLchar[length];
 	GLint size = -1;
 	GLenum type = -1;
 
@@ -283,6 +286,7 @@ JSBool JSB_glGetActiveAttrib(JSContext *cx, uint32_t argc, jsval *vp)
 	retval = OBJECT_TO_JSVAL(object);
 
 	JS_SET_RVAL(cx, vp, retval);
+	CC_SAFE_DELETE_ARRAY(buffer);
 	return JS_TRUE;
 }
 
@@ -306,7 +310,7 @@ JSBool JSB_glGetActiveUniform(JSContext *cx, uint32_t argc, jsval *vp)
 
 	GLsizei length;
 	glGetProgramiv(arg0, GL_ACTIVE_ATTRIBUTE_MAX_LENGTH, &length);
-	GLchar buffer[length];
+	GLchar* buffer = new GLchar[length];
 	GLint size = -1;
 	GLenum type = -1;
 
@@ -326,6 +330,7 @@ JSBool JSB_glGetActiveUniform(JSContext *cx, uint32_t argc, jsval *vp)
 	retval = OBJECT_TO_JSVAL(object);
 
 	JS_SET_RVAL(cx, vp, retval);
+	CC_SAFE_DELETE_ARRAY(buffer);
 	return JS_TRUE;
 }
 
@@ -342,7 +347,7 @@ JSBool JSB_glGetAttachedShaders(JSContext *cx, uint32_t argc, jsval *vp)
 
 	GLsizei length;
 	glGetProgramiv(arg0, GL_ATTACHED_SHADERS, &length);
-	GLuint buffer[length];
+	GLuint* buffer = new GLuint[length];
 
 	glGetAttachedShaders(arg0, length, NULL, buffer);
 
@@ -355,6 +360,7 @@ JSBool JSB_glGetAttachedShaders(JSContext *cx, uint32_t argc, jsval *vp)
 	}
 
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+	CC_SAFE_DELETE_ARRAY(buffer);
 	return JS_TRUE;
 
 }
@@ -371,7 +377,7 @@ JSBool JSB_glGetSupportedExtensions(JSContext *cx, uint32_t argc, jsval *vp)
 
 	// copy, to be able to add '\0'
 	size_t len = strlen((char*)extensions);
-	GLubyte copy[len+1];
+	GLubyte* copy = new GLubyte[len+1];
 	strncpy((char*)copy, (const char*)extensions, len );
 
 	int start_extension=0;
@@ -390,6 +396,7 @@ JSBool JSB_glGetSupportedExtensions(JSContext *cx, uint32_t argc, jsval *vp)
 	}
 
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+	CC_SAFE_DELETE_ARRAY(copy);
 	return JS_TRUE;
 	
 }
@@ -429,11 +436,12 @@ JSBool JSB_glGetUniformfv(JSContext *cx, uint32_t argc, jsval *vp)
 
 	GLsizei length;
 	glGetProgramiv(arg0, GL_ACTIVE_ATTRIBUTE_MAX_LENGTH, &length);
-	GLchar namebuffer[length];
+	GLchar* namebuffer = new GLchar[length];
 	GLint size = -1;
 	GLenum type = -1;
 
 	glGetActiveUniform(arg0, arg1, length, NULL, &size, &type, namebuffer);
+	CC_SAFE_DELETE_ARRAY(namebuffer);
 
 	int usize = 0;
 	int utype = 0;
@@ -493,20 +501,21 @@ JSBool JSB_glGetUniformfv(JSContext *cx, uint32_t argc, jsval *vp)
 
 	JSObject *typedArray = NULL;
 	if( utype == GL_FLOAT) {
-		GLfloat param[usize];
+		GLfloat* param = new GLfloat[usize];
 		glGetUniformfv(arg0, arg1, param);
 
 		typedArray = JS_NewFloat32Array(cx, usize);
 		float *buffer = (float*)JS_GetArrayBufferViewData(typedArray);
 		memcpy( buffer, param, sizeof(float) * usize);
+		CC_SAFE_DELETE_ARRAY(param);
 	} else if( utype == GL_INT ) {
-		GLint param[usize];
+		GLint* param = new GLint[usize];
 		glGetUniformiv(arg0, arg1, param);
 
 		typedArray = JS_NewInt32Array(cx, usize);
 		GLint *buffer = (GLint*)JS_GetArrayBufferViewData(typedArray);
 		memcpy( buffer, param, sizeof(GLint) * usize);
-
+		CC_SAFE_DELETE_ARRAY(param);
 	}
 
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
