@@ -106,6 +106,7 @@ Developers:
     Rohan Kuruvilla (rohankuruvilla, Zynga)
         Improvements to JS Bindings.
         Synchronizing CCBReader to version 5.
+        Adding OpenGL Bindings to Javascript.
 
     Jianfeng Zou (NetDragon Inc)
         contributes CCListView and CCTextureWatcher.

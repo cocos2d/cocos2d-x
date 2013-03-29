@@ -500,6 +500,7 @@ cc.Class.extend = function (prop) {
 };
 
 cc.Node.prototype.ctor = function() {};
+cc.GLNode.extend = cc.Class.extend;
 cc.Node.extend = cc.Class.extend;
 cc.Layer.extend = cc.Class.extend;
 cc.LayerGradient.extend = cc.Class.extend;
