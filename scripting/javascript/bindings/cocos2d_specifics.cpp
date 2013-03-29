@@ -2402,6 +2402,27 @@ JSBool JSB_CCCatmullRomTo_actionWithDuration(JSContext *cx, uint32_t argc, jsval
 	return js_CatmullRomActions_create<cocos2d::CCCatmullRomTo>(cx, argc, vp);
 }
 
+JSBool js_cocos2dx_ccGLEnableVertexAttribs(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSBool ok = JS_TRUE;
+	jsval *argv = JS_ARGV(cx, vp);
+    
+	if (argc == 1) {
+		unsigned int arg0;
+		ok &= jsval_to_uint32(cx, argv[0], &arg0);
+        JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+        
+		ccGLEnableVertexAttribs(arg0);
+		JS_SET_RVAL(cx, vp, JSVAL_NULL);
+		return JS_TRUE;
+	}
+	
+    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
+	return JS_FALSE;
+}
+
+
+
 JSBool js_cocos2dx_ccpAdd(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSBool ok = JS_TRUE;
@@ -2424,6 +2445,8 @@ JSBool js_cocos2dx_ccpAdd(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
 	return JS_FALSE;
 }
+
+
 
 JSBool js_cocos2dx_ccpDistance(JSContext *cx, uint32_t argc, jsval *vp)
 {
@@ -3143,6 +3166,141 @@ JSBool js_cocos2dx_CCFileUtils_getSearchResolutionsOrder(JSContext *cx, uint32_t
     return JS_FALSE;
 }
 
+JSBool js_cocos2dx_CCGLProgram_setUniformLocationWith4f(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	JSBool ok = JS_TRUE;
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
+	cocos2d::CCGLProgram* cobj = (cocos2d::CCGLProgram *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
+    int arg0;
+    double arg1;
+    double arg2;
+    double arg3;
+    double arg4;
+    ok &= jsval_to_int32(cx, argv[0], (int32_t *)&arg0);
+    ok &= JS_ValueToNumber(cx, argv[1], &arg1);
+    
+    if(argc == 2) {
+        JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+        cobj->setUniformLocationWith1f(arg0, arg1);
+    }
+	if (argc == 3) {
+        ok &= JS_ValueToNumber(cx, argv[2], &arg2);
+		JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+		cobj->setUniformLocationWith2f(arg0, arg1, arg2);
+	}
+    if(argc == 4) {
+        ok &= JS_ValueToNumber(cx, argv[3], &arg3);
+        JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+		cobj->setUniformLocationWith3f(arg0, arg1, arg2, arg3);
+    }
+    if(argc == 5) {
+        ok &= JS_ValueToNumber(cx, argv[4], &arg4);
+        JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+		cobj->setUniformLocationWith4f(arg0, arg1, arg2, arg3, arg4);
+    }
+    
+    JS_SET_RVAL(cx, vp, JSVAL_VOID);
+    return JS_TRUE;
+	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 5);
+	return JS_FALSE;
+}
+
+JSBool js_cocos2dx_CCGLProgram_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	JSBool ok = JS_TRUE;
+    if(argc != 2) {
+        JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 2);
+        return JS_FALSE;
+    }
+    
+    const char *arg0, *arg1;
+    std::string arg0_tmp; ok &= jsval_to_std_string(cx, argv[0], &arg0_tmp); arg0 = arg0_tmp.c_str();
+    std::string arg1_tmp; ok &= jsval_to_std_string(cx, argv[1], &arg1_tmp); arg1 = arg1_tmp.c_str();
+
+    CCGLProgram* ret = new CCGLProgram();
+    ret->autorelease();
+    
+    ret->initWithVertexShaderFilename(arg0, arg1);
+    
+    jsval jsret;
+    do {
+        if (ret) {
+            js_proxy_t *p;
+            JS_GET_PROXY(p, ret);
+            if (p) {
+                jsret = OBJECT_TO_JSVAL(p->obj);
+            } else {
+                // create a new js obj of that class
+                js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::CCGLProgram>(cx, ret);
+                jsret = OBJECT_TO_JSVAL(proxy->obj);
+            }
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+    JS_SET_RVAL(cx, vp, jsret);
+    return JS_TRUE;
+
+}
+
+
+JSBool js_cocos2dx_CCGLProgram_createWithString(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	JSBool ok = JS_TRUE;
+	JSObject *obj = JS_THIS_OBJECT(cx,  vp);
+    if(argc != 2) {
+        JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 2);
+        return JS_FALSE;
+    }
+    
+    const char *arg0, *arg1;
+    std::string arg0_tmp; ok &= jsval_to_std_string(cx, argv[0], &arg0_tmp); arg0 = arg0_tmp.c_str();
+    std::string arg1_tmp; ok &= jsval_to_std_string(cx, argv[1], &arg1_tmp); arg1 = arg1_tmp.c_str();
+    
+    CCGLProgram* ret = new CCGLProgram();
+    ret->initWithVertexShaderByteArray(arg0, arg1);
+    
+    jsval jsret;
+    do {
+        if (ret) {
+            js_proxy_t *p;
+            JS_GET_PROXY(p, ret);
+            if (p) {
+                jsret = OBJECT_TO_JSVAL(p->obj);
+            } else {
+                // create a new js obj of that class
+                js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::CCGLProgram>(cx, ret);
+                jsret = OBJECT_TO_JSVAL(proxy->obj);
+            }
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+    JS_SET_RVAL(cx, vp, jsret);
+    return JS_TRUE;
+    
+}
+
+JSBool js_cocos2dx_CCGLProgram_getProgram(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
+	cocos2d::CCGLProgram* cobj = (cocos2d::CCGLProgram *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
+	if (argc == 0) {
+        GLuint ret = cobj->getProgram();
+        JS_SET_RVAL(cx, vp, UINT_TO_JSVAL((uint32_t)ret));
+		return JS_TRUE;
+	}
+    
+	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 0);
+	return JS_FALSE;
+}
 
 void register_cocos2dx_js_extensions(JSContext* cx, JSObject* global)
 {
@@ -3165,6 +3323,9 @@ void register_cocos2dx_js_extensions(JSContext* cx, JSObject* global)
 
     JS_DefineFunction(cx, jsb_CCNode_prototype, "retain", js_cocos2dx_retain, 0, JSPROP_READONLY | JSPROP_PERMANENT);
 	JS_DefineFunction(cx, jsb_CCNode_prototype, "release", js_cocos2dx_release, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+    
+    JS_DefineFunction(cx, jsb_CCGLProgram_prototype, "retain", js_cocos2dx_retain, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+	JS_DefineFunction(cx, jsb_CCGLProgram_prototype, "release", js_cocos2dx_release, 0, JSPROP_READONLY | JSPROP_PERMANENT);
 	JS_DefineFunction(cx, jsb_CCNode_prototype, "copy", js_cocos2dx_CCNode_copy, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_CCNode_prototype, "onExit", js_doNothing, 1, JSPROP_ENUMERATE  | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_CCNode_prototype, "onEnter", js_doNothing, 1, JSPROP_ENUMERATE  | JSPROP_PERMANENT);
@@ -3180,6 +3341,9 @@ void register_cocos2dx_js_extensions(JSContext* cx, JSObject* global)
     JS_DefineFunction(cx, jsb_CCNode_prototype, "unscheduleAllCallbacks", js_cocos2dx_CCNode_unscheduleAllSelectors, 0, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_CCNode_prototype, "setPosition", js_cocos2dx_CCNode_setPosition, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     
+    JS_DefineFunction(cx, jsb_CCGLProgram_prototype, "setUniformLocationF32", js_cocos2dx_CCGLProgram_setUniformLocationWith4f, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, jsb_CCGLProgram_prototype, "getProgram", js_cocos2dx_CCGLProgram_getProgram, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+
     JS_DefineFunction(cx, jsb_CCScheduler_prototype, "resumeTarget", js_cocos2dx_CCScheduler_resumeTarget, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_CCScheduler_prototype, "pauseTarget", js_cocos2dx_CCScheduler_pauseTarget, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_CCScheduler_prototype, "scheduleUpdateForTarget", js_CCScheduler_scheduleUpdateForTarget, 1, JSPROP_READONLY | JSPROP_PERMANENT);
@@ -3280,9 +3444,15 @@ void register_cocos2dx_js_extensions(JSContext* cx, JSObject* global)
 	tmpObj = JSVAL_TO_OBJECT(anonEvaluate(cx, global, "(function () { return cc.CallFunc; })()"));
 	JS_DefineFunction(cx, tmpObj, "create", js_callFunc, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 
+    
+	tmpObj = JSVAL_TO_OBJECT(anonEvaluate(cx, global, "(function () { return cc.GLProgram; })()"));
+	JS_DefineFunction(cx, tmpObj, "create", js_cocos2dx_CCGLProgram_create, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, tmpObj, "createWithString", js_cocos2dx_CCGLProgram_createWithString, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+
      tmpObj = JSVAL_TO_OBJECT(anonEvaluate(cx, global, "(function () { return this; })()"));
     JS_DefineFunction(cx, tmpObj, "garbageCollect", js_forceGC, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 
+    JS_DefineFunction(cx, ns, "glEnableVertexAttribs", js_cocos2dx_ccGLEnableVertexAttribs, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, ns, "pAdd", js_cocos2dx_ccpAdd, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, ns, "pDistance", js_cocos2dx_ccpDistance, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, ns, "pSub", js_cocos2dx_ccpSub, 0, JSPROP_READONLY | JSPROP_PERMANENT);
