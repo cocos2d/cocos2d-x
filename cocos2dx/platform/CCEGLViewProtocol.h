@@ -101,7 +101,7 @@ public:
     /*
      * Get whether GL_SCISSOR_TEST is enable
      */
-    virtual bool getIsScissorEnable();
+    virtual bool isScissorEnable();
 
     /*
      * Get the current scissor rectangle
