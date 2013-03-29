@@ -290,9 +290,9 @@ function Atlas4.create()
 
     local scale = CCScaleBy:create(2, 1.5)
     local scale_back = scale:reverse()
-	local action_arr = CCArray:create()
-	action_arr:addObject(scale)
-	action_arr:addObject(scale_back)
+    local action_arr = CCArray:create()
+    action_arr:addObject(scale)
+    action_arr:addObject(scale_back)
 
     local scale_seq = CCSequence:create(action_arr)
     local scale_4ever = CCRepeatForever:create(scale_seq)
@@ -303,9 +303,9 @@ function Atlas4.create()
     local fade_out = CCFadeOut:create(1)
     local fade_in = CCFadeIn:create(1)
 
-	local action_arr2 = CCArray:create()
-	action_arr2:addObject(fade_out)
-	action_arr2:addObject(fade_in)
+    local action_arr2 = CCArray:create()
+    action_arr2:addObject(fade_out)
+    action_arr2:addObject(fade_in)
     local seq = CCSequence:create(action_arr2)
     local fade_4ever = CCRepeatForever:create(seq)
 
@@ -1162,6 +1162,192 @@ function BitmapFontMultiLineAlignment.snapArrowsToEdge()
     )
 end
 
+--/ LabelTTFA8Test
+
+local LabelTTFA8Test = {}
+   
+function LabelTTFA8Test.create()
+   local layer = CCLayer:create()
+   Helper.initWithLayer(layer)
+
+   local s = CCDirector:sharedDirector():getWinSize()
+
+   local colorlayer = CCLayerColor:create(ccc4(128, 128, 128, 255))
+   layer:addChild(colorlayer, -10)
+
+   -- CCLabelBMFont
+   local label1 = CCLabelTTF:create("Testing A8 Format", "Marker Felt", 48)
+   layer:addChild(label1)
+   label1:setColor(ccc3(255, 0, 0))
+   label1:setPosition(ccp(s.width/2, s.height/2))
+
+   local fadeOut = CCFadeOut:create(2)
+   local fadeIn = CCFadeIn:create(2)
+   local arr = CCArray:create()
+   arr:addObject(fadeOut)
+   arr:addObject(fadeIn)
+
+   local seq = CCSequence:create(arr)
+   local forever = CCRepeatForever:create(seq)
+   label1:runAction(forever)
+
+   Helper.titleLabel:setString("Testing A8 Format")
+   Helper.subtitleLabel:setString("RED label, fading In and Out in the center of the screen")
+   return layer
+end
+
+--/ BMFontOneAtlas
+local BMFontOneAtlas = {}
+function BMFontOneAtlas.create()
+   local layer = CCLayer:create()
+   Helper.initWithLayer(layer)
+
+   local s = CCDirector:sharedDirector():getWinSize()
+  
+   local label1 = CCLabelBMFont:create("This is Helvetica", "fonts/helvetica-32.fnt", kCCLabelAutomaticWidth, kCCTextAlignmentLeft, ccp(0, 0))
+   layer:addChild(label1)
+   label1:setPosition(ccp(s.width/2, s.height/3*2))
+  
+   local label2 = CCLabelBMFont:create("And this is Geneva", "fonts/geneva-32.fnt", kCCLabelAutomaticWidth, kCCTextAlignmentLeft, ccp(0, 128))
+   layer:addChild(label2)
+   label2:setPosition(ccp(s.width/2, s.height/3*1))
+   Helper.titleLabel:setString("CCLabelBMFont with one texture")
+   Helper.subtitleLabel:setString("Using 2 .fnt definitions that share the same texture atlas.")
+   return layer
+end
+  
+--/ BMFontUnicode
+local BMFontUnicode = {}
+function BMFontUnicode.create()
+   local layer = CCLayer:create()
+   Helper.initWithLayer(layer)
+   Helper.titleLabel:setString("CCLabelBMFont with Unicode support")
+   Helper.subtitleLabel:setString("You should see 3 differnt labels: In Spanish, Chinese and Korean")
+
+   local s = CCDirector:sharedDirector():getWinSize()
+  
+   local label1 = CCLabelBMFont:create("Buen día", "fonts/arial-unicode-26.fnt", 200, kCCTextAlignmentLeft)
+   layer:addChild(label1)
+   label1:setPosition(ccp(s.width/2, s.height/4*3))
+  
+   local label2 = CCLabelBMFont:create("美好的一天", "fonts/arial-unicode-26.fnt")
+   layer:addChild(label2)
+   label2:setPosition(ccp(s.width/2, s.height/4*2))
+  
+   local label3 = CCLabelBMFont:create("良い一日を", "fonts/arial-unicode-26.fnt")
+   layer:addChild(label3)
+   label3:setPosition(ccp(s.width/2, s.height/4*1))
+
+   return layer
+end
+
+--BMFontInit
+
+local BMFontInit = {}
+function BMFontInit.create()
+   local layer = CCLayer:create()
+   Helper.initWithLayer(layer)
+   Helper.titleLabel:setString("CCLabelBMFont init")
+   Helper.subtitleLabel:setString("Test for support of init method without parameters.")
+  
+   local s = CCDirector:sharedDirector():getWinSize()
+  
+   local bmFont = CCLabelBMFont:new()
+   bmFont:init()
+   bmFont:autorelease()
+   --CCLabelBMFont* bmFont = [CCLabelBMFont create:@"Foo" fntFile:@"arial-unicode-26.fnt"]
+   bmFont:setFntFile("fonts/helvetica-32.fnt")
+   bmFont:setString("It is working!")
+   layer:addChild(bmFont)
+   bmFont:setPosition(ccp(s.width/2,s.height/4*2))
+   return layer
+end
+  
+  
+-- TTFFontInit
+  
+local TTFFontInit = {}
+function TTFFontInit.create()
+   local layer = CCLayer:create()
+   Helper.initWithLayer(layer)
+   Helper.titleLabel:setString("CCLabelTTF init")
+   Helper.subtitleLabel:setString("Test for support of init method without parameters.")
+  
+   local s = CCDirector:sharedDirector():getWinSize()
+  
+   local font = CCLabelTTF:new()
+   font:init()
+   font:autorelease()
+   font:setFontName("Marker Felt")
+   font:setFontSize(48)
+   font:setString("It is working!")
+   layer:addChild(font)
+   font:setPosition(ccp(s.width/2,s.height/4*2))
+   return layer
+end
+  
+-- Issue1343
+  
+local Issue1343 = {}
+function Issue1343.create()
+   local layer = CCLayer:create()
+   Helper.initWithLayer(layer)
+   Helper.titleLabel:setString("Issue 1343")
+   Helper.subtitleLabel:setString("You should see: ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz.,'")
+  
+   local s = CCDirector:sharedDirector():getWinSize()
+  
+   local bmFont = CCLabelBMFont:new()
+   bmFont:init()
+   bmFont:setFntFile("fonts/font-issue1343.fnt")
+   bmFont:setString("ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz.,'")
+   layer:addChild(bmFont)
+   bmFont:release()
+   bmFont:setScale(0.3)
+  
+   bmFont:setPosition(ccp(s.width/2,s.height/4*2))
+   return layer
+end
+  
+local LabelBMFontBounds = {}
+function LabelBMFontBounds.create()
+   local layer = CCLayer:create()
+   Helper.initWithLayer(layer)
+   Helper.titleLabel:setString("Testing LabelBMFont Bounds")
+   Helper.subtitleLabel:setString("You should see string enclosed by a box")
+  
+   local s = CCDirector:sharedDirector():getWinSize()
+   
+   local colorlayer = CCLayerColor:create(ccc4(128,128,128,255))
+   layer:addChild(colorlayer, -10)
+   
+   -- CCLabelBMFont
+   local label1 = CCLabelBMFont:create("Testing Glyph Designer", "fonts/boundsTestFont.fnt")
+   
+   
+   layer:addChild(label1)
+   label1:setPosition(ccp(s.width/2, s.height/2))
+   return layer
+end
+  
+  
+function LabelBMFontBounds.draw()
+   -- CCSize labelSize = label1:getContentSize()
+   -- CCSize origin = CCDirector:sharedDirector():getWinSize()
+   
+   -- origin.width = origin.width / 2 - (labelSize.width / 2)
+   -- origin.height = origin.height / 2 - (labelSize.height / 2)
+   
+   -- CCPoint vertices[4]=
+   
+   --     ccp(origin.width, origin.height),
+   --     ccp(labelSize.width + origin.width, origin.height),
+   --     ccp(labelSize.width + origin.width, labelSize.height + origin.height),
+   --     ccp(origin.width, labelSize.height + origin.height)
+   -- end
+   -- ccDrawPoly(vertices, 4, true)
+end
+
 
 function LabelTest()
    cclog("LabelTest")
@@ -1188,14 +1374,14 @@ function LabelTest()
 	  LabelTTFChinese.create,
 	  LabelBMFontChinese.create,
 	  BitmapFontMultiLineAlignment.create,
---	  LabelTTFA8Test,
---	  BMFontOneAtlas,
---	  BMFontUnicode,
---	  BMFontInit,
---	  TTFFontInit,
---	  Issue1343,
---	  LabelTTFAlignment,
---	  LabelBMFontBounds
+	  LabelTTFA8Test.create,
+	  BMFontOneAtlas.create,
+	  BMFontUnicode.create,
+	  BMFontInit.create,
+	  TTFFontInit.create,
+	  Issue1343.create,
+	  -- LabelTTFAlignment.create,
+	  LabelBMFontBounds.create
    }
    scene:addChild(LabelAtlasTest.create())
    scene:addChild(CreateBackMenuItem())
