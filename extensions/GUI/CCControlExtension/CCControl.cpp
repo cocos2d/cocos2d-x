@@ -37,7 +37,6 @@ NS_CC_EXT_BEGIN
 
 CCControl::CCControl()
 : m_bIsOpacityModifyRGB(false)
-, m_nDefaultTouchPriority(0)
 , m_eState(CCControlStateNormal)
 , m_hasVisibleParents(false)
 , m_bEnabled(false)
@@ -76,8 +75,7 @@ bool CCControl::init()
         setHighlighted(false);
 
         // Set the touch dispatcher priority by default to 1
-        setDefaultTouchPriority(1);
-        this->setTouchPriority(m_nDefaultTouchPriority);
+        this->setTouchPriority(1);
         // Initialise the tables
         m_pDispatchTable = new CCDictionary(); 
 
