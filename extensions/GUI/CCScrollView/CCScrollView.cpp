@@ -494,7 +494,7 @@ void CCScrollView::beforeDraw()
     {
 		m_bScissorRestored = false;
         CCRect frame = getViewRect();
-        if (CCEGLView::sharedOpenGLView()->isScissorEnable()) {
+        if (CCEGLView::sharedOpenGLView()->isScissorEnabled()) {
             m_bScissorRestored = true;
             m_tParentScissorRect = CCEGLView::sharedOpenGLView()->getScissorRect();
             //set the intersection of m_tParentScissorRect and frame as the new scissor rect
