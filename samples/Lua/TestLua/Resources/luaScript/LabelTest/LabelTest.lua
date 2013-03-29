@@ -756,7 +756,7 @@ function LabelTTFTest.create()
     menu:setPosition(ccp(s.width - 50, s.height / 2 - 20))
     layer:addChild(menu)
 
-    layer:updateAlignment()
+    LabelTTFTest.updateAlignment()
     
     layer:registerScriptHandler(LabelTTFTest.onNodeEvent)
 
@@ -768,7 +768,7 @@ end
 
 function LabelTTFTest.onNodeEvent(tag)
    if tag == "exit" then
-      if LabelTTFTest._plabel != nil then
+      if LabelTTFTest._plabel ~= nil then
          LabelTTFTest._plabel:release()
       end
    end
@@ -778,13 +778,12 @@ function LabelTTFTest.updateAlignment()
     local blockSize = CCSizeMake(200, 160)
     local s = CCDirector:sharedDirector():getWinSize()
 
-    if (LabelTTFTest._plabel)
-    {
+    if (LabelTTFTest._plabel) then
         LabelTTFTest._plabel:removeFromParentAndCleanup(true)
         LabelTTFTest._plabel:release()
-    }
+    end
 
-    LabelTTFTest._plabel = CCLabelTTF:create(this:getCurrentAlignment(), "Marker Felt", 32,
+    LabelTTFTest._plabel = CCLabelTTF:create(LabelTTFTest.getCurrentAlignment(), "Marker Felt", 32,
                                   blockSize, LabelTTFTest._eHorizAlign, LabelTTFTest._eVertAlign)
     LabelTTFTest._plabel:retain()
 
@@ -804,61 +803,369 @@ function LabelTTFTest.setAlignmentCenter(pSender)
     LabelTTFTest.updateAlignment()
 end
 
-void LabelTTFTest:setAlignmentRight(CCObject* pSender)
-{
-    m_eHorizAlign = kCCTextAlignmentRight
-    this:updateAlignment()
-}
+function LabelTTFTest.setAlignmentRight(pSender)
+    LabelTTFTest._eHorizAlign = kCCTextAlignmentRight
+    LabelTTFTest.updateAlignment()
+end
 
-void LabelTTFTest:setAlignmentTop(CCObject* pSender)
-{
-    m_eVertAlign = kCCVerticalTextAlignmentTop
-    this:updateAlignment()
-}
+function LabelTTFTest.setAlignmentTop(pSender)
+    LabelTTFTest._eVertAlign = kCCVerticalTextAlignmentTop
+    LabelTTFTest.updateAlignment()
+end
 
-void LabelTTFTest:setAlignmentMiddle(CCObject* pSender)
-{
-    m_eVertAlign = kCCVerticalTextAlignmentCenter
-    this:updateAlignment()
-}
+function LabelTTFTest.setAlignmentMiddle(pSender)
+    LabelTTFTest._eVertAlign = kCCVerticalTextAlignmentCenter
+    LabelTTFTest.updateAlignment()
+end
 
-void LabelTTFTest:setAlignmentBottom(CCObject* pSender)
-{
-    m_eVertAlign = kCCVerticalTextAlignmentBottom
-    this:updateAlignment()
-}
+function LabelTTFTest.setAlignmentBottom(pSender)
+    LabelTTFTest._eVertAlign = kCCVerticalTextAlignmentBottom
+    LabelTTFTest.updateAlignment()
+end
 
-const char* LabelTTFTest:getCurrentAlignment()
-{
-    const char* vertical = NULL
-    const char* horizontal = NULL
-    switch (m_eVertAlign) {
-        case kCCVerticalTextAlignmentTop:
+function LabelTTFTest.getCurrentAlignment()
+    local vertical = nil
+    local horizontal = nil
+    if LabelTTFTest._eVertAlign == kCCVerticalTextAlignmentTop then
             vertical = "Top"
-            break
-        case kCCVerticalTextAlignmentCenter:
+    elseif LabelTTFTest._eVertAlign ==  kCCVerticalTextAlignmentCenter then
             vertical = "Middle"
-            break
-        case kCCVerticalTextAlignmentBottom:
+    elseif LabelTTFTest._eVertAlign ==  kCCVerticalTextAlignmentBottom then
             vertical = "Bottom"
-            break
-    }
-    switch (m_eHorizAlign) {
-        case kCCTextAlignmentLeft:
-            horizontal = "Left"
-            break
-        case kCCTextAlignmentCenter:
-            horizontal = "Center"
-            break
-        case kCCTextAlignmentRight:
-            horizontal = "Right"
-            break
-    }
+    end
 
-    return CCString:createWithFormat("Alignment %s %s", vertical, horizontal):getCString()
+    if LabelTTFTest._eHorizAlign == kCCTextAlignmentLeft then
+            horizontal = "Left"
+    elseif LabelTTFTest._eHorizAlign == kCCTextAlignmentCenter then
+            horizontal = "Center"
+    elseif LabelTTFTest._eHorizAlign == kCCTextAlignmentRight then
+            horizontal = "Right"
+    end
+
+    return string.format("Alignment %s %s", vertical, horizontal)
+end
+
+--------------------------------------------------------------------
+--
+-- Atlas1
+--
+--------------------------------------------------------------------
+--Atlas1:Atlas1()
+--{ 
+--    m_textureAtlas = CCTextureAtlas:create(s_AtlasTest, 3); m_textureAtlas:retain();
+--    
+--    CCSize s = CCDirector:sharedDirector():getWinSize();
+--  
+--    --
+--    -- Notice: u,v tex coordinates are inverted
+--    --
+--    ccV3F_C4B_T2F_Quad quads[] = 
+--    {
+--        {
+--            {{0,0,0},ccc4(0,0,255,255),{0.0f,1.0f},},                -- bottom left
+--            {{s.width,0,0},ccc4(0,0,255,0),{1.0f,1.0f},},            -- bottom right
+--            {{0,s.height,0},ccc4(0,0,255,0),{0.0f,0.0f},},            -- top left
+--            {{s.width,s.height,0},{0,0,255,255},{1.0f,0.0f},},    -- top right
+--        },        
+--        {
+--            {{40,40,0},ccc4(255,255,255,255),{0.0f,0.2f},},            -- bottom left
+--            {{120,80,0},ccc4(255,0,0,255),{0.5f,0.2f},},            -- bottom right
+--            {{40,160,0},ccc4(255,255,255,255),{0.0f,0.0f},},        -- top left
+--            {{160,160,0},ccc4(0,255,0,255),{0.5f,0.0f},},            -- top right
+--        },
+--  
+--        {
+--            {{s.width/2,40,0},ccc4(255,0,0,255),{0.0f,1.0f},},        -- bottom left
+--            {{s.width,40,0},ccc4(0,255,0,255),{1.0f,1.0f},},        -- bottom right
+--            {{s.width/2-50,200,0},ccc4(0,0,255,255),{0.0f,0.0f},},        -- top left
+--            {{s.width,100,0},ccc4(255,255,0,255),{1.0f,0.0f},},        -- top right
+--        },
+--        
+--    };
+--    
+--    
+--    for( int i=0;i<3;i++) 
+--    {
+--        m_textureAtlas:updateQuad(&quads[i], i);
+--    }
+--} 
+--  
+--Atlas1:~Atlas1()
+--{ 
+--    m_textureAtlas:release();
+--} 
+--  
+--void Atlas1:draw()
+--{ 
+--    -- GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
+--    -- GL_TEXTURE_2D
+--  
+--    m_textureAtlas:drawQuads();
+--  
+----    [textureAtlas drawNumberOfQuads:3];
+--    
+--} 
+--  
+--std:string Atlas1:title()
+--{ 
+--    return "CCTextureAtlas";
+--} 
+--  
+--std:string Atlas1:subtitle()
+--{ 
+--    return "Manual creation of CCTextureAtlas";
+--} 
+
+local LabelTTFMultiline = {
+    layer = nil
 }
 
+function LabelTTFMultiline.create()
+    local layer = CCLayer:create()
+    Helper.initWithLayer(layer)
+    
+    local s = CCDirector:sharedDirector():getWinSize()
 
+    local center = CCLabelTTF:create("word wrap \"testing\" (bla0) bla1 'bla2' [bla3] (bla4) {bla5} {bla6} [bla7] (bla8) [bla9] 'bla0' \"bla1\"",
+                                            "Paint Boy",
+                                            32,
+                                            CCSizeMake(s.width/2,200),
+                                            kCCTextAlignmentCenter,
+                                            kCCVerticalTextAlignmentTop)
+
+    center:setPosition(ccp(s.width / 2, 150))
+
+    layer:addChild(center)
+    Helper.titleLabel:setString("Testing CCLabelTTF Word Wrap")
+    Helper.subtitleLabel:setString("Word wrap using CCLabelTTF and a custom TTF font")
+
+    return layer
+end
+
+local LabelTTFChinese = {}
+
+function LabelTTFChinese.create()
+    local layer = CCLayer:create()
+    Helper.initWithLayer(layer)
+    local size = CCDirector:sharedDirector():getWinSize()
+    local pLable = CCLabelTTF:create("中国", "Marker Felt", 30)
+    pLable:setPosition(ccp(size.width / 2, size.height /2))
+    layer:addChild(pLable)
+    Helper.titleLabel:setString("Testing CCLabelTTF with Chinese character")
+    return layer
+end
+
+local LabelBMFontChinese = {}
+function LabelBMFontChinese.create()
+    local layer = CCLayer:create()
+    Helper.initWithLayer(layer)
+
+    local size = CCDirector:sharedDirector():getWinSize()
+    local pLable = CCLabelBMFont:create("中国", "fonts/bitmapFontChinese.fnt")
+    pLable:setPosition(ccp(size.width / 2, size.height /2))
+    layer:addChild(pLable)
+
+    Helper.titleLabel:setString("Testing CCLabelBMFont with Chinese character")
+    return layer
+end
+
+-- BitmapFontMultiLineAlignment
+
+local  LongSentencesExample =  "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+local  LineBreaksExample = "Lorem ipsum dolor\nsit amet\nconsectetur adipisicing elit\nblah\nblah"
+local  MixedExample = "ABC\nLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt\nDEF"
+
+local  ArrowsMax = 0.95
+local  ArrowsMin = 0.7
+
+local  LeftAlign = 0
+local  CenterAlign = 1
+local  RightAlign = 2
+
+local  LongSentences = 0
+local  LineBreaks = 1
+local  Mixed = 2
+
+static float alignmentItemPadding = 50;
+static float menuItemPaddingCenter = 50;
+BitmapFontMultiLineAlignment::BitmapFontMultiLineAlignment()
+{
+    this->setTouchEnabled(true);
+
+    // ask director the the window size
+    CCSize size = CCDirector::sharedDirector()->getWinSize();
+
+    // create and initialize a Label
+    this->m_pLabelShouldRetain = CCLabelBMFont::create(LongSentencesExample, "fonts/markerFelt.fnt", size.width/1.5, kCCTextAlignmentCenter);
+    this->m_pLabelShouldRetain->retain();
+
+    this->m_pArrowsBarShouldRetain = CCSprite::create("Images/arrowsBar.png");
+    this->m_pArrowsBarShouldRetain->retain();
+    this->m_pArrowsShouldRetain = CCSprite::create("Images/arrows.png");
+    this->m_pArrowsShouldRetain->retain();
+
+    CCMenuItemFont::setFontSize(20);
+    CCMenuItemFont *longSentences = CCMenuItemFont::create("Long Flowing Sentences", this, menu_selector(BitmapFontMultiLineAlignment::stringChanged));
+    CCMenuItemFont *lineBreaks = CCMenuItemFont::create("Short Sentences With Intentional Line Breaks", this, menu_selector(BitmapFontMultiLineAlignment::stringChanged));
+    CCMenuItemFont *mixed = CCMenuItemFont::create("Long Sentences Mixed With Intentional Line Breaks", this, menu_selector(BitmapFontMultiLineAlignment::stringChanged));
+    CCMenu *stringMenu = CCMenu::create(longSentences, lineBreaks, mixed, NULL);
+    stringMenu->alignItemsVertically();
+
+    longSentences->setColor(ccRED);
+    m_pLastSentenceItem = longSentences;
+    longSentences->setTag(LongSentences);
+    lineBreaks->setTag(LineBreaks);
+    mixed->setTag(Mixed);
+
+    CCMenuItemFont::setFontSize(30);
+
+    CCMenuItemFont *left = CCMenuItemFont::create("Left", this, menu_selector(BitmapFontMultiLineAlignment::alignmentChanged));
+    CCMenuItemFont *center = CCMenuItemFont::create("Center", this, menu_selector(BitmapFontMultiLineAlignment::alignmentChanged));
+    CCMenuItemFont *right = CCMenuItemFont::create("Right", this, menu_selector(BitmapFontMultiLineAlignment::alignmentChanged));
+    CCMenu *alignmentMenu = CCMenu::create(left, center, right, NULL);
+    alignmentMenu->alignItemsHorizontallyWithPadding(alignmentItemPadding);
+
+    center->setColor(ccRED);
+    m_pLastAlignmentItem = center;
+    left->setTag(LeftAlign);
+    center->setTag(CenterAlign);
+    right->setTag(RightAlign);
+
+    // position the label on the center of the screen
+    this->m_pLabelShouldRetain->setPosition(ccp(size.width/2, size.height/2));
+
+    this->m_pArrowsBarShouldRetain->setVisible(false);
+
+    float arrowsWidth = (ArrowsMax - ArrowsMin) * size.width;
+    this->m_pArrowsBarShouldRetain->setScaleX(arrowsWidth / this->m_pArrowsBarShouldRetain->getContentSize().width);
+    this->m_pArrowsBarShouldRetain->setPosition(ccp(((ArrowsMax + ArrowsMin) / 2) * size.width, this->m_pLabelShouldRetain->getPosition().y));
+
+    this->snapArrowsToEdge();
+
+    stringMenu->setPosition(ccp(size.width/2, size.height - menuItemPaddingCenter));
+    alignmentMenu->setPosition(ccp(size.width/2, menuItemPaddingCenter+15));
+
+    this->addChild(this->m_pLabelShouldRetain);
+    this->addChild(this->m_pArrowsBarShouldRetain);
+    this->addChild(this->m_pArrowsShouldRetain);
+    this->addChild(stringMenu);
+    this->addChild(alignmentMenu);
+}
+
+BitmapFontMultiLineAlignment::~BitmapFontMultiLineAlignment()
+{
+    this->m_pLabelShouldRetain->release();
+    this->m_pArrowsBarShouldRetain->release();
+    this->m_pArrowsShouldRetain->release();
+}
+
+std::string BitmapFontMultiLineAlignment::title()
+{
+    return "";
+}
+
+std::string BitmapFontMultiLineAlignment::subtitle()
+{
+    return "";
+}
+
+void BitmapFontMultiLineAlignment::stringChanged(cocos2d::CCObject *sender)
+{
+    CCMenuItemFont *item = (CCMenuItemFont*)sender;
+    item->setColor(ccRED);
+    this->m_pLastAlignmentItem->setColor(ccWHITE);
+    this->m_pLastAlignmentItem = item;
+
+    switch(item->getTag())
+    {
+    case LongSentences:
+        this->m_pLabelShouldRetain->setString(LongSentencesExample);
+        break;
+    case LineBreaks:
+        this->m_pLabelShouldRetain->setString(LineBreaksExample);
+        break;
+    case Mixed:
+        this->m_pLabelShouldRetain->setString(MixedExample);
+        break;
+
+    default:
+        break;
+    }
+
+    this->snapArrowsToEdge();
+}
+
+void BitmapFontMultiLineAlignment::alignmentChanged(cocos2d::CCObject *sender)
+{
+    CCMenuItemFont *item = (CCMenuItemFont*)sender;
+    item->setColor(ccRED);
+    this->m_pLastAlignmentItem->setColor(ccWHITE);
+    this->m_pLastAlignmentItem = item;
+
+    switch(item->getTag())
+    {
+    case LeftAlign:
+        this->m_pLabelShouldRetain->setAlignment(kCCTextAlignmentLeft);
+        break;
+    case CenterAlign:
+        this->m_pLabelShouldRetain->setAlignment(kCCTextAlignmentCenter);
+        break;
+    case RightAlign:
+        this->m_pLabelShouldRetain->setAlignment(kCCTextAlignmentRight);
+        break;
+
+    default:
+        break;
+    }
+
+    this->snapArrowsToEdge();
+}
+
+void BitmapFontMultiLineAlignment::ccTouchesBegan(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEvent)
+{
+    CCTouch *touch = (CCTouch *)pTouches->anyObject();
+    CCPoint location = touch->getLocationInView();
+
+    if (this->m_pArrowsShouldRetain->boundingBox().containsPoint(location))
+    {
+        m_drag = true;
+        this->m_pArrowsBarShouldRetain->setVisible(true);
+    }
+}
+
+void BitmapFontMultiLineAlignment::ccTouchesEnded(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEvent)
+{
+    m_drag = false;
+    this->snapArrowsToEdge();
+
+    this->m_pArrowsBarShouldRetain->setVisible(false);
+}
+
+void BitmapFontMultiLineAlignment::ccTouchesMoved(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEvent)
+{
+    if (! m_drag)
+    {
+        return;
+    }
+
+    CCTouch *touch = (CCTouch *)pTouches->anyObject();
+    CCPoint location = touch->getLocationInView();
+
+    CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+
+    this->m_pArrowsShouldRetain->setPosition(ccp(MAX(MIN(location.x, ArrowsMax*winSize.width), ArrowsMin*winSize.width), 
+        this->m_pArrowsShouldRetain->getPosition().y));
+
+    float labelWidth = fabs(this->m_pArrowsShouldRetain->getPosition().x - this->m_pLabelShouldRetain->getPosition().x) * 2;
+
+    this->m_pLabelShouldRetain->setWidth(labelWidth);
+}
+
+void BitmapFontMultiLineAlignment::snapArrowsToEdge()
+{
+    this->m_pArrowsShouldRetain->setPosition(ccp(this->m_pLabelShouldRetain->getPosition().x + this->m_pLabelShouldRetain->getContentSize().width/2,
+        this->m_pLabelShouldRetain->getPosition().y));
+}
 
 
 function LabelTest()
@@ -881,10 +1188,10 @@ function LabelTest()
 	  LabelAtlasHD.create,
 	  LabelGlyphDesigner.create,
 --	  Atlas1,
---	  LabelTTFTest,
---	  LabelTTFMultiline,
---	  LabelTTFChinese,
---	  LabelBMFontChinese,
+	  LabelTTFTest.create,
+	  LabelTTFMultiline.create,
+	  LabelTTFChinese.create,
+	  LabelBMFontChinese.create,
 --	  BitmapFontMultiLineAlignment,
 --	  LabelTTFA8Test,
 --	  BMFontOneAtlas,
