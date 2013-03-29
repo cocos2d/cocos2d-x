@@ -972,200 +972,195 @@ end
 -- BitmapFontMultiLineAlignment
 
 local  LongSentencesExample =  "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-local  LineBreaksExample = "Lorem ipsum dolor\nsit amet\nconsectetur adipisicing elit\nblah\nblah"
-local  MixedExample = "ABC\nLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt\nDEF"
+local  LineBreaksExample    = "Lorem ipsum dolor\nsit amet\nconsectetur adipisicing elit\nblah\nblah"
+local  MixedExample         = "ABC\nLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt\nDEF"
 
-local  ArrowsMax = 0.95
-local  ArrowsMin = 0.7
+local  ArrowsMax             = 0.95
+local  ArrowsMin             = 0.7
 
-local  LeftAlign = 0
-local  CenterAlign = 1
-local  RightAlign = 2
+local  LeftAlign             = 0
+local  CenterAlign           = 1
+local  RightAlign            = 2
 
-local  LongSentences = 0
-local  LineBreaks = 1
-local  Mixed = 2
+local  LongSentences         = 0
+local  LineBreaks            = 1
+local  Mixed                 = 2
 
-static float alignmentItemPadding = 50;
-static float menuItemPaddingCenter = 50;
-BitmapFontMultiLineAlignment::BitmapFontMultiLineAlignment()
-{
-    this->setTouchEnabled(true);
+local  alignmentItemPadding  = 50
+local  menuItemPaddingCenter = 50
 
-    // ask director the the window size
-    CCSize size = CCDirector::sharedDirector()->getWinSize();
-
-    // create and initialize a Label
-    this->m_pLabelShouldRetain = CCLabelBMFont::create(LongSentencesExample, "fonts/markerFelt.fnt", size.width/1.5, kCCTextAlignmentCenter);
-    this->m_pLabelShouldRetain->retain();
-
-    this->m_pArrowsBarShouldRetain = CCSprite::create("Images/arrowsBar.png");
-    this->m_pArrowsBarShouldRetain->retain();
-    this->m_pArrowsShouldRetain = CCSprite::create("Images/arrows.png");
-    this->m_pArrowsShouldRetain->retain();
-
-    CCMenuItemFont::setFontSize(20);
-    CCMenuItemFont *longSentences = CCMenuItemFont::create("Long Flowing Sentences", this, menu_selector(BitmapFontMultiLineAlignment::stringChanged));
-    CCMenuItemFont *lineBreaks = CCMenuItemFont::create("Short Sentences With Intentional Line Breaks", this, menu_selector(BitmapFontMultiLineAlignment::stringChanged));
-    CCMenuItemFont *mixed = CCMenuItemFont::create("Long Sentences Mixed With Intentional Line Breaks", this, menu_selector(BitmapFontMultiLineAlignment::stringChanged));
-    CCMenu *stringMenu = CCMenu::create(longSentences, lineBreaks, mixed, NULL);
-    stringMenu->alignItemsVertically();
-
-    longSentences->setColor(ccRED);
-    m_pLastSentenceItem = longSentences;
-    longSentences->setTag(LongSentences);
-    lineBreaks->setTag(LineBreaks);
-    mixed->setTag(Mixed);
-
-    CCMenuItemFont::setFontSize(30);
-
-    CCMenuItemFont *left = CCMenuItemFont::create("Left", this, menu_selector(BitmapFontMultiLineAlignment::alignmentChanged));
-    CCMenuItemFont *center = CCMenuItemFont::create("Center", this, menu_selector(BitmapFontMultiLineAlignment::alignmentChanged));
-    CCMenuItemFont *right = CCMenuItemFont::create("Right", this, menu_selector(BitmapFontMultiLineAlignment::alignmentChanged));
-    CCMenu *alignmentMenu = CCMenu::create(left, center, right, NULL);
-    alignmentMenu->alignItemsHorizontallyWithPadding(alignmentItemPadding);
-
-    center->setColor(ccRED);
-    m_pLastAlignmentItem = center;
-    left->setTag(LeftAlign);
-    center->setTag(CenterAlign);
-    right->setTag(RightAlign);
-
-    // position the label on the center of the screen
-    this->m_pLabelShouldRetain->setPosition(ccp(size.width/2, size.height/2));
-
-    this->m_pArrowsBarShouldRetain->setVisible(false);
-
-    float arrowsWidth = (ArrowsMax - ArrowsMin) * size.width;
-    this->m_pArrowsBarShouldRetain->setScaleX(arrowsWidth / this->m_pArrowsBarShouldRetain->getContentSize().width);
-    this->m_pArrowsBarShouldRetain->setPosition(ccp(((ArrowsMax + ArrowsMin) / 2) * size.width, this->m_pLabelShouldRetain->getPosition().y));
-
-    this->snapArrowsToEdge();
-
-    stringMenu->setPosition(ccp(size.width/2, size.height - menuItemPaddingCenter));
-    alignmentMenu->setPosition(ccp(size.width/2, menuItemPaddingCenter+15));
-
-    this->addChild(this->m_pLabelShouldRetain);
-    this->addChild(this->m_pArrowsBarShouldRetain);
-    this->addChild(this->m_pArrowsShouldRetain);
-    this->addChild(stringMenu);
-    this->addChild(alignmentMenu);
+local BitmapFontMultiLineAlignment = {
+   _pLabelShouldRetain = nil,
+   _pArrowsBarShouldRetain = nil,
+   _pArrowsShouldRetain = nil,
+   _pLastSentenceItem = nil,
+   _drag = false,
 }
 
-BitmapFontMultiLineAlignment::~BitmapFontMultiLineAlignment()
-{
-    this->m_pLabelShouldRetain->release();
-    this->m_pArrowsBarShouldRetain->release();
-    this->m_pArrowsShouldRetain->release();
-}
+function BitmapFontMultiLineAlignment.create()
+    local layer = CCLayer:create()
+    Helper.initWithLayer(layer)
 
-std::string BitmapFontMultiLineAlignment::title()
-{
-    return "";
-}
+    layer:setTouchEnabled(true)
 
-std::string BitmapFontMultiLineAlignment::subtitle()
-{
-    return "";
-}
+    -- ask director the the window size
+    local size = CCDirector:sharedDirector():getWinSize()
 
-void BitmapFontMultiLineAlignment::stringChanged(cocos2d::CCObject *sender)
-{
-    CCMenuItemFont *item = (CCMenuItemFont*)sender;
-    item->setColor(ccRED);
-    this->m_pLastAlignmentItem->setColor(ccWHITE);
-    this->m_pLastAlignmentItem = item;
+    -- create and initialize a Label
+    BitmapFontMultiLineAlignment._pLabelShouldRetain = CCLabelBMFont:create(LongSentencesExample, "fonts/markerFelt.fnt", size.width/1.5, kCCTextAlignmentCenter)
+    BitmapFontMultiLineAlignment._pLabelShouldRetain:retain()
 
-    switch(item->getTag())
-    {
-    case LongSentences:
-        this->m_pLabelShouldRetain->setString(LongSentencesExample);
-        break;
-    case LineBreaks:
-        this->m_pLabelShouldRetain->setString(LineBreaksExample);
-        break;
-    case Mixed:
-        this->m_pLabelShouldRetain->setString(MixedExample);
-        break;
+    BitmapFontMultiLineAlignment._pArrowsBarShouldRetain = CCSprite:create("Images/arrowsBar.png")
+    BitmapFontMultiLineAlignment._pArrowsBarShouldRetain:retain()
+    BitmapFontMultiLineAlignment._pArrowsShouldRetain = CCSprite:create("Images/arrows.png")
+    BitmapFontMultiLineAlignment._pArrowsShouldRetain:retain()
 
-    default:
-        break;
-    }
+    CCMenuItemFont:setFontSize(20)
+    local longSentences = CCMenuItemFont:create("Long Flowing Sentences")
+    longSentences:registerScriptTapHandler(BitmapFontMultiLineAlignment.stringChanged)
+    local lineBreaks    = CCMenuItemFont:create("Short Sentences With Intentional Line Breaks")
+    lineBreaks:registerScriptTapHandler(BitmapFontMultiLineAlignment.stringChanged)
+    local mixed         = CCMenuItemFont:create("Long Sentences Mixed With Intentional Line Breaks")
+    mixed:registerScriptTapHandler(BitmapFontMultiLineAlignment.stringChanged)
+    local stringMenu    = CCMenu:create()
+    stringMenu:addChild(longSentences)
+    stringMenu:addChild(lineBreaks)
+    stringMenu:addChild(mixed)
+    stringMenu:alignItemsVertically()
 
-    this->snapArrowsToEdge();
-}
+    longSentences:setColor(ccc3(255, 0, 0))
+    BitmapFontMultiLineAlignment._pLastSentenceItem = longSentences
 
-void BitmapFontMultiLineAlignment::alignmentChanged(cocos2d::CCObject *sender)
-{
-    CCMenuItemFont *item = (CCMenuItemFont*)sender;
-    item->setColor(ccRED);
-    this->m_pLastAlignmentItem->setColor(ccWHITE);
-    this->m_pLastAlignmentItem = item;
+    longSentences:setTag(LongSentences)
+    lineBreaks:setTag(LineBreaks)
+    mixed:setTag(Mixed)
 
-    switch(item->getTag())
-    {
-    case LeftAlign:
-        this->m_pLabelShouldRetain->setAlignment(kCCTextAlignmentLeft);
-        break;
-    case CenterAlign:
-        this->m_pLabelShouldRetain->setAlignment(kCCTextAlignmentCenter);
-        break;
-    case RightAlign:
-        this->m_pLabelShouldRetain->setAlignment(kCCTextAlignmentRight);
-        break;
+    CCMenuItemFont:setFontSize(30)
 
-    default:
-        break;
-    }
+    local left          = CCMenuItemFont:create("Left")
+    left:registerScriptTapHandler(BitmapFontMultiLineAlignment.alignmentChanged)
+    local center        = CCMenuItemFont:create("Center")
+    center:registerScriptTapHandler(BitmapFontMultiLineAlignment.alignmentChanged)
+    local right         = CCMenuItemFont:create("Right")
+    right:registerScriptTapHandler(BitmapFontMultiLineAlignment.alignmentChanged)
 
-    this->snapArrowsToEdge();
-}
+    local alignmentMenu = CCMenu:create()
+    alignmentMenu:addChild(left)
+    alignmentMenu:addChild(center)
+    alignmentMenu:addChild(right)
 
-void BitmapFontMultiLineAlignment::ccTouchesBegan(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEvent)
-{
-    CCTouch *touch = (CCTouch *)pTouches->anyObject();
-    CCPoint location = touch->getLocationInView();
+    alignmentMenu:alignItemsHorizontallyWithPadding(alignmentItemPadding)
 
-    if (this->m_pArrowsShouldRetain->boundingBox().containsPoint(location))
-    {
-        m_drag = true;
-        this->m_pArrowsBarShouldRetain->setVisible(true);
-    }
-}
+    center:setColor(ccc3(255, 0, 0))
+    BitmapFontMultiLineAlignment._pLastAlignmentItem = center
+    left:setTag(LeftAlign)
+    center:setTag(CenterAlign)
+    right:setTag(RightAlign)
 
-void BitmapFontMultiLineAlignment::ccTouchesEnded(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEvent)
-{
-    m_drag = false;
-    this->snapArrowsToEdge();
+    -- position the label on the center of the screen
+    BitmapFontMultiLineAlignment._pLabelShouldRetain:setPosition(ccp(size.width/2, size.height/2))
 
-    this->m_pArrowsBarShouldRetain->setVisible(false);
-}
+    BitmapFontMultiLineAlignment._pArrowsBarShouldRetain:setVisible(false)
 
-void BitmapFontMultiLineAlignment::ccTouchesMoved(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEvent)
-{
-    if (! m_drag)
-    {
-        return;
-    }
+    local arrowsWidth = (ArrowsMax - ArrowsMin) * size.width
+    BitmapFontMultiLineAlignment._pArrowsBarShouldRetain:setScaleX(arrowsWidth / BitmapFontMultiLineAlignment._pArrowsBarShouldRetain:getContentSize().width)
+    BitmapFontMultiLineAlignment._pArrowsBarShouldRetain:setPosition( ((ArrowsMax + ArrowsMin) / 2) * size.width, BitmapFontMultiLineAlignment._pLabelShouldRetain:getPositionY() )
 
-    CCTouch *touch = (CCTouch *)pTouches->anyObject();
-    CCPoint location = touch->getLocationInView();
+    BitmapFontMultiLineAlignment.snapArrowsToEdge()
 
-    CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+    stringMenu:setPosition(ccp(size.width/2, size.height - menuItemPaddingCenter))
+    alignmentMenu:setPosition(ccp(size.width/2, menuItemPaddingCenter+15))
 
-    this->m_pArrowsShouldRetain->setPosition(ccp(MAX(MIN(location.x, ArrowsMax*winSize.width), ArrowsMin*winSize.width), 
-        this->m_pArrowsShouldRetain->getPosition().y));
+    layer:addChild(BitmapFontMultiLineAlignment._pLabelShouldRetain)
+    layer:addChild(BitmapFontMultiLineAlignment._pArrowsBarShouldRetain)
+    layer:addChild(BitmapFontMultiLineAlignment._pArrowsShouldRetain)
+    layer:addChild(stringMenu)
+    layer:addChild(alignmentMenu)
+    layer:registerScriptHandler(BitmapFontMultiLineAlignment.onNodeEvent)
+    layer:registerScriptTouchHandler(BitmapFontMultiLineAlignment.onTouchEvent)
+    return layer
+end
 
-    float labelWidth = fabs(this->m_pArrowsShouldRetain->getPosition().x - this->m_pLabelShouldRetain->getPosition().x) * 2;
+function BitmapFontMultiLineAlignment.onNodeEvent(tag)
+    if tag == "onexit" then
+       BitmapFontMultiLineAlignment._pLabelShouldRetain:release()
+       BitmapFontMultiLineAlignment._pArrowsBarShouldRetain:release()
+       BitmapFontMultiLineAlignment._pArrowsShouldRetain:release()
+    end
+end
 
-    this->m_pLabelShouldRetain->setWidth(labelWidth);
-}
 
-void BitmapFontMultiLineAlignment::snapArrowsToEdge()
-{
-    this->m_pArrowsShouldRetain->setPosition(ccp(this->m_pLabelShouldRetain->getPosition().x + this->m_pLabelShouldRetain->getContentSize().width/2,
-        this->m_pLabelShouldRetain->getPosition().y));
-}
+
+function BitmapFontMultiLineAlignment.stringChanged(tag, sender)
+    local item = tolua.cast(sender, "CCMenuItemFont")
+    item:setColor(ccc3(255, 0, 0))
+    BitmapFontMultiLineAlignment._pLastAlignmentItem:setColor(ccc3(255, 255, 255))
+    BitmapFontMultiLineAlignment._pLastAlignmentItem = item
+
+    if item:getTag() == LongSentences then
+        BitmapFontMultiLineAlignment._pLabelShouldRetain:setString(LongSentencesExample)
+    elseif item:getTag() == LineBreaks then
+        BitmapFontMultiLineAlignment._pLabelShouldRetain:setString(LineBreaksExample)
+    elseif item:getTag() == Mixed then
+        BitmapFontMultiLineAlignment._pLabelShouldRetain:setString(MixedExample)
+    end
+
+    BitmapFontMultiLineAlignment.snapArrowsToEdge()
+end
+
+function BitmapFontMultiLineAlignment.alignmentChanged(tag, sender)
+    -- cclog("BitmapFontMultiLineAlignment.alignmentChanged, tag:"..tag)
+    local item = tolua.cast(sender, "CCMenuItemFont")
+    item:setColor(ccc3(255, 0, 0))
+    BitmapFontMultiLineAlignment._pLastAlignmentItem:setColor(ccc3(255, 255, 255))
+    BitmapFontMultiLineAlignment._pLastAlignmentItem = item
+
+    if tag == LeftAlign then
+       cclog("LeftAlign")
+       BitmapFontMultiLineAlignment._pLabelShouldRetain:setAlignment(kCCTextAlignmentLeft)
+    elseif tag == CenterAlign then
+       BitmapFontMultiLineAlignment._pLabelShouldRetain:setAlignment(kCCTextAlignmentCenter)
+    elseif tag == RightAlign then
+       BitmapFontMultiLineAlignment._pLabelShouldRetain:setAlignment(kCCTextAlignmentRight)
+    end
+
+    BitmapFontMultiLineAlignment.snapArrowsToEdge()
+end
+
+function BitmapFontMultiLineAlignment.onTouchEvent(eventType, x, y)
+    -- cclog("type:"..eventType.."["..x..","..y.."]")
+    if eventType == "began" then
+       if BitmapFontMultiLineAlignment._pArrowsShouldRetain:boundingBox():containsPoint(ccp(x, y)) then
+         BitmapFontMultiLineAlignment._drag = true
+         BitmapFontMultiLineAlignment._pArrowsBarShouldRetain:setVisible(true)
+         return true
+       end
+    elseif eventType == "ended" then
+         BitmapFontMultiLineAlignment._drag = false
+         BitmapFontMultiLineAlignment.snapArrowsToEdge()
+         BitmapFontMultiLineAlignment._pArrowsBarShouldRetain:setVisible(false)
+    elseif eventType == "moved" then
+       if BitmapFontMultiLine._drag == false then
+          return
+       end
+
+       local winSize = CCDirector:sharedDirector():getWinSize()
+       BitmapFontMultiLineAlignment._pArrowsShouldRetain:setPosition(
+          math.max(math.min(x, ArrowsMax*winSize.width), ArrowsMin*winSize.width), 
+          BitmapFontMultiLineAlignment._pArrowsShouldRetain:getPositionY())
+
+       local labelWidth = math.abs(BitmapFontMultiLineAlignment._pArrowsShouldRetain:getPositionX() - BitmapFontMultiLineAlignment._pLabelShouldRetain:getPositionX()) * 2
+
+       BitmapFontMultiLineAlignment._pLabelShouldRetain:setWidth(labelWidth)
+       
+    end
+end
+
+function BitmapFontMultiLineAlignment.snapArrowsToEdge()
+    BitmapFontMultiLineAlignment._pArrowsShouldRetain:setPosition(
+       BitmapFontMultiLineAlignment._pLabelShouldRetain:getPositionX() + BitmapFontMultiLineAlignment._pLabelShouldRetain:getContentSize().width/2, BitmapFontMultiLineAlignment._pLabelShouldRetain:getPositionY()
+    )
+end
 
 
 function LabelTest()
@@ -1192,7 +1187,7 @@ function LabelTest()
 	  LabelTTFMultiline.create,
 	  LabelTTFChinese.create,
 	  LabelBMFontChinese.create,
---	  BitmapFontMultiLineAlignment,
+	  BitmapFontMultiLineAlignment.create,
 --	  LabelTTFA8Test,
 --	  BMFontOneAtlas,
 --	  BMFontUnicode,
