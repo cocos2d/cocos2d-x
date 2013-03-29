@@ -117,9 +117,9 @@ namespace CocosDenshion
 				if (it->second->source == s_backgroundSource)
 				{
 					alDeleteBuffers(1, &it->second->buffer);
-					checkALError("stopBackground");
+					checkALError("stopBackground:alDeleteBuffers");
 					alDeleteSources(1, &it->second->source);
-					checkALError("stopBackground");
+					checkALError("stopBackground:alDeleteSources");
 					delete it->second;
 					s_backgroundMusics.erase(it);
 					break;
@@ -138,6 +138,7 @@ namespace CocosDenshion
 	SimpleAudioEngine::SimpleAudioEngine()
 	{
 		alutInit(0, 0);
+	  checkALError("SimpleAudioEngine:alutInit");
 	}
 
 	SimpleAudioEngine::~SimpleAudioEngine()
@@ -155,18 +156,18 @@ namespace CocosDenshion
 
 	void SimpleAudioEngine::end()
 	{
-		checkALError("end");
+		checkALError("end:init");
 
 		// clear all the sounds
 	    EffectsMap::const_iterator end = s_effects.end();
 	    for (EffectsMap::iterator it = s_effects.begin(); it != end; it++)
 	    {
 	        alSourceStop(it->second->source);
-	        checkALError("end");
+	        checkALError("end:alSourceStop");
 			alDeleteBuffers(1, &it->second->buffer);
-			checkALError("end");
+			checkALError("end:alDeleteBuffers");
 			alDeleteSources(1, &it->second->source);
-			checkALError("end");
+			checkALError("end:alDeleteSources");
 			delete it->second;
 	    }
 	    s_effects.clear();
@@ -177,11 +178,11 @@ namespace CocosDenshion
 		for (BackgroundMusicsMap::iterator it = s_backgroundMusics.begin(); it != s_backgroundMusics.end(); ++it)
 		{
 			alSourceStop(it->second->source);
-			checkALError("end");
+			checkALError("end:alSourceStop");
 			alDeleteBuffers(1, &it->second->buffer);
-			checkALError("end");
+			checkALError("end:alDeleteBuffers");
 			alDeleteSources(1, &it->second->source);
-			checkALError("end");
+			checkALError("end:alDeleteSources");
 			delete it->second;
 		}
 		s_backgroundMusics.clear();
@@ -260,12 +261,12 @@ namespace CocosDenshion
 		}
 
 		// clear al errors
-		checkALError("createBufferFromOGG");
+		checkALError("createBufferFromOGG:init");
 
 	    // Load audio data into a buffer.
 	    alGenBuffers(1, &buffer);
 
-	    if (checkALError("createBufferFromOGG") != AL_NO_ERROR)
+	    if (checkALError("createBufferFromOGG:alGenBuffers") != AL_NO_ERROR)
 	    {
 	        fprintf(stderr, "Couldn't generate a buffer for OGG file\n");
 	        delete [] data;
@@ -273,7 +274,7 @@ namespace CocosDenshion
 	    }
 
 		alBufferData(buffer, format, data, data_size, info->rate);
-		checkALError("createBufferFromOGG");
+		checkALError("createBufferFromOGG:alBufferData");
 
 		delete [] data;
 		ov_clear(&ogg_file);
@@ -304,7 +305,7 @@ namespace CocosDenshion
 				buffer = alutCreateBufferFromFile(fullPath.data());
 			
 
-			checkALError("preloadBackgroundMusic");
+			checkALError("preloadBackgroundMusic:createBuffer");
 
 			if (buffer == AL_NONE)
 			{
@@ -315,10 +316,10 @@ namespace CocosDenshion
 
 			ALuint source = AL_NONE;
 			alGenSources(1, &source);
-			checkALError("preloadBackgroundMusic");
+			checkALError("preloadBackgroundMusic:alGenSources");
 
 			alSourcei(source, AL_BUFFER, buffer);
-			checkALError("preloadBackgroundMusic");
+			checkALError("preloadBackgroundMusic:alSourcei");
 
 			backgroundMusicData* data = new backgroundMusicData();
 			data->buffer = buffer;
@@ -347,7 +348,7 @@ namespace CocosDenshion
 			s_backgroundSource = it->second->source;
 			alSourcei(s_backgroundSource, AL_LOOPING, bLoop ? AL_TRUE : AL_FALSE);
 			alSourcePlay(s_backgroundSource);
-			checkALError("playBackgroundMusic");
+			checkALError("playBackgroundMusic:alSourcePlay");
 		}
 	}
 
@@ -362,7 +363,7 @@ namespace CocosDenshion
 		alGetSourcei(s_backgroundSource, AL_SOURCE_STATE, &state);
 		if (state == AL_PLAYING)
 			alSourcePause(s_backgroundSource);
-		checkALError("pauseBackgroundMusic");
+		checkALError("pauseBackgroundMusic:alSourcePause");
 	}
 
 	void SimpleAudioEngine::resumeBackgroundMusic()
@@ -371,13 +372,13 @@ namespace CocosDenshion
 		alGetSourcei(s_backgroundSource, AL_SOURCE_STATE, &state);
 		if (state == AL_PAUSED)
 			alSourcePlay(s_backgroundSource);
-		checkALError("resumeBackgroundMusic");
+		checkALError("resumeBackgroundMusic:alSourcePlay");
 	} 
 
 	void SimpleAudioEngine::rewindBackgroundMusic()
 	{
 		alSourceRewind(s_backgroundSource);
-		checkALError("rewindBackgroundMusic");
+		checkALError("rewindBackgroundMusic:alSourceRewind");
 	}
 
 	bool SimpleAudioEngine::willPlayBackgroundMusic()
@@ -450,11 +451,11 @@ namespace CocosDenshion
 			}
 		}
 
-		checkALError("playEffect");
+		checkALError("playEffect:init");
 		iter->second->isLooped = bLoop;
 		alSourcei(iter->second->source, AL_LOOPING, iter->second->isLooped ? AL_TRUE : AL_FALSE);
 		alSourcePlay(iter->second->source);
-		checkALError("playEffect");
+		checkALError("playEffect:alSourcePlay");
 
 		return iter->second->source;
 	}
@@ -462,7 +463,7 @@ namespace CocosDenshion
 	void SimpleAudioEngine::stopEffect(unsigned int nSoundId)
 	{
 		alSourceStop(nSoundId);
-		checkALError("stopEffect");
+		checkALError("stopEffect:alSourceStop");
 	}
 
 	void SimpleAudioEngine::preloadEffect(const char* pszFilePath)
@@ -480,7 +481,7 @@ namespace CocosDenshion
 			soundData  *data = new soundData;
 			string 	    path = fullPath;
 
-			checkALError("preloadEffect");
+			checkALError("preloadEffect:init");
 #ifndef DISABLE_VORBIS
 			if (isOGGFile(path.data()))
 			{
@@ -490,7 +491,7 @@ namespace CocosDenshion
 #endif			
 			{
 				buffer = alutCreateBufferFromFile(path.data());
-				checkALError("preloadEffect");
+				checkALError("preloadEffect:createBufferFromFile");
 			}
 
 			if (buffer == AL_NONE)
@@ -502,14 +503,14 @@ namespace CocosDenshion
 
 			alGenSources(1, &source);
 
-			if (checkALError("preloadEffect") != AL_NO_ERROR)
+			if (checkALError("preloadEffect:alGenSources") != AL_NO_ERROR)
 			{
 				alDeleteBuffers(1, &buffer);
 				return;
 			}
 
 			alSourcei(source, AL_BUFFER, buffer);
-			checkALError("preloadEffect");
+			checkALError("preloadEffect:alSourcei");
 
 			data->isLooped = false;
 			data->buffer = buffer;
@@ -528,16 +529,16 @@ namespace CocosDenshion
 
 		if (iter != s_effects.end())
 	    {
-			checkALError("unloadEffect");
+			checkALError("unloadEffect:init");
 
 	        alSourceStop(iter->second->source);
-	        checkALError("unloadEffect");
+	        checkALError("unloadEffect:alSourceStop");
 
 			alDeleteSources(1, &iter->second->source);
-			checkALError("unloadEffect");
+			checkALError("unloadEffect:DeletSources");
 
 			alDeleteBuffers(1, &iter->second->buffer);
-			checkALError("unloadEffect");
+			checkALError("unloadEffect:alDeleteBuffers");
 			delete iter->second;
 
 			s_effects.erase(iter);
@@ -550,7 +551,7 @@ namespace CocosDenshion
 		alGetSourcei(nSoundId, AL_SOURCE_STATE, &state);
 		if (state == AL_PLAYING)
 			alSourcePause(nSoundId);
-		checkALError("pauseEffect");
+		checkALError("pauseEffect:alSourcePause");
 	}
 
 	void SimpleAudioEngine::pauseAllEffects()
@@ -562,7 +563,7 @@ namespace CocosDenshion
 			alGetSourcei(iter->second->source, AL_SOURCE_STATE, &state);
 			if (state == AL_PLAYING)
 				alSourcePause(iter->second->source);
-			checkALError("pauseAllEffects");
+			checkALError("pauseAllEffects:alSourcePause");
 			++iter;
 	    }
 	}
@@ -573,7 +574,7 @@ namespace CocosDenshion
 		alGetSourcei(nSoundId, AL_SOURCE_STATE, &state);
 		if (state == AL_PAUSED)
 			alSourcePlay(nSoundId);
-		checkALError("resumeEffect");
+		checkALError("resumeEffect:alSourcePlay");
 	}
 
 	void SimpleAudioEngine::resumeAllEffects()
@@ -585,7 +586,7 @@ namespace CocosDenshion
 			alGetSourcei(iter->second->source, AL_SOURCE_STATE, &state);
 			if (state == AL_PAUSED)
 				alSourcePlay(iter->second->source);
-			checkALError("resumeAllEffects");
+			checkALError("resumeAllEffects:alSourcePlay");
 			++iter;
 	    }
 	}
@@ -596,9 +597,9 @@ namespace CocosDenshion
 
 		if (iter != s_effects.end())
 	    {
-			checkALError("stopAllEffects");
+			checkALError("stopAllEffects:init");
 	        alSourceStop(iter->second->source);
-			checkALError("stopAllEffects");
+			checkALError("stopAllEffects:alSourceStop");
 	    }
     }
 
