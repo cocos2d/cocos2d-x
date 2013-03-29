@@ -59,6 +59,15 @@
     <ClCompile Include="..\jsb_cocos2dx_extension_manual.cpp">
       <Filter>manual</Filter>
     </ClCompile>
+    <ClCompile Include="..\js_bindings_opengl.cpp">
+      <Filter>manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\jsb_opengl_registration.cpp">
+      <Filter>manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\jsb_opengl_manual.cpp">
+      <Filter>manual</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\cocos2d_specifics.hpp">
@@ -119,6 +128,18 @@
       <Filter>generated</Filter>
     </ClInclude>
     <ClInclude Include="..\jsb_cocos2dx_extension_manual.h">
+      <Filter>manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\js_bindings_opengl.h">
+      <Filter>manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\jsb_opengl_functions.h">
+      <Filter>manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\jsb_opengl_manual.h">
+      <Filter>manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\jsb_opengl_registration.h">
       <Filter>manual</Filter>
     </ClInclude>
   </ItemGroup>

@@ -29,7 +29,7 @@
 #include "js_bindings_config.h"
 #ifdef JSB_INCLUDE_OPENGL
 
-#include <Availability.h>
+//#include <Availability.h>
 #include "jsapi.h"
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
