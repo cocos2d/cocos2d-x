@@ -43,6 +43,7 @@
                 <file name="LabelTest/LabelTest.js"/>
                 <file name="LayerTest/LayerTest.js"/>
                 <file name="MenuTest/MenuTest.js"/>
+                <file name="OpenGLTest/OpenGLTest.js"/>
                 <file name="ParallaxTest/ParallaxTest.js"/>
                 <file name="ParticleTest/ParticleTest.js"/>
                 <file name="PerformanceTest/PerformanceTest.js"/>
