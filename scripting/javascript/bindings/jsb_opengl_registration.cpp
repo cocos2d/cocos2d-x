@@ -24,18 +24,14 @@
 
 #include "js_bindings_config.h"
 #include "js_bindings_core.h"
-//#include "jsb_opengl_manual.h"
 #include "jsfriendapi.h"
 #include "jsb_opengl_manual.h"
-#include "jsb_opengl_manual.cpp"
 #include "js_bindings_opengl.h"
 
 //#include "jsb_opengl_functions_registration.h"
 
 // system
 #include "jsb_opengl_functions.h"
-#include "jsb_opengl_functions.cpp"
-
 
 void JSB_register_opengl(JSContext *_cx, JSObject *object)
 {

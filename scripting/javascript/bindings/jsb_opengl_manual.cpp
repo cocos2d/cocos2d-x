@@ -348,7 +348,7 @@ JSBool JSB_glGetAttachedShaders(JSContext *cx, uint32_t argc, jsval *vp)
 	GLsizei length;
 	glGetProgramiv(arg0, GL_ATTACHED_SHADERS, &length);
 	GLuint* buffer = new GLuint[length];
-
+	memset(buffer, 0, length * sizeof(GLuint));
 	glGetAttachedShaders(arg0, length, NULL, buffer);
 
 	JSObject *jsobj = JS_NewArrayObject(cx, length, NULL);

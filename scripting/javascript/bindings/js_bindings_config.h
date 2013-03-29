@@ -161,4 +161,11 @@ JSAutoCompartment ac(cx, obj)
 #define JSB_INCLUDE_SYSTEM 1
 #endif // JSB_INCLUDE_SYSTEM
 
+/** @def JSB_INCLUDE_OPENGL
+ Whether or not it should include bindings for WebGL / OpenGL ES 2.0
+ */
+#ifndef JSB_INCLUDE_OPENGL
+#define JSB_INCLUDE_OPENGL 1
+#endif // JSB_INCLUDE_OPENGL
+
 #endif // __JS_BINDINGS_CONFIG_H
