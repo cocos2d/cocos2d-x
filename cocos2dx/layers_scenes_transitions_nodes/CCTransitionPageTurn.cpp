@@ -55,7 +55,7 @@ bool CCTransitionPageTurn::initWithDuration(float t, CCScene *scene, bool backwa
     // XXX: needed before [super init]
     m_bBack = backwards;
 
-    if( CCTransitionScene::initWithDuration(t, scene) )
+    if (CCTransitionScene::initWithDuration(t, scene))
     {
         // do something
     }
@@ -72,7 +72,7 @@ void CCTransitionPageTurn::onEnter()
     CCTransitionScene::onEnter();
     CCSize s = CCDirector::sharedDirector()->getWinSize();
     int x,y;
-    if( s.width > s.height)
+    if (s.width > s.height)
     {
         x=16;
         y=12;
@@ -85,7 +85,7 @@ void CCTransitionPageTurn::onEnter()
 
     CCActionInterval *action  = this->actionWithSize(CCSizeMake(x,y));
 
-    if(! m_bBack )
+    if (! m_bBack )
     {
         m_pOutScene->runAction
         (
@@ -119,7 +119,7 @@ void CCTransitionPageTurn::onEnter()
 
 CCActionInterval* CCTransitionPageTurn:: actionWithSize(const CCSize& vector)
 {
-    if( m_bBack )
+    if (m_bBack)
     {
         // Get hold of the PageTurn3DAction
         return CCReverseTime::create

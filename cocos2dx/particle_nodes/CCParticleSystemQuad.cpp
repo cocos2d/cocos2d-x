@@ -56,7 +56,7 @@ bool CCParticleSystemQuad::initWithTotalParticles(unsigned int numberOfParticles
             return false;
         }
 
-        setupIndices();
+        initIndices();
 #if CC_TEXTURE_ATLAS_USE_VAO
         setupVBOandVAO();
 #else
@@ -221,7 +221,7 @@ void CCParticleSystemQuad::setDisplayFrame(CCSpriteFrame *spriteFrame)
     }
 }
 
-void CCParticleSystemQuad::setupIndices()
+void CCParticleSystemQuad::initIndices()
 {
     for(unsigned int i = 0; i < m_uTotalParticles; ++i)
     {
@@ -420,6 +420,7 @@ void CCParticleSystemQuad::setTotalParticles(unsigned int tp)
             m_pIndices = indicesNew;
 
             // Clear the memory
+            // XXX: Bug? If the quads are cleared, then drawing doesn't work... WHY??? XXX
             memset(m_pParticles, 0, particlesSize);
             memset(m_pQuads, 0, quadsSize);
             memset(m_pIndices, 0, indicesSize);
@@ -448,7 +449,7 @@ void CCParticleSystemQuad::setTotalParticles(unsigned int tp)
             }
         }
 
-        setupIndices();
+        initIndices();
 #if CC_TEXTURE_ATLAS_USE_VAO
         setupVBOandVAO();
 #else
@@ -459,11 +460,17 @@ void CCParticleSystemQuad::setTotalParticles(unsigned int tp)
     {
         m_uTotalParticles = tp;
     }
+    
+    resetSystem();
 }
 
 #if CC_TEXTURE_ATLAS_USE_VAO
 void CCParticleSystemQuad::setupVBOandVAO()
 {
+    // clean VAO
+    glDeleteBuffers(2, &m_pBuffersVBO[0]);
+    glDeleteVertexArrays(1, &m_uVAOname);
+    
     glGenVertexArrays(1, &m_uVAOname);
     ccGLBindVAO(m_uVAOname);
 
@@ -500,6 +507,8 @@ void CCParticleSystemQuad::setupVBOandVAO()
 
 void CCParticleSystemQuad::setupVBO()
 {
+    glDeleteBuffers(2, &m_pBuffersVBO[0]);
+    
     glGenBuffers(2, &m_pBuffersVBO[0]);
 
     glBindBuffer(GL_ARRAY_BUFFER, m_pBuffersVBO[0]);
@@ -562,7 +571,7 @@ void CCParticleSystemQuad::setBatchNode(CCParticleBatchNode * batchNode)
         if( ! batchNode ) 
         {
             allocMemory();
-            setupIndices();
+            initIndices();
             setTexture(oldBatch->getTexture());
 #if CC_TEXTURE_ATLAS_USE_VAO
             setupVBOandVAO();

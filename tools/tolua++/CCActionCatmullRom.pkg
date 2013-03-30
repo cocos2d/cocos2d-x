@@ -10,7 +10,6 @@ class CCPointArray : public CCNode
     unsigned int count();
     CCPointArray* reverse();
     void reverseInline();
-    CCObject* copyWithZone(CCZone *zone);
     const std::vector<CCPoint*>* getControlPoints();
     void setControlPoints(std::vector<CCPoint*> *controlPoints);
 
@@ -19,7 +18,6 @@ class CCPointArray : public CCNode
 
 class CCCardinalSplineTo : public CCActionInterval
 {
-	CCCardinalSplineTo* copyWithZone(CCZone* pZone);
     CCActionInterval* reverse();
     CCPointArray* getPoints();
     void  setPoints(CCPointArray* points);

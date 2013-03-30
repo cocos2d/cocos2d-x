@@ -1,22 +1,16 @@
 
 class CCShakyTiles3D : public CCTiledGrid3DAction
 {
-	CCObject* copyWithZone(CCZone* pZone);
-
-    CCShakyTiles3D* create(float duration, CCSize gridSize, int nRange, bool bShakeZ);
+    static CCShakyTiles3D* create(float duration, CCSize gridSize, int nRange, bool bShakeZ);
 };
 
 class CCShatteredTiles3D : public CCTiledGrid3DAction
 {
-	CCObject* copyWithZone(CCZone* pZone);
-
     static CCShatteredTiles3D* create(float duration, CCSize gridSize, int nRange, bool bShatterZ);
 };
 
 class CCShuffleTiles : public CCTiledGrid3DAction
 {
-	CCObject* copyWithZone(CCZone* pZone);
-
     void shuffle(unsigned int *pArray, int nLen);
     CCSize getDelta(CCSize pos);
     void placeTile(CCPoint pos, Tile *t);
@@ -52,8 +46,6 @@ class CCFadeOutDownTiles : public CCFadeOutUpTiles
 
 class CCTurnOffTiles : public CCTiledGrid3DAction
 {
-	CCObject* copyWithZone(CCZone* pZone);
-
     void shuffle(unsigned int *pArray, int nLen);
     void turnOnTile(CCPoint pos);
     void turnOffTile(CCPoint pos);
@@ -64,8 +56,6 @@ class CCTurnOffTiles : public CCTiledGrid3DAction
 
 class CCWavesTiles3D : public CCTiledGrid3DAction
 {
-	CCObject* copyWithZone(CCZone* pZone);
-
     float getAmplitude(void);
     void setAmplitude(float fAmplitude);
     float getAmplitudeRate(void);
@@ -76,8 +66,6 @@ class CCWavesTiles3D : public CCTiledGrid3DAction
 
 class CCJumpTiles3D : public CCTiledGrid3DAction
 {
-	CCObject* copyWithZone(CCZone* pZone);
-
     float getAmplitude(void);
     void setAmplitude(float fAmplitude);
     float getAmplitudeRate(void);
@@ -88,14 +76,10 @@ class CCJumpTiles3D : public CCTiledGrid3DAction
 
 class CCSplitRows : public CCTiledGrid3DAction
 {
-	CCObject* copyWithZone(CCZone* pZone);
-
     static CCSplitRows* create(float duration, unsigned int nRows);
 };
 
 class CCSplitCols : public CCTiledGrid3DAction
 {
-	CCObject* copyWithZone(CCZone* pZone);
-
     static CCSplitCols* create(float duration, unsigned int nCols);
 };

@@ -1,13 +1,16 @@
 1. Generating the lua<-->C bindings with tolua++
-tolua++.exe -tCocos2d -o LuaCocos2d.cpp Cocos2d.pkg
 
-    An ant script has been provided to generate the relevant files, to do this after
-    modifying the .pkg files you should use the following command in this directory:
+    Build scripts for windows (build.bat) and unix (build.sh) are provided
+    to generate the relevant files after modifying the .pkg files.  These
+    scripts basically run the following command:
 
-    ant
+        tolua++.exe -L basic.lua -o LuaCocos2d.cpp Cocos2d.pkg
 
-    This will generate the bindings file, patch it to compile successfully and move it
-    to the standard destination.
+    This will generate the bindings file and patch it with come cocos2dx
+    specific modifications.
+
+    On POSIX systems you can also just run "make" to build the bindings
+    if/when you change .pkg files.
 
 2. Writing .pkg files
 

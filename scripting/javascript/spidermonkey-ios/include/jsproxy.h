@@ -26,7 +26,9 @@ class JS_FRIEND_API(Wrapper);
  *
  * Proxy traps are grouped into fundamental and derived traps. Every proxy has
  * to at least provide implementations for the fundamental traps, but the
- * derived traps can be implemented in terms of the fundamental ones.
+ * derived traps can be implemented in terms of the fundamental ones
+ * BaseProxyHandler provides implementations of the derived traps in terms of
+ * the (pure virtual) fundamental traps.
  *
  * To minimize code duplication, a set of abstract proxy handler classes is
  * provided, from which other handlers may inherit. These abstract classes
@@ -34,9 +36,9 @@ class JS_FRIEND_API(Wrapper);
  *
  * BaseProxyHandler
  * |
- * IndirectProxyHandler
- * |                    
  * DirectProxyHandler
+ * |
+ * Wrapper
  */
 
 /*
@@ -67,20 +69,6 @@ class JS_FRIEND_API(BaseProxyHandler) {
 
     virtual bool isOuterWindow() {
         return false;
-    }
-
-    /*
-     * The function Wrapper::wrapperHandler takes a pointer to a
-     * BaseProxyHandler and returns a pointer to a Wrapper if and only if the
-     * BaseProxyHandler is a wrapper handler (otherwise, it returns NULL).
-     *
-     * Unfortunately, we can't inherit Wrapper from BaseProxyHandler, since that
-     * would create a dreaded diamond, and we can't use dynamic_cast to cast
-     * BaseProxyHandler to Wrapper, since that would require us to compile with
-     * run-time type information. Hence the need for this virtual function.
-     */
-    virtual Wrapper *toWrapper() {
-        return NULL;
     }
 
     /* ES5 Harmony fundamental proxy traps. */
@@ -130,17 +118,14 @@ class JS_FRIEND_API(BaseProxyHandler) {
 };
 
 /*
- * IndirectProxyHandler assumes that a target exists. Moreover, it assumes the
- * target is a JSObject. Consequently, it provides default implementations for
- * the fundamental traps that forward their behavior to the target. The derived
- * traps, however, are inherited from BaseProxyHandler, and therefore still
- * implemented in terms of the fundamental ones. This allows consumers of this
- * class to define custom behavior without implementing the entire gamut of
- * proxy traps. 
+ * DirectProxyHandler includes a notion of a target object. All traps are
+ * reimplemented such that they forward their behavior to the target. This
+ * allows consumers of this class to forward to another object as transparently
+ * and efficiently as possible.
  */
-class JS_PUBLIC_API(IndirectProxyHandler) : public BaseProxyHandler {
-  public:
-    explicit IndirectProxyHandler(void *family);
+class JS_PUBLIC_API(DirectProxyHandler) : public BaseProxyHandler {
+public:
+    explicit DirectProxyHandler(void *family);
 
     /* ES5 Harmony fundamental proxy traps. */
     virtual bool getPropertyDescriptor(JSContext *cx, JSObject *proxy, jsid id,
@@ -158,11 +143,21 @@ class JS_PUBLIC_API(IndirectProxyHandler) : public BaseProxyHandler {
     virtual bool enumerate(JSContext *cx, JSObject *proxy,
                            AutoIdVector &props) MOZ_OVERRIDE;
 
+    /* ES5 Harmony derived proxy traps. */
+    virtual bool has(JSContext *cx, JSObject *proxy, jsid id,
+                     bool *bp) MOZ_OVERRIDE;
+    virtual bool hasOwn(JSContext *cx, JSObject *proxy, jsid id,
+                        bool *bp) MOZ_OVERRIDE;
+    virtual bool get(JSContext *cx, JSObject *proxy, JSObject *receiver,
+                     jsid id, Value *vp) MOZ_OVERRIDE;
+    virtual bool set(JSContext *cx, JSObject *proxy, JSObject *receiver,
+                     jsid id, bool strict, Value *vp) MOZ_OVERRIDE;
+    virtual bool keys(JSContext *cx, JSObject *proxy,
+                      AutoIdVector &props) MOZ_OVERRIDE;
+    virtual bool iterate(JSContext *cx, JSObject *proxy, unsigned flags,
+                         Value *vp) MOZ_OVERRIDE;
+
     /* Spidermonkey extensions. */
-    virtual bool call(JSContext *cx, JSObject *proxy, unsigned argc,
-                      Value *vp) MOZ_OVERRIDE;
-    virtual bool construct(JSContext *cx, JSObject *proxy, unsigned argc,
-                           Value *argv, Value *rval) MOZ_OVERRIDE;
     virtual bool nativeCall(JSContext *cx, IsAcceptableThis test, NativeImpl impl,
                             CallArgs args) MOZ_OVERRIDE;
     virtual bool hasInstance(JSContext *cx, HandleObject proxy, MutableHandleValue v,
@@ -180,33 +175,6 @@ class JS_PUBLIC_API(IndirectProxyHandler) : public BaseProxyHandler {
     virtual bool iteratorNext(JSContext *cx, JSObject *proxy,
                               Value *vp) MOZ_OVERRIDE;
     virtual JSObject *weakmapKeyDelegate(JSObject *proxy);
-};
-
-/*
- * DirectProxyHandler has the same assumptions about the target as its base,
- * IndirectProxyHandler. Its fundamental traps are inherited from this class,
- * and therefore forward their behavior to the target. The derived traps,
- * however, are overrided so that, they too, forward their behavior to the
- * target. This allows consumers of this class to forward to another object as
- * transparently as possible.
- */
-class JS_PUBLIC_API(DirectProxyHandler) : public IndirectProxyHandler {
-public:
-    explicit DirectProxyHandler(void *family);
-
-    /* ES5 Harmony derived proxy traps. */
-    virtual bool has(JSContext *cx, JSObject *proxy, jsid id,
-                     bool *bp) MOZ_OVERRIDE;
-    virtual bool hasOwn(JSContext *cx, JSObject *proxy, jsid id,
-                        bool *bp) MOZ_OVERRIDE;
-    virtual bool get(JSContext *cx, JSObject *proxy, JSObject *receiver,
-                     jsid id, Value *vp) MOZ_OVERRIDE;
-    virtual bool set(JSContext *cx, JSObject *proxy, JSObject *receiver,
-                     jsid id, bool strict, Value *vp) MOZ_OVERRIDE;
-    virtual bool keys(JSContext *cx, JSObject *proxy,
-                      AutoIdVector &props) MOZ_OVERRIDE;
-    virtual bool iterate(JSContext *cx, JSObject *proxy, unsigned flags,
-                         Value *vp) MOZ_OVERRIDE;
 };
 
 /* Dispatch point for handlers that executes the appropriate C++ or scripted traps. */
@@ -350,13 +318,12 @@ NewProxyObject(JSContext *cx, BaseProxyHandler *handler, const Value &priv,
                JSObject *proto, JSObject *parent,
                JSObject *call = NULL, JSObject *construct = NULL);
 
-} /* namespace js */
+JSObject *
+RenewProxyObject(JSContext *cx, JSObject *obj, BaseProxyHandler *handler, Value priv);
 
-JS_BEGIN_EXTERN_C
+} /* namespace js */
 
 extern JS_FRIEND_API(JSObject *)
 js_InitProxyClass(JSContext *cx, JSHandleObject obj);
-
-JS_END_EXTERN_C
 
 #endif

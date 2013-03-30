@@ -342,7 +342,7 @@ void CCShuffleTiles::startWithTarget(CCNode *pTarget)
 {
     CCTiledGrid3DAction::startWithTarget(pTarget);
 
-    if (m_nSeed != -1)
+    if (m_nSeed != (unsigned int)-1)
     {
         srand(m_nSeed);
     }
@@ -699,7 +699,7 @@ void CCTurnOffTiles::startWithTarget(CCNode *pTarget)
 
     CCTiledGrid3DAction::startWithTarget(pTarget);
 
-    if (m_nSeed != -1)
+    if (m_nSeed != (unsigned int)-1)
     {
         srand(m_nSeed);
     }

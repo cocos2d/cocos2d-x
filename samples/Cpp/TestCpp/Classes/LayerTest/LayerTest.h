@@ -22,6 +22,49 @@ public:
     void backCallback(CCObject* pSender);
 };
 
+class LayerTestCascadingOpacityA : public LayerTest
+{
+public:
+    virtual void onEnter();
+    virtual std::string title();
+};
+
+class LayerTestCascadingOpacityB : public LayerTest
+{
+public:
+    virtual void onEnter();
+    virtual std::string title();
+};
+
+class LayerTestCascadingOpacityC : public LayerTest
+{
+public:
+    virtual void onEnter();
+    virtual std::string title();
+};
+
+class LayerTestCascadingColorA : public LayerTest
+{
+public:
+    virtual void onEnter();
+    virtual std::string title();
+};
+
+class LayerTestCascadingColorB : public LayerTest
+{
+public:
+    virtual void onEnter();
+    virtual std::string title();
+};
+
+class LayerTestCascadingColorC : public LayerTest
+{
+public:
+    virtual void onEnter();
+    virtual std::string title();
+};
+
+
 class LayerTest1 : public LayerTest
 {
 public:

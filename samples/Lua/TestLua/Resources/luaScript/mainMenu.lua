@@ -64,10 +64,11 @@ local function CreateTestScene(nIdx)
 --#endif
 --#endif
     elseif nIdx == Test_Table.TEST_LABEL then
-
+        scene = LabelTest()
     elseif nIdx == Test_Table.TEST_TEXT_INPUT then
 
     elseif nIdx == Test_Table.TEST_SPRITE then
+        scene = SpriteTest()
 
     elseif nIdx == Test_Table.TEST_SCHEDULER then
 
@@ -193,9 +194,9 @@ function CreateTestMenu()
     end
 
     local function onTouch(eventType, x, y)
-        if eventType == CCTOUCHBEGAN then
+        if eventType == "began" then
             return onTouchBegan(x, y)
-        elseif eventType == CCTOUCHMOVED then
+        elseif eventType == "moved" then
             return onTouchMoved(x, y)
         end
     end

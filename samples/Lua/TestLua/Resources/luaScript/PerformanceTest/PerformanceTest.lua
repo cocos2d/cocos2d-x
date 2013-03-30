@@ -20,9 +20,9 @@ local s = CCDirector:sharedDirector():getWinSize()
 ----------------------------------
 local function menuCallback(tag)
 	local scene = nil
-	tag = tag - kItemTagBasic
+--  tag = tag - kItemTagBasic
 
-	if tag == 0 then
+	if tag == "enter" then
 		scene = PerformanceSpriteTest()
 	elseif tag == 1 then
 

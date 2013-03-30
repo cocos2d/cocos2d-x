@@ -76,7 +76,7 @@ struct transformValues_;
  *
  * The default anchorPoint in CCSprite is (0.5, 0.5).
  */
-class CC_DLL CCSprite : public CCNode, public CCTextureProtocol, public CCRGBAProtocol
+class CC_DLL CCSprite : public CCNodeRGBA, public CCTextureProtocol
 {
 public:
     /// @{
@@ -253,33 +253,6 @@ public:
     
     /// @} end of initializers
     
-    
-    /// @{
-    /// @name Functions inherited from CCRGBAProtocol
-    inline virtual GLubyte getOpacity() { return m_nOpacity; }
-    /**
-     * Changes the opacity.
-     *
-     * @warning If the sprite's texture has premultiplied alpha then, the R, G and B channels will be modified.
-     *
-     * @param   value   Goes from 0 to 255, where 255 means fully opaque and 0 means fully transparent.
-     */
-    virtual void setOpacity(GLubyte value);
-    virtual const ccColor3B& getColor();
-    virtual void setColor(const ccColor3B& value);
-    /**
-     * Changes the premultipliedAlphaOpacity property.
-     *
-     * Textures with premultiplied alpha will have this property by default on true.
-     * Otherwise the default value is false.
-     *
-     * @param   bValue  flase then opacity will be applied as: glColor(R,G,B,opacity);
-     *                  true then opacity will be applied as: glColor(opacity, opacity, opacity, opacity);
-     */
-    virtual void setOpacityModifyRGB(bool bValue);
-    virtual bool isOpacityModifyRGB(void);
-    /// @} end of CCRGBAProtocol Inheritance
-    
     /// @{
     /// @name Functions inherited from CCTextureProtocol
     virtual void setTexture(CCTexture2D *texture);
@@ -311,6 +284,16 @@ public:
     virtual void ignoreAnchorPointForPosition(bool value);
     virtual void setVisible(bool bVisible);
     virtual void draw(void);
+    /// @}
+    
+    /// @{
+    /// @name Functions inherited from CCNodeRGBA
+    virtual void setColor(const ccColor3B& color3);
+    virtual void updateDisplayedColor(const ccColor3B& parentColor);
+    virtual void setOpacity(GLubyte opacity);
+    virtual void setOpacityModifyRGB(bool modify);
+    virtual bool isOpacityModifyRGB(void);
+    virtual void updateDisplayedOpacity(GLubyte parentOpacity);
     /// @}
 
     
@@ -540,18 +523,11 @@ protected:
     ccV3F_C4B_T2F_Quad m_sQuad;
 
     // opacity and RGB protocol
-    ccColor3B m_sColorUnmodified;
     bool m_bOpacityModifyRGB;
 
     // image is flipped
     bool m_bFlipX;                              /// Whether the sprite is flipped horizaontally or not.
     bool m_bFlipY;                              /// Whether the sprite is flipped vertically or not.
-    
-    // opacity
-    GLubyte m_nOpacity;                         /// Goes from 0-255. 0 means fully tranparent and 255 means fully opaque.
-    
-    // Color: conforms with CCRGBAProtocol protocol
-    ccColor3B m_sColor;
 };
 
 

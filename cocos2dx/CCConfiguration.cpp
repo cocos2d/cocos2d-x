@@ -37,13 +37,13 @@ CCConfiguration* CCConfiguration::s_gSharedConfiguration = NULL;
 CCConfiguration::CCConfiguration(void)
 : m_nMaxTextureSize(0) 
 , m_nMaxModelviewStackDepth(0)
-, m_nMaxTextureUnits(0)
 , m_bSupportsPVRTC(false)
 , m_bSupportsNPOT(false)
 , m_bSupportsBGRA8888(false)
-, m_bSupportsShareableVAO(false)
 , m_bSupportsDiscardFramebuffer(false)
+, m_bSupportsShareableVAO(false)
 , m_nMaxSamplesAllowed(0)
+, m_nMaxTextureUnits(0)
 , m_pGlExtensions(NULL)
 {
 }
@@ -77,14 +77,13 @@ bool CCConfiguration::init(void)
     CCLOG("cocos2d: GL supports discard_framebuffer: %s", (m_bSupportsDiscardFramebuffer ? "YES" : "NO"));
     CCLOG("cocos2d: GL supports shareable VAO: %s", (m_bSupportsShareableVAO ? "YES" : "NO") );
 
-    bool bEnableProfilers = false;
+    bool CC_UNUSED bEnableProfilers = false;
 
 #if CC_ENABLE_PROFILERS
     bEnableProfilers = true;
 #else
-	bEnableProfilers = false;
+    bEnableProfilers = false;
 #endif
-
     CCLOG("cocos2d: compiled with Profiling Support: %s",
         bEnableProfilers ? "YES - *** Disable it when you finish profiling ***" : "NO");
     

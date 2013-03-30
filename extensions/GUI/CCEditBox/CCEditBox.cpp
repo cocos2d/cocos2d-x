@@ -48,7 +48,7 @@ CCEditBox::~CCEditBox(void)
 
 
 void CCEditBox::touchDownAction(CCObject *sender, CCControlEvent controlEvent)
-{    
+{
     m_pEditBoxImpl->openKeyboard();
 }
 
@@ -84,6 +84,7 @@ bool CCEditBox::initWithSizeAndBackgroundSprite(const CCSize& size, CCScale9Spri
         m_pEditBoxImpl = __createSystemEditBox(this);
         m_pEditBoxImpl->initWithSize(size);
         
+        this->setZoomOnTouchDown(false);
         this->setPreferredSize(size);
         this->setPosition(ccp(0, 0));
         this->addTargetWithActionForControlEvent(this, cccontrol_selector(CCEditBox::touchDownAction), CCControlEventTouchUpInside);
@@ -118,10 +119,23 @@ const char* CCEditBox::getText(void)
 {
     if (m_pEditBoxImpl != NULL)
     {
-        return m_pEditBoxImpl->getText();
+		const char* pText = m_pEditBoxImpl->getText();
+		if(pText != NULL)
+			return pText;
     }
     
-    return NULL;
+    return "";
+}
+
+void CCEditBox::setFont(const char* pFontName, int fontSize)
+{
+    if (pFontName != NULL)
+    {
+        if (m_pEditBoxImpl != NULL)
+        {
+            m_pEditBoxImpl->setFont(pFontName, fontSize);
+        }
+    }
 }
 
 void CCEditBox::setFontColor(const ccColor3B& color)
@@ -130,6 +144,17 @@ void CCEditBox::setFontColor(const ccColor3B& color)
     if (m_pEditBoxImpl != NULL)
     {
         m_pEditBoxImpl->setFontColor(color);
+    }
+}
+
+void CCEditBox::setPlaceholderFont(const char* pFontName, int fontSize)
+{
+    if (pFontName != NULL)
+    {
+        if (m_pEditBoxImpl != NULL)
+        {
+            m_pEditBoxImpl->setPlaceholderFont(pFontName, fontSize);
+        }
     }
 }
 
@@ -210,6 +235,15 @@ void CCEditBox::setPosition(const CCPoint& pos)
     }
 }
 
+void CCEditBox::setVisible(bool visible)
+{
+    CCControlButton::setVisible(visible);
+    if (m_pEditBoxImpl != NULL)
+    {
+        m_pEditBoxImpl->setVisible(visible);
+    }
+}
+
 void CCEditBox::setContentSize(const CCSize& size)
 {
     CCControlButton::setContentSize(size);
@@ -219,12 +253,30 @@ void CCEditBox::setContentSize(const CCSize& size)
     }
 }
 
+void CCEditBox::setAnchorPoint(const CCPoint& anchorPoint)
+{
+    CCControlButton::setAnchorPoint(anchorPoint);
+    if (m_pEditBoxImpl != NULL)
+    {
+        m_pEditBoxImpl->setAnchorPoint(anchorPoint);
+    }
+}
+
 void CCEditBox::visit(void)
 {
     CCControlButton::visit();
     if (m_pEditBoxImpl != NULL)
     {
         m_pEditBoxImpl->visit();
+    }
+}
+
+void CCEditBox::onEnter(void)
+{
+    CCControlButton::onEnter();
+    if (m_pEditBoxImpl != NULL)
+    {
+        m_pEditBoxImpl->onEnter();
     }
 }
 
@@ -240,19 +292,18 @@ void CCEditBox::onExit(void)
 
 static CCRect getRect(CCNode * pNode)
 {
-    CCRect rc;
-    rc.origin = pNode->getPosition();
-    rc.size = pNode->getContentSize();
-    rc.origin.x -= rc.size.width / 2;
-    rc.origin.y -= rc.size.height / 2;
-    return rc;
+	CCSize contentSize = pNode->getContentSize();
+	CCRect rect = CCRectMake(0, 0, contentSize.width, contentSize.height);
+	return CCRectApplyAffineTransform(rect, pNode->nodeToWorldTransform());
 }
 
 void CCEditBox::keyboardWillShow(CCIMEKeyboardNotificationInfo& info)
 {
     // CCLOG("CCEditBox::keyboardWillShow");
     CCRect rectTracked = getRect(this);
-    
+	// some adjustment for margin between the keyboard and the edit box.
+	rectTracked.origin.y -= 4;
+
     // if the keyboard area doesn't intersect with the tracking node area, nothing needs to be done.
     if (!rectTracked.intersectsRect(info.end))
     {
@@ -272,7 +323,7 @@ void CCEditBox::keyboardWillShow(CCIMEKeyboardNotificationInfo& info)
 
 void CCEditBox::keyboardDidShow(CCIMEKeyboardNotificationInfo& info)
 {
-
+	
 }
 
 void CCEditBox::keyboardWillHide(CCIMEKeyboardNotificationInfo& info)
@@ -286,7 +337,7 @@ void CCEditBox::keyboardWillHide(CCIMEKeyboardNotificationInfo& info)
 
 void CCEditBox::keyboardDidHide(CCIMEKeyboardNotificationInfo& info)
 {
-
+	
 }
 
 

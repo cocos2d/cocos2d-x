@@ -111,7 +111,7 @@ static voidpf ZCALLBACK fopen64_file_func (voidpf opaque, const void* filename, 
 
     if ((filename!=NULL) && (mode_fopen != NULL))
     {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE || CC_TARGET_PLATFORM == CC_PLATFORM_BADA) || (CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE || CC_TARGET_PLATFORM == CC_PLATFORM_BADA || CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY || CC_TARGET_PLATFORM == CC_PLATFORM_NACL)
         file = NULL;
 #else
         file = fopen64((const char*)filename, mode_fopen);    
@@ -147,8 +147,8 @@ static long ZCALLBACK ftell_file_func (voidpf opaque, voidpf stream)
 static ZPOS64_T ZCALLBACK ftell64_file_func (voidpf opaque, voidpf stream)
 {
     ZPOS64_T ret;
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE || CC_TARGET_PLATFORM == CC_PLATFORM_BADA) || (CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY)
-    ret = NULL;
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE || CC_TARGET_PLATFORM == CC_PLATFORM_BADA || CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY || CC_TARGET_PLATFORM == CC_PLATFORM_NACL)
+    ret = 0;
 #else
     ret = ftello64((FILE *)stream);
 #endif
@@ -180,8 +180,10 @@ static long ZCALLBACK fseek_file_func (voidpf  opaque, voidpf stream, uLong offs
 
 static long ZCALLBACK fseek64_file_func (voidpf  opaque, voidpf stream, ZPOS64_T offset, int origin)
 {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE || CC_TARGET_PLATFORM == CC_PLATFORM_BADA || CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY || CC_TARGET_PLATFORM == CC_PLATFORM_NACL)
+    return -1;
+#else
     int fseek_origin=0;
-    long ret;
     switch (origin)
     {
     case ZLIB_FILEFUNC_SEEK_CUR :
@@ -195,15 +197,10 @@ static long ZCALLBACK fseek64_file_func (voidpf  opaque, voidpf stream, ZPOS64_T
         break;
     default: return -1;
     }
-    ret = 0;
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE || CC_TARGET_PLATFORM == CC_PLATFORM_BADA) || (CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY)
-    ret = -1;
-#else
     if(fseeko64((FILE *)stream, offset, fseek_origin) != 0)
-        ret = -1;
+        return -1;
+    return 0;
 #endif
-    return ret;
 }
 
 

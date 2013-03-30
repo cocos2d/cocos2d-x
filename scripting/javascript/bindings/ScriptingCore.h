@@ -41,11 +41,11 @@ class ScriptingCore : public CCScriptEngineProtocol
 	JSObject  *global_;
 	JSObject  *debugGlobal_;
 	SimpleRunLoop* runLoop;
-	
+
 	ScriptingCore();
 public:
 	~ScriptingCore();
-	
+
 	static ScriptingCore *getInstance() {
 		static ScriptingCore* pInstance = NULL;
         if (pInstance == NULL) {
@@ -55,7 +55,7 @@ public:
 	};
 
     virtual ccScriptType getScriptType() { return kScriptTypeJavascript; };
-    
+
     /**
      @brief Remove CCObject from lua state
      @param object to remove
@@ -69,16 +69,16 @@ public:
      @return other if the string is excuted wrongly.
      */
 	virtual int executeString(const char* codes) { return 0; }
-    void pauseSchedulesAndActions(CCNode *node);
-    void resumeSchedulesAndActions(CCNode *node);
-    void cleanupSchedulesAndActions(CCNode *node);
+    void pauseSchedulesAndActions(js_proxy_t* p);
+    void resumeSchedulesAndActions(js_proxy_t* p);
+    void cleanupSchedulesAndActions(js_proxy_t* p);
 
     /**
      @brief Execute a script file.
      @param filename String object holding the filename of the script file that is to be executed
      */
     virtual  int executeScriptFile(const char* filename) { return 0; }
-    
+
     /**
      @brief Execute a scripted global function.
      @brief The function should not take any parameters and should return an integer.
@@ -96,11 +96,12 @@ public:
     virtual int executeLayerTouchEvent(CCLayer* pLayer, int eventType, CCTouch *pTouch);
     virtual int executeAccelerometerEvent(CCLayer* pLayer, CCAcceleration* pAccelerationValue);
     virtual int executeLayerKeypadEvent(CCLayer* pLayer, int eventType);
+    virtual int executeEvent(int nHandler, const char* pEventName, CCObject* pEventSource = NULL, const char* pEventSourceClassName = NULL) { return 0; }
     virtual bool executeAssert(bool cond, const char *msg = NULL) {return false;}
 
     bool executeFunctionWithObjectData(CCNode *self, const char *name, JSObject *obj);
-    int executeFunctionWithOwner(jsval owner, const char *name, jsval data);
-        
+    JSBool executeFunctionWithOwner(jsval owner, const char *name, uint32_t argc = 0, jsval* vp = NULL, jsval* retVal = NULL);
+
     void executeJSFunctionWithThisObj(jsval thisObj, jsval callback, jsval *data);
 
 	/**
@@ -110,7 +111,7 @@ public:
 	 * Can be NULL.
 	 */
 	JSBool evalString(const char *string, jsval *outVal, const char *filename = NULL, JSContext* cx = NULL, JSObject* global = NULL);
-	
+
 	/**
 	 * will run the specified string
 	 * @param string The path of the script to be run
@@ -123,6 +124,16 @@ public:
 	void start();
 
 	/**
+	 * cleanup everything
+	 */
+	void cleanup();
+
+	/**
+	 * cleanup everything then initialize everything
+	 */
+	void reset();
+
+	/**
 	 * will add the register_sth callback to the list of functions that need to be called
 	 * after the creation of the context
 	 */
@@ -133,15 +144,15 @@ public:
 	 * and create a new one.
 	 */
 	void createGlobalContext();
-    
+
     static void removeAllRoots(JSContext *cx);
-	
-    
-    int executeCustomTouchEvent(int eventType, 
+
+
+    int executeCustomTouchEvent(int eventType,
                                 CCTouch *pTouch, JSObject *obj, jsval &retval);
-    int executeCustomTouchEvent(int eventType, 
+    int executeCustomTouchEvent(int eventType,
                                 CCTouch *pTouch, JSObject *obj);
-    int executeCustomTouchesEvent(int eventType, 
+    int executeCustomTouchesEvent(int eventType,
                                   CCSet *pTouches, JSObject *obj);
 	/**
 	 * @return the global context
@@ -149,14 +160,14 @@ public:
 	JSContext* getGlobalContext() {
 		return cx_;
 	};
-	
+
 	/**
 	 * @param cx
 	 * @param message
 	 * @param report
 	 */
 	static void reportError(JSContext *cx, const char *message, JSErrorReport *report);
-	
+
 	/**
 	 * Log something using CCLog
 	 * @param cx
@@ -164,14 +175,14 @@ public:
 	 * @param vp
 	 */
 	static JSBool log(JSContext *cx, uint32_t argc, jsval *vp);
-	
+
 	JSBool setReservedSpot(uint32_t i, JSObject *obj, jsval value);
-	
+
 	/**
 	 * run a script from script :)
 	 */
 	static JSBool executeScript(JSContext *cx, uint32_t argc, jsval *vp);
-	
+
 	/**
 	 * Force a cycle of GC
 	 * @param cx
@@ -189,7 +200,8 @@ public:
 	void debugProcessInput(string str);
 	void enableDebugger();
 	JSObject* getDebugGlobal() { return debugGlobal_; }
-	
+    JSObject* getGlobalObject() { return global_; }
+    
  private:
     void string_report(jsval val);
 };
@@ -256,16 +268,13 @@ public:
 	}
 	~JSStringWrapper() {
 		if (buffer) {
-			JS_free(ScriptingCore::getInstance()->getGlobalContext(), (void*)buffer);
+			//JS_free(ScriptingCore::getInstance()->getGlobalContext(), (void*)buffer);
+            delete[] buffer;
 		}
 	}
 	void set(jsval val, JSContext* cx) {
 		if (val.isString()) {
-			string = val.toString();
-			if (!cx) {
-				cx = ScriptingCore::getInstance()->getGlobalContext();
-			}
-			buffer = JS_EncodeString(cx, string);
+			this->set(val.toString(), cx);
 		} else {
 			buffer = NULL;
 		}
@@ -274,8 +283,12 @@ public:
 		string = str;
 		if (!cx) {
 			cx = ScriptingCore::getInstance()->getGlobalContext();
+            
 		}
-		buffer = JS_EncodeString(cx, string);
+        // JS_EncodeString isn't supported in SpiderMonkey ff19.0.
+        //buffer = JS_EncodeString(cx, string);
+        unsigned short* pStrUTF16 = (unsigned short*)JS_GetStringCharsZ(cx, str);
+        buffer = cc_utf16_to_utf8(pStrUTF16, -1, NULL, NULL);
 	}
 	std::string get() {
         return buffer;
@@ -287,6 +300,10 @@ public:
 	operator char*() {
 		return (char*)buffer;
 	}
+private:
+	/* Copy and assignment are not supported. */
+    JSStringWrapper(const JSStringWrapper &another);
+    JSStringWrapper &operator=(const JSStringWrapper &another);
 };
 
 JSBool jsb_set_reserved_slot(JSObject *obj, uint32_t idx, jsval value);

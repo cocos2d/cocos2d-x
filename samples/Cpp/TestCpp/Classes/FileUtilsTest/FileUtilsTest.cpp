@@ -4,11 +4,13 @@
 TESTLAYER_CREATE_FUNC(TestResolutionDirectories);
 TESTLAYER_CREATE_FUNC(TestSearchPath);
 TESTLAYER_CREATE_FUNC(TestFilenameLookup);
+TESTLAYER_CREATE_FUNC(TestIsFileExist);
 
 static NEWTESTFUNC createFunctions[] = {
     CF(TestResolutionDirectories),
     CF(TestSearchPath),
-    CF(TestFilenameLookup)
+    CF(TestFilenameLookup),
+    CF(TestIsFileExist)
 };
 
 static int sceneIdx=-1;
@@ -194,7 +196,7 @@ void TestSearchPath::onEnter()
     sharedFileUtils->purgeCachedEntries();
     m_defaultSearchPathArray = sharedFileUtils->getSearchPaths();
     vector<string> searchPaths = m_defaultSearchPathArray;
-    string writablePath = sharedFileUtils->getWriteablePath();
+    string writablePath = sharedFileUtils->getWritablePath();
     string fileName = writablePath+"external.txt";
     char szBuf[100] = "Hello Cocos2d-x!";
     FILE* fp = fopen(fileName.c_str(), "wb");
@@ -225,13 +227,15 @@ void TestSearchPath::onEnter()
     // Gets external.txt from writable path
     string fullPath = sharedFileUtils->fullPathForFilename("external.txt");
     CCLog("\nexternal file path = %s\n", fullPath.c_str());
-    if (fullPath.length() > 0) {
+    if (fullPath.length() > 0)
+    {
         fp = fopen(fullPath.c_str(), "rb");
         if (fp)
         {
             char szReadBuf[100] = {0};
-            fread(szReadBuf, 1, strlen(szBuf), fp);
-            CCLog("The content of file from writable path: %s", szReadBuf);
+            int read = fread(szReadBuf, 1, strlen(szBuf), fp);
+            if (read > 0)
+                CCLog("The content of file from writable path: %s", szReadBuf);
             fclose(fp);
         }
     }
@@ -301,3 +305,46 @@ string TestFilenameLookup::subtitle()
     return "See the console";
 }
 
+//#pragma mark - TestIsFileExist
+
+void TestIsFileExist::onEnter()
+{
+    FileUtilsDemo::onEnter();
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    CCFileUtils *sharedFileUtils = CCFileUtils::sharedFileUtils();
+    
+    CCLabelTTF* pTTF = NULL;
+    bool isExist = false;
+    
+    isExist = sharedFileUtils->isFileExist("Images/grossini.png");
+    
+    pTTF = CCLabelTTF::create(isExist ? "Images/grossini.png exists" : "Images/grossini.png doesn't exist", "", 20);
+    pTTF->setPosition(ccp(s.width/2, s.height/3));
+    this->addChild(pTTF);
+    
+    isExist = sharedFileUtils->isFileExist("Images/grossini.xcf");
+    pTTF = CCLabelTTF::create(isExist ? "Images/grossini.xcf exists" : "Images/grossini.xcf doesn't exist", "", 20);
+    pTTF->setPosition(ccp(s.width/2, s.height/3*2));
+    this->addChild(pTTF);
+}
+
+void TestIsFileExist::onExit()
+{
+	
+	CCFileUtils *sharedFileUtils = CCFileUtils::sharedFileUtils();
+	
+	// reset filename lookup
+    sharedFileUtils->setFilenameLookupDictionary(CCDictionary::create());
+	
+    FileUtilsDemo::onExit();
+}
+
+string TestIsFileExist::title()
+{
+    return "FileUtils: check whether the file exists";
+}
+
+string TestIsFileExist::subtitle()
+{
+    return "";
+}

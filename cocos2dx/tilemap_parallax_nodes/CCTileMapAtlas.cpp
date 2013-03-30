@@ -56,7 +56,6 @@ bool CCTileMapAtlas::initWithTileFile(const char *tile, const char *mapFile, int
 
     if( CCAtlasNode::initWithTileFile(tile, tileWidth, tileHeight, m_nItemsToRender) )
     {
-        m_tColor = ccWHITE;
         m_pPosToAtlasIndex = new CCDictionary();
         this->updateAtlasValues();
         this->setContentSize(CCSizeMake((float)(m_pTGAInfo->width*m_uItemWidth),
@@ -135,11 +134,11 @@ void CCTileMapAtlas::loadTGAfile(const char *file)
 // CCTileMapAtlas - Atlas generation / updates
 void CCTileMapAtlas::setTile(const ccColor3B& tile, const CCPoint& position)
 {
-    CCAssert( m_pTGAInfo != NULL, "tgaInfo must not be nil");
-    CCAssert( m_pPosToAtlasIndex != NULL, "posToAtlasIndex must not be nil");
-    CCAssert( position.x < m_pTGAInfo->width, "Invalid position.x");
-    CCAssert( position.y < m_pTGAInfo->height, "Invalid position.x");
-    CCAssert( tile.r != 0, "R component must be non 0");
+    CCAssert(m_pTGAInfo != NULL, "tgaInfo must not be nil");
+    CCAssert(m_pPosToAtlasIndex != NULL, "posToAtlasIndex must not be nil");
+    CCAssert(position.x < m_pTGAInfo->width, "Invalid position.x");
+    CCAssert(position.y < m_pTGAInfo->height, "Invalid position.x");
+    CCAssert(tile.r != 0, "R component must be non 0");
 
     ccColor3B *ptr = (ccColor3B*)m_pTGAInfo->imageData;
     ccColor3B value = ptr[(unsigned int)(position.x + position.y * m_pTGAInfo->width)];
@@ -221,7 +220,7 @@ void CCTileMapAtlas::updateAtlasValueAt(const CCPoint& pos, const ccColor3B& val
     quad.tr.vertices.y = (float)(y * m_uItemHeight + m_uItemHeight);
     quad.tr.vertices.z = 0.0f;
 
-    ccColor4B color = { m_tColor.r, m_tColor.g, m_tColor.b, m_cOpacity };
+    ccColor4B color = { _displayedColor.r, _displayedColor.g, _displayedColor.b, _displayedOpacity };
     quad.tr.colors = color;
     quad.tl.colors = color;
     quad.br.colors = color;

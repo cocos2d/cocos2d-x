@@ -44,8 +44,8 @@ static void removeUsedIndexBit(int index)
 
 CCEGLViewProtocol::CCEGLViewProtocol()
 : m_pDelegate(NULL)
-, m_fScaleY(1.0f)
 , m_fScaleX(1.0f)
+, m_fScaleY(1.0f)
 , m_eResolutionPolicy(kResolutionUnKnown)
 {
 }
