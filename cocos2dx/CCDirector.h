@@ -239,6 +239,7 @@ public:
     void replaceScene(CCScene *pScene);
     
     /** Give the number of scenes present in the scene stack.
+     *  Note: this count also includes the root scene node.
      */
     unsigned int getSceneCount();
 
