@@ -14,6 +14,7 @@ static CCLayer* create##className() \
 { return new className(); }
 
 TEXTURE2D_CREATE_FUNC(TextureMemoryAlloc);
+
 TEXTURE2D_CREATE_FUNC(TextureAlias);
 TEXTURE2D_CREATE_FUNC(TexturePVRMipMap);
 TEXTURE2D_CREATE_FUNC(TexturePVRMipMap2);
@@ -21,6 +22,7 @@ TEXTURE2D_CREATE_FUNC(TexturePVRNonSquare);
 TEXTURE2D_CREATE_FUNC(TexturePVRNPOT4444);
 TEXTURE2D_CREATE_FUNC(TexturePVRNPOT8888);
 TEXTURE2D_CREATE_FUNC(TexturePVR);
+
 TEXTURE2D_CREATE_FUNC(TexturePVR2BPP);
 TEXTURE2D_CREATE_FUNC(TexturePVR2BPPv3);
 TEXTURE2D_CREATE_FUNC(TexturePVR4BPP);
@@ -46,10 +48,14 @@ TEXTURE2D_CREATE_FUNC(TexturePVRI8);
 TEXTURE2D_CREATE_FUNC(TexturePVRI8v3);
 TEXTURE2D_CREATE_FUNC(TexturePVRAI88);
 TEXTURE2D_CREATE_FUNC(TexturePVRAI88v3);
+
+TEXTURE2D_CREATE_FUNC(TexturePVRv3Premult);
+
 TEXTURE2D_CREATE_FUNC(TexturePVRBadEncoding);
 TESTLAYER_CREATE_FUNC(TexturePNG);
 TESTLAYER_CREATE_FUNC(TextureJPEG);
 TESTLAYER_CREATE_FUNC(TextureTIFF);
+TESTLAYER_CREATE_FUNC(TextureWEBP);
 TESTLAYER_CREATE_FUNC(TexturePixelFormat);
 TESTLAYER_CREATE_FUNC(TextureBlend);
 TESTLAYER_CREATE_FUNC(TextureAsync);
@@ -96,10 +102,13 @@ static NEWTEXTURE2DTESTFUNC createFunctions[] =
     createTexturePVRAI88,
     createTexturePVRAI88v3,
     
+    createTexturePVRv3Premult,
+    
     createTexturePVRBadEncoding,
     createTexturePNG,
     createTextureJPEG,
     createTextureTIFF,
+    createTextureWEBP,
     createTexturePixelFormat,
     createTextureBlend,
     createTextureAsync,
@@ -184,7 +193,11 @@ void TextureDemo::onEnter()
     item1->setPosition(ccp(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
     item2->setPosition(ccp(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2));
     item3->setPosition(ccp(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
-    addChild(menu, 1);    
+    addChild(menu, 1);
+    
+    CCLayerColor *col = CCLayerColor::create(ccc4(128,128,128,255));
+    addChild(col, -10);
+    
     CCTextureCache::sharedTextureCache()->dumpCachedTextureInfo();
 }
 
@@ -291,6 +304,27 @@ void TextureJPEG::onEnter()
 std::string TextureJPEG::title()
 {
     return "JPEG Test";
+}
+
+//------------------------------------------------------------------
+//
+// TextureWEBP
+//
+//------------------------------------------------------------------
+void TextureWEBP::onEnter()
+{
+    TextureDemo::onEnter();
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    
+    CCSprite *img = CCSprite::create("Images/test_image.webp");
+    img->setPosition(ccp( s.width/2.0f, s.height/2.0f));
+    addChild(img);
+    CCTextureCache::sharedTextureCache()->dumpCachedTextureInfo();
+}
+
+std::string TextureWEBP::title()
+{
+    return "WEBP Test";
 }
 
 //------------------------------------------------------------------
@@ -1965,4 +1999,54 @@ string TextureMemoryAlloc::title()
 string TextureMemoryAlloc::subtitle()
 {
     return "Testing Texture Memory allocation. Use Instruments + VM Tracker";
+}
+
+// TexturePVRv3Premult
+TexturePVRv3Premult::TexturePVRv3Premult()
+{
+    CCSize size = CCDirector::sharedDirector()->getWinSize();
+        
+    CCLayerColor *background = CCLayerColor::create(ccc4(128,128,128,255), size.width, size.height);
+    addChild(background, -1);
+    
+    
+    // PVR premultiplied
+    CCSprite *pvr1 = CCSprite::create("Images/grossinis_sister1-testalpha_premult.pvr");
+    addChild(pvr1, 0);
+    pvr1->setPosition(ccp(size.width/4*1, size.height/2));
+    transformSprite(pvr1);
+    
+    // PVR non-premultiplied
+    CCSprite *pvr2 = CCSprite::create("Images/grossinis_sister1-testalpha_nopremult.pvr");
+    addChild(pvr2, 0);
+    pvr2->setPosition(ccp(size.width/4*2, size.height/2));
+    transformSprite(pvr2);
+    
+    // PNG
+    CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA8888);
+    CCTextureCache::sharedTextureCache()->removeTextureForKey("Images/grossinis_sister1-testalpha.png");
+    CCSprite *png = CCSprite::create("Images/grossinis_sister1-testalpha.png");
+    addChild(png, 0);
+    png->setPosition(ccp(size.width/4*3, size.height/2));
+    transformSprite(png);
+}
+
+std::string TexturePVRv3Premult::title()
+{
+    return "PVRv3 Premult Flag";
+}
+
+std::string TexturePVRv3Premult::subtitle()
+{
+    return "All images should look exactly the same";
+}
+
+void TexturePVRv3Premult::transformSprite(cocos2d::CCSprite *sprite)
+{
+    CCFadeOut *fade = CCFadeOut::create(2);
+    CCDelayTime *dl = CCDelayTime::create(2);
+    CCFadeOut *fadein = (CCFadeOut*)fade->reverse();
+    CCSequence *seq = CCSequence::create(fade, fadein, dl, NULL);
+    CCRepeatForever *repeat = CCRepeatForever::create(seq);
+    sprite->runAction(repeat);
 }

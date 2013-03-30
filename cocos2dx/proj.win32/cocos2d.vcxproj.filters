@@ -94,6 +94,12 @@
     <Filter Include="draw_nodes">
       <UniqueIdentifier>{1179d205-d065-49f0-8457-bc4c3f1d0cb3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="support\tinyxml2">
+      <UniqueIdentifier>{cc25bb83-527d-4218-8d68-ebf963ce7698}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="support\user_default">
+      <UniqueIdentifier>{c45b97e8-fa1f-4e58-8ec5-d46371c2dd26}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\base_nodes\CCAtlasNode.cpp">
@@ -252,9 +258,6 @@
     <ClCompile Include="..\platform\win32\CCEGLView.cpp">
       <Filter>platform\win32</Filter>
     </ClCompile>
-    <ClCompile Include="..\platform\win32\CCFileUtils.cpp">
-      <Filter>platform\win32</Filter>
-    </ClCompile>
     <ClCompile Include="..\platform\win32\CCImage.cpp">
       <Filter>platform\win32</Filter>
     </ClCompile>
@@ -289,9 +292,6 @@
       <Filter>support</Filter>
     </ClCompile>
     <ClCompile Include="..\support\CCProfiling.cpp">
-      <Filter>support</Filter>
-    </ClCompile>
-    <ClCompile Include="..\support\CCUserDefault.cpp">
       <Filter>support</Filter>
     </ClCompile>
     <ClCompile Include="..\support\ccUtils.cpp">
@@ -436,6 +436,27 @@
     </ClCompile>
     <ClCompile Include="..\shaders\CCGLProgram.cpp">
       <Filter>shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\win32\CCFileUtilsWin32.cpp">
+      <Filter>platform\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\CCFileUtils.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\CCImageCommonWebp.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\win32\CCDevice.cpp">
+      <Filter>platform\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\ccUTF8.cpp">
+      <Filter>support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\user_default\CCUserDefault.cpp">
+      <Filter>support\user_default</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\tinyxml2\tinyxml2.cpp">
+      <Filter>support\tinyxml2</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -607,9 +628,6 @@
     <ClInclude Include="..\platform\CCFileUtils.h">
       <Filter>platform</Filter>
     </ClInclude>
-    <ClInclude Include="..\platform\CCFileUtilsCommon_cpp.h">
-      <Filter>platform</Filter>
-    </ClInclude>
     <ClInclude Include="..\platform\CCImage.h">
       <Filter>platform</Filter>
     </ClInclude>
@@ -677,9 +695,6 @@
       <Filter>support</Filter>
     </ClInclude>
     <ClInclude Include="..\support\CCProfiling.h">
-      <Filter>support</Filter>
-    </ClInclude>
-    <ClInclude Include="..\support\CCUserDefault.h">
       <Filter>support</Filter>
     </ClInclude>
     <ClInclude Include="..\support\ccUtils.h">
@@ -886,6 +901,18 @@
     </ClInclude>
     <ClInclude Include="..\shaders\CCGLProgram.h">
       <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\win32\CCFileUtilsWin32.h">
+      <Filter>platform\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\ccUTF8.h">
+      <Filter>support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\user_default\CCUserDefault.h">
+      <Filter>support\user_default</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\tinyxml2\tinyxml2.h">
+      <Filter>support\tinyxml2</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

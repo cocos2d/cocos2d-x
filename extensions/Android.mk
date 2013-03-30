@@ -5,7 +5,8 @@ LOCAL_MODULE    := cocos_extension_static
 
 LOCAL_MODULE_FILENAME := libextension
 
-LOCAL_SRC_FILES := CCBReader/CCBFileLoader.cpp \
+LOCAL_SRC_FILES := AssetsManager/AssetsManager.cpp \
+CCBReader/CCBFileLoader.cpp \
 CCBReader/CCBReader.cpp \
 CCBReader/CCControlButtonLoader.cpp \
 CCBReader/CCControlLoader.cpp \
@@ -53,6 +54,7 @@ physics_nodes/CCPhysicsSprite.cpp \
 LocalStorage/LocalStorageAndroid.cpp 
 
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dx_static
+LOCAL_WHOLE_STATIC_LIBRARIES += cocosdenshion_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_curl_static
 LOCAL_WHOLE_STATIC_LIBRARIES += box2d_static
 LOCAL_WHOLE_STATIC_LIBRARIES += chipmunk_static
@@ -67,6 +69,7 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
 include $(BUILD_STATIC_LIBRARY)
 
 $(call import-module,cocos2dx)
+$(call import-module,CocosDenshion/android)
 $(call import-module,cocos2dx/platform/third_party/android/prebuilt/libcurl)
 $(call import-module,external/Box2D)
 $(call import-module,external/chipmunk)

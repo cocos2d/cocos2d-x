@@ -1,0 +1,20 @@
+{
+  "manifest_version": 2,
+  "name": "Cocos2dx Test App",
+  "version": "2.1",
+  "app": {
+    "background": {
+      "scripts": ["main.js"]
+    }
+  },
+  "icons": {
+    "16": "icon_16.png",
+    "128": "icon_128.png"
+  },
+  "minimum_chrome_version": "25",
+  "requirements": {
+    "3D": {
+      "features": ["webgl"]
+    }
+  }
+}

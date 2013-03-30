@@ -93,7 +93,33 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
     
-    void touched(cocos2d::CCObject* sender);
+    void touched(CCObject* sender);
+};
+
+class SpriteRenderTextureBug : public RenderTextureTest
+{
+public:
+    
+class SimpleSprite : public CCSprite
+{
+    public:
+        SimpleSprite();
+        virtual void draw();
+        
+        static SimpleSprite* create(const char* filename, const CCRect &rect);
+        
+    public:
+        CCRenderTexture *rt;
+};
+        
+public:
+    SpriteRenderTextureBug();
+    
+    virtual void ccTouchesEnded(CCSet* touches, CCEvent* event);
+    virtual std::string title();
+    virtual std::string subtitle();
+    
+    SimpleSprite* addNewSpriteWithCoords(const CCPoint& p);
 };
 
 #endif

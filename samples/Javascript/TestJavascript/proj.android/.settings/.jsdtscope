@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="lib" path="/Users/rohankuruvilla/work/cc/scripting/javascript/bindings/generated/cocos2dxapi.js"/>
+	<classpathentry kind="con" path="org.eclipse.wst.jsdt.launching.baseBrowserLibrary"/>
+	<classpathentry kind="output" path=""/>
+</classpath>

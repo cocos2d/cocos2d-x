@@ -43,6 +43,7 @@ Config of cocos2d-x project, per target platform.
 #define CC_PLATFORM_BADA               6
 #define CC_PLATFORM_BLACKBERRY         7
 #define CC_PLATFORM_MAC                8
+#define CC_PLATFORM_NACL               9
 
 // Determine target platform by compile environment macro.
 #define CC_TARGET_PLATFORM             CC_PLATFORM_UNKNOWN
@@ -57,7 +58,6 @@ Config of cocos2d-x project, per target platform.
 #if defined(CC_TARGET_OS_IPHONE)
     #undef  CC_TARGET_PLATFORM
     #define CC_TARGET_PLATFORM         CC_PLATFORM_IOS
-    #define CC_SUPPORT_PVRTC
 #endif
 
 // android
@@ -94,6 +94,12 @@ Config of cocos2d-x project, per target platform.
 #if defined(__QNX__)
     #undef  CC_TARGET_PLATFORM
     #define CC_TARGET_PLATFORM     CC_PLATFORM_BLACKBERRY
+#endif
+
+// native client
+#if defined(__native_client__)
+    #undef  CC_TARGET_PLATFORM
+    #define CC_TARGET_PLATFORM     CC_PLATFORM_NACL
 #endif
 
 

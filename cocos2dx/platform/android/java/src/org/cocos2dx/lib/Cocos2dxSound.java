@@ -129,8 +129,10 @@ public class Cocos2dxSound {
 
 		// unload effect
 		final Integer soundID = this.mPathSoundIDMap.get(pPath);
-		this.mSoundPool.unload(soundID);
-		this.mPathSoundIDMap.remove(pPath);
+		if(soundID != null){
+			this.mSoundPool.unload(soundID);
+			this.mPathSoundIDMap.remove(pPath);
+		}
 	}
 
 	public int playEffect(final String pPath, final boolean pLoop) {

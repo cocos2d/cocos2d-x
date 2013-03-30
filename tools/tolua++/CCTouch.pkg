@@ -1,11 +1,4 @@
 
-enum {
-    CCTOUCHBEGAN,
-    CCTOUCHMOVED,
-    CCTOUCHENDED,
-    CCTOUCHCANCELLED,
-};
-
 class CCTouch : public CCObject
 {
 	CCPoint getLocation() const;

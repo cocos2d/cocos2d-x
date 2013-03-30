@@ -404,8 +404,8 @@ void CCHttpClient::destroyInstance()
 }
 
 CCHttpClient::CCHttpClient()
-:_timeoutForRead(60)
-,_timeoutForConnect(30)
+: _timeoutForConnect(30)
+, _timeoutForRead(60)
 {
     CCDirector::sharedDirector()->getScheduler()->scheduleSelector(
                     schedule_selector(CCHttpClient::dispatchResponseCallbacks), this, 0, false);

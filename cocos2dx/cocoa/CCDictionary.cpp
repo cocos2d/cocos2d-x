@@ -25,6 +25,7 @@
 #include "CCDictionary.h"
 #include "CCString.h"
 #include "CCInteger.h"
+#include "platform/CCFileUtils.h"
 
 using namespace std;
 
@@ -328,6 +329,7 @@ void CCDictionary::removeAllObjects()
         HASH_DEL(m_pElements, pElement);
         pElement->m_pObject->release();
         CC_SAFE_DELETE(pElement);
+
     }
 }
 
@@ -401,11 +403,9 @@ CCDictionary* CCDictionary::createWithDictionary(CCDictionary* srcDict)
     return pNewDict;
 }
 
-extern CCDictionary* ccFileUtils_dictionaryWithContentsOfFileThreadSafe(const char *pFileName);
-
 CCDictionary* CCDictionary::createWithContentsOfFileThreadSafe(const char *pFileName)
 {
-    return ccFileUtils_dictionaryWithContentsOfFileThreadSafe(pFileName);
+    return CCFileUtils::sharedFileUtils()->createCCDictionaryWithContentsOfFile(pFileName);
 }
 
 CCDictionary* CCDictionary::createWithContentsOfFile(const char *pFileName)

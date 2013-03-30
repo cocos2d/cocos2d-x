@@ -38,14 +38,10 @@ public:
     virtual void updateQuantityOfNodes();
     virtual void initWithQuantityOfNodes(unsigned int nNodes);
     virtual void update(float dt) = 0;
-    virtual std::string profilerName();
+    virtual const char* profilerName();
 
 protected:
     CCSpriteBatchNode    *batchNode;
-
-#if CC_ENABLE_PROFILERS
-    CCProfilingTimer    *_profilingTimer;
-#endif
 };
 
 class IterateSpriteSheetFastEnum : public IterateSpriteSheet
@@ -55,7 +51,7 @@ public:
 
     virtual std::string title();
     virtual std::string subtitle();
-    virtual std::string profilerName();
+    virtual const char* profilerName();
 };
 
 class IterateSpriteSheetCArray : public IterateSpriteSheet
@@ -65,7 +61,7 @@ public:
 
     virtual std::string title();
     virtual std::string subtitle();
-    virtual std::string profilerName();
+    virtual const char* profilerName();
 };
 
 class AddRemoveSpriteSheet : public NodeChildrenMainScene
@@ -75,7 +71,7 @@ public:
     virtual void updateQuantityOfNodes();
     virtual void initWithQuantityOfNodes(unsigned int nNodes);
     virtual void update(float dt) = 0;
-    virtual std::string profilerName();
+    virtual const char* profilerName();
 
 protected:
     CCSpriteBatchNode    *batchNode;
@@ -92,7 +88,7 @@ public:
 
     virtual std::string title();
     virtual std::string subtitle();
-    virtual std::string profilerName();
+    virtual const char* profilerName();
 };
 
 class RemoveSpriteSheet : public AddRemoveSpriteSheet
@@ -102,7 +98,7 @@ public:
 
     virtual std::string title();
     virtual std::string subtitle();
-    virtual std::string profilerName();
+    virtual const char* profilerName();
 };
 
 class ReorderSpriteSheet : public AddRemoveSpriteSheet
@@ -112,7 +108,7 @@ public:
 
     virtual std::string title();
     virtual std::string subtitle();
-    virtual std::string profilerName();
+    virtual const char* profilerName();
 };
 
 void runNodeChildrenTest();

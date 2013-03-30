@@ -64,6 +64,7 @@ public:
     static CCEGLView* sharedOpenGLView();
 
     bool    handleEvents();
+    screen_display_t getScreenDisplay() const;
 
 private:
     void        release();
@@ -89,6 +90,7 @@ private:
     screen_event_t 	 m_screenEvent;
     screen_window_t  m_screenWindow;
     screen_context_t m_screenContext;
+    screen_display_t m_screen_display;
     char 			 m_windowGroupID[16];
 };
 

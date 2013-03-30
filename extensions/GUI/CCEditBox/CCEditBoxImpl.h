@@ -40,7 +40,9 @@ public:
     virtual ~CCEditBoxImpl() {}
     
     virtual bool initWithSize(const CCSize& size) = 0;
+    virtual void setFont(const char* pFontName, int fontSize) = 0;
     virtual void setFontColor(const ccColor3B& color) = 0;
+    virtual void setPlaceholderFont(const char* pFontName, int fontSize) = 0;
     virtual void setPlaceholderFontColor(const ccColor3B& color) = 0;
     virtual void setInputMode(EditBoxInputMode inputMode) = 0;
     virtual void setInputFlag(EditBoxInputFlag inputFlag) = 0;
@@ -58,8 +60,11 @@ public:
     virtual void closeKeyboard() = 0;
     
     virtual void setPosition(const CCPoint& pos) = 0;
+    virtual void setVisible(bool visible) = 0;
     virtual void setContentSize(const CCSize& size) = 0;
+	virtual void setAnchorPoint(const CCPoint& anchorPoint) = 0;
     virtual void visit(void) = 0;
+    virtual void onEnter(void) = 0;
     
     
     void setDelegate(CCEditBoxDelegate* pDelegate) { m_pDelegate = pDelegate; };

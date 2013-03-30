@@ -222,6 +222,9 @@ public:
 
     /** execute a accelerometer event */
     virtual int executeAccelerometerEvent(CCLayer* pLayer, CCAcceleration* pAccelerationValue) = 0;
+
+    /** function for common event */
+    virtual int executeEvent(int nHandler, const char* pEventName, CCObject* pEventSource = NULL, const char* pEventSourceClassName = NULL) = 0;
     /** function for assert test */
     virtual bool executeAssert(bool cond, const char *msg = NULL) = 0;
 };

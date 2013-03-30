@@ -105,7 +105,11 @@ static CCImage::EImageFormat computeImageFormatType(string& filename)
     {
         ret = CCImage::kFmtTiff;
     }
-    
+    else if ((std::string::npos != filename.find(".webp")) || (std::string::npos != filename.find(".WEBP")))
+    {
+        ret = CCImage::kFmtWebp;
+    }
+   
     return ret;
 }
 
@@ -398,14 +402,17 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
     
     //pthread_mutex_lock(m_pDictLock);
 
-    // remove possible -HD suffix to prevent caching the same image twice (issue #1040)
     std::string pathKey = path;
 
     pathKey = CCFileUtils::sharedFileUtils()->fullPathForFilename(pathKey.c_str());
+    if (pathKey.size() == 0)
+    {
+        return NULL;
+    }
     texture = (CCTexture2D*)m_pTextures->objectForKey(pathKey.c_str());
 
     std::string fullpath = pathKey; // (CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(path));
-    if( ! texture ) 
+    if (! texture) 
     {
         std::string lowerCase(pathKey);
         for (unsigned int i = 0; i < lowerCase.length(); ++i)
@@ -434,12 +441,17 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
                 {
                     eImageFormat = CCImage::kFmtTiff;
                 }
+                else if (std::string::npos != lowerCase.find(".webp"))
+                {
+                    eImageFormat = CCImage::kFmtWebp;
+                }
                 
                 pImage = new CCImage();
                 CC_BREAK_IF(NULL == pImage);
 
                 unsigned long nSize = 0;
                 unsigned char* pBuffer = CCFileUtils::sharedFileUtils()->getFileData(fullpath.c_str(), "rb", &nSize);
+                
                 bool bRet = pImage->initWithImageData((void*)pBuffer, nSize, eImageFormat);
                 CC_SAFE_DELETE_ARRAY(pBuffer);
                 CC_BREAK_IF(!bRet);
@@ -453,13 +465,12 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
                     // cache the texture file name
                     VolatileTexture::addImageTexture(texture, fullpath.c_str(), eImageFormat);
 #endif
-
                     m_pTextures->setObject(texture, pathKey.c_str());
                     texture->release();
                 }
                 else
                 {
-                    CCLOG("cocos2d: Couldn't add image:%s in CCTextureCache", path);
+                    CCLOG("cocos2d: Couldn't create texture for file:%s in CCTextureCache", path);
                 }
             }
         } while (0);
@@ -470,45 +481,6 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
     //pthread_mutex_unlock(m_pDictLock);
     return texture;
 }
-
-#ifdef CC_SUPPORT_PVRTC
-CCTexture2D* CCTextureCache::addPVRTCImage(const char* path, int bpp, bool hasAlpha, int width)
-{
-    CCAssert(path != NULL, "TextureCache: fileimage MUST not be nil");
-    CCAssert( bpp==2 || bpp==4, "TextureCache: bpp must be either 2 or 4");
-
-    CCTexture2D * texture;
-
-    std::string temp(path);
-    
-    if ( (texture = (CCTexture2D*)m_pTextures->objectForKey(temp.c_str())) )
-    {
-        return texture;
-    }
-    
-    // Split up directory and filename
-    std::string fullpath( CCFileUtils::sharedFileUtils()->fullPathForFilename(path) );
-
-    unsigned long nLen = 0;
-    unsigned char* pData = CCFileUtils::sharedFileUtils()->getFileData(fullpath.c_str(), "rb", &nLen);
-
-    texture = new CCTexture2D();
-    
-    if( texture->initWithPVRTCData(pData, 0, bpp, hasAlpha, width,
-                                   (bpp==2 ? kCCTexture2DPixelFormat_PVRTC2 : kCCTexture2DPixelFormat_PVRTC4)))
-    {
-        m_pTextures->setObject(texture, temp.c_str());
-        texture->autorelease();
-    }
-    else
-    {
-        CCLOG("cocos2d: Couldn't add PVRTCImage:%s in CCTextureCache",path);
-    }
-    CC_SAFE_DELETE_ARRAY(pData);
-
-    return texture;
-}
-#endif // CC_SUPPORT_PVRTC
 
 CCTexture2D * CCTextureCache::addPVRImage(const char* path)
 {

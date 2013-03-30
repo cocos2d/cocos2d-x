@@ -27,7 +27,8 @@ enum
     kFloatValue,
     kBoolValue,
     kUnsignedCharValue,
-    kStringValue
+    kStringValue,
+    kArrayValue
 };
 
 class CCBValue : public CCObject
@@ -40,6 +41,7 @@ private:
     } mValue;
     
     std::string m_strValue;
+    CCArray* m_arrValue;
     int mType;
     
 public:
@@ -48,12 +50,15 @@ public:
     static CCBValue* create(float fValue);
     static CCBValue* create(unsigned char byte);
     static CCBValue* create(const char* pStr);
+    static CCBValue* create(CCArray* pArr);
+
     
     int getIntValue();
     float getFloatValue();
     bool getBoolValue();
     unsigned char getByteValue();
     const char* getStringValue();
+    CCArray *getArrayValue();
     
     int getType();
 };

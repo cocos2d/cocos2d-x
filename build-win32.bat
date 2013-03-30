@@ -1,8 +1,8 @@
 @echo off
 
 echo./*
-echo.* Check VC++ environment...
-echo.*/
+echo. * Check VC++ environment...
+echo. */
 echo.
 
 if defined VS110COMNTOOLS (
@@ -26,13 +26,13 @@ if not defined VSVARS (
 )
 
 echo./*
-echo.* Building cocos2d-x library binary, please wait a while...
-echo.*/
+echo. * Building cocos2d-x library binary, please wait a while...
+echo. */
 echo.
 
 call %VSVARS%
 if %VC_VER%==100 (
-    msbuild cocos2d-win32.vc2010.sln /p:Configuration="Debug" 
+    msbuild cocos2d-win32.vc2010.sln /p:Configuration="Debug"
     msbuild cocos2d-win32.vc2010.sln /p:Configuration="Release"
 ) else if %VC_VER%==110 (
     msbuild cocos2d-win32.vc2012.sln /t:Clean
@@ -44,11 +44,11 @@ if %VC_VER%==100 (
 )
 
 echo./*
-echo.* Check the cocos2d-win32 application "TestCpp.exe" ...
-echo.*/
+echo. * Check the cocos2d-win32 application "TestCpp.exe" ...
+echo. */
 echo.
 
-cd ".\Release.win32\"
+pushd ".\Release.win32\"
 
 set CC_TEST_BIN=TestCpp.exe
 
@@ -65,8 +65,8 @@ set CC_WATERMELONWITHME_RES=..\samples\Javascript\Shared\games\WatermelonWithMe
 
 
 echo./*
-echo.* Run cocos2d-win32 tests.exe and view Cocos2d-x Application Wizard for Visual Studio User Guide.
-echo.*/
+echo. * Run cocos2d-win32 tests.exe and view Cocos2d-x Application Wizard for Visual Studio User Guide.
+echo. */
 echo.
 xcopy  /E /Y /Q "%CC_TEST_RES%" .
 xcopy  /E /Y /Q "%CC_HELLOWORLD_RES%" .
@@ -85,6 +85,7 @@ if not exist "%CC_TEST_BIN%" (
 )
 
 call "%CC_TEST_BIN%"
+popd
 start http://www.cocos2d-x.org/projects/cocos2d-x/wiki/Cocos2d-x_Application_Wizard_for_Visual_Studio_User_Guide
 goto EOF
 

@@ -1,65 +1,47 @@
-CC      = gcc
-CXX     = g++
-AR      = ar
-TARGET	= libchipmunk.a
-CCFLAGS = -Wall -std=gnu99
-CXXFLAGS = -Wall 
-ARFLAGS = cr
+SOURCES = ../src/chipmunk.c \
+	../src/cpBody.c \
+	../src/cpSpace.c \
+	../src/cpSpatialIndex.c \
+	../src/cpArbiter.c \
+	../src/cpCollision.c \
+	../src/cpSpaceComponent.c \
+	../src/cpSweep1D.c \
+	../src/cpArray.c \
+	../src/cpHashSet.c \
+	../src/cpSpaceHash.c \
+	../src/cpVect.c \
+	../src/cpBB.c \
+	../src/cpPolyShape.c \
+	../src/cpSpaceQuery.c \
+	../src/cpBBTree.c \
+	../src/cpShape.c \
+	../src/cpSpaceStep.c \
+	../src/constraints/cpConstraint.c \
+	../src/constraints/cpPivotJoint.c \
+	../src/constraints/cpDampedRotarySpring.c \
+	../src/constraints/cpRatchetJoint.c \
+	../src/constraints/cpDampedSpring.c \
+	../src/constraints/cpRotaryLimitJoint.c \
+	../src/constraints/cpGearJoint.c \
+	../src/constraints/cpSimpleMotor.c \
+	../src/constraints/cpGrooveJoint.c \
+	../src/constraints/cpSlideJoint.c \
+	../src/constraints/cpPinJoint.c \
 
+include ../../../cocos2dx/proj.linux/cocos2dx.mk
+
+TARGET = $(LIB_DIR)/libchipmunk.a
 INCLUDES = -I../include/chipmunk
-
 DEFINES = -DLINUX
+CCFLAGS += -std=gnu99
+OBJECTS := $(subst src/,,$(OBJECTS))
 
-OBJECTS = ../src/chipmunk.o \
-			../src/cpBody.o \
-			../src/cpSpace.o \
-			../src/cpSpatialIndex.o \
-			../src/cpArbiter.o \
-			../src/cpCollision.o \
-			../src/cpSpaceComponent.o \
-			../src/cpSweep1D.o \
-			../src/cpArray.o \
-			../src/cpHashSet.o \
-			../src/cpSpaceHash.o \
-			../src/cpVect.o \
-			../src/cpBB.o \
-			../src/cpPolyShape.o \
-			../src/cpSpaceQuery.o \
-			../src/cpBBTree.o \
-			../src/cpShape.o \
-			../src/cpSpaceStep.o \
-			../src/constraints/cpConstraint.o \
-			../src/constraints/cpPivotJoint.o \
-			../src/constraints/cpDampedRotarySpring.o \
-			../src/constraints/cpRatchetJoint.o \
-			../src/constraints/cpDampedSpring.o \
-			../src/constraints/cpRotaryLimitJoint.o \
-			../src/constraints/cpGearJoint.o \
-			../src/constraints/cpSimpleMotor.o \
-			../src/constraints/cpGrooveJoint.o \
-			../src/constraints/cpSlideJoint.o \
-			../src/constraints/cpPinJoint.o \
+all: $(TARGET)
 
-debug: CCFLAGS += -g3 -O0
-debug: CXXFLAGS += -g3 -O0
-debug: DEFINES += -DDEBUG
-debug: $(TARGET)
+$(TARGET): $(OBJECTS) $(CORE_MAKEFILE_LIST)
+	@mkdir -p $(@D)
+	$(LOG_AR)$(AR) $(ARFLAGS) $(TARGET) $(OBJECTS)
 
-release: CCFLAGS += -O3
-release: CXXFLAGS += -O3
-release: DEFINES += -DNDEBIG
-release: $(TARGET)
-
-####### Build rules
-$(TARGET): $(OBJECTS) 
-	$(AR) $(ARFLAGS) $(TARGET) $(OBJECTS)  
-
-####### Compile
-%.o: %.cpp
-	$(CXX) $(CXXFLAGS) $(INCLUDES) $(DEFINES) -c $< -o $@
-
-%.o: %.c
-	$(CC) $(CCFLAGS) $(INCLUDES) $(DEFINES) -c $< -o $@
-
-clean: 
-	rm -f $(OBJECTS) $(TARGET) core
+$(OBJ_DIR)/%.o: ../src/%.c $(CORE_MAKEFILE_LIST)
+	@mkdir -p $(@D)
+	$(LOG_CC)$(CC) $(CCFLAGS) $(INCLUDES) $(DEFINES) -c $< -o $@

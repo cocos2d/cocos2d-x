@@ -37,7 +37,11 @@ NS_CC_BEGIN
 
 struct CC_DLL cc_timeval
 {
+#ifdef __native_client__
+    time_t    tv_sec;        // seconds
+#else
     long    tv_sec;        // seconds
+#endif
     long    tv_usec;    // microSeconds
 };
 

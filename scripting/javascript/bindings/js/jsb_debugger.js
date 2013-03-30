@@ -1,6 +1,7 @@
 dbg = {};
 
-cc = cc || {};
+// fallback for no cc
+cc = {};
 cc.log = log;
 
 var breakpointHandler = {
@@ -27,7 +28,7 @@ var stepFunction = function (frame, script) {
 
 dbg.breakLine = 0;
 
-this.processInput = function (str, frame, script) {
+var processInput = function (str, frame, script) {
 	str = str.replace(/\n$/, "");
 	if (str.length === 0) {
 		return;
@@ -170,26 +171,20 @@ dbg.onError = function (frame, report) {
 	cc.log("!! exception");
 };
 
-this._prepareDebugger = function (global) {
+function _prepareDebugger(global) {
 	var tmp = new Debugger(global);
 	tmp.onNewScript = dbg.onNewScript;
 	tmp.onDebuggerStatement = dbg.onDebuggerStatement;
 	tmp.onError = dbg.onError;
 	dbg.dbg = tmp;
-};
+}
 
-this._startDebugger = function (global, files, startFunc) {
-	cc.log("[DBG] starting debug session");
+function _startDebugger(global, files, startFunc) {
+	cc.log("starting with debugger enabled");
 	for (var i in files) {
-		try {
-			global['eval']("require('" + files[i] + "');");
-		} catch (e) {
-			cc.log("[DBG] error evaluating file: " + files[i]);
-		}
+		global['eval']("require('" + files[i] + "');");
 	}
-	cc.log("[DBG] all files required");
 	if (startFunc) {
-		cc.log("executing start func: " + startFunc);
 		global['eval'](startFunc);
 	}
 	// beginDebug();

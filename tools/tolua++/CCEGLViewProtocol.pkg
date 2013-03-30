@@ -83,3 +83,9 @@ class CCEGLViewProtocol
      */
     float getScaleY() const;
 };
+
+class CCEGLView : public CCEGLViewProtocol
+{
+    static CCEGLView* sharedOpenGLView(void);
+};
+

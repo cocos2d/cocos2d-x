@@ -412,6 +412,8 @@ void CCGrid3D::calculateVertexPoints(void)
 
 ccVertex3F CCGrid3D::vertex(const CCPoint& pos)
 {
+    CCAssert( pos.x == (unsigned int)pos.x && pos.y == (unsigned int) pos.y , "Numbers must be integers");
+    
     int index = (pos.x * (m_sGridSize.height+1) + pos.y) * 3;
     float *vertArray = (float*)m_pVertices;
 
@@ -422,6 +424,8 @@ ccVertex3F CCGrid3D::vertex(const CCPoint& pos)
 
 ccVertex3F CCGrid3D::originalVertex(const CCPoint& pos)
 {
+    CCAssert( pos.x == (unsigned int)pos.x && pos.y == (unsigned int) pos.y , "Numbers must be integers");
+    
     int index = (pos.x * (m_sGridSize.height+1) + pos.y) * 3;
     float *vertArray = (float*)m_pOriginalVertices;
 
@@ -432,6 +436,7 @@ ccVertex3F CCGrid3D::originalVertex(const CCPoint& pos)
 
 void CCGrid3D::setVertex(const CCPoint& pos, const ccVertex3F& vertex)
 {
+    CCAssert( pos.x == (unsigned int)pos.x && pos.y == (unsigned int) pos.y , "Numbers must be integers");
     int index = (pos.x * (m_sGridSize.height + 1) + pos.y) * 3;
     float *vertArray = (float*)m_pVertices;
     vertArray[index] = vertex.x;
@@ -611,6 +616,7 @@ void CCTiledGrid3D::calculateVertexPoints(void)
 
 void CCTiledGrid3D::setTile(const CCPoint& pos, const ccQuad3& coords)
 {
+    CCAssert( pos.x == (unsigned int)pos.x && pos.y == (unsigned int) pos.y , "Numbers must be integers");
     int idx = (m_sGridSize.height * pos.x + pos.y) * 4 * 3;
     float *vertArray = (float*)m_pVertices;
     memcpy(&vertArray[idx], &coords, sizeof(ccQuad3));
@@ -618,6 +624,7 @@ void CCTiledGrid3D::setTile(const CCPoint& pos, const ccQuad3& coords)
 
 ccQuad3 CCTiledGrid3D::originalTile(const CCPoint& pos)
 {
+    CCAssert( pos.x == (unsigned int)pos.x && pos.y == (unsigned int) pos.y , "Numbers must be integers");
     int idx = (m_sGridSize.height * pos.x + pos.y) * 4 * 3;
     float *vertArray = (float*)m_pOriginalVertices;
 
@@ -629,6 +636,7 @@ ccQuad3 CCTiledGrid3D::originalTile(const CCPoint& pos)
 
 ccQuad3 CCTiledGrid3D::tile(const CCPoint& pos)
 {
+    CCAssert( pos.x == (unsigned int)pos.x && pos.y == (unsigned int) pos.y , "Numbers must be integers");
     int idx = (m_sGridSize.height * pos.x + pos.y) * 4 * 3;
     float *vertArray = (float*)m_pVertices;
 

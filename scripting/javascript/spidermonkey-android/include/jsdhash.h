@@ -14,8 +14,6 @@
 #include "jstypes.h"
 #include "jsutil.h"
 
-JS_BEGIN_EXTERN_C
-
 #if defined(__GNUC__) && defined(__i386__) && (__GNUC__ >= 3) && !defined(XP_OS2)
 #define JS_DHASH_FASTCALL __attribute__ ((regparm (3),stdcall))
 #elif defined(XP_WIN)
@@ -597,7 +595,5 @@ JS_DHashMarkTableImmutable(JSDHashTable *table);
 extern JS_PUBLIC_API(void)
 JS_DHashTableDumpMeter(JSDHashTable *table, JSDHashEnumerator dump, FILE *fp);
 #endif
-
-JS_END_EXTERN_C
 
 #endif /* jsdhash_h___ */

@@ -141,6 +141,9 @@ public:
      */
     inline ccDirectorProjection getProjection(void) { return m_eProjection; }
     void setProjection(ccDirectorProjection kProjection);
+    
+    /** Sets the glViewport*/
+    void setViewport();
 
     /** How many frames were called since the director started */
     
@@ -323,6 +326,9 @@ public:
      */
     CC_PROPERTY(CCAccelerometer*, m_pAccelerometer, Accelerometer);
 
+    /* delta time since last tick to main loop */
+	CC_PROPERTY_READONLY(float, m_fDeltaTime, DeltaTime);
+	
     /** returns a shared instance of the director */
     static CCDirector* sharedDirector(void);
 
@@ -336,7 +342,8 @@ protected:
     void showStats();
     void createStatsLabel();
     void calculateMPF();
-
+    void getFPSImageData(unsigned char** datapointer, unsigned int* length);
+    
     /** calculates delta time since last time it was called */    
     void calculateDeltaTime();
 protected:
@@ -380,9 +387,6 @@ protected:
     
     /* last time the main loop was updated */
     struct cc_timeval *m_pLastUpdate;
-
-    /* delta time since last tick to main loop */
-    float m_fDeltaTime;
 
     /* whether or not the next delta time will be zero */
     bool m_bNextDeltaTimeZero;

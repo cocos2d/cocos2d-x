@@ -1,7 +1,5 @@
 class CCArray : public CCObject
 {
-	CCObject* copyWithZone(CCZone* pZone);
-
     static CCArray* create();
 
 	static CCArray* createWithObject(CCObject* pObject);
