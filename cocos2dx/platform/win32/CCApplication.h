@@ -54,8 +54,6 @@ public:
     {
         return m_startupScriptFilename;
     }
-    
-    void openURL(const char* pszUrl);
 
 protected:
     HINSTANCE           m_hInstance;
