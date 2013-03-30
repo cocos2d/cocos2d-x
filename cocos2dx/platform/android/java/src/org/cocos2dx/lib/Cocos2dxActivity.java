@@ -31,8 +31,6 @@ import android.os.Bundle;
 import android.os.Message;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.content.Intent;
-import android.net.Uri;
 
 public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelperListener {
 	// ===========================================================
@@ -44,25 +42,23 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 	// ===========================================================
 	// Fields
 	// ===========================================================
-
+	
 	private Cocos2dxGLSurfaceView mGLSurfaceView;
 	private Cocos2dxHandler mHandler;
-	private static Activity me = null;
 	private static Context sContext = null;
-
+	
 	public static Context getContext() {
 		return sContext;
 	}
-
+	
 	// ===========================================================
 	// Constructors
 	// ===========================================================
-
+	
 	@Override
 	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		sContext = this;
-		me = this;
     	this.mHandler = new Cocos2dxHandler(this);
 
     	this.init();
@@ -103,13 +99,13 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 	}
 
 	@Override
-	public void showEditTextDialog(final String pTitle, final String pContent, final int pInputMode, final int pInputFlag, final int pReturnType, final int pMaxLength) {
+	public void showEditTextDialog(final String pTitle, final String pContent, final int pInputMode, final int pInputFlag, final int pReturnType, final int pMaxLength) { 
 		Message msg = new Message();
 		msg.what = Cocos2dxHandler.HANDLER_SHOW_EDITBOX_DIALOG;
 		msg.obj = new Cocos2dxHandler.EditBoxMessage(pTitle, pContent, pInputMode, pInputFlag, pReturnType, pMaxLength);
 		this.mHandler.sendMessage(msg);
 	}
-
+	
 	@Override
 	public void runOnGLThread(final Runnable pRunnable) {
 		this.mGLSurfaceView.queueEvent(pRunnable);
@@ -119,7 +115,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 	// Methods
 	// ===========================================================
 	public void init() {
-
+		
     	// FrameLayout
         ViewGroup.LayoutParams framelayout_params =
             new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,
@@ -149,17 +145,10 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
         // Set framelayout as the content view
 		setContentView(framelayout);
 	}
-
+	
     public Cocos2dxGLSurfaceView onCreateView() {
     	return new Cocos2dxGLSurfaceView(this);
     }
-
-	// Opens URL as the new activity
-	public static void openURL(String url) {
-		Intent i = new Intent(Intent.ACTION_VIEW);
-		i.setData(Uri.parse(url));
-		me.startActivity(i);
-	}
 
 	// ===========================================================
 	// Inner and Anonymous Classes
