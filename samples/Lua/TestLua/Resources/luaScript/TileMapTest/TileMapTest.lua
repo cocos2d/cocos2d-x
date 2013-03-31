@@ -5,14 +5,17 @@ local kTagTileMap = 1
 -- TileMapTest
 --
 --------------------------------------------------------------------
-TileMapTest:TileMapTest()
+local TileMapTest = { index = nil } 
 
+function TileMapTest.create()
+    
     local  map = CCTileMapAtlas:create(s_TilesPng,  s_LevelMapTga, 16, 16)
     -- Convert it to "alias" (GL_LINEAR filtering)
     map:getTexture():setAntiAliasTexParameters()
     
-    CCSize CC_UNUSED s = map:getContentSize()
-    CCLOG("ContentSize: %f, %f", s.width,s.height)
+    CCSize  s = map:getContentSize()
+
+    cclog("ContentSize: %f, %f", s.width,s.height)
 
     -- If you are not going to use the Map, you can free it now
     -- NEW since v0.7
@@ -46,8 +49,8 @@ TileMapEditTest:TileMapEditTest()
     -- Create an Aliased Atlas
     map:getTexture():setAliasTexParameters()
     
-    CCSize CC_UNUSED s = map:getContentSize()
-    CCLOG("ContentSize: %f, %f", s.width,s.height)
+    CCSize  s = map:getContentSize()
+    cclog("ContentSize: %f, %f", s.width,s.height)
     
     -- If you are not going to use the Map, you can free it now
     -- [tilemap releaseMap)
@@ -76,7 +79,7 @@ void TileMapEditTest:updateMap(float dt)
     --        for(int y=0 y < tilemap.tgaInfo:height y++) 
     --            ccColor3B c =[tilemap tileAt:CCSizeMake(x,y))
     --            if( c.r != 0 ) 
-    --                --------CCLOG("%d,%d = %d", x,y,c.r)
+    --                --------cclog("%d,%d = %d", x,y,c.r)
     --            end
     --        end
     --    end
@@ -115,8 +118,8 @@ TMXOrthoTest:TMXOrthoTest()
     local  map = CCTMXTiledMap:create("TileMaps/orthogonal-test2.tmx")
     addChild(map, 0, kTagTileMap)
     
-    CCSize CC_UNUSED s = map:getContentSize()
-    CCLOG("ContentSize: %f, %f", s.width,s.height)
+    CCSize  s = map:getContentSize()
+    cclog("ContentSize: %f, %f", s.width,s.height)
     
     local  pChildrenArray = map:getChildren()
     local  child = NULL
@@ -164,8 +167,8 @@ TMXOrthoTest2:TMXOrthoTest2()
     local  map = CCTMXTiledMap:create("TileMaps/orthogonal-test1.tmx")
     addChild(map, 0, kTagTileMap)
 
-    CCSize CC_UNUSED s = map:getContentSize()
-    CCLOG("ContentSize: %f, %f", s.width,s.height)
+    CCSize  s = map:getContentSize()
+    cclog("ContentSize: %f, %f", s.width,s.height)
 
     local  pChildrenArray = map:getChildren()
     local  child = NULL
@@ -198,8 +201,8 @@ TMXOrthoTest3:TMXOrthoTest3()
     local map = CCTMXTiledMap:create("TileMaps/orthogonal-test3.tmx")
     addChild(map, 0, kTagTileMap)
     
-    CCSize CC_UNUSED s = map:getContentSize()
-    CCLOG("ContentSize: %f, %f", s.width,s.height)
+    CCSize  s = map:getContentSize()
+    cclog("ContentSize: %f, %f", s.width,s.height)
     
     local  pChildrenArray = map:getChildren()
     local  child = NULL
@@ -233,8 +236,8 @@ TMXOrthoTest4:TMXOrthoTest4()
     local map = CCTMXTiledMap:create("TileMaps/orthogonal-test4.tmx")
     addChild(map, 0, kTagTileMap)
     
-    CCSize CC_UNUSED s1 = map:getContentSize()
-    CCLOG("ContentSize: %f, %f", s1.width,s1.height)
+    CCSize  s1 = map:getContentSize()
+    cclog("ContentSize: %f, %f", s1.width,s1.height)
     
     local  pChildrenArray = map:getChildren()
     local  child = NULL
@@ -304,8 +307,8 @@ TMXReadWriteTest:TMXReadWriteTest()
     local  map = CCTMXTiledMap:create("TileMaps/orthogonal-test2.tmx")
     addChild(map, 0, kTagTileMap)
     
-    CCSize CC_UNUSED s = map:getContentSize()
-    CCLOG("ContentSize: %f, %f", s.width,s.height)
+    CCSize  s = map:getContentSize()
+    cclog("ContentSize: %f, %f", s.width,s.height)
 
     
     local  layer = map:layerNamed("Layer 0")
@@ -341,21 +344,21 @@ TMXReadWriteTest:TMXReadWriteTest()
     
     
     m_gid = layer:tileGIDAt(ccp(0,63))
-    --------CCLOG("Tile GID at:(0,63) is: %d", m_gid)
+    --------cclog("Tile GID at:(0,63) is: %d", m_gid)
 
     schedule(schedule_selector(TMXReadWriteTest:updateCol), 2.0) 
     schedule(schedule_selector(TMXReadWriteTest:repaintWithGID), 2.05)
     schedule(schedule_selector(TMXReadWriteTest:removeTiles), 1.0) 
 
-    --------CCLOG("++++atlas quantity: %d", layer:textureAtlas():getTotalQuads())
-    --------CCLOG("++++children: %d", layer:getChildren():count() )
+    --------cclog("++++atlas quantity: %d", layer:textureAtlas():getTotalQuads())
+    --------cclog("++++children: %d", layer:getChildren():count() )
     
     m_gid2 = 0
 end
 
 void TMXReadWriteTest:removeSprite(CCNode* sender)
 
-    --------CCLOG("removing tile: %x", sender)
+    --------cclog("removing tile: %x", sender)
     local  p = ((CCNode*)sender):getParent()
 
     if (p)
@@ -363,7 +366,7 @@ void TMXReadWriteTest:removeSprite(CCNode* sender)
         p:removeChild((CCNode*)sender, true)
     end    
     
-    ----------CCLOG("atlas quantity: %d", p:textureAtlas():totalQuads())
+    ----------cclog("atlas quantity: %d", p:textureAtlas():totalQuads())
 end
 
 void TMXReadWriteTest:updateCol(float dt)
@@ -371,8 +374,8 @@ void TMXReadWriteTest:updateCol(float dt)
     local  map = tolua.cast(getChildByTag(kTagTileMap), "CCTMXTiledMap")
     local layer = tolua.cast(map:getChildByTag(0), "CCTMXLayer")
 
-    --------CCLOG("++++atlas quantity: %d", layer:textureAtlas():getTotalQuads())
-    --------CCLOG("++++children: %d", layer:getChildren():count() )
+    --------cclog("++++atlas quantity: %d", layer:textureAtlas():getTotalQuads())
+    --------cclog("++++children: %d", layer:getChildren():count() )
 
 
     CCSize s = layer:getLayerSize()
@@ -435,8 +438,8 @@ TMXHexTest:TMXHexTest()
     local  map = CCTMXTiledMap:create("TileMaps/hexa-test.tmx")
     addChild(map, 0, kTagTileMap)
     
-    CCSize CC_UNUSED s = map:getContentSize()
-    CCLOG("ContentSize: %f, %f", s.width,s.height)
+    CCSize  s = map:getContentSize()
+    cclog("ContentSize: %f, %f", s.width,s.height)
 end
 
 std:string TMXHexTest:title()
@@ -481,8 +484,8 @@ TMXIsoTest1:TMXIsoTest1()
     local map = CCTMXTiledMap:create("TileMaps/iso-test1.tmx")
     addChild(map, 0, kTagTileMap)
     
-    CCSize CC_UNUSED s = map:getContentSize()
-    CCLOG("ContentSize: %f, %f", s.width,s.height)
+    CCSize  s = map:getContentSize()
+    cclog("ContentSize: %f, %f", s.width,s.height)
     
     map:setAnchorPoint(ccp(0.5, 0.5))
 end
@@ -505,8 +508,8 @@ TMXIsoTest2:TMXIsoTest2()
     local map = CCTMXTiledMap:create("TileMaps/iso-test2.tmx")
     addChild(map, 0, kTagTileMap)    
     
-    CCSize CC_UNUSED s = map:getContentSize()
-    CCLOG("ContentSize: %f, %f", s.width,s.height)
+    CCSize  s = map:getContentSize()
+    cclog("ContentSize: %f, %f", s.width,s.height)
     
     -- move map to the center of the screen
     CCSize ms = map:getMapSize()
@@ -532,8 +535,8 @@ TMXUncompressedTest:TMXUncompressedTest()
     local map = CCTMXTiledMap:create("TileMaps/iso-test2-uncompressed.tmx")
     addChild(map, 0, kTagTileMap)    
     
-    CCSize CC_UNUSED s = map:getContentSize()
-    CCLOG("ContentSize: %f, %f", s.width,s.height)
+    CCSize  s = map:getContentSize()
+    cclog("ContentSize: %f, %f", s.width,s.height)
     
     -- move map to the center of the screen
     CCSize ms = map:getMapSize()
@@ -571,8 +574,8 @@ TMXTilesetTest:TMXTilesetTest()
     local map = CCTMXTiledMap:create("TileMaps/orthogonal-test5.tmx")
     addChild(map, 0, kTagTileMap)
     
-    CCSize CC_UNUSED s = map:getContentSize()
-    CCLOG("ContentSize: %f, %f", s.width,s.height)
+    CCSize  s = map:getContentSize()
+    cclog("ContentSize: %f, %f", s.width,s.height)
     
     CCTMXLayer* layer
     layer = map:layerNamed("Layer 0")
@@ -600,10 +603,10 @@ TMXOrthoObjectsTest:TMXOrthoObjectsTest()
     local map = CCTMXTiledMap:create("TileMaps/ortho-objects.tmx")
     addChild(map, -1, kTagTileMap)
     
-    CCSize CC_UNUSED s = map:getContentSize()
-    CCLOG("ContentSize: %f, %f", s.width,s.height)
+    CCSize  s = map:getContentSize()
+    cclog("ContentSize: %f, %f", s.width,s.height)
     
-    --------CCLOG("---: Iterating over all the group objets")
+    --------cclog("---: Iterating over all the group objets")
     local  group = map:objectGroupNamed("Object Group 1")
     local  objects = group:getObjects()
 
@@ -616,12 +619,12 @@ TMXOrthoObjectsTest:TMXOrthoObjectsTest()
         if(!dict)
             break
 
-        --------CCLOG("object: %x", dict)
+        --------cclog("object: %x", dict)
     end
     
-    --------CCLOG("---: Fetching 1 object by name")
+    --------cclog("---: Fetching 1 object by name")
     -- local  platform = group:objectNamed("platform")
-    --------CCLOG("platform: %x", platform)
+    --------cclog("platform: %x", platform)
 end
 
 void TMXOrthoObjectsTest:draw()
@@ -680,8 +683,8 @@ TMXIsoObjectsTest:TMXIsoObjectsTest()
     local  map = CCTMXTiledMap:create("TileMaps/iso-test-objectgroup.tmx")
     addChild(map, -1, kTagTileMap)
     
-    CCSize CC_UNUSED s = map:getContentSize()
-    CCLOG("ContentSize: %f, %f", s.width,s.height)
+    CCSize  s = map:getContentSize()
+    cclog("ContentSize: %f, %f", s.width,s.height)
 
     local  group = map:objectGroupNamed("Object Group 1")
 
@@ -697,7 +700,7 @@ TMXIsoObjectsTest:TMXIsoObjectsTest()
         if(!dict)
             break
 
-        --------CCLOG("object: %x", dict)
+        --------cclog("object: %x", dict)
     end        
 end
 
@@ -757,8 +760,8 @@ TMXResizeTest:TMXResizeTest()
     local  map = CCTMXTiledMap:create("TileMaps/orthogonal-test5.tmx")
     addChild(map, 0, kTagTileMap)
     
-    CCSize CC_UNUSED s = map:getContentSize()
-    CCLOG("ContentSize: %f, %f", s.width,s.height)
+    CCSize  s = map:getContentSize()
+    cclog("ContentSize: %f, %f", s.width,s.height)
 
     CCTMXLayer* layer
     layer = map:layerNamed("Layer 0")
@@ -795,7 +798,7 @@ TMXIsoZorder:TMXIsoZorder()
     addChild(map, 0, kTagTileMap)
 
     CCSize s = map:getContentSize()
-    CCLOG("ContentSize: %f, %f", s.width,s.height)
+    cclog("ContentSize: %f, %f", s.width,s.height)
     map:setPosition(ccp(-s.width/2,0))
     
     m_tamara = CCSprite:create(s_pPathSister1)
@@ -863,8 +866,8 @@ TMXOrthoZorder:TMXOrthoZorder()
     local map = CCTMXTiledMap:create("TileMaps/orthogonal-test-zorder.tmx")
     addChild(map, 0, kTagTileMap)
     
-    CCSize CC_UNUSED s = map:getContentSize()
-    CCLOG("ContentSize: %f, %f", s.width,s.height)
+    CCSize  s = map:getContentSize()
+    cclog("ContentSize: %f, %f", s.width,s.height)
     
     m_tamara = CCSprite:create(s_pPathSister1)
     map:addChild(m_tamara,  map:getChildren():count())
@@ -926,7 +929,7 @@ TMXIsoVertexZ:TMXIsoVertexZ()
     
     CCSize s = map:getContentSize()
     map:setPosition( ccp(-s.width/2,0) )
-    CCLOG("ContentSize: %f, %f", s.width,s.height)
+    cclog("ContentSize: %f, %f", s.width,s.height)
     
     -- because I'm lazy, I'm reusing a tile as an sprite, but since this method uses vertexZ, you
     -- can use any CCSprite and it will work OK.
@@ -994,14 +997,14 @@ TMXOrthoVertexZ:TMXOrthoVertexZ()
     local map = CCTMXTiledMap:create("TileMaps/orthogonal-test-vertexz.tmx")
     addChild(map, 0, kTagTileMap)
     
-    CCSize CC_UNUSED s = map:getContentSize()
-    CCLOG("ContentSize: %f, %f", s.width,s.height)
+    CCSize  s = map:getContentSize()
+    cclog("ContentSize: %f, %f", s.width,s.height)
     
     -- because I'm lazy, I'm reusing a tile as an sprite, but since this method uses vertexZ, you
     -- can use any CCSprite and it will work OK.
     local  layer = map:layerNamed("trees")
     m_tamara = layer:tileAt(ccp(0,11))
-    CCLOG("%p vertexZ: %f", m_tamara, m_tamara:getVertexZ())
+    cclog("%p vertexZ: %f", m_tamara, m_tamara:getVertexZ())
     m_tamara:retain()
 
     local  move = CCMoveBy:create(10, ccpMult( ccp(400,450), 1/CC_CONTENT_SCALE_FACTOR()))
@@ -1065,8 +1068,8 @@ TMXIsoMoveLayer:TMXIsoMoveLayer()
     
     map:setPosition(ccp(-700,-50))
 
-    CCSize CC_UNUSED s = map:getContentSize()
-    CCLOG("ContentSize: %f, %f", s.width,s.height)
+    CCSize  s = map:getContentSize()
+    cclog("ContentSize: %f, %f", s.width,s.height)
 end
 
 std:string TMXIsoMoveLayer:title()
@@ -1090,8 +1093,8 @@ TMXOrthoMoveLayer:TMXOrthoMoveLayer()
     local map = CCTMXTiledMap:create("TileMaps/orthogonal-test-movelayer.tmx")
     addChild(map, 0, kTagTileMap)
 
-    CCSize CC_UNUSED s = map:getContentSize()
-    CCLOG("ContentSize: %f, %f", s.width,s.height)
+    CCSize  s = map:getContentSize()
+    cclog("ContentSize: %f, %f", s.width,s.height)
 end
 
 std:string TMXOrthoMoveLayer:title()
@@ -1116,7 +1119,7 @@ TMXTilePropertyTest:TMXTilePropertyTest()
     addChild(map ,0 ,kTagTileMap)
 
     for(int i=1i<=20i++)
-        CCLog("GID:%i, Properties:%p", i, map:propertiesForGID(i))
+        cclog("GID:%i, Properties:%p", i, map:propertiesForGID(i))
     end
 end
 
@@ -1141,8 +1144,8 @@ TMXOrthoFlipTest:TMXOrthoFlipTest()
     local map = CCTMXTiledMap:create("TileMaps/ortho-rotation-test.tmx")
     addChild(map, 0, kTagTileMap)
 
-    CCSize CC_UNUSED s = map:getContentSize()
-    CCLog("ContentSize: %f, %f", s.width,s.height)
+    CCSize  s = map:getContentSize()
+    cclog("ContentSize: %f, %f", s.width,s.height)
 
     local  pObj = NULL
     CCARRAY_FOREACH(map:getChildren(), pObj)
@@ -1172,7 +1175,7 @@ TMXOrthoFlipRunTimeTest:TMXOrthoFlipRunTimeTest()
     addChild(map, 0, kTagTileMap)
 
     CCSize s = map:getContentSize()
-    CCLog("ContentSize: %f, %f", s.width,s.height)
+    cclog("ContentSize: %f, %f", s.width,s.height)
 
     local  pObj = NULL
     CCARRAY_FOREACH(map:getChildren(), pObj)
@@ -1251,7 +1254,7 @@ TMXOrthoFromXMLTest:TMXOrthoFromXMLTest()
     addChild(map, 0, kTagTileMap)
 
     CCSize s = map:getContentSize()
-    CCLog("ContentSize: %f, %f", s.width,s.height)
+    cclog("ContentSize: %f, %f", s.width,s.height)
 
     local  pObj = NULL
     CCARRAY_FOREACH(map:getChildren(), pObj)
@@ -1279,8 +1282,8 @@ TMXBug987:TMXBug987()
     local map = CCTMXTiledMap:create("TileMaps/orthogonal-test6.tmx")
     addChild(map, 0, kTagTileMap)
 
-    CCSize CC_UNUSED s1 = map:getContentSize()
-    CCLOG("ContentSize: %f, %f", s1.width,s1.height)
+    CCSize  s1 = map:getContentSize()
+    cclog("ContentSize: %f, %f", s1.width,s1.height)
 
     local  childs = map:getChildren()
     CCTMXLayer* pNode
@@ -1530,10 +1533,10 @@ TMXGIDObjectsTest:TMXGIDObjectsTest()
     local map = CCTMXTiledMap:create("TileMaps/test-object-layer.tmx")
     addChild(map, -1, kTagTileMap)
 
-    CCSize CC_UNUSED s = map:getContentSize()
-    CCLOG("Contentsize: %f, %f", s.width, s.height)
+    CCSize  s = map:getContentSize()
+    cclog("Contentsize: %f, %f", s.width, s.height)
 
-    CCLOG("---: Iterating over all the group objets")
+    cclog("---: Iterating over all the group objets")
     --local group = map:objectGroupNamed("Object Layer 1")
 
 end
