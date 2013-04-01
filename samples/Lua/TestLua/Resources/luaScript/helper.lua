@@ -1,3 +1,17 @@
+CC_CONTENT_SCALE_FACTOR = function()
+    return CCDirector:sharedDirector():getContentScaleFactor()
+end
+
+
+CC_POINT_PIXELS_TO_POINTS = function(pixels)
+    return ccp(pixels.x/CC_CONTENT_SCALE_FACTOR(), pixels.y/CC_CONTENT_SCALE_FACTOR())
+end
+
+CC_POINT_POINTS_TO_PIXELS = function(points)
+    return ccp(points.x*CC_CONTENT_SCALE_FACTOR(), points.y*CC_CONTENT_SCALE_FACTOR())
+end
+
+
 -- cclog
 cclog = function(...)
     print(string.format(...))

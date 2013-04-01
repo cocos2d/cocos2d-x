@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.92 on Wed Mar 20 16:04:45 2013.
+** Generated automatically by tolua++-1.0.92 on Fri Mar 29 19:20:51 2013.
 */
 
 /****************************************************************************
@@ -111,6 +111,13 @@ static int tolua_collect_ccColor4B (lua_State* tolua_S)
     return 0;
 }
 
+static int tolua_collect_CCLabelTTF (lua_State* tolua_S)
+{
+ CCLabelTTF* self = (CCLabelTTF*) tolua_tousertype(tolua_S,1,0);
+    Mtolua_delete(self);
+    return 0;
+}
+
 static int tolua_collect_ccTex2F (lua_State* tolua_S)
 {
  ccTex2F* self = (ccTex2F*) tolua_tousertype(tolua_S,1,0);
@@ -128,6 +135,13 @@ static int tolua_collect_ccV3F_C4B_T2F (lua_State* tolua_S)
 static int tolua_collect_ccBezierConfig (lua_State* tolua_S)
 {
  ccBezierConfig* self = (ccBezierConfig*) tolua_tousertype(tolua_S,1,0);
+    Mtolua_delete(self);
+    return 0;
+}
+
+static int tolua_collect_CCLabelBMFont (lua_State* tolua_S)
+{
+ CCLabelBMFont* self = (CCLabelBMFont*) tolua_tousertype(tolua_S,1,0);
     Mtolua_delete(self);
     return 0;
 }
@@ -37441,6 +37455,128 @@ tolua_lerror:
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: new of class  CCLabelBMFont */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCLabelBMFont_new00
+static int tolua_Cocos2d_CCLabelBMFont_new00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"CCLabelBMFont",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  {
+   CCLabelBMFont* tolua_ret = (CCLabelBMFont*)  Mtolua_new((CCLabelBMFont)());
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCLabelBMFont");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'new'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: new_local of class  CCLabelBMFont */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCLabelBMFont_new00_local
+static int tolua_Cocos2d_CCLabelBMFont_new00_local(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"CCLabelBMFont",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  {
+   CCLabelBMFont* tolua_ret = (CCLabelBMFont*)  Mtolua_new((CCLabelBMFont)());
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCLabelBMFont");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'new'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: delete of class  CCLabelBMFont */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCLabelBMFont_delete00
+static int tolua_Cocos2d_CCLabelBMFont_delete00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCLabelBMFont",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCLabelBMFont* self = (CCLabelBMFont*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'", NULL);
+#endif
+  Mtolua_delete(self);
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'delete'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: init of class  CCLabelBMFont */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCLabelBMFont_init00
+static int tolua_Cocos2d_CCLabelBMFont_init00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCLabelBMFont",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCLabelBMFont* self = (CCLabelBMFont*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'init'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->init();
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'init'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: setString of class  CCLabelBMFont */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCLabelBMFont_setString00
 static int tolua_Cocos2d_CCLabelBMFont_setString00(lua_State* tolua_S)
@@ -38182,6 +38318,128 @@ static int tolua_Cocos2d_CCLabelBMFont_create02(lua_State* tolua_S)
  return 1;
 tolua_lerror:
  return tolua_Cocos2d_CCLabelBMFont_create01(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: new of class  CCLabelTTF */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCLabelTTF_new00
+static int tolua_Cocos2d_CCLabelTTF_new00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"CCLabelTTF",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  {
+   CCLabelTTF* tolua_ret = (CCLabelTTF*)  Mtolua_new((CCLabelTTF)());
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCLabelTTF");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'new'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: new_local of class  CCLabelTTF */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCLabelTTF_new00_local
+static int tolua_Cocos2d_CCLabelTTF_new00_local(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"CCLabelTTF",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  {
+   CCLabelTTF* tolua_ret = (CCLabelTTF*)  Mtolua_new((CCLabelTTF)());
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCLabelTTF");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'new'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: delete of class  CCLabelTTF */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCLabelTTF_delete00
+static int tolua_Cocos2d_CCLabelTTF_delete00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCLabelTTF",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCLabelTTF* self = (CCLabelTTF*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'", NULL);
+#endif
+  Mtolua_delete(self);
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'delete'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: init of class  CCLabelTTF */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCLabelTTF_init00
+static int tolua_Cocos2d_CCLabelTTF_init00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCLabelTTF",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCLabelTTF* self = (CCLabelTTF*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'init'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->init();
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'init'.",&tolua_err);
+ return 0;
+#endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
@@ -53762,8 +54020,17 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCLabelAtlas_create01);
   tolua_endmodule(tolua_S);
   tolua_constant(tolua_S,"kCCLabelAutomaticWidth",kCCLabelAutomaticWidth);
+  #ifdef __cplusplus
+  tolua_cclass(tolua_S,"CCLabelBMFont","CCLabelBMFont","CCNode",tolua_collect_CCLabelBMFont);
+  #else
   tolua_cclass(tolua_S,"CCLabelBMFont","CCLabelBMFont","CCNode",NULL);
+  #endif
   tolua_beginmodule(tolua_S,"CCLabelBMFont");
+   tolua_function(tolua_S,"new",tolua_Cocos2d_CCLabelBMFont_new00);
+   tolua_function(tolua_S,"new_local",tolua_Cocos2d_CCLabelBMFont_new00_local);
+   tolua_function(tolua_S,".call",tolua_Cocos2d_CCLabelBMFont_new00_local);
+   tolua_function(tolua_S,"delete",tolua_Cocos2d_CCLabelBMFont_delete00);
+   tolua_function(tolua_S,"init",tolua_Cocos2d_CCLabelBMFont_init00);
    tolua_function(tolua_S,"setString",tolua_Cocos2d_CCLabelBMFont_setString00);
    tolua_function(tolua_S,"setString",tolua_Cocos2d_CCLabelBMFont_setString01);
    tolua_function(tolua_S,"setCString",tolua_Cocos2d_CCLabelBMFont_setCString00);
@@ -53788,8 +54055,17 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCLabelBMFont_create01);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCLabelBMFont_create02);
   tolua_endmodule(tolua_S);
+  #ifdef __cplusplus
+  tolua_cclass(tolua_S,"CCLabelTTF","CCLabelTTF","CCSprite",tolua_collect_CCLabelTTF);
+  #else
   tolua_cclass(tolua_S,"CCLabelTTF","CCLabelTTF","CCSprite",NULL);
+  #endif
   tolua_beginmodule(tolua_S,"CCLabelTTF");
+   tolua_function(tolua_S,"new",tolua_Cocos2d_CCLabelTTF_new00);
+   tolua_function(tolua_S,"new_local",tolua_Cocos2d_CCLabelTTF_new00_local);
+   tolua_function(tolua_S,".call",tolua_Cocos2d_CCLabelTTF_new00_local);
+   tolua_function(tolua_S,"delete",tolua_Cocos2d_CCLabelTTF_delete00);
+   tolua_function(tolua_S,"init",tolua_Cocos2d_CCLabelTTF_init00);
    tolua_function(tolua_S,"setString",tolua_Cocos2d_CCLabelTTF_setString00);
    tolua_function(tolua_S,"getString",tolua_Cocos2d_CCLabelTTF_getString00);
    tolua_function(tolua_S,"getHorizontalAlignment",tolua_Cocos2d_CCLabelTTF_getHorizontalAlignment00);
