@@ -20,6 +20,7 @@ Developers:
 
     DarraghCoy
         fix for loading custom fonts on iOS when referenced from a CCB file
+        Fix CCUserDefault.cpp compiling on Android.
 
     Waiter
         fix an error that OpenSLEngine can't load resources from SD card
