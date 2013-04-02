@@ -13,7 +13,7 @@ require "luaScript/DrawPrimitivesTest/DrawPrimitivesTest"
 require "luaScript/NodeTest/NodeTest"
 require "luaScript/TouchesTest/TouchesTest"
 require "luaScript/SpriteTest/SpriteTest"
-
+require "luaScript/LayerTest/LayerTest"
 require "luaScript/PerformanceTest/PerformanceTest"
 require "luaScript/LabelTest/LabelTest"
 require "luaScript/TileMapTest/TileMapTest"
@@ -36,7 +36,7 @@ Test_Table =
     "TEST_TOUCHES",
 --  "TEST_MENU",
 --  "TEST_ACTION_MANAGER",
---  "TEST_LAYER",
+    "TEST_LAYER",
 --  "TEST_SCENE",
 --  "TEST_PARALLAX",
     "TEST_TILE_MAP",
@@ -86,7 +86,7 @@ Test_Name =
     "TouchesTest",
 --  "MenuTest",
 --  "ActionManagerTest",
---  "LayerTest",
+    "LayerTest",
 --  "SceneTest",
 --  "ParallaxTest",
     "TileMapTest",
