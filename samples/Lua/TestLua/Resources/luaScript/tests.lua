@@ -16,6 +16,7 @@ require "luaScript/SpriteTest/SpriteTest"
 require "luaScript/LayerTest/LayerTest"
 require "luaScript/PerformanceTest/PerformanceTest"
 require "luaScript/LabelTest/LabelTest"
+require "luaScript/ParallaxTest/ParallaxTest"
 require "luaScript/TileMapTest/TileMapTest"
 ----------------------------------------------------
 
@@ -38,7 +39,7 @@ Test_Table =
 --  "TEST_ACTION_MANAGER",
     "TEST_LAYER",
 --  "TEST_SCENE",
---  "TEST_PARALLAX",
+    "TEST_PARALLAX",
     "TEST_TILE_MAP",
 --  "TEST_INTERVAL",
 --  "TEST_CHIPMUNKACCELTOUCH",
@@ -88,7 +89,7 @@ Test_Name =
 --  "ActionManagerTest",
     "LayerTest",
 --  "SceneTest",
---  "ParallaxTest",
+    "ParallaxTest",
     "TileMapTest",
 --  "IntervalTest",
 --  "ChipmunkAccelTouchTest",
