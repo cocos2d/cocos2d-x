@@ -12,6 +12,10 @@ Developers:
     Rolando Abarca
         Javascript Binding and testjs
 
+    nickveri
+    nickkwalee
+        added some missing function for setting integer shader uniforms in CCGLProgram
+
     biteforest
         fix cc scale9 sprite bug
 
