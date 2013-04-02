@@ -1,10 +1,11 @@
+local scheduler = CCDirector:sharedDirector():getScheduler()
 local kTagLayer = 1
 
 local function createLayerDemoLayer(title, subtitle)
     local layer = CCLayer:create()
     Helper.initWithLayer(layer)
     local titleStr = title == nil and "No title" or title
-    local subTitleStr = subtitle  == nil and "drag the screen" or subtitle
+    local subTitleStr = subtitle  == nil and "" or subtitle
     Helper.titleLabel:setString(titleStr)
     Helper.subtitleLabel:setString(subTitleStr)
 
@@ -34,14 +35,23 @@ end
 --#pragma mark - Cascading support extensions
 
 local function setEnableRecursiveCascading(node, enable)
-    local  rgba = tolua.cast(node, "CCRGBAProtocol")
-    if rgba ~= nil then
-        rgba:setCascadeColorEnabled(enable)
-        rgba:setCascadeOpacityEnabled(enable)
+    if node == nil then
+        -- cclog("node == nil, return directly")
+        return
+    end
+
+    if node.__CCRGBAProtocol__ ~= nil then
+        node.__CCRGBAProtocol__:setCascadeColorEnabled(enable)
+        node.__CCRGBAProtocol__:setCascadeOpacityEnabled(enable)
     end
     
     local obj = nil
-    local  children = node:getChildren()
+    local children = node:getChildren()
+    if children == nil then
+        -- cclog("children is nil")
+        return
+    end
+
     local i = 0
     local len = children:count()
     for i = 0, len-1, 1 do
@@ -58,7 +68,7 @@ local function LayerTestCascadingOpacityA()
     
     local sister1 = CCSprite:create("Images/grossinis_sister1.png")
     local sister2 = CCSprite:create("Images/grossinis_sister2.png")
-    local label = CCLabelBMFont:create("Test", "fonts/bitmapFontTest.nt")
+    local label = CCLabelBMFont:create("Test", "fonts/bitmapFontTest.fnt")
     
     layer1:addChild(sister1)
     layer1:addChild(sister2)
@@ -74,674 +84,599 @@ local function LayerTestCascadingOpacityA()
     arr:addObject(CCFadeTo:create(4, 255))
     arr:addObject(CCDelayTime:create(1))
     layer1:runAction(CCRepeatForever:create(CCSequence:create(arr)))
+
+    arr = CCArray:create()
+    arr:addObject(CCFadeTo:create(2, 0))
+    arr:addObject(CCFadeTo:create(2, 255))
+    arr:addObject(CCFadeTo:create(2, 0))
+    arr:addObject(CCFadeTo:create(2, 255))
+    arr:addObject(CCDelayTime:create(1))
+    sister1:runAction(CCRepeatForever:create(CCSequence:create(arr)))
+    
+    -- Enable cascading in scene
+    setEnableRecursiveCascading(ret, true)
+    return ret
+end
+
+-- LayerTestCascadingOpacityB
+local function LayerTestCascadingOpacityB()
+    local ret = createLayerDemoLayer("CCLayerColor: cascading opacity")
+        
+    local s = CCDirector:sharedDirector():getWinSize()
+    local layer1 = CCLayerColor:create(ccc4(192, 0, 0, 255), s.width, s.height/2)
+    layer1:setCascadeColorEnabled(false)
+    
+    layer1:setPosition( ccp(0, s.height/2))
+    
+    local sister1 = CCSprite:create("Images/grossinis_sister1.png")
+    local sister2 = CCSprite:create("Images/grossinis_sister2.png")
+    local label = CCLabelBMFont:create("Test", "fonts/bitmapFontTest.fnt")
+    
+    layer1:addChild(sister1)
+    layer1:addChild(sister2)
+    layer1:addChild(label)
+    ret:addChild( layer1, 0, kTagLayer)
+    
+    sister1:setPosition( ccp( s.width*1/3, 0))
+    sister2:setPosition( ccp( s.width*2/3, 0))
+    label:setPosition( ccp( s.width/2, 0))
+    
+    local arr = CCArray:create()
+    arr:addObject(CCFadeTo:create(4, 0))
+    arr:addObject(CCFadeTo:create(4, 255))
+    arr:addObject(CCDelayTime:create(1))
+
+    layer1:runAction(CCRepeatForever:create(CCSequence:create(arr)))
+    
+    arr = CCArray:create()
+    arr:addObject(CCFadeTo:create(2, 0))
+    arr:addObject(CCFadeTo:create(2, 255))
+    arr:addObject(CCFadeTo:create(2, 0))
+    arr:addObject(CCFadeTo:create(2, 255))
+    arr:addObject(CCDelayTime:create(1))
+    
+    sister1:runAction(CCRepeatForever:create(CCSequence:create(arr)))
+    
+    -- Enable cascading in scene
+    setEnableRecursiveCascading(ret, true)
+    return ret
+end
+
+-- LayerTestCascadingOpacityC
+local function LayerTestCascadingOpacityC()
+    local ret = createLayerDemoLayer("CCLayerColor: non-cascading opacity")
+    
+    local s = CCDirector:sharedDirector():getWinSize()
+    local  layer1 = CCLayerColor:create(ccc4(192, 0, 0, 255), s.width, s.height/2)
+    layer1:setCascadeColorEnabled(false)
+    layer1:setCascadeOpacityEnabled(false)
+    
+    layer1:setPosition( ccp(0, s.height/2))
+    
+    local sister1 = CCSprite:create("Images/grossinis_sister1.png")
+    local sister2 = CCSprite:create("Images/grossinis_sister2.png")
+    local label = CCLabelBMFont:create("Test", "fonts/bitmapFontTest.fnt")
+    
+    layer1:addChild(sister1)
+    layer1:addChild(sister2)
+    layer1:addChild(label)
+    ret:addChild( layer1, 0, kTagLayer)
+    
+    sister1:setPosition( ccp( s.width*1/3, 0))
+    sister2:setPosition( ccp( s.width*2/3, 0))
+    label:setPosition( ccp( s.width/2, 0))
+
+    local arr = CCArray:create()
+    arr:addObject(CCFadeTo:create(4, 0))
+    arr:addObject(CCFadeTo:create(4, 255))
+    arr:addObject(CCDelayTime:create(1))
+    
+    layer1:runAction(
+     CCRepeatForever:create(
+      CCSequence:create(arr
+       )))
+
+    arr = CCArray:create()
+    arr:addObject(CCFadeTo:create(2, 0))
+    arr:addObject(CCFadeTo:create(2, 255))
+    arr:addObject(CCFadeTo:create(2, 0))
+    arr:addObject(CCFadeTo:create(2, 255))
+    arr:addObject(CCDelayTime:create(1))
+    
+    sister1:runAction(
+     CCRepeatForever:create(
+      CCSequence:create(arr)))
+    return ret
+end
+
+--#pragma mark Example LayerTestCascadingColor
+
+-- LayerTestCascadingColorA
+local function LayerTestCascadingColorA()
+    local ret = createLayerDemoLayer("LayerRGBA: cascading color")
+    
+    local s = CCDirector:sharedDirector():getWinSize()
+    local  layer1 = CCLayerRGBA:create()
+    
+    local sister1 = CCSprite:create("Images/grossinis_sister1.png")
+    local sister2 = CCSprite:create("Images/grossinis_sister2.png")
+    local label = CCLabelBMFont:create("Test", "fonts/bitmapFontTest.fnt")
+    
+    layer1:addChild(sister1)
+    layer1:addChild(sister2)
+    layer1:addChild(label)
+    ret:addChild( layer1, 0, kTagLayer)
+    
+    sister1:setPosition( ccp( s.width*1/3, s.height/2))
+    sister2:setPosition( ccp( s.width*2/3, s.height/2))
+    label:setPosition( ccp( s.width/2, s.height/2))
+    
+    local arr = CCArray:create()
+    arr:addObject(CCTintTo:create(6, 255, 0, 255))
+    arr:addObject(CCTintTo:create(6, 255, 255, 255))
+    arr:addObject(CCDelayTime:create(1))
+
+    layer1:runAction(
+     CCRepeatForever:create(
+      CCSequence:create(arr
+       )))
+
+    arr = CCArray:create()
+    arr:addObject(CCTintTo:create(2, 255, 255, 0))
+    arr:addObject(CCTintTo:create(2, 255, 255, 255))
+    arr:addObject(CCTintTo:create(2, 0, 255, 255))
+    arr:addObject(CCTintTo:create(2, 255, 255, 255))
+    arr:addObject(CCTintTo:create(2, 255, 0, 255))
+    arr:addObject(CCTintTo:create(2, 255, 255, 255))
+    arr:addObject(CCDelayTime:create(1))
     
     sister1:runAction(
      CCRepeatForever:create(
       CCSequence:create(
-       CCFadeTo:create(2, 0),
-       CCFadeTo:create(2, 255),
-       CCFadeTo:create(2, 0),
-       CCFadeTo:create(2, 255),
-       CCDelayTime:create(1),
-       NULL)))
-    
+       arr)))
     
     -- Enable cascading in scene
-    setEnableRecursiveCascading(this, true)
+    setEnableRecursiveCascading(ret, true)
+    return ret     
 end
 
-local function title()
+-- LayerTestCascadingColorB
+local function LayerTestCascadingColorB()
+    local ret = createLayerDemoLayer("CCLayerColor: cascading color")
 
-    return 
+    local s = CCDirector:sharedDirector():getWinSize()
+    local  layer1 = CCLayerColor:create(ccc4(255, 255, 255, 255), s.width, s.height/2)
+    
+    layer1:setPosition( ccp(0, s.height/2))
+    
+    local sister1 = CCSprite:create("Images/grossinis_sister1.png")
+    local sister2 = CCSprite:create("Images/grossinis_sister2.png")
+    local label = CCLabelBMFont:create("Test", "fonts/bitmapFontTest.fnt")
+    
+    layer1:addChild(sister1)
+    layer1:addChild(sister2)
+    layer1:addChild(label)
+    ret:addChild( layer1, 0, kTagLayer)
+    
+    sister1:setPosition( ccp( s.width*1/3, 0))
+    sister2:setPosition( ccp( s.width*2/3, 0))
+    label:setPosition( ccp( s.width/2, 0))
+
+    local arr = CCArray:create()
+    arr:addObject(CCTintTo:create(6, 255, 0, 255))
+    arr:addObject(CCTintTo:create(6, 255, 255, 255))
+    arr:addObject(CCDelayTime:create(1))
+
+    layer1:runAction(
+     CCRepeatForever:create(
+      CCSequence:create(
+       arr)))
+
+    arr = CCArray:create()
+    arr:addObject(CCTintTo:create(2, 255, 255, 0))
+    arr:addObject(CCTintTo:create(2, 255, 255, 255))
+    arr:addObject(CCTintTo:create(2, 0, 255, 255))
+    arr:addObject(CCTintTo:create(2, 255, 255, 255))
+    arr:addObject(CCTintTo:create(2, 255, 0, 255))
+    arr:addObject(CCTintTo:create(2, 255, 255, 255))
+    arr:addObject(CCDelayTime:create(1))
+    
+    sister1:runAction(
+     CCRepeatForever:create(
+      CCSequence:create(
+       arr)))
+    
+    -- Enable cascading in scene
+    setEnableRecursiveCascading(ret, true)
+    return ret
 end
 
+-- LayerTestCascadingColorC
+local function LayerTestCascadingColorC()
+    local ret = createLayerDemoLayer("CCLayerColor: non-cascading color")
 
---  LayerTestCascadingOpacityB
--- local function onEnter()
+    local s = CCDirector:sharedDirector():getWinSize()
+    local  layer1 = CCLayerColor:create(ccc4(255, 255, 255, 255), s.width, s.height/2)
+    layer1:setCascadeColorEnabled(false)
+    layer1:setPosition( ccp(0, s.height/2))
+    
+    local sister1 = CCSprite:create("Images/grossinis_sister1.png")
+    local sister2 = CCSprite:create("Images/grossinis_sister2.png")
+    local label = CCLabelBMFont:create("Test", "fonts/bitmapFontTest.fnt")
+    
+    layer1:addChild(sister1)
+    layer1:addChild(sister2)
+    layer1:addChild(label)
+    ret:addChild( layer1, 0, kTagLayer)
+    
+    sister1:setPosition( ccp( s.width*1/3, 0))
+    sister2:setPosition( ccp( s.width*2/3, 0))
+    label:setPosition( ccp( s.width/2, 0))
 
---     LayerTest:onEnter()
+    local arr = CCArray:create()
+    arr:addObject(CCTintTo:create(6, 255, 0, 255))
+    arr:addObject(CCTintTo:create(6, 255, 255, 255))
+    arr:addObject(CCDelayTime:create(1))
+
+    layer1:runAction(
+     CCRepeatForever:create(
+      CCSequence:create(
+       arr)))
+
+    arr = CCArray:create()
+    arr:addObject(CCTintTo:create(2, 255, 255, 0))
+    arr:addObject(CCTintTo:create(2, 255, 255, 255))
+    arr:addObject(CCTintTo:create(2, 0, 255, 255))
+    arr:addObject(CCTintTo:create(2, 255, 255, 255))
+    arr:addObject(CCTintTo:create(2, 255, 0, 255))
+    arr:addObject(CCTintTo:create(2, 255, 255, 255))
+    arr:addObject(CCDelayTime:create(1))
+    
+    sister1:runAction(
+     CCRepeatForever:create(
+      CCSequence:create(
+       arr)))
+    return ret
+end
+
+--------------------------------------------------------------------
+--
+-- LayerTest1
+--
+--------------------------------------------------------------------
+local function LayerTest1()
+    local ret = createLayerDemoLayer("ColorLayer resize (tap & move)")
+
+    ret:setTouchEnabled(true)
+    
+    local s = CCDirector:sharedDirector():getWinSize()
+    local  layer = CCLayerColor:create( ccc4(0xFF, 0x00, 0x00, 0x80), 200, 200) 
+    
+    layer:ignoreAnchorPointForPosition(false)
+    layer:setPosition( ccp(s.width/2, s.height/2) )
+    ret:addChild(layer, 1, kTagLayer)
+
+    local function updateSize(x, y)
+        local s = CCDirector:sharedDirector():getWinSize()
         
---     local s = CCDirector:sharedDirector():getWinSize()
---     local  layer1 = CCLayerColor:create(ccc4(192, 0, 0, 255), s.width, s.height/2)
---     layer1:setCascadeColorEnabled(false)
+        local newSize = CCSizeMake( math.abs(x - s.width/2)*2, math.abs(y - s.height/2)*2)
+        
+        local  l = tolua.cast(ret:getChildByTag(kTagLayer), "CCLayerColor")
+
+        l:setContentSize( newSize )
+    end
+
+    local function onTouchEvent(eventType, x, y)
+        if eventType == "began" then
+            updateSize(x, y)
+            return true
+        else
+            updateSize(x, y)
+        end
+    end
+    ret:registerScriptTouchHandler(onTouchEvent)
+    return ret
+end
+
+--------------------------------------------------------------------
+--
+-- LayerTest2
+--
+--------------------------------------------------------------------
+local function LayerTest2()
+    local ret = createLayerDemoLayer("ColorLayer: fade and tint")
+
+    local s = CCDirector:sharedDirector():getWinSize()
+    local  layer1 = CCLayerColor:create( ccc4(255, 255, 0, 80), 100, 300)
+    layer1:setPosition(ccp(s.width/3, s.height/2))
+    layer1:ignoreAnchorPointForPosition(false)
+    ret:addChild(layer1, 1)
     
---     layer1:setPosition( ccp(0, s.height/2))
+    local  layer2 = CCLayerColor:create( ccc4(0, 0, 255, 255), 100, 300)
+    layer2:setPosition(ccp((s.width/3)*2, s.height/2))
+    layer2:ignoreAnchorPointForPosition(false)
+    ret:addChild(layer2, 1)
     
---     local sister1 = CCSprite:create("Images/grossinis_sister1.png")
---     local sister2 = CCSprite:create("Images/grossinis_sister2.png")
---     local label = CCLabelBMFont:create("Test", "fonts/bitmapFontTest.nt")
+    local  actionTint = CCTintBy:create(2, -255, -127, 0)
+    local  actionTintBack = actionTint:reverse()
+    local arr = CCArray:create()
+    arr:addObject(actionTint)
+    arr:addObject(actionTintBack)
+    local  seq1 = CCSequence:create(arr)
+    layer1:runAction(seq1)
+
+    local  actionFade = CCFadeOut:create(2.0)
+    local  actionFadeBack = actionFade:reverse()
+    arr = CCArray:create()
+    arr:addObject(actionFade)
+    arr:addObject(actionFadeBack)
+    local  seq2 = CCSequence:create(arr)
+    layer2:runAction(seq2)
+
+    return ret
+end
+
+--------------------------------------------------------------------
+--
+-- LayerTestBlend
+--
+--------------------------------------------------------------------
+
+local function LayerTestBlend()
+    local ret = createLayerDemoLayer("ColorLayer: blend")
+    local s = CCDirector:sharedDirector():getWinSize()
+    local  layer1 = CCLayerColor:create( ccc4(255, 255, 255, 80) )
     
---     layer1:addChild(sister1)
---     layer1:addChild(sister2)
---     layer1:addChild(label)
---     this:addChild( layer1, 0, kTagLayer)
+    local  sister1 = CCSprite:create(s_pPathSister1)
+    local  sister2 = CCSprite:create(s_pPathSister2)
     
---     sister1:setPosition( ccp( s.width*1/3, 0))
---     sister2:setPosition( ccp( s.width*2/3, 0))
---     label:setPosition( ccp( s.width/2, 0))
+    ret:addChild(sister1)
+    ret:addChild(sister2)
+    ret:addChild(layer1, 100, kTagLayer)
     
---     layer1:runAction(
---      CCRepeatForever:create(
---       CCSequence:create(
---        CCFadeTo:create(4, 0),
---        CCFadeTo:create(4, 255),
---        CCDelayTime:create(1),
---        NULL)))
+    sister1:setPosition( ccp( s.width*1/3, s.height/2) )
+    sister2:setPosition( ccp( s.width*2/3, s.height/2) )
+
+    local function newBlend(dt)
+        local layer = tolua.cast(ret:getChildByTag(kTagLayer), "CCLayerColor")
+
+        local src = 0
+        local dst = 0
+
+        if  layer:getBlendFunc().dst == GL_ZERO then
+            src = GL_SRC_ALPHA
+            dst = GL_ONE_MINUS_SRC_ALPHA
+        else
+            src = GL_ONE_MINUS_DST_COLOR
+            dst = GL_ZERO
+        end
+
+        local bf = ccBlendFunc()
+        bf.src = src
+        bf.dst = dst
+        layer:setBlendFunc( bf )
+    end
+
+
+    local schedulerEntry = nil
+    local function onNodeEvent(event)
+        if event == "enter" then
+            schedulerEntry = scheduler:scheduleScriptFunc(newBlend, 1.0, false)
+        elseif event == "exit" then
+            scheduler:unscheduleScriptEntry(schedulerEntry)
+        end
+    end
+
+    ret:registerScriptHandler(onNodeEvent)
+    return ret
+end
+
+--------------------------------------------------------------------
+--
+-- LayerGradient
+--
+--------------------------------------------------------------------
+local function LayerGradient()
+    local ret = createLayerDemoLayer("LayerGradient", "Touch the screen and move your finger")
+    local  layer1 = CCLayerGradient:create(ccc4(255,0,0,255), ccc4(0,255,0,255), ccp(0.9, 0.9))
+    ret:addChild(layer1, 0, kTagLayer)
+
+    ret:setTouchEnabled(true)
+
+    local label1 = CCLabelTTF:create("Compressed Interpolation: Enabled", "Marker Felt", 26)
+    local label2 = CCLabelTTF:create("Compressed Interpolation: Disabled", "Marker Felt", 26)
+    local item1 = CCMenuItemLabel:create(label1)
+    local item2 = CCMenuItemLabel:create(label2)
+    local item = CCMenuItemToggle:create(item1)
+    item:addSubItem(item2)
+
+    local function toggleItem(sender)
+        -- cclog("toggleItem")
+        local gradient = tolua.cast(ret:getChildByTag(kTagLayer), "CCLayerGradient")
+        gradient:setCompressedInterpolation(not gradient:isCompressedInterpolation())
+    end
+
+    item:registerScriptTapHandler(toggleItem)
+
+    local menu = CCMenu:createWithItem(item)
+    ret:addChild(menu)
+    local s = CCDirector:sharedDirector():getWinSize()
+    menu:setPosition(ccp(s.width / 2, 100))
+
+    local function onTouchEvent(eventType, x, y)
+        if eventType == "began" then
+            return true
+        elseif eventType == "moved" then
+            local s = CCDirector:sharedDirector():getWinSize()
+            local start = ccp(x, y)
+
+            local diff = ccpSub( ccp(s.width/2,s.height/2), start)    
+            diff = ccpNormalize(diff)
+
+            local gradient = tolua.cast(ret:getChildByTag(1), "CCLayerGradient")
+            gradient:setVector(diff)
+        end
+    end
+
+    ret:registerScriptTouchHandler(onTouchEvent)
+    return ret
+end
+
+
+-- LayerIgnoreAnchorPointPos
+
+local kLayerIgnoreAnchorPoint = 1000
+
+local function LayerIgnoreAnchorPointPos()
+    local ret = createLayerDemoLayer("IgnoreAnchorPoint - Position", "Ignoring Anchor Point for position")
+
+    local s = CCDirector:sharedDirector():getWinSize()
+
+    local l = CCLayerColor:create(ccc4(255, 0, 0, 255), 150, 150)
+
+    l:setAnchorPoint(ccp(0.5, 0.5))
+    l:setPosition(ccp( s.width/2, s.height/2))
+
+    local move = CCMoveBy:create(2, ccp(100,2))
+    local  back = tolua.cast(move:reverse(), "CCMoveBy")
+    local arr = CCArray:create()
+    arr:addObject(move)
+    arr:addObject(back)
+    local seq = CCSequence:create(arr)
+    l:runAction(CCRepeatForever:create(seq))
+    ret:addChild(l, 0, kLayerIgnoreAnchorPoint)
+
+    local child = CCSprite:create("Images/grossini.png")
+    l:addChild(child)
+    local lsize = l:getContentSize()
+    child:setPosition(ccp(lsize.width/2, lsize.height/2))
+
+    local function onToggle(pObject)
+        local  pLayer = ret:getChildByTag(kLayerIgnoreAnchorPoint)
+        local ignore = pLayer:isIgnoreAnchorPointForPosition()
+        pLayer:ignoreAnchorPointForPosition(not ignore)
+    end
+
+    local item = CCMenuItemFont:create("Toggle ignore anchor point")
+    item:registerScriptTapHandler(onToggle)
+
+    local menu = CCMenu:createWithItem(item)
+    ret:addChild(menu)
+
+    menu:setPosition(ccp(s.width/2, s.height/2))
+    return ret
+end
+
+-- LayerIgnoreAnchorPointRot
+
+local function LayerIgnoreAnchorPointRot()
+    local ret = createLayerDemoLayer("IgnoreAnchorPoint - Rotation", "Ignoring Anchor Point for rotations")
+
+    local s = CCDirector:sharedDirector():getWinSize()
+
+    local l = CCLayerColor:create(ccc4(255, 0, 0, 255), 200, 200)
+
+    l:setAnchorPoint(ccp(0.5, 0.5))
+    l:setPosition(ccp( s.width/2, s.height/2))
+
+    ret:addChild(l, 0, kLayerIgnoreAnchorPoint)
+
+    local rot = CCRotateBy:create(2, 360)
+    l:runAction(CCRepeatForever:create(rot))
+
+
+    local child = CCSprite:create("Images/grossini.png")
+    l:addChild(child)
+    local lsize = l:getContentSize()
+    child:setPosition(ccp(lsize.width/2, lsize.height/2))
+
+    local function onToggle(pObject)
+        local  pLayer = ret:getChildByTag(kLayerIgnoreAnchorPoint)
+        local ignore = pLayer:isIgnoreAnchorPointForPosition()
+        pLayer:ignoreAnchorPointForPosition(not ignore)
+    end
+
+    local item = CCMenuItemFont:create("Toogle ignore anchor point")
+    item:registerScriptTapHandler(onToggle)
+
+    local menu = CCMenu:createWithItem(item)
+    ret:addChild(menu)
+
+    menu:setPosition(ccp(s.width/2, s.height/2))
+    return ret
+end
+
+-- LayerIgnoreAnchorPointScale
+local function LayerIgnoreAnchorPointScale()
+    local ret = createLayerDemoLayer("IgnoreAnchorPoint - Scale", "Ignoring Anchor Point for scale")
+    local s = CCDirector:sharedDirector():getWinSize()
+
+    local l = CCLayerColor:create(ccc4(255, 0, 0, 255), 200, 200)
+
+    l:setAnchorPoint(ccp(0.5, 1.0))
+    l:setPosition(ccp( s.width/2, s.height/2))
+
+
+    local scale = CCScaleBy:create(2, 2)
+    local  back = tolua.cast(scale:reverse(), "CCScaleBy")
+    local arr = CCArray:create()
+    arr:addObject(scale)
+    arr:addObject(back)
+    local seq = CCSequence:create(arr)
+
+    l:runAction(CCRepeatForever:create(seq))
+
+    ret:addChild(l, 0, kLayerIgnoreAnchorPoint)
+
+    local child = CCSprite:create("Images/grossini.png")
+    l:addChild(child)
+    local lsize = l:getContentSize()
+    child:setPosition(ccp(lsize.width/2, lsize.height/2))
+
+    local function onToggle(pObject)
+        local  pLayer = ret:getChildByTag(kLayerIgnoreAnchorPoint)
+        local ignore = pLayer:isIgnoreAnchorPointForPosition()
+        pLayer:ignoreAnchorPointForPosition(not ignore)
+        return ret
+    end
+
+    local item = CCMenuItemFont:create("Toogle ignore anchor point")
+    item:registerScriptTapHandler(onToggle)
+
+    local menu = CCMenu:createWithItem(item)
+    ret:addChild(menu)
+
+    menu:setPosition(ccp(s.width/2, s.height/2))
+    return ret
+end
+
+
+local function LayerExtendedBlendOpacityTest()
+    local ret = createLayerDemoLayer("Extended Blend & Opacity", "You should see 3 layers")
+    local  layer1 = CCLayerGradient:create(ccc4(255, 0, 0, 255), ccc4(255, 0, 255, 255))
+    layer1:setContentSize(CCSizeMake(80, 80))
+    layer1:setPosition(ccp(50,50))
+    ret:addChild(layer1)
     
---     sister1:runAction(
---      CCRepeatForever:create(
---       CCSequence:create(
---        CCFadeTo:create(2, 0),
---        CCFadeTo:create(2, 255),
---        CCFadeTo:create(2, 0),
---        CCFadeTo:create(2, 255),
---        CCDelayTime:create(1),
---        NULL)))
+    local  layer2 = CCLayerGradient:create(ccc4(0, 0, 0, 127), ccc4(255, 255, 255, 127))
+    layer2:setContentSize(CCSizeMake(80, 80))
+    layer2:setPosition(ccp(100,90))
+    ret:addChild(layer2)
     
---     -- Enable cascading in scene
---     setEnableRecursiveCascading(this, true)
--- end
-
--- local function title()
-
---     return "CCLayerColor: cascading opacity"
--- end
-
-
--- -- LayerTestCascadingOpacityC
--- local function onEnter()
-
---     LayerTest:onEnter()
-    
---     local s = CCDirector:sharedDirector():getWinSize()
---     local  layer1 = CCLayerColor:create(ccc4(192, 0, 0, 255), s.width, s.height/2)
---     layer1:setCascadeColorEnabled(false)
---     layer1:setCascadeOpacityEnabled(false)
-    
---     layer1:setPosition( ccp(0, s.height/2))
-    
---     local sister1 = CCSprite:create("Images/grossinis_sister1.png")
---     local sister2 = CCSprite:create("Images/grossinis_sister2.png")
---     local label = CCLabelBMFont:create("Test", "fonts/bitmapFontTest.nt")
-    
---     layer1:addChild(sister1)
---     layer1:addChild(sister2)
---     layer1:addChild(label)
---     this:addChild( layer1, 0, kTagLayer)
-    
---     sister1:setPosition( ccp( s.width*1/3, 0))
---     sister2:setPosition( ccp( s.width*2/3, 0))
---     label:setPosition( ccp( s.width/2, 0))
-    
---     layer1:runAction(
---      CCRepeatForever:create(
---       CCSequence:create(
---        CCFadeTo:create(4, 0),
---        CCFadeTo:create(4, 255),
---        CCDelayTime:create(1),
---        NULL)))
-    
---     sister1:runAction(
---      CCRepeatForever:create(
---       CCSequence:create(
---        CCFadeTo:create(2, 0),
---        CCFadeTo:create(2, 255),
---        CCFadeTo:create(2, 0),
---        CCFadeTo:create(2, 255),
---        CCDelayTime:create(1),
---        NULL)))
--- end
-
--- local function title()
-
---     return "CCLayerColor: non-cascading opacity"
--- end
-
-
--- --#pragma mark Example LayerTestCascadingColor
-
--- -- LayerTestCascadingColorA
--- local function onEnter()
-
---     LayerTest:onEnter()
-    
---     local s = CCDirector:sharedDirector():getWinSize()
---     local  layer1 = CCLayerRGBA:create()
-    
---     local sister1 = CCSprite:create("Images/grossinis_sister1.png")
---     local sister2 = CCSprite:create("Images/grossinis_sister2.png")
---     local label = CCLabelBMFont:create("Test", "fonts/bitmapFontTest.nt")
-    
---     layer1:addChild(sister1)
---     layer1:addChild(sister2)
---     layer1:addChild(label)
---     this:addChild( layer1, 0, kTagLayer)
-    
---     sister1:setPosition( ccp( s.width*1/3, s.height/2))
---     sister2:setPosition( ccp( s.width*2/3, s.height/2))
---     label:setPosition( ccp( s.width/2, s.height/2))
-    
---     layer1:runAction(
---      CCRepeatForever:create(
---       CCSequence:create(
---        CCTintTo:create(6, 255, 0, 255),
---        CCTintTo:create(6, 255, 255, 255),
---        CCDelayTime:create(1),
---        NULL)))
-    
---     sister1:runAction(
---      CCRepeatForever:create(
---       CCSequence:create(
---        CCTintTo:create(2, 255, 255, 0),
---        CCTintTo:create(2, 255, 255, 255),
---        CCTintTo:create(2, 0, 255, 255),
---        CCTintTo:create(2, 255, 255, 255),
---        CCTintTo:create(2, 255, 0, 255),
---        CCTintTo:create(2, 255, 255, 255),
---        CCDelayTime:create(1),
---        NULL)))
-    
---     -- Enable cascading in scene
---     setEnableRecursiveCascading(this, true)
-     
--- end
-
--- local function title()
-
---     return "LayerRGBA: cascading color"
--- end
-
-
--- -- LayerTestCascadingColorB
--- local function onEnter()
-
---     LayerTest:onEnter()
---     local s = CCDirector:sharedDirector():getWinSize()
---     local  layer1 = CCLayerColor:create(ccc4(255, 255, 255, 255), s.width, s.height/2)
-    
---     layer1:setPosition( ccp(0, s.height/2))
-    
---     local sister1 = CCSprite:create("Images/grossinis_sister1.png")
---     local sister2 = CCSprite:create("Images/grossinis_sister2.png")
---     local label = CCLabelBMFont:create("Test", "fonts/bitmapFontTest.nt")
-    
---     layer1:addChild(sister1)
---     layer1:addChild(sister2)
---     layer1:addChild(label)
---     this:addChild( layer1, 0, kTagLayer)
-    
---     sister1:setPosition( ccp( s.width*1/3, 0))
---     sister2:setPosition( ccp( s.width*2/3, 0))
---     label:setPosition( ccp( s.width/2, 0))
-    
---     layer1:runAction(
---      CCRepeatForever:create(
---       CCSequence:create(
---        CCTintTo:create(6, 255, 0, 255),
---        CCTintTo:create(6, 255, 255, 255),
---        CCDelayTime:create(1),
---        NULL)))
-    
---     sister1:runAction(
---      CCRepeatForever:create(
---       CCSequence:create(
---        CCTintTo:create(2, 255, 255, 0),
---        CCTintTo:create(2, 255, 255, 255),
---        CCTintTo:create(2, 0, 255, 255),
---        CCTintTo:create(2, 255, 255, 255),
---        CCTintTo:create(2, 255, 0, 255),
---        CCTintTo:create(2, 255, 255, 255),
---        CCDelayTime:create(1),
---        NULL)))
-    
---     -- Enable cascading in scene
---     setEnableRecursiveCascading(this, true)
--- end
-
--- local function title()
-
---     return "CCLayerColor: cascading color"
--- end
-
-
--- -- LayerTestCascadingColorC
--- local function onEnter()
-
---     LayerTest:onEnter()
---     local s = CCDirector:sharedDirector():getWinSize()
---     local  layer1 = CCLayerColor:create(ccc4(255, 255, 255, 255), s.width, s.height/2)
---     layer1:setCascadeColorEnabled(false)
---     layer1:setPosition( ccp(0, s.height/2))
-    
---     local sister1 = CCSprite:create("Images/grossinis_sister1.png")
---     local sister2 = CCSprite:create("Images/grossinis_sister2.png")
---     local label = CCLabelBMFont:create("Test", "fonts/bitmapFontTest.nt")
-    
---     layer1:addChild(sister1)
---     layer1:addChild(sister2)
---     layer1:addChild(label)
---     this:addChild( layer1, 0, kTagLayer)
-    
---     sister1:setPosition( ccp( s.width*1/3, 0))
---     sister2:setPosition( ccp( s.width*2/3, 0))
---     label:setPosition( ccp( s.width/2, 0))
-    
---     layer1:runAction(
---      CCRepeatForever:create(
---       CCSequence:create(
---        CCTintTo:create(6, 255, 0, 255),
---        CCTintTo:create(6, 255, 255, 255),
---        CCDelayTime:create(1),
---        NULL)))
-    
---     sister1:runAction(
---      CCRepeatForever:create(
---       CCSequence:create(
---        CCTintTo:create(2, 255, 255, 0),
---        CCTintTo:create(2, 255, 255, 255),
---        CCTintTo:create(2, 0, 255, 255),
---        CCTintTo:create(2, 255, 255, 255),
---        CCTintTo:create(2, 255, 0, 255),
---        CCTintTo:create(2, 255, 255, 255),
---        CCDelayTime:create(1),
---        NULL)))
--- end
-
--- local function title()
-
---     return "CCLayerColor: non-cascading color"
--- end
-
--- --------------------------------------------------------------------
--- --
--- -- LayerTest1
--- --
--- --------------------------------------------------------------------
--- local function onEnter()
-
---     LayerTest:onEnter()
-
---     setTouchEnabled(true)
-    
---     local s = CCDirector:sharedDirector():getWinSize()
---     local  layer = CCLayerColor:create( ccc4(0xFF, 0x00, 0x00, 0x80), 200, 200) 
-    
---     layer:ignoreAnchorPointForPosition(false)
---     layer:setPosition( ccp(s.width/2, s.height/2) )
---     addChild(layer, 1, kTagLayer)
--- end
-
--- local function updateSize(CCPoint &touchLocation)
-    
---     local s = CCDirector:sharedDirector():getWinSize()
-    
---     local newSize = local Make( fabs(touchLocation.x - s.width/2)*2, fabs(touchLocation.y - s.height/2)*2)
-    
---     local  l = tolua.cast(getChildByTag(kTagLayer), "CCLayerColor")
-
---     l:setContentSize( newSize )
--- end
-
--- local function ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
-
---     ccTouchesMoved(pTouches, pEvent)
--- end
-
--- local function ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
-
---     local touch = tolua.cast(pTouches:anyObject(), "CCTouch")
---     local touchLocation = touch:getLocation()
-
---     updateSize(touchLocation)
--- end
-
--- local function ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
-
---     ccTouchesMoved(pTouches, pEvent)
--- end
-
--- local function title()
-
---     return "ColorLayer resize (tap & move)"
--- end
-
--- --------------------------------------------------------------------
--- --
--- -- LayerTest2
--- --
--- --------------------------------------------------------------------
--- local function onEnter()
-
---     LayerTest:onEnter()
-
---     local s = CCDirector:sharedDirector():getWinSize()
---     local  layer1 = CCLayerColor:create( ccc4(255, 255, 0, 80), 100, 300)
---     layer1:setPosition(ccp(s.width/3, s.height/2))
---     layer1:ignoreAnchorPointForPosition(false)
---     addChild(layer1, 1)
-    
---     local  layer2 = CCLayerColor:create( ccc4(0, 0, 255, 255), 100, 300)
---     layer2:setPosition(ccp((s.width/3)*2, s.height/2))
---     layer2:ignoreAnchorPointForPosition(false)
---     addChild(layer2, 1)
-    
---     local  actionTint = CCTintBy:create(2, -255, -127, 0)
---     local  actionTintBack = actionTint:reverse()
---     local  seq1 = CCSequence:create( actionTint, actionTintBack, NULL)
---     layer1:runAction(seq1)
-
---     local  actionFade = CCFadeOut:create(2.0)
---     local  actionFadeBack = actionFade:reverse()
---     local  seq2 = CCSequence:create(actionFade, actionFadeBack, NULL)        
---     layer2:runAction(seq2)
--- end
-
--- local function title()
-
---     return "ColorLayer: fade and tint"
--- end
-
--- --------------------------------------------------------------------
--- --
--- -- LayerTestBlend
--- --
--- --------------------------------------------------------------------
-
--- local function LayerTestBlend()
-
---     local s = CCDirector:sharedDirector():getWinSize()
---     local  layer1 = CCLayerColor:create( ccc4(255, 255, 255, 80) )
-    
---     local  sister1 = CCSprite:create(s_pPathSister1)
---     local  sister2 = CCSprite:create(s_pPathSister2)
-    
---     addChild(sister1)
---     addChild(sister2)
---     addChild(layer1, 100, kTagLayer)
-    
---     sister1:setPosition( ccp( s.width*1/3, s.height/2) )
---     sister2:setPosition( ccp( s.width*2/3, s.height/2) )
-
---     schedule( schedule_selector(LayerTestBlend:newBlend), 1.0)
--- end
-
--- local function newBlend(float dt)
-
---      local layer = tolua.cast(getChildByTag(kTagLayer), "CCLayerColor")
-
---     GLenum src
---     GLenum dst
-
---     if( layer:getBlendFunc().dst == GL_ZERO )
-    
---         src = GL_SRC_ALPHA
---         dst = GL_ONE_MINUS_SRC_ALPHA
---     end
---     else
-    
---         src = GL_ONE_MINUS_DST_COLOR
---         dst = GL_ZERO
---     end
-
---     ccBlendFunc bf = src, dstend
---     layer:setBlendFunc( bf )
--- end
-
-
--- local function title()
-
---     return "ColorLayer: blend"
--- end
-
--- --------------------------------------------------------------------
--- --
--- -- LayerGradient
--- --
--- --------------------------------------------------------------------
--- local function LayerGradient()
-
---     local  layer1 = CCLayerGradient:create(ccc4(255,0,0,255), ccc4(0,255,0,255), ccp(0.9, 0.9))
---     addChild(layer1, 0, kTagLayer)
-
---     setTouchEnabled(true)
-
---     local label1 = CCLabelTTF:create("Compressed Interpolation: Enabled", "Marker Felt", 26)
---     local label2 = CCLabelTTF:create("Compressed Interpolation: Disabled", "Marker Felt", 26)
---     local item1 = CCMenuItemLabel:create(label1)
---     local item2 = CCMenuItemLabel:create(label2)
---     local item = CCMenuItemToggle:createWithTarget(this, menu_selector(LayerGradient:toggleItem), item1, item2, NULL)
-
---     local menu = CCMenu:create(item, NULL)
---     addChild(menu)
---     local s = CCDirector:sharedDirector():getWinSize()
---     menu:setPosition(ccp(s.width / 2, 100))
--- end
-
--- local function toggleItem(CCObject *sender)
-
---     local gradient = tolua.cast(getChildByTag(kTagLayer), "CCLayerGradient")
---     gradient:setCompressedInterpolation(! gradient:isCompressedInterpolation())
--- end
-
--- local function ccTouchesMoved(CCSet * touches, CCEvent *event)
-
---     local s = CCDirector:sharedDirector():getWinSize()
-
---     CCSetIterator it = touches:begin()
---     local  touch = (CCTouch*)(*it)
---     local start = touch:getLocation()    
-
---     local diff = ccpSub( ccp(s.width/2,s.height/2), start)    
---     diff = ccpNormalize(diff)
-
---     local gradient = tolua.cast(getChildByTag(1), "CCLayerGradient")
---     gradient:setVector(diff)
--- end
-
--- local function title()
-
---     return "LayerGradient"
--- end
-
--- local function subtitle()
-
---     return "Touch the screen and move your finger"
--- end
-
--- -- LayerIgnoreAnchorPointPos
-
--- #define kLayerIgnoreAnchorPoint  1000
-
--- local function onEnter()
-
---     LayerTest:onEnter()
-
---     local s = CCDirector:sharedDirector():getWinSize()
-
---     local l = CCLayerColor:create(ccc4(255, 0, 0, 255), 150, 150)
-
---     l:setAnchorPoint(ccp(0.5, 0.5))
---     l:setPosition(ccp( s.width/2, s.height/2))
-
---     local move = CCMoveBy:create(2, ccp(100,2))
---     local  back = tolua.cast(move:reverse(), "CCMoveBy")
---     local seq = CCSequence:create(move, back, NULL)
---     l:runAction(CCRepeatForever:create(seq))
---     this:addChild(l, 0, kLayerIgnoreAnchorPoint)
-
---     local child = CCSprite:create("Images/grossini.png")
---     l:addChild(child)
---     local lsize = l:getContentSize()
---     child:setPosition(ccp(lsize.width/2, lsize.height/2))
-
---     local item = CCMenuItemFont:create("Toggle ignore anchor point", this, menu_selector(LayerIgnoreAnchorPointPos:onToggle))
-
---     local menu = CCMenu:create(item, NULL)
---     this:addChild(menu)
-
---     menu:setPosition(ccp(s.width/2, s.height/2))
--- end
-
--- local function onToggle(CCObject* pObject)
-
---     local  pLayer = this:getChildByTag(kLayerIgnoreAnchorPoint)
---     bool ignore = pLayer:isIgnoreAnchorPointForPosition()
---     pLayer:ignoreAnchorPointForPosition(! ignore)
--- end
-
--- local function title()
-
---     return "IgnoreAnchorPoint - Position"
--- end
-
--- local function subtitle()
-
---     return "Ignoring Anchor Point for position"
--- end
-
--- -- LayerIgnoreAnchorPointRot
-
--- local function onEnter()
-
---     LayerTest:onEnter()
---     local s = CCDirector:sharedDirector():getWinSize()
-
---     local l = CCLayerColor:create(ccc4(255, 0, 0, 255), 200, 200)
-
---     l:setAnchorPoint(ccp(0.5, 0.5))
---     l:setPosition(ccp( s.width/2, s.height/2))
-
---     this:addChild(l, 0, kLayerIgnoreAnchorPoint)
-
---     local rot = CCRotateBy:create(2, 360)
---     l:runAction(CCRepeatForever:create(rot))
-
-
---     local child = CCSprite:create("Images/grossini.png")
---     l:addChild(child)
---     local lsize = l:getContentSize()
---     child:setPosition(ccp(lsize.width/2, lsize.height/2))
-
---     local item = CCMenuItemFont:create("Toogle ignore anchor point", this, menu_selector(LayerIgnoreAnchorPointRot:onToggle))
-
---     local menu = CCMenu:create(item, NULL)
---     this:addChild(menu)
-
---     menu:setPosition(ccp(s.width/2, s.height/2))
--- end
-
--- local function onToggle(CCObject* pObject)
-
---     local  pLayer = this:getChildByTag(kLayerIgnoreAnchorPoint)
---     bool ignore = pLayer:isIgnoreAnchorPointForPosition()
---     pLayer:ignoreAnchorPointForPosition(! ignore)
--- end
-
--- local function title()
-
---     return "IgnoreAnchorPoint - Rotation"
--- end
-
--- local function subtitle()
-
---     return "Ignoring Anchor Point for rotations"
--- end
-
--- -- LayerIgnoreAnchorPointScale
--- local function onEnter()
-
---     LayerTest:onEnter()
-    
---     local s = CCDirector:sharedDirector():getWinSize()
-
---     local l = CCLayerColor:create(ccc4(255, 0, 0, 255), 200, 200)
-
---     l:setAnchorPoint(ccp(0.5, 1.0))
---     l:setPosition(ccp( s.width/2, s.height/2))
-
-
---     local scale = CCScaleBy:create(2, 2)
---     local  back = tolua.cast(scale:reverse(), "CCScaleBy")
---     local seq = CCSequence:create(scale, back, NULL)
-
---     l:runAction(CCRepeatForever:create(seq))
-
---     this:addChild(l, 0, kLayerIgnoreAnchorPoint)
-
---     local child = CCSprite:create("Images/grossini.png")
---     l:addChild(child)
---     local lsize = l:getContentSize()
---     child:setPosition(ccp(lsize.width/2, lsize.height/2))
-
---     local item = CCMenuItemFont:create("Toogle ignore anchor point", this, menu_selector(LayerIgnoreAnchorPointScale:onToggle))
-
---     local menu = CCMenu:create(item, NULL)
---     this:addChild(menu)
-
---     menu:setPosition(ccp(s.width/2, s.height/2))
--- end
-
--- local function onToggle(CCObject* pObject)
-
---     local  pLayer = this:getChildByTag(kLayerIgnoreAnchorPoint)
---     bool ignore = pLayer:isIgnoreAnchorPointForPosition()
---     pLayer:ignoreAnchorPointForPosition(! ignore)
--- end
-
--- local function title()
-
---     return "IgnoreAnchorPoint - Scale"
--- end
-
--- local function subtitle()
-
---     return "Ignoring Anchor Point for scale"
--- end
-
--- local function runThisTest()
-
---     sceneIdx = -1
---     local  pLayer = nextAction()
---     addChild(pLayer)
-
---     CCDirector:sharedDirector():replaceScene(this)
--- end
-
--- local function LayerExtendedBlendOpacityTest()
-
---     local  layer1 = CCLayerGradient:create(ccc4(255, 0, 0, 255), ccc4(255, 0, 255, 255))
---     layer1:setContentSize(local Make(80, 80))
---     layer1:setPosition(ccp(50,50))
---     addChild(layer1)
-    
---     local  layer2 = CCLayerGradient:create(ccc4(0, 0, 0, 127), ccc4(255, 255, 255, 127))
---     layer2:setContentSize(local Make(80, 80))
---     layer2:setPosition(ccp(100,90))
---     addChild(layer2)
-    
---     local  layer3 = CCLayerGradient:create()
---     layer3:setContentSize(local Make(80, 80))
---     layer3:setPosition(ccp(150,140))
---     layer3:setStartColor(ccc3(255, 0, 0))
---     layer3:setEndColor(ccc3(255, 0, 255))
---     layer3:setStartOpacity(255)
---     layer3:setEndOpacity(255)
---     ccBlendFunc blend
---     blend.src = GL_SRC_ALPHA
---     blend.dst = GL_ONE_MINUS_SRC_ALPHA
---     layer3:setBlendFunc(blend)
---     addChild(layer3)
--- end
-
--- local function title()
-
---     return "Extended Blend & Opacity"
--- end
-
--- local function subtitle()
-
---     return "You should see 3 layers"
--- end
+    local  layer3 = CCLayerGradient:create()
+    layer3:setContentSize(CCSizeMake(80, 80))
+    layer3:setPosition(ccp(150,140))
+    layer3:setStartColor(ccc3(255, 0, 0))
+    layer3:setEndColor(ccc3(255, 0, 255))
+    layer3:setStartOpacity(255)
+    layer3:setEndOpacity(255)
+    local blend = ccBlendFunc()
+    blend.src = GL_SRC_ALPHA
+    blend.dst = GL_ONE_MINUS_SRC_ALPHA
+    layer3:setBlendFunc(blend)
+    ret:addChild(layer3)
+    return ret
+end
 
 function LayerTestMain()
     cclog("LayerTestMain")
@@ -751,19 +686,19 @@ function LayerTestMain()
 
     Helper.createFunctionTable = {
         LayerTestCascadingOpacityA,
-        -- LayerTestCascadingOpacityB,
-        -- LayerTestCascadingOpacityC,
-        -- LayerTestCascadingColorA,
-        -- LayerTestCascadingColorB,
-        -- LayerTestCascadingColorC,
-        -- LayerTest1,
-        -- LayerTest2,
-        -- LayerTestBlend,
-        -- LayerGradient,
-        -- LayerIgnoreAnchorPointPos,
-        -- LayerIgnoreAnchorPointRot,
-        -- LayerIgnoreAnchorPointScale,
-        -- LayerExtendedBlendOpacityTest
+        LayerTestCascadingOpacityB,
+        LayerTestCascadingOpacityC,
+        LayerTestCascadingColorA,
+        LayerTestCascadingColorB,
+        LayerTestCascadingColorC,
+        LayerTest1,
+        LayerTest2,
+        LayerTestBlend,
+        LayerGradient,
+        LayerIgnoreAnchorPointPos,
+        LayerIgnoreAnchorPointRot,
+        LayerIgnoreAnchorPointScale,
+        LayerExtendedBlendOpacityTest
     }
     scene:addChild(LayerTestCascadingOpacityA())
     scene:addChild(CreateBackMenuItem())

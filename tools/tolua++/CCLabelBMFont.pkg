@@ -3,7 +3,7 @@ enum {
     kCCLabelAutomaticWidth = -1,
 };
 
-class CCLabelBMFont : public CCNode
+class CCLabelBMFont : public CCSpriteBatchNode
 {
     CCLabelBMFont();
     ~CCLabelBMFont();
