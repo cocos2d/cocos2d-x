@@ -1,5 +1,5 @@
 
-class CCMenuItem : public CCNode
+class CCMenuItem : public CCNodeRGBA
 {
     CCRect rect();
     void activate();
