@@ -379,14 +379,14 @@ cc.LayerMultiplex.create = cc.LayerMultiplex.createWithArray;
  */
 cc.associateWithNative = function( jsobj, superclass_or_instance ) {
 
-    try {
+//    try {
         // Used when subclassing using the "extend" method
-        var nativeObj = new superclass_or_instance();
-        __associateObjWithNative( jsobj, nativeObj );
-    } catch(err) {
+//        var nativeObj = new superclass_or_instance();
+//        __associateObjWithNative( jsobj, nativeObj );
+//    } catch(err) {
         // Used when subclassing using the goog.inherits method
-       __associateObjWithNative( jsobj, superclass_or_instance );
-   }
+//       __associateObjWithNative( jsobj, superclass_or_instance );
+//   }
 };
 
 //
@@ -499,8 +499,6 @@ cc.Class.extend = function (prop) {
     return Class;
 };
 
-cc.Node.prototype.ctor = function() {};
-cc.GLNode.extend = cc.Class.extend;
 cc.Node.extend = cc.Class.extend;
 cc.Layer.extend = cc.Class.extend;
 cc.LayerGradient.extend = cc.Class.extend;
