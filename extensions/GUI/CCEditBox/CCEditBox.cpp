@@ -38,6 +38,8 @@ CCEditBox::CCEditBox(void)
 , m_colPlaceHolder(ccGRAY)
 , m_nMaxLength(0)
 , m_fAdjustHeight(0.0f)
+, m_nPlaceholderFontSize(-1)
+, m_nFontSize(-1)
 {
 }
 
@@ -129,12 +131,32 @@ const char* CCEditBox::getText(void)
 
 void CCEditBox::setFont(const char* pFontName, int fontSize)
 {
+    m_strFontName = pFontName;
+    m_nFontSize = fontSize;
     if (pFontName != NULL)
     {
         if (m_pEditBoxImpl != NULL)
         {
             m_pEditBoxImpl->setFont(pFontName, fontSize);
         }
+    }
+}
+
+void CCEditBox::setFontName(const char* pFontName)
+{
+    m_strFontName = pFontName;
+    if (m_pEditBoxImpl != NULL && m_nFontSize != -1)
+    {
+        m_pEditBoxImpl->setFont(pFontName, m_nFontSize);
+    }
+}
+
+void CCEditBox::setFontSize(int fontSize)
+{
+    m_nFontSize = fontSize;
+    if (m_pEditBoxImpl != NULL && m_strFontName.length() > 0)
+    {
+        m_pEditBoxImpl->setFont(m_strFontName.c_str(), m_nFontSize);
     }
 }
 
@@ -149,12 +171,32 @@ void CCEditBox::setFontColor(const ccColor3B& color)
 
 void CCEditBox::setPlaceholderFont(const char* pFontName, int fontSize)
 {
+    m_strPlaceholderFontName = pFontName;
+    m_nPlaceholderFontSize = fontSize;
     if (pFontName != NULL)
     {
         if (m_pEditBoxImpl != NULL)
         {
             m_pEditBoxImpl->setPlaceholderFont(pFontName, fontSize);
         }
+    }
+}
+
+void CCEditBox::setPlaceholderFontName(const char* pFontName)
+{
+    m_strPlaceholderFontName = pFontName;
+    if (m_pEditBoxImpl != NULL && m_nPlaceholderFontSize != -1)
+    {
+        m_pEditBoxImpl->setPlaceholderFont(pFontName, m_nFontSize);
+    }
+}
+
+void CCEditBox::setPlaceholderFontSize(int fontSize)
+{
+    m_nPlaceholderFontSize = fontSize;
+    if (m_pEditBoxImpl != NULL && m_strPlaceholderFontName.length() > 0)
+    {
+        m_pEditBoxImpl->setPlaceholderFont(m_strPlaceholderFontName.c_str(), m_nFontSize);
     }
 }
 
