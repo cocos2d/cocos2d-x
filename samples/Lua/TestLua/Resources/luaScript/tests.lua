@@ -18,6 +18,7 @@ require "luaScript/PerformanceTest/PerformanceTest"
 require "luaScript/LabelTest/LabelTest"
 require "luaScript/ParallaxTest/ParallaxTest"
 require "luaScript/TileMapTest/TileMapTest"
+require "luaScript/ActionManagerTest/ActionManagerTest"
 ----------------------------------------------------
 
 -- tests scene
@@ -36,7 +37,7 @@ Test_Table =
     "TEST_COCOSNODE",
     "TEST_TOUCHES",
 --  "TEST_MENU",
---  "TEST_ACTION_MANAGER",
+    "TEST_ACTION_MANAGER",
     "TEST_LAYER",
 --  "TEST_SCENE",
     "TEST_PARALLAX",
@@ -86,7 +87,7 @@ Test_Name =
     "NodeTest",
     "TouchesTest",
 --  "MenuTest",
---  "ActionManagerTest",
+    "ActionManagerTest",
     "LayerTest",
 --  "SceneTest",
     "ParallaxTest",
