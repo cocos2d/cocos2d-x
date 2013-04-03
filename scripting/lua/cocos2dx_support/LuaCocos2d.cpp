@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.92 on Wed Apr  3 15:24:27 2013.
+** Generated automatically by tolua++-1.0.92 on Wed Apr  3 18:12:47 2013.
 */
 
 /****************************************************************************
@@ -11649,6 +11649,37 @@ static int tolua_Cocos2d_CCDirector_popScene00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'popScene'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: popToRootScene of class  CCDirector */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCDirector_popToRootScene00
+static int tolua_Cocos2d_CCDirector_popToRootScene00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCDirector",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCDirector* self = (CCDirector*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'popToRootScene'", NULL);
+#endif
+  {
+   self->popToRootScene();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'popToRootScene'.",&tolua_err);
  return 0;
 #endif
 }
@@ -54570,6 +54601,7 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"runWithScene",tolua_Cocos2d_CCDirector_runWithScene00);
    tolua_function(tolua_S,"pushScene",tolua_Cocos2d_CCDirector_pushScene00);
    tolua_function(tolua_S,"popScene",tolua_Cocos2d_CCDirector_popScene00);
+   tolua_function(tolua_S,"popToRootScene",tolua_Cocos2d_CCDirector_popToRootScene00);
    tolua_function(tolua_S,"replaceScene",tolua_Cocos2d_CCDirector_replaceScene00);
    tolua_function(tolua_S,"endToLua",tolua_Cocos2d_CCDirector_endToLua00);
    tolua_function(tolua_S,"getContentScaleFactor",tolua_Cocos2d_CCDirector_getContentScaleFactor00);
