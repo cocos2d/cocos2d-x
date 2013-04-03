@@ -51,7 +51,7 @@ local function CreateTestScene(nIdx)
     elseif nIdx == Test_Table.TEST_TILE_MAP then
 		scene = TileMapTestMain()
     elseif nIdx == Test_Table.TEST_INTERVAL then
-		scene = IntervalTest()
+		scene = IntervalTestMain()
     elseif nIdx == Test_Table.TEST_CHIPMUNKACCELTOUCH then
 --#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
 --        pScene = new ChipmunkAccelTouchTestScene()
