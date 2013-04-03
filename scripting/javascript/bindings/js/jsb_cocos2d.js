@@ -377,17 +377,7 @@ cc.LayerMultiplex.create = cc.LayerMultiplex.createWithArray;
  * @param {object} jsobj subclass
  * @param {object} klass superclass
  */
-cc.associateWithNative = function( jsobj, superclass_or_instance ) {
-
-//    try {
-        // Used when subclassing using the "extend" method
-//        var nativeObj = new superclass_or_instance();
-//        __associateObjWithNative( jsobj, nativeObj );
-//    } catch(err) {
-        // Used when subclassing using the goog.inherits method
-//       __associateObjWithNative( jsobj, superclass_or_instance );
-//   }
-};
+cc.associateWithNative = function( jsobj, superclass_or_instance ) {};
 
 //
 // JSB supports 2 official ways to create subclasses
