@@ -31,7 +31,7 @@ SOURCES += $(addprefix $(COCOS_ROOT)/extensions/, $(EXTENSIONS_SOURCES))
 include $(COCOS_ROOT)/cocos2dx/proj.nacl/cocos2dx.mk
 
 CXXFLAGS   += -Wno-multichar
-STATICLIBS += -llua -lnosys
+STATICLIBS += -llua
 SHAREDLIBS += -lbox2d
 
 APP_NAME = TestLua
@@ -40,23 +40,23 @@ NMF = $(BIN_DIR)/$(APP_NAME).nmf
 
 all: $(NMF)
 
-$(TARGET): $(OBJECTS) $(LIB_DIR)/libcocos2d.a
+$(TARGET): $(OBJECTS) $(LIB_DIR)/libcocos2d.a $(CORE_MAKEFILE_LIST)
 	@mkdir -p $(@D)
 	$(LOG_LINK)$(NACL_CXX) $(CXXFLAGS) $(LDFLAGS) $(OBJECTS) -o $@ $(SHAREDLIBS) $(STATICLIBS)
 
-$(OBJ_DIR)/%.o: %.cpp
+$(OBJ_DIR)/%.o: %.cpp $(CORE_MAKEFILE_LIST)
 	@mkdir -p $(@D)
 	$(LOG_CXX)$(NACL_CXX) -MMD $(CXXFLAGS) $(INCLUDES) $(DEFINES) -c $< -o $@
 
-$(OBJ_DIR)/%.o: ../%.cpp
+$(OBJ_DIR)/%.o: ../%.cpp $(CORE_MAKEFILE_LIST)
 	@mkdir -p $(@D)
 	$(LOG_CXX)$(NACL_CXX) -MMD $(CXXFLAGS) $(INCLUDES) $(DEFINES) -c $< -o $@
 
-$(OBJ_DIR)/%.o: $(COCOS_ROOT)/%.cpp
+$(OBJ_DIR)/%.o: $(COCOS_ROOT)/%.cpp $(CORE_MAKEFILE_LIST)
 	@mkdir -p $(@D)
 	$(LOG_CXX)$(NACL_CXX) -MMD $(CXXFLAGS) $(INCLUDES) $(DEFINES) -c $< -o $@
 
-$(OBJ_DIR)/%.o: $(COCOS_ROOT)/%.c
+$(OBJ_DIR)/%.o: $(COCOS_ROOT)/%.c $(CORE_MAKEFILE_LIST)
 	@mkdir -p $(@D)
 	$(LOG_CC)$(NACL_CC) -MMD $(CCFLAGS) $(INCLUDES) $(DEFINES) -c $< -o $@
 
