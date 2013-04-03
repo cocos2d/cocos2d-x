@@ -100,14 +100,6 @@ public:
     virtual ~CCTableView();
 
     /**
-     * An intialized table view object
-     *
-     * @param dataSource data source
-     * @param size view size
-     * @return table view
-     */
-    static CCTableView* create(CCTableViewDataSource* dataSource, CCSize size);
-    /**
      * An initialized table view object
      *
      * @param dataSource data source;
@@ -115,7 +107,7 @@ public:
      * @param container parent object for cells
      * @return table view
      */
-    static CCTableView* create(CCTableViewDataSource* dataSource, CCSize size, CCNode *container);
+    static CCTableView* create(CCTableViewDataSource* dataSource, CCSize size, CCNode *container=NULL, CCScrollViewDirection eDirection=kCCScrollViewDirectionVertical, CCTableViewVerticalFillOrder order=kCCTableViewFillBottomUp);
     
     /**
      * data source
