@@ -107,7 +107,7 @@ endif
 
 SOUNDLIBS := -lalut -lopenal -lvorbisfile -lvorbis -logg
 STATICLIBS += $(SOUNDLIBS) -lfreetype -lxml2 -lwebp -lpng -ljpeg -ltiff -llua -lchipmunk
-STATICLIBS += -lnacl_io -lppapi_gles2 -lppapi -lppapi_cpp -lnosys
+STATICLIBS += -lnacl_io -lppapi_gles2 -lppapi -lppapi_cpp
 SHAREDLIBS += -lpthread -lcocosdenshion -lcocos2d -lz
 
 OBJECTS := $(SOURCES:.cpp=.o)
