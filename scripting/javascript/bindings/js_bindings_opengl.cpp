@@ -67,7 +67,7 @@ static JSBool js_cocos2dx_GLNode_ctor(JSContext *cx, uint32_t argc, jsval *vp)
     js_proxy_t* p;
     JS_NEW_PROXY(p, nobj, obj);
     nobj->autorelease();
-    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::extension::CCBReader");
+    JS_AddNamedObjectRoot(cx, &p->obj, "GLNode");
     JS_SET_RVAL(cx, vp, JSVAL_VOID);
     return JS_TRUE;
 }
