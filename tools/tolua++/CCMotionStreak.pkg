@@ -1,4 +1,4 @@
-class CCMotionStreak : public CCNode
+class CCMotionStreak : public CCNodeRGBA
 {
     static CCMotionStreak* create(float fade, float minSeg, float stroke, ccColor3B color, const char* path);
     static CCMotionStreak* create(float fade, float minSeg, float stroke, ccColor3B color, CCTexture2D* texture);
