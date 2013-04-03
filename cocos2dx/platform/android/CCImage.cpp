@@ -145,7 +145,7 @@ extern "C"
     /**
     * this method is called by java code to init width, height and pixels data
     */
-    void Java_org_cocos2dx_lib_Cocos2dxBitmap_nativeInitBitmapDC(JNIEnv*  env, jobject thiz, int width, int height, jbyteArray pixels)
+    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxBitmap_nativeInitBitmapDC(JNIEnv*  env, jobject thiz, int width, int height, jbyteArray pixels)
     {
         int size = width * height * 4;
         cocos2d::sharedBitmapDC().m_nWidth = width;
