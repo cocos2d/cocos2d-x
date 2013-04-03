@@ -121,3 +121,15 @@ function Helper.initWithLayer(layer)
     local background = CCLayer:create()
     layer:addChild(background, -10)
 end
+
+function createTestLayer(title, subtitle)
+    local layer = CCLayer:create()
+    Helper.initWithLayer(layer)
+    local titleStr = title == nil and "No title" or title
+    local subTitleStr = subtitle  == nil and "" or subtitle
+    Helper.titleLabel:setString(titleStr)
+    Helper.subtitleLabel:setString(subTitleStr)
+    return layer
+end
+
+
