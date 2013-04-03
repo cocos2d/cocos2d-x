@@ -1,7 +1,7 @@
 local    kTagNode = 0
 local    kTagGrossini = 1
 local    kTagSequence = 2
-
+local scheduler = CCDirector:sharedDirector():getScheduler()
 --------------------------------------------------------------------
 --
 -- Test1
@@ -26,45 +26,39 @@ local function CrashTest()
     arr:addObject(CCDelayTime:create(1.4))
 
     local function removeThis()
-        m_pParent:removeChild(this, true)
+        ret:getParent():removeChild(ret, true)
         Helper.nextAction()
     end
 
     arr:addObject(CCCallFunc:create(removeThis))
     --After 1.5 second, self will be removed.
     ret:runAction( CCSequence:create(arr))
+    return ret
 end
 
 
 --------------------------------------------------------------------
 --
--- Test2
+-- LogicTest
 --
 --------------------------------------------------------------------
-local function onEnter()
-
-    ActionManagerTest:onEnter()
-
+local function LogicTest()
+    local ret = createTestLayer("Logic test")
     local  grossini = CCSprite:create(s_pPathGrossini)
-    addChild(grossini, 0, 2)
+    ret:addChild(grossini, 0, 2)
     grossini:setPosition(VisibleRect:center())
 
-    grossini:runAction( CCSequence:create( 
-                                                CCMoveBy:create(1, ccp(150,0)),
-                                                CCCallFuncN:create(this, callfuncN_selector(LogicTest:bugMe)),
-                                                NULL) 
-                        )
-end
+    local arr = CCArray:create()
+    arr:addObject(CCMoveBy:create(1, ccp(150,0)))
 
-local function bugMe(CCNode* node)
+    local function bugMe(node)
+        node:stopAllActions() --After this stop next action not working, if remove this stop everything is working
+        node:runAction(CCScaleTo:create(2, 2))
+    end
 
-    node:stopAllActions() --After this stop next action not working, if remove this stop everything is working
-    node:runAction(CCScaleTo:create(2, 2))
-end
-
-local function title()
-
-    return "Logic test" 
+    arr:addObject(CCCallFuncN:create(bugMe))
+    grossini:runAction( CCSequence:create(arr));
+    return ret
 end
 
 --------------------------------------------------------------------
@@ -73,46 +67,43 @@ end
 --
 --------------------------------------------------------------------
 
-local function onEnter()
+local function PauseTest()
+    local ret = createTestLayer("Pause Test")
 
-    --
-    -- This test MUST be done in 'onEnter' and not on 'init'
-    -- otherwise the paused action will be resumed at 'onEnter' time
-    --
-    ActionManagerTest:onEnter()
-    
+    local schedulerEntry = nil
+    local function unpause(dt)
+        scheduler:unscheduleScriptEntry(schedulerEntry)
+        schedulerEntry = nil
+        local  node = ret:getChildByTag( kTagGrossini )
+        local  pDirector = CCDirector:sharedDirector()
+        pDirector:getActionManager():resumeTarget(node)
+    end
 
-    local  l = CCLabelTTF:create("After 5 seconds grossini should move", "Thonburi", 16)
-    addChild(l)
-    l:setPosition( ccp(VisibleRect:center().x, VisibleRect:top().y-75) )
-    
-    
-    --
-    -- Also, this test MUST be done, after [super onEnter]
-    --
-    local  grossini = CCSprite:create(s_pPathGrossini)
-    addChild(grossini, 0, kTagGrossini)
-    grossini:setPosition(VisibleRect:center() )
-    
-    local  action = CCMoveBy:create(1, ccp(150,0))
+    local function onNodeEvent(event)
+        if event == "enter" then
+            local  l = CCLabelTTF:create("After 3 seconds grossini should move", "Thonburi", 16)
+            ret:addChild(l)
+            l:setPosition( ccp(VisibleRect:center().x, VisibleRect:top().y-75) )
+            
+            local  grossini = CCSprite:create(s_pPathGrossini)
+            ret:addChild(grossini, 0, kTagGrossini)
+            grossini:setPosition(VisibleRect:center() )
+            
+            local  action = CCMoveBy:create(1, ccp(150,0))
 
-    local  pDirector = CCDirector:sharedDirector()
-    pDirector:getActionManager():addAction(action, grossini, true)
+            local  pDirector = CCDirector:sharedDirector()
+            pDirector:getActionManager():addAction(action, grossini, true)
 
-    schedule( schedule_selector(PauseTest:unpause), 3) 
-end
+            schedulerEntry = scheduler:scheduleScriptFunc(unpause, 3.0, false)
+        elseif event == "exit" then
+            if schedulerEntry ~= nil then
+                scheduler:unscheduleScriptEntry(schedulerEntry)
+            end
+        end
+    end
 
-local function unpause(float dt)
-
-    unschedule( schedule_selector(PauseTest:unpause) )
-    local  node = getChildByTag( kTagGrossini )
-    local  pDirector = CCDirector:sharedDirector()
-    pDirector:getActionManager():resumeTarget(node)
-end
-
-local function title()
-
-    return "Pause Test"
+    ret:registerScriptHandler(onNodeEvent)
+    return ret
 end
 
 --------------------------------------------------------------------
@@ -120,76 +111,81 @@ end
 -- RemoveTest
 --
 --------------------------------------------------------------------
-local function onEnter()
-
-    ActionManagerTest:onEnter()
-
+local function RemoveTest()
+    local ret = createTestLayer("Remove Test")
     local  l = CCLabelTTF:create("Should not crash", "Thonburi", 16)
-    addChild(l)
+    ret:addChild(l)
     l:setPosition( ccp(VisibleRect:center().x, VisibleRect:top().y - 75) )
 
     local  pMove = CCMoveBy:create(2, ccp(200, 0))
-    local  pCallback = CCCallFunc:create(this, callfunc_selector(RemoveTest:stopAction))
-    local  pSequence = CCSequence:create(pMove, pCallback, NULL)
+    local function stopAction()
+        local  pSprite = ret:getChildByTag(kTagGrossini)
+        pSprite:stopActionByTag(kTagSequence)
+    end
+
+    local  pCallback = CCCallFunc:create(stopAction)
+    local arr = CCArray:create()
+    arr:addObject(pMove)
+    arr:addObject(pCallback)
+    local  pSequence = CCSequence:create(arr)
     pSequence:setTag(kTagSequence)
 
     local  pChild = CCSprite:create(s_pPathGrossini)
     pChild:setPosition( VisibleRect:center() )
 
-    addChild(pChild, 1, kTagGrossini)
+    ret:addChild(pChild, 1, kTagGrossini)
     pChild:runAction(pSequence)
+    return ret
 end
 
-local function stopAction()
-
-    local  pSprite = getChildByTag(kTagGrossini)
-    pSprite:stopActionByTag(kTagSequence)
-end
-
-local function title()
-
-    return "Remove Test"
-end
 
 --------------------------------------------------------------------
 --
 -- ResumeTest
 --
 --------------------------------------------------------------------
-local function title()
+local function ResumeTest()
+    local ret = createTestLayer("Resume Test")
 
-    return "Resume Test"
+    local schedulerEntry = nil
+    local function resumeGrossini(time)
+        scheduler:unscheduleScriptEntry(schedulerEntry)
+        schedulerEntry = nil
+        local  pGrossini = ret:getChildByTag(kTagGrossini)
+        local  pDirector = CCDirector:sharedDirector()
+        pDirector:getActionManager():resumeTarget(pGrossini)
+    end
+
+
+    local function onNodeEvent(event)
+        if event == "enter" then
+            local  l = CCLabelTTF:create("Grossini only rotate/scale in 3 seconds", "Thonburi", 16)
+            ret:addChild(l)
+            l:setPosition( ccp(VisibleRect:center().x, VisibleRect:top().y - 75))
+
+            local  pGrossini = CCSprite:create(s_pPathGrossini)
+            ret:addChild(pGrossini, 0, kTagGrossini)
+            pGrossini:setPosition(VisibleRect:center())
+
+            pGrossini:runAction(CCScaleBy:create(2, 2))
+
+            local  pDirector = CCDirector:sharedDirector()
+            pDirector:getActionManager():pauseTarget(pGrossini)
+            pGrossini:runAction(CCRotateBy:create(2, 360))
+
+            schedulerEntry = scheduler:scheduleScriptFunc(resumeGrossini, 3.0, false)
+        elseif event == "exit" then
+            if schedulerEntry ~= nil then
+                scheduler:unscheduleScriptEntry(schedulerEntry)
+            end
+        end
+    end
+
+    ret:registerScriptHandler(onNodeEvent)
+
+    return ret
 end
 
-local function onEnter()
-
-    ActionManagerTest:onEnter()
-
-    local  l = CCLabelTTF:create("Grossini only rotate/scale in 3 seconds", "Thonburi", 16)
-    addChild(l)
-    l:setPosition( ccp(VisibleRect:center().x, VisibleRect:top().y - 75))
-
-    local  pGrossini = CCSprite:create(s_pPathGrossini)
-    addChild(pGrossini, 0, kTagGrossini)
-    pGrossini:setPosition(VisibleRect:center())
-
-    pGrossini:runAction(CCScaleBy:create(2, 2))
-
-    local  pDirector = CCDirector:sharedDirector()
-    pDirector:getActionManager():pauseTarget(pGrossini)
-    pGrossini:runAction(CCRotateBy:create(2, 360))
-
-    this:schedule(schedule_selector(ResumeTest:resumeGrossini), 3.0)
-end
-
-local function resumeGrossini(float time)
-
-    this:unschedule(schedule_selector(ResumeTest:resumeGrossini))
-
-    local  pGrossini = getChildByTag(kTagGrossini)
-    local  pDirector = CCDirector:sharedDirector()
-    pDirector:getActionManager():resumeTarget(pGrossini)
-end
 
 function ActionManagerTestMain()
     cclog("ActionManagerTestMain")
