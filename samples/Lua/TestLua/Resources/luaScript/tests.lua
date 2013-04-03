@@ -20,6 +20,8 @@ require "luaScript/ParallaxTest/ParallaxTest"
 require "luaScript/TileMapTest/TileMapTest"
 require "luaScript/ActionManagerTest/ActionManagerTest"
 require "luaScript/MenuTest/MenuTest"
+require "luaScript/IntervalTest/IntervalTest"
+require "luaScript/SceneTest/SceneTest"
 ----------------------------------------------------
 
 -- tests scene
@@ -40,10 +42,10 @@ Test_Table =
     "TEST_MENU",
     "TEST_ACTION_MANAGER",
     "TEST_LAYER",
---  "TEST_SCENE",
+    "TEST_SCENE",
     "TEST_PARALLAX",
     "TEST_TILE_MAP",
---  "TEST_INTERVAL",
+    "TEST_INTERVAL",
 --  "TEST_CHIPMUNKACCELTOUCH",
     "TEST_LABEL",
 --  "TEST_TEXT_INPUT",
@@ -90,10 +92,10 @@ Test_Name =
     "MenuTest",
     "ActionManagerTest",
     "LayerTest",
---  "SceneTest",
+    "SceneTest",
     "ParallaxTest",
     "TileMapTest",
---  "IntervalTest",
+    "IntervalTest",
 --  "ChipmunkAccelTouchTest",
     "LabelTest",
 --  "TextInputTest",

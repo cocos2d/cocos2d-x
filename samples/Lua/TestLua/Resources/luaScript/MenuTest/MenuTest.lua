@@ -651,8 +651,6 @@ end
 
 function MenuTestMain()
     cclog("MenuTestMain")
-    Helper.index = 1
-    CCDirector:sharedDirector():setDepthTest(true)
     local scene = CCScene:create()
 
     local  pLayer1 = MenuLayerMainMenu()
