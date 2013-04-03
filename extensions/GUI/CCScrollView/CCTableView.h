@@ -105,9 +105,11 @@ public:
      * @param dataSource data source;
      * @param size view size
      * @param container parent object for cells
+     * @param eDirection direction allowed to scroll
+     * @param eVordering how cell is ordered and filled in the view
      * @return table view
      */
-    static CCTableView* create(CCTableViewDataSource* dataSource, CCSize size, CCNode *container=NULL, CCScrollViewDirection eDirection=kCCScrollViewDirectionVertical, CCTableViewVerticalFillOrder order=kCCTableViewFillBottomUp);
+    static CCTableView* create(CCTableViewDataSource* dataSource, CCSize size, CCNode *container=NULL, CCScrollViewDirection eDirection=kCCScrollViewDirectionVertical, CCTableViewVerticalFillOrder eVordering=kCCTableViewFillBottomUp);
     
     /**
      * data source

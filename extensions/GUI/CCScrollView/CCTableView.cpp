@@ -33,12 +33,12 @@
 
 NS_CC_EXT_BEGIN
 
-CCTableView* CCTableView::create(CCTableViewDataSource* dataSource, CCSize size, CCNode *container/*=NULL*/, CCScrollViewDirection eDirection/*=kCCScrollViewDirectionVertical*/, CCTableViewVerticalFillOrder order/*=kCCTableViewFillBottomUp*/)
+CCTableView* CCTableView::create(CCTableViewDataSource* dataSource, CCSize size, CCNode *container/*=NULL*/, CCScrollViewDirection eDirection/*=kCCScrollViewDirectionVertical*/, CCTableViewVerticalFillOrder eVordering/*=kCCTableViewFillBottomUp*/)
 {
     CCTableView *table = new CCTableView();
     table->initWithViewSize(size, container);
     table->setDirection(eDirection);
-    table->m_eVordering=order;
+    table->m_eVordering=eVordering;
     table->autorelease();
     table->setDataSource(dataSource);
     table->_updateContentSize();
