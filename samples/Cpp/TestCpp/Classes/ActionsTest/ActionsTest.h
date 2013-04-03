@@ -296,6 +296,7 @@ public:
     virtual void onEnter();
     virtual std::string title();
     virtual std::string subtitle();
+    using CCNode::removeFromParentAndCleanup;
     void removeFromParentAndCleanup(CCNode* pSender, void* data);
 };
 

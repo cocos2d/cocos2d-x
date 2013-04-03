@@ -48,6 +48,8 @@ SOURCES = ../lua/lapi.o \
 
 include ../../../cocos2dx/proj.linux/cocos2dx.mk
 
+CCFLAGS += -Wno-empty-body
+
 TARGET := $(LIB_DIR)/$(TARGET)
 
 all: $(TARGET)

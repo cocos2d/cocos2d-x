@@ -10,8 +10,11 @@ enum {
 };
 
 Box2DTestLayer::Box2DTestLayer()
-: m_pSpriteTexture(NULL)
-, world(NULL)
+: world(NULL)
+#if CC_ENABLE_BOX2D_INTEGRATION
+,m_pSpriteTexture(NULL)
+#endif
+
 {
 #if CC_ENABLE_BOX2D_INTEGRATION
     setTouchEnabled( true );

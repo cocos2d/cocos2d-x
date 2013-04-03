@@ -47,6 +47,7 @@ public:
     inline void setAmplitudeRate(float fAmplitudeRate) { m_fAmplitudeRate = fAmplitudeRate; }
 
     /** initializes an action with duration, grid size, waves and amplitude */
+    using CCGrid3DAction::initWithDuration;
     bool initWithDuration(float duration, const CCSize& gridSize, unsigned int waves, float amplitude);
 
     virtual CCObject* copyWithZone(CCZone* pZone);
@@ -66,6 +67,7 @@ class CC_DLL CCFlipX3D : public CCGrid3DAction
 {
 public:
     /** initializes the action with duration */
+    using CCGrid3DAction::initWithDuration;
     virtual bool initWithDuration(float duration);
     virtual bool initWithSize(const CCSize& gridSize, float duration);
     virtual CCObject* copyWithZone(CCZone* pZone);
@@ -103,6 +105,7 @@ public:
     void setPosition(const CCPoint& position);
 
     /** initializes the action with center position, radius, a grid size and duration */
+    using CCGrid3DAction::initWithDuration;
     bool initWithDuration(float duration, const CCSize& gridSize, const CCPoint& position, float radius);
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void update(float time);
@@ -138,6 +141,7 @@ public:
     inline void setAmplitudeRate(float fAmplitudeRate) { m_fAmplitudeRate = fAmplitudeRate; }
 
     /** initializes the action with radius, number of waves, amplitude, a grid size and duration */
+    using CCGrid3DAction::initWithDuration;
     bool initWithDuration(float duration, const CCSize& gridSize, const CCPoint& position, float radius, unsigned int waves, float amplitude);
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void update(float time);
@@ -159,6 +163,7 @@ class CC_DLL CCShaky3D : public CCGrid3DAction
 {
 public:
     /** initializes the action with a range, shake Z vertices, a grid and duration */
+    using CCGrid3DAction::initWithDuration;
     bool initWithDuration(float duration, const CCSize& gridSize, int range, bool shakeZ);
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void update(float time);
@@ -182,6 +187,7 @@ public:
     inline void setAmplitudeRate(float fAmplitudeRate) { m_fAmplitudeRate = fAmplitudeRate; }
 
     /** initializes the action with amplitude, a grid and duration */
+    using CCGrid3DAction::initWithDuration;
     bool initWithDuration(float duration, const CCSize& gridSize, unsigned int waves, float amplitude);
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void update(float time);
@@ -206,6 +212,7 @@ public:
     inline void setAmplitudeRate(float fAmplitudeRate) { m_fAmplitudeRate = fAmplitudeRate; }
 
     /** initializes the action with amplitude, horizontal sin, vertical sin, a grid and duration */
+    using CCGrid3DAction::initWithDuration;
     bool initWithDuration(float duration, const CCSize& gridSize, unsigned int waves, float amplitude, bool horizontal, bool vertical);
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void update(float time);
@@ -238,6 +245,7 @@ public:
     inline void setAmplitudeRate(float fAmplitudeRate) { m_fAmplitudeRate = fAmplitudeRate; }
 
     /** initializes the action with center position, number of twirls, amplitude, a grid size and duration */
+    using CCGrid3DAction::initWithDuration;
     bool initWithDuration(float duration, const CCSize& gridSize, CCPoint position, unsigned int twirls, float amplitude);
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void update(float time);

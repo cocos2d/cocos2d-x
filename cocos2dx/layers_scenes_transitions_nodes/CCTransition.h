@@ -131,6 +131,7 @@ public:
     static CCTransitionSceneOriented * create(float t,CCScene* scene, tOrientation orientation);
 
     /** initializes a transition with duration and incoming scene */
+    using CCTransitionScene::initWithDuration;
     virtual bool initWithDuration(float t,CCScene* scene,tOrientation orientation);
 };
 

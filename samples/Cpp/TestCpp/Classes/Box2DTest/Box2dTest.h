@@ -18,8 +18,10 @@ private:
 
 class Box2DTestLayer : public CCLayer
 {
-    CCTexture2D* m_pSpriteTexture;    // weak ref
     b2World* world;
+#if CC_ENABLE_BOX2D_INTEGRATION
+    CCTexture2D* m_pSpriteTexture;    // weak ref
+#endif
 //    GLESDebugDraw* m_debugDraw;
 
 public:

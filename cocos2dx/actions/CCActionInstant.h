@@ -292,6 +292,7 @@ public:
 
     typedef void (CCObject::*SEL_CallFuncN)(CCNode*);
     */
+    using CCCallFunc::initWithTarget;
     virtual bool initWithTarget(CCObject* pSelectorTarget, SEL_CallFuncN selector);
     // super methods
     virtual CCObject* copyWithZone(CCZone *pZone);
@@ -315,6 +316,7 @@ public:
     static CCCallFuncND * create(CCObject* pSelectorTarget, SEL_CallFuncND selector, void* d);
 
     /** initializes the action with the callback and the data to pass as an argument */
+    using CCCallFuncN::initWithTarget;
     virtual bool initWithTarget(CCObject* pSelectorTarget, SEL_CallFuncND selector, void* d);
     // super methods
     virtual CCObject* copyWithZone(CCZone *pZone);
@@ -352,6 +354,7 @@ public:
 
     typedef void (CCObject::*SEL_CallFuncO)(CCObject*);
     */
+    using CCCallFunc::initWithTarget;
     virtual bool initWithTarget(CCObject* pSelectorTarget, SEL_CallFuncO selector, CCObject* pObject);
     // super methods
     virtual CCObject* copyWithZone(CCZone *pZone);

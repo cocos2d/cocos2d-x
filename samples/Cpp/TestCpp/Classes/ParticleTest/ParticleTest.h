@@ -255,8 +255,6 @@ public:
     virtual void update(float dt);
     virtual std::string title();
     virtual std::string subtitle();
-private:
-    CCParticleBatchNode* m_pBatchNode;
 };
 
 class AddAndDeleteParticleSystems : public ParticleDemo

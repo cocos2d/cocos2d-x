@@ -67,6 +67,7 @@ public:
     * If back is true then the effect is reversed to appear as if the incoming 
     * scene is being turned from left over the outgoing scene.
     */
+    using CCTransitionScene::initWithDuration;
     virtual bool initWithDuration(float t,CCScene* scene,bool backwards);
 
     CCActionInterval* actionWithSize(const CCSize& vector);

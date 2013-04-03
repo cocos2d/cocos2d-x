@@ -37,6 +37,7 @@ NS_CC_BEGIN
 
 static GLint g_sStencilBits = -1;
 
+#if !(CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WINDOWS || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
 static void setProgram(CCNode *n, CCGLProgram *p)
 {
     n->setShaderProgram(p);
@@ -48,6 +49,7 @@ static void setProgram(CCNode *n, CCGLProgram *p)
         setProgram((CCNode*)pObj, p);
     }
 }
+#endif
 
 CCClippingNode::CCClippingNode()
 : m_pStencil(NULL)

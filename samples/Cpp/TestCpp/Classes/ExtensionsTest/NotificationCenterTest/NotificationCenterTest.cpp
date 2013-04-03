@@ -78,7 +78,6 @@ void Light::updateLightState()
 }
 
 NotificationCenterTest::NotificationCenterTest()
-: m_bShowImage(false)
 {
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 

@@ -57,6 +57,7 @@ public:
     virtual ~CCParallaxNode();
 
     static CCParallaxNode * create();
+    using CCNode::addChild;
     virtual void addChild(CCNode * child, unsigned int z, const CCPoint& parallaxRatio, const CCPoint& positionOffset);
     // super methods
     virtual void addChild(CCNode * child, unsigned int zOrder, int tag);
