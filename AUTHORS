@@ -360,6 +360,9 @@ Developers:
     brawsome
         Adding new macro CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK to CCBMemberVariableAssigner.h.
 
+    James Gregory (j4m3z0r, Zynga)
+        Initial Emscripten port.
+
 Retired Core Developers:
     WenSheng Yang
         Author of windows port, CCTextField,
