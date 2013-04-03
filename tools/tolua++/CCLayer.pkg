@@ -1,3 +1,8 @@
+typedef enum {
+	kCCTouchesAllAtOnce,
+	kCCTouchesOneByOne,
+} ccTouchesMode;
+
 class CCLayer : public CCNode
 {
     void setTouchEnabled(bool bValue);
@@ -8,6 +13,11 @@ class CCLayer : public CCNode
 
     void setKeypadEnabled(bool bValue);
     bool isKeypadEnabled();
+
+    virtual void setTouchMode(ccTouchesMode mode);
+    virtual int getTouchMode();
+    virtual void setTouchPriority(int priority);
+    virtual int getTouchPriority();
 
     void registerScriptTouchHandler(LUA_FUNCTION nHandler,
                                     bool bIsMultiTouches = false,
@@ -100,6 +110,7 @@ class CCLayerMultiplex : public CCLayer
     void switchTo(unsigned int n);
     void switchToAndReleaseMe(unsigned int n);
 
-	static CCLayerMultiplex * create(CCLayer* layer);
+    static CCLayerMultiplex* createWithArray(CCArray* arrayOfLayers);
+    static CCLayerMultiplex * create();
     static CCLayerMultiplex * createWithLayer(CCLayer* layer);
 };

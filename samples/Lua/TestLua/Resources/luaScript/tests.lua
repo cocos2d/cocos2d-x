@@ -19,6 +19,7 @@ require "luaScript/LabelTest/LabelTest"
 require "luaScript/ParallaxTest/ParallaxTest"
 require "luaScript/TileMapTest/TileMapTest"
 require "luaScript/ActionManagerTest/ActionManagerTest"
+require "luaScript/MenuTest/MenuTest"
 ----------------------------------------------------
 
 -- tests scene
@@ -36,7 +37,7 @@ Test_Table =
 --  "TEST_DRAW_PRIMITIVES",
     "TEST_COCOSNODE",
     "TEST_TOUCHES",
---  "TEST_MENU",
+    "TEST_MENU",
     "TEST_ACTION_MANAGER",
     "TEST_LAYER",
 --  "TEST_SCENE",
@@ -86,7 +87,7 @@ Test_Name =
 --  "DrawPrimitivesTest",
     "NodeTest",
     "TouchesTest",
---  "MenuTest",
+    "MenuTest",
     "ActionManagerTest",
     "LayerTest",
 --  "SceneTest",
