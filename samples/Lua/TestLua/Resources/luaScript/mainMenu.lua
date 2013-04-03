@@ -39,7 +39,7 @@ local function CreateTestScene(nIdx)
     elseif nIdx == Test_Table.TEST_TOUCHES then
 		scene = TouchesTest()
     elseif nIdx == Test_Table.TEST_MENU then
-		scene = MenuTest()
+		scene = MenuTestMain()
     elseif nIdx == Test_Table.TEST_ACTION_MANAGER then
 		scene = ActionManagerTestMain()
     elseif nIdx == Test_Table.TEST_LAYER then
