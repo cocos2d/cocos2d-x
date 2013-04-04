@@ -30,6 +30,7 @@
 #include "CCTableViewCell.h"
 
 #include <set>
+#include <vector>
 
 NS_CC_EXT_BEGIN
 
@@ -91,13 +92,25 @@ class CCTableViewDataSource
 {
 public:
     virtual ~CCTableViewDataSource() {}
+    
+    /**
+     * cell size for a given index
+     *
+     * @param idx the index of a cell to get a size
+     * @return size of a cell at given index
+     */
+    virtual CCSize tableCellSizeForIndex(CCTableView *table, unsigned int idx) {
+        return cellSizeForTable(table);
+    };
     /**
      * cell height for a given table.
      *
      * @param table table to hold the instances of Class
      * @return cell size
      */
-    virtual CCSize cellSizeForTable(CCTableView *table) = 0;
+    virtual CCSize cellSizeForTable(CCTableView *table) {
+        return CCSizeZero;
+    };
     /**
      * a cell instance at a given index
      *
@@ -222,6 +235,11 @@ protected:
      * index set to query the indexes of the cells used.
      */
     std::set<unsigned int>* m_pIndices;
+    
+    /**
+     * vector with all cell positions
+     */
+    std::vector<float> m_vCellsPositions;
     //NSMutableIndexSet *indices_;
     /**
      * cells that are currently in the table
@@ -252,6 +270,7 @@ protected:
     void _setIndexForCell(unsigned int index, CCTableViewCell *cell);
     void _addCellIfNecessary(CCTableViewCell * cell);
     
+    void _updateCellPositions();
 public:
     void _updateContentSize();
 
