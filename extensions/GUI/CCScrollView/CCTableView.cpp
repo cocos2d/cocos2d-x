@@ -44,6 +44,7 @@ CCTableView* CCTableView::create(CCTableViewDataSource* dataSource, CCSize size,
     table->initWithViewSize(size, container);
     table->autorelease();
     table->setDataSource(dataSource);
+    table->_updateCellPositions();
     table->_updateContentSize();
 
     return table;
@@ -123,6 +124,7 @@ void CCTableView::reloadData()
     m_pCellsUsed->release();
     m_pCellsUsed = new CCArrayForObjectSorting();
     
+    this->_updateCellPositions();
     this->_updateContentSize();
     if (m_pDataSource->numberOfCellsInTableView(this) > 0)
     {
@@ -158,7 +160,7 @@ void CCTableView::updateCellAtIndex(unsigned int idx)
     if (cell)
     {
         this->_moveCellOutOfSight(cell);
-    } 
+    }
     cell = m_pDataSource->tableCellAtIndex(this, idx);
     this->_setIndexForCell(idx, cell);
     this->_addCellIfNecessary(cell);
@@ -197,7 +199,8 @@ void CCTableView::insertCellAtIndex(unsigned  int idx)
     cell = m_pDataSource->tableCellAtIndex(this, idx);
     this->_setIndexForCell(idx, cell);
     this->_addCellIfNecessary(cell);
-    
+   
+    this->_updateCellPositions();
     this->_updateContentSize();
 }
 
@@ -217,7 +220,8 @@ void CCTableView::removeCellAtIndex(unsigned int idx)
     unsigned int newIdx = 0;
     
     CCTableViewCell* cell = this->cellAtIndex(idx);
-    if (!cell) {
+    if (!cell)
+    {
         return;
     }
     
@@ -227,8 +231,10 @@ void CCTableView::removeCellAtIndex(unsigned int idx)
     this->_moveCellOutOfSight(cell);
     
     m_pIndices->erase(idx);
+    this->_updateCellPositions();
 //    [m_pIndices shiftIndexesStartingAtIndex:idx+1 by:-1];
-    for (unsigned int i=m_pCellsUsed->count()-1; i > newIdx; i--) {
+    for (unsigned int i=m_pCellsUsed->count()-1; i > newIdx; i--)
+    {
         cell = (CCTableViewCell*)m_pCellsUsed->objectAtIndex(i);
         this->_setIndexForCell(cell->getIdx()-1, cell);
     }
@@ -262,21 +268,24 @@ void CCTableView::_addCellIfNecessary(CCTableViewCell * cell)
 
 void CCTableView::_updateContentSize()
 {
-    CCSize     size, cellSize;
-    unsigned int cellCount;
-
-    cellSize  = m_pDataSource->cellSizeForTable(this);
-    cellCount = m_pDataSource->numberOfCellsInTableView(this);
+    CCSize size = CCSizeZero;
+    unsigned int cellsCount = m_pDataSource->numberOfCellsInTableView(this);
     
-    switch (this->getDirection())
+    if (cellsCount > 0)
     {
-        case kCCScrollViewDirectionHorizontal:
-            size = CCSizeMake(cellCount * cellSize.width, cellSize.height);
-            break;
-        default:
-            size = CCSizeMake(cellSize.width, cellCount * cellSize.height);
-            break;
+        float maxPosition = m_vCellsPositions[cellsCount];
+
+        switch (this->getDirection())
+        {
+            case kCCScrollViewDirectionHorizontal:
+                size = CCSizeMake(maxPosition, m_tViewSize.height);
+                break;
+            default:
+                size = CCSizeMake(m_tViewSize.width, maxPosition);
+                break;
+        }
     }
+    
     this->setContentSize(size);
 
 	if (m_eOldDirection != m_eDirection)
@@ -298,8 +307,9 @@ CCPoint CCTableView::_offsetFromIndex(unsigned int index)
 {
     CCPoint offset = this->__offsetFromIndex(index);
     
-    const CCSize cellSize = m_pDataSource->cellSizeForTable(this);
-    if (m_eVordering == kCCTableViewFillTopDown) {
+    const CCSize cellSize = m_pDataSource->tableCellSizeForIndex(this, index);
+    if (m_eVordering == kCCTableViewFillTopDown)
+    {
         offset.y = this->getContainer()->getContentSize().height - offset.y - cellSize.height;
     }
     return offset;
@@ -310,13 +320,13 @@ CCPoint CCTableView::__offsetFromIndex(unsigned int index)
     CCPoint offset;
     CCSize  cellSize;
     
-    cellSize = m_pDataSource->cellSizeForTable(this);
-    switch (this->getDirection()) {
+    switch (this->getDirection())
+    {
         case kCCScrollViewDirectionHorizontal:
-            offset = ccp(cellSize.width * index, 0.0f);
+            offset = ccp(m_vCellsPositions[index], 0.0f);
             break;
         default:
-            offset = ccp(0.0f, cellSize.height * index);
+            offset = ccp(0.0f, m_vCellsPositions[index]);
             break;
     }
     
@@ -328,36 +338,65 @@ unsigned int CCTableView::_indexFromOffset(CCPoint offset)
     int index = 0;
     const int maxIdx = m_pDataSource->numberOfCellsInTableView(this)-1;
 
-    const CCSize cellSize = m_pDataSource->cellSizeForTable(this);
-    if (m_eVordering == kCCTableViewFillTopDown) {
-        offset.y = this->getContainer()->getContentSize().height - offset.y - cellSize.height;
+    if (m_eVordering == kCCTableViewFillTopDown)
+    {
+        offset.y = this->getContainer()->getContentSize().height - offset.y;
     }
-    index = MAX(0, this->__indexFromOffset(offset));
-    if (index >maxIdx)
-	{
-		index = CC_INVALID_INDEX;
-	}
+    index = this->__indexFromOffset(offset);
+    if (index != CC_INVALID_INDEX)
+    {
+        index = MAX(0, index);
+        if (index >maxIdx)
+        {
+            index = CC_INVALID_INDEX;
+        }
+    }
 
     return index;
 }
 
 int CCTableView::__indexFromOffset(CCPoint offset)
 {
-    int  index = 0;
-    CCSize     cellSize;
-    
-    cellSize = m_pDataSource->cellSizeForTable(this);
-    
-    switch (this->getDirection()) {
+    int low = 0;
+    int high = m_pDataSource->numberOfCellsInTableView(this);
+    float search;
+    switch (this->getDirection())
+    {
         case kCCScrollViewDirectionHorizontal:
-            index = offset.x/cellSize.width;
+            search = offset.x;
             break;
         default:
-            index = offset.y/cellSize.height;
+            search = offset.y;
             break;
     }
     
-    return index;
+    
+    while (high >= low)
+    {
+        int index = low + (high - low) / 2;
+        float cellStart = m_vCellsPositions[index];
+        float cellEnd = m_vCellsPositions[index + 1];
+        
+        if (search >= cellStart && search <= cellEnd)
+        {
+            return index;
+        }
+        else if (search < cellStart)
+        {
+            high = index - 1;
+        }
+        else
+        {
+            low = index + 1;
+        }
+        
+    }
+    
+    if (low <= 0) {
+        return 0;
+    }
+    
+    return CC_INVALID_INDEX;
 }
 
 void CCTableView::_moveCellOutOfSight(CCTableViewCell *cell)
@@ -383,6 +422,33 @@ void CCTableView::_setIndexForCell(unsigned int index, CCTableViewCell *cell)
     cell->setIdx(index);
 }
 
+void CCTableView::_updateCellPositions() {
+    int cellsCount = m_pDataSource->numberOfCellsInTableView(this);
+    m_vCellsPositions.resize(cellsCount + 1, 0.0);
+    
+    if (cellsCount > 0)
+    {
+        float currentPos = 0;
+        CCSize cellSize;
+        for (unsigned int i=0; i < cellsCount; i++)
+        {
+            m_vCellsPositions[i] = currentPos;
+            cellSize = m_pDataSource->tableCellSizeForIndex(this, i);
+            switch (this->getDirection())
+            {
+                case kCCScrollViewDirectionHorizontal:
+                    currentPos += cellSize.width;
+                    break;
+                default:
+                    currentPos += cellSize.height;
+                    break;
+            }
+        }
+        m_vCellsPositions[cellsCount] = currentPos;//1 extra value allows us to get right/bottom of the last cell
+    }
+    
+}
+
 void CCTableView::scrollViewDidScroll(CCScrollView* view)
 {
     unsigned int uCountOfItems = m_pDataSource->numberOfCellsInTableView(this);
@@ -398,11 +464,10 @@ void CCTableView::scrollViewDidScroll(CCScrollView* view)
     unsigned int startIdx = 0, endIdx = 0, idx = 0, maxIdx = 0;
     CCPoint offset = ccpMult(this->getContentOffset(), -1);
     maxIdx = MAX(uCountOfItems-1, 0);
-    const CCSize cellSize = m_pDataSource->cellSizeForTable(this);
     
     if (m_eVordering == kCCTableViewFillTopDown)
     {
-        offset.y = offset.y + m_tViewSize.height/this->getContainer()->getScaleY() - cellSize.height;
+        offset.y = offset.y + m_tViewSize.height/this->getContainer()->getScaleY();
     }
     startIdx = this->_indexFromOffset(offset);
 	if (startIdx == CC_INVALID_INDEX)
@@ -532,11 +597,6 @@ bool CCTableView::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
         CCPoint           point;
         
         point = this->getContainer()->convertTouchToNodeSpace(pTouch);
-        
-        if (m_eVordering == kCCTableViewFillTopDown) {
-            CCSize cellSize = m_pDataSource->cellSizeForTable(this);
-            point.y -= cellSize.height;
-        }
         
         index = this->_indexFromOffset(point);
 		if (index == CC_INVALID_INDEX)
