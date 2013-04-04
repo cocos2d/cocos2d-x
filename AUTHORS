@@ -276,6 +276,9 @@ Developers:
     rtissera (Romain TISSERAND)
         Adding missing JNIEXPORT / JNICALL declarations.
 
+    Yodesoft
+        Improving font rendering performance for linux platform.
+
 Retired Core Developers:
     WenSheng Yang
         Author of windows port, CCTextField,
