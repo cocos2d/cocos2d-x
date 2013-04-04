@@ -14,8 +14,8 @@ OBJ_DIR ?= obj
 CC := $(COCOS_ROOT)/external/emscripten/emcc
 CXX := $(COCOS_ROOT)/external/emscripten/em++
 AR := $(COCOS_ROOT)/external/emscripten/emar
-CCFLAGS += -MMD -Wall -fPIC -Qunused-arguments
-CXXFLAGS += -MMD -Wall -fPIC -Qunused-arguments
+CCFLAGS += -MMD -Wall -fPIC -Qunused-arguments -Wno-overloaded-virtual -Qunused-variable
+CXXFLAGS += -MMD -Wall -fPIC -Qunused-arguments -Wno-overloaded-virtual -Qunused-variable
 ARFLAGS = cr
 
 LIB_DIR = $(COCOS_SRC)/lib/linux
@@ -48,8 +48,8 @@ OBJ_DIR := $(OBJ_DIR)/debug
 LIB_DIR := $(LIB_DIR)/debug
 BIN_DIR := $(BIN_DIR)/debug
 else
-CCFLAGS += -O1
-CXXFLAGS += -O1
+CCFLAGS += -O0
+CXXFLAGS += -O0
 DEFINES += -DNDEBUG
 OBJ_DIR := $(OBJ_DIR)/release
 LIB_DIR := $(LIB_DIR)/release
@@ -72,24 +72,15 @@ DEPS = $(OBJECTS:.o=.d)
 CORE_MAKEFILE_LIST := $(MAKEFILE_LIST)
 -include $(DEPS)
 
-ifeq ($(LBITS),64)
-STATICLIBS_DIR = $(COCOS_SRC)/platform/third_party/linux/libraries/lib64
-else
-STATICLIBS_DIR = $(COCOS_SRC)/platform/third_party/linux/libraries
-endif
-STATICLIBS = $(STATICLIBS_DIR)/libfreetype.a \
+STATICLIBS_DIR = $(COCOS_SRC)/platform/third_party/emscripten/libraries
+STATICLIBS = $(STATICLIBS_DIR)/libfreetype.a #\
     $(STATICLIBS_DIR)/libpng.a \
     $(STATICLIBS_DIR)/libjpeg.a \
     $(STATICLIBS_DIR)/libtiff.a \
     $(STATICLIBS_DIR)/libwebp.a
 
-ifeq ($(LBITS),64)
-FMOD_LIBDIR = $(COCOS_ROOT)/CocosDenshion/third_party/fmod/lib64/api/lib
-SHAREDLIBS += -lfmodex64
-else
 FMOD_LIBDIR = $(COCOS_ROOT)/CocosDenshion/third_party/fmod/api/lib
 SHAREDLIBS += -lfmodex
-endif
 
 SHAREDLIBS += -lglfw -lGLEW -lfontconfig
 SHAREDLIBS += -L$(FMOD_LIBDIR) -Wl,-rpath,$(RPATH_REL)/$(FMOD_LIBDIR)
