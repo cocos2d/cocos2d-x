@@ -1,4 +1,4 @@
-PLATFORM = linux
+PLATFORM = emscripten
 
 define MAKE_TARGET
 	+$(MAKE) -C external/chipmunk/proj.$(PLATFORM) $@
