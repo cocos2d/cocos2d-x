@@ -93,7 +93,7 @@ local function CreateTestScene(nIdx)
     elseif nIdx == Test_Table.TEST_PERFORMANCE then
         scene = PerformanceTest()
     elseif nIdx == Test_Table.TEST_ZWOPTEX then
-
+        scene = ZwoptexTestMain()
         --#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
         -- bada don't support libcurl
         --#if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA)
