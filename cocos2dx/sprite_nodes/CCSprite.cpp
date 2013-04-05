@@ -83,6 +83,7 @@ CCSprite* CCSprite::createWithTexture(CCTexture2D *pTexture, const CCRect& rect)
 
 CCSprite* CCSprite::create(const char *pszFileName)
 {
+    printf("CCSprite::create(%s)\n", pszFileName);
     CCSprite *pobSprite = new CCSprite();
     if (pobSprite && pobSprite->initWithFile(pszFileName))
     {
@@ -569,7 +570,12 @@ void CCSprite::draw(void)
     ccGLEnableVertexAttribs( kCCVertexAttribFlag_PosColorTex );
 
 #define kQuadSize sizeof(m_sQuad.bl)
+#ifdef EMSCRIPTEN
+    long offset = 0;
+    setGLBufferData(&m_sQuad, 4 * kQuadSize);
+#else
     long offset = (long)&m_sQuad;
+#endif // EMSCRIPTEN
 
     // vertex
     int diff = offsetof( ccV3F_C4B_T2F, vertices);
