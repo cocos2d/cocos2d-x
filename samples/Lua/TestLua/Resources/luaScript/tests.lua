@@ -24,6 +24,8 @@ require "luaScript/IntervalTest/IntervalTest"
 require "luaScript/SceneTest/SceneTest"
 require "luaScript/Texture2dTest/Texture2dTest"
 require "luaScript/RenderTextureTest/RenderTextureTest"
+require "luaScript/ZwoptexTest/ZwoptexTest"
+
 ----------------------------------------------------
 
 -- tests scene
@@ -62,7 +64,7 @@ Test_Table =
 --  "TEST_KEYPAD",
 --  "TEST_COCOSDENSHION",
 --  "TEST_PERFORMANCE",
---  "TEST_ZWOPTEX",
+    "TEST_ZWOPTEX",
 --  "TEST_CURL",
 --  "TEST_USERDEFAULT",
 --  "TEST_BUGS",
@@ -112,7 +114,7 @@ Test_Name =
 --  "KeypadTest",
 --  "CocosDenshionTest",
 --  "PerformanceTest",
---  "ZwoptexTest",
+    "ZwoptexTest",
 --  "CurlTest",
 --  "UserDefaultTest",
 --  "BugsTest",
