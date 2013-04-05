@@ -73,7 +73,7 @@ local function CreateTestScene(nIdx)
     elseif nIdx == Test_Table.TEST_SCHEDULER then
 
     elseif nIdx == Test_Table.TEST_RENDERTEXTURE then
-
+        scene = RenderTextureTestMain()
     elseif nIdx == Test_Table.TEST_TEXTURE2D then
         scene = Texture2dTestMain()
     elseif nIdx == Test_Table.TEST_BOX2D then
