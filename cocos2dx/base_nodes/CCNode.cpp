@@ -88,6 +88,10 @@ CCNode::CCNode(void)
 , m_bReorderChildDirty(false)
 , m_nScriptHandler(0)
 , m_nUpdateScriptHandler(0)
+#ifdef EMSCRIPTEN
+, m_bufferObject(0)
+, m_bufferSize(0)
+#endif // EMSCRIPTEN
 {
     // set default scheduler and actionManager
     CCDirector *director = CCDirector::sharedDirector();
@@ -1191,7 +1195,6 @@ void CCNode::setAdditionalTransform(const CCAffineTransform& additionalTransform
     m_bTransformDirty = true;
     m_bAdditionalTransformDirty = true;
 }
-
 
 CCAffineTransform CCNode::parentToNodeTransform(void)
 {
