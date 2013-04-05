@@ -22,6 +22,7 @@ require "luaScript/ActionManagerTest/ActionManagerTest"
 require "luaScript/MenuTest/MenuTest"
 require "luaScript/IntervalTest/IntervalTest"
 require "luaScript/SceneTest/SceneTest"
+require "luaScript/Texture2dTest/Texture2dTest"
 ----------------------------------------------------
 
 -- tests scene
@@ -52,7 +53,7 @@ Test_Table =
     "TEST_SPRITE",
 --  "TEST_SCHEDULER",
 --  "TEST_RENDERTEXTURE",
---  "TEST_TEXTURE2D",
+    "TEST_TEXTURE2D",
 --  "TEST_BOX2D",
 --  "TEST_BOX2DBED",
 --  "TEST_EFFECT_ADVANCE",
@@ -102,7 +103,7 @@ Test_Name =
     "SpriteTest",
 --  "SchdulerTest",
 --  "RenderTextureTest",
---  "Texture2DTest",
+    "Texture2DTest",
 --  "Box2dTest",
 --  "Box2dTestBed",
 --  "EffectAdvancedTest",

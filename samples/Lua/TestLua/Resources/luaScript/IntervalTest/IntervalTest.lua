@@ -46,19 +46,19 @@ local function IntervalLayer()
     local function step2(dt)
         m_time2 = m_time2 + dt
         local str = string.format("%2.1f", m_time2)
-        m_label2:setString( str ) 
+        m_label2:setString( str )
     end
 
     local function step3(dt)
         m_time3 = m_time3 + dt
         local str = string.format("%2.1f", m_time3)
-        m_label3:setString( str ) 
+        m_label3:setString( str )
     end
 
     local function step4(dt)
         m_time4 = m_time4 + dt
         local str = string.format("%2.1f", m_time4)
-        m_label4:setString( str ) 
+        m_label4:setString( str )
     end
 
     local schedulerEntry1 = nil
@@ -101,9 +101,9 @@ local function IntervalLayer()
     -- Sprite
     local  sprite = CCSprite:create(s_pPathGrossini)
     sprite:setPosition( ccp(VisibleRect:left().x + 40, VisibleRect:bottom().y + 50) )
-    
+
     local  jump = CCJumpBy:create(3, ccp(s.width-80,0), 50, 4)
-    
+
     ret:addChild(sprite)
     local arr = CCArray:create()
     arr:addObject(jump)
@@ -113,9 +113,9 @@ local function IntervalLayer()
     local  item1 = CCMenuItemFont:create("Pause")
     local function onPause(tag, pSender)
         if CCDirector:sharedDirector():isPaused() then
-            CCDirector:sharedDirector():resume() 
+            CCDirector:sharedDirector():resume()
         else
-            CCDirector:sharedDirector():pause() 
+            CCDirector:sharedDirector():pause()
         end
     end
 
@@ -133,8 +133,7 @@ function IntervalTestMain()
     cclog("IntervalTestMain")
     local scene = CCScene:create()
     local  layer = IntervalLayer()
-    scene:addChild(layer, 0) 
+    scene:addChild(layer, 0)
     scene:addChild(CreateBackMenuItem())
     return scene
 end
-
