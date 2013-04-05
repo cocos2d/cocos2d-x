@@ -1,0 +1,55 @@
+class CCImage : public CCObject
+{
+    CCImage();
+    ~CCImage();
+
+    typedef enum
+    {
+        kFmtJpg = 0,
+        kFmtPng,
+        kFmtTiff,
+        kFmtWebp,
+        kFmtRawData,
+        kFmtUnKnown
+    }EImageFormat;
+
+    typedef enum
+    {
+        kAlignCenter        = 0x33, ///< Horizontal center and vertical center.
+        kAlignTop           = 0x13, ///< Horizontal center and vertical top.
+        kAlignTopRight      = 0x12, ///< Horizontal right and vertical top.
+        kAlignRight         = 0x32, ///< Horizontal right and vertical center.
+        kAlignBottomRight   = 0x22, ///< Horizontal right and vertical bottom.
+        kAlignBottom        = 0x23, ///< Horizontal center and vertical bottom.
+        kAlignBottomLeft    = 0x21, ///< Horizontal left and vertical bottom.
+        kAlignLeft          = 0x31, ///< Horizontal left and vertical center.
+        kAlignTopLeft       = 0x11, ///< Horizontal left and vertical top.
+    }ETextAlign;
+
+
+    bool initWithImageFile(const char * strPath, EImageFormat imageType = kFmtPng);
+    bool initWithImageFileThreadSafe(const char *fullpath, EImageFormat imageType = kFmtPng);
+    bool initWithImageData(void * pData,
+                           int nDataLen,
+                           EImageFormat eFmt = kFmtUnKnown,
+                           int nWidth = 0,
+                           int nHeight = 0,
+                           int nBitsPerComponent = 8);
+    bool initWithString(
+        const char *    pText,
+        int             nWidth = 0,
+        int             nHeight = 0,
+        ETextAlign      eAlignMask = kAlignCenter,
+        const char *    pFontName = 0,
+        int             nSize = 0);
+
+    unsigned char *   getData();
+    int         getDataLen();
+
+    bool hasAlpha();
+    bool isPremultipliedAlpha();
+    bool saveToFile(const char *pszFilePath, bool bIsToRGB = true);
+    unsigned short getWidth();
+    unsigned short getHeight();
+    int getBitsPerComponent();
+};
