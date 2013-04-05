@@ -1,4 +1,4 @@
-EXECUTABLE = HelloCpp.html
+EXECUTABLE = HelloCpp
 
 INCLUDES = -I.. -I../Classes
 
