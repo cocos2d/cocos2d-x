@@ -11,11 +11,12 @@ endif
 COCOS_SRC = $(COCOS_ROOT)/cocos2dx
 OBJ_DIR ?= obj
 
+PACKAGER := $(realpath $(COCOS_ROOT)/external/emscripten/tools/file_packager.py)
 CC := $(COCOS_ROOT)/external/emscripten/emcc
 CXX := $(COCOS_ROOT)/external/emscripten/em++
 AR := $(COCOS_ROOT)/external/emscripten/emar
-CCFLAGS += -MMD -Wall -fPIC -Qunused-arguments -Wno-overloaded-virtual -Qunused-variable
-CXXFLAGS += -MMD -Wall -fPIC -Qunused-arguments -Wno-overloaded-virtual -Qunused-variable
+CCFLAGS += -MMD -Wall -fPIC -Qunused-arguments -Wno-overloaded-virtual -Qunused-variable -s GL_DEBUG=1
+CXXFLAGS += -MMD -Wall -fPIC -Qunused-arguments -Wno-overloaded-virtual -Qunused-variable -s GL_DEBUG=1
 ARFLAGS = cr
 
 LIB_DIR = $(COCOS_SRC)/lib/linux
@@ -89,7 +90,7 @@ LIBS = -lrt -lz
 
 clean:
 	rm -rf $(OBJ_DIR)
-	rm -f $(TARGET) core
+	rm -f $(TARGET).js $(TARGET).data $(TARGET).data.js $(BIN_DIR)/index.html core
 
 .PHONY: all clean
 
@@ -98,7 +99,7 @@ clean:
 ifdef EXECUTABLE
 TARGET := $(BIN_DIR)/$(EXECUTABLE)
 
-all: $(TARGET)
+all: $(TARGET).js $(TARGET).data $(BIN_DIR)/index.html
 
 run: $(TARGET)
 	cd $(dir $^) && ./$(notdir $^)
