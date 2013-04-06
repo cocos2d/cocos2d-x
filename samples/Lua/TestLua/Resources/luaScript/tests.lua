@@ -25,7 +25,7 @@ require "luaScript/SceneTest/SceneTest"
 require "luaScript/Texture2dTest/Texture2dTest"
 require "luaScript/RenderTextureTest/RenderTextureTest"
 require "luaScript/ZwoptexTest/ZwoptexTest"
-
+require "luaScript/FontTest/FontTest"
 ----------------------------------------------------
 
 -- tests scene
@@ -68,7 +68,7 @@ Test_Table =
 --  "TEST_CURL",
 --  "TEST_USERDEFAULT",
 --  "TEST_BUGS",
---  "TEST_FONTS",
+    "TEST_FONTS",
 --  "TEST_CURRENT_LANGUAGE",
 --  "TEST_TEXTURECACHE",
 --  "TEST_EXTENSIONS",
@@ -118,7 +118,7 @@ Test_Name =
 --  "CurlTest",
 --  "UserDefaultTest",
 --  "BugsTest",
---  "FontTest",
+    "FontTest",
 --  "CurrentLanguageTest",
 --  "TextureCacheTest",
 --  "ExtensionsTest",
