@@ -106,7 +106,7 @@ local function CreateTestScene(nIdx)
     elseif nIdx == Test_Table.TEST_BUGS then
 
     elseif nIdx == Test_Table.TEST_FONTS then
-
+        scene = FontTestMain()
     elseif nIdx == Test_Table.TEST_CURRENT_LANGUAGE then
 
         --#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
