@@ -90,7 +90,6 @@ local function createTestLayer()
     end
 
     local ret = originCreateLayer("")
-    cclog("Helper.index = "..Helper.index)
     showFont(ret, fontList[Helper.index])
     return ret
 end
