@@ -26,6 +26,7 @@ require "luaScript/Texture2dTest/Texture2dTest"
 require "luaScript/RenderTextureTest/RenderTextureTest"
 require "luaScript/ZwoptexTest/ZwoptexTest"
 require "luaScript/FontTest/FontTest"
+require "luaScript/CocosDenshionTest/CocosDenshionTest"
 ----------------------------------------------------
 
 -- tests scene
@@ -62,7 +63,7 @@ Test_Table =
 --  "TEST_EFFECT_ADVANCE",
 --  "TEST_ACCELEROMRTER",
 --  "TEST_KEYPAD",
---  "TEST_COCOSDENSHION",
+    "TEST_COCOSDENSHION",
 --  "TEST_PERFORMANCE",
     "TEST_ZWOPTEX",
 --  "TEST_CURL",
@@ -112,7 +113,7 @@ Test_Name =
 --  "EffectAdvancedTest",
 --  "Accelerometer",
 --  "KeypadTest",
---  "CocosDenshionTest",
+    "CocosDenshionTest",
 --  "PerformanceTest",
     "ZwoptexTest",
 --  "CurlTest",
