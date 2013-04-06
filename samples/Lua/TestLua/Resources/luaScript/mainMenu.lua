@@ -89,7 +89,7 @@ local function CreateTestScene(nIdx)
         --        pScene = new KeypadTestScene()
         --#endif
     elseif nIdx == Test_Table.TEST_COCOSDENSHION then
-
+        scene = CocosDenshionTestMain()
     elseif nIdx == Test_Table.TEST_PERFORMANCE then
         scene = PerformanceTest()
     elseif nIdx == Test_Table.TEST_ZWOPTEX then
