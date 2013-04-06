@@ -76,22 +76,22 @@ def getFiles(currentDir):
 
 def prepareConfigs():
     config = {
-        "path_to_compiler": "undefiend",
-        "path_to_excludes": "undefined",
-        "path_to_sources": "undefined",
-        "sources": [],
+        "path_to_cocos2d": context["cocos2d"],
+        "path_to_output": context["output"] + "game.js",
+        "path_to_js_sources": context["input"],
+        "js_sources": "",
     }
-    
-    config["path_to_compiler"] = context["cocos2d"] + "/tools/closure-compiler/compiler.jar"
-    config["path_to_excludes"] = context["cocos2d"] + "/scripting/javascript/bindings/obfuscate"
-    config["path_to_sources"] = "./" # don't use context["input"] here
-    config["path_to_output"] = context["output"] + "main.js"
-    config["js_files"] = ""
-    
+        
     files = getFiles( context["input"] )
             
     for item in files["js"]:
-        config["js_files"] += "<file name=\"" + item.filepath + "/" + item.filename + "\"/>" + "\n\t\t\t\t" 
+        # use item.filepath and item.filename
+        fullpath = item.filepath.replace(config["path_to_js_sources"], "")
+        if (len(fullpath) != 0):
+            fullpath += "/"
+        # end of if len(tmp)
+        fullpath += item.filename
+        config["js_sources"] += "<file name=\"" + fullpath + "\"/>" + "\n\t\t\t\t" 
     
     return config
 # end of prepareConfigs
@@ -105,11 +105,13 @@ def generateXmlForCompiler():
     f1.close()
     from string import Template
     s = Template(tmp)
-    content = s.substitute( PATH_TO_COMPILER = config["path_to_compiler"],
-                            PATH_TO_EXCLUDES = config["path_to_excludes"],
-                            PATH_TO_OUTPUT   = config["path_to_output"],
-                            PATH_TO_SOURCES  = config["path_to_sources"],
-                            JS_FILES         = config["js_files"] )
+    content = s.substitute( PATH_TO_COCOS2D      = config["path_to_cocos2d"],
+                            PATH_TO_COMPILER     = "${basedir}/tools/closure-compiler/compiler.jar",
+                            PATH_TO_OUTPUT       = config["path_to_output"],
+                            PATH_TO_EXCLUSIONS   = "${basedir}/scripting/javascript/bindings/obfuscate",
+                            PATH_TO_JS_FRAMEWORK = "${basedir}/scripting/javascript/bindings/js/",
+                            PATH_TO_JS_SOURCES   = os.getcwd() + "/" + config["path_to_js_sources"],
+                            JS_SOURCES           = config["js_sources"] )
 
     f2 = open(context["output"] + "obfuscate.xml", "wb")
     f2.write(content)
@@ -119,7 +121,9 @@ def generateXmlForCompiler():
 # main
 checkParams()
 generateXmlForCompiler()
-print "running ant to generate obfuscated main.js"
-os.popen("ant -buildfile obfuscate.xml")
-print "done!"
+# print "running ant to generate obfuscated main.js"
+# os.popen("ant -buildfile obfuscate.xml")
+print "Successful! obfuscate.xml is generated."
+print "Note: Please reoder the files sequence in obfuscate.xml, keep it the same order as javascript \"requrie\" instruction,"
+print "then call \"ant -buildfile obfuscate.xml\" to obfuscate your js codes."
 
