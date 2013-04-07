@@ -85,7 +85,7 @@ public:
     }
 
     // ARGB -> RGBA
-    unsigned int swapAlpha(unsigned int value)
+    inline unsigned int swapAlpha(unsigned int value)
     {
         return ((value << 8 & 0xffffff00) | (value >> 24 & 0x000000ff));
     }
@@ -148,20 +148,21 @@ extern "C"
     JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxBitmap_nativeInitBitmapDC(JNIEnv*  env, jobject thiz, int width, int height, jbyteArray pixels)
     {
         int size = width * height * 4;
-        cocos2d::sharedBitmapDC().m_nWidth = width;
-        cocos2d::sharedBitmapDC().m_nHeight = height;
-        cocos2d::sharedBitmapDC().m_pData = new unsigned char[size];
-        env->GetByteArrayRegion(pixels, 0, size, (jbyte*)cocos2d::sharedBitmapDC().m_pData);
+        cocos2d::BitmapDC& bitmapDC = cocos2d::sharedBitmapDC();
+        bitmapDC.m_nWidth = width;
+        bitmapDC.m_nHeight = height;
+        bitmapDC.m_pData = new unsigned char[size];
+        env->GetByteArrayRegion(pixels, 0, size, (jbyte*)bitmapDC.m_pData);
 
         // swap data
-        unsigned int *tempPtr = (unsigned int*)cocos2d::sharedBitmapDC().m_pData;
+        unsigned int *tempPtr = (unsigned int*)bitmapDC.m_pData;
         unsigned int tempdata = 0;
         for (int i = 0; i < height; ++i)
         {
             for (int j = 0; j < width; ++j)
             {
                 tempdata = *tempPtr;
-                *tempPtr++ = cocos2d::sharedBitmapDC().swapAlpha(tempdata);
+                *tempPtr++ = bitmapDC.swapAlpha(tempdata);
             }
         }
     }
