@@ -1,6 +1,35 @@
-require "luaScript/tests"
 require "luaScript/helper"
 require "luaScript/testResource"
+
+require "luaScript/ActionsTest/ActionsTest"
+require "luaScript/TransitionsTest/TransitionsTest"
+require "luaScript/ActionsProgressTest/ActionsProgressTest"
+require "luaScript/EffectsTest/EffectsTest"
+require "luaScript/ClickAndMoveTest/ClickAndMoveTest"
+require "luaScript/RotateWorldTest/RotateWorldTest"
+require "luaScript/ParticleTest/ParticleTest"
+require "luaScript/ActionsEaseTest/ActionsEaseTest"
+require "luaScript/MotionStreakTest/MotionStreakTest"
+require "luaScript/DrawPrimitivesTest/DrawPrimitivesTest"
+require "luaScript/NodeTest/NodeTest"
+require "luaScript/TouchesTest/TouchesTest"
+require "luaScript/SpriteTest/SpriteTest"
+require "luaScript/LayerTest/LayerTest"
+require "luaScript/PerformanceTest/PerformanceTest"
+require "luaScript/LabelTest/LabelTest"
+require "luaScript/ParallaxTest/ParallaxTest"
+require "luaScript/TileMapTest/TileMapTest"
+require "luaScript/ActionManagerTest/ActionManagerTest"
+require "luaScript/MenuTest/MenuTest"
+require "luaScript/IntervalTest/IntervalTest"
+require "luaScript/SceneTest/SceneTest"
+require "luaScript/Texture2dTest/Texture2dTest"
+require "luaScript/RenderTextureTest/RenderTextureTest"
+require "luaScript/ZwoptexTest/ZwoptexTest"
+require "luaScript/FontTest/FontTest"
+require "luaScript/CocosDenshionTest/CocosDenshionTest"
+require "luaScript/EffectsAdvancedTest/EffectsAdvancedTest"
+require "luaScript/UserDefaultTest/UserDefaultTest"
 ------------------------
 
 
@@ -46,7 +75,7 @@ local _allTests = {
     { isSupported = false,  name = "PerformanceTest"        , create_func=           PerformanceTestMain  },
     { isSupported = true,  name = "ZwoptexTest"            , create_func   =               ZwoptexTestMain  },
     { isSupported = false,  name = "CurlTest"               , create_func=                  CurlTestMain  },
-    { isSupported = false,  name = "UserDefaultTest"        , create_func=           UserDefaultTestMain  },
+    { isSupported = true,  name = "UserDefaultTest"        , create_func=           UserDefaultTestMain  },
     { isSupported = false,  name = "BugsTest"               , create_func=              BugsTestMain      },
     { isSupported = true,  name = "FontTest"               , create_func   =              FontTestMain      },
     { isSupported = false,  name = "CurrentLanguageTest"    , create_func=   CurrentLanguageTestMain      },
