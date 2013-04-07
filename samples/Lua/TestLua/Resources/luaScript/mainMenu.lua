@@ -30,6 +30,7 @@ require "luaScript/FontTest/FontTest"
 require "luaScript/CocosDenshionTest/CocosDenshionTest"
 require "luaScript/EffectsAdvancedTest/EffectsAdvancedTest"
 require "luaScript/UserDefaultTest/UserDefaultTest"
+require "luaScript/CurrentLanguageTest/CurrentLanguageTest"
 ------------------------
 
 
@@ -78,7 +79,7 @@ local _allTests = {
     { isSupported = true,  name = "UserDefaultTest"        , create_func=           UserDefaultTestMain  },
     { isSupported = false,  name = "BugsTest"               , create_func=              BugsTestMain      },
     { isSupported = true,  name = "FontTest"               , create_func   =              FontTestMain      },
-    { isSupported = false,  name = "CurrentLanguageTest"    , create_func=   CurrentLanguageTestMain      },
+    { isSupported = true,  name = "CurrentLanguageTest"    , create_func=   CurrentLanguageTestMain      },
     { isSupported = false,  name = "TextureCacheTest"       , create_func=      TextureCacheTestMain      },
     { isSupported = false,  name = "ExtensionsTest"         , create_func=        ExtensionsTestMain      },
     { isSupported = false,  name = "ShaderTest"             , create_func=            ShaderTestMain      },
