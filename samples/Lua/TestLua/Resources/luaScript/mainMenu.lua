@@ -9,120 +9,59 @@ local LINE_SPACE = 40
 local CurPos = {x = 0, y = 0}
 local BeginPos = {x = 0, y = 0}
 
+
+local _allTests = {
+    { name = "ActionsTest"            , create_func   =               ActionsTest      },
+    { name = "TransitionsTest"        , create_func   =           TransitionsTest      },
+    { name = "ActionsProgressTest"    , create_func   =       ProgressActionsTest      },
+    { name = "EffectsTest"            , create_func   =               EffectsTest      },
+    { name = "ClickAndMoveTest"       , create_func   =          ClickAndMoveTest      },
+    { name = "RotateWorldTest"        , create_func   =           RotateWorldTest      },
+    { name = "ParticleTest"           , create_func   =              ParticleTest      },
+    { name = "ActionsEaseTest"        , create_func   =           EaseActionsTest      },
+    { name = "MotionStreakTest"       , create_func   =          MotionStreakTest      },
+  --{ name = "DrawPrimitivesTest"     , create_func=        DrawPrimitivesTest      },
+    { name = "NodeTest"               , create_func   =                  CocosNodeTest },
+    { name = "TouchesTest"            , create_func   =               TouchesTest      },
+    { name = "MenuTest"               , create_func   =                  MenuTestMain  },
+    { name = "ActionManagerTest"      , create_func   =         ActionManagerTestMain  },
+    { name = "LayerTest"              , create_func   =                 LayerTestMain  },
+    { name = "SceneTest"              , create_func   =                 SceneTestMain  },
+    { name = "ParallaxTest"           , create_func   =              ParallaxTestMain  },
+    { name = "TileMapTest"            , create_func   =               TileMapTestMain  },
+    { name = "IntervalTest"           , create_func   =              IntervalTestMain  },
+  --{ name = "ChipmunkAccelTouchTest" , create_func=    ChipmunkAccelTouchTestMain  },
+    { name = "LabelTest"              , create_func   =                 LabelTest      },
+  --{ name = "TextInputTest"          , create_func=             TextInputTestMain  },
+    { name = "SpriteTest"             , create_func   =                SpriteTest      },
+  --{ name = "SchdulerTest"           , create_func=              SchdulerTestMain  },
+    { name = "RenderTextureTest"      , create_func   =         RenderTextureTestMain  },
+    { name = "Texture2DTest"          , create_func   =             Texture2dTestMain  },
+  --{ name = "Box2dTest"              , create_func=                 Box2dTestMain  },
+  --{ name = "Box2dTestBed"           , create_func=              Box2dTestBedMain  },
+    { name = "EffectAdvancedTest"     , create_func   =        EffectAdvancedTestMain  },
+  --{ name = "Accelerometer"          , create_func=             AccelerometerMain  },
+  --{ name = "KeypadTest"             , create_func=                KeypadTestMain  },
+    { name = "CocosDenshionTest"      , create_func   =         CocosDenshionTestMain  },
+  --{ name = "PerformanceTest"        , create_func=           PerformanceTestMain  },
+    { name = "ZwoptexTest"            , create_func   =               ZwoptexTestMain  },
+  --{ name = "CurlTest"               , create_func=                  CurlTestMain  },
+  --{ name = "UserDefaultTest"        , create_func=           UserDefaultTestMain  },
+  --{ name = "BugsTest"               , create_func=              BugsTestMain      },
+    { name = "FontTest"               , create_func   =              FontTestMain      },
+  --{ name = "CurrentLanguageTest"    , create_func=   CurrentLanguageTestMain      },
+  --{ name = "TextureCacheTest"       , create_func=      TextureCacheTestMain      },
+  --{ name = "ExtensionsTest"         , create_func=        ExtensionsTestMain      },
+  --{ name = "ShaderTest"             , create_func=            ShaderTestMain      },
+  --{ name = "MutiTouchTest"          , create_func=          MutiTouchTestMain          }
+}
+
 -- create scene
 local function CreateTestScene(nIdx)
+    local scene = _allTests[nIdx].create_func()
     CCDirector:sharedDirector():purgeCachedData()
-
-    local scene = nil
-    if nIdx == Test_Table.TEST_ACTIONS then
-        scene = ActionsTest()
-    elseif nIdx == Test_Table.TEST_TRANSITIONS then
-        scene = TransitionsTest()
-    elseif nIdx == Test_Table.TEST_PROGRESS_ACTIONS then
-        scene = ProgressActionsTest()
-    elseif nIdx == Test_Table.TEST_EFFECTS then
-        scene = EffectsTest()
-    elseif nIdx == Test_Table.TEST_CLICK_AND_MOVE then
-        scene = ClickAndMoveTest()
-    elseif nIdx == Test_Table.TEST_ROTATE_WORLD then
-        scene = RotateWorldTest()
-    elseif nIdx == Test_Table.TEST_PARTICLE then
-        scene = ParticleTest()
-    elseif nIdx == Test_Table.TEST_EASE_ACTIONS then
-        scene = EaseActionsTest()
-    elseif nIdx == Test_Table.TEST_MOTION_STREAK then
-        scene = MotionStreakTest()
-    elseif nIdx == Test_Table.TEST_DRAW_PRIMITIVES then
-        scene = DrawPrimitivesTest()
-    elseif nIdx == Test_Table.TEST_COCOSNODE then
-        scene = CocosNodeTest()
-    elseif nIdx == Test_Table.TEST_TOUCHES then
-        scene = TouchesTest()
-    elseif nIdx == Test_Table.TEST_MENU then
-        scene = MenuTestMain()
-    elseif nIdx == Test_Table.TEST_ACTION_MANAGER then
-        scene = ActionManagerTestMain()
-    elseif nIdx == Test_Table.TEST_LAYER then
-        scene = LayerTestMain()
-    elseif nIdx == Test_Table.TEST_SCENE then
-        scene = SceneTestMain()
-    elseif nIdx == Test_Table.TEST_PARALLAX then
-        scene = ParallaxTestMain()
-    elseif nIdx == Test_Table.TEST_TILE_MAP then
-        scene = TileMapTestMain()
-    elseif nIdx == Test_Table.TEST_INTERVAL then
-        scene = IntervalTestMain()
-    elseif nIdx == Test_Table.TEST_CHIPMUNKACCELTOUCH then
-        --#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
-        --        pScene = new ChipmunkAccelTouchTestScene()
-        --#else
-        --#ifdef MARMALADEUSECHIPMUNK
-        --#if    (MARMALADEUSECHIPMUNK == 1)
-        --        pScene = new ChipmunkAccelTouchTestScene();
-        --#endif
-        --        break;
-        --#endif
-        --#endif
-    elseif nIdx == Test_Table.TEST_LABEL then
-        scene = LabelTest()
-    elseif nIdx == Test_Table.TEST_TEXT_INPUT then
-
-    elseif nIdx == Test_Table.TEST_SPRITE then
-        scene = SpriteTest()
-
-    elseif nIdx == Test_Table.TEST_SCHEDULER then
-
-    elseif nIdx == Test_Table.TEST_RENDERTEXTURE then
-        scene = RenderTextureTestMain()
-    elseif nIdx == Test_Table.TEST_TEXTURE2D then
-        scene = Texture2dTestMain()
-    elseif nIdx == Test_Table.TEST_BOX2D then
-
-    elseif nIdx == Test_Table.TEST_BOX2DBED then
-
-    elseif nIdx == Test_Table.TEST_EFFECT_ADVANCE then
-        scene = EffectAdvancedTestMain()
-    elseif nIdx == Test_Table.TEST_ACCELEROMRTER then
-
-        --#if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA)
-        --    elseif nIdx == Test_Table.TEST_KEYPAD then
-        --        pScene = new KeypadTestScene()
-        --#endif
-    elseif nIdx == Test_Table.TEST_COCOSDENSHION then
-        scene = CocosDenshionTestMain()
-    elseif nIdx == Test_Table.TEST_PERFORMANCE then
-        scene = PerformanceTest()
-    elseif nIdx == Test_Table.TEST_ZWOPTEX then
-        scene = ZwoptexTestMain()
-        --#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
-        -- bada don't support libcurl
-        --#if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA)
-        --   elseif nIdx == Test_Table.TEXT_CURL then
-
-        --#endif
-        --#endif
-    elseif nIdx == Test_Table.TEST_USERDEFAULT then
-
-    elseif nIdx == Test_Table.TEST_BUGS then
-
-    elseif nIdx == Test_Table.TEST_FONTS then
-        scene = FontTestMain()
-    elseif nIdx == Test_Table.TEST_CURRENT_LANGUAGE then
-
-        --#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
-        --   elseif nIdx == Test_Table.TEST_TEXTURECACHE then pScene = new TextureCacheTestScene()
-        --#endif
-    elseif nIdx == Test_Table.TEST_EXTENSIONS then
-
-    elseif nIdx == Test_Table.TEST_SHADER then
-
-    elseif nIdx == Test_Table.TEST_MUTITOUCH then
-
-    end
-
     return scene
 end
-
 -- create menu
 function CreateTestMenu()
     local menuLayer = CCLayer:create()
@@ -153,12 +92,14 @@ function CreateTestMenu()
 
     -- add menu items for tests
     local MainMenu = CCMenu:create()
-    for index, labelName in pairs(Test_Name) do
-        local testLabel = CCLabelTTF:create(labelName, "Arial", 24)
+    local index = 0
+    local obj = nil
+    for index, obj in pairs(_allTests) do
+        local testLabel = CCLabelTTF:create(obj.name, "Arial", 24)
         local testMenuItem = CCMenuItemLabel:create(testLabel)
 
         testMenuItem:registerScriptTapHandler(menuCallback)
-        testMenuItem:setPosition(ccp(s.width / 2, (s.height - (index + 1) * LINE_SPACE)))
+        testMenuItem:setPosition(ccp(s.width / 2, (s.height - (index) * LINE_SPACE)))
         MainMenu:addChild(testMenuItem, index + 10000, index + 10000)
     end
 
