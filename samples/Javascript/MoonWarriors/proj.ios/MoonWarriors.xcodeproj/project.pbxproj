@@ -63,6 +63,8 @@
 		1A177EC41698262E00C9AC27 /* jsb.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A177EB61698261C00C9AC27 /* jsb.js */; };
 		1A177ECA1698271700C9AC27 /* js_bindings_system_functions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A177EC61698271700C9AC27 /* js_bindings_system_functions.cpp */; };
 		1A177ECB1698271700C9AC27 /* js_bindings_system_registration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A177EC81698271700C9AC27 /* js_bindings_system_registration.cpp */; };
+		1A3F8833170A7FD2000159E1 /* jsb_opengl_constants.js in Sources */ = {isa = PBXBuildFile; fileRef = 1A3F8832170A7FD2000159E1 /* jsb_opengl_constants.js */; };
+		1A3F8834170A7FDB000159E1 /* jsb_opengl_constants.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A3F8832170A7FD2000159E1 /* jsb_opengl_constants.js */; };
 		1A82F5E7169AC86100C4B13A /* LocalStorage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A82F5E4169AC86100C4B13A /* LocalStorage.cpp */; };
 		1A82F5E8169AC86100C4B13A /* LocalStorageAndroid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A82F5E6169AC86100C4B13A /* LocalStorageAndroid.cpp */; };
 		1A82F5EA169AC8DD00C4B13A /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A82F5E9169AC8DD00C4B13A /* libsqlite3.dylib */; };
@@ -165,6 +167,7 @@
 		1A177EC71698271700C9AC27 /* js_bindings_system_functions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_system_functions.h; sourceTree = "<group>"; };
 		1A177EC81698271700C9AC27 /* js_bindings_system_registration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = js_bindings_system_registration.cpp; sourceTree = "<group>"; };
 		1A177EC91698271700C9AC27 /* js_bindings_system_registration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_system_registration.h; sourceTree = "<group>"; };
+		1A3F8832170A7FD2000159E1 /* jsb_opengl_constants.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_opengl_constants.js; sourceTree = "<group>"; };
 		1A82F5E4169AC86100C4B13A /* LocalStorage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LocalStorage.cpp; sourceTree = "<group>"; };
 		1A82F5E5169AC86100C4B13A /* LocalStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalStorage.h; sourceTree = "<group>"; };
 		1A82F5E6169AC86100C4B13A /* LocalStorageAndroid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LocalStorageAndroid.cpp; sourceTree = "<group>"; };
@@ -381,6 +384,7 @@
 		15A3D2A61682EE81002FB0C5 /* js */ = {
 			isa = PBXGroup;
 			children = (
+				1A3F8832170A7FD2000159E1 /* jsb_opengl_constants.js */,
 				1AA51AD816F71492000FDF05 /* jsb_cocos2d_constants.js */,
 				A9706D8316A0C1FA0090A01D /* main.debug.js */,
 				1A177EB01698261C00C9AC27 /* jsb_chipmunk.js */,
@@ -471,6 +475,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1A3F8834170A7FDB000159E1 /* jsb_opengl_constants.js in Resources */,
 				1AA51ADA16F7149D000FDF05 /* jsb_cocos2d_constants.js in Resources */,
 				1A177EBE1698262E00C9AC27 /* jsb_chipmunk.js in Resources */,
 				1A177EBF1698262E00C9AC27 /* jsb_cocos2d.js in Resources */,
@@ -533,6 +538,7 @@
 				1AAC795F16EDC7C000B97F83 /* jsb_cocos2dx_auto_api.js in Sources */,
 				1AAC796016EDC7C000B97F83 /* jsb_cocos2dx_auto.cpp in Sources */,
 				1AA51AD916F71492000FDF05 /* jsb_cocos2d_constants.js in Sources */,
+				1A3F8833170A7FD2000159E1 /* jsb_opengl_constants.js in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
