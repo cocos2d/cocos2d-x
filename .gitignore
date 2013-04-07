@@ -90,3 +90,4 @@ tools/jenkins_scripts/mac/android/userconf.ini
 
 # Ignore files built by plugin
 plugin/publish/*
+plugin/tools/toolsForPublish/environment.sh
