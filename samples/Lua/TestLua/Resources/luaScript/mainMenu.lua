@@ -81,7 +81,7 @@ local function CreateTestScene(nIdx)
     elseif nIdx == Test_Table.TEST_BOX2DBED then
 
     elseif nIdx == Test_Table.TEST_EFFECT_ADVANCE then
-
+        scene = EffectAdvancedTestMain()
     elseif nIdx == Test_Table.TEST_ACCELEROMRTER then
 
         --#if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA)
