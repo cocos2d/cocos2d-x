@@ -31,6 +31,7 @@ Developers:
 
     Waiter
         fix an error that OpenSLEngine can't load resources from SD card
+        add CCRemoveSelf action
 
     billy1380
         make CCLens3d support concave effect.
