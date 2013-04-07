@@ -11,50 +11,52 @@ local BeginPos = {x = 0, y = 0}
 
 
 local _allTests = {
-    { name = "ActionsTest"            , create_func   =               ActionsTest      },
-    { name = "TransitionsTest"        , create_func   =           TransitionsTest      },
-    { name = "ActionsProgressTest"    , create_func   =       ProgressActionsTest      },
-    { name = "EffectsTest"            , create_func   =               EffectsTest      },
-    { name = "ClickAndMoveTest"       , create_func   =          ClickAndMoveTest      },
-    { name = "RotateWorldTest"        , create_func   =           RotateWorldTest      },
-    { name = "ParticleTest"           , create_func   =              ParticleTest      },
-    { name = "ActionsEaseTest"        , create_func   =           EaseActionsTest      },
-    { name = "MotionStreakTest"       , create_func   =          MotionStreakTest      },
-  --{ name = "DrawPrimitivesTest"     , create_func=        DrawPrimitivesTest      },
-    { name = "NodeTest"               , create_func   =                  CocosNodeTest },
-    { name = "TouchesTest"            , create_func   =               TouchesTest      },
-    { name = "MenuTest"               , create_func   =                  MenuTestMain  },
-    { name = "ActionManagerTest"      , create_func   =         ActionManagerTestMain  },
-    { name = "LayerTest"              , create_func   =                 LayerTestMain  },
-    { name = "SceneTest"              , create_func   =                 SceneTestMain  },
-    { name = "ParallaxTest"           , create_func   =              ParallaxTestMain  },
-    { name = "TileMapTest"            , create_func   =               TileMapTestMain  },
-    { name = "IntervalTest"           , create_func   =              IntervalTestMain  },
-  --{ name = "ChipmunkAccelTouchTest" , create_func=    ChipmunkAccelTouchTestMain  },
-    { name = "LabelTest"              , create_func   =                 LabelTest      },
-  --{ name = "TextInputTest"          , create_func=             TextInputTestMain  },
-    { name = "SpriteTest"             , create_func   =                SpriteTest      },
-  --{ name = "SchdulerTest"           , create_func=              SchdulerTestMain  },
-    { name = "RenderTextureTest"      , create_func   =         RenderTextureTestMain  },
-    { name = "Texture2DTest"          , create_func   =             Texture2dTestMain  },
-  --{ name = "Box2dTest"              , create_func=                 Box2dTestMain  },
-  --{ name = "Box2dTestBed"           , create_func=              Box2dTestBedMain  },
-    { name = "EffectAdvancedTest"     , create_func   =        EffectAdvancedTestMain  },
-  --{ name = "Accelerometer"          , create_func=             AccelerometerMain  },
-  --{ name = "KeypadTest"             , create_func=                KeypadTestMain  },
-    { name = "CocosDenshionTest"      , create_func   =         CocosDenshionTestMain  },
-  --{ name = "PerformanceTest"        , create_func=           PerformanceTestMain  },
-    { name = "ZwoptexTest"            , create_func   =               ZwoptexTestMain  },
-  --{ name = "CurlTest"               , create_func=                  CurlTestMain  },
-  --{ name = "UserDefaultTest"        , create_func=           UserDefaultTestMain  },
-  --{ name = "BugsTest"               , create_func=              BugsTestMain      },
-    { name = "FontTest"               , create_func   =              FontTestMain      },
-  --{ name = "CurrentLanguageTest"    , create_func=   CurrentLanguageTestMain      },
-  --{ name = "TextureCacheTest"       , create_func=      TextureCacheTestMain      },
-  --{ name = "ExtensionsTest"         , create_func=        ExtensionsTestMain      },
-  --{ name = "ShaderTest"             , create_func=            ShaderTestMain      },
-  --{ name = "MutiTouchTest"          , create_func=          MutiTouchTestMain          }
+    { isSupported = true,  name = "ActionsTest"            , create_func   =               ActionsTest      },
+    { isSupported = true,  name = "TransitionsTest"        , create_func   =           TransitionsTest      },
+    { isSupported = true,  name = "ActionsProgressTest"    , create_func   =       ProgressActionsTest      },
+    { isSupported = true,  name = "EffectsTest"            , create_func   =               EffectsTest      },
+    { isSupported = true,  name = "ClickAndMoveTest"       , create_func   =          ClickAndMoveTest      },
+    { isSupported = true,  name = "RotateWorldTest"        , create_func   =           RotateWorldTest      },
+    { isSupported = true,  name = "ParticleTest"           , create_func   =              ParticleTest      },
+    { isSupported = true,  name = "ActionsEaseTest"        , create_func   =           EaseActionsTest      },
+    { isSupported = true,  name = "MotionStreakTest"       , create_func   =          MotionStreakTest      },
+    { isSupported = false,  name = "DrawPrimitivesTest"     , create_func=        DrawPrimitivesTest      },
+    { isSupported = true,  name = "NodeTest"               , create_func   =                  CocosNodeTest },
+    { isSupported = true,  name = "TouchesTest"            , create_func   =               TouchesTest      },
+    { isSupported = true,  name = "MenuTest"               , create_func   =                  MenuTestMain  },
+    { isSupported = true,  name = "ActionManagerTest"      , create_func   =         ActionManagerTestMain  },
+    { isSupported = true,  name = "LayerTest"              , create_func   =                 LayerTestMain  },
+    { isSupported = true,  name = "SceneTest"              , create_func   =                 SceneTestMain  },
+    { isSupported = true,  name = "ParallaxTest"           , create_func   =              ParallaxTestMain  },
+    { isSupported = true,  name = "TileMapTest"            , create_func   =               TileMapTestMain  },
+    { isSupported = true,  name = "IntervalTest"           , create_func   =              IntervalTestMain  },
+    { isSupported = false,  name = "ChipmunkAccelTouchTest" , create_func=    ChipmunkAccelTouchTestMain  },
+    { isSupported = true,  name = "LabelTest"              , create_func   =                 LabelTest      },
+    { isSupported = false,  name = "TextInputTest"          , create_func=             TextInputTestMain  },
+    { isSupported = true,  name = "SpriteTest"             , create_func   =                SpriteTest      },
+    { isSupported = false,  name = "SchdulerTest"           , create_func=              SchdulerTestMain  },
+    { isSupported = true,  name = "RenderTextureTest"      , create_func   =         RenderTextureTestMain  },
+    { isSupported = true,  name = "Texture2DTest"          , create_func   =             Texture2dTestMain  },
+    { isSupported = false,  name = "Box2dTest"              , create_func=                 Box2dTestMain  },
+    { isSupported = false,  name = "Box2dTestBed"           , create_func=              Box2dTestBedMain  },
+    { isSupported = true,  name = "EffectAdvancedTest"     , create_func   =        EffectAdvancedTestMain  },
+    { isSupported = false,  name = "Accelerometer"          , create_func=             AccelerometerMain  },
+    { isSupported = false,  name = "KeypadTest"             , create_func=                KeypadTestMain  },
+    { isSupported = true,  name = "CocosDenshionTest"      , create_func   =         CocosDenshionTestMain  },
+    { isSupported = false,  name = "PerformanceTest"        , create_func=           PerformanceTestMain  },
+    { isSupported = true,  name = "ZwoptexTest"            , create_func   =               ZwoptexTestMain  },
+    { isSupported = false,  name = "CurlTest"               , create_func=                  CurlTestMain  },
+    { isSupported = false,  name = "UserDefaultTest"        , create_func=           UserDefaultTestMain  },
+    { isSupported = false,  name = "BugsTest"               , create_func=              BugsTestMain      },
+    { isSupported = true,  name = "FontTest"               , create_func   =              FontTestMain      },
+    { isSupported = false,  name = "CurrentLanguageTest"    , create_func=   CurrentLanguageTestMain      },
+    { isSupported = false,  name = "TextureCacheTest"       , create_func=      TextureCacheTestMain      },
+    { isSupported = false,  name = "ExtensionsTest"         , create_func=        ExtensionsTestMain      },
+    { isSupported = false,  name = "ShaderTest"             , create_func=            ShaderTestMain      },
+    { isSupported = false,  name = "MutiTouchTest"          , create_func=          MutiTouchTestMain          }
 }
+
+local TESTS_COUNT = table.getn(_allTests)
 
 -- create scene
 local function CreateTestScene(nIdx)
@@ -97,13 +99,15 @@ function CreateTestMenu()
     for index, obj in pairs(_allTests) do
         local testLabel = CCLabelTTF:create(obj.name, "Arial", 24)
         local testMenuItem = CCMenuItemLabel:create(testLabel)
-
+        if not obj.isSupported then
+            testMenuItem:setEnabled(false)
+        end
         testMenuItem:registerScriptTapHandler(menuCallback)
         testMenuItem:setPosition(ccp(s.width / 2, (s.height - (index) * LINE_SPACE)))
         MainMenu:addChild(testMenuItem, index + 10000, index + 10000)
     end
 
-    MainMenu:setContentSize(CCSizeMake(s.width, (Test_Table.TESTS_COUNT + 1) * (LINE_SPACE)))
+    MainMenu:setContentSize(CCSizeMake(s.width, (TESTS_COUNT + 1) * (LINE_SPACE)))
     MainMenu:setPosition(CurPos.x, CurPos.y)
     menuLayer:addChild(MainMenu)
 
@@ -124,8 +128,8 @@ function CreateTestMenu()
             return
         end
 
-        if nextPosy > ((Test_Table.TESTS_COUNT + 1) * LINE_SPACE - winSize.height) then
-            MainMenu:setPosition(0, ((Test_Table.TESTS_COUNT + 1) * LINE_SPACE - winSize.height))
+        if nextPosy > ((TESTS_COUNT + 1) * LINE_SPACE - winSize.height) then
+            MainMenu:setPosition(0, ((TESTS_COUNT + 1) * LINE_SPACE - winSize.height))
             return
         end
 
