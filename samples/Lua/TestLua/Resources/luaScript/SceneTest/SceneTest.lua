@@ -1,4 +1,3 @@
-
 local    MID_PUSHSCENE        = 100
 local    MID_PUSHSCENETRAN    = 101
 local    MID_QUIT             = 102
@@ -22,7 +21,7 @@ SceneTestLayer1 = function()
     local function onPushScene(tag, pSender)
         local scene = CCScene:create()
         local  layer = SceneTestLayer2()
-        scene:addChild(layer, 0) 
+        scene:addChild(layer, 0)
         scene:addChild(CreateBackMenuItem())
         CCDirector:sharedDirector():pushScene( scene )
     end
@@ -30,7 +29,7 @@ SceneTestLayer1 = function()
     local function onPushSceneTran(tag, pSender)
         local scene = CCScene:create()
         local  layer = SceneTestLayer2()
-        scene:addChild(layer, 0) 
+        scene:addChild(layer, 0)
         scene:addChild(CreateBackMenuItem())
         CCDirector:sharedDirector():pushScene( CCTransitionSlideInT:create(1, scene) )
     end
@@ -53,9 +52,9 @@ SceneTestLayer1 = function()
     arr:addObject(item3)
     local  menu = CCMenu:createWithArray(arr)
     menu:alignItemsVertically()
-    
+
     ret:addChild( menu )
-    
+
     local s = CCDirector:sharedDirector():getWinSize()
     local  sprite = CCSprite:create(s_pPathGrossini)
     ret:addChild(sprite)
@@ -93,7 +92,7 @@ SceneTestLayer2 = function()
     local function onReplaceScene(tag, pSender)
         local scene = CCScene:create()
         local  layer = SceneTestLayer3()
-        scene:addChild(layer, 0) 
+        scene:addChild(layer, 0)
         scene:addChild(CreateBackMenuItem())
         CCDirector:sharedDirector():replaceScene( scene )
     end
@@ -102,7 +101,7 @@ SceneTestLayer2 = function()
     local function onReplaceSceneTran(tag, pSender)
         local scene = CCScene:create()
         local  layer = SceneTestLayer3()
-        scene:addChild(layer, 0) 
+        scene:addChild(layer, 0)
         scene:addChild(CreateBackMenuItem())
         CCDirector:sharedDirector():replaceScene( CCTransitionFlipX:create(2, scene) )
     end
@@ -119,7 +118,7 @@ SceneTestLayer2 = function()
     arr:addObject(item3)
     local  menu = CCMenu:createWithArray(arr)
     menu:alignItemsVertically()
-    
+
     ret:addChild( menu )
 
     local s = CCDirector:sharedDirector():getWinSize()
@@ -163,12 +162,12 @@ SceneTestLayer3 = function()
     item1:registerScriptTapHandler(item1Clicked)
     local item2 = CCMenuItemFont:create("Touch to popToRootScene")
     item2:registerScriptTapHandler(item2Clicked)
-    
+
     local arr = CCArray:create()
     arr:addObject(item0)
     arr:addObject(item1)
     arr:addObject(item2)
-    
+
     local menu = CCMenu:createWithArray(arr)
     ret:addChild(menu)
     menu:alignItemsVertically()
@@ -188,7 +187,7 @@ function SceneTestMain()
     cclog("SceneTestMain")
     local scene = CCScene:create()
     local  layer = SceneTestLayer1()
-    scene:addChild(layer, 0) 
+    scene:addChild(layer, 0)
     scene:addChild(CreateBackMenuItem())
     return scene
 end
