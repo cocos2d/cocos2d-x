@@ -22,6 +22,12 @@ require "luaScript/ActionManagerTest/ActionManagerTest"
 require "luaScript/MenuTest/MenuTest"
 require "luaScript/IntervalTest/IntervalTest"
 require "luaScript/SceneTest/SceneTest"
+require "luaScript/Texture2dTest/Texture2dTest"
+require "luaScript/RenderTextureTest/RenderTextureTest"
+require "luaScript/ZwoptexTest/ZwoptexTest"
+require "luaScript/FontTest/FontTest"
+require "luaScript/CocosDenshionTest/CocosDenshionTest"
+require "luaScript/EffectsAdvancedTest/EffectsAdvancedTest"
 ----------------------------------------------------
 
 -- tests scene
@@ -51,20 +57,20 @@ Test_Table =
 --  "TEST_TEXT_INPUT",
     "TEST_SPRITE",
 --  "TEST_SCHEDULER",
---  "TEST_RENDERTEXTURE",
---  "TEST_TEXTURE2D",
+    "TEST_RENDERTEXTURE",
+    "TEST_TEXTURE2D",
 --  "TEST_BOX2D",
 --  "TEST_BOX2DBED",
---  "TEST_EFFECT_ADVANCE",
+    "TEST_EFFECT_ADVANCE",
 --  "TEST_ACCELEROMRTER",
 --  "TEST_KEYPAD",
---  "TEST_COCOSDENSHION",
+    "TEST_COCOSDENSHION",
 --  "TEST_PERFORMANCE",
---  "TEST_ZWOPTEX",
+    "TEST_ZWOPTEX",
 --  "TEST_CURL",
 --  "TEST_USERDEFAULT",
 --  "TEST_BUGS",
---  "TEST_FONTS",
+    "TEST_FONTS",
 --  "TEST_CURRENT_LANGUAGE",
 --  "TEST_TEXTURECACHE",
 --  "TEST_EXTENSIONS",
@@ -101,20 +107,20 @@ Test_Name =
 --  "TextInputTest",
     "SpriteTest",
 --  "SchdulerTest",
---  "RenderTextureTest",
---  "Texture2DTest",
+    "RenderTextureTest",
+    "Texture2DTest",
 --  "Box2dTest",
 --  "Box2dTestBed",
---  "EffectAdvancedTest",
+    "EffectAdvancedTest",
 --  "Accelerometer",
 --  "KeypadTest",
---  "CocosDenshionTest",
+    "CocosDenshionTest",
 --  "PerformanceTest",
---  "ZwoptexTest",
+    "ZwoptexTest",
 --  "CurlTest",
 --  "UserDefaultTest",
 --  "BugsTest",
---  "FontTest",
+    "FontTest",
 --  "CurrentLanguageTest",
 --  "TextureCacheTest",
 --  "ExtensionsTest",

@@ -22,6 +22,7 @@ $pfile "CCUserDefault.pkg"
 $pfile "CCNotificationCenter.pkg"
 $pfile "CCKeypadDispatcher.pkg"
 
+$pfile "CCImage.pkg"
 $pfile "CCNode.pkg"
 $pfile "CCTexture2D.pkg"
 $pfile "CCTextureAtlas.pkg"
