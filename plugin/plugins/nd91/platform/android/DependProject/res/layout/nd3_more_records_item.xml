@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout 
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" 
+	android:layout_height="wrap_content"
+	android:orientation="horizontal" 
+	android:id="@+id/nd3_records_item_id"
+	android:gravity="center"
+	style="@style/nd3_option_item_padding_style"
+	>
+
+	<LinearLayout 
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content" 
+		android:layout_weight="1"
+		android:orientation="vertical">
+
+		<LinearLayout 
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content" 
+			android:orientation="horizontal">
+
+			<!-- 类型（消费91豆、充值91豆） -->
+			<TextView 
+				android:id="@+id/nd3_type_text"
+				android:layout_width="wrap_content" 
+				android:layout_height="wrap_content"
+				android:layout_marginRight="3dip" 
+				android:gravity="left" 
+				android:singleLine="true"
+				android:textAppearance="?android:attr/textAppearanceMedium"
+				android:ellipsize="end" 
+				android:textColor="@color/nd3_records_title_color"
+				android:textSize="@dimen/nd3_records_title_text_size"
+				/>
+
+			<!-- 个数 -->
+			<TextView 
+				android:id="@+id/nd3_count_text"
+				android:layout_width="wrap_content" 
+				android:layout_height="wrap_content"
+				android:layout_marginRight="3dip" 
+				android:gravity="left" 
+				android:singleLine="true"
+				android:ellipsize="end"  
+				android:textColor="@color/nd3_records_title_color"
+				android:textSize="@dimen/nd3_records_title_text_size"
+				/>
+				
+		</LinearLayout>
+
+		<!-- 描述 -->
+		<TextView 
+			android:id="@+id/nd3_money_text"
+			android:layout_width="wrap_content" 
+			android:layout_height="wrap_content"
+			android:layout_marginRight="3dip" 
+			android:gravity="left" 
+			android:singleLine="true"
+			android:ellipsize="end"  
+			android:textColor="@color/nd3_records_time_color"
+			android:textSize="@dimen/nd3_records_title_text_size"
+			/>
+
+	</LinearLayout>
+
+	<!-- 时间 -->
+	<TextView 
+		android:id="@+id/nd3_time_text" 
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content" 
+		android:layout_marginRight="3dip" 
+		android:gravity="right" 
+		android:lines="2"
+		android:maxLines="2"
+		android:ellipsize="end"  
+		android:textColor="@color/nd3_records_time_color"
+		android:textSize="@dimen/nd3_records_time_text_size"
+		/>
+
+</LinearLayout>
