@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.92 on Sat Apr  6 14:31:38 2013.
+** Generated automatically by tolua++-1.0.92 on Sun Apr  7 16:31:51 2013.
 */
 
 /****************************************************************************
@@ -55232,6 +55232,8 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
   tolua_constant(tolua_S,"kLanguageKorean",kLanguageKorean);
   tolua_constant(tolua_S,"kLanguageJapanese",kLanguageJapanese);
   tolua_constant(tolua_S,"kLanguageHungarian",kLanguageHungarian);
+  tolua_constant(tolua_S,"kLanguagePortuguese",kLanguagePortuguese);
+  tolua_constant(tolua_S,"kLanguageArabic",kLanguageArabic);
   tolua_constant(tolua_S,"kTargetWindows",kTargetWindows);
   tolua_constant(tolua_S,"kTargetLinux",kTargetLinux);
   tolua_constant(tolua_S,"kTargetMacOS",kTargetMacOS);
