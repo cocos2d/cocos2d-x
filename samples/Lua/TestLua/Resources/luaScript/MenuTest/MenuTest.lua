@@ -26,7 +26,7 @@ local function MenuLayerMainMenu()
     ret:setTouchPriority(kCCMenuHandlerPriority + 1)
     ret:setTouchMode(kCCTouchesOneByOne)
 
-    -- Font Item    
+    -- Font Item
     local  spriteNormal = CCSprite:create(s_MenuItem, CCRectMake(0,23*2,115,23))
     local  spriteSelected = CCSprite:create(s_MenuItem, CCRectMake(0,23*1,115,23))
     local  spriteDisabled = CCSprite:create(s_MenuItem, CCRectMake(0,23*0,115,23))
@@ -47,7 +47,7 @@ local function MenuLayerMainMenu()
     local  item2 = CCMenuItemImage:create(s_SendScore, s_PressSendScore)
     item2:registerScriptTapHandler(menuCallback2)
 
-    
+
     local schedulerEntry = nil
 
     local function allowTouches(dt)
@@ -58,7 +58,7 @@ local function MenuLayerMainMenu()
     end
 
 
-    local function menuCallbackDisabled(sender) 
+    local function menuCallbackDisabled(sender)
         -- hijack all touch events for 5 seconds
         local  pDirector = CCDirector:sharedDirector()
         pDirector:getTouchDispatcher():setPriority(kCCMenuHandlerPriority-1, ret)
@@ -73,10 +73,10 @@ local function MenuLayerMainMenu()
     item3:setDisabledColor( ccc3(32,32,64) )
     item3:setColor( ccc3(200,200,255) )
 
-    local function menuCallbackEnable(sender) 
+    local function menuCallbackEnable(sender)
         m_disabledItem:setEnabled(not m_disabledItem:isEnabled() )
     end
-    
+
     -- Font Item
     local item4 = CCMenuItemFont:create("I toggle enable items")
     item4:registerScriptTapHandler(menuCallbackEnable)
@@ -87,7 +87,7 @@ local function MenuLayerMainMenu()
     local function menuCallbackConfig(sender)
         tolua.cast(ret:getParent(), "CCLayerMultiplex"):switchTo(3)
     end
-    
+
     -- Label Item (CCLabelBMFont)
     local  label = CCLabelBMFont:create("configuration", "fonts/bitmapFontTest3.fnt")
     local  item5 = CCMenuItemLabel:create(label)
@@ -127,7 +127,7 @@ local function MenuLayerMainMenu()
 
     local  item9 = CCMenuItemFont:create("Remove menu item when moving")
     item9:registerScriptTapHandler(menuMovingCallback)
-    
+
     local  color_action = CCTintBy:create(0.5, 0, -255, -255)
     local  color_back = color_action:reverse()
     local arr = CCArray:create()
@@ -137,7 +137,7 @@ local function MenuLayerMainMenu()
     item8:runAction(CCRepeatForever:create(seq))
 
     local  menu = CCMenu:create()
-    
+
     menu:addChild(item1)
     menu:addChild(item2)
     menu:addChild(item3)
@@ -149,10 +149,10 @@ local function MenuLayerMainMenu()
     menu:addChild(item9)
 
     menu:alignItemsVertically()
-    
+
     -- elastic effect
     local s = CCDirector:sharedDirector():getWinSize()
-    
+
     local i        = 0
     local child    = nil
     local pArray   = menu:getChildren()
@@ -186,7 +186,7 @@ local function MenuLayerMainMenu()
     local function onNodeEvent(event)
         if event == "exit" then
             if (schedulerEntry ~= nil) then
-                scheduler:unscheduleScriptEntry(schedulerEntry)                
+                scheduler:unscheduleScriptEntry(schedulerEntry)
             end
             if m_disabledItem ~= nil then
                 m_disabledItem:release()
@@ -219,12 +219,12 @@ local function MenuLayer2()
                 menu:alignItemsHorizontally()
                 local x, y = menu:getPosition()
                 menu:setPosition( ccpAdd(ccp(x, y), ccp(0,30)) )
-            else 
+            else
                 -- TIP: but padding is configurable
                 menu:alignItemsHorizontallyWithPadding(40)
                 local x, y = menu:getPosition()
                 menu:setPosition( ccpSub(ccp(x, y), ccp(0,30)) )
-            end        
+            end
         end
     end
 
@@ -235,15 +235,15 @@ local function MenuLayer2()
             menu:setPosition( m_centeredMenu )
             if i==0 then
                 -- TIP: if no padding, padding = 5
-                menu:alignItemsVertically()            
+                menu:alignItemsVertically()
                 local x, y = menu:getPosition()
-                menu:setPosition( ccpAdd(ccp(x, y), ccp(100,0)) )            
-            else 
+                menu:setPosition( ccpAdd(ccp(x, y), ccp(100,0)) )
+            else
                 -- TIP: but padding is configurable
-                menu:alignItemsVerticallyWithPadding(40)    
+                menu:alignItemsVerticallyWithPadding(40)
                 local x, y = menu:getPosition()
                 menu:setPosition( ccpSub(ccp(x, y), ccp(100,0)) )
-            end        
+            end
         end
     end
 
@@ -257,17 +257,17 @@ local function MenuLayer2()
         if opacity == 128 then
             menu:setOpacity(255)
         else
-            menu:setOpacity(128)     
+            menu:setOpacity(128)
         end
     end
 
     local function menuCallbackAlign(sender)
         m_alignedH = not m_alignedH
-        
+
         if m_alignedH then
             alignMenusH()
         else
-            alignMenusV() 
+            alignMenusV()
         end
     end
 
@@ -285,18 +285,18 @@ local function MenuLayer2()
         item1:setScaleX( 1.5 )
         item2:setScaleX( 0.5 )
         item3:setScaleX( 0.5 )
-        
+
         local  menu = CCMenu:create()
-        
+
         menu:addChild(item1)
         menu:addChild(item2)
         menu:addChild(item3)
-        
+
         local s = CCDirector:sharedDirector():getWinSize()
         menu:setPosition(ccp(s.width/2, s.height/2))
 
         menu:setTag( kTagMenu )
-        
+
         ret:addChild(menu, 0, 100+i)
 
         local x, y = menu:getPosition()
@@ -340,20 +340,20 @@ local function MenuLayer3()
 
     local  item2 = CCMenuItemFont:create("--- Go Back ---")
     item2:registerScriptTapHandler(menuCallback)
-    
+
     local spriteNormal   = CCSprite:create(s_MenuItem,  CCRectMake(0,23*2,115,23))
     local spriteSelected = CCSprite:create(s_MenuItem,  CCRectMake(0,23*1,115,23))
     local spriteDisabled = CCSprite:create(s_MenuItem,  CCRectMake(0,23*0,115,23))
-    
-    
+
+
     local  item3 = CCMenuItemSprite:create(spriteNormal, spriteSelected, spriteDisabled)
     item3:registerScriptTapHandler(menuCallback3)
     m_disabledItem = item3
     item3:retain()
     m_disabledItem:setEnabled( false )
-    
+
     local menu = CCMenu:create()
-    
+
     menu:addChild(item1)
     menu:addChild(item2)
     menu:addChild(item3)
@@ -361,11 +361,11 @@ local function MenuLayer3()
     menu:setPosition( ccp(0,0) )
 
     local s = CCDirector:sharedDirector():getWinSize()
-    
+
     item1:setPosition( ccp(s.width/2 - 150, s.height/2) )
     item2:setPosition( ccp(s.width/2 - 200, s.height/2) )
     item3:setPosition( ccp(s.width/2, s.height/2 - 100) )
-    
+
     local  jump = CCJumpBy:create(3, ccp(400,0), 50, 4)
     local arr = CCArray:create()
     arr:addObject(jump)
@@ -375,12 +375,12 @@ local function MenuLayer3()
     local  spin1 = CCRotateBy:create(3, 360)
     local  spin2 = tolua.cast(spin1:copy():autorelease(), "CCActionInterval")
     local  spin3 = tolua.cast(spin1:copy():autorelease(), "CCActionInterval")
-    
+
     item1:runAction( CCRepeatForever:create(spin1) )
     item2:runAction( CCRepeatForever:create(spin2) )
     item3:runAction( CCRepeatForever:create(spin3) )
-    
-    ret:addChild( menu ) 
+
+    ret:addChild( menu )
 
     menu:setPosition(ccp(0,0))
 
@@ -414,7 +414,7 @@ local function MenuLayer4()
     local  item1 = CCMenuItemToggle:create(CCMenuItemFont:create( "On" ))
 
     local function menuCallback(tag, sender)
-        cclog("selected item: tag: %d, index:%d", tag, tolua.cast(sender, "CCMenuItemToggle"):getSelectedIndex() ) 
+        cclog("selected item: tag: %d, index:%d", tag, tolua.cast(sender, "CCMenuItemToggle"):getSelectedIndex() )
     end
 
     local function backCallback(tag, sender)
@@ -423,7 +423,7 @@ local function MenuLayer4()
 
     item1:registerScriptTapHandler(menuCallback)
     item1:addSubItem(CCMenuItemFont:create( "Off"))
-    
+
     CCMenuItemFont:setFontName( "American Typewriter" )
     CCMenuItemFont:setFontSize(18)
     local  title2 = CCMenuItemFont:create( "Music" )
@@ -432,8 +432,8 @@ local function MenuLayer4()
     CCMenuItemFont:setFontSize(34)
     local item2 = CCMenuItemToggle:create(CCMenuItemFont:create( "On" ))
     item2:registerScriptTapHandler(menuCallback)
-    item2:addSubItem(CCMenuItemFont:create( "Off"))                
-    
+    item2:addSubItem(CCMenuItemFont:create( "Off"))
+
     CCMenuItemFont:setFontName( "American Typewriter" )
     CCMenuItemFont:setFontSize(18)
     local  title3 = CCMenuItemFont:create( "Quality" )
@@ -443,7 +443,7 @@ local function MenuLayer4()
     local item3 = CCMenuItemToggle:create(CCMenuItemFont:create( "High" ))
     item3:registerScriptTapHandler(menuCallback)
     item3:addSubItem(CCMenuItemFont:create( "Low" ))
-    
+
     CCMenuItemFont:setFontName( "American Typewriter" )
     CCMenuItemFont:setFontSize(18)
     local  title4 = CCMenuItemFont:create( "Orientation" )
@@ -453,20 +453,20 @@ local function MenuLayer4()
     local item4 = CCMenuItemToggle:create(CCMenuItemFont:create( "Off" ))
     item4:registerScriptTapHandler(menuCallback)
 
-    item4:getSubItems():addObject( CCMenuItemFont:create( "33%" ) ) 
-    item4:getSubItems():addObject( CCMenuItemFont:create( "66%" ) ) 
-    item4:getSubItems():addObject( CCMenuItemFont:create( "100%" ) ) 
-    
+    item4:getSubItems():addObject( CCMenuItemFont:create( "33%" ) )
+    item4:getSubItems():addObject( CCMenuItemFont:create( "66%" ) )
+    item4:getSubItems():addObject( CCMenuItemFont:create( "100%" ) )
+
     -- you can change the one of the items by doing this
     item4:setSelectedIndex( 2 )
-    
+
     CCMenuItemFont:setFontName( "Marker Felt" )
     CCMenuItemFont:setFontSize( 34 )
-    
+
     local label = CCLabelBMFont:create( "go back", "fonts/bitmapFontTest3.fnt" )
     local  back = CCMenuItemLabel:create(label)
     back:registerScriptTapHandler(backCallback)
-    
+
     local menu = CCMenu:create()
 
     menu:addChild(title1)
@@ -481,7 +481,7 @@ local function MenuLayer4()
 
     -- FIXME:tolua++ doesn't support valist argument.
     -- menu:alignItemsInColumns(2, 2, 2, 2, 1, NULL)
-    
+
     ret:addChild( menu )
 
     local s = CCDirector:sharedDirector():getWinSize()
@@ -519,7 +519,7 @@ local function MenuLayerPriorityTest()
         if m_bPriority then
             m_pMenu2:setHandlerPriority(kCCMenuHandlerPriority + 20)
             m_bPriority = false
-        else 
+        else
             m_pMenu2:setHandlerPriority(kCCMenuHandlerPriority - 20)
             m_bPriority = true
         end
@@ -580,14 +580,14 @@ local function BugsTest()
     issue1410_2:registerScriptTapHandler(issue1410v2MenuCallback)
     local back = CCMenuItemFont:create("Back")
     back:registerScriptTapHandler(backMenuCallback)
-    
+
     local menu = CCMenu:create()
     menu:addChild(issue1410)
     menu:addChild(issue1410_2)
     menu:addChild(back)
     ret:addChild(menu)
     menu:alignItemsVertically()
-    
+
     local s = CCDirector:sharedDirector():getWinSize()
     menu:setPosition(ccp(s.width/2, s.height/2))
     return ret
@@ -597,30 +597,30 @@ end
 local function RemoveMenuItemWhenMove()
     local ret = CCLayer:create()
     local s = CCDirector:sharedDirector():getWinSize()
-    
+
     local  label = CCLabelTTF:create("click item and move, should not crash", "Arial", 20)
     label:setPosition(ccp(s.width/2, s.height - 30))
     ret:addChild(label)
-    
+
     local item = CCMenuItemFont:create("item 1")
     item:retain()
-    
+
     local back = CCMenuItemFont:create("go back")
     local function goBack(tag, pSender)
         tolua.cast(ret:getParent(), "CCLayerMultiplex"):switchTo(0)
     end
 
     back:registerScriptTapHandler(goBack)
-    
+
     local menu = CCMenu:create()
     menu:addChild(item)
     menu:addChild(back)
 
     ret:addChild(menu)
     menu:alignItemsVertically()
-    
+
     menu:setPosition(ccp(s.width/2, s.height/2))
-    
+
     ret:setTouchEnabled(true)
 
     local function onNodeEvent(event)
@@ -674,7 +674,7 @@ function MenuTestMain()
 
     local  layer = CCLayerMultiplex:createWithArray(arr)
 
-    scene:addChild(layer, 0) 
+    scene:addChild(layer, 0)
     scene:addChild(CreateBackMenuItem())
     return scene
 end

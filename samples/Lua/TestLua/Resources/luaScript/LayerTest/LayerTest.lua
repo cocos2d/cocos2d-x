@@ -44,7 +44,7 @@ local function setEnableRecursiveCascading(node, enable)
         node.__CCRGBAProtocol__:setCascadeColorEnabled(enable)
         node.__CCRGBAProtocol__:setCascadeOpacityEnabled(enable)
     end
-    
+
     local obj = nil
     local children = node:getChildren()
     if children == nil then
@@ -65,20 +65,20 @@ local function LayerTestCascadingOpacityA()
     local ret = createLayerDemoLayer("LayerRGBA: cascading opacity")
     local s = CCDirector:sharedDirector():getWinSize()
     local  layer1 = CCLayerRGBA:create()
-    
+
     local sister1 = CCSprite:create("Images/grossinis_sister1.png")
     local sister2 = CCSprite:create("Images/grossinis_sister2.png")
     local label = CCLabelBMFont:create("Test", "fonts/bitmapFontTest.fnt")
-    
+
     layer1:addChild(sister1)
     layer1:addChild(sister2)
     layer1:addChild(label)
     ret:addChild( layer1, 0, kTagLayer)
-    
+
     sister1:setPosition( ccp( s.width*1/3, s.height/2))
     sister2:setPosition( ccp( s.width*2/3, s.height/2))
     label:setPosition( ccp( s.width/2, s.height/2))
-    
+
     local arr = CCArray:create()
     arr:addObject(CCFadeTo:create(4, 0))
     arr:addObject(CCFadeTo:create(4, 255))
@@ -92,7 +92,7 @@ local function LayerTestCascadingOpacityA()
     arr:addObject(CCFadeTo:create(2, 255))
     arr:addObject(CCDelayTime:create(1))
     sister1:runAction(CCRepeatForever:create(CCSequence:create(arr)))
-    
+
     -- Enable cascading in scene
     setEnableRecursiveCascading(ret, true)
     return ret
@@ -101,42 +101,42 @@ end
 -- LayerTestCascadingOpacityB
 local function LayerTestCascadingOpacityB()
     local ret = createLayerDemoLayer("CCLayerColor: cascading opacity")
-        
+
     local s = CCDirector:sharedDirector():getWinSize()
     local layer1 = CCLayerColor:create(ccc4(192, 0, 0, 255), s.width, s.height/2)
     layer1:setCascadeColorEnabled(false)
-    
+
     layer1:setPosition( ccp(0, s.height/2))
-    
+
     local sister1 = CCSprite:create("Images/grossinis_sister1.png")
     local sister2 = CCSprite:create("Images/grossinis_sister2.png")
     local label = CCLabelBMFont:create("Test", "fonts/bitmapFontTest.fnt")
-    
+
     layer1:addChild(sister1)
     layer1:addChild(sister2)
     layer1:addChild(label)
     ret:addChild( layer1, 0, kTagLayer)
-    
+
     sister1:setPosition( ccp( s.width*1/3, 0))
     sister2:setPosition( ccp( s.width*2/3, 0))
     label:setPosition( ccp( s.width/2, 0))
-    
+
     local arr = CCArray:create()
     arr:addObject(CCFadeTo:create(4, 0))
     arr:addObject(CCFadeTo:create(4, 255))
     arr:addObject(CCDelayTime:create(1))
 
     layer1:runAction(CCRepeatForever:create(CCSequence:create(arr)))
-    
+
     arr = CCArray:create()
     arr:addObject(CCFadeTo:create(2, 0))
     arr:addObject(CCFadeTo:create(2, 255))
     arr:addObject(CCFadeTo:create(2, 0))
     arr:addObject(CCFadeTo:create(2, 255))
     arr:addObject(CCDelayTime:create(1))
-    
+
     sister1:runAction(CCRepeatForever:create(CCSequence:create(arr)))
-    
+
     -- Enable cascading in scene
     setEnableRecursiveCascading(ret, true)
     return ret
@@ -145,23 +145,23 @@ end
 -- LayerTestCascadingOpacityC
 local function LayerTestCascadingOpacityC()
     local ret = createLayerDemoLayer("CCLayerColor: non-cascading opacity")
-    
+
     local s = CCDirector:sharedDirector():getWinSize()
     local  layer1 = CCLayerColor:create(ccc4(192, 0, 0, 255), s.width, s.height/2)
     layer1:setCascadeColorEnabled(false)
     layer1:setCascadeOpacityEnabled(false)
-    
+
     layer1:setPosition( ccp(0, s.height/2))
-    
+
     local sister1 = CCSprite:create("Images/grossinis_sister1.png")
     local sister2 = CCSprite:create("Images/grossinis_sister2.png")
     local label = CCLabelBMFont:create("Test", "fonts/bitmapFontTest.fnt")
-    
+
     layer1:addChild(sister1)
     layer1:addChild(sister2)
     layer1:addChild(label)
     ret:addChild( layer1, 0, kTagLayer)
-    
+
     sister1:setPosition( ccp( s.width*1/3, 0))
     sister2:setPosition( ccp( s.width*2/3, 0))
     label:setPosition( ccp( s.width/2, 0))
@@ -170,7 +170,7 @@ local function LayerTestCascadingOpacityC()
     arr:addObject(CCFadeTo:create(4, 0))
     arr:addObject(CCFadeTo:create(4, 255))
     arr:addObject(CCDelayTime:create(1))
-    
+
     layer1:runAction(
      CCRepeatForever:create(
       CCSequence:create(arr
@@ -182,7 +182,7 @@ local function LayerTestCascadingOpacityC()
     arr:addObject(CCFadeTo:create(2, 0))
     arr:addObject(CCFadeTo:create(2, 255))
     arr:addObject(CCDelayTime:create(1))
-    
+
     sister1:runAction(
      CCRepeatForever:create(
       CCSequence:create(arr)))
@@ -194,23 +194,23 @@ end
 -- LayerTestCascadingColorA
 local function LayerTestCascadingColorA()
     local ret = createLayerDemoLayer("LayerRGBA: cascading color")
-    
+
     local s = CCDirector:sharedDirector():getWinSize()
     local  layer1 = CCLayerRGBA:create()
-    
+
     local sister1 = CCSprite:create("Images/grossinis_sister1.png")
     local sister2 = CCSprite:create("Images/grossinis_sister2.png")
     local label = CCLabelBMFont:create("Test", "fonts/bitmapFontTest.fnt")
-    
+
     layer1:addChild(sister1)
     layer1:addChild(sister2)
     layer1:addChild(label)
     ret:addChild( layer1, 0, kTagLayer)
-    
+
     sister1:setPosition( ccp( s.width*1/3, s.height/2))
     sister2:setPosition( ccp( s.width*2/3, s.height/2))
     label:setPosition( ccp( s.width/2, s.height/2))
-    
+
     local arr = CCArray:create()
     arr:addObject(CCTintTo:create(6, 255, 0, 255))
     arr:addObject(CCTintTo:create(6, 255, 255, 255))
@@ -229,15 +229,15 @@ local function LayerTestCascadingColorA()
     arr:addObject(CCTintTo:create(2, 255, 0, 255))
     arr:addObject(CCTintTo:create(2, 255, 255, 255))
     arr:addObject(CCDelayTime:create(1))
-    
+
     sister1:runAction(
      CCRepeatForever:create(
       CCSequence:create(
        arr)))
-    
+
     -- Enable cascading in scene
     setEnableRecursiveCascading(ret, true)
-    return ret     
+    return ret
 end
 
 -- LayerTestCascadingColorB
@@ -246,18 +246,18 @@ local function LayerTestCascadingColorB()
 
     local s = CCDirector:sharedDirector():getWinSize()
     local  layer1 = CCLayerColor:create(ccc4(255, 255, 255, 255), s.width, s.height/2)
-    
+
     layer1:setPosition( ccp(0, s.height/2))
-    
+
     local sister1 = CCSprite:create("Images/grossinis_sister1.png")
     local sister2 = CCSprite:create("Images/grossinis_sister2.png")
     local label = CCLabelBMFont:create("Test", "fonts/bitmapFontTest.fnt")
-    
+
     layer1:addChild(sister1)
     layer1:addChild(sister2)
     layer1:addChild(label)
     ret:addChild( layer1, 0, kTagLayer)
-    
+
     sister1:setPosition( ccp( s.width*1/3, 0))
     sister2:setPosition( ccp( s.width*2/3, 0))
     label:setPosition( ccp( s.width/2, 0))
@@ -280,12 +280,12 @@ local function LayerTestCascadingColorB()
     arr:addObject(CCTintTo:create(2, 255, 0, 255))
     arr:addObject(CCTintTo:create(2, 255, 255, 255))
     arr:addObject(CCDelayTime:create(1))
-    
+
     sister1:runAction(
      CCRepeatForever:create(
       CCSequence:create(
        arr)))
-    
+
     -- Enable cascading in scene
     setEnableRecursiveCascading(ret, true)
     return ret
@@ -299,16 +299,16 @@ local function LayerTestCascadingColorC()
     local  layer1 = CCLayerColor:create(ccc4(255, 255, 255, 255), s.width, s.height/2)
     layer1:setCascadeColorEnabled(false)
     layer1:setPosition( ccp(0, s.height/2))
-    
+
     local sister1 = CCSprite:create("Images/grossinis_sister1.png")
     local sister2 = CCSprite:create("Images/grossinis_sister2.png")
     local label = CCLabelBMFont:create("Test", "fonts/bitmapFontTest.fnt")
-    
+
     layer1:addChild(sister1)
     layer1:addChild(sister2)
     layer1:addChild(label)
     ret:addChild( layer1, 0, kTagLayer)
-    
+
     sister1:setPosition( ccp( s.width*1/3, 0))
     sister2:setPosition( ccp( s.width*2/3, 0))
     label:setPosition( ccp( s.width/2, 0))
@@ -331,7 +331,7 @@ local function LayerTestCascadingColorC()
     arr:addObject(CCTintTo:create(2, 255, 0, 255))
     arr:addObject(CCTintTo:create(2, 255, 255, 255))
     arr:addObject(CCDelayTime:create(1))
-    
+
     sister1:runAction(
      CCRepeatForever:create(
       CCSequence:create(
@@ -348,19 +348,19 @@ local function LayerTest1()
     local ret = createLayerDemoLayer("ColorLayer resize (tap & move)")
 
     ret:setTouchEnabled(true)
-    
+
     local s = CCDirector:sharedDirector():getWinSize()
-    local  layer = CCLayerColor:create( ccc4(0xFF, 0x00, 0x00, 0x80), 200, 200) 
-    
+    local  layer = CCLayerColor:create( ccc4(0xFF, 0x00, 0x00, 0x80), 200, 200)
+
     layer:ignoreAnchorPointForPosition(false)
     layer:setPosition( ccp(s.width/2, s.height/2) )
     ret:addChild(layer, 1, kTagLayer)
 
     local function updateSize(x, y)
         local s = CCDirector:sharedDirector():getWinSize()
-        
+
         local newSize = CCSizeMake( math.abs(x - s.width/2)*2, math.abs(y - s.height/2)*2)
-        
+
         local  l = tolua.cast(ret:getChildByTag(kTagLayer), "CCLayerColor")
 
         l:setContentSize( newSize )
@@ -391,12 +391,12 @@ local function LayerTest2()
     layer1:setPosition(ccp(s.width/3, s.height/2))
     layer1:ignoreAnchorPointForPosition(false)
     ret:addChild(layer1, 1)
-    
+
     local  layer2 = CCLayerColor:create( ccc4(0, 0, 255, 255), 100, 300)
     layer2:setPosition(ccp((s.width/3)*2, s.height/2))
     layer2:ignoreAnchorPointForPosition(false)
     ret:addChild(layer2, 1)
-    
+
     local  actionTint = CCTintBy:create(2, -255, -127, 0)
     local  actionTintBack = actionTint:reverse()
     local arr = CCArray:create()
@@ -426,14 +426,14 @@ local function LayerTestBlend()
     local ret = createLayerDemoLayer("ColorLayer: blend")
     local s = CCDirector:sharedDirector():getWinSize()
     local  layer1 = CCLayerColor:create( ccc4(255, 255, 255, 80) )
-    
+
     local  sister1 = CCSprite:create(s_pPathSister1)
     local  sister2 = CCSprite:create(s_pPathSister2)
-    
+
     ret:addChild(sister1)
     ret:addChild(sister2)
     ret:addChild(layer1, 100, kTagLayer)
-    
+
     sister1:setPosition( ccp( s.width*1/3, s.height/2) )
     sister2:setPosition( ccp( s.width*2/3, s.height/2) )
 
@@ -510,7 +510,7 @@ local function LayerGradient()
             local s = CCDirector:sharedDirector():getWinSize()
             local start = ccp(x, y)
 
-            local diff = ccpSub( ccp(s.width/2,s.height/2), start)    
+            local diff = ccpSub( ccp(s.width/2,s.height/2), start)
             diff = ccpNormalize(diff)
 
             local gradient = tolua.cast(ret:getChildByTag(1), "CCLayerGradient")
@@ -657,12 +657,12 @@ local function LayerExtendedBlendOpacityTest()
     layer1:setContentSize(CCSizeMake(80, 80))
     layer1:setPosition(ccp(50,50))
     ret:addChild(layer1)
-    
+
     local  layer2 = CCLayerGradient:create(ccc4(0, 0, 0, 127), ccc4(255, 255, 255, 127))
     layer2:setContentSize(CCSizeMake(80, 80))
     layer2:setPosition(ccp(100,90))
     ret:addChild(layer2)
-    
+
     local  layer3 = CCLayerGradient:create()
     layer3:setContentSize(CCSizeMake(80, 80))
     layer3:setPosition(ccp(150,140))
