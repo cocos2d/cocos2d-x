@@ -12,6 +12,9 @@ Developers:
     Rolando Abarca
         Javascript Binding and testjs
 
+    mchinen
+        fix emulator issue for OpenGL ES 2.0 on Android
+
     DenizPiri
         use CCLOG to implement print() function in LUA
 
