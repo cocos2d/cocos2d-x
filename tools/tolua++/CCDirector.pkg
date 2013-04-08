@@ -33,6 +33,7 @@ class CCDirector : public CCObject
     void runWithScene(CCScene *pScene);
     void pushScene(CCScene *pScene);
     void popScene(void);
+    void popToRootScene();
     void replaceScene(CCScene *pScene);
     void end @ endToLua ();
 

@@ -124,7 +124,6 @@ void* cocos_main(void* arg)
                                 "zwoptex/grossini.png",
                                 "luaScript/mainMenu.lua",
                                 "luaScript/helper.lua",
-                                "luaScript/tests.lua",
                                 "luaScript/testResource.lua",
                                 "luaScript/ActionsTest/ActionsTest.lua",
                                 "luaScript/ActionsTest/ActionsName.lua",
