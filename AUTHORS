@@ -284,6 +284,9 @@ Developers:
         Improving font rendering performance for linux platform.
         YodesoftReduce function call in nativeInitBitmapDC to improve performance.
 
+    sjchao
+        Fixing a display bug when a scrollView nested in another scrollView.
+
 Retired Core Developers:
     WenSheng Yang
         Author of windows port, CCTextField,
