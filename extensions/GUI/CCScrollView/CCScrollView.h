@@ -317,6 +317,11 @@ protected:
      * max and min scale
      */
     float m_fMinScale, m_fMaxScale;
+    /**
+     * scissor rect for parent, just for restoring GL_SCISSOR_BOX
+     */
+    CCRect m_tParentScissorRect;
+    bool m_bScissorRestored;
 };
 
 // end of GUI group
