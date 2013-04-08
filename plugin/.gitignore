@@ -87,3 +87,8 @@ tools/tojs/user.cfg
 tools/tojs/userconf.ini
 # ... userconf.ini generated if running from tools/jenkins_scripts/mac/android/
 tools/jenkins_scripts/mac/android/userconf.ini
+
+# Ignore files built by plugin
+publish/*
+tools/toolsForPublish/environment.sh
+.settings
