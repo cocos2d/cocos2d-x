@@ -429,7 +429,7 @@ bool CCTexturePVR::unpackPVRv3Data(unsigned char* dataPointer, unsigned int data
         pvr3TableElements = 9;
     }
 	
-	for(int i = 0; i < pvr3TableElements; i++)
+	for(unsigned int i = 0; i < pvr3TableElements; i++)
     {
 		if( v3_pixel_formathash[i].pixelFormat == pixelFormat )
         {
