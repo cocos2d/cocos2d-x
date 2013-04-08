@@ -98,6 +98,16 @@ public:
      */
     virtual void setScissorInPoints(float x , float y , float w , float h);
 
+    /**
+     * Get whether GL_SCISSOR_TEST is enable
+     */
+    virtual bool isScissorEnabled();
+
+    /**
+     * Get the current scissor rectangle
+     */
+    virtual CCRect getScissorRect();
+
     virtual void setViewName(const char* pszViewName);
 
     const char* getViewName();
