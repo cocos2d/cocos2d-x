@@ -2,8 +2,6 @@
 // cocos2d constants
 //
 
-require('jsb_cocos2d_constants.js');
-
 var cc = cc || {};
 
 cc.DIRECTOR_PROJECTION_2D = 0;
@@ -379,17 +377,7 @@ cc.LayerMultiplex.create = cc.LayerMultiplex.createWithArray;
  * @param {object} jsobj subclass
  * @param {object} klass superclass
  */
-cc.associateWithNative = function( jsobj, superclass_or_instance ) {
-
-    try {
-        // Used when subclassing using the "extend" method
-        var native = new superclass_or_instance();
-        __associateObjWithNative( jsobj, native );
-    } catch(err) {
-        // Used when subclassing using the goog.inherits method
-       __associateObjWithNative( jsobj, superclass_or_instance );
-   }
-};
+cc.associateWithNative = function( jsobj, superclass_or_instance ) {};
 
 //
 // JSB supports 2 official ways to create subclasses
@@ -501,7 +489,6 @@ cc.Class.extend = function (prop) {
     return Class;
 };
 
-cc.Node.prototype.ctor = function() {};
 cc.Node.extend = cc.Class.extend;
 cc.Layer.extend = cc.Class.extend;
 cc.LayerGradient.extend = cc.Class.extend;

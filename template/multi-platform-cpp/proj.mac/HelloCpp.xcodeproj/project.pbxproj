@@ -1340,13 +1340,11 @@
 					"\"$(SRCROOT)/../../../cocos2dx/platform/mac\"",
 				);
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../../cocos2dx/platform/third_party/mac/libraries\"";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OTHER_CFLAGS = "-O2";
 				PRODUCT_NAME = HelloCpp;
 				SDKROOT = macosx;
-				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "";
 				VALID_ARCHS = "i386 x86_64";
 			};
@@ -1381,12 +1379,10 @@
 					"\"$(SRCROOT)/../../../cocos2dx/platform/mac\"",
 				);
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../../cocos2dx/platform/third_party/mac/libraries\"";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_NAME = HelloCpp;
 				SDKROOT = macosx;
-				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "";
 				VALIDATE_PRODUCT = YES;
 				VALID_ARCHS = "i386 x86_64";
@@ -1396,7 +1392,7 @@
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CODE_SIGN_IDENTITY = "iPhone Developer: 小明 张 (L4ZF355VQS)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 小明 张 (L4ZF355VQS)";
 				GCC_C_LANGUAGE_STANDARD = c99;
@@ -1405,15 +1401,15 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PROVISIONING_PROFILE = "0C43CFE2-55C4-429A-9A03-BFB76D31630B";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0C43CFE2-55C4-429A-9A03-BFB76D31630B";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "armv6 armv7 i386";
+				SDKROOT = macosx;
+				VALID_ARCHS = "x86_64 i386";
 			};
 			name = Debug;
 		};
 		C01FCF5008A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CODE_SIGN_IDENTITY = "iPhone Developer: 小明 张 (L4ZF355VQS)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 小明 张 (L4ZF355VQS)";
 				GCC_C_LANGUAGE_STANDARD = c99;
@@ -1423,8 +1419,8 @@
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PROVISIONING_PROFILE = "0C43CFE2-55C4-429A-9A03-BFB76D31630B";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "DB6844BA-2943-44DB-B10A-3A3F0E8A52B8";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "armv6 armv7 i386";
+				SDKROOT = macosx;
+				VALID_ARCHS = "x86_64 i386";
 			};
 			name = Release;
 		};

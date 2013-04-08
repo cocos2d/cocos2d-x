@@ -49,6 +49,7 @@ enum
     ACTION_ISSUE1327_LAYER,
     ACTION_ISSUE1398_LAYER,
     ACTION_LAYER_COUNT,
+	ACTION_REMOVE_SELF,
 };
 
 
@@ -246,6 +247,13 @@ class ActionOrbit : public ActionsDemo
 public:
     virtual void onEnter();
     virtual std::string subtitle();
+};
+
+class ActionRemoveSelf : public ActionsDemo
+{
+public:
+	virtual void onEnter();
+	virtual std::string subtitle();
 };
 
 class ActionRepeatForever : public ActionsDemo

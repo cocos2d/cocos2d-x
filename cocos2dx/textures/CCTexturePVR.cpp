@@ -64,6 +64,9 @@ static const ccPVRTexturePixelFormatInfo PVRTableFormats[] = {
 	// 8: LA_88
 	{GL_LUMINANCE_ALPHA, GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE, 16, false, true, kCCTexture2DPixelFormat_AI88},
 
+// Not all platforms include GLES/gl2ext.h so these PVRTC enums are not always
+// available.
+#ifdef GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG
 	// 9: PVRTC 2BPP RGB
 	{GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG, 0xFFFFFFFF, 0xFFFFFFFF, 2, true, false, kCCTexture2DPixelFormat_PVRTC2},
 	// 10: PVRTC 2BPP RGBA
@@ -72,6 +75,7 @@ static const ccPVRTexturePixelFormatInfo PVRTableFormats[] = {
 	{GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG, 0xFFFFFFFF, 0xFFFFFFFF, 4, true, false, kCCTexture2DPixelFormat_PVRTC4},
 	// 12: PVRTC 4BPP RGBA
 	{GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG, 0xFFFFFFFF, 0xFFFFFFFF, 4, true, true, kCCTexture2DPixelFormat_PVRTC4},
+#endif
 };
 
 struct _pixel_formathash {
@@ -147,8 +151,10 @@ static struct _pixel_formathash v2_pixel_formathash[] = {
 	{ kPVR2TexturePixelFormat_I_8,			&PVRTableFormats[7] },
 	{ kPVR2TexturePixelFormat_AI_88,		&PVRTableFormats[8] },
     
+#ifdef GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG
 	{ kPVR2TexturePixelFormat_PVRTC_2BPP_RGBA,	&PVRTableFormats[10] },
 	{ kPVR2TexturePixelFormat_PVRTC_4BPP_RGBA,	&PVRTableFormats[12] },
+#endif
 };
 
 #define PVR2_MAX_TABLE_ELEMENTS (sizeof(v2_pixel_formathash) / sizeof(v2_pixel_formathash[0]))
@@ -166,10 +172,12 @@ struct _pixel_formathash v3_pixel_formathash[] = {
 	{kPVR3TexturePixelFormat_L_8,		&PVRTableFormats[7] },
 	{kPVR3TexturePixelFormat_LA_88,		&PVRTableFormats[8] },
 	
+#ifdef GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG
 	{kPVR3TexturePixelFormat_PVRTC_2BPP_RGB,	&PVRTableFormats[9] },
 	{kPVR3TexturePixelFormat_PVRTC_2BPP_RGBA,	&PVRTableFormats[10] },
 	{kPVR3TexturePixelFormat_PVRTC_4BPP_RGB,	&PVRTableFormats[11] },
 	{kPVR3TexturePixelFormat_PVRTC_4BPP_RGBA,	&PVRTableFormats[12] },
+#endif
 };
 
 
@@ -421,7 +429,7 @@ bool CCTexturePVR::unpackPVRv3Data(unsigned char* dataPointer, unsigned int data
         pvr3TableElements = 9;
     }
 	
-	for(unsigned int i = 0; i < pvr3TableElements; i++)
+	for(int i = 0; i < pvr3TableElements; i++)
     {
 		if( v3_pixel_formathash[i].pixelFormat == pixelFormat )
         {

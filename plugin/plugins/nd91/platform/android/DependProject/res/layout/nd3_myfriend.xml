@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="wrap_content">
+  <RelativeLayout
+   android:id="@+id/nd3_friend_search_rl"
+   android:layout_width="fill_parent"
+   android:layout_height="40dip"
+   android:background="@drawable/nd3_search_layout_bg">
+	   <EditText 
+	   android:id="@+id/nd3_friend_search_edit"
+	   android:layout_width="fill_parent"
+	   android:layout_height="33dip"
+	   android:background="@drawable/nd3_search_edit_bg"
+	   android:drawableLeft="@drawable/nd3_search_edit_left"
+	   android:layout_centerVertical="true"
+	   android:layout_marginLeft="@dimen/nd3_margin_size"
+	   android:layout_marginRight="@dimen/nd3_margin_size"
+	   android:singleLine="true"
+	   android:gravity="center_vertical|left"/>
+  </RelativeLayout>
+  
+  <RelativeLayout
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  android:layout_below="@id/nd3_friend_search_rl">
+	  <include
+	   android:layout_width="fill_parent"
+	   android:layout_height="fill_parent"
+	   android:id="@+id/nd3_friend_panel"
+	   layout="@layout/nd3_friend_section_panel"/>
+   </RelativeLayout>
+</RelativeLayout>

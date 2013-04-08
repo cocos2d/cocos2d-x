@@ -12,6 +12,13 @@ Developers:
     Rolando Abarca
         Javascript Binding and testjs
 
+    DenizPiri
+        use CCLOG to implement print() function in LUA
+
+    nickveri
+    nickkwalee
+        added some missing function for setting integer shader uniforms in CCGLProgram
+
     biteforest
         fix cc scale9 sprite bug
 
@@ -20,12 +27,15 @@ Developers:
 
     DarraghCoy
         fix for loading custom fonts on iOS when referenced from a CCB file
+        Fix CCUserDefault.cpp compiling on Android.
 
     Waiter
         fix an error that OpenSLEngine can't load resources from SD card
+        add CCRemoveSelf action
 
     billy1380
-        make CCLens3d support concave effect
+        make CCLens3d support concave effect.
+        Adding 64bit target for Mac project.
 
     benjamesward
         add Portuguese and Arabic language support
@@ -76,6 +86,7 @@ Developers:
         Fixed a bug that the truetype fonts from resource directory can't be found on linux.
         Fixed the size calculations for true type fonts (especially for italic fonts).
         Added a very simple greedy line break algorithmfor true type labels.
+        Fixed font rendering crash for certain fonts on linux.
 
     Nat Weiss (iphonegamekit.com)
         author of Mac port
@@ -104,6 +115,7 @@ Developers:
     Rohan Kuruvilla (rohankuruvilla, Zynga)
         Improvements to JS Bindings.
         Synchronizing CCBReader to version 5.
+        Adding OpenGL Bindings to Javascript.
 
     Jianfeng Zou (NetDragon Inc)
         contributes CCListView and CCTextureWatcher.
@@ -208,6 +220,7 @@ Developers:
 
     tiantian20007
         Fix crash for call runAnimation() in CCBAnimationManagerDelegate::completedAnimationSequenceNamed.
+        Fixing a bug that CCControl's touch priority is not set correctly; m_nDefaultTouchPriority is never used.
 
     xyhl515
         Fixed a bug that CCControlSwitch::setOn(isOn,false) doesn't work.
@@ -219,6 +232,7 @@ Developers:
     Sergej Tatarincev (SevInf)
         Making ScriptingCore.cpp compiled fine with C++11 on iOS.
         Using shared NodeLoaderLibrary in CCBReader bindings.
+        CCEditBox iOS enchantments/bugfixes.
 
     ThePickleMan
         Adding 'rotationIsDir' property to ParticleSystem.
@@ -253,6 +267,18 @@ Developers:
 
     whitegfx
         Implementation of kEditBoxInputFlagSensitive setting for CCEditBoxImplIOS.
+
+    Zecken (gelldur)
+        Fixing a profiling compilation error in CCParticleBatchNode.
+
+    flamingo (flaming0)
+        Null pointer check in order to prevent crashes.
+
+    rtissera (Romain TISSERAND)
+        Adding missing JNIEXPORT / JNICALL declarations.
+
+    Yodesoft
+        Improving font rendering performance for linux platform.
 
 Retired Core Developers:
     WenSheng Yang
