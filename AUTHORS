@@ -92,6 +92,7 @@ Developers:
         Added a very simple greedy line break algorithmfor true type labels.
         Fixed font rendering crash for certain fonts on linux.
         Fixed potential crash in CCScheduler::removeHashElement.
+        Fixed potential crash in CCSaxParser.
 
     Nat Weiss (iphonegamekit.com)
         author of Mac port
