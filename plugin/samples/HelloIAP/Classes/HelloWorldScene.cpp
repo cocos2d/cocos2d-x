@@ -112,27 +112,11 @@ void HelloWorld::eventMenuCallback(CCObject* pSender)
 {
     CCMenuItemLabel* pMenuItem = (CCMenuItemLabel*)pSender;
     TProductInfo pInfo;
-    MyPurchase::MyPayMode mode = MyPurchase::eNoneMode;
-
-    switch (pMenuItem->getTag())
-    {
-    case TAG_PAY_BY_ALIPAY:
-        pInfo["productName"] = "100金币";
-        pInfo["productPrice"] = "0.1";
-        pInfo["productDesc"] = "100个金灿灿的游戏币哦";
-    	mode = MyPurchase::eAlipay;
-    	break;
-    case TAG_PAY_BY_ND91:
-    	pInfo["productName"] = "100金币";
-		pInfo["productPrice"] = "0.01";
-		pInfo["productDesc"] = "100个金灿灿的游戏币哦";
-		pInfo["Nd91ProductId"] = "685994";
-		mode = MyPurchase::eND91;
-    	break;
-    default:
-        break;
-    }
-
+    MyPurchase::MyPayMode mode = (MyPurchase::MyPayMode) (pMenuItem->getTag() - TAG_PAY_BY_ALIPAY + 1);
+    pInfo["productName"] = "100金币";
+	pInfo["productPrice"] = "0.01";
+	pInfo["productDesc"] = "100个金灿灿的游戏币哦";
+	pInfo["Nd91ProductId"] = "685994";
     MyPurchase::sharedPurchase()->payByMode(pInfo, mode);
 }
 
