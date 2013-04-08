@@ -415,7 +415,7 @@ bool CCTexturePVR::unpackPVRv3Data(unsigned char* dataPointer, unsigned int data
 	
 	bool infoValid = false;
     
-    int pvr3TableElements = PVR3_MAX_TABLE_ELEMENTS;
+    unsigned int pvr3TableElements = PVR3_MAX_TABLE_ELEMENTS;
     if (! CCConfiguration::sharedConfiguration()->supportsPVRTC())
     {
         pvr3TableElements = 9;
