@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.nd.commplatform.widget.NdAppListItem
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="wrap_content"
+  android:paddingBottom="@dimen/nd3_margin_size">
+  
+  <ImageView
+  android:id="@+id/nd3_app_image"
+  android:layout_width="@dimen/nd3_image_size"
+  android:layout_height="@dimen/nd3_image_size"
+  android:layout_alignParentLeft="true"
+  android:layout_alignParentTop="true"
+  android:scaleType="fitXY"
+  android:layout_margin="@dimen/nd3_margin_size"/>
+  
+  
+  <RelativeLayout
+  android:layout_alignParentTop="true"
+  android:layout_width="0dip"
+  android:layout_toRightOf="@id/nd3_app_image"
+  android:layout_toLeftOf="@+id/nd3_app_action_btn"
+  android:layout_height="wrap_content">
+	  <TextView
+	  android:id="@+id/nd3_app_name_txt"
+	  android:layout_width="wrap_content"
+	  android:layout_height="wrap_content"
+	  android:layout_alignParentLeft="true"
+	  android:layout_alignParentTop="true"
+      android:layout_toLeftOf="@+id/nd3_app_grade"
+      android:singleLine="true"
+      android:ellipsize="end"  
+	  style="@style/nd3_textview_1"/>
+  
+	  <RatingBar
+	  android:id="@+id/nd3_app_grade"
+	  android:layout_width="wrap_content"
+	  android:layout_height="wrap_content"
+	  android:layout_alignParentRight="true"
+	  android:layout_alignTop="@id/nd3_app_name_txt"
+	  android:paddingTop="@dimen/nd3_margin_size"
+	  android:numStars="5"
+	  android:rating="0"
+	  style="?android:attr/ratingBarStyleSmall"/>
+	  <TextView
+	  android:id="@+id/nd3_app_grade_desc"
+	  android:layout_width="fill_parent"
+	  android:layout_height="wrap_content"
+	  android:layout_below="@id/nd3_app_name_txt"
+	  android:layout_alignLeft="@+id/nd3_app_name_txt"
+	  style="@style/nd3_textview_2"/>
+  </RelativeLayout>
+  
+  <ImageView
+  android:id="@+id/nd3_app_action_btn"
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"
+  android:src="@drawable/nd3_switch_image"
+  android:layout_alignParentRight="true"
+  android:layout_centerVertical="true"
+  android:layout_margin="@dimen/nd3_margin_size"/>
+</com.nd.commplatform.widget.NdAppListItem>
