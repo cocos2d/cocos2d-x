@@ -279,6 +279,7 @@ Developers:
 
     Yodesoft
         Improving font rendering performance for linux platform.
+        YodesoftReduce function call in nativeInitBitmapDC to improve performance.
 
 Retired Core Developers:
     WenSheng Yang
