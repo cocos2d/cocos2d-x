@@ -12,6 +12,9 @@ Developers:
     Rolando Abarca
         Javascript Binding and testjs
 
+    mchinen
+        fix emulator issue for OpenGL ES 2.0 on Android
+
     DenizPiri
         use CCLOG to implement print() function in LUA
 
@@ -28,6 +31,7 @@ Developers:
     DarraghCoy
         fix for loading custom fonts on iOS when referenced from a CCB file
         Fix CCUserDefault.cpp compiling on Android.
+        Fixing CCFileUtils 'createXXXXWithContentsOfFile' path lookup issue.
 
     Waiter
         fix an error that OpenSLEngine can't load resources from SD card
@@ -87,6 +91,7 @@ Developers:
         Fixed the size calculations for true type fonts (especially for italic fonts).
         Added a very simple greedy line break algorithmfor true type labels.
         Fixed font rendering crash for certain fonts on linux.
+        Fixed potential crash in CCScheduler::removeHashElement.
 
     Nat Weiss (iphonegamekit.com)
         author of Mac port
@@ -279,6 +284,10 @@ Developers:
 
     Yodesoft
         Improving font rendering performance for linux platform.
+        YodesoftReduce function call in nativeInitBitmapDC to improve performance.
+
+    sjchao
+        Fixing a display bug when a scrollView nested in another scrollView.
 
 Retired Core Developers:
     WenSheng Yang
