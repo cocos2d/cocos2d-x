@@ -92,3 +92,6 @@ tools/jenkins_scripts/mac/android/userconf.ini
 publish/*
 tools/toolsForPublish/environment.sh
 .settings
+plugins/china*
+plugins/punchbox*
+samplesPrivate*
