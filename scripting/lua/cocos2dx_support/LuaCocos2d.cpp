@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.92 on Sun Apr  7 16:31:51 2013.
+** Generated automatically by tolua++-1.0.93 on Mon Apr  8 14:06:15 2013.
 */
 
 /****************************************************************************
@@ -55490,7 +55490,6 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"isOpacityModifyRGB",tolua_Cocos2d_CCNodeRGBA_isOpacityModifyRGB00);
    tolua_variable(tolua_S,"__CCRGBAProtocol__",tolua_get_CCNodeRGBA___CCRGBAProtocol__,NULL);
   tolua_endmodule(tolua_S);
-  tolua_constant(tolua_S,"GL_ES_VERSION_2_0",GL_ES_VERSION_2_0);
   tolua_constant(tolua_S,"GL_DEPTH_BUFFER_BIT",GL_DEPTH_BUFFER_BIT);
   tolua_constant(tolua_S,"GL_STENCIL_BUFFER_BIT",GL_STENCIL_BUFFER_BIT);
   tolua_constant(tolua_S,"GL_COLOR_BUFFER_BIT",GL_COLOR_BUFFER_BIT);
@@ -55787,7 +55786,6 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
   tolua_constant(tolua_S,"GL_FRAMEBUFFER_COMPLETE",GL_FRAMEBUFFER_COMPLETE);
   tolua_constant(tolua_S,"GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT",GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT);
   tolua_constant(tolua_S,"GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT",GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT);
-  tolua_constant(tolua_S,"GL_FRAMEBUFFER_INCOMPLETE_DIMENSIONS",GL_FRAMEBUFFER_INCOMPLETE_DIMENSIONS);
   tolua_constant(tolua_S,"GL_FRAMEBUFFER_UNSUPPORTED",GL_FRAMEBUFFER_UNSUPPORTED);
   tolua_constant(tolua_S,"GL_FRAMEBUFFER_BINDING",GL_FRAMEBUFFER_BINDING);
   tolua_constant(tolua_S,"GL_RENDERBUFFER_BINDING",GL_RENDERBUFFER_BINDING);
