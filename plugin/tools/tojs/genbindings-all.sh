@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PLUGIN_NAME=("chinamobile" "chinatelecom" "chinaunicom" "punchbox" "alipay" "flurry" "nd91" "umeng" "chinaunicom_online" "chinatelecom_online")
+PLUGIN_NAME=("alipay" "flurry" "nd91" "umeng")
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # ... use paths relative to current directory
@@ -37,7 +37,7 @@ check_return_value "cocos2dx_others"
 for i in "${PLUGIN_NAME[@]}"
 do
     echo $i
-    ./genbindings.sh $i
+    ./genbindings.sh $i "plugins/"
     check_return_value $i
 done
 
