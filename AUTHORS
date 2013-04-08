@@ -90,6 +90,7 @@ Developers:
         Fixed the size calculations for true type fonts (especially for italic fonts).
         Added a very simple greedy line break algorithmfor true type labels.
         Fixed font rendering crash for certain fonts on linux.
+        Fixed potential crash in CCScheduler::removeHashElement.
 
     Nat Weiss (iphonegamekit.com)
         author of Mac port
