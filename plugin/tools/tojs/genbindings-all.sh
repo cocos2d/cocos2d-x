@@ -5,7 +5,7 @@ PLUGIN_NAME=("alipay" "flurry" "nd91" "umeng")
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # ... use paths relative to current directory
 PLUGIN_ROOT="$DIR/../.."
-CXX_GENERATOR_ROOT="$DIR/../../../tools/cxx-generator"
+CXX_GENERATOR_ROOT="$DIR/../../../tools/bindings-generator"
 # Delete the output directory
 if [ -d $PLUGIN_ROOT/jsbindings/auto ]; then
     echo "Delete the output directory."
