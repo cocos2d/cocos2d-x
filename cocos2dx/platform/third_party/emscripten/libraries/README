@@ -1,0 +1,4 @@
+libfreetype.a from Emscripten test-suite
+libpng.a from https://github.com/hachque-Emscripten/libpng-1.2.49.git
+libz.a from https://github.com/hachque-Emscripten/zlib-1.2.5.git
+
