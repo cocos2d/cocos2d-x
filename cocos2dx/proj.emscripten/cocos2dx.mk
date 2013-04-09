@@ -15,11 +15,11 @@ PACKAGER := $(realpath $(COCOS_ROOT)/external/emscripten/tools/file_packager.py)
 CC := $(COCOS_ROOT)/external/emscripten/emcc
 CXX := $(COCOS_ROOT)/external/emscripten/em++
 AR := $(COCOS_ROOT)/external/emscripten/emar
-CCFLAGS += -MMD -Wall -fPIC -Qunused-arguments -Wno-overloaded-virtual -Qunused-variable -s TOTAL_MEMORY=268435456
-CXXFLAGS += -MMD -Wall -fPIC -Qunused-arguments -Wno-overloaded-virtual -Qunused-variable -s TOTAL_MEMORY=268435456
+CCFLAGS += -MMD -Wall -fPIC -Qunused-arguments -Wno-overloaded-virtual -Qunused-variable -s TOTAL_MEMORY=268435456 -s VERBOSE=1
+CXXFLAGS += -MMD -Wall -fPIC -Qunused-arguments -Wno-overloaded-virtual -Qunused-variable -s TOTAL_MEMORY=268435456 -s VERBOSE=1
 ARFLAGS = cr
 
-LIB_DIR = $(COCOS_SRC)/lib/linux
+LIB_DIR = $(COCOS_SRC)/lib/emscripten
 BIN_DIR = bin
 
 INCLUDES +=  \
@@ -31,6 +31,7 @@ INCLUDES +=  \
     -I$(COCOS_SRC)/platform/emscripten \
     -I$(COCOS_SRC)/platform/third_party/emscripten/libpng \
     -I$(COCOS_SRC)/platform/third_party/emscripten/libz \
+    -I$(COCOS_SRC)/platform/third_party/emscripten/libfreetype2 \
     -I$(COCOS_SRC)/platform/third_party/linux/libjpeg \
     -I$(COCOS_SRC)/platform/third_party/linux/libtiff/include \
     -I$(COCOS_SRC)/platform/third_party/linux/libwebp
