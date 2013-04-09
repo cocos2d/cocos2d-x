@@ -338,6 +338,7 @@ void CCMotionStreak::draw()
     ccGLBindTexture2D( m_pTexture->getName() );
 
 #ifdef EMSCRIPTEN
+    // Size calculations from ::initWithFade
     setGLBufferData(m_pVertices, (sizeof(ccVertex2F) * m_uMaxPoints * 2), 0);
     glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, 0);
 
