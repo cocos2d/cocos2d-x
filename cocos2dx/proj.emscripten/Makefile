@@ -72,6 +72,7 @@ SOURCES = ../actions/CCAction.cpp \
 ../platform/emscripten/CCEGLView.cpp \
 ../platform/emscripten/CCImage.cpp \
 ../platform/emscripten/CCDevice.cpp \
+../platform/emscripten/CCFileUtilsEmscripten.cpp \
 ../script_support/CCScriptSupport.cpp \
 ../sprite_nodes/CCAnimation.cpp \
 ../sprite_nodes/CCAnimationCache.cpp \
