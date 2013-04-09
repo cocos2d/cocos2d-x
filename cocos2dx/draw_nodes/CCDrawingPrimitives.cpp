@@ -108,6 +108,9 @@ void ccDrawPoint( const CCPoint& point )
 
     glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, &p);
 
+#ifdef EMSCRIPTEN
+    printf("WARNING: %s does not have client-side buffer fix for Emscripten\n", __func__);
+#endif // EMSCRIPTEN
     glDrawArrays(GL_POINTS, 0, 1);
 
     CC_INCREMENT_GL_DRAWS(1);
@@ -141,6 +144,9 @@ void ccDrawPoints( const CCPoint *points, unsigned int numberOfPoints )
         glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, newPoints);
     }
 
+#ifdef EMSCRIPTEN
+    printf("WARNING: %s does not have client-side buffer fix for Emscripten\n", __func__);
+#endif // EMSCRIPTEN
     glDrawArrays(GL_POINTS, 0, (GLsizei) numberOfPoints);
 
     CC_SAFE_DELETE_ARRAY(newPoints);
@@ -164,6 +170,9 @@ void ccDrawLine( const CCPoint& origin, const CCPoint& destination )
 
     ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
     glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);
+#ifdef EMSCRIPTEN
+    printf("WARNING: %s does not have client-side buffer fix for Emscripten\n", __func__);
+#endif // EMSCRIPTEN
     glDrawArrays(GL_LINES, 0, 2);
 
     CC_INCREMENT_GL_DRAWS(1);
@@ -199,6 +208,9 @@ void ccDrawPoly( const CCPoint *poli, unsigned int numberOfPoints, bool closePol
 
     ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
 
+#ifdef EMSCRIPTEN
+    printf("WARNING: %s does not have client-side buffer fix for Emscripten\n", __func__);
+#endif // EMSCRIPTEN
     // iPhone and 32-bit machines optimization
     if( sizeof(CCPoint) == sizeof(ccVertex2F) )
     {
@@ -259,6 +271,9 @@ void ccDrawSolidPoly( const CCPoint *poli, unsigned int numberOfPoints, ccColor4
         glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, newPoli);
     }    
 
+#ifdef EMSCRIPTEN
+    printf("WARNING: %s does not have client-side buffer fix for Emscripten\n", __func__);
+#endif // EMSCRIPTEN
     glDrawArrays(GL_TRIANGLE_FAN, 0, (GLsizei) numberOfPoints);
 
     CC_SAFE_DELETE_ARRAY(newPoli);
@@ -297,6 +312,9 @@ void ccDrawCircle( const CCPoint& center, float radius, float angle, unsigned in
     ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
 
     glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);
+#ifdef EMSCRIPTEN
+    printf("WARNING: %s does not have client-side buffer fix for Emscripten\n", __func__);
+#endif // EMSCRIPTEN
     glDrawArrays(GL_LINE_STRIP, 0, (GLsizei) segments+additionalSegment);
 
     free( vertices );
@@ -332,6 +350,9 @@ void ccDrawQuadBezier(const CCPoint& origin, const CCPoint& control, const CCPoi
     ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
 
     glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);
+#ifdef EMSCRIPTEN
+    printf("WARNING: %s does not have client-side buffer fix for Emscripten\n", __func__);
+#endif // EMSCRIPTEN
     glDrawArrays(GL_LINE_STRIP, 0, (GLsizei) segments + 1);
     CC_SAFE_DELETE_ARRAY(vertices);
 
@@ -384,6 +405,9 @@ void ccDrawCardinalSpline( CCPointArray *config, float tension,  unsigned int se
     ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
 
     glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);
+#ifdef EMSCRIPTEN
+    printf("WARNING: %s does not have client-side buffer fix for Emscripten\n", __func__);
+#endif // EMSCRIPTEN
     glDrawArrays(GL_LINE_STRIP, 0, (GLsizei) segments + 1);
 
     CC_SAFE_DELETE_ARRAY(vertices);
@@ -413,6 +437,9 @@ void ccDrawCubicBezier(const CCPoint& origin, const CCPoint& control1, const CCP
     ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
 
     glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);
+#ifdef EMSCRIPTEN
+    printf("WARNING: %s does not have client-side buffer fix for Emscripten\n", __func__);
+#endif // EMSCRIPTEN
     glDrawArrays(GL_LINE_STRIP, 0, (GLsizei) segments + 1);
     CC_SAFE_DELETE_ARRAY(vertices);
 
