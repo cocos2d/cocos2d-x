@@ -357,8 +357,9 @@ bool CCEGLView::initGL()
     }
 
     // FIXME: Get the actual canvas size somehow.
-    EGLint width = 300;
-    EGLint height = 150;
+    EGLint width = 800;
+    EGLint height = 500;
+#warning Assuming screen size is 800X500. Mouse cursor will be offset if a different sized canvas is used.
 
     if ((m_eglDisplay == EGL_NO_DISPLAY) || (m_eglSurface == EGL_NO_SURFACE) )
     	return EXIT_FAILURE;
