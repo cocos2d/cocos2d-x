@@ -14,7 +14,6 @@
 #include "jsb_pluginx_protocols_auto.hpp"
 #include "jsb_pluginx_flurry_auto.hpp"
 #include "jsb_pluginx_umeng_auto.hpp"
-#include "jsb_cocos2dx_other_auto.hpp"
 #include "jsb_pluginx_extension_registration.h"
 
 USING_NS_CC;
@@ -53,7 +52,6 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(register_all_pluginx_umeng);
     sc->addRegisterCallback(register_all_pluginx_flurry);
     sc->addRegisterCallback(register_pluginx_js_extensions);
-    sc->addRegisterCallback(register_all_cocos2dx_other);
     sc->start();
     CCLOG("applicationDidFinishLaunching 02");
     CCScriptEngineProtocol *pEngine = ScriptingCore::getInstance();
