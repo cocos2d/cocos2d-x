@@ -140,6 +140,9 @@ void ccDrawPoint( const CCPoint& point )
     glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, &p);
 #endif // EMSCRIPTEN
 
+#ifdef EMSCRIPTEN
+    printf("WARNING: %s does not have client-side buffer fix for Emscripten\n", __func__);
+#endif // EMSCRIPTEN
     glDrawArrays(GL_POINTS, 0, 1);
 
     CC_INCREMENT_GL_DRAWS(1);
@@ -186,6 +189,9 @@ void ccDrawPoints( const CCPoint *points, unsigned int numberOfPoints )
 #endif // EMSCRIPTEN
     }
 
+#ifdef EMSCRIPTEN
+    printf("WARNING: %s does not have client-side buffer fix for Emscripten\n", __func__);
+#endif // EMSCRIPTEN
     glDrawArrays(GL_POINTS, 0, (GLsizei) numberOfPoints);
 
     CC_SAFE_DELETE_ARRAY(newPoints);
@@ -249,6 +255,9 @@ void ccDrawPoly( const CCPoint *poli, unsigned int numberOfPoints, bool closePol
 
     ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
 
+#ifdef EMSCRIPTEN
+    printf("WARNING: %s does not have client-side buffer fix for Emscripten\n", __func__);
+#endif // EMSCRIPTEN
     // iPhone and 32-bit machines optimization
     if( sizeof(CCPoint) == sizeof(ccVertex2F) )
     {
@@ -329,6 +338,9 @@ void ccDrawSolidPoly( const CCPoint *poli, unsigned int numberOfPoints, ccColor4
 #endif // EMSCRIPTEN
     }    
 
+#ifdef EMSCRIPTEN
+    printf("WARNING: %s does not have client-side buffer fix for Emscripten\n", __func__);
+#endif // EMSCRIPTEN
     glDrawArrays(GL_TRIANGLE_FAN, 0, (GLsizei) numberOfPoints);
 
     CC_SAFE_DELETE_ARRAY(newPoli);
