@@ -15,8 +15,8 @@ PACKAGER := $(realpath $(COCOS_ROOT)/external/emscripten/tools/file_packager.py)
 CC := $(COCOS_ROOT)/external/emscripten/emcc
 CXX := $(COCOS_ROOT)/external/emscripten/em++
 AR := $(COCOS_ROOT)/external/emscripten/emar
-CCFLAGS += -MMD -Wall -fPIC -Qunused-arguments -Wno-overloaded-virtual -Qunused-variable -s GL_DEBUG=1
-CXXFLAGS += -MMD -Wall -fPIC -Qunused-arguments -Wno-overloaded-virtual -Qunused-variable -s GL_DEBUG=1
+CCFLAGS += -MMD -Wall -fPIC -Qunused-arguments -Wno-overloaded-virtual -Qunused-variable -s TOTAL_MEMORY=268435456
+CXXFLAGS += -MMD -Wall -fPIC -Qunused-arguments -Wno-overloaded-virtual -Qunused-variable -s TOTAL_MEMORY=268435456
 ARFLAGS = cr
 
 LIB_DIR = $(COCOS_SRC)/lib/linux
@@ -29,17 +29,14 @@ INCLUDES +=  \
     -I$(COCOS_SRC)/include \
     -I$(COCOS_SRC)/kazmath/include \
     -I$(COCOS_SRC)/platform/emscripten \
-    -I$(COCOS_SRC)/platform/third_party/linux/libpng \
+    -I$(COCOS_SRC)/platform/third_party/emscripten/libpng \
+    -I$(COCOS_SRC)/platform/third_party/emscripten/libz \
     -I$(COCOS_SRC)/platform/third_party/linux/libjpeg \
     -I$(COCOS_SRC)/platform/third_party/linux/libtiff/include \
     -I$(COCOS_SRC)/platform/third_party/linux/libwebp
 
 LBITS := $(shell getconf LONG_BIT)
-ifeq ($(LBITS),64)
-INCLUDES += -I$(COCOS_SRC)/platform/third_party/linux/include64
-else
 INCLUDES += -I$(COCOS_SRC)/platform/third_party/linux
-endif
 
 ifeq ($(DEBUG), 1)
 CCFLAGS += -g3 -O0
@@ -74,8 +71,9 @@ CORE_MAKEFILE_LIST := $(MAKEFILE_LIST)
 -include $(DEPS)
 
 STATICLIBS_DIR = $(COCOS_SRC)/platform/third_party/emscripten/libraries
-STATICLIBS = $(STATICLIBS_DIR)/libfreetype.a #\
+STATICLIBS = $(STATICLIBS_DIR)/libfreetype.a \
     $(STATICLIBS_DIR)/libpng.a \
+    $(STATICLIBS_DIR)/zlib.a #\
     $(STATICLIBS_DIR)/libjpeg.a \
     $(STATICLIBS_DIR)/libtiff.a \
     $(STATICLIBS_DIR)/libwebp.a
