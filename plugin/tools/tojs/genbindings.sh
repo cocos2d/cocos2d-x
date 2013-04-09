@@ -55,7 +55,7 @@ if [ -z "${PLUGINX_ROOT+aaa}" ]; then
 fi
 
 if [ -z "${CXX_GENERATOR_ROOT+aaa}" ]; then
-    CXX_GENERATOR_ROOT="$PLUGINX_ROOT/../tools/cxx-generator"
+    CXX_GENERATOR_ROOT="$PLUGINX_ROOT/../tools/bindings-generator"
 fi
 
 if [ -z "${TOJS_ROOT+aaa}" ]; then
