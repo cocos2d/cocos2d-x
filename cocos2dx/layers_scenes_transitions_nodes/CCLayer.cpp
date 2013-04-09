@@ -778,8 +778,16 @@ void CCLayerColor::draw()
     //
     // Attributes
     //
+#ifdef EMSCRIPTEN
+    setGLBufferData(m_pSquareVertices, 4 * sizeof(ccVertex2F), 0);
+    glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, 0);
+
+    setGLBufferData(m_pSquareColors, 4 * sizeof(ccColor4F), 1);
+    glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_FLOAT, GL_FALSE, 0, 0);
+#else
     glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, m_pSquareVertices);
     glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_FLOAT, GL_FALSE, 0, m_pSquareColors);
+#endif // EMSCRIPTEN
 
     ccGLBlendFunc( m_tBlendFunc.src, m_tBlendFunc.dst );
 

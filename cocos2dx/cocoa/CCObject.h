@@ -27,6 +27,10 @@ THE SOFTWARE.
 
 #include "platform/CCPlatformMacros.h"
 
+#ifdef EMSCRIPTEN
+#include <GLES2/gl2.h>
+#endif // EMSCRIPTEN
+
 NS_CC_BEGIN
 
 /**
@@ -72,6 +76,26 @@ public:
     virtual void update(float dt) {CC_UNUSED_PARAM(dt);};
     
     friend class CCAutoreleasePool;
+
+#ifdef EMSCRIPTEN
+#define BUFFER_SLOTS 4
+    // Moving GL Buffer management code up to CCObject as it is used both via
+    // the CCNode and CCGrid inheritance trees.
+
+    /**
+     * Load the given data into this CCNode's GL Buffer. Needed for WebGL, as it does not support client-side arrays.
+     */
+    void setGLBufferData(void *buf, GLuint bufSize, int slot);
+    void setGLIndexData(void *buf, GLuint bufSize, int slot);
+
+    // We allocate 4 buffer objs per node, and index into them as slots.
+    GLuint m_bufferObject[BUFFER_SLOTS];
+    GLuint m_bufferSize[BUFFER_SLOTS];
+
+    GLuint m_indexBufferObject[BUFFER_SLOTS];
+    GLuint m_indexBufferSize[BUFFER_SLOTS];
+#endif // EMSCRIPTEN
+
 };
 
 
