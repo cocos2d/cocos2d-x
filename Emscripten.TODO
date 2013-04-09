@@ -1,0 +1,9 @@
+# Need to switch to server-side buffers in
+- cocos2dx/draw_nodes/CCDrawNode.cpp
+- cocos2dx/draw_nodes/CCDrawingPrimitives
+- cocos2dx/particle_nodes/CCParticleSystemQuad.cpp
+- cocos2dx/textures/CCTextureAtlas.cpp
+
+# Need to figure out how to get correct screen resolutions consistently.
+
+# Need to compile with -O2 -- possible -s VERBOSE=1 will give a clue?
