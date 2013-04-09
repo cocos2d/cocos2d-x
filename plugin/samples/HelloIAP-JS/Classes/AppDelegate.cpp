@@ -14,7 +14,6 @@
 #include "jsb_pluginx_protocols_auto.hpp"
 #include "jsb_pluginx_alipay_auto.hpp"
 #include "jsb_pluginx_nd91_auto.hpp"
-#include "jsb_cocos2dx_other_auto.hpp"
 #include "jsb_pluginx_extension_registration.h"
 
 USING_NS_CC;

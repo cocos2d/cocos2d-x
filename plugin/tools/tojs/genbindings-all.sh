@@ -31,9 +31,6 @@ check_return_value()
 ./genbindings.sh "protocols"
 check_return_value "protocols"
 
-./genbindings-cocos2dx-others.sh
-check_return_value "cocos2dx_others"
-
 for i in "${PLUGIN_NAME[@]}"
 do
     echo $i
