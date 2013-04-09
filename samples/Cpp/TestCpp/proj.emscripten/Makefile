@@ -433,7 +433,7 @@ $(TARGET).js: $(OBJECTS) $(STATICLIBS) $(COCOS_LIBS) $(CORE_MAKEFILE_LIST)
 	@mkdir -p $(@D)
 	$(CXX) $(CXXFLAGS) $(OBJECTS) -o $@ $(SHAREDLIBS) $(STATICLIBS) $(LIBS)
 
-$(TARGET).data: $(CORE_MAKEFILE_LIST) $(patsubst %,$(RESOURCE_PATH)/%,$(RESOURCEs))
+$(TARGET).data: $(CORE_MAKEFILE_LIST) $(patsubst %,$(RESOURCE_PATH)/%,$(RESOURCES))
 	@mkdir -p $(@D)
 	$(eval RESTMP := $(shell mktemp -d /tmp/cocos-emscripten.XXXXXX))
 	# Always need a font path, so ensure that it is created first.
