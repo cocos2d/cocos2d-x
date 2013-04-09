@@ -88,10 +88,6 @@ CCNode::CCNode(void)
 , m_bReorderChildDirty(false)
 , m_nScriptHandler(0)
 , m_nUpdateScriptHandler(0)
-#ifdef EMSCRIPTEN
-, m_bufferObject(0)
-, m_bufferSize(0)
-#endif // EMSCRIPTEN
 {
     // set default scheduler and actionManager
     CCDirector *director = CCDirector::sharedDirector();
@@ -1196,23 +1192,6 @@ void CCNode::setAdditionalTransform(const CCAffineTransform& additionalTransform
     m_bAdditionalTransformDirty = true;
 }
 
-#ifdef EMSCRIPTEN
-void CCNode::setGLBufferData(void *buf, GLuint bufSize)
-{
-    // WebGL doesn't support client-side arrays, so generate a buffer and load the data first.
-    if(m_bufferSize < bufSize)
-    {
-        if(m_bufferObject)
-        {
-            glDeleteBuffers(1, &m_bufferObject);
-        }
-        glGenBuffers(1, &m_bufferObject);
-        m_bufferSize = bufSize;
-    }
-    glBindBuffer(GL_ARRAY_BUFFER, m_bufferObject);
-    glBufferData(GL_ARRAY_BUFFER, bufSize, buf, GL_STATIC_DRAW);
-}
-#endif // EMSCRIPTEN
 
 CCAffineTransform CCNode::parentToNodeTransform(void)
 {
