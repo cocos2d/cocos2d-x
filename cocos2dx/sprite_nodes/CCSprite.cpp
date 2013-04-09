@@ -83,7 +83,6 @@ CCSprite* CCSprite::createWithTexture(CCTexture2D *pTexture, const CCRect& rect)
 
 CCSprite* CCSprite::create(const char *pszFileName)
 {
-    printf("CCSprite::create(%s)\n", pszFileName);
     CCSprite *pobSprite = new CCSprite();
     if (pobSprite && pobSprite->initWithFile(pszFileName))
     {
