@@ -89,6 +89,218 @@ SOURCES = ../Classes/AccelerometerTest/AccelerometerTest.cpp \
 	../Classes/VisibleRect.cpp \
 	main.cpp
 
+RESOURCE_PATH = ../Resources
+
+RESOURCES = \
+	Images/arrows.png \
+	Images/arrowsBar.png \
+	Images/atlastest.png \
+	Images/b1.png \
+	Images/b2.png \
+	Images/background.png \
+	Images/background1.jpg \
+	Images/background1.png \
+	Images/background2.jpg \
+	Images/background2.png \
+	Images/background3.jpg \
+	Images/background3.png \
+	Images/ball.png \
+	Images/bitmapFontTest3.fnt \
+	Images/bitmapFontTest3.png \
+	Images/blocks.png \
+	Images/btn-about-normal.png \
+	Images/btn-about-selected.png \
+	Images/btn-highscores-normal.png \
+	Images/btn-highscores-selected.png \
+	Images/btn-play-normal.png \
+	Images/btn-play-selected.png \
+	Images/bugs/bug886.jpg \
+	Images/bugs/bug886.png \
+	Images/bugs/circle.plist \
+	Images/bugs/circle.png \
+	Images/bugs/corner.png \
+	Images/bugs/edge.png \
+	Images/bugs/fill.png \
+	Images/bugs/picture.png \
+	Images/bugs/RetinaDisplay.jpg \
+	Images/close.png \
+	Images/Comet.png \
+	Images/f1.png \
+	Images/f2.png \
+	Images/fire-grayscale.png \
+	Images/fire.png \
+	Images/fire_rgba8888.pvr \
+	Images/Fog.png \
+	Images/grossini.png \
+	Images/grossini_128x256_mipmap.pvr \
+	Images/grossini_dance_01.png \
+	Images/grossini_dance_02.png \
+	Images/grossini_dance_03.png \
+	Images/grossini_dance_04.png \
+	Images/grossini_dance_05.png \
+	Images/grossini_dance_06.png \
+	Images/grossini_dance_07.png \
+	Images/grossini_dance_08.png \
+	Images/grossini_dance_09.png \
+	Images/grossini_dance_10.png \
+	Images/grossini_dance_11.png \
+	Images/grossini_dance_12.png \
+	Images/grossini_dance_13.png \
+	Images/grossini_dance_14.png \
+	Images/grossini_dance_atlas-mono.png \
+	Images/grossini_dance_atlas.png \
+	Images/grossini_dance_atlas_nomipmap.png \
+	Images/grossini_pvr_rgba4444.pvr \
+	Images/grossini_pvr_rgba8888.pvr \
+	Images/grossinis_sister1-testalpha.png \
+	Images/grossinis_sister1-testalpha.ppng \
+	Images/grossinis_sister1-testalpha_nopremult.pvr \
+	Images/grossinis_sister1-testalpha_premult.pvr \
+	Images/grossinis_sister1.png \
+	Images/grossinis_sister2.png \
+	Images/HelloWorld.png \
+	Images/hole_effect.png \
+	Images/hole_stencil.png \
+	Images/Icon.png \
+	Images/labelatlas.png \
+	Images/landscape-1024x1024.png \
+	Images/logo-mipmap.pvr \
+	Images/logo-nomipmap.pvr \
+	Images/menuitemsprite.png \
+	Images/paddle.png \
+	Images/particles.png \
+	Images/pattern1.png \
+	Images/Pea.png \
+	Images/piece.png \
+	Images/PlanetCute-1024x1024.png \
+	Images/powered.png \
+	Images/r1.png \
+	Images/r2.png \
+	Images/SendScoreButton.png \
+	Images/SendScoreButtonPressed.png \
+	Images/snow.png \
+	Images/SpinningPeas.png \
+	Images/SpookyPeas.png \
+	Images/sprites_test/sprite-0-0.png \
+	Images/sprites_test/sprite-0-1.png \
+	Images/sprites_test/sprite-0-2.png \
+	Images/sprites_test/sprite-0-3.png \
+	Images/sprites_test/sprite-0-4.png \
+	Images/sprites_test/sprite-0-5.png \
+	Images/sprites_test/sprite-0-6.png \
+	Images/sprites_test/sprite-0-7.png \
+	Images/sprites_test/sprite-1-0.png \
+	Images/sprites_test/sprite-1-1.png \
+	Images/sprites_test/sprite-1-2.png \
+	Images/sprites_test/sprite-1-3.png \
+	Images/sprites_test/sprite-1-4.png \
+	Images/sprites_test/sprite-1-5.png \
+	Images/sprites_test/sprite-1-6.png \
+	Images/sprites_test/sprite-1-7.png \
+	Images/sprites_test/sprite-2-0.png \
+	Images/sprites_test/sprite-2-1.png \
+	Images/sprites_test/sprite-2-2.png \
+	Images/sprites_test/sprite-2-3.png \
+	Images/sprites_test/sprite-2-4.png \
+	Images/sprites_test/sprite-2-5.png \
+	Images/sprites_test/sprite-2-6.png \
+	Images/sprites_test/sprite-2-7.png \
+	Images/sprites_test/sprite-3-0.png \
+	Images/sprites_test/sprite-3-1.png \
+	Images/sprites_test/sprite-3-2.png \
+	Images/sprites_test/sprite-3-3.png \
+	Images/sprites_test/sprite-3-4.png \
+	Images/sprites_test/sprite-3-5.png \
+	Images/sprites_test/sprite-3-6.png \
+	Images/sprites_test/sprite-3-7.png \
+	Images/sprites_test/sprite-4-0.png \
+	Images/sprites_test/sprite-4-1.png \
+	Images/sprites_test/sprite-4-2.png \
+	Images/sprites_test/sprite-4-3.png \
+	Images/sprites_test/sprite-4-4.png \
+	Images/sprites_test/sprite-4-5.png \
+	Images/sprites_test/sprite-4-6.png \
+	Images/sprites_test/sprite-4-7.png \
+	Images/sprites_test/sprite-5-0.png \
+	Images/sprites_test/sprite-5-1.png \
+	Images/sprites_test/sprite-5-2.png \
+	Images/sprites_test/sprite-5-3.png \
+	Images/sprites_test/sprite-5-4.png \
+	Images/sprites_test/sprite-5-5.png \
+	Images/sprites_test/sprite-5-6.png \
+	Images/sprites_test/sprite-5-7.png \
+	Images/sprites_test/sprite-6-0.png \
+	Images/sprites_test/sprite-6-1.png \
+	Images/sprites_test/sprite-6-2.png \
+	Images/sprites_test/sprite-6-3.png \
+	Images/sprites_test/sprite-6-4.png \
+	Images/sprites_test/sprite-6-5.png \
+	Images/sprites_test/sprite-6-6.png \
+	Images/sprites_test/sprite-6-7.png \
+	Images/sprites_test/sprite-7-0.png \
+	Images/sprites_test/sprite-7-1.png \
+	Images/sprites_test/sprite-7-2.png \
+	Images/sprites_test/sprite-7-3.png \
+	Images/sprites_test/sprite-7-4.png \
+	Images/sprites_test/sprite-7-5.png \
+	Images/sprites_test/sprite-7-6.png \
+	Images/sprites_test/sprite-7-7.png \
+	Images/spritesheet1.png \
+	Images/stars-grayscale.png \
+	Images/stars.png \
+	Images/stars2-grayscale.png \
+	Images/stars2.png \
+	Images/streak.png \
+	Images/test-rgba1.png \
+	Images/test_1021x1024.png \
+	Images/test_1021x1024_a8.pvr \
+	Images/test_1021x1024_a8.pvr.gz \
+	Images/test_1021x1024_rgb888.pvr \
+	Images/test_1021x1024_rgb888.pvr.gz \
+	Images/test_1021x1024_rgba4444.pvr \
+	Images/test_1021x1024_rgba4444.pvr.gz \
+	Images/test_1021x1024_rgba8888.pvr \
+	Images/test_1021x1024_rgba8888.pvr.gz \
+	Images/test_blend.png \
+	Images/test_image-bad_encoding.pvr \
+	Images/test_image.jpeg \
+	Images/test_image.png \
+	Images/test_image.pvr \
+	Images/test_image.pvrraw \
+	Images/test_image.tiff \
+	Images/test_image.webp \
+	Images/test_image_a8.pvr \
+	Images/test_image_a8_v3.pvr \
+	Images/test_image_ai88.pvr \
+	Images/test_image_ai88_v3.pvr \
+	Images/test_image_bgra8888.pvr \
+	Images/test_image_bgra8888_v3.pvr \
+	Images/test_image_i8.pvr \
+	Images/test_image_i8_v3.pvr \
+	Images/test_image_pvrtc2bpp.pvr \
+	Images/test_image_pvrtc2bpp_v3.pvr \
+	Images/test_image_pvrtc4bpp.pvr \
+	Images/test_image_pvrtc4bpp_v3.pvr \
+	Images/test_image_pvrtcii2bpp_v3.pvr \
+	Images/test_image_pvrtcii4bpp_v3.pvr \
+	Images/test_image_rgb565.pvr \
+	Images/test_image_rgb565_v3.pvr \
+	Images/test_image_rgb888.pvr \
+	Images/test_image_rgb888_v3.pvr \
+	Images/test_image_rgba4444.pvr \
+	Images/test_image_rgba4444.pvr.ccz \
+	Images/test_image_rgba4444.pvr.gz \
+	Images/test_image_rgba4444_mipmap.pvr \
+	Images/test_image_rgba4444_v3.pvr \
+	Images/test_image_rgba5551.pvr \
+	Images/test_image_rgba5551_v3.pvr \
+	Images/test_image_rgba8888.pvr \
+	Images/test_image_rgba8888_v3.pvr \
+	Images/texture1024x1024.png \
+	Images/texture2048x2048.png \
+	Images/texture512x512.png \
+	Images/white-512x512.png
+
 SHAREDLIBS = -lcocos2d -lcocosdenshion
 COCOS_LIBS = $(LIB_DIR)/libcocos2d.so $(LIB_DIR)/libcocosdenshion.so
 
@@ -104,7 +316,6 @@ INCLUDES +=  -I../ \
     -I$(COCOS_ROOT)/external/chipmunk/include/chipmunk
 
 STATICLIBS += \
-    $(STATICLIBS_DIR)/libcurl.a \
     $(LIB_DIR)/libextension.a \
     $(LIB_DIR)/libbox2d.a \
     $(LIB_DIR)/libchipmunk.a
@@ -112,9 +323,26 @@ STATICLIBS += \
 DEFINES += -DCC_ENABLE_CHIPMUNK_INTEGRATION=1
 
 ####### Build rules
-$(TARGET): $(OBJECTS) $(STATICLIBS) $(COCOS_LIBS) $(CORE_MAKEFILE_LIST)
+$(TARGET).js: $(OBJECTS) $(STATICLIBS) $(COCOS_LIBS) $(CORE_MAKEFILE_LIST)
 	@mkdir -p $(@D)
 	$(CXX) $(CXXFLAGS) $(OBJECTS) -o $@ $(SHAREDLIBS) $(STATICLIBS) $(LIBS)
+
+$(TARGET).data:
+	@mkdir -p $(@D)
+	$(eval RESTMP := $(shell mktemp -d /tmp/cocos-emscripten.XXXXXX))
+	# Always need a font path, so ensure that it is created first.
+	mkdir -p $(RESTMP)/fonts
+	(cd $(RESOURCE_PATH) && tar cf - $(RESOURCES)) | (cd $(RESTMP) && tar xvf -)
+	# NOTE: we copy the system arial.ttf so that there is always a fallback.
+	cp /Library/Fonts/Arial.ttf $(RESTMP)/fonts/arial.ttf
+	(cd $(RESTMP); python $(PACKAGER) $(EXECUTABLE).data $(patsubst %,--preload %,$(RESOURCES)) --preload fonts --pre-run > $(EXECUTABLE).data.js)
+	mv $(RESTMP)/$(EXECUTABLE).data $@
+	mv $(RESTMP)/$(EXECUTABLE).data.js $@.js
+	rm -rf $(RESTMP)
+
+$(BIN_DIR)/index.html: index.html
+	@mkdir -p $(@D)
+	cp index.html $(@D)
 
 ####### Compile
 $(OBJ_DIR)/%.o: ../%.cpp $(CORE_MAKEFILE_LIST)
