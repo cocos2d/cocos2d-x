@@ -69,7 +69,7 @@ var loadAnalyticsPlugin = function() {
     }
 
 
-    if (cc.kLanguageChinese == langType)
+    if (cc.LANGUAGE_CHINESE == langType)
     {
         g_pAnalytics = plugin.PluginManager.getInstance().loadPlugin("AnalyticsUmeng");
         s_strAppKey = umengKey;
