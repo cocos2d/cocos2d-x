@@ -93,9 +93,15 @@ void CCObject::setGLBufferData(void *buf, GLuint bufSize, int slot)
         }
         glGenBuffers(1, &(m_bufferObject[slot]));
         m_bufferSize[slot] = bufSize;
+
+        glBindBuffer(GL_ARRAY_BUFFER, m_bufferObject[slot]);
+        glBufferData(GL_ARRAY_BUFFER, bufSize, buf, GL_DYNAMIC_DRAW);
     }
-    glBindBuffer(GL_ARRAY_BUFFER, m_bufferObject[slot]);
-    glBufferData(GL_ARRAY_BUFFER, bufSize, buf, GL_STATIC_DRAW);
+    else
+    {
+        glBindBuffer(GL_ARRAY_BUFFER, m_bufferObject[slot]);
+        glBufferSubData(GL_ARRAY_BUFFER, 0, bufSize, buf);
+    }
 }
 void CCObject::setGLIndexData(void *buf, GLuint bufSize, int slot)
 {
@@ -108,9 +114,15 @@ void CCObject::setGLIndexData(void *buf, GLuint bufSize, int slot)
         }
         glGenBuffers(1, &(m_indexBufferObject[slot]));
         m_indexBufferSize[slot] = bufSize;
+
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_indexBufferObject[slot]);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, bufSize, buf, GL_DYNAMIC_DRAW);
     }
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_indexBufferObject[slot]);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, bufSize, buf, GL_STATIC_DRAW);
+    else
+    {
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_indexBufferObject[slot]);
+        glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, bufSize, buf);
+    }
 }
 #endif // EMSCRIPTEN
 CCObject* CCObject::copy()
