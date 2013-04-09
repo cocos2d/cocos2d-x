@@ -76,12 +76,12 @@ CC_DEPRECATED_ATTRIBUTE static __TYPE__* node() \
 
 /** @def CC_ENABLE_CACHE_TEXTURE_DATA
 Enable it if you want to cache the texture data.
-Basically,it's only enabled in android
+Basically, it's only enabled for Emscripten.
 
 It's new in cocos2d-x since v0.99.5
 */
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    #define CC_ENABLE_CACHE_TEXTURE_DATA       0
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_EMSCRIPTEN)
+    #define CC_ENABLE_CACHE_TEXTURE_DATA       1
 #else
     #define CC_ENABLE_CACHE_TEXTURE_DATA       0
 #endif
