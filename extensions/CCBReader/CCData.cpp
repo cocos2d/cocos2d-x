@@ -26,7 +26,7 @@ unsigned char* CCData::getBytes()
     return m_pBytes;
 }
 
-unsigned long CCData::getBytes()
+unsigned long CCData::getSize()
 {
     return m_nSize;
 }
