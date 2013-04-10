@@ -118,7 +118,9 @@ CCNode::~CCNode(void)
     CC_SAFE_RELEASE(m_pGrid);
     CC_SAFE_RELEASE(m_pShaderProgram);
     CC_SAFE_RELEASE(m_pUserObject);
-
+    
+    delete(m_pUserData);
+    
     if(m_pChildren && m_pChildren->count() > 0)
     {
         CCObject* child;
