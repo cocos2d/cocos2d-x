@@ -30,7 +30,7 @@
 #include <pthread.h>
 #include <semaphore.h>
 #include <errno.h>
-
+#include "CCFileUtils.h"
 #include "curl/curl.h"
 
 NS_CC_EXT_BEGIN
@@ -68,6 +68,7 @@ static char s_errorBuffer[CURL_ERROR_SIZE];
 
 typedef size_t (*write_callback)(void *ptr, size_t size, size_t nmemb, void *stream);
 
+static const char *cookieFilename = (CCFileUtils::sharedFileUtils()->getWritablePath() + "cookieFile.txt").c_str();
 
 // Callback function used by libcurl for collect response data
 size_t writeData(void *ptr, size_t size, size_t nmemb, void *stream)
@@ -84,8 +85,8 @@ size_t writeData(void *ptr, size_t size, size_t nmemb, void *stream)
 
 // Prototypes
 bool configureCURL(CURL *handle);
-int processGetTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *errorCode);
-int processPostTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *errorCode);
+int processGetTask(CCHttpRequest *request, write_callback callback, void *stream, void *headerStream, int32_t *errorCode);
+int processPostTask(CCHttpRequest *request, write_callback callback, void *stream, void *headerStream, int32_t *errorCode);
 // int processDownloadTask(HttpRequest *task, write_callback callback, void *stream, int32_t *errorCode);
 
 
@@ -143,14 +144,16 @@ static void* networkThread(void *data)
             case CCHttpRequest::kHttpGet: // HTTP GET
                 retValue = processGetTask(request, 
                                           writeData, 
-                                          response->getResponseData(), 
+                                          response->getResponseData(),
+                                          response->getResponseHeaders(),
                                           &responseCode);
                 break;
             
             case CCHttpRequest::kHttpPost: // HTTP POST
                 retValue = processPostTask(request, 
                                            writeData, 
-                                           response->getResponseData(), 
+                                           response->getResponseData(),
+                                           response->getResponseHeaders(),
                                            &responseCode);
                 break;
             
@@ -235,7 +238,7 @@ bool configureCURL(CURL *handle)
 }
 
 //Process Get Request
-int processGetTask(CCHttpRequest *request, write_callback callback, void *stream, int *responseCode)
+int processGetTask(CCHttpRequest *request, write_callback callback, void *stream, void *headerStream, int *responseCode)
 {
     CURLcode code = CURL_LAST;
     CURL *curl = curl_easy_init();
@@ -289,12 +292,22 @@ int processGetTask(CCHttpRequest *request, write_callback callback, void *stream
             break;
         }
         
+        code = curl_easy_setopt(curl, CURLOPT_COOKIEFILE, cookieFilename);
+        if (code != CURLE_OK) {
+            break;
+        }
+
+        code = curl_easy_setopt(curl, CURLOPT_COOKIEJAR, cookieFilename);
+        if (code != CURLE_OK) {
+            break;
+        }
+        
         code = curl_easy_perform(curl);
         if (code != CURLE_OK) 
         {
             break;
         }
-        
+
         /* free the linked list for header data */
         curl_slist_free_all(cHeaders);
 
@@ -313,7 +326,7 @@ int processGetTask(CCHttpRequest *request, write_callback callback, void *stream
 }
 
 //Process POST Request
-int processPostTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *responseCode)
+int processPostTask(CCHttpRequest *request, write_callback callback, void *stream, void *headerStream, int32_t *responseCode)
 {
     CURLcode code = CURL_LAST;
     CURL *curl = curl_easy_init();
@@ -366,11 +379,27 @@ int processPostTask(CCHttpRequest *request, write_callback callback, void *strea
         if (code != CURLE_OK) {
             break;
         }
+        code = curl_easy_setopt(curl, CURLOPT_COOKIEFILE, cookieFilename);
+        if (code != CURLE_OK) {
+            break;
+        }
+        code = curl_easy_setopt(curl, CURLOPT_COOKIEJAR, cookieFilename);
+        if (code != CURLE_OK) {
+            break;
+        }
+        code = curl_easy_setopt(curl, CURLOPT_HEADERFUNCTION, callback);
+        if (code != CURLE_OK) {
+            break;
+        }
+        code = curl_easy_setopt(curl, CURLOPT_WRITEHEADER, headerStream);
+        if (code != CURLE_OK) {
+            break;
+        }
         code = curl_easy_perform(curl);
         if (code != CURLE_OK) {
             break;
         }
-        
+
         /* free the linked list for header data */
         curl_slist_free_all(cHeaders);
 
