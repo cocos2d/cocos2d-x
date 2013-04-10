@@ -258,6 +258,7 @@ Developers:
         Refactor linux build system and fix many warnings.
         Fixing a bug where missing packages would cause the script to exit on linux.
         Adding 'make run' target for linux projects.
+        Stripping newlines from log message and fixing linux library location.
 
     Peter Young (young40)
         Implements setVisible() for CCEditBox
