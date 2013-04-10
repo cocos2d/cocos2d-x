@@ -412,7 +412,8 @@ void CCUserDefault::initXMLFilePath()
 #ifdef KEEP_COMPATABILITY
     if (! m_sbIsFilePathInitialized)
     {
-        m_sFilePath += CCFileUtils::sharedFileUtils()->getWritablePath() + XML_FILE_NAME;
+        // UserDefault.xml is stored in /data/data/<package-path>/ before v2.1.2
+        m_sFilePath += "/data/data/" + getPackageNameJNI() + "/" + XML_FILE_NAME;
         m_sbIsFilePathInitialized = true;
     }
 #endif
