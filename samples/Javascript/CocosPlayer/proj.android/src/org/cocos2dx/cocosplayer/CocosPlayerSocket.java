@@ -55,30 +55,47 @@ public class CocosPlayerSocket {
 	}
 
 	private void handleConnected() {
-		nativeConnected();
+		Cocos2dxGLSurfaceView.getInstance().queueEvent(new Runnable() {
+			@Override
+			public void run() {
+			    nativeConnected();
+			}
+		});
 	}
 
 	private void handleDisconnected() {
-		nativeDisconnected();
+		Cocos2dxGLSurfaceView.getInstance().queueEvent(new Runnable() {
+			@Override
+			public void run() {
+			    nativeDisconnected();
+			}
+		});
 	}
 
 	private void stopCCB() {
-		nativeStopCCB();
+		Cocos2dxGLSurfaceView.getInstance().queueEvent(new Runnable() {
+			@Override
+			public void run() {
+			    nativeStopCCB();
+			}
+		});
 	}
 
 	private void runScript(String script) {
-		nativeRunScript(script);
+	    nativeRunScript(script);
 	}
 
 	private static native void nativeRunCCB();
 	private static native void nativeConnected();
 	private static native void nativeDisconnected();
 	private static native void nativeStopCCB();
+        private static native void nativeSetOrientation(boolean isPortrait);
 	private static native void nativeRunScript(final String script);
 
 	private static void setOrientation(String isPortrait) {
 		CocosPlayer.setOrientation(isPortrait.equalsIgnoreCase("true") ? 
 				ActivityInfo.SCREEN_ORIENTATION_PORTRAIT : ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+		nativeSetOrientation(isPortrait.equalsIgnoreCase("true") ? true : false);
 	}
 	
 	private void switchCmd(NSDictionary data) {
@@ -88,7 +105,7 @@ public class CocosPlayerSocket {
 			for(int i =0 ; i < keys.length; ++i ) {
 			}
 			if(cmd.equalsIgnoreCase("zip")) {
-				cleanCache();
+			    //cleanCache();
 				try {
 					Log.i(TAG, "Size of NSDATA payload: "+((NSData)data.objectForKey("data")).bytes().length);
 					CCBFileUtilsHelper.unzipCCB(((NSData)data.objectForKey("data")).bytes(), cw);
