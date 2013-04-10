@@ -33,24 +33,26 @@ CCFileUtilsLinux::CCFileUtilsLinux()
 
 bool CCFileUtilsLinux::init()
 {
-    // get application path
-    int length = 0;
-    char fullpath[256] = {0};
-    length = readlink("/proc/self/exe", fullpath, sizeof(fullpath));
-    fullpath[length] = '\0';
+    std::string path;
+    path.append(getenv("HOME"));
+    path.append("/.config/");
+    path.append(getenv("_"));
+    path.append("/");
 
-    std::string resourcePath = fullpath;
-    resourcePath = resourcePath.substr(0, resourcePath.find_last_of("/"));
-    resourcePath += "/../../../Resources/";
-    m_strDefaultResRootPath = resourcePath;
+    struct stat st;
+    stat(path.c_str(), &st);
+    if (!S_ISDIR(st.st_mode)) {
+        mkdir(path.c_str(), 0744);
+    }
+
+    m_writablePath = path;
 
     return CCFileUtils::init();
 }
 
 string CCFileUtilsLinux::getWritablePath()
 {
-    //return current resource path
-    return m_strDefaultResRootPath;
+    return m_writablePath;
 }
 
 bool CCFileUtilsLinux::isFileExist(const std::string& strFilePath)
