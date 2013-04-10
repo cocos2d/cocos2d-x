@@ -10,14 +10,12 @@ DEFINES += -DLINUX
 
 THIS_MAKEFILE := $(CURDIR)/$(word $(words $(MAKEFILE_LIST)),$(MAKEFILE_LIST))
 ifndef COCOS_ROOT
-COCOS_ROOT ?= $(realpath $(dir $(THIS_MAKEFILE))/../..)
-else
-RPATH_REL = ../..
+COCOS_ROOT := $(realpath $(dir $(THIS_MAKEFILE))/../..)
 endif
 COCOS_SRC = $(COCOS_ROOT)/cocos2dx
 OBJ_DIR ?= obj
 
-LIB_DIR = $(COCOS_SRC)/lib/linux
+LIB_DIR = $(COCOS_ROOT)/lib/linux
 BIN_DIR = bin
 
 INCLUDES +=  \
@@ -92,8 +90,9 @@ endif
 endif
 
 SHAREDLIBS += -lglfw -lGLEW -lfontconfig -lpthread -lGL
-SHAREDLIBS += -L$(FMOD_LIBDIR) -Wl,-rpath,$(RPATH_REL)/$(FMOD_LIBDIR)
-SHAREDLIBS += -L$(LIB_DIR) -Wl,-rpath,$(RPATH_REL)/$(LIB_DIR)
+SHAREDLIBS += -L$(FMOD_LIBDIR) -Wl,-rpath,$(abspath $(FMOD_LIBDIR))
+SHAREDLIBS += -L$(LIB_DIR) -Wl,-rpath,$(abspath $(LIB_DIR))
+
 LIBS = -lrt -lz
 
 clean:
