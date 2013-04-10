@@ -293,6 +293,13 @@ Developers:
     Éloi Rivard (azmeuk)
         Linux OpenAL support.
 
+    elmiro
+        Correction of passed buffer size to readlink and verification of result return by readlink.
+
+    harikrishnar (Hari Krishna)
+        Wrong logic in CCArray::initWithObjects.
+        Fixing a bug that button should not get respond if its parent is invisable.
+
 Retired Core Developers:
     WenSheng Yang
         Author of windows port, CCTextField,

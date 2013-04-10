@@ -5,7 +5,7 @@ PLUGIN_NAME=("alipay" "flurry" "nd91" "umeng")
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # ... use paths relative to current directory
 PLUGIN_ROOT="$DIR/../.."
-CXX_GENERATOR_ROOT="$DIR/../../../tools/cxx-generator"
+CXX_GENERATOR_ROOT="$DIR/../../../tools/bindings-generator"
 # Delete the output directory
 if [ -d $PLUGIN_ROOT/jsbindings/auto ]; then
     echo "Delete the output directory."
@@ -30,9 +30,6 @@ check_return_value()
 
 ./genbindings.sh "protocols"
 check_return_value "protocols"
-
-./genbindings-cocos2dx-others.sh
-check_return_value "cocos2dx_others"
 
 for i in "${PLUGIN_NAME[@]}"
 do
