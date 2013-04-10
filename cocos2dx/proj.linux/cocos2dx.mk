@@ -91,7 +91,7 @@ SHAREDLIBS += -lfmodex
 endif
 endif
 
-SHAREDLIBS += -lglfw -lGLEW -lfontconfig
+SHAREDLIBS += -lglfw -lGLEW -lfontconfig -lpthread -lGL
 SHAREDLIBS += -L$(FMOD_LIBDIR) -Wl,-rpath,$(RPATH_REL)/$(FMOD_LIBDIR)
 SHAREDLIBS += -L$(LIB_DIR) -Wl,-rpath,$(RPATH_REL)/$(LIB_DIR)
 LIBS = -lrt -lz
