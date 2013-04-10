@@ -33,19 +33,33 @@ CCFileUtilsLinux::CCFileUtilsLinux()
 
 bool CCFileUtilsLinux::init()
 {
-    //Set writable path to /<user's home>/.config/<app name>/
+    // get application path
+    char fullpath[256] = {0};
+    ssize_t length = readlink("/proc/self/exe", fullpath, sizeof(fullpath)-1);
+
+    if (length <= 0) {
+        return false;
+    }
+
+    fullpath[length] = '\0';
+    std::string resourcePath = fullpath;
+    resourcePath = resourcePath.substr(0, resourcePath.find_last_of("/"));
+    resourcePath += "/../../../Resources/";
+    m_strDefaultResRootPath = resourcePath;
+
+    // Set writable path to ~/.config/<app name>/
     std::string path;
     path.append(getenv("HOME"));
     path.append("/.config/");
     path.append(getenv("_"));
     path.append("/");
-    
+
     struct stat st;
     stat(path.c_str(), &st);
     if (!S_ISDIR(st.st_mode)) {
         mkdir(path.c_str(), 0744);
     }
-    
+
     m_writablePath = path;
 
     return CCFileUtils::init();
