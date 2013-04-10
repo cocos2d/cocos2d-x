@@ -300,6 +300,9 @@ Developers:
         Wrong logic in CCArray::initWithObjects.
         Fixing a bug that button should not get respond if its parent is invisable.
 
+    rogerzanoni
+        Fixing a linking error that libpthread and libGL libraries need to be linked on linux.
+
 Retired Core Developers:
     WenSheng Yang
         Author of windows port, CCTextField,
