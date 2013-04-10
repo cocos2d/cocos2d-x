@@ -39,7 +39,7 @@ if [ -f ${MK_FILE_PATH} ]; then
     rm -rf ${TEMP_FILE_PATH}
 else
     echo "APP_STL := ${STL_CFG}" > ${MK_FILE_PATH}
-    echo "﻿APP_CPPFLAGS += ${CPP_FLAG}" >> ${MK_FILE_PATH}
+    echo "APP_CPPFLAGS += ${CPP_FLAG}" >> ${MK_FILE_PATH}
 fi
 
 exit 0
