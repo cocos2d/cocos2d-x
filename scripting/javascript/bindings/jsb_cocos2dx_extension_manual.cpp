@@ -161,18 +161,21 @@ static JSBool js_cocos2dx_CCTableView_setDelegate(JSContext *cx, uint32_t argc, 
 class JSB_TableViewDataSource : public CCTableViewDataSource
 {
 public:
-    virtual CCSize cellSizeForTable(CCTableView *table)
+    virtual CCSize tableCellSizeForIndex(CCTableView *table, unsigned int idx)
     {
         jsval ret;
-        bool ok = callJSDelegate(table, "cellSizeForTable", ret);
-        if (ok)
-        {
+        bool ok = callJSDelegate(table, idx, "tableCellSizeForIndex", ret);
+        if (!ok) {
+            ok = callJSDelegate(table, "cellSizeForTable", ret);
+        }
+        if (ok) {
             JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
             CCSize size;
             JSBool isSucceed = jsval_to_ccsize(cx, ret, &size);
             if (isSucceed) return size;
         }
         return CCSizeZero;
+        
     }
     
     virtual CCTableViewCell* tableCellAtIndex(CCTableView *table, unsigned int idx)
@@ -343,7 +346,7 @@ static JSBool js_cocos2dx_CCTableView_create(JSContext *cx, uint32_t argc, jsval
             JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
             ret->initWithViewSize(arg1, arg2);
         }
-        ret->_updateContentSize();
+        ret->reloadData();
         
         JS_SET_RVAL(cx, vp, jsret);
         return JS_TRUE;
