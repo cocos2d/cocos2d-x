@@ -99,7 +99,7 @@ static void* networkThread(void *data)
         // Wait for http request tasks from main thread
         int semWaitRet = sem_wait(s_pSem);
         if (semWaitRet < 0) {
-            CCLog("HttpRequest async thread semaphore error: %s\n", strerror(errno));
+            CCLog("HttpRequest async thread semaphore error: %s", strerror(errno));
             break;
         }
         
