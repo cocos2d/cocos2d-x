@@ -625,6 +625,13 @@ void Director::popScene(void)
     }
 }
 
+Scene* Director::popSceneBack(void)
+{
+    popScene();
+
+    return _nextScene;
+}
+
 void Director::popToRootScene(void)
 {
     popToSceneStackLevel(1);
