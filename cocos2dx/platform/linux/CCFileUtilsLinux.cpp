@@ -42,23 +42,16 @@ bool CCFileUtilsLinux::init()
     }
 
     fullpath[length] = '\0';
-    std::string resourcePath = fullpath;
-    resourcePath = resourcePath.substr(0, resourcePath.find_last_of("/"));
-    resourcePath += "/../../../Resources/";
-    m_strDefaultResRootPath = resourcePath;
+    std::string appPath = fullpath;
+    m_strDefaultResRootPath = appPath.substr(0, appPath.find_last_of("/"));
+    m_strDefaultResRootPath += "/../../../Resources/";
 
     // Set writable path to ~/.config/<app name>/
-    std::string path;
-    path.append(getenv("HOME"));
-    path.append("/.config/");
-    path.append(getenv("_"));
-    path.append("/");
+    std::string path = getenv("HOME");
+    path += "/.config";
+    path += appPath.substr(appPath.find_last_of("/"));
+    path += "/";
 
-    struct stat st;
-    stat(path.c_str(), &st);
-    if (!S_ISDIR(st.st_mode)) {
-        mkdir(path.c_str(), 0744);
-    }
 
     m_writablePath = path;
 
@@ -67,6 +60,12 @@ bool CCFileUtilsLinux::init()
 
 string CCFileUtilsLinux::getWritablePath()
 {
+    struct stat st;
+    stat(m_writablePath.c_str(), &st);
+    if (!S_ISDIR(st.st_mode)) {
+        mkdir(m_writablePath.c_str(), 0744);
+    }
+
     return m_writablePath;
 }
 
