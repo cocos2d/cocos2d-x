@@ -1701,30 +1701,30 @@ void TextureSizeTest::onEnter()
     CCLog("Loading 512x512 image...");
     sprite = CCSprite::create("Images/texture512x512.png");
     if( sprite )
-        CCLog("OK\n");
+        CCLog("OK");
     else
-        CCLog("Error\n");
+        CCLog("Error");
 
     CCLog("Loading 1024x1024 image...");
     sprite = CCSprite::create("Images/texture1024x1024.png");
     if( sprite )
-        CCLog("OK\n");
+        CCLog("OK");
     else
-        CCLog("Error\n");
+        CCLog("Error");
 //     @todo
 //     CCLog("Loading 2048x2048 image...");
 //     sprite = CCSprite::create("Images/texture2048x2048.png");
 //     if( sprite )
-//         CCLog("OK\n");
+//         CCLog("OK");
 //     else
-//         CCLog("Error\n");
+//         CCLog("Error");
 //     
 //     CCLog("Loading 4096x4096 image...");
 //     sprite = CCSprite::create("Images/texture4096x4096.png");
 //     if( sprite )
-//         CCLog("OK\n");
+//         CCLog("OK");
 //     else
-//         CCLog("Error\n");
+//         CCLog("Error");
 }
 
 std::string TextureSizeTest::title()

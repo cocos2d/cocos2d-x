@@ -12,6 +12,9 @@ Developers:
     Rolando Abarca
         Javascript Binding and testjs
 
+    martell
+        use tinyxml2 to replace libxml2
+
     mchinen
         fix emulator issue for OpenGL ES 2.0 on Android
 
@@ -112,6 +115,7 @@ Developers:
     Surith Thekkiam (folecr, Zynga)
         contribute for Android module building
         Simpler, correct handling of spritesheet sources for CCScale9Sprite.
+        Clean up linked libraries for android.
 
     Nicolas Gramlich (nicolasgramlich, Zynga)
         fixed CCDirector to use CCLabelBMFont instead of CCLabelTTF
@@ -239,6 +243,7 @@ Developers:
         Making ScriptingCore.cpp compiled fine with C++11 on iOS.
         Using shared NodeLoaderLibrary in CCBReader bindings.
         CCEditBox iOS enchantments/bugfixes.
+        Support variable cell sizes in CCTableView.
 
     ThePickleMan
         Adding 'rotationIsDir' property to ParticleSystem.
@@ -258,6 +263,7 @@ Developers:
         Refactor linux build system and fix many warnings.
         Fixing a bug where missing packages would cause the script to exit on linux.
         Adding 'make run' target for linux projects.
+        Stripping newlines from log message and fixing linux library location.
 
     Peter Young (young40)
         Implements setVisible() for CCEditBox
@@ -299,6 +305,9 @@ Developers:
     harikrishnar (Hari Krishna)
         Wrong logic in CCArray::initWithObjects.
         Fixing a bug that button should not get respond if its parent is invisable.
+
+    rogerzanoni
+        Fixing a linking error that libpthread and libGL libraries need to be linked on linux.
 
 Retired Core Developers:
     WenSheng Yang

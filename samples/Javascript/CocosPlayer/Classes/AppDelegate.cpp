@@ -11,6 +11,7 @@
 #include "js_bindings_chipmunk_registration.h"
 #include "js_bindings_ccbreader.h"
 #include "js_bindings_system_registration.h"
+#include "jsb_opengl_registration.h"
 
 #ifdef JSLOG
 #undef JSLOG
@@ -38,6 +39,10 @@ void handle_ccb_run() {
 
 void handle_connected() {
   CCBHelper::setStatusMessage("Connected!");
+}
+
+void handle_set_orient(bool isPortrait) {
+  CCLOG("ORIENTATION HALF IMPLEMENTED");
 }
 
 void handle_disconnected() {
@@ -122,7 +127,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(register_CCBuilderReader);
     sc->addRegisterCallback(jsb_register_system);
     sc->addRegisterCallback(jsb_register_chipmunk);
-    
+    sc->addRegisterCallback(JSB_register_opengl);
     sc->start();
 
     CCScriptEngineProtocol *pEngine = ScriptingCore::getInstance();
