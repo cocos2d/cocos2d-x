@@ -39,6 +39,9 @@ namespace JS { class Value; }
  */
 #ifdef __cplusplus
 
+// Needed for cocos2d-js
+#define JS_NO_JSVAL_JSID_STRUCT_TYPES
+
 # if defined(DEBUG) && !defined(JS_NO_JSVAL_JSID_STRUCT_TYPES)
 #  define JS_USE_JSID_STRUCT_TYPES
 # endif
