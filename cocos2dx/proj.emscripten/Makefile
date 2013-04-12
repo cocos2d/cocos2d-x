@@ -27,6 +27,7 @@ SOURCES = ../actions/CCAction.cpp \
 ../actions/CCActionTween.cpp \
 ../base_nodes/CCAtlasNode.cpp \
 ../base_nodes/CCNode.cpp \
+../base_nodes/CCGLBufferedNode.cpp \
 ../cocoa/CCAffineTransform.cpp \
 ../cocoa/CCAutoreleasePool.cpp \
 ../cocoa/CCGeometry.cpp \
