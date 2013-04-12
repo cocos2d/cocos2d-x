@@ -45,16 +45,6 @@ CCObject::CCObject(void)
     static unsigned int uObjectCount = 0;
 
     m_uID = ++uObjectCount;
-
-#ifdef EMSCRIPTEN
-    for(int i = 0; i < BUFFER_SLOTS; i++)
-    {
-        m_bufferObject[i] = 0;
-        m_bufferSize[i] = 0;
-        m_indexBufferObject[i] = 0;
-        m_indexBufferSize[i] = 0;
-    }
-#endif //EMSCRIPTEN
 }
 
 CCObject::~CCObject(void)
@@ -81,50 +71,6 @@ CCObject::~CCObject(void)
     }
 }
 
-#ifdef EMSCRIPTEN
-void CCObject::setGLBufferData(void *buf, GLuint bufSize, int slot)
-{
-    // WebGL doesn't support client-side arrays, so generate a buffer and load the data first.
-    if(m_bufferSize[slot] < bufSize)
-    {
-        if(m_bufferObject[slot])
-        {
-            glDeleteBuffers(1, &(m_bufferObject[slot]));
-        }
-        glGenBuffers(1, &(m_bufferObject[slot]));
-        m_bufferSize[slot] = bufSize;
-
-        glBindBuffer(GL_ARRAY_BUFFER, m_bufferObject[slot]);
-        glBufferData(GL_ARRAY_BUFFER, bufSize, buf, GL_DYNAMIC_DRAW);
-    }
-    else
-    {
-        glBindBuffer(GL_ARRAY_BUFFER, m_bufferObject[slot]);
-        glBufferSubData(GL_ARRAY_BUFFER, 0, bufSize, buf);
-    }
-}
-void CCObject::setGLIndexData(void *buf, GLuint bufSize, int slot)
-{
-    // WebGL doesn't support client-side arrays, so generate a buffer and load the data first.
-    if(m_indexBufferSize[slot] < bufSize)
-    {
-        if(m_indexBufferObject[slot])
-        {
-            glDeleteBuffers(1, &(m_indexBufferObject[slot]));
-        }
-        glGenBuffers(1, &(m_indexBufferObject[slot]));
-        m_indexBufferSize[slot] = bufSize;
-
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_indexBufferObject[slot]);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, bufSize, buf, GL_DYNAMIC_DRAW);
-    }
-    else
-    {
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_indexBufferObject[slot]);
-        glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, bufSize, buf);
-    }
-}
-#endif // EMSCRIPTEN
 CCObject* CCObject::copy()
 {
     return copyWithZone(0);
