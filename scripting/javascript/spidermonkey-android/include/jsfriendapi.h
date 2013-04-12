@@ -7,14 +7,12 @@
 #ifndef jsfriendapi_h___
 #define jsfriendapi_h___
 
+#include "mozilla/GuardObjects.h"
+
 #include "jsclass.h"
 #include "jscpucfg.h"
 #include "jspubtd.h"
 #include "jsprvtd.h"
-
-#include "js/HeapAPI.h"
-
-#include "mozilla/GuardObjects.h"
 
 /*
  * This macro checks if the stack pointer has exceeded a given limit. If
@@ -200,6 +198,12 @@ GetRuntime(const JSContext *cx)
     return ContextFriendFields::get(cx)->runtime;
 }
 
+inline JSCompartment *
+GetContextCompartment(const JSContext *cx)
+{
+    return ContextFriendFields::get(cx)->compartment;
+}
+
 typedef bool
 (* PreserveWrapperCallback)(JSContext *cx, JSObject *obj);
 
@@ -216,10 +220,11 @@ class JS_FRIEND_API(AutoSwitchCompartment) {
     JSCompartment *oldCompartment;
   public:
     AutoSwitchCompartment(JSContext *cx, JSCompartment *newCompartment
-                          JS_GUARD_OBJECT_NOTIFIER_PARAM);
-    AutoSwitchCompartment(JSContext *cx, JSHandleObject target JS_GUARD_OBJECT_NOTIFIER_PARAM);
+                          MOZ_GUARD_OBJECT_NOTIFIER_PARAM);
+    AutoSwitchCompartment(JSContext *cx, JSHandleObject target
+                          MOZ_GUARD_OBJECT_NOTIFIER_PARAM);
     ~AutoSwitchCompartment();
-    JS_DECL_USE_GUARD_OBJECT_NOTIFIER
+    MOZ_DECL_USE_GUARD_OBJECT_NOTIFIER
 };
 
 #ifdef OLD_GETTER_SETTER_METHODS
@@ -234,13 +239,14 @@ extern JS_FRIEND_API(bool)
 IsAtomsCompartment(const JSCompartment *c);
 
 /*
- * Check whether it is OK to assign an undeclared property with name
- * propname of the global object in the current script on cx.  Reports
- * an error if one needs to be reported (in particular in all cases
- * when it returns false).
+ * Check whether it is OK to assign an undeclared variable with the name
+ * |propname| at the current location in script.  It is not an error if there is
+ * no current script location, or if that location is not an assignment to an
+ * undeclared variable.  Reports an error if one needs to be reported (and,
+ * particularly, always reports when it returns false).
  */
 extern JS_FRIEND_API(bool)
-CheckUndeclaredVarAssignment(JSContext *cx, JSString *propname);
+ReportIfUndeclaredVarAssignment(JSContext *cx, HandleString propname);
 
 struct WeakMapTracer;
 
@@ -265,9 +271,6 @@ struct WeakMapTracer {
 
 extern JS_FRIEND_API(void)
 TraceWeakMaps(WeakMapTracer *trc);
-
-extern JS_FRIEND_API(bool)
-GCThingIsMarkedGray(void *thing);
 
 extern JS_FRIEND_API(bool)
 AreGCGrayBitsValid(JSRuntime *rt);
@@ -297,6 +300,11 @@ GCThingTraceKind(void *thing);
 extern JS_FRIEND_API(void)
 IterateGrayObjects(JSCompartment *compartment, GCThingCallback cellCallback, void *data);
 
+#ifdef JS_HAS_CTYPES
+extern JS_FRIEND_API(size_t)
+SizeOfDataIfCDataObject(JSMallocSizeOfFun mallocSizeOf, JSObject *obj);
+#endif
+
 /*
  * Shadow declarations of JS internal structures, for access by inline access
  * functions below. Do not use these structures in any other way. When adding
@@ -314,19 +322,20 @@ struct BaseShape {
     JSObject    *parent;
 };
 
-struct Shape {
-    BaseShape   *base;
-    jsid        _1;
-    uint32_t    slotInfo;
+class Shape {
+public:
+    shadow::BaseShape *base;
+    jsid              _1;
+    uint32_t          slotInfo;
 
     static const uint32_t FIXED_SLOTS_SHIFT = 27;
 };
 
 struct Object {
-    Shape       *shape;
-    TypeObject  *type;
-    js::Value   *slots;
-    js::Value   *_1;
+    shadow::Shape      *shape;
+    shadow::TypeObject *type;
+    js::Value          *slots;
+    js::Value          *_1;
 
     size_t numFixedSlots() const { return shape->slotInfo >> Shape::FIXED_SLOTS_SHIFT; }
     Value *fixedSlots() const {
@@ -434,6 +443,9 @@ InitClassWithReserved(JSContext *cx, JSObject *obj, JSObject *parent_proto,
                       JSClass *clasp, JSNative constructor, unsigned nargs,
                       JSPropertySpec *ps, JSFunctionSpec *fs,
                       JSPropertySpec *static_ps, JSFunctionSpec *static_fs);
+
+JS_FRIEND_API(bool)
+DefineProperty(JSContext *cx, JSObject *obj, JSPropertySpec &ps);
 
 JS_FRIEND_API(const Value &)
 GetFunctionNativeReserved(RawObject fun, size_t which);
@@ -676,8 +688,10 @@ SetRuntimeProfilingStack(JSRuntime *rt, ProfileEntry *stack, uint32_t *size,
 JS_FRIEND_API(void)
 EnableRuntimeProfilingStack(JSRuntime *rt, bool enabled);
 
+// Use RawScript rather than UnrootedScript because it may be called from a
+// signal handler
 JS_FRIEND_API(jsbytecode*)
-ProfilingGetPC(JSRuntime *rt, JSScript *script, void *ip);
+ProfilingGetPC(JSRuntime *rt, RawScript script, void *ip);
 
 #ifdef JS_THREADSAFE
 JS_FRIEND_API(void *)
@@ -686,9 +700,6 @@ GetOwnerThread(const JSContext *cx);
 JS_FRIEND_API(bool)
 ContextHasOutstandingRequests(const JSContext *cx);
 #endif
-
-JS_FRIEND_API(JSCompartment *)
-GetContextCompartment(const JSContext *cx);
 
 JS_FRIEND_API(bool)
 HasUnrootedGlobal(const JSContext *cx);
@@ -891,12 +902,6 @@ IsIncrementalBarrierNeeded(JSRuntime *rt);
 
 extern JS_FRIEND_API(bool)
 IsIncrementalBarrierNeeded(JSContext *cx);
-
-extern JS_FRIEND_API(bool)
-IsIncrementalBarrierNeededOnObject(RawObject obj);
-
-extern JS_FRIEND_API(bool)
-IsIncrementalBarrierNeededOnScript(JSScript *obj);
 
 extern JS_FRIEND_API(void)
 IncrementalReferenceBarrier(void *ptr);
@@ -1451,8 +1456,9 @@ struct JSJitInfo {
     uint32_t protoID;
     uint32_t depth;
     OpType type;
-    bool isInfallible;    /* Is op fallible? False in setters. */
-    bool isConstant;      /* Getting a construction-time constant? */
+    bool isInfallible;      /* Is op fallible? False in setters. */
+    bool isConstant;        /* Getting a construction-time constant? */
+    JSValueType returnType; /* The return type tag.  Might be JSVAL_TYPE_UNKNOWN */
 };
 
 static JS_ALWAYS_INLINE const JSJitInfo *
@@ -1563,6 +1569,46 @@ IsReadOnlyDateMethod(JS::IsAcceptableThis test, JS::NativeImpl method);
 
 extern JS_FRIEND_API(bool)
 IsTypedArrayThisCheck(JS::IsAcceptableThis test);
+
+enum CTypesActivityType {
+    CTYPES_CALL_BEGIN,
+    CTYPES_CALL_END,
+    CTYPES_CALLBACK_BEGIN,
+    CTYPES_CALLBACK_END
+};
+
+typedef void
+(* CTypesActivityCallback)(JSContext *cx, CTypesActivityType type);
+
+/*
+ * Sets a callback that is run whenever js-ctypes is about to be used when
+ * calling into C.
+ */
+JS_FRIEND_API(void)
+SetCTypesActivityCallback(JSRuntime *rt, CTypesActivityCallback cb);
+
+class JS_FRIEND_API(AutoCTypesActivityCallback) {
+  private:
+    JSContext *cx;
+    CTypesActivityCallback callback;
+    CTypesActivityType beginType;
+    CTypesActivityType endType;
+    MOZ_DECL_USE_GUARD_OBJECT_NOTIFIER
+
+  public:
+    AutoCTypesActivityCallback(JSContext *cx, CTypesActivityType beginType,
+                               CTypesActivityType endType
+                               MOZ_GUARD_OBJECT_NOTIFIER_PARAM);
+    ~AutoCTypesActivityCallback() {
+        DoEndCallback();
+    }
+    void DoEndCallback() {
+        if (callback) {
+            callback(cx, endType);
+            callback = NULL;
+        }
+    }
+};
 
 } /* namespace js */
 

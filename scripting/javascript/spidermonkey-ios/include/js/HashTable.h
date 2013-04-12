@@ -8,9 +8,12 @@
 #ifndef js_HashTable_h__
 #define js_HashTable_h__
 
+#include "mozilla/Attributes.h"
+#include "mozilla/DebugOnly.h"
+#include "mozilla/Util.h"
+
 #include "js/TemplateLib.h"
 #include "js/Utility.h"
-#include "mozilla/Attributes.h"
 
 namespace js {
 
@@ -467,6 +470,7 @@ struct PointerHasher
 {
     typedef Key Lookup;
     static HashNumber hash(const Lookup &l) {
+        JS_ASSERT(!js::IsPoisonedPtr(l));
         size_t word = reinterpret_cast<size_t>(l) >> zeroBits;
         JS_STATIC_ASSERT(sizeof(HashNumber) == 4);
 #if JS_BYTES_PER_WORD == 4
@@ -477,6 +481,8 @@ struct PointerHasher
 #endif
     }
     static bool match(const Key &k, const Lookup &l) {
+        JS_ASSERT(!js::IsPoisonedPtr(k));
+        JS_ASSERT(!js::IsPoisonedPtr(l));
         return k == l;
     }
 };
