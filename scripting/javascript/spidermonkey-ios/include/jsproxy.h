@@ -73,10 +73,9 @@ class JS_FRIEND_API(BaseProxyHandler) {
 
     /* ES5 Harmony fundamental proxy traps. */
     virtual bool getPropertyDescriptor(JSContext *cx, JSObject *proxy, jsid id,
-                                       bool set, PropertyDescriptor *desc) = 0;
+                                       PropertyDescriptor *desc, unsigned flags) = 0;
     virtual bool getOwnPropertyDescriptor(JSContext *cx, JSObject *proxy,
-                                          jsid id, bool set,
-                                          PropertyDescriptor *desc) = 0;
+                                          jsid id, PropertyDescriptor *desc, unsigned flags) = 0;
     virtual bool defineProperty(JSContext *cx, JSObject *proxy, jsid id,
                                 PropertyDescriptor *desc) = 0;
     virtual bool getOwnPropertyNames(JSContext *cx, JSObject *proxy,
@@ -107,7 +106,6 @@ class JS_FRIEND_API(BaseProxyHandler) {
     virtual JSString *fun_toString(JSContext *cx, JSObject *proxy, unsigned indent);
     virtual bool regexp_toShared(JSContext *cx, JSObject *proxy, RegExpGuard *g);
     virtual bool defaultValue(JSContext *cx, JSObject *obj, JSType hint, Value *vp);
-    virtual bool iteratorNext(JSContext *cx, JSObject *proxy, Value *vp);
     virtual void finalize(JSFreeOp *fop, JSObject *proxy);
     virtual bool getElementIfPresent(JSContext *cx, JSObject *obj, JSObject *receiver,
                                      uint32_t index, Value *vp, bool *present);
@@ -129,11 +127,10 @@ public:
 
     /* ES5 Harmony fundamental proxy traps. */
     virtual bool getPropertyDescriptor(JSContext *cx, JSObject *proxy, jsid id,
-                                       bool set,
-                                       PropertyDescriptor *desc) MOZ_OVERRIDE;
+                                       PropertyDescriptor *desc, unsigned flags) MOZ_OVERRIDE;
     virtual bool getOwnPropertyDescriptor(JSContext *cx, JSObject *proxy,
-                                          jsid id, bool set,
-                                          PropertyDescriptor *desc) MOZ_OVERRIDE;
+                                          jsid id, PropertyDescriptor *desc,
+                                          unsigned flags) MOZ_OVERRIDE;
     virtual bool defineProperty(JSContext *cx, JSObject *proxy, jsid id,
                                 PropertyDescriptor *desc) MOZ_OVERRIDE;
     virtual bool getOwnPropertyNames(JSContext *cx, JSObject *proxy,
@@ -172,8 +169,6 @@ public:
                                  RegExpGuard *g) MOZ_OVERRIDE;
     virtual bool defaultValue(JSContext *cx, JSObject *obj, JSType hint,
                               Value *vp) MOZ_OVERRIDE;
-    virtual bool iteratorNext(JSContext *cx, JSObject *proxy,
-                              Value *vp) MOZ_OVERRIDE;
     virtual JSObject *weakmapKeyDelegate(JSObject *proxy);
 };
 
@@ -181,12 +176,13 @@ public:
 class Proxy {
   public:
     /* ES5 Harmony fundamental proxy traps. */
-    static bool getPropertyDescriptor(JSContext *cx, JSObject *proxy, jsid id, bool set,
-                                      PropertyDescriptor *desc);
-    static bool getPropertyDescriptor(JSContext *cx, JSObject *proxy, jsid id, bool set, Value *vp);
-    static bool getOwnPropertyDescriptor(JSContext *cx, JSObject *proxy, jsid id, bool set,
-                                         PropertyDescriptor *desc);
-    static bool getOwnPropertyDescriptor(JSContext *cx, JSObject *proxy, jsid id, bool set,
+    static bool getPropertyDescriptor(JSContext *cx, JSObject *proxy, jsid id,
+                                      PropertyDescriptor *desc, unsigned flags);
+    static bool getPropertyDescriptor(JSContext *cx, JSObject *proxy, unsigned flags, jsid id,
+                                      Value *vp);
+    static bool getOwnPropertyDescriptor(JSContext *cx, JSObject *proxy, jsid id,
+                                         PropertyDescriptor *desc, unsigned flags);
+    static bool getOwnPropertyDescriptor(JSContext *cx, JSObject *proxy, unsigned flags, jsid id,
                                          Value *vp);
     static bool defineProperty(JSContext *cx, JSObject *proxy, jsid id, PropertyDescriptor *desc);
     static bool defineProperty(JSContext *cx, JSObject *proxy, jsid id, const Value &v);
@@ -216,7 +212,6 @@ class Proxy {
     static JSString *fun_toString(JSContext *cx, JSObject *proxy, unsigned indent);
     static bool regexp_toShared(JSContext *cx, JSObject *proxy, RegExpGuard *g);
     static bool defaultValue(JSContext *cx, JSObject *obj, JSType hint, Value *vp);
-    static bool iteratorNext(JSContext *cx, JSObject *proxy, Value *vp);
     static bool getPrototypeOf(JSContext *cx, JSObject *proxy, JSObject **protop);
 
     static JSObject * const LazyProto;
@@ -249,8 +244,14 @@ inline bool IsProxy(RawObject obj)
 }
 
 /* Shared between object and function proxies. */
-const uint32_t JSSLOT_PROXY_HANDLER = 0;
-const uint32_t JSSLOT_PROXY_PRIVATE = 1;
+/*
+ * NOTE: JSSLOT_PROXY_PRIVATE is 0, because that way slot 0 is usable by API
+ * clients for both proxy and non-proxy objects.  So an API client that only
+ * needs to store one slot's worth of data doesn't need to branch on what sort
+ * of object it has.
+ */
+const uint32_t JSSLOT_PROXY_PRIVATE = 0;
+const uint32_t JSSLOT_PROXY_HANDLER = 1;
 const uint32_t JSSLOT_PROXY_EXTRA   = 2;
 /* Function proxies only. */
 const uint32_t JSSLOT_PROXY_CALL = 4;
