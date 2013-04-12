@@ -73,38 +73,62 @@ static EAGLView *view;
 	
 	NSOpenGLPixelFormat *pixelFormat = [[NSOpenGLPixelFormat alloc] initWithAttributes:attribs];
 	
-	if (!pixelFormat)
+	if (!pixelFormat) {
 		NSLog(@"No OpenGL pixel format");
+    }
 	
-	if( (self = [super initWithFrame:frameRect pixelFormat:[pixelFormat autorelease]]) ) {
-		
-		if( context )
+	if(self = [super initWithFrame:frameRect pixelFormat:[pixelFormat autorelease]]) {
+		if(context) {
 			[self setOpenGLContext:context];
+        }
+        
+        // MacBook Pro with Retina display
+        [self setWantsBestResolutionOpenGLSurface:YES];
 
 		// event delegate
 		eventDelegate_ = [CCEventDispatcher sharedDispatcher];
 	}
     
-    cocos2d::CCEGLView::sharedOpenGLView()->setFrameSize(frameRect.size.width, frameRect.size.height);
+    NSRect backingBounds = frameRect;
     
-    frameZoomFactor_ = 1.0f;
+    // MacBook Pro with Retina display
+    if ([self wantsBestResolutionOpenGLSurface]) {
+        backingBounds = [self convertRectToBacking:[self bounds]];
+    }
+    
+    cocos2d::CCEGLView::sharedOpenGLView()->setFrameSize(backingBounds.size.width, backingBounds.size.height);
+    
+    frameZoomFactor_ = frameRect.size.width / backingBounds.size.width;
 	
 	view = self;
+    
 	return self;
 }
 
-- (id) initWithFrame:(NSRect)frameRect pixelFormat:(NSOpenGLPixelFormat *)format{
-    // event delegate
-    eventDelegate_ = [CCEventDispatcher sharedDispatcher];
+- (id) initWithFrame:(NSRect)frameRect pixelFormat:(NSOpenGLPixelFormat *)format
+{
+    if (self = [super initWithFrame:frameRect pixelFormat:format]) {
+        // MacBook Pro with Retina display
+        [self setWantsBestResolutionOpenGLSurface:YES];
+
+        // event delegate
+        eventDelegate_ = [CCEventDispatcher sharedDispatcher];
+    }
     
-    cocos2d::CCEGLView::sharedOpenGLView()->setFrameSize(frameRect.size.width, frameRect.size.height);
+    NSRect backingBounds = frameRect;
     
-    frameZoomFactor_ = 1.0f;
+    // MacBook Pro with Retina display
+    if ([self wantsBestResolutionOpenGLSurface]) {
+        backingBounds = [self convertRectToBacking:[self bounds]];
+    }
+    
+    cocos2d::CCEGLView::sharedOpenGLView()->setFrameSize(backingBounds.size.width, backingBounds.size.height);
+    
+    // MacBook Pro with Retina display
+    frameZoomFactor_ = frameRect.size.width / backingBounds.size.width;
 	
 	view = self;
     
-    [super initWithFrame:frameRect pixelFormat:format];
-
     return self;
 }
 
