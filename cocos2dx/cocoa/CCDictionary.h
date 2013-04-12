@@ -275,7 +275,7 @@ public:
      *  @param key      The string key for searching.
      *  @see setObject(CCObject*, const std::string&)
      */
-    void setObject(CCObject* pObject, int key);
+    void setObject(CCObject* pObject, long key);
 
     /** 
      *  Remove an object by the specified string key.
@@ -380,7 +380,7 @@ private:
      *  For internal usage, invoked by setObject.
      */
     void setObjectUnSafe(CCObject* pObject, const std::string& key);
-    void setObjectUnSafe(CCObject* pObject, const int key);
+    void setObjectUnSafe(CCObject* pObject, const long key);
     
 public:
     /**

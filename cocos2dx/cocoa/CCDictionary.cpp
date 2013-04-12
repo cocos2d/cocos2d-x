@@ -233,7 +233,7 @@ void CCDictionary::setObject(CCObject* pObject, const std::string& key)
     }
 }
 
-void CCDictionary::setObject(CCObject* pObject, int key)
+void CCDictionary::setObject(CCObject* pObject, long key)
 {
     CCAssert(pObject != NULL, "Invalid Argument!");
     if (m_eDictType == kCCDictUnknown)
@@ -294,7 +294,7 @@ void CCDictionary::setObjectUnSafe(CCObject* pObject, const std::string& key)
     HASH_ADD_STR(m_pElements, m_szKey, pElement);
 }
 
-void CCDictionary::setObjectUnSafe(CCObject* pObject, const int key)
+void CCDictionary::setObjectUnSafe(CCObject* pObject, const long key)
 {
     pObject->retain();
     CCDictElement* pElement = new CCDictElement(key, pObject);
