@@ -126,6 +126,8 @@ class MOZ_EXPORT GuardObjectNotificationReceiver
          mozilla::detail::GuardObjectNotifier()
 #  define MOZ_GUARD_OBJECT_NOTIFIER_PARAM_IN_IMPL \
      , const mozilla::detail::GuardObjectNotifier& _notifier
+#  define MOZ_GUARD_OBJECT_NOTIFIER_ONLY_PARAM_IN_IMPL \
+     const mozilla::detail::GuardObjectNotifier& _notifier
 #  define MOZ_GUARD_OBJECT_NOTIFIER_PARAM_TO_PARENT \
      , _notifier
 #  define MOZ_GUARD_OBJECT_NOTIFIER_ONLY_PARAM_TO_PARENT \
@@ -137,6 +139,7 @@ class MOZ_EXPORT GuardObjectNotificationReceiver
 #  define MOZ_GUARD_OBJECT_NOTIFIER_PARAM
 #  define MOZ_GUARD_OBJECT_NOTIFIER_ONLY_PARAM
 #  define MOZ_GUARD_OBJECT_NOTIFIER_PARAM_IN_IMPL
+#  define MOZ_GUARD_OBJECT_NOTIFIER_ONLY_PARAM_IN_IMPL
 #  define MOZ_GUARD_OBJECT_NOTIFIER_ONLY_PARAM_TO_PARENT
 #  define MOZ_GUARD_OBJECT_NOTIFIER_PARAM_TO_PARENT
 #  define MOZ_GUARD_OBJECT_NOTIFIER_INIT do { } while (0)

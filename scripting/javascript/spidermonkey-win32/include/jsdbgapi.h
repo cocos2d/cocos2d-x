@@ -141,8 +141,9 @@ JS_ClearAllWatchPoints(JSContext *cx);
 
 /************************************************************************/
 
+// RawScript because this needs to be callable from a signal handler
 extern JS_PUBLIC_API(unsigned)
-JS_PCToLineNumber(JSContext *cx, JSScript *script, jsbytecode *pc);
+JS_PCToLineNumber(JSContext *cx, js::RawScript script, jsbytecode *pc);
 
 extern JS_PUBLIC_API(jsbytecode *)
 JS_LineNumberToPC(JSContext *cx, JSScript *script, unsigned lineno);
