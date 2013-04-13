@@ -229,8 +229,9 @@ Developers:
         Adding CCEditBox implementation for Mac OSX.
 
     tiantian20007
-        Fix crash for call runAnimation() in CCBAnimationManagerDelegate::completedAnimationSequenceNamed.
+        Fixing a crash for call runAnimation() in CCBAnimationManagerDelegate::completedAnimationSequenceNamed.
         Fixing a bug that CCControl's touch priority is not set correctly; m_nDefaultTouchPriority is never used.
+        Fixing a syntax error for RENDER_IN_SUBPIXEL macro.
 
     xyhl515
         Fixed a bug that CCControlSwitch::setOn(isOn,false) doesn't work.
