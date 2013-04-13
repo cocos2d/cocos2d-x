@@ -34,11 +34,14 @@ CCFileUtilsLinux::CCFileUtilsLinux()
 bool CCFileUtilsLinux::init()
 {
     // get application path
-    int length = 0;
     char fullpath[256] = {0};
-    length = readlink("/proc/self/exe", fullpath, sizeof(fullpath));
-    fullpath[length] = '\0';
+    ssize_t length = readlink("/proc/self/exe", fullpath, sizeof(fullpath)-1);
 
+    if (length <= 0) {
+        return false;
+    }
+
+    fullpath[length] = '\0';
     std::string resourcePath = fullpath;
     resourcePath = resourcePath.substr(0, resourcePath.find_last_of("/"));
     resourcePath += "/../../../Resources/";

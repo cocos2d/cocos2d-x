@@ -257,11 +257,18 @@ CCScheduler::~CCScheduler(void)
 
 void CCScheduler::removeHashElement(_hashSelectorEntry *pElement)
 {
+
+	cocos2d::CCObject *target = pElement->target;
+
     ccArrayFree(pElement->timers);
-    pElement->target->release();
-    pElement->target = NULL;
     HASH_DEL(m_pHashForTimers, pElement);
     free(pElement);
+
+    // make sure the target is released after we have removed the hash element
+    // otherwise we access invalid memory when the release call deletes the target
+    // and the target calls removeAllSelectors() during its destructor
+    target->release();
+
 }
 
 void CCScheduler::scheduleSelector(SEL_SCHEDULE pfnSelector, CCObject *pTarget, float fInterval, bool bPaused)

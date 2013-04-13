@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/nd_bind_phone_number_layout"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent" 
+	android:orientation ="vertical"
+	android:fillViewport="true"
+	android:gravity="center"
+	>
+	<RelativeLayout
+        android:id="@+id/nd3_title_bar_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/nd3_title_bar_bg"
+        android:orientation="vertical" >
+
+        <!-- 左按钮 -->
+
+        <Button
+            android:id="@+id/nd3_title_bar_button_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dip"
+            android:background="@drawable/nd3_title_bar_return_btn_xml"
+            android:gravity="center"
+            android:text="@string/nd3_topbar_ret"
+            android:textColor="#FFFFFFFF"
+            android:textSize="16sp" >
+        </Button>
+
+        <!-- 标题 -->
+
+        <TextView
+            android:id="@+id/nd3_title_bar_title"
+            style="@style/nd3_textview_0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true" 
+            android:drawablePadding="@dimen/nd3_option_item_marginLeft"
+            android:text="@string/nd_bind_phone_title" >
+        </TextView>
+
+        <!-- 右按钮 -->
+
+        <Button
+            android:id="@+id/nd3_title_bar_button_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dip"
+            android:background="@drawable/nd3_title_bar_action_btn_xml"
+            android:gravity="center"
+            android:text="@string/nd3_account_login_button_right"
+            android:textColor="#FFFFFFFF"
+            android:textSize="16sp"
+            android:visibility="invisible" >
+        </Button>
+    </RelativeLayout>
+    
+    <ScrollView
+     android:layout_width="fill_parent"
+     android:layout_height="fill_parent" 
+     android:fillViewport="true"
+	 android:fadingEdge="none" >
+    <LinearLayout 
+	    android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:orientation="vertical">
+        <!-- 提示 -->
+        <TextView android:id="@+id/nd_account"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"  
+			android:textSize="@dimen/nd3_pay_password_tip_text_size"
+			android:textColor="@color/nd3_white"	
+			android:textStyle="bold"
+			android:padding="@dimen/nd3_margin_size"	
+			android:gravity="center" 
+			>
+		</TextView>
+		<TextView
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content" 
+			android:text="@string/nd_account_bind_tips" 
+			android:textColor="@color/nd3_white"	
+			android:textStyle="bold"
+			android:padding="@dimen/nd3_margin_size"	
+			android:gravity="center"
+			 
+			>
+		</TextView>
+        
+	<!-- 输入绑定的手机号 -->
+	<LinearLayout 
+	    android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:orientation="vertical"
+		android:paddingLeft="@dimen/nd_20"
+		android:paddingRight="@dimen/nd_20"
+		>
+		 
+		
+		<LinearLayout
+		    android:id="@+id/nd_bind_group_code" 
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content" 
+		    >
+			<LinearLayout 
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"  
+			    android:layout_weight="0.8"
+			    android:orientation="vertical">
+			    	<!-- 提示 -->
+					<TextView
+						android:layout_width="fill_parent"
+						android:layout_height="wrap_content"
+						android:gravity="left"
+						android:text="@string/nd_bind_phone_number_enter_number_tip"
+						android:textSize="@dimen/nd3_register_agreement_text_size"
+						android:textColor="@color/nd3_white"		
+						>
+					</TextView>
+			
+					<!-- 编辑框 -->
+					<EditText
+			            android:id="@+id/nd_bind_edit_phone_number"
+			            android:textSize="16.0sp"
+			            android:layout_width="fill_parent"
+			            android:layout_height="wrap_content"
+			            android:layout_marginTop="@dimen/nd3_margin_size"
+			            android:inputType="phone"
+			            android:textColor="@color/nd3_white"
+			            android:background="@drawable/nd3_input_gray"
+			            android:singleLine="true" >
+			        </EditText>	
+		    		
+			</LinearLayout>
+			    
+			<!-- 和 -->
+			<LinearLayout 
+				    android:layout_width="wrap_content"
+			    	android:layout_height="wrap_content"  
+			    	android:orientation="vertical">
+					<TextView
+					    android:id="@+id/nd_number_gain_text"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content" 
+						android:textSize="@dimen/nd3_register_agreement_text_size"
+						android:textColor="@color/nd3_balance_color"	
+						android:visibility="invisible"
+						android:layout_gravity="right"/>
+					
+					<Button 
+					    android:id="@+id/nd_bind_phone_number_gain"
+				    	android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="@string/nd_bind_phone_number_gain_code"
+						android:background="@drawable/nd_white_btn"
+						android:textColor="@color/nd3_font_color"
+						android:layout_gravity="right"
+						android:layout_marginTop="@dimen/nd3_margin_size"
+						/>    
+			</LinearLayout>
+		</LinearLayout>
+		<!-- 请输入收到的短信验证码 -->
+		<LinearLayout
+		    android:id="@+id/nd_bind_phone_number_bind_group_phone_number" 
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:orientation="vertical"
+		    android:layout_marginTop="@dimen/nd_10"
+		    >
+			<!-- 提示 -->
+			<TextView
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:gravity="left"
+				android:text="@string/nd_bind_phone_number_enter_code_tip"
+				android:textSize="@dimen/nd3_register_agreement_text_size"
+				android:textColor="@color/nd3_white"		
+				>
+			</TextView>
+			<!-- 编辑框 -->
+			<EditText
+	            android:id="@+id/nd_bind_edit_code"
+	            android:textSize="16.0sp"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1.0"
+	            android:textColor="@color/nd3_white"
+	            android:background="@drawable/nd3_input_gray"
+	            android:layout_marginTop="@dimen/nd3_margin_size"
+	            android:singleLine="true" />
+		    				    		
+		</LinearLayout>
+		 <!-- 绑定手机 -->				
+		<Button 
+		    android:id="@+id/nd_bind_phone_number_bind"
+	    	android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/nd_bind_phone_number_bind"
+			android:textSize="@dimen/nd3_pay_tip_text_size"
+			android:textColor="@color/nd3_white"	 
+			android:background="@drawable/nd_blue"
+			android:layout_gravity="center"
+			android:layout_marginTop="@dimen/nd_20"
+			/>      
+		
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/nd_bind_phone_reason"
+			android:textSize="@dimen/nd_20"
+			android:textColor="@color/nd3_white"	
+			android:layout_marginTop="@dimen/nd_20" 
+			/>
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/nd_bind_phone_reason1"
+			android:textSize="@dimen/nd3_register_agreement_text_size"
+			android:textColor="@color/nd3_white" 
+			/>
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/nd_bind_phone_reason2"
+			android:textSize="@dimen/nd3_register_agreement_text_size"
+			android:textColor="@color/nd3_white"	 
+			/>
+		<!-- <TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/nd_bind_phone_reason3"
+			android:textSize="@dimen/nd3_register_agreement_text_size"
+			android:textColor="@color/nd3_white"	 
+			/> -->
+		
+	</LinearLayout>
+	</LinearLayout>
+	</ScrollView>  
+</LinearLayout>

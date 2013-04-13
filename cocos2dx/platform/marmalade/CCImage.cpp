@@ -383,7 +383,7 @@ bool BitmapDC::getBitmap( const char *text, int nWidth, int nHeight, CCImage::ET
 				if (iError) { //no valid font found, try to use default
 					
 					fName = "fonts/Marker Felt.ttf" ;
-					//CCLog("No valid font, use default %s\n", fName.c_str());
+					//CCLog("No valid font, use default %s", fName.c_str());
 					iError = openFont( fName, fontSize );
 				}
 			}

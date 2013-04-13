@@ -103,10 +103,10 @@ static bool glew_dynamic_binding()
 	// If the current opengl driver doesn't have framebuffers methods, check if an extension exists
 	if (glGenFramebuffers == NULL)
 	{
-		CCLog("OpenGL: glGenFramebuffers is NULL, try to detect an extension\n");
+		CCLog("OpenGL: glGenFramebuffers is NULL, try to detect an extension");
 		if (strstr(gl_extensions, "ARB_framebuffer_object"))
 		{
-			CCLog("OpenGL: ARB_framebuffer_object is supported\n");
+			CCLog("OpenGL: ARB_framebuffer_object is supported");
 
 			glIsRenderbuffer = (PFNGLISRENDERBUFFERPROC) wglGetProcAddress("glIsRenderbuffer");
 			glBindRenderbuffer = (PFNGLBINDRENDERBUFFERPROC) wglGetProcAddress("glBindRenderbuffer");
@@ -129,7 +129,7 @@ static bool glew_dynamic_binding()
 		else
 		if (strstr(gl_extensions, "EXT_framebuffer_object"))
 		{
-			CCLog("OpenGL: EXT_framebuffer_object is supported\n");
+			CCLog("OpenGL: EXT_framebuffer_object is supported");
 			glIsRenderbuffer = (PFNGLISRENDERBUFFERPROC) wglGetProcAddress("glIsRenderbufferEXT");
 			glBindRenderbuffer = (PFNGLBINDRENDERBUFFERPROC) wglGetProcAddress("glBindRenderbufferEXT");
 			glDeleteRenderbuffers = (PFNGLDELETERENDERBUFFERSPROC) wglGetProcAddress("glDeleteRenderbuffersEXT");
@@ -150,8 +150,8 @@ static bool glew_dynamic_binding()
 		}
 		else
 		{
-			CCLog("OpenGL: No framebuffers extension is supported\n");
-			CCLog("OpenGL: Any call to Fbo will crash!\n");
+			CCLog("OpenGL: No framebuffers extension is supported");
+			CCLog("OpenGL: Any call to Fbo will crash!");
 			return false;
 		}
 	}

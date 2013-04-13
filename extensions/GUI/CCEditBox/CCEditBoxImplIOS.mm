@@ -105,7 +105,9 @@ static const int CC_EDIT_BOX_PADDING = 5;
 
 -(void) setContentSize:(CGSize) size
 {
-    
+    CGRect frame = [textField_ frame];
+    frame.size = size;
+    [textField_ setFrame:frame];
 }
 
 -(void) visit
@@ -262,6 +264,7 @@ bool CCEditBoxImplIOS::initWithSize(const CCSize& size)
         if (!m_systemControl) break;
         
 		initInactiveLabels(size);
+        setContentSize(size);
 		
         return true;
     }while (0);
@@ -275,7 +278,6 @@ void CCEditBoxImplIOS::initInactiveLabels(const CCSize& size)
 
 	m_pLabel = CCLabelTTF::create("", "", 0.0f);
     m_pLabel->setAnchorPoint(ccp(0, 0.5f));
-    m_pLabel->setPosition(ccp(CC_EDIT_BOX_PADDING, size.height / 2.0f));
     m_pLabel->setColor(ccWHITE);
     m_pLabel->setVisible(false);
     m_pEditBox->addChild(m_pLabel, kLabelZOrder);
@@ -283,12 +285,16 @@ void CCEditBoxImplIOS::initInactiveLabels(const CCSize& size)
     m_pLabelPlaceHolder = CCLabelTTF::create("", "", 0.0f);
 	// align the text vertically center
     m_pLabelPlaceHolder->setAnchorPoint(ccp(0, 0.5f));
-    m_pLabelPlaceHolder->setPosition(ccp(CC_EDIT_BOX_PADDING, size.height / 2.0f));
     m_pLabelPlaceHolder->setColor(ccGRAY);
     m_pEditBox->addChild(m_pLabelPlaceHolder, kLabelZOrder);
     
     setFont(pDefaultFontName, size.height*2/3);
     setPlaceholderFont(pDefaultFontName, size.height*2/3);
+}
+
+void CCEditBoxImplIOS::placeInactiveLabels() {
+    m_pLabel->setPosition(ccp(CC_EDIT_BOX_PADDING, m_tContentSize.height / 2.0f));
+    m_pLabelPlaceHolder->setPosition(ccp(CC_EDIT_BOX_PADDING, m_tContentSize.height / 2.0f));
 }
 
 void CCEditBoxImplIOS::setInactiveText(const char* pText)
@@ -511,6 +517,16 @@ void CCEditBoxImplIOS::setContentSize(const CCSize& size)
 {
     m_tContentSize = size;
     CCLOG("[Edit text] content size = (%f, %f)", size.width, size.height);
+    placeInactiveLabels();
+    CCEGLViewProtocol* eglView = CCEGLView::sharedOpenGLView();
+    CGSize controlSize = CGSizeMake(size.width * eglView->getScaleX(),size.height * eglView->getScaleY());
+    
+    if (m_bInRetinaMode)
+    {
+        controlSize.width /= 2.0f;
+        controlSize.height /= 2.0f;
+    }
+    [m_systemControl setContentSize:controlSize];
 }
 
 void CCEditBoxImplIOS::setAnchorPoint(const CCPoint& anchorPoint)
