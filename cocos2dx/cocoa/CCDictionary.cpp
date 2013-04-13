@@ -415,4 +415,10 @@ CCDictionary* CCDictionary::createWithContentsOfFile(const char *pFileName)
     return pRet;
 }
 
+bool CCDictionary::writeToFile(const char *fullPath)
+{
+    return CCFileUtils::sharedFileUtils()->writeToFile(this, fullPath);
+}
+
+
 NS_CC_END

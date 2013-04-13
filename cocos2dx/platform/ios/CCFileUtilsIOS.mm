@@ -39,6 +39,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 static void addValueToCCDict(id key, id value, CCDictionary* pDict);
+static void addCCObjectToNSDict(const char*key, CCObject* object, NSMutableDictionary *dict);
 
 static void addItemToCCArray(id item, CCArray *pArray)
 {
@@ -84,6 +85,40 @@ static void addItemToCCArray(id item, CCArray *pArray)
         pArrayItem->release();
         return;
     }
+}
+
+static void addCCObjectToNSArray(CCObject *object, NSMutableArray *array)
+{
+    // add string into array
+    if (CCString *ccString = dynamic_cast<CCString *>(object)) {
+        NSString *strElement = [NSString stringWithCString:ccString->getCString() encoding:NSUTF8StringEncoding];
+        [array addObject:strElement];
+        return;
+    }
+    
+    // add array into array
+    if (CCArray *ccArray = dynamic_cast<CCArray *>(object)) {
+        NSMutableArray *arrElement = [NSMutableArray array];
+        CCObject *element = NULL;
+        CCARRAY_FOREACH(ccArray, element)
+        {
+            addCCObjectToNSArray(element, arrElement);
+        }
+        [array addObject:arrElement];
+        return;
+    }
+    
+    // add dictionary value into array
+    if (CCDictionary *ccDict = dynamic_cast<CCDictionary *>(object)) {
+        NSMutableDictionary *dictElement = [NSMutableDictionary dictionary];
+        CCDictElement *element = NULL;
+        CCDICT_FOREACH(ccDict, element)
+        {
+            addCCObjectToNSDict(element->getStrKey(), element->getObject(), dictElement);
+        }
+        [array addObject:dictElement];
+    }
+
 }
 
 static void addValueToCCDict(id key, id value, CCDictionary* pDict)
@@ -132,6 +167,43 @@ static void addValueToCCDict(id key, id value, CCDictionary* pDict)
         }
         pDict->setObject(pArray, pKey.c_str());
         pArray->release();
+        return;
+    }
+}
+
+static void addCCObjectToNSDict(const char * key, CCObject* object, NSMutableDictionary *dict)
+{
+    NSString *NSkey = [NSString stringWithCString:key encoding:NSUTF8StringEncoding];
+    
+    // the object is a CCDictionary
+    if (CCDictionary *ccDict = dynamic_cast<CCDictionary *>(object)) {
+        NSMutableDictionary *dictElement = [NSMutableDictionary dictionary];
+        CCDictElement *element = NULL;
+        CCDICT_FOREACH(ccDict, element)
+        {
+            addCCObjectToNSDict(element->getStrKey(), element->getObject(), dictElement);
+        }
+        
+        [dict setObject:dictElement forKey:NSkey];
+        return;
+    }
+    
+    // the object is a CCString
+    if (CCString *element = dynamic_cast<CCString *>(object)) {
+        NSString *strElement = [NSString stringWithCString:element->getCString() encoding:NSUTF8StringEncoding];
+        [dict setObject:strElement forKey:NSkey];
+        return;
+    }
+    
+    // the object is a CCArray
+    if (CCArray *ccArray = dynamic_cast<CCArray *>(object)) {
+        NSMutableArray *arrElement = [NSMutableArray array];
+        CCObject *element = NULL;
+        CCARRAY_FOREACH(ccArray, element)
+        {
+            addCCObjectToNSArray(element, arrElement);
+        }
+        [dict setObject:arrElement forKey:NSkey];
         return;
     }
 }
@@ -232,6 +304,24 @@ CCDictionary* CCFileUtilsIOS::createCCDictionaryWithContentsOfFile(const std::st
     }
     
     return pRet;
+}
+
+bool CCFileUtilsIOS::writeToFile(CCDictionary *dict, const std::string &fullPath)
+{
+    CCLog("iOS||Mac CCDictionary %d write to file %s", dict->m_uID, fullPath.c_str());
+    NSMutableDictionary *nsDict = [NSMutableDictionary dictionary];
+    
+    CCDictElement *element = NULL;
+    CCDICT_FOREACH(dict, element)
+    {
+        addCCObjectToNSDict(element->getStrKey(), element->getObject(), nsDict);
+    }
+    
+    NSString *file = [NSString stringWithUTF8String:fullPath.c_str()];
+    // no one else will write this file
+    [nsDict writeToFile:file atomically:NO];
+    
+    return true;
 }
 
 CCArray* CCFileUtilsIOS::createCCArrayWithContentsOfFile(const std::string& filename)
