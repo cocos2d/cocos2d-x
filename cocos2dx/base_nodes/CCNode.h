@@ -1154,13 +1154,33 @@ public:
      * This method is called internally by onEnter
      */
     void resumeSchedulerAndActions(void);
-    /** 
+    
+    /**
+     * Resumes all scheduled selectors and actions.
+     * @see pesumeSchedulerAndActions()
+     *
+     * @param applyToChildren Calls resumeSchedulerAndActions() for
+     * all children if true ,else it calls
+     * only calls resumeSchedulerAndActions()
+     */
+     void resumeSchedulerAndActions(bool applyToChildren);
+
+    /**
      * Pauses all scheduled selectors and actions.
      * This method is called internally by onExit
      */
     void pauseSchedulerAndActions(void);
     
-    /* 
+    /**
+     * Pauses all scheduled selectors and actions.
+     * @see pauseSchedulerAndActions(void)
+     *
+     * @param applyToChildren Calls pauseSchedulerAndActions() for
+     * all children if true ,else it calls
+     * only calls pauseSchedulerAndActions()
+     */
+    void pauseSchedulerAndActions(bool applyToChildren);
+    /*
      * Update method will be called automatically every frame if "scheduleUpdate" is called, and the node is "live"
      */
     virtual void update(float delta);
