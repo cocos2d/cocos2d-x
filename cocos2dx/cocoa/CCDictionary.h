@@ -230,7 +230,7 @@ public:
      *  @return The object matches the key.
      *  @see objectForKey(const std::string&)
      */
-    CCObject* objectForKey(int key);
+    CCObject* objectForKey(intptr_t key);
     
     /** Get the value according to the specified string key.
      *
@@ -250,7 +250,7 @@ public:
      *          It will return an empty string if the objects aren't CCString pointer or the key wasn't found.
      *  @see valueForKey(int)
      */
-    const CCString* valueForKey(int key);
+    const CCString* valueForKey(intptr_t key);
 
     /** Insert an object to dictionary, and match it with the specified string key.
      *
@@ -275,7 +275,7 @@ public:
      *  @param key      The string key for searching.
      *  @see setObject(CCObject*, const std::string&)
      */
-    void setObject(CCObject* pObject, long key);
+    void setObject(CCObject* pObject, intptr_t key);
 
     /** 
      *  Remove an object by the specified string key.
@@ -293,7 +293,7 @@ public:
      *  @see removeObjectForKey(const std::string&), removeObjectsForKeys(CCArray*),
      *       removeObjectForElememt(CCDictElement*), removeAllObjects().
      */
-    void removeObjectForKey(int key);
+    void removeObjectForKey(intptr_t key);
     
     /**
      *  Remove objects by an array of keys.
@@ -380,7 +380,7 @@ private:
      *  For internal usage, invoked by setObject.
      */
     void setObjectUnSafe(CCObject* pObject, const std::string& key);
-    void setObjectUnSafe(CCObject* pObject, const long key);
+    void setObjectUnSafe(CCObject* pObject, const intptr_t key);
     
 public:
     /**
