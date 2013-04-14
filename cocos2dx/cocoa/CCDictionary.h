@@ -218,7 +218,7 @@ public:
      *          // Do something about pStr2
      *     }
      *  @endcode
-     *  @see objectForKey(int)
+     *  @see objectForKey(intptr_t)
      */
     CCObject* objectForKey(const std::string& key);
     
@@ -238,7 +238,7 @@ public:
      *  @param key  The string key for searching
      *  @return An instance of CCString.
      *          It will return an empty string if the objects aren't CCString pointer or the key wasn't found.
-     *  @see valueForKey(int)
+     *  @see valueForKey(intptr_t)
      */
     const CCString* valueForKey(const std::string& key);
     
@@ -248,7 +248,7 @@ public:
      *  @param key  The string key for searching.
      *  @return An instance of CCString.
      *          It will return an empty string if the objects aren't CCString pointer or the key wasn't found.
-     *  @see valueForKey(int)
+     *  @see valueForKey(intptr_t)
      */
     const CCString* valueForKey(intptr_t key);
 
@@ -261,7 +261,7 @@ public:
      *
      *  @param pObject  The Object to be inserted.
      *  @param key      The string key for searching.
-     *  @see setObject(CCObject*, int)
+     *  @see setObject(CCObject*, intptr_t)
      */
     void setObject(CCObject* pObject, const std::string& key);
     
@@ -281,7 +281,7 @@ public:
      *  Remove an object by the specified string key.
      *
      *  @param key  The string key for searching.
-     *  @see removeObjectForKey(int), removeObjectsForKeys(CCArray*),
+     *  @see removeObjectForKey(intptr_t), removeObjectsForKeys(CCArray*),
      *       removeObjectForElememt(CCDictElement*), removeAllObjects().
      */
     void removeObjectForKey(const std::string& key);
@@ -299,7 +299,7 @@ public:
      *  Remove objects by an array of keys.
      *
      *  @param pKeyArray  The array contains keys to be removed.
-     *  @see removeObjectForKey(const std::string&), removeObjectForKey(int),
+     *  @see removeObjectForKey(const std::string&), removeObjectForKey(intptr_t),
      *       removeObjectForElememt(CCDictElement*), removeAllObjects().
      */
     void removeObjectsForKeys(CCArray* pKeyArray);
@@ -308,7 +308,7 @@ public:
      *  Remove an object by an element.
      *
      *  @param pElement  The element need to be removed.
-     *  @see removeObjectForKey(const std::string&), removeObjectForKey(int),
+     *  @see removeObjectForKey(const std::string&), removeObjectForKey(intptr_t),
      *       removeObjectsForKeys(CCArray*), removeAllObjects().
      */
     void removeObjectForElememt(CCDictElement* pElement);
@@ -316,7 +316,7 @@ public:
     /**
      *  Remove all objects in the dictionary.
      *
-     *  @see removeObjectForKey(const std::string&), removeObjectForKey(int),
+     *  @see removeObjectForKey(const std::string&), removeObjectForKey(intptr_t),
      *       removeObjectsForKeys(CCArray*), removeObjectForElememt(CCDictElement*).
      */
     void removeAllObjects();
@@ -334,7 +334,7 @@ public:
      *  Return a random object in the dictionary.
      *
      *  @return The random object. 
-     *  @see objectForKey(int), objectForKey(const std::string&)
+     *  @see objectForKey(intptr_t), objectForKey(const std::string&)
      */
     CCObject* randomObject();
     
