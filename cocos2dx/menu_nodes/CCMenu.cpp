@@ -315,7 +315,7 @@ void CCMenu::alignItemsVerticallyWithPadding(float padding)
         }
     }
 
-    float y = height / 2.0f;
+    float y = (1.0f - getAnchorPoint().y) * height;
     if (m_pChildren && m_pChildren->count() > 0)
     {
         CCObject* pObject = NULL;
@@ -324,8 +324,12 @@ void CCMenu::alignItemsVerticallyWithPadding(float padding)
             CCNode* pChild = dynamic_cast<CCNode*>(pObject);
             if (pChild)
             {
-                pChild->setPosition(ccp(0, y - pChild->getContentSize().height * pChild->getScaleY() / 2.0f));
-                y -= pChild->getContentSize().height * pChild->getScaleY() + padding;
+                const CCSize itemSize = pChild->getContentSize();
+                pChild->setPosition(ccp(
+                    (itemSize.width * pChild->getScaleX()) * -(0.5f - getAnchorPoint().x),
+                    y - itemSize.height * pChild->getScaleY() / 2.0f
+                ));
+                y -= itemSize.height * pChild->getScaleY() + padding;
             }
         }
     }
