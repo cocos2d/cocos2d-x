@@ -638,7 +638,7 @@ CCScale9Sprite* CCScale9Sprite::resizableSpriteWithCapInsets(CCRect capInsets)
 CCScale9Sprite* CCScale9Sprite::create()
 { 
     CCScale9Sprite *pReturn = new CCScale9Sprite();
-    if (pReturn)
+    if (pReturn && pReturn->init())
     { 
         pReturn->autorelease();   
         return pReturn;
