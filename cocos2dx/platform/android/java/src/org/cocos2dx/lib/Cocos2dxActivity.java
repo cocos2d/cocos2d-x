@@ -27,9 +27,11 @@ import org.cocos2dx.lib.Cocos2dxHelper.Cocos2dxHelperListener;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
 import android.view.ViewGroup;
+import android.util.Log;
 import android.widget.FrameLayout;
 
 public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelperListener {
@@ -139,6 +141,10 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
         // ...add to FrameLayout
         framelayout.addView(this.mGLSurfaceView);
 
+        // Switch to supported OpenGL (ARGB888) mode on emulator
+        if (isAndroidEmulator())
+           this.mGLSurfaceView.setEGLConfigChooser(8 , 8, 8, 8, 16, 0);
+
         this.mGLSurfaceView.setCocos2dxRenderer(new Cocos2dxRenderer());
         this.mGLSurfaceView.setCocos2dxEditText(edittext);
 
@@ -149,6 +155,19 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
     public Cocos2dxGLSurfaceView onCreateView() {
     	return new Cocos2dxGLSurfaceView(this);
     }
+
+   private final static boolean isAndroidEmulator() {
+      String model = Build.MODEL;
+      Log.d(TAG, "model=" + model);
+      String product = Build.PRODUCT;
+      Log.d(TAG, "product=" + product);
+      boolean isEmulator = false;
+      if (product != null) {
+         isEmulator = product.equals("sdk") || product.contains("_sdk") || product.contains("sdk_");
+      }
+      Log.d(TAG, "isEmulator=" + isEmulator);
+      return isEmulator;
+   }
 
 	// ===========================================================
 	// Inner and Anonymous Classes

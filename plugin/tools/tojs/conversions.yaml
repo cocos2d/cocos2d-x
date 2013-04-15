@@ -1,0 +1,96 @@
+definitions:
+  # the names of the functions - we use this to generate the code and to register the functions in
+  # the javascript class
+  ifunction: "js_${generator.prefix}_${class_name}_${func_name}"
+  sfunction: "js_${generator.prefix}_${class_name}_${func_name}"
+  constructor: "js_${generator.prefix}_${class_name}_constructor"
+conversions:
+  # some times you want to use a special native type when converting from spidermonkey to native
+  # the most common case would be from JS-boolean to bool. Using "bool" will fail here since we
+  # pass the address to the conversion method, and a JSBool is defined as an integer in spidermonkey
+  native_types:
+    bool: "JSBool"
+    float: "double"
+    short: "int32_t"
+    "unsigned char": "uint16_t"
+    "char": "int32_t"
+  to_native:
+    # jsval to int
+    int: "ok &= jsval_to_int32(cx, ${in_value}, (int32_t *)&${out_value})"
+    "unsigned int": "ok &= jsval_to_uint32(cx, ${in_value}, &${out_value})"
+    "unsigned char": "ok &= jsval_to_uint16(cx, ${in_value}, &${out_value})"
+    short: "ok &= jsval_to_int32(cx, ${in_value}, &${out_value})"
+    char: "ok &= jsval_to_int32(cx, ${in_value}, &${out_value})"
+    bool: "ok &= JS_ValueToBoolean(cx, ${in_value}, &${out_value})"
+    float: "ok &= JS_ValueToNumber(cx, ${in_value}, &${out_value})"
+    double: "ok &= JS_ValueToNumber(cx, ${in_value}, &${out_value})"
+    # jsval has to be a TypedArray, a UInt32Array with 2 elements
+    "long long": "ok &= jsval_to_long_long(cx, ${in_value}, &${out_value})"
+    "std::string": "ok &= jsval_to_std_string(cx, ${in_value}, &${out_value})"
+    "const char*": "std::string ${out_value}_tmp; ok &= jsval_to_std_string(cx, ${in_value}, &${out_value}_tmp); ${out_value} = ${out_value}_tmp.c_str()"
+    "CCPoint": "ok &= jsval_to_ccpoint(cx, ${in_value}, &${out_value})"
+    "CCRect": "ok &= jsval_to_ccrect(cx, ${in_value}, &${out_value})"
+    "CCSize": "ok &= jsval_to_ccsize(cx, ${in_value}, &${out_value})"
+    "const ccColor4B": "ok &= jsval_to_cccolor4b(cx, ${in_value}, &${out_value})"
+    "const ccColor4F": "ok &= jsval_to_cccolor4f(cx, ${in_value}, &${out_value})"
+    "const ccColor3B": "ok &= jsval_to_cccolor3b(cx, ${in_value}, &${out_value})"
+    "CCArray*": "ok &= jsval_to_ccarray(cx, ${in_value}, &${out_value})"
+    "CCDictionary*": "ok &= jsval_to_ccdictionary(cx, ${in_value}, &${out_value})"
+    object: |
+      do {
+      ${($level + 1) * '\t'}js_proxy_t *proxy;
+      ${($level + 1) * '\t'}JSObject *tmpObj = JSVAL_TO_OBJECT(${in_value});
+      ${($level + 1) * '\t'}JS_GET_NATIVE_PROXY(proxy, tmpObj);
+      ${($level + 1) * '\t'}${out_value} = (${ntype})(proxy ? proxy->ptr : NULL);
+      ${($level + 1) * '\t'}JSB_PRECONDITION2( ${out_value}, cx, JS_FALSE, "Invalid Native Object");
+      ${($level + 0) * '\t'}} while (0)
+    TProductInfo: "ok &= jsval_to_TProductInfo(cx, ${in_value}, &${out_value})"
+    TDeveloperInfo: "ok &= jsval_to_TDeveloperInfo(cx, ${in_value}, &${out_value})"
+    TPaymentInfo: "ok &= jsval_to_TPaymentInfo(cx, ${in_value}, &${out_value})"
+    LogEventParamMap*: |
+      LogEventParamMap ${out_value}_tmp;
+      ${($level + 0) * '\t'}do {
+      ${($level + 1) * '\t'}ok &= jsval_to_LogEventParamMap(cx, ${in_value}, &${out_value});
+      ${($level + 1) * '\t'}if (ok) { ${out_value}_tmp = *${out_value}; delete ${out_value}; ${out_value} = &${out_value}_tmp; } else { ${out_value} = NULL; }
+      ${($level + 0) * '\t'}} while(0)
+    long: "ok &= jsval_to_long(cx, ${in_value}, (long *)&${out_value})"
+
+  from_native:
+    # int to jsval
+    int: "${out_value} = int32_to_jsval(cx, ${in_value})"
+    "unsigned int": "${out_value} = uint32_to_jsval(cx, ${in_value})"
+    "unsigned char": "${out_value} = uint32_to_jsval(cx, ${in_value})"
+    "long long": "${out_value} = long_long_to_jsval(cx, ${in_value})"
+    "std::string": "${out_value} = std_string_to_jsval(cx, ${in_value})"
+    "const char*": "${out_value} = c_string_to_jsval(cx, ${in_value})"
+    bool: "${out_value} = BOOLEAN_TO_JSVAL(${in_value})"
+    float: "${out_value} = DOUBLE_TO_JSVAL(${in_value})"
+    double: "${out_value} = DOUBLE_TO_JSVAL(${in_value})"
+    "CCPoint": "${out_value} = ccpoint_to_jsval(cx, ${in_value})"
+    "CCRect": "${out_value} = ccrect_to_jsval(cx, ${in_value})"
+    "CCSize": "${out_value} = ccsize_to_jsval(cx, ${in_value})"
+    "const ccGridSize": "${out_value} = ccgridsize_to_jsval(cx, ${in_value})"
+    "const ccColor4B": "${out_value} = cccolor4b_to_jsval(cx, ${in_value})"
+    "const ccColor4F": "${out_value} = cccolor4f_to_jsval(cx, ${in_value})"
+    "const ccColor3B": "${out_value} = cccolor3b_to_jsval(cx, ${in_value})"
+    "ccColor4B": "${out_value} = cccolor4b_to_jsval(cx, ${in_value})"
+    "ccColor4F": "${out_value} = cccolor4f_to_jsval(cx, ${in_value})"
+    "ccColor3B": "${out_value} = cccolor3b_to_jsval(cx, ${in_value})"
+    "CCArray*": "${out_value} = ccarray_to_jsval(cx, ${in_value})"
+    "CCDictionary*": "${out_value} = ccdictionary_to_jsval(cx, ${in_value})"
+    TProductInfo: "${out_value} = TProductInfo_to_jsval(cx, ${in_value})"
+    TDeveloperInfo: "${out_value} = TDeveloperInfo_to_jsval(cx, ${in_value})"
+    TPaymentInfo: "${out_value} = TPaymentInfo_to_jsval(cx, ${in_value})"
+    LogEventParamMap*: "${out_value} = LogEventParamMap_to_jsval(cx, ${in_value})"
+    long: "${out_value} = long_to_jsval(cx, ${in_value})"
+
+    object: |
+      do {
+      ${($level + 1) * '\t'}if (${in_value}) {
+      ${($level + 2) * '\t'}js_proxy_t *proxy = js_get_or_create_proxy<${ntype.replace("*", "")}>(cx, ${in_value});
+      ${($level + 2) * '\t'}${out_value} = OBJECT_TO_JSVAL(proxy->obj);
+      ${($level + 1) * '\t'}} else {
+      ${($level + 2) * '\t'}${out_value} = JSVAL_NULL;
+      ${($level + 1) * '\t'}}
+      ${($level) * '\t'}} while (0)
+

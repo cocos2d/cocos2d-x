@@ -253,20 +253,17 @@ public:
 	}
 
 	int computeLineStartY( FT_Face face, CCImage::ETextAlign eAlignMask, int txtHeight, int borderHeight ){
-		int iRet;
-		if (eAlignMask == CCImage::kAlignCenter || eAlignMask == CCImage::kAlignLeft
-				|| eAlignMask == CCImage::kAlignRight) {
+		int baseLinePos = ceilf(FT_MulFix( face->bbox.yMax, face->size->metrics.y_scale )/64.0f);
+		if (eAlignMask == CCImage::kAlignCenter || eAlignMask == CCImage::kAlignLeft || eAlignMask == CCImage::kAlignRight) {
 			//vertical center
-			iRet = (borderHeight - txtHeight) / 2 + (face->size->metrics.ascender >> 6);
-		} else if (eAlignMask == CCImage::kAlignBottomRight || eAlignMask == CCImage::kAlignBottom
-				|| eAlignMask == CCImage::kAlignBottomLeft) {
+			return (borderHeight - txtHeight) / 2 + baseLinePos;
+		} else if (eAlignMask == CCImage::kAlignBottomRight || eAlignMask == CCImage::kAlignBottom || eAlignMask == CCImage::kAlignBottomLeft) {
 			//vertical bottom
-			iRet = borderHeight - txtHeight + (face->size->metrics.ascender >> 6);
-		} else {
-			// left or other situation
-			iRet = (face->size->metrics.ascender >> 6);
+			return borderHeight - txtHeight + baseLinePos;
 		}
-		return iRet;
+
+		// top alignment
+		return baseLinePos;
 	}
 
     std::string getFontFile(const char* family_name) {
@@ -350,8 +347,11 @@ public:
 		iMaxLineWidth = MAX(iMaxLineWidth, nWidth);
 
 		//compute the final line height
-		iMaxLineHeight = (face->size->metrics.ascender >> 6) - (face->size->metrics.descender >> 6);
-		iMaxLineHeight *= textLines.size();
+		iMaxLineHeight = ceilf(FT_MulFix( face->bbox.yMax - face->bbox.yMin, face->size->metrics.y_scale )/64.0f);
+		int lineHeight = face->size->metrics.height>>6;
+		if ( textLines.size() > 0 ) {
+			iMaxLineHeight += (lineHeight * (textLines.size() -1));
+		}
 		int txtHeight = iMaxLineHeight;
 		iMaxLineHeight = MAX(iMaxLineHeight, nHeight);
 
@@ -377,27 +377,30 @@ public:
 				int xoffset = iCurXCursor + glyph.paintPosition;
 
 				for (int y = 0; y < bitmap.rows; ++y) {
+                    int iY = yoffset + y;
+                    if (iY>=iMaxLineHeight) {
+                        //exceed the height truncate
+                        break;
+                    }
+                    iY *= iMaxLineWidth;
+
+                    int bitmap_y = y * bitmap.width;
+
 					for (int x = 0; x < bitmap.width; ++x) {
-						unsigned char cTemp = bitmap.buffer[y * bitmap.width + x];
+						unsigned char cTemp = bitmap.buffer[bitmap_y + x];
 						if (cTemp == 0) {
 							continue;
 						}
 
-						int iY = yoffset + y;
 						int iX = xoffset + x;
 
-						if (iY>=iMaxLineHeight) {
-							//exceed the height truncate
-							continue;
-						}
-
 						int iTemp = cTemp << 24 | cTemp << 16 | cTemp << 8 | cTemp;
-						*(int*) &m_pData[(iY * iMaxLineWidth + iX) * 4 + 0] = iTemp;
+						*(int*) &m_pData[(iY + iX) * 4 + 0] = iTemp;
 					}
 				}
 			}
 			// step to next line
-			iCurYCursor += (face->size->metrics.ascender >> 6) - (face->size->metrics.descender >> 6);
+			iCurYCursor += lineHeight;
 		}
 
 		//  free face
