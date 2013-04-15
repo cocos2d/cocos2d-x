@@ -404,7 +404,7 @@ int CCLuaStack::executeFunctionByHandler(int nHandler, int numArgs)
     return ret;
 }
 
-bool CCLuaStack::executeAssert(bool cond, const char *msg)
+bool CCLuaStack::handleAssert(const char *msg)
 {
     if (m_callFromLua == 0) return false;
     
