@@ -147,9 +147,9 @@ protected:
     ccColor3B m_ColorSpaceHolder;
 public:
 	virtual void setSecureTextEntry(bool value);
-	virtual bool getSecureTextEntry();
+	virtual bool isSecureTextEntry();
 protected:
-	bool m_pSecureTextEntry;
+	bool m_bSecureTextEntry;
 protected:
 
     virtual void draw();
