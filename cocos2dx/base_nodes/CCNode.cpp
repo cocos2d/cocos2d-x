@@ -43,7 +43,7 @@ THE SOFTWARE.
 #if CC_NODE_RENDER_SUBPIXEL
 #define RENDER_IN_SUBPIXEL
 #else
-#define RENDER_IN_SUBPIXEL (__ARGS__) (ceil(__ARGS__))
+#define RENDER_IN_SUBPIXEL(__ARGS__) (ceil(__ARGS__))
 #endif
 
 NS_CC_BEGIN

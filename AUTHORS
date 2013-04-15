@@ -229,8 +229,9 @@ Developers:
         Adding CCEditBox implementation for Mac OSX.
 
     tiantian20007
-        Fix crash for call runAnimation() in CCBAnimationManagerDelegate::completedAnimationSequenceNamed.
+        Fixing a crash for call runAnimation() in CCBAnimationManagerDelegate::completedAnimationSequenceNamed.
         Fixing a bug that CCControl's touch priority is not set correctly; m_nDefaultTouchPriority is never used.
+        Fixing a syntax error for RENDER_IN_SUBPIXEL macro.
 
     xyhl515
         Fixed a bug that CCControlSwitch::setOn(isOn,false) doesn't work.
@@ -291,7 +292,8 @@ Developers:
 
     Yodesoft
         Improving font rendering performance for linux platform.
-        YodesoftReduce function call in nativeInitBitmapDC to improve performance.
+        Reducing function call in nativeInitBitmapDC to improve performance.
+        Refactoring writable path to "<user's home>/.config/<app name>" for linux platform.
 
     sjchao
         Fixing a display bug when a scrollView nested in another scrollView.
@@ -308,6 +310,13 @@ Developers:
 
     rogerzanoni
         Fixing a linking error that libpthread and libGL libraries need to be linked on linux.
+        Fixing a compiling error of [-Werror=array-bounds] when compiling Box2dTestBed.
+
+    zhanghaojie
+        Fixing a bug that anchorPoint property of CCScale9Sprite doesn't work in CCBReader.
+
+    MarkEHenderson (Mark Henderson)
+        Fix of variable initialization in SpriteBatchNode.
 
 Retired Core Developers:
     WenSheng Yang
