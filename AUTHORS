@@ -292,7 +292,8 @@ Developers:
 
     Yodesoft
         Improving font rendering performance for linux platform.
-        YodesoftReduce function call in nativeInitBitmapDC to improve performance.
+        Reducing function call in nativeInitBitmapDC to improve performance.
+        Refactoring writable path to "<user's home>/.config/<app name>" for linux platform.
 
     sjchao
         Fixing a display bug when a scrollView nested in another scrollView.
