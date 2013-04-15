@@ -315,6 +315,9 @@ Developers:
     zhanghaojie
         Fixing a bug that anchorPoint property of CCScale9Sprite doesn't work in CCBReader.
 
+    MarkEHenderson (Mark Henderson)
+        Fix of variable initialization in SpriteBatchNode.
+
 Retired Core Developers:
     WenSheng Yang
         Author of windows port, CCTextField,
