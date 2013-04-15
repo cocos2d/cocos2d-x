@@ -55,7 +55,7 @@ CCTextFieldTTF::CCTextFieldTTF()
 , m_nCharCount(0)
 , m_pInputText(new std::string)
 , m_pPlaceHolder(new std::string)   // prevent CCLabelTTF initWithString assertion
-, m_pSecureTextEntry(false)
+, m_bSecureTextEntry(false)
 {
     m_ColorSpaceHolder.r = m_ColorSpaceHolder.g = m_ColorSpaceHolder.b = 127;
 }
@@ -297,7 +297,7 @@ void CCTextFieldTTF::setString(const char *text)
     {
         m_pInputText = new std::string(text);
 		displayText = *m_pInputText;
-		if (m_pSecureTextEntry)
+		if (m_bSecureTextEntry)
 		{
 			displayText = "";
 			length = m_pInputText->length();
@@ -349,16 +349,16 @@ const char * CCTextFieldTTF::getPlaceHolder(void)
 // secureTextEntry
 void CCTextFieldTTF::setSecureTextEntry(bool value)
 {
-	if (m_pSecureTextEntry != value)
+	if (m_bSecureTextEntry != value)
 	{
-		m_pSecureTextEntry = value;
+		m_bSecureTextEntry = value;
 		setString(getString());
 	}
 }
 
-bool CCTextFieldTTF::getSecureTextEntry()
+bool CCTextFieldTTF::isSecureTextEntry()
 {
-	return m_pSecureTextEntry;
+	return m_bSecureTextEntry;
 }
 
 NS_CC_END
