@@ -630,7 +630,8 @@ CCNode * CCBReader::readNodeGraph(CCNode * pParent) {
         CCNode *embeddedNode = ccbFileNode->getCCBFileNode();
         embeddedNode->setPosition(ccbFileNode->getPosition());
         embeddedNode->setRotation(ccbFileNode->getRotation());
-        embeddedNode->setScale(ccbFileNode->getScale());
+        embeddedNode->setScaleX(ccbFileNode->getScaleX());
+        embeddedNode->setScaleY(ccbFileNode->getScaleY());
         embeddedNode->setTag(ccbFileNode->getTag());
         embeddedNode->setVisible(true);
         embeddedNode->ignoreAnchorPointForPosition(ccbFileNode->isIgnoreAnchorPointForPosition());
