@@ -312,6 +312,9 @@ Developers:
         Fixing a linking error that libpthread and libGL libraries need to be linked on linux.
         Fixing a compiling error of [-Werror=array-bounds] when compiling Box2dTestBed.
 
+    zhanghaojie
+        Fixing a bug that anchorPoint property of CCScale9Sprite doesn't work in CCBReader.
+
 Retired Core Developers:
     WenSheng Yang
         Author of windows port, CCTextField,
