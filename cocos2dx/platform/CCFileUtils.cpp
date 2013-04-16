@@ -328,42 +328,124 @@ CCArray* CCFileUtils::createCCArrayWithContentsOfFile(const std::string& filenam
 }
 
 /*
+ * forward statement
+ */
+static tinyxml2::XMLElement* generateElementForArray(cocos2d::CCArray *array, tinyxml2::XMLDocument *pDoc);
+static tinyxml2::XMLElement* generateElementForDict(cocos2d::CCDictionary *dict, tinyxml2::XMLDocument *pDoc);
+
+/*
  * Use tinyxml2 to write plist files
  */
 bool CCFileUtils::writeToFile(cocos2d::CCDictionary *dict, const std::string &fullPath)
 {
-    CCLOG("tinyxml2 CCDictionary %d writeToFile %s", dict->m_uId, fullPath.c_str())
+    CCLOG("tinyxml2 CCDictionary %d writeToFile %s", dict->m_uID, fullPath.c_str());
     bool bRet = false;
     tinyxml2::XMLDocument *pDoc = new tinyxml2::XMLDocument();
     if (NULL == pDoc)
         return false;
     
-	tinyxml2::XMLDeclaration *pDeclaration = pDoc->NewDeclaration("xml version=\"1.0\" encoding=\"UTF-8\"");
-	if (NULL == pDeclaration)
-		return false;
+    tinyxml2::XMLDeclaration *pDeclaration = pDoc->NewDeclaration("xml version=\"1.0\" encoding=\"UTF-8\"");
+    if (NULL == pDeclaration)
+        return false;
     
-	pDoc->LinkEndChild(pDeclaration);
+    pDoc->LinkEndChild(pDeclaration);
     tinyxml2::XMLElement *docType = pDoc->NewElement("!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\"");
     pDoc->LinkEndChild(docType);
     
-	tinyxml2::XMLElement *pRootEle = pDoc->NewElement("plist");
+    tinyxml2::XMLElement *pRootEle = pDoc->NewElement("plist");
     pRootEle->SetAttribute("version", "1.0");
-	if (NULL == pRootEle)
-		return false;
-	pDoc->LinkEndChild(pRootEle);
+    if (NULL == pRootEle)
+        return false;
+    pDoc->LinkEndChild(pRootEle);
     
     tinyxml2::XMLElement *innerDict = generateElementForDict(dict, pDoc);
     if (NULL == innerDict )
         return false;
     pRootEle->LinkEndChild(innerDict);
     
-	bRet = tinyxml2::XML_SUCCESS == pDoc->SaveFile(fullPath.c_str());
+    bRet = tinyxml2::XML_SUCCESS == pDoc->SaveFile(fullPath.c_str());
     
-	if(pDoc)
-		delete pDoc;
+    if(pDoc)
+        delete pDoc;
     
     return bRet;
 }
+
+/*
+ * Generate tinyxml2::XMLElement for CCObject through a tinyxml2::XMLDocument
+ */
+static tinyxml2::XMLElement* generateElementForObject(cocos2d::CCObject *object, tinyxml2::XMLDocument *pDoc)
+{
+    tinyxml2::XMLElement* rootNode = NULL;
+    // object is CCString
+    CCString *str = dynamic_cast<CCString *>(object);
+    if (str)
+    {
+        rootNode = pDoc->NewElement("string");
+        tinyxml2::XMLText* content = pDoc->NewText(str->getCString());
+        rootNode->LinkEndChild(content);
+        return rootNode;
+    }
+    
+    // object is CCArray
+    CCArray *array = dynamic_cast<CCArray *>(object);
+    if (array)
+    {
+        rootNode = generateElementForArray(array, pDoc);
+        return rootNode;
+    }
+    
+    // object is CCDictionary
+    CCDictionary *innerDict = dynamic_cast<CCDictionary *>(object);
+    if (innerDict)
+    {
+        rootNode = generateElementForDict(innerDict, pDoc);
+        return rootNode;
+    }
+    
+    return rootNode;
+}
+
+/*
+ * Generate tinyxml2::XMLElement for CCDictionary through a tinyxml2::XMLDocument
+ */
+static tinyxml2::XMLElement* generateElementForDict(cocos2d::CCDictionary *dict, tinyxml2::XMLDocument *pDoc)
+{
+    tinyxml2::XMLElement* rootNode = pDoc->NewElement("dict");
+    
+    CCDictElement *dictElement = NULL;
+    CCDICT_FOREACH(dict, dictElement)
+    {
+        tinyxml2::XMLElement* tmpNode = pDoc->NewElement("key");
+        rootNode->LinkEndChild(tmpNode);
+        tinyxml2::XMLText* content = pDoc->NewText(dictElement->getStrKey());
+        tmpNode->LinkEndChild(content);
+        
+        CCObject *object = dictElement->getObject();
+        tinyxml2::XMLElement *element = generateElementForObject(object, pDoc);
+        if (element)
+            rootNode->LinkEndChild(element);
+    }
+    return rootNode;
+}
+
+/*
+ * Generate tinyxml2::XMLElement for CCArray through a tinyxml2::XMLDocument
+ */
+static tinyxml2::XMLElement* generateElementForArray(cocos2d::CCArray *array, tinyxml2::XMLDocument *pDoc)
+{
+    tinyxml2::XMLElement* rootNode = pDoc->NewElement("array");
+    
+    CCObject *object = NULL;
+    CCARRAY_FOREACH(array, object)
+    {
+        tinyxml2::XMLElement *element = generateElementForObject(object, pDoc);
+        if (element)
+            rootNode->LinkEndChild(element);
+    }
+    return rootNode;
+}
+
 
 #else
 NS_CC_BEGIN
@@ -374,40 +456,6 @@ bool CCFileUtils::writeToFile(cocos2d::CCDictionary *dict, const std::string &fu
 CCArray* CCFileUtils::createCCArrayWithContentsOfFile(const std::string& filename) {return NULL;}
 
 #endif /* (CC_TARGET_PLATFORM != CC_PLATFORM_IOS) && (CC_TARGET_PLATFORM != CC_PLATFORM_MAC) */
-
-
-/*
- * Generate tinyxml2::XMLElement for CCDictionary through a tinyxml2::XMLDocument
- */
-static tinyxml2::XMLElement* generateElementForDict(cocos2d::CCDictionary *dict, tinyxml2::XMLDocument *pDoc)
-{
-    tinyxml2::XMLElement* rootNode = pDoc->NewElement("dict");
-    
-    CCDictElement *element = NULL;
-    CCDICT_FOREACH(dict, element)
-    {
-        tinyxml2::XMLElement* tmpNode = pDoc->NewElement("key");
-        rootNode->LinkEndChild(tmpNode);
-        tinyxml2::XMLText* content = pDoc->NewText(element->getStrKey());
-        tmpNode->LinkEndChild(content);
-        
-        CCObject *object = element->getObject();
-        CCString *str = dynamic_cast<CCString *>(object);
-        if (str)
-        {
-            tinyxml2::XMLElement* tmpNode = pDoc->NewElement("string");
-            rootNode->LinkEndChild(tmpNode);
-            tinyxml2::XMLText* content = pDoc->NewText(str->getCString());
-            tmpNode->LinkEndChild(content);
-            continue;
-        }
-        
-        CCDictionary *innerDict = dynamic_cast<CCDictionary *>(object);
-        if (innerDict)
-            rootNode->LinkEndChild(generateElementForDict(innerDict, pDoc));
-    }
-    return rootNode;
-}
 
 
 CCFileUtils* CCFileUtils::s_sharedFileUtils = NULL;
