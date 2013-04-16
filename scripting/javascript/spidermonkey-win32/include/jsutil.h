@@ -12,6 +12,7 @@
 #define jsutil_h___
 
 #include "mozilla/Attributes.h"
+#include "mozilla/GuardObjects.h"
 
 #include "js/Utility.h"
 
@@ -158,20 +159,21 @@ ImplicitCast(U &u)
 template<typename T>
 class AutoScopedAssign
 {
-  private:
-    JS_DECL_USE_GUARD_OBJECT_NOTIFIER
-    T *addr;
-    T old;
-
   public:
-    AutoScopedAssign(T *addr, const T &value JS_GUARD_OBJECT_NOTIFIER_PARAM)
+    AutoScopedAssign(T *addr, const T &value
+                     MOZ_GUARD_OBJECT_NOTIFIER_PARAM)
         : addr(addr), old(*addr)
     {
-        JS_GUARD_OBJECT_NOTIFIER_INIT;
+        MOZ_GUARD_OBJECT_NOTIFIER_INIT;
         *addr = value;
     }
 
     ~AutoScopedAssign() { *addr = old; }
+
+  private:
+    MOZ_DECL_USE_GUARD_OBJECT_NOTIFIER
+    T *addr;
+    T old;
 };
 
 template <class T>

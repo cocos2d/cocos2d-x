@@ -305,10 +305,12 @@ CCNode * CCScrollView::getContainer()
 
 void CCScrollView::setContainer(CCNode * pContainer)
 {
+    // Make sure that 'm_pContainer' has a non-NULL value since there are
+    // lots of logic that use 'm_pContainer'.
+    if (NULL == pContainer)
+        return;
+
     this->removeAllChildrenWithCleanup(true);
-
-    if (!pContainer) return;
-
     this->m_pContainer = pContainer;
 
     this->m_pContainer->ignoreAnchorPointForPosition(false);
