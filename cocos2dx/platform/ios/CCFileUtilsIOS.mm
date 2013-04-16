@@ -318,8 +318,8 @@ bool CCFileUtilsIOS::writeToFile(CCDictionary *dict, const std::string &fullPath
     }
     
     NSString *file = [NSString stringWithUTF8String:fullPath.c_str()];
-    // no one else will write this file
-    [nsDict writeToFile:file atomically:NO];
+    // do it atomically
+    [nsDict writeToFile:file atomically:YES];
     
     return true;
 }
