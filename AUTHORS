@@ -265,6 +265,8 @@ Developers:
         Fixing a bug where missing packages would cause the script to exit on linux.
         Adding 'make run' target for linux projects.
         Stripping newlines from log message and fixing linux library location.
+        Fixing a bug that CCPhysicsSprite was overriding only some of the getPosition methods.
+        Adding a macro USE_BOX2D to check whether to enable Box2D for linux and nacl port.
 
     Peter Young (young40)
         Implements setVisible() for CCEditBox
