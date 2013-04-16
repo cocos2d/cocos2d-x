@@ -8,7 +8,6 @@
 #ifndef jsalloc_h_
 #define jsalloc_h_
 
-#include "jspubtd.h"
 #include "jsutil.h"
 
 namespace js {
