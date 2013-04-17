@@ -3142,8 +3142,42 @@ JSBool js_cocos2dx_CCFileUtils_getStringFromFile(JSContext *cx, uint32_t argc, j
 
 JSBool js_cocos2dx_CCFileUtils_getByteArrayFromFile(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    // TODO:
-    CCAssert(false, "not implemented!");
+    jsval *argv = JS_ARGV(cx, vp);
+    JSBool ok = JS_TRUE;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
+    cocos2d::CCFileUtils* cobj = (cocos2d::CCFileUtils *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
+    
+    if (argc == 1) {
+        const char* arg0;
+        std::string arg0_tmp; ok &= jsval_to_std_string(cx, argv[0], &arg0_tmp); arg0 = arg0_tmp.c_str();
+        JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+        unsigned long size = 0;
+        unsigned char* data = cobj->getFileData(arg0, "rb", &size);
+        do
+        {
+            if (data && size > 0) {
+                JSObject* buffer = JS_NewArrayBuffer(cx, size);
+                if (NULL == buffer) {
+                    break;
+                }
+                uint8_t* bufdata = JS_GetArrayBufferData(buffer);
+                memcpy(bufdata, data, size);
+                
+                JSObject* array = JS_NewUint8ArrayWithBuffer(cx, buffer, 0, -1);
+                if (NULL == array) {
+                    break;
+                }
+                JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(array));
+                return JS_TRUE;
+            }
+        } while(false);
+        
+        JS_ReportError(cx, "get file(%s) data fails", arg0);
+        return JS_FALSE;
+    }
+    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 3);
     return JS_FALSE;
 }
 
