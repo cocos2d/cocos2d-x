@@ -162,11 +162,11 @@ void ScriptingCore::executeJSFunctionWithThisObj(jsval thisObj, jsval callback,
 
 void js_log(const char *format, ...) {
     if (_js_log_buf == NULL) {
-        _js_log_buf = (char *)calloc(sizeof(char), 257);
+        _js_log_buf = (char *)calloc(sizeof(char), kMaxLogLen+1);
     }
     va_list vl;
     va_start(vl, format);
-    int len = vsnprintf(_js_log_buf, 256, format, vl);
+    int len = vsnprintf(_js_log_buf, kMaxLogLen, format, vl);
     va_end(vl);
     if (len) {
         CCLOG("JS: %s\n", _js_log_buf);
@@ -1525,14 +1525,16 @@ jsval std_string_to_jsval(JSContext* cx, std::string& v) {
     return c_string_to_jsval(cx, v.c_str());
 }
 
-jsval c_string_to_jsval(JSContext* cx, const char* v) {
+jsval c_string_to_jsval(JSContext* cx, const char* v, size_t length /* = -1 */) {
     if (v == NULL) {
         return JSVAL_NULL;
     }
     jsval ret = JSVAL_NULL;
-    jschar* strUTF16 = (jschar*)cc_utf8_to_utf16(v);
-    if (strUTF16) {
-        JSString* str = JS_NewUCStringCopyZ(cx, strUTF16);
+    size_t utf16_size = 0;
+    jschar* strUTF16 = (jschar*)cc_utf8_to_utf16(v, length, &utf16_size);
+
+    if (strUTF16 && utf16_size > 0) {
+        JSString* str = JS_NewUCStringCopyN(cx, strUTF16, utf16_size);
         if (str) {
             ret = STRING_TO_JSVAL(str);
         }
