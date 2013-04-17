@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<!-- Class name of game entry -->
+    <string name="g_class_name">cn.emagsoftware.sdk.example.BillingDemo</string>
+    
+	<!-- Billing -->
+	<string name="gc_billing_package_id"></string>
+	<string name="gc_billing_package_name"></string>
+	<string name="gc_billing_islow_version">false</string>
+	<string name="gc_billing_is_no_sound">false</string>
+	<string name="gc_billing_title">中国移动手机游戏</string>
+	<string name="gc_billing_title_2">感谢您支持正版游戏</string>
+	<string name="gc_billing_sending">正在发送激活短信！</string>
+	<string name="gc_billing_info_sms_1">尊敬的{0}用户，您即将购买：</string>
+	<string name="gc_billing_info_sms_2">\r\n游戏名称：{0}</string>
+	<string name="gc_billing_info_sms_3">游戏提供商：{0}</string>
+	<string name="gc_billing_info_sms_4">客服电话：{0}</string>
+	<string name="gc_billing_info_sms_6">{0}</string>
+	<string name="gc_billing_info_sms_7">共需支付话费{0}元（折合{1}点）</string>
+	<string name="gc_billing_info_sms_8">请点击《确定》发送短信确认购买。</string>
+	<string name="gc_billing_info_sms_9">请点击《确定》确认购买。</string>
+	<string name="gc_billing_info_sms_a">* 该道具不属于{0}权益，您可以选择取消购买并免费继续游戏，或确认购买该道具以获得更好的游戏体验。</string>
+	<string name="gc_billing_error_network">网络连接失败！\r\n尊敬的用户，您正在使用中国移动{0}业务中的游戏，需要通过移动网络进行订购关系验证，如果您是中国移动{0}的订购用户，将可免费使用该游戏，如果不是，则需要付费后方可继续使用，请检查您的移动网络是否可用！</string>
+	<string name="gc_billing_ok">付费成功！</string>
+	<string name="gc_billing_ok_history">已付费成功！</string>
+	<string name="gc_billing_fail">您的付费操作失败了，请稍后重试！</string>
+	<string name="gc_billing_require">不进行付费，您将无法获得更好的游戏体验，是否确认？\r\n\r\n点击《不购买》不进行付费，点击《返回》回到付费界面</string>
+	<string name="gc_billing_no_simcard">短信激活失败，请检查SIM卡！</string>
+	<string name="gc_billing_simcard_unavailable">没有可用中国移动SIM卡！</string>
+	<string name="gc_billing_check_network">找不到可用网络，请检查您当前的网络设置！</string>
+	<string name="gc_billing_network_airplane">当前设备处于飞行模式，无可用网络！</string>
+	<string name="gc_billing_network_multi">当前设备存在重复网络，无可用网络！</string>
+	<string name="gc_billing_cmgc_game_tag">此游戏没有配置中国移动标识信息，不能继续使用！</string>
+	<string name="gc_billing_dialog_charging">正在处理付费请求...</string>
+	<string name="gc_billing_invalid_china_mobile_card">请输入有效的手机号码！</string>
+	<string name="gc_billing_fail_phone">您的计费请求失败啦，请尝试输入手机号码进行计费！</string>
+	<string name="gc_billing_fail_vericode">短信验证码获取失败</string>
+	<string name="gc_billing_no_charge">未找到计费信息！</string>
+	<string name="gc_billing_no_vericode">请输入您收到的短信验证码！</string>
+	<string name="gc_billing_no_phone_number">未找到手机号码，请重试！</string>
+	<string name="gc_billing_info_title">感谢您支持正版游戏</string>
+	<string name="gc_billing_info_title_2">游戏付费确认</string>
+	<string name="gc_billing_net_info">您需要输入手机号码，以获取短信验证码，在进入确认界面输入正确验证码之前，不会产生费用。</string>
+	<string name="gc_billing_net_verifycode">短信验证码：</string>
+	<string name="gc_billing_net_verifycode_1">请在确认游戏付费前，正确输入您手机上收到的随机短信验证码。</string>
+	<string name="gc_billing_net_verifycode_2">短信验证码在5分钟内有效，超过时间内仍未收到验证码，建议您稍后重试。</string>
+	<string name="gc_billing_net_phone">手机号码：（请输入正确的{0}）</string>
+	<string name="gc_billing_net_phone_2">移动手机号码</string>
+	<string name="gc_billing_more_time_error">您的付费请求太频繁，请稍后重试！</string>
+	<string name="gc_billing_net_contacts">好友代付</string>
+	<string name="gc_billing_net_contacts_error">没有找到联系人，您可以手动输入付费手机号码</string>
+
+	<!-- Dialog -->
+	<string name="gc_billing_dialog_sure_space">　确定　</string>
+	<string name="gc_billing_dialog_clear_space">　取消　</string>
+	<string name="gc_billing_dialog_continue">　继续　</string>
+	<string name="gc_billing_dialog_exit">　退出　</string>
+	<string name="gc_billing_dialog_information">提示</string>
+	<string name="gc_billing_dialog_sure">确定</string>
+	<string name="gc_billing_dialog_clear">取消</string>
+	<string name="gc_billing_dialog_reject">不购买</string>
+	<string name="gc_billing_dialog_positive">继续</string>
+	<string name="gc_billing_dialog_neutral">结束</string>
+	<string name="gc_billing_dialog_cancel">返回</string>
+</resources>

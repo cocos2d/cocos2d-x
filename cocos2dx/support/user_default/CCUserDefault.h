@@ -110,11 +110,11 @@ public:
     static CCUserDefault* sharedUserDefault();
     static void purgeSharedUserDefault();
     const static std::string& getXMLFilePath();
+    static bool isXMLFileExist();
 
 private:
     CCUserDefault();
     static bool createXMLFile();
-    static bool isXMLFileExist();
     static void initXMLFilePath();
     
     static CCUserDefault* m_spUserDefault;

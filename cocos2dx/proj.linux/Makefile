@@ -9,9 +9,6 @@ INCLUDES += \
 			-I../../external/chipmunk/include/chipmunk \
 			-I../../extensions/network \
 
-DEFINES += -D__CC_PLATFORM_FILEUTILS_CPP__
-DEFINES += -DCC_ENABLE_CHIPMUNK_INTEGRATION
-
 SOURCES = ../actions/CCAction.cpp \
 ../actions/CCActionCamera.cpp \
 ../actions/CCActionEase.cpp \

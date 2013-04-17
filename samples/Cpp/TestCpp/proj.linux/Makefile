@@ -110,8 +110,6 @@ STATICLIBS += \
     $(LIB_DIR)/libbox2d.a \
     $(LIB_DIR)/libchipmunk.a
 
-DEFINES += -DCC_ENABLE_CHIPMUNK_INTEGRATION=1
-
 ####### Build rules
 $(TARGET): $(OBJECTS) $(STATICLIBS) $(COCOS_LIBS) $(CORE_MAKEFILE_LIST)
 	@mkdir -p $(@D)

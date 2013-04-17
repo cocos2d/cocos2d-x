@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="gen"/>
+	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
+	<classpathentry kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
+	<classpathentry exported="true" kind="lib" path="publish/protocols/android/libPluginProtocol.jar"/>
+	<classpathentry exported="true" kind="lib" path="publish/plugins/flurry/android/FlurryAgent.jar"/>
+	<classpathentry exported="true" kind="lib" path="publish/plugins/flurry/android/libPluginFlurry.jar"/>
+	<classpathentry exported="true" kind="lib" path="publish/plugins/umeng/android/libPluginUmeng.jar"/>
+	<classpathentry exported="true" kind="lib" path="publish/plugins/umeng/android/umeng_sdk.jar"/>
+	<classpathentry kind="output" path="bin/classes"/>
+</classpath>
