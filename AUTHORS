@@ -320,6 +320,9 @@ Developers:
     MarkEHenderson (Mark Henderson)
         Fix of variable initialization in SpriteBatchNode.
 
+    akira-cn
+        Adding response for back and menu keypad event for Android.
+
 Retired Core Developers:
     WenSheng Yang
         Author of windows port, CCTextField,
