@@ -26,7 +26,7 @@ fi
 
 if [ $NEED_LUA = "true" ]; then
     LOCAL_STATIC_LIBRARIES=$LOCAL_STATIC_LIBRARIES" cocos_lua_static"
-    MODULES_TO_CALL=$MODULES_TO_CALL" \$(call import-module,scripting/lua/proj.android/jni)"
+    MODULES_TO_CALL=$MODULES_TO_CALL" \$(call import-module,scripting/lua/proj.android)"
 fi
 
 cat > $FILE << EOF
