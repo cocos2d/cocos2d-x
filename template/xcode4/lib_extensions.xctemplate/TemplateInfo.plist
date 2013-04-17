@@ -1369,28 +1369,6 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>libs/extensions/proj.marmalade/cocos2dx-ext.mkf</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>extensions</string>
-				<string>proj.marmalade</string>
-			</array>
-			<key>Path</key>
-			<string>libs/extensions/proj.marmalade/cocos2dx-ext.mkf</string>
-		</dict>
-		<key>libs/extensions/proj.marmalade/cocos2dx-ext_public.defines.txt</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>extensions</string>
-				<string>proj.marmalade</string>
-			</array>
-			<key>Path</key>
-			<string>libs/extensions/proj.marmalade/cocos2dx-ext_public.defines.txt</string>
-		</dict>
 	</dict>
 	<key>Nodes</key>
 	<array>
@@ -1503,8 +1481,6 @@
 		<string>libs/extensions/physics_nodes/CCPhysicsDebugNode.h</string>
 		<string>libs/extensions/physics_nodes/CCPhysicsSprite.cpp</string>
 		<string>libs/extensions/physics_nodes/CCPhysicsSprite.h</string>
-		<string>libs/extensions/proj.marmalade/cocos2dx-ext.mkf</string>
-		<string>libs/extensions/proj.marmalade/cocos2dx-ext_public.defines.txt</string>
 	</array>
 </dict>
 </plist>
