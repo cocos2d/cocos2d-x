@@ -14,6 +14,11 @@ SEL_CCControlHandler TestHeaderLayer::onResolveCCBCCControlSelector(CCObject * p
     return NULL;
 }
 
+void TestHeaderLayer::onNodeLoaded(cocos2d::CCNode * pNode, cocos2d::extension::CCNodeLoader * pNodeLoader)
+{
+    CCLOG("TestHeaderLayer::onNodeLoaded");
+}
+
 void TestHeaderLayer::onBackClicked(cocos2d::CCObject *pSender) {
     CCDirector::sharedDirector()->popScene();
 }

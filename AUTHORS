@@ -12,6 +12,19 @@ Developers:
     Rolando Abarca
         Javascript Binding and testjs
 
+    martell
+        use tinyxml2 to replace libxml2
+
+    mchinen
+        fix emulator issue for OpenGL ES 2.0 on Android
+
+    DenizPiri
+        use CCLOG to implement print() function in LUA
+
+    nickveri
+    nickkwalee
+        added some missing function for setting integer shader uniforms in CCGLProgram
+
     biteforest
         fix cc scale9 sprite bug
 
@@ -20,9 +33,12 @@ Developers:
 
     DarraghCoy
         fix for loading custom fonts on iOS when referenced from a CCB file
+        Fix CCUserDefault.cpp compiling on Android.
+        Fixing CCFileUtils 'createXXXXWithContentsOfFile' path lookup issue.
 
     Waiter
         fix an error that OpenSLEngine can't load resources from SD card
+        add CCRemoveSelf action
 
     billy1380
         make CCLens3d support concave effect.
@@ -78,6 +94,8 @@ Developers:
         Fixed the size calculations for true type fonts (especially for italic fonts).
         Added a very simple greedy line break algorithmfor true type labels.
         Fixed font rendering crash for certain fonts on linux.
+        Fixed potential crash in CCScheduler::removeHashElement.
+        Fixed potential crash in CCSaxParser.
 
     Nat Weiss (iphonegamekit.com)
         author of Mac port
@@ -97,6 +115,7 @@ Developers:
     Surith Thekkiam (folecr, Zynga)
         contribute for Android module building
         Simpler, correct handling of spritesheet sources for CCScale9Sprite.
+        Clean up linked libraries for android.
 
     Nicolas Gramlich (nicolasgramlich, Zynga)
         fixed CCDirector to use CCLabelBMFont instead of CCLabelTTF
@@ -210,8 +229,9 @@ Developers:
         Adding CCEditBox implementation for Mac OSX.
 
     tiantian20007
-        Fix crash for call runAnimation() in CCBAnimationManagerDelegate::completedAnimationSequenceNamed.
+        Fixing a crash for call runAnimation() in CCBAnimationManagerDelegate::completedAnimationSequenceNamed.
         Fixing a bug that CCControl's touch priority is not set correctly; m_nDefaultTouchPriority is never used.
+        Fixing a syntax error for RENDER_IN_SUBPIXEL macro.
 
     xyhl515
         Fixed a bug that CCControlSwitch::setOn(isOn,false) doesn't work.
@@ -223,6 +243,8 @@ Developers:
     Sergej Tatarincev (SevInf)
         Making ScriptingCore.cpp compiled fine with C++11 on iOS.
         Using shared NodeLoaderLibrary in CCBReader bindings.
+        CCEditBox iOS enchantments/bugfixes.
+        Support variable cell sizes in CCTableView.
 
     ThePickleMan
         Adding 'rotationIsDir' property to ParticleSystem.
@@ -242,10 +264,13 @@ Developers:
         Refactor linux build system and fix many warnings.
         Fixing a bug where missing packages would cause the script to exit on linux.
         Adding 'make run' target for linux projects.
+        Stripping newlines from log message and fixing linux library location.
+        Fixing a bug that CCPhysicsSprite was overriding only some of the getPosition methods.
+        Adding a macro USE_BOX2D to check whether to enable Box2D for linux and nacl port.
 
     Peter Young (young40)
         Implements setVisible() for CCEditBox
-    
+
     csy1988525
         Fixing a bug about display result is wrong when invoking CCControlButton:: setHighlighted.
 
@@ -263,6 +288,43 @@ Developers:
 
     flamingo (flaming0)
         Null pointer check in order to prevent crashes.
+
+    rtissera (Romain TISSERAND)
+        Adding missing JNIEXPORT / JNICALL declarations.
+
+    Yodesoft
+        Improving font rendering performance for linux platform.
+        Reducing function call in nativeInitBitmapDC to improve performance.
+        Refactoring writable path to "<user's home>/.config/<app name>" for linux platform.
+
+    sjchao
+        Fixing a display bug when a scrollView nested in another scrollView.
+
+    Éloi Rivard (azmeuk)
+        Linux OpenAL support.
+
+    elmiro
+        Correction of passed buffer size to readlink and verification of result return by readlink.
+
+    harikrishnar (Hari Krishna)
+        Wrong logic in CCArray::initWithObjects.
+        Fixing a bug that button should not get respond if its parent is invisable.
+
+    rogerzanoni
+        Fixing a linking error that libpthread and libGL libraries need to be linked on linux.
+        Fixing a compiling error of [-Werror=array-bounds] when compiling Box2dTestBed.
+
+    zhanghaojie
+        Fixing a bug that anchorPoint property of CCScale9Sprite doesn't work in CCBReader.
+
+    MarkEHenderson (Mark Henderson)
+        Fix of variable initialization in SpriteBatchNode.
+
+    akira-cn
+        Adding response for back and menu keypad event for Android.
+
+    lgb (Oleg)
+        Fix a compilation error for BlackBerry PlayBook.
 
 Retired Core Developers:
     WenSheng Yang

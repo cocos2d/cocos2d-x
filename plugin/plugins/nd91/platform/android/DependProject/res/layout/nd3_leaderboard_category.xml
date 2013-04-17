@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  >
+    <RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/nd3_bk1"
+    android:layout_margin="@dimen/nd3_margin_size">
+	  <ListView
+	  android:layout_width="fill_parent"
+	  android:layout_height="fill_parent"
+	  android:id="@+id/nd3_rank_category_listview"
+	  android:headerDividersEnabled="false"
+	  android:footerDividersEnabled="false"
+	  android:divider="@drawable/nd3_horizontal_line"
+	  android:fastScrollEnabled="true"
+	  android:cacheColorHint="#00000000"
+	  android:fadingEdge="none"
+	  />
+	</RelativeLayout>
+ 
+ </RelativeLayout>
+

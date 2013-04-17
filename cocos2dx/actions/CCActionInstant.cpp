@@ -189,6 +189,51 @@ CCObject* CCToggleVisibility::copyWithZone(CCZone *pZone)
 }
 
 //
+// Remove Self
+//
+CCRemoveSelf * CCRemoveSelf::create(bool isNeedCleanUp /*= true*/) 
+{
+	CCRemoveSelf *pRet = new CCRemoveSelf();
+
+	if (pRet && pRet->init(isNeedCleanUp)) {
+		pRet->autorelease();
+	}
+
+	return pRet;
+}
+
+bool CCRemoveSelf::init(bool isNeedCleanUp) {
+	m_bIsNeedCleanUp = isNeedCleanUp;
+	return true;
+}
+
+void CCRemoveSelf::update(float time) {
+	CC_UNUSED_PARAM(time);
+	m_pTarget->removeFromParentAndCleanup(m_bIsNeedCleanUp);
+}
+
+CCFiniteTimeAction *CCRemoveSelf::reverse() {
+	return (CCFiniteTimeAction*) (CCRemoveSelf::create(m_bIsNeedCleanUp));
+}
+
+CCObject* CCRemoveSelf::copyWithZone(CCZone *pZone) {
+	CCZone *pNewZone = NULL;
+	CCRemoveSelf *pRet = NULL;
+
+	if (pZone && pZone->m_pCopyObject) {
+		pRet = (CCRemoveSelf*) (pZone->m_pCopyObject);
+	} else {
+		pRet = new CCRemoveSelf();
+		pZone = pNewZone = new CCZone(pRet);
+	}
+
+	CCActionInstant::copyWithZone(pZone);
+	pRet->init(m_bIsNeedCleanUp);
+	CC_SAFE_DELETE(pNewZone);
+	return pRet;
+}
+
+//
 // FlipX
 //
 

@@ -331,6 +331,12 @@ struct Class
     bool hasPrivate() const {
         return !!(flags & JSCLASS_HAS_PRIVATE);
     }
+
+    bool emulatesUndefined() const {
+        return flags & JSCLASS_EMULATES_UNDEFINED;
+    }
+
+    static size_t offsetOfFlags() { return offsetof(Class, flags); }
 };
 
 JS_STATIC_ASSERT(offsetof(JSClass, name) == offsetof(Class, name));
