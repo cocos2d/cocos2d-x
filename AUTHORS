@@ -323,6 +323,9 @@ Developers:
     akira-cn
         Adding response for back and menu keypad event for Android.
 
+    lgb (Oleg)
+        Fix a compilation error for BlackBerry PlayBook.
+
 Retired Core Developers:
     WenSheng Yang
         Author of windows port, CCTextField,
