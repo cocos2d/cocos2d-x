@@ -1,7 +1,7 @@
 
-require "luaScript.extern"
-require "luaScript.VisibleRect"
-require "luaScript.TouchesTest.Paddle"
+require "luaScript/extern"
+require "luaScript/VisibleRect"
+require "luaScript/TouchesTest/Paddle"
 
 Ball = class("Ball", function(texture)
     return CCSprite:createWithTexture(texture)
