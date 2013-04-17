@@ -868,7 +868,24 @@ int ScriptingCore::executeAccelerometerEvent(CCLayer *pLayer, CCAcceleration *pA
 
 int ScriptingCore::executeLayerKeypadEvent(CCLayer* pLayer, int eventType)
 {
-    return 0;
+	js_proxy_t * p;
+	JS_GET_PROXY(p, pLayer);
+
+	if(p){
+		switch(eventType){
+		case kTypeBackClicked:
+			executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "backClicked");
+			break;
+		case kTypeMenuClicked:
+			executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "menuClicked");
+			break;
+		default:
+			break;
+		}
+		return 1;
+	}
+
+	return 0;
 }
 
 
