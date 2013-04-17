@@ -244,7 +244,7 @@ void CCTMXLayer::setupTileSprite(CCSprite* sprite, CCPoint pos, unsigned int gid
 
     //issue 1264, flip can be undone as well
     sprite->setFlipX(false);
-    sprite->setFlipX(false);
+    sprite->setFlipY(false);
     sprite->setRotation(0.0f);
     sprite->setAnchorPoint(ccp(0,0));
 
