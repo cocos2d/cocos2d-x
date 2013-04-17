@@ -3129,8 +3129,7 @@ JSBool js_cocos2dx_CCFileUtils_getStringFromFile(JSContext *cx, uint32_t argc, j
         unsigned long size = 0;
         unsigned char* data = cobj->getFileData(arg0, "rb", &size);
         if (data && size > 0) {
-            //JSString* str = JS_NewStringCopyN(cx, (const char*)ret, (size_t)size);
-            jsval jsret = c_string_to_jsval(cx, (char*)data);
+            jsval jsret = c_string_to_jsval(cx, (char*)data, size);
             JS_SET_RVAL(cx, vp, jsret);
             return JS_TRUE;
         }
