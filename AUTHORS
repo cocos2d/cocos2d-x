@@ -12,6 +12,9 @@ Developers:
     Rolando Abarca
         Javascript Binding and testjs
 
+    kdejongh
+        Fix for spaces at the beginning of wrapped lines on Android
+
     martell
         use tinyxml2 to replace libxml2
 
@@ -100,6 +103,7 @@ Developers:
     Nat Weiss (iphonegamekit.com)
         author of Mac port
         add TMX polygon parsing
+        Properly resets the tile's Y flipping
 
     XiaoLong Zhang (Chukong Inc)
     Mike McGary (Zynga)
@@ -318,13 +322,16 @@ Developers:
         Fixing a bug that anchorPoint property of CCScale9Sprite doesn't work in CCBReader.
 
     MarkEHenderson (Mark Henderson)
-        Fix of variable initialization in SpriteBatchNode.
+        Fixing of variable initialization in SpriteBatchNode.
 
     akira-cn
         Adding response for back and menu keypad event for Android.
 
     lgb (Oleg)
-        Fix a compilation error for BlackBerry PlayBook.
+        Fixing a compilation error for BlackBerry PlayBook.
+
+    jotel (Jaroslaw Lewandowski)
+        Fixing a bug that wrong type of argument signature is used in setAccelerometerIntervalJNI function.
 
 Retired Core Developers:
     WenSheng Yang

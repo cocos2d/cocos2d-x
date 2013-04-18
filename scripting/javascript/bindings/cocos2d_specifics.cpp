@@ -3129,8 +3129,7 @@ JSBool js_cocos2dx_CCFileUtils_getStringFromFile(JSContext *cx, uint32_t argc, j
         unsigned long size = 0;
         unsigned char* data = cobj->getFileData(arg0, "rb", &size);
         if (data && size > 0) {
-            //JSString* str = JS_NewStringCopyN(cx, (const char*)ret, (size_t)size);
-            jsval jsret = c_string_to_jsval(cx, (char*)data);
+            jsval jsret = c_string_to_jsval(cx, (char*)data, size);
             JS_SET_RVAL(cx, vp, jsret);
             return JS_TRUE;
         }
@@ -3143,8 +3142,37 @@ JSBool js_cocos2dx_CCFileUtils_getStringFromFile(JSContext *cx, uint32_t argc, j
 
 JSBool js_cocos2dx_CCFileUtils_getByteArrayFromFile(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    // TODO:
-    CCAssert(false, "not implemented!");
+    jsval *argv = JS_ARGV(cx, vp);
+    JSBool ok = JS_TRUE;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
+    cocos2d::CCFileUtils* cobj = (cocos2d::CCFileUtils *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
+    
+    if (argc == 1) {
+        const char* arg0;
+        std::string arg0_tmp; ok &= jsval_to_std_string(cx, argv[0], &arg0_tmp); arg0 = arg0_tmp.c_str();
+        JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+        unsigned long size = 0;
+        unsigned char* data = cobj->getFileData(arg0, "rb", &size);
+        do
+        {
+            if (data && size > 0) {
+                JSObject* array = JS_NewUint8Array(cx, size);
+                if (NULL == array) {
+                    break;
+                }
+                uint8_t* bufdata = (uint8_t*)JS_GetArrayBufferViewData(array);
+                memcpy(bufdata, data, size*sizeof(uint8_t));
+                JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(array));
+                return JS_TRUE;
+            }
+        } while(false);
+        
+        JS_ReportError(cx, "get file(%s) data fails", arg0);
+        return JS_FALSE;
+    }
+    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 3);
     return JS_FALSE;
 }
 
