@@ -22,14 +22,32 @@ char *_js_log_buf_ccbuilder = NULL;
 
 USING_NS_CC;
 using namespace CocosDenshion;
+CCScene *mainScene;
 
-AppDelegate::AppDelegate()
+AppDelegate::AppDelegate(): isRetina(false), isIPhone(false)
 {
 }
 
 AppDelegate::~AppDelegate()
 {
     CCScriptEngineManager::sharedManager()->purgeSharedManager();
+}
+
+
+bool runMainScene() {
+    /* Push the new scene with a fancy transition. */
+    ccColor3B transitionColor;
+    transitionColor.r = 0;
+    transitionColor.g = 0;
+    transitionColor.b = 0;
+    
+    mainScene = PlayerStatus::loadMainScene("StatusLayer.ccbi");
+    if(CCDirector::sharedDirector()->getRunningScene() != NULL) {
+        CCDirector::sharedDirector()->replaceScene(CCTransitionFade::create(0.5f, mainScene, transitionColor));
+    } else {
+        CCDirector::sharedDirector()->runWithScene(CCTransitionFade::create(0.5f, mainScene, transitionColor));
+    }
+    return true;
 }
 
 void handle_ccb_run() {
@@ -45,21 +63,27 @@ void handle_set_orient(bool isPortrait) {
   CCLOG("ORIENTATION HALF IMPLEMENTED");
 }
 
+void handle_set_message(const char* msg) {
+    CCBHelper::setInstructionsMessage(msg);
+}
+
+void handle_set_status(const char* msg) {
+    CCBHelper::setStatusMessage(msg);
+}
+
 void handle_disconnected() {
   CCBHelper::setStatusMessage("Disconnected");
 }
 
 void handle_ccb_stop() {
-  CCLOG("STOP UNIMPLEMENTED");
+    runMainScene();
 }
+
 
 extern "C" {
 
-bool runMainScene() {
-    PlayerStatus::loadMainScene("StatusLayer.ccbi");
-    return true;
-}
-
+const char * getCCBDirectoryPath();
+    
 bool AppDelegate::applicationDidFinishLaunching()
 {
 
@@ -68,46 +92,106 @@ bool AppDelegate::applicationDidFinishLaunching()
     pDirector->setOpenGLView(CCEGLView::sharedOpenGLView());
     pDirector->setProjection(kCCDirectorProjection2D);
 
-
+    
     CCSize screenSize = CCEGLView::sharedOpenGLView()->getFrameSize();
-
+    
     CCSize designSize = CCSizeMake(320, 480);
     CCSize resourceSize = CCSizeMake(320, 480);
+    
+    std::vector<std::string> resDirOrders;
+    std::string res;
+    TargetPlatform platform = CCApplication::sharedApplication()->getTargetPlatform();
+    
 
-    CCFileUtils* pFileUtils = CCFileUtils::sharedFileUtils();
-    std::vector<std::string> searchResOrder;
-    string res = "xlarge";
-    // if (screenSize.height > 1024)
-    // {
-    //     resourceSize = CCSizeMake(1280, 1920);
-    //     searchResOrder.push_back("resources-xlarge");
-    //     res = "xlarge";
-    // }
-    // else
-     if (screenSize.height > 960)
-      {
-    	resourceSize = CCSizeMake(640, 960);
-        searchResOrder.push_back("resources-large");
-    	res = "large";
-      }
-    else if (screenSize.height > 480)
-      {
-    	resourceSize = CCSizeMake(480, 720);
-        searchResOrder.push_back("resources-medium");
-    	res = "medium";
-      }
-    else
-      {
-    	resourceSize = CCSizeMake(320, 568);
-        searchResOrder.push_back("resources-small");
-    	res = "small";
-      }
+    if (platform == kTargetIphone || platform == kTargetIpad)
+    {
+        std::vector<std::string> searchPaths = CCFileUtils::sharedFileUtils()->getSearchPaths();
+        searchPaths.insert(searchPaths.begin(), "Published files iOS");        
+        searchPaths.insert(searchPaths.begin(), getCCBDirectoryPath());
 
-    pFileUtils->setSearchResolutionsOrder(searchResOrder);
-    pDirector->setContentScaleFactor(resourceSize.height/designSize.height);
-
+        CCFileUtils::sharedFileUtils()->setSearchPaths(searchPaths);
+        if (screenSize.height > 1024)
+        {
+            res = "iPad";
+            designSize = CCSizeMake(360, 480);
+            resourceSize = CCSizeMake(1536, 2048);
+            resDirOrders.push_back("resources-ipadhd");
+            resDirOrders.push_back("resources-ipad");
+            resDirOrders.push_back("resources-iphonehd");
+            isIPhone = false;
+            isRetina = true;
+        }
+        else if (screenSize.height > 960)
+        {
+            res = "iPad";
+            designSize = CCSizeMake(360, 480);
+            resourceSize = CCSizeMake(768, 1024);
+            resDirOrders.push_back("resources-ipad");
+            resDirOrders.push_back("resources-iphonehd");
+            isIPhone = false;
+            isRetina = false;
+        }
+        else if (screenSize.height > 480)
+        {
+            res = "iPhone";
+            resourceSize = CCSizeMake(640, 960);
+            resDirOrders.push_back("resources-iphonehd");
+            resDirOrders.push_back("resources-iphone");
+            isIPhone = true;
+            isRetina = true;
+        }
+        else
+        {
+            res = "iPhone";
+            resourceSize = CCSizeMake(320, 480);
+            resDirOrders.push_back("resources-iphone");
+            isIPhone = true;
+            isRetina = false;
+        }
+        
+    }
+    else if (platform == kTargetAndroid || platform == kTargetWindows)
+    {
+        
+        if (screenSize.height > 960)
+        {
+            res = "xlarge";
+            resourceSize = CCSizeMake(1280, 1920);
+            resDirOrders.push_back("resources-xlarge");
+            resDirOrders.push_back("resources-large");
+            resDirOrders.push_back("resources-medium");
+            resDirOrders.push_back("resources-small");
+        }
+        else if (screenSize.height > 720)
+        {
+            res = "large";
+            resourceSize = CCSizeMake(640, 960);
+            resDirOrders.push_back("resources-large");
+            resDirOrders.push_back("resources-medium");
+            resDirOrders.push_back("resources-small");
+        }
+        else if (screenSize.height > 480)
+        {
+            res = "medium";
+            resourceSize = CCSizeMake(480, 720);
+            resDirOrders.push_back("resources-medium");
+            resDirOrders.push_back("resources-small");
+        }
+        else
+        {
+            res = "small";
+            resourceSize = CCSizeMake(320, 480);
+            resDirOrders.push_back("resources-small");
+        }
+    }
+    
+    CCFileUtils *pFileUtils = CCFileUtils::sharedFileUtils();
+    pFileUtils->setSearchResolutionsOrder(resDirOrders);
+    
+    pDirector->setContentScaleFactor(resourceSize.width/designSize.width);
+    
     CCEGLView::sharedOpenGLView()->setDesignResolutionSize(designSize.width, designSize.height, kResolutionNoBorder);
-
+ 
     std::vector<std::string> searchPaths = pFileUtils->getSearchPaths();
     searchPaths.insert(searchPaths.begin(), pFileUtils->getWritablePath());
     pFileUtils->setSearchPaths(searchPaths);

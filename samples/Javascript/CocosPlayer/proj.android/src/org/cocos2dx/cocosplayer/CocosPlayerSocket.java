@@ -105,7 +105,7 @@ public class CocosPlayerSocket {
 			for(int i =0 ; i < keys.length; ++i ) {
 			}
 			if(cmd.equalsIgnoreCase("zip")) {
-			    //cleanCache();
+			    // cleanCache();
 				try {
 					Log.i(TAG, "Size of NSDATA payload: "+((NSData)data.objectForKey("data")).bytes().length);
 					CCBFileUtilsHelper.unzipCCB(((NSData)data.objectForKey("data")).bytes(), cw);

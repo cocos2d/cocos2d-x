@@ -20,7 +20,7 @@
 class  AppDelegate : private cocos2d::CCApplication
 {
 public:
-  //    bool isRetina = false, isIPhone = false;
+    bool isRetina, isIPhone;
     
     AppDelegate();
     virtual ~AppDelegate();
@@ -46,11 +46,14 @@ public:
    
 };
 
-
+bool runMainScene();
 void handle_ccb_run();
 void handle_ccb_stop();
 void handle_connected();
 void handle_disconnected();
 void handle_set_orient(bool isPortrait);
+void handle_set_message(const char *msg);
+void handle_set_status(const char *msg);
+
 #endif // _APP_DELEGATE_H_
 

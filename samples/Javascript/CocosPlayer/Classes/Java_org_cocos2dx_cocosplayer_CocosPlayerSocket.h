@@ -27,7 +27,7 @@ THE SOFTWARE.
 #include <string>
 
 extern "C" {
-  extern void setPairingCodeJNI(int code);
+  extern void updatePairing(const char *code);
   extern void cleanCacheDirJNI();
   extern void setDeviceResolutionJNI(const char* res);
 }
