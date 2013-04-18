@@ -3158,17 +3158,12 @@ JSBool js_cocos2dx_CCFileUtils_getByteArrayFromFile(JSContext *cx, uint32_t argc
         do
         {
             if (data && size > 0) {
-                JSObject* buffer = JS_NewArrayBuffer(cx, size);
-                if (NULL == buffer) {
-                    break;
-                }
-                uint8_t* bufdata = JS_GetArrayBufferData(buffer);
-                memcpy(bufdata, data, size);
-                
-                JSObject* array = JS_NewUint8ArrayWithBuffer(cx, buffer, 0, -1);
+                JSObject* array = JS_NewUint8Array(cx, size);
                 if (NULL == array) {
                     break;
                 }
+                uint8_t* bufdata = (uint8_t*)JS_GetArrayBufferViewData(array);
+                memcpy(bufdata, data, size*sizeof(uint8_t));
                 JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(array));
                 return JS_TRUE;
             }
