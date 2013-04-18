@@ -319,13 +319,16 @@ Developers:
         Fixing a bug that anchorPoint property of CCScale9Sprite doesn't work in CCBReader.
 
     MarkEHenderson (Mark Henderson)
-        Fix of variable initialization in SpriteBatchNode.
+        Fixing of variable initialization in SpriteBatchNode.
 
     akira-cn
         Adding response for back and menu keypad event for Android.
 
     lgb (Oleg)
-        Fix a compilation error for BlackBerry PlayBook.
+        Fixing a compilation error for BlackBerry PlayBook.
+
+    jotel (Jaroslaw Lewandowski)
+        Fixing a bug that wrong type of argument signature is used in setAccelerometerIntervalJNI function.
 
 Retired Core Developers:
     WenSheng Yang
