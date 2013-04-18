@@ -99,6 +99,7 @@ Developers:
         Fixed font rendering crash for certain fonts on linux.
         Fixed potential crash in CCScheduler::removeHashElement.
         Fixed potential crash in CCSaxParser.
+        Added kResolutionFixedHeight and kResolutionFixedWidth resolution policy.
 
     Nat Weiss (iphonegamekit.com)
         author of Mac port
