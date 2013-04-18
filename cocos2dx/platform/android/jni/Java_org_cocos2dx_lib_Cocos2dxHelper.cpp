@@ -165,7 +165,7 @@ void enableAccelerometerJNI() {
 void setAccelerometerIntervalJNI(float interval) {
     JniMethodInfo t;
 
-    if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "setAccelerometerInterval", "(I)V")) {
+    if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "setAccelerometerInterval", "(F)V")) {
         t.env->CallStaticVoidMethod(t.classID, t.methodID, interval);
         t.env->DeleteLocalRef(t.classID);
     }
