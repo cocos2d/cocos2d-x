@@ -16,13 +16,19 @@ using namespace cocos2d;
 using namespace std;
 
 extern "C" {
-   void setPairingCodeJNI(int code) {
-        JniMethodInfo t;
-        if (JniHelper::getStaticMethodInfo(t, SOCKET_CLASS_NAME, "setPairingCode", "(I)V")) {
+   void updatePairing(const char *code) {
+       int pairingCode = 0;
+       if(strcmp(code, "Auto") == 0) {
+	   pairingCode = -1;
+       } else {
+	   pairingCode = atoi(code);
+       }
+       JniMethodInfo t;
+       if (JniHelper::getStaticMethodInfo(t, SOCKET_CLASS_NAME, "setPairingCode", "(I)V")) {
 	  t.env->CallStaticVoidMethod(t.classID, t.methodID, code);
 	  t.env->DeleteLocalRef(t.classID);
-        }
-    }
+       }
+   }
 
    void cleanCacheDirJNI() {
         JniMethodInfo t;
@@ -40,5 +46,8 @@ extern "C" {
 	  t.env->DeleteLocalRef(stringArg1);
 	  t.env->DeleteLocalRef(t.classID);
       }
+  }
+  const char *getCCBDirectoryPath() {
+      return "";
   }
 }

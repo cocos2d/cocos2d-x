@@ -78,6 +78,7 @@ void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeInit(JNIEnv*  env, jobject thi
   {
     handle_disconnected();
   }
+
   void Java_org_cocos2dx_cocosplayer_CocosPlayerSocket_nativeSetOrientation(JNIEnv*  env, jobject thiz, jboolean isPortrait)
   {
     handle_set_orient((bool)isPortrait);
