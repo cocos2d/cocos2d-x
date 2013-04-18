@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
+ Copyright (c) 2013 cocos2d-x.org
  
  http://www.cocos2d-x.org
  
@@ -22,45 +22,48 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __CCFLOAT_H__
-#define __CCFLOAT_H__
-
 #include "CCObject.h"
 
 NS_CC_BEGIN
 
-/**
- * @addtogroup data_structures
- * @{
- */
-
-class CC_DLL CCFloat : public CCObject
+void CCDataVisitor::visit(const CCBool *value)
 {
-public:
-    CCFloat(float v)
-        : m_fValue(v) {}
-    float getValue() const {return m_fValue;}
+    visitObject(value);
+}
 
-    static CCFloat* create(float v)
-    {
-        CCFloat* pRet = new CCFloat(v);
-        if (pRet)
-        {
-            pRet->autorelease();
-        }
-        return pRet;
-    }
+void CCDataVisitor::visit(const CCInteger *value)
+{
+    visitObject(value);
+}
 
-    /* override functions */
-    virtual void acceptVisitor(CCDataVisitor &visitor) { visitor.visit(this); }
+void CCDataVisitor::visit(const CCFloat *value)
+{
+    visitObject(value);
+}
 
-private:
-    float m_fValue;
-};
+void CCDataVisitor::visit(const CCDouble *value)
+{
+    visitObject(value);
+}
 
-// end of data_structure group
-/// @}
+void CCDataVisitor::visit(const CCString *value)
+{
+    visitObject(value);
+}
+
+void CCDataVisitor::visit(const CCArray *value)
+{
+    visitObject(value);
+}
+
+void CCDataVisitor::visit(const CCDictionary *value)
+{
+    visitObject(value);
+}
+
+void CCDataVisitor::visit(const CCSet *value)
+{
+    visitObject(value);
+}
 
 NS_CC_END
-
-#endif /* __CCFLOAT_H__ */

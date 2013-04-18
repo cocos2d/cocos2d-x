@@ -375,6 +375,9 @@ public:
      */
     static CCDictionary* createWithContentsOfFileThreadSafe(const char *pFileName);
 
+    /* override functions */
+    virtual void acceptVisitor(CCDataVisitor &visitor);
+
 private:
     /** 
      *  For internal usage, invoked by setObject.

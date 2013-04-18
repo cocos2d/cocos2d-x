@@ -90,6 +90,8 @@ public:
     */
     CCObject* anyObject();
 
+    virtual void acceptVisitor(CCDataVisitor &visitor);
+
 private:
     std::set<CCObject *> *m_pSet;
 };

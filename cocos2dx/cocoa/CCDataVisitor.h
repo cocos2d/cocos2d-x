@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
+ Copyright (c) 2013 cocos2d-x.org
  
  http://www.cocos2d-x.org
  
@@ -22,40 +22,58 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __CCFLOAT_H__
-#define __CCFLOAT_H__
+#ifndef __CCDATAVISITOR_H__
+#define __CCDATAVISITOR_H__
 
-#include "CCObject.h"
+#include "platform/CCPlatformMacros.h"
 
 NS_CC_BEGIN
+
+class CCObject;
+class CCBool;
+class CCInteger;
+class CCFloat;
+class CCDouble;
+class CCString;
+class CCArray;
+class CCDictionary;
+class CCSet;
 
 /**
  * @addtogroup data_structures
  * @{
  */
 
-class CC_DLL CCFloat : public CCObject
+/**
+ * Visitor that helps to perform action that depends on polymorphic object type
+ *
+ * Use cases:
+ *  - data serialization,
+ *  - pretty printing of \a CCObject *
+ *  - safe value reading from \a CCArray, \a CCDictionary, \a CCSet
+ *
+ * Usage:
+ *  1. subclass CCDataVisitor
+ *  2. overload visit() methods for object that you need to handle
+ *  3. handle other objects in \a visitObject()
+ *  4. pass your visitor to \a CCObject::acceptVisitor()
+ */
+class CCDataVisitor
 {
 public:
-    CCFloat(float v)
-        : m_fValue(v) {}
-    float getValue() const {return m_fValue;}
+    virtual ~CCDataVisitor() {}
 
-    static CCFloat* create(float v)
-    {
-        CCFloat* pRet = new CCFloat(v);
-        if (pRet)
-        {
-            pRet->autorelease();
-        }
-        return pRet;
-    }
+    /** default method, called from non-overloaded methods and for unrecognized objects */
+    virtual void visitObject(const CCObject *) = 0;
 
-    /* override functions */
-    virtual void acceptVisitor(CCDataVisitor &visitor) { visitor.visit(this); }
-
-private:
-    float m_fValue;
+    virtual void visit(const CCBool *);
+    virtual void visit(const CCInteger *);
+    virtual void visit(const CCFloat *);
+    virtual void visit(const CCDouble *);
+    virtual void visit(const CCString *);
+    virtual void visit(const CCArray *);
+    virtual void visit(const CCDictionary *);
+    virtual void visit(const CCSet *);
 };
 
 // end of data_structure group
@@ -63,4 +81,4 @@ private:
 
 NS_CC_END
 
-#endif /* __CCFLOAT_H__ */
+#endif // __CCDATAVISITOR_H__

@@ -391,4 +391,9 @@ CCObject* CCArray::copyWithZone(CCZone* pZone)
     return pArray;
 }
 
+void CCArray::acceptVisitor(CCDataVisitor &visitor)
+{
+    visitor.visit(this);
+}
+
 NS_CC_END
