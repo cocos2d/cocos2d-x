@@ -90,7 +90,7 @@ SOURCES = ../Classes/AccelerometerTest/AccelerometerTest.cpp \
 	../Classes/VisibleRect.cpp \
 	main.cpp
 
-SHAREDLIBS = -lcocos2d -lcocosdenshion
+SHAREDLIBS = -lcocos2d -lcocosdenshion -lcurl
 COCOS_LIBS = $(LIB_DIR)/libcocos2d.so $(LIB_DIR)/libcocosdenshion.so
 
 include ../../../../cocos2dx/proj.linux/cocos2dx.mk
