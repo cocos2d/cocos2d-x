@@ -1502,6 +1502,31 @@ JSBool jsval_to_ccdictionary(JSContext* cx, jsval v, CCDictionary** ret) {
     return JS_TRUE;
 }
 
+JSBool jsval_to_ccaffinetransform(JSContext* cx, jsval v, CCAffineTransform* ret)
+{
+    JSObject *tmp;
+    jsval jsa, jsb, jsc, jsd, jstx, jsty;
+    double a, b, c, d, tx, ty;
+    JSBool ok = JS_ValueToObject(cx, v, &tmp) &&
+    JS_GetProperty(cx, tmp, "a", &jsa) &&
+    JS_GetProperty(cx, tmp, "b", &jsb) &&
+    JS_GetProperty(cx, tmp, "c", &jsc) &&
+    JS_GetProperty(cx, tmp, "d", &jsd) &&
+    JS_GetProperty(cx, tmp, "tx", &jstx) &&
+    JS_GetProperty(cx, tmp, "ty", &jsty) &&
+    JS_ValueToNumber(cx, jsa, &a) &&
+    JS_ValueToNumber(cx, jsb, &b) &&
+    JS_ValueToNumber(cx, jsc, &c) &&
+    JS_ValueToNumber(cx, jsd, &d) &&
+    JS_ValueToNumber(cx, jstx, &tx) &&
+    JS_ValueToNumber(cx, jsty, &ty);
+    
+    JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+    
+    *ret = CCAffineTransformMake(a, b, c, d, tx, ty);
+    return JS_TRUE;
+}
+
 // From native type to jsval
 jsval int32_to_jsval( JSContext *cx, int32_t number )
 {
@@ -1623,6 +1648,24 @@ jsval cccolor3b_to_jsval(JSContext* cx, const ccColor3B& v) {
     JSBool ok = JS_DefineProperty(cx, tmp, "r", INT_TO_JSVAL(v.r), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
                 JS_DefineProperty(cx, tmp, "g", INT_TO_JSVAL(v.g), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
                 JS_DefineProperty(cx, tmp, "b", INT_TO_JSVAL(v.g), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    if (ok) {
+        return OBJECT_TO_JSVAL(tmp);
+    }
+    return JSVAL_NULL;
+}
+
+jsval ccaffinetransform_to_jsval(JSContext* cx, CCAffineTransform& t)
+{
+    CCLOG("native xxx: a = %f, b = %f, c = %f, d = %f, tx = %f, ty = %f", t.a, t.b, t.c, t.d, t.tx, t.ty);
+    
+    JSObject *tmp = JS_NewObject(cx, NULL, NULL, NULL);
+    if (!tmp) return JSVAL_NULL;
+    JSBool ok = JS_DefineProperty(cx, tmp, "a", DOUBLE_TO_JSVAL(t.a), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+    JS_DefineProperty(cx, tmp, "b", DOUBLE_TO_JSVAL(t.b), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+    JS_DefineProperty(cx, tmp, "c", DOUBLE_TO_JSVAL(t.c), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+    JS_DefineProperty(cx, tmp, "d", DOUBLE_TO_JSVAL(t.d), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+    JS_DefineProperty(cx, tmp, "tx", DOUBLE_TO_JSVAL(t.tx), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+    JS_DefineProperty(cx, tmp, "ty", DOUBLE_TO_JSVAL(t.ty), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     if (ok) {
         return OBJECT_TO_JSVAL(tmp);
     }

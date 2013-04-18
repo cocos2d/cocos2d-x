@@ -223,6 +223,7 @@ JSBool jsval_to_ccarray(JSContext* cx, jsval v, CCArray** ret);
 JSBool jsval_to_ccdictionary(JSContext* cx, jsval v, CCDictionary** ret);
 JSBool jsval_to_ccacceleration(JSContext* cx,jsval v, CCAcceleration* ret);
 JSBool jsvals_variadic_to_ccarray( JSContext *cx, jsval *vp, int argc, CCArray** ret);
+JSBool jsval_to_ccaffinetransform(JSContext* cx, jsval v, CCAffineTransform* ret);
 
 // from native
 jsval int32_to_jsval( JSContext *cx, int32_t l);
@@ -239,6 +240,8 @@ jsval cccolor3b_to_jsval(JSContext* cx, const ccColor3B& v);
 jsval ccdictionary_to_jsval(JSContext* cx, CCDictionary *dict);
 jsval ccarray_to_jsval(JSContext* cx, CCArray *arr);
 jsval ccacceleration_to_jsval(JSContext* cx, CCAcceleration& v);
+jsval ccaffinetransform_to_jsval(JSContext* cx, CCAffineTransform& t);
+
 
 JSObject* NewGlobalObject(JSContext* cx, bool debug = false);
 JSBool jsStartDebugger(JSContext* cx, unsigned argc, jsval* vp);
