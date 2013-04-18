@@ -12,6 +12,9 @@ Developers:
     Rolando Abarca
         Javascript Binding and testjs
 
+    kdejongh
+        Fix for spaces at the beginning of wrapped lines on Android
+
     martell
         use tinyxml2 to replace libxml2
 
