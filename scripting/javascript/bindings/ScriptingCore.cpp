@@ -1656,8 +1656,6 @@ jsval cccolor3b_to_jsval(JSContext* cx, const ccColor3B& v) {
 
 jsval ccaffinetransform_to_jsval(JSContext* cx, CCAffineTransform& t)
 {
-    CCLOG("native xxx: a = %f, b = %f, c = %f, d = %f, tx = %f, ty = %f", t.a, t.b, t.c, t.d, t.tx, t.ty);
-    
     JSObject *tmp = JS_NewObject(cx, NULL, NULL, NULL);
     if (!tmp) return JSVAL_NULL;
     JSBool ok = JS_DefineProperty(cx, tmp, "a", DOUBLE_TO_JSVAL(t.a), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
