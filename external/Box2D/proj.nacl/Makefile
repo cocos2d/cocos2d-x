@@ -1,5 +1,3 @@
-LIBS =
-
 INCLUDES = -I../..
 
 SOURCES = ../Collision/Shapes/b2ChainShape.cpp \
@@ -61,11 +59,9 @@ endif
 
 ifeq ($(DEBUG), 1)
 DEFINES = -D_DEBUG
-else
-DEFINES =
 endif
 
-TARGET = $(LIB_DIR)/libbox2d.a
+TARGET = $(LIB_DIR)/libBox2D.a
 
 all: $(TARGET)
 

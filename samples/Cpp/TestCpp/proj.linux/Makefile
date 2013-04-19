@@ -110,7 +110,7 @@ INCLUDES +=	 -I../ \
 STATICLIBS += \
 	$(STATICLIBS_DIR)/libcurl.a \
 	$(LIB_DIR)/libextension.a \
-	$(LIB_DIR)/libbox2d.a \
+	$(LIB_DIR)/libBox2D.a \
 	$(LIB_DIR)/libchipmunk.a
 
 ####### Build rules

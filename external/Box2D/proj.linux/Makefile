@@ -1,4 +1,4 @@
-TARGET = libbox2d.a
+TARGET = libBox2D.a
 
 SOURCES = ../Collision/Shapes/b2ChainShape.cpp \
 ../Collision/Shapes/b2CircleShape.cpp \
@@ -56,8 +56,6 @@ CXXFLAGS += -Wno-uninitialized
 
 ifeq ($(DEBUG), 1)
 DEFINES = -D_DEBUG
-else
-DEFINES =
 endif
 
 TARGET := $(LIB_DIR)/$(TARGET)

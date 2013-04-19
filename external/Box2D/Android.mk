@@ -4,7 +4,7 @@ include $(CLEAR_VARS)
 
 LOCAL_MODULE := box2d_static
 
-LOCAL_MODULE_FILENAME := libbox2d
+LOCAL_MODULE_FILENAME := libBox2D
 
 LOCAL_SRC_FILES := \
 Collision/Shapes/b2ChainShape.cpp \
