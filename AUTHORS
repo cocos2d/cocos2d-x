@@ -334,6 +334,9 @@ Developers:
     jotel (Jaroslaw Lewandowski)
         Fixing a bug that wrong type of argument signature is used in setAccelerometerIntervalJNI function.
 
+    MarcelBloemendaal
+        Adding secureTextEntry property to CCTextFieldTTF.
+
 Retired Core Developers:
     WenSheng Yang
         Author of windows port, CCTextField,
