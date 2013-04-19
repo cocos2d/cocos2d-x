@@ -337,6 +337,9 @@ Developers:
     MarcelBloemendaal
         Adding secureTextEntry property to CCTextFieldTTF.
 
+    brawsome
+        Adding new macro CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK to CCBMemberVariableAssigner.h.
+
 Retired Core Developers:
     WenSheng Yang
         Author of windows port, CCTextField,
