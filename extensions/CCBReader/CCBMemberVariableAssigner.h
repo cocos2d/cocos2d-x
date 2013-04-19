@@ -18,6 +18,12 @@ NS_CC_EXT_BEGIN
         return true; \
     }
 
+#define CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(TARGET, MEMBERVARIABLENAME, MEMBERVARIABLETYPE, MEMBERVARIABLE) \
+    if (pTarget == TARGET && 0 == strcmp(pMemberVariableName, MEMBERVARIABLENAME)) { \
+        MEMBERVARIABLE = dynamic_cast<MEMBERVARIABLETYPE>(pNode); \
+        CC_ASSERT(MEMBERVARIABLE); \
+        return true; \
+    }
 
 class CCBMemberVariableAssigner {
     public:
