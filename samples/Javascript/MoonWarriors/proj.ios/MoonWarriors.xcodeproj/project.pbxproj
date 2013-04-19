@@ -150,7 +150,6 @@
 		15A3D2BD1682EE81002FB0C5 /* ScriptingCore.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ScriptingCore.cpp; sourceTree = "<group>"; };
 		15A3D2BE1682EE81002FB0C5 /* ScriptingCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptingCore.h; sourceTree = "<group>"; };
 		15A3D2BF1682EE81002FB0C5 /* spidermonkey_specifics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = spidermonkey_specifics.h; sourceTree = "<group>"; };
-		15A3D2C01682EE81002FB0C5 /* uthash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uthash.h; sourceTree = "<group>"; };
 		15A3D2D41682EEC8002FB0C5 /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; name = res; path = ../../Shared/games/MoonWarriors/res; sourceTree = "<group>"; };
 		15A3D2D51682EEC8002FB0C5 /* src */ = {isa = PBXFileReference; lastKnownFileType = folder; name = src; path = ../../Shared/games/MoonWarriors/src; sourceTree = "<group>"; };
 		15A3D2D81682EEEA002FB0C5 /* main.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = main.js; path = ../../Shared/games/MoonWarriors/main.js; sourceTree = "<group>"; };
@@ -364,7 +363,6 @@
 				15A3D2BD1682EE81002FB0C5 /* ScriptingCore.cpp */,
 				15A3D2BE1682EE81002FB0C5 /* ScriptingCore.h */,
 				15A3D2BF1682EE81002FB0C5 /* spidermonkey_specifics.h */,
-				15A3D2C01682EE81002FB0C5 /* uthash.h */,
 			);
 			name = bindings;
 			path = ../../../../scripting/javascript/bindings;
