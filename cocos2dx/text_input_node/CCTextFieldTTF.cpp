@@ -288,7 +288,7 @@ void CCTextFieldTTF::setColorSpaceHolder(const ccColor3B& color)
 // input text property
 void CCTextFieldTTF::setString(const char *text)
 {
-    static char bulletString[] = {0xe2, 0x80, 0xa2, 0x00};
+    static char bulletString[] = {(char)0xe2, (char)0x80, (char)0xa2, (char)0x00};
     std::string displayText;
     int length;
 
