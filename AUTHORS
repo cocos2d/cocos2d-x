@@ -330,6 +330,7 @@ Developers:
 
     lgb (Oleg)
         Fixing a compilation error for BlackBerry PlayBook.
+        Comparing float number by using epsilon and absolute difference.
 
     jotel (Jaroslaw Lewandowski)
         Fixing a bug that wrong type of argument signature is used in setAccelerometerIntervalJNI function.
