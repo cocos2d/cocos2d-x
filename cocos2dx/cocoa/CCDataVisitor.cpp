@@ -23,6 +23,14 @@
  ****************************************************************************/
 
 #include "CCObject.h"
+#include "CCBool.h"
+#include "CCInteger.h"
+#include "CCFloat.h"
+#include "CCDouble.h"
+#include "CCString.h"
+#include "CCArray.h"
+#include "CCDictionary.h"
+#include "CCSet.h"
 
 NS_CC_BEGIN
 
