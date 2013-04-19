@@ -52,22 +52,34 @@ const unsigned int    kDisableTag = 0x3;
 
 CCMenuItem* CCMenuItem::create()
 {
-    return CCMenuItem::create(NULL, NULL);
+    return CCMenuItem::create(NULL, NULL, NULL, NULL);
 }
 
-CCMenuItem* CCMenuItem::create(CCObject *rec, SEL_MenuHandler selector)
+CCMenuItem* CCMenuItem::create(CCObject *rec, SEL_MenuHandler activatedSelector)
+{
+    return CCMenuItem::create(rec, NULL, NULL, activatedSelector);
+}
+
+CCMenuItem* CCMenuItem::create(CCObject *rec, SEL_MenuHandler pressSelector, SEL_MenuHandler releaseSelector, SEL_MenuHandler activatedSelector)
 {
     CCMenuItem *pRet = new CCMenuItem();
-    pRet->initWithTarget(rec, selector);
+    pRet->initWithTarget(rec, pressSelector, releaseSelector, activatedSelector);
     pRet->autorelease();
     return pRet;
 }
 
-bool CCMenuItem::initWithTarget(CCObject *rec, SEL_MenuHandler selector)
+bool CCMenuItem::initWithTarget(CCObject *rec, SEL_MenuHandler activatedSelector)
+{
+    return initWithTarget(rec, NULL, NULL, activatedSelector);
+}
+
+bool CCMenuItem::initWithTarget(CCObject *rec, SEL_MenuHandler pressSelector, SEL_MenuHandler releaseSelector, SEL_MenuHandler activatedSelector)
 {
     setAnchorPoint(ccp(0.5f, 0.5f));
     m_pListener = rec;
-    m_pfnSelector = selector;
+    m_pfnPressSelector = pressSelector;
+    m_pfnReleaseSelector = releaseSelector;
+    m_pfnActivatedSelector = activatedSelector;
     m_bIsEnabled = true;
     m_bIsSelected = false;
     return true;
@@ -81,11 +93,27 @@ CCMenuItem::~CCMenuItem()
 void CCMenuItem::selected()
 {
     m_bIsSelected = true;
+    
+    if (m_bIsEnabled)
+    {
+        if (m_pListener && m_pfnPressSelector)
+        {
+            (m_pListener->*m_pfnPressSelector)(this);
+        }
+    }
 }
 
 void CCMenuItem::unselected()
 {
     m_bIsSelected = false;
+    
+    if (m_bIsEnabled)
+    {
+        if (m_pListener && m_pfnReleaseSelector)
+        {
+            (m_pListener->*m_pfnReleaseSelector)(this);
+        }
+    }
 }
 
 void CCMenuItem::registerScriptTapHandler(int nHandler)
@@ -109,9 +137,9 @@ void CCMenuItem::activate()
 {
     if (m_bIsEnabled)
     {
-        if (m_pListener && m_pfnSelector)
+        if (m_pListener && m_pfnActivatedSelector)
         {
-            (m_pListener->*m_pfnSelector)(this);
+            (m_pListener->*m_pfnActivatedSelector)(this);
         }
         
         if (kScriptTypeNone != m_eScriptType)
@@ -146,9 +174,14 @@ bool CCMenuItem::isSelected()
 void CCMenuItem::setTarget(CCObject *rec, SEL_MenuHandler selector)
 {
     m_pListener = rec;
-    m_pfnSelector = selector;
+    m_pfnReleaseSelector = selector;
 }
 
+void CCMenuItem::setPressTarget(CCObject *rec, SEL_MenuHandler selector)
+{
+    m_pListener = rec;
+    m_pfnPressSelector = selector;
+}
 //
 //CCMenuItemLabel
 //
@@ -548,22 +581,32 @@ CCMenuItemSprite * CCMenuItemSprite::create(CCNode* normalSprite, CCNode* select
     return CCMenuItemSprite::create(normalSprite, selectedSprite, disabledSprite, NULL, NULL);
 }
 
-CCMenuItemSprite * CCMenuItemSprite::create(CCNode* normalSprite, CCNode* selectedSprite, CCObject* target, SEL_MenuHandler selector)
+CCMenuItemSprite * CCMenuItemSprite::create(CCNode* normalSprite, CCNode* selectedSprite, CCObject* target, SEL_MenuHandler activatedSelector)
 {
-    return CCMenuItemSprite::create(normalSprite, selectedSprite, NULL, target, selector);
+    return CCMenuItemSprite::create(normalSprite, selectedSprite, NULL, target, NULL, NULL, activatedSelector);
 }
 
-CCMenuItemSprite * CCMenuItemSprite::create(CCNode *normalSprite, CCNode *selectedSprite, CCNode *disabledSprite, CCObject *target, SEL_MenuHandler selector)
+CCMenuItemSprite * CCMenuItemSprite::create(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite, CCObject* target, SEL_MenuHandler activatedSelector)
+{
+    return CCMenuItemSprite::create(normalSprite, selectedSprite, disabledSprite, target, NULL, NULL, activatedSelector);
+}
+
+CCMenuItemSprite * CCMenuItemSprite::create(CCNode* normalSprite, CCNode* selectedSprite, CCObject* target, SEL_MenuHandler pressSelector, SEL_MenuHandler releaseSelector, SEL_MenuHandler activatedSelector)
+{
+    return CCMenuItemSprite::create(normalSprite, selectedSprite, NULL, target, pressSelector, releaseSelector, activatedSelector);
+}
+
+CCMenuItemSprite * CCMenuItemSprite::create(CCNode *normalSprite, CCNode *selectedSprite, CCNode *disabledSprite, CCObject *target, SEL_MenuHandler pressSelector, SEL_MenuHandler releaseSelector, SEL_MenuHandler activatedSelector)
 {
     CCMenuItemSprite *pRet = new CCMenuItemSprite();
-    pRet->initWithNormalSprite(normalSprite, selectedSprite, disabledSprite, target, selector); 
+    pRet->initWithNormalSprite(normalSprite, selectedSprite, disabledSprite, target, pressSelector, releaseSelector, activatedSelector);
     pRet->autorelease();
     return pRet;
 }
 
-bool CCMenuItemSprite::initWithNormalSprite(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite, CCObject* target, SEL_MenuHandler selector)
+bool CCMenuItemSprite::initWithNormalSprite(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite, CCObject* target, SEL_MenuHandler pressSelector, SEL_MenuHandler releaseSelector, SEL_MenuHandler activatedSelector)
 {
-    CCMenuItem::initWithTarget(target, selector); 
+    CCMenuItem::initWithTarget(target, pressSelector, releaseSelector, activatedSelector);
     setNormalImage(normalSprite);
     setSelectedImage(selectedSprite);
     setDisabledImage(disabledSprite);
@@ -730,7 +773,8 @@ bool CCMenuItemImage::initWithNormalImage(const char *normalImage, const char *s
     {
         disabledSprite = CCSprite::create(disabledImage);
     }
-    return initWithNormalSprite(normalSprite, selectedSprite, disabledSprite, target, selector);
+    
+    return initWithNormalSprite(normalSprite, selectedSprite, disabledSprite, target, NULL, NULL, selector);
 }
 //
 // Setter of sprite frames
