@@ -259,6 +259,12 @@ public: virtual void set##funName(varType var)   \
 #define CC_FORMAT_PRINTF(formatPos, argPos)
 #endif
 
+#if defined(_MSC_VER)
+#define CC_FORMAT_PRINTF_SIZE_T "%08lX"
+#else
+#define CC_FORMAT_PRINTF_SIZE_T "%08zX"
+#endif
+
 #ifdef __GNUC__
 #define CC_UNUSED __attribute__ ((unused))
 #else
