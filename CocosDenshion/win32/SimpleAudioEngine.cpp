@@ -35,7 +35,7 @@ static MciPlayer& sharedMusic()
     return s_Music;
 }
 
-SimpleAudioEngine::SimpleAudioEngine()
+SimpleAudioEngine::SimpleAudioEngine() : m_effectsVolume(1.0f)
 {
 }
 
@@ -130,6 +130,7 @@ unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop)
     if (p != sharedList().end())
     {
         p->second->Play((bLoop) ? -1 : 1);
+        p->second->Volume((UINT) (m_effectsVolume * 1000.0));
     }
 
     return nRet;
@@ -245,11 +246,12 @@ void SimpleAudioEngine::setBackgroundMusicVolume(float volume)
 
 float SimpleAudioEngine::getEffectsVolume()
 {
-    return sharedList().at(0)->GetVolume() / 1000.0f; // XXX returning the first
+    return m_effectsVolume;
 }
 
 void SimpleAudioEngine::setEffectsVolume(float volume)
 {
+    m_effectsVolume = volume;
     EffectList::iterator iter;
     for (iter = sharedList().begin(); iter != sharedList().end(); iter++)
     {
