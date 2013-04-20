@@ -55,10 +55,10 @@ public:
     UINT GetSoundID();
 
     // @volume value ranges from 0 .. 1000
-    void Volume(UINT volume);
+    void SetVolume(UINT volume);
 
     // @return value ranges from 0 .. 1000
-    UINT Volume() const;
+    UINT GetVolume() const;
 
 private:
     friend LRESULT WINAPI _SoundPlayProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam);

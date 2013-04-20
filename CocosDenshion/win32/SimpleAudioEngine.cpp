@@ -235,17 +235,17 @@ void SimpleAudioEngine::unloadEffect(const char* pszFilePath)
 
 float SimpleAudioEngine::getBackgroundMusicVolume()
 {
-    return sharedMusic().Volume() / 1000.0f;
+    return sharedMusic().GetVolume() / 1000.0f;
 }
 
 void SimpleAudioEngine::setBackgroundMusicVolume(float volume)
 {
-    sharedMusic().Volume((UINT) (volume * 1000.0));
+    sharedMusic().SetVolume((UINT) (volume * 1000.0));
 }
 
 float SimpleAudioEngine::getEffectsVolume()
 {
-    return sharedList().at(0)->Volume() / 1000.0f; // XXX returning the first
+    return sharedList().at(0)->GetVolume() / 1000.0f; // XXX returning the first
 }
 
 void SimpleAudioEngine::setEffectsVolume(float volume)
@@ -253,7 +253,7 @@ void SimpleAudioEngine::setEffectsVolume(float volume)
     EffectList::iterator iter;
     for (iter = sharedList().begin(); iter != sharedList().end(); iter++)
     {
-        iter->second->Volume((UINT) (volume * 1000.0));
+        iter->second->SetVolume((UINT) (volume * 1000.0));
     }
 }
 

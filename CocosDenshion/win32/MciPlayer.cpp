@@ -95,7 +95,7 @@ void MciPlayer::Open(const char* pFileName, UINT uId)
     } while (0);
 }
 
-void MciPlayer::Volume(UINT volume)
+void MciPlayer::SetVolume(UINT volume)
 {
     if (!m_hDev)
         return;
@@ -105,7 +105,7 @@ void MciPlayer::Volume(UINT volume)
     mciSendCommand(m_hDev, MCI_SETAUDIO, MCI_DGV_SETAUDIO_ITEM | MCI_DGV_SETAUDIO_VALUE, (DWORD)&mciParams);
 }
 
-UINT MciPlayer::Volume() const
+UINT MciPlayer::GetVolume() const
 {
     if (!m_hDev)
         return 0;
