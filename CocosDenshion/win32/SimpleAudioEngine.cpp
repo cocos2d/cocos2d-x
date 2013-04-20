@@ -130,7 +130,7 @@ unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop)
     if (p != sharedList().end())
     {
         p->second->Play((bLoop) ? -1 : 1);
-        p->second->Volume((UINT) (m_effectsVolume * 1000.0));
+        p->second->SetVolume((UINT) (m_effectsVolume * 1000.0));
     }
 
     return nRet;
