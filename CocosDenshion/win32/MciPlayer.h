@@ -15,42 +15,42 @@ public:
     void Close();
 
     /**
-    @brief 播放声音文件
-    @param pFileName 播放的声音文件名称，需要包含文件的路径
-    @param nTimes    播放声音文件的循环次数，默认值为 1，即播放一次
+    @brief 锟斤拷锟斤拷锟斤拷锟斤拷锟侥硷拷
+    @param pFileName 锟斤拷锟脚碉拷锟斤拷锟斤拷锟侥硷拷锟斤拷锟狡ｏ拷锟斤拷要锟斤拷锟斤拷锟侥硷拷锟斤拷路锟斤拷
+    @param nTimes    锟斤拷锟斤拷锟斤拷锟斤拷锟侥硷拷锟斤拷循锟斤拷锟斤拷锟斤拷锟斤拷默锟斤拷值为 1锟斤拷锟斤拷锟斤拷锟斤拷一锟斤拷
     */
     void Open(const char* pFileName, UINT uId);
 
     void Play(UINT uTimes = 1);
 
     /**
-    @brief 暂停播放声音
+    @brief 锟斤拷停锟斤拷锟斤拷锟斤拷锟斤拷
     */
     void Pause();
 
     /**
-    @brief 继续播放声音
+    @brief 锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷
     */
     void Resume();
 
     /**
-    @brief 停止播放声音
+    @brief 止停锟斤拷锟斤拷锟斤拷锟斤拷
     */
     void Stop();
 
     /**
-    @brief 重新播放
+    @brief 锟斤拷锟铰诧拷锟斤拷
     */
     void Rewind();
 
     /**
-    @brief 获取播放器当前是否正在播放中
+    @brief 锟斤拷取锟斤拷锟斤拷锟斤拷锟斤拷前锟角凤拷锟斤拷锟节诧拷锟斤拷锟斤拷
     */
     bool IsPlaying();
 
     /**
-    @brief 获取当前播放的音效 ID
-    @return 当前播放的音效ID
+    @brief 锟斤拷取锟斤拷前锟斤拷锟脚碉拷锟斤拷效 ID
+    @return 锟斤拷前锟斤拷锟脚碉拷锟斤拷效ID
     */
     UINT GetSoundID();
 
@@ -58,7 +58,7 @@ public:
     void Volume(UINT volume);
 
     // @return value ranges from 0 .. 1000
-    UINT MciPlayer::Volume() const;
+    UINT Volume() const;
 
 private:
     friend LRESULT WINAPI _SoundPlayProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam);
