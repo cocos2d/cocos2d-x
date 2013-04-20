@@ -32,7 +32,6 @@ include ../../../cocos2dx/proj.emscripten/cocos2dx.mk
 
 TARGET = $(LIB_DIR)/libchipmunk.a
 INCLUDES = -I../include/chipmunk
-DEFINES = -DLINUX
 CCFLAGS += -std=gnu99
 OBJECTS := $(subst src/,,$(OBJECTS))
 
