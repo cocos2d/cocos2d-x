@@ -85,6 +85,8 @@ size_t writeData(void *ptr, size_t size, size_t nmemb, void *stream)
 bool configureCURL(CURL *handle);
 int processGetTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *errorCode);
 int processPostTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *errorCode);
+int processPutTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *errorCode);
+int processDeleteTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *errorCode);
 // int processDownloadTask(HttpRequest *task, write_callback callback, void *stream, int32_t *errorCode);
 
 
@@ -151,6 +153,20 @@ static void* networkThread(void *data)
                                            writeData, 
                                            response->getResponseData(), 
                                            &responseCode);
+                break;
+
+            case CCHttpRequest::kHttpPut:
+                retValue = processPutTask(request,
+                                          writeData,
+                                          response->getResponseData(),
+                                          &responseCode);
+                break;
+
+            case CCHttpRequest::kHttpDelete:
+                retValue = processDeleteTask(request,
+                                             writeData,
+                                             response->getResponseData(),
+                                             &responseCode);
                 break;
             
             default:
@@ -321,6 +337,29 @@ int processPostTask(CCHttpRequest *request, write_callback callback, void *strea
             && curl.setOption(CURLOPT_POST, 1)
             && curl.setOption(CURLOPT_POSTFIELDS, request->getRequestData())
             && curl.setOption(CURLOPT_POSTFIELDSIZE, request->getRequestDataSize())
+            && curl.perform(responseCode);
+    return ok ? 0 : 1;
+}
+
+//Process PUT Request
+int processPutTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *responseCode)
+{
+    CURLRaii curl;
+    bool ok = curl.init(request, callback, stream)
+            && curl.setOption(CURLOPT_CUSTOMREQUEST, "PUT")
+            && curl.setOption(CURLOPT_POSTFIELDS, request->getRequestData())
+            && curl.setOption(CURLOPT_POSTFIELDSIZE, request->getRequestDataSize())
+            && curl.perform(responseCode);
+    return ok ? 0 : 1;
+}
+
+//Process DELETE Request
+int processDeleteTask(CCHttpRequest *request, write_callback callback, void *stream, int *responseCode)
+{
+    CURLRaii curl;
+    bool ok = curl.init(request, callback, stream)
+            && curl.setOption(CURLOPT_CUSTOMREQUEST, "DELETE")
+            && curl.setOption(CURLOPT_FOLLOWLOCATION, true)
             && curl.perform(responseCode);
     return ok ? 0 : 1;
 }
