@@ -68,7 +68,6 @@ static char s_errorBuffer[CURL_ERROR_SIZE];
 
 typedef size_t (*write_callback)(void *ptr, size_t size, size_t nmemb, void *stream);
 
-
 // Callback function used by libcurl for collect response data
 size_t writeData(void *ptr, size_t size, size_t nmemb, void *stream)
 {
@@ -234,156 +233,96 @@ bool configureCURL(CURL *handle)
     return true;
 }
 
+class CURLRaii
+{
+    /// Instance of CURL
+    CURL *m_curl;
+    /// Keeps custom header data
+    curl_slist *m_headers;
+public:
+    CURLRaii()
+        : m_curl(curl_easy_init())
+        , m_headers(NULL)
+    {
+    }
+
+    ~CURLRaii()
+    {
+        if (m_curl)
+            curl_easy_cleanup(m_curl);
+        /* free the linked list for header data */
+        if (m_headers)
+            curl_slist_free_all(m_headers);
+    }
+
+    template <class T>
+    bool setOption(CURLoption option, T data)
+    {
+        return CURLE_OK == curl_easy_setopt(m_curl, option, data);
+    }
+
+    /**
+     * @brief Inits CURL instance for common usage
+     * @param request Null not allowed
+     * @param callback Response write callback
+     * @param stream Response write stream
+     */
+    bool init(CCHttpRequest *request, write_callback callback, void *stream)
+    {
+        if (!m_curl)
+            return false;
+        if (!configureCURL(m_curl))
+            return false;
+
+        /* get custom header data (if set) */
+       	std::vector<std::string> headers=request->getHeaders();
+        if(!headers.empty())
+        {
+            /* append custom headers one by one */
+            for (std::vector<std::string>::iterator it = headers.begin(); it != headers.end(); ++it)
+                m_headers = curl_slist_append(m_headers,it->c_str());
+            /* set custom headers for curl */
+            if (!setOption(CURLOPT_HTTPHEADER, m_headers))
+                return false;
+        }
+
+        return setOption(CURLOPT_URL, request->getUrl())
+                && setOption(CURLOPT_WRITEFUNCTION, callback)
+                && setOption(CURLOPT_WRITEDATA, stream);
+    }
+
+    /// @param responseCode Null not allowed
+    bool perform(int *responseCode)
+    {
+        if (CURLE_OK != curl_easy_perform(m_curl))
+            return false;
+        CURLcode code = curl_easy_getinfo(m_curl, CURLINFO_RESPONSE_CODE, responseCode);
+        if (code != CURLE_OK || *responseCode != 200)
+            return false;
+        return true;
+    }
+};
+
 //Process Get Request
 int processGetTask(CCHttpRequest *request, write_callback callback, void *stream, int *responseCode)
 {
-    CURLcode code = CURL_LAST;
-    CURL *curl = curl_easy_init();
-    
-    do {
-        if (!configureCURL(curl)) 
-        {
-            break;
-        }
-        
-        /* handle custom header data */
-        /* create curl linked list */
-        struct curl_slist *cHeaders=NULL;
-        /* get custom header data (if set) */
-       	std::vector<std::string> headers=request->getHeaders();
-      		if(!headers.empty())
-      		{      			
-        			for(std::vector<std::string>::iterator it=headers.begin();it!=headers.end();it++)
-        			{
-              /* append custom headers one by one */
-          				cHeaders=curl_slist_append(cHeaders,it->c_str());
-        			}
-           /* set custom headers for curl */
-        			code = curl_easy_setopt(curl, CURLOPT_HTTPHEADER, cHeaders);
-        			if (code != CURLE_OK) {
-          				break;
-        			}
-      		}
-              
-        code = curl_easy_setopt(curl, CURLOPT_URL, request->getUrl());
-        if (code != CURLE_OK) 
-        {
-            break;
-        }
-        
-        code = curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, request->getUrl());
-        if (code != CURLE_OK)
-        {
-            break;
-        }
-
-        code = curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, callback);
-        if (code != CURLE_OK) 
-        {
-            break;
-        }
-        
-        code = curl_easy_setopt(curl, CURLOPT_WRITEDATA, stream);
-        if (code != CURLE_OK) 
-        {
-            break;
-        }
-        
-        code = curl_easy_perform(curl);
-        if (code != CURLE_OK) 
-        {
-            break;
-        }
-        
-        /* free the linked list for header data */
-        curl_slist_free_all(cHeaders);
-
-        code = curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, responseCode); 
-        if (code != CURLE_OK || *responseCode != 200) 
-        {
-            code = CURLE_HTTP_RETURNED_ERROR;
-        }
-    } while (0);
-    
-    if (curl) {
-        curl_easy_cleanup(curl);
-    }
-    
-    return (code == CURLE_OK ? 0 : 1);
+    CURLRaii curl;
+    bool ok = curl.init(request, callback, stream)
+            && curl.setOption(CURLOPT_FOLLOWLOCATION, true)
+            && curl.perform(responseCode);
+    return ok ? 0 : 1;
 }
 
 //Process POST Request
 int processPostTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *responseCode)
 {
-    CURLcode code = CURL_LAST;
-    CURL *curl = curl_easy_init();
-    
-    do {
-        if (!configureCURL(curl)) {
-            break;
-        }
-        
-        /* handle custom header data */
-        /* create curl linked list */
-        struct curl_slist *cHeaders=NULL;
-        /* get custom header data (if set) */
-      		std::vector<std::string> headers=request->getHeaders();
-      		if(!headers.empty())
-      		{      			
-        			for(std::vector<std::string>::iterator it=headers.begin();it!=headers.end();it++)
-        			{
-              /* append custom headers one by one */
-          				cHeaders=curl_slist_append(cHeaders,it->c_str());
-        			}
-           /* set custom headers for curl */
-        			code = curl_easy_setopt(curl, CURLOPT_HTTPHEADER, cHeaders);
-        			if (code != CURLE_OK) {
-          				break;
-        			}
-      		}
-              
-        code = curl_easy_setopt(curl, CURLOPT_URL, request->getUrl());
-        if (code != CURLE_OK) {
-            break;
-        }
-        code = curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, callback);
-        if (code != CURLE_OK) {
-            break;
-        }
-        code = curl_easy_setopt(curl, CURLOPT_WRITEDATA, stream);
-        if (code != CURLE_OK) {
-            break;
-        }
-        code = curl_easy_setopt(curl, CURLOPT_POST, 1);
-        if (code != CURLE_OK) {
-            break;
-        }
-        code = curl_easy_setopt(curl, CURLOPT_POSTFIELDS, request->getRequestData());
-        if (code != CURLE_OK) {
-            break;
-        }
-        code = curl_easy_setopt(curl, CURLOPT_POSTFIELDSIZE, request->getRequestDataSize());
-        if (code != CURLE_OK) {
-            break;
-        }
-        code = curl_easy_perform(curl);
-        if (code != CURLE_OK) {
-            break;
-        }
-        
-        /* free the linked list for header data */
-        curl_slist_free_all(cHeaders);
-
-        code = curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, responseCode); 
-        if (code != CURLE_OK || *responseCode != 200) {
-            code = CURLE_HTTP_RETURNED_ERROR;
-        }
-    } while (0);
-    if (curl) {
-        curl_easy_cleanup(curl);
-    }
-    
-    return (code == CURLE_OK ? 0 : 1);    
+    CURLRaii curl;
+    bool ok = curl.init(request, callback, stream)
+            && curl.setOption(CURLOPT_POST, 1)
+            && curl.setOption(CURLOPT_POSTFIELDS, request->getRequestData())
+            && curl.setOption(CURLOPT_POSTFIELDSIZE, request->getRequestDataSize())
+            && curl.perform(responseCode);
+    return ok ? 0 : 1;
 }
 
 // HttpClient implementation
