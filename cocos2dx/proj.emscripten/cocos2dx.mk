@@ -47,8 +47,8 @@ OBJ_DIR := $(OBJ_DIR)/debug
 LIB_DIR := $(LIB_DIR)/debug
 BIN_DIR := $(BIN_DIR)/debug
 else
-CCFLAGS += -O0
-CXXFLAGS += -O0
+CCFLAGS += -O2
+CXXFLAGS += -O2
 DEFINES += -DNDEBUG
 OBJ_DIR := $(OBJ_DIR)/release
 LIB_DIR := $(LIB_DIR)/release
