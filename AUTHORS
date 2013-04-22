@@ -12,6 +12,9 @@ Developers:
     Rolando Abarca
         Javascript Binding and testjs
 
+    kdejongh
+        Fix for spaces at the beginning of wrapped lines on Android
+
     martell
         use tinyxml2 to replace libxml2
 
@@ -96,10 +99,12 @@ Developers:
         Fixed font rendering crash for certain fonts on linux.
         Fixed potential crash in CCScheduler::removeHashElement.
         Fixed potential crash in CCSaxParser.
+        Added kResolutionFixedHeight and kResolutionFixedWidth resolution policy.
 
     Nat Weiss (iphonegamekit.com)
         author of Mac port
         add TMX polygon parsing
+        Properly resets the tile's Y flipping
 
     XiaoLong Zhang (Chukong Inc)
     Mike McGary (Zynga)
@@ -318,7 +323,23 @@ Developers:
         Fixing a bug that anchorPoint property of CCScale9Sprite doesn't work in CCBReader.
 
     MarkEHenderson (Mark Henderson)
-        Fix of variable initialization in SpriteBatchNode.
+        Fixing of variable initialization in SpriteBatchNode.
+
+    akira-cn
+        Adding response for back and menu keypad event for Android.
+
+    lgb (Oleg)
+        Fixing a compilation error for BlackBerry PlayBook.
+        Comparing float number by using epsilon and absolute difference.
+
+    jotel (Jaroslaw Lewandowski)
+        Fixing a bug that wrong type of argument signature is used in setAccelerometerIntervalJNI function.
+
+    MarcelBloemendaal
+        Adding secureTextEntry property to CCTextFieldTTF.
+
+    brawsome
+        Adding new macro CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK to CCBMemberVariableAssigner.h.
 
 Retired Core Developers:
     WenSheng Yang
