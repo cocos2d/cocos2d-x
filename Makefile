@@ -1,4 +1,4 @@
-PLATFORM = emscripten
+PLATFORM = linux
 
 define MAKE_TARGET
 	+$(MAKE) -C external/chipmunk/proj.$(PLATFORM) $@
@@ -14,10 +14,26 @@ define MAKE_TARGET
 	+$(MAKE) -C samples/Lua/TestLua/proj.$(PLATFORM) $@
 endef
 
+define EMSCRIPTEN_MAKE_TARGET
+	+$(MAKE) -C external/chipmunk/proj.emscripten $1
+	+$(MAKE) -C external/Box2D/proj.emscripten $1
+	+$(MAKE) -C CocosDenshion/proj.emscripten $1
+	+$(MAKE) -C extensions/proj.emscripten $1
+	+$(MAKE) -C cocos2dx/proj.emscripten $1
+	+$(MAKE) -C scripting/lua/proj.emscripten $1
+	+$(MAKE) -C samples/Cpp/HelloCpp/proj.emscripten $1
+	+$(MAKE) -C samples/Cpp/TestCpp/proj.emscripten $1
+	+$(MAKE) -C samples/Cpp/SimpleGame/proj.emscripten $1
+endef
+
 all:
 	$(call MAKE_TARGET,all)
 
 clean:
 	$(call MAKE_TARGET,clean)
+	$(call EMSCRIPTEN_MAKE_TARGET,clean)
 
-.PHONY: all clean
+emscripten:
+	$(call EMSCRIPTEN_MAKE_TARGET,all)
+
+.PHONY: all clean emscripten
