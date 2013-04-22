@@ -25,6 +25,7 @@ package org.cocos2dx.HelloAds;
 
 import org.cocos2dx.lib.Cocos2dxActivity;
 import org.cocos2dx.lib.Cocos2dxGLSurfaceView;
+import org.cocos2dx.plugin.PluginWrapper;
 
 import android.os.Bundle;
 
@@ -32,6 +33,9 @@ public class HelloAds extends Cocos2dxActivity{
 	
     protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);	
+		
+		PluginWrapper.init(this); // for plugins
+		PluginWrapper.setGLSurfaceView(Cocos2dxGLSurfaceView.getInstance());
 	}
 
     public Cocos2dxGLSurfaceView onCreateView() {
