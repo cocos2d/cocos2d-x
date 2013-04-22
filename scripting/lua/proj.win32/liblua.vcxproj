@@ -63,7 +63,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\cocos2dx;$(ProjectDir)..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\..\cocos2dx\platform\win32;$(ProjectDir)..\..\..\cocos2dx\platform\third_party\win32\OGLES;$(ProjectDir)..\..\..\CocosDenshion\include;$(ProjectDir)..\tolua;$(ProjectDir)..\lua;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\cocos2dx;$(ProjectDir)..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\..\cocos2dx\platform\win32;$(ProjectDir)..\..\..\cocos2dx\platform\third_party\win32\OGLES;$(ProjectDir)..\..\..\CocosDenshion\include;$(ProjectDir)..\tolua;$(ProjectDir)..\luajit\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -81,12 +81,20 @@
     <Lib>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
+    <PreLinkEvent>
+      <Command>
+      </Command>
+    </PreLinkEvent>
+    <PreBuildEvent>
+      <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
+xcopy /Y /Q "$(ProjectDir)..\luajit\win32\*.*" "$(OutDir)"</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\cocos2dx;$(ProjectDir)..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\..\cocos2dx\platform\win32;$(ProjectDir)..\..\..\cocos2dx\platform\third_party\win32\OGLES;$(ProjectDir)..\..\..\CocosDenshion\include;$(ProjectDir)..\tolua;$(ProjectDir)..\lua;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\cocos2dx;$(ProjectDir)..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\..\cocos2dx\platform\win32;$(ProjectDir)..\..\..\cocos2dx\platform\third_party\win32\OGLES;$(ProjectDir)..\..\..\CocosDenshion\include;$(ProjectDir)..\tolua;$(ProjectDir)..\luajit\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;LIBLUA_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -103,6 +111,14 @@
     <Lib>
       <AdditionalLibraryDirectories>libcocos2d.lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
+    <PreLinkEvent>
+      <Command>
+      </Command>
+    </PreLinkEvent>
+    <PreBuildEvent>
+      <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
+xcopy /Y /Q "$(ProjectDir)..\luajit\win32\*.*" "$(OutDir)"</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\cocos2dx_support\CCLuaBridge.cpp" />
@@ -112,37 +128,6 @@
     <ClCompile Include="..\cocos2dx_support\Cocos2dxLuaLoader.cpp" />
     <ClCompile Include="..\cocos2dx_support\LuaCocos2d.cpp" />
     <ClCompile Include="..\cocos2dx_support\tolua_fix.c" />
-    <ClCompile Include="..\lua\lapi.c" />
-    <ClCompile Include="..\lua\lauxlib.c" />
-    <ClCompile Include="..\lua\lbaselib.c" />
-    <ClCompile Include="..\lua\lcode.c" />
-    <ClCompile Include="..\lua\ldblib.c" />
-    <ClCompile Include="..\lua\ldebug.c" />
-    <ClCompile Include="..\lua\ldo.c" />
-    <ClCompile Include="..\lua\ldump.c" />
-    <ClCompile Include="..\lua\lfunc.c" />
-    <ClCompile Include="..\lua\lgc.c" />
-    <ClCompile Include="..\lua\linit.c" />
-    <ClCompile Include="..\lua\liolib.c" />
-    <ClCompile Include="..\lua\llex.c" />
-    <ClCompile Include="..\lua\lmathlib.c" />
-    <ClCompile Include="..\lua\lmem.c" />
-    <ClCompile Include="..\lua\loadlib.c" />
-    <ClCompile Include="..\lua\lobject.c" />
-    <ClCompile Include="..\lua\lopcodes.c" />
-    <ClCompile Include="..\lua\loslib.c" />
-    <ClCompile Include="..\lua\lparser.c" />
-    <ClCompile Include="..\lua\lstate.c" />
-    <ClCompile Include="..\lua\lstring.c" />
-    <ClCompile Include="..\lua\lstrlib.c" />
-    <ClCompile Include="..\lua\ltable.c" />
-    <ClCompile Include="..\lua\ltablib.c" />
-    <ClCompile Include="..\lua\ltm.c" />
-    <ClCompile Include="..\lua\lua.c" />
-    <ClCompile Include="..\lua\lundump.c" />
-    <ClCompile Include="..\lua\lvm.c" />
-    <ClCompile Include="..\lua\lzio.c" />
-    <ClCompile Include="..\lua\print.c" />
     <ClCompile Include="..\tolua\tolua_event.c" />
     <ClCompile Include="..\tolua\tolua_is.c" />
     <ClCompile Include="..\tolua\tolua_map.c" />
@@ -157,29 +142,10 @@
     <ClInclude Include="..\cocos2dx_support\Cocos2dxLuaLoader.h" />
     <ClInclude Include="..\cocos2dx_support\LuaCocos2d.h" />
     <ClInclude Include="..\cocos2dx_support\tolua_fix.h" />
-    <ClInclude Include="..\lua\lapi.h" />
-    <ClInclude Include="..\lua\lauxlib.h" />
-    <ClInclude Include="..\lua\lcode.h" />
-    <ClInclude Include="..\lua\ldebug.h" />
-    <ClInclude Include="..\lua\ldo.h" />
-    <ClInclude Include="..\lua\lfunc.h" />
-    <ClInclude Include="..\lua\lgc.h" />
-    <ClInclude Include="..\lua\llex.h" />
-    <ClInclude Include="..\lua\llimits.h" />
-    <ClInclude Include="..\lua\lmem.h" />
-    <ClInclude Include="..\lua\lobject.h" />
-    <ClInclude Include="..\lua\lopcodes.h" />
-    <ClInclude Include="..\lua\lparser.h" />
-    <ClInclude Include="..\lua\lstate.h" />
-    <ClInclude Include="..\lua\lstring.h" />
-    <ClInclude Include="..\lua\ltable.h" />
-    <ClInclude Include="..\lua\ltm.h" />
-    <ClInclude Include="..\lua\lua.h" />
-    <ClInclude Include="..\lua\luaconf.h" />
-    <ClInclude Include="..\lua\lualib.h" />
-    <ClInclude Include="..\lua\lundump.h" />
-    <ClInclude Include="..\lua\lvm.h" />
-    <ClInclude Include="..\lua\lzio.h" />
+    <ClInclude Include="..\luajit\include\lauxlib.h" />
+    <ClInclude Include="..\luajit\include\lua.h" />
+    <ClInclude Include="..\luajit\include\luaconf.h" />
+    <ClInclude Include="..\luajit\include\lualib.h" />
     <ClInclude Include="..\tolua\tolua++.h" />
     <ClInclude Include="..\tolua\tolua_event.h" />
   </ItemGroup>

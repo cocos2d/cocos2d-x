@@ -275,9 +275,12 @@ cc_utf8_get_char (const char * p)
 }
 
 
-unsigned short* cc_utf8_to_utf16(const char* str_old)
+unsigned short* cc_utf8_to_utf16(const char* str_old, int length/* = -1 */, int* rUtf16Size/* = NULL */)
 {
-    int len = cc_utf8_strlen(str_old, -1);
+    int len = cc_utf8_strlen(str_old, length);
+    if (rUtf16Size != NULL) {
+        *rUtf16Size = len;
+    }
     
     unsigned short* str_new = new unsigned short[len + 1];
     str_new[len] = 0;
