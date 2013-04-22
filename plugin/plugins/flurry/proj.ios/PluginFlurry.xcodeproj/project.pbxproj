@@ -202,7 +202,7 @@
 				DSTROOT = /tmp/libPluginFlurry.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PluginFlurry-Prefix.pch";
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../protocols/include";
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../protocols/include";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../platform/ios\"",
@@ -219,7 +219,7 @@
 				DSTROOT = /tmp/libPluginFlurry.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PluginFlurry-Prefix.pch";
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../protocols/include";
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../protocols/include";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../platform/ios\"",

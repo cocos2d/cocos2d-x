@@ -29,58 +29,13 @@
 		FA0CB87E168D2FB200E36B11 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA0CB87D168D2FB200E36B11 /* SystemConfiguration.framework */; };
 		FA0CB8A6168D31EA00E36B11 /* CloseNormal.png in Resources */ = {isa = PBXBuildFile; fileRef = FA0CB8A3168D31EA00E36B11 /* CloseNormal.png */; };
 		FA0CB8A7168D31EA00E36B11 /* CloseSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = FA0CB8A4168D31EA00E36B11 /* CloseSelected.png */; };
-		FA0CB8A8168D31EA00E36B11 /* HelloWorld.png in Resources */ = {isa = PBXBuildFile; fileRef = FA0CB8A5168D31EA00E36B11 /* HelloWorld.png */; };
-		FA0CB8A9168D3AEC00E36B11 /* libcocos2dx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FA0CB887168D2FCC00E36B11 /* libcocos2dx.a */; };
-		FA3FC10B168D43C900F56319 /* libPluginFlurry.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FA3FC104168D43AB00F56319 /* libPluginFlurry.a */; };
-		FA3FC10C168D43C900F56319 /* libPluginUmeng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FA3FC0FB168D43A600F56319 /* libPluginUmeng.a */; };
 		FA3FC131168D6AF400F56319 /* libPluginProtocol.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FA3FC12E168D6ADD00F56319 /* libPluginProtocol.a */; };
-		FA3FC133168D6B4300F56319 /* libFlurry.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FA3FC132168D6B4300F56319 /* libFlurry.a */; };
-		FA3FC135168D6B5800F56319 /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FA3FC134168D6B5800F56319 /* libMobClickLibrary.a */; };
+		FA7C6D1817251CD5008A0ECC /* libcocos2dx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FA7C6CF517251BEA008A0ECC /* libcocos2dx.a */; };
+		FA7C6D1917251CD5008A0ECC /* libPluginFlurry.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FA7C6D0817251C10008A0ECC /* libPluginFlurry.a */; };
+		FA7C6D1A17251CD5008A0ECC /* libPluginUmeng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FA7C6D1117251C17008A0ECC /* libPluginUmeng.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		FA0CB886168D2FCC00E36B11 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FA0CB87F168D2FCC00E36B11 /* cocos2dx.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 1551A33F158F2AB200E66CFE;
-			remoteInfo = cocos2dx;
-		};
-		FA0CB8AF168D3B0100E36B11 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FA0CB87F168D2FCC00E36B11 /* cocos2dx.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 1551A33E158F2AB200E66CFE;
-			remoteInfo = cocos2dx;
-		};
-		FA3FC0FA168D43A600F56319 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FA3FC0F3168D43A600F56319 /* PluginUmeng.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = FA09A301168ADAEC008C1C7B;
-			remoteInfo = PluginUmeng;
-		};
-		FA3FC103168D43AB00F56319 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FA3FC0FC168D43AB00F56319 /* PluginFlurry.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = FA09A372168AFD41008C1C7B;
-			remoteInfo = PluginFlurry;
-		};
-		FA3FC105168D43C100F56319 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FA3FC0FC168D43AB00F56319 /* PluginFlurry.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = FA09A371168AFD41008C1C7B;
-			remoteInfo = PluginFlurry;
-		};
-		FA3FC107168D43C100F56319 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FA3FC0F3168D43A600F56319 /* PluginUmeng.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = FA09A300168ADAEC008C1C7B;
-			remoteInfo = PluginUmeng;
-		};
 		FA3FC12D168D6ADD00F56319 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FA3FC126168D6ADC00F56319 /* PluginProtocol.xcodeproj */;
@@ -94,6 +49,48 @@
 			proxyType = 1;
 			remoteGlobalIDString = FA09A320168ADBC2008C1C7B;
 			remoteInfo = PluginProtocol;
+		};
+		FA7C6CF417251BEA008A0ECC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FA7C6CED17251BEA008A0ECC /* cocos2dx.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1551A33F158F2AB200E66CFE;
+			remoteInfo = cocos2dx;
+		};
+		FA7C6D0717251C10008A0ECC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FA7C6D0017251C10008A0ECC /* PluginFlurry.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FA09A372168AFD41008C1C7B;
+			remoteInfo = PluginFlurry;
+		};
+		FA7C6D1017251C17008A0ECC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FA7C6D0917251C16008A0ECC /* PluginUmeng.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FA09A301168ADAEC008C1C7B;
+			remoteInfo = PluginUmeng;
+		};
+		FA7C6D1217251C30008A0ECC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FA7C6D0017251C10008A0ECC /* PluginFlurry.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = FA09A371168AFD41008C1C7B;
+			remoteInfo = PluginFlurry;
+		};
+		FA7C6D1417251C30008A0ECC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FA7C6D0917251C16008A0ECC /* PluginUmeng.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = FA09A300168ADAEC008C1C7B;
+			remoteInfo = PluginUmeng;
+		};
+		FA7C6D1617251C30008A0ECC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FA7C6CED17251BEA008A0ECC /* cocos2dx.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 1551A33E158F2AB200E66CFE;
+			remoteInfo = cocos2dx;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -126,15 +123,12 @@
 		FA0CB875168D2F5400E36B11 /* HelloWorldScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HelloWorldScene.cpp; sourceTree = "<group>"; };
 		FA0CB876168D2F5400E36B11 /* HelloWorldScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelloWorldScene.h; sourceTree = "<group>"; };
 		FA0CB87D168D2FB200E36B11 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		FA0CB87F168D2FCC00E36B11 /* cocos2dx.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2dx.xcodeproj; path = "../../cocos2d-x/cocos2dx/proj.ios/cocos2dx.xcodeproj"; sourceTree = "<group>"; };
 		FA0CB8A3168D31EA00E36B11 /* CloseNormal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CloseNormal.png; sourceTree = "<group>"; };
 		FA0CB8A4168D31EA00E36B11 /* CloseSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CloseSelected.png; sourceTree = "<group>"; };
-		FA0CB8A5168D31EA00E36B11 /* HelloWorld.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HelloWorld.png; sourceTree = "<group>"; };
-		FA3FC0F3168D43A600F56319 /* PluginUmeng.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PluginUmeng.xcodeproj; path = ../../../umeng/proj.ios/PluginUmeng.xcodeproj; sourceTree = "<group>"; };
-		FA3FC0FC168D43AB00F56319 /* PluginFlurry.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PluginFlurry.xcodeproj; path = ../../../flurry/proj.ios/PluginFlurry.xcodeproj; sourceTree = "<group>"; };
 		FA3FC126168D6ADC00F56319 /* PluginProtocol.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PluginProtocol.xcodeproj; path = ../../../protocols/proj.ios/PluginProtocol.xcodeproj; sourceTree = "<group>"; };
-		FA3FC132168D6B4300F56319 /* libFlurry.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libFlurry.a; path = ../../../flurry/platform/ios/libFlurry.a; sourceTree = "<group>"; };
-		FA3FC134168D6B5800F56319 /* libMobClickLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMobClickLibrary.a; path = ../../../umeng/platform/ios/libMobClickLibrary.a; sourceTree = "<group>"; };
+		FA7C6CED17251BEA008A0ECC /* cocos2dx.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2dx.xcodeproj; path = ../../../../cocos2dx/proj.ios/cocos2dx.xcodeproj; sourceTree = "<group>"; };
+		FA7C6D0017251C10008A0ECC /* PluginFlurry.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PluginFlurry.xcodeproj; path = ../../../plugins/flurry/proj.ios/PluginFlurry.xcodeproj; sourceTree = "<group>"; };
+		FA7C6D0917251C16008A0ECC /* PluginUmeng.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PluginUmeng.xcodeproj; path = ../../../plugins/umeng/proj.ios/PluginUmeng.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,12 +136,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FA3FC135168D6B5800F56319 /* libMobClickLibrary.a in Frameworks */,
-				FA3FC133168D6B4300F56319 /* libFlurry.a in Frameworks */,
+				FA7C6D1817251CD5008A0ECC /* libcocos2dx.a in Frameworks */,
+				FA7C6D1917251CD5008A0ECC /* libPluginFlurry.a in Frameworks */,
+				FA7C6D1A17251CD5008A0ECC /* libPluginUmeng.a in Frameworks */,
 				FA3FC131168D6AF400F56319 /* libPluginProtocol.a in Frameworks */,
-				FA3FC10B168D43C900F56319 /* libPluginFlurry.a in Frameworks */,
-				FA3FC10C168D43C900F56319 /* libPluginUmeng.a in Frameworks */,
-				FA0CB8A9168D3AEC00E36B11 /* libcocos2dx.a in Frameworks */,
 				FA0CB87E168D2FB200E36B11 /* SystemConfiguration.framework in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
@@ -173,12 +165,10 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				FA3FC134168D6B5800F56319 /* libMobClickLibrary.a */,
-				FA3FC132168D6B4300F56319 /* libFlurry.a */,
+				FA7C6D0917251C16008A0ECC /* PluginUmeng.xcodeproj */,
+				FA7C6D0017251C10008A0ECC /* PluginFlurry.xcodeproj */,
+				FA7C6CED17251BEA008A0ECC /* cocos2dx.xcodeproj */,
 				FA3FC126168D6ADC00F56319 /* PluginProtocol.xcodeproj */,
-				FA3FC0FC168D43AB00F56319 /* PluginFlurry.xcodeproj */,
-				FA3FC0F3168D43A600F56319 /* PluginUmeng.xcodeproj */,
-				FA0CB87F168D2FCC00E36B11 /* cocos2dx.xcodeproj */,
 				FA0CB87D168D2FB200E36B11 /* SystemConfiguration.framework */,
 				FA0CB872168D2F5400E36B11 /* Classes */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
@@ -211,7 +201,6 @@
 			children = (
 				FA0CB8A3168D31EA00E36B11 /* CloseNormal.png */,
 				FA0CB8A4168D31EA00E36B11 /* CloseSelected.png */,
-				FA0CB8A5168D31EA00E36B11 /* HelloWorld.png */,
 				D4EF94ED15BD319D00D803EB /* Icon-144.png */,
 				D4EF94EB15BD319B00D803EB /* Icon-72.png */,
 				D4EF94E915BD319500D803EB /* Icon-114.png */,
@@ -248,34 +237,34 @@
 			path = ../Classes;
 			sourceTree = "<group>";
 		};
-		FA0CB880168D2FCC00E36B11 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				FA0CB887168D2FCC00E36B11 /* libcocos2dx.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		FA3FC0F4168D43A600F56319 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				FA3FC0FB168D43A600F56319 /* libPluginUmeng.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		FA3FC0FD168D43AB00F56319 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				FA3FC104168D43AB00F56319 /* libPluginFlurry.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		FA3FC127168D6ADC00F56319 /* Products */ = {
 			isa = PBXGroup;
 			children = (
 				FA3FC12E168D6ADD00F56319 /* libPluginProtocol.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FA7C6CEE17251BEA008A0ECC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FA7C6CF517251BEA008A0ECC /* libcocos2dx.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FA7C6D0117251C10008A0ECC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FA7C6D0817251C10008A0ECC /* libPluginFlurry.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FA7C6D0A17251C16008A0ECC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FA7C6D1117251C17008A0ECC /* libPluginUmeng.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -294,10 +283,10 @@
 			buildRules = (
 			);
 			dependencies = (
+				FA7C6D1317251C30008A0ECC /* PBXTargetDependency */,
+				FA7C6D1517251C30008A0ECC /* PBXTargetDependency */,
+				FA7C6D1717251C30008A0ECC /* PBXTargetDependency */,
 				FA3FC130168D6AEB00F56319 /* PBXTargetDependency */,
-				FA3FC106168D43C100F56319 /* PBXTargetDependency */,
-				FA3FC108168D43C100F56319 /* PBXTargetDependency */,
-				FA0CB8B0168D3B0100E36B11 /* PBXTargetDependency */,
 			);
 			name = HelloAnalytics;
 			productName = HelloWorld;
@@ -326,20 +315,20 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = FA0CB880168D2FCC00E36B11 /* Products */;
-					ProjectRef = FA0CB87F168D2FCC00E36B11 /* cocos2dx.xcodeproj */;
+					ProductGroup = FA7C6CEE17251BEA008A0ECC /* Products */;
+					ProjectRef = FA7C6CED17251BEA008A0ECC /* cocos2dx.xcodeproj */;
 				},
 				{
-					ProductGroup = FA3FC0FD168D43AB00F56319 /* Products */;
-					ProjectRef = FA3FC0FC168D43AB00F56319 /* PluginFlurry.xcodeproj */;
+					ProductGroup = FA7C6D0117251C10008A0ECC /* Products */;
+					ProjectRef = FA7C6D0017251C10008A0ECC /* PluginFlurry.xcodeproj */;
 				},
 				{
 					ProductGroup = FA3FC127168D6ADC00F56319 /* Products */;
 					ProjectRef = FA3FC126168D6ADC00F56319 /* PluginProtocol.xcodeproj */;
 				},
 				{
-					ProductGroup = FA3FC0F4168D43A600F56319 /* Products */;
-					ProjectRef = FA3FC0F3168D43A600F56319 /* PluginUmeng.xcodeproj */;
+					ProductGroup = FA7C6D0A17251C16008A0ECC /* Products */;
+					ProjectRef = FA7C6D0917251C16008A0ECC /* PluginUmeng.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -350,32 +339,32 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		FA0CB887168D2FCC00E36B11 /* libcocos2dx.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libcocos2dx.a;
-			remoteRef = FA0CB886168D2FCC00E36B11 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		FA3FC0FB168D43A600F56319 /* libPluginUmeng.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libPluginUmeng.a;
-			remoteRef = FA3FC0FA168D43A600F56319 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		FA3FC104168D43AB00F56319 /* libPluginFlurry.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libPluginFlurry.a;
-			remoteRef = FA3FC103168D43AB00F56319 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		FA3FC12E168D6ADD00F56319 /* libPluginProtocol.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libPluginProtocol.a;
 			remoteRef = FA3FC12D168D6ADD00F56319 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FA7C6CF517251BEA008A0ECC /* libcocos2dx.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libcocos2dx.a;
+			remoteRef = FA7C6CF417251BEA008A0ECC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FA7C6D0817251C10008A0ECC /* libPluginFlurry.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libPluginFlurry.a;
+			remoteRef = FA7C6D0717251C10008A0ECC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FA7C6D1117251C17008A0ECC /* libPluginUmeng.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libPluginUmeng.a;
+			remoteRef = FA7C6D1017251C17008A0ECC /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -394,7 +383,6 @@
 				D446FD7D161028F4000ADA7B /* Default-568h@2x.png in Resources */,
 				FA0CB8A6168D31EA00E36B11 /* CloseNormal.png in Resources */,
 				FA0CB8A7168D31EA00E36B11 /* CloseSelected.png in Resources */,
-				FA0CB8A8168D31EA00E36B11 /* HelloWorld.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -416,25 +404,25 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		FA0CB8B0168D3B0100E36B11 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = cocos2dx;
-			targetProxy = FA0CB8AF168D3B0100E36B11 /* PBXContainerItemProxy */;
-		};
-		FA3FC106168D43C100F56319 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = PluginFlurry;
-			targetProxy = FA3FC105168D43C100F56319 /* PBXContainerItemProxy */;
-		};
-		FA3FC108168D43C100F56319 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = PluginUmeng;
-			targetProxy = FA3FC107168D43C100F56319 /* PBXContainerItemProxy */;
-		};
 		FA3FC130168D6AEB00F56319 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = PluginProtocol;
 			targetProxy = FA3FC12F168D6AEB00F56319 /* PBXContainerItemProxy */;
+		};
+		FA7C6D1317251C30008A0ECC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = PluginFlurry;
+			targetProxy = FA7C6D1217251C30008A0ECC /* PBXContainerItemProxy */;
+		};
+		FA7C6D1517251C30008A0ECC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = PluginUmeng;
+			targetProxy = FA7C6D1417251C30008A0ECC /* PBXContainerItemProxy */;
+		};
+		FA7C6D1717251C30008A0ECC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = cocos2dx;
+			targetProxy = FA7C6D1617251C30008A0ECC /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -461,21 +449,21 @@
 				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = (
 					"\"$(SDKROOT)/usr/include/libxml2/\"",
-					"\"$(SRCROOT)/../../cocos2d-x/cocos2dx/include\"",
-					"\"$(SRCROOT)/../../cocos2d-x/cocos2dx\"",
-					"\"$(SRCROOT)/../../cocos2d-x/cocos2dx/platform/ios\"",
-					"\"$(SRCROOT)/../../cocos2d-x/cocos2dx/kazmath/include\"",
-					"\"$(SRCROOT)/../../cocos2d-x/external/chipmunk/include/chipmunk\"",
+					"\"$(SRCROOT)/../../../../cocos2dx/include\"",
+					"\"$(SRCROOT)/../../../../cocos2dx\"",
+					"\"$(SRCROOT)/../../../../cocos2dx/platform/ios\"",
+					"\"$(SRCROOT)/../../../../cocos2dx/kazmath/include\"",
+					"\"$(SRCROOT)/../../../../external/chipmunk/include/chipmunk\"",
 					"\"$(SRCROOT)/../../../protocols/include\"",
-					"\"$(SRCROOT)/../../../flurry/include\"",
-					"\"$(SRCROOT)/../../../umeng/include\"",
+					"\"$(SRCROOT)/../../../plugins/flurry/include\"",
+					"\"$(SRCROOT)/../../../plugins/umeng/include\"",
 				);
 				INFOPLIST_FILE = "HelloAnalytics-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../../../flurry/platform/ios\"",
-					"\"$(SRCROOT)/../../../umeng/platform/ios\"",
+					"\"$(SRCROOT)/../../../plugins/flurry/platform/ios\"",
+					"\"$(SRCROOT)/../../../plugins/umeng/platform/ios\"",
 				);
 				PRODUCT_NAME = HelloAnalytics;
 				PROVISIONING_PROFILE = "";
@@ -504,21 +492,21 @@
 				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = (
 					"\"$(SDKROOT)/usr/include/libxml2/\"",
-					"\"$(SRCROOT)/../../cocos2d-x/cocos2dx/include\"",
-					"\"$(SRCROOT)/../../cocos2d-x/cocos2dx\"",
-					"\"$(SRCROOT)/../../cocos2d-x/cocos2dx/platform/ios\"",
-					"\"$(SRCROOT)/../../cocos2d-x/cocos2dx/kazmath/include\"",
-					"\"$(SRCROOT)/../../cocos2d-x/external/chipmunk/include/chipmunk\"",
+					"\"$(SRCROOT)/../../../../cocos2dx/include\"",
+					"\"$(SRCROOT)/../../../../cocos2dx\"",
+					"\"$(SRCROOT)/../../../../cocos2dx/platform/ios\"",
+					"\"$(SRCROOT)/../../../../cocos2dx/kazmath/include\"",
+					"\"$(SRCROOT)/../../../../external/chipmunk/include/chipmunk\"",
 					"\"$(SRCROOT)/../../../protocols/include\"",
-					"\"$(SRCROOT)/../../../flurry/include\"",
-					"\"$(SRCROOT)/../../../umeng/include\"",
+					"\"$(SRCROOT)/../../../plugins/flurry/include\"",
+					"\"$(SRCROOT)/../../../plugins/umeng/include\"",
 				);
 				INFOPLIST_FILE = "HelloAnalytics-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../../../flurry/platform/ios\"",
-					"\"$(SRCROOT)/../../../umeng/platform/ios\"",
+					"\"$(SRCROOT)/../../../plugins/flurry/platform/ios\"",
+					"\"$(SRCROOT)/../../../plugins/umeng/platform/ios\"",
 				);
 				PRODUCT_NAME = HelloAnalytics;
 				PROVISIONING_PROFILE = "";
