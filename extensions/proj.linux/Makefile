@@ -4,13 +4,11 @@ COCOS_ROOT=../..
 
 INCLUDES = -I$(COCOS_ROOT)/external \
 	-I$(COCOS_ROOT)/external/chipmunk/include/chipmunk \
+	-I$(COCOS_ROOT)/CocosDenshion/include \
 	-I.. \
 	-I../CCBReader \
 	-I../GUI/CCControlExtension \
 	-I../network
-
-DEFINES += -DCC_ENABLE_CHIPMUNK_INTEGRATION=1
-DEFINES += -D__CC_PLATFORM_IMAGE_CPP__
 
 SOURCES = ../CCBReader/CCBFileLoader.cpp \
 ../CCBReader/CCMenuItemImageLoader.cpp \

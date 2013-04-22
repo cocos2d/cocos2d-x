@@ -207,60 +207,56 @@ files
 	ExtensionsTest.cpp
 	ExtensionsTest.h
 
-#	[Test/ExtensionsTest/CocosBuilderTest]
-#	(../Classes/ExtensionsTest/CocosBuilderTest)
-#	CocosBuilderTest.cpp
-#	CocosBuilderTest.h
-#
-#	[Test/ExtensionsTest/CocosBuilderTest/AnimationsTest]
-#	(../Classes/ExtensionsTest/CocosBuilderTest/AnimationsTest)
-#	AnimationsLayerLoader.h
-#	AnimationsTestLayer.cpp
-#	AnimationsTestLayer.h
-#
-#	[Test/ExtensionsTest/CocosBuilderTest/ButtonTest]
-#	(../Classes/ExtensionsTest/CocosBuilderTest/ButtonTest)
-#	ButtonTestLayer.cpp
-#	ButtonTestLayer.h
-#	ButtonTestLayerLoader.h
-#
-#	[Test/ExtensionsTest/CocosBuilderTest/HelloCocosBuilder]
-#	(../Classes/ExtensionsTest/CocosBuilderTest/HelloCocosBuilder)
-#	HelloCocosBuilderLayer.cpp
-#	HelloCocosBuilderLayer.h
-#	HelloCocosBuilderLayerLoader.h
-#
-#	[Test/ExtensionsTest/CocosBuilderTest/LabelTest]
-#	(../Classes/ExtensionsTest/CocosBuilderTest/LabelTest)
-#	LabelTestLayer.h
-#	LabelTestLayerLoader.h
-#
-#	[Test/ExtensionsTest/CocosBuilderTest/MenuTest]
-#	(../Classes/ExtensionsTest/CocosBuilderTest/MenuTest)
-#	MenuTestLayer.cpp
-#	MenuTestLayer.h
-#	MenuTestLayerLoader.h
-#
-#	[Test/ExtensionsTest/CocosBuilderTest/ParticleSystemTest]
-#	(../Classes/ExtensionsTest/CocosBuilderTest/ParticleSystemTest)
-#	ParticleSystemTestLayer.h
-#	ParticleSystemTestLayerLoader.h
-#
-#	[Test/ExtensionsTest/CocosBuilderTest/ScrollViewTest]
-#	(../Classes/ExtensionsTest/CocosBuilderTest/ScrollViewTest)
-#	ScrollViewTestLayer.h
-#	ScrollViewTestLayerLoader.h
-#
-#	[Test/ExtensionsTest/CocosBuilderTest/SpriteTest]
-#	(../Classes/ExtensionsTest/CocosBuilderTest/SpriteTest)
-#	SpriteTestLayer.h
-#	SpriteTestLayerLoader.h
-#
-#	[Test/ExtensionsTest/CocosBuilderTest/TestHeader]
-#	(../Classes/ExtensionsTest/CocosBuilderTest/TestHeader)
-#	TestHeaderLayer.cpp
-#	TestHeaderLayer.h
-#	TestHeaderLayerLoader.h
+	[Test/ExtensionsTest/CocosBuilderTest]
+	(../Classes/ExtensionsTest/CocosBuilderTest)
+	"*.h"
+	"*.cpp"
+
+	[Test/ExtensionsTest/CocosBuilderTest/AnimationsTest]
+	(../Classes/ExtensionsTest/CocosBuilderTest/AnimationsTest)
+	"*.h"
+	"*.cpp"
+
+	[Test/ExtensionsTest/CocosBuilderTest/ButtonTest]
+	(../Classes/ExtensionsTest/CocosBuilderTest/ButtonTest)
+	"*.h"
+	"*.cpp"
+
+	[Test/ExtensionsTest/CocosBuilderTest/HelloCocosBuilder]
+	(../Classes/ExtensionsTest/CocosBuilderTest/HelloCocosBuilder)
+	"*.h"
+	"*.cpp"
+
+	[Test/ExtensionsTest/CocosBuilderTest/LabelTest]
+	(../Classes/ExtensionsTest/CocosBuilderTest/LabelTest)
+	"*.h"
+
+	[Test/ExtensionsTest/CocosBuilderTest/MenuTest]
+	(../Classes/ExtensionsTest/CocosBuilderTest/MenuTest)
+	"*.h"
+	"*.cpp"
+
+	[Test/ExtensionsTest/CocosBuilderTest/ParticleSystemTest]
+	(../Classes/ExtensionsTest/CocosBuilderTest/ParticleSystemTest)
+	"*.h"
+
+	[Test/ExtensionsTest/CocosBuilderTest/ScrollViewTest]
+	(../Classes/ExtensionsTest/CocosBuilderTest/ScrollViewTest)
+	"*.h"
+
+	[Test/ExtensionsTest/CocosBuilderTest/SpriteTest]
+	(../Classes/ExtensionsTest/CocosBuilderTest/SpriteTest)
+	"*.h"
+
+	[Test/ExtensionsTest/CocosBuilderTest/TestHeader]
+	(../Classes/ExtensionsTest/CocosBuilderTest/TestHeader)
+	"*.h"
+	"*.cpp"
+
+	[Test/ExtensionsTest/CocosBuilderTest/TimelineCallbackTest]
+	(../Classes/ExtensionsTest/CocosBuilderTest/TimelineCallbackTest)
+	"*.h"
+	"*.cpp"
 
 	[Test/ExtensionsTest/ControlExtensionTest]
 	(../Classes/ExtensionsTest/ControlExtensionTest)

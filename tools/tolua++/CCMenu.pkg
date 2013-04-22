@@ -1,16 +1,14 @@
-/*
-typedef enum
+enum
 {
     kCCMenuStateWaiting,
     kCCMenuStateTrackingTouch
-} tCCMenuState;
+};
 
 enum {
-    //* priority used by the menu for the event handler
-    kCCMenuHandlerPriority = -128,
+    kCCMenuHandlerPriority = -128
 };
-*/
-class CCMenu : public CCLayer
+
+class CCMenu : public CCLayerRGBA
 {
     void alignItemsVertically();
     void alignItemsVerticallyWithPadding(float padding);

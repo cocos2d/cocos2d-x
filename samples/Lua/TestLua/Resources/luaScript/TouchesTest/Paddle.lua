@@ -1,5 +1,5 @@
-require "luaScript.extern"
-require "luaScript.VisibleRect"
+require "luaScript/extern"
+require "luaScript/VisibleRect"
 
 Paddle = class("Paddle", function(texture)
     return CCSprite:createWithTexture(texture)

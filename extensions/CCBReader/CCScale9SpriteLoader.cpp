@@ -17,7 +17,7 @@ NS_CC_EXT_BEGIN
 
 void CCScale9SpriteLoader::onHandlePropTypeSpriteFrame(CCNode * pNode, CCNode * pParent, const char * pPropertyName, CCSpriteFrame * pCCSpriteFrame, CCBReader * pCCBReader) {
     if(strcmp(pPropertyName, PROPERTY_SPRITEFRAME) == 0) {
-        ((CCScale9Sprite *)pNode)->initWithSpriteFrame(pCCSpriteFrame);
+        ((CCScale9Sprite *)pNode)->setSpriteFrame(pCCSpriteFrame);
     } else {
         CCNodeLoader::onHandlePropTypeSpriteFrame(pNode, pParent, pPropertyName, pCCSpriteFrame, pCCBReader);
     }

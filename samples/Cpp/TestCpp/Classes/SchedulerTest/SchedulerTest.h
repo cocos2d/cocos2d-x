@@ -250,6 +250,17 @@ public:
     CCControlSlider    *sliderCtl2;
 };
 
+class SchedulerIssue2268 : public SchedulerTestLayer
+{
+	public:
+		~SchedulerIssue2268();
+		std::string title();
+		std::string subtitle();
+		void onEnter();
+		void update(float dt);
+	private:
+		CCNode *testNode;
+};
 
 class SchedulerTestScene : public TestScene
 {

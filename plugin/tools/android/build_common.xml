@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="" default="debug">
+
+    <!-- link jar files -->
+    <property name="myjar.libs.dir" value="./sdk" />
+    <target name="-pre-build" depends="check-dependens">
+        <if condition="${jarExisted}">
+            <then>
+                <path id="project.all.jars.path">
+                    <fileset dir="${myjar.libs.dir}" includes="*.jar" />
+                    <fileset file="${project.jar.1}" />
+                    <fileset file="${project.jar.2}" />
+                </path>
+            </then>
+            <else>
+                <path id="project.all.jars.path">
+                    <fileset file="${project.jar.1}" />
+                    <fileset file="${project.jar.2}" />
+                </path>
+            </else>
+        </if>
+    </target>
+
+    <import file="${sdk.dir}/tools/ant/build.xml" />
+
+    <!-- rename the jar file -->
+    <target name="plugin-publish" depends="release">
+		<copy file="${out.absolute.dir}/classes.jar" tofile="${out.absolute.dir}/${ant.project.name}.jar" />
+
+		<!-- delete temp files -->
+        <delete>
+			<fileset dir="${out.absolute.dir}" includes="build.prop AndroidManifest.xml.d jarlist.cache classes.jar"/>
+		</delete>
+    </target>
+
+    <!-- check the project & jars which current project dependents --> 
+    <target name="check-dependens">
+
+        <!-- check the sdk dir is existed or not -->
+        <condition property="jarExisted">
+            <and>
+                <available file="${myjar.libs.dir}" /> 
+            </and>
+        </condition>
+
+        <!-- check the projects dependents -->
+        <condition property="have.proj.1">
+            <isset property="android.library.reference.1" />   
+        </condition>
+        <if condition="${have.proj.1}">
+            <then>
+                <property name="project.jar.1" value="${android.library.reference.1}/bin/classes.jar" />
+            </then>
+        </if>
+
+        <condition property="have.proj.2">
+            <isset property="android.library.reference.2" />   
+        </condition>
+        <if condition="${have.proj.2}">
+            <then>
+                <property name="project.jar.2" value="${android.library.reference.2}/bin/classes.jar" />
+            </then>
+        </if>
+    </target>
+</project>

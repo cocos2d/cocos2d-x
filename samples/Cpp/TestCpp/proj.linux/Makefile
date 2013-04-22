@@ -36,6 +36,7 @@ SOURCES = ../Classes/AccelerometerTest/AccelerometerTest.cpp \
 	../Classes/ExtensionsTest/CocosBuilderTest/AnimationsTest/AnimationsTestLayer.cpp \
 	../Classes/ExtensionsTest/CocosBuilderTest/MenuTest/MenuTestLayer.cpp \
 	../Classes/ExtensionsTest/CocosBuilderTest/TestHeader/TestHeaderLayer.cpp \
+	../Classes/ExtensionsTest/CocosBuilderTest/TimelineCallbackTest/TimelineCallbackTestLayer.cpp \
 	../Classes/ExtensionsTest/ControlExtensionTest/CCControlButtonTest/CCControlButtonTest.cpp \
 	../Classes/ExtensionsTest/ControlExtensionTest/CCControlColourPicker/CCControlColourPickerTest.cpp \
 	../Classes/ExtensionsTest/ControlExtensionTest/CCControlScene.cpp \
@@ -108,8 +109,6 @@ STATICLIBS += \
     $(LIB_DIR)/libextension.a \
     $(LIB_DIR)/libbox2d.a \
     $(LIB_DIR)/libchipmunk.a
-
-DEFINES += -DCC_ENABLE_CHIPMUNK_INTEGRATION=1
 
 ####### Build rules
 $(TARGET): $(OBJECTS) $(STATICLIBS) $(COCOS_LIBS) $(CORE_MAKEFILE_LIST)
