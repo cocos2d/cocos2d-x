@@ -49,7 +49,7 @@ $(TARGET).data:
 	(cd $(RESTMP); python $(PACKAGER) $(EXECUTABLE).data $(patsubst %,--preload %,$(ALL_ASSETS)) --preload fonts --pre-run > $(EXECUTABLE).data.js)
 	mv $(RESTMP)/$(EXECUTABLE).data $@
 	mv $(RESTMP)/$(EXECUTABLE).data.js $@.js
-	#rm -rf $(RESTMP)
+	rm -rf $(RESTMP)
 
 $(BIN_DIR)/index.html: index.html
 	@mkdir -p $(@D)
