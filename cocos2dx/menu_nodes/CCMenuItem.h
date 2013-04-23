@@ -250,11 +250,6 @@ public:
 
     /** initializes a menu item with a normal, selected  and disabled image with target/selector */
     bool initWithNormalSprite(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite, CCObject* target, SEL_MenuHandler selector);
-    // super methods
-    virtual void setColor(const ccColor3B& color);
-    virtual const ccColor3B& getColor();
-    virtual void setOpacity(GLubyte opacity);
-    virtual GLubyte getOpacity();
     
     /**
      @since v0.99.5

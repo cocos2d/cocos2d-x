@@ -36,9 +36,9 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
     
-static unsigned int _fontSize = kCCItemSize;
-static std::string _fontName = "Marker Felt";
-static bool _fontNameRelease = false;
+static unsigned int _globalFontSize = kCCItemSize;
+static std::string _globalFontName = "Marker Felt";
+static bool _globalFontNameRelease = false;
 
 const unsigned int    kCurrentItem = 0xc0c05001;
 const unsigned int    kZoomActionTag = 0xc0c05002;
@@ -68,8 +68,8 @@ bool CCMenuItem::initWithTarget(CCObject *rec, SEL_MenuHandler selector)
     setAnchorPoint(ccp(0.5f, 0.5f));
     m_pListener = rec;
     m_pfnSelector = selector;
-    m_bIsEnabled = true;
-    m_bIsSelected = false;
+    m_bEnabled = true;
+    m_bSelected = false;
     return true;
 }
 
@@ -80,12 +80,12 @@ CCMenuItem::~CCMenuItem()
 
 void CCMenuItem::selected()
 {
-    m_bIsSelected = true;
+    m_bSelected = true;
 }
 
 void CCMenuItem::unselected()
 {
-    m_bIsSelected = false;
+    m_bSelected = false;
 }
 
 void CCMenuItem::registerScriptTapHandler(int nHandler)
