@@ -40,7 +40,7 @@
 #include "network/HttpRequest.h"
 #include "network/HttpResponse.h"
 #include "network/HttpClient.h"
-
+#include "spine/spine-cocos2dx.h"
 // Physics integration
 #if CC_ENABLE_CHIPMUNK_INTEGRATION || CC_ENABLE_BOX2D_INTEGRATION
 #include "physics_nodes/CCPhysicsDebugNode.h"
