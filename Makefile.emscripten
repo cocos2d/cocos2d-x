@@ -12,7 +12,6 @@ define MAKE_TARGET
 	+$(MAKE) -C samples/Cpp/SimpleGame/proj.$(PLATFORM) $@
 endef
 
-
 # Haven't yet got the lua projects working.
 #	+$(MAKE) -C samples/Lua/HelloLua/proj.$(PLATFORM) $@
 #	+$(MAKE) -C samples/Lua/TestLua/proj.$(PLATFORM) $@
