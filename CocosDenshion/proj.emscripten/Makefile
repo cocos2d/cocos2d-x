@@ -13,8 +13,8 @@ all: $(TARGET)
 
 $(TARGET): $(OBJECTS) $(CORE_MAKEFILE_LIST)
 	@mkdir -p $(@D)
-	$(LOG_LINK)$(CXX) $(CXXFLAGS) $(OBJECTS) -shared -o $(TARGET) $(SHAREDLIBS) $(STATICLIBS)
+	$(CXX) $(CXXFLAGS) $(OBJECTS) -shared -o $(TARGET) $(SHAREDLIBS) $(STATICLIBS)
 
 $(OBJ_DIR)/%.o: ../%.cpp $(CORE_MAKEFILE_LIST)
 	@mkdir -p $(@D)
-	$(LOG_CXX)$(CXX) $(CXXFLAGS) $(INCLUDES) $(DEFINES) $(VISIBILITY) -c $< -o $@
+	$(CXX) $(CXXFLAGS) $(INCLUDES) $(DEFINES) $(VISIBILITY) -c $< -o $@
