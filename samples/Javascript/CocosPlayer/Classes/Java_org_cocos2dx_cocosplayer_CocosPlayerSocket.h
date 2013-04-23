@@ -31,6 +31,7 @@ extern "C" {
   extern void cleanCacheDirJNI();
   extern void setDeviceResolutionJNI(const char* res);
   extern void sendLogMsg(const char* log);
+  extern void resetCocosApp();
 }
 
 #endif

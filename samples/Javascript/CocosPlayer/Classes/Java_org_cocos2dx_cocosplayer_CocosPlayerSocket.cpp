@@ -62,4 +62,7 @@ extern "C" {
   const char *getCCBDirectoryPath() {
       return "";
   }
+
+  void resetCocosApp() {
+  }
 }
