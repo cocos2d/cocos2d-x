@@ -64,9 +64,7 @@ public:
     : m_bSelected(false)
     , m_bEnabled(false)            
     , m_pListener(NULL)            
-    , m_pfnPressSelector(NULL)
-    , m_pfnReleaseSelector(NULL)
-    , m_pfnActivatedSelector(NULL)
+    , m_pfnSelector(NULL)
     , m_nScriptTapHandler(0)
     {}
     virtual ~CCMenuItem();
@@ -74,11 +72,9 @@ public:
     /** Creates a CCMenuItem with no target/selector */
     static CCMenuItem* create();
     /** Creates a CCMenuItem with a target/selector */
-    static CCMenuItem* create(CCObject *rec, SEL_MenuHandler activatedSelector);
-    static CCMenuItem* create(CCObject *rec, SEL_MenuHandler pressSelector, SEL_MenuHandler releaseSelector, SEL_MenuHandler activatedSelector);
+    static CCMenuItem* create(CCObject *rec, SEL_MenuHandler selector);
     /** Initializes a CCMenuItem with a target/selector */
-    bool initWithTarget(CCObject *rec, SEL_MenuHandler activatedSelector);
-    bool initWithTarget(CCObject *rec, SEL_MenuHandler pressSelector, SEL_MenuHandler releaseSelector, SEL_MenuHandler activatedSelector);
+    bool initWithTarget(CCObject *rec, SEL_MenuHandler selector);
     /** Returns the outside box */
     CCRect rect();
     /** Activate the item */
@@ -103,13 +99,10 @@ public:
     
     /** set the target/selector of the menu item*/
     void setTarget(CCObject *rec, SEL_MenuHandler selector);
-    void setPressTarget(CCObject *rec, SEL_MenuHandler selector);
-    
+
 protected:
     CCObject*       m_pListener;
-    SEL_MenuHandler    m_pfnPressSelector;
-    SEL_MenuHandler    m_pfnReleaseSelector;
-    SEL_MenuHandler    m_pfnActivatedSelector;
+    SEL_MenuHandler    m_pfnSelector;
     int             m_nScriptTapHandler;
 };
 
@@ -257,16 +250,21 @@ public:
     /** creates a menu item with a normal, selected and disabled image*/
     static CCMenuItemSprite * create(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite = NULL);
     /** creates a menu item with a normal and selected image with target/selector */
-    static CCMenuItemSprite * create(CCNode* normalSprite, CCNode* selectedSprite, CCObject* target, SEL_MenuHandler activatedSelector);
+    static CCMenuItemSprite * create(CCNode* normalSprite, CCNode* selectedSprite, CCObject* target, SEL_MenuHandler selector);
     /** creates a menu item with a normal,selected  and disabled image with target/selector */
-    static CCMenuItemSprite * create(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite, CCObject* target, SEL_MenuHandler activatedSelector);
-    /** creates a menu item with a normal and selected image with press/release selector */
-    static CCMenuItemSprite * create(CCNode* normalSprite, CCNode* selectedSprite, CCObject* target, SEL_MenuHandler pressSelector, SEL_MenuHandler releaseSelector, SEL_MenuHandler activatedSelector);
-    /** creates a menu item with a normal,selected  and disabled image with press/release tselector */
-    static CCMenuItemSprite * create(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite, CCObject* target, SEL_MenuHandler pressSelector, SEL_MenuHandler releaseSelector, SEL_MenuHandler activatedSelector);
+    static CCMenuItemSprite * create(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite, CCObject* target, SEL_MenuHandler selector);
 
     /** initializes a menu item with a normal, selected  and disabled image with target/selector */
+<<<<<<< HEAD
     bool initWithNormalSprite(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite, CCObject* target, SEL_MenuHandler pressSelector, SEL_MenuHandler releaseSelector, SEL_MenuHandler activatedSelector);
+=======
+    bool initWithNormalSprite(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite, CCObject* target, SEL_MenuHandler selector);
+    // super methods
+    virtual void setColor(const ccColor3B& color);
+    virtual const ccColor3B& getColor();
+    virtual void setOpacity(GLubyte opacity);
+    virtual GLubyte getOpacity();
+>>>>>>> parent of 09157d1... Update CCMenuItem to provide optional PressSelector and optional ReleaseSelector in addition to the usual ActivateSelector. This allows the developer more control: for example to play an onButtonPressed sound as well as an onButtonReleased sound.
     
     /**
      @since v0.99.5
