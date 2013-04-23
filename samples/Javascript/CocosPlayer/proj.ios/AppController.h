@@ -18,6 +18,8 @@ void cleanCache() {
     UIWindow *window;
     RootViewController    *viewController;
 }
++ (AppController*) appController;
+- (void) resetCocos2d;
 
 @end
 

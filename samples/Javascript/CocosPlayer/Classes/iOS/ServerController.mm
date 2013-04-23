@@ -412,7 +412,7 @@ NSString *kCCBPlayerStatusStringScript = @"Action: Executing script";
         if ([[arr objectAtIndex:2] boolValue]) orientations |= UIInterfaceOrientationMaskLandscapeLeft;
         if ([[arr objectAtIndex:3] boolValue]) orientations |= UIInterfaceOrientationMaskLandscapeRight;
         
-        //[AppController appController].deviceOrientations = orientations;
+        handle_set_orient(([[arr objectAtIndex:0] boolValue] || [[arr objectAtIndex:1] boolValue]) ? true: false);
     }
 }
 

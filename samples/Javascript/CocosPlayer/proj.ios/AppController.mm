@@ -9,6 +9,7 @@
 
 ServerController *server;
 
+
 extern "C" {
 
     
@@ -46,6 +47,10 @@ extern "C" {
         return [dirPath cStringUsingEncoding:NSASCIIStringEncoding];
     }
     
+    void resetCocosApp() {
+        [[AppController appController] resetCocos2d];
+    }
+    
 }
 
 @implementation AppController
@@ -55,9 +60,58 @@ extern "C" {
 
 // cocos2d application instance
 static AppDelegate s_sharedApplication;
+static AppController* appController = NULL;
+
+
++ (AppController*) appController
+{
+    return appController;
+}
+
+
+- (void) resetCocos2d
+{
+    
+    UIView* mainView = viewController.view.superview;    
+    [viewController.view removeFromSuperview];
+    viewController = nil;    
+    cocos2d::CCDirector::sharedDirector()->end();    
+    
+    EAGLView *__glView = [EAGLView viewWithFrame: [window bounds]
+                                     pixelFormat: kEAGLColorFormatRGBA8
+                                     depthFormat: GL_DEPTH_COMPONENT16 //_OES
+                              preserveBackbuffer: NO
+                                      sharegroup: nil
+                                   multiSampling: NO
+                                 numberOfSamples: 0 ];
+    
+    // Use RootViewController manage EAGLView
+    viewController = [[RootViewController alloc] initWithNibName:nil bundle:nil];
+    viewController.wantsFullScreenLayout = YES;
+    viewController.view = __glView;
+    
+    // Set RootViewController to window
+    if ( [[UIDevice currentDevice].systemVersion floatValue] < 6.0)
+    {
+        // warning: addSubView doesn't work on iOS6
+        [mainView addSubview: viewController.view];
+    }
+    else
+    {
+        // use this method on ios6
+        [mainView setRootViewController:viewController];
+    }
+    
+//    [[UIApplication sharedApplication] setStatusBarHidden: YES];
+    
+    cocos2d::CCApplication::sharedApplication()->run();
+
+}
+
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
+    appController = self;
     // Override point for customization after application launch.
 
     // Add the view controller's view to the window and display.
@@ -93,11 +147,12 @@ static AppDelegate s_sharedApplication;
 
     cocos2d::CCApplication::sharedApplication()->run();
     
-
-    BOOL isRetina = s_sharedApplication.isRetina;
-    BOOL isIPhone = s_sharedApplication.isIPhone;
-    NSLog(@"ISIphone: %d %d", isIPhone, isRetina);
     startServer(s_sharedApplication.isRetina, s_sharedApplication.isIPhone);
+    return YES;
+}
+
+- (BOOL)shouldAutorotate;
+{
     return YES;
 }
 
