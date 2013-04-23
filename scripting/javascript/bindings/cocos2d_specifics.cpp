@@ -2228,6 +2228,32 @@ JSBool js_cocos2dx_CCTMXLayer_tileFlagsAt(JSContext *cx, uint32_t argc, jsval *v
     return JS_FALSE;
 }
 
+JSBool js_cocos2dx_CCTMXLayer_getTiles(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
+	cocos2d::CCTMXLayer* cobj = (cocos2d::CCTMXLayer *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
+	if (argc == 0) {
+		unsigned int* ret = cobj->getTiles();
+        CCSize size = cobj->getLayerSize();
+        int count = size.width * size.height;
+        JSObject* array = JS_NewUint32Array(cx, count);
+        if (NULL == array) {
+            JS_ReportError(cx, "Can't allocate enough memory.");
+            return JS_FALSE;
+        }
+        uint32_t* bufdata = (uint32_t*)JS_GetArrayBufferViewData(array);
+        memcpy(bufdata, ret, count*sizeof(uint32_t));
+        JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(array));
+		return JS_TRUE;
+	}
+    
+	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 0);
+	return JS_FALSE;
+}
+
+
 template<class T>
 JSBool js_BezierActions_create(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argv = JS_ARGV(cx, vp);
@@ -3129,8 +3155,7 @@ JSBool js_cocos2dx_CCFileUtils_getStringFromFile(JSContext *cx, uint32_t argc, j
         unsigned long size = 0;
         unsigned char* data = cobj->getFileData(arg0, "rb", &size);
         if (data && size > 0) {
-            //JSString* str = JS_NewStringCopyN(cx, (const char*)ret, (size_t)size);
-            jsval jsret = c_string_to_jsval(cx, (char*)data);
+            jsval jsret = c_string_to_jsval(cx, (char*)data, size);
             JS_SET_RVAL(cx, vp, jsret);
             return JS_TRUE;
         }
@@ -3143,8 +3168,37 @@ JSBool js_cocos2dx_CCFileUtils_getStringFromFile(JSContext *cx, uint32_t argc, j
 
 JSBool js_cocos2dx_CCFileUtils_getByteArrayFromFile(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    // TODO:
-    CCAssert(false, "not implemented!");
+    jsval *argv = JS_ARGV(cx, vp);
+    JSBool ok = JS_TRUE;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
+    cocos2d::CCFileUtils* cobj = (cocos2d::CCFileUtils *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
+    
+    if (argc == 1) {
+        const char* arg0;
+        std::string arg0_tmp; ok &= jsval_to_std_string(cx, argv[0], &arg0_tmp); arg0 = arg0_tmp.c_str();
+        JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+        unsigned long size = 0;
+        unsigned char* data = cobj->getFileData(arg0, "rb", &size);
+        do
+        {
+            if (data && size > 0) {
+                JSObject* array = JS_NewUint8Array(cx, size);
+                if (NULL == array) {
+                    break;
+                }
+                uint8_t* bufdata = (uint8_t*)JS_GetArrayBufferViewData(array);
+                memcpy(bufdata, data, size*sizeof(uint8_t));
+                JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(array));
+                return JS_TRUE;
+            }
+        } while(false);
+        
+        JS_ReportError(cx, "get file(%s) data fails", arg0);
+        return JS_FALSE;
+    }
+    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 3);
     return JS_FALSE;
 }
 
@@ -3411,7 +3465,8 @@ void register_cocos2dx_js_extensions(JSContext* cx, JSObject* global)
 	JS_DefineFunction(cx, jsb_CCSpriteFrame_prototype, "release", js_cocos2dx_release, 0, JSPROP_READONLY | JSPROP_PERMANENT);
 	JS_DefineFunction(cx, jsb_CCMenuItem_prototype, "setCallback", js_cocos2dx_CCMenuItem_setCallback, 2, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_CCTMXLayer_prototype, "getTileFlagsAt", js_cocos2dx_CCTMXLayer_tileFlagsAt, 2, JSPROP_READONLY | JSPROP_PERMANENT);
-
+    JS_DefineFunction(cx, jsb_CCTMXLayer_prototype, "getTiles", js_cocos2dx_CCTMXLayer_getTiles, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+    
 	tmpObj = JSVAL_TO_OBJECT(anonEvaluate(cx, global, "(function () { return cc.Menu; })()"));
 	JS_DefineFunction(cx, tmpObj, "create", js_cocos2dx_CCMenu_create, 0, JSPROP_READONLY | JSPROP_PERMANENT);
 	tmpObj = JSVAL_TO_OBJECT(anonEvaluate(cx, global, "(function () { return cc.MenuItem; })()"));

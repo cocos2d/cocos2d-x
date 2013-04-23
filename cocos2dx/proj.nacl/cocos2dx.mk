@@ -18,13 +18,15 @@ THIS_MAKEFILE := $(CURDIR)/$(word $(words $(MAKEFILE_LIST)),$(MAKEFILE_LIST))
 # The top level of the cocos2dx-x source tree.  The parent Makefile will
 # often define this, but in case is doesn't we can find it relative to
 # THIS_MAKEFILE
-COCOS_ROOT ?= $(realpath $(dir $(THIS_MAKEFILE))/../..)
-COCOS_SRC = $(COCOS_ROOT)/cocos2dx
+ifndef COCOS_ROOT
+COCOS_ROOT := $(realpath $(dir $(THIS_MAKEFILE))/../..)
+endif
+COCOS_SRC := $(COCOS_ROOT)/cocos2dx
 
 ifeq ($(NACL_ARCH), i686)
-ARCH_DIR=$(NACL_LIBC)_x86_32
+ARCH_DIR := $(NACL_LIBC)_x86_32
 else
-ARCH_DIR=$(NACL_LIBC)_$(NACL_ARCH)
+ARCH_DIR := $(NACL_LIBC)_$(NACL_ARCH)
 endif
 
 NACLPORTS_ROOT ?= $(NACL_SDK_ROOT)/ports
@@ -32,6 +34,12 @@ NACLPORTS_INCLUDE ?= $(NACLPORTS_ROOT)/include
 OUT_DIR ?= obj
 OBJ_DIR ?= $(OUT_DIR)/$(NACL_ARCH)
 LIB_DIR ?= $(COCOS_ROOT)/lib/nacl/$(ARCH_DIR)
+
+ifdef USE_BOX2D
+DEFINES += -DCC_ENABLE_BOX2D_INTEGRATION=1
+else
+DEFINES += -DCC_ENABLE_CHIPMUNK_INTEGRATION=1
+endif
 
 INCLUDES += -I$(COCOS_SRC) \
 	-I$(COCOS_SRC)/cocoa \

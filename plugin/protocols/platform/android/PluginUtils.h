@@ -15,9 +15,9 @@ namespace cocos2d { namespace plugin {
 class PluginUtils
 {
 public:
-	static jobject createJavaMapObject(PluginJniMethodInfo&t, std::map<std::string, std::string>* paramMap);
-	static bool initJavaPlugin(PluginProtocol* pPlugin, const char* className);
-	static JNIEnv* getEnv();
+    static jobject createJavaMapObject(PluginJniMethodInfo&t, std::map<std::string, std::string>* paramMap);
+    static bool initJavaPlugin(PluginProtocol* pPlugin, const char* className);
+    static JNIEnv* getEnv();
 
     static PluginJavaData* getPluginJavaData(PluginProtocol* pKeyObj);
     static void setPluginJavaData(PluginProtocol* pKeyObj, PluginJavaData* pData);
@@ -26,18 +26,33 @@ public:
     template <typename T>
     static void callJavaFunctionWithName_oneBaseType(PluginProtocol* thiz, const char* funcName, const char* paramCode, T param)
     {
-    	return_if_fails(funcName != NULL && strlen(funcName) > 0);
-    	return_if_fails(paramCode != NULL && strlen(paramCode) > 0);
+        return_if_fails(funcName != NULL && strlen(funcName) > 0);
+        return_if_fails(paramCode != NULL && strlen(paramCode) > 0);
         PluginJavaData* pData = PluginUtils::getPluginJavaData(thiz);
-     	PluginJniMethodInfo t;
-    	if (PluginJniHelper::getMethodInfo(t
-    		, pData->jclassName.c_str()
-    		, funcName
-    		, paramCode))
-    	{
-    		t.env->CallVoidMethod(pData->jobj, t.methodID, param);
-    		t.env->DeleteLocalRef(t.classID);
-    	}
+         PluginJniMethodInfo t;
+        if (PluginJniHelper::getMethodInfo(t
+            , pData->jclassName.c_str()
+            , funcName
+            , paramCode))
+        {
+            t.env->CallVoidMethod(pData->jobj, t.methodID, param);
+            t.env->DeleteLocalRef(t.classID);
+        }
+    }
+    
+    static void callJavaFunctionWithName(PluginProtocol* thiz, const char* funcName)
+    {
+        return_if_fails(funcName != NULL && strlen(funcName) > 0);
+        PluginJavaData* pData = PluginUtils::getPluginJavaData(thiz);
+        PluginJniMethodInfo t;
+        if (PluginJniHelper::getMethodInfo(t
+            , pData->jclassName.c_str()
+            , funcName
+            , "()V"))
+        {
+            t.env->CallVoidMethod(pData->jobj, t.methodID);
+            t.env->DeleteLocalRef(t.classID);
+        }
     }
 };
 

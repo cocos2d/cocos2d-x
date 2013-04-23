@@ -137,8 +137,6 @@ CXXFLAGS += -Wno-sequence-point
 
 TARGET = $(LIB_DIR)/libcocos2d.a
 
-DEFINES += -DCC_ENABLE_CHIPMUNK_INTEGRATION
-
 all: $(TARGET)
 
 $(TARGET): $(OBJECTS) $(CORE_MAKEFILE_LIST)
