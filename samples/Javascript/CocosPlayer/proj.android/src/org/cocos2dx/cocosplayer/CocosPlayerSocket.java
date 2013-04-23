@@ -44,7 +44,8 @@ public class CocosPlayerSocket {
 	private static ServerSocket server;
 	private static int mPairingCode = -1;
 	private static CocosPlayerPresence presence = null;
-
+        private static PrintWriter out = null;
+        private static Socket client = null;
 	private void runCCB() {
 		Cocos2dxGLSurfaceView.getInstance().queueEvent(new Runnable() {
 			@Override
@@ -198,7 +199,7 @@ public class CocosPlayerSocket {
 				ServerSocket server = args[0];
 				while(true) {
 
-					Socket client = server.accept();
+					client = server.accept();
 
 					Log.i(TAG,"New connection from "+ client.getInetAddress());
 					handleConnected();
@@ -210,7 +211,7 @@ public class CocosPlayerSocket {
 					try {
 
 						// Send deviceInfo and filelist
-						PrintWriter out = new PrintWriter(client.getOutputStream(), true);
+						out = new PrintWriter(client.getOutputStream(), true);
 						CCBStreamHandler.sendString(CCBStreamHandler.getDeviceInfo(), client, out);
 						CCBStreamHandler.sendString(CCBStreamHandler.getFileSystem(), client, out);
 						//out.close();
@@ -292,6 +293,11 @@ public class CocosPlayerSocket {
 		presence.startPresence(server.getLocalPort(), mPairingCode);
 
 		//new PresenceStarter().execute(server.getLocalPort(), mPairingCode);
+	}
+
+
+	public static void sendLog(String log) {
+	    CCBStreamHandler.sendString(CCBStreamHandler.getLogMsg(log), client, out);	    
 	}
 
 	public void createServer() {

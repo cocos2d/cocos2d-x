@@ -13,10 +13,6 @@
 #include "js_bindings_system_registration.h"
 #include "jsb_opengl_registration.h"
 
-#ifdef JSLOG
-#undef JSLOG
-#endif
-#define JSLOG  CocosBuilder_log
 
 char *_js_log_buf_ccbuilder = NULL;
 
@@ -52,6 +48,7 @@ bool runMainScene() {
 
 void handle_ccb_run() {
     CCFileUtils::sharedFileUtils()->purgeCachedEntries();
+    CCFileUtils::sharedFileUtils()->loadFilenameLookupDictionaryFromFile("fileLookup.plist");
     ScriptingCore::getInstance()->runScript("main.js");
 }
 
@@ -79,8 +76,26 @@ void handle_ccb_stop() {
     runMainScene();
 }
 
+void sendLogMsg(const char *msg);
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+
+void cocos2d::CCLog(const char * pszFormat, ...)
+{
+    printf("Cocos2d: ");
+    char szBuf[kMaxLogLen+1] = {0};
+    va_list ap;
+    va_start(ap, pszFormat);
+    vsnprintf(szBuf, kMaxLogLen, pszFormat, ap);
+    va_end(ap);
+    printf("%s", szBuf);
+    printf("\n");
+    sendLogMsg(szBuf);
+}
+#endif
 
 extern "C" {
+
 
 const char * getCCBDirectoryPath();
     
@@ -113,7 +128,7 @@ bool AppDelegate::applicationDidFinishLaunching()
         if (screenSize.height > 1024)
         {
             res = "iPad";
-            designSize = CCSizeMake(360, 480);
+            designSize = CCSizeMake(768, 1024);
             resourceSize = CCSizeMake(1536, 2048);
             resDirOrders.push_back("resources-ipadhd");
             resDirOrders.push_back("resources-ipad");
@@ -124,7 +139,7 @@ bool AppDelegate::applicationDidFinishLaunching()
         else if (screenSize.height > 960)
         {
             res = "iPad";
-            designSize = CCSizeMake(360, 480);
+            designSize = CCSizeMake(768, 1024);
             resourceSize = CCSizeMake(768, 1024);
             resDirOrders.push_back("resources-ipad");
             resDirOrders.push_back("resources-iphonehd");

@@ -30,6 +30,7 @@ extern "C" {
   extern void updatePairing(const char *code);
   extern void cleanCacheDirJNI();
   extern void setDeviceResolutionJNI(const char* res);
+  extern void sendLogMsg(const char* log);
 }
 
 #endif
