@@ -20,6 +20,14 @@ extern "C" {
         cleanCache();
     }
     
+    void sendLogMsg(const char *msg) {
+        if(server != NULL) {
+            NSString *str = [NSString stringWithCString:msg encoding:NSASCIIStringEncoding];
+            [server sendLog:[str stringByAppendingString:@"\n"]];
+        }
+    }
+
+    
     void updatePairing(const char *pairing) {
         NSString *code = [NSString stringWithCString:pairing encoding:NSASCIIStringEncoding];
         if([code isEqual:@"Auto"]) {

@@ -47,6 +47,18 @@ extern "C" {
 	  t.env->DeleteLocalRef(t.classID);
       }
   }
+
+
+  void sendLogMsg(const char *res) {
+      JniMethodInfo t;
+      if (JniHelper::getStaticMethodInfo(t, SOCKET_CLASS_NAME, "sendLog", "(Ljava/lang/String;)V")) {
+	  jstring stringArg1 = t.env->NewStringUTF(res);
+	  t.env->CallStaticVoidMethod(t.classID, t.methodID, stringArg1);
+	  t.env->DeleteLocalRef(stringArg1);
+	  t.env->DeleteLocalRef(t.classID);
+      }
+  }
+
   const char *getCCBDirectoryPath() {
       return "";
   }
