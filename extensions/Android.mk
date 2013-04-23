@@ -50,6 +50,25 @@ GUI/CCEditBox/CCEditBox.cpp \
 GUI/CCEditBox/CCEditBoxImplAndroid.cpp \
 network/HttpClient.cpp \
 physics_nodes/CCPhysicsDebugNode.cpp \
+spine/Animation.cpp	\
+spine/AnimationState.cpp	\
+spine/AnimationStateData.cpp	\
+spine/Atlas.cpp	\
+spine/AtlasAttachmentLoader.cpp	\
+spine/AttachmentLoader.cpp	\
+spine/Bone.cpp	\
+spine/BoneData.cpp	\
+spine/extension.cpp	\
+spine/Attachment.cpp	\
+spine/Json.cpp	\
+spine/RegionAttachment.cpp	\
+spine/Skeleton.cpp	\
+spine/SkeletonData.cpp	\
+spine/SkeletonJson.cpp	\
+spine/Skin.cpp	\
+spine/Slot.cpp	\
+spine/SlotData.cpp	\
+spine/spine-cocos2dx.cpp	\
 physics_nodes/CCPhysicsSprite.cpp \
 LocalStorage/LocalStorageAndroid.cpp 
 
@@ -63,6 +82,7 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                            $(LOCAL_PATH)/GUI/CCControlExtension \
                            $(LOCAL_PATH)/GUI/CCScrollView \
                            $(LOCAL_PATH)/network \
+			   $(LOCAL_PATH)/spine	\
                            $(LOCAL_PATH)/LocalStorage 
                     
 include $(BUILD_STATIC_LIBRARY)
