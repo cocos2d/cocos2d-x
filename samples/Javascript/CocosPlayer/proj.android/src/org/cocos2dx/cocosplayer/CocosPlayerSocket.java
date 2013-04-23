@@ -94,8 +94,8 @@ public class CocosPlayerSocket {
 	private static native void nativeRunScript(final String script);
 
 	private static void setOrientation(String isPortrait) {
-	    //		CocosPlayer.setOrientation(isPortrait.equalsIgnoreCase("true") ? 
-	    //		ActivityInfo.SCREEN_ORIENTATION_PORTRAIT : ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+	    CocosPlayer.setOrientation(isPortrait.equalsIgnoreCase("true") ? 
+				       ActivityInfo.SCREEN_ORIENTATION_PORTRAIT : ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 	    //nativeSetOrientation(isPortrait.equalsIgnoreCase("true") ? true : false);
 	}
 	

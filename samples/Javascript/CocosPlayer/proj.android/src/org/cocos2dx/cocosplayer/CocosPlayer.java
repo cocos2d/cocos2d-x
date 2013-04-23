@@ -37,9 +37,9 @@ public class CocosPlayer extends Cocos2dxActivity{
     
     public static Activity activity;
     
-	public static void setOrientation(int orient) {
-		activity.setRequestedOrientation(orient);
-	}
+    public static void setOrientation(int orient) {
+	activity.setRequestedOrientation(orient);
+    }
     
     protected void onCreate(Bundle savedInstanceState){    	
     	super.onCreate(savedInstanceState);
