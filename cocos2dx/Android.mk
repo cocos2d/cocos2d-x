@@ -106,11 +106,12 @@ sprite_nodes/CCSprite.cpp \
 sprite_nodes/CCSpriteBatchNode.cpp \
 sprite_nodes/CCSpriteFrame.cpp \
 sprite_nodes/CCSpriteFrameCache.cpp \
+support/ccUTF8.cpp \
 support/CCNotificationCenter.cpp \
 support/CCProfiling.cpp \
 support/CCPointExtension.cpp \
 support/TransformUtils.cpp \
-support/CCUserDefault.cpp \
+support/user_default/CCUserDefaultAndroid.cpp \
 support/base64.cpp \
 support/ccUtils.cpp \
 support/CCVertex.cpp \
@@ -141,20 +142,18 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/kazmath/include \
                     $(LOCAL_PATH)/platform/android
 
-
-LOCAL_EXPORT_LDLIBS := -llog\
-                       -lz \
-                       -lGLESv2
-
 LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/include \
                     $(LOCAL_PATH)/kazmath/include \
                     $(LOCAL_PATH)/platform/android
 
 LOCAL_LDLIBS := -lGLESv2 \
-                -lEGL \
                 -llog \
                 -lz
+
+LOCAL_EXPORT_LDLIBS := -lGLESv2 \
+                       -llog \
+                       -lz
 
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos_libpng_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_jpeg_static

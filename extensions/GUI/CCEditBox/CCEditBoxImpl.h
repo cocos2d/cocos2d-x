@@ -60,9 +60,11 @@ public:
     virtual void closeKeyboard() = 0;
     
     virtual void setPosition(const CCPoint& pos) = 0;
+    virtual void setVisible(bool visible) = 0;
     virtual void setContentSize(const CCSize& size) = 0;
 	virtual void setAnchorPoint(const CCPoint& anchorPoint) = 0;
     virtual void visit(void) = 0;
+    virtual void onEnter(void) = 0;
     
     
     void setDelegate(CCEditBoxDelegate* pDelegate) { m_pDelegate = pDelegate; };

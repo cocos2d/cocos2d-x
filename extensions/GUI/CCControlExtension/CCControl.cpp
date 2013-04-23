@@ -36,10 +36,7 @@
 NS_CC_EXT_BEGIN
 
 CCControl::CCControl()
-: m_cOpacity(0)
-, m_tColor(ccBLACK)
-, m_bIsOpacityModifyRGB(false)
-, m_nDefaultTouchPriority(0)
+: m_bIsOpacityModifyRGB(false)
 , m_eState(CCControlStateNormal)
 , m_hasVisibleParents(false)
 , m_bEnabled(false)
@@ -78,8 +75,7 @@ bool CCControl::init()
         setHighlighted(false);
 
         // Set the touch dispatcher priority by default to 1
-        setDefaultTouchPriority(1);
-        this->setDefaultTouchPriority(m_nDefaultTouchPriority);
+        this->setTouchPriority(1);
         // Initialise the tables
         m_pDispatchTable = new CCDictionary(); 
 
@@ -99,7 +95,7 @@ CCControl::~CCControl()
     //Menu - Events
 void CCControl::registerWithTouchDispatcher()
 {
-    CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, m_nDefaultTouchPriority, true);
+    CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, getTouchPriority(), true);
 }
 
 void CCControl::onEnter()
@@ -224,50 +220,6 @@ void CCControl::removeTargetWithActionForControlEvent(CCObject* target, SEL_CCCo
 
 
 //CRGBA protocol
-void CCControl::setColor(const ccColor3B& color)
-{
-    m_tColor=color;
-    CCObject* child;
-    CCArray* children=getChildren();
-    CCARRAY_FOREACH(children, child)
-    {
-        CCRGBAProtocol* pNode = dynamic_cast<CCRGBAProtocol*>(child);        
-        if (pNode)
-        {
-            pNode->setColor(m_tColor);
-        }
-    }
-}
-
-const ccColor3B& CCControl::getColor(void)
-{
-    return m_tColor;
-}
-
-
-void CCControl::setOpacity(GLubyte opacity)
-{
-    m_cOpacity = opacity;
-    
-    CCObject* child;
-    CCArray* children=getChildren();
-    CCARRAY_FOREACH(children, child)
-    {
-        CCRGBAProtocol* pNode = dynamic_cast<CCRGBAProtocol*>(child);        
-        if (pNode)
-        {
-            pNode->setOpacity(opacity);
-        }
-    }
-
-}
-
-GLubyte CCControl::getOpacity()
-{
-    return m_cOpacity;
-}
-
-
 void CCControl::setOpacityModifyRGB(bool bOpacityModifyRGB)
 {
     m_bIsOpacityModifyRGB=bOpacityModifyRGB;

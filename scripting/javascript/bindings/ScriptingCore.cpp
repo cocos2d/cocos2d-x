@@ -160,27 +160,6 @@ void ScriptingCore::executeJSFunctionWithThisObj(jsval thisObj, jsval callback,
     }
 }
 
-
-static void executeJSFunctionWithName(JSContext *cx, JSObject *obj,
-                                      const char *funcName, jsval &dataVal,
-                                      jsval &retval) {
-    JSBool hasAction;
-    jsval temp_retval;
-
-    if (JS_HasProperty(cx, obj, funcName, &hasAction) && hasAction) {
-        if(!JS_GetProperty(cx, obj, funcName, &temp_retval)) {
-            return;
-        }
-        if(temp_retval == JSVAL_VOID) {
-            return;
-        }
-        JSAutoCompartment ac(cx, obj);
-        JS_CallFunctionName(cx, obj, funcName,
-                            1, &dataVal, &retval);
-    }
-
-}
-
 void js_log(const char *format, ...) {
     if (_js_log_buf == NULL) {
         _js_log_buf = (char *)calloc(sizeof(char), 257);
@@ -276,6 +255,13 @@ JSBool JSBCore_os(JSContext *cx, uint32_t argc, jsval *vp)
     return JS_TRUE;
 };
 
+JSBool JSB_core_restartVM(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	JSB_PRECONDITION2(argc==0, cx, JS_FALSE, "Invalid number of arguments in executeScript");
+    ScriptingCore::getInstance()->reset();
+    JS_SET_RVAL(cx, vp, JSVAL_VOID);
+	return JS_TRUE;
+};
 
 void registerDefaultClasses(JSContext* cx, JSObject* global) {
     // first, try to get the ns
@@ -312,6 +298,7 @@ void registerDefaultClasses(JSContext* cx, JSObject* global) {
     JS_DefineFunction(cx, global, "__getPlatform", JSBCore_platform, 0, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, global, "__getOS", JSBCore_os, 0, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, global, "__getVersion", JSBCore_version, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, global, "__restartVM", JSB_core_restartVM, 0, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
 }
 
 void sc_finalize(JSFreeOp *freeOp, JSObject *obj) {
@@ -332,7 +319,8 @@ ScriptingCore::ScriptingCore()
 , debugGlobal_(NULL)
 {
     // set utf8 strings internally (we don't need utf16)
-    JS_SetCStringsAreUTF8();
+    // XXX: Removed in SpiderMonkey 19.0
+    //JS_SetCStringsAreUTF8();
     this->addRegisterCallback(registerDefaultClasses);
     this->runLoop = new SimpleRunLoop();
 }
@@ -417,7 +405,7 @@ void ScriptingCore::createGlobalContext() {
         this->rt_ = NULL;
     }
     //JS_SetCStringsAreUTF8();
-    this->rt_ = JS_NewRuntime(10 * 1024 * 1024);
+    this->rt_ = JS_NewRuntime(10 * 1024 * 1024, JS_NO_HELPER_THREADS);
     this->cx_ = JS_NewContext(rt_, 10240);
     JS_SetOptions(this->cx_, JSOPTION_TYPE_INFERENCE);
     JS_SetVersion(this->cx_, JSVERSION_LATEST);
@@ -456,17 +444,25 @@ JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* c
         cx = cx_;
     }
 
+    js::RootedObject obj(cx, global);
+	JS::CompileOptions options(cx);
+	options.setUTF8(true).setFileAndLine(rpath.c_str(), 1);
+    
     // this will always compile the script, we can actually check if the script
     // was compiled before, because it can be in the global map
-#ifdef ANDROID
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     unsigned char *content = NULL;
     unsigned long contentSize = 0;
 
     content = (unsigned char*)CCString::createWithContentsOfFile(rpath.c_str())->getCString();
     contentSize = strlen((char*)content);
-    JSScript* script = JS_CompileScript(cx, global, (char*)content, contentSize, path, 1);
+    // Not supported in SpiderMonkey 19.0
+    //JSScript* script = JS_CompileScript(cx, global, (char*)content, contentSize, path, 1);
+    JSScript *script = JS::Compile(cx, obj, options, (char*)content, contentSize);
 #else
-    JSScript* script = JS_CompileUTF8File(cx, global, rpath.c_str());
+    // Removed in SpiderMonkey 19.0
+    //JSScript* script = JS_CompileUTF8File(cx, global, rpath.c_str());
+	JSScript *script = JS::Compile(cx, obj, options, rpath.c_str());
 #endif
     JSBool evaluatedOK = false;
     if (script) {
@@ -642,10 +638,12 @@ JSBool ScriptingCore::removeRootJS(JSContext *cx, uint32_t argc, jsval *vp)
     return JS_FALSE;
 }
 
-void ScriptingCore::pauseSchedulesAndActions(CCNode *node) {
-
-    CCArray * arr = JSScheduleWrapper::getTargetForNativeNode(node);
+void ScriptingCore::pauseSchedulesAndActions(js_proxy_t* p)
+{
+    CCArray * arr = JSScheduleWrapper::getTargetForJSObject(p->obj);
     if(! arr) return;
+    
+    CCNode* node = (CCNode*)p->ptr;
     for(unsigned int i = 0; i < arr->count(); ++i) {
         if(arr->objectAtIndex(i)) {
             node->getScheduler()->pauseTarget(arr->objectAtIndex(i));
@@ -654,24 +652,26 @@ void ScriptingCore::pauseSchedulesAndActions(CCNode *node) {
 }
 
 
-void ScriptingCore::resumeSchedulesAndActions(CCNode *node) {
-
-    CCArray * arr = JSScheduleWrapper::getTargetForNativeNode(node);
+void ScriptingCore::resumeSchedulesAndActions(js_proxy_t* p)
+{
+    CCArray * arr = JSScheduleWrapper::getTargetForJSObject(p->obj);
     if(!arr) return;
+    
+    CCNode* node = (CCNode*)p->ptr;
     for(unsigned int i = 0; i < arr->count(); ++i) {
         if(!arr->objectAtIndex(i)) continue;
         node->getScheduler()->resumeTarget(arr->objectAtIndex(i));
     }
 }
 
-void ScriptingCore::cleanupSchedulesAndActions(CCNode *node) {
-
-    CCArray * arr = JSCallFuncWrapper::getTargetForNativeNode(node);
+void ScriptingCore::cleanupSchedulesAndActions(js_proxy_t* p)
+{
+    CCArray * arr = JSCallFuncWrapper::getTargetForNativeNode((CCNode*)p->ptr);
     if(arr) {
         arr->removeAllObjects();
     }
-
-    arr = JSScheduleWrapper::getTargetForNativeNode(node);
+    
+    arr = JSScheduleWrapper::getTargetForJSObject(p->obj);
     if(arr) {
         CCScheduler* pScheduler = CCDirector::sharedDirector()->getScheduler();
         CCObject* pObj = NULL;
@@ -680,7 +680,7 @@ void ScriptingCore::cleanupSchedulesAndActions(CCNode *node) {
             pScheduler->unscheduleAllForTarget(pObj);
         }
 
-        JSScheduleWrapper::removeAllTargetsForNatiaveNode(node);
+        JSScheduleWrapper::removeAllTargetsForJSObject(p->obj);
     }
 }
 
@@ -688,34 +688,31 @@ int ScriptingCore::executeNodeEvent(CCNode* pNode, int nAction)
 {
     js_proxy_t * p;
     JS_GET_PROXY(p, pNode);
-
     if (!p) return 0;
 
     jsval retval;
     jsval dataVal = INT_TO_JSVAL(1);
-    js_proxy_t *proxy;
-    JS_GET_PROXY(proxy, pNode);
 
     if(nAction == kCCNodeOnEnter)
     {
-        executeJSFunctionWithName(this->cx_, p->obj, "onEnter", dataVal, retval);
-        resumeSchedulesAndActions(pNode);
+        executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onEnter", 1, &dataVal, &retval);
+        resumeSchedulesAndActions(p);
     }
     else if(nAction == kCCNodeOnExit)
     {
-        executeJSFunctionWithName(this->cx_, p->obj, "onExit", dataVal, retval);
-        pauseSchedulesAndActions(pNode);
+        executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onExit", 1, &dataVal, &retval);
+        pauseSchedulesAndActions(p);
     }
     else if(nAction == kCCNodeOnEnterTransitionDidFinish)
     {
-        executeJSFunctionWithName(this->cx_, p->obj, "onEnterTransitionDidFinish", dataVal, retval);
+        executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onEnterTransitionDidFinish", 1, &dataVal, &retval);
     }
     else if(nAction == kCCNodeOnExitTransitionDidStart)
     {
-        executeJSFunctionWithName(this->cx_, p->obj, "onExitTransitionDidStart", dataVal, retval);
+        executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onExitTransitionDidStart", 1, &dataVal, &retval);
     }
     else if(nAction == kCCNodeOnCleanup) {
-        cleanupSchedulesAndActions(pNode);
+        cleanupSchedulesAndActions(p);
     }
 
     return 1;
@@ -759,7 +756,7 @@ int ScriptingCore::executeSchedule(int nHandler, float dt, CCNode* pNode/* = NUL
     jsval retval;
     jsval dataVal = DOUBLE_TO_JSVAL(dt);
 
-    executeJSFunctionWithName(this->cx_, p->obj, "update", dataVal, retval);
+    executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "update", 1, &dataVal, &retval);
 
     return 1;
 }
@@ -817,7 +814,7 @@ bool ScriptingCore::executeFunctionWithObjectData(CCNode *self, const char *name
     jsval retval;
     jsval dataVal = OBJECT_TO_JSVAL(obj);
 
-    executeJSFunctionWithName(this->cx_, p->obj, name, dataVal, retval);
+    executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), name, 1, &dataVal, &retval);
     if(JSVAL_IS_NULL(retval)) {
         return false;
     }
@@ -827,12 +824,35 @@ bool ScriptingCore::executeFunctionWithObjectData(CCNode *self, const char *name
     return false;
 }
 
-int ScriptingCore::executeFunctionWithOwner(jsval owner, const char *name, jsval data) {
-    jsval retval;
-
-    executeJSFunctionWithName(this->cx_, JSVAL_TO_OBJECT(owner), name, data, retval);
-
-    return 1;
+JSBool ScriptingCore::executeFunctionWithOwner(jsval owner, const char *name, uint32_t argc /* = 0 */, jsval *vp /* = NULL */, jsval* retVal /* = NULL */)
+{
+    JSBool bRet = JS_FALSE;
+    JSBool hasAction;
+    jsval temp_retval;
+    JSContext* cx = this->cx_;
+    JSObject* obj = JSVAL_TO_OBJECT(owner);
+    
+    do
+    {
+        if (JS_HasProperty(cx, obj, name, &hasAction) && hasAction) {
+            if(!JS_GetProperty(cx, obj, name, &temp_retval)) {
+                break;
+            }
+            if(temp_retval == JSVAL_VOID) {
+                break;
+            }
+            
+            JSAutoCompartment ac(cx, obj);
+            if (retVal) {
+                bRet = JS_CallFunctionName(cx, obj, name, argc, vp, retVal);
+            }
+            else {
+                jsval jsret;
+                bRet = JS_CallFunctionName(cx, obj, name, argc, vp, &jsret);
+            }
+        }
+    }while(0);
+    return bRet;
 }
 
 int ScriptingCore::executeAccelerometerEvent(CCLayer *pLayer, CCAcceleration *pAccelerationValue) {
@@ -871,7 +891,7 @@ int ScriptingCore::executeCustomTouchesEvent(int eventType,
     }
 
     jsval jsretArrVal = OBJECT_TO_JSVAL(jsretArr);
-    executeJSFunctionWithName(this->cx_, obj, funcName.c_str(), jsretArrVal, retval);
+    executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), funcName.c_str(), 1, &jsretArrVal, &retval);
     JS_RemoveObjectRoot(this->cx_, &jsretArr);
 
     for(CCSetIterator it = pTouches->begin(); it != pTouches->end(); ++it, ++count) {
@@ -892,7 +912,7 @@ int ScriptingCore::executeCustomTouchEvent(int eventType,
     jsval jsTouch;
     getJSTouchObject(this->cx_, pTouch, jsTouch);
 
-    executeJSFunctionWithName(this->cx_, obj, funcName.c_str(), jsTouch, retval);
+    executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), funcName.c_str(), 1, &jsTouch, &retval);
 
     // Remove touch object from global hash table and unroot it.
     removeJSTouchObject(this->cx_, pTouch, jsTouch);
@@ -911,7 +931,7 @@ int ScriptingCore::executeCustomTouchEvent(int eventType,
     jsval jsTouch;
     getJSTouchObject(this->cx_, pTouch, jsTouch);
 
-    executeJSFunctionWithName(this->cx_, obj, funcName.c_str(), jsTouch, retval);
+    executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), funcName.c_str(), 1, &jsTouch, &retval);
 
     // Remove touch object from global hash table and unroot it.
     removeJSTouchObject(this->cx_, pTouch, jsTouch);
@@ -963,15 +983,20 @@ JSBool jsval_to_uint16( JSContext *cx, jsval vp, uint16_t *outval )
     return ok;
 }
 
-JSBool jsval_to_long_long(JSContext *cx, jsval v, long long* ret) {
-    JSBool ok = JS_TRUE;
-    JSObject *tmp = JSVAL_TO_OBJECT(v);
-    ok &= JS_IsTypedArrayObject(tmp, cx) && JS_GetTypedArrayByteLength(tmp, cx) == 8;
-    JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
-
-    uint32_t *data = (uint32_t *)JS_GetUint32ArrayData(tmp, cx);
-    *ret = (long long)(*data);
-    return ok;
+JSBool jsval_to_long_long(JSContext *cx, jsval vp, long long* r) {
+	JSObject *tmp_arg;
+	JSBool ok = JS_ValueToObject( cx, vp, &tmp_arg );
+	JSB_PRECONDITION2( ok, cx, JS_FALSE, "Error converting value to object");
+	JSB_PRECONDITION2( tmp_arg && JS_IsTypedArrayObject( tmp_arg ), cx, JS_FALSE, "Not a TypedArray object");
+	JSB_PRECONDITION2( JS_GetTypedArrayByteLength( tmp_arg ) == sizeof(long long), cx, JS_FALSE, "Invalid Typed Array length");
+	
+	uint32_t* arg_array = (uint32_t*)JS_GetArrayBufferViewData( tmp_arg );
+	long long ret =  arg_array[0];
+	ret = ret << 32;
+	ret |= arg_array[1];
+	
+	*r = ret;
+	return JS_TRUE;
 }
 
 JSBool jsval_to_std_string(JSContext *cx, jsval v, std::string* ret) {
@@ -1201,14 +1226,61 @@ JSBool jsval_to_ccarray(JSContext* cx, jsval v, CCArray** ret) {
     JS_GetArrayLength(cx, jsobj, &len);
     CCArray* arr = CCArray::createWithCapacity(len);
     for (uint32_t i=0; i < len; i++) {
-        jsval elt;
-        JSObject *elto;
-        if (JS_GetElement(cx, jsobj, i, &elt) && JS_ValueToObject(cx, elt, &elto)) {
-            js_proxy_t *proxy;
-            JS_GET_NATIVE_PROXY(proxy, elto);
-            JSB_PRECONDITION2( proxy, cx, JS_FALSE, "Error getting proxy.");
-
-            arr->addObject((CCObject *)proxy->ptr);
+        jsval value;
+        if (JS_GetElement(cx, jsobj, i, &value)) {
+            if (value.isObject())
+            {
+                js_proxy_t *proxy;
+                JSObject *tmp = JSVAL_TO_OBJECT(value);
+                JS_GET_NATIVE_PROXY(proxy, tmp);
+                cocos2d::CCObject* cobj = (cocos2d::CCObject *)(proxy ? proxy->ptr : NULL);
+                // Don't test it.
+                //TEST_NATIVE_OBJECT(cx, cobj)
+                if (cobj) {
+                    // It's a native js object.
+                    arr->addObject(cobj);
+                }
+                else if (!JS_IsArrayObject(cx, tmp)){
+                    // It's a normal js object.
+                    CCDictionary* dictVal = NULL;
+                    JSBool ok = jsval_to_ccdictionary(cx, value, &dictVal);
+                    if (ok) {
+                        arr->addObject(dictVal);
+                    }
+                }
+                else {
+                    // It's a js array object.
+                    CCArray* arrVal = NULL;
+                    JSBool ok = jsval_to_ccarray(cx, value, &arrVal);
+                    if (ok) {
+                        arr->addObject(arrVal);
+                    }
+                }
+            }
+            else if (JSVAL_IS_STRING(value)) {
+                JSStringWrapper valueWapper(JSVAL_TO_STRING(value), cx);
+                arr->addObject(CCString::create(valueWapper.get()));
+//                CCLOG("iterate array: value = %s", valueWapper.get().c_str());
+            }
+            else if (JSVAL_IS_NUMBER(value)) {
+                double number = 0.0;
+                JSBool ok = JS_ValueToNumber(cx, value, &number);
+                if (ok) {
+                    arr->addObject(CCDouble::create(number));
+//                    CCLOG("iterate array: value = %lf", number);
+                }
+            }
+            else if (JSVAL_IS_BOOLEAN(value)) {
+                JSBool boolVal = JS_FALSE;
+                JSBool ok = JS_ValueToBoolean(cx, value, &boolVal);
+                if (ok) {
+                    arr->addObject(CCBool::create(boolVal));
+//                    CCLOG("iterate object: value = %d", boolVal);
+                }
+            }
+            else {
+                CCAssert(false, "not supported type");
+            }
         }
     }
     *ret = arr;
@@ -1216,32 +1288,50 @@ JSBool jsval_to_ccarray(JSContext* cx, jsval v, CCArray** ret) {
 }
 
 
-jsval ccarray_to_jsval(JSContext* cx, CCArray *arr) {
-
+jsval ccarray_to_jsval(JSContext* cx, CCArray *arr)
+{
     JSObject *jsretArr = JS_NewArrayObject(cx, 0, NULL);
 
-    for(unsigned int i = 0; i < arr->count(); ++i) {
-        jsval arrElement;
-        CCObject *obj = arr->objectAtIndex(i);
+    if (arr && arr->count() > 0) {
+        for(unsigned int i = 0; i < arr->count(); ++i) {
+            jsval arrElement;
+            CCObject *obj = arr->objectAtIndex(i);
 
-        CCString *testString = dynamic_cast<cocos2d::CCString *>(obj);
-        CCDictionary* testDict = NULL;
-        CCArray* testArray = NULL;
-        // XXX: Only supports string, since all data read from plist files will be stored as string in cocos2d-x
-        // Do we need to convert string to js base type ?
-        if(testString) {
-            arrElement = c_string_to_jsval(cx, testString->getCString());
-        } else if ((testDict = dynamic_cast<cocos2d::CCDictionary*>(obj))) {
-            arrElement = ccdictionary_to_jsval(cx, testDict);
-        } else if ((testArray = dynamic_cast<cocos2d::CCArray*>(obj))) {
-            arrElement = ccarray_to_jsval(cx, testArray);
-        } else {
-            js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::CCObject>(cx, obj);
-            arrElement = OBJECT_TO_JSVAL(proxy->obj);
-        }
-
-        if(!JS_SetElement(cx, jsretArr, i, &arrElement)) {
-            break;
+            //First, check whether object is associated with js object.
+            js_proxy_t* jsproxy = js_get_or_create_proxy<cocos2d::CCObject>(cx, obj);
+            if (jsproxy) {
+                arrElement = OBJECT_TO_JSVAL(jsproxy->obj);
+            }
+            else {
+                CCString* strVal = NULL;
+                CCDictionary* dictVal = NULL;
+                CCArray* arrVal = NULL;
+                CCDouble* doubleVal = NULL;
+                CCBool* boolVal = NULL;
+                CCFloat* floatVal = NULL;
+                CCInteger* intVal = NULL;
+                
+                if((strVal = dynamic_cast<cocos2d::CCString *>(obj))) {
+                    arrElement = c_string_to_jsval(cx, strVal->getCString());
+                } else if ((dictVal = dynamic_cast<cocos2d::CCDictionary*>(obj))) {
+                    arrElement = ccdictionary_to_jsval(cx, dictVal);
+                } else if ((arrVal = dynamic_cast<cocos2d::CCArray*>(obj))) {
+                    arrElement = ccarray_to_jsval(cx, arrVal);
+                } else if ((doubleVal = dynamic_cast<CCDouble*>(obj))) {
+                    arrElement = DOUBLE_TO_JSVAL(doubleVal->getValue());
+                } else if ((floatVal = dynamic_cast<CCFloat*>(obj))) {
+                    arrElement = DOUBLE_TO_JSVAL(floatVal->getValue());
+                } else if ((intVal = dynamic_cast<CCInteger*>(obj))) {
+                    arrElement = INT_TO_JSVAL(intVal->getValue());
+                }  else if ((boolVal = dynamic_cast<CCBool*>(obj))) {
+                    arrElement = BOOLEAN_TO_JSVAL(boolVal->getValue() ? JS_TRUE : JS_FALSE);
+                } else {
+                    CCAssert(false, "the type isn't suppored.");
+                }
+            }
+            if(!JS_SetElement(cx, jsretArr, i, &arrElement)) {
+                break;
+            }
         }
     }
     return OBJECT_TO_JSVAL(jsretArr);
@@ -1254,24 +1344,39 @@ jsval ccdictionary_to_jsval(JSContext* cx, CCDictionary* dict)
     CCDICT_FOREACH(dict, pElement)
     {
         jsval dictElement;
-        CCString* obj = dynamic_cast<CCString*>(pElement->getObject());
-
-        CCString *testString = dynamic_cast<cocos2d::CCString *>(obj);
-        CCDictionary* testDict = NULL;
-        CCArray* testArray = NULL;
-        // XXX: Only supports string, since all data read from plist files will be stored as string in cocos2d-x
-        // Do we need to convert string to js base type ?
-        if(testString) {
-            dictElement = c_string_to_jsval(cx, testString->getCString());
-        } else if ((testDict = dynamic_cast<cocos2d::CCDictionary*>(obj))) {
-            dictElement = ccdictionary_to_jsval(cx, testDict);
-        } else if ((testArray = dynamic_cast<cocos2d::CCArray*>(obj))) {
-            dictElement = ccarray_to_jsval(cx, testArray);
-        } else {
-            js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::CCObject>(cx, obj);
-            dictElement = OBJECT_TO_JSVAL(proxy->obj);
+        CCObject* obj = pElement->getObject();
+        //First, check whether object is associated with js object.
+        js_proxy_t* jsproxy = js_get_or_create_proxy<cocos2d::CCObject>(cx, obj);
+        if (jsproxy) {
+            dictElement = OBJECT_TO_JSVAL(jsproxy->obj);
         }
-
+        else {
+            CCString* strVal = NULL;
+            CCDictionary* dictVal = NULL;
+            CCArray* arrVal = NULL;
+            CCDouble* doubleVal = NULL;
+            CCBool* boolVal = NULL;
+            CCFloat* floatVal = NULL;
+            CCInteger* intVal = NULL;
+            
+            if((strVal = dynamic_cast<cocos2d::CCString *>(obj))) {
+                dictElement = c_string_to_jsval(cx, strVal->getCString());
+            } else if ((dictVal = dynamic_cast<CCDictionary*>(obj))) {
+                dictElement = ccdictionary_to_jsval(cx, dictVal);
+            } else if ((arrVal = dynamic_cast<CCArray*>(obj))) {
+                dictElement = ccarray_to_jsval(cx, arrVal);
+            } else if ((doubleVal = dynamic_cast<CCDouble*>(obj))) {
+                dictElement = DOUBLE_TO_JSVAL(doubleVal->getValue());
+            } else if ((floatVal = dynamic_cast<CCFloat*>(obj))) {
+                dictElement = DOUBLE_TO_JSVAL(floatVal->getValue());
+            } else if ((intVal = dynamic_cast<CCInteger*>(obj))) {
+                dictElement = INT_TO_JSVAL(intVal->getValue());
+            } else if ((boolVal = dynamic_cast<CCBool*>(obj))) {
+                dictElement = BOOLEAN_TO_JSVAL(boolVal->getValue() ? JS_TRUE : JS_FALSE);
+            } else {
+                CCAssert(false, "the type isn't suppored.");
+            }
+        }
         const char* key = pElement->getStrKey();
         if (key && strlen(key) > 0)
         {
@@ -1288,38 +1393,94 @@ JSBool jsval_to_ccdictionary(JSContext* cx, jsval v, CCDictionary** ret) {
         *ret = NULL;
         return JS_TRUE;
     }
+
+    JSObject* tmp = JSVAL_TO_OBJECT(v);
+    if (!tmp) {
+        LOGD("jsval_to_ccdictionary: the jsval is not an object.");
+        return JS_FALSE;
+    }
     
-    JSObject *itEl = JS_NewPropertyIterator(cx, JSVAL_TO_OBJECT(v));
-    JSBool ok = JS_TRUE;
+    JSObject* it = JS_NewPropertyIterator(cx, tmp);
     CCDictionary* dict = NULL;
-    jsid propId;
-    do {
 
-        jsval prop;
-        JS_GetPropertyById(cx, JSVAL_TO_OBJECT(v), propId, &prop);
-
-        js_proxy_t *proxy;
-        JSObject *tmp = JSVAL_TO_OBJECT(prop);
-        JS_GET_NATIVE_PROXY(proxy, tmp);
-        cocos2d::CCObject* cobj = (cocos2d::CCObject *)(proxy ? proxy->ptr : NULL);
-        TEST_NATIVE_OBJECT(cx, cobj)
-
+    while (true)
+    {
+        jsid idp;
         jsval key;
-        std::string keyStr;
-        if(JSID_IS_STRING(propId)) {
-            JS_IdToValue(cx, propId, &key);
-            ok &= jsval_to_std_string(cx, key, &keyStr);
-            JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+        if (! JS_NextProperty(cx, it, &idp) || ! JS_IdToValue(cx, idp, &key)) {
+            return JS_FALSE; // error
         }
 
-        if(JSVAL_IS_NULL(key)) continue;
-
+        if (key == JSVAL_VOID) {
+            break; // end of iteration
+        }
+        
+        if (!JSVAL_IS_STRING(key)) {
+            continue; // ignore integer properties
+        }
+        
+        JSStringWrapper keyWrapper(JSVAL_TO_STRING(key), cx);
         if(!dict) {
             dict = CCDictionary::create();
         }
-        dict->setObject(cobj, keyStr);
+        
+        jsval value;
+        JS_GetPropertyById(cx, tmp, idp, &value);
+        if (value.isObject())
+        {
+            js_proxy_t *proxy;
+            JSObject *tmp = JSVAL_TO_OBJECT(value);
+            JS_GET_NATIVE_PROXY(proxy, tmp);
+            cocos2d::CCObject* cobj = (cocos2d::CCObject *)(proxy ? proxy->ptr : NULL);
+            // Don't test it.
+            //TEST_NATIVE_OBJECT(cx, cobj)
+            if (cobj) {
+                // It's a native <-> js glue object.
+                dict->setObject(cobj, keyWrapper.get());
+            }
+            else if (!JS_IsArrayObject(cx, tmp)){
+                // It's a normal js object.
+                CCDictionary* dictVal = NULL;
+                JSBool ok = jsval_to_ccdictionary(cx, value, &dictVal);
+                if (ok) {
+                    dict->setObject(dictVal, keyWrapper.get());
+                }
+            }
+            else {
+                // It's a js array object.
+                CCArray* arrVal = NULL;
+                JSBool ok = jsval_to_ccarray(cx, value, &arrVal);
+                if (ok) {
+                    dict->setObject(arrVal, keyWrapper.get());
+                }
+            }
+        }
+        else if (JSVAL_IS_STRING(value)) {
+            JSStringWrapper valueWapper(JSVAL_TO_STRING(value), cx);
+            dict->setObject(CCString::create(valueWapper.get()), keyWrapper.get());
+//            CCLOG("iterate object: key = %s, value = %s", keyWrapper.get().c_str(), valueWapper.get().c_str());
+        }
+        else if (JSVAL_IS_NUMBER(value)) {
+            double number = 0.0;
+            JSBool ok = JS_ValueToNumber(cx, value, &number);
+            if (ok) {
+                dict->setObject(CCDouble::create(number), keyWrapper.get());
+//                CCLOG("iterate object: key = %s, value = %lf", keyWrapper.get().c_str(), number);
+            }
+        }
+        else if (JSVAL_IS_BOOLEAN(value)) {
+            JSBool boolVal = JS_FALSE;
+            JSBool ok = JS_ValueToBoolean(cx, value, &boolVal);
+            if (ok) {
+                dict->setObject(CCBool::create(boolVal), keyWrapper.get());
+//                CCLOG("iterate object: key = %s, value = %d", keyWrapper.get().c_str(), boolVal);
+            }
+        }
+        else {
+            CCAssert(false, "not supported type");
+        }
+    }
 
-    } while(JS_NextProperty(cx, itEl, &propId));
     *ret = dict;
     return JS_TRUE;
 }
@@ -1337,20 +1498,30 @@ jsval uint32_to_jsval( JSContext *cx, uint32_t number )
 
 jsval long_long_to_jsval(JSContext* cx, long long v) {
     JSObject *tmp = JS_NewUint32Array(cx, 2);
-    uint32_t *data = (uint32_t *)JS_GetArrayBufferViewData(tmp, cx);
+    uint32_t *data = (uint32_t *)JS_GetArrayBufferViewData(tmp);
     data[0] = ((uint32_t *)(&v))[0];
     data[1] = ((uint32_t *)(&v))[1];
     return OBJECT_TO_JSVAL(tmp);
 }
 
 jsval std_string_to_jsval(JSContext* cx, std::string& v) {
-    JSString *str = JS_NewStringCopyZ(cx, v.c_str());
-    return STRING_TO_JSVAL(str);
+    return c_string_to_jsval(cx, v.c_str());
 }
 
 jsval c_string_to_jsval(JSContext* cx, const char* v) {
-    JSString *str = JS_NewStringCopyZ(cx, v);
-    return STRING_TO_JSVAL(str);
+    if (v == NULL) {
+        return JSVAL_NULL;
+    }
+    jsval ret = JSVAL_NULL;
+    jschar* strUTF16 = (jschar*)cc_utf8_to_utf16(v);
+    if (strUTF16) {
+        JSString* str = JS_NewUCStringCopyZ(cx, strUTF16);
+        if (str) {
+            ret = STRING_TO_JSVAL(str);
+        }
+        delete[] strUTF16;
+    }
+    return ret;
 }
 
 jsval ccpoint_to_jsval(JSContext* cx, CCPoint& v) {
@@ -1608,15 +1779,9 @@ JSBool JSBDebug_BufferWrite(JSContext* cx, unsigned argc, jsval* vp)
 {
     if (argc == 1) {
         jsval* argv = JS_ARGV(cx, vp);
-        const char* str;
-
-        JSString* jsstr = JS_ValueToString(cx, argv[0]);
-        str = JS_EncodeString(cx, jsstr);
-
+        JSStringWrapper strWrapper(argv[0]);
         // this is safe because we're already inside a lock (from clearBuffers)
-        outData.append(str);
-
-        JS_free(cx, (void*)str);
+        outData.append(strWrapper.get());
     }
     return JS_TRUE;
 }

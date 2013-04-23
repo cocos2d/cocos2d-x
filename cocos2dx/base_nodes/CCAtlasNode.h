@@ -48,7 +48,7 @@ If you are going to render a TextureAtlas consider subclassing CCAtlasNode (or a
 All features from CCNode are valid, plus the following features:
 - opacity and RGB colors
 */
-class CC_DLL CCAtlasNode : public CCNode, public CCRGBAProtocol, public CCTextureProtocol
+class CC_DLL CCAtlasNode : public CCNodeRGBA, public CCTextureProtocol
 {
 protected:
 
@@ -68,12 +68,8 @@ protected:
 
     // protocol variables
     bool m_bIsOpacityModifyRGB;
-    bool isOpacityModifyRGB();
-    void setOpacityModifyRGB(bool isOpacityModifyRGB);
     
     CC_PROPERTY(ccBlendFunc, m_tBlendFunc, BlendFunc);
-    CC_PROPERTY(GLubyte, m_cOpacity, Opacity);
-    CC_PROPERTY_PASS_BY_REF(ccColor3B, m_tColor, Color);
 
     // quads to draw
     CC_PROPERTY(unsigned int, m_uQuadsToDraw, QuadsToDraw);
@@ -90,6 +86,9 @@ public:
     /** initializes an CCAtlasNode  with an Atlas file the width and height of each item and the quantity of items to render*/
     bool initWithTileFile(const char* tile, unsigned int tileWidth, unsigned int tileHeight, unsigned int itemsToRender);
 
+    /** initializes an CCAtlasNode  with a texture the width and height of each item measured in points and the quantity of items to render*/
+    bool initWithTexture(CCTexture2D* texture, unsigned int tileWidth, unsigned int tileHeight, unsigned int itemsToRender);
+    
     /** updates the Atlas (indexed vertex array).
     * Shall be overridden in subclasses
     */
@@ -104,6 +103,12 @@ public:
 
     /** sets a new texture. it will be retained*/
     virtual void setTexture(CCTexture2D *texture);
+    
+    virtual bool isOpacityModifyRGB();
+    virtual void setOpacityModifyRGB(bool isOpacityModifyRGB);
+    virtual const ccColor3B& getColor(void);
+    virtual void setColor(const ccColor3B& color);
+    virtual void setOpacity(GLubyte opacity);
 
 private :
     void calculateMaxItems();

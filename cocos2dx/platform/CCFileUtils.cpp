@@ -314,14 +314,16 @@ public:
 
 CCDictionary* CCFileUtils::createCCDictionaryWithContentsOfFile(const std::string& filename)
 {
+    std::string fullPath = fullPathForFilename(filename.c_str());
     CCDictMaker tMaker;
-    return tMaker.dictionaryWithContentsOfFile(filename.c_str());
+    return tMaker.dictionaryWithContentsOfFile(fullPath.c_str());
 }
 
 CCArray* CCFileUtils::createCCArrayWithContentsOfFile(const std::string& filename)
 {
+    std::string fullPath = fullPathForFilename(filename.c_str());
     CCDictMaker tMaker;
-    return tMaker.arrayWithContentsOfFile(filename.c_str());
+    return tMaker.arrayWithContentsOfFile(fullPath.c_str());
 }
 
 #else
@@ -419,8 +421,7 @@ unsigned char* CCFileUtils::getFileDataFromZip(const char* pszZipFilePath, const
         CC_BREAK_IF(UNZ_OK != nRet);
 
         pBuffer = new unsigned char[FileInfo.uncompressed_size];
-        int nSize = 0;
-        nSize = unzReadCurrentFile(pFile, pBuffer, FileInfo.uncompressed_size);
+        int CC_UNUSED nSize = unzReadCurrentFile(pFile, pBuffer, FileInfo.uncompressed_size);
         CCAssert(nSize == 0 || nSize == (int)FileInfo.uncompressed_size, "the file size is wrong");
 
         *pSize = FileInfo.uncompressed_size;

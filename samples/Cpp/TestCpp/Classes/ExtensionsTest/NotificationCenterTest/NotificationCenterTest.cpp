@@ -127,11 +127,20 @@ NotificationCenterTest::NotificationCenterTest()
         light->setIsConnectToSwitch(bConnected);
     }
 
-    CCNotificationCenter::sharedNotificationCenter()->postNotification(MSG_SWITCH_STATE, (CCObject*)item->getSelectedIndex());
+    CCNotificationCenter::sharedNotificationCenter()->postNotification(MSG_SWITCH_STATE, (CCObject*)(intptr_t)item->getSelectedIndex());
+
+    /* for testing removeAllObservers */
+    CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(NotificationCenterTest::doNothing), "random-observer1", NULL);
+    CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(NotificationCenterTest::doNothing), "random-observer2", NULL);
+    CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(NotificationCenterTest::doNothing), "random-observer3", NULL);
 }
 
 void NotificationCenterTest::toExtensionsMainLayer(cocos2d::CCObject* sender)
 {
+    /* for testing removeAllObservers */
+    int CC_UNUSED numObserversRemoved = CCNotificationCenter::sharedNotificationCenter()->removeAllObservers(this);
+    CCAssert(numObserversRemoved >= 3, "All observers were not removed!");
+
     ExtensionsTestScene* pScene = new ExtensionsTestScene();
     pScene->runThisTest();
     pScene->release();
@@ -141,7 +150,7 @@ void NotificationCenterTest::toggleSwitch(CCObject *sender)
 {
     CCMenuItemToggle* item = (CCMenuItemToggle*)sender;
     int index = item->getSelectedIndex();
-    CCNotificationCenter::sharedNotificationCenter()->postNotification(MSG_SWITCH_STATE, (CCObject*)index);
+    CCNotificationCenter::sharedNotificationCenter()->postNotification(MSG_SWITCH_STATE, (CCObject*)(intptr_t)index);
 }
 
 void NotificationCenterTest::connectToSwitch(CCObject *sender)
@@ -150,6 +159,11 @@ void NotificationCenterTest::connectToSwitch(CCObject *sender)
     bool bConnected = item->getSelectedIndex() == 0 ? false : true;
     Light* pLight = (Light*)this->getChildByTag(item->getTag()-kTagConnect+kTagLight);
     pLight->setIsConnectToSwitch(bConnected);
+}
+
+void NotificationCenterTest::doNothing(cocos2d::CCObject *sender)
+{
+
 }
 
 void runNotificationCenterTest()

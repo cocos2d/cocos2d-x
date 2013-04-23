@@ -12,8 +12,37 @@ Developers:
     Rolando Abarca
         Javascript Binding and testjs
 
+    martell
+        use tinyxml2 to replace libxml2
+
+    mchinen
+        fix emulator issue for OpenGL ES 2.0 on Android
+
+    DenizPiri
+        use CCLOG to implement print() function in LUA
+
+    nickveri
+    nickkwalee
+        added some missing function for setting integer shader uniforms in CCGLProgram
+
+    biteforest
+        fix cc scale9 sprite bug
+
+    Jimmy Sambuo
+        fix the bug that SimpleAudioEngine::playEffect() and playBackgroundMusic() play twice on linux
+
+    DarraghCoy
+        fix for loading custom fonts on iOS when referenced from a CCB file
+        Fix CCUserDefault.cpp compiling on Android.
+        Fixing CCFileUtils 'createXXXXWithContentsOfFile' path lookup issue.
+
+    Waiter
+        fix an error that OpenSLEngine can't load resources from SD card
+        add CCRemoveSelf action
+
     billy1380
-        make CCLens3d support concave effect
+        make CCLens3d support concave effect.
+        Adding 64bit target for Mac project.
 
     benjamesward
         add Portuguese and Arabic language support
@@ -61,7 +90,12 @@ Developers:
     Weeds (Andre Rudlaff)
         Used fontconfig to enhance font rendering on linux.
         Fixed a bug about missing horizontal alignment for Custom TTF fonts on linux.
-        Fixed a bug that the truetype fonts from resource directory can't be found on linux.	
+        Fixed a bug that the truetype fonts from resource directory can't be found on linux.
+        Fixed the size calculations for true type fonts (especially for italic fonts).
+        Added a very simple greedy line break algorithmfor true type labels.
+        Fixed font rendering crash for certain fonts on linux.
+        Fixed potential crash in CCScheduler::removeHashElement.
+        Fixed potential crash in CCSaxParser.
 
     Nat Weiss (iphonegamekit.com)
         author of Mac port
@@ -70,7 +104,7 @@ Developers:
     XiaoLong Zhang (Chukong Inc)
     Mike McGary (Zynga)
     Di Wu (Zynga China)
-        CCBReader and cpp reflection mechanic  
+        CCBReader and cpp reflection mechanic
 
     Angus Comrie
         contributes cocos2d-x port of CCControlExtension.
@@ -81,18 +115,21 @@ Developers:
     Surith Thekkiam (folecr, Zynga)
         contribute for Android module building
         Simpler, correct handling of spritesheet sources for CCScale9Sprite.
+        Clean up linked libraries for android.
 
     Nicolas Gramlich (nicolasgramlich, Zynga)
         fixed CCDirector to use CCLabelBMFont instead of CCLabelTTF
         added CCBReader (CCBI format)
         Added cleanup and reset methods to ScriptingCore.
-    
+
     Rohan Kuruvilla (rohankuruvilla, Zynga)
         Improvements to JS Bindings.
+        Synchronizing CCBReader to version 5.
+        Adding OpenGL Bindings to Javascript.
 
-    Jianfeng Zhou (NetGragon Inc)
+    Jianfeng Zou (NetDragon Inc)
         contributes CCListView and CCTextureWatcher.
-	  
+
     dducharme
         author of blackberry port
 
@@ -101,8 +138,8 @@ Developers:
 
     HuaXu Cai (Kongzhong Corporation)
         author of linux port
-        
-    ciaranj 
+
+    ciaranj
         add a build file that correctly generates LuaCocos2d.cpp
         add a lua template
         add particle systems to lua bindings
@@ -118,7 +155,7 @@ Developers:
         improvements to CCUserDefaults
 
     ZhuoShi Shun
-	contribute the lua binding of CocosDenshion
+        contribute the lua binding of CocosDenshion
 
     Jirka Fajfr
     Chris Calm
@@ -138,16 +175,16 @@ Developers:
 
     Mat Hopwood( Marmalade official engineer )
         Marmalade support for gles20 branch
-		
+
     Carlos Sessa
-	implement the accelerometer module for Android port
+        implement the accelerometer module for Android port
 
     James Chen(dumganhar)
         author of Bada port
 
     Erawppa
         implement CCNotificationCenter
-        
+
     YuLei Liao(dualface)
         contribute the factor of lua binding
 
@@ -183,16 +220,18 @@ Developers:
         fixed compilation errors after adding support of webp image format.
 
     Tomoaki Shimizu (tks2shimizu)
-	Adding randomObject to CCDictionary.
+        Adding randomObject to CCDictionary.
 
     Igor Zavorotkin (ivzave)
         Adding lua support for linux platform.
-	
+
     Jozef Prídavok (jpridavok)
         Adding CCEditBox implementation for Mac OSX.
 
     tiantian20007
-        Fix crash for call runAnimation() in CCBAnimationManagerDelegate::completedAnimationSequenceNamed.
+        Fixing a crash for call runAnimation() in CCBAnimationManagerDelegate::completedAnimationSequenceNamed.
+        Fixing a bug that CCControl's touch priority is not set correctly; m_nDefaultTouchPriority is never used.
+        Fixing a syntax error for RENDER_IN_SUBPIXEL macro.
 
     xyhl515
         Fixed a bug that CCControlSwitch::setOn(isOn,false) doesn't work.
@@ -203,6 +242,9 @@ Developers:
 
     Sergej Tatarincev (SevInf)
         Making ScriptingCore.cpp compiled fine with C++11 on iOS.
+        Using shared NodeLoaderLibrary in CCBReader bindings.
+        CCEditBox iOS enchantments/bugfixes.
+        Support variable cell sizes in CCTableView.
 
     ThePickleMan
         Adding 'rotationIsDir' property to ParticleSystem.
@@ -215,20 +257,80 @@ Developers:
 
     neokim
         Adds 'setFont' and 'setAnchorPoint' to CCEditBox.
+        Workaround for some problems due to UITextField of CCEditBoxImplIOS is attached as a view above OpenGL view.
+
+    Sam Clegg (sbc100)
+        Author of Native Client port.
+        Refactor linux build system and fix many warnings.
+        Fixing a bug where missing packages would cause the script to exit on linux.
+        Adding 'make run' target for linux projects.
+        Stripping newlines from log message and fixing linux library location.
+
+    Peter Young (young40)
+        Implements setVisible() for CCEditBox
+
+    csy1988525
+        Fixing a bug about display result is wrong when invoking CCControlButton:: setHighlighted.
+
+    Asad ur Rehman (AsadR)
+        Adding CCNotificationCenter::removeAllObservers(CCObject *target).
+
+    jedy
+        Fix of CCNode.h's document with doxygen 1.8.3 can't be generated.
+
+    whitegfx
+        Implementation of kEditBoxInputFlagSensitive setting for CCEditBoxImplIOS.
+
+    Zecken (gelldur)
+        Fixing a profiling compilation error in CCParticleBatchNode.
+
+    flamingo (flaming0)
+        Null pointer check in order to prevent crashes.
+
+    rtissera (Romain TISSERAND)
+        Adding missing JNIEXPORT / JNICALL declarations.
+
+    Yodesoft
+        Improving font rendering performance for linux platform.
+        Reducing function call in nativeInitBitmapDC to improve performance.
+        Refactoring writable path to "<user's home>/.config/<app name>" for linux platform.
+
+    sjchao
+        Fixing a display bug when a scrollView nested in another scrollView.
+
+    Éloi Rivard (azmeuk)
+        Linux OpenAL support.
+
+    elmiro
+        Correction of passed buffer size to readlink and verification of result return by readlink.
+
+    harikrishnar (Hari Krishna)
+        Wrong logic in CCArray::initWithObjects.
+        Fixing a bug that button should not get respond if its parent is invisable.
+
+    rogerzanoni
+        Fixing a linking error that libpthread and libGL libraries need to be linked on linux.
+        Fixing a compiling error of [-Werror=array-bounds] when compiling Box2dTestBed.
+
+    zhanghaojie
+        Fixing a bug that anchorPoint property of CCScale9Sprite doesn't work in CCBReader.
+
+    MarkEHenderson (Mark Henderson)
+        Fix of variable initialization in SpriteBatchNode.
 
 Retired Core Developers:
     WenSheng Yang
-	Author of windows port, CCTextField, 
-        Designer of CCApplication/CCEGLView/platform structure. 
+        Author of windows port, CCTextField,
+        Designer of CCApplication/CCEGLView/platform structure.
         He's working together with 2dx core team but leading FishingJoy game
 
     Bin Zhang
-	core-team member but put himself in FishingJoy game since 2012.
+        core-team member but put himself in FishingJoy game since 2012.
 
     RongHong Huang (flyingpaper)
         Author of cocos2d-xna and spent all his time on wp7.
 
-	  		
+
 Cocos2d-x can not grow so fast without the active community.
 Thanks to all developers who report & trace bugs, discuss the engine usage in forum & QQ groups!
 Special thanks to Ricardo Quesada for giving us lots of guidances & suggestions.

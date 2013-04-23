@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010-2013 cocos2d-x.org
 
 http://www.cocos2d-x.org
 
@@ -23,16 +23,15 @@ THE SOFTWARE.
  ****************************************************************************/
 package org.cocos2dx.lib;
 
-import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.util.Locale;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.res.AssetManager;
 import android.os.Build;
-import android.os.Environment;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.WindowManager;
@@ -41,6 +40,7 @@ public class Cocos2dxHelper {
 	// ===========================================================
 	// Constants
 	// ===========================================================
+	private static final String PREFS_NAME = "Cocos2dxPrefsFile";
 
 	// ===========================================================
 	// Fields
@@ -269,6 +269,72 @@ public class Cocos2dxHelper {
 			}
 		}
 		return -1;
+    }
+    
+    // ===========================================================
+ 	// Functions for CCUserDefault
+ 	// ===========================================================
+    
+    public static boolean getBoolForKey(String key, boolean defaultValue) {
+    	SharedPreferences settings = ((Activity)sContext).getSharedPreferences(Cocos2dxHelper.PREFS_NAME, 0);
+    	return settings.getBoolean(key, defaultValue);
+    }
+    
+    public static int getIntegerForKey(String key, int defaultValue) {
+    	SharedPreferences settings = ((Activity)sContext).getSharedPreferences(Cocos2dxHelper.PREFS_NAME, 0);
+    	return settings.getInt(key, defaultValue);
+    }
+    
+    public static float getFloatForKey(String key, float defaultValue) {
+    	SharedPreferences settings = ((Activity)sContext).getSharedPreferences(Cocos2dxHelper.PREFS_NAME, 0);
+    	return settings.getFloat(key, defaultValue);
+    }
+    
+    public static double getDoubleForKey(String key, double defaultValue) {
+    	// SharedPreferences doesn't support saving double value
+    	SharedPreferences settings = ((Activity)sContext).getSharedPreferences(Cocos2dxHelper.PREFS_NAME, 0);
+    	return settings.getFloat(key, (float)defaultValue);
+    }
+    
+    public static String getStringForKey(String key, String defaultValue) {
+    	SharedPreferences settings = ((Activity)sContext).getSharedPreferences(Cocos2dxHelper.PREFS_NAME, 0);
+    	return settings.getString(key, defaultValue);
+    }
+    
+    public static void setBoolForKey(String key, boolean value) {
+    	SharedPreferences settings = ((Activity)sContext).getSharedPreferences(Cocos2dxHelper.PREFS_NAME, 0);
+    	SharedPreferences.Editor editor = settings.edit();
+    	editor.putBoolean(key, value);
+    	editor.commit();
+    }
+    
+    public static void setIntegerForKey(String key, int value) {
+    	SharedPreferences settings = ((Activity)sContext).getSharedPreferences(Cocos2dxHelper.PREFS_NAME, 0);
+    	SharedPreferences.Editor editor = settings.edit();
+    	editor.putInt(key, value);
+    	editor.commit();
+    }
+    
+    public static void setFloatForKey(String key, float value) {
+    	SharedPreferences settings = ((Activity)sContext).getSharedPreferences(Cocos2dxHelper.PREFS_NAME, 0);
+    	SharedPreferences.Editor editor = settings.edit();
+    	editor.putFloat(key, value);
+    	editor.commit();
+    }
+    
+    public static void setDoubleForKey(String key, double value) {
+    	// SharedPreferences doesn't support recording double value
+    	SharedPreferences settings = ((Activity)sContext).getSharedPreferences(Cocos2dxHelper.PREFS_NAME, 0);
+    	SharedPreferences.Editor editor = settings.edit();
+    	editor.putFloat(key, (float)value);
+    	editor.commit();
+    }
+    
+    public static void setStringForKey(String key, String value) {
+    	SharedPreferences settings = ((Activity)sContext).getSharedPreferences(Cocos2dxHelper.PREFS_NAME, 0);
+    	SharedPreferences.Editor editor = settings.edit();
+    	editor.putString(key, value);
+    	editor.commit();
     }
 	
 	// ===========================================================

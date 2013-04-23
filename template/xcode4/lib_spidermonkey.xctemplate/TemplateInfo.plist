@@ -27,36 +27,6 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>libs/javascript/spidermonkey-ios/include/gc/Barrier.h</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>javascript</string>
-				<string>spidermonkey-ios</string>
-				<string>include</string>
-				<string>gc</string>
-			</array>
-			<key>Path</key>
-			<string>libs/javascript/spidermonkey-ios/include/gc/Barrier.h</string>
-			<key>TargetIndices</key>
-			<array/>
-		</dict>
-		<key>libs/javascript/spidermonkey-ios/include/gc/Heap.h</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>javascript</string>
-				<string>spidermonkey-ios</string>
-				<string>include</string>
-				<string>gc</string>
-			</array>
-			<key>Path</key>
-			<string>libs/javascript/spidermonkey-ios/include/gc/Heap.h</string>
-			<key>TargetIndices</key>
-			<array/>
-		</dict>
 		<key>libs/javascript/spidermonkey-ios/include/gc/Root.h</key>
 		<dict>
 			<key>Group</key>
@@ -72,36 +42,6 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>libs/javascript/spidermonkey-ios/include/gc/Statistics.h</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>javascript</string>
-				<string>spidermonkey-ios</string>
-				<string>include</string>
-				<string>gc</string>
-			</array>
-			<key>Path</key>
-			<string>libs/javascript/spidermonkey-ios/include/gc/Statistics.h</string>
-			<key>TargetIndices</key>
-			<array/>
-		</dict>
-		<key>libs/javascript/spidermonkey-ios/include/gc/StoreBuffer.h</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>javascript</string>
-				<string>spidermonkey-ios</string>
-				<string>include</string>
-				<string>gc</string>
-			</array>
-			<key>Path</key>
-			<string>libs/javascript/spidermonkey-ios/include/gc/StoreBuffer.h</string>
-			<key>TargetIndices</key>
-			<array/>
-		</dict>
 		<key>libs/javascript/spidermonkey-ios/include/js/HashTable.h</key>
 		<dict>
 			<key>Group</key>
@@ -114,6 +54,21 @@
 			</array>
 			<key>Path</key>
 			<string>libs/javascript/spidermonkey-ios/include/js/HashTable.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/javascript/spidermonkey-ios/include/js/HeapAPI.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>javascript</string>
+				<string>spidermonkey-ios</string>
+				<string>include</string>
+				<string>js</string>
+			</array>
+			<key>Path</key>
+			<string>libs/javascript/spidermonkey-ios/include/js/HeapAPI.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
@@ -327,20 +282,6 @@
 			</array>
 			<key>Path</key>
 			<string>libs/javascript/spidermonkey-ios/include/jsfriendapi.h</string>
-			<key>TargetIndices</key>
-			<array/>
-		</dict>
-		<key>libs/javascript/spidermonkey-ios/include/jsgc.h</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>javascript</string>
-				<string>spidermonkey-ios</string>
-				<string>include</string>
-			</array>
-			<key>Path</key>
-			<string>libs/javascript/spidermonkey-ios/include/jsgc.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
@@ -598,6 +539,21 @@
 			</array>
 			<key>Path</key>
 			<string>libs/javascript/spidermonkey-ios/include/mozilla/Constants.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/javascript/spidermonkey-ios/include/mozilla/EnumSet.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>javascript</string>
+				<string>spidermonkey-ios</string>
+				<string>include</string>
+				<string>mozilla</string>
+			</array>
+			<key>Path</key>
+			<string>libs/javascript/spidermonkey-ios/include/mozilla/EnumSet.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
@@ -887,12 +843,9 @@
 	<key>Nodes</key>
 	<array>
 		<string>libs/javascript/spidermonkey-ios/include/ds/BitArray.h</string>
-		<string>libs/javascript/spidermonkey-ios/include/gc/Barrier.h</string>
-		<string>libs/javascript/spidermonkey-ios/include/gc/Heap.h</string>
 		<string>libs/javascript/spidermonkey-ios/include/gc/Root.h</string>
-		<string>libs/javascript/spidermonkey-ios/include/gc/Statistics.h</string>
-		<string>libs/javascript/spidermonkey-ios/include/gc/StoreBuffer.h</string>
 		<string>libs/javascript/spidermonkey-ios/include/js/HashTable.h</string>
+		<string>libs/javascript/spidermonkey-ios/include/js/HeapAPI.h</string>
 		<string>libs/javascript/spidermonkey-ios/include/js/LegacyIntTypes.h</string>
 		<string>libs/javascript/spidermonkey-ios/include/js/MemoryMetrics.h</string>
 		<string>libs/javascript/spidermonkey-ios/include/js/TemplateLib.h</string>
@@ -908,7 +861,6 @@
 		<string>libs/javascript/spidermonkey-ios/include/jsdbgapi.h</string>
 		<string>libs/javascript/spidermonkey-ios/include/jsdhash.h</string>
 		<string>libs/javascript/spidermonkey-ios/include/jsfriendapi.h</string>
-		<string>libs/javascript/spidermonkey-ios/include/jsgc.h</string>
 		<string>libs/javascript/spidermonkey-ios/include/jslock.h</string>
 		<string>libs/javascript/spidermonkey-ios/include/json.h</string>
 		<string>libs/javascript/spidermonkey-ios/include/jsperf.h</string>
@@ -927,6 +879,7 @@
 		<string>libs/javascript/spidermonkey-ios/include/mozilla/BloomFilter.h</string>
 		<string>libs/javascript/spidermonkey-ios/include/mozilla/CheckedInt.h</string>
 		<string>libs/javascript/spidermonkey-ios/include/mozilla/Constants.h</string>
+		<string>libs/javascript/spidermonkey-ios/include/mozilla/EnumSet.h</string>
 		<string>libs/javascript/spidermonkey-ios/include/mozilla/FloatingPoint.h</string>
 		<string>libs/javascript/spidermonkey-ios/include/mozilla/GuardObjects.h</string>
 		<string>libs/javascript/spidermonkey-ios/include/mozilla/HashFunctions.h</string>

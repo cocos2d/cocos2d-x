@@ -59,13 +59,14 @@ public:
     virtual const char* getText(void);
     virtual void setPlaceHolder(const char* pText);
     virtual void setPosition(const CCPoint& pos);
+	virtual void setVisible(bool visible);
     virtual void setContentSize(const CCSize& size);
     virtual void setAnchorPoint(const CCPoint& anchorPoint);
     virtual void visit(void);
     virtual void doAnimationWhenKeyboardMove(float duration, float distance);
     virtual void openKeyboard();
     virtual void closeKeyboard();
-    
+    virtual void onEnter(void);
 private:
 
     CCLabelTTF* m_pLabel;

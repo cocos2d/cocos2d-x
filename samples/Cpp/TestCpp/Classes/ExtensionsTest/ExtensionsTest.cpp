@@ -88,7 +88,6 @@ void ExtensionsMainLayer::menuCallback(CCObject* pSender)
             CCDirector::sharedDirector()->replaceScene(pScene);
         }
         break;
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)	// MARMALADE CHANGE: Not yet avaiable on Marmalade
     case TEST_COCOSBUILDER:
         {
             TestScene* pScene = new CocosBuilderTestScene();
@@ -99,8 +98,7 @@ void ExtensionsMainLayer::menuCallback(CCObject* pSender)
             }
         }
         break;
-#endif
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)	// MARMALADE CHANGE: Not yet avaiable on Marmalade
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE && CC_TARGET_PLATFORM != CC_PLATFORM_NACL)
     case TEST_HTTPCLIENT:
         {
             runHttpClientTest();

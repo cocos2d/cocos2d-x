@@ -151,6 +151,11 @@ bool CCMenu::initWithArray(CCArray* pArrayOfItems)
         //    [self alignItemsVertically];
         m_pSelectedItem = NULL;
         m_eState = kCCMenuStateWaiting;
+        
+        // enable cascade color and opacity on menus
+        setCascadeColorEnabled(true);
+        setCascadeOpacityEnabled(true);
+        
         return true;
     }
     return false;
@@ -593,63 +598,6 @@ void CCMenu::alignItemsInRowsWithArray(CCArray* columnArray)
             }
         }
     }
-}
-
-// Opacity Protocol
-
-/** Override synthesized setOpacity to recurse items */
-void CCMenu::setOpacity(GLubyte var)
-{
-    m_cOpacity = var;
-
-    if (m_pChildren && m_pChildren->count() > 0)
-    {
-        CCObject* pObject = NULL;
-        CCARRAY_FOREACH(m_pChildren, pObject)
-        {
-            CCNode* pChild = dynamic_cast<CCNode*>(pObject);
-            if (pChild)
-            {
-                CCRGBAProtocol *pRGBAProtocol = dynamic_cast<CCRGBAProtocol*>(pChild);
-                if (pRGBAProtocol)
-                {
-                    pRGBAProtocol->setOpacity(m_cOpacity);
-                }
-            }
-        }
-    }
-}
-
-GLubyte CCMenu::getOpacity(void)
-{
-    return m_cOpacity;
-}
-
-void CCMenu::setColor(const ccColor3B& var)
-{
-    m_tColor = var;
-
-    if (m_pChildren && m_pChildren->count() > 0)
-    {
-        CCObject* pObject = NULL;
-        CCARRAY_FOREACH(m_pChildren, pObject)
-        {
-            CCNode* pChild = dynamic_cast<CCNode*>(pObject);
-            if (pChild)
-            {
-                CCRGBAProtocol *pRGBAProtocol = dynamic_cast<CCRGBAProtocol*>(pChild);
-                if (pRGBAProtocol)
-                {
-                    pRGBAProtocol->setColor(m_tColor);
-                }
-            }
-        }
-    }
-}
-
-const ccColor3B& CCMenu::getColor(void)
-{
-    return m_tColor;
 }
 
 CCMenuItem* CCMenu::itemForTouch(CCTouch *touch)

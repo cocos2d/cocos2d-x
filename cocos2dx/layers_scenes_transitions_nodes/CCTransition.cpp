@@ -84,6 +84,8 @@ bool CCTransitionScene::initWithDuration(float t, CCScene *scene)
         m_pOutScene->retain();
 
         CCAssert( m_pInScene != m_pOutScene, "Incoming scene must be different from the outgoing scene" );
+        
+        sceneOrder();
 
         return true;
     }
@@ -388,7 +390,7 @@ CCActionInterval* CCTransitionMoveInL::easeActionWithAction(CCActionInterval* ac
 void CCTransitionMoveInL::initScenes()
 {
     CCSize s = CCDirector::sharedDirector()->getWinSize();
-    m_pInScene->setPosition( ccp(-s.width,0) );
+    m_pInScene->setPosition(ccp(-s.width,0));
 }
 
 //
@@ -1379,7 +1381,7 @@ void CCTransitionTurnOffTiles::onEnter()
     int x = (int)(12 * aspect);
     int y = 12;
 
-    CCTurnOffTiles* toff = CCTurnOffTiles::create( m_fDuration, CCSizeMake(x,y));
+    CCTurnOffTiles* toff = CCTurnOffTiles::create(m_fDuration, CCSizeMake(x,y));
     CCActionInterval* action = easeActionWithAction(toff);
     m_pOutScene->runAction
     (

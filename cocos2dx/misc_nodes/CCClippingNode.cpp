@@ -51,8 +51,8 @@ static void setProgram(CCNode *n, CCGLProgram *p)
 
 CCClippingNode::CCClippingNode()
 : m_pStencil(NULL)
-, m_bInverted(false)
 , m_fAlphaThreshold(0.0f)
+, m_bInverted(false)
 {}
 
 CCClippingNode::~CCClippingNode()
