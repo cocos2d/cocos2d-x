@@ -80,8 +80,8 @@ bool CCMenuItem::initWithTarget(CCObject *rec, SEL_MenuHandler pressSelector, SE
     m_pfnPressSelector = pressSelector;
     m_pfnReleaseSelector = releaseSelector;
     m_pfnActivatedSelector = activatedSelector;
-    m_bIsEnabled = true;
-    m_bIsSelected = false;
+    m_bEnabled = true;
+    m_bSelected = false;
     return true;
 }
 
@@ -92,9 +92,9 @@ CCMenuItem::~CCMenuItem()
 
 void CCMenuItem::selected()
 {
-    m_bIsSelected = true;
+    m_bSelected = true;
     
-    if (m_bIsEnabled)
+    if (m_bEnabled)
     {
         if (m_pListener && m_pfnPressSelector)
         {
@@ -105,9 +105,9 @@ void CCMenuItem::selected()
 
 void CCMenuItem::unselected()
 {
-    m_bIsSelected = false;
+    m_bSelected = false;
     
-    if (m_bIsEnabled)
+    if (m_bEnabled)
     {
         if (m_pListener && m_pfnReleaseSelector)
         {
