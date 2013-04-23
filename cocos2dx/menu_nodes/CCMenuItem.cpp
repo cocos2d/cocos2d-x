@@ -700,9 +700,7 @@ bool CCMenuItemImage::initWithNormalImage(const char *normalImage, const char *s
     {
         disabledSprite = CCSprite::create(disabledImage);
     }
-<<<<<<< HEAD
-    
-    return initWithNormalSprite(normalSprite, selectedSprite, disabledSprite, target, NULL, NULL, activatedSelector);
+    return initWithNormalSprite(normalSprite, selectedSprite, disabledSprite, target, selector);
 }
 
 bool CCMenuItemImage::initWithNormalImage(const char *normalImage, const char *selectedImage, const char *disabledImage, CCObject* target, SEL_MenuHandler pressSelector, SEL_MenuHandler releaseSelector, SEL_MenuHandler activatedSelector)
