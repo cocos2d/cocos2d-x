@@ -261,7 +261,6 @@ public:
     virtual const ccColor3B& getColor();
     virtual void setOpacity(GLubyte opacity);
     virtual GLubyte getOpacity();
->>>>>>> parent of 09157d1... Update CCMenuItem to provide optional PressSelector and optional ReleaseSelector in addition to the usual ActivateSelector. This allows the developer more control: for example to play an onButtonPressed sound as well as an onButtonReleased sound.
     
     /**
      @since v0.99.5
