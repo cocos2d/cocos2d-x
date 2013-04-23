@@ -15,6 +15,7 @@
 
 
 char *_js_log_buf_ccbuilder = NULL;
+static bool firstTime = true;
 
 USING_NS_CC;
 using namespace CocosDenshion;
@@ -38,9 +39,12 @@ bool runMainScene() {
     transitionColor.b = 0;
     
     mainScene = PlayerStatus::loadMainScene("StatusLayer.ccbi");
-    if(CCDirector::sharedDirector()->getRunningScene() != NULL) {
+    
+    if(CCDirector::sharedDirector()->getRunningScene() != NULL && CCDirector::sharedDirector()->getRunningScene() != mainScene) {
         CCDirector::sharedDirector()->replaceScene(CCTransitionFade::create(0.5f, mainScene, transitionColor));
-    } else {
+    } else if(CCDirector::sharedDirector()->getRunningScene() != NULL) {
+        
+    }else {
         CCDirector::sharedDirector()->runWithScene(CCTransitionFade::create(0.5f, mainScene, transitionColor));
     }
     return true;
@@ -56,8 +60,43 @@ void handle_connected() {
   CCBHelper::setStatusMessage("Connected!");
 }
 
+void resetCocosApp();
+
+void initViews(CCSize designSize) {
+    (CCScriptEngineManager::sharedManager())->removeScriptEngine();
+    resetCocosApp();
+    CCDirector *pDirector = CCDirector::sharedDirector();
+    pDirector->setOpenGLView(CCEGLView::sharedOpenGLView());
+    pDirector->setProjection(kCCDirectorProjection2D);
+    CCEGLView::sharedOpenGLView()->setDesignResolutionSize(designSize.width, designSize.height, kResolutionNoBorder);
+}
+
+static void setViewValues(CCEGLView *pView, CCSize frameSize, CCSize designSize) {
+ 
+//#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+//    (CCScriptEngineManager::sharedManager())->removeScriptEngine();
+//    resetCocosApp();
+//#endif
+//    
+    pView->setFrameSize(frameSize.height, frameSize.width);
+    pView->setDesignResolutionSize(designSize.height, designSize.width, kResolutionNoBorder);
+    CCLOG("Design Size %f x %f", designSize.height, designSize.width);
+    cocos2d::CCDirector::sharedDirector()->setProjection(kCCDirectorProjection2D);
+}
+
 void handle_set_orient(bool isPortrait) {
-  CCLOG("ORIENTATION HALF IMPLEMENTED");
+        cocos2d::CCEGLView* pView = CCEGLView::sharedOpenGLView();
+    if (pView != NULL)
+    {
+        CCSize frameSize = pView->getFrameSize();
+        CCSize designSize = pView->getDesignResolutionSize();
+        CCLOG("is Portrait %d", isPortrait);
+        if (((frameSize.width > frameSize.height && isPortrait))
+            || (frameSize.width < frameSize.height && !isPortrait)) {
+            setViewValues(pView, frameSize, designSize);
+        }
+    }
+    
 }
 
 void handle_set_message(const char* msg) {
@@ -98,6 +137,7 @@ extern "C" {
 
 
 const char * getCCBDirectoryPath();
+    
     
 bool AppDelegate::applicationDidFinishLaunching()
 {
@@ -231,7 +271,12 @@ bool AppDelegate::applicationDidFinishLaunching()
 
     CCScriptEngineProtocol *pEngine = ScriptingCore::getInstance();
     CCScriptEngineManager::sharedManager()->setScriptEngine(pEngine);
-    runMainScene();
+    if(firstTime) {
+        runMainScene();
+        firstTime = false;
+    } else {
+        handle_ccb_run();
+    }
 }
 
 
