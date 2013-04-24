@@ -28,6 +28,9 @@
     <Filter Include="AssetsManager">
       <UniqueIdentifier>{49487dbe-5758-436a-b014-8e2edc6b33ae}</UniqueIdentifier>
     </Filter>
+    <Filter Include="spine">
+      <UniqueIdentifier>{ff4b5934-99d4-4ea7-9f50-a774192d9ca9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\GUI\CCScrollView\CCScrollView.cpp">
@@ -173,6 +176,63 @@
     </ClCompile>
     <ClCompile Include="..\AssetsManager\AssetsManager.cpp">
       <Filter>AssetsManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\spine\Animation.cpp">
+      <Filter>spine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\spine\AnimationState.cpp">
+      <Filter>spine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\spine\AnimationStateData.cpp">
+      <Filter>spine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\spine\Atlas.cpp">
+      <Filter>spine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\spine\AtlasAttachmentLoader.cpp">
+      <Filter>spine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\spine\Attachment.cpp">
+      <Filter>spine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\spine\AttachmentLoader.cpp">
+      <Filter>spine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\spine\Bone.cpp">
+      <Filter>spine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\spine\BoneData.cpp">
+      <Filter>spine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\spine\extension.cpp">
+      <Filter>spine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\spine\Json.cpp">
+      <Filter>spine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\spine\RegionAttachment.cpp">
+      <Filter>spine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\spine\Skeleton.cpp">
+      <Filter>spine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\spine\SkeletonData.cpp">
+      <Filter>spine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\spine\SkeletonJson.cpp">
+      <Filter>spine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\spine\Skin.cpp">
+      <Filter>spine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\spine\Slot.cpp">
+      <Filter>spine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\spine\SlotData.cpp">
+      <Filter>spine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\spine\spine-cocos2dx.cpp">
+      <Filter>spine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -345,6 +405,66 @@
     </ClInclude>
     <ClInclude Include="..\AssetsManager\AssetsManager.h">
       <Filter>AssetsManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\spine\Animation.h">
+      <Filter>spine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\spine\AnimationState.h">
+      <Filter>spine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\spine\AnimationStateData.h">
+      <Filter>spine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\spine\Atlas.h">
+      <Filter>spine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\spine\AtlasAttachmentLoader.h">
+      <Filter>spine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\spine\Attachment.h">
+      <Filter>spine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\spine\AttachmentLoader.h">
+      <Filter>spine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\spine\Bone.h">
+      <Filter>spine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\spine\BoneData.h">
+      <Filter>spine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\spine\extension.h">
+      <Filter>spine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\spine\Json.h">
+      <Filter>spine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\spine\RegionAttachment.h">
+      <Filter>spine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\spine\Skeleton.h">
+      <Filter>spine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\spine\SkeletonData.h">
+      <Filter>spine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\spine\SkeletonJson.h">
+      <Filter>spine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\spine\Skin.h">
+      <Filter>spine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\spine\Slot.h">
+      <Filter>spine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\spine\SlotData.h">
+      <Filter>spine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\spine\spine-cocos2dx.h">
+      <Filter>spine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\spine\spine.h">
+      <Filter>spine</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
