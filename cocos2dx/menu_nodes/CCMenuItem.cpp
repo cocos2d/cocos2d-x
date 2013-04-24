@@ -107,6 +107,7 @@ void CCMenuItem::unregisterScriptTapHandler(void)
 
 void CCMenuItem::activate()
 {
+    retain();
     if (m_bEnabled)
     {
         if (m_pListener && m_pfnSelector)
@@ -119,6 +120,7 @@ void CCMenuItem::activate()
             CCScriptEngineManager::sharedManager()->getScriptEngine()->executeMenuItemEvent(this);
         }
     }
+    release();
 }
 
 void CCMenuItem::setEnabled(bool enabled)
