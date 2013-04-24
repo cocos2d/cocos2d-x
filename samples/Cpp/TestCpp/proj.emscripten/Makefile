@@ -301,6 +301,22 @@ RESOURCES = \
 	Images/texture2048x2048.png \
 	Images/texture512x512.png \
 	Images/white-512x512.png \
+	Particles/BoilingFoam.plist \
+	Particles/BurstPipe.plist \
+	Particles/Comet.plist \
+	Particles/ExplodingRing.plist \
+	Particles/Flower.plist \
+	Particles/Galaxy.plist \
+	Particles/LavaFlow.plist \
+	Particles/Phoenix.plist \
+	Particles/SmallSun.plist \
+	Particles/SpinningPeas.plist \
+	Particles/Spiral.plist \
+	Particles/SpookyPeas.plist \
+	Particles/TestPremultipliedAlpha.plist \
+	Particles/Upsidedown.plist \
+	Particles/debian.plist \
+	Particles/lines.plist \
 	TileMaps/tiles.png \
 	animations/dragon_animation.png \
 	animations/ghosts.png \
@@ -309,7 +325,6 @@ RESOURCES = \
 	animations/grossini_blue.png \
 	animations/grossini_family.png \
 	animations/grossini_gray.png \
-	Images/bugs/circle.png \
 	extensions/CCControlColourPickerSpriteSheet.png \
 	extensions/background.png \
 	extensions/button.png \
@@ -333,33 +348,64 @@ RESOURCES = \
 	extensions/switch-on.png \
 	extensions/switch-thumb.png \
 	extensions/yellow_edit.png \
-	Images/fire.png \
+	fonts/Abberancy.ttf \
+	fonts/Abduction.ttf \
+	fonts/Thonburi.ttf \
+	fonts/ThonburiBold.ttf \
+	fonts/arial-unicode-26.GlyphProject \
+	fonts/arial-unicode-26.fnt \
+	fonts/arial-unicode-26.png \
+	fonts/arial.ttf \
+	fonts/arial16.fnt \
+	fonts/arial16.png \
+	fonts/bitmapFontChinese.fnt \
+	fonts/bitmapFontChinese.png \
+	fonts/bitmapFontTest.fnt \
+	fonts/bitmapFontTest.png \
+	fonts/bitmapFontTest2.bmp \
+	fonts/bitmapFontTest2.fnt \
+	fonts/bitmapFontTest2.png \
+	fonts/bitmapFontTest3.fnt \
+	fonts/bitmapFontTest3.png \
+	fonts/bitmapFontTest4.fnt \
+	fonts/bitmapFontTest4.png \
+	fonts/bitmapFontTest5.fnt \
+	fonts/bitmapFontTest5.png \
+	fonts/boundsTestFont.fnt \
+	fonts/boundsTestFont.png \
+	fonts/font-issue1343-hd.fnt \
+	fonts/font-issue1343-hd.png \
+	fonts/font-issue1343.fnt \
+	fonts/font-issue1343.png \
+	fonts/futura-48.fnt \
+	fonts/futura-48.png \
+	fonts/geneva-32.fnt \
+	fonts/helvetica-32.fnt \
+	fonts/helvetica-geneva-32.png \
+	fonts/konqa32.fnt \
+	fonts/konqa32.png \
 	fonts/labelatlas.png \
+	fonts/larabie-16.plist \
+	fonts/larabie-16.png \
+	fonts/markerFelt.fnt \
+	fonts/markerFelt.png \
+	fonts/strings.xml \
+	fonts/tahoma.ttf \
+	fonts/tuffy_bold_italic-charmap.plist \
 	fonts/tuffy_bold_italic-charmap.png \
+	fonts/west_england-64.fnt \
+	fonts/west_england-64.png \
 	fps_images.png \
-	Images/grossini_dance_01.png \
-	Images/grossini_dance_02.png \
-	Images/grossini_dance_03.png \
-	Images/grossini_dance_04.png \
-	Images/grossini_dance_08.png \
-	Images/grossinis_sister1.png \
-	Images/grossinis_sister2.png \
-	Particles/BoilingFoam.plist \
-	Particles/BurstPipe.plist \
-	Particles/Comet.plist \
-	Particles/ExplodingRing.plist \
-	Particles/Flower.plist \
-	Particles/Galaxy.plist \
-	Particles/LavaFlow.plist \
-	Particles/Phoenix.plist \
-	Particles/SmallSun.plist \
-	Particles/SpinningPeas.plist \
-	Particles/Spiral.plist \
-	Particles/SpookyPeas.plist \
-	Particles/TestPremultipliedAlpha.plist \
-	Particles/Upsidedown.plist \
-	Particles/debian.plist \
-	Particles/lines.plist
+    fonts/bitmapFontTest.fnt
+
+
+#	fonts/A\ Damn\ Mess.ttf \
+	fonts/American\ Typewriter.ttf \
+	fonts/Courier New.ttf \
+	fonts/Marker Felt.ttf \
+	fonts/Paint Boy.ttf \
+	fonts/Schwarzwald Regular.ttf \
+	fonts/Scissor Cuts.ttf \
 
 SHAREDLIBS = -lcocos2d -lcocosdenshion
 COCOS_LIBS = $(LIB_DIR)/libcocos2d.so $(LIB_DIR)/libcocosdenshion.so
