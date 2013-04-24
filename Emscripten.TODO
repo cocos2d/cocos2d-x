@@ -5,9 +5,6 @@
 * TileMap Test crashes
   - void CCNode::insertChild(CCNode* child, int z)
 
-* IntervalTest crashes
-  - cocos2d::CCLabelBMFont::create(char const*, char const*, float, cocos2d::CCTextAlignment, cocos2d::CCPoint)
-
 * LabelTest crashes
   - cocos2d::CCAtlasNode::calculateMaxItems()
 
@@ -52,4 +49,6 @@ DONE:
 * Layer Test crashes
   - cocos2d::CCLabelBMFont::create(char const*, char const*, float, cocos2d::CCTextAlignment, cocos2d::CCPoint)
 
- 
+* IntervalTest crashes
+  - cocos2d::CCLabelBMFont::create(char const*, char const*, float, cocos2d::CCTextAlignment, cocos2d::CCPoint)
+
