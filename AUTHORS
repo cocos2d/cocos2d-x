@@ -364,6 +364,9 @@ Developers:
     sunzhuoshi
         Adding support for javascript bytecode.
 
+    James Gregory (j4m3z0r)
+        Author of Emscripten port
+
 Retired Core Developers:
     WenSheng Yang
         Author of windows port, CCTextField,
