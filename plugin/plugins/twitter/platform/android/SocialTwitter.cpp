@@ -20,13 +20,13 @@ bool SocialTwitter::init()
 /**
 @brief initialize the developer info
 @param devInfo This parameter is the info of developer, must contains key:
-    		consumerkey		The consumerkey of twitter account
-			consumersecret		The consumersecret of twitter account
-       More: https://dev.twitter.com
+		TwitterKey			The consumerkey of twitter account
+		TwitterSecret		The consumersecret of twitter account
+		More: https://dev.twitter.com
 @warning Must invoke this interface before other interfaces.
 		 And invoked only once.
 */
-void SocialTwitter::initDeveloperInfo(TDeveloperInfo devInfo)
+void SocialTwitter::initDeveloperInfo(TSocialDevInfo devInfo)
 {
 	ProtocolSocial::initDeveloperInfo(devInfo);
 }
@@ -34,8 +34,8 @@ void SocialTwitter::initDeveloperInfo(TDeveloperInfo devInfo)
 /**
 @brief pay for product
 @param info The info of product, must contains key:
-		text         The text to share
-		imagePath        The full path of image to share
+		SharedText			The text need to share
+		SharedImagePath		The full path of image file need to share (optinal)
 */
 void SocialTwitter::share(TShareInfo info)
 {

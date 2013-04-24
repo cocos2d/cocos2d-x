@@ -21,9 +21,7 @@ extern "C" {
 	}
 }
 
-bool ProtocolSocial::m_bSharing = false;
 ShareResultListener* ProtocolSocial::m_pListener = NULL;
-TShareInfo ProtocolSocial::m_curInfo;
 
 ProtocolSocial::ProtocolSocial()
 {
@@ -39,7 +37,7 @@ bool ProtocolSocial::init()
     return true;
 }
 
-void ProtocolSocial::initDeveloperInfo(TDeveloperInfo devInfo)
+void ProtocolSocial::initDeveloperInfo(TSocialDevInfo devInfo)
 {
     if (devInfo.empty())
     {
@@ -68,12 +66,6 @@ void ProtocolSocial::initDeveloperInfo(TDeveloperInfo devInfo)
 
 void ProtocolSocial::share(TShareInfo info)
 {
-    if (m_bSharing)
-    {
-        LOGD("Now is sharing");
-        return;
-    }
-
     if (info.empty())
     {
         if (NULL != m_pListener)
@@ -85,9 +77,6 @@ void ProtocolSocial::share(TShareInfo info)
     }
     else
     {
-        m_bSharing = true;
-        m_curInfo = info;
-
         PluginJavaData* pData = PluginUtils::getPluginJavaData(this);
 		PluginJniMethodInfo t;
 		if (PluginJniHelper::getMethodInfo(t
@@ -113,16 +102,14 @@ void ProtocolSocial::setResultListener(ShareResultListener* pListener)
 
 void ProtocolSocial::shareResult(EShareResult ret, const char* msg)
 {
-    m_bSharing = false;
     if (m_pListener)
     {
-    	m_pListener->shareResult(ret, msg, m_curInfo);
+    	m_pListener->shareResult(ret, msg);
     }
     else
     {
         LOGD("Result listener is null!");
     }
-    m_curInfo.clear();
     LOGD("Share result is : %d(%s)", (int) ret, msg);
 }
 

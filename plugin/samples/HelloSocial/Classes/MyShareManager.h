@@ -6,7 +6,7 @@
 class MyShareResult : public cocos2d::plugin::ShareResultListener
 {
 public:
-	virtual void shareResult(cocos2d::plugin::EShareResult ret, const char* msg, cocos2d::plugin::TShareInfo info);
+	virtual void shareResult(cocos2d::plugin::EShareResult ret, const char* msg);
 };
 
 class MyShareManager

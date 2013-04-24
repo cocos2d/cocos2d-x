@@ -23,8 +23,8 @@ public class SocialTwitter implements ShareAdapter {
 	private static boolean isInitialized = false;
 	private static Hashtable<String, String> mShareInfo = null;
 	
-	public static String KEY_TEXT="text";
-	public static String KEY_IMAGE_PATH = "imagePath";
+	public static String KEY_TEXT="SharedText";
+	public static String KEY_IMAGE_PATH = "SharedImagePath";
 
 	protected static void LogE(String msg, Exception e) {
 		Log.e(LOG_TAG, msg, e);
@@ -46,10 +46,11 @@ public class SocialTwitter implements ShareAdapter {
 	public void initDeveloperInfo(Hashtable<String, String> cpInfo) {
 		LogD("initDeveloperInfo invoked " + cpInfo.toString());
 		mShareInfo = cpInfo;
-		mShareInfo = cpInfo;
 		try {
-			SocialTwitter.CONSUMER_KEY = cpInfo.get("consumerkey");
-			SocialTwitter.CONSUMER_SECRET = cpInfo.get("consumersecret");
+			SocialTwitter.CONSUMER_KEY = cpInfo.get("TwitterKey");
+			SocialTwitter.CONSUMER_SECRET = cpInfo.get("TwitterSecret");
+			LogD("key : " + SocialTwitter.CONSUMER_KEY);
+			LogD("secret : " + SocialTwitter.CONSUMER_SECRET);
 			if(isInitialized){
 				return;
 			}
