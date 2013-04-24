@@ -28,7 +28,7 @@ void register_pluginx_js_extensions(JSContext* cx, JSObject* global)
     tmpObj = JSVAL_TO_OBJECT(anonEvaluate(cx, global, "(function () { return plugin.ProtocolIAP; })()"));
     JS_DefineFunction(cx, tmpObj, "setResultListener", js_pluginx_ProtocolIAP_setResultListener, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 
-    tmpObj = JSVAL_TO_OBJECT(anonEvaluate(cx, global, "(function () { return plugin.ProtocolIAPOnLine; })()"));
-    JS_DefineFunction(cx, tmpObj, "setLocalResultListener", js_pluginx_ProtocolIAPOnLine_setLocalResultListener, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+    tmpObj = JSVAL_TO_OBJECT(anonEvaluate(cx, global, "(function () { return plugin.ProtocolAds; })()"));
+    JS_DefineFunction(cx, tmpObj, "setLocalResultListener", js_pluginx_ProtocolAds_setAdListener, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 
 }
