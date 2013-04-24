@@ -19,6 +19,7 @@ extern "C" {
     
     void cleanCacheDirJNI(){
         cleanCache();
+        [server sendFileList];
     }
     
     void sendLogMsg(const char *msg) {
