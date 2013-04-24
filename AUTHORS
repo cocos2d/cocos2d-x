@@ -276,6 +276,9 @@ Developers:
     rtissera (Romain TISSERAND)
         Adding missing JNIEXPORT / JNICALL declarations.
 
+    James Gregory (j4m3z0r)
+        Author of Emscripten port
+
 Retired Core Developers:
     WenSheng Yang
         Author of windows port, CCTextField,
