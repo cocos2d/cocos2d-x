@@ -14,8 +14,6 @@
 * Layer Test crashes
   - cocos2d::CCLabelBMFont::create(char const*, char const*, float, cocos2d::CCTextAlignment, cocos2d::CCPoint)
 
-* Parallax Test crashes
-  - cocos2d::CCAtlasNode::calculateMaxItems()
  
 * TileMap Test crashes
   - void CCNode::insertChild(CCNode* child, int z)
@@ -25,9 +23,6 @@
 
 * LabelTest crashes
   - cocos2d::CCAtlasNode::calculateMaxItems()
-
-* SchedulerTest crashes
-  - cocos2d::CCNode::boundingBox()
 
 * RenderTextureTest is... weird.
 
@@ -40,8 +35,21 @@
 * ZwoptexTest crashes.
   - ZwoptexGenericTest::onEnter()
 
-DONE: 
-* Need to switch to server-side buffers in
-- cocos2dx/draw_nodes/CCDrawingPrimitives - DONE
 
-* Need to compile with -O2 -- possible -s VERBOSE=1 will give a clue? - DONE
+###
+DONE:
+###
+
+* Need to switch to server-side buffers in
+- cocos2dx/draw_nodes/CCDrawingPrimitives
+
+* Need to compile with -O2 -- possible -s VERBOSE=1 will give a clue?
+
+* SchedulerTest crashes
+  - cocos2d::CCNode::boundingBox()
+
+* Parallax Test crashes
+  - cocos2d::CCAtlasNode::calculateMaxItems()
+
+* Particle Test crashes
+  - TIFFClientOpen not a function. Looks like we need to build and link in libtiff.
