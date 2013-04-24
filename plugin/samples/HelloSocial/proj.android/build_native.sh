@@ -1,4 +1,4 @@
-APPNAME="HelloAnalytics"
+APPNAME="HelloSocial"
 
 # options
 
