@@ -465,6 +465,11 @@ files
 	(../Classes/FileUtilsTest)
 	FileUtilsTest.cpp
 	FileUtilsTest.h
+
+	[Test/SpineTest]
+	(../Classes/SpineTest)
+	SpineTest.cpp
+	SpineTest.h
 }
 
 
