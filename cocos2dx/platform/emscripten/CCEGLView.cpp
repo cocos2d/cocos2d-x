@@ -275,7 +275,7 @@ static EGLenum checkErrorEGL(const char* msg)
 bool CCEGLView::initGL()
 {
     int rc = 0;
-    int angle = atoi(getenv("ORIENTATION"));
+    int angle = 0;
 
     // Hard-coded to (0,0).
     int windowPosition[] =
