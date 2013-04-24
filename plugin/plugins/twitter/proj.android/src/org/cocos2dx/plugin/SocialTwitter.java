@@ -45,7 +45,6 @@ public class SocialTwitter implements ShareAdapter {
 	@Override
 	public void initDeveloperInfo(Hashtable<String, String> cpInfo) {
 		LogD("initDeveloperInfo invoked " + cpInfo.toString());
-		mShareInfo = cpInfo;
 		try {
 			SocialTwitter.CONSUMER_KEY = cpInfo.get("TwitterKey");
 			SocialTwitter.CONSUMER_SECRET = cpInfo.get("TwitterSecret");
@@ -74,7 +73,7 @@ public class SocialTwitter implements ShareAdapter {
 		LogD("share invoked " + info.toString());
 		mShareInfo =  info;
 		if (! networkReachable()) {
-			shareResult(InterfaceSocial.SHARERESULT_FAIL, "网络不可用");
+			shareResult(InterfaceSocial.SHARERESULT_FAIL, "Network error!");
 			return;
 		}
 		// need login
@@ -94,21 +93,7 @@ public class SocialTwitter implements ShareAdapter {
 			
 			@Override
 			public void run() {
-				String text = mShareInfo.get(KEY_TEXT);
-				String imagePath = mShareInfo.get(KEY_IMAGE_PATH);				
-				try {
-					if(imagePath != null && imagePath.length() > 0){
-						mTwitter.updateStatus(text, imagePath);
-					}else{
-						mTwitter.updateStatus(text);	
-					}
-					LogD("Posted to Twitter!");
-					shareResult(InterfaceSocial.SHARERESULT_SUCCESS, "user lihex");
-				} catch (Exception e) {
-					LogD("Post to Twitter failed!");
-					shareResult(InterfaceSocial.SHARERESULT_FAIL, "user lihex");
-					e.printStackTrace();
-				}
+				SocialTwitter.sendToTwitter();
 			}
 		});
 	}
@@ -151,23 +136,25 @@ public class SocialTwitter implements ShareAdapter {
 		
 		@Override
 		public void onComplete(String value) {
-			String username = mTwitter.getUsername();
-			LogD("Connected to Twitter as" + username);
-			String text = mShareInfo.get(KEY_TEXT);
-			String imagePath = mShareInfo.get(KEY_IMAGE_PATH);	
-			try {
-				if(imagePath != null && imagePath.length() > 0){
-					mTwitter.updateStatus(text, imagePath);
-				}else{
-					mTwitter.updateStatus(text);	
-				}
-				LogD("Posted to Twitter!");
-				shareResult(InterfaceSocial.SHARERESULT_SUCCESS, username);
-			} catch (Exception e) {
-				LogD("Post to Twitter failed!");
-				shareResult(InterfaceSocial.SHARERESULT_FAIL, username);
-				e.printStackTrace();
-			}
+			SocialTwitter.sendToTwitter();
 		}
 	};
+
+	private static void sendToTwitter() {
+		String text = mShareInfo.get(KEY_TEXT);
+		String imagePath = mShareInfo.get(KEY_IMAGE_PATH);				
+		try {
+			if(imagePath != null && imagePath.length() > 0){
+				mTwitter.updateStatus(text, imagePath);
+			}else{
+				mTwitter.updateStatus(text);	
+			}
+			LogD("Posted to Twitter!");
+			shareResult(InterfaceSocial.SHARERESULT_SUCCESS, "Share succeed!");
+		} catch (Exception e) {
+			LogD("Post to Twitter failed!");
+			shareResult(InterfaceSocial.SHARERESULT_FAIL, "Unknown error!");
+			e.printStackTrace();
+		}
+	}
 }
