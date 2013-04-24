@@ -51,7 +51,26 @@ GUI/CCEditBox/CCEditBoxImplAndroid.cpp \
 network/HttpClient.cpp \
 physics_nodes/CCPhysicsDebugNode.cpp \
 physics_nodes/CCPhysicsSprite.cpp \
-LocalStorage/LocalStorageAndroid.cpp 
+LocalStorage/LocalStorageAndroid.cpp \
+spine/Animation.cpp \
+spine/AnimationState.cpp \
+spine/AnimationStateData.cpp \
+spine/Atlas.cpp \
+spine/AtlasAttachmentLoader.cpp \
+spine/Attachment.cpp \
+spine/AttachmentLoader.cpp \
+spine/Bone.cpp \
+spine/BoneData.cpp \
+spine/Json.cpp \
+spine/RegionAttachment.cpp \
+spine/Skeleton.cpp \
+spine/SkeletonData.cpp \
+spine/SkeletonJson.cpp \
+spine/Skin.cpp \
+spine/Slot.cpp \
+spine/SlotData.cpp \
+spine/extension.cpp \
+spine/spine-cocos2dx.cpp
 
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dx_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocosdenshion_static
