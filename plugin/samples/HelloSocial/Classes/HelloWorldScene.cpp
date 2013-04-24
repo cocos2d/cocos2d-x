@@ -7,8 +7,7 @@ using namespace cocos2d;
 using namespace cocos2d::plugin;
 
 enum {
-	TAG_PAY_BY_ALIPAY = 100,
-	TAG_PAY_BY_ND91,
+	TAG_SHARE_BY_TWWITER = 100,
 };
 
 typedef struct tagEventMenuItem {
@@ -17,7 +16,7 @@ typedef struct tagEventMenuItem {
 }EventMenuItem;
 
 static EventMenuItem s_EventMenuItem[] = {
-    {"twitter.jpeg", TAG_PAY_BY_ALIPAY}
+    {"twitter.jpeg", TAG_SHARE_BY_TWWITER}
 };
 
 CCScene* HelloWorld::scene()
@@ -110,10 +109,12 @@ void HelloWorld::reloadPluginMenuCallback(CCObject* pSender)
 
 void HelloWorld::eventMenuCallback(CCObject* pSender)
 {
+	CCMenuItemLabel* pMenuItem = (CCMenuItemLabel*)pSender;
     TShareInfo pInfo;
-    pInfo["text"] = "MyFirst tweet!";
-    // pInfo["imagePath"] = "Full/path/to/image";
-    MyShareManager::sharedManager()->shareByMode(pInfo, MyShareManager::eTwitter);
+    pInfo["SharedText"] = "MyFirst tweet!";
+    // pInfo["SharedImagePath"] = "Full/path/to/image";
+    MyShareManager::MyShareMode mode = (MyShareManager::MyShareMode) (pMenuItem->getTag() - TAG_SHARE_BY_TWWITER + 1);
+    MyShareManager::sharedManager()->shareByMode(pInfo, mode);
 }
 
 void HelloWorld::menuCloseCallback(CCObject* pSender)

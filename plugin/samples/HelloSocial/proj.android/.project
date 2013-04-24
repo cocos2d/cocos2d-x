@@ -37,7 +37,7 @@
 			<locationURI>PARENT-1-PROJECT_LOC/Classes</locationURI>
 		</link>
 		<link>
-			<name>publish</name>
+			<name>plugin-x</name>
 			<type>2</type>
 			<locationURI>PARENT-3-PROJECT_LOC/publish</locationURI>
 		</link>
