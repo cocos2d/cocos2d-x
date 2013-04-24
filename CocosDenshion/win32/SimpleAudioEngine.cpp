@@ -161,6 +161,7 @@ void SimpleAudioEngine::preloadEffect(const char* pszFilePath)
 
         BREAK_IF(nRet == pPlayer->GetSoundID());
 
+        delete pPlayer;
         sharedList().erase(nRet);
         nRet = 0;
     } while (0);
