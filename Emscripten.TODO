@@ -1,20 +1,7 @@
-* Need to switch to server-side buffers in
-- cocos2dx/draw_nodes/CCDrawNode.cpp
-- cocos2dx/particle_nodes/CCParticleSystemQuad.cpp
-- cocos2dx/textures/CCTextureAtlas.cpp
-
 * Need to figure out how to get correct screen resolutions consistently.
-
-
-* cocos2d::CCAtlasNode::calculateMaxItems() throwing an error; related to
-  CCTextureAtlas? Preventing particle test from working.
 
 * Touch handler screwed up after TouchesTest? MenuTest? (TestCpp sample)
 
-* Layer Test crashes
-  - cocos2d::CCLabelBMFont::create(char const*, char const*, float, cocos2d::CCTextAlignment, cocos2d::CCPoint)
-
- 
 * TileMap Test crashes
   - void CCNode::insertChild(CCNode* child, int z)
 
@@ -53,3 +40,16 @@ DONE:
 
 * Particle Test crashes
   - TIFFClientOpen not a function. Looks like we need to build and link in libtiff.
+
+* cocos2d::CCAtlasNode::calculateMaxItems() throwing an error; related to
+  CCTextureAtlas? Preventing particle test from working.
+
+* Need to switch to server-side buffers in
+- cocos2dx/draw_nodes/CCDrawNode.cpp -- Think this is fixed by undef CC_TEXTURE_ATLAS_USE_VAO?
+- cocos2dx/particle_nodes/CCParticleSystemQuad.cpp -- Think this is fixed by CC_REBIND_INDICES_BUFFER?
+- cocos2dx/textures/CCTextureAtlas.cpp -- Think this works already.
+
+* Layer Test crashes
+  - cocos2d::CCLabelBMFont::create(char const*, char const*, float, cocos2d::CCTextAlignment, cocos2d::CCPoint)
+
+ 
