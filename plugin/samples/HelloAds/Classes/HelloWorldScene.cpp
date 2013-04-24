@@ -120,9 +120,15 @@ bool HelloWorld::init()
 
 void HelloWorld::testShow(CCObject* pSender)
 {
+    int nSize = 0;
 	if (m_pAds == m_pAdmob)
 	{
-		m_pAds->showBannerAd(m_ePos, AdsAdmob::eSizeBanner);
+	    nSize = AdsAdmob::eSizeBanner;
+	}
+
+    if (m_pAds)
+	{
+        m_pAds->showBannerAd(m_ePos, nSize);
 	}
 }
 
