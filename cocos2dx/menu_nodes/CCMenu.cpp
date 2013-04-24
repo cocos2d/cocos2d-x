@@ -213,8 +213,7 @@ void CCMenu::removeChild(CCNode* child, bool cleanup)
 
 void CCMenu::setHandlerPriority(int newPriority)
 {
-    CCTouchDispatcher* pDispatcher = CCDirector::sharedDirector()->getTouchDispatcher();
-    pDispatcher->setPriority(newPriority, this);
+    setTouchPriority(newPriority);
 }
 
 void CCMenu::registerWithTouchDispatcher()
@@ -257,7 +256,10 @@ void CCMenu::ccTouchEnded(CCTouch *touch, CCEvent* event)
     if (m_pSelectedItem)
     {
         m_pSelectedItem->unselected();
-        m_pSelectedItem->activate();
+	if (m_bEnabled)
+	{
+	    m_pSelectedItem->activate();
+	}
     }
     m_eState = kCCMenuStateWaiting;
 }
@@ -279,7 +281,11 @@ void CCMenu::ccTouchMoved(CCTouch* touch, CCEvent* event)
     CC_UNUSED_PARAM(event);
     CCAssert(m_eState == kCCMenuStateTrackingTouch, "[Menu ccTouchMoved] -- invalid state");
     CCMenuItem *currentItem = this->itemForTouch(touch);
-    if (currentItem != m_pSelectedItem) 
+    if (!m_bEnabled)
+    {
+	currentItem = NULL;
+    }
+    if (currentItem != m_pSelectedItem)
     {
         if (m_pSelectedItem)
         {
