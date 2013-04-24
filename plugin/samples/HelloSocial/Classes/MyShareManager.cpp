@@ -44,11 +44,11 @@ void MyShareManager::loadSocialPlugin()
 	{
 		// init twitter plugin
 		s_pTwitter = dynamic_cast<SocialTwitter*>(PluginManager::getInstance()->loadPlugin("SocialTwitter"));
-		TDeveloperInfo pTwitterInfo;
+		TSocialDevInfo pTwitterInfo;
 
         /* Warning: must set your twiiter dev info here */
-        // pTwitterInfo["consumerkey"] = "your consumerkey";
-        // pTwitterInfo["consumersecret"] = "your consumersecret";
+        // pTwitterInfo["TwitterKey"] = "your consumerkey";
+        // pTwitterInfo["TwitterSecret"] = "your consumersecret";
 
 		if (pTwitterInfo.empty())
 		{
@@ -93,14 +93,9 @@ void MyShareManager::shareByMode(TShareInfo info, MyShareMode mode)
 	}
 }
 
-void MyShareResult::shareResult(EShareResult ret, const char* msg, TShareInfo info)
+void MyShareResult::shareResult(EShareResult ret, const char* msg)
 {
-    char shareInfo[1024] = { 0 };
     char shareStatus[1024] = { 0 };
-    sprintf(shareStatus, "Share info:%s", (ret == eShareSuccess)? "Successed" : "Failed");
-    sprintf(shareInfo, " %s\ntext:%s",
-            shareStatus,
-            info.find("text")->second.c_str()
-           );
-    CCMessageBox(shareInfo , msg);
+    sprintf(shareStatus, "Share %s", (ret == eShareSuccess)? "Successed" : "Failed");
+    CCMessageBox(msg, shareStatus);
 }

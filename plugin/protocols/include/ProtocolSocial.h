@@ -7,7 +7,7 @@
 
 namespace cocos2d { namespace plugin {
 
-typedef std::map<std::string, std::string> TDeveloperInfo;
+typedef std::map<std::string, std::string> TSocialDevInfo;
 typedef std::map<std::string, std::string> TShareInfo;
 
 typedef enum 
@@ -21,7 +21,7 @@ typedef enum
 class ShareResultListener
 {
 public:
-    virtual void shareResult(EShareResult ret, const char* msg, TShareInfo info) = 0;
+    virtual void shareResult(EShareResult ret, const char* msg) = 0;
 };
 
 class ProtocolSocial : public PluginProtocol
@@ -40,12 +40,13 @@ public:
     @warning Must invoke this interface before other interfaces.
              And invoked only once.
     */
-    virtual void initDeveloperInfo(TDeveloperInfo devInfo);
+    virtual void initDeveloperInfo(TSocialDevInfo devInfo);
 
     /**
     @brief share information
-    @param info The info of share, must contains key:
-            text                The text of share
+    @param info The info of share, contains key:
+            SharedText                	The text need to share
+            SharedImagePath				The full path of image file need to share (optinal)
     @warning For different plugin, the parameter should have other keys to share.
              Look at the manual of plugins.
     */
@@ -69,7 +70,7 @@ public:
     */
     static void shareResult(EShareResult ret, const char* msg);
 
-    virtual const char* getPluginVersion() { return "ProtocolSocial, v0.1.00 , subclass should override this interface!"; };
+    virtual const char* getPluginVersion() { return "ProtocolSocial, v0.1.0, subclass should override this interface!"; };
     virtual const char* getSDKVersion();
     virtual const char* getPluginName() = 0;
 
@@ -79,9 +80,7 @@ public:
     virtual ~ProtocolSocial();
 
 protected:
-    static bool m_bSharing;
     static ShareResultListener* m_pListener;
-    static TShareInfo m_curInfo;
 };
 
 }} // namespace cocos2d { namespace plugin {
