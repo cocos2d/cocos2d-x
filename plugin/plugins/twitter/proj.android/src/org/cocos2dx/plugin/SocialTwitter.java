@@ -76,6 +76,12 @@ public class SocialTwitter implements ShareAdapter {
 			shareResult(InterfaceSocial.SHARERESULT_FAIL, "Network error!");
 			return;
 		}
+
+		if (! isInitialized) {
+			shareResult(InterfaceSocial.SHARERESULT_FAIL, "Initialize failed!");
+			return;
+		}
+
 		// need login
 		if(!mTwitter.hasAccessToken()){
 			PluginWrapper.runOnMainThread(new Runnable() {
