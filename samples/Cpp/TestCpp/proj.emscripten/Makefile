@@ -299,7 +299,30 @@ RESOURCES = \
 	Images/texture1024x1024.png \
 	Images/texture2048x2048.png \
 	Images/texture512x512.png \
-	Images/white-512x512.png
+	Images/white-512x512.png \
+	extensions/background.png \
+	extensions/button.png \
+	extensions/buttonBackground.png \
+	extensions/buttonHighlighted.png \
+	extensions/CCControlColourPickerSpriteSheet.png \
+	extensions/green_edit.png \
+	extensions/orange_edit.png \
+	extensions/potentiometerButton.png \
+	extensions/potentiometerProgress.png \
+	extensions/potentiometerTrack.png \
+	extensions/ribbon.png \
+	extensions/sliderProgress.png \
+	extensions/sliderProgress2.png \
+	extensions/sliderThumb.png \
+	extensions/sliderTrack.png \
+	extensions/sliderTrack2.png \
+	extensions/stepper-minus.png \
+	extensions/stepper-plus.png \
+	extensions/switch-mask.png \
+	extensions/switch-off.png \
+	extensions/switch-on.png \
+	extensions/switch-thumb.png \
+	extensions/yellow_edit.png
 
 SHAREDLIBS = -lcocos2d -lcocosdenshion
 COCOS_LIBS = $(LIB_DIR)/libcocos2d.so $(LIB_DIR)/libcocosdenshion.so
@@ -327,7 +350,7 @@ $(TARGET).js: $(OBJECTS) $(STATICLIBS) $(COCOS_LIBS) $(CORE_MAKEFILE_LIST)
 	@mkdir -p $(@D)
 	$(CXX) $(CXXFLAGS) $(OBJECTS) -o $@ $(SHAREDLIBS) $(STATICLIBS) $(LIBS)
 
-$(TARGET).data:
+$(TARGET).data: $(CORE_MAKEFILE_LIST) $(patsubst %,$(RESOURCE_PATH)/%,$(RESOURCEs))
 	@mkdir -p $(@D)
 	$(eval RESTMP := $(shell mktemp -d /tmp/cocos-emscripten.XXXXXX))
 	# Always need a font path, so ensure that it is created first.
@@ -340,7 +363,7 @@ $(TARGET).data:
 	mv $(RESTMP)/$(EXECUTABLE).data.js $@.js
 	rm -rf $(RESTMP)
 
-$(BIN_DIR)/index.html: index.html
+$(BIN_DIR)/index.html: index.html $(CORE_MAKEFILE_LIST)
 	@mkdir -p $(@D)
 	cp index.html $(@D)
 
