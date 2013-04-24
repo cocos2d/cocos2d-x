@@ -32,23 +32,23 @@ INCLUDES +=  \
     -I$(COCOS_SRC)/platform/third_party/emscripten/libpng \
     -I$(COCOS_SRC)/platform/third_party/emscripten/libz \
     -I$(COCOS_SRC)/platform/third_party/emscripten/libfreetype2 \
+    -I$(COCOS_SRC)/platform/third_party/emscripten/libtiff/include \
     -I$(COCOS_SRC)/platform/third_party/linux/libjpeg \
-    -I$(COCOS_SRC)/platform/third_party/linux/libtiff/include \
     -I$(COCOS_SRC)/platform/third_party/linux/libwebp
 
 LBITS := $(shell getconf LONG_BIT)
 INCLUDES += -I$(COCOS_SRC)/platform/third_party/linux
 
 ifeq ($(DEBUG), 1)
-CCFLAGS += -g3 -O0
-CXXFLAGS += -g3 -O0
+CCFLAGS += -g -O0 -s ASSERTIONS=1 -s SAFE_HEAP=1 --jcache
+CXXFLAGS += -g -O0 -s ASSERTIONS=1 -s SAFE_HEAP=1 --jcache
 DEFINES += -D_DEBUG -DCOCOS2D_DEBUG=1
 OBJ_DIR := $(OBJ_DIR)/debug
 LIB_DIR := $(LIB_DIR)/debug
 BIN_DIR := $(BIN_DIR)/debug
 else
-CCFLAGS += -O1
-CXXFLAGS += -O1
+CCFLAGS += -O1 --jcache
+CXXFLAGS += -O1 --jcache
 DEFINES += -DNDEBUG
 OBJ_DIR := $(OBJ_DIR)/release
 LIB_DIR := $(LIB_DIR)/release
@@ -74,9 +74,9 @@ CORE_MAKEFILE_LIST := $(MAKEFILE_LIST)
 STATICLIBS_DIR = $(COCOS_SRC)/platform/third_party/emscripten/libraries
 STATICLIBS = $(STATICLIBS_DIR)/libfreetype.a \
     $(STATICLIBS_DIR)/libpng.a \
-    $(STATICLIBS_DIR)/zlib.a #\
+    $(STATICLIBS_DIR)/zlib.a \
+    $(STATICLIBS_DIR)/libtiff.a #\
     $(STATICLIBS_DIR)/libjpeg.a \
-    $(STATICLIBS_DIR)/libtiff.a \
     $(STATICLIBS_DIR)/libwebp.a
 
 FMOD_LIBDIR = $(COCOS_ROOT)/CocosDenshion/third_party/fmod/api/lib
