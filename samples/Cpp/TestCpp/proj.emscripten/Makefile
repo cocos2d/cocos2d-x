@@ -92,6 +92,17 @@ SOURCES = ../Classes/AccelerometerTest/AccelerometerTest.cpp \
 RESOURCE_PATH = ../Resources
 
 RESOURCES = \
+	Hello.png \
+	Images/Comet.png \
+	Images/Fog.png \
+	Images/HelloWorld.png \
+	Images/Icon.png \
+	Images/Pea.png \
+	Images/PlanetCute-1024x1024.png \
+	Images/SendScoreButton.png \
+	Images/SendScoreButtonPressed.png \
+	Images/SpinningPeas.png \
+	Images/SpookyPeas.png \
 	Images/arrows.png \
 	Images/arrowsBar.png \
 	Images/atlastest.png \
@@ -114,6 +125,7 @@ RESOURCES = \
 	Images/btn-highscores-selected.png \
 	Images/btn-play-normal.png \
 	Images/btn-play-selected.png \
+	Images/bugs/RetinaDisplay.jpg \
 	Images/bugs/bug886.jpg \
 	Images/bugs/bug886.png \
 	Images/bugs/circle.plist \
@@ -122,15 +134,12 @@ RESOURCES = \
 	Images/bugs/edge.png \
 	Images/bugs/fill.png \
 	Images/bugs/picture.png \
-	Images/bugs/RetinaDisplay.jpg \
 	Images/close.png \
-	Images/Comet.png \
 	Images/f1.png \
 	Images/f2.png \
 	Images/fire-grayscale.png \
 	Images/fire.png \
 	Images/fire_rgba8888.pvr \
-	Images/Fog.png \
 	Images/grossini.png \
 	Images/grossini_128x256_mipmap.pvr \
 	Images/grossini_dance_01.png \
@@ -158,10 +167,8 @@ RESOURCES = \
 	Images/grossinis_sister1-testalpha_premult.pvr \
 	Images/grossinis_sister1.png \
 	Images/grossinis_sister2.png \
-	Images/HelloWorld.png \
 	Images/hole_effect.png \
 	Images/hole_stencil.png \
-	Images/Icon.png \
 	Images/labelatlas.png \
 	Images/landscape-1024x1024.png \
 	Images/logo-mipmap.pvr \
@@ -170,17 +177,11 @@ RESOURCES = \
 	Images/paddle.png \
 	Images/particles.png \
 	Images/pattern1.png \
-	Images/Pea.png \
 	Images/piece.png \
-	Images/PlanetCute-1024x1024.png \
 	Images/powered.png \
 	Images/r1.png \
 	Images/r2.png \
-	Images/SendScoreButton.png \
-	Images/SendScoreButtonPressed.png \
 	Images/snow.png \
-	Images/SpinningPeas.png \
-	Images/SpookyPeas.png \
 	Images/sprites_test/sprite-0-0.png \
 	Images/sprites_test/sprite-0-1.png \
 	Images/sprites_test/sprite-0-2.png \
@@ -300,11 +301,20 @@ RESOURCES = \
 	Images/texture2048x2048.png \
 	Images/texture512x512.png \
 	Images/white-512x512.png \
+	TileMaps/tiles.png \
+	animations/dragon_animation.png \
+	animations/ghosts.png \
+	animations/grossini-aliases.png \
+	animations/grossini.png \
+	animations/grossini_blue.png \
+	animations/grossini_family.png \
+	animations/grossini_gray.png \
+	Images/bugs/circle.png \
+	extensions/CCControlColourPickerSpriteSheet.png \
 	extensions/background.png \
 	extensions/button.png \
 	extensions/buttonBackground.png \
 	extensions/buttonHighlighted.png \
-	extensions/CCControlColourPickerSpriteSheet.png \
 	extensions/green_edit.png \
 	extensions/orange_edit.png \
 	extensions/potentiometerButton.png \
@@ -322,7 +332,34 @@ RESOURCES = \
 	extensions/switch-off.png \
 	extensions/switch-on.png \
 	extensions/switch-thumb.png \
-	extensions/yellow_edit.png
+	extensions/yellow_edit.png \
+	Images/fire.png \
+	fonts/labelatlas.png \
+	fonts/tuffy_bold_italic-charmap.png \
+	fps_images.png \
+	Images/grossini_dance_01.png \
+	Images/grossini_dance_02.png \
+	Images/grossini_dance_03.png \
+	Images/grossini_dance_04.png \
+	Images/grossini_dance_08.png \
+	Images/grossinis_sister1.png \
+	Images/grossinis_sister2.png \
+	Particles/BoilingFoam.plist \
+	Particles/BurstPipe.plist \
+	Particles/Comet.plist \
+	Particles/ExplodingRing.plist \
+	Particles/Flower.plist \
+	Particles/Galaxy.plist \
+	Particles/LavaFlow.plist \
+	Particles/Phoenix.plist \
+	Particles/SmallSun.plist \
+	Particles/SpinningPeas.plist \
+	Particles/Spiral.plist \
+	Particles/SpookyPeas.plist \
+	Particles/TestPremultipliedAlpha.plist \
+	Particles/Upsidedown.plist \
+	Particles/debian.plist \
+	Particles/lines.plist
 
 SHAREDLIBS = -lcocos2d -lcocosdenshion
 COCOS_LIBS = $(LIB_DIR)/libcocos2d.so $(LIB_DIR)/libcocosdenshion.so
