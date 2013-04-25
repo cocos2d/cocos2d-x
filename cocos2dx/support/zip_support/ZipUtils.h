@@ -28,6 +28,26 @@ THE SOFTWARE.
 
 namespace cocos2d
 {
+    /**
+     * Set the TexturePacker encryption key
+     *
+     * If your key used to encrypt the pvr.ccz file is
+     * aaaaaaaabbbbbbbbccccccccdddddddd
+     * you have to call this function 4 times:
+     * caw_setkey_part(0, 0xaaaaaaaa);
+     * caw_setkey_part(1, 0xbbbbbbbb);
+     * caw_setkey_part(2, 0xcccccccc);
+     * caw_setkey_part(3, 0xdddddddd);
+     *
+     * Distribute the call accross some files but make sure
+     * to call all of the parts *before* loading the first
+     * spritesheet.
+     *
+     * @param index part of the key [0..3]
+     * @param value value of the key part
+     */
+    void caw_setkey_part(int index, uint32_t value);
+
     /* XXX: pragma pack ??? */
     /** @struct CCZHeader
     */
