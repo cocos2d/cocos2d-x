@@ -352,6 +352,12 @@ void CCTouchDispatcher::touches(CCSet *pTouches, CCEvent *pEvent, unsigned int u
                 {
                    break;
                 }
+                
+                // if pHandler has touches paused then don't process its touches
+                if (pHandler->getDelegate()->isTouchPaused())
+                {
+                    continue;
+                }
 
                 bool bClaimed = false;
                 if (uIndex == CCTOUCHBEGAN)
@@ -411,6 +417,12 @@ void CCTouchDispatcher::touches(CCSet *pTouches, CCEvent *pEvent, unsigned int u
             if (! pHandler)
             {
                 break;
+            }
+            
+            // if pHandler has touches paused then don't process its touches
+            if (pHandler->getDelegate()->isTouchPaused())
+            {
+                continue;
             }
 
             switch (sHelper.m_type)
