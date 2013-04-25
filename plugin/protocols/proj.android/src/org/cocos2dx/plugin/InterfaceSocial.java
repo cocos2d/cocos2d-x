@@ -38,15 +38,16 @@ public class InterfaceSocial {
 		public String getSDKVersion();
 	}
 
-	public static void shareResult(int ret, String msg) {
+	public static void shareResult(ShareAdapter obj, int ret, String msg) {
 		final int curRet = ret;
 		final String curMsg = msg;
+		final ShareAdapter curAdapter = obj;
 		PluginWrapper.runOnGLThread(new Runnable() {
 			@Override
 			public void run() {
-				nativeShareResult(curRet, curMsg);
+				nativeShareResult(curAdapter, curRet, curMsg);
 			}
 		});
 	}
-	private static native void nativeShareResult(int ret, String msg);
+	private static native void nativeShareResult(Object obj, int ret, String msg);
 }

@@ -21,27 +21,40 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef __HELLOWORLD_SCENE_H__
-#define __HELLOWORLD_SCENE_H__
+#ifndef __MY_SOCIAL_MANAGER_H__
+#define __MY_SOCIAL_MANAGER_H__
 
-#include "cocos2d.h"
+#include "SocialTwitter.h"
 
-class HelloWorld : public cocos2d::CCLayer
+class MyShareResult : public cocos2d::plugin::ShareResultListener
 {
 public:
-    // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
-    virtual bool init();  
-
-    // there's no 'id' in cpp, so we recommand to return the exactly class pointer
-    static cocos2d::CCScene* scene();
-    
-    // a selector callback
-    void menuCloseCallback(CCObject* pSender);
-    void eventMenuCallback(CCObject* pSender);
-    void reloadPluginMenuCallback(CCObject* pSender);
-
-    // implement the "static node()" method manually
-    CREATE_FUNC(HelloWorld);
+	virtual void shareResult(cocos2d::plugin::EShareResult ret, const char* msg);
 };
 
-#endif // __HELLOWORLD_SCENE_H__
+class MySocialManager
+{
+public:
+	static MySocialManager* sharedSocialManager();
+    static void purgeManager();
+
+    typedef enum {
+    	eNoneMode = 0,
+    	eTwitter,
+    } MyShareMode;
+
+	void unloadSocialPlugin();
+    void loadSocialPlugin();
+    void shareByMode(cocos2d::plugin::TShareInfo info, MyShareMode mode);
+
+private:
+    MySocialManager();
+    virtual ~MySocialManager();
+
+    static MySocialManager* s_pManager;
+
+    cocos2d::plugin::SocialTwitter* s_pTwitter;
+    MyShareResult* s_pRetListener;
+};
+
+#endif // __MY_SOCIAL_MANAGER_H__

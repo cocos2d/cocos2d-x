@@ -1,7 +1,30 @@
+/****************************************************************************
+Copyright (c) 2012-2013 cocos2d-x.org
+
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
 #include "HelloWorldScene.h"
 #include "PluginManager.h"
 #include "AppDelegate.h"
-#include "MyShareManager.h"
+#include "MySocialManager.h"
 
 using namespace cocos2d;
 using namespace cocos2d::plugin;
@@ -103,8 +126,8 @@ bool HelloWorld::init()
 
 void HelloWorld::reloadPluginMenuCallback(CCObject* pSender)
 {
-    MyShareManager::sharedManager()->unloadSocialPlugin();
-    MyShareManager::sharedManager()->loadSocialPlugin();
+    MySocialManager::sharedSocialManager()->unloadSocialPlugin();
+    MySocialManager::sharedSocialManager()->loadSocialPlugin();
 }
 
 void HelloWorld::eventMenuCallback(CCObject* pSender)
@@ -113,13 +136,13 @@ void HelloWorld::eventMenuCallback(CCObject* pSender)
     TShareInfo pInfo;
     pInfo["SharedText"] = "MyFirst tweet!";
     // pInfo["SharedImagePath"] = "Full/path/to/image";
-    MyShareManager::MyShareMode mode = (MyShareManager::MyShareMode) (pMenuItem->getTag() - TAG_SHARE_BY_TWWITER + 1);
-    MyShareManager::sharedManager()->shareByMode(pInfo, mode);
+    MySocialManager::MyShareMode mode = (MySocialManager::MyShareMode) (pMenuItem->getTag() - TAG_SHARE_BY_TWWITER + 1);
+    MySocialManager::sharedSocialManager()->shareByMode(pInfo, mode);
 }
 
 void HelloWorld::menuCloseCallback(CCObject* pSender)
 {
-    MyShareManager::purgeManager();
+    MySocialManager::purgeManager();
     CCDirector::sharedDirector()->end();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     exit(0);
