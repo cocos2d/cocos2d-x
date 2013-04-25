@@ -23,6 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 #include "Cocos2dxLuaLoader.h"
 #include <string>
+#include <algorithm>
 
 using namespace cocos2d;
 
@@ -31,23 +32,69 @@ extern "C"
     int loader_Android(lua_State *L)
     {
         std::string filename(luaL_checkstring(L, 1));
-        filename.append(".lua");
-
-        CCString* pFileContent = CCString::createWithContentsOfFile(filename.c_str());
-
-        if (pFileContent)
+        int pos = filename.rfind(".lua");
+        if (pos != std::string::npos)
         {
-            if (luaL_loadstring(L, pFileContent->getCString()) != 0)
+            filename = filename.substr(0, pos);
+        }
+        
+        pos = filename.find_first_of(".");
+        while (pos != std::string::npos)
+        {
+            filename.replace(pos, 1, "/");
+            pos = filename.find_first_of(".");
+        }
+        filename.append(".lua");
+        
+        // search file in package.path
+        unsigned char* codeBuffer = NULL;
+        unsigned long codeBufferSize = 0;
+        std::string codePath;
+        CCFileUtils* utils = CCFileUtils::sharedFileUtils();
+        
+        lua_getglobal(L, "package");
+        lua_getfield(L, -1, "path");
+        std::string searchpath(lua_tostring(L, -1));
+        lua_pop(L, 1);
+        int begin = 0;
+        int next = searchpath.find_first_of(";", 0);
+        
+        do
+        {
+            if (next == std::string::npos) next = searchpath.length();
+            std::string prefix = searchpath.substr(begin, next);
+            if (prefix[0] == '.' && prefix[1] == '/')
+            {
+                prefix = prefix.substr(2);
+            }
+            
+            pos = prefix.find("?.lua");
+            codePath = prefix.substr(0, pos).append(filename);
+            codePath = utils->fullPathForFilename(codePath.c_str());
+            if (utils->isFileExist(codePath))
+            {
+                codeBuffer = utils->getFileData(codePath.c_str(), "rb", &codeBufferSize);
+                break;
+            }
+            
+            begin = next + 1;
+            next = searchpath.find_first_of(";", begin);
+        } while (begin < (int)searchpath.length());
+        
+        if (codeBuffer)
+        {
+            if (luaL_loadbuffer(L, (char*)codeBuffer, codeBufferSize, codePath.c_str()) != 0)
             {
                 luaL_error(L, "error loading module %s from file %s :\n\t%s",
                     lua_tostring(L, 1), filename.c_str(), lua_tostring(L, -1));
             }
+            delete []codeBuffer;
         }
         else
         {
             CCLog("can not get file data of %s", filename.c_str());
         }
-
+        
         return 1;
     }
 }
