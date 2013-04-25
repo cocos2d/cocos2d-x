@@ -100,9 +100,11 @@ void ccArrayShrink(ccArray *arr)
 /** Returns index of first occurrence of object, CC_INVALID_INDEX if object not found. */
 unsigned int ccArrayGetIndexOfObject(ccArray *arr, CCObject* object)
 {
-	for(unsigned int i = 0; i < arr->num; i++)
+    const unsigned int arrNum = arr->num;
+    const CCObject* ptr = arr->arr[0];
+	for(unsigned int i = 0; i < arrNum; ++i, ++ptr)
     {
-		if( arr->arr[i] == object ) return i;
+		if( ptr == object ) return i;
     }
 
 	return CC_INVALID_INDEX;
