@@ -41,7 +41,7 @@ static pthread_mutex_t  s_responseQueueMutex;
 static sem_t *          s_pSem = NULL;
 static unsigned long    s_asyncRequestCount = 0;
 
-#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC
 #define CC_ASYNC_HTTPREQUEST_USE_NAMED_SEMAPHORE 1
 #else
 #define CC_ASYNC_HTTPREQUEST_USE_NAMED_SEMAPHORE 0
@@ -99,7 +99,7 @@ static void* networkThread(void *data)
         // Wait for http request tasks from main thread
         int semWaitRet = sem_wait(s_pSem);
         if (semWaitRet < 0) {
-            CCLog("HttpRequest async thread semaphore error: %s\n", strerror(errno));
+            CCLog("HttpRequest async thread semaphore error: %s", strerror(errno));
             break;
         }
         

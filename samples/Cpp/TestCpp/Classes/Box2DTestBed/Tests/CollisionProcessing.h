@@ -164,10 +164,10 @@ public:
 
         // Destroy the bodies, skipping duplicates.
         int32 i = 0;
-        while (i < nukeCount)
+        while (i < k_maxNuke && i < nukeCount)
         {
             b2Body* b = nuke[i++];
-            while (i < nukeCount && nuke[i] == b)
+            while (i < k_maxNuke && i < nukeCount && nuke[i] == b)
             {
                 ++i;
             }

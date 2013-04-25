@@ -13,7 +13,7 @@
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     #define MUSIC_FILE        "music.mid"
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY)
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX )
     #define MUSIC_FILE        "background.ogg"
 #else
     #define MUSIC_FILE        "background.mp3"
