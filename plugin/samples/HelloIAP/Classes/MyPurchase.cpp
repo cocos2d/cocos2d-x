@@ -44,6 +44,7 @@ MyPurchase::~MyPurchase()
 	if (s_pRetListener)
 	{
 		delete s_pRetListener;
+		s_pRetListener = NULL;
 	}
 }
 
@@ -60,7 +61,9 @@ void MyPurchase::purgePurchase()
 	if (s_pPurchase)
 	{
 		delete s_pPurchase;
+		s_pPurchase = NULL;
 	}
+	PluginManager::end();
 }
 
 void MyPurchase::loadIAPPlugin()

@@ -79,19 +79,19 @@ public:
 	 @brief Set whether needs to output logs to console.
 	 @param debug if true debug mode enabled, or debug mode disabled.
 	 */
-	virtual void setDebugMode(bool debug);
+    virtual void setDebugMode(bool debug);
 
     /**
     @breif set the result listener
     @param pListener The callback object for share result
     @wraning Must invoke this interface before share
     */
-    static void setResultListener(ShareResultListener* pListener);
+    virtual void setResultListener(ShareResultListener* pListener);
 
     /**
     @brief share result callback
     */
-    static void shareResult(EShareResult ret, const char* msg);
+    virtual void shareResult(EShareResult ret, const char* msg);
 
     virtual const char* getPluginVersion() { return "ProtocolSocial, v0.1.0, subclass should override this interface!"; };
     virtual const char* getSDKVersion();
@@ -103,7 +103,7 @@ public:
     virtual ~ProtocolSocial();
 
 protected:
-    static ShareResultListener* m_pListener;
+    ShareResultListener* m_pListener;
 };
 
 }} // namespace cocos2d { namespace plugin {
