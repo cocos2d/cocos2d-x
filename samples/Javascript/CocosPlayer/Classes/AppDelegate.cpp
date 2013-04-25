@@ -19,6 +19,8 @@
 char *_js_log_buf_ccbuilder = NULL;
 static bool firstTime = true;
 
+static bool isPortraitApp = true;
+
 USING_NS_CC;
 using namespace CocosDenshion;
 CCScene *mainScene;
@@ -54,6 +56,7 @@ bool runMainScene() {
 
 void handle_ccb_run() {
     CCFileUtils::sharedFileUtils()->purgeCachedEntries();
+    SimpleAudioEngine::sharedEngine()->end();
     CCFileUtils::sharedFileUtils()->loadFilenameLookupDictionaryFromFile("fileLookup.plist");
     ScriptingCore::getInstance()->runScript("main.js");
 }
@@ -76,13 +79,14 @@ void initViews(CCSize designSize) {
 static void setViewValues(CCEGLView *pView, CCSize frameSize, CCSize designSize) {
     
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    (CCScriptEngineManager::sharedManager())->removeScriptEngine();
     resetCocosApp();
 #endif
-    
+
+
+    cocos2d::CCDirector::sharedDirector()->purgeCachedData();
     pView->setFrameSize(frameSize.height, frameSize.width);
     pView->setDesignResolutionSize(designSize.height, designSize.width, kResolutionNoBorder);
-    CCLOG("Design Size %f x %f", designSize.height, designSize.width);
+    CCLOG("Design Size %f x %f frame: %%f x %f", designSize.height, designSize.width, frameSize.height, frameSize.width);
     cocos2d::CCDirector::sharedDirector()->setProjection(kCCDirectorProjection2D);
 }
 
@@ -98,8 +102,23 @@ void handle_set_orient(bool isPortrait) {
             setViewValues(pView, frameSize, designSize);
         }
     }
-    
 }
+
+void handle_set_orient(float w, float h) {
+    cocos2d::CCEGLView* pView = CCEGLView::sharedOpenGLView();
+    bool isPortrait = (w > h) ? false: true;
+    if (pView != NULL)
+    {
+        CCSize frameSize = CCSizeMake(w, h);
+        CCSize designSize = pView->getDesignResolutionSize();
+        CCLOG("is Portrait %d", isPortrait);
+        if (((frameSize.width > frameSize.height && isPortrait))
+            || (frameSize.width < frameSize.height && !isPortrait)) {
+            setViewValues(pView, frameSize, designSize);
+        }
+    }
+}
+
 
 void handle_set_message(const char* msg) {
     CCBHelper::setInstructionsMessage(msg);
@@ -114,6 +133,7 @@ void handle_disconnected() {
 }
 
 void handle_ccb_stop() {
+    SimpleAudioEngine::sharedEngine()->end();
     runMainScene();
 }
 
@@ -191,7 +211,7 @@ extern "C" {
             if (screenSize.height > 1136)
             {
                 res = "iPad";
-                setResolutionSizes(true, true, true);
+                setResolutionSizes(true, true, isPortraitApp);
                 resDirOrders.push_back("resources-ipadhd");
                 resDirOrders.push_back("resources-ipad");
                 resDirOrders.push_back("resources-iphonehd");
@@ -200,7 +220,7 @@ extern "C" {
                 cocos2d::extension::CCBReader::setResolutionScale(2);
             } else if(screenSize.height > 1024) {
                 res = "iPhone";
-                setResolutionSizes(false, true, true);
+                setResolutionSizes(false, true, isPortraitApp);
                 resDirOrders.push_back("resources-iphonehd");
                 resDirOrders.push_back("resources-iphone");
                 isIPhone = true;
@@ -209,7 +229,7 @@ extern "C" {
             else if (screenSize.height > 960)
             {
                 res = "iPad";
-                setResolutionSizes(true, false, true);
+                setResolutionSizes(true, false, isPortraitApp);
                 resDirOrders.push_back("resources-ipad");
                 resDirOrders.push_back("resources-iphonehd");
                 isIPhone = false;
@@ -220,7 +240,7 @@ extern "C" {
             else if (screenSize.height > 480)
             {
                 res = "iPhone";
-                setResolutionSizes(false, true, true);
+                setResolutionSizes(false, true, isPortraitApp);
                 resDirOrders.push_back("resources-iphonehd");
                 resDirOrders.push_back("resources-iphone");
                 isIPhone = true;
@@ -229,7 +249,7 @@ extern "C" {
             else
             {
                 res = "iPhone";
-                setResolutionSizes(false, false, true);
+                setResolutionSizes(false, false, isPortraitApp);
                 resDirOrders.push_back("resources-iphone");
                 isIPhone = true;
                 isRetina = false;
@@ -244,14 +264,14 @@ extern "C" {
             if(dpi > 300) { // retina
                 if (screenSize.height > 1920) {
                     res = "xlarge";
-                    setResolutionSizes(true, true, true);
+                    setResolutionSizes(true, true, isPortraitApp);
                     resDirOrders.push_back("resources-xlarge");
                     resDirOrders.push_back("resources-large");
                     resDirOrders.push_back("resources-medium");
                     resDirOrders.push_back("resources-small");
                 } else {
                     res = "large";
-                    setResolutionSizes(false, true, true);
+                    setResolutionSizes(false, true, isPortraitApp);
                     resDirOrders.push_back("resources-large");
                     resDirOrders.push_back("resources-medium");
                     resDirOrders.push_back("resources-small");
@@ -260,7 +280,7 @@ extern "C" {
                 if (screenSize.height > 960)
                 {
                     res = "large";
-                    setResolutionSizes(true, false, true);
+                    setResolutionSizes(true, false, isPortraitApp);
                     resDirOrders.push_back("resources-large");
                     resDirOrders.push_back("resources-medium");
                     resDirOrders.push_back("resources-small");
@@ -268,19 +288,19 @@ extern "C" {
                 else if (screenSize.height > 768)
                 {
                     res = "medium";
-                    setResolutionSizes(true, false, true);
+                    setResolutionSizes(true, false, isPortraitApp);
                     resDirOrders.push_back("resources-medium");
                     resDirOrders.push_back("resources-small");
                 }
                 else if (screenSize.height > 480)
                 {
                     res = "small";
-                    setResolutionSizes(false, false, true);
+                    setResolutionSizes(false, false, isPortraitApp);
                     resDirOrders.push_back("resources-small");
                 }
                 else
                 {
-                    setResolutionSizes(false, false, true);
+                    setResolutionSizes(false, false, isPortraitApp);
                     res = "xsmall";
                     resDirOrders.push_back("resources-xsmall");
                 }
@@ -289,8 +309,7 @@ extern "C" {
         
         CCFileUtils *pFileUtils = CCFileUtils::sharedFileUtils();
         pFileUtils->setSearchResolutionsOrder(resDirOrders);
-        
-        
+                
         std::vector<std::string> searchPaths = pFileUtils->getSearchPaths();
         searchPaths.insert(searchPaths.begin(), pFileUtils->getWritablePath());
         pFileUtils->setSearchPaths(searchPaths);
