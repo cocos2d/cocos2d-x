@@ -301,8 +301,8 @@ void registerDefaultClasses(JSContext* cx, JSObject* global) {
     JS_DefineFunction(cx, global, "__restartVM", JSB_core_restartVM, 0, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
 }
 
-void sc_finalize(JSFreeOp *freeOp, JSObject *obj) {
-    return;
+static void sc_finalize(JSFreeOp *freeOp, JSObject *obj) {
+    CCLOGINFO("jsbindings: finalizing JS object %p (global class)", obj);
 }
 
 static JSClass global_class = {
@@ -369,7 +369,7 @@ JSBool ScriptingCore::evalString(const char *string, jsval *outVal, const char *
         }
         return evaluatedOK;
     }
-    return false;
+    return JS_FALSE;
 }
 
 void ScriptingCore::start() {
@@ -396,6 +396,20 @@ void ScriptingCore::removeAllRoots(JSContext *cx) {
     HASH_CLEAR(hh, _native_js_global_ht);
 }
 
+static JSPrincipals shellTrustedPrincipals = { 1 };
+
+static JSBool
+CheckObjectAccess(JSContext *cx, js::HandleObject obj, js::HandleId id, JSAccessMode mode,
+                  js::MutableHandleValue vp)
+{
+    return JS_TRUE;
+}
+
+static JSSecurityCallbacks securityCallbacks = {
+    CheckObjectAccess,
+    NULL
+};
+
 void ScriptingCore::createGlobalContext() {
     if (this->cx_ && this->rt_) {
         ScriptingCore::removeAllRoots(this->cx_);
@@ -404,9 +418,16 @@ void ScriptingCore::createGlobalContext() {
         this->cx_ = NULL;
         this->rt_ = NULL;
     }
+    // Removed from Spidermonkey 19.
     //JS_SetCStringsAreUTF8();
-    this->rt_ = JS_NewRuntime(10 * 1024 * 1024, JS_NO_HELPER_THREADS);
-    this->cx_ = JS_NewContext(rt_, 10240);
+    this->rt_ = JS_NewRuntime(8L * 1024L * 1024L, JS_USE_HELPER_THREADS);
+    JS_SetGCParameter(rt_, JSGC_MAX_BYTES, 0xffffffff);
+	
+    JS_SetTrustedPrincipals(rt_, &shellTrustedPrincipals);
+    JS_SetSecurityCallbacks(rt_, &securityCallbacks);
+	JS_SetNativeStackQuota(rt_, JSB_MAX_STACK_QUOTA);
+    
+    this->cx_ = JS_NewContext(rt_, 8192);
     JS_SetOptions(this->cx_, JSOPTION_TYPE_INFERENCE);
     JS_SetVersion(this->cx_, JSVERSION_LATEST);
     JS_SetOptions(this->cx_, JS_GetOptions(this->cx_) & ~JSOPTION_METHODJIT);
@@ -608,6 +629,7 @@ JSBool ScriptingCore::dumpRoot(JSContext *cx, uint32_t argc, jsval *vp)
 //    JSContext *_cx = ScriptingCore::getInstance()->getGlobalContext();
 //    JSRuntime *rt = JS_GetRuntime(_cx);
 //    JS_DumpNamedRoots(rt, dumpNamedRoot, NULL);
+//    JS_DumpHeap(rt, stdout, NULL, JSTRACE_OBJECT, NULL, 2, NULL);
 #endif
     return JS_TRUE;
 }
