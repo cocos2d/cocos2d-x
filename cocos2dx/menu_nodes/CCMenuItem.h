@@ -249,7 +249,16 @@ public:
     static CCMenuItemSprite * create(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite, CCObject* target, SEL_MenuHandler selector);
 
     /** initializes a menu item with a normal, selected  and disabled image with target/selector */
+<<<<<<< HEAD
+    bool initWithNormalSprite(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite, CCObject* target, SEL_MenuHandler pressSelector, SEL_MenuHandler releaseSelector, SEL_MenuHandler activatedSelector);
+=======
     bool initWithNormalSprite(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite, CCObject* target, SEL_MenuHandler selector);
+    // super methods
+    virtual void setColor(const ccColor3B& color);
+    virtual const ccColor3B& getColor();
+    virtual void setOpacity(GLubyte opacity);
+    virtual GLubyte getOpacity();
+>>>>>>> parent of 09157d1... Update CCMenuItem to provide optional PressSelector and optional ReleaseSelector in addition to the usual ActivateSelector. This allows the developer more control: for example to play an onButtonPressed sound as well as an onButtonReleased sound.
     
     /**
      @since v0.99.5

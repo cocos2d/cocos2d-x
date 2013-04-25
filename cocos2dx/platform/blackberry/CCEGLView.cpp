@@ -391,6 +391,13 @@ bool CCEGLView::initGL()
         return false;
     }
 
+    int idle_mode = SCREEN_IDLE_MODE_KEEP_AWAKE;
+    rc = screen_set_window_property_iv(m_screenWindow, SCREEN_PROPERTY_IDLE_MODE, &idle_mode);
+    if (rc)
+    {
+        perror("screen_set_window_property_iv(SCREEN_PROPERTY_IDLE_MODE)");
+        return false;
+    }
 
 	char *width_str = getenv("WIDTH");
 	char *height_str = getenv("HEIGHT");

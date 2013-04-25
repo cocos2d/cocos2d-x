@@ -36,9 +36,9 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
     
-static unsigned int _globalFontSize = kCCItemSize;
-static std::string _globalFontName = "Marker Felt";
-static bool _globalFontNameRelease = false;
+static unsigned int _fontSize = kCCItemSize;
+static std::string _fontName = "Marker Felt";
+static bool _fontNameRelease = false;
 
 const unsigned int    kCurrentItem = 0xc0c05001;
 const unsigned int    kZoomActionTag = 0xc0c05002;
@@ -68,8 +68,8 @@ bool CCMenuItem::initWithTarget(CCObject *rec, SEL_MenuHandler selector)
     setAnchorPoint(ccp(0.5f, 0.5f));
     m_pListener = rec;
     m_pfnSelector = selector;
-    m_bEnabled = true;
-    m_bSelected = false;
+    m_bIsEnabled = true;
+    m_bIsSelected = false;
     return true;
 }
 
@@ -80,12 +80,12 @@ CCMenuItem::~CCMenuItem()
 
 void CCMenuItem::selected()
 {
-    m_bSelected = true;
+    m_bIsSelected = true;
 }
 
 void CCMenuItem::unselected()
 {
-    m_bSelected = false;
+    m_bIsSelected = false;
 }
 
 void CCMenuItem::registerScriptTapHandler(int nHandler)
@@ -654,8 +654,14 @@ CCMenuItemImage * CCMenuItemImage::create(const char *normalImage, const char *s
         pRet->autorelease();
         return pRet;
     }
+<<<<<<< HEAD
+<<<<<<< HEAD
+    
+    return initWithNormalSprite(normalSprite, selectedSprite, disabledSprite, target, NULL, NULL, activatedSelector);
+=======
     CC_SAFE_DELETE(pRet);
     return NULL;
+>>>>>>> parent of 80247dd... Updated all other MenuItem* classes to offer a PressSelector and a ReleaseSelector
 }
 
 bool CCMenuItemImage::initWithNormalImage(const char *normalImage, const char *selectedImage, const char *disabledImage, CCObject* target, SEL_MenuHandler selector)
@@ -678,7 +684,15 @@ bool CCMenuItemImage::initWithNormalImage(const char *normalImage, const char *s
     {
         disabledSprite = CCSprite::create(disabledImage);
     }
+    
+<<<<<<< HEAD
+    return initWithNormalSprite(normalSprite, selectedSprite, disabledSprite, target, pressSelector, releaseSelector, activatedSelector);
+=======
     return initWithNormalSprite(normalSprite, selectedSprite, disabledSprite, target, selector);
+>>>>>>> parent of d58e591... Revert "reverse changes to branch"
+=======
+    return initWithNormalSprite(normalSprite, selectedSprite, disabledSprite, target, NULL, NULL, selector);
+>>>>>>> parent of 80247dd... Updated all other MenuItem* classes to offer a PressSelector and a ReleaseSelector
 }
 //
 // Setter of sprite frames
