@@ -29,6 +29,7 @@
 #include "AppDelegate.h"
 #import "CCBDirectoryComparer.h"
 #import "SSZipArchive.h"
+#import "RootViewController.h"
 
 // Predefined messages
 NSString *kCCBNetworkStatusStringWaiting = @"Waiting for connections";
@@ -411,7 +412,13 @@ NSString *kCCBPlayerStatusStringScript = @"Action: Executing script";
         if ([[arr objectAtIndex:1] boolValue]) orientations |= UIInterfaceOrientationMaskPortraitUpsideDown;
         if ([[arr objectAtIndex:2] boolValue]) orientations |= UIInterfaceOrientationMaskLandscapeLeft;
         if ([[arr objectAtIndex:3] boolValue]) orientations |= UIInterfaceOrientationMaskLandscapeRight;
-        
+                
+        [RootViewController setDeviceOrientation:orientations];
+        if([[arr objectAtIndex:2] boolValue] || [[arr objectAtIndex:3] boolValue]) {
+            [[UIDevice currentDevice] setOrientation:UIInterfaceOrientationLandscapeLeft];
+        } else {
+            [[UIDevice currentDevice] setOrientation:UIInterfaceOrientationPortrait];
+        }
         handle_set_orient(([[arr objectAtIndex:0] boolValue] || [[arr objectAtIndex:1] boolValue]) ? true: false);
     }
 }

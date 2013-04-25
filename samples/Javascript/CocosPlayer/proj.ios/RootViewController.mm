@@ -4,6 +4,7 @@
 
 @implementation RootViewController
 
+//@synthesize deviceOrientations;
 /*
  // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -36,9 +37,14 @@
 // For ios6, use supportedInterfaceOrientations & shouldAutorotate instead
 - (NSUInteger) supportedInterfaceOrientations{
 #ifdef __IPHONE_6_0
-    return UIInterfaceOrientationMaskAllButUpsideDown;
+    return deviceOrientations;
 #endif
 }
+
++ (void) setDeviceOrientation: (NSUInteger) orientation {
+    deviceOrientations = orientation;
+}
+
 
 - (BOOL) shouldAutorotate {
     return YES;

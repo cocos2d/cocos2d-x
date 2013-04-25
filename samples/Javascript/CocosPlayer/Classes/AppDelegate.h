@@ -43,6 +43,7 @@ public:
      @param  the pointer of the application
      */
     virtual void applicationWillEnterForeground();
+    void shit();
    
 };
 
@@ -52,6 +53,7 @@ void handle_ccb_stop();
 void handle_connected();
 void handle_disconnected();
 void handle_set_orient(bool isPortrait);
+void handle_set_orient(float w, float h);
 void handle_set_message(const char *msg);
 void handle_set_status(const char *msg);
 

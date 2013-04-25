@@ -51,6 +51,7 @@ extern "C" {
     void resetCocosApp() {
         [[AppController appController] resetCocos2d];
     }
+
     
 }
 
@@ -73,8 +74,18 @@ static AppController* appController = NULL;
 - (void) resetCocos2d
 {
     
-    UIView* mainView = viewController.view.superview;    
-    [viewController.view removeFromSuperview];
+    return;
+    
+    UIView *view = [window.subviews objectAtIndex:0];
+    [view removeFromSuperview];
+    [window addSubview:view];
+    
+    UIView* mainView = viewController.view.superview;
+//    [viewController.view removeFromSuperview];
+//    [mainView addSubview:viewController.view];
+
+    return;
+    
     viewController = nil;    
     cocos2d::CCDirector::sharedDirector()->end();    
     

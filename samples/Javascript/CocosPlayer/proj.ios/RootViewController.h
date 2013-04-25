@@ -25,9 +25,13 @@
 
 #import <UIKit/UIKit.h>
 
+static NSUInteger deviceOrientations = 0;
 
 @interface RootViewController : UIViewController {
 
 }
 
+//@property (nonatomic, assign) NSUInteger deviceOrientations;
+
++ (void) setDeviceOrientation: (NSUInteger) oreintation;
 @end
