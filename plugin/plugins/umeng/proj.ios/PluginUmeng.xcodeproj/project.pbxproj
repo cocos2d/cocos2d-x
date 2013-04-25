@@ -200,7 +200,7 @@
 				DSTROOT = /tmp/libPluginUmeng.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PluginUmeng-Prefix.pch";
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../protocols/include";
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../protocols/include";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -218,7 +218,7 @@
 				DSTROOT = /tmp/libPluginUmeng.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PluginUmeng-Prefix.pch";
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../protocols/include";
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../protocols/include";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",

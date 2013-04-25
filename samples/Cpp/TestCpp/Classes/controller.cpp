@@ -119,6 +119,9 @@ static TestScene* CreateTestScene(int nIdx)
     case TEST_FILEUTILS:
         pScene = new FileUtilsTestScene();
         break;
+    case TEST_SPINE:
+        pScene = new SpineTestScene();
+        break;
     default:
         break;
     }
