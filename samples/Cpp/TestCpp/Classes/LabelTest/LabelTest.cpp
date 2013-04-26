@@ -1493,7 +1493,7 @@ std::string TTFFontInit::subtitle()
 
 TTFFontShadowAndStroke::TTFFontShadowAndStroke()
 {
-    CCLayerColor *layer = CCLayerColor::create(ccc4(190,0,0,255));
+    CCLayerColor *layer = CCLayerColor::create(ccc4(0,190,0,255));
     addChild(layer, -10);
     
     CCSize s = CCDirector::sharedDirector()->getWinSize();

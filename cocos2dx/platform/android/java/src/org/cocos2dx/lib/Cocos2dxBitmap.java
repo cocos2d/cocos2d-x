@@ -152,8 +152,8 @@ public class Cocos2dxBitmap {
 		
 		if ( shadow ) {
 
-			int shadowColor = 0x7d7d7d7d;
-			paint.setShadowLayer(shadowBlur, shadowDX, shadowDY, shadowColor);
+			int shadowColor = 0xff7d7d7d;
+			paint.setShadowLayer(shadowBlur, shadowDX, shadowDY, Color.BLACK);
 			
 			bitmapPaddingX = Math.abs(shadowDX) * 4;
 			bitmapPaddingY = Math.abs(shadowDY) * 4;
@@ -184,10 +184,13 @@ public class Cocos2dxBitmap {
 		// draw again with stroke on if needed 
 		if ( stroke ) {
 			
+			final Paint paintStroke = Cocos2dxBitmap.newPaintNoColor(pFontName, pFontSize,
+					horizontalAlignment);
 			paint.setStyle(Paint.Style.STROKE);
 			paint.setStrokeWidth(strokeSize);
-			paint.setARGB(255, (int)strokeR * 255, (int)strokeG * 255, (int)strokeB * 255);
-			paint.clearShadowLayer();
+			//paint.setARGB(255, (int)strokeR * 255, (int)strokeG * 255, (int)strokeB * 255);
+			paint.setARGB(0, 0, 0,255);
+			//paint.clearShadowLayer();
 
 			x = 0;
 			y = Cocos2dxBitmap.computeY(fontMetricsInt, pHeight,
@@ -197,7 +200,7 @@ public class Cocos2dxBitmap {
 			for (final String line : lines2) {
 				x = Cocos2dxBitmap.computeX(line, textProperty.mMaxWidth,
 						horizontalAlignment);
-				canvas.drawText(line, x + (bitmapPaddingX/2), y + ( bitmapPaddingY / 2 ) , paint);
+				canvas.drawText(line, x + (bitmapPaddingX/2), y + ( bitmapPaddingY / 2 ) , paintStroke);
 				y += textProperty.mHeightPerLine;
 			}
 		}
@@ -209,6 +212,46 @@ public class Cocos2dxBitmap {
 			final int pHorizontalAlignment) {
 		final Paint paint = new Paint();
 		paint.setColor(Color.WHITE);
+		paint.setTextSize(pFontSize);
+		paint.setAntiAlias(true);
+
+		/* Set type face for paint, now it support .ttf file. */
+		if (pFontName.endsWith(".ttf")) {
+			try {
+				final Typeface typeFace = Cocos2dxTypefaces.get(
+						Cocos2dxBitmap.sContext, pFontName);
+				paint.setTypeface(typeFace);
+			} catch (final Exception e) {
+				Log.e("Cocos2dxBitmap", "error to create ttf type face: "
+						+ pFontName);
+
+				/* The file may not find, use system font. */
+				paint.setTypeface(Typeface.create(pFontName, Typeface.NORMAL));
+			}
+		} else {
+			paint.setTypeface(Typeface.create(pFontName, Typeface.NORMAL));
+		}
+
+		switch (pHorizontalAlignment) {
+		case HORIZONTALALIGN_CENTER:
+			paint.setTextAlign(Align.CENTER);
+			break;
+		case HORIZONTALALIGN_RIGHT:
+			paint.setTextAlign(Align.RIGHT);
+			break;
+		case HORIZONTALALIGN_LEFT:
+		default:
+			paint.setTextAlign(Align.LEFT);
+			break;
+		}
+
+		return paint;
+	}
+	
+	private static Paint newPaintNoColor(final String pFontName, final int pFontSize,
+			final int pHorizontalAlignment) {
+		final Paint paint = new Paint();
+		//paint.setColor(Color.WHITE);
 		paint.setTextSize(pFontSize);
 		paint.setAntiAlias(true);
 
