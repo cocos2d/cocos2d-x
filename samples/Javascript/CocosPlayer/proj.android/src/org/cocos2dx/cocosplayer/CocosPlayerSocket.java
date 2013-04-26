@@ -36,6 +36,11 @@ import java.nio.ByteOrder;
 
 public class CocosPlayerSocket {
 
+	private static final String kCCBPlayerStatusStringNotConnected = "Connect by running CocosBuilder on the same local wireless network as CocosPlayer.\nIf multiple instances of CocosBuilder is run on the same network, use a unique pairing code.";
+	private static final String kCCBPlayerStatusStringConnected = "idle";
+	private static final String kCCBNetworkStatusStringConnected = "Connected!";
+	private static final String kCCBNetworkStatusStringNotConnected = "Waiting for Connection";
+
 	public static final String TAG = CocosPlayerSocket.class.getSimpleName();
 	private static boolean running = false;
 	private static Context cw = null;
@@ -55,20 +60,20 @@ public class CocosPlayerSocket {
 		});
 	}
 
-	private void handleConnected() {
+	private void setStatusMessage(final String msg) {
 		Cocos2dxGLSurfaceView.getInstance().queueEvent(new Runnable() {
 			@Override
 			public void run() {
-			    nativeConnected();
+			    nativeStatus(msg);
 			}
 		});
 	}
 
-	private void handleDisconnected() {
+	private void setConnectionMessage(final String msg) {
 		Cocos2dxGLSurfaceView.getInstance().queueEvent(new Runnable() {
 			@Override
 			public void run() {
-			    nativeDisconnected();
+			    nativeConnectionStatus(msg);
 			}
 		});
 	}
@@ -87,8 +92,8 @@ public class CocosPlayerSocket {
 	}
 
 	private static native void nativeRunCCB();
-	private static native void nativeConnected();
-	private static native void nativeDisconnected();
+	private static native void nativeStatus(final String msg);
+	private static native void nativeConnectionStatus(final String msg);
 	private static native void nativeStopCCB();
         private static native void nativeSetOrientation(boolean isPortrait);
 	private static native void nativeRunScript(final String script);
@@ -212,14 +217,16 @@ public class CocosPlayerSocket {
 		protected Void doInBackground(ServerSocket... args) {
 			try {
 
-				handleDisconnected();
+				setConnectionMessage(kCCBNetworkStatusStringNotConnected);
+				setStatusMessage(kCCBPlayerStatusStringNotConnected);
 				ServerSocket server = args[0];
 				while(true) {
 
 					client = server.accept();
 
 					Log.i(TAG,"New connection from "+ client.getInetAddress());
-					handleConnected();
+					setConnectionMessage(kCCBNetworkStatusStringConnected);
+					setStatusMessage(kCCBPlayerStatusStringConnected);
 
 					if(client == null) {
 						Log.i(TAG, "Client null");
@@ -323,12 +330,6 @@ public class CocosPlayerSocket {
 				out);
 	}
 	
-	public static void destroy() {
-		try {
-			server.close();
-		} catch (Exception e) {
-		}
-	}
 
 	public void createServer() {
 
