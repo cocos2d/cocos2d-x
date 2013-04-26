@@ -479,11 +479,11 @@ void CCHttpClient::dispatchResponseCallbacks(float delta)
         
         CCHttpRequest *request = response->getHttpRequest();
         CCObject *pTarget = request->getTarget();
-        SEL_CallFuncND pSelector = request->getSelector();
+        SEL_HttpResponse pSelector = request->getSelector();
 
         if (pTarget && pSelector) 
         {
-            (pTarget->*pSelector)((CCNode *)this, response);
+            (pTarget->*pSelector)(this, response);
         }
         
         response->release();
