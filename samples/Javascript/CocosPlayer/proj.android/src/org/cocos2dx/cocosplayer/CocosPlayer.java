@@ -45,7 +45,7 @@ public class CocosPlayer extends Cocos2dxActivity {
 
 	@Override
 	public void onStop() {
-		Log.i("main", "onStop CocosPlayer");
+		Log.i("CocosPlayer", "onStop");
 		CocosPlayerPresence.destroy();
 		super.onStop();
 	}
@@ -53,18 +53,18 @@ public class CocosPlayer extends Cocos2dxActivity {
 	@Override
 	public void onResume() {
 		CocosPlayerPresence.startPresence();
-		Log.i("main", "onResume CocosPlayer");
+		Log.i("CocosPlayer", "onResume");
 		super.onResume();
 	}
 
 	@Override
 	public void finish() {
-		Log.i("main", "DESTROYING 1");
+		Log.i("CocosPlayer", "onFinish");
 		CocosPlayerPresence.destroy();
 	}
 
 	protected void onCreate(Bundle savedInstanceState) {
-		Log.i("main", "CREATING 1");
+		Log.i("CocosPlayer", "onCreate");
 		super.onCreate(savedInstanceState);
 		activity = ((Activity) Cocos2dxActivity.getContext());
 		c = getApplicationContext();
