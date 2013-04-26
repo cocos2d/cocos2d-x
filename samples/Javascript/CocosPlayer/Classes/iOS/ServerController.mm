@@ -222,7 +222,11 @@ NSString *kCCBPlayerStatusStringScript = @"Action: Executing script";
 - (void) executeJavaScript:(NSString*)script
 {
 	self.playerStatus = kCCBPlayerStatusExecuteScript;
-		
+    jsval out;
+    bool success = handle_eval_script([script cStringUsingEncoding:NSUTF8StringEncoding], &out);
+    
+	//BOOL success = [[JSBCore sharedInstance] evalString:script outVal:&out];
+    
 //    NSThread *cocos2dThread = [[CCDirector sharedDirector] runningThread];
 //	
 //	[cocos2dThread performBlock:^(void) { 
@@ -324,18 +328,27 @@ NSString *kCCBPlayerStatusStringScript = @"Action: Executing script";
 	dispatch_after(popTime, dispatch_get_main_queue(), runBlock);
 }
 
+
+
 -(void) stopJSApp
 {
 	if( ! playerWindowDisplayed ) {
 		//[[AppController appController] stopJSApp];
 		playerWindowDisplayed = YES;
-	}
+        NSUInteger orientations = 0;
+        
+        orientations |= UIInterfaceOrientationMaskPortrait;
+
+        [RootViewController setDeviceOrientation:orientations];
+        [[UIDevice currentDevice] setOrientation:UIInterfaceOrientationPortrait];
+        handle_set_orient(true);
+    }
 }
 
 -(void) runJSApp
 {
+    [self stopMain];
     handle_ccb_run();
-	//[[AppController appController] runJSApp];
 	playerWindowDisplayed = NO;	
 }
 
@@ -343,17 +356,9 @@ NSString *kCCBPlayerStatusStringScript = @"Action: Executing script";
 {
 	if( ! playerWindowDisplayed ) {
 		self.playerStatus = kCCBPlayerStatusStop;
-		
-//		NSThread *cocos2dThread = [[CCDirector sharedDirector] runningThread];
-//		
-//		[cocos2dThread performBlock:^(void) {
-//			[self stopJSApp];
-//		} waitUntilDone:YES];
-//		
-		// Force update network status
-        
+
+        [self stopJSApp];
         handle_ccb_stop();
-        
 		CCBNetworkStatus tmp = networkStatus;
 		networkStatus = kCCBNetworkUninitialized;
 		self.networkStatus = tmp;
@@ -495,7 +500,7 @@ NSString *kCCBPlayerStatusStringScript = @"Action: Executing script";
 				self.playerStatus = kCCBPlayerStatusIdle;
 				break;
 			case kCCBNetworkStatusShutDown:
-				if( playerWindowDisplayed)
+				if( playerWindowDisplayed)  
                     handle_set_status((const char *)[kCCBNetworkStatusStringShutDown cStringUsingEncoding:NSASCIIStringEncoding]);
 
 				self.playerStatus = kCCBPlayerStatusNotConnected;

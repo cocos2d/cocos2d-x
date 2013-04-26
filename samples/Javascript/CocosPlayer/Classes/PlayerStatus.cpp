@@ -74,7 +74,7 @@ void PlayerStatus::pressedPair(CCObject * pSender, cocos2d::extension::CCControl
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     showEditTextDialogJNI("Enter pairing code", "", kEditBoxInputModeNumeric, kEditBoxInputFlagInitialCapsWord,
                                         kKeyboardReturnTypeDone, 4, editBoxCallbackFunc, (void*)this);
-#else if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     openEditBox();
 #endif
 }
@@ -85,9 +85,8 @@ void PlayerStatus::pressedReset(CCObject * pSender, cocos2d::extension::CCContro
     CCBHelper::checkIsMainJSPresent();
 }
 
-
 void PlayerStatus::pressedRun(CCObject * pSender, cocos2d::extension::CCControlEvent pCCControlEvent) {
-    handle_ccb_run();
+    runJSApp();
 }
 
 
