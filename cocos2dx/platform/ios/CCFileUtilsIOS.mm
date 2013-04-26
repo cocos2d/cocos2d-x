@@ -161,23 +161,33 @@ std::string CCFileUtilsIOS::getWritablePath()
 
 bool CCFileUtilsIOS::isFileExist(const std::string& strFilePath)
 {
+    if (0 == strFilePath.length())
+    {
+        return false;
+    }
+
     bool bRet = false;
     
     if (strFilePath[0] != '/')
     {
-        std::string path = strFilePath;
+        std::string path;
         std::string file;
-        size_t pos = path.find_last_of("/");
+        size_t pos = strFilePath.find_last_of("/");
         if (pos != std::string::npos)
         {
-            file = path.substr(pos+1);
-            path = path.substr(0, pos+1);
-            NSString* fullpath = [[NSBundle mainBundle] pathForResource:[NSString stringWithUTF8String:file.c_str()]
-                                                                 ofType:nil
-                                                            inDirectory:[NSString stringWithUTF8String:path.c_str()]];
-            if (fullpath != nil) {
-                bRet = true;
-            }
+            file = strFilePath.substr(pos+1);
+            path = strFilePath.substr(0, pos+1);
+        }
+        else
+        {
+            file = strFilePath;
+        }
+        
+        NSString* fullpath = [[NSBundle mainBundle] pathForResource:[NSString stringWithUTF8String:file.c_str()]
+                                                             ofType:nil
+                                                        inDirectory:[NSString stringWithUTF8String:path.c_str()]];
+        if (fullpath != nil) {
+            bRet = true;
         }
     }
     else
