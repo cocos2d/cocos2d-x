@@ -153,7 +153,7 @@ public class CCBStreamHandler {
 		try {
 			NSDictionary root = new NSDictionary();
 			root.put("cmd", "log");
-			root.put("log", msg);
+			root.put("string", msg);
 			String payload = root.toXMLPropertyList();
 			//		String data = new String(header, 0 , header.length);
 			return payload;

@@ -117,11 +117,19 @@ public class CocosPlayerSocket {
 			if(cmd.equalsIgnoreCase("zip")) {
 			    // cleanCache();
 				try {
-					Log.i(TAG, "Size of NSDATA payload: "+((NSData)data.objectForKey("data")).bytes().length);
-					CCBFileUtilsHelper.unzipCCB(((NSData)data.objectForKey("data")).bytes(), cw);
-				} catch(Exception e) {
-					Log.i(TAG, "Size of UID payload: "+((UID)data.objectForKey("data")).getBytes().length);
-					CCBFileUtilsHelper.unzipCCB(((UID)data.objectForKey("data")).getBytes(), cw);
+					Log.i(TAG,
+							"Size of NSDATA payload: "
+									+ ((NSData) data.objectForKey("data"))
+											.bytes().length);
+					CCBFileUtilsHelper.unzipCCB(
+							((NSData) data.objectForKey("data")).bytes(), cw);
+				} catch (Exception e) {
+					Log.i(TAG,
+							"Size of UID payload: "
+									+ ((UID) data.objectForKey("data"))
+											.getBytes().length);
+					CCBFileUtilsHelper.unzipCCB(
+							((UID) data.objectForKey("data")).getBytes(), cw);
 				}
 			} else if(cmd.equalsIgnoreCase("run")) {
 				runCCB();
@@ -263,8 +271,10 @@ public class CocosPlayerSocket {
 			}
 		}
 
-		/** The system calls this to perform work in the UI thread and delivers
-		 * the result from doInBackground() */
+		/**
+		 * The system calls this to perform work in the UI thread and delivers
+		 * the result from doInBackground()
+		 */
 		protected void onPostExecute() {
 			try {
 				server.close();
@@ -289,24 +299,35 @@ public class CocosPlayerSocket {
 	}
 
 	public static void setPairingCode(int code) {
-		//mPresenceAsync.cancel(true);
-		if(presence != null) {
-			presence.unregisterService();
+		try {
+			// mPresenceAsync.cancel(true);
+			if (presence != null) {
+				presence.unregisterService();
+			}
+			mPairingCode = code;
+
+			CocosPlayerPresence.setContext(cw);
+			CocosPlayerPresence.setPortAndPairing(server.getLocalPort(),
+					mPairingCode);
+			CocosPlayerPresence.startPresence();
+
+		} catch (Exception e) {
 		}
-		mPairingCode = code;
-
-
-		presence = new CocosPlayerPresence();
-		Log.i("CocosPlayerSocket", "Registering Bonjour on Port: "+server.getLocalPort()+" With pairing code: "+code);
-		presence.setContext(cw);
-		presence.startPresence(server.getLocalPort(), mPairingCode);
-
-		//new PresenceStarter().execute(server.getLocalPort(), mPairingCode);
+		// new PresenceStarter().execute(server.getLocalPort(), mPairingCode);
 	}
 
 
 	public static void sendLog(String log) {
-	    CCBStreamHandler.sendString(CCBStreamHandler.getLogMsg(log), client, out);	    
+		Log.i("main", "Sending log: "+log);
+		CCBStreamHandler.sendString(CCBStreamHandler.getLogMsg(log), client,
+				out);
+	}
+	
+	public static void destroy() {
+		try {
+			server.close();
+		} catch (Exception e) {
+		}
 	}
 
 	public void createServer() {
@@ -317,9 +338,11 @@ public class CocosPlayerSocket {
 			Log.i(TAG, "IP " + server.getInetAddress()
 					+ ", running on port " + server.getLocalPort());
 
-			presence = new CocosPlayerPresence();
-			presence.setContext(cw);
-			presence.startPresence(server.getLocalPort(), mPairingCode);
+			// presence = new CocosPlayerPresence();
+			CocosPlayerPresence.setContext(cw);
+			CocosPlayerPresence.setPortAndPairing(server.getLocalPort(),
+					mPairingCode);
+			CocosPlayerPresence.startPresence();
 			new StreamHandler().execute(server);
 
 		} catch(Exception e) {
