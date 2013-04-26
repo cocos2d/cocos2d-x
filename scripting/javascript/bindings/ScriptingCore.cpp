@@ -162,11 +162,11 @@ void ScriptingCore::executeJSFunctionWithThisObj(jsval thisObj, jsval callback,
 
 void js_log(const char *format, ...) {
     if (_js_log_buf == NULL) {
-        _js_log_buf = (char *)calloc(sizeof(char), 257);
+        _js_log_buf = (char *)calloc(sizeof(char), kMaxLogLen+1);
     }
     va_list vl;
     va_start(vl, format);
-    int len = vsnprintf(_js_log_buf, 256, format, vl);
+    int len = vsnprintf(_js_log_buf, kMaxLogLen, format, vl);
     va_end(vl);
     if (len) {
         CCLOG("JS: %s\n", _js_log_buf);
@@ -301,8 +301,8 @@ void registerDefaultClasses(JSContext* cx, JSObject* global) {
     JS_DefineFunction(cx, global, "__restartVM", JSB_core_restartVM, 0, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
 }
 
-void sc_finalize(JSFreeOp *freeOp, JSObject *obj) {
-    return;
+static void sc_finalize(JSFreeOp *freeOp, JSObject *obj) {
+    CCLOGINFO("jsbindings: finalizing JS object %p (global class)", obj);
 }
 
 static JSClass global_class = {
@@ -369,7 +369,7 @@ JSBool ScriptingCore::evalString(const char *string, jsval *outVal, const char *
         }
         return evaluatedOK;
     }
-    return false;
+    return JS_FALSE;
 }
 
 void ScriptingCore::start() {
@@ -396,6 +396,20 @@ void ScriptingCore::removeAllRoots(JSContext *cx) {
     HASH_CLEAR(hh, _native_js_global_ht);
 }
 
+static JSPrincipals shellTrustedPrincipals = { 1 };
+
+static JSBool
+CheckObjectAccess(JSContext *cx, js::HandleObject obj, js::HandleId id, JSAccessMode mode,
+                  js::MutableHandleValue vp)
+{
+    return JS_TRUE;
+}
+
+static JSSecurityCallbacks securityCallbacks = {
+    CheckObjectAccess,
+    NULL
+};
+
 void ScriptingCore::createGlobalContext() {
     if (this->cx_ && this->rt_) {
         ScriptingCore::removeAllRoots(this->cx_);
@@ -404,9 +418,16 @@ void ScriptingCore::createGlobalContext() {
         this->cx_ = NULL;
         this->rt_ = NULL;
     }
+    // Removed from Spidermonkey 19.
     //JS_SetCStringsAreUTF8();
-    this->rt_ = JS_NewRuntime(10 * 1024 * 1024, JS_NO_HELPER_THREADS);
-    this->cx_ = JS_NewContext(rt_, 10240);
+    this->rt_ = JS_NewRuntime(8L * 1024L * 1024L, JS_USE_HELPER_THREADS);
+    JS_SetGCParameter(rt_, JSGC_MAX_BYTES, 0xffffffff);
+	
+    JS_SetTrustedPrincipals(rt_, &shellTrustedPrincipals);
+    JS_SetSecurityCallbacks(rt_, &securityCallbacks);
+	JS_SetNativeStackQuota(rt_, JSB_MAX_STACK_QUOTA);
+    
+    this->cx_ = JS_NewContext(rt_, 8192);
     JS_SetOptions(this->cx_, JSOPTION_TYPE_INFERENCE);
     JS_SetVersion(this->cx_, JSVERSION_LATEST);
     JS_SetOptions(this->cx_, JS_GetOptions(this->cx_) & ~JSOPTION_METHODJIT);
@@ -608,6 +629,7 @@ JSBool ScriptingCore::dumpRoot(JSContext *cx, uint32_t argc, jsval *vp)
 //    JSContext *_cx = ScriptingCore::getInstance()->getGlobalContext();
 //    JSRuntime *rt = JS_GetRuntime(_cx);
 //    JS_DumpNamedRoots(rt, dumpNamedRoot, NULL);
+//    JS_DumpHeap(rt, stdout, NULL, JSTRACE_OBJECT, NULL, 2, NULL);
 #endif
     return JS_TRUE;
 }
@@ -915,7 +937,24 @@ int ScriptingCore::executeAccelerometerEvent(CCLayer *pLayer, CCAcceleration *pA
 
 int ScriptingCore::executeLayerKeypadEvent(CCLayer* pLayer, int eventType)
 {
-    return 0;
+	js_proxy_t * p;
+	JS_GET_PROXY(p, pLayer);
+
+	if(p){
+		switch(eventType){
+		case kTypeBackClicked:
+			executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "backClicked");
+			break;
+		case kTypeMenuClicked:
+			executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "menuClicked");
+			break;
+		default:
+			break;
+		}
+		return 1;
+	}
+
+	return 0;
 }
 
 
@@ -1532,6 +1571,31 @@ JSBool jsval_to_ccdictionary(JSContext* cx, jsval v, CCDictionary** ret) {
     return JS_TRUE;
 }
 
+JSBool jsval_to_ccaffinetransform(JSContext* cx, jsval v, CCAffineTransform* ret)
+{
+    JSObject *tmp;
+    jsval jsa, jsb, jsc, jsd, jstx, jsty;
+    double a, b, c, d, tx, ty;
+    JSBool ok = JS_ValueToObject(cx, v, &tmp) &&
+    JS_GetProperty(cx, tmp, "a", &jsa) &&
+    JS_GetProperty(cx, tmp, "b", &jsb) &&
+    JS_GetProperty(cx, tmp, "c", &jsc) &&
+    JS_GetProperty(cx, tmp, "d", &jsd) &&
+    JS_GetProperty(cx, tmp, "tx", &jstx) &&
+    JS_GetProperty(cx, tmp, "ty", &jsty) &&
+    JS_ValueToNumber(cx, jsa, &a) &&
+    JS_ValueToNumber(cx, jsb, &b) &&
+    JS_ValueToNumber(cx, jsc, &c) &&
+    JS_ValueToNumber(cx, jsd, &d) &&
+    JS_ValueToNumber(cx, jstx, &tx) &&
+    JS_ValueToNumber(cx, jsty, &ty);
+    
+    JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+    
+    *ret = CCAffineTransformMake(a, b, c, d, tx, ty);
+    return JS_TRUE;
+}
+
 // From native type to jsval
 jsval int32_to_jsval( JSContext *cx, int32_t number )
 {
@@ -1555,14 +1619,16 @@ jsval std_string_to_jsval(JSContext* cx, std::string& v) {
     return c_string_to_jsval(cx, v.c_str());
 }
 
-jsval c_string_to_jsval(JSContext* cx, const char* v) {
+jsval c_string_to_jsval(JSContext* cx, const char* v, size_t length /* = -1 */) {
     if (v == NULL) {
         return JSVAL_NULL;
     }
     jsval ret = JSVAL_NULL;
-    jschar* strUTF16 = (jschar*)cc_utf8_to_utf16(v);
-    if (strUTF16) {
-        JSString* str = JS_NewUCStringCopyZ(cx, strUTF16);
+    int utf16_size = 0;
+    jschar* strUTF16 = (jschar*)cc_utf8_to_utf16(v, length, &utf16_size);
+
+    if (strUTF16 && utf16_size > 0) {
+        JSString* str = JS_NewUCStringCopyN(cx, strUTF16, utf16_size);
         if (str) {
             ret = STRING_TO_JSVAL(str);
         }
@@ -1651,6 +1717,22 @@ jsval cccolor3b_to_jsval(JSContext* cx, const ccColor3B& v) {
     JSBool ok = JS_DefineProperty(cx, tmp, "r", INT_TO_JSVAL(v.r), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
                 JS_DefineProperty(cx, tmp, "g", INT_TO_JSVAL(v.g), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
                 JS_DefineProperty(cx, tmp, "b", INT_TO_JSVAL(v.g), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    if (ok) {
+        return OBJECT_TO_JSVAL(tmp);
+    }
+    return JSVAL_NULL;
+}
+
+jsval ccaffinetransform_to_jsval(JSContext* cx, CCAffineTransform& t)
+{
+    JSObject *tmp = JS_NewObject(cx, NULL, NULL, NULL);
+    if (!tmp) return JSVAL_NULL;
+    JSBool ok = JS_DefineProperty(cx, tmp, "a", DOUBLE_TO_JSVAL(t.a), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+    JS_DefineProperty(cx, tmp, "b", DOUBLE_TO_JSVAL(t.b), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+    JS_DefineProperty(cx, tmp, "c", DOUBLE_TO_JSVAL(t.c), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+    JS_DefineProperty(cx, tmp, "d", DOUBLE_TO_JSVAL(t.d), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+    JS_DefineProperty(cx, tmp, "tx", DOUBLE_TO_JSVAL(t.tx), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+    JS_DefineProperty(cx, tmp, "ty", DOUBLE_TO_JSVAL(t.ty), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     if (ok) {
         return OBJECT_TO_JSVAL(tmp);
     }

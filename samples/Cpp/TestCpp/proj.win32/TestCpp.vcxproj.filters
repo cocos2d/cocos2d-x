@@ -214,6 +214,9 @@
     <Filter Include="Classes\ExtensionsTest\CocosBuilderTest\TimelineCallbackTest">
       <UniqueIdentifier>{0ef55f53-411a-4661-b5d5-13930da52e68}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\SpineTest">
+      <UniqueIdentifier>{60df7835-5770-44bb-b5c7-24c9aa34da88}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -485,6 +488,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\ExtensionsTest\CocosBuilderTest\TimelineCallbackTest\TimelineCallbackTestLayer.cpp">
       <Filter>Classes\ExtensionsTest\CocosBuilderTest\TimelineCallbackTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\SpineTest\SpineTest.cpp">
+      <Filter>Classes\SpineTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -937,6 +943,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ExtensionsTest\CocosBuilderTest\TimelineCallbackTest\TimelineCallbackTestLayer.h">
       <Filter>Classes\ExtensionsTest\CocosBuilderTest\TimelineCallbackTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\SpineTest\SpineTest.h">
+      <Filter>Classes\SpineTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

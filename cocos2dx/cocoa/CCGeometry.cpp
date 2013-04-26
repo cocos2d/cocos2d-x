@@ -57,7 +57,8 @@ void CCPoint::setPoint(float x, float y)
 
 bool CCPoint::equals(const CCPoint& target) const
 {
-    return ((x == target.x) && (y == target.y));
+    return (fabs(this->x - target.x) < FLT_EPSILON)
+        && (fabs(this->y - target.y) < FLT_EPSILON);
 }
 
 // implementation of CCSize
@@ -91,7 +92,8 @@ void CCSize::setSize(float width, float height)
 
 bool CCSize::equals(const CCSize& target) const
 {
-    return ((width == target.width) && (height == target.height));
+    return (fabs(this->width  - target.width)  < FLT_EPSILON)
+        && (fabs(this->height - target.height) < FLT_EPSILON);
 }
 
 // implementation of CCRect

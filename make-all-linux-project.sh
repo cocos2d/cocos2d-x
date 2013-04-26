@@ -45,8 +45,8 @@ cd $(dirname ${BASH_SOURCE[0]})
 
 export MAKEFLAGS=-j10
 
-make PROJECT=linux DEBUG=1 clean
-make PROJECT=linux DEBUG=0 clean
+make PLATFORM=linux DEBUG=1 clean
+make PLATFORM=linux DEBUG=0 clean
 
-make PROJECT=linux DEBUG=1 all
-make PROJECT=linux DEBUG=0 all
+make PLATFORM=linux DEBUG=1 all
+make PLATFORM=linux DEBUG=0 all

@@ -282,7 +282,7 @@ public class Cocos2dxBitmap {
 				if (lastIndexOfSpace != -1 && lastIndexOfSpace > start) {
 					/* Should wrap the word. */
 					strList.add(pString.substring(start, lastIndexOfSpace));
-					i = lastIndexOfSpace;
+					i = lastIndexOfSpace + 1; // skip space
 				} else {
 					/* Should not exceed the width. */
 					if (tempWidth > pMaxWidth) {
@@ -295,7 +295,7 @@ public class Cocos2dxBitmap {
 				}
 
 				/* Remove spaces at the beginning of a new line. */
-				while (pString.indexOf(i) == ' ') {
+				while (pString.charAt(i) == ' ') {
 					++i;
 				}
 
