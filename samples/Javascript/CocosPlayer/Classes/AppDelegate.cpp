@@ -78,17 +78,8 @@ void initViews(CCSize designSize) {
 }
 
 static void setViewValues(CCEGLView *pView, CCSize frameSize, CCSize designSize) {
-    
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    resetCocosApp();
-#endif
-
-
-    cocos2d::CCDirector::sharedDirector()->purgeCachedData();
-    pView->setFrameSize(frameSize.height, frameSize.width);
-    pView->setDesignResolutionSize(designSize.height, designSize.width, kResolutionNoBorder);
-    CCLOG("Design Size %f x %f frame: %%f x %f", designSize.height, designSize.width, frameSize.height, frameSize.width);
-    cocos2d::CCDirector::sharedDirector()->setProjection(kCCDirectorProjection2D);
+    CCFileUtils::sharedFileUtils()->purgeCachedEntries();
+    ((AppDelegate *)CCApplication::sharedApplication())->initGameView();
 }
 
 void handle_set_orient(bool isPortrait) {
@@ -97,9 +88,10 @@ void handle_set_orient(bool isPortrait) {
     {
         CCSize frameSize = pView->getFrameSize();
         CCSize designSize = pView->getDesignResolutionSize();
-        CCLOG("is Portrait %d", isPortrait);
         if (((frameSize.width > frameSize.height && isPortrait))
             || (frameSize.width < frameSize.height && !isPortrait)) {
+            isPortraitApp = isPortrait;
+            pView->setFrameSize(frameSize.height, frameSize.width);
             setViewValues(pView, frameSize, designSize);
         }
     }
@@ -228,142 +220,151 @@ extern "C" {
         CCEGLView::sharedOpenGLView()->setDesignResolutionSize(designSize.width, designSize.height, kResolutionFixedWidth);
     }
     
-    bool AppDelegate::applicationDidFinishLaunching()
-    {
-        
-        // initialize director
+    void AppDelegate::initGameView() {
+    
+    // initialize director
         CCDirector *pDirector = CCDirector::sharedDirector();
-        pDirector->setOpenGLView(CCEGLView::sharedOpenGLView());
-        pDirector->setProjection(kCCDirectorProjection2D);
+    pDirector->setOpenGLView(CCEGLView::sharedOpenGLView());
+    pDirector->setProjection(kCCDirectorProjection2D);
+    
+    
+    CCSize screenSize = CCEGLView::sharedOpenGLView()->getFrameSize();
+        if(!isPortraitApp) {
+            screenSize = CCSizeMake(screenSize.height, screenSize.width);
+        }
         
+    std::vector<std::string> resDirOrders;
+    std::string res;
+    TargetPlatform platform = CCApplication::sharedApplication()->getTargetPlatform();
+    
+    
+    if (platform == kTargetIphone || platform == kTargetIpad)
+    {
+        std::vector<std::string> searchPaths = CCFileUtils::sharedFileUtils()->getSearchPaths();
+        searchPaths.insert(searchPaths.begin(), "Published files iOS");
+        searchPaths.insert(searchPaths.begin(), getCCBDirectoryPath());
         
-        CCSize screenSize = CCEGLView::sharedOpenGLView()->getFrameSize();
-
-        std::vector<std::string> resDirOrders;
-        std::string res;
-        TargetPlatform platform = CCApplication::sharedApplication()->getTargetPlatform();
-        
-        
-        if (platform == kTargetIphone || platform == kTargetIpad)
+        CCFileUtils::sharedFileUtils()->setSearchPaths(searchPaths);
+        if (screenSize.height > 1136)
         {
-            std::vector<std::string> searchPaths = CCFileUtils::sharedFileUtils()->getSearchPaths();
-            searchPaths.insert(searchPaths.begin(), "Published files iOS");
-            searchPaths.insert(searchPaths.begin(), getCCBDirectoryPath());
+            res = "iPad";
+            setResolutionSizes(true, true, isPortraitApp);
+            resDirOrders.push_back("resources-ipadhd");
+            resDirOrders.push_back("resources-ipad");
+            resDirOrders.push_back("resources-iphonehd");
+            isIPhone = false;
+            isRetina = true;
+            cocos2d::extension::CCBReader::setResolutionScale(2);
+        } else if(screenSize.height > 1024) {
+            res = "iPhone";
+            setResolutionSizes(false, true, isPortraitApp);
+            resDirOrders.push_back("resources-iphonehd");
+            resDirOrders.push_back("resources-iphone");
+            isIPhone = true;
+            isRetina = true;
+        }
+        else if (screenSize.height > 960)
+        {
+            res = "iPad";
+            setResolutionSizes(true, false, isPortraitApp);
+            resDirOrders.push_back("resources-ipad");
+            resDirOrders.push_back("resources-iphonehd");
+            isIPhone = false;
+            isRetina = false;
+            cocos2d::extension::CCBReader::setResolutionScale(2);
             
-            CCFileUtils::sharedFileUtils()->setSearchPaths(searchPaths);
-            if (screenSize.height > 1136)
-            {
-                res = "iPad";
+        }
+        else if (screenSize.height > 480)
+        {
+            res = "iPhone";
+            setResolutionSizes(false, true, isPortraitApp);
+            resDirOrders.push_back("resources-iphonehd");
+            resDirOrders.push_back("resources-iphone");
+            isIPhone = true;
+            isRetina = true;
+        }
+        else
+        {
+            res = "iPhone";
+            setResolutionSizes(false, false, isPortraitApp);
+            resDirOrders.push_back("resources-iphone");
+            isIPhone = true;
+            isRetina = false;
+        }
+        
+    }
+    else if (platform == kTargetAndroid || platform == kTargetWindows)
+    {
+        int dpi = -1;
+        dpi = CCDevice::getDPI();
+        
+        if(dpi > 300) { // retina
+            if (screenSize.height > 1920) {
+                res = "xlarge";
                 setResolutionSizes(true, true, isPortraitApp);
-                resDirOrders.push_back("resources-ipadhd");
-                resDirOrders.push_back("resources-ipad");
-                resDirOrders.push_back("resources-iphonehd");
-                isIPhone = false;
-                isRetina = true;
-                cocos2d::extension::CCBReader::setResolutionScale(2);
-            } else if(screenSize.height > 1024) {
-                res = "iPhone";
+                resDirOrders.push_back("resources-xlarge");
+                resDirOrders.push_back("resources-large");
+                resDirOrders.push_back("resources-medium");
+                resDirOrders.push_back("resources-small");
+            } else {
+                res = "large";
                 setResolutionSizes(false, true, isPortraitApp);
-                resDirOrders.push_back("resources-iphonehd");
-                resDirOrders.push_back("resources-iphone");
-                isIPhone = true;
-                isRetina = true;
+                resDirOrders.push_back("resources-large");
+                resDirOrders.push_back("resources-medium");
+                resDirOrders.push_back("resources-small");
             }
-            else if (screenSize.height > 960)
+        } else { // non retina
+            if (screenSize.height > 960)
             {
-                res = "iPad";
+                res = "large";
                 setResolutionSizes(true, false, isPortraitApp);
-                resDirOrders.push_back("resources-ipad");
-                resDirOrders.push_back("resources-iphonehd");
-                isIPhone = false;
-                isRetina = false;
+                resDirOrders.push_back("resources-large");
+                resDirOrders.push_back("resources-medium");
+                resDirOrders.push_back("resources-small");
                 cocos2d::extension::CCBReader::setResolutionScale(2);
-                
+            }
+            else if (screenSize.height > 768)
+            {
+                res = "medium";
+                setResolutionSizes(true, false, isPortraitApp);
+                resDirOrders.push_back("resources-medium");
+                resDirOrders.push_back("resources-small");
             }
             else if (screenSize.height > 480)
             {
-                res = "iPhone";
-                setResolutionSizes(false, true, isPortraitApp);
-                resDirOrders.push_back("resources-iphonehd");
-                resDirOrders.push_back("resources-iphone");
-                isIPhone = true;
-                isRetina = true;
+                res = "small";
+                setResolutionSizes(false, false, isPortraitApp);
+                resDirOrders.push_back("resources-small");
             }
             else
             {
-                res = "iPhone";
                 setResolutionSizes(false, false, isPortraitApp);
-                resDirOrders.push_back("resources-iphone");
-                isIPhone = true;
-                isRetina = false;
+                res = "xsmall";
+                resDirOrders.push_back("resources-xsmall");
             }
             
         }
-        else if (platform == kTargetAndroid || platform == kTargetWindows)
-        {
-            int dpi = -1;
-            dpi = CCDevice::getDPI();
-            
-            if(dpi > 300) { // retina
-                if (screenSize.height > 1920) {
-                    res = "xlarge";
-                    setResolutionSizes(true, true, isPortraitApp);
-                    resDirOrders.push_back("resources-xlarge");
-                    resDirOrders.push_back("resources-large");
-                    resDirOrders.push_back("resources-medium");
-                    resDirOrders.push_back("resources-small");
-                } else {
-                    res = "large";
-                    setResolutionSizes(false, true, isPortraitApp);
-                    resDirOrders.push_back("resources-large");
-                    resDirOrders.push_back("resources-medium");
-                    resDirOrders.push_back("resources-small");
-                }
-            } else { // non retina
-                if (screenSize.height > 960)
-                {
-                    res = "large";
-                    setResolutionSizes(true, false, isPortraitApp);
-                    resDirOrders.push_back("resources-large");
-                    resDirOrders.push_back("resources-medium");
-                    resDirOrders.push_back("resources-small");
-                }
-                else if (screenSize.height > 768)
-                {
-                    res = "medium";
-                    setResolutionSizes(true, false, isPortraitApp);
-                    resDirOrders.push_back("resources-medium");
-                    resDirOrders.push_back("resources-small");
-                }
-                else if (screenSize.height > 480)
-                {
-                    res = "small";
-                    setResolutionSizes(false, false, isPortraitApp);
-                    resDirOrders.push_back("resources-small");
-                }
-                else
-                {
-                    setResolutionSizes(false, false, isPortraitApp);
-                    res = "xsmall";
-                    resDirOrders.push_back("resources-xsmall");
-                }
-            }
-        }
+    }
+    
+    CCFileUtils *pFileUtils = CCFileUtils::sharedFileUtils();
+    pFileUtils->setSearchResolutionsOrder(resDirOrders);
+    
+    std::vector<std::string> searchPaths = pFileUtils->getSearchPaths();
+    searchPaths.insert(searchPaths.begin(), pFileUtils->getWritablePath());
+    pFileUtils->setSearchPaths(searchPaths);
+    
+    PlayerStatus::setDeviceResolution(res);
+    // turn on display FPS
+    pDirector->setDisplayStats(true);
+    
+    // set FPS. the default value is 1.0/60 if you don't call this
+    pDirector->setAnimationInterval(1.0 / 60);
+}
+    
+    bool AppDelegate::applicationDidFinishLaunching()
+    {
         
-        CCFileUtils *pFileUtils = CCFileUtils::sharedFileUtils();
-        pFileUtils->setSearchResolutionsOrder(resDirOrders);
-                
-        std::vector<std::string> searchPaths = pFileUtils->getSearchPaths();
-        searchPaths.insert(searchPaths.begin(), pFileUtils->getWritablePath());
-        pFileUtils->setSearchPaths(searchPaths);
-        
-        PlayerStatus::setDeviceResolution(res);
-        // turn on display FPS
-        pDirector->setDisplayStats(true);
-        
-        // set FPS. the default value is 1.0/60 if you don't call this
-        pDirector->setAnimationInterval(1.0 / 60);
-        
+        initGameView();
         ScriptingCore* sc = ScriptingCore::getInstance();
         sc->addRegisterCallback(register_all_cocos2dx);
         sc->addRegisterCallback(register_all_cocos2dx_extension);
