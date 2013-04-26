@@ -115,6 +115,66 @@ public class Cocos2dxBitmap {
 
 		Cocos2dxBitmap.initNativeObject(bitmap);
 	}
+	
+	public static void createTextBitmapShadowStroke(String pString,
+												    final String pFontName,
+												    final int pFontSize,
+												    final int pAlignment,
+												    final int pWidth,
+												    final int pHeight,
+												    final boolean shadow,
+												    final float shadowDX,
+												    final float shadowDY,
+												    final float shadowBlur, 
+												    final boolean stroke, 
+												    final float strokeR, 
+												    final float strokeG, 
+												    final float strokeB, 
+												    final float strokeSize) {
+		
+		final int horizontalAlignment = pAlignment & 0x0F;
+		final int verticalAlignment   = (pAlignment >> 4) & 0x0F;
+
+		pString = Cocos2dxBitmap.refactorString(pString);
+		
+		final Paint paint = Cocos2dxBitmap.newPaint(pFontName, pFontSize, horizontalAlignment);
+		
+		if ( shadow ) {
+			
+			int shadowColor = 0x7d7d7d7d;
+			paint.setShadowLayer(shadowBlur, shadowDX, shadowDY, shadowColor);
+		
+		}
+		
+		if (stroke) {
+			
+			paint.setStyle(Paint.Style.FILL_AND_STROKE);
+			paint.setStrokeWidth(strokeSize);
+		
+		}
+		
+
+		final TextProperty textProperty = Cocos2dxBitmap.computeTextProperty(pString, pWidth, pHeight, paint);
+
+		final int bitmapTotalHeight = (pHeight == 0 ? textProperty.mTotalHeight : pHeight);
+
+		final Bitmap bitmap = Bitmap.createBitmap(textProperty.mMaxWidth, bitmapTotalHeight, Bitmap.Config.ARGB_8888);
+		final Canvas canvas = new Canvas(bitmap);
+
+		/* Draw string. */
+		final FontMetricsInt fontMetricsInt = paint.getFontMetricsInt();
+		int x = 0;
+		int y = Cocos2dxBitmap.computeY(fontMetricsInt, pHeight, textProperty.mTotalHeight, verticalAlignment);
+		final String[] lines = textProperty.mLines;
+		for (final String line : lines) {
+			x = Cocos2dxBitmap.computeX(line, textProperty.mMaxWidth, horizontalAlignment);
+			canvas.drawText(line, x, y, paint);
+			y += textProperty.mHeightPerLine;
+		}
+
+		Cocos2dxBitmap.initNativeObject(bitmap);
+	}
+	
 
 	private static Paint newPaint(final String pFontName, final int pFontSize, final int pHorizontalAlignment) {
 		final Paint paint = new Paint();

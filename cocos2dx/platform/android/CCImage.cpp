@@ -96,6 +96,53 @@ public:
         return true;
     }
 
+
+
+    bool getBitmapFromJavaShadowStroke(	const char *text,
+    									int nWidth,
+    									int nHeight,
+    									CCImage::ETextAlign eAlignMask,
+    									const char * pFontName,
+    									float fontSize,
+    									bool shadow,
+    									float shadowDeltaX,
+    									float shadowDeltaY,
+    									float shadowBlur,
+    									float shadowIntensity,
+    									bool stroke,
+    									float strokeColorR,
+    									float strokeColorG,
+    									float strokeColorB,
+    									float strokeSize)
+       {
+           JniMethodInfo methodInfo;
+           if (! JniHelper::getStaticMethodInfo(methodInfo, "org/cocos2dx/lib/Cocos2dxBitmap", "createTextBitmapShadowStroke",
+               "(Ljava/lang/String;Ljava/lang/String;IIII)V"))
+           {
+               CCLOG("%s %d: error to get methodInfo", __FILE__, __LINE__);
+               return false;
+           }
+
+           /**create bitmap
+            * this method call Cococs2dx.createBitmap()(java code) to create the bitmap, the java code
+            * will call Java_org_cocos2dx_lib_Cocos2dxBitmap_nativeInitBitmapDC() to init the width, height
+            * and data.
+            * use this approach to decrease the jni call number
+           */
+           jstring jstrText = methodInfo.env->NewStringUTF(text);
+           jstring jstrFont = methodInfo.env->NewStringUTF(pFontName);
+
+           methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID, jstrText,
+               jstrFont, (int)fontSize, eAlignMask, nWidth, nHeight);
+
+           methodInfo.env->DeleteLocalRef(jstrText);
+           methodInfo.env->DeleteLocalRef(jstrFont);
+           methodInfo.env->DeleteLocalRef(methodInfo.classID);
+
+           return true;
+       }
+
+
     // ARGB -> RGBA
     inline unsigned int swapAlpha(unsigned int value)
     {
@@ -167,7 +214,44 @@ bool CCImage::initWithStringShadowStroke(
                                          float strokeB,
                                          float strokeSize)
 {
-	return false;
+	 bool bRet = false;
+	    do
+	    {
+	        CC_BREAK_IF(! pText);
+
+	        BitmapDC &dc = sharedBitmapDC();
+
+	        CC_BREAK_IF(! dc.getBitmapFromJavaShadowStroke(pText,
+	        											   nWidth,
+	        											   nHeight,
+	        											   eAlignMask,
+	        											   pFontName,
+	        											   nSize,
+	        											   shadow,
+	        											   shadowOffsetX,
+	        											   shadowOffsetY,
+	        											   shadowBlur,
+	        											   shadowOpacity,
+	        											   stroke,
+	        											   strokeR,
+	        											   strokeG,
+	        											   strokeB,
+	        											   strokeSize ));
+
+	        // assign the dc.m_pData to m_pData in order to save time
+	        m_pData = dc.m_pData;
+	        CC_BREAK_IF(! m_pData);
+
+	        m_nWidth    = (short)dc.m_nWidth;
+	        m_nHeight   = (short)dc.m_nHeight;
+	        m_bHasAlpha = true;
+	        m_bPreMulti = true;
+	        m_nBitsPerComponent = 8;
+
+	        bRet = true;
+	    } while (0);
+
+	    return bRet;
 }
 
 NS_CC_END
