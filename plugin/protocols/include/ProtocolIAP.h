@@ -30,21 +30,21 @@ THE SOFTWARE.
 
 namespace cocos2d { namespace plugin {
 
-typedef std::map<std::string, std::string> TDeveloperInfo;
+typedef std::map<std::string, std::string> TIAPDeveloperInfo;
 typedef std::map<std::string, std::string> TProductInfo;
 
 typedef enum 
 {
-    ePaySuccess = 0,
-    ePayFail,
-    ePayCancel,
-    ePayTimeOut,
-} EPayResult;
+    kPaySuccess = 0,
+    kPayFail,
+    kPayCancel,
+    kPayTimeOut,
+} PayResultCode;
 
 class PayResultListener
 {
 public:
-    virtual void payResult(EPayResult ret, const char* msg, TProductInfo info) = 0;
+    virtual void onPayResult(PayResultCode ret, const char* msg, TProductInfo info) = 0;
 };
 
 class ProtocolIAP : public PluginProtocol
@@ -57,13 +57,13 @@ public:
     virtual bool init();
 
     /**
-    @brief initialize the developer info
+    @brief config the developer info
     @param devInfo This parameter is the info of developer,
            different plugin have different format
     @warning Must invoke this interface before other interfaces.
              And invoked only once.
     */
-    virtual void initDeveloperInfo(TDeveloperInfo devInfo);
+    virtual void configDeveloperInfo(TIAPDeveloperInfo devInfo);
 
     /**
     @brief pay for product
@@ -87,12 +87,12 @@ public:
     @param pListener The callback object for pay result
     @wraning Must invoke this interface before payForProduct.
     */
-    virtual void setResultListener(PayResultListener* pListener);
+    void setResultListener(PayResultListener* pListener);
 
     /**
     @brief pay result callback
     */
-    virtual void payResult(EPayResult ret, const char* msg);
+    void onPayResult(PayResultCode ret, const char* msg);
 
     virtual const char* getPluginVersion() { return "ProtocolIAP, v0.1.01 , subclass should override this interface!"; };
     virtual const char* getSDKVersion();

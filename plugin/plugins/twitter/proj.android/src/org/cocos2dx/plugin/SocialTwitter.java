@@ -68,7 +68,7 @@ public class SocialTwitter implements ShareAdapter {
 	
 
 	@Override
-	public void initDeveloperInfo(Hashtable<String, String> cpInfo) {
+	public void configDeveloperInfo(Hashtable<String, String> cpInfo) {
 		LogD("initDeveloperInfo invoked " + cpInfo.toString());
 		try {
 			SocialTwitter.CONSUMER_KEY = cpInfo.get("TwitterKey");
@@ -153,7 +153,7 @@ public class SocialTwitter implements ShareAdapter {
 	}
 
 	private static void shareResult(int ret, String msg) {
-		InterfaceSocial.shareResult(mSocialAdapter, ret, msg);
+		InterfaceSocial.onShareResult(mSocialAdapter, ret, msg);
 		LogD("SocialTwitter result : " + ret + " msg : " + msg);
 	}
 

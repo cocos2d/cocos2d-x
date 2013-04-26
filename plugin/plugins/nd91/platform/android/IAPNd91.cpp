@@ -41,7 +41,7 @@ bool IAPNd91::init()
 }
 
 /**
-@brief initialize the developer info
+@brief config the developer info
 @param devInfo This parameter is the info of developer, must contains key:
         Nd91AppId           The app id of nd91
         Nd91AppKey          The app key of nd91
@@ -50,9 +50,9 @@ bool IAPNd91::init()
 @warning Must invoke this interface before other interfaces.
 		 And invoked only once.
 */
-void IAPNd91::initDeveloperInfo(TDeveloperInfo devInfo)
+void IAPNd91::configDeveloperInfo(TIAPDeveloperInfo devInfo)
 {
-	ProtocolIAP::initDeveloperInfo(devInfo);
+	ProtocolIAP::configDeveloperInfo(devInfo);
 }
 
 /**

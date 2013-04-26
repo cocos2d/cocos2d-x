@@ -65,7 +65,7 @@ public class IAPNd91 implements IAPAdapter {
 	}
 
 	@Override
-	public void initDeveloperInfo(Hashtable<String, String> cpInfo) {
+	public void configDeveloperInfo(Hashtable<String, String> cpInfo) {
 		LogD("initDeveloperInfo invoked " + cpInfo.toString());
 		final Hashtable<String, String> curCPInfo = cpInfo;
 		PluginWrapper.runOnMainThread(new Runnable() {
@@ -150,7 +150,7 @@ public class IAPNd91 implements IAPAdapter {
 	}
 
 	private static void payResult(int ret, String msg) {
-		InterfaceIAP.payResult(mNd91, ret, msg);
+		InterfaceIAP.onPayResult(mNd91, ret, msg);
 		LogD("Nd91 result : " + ret + " msg : " + msg);
 	}
 

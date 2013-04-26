@@ -75,7 +75,7 @@ void MySocialManager::loadSocialPlugin()
 	{
 		// init twitter plugin
 		s_pTwitter = dynamic_cast<SocialTwitter*>(PluginManager::getInstance()->loadPlugin("SocialTwitter"));
-		TSocialDevInfo pTwitterInfo;
+		TSocialDeveloperInfo pTwitterInfo;
 
         /* Warning: must set your twiiter dev info here */
 		// pTwitterInfo["TwitterKey"] = "your consumerkey";
@@ -88,7 +88,7 @@ void MySocialManager::loadSocialPlugin()
 			CCMessageBox(msg, "Twitter Warning");
 		}
 		s_pTwitter->setDebugMode(true);
-		s_pTwitter->initDeveloperInfo(pTwitterInfo);
+		s_pTwitter->configDeveloperInfo(pTwitterInfo);
 		s_pTwitter->setResultListener(s_pRetListener);
 	}
 }
@@ -119,9 +119,9 @@ void MySocialManager::shareByMode(TShareInfo info, MyShareMode mode)
 	}
 }
 
-void MyShareResult::shareResult(EShareResult ret, const char* msg)
+void MyShareResult::onShareResult(ShareResultCode ret, const char* msg)
 {
     char shareStatus[1024] = { 0 };
-    sprintf(shareStatus, "Share %s", (ret == eShareSuccess)? "Successed" : "Failed");
+    sprintf(shareStatus, "Share %s", (ret == kShareSuccess)? "Successed" : "Failed");
     CCMessageBox(msg, shareStatus);
 }

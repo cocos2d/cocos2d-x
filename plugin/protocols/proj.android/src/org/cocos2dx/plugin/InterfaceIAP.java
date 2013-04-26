@@ -32,22 +32,22 @@ public class InterfaceIAP {
 	public static final int PAYRESULT_TIMEOUT = 3;
 
 	public interface IAPAdapter {
-		public void initDeveloperInfo(Hashtable<String, String> cpInfo);
+		public void configDeveloperInfo(Hashtable<String, String> cpInfo);
 		public void payForProduct(Hashtable<String, String> cpInfo);
 		public void setDebugMode(boolean debug);
 		public String getSDKVersion();
 	}
 
-	public static void payResult(IAPAdapter obj, int ret, String msg) {
+	public static void onPayResult(IAPAdapter obj, int ret, String msg) {
 		final int curRet = ret;
 		final String curMsg = msg;
 		final IAPAdapter curObj = obj;
 		PluginWrapper.runOnGLThread(new Runnable() {
 			@Override
 			public void run() {
-				nativePayResult(curObj, curRet, curMsg);
+				nativeOnPayResult(curObj, curRet, curMsg);
 			}
 		});
 	}
-	private static native void nativePayResult(Object obj, int ret, String msg);
+	private static native void nativeOnPayResult(Object obj, int ret, String msg);
 }

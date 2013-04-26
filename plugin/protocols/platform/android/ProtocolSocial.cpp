@@ -37,18 +37,18 @@ THE SOFTWARE.
 namespace cocos2d { namespace plugin {
 
 extern "C" {
-	JNIEXPORT void JNICALL Java_org_cocos2dx_plugin_InterfaceSocial_nativeShareResult(JNIEnv*  env, jobject thiz, jobject obj, jint ret, jstring msg)
+	JNIEXPORT void JNICALL Java_org_cocos2dx_plugin_InterfaceSocial_nativeOnShareResult(JNIEnv*  env, jobject thiz, jobject obj, jint ret, jstring msg)
 	{
 		std::string strMsg = PluginJniHelper::jstring2string(msg);
 		PluginProtocol* pPlugin = PluginUtils::getPluginPtr(obj);
-		LOGD("nativeShareResult(), Get plugin ptr : %p", pPlugin);
+		LOGD("nativeOnShareResult(), Get plugin ptr : %p", pPlugin);
 		if (pPlugin != NULL)
 		{
-			LOGD("nativeShareResult(), Get plugin name : %s", pPlugin->getPluginName());
+			LOGD("nativeOnShareResult(), Get plugin name : %s", pPlugin->getPluginName());
 			ProtocolSocial* pSocial = dynamic_cast<ProtocolSocial*>(pPlugin);
 			if (pSocial != NULL)
 			{
-				pSocial->shareResult((EShareResult) ret, strMsg.c_str());
+				pSocial->onShareResult((ShareResultCode) ret, strMsg.c_str());
 			}
 		}
 	}
@@ -69,7 +69,7 @@ bool ProtocolSocial::init()
     return true;
 }
 
-void ProtocolSocial::initDeveloperInfo(TSocialDevInfo devInfo)
+void ProtocolSocial::configDeveloperInfo(TSocialDeveloperInfo devInfo)
 {
     if (devInfo.empty())
     {
@@ -82,7 +82,7 @@ void ProtocolSocial::initDeveloperInfo(TSocialDevInfo devInfo)
     	PluginJniMethodInfo t;
         if (PluginJniHelper::getMethodInfo(t
     		, pData->jclassName.c_str()
-    		, "initDeveloperInfo"
+    		, "configDeveloperInfo"
     		, "(Ljava/util/Hashtable;)V"))
     	{
         	// generate the hashtable from map
@@ -102,7 +102,7 @@ void ProtocolSocial::share(TShareInfo info)
     {
         if (NULL != m_pListener)
         {
-            shareResult(eShareFail, "Share info error");
+            onShareResult(kShareFail, "Share info error");
         }
         LOGD("The Share info is empty!");
         return;
@@ -132,11 +132,11 @@ void ProtocolSocial::setResultListener(ShareResultListener* pListener)
 	m_pListener = pListener;
 }
 
-void ProtocolSocial::shareResult(EShareResult ret, const char* msg)
+void ProtocolSocial::onShareResult(ShareResultCode ret, const char* msg)
 {
     if (m_pListener)
     {
-    	m_pListener->shareResult(ret, msg);
+    	m_pListener->onShareResult(ret, msg);
     }
     else
     {
