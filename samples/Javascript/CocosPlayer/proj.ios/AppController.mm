@@ -22,6 +22,10 @@ extern "C" {
         [server sendFileList];
     }
     
+    void openEditBox() {
+        [server pressedPair];
+    }
+    
     void sendLogMsg(const char *msg) {
         if(server != NULL) {
             NSString *str = [NSString stringWithCString:msg encoding:NSASCIIStringEncoding];
@@ -31,7 +35,12 @@ extern "C" {
 
     
     void updatePairing(const char *pairing) {
-        NSString *code = [NSString stringWithCString:pairing encoding:NSASCIIStringEncoding];
+        NSString *code;
+        if(pairing) {
+            code = [NSString stringWithCString:pairing encoding:NSASCIIStringEncoding];
+        } else {
+            code = [[NSString alloc] initWithString:@"Auto"];
+        }
         if([code isEqual:@"Auto"]) {
             [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"pairing"];
         } else {
@@ -68,56 +77,6 @@ static AppController* appController = NULL;
 + (AppController*) appController
 {
     return appController;
-}
-
-
-- (void) resetCocos2d
-{
-    
-    return;
-    
-    UIView *view = [window.subviews objectAtIndex:0];
-    [view removeFromSuperview];
-    [window addSubview:view];
-    
-    UIView* mainView = viewController.view.superview;
-//    [viewController.view removeFromSuperview];
-//    [mainView addSubview:viewController.view];
-
-    return;
-    
-    viewController = nil;    
-    cocos2d::CCDirector::sharedDirector()->end();    
-    
-    EAGLView *__glView = [EAGLView viewWithFrame: [window bounds]
-                                     pixelFormat: kEAGLColorFormatRGBA8
-                                     depthFormat: GL_DEPTH_COMPONENT16 //_OES
-                              preserveBackbuffer: NO
-                                      sharegroup: nil
-                                   multiSampling: NO
-                                 numberOfSamples: 0 ];
-    
-    // Use RootViewController manage EAGLView
-    viewController = [[RootViewController alloc] initWithNibName:nil bundle:nil];
-    viewController.wantsFullScreenLayout = YES;
-    viewController.view = __glView;
-    
-    // Set RootViewController to window
-    if ( [[UIDevice currentDevice].systemVersion floatValue] < 6.0)
-    {
-        // warning: addSubView doesn't work on iOS6
-        [mainView addSubview: viewController.view];
-    }
-    else
-    {
-        // use this method on ios6
-        [mainView setRootViewController:viewController];
-    }
-    
-//    [[UIApplication sharedApplication] setStatusBarHidden: YES];
-    
-    cocos2d::CCApplication::sharedApplication()->run();
-
 }
 
 

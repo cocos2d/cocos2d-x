@@ -19,7 +19,6 @@ void cleanCache() {
     RootViewController    *viewController;
 }
 + (AppController*) appController;
-- (void) resetCocos2d;
 
 @end
 
