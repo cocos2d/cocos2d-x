@@ -266,19 +266,44 @@ bool CCLabelTTF::updateTexture()
 		return false;
     }
     
+    ccTextShadow *textShadow  = 0;
+    ccTextStroke *textStroke  = 0;
+    
+    if (m_strokeEnabled)
+    {
+        textStroke = new ccTextStroke;
+        if (!textStroke)
+            return false;
+        
+        textStroke->m_strokeSize    = m_strokeSize;
+        textStroke->m_strokeColor   = m_strokeColor;
+    }
+    
+    if (m_shadowEnabled)
+    {
+        textShadow = new ccTextShadow;
+        
+        if (!textShadow)
+        {
+            if(textStroke)
+                delete textStroke;
+            return false;
+        }
+        
+        textShadow->m_shadowOffset  = m_shadowOffset;
+        textShadow->m_shadowBlur    = m_shadowBlur;
+        textShadow->m_shadowOpacity = m_shadowOpacity;
+    }
+    
+    
     tex->initWithStringShadowStroke( m_string.c_str(),
                                     m_pFontName->c_str(),
                                     m_fFontSize * CC_CONTENT_SCALE_FACTOR(),
                                     CC_SIZE_POINTS_TO_PIXELS(m_tDimensions),
                                     m_hAlignment,
                                     m_vAlignment,
-                                    m_shadowEnabled,
-                                    m_shadowOffset,
-                                    m_shadowOpacity,
-                                    m_shadowBlur,
-                                    m_strokeEnabled,
-                                    m_strokeColor,
-                                    m_strokeSize);
+                                    textShadow,
+                                    textStroke);
     
     this->setTexture(tex);
     tex->release();
@@ -286,7 +311,15 @@ bool CCLabelTTF::updateTexture()
 	CCRect rect = CCRectZero;
     rect.size = m_pobTexture->getContentSize();
     this->setTextureRect(rect);
+    
+    
+    if (textShadow)
+        delete textShadow;
+    
+    if (textStroke)
+        delete textStroke;
 
+    
     return true;
 }
 

@@ -428,25 +428,17 @@ bool CCTexture2D::initWithString(const char *text, const char *fontName, float f
 
 bool CCTexture2D::initWithString(const char *text, const char *fontName, float fontSize, const CCSize& dimensions, CCTextAlignment hAlignment, CCVerticalTextAlignment vAlignment)
 {
-    ccColor3B   notUsedColor;
-    CCSize      noUsedSize(0.0, 0.0);
-    
-    return initWithStringShadowStroke(text, fontName, fontSize, dimensions, hAlignment, vAlignment, false, noUsedSize, 0.0, 0.0, false, notUsedColor, 0.0);
+    return initWithStringShadowStroke(text, fontName, fontSize, dimensions, hAlignment, vAlignment, 0, 0);
 }
 
-bool CCTexture2D::initWithStringShadowStroke(    const char                 *text,
-                                                 const char                 *fontName,
-                                                 float                      fontSize,
-                                                 const CCSize               & dimensions,
-                                                 CCTextAlignment            hAlignment,
-                                                 CCVerticalTextAlignment    vAlignment,
-                                                 bool                       shadowEnabled,
-                                                 CCSize                     &shadowOffset,
-                                                 float                      shadowOpacity,
-                                                 float                      shadowBlur,
-                                                 bool                       strokeEnabled,
-                                                 ccColor3B &                strokeColor,
-                                                 float                      strokeSize)
+bool CCTexture2D::initWithStringShadowStroke(const char *text,
+                                             const char *fontName,
+                                             float fontSize,
+                                             const CCSize& dimensions,
+                                             CCTextAlignment hAlignment,
+                                             CCVerticalTextAlignment vAlignment,
+                                             ccTextShadow *pShadowParams,
+                                             ccTextStroke *pStrokeParams)
 {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     // cache the texture data
@@ -476,6 +468,40 @@ bool CCTexture2D::initWithStringShadowStroke(    const char                 *tex
         CCAssert(false, "Not supported alignment format!");
         return false;
     }
+
+    
+    
+    // handle shadow parameters
+    bool  shadowEnabled =  false;
+    float shadowDX      = 0.0;
+    float shadowDY      = 0.0;
+    float shadowBlur    = 0.0;
+    float shadowOpacity = 0.0;
+    
+    if (pShadowParams!=0)
+    {
+        shadowEnabled =  true;
+        shadowDX      = pShadowParams->m_shadowOffset.width;
+        shadowDY      = pShadowParams->m_shadowOffset.height;
+        shadowBlur    = pShadowParams->m_shadowBlur;
+        shadowOpacity = pShadowParams->m_shadowOpacity;
+    }
+    
+    // handle stroke parameters
+    bool strokeEnabled = false;
+    float strokeColorR = 0.0;
+    float strokeColorG = 0.0;
+    float strokeColorB = 0.0;
+    float strokeSize   = 0.0;
+    
+    if (pStrokeParams!=0)
+    {
+        strokeEnabled = true;
+        strokeColorR = pStrokeParams->m_strokeColor.r / 255;
+        strokeColorG = pStrokeParams->m_strokeColor.g / 255;
+        strokeColorB = pStrokeParams->m_strokeColor.b / 255;
+        strokeSize   = pStrokeParams->m_strokeSize;
+    }
     
     CCImage* pImage = new CCImage();
     do
@@ -489,14 +515,14 @@ bool CCTexture2D::initWithStringShadowStroke(    const char                 *tex
                                                   fontName,
                                                   (int)fontSize,
                                                   shadowEnabled,
-                                                  shadowOffset.width,
-                                                  shadowOffset.height,
+                                                  shadowDX,
+                                                  shadowDY,
                                                   shadowOpacity,
                                                   shadowBlur,
                                                   strokeEnabled,
-                                                  (strokeColor.r/255.0),
-                                                  (strokeColor.g/255.0),
-                                                  (strokeColor.b/255.0),
+                                                  strokeColorR,
+                                                  strokeColorG,
+                                                  strokeColorB,
                                                   strokeSize);
         
         
