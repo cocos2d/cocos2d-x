@@ -86,6 +86,7 @@ extern NSString *kCCBPlayerStatusStringScript;
 @property (nonatomic,copy) NSString* serverStatus;
 
 - (void) start;
+- (void) runJSApp;
 - (void) stop;
 - (void) setPairingCode: (NSString *)code;
 - (void) startIfNotStarted;
