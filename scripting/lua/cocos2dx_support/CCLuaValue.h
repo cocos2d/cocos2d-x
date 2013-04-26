@@ -69,7 +69,7 @@ typedef union {
     CCObject*           ccobjectValue;
 } CCLuaValueField;
 
-class CCLuaValue
+class CC_DLL CCLuaValue
 {
 public:
     static const CCLuaValue intValue(const int intValue);

@@ -35,7 +35,7 @@ extern "C" {
 
 NS_CC_BEGIN
 
-class CCLuaStack : public CCObject
+class CC_DLL CCLuaStack : public CCObject
 {
 public:
     static CCLuaStack *create(void);
