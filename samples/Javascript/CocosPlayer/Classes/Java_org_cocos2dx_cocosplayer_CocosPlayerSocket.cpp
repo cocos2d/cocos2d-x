@@ -5,15 +5,20 @@
 #include "platform/android/jni/JniHelper.h"
 #include "cocoa/CCString.h"
 #include "Java_org_cocos2dx_cocosplayer_CocosPlayerSocket.h"
+#include "jsapi.h"
 
 #define  LOG_TAG    "Java_org_cocos2dx_cocosplayer_CocosPlayerSocket.cpp"
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
 
 #define  SOCKET_CLASS_NAME "org/cocos2dx/cocosplayer/CocosPlayerSocket"
+#define  MAIN_CLASS_NAME "org/cocos2dx/cocosplayer/CocosPlayer"
 #define  STREAM_CLASS_NAME "org/cocos2dx/cocosplayer/CCBStreamHandler"
 
 using namespace cocos2d;
 using namespace std;
+
+const int SCREEN_ORIENTATION_PORTRAIT = 1;
+const int SCREEN_ORIENTATION_LANDSCAPE = 0;
 
 extern "C" {
    void updatePairing(const char *code) {
@@ -29,6 +34,21 @@ extern "C" {
 	  t.env->DeleteLocalRef(t.classID);
        }
    }
+
+  void setOrientationJNI(int orient) {
+        JniMethodInfo t;
+        if (JniHelper::getStaticMethodInfo(t, MAIN_CLASS_NAME, "setOrientation", "(I)V")) {
+	  t.env->CallStaticVoidMethod(t.classID, t.methodID, orient);
+	  t.env->DeleteLocalRef(t.classID);
+        }    
+	handle_set_orient(orient == SCREEN_ORIENTATION_PORTRAIT);
+  }
+
+  void runJSApp() {
+    handle_ccb_run();
+    setOrientationJNI(SCREEN_ORIENTATION_PORTRAIT);
+  }
+  
 
    void cleanCacheDirJNI() {
         JniMethodInfo t;

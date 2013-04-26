@@ -32,7 +32,10 @@ extern "C" {
             [server sendLog:[str stringByAppendingString:@"\n"]];
         }
     }
-
+    
+    void runJSApp() {
+        [server runJSApp];
+    }
     
     void updatePairing(const char *pairing) {
         NSString *code;
