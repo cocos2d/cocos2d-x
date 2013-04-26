@@ -21,32 +21,6 @@ jint JNI_OnLoad(JavaVM *vm, void *reserved)
     return JNI_VERSION_1_4;
 }
 
-
-static void initRotatedView(jint w, jint h) {
-    if (!CCDirector::sharedDirector()->getOpenGLView())
-    {
-        CCEGLView *view = CCEGLView::sharedOpenGLView();
-        view->setFrameSize(w, h);
-
-        AppDelegate *pAppDelegate = new AppDelegate();
-        CCApplication::sharedApplication()->run();
-    }
-    
-    else
-    {
-        ccDrawInit();
-        ccGLInvalidateStateCache();
-        
-        CCShaderCache::sharedShaderCache()->reloadDefaultShaders();
-	CCTextureCache::reloadAllTextures();
-	CCNotificationCenter::sharedNotificationCenter()->postNotification(EVNET_COME_TO_FOREGROUND, NULL);
-	CCDirector::sharedDirector()->setGLDefaultValues(); 
-	
-	bool isPortrait = (w < h) ? true: false;
-	handle_set_orient(isPortrait);
-    }
-}
-
 void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeInit(JNIEnv*  env, jobject thiz, jint w, jint h)
 {
     if (!CCDirector::sharedDirector()->getOpenGLView())
@@ -74,18 +48,17 @@ void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeInit(JNIEnv*  env, jobject thi
 
   JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeOnScreenSizeChanged(JNIEnv* env, jobject thiz, jint w, jint h)
   {
-    initRotatedView(w,h);
+    //    handle_set_orient(w, h);
   }
 
   void Java_org_cocos2dx_lib_Cocos2dxGLSurfaceView_nativeRunCCB(JNIEnv*  env, jobject thiz)
   {
-    LOGD("INSIDE JNI RUN CALL");
     handle_ccb_run();
   }
 
   void Java_org_cocos2dx_cocosplayer_CocosPlayerSocket_nativeRunCCB(JNIEnv*  env, jobject thiz)
   {
-    LOGD("INSIDE JNI RUN CALL");
+    LOGD("INSIDE JNI RUN CALL %d %d", gettid(), getpid());
     handle_ccb_run();
   }
 
@@ -112,6 +85,7 @@ void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeInit(JNIEnv*  env, jobject thi
 
   void Java_org_cocos2dx_cocosplayer_CocosPlayerSocket_nativeSetOrientation(JNIEnv*  env, jobject thiz, jboolean isPortrait)
   {
+    LOGD("INSIDE SET ORIENTATION CALL");
     handle_set_orient((bool)isPortrait);
   }
 }
