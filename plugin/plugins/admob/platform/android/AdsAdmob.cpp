@@ -37,19 +37,19 @@ bool AdsAdmob::init()
 	return PluginUtils::initJavaPlugin(this, "org.cocos2dx.plugin.AdsAdmob");
 }
 
-void AdsAdmob::initAppInfo(TAppInfo appInfo)
+void AdsAdmob::configDeveloperInfo(TAdsDeveloperInfo appInfo)
 {
-	ProtocolAds::initAppInfo(appInfo);
+	ProtocolAds::configDeveloperInfo(appInfo);
 }
 
-void AdsAdmob::showBannerAd(EBannerPos pos, int sizeEnum)
+void AdsAdmob::showAds(AdsType type, int sizeEnum, AdsPos pos)
 {
-	ProtocolAds::showBannerAd(pos, sizeEnum);
+	ProtocolAds::showAds(type, sizeEnum, pos);
 }
 
-void AdsAdmob::hideBannerAd()
+void AdsAdmob::hideAds(AdsType type)
 {
-	ProtocolAds::hideBannerAd();
+	ProtocolAds::hideAds(type);
 }
 
 const char* AdsAdmob::getSDKVersion()

@@ -43,18 +43,17 @@ public class AdsAdmob implements AdsAdapter {
 	private static final String LOG_TAG = "AdsAdmob";
 	private static Activity mContext = null;
 	private static boolean bDebug = false;
-//	private static Handler mHandler = null;
-//	private static AdsAdmob mAdapter = null;
+	private static AdsAdmob mAdapter = null;
 
 	private AdView adView = null;
 	private String mPublishID = "";
 	private Set<String> mTestDevices = null;
 	private WindowManager mWm = null;
 
-	private static final int SIZE_BANNER = 0;
-	private static final int SIZE_IABMRect = 1;
-	private static final int SIZE_IABBanner = 2;
-	private static final int SIZE_IABLeaderboard = 3;
+	private static final int ADMOB_SIZE_BANNER = 0;
+	private static final int ADMOB_SIZE_IABMRect = 1;
+	private static final int ADMOB_SIZE_IABBanner = 2;
+	private static final int ADMOB_SIZE_IABLeaderboard = 3;
 
 	protected static void LogE(String msg, Exception e) {
 		Log.e(LOG_TAG, msg, e);
@@ -69,7 +68,7 @@ public class AdsAdmob implements AdsAdapter {
 
 	public AdsAdmob(Context context) {
 		mContext = (Activity) context;
-		//mAdapter = this;
+		mAdapter = this;
 	}
 
 	@Override
@@ -83,9 +82,9 @@ public class AdsAdmob implements AdsAdapter {
 	}
 
 	@Override
-	public void initAppInfo(Hashtable<String, String> appInfo) {
+	public void configDeveloperInfo(Hashtable<String, String> devInfo) {
 		try {
-			mPublishID = appInfo.get("AdmobID");
+			mPublishID = devInfo.get("AdmobID");
 			LogD("init AppInfo : " + mPublishID);
 		} catch (Exception e) {
 			LogE("initAppInfo, The format of appInfo is wrong", e);
@@ -93,7 +92,38 @@ public class AdsAdmob implements AdsAdapter {
 	}
 
 	@Override
-	public void showBannerAd(int pos, int sizeEnum) {
+	public void showAds(int adsType, int sizeEnum, int pos) {
+		switch (adsType) {
+		case InterfaceAds.ADS_TYPE_BANNER:
+			showBannerAd(sizeEnum, pos);
+			break;
+		case InterfaceAds.ADS_TYPE_FULL_SCREEN:
+			LogD("Now not support full screen view in Admob");
+			break;
+		default:
+			break;
+		}
+	}
+
+	@Override
+	public void spendPoints(int points) {
+		// do nothing, Admob don't have this function
+	}
+
+	@Override
+	public void hideAds(int adsType) {
+		switch (adsType) {
+		case InterfaceAds.ADS_TYPE_BANNER:
+			hideBannerAd();
+			break;
+		case InterfaceAds.ADS_TYPE_FULL_SCREEN:
+			break;
+		default:
+			break;
+		}
+	}
+
+	private void showBannerAd(int sizeEnum, int pos) {
 		final int curPos = pos;
 		final int curSize = sizeEnum;
 
@@ -112,13 +142,17 @@ public class AdsAdmob implements AdsAdapter {
 
 				AdSize size = AdSize.BANNER;
 				switch (curSize) {
-				case AdsAdmob.SIZE_BANNER:
+				case AdsAdmob.ADMOB_SIZE_BANNER:
+					size = AdSize.BANNER;
 					break;
-				case AdsAdmob.SIZE_IABMRect:
+				case AdsAdmob.ADMOB_SIZE_IABMRect:
+					size = AdSize.IAB_MRECT;
 					break;
-				case AdsAdmob.SIZE_IABBanner:
+				case AdsAdmob.ADMOB_SIZE_IABBanner:
+					size = AdSize.IAB_BANNER;
 					break;
-				case AdsAdmob.SIZE_IABLeaderboard:
+				case AdsAdmob.ADMOB_SIZE_IABLeaderboard:
+					size = AdSize.IAB_LEADERBOARD;
 					break;
 				default:
 					break;
@@ -139,7 +173,7 @@ public class AdsAdmob implements AdsAdapter {
 				}
 				
 				adView.loadAd(req);
-				adView.setAdListener(new AdmobAdListener());
+				adView.setAdListener(new AdmobAdsListener());
 
 				if (null == mWm) {
 					mWm = (WindowManager) mContext.getSystemService("window");
@@ -149,8 +183,7 @@ public class AdsAdmob implements AdsAdapter {
 		});
 	}
 
-	@Override
-	public void hideBannerAd() {
+	private void hideBannerAd() {
 		PluginWrapper.runOnMainThread(new Runnable() {
 			@Override
 			public void run() {
@@ -173,25 +206,25 @@ public class AdsAdmob implements AdsAdapter {
 		mTestDevices.add(deviceID);
 	}
 
-	private class AdmobAdListener implements AdListener {
+	private class AdmobAdsListener implements AdListener {
 
 		@Override
 		public void onDismissScreen(Ad arg0) {
 			LogD("onDismissScreen invoked");
-			InterfaceAds.dismissScreen();
+			InterfaceAds.onAdsResult(mAdapter, InterfaceAds.RESULT_CODE_FullScreenViewDismissed, "Full screen ads view dismissed!");
 		}
 
 		@Override
 		public void onFailedToReceiveAd(Ad arg0, ErrorCode arg1) {
-			int errorNo = InterfaceAds.UNKNOWN_ERROR;
+			int errorNo = InterfaceAds.RESULT_CODE_UnknownError;
 			String errorMsg = "Unknow error";
 			switch (arg1) {
 			case NETWORK_ERROR:
-				errorNo =  InterfaceAds.NETWORK_ERROR;
+				errorNo =  InterfaceAds.RESULT_CODE_NetworkError;
 				errorMsg = "Network error";
 				break;
 			case INVALID_REQUEST:
-				errorNo = InterfaceAds.REQUESTING_ERROR;
+				errorNo = InterfaceAds.RESULT_CODE_NetworkError;
 				errorMsg = "The ad request is invalid";
 				break;
 			case NO_FILL:
@@ -201,7 +234,7 @@ public class AdsAdmob implements AdsAdapter {
 				break;
 			}
 			LogD("failed to receive ad : " + errorNo + " , " + errorMsg);
-			InterfaceAds.failedToReceiveAd(errorNo, errorMsg);
+			InterfaceAds.onAdsResult(mAdapter, errorNo, errorMsg);
 		}
 
 		@Override
@@ -212,13 +245,13 @@ public class AdsAdmob implements AdsAdapter {
 		@Override
 		public void onPresentScreen(Ad arg0) {
 			LogD("onPresentScreen invoked");
-			InterfaceAds.presentScreen();
+			InterfaceAds.onAdsResult(mAdapter, InterfaceAds.RESULT_CODE_FullScreenViewShown, "Full screen ads view shown!");
 		}
 
 		@Override
 		public void onReceiveAd(Ad arg0) {
 			LogD("onReceiveAd invoked");
-			InterfaceAds.receiveAd();
+			InterfaceAds.onAdsResult(mAdapter, InterfaceAds.RESULT_CODE_AdsReceived, "Ads request received success!");
 		}
 	}
 }

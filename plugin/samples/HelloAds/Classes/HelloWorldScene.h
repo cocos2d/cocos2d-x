@@ -4,13 +4,11 @@
 #include "cocos2d.h"
 #include "AdsAdmob.h"
 
-class MyAdListener : public cocos2d::plugin::AdListener
+class MyAdsListener : public cocos2d::plugin::AdsListener
 {
 public:
-	virtual void onReceiveAd();
-	virtual void onPresentScreen();
-	virtual void onFailedToReceiveAd(EAdErrorCode code, const char* msg);
-	virtual void onDismissScreen();
+	virtual void onAdsResult(cocos2d::plugin::AdsResultCode code, const char* msg);
+	virtual void onPlayerGetPoints(int points, cocos2d::plugin::ProtocolAds* pAdsPlugin);
 };
 
 class HelloWorld : public cocos2d::CCLayer
@@ -30,18 +28,22 @@ public:
 	// option changed callback
 	void caseChanged(CCObject* pSender);
 	void posChanged(CCObject* pSender);
+	void typeChanged(CCObject* pSender);
 
     // implement the "static node()" method manually
     CREATE_FUNC(HelloWorld);
 
 private:
     cocos2d::plugin::AdsAdmob* m_pAdmob;
-    MyAdListener* m_pListener;
+    MyAdsListener* m_pListener;
 
     cocos2d::CCMenuItemToggle* m_pCaseItem;
+    cocos2d::CCMenuItemToggle* m_pTypeItem;
     cocos2d::CCMenuItemToggle* m_pPosItem;
+
     cocos2d::plugin::ProtocolAds* m_pAds;
-    cocos2d::plugin::ProtocolAds::EBannerPos m_ePos;
+    cocos2d::plugin::ProtocolAds::AdsPos m_ePos;
+    cocos2d::plugin::ProtocolAds::AdsType m_eType;
 };
 
 #endif // __HELLOWORLD_SCENE_H__

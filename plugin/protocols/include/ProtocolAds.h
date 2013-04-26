@@ -30,21 +30,37 @@ THE SOFTWARE.
 
 namespace cocos2d { namespace plugin {
 
-typedef std::map<std::string, std::string> TAppInfo;
+typedef std::map<std::string, std::string> TAdsDeveloperInfo;
 
-class AdListener
+typedef enum
+{
+    kAdsReceived = 0,            // The ad is received
+
+    kFullScreenViewShown,       // The full screen advertisement shown
+    kFullScreenViewDismissed,   // The full screen advertisement dismissed
+
+    kPointsSpendSucceed,        // The points spend succeed
+    kPointsSpendFailed,         // The points spend failed
+
+    kNetworkError,              // Network error
+    kUnknownError,              // Unknown error
+} AdsResultCode;
+
+class ProtocolAds;
+class AdsListener
 {
 public:
-    typedef enum
-    {
-        eUnknownError = 0,
-        eNetworkError,
-    } EAdErrorCode;
-
-    virtual void onReceiveAd() {}
-    virtual void onPresentScreen() {}
-    virtual void onFailedToReceiveAd(EAdErrorCode code, const char* msg) {}
-    virtual void onDismissScreen() {}
+    /**
+    @brief The advertisement request result
+    */
+    virtual void onAdsResult(AdsResultCode code, const char* msg) = 0;
+    
+    /**
+    @brief Player get points from advertisement(For example: Tapjoy)
+    @param points The point number player has got.
+    @param pAdsPlugin  The plugin which the player get points. Used to spend the points.
+    */
+    virtual void onPlayerGetPoints(int points, ProtocolAds* pAdsPlugin) {}
 };
 
 class ProtocolAds : public PluginProtocol
@@ -52,13 +68,19 @@ class ProtocolAds : public PluginProtocol
 public:
 
     typedef enum {
-        ePosTop = 0,
-        ePosTopLeft,
-        ePosTopRight,
-        ePosBottom,
-        ePosBottomLeft,
-        ePosBottomRight,
-    } EBannerPos;
+        kBannerAd = 0,
+        kFullScreenAd,
+    } AdsType;
+
+    typedef enum {
+        kPosCenter = 0,
+        kPosTop,
+        kPosTopLeft,
+        kPosTopRight,
+        kPosBottom,
+        kPosBottomLeft,
+        kPosBottomRight,
+    } AdsPos;
 
     /**
     @brief plugin initialization
@@ -66,27 +88,38 @@ public:
     virtual bool init();
 
     /**
-    @brief initialize the application info
-    @param appInfo This parameter is the info of aplication,
+    @brief config the application info
+    @param devInfo This parameter is the info of aplication,
            different plugin have different format
     @warning Must invoke this interface before other interfaces.
              And invoked only once.
     */
-    virtual void initAppInfo(TAppInfo appInfo);
+    virtual void configDeveloperInfo(TAdsDeveloperInfo devInfo);
 
     /**
-    @brief show banner ads at specified position
-    @param pos The position where the banner view be shown
+    @brief show adview
+    @param type The adview type need to show.
     @param sizeEnum The size of the banner view.
-    	   In different plugin, it's have different mean.
-    	   Pay attention to the subclass definition
+                (only used when type is kBannerAd)
+                In different plugin, it's have different mean.
+                Pay attention to the subclass definition
+    @param pos The position where the adview be shown.
+               (only used when type is kBannerAd)
     */
-    virtual void showBannerAd(EBannerPos pos, int sizeEnum);
+    virtual void showAds(AdsType type, int sizeEnum = 0, AdsPos pos = kPosCenter);
 
     /**
-    @brief hide the banner ads view
+    @brief Hide the adview
+    @param type The adview type need to hide.
     */
-    virtual void hideBannerAd();
+    virtual void hideAds(AdsType type);
+
+    /**
+    @brief Spend the points.
+           Use this method to notify server spend points.
+    @param points Need spend number of points
+    */
+    virtual void spendPoints(int points);
 
     /**
      @brief Set whether needs to output logs to console.
@@ -97,16 +130,11 @@ public:
     /**
      @brief set the Ads listener
     */
-    static void setAdListener(AdListener* pListener)
-    {
-        m_pListener = pListener;
-    }
+    void setAdsListener(AdsListener* pListener);
 
     // For the callbak methods
-    static void receiveAd();
-    static void presentScreen();
-    static void failedToReceiveAd(AdListener::EAdErrorCode code, const char* msg);
-    static void dismissScreen();
+    void onAdsResult(AdsResultCode code, const char* msg);
+    void onPlayerGetPoints(int points);
 
     virtual const char* getPluginVersion() { return "ProtocolAds, v0.1.01 , subclass should override this interface!"; };
     virtual const char* getSDKVersion();
@@ -118,7 +146,7 @@ public:
     virtual ~ProtocolAds();
 
 protected:
-    static AdListener* m_pListener;
+    AdsListener* m_pListener;
 };
 
 }} // namespace cocos2d { namespace plugin {
