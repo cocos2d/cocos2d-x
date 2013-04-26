@@ -30,7 +30,7 @@ THE SOFTWARE.
 class MyPurchaseResult : public cocos2d::plugin::PayResultListener
 {
 public:
-	virtual void payResult(cocos2d::plugin::EPayResult ret, const char* msg, cocos2d::plugin::TProductInfo info);
+	virtual void onPayResult(cocos2d::plugin::PayResultCode ret, const char* msg, cocos2d::plugin::TProductInfo info);
 };
 
 class MyPurchase

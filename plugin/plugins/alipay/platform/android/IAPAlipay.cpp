@@ -41,7 +41,7 @@ bool IAPAlipay::init()
 }
 
 /**
-@brief initialize the developer info
+@brief config the developer info
 @param devInfo This parameter is the info of developer, must contains key:
     		AlipayPartner		The partner id of alipay account
 			AlipaySeller		The seller id of alipay account
@@ -52,9 +52,9 @@ bool IAPAlipay::init()
 @warning Must invoke this interface before other interfaces.
 		 And invoked only once.
 */
-void IAPAlipay::initDeveloperInfo(TDeveloperInfo devInfo)
+void IAPAlipay::configDeveloperInfo(TIAPDeveloperInfo devInfo)
 {
-	ProtocolIAP::initDeveloperInfo(devInfo);
+	ProtocolIAP::configDeveloperInfo(devInfo);
 }
 
 /**

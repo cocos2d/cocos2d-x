@@ -32,22 +32,22 @@ public class InterfaceSocial {
 	public static final int SHARERESULT_TIMEOUT = 3;
 
 	public interface ShareAdapter {
-		public void initDeveloperInfo(Hashtable<String, String> cpInfo);
+		public void configDeveloperInfo(Hashtable<String, String> cpInfo);
 		public void share(Hashtable<String, String> cpInfo);
 		public void setDebugMode(boolean debug);
 		public String getSDKVersion();
 	}
 
-	public static void shareResult(ShareAdapter obj, int ret, String msg) {
+	public static void onShareResult(ShareAdapter obj, int ret, String msg) {
 		final int curRet = ret;
 		final String curMsg = msg;
 		final ShareAdapter curAdapter = obj;
 		PluginWrapper.runOnGLThread(new Runnable() {
 			@Override
 			public void run() {
-				nativeShareResult(curAdapter, curRet, curMsg);
+				nativeOnShareResult(curAdapter, curRet, curMsg);
 			}
 		});
 	}
-	private static native void nativeShareResult(Object obj, int ret, String msg);
+	private static native void nativeOnShareResult(Object obj, int ret, String msg);
 }

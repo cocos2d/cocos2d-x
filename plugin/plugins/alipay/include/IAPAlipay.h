@@ -40,7 +40,7 @@ public:
     virtual bool init();
 
     /**
-    @brief initialize the developer info
+    @brief config the developer info
     @param devInfo This parameter is the info of developer, must contains key:
     		AlipayPartner		The partner id of alipay account
 			AlipaySeller		The seller id of alipay account
@@ -51,7 +51,7 @@ public:
     @warning Must invoke this interface before other interfaces.
              And invoked only once.
     */
-    virtual void initDeveloperInfo(TDeveloperInfo devInfo);
+    virtual void configDeveloperInfo(TIAPDeveloperInfo devInfo);
 
     /**
     @brief pay for product

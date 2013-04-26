@@ -74,7 +74,7 @@ public class IAPAlipay implements IAPAdapter {
 	}
 
 	@Override
-	public void initDeveloperInfo(Hashtable<String, String> cpInfo) {
+	public void configDeveloperInfo(Hashtable<String, String> cpInfo) {
 		LogD("initDeveloperInfo invoked " + cpInfo.toString());
 		try {
 			PartnerConfig.PARTNER = cpInfo.get("AlipayPartner");
@@ -335,7 +335,7 @@ public class IAPAlipay implements IAPAdapter {
 	}
 
 	private static void payResult(int ret, String msg) {
-		InterfaceIAP.payResult(mAdapter, ret, msg);
+		InterfaceIAP.onPayResult(mAdapter, ret, msg);
 		LogD("Alipay result : " + ret + " msg : " + msg);
 	}
 }

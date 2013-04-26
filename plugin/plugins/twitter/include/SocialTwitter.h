@@ -40,14 +40,14 @@ public:
     virtual bool init();
 
     /**
-    @brief initialize the developer info
+    @brief config the developer info
     @param devInfo This parameter is the info of developer, must contains key:
     		TwitterKey			The consumerkey of twitter account
     		TwitterSecret		The consumersecret of twitter account
     @warning Must invoke this interface before other interfaces.
              And invoked only once.
     */
-    virtual void initDeveloperInfo(TSocialDevInfo devInfo);
+    virtual void configDeveloperInfo(TSocialDeveloperInfo devInfo);
 
     /**
     @brief pay for product

@@ -76,7 +76,7 @@ void MyPurchase::loadIAPPlugin()
 	{
 		// init alipay plugin
 		s_pAlipay = dynamic_cast<IAPAlipay*>(PluginManager::getInstance()->loadPlugin("IAPAlipay"));
-		TDeveloperInfo pAlipayInfo;
+		TIAPDeveloperInfo pAlipayInfo;
 		if (pAlipayInfo.empty())
 		{
 			char msg[256] = { 0 };
@@ -84,12 +84,12 @@ void MyPurchase::loadIAPPlugin()
 			CCMessageBox(msg, "Alipay Warning");
 		}
 		s_pAlipay->setDebugMode(true);
-		s_pAlipay->initDeveloperInfo(pAlipayInfo);
+		s_pAlipay->configDeveloperInfo(pAlipayInfo);
 		s_pAlipay->setResultListener(s_pRetListener);
 	}
 
 	{
-		TDeveloperInfo pNdInfo;
+		TIAPDeveloperInfo pNdInfo;
 		pNdInfo["Nd91AppId"] = "100010";
 		pNdInfo["Nd91AppKey"] = "C28454605B9312157C2F76F27A9BCA2349434E546A6E9C75";
 		pNdInfo["Nd91Orientation"] = "landscape";
@@ -100,7 +100,7 @@ void MyPurchase::loadIAPPlugin()
 		}
 		s_pNd91 = dynamic_cast<IAPNd91*>(PluginManager::getInstance()->loadPlugin("IAPNd91"));
 		s_pNd91->setDebugMode(true);
-		s_pNd91->initDeveloperInfo(pNdInfo);
+		s_pNd91->configDeveloperInfo(pNdInfo);
 		s_pNd91->setResultListener(s_pRetListener);
 	}
 }
@@ -140,7 +140,7 @@ void MyPurchase::payByMode(TProductInfo info, MyPayMode mode)
 	}
 }
 
-void MyPurchaseResult::payResult(EPayResult ret, const char* msg, TProductInfo info)
+void MyPurchaseResult::onPayResult(PayResultCode ret, const char* msg, TProductInfo info)
 {
 	char goodInfo[1024] = { 0 };
 	sprintf(goodInfo, "商品名称:%s\n商品价格:%s\n商品描述:%s",

@@ -30,21 +30,21 @@ THE SOFTWARE.
 
 namespace cocos2d { namespace plugin {
 
-typedef std::map<std::string, std::string> TSocialDevInfo;
+typedef std::map<std::string, std::string> TSocialDeveloperInfo;
 typedef std::map<std::string, std::string> TShareInfo;
 
 typedef enum 
 {
-    eShareSuccess = 0,
-    eShareFail,
-    eShareCancel,
-    eShareTimeOut,
-} EShareResult;
+    kShareSuccess = 0,
+    kShareFail,
+    kShareCancel,
+    kShareTimeOut,
+} ShareResultCode;
 
 class ShareResultListener
 {
 public:
-    virtual void shareResult(EShareResult ret, const char* msg) = 0;
+    virtual void onShareResult(ShareResultCode ret, const char* msg) = 0;
 };
 
 class ProtocolSocial : public PluginProtocol
@@ -57,13 +57,13 @@ public:
     virtual bool init();
 
     /**
-    @brief initialize the developer info
+    @brief config the social developer info
     @param devInfo This parameter is the info of developer,
            different plugin have different format
     @warning Must invoke this interface before other interfaces.
              And invoked only once.
     */
-    virtual void initDeveloperInfo(TSocialDevInfo devInfo);
+    virtual void configDeveloperInfo(TSocialDeveloperInfo devInfo);
 
     /**
     @brief share information
@@ -86,12 +86,12 @@ public:
     @param pListener The callback object for share result
     @wraning Must invoke this interface before share
     */
-    virtual void setResultListener(ShareResultListener* pListener);
+    void setResultListener(ShareResultListener* pListener);
 
     /**
     @brief share result callback
     */
-    virtual void shareResult(EShareResult ret, const char* msg);
+    void onShareResult(ShareResultCode ret, const char* msg);
 
     virtual const char* getPluginVersion() { return "ProtocolSocial, v0.1.0, subclass should override this interface!"; };
     virtual const char* getSDKVersion();

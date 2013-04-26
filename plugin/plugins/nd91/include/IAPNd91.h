@@ -40,7 +40,7 @@ public:
     virtual bool init();
 
     /**
-    @brief initialize the developer info
+    @brief config the developer info
     @param devInfo This parameter is the info of developer, must contains key:
     		Nd91AppId           The app id of nd91
     		Nd91AppKey          The app key of nd91
@@ -49,7 +49,7 @@ public:
     @warning Must invoke this interface before other interfaces.
              And invoked only once.
     */
-    virtual void initDeveloperInfo(TDeveloperInfo devInfo);
+    virtual void configDeveloperInfo(TIAPDeveloperInfo devInfo);
 
     /**
     @brief pay for product

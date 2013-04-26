@@ -29,7 +29,7 @@ THE SOFTWARE.
 class MyShareResult : public cocos2d::plugin::ShareResultListener
 {
 public:
-	virtual void shareResult(cocos2d::plugin::EShareResult ret, const char* msg);
+	virtual void onShareResult(cocos2d::plugin::ShareResultCode ret, const char* msg);
 };
 
 class MySocialManager

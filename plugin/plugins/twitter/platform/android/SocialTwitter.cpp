@@ -18,7 +18,7 @@ bool SocialTwitter::init()
 }
 
 /**
-@brief initialize the developer info
+@brief config the developer info
 @param devInfo This parameter is the info of developer, must contains key:
 		TwitterKey			The consumerkey of twitter account
 		TwitterSecret		The consumersecret of twitter account
@@ -26,9 +26,9 @@ bool SocialTwitter::init()
 @warning Must invoke this interface before other interfaces.
 		 And invoked only once.
 */
-void SocialTwitter::initDeveloperInfo(TSocialDevInfo devInfo)
+void SocialTwitter::configDeveloperInfo(TSocialDeveloperInfo devInfo)
 {
-	ProtocolSocial::initDeveloperInfo(devInfo);
+	ProtocolSocial::configDeveloperInfo(devInfo);
 }
 
 /**
