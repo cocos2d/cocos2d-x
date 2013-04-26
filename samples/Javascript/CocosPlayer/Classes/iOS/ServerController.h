@@ -59,7 +59,7 @@ extern NSString *kCCBPlayerStatusStringStop;
 extern NSString *kCCBPlayerStatusStringPlay;
 extern NSString *kCCBPlayerStatusStringScript;
 
-@interface ServerController : NSObject <ThoMoServerDelegateProtocol>
+@interface ServerController : NSObject <ThoMoServerDelegateProtocol, UITextFieldDelegate>
 {
     ThoMoServerStub* server;
     
@@ -95,5 +95,6 @@ extern NSString *kCCBPlayerStatusStringScript;
 - (void) sendResultString:(NSString*) str;
 - (void) sendLog:(NSString*)log;
 - (void) sendFileList;
+- (void) pressedPair;
 
 @end

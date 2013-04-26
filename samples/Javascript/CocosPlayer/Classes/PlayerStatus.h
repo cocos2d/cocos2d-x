@@ -64,6 +64,7 @@ public:
   cocos2d::CCLabelTTF* mLblInstructions;
   cocos2d::CCLabelTTF* mLblPair;
   virtual void update(float dt);
+    static std::string pairingLabel;
 private:
     cocos2d::extension::CCEditBox *editBox;
 

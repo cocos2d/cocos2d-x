@@ -25,7 +25,7 @@ extern "C" {
        }
        JniMethodInfo t;
        if (JniHelper::getStaticMethodInfo(t, SOCKET_CLASS_NAME, "setPairingCode", "(I)V")) {
-	  t.env->CallStaticVoidMethod(t.classID, t.methodID, code);
+	  t.env->CallStaticVoidMethod(t.classID, t.methodID, pairingCode);
 	  t.env->DeleteLocalRef(t.classID);
        }
    }

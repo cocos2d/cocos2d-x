@@ -97,18 +97,12 @@ void handle_set_orient(bool isPortrait) {
     }
 }
 
-void handle_set_orient(float w, float h) {
-    cocos2d::CCEGLView* pView = CCEGLView::sharedOpenGLView();
-    bool isPortrait = (w > h) ? false: true;
-    if (pView != NULL)
-    {
-        CCSize frameSize = CCSizeMake(w, h);
-        CCSize designSize = pView->getDesignResolutionSize();
-        CCLOG("is Portrait %d", isPortrait);
-        if (((frameSize.width > frameSize.height && isPortrait))
-            || (frameSize.width < frameSize.height && !isPortrait)) {
-            setViewValues(pView, frameSize, designSize);
-        }
+void openEditBox();
+void updatePairingLabel(const char * label) {
+    if(!label) {
+        PlayerStatus::pairingLabel = "";
+    } else {
+        PlayerStatus::pairingLabel = label;
     }
 }
 

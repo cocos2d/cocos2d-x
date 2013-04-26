@@ -43,12 +43,14 @@ public:
      @param  the pointer of the application
      */
     virtual void applicationWillEnterForeground();
-    void shit();
+    void initGameView();
    
 };
 
 bool runMainScene();
 void handle_ccb_run();
+void openEditBox();
+void updatePairingLabel(const char *);
 void handle_ccb_stop();
 void handle_connected();
 void handle_disconnected();
