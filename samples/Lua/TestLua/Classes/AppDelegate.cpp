@@ -36,7 +36,6 @@ bool AppDelegate::applicationDidFinishLaunching()
 	std::string dirPath = "luaScript";
 
     std::string path = CCFileUtils::sharedFileUtils()->fullPathForFilename((dirPath + "/controller.lua").c_str());
-    pEngine->addSearchPath(path.substr(0, path.find_last_of("/") - dirPath.length()).c_str());
     pEngine->executeScriptFile(path.c_str());
 
     return true;
