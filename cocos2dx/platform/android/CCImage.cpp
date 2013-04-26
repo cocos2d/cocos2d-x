@@ -56,71 +56,42 @@ public:
         }
     }
 
-    bool getBitmapFromJava(const char *text, int nWidth, int nHeight, CCImage::ETextAlign eAlignMask, const char * pFontName, float fontSize)
-    {
-        JniMethodInfo methodInfo;
-        if (! JniHelper::getStaticMethodInfo(methodInfo, "org/cocos2dx/lib/Cocos2dxBitmap", "createTextBitmap", 
-            "(Ljava/lang/String;Ljava/lang/String;IIII)V"))
-        {
-            CCLOG("%s %d: error to get methodInfo", __FILE__, __LINE__);
-            return false;
-        }
-
-        // Do a full lookup for the font path using CCFileUtils in case the given font name is a relative path to a font file asset,
-        // or the path has been mapped to a different location in the app package:
-        std::string fullPathOrFontName = CCFileUtils::sharedFileUtils()->fullPathForFilename(pFontName);
-
-		// If the path name returned includes the 'assets' dir then that needs to be removed, because the android.content.Context
-		// requires this portion of the path to be omitted for assets inside the app package.
-		if (fullPathOrFontName.find("assets/") == 0)
-		{
-			fullPathOrFontName = fullPathOrFontName.substr(strlen("assets/"));	// Chop out the 'assets/' portion of the path.
-		}
-
-        /**create bitmap
-         * this method call Cococs2dx.createBitmap()(java code) to create the bitmap, the java code
-         * will call Java_org_cocos2dx_lib_Cocos2dxBitmap_nativeInitBitmapDC() to init the width, height
-         * and data.
-         * use this approach to decrease the jni call number
-        */
-        jstring jstrText = methodInfo.env->NewStringUTF(text);
-        jstring jstrFont = methodInfo.env->NewStringUTF(fullPathOrFontName.c_str());
-
-        methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID, jstrText, 
-            jstrFont, (int)fontSize, eAlignMask, nWidth, nHeight);
-
-        methodInfo.env->DeleteLocalRef(jstrText);
-        methodInfo.env->DeleteLocalRef(jstrFont);
-        methodInfo.env->DeleteLocalRef(methodInfo.classID);
-
-        return true;
-    }
-
-
-
     bool getBitmapFromJavaShadowStroke(	const char *text,
     									int nWidth,
     									int nHeight,
     									CCImage::ETextAlign eAlignMask,
     									const char * pFontName,
     									float fontSize,
-    									bool shadow,
-    									float shadowDeltaX,
-    									float shadowDeltaY,
-    									float shadowBlur,
-    									float shadowIntensity,
-    									bool stroke,
-    									float strokeColorR,
-    									float strokeColorG,
-    									float strokeColorB,
-    									float strokeSize)
-       {
+    									bool shadow 			= false,
+    									float shadowDeltaX 		= 0.0,
+    									float shadowDeltaY 		= 0.0,
+    									float shadowBlur 		= 0.0,
+    									float shadowIntensity 	= 0.0,
+    									bool stroke 			= false,
+    									float strokeColorR 		= 0.0,
+    									float strokeColorG 		= 0.0,
+    									float strokeColorB 		= 0.0,
+    									float strokeSize 		= 0.0 )
+    {
            JniMethodInfo methodInfo;
            if (! JniHelper::getStaticMethodInfo(methodInfo, "org/cocos2dx/lib/Cocos2dxBitmap", "createTextBitmapShadowStroke",
-               "(Ljava/lang/String;Ljava/lang/String;IIII)V"))
+               "(Ljava/lang/String;Ljava/lang/String;IIIIZFFFZFFFF)V"))
            {
                CCLOG("%s %d: error to get methodInfo", __FILE__, __LINE__);
                return false;
+           }
+        
+        
+        
+           // Do a full lookup for the font path using CCFileUtils in case the given font name is a relative path to a font file asset,
+           // or the path has been mapped to a different location in the app package:
+           std::string fullPathOrFontName = CCFileUtils::sharedFileUtils()->fullPathForFilename(pFontName);
+        
+		   // If the path name returned includes the 'assets' dir then that needs to be removed, because the android.content.Context
+		   // requires this portion of the path to be omitted for assets inside the app package.
+		   if (fullPathOrFontName.find("assets/") == 0)
+		   {
+               fullPathOrFontName = fullPathOrFontName.substr(strlen("assets/"));	// Chop out the 'assets/' portion of the path.
            }
 
            /**create bitmap
@@ -130,17 +101,23 @@ public:
             * use this approach to decrease the jni call number
            */
            jstring jstrText = methodInfo.env->NewStringUTF(text);
-           jstring jstrFont = methodInfo.env->NewStringUTF(pFontName);
+           jstring jstrFont = methodInfo.env->NewStringUTF(fullPathOrFontName.c_str());
 
            methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID, jstrText,
-               jstrFont, (int)fontSize, eAlignMask, nWidth, nHeight);
+               jstrFont, (int)fontSize, eAlignMask, nWidth, nHeight, shadow, shadowDeltaX, -shadowDeltaY, shadowBlur, stroke, strokeColorR, strokeColorG, strokeColorB, strokeSize);
 
            methodInfo.env->DeleteLocalRef(jstrText);
            methodInfo.env->DeleteLocalRef(jstrFont);
            methodInfo.env->DeleteLocalRef(methodInfo.classID);
 
            return true;
-       }
+    }
+
+
+    bool getBitmapFromJava(const char *text, int nWidth, int nHeight, CCImage::ETextAlign eAlignMask, const char * pFontName, float fontSize)
+    {
+    	return  getBitmapFromJavaShadowStroke(	text, nWidth, nHeight, eAlignMask, pFontName, fontSize );
+    }
 
 
     // ARGB -> RGBA
