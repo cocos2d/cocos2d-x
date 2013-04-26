@@ -112,6 +112,28 @@ public:
         ETextAlign      eAlignMask = kAlignCenter,
         const char *    pFontName = 0,
         int             nSize = 0);
+    
+    
+    bool initWithStringShadowStroke(
+                                        const char *    pText,
+                                        int             nWidth      = 0,
+                                        int             nHeight     = 0,
+                                        ETextAlign      eAlignMask  = kAlignCenter,
+                                        const char *    pFontName   = 0,
+                                        int             nSize       = 0,
+                                        bool shadow                 = false,
+                                        float shadowOffsetX         = 0.0,
+                                        float shadowOffsetY         = 0.0,
+                                        float shadowOpacity         = 0.0,
+                                        float shadowBlur            = 0.0,
+                                        bool  stroke                =  false,
+                                        float strokeR               = 1,
+                                        float strokeG               = 1,
+                                        float strokeB               = 1,
+                                        float strokeSize            = 1
+                                    
+                                    );
+    
 
     unsigned char *   getData()               { return m_pData; }
     int         getDataLen()            { return m_nWidth * m_nHeight; }

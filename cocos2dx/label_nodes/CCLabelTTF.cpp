@@ -45,6 +45,8 @@ CCLabelTTF::CCLabelTTF()
 , m_pFontName(NULL)
 , m_fFontSize(0.0)
 , m_string("")
+, m_shadowEnabled(false)
+, m_strokeEnabled(false)
 {
 }
 
@@ -120,10 +122,10 @@ bool CCLabelTTF::initWithString(const char *string, const char *fontName, float 
         this->setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(SHADER_PROGRAM));
         
         m_tDimensions = CCSizeMake(dimensions.width, dimensions.height);
-        m_hAlignment = hAlignment;
-        m_vAlignment = vAlignment;
-        m_pFontName = new std::string(fontName);
-        m_fFontSize = fontSize;
+        m_hAlignment  = hAlignment;
+        m_vAlignment  = vAlignment;
+        m_pFontName   = new std::string(fontName);
+        m_fFontSize   = fontSize;
         
         this->setString(string);
         
@@ -264,13 +266,20 @@ bool CCLabelTTF::updateTexture()
 		return false;
     }
     
-    tex->initWithString( m_string.c_str(),
-                        m_pFontName->c_str(),
-                        m_fFontSize * CC_CONTENT_SCALE_FACTOR(),
-                        CC_SIZE_POINTS_TO_PIXELS(m_tDimensions), 
-                        m_hAlignment,
-                        m_vAlignment);
-	
+    tex->initWithStringShadowStroke( m_string.c_str(),
+                                    m_pFontName->c_str(),
+                                    m_fFontSize * CC_CONTENT_SCALE_FACTOR(),
+                                    CC_SIZE_POINTS_TO_PIXELS(m_tDimensions),
+                                    m_hAlignment,
+                                    m_vAlignment,
+                                    m_shadowEnabled,
+                                    m_shadowOffset,
+                                    m_shadowOpacity,
+                                    m_shadowBlur,
+                                    m_strokeEnabled,
+                                    m_strokeColor,
+                                    m_strokeSize);
+    
     this->setTexture(tex);
     tex->release();
 	
@@ -279,6 +288,87 @@ bool CCLabelTTF::updateTexture()
     this->setTextureRect(rect);
 
     return true;
+}
+
+void CCLabelTTF::enableShadow(CCSize &shadowOffset, float shadowOpacity, float shadowBlur)
+{
+    bool valueChanged = false;
+    
+    if (false == m_shadowEnabled)
+    {
+        m_shadowEnabled = true;
+        valueChanged    = true;
+    }
+    
+    if ( (m_shadowOffset.width != shadowOffset.width) || (m_shadowOffset.height!=shadowOffset.height) )
+    {
+        m_shadowOffset = shadowOffset;
+        valueChanged = true;
+    }
+    
+    if (m_shadowOpacity != shadowOpacity )
+    {
+        m_shadowOpacity = shadowOpacity;
+        valueChanged = true;
+    }
+
+    if (m_shadowBlur    != shadowBlur)
+    {
+        m_shadowBlur = shadowBlur;
+        valueChanged = true;
+    }
+    
+    
+    if ( valueChanged )
+    {
+        this->updateTexture();
+    }
+}
+
+void CCLabelTTF::disableShadow()
+{
+    if (m_shadowEnabled)
+    {
+        m_shadowEnabled = false;
+        this->updateTexture();
+    }
+}
+
+void CCLabelTTF::enableStroke(ccColor3B &strokeColor, float strokeSize)
+{
+    bool valueChanged = false;
+    
+    if(m_strokeEnabled == false)
+    {
+        m_strokeEnabled = true;
+        valueChanged = true;
+    }
+    
+    if ( (m_strokeColor.r != strokeColor.r) || (m_strokeColor.g != strokeColor.g) || (m_strokeColor.b != strokeColor.b) )
+    {
+        m_strokeColor = strokeColor;
+        valueChanged = true;
+    }
+    
+    if (m_strokeSize!=strokeSize)
+    {
+        m_strokeSize = strokeSize;
+        valueChanged = true;
+    }
+    
+    if (valueChanged)
+    {
+        this->updateTexture();
+    }
+}
+
+void CCLabelTTF::disableStroke()
+{
+    if (m_strokeEnabled)
+    {
+        m_strokeEnabled = false;
+        this->updateTexture();
+    }
 }
 
 NS_CC_END
