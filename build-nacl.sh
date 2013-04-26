@@ -39,5 +39,11 @@ if [ "$1" = "clean" ]; then
     exit 0
 fi
 
-make DEBUG=1 all
-make DEBUG=0 all
+make NACL_ARCH=x86_64 DEBUG=1 all
+make NACL_ARCH=x86_64 DEBUG=0 all
+
+make NACL_ARCH=i686 DEBUG=1 all
+make NACL_ARCH=i686 DEBUG=0 all
+
+make NACL_ARCH=arm DEBUG=1 all
+make NACL_ARCH=arm DEBUG=0 all
