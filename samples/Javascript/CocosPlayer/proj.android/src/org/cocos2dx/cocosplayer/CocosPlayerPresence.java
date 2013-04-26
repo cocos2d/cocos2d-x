@@ -66,7 +66,7 @@ public class CocosPlayerPresence extends Service {
 
 	public static int startPresence() {
 
-		if (port < 0 || !running)
+		if (port < 0 || running)
 			return -1;
 
 		Log.i(TAG, "Starting NSD Service");
