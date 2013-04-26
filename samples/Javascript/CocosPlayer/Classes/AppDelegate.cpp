@@ -16,10 +16,11 @@
 
 
 
-char *_js_log_buf_ccbuilder = NULL;
 static bool firstTime = true;
 
 static bool isPortraitApp = true;
+char *_cocosplayer_log_buf = NULL;
+
 
 USING_NS_CC;
 using namespace CocosDenshion;
@@ -139,9 +140,8 @@ void handle_ccb_stop() {
 
 void sendLogMsg(const char *msg);
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 
-void cocos2d::CCLog(const char * pszFormat, ...)
+void cocosPlayerNetworkLog(const char * pszFormat, ...)
 {
     printf("Cocos2d: ");
     char szBuf[kMaxLogLen+1] = {0};
@@ -153,7 +153,50 @@ void cocos2d::CCLog(const char * pszFormat, ...)
     printf("\n");
     sendLogMsg(szBuf);
 }
-#endif
+
+void cocosplayer_js_log(const char *format, ...) {
+    if (_cocosplayer_log_buf == NULL) {
+        _cocosplayer_log_buf = (char *)calloc(sizeof(char), kMaxLogLen+1);
+    }
+    va_list vl;
+    va_start(vl, format);
+    int len = vsnprintf(_cocosplayer_log_buf, kMaxLogLen, format, vl);
+    va_end(vl);
+    if (len) {
+        cocosPlayerNetworkLog("CocosPlayer: %s\n", _cocosplayer_log_buf);
+    }
+}
+
+JSBool JS_cocosPlayerLog(JSContext* cx, uint32_t argc, jsval *vp)
+{
+    if (argc > 0) {
+        JSString *string = NULL;
+        JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "S", &string);
+        if (string) {
+            JSStringWrapper wrapper(string);
+            cocosplayer_js_log((char *)wrapper);
+        }
+    }
+    return JS_TRUE;
+}
+
+
+static void register_CocosPlayer(JSContext* cx, JSObject* obj) {
+	// first, try to get the ns
+	jsval nsval;
+	JSObject *ns;
+	JS_GetProperty(cx, obj, "cc", &nsval);
+	if (nsval == JSVAL_VOID) {
+		ns = JS_NewObject(cx, NULL, NULL, NULL);
+		nsval = OBJECT_TO_JSVAL(ns);
+		JS_SetProperty(cx, obj, "cc", &nsval);
+	} else {
+		JS_ValueToObject(cx, nsval, &ns);
+	}
+	obj = ns;
+
+    JS_DefineFunction(cx, obj, "_cocosplayerLog", JS_cocosPlayerLog, 2, JSPROP_READONLY | JSPROP_PERMANENT);
+}
 
 extern "C" {
     
@@ -330,6 +373,7 @@ extern "C" {
         sc->addRegisterCallback(jsb_register_system);
         sc->addRegisterCallback(jsb_register_chipmunk);
         sc->addRegisterCallback(JSB_register_opengl);
+        sc->addRegisterCallback(register_CocosPlayer);
         sc->start();
         
         CCScriptEngineProtocol *pEngine = ScriptingCore::getInstance();
