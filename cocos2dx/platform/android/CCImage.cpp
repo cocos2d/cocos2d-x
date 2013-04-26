@@ -149,6 +149,27 @@ bool CCImage::initWithString(
     return bRet;
 }
 
+bool CCImage::initWithStringShadowStroke(
+                                         const char * pText,
+                                         int         nWidth ,
+                                         int         nHeight ,
+                                         ETextAlign eAlignMask ,
+                                         const char * pFontName ,
+                                         int         nSize ,
+                                         bool shadow,
+                                         float shadowOffsetX,
+                                         float shadowOffsetY,
+                                         float shadowOpacity,
+                                         float shadowBlur,
+                                         bool  stroke,
+                                         float strokeR,
+                                         float strokeG,
+                                         float strokeB,
+                                         float strokeSize)
+{
+	return false;
+}
+
 NS_CC_END
 
 // this method is called by Cocos2dxBitmap

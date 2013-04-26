@@ -40,7 +40,7 @@ CCLayer* restartAtlasAction();
 
 static int sceneIdx = -1; 
 
-#define MAX_LAYER    27
+#define MAX_LAYER    28
 
 CCLayer* createAtlasLayer(int nIndex)
 {
@@ -75,6 +75,7 @@ CCLayer* createAtlasLayer(int nIndex)
         case 24: return new Issue1343();
         case 25: return new LabelTTFAlignment();
         case 26: return new LabelBMFontBounds();
+        case 27: return new TTFFontShadowAndStroke();
     }
 
     return NULL;
@@ -1488,6 +1489,60 @@ std::string TTFFontInit::title()
 std::string TTFFontInit::subtitle()
 {
     return "Test for support of init method without parameters.";
+}
+
+TTFFontShadowAndStroke::TTFFontShadowAndStroke()
+{
+    CCLayerColor *layer = CCLayerColor::create(ccc4(190,0,0,255));
+    addChild(layer, -10);
+    
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+ 
+    
+    CCLabelTTF* fontShadow = new CCLabelTTF();
+    fontShadow->initWithString("Shadow Only", "Marker Felt", 20);
+    CCSize shadowOffset(12.0, 12.0);
+    fontShadow->enableShadow(shadowOffset, 1.0, 1.0);
+    this->addChild(fontShadow);
+    fontShadow->setPosition(ccp(s.width/2,s.height/4*2.5));
+
+    
+    CCLabelTTF* fontStroke = new CCLabelTTF();
+    fontStroke->initWithString("Stroke Only", "Marker Felt", 20);
+
+    ccColor3B strokeColor;
+    strokeColor.r = 0;
+    strokeColor.g = 10;
+    strokeColor.b = 255;
+    fontStroke->enableStroke(strokeColor, 1.5f);
+    this->addChild(fontStroke);
+    fontStroke->setPosition(ccp(s.width/2,s.height/4*1.8));
+    
+    
+    CCLabelTTF* fontStrokeAndShadow = new CCLabelTTF();
+    fontStrokeAndShadow->initWithString("Stroke & Shadow", "Marker Felt", 20);
+    
+    ccColor3B strokeShadowColor;
+    
+    strokeShadowColor.r = 0;
+    strokeShadowColor.g = 10;
+    strokeShadowColor.b = 255;
+    
+    fontStrokeAndShadow->enableStroke(strokeShadowColor, 1.5f);
+    fontStrokeAndShadow->enableShadow(shadowOffset, 1.0, 1.0);
+    this->addChild(fontStrokeAndShadow);
+    fontStrokeAndShadow->setPosition(ccp(s.width/2,s.height/4*1.1));
+    
+}
+
+std::string TTFFontShadowAndStroke::title()
+{
+    return "CCLabelTTF  shadows + stroke";
+}
+
+std::string TTFFontShadowAndStroke::subtitle()
+{
+    return "Test for support of TTF label with stroke and shadow";
 }
 
 

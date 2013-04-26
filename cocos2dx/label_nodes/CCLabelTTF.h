@@ -80,6 +80,19 @@ public:
                         const CCSize& dimensions, CCTextAlignment hAlignment, 
                         CCVerticalTextAlignment vAlignment);
     
+    
+    /** enable or disable shadow for the label */
+    void enableShadow(CCSize &shadowOffset, float shadowOpacity, float shadowBlur);
+    
+    /** disable shadow rendering */
+    void disableShadow();
+    
+    /** enable or disable stroke */
+    void enableStroke(ccColor3B &strokeColor, float strokeSize);
+    
+    /** disable stroke */
+    void disableStroke();
+    
     /** initializes the CCLabelTTF */
     bool init();
 
@@ -107,7 +120,7 @@ public:
     
     const char* getFontName();
     void setFontName(const char *fontName);
-
+    
 private:
     bool updateTexture();
 protected:
@@ -121,6 +134,18 @@ protected:
     std::string * m_pFontName;
     /** Font size of the label */
     float m_fFontSize;
+    
+    /** font shadow */
+    bool    m_shadowEnabled;
+    CCSize  m_shadowOffset;
+    float   m_shadowOpacity;
+    float   m_shadowBlur;
+    
+    /** font stroke */
+    bool        m_strokeEnabled;
+    ccColor3B   m_strokeColor;
+    float       m_strokeSize;
+    
     
     std::string m_string;
 };

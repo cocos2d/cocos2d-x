@@ -29,14 +29,26 @@ THE SOFTWARE.
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+
 typedef struct
 {
     unsigned int height;
     unsigned int width;
-    int         bitsPerComponent;
-    bool        hasAlpha;
-    bool        isPremultipliedAlpha;
+    int          bitsPerComponent;
+    bool         hasAlpha;
+    bool         isPremultipliedAlpha;
+    bool         hasShadow;
+    CGSize       shadowOffset;
+    float        shadowBlur;
+    float        shadowOpacity;
+    bool         hasStroke;
+    float        strokeColorR;
+    float        strokeColorG;
+    float        strokeColorB;
+    float        strokeSize;
+    
     unsigned char*  data;
+    
 } tImageInfo;
 
 static bool _initWithImage(CGImageRef cgImage, tImageInfo *pImageinfo)
@@ -250,6 +262,25 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
             dim.height = constrainSize.height;
         }
         
+        
+        float shadowStrokePaddingX = 0.0f;
+        float shadowStrokePaddingY = 0.0f;
+        
+        if ( pInfo->hasStroke )
+        {
+            shadowStrokePaddingX = pInfo->strokeSize * 4.0;
+            shadowStrokePaddingY = pInfo->strokeSize * 4.0;
+        }
+        if ( pInfo->hasShadow )
+        {
+            shadowStrokePaddingX = std::max(shadowStrokePaddingX, (pInfo->shadowOffset.width  * 4));
+            shadowStrokePaddingY = std::max(shadowStrokePaddingY, (pInfo->shadowOffset.height * 4));
+        }
+        
+        // add the padding if needed
+        dim.width  += shadowStrokePaddingX;
+        dim.height += shadowStrokePaddingY;
+        
         unsigned char* data = new unsigned char[(int)(dim.width * dim.height * 4)];
         memset(data, 0, (int)(dim.width * dim.height * 4));
         
@@ -263,6 +294,7 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
             delete[] data;
             break;
         }
+
         
         CGContextSetRGBFillColor(context, 1, 1, 1, 1);
         CGContextTranslateCTM(context, 0.0f, dim.height);
@@ -274,19 +306,39 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
         UITextAlignment align = (UITextAlignment)((2 == uHoriFlag) ? UITextAlignmentRight
                                 : (3 == uHoriFlag) ? UITextAlignmentCenter
                                 : UITextAlignmentLeft);
+
+        
+        
+        // take care of stroke if needed
+        if ( pInfo->hasStroke )
+        {
+            CGContextSetTextDrawingMode(context, kCGTextFillStroke);
+            CGContextSetRGBStrokeColor(context, pInfo->strokeColorR, pInfo->strokeColorG, pInfo->strokeColorB, 1);
+            CGContextSetLineWidth(context, pInfo->strokeSize);
+        }
+        
+        // take care of shadow if needed
+        if ( pInfo->hasShadow )
+        {
+            CGSize offset;
+            offset.height = pInfo->shadowOffset.height;
+            offset.width  = pInfo->shadowOffset.width;
+            CGContextSetShadow(context, offset, pInfo->shadowBlur);
+        }
         
         // normal fonts
-        /*
-        if( [font isKindOfClass:[UIFont class] ] )
-        {
-            [str drawInRect:CGRectMake(0, startH, dim.width, dim.height) withFont:font lineBreakMode:(UILineBreakMode)UILineBreakModeWordWrap alignment:align];
-        }
-        else // ZFont class 
-        {
-            [FontLabelStringDrawingHelper drawInRect:str rect:CGRectMake(0, startH, dim.width, dim.height) withZFont:font lineBreakMode:(UILineBreakMode)UILineBreakModeWordWrap alignment:align];
-        }
-         */
-        [str drawInRect:CGRectMake(0, startH, dim.width, dim.height) withFont:font lineBreakMode:(UILineBreakMode)UILineBreakModeWordWrap alignment:align];
+     
+        //if( [font isKindOfClass:[UIFont class] ] )
+        //{
+        //    [str drawInRect:CGRectMake(0, startH, dim.width, dim.height) withFont:font lineBreakMode:(UILineBreakMode)UILineBreakModeWordWrap alignment:align];
+        //}
+        //else // ZFont class
+        //{
+        //    [FontLabelStringDrawingHelper drawInRect:str rect:CGRectMake(0, startH, dim.width, dim.height) withZFont:font lineBreakMode:(UILineBreakMode)UILineBreakModeWordWrap 
+        ////alignment:align];
+        //}
+    
+        [str drawInRect:CGRectMake(0 + (shadowStrokePaddingX/2), startH + (shadowStrokePaddingY/2), dim.width, dim.height) withFont:font lineBreakMode:(UILineBreakMode)UILineBreakModeWordWrap alignment:align];
         
         UIGraphicsPopContext();
         
@@ -300,6 +352,7 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
         pInfo->width = dim.width;
         pInfo->height = dim.height;
         bRet = true;
+        
     } while (0);
 
     return bRet;
@@ -365,6 +418,10 @@ bool CCImage::initWithImageData(void * pData,
 {
     bool bRet = false;
     tImageInfo info = {0};
+    
+    info.hasShadow = false;
+    info.hasStroke = false;
+    
     do 
     {
         CC_BREAK_IF(! pData || nDataLen <= 0);
@@ -443,17 +500,52 @@ bool CCImage::_saveImageToJPG(const char *pszFilePath)
 }
 
 bool CCImage::initWithString(
-             const char * pText, 
-             int         nWidth /* = 0 */, 
-             int         nHeight /* = 0 */,
-             ETextAlign eAlignMask /* = kAlignCenter */,
-             const char * pFontName /* = nil */,
-             int         nSize /* = 0 */)
+                            const char * pText,
+                            int         nWidth /* = 0 */,
+                            int         nHeight /* = 0 */,
+                            ETextAlign eAlignMask /* = kAlignCenter */,
+                            const char * pFontName /* = nil */,
+                            int         nSize /* = 0 */)
 {
+    return initWithStringShadowStroke(pText, nWidth, nHeight, eAlignMask , pFontName, nSize);
+}
+
+bool CCImage::initWithStringShadowStroke(
+                                         const char * pText,
+                                         int         nWidth ,
+                                         int         nHeight ,
+                                         ETextAlign eAlignMask ,
+                                         const char * pFontName ,
+                                         int         nSize ,
+                                         bool shadow,
+                                         float shadowOffsetX,
+                                         float shadowOffsetY,
+                                         float shadowOpacity,
+                                         float shadowBlur,
+                                         bool  stroke,
+                                         float strokeR,
+                                         float strokeG,
+                                         float strokeB,
+                                         float strokeSize)
+{
+    
+   
+    
     tImageInfo info = {0};
-    info.width = nWidth;
-    info.height = nHeight;
-      
+    info.width                  = nWidth;
+    info.height                 = nHeight;
+    info.hasShadow              = shadow;
+    info.shadowOffset.width     = shadowOffsetX;
+    info.shadowOffset.height    = shadowOffsetY;
+    info.shadowBlur             = shadowBlur;
+    info.shadowOpacity          = shadowOpacity;
+    info.hasStroke              =  stroke;
+    info.strokeColorR           =  strokeR;
+    info.strokeColorG           = strokeG;
+    info.strokeColorB           = strokeB;
+    info.strokeSize             = strokeSize;
+    
+    
     if (! _initWithString(pText, eAlignMask, pFontName, nSize, &info))
     {
         return false;
@@ -464,9 +556,10 @@ bool CCImage::initWithString(
     m_bHasAlpha = info.hasAlpha;
     m_bPreMulti = info.isPremultipliedAlpha;
     m_pData = info.data;
-
+    
     return true;
 }
+
 
 bool CCImage::saveToFile(const char *pszFilePath, bool bIsToRGB)
 {
