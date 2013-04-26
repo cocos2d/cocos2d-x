@@ -1,4 +1,3 @@
-
 -- for CCLuaEngine traceback
 function __G__TRACKBACK__(msg)
     print("----------------------------------------")
@@ -12,12 +11,8 @@ local function main()
     collectgarbage("setpause", 100)
     collectgarbage("setstepmul", 5000)
 
-    local cclog = function(...)
-        print(string.format(...))
-    end
-
     require "hello2"
-    cclog("result is " .. myadd(3, 5))
+    print("result is " .. myadd(1, 1))
 
     ---------------
 

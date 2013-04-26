@@ -33,11 +33,10 @@ extern "C" {
 }
 
 #include "LuaCocos2d.h"
+#include "Cocos2dxLuaLoader.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 #include "platform/ios/CCLuaObjcBridge.h"
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-#include "Cocos2dxLuaLoader.h"
 #endif
 
 namespace {
@@ -118,9 +117,11 @@ bool CCLuaStack::init(void)
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     CCLuaObjcBridge::luaopen_luaoc(m_state);
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    addLuaLoader(loader_Android);
 #endif
+    
+    // add cocos2dx loader
+    addLuaLoader(cocos2dx_lua_loader);
+
     return true;
 }
 

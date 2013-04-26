@@ -37,7 +37,6 @@ bool AppDelegate::applicationDidFinishLaunching()
     CCScriptEngineManager::sharedManager()->setScriptEngine(pEngine);
 
     std::string path = CCFileUtils::sharedFileUtils()->fullPathForFilename("hello.lua");
-    pEngine->addSearchPath(path.substr(0, path.find_last_of("/")).c_str());
     pEngine->executeScriptFile(path.c_str());
 
     return true;
