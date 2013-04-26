@@ -30,21 +30,31 @@ import android.view.View;
 import android.view.WindowManager;
 
 public class InterfaceAds {
-	public static final int UNKNOWN_ERROR = 0;
-	public static final int NETWORK_ERROR = 1;
-	public static final int REQUESTING_ERROR = 2;
 
-	public static final int POS_TOP		     = 0;
-	public static final int POS_TOP_LEFT     = 1;
-	public static final int POS_TOP_RIGHT    = 2;
-	public static final int POS_BOTTOM       = 3;
-	public static final int POS_BOTTOM_LEFT  = 4;
-	public static final int POS_BOTTOM_RIGHT = 5;
+	public static final int RESULT_CODE_AdsReceived = 0;               // The ad is received
+	public static final int RESULT_CODE_FullScreenViewShown = 1;       // The full screen advertisement shown
+    public static final int RESULT_CODE_FullScreenViewDismissed = 2;   // The full screen advertisement dismissed
+    public static final int RESULT_CODE_PointsSpendSucceed = 3;        // The points spend succeed
+    public static final int RESULT_CODE_PointsSpendFailed = 4;         // The points spend failed
+    public static final int RESULT_CODE_NetworkError = 5;              // Network error
+    public static final int RESULT_CODE_UnknownError = 6;              // Unknown error
+
+    public static final int ADS_TYPE_BANNER        = 0;
+    public static final int ADS_TYPE_FULL_SCREEN   = 1;
+
+	public static final int POS_CENTER 	     = 0;
+	public static final int POS_TOP		     = 1;
+	public static final int POS_TOP_LEFT     = 2;
+	public static final int POS_TOP_RIGHT    = 3;
+	public static final int POS_BOTTOM       = 4;
+	public static final int POS_BOTTOM_LEFT  = 5;
+	public static final int POS_BOTTOM_RIGHT = 6;
 
 	public interface AdsAdapter {
-		public void initAppInfo(Hashtable<String, String> appInfo);
-		public void showBannerAd(int pos, int sizeEnum);
-		public void hideBannerAd();
+		public void configDeveloperInfo(Hashtable<String, String> devInfo);
+		public void showAds(int type, int sizeEnum, int pos);
+		public void hideAds(int type);
+		public void spendPoints(int points);
 		public void setDebugMode(boolean debug);
 		public String getSDKVersion();
 	}
@@ -57,6 +67,9 @@ public class InterfaceAds {
 		mLayoutParams.flags |= WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
 		
 		switch (pos) {
+		case POS_CENTER:
+			mLayoutParams.gravity = Gravity.CENTER;
+			break;
 		case POS_TOP:
 			mLayoutParams.gravity = Gravity.TOP;
 			break;
@@ -81,45 +94,28 @@ public class InterfaceAds {
 		mWm.addView(adView, mLayoutParams);
 	}
 
-	public static void receiveAd() {
+	public static void onAdsResult(AdsAdapter adapter, int code, String msg) {
+		final int curCode = code;
+		final String curMsg = msg;
+		final AdsAdapter curObj = adapter;
 		PluginWrapper.runOnGLThread(new Runnable(){
 			@Override
 			public void run() {
-				InterfaceAds.nativeReceiveAd();
+				InterfaceAds.nativeOnAdsResult(curObj, curCode, curMsg);
 			}
 		});
 	}
-	private native static void nativeReceiveAd();
-	
-	public static void presentScreen() {
+	private native static void nativeOnAdsResult(Object obj, int code, String msg);
+
+	public static void onPlayerGetPoints(AdsAdapter adapter, int points) {
+		final int curPoints = points;
+		final AdsAdapter curAdapter = adapter;
 		PluginWrapper.runOnGLThread(new Runnable(){
 			@Override
 			public void run() {
-				InterfaceAds.nativePresentScreen();
+				InterfaceAds.nativeOnPlayerGetPoints(curAdapter, curPoints);
 			}
 		});
 	}
-	private native static void nativePresentScreen();
-	
-	public static void failedToReceiveAd(int code, String msg) {
-		final int eCode = code;
-		final String eMsg = msg;
-		PluginWrapper.runOnGLThread(new Runnable(){
-			@Override
-			public void run() {
-				InterfaceAds.nativeFailedToReceiveAd(eCode, eMsg);
-			}
-		});
-	}
-	private native static void nativeFailedToReceiveAd(int code, String msg);
-	
-	public static void dismissScreen() {
-		PluginWrapper.runOnGLThread(new Runnable(){
-			@Override
-			public void run() {
-				InterfaceAds.nativeDismissScreen();
-			}
-		});
-	}
-	private native static void nativeDismissScreen();
+	private native static void nativeOnPlayerGetPoints(Object obj, int points);
 }

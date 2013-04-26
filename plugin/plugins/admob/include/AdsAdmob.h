@@ -36,11 +36,11 @@ class AdsAdmob : public ProtocolAds
 public:
 
 	typedef enum {
-		eSizeBanner = 0,
-		eSizeIABMRect,
-		eSizeIABBanner,
-		eSizeIABLeaderboard,
-	} ESizeAdmobBanner;
+		kSizeBanner = 0,
+		kSizeIABMRect,
+		kSizeIABBanner,
+		kSizeIABLeaderboard,
+	} AdmobBannerSize;
 
     /**
     @brief plugin initialization
@@ -48,25 +48,30 @@ public:
     virtual bool init();
 
     /**
-	@brief initialize the application info
-	@param appInfo This parameter is the info of application, must contains:
+	@brief config the application info
+	@param devInfo This parameter is the info of application, must contains:
 					AdmobID		The publisher ID of admob.
 	@warning Must invoke this interface before other interfaces.
 			 And invoked only once.
 	*/
-    virtual void initAppInfo(TAppInfo appInfo);
+    virtual void configDeveloperInfo(TAdsDeveloperInfo devInfo);
+
+    /**
+	@brief show adview
+	@param type The adview type need to show.
+	@param sizeEnum The size of the banner view.
+				(only used when type is kBannerAd)
+				Use the enum number in AdmobBannerSize.
+	@param pos The position where the adview be shown.
+			   (only used when type is kBannerAd)
+	*/
+	virtual void showAds(AdsType type, int sizeEnum = 0, AdsPos pos = kPosCenter);
 
 	/**
-	@brief show banner ads at specified position
-	@param pos The position where the banner view be shown
-	@param sizeEnum The size of the banner view. Use the value in ESizeAdmobBanner
+	@brief Hide the adview
+	@param type The adview type need to hide.
 	*/
-	virtual void showBannerAd(EBannerPos pos, int sizeEnum);
-
-	/**
-	@brief hide the banner ads view
-	*/
-	virtual void hideBannerAd();
+	virtual void hideAds(AdsType type);
 
     /**
 	 @brief Set whether needs to output logs to console.
