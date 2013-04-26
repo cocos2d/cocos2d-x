@@ -62,6 +62,12 @@ void handle_ccb_run() {
     ScriptingCore::getInstance()->runScript("main.js");
 }
 
+bool handle_eval_script(const char *script, jsval *out) {
+    ScriptingCore::getInstance()->evalString(script, out);
+    return true;
+}
+
+
 void handle_connected() {
     CCBHelper::setStatusMessage("Connected!");
 }
