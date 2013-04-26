@@ -54,7 +54,7 @@ NSString *kCCBPlayerStatusStringScript = @"Action: Executing script";
 - (NSString*) protocolIdentifier
 {
     NSString* pairing = [[NSUserDefaults standardUserDefaults] objectForKey:@"pairing"];
-    
+    updatePairingLabel([pairing cStringUsingEncoding:NSASCIIStringEncoding]);
     if (pairing)
     {
         return [NSString stringWithFormat:@"CocosP-%@",pairing];
@@ -160,6 +160,62 @@ NSString *kCCBPlayerStatusStringScript = @"Action: Executing script";
     
 	self.networkStatus = kCCBNetworkStatusWaiting;
 }
+
+- (void) pressedPair
+{
+    UIAlertView* alert = [[[UIAlertView alloc] initWithTitle:@"Pair Device" message:@"Enter a 4 digit pairing number (use the same number in CocosBuilder)" delegate:self cancelButtonTitle:@"Remove" otherButtonTitles:@"Set Pairing", nil] autorelease];
+    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    
+    UITextField* textField = [alert textFieldAtIndex:0];
+    textField.keyboardType = UIKeyboardTypeNumberPad;
+    textField.delegate = self;
+    
+    [alert show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSString* pairing = NULL;
+    if (buttonIndex == 1)
+    {
+        UITextField* textField = [alertView textFieldAtIndex:0];
+        pairing = textField.text;
+        if ([pairing isEqualToString:@""]) pairing = NULL;
+    }
+    
+    if (pairing)
+    {
+        [[NSUserDefaults standardUserDefaults] setObject:pairing forKey:@"pairing"];
+    }
+    else
+    {
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"pairing"];
+    }
+    
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    updatePairing([pairing cStringUsingEncoding:NSASCIIStringEncoding]);
+    updatePairingLabel([pairing cStringUsingEncoding:NSASCIIStringEncoding]);
+}
+
+- (BOOL)textField:(UITextField *)theTextField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    // Validate string length
+    NSUInteger newLength = [theTextField.text length] + [string length] - range.length;
+    if (newLength > 4) return NO;
+    
+    // Make sure it only uses numbers
+    NSCharacterSet *myCharSet = [NSCharacterSet characterSetWithCharactersInString:@"0123456789"];
+    for (int i = 0; i < [string length]; i++) {
+        unichar c = [string characterAtIndex:i];
+        if (![myCharSet characterIsMember:c]) {
+            return NO;
+        }
+    }
+    
+    return YES;
+}
+
 
 #pragma mark Helper methods
 

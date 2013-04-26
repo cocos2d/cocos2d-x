@@ -11,7 +11,10 @@
 USING_NS_CC;
 USING_NS_CC_EXT;
 
-PlayerStatus::PlayerStatus(): mBtnRun(NULL), mBtnReset(NULL), mBtnPair(NULL), 
+std::string PlayerStatus::pairingLabel = "";
+
+
+PlayerStatus::PlayerStatus(): mBtnRun(NULL), mBtnReset(NULL), mBtnPair(NULL),
 			      mLblStatus(NULL), mLblInstructions(NULL), mLblPair(NULL), editBox(NULL)
 {
     this->scheduleUpdate();
@@ -59,38 +62,20 @@ void editBoxCallbackFunc(const char* pText, void* ctx)
   PlayerStatus *thiz = (PlayerStatus *)ctx;
   std::string text(pText);
   if(text == "" || text == " ") {
-    thiz->mLblPair->setString("Auto");
+      PlayerStatus::pairingLabel = "";
     updatePairing("Auto");
   } else {
-    thiz->mLblPair->setString(pText);
+    PlayerStatus::pairingLabel = pText;
     updatePairing(pText);
   }
 }
 
 void PlayerStatus::pressedPair(CCObject * pSender, cocos2d::extension::CCControlEvent pCCControlEvent) {
-    TargetPlatform platform = CCApplication::sharedApplication()->getTargetPlatform();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     showEditTextDialogJNI("Enter pairing code", "", kEditBoxInputModeNumeric, kEditBoxInputFlagInitialCapsWord,
                                         kKeyboardReturnTypeDone, 4, editBoxCallbackFunc, (void*)this);
-#else
-        if(!this->editBox) {
-            this->editBox = CCEditBox::create(CCSize(150, 50), CCScale9Sprite::create("green_edit.png"));
-            PairingDelegate *p = new PairingDelegate();
-            p->setTarget(this);
-            CCPoint visibleOrigin = CCEGLView::sharedOpenGLView()->getVisibleOrigin();
-            CCSize visibleSize = CCEGLView::sharedOpenGLView()->getVisibleSize();
-    
-            editBox->setPosition(ccp(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height*1/2));
-            editBox->setDelegate(p);
-            editBox->setPlaceHolder("Enter Pairing Code");
-            editBox->setPlaceholderFontColor(ccRED);
-            editBox->setFont("arial", 15);
-            editBox->setMaxLength(4);
-            editBox->setReturnType(kKeyboardReturnTypeDone);
-            this->addChild(editBox);
-        } else {
-            this->editBox->setVisible(true);
-        }
+#else if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    openEditBox();
 #endif
 }
 
@@ -131,6 +116,11 @@ void PlayerStatus::update(float dt) {
     } else if(this->mBtnRun != NULL && this->mBtnReset != NULL) {
         this->mBtnRun->setEnabled(false);
         this->mBtnReset->setEnabled(false);
+    }
+    if(pairingLabel != "") {
+        this->mLblPair->setString(pairingLabel.c_str());
+    } else {
+        this->mLblPair->setString("Auto");
     }
 }
 
