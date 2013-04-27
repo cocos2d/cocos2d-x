@@ -3,10 +3,9 @@
 namespace cocos2d { namespace plugin {
     
 bool ProtocolIAP::m_bPaying = false;
-PayResultListener* ProtocolIAP::m_pListener = NULL;
-TProductInfo ProtocolIAP::m_curInfo;
 
 ProtocolIAP::ProtocolIAP()
+: m_pListener(NULL)
 {
 }
 
@@ -19,7 +18,7 @@ bool ProtocolIAP::init()
     return true;
 }
 
-void ProtocolIAP::initDeveloperInfo(TDeveloperInfo devInfo)
+void ProtocolIAP::configDeveloperInfo(TIAPDeveloperInfo devInfo)
 {
 }
 
@@ -32,12 +31,12 @@ void ProtocolIAP::setResultListener(PayResultListener* pListener)
     m_pListener = pListener;
 }
 
-void ProtocolIAP::payResult(EPayResult ret, const char* msg)
+void ProtocolIAP::onPayResult(PayResultCode ret, const char* msg)
 {
     m_bPaying = false;
     if (m_pListener)
     {
-        m_pListener->payResult(ret, msg, m_curInfo);
+        m_pListener->onPayResult(ret, msg, m_curInfo);
     }
 
     m_curInfo.clear();
