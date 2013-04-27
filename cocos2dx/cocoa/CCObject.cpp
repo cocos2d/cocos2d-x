@@ -131,23 +131,23 @@ typedef std::map<unsigned int, Referent> ReferentMap;
 
 
 
-// the order of initialization of global variables is undeterminable, using lazyload
-// can avoid potential crash.
-static inline ReferentMap* GetReferentMap()
+// The order of initialization of global variables is undeterminable, using
+// non thread-safe lazyload can avoid potential crash.
+static ReferentMap &GetReferentMap()
 {
     static cocos2d::ReferentMap _referent_map;
-    return &_referent_map;
+    return _referent_map;
 }
 
 static void releaseWeakReferenceFor(CCObject *obj) {
-    ReferentMap *ref_map = GetReferentMap();
-    if(ref_map->size() == 0)
+    ReferentMap &ref_map = GetReferentMap();
+    if(ref_map.size() == 0)
         return;
 
     // takes O(lgN) times, N is the amount of currently weak referenced objects.
-    ReferentMap::iterator iter = ref_map->find(obj->m_uID);
+    ReferentMap::iterator iter = ref_map.find(obj->m_uID);
 
-    if (iter == ref_map->end()) { //not found
+    if (iter == ref_map.end()) { //not found
         return;
     } else {
         CCObject **ppobj = iter->second.second;
@@ -192,10 +192,10 @@ CCWeakReference::~CCWeakReference()
 
 unsigned int CCWeakReference::getWeakRefCount(CCObject *obj)
 {
-    ReferentMap *ref_map = GetReferentMap();
+    ReferentMap &ref_map = GetReferentMap();
 
-    ReferentMap::const_iterator iter = ref_map->find(obj->m_uID);
-    if (iter == ref_map->end()){ //not found
+    ReferentMap::const_iterator iter = ref_map.find(obj->m_uID);
+    if (iter == ref_map.end()){ //not found
         return 0;
     } else {
         return iter->second.first;
@@ -207,16 +207,16 @@ void CCWeakReference::incRef(CCObject *obj)
     if(!object_id)
         return;
 
-    ReferentMap *ref_map = GetReferentMap();
+    ReferentMap &ref_map = GetReferentMap();
 
-    ReferentMap::iterator iter = ref_map->find(object_id);
-    if (iter == ref_map->end()){  //not referenced before
+    ReferentMap::iterator iter = ref_map.find(object_id);
+    if (iter == ref_map.end()){  //not referenced before
         // point to CCObject *
         CCObject **ppobj = new CCObject *;
         *ppobj = obj;
 
         // set ref count to 1, and add to map
-        (*ref_map)[object_id] = Referent(1, ppobj);
+        ref_map[object_id] = Referent(1, ppobj);
         this->pp_obj = ppobj;
     } else {  // already referenced before
         // ref count + 1
@@ -230,10 +230,10 @@ void CCWeakReference::decRef()
     if (!object_id)
         return;
 
-    ReferentMap *ref_map = GetReferentMap();
+    ReferentMap &ref_map = GetReferentMap();
 
-    ReferentMap::iterator iter = ref_map->find(object_id);
-    if (iter == ref_map->end()){  // not referenced
+    ReferentMap::iterator iter = ref_map.find(object_id);
+    if (iter == ref_map.end()){  // not referenced
         //error
         CCAssert(0, "weakref < 0");
     } else {
@@ -244,7 +244,7 @@ void CCWeakReference::decRef()
         if( weakref == 0 ) {
             CCObject **ppobj = iter->second.second;
             // remove from map
-            ref_map->erase(iter);
+            ref_map.erase(iter);
             delete ppobj;
         }
     }
