@@ -60,7 +60,7 @@ public:
     @param points The point number player has got.
     @param pAdsPlugin  The plugin which the player get points. Used to spend the points.
     */
-    virtual void onPlayerGetPoints(int points, ProtocolAds* pAdsPlugin) {}
+    virtual void onPlayerGetPoints(ProtocolAds* pAdsPlugin, int points) {}
 };
 
 class ProtocolAds : public PluginProtocol

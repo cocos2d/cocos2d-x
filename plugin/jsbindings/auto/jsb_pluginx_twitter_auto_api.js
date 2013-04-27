@@ -1,32 +1,12 @@
 /**
- * @module pluginx_admob
+ * @module pluginx_twitter
  */
 var plugin = plugin || {};
 
 /**
- * @class AdsAdmob
+ * @class SocialTwitter
  */
-plugin.AdsAdmob = {
-
-/**
- * @method showAds
- * @param {cocos2d::plugin::ProtocolAds::AdsType}
- * @param {int}
- * @param {cocos2d::plugin::ProtocolAds::AdsPos}
- */
-showAds : function () {},
-
-/**
- * @method hideAds
- * @param {cocos2d::plugin::ProtocolAds::AdsType}
- */
-hideAds : function () {},
-
-/**
- * @method addTestDevice
- * @param {const char*}
- */
-addTestDevice : function () {},
+plugin.SocialTwitter = {
 
 /**
  * @method getPluginName
@@ -41,6 +21,12 @@ getPluginName : function () {},
 getPluginVersion : function () {},
 
 /**
+ * @method share
+ * @param {TShareInfo}
+ */
+share : function () {},
+
+/**
  * @method init
  * @return A value converted from C/C++ "bool"
  */
@@ -48,7 +34,7 @@ init : function () {},
 
 /**
  * @method configDeveloperInfo
- * @param {TAdsDeveloperInfo}
+ * @param {TSocialDeveloperInfo}
  */
 configDeveloperInfo : function () {},
 
