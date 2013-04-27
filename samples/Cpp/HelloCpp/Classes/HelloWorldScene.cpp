@@ -75,31 +75,31 @@ bool HelloWorld::init()
     this->addChild(pSprite, 0);
     
     // test CCWeakReference
-    CCObject *obj = new CCObject();
-    CC_ASSERT(CCWeakReference::getWeakRefCount(obj)==0);  
+    CCArray *obj = new CCArray();
+    CC_ASSERT(obj->weakRefsCount() == 0);
 
-    CCWeakReference wr1 = CCWeakReference(obj);
+    CCWeakPointer<CCArray> wr1(obj);
     CC_ASSERT(wr1.getObject()==obj);    
-    CC_ASSERT(CCWeakReference::getWeakRefCount(obj)==1);  // wr1
+    CC_ASSERT(obj->weakRefsCount() == 1);  // wr1
 
-    CCWeakReference wr2 = CCWeakReference(obj);
-    CC_ASSERT(CCWeakReference::getWeakRefCount(obj)==2);  //wr1, wr2
+    CCWeakPointer<CCArray> wr2(obj);
+    CC_ASSERT(obj->weakRefsCount() == 2);  //wr1, wr2
 
-    CCWeakReference wr3;
-    CCWeakReference *wr4 = new CCWeakReference();
+    CCWeakPointer<CCArray> wr3;
+    CCWeakPointer<CCArray> *wr4 = new CCWeakPointer<CCArray>();
     
     wr3 = wr2;
     CC_ASSERT(wr3.getObject()==obj);    
-    CC_ASSERT(CCWeakReference::getWeakRefCount(obj)==3);  //wr1, wr2, wr3
+    CC_ASSERT(obj->weakRefsCount() == 3);  //wr1, wr2, wr3
     wr1 = *wr4;
     CC_ASSERT(wr1.getObject()==NULL);        
-    CC_ASSERT(CCWeakReference::getWeakRefCount(obj)==2);  //wr2, wr3
+    CC_ASSERT(obj->weakRefsCount() == 2);  //wr2, wr3
     *wr4 = wr3;
     CC_ASSERT(wr4->getObject()==obj);    
-    CC_ASSERT(CCWeakReference::getWeakRefCount(obj)==3);  //wr, wr3, wr4
+    CC_ASSERT(obj->weakRefsCount() == 3);  //wr, wr3, wr4
 
     CC_SAFE_DELETE(wr4);  // should not crash
-    CC_ASSERT(CCWeakReference::getWeakRefCount(obj)==2);  //wr, wr3
+    CC_ASSERT(obj->weakRefsCount() == 2);  //wr, wr3
 
     CC_SAFE_RELEASE(obj);
 

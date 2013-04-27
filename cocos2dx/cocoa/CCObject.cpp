@@ -31,6 +31,37 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+namespace {
+    // weak reference info, a std::pair which contains (refcount, CCObject *)
+    typedef std::pair<unsigned int, CCObject **> Referent;
+    // a map which stores all weak reference infomations.
+    // the key is CCObject::m_uID
+    typedef std::map<unsigned int, Referent> ReferentMap;
+
+    // The order of initialization of global variables is undeterminable, using
+    // non thread-safe lazyload can avoid potential crash.
+    ReferentMap &GetReferentMap()
+    {
+        static cocos2d::ReferentMap _referent_map;
+        return _referent_map;
+    }
+
+    void releaseWeakReferenceFor(CCObject *obj) {
+        ReferentMap &ref_map = GetReferentMap();
+        if(ref_map.size() == 0)
+            return;
+
+        // takes O(lgN) times, N is the amount of currently weak referenced objects.
+        ReferentMap::iterator iter = ref_map.find(obj->m_uID);
+
+        if (iter == ref_map.end()) { //not found
+            return;
+        } else {
+            CCObject **ppobj = iter->second.second;
+            *ppobj = NULL;
+        }
+    }
+} // anonymous namespace
 
 CCObject* CCCopying::copyWithZone(CCZone *pZone)
 {
@@ -49,7 +80,6 @@ CCObject::CCObject(void)
     m_uID = ++uObjectCount;
 }
 
-static void releaseWeakReferenceFor(CCObject *obj);
 CCObject::~CCObject(void)
 {
     // release weak reference to this object
@@ -116,6 +146,17 @@ unsigned int CCObject::retainCount(void)
     return m_uReference;
 }
 
+unsigned int CCObject::weakRefsCount() const
+{
+    ReferentMap &ref_map = GetReferentMap();
+    ReferentMap::const_iterator iter = ref_map.find(m_uID);
+    if (iter == ref_map.end()) { //not found
+        return 0;
+    } else {
+        return iter->second.first;
+    }
+}
+
 bool CCObject::isEqual(const CCObject *pObject)
 {
     return this == pObject;
@@ -123,53 +164,21 @@ bool CCObject::isEqual(const CCObject *pObject)
 
 // CCWeakReference
 
-// weak reference info, a std::pair which contains (refcount, CCObject *)
-typedef std::pair<unsigned int, CCObject **> Referent;
-// a map which stores all weak reference infomations.
-// the key is CCObject::m_uID
-typedef std::map<unsigned int, Referent> ReferentMap;
-
-
-
-// The order of initialization of global variables is undeterminable, using
-// non thread-safe lazyload can avoid potential crash.
-static ReferentMap &GetReferentMap()
-{
-    static cocos2d::ReferentMap _referent_map;
-    return _referent_map;
-}
-
-static void releaseWeakReferenceFor(CCObject *obj) {
-    ReferentMap &ref_map = GetReferentMap();
-    if(ref_map.size() == 0)
-        return;
-
-    // takes O(lgN) times, N is the amount of currently weak referenced objects.
-    ReferentMap::iterator iter = ref_map.find(obj->m_uID);
-
-    if (iter == ref_map.end()) { //not found
-        return;
-    } else {
-        CCObject **ppobj = iter->second.second;
-        *ppobj = NULL;
-    }
-}
-
-CCWeakReference::CCWeakReference(CCObject *obj) :
+CCObjectWeakPointer::CCObjectWeakPointer(CCObject *obj) :
 object_id(obj ? obj->m_uID : 0),
 pp_obj(NULL)
 {
     incRef(obj);
 }
 
-CCWeakReference::CCWeakReference(const CCWeakReference &weakref) :
+CCObjectWeakPointer::CCObjectWeakPointer(const CCObjectWeakPointer &weakref) :
 object_id(weakref.getObjectId()),
 pp_obj(NULL)
 {
     incRef();
 }
 
-CCWeakReference &CCWeakReference::operator=(const CCWeakReference& weakref)
+CCObjectWeakPointer &CCObjectWeakPointer::operator=(const CCObjectWeakPointer& weakref)
 {
     decRef(); // for previous referenced obj
 
@@ -180,29 +189,17 @@ CCWeakReference &CCWeakReference::operator=(const CCWeakReference& weakref)
     return *this;
 }
 
-bool CCWeakReference::operator==(const CCWeakReference& weakref) const
+bool CCObjectWeakPointer::operator==(const CCObjectWeakPointer& weakref) const
 {
     return this->object_id == weakref.object_id;
 }
 
-CCWeakReference::~CCWeakReference()
+CCObjectWeakPointer::~CCObjectWeakPointer()
 {
     decRef();
 }
 
-unsigned int CCWeakReference::getWeakRefCount(CCObject *obj)
-{
-    ReferentMap &ref_map = GetReferentMap();
-
-    ReferentMap::const_iterator iter = ref_map.find(obj->m_uID);
-    if (iter == ref_map.end()){ //not found
-        return 0;
-    } else {
-        return iter->second.first;
-    }
-}
-
-void CCWeakReference::incRef(CCObject *obj)
+void CCObjectWeakPointer::incRef(CCObject *obj)
 {
     if(!object_id)
         return;
@@ -225,7 +222,7 @@ void CCWeakReference::incRef(CCObject *obj)
     }
 }
 
-void CCWeakReference::decRef()
+void CCObjectWeakPointer::decRef()
 {
     if (!object_id)
         return;

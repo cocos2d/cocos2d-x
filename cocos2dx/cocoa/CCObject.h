@@ -67,6 +67,7 @@ public:
     CCObject* copy(void);
     bool isSingleReference(void);
     unsigned int retainCount(void);
+    unsigned int weakRefsCount(void) const;
     virtual bool isEqual(const CCObject* pObject);
 
     virtual void update(float dt) {CC_UNUSED_PARAM(dt);};
@@ -93,16 +94,15 @@ typedef int (CCObject::*SEL_Compare)(CCObject*);
 #define event_selector(_SELECTOR) (SEL_EventHandler)(&_SELECTOR)
 #define compare_selector(_SELECTOR) (SEL_Compare)(&_SELECTOR)
 
-
 /// @brief weak reference to CCObject
-class CC_DLL CCWeakReference {
+class CC_DLL CCObjectWeakPointer {
 public:
-    CCWeakReference(CCObject *obj = NULL);
-    CCWeakReference(const CCWeakReference &weakref);
-    CCWeakReference &operator=(const CCWeakReference &weakref);
+    CCObjectWeakPointer(CCObject *obj = NULL);
+    CCObjectWeakPointer(const CCObjectWeakPointer &weakref);
+    CCObjectWeakPointer &operator =(const CCObjectWeakPointer &weakref);
 
-    bool operator==(const CCWeakReference &weakref) const;
-    virtual ~CCWeakReference();
+    bool operator ==(const CCObjectWeakPointer &weakref) const;
+    virtual ~CCObjectWeakPointer();
 
     /// @brief gets the referenced CCObject *, might be NULL
     inline CCObject *getObject() const {
@@ -114,19 +114,37 @@ public:
         return dynamic_cast<_T>(getObject());
     }
 
-    static unsigned int getWeakRefCount(CCObject *obj);
-
 private:
     void incRef(CCObject *obj = NULL);
     void decRef();
 
-private:
     // corresponding CCObject:m_uID, or 0 if invalid. (CCObject:m_uID starts from 1)
     CC_SYNTHESIZE_READONLY(unsigned int, object_id, ObjectId);
 
+private:
     // equals to Referent.second, which points to CCObject *.
     // NULL value indicates an invaild reference (not initialized, or been released).
     CCObject **pp_obj;
+};
+
+/// @brief weak reference to CCObject subclass
+template <class _T>
+class CCWeakPointer
+{
+public:
+    CCWeakPointer(_T *obj = NULL) : m_data(obj) {
+    }
+
+    bool operator ==(const CCWeakPointer &weakref) const {
+        return m_data == weakref.m_data;
+    }
+
+    inline _T *getObject() {
+        return static_cast<_T *>(m_data.getObject());
+    }
+
+private:
+    CCObjectWeakPointer m_data;
 };
 
 // end of base_nodes group
