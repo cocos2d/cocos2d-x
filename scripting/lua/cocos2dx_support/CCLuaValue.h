@@ -36,6 +36,11 @@ extern "C" {
 #include "ccTypes.h"
 #include "cocoa/CCObject.h"
 
+#if CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY
+using std::memset;
+using std::memcpy;
+#endif
+
 NS_CC_BEGIN
 
 typedef int LUA_FUNCTION;
@@ -69,7 +74,7 @@ typedef union {
     CCObject*           ccobjectValue;
 } CCLuaValueField;
 
-class CC_DLL CCLuaValue
+class CCLuaValue
 {
 public:
     static const CCLuaValue intValue(const int intValue);

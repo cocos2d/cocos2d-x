@@ -16,7 +16,22 @@
  * This thread describes the problem:
  * http://www.cocoabuilder.com/archive/xcode/265549-crash-in-virtual-method-call.html
  */
+void editBoxCallbackFunc(const char* pText, void* ctx);
 
+class PairingDelegate: public cocos2d::extension::CCEditBoxDelegate {
+private:
+    void *m_Target;
+public:
+    
+    void setTarget(void *target) {
+        m_Target = target;
+    }
+    
+    virtual void editBoxReturn(cocos2d::extension::CCEditBox* editBox) {
+        editBoxCallbackFunc(editBox->getText(), m_Target);
+        editBox->setVisible(false);
+    }
+};
 
 class PlayerStatus
   : public cocos2d::CCLayer
@@ -30,8 +45,6 @@ public:
   PlayerStatus();
   virtual ~PlayerStatus();
 
-  void openTest(const char * pCCBFileName, const char * pCCNodeName = NULL, cocos2d::extension::CCNodeLoader * pCCNodeLoader = NULL);
-
   virtual cocos2d::SEL_MenuHandler onResolveCCBCCMenuItemSelector(cocos2d::CCObject * pTarget, const char * pSelectorName);
   virtual cocos2d::extension::SEL_CCControlHandler onResolveCCBCCControlSelector(cocos2d::CCObject * pTarget, const char * pSelectorName);
   virtual bool onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode);
@@ -40,7 +53,7 @@ public:
   void pressedPair(CCObject * pSender, cocos2d::extension::CCControlEvent pCCControlEvent);
   void pressedReset(CCObject * pSender, cocos2d::extension::CCControlEvent pCCControlEvent);
   void pressedRun(CCObject * pSender, cocos2d::extension::CCControlEvent pCCControlEvent);
-  static void loadMainScene(const char *fileName);
+  static cocos2d::CCScene* loadMainScene(const char *fileName);
   static void setDeviceResolution(std::string res);
 
   cocos2d::CCMenuItemImage* mBtnRun;
@@ -50,6 +63,10 @@ public:
   cocos2d::CCLabelTTF* mLblStatus;
   cocos2d::CCLabelTTF* mLblInstructions;
   cocos2d::CCLabelTTF* mLblPair;
+  virtual void update(float dt);
+    static std::string pairingLabel;
+private:
+    cocos2d::extension::CCEditBox *editBox;
 
 };
 
