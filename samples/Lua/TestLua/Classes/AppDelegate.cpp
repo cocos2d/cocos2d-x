@@ -35,7 +35,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY
     std::vector<std::string> searchPaths;
-    searchPaths.push_back("app/native/TestCppResources");
+    searchPaths.push_back("TestCppResources");
     CCFileUtils::sharedFileUtils()->setSearchPaths(searchPaths);
 #endif
 
