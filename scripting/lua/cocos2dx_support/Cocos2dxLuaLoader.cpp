@@ -32,7 +32,7 @@ extern "C"
     int cocos2dx_lua_loader(lua_State *L)
     {
         std::string filename(luaL_checkstring(L, 1));
-        int pos = filename.rfind(".lua");
+        size_t pos = filename.rfind(".lua");
         if (pos != std::string::npos)
         {
             filename = filename.substr(0, pos);
