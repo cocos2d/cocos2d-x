@@ -4,84 +4,41 @@ CCMenuItemImage * CCBHelper::mBtnRun = NULL;
 CCMenuItemImage * CCBHelper::mBtnPair = NULL;
 CCMenuItemImage * CCBHelper::mBtnReset = NULL;
 
-CCLabelTTF * CCBHelper::mLblStatus = NULL;
-CCLabelTTF * CCBHelper::mLblPair = NULL;
-CCLabelTTF * CCBHelper::mLblInstructions = NULL;
-
-std::string CCBHelper::mLblStatus_background = "";
-std::string CCBHelper::mLblPair_background = "";
-bool CCBHelper::mLblInstructions_visible = true;
-
-
-void CCBHelper::setStatusObject(CCLabelTTF *status) {
-  if(mLblStatus == NULL) {
-    mLblStatus = CCLabelTTF::create();
-  }
-
-  status->retain();
-  mLblStatus = status;
-
-  if(mLblStatus_background != "") {    
-    status->setString(mLblStatus_background.c_str());
-  }
-}
-
+std::string CCBHelper::mLblStatus_prev = "";
+std::string CCBHelper::mLblStatus_str = "";
+std::string CCBHelper::mLblInstructions_prev= "";
+std::string CCBHelper::mLblInstructions_str= "";
+std::string CCBHelper::mLblPair_prev = "";
+std::string CCBHelper::mLblPair_str = "";
+bool CCBHelper::gameAvailable = false;
 
 void CCBHelper::setStatusMessage(std::string str) {
-  if(mLblStatus == NULL) {
-    mLblStatus_background = str;
-  } else {
-    mLblStatus->setString(str.c_str());
-  }
+    if(mLblStatus_prev.compare(str) != 0) {
+        mLblStatus_prev = str;
+        mLblStatus_str = str;
+    }
 }
 
-void CCBHelper::setInstructionsObject(CCLabelTTF *status) {
-  if(mLblInstructions == NULL) {
-    mLblInstructions = CCLabelTTF::create();
-  }
-  status->retain();
-  mLblInstructions = status;
-  if(!mLblInstructions_visible) {
-    mLblInstructions->setVisible(false);
-  }
+void CCBHelper::setInstructionsMessage(std::string str) {
+    if(mLblInstructions_prev.compare(str) != 0) {
+        mLblInstructions_prev = str;
+        mLblInstructions_str = str;
+    }
 }
 
-void CCBHelper::setInstructionsMessage(bool isVisible) {
-  if(mLblInstructions == NULL) {
-    mLblInstructions_visible = isVisible;
-  } else {
-    mLblInstructions_visible = isVisible;
-    mLblInstructions->setVisible(isVisible);
-  }
-}
-
-void CCBHelper::setPairObject(CCLabelTTF *pair) {
-
-  if(mLblPair == NULL) {
-    mLblPair = CCLabelTTF::create();
-  }
-  pair->retain();
-  mLblPair = pair;
-  if(mLblPair_background != "") {
-    mLblPair->setString(mLblPair_background.c_str());
-  }
-    
-}
 
 void CCBHelper::setPairMessage(std::string str) {
-  if(mLblPair == NULL) {
-    mLblPair_background = str;
-  } else {
-    mLblPair->setString(str.c_str());
-  }
+    if(mLblPair_prev.compare(str) != 0) {
+        mLblPair_prev = str;
+        mLblPair_str = str;
+    }
+}
+
+bool CCBHelper::checkIsMainJSPresent() {
+    gameAvailable = CCFileUtils::sharedFileUtils()->isFileExist(CCFileUtils::sharedFileUtils()->fullPathForFilename("main.js"));
 }
 
 bool CCBHelper::isMainJSPresent() {
-  std::string path = CCFileUtils::sharedFileUtils()->fullPathForFilename("main.js");
-  CCLOG("PATH RETURNED: %s", path.c_str());
-  if(path == "") {
-    return false;
-  } 
-  return true;
+  return gameAvailable;
 }
 
