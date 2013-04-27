@@ -31,7 +31,7 @@ class MyAdsListener : public cocos2d::plugin::AdsListener
 {
 public:
 	virtual void onAdsResult(cocos2d::plugin::AdsResultCode code, const char* msg);
-	virtual void onPlayerGetPoints(int points, cocos2d::plugin::ProtocolAds* pAdsPlugin);
+	virtual void onPlayerGetPoints(cocos2d::plugin::ProtocolAds* pAdsPlugin, int points);
 };
 
 class HelloWorld : public cocos2d::CCLayer
