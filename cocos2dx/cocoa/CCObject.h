@@ -27,8 +27,6 @@ THE SOFTWARE.
 
 #include "platform/CCPlatformMacros.h"
 
-#include <map>
-
 NS_CC_BEGIN
 
 /**
