@@ -191,8 +191,9 @@ int CCLuaStack::executeScriptFile(const char* filename)
     code.append("\"");
     return executeString(code.c_str());
 #else
+    std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(filename);
     ++m_callFromLua;
-    int nRet = luaL_dofile(m_state, filename);
+    int nRet = luaL_dofile(m_state, fullPath.c_str());
     --m_callFromLua;
     CC_ASSERT(m_callFromLua >= 0);
     // lua_gc(m_state, LUA_GCCOLLECT, 0);
