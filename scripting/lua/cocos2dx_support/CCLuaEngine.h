@@ -41,7 +41,7 @@ extern "C" {
 NS_CC_BEGIN
 
 // Lua support for cocos2d-x
-class CC_DLL CCLuaEngine : public CCScriptEngineProtocol
+class CCLuaEngine : public CCScriptEngineProtocol
 {
 public:
     static CCLuaEngine* defaultEngine(void);    
