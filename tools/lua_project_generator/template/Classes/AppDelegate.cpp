@@ -37,17 +37,9 @@ bool AppDelegate::applicationDidFinishLaunching()
     CCScriptEngineProtocol* pEngine = CCLuaEngine::engine();
     CCScriptEngineManager::sharedManager()->setScriptEngine(pEngine);
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    CCString* pstrFileContent = CCString::createWithContentsOfFile("hello.lua");
-    if (pstrFileContent)
-    {
-        pEngine->executeString(pstrFileContent->getCString());
-    }
-#else
     std::string path = CCFileUtils::sharedFileUtils()->fullPathForFilename("hello.lua");
     pEngine->addSearchPath(path.substr(0, path.find_last_of("/")).c_str());
     pEngine->executeScriptFile(path.c_str());
-#endif 
 
     return true;
 }
