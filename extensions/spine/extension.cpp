@@ -59,8 +59,9 @@ char* _readFile (const char* path, int* length) {
 	fseek(file, 0, SEEK_SET);
 
 	char* data = MALLOC(char, *length);
-	fread(data, 1, *length, file);
+	int rtn = fread(data, 1, *length, file);
 	fclose(file);
+	if (rtn != *length) return 0;
 
 	return data;
 }
