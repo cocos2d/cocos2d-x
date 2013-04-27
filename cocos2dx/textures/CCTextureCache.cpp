@@ -170,6 +170,11 @@ static void* loadImage(void* data)
         s_pAsyncStructQueue = NULL;
         delete s_pImageQueue;
         s_pImageQueue = NULL;
+
+        pthread_mutex_destroy(&s_asyncStructQueueMutex);
+        pthread_mutex_destroy(&s_ImageInfoMutex);
+        pthread_mutex_destroy(&s_SleepMutex);
+        pthread_cond_destroy(&s_SleepCondition);
     }
     
     return 0;
