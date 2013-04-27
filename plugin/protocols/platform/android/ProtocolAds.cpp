@@ -176,7 +176,7 @@ void ProtocolAds::onPlayerGetPoints(int points)
 	LOGD("ProtocolAds::onPlayerGetPoints invoked!");
 	if (m_pListener != NULL)
 	{
-		m_pListener->onPlayerGetPoints(points, this);
+		m_pListener->onPlayerGetPoints(this, points);
 	}
 }
 

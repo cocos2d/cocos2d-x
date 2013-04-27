@@ -238,7 +238,7 @@ void MyAdsListener::onAdsResult(AdsResultCode code, const char* msg)
 	CCLog("OnAdsResult, code : %d, msg : %s", code, msg);
 }
 
-void MyAdsListener::onPlayerGetPoints(int points, ProtocolAds* pAdsPlugin)
+void MyAdsListener::onPlayerGetPoints(cocos2d::plugin::ProtocolAds* pAdsPlugin, int points)
 {
 	CCLog("Player get points : %d", points);
 
