@@ -220,15 +220,27 @@ payResult : function () {},
 };
 
 /**
- * @class ProtocolIAPOnLine
+ * @class ProtocolAds
  */
-plugin.ProtocolIAPOnLine = {
+plugin.ProtocolAds = {
 
 /**
- * @method initDeveloperInfo
- * @param {TDeveloperInfo}
+ * @method hideBannerAd
  */
-initDeveloperInfo : function () {},
+hideBannerAd : function () {},
+
+/**
+ * @method showBannerAd
+ * @param {cocos2d::plugin::ProtocolAds::EBannerPos}
+ * @param {int}
+ */
+showBannerAd : function () {},
+
+/**
+ * @method getPluginName
+ * @return A value converted from C/C++ "const char*"
+ */
+getPluginName : function () {},
 
 /**
  * @method getPluginVersion
@@ -243,10 +255,10 @@ getPluginVersion : function () {},
 init : function () {},
 
 /**
- * @method payForProduct
- * @param {TProductInfo}
+ * @method initAppInfo
+ * @param {TAppInfo}
  */
-payForProduct : function () {},
+initAppInfo : function () {},
 
 /**
  * @method getSDKVersion
@@ -261,16 +273,25 @@ getSDKVersion : function () {},
 setDebugMode : function () {},
 
 /**
- * @method getPluginName
- * @return A value converted from C/C++ "const char*"
+ * @method presentScreen
  */
-getPluginName : function () {},
+presentScreen : function () {},
 
 /**
- * @method payFailedLocally
- * @param {cocos2d::plugin::EPayResult}
+ * @method receiveAd
+ */
+receiveAd : function () {},
+
+/**
+ * @method failedToReceiveAd
+ * @param {cocos2d::plugin::AdListener::EAdErrorCode}
  * @param {const char*}
  */
-payFailedLocally : function () {},
+failedToReceiveAd : function () {},
+
+/**
+ * @method dismissScreen
+ */
+dismissScreen : function () {},
 
 };
