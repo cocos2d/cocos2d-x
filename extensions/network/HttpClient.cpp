@@ -74,9 +74,9 @@ size_t writeData(void *ptr, size_t size, size_t nmemb, void *stream)
 
 // Prototypes
 bool configureCURL(CURL *handle);
-int processGetTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *errorCode);
-int processPostTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *errorCode);
-// int processDownloadTask(HttpRequest *task, write_callback callback, void *stream, int32_t *errorCode);
+int processGetTask(CCHttpRequest *request, write_callback callback, void *stream, long *errorCode);
+int processPostTask(CCHttpRequest *request, write_callback callback, void *stream, long *errorCode);
+// int processDownloadTask(HttpRequest *task, write_callback callback, void *stream, long *errorCode);
 
 
 // Worker thread
@@ -119,7 +119,7 @@ static void* networkThread(void *data)
         request->release();
         // ok, refcount = 1 now, only HttpResponse hold it.
         
-        int responseCode = -1;
+        long responseCode = -1;
         int retValue = 0;
 
         // Process the request -> get response packet
@@ -217,7 +217,7 @@ bool configureCURL(CURL *handle)
 }
 
 //Process Get Request
-int processGetTask(CCHttpRequest *request, write_callback callback, void *stream, int *responseCode)
+int processGetTask(CCHttpRequest *request, write_callback callback, void *stream, long *responseCode)
 {
     CURLcode code = CURL_LAST;
     CURL *curl = curl_easy_init();
@@ -295,7 +295,7 @@ int processGetTask(CCHttpRequest *request, write_callback callback, void *stream
 }
 
 //Process POST Request
-int processPostTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *responseCode)
+int processPostTask(CCHttpRequest *request, write_callback callback, void *stream, long *responseCode)
 {
     CURLcode code = CURL_LAST;
     CURL *curl = curl_easy_init();
