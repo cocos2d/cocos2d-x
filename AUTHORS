@@ -89,6 +89,7 @@ Developers:
          Some improvements for CCScrollView and CCTableView.
          Touch priority can't be set to the value specified by a call to CCMenu::setTouchPriority(int).
          CCTableView crashes if a CCTableViewDelegate is not provided.
+         Fixing a bug that _realOpacity isn't assigned in CCLayerColor::initWithColor.
 
     Weeds (Andre Rudlaff)
         Used fontconfig to enhance font rendering on linux.

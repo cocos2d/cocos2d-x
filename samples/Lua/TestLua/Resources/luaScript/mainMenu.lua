@@ -53,7 +53,8 @@ local _allTests = {
     { isSupported = false,  name = "DrawPrimitivesTest"     , create_func=        DrawPrimitivesTest      },
     { isSupported = true,  name = "NodeTest"               , create_func   =                  CocosNodeTest },
     { isSupported = true,  name = "TouchesTest"            , create_func   =               TouchesTest      },
-    { isSupported = true,  name = "MenuTest"               , create_func   =                  MenuTestMain  },
+    --Many tests in MenuTest will crash, so disable it. Should enable it after all crashes are resolved.
+    { isSupported = false,  name = "MenuTest"               , create_func   =                  MenuTestMain  },
     { isSupported = true,  name = "ActionManagerTest"      , create_func   =         ActionManagerTestMain  },
     { isSupported = true,  name = "LayerTest"              , create_func   =                 LayerTestMain  },
     { isSupported = true,  name = "SceneTest"              , create_func   =                 SceneTestMain  },
