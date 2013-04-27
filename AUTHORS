@@ -101,6 +101,7 @@ Developers:
         Fixed potential crash in CCScheduler::removeHashElement.
         Fixed potential crash in CCSaxParser.
         Added kResolutionFixedHeight and kResolutionFixedWidth resolution policy.
+        Use pthread mutex and condition variable instead of pthred semaphore to load image asynchronizely.
 
     Nat Weiss (iphonegamekit.com)
         author of Mac port
