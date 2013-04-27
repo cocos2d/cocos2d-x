@@ -25,7 +25,7 @@ THE SOFTWARE.
 #ifndef __CCOBJECT_H__
 #define __CCOBJECT_H__
 
-#include "platform/CCPlatformMacros.h"
+#include "CCDataVisitor.h"
 
 NS_CC_BEGIN
 
@@ -68,6 +68,8 @@ public:
     bool isSingleReference(void);
     unsigned int retainCount(void);
     virtual bool isEqual(const CCObject* pObject);
+
+    virtual void acceptVisitor(CCDataVisitor &visitor);
 
     virtual void update(float dt) {CC_UNUSED_PARAM(dt);};
     

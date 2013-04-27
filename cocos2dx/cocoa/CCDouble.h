@@ -50,6 +50,10 @@ public:
         }
         return pRet;
     }
+
+    /* override functions */
+    virtual void acceptVisitor(CCDataVisitor &visitor) { visitor.visit(this); }
+
 private:
     double m_dValue;
 };
