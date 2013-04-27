@@ -33,10 +33,13 @@ bool AppDelegate::applicationDidFinishLaunching()
     CCLuaEngine* pEngine = CCLuaEngine::defaultEngine();
     CCScriptEngineManager::sharedManager()->setScriptEngine(pEngine);
 
-	std::string dirPath = "luaScript";
+#if CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY
+    std::vector<std::string> searchPaths;
+    searchPaths.push_back("TestCppResources");
+    CCFileUtils::sharedFileUtils()->setSearchPaths(searchPaths);
+#endif
 
-    std::string path = CCFileUtils::sharedFileUtils()->fullPathForFilename((dirPath + "/controller.lua").c_str());
-    pEngine->executeScriptFile(path.c_str());
+    pEngine->executeScriptFile("luaScript/controller.lua");
 
     return true;
 }
