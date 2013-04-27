@@ -96,39 +96,39 @@ typedef int (CCObject::*SEL_Compare)(CCObject*);
 #define compare_selector(_SELECTOR) (SEL_Compare)(&_SELECTOR)
 
 
-// weak reference to CCObject
+/// @brief weak reference to CCObject
 class CC_DLL CCWeakReference {
-public:    // interfaces
-  CCWeakReference(CCObject *obj=NULL);
-  CCWeakReference(const CCWeakReference &weakref);
-  CCWeakReference &operator=(const CCWeakReference& weakref);
+public:
+    CCWeakReference(CCObject *obj = NULL);
+    CCWeakReference(const CCWeakReference &weakref);
+    CCWeakReference &operator=(const CCWeakReference &weakref);
 
-  bool operator==(const CCWeakReference& weakref) const;
-  virtual ~CCWeakReference();  
+    bool operator==(const CCWeakReference &weakref) const;
+    virtual ~CCWeakReference();
 
-  // gets the referenced CCObject *, might be NULL
-  inline CCObject *getObject() const {
-    return pp_obj ? *pp_obj : NULL;
-  }
-  
-  template<class _T>
-  inline _T getObjectEx() const {
-    return dynamic_cast<_T>(getObject());
-  }
+    /// @brief gets the referenced CCObject *, might be NULL
+    inline CCObject *getObject() const {
+        return pp_obj ? *pp_obj : NULL;
+    }
 
-  static unsigned int getWeakRefCount(CCObject *obj); 
+    template<class _T>
+    inline _T getObjectEx() const {
+        return dynamic_cast<_T>(getObject());
+    }
 
-private:    // private methods
-  void incRef(CCObject *obj=NULL);
-  void decRef();
+    static unsigned int getWeakRefCount(CCObject *obj);
 
-private:    // private members
-  // equals to Referent.second, which points to CCObject *. 
-  // NULL value indicates an invaild reference (not initialized, or been released).
-  CCObject **pp_obj;
+private:
+    void incRef(CCObject *obj = NULL);
+    void decRef();
 
-  // corresponding CCObject:m_uID, or 0 if invalid. (CCObject:m_uID starts from 1)
-  CC_SYNTHESIZE_READONLY(unsigned int, object_id, ObjectId);  
+private:
+    // corresponding CCObject:m_uID, or 0 if invalid. (CCObject:m_uID starts from 1)
+    CC_SYNTHESIZE_READONLY(unsigned int, object_id, ObjectId);
+
+    // equals to Referent.second, which points to CCObject *.
+    // NULL value indicates an invaild reference (not initialized, or been released).
+    CCObject **pp_obj;
 };
 
 // end of base_nodes group
