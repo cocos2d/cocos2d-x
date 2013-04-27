@@ -129,15 +129,14 @@ typedef std::pair<unsigned int, CCObject **> Referent;
 // the key is CCObject::m_uID
 typedef std::map<unsigned int, Referent> ReferentMap;
 
-cocos2d::ReferentMap *_referent_map = NULL;
+
 
 // the order of initialization of global variables is undeterminable, using lazyload
 // can avoid potential crash.
 static inline ReferentMap* GetReferentMap()
 {
-    if( !_referent_map )
-        _referent_map = new ReferentMap();
-    return _referent_map;
+    static cocos2d::ReferentMap _referent_map;
+    return &_referent_map;
 }
 
 static void releaseWeakReferenceFor(CCObject *obj) {
