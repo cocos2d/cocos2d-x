@@ -338,15 +338,17 @@ static tinyxml2::XMLElement* generateElementForDict(cocos2d::CCDictionary *dict,
  */
 bool CCFileUtils::writeToFile(cocos2d::CCDictionary *dict, const std::string &fullPath)
 {
-    CCLOG("tinyxml2 CCDictionary %d writeToFile %s", dict->m_uID, fullPath.c_str());
-    bool bRet = false;
+    //CCLOG("tinyxml2 CCDictionary %d writeToFile %s", dict->m_uID, fullPath.c_str());
     tinyxml2::XMLDocument *pDoc = new tinyxml2::XMLDocument();
     if (NULL == pDoc)
         return false;
     
     tinyxml2::XMLDeclaration *pDeclaration = pDoc->NewDeclaration("xml version=\"1.0\" encoding=\"UTF-8\"");
     if (NULL == pDeclaration)
+    {
+        delete pDoc;
         return false;
+    }
     
     pDoc->LinkEndChild(pDeclaration);
     tinyxml2::XMLElement *docType = pDoc->NewElement("!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\"");
@@ -355,19 +357,23 @@ bool CCFileUtils::writeToFile(cocos2d::CCDictionary *dict, const std::string &fu
     tinyxml2::XMLElement *pRootEle = pDoc->NewElement("plist");
     pRootEle->SetAttribute("version", "1.0");
     if (NULL == pRootEle)
+    {
+        delete pDoc;
         return false;
+    }
     pDoc->LinkEndChild(pRootEle);
     
     tinyxml2::XMLElement *innerDict = generateElementForDict(dict, pDoc);
     if (NULL == innerDict )
+    {
+        delete pDoc;
         return false;
+    }
     pRootEle->LinkEndChild(innerDict);
     
-    bRet = tinyxml2::XML_SUCCESS == pDoc->SaveFile(fullPath.c_str());
+    bool bRet = tinyxml2::XML_SUCCESS == pDoc->SaveFile(fullPath.c_str());
     
-    if(pDoc)
-        delete pDoc;
-    
+    delete pDoc;
     return bRet;
 }
 
@@ -376,34 +382,25 @@ bool CCFileUtils::writeToFile(cocos2d::CCDictionary *dict, const std::string &fu
  */
 static tinyxml2::XMLElement* generateElementForObject(cocos2d::CCObject *object, tinyxml2::XMLDocument *pDoc)
 {
-    tinyxml2::XMLElement* rootNode = NULL;
     // object is CCString
-    CCString *str = dynamic_cast<CCString *>(object);
-    if (str)
+    if (CCString *str = dynamic_cast<CCString *>(object))
     {
-        rootNode = pDoc->NewElement("string");
+        tinyxml2::XMLElement* node = pDoc->NewElement("string");
         tinyxml2::XMLText* content = pDoc->NewText(str->getCString());
-        rootNode->LinkEndChild(content);
-        return rootNode;
+        node->LinkEndChild(content);
+        return node;
     }
     
     // object is CCArray
-    CCArray *array = dynamic_cast<CCArray *>(object);
-    if (array)
-    {
-        rootNode = generateElementForArray(array, pDoc);
-        return rootNode;
-    }
+    if (CCArray *array = dynamic_cast<CCArray *>(object))
+        return generateElementForArray(array, pDoc);
     
     // object is CCDictionary
-    CCDictionary *innerDict = dynamic_cast<CCDictionary *>(object);
-    if (innerDict)
-    {
-        rootNode = generateElementForDict(innerDict, pDoc);
-        return rootNode;
-    }
+    if (CCDictionary *innerDict = dynamic_cast<CCDictionary *>(object))
+        return generateElementForDict(innerDict, pDoc);
     
-    return rootNode;
+    CCLOG("This type cannot appear in property list");
+    return NULL;
 }
 
 /*

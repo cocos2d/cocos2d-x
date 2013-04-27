@@ -352,9 +352,6 @@ protected:
      */
     virtual bool writeToFile(CCDictionary *dict, const std::string& fullPath);
     
-    // for test
-    //virtual bool writeToFileTest(CCDictionary *dict, const std::string& fullPath);
-    
     /**
      *  Creates an array by the contents of a file.
      *  @note This method is used internally.
