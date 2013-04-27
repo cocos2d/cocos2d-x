@@ -64,4 +64,13 @@ public:
     virtual string subtitle();
 };
 
+class TextWritePlist : public FileUtilsDemo
+{
+public:
+    virtual void onEnter();
+    virtual void onExit();
+    virtual string title();
+    virtual string subtitle();
+};
+
 #endif /* __FILEUTILSTEST_H__ */
