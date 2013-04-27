@@ -99,6 +99,11 @@
 			<type>2</type>
 			<locationURI>PARENT-1-PROJECT_LOC/physics_nodes</locationURI>
 		</link>
+		<link>
+			<name>spine</name>
+			<type>2</type>
+			<locationURI>PARENT-1-PROJECT_LOC/spine</locationURI>
+		</link>
 	</linkedResources>
 	<filteredResources>
 		<filter>
