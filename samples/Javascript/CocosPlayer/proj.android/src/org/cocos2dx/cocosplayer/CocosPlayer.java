@@ -20,7 +20,7 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
-****************************************************************************/
+ ****************************************************************************/
 package org.cocos2dx.cocosplayer;
 
 import org.cocos2dx.lib.Cocos2dxActivity;
@@ -30,24 +30,48 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.ContextWrapper;
 import android.content.Context;
+import android.util.Log;
 
-public class CocosPlayer extends Cocos2dxActivity{
+public class CocosPlayer extends Cocos2dxActivity {
 
-    public static Context c;
-    
-    public static Activity activity;
-    
+	public static Context c;
+
+	public static Activity activity;
+
 	public static void setOrientation(int orient) {
-		activity.setRequestedOrientation(orient);
+		((Activity) Cocos2dxActivity.getContext())
+				.setRequestedOrientation(orient);
 	}
-    
-    protected void onCreate(Bundle savedInstanceState){    	
-    	super.onCreate(savedInstanceState);
-    	activity = this;
+
+	@Override
+	public void onStop() {
+		Log.i("CocosPlayer", "onStop");
+		CocosPlayerPresence.destroy();
+		super.onStop();
+	}
+
+	@Override
+	public void onResume() {
+		CocosPlayerPresence.startPresence();
+		Log.i("CocosPlayer", "onResume");
+		super.onResume();
+	}
+
+	@Override
+	public void finish() {
+		Log.i("CocosPlayer", "onFinish");
+		CocosPlayerPresence.destroy();
+	}
+
+	protected void onCreate(Bundle savedInstanceState) {
+		Log.i("CocosPlayer", "onCreate");
+		super.onCreate(savedInstanceState);
+		activity = ((Activity) Cocos2dxActivity.getContext());
 		c = getApplicationContext();
-    }
-	
-    static {
-    	System.loadLibrary("cocosplayer");
-    }
+	}
+
+	static {
+		System.loadLibrary("cocosplayer");
+	}
+
 }

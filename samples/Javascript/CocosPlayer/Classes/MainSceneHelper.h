@@ -8,22 +8,16 @@ class CCBHelper {
   static CCMenuItemImage * mBtnRun;
   static CCMenuItemImage * mBtnReset;
   static CCMenuItemImage * mBtnPair;
+    static bool gameAvailable;
+  static std::string mLblStatus_prev, mLblStatus_str;
+  static std::string mLblPair_prev, mLblPair_str;
+  static std::string mLblInstructions_str, mLblInstructions_prev;
 
-  static CCLabelTTF *mLblStatus;
-  static std::string mLblStatus_background;
-  static CCLabelTTF *mLblPair;
-  static std::string mLblPair_background;
-  static CCLabelTTF *mLblInstructions;
-  static bool mLblInstructions_visible;
-
-  static void setPairObject(CCLabelTTF *pair);  
-  static void setPairMessage(std::string str);  
-
-  static void setInstructionsObject(CCLabelTTF *instr);  
-  static void setInstructionsMessage(bool isVisible);  
-
-  static void setStatusObject(CCLabelTTF *status);  
-  static void setStatusMessage(std::string str);  
-
+  static void setPairMessage(std::string str);
+    static void setInstructionsMessage(std::string msg);
+  static void setStatusMessage(std::string str);
   static bool isMainJSPresent();
+    static bool checkIsMainJSPresent();
+
+
 };
