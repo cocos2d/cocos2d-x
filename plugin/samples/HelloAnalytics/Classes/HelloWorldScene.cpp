@@ -107,7 +107,7 @@ bool HelloWorld::init()
         CCLabelTTF* label = CCLabelTTF::create(s_EventMenuItem[i].id.c_str(), "Arial", 24);
         CCMenuItemLabel* pMenuItem = CCMenuItemLabel::create(label, this, menu_selector(HelloWorld::eventMenuCallback));
         pMenu->addChild(pMenuItem, 0, s_EventMenuItem[i].tag);
-        yPos = size.height - 50*i - 100;
+        yPos = size.height - 35*i - 100;
         pMenuItem->setPosition( ccp(size.width / 2, yPos));
     }
 
@@ -115,8 +115,8 @@ bool HelloWorld::init()
     std::string strVer = g_pAnalytics->getPluginVersion();
     char ret[256] = { 0 };
     sprintf(ret, "Plugin : %s, Ver : %s", strName.c_str(), strVer.c_str());
-    CCLabelTTF* pLabel = CCLabelTTF::create(ret, "Arial", 24, CCSizeMake(size.width, 0), kCCTextAlignmentCenter);
-    pLabel->setPosition(ccp(size.width / 2, yPos - 100));
+    CCLabelTTF* pLabel = CCLabelTTF::create(ret, "Arial", 18, CCSizeMake(size.width, 0), kCCTextAlignmentCenter);
+    pLabel->setPosition(ccp(size.width / 2, yPos - 80));
     addChild(pLabel);
 
     CCLabelTTF* label = CCLabelTTF::create("reload all plugins", "Arial", 24);
