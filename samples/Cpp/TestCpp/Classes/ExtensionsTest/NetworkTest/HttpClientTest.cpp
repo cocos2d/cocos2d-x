@@ -61,7 +61,7 @@ void HttpClientTest::onMenuGetTestClicked(cocos2d::CCObject *sender)
         CCHttpRequest* request = new CCHttpRequest();
         request->setUrl("http://just-make-this-request-failed.com");
         request->setRequestType(CCHttpRequest::kHttpGet);
-        request->setResponseCallback(this, callfuncND_selector(HttpClientTest::onHttpRequestCompleted));
+        request->setResponseCallback(this, httpresponse_selector(HttpClientTest::onHttpRequestCompleted));
         request->setTag("GET test1");
         CCHttpClient::getInstance()->send(request);
         request->release();
@@ -73,7 +73,7 @@ void HttpClientTest::onMenuGetTestClicked(cocos2d::CCObject *sender)
         // required fields
         request->setUrl("http://www.httpbin.org/ip");
         request->setRequestType(CCHttpRequest::kHttpGet);
-        request->setResponseCallback(this, callfuncND_selector(HttpClientTest::onHttpRequestCompleted));
+        request->setResponseCallback(this, httpresponse_selector(HttpClientTest::onHttpRequestCompleted));
         // optional fields                            
         request->setTag("GET test2");
     
@@ -88,7 +88,7 @@ void HttpClientTest::onMenuGetTestClicked(cocos2d::CCObject *sender)
         CCHttpRequest* request = new CCHttpRequest();
         request->setUrl("http://www.httpbin.org/get");
         request->setRequestType(CCHttpRequest::kHttpGet);
-        request->setResponseCallback(this, callfuncND_selector(HttpClientTest::onHttpRequestCompleted));
+        request->setResponseCallback(this, httpresponse_selector(HttpClientTest::onHttpRequestCompleted));
         request->setTag("GET test3");
         CCHttpClient::getInstance()->send(request);
         request->release();
@@ -106,7 +106,7 @@ void HttpClientTest::onMenuPostTestClicked(cocos2d::CCObject *sender)
         CCHttpRequest* request = new CCHttpRequest();
         request->setUrl("http://www.httpbin.org/post");
         request->setRequestType(CCHttpRequest::kHttpPost);
-        request->setResponseCallback(this, callfuncND_selector(HttpClientTest::onHttpRequestCompleted));
+        request->setResponseCallback(this, httpresponse_selector(HttpClientTest::onHttpRequestCompleted));
         
         // write the post data
         const char* postData = "visitor=cocos2d&TestSuite=Extensions Test/NetworkTest";
@@ -125,7 +125,7 @@ void HttpClientTest::onMenuPostTestClicked(cocos2d::CCObject *sender)
         std::vector<std::string> headers;
         headers.push_back("Content-Type: application/json; charset=utf-8");
         request->setHeaders(headers);
-        request->setResponseCallback(this, callfuncND_selector(HttpClientTest::onHttpRequestCompleted));
+        request->setResponseCallback(this, httpresponse_selector(HttpClientTest::onHttpRequestCompleted));
         
         // write the post data
         const char* postData = "visitor=cocos2d&TestSuite=Extensions Test/NetworkTest";
@@ -145,7 +145,7 @@ void HttpClientTest::onMenuPostBinaryTestClicked(cocos2d::CCObject *sender)
     CCHttpRequest* request = new CCHttpRequest();
     request->setUrl("http://www.httpbin.org/post");
     request->setRequestType(CCHttpRequest::kHttpPost);
-    request->setResponseCallback(this, callfuncND_selector(HttpClientTest::onHttpRequestCompleted));
+    request->setResponseCallback(this, httpresponse_selector(HttpClientTest::onHttpRequestCompleted));
     
     // write the post data
     char postData[22] = "binary=hello\0\0cocos2d";  // including \0, the strings after \0 should not be cut in response
@@ -159,10 +159,8 @@ void HttpClientTest::onMenuPostBinaryTestClicked(cocos2d::CCObject *sender)
     m_labelStatusCode->setString("waiting...");
 }
 
-void HttpClientTest::onHttpRequestCompleted(cocos2d::CCNode *sender, void *data)
+void HttpClientTest::onHttpRequestCompleted(CCHttpClient *sender, CCHttpResponse *response)
 {
-    CCHttpResponse *response = (CCHttpResponse*)data;
-
     if (!response)
     {
         return;
