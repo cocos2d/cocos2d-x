@@ -62,6 +62,7 @@ void AnalyticsUmeng::startSession(const char* appKey)
         return;
     }
     NSString* pKey = [NSString stringWithUTF8String:appKey];
+    [[MobClick class] performSelector:@selector(setWrapperType:wrapperVersion:) withObject:@"Cocos2d-x" withObject:@"1.0"];
     [MobClick startWithAppkey:pKey];
 }
 
@@ -311,6 +312,7 @@ void AnalyticsUmeng::startSession(const char* appKey, UmengReportPolicy policy, 
 
     NSString* key = [NSString stringWithUTF8String:appKey];
     NSString* channel = [NSString stringWithUTF8String:channelId];
+    [[MobClick class] performSelector:@selector(setWrapperType:wrapperVersion:) withObject:@"Cocos2d-x" withObject:@"1.0"];
     [MobClick startWithAppkey:key reportPolicy:(ReportPolicy)policy channelId:channel];
 }
 
