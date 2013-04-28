@@ -23,7 +23,10 @@ THE SOFTWARE.
 ****************************************************************************/
 package org.cocos2dx.plugin;
 
+import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.Iterator;
+
 import android.content.Context;
 import android.util.Log;
 
@@ -49,6 +52,7 @@ public class AnalyticsUmeng implements InterfaceAnalytics{
 
 	public AnalyticsUmeng(Context context) {
 		mContext = context;
+		MobclickAgent.setWrapper("Cocos2d-x", "1.0");
 	}
 	
 	public boolean isValid() {
@@ -101,7 +105,8 @@ public class AnalyticsUmeng implements InterfaceAnalytics{
 	@Override
 	public void logEvent(String eventId, Hashtable<String, String> paramMap) {
 		LogD("logEvent(eventId, paramMap) invoked!");
-		MobclickAgent.onEvent(mContext, eventId, paramMap);
+		HashMap<String, String> curParam = changeTableToMap(paramMap);
+		MobclickAgent.onEvent(mContext, eventId, curParam);
 	}
 
 	@Override
@@ -188,7 +193,8 @@ public class AnalyticsUmeng implements InterfaceAnalytics{
 		LogD("logEventWithDuration(eventId, duration, paramMap) invoked!");
 		if (!isValid()) return;
 		try{
-			MobclickAgent.onEventDuration(mContext, eventId, paramMap, duration);
+			HashMap<String, String> curMap = changeTableToMap(paramMap);
+			MobclickAgent.onEventDuration(mContext, eventId, curMap, duration);
 		} catch(Exception e){
 			LogE("Exception in logEventWithDuration,eventId,duration,paramMap", e);
 		}
@@ -218,7 +224,8 @@ public class AnalyticsUmeng implements InterfaceAnalytics{
 		LogD("logTimedKVEventBegin invoked!");
 		if (!isValid()) return;
 		try{
-			MobclickAgent.onKVEventBegin(mContext, eventId, paramMap, label);
+			HashMap<String, String> curMap = changeTableToMap(paramMap);
+			MobclickAgent.onKVEventBegin(mContext, eventId, curMap, label);
 		} catch(Exception e){
 			LogE("Exception in logTimedKVEventBegin", e);
 		}
@@ -232,5 +239,17 @@ public class AnalyticsUmeng implements InterfaceAnalytics{
 		} catch(Exception e){
 			LogE("Exception in logTimedKVEventEnd", e);
 		}
+	}
+
+	private HashMap<String, String> changeTableToMap(Hashtable<String, String> param) {
+		HashMap<String, String> retParam = new HashMap<String, String>();
+		for(Iterator<String> it = param.keySet().iterator(); it.hasNext(); ) {   
+            String key = it.next();
+            String value = param.get(key);
+
+            retParam.put(key, value);
+        }
+
+		return retParam;
 	}
 }
