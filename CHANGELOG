@@ -18,7 +18,7 @@ cocos2d-2.1rc0-x-2.1.3 @May.01 2013
      Bug      #2055: enable easy switching between Box2D and chipmunk
      Bug      #2058: properly resets the tile's Y flipping
      Bug      #2061: fix a bug that wrong type of argument signature is used in setAccelerometerIntervalJNI function
-     Bug      #2073: fix a memory leak in 
+     Bug      #2073: fix a memory leak in CCUserDefault
      Bug      #2080: fix a bug that _realOpacity isn't assigned in CCLayerColor::initWithColor
      Feature  #2001: add CCRemoveSelf Action
      Feature  #2048: support variable cell sizes in CCTableView
@@ -29,7 +29,7 @@ cocos2d-2.1rc0-x-2.1.3 @May.01 2013
      Feature  #2076: adding a method CCBReader::setResolutionScale for setting resolution scale manually
      Refactor #1592: updating UTHASH to v1.9.8
      Refactor #2042: remove libxml2
-     Refactor #2097: use pthread mutex and condition variable instead of pthred semaphore to load image asynchronizely 
+     Refactor #2097: use pthread mutex and condition variable instead of pthread semaphore to load image asynchronizely 
 [android]  
      Bug      #1996: adding missing JNIEXPORT / JNICALL declarations
      Bug      #2028: fix a bug taht application can not run correctly on Android simulator
@@ -39,7 +39,7 @@ cocos2d-2.1rc0-x-2.1.3 @May.01 2013
      Refactor #1613: not reload resources when coming from background on Android
      Refactor #1861: CocosPlayer Android update
      Refactor #1904: strip libcurl.a on x86 architecture
-     Refactor #2027: eeduce function call in nativeInitBitmapDC to improve performance
+     Refactor #2027: reduce function call in nativeInitBitmapDC to improve performance
      Refactor #2047: clean up linked libraries for android
 [iOS]
      Bug      #1863: fix a bug that CCUserDefault on iOS may not save immediately
@@ -66,7 +66,7 @@ cocos2d-2.1rc0-x-2.1.3 @May.01 2013
      Feature  #2043: upgrading SpiderMonkey to Firefox20.0
      Feature  #2060: support for cc.FileUtils.getInstance().getByteArrayFromFile(filename)
      Feature  #2064: exposing cc.Node.nodeTo***Transform to JS
-     Refactor #1944: the subclass of cc.Sprite,cc.Layer... doesn't need cc.associateWithNative anymore
+     Refactor #1944: subclass of cc.Sprite,cc.Layer... doesn't need cc.associateWithNative anymore
 [lua binding]
      Feature  #1814: add menutest 
      Feature  #1941: add TileMapTest
@@ -74,7 +74,7 @@ cocos2d-2.1rc0-x-2.1.3 @May.01 2013
      Feature  #1945: use CCLOG to implement print() function
      Feature  #1993: add ParallaxTest
      Feature  #1994: add ActionManagerTest
-     Feature  #1997: adding IntervalTest
+     Feature  #1997: add IntervalTest
      Feature  #1998: add SceneTest
      Feature  #2002: add Texture2dTest, RenderTexture, ZwoptexTest, FontTest, CocosDenshionTest and EffectsAdvancedTest
      Feature  #2004: add UserDefaultTest
