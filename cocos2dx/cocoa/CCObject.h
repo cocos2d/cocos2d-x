@@ -139,8 +139,23 @@ public:
         return m_data == weakref.m_data;
     }
 
-    inline _T *getObject() {
+    inline _T *getObject() const {
         return static_cast<_T *>(m_data.getObject());
+    }
+
+    T *operator ->() const
+    {
+        return getObject();
+    }
+
+    T &operator *()
+    {
+        return *getObject();
+    }
+
+    const T &operator *() const
+    {
+        return *getObject();
     }
 
 private:
