@@ -23,8 +23,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef _COCOS2DX_APPLICATION_H_
-#define _COCOS2DX_APPLICATION_H_
+#ifndef _CCOSPAPPLICATION_H_
+#define _CCOSPAPPLICATION_H_
 
 #include <FApp.h>
 #include <FUi.h>
@@ -66,4 +66,4 @@ private:
     Tizen::Ui::Controls::Form* __pForm;
 };
 
-#endif
+#endif // _CCOSPAPPLICATION_H_
