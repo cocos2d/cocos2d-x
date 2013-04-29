@@ -10,6 +10,8 @@
 #define  _APP_DELEGATE_H_
 
 #include "CCApplication.h"
+#include "jsapi.h"
+
 /**
  @brief    The cocos2d Application.
  
@@ -20,6 +22,8 @@
 class  AppDelegate : private cocos2d::CCApplication
 {
 public:
+    bool isRetina, isIPhone;
+    
     AppDelegate();
     virtual ~AppDelegate();
     
@@ -41,13 +45,20 @@ public:
      @param  the pointer of the application
      */
     virtual void applicationWillEnterForeground();
+    void initGameView();
    
 };
 
-
-void handle_ccb_run();
+bool runMainScene();
+bool handle_eval_script(const char *script, jsval *out);
+void openEditBox();
+void updatePairingLabel(const char *);
 void handle_ccb_stop();
 void handle_connected();
 void handle_disconnected();
+void handle_set_orient(float w, float h);
+void handle_set_message(const char *msg);
+void handle_set_status(const char *msg);
+
 #endif // _APP_DELEGATE_H_
 

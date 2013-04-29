@@ -132,7 +132,7 @@ bool CCScrollView::init()
 
 void CCScrollView::registerWithTouchDispatcher()
 {
-    CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, 0, false);
+    CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, CCLayer::getTouchPriority(), false);
 }
 
 bool CCScrollView::isNodeVisible(CCNode* node)
@@ -305,10 +305,12 @@ CCNode * CCScrollView::getContainer()
 
 void CCScrollView::setContainer(CCNode * pContainer)
 {
+    // Make sure that 'm_pContainer' has a non-NULL value since there are
+    // lots of logic that use 'm_pContainer'.
+    if (NULL == pContainer)
+        return;
+
     this->removeAllChildrenWithCleanup(true);
-
-    if (!pContainer) return;
-
     this->m_pContainer = pContainer;
 
     this->m_pContainer->ignoreAnchorPointForPosition(false);
@@ -492,11 +494,24 @@ void CCScrollView::beforeDraw()
 {
     if (m_bClippingToBounds)
     {
-		CCRect frame = getViewRect();
-        
-        glEnable(GL_SCISSOR_TEST);
-        
-        CCEGLView::sharedOpenGLView()->setScissorInPoints(frame.origin.x, frame.origin.y, frame.size.width, frame.size.height);
+		m_bScissorRestored = false;
+        CCRect frame = getViewRect();
+        if (CCEGLView::sharedOpenGLView()->isScissorEnabled()) {
+            m_bScissorRestored = true;
+            m_tParentScissorRect = CCEGLView::sharedOpenGLView()->getScissorRect();
+            //set the intersection of m_tParentScissorRect and frame as the new scissor rect
+            if (frame.intersectsRect(m_tParentScissorRect)) {
+                float x = MAX(frame.origin.x, m_tParentScissorRect.origin.x);
+                float y = MAX(frame.origin.y, m_tParentScissorRect.origin.y);
+                float xx = MIN(frame.origin.x+frame.size.width, m_tParentScissorRect.origin.x+m_tParentScissorRect.size.width);
+                float yy = MIN(frame.origin.y+frame.size.height, m_tParentScissorRect.origin.y+m_tParentScissorRect.size.height);
+                CCEGLView::sharedOpenGLView()->setScissorInPoints(x, y, xx-x, yy-y);
+            }
+        }
+        else {
+            glEnable(GL_SCISSOR_TEST);
+            CCEGLView::sharedOpenGLView()->setScissorInPoints(frame.origin.x, frame.origin.y, frame.size.width, frame.size.height);
+        }
     }
 }
 
@@ -508,7 +523,12 @@ void CCScrollView::afterDraw()
 {
     if (m_bClippingToBounds)
     {
-        glDisable(GL_SCISSOR_TEST);
+        if (m_bScissorRestored) {//restore the parent's scissor rect
+            CCEGLView::sharedOpenGLView()->setScissorInPoints(m_tParentScissorRect.origin.x, m_tParentScissorRect.origin.y, m_tParentScissorRect.size.width, m_tParentScissorRect.size.height);
+        }
+        else {
+            glDisable(GL_SCISSOR_TEST);
+        }
     }
 }
 

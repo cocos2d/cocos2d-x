@@ -1,4 +1,4 @@
-TARGET = TestCpp
+EXECUTABLE = TestCpp
 
 SOURCES = ../Classes/AccelerometerTest/AccelerometerTest.cpp \
 	../Classes/ActionManagerTest/ActionManagerTest.cpp \
@@ -36,6 +36,7 @@ SOURCES = ../Classes/AccelerometerTest/AccelerometerTest.cpp \
 	../Classes/ExtensionsTest/CocosBuilderTest/AnimationsTest/AnimationsTestLayer.cpp \
 	../Classes/ExtensionsTest/CocosBuilderTest/MenuTest/MenuTestLayer.cpp \
 	../Classes/ExtensionsTest/CocosBuilderTest/TestHeader/TestHeaderLayer.cpp \
+	../Classes/ExtensionsTest/CocosBuilderTest/TimelineCallbackTest/TimelineCallbackTestLayer.cpp \
 	../Classes/ExtensionsTest/ControlExtensionTest/CCControlButtonTest/CCControlButtonTest.cpp \
 	../Classes/ExtensionsTest/ControlExtensionTest/CCControlColourPicker/CCControlColourPickerTest.cpp \
 	../Classes/ExtensionsTest/ControlExtensionTest/CCControlScene.cpp \
@@ -83,6 +84,7 @@ SOURCES = ../Classes/AccelerometerTest/AccelerometerTest.cpp \
 	../Classes/UserDefaultTest/UserDefaultTest.cpp \
 	../Classes/ZwoptexTest/ZwoptexTest.cpp \
 	../Classes/FileUtilsTest/FileUtilsTest.cpp \
+	../Classes/SpineTest/SpineTest.cpp \
 	../Classes/controller.cpp \
 	../Classes/testBasic.cpp \
 	../Classes/AppDelegate.cpp \
@@ -95,24 +97,19 @@ COCOS_LIBS = $(LIB_DIR)/libcocos2d.so $(LIB_DIR)/libcocosdenshion.so
 include ../../../../cocos2dx/proj.linux/cocos2dx.mk
 
 
-INCLUDES +=  -I../ \
-    -I../../ \
-    -I../Classes \
-    -I$(COCOS_ROOT)/CocosDenshion/include \
-    -I$(COCOS_ROOT)/extensions/ \
-    -I$(COCOS_ROOT)/external/ \
-    -I$(COCOS_ROOT)/external/chipmunk/include/chipmunk
+INCLUDES +=	 -I../ \
+	-I../../ \
+	-I../Classes \
+	-I$(COCOS_ROOT)/CocosDenshion/include \
+	-I$(COCOS_ROOT)/extensions/ \
+	-I$(COCOS_ROOT)/external/ \
+	-I$(COCOS_ROOT)/external/chipmunk/include/chipmunk
 
 STATICLIBS += \
-    $(STATICLIBS_DIR)/libcurl.a \
-    $(LIB_DIR)/libextension.a \
-    $(LIB_DIR)/libbox2d.a \
-    $(LIB_DIR)/libchipmunk.a
-
-DEFINES += -DCC_ENABLE_CHIPMUNK_INTEGRATION=1
-
-TARGET := $(BIN_DIR)/$(TARGET)
-all: $(TARGET)
+	$(STATICLIBS_DIR)/libcurl.a \
+	$(LIB_DIR)/libextension.a \
+	$(LIB_DIR)/libbox2d.a \
+	$(LIB_DIR)/libchipmunk.a
 
 ####### Build rules
 $(TARGET): $(OBJECTS) $(STATICLIBS) $(COCOS_LIBS) $(CORE_MAKEFILE_LIST)

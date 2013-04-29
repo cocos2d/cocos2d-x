@@ -91,9 +91,7 @@
 #        define MOZ_HAVE_CXX11_OVERRIDE
 #        define MOZ_HAVE_CXX11_FINAL     final
 #      endif
-#      if __GNUC_MINOR__ >= 4
-#        define MOZ_HAVE_CXX11_DELETE
-#      endif
+#      define MOZ_HAVE_CXX11_DELETE
 #      if __GNUC_MINOR__ >= 5
 #        define MOZ_HAVE_CXX11_ENUM_TYPE
 #        define MOZ_HAVE_CXX11_STRONG_ENUMS
@@ -112,15 +110,15 @@
 #  define MOZ_HAVE_NEVER_INLINE          __attribute__((noinline))
 #  define MOZ_HAVE_NORETURN              __attribute__((noreturn))
 #elif defined(_MSC_VER)
-#  if _MSC_VER >= 1400
-#    define MOZ_HAVE_CXX11_OVERRIDE
-     /* MSVC currently spells "final" as "sealed". */
-#    define MOZ_HAVE_CXX11_FINAL         sealed
-#    define MOZ_HAVE_CXX11_ENUM_TYPE
-#  endif
 #  if _MSC_VER >= 1700
+#    define MOZ_HAVE_CXX11_FINAL         final
 #    define MOZ_HAVE_CXX11_STRONG_ENUMS
+#  else
+     /* MSVC <= 10 used to spell "final" as "sealed". */
+#    define MOZ_HAVE_CXX11_FINAL         sealed
 #  endif
+#  define MOZ_HAVE_CXX11_OVERRIDE
+#  define MOZ_HAVE_CXX11_ENUM_TYPE
 #  define MOZ_HAVE_NEVER_INLINE          __declspec(noinline)
 #  define MOZ_HAVE_NORETURN              __declspec(noreturn)
 #endif

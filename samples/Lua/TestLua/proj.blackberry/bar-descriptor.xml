@@ -54,6 +54,7 @@
     
     <!-- the variable 'worksparce_loc' is not supported in bbndk2.0, so we create an empty folder to make the relative path work. -->
     <asset path="../Resources">Resources</asset>
+    <asset path="../../../Cpp/TestCpp/Resources">Resources/TestCppResources</asset>
     
     <!-- the path of the three shared libraries as follows in bbndk2.0 is different from bbndk1.0, so if the version of bbndk you use is 1.0, just uncomment the next three lines and comment the following three lines-->
     
@@ -63,35 +64,41 @@
     <!--<asset path="${QNX_TARGET}/../target-override/${CPUVARDIR}/usr/lib/libalut.so" type="Qnx/Elf">lib/libalut.so.1</asset>-->
     
     <!-- used for bbndk2.0 -->
-    <asset path="empty/../../../../../CocosDenshion/proj.blackberry/Device-Debug/libCocosDenshion.so" type="Qnx/Elf">lib/libCocosDenshion.so</asset>
     
     <configuration id="com.qnx.qcc.configuration.exe.debug.446234419" name="Device-Debug">
        <platformArchitecture>armle-v7</platformArchitecture>
        <asset path="Device-Debug/TestLua" entry="true" type="Qnx/Elf">TestLua</asset>
+       <asset path="empty/../../../../../CocosDenshion/proj.blackberry/Device-Debug/libCocosDenshion.so" type="Qnx/Elf">lib/libCocosDenshion.so</asset>
     </configuration>
     <configuration id="com.qnx.qcc.configuration.exe.release.1265921422" name="Device-Release">
        <platformArchitecture>armle-v7</platformArchitecture>
        <asset path="Device-Release/TestLua" entry="true" type="Qnx/Elf">TestLua</asset>
+       <asset path="empty/../../../../../CocosDenshion/proj.blackberry/Device-Release/libCocosDenshion.so" type="Qnx/Elf">lib/libCocosDenshion.so</asset>
     </configuration>
     <configuration id="com.qnx.qcc.configuration.exe.profile.1761000041" name="Device-Profile">
        <platformArchitecture>armle-v7</platformArchitecture>
        <asset path="Device-Profile/TestLua" entry="true" type="Qnx/Elf">TestLua</asset>
+       <asset path="empty/../../../../../CocosDenshion/proj.blackberry/Device-Profile/libCocosDenshion.so" type="Qnx/Elf">lib/libCocosDenshion.so</asset>
     </configuration>
     <configuration id="com.qnx.qcc.configuration.exe.profile.coverage.1771167181" name="Device-Coverage">
        <platformArchitecture>armle-v7</platformArchitecture>
        <asset path="Device-Coverage/TestLua" entry="true" type="Qnx/Elf">TestLua</asset>
+       <asset path="empty/../../../../../CocosDenshion/proj.blackberry/Device-Coverage/libCocosDenshion.so" type="Qnx/Elf">lib/libCocosDenshion.so</asset>
     </configuration>
     <configuration id="com.qnx.qcc.configuration.exe.debug.660208940" name="Simulator">
        <platformArchitecture>x86</platformArchitecture>
        <asset path="Simulator/TestLua" entry="true" type="Qnx/Elf">TestLua</asset>
+       <asset path="empty/../../../../../CocosDenshion/proj.blackberry/Simulator/libCocosDenshion.so" type="Qnx/Elf">lib/libCocosDenshion.so</asset>
     </configuration>
     <configuration id="com.qnx.qcc.configuration.exe.profile.1237484173" name="Simulator-Profile">
        <platformArchitecture>x86</platformArchitecture>
        <asset path="Simulator-Profile/TestLua" entry="true" type="Qnx/Elf">TestLua</asset>
+       <asset path="empty/../../../../../CocosDenshion/proj.blackberry/Simulator-Profile/libCocosDenshion.so" type="Qnx/Elf">lib/libCocosDenshion.so</asset>
     </configuration>
     <configuration id="com.qnx.qcc.configuration.exe.profile.coverage.181538713" name="Simulator-Coverage">
        <platformArchitecture>x86</platformArchitecture>
        <asset path="Simulator-Coverage/TestLua" entry="true" type="Qnx/Elf">TestLua</asset>
+       <asset path="empty/../../../../../CocosDenshion/proj.blackberry/Simulator-Coverage/libCocosDenshion.so" type="Qnx/Elf">lib/libCocosDenshion.so</asset>
     </configuration>
     
     <!--  The icon for the application, which should be 86x86. -->

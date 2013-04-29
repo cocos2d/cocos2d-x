@@ -53,6 +53,7 @@ Classes/ExtensionsTest/CocosBuilderTest/TestHeader/TestHeaderLayer.cpp \
 Classes/ExtensionsTest/CocosBuilderTest/ButtonTest/ButtonTestLayer.cpp \
 Classes/ExtensionsTest/CocosBuilderTest/MenuTest/MenuTestLayer.cpp \
 Classes/ExtensionsTest/CocosBuilderTest/AnimationsTest/AnimationsTestLayer.cpp \
+Classes/ExtensionsTest/CocosBuilderTest/TimelineCallbackTest/TimelineCallbackTestLayer.cpp \
 Classes/ExtensionsTest/NetworkTest/HttpClientTest.cpp \
 Classes/ExtensionsTest/EditBoxTest/EditBoxTest.cpp \
 Classes/ExtensionsTest/TableViewTest/TableViewTestScene.cpp \
@@ -80,6 +81,7 @@ Classes/RotateWorldTest/RotateWorldTest.cpp \
 Classes/SceneTest/SceneTest.cpp \
 Classes/SchedulerTest/SchedulerTest.cpp \
 Classes/ShaderTest/ShaderTest.cpp \
+Classes/SpineTest/SpineTest.cpp \
 Classes/SpriteTest/SpriteTest.cpp \
 Classes/TextureCacheTest/TextureCacheTest.cpp \
 Classes/Texture2dTest/Texture2dTest.cpp \

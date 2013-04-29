@@ -53,6 +53,11 @@ bool CCFileUtilsBlackberry::isAbsolutePath(const std::string& strPath)
 
 bool CCFileUtilsBlackberry::isFileExist(const std::string& strFilePath)
 {
+    if (0 == strFilePath.length())
+    {
+        return false;
+    }
+
     std::string strPath = strFilePath;
     if (strPath[0] != '/')
     { // Not absolute path, add the default root path at the beginning.

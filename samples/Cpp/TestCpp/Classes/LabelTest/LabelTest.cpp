@@ -1004,7 +1004,9 @@ void  LabelTTFTest::updateAlignment()
     {
         m_plabel->removeFromParentAndCleanup(true);
     }
-    
+
+    CC_SAFE_RELEASE(m_plabel);
+
     m_plabel = CCLabelTTF::create(this->getCurrentAlignment(), "Marker Felt", 32,
                                   blockSize, m_eHorizAlign, m_eVertAlign);
     m_plabel->retain();

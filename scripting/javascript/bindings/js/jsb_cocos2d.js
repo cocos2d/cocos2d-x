@@ -4,6 +4,19 @@
 
 var cc = cc || {};
 
+cc.LANGUAGE_ENGLISH    = 0;
+cc.LANGUAGE_CHINESE    = 1;
+cc.LANGUAGE_FRENCH     = 2;
+cc.LANGUAGE_ITALIAN    = 3;
+cc.LANGUAGE_GERMAN     = 4;
+cc.LANGUAGE_SPANISH    = 5;
+cc.LANGUAGE_RUSSIAN    = 6;
+cc.LANGUAGE_KOREAN     = 7;
+cc.LANGUAGE_JAPANESE   = 8;
+cc.LANGUAGE_HUNGARIAN  = 9;
+cc.LANGUAGE_PORTUGUESE = 10;
+cc.LANGUAGE_ARABIC     = 11;
+
 cc.DIRECTOR_PROJECTION_2D = 0;
 cc.DIRECTOR_PROJECTION_3D = 1;
 
@@ -59,6 +72,7 @@ cc.GREEN = {r:0, g:255, b:0};
 cc.BLUE = {r:0, g:0, b:255};
 cc.BLACK = {r:0, g:0, b:0};
 cc.WHITE = {r:255, g:255, b:255};
+cc.YELLOW = {r:255, g:255, b:0};
 
 cc.POINT_ZERO = {x:0, y:0};
 
@@ -76,13 +90,6 @@ cc.MENU_STATE_TRACKING_TOUCH = 1;
 cc.MENU_HANDLER_PRIORITY = -128;
 cc.DEFAULT_PADDING = 5;
 
-cc.SCROLLVIEW_DIRECTION_NONE = -1;
-cc.SCROLLVIEW_DIRECTION_HORIZONTAL = 0;
-cc.SCROLLVIEW_DIRECTION_VERTICAL = 1;
-cc.SCROLLVIEW_DIRECTION_BOTH = 2;
-cc.TABLEVIEW_FILL_TOPDOWN = 0;
-cc.TABLEVIEW_FILL_BOTTOMUP = 1;
-
 // reusable objects
 cc._reuse_p = [ {x:0, y:0}, {x:0,y:0}, {x:0,y:0}, {x:0,y:0} ];
 cc._reuse_p_index = 0;
@@ -90,7 +97,7 @@ cc._reuse_size = {width:0, height:0};
 cc._reuse_rect = {x:0, y:0, width:0, height:0};
 cc._reuse_color3b = {r:255, g:255, b:255 };
 cc._reuse_color4b = {r:255, g:255, b:255, a:255 };
-cc.log = cc.log || log;
+cc.log = cc._cocosplayerLog || cc.log || log;
 
 //
 // Color 3B
@@ -323,10 +330,13 @@ cc.dump = function(obj)
 };
 
 // dump config info, but only in debug mode
+var sys = sys || undefined;
 cc.dumpConfig = function()
 {
-    cc.dump(sys);
-    cc.dump(sys.capabilities);
+    if (sys) {
+        cc.dump(sys);
+        cc.dump(sys.capabilities);
+    }
 };
 
 //
@@ -373,28 +383,6 @@ cc.LabelAtlas.create = function( a,b,c,d,e ) {
 
 cc.LayerMultiplex.create = cc.LayerMultiplex.createWithArray;
 
-// PhysicsDebugNode
-cc.PhysicsDebugNode.create = function( space ) {
-    var s = space;
-    if( space.handle !== undefined )
-        s = space.handle;
-    return cc.PhysicsDebugNode._create( s );
-};
-cc.PhysicsDebugNode.prototype.setSpace = function( space ) {
-    var s = space;
-    if( space.handle !== undefined )
-        s = space.handle;
-    return this._setSpace( s );
-};
-
-// PhysicsSprite
-cc.PhysicsSprite.prototype.setBody = function( body ) {
-    var b = body;
-    if( body.handle !== undefined )
-        b = body.handle;
-    return this._setCPBody( b );
-};
-
 
 /**
  * Associates a base class with a native superclass
@@ -402,17 +390,7 @@ cc.PhysicsSprite.prototype.setBody = function( body ) {
  * @param {object} jsobj subclass
  * @param {object} klass superclass
  */
-cc.associateWithNative = function( jsobj, superclass_or_instance ) {
-
-    try {
-        // Used when subclassing using the "extend" method
-        var native = new superclass_or_instance();
-        __associateObjWithNative( jsobj, native );
-    } catch(err) {
-        // Used when subclassing using the goog.inherits method
-       __associateObjWithNative( jsobj, superclass_or_instance );
-   }
-};
+cc.associateWithNative = function( jsobj, superclass_or_instance ) {};
 
 //
 // JSB supports 2 official ways to create subclasses
@@ -524,7 +502,6 @@ cc.Class.extend = function (prop) {
     return Class;
 };
 
-cc.Node.prototype.ctor = function() {};
 cc.Node.extend = cc.Class.extend;
 cc.Layer.extend = cc.Class.extend;
 cc.LayerGradient.extend = cc.Class.extend;
@@ -533,7 +510,23 @@ cc.Sprite.extend = cc.Class.extend;
 cc.MenuItemFont.extend = cc.Class.extend;
 cc.Scene.extend = cc.Class.extend;
 cc.DrawNode.extend = cc.Class.extend;
-cc.ScrollView.extend = cc.Class.extend;
-cc.TableView.extend = cc.Class.extend;
-cc.TableViewCell.extend = cc.Class.extend;
 
+// Cocos2d-html5 supports multi scene resources preloading.
+// This is a compatible function for JSB.
+cc.Loader = cc.Class.extend({
+                            initWith:function (resources, selector, target) {
+                            if (selector) {
+                            this._selector = selector;
+                            this._target = target;
+                            }
+                            this._selector.call(this._target);
+                            }
+                            });
+
+cc.Loader.preload = function (resources, selector, target) {
+    if (!this._instance) {
+        this._instance = new cc.Loader();
+    }
+    this._instance.initWith(resources, selector, target);
+    return this._instance;
+};

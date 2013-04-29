@@ -26,6 +26,7 @@ TESTLAYER_CREATE_FUNC(SchedulerUpdateAndCustom)
 TESTLAYER_CREATE_FUNC(SchedulerUpdateFromCustom)
 TESTLAYER_CREATE_FUNC(RescheduleSelector)
 TESTLAYER_CREATE_FUNC(SchedulerDelayAndRepeat)
+TESTLAYER_CREATE_FUNC(SchedulerIssue2268)
 
 static NEWTESTFUNC createFunctions[] = {
     CF(SchedulerTimeScale),
@@ -42,7 +43,8 @@ static NEWTESTFUNC createFunctions[] = {
     CF(SchedulerUpdateAndCustom),
     CF(SchedulerUpdateFromCustom),
     CF(RescheduleSelector),
-    CF(SchedulerDelayAndRepeat)
+    CF(SchedulerDelayAndRepeat),
+    CF(SchedulerIssue2268)
 };
 
 #define MAX_LAYER (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -1114,7 +1116,62 @@ std::string TwoSchedulers::subtitle()
     return "Three schedulers. 2 custom + 1 default. Two different time scales";
 }
 
+class TestNode2 : public CCNode
+{
+public:
+	~TestNode2() {
+		cocos2d::CCLog("Delete TestNode (should not crash)");
+		this->unscheduleAllSelectors();
+	}
 
+	void update(float dt) {
+	}
+};
+
+void SchedulerIssue2268::onEnter()
+{
+	SchedulerTestLayer::onEnter();
+
+	testNode = new TestNode2();
+	testNode->init();
+	testNode->autorelease();
+	testNode->retain();
+	testNode->schedule(SEL_SCHEDULE(&TestNode::update));
+	this->addChild(testNode);
+
+
+	this->scheduleOnce(SEL_SCHEDULE(&SchedulerIssue2268::update), 0.25f);
+}
+
+void SchedulerIssue2268::update(float dt)
+{
+	if ( testNode != NULL ) {
+		// do something with testNode
+
+		// at some point we are done, pause the nodes actions and schedulers
+		testNode->removeFromParentAndCleanup(false);
+
+		// at some other point we are completely done with the node and want to clear it
+		testNode->release();
+		testNode->unscheduleAllSelectors();
+		testNode = NULL;
+
+	}
+}
+SchedulerIssue2268::~SchedulerIssue2268()
+{
+
+}
+
+std::string SchedulerIssue2268::title()
+{
+    return "Issue #2268";
+}
+
+std::string SchedulerIssue2268::subtitle()
+{
+    return "Should not crash";
+}
 //------------------------------------------------------------------
 //
 // SchedulerTestScene

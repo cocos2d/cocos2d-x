@@ -28,7 +28,6 @@
 
 #include <queue>
 #include <pthread.h>
-#include <semaphore.h>
 #include <errno.h>
 
 #include "curl/curl.h"
@@ -38,20 +37,11 @@ NS_CC_EXT_BEGIN
 static pthread_t        s_networkThread;
 static pthread_mutex_t  s_requestQueueMutex;
 static pthread_mutex_t  s_responseQueueMutex;
-static sem_t *          s_pSem = NULL;
+
+static pthread_mutex_t		s_SleepMutex;
+static pthread_cond_t		s_SleepCondition;
+
 static unsigned long    s_asyncRequestCount = 0;
-
-#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
-#define CC_ASYNC_HTTPREQUEST_USE_NAMED_SEMAPHORE 1
-#else
-#define CC_ASYNC_HTTPREQUEST_USE_NAMED_SEMAPHORE 0
-#endif
-
-#if CC_ASYNC_HTTPREQUEST_USE_NAMED_SEMAPHORE
-#define CC_ASYNC_HTTPREQUEST_SEMAPHORE "ccHttpAsync"
-#else
-static sem_t s_sem;
-#endif
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 typedef int int32_t;
@@ -96,13 +86,6 @@ static void* networkThread(void *data)
     
     while (true) 
     {
-        // Wait for http request tasks from main thread
-        int semWaitRet = sem_wait(s_pSem);
-        if (semWaitRet < 0) {
-            CCLog("HttpRequest async thread semaphore error: %s\n", strerror(errno));
-            break;
-        }
-        
         if (need_quit)
         {
             break;
@@ -122,6 +105,8 @@ static void* networkThread(void *data)
         
         if (NULL == request)
         {
+        	// Wait for http request tasks from main thread
+        	pthread_cond_wait(&s_SleepCondition, &s_SleepMutex);
             continue;
         }
         
@@ -188,21 +173,18 @@ static void* networkThread(void *data)
     pthread_mutex_unlock(&s_requestQueueMutex);
     s_asyncRequestCount -= s_requestQueue->count();
     
-    if (s_pSem != NULL) {
-#if CC_ASYNC_HTTPREQUEST_USE_NAMED_SEMAPHORE
-        sem_unlink(CC_ASYNC_HTTPREQUEST_SEMAPHORE);
-        sem_close(s_pSem);
-#else
-        sem_destroy(s_pSem);
-#endif
-        
-        s_pSem = NULL;
+    if (s_requestQueue != NULL) {
         
         pthread_mutex_destroy(&s_requestQueueMutex);
         pthread_mutex_destroy(&s_responseQueueMutex);
         
+        pthread_mutex_destroy(&s_SleepMutex);
+        pthread_cond_destroy(&s_SleepCondition);
+
         s_requestQueue->release();
+        s_requestQueue = NULL;
         s_responseQueue->release();
+        s_responseQueue = NULL;
     }
 
     pthread_exit(NULL);
@@ -416,8 +398,8 @@ CCHttpClient::~CCHttpClient()
 {
     need_quit = true;
     
-    if (s_pSem != NULL) {
-        sem_post(s_pSem);
+    if (s_requestQueue != NULL) {
+    	pthread_cond_signal(&s_SleepCondition);
     }
     
     s_pHttpClient = NULL;
@@ -426,25 +408,9 @@ CCHttpClient::~CCHttpClient()
 //Lazy create semaphore & mutex & thread
 bool CCHttpClient::lazyInitThreadSemphore()
 {
-    if (s_pSem != NULL) {
+    if (s_requestQueue != NULL) {
         return true;
     } else {
-#if CC_ASYNC_HTTPREQUEST_USE_NAMED_SEMAPHORE
-        s_pSem = sem_open(CC_ASYNC_HTTPREQUEST_SEMAPHORE, O_CREAT, 0644, 0);
-        if (s_pSem == SEM_FAILED) {
-            CCLog("Open HttpRequest Semaphore failed");
-            s_pSem = NULL;
-            return false;
-        }
-#else
-        int semRet = sem_init(&s_sem, 0, 0);
-        if (semRet < 0) {
-            CCLog("Init HttpRequest Semaphore failed");
-            return false;
-        }
-        
-        s_pSem = &s_sem;
-#endif
         
         s_requestQueue = new CCArray();
         s_requestQueue->init();
@@ -455,6 +421,9 @@ bool CCHttpClient::lazyInitThreadSemphore()
         pthread_mutex_init(&s_requestQueueMutex, NULL);
         pthread_mutex_init(&s_responseQueueMutex, NULL);
         
+        pthread_mutex_init(&s_SleepMutex, NULL);
+        pthread_cond_init(&s_SleepCondition, NULL);
+
         pthread_create(&s_networkThread, NULL, networkThread, NULL);
         pthread_detach(s_networkThread);
         
@@ -486,7 +455,7 @@ void CCHttpClient::send(CCHttpRequest* request)
     pthread_mutex_unlock(&s_requestQueueMutex);
     
     // Notify thread start to work
-    sem_post(s_pSem);
+    pthread_cond_signal(&s_SleepCondition);
 }
 
 // Poll and notify main thread if responses exists in queue

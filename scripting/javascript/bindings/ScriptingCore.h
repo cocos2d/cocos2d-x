@@ -13,7 +13,6 @@
 #include "cocos2d.h"
 #include "js_bindings_config.h"
 #include "js_bindings_core.h"
-#include "uthash.h"
 #include "jsapi.h"
 #include "jsfriendapi.h"
 #include "spidermonkey_specifics.h"
@@ -69,9 +68,9 @@ public:
      @return other if the string is excuted wrongly.
      */
 	virtual int executeString(const char* codes) { return 0; }
-    void pauseSchedulesAndActions(CCNode *node);
-    void resumeSchedulesAndActions(CCNode *node);
-    void cleanupSchedulesAndActions(CCNode *node);
+    void pauseSchedulesAndActions(js_proxy_t* p);
+    void resumeSchedulesAndActions(js_proxy_t* p);
+    void cleanupSchedulesAndActions(js_proxy_t* p);
 
     /**
      @brief Execute a script file.
@@ -100,7 +99,7 @@ public:
     virtual bool executeAssert(bool cond, const char *msg = NULL) {return false;}
 
     bool executeFunctionWithObjectData(CCNode *self, const char *name, JSObject *obj);
-    int executeFunctionWithOwner(jsval owner, const char *name, jsval data);
+    JSBool executeFunctionWithOwner(jsval owner, const char *name, uint32_t argc = 0, jsval* vp = NULL, jsval* retVal = NULL);
 
     void executeJSFunctionWithThisObj(jsval thisObj, jsval callback, jsval *data);
 
@@ -200,7 +199,8 @@ public:
 	void debugProcessInput(string str);
 	void enableDebugger();
 	JSObject* getDebugGlobal() { return debugGlobal_; }
-
+    JSObject* getGlobalObject() { return global_; }
+    
  private:
     void string_report(jsval val);
 };
@@ -223,13 +223,14 @@ JSBool jsval_to_ccarray(JSContext* cx, jsval v, CCArray** ret);
 JSBool jsval_to_ccdictionary(JSContext* cx, jsval v, CCDictionary** ret);
 JSBool jsval_to_ccacceleration(JSContext* cx,jsval v, CCAcceleration* ret);
 JSBool jsvals_variadic_to_ccarray( JSContext *cx, jsval *vp, int argc, CCArray** ret);
+JSBool jsval_to_ccaffinetransform(JSContext* cx, jsval v, CCAffineTransform* ret);
 
 // from native
 jsval int32_to_jsval( JSContext *cx, int32_t l);
 jsval uint32_to_jsval( JSContext *cx, uint32_t number );
 jsval long_long_to_jsval(JSContext* cx, long long v);
 jsval std_string_to_jsval(JSContext* cx, string& v);
-jsval c_string_to_jsval(JSContext* cx, const char* v);
+jsval c_string_to_jsval(JSContext* cx, const char* v, size_t length = -1);
 jsval ccpoint_to_jsval(JSContext* cx, CCPoint& v);
 jsval ccrect_to_jsval(JSContext* cx, CCRect& v);
 jsval ccsize_to_jsval(JSContext* cx, CCSize& v);
@@ -239,6 +240,8 @@ jsval cccolor3b_to_jsval(JSContext* cx, const ccColor3B& v);
 jsval ccdictionary_to_jsval(JSContext* cx, CCDictionary *dict);
 jsval ccarray_to_jsval(JSContext* cx, CCArray *arr);
 jsval ccacceleration_to_jsval(JSContext* cx, CCAcceleration& v);
+jsval ccaffinetransform_to_jsval(JSContext* cx, CCAffineTransform& t);
+
 
 JSObject* NewGlobalObject(JSContext* cx, bool debug = false);
 JSBool jsStartDebugger(JSContext* cx, unsigned argc, jsval* vp);
@@ -267,7 +270,8 @@ public:
 	}
 	~JSStringWrapper() {
 		if (buffer) {
-			JS_free(ScriptingCore::getInstance()->getGlobalContext(), (void*)buffer);
+			//JS_free(ScriptingCore::getInstance()->getGlobalContext(), (void*)buffer);
+            delete[] buffer;
 		}
 	}
 	void set(jsval val, JSContext* cx) {
@@ -281,8 +285,12 @@ public:
 		string = str;
 		if (!cx) {
 			cx = ScriptingCore::getInstance()->getGlobalContext();
+            
 		}
-        buffer = JS_EncodeString(cx, string);
+        // JS_EncodeString isn't supported in SpiderMonkey ff19.0.
+        //buffer = JS_EncodeString(cx, string);
+        unsigned short* pStrUTF16 = (unsigned short*)JS_GetStringCharsZ(cx, str);
+        buffer = cc_utf16_to_utf8(pStrUTF16, -1, NULL, NULL);
 	}
 	std::string get() {
         return buffer;

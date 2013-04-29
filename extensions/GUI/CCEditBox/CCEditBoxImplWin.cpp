@@ -269,6 +269,11 @@ void CCEditBoxImplWin::closeKeyboard()
 
 }
 
+void CCEditBoxImplWin::onEnter(void)
+{
+
+}
+
 NS_CC_EXT_END
 
 #endif /* (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) */

@@ -31,6 +31,7 @@ TESTLAYER_CREATE_FUNC(ActionCallFunc);
 TESTLAYER_CREATE_FUNC(ActionCallFuncND);
 TESTLAYER_CREATE_FUNC(ActionReverseSequence);
 TESTLAYER_CREATE_FUNC(ActionReverseSequence2);
+TESTLAYER_CREATE_FUNC(ActionRemoveSelf);
 TESTLAYER_CREATE_FUNC(ActionOrbit);
 TESTLAYER_CREATE_FUNC(ActionFollow);
 TESTLAYER_CREATE_FUNC(ActionTargeted);
@@ -67,6 +68,7 @@ static NEWTESTFUNC createFunctions[] = {
     CF(ActionAnimate),
     CF(ActionSequence),
     CF(ActionSequence2),
+	CF(ActionRemoveSelf),
     CF(ActionSpawn),
     CF(ActionReverse),
     CF(ActionDelayTime),
@@ -2172,4 +2174,30 @@ void PauseResumeActions::resume(float dt)
     CCLog("Resuming");
     CCDirector *director = CCDirector::sharedDirector();
     director->getActionManager()->resumeTargets(m_pPausedTargets);
+}
+
+//------------------------------------------------------------------
+//
+//    ActionRemoveSelf
+//
+//------------------------------------------------------------------
+void ActionRemoveSelf::onEnter()
+{
+	ActionsDemo::onEnter();
+
+	alignSpritesLeft(1);
+
+	CCFiniteTimeAction*  action = CCSequence::create(
+		CCMoveBy::create( 2, ccp(240,0)),
+		CCRotateBy::create( 2,  540),
+		CCScaleTo::create(1,0.1f),
+		CCRemoveSelf::create(),
+		NULL);
+
+	m_grossini->runAction(action);
+}
+
+std::string ActionRemoveSelf::subtitle()
+{
+	return "Sequence: Move + Rotate + Scale + RemoveSelf";
 }

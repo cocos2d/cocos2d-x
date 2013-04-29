@@ -33,12 +33,55 @@ extern "C" {
 }
 
 #include "LuaCocos2d.h"
+#include "Cocos2dxLuaLoader.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 #include "platform/ios/CCLuaObjcBridge.h"
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-#include "Cocos2dxLuaLoader.h"
 #endif
+
+namespace {
+int lua_print(lua_State * luastate)
+{
+    int nargs = lua_gettop(luastate);
+
+    std::string t;
+    for (int i=1; i <= nargs; i++)
+    {
+        if (lua_istable(luastate, i))
+            t += "table";
+        else if (lua_isnone(luastate, i))
+            t += "none";
+        else if (lua_isnil(luastate, i))
+            t += "nil";
+        else if (lua_isboolean(luastate, i))
+        {
+            if (lua_toboolean(luastate, i) != 0)
+                t += "true";
+            else
+                t += "false";
+        }
+        else if (lua_isfunction(luastate, i))
+            t += "function";
+        else if (lua_islightuserdata(luastate, i))
+            t += "lightuserdata";
+        else if (lua_isthread(luastate, i))
+            t += "thread";
+        else
+        {
+            const char * str = lua_tostring(luastate, i);
+            if (str)
+                t += lua_tostring(luastate, i);
+            else
+                t += lua_typename(luastate, lua_type(luastate, i));
+        }
+        if (i!=nargs)
+            t += "\t";
+    }
+    CCLOG("[LUA-print] %s", t.c_str());
+
+    return 0;
+}
+}  // namespace {
 
 NS_CC_BEGIN
 
@@ -65,11 +108,20 @@ bool CCLuaStack::init(void)
     tolua_Cocos2d_open(m_state);
     toluafix_open(m_state);
 
+    // Register our version of the global "print" function
+    const luaL_reg global_functions [] = {
+        {"print", lua_print},
+        {NULL, NULL}
+    };
+    luaL_register(m_state, "_G", global_functions);
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     CCLuaObjcBridge::luaopen_luaoc(m_state);
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    addLuaLoader(loader_Android);
 #endif
+    
+    // add cocos2dx loader
+    addLuaLoader(cocos2dx_lua_loader);
+
     return true;
 }
 
@@ -84,10 +136,9 @@ void CCLuaStack::addSearchPath(const char* path)
     lua_getglobal(m_state, "package");                                  /* L: package */
     lua_getfield(m_state, -1, "path");                /* get package.path, L: package path */
     const char* cur_path =  lua_tostring(m_state, -1);
-    lua_pop(m_state, 1);                                                /* L: package */
-    lua_pushfstring(m_state, "%s;%s/?.lua", cur_path, path);            /* L: package newpath */
-    lua_setfield(m_state, -2, "path");          /* package.path = newpath, L: package */
-    lua_pop(m_state, 1);                                                /* L: - */
+    lua_pushfstring(m_state, "%s;%s/?.lua", cur_path, path);            /* L: package path newpath */
+    lua_setfield(m_state, -3, "path");          /* package.path = newpath, L: package path */
+    lua_pop(m_state, 2);                                                /* L: - */
 }
 
 void CCLuaStack::addLuaLoader(lua_CFunction func)
@@ -128,25 +179,21 @@ void CCLuaStack::removeScriptHandler(int nHandler)
 
 int CCLuaStack::executeString(const char *codes)
 {
-    ++m_callFromLua;
-    int nRet = luaL_dostring(m_state, codes);
-    --m_callFromLua;
-    CC_ASSERT(m_callFromLua >= 0);
-    lua_gc(m_state, LUA_GCCOLLECT, 0);
-    
-    if (nRet != 0)
-    {
-        CCLOG("[LUA ERROR] %s", lua_tostring(m_state, -1));
-        lua_pop(m_state, 1);
-        return nRet;
-    }
-    return 0;
+    luaL_loadstring(m_state, codes);
+    return executeFunction(0);
 }
 
 int CCLuaStack::executeScriptFile(const char* filename)
 {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    std::string code("require \"");
+    code.append(filename);
+    code.append("\"");
+    return executeString(code.c_str());
+#else
+    std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(filename);
     ++m_callFromLua;
-    int nRet = luaL_dofile(m_state, filename);
+    int nRet = luaL_dofile(m_state, fullPath.c_str());
     --m_callFromLua;
     CC_ASSERT(m_callFromLua >= 0);
     // lua_gc(m_state, LUA_GCCOLLECT, 0);
@@ -158,6 +205,7 @@ int CCLuaStack::executeScriptFile(const char* filename)
         return nRet;
     }
     return 0;
+#endif
 }
 
 int CCLuaStack::executeGlobalFunction(const char* functionName)
@@ -169,30 +217,7 @@ int CCLuaStack::executeGlobalFunction(const char* functionName)
         lua_pop(m_state, 1);
         return 0;
     }
-    
-    ++m_callFromLua;
-    int error = lua_pcall(m_state, 0, 1, 0);             /* call function, stack: ret */
-    --m_callFromLua;
-    CC_ASSERT(m_callFromLua >= 0);
-    // lua_gc(m_state, LUA_GCCOLLECT, 0);
-    
-    if (error)
-    {
-        CCLOG("[LUA ERROR] %s", lua_tostring(m_state, - 1));
-        lua_pop(m_state, 1); // clean error message
-        return 0;
-    }
-    
-    // get return value
-    if (!lua_isnumber(m_state, -1))
-    {
-        lua_pop(m_state, 1);
-        return 0;
-    }
-    
-    int ret = lua_tointeger(m_state, -1);
-    lua_pop(m_state, 1);                                                /* stack: - */
-    return ret;
+    return executeFunction(0);
 }
 
 void CCLuaStack::clean(void)
@@ -309,6 +334,7 @@ int CCLuaStack::executeFunction(int numArgs)
     if (!lua_isfunction(m_state, functionIndex))
     {
         CCLOG("value at stack [%d] is not function", functionIndex);
+        lua_pop(m_state, numArgs + 1); // remove function and arguments
         return 0;
     }
 
@@ -326,7 +352,7 @@ int CCLuaStack::executeFunction(int numArgs)
     
     int error = 0;
     ++m_callFromLua;
-    error = lua_pcall(m_state, numArgs, 1, traceback);                  /* L: ... ret */
+    error = lua_pcall(m_state, numArgs, 1, traceback);                  /* L: ... [G] ret */
     --m_callFromLua;
     if (error)
     {
@@ -334,6 +360,10 @@ int CCLuaStack::executeFunction(int numArgs)
         {
             CCLOG("[LUA ERROR] %s", lua_tostring(m_state, - 1));        /* L: ... error */
             lua_pop(m_state, 1); // remove error message from stack
+        }
+        else                                                            /* L: ... G error */
+        {
+            lua_pop(m_state, 2); // remove __G__TRACKBACK__ and error message from stack
         }
         return 0;
     }
@@ -348,23 +378,30 @@ int CCLuaStack::executeFunction(int numArgs)
     {
         ret = lua_toboolean(m_state, -1);
     }
-    lua_pop(m_state, 1); // remove return value from stack
+    // remove return value from stack
+    lua_pop(m_state, 1);                                                /* L: ... [G] */
+    
+    if (traceback)
+    {
+        lua_pop(m_state, 1); // remove __G__TRACKBACK__ from stack      /* L: ... */
+    }
+    
     return ret;
 }
 
 int CCLuaStack::executeFunctionByHandler(int nHandler, int numArgs)
 {
+    int ret = 0;
     if (pushFunctionByHandler(nHandler))                                /* L: ... arg1 arg2 ... func */
     {
         if (numArgs > 0)
         {
             lua_insert(m_state, -(numArgs + 1));                        /* L: ... func arg1 arg2 ... */
         }
-        return executeFunction(numArgs);
+        ret = executeFunction(numArgs);
     }
-
-    lua_pop(m_state, numArgs); // remove args from stack
-    return 0;
+    lua_settop(m_state, 0);
+    return ret;
 }
 
 bool CCLuaStack::executeAssert(bool cond, const char *msg)

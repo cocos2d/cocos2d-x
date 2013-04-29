@@ -211,9 +211,9 @@ public:
     /** updates the font chars based on the string to render */
     void createFontChars();
     // super method
-    virtual void setString(const char *label);
-    virtual void setString(const char *label, bool fromUpdate);
-    virtual void updateString(bool fromUpdate);
+    virtual void setString(const char *newString);
+    virtual void setString(const char *newString, bool needUpdateLabel);
+
     virtual const char* getString(void);
     virtual void setCString(const char *label);
     virtual void setAnchorPoint(const CCPoint& var);
@@ -252,6 +252,7 @@ private:
     float getLetterPosXRight( CCSprite* characterSprite );
     
 protected:
+    virtual void setString(unsigned short *newString, bool needUpdateLabel);
     // string to render
     unsigned short* m_sString;
     
@@ -259,7 +260,9 @@ protected:
     std::string m_sFntFile;
     
     // initial string without line breaks
-    std::string m_sInitialString;
+    unsigned short* m_sInitialString;
+    std::string m_sInitialStringUTF8;
+    
     // alignment of all lines
     CCTextAlignment m_pAlignment;
     // max width until a line break is added
