@@ -24,6 +24,7 @@ private:
     int mAutoPlaySequenceId;
     
     CCNode *mRootNode;
+    
     CCSize mRootContainerSize;
     
     CCBAnimationManagerDelegate *mDelegate;
@@ -33,6 +34,9 @@ private:
     CCArray *mDocumentOutletNodes;
     CCArray *mDocumentCallbackNames;
     CCArray *mDocumentCallbackNodes;
+    CCArray *mKeyframeCallbacks;
+    CCDictionary *mKeyframeCallFuncs;
+
     std::string mDocumentControllerName;
     std::string lastCompletedSequenceName;
 
@@ -41,8 +45,12 @@ private:
     
     
 public:
+    bool jsControlled;
     CCBAnimationManager();
     ~CCBAnimationManager();
+
+
+    CCObject *mOwner;
     
     virtual bool init();
     
@@ -71,6 +79,7 @@ public:
     CCArray* getDocumentOutletNodes();
     std::string getLastCompletedSequenceName();
     
+    CCArray* getKeyframeCallbacks();
     
     const CCSize& getRootContainerSize();
     void setRootContainerSize(const CCSize &rootContainerSize);
@@ -101,6 +110,11 @@ public:
 
     void debug();
     
+    void setCallFunc(CCCallFunc *callFunc, const std::string &callbackNamed);
+
+    CCObject* actionForCallbackChannel(CCBSequenceProperty* channel);
+    CCObject* actionForSoundChannel(CCBSequenceProperty* channel);
+    
 private:
     CCObject* getBaseValue(CCNode *pNode, const char* pPropName);
     int getSequenceId(const char* pSequenceName);
@@ -128,6 +142,24 @@ public:
     virtual CCObject* copyWithZone(CCZone *pZone);
 };
 
+
+
+class CCBSoundEffect : public CCActionInstant
+{
+private:
+  std::string mSoundFile;
+  float mPitch, mPan, mGain;
+    
+public:
+    ~CCBSoundEffect();
+    
+    static CCBSoundEffect* actionWithSoundFile(const std::string &file, float pitch, float pan, float gain);
+    bool initWithSoundFile(const std::string &file, float pitch, float pan, float gain);
+    virtual void update(float time);
+    virtual CCObject* copyWithZone(CCZone *pZone);
+};
+
+
 class CCBRotateTo : public CCActionInterval
 {
 private:
@@ -143,6 +175,36 @@ public:
     virtual void startWithTarget(CCNode *pNode);
 };
 
+
+class CCBRotateXTo: public CCActionInterval {
+private:
+    float mStartAngle;
+    float mDstAngle;
+    float mDiffAngle;
+public:
+    static CCBRotateXTo* create(float fDuration, float fAngle);
+    bool initWithDuration(float fDuration, float fAngle);
+    virtual void startWithTarget(CCNode *pNode);
+    virtual CCObject* copyWithZone(CCZone *pZone);
+    virtual void update(float time);
+};
+
+
+class CCBRotateYTo: public CCActionInterval {
+private:
+    float mStartAngle;
+    float mDstAngle;
+    float mDiffAngle;
+    
+public:
+    static CCBRotateYTo* create(float fDuration, float fAngle);
+    bool initWithDuration(float fDuration, float fAngle);
+    virtual void startWithTarget(CCNode *pNode);
+    virtual CCObject* copyWithZone(CCZone *pZone);
+    virtual void update(float time);
+};
+
+
 class CCBEaseInstant : public CCActionEase
 {
 public:
@@ -150,6 +212,7 @@ public:
     
     virtual void update(float dt);
 };
+
 
 NS_CC_EXT_END
 

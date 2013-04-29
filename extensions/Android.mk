@@ -51,12 +51,35 @@ GUI/CCEditBox/CCEditBoxImplAndroid.cpp \
 network/HttpClient.cpp \
 physics_nodes/CCPhysicsDebugNode.cpp \
 physics_nodes/CCPhysicsSprite.cpp \
-LocalStorage/LocalStorageAndroid.cpp 
+LocalStorage/LocalStorageAndroid.cpp \
+spine/Animation.cpp \
+spine/AnimationState.cpp \
+spine/AnimationStateData.cpp \
+spine/Atlas.cpp \
+spine/AtlasAttachmentLoader.cpp \
+spine/Attachment.cpp \
+spine/AttachmentLoader.cpp \
+spine/Bone.cpp \
+spine/BoneData.cpp \
+spine/Json.cpp \
+spine/RegionAttachment.cpp \
+spine/Skeleton.cpp \
+spine/SkeletonData.cpp \
+spine/SkeletonJson.cpp \
+spine/Skin.cpp \
+spine/Slot.cpp \
+spine/SlotData.cpp \
+spine/extension.cpp \
+spine/spine-cocos2dx.cpp
 
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dx_static
+LOCAL_WHOLE_STATIC_LIBRARIES += cocosdenshion_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_curl_static
 LOCAL_WHOLE_STATIC_LIBRARIES += box2d_static
 LOCAL_WHOLE_STATIC_LIBRARIES += chipmunk_static
+
+LOCAL_CFLAGS += -DCC_ENABLE_CHIPMUNK_INTEGRATION=1
+LOCAL_EXPORT_CFLAGS += -DCC_ENABLE_CHIPMUNK_INTEGRATION=1
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                            $(LOCAL_PATH)/CCBReader \
@@ -68,6 +91,7 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
 include $(BUILD_STATIC_LIBRARY)
 
 $(call import-module,cocos2dx)
+$(call import-module,CocosDenshion/android)
 $(call import-module,cocos2dx/platform/third_party/android/prebuilt/libcurl)
 $(call import-module,external/Box2D)
 $(call import-module,external/chipmunk)

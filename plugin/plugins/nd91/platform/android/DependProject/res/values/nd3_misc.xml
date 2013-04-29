@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<!-- color -->
+
+	<color name="nd3_white">#FFFFFF</color>
+	<color name="nd3_black">#000000</color>
+	<color name="nd3_background">#EBEBEB</color>
+	<color name="nd3_blue">#0000FF</color>
+	<color name="nd3_dark_blue">#415f91</color> 
+	<color name="nd3_user_setting_hint_color">#898989</color>
+	<color name="nd3_recharge_pay_record_bg_color">#b0b0b0</color>
+	<color name="nd_font_color">#333333</color>
+	<color name="nd_btn_font_color">#ffffff</color>
+	<color name="nd3_red">#ff0000</color>
+	<color name="nd3_list_view_divider">#898989</color>
+	<color name="nd3_balance_color">#FFFF8000</color>
+	
+	
+	<color name="nd3_hint">#B3B3B3</color>
+	
+	<color name="nd_green">#52e297</color>
+	
+	
+	<!-- begin 未定义 -->
+	<color name="nd3_list_view_item_bg_1">#FFB8B8B8</color>
+	<color name="nd3_list_view_item_bg_2">#FFD9D9D9</color>
+	<!-- end 未定义 -->
+	
+	
+	<color name="nd3_account_register_agreement_color">#FF777777</color>
+	
+	<color name="nd3_regist_greement_bg">#f3f3f3</color>
+	<color name="nd3_btn_font_color">#ffffff</color>
+	<color name="nd3_font_color">#333333</color>
+	<color name="nd3_conform_pay_font_color">#000000</color>
+	
+	<color name="nd3_dark_color">#FF515151</color>
+	
+	<color name="nd3_pay_color">#FFebedec</color>
+	
+	<color name="nd3_network_error_color">#FF4f4f4f</color>
+	<color name="nd3_portrait_add_color">#FF525252</color>
+	
+	<color name="nd3_records_title_color">#FF000000</color>
+	<color name="nd3_records_time_color">#FF515151</color>
+	<color name="nd3_records_time_bg_color_1">#FFB7B7B7</color>
+	<color name="nd3_records_time_bg_color_2">#FFd8d8df</color>
+	
+	<color name="nd3_orchid_color">#FF9dc4ed</color>
+
+<!-- color -->
+
+<!-- Ids -->
+
+	<item type="id" name="nd3_left_btn_id" />
+	<item type="id" name="nd3_right_btn_id" />
+	<item type="id" name="nd3_title_txt_id" />
+	<item type="id" name="nd3_title_progress_bar_id" />
+ 
+<!-- Ids -->
+
+<!-- dimen -->
+
+    <dimen name="nd3_margin_size">5dip</dimen>
+	<dimen name="nd3_btn_text_size">18sp</dimen>
+	<dimen name="nd3_divider_height">2dip</dimen>
+	<dimen name="nd3_option_item_marginLeft">10dip</dimen>
+	
+ 
+    <dimen name="nd3_item_divider">8dip</dimen>
+    <dimen name="nd3_item_height">45dip</dimen>
+    
+    <dimen name="nd3_logout_text_size">23sp</dimen>
+    
+    <dimen name="nd3_bind_phonenumber_paddingTop">23dip</dimen>
+    
+    <dimen name="nd3_image_size">48dip</dimen>
+    <dimen name="nd3_platform_image_size">30dip</dimen>
+    <dimen name="nd3_platform_padding_size">3dip</dimen>
+    
+    <dimen name="nd3_platform_image_size_large">48dip</dimen>
+    
+    <dimen name="nd3_pay_tip_text_size">16sp</dimen>
+    <dimen name="nd3_pay_service_text_size">12sp</dimen>
+
+	<dimen name="nd3_pay_password_tip_text_size">18sp</dimen>
+    <dimen name="nd3_network_error_tip_text_size">16sp</dimen>
+    <dimen name="nd3_network_error_content_text_size">12sp</dimen>
+        
+	<dimen name="nd3_portrait_add_text_size">14sp</dimen>
+	
+	<dimen name="nd3_register_agreement_text_size">16sp</dimen>
+	<dimen name="nd3_register_sendsms_text_size">12sp</dimen>
+
+	<dimen name="nd3_records_title_text_size">14sp</dimen>
+	<dimen name="nd3_records_time_text_size">12sp</dimen>
+
+	<dimen name="nd3_option_margin_top">15dip</dimen>
+
+	<dimen name="nd_goods_flag_w">68dip</dimen>
+	<dimen name="nd_goods_flag_h">25dip</dimen>
+	<dimen name="nd_goods_detail_size">85dip</dimen>
+	<dimen name="nd_about_size">3dip</dimen>
+	
+	<dimen name="nd_20">20dip</dimen>
+	<dimen name="nd_50">50dip</dimen>
+	<dimen name="nd_10">10dip</dimen>
+	 
+
+<!-- dimen -->
+
+<!-- styles -->
+
+<!-- 定义文本等样式，不包含边距等 -->
+<!-- 顶部条标题 -->
+<style name="nd3_textview_0" parent="@android:style/TextAppearance">
+	<item name="android:textSize">24sp</item>
+	<item name="android:textColor">@color/nd3_white</item>
+	<item name="android:textStyle">bold</item>
+</style>
+
+<!-- 列表项， 用户名... -->
+<style name="nd3_textview_1" parent="@android:style/TextAppearance">
+	<item name="android:textSize">20sp</item>
+	<item name="android:textColor">@color/nd3_black</item>
+</style>
+
+<!-- 列表项，心情... -->
+<style name="nd3_textview_2" parent="@android:style/TextAppearance">
+	<item name="android:textSize">16sp</item>
+	<item name="android:textColor">@color/nd3_dark_color</item>
+</style>
+
+
+<!-- 列表项，排行榜    如"积分排行榜"  ->-->
+<style name="nd3_textview_3" parent="@android:style/TextAppearance">
+	<item name="android:textSize">18sp</item>
+	<item name="android:textColor">@color/nd3_black</item>
+</style>
+
+<!-- 列表项，排行榜...排名 >-->
+<style name="nd3_textview_4" parent="@android:style/TextAppearance">
+	<item name="android:textSize">16sp</item>
+	<item name="android:textColor">@color/nd3_dark_color</item>
+</style>
+<!-- 列表项，排行榜...时间 >-->
+<style name="nd3_textview_5" parent="@android:style/TextAppearance">
+	<item name="android:textSize">14sp</item>
+	<item name="android:textColor">@color/nd3_dark_color</item>
+</style>
+
+
+<!-- 编辑框 -->
+<style name="nd3_option_edittext_style">
+	<item name="android:textSize">16sp</item>
+	<item name="android:background">@null</item>
+	<item name="android:textColor">#FF000000</item>
+</style>
+
+<!-- 文本框 -->
+<style name="nd3_option_textview_style">
+	<item name="android:textSize">16sp</item>
+	<item name="android:textStyle">bold</item>
+	<item name="android:textColor">#FF000000</item>	
+</style>
+
+<!-- 外框 -->
+<style name="nd3_option_margin_padding_style">
+				
+	<item name="android:layout_marginTop">0dip</item>
+	<item name="android:layout_marginBottom">15dip</item>
+	<item name="android:layout_marginLeft">10dip</item>
+	<item name="android:layout_marginRight">10dip</item>	
+
+	<item name="android:paddingTop">10dip</item>
+	<item name="android:paddingBottom">10dip</item>
+	<item name="android:paddingLeft">10dip</item>
+	<item name="android:paddingRight">10dip</item>
+	
+</style>
+
+<style name="nd3_option_margin_style">
+				
+	<item name="android:layout_marginTop">0dip</item>
+	<item name="android:layout_marginBottom">15dip</item>
+	<item name="android:layout_marginLeft">10dip</item>
+	<item name="android:layout_marginRight">10dip</item>	
+
+</style>
+
+<style name="nd3_option_item_margin_style">
+				
+	<item name="android:layout_marginTop">10dip</item>
+	<item name="android:layout_marginBottom">10dip</item>
+	<item name="android:layout_marginLeft">10dip</item>
+	<item name="android:layout_marginRight">10dip</item>	
+		
+</style>
+
+<style name="nd3_photo_margin_style"> 
+    <item name="android:layout_marginTop">10dip</item>
+	<item name="android:layout_marginLeft">20dip</item>
+	<item name="android:layout_marginRight">20dip</item>	
+		
+</style>
+<style name="nd3_text_margin_style_25"> 
+	<item name="android:layout_marginLeft">25dip</item>
+	<item name="android:layout_marginRight">25dip</item>	
+		
+</style>
+
+<style name="nd3_margin_style_20"> 
+    <item name="android:layout_marginTop">20dip</item>
+	<item name="android:layout_marginLeft">20dip</item>
+	<item name="android:layout_marginRight">20dip</item> 
+</style>
+    
+
+<style name="nd3_button_margin_style"> 
+	<item name="android:layout_marginLeft">50dip</item>
+	<item name="android:layout_marginRight">50dip</item>	
+</style>
+
+<style name="nd3_option_item_padding_style">
+				
+	<item name="android:paddingTop">10dip</item>
+	<item name="android:paddingBottom">10dip</item>
+	<item name="android:paddingLeft">10dip</item>
+	<item name="android:paddingRight">10dip</item>	
+		
+</style>
+
+<style name="nd_goods_item_style">
+	<item name="android:textSize">16sp</item>
+	<item name="android:textColor">@color/nd3_black</item>
+</style>
+
+<style name="nd_check_version_style">
+	<item name="android:textSize">16sp</item> 
+	<item name="android:textStyle">bold</item>
+	<item name="android:textColor">@android:color/darker_gray</item>
+</style>
+<!-- styles -->
+</resources>

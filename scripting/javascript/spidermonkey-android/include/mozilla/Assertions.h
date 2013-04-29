@@ -61,8 +61,7 @@
 #      define MOZ_STATIC_ASSERT(cond, reason)    static_assert((cond), reason)
 #    endif
 #  elif defined(__GNUC__)
-#    if (defined(__GXX_EXPERIMENTAL_CXX0X__) || __cplusplus >= 201103L) && \
-        (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 3))
+#    if (defined(__GXX_EXPERIMENTAL_CXX0X__) || __cplusplus >= 201103L)
 #      define MOZ_STATIC_ASSERT(cond, reason)    static_assert((cond), reason)
 #    endif
 #  elif defined(_MSC_VER)

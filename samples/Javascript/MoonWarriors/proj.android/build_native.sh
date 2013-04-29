@@ -36,10 +36,24 @@ done
 # exit this script if any commmand fails
 set -e
 
+# read local.properties
+
+_LOCALPROPERTIES_FILE=$(dirname "$0")"/local.properties"
+if [ -f "$_LOCALPROPERTIES_FILE" ]
+then
+    [ -r "$_LOCALPROPERTIES_FILE" ] || die "Fatal Error: $_LOCALPROPERTIES_FILE exists but is unreadable"
+
+    # strip out entries with a "." because Bash cannot process variables with a "."
+    _PROPERTIES=`sed '/\./d' "$_LOCALPROPERTIES_FILE"`
+    for line in "$_PROPERTIES"; do
+        declare "$line";
+    done
+fi
+
 # paths
 
 if [ -z "${NDK_ROOT+aaa}" ];then
-echo "please define NDK_ROOT"
+echo "NDK_ROOT not defined. Please define NDK_ROOT in your environment or in local.properties"
 exit 1
 fi
 

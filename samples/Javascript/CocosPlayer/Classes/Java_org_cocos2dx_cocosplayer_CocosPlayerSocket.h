@@ -27,9 +27,15 @@ THE SOFTWARE.
 #include <string>
 
 extern "C" {
-  extern void setPairingCodeJNI(int code);
+  extern void updatePairing(const char *code);
   extern void cleanCacheDirJNI();
   extern void setDeviceResolutionJNI(const char* res);
+  extern void sendLogMsg(const char* log);
+  extern void resetCocosApp();
+  extern void runJSApp();
+  extern void handle_ccb_run();
+  extern void handle_set_orient(bool isPortrait);
+  extern void setOrientationJNI(int orient);
 }
 
 #endif

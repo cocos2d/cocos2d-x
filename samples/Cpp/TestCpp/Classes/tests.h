@@ -53,6 +53,7 @@
 #include "ChipmunkTest/ChipmunkTest.h"
 #endif
 #include "FileUtilsTest/FileUtilsTest.h"
+#include "SpineTest/SpineTest.h"
 
 enum
 {
@@ -109,6 +110,7 @@ enum
     TEST_CLIPPINGNODE,
 #endif
     TEST_FILEUTILS,
+    TEST_SPINE,
     TESTS_COUNT,    
 };
 
@@ -165,7 +167,8 @@ const std::string g_aTestNames[TESTS_COUNT] = {
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
     "ClippingNodeTest",
 #endif
-    "FileUtilsTest"
+    "FileUtilsTest",
+    "SpineTest"
 };
 
 #endif

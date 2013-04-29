@@ -138,15 +138,6 @@ public:
     bool initWithString(const char *text,  const char *fontName, float fontSize, const CCSize& dimensions, CCTextAlignment hAlignment, CCVerticalTextAlignment vAlignment);
     /** Initializes a texture from a string with font name and font size */
     bool initWithString(const char *text, const char *fontName, float fontSize);
-
-#ifdef CC_SUPPORT_PVRTC    
-    /**
-    Extensions to make it easy to create a CCTexture2D object from a PVRTC file
-    Note that the generated textures don't have their alpha premultiplied - use the blending mode (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA).
-    */
-    /** Initializes a texture from a PVRTC buffer */
-    bool initWithPVRTCData(const void *data, int level, int bpp, bool hasAlpha, int length, CCTexture2DPixelFormat pixelFormat);
-#endif // CC_SUPPORT_PVRTC
     
     /** Initializes a texture from a PVR file */
     bool initWithPVRFile(const char* file);

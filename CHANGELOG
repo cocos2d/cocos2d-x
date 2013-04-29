@@ -1,3 +1,170 @@
+cocos2d-2.1rc0-x-2.1.3 @May.01 2013
+[all platforms]
+     Bug      #1853: use SHELLOPTS instead of "-o igncr" for Android Eclipse project
+     Bug      #1860: fix a bug that onNodeLoaded will be called twice if ccb was added as a CCBFile
+     Bug      #1862: fix a bug that CCScrollView::setContainer may cause dangling pointer when NULL is passed into
+     Bug      #1876: fix a bug that CCScale9Sprite::setColor() & setOpacity() are broken
+     Bug      #1935: fix a bug that use "==" for float comparison of CCPoint and CCSize
+     Bug      #1937: fix a bug that CCControl's touch priority is not set correctly, m_nDefaultTouchPriority is never used
+     Bug      #1943: added some missing function for setting integer shader uniforms in CCGLProgram
+     Bug      #1999: allowing to set fontName and fontSize separately for CCEditBox
+     Bug      #2003: fix a potential crash in CCScheduler::removeHashElement()
+     Bug      #2030: fix a bug that scissor rectangle in nested CCScrollView is wrong
+     Bug      #2031: make CCFileUtils::createXXXXWithContentsOfFile() support relative path
+     Bug      #2035: fix a potential crash in CCSaxParser
+     Bug      #2037: fix a wrong logic in CCArray::initWithObjects()
+     Bug      #2040: get scale property from sub-ccb node may trigger an assert
+     Bug      #2054: fix a bug that anchorPoint property of CCScale9Sprite doesn't work in CCBReader
+     Bug      #2055: enable easy switching between Box2D and chipmunk
+     Bug      #2058: properly resets the tile's Y flipping
+     Bug      #2061: fix a bug that wrong type of argument signature is used in setAccelerometerIntervalJNI function
+     Bug      #2073: fix a memory leak in CCUserDefault
+     Bug      #2080: fix a bug that _realOpacity isn't assigned in CCLayerColor::initWithColor
+     Feature  #2001: add CCRemoveSelf Action
+     Feature  #2048: support variable cell sizes in CCTableView
+     Feature  #2065: adding kResolutionFixedHeight and kResolutionFixedWidth resolution policy
+     Feature  #2068: adding a secureTextEntry property to CCTextFieldTTF
+     Feature  #2069: adding new macro CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK to CCBMemberVariableAssigner.h
+     Feature  #2075: support spine editor
+     Feature  #2076: adding a method CCBReader::setResolutionScale for setting resolution scale manually
+     Refactor #1592: updating UTHASH to v1.9.8
+     Refactor #2042: remove libxml2
+     Refactor #2097: use pthread mutex and condition variable instead of pthread semaphore to load image asynchronizely 
+[android]  
+     Bug      #1996: adding missing JNIEXPORT / JNICALL declarations
+     Bug      #2028: fix a bug taht application can not run correctly on Android simulator
+     Bug      #2045: some small fixes to CocosPlayer
+     Bug      #2062: fix for spaces at the beginning of wrapped lines
+     Bug      #2083: fix a bug that Bytecode of LuaJIT can't work on android
+     Refactor #1613: not reload resources when coming from background on Android
+     Refactor #1861: CocosPlayer Android update
+     Refactor #1904: strip libcurl.a on x86 architecture
+     Refactor #2027: reduce function call in nativeInitBitmapDC to improve performance
+     Refactor #2047: clean up linked libraries for android
+[iOS]
+     Bug      #1863: fix a bug that CCUserDefault on iOS may not save immediately
+     Feature  #2096: adding Cocosplayer for iOS and bug fixes
+[linux]
+     Bug      #1932: fix a bug that font rendering crashed for certain fonts
+     Bug      #2036: correct passed buffer size to readlink
+     Bug      #2044: link libpthread and libGL
+     Bug      #2046: strip newlines from log message and fixing linux library location
+     Bug      #2052: fix a bug that [-Werror=array-bounds] error appears when compiling Box2dTestBed
+     Feature  #2032: Linux OpenAL support
+     Refactor #2000: improve font rendering performance for linux platform
+     Refactor #2053: set writable path to "<user's home>/.config/<app name>"
+[mac]
+     Bug      #2051: fix a bug that TestCpp/ExtensionsTest/CocosbuilderTest crashes under x86_64 target
+     Feature  #1856: adding 64bit target for Mac project
+[javascript binding]
+     Bug      #1855: fix a bug that std_string_to_jsval generates messy js string when passed a non-ascii UTF8 std::string
+     Bug      #2057: adding response for back and menu keypad event for Android
+     Bug      #2059: fix a bug that cc.FileUtils.getInstance().getStringFromFile(filename) doesn't return a whole string
+     Bug      #2071: fix a bug that cc.TMXLayer.getTiles() can't work
+     Feature  #1841: find a way to obfuscate javascript code on the top of JSB
+     Feature  #1936: adding OpenGL Bindings to Javascript
+     Feature  #2043: upgrading SpiderMonkey to Firefox20.0
+     Feature  #2060: support for cc.FileUtils.getInstance().getByteArrayFromFile(filename)
+     Feature  #2064: exposing cc.Node.nodeTo***Transform to JS
+     Refactor #1944: subclass of cc.Sprite,cc.Layer... doesn't need cc.associateWithNative anymore
+[lua binding]
+     Feature  #1814: add menutest 
+     Feature  #1941: add TileMapTest
+     Feature  #1942: add LayerTest
+     Feature  #1945: use CCLOG to implement print() function
+     Feature  #1993: add ParallaxTest
+     Feature  #1994: add ActionManagerTest
+     Feature  #1997: add IntervalTest
+     Feature  #1998: add SceneTest
+     Feature  #2002: add Texture2dTest, RenderTexture, ZwoptexTest, FontTest, CocosDenshionTest and EffectsAdvancedTest
+     Feature  #2004: add UserDefaultTest
+     Feature  #2005: add CurrentLanguageTest
+     Refactor #1847: use luajit
+     Refactor #2084: unify the method of loading lua files on all platforms
+
+cocos2d-2.1rc0-x-2.1.2 @Mar.20 2013
+[all platforms]
+     Bug      #1529: use NSUserDefaults on iOS and SharedPreferences on Android implement CCUserDefault
+     Bug      #1672: fix a bug that CCTableView is too sensitive on some devices with high density display
+     Bug      #1689: support horizontal alignment for Custom TTF fonts
+     Bug      #1691: fix a bug that CCControlSwitch::setOn(isOn,false) doesn't work
+     Bug      #1692: add TMX polygon parsing
+     Bug      #1697: fix a logical error in CCRenderTexture::initWithWidthAndHeight()
+     Bug      #1710: add simpler,correct handling of spritesheet sources for CCScale9Sprite
+     Bug      #1711: fix a bug that clipping rectangle of CCScrollView is wrong when the scale of its ancestors isn't equal to 1
+     Bug      #1731: change declaration of CCSize, CCPoint and CCRect in pkg file
+     Bug      #1751: fix a bug that clicking outside of CCTableViewCell will also get response when container size is smaller than view size
+     Bug      #1754: fix a bug that offset of the container is wrong in CCTableView
+     Bug      #1821: fix a bug that the display result is wrong when invoking CCControlButton::setHighlighted()
+     Feature  #1686: synchronize to cocos2d-iphone v2.1rc0
+     Feature  #1708: adding Portuguese and Arabic language support
+     Feature  #1712: add an interface to get DPI
+     Feature  #1741: CCLens3d can be concave
+     Feature  #1742: add 'rotationIsDir' property to ParticleSystem
+     Feature  #1761: implement setVisible() for CCEditBox
+     Feature  #1807: add getStartLocationInView() and getStartLocation() methods in CCTouch
+     Feature  #1822: add CCNotificationCenter::removeAllObservers(CCObject *target)
+     Feature  #1838: synchronize CCBReader to the lastest version
+     Feature  #1489: add AssetsManager
+     Refactor #1687: refactor CCFileUtils and CCImage
+     Refactor #1700: add webp image format support
+     Refactor #1702: change return value of CCFileUtils::getWritablePath()
+     Refactor #1703: replace libxml2 with tinyxml2
+     Refactor #1749: add 'setFont' and 'setAnchorPoint' to CCEditBox
+[android]
+     Bug      #1752: fix a bug that libcurl.a causes link error after being stripped
+     Bug      #1760: fix a bug that cpufeatures module is redefined
+     Bug      #1775: fix a bug that OpenSLEngine can not load resources from SD card
+     Bug      #1812: fix a warning of getStringWithEllipsisJni() function when compiling it with clang
+     Feature  #1827: support building android project, including native codes, in Eclipse
+[iOS]
+     Bug      #1750: fix a bug that CCEditBox's position is incorrect when it's added to a non-fullscreen CCNode
+     Bug      #1804: fix for loading custom fonts on iOS when referenced from a CCB file
+     Feature  #1842: support kEditBoxInputFlagSensitive setting for CCEditBox on iOS
+     Refactor #1755: add CocosDenshion xcode project
+     Refactor #1825: use CCLabelTTF to show text for CCEditBox
+[javascript binding]
+     Bug      #1707: fix a crash caused by unaligned memory access in CCBReader::readFloat()
+     Bug      #1726: fix crash of JSB application on android device with armv6 architecture
+     Bug      #1729: fix compiling error of ScriptingCore.cpp with C++11 on iOS
+     Bug      #1747: fix a crash when passing null to cc.AnimationFrame.initWithSpriteFrame()
+     Bug      #1823: use shared NodeLoaderLibrary in CCBReader bindings
+     Feature  #1724: add HelloJS sample
+     Feature  #1730: bind CCScrollView and CCTableView to js
+     Feature  #1748: separate chipmunk and sqlite from js_binding_core.cpp
+     Feature  #1753: upgrade SpiderMonkey to Firefox19.
+     Feature  #1808: make cxx_generator support parsing functions that have default parameters
+     Feature  #1811: add a method to get file data for JSB
+     Feature  #1824: bind CCEditBox to JS
+     Refactor #1682: add ScriptingCore::getGlobalObject() function
+     Refactor #1740: add cleanup and reset methods to ScriptingCore
+     Refactor #1830: use JS::CompileOptions::setUTF8(true) to compile script
+     Refactor #1836: make js target of "cc.Scheduler().scheduleCallbackForTarget()" accept a object that not depend on CCNode or its subclass
+     Refactor #1837: refactor schedule binding codes
+[lua binding]
+     Bug      #1745: fix a bug that CCRepeat:create() receives error argument
+     Feature  #1425: fix errors in lua test cases and add more test cases
+     Feature  #1698: add CCLuaObjcBridge
+     Feature  #1802: add TouchesTest for lua binding
+     Refactor #1818: cleanup the tolua++ bindings build system
+[win32]
+     Feature  #1634: CCEditBox support
+     Feature  #1746: add VS2012 Express template installing support
+[linux]
+     Bug      #1688: fix a bug that truetype fonts from resource directory can't be found
+     Bug      #1810: fix a bug that SimpleAudioEngine::playEffect() and playBackgroundMusic() play twice on linux
+     Bug      #1819: fix a bug that building script exits when missing packages
+     Bug      #1834: fix the size calculations for true type fonts (especially for italic fonts)
+     Refactor #1806: refactor linux build system
+     Refactor #1820: add 'make run' target for linux projects
+[mac os]
+     Bug      #1637: fix a bug that CCLabelTTF & CCMenuItemLabel cannot display on Mac Retina
+[black berry]
+     Refactor #1709: add support for multiple background music sources
+[chrome native client]
+     Feature  #1762: add Native Client support
+
+
 cocos2d-2.1beta3-x-2.1.1 @Jan.29 2013
 [ all platforms]
      Bug      #1547: fix a bug that when CCMenuItem is removed before touch ended, application will crash if keeping moving
