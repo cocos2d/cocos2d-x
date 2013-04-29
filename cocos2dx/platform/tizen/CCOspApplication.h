@@ -23,56 +23,47 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CC_APPLICATION_TIZEN_H__
-#define __CC_APPLICATION_TIZEN_H__
+#ifndef _COCOS2DX_APPLICATION_H_
+#define _COCOS2DX_APPLICATION_H_
 
-#include "platform/CCCommon.h"
-#include "platform/CCApplicationProtocol.h"
-#include "CCOspApplication.h"
+#include <FApp.h>
+#include <FUi.h>
 
-NS_CC_BEGIN
+typedef void (*CCOspApplicationInitialized)(void);
 
-class CCRect;
-
-class CC_DLL CCApplication
-    : public CCApplicationProtocol
+class CCOspApplication
+    : public Tizen::App::Application
 {
 public:
-    CCApplication();
-    virtual ~CCApplication();
-
     /**
-    @brief    Callback by CCDirector to limit FPS.
-    @interval       The time, expressed in seconds, between current frame and next. 
-    */
-    void setAnimationInterval(double interval);
-
-    /**
-    @brief    Run the message loop.
-    */
-    int run();
-
-    /**
-    @brief    Get current application instance.
-    @return Current application instance pointer.
-    */
-    static CCApplication* sharedApplication();
-
-    /**
-    @brief Get current language config
-    @return Current language config
-    */
-    virtual ccLanguageType getCurrentLanguage();
-    
-    /**
-     @brief Get target platform
+     * [OspApplication] application must have a factory method that creates an instance of itself.
      */
-    virtual TargetPlatform getTargetPlatform();
+    static Tizen::App::Application* CreateInstance(void);
+    static CCOspApplication* GetInstance(void);
+    static void SetApplicationInitializedCallback(CCOspApplicationInitialized p);
+
+public:
+    CCOspApplication();
+    ~CCOspApplication();
+
+    Tizen::Ui::Controls::Form* getCCOspForm();
+
+    virtual bool OnAppInitializing(Tizen::App::AppRegistry& appRegistry);
+    virtual bool OnAppInitialized(void);
+    virtual bool OnAppTerminating(Tizen::App::AppRegistry& appRegistry, bool forcedTermination = false);
+    virtual void OnForeground(void);
+    virtual void OnBackground(void);
+    virtual void OnLowMemory(void);
+    virtual void OnBatteryLevelChanged(Tizen::System::BatteryLevel batteryLevel);
+    virtual void OnScreenOn(void);
+    virtual void OnScreenOff(void);
 
 protected:
-    static CCApplication * sm_pSharedApplication;
+    static CCOspApplication* sm_pSharedCCOspApplication;
+    static CCOspApplicationInitialized sm_pApplicationInitialized;
+
+private:
+    Tizen::Ui::Controls::Form* __pForm;
 };
 
-NS_CC_END
-
-#endif    // __CC_APPLICATION_TIZEN_H__
+#endif

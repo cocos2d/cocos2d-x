@@ -28,16 +28,21 @@ THE SOFTWARE.
 
 #include "cocoa/CCGeometry.h"
 #include "platform/CCEGLViewProtocol.h"
+#include <FBase.h>
 
 NS_CC_BEGIN
 
-class CC_DLL CCEGLView : public CCEGLViewProtocol
+class CC_DLL CCEGLView
+    : public CCEGLViewProtocol
+    , public Tizen::Base::Runtime::ITimerEventListener
 {
 public:
     CCEGLView();
     virtual ~CCEGLView();
 
     bool    isOpenGLReady();
+    Tizen::Base::Runtime::Timer*    getTimer();
+    void    cleanup();
 
     // keep compatible
     void    end();
@@ -49,7 +54,24 @@ public:
     @brief    get the shared main open gl window
     */
     static CCEGLView* sharedOpenGLView();
+
+    // Tizen timer callback
+    virtual void OnTimerExpired(Tizen::Base::Runtime::Timer& timer);
+
+private:
+    bool create();
+    bool initEGL();
+    void destroyGL();
+
+    Tizen::Graphics::Opengl::EGLDisplay __eglDisplay;
+    Tizen::Graphics::Opengl::EGLSurface __eglSurface;
+    Tizen::Graphics::Opengl::EGLConfig  __eglConfig;
+    Tizen::Graphics::Opengl::EGLContext __eglContext;
+
+    Tizen::Base::Runtime::Timer*        __pTimer;
 };
+
+const int TIME_OUT = 10;
 
 NS_CC_END
 

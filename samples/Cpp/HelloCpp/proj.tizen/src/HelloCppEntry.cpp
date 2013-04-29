@@ -26,8 +26,10 @@ THE SOFTWARE.
 /**
  * This file contains the Tizen C++ application entry point.
  */
-#include "HelloCpp.h"
+#include "../../Classes/AppDelegate.h"
+#include "cocos2d.h"
 
+USING_NS_CC;
 using namespace Tizen::Base;
 using namespace Tizen::Base::Collection;
 
@@ -37,7 +39,7 @@ extern "C"
 #endif // __cplusplus
 
 _EXPORT_ int OspMain(int argc, char* pArgv[]);
-
+void ApplicationInitialized(void);
 
 /**
  * The entry function of Tizen C++ application called by the operating system.
@@ -54,7 +56,8 @@ OspMain(int argc, char* pArgv[])
         args.Add(*(new (std::nothrow) String(pArgv[i])));
     }
 
-    result r = Tizen::App::Application::Execute(HelloCpp::CreateInstance, &args);
+    CCOspApplication::SetApplicationInitializedCallback(ApplicationInitialized);
+    result r = Tizen::App::Application::Execute(CCOspApplication::CreateInstance, &args);
 
     TryLog(r == E_SUCCESS, "[%s] Application execution failed", GetErrorMessage(r));
 
@@ -63,6 +66,19 @@ OspMain(int argc, char* pArgv[])
 
     return static_cast<int>(r);
 }
+
+void
+ApplicationInitialized(void)
+{
+    AppDelegate app;
+
+    CCEGLView* eglView = CCEGLView::sharedOpenGLView();
+    eglView->setFrameSize(720, 1280);
+
+    CCApplication::sharedApplication()->run();
+}
+
+
 #ifdef __cplusplus
 }
 #endif // __cplusplus
