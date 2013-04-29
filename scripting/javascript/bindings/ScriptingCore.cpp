@@ -45,7 +45,7 @@
 
 #include "js_bindings_config.h"
 
-
+#define BYTE_CODE_SUFFIX ".bc"
 
 pthread_t debugThread;
 string inData;
@@ -438,47 +438,57 @@ void ScriptingCore::createGlobalContext() {
     }
 }
 
+std::string TransScriptPath(const std::string& path) {
+    if (path.c_str()[0] == '/') {
+        return path;
+    }
+    else {
+        return cocos2d::CCFileUtils::sharedFileUtils()->fullPathForFilename(path.c_str());
+    }
+}
+
 JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* cx)
 {
     if (!path) {
         return false;
     }
     cocos2d::CCFileUtils *futil = cocos2d::CCFileUtils::sharedFileUtils();
-    std::string rpath;
-    if (path[0] == '/') {
-        rpath = path;
-    } else {
-        rpath = futil->fullPathForFilename(path);
-    }
+    std::string rpath = TransScriptPath(path);
+    std::string bcPath = TransScriptPath(std::string(path) + BYTE_CODE_SUFFIX);
     if (global == NULL) {
         global = global_;
     }
     if (cx == NULL) {
         cx = cx_;
     }
-
+    JSScript *script = NULL;    
     js::RootedObject obj(cx, global);
 	JS::CompileOptions options(cx);
     options.setFileAndLine(rpath.c_str(), 1);
     // Don't setUTF8 since it will cause messy string output by cc.log .
-//	options.setUTF8(true).setFileAndLine(rpath.c_str(), 1);
+    //	options.setUTF8(true).setFileAndLine(rpath.c_str(), 1);
     
     // this will always compile the script, we can actually check if the script
     // was compiled before, because it can be in the global map
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    unsigned char *content = NULL;
-    unsigned long contentSize = 0;
-
-    content = (unsigned char*)CCString::createWithContentsOfFile(rpath.c_str())->getCString();
-    contentSize = strlen((char*)content);
-    // Not supported in SpiderMonkey 19.0
-    //JSScript* script = JS_CompileScript(cx, global, (char*)content, contentSize, path, 1);
-    JSScript *script = JS::Compile(cx, obj, options, (char*)content, contentSize);
-#else
+    unsigned long length = 0;
     // Removed in SpiderMonkey 19.0
     //JSScript* script = JS_CompileUTF8File(cx, global, rpath.c_str());
-	JSScript *script = JS::Compile(cx, obj, options, rpath.c_str());
+    void *data = futil->getFileData(bcPath.c_str(), "rb", &length);
+    if (data) {
+        script = JS_DecodeScript(cx, data, length, NULL, NULL);
+    }
+    else {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+        unsigned char *content = (unsigned char*)CCString::createWithContentsOfFile(rpath.c_str())->getCString();
+        if (content) {
+            // Not supported in SpiderMonkey 19.0
+            //JSScript* script = JS_CompileScript(cx, global, (char*)content, contentSize, path, 1);
+            script = JS::Compile(cx, obj, options, (char*)content, strlen((char*)content));
+        }
+#else
+        script = JS::Compile(cx, obj, options, rpath.c_str());
 #endif
+    }
     JSBool evaluatedOK = false;
     if (script) {
         jsval rval;
