@@ -662,7 +662,7 @@ void CCNode::removeChildByTag(int tag, bool cleanup)
 
     if (child == NULL)
     {
-        CCLOG("cocos2d: removeChildByTag: child not found!");
+        CCLOG("cocos2d: removeChildByTag(tag = %d): child not found!", tag);
     }
     else
     {
