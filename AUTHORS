@@ -12,6 +12,9 @@ Developers:
     Rolando Abarca
         Javascript Binding and testjs
 
+    rodrigogolive
+        Fix broke linux build
+
     kdejongh
         Fix for spaces at the beginning of wrapped lines on Android
 
