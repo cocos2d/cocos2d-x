@@ -36,6 +36,11 @@ import java.nio.ByteOrder;
 
 public class CocosPlayerSocket {
 
+	private static final String kCCBPlayerStatusStringNotConnected = "Connect by running CocosBuilder on the same local wireless network as CocosPlayer.\nIf multiple instances of CocosBuilder is run on the same network, use a unique pairing code.";
+	private static final String kCCBPlayerStatusStringConnected = "idle";
+	private static final String kCCBNetworkStatusStringConnected = "Connected!";
+	private static final String kCCBNetworkStatusStringNotConnected = "Waiting for Connection";
+
 	public static final String TAG = CocosPlayerSocket.class.getSimpleName();
 	private static boolean running = false;
 	private static Context cw = null;
@@ -44,7 +49,8 @@ public class CocosPlayerSocket {
 	private static ServerSocket server;
 	private static int mPairingCode = -1;
 	private static CocosPlayerPresence presence = null;
-
+        private static PrintWriter out = null;
+        private static Socket client = null;
 	private void runCCB() {
 		Cocos2dxGLSurfaceView.getInstance().queueEvent(new Runnable() {
 			@Override
@@ -54,20 +60,20 @@ public class CocosPlayerSocket {
 		});
 	}
 
-	private void handleConnected() {
+	private void setStatusMessage(final String msg) {
 		Cocos2dxGLSurfaceView.getInstance().queueEvent(new Runnable() {
 			@Override
 			public void run() {
-			    nativeConnected();
+			    nativeStatus(msg);
 			}
 		});
 	}
 
-	private void handleDisconnected() {
+	private void setConnectionMessage(final String msg) {
 		Cocos2dxGLSurfaceView.getInstance().queueEvent(new Runnable() {
 			@Override
 			public void run() {
-			    nativeDisconnected();
+			    nativeConnectionStatus(msg);
 			}
 		});
 	}
@@ -86,16 +92,25 @@ public class CocosPlayerSocket {
 	}
 
 	private static native void nativeRunCCB();
-	private static native void nativeConnected();
-	private static native void nativeDisconnected();
+	private static native void nativeStatus(final String msg);
+	private static native void nativeConnectionStatus(final String msg);
 	private static native void nativeStopCCB();
         private static native void nativeSetOrientation(boolean isPortrait);
 	private static native void nativeRunScript(final String script);
 
-	private static void setOrientation(String isPortrait) {
-		CocosPlayer.setOrientation(isPortrait.equalsIgnoreCase("true") ? 
-				ActivityInfo.SCREEN_ORIENTATION_PORTRAIT : ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-		nativeSetOrientation(isPortrait.equalsIgnoreCase("true") ? true : false);
+	private static void setOrientation(final String isPortrait) {
+		Cocos2dxGLSurfaceView.getInstance().setPreserveEGLContextOnPause(true);
+		Cocos2dxGLSurfaceView.getInstance().queueEvent(new Runnable() {
+			@Override
+			public void run() {
+				CocosPlayer.setOrientation(isPortrait.equalsIgnoreCase("true") ? ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+						: ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+
+				nativeSetOrientation(isPortrait.equalsIgnoreCase("true") ? true
+						: false);
+			}
+		});
+
 	}
 	
 	private void switchCmd(NSDictionary data) {
@@ -105,13 +120,21 @@ public class CocosPlayerSocket {
 			for(int i =0 ; i < keys.length; ++i ) {
 			}
 			if(cmd.equalsIgnoreCase("zip")) {
-			    //cleanCache();
+			    // cleanCache();
 				try {
-					Log.i(TAG, "Size of NSDATA payload: "+((NSData)data.objectForKey("data")).bytes().length);
-					CCBFileUtilsHelper.unzipCCB(((NSData)data.objectForKey("data")).bytes(), cw);
-				} catch(Exception e) {
-					Log.i(TAG, "Size of UID payload: "+((UID)data.objectForKey("data")).getBytes().length);
-					CCBFileUtilsHelper.unzipCCB(((UID)data.objectForKey("data")).getBytes(), cw);
+					Log.i(TAG,
+							"Size of NSDATA payload: "
+									+ ((NSData) data.objectForKey("data"))
+											.bytes().length);
+					CCBFileUtilsHelper.unzipCCB(
+							((NSData) data.objectForKey("data")).bytes(), cw);
+				} catch (Exception e) {
+					Log.i(TAG,
+							"Size of UID payload: "
+									+ ((UID) data.objectForKey("data"))
+											.getBytes().length);
+					CCBFileUtilsHelper.unzipCCB(
+							((UID) data.objectForKey("data")).getBytes(), cw);
 				}
 			} else if(cmd.equalsIgnoreCase("run")) {
 				runCCB();
@@ -194,14 +217,16 @@ public class CocosPlayerSocket {
 		protected Void doInBackground(ServerSocket... args) {
 			try {
 
-				handleDisconnected();
+				setConnectionMessage(kCCBNetworkStatusStringNotConnected);
+				setStatusMessage(kCCBPlayerStatusStringNotConnected);
 				ServerSocket server = args[0];
 				while(true) {
 
-					Socket client = server.accept();
+					client = server.accept();
 
 					Log.i(TAG,"New connection from "+ client.getInetAddress());
-					handleConnected();
+					setConnectionMessage(kCCBNetworkStatusStringConnected);
+					setStatusMessage(kCCBPlayerStatusStringConnected);
 
 					if(client == null) {
 						Log.i(TAG, "Client null");
@@ -210,7 +235,7 @@ public class CocosPlayerSocket {
 					try {
 
 						// Send deviceInfo and filelist
-						PrintWriter out = new PrintWriter(client.getOutputStream(), true);
+						out = new PrintWriter(client.getOutputStream(), true);
 						CCBStreamHandler.sendString(CCBStreamHandler.getDeviceInfo(), client, out);
 						CCBStreamHandler.sendString(CCBStreamHandler.getFileSystem(), client, out);
 						//out.close();
@@ -253,8 +278,10 @@ public class CocosPlayerSocket {
 			}
 		}
 
-		/** The system calls this to perform work in the UI thread and delivers
-		 * the result from doInBackground() */
+		/**
+		 * The system calls this to perform work in the UI thread and delivers
+		 * the result from doInBackground()
+		 */
 		protected void onPostExecute() {
 			try {
 				server.close();
@@ -279,20 +306,30 @@ public class CocosPlayerSocket {
 	}
 
 	public static void setPairingCode(int code) {
-		//mPresenceAsync.cancel(true);
-		if(presence != null) {
-			presence.unregisterService();
+		try {
+			// mPresenceAsync.cancel(true);
+			if (presence != null) {
+				presence.unregisterService();
+			}
+			mPairingCode = code;
+
+			CocosPlayerPresence.setContext(cw);
+			CocosPlayerPresence.setPortAndPairing(server.getLocalPort(),
+					mPairingCode);
+			CocosPlayerPresence.startPresence();
+
+		} catch (Exception e) {
 		}
-		mPairingCode = code;
-
-
-		presence = new CocosPlayerPresence();
-		Log.i("CocosPlayerSocket", "Registering Bonjour on Port: "+server.getLocalPort()+" With pairing code: "+code);
-		presence.setContext(cw);
-		presence.startPresence(server.getLocalPort(), mPairingCode);
-
-		//new PresenceStarter().execute(server.getLocalPort(), mPairingCode);
+		// new PresenceStarter().execute(server.getLocalPort(), mPairingCode);
 	}
+
+
+	public static void sendLog(String log) {
+		Log.i("main", "Sending log: "+log);
+		CCBStreamHandler.sendString(CCBStreamHandler.getLogMsg(log), client,
+				out);
+	}
+	
 
 	public void createServer() {
 
@@ -302,9 +339,11 @@ public class CocosPlayerSocket {
 			Log.i(TAG, "IP " + server.getInetAddress()
 					+ ", running on port " + server.getLocalPort());
 
-			presence = new CocosPlayerPresence();
-			presence.setContext(cw);
-			presence.startPresence(server.getLocalPort(), mPairingCode);
+			// presence = new CocosPlayerPresence();
+			CocosPlayerPresence.setContext(cw);
+			CocosPlayerPresence.setPortAndPairing(server.getLocalPort(),
+					mPairingCode);
+			CocosPlayerPresence.startPresence();
 			new StreamHandler().execute(server);
 
 		} catch(Exception e) {

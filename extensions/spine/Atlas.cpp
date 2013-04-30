@@ -55,9 +55,14 @@ void AtlasRegion_dispose (AtlasRegion* self) {
 
 /**/
 
-typedef struct {
+typedef struct _struct_Str {
 	const char* begin;
 	const char* end;
+
+    _struct_Str()
+        : begin(NULL)
+        , end(NULL) {
+    }
 } Str;
 
 static void trim (Str* str) {

@@ -196,7 +196,22 @@ JSBool jsval_to_TProductInfo(JSContext *cx, jsval v, TProductInfo* ret)
     return JS_TRUE;
 }
 
-JSBool jsval_to_TDeveloperInfo(JSContext *cx, jsval v, TDeveloperInfo* ret)
+JSBool jsval_to_TIAPDeveloperInfo(JSContext *cx, jsval v, TIAPDeveloperInfo* ret)
+{
+    return jsval_to_TProductInfo(cx, v, ret);
+}
+
+JSBool jsval_to_TAdsDeveloperInfo(JSContext *cx, jsval v, TAdsDeveloperInfo* ret)
+{
+    return jsval_to_TProductInfo(cx, v, ret);
+}
+
+JSBool jsval_to_TSocialDeveloperInfo(JSContext *cx, jsval v, TSocialDeveloperInfo* ret)
+{
+    return jsval_to_TProductInfo(cx, v, ret);
+}
+
+JSBool jsval_to_TShareInfo(JSContext *cx, jsval v, TShareInfo* ret)
 {
     return jsval_to_TProductInfo(cx, v, ret);
 }

@@ -48,8 +48,8 @@ var MyPurchase = cc.Class.extend({
         }
 
         this._pAlipay.setDebugMode(true);
-        this._pAlipay.initDeveloperInfo(pAlipayInfo);
-
+        this._pAlipay.configDeveloperInfo(pAlipayInfo);
+        this._pAlipay.setResultListener(this);
 
         var pNdInfo = {};
         pNdInfo["Nd91AppId"] = "100010";
@@ -60,7 +60,8 @@ var MyPurchase = cc.Class.extend({
         }
         this._pNd91 = plugin.PluginManager.getInstance().loadPlugin("IAPNd91");
         this._pNd91.setDebugMode(true);
-        this._pNd91.initDeveloperInfo(pNdInfo);
+        this._pNd91.configDeveloperInfo(pNdInfo);
+        this._pNd91.setResultListener(this);
     },
 
     unloadIAPPlugin: function() {
@@ -94,7 +95,13 @@ var MyPurchase = cc.Class.extend({
         if (pIAP) {
             pIAP.payForProduct(info);
         }
-    }
+    },
+
+    onPayResult: function(ret, msg, productInfo) {
+        cc.log("---------onPayResult callback begin-----------------");
+        cc.log("onPayResult="+ ret + ";msg=" +msg + ";productinfo="+productInfo);
+        cc.log("---------onPayResult callback end-----------------");
+    },
 });
 
 MyPurchase.getInstance = function() {
@@ -122,12 +129,6 @@ var IAPTestLayer = cc.Layer.extend({
     menuCloseCallback: function() {
         cc.log("menuCloseCallback");
         __jsc__.garbageCollect();
-    },
-
-    payResult: function(ret, msg, productInfo) {
-        cc.log("---------payResult callback begin-----------------");
-        cc.log("payResult="+ ret + ";msg=" +msg + ";productinfo="+productInfo);
-        cc.log("---------payResult callback end-----------------");
     },
 
     eventMenuCallback: function(pSender) {
@@ -166,7 +167,6 @@ var IAPTestLayer = cc.Layer.extend({
     onEnter:function () {
         this._super();
         MyPurchase.getInstance().loadIAPPlugin();
-        plugin.ProtocolIAP.setResultListener(this);
 
         var director = cc.Director.getInstance();
         var size = director.getWinSize();

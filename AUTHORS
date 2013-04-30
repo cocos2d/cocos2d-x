@@ -12,6 +12,9 @@ Developers:
     Rolando Abarca
         Javascript Binding and testjs
 
+    rodrigogolive
+        Fix broke linux build
+
     kdejongh
         Fix for spaces at the beginning of wrapped lines on Android
 
@@ -90,6 +93,7 @@ Developers:
          Touch priority can't be set to the value specified by a call to CCMenu::setTouchPriority(int).
          CCTableView crashes if a CCTableViewDelegate is not provided.
          Fixing a bug that _realOpacity isn't assigned in CCLayerColor::initWithColor.
+         CCScrollView TouchPriority Fix
 
     Weeds (Andre Rudlaff)
         Used fontconfig to enhance font rendering on linux.
@@ -101,6 +105,7 @@ Developers:
         Fixed potential crash in CCScheduler::removeHashElement.
         Fixed potential crash in CCSaxParser.
         Added kResolutionFixedHeight and kResolutionFixedWidth resolution policy.
+        Use pthread mutex and condition variable instead of pthred semaphore to load image asynchronizely.
 
     Nat Weiss (iphonegamekit.com)
         author of Mac port

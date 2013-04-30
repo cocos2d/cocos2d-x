@@ -1,3 +1,26 @@
+/****************************************************************************
+Copyright (c) 2012-2013 cocos2d-x.org
+
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
 #include "MyPurchase.h"
 #include "PluginManager.h"
 #include "cocos2d.h"
@@ -21,6 +44,7 @@ MyPurchase::~MyPurchase()
 	if (s_pRetListener)
 	{
 		delete s_pRetListener;
+		s_pRetListener = NULL;
 	}
 }
 
@@ -37,15 +61,22 @@ void MyPurchase::purgePurchase()
 	if (s_pPurchase)
 	{
 		delete s_pPurchase;
+		s_pPurchase = NULL;
 	}
+	PluginManager::end();
 }
 
 void MyPurchase::loadIAPPlugin()
 {
+	if (s_pRetListener == NULL)
+	{
+		s_pRetListener = new MyPurchaseResult();
+	}
+
 	{
 		// init alipay plugin
 		s_pAlipay = dynamic_cast<IAPAlipay*>(PluginManager::getInstance()->loadPlugin("IAPAlipay"));
-		TDeveloperInfo pAlipayInfo;
+		TIAPDeveloperInfo pAlipayInfo;
 		if (pAlipayInfo.empty())
 		{
 			char msg[256] = { 0 };
@@ -53,11 +84,12 @@ void MyPurchase::loadIAPPlugin()
 			CCMessageBox(msg, "Alipay Warning");
 		}
 		s_pAlipay->setDebugMode(true);
-		s_pAlipay->initDeveloperInfo(pAlipayInfo);
+		s_pAlipay->configDeveloperInfo(pAlipayInfo);
+		s_pAlipay->setResultListener(s_pRetListener);
 	}
 
 	{
-		TDeveloperInfo pNdInfo;
+		TIAPDeveloperInfo pNdInfo;
 		pNdInfo["Nd91AppId"] = "100010";
 		pNdInfo["Nd91AppKey"] = "C28454605B9312157C2F76F27A9BCA2349434E546A6E9C75";
 		pNdInfo["Nd91Orientation"] = "landscape";
@@ -68,13 +100,8 @@ void MyPurchase::loadIAPPlugin()
 		}
 		s_pNd91 = dynamic_cast<IAPNd91*>(PluginManager::getInstance()->loadPlugin("IAPNd91"));
 		s_pNd91->setDebugMode(true);
-		s_pNd91->initDeveloperInfo(pNdInfo);
-	}
-
-	if (s_pRetListener == NULL)
-	{
-		s_pRetListener = new MyPurchaseResult();
-		ProtocolIAP::setResultListener(s_pRetListener);
+		s_pNd91->configDeveloperInfo(pNdInfo);
+		s_pNd91->setResultListener(s_pRetListener);
 	}
 }
 
@@ -113,7 +140,7 @@ void MyPurchase::payByMode(TProductInfo info, MyPayMode mode)
 	}
 }
 
-void MyPurchaseResult::payResult(EPayResult ret, const char* msg, TProductInfo info)
+void MyPurchaseResult::onPayResult(PayResultCode ret, const char* msg, TProductInfo info)
 {
 	char goodInfo[1024] = { 0 };
 	sprintf(goodInfo, "商品名称:%s\n商品价格:%s\n商品描述:%s",
