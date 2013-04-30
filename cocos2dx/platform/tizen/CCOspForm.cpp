@@ -22,3 +22,68 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
+
+#include "CCOspForm.h"
+#include "CCDirector.h"
+#include "CCEGLView.h"
+
+USING_NS_CC;
+using namespace Tizen::Ui;
+using namespace Tizen::Ui::Controls;
+using namespace Tizen::Graphics;
+
+result
+CCOspForm::OnInitializing(void)
+{
+    AddTouchEventListener(*this);
+    SetMultipointTouchEnabled(true);
+
+    return E_SUCCESS;
+}
+
+void
+CCOspForm:: OnTouchDoublePressed(const Control& source, const Point& currentPosition, const TouchEventInfo& touchInfo)
+{
+}
+
+void
+CCOspForm:: OnTouchFocusIn(const Control& source, const Point& currentPosition, const TouchEventInfo& touchInfo)
+{
+}
+
+void
+CCOspForm::OnTouchFocusOut(const Control& source, const Point& currentPosition, const TouchEventInfo& touchInfo)
+{
+}
+
+void
+CCOspForm::OnTouchLongPressed(const Control& source, const Point& currentPosition, const TouchEventInfo& touchInfo)
+{
+}
+
+void
+CCOspForm::OnTouchMoved(const Control& source, const Point& currentPosition, const TouchEventInfo& touchInfo)
+{
+    int id = touchInfo.GetPointId();
+    float x = currentPosition.x;
+    float y = currentPosition.y;
+    CCDirector::sharedDirector()->getOpenGLView()->handleTouchesMove(1, &id, &x, &y);
+}
+
+void
+CCOspForm::OnTouchPressed(const Control& source, const Point& currentPosition, const TouchEventInfo& touchInfo)
+{
+    int id = touchInfo.GetPointId();
+    float x = currentPosition.x;
+    float y = currentPosition.y;
+    CCDirector::sharedDirector()->getOpenGLView()->handleTouchesBegin(1, &id, &x, &y);
+}
+
+void
+CCOspForm::OnTouchReleased(const Control& source, const Point& currentPosition, const TouchEventInfo& touchInfo)
+{
+    int id = touchInfo.GetPointId();
+    float x = currentPosition.x;
+    float y = currentPosition.y;
+    CCDirector::sharedDirector()->getOpenGLView()->handleTouchesEnd(1, &id, &x, &y);
+}
