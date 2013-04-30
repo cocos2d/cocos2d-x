@@ -2,22 +2,14 @@
 
 * Touch handler screwed up after TouchesTest? MenuTest? (TestCpp sample)
 
-* TileMap Test crashes
-  - void CCNode::insertChild(CCNode* child, int z)
+* Add linkage to libjpeg to get RenderTexture test to work.
 
-* LabelTest crashes
-  - cocos2d::CCAtlasNode::calculateMaxItems()
+* TTF Font rendering is slow and seems to wrap around by a few pixels
+  horizontally. Need to investigate here, but I suspect the right answer is to
+  offload font rendering to an offscreen canvas and let the browser handle it.
+  Potentially creates new challenges in packaging which would need to be solved
+  somehow.
 
-* RenderTextureTest is... weird.
-
-* ChipmunkTest crashes:
-    Aborting due to Chipmunk error: Moment of Inertia must be positive and non-zero.
-        Failed condition: moment > 0.0f
-        Source:../src/cpBody.c:151
-
-
-* ZwoptexTest crashes.
-  - ZwoptexGenericTest::onEnter()
 
 
 ###
@@ -51,4 +43,18 @@ DONE:
 
 * IntervalTest crashes
   - cocos2d::CCLabelBMFont::create(char const*, char const*, float, cocos2d::CCTextAlignment, cocos2d::CCPoint)
+
+* TileMap Test crashes
+  - void CCNode::insertChild(CCNode* child, int z)
+
+* LabelTest crashes
+  - cocos2d::CCAtlasNode::calculateMaxItems()
+
+* ZwoptexTest crashes.
+  - ZwoptexGenericTest::onEnter()
+
+* ChipmunkTest crashes:
+    Aborting due to Chipmunk error: Moment of Inertia must be positive and non-zero.
+        Failed condition: moment > 0.0f
+        Source:../src/cpBody.c:151
 
