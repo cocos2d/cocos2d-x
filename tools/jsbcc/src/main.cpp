@@ -49,35 +49,14 @@ bool WriteFile(const std::string &filePath, void *data, uint32_t length) {
     }
     return false;
 }
-
-int main(int argc, const char * argv[])
-{
-    std::string inputFilePath;
-    std::ostringstream outputFilePath;
-    if (1 == argc) {
-        fd_set fds;
-        struct timeval tv;
-        tv.tv_sec = 0;
-        tv.tv_usec = 500; // wait pipe data timeout
-        FD_ZERO (&fds);
-        FD_SET (STDIN_FILENO, &fds);
-        int result = select (STDIN_FILENO + 1, &fds, NULL, NULL, &tv);
-        if (result) { // STDIN ready to read
-            std::getline(std::cin, inputFilePath);
-        }
-        if (inputFilePath.empty()) {
-            std::cerr << USAGE << std::endl;
-            return EC_ERROR;
-        }
-    }
-    else if (1 < argc) {
-        inputFilePath = argv[1];
-    }
-    if (2 < argc) {
-        outputFilePath << argv[2];
+bool CompileFile(const std::string &inputFilePath, const std::string &outputFilePath) {
+    bool result = false;
+    std::string ofp;
+    if (!outputFilePath.empty()) {
+        ofp = outputFilePath;
     }
     else {
-        outputFilePath << inputFilePath << BYTE_CODE_FILE_SUFFIX;
+        ofp = inputFilePath + BYTE_CODE_FILE_SUFFIX;
     }
     std::cout << "Input file: " << inputFilePath << std::endl;
     JSRuntime * runtime = JS_NewRuntime(10 * 1024 * 1024, JS_NO_HELPER_THREADS);
@@ -88,28 +67,73 @@ int main(int argc, const char * argv[])
     JS_SetOptions(context, JS_GetOptions(context) & ~JSOPTION_METHODJIT_ALWAYS);
 	JSObject* global = JS_NewGlobalObject(context, &GlobalClass, NULL);
     JS_SetErrorReporter(context, &ReportError);
-	if (!JS_InitStandardClasses(context, global)) {
-        return EC_ERROR;
+	if (JS_InitStandardClasses(context, global)) {
+        JS::CompileOptions options(context);
+        options.setSourcePolicy(JS::CompileOptions::NO_SOURCE);
+        js::RootedObject rootedObject(context, global);
+        std::cout << "Compiling ..." << std::endl;
+        JSScript *script = JS::Compile(context, rootedObject, options, inputFilePath.c_str());
+        if (script) {
+            void *data = NULL;
+            uint32_t length = 0;
+            std::cout << "Encoding ..." << std::endl;
+            data = JS_EncodeScript(context, script, &length);
+            if (data) {
+                if (WriteFile(ofp, data, length)) {
+                    std::cout << "Done! " << "Output file: " << ofp << std::endl;
+                    result = true;
+                }
+            }
+        }
+        
     }
-	JS::CompileOptions options(context);
-    options.setSourcePolicy(JS::CompileOptions::NO_SOURCE);
-    js::RootedObject rootedObject(context, global);
-    std::cout << "Compiling ..." << std::endl;
-    JSScript *script = JS::Compile(context, rootedObject, options, inputFilePath.c_str());
-    if (!script) {
-        return EC_ERROR;
+Exit:
+    if (context) {
+        JS_DestroyContext(context);
+        context = NULL;
     }
-    void *data = NULL;
-    uint32_t length = 0;
-    std::cout << "Encoding ..." << std::endl;
-    data = JS_EncodeScript(context, script, &length);
-    if (!data) {
-        return EC_ERROR;
+    if (runtime) {
+        JS_DestroyRuntime(runtime);
+        runtime = NULL;
     }
-    if (WriteFile(outputFilePath.str(), data, length)) {
-        std::cout << "Done! " << "Output file: " << outputFilePath.str() << std::endl;
-        return EC_OK;
-    }
-    return EC_ERROR;
+    return result;
 }
 
+int main(int argc, const char * argv[])
+{
+    std::string inputFilePath, outputFilePath;
+    if (1 == argc) { // no argument or pipe mode
+        fd_set fds;
+        struct timeval tv;
+        tv.tv_sec = 0;
+        tv.tv_usec = 500; // wait pipe data timeout
+        FD_ZERO (&fds);
+        FD_SET (STDIN_FILENO, &fds);
+        int result = select (STDIN_FILENO + 1, &fds, NULL, NULL, &tv);
+        if (result) { // STDIN ready to read
+            std::string line;
+            while (std::getline(std::cin, line)) {
+                if (!line.empty()) {
+                    CompileFile(line, "");
+                }
+            }
+            return EC_OK;
+        }
+        else {
+            std::cerr << USAGE << std::endl;
+            return EC_ERROR;
+        }
+    }
+    else {
+        if (1 < argc) {
+            inputFilePath = argv[1];
+        }
+        if (2 < argc) {
+            outputFilePath = argv[2];
+        }
+        if (CompileFile(inputFilePath, outputFilePath)) {
+            return EC_OK;
+        }
+        return EC_ERROR;
+    }
+}
