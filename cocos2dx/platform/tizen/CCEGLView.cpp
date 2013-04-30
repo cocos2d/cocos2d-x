@@ -30,6 +30,7 @@ THE SOFTWARE.
 #include "CCOspApplication.h"
 
 NS_CC_BEGIN
+using namespace Tizen::App;
 using namespace Tizen::Base::Runtime;
 
 CCEGLView::CCEGLView()
@@ -73,6 +74,11 @@ CCEGLView::cleanup()
 
 void CCEGLView::end()
 {
+    cleanup();
+
+    UiApp* pApp = UiApp::GetInstance();
+    AppAssert(pApp);
+    pApp->Terminate();
 }
 
 void CCEGLView::swapBuffers()
