@@ -27,8 +27,41 @@ THE SOFTWARE.
 #include "CCAutoreleasePool.h"
 #include "ccMacros.h"
 #include "script_support/CCScriptSupport.h"
+#include <map>
 
 NS_CC_BEGIN
+
+namespace {
+    // weak reference info, a std::pair which contains (refcount, CCObject *)
+    typedef std::pair<unsigned int, CCObject **> Referent;
+    // a map which stores all weak reference infomations.
+    // the key is CCObject::m_uID
+    typedef std::map<unsigned int, Referent> ReferentMap;
+
+    // The order of initialization of global variables is undeterminable, using
+    // non thread-safe lazyload can avoid potential crash.
+    ReferentMap &GetReferentMap()
+    {
+        static cocos2d::ReferentMap _referent_map;
+        return _referent_map;
+    }
+
+    void releaseWeakReferenceFor(CCObject *obj) {
+        ReferentMap &ref_map = GetReferentMap();
+        if(ref_map.size() == 0)
+            return;
+
+        // takes O(lgN) times, N is the amount of currently weak referenced objects.
+        ReferentMap::iterator iter = ref_map.find(obj->m_uID);
+
+        if (iter == ref_map.end()) { //not found
+            return;
+        } else {
+            CCObject **ppobj = iter->second.second;
+            *ppobj = NULL;
+        }
+    }
+} // anonymous namespace
 
 CCObject* CCCopying::copyWithZone(CCZone *pZone)
 {
@@ -49,6 +82,9 @@ CCObject::CCObject(void)
 
 CCObject::~CCObject(void)
 {
+    // release weak reference to this object
+    releaseWeakReferenceFor(this);
+
     // if the object is managed, we should remove it
     // from pool manager
     if (m_uAutoReleaseCount > 0)
@@ -110,9 +146,107 @@ unsigned int CCObject::retainCount(void)
     return m_uReference;
 }
 
+unsigned int CCObject::weakRefsCount() const
+{
+    ReferentMap &ref_map = GetReferentMap();
+    ReferentMap::const_iterator iter = ref_map.find(m_uID);
+    if (iter == ref_map.end()) { //not found
+        return 0;
+    } else {
+        return iter->second.first;
+    }
+}
+
 bool CCObject::isEqual(const CCObject *pObject)
 {
     return this == pObject;
 }
+
+// CCWeakReference
+
+CCObjectWeakPointer::CCObjectWeakPointer(CCObject *obj) :
+object_id(obj ? obj->m_uID : 0),
+pp_obj(NULL)
+{
+    incRef(obj);
+}
+
+CCObjectWeakPointer::CCObjectWeakPointer(const CCObjectWeakPointer &weakref) :
+object_id(weakref.getObjectId()),
+pp_obj(NULL)
+{
+    incRef();
+}
+
+CCObjectWeakPointer &CCObjectWeakPointer::operator=(const CCObjectWeakPointer& weakref)
+{
+    decRef(); // for previous referenced obj
+
+    this->object_id = weakref.getObjectId();
+    this->pp_obj = NULL;
+
+    incRef();
+    return *this;
+}
+
+bool CCObjectWeakPointer::operator==(const CCObjectWeakPointer& weakref) const
+{
+    return this->object_id == weakref.object_id;
+}
+
+CCObjectWeakPointer::~CCObjectWeakPointer()
+{
+    decRef();
+}
+
+void CCObjectWeakPointer::incRef(CCObject *obj)
+{
+    if(!object_id)
+        return;
+
+    ReferentMap &ref_map = GetReferentMap();
+
+    ReferentMap::iterator iter = ref_map.find(object_id);
+    if (iter == ref_map.end()){  //not referenced before
+        // point to CCObject *
+        CCObject **ppobj = new CCObject *;
+        *ppobj = obj;
+
+        // set ref count to 1, and add to map
+        ref_map[object_id] = Referent(1, ppobj);
+        this->pp_obj = ppobj;
+    } else {  // already referenced before
+        // ref count + 1
+        iter->second.first += 1;
+        this->pp_obj = iter->second.second;
+    }
+}
+
+void CCObjectWeakPointer::decRef()
+{
+    if (!object_id)
+        return;
+
+    ReferentMap &ref_map = GetReferentMap();
+
+    ReferentMap::iterator iter = ref_map.find(object_id);
+    if (iter == ref_map.end()){  // not referenced
+        //error
+        CCAssert(0, "weakref < 0");
+    } else {
+        // ref count - 1
+        unsigned int weakref = (iter->second.first -= 1);
+
+        // no weak ref anymore
+        if( weakref == 0 ) {
+            CCObject **ppobj = iter->second.second;
+            // remove from map
+            ref_map.erase(iter);
+            delete ppobj;
+        }
+    }
+}
+
+// End of CCWeakReference
 
 NS_CC_END

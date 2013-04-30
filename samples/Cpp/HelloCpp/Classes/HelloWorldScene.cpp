@@ -74,6 +74,38 @@ bool HelloWorld::init()
     // add the sprite as a child to this layer
     this->addChild(pSprite, 0);
     
+    // test CCWeakReference
+    CCArray *obj = new CCArray();
+    CC_ASSERT(obj->weakRefsCount() == 0);
+
+    CCWeakPointer<CCArray> wr1(obj);
+    CC_ASSERT(wr1.getObject()==obj);    
+    CC_ASSERT(obj->weakRefsCount() == 1);  // wr1
+
+    CCWeakPointer<CCArray> wr2(obj);
+    CC_ASSERT(obj->weakRefsCount() == 2);  //wr1, wr2
+
+    CCWeakPointer<CCArray> wr3;
+    CCWeakPointer<CCArray> *wr4 = new CCWeakPointer<CCArray>();
+    
+    wr3 = wr2;
+    CC_ASSERT(wr3.getObject()==obj);    
+    CC_ASSERT(obj->weakRefsCount() == 3);  //wr1, wr2, wr3
+    wr1 = *wr4;
+    CC_ASSERT(wr1.getObject()==NULL);        
+    CC_ASSERT(obj->weakRefsCount() == 2);  //wr2, wr3
+    *wr4 = wr3;
+    CC_ASSERT(wr4->getObject()==obj);    
+    CC_ASSERT(obj->weakRefsCount() == 3);  //wr, wr3, wr4
+
+    CC_SAFE_DELETE(wr4);  // should not crash
+    CC_ASSERT(obj->weakRefsCount() == 2);  //wr, wr3
+
+    CC_SAFE_RELEASE(obj);
+
+    CC_ASSERT( wr1.getObject() == NULL);    
+    CC_ASSERT( wr2.getObject() == NULL);    
+    CC_ASSERT( wr3.getObject() == NULL);    
     return true;
 }
 
