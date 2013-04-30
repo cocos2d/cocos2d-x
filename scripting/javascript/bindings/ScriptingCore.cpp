@@ -479,7 +479,10 @@ JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* c
     unsigned long length = 0;
     // Removed in SpiderMonkey 19.0
     //JSScript* script = JS_CompileUTF8File(cx, global, rpath.c_str());
+    bool notify = futil->isPopupNotify();
+    futil->setPopupNotify(false);
     void *data = futil->getFileData(bcPath.c_str(), "rb", &length);
+    futil->setPopupNotify(notify);    
     if (data) {
         script = JS_DecodeScript(cx, data, length, NULL, NULL);
     }
