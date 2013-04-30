@@ -1,3 +1,26 @@
+/****************************************************************************
+Copyright (c) 2012-2013 cocos2d-x.org
+
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
 #include "ProtocolAds.h"
 #include "PluginJniHelper.h"
 #include <android/log.h>
@@ -14,27 +37,38 @@
 namespace cocos2d { namespace plugin {
 
 extern "C" {
-	JNIEXPORT void JNICALL Java_org_cocos2dx_plugin_InterfaceAds_nativeReceiveAd(JNIEnv*  env, jobject thiz) {
-		ProtocolAds::receiveAd();
-	}
-
-	JNIEXPORT void JNICALL Java_org_cocos2dx_plugin_InterfaceAds_nativePresentScreen(JNIEnv*  env, jobject thiz) {
-		ProtocolAds::presentScreen();
-	}
-
-	JNIEXPORT void JNICALL Java_org_cocos2dx_plugin_InterfaceAds_nativeFailedToReceiveAd(JNIEnv*  env, jobject thiz, jint ret, jstring msg) {
+	JNIEXPORT void JNICALL Java_org_cocos2dx_plugin_InterfaceAds_nativeOnAdsResult(JNIEnv*  env, jobject thiz, jobject obj, jint ret, jstring msg) {
 		std::string strMsg = PluginJniHelper::jstring2string(msg);
-		ProtocolAds::failedToReceiveAd((AdListener::EAdErrorCode) ret, strMsg.c_str());
+		PluginProtocol* pPlugin = PluginUtils::getPluginPtr(obj);
+		LOGD("nativeOnAdsResult(), Get plugin ptr : %p", pPlugin);
+		if (pPlugin != NULL)
+		{
+			LOGD("nativeOnAdsResult(), Get plugin name : %s", pPlugin->getPluginName());
+			ProtocolAds* pAds = dynamic_cast<ProtocolAds*>(pPlugin);
+			if (pAds != NULL)
+			{
+				pAds->onAdsResult((AdsResultCode) ret, strMsg.c_str());
+			}
+		}
 	}
 
-	JNIEXPORT void JNICALL Java_org_cocos2dx_plugin_InterfaceAds_nativeDismissScreen(JNIEnv*  env, jobject thiz) {
-		ProtocolAds::dismissScreen();
+	JNIEXPORT void JNICALL Java_org_cocos2dx_plugin_InterfaceAds_nativeOnPlayerGetPoints(JNIEnv*  env, jobject thiz, jobject obj, jint points) {
+		PluginProtocol* pPlugin = PluginUtils::getPluginPtr(obj);
+		LOGD("nativeOnPlayerGetPoints(), Get plugin ptr : %p", pPlugin);
+		if (pPlugin != NULL)
+		{
+			LOGD("nativeOnPlayerGetPoints(), Get plugin name : %s", pPlugin->getPluginName());
+			ProtocolAds* pAds = dynamic_cast<ProtocolAds*>(pPlugin);
+			if (pAds != NULL)
+			{
+				pAds->onPlayerGetPoints(points);
+			}
+		}
 	}
 }
 
-AdListener* ProtocolAds::m_pListener = NULL;
-
 ProtocolAds::ProtocolAds()
+: m_pListener(NULL)
 {
 }
 
@@ -48,9 +82,9 @@ bool ProtocolAds::init()
     return true;
 }
 
-void ProtocolAds::initAppInfo(TAppInfo appInfo)
+void ProtocolAds::configDeveloperInfo(TAdsDeveloperInfo devInfo)
 {
-    if (appInfo.empty())
+    if (devInfo.empty())
     {
         LOGD("The application info is empty!");
         return;
@@ -61,11 +95,11 @@ void ProtocolAds::initAppInfo(TAppInfo appInfo)
     	PluginJniMethodInfo t;
         if (PluginJniHelper::getMethodInfo(t
     		, pData->jclassName.c_str()
-    		, "initAppInfo"
+    		, "configDeveloperInfo"
     		, "(Ljava/util/Hashtable;)V"))
     	{
         	// generate the hashtable from map
-        	jobject obj_Map = PluginUtils::createJavaMapObject(t, &appInfo);
+        	jobject obj_Map = PluginUtils::createJavaMapObject(t, &devInfo);
 
             // invoke java method
             t.env->CallVoidMethod(pData->jobj, t.methodID, obj_Map);
@@ -75,7 +109,7 @@ void ProtocolAds::initAppInfo(TAppInfo appInfo)
     }
 }
 
-void ProtocolAds::showBannerAd(EBannerPos pos, int size)
+void ProtocolAds::showAds(AdsType type, int sizeEnum, AdsPos pos)
 {
 	PluginJavaData* pData = PluginUtils::getPluginJavaData(this);
 	PluginJniMethodInfo t;
@@ -83,17 +117,22 @@ void ProtocolAds::showBannerAd(EBannerPos pos, int size)
 	LOGD("Class name : %s", pData->jclassName.c_str());
 	if (PluginJniHelper::getMethodInfo(t
 		, pData->jclassName.c_str()
-		, "showBannerAd"
-		, "(II)V"))
+		, "showAds"
+		, "(III)V"))
 	{
-		t.env->CallVoidMethod(pData->jobj, t.methodID, pos, size);
+		t.env->CallVoidMethod(pData->jobj, t.methodID, type, sizeEnum, pos);
 		t.env->DeleteLocalRef(t.classID);
 	}
 }
 
-void ProtocolAds::hideBannerAd()
+void ProtocolAds::hideAds(AdsType type)
 {
-	PluginUtils::callJavaFunctionWithName(this, "hideBannerAd");
+	PluginUtils::callJavaFunctionWithName_oneBaseType(this, "hideAds", "(I)V", type);
+}
+
+void ProtocolAds::spendPoints(int points)
+{
+	PluginUtils::callJavaFunctionWithName_oneBaseType(this, "spendPoints", "(I)V", points);
 }
 
 const char* ProtocolAds::getSDKVersion()
@@ -118,39 +157,26 @@ void ProtocolAds::setDebugMode(bool debug)
     PluginUtils::callJavaFunctionWithName_oneBaseType(this, "setDebugMode", "(Z)V", debug);
 }
 
-void ProtocolAds::receiveAd()
+void ProtocolAds::setAdsListener(AdsListener* pListener)
 {
-	LOGD("ProtocolAds::receiveAd invoked!");
+	m_pListener = pListener;
+}
+
+void ProtocolAds::onAdsResult(AdsResultCode code, const char* msg)
+{
+	LOGD("ProtocolAds::adsResult invoked!");
 	if (m_pListener != NULL)
 	{
-		m_pListener->onReceiveAd();
+		m_pListener->onAdsResult(code, msg);
 	}
 }
 
-void ProtocolAds::presentScreen()
+void ProtocolAds::onPlayerGetPoints(int points)
 {
-	LOGD("ProtocolAds::presentScreen invoked!");
+	LOGD("ProtocolAds::onPlayerGetPoints invoked!");
 	if (m_pListener != NULL)
 	{
-		m_pListener->onPresentScreen();
-	}
-}
-
-void ProtocolAds::failedToReceiveAd(AdListener::EAdErrorCode code, const char* msg)
-{
-	LOGD("ProtocolAds::failedToReceiveAd invoked!");
-	if (m_pListener != NULL)
-	{
-		m_pListener->onFailedToReceiveAd(code, msg);
-	}
-}
-
-void ProtocolAds::dismissScreen()
-{
-	LOGD("ProtocolAds::dismissScreen invoked!");
-	if (m_pListener != NULL)
-	{
-		m_pListener->onDismissScreen();
+		m_pListener->onPlayerGetPoints(this, points);
 	}
 }
 

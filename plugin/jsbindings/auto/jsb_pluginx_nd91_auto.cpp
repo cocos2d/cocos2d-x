@@ -28,6 +28,26 @@ static JSBool empty_constructor(JSContext *cx, uint32_t argc, jsval *vp) {
 JSClass  *jsb_IAPNd91_class;
 JSObject *jsb_IAPNd91_prototype;
 
+JSBool js_pluginx_nd91_IAPNd91_configDeveloperInfo(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	JSBool ok = JS_TRUE;
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
+	cocos2d::plugin::IAPNd91* cobj = (cocos2d::plugin::IAPNd91 *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
+	if (argc == 1) {
+		TIAPDeveloperInfo arg0;
+		ok &= jsval_to_TIAPDeveloperInfo(cx, argv[0], &arg0);
+		JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+		cobj->configDeveloperInfo(arg0);
+		JS_SET_RVAL(cx, vp, JSVAL_VOID);
+		return JS_TRUE;
+	}
+
+	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
+	return JS_FALSE;
+}
 JSBool js_pluginx_nd91_IAPNd91_getPluginName(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
@@ -77,26 +97,6 @@ JSBool js_pluginx_nd91_IAPNd91_init(JSContext *cx, uint32_t argc, jsval *vp)
 	}
 
 	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 0);
-	return JS_FALSE;
-}
-JSBool js_pluginx_nd91_IAPNd91_initDeveloperInfo(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	jsval *argv = JS_ARGV(cx, vp);
-	JSBool ok = JS_TRUE;
-	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
-	cocos2d::plugin::IAPNd91* cobj = (cocos2d::plugin::IAPNd91 *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
-	if (argc == 1) {
-		TDeveloperInfo arg0;
-		ok &= jsval_to_TDeveloperInfo(cx, argv[0], &arg0);
-		JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
-		cobj->initDeveloperInfo(arg0);
-		JS_SET_RVAL(cx, vp, JSVAL_VOID);
-		return JS_TRUE;
-	}
-
-	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
 	return JS_FALSE;
 }
 JSBool js_pluginx_nd91_IAPNd91_payForProduct(JSContext *cx, uint32_t argc, jsval *vp)
@@ -191,14 +191,14 @@ void js_register_pluginx_nd91_IAPNd91(JSContext *cx, JSObject *global) {
 	JSPropertySpec *properties = NULL;
 
 	static JSFunctionSpec funcs[] = {
+		JS_FN("configDeveloperInfo", js_pluginx_nd91_IAPNd91_configDeveloperInfo, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getPluginName", js_pluginx_nd91_IAPNd91_getPluginName, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getPluginVersion", js_pluginx_nd91_IAPNd91_getPluginVersion, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("init", js_pluginx_nd91_IAPNd91_init, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("initDeveloperInfo", js_pluginx_nd91_IAPNd91_initDeveloperInfo, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("payForProduct", js_pluginx_nd91_IAPNd91_payForProduct, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getSDKVersion", js_pluginx_nd91_IAPNd91_getSDKVersion, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("setDebugMode", js_pluginx_nd91_IAPNd91_setDebugMode, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FS_END
+        JS_FS_END
 	};
 
 	JSFunctionSpec *st_funcs = NULL;
