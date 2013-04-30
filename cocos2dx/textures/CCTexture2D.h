@@ -71,6 +71,7 @@ typedef enum {
     //! 2-bit PVRTC-compressed texture: PVRTC2
     kCCTexture2DPixelFormat_PVRTC2,
 
+
     //! Default texture format: RGBA8888
     kCCTexture2DPixelFormat_Default = kCCTexture2DPixelFormat_RGBA8888,
 
@@ -101,20 +102,46 @@ typedef struct _ccTexParams {
 Extension used for requesting text with stroke or shadow
 */
 
+// text shadow attributes 
 typedef struct _ccTextShadow
 {
+    bool m_shadowEnabled;
 	CCSize m_shadowOffset;
 	float  m_shadowBlur;
 	float  m_shadowOpacity;
 
 } ccTextShadow;
 
+// text stroke attributes 
 typedef struct _ccTextStroke
 {
+    bool        m_strokeEnabled;
 	ccColor3B   m_strokeColor;
     float       m_strokeSize;
 
 } ccTextStroke;
+
+// text tinting attributes
+typedef struct _ccTextTint
+{
+    bool        m_tintEnabled;
+    ccColor3B   m_tintColor;
+    
+} ccTextTint;
+
+// text attributes
+typedef struct _ccTextDefinition
+{
+    std::string             m_fontName;
+    int                     m_fontSize;
+    CCTextAlignment         m_alignment;
+    CCVerticalTextAlignment m_vertAlignment;
+    CCSize                  m_dimensions;
+    ccTextTint              m_fontTint;
+    ccTextShadow            m_shadow;
+    ccTextStroke            m_stroke;
+    
+} ccTextDefinition;
 
 
 //CLASS INTERFACES:
@@ -165,18 +192,7 @@ public:
     /** Initializes a texture from a string with font name and font size */
     bool initWithString(const char *text, const char *fontName, float fontSize);
     /** Initializes a texture from a string with dimensions, alignment, font name and font size shadow and stroke*/
-    bool initWithStringShadowStroke(const char *text,
-                                    const char *fontName,
-                                    float fontSize,
-                                    const CCSize& dimensions,
-                                    CCTextAlignment hAlignment,
-                                    CCVerticalTextAlignment vAlignment,
-                                    ccTextShadow *pShadowParams,
-                                    ccTextStroke *pStrokeParams);
-    
-   
-    
-    
+    bool initWithStringShadowStroke(const char *text, ccTextDefinition &textDefinition);
     
     /** Initializes a texture from a PVR file */
     bool initWithPVRFile(const char* file);

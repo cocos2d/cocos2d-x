@@ -35,12 +35,15 @@ THE SOFTWARE.
 #include <string.h>
 #include <jni.h>
 
+// prototype
+void swapAlphaChannel(unsigned int *pImageMemory, unsigned int numPixels);
 
 NS_CC_BEGIN
 
 class BitmapDC
 {
 public:
+
     BitmapDC()
     : m_pData(NULL)
     , m_nWidth(0)
@@ -62,6 +65,9 @@ public:
     									CCImage::ETextAlign eAlignMask,
     									const char * pFontName,
     									float fontSize,
+    									float textTintR 		= 1.0,
+    									float textTintG 		= 1.0,
+    									float textTintB 		= 1.0,
     									bool shadow 			= false,
     									float shadowDeltaX 		= 0.0,
     									float shadowDeltaY 		= 0.0,
@@ -75,7 +81,7 @@ public:
     {
            JniMethodInfo methodInfo;
            if (! JniHelper::getStaticMethodInfo(methodInfo, "org/cocos2dx/lib/Cocos2dxBitmap", "createTextBitmapShadowStroke",
-               "(Ljava/lang/String;Ljava/lang/String;IIIIZFFFZFFFF)V"))
+               "(Ljava/lang/String;Ljava/lang/String;IFFFIIIZFFFZFFFF)V"))
            {
                CCLOG("%s %d: error to get methodInfo", __FILE__, __LINE__);
                return false;
@@ -104,7 +110,7 @@ public:
            jstring jstrFont = methodInfo.env->NewStringUTF(fullPathOrFontName.c_str());
 
            methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID, jstrText,
-               jstrFont, (int)fontSize, eAlignMask, nWidth, nHeight, shadow, shadowDeltaX, -shadowDeltaY, shadowBlur, stroke, strokeColorR, strokeColorG, strokeColorB, strokeSize);
+               jstrFont, (int)fontSize, textTintR, textTintG, textTintB, eAlignMask, nWidth, nHeight, shadow, shadowDeltaX, -shadowDeltaY, shadowBlur, stroke, strokeColorR, strokeColorG, strokeColorB, strokeSize);
 
            methodInfo.env->DeleteLocalRef(jstrText);
            methodInfo.env->DeleteLocalRef(jstrFont);
@@ -118,7 +124,6 @@ public:
     {
     	return  getBitmapFromJavaShadowStroke(	text, nWidth, nHeight, eAlignMask, pFontName, fontSize );
     }
-
 
     // ARGB -> RGBA
     inline unsigned int swapAlpha(unsigned int value)
@@ -179,7 +184,10 @@ bool CCImage::initWithStringShadowStroke(
                                          int         nHeight ,
                                          ETextAlign eAlignMask ,
                                          const char * pFontName ,
-                                         int         nSize ,
+                                         int          nSize ,
+                                         float        textTintR,
+                                         float        textTintG,
+                                         float        textTintB,
                                          bool shadow,
                                          float shadowOffsetX,
                                          float shadowOffsetY,
@@ -198,25 +206,16 @@ bool CCImage::initWithStringShadowStroke(
 
 	        BitmapDC &dc = sharedBitmapDC();
 
-	        CC_BREAK_IF(! dc.getBitmapFromJavaShadowStroke(pText,
-	        											   nWidth,
-	        											   nHeight,
-	        											   eAlignMask,
-	        											   pFontName,
-	        											   nSize,
-	        											   shadow,
-	        											   shadowOffsetX,
-	        											   shadowOffsetY,
-	        											   shadowBlur,
-	        											   shadowOpacity,
-	        											   stroke,
-	        											   strokeR,
-	        											   strokeG,
-	        											   strokeB,
-	        											   strokeSize ));
+
+	        CC_BREAK_IF(! dc.getBitmapFromJavaShadowStroke(pText, nWidth, nHeight, eAlignMask, pFontName,
+	        											   nSize, textTintR, textTintG, textTintB, shadow,
+	        											   shadowOffsetX, shadowOffsetY, shadowBlur, shadowOpacity,
+	        											   stroke, strokeR, strokeG, strokeB, strokeSize ));
+
 
 	        // assign the dc.m_pData to m_pData in order to save time
 	        m_pData = dc.m_pData;
+
 	        CC_BREAK_IF(! m_pData);
 
 	        m_nWidth    = (short)dc.m_nWidth;
@@ -225,13 +224,31 @@ bool CCImage::initWithStringShadowStroke(
 	        m_bPreMulti = true;
 	        m_nBitsPerComponent = 8;
 
+	        // swap the alpha channel (ARGB to RGBA)
+	        swapAlphaChannel((unsigned int *)m_pData, (m_nWidth * m_nHeight) );
+
+	        // ok
 	        bRet = true;
+
 	    } while (0);
 
 	    return bRet;
 }
 
 NS_CC_END
+
+// swap the alpha channel in an 32 bit image (from ARGB to RGBA)
+void swapAlphaChannel(unsigned int *pImageMemory, unsigned int numPixels)
+{
+	for(int c = 0; c < numPixels; ++c, ++pImageMemory)
+	{
+		// copy the current pixel
+		unsigned int currenPixel =  (*pImageMemory);
+		// swap channels and store back
+		char *pSource = (char *) 	&currenPixel;
+		*pImageMemory = (pSource[0] << 24) | (pSource[3]<<16) | (pSource[2]<<8) | pSource[1];
+	}
+}
 
 // this method is called by Cocos2dxBitmap
 extern "C"
