@@ -46,6 +46,9 @@ typedef struct
     float        strokeColorG;
     float        strokeColorB;
     float        strokeSize;
+    float        tintColorR;
+    float        tintColorG;
+    float        tintColorB;
     
     unsigned char*  data;
     
@@ -295,8 +298,9 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
             break;
         }
 
+        // text color
+        CGContextSetRGBFillColor(context, pInfo->tintColorR, pInfo->tintColorG, pInfo->tintColorB, 1);
         
-        CGContextSetRGBFillColor(context, 1, 1, 1, 1);
         CGContextTranslateCTM(context, 0.0f, dim.height);
         CGContextScaleCTM(context, 1.0f, -1.0f); //NOTE: NSString draws in UIKit referential i.e. renders upside-down compared to CGBitmapContext referential
         UIGraphicsPushContext(context);
@@ -517,6 +521,9 @@ bool CCImage::initWithStringShadowStroke(
                                          ETextAlign eAlignMask ,
                                          const char * pFontName ,
                                          int         nSize ,
+                                         float       textTintR,
+                                         float       textTintG,
+                                         float       textTintB,
                                          bool shadow,
                                          float shadowOffsetX,
                                          float shadowOffsetY,
@@ -544,6 +551,9 @@ bool CCImage::initWithStringShadowStroke(
     info.strokeColorG           = strokeG;
     info.strokeColorB           = strokeB;
     info.strokeSize             = strokeSize;
+    info.tintColorR             = textTintR;
+    info.tintColorG             = textTintG;
+    info.tintColorB             = textTintB;
     
     
     if (! _initWithString(pText, eAlignMask, pFontName, nSize, &info))

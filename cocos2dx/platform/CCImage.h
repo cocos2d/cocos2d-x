@@ -121,6 +121,9 @@ public:
                                         ETextAlign      eAlignMask  = kAlignCenter,
                                         const char *    pFontName   = 0,
                                         int             nSize       = 0,
+                                        float           textTintR   = 1,
+                                        float           textTintG   = 1,
+                                        float           textTintB   = 1,
                                         bool shadow                 = false,
                                         float shadowOffsetX         = 0.0,
                                         float shadowOffsetY         = 0.0,
@@ -136,10 +139,12 @@ public:
     
 
     unsigned char *   getData()               { return m_pData; }
-    int         getDataLen()            { return m_nWidth * m_nHeight; }
+    int               getDataLen()            { return m_nWidth * m_nHeight; }
 
-    bool hasAlpha()                     { return m_bHasAlpha; }
-    bool isPremultipliedAlpha()         { return m_bPreMulti; }
+
+    bool hasAlpha()                     { return m_bHasAlpha;   }
+    bool isPremultipliedAlpha()         { return m_bPreMulti;   }
+
 
     /**
     @brief    Save CCImage data to the specified file, with specified format.
@@ -166,6 +171,7 @@ protected:
     unsigned char *m_pData;
     bool m_bHasAlpha;
     bool m_bPreMulti;
+
 
 private:
     // noncopyable

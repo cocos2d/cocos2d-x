@@ -48,6 +48,9 @@ CCLabelTTF::CCLabelTTF()
 , m_shadowEnabled(false)
 , m_strokeEnabled(false)
 {
+    m_textTintColor.r = 255;
+    m_textTintColor.g = 255;
+    m_textTintColor.b = 255;
 }
 
 CCLabelTTF::~CCLabelTTF()
@@ -260,65 +263,57 @@ bool CCLabelTTF::updateTexture()
     
     // let system compute label's width or height when its value is 0
     // refer to cocos2d-x issue #1430
+    
     tex = new CCTexture2D();
     if (!tex)
     {
 		return false;
     }
     
-    ccTextShadow *textShadow  = 0;
-    ccTextStroke *textStroke  = 0;
+    ccTextDefinition texDef;
     
-    if (m_strokeEnabled)
+    texDef.m_fontSize       =  m_fFontSize * CC_CONTENT_SCALE_FACTOR();
+    texDef.m_fontName       = *m_pFontName;
+    texDef.m_alignment      =  m_hAlignment;
+    texDef.m_vertAlignment  =  m_vAlignment;
+    texDef.m_dimensions     =  CC_SIZE_POINTS_TO_PIXELS(m_tDimensions);
+    
+    if ( m_strokeEnabled )
     {
-        textStroke = new ccTextStroke;
-        if (!textStroke)
-            return false;
-        
-        textStroke->m_strokeSize    = m_strokeSize;
-        textStroke->m_strokeColor   = m_strokeColor;
+        texDef.m_stroke.m_strokeEnabled = true;
+        texDef.m_stroke.m_strokeSize    = m_strokeSize;
+        texDef.m_stroke.m_strokeColor   = m_strokeColor;
     }
-    
-    if (m_shadowEnabled)
+    else
     {
-        textShadow = new ccTextShadow;
-        
-        if (!textShadow)
-        {
-            if(textStroke)
-                delete textStroke;
-            return false;
-        }
-        
-        textShadow->m_shadowOffset  = m_shadowOffset;
-        textShadow->m_shadowBlur    = m_shadowBlur;
-        textShadow->m_shadowOpacity = m_shadowOpacity;
+        texDef.m_stroke.m_strokeEnabled = false;
     }
     
     
-    tex->initWithStringShadowStroke( m_string.c_str(),
-                                    m_pFontName->c_str(),
-                                    m_fFontSize * CC_CONTENT_SCALE_FACTOR(),
-                                    CC_SIZE_POINTS_TO_PIXELS(m_tDimensions),
-                                    m_hAlignment,
-                                    m_vAlignment,
-                                    textShadow,
-                                    textStroke);
+    if ( m_shadowEnabled )
+    {
+        texDef.m_shadow.m_shadowEnabled = true;
+        texDef.m_shadow.m_shadowOffset  = m_shadowOffset;
+        texDef.m_shadow.m_shadowBlur    = m_shadowBlur;
+        texDef.m_shadow.m_shadowOpacity = m_shadowOpacity;
+    }
+    else
+    {
+        texDef.m_shadow.m_shadowEnabled = false;
+    }
+    
+    // text tint
+    texDef.m_fontTint.m_tintColor = m_textTintColor;
+
+    // init the texture
+    tex->initWithStringShadowStroke( m_string.c_str(), texDef );
     
     this->setTexture(tex);
     tex->release();
 	
 	CCRect rect = CCRectZero;
-    rect.size = m_pobTexture->getContentSize();
+    rect.size   = m_pobTexture->getContentSize();
     this->setTextureRect(rect);
-    
-    
-    if (textShadow)
-        delete textShadow;
-    
-    if (textStroke)
-        delete textStroke;
-
     
     return true;
 }
@@ -403,5 +398,15 @@ void CCLabelTTF::disableStroke()
         this->updateTexture();
     }
 }
+
+void CCLabelTTF::setFontTintColor(ccColor3B &tintColor)
+{
+    if (m_textTintColor.r != tintColor.r || m_textTintColor.g != tintColor.g || m_textTintColor.b != tintColor.b)
+    {
+        m_textTintColor = tintColor;
+        this->updateTexture();
+    }
+}
+
 
 NS_CC_END

@@ -1,4 +1,4 @@
-#include "LabelTest.h"
+    #include "LabelTest.h"
 #include "../testResource.h"
 
 enum {
@@ -1498,38 +1498,67 @@ TTFFontShadowAndStroke::TTFFontShadowAndStroke()
     
     CCSize s = CCDirector::sharedDirector()->getWinSize();
  
+    ccColor3B tintColorRed      =  { 255, 0, 0   };
+    ccColor3B tintColorYellow   =  { 255, 255, 0 };
+    ccColor3B tintColorBlue     =  { 0, 0, 255   };
     
+    // create the label 
     CCLabelTTF* fontShadow = new CCLabelTTF();
-    fontShadow->initWithString("Shadow Only", "Marker Felt", 20);
+    fontShadow->initWithString("Shadow Only Red Text", "Marker Felt", 20);
+    
+    // enable shadow
     CCSize shadowOffset(12.0, 12.0);
     fontShadow->enableShadow(shadowOffset, 1.0, 1.0);
+    
+    // set the text tint color 
+    fontShadow->setFontTintColor(tintColorRed);
+    
+    // add label to the scene
     this->addChild(fontShadow);
     fontShadow->setPosition(ccp(s.width/2,s.height/4*2.5));
+    
 
     
+    // create the label 
     CCLabelTTF* fontStroke = new CCLabelTTF();
-    fontStroke->initWithString("Stroke Only", "Marker Felt", 20);
+    fontStroke->initWithString("Stroke Only Yellow Text", "Marker Felt", 20);
 
+    // enable stroke
     ccColor3B strokeColor;
     strokeColor.r = 0;
     strokeColor.g = 10;
     strokeColor.b = 255;
     fontStroke->enableStroke(strokeColor, 1.5f);
+    
+    // set text tint color
+    fontStroke->setFontTintColor(tintColorYellow);
+    
+    // add label to the scene
     this->addChild(fontStroke);
     fontStroke->setPosition(ccp(s.width/2,s.height/4*1.8));
     
     
+    
+    
+    
+    // create the label
     CCLabelTTF* fontStrokeAndShadow = new CCLabelTTF();
-    fontStrokeAndShadow->initWithString("Stroke & Shadow", "Marker Felt", 20);
+    fontStrokeAndShadow->initWithString("Stroke & Shadow Blue Text", "Marker Felt", 20);
     
+    // enable stroke
     ccColor3B strokeShadowColor;
-    
-    strokeShadowColor.r = 0;
-    strokeShadowColor.g = 10;
-    strokeShadowColor.b = 255;
-    
+    strokeShadowColor.r = 255;
+    strokeShadowColor.g = 0;
+    strokeShadowColor.b = 0;
     fontStrokeAndShadow->enableStroke(strokeShadowColor, 1.5f);
+    
+    // enable shadow
     fontStrokeAndShadow->enableShadow(shadowOffset, 1.0, 1.0);
+    
+    // set text tint color
+    fontStrokeAndShadow->setFontTintColor(tintColorBlue);
+   
+    // add label to the scene
     this->addChild(fontStrokeAndShadow);
     fontStrokeAndShadow->setPosition(ccp(s.width/2,s.height/4*1.1));
     

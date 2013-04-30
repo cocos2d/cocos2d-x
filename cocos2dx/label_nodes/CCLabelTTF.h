@@ -93,6 +93,9 @@ public:
     /** disable stroke */
     void disableStroke();
     
+    /** set text tinting */
+    void setFontTintColor(ccColor3B &tintColor);
+
     /** initializes the CCLabelTTF */
     bool init();
 
@@ -146,6 +149,9 @@ protected:
     ccColor3B   m_strokeColor;
     float       m_strokeSize;
     
+    /** font tint */
+    ccColor3B   m_textTintColor;
+
     
     std::string m_string;
 };
