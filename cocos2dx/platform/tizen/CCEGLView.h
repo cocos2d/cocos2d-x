@@ -71,8 +71,6 @@ private:
     Tizen::Base::Runtime::Timer*        __pTimer;
 };
 
-const int TIME_OUT = 10;
-
 NS_CC_END
 
 #endif    // end of __CC_EGLVIEW_TIZEN_H__

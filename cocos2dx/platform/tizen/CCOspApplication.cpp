@@ -129,7 +129,7 @@ CCOspApplication::OnForeground(void)
 
     if (timer != null)
     {
-        timer->Start(TIME_OUT);
+        timer->Start(CCApplication::sharedApplication()->getAnimationInterval());
     }
 }
 
