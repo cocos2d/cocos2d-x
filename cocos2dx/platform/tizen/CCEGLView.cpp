@@ -113,7 +113,7 @@ CCEGLView::OnTimerExpired(Timer& timer)
     {
         return;
     }
-    __pTimer->Start(TIME_OUT);
+    __pTimer->Start(CCApplication::sharedApplication()->getAnimationInterval());
 
     CCDirector::sharedDirector()->mainLoop();
 }

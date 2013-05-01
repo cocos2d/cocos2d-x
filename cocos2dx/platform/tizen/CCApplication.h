@@ -46,6 +46,7 @@ public:
     @interval       The time, expressed in seconds, between current frame and next. 
     */
     void setAnimationInterval(double interval);
+    long getAnimationInterval();
 
     /**
     @brief    Run the message loop.
@@ -71,6 +72,7 @@ public:
 
 protected:
     static CCApplication * sm_pSharedApplication;
+    static long m_nAnimationInterval; // milliseconds
 };
 
 NS_CC_END
