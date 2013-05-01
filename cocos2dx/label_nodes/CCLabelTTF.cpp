@@ -362,7 +362,7 @@ void CCLabelTTF::disableShadow()
     }
 }
 
-void CCLabelTTF::enableStroke(ccColor3B &strokeColor, float strokeSize)
+void CCLabelTTF::enableStroke(const ccColor3B &strokeColor, float strokeSize)
 {
     bool valueChanged = false;
     
@@ -399,7 +399,7 @@ void CCLabelTTF::disableStroke()
     }
 }
 
-void CCLabelTTF::setFontTintColor(ccColor3B &tintColor)
+void CCLabelTTF::setFontTintColor(const ccColor3B &tintColor)
 {
     if (m_textTintColor.r != tintColor.r || m_textTintColor.g != tintColor.g || m_textTintColor.b != tintColor.b)
     {
