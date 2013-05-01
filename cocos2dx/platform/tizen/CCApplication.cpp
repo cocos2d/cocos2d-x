@@ -26,8 +26,11 @@ THE SOFTWARE.
 #include "CCApplication.h"
 #include "CCDirector.h"
 #include "CCEGLView.h"
+#include <FSystem.h>
 
 NS_CC_BEGIN
+using namespace Tizen::Base;
+using namespace Tizen::System;
 
 // sharedApplication pointer
 CCApplication * CCApplication::sm_pSharedApplication = 0;
@@ -77,7 +80,66 @@ CCApplication* CCApplication::sharedApplication()
 
 ccLanguageType CCApplication::getCurrentLanguage()
 {
-    return kLanguageEnglish;
+    result r = E_SUCCESS;
+    int index = 0;
+    String localelanguageCode, languageCode;
+    ccLanguageType ret = kLanguageEnglish;
+
+    r = SettingInfo::GetValue(L"http://tizen.org/setting/locale.language", localelanguageCode);
+    TryLog(!IsFailed(r), "[%s] Cannot get the current language setting", GetErrorMessage(r));
+    localelanguageCode.IndexOf("_", 0, index);
+    localelanguageCode.SubString(0, index, languageCode);
+
+    if (0 == languageCode.CompareTo(L"zho"))
+    {
+        ret = kLanguageChinese;
+    }
+    else if (0 == languageCode.CompareTo(L"eng"))
+    {
+        ret = kLanguageEnglish;
+    }
+    else if (0 == languageCode.CompareTo(L"fre"))
+    {
+        ret = kLanguageFrench;
+    }
+    else if (0 == languageCode.CompareTo(L"ita"))
+    {
+        ret = kLanguageItalian;
+    }
+    else if (0 == languageCode.CompareTo(L"deu"))
+    {
+        ret = kLanguageGerman;
+    }
+    else if (0 == languageCode.CompareTo(L"spa"))
+    {
+        ret = kLanguageSpanish;
+    }
+    else if (0 == languageCode.CompareTo(L"rus"))
+    {
+        ret = kLanguageRussian;
+    }
+    else if (0 == languageCode.CompareTo(L"kor"))
+    {
+        ret = kLanguageKorean;
+    }
+    else if (0 == languageCode.CompareTo(L"jpn"))
+    {
+        ret = kLanguageJapanese;
+    }
+    else if (0 == languageCode.CompareTo(L"hun"))
+    {
+        ret = kLanguageHungarian;
+    }
+    else if (0 == languageCode.CompareTo(L"por"))
+    {
+        ret = kLanguagePortuguese;
+    }
+    else if (0 == languageCode.CompareTo(L"ara"))
+    {
+        ret = kLanguageArabic;
+    }
+
+    return ret;
 }
 
 TargetPlatform CCApplication::getTargetPlatform()
