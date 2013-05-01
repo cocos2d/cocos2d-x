@@ -29,6 +29,8 @@ THE SOFTWARE.
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+#include<math.h>
+
 
 typedef struct
 {
@@ -200,11 +202,13 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
     {
         CC_BREAK_IF(! pText || ! pInfo);
         
-        NSString * str  = [NSString stringWithUTF8String:pText];
-        NSString * fntName = [NSString stringWithUTF8String:pFontName];
+        NSString * str          = [NSString stringWithUTF8String:pText];
+        NSString * fntName      = [NSString stringWithUTF8String:pFontName];
+        
         CGSize dim, constrainSize;
-        constrainSize.width = pInfo->width;
-        constrainSize.height = pInfo->height;
+        
+        constrainSize.width     = pInfo->width;
+        constrainSize.height    = pInfo->height;
         
         // On iOS custom fonts must be listed beforehand in the App info.plist (in order to be usable) and referenced only the by the font family name itself when
         // calling [UIFont fontWithName]. Therefore even if the developer adds 'SomeFont.ttf' or 'fonts/SomeFont.ttf' to the App .plist, the font must
@@ -274,14 +278,16 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
             shadowStrokePaddingX = pInfo->strokeSize * 4.0;
             shadowStrokePaddingY = pInfo->strokeSize * 4.0;
         }
+        
         if ( pInfo->hasShadow )
         {
-            shadowStrokePaddingX = std::max(shadowStrokePaddingX, (pInfo->shadowOffset.width  * 4));
-            shadowStrokePaddingY = std::max(shadowStrokePaddingY, (pInfo->shadowOffset.height * 4));
+            shadowStrokePaddingX = std::max(shadowStrokePaddingX, ((float)abs(pInfo->shadowOffset.width)  * 4));
+            shadowStrokePaddingY = std::max(shadowStrokePaddingY, ((float)abs(pInfo->shadowOffset.height) * 4));
         }
         
+        
         // add the padding if needed
-        dim.width  += shadowStrokePaddingX;
+        //dim.width  += shadowStrokePaddingX;
         dim.height += shadowStrokePaddingY;
         
         unsigned char* data = new unsigned char[(int)(dim.width * dim.height * 4)];
@@ -292,7 +298,7 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
         CGContextRef context = CGBitmapContextCreate(data, dim.width, dim.height, 8, dim.width * 4, colorSpace, kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
         CGColorSpaceRelease(colorSpace);
         
-        if (! context)
+        if ( ! context )
         {
             delete[] data;
             break;
@@ -342,10 +348,13 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
         ////alignment:align];
         //}
     
-        [str drawInRect:CGRectMake(0 + (shadowStrokePaddingX/2), startH + (shadowStrokePaddingY/2), dim.width, dim.height) withFont:font lineBreakMode:(UILineBreakMode)UILineBreakModeWordWrap alignment:align];
+        // draw the text
+        [str drawInRect:CGRectMake(0, startH + (shadowStrokePaddingY), dim.width, dim.height) withFont:font lineBreakMode:(UILineBreakMode)UILineBreakModeWordWrap alignment:align];
         
+        // pop the context
         UIGraphicsPopContext();
         
+        // release the context
         CGContextRelease(context);
                
         // output params
