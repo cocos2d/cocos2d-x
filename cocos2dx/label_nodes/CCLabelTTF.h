@@ -94,7 +94,7 @@ public:
     void disableStroke();
     
     /** set text tinting */
-    void setFontTintColor(const ccColor3B &tintColor);
+    void setFontFillColor(const ccColor3B &tintColor);
 
     /** initializes the CCLabelTTF */
     bool init();
