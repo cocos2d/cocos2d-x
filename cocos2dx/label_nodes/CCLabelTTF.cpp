@@ -399,7 +399,7 @@ void CCLabelTTF::disableStroke()
     }
 }
 
-void CCLabelTTF::setFontTintColor(const ccColor3B &tintColor)
+void CCLabelTTF::setFontFillColor(const ccColor3B &tintColor)
 {
     if (m_textTintColor.r != tintColor.r || m_textTintColor.g != tintColor.g || m_textTintColor.b != tintColor.b)
     {
