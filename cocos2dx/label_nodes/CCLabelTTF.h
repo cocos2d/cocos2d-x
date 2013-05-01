@@ -88,13 +88,13 @@ public:
     void disableShadow();
     
     /** enable or disable stroke */
-    void enableStroke(ccColor3B &strokeColor, float strokeSize);
+    void enableStroke(const ccColor3B &strokeColor, float strokeSize);
     
     /** disable stroke */
     void disableStroke();
     
     /** set text tinting */
-    void setFontTintColor(ccColor3B &tintColor);
+    void setFontTintColor(const ccColor3B &tintColor);
 
     /** initializes the CCLabelTTF */
     bool init();
