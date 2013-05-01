@@ -317,7 +317,41 @@ RESOURCES = \
 	Particles/Upsidedown.plist \
 	Particles/debian.plist \
 	Particles/lines.plist \
+	TileMaps/fixed-ortho-test2.png \
+	TileMaps/hexa-test.tmx \
+	TileMaps/hexa-tiles.png \
+	TileMaps/iso-test-bug787.tmx \
+	TileMaps/iso-test-movelayer.tmx \
+	TileMaps/iso-test-objectgroup.tmx \
+	TileMaps/iso-test-vertexz.tmx \
+	TileMaps/iso-test-zorder.tmx \
+	TileMaps/iso-test.png \
+	TileMaps/iso-test.tmx \
+	TileMaps/iso-test1.tmx \
+	TileMaps/iso-test2-uncompressed.tmx \
+	TileMaps/iso-test2.png \
+	TileMaps/iso-test2.tmx \
+	TileMaps/iso.png \
+	TileMaps/levelmap.tga \
+	TileMaps/ortho-objects.tmx \
+	TileMaps/ortho-rotation-test.tmx \
+	TileMaps/ortho-test1.png \
+	TileMaps/ortho-test1_bw.png \
+	TileMaps/ortho-test2.png \
+	TileMaps/ortho-tile-property.tmx \
+	TileMaps/orthogonal-test-movelayer.tmx \
+	TileMaps/orthogonal-test-vertexz.tmx \
+	TileMaps/orthogonal-test-zorder.tmx \
+	TileMaps/orthogonal-test1.tmx \
+	TileMaps/orthogonal-test1.tsx \
+	TileMaps/orthogonal-test2.tmx \
+	TileMaps/orthogonal-test3.tmx \
+	TileMaps/orthogonal-test4.tmx \
+	TileMaps/orthogonal-test5.tmx \
+	TileMaps/orthogonal-test6.tmx \
+	TileMaps/test-object-layer.tmx \
 	TileMaps/tiles.png \
+	TileMaps/tmw_desert_spacing.png \
 	animations/dragon_animation.png \
 	animations/ghosts.png \
 	animations/grossini-aliases.png \
@@ -396,9 +430,13 @@ RESOURCES = \
 	fonts/west_england-64.fnt \
 	fonts/west_england-64.png \
 	fps_images.png \
-    fonts/bitmapFontTest.fnt
+    fonts/bitmapFontTest.fnt \
+	zwoptex/grossini-generic.plist \
+	zwoptex/grossini-generic.png \
+	zwoptex/grossini.plist \
+	zwoptex/grossini.png
 
-
+# XXX: Need to figure out how to accept filnames with spaces in them.
 #	fonts/A\ Damn\ Mess.ttf \
 	fonts/American\ Typewriter.ttf \
 	fonts/Courier New.ttf \
