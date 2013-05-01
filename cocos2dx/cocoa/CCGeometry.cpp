@@ -73,6 +73,14 @@ CCPoint CCPoint::operator*(float a) const
 	return p;
 };
 
+CCPoint CCPoint::operator/(float a) const
+{
+	CCPoint p;
+	p.x = this->x / a;
+	p.y = this->y / a;
+	return p;
+}
+
 void CCPoint::setPoint(float x, float y)
 {
     this->x = x;
