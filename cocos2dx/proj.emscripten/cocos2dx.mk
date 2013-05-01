@@ -12,9 +12,9 @@ COCOS_SRC = $(COCOS_ROOT)/cocos2dx
 OBJ_DIR ?= obj
 
 PACKAGER := $(realpath $(COCOS_ROOT)/external/emscripten/tools/file_packager.py)
-CC := $(COCOS_ROOT)/external/emscripten/emcc
-CXX := $(COCOS_ROOT)/external/emscripten/em++
-AR := $(COCOS_ROOT)/external/emscripten/emar
+CC := EMSCRIPTEN=$(realpath $(COCOS_ROOT)/external/emscripten) $(COCOS_ROOT)/external/emscripten/emcc
+CXX := EMSCRIPTEN=$(realpath $(COCOS_ROOT)/external/emscripten) $(COCOS_ROOT)/external/emscripten/em++
+AR := EMSCRIPTEN=$(realpath $(COCOS_ROOT)/external/emscripten) $(COCOS_ROOT)/external/emscripten/emar
 CCFLAGS += -MMD -Wall -fPIC -Qunused-arguments -Wno-overloaded-virtual -Qunused-variable -s TOTAL_MEMORY=268435456 -s VERBOSE=1
 CXXFLAGS += -MMD -Wall -fPIC -Qunused-arguments -Wno-overloaded-virtual -Qunused-variable -s TOTAL_MEMORY=268435456 -s VERBOSE=1
 ARFLAGS = cr
