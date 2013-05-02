@@ -46,6 +46,10 @@ public:
     CCPoint(float x, float y);
     CCPoint(const CCPoint& other);
     CCPoint& operator= (const CCPoint& other);
+    CCPoint operator+(const CCPoint& right) const;
+    CCPoint operator-(const CCPoint& right) const;
+    CCPoint operator*(float a) const;
+    CCPoint operator/(float a) const;
     void setPoint(float x, float y);
     bool equals(const CCPoint& target) const;
 };
