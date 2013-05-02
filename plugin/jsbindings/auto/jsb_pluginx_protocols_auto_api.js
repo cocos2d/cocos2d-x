@@ -169,16 +169,22 @@ setDebugMode : function () {},
 plugin.ProtocolIAP = {
 
 /**
- * @method initDeveloperInfo
- * @param {TDeveloperInfo}
- */
-initDeveloperInfo : function () {},
-
-/**
  * @method getPluginVersion
  * @return A value converted from C/C++ "const char*"
  */
 getPluginVersion : function () {},
+
+/**
+ * @method payForProduct
+ * @param {TProductInfo}
+ */
+payForProduct : function () {},
+
+/**
+ * @method configDeveloperInfo
+ * @param {TIAPDeveloperInfo}
+ */
+configDeveloperInfo : function () {},
 
 /**
  * @method init
@@ -187,10 +193,17 @@ getPluginVersion : function () {},
 init : function () {},
 
 /**
- * @method payForProduct
- * @param {TProductInfo}
+ * @method getPluginName
+ * @return A value converted from C/C++ "const char*"
  */
-payForProduct : function () {},
+getPluginName : function () {},
+
+/**
+ * @method onPayResult
+ * @param {cocos2d::plugin::PayResultCode}
+ * @param {const char*}
+ */
+onPayResult : function () {},
 
 /**
  * @method getSDKVersion
@@ -203,32 +216,27 @@ getSDKVersion : function () {},
  * @param {bool}
  */
 setDebugMode : function () {},
-
-/**
- * @method getPluginName
- * @return A value converted from C/C++ "const char*"
- */
-getPluginName : function () {},
-
-/**
- * @method payResult
- * @param {cocos2d::plugin::EPayResult}
- * @param {const char*}
- */
-payResult : function () {},
 
 };
 
 /**
- * @class ProtocolIAPOnLine
+ * @class ProtocolAds
  */
-plugin.ProtocolIAPOnLine = {
+plugin.ProtocolAds = {
 
 /**
- * @method initDeveloperInfo
- * @param {TDeveloperInfo}
+ * @method showAds
+ * @param {cocos2d::plugin::ProtocolAds::AdsType}
+ * @param {int}
+ * @param {cocos2d::plugin::ProtocolAds::AdsPos}
  */
-initDeveloperInfo : function () {},
+showAds : function () {},
+
+/**
+ * @method hideAds
+ * @param {cocos2d::plugin::ProtocolAds::AdsType}
+ */
+hideAds : function () {},
 
 /**
  * @method getPluginVersion
@@ -237,16 +245,97 @@ initDeveloperInfo : function () {},
 getPluginVersion : function () {},
 
 /**
+ * @method getPluginName
+ * @return A value converted from C/C++ "const char*"
+ */
+getPluginName : function () {},
+
+/**
+ * @method onAdsResult
+ * @param {cocos2d::plugin::AdsResultCode}
+ * @param {const char*}
+ */
+onAdsResult : function () {},
+
+/**
  * @method init
  * @return A value converted from C/C++ "bool"
  */
 init : function () {},
 
 /**
- * @method payForProduct
- * @param {TProductInfo}
+ * @method spendPoints
+ * @param {int}
  */
-payForProduct : function () {},
+spendPoints : function () {},
+
+/**
+ * @method configDeveloperInfo
+ * @param {TAdsDeveloperInfo}
+ */
+configDeveloperInfo : function () {},
+
+/**
+ * @method onPlayerGetPoints
+ * @param {int}
+ */
+onPlayerGetPoints : function () {},
+
+/**
+ * @method getSDKVersion
+ * @return A value converted from C/C++ "const char*"
+ */
+getSDKVersion : function () {},
+
+/**
+ * @method setDebugMode
+ * @param {bool}
+ */
+setDebugMode : function () {},
+
+};
+
+/**
+ * @class ProtocolSocial
+ */
+plugin.ProtocolSocial = {
+
+/**
+ * @method getPluginName
+ * @return A value converted from C/C++ "const char*"
+ */
+getPluginName : function () {},
+
+/**
+ * @method onShareResult
+ * @param {cocos2d::plugin::ShareResultCode}
+ * @param {const char*}
+ */
+onShareResult : function () {},
+
+/**
+ * @method getPluginVersion
+ * @return A value converted from C/C++ "const char*"
+ */
+getPluginVersion : function () {},
+
+/**
+ * @method share
+ * @param {TShareInfo}
+ */
+share : function () {},
+
+/**
+ * @method init
+ * @return A value converted from C/C++ "bool"
+ */
+init : function () {},
+
+/**
+ * @method configDeveloperInfo
+ * @param {TSocialDeveloperInfo}
+ */
+configDeveloperInfo : function () {},
 
 /**
  * @method getSDKVersion
@@ -261,16 +350,9 @@ getSDKVersion : function () {},
 setDebugMode : function () {},
 
 /**
- * @method getPluginName
- * @return A value converted from C/C++ "const char*"
+ * @method setResultListener
+ * @param {cocos2d::plugin::ShareResultListener*}
  */
-getPluginName : function () {},
-
-/**
- * @method payFailedLocally
- * @param {cocos2d::plugin::EPayResult}
- * @param {const char*}
- */
-payFailedLocally : function () {},
+setResultListener : function () {},
 
 };

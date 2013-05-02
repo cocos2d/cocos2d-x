@@ -1,6 +1,32 @@
+/****************************************************************************
+Copyright (c) 2012-2013 cocos2d-x.org
+
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
 package org.cocos2dx.plugin;
 
+import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.Iterator;
+
 import android.content.Context;
 import android.util.Log;
 
@@ -26,6 +52,7 @@ public class AnalyticsUmeng implements InterfaceAnalytics{
 
 	public AnalyticsUmeng(Context context) {
 		mContext = context;
+		MobclickAgent.setWrapper("Cocos2d-x", "1.0");
 	}
 	
 	public boolean isValid() {
@@ -78,7 +105,8 @@ public class AnalyticsUmeng implements InterfaceAnalytics{
 	@Override
 	public void logEvent(String eventId, Hashtable<String, String> paramMap) {
 		LogD("logEvent(eventId, paramMap) invoked!");
-		MobclickAgent.onEvent(mContext, eventId, paramMap);
+		HashMap<String, String> curParam = changeTableToMap(paramMap);
+		MobclickAgent.onEvent(mContext, eventId, curParam);
 	}
 
 	@Override
@@ -165,7 +193,8 @@ public class AnalyticsUmeng implements InterfaceAnalytics{
 		LogD("logEventWithDuration(eventId, duration, paramMap) invoked!");
 		if (!isValid()) return;
 		try{
-			MobclickAgent.onEventDuration(mContext, eventId, paramMap, duration);
+			HashMap<String, String> curMap = changeTableToMap(paramMap);
+			MobclickAgent.onEventDuration(mContext, eventId, curMap, duration);
 		} catch(Exception e){
 			LogE("Exception in logEventWithDuration,eventId,duration,paramMap", e);
 		}
@@ -195,7 +224,8 @@ public class AnalyticsUmeng implements InterfaceAnalytics{
 		LogD("logTimedKVEventBegin invoked!");
 		if (!isValid()) return;
 		try{
-			MobclickAgent.onKVEventBegin(mContext, eventId, paramMap, label);
+			HashMap<String, String> curMap = changeTableToMap(paramMap);
+			MobclickAgent.onKVEventBegin(mContext, eventId, curMap, label);
 		} catch(Exception e){
 			LogE("Exception in logTimedKVEventBegin", e);
 		}
@@ -209,5 +239,17 @@ public class AnalyticsUmeng implements InterfaceAnalytics{
 		} catch(Exception e){
 			LogE("Exception in logTimedKVEventEnd", e);
 		}
+	}
+
+	private HashMap<String, String> changeTableToMap(Hashtable<String, String> param) {
+		HashMap<String, String> retParam = new HashMap<String, String>();
+		for(Iterator<String> it = param.keySet().iterator(); it.hasNext(); ) {   
+            String key = it.next();
+            String value = param.get(key);
+
+            retParam.put(key, value);
+        }
+
+		return retParam;
 	}
 }

@@ -12,6 +12,12 @@ Developers:
     Rolando Abarca
         Javascript Binding and testjs
 
+    rodrigogolive
+        Fix broke linux build
+
+    kdejongh
+        Fix for spaces at the beginning of wrapped lines on Android
+
     martell
         use tinyxml2 to replace libxml2
 
@@ -35,6 +41,7 @@ Developers:
         fix for loading custom fonts on iOS when referenced from a CCB file
         Fix CCUserDefault.cpp compiling on Android.
         Fixing CCFileUtils 'createXXXXWithContentsOfFile' path lookup issue.
+        Add CCDirector::popToSceneStackLevel(int level).
 
     Waiter
         fix an error that OpenSLEngine can't load resources from SD card
@@ -86,6 +93,8 @@ Developers:
          Some improvements for CCScrollView and CCTableView.
          Touch priority can't be set to the value specified by a call to CCMenu::setTouchPriority(int).
          CCTableView crashes if a CCTableViewDelegate is not provided.
+         Fixing a bug that _realOpacity isn't assigned in CCLayerColor::initWithColor.
+         CCScrollView TouchPriority Fix
 
     Weeds (Andre Rudlaff)
         Used fontconfig to enhance font rendering on linux.
@@ -96,10 +105,13 @@ Developers:
         Fixed font rendering crash for certain fonts on linux.
         Fixed potential crash in CCScheduler::removeHashElement.
         Fixed potential crash in CCSaxParser.
+        Added kResolutionFixedHeight and kResolutionFixedWidth resolution policy.
+        Use pthread mutex and condition variable instead of pthred semaphore to load image asynchronizely.
 
     Nat Weiss (iphonegamekit.com)
         author of Mac port
         add TMX polygon parsing
+        Properly resets the tile's Y flipping
 
     XiaoLong Zhang (Chukong Inc)
     Mike McGary (Zynga)
@@ -121,6 +133,7 @@ Developers:
         fixed CCDirector to use CCLabelBMFont instead of CCLabelTTF
         added CCBReader (CCBI format)
         Added cleanup and reset methods to ScriptingCore.
+        Fixed a bug in ScriptingCore::evalString not setting the outval.
 
     Rohan Kuruvilla (rohankuruvilla, Zynga)
         Improvements to JS Bindings.
@@ -265,6 +278,8 @@ Developers:
         Fixing a bug where missing packages would cause the script to exit on linux.
         Adding 'make run' target for linux projects.
         Stripping newlines from log message and fixing linux library location.
+        Fixing a bug that CCPhysicsSprite was overriding only some of the getPosition methods.
+        Adding a macro USE_BOX2D to check whether to enable Box2D for linux and nacl port.
 
     Peter Young (young40)
         Implements setVisible() for CCEditBox
@@ -292,7 +307,8 @@ Developers:
 
     Yodesoft
         Improving font rendering performance for linux platform.
-        YodesoftReduce function call in nativeInitBitmapDC to improve performance.
+        Reducing function call in nativeInitBitmapDC to improve performance.
+        Refactoring writable path to "<user's home>/.config/<app name>" for linux platform.
 
     sjchao
         Fixing a display bug when a scrollView nested in another scrollView.
@@ -309,6 +325,29 @@ Developers:
 
     rogerzanoni
         Fixing a linking error that libpthread and libGL libraries need to be linked on linux.
+        Fixing a compiling error of [-Werror=array-bounds] when compiling Box2dTestBed.
+
+    zhanghaojie
+        Fixing a bug that anchorPoint property of CCScale9Sprite doesn't work in CCBReader.
+
+    MarkEHenderson (Mark Henderson)
+        Fixing of variable initialization in SpriteBatchNode.
+
+    akira-cn
+        Adding response for back and menu keypad event for Android.
+
+    lgb (Oleg)
+        Fixing a compilation error for BlackBerry PlayBook.
+        Comparing float number by using epsilon and absolute difference.
+
+    jotel (Jaroslaw Lewandowski)
+        Fixing a bug that wrong type of argument signature is used in setAccelerometerIntervalJNI function.
+
+    MarcelBloemendaal
+        Adding secureTextEntry property to CCTextFieldTTF.
+
+    brawsome
+        Adding new macro CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK to CCBMemberVariableAssigner.h.
 
 Retired Core Developers:
     WenSheng Yang

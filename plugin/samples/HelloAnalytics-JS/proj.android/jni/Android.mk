@@ -8,7 +8,6 @@ LOCAL_MODULE_FILENAME := libgame
 
 LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/AppDelegate.cpp \
-                   ../../../../jsbindings/auto/jsb_cocos2dx_other_auto.cpp \
                    ../../../../jsbindings/auto/jsb_pluginx_umeng_auto.cpp \
                    ../../../../jsbindings/auto/jsb_pluginx_flurry_auto.cpp \
                    ../../../../jsbindings/auto/jsb_pluginx_protocols_auto.cpp \

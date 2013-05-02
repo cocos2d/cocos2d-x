@@ -11,6 +11,8 @@
 		FA09A33E168ADC1F008C1C7B /* PluginManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA09A33C168ADC1F008C1C7B /* PluginManager.cpp */; };
 		FA09A33F168ADC1F008C1C7B /* RegisterPlugin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA09A33D168ADC1F008C1C7B /* RegisterPlugin.cpp */; };
 		FA0CB8B7168D3CC200E36B11 /* ProtocolAnalytics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA0CB8B6168D3CC200E36B11 /* ProtocolAnalytics.cpp */; };
+		FA7C6C9B1724E51C008A0ECC /* ProtocolAds.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA7C6C991724E51C008A0ECC /* ProtocolAds.cpp */; };
+		FA7C6C9C1724E51C008A0ECC /* ProtocolIAP.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA7C6C9A1724E51C008A0ECC /* ProtocolIAP.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -26,7 +28,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		FA09A321168ADBC2008C1C7B /* libPluginProtocol.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libPluginProtocol.a; path = libPluginProtocol.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		FA09A321168ADBC2008C1C7B /* libPluginProtocol.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPluginProtocol.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA09A324168ADBC2008C1C7B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		FA09A337168ADC05008C1C7B /* PluginManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PluginManager.h; sourceTree = "<group>"; };
 		FA09A338168ADC05008C1C7B /* PluginProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PluginProtocol.h; sourceTree = "<group>"; };
@@ -36,6 +38,10 @@
 		FA09A33C168ADC1F008C1C7B /* PluginManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PluginManager.cpp; path = ../PluginManager.cpp; sourceTree = "<group>"; };
 		FA09A33D168ADC1F008C1C7B /* RegisterPlugin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RegisterPlugin.cpp; path = ../RegisterPlugin.cpp; sourceTree = "<group>"; };
 		FA0CB8B6168D3CC200E36B11 /* ProtocolAnalytics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ProtocolAnalytics.cpp; sourceTree = "<group>"; };
+		FA4E3033172BD02800A3E673 /* ProtocolSocial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProtocolSocial.h; sourceTree = "<group>"; };
+		FA7C6C971724E4DD008A0ECC /* ProtocolAds.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProtocolAds.h; sourceTree = "<group>"; };
+		FA7C6C991724E51C008A0ECC /* ProtocolAds.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ProtocolAds.cpp; sourceTree = "<group>"; };
+		FA7C6C9A1724E51C008A0ECC /* ProtocolIAP.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ProtocolIAP.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +87,8 @@
 		FA09A336168ADC05008C1C7B /* include */ = {
 			isa = PBXGroup;
 			children = (
+				FA4E3033172BD02800A3E673 /* ProtocolSocial.h */,
+				FA7C6C971724E4DD008A0ECC /* ProtocolAds.h */,
 				FA09A337168ADC05008C1C7B /* PluginManager.h */,
 				FA09A338168ADC05008C1C7B /* PluginProtocol.h */,
 				FA09A339168ADC05008C1C7B /* ProtocolAnalytics.h */,
@@ -94,6 +102,8 @@
 		FA0CB8B5168D3CC200E36B11 /* ios */ = {
 			isa = PBXGroup;
 			children = (
+				FA7C6C991724E51C008A0ECC /* ProtocolAds.cpp */,
+				FA7C6C9A1724E51C008A0ECC /* ProtocolIAP.cpp */,
 				FA0CB8B6168D3CC200E36B11 /* ProtocolAnalytics.cpp */,
 			);
 			name = ios;
@@ -154,6 +164,8 @@
 				FA09A33E168ADC1F008C1C7B /* PluginManager.cpp in Sources */,
 				FA09A33F168ADC1F008C1C7B /* RegisterPlugin.cpp in Sources */,
 				FA0CB8B7168D3CC200E36B11 /* ProtocolAnalytics.cpp in Sources */,
+				FA7C6C9B1724E51C008A0ECC /* ProtocolAds.cpp in Sources */,
+				FA7C6C9C1724E51C008A0ECC /* ProtocolIAP.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

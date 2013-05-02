@@ -1,3 +1,26 @@
+/****************************************************************************
+Copyright (c) 2012-2013 cocos2d-x.org
+
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
 #include "ProtocolIAP.h"
 #include "PluginJniHelper.h"
 #include <android/log.h>
@@ -14,18 +37,27 @@
 namespace cocos2d { namespace plugin {
 
 extern "C" {
-	JNIEXPORT void JNICALL Java_org_cocos2dx_plugin_InterfaceIAP_nativePayResult(JNIEnv*  env, jobject thiz, jint ret, jstring msg)
+	JNIEXPORT void JNICALL Java_org_cocos2dx_plugin_InterfaceIAP_nativeOnPayResult(JNIEnv*  env, jobject thiz, jobject obj, jint ret, jstring msg)
 	{
 		std::string strMsg = PluginJniHelper::jstring2string(msg);
-		ProtocolIAP::payResult((EPayResult) ret, strMsg.c_str());
+		PluginProtocol* pPlugin = PluginUtils::getPluginPtr(obj);
+		LOGD("nativeOnPayResult(), Get plugin ptr : %p", pPlugin);
+		if (pPlugin != NULL)
+		{
+			LOGD("nativeOnPayResult(), Get plugin name : %s", pPlugin->getPluginName());
+			ProtocolIAP* pIAP = dynamic_cast<ProtocolIAP*>(pPlugin);
+			if (pIAP != NULL)
+			{
+				pIAP->onPayResult((PayResultCode) ret, strMsg.c_str());
+			}
+		}
 	}
 }
 
 bool ProtocolIAP::m_bPaying = false;
-PayResultListener* ProtocolIAP::m_pListener = NULL;
-TProductInfo ProtocolIAP::m_curInfo;
 
 ProtocolIAP::ProtocolIAP()
+: m_pListener(NULL)
 {
 }
 
@@ -39,7 +71,7 @@ bool ProtocolIAP::init()
     return true;
 }
 
-void ProtocolIAP::initDeveloperInfo(TDeveloperInfo devInfo)
+void ProtocolIAP::configDeveloperInfo(TIAPDeveloperInfo devInfo)
 {
     if (devInfo.empty())
     {
@@ -52,7 +84,7 @@ void ProtocolIAP::initDeveloperInfo(TDeveloperInfo devInfo)
     	PluginJniMethodInfo t;
         if (PluginJniHelper::getMethodInfo(t
     		, pData->jclassName.c_str()
-    		, "initDeveloperInfo"
+    		, "configDeveloperInfo"
     		, "(Ljava/util/Hashtable;)V"))
     	{
         	// generate the hashtable from map
@@ -78,7 +110,7 @@ void ProtocolIAP::payForProduct(TProductInfo info)
     {
         if (NULL != m_pListener)
         {
-            payResult(ePayFail, "Product info error");
+            onPayResult(kPayFail, "Product info error");
         }
         LOGD("The product info is empty!");
         return;
@@ -111,12 +143,12 @@ void ProtocolIAP::setResultListener(PayResultListener* pListener)
 	m_pListener = pListener;
 }
 
-void ProtocolIAP::payResult(EPayResult ret, const char* msg)
+void ProtocolIAP::onPayResult(PayResultCode ret, const char* msg)
 {
     m_bPaying = false;
     if (m_pListener)
     {
-    	m_pListener->payResult(ret, msg, m_curInfo);
+    	m_pListener->onPayResult(ret, msg, m_curInfo);
     }
     else
     {
