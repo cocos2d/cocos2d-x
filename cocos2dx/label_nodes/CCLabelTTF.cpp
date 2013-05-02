@@ -386,8 +386,7 @@ void CCLabelTTF::enableShadow(CCSize &shadowOffset, float shadowOpacity, float s
         }
     
     #else
-        // carloX 
-        // not implemented throw exception
+        CCAssert(false, "Currently only supported on iOS and Android!");
     #endif
     
 }
@@ -403,8 +402,7 @@ void CCLabelTTF::disableShadow()
         }
     
     #else
-        // carloX
-        // not implemented throw exception
+        CCAssert(false, "Currently only supported on iOS and Android!");
     #endif
 }
 
@@ -438,8 +436,7 @@ void CCLabelTTF::enableStroke(const ccColor3B &strokeColor, float strokeSize)
         }
     
     #else
-        // carloX
-        // not implemented throw exception
+        CCAssert(false, "Currently only supported on iOS and Android!");
     #endif
     
 }
@@ -455,8 +452,7 @@ void CCLabelTTF::disableStroke()
         }
     
     #else
-        // carloX
-        // not implemented throw exception
+        CCAssert(false, "Currently only supported on iOS and Android!");
     #endif
     
 }
@@ -470,8 +466,7 @@ void CCLabelTTF::setFontFillColor(const ccColor3B &tintColor)
             this->updateTexture();
         }
     #else
-        // carloX
-        // not implemented throw exception
+        CCAssert(false, "Currently only supported on iOS and Android!");
     #endif
 }
 
