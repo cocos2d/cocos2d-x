@@ -168,4 +168,8 @@ JSAutoCompartment ac(cx, obj)
 #define JSB_INCLUDE_OPENGL 1
 #endif // JSB_INCLUDE_OPENGL
 
+#ifndef JSB_MAX_STACK_QUOTA
+#define JSB_MAX_STACK_QUOTA 500000
+#endif // JSB_MAX_STACK_QUOTA
+
 #endif // __JS_BINDINGS_CONFIG_H

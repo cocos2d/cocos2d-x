@@ -58,7 +58,7 @@ Skeleton* Skeleton_create (SkeletonData* data) {
 		SlotData *slotData = data->slots[i];
 
 		/* Find bone for the slotData's boneData. */
-		Bone *bone;
+		Bone *bone = NULL;
 		for (ii = 0; ii < self->boneCount; ++ii) {
 			if (data->bones[ii] == slotData->boneData) {
 				bone = self->bones[ii];
