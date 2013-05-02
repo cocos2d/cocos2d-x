@@ -28,14 +28,17 @@ THE SOFTWARE.
 #include "ccMacros.h"
 #include "CCApplication.h"
 #include "cocoa/CCString.h"
-#include <unistd.h>
-#include <sys/stat.h>
-#include <stdio.h>
-#include <errno.h>
-
-using namespace std;
+#include <FApp.h>
+#include <FBase.h>
+#include <FIo.h>
+#include <FText.h>
 
 NS_CC_BEGIN
+using namespace std;
+using namespace Tizen::App;
+using namespace Tizen::Base;
+using namespace Tizen::Io;
+using namespace Tizen::Text;
 
 CCFileUtils* CCFileUtils::sharedFileUtils()
 {
@@ -48,23 +51,25 @@ CCFileUtils* CCFileUtils::sharedFileUtils()
 }
 
 CCFileUtilsTizen::CCFileUtilsTizen()
-{}
+{
+}
 
 bool CCFileUtilsTizen::init()
 {
-    // get application path
-    char fullpath[256] = {0};
-    ssize_t length = readlink("/proc/self/exe", fullpath, sizeof(fullpath)-1);
-    if (length <= 0) {
+    UiApp* pApp = UiApp::GetInstance();
+    if (!pApp)
+    {
         return false;
     }
 
-    fullpath[length] = '\0';
-    std::string resourcePath = fullpath;
-    resourcePath = resourcePath.substr(0, resourcePath.find_last_of("/"));
-    resourcePath += "/../res/";
-    m_strDefaultResRootPath = resourcePath;
+    String resPath = pApp->GetAppResourcePath();
+    if (resPath.IsEmpty())
+    {
+        return false;
+    }
 
+    AsciiEncoding ascii;
+    m_strDefaultResRootPath = (const char *)ascii.GetBytesN(resPath)->GetPointer();
     return CCFileUtils::init();
 }
 
@@ -81,9 +86,8 @@ bool CCFileUtilsTizen::isFileExist(const std::string& strFilePath)
     { // Not absolute path, add the default root path at the beginning.
         strPath.insert(0, m_strDefaultResRootPath);
     }
-    
-    struct stat sts;
-    return (stat(strPath.c_str(), &sts) != -1) ? true : false;
+
+    return File::IsFileExist(strPath.c_str());
 }
 
 NS_CC_END
