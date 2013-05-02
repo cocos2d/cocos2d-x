@@ -65,7 +65,7 @@ CCOspApplication::SetApplicationInitializedCallback(CCOspApplicationInitialized 
 CCOspApplication*
 CCOspApplication::GetInstance(void)
 {
-    CCAssert(sm_pSharedApplication, "");
+    CCAssert(sm_pSharedCCOspApplication, "");
     return sm_pSharedCCOspApplication;
 }
 
