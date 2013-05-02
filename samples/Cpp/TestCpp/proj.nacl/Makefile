@@ -143,7 +143,7 @@ $(OBJ_DIR)/%.o: ../%.c $(CORE_MAKEFILE_LIST)
 	$(LOG_CC)$(NACL_CC) -MMD $(CCFLAGS) $(INCLUDES) $(DEFINES) -c $< -o $@
 
 $(NMF): $(TARGET)
-	$(NACL_SDK_ROOT)/tools/create_nmf.py -o $@ $(BIN_DIR)/*.nexe --objdump=i686-nacl-objdump -L$(NACL_SDK_ROOT)/toolchain/linux_x86_newlib/x86_64-nacl/lib/ -s $(BIN_DIR)
+	$(NACL_SDK_ROOT)/tools/create_nmf.py -o $@ $(BIN_DIR)/*.nexe $(NMF_FLAGS) -s $(BIN_DIR)
 
 PACKAGE_ROOT = $(OUT_DIR)/package
 

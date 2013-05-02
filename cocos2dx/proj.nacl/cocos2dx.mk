@@ -14,7 +14,12 @@ endif
 
 all:
 
+ifeq ($(NACL_GLIBC),1)
+NACL_LIBC = glibc
+else
 NACL_LIBC = newlib
+endif
+
 NACL_ARCH ?= x86_64
 NACL_AR ?= $(NACL_ARCH)-nacl-ar
 NACL_CC ?= $(NACL_ARCH)-nacl-gcc
@@ -47,6 +52,14 @@ NACLPORTS_INCLUDE ?= $(NACLPORTS_ROOT)/include
 OUT_DIR ?= obj
 OBJ_DIR ?= $(OUT_DIR)/$(NACL_ARCH)
 LIB_DIR ?= $(COCOS_ROOT)/lib/nacl/$(ARCH_DIR)
+
+NMF_FLAGS = --objdump=i686-nacl-objdump
+NMF_FLAGS += -L$(NACL_SDK_ROOT)/toolchain/linux_x86_$(NACL_LIBC)/x86_64-nacl/lib32/
+NMF_FLAGS += -L$(NACL_SDK_ROOT)/toolchain/linux_x86_$(NACL_LIBC)/x86_64-nacl/lib64/
+NMF_FLAGS += -L$(NACL_SDK_ROOT)/lib/$(NACL_LIBC)_x86_32/Release
+NMF_FLAGS += -L$(NACL_SDK_ROOT)/lib/$(NACL_LIBC)_x86_64/Release
+NMF_FLAGS += -L$(NACLPORTS_ROOT)/lib/$(NACL_LIBC)_x86_32/Release
+NMF_FLAGS += -L$(NACLPORTS_ROOT)/lib/$(NACL_LIBC)_x86_64/Release
 
 ifdef USE_BOX2D
 DEFINES += -DCC_ENABLE_BOX2D_INTEGRATION=1
