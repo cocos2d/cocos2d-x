@@ -113,29 +113,32 @@ public:
         const char *    pFontName = 0,
         int             nSize = 0);
     
+    #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     
-    bool initWithStringShadowStroke(
-                                        const char *    pText,
-                                        int             nWidth      = 0,
-                                        int             nHeight     = 0,
-                                        ETextAlign      eAlignMask  = kAlignCenter,
-                                        const char *    pFontName   = 0,
-                                        int             nSize       = 0,
-                                        float           textTintR   = 1,
-                                        float           textTintG   = 1,
-                                        float           textTintB   = 1,
-                                        bool shadow                 = false,
-                                        float shadowOffsetX         = 0.0,
-                                        float shadowOffsetY         = 0.0,
-                                        float shadowOpacity         = 0.0,
-                                        float shadowBlur            = 0.0,
-                                        bool  stroke                =  false,
-                                        float strokeR               = 1,
-                                        float strokeG               = 1,
-                                        float strokeB               = 1,
-                                        float strokeSize            = 1
-                                    
-                                    );
+        bool initWithStringShadowStroke(
+                                            const char *    pText,
+                                            int             nWidth      = 0,
+                                            int             nHeight     = 0,
+                                            ETextAlign      eAlignMask  = kAlignCenter,
+                                            const char *    pFontName   = 0,
+                                            int             nSize       = 0,
+                                            float           textTintR   = 1,
+                                            float           textTintG   = 1,
+                                            float           textTintB   = 1,
+                                            bool shadow                 = false,
+                                            float shadowOffsetX         = 0.0,
+                                            float shadowOffsetY         = 0.0,
+                                            float shadowOpacity         = 0.0,
+                                            float shadowBlur            = 0.0,
+                                            bool  stroke                =  false,
+                                            float strokeR               = 1,
+                                            float strokeG               = 1,
+                                            float strokeB               = 1,
+                                            float strokeSize            = 1
+                                        
+                                        );
+    
+    #endif
     
 
     unsigned char *   getData()               { return m_pData; }
