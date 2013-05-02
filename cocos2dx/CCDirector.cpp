@@ -595,11 +595,11 @@ void CCDirector::popToSceneStackLevel(int level)
     }
 
     // current level or lower -> nothing
-    if (level >= c)
+    if ((unsigned int)level >= c)
         return;
 
 	// pop stack until reaching desired level
-	while (c > level)
+	while (c > (unsigned int)level)
     {
 		CCScene *current = (CCScene*)m_pobScenesStack->lastObject();
 
