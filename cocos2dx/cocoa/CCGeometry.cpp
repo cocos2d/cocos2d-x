@@ -33,9 +33,8 @@ CCPoint::CCPoint(void)
     setPoint(0.0f, 0.0f);
 }
 
-CCPoint::CCPoint(float x, float y)
+CCPoint::CCPoint(float x, float y) : x(x), y(y)
 {
-    setPoint(x, y);
 }
 
 CCPoint::CCPoint(const CCPoint& other)
