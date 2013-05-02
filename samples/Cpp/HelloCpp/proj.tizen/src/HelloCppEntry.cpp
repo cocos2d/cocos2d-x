@@ -70,7 +70,7 @@ OspMain(int argc, char* pArgv[])
 void
 ApplicationInitialized(void)
 {
-    AppDelegate app;
+    AppDelegate* pAppDelegate = new AppDelegate;
 
     CCEGLView* eglView = CCEGLView::sharedOpenGLView();
     eglView->setFrameSize(720, 1280);
