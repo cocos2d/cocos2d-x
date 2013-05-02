@@ -40,15 +40,15 @@ LBITS := $(shell getconf LONG_BIT)
 INCLUDES += -I$(COCOS_SRC)/platform/third_party/linux
 
 ifeq ($(DEBUG), 1)
-CCFLAGS += -g -O0 -s ASSERTIONS=1 -s SAFE_HEAP=1 --jcache
-CXXFLAGS += -g -O0 -s ASSERTIONS=1 -s SAFE_HEAP=1 --jcache
+CCFLAGS += -g -O0 -s ASSERTIONS=1 -s SAFE_HEAP=1 --jcache -s GL_UNSAFE_OPTS=0
+CXXFLAGS += -g -O0 -s ASSERTIONS=1 -s SAFE_HEAP=1 --jcache -s GL_UNSAFE_OPTS=0
 DEFINES += -D_DEBUG -DCOCOS2D_DEBUG=1 -DCP_USE_DOUBLES=0
 OBJ_DIR := $(OBJ_DIR)/debug
 LIB_DIR := $(LIB_DIR)/debug
 BIN_DIR := $(BIN_DIR)/debug
 else
-CCFLAGS += -O1 --jcache
-CXXFLAGS += -O1 --jcache
+CCFLAGS += -O2 --jcache -s GL_UNSAFE_OPTS=0
+CXXFLAGS += -O2 --jcache -s GL_UNSAFE_OPTS=0
 DEFINES += -DNDEBUG -DCP_USE_DOUBLES=0
 OBJ_DIR := $(OBJ_DIR)/release
 LIB_DIR := $(LIB_DIR)/release
