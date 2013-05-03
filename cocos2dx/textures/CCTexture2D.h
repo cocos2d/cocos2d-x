@@ -142,11 +142,11 @@ public:
 } ccTextTint;
 
 // text attributes
-typedef class _ccTextDefinition : public CCObject
+class CCTextDefinition : public CCObject
 {
 public:
 
-    _ccTextDefinition(): m_alignment(kCCTextAlignmentCenter),
+    CCTextDefinition():  m_alignment(kCCTextAlignmentCenter),
                          m_vertAlignment(kCCVerticalTextAlignmentTop)
                          { m_dimensions = CCSizeMake(0,0); }
     
@@ -159,7 +159,7 @@ public:
     ccTextShadow            m_shadow;
     ccTextStroke            m_stroke;
     
-} ccTextDefinition;
+} ;
 
 
 //CLASS INTERFACES:
@@ -210,7 +210,7 @@ public:
     /** Initializes a texture from a string with font name and font size */
     bool initWithString(const char *text, const char *fontName, float fontSize);
     /** Initializes a texture from a string with dimensions, alignment, font name and font size shadow and stroke*/
-    bool initWithStringShadowStroke(const char *text, ccTextDefinition &textDefinition);
+    bool initWithStringShadowStroke(const char *text, CCTextDefinition *textDefinition);
     
     /** Initializes a texture from a PVR file */
     bool initWithPVRFile(const char* file);

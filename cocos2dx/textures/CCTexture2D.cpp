@@ -430,7 +430,7 @@ bool CCTexture2D::initWithString(const char *text, const char *fontName, float f
 {
     #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     
-        ccTextDefinition tempDef;
+        CCTextDefinition tempDef;
         
         tempDef.m_shadow.m_shadowEnabled = false;
         tempDef.m_stroke.m_strokeEnabled = false;
@@ -446,7 +446,7 @@ bool CCTexture2D::initWithString(const char *text, const char *fontName, float f
         tempDef.m_fontTint.m_tintColor.g = 255;
         tempDef.m_fontTint.m_tintColor.b = 255;
 
-        return initWithStringShadowStroke(text, tempDef);
+        return initWithStringShadowStroke(text, &tempDef);
     
     
     #else
@@ -499,7 +499,7 @@ bool CCTexture2D::initWithString(const char *text, const char *fontName, float f
     
 }
 
-bool CCTexture2D::initWithStringShadowStroke(const char *text, ccTextDefinition &textDefinition)
+bool CCTexture2D::initWithStringShadowStroke(const char *text, CCTextDefinition *textDefinition)
 {
     #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     
@@ -511,20 +511,20 @@ bool CCTexture2D::initWithStringShadowStroke(const char *text, ccTextDefinition 
         bool bRet = false;
         CCImage::ETextAlign eAlign;
         
-        if (kCCVerticalTextAlignmentTop == textDefinition.m_vertAlignment)
+        if (kCCVerticalTextAlignmentTop == textDefinition->m_vertAlignment)
         {
-            eAlign = (kCCTextAlignmentCenter == textDefinition.m_alignment) ? CCImage::kAlignTop
-            : (kCCTextAlignmentLeft == textDefinition.m_alignment) ? CCImage::kAlignTopLeft : CCImage::kAlignTopRight;
+            eAlign = (kCCTextAlignmentCenter == textDefinition->m_alignment) ? CCImage::kAlignTop
+            : (kCCTextAlignmentLeft == textDefinition->m_alignment) ? CCImage::kAlignTopLeft : CCImage::kAlignTopRight;
         }
-        else if (kCCVerticalTextAlignmentCenter == textDefinition.m_vertAlignment)
+        else if (kCCVerticalTextAlignmentCenter == textDefinition->m_vertAlignment)
         {
-            eAlign = (kCCTextAlignmentCenter == textDefinition.m_alignment) ? CCImage::kAlignCenter
-            : (kCCTextAlignmentLeft == textDefinition.m_alignment) ? CCImage::kAlignLeft : CCImage::kAlignRight;
+            eAlign = (kCCTextAlignmentCenter == textDefinition->m_alignment) ? CCImage::kAlignCenter
+            : (kCCTextAlignmentLeft == textDefinition->m_alignment) ? CCImage::kAlignLeft : CCImage::kAlignRight;
         }
-        else if (kCCVerticalTextAlignmentBottom == textDefinition.m_vertAlignment)
+        else if (kCCVerticalTextAlignmentBottom == textDefinition->m_vertAlignment)
         {
-            eAlign = (kCCTextAlignmentCenter == textDefinition.m_alignment) ? CCImage::kAlignBottom
-            : (kCCTextAlignmentLeft == textDefinition.m_alignment) ? CCImage::kAlignBottomLeft : CCImage::kAlignBottomRight;
+            eAlign = (kCCTextAlignmentCenter == textDefinition->m_alignment) ? CCImage::kAlignBottom
+            : (kCCTextAlignmentLeft == textDefinition->m_alignment) ? CCImage::kAlignBottomLeft : CCImage::kAlignBottomRight;
         }
         else
         {
@@ -539,13 +539,13 @@ bool CCTexture2D::initWithStringShadowStroke(const char *text, ccTextDefinition 
         float shadowBlur    = 0.0;
         float shadowOpacity = 0.0;
         
-        if ( textDefinition.m_shadow.m_shadowEnabled )
+        if ( textDefinition->m_shadow.m_shadowEnabled )
         {
             shadowEnabled =  true;
-            shadowDX      = textDefinition.m_shadow.m_shadowOffset.width;
-            shadowDY      = textDefinition.m_shadow.m_shadowOffset.height;
-            shadowBlur    = textDefinition.m_shadow.m_shadowBlur;
-            shadowOpacity = textDefinition.m_shadow.m_shadowOpacity;
+            shadowDX      = textDefinition->m_shadow.m_shadowOffset.width;
+            shadowDY      = textDefinition->m_shadow.m_shadowOffset.height;
+            shadowBlur    = textDefinition->m_shadow.m_shadowBlur;
+            shadowOpacity = textDefinition->m_shadow.m_shadowOpacity;
         }
         
         // handle stroke parameters
@@ -555,13 +555,13 @@ bool CCTexture2D::initWithStringShadowStroke(const char *text, ccTextDefinition 
         float strokeColorB = 0.0;
         float strokeSize   = 0.0;
         
-        if ( textDefinition.m_stroke.m_strokeEnabled )
+        if ( textDefinition->m_stroke.m_strokeEnabled )
         {
             strokeEnabled = true;
-            strokeColorR = textDefinition.m_stroke.m_strokeColor.r / 255;
-            strokeColorG = textDefinition.m_stroke.m_strokeColor.g / 255;
-            strokeColorB = textDefinition.m_stroke.m_strokeColor.b / 255;
-            strokeSize   = textDefinition.m_stroke.m_strokeSize;
+            strokeColorR = textDefinition->m_stroke.m_strokeColor.r / 255;
+            strokeColorG = textDefinition->m_stroke.m_strokeColor.g / 255;
+            strokeColorB = textDefinition->m_stroke.m_strokeColor.b / 255;
+            strokeSize   = textDefinition->m_stroke.m_strokeSize;
         }
         
         CCImage* pImage = new CCImage();
@@ -570,14 +570,14 @@ bool CCTexture2D::initWithStringShadowStroke(const char *text, ccTextDefinition 
             CC_BREAK_IF(NULL == pImage);
             
             bRet = pImage->initWithStringShadowStroke(text,
-                                                      (int)textDefinition.m_dimensions.width,
-                                                      (int)textDefinition.m_dimensions.height,
+                                                      (int)textDefinition->m_dimensions.width,
+                                                      (int)textDefinition->m_dimensions.height,
                                                       eAlign,
-                                                      textDefinition.m_fontName.c_str(),
-                                                      textDefinition.m_fontSize,
-                                                      textDefinition.m_fontTint.m_tintColor.r / 255,
-                                                      textDefinition.m_fontTint.m_tintColor.g / 255,
-                                                      textDefinition.m_fontTint.m_tintColor.b / 255,
+                                                      textDefinition->m_fontName.c_str(),
+                                                      textDefinition->m_fontSize,
+                                                      textDefinition->m_fontTint.m_tintColor.r / 255,
+                                                      textDefinition->m_fontTint.m_tintColor.g / 255,
+                                                      textDefinition->m_fontTint.m_tintColor.b / 255,
                                                       shadowEnabled,
                                                       shadowDX,
                                                       shadowDY,
