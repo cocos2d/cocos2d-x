@@ -149,6 +149,30 @@ void CCProgressTimer::setReverseProgress(bool reverse)
     }
 }
 
+void CCProgressTimer::setOpacity(GLubyte opacity)
+{
+    CCNodeRGBA::setOpacity(opacity);
+    updateColor();
+}
+
+void CCProgressTimer::setColor(const ccColor3B& color3)
+{
+    CCNodeRGBA::setColor(color3);
+    updateColor();
+}
+
+void CCProgressTimer::updateDisplayedColor(const ccColor3B& parentColor)
+{
+    CCNodeRGBA::updateDisplayedColor(parentColor);
+    updateColor();
+}
+
+void CCProgressTimer::updateDisplayedOpacity(GLubyte opacity)
+{
+    CCNodeRGBA::updateDisplayedOpacity(opacity);
+    updateColor();
+}
+
 void CCProgressTimer::setOpacityModifyRGB(bool bValue)
 {
     CC_UNUSED_PARAM(bValue);
@@ -203,6 +227,13 @@ void CCProgressTimer::updateColor(void)
     if (m_pVertexData)
     {
         ccColor4B sc = m_pSprite->getQuad().tl.colors;
+        float op = _displayedOpacity / 255.f;
+        sc.a *= op;
+        if (m_pSprite->getTexture()->hasPremultipliedAlpha()) {
+            sc.r *= op;
+            sc.g *= op;
+            sc.b *= op;
+        }
         for (int i = 0; i < m_nVertexDataCount; ++i)
         {
             m_pVertexData[i].colors = sc;
