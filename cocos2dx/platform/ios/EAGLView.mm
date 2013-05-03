@@ -720,8 +720,8 @@ static EAGLView *view = 0;
 
 - (NSArray *)selectionRectsForRange:(UITextRange *)range
 {
-   CCLOG("selectionRectsForRange");
-   return nil;
+    CCLOG("selectionRectsForRange");
+    return nil;
 }
 
 #pragma mark -
