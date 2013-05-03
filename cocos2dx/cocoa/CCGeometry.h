@@ -35,6 +35,9 @@ NS_CC_BEGIN
  * @{
  */
 
+// for CCPoint assignement operator
+class CC_DLL CCSize;
+
 class CC_DLL CCPoint
 {
 public:
@@ -45,7 +48,9 @@ public:
     CCPoint();
     CCPoint(float x, float y);
     CCPoint(const CCPoint& other);
+    CCPoint(const CCSize& size);
     CCPoint& operator= (const CCPoint& other);
+    CCPoint& operator= (const CCSize& size);
     CCPoint operator+(const CCPoint& right) const;
     CCPoint operator-(const CCPoint& right) const;
     CCPoint operator*(float a) const;
@@ -64,7 +69,13 @@ public:
     CCSize();
     CCSize(float width, float height);
     CCSize(const CCSize& other);
+    CCSize(const CCPoint& point);
     CCSize& operator= (const CCSize& other);
+    CCSize& operator= (const CCPoint& point);
+    CCSize operator+(const CCSize& right) const;
+    CCSize operator-(const CCSize& right) const;
+    CCSize operator*(float a) const;
+    CCSize operator/(float a) const;
     void setSize(float width, float height);
     bool equals(const CCSize& target) const;
 };
@@ -76,10 +87,10 @@ public:
     CCSize  size;
 
 public:
-    CCRect();    
+    CCRect();
     CCRect(float x, float y, float width, float height);
     CCRect(const CCRect& other);
-    CCRect& operator= (const CCRect& other); 
+    CCRect& operator= (const CCRect& other);
     void setRect(float x, float y, float width, float height);
     float getMinX() const; /// return the leftmost x-value of current rect
     float getMidX() const; /// return the midpoint x-value of current rect
