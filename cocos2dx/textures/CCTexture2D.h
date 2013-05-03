@@ -103,9 +103,13 @@ Extension used for requesting text with stroke or shadow
 */
 
 // text shadow attributes 
-typedef struct _ccTextShadow
+typedef class _ccTextShadow
 {
-    bool m_shadowEnabled;
+public:
+    
+    _ccTextShadow(): m_shadowEnabled(false) {}
+    
+    bool   m_shadowEnabled;
 	CCSize m_shadowOffset;
 	float  m_shadowBlur;
 	float  m_shadowOpacity;
@@ -113,8 +117,12 @@ typedef struct _ccTextShadow
 } ccTextShadow;
 
 // text stroke attributes 
-typedef struct _ccTextStroke
+typedef class _ccTextStroke
 {
+public:
+    
+    _ccTextStroke(): m_strokeEnabled(false) {}
+    
     bool        m_strokeEnabled;
 	ccColor3B   m_strokeColor;
     float       m_strokeSize;
@@ -122,16 +130,26 @@ typedef struct _ccTextStroke
 } ccTextStroke;
 
 // text tinting attributes
-typedef struct _ccTextTint
+typedef class _ccTextTint
 {
+public:
+    
+    _ccTextTint(): m_tintEnabled(false) {}
+    
     bool        m_tintEnabled;
     ccColor3B   m_tintColor;
     
 } ccTextTint;
 
 // text attributes
-typedef struct _ccTextDefinition
+typedef class _ccTextDefinition : public CCObject
 {
+public:
+
+    _ccTextDefinition(): m_alignment(kCCTextAlignmentCenter),
+                         m_vertAlignment(kCCVerticalTextAlignmentTop)
+                         { m_dimensions = CCSizeMake(0,0); }
+    
     std::string             m_fontName;
     int                     m_fontSize;
     CCTextAlignment         m_alignment;

@@ -37,6 +37,8 @@ NS_CC_BEGIN
  * @{
  */
 
+
+
 /** @brief CCLabelTTF is a subclass of CCTextureNode that knows how to render text labels
 *
 * All features from CCTextureNode are valid in CCLabelTTF
@@ -80,22 +82,37 @@ public:
                         const CCSize& dimensions, CCTextAlignment hAlignment, 
                         CCVerticalTextAlignment vAlignment);
     
+    /** initializes the CCLabelTTF with a font name, alignment, dimension and font size */
+    bool initWithStringAndTextDefinition(const char *string, ccTextDefinition & textDefinition);
+    
+    
+    
+    /** set the text definition used by this label */
+    void setTextDefinition(ccTextDefinition *theDefinition);
+    
+    /** get the text definition used by this label */
+    ccTextDefinition * getTextDefinition();
+    
+    
+    
     
     /** enable or disable shadow for the label */
-    void enableShadow(CCSize &shadowOffset, float shadowOpacity, float shadowBlur);
+    void enableShadow(CCSize &shadowOffset, float shadowOpacity, float shadowBlur, bool mustUpdateTexture = true);
     
     /** disable shadow rendering */
-    void disableShadow();
+    void disableShadow(bool mustUpdateTexture = true);
     
     /** enable or disable stroke */
-    void enableStroke(const ccColor3B &strokeColor, float strokeSize);
+    void enableStroke(const ccColor3B &strokeColor, float strokeSize, bool mustUpdateTexture = true);
     
     /** disable stroke */
-    void disableStroke();
+    void disableStroke(bool mustUpdateTexture = true);
     
     /** set text tinting */
-    void setFontFillColor(const ccColor3B &tintColor);
+    void setFontFillColor(const ccColor3B &tintColor, bool mustUpdateTexture = true);
 
+    
+    
     /** initializes the CCLabelTTF */
     bool init();
 
@@ -127,6 +144,11 @@ public:
 private:
     bool updateTexture();
 protected:
+    
+    /** set the text definition for this label */
+    void                _updateWithTextDefinition(ccTextDefinition & textDefinition, bool mustUpdateTexture = true);
+    ccTextDefinition    _prepareTextDefinition();
+    
     /** Dimensions of the label in Points */
     CCSize m_tDimensions;
     /** The alignment of the label */
@@ -148,11 +170,10 @@ protected:
     bool        m_strokeEnabled;
     ccColor3B   m_strokeColor;
     float       m_strokeSize;
-    
+        
     /** font tint */
     ccColor3B   m_textTintColor;
 
-    
     std::string m_string;
 };
 
