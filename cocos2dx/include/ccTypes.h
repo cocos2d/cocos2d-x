@@ -49,6 +49,14 @@ ccc3(const GLubyte r, const GLubyte g, const GLubyte b)
     ccColor3B c = {r, g, b};
     return c;
 }
+
+/** returns YES if both ccColor3B are equal. Otherwise it returns NO.
+ */
+static inline bool ccc3BEqual(const ccColor3B &col1, const ccColor3B &col2)
+{
+    return col1.r == col2.r && col1.g == col2.g && col1.b == col2.b;
+}
+
 //ccColor3B predefined colors
 //! White color (255,255,255)
 static const ccColor3B ccWHITE={255,255,255};
