@@ -138,7 +138,7 @@ bool CCLabelTTF::initWithString(const char *string, const char *fontName, float 
     return false;
 }
 
-bool CCLabelTTF::initWithStringAndTextDefinition(const char *string, ccTextDefinition & textDefinition)
+bool CCLabelTTF::initWithStringAndTextDefinition(const char *string, CCTextDefinition * textDefinition)
 {
     if (CCSprite::init())
     {
@@ -146,7 +146,7 @@ bool CCLabelTTF::initWithStringAndTextDefinition(const char *string, ccTextDefin
         this->setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(SHADER_PROGRAM));
         
         // prepare everythin needed to render the label
-        _updateWithTextDefinition(textDefinition, false);
+        _updateWithTextDefinition(*textDefinition, false);
         
         // set the string
         this->setString(string);
@@ -159,7 +159,6 @@ bool CCLabelTTF::initWithStringAndTextDefinition(const char *string, ccTextDefin
         return false;
     }
 }
-
 
 
 void CCLabelTTF::setString(const char *string)
@@ -292,8 +291,8 @@ bool CCLabelTTF::updateTexture()
     
     #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     
-        ccTextDefinition texDef = _prepareTextDefinition();
-        tex->initWithStringShadowStroke( m_string.c_str(), texDef );
+        CCTextDefinition texDef = _prepareTextDefinition();
+        tex->initWithStringShadowStroke( m_string.c_str(), &texDef );
     
     #else
     
@@ -448,7 +447,7 @@ void CCLabelTTF::setFontFillColor(const ccColor3B &tintColor, bool updateTexture
     #endif
 }
 
-void CCLabelTTF::setTextDefinition(ccTextDefinition *theDefinition)
+void CCLabelTTF::setTextDefinition(CCTextDefinition *theDefinition)
 {
     if (theDefinition)
     {
@@ -456,14 +455,14 @@ void CCLabelTTF::setTextDefinition(ccTextDefinition *theDefinition)
     }
 }
 
-ccTextDefinition *CCLabelTTF::getTextDefinition()
+CCTextDefinition *CCLabelTTF::getTextDefinition()
 {
-    ccTextDefinition *tempDefinition = new ccTextDefinition;
+    CCTextDefinition *tempDefinition = new CCTextDefinition;
     *tempDefinition = _prepareTextDefinition();
     return tempDefinition;
 }
 
-void CCLabelTTF::_updateWithTextDefinition(ccTextDefinition & textDefinition, bool mustUpdateTexture)
+void CCLabelTTF::_updateWithTextDefinition(CCTextDefinition & textDefinition, bool mustUpdateTexture)
 {
     m_tDimensions = CCSizeMake(textDefinition.m_dimensions.width, textDefinition.m_dimensions.height);
     m_hAlignment  = textDefinition.m_alignment;
@@ -495,9 +494,9 @@ void CCLabelTTF::_updateWithTextDefinition(ccTextDefinition & textDefinition, bo
         updateTexture();
 }
 
-ccTextDefinition CCLabelTTF::_prepareTextDefinition()
+CCTextDefinition CCLabelTTF::_prepareTextDefinition()
 {
-    ccTextDefinition texDef;
+    CCTextDefinition texDef;
     
     texDef.m_fontSize       =  m_fFontSize * CC_CONTENT_SCALE_FACTOR();
     texDef.m_fontName       = *m_pFontName;
