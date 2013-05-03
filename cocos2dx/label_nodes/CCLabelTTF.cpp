@@ -138,6 +138,30 @@ bool CCLabelTTF::initWithString(const char *string, const char *fontName, float 
     return false;
 }
 
+bool CCLabelTTF::initWithStringAndTextDefinition(const char *string, ccTextDefinition & textDefinition)
+{
+    if (CCSprite::init())
+    {
+        // shader program
+        this->setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(SHADER_PROGRAM));
+        
+        // prepare everythin needed to render the label
+        _updateWithTextDefinition(textDefinition, false);
+        
+        // set the string
+        this->setString(string);
+        
+        //
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+
+
 void CCLabelTTF::setString(const char *string)
 {
     CCAssert(string != NULL, "Invalid string");
@@ -259,76 +283,19 @@ void CCLabelTTF::setFontName(const char *fontName)
 // Helper
 bool CCLabelTTF::updateTexture()
 {
+    CCTexture2D *tex;
+    tex = new CCTexture2D();
+    
+    assert(tex);
+    if (!tex)
+        return false;
+    
     #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     
-        CCTexture2D *tex;
-        
-        // let system compute label's width or height when its value is 0
-        // refer to cocos2d-x issue #1430
-        
-        tex = new CCTexture2D();
-        if (!tex)
-        {
-            return false;
-        }
-        
-        ccTextDefinition texDef;
-        
-        texDef.m_fontSize       =  m_fFontSize * CC_CONTENT_SCALE_FACTOR();
-        texDef.m_fontName       = *m_pFontName;
-        texDef.m_alignment      =  m_hAlignment;
-        texDef.m_vertAlignment  =  m_vAlignment;
-        texDef.m_dimensions     =  CC_SIZE_POINTS_TO_PIXELS(m_tDimensions);
-        
-        if ( m_strokeEnabled )
-        {
-            texDef.m_stroke.m_strokeEnabled = true;
-            texDef.m_stroke.m_strokeSize    = m_strokeSize;
-            texDef.m_stroke.m_strokeColor   = m_strokeColor;
-        }
-        else
-        {
-            texDef.m_stroke.m_strokeEnabled = false;
-        }
-        
-        if ( m_shadowEnabled )
-        {
-            texDef.m_shadow.m_shadowEnabled = true;
-            texDef.m_shadow.m_shadowOffset  = m_shadowOffset;
-            texDef.m_shadow.m_shadowBlur    = m_shadowBlur;
-            texDef.m_shadow.m_shadowOpacity = m_shadowOpacity;
-        }
-        else
-        {
-            texDef.m_shadow.m_shadowEnabled = false;
-        }
-        
-        // text tint
-        texDef.m_fontTint.m_tintColor = m_textTintColor;
-
-        // init the texture
+        ccTextDefinition texDef = _prepareTextDefinition();
         tex->initWithStringShadowStroke( m_string.c_str(), texDef );
-        
-        this->setTexture(tex);
-        tex->release();
-        
-        CCRect rect = CCRectZero;
-        rect.size   = m_pobTexture->getContentSize();
-        this->setTextureRect(rect);
-        
-        return true;
     
     #else
-    
-        CCTexture2D *tex;
-    
-        // let system compute label's width or height when its value is 0
-        // refer to cocos2d-x issue #1430
-        tex = new CCTexture2D();
-        if (!tex)
-        {
-            return false;
-        }
     
         tex->initWithString( m_string.c_str(),
                             m_pFontName->c_str(),
@@ -336,20 +303,24 @@ bool CCLabelTTF::updateTexture()
                             CC_SIZE_POINTS_TO_PIXELS(m_tDimensions),
                             m_hAlignment,
                             m_vAlignment);
-        
-        this->setTexture(tex);
-        tex->release();
-	
-        CCRect rect = CCRectZero;
-        rect.size = m_pobTexture->getContentSize();
-        this->setTextureRect(rect);
-    
-        return true;
     
     #endif
+    
+    // set the texture
+    this->setTexture(tex);
+    // release it
+    tex->release();
+    
+    // set the size in the sprite
+    CCRect rect =CCRectZero;
+    rect.size   = m_pobTexture->getContentSize();
+    this->setTextureRect(rect);
+    
+    //ok
+    return true;
 }
 
-void CCLabelTTF::enableShadow(CCSize &shadowOffset, float shadowOpacity, float shadowBlur)
+void CCLabelTTF::enableShadow(CCSize &shadowOffset, float shadowOpacity, float shadowBlur, bool updateTexture)
 {
     #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     
@@ -380,7 +351,7 @@ void CCLabelTTF::enableShadow(CCSize &shadowOffset, float shadowOpacity, float s
         }
         
         
-        if ( valueChanged )
+        if ( valueChanged && updateTexture )
         {
             this->updateTexture();
         }
@@ -391,14 +362,17 @@ void CCLabelTTF::enableShadow(CCSize &shadowOffset, float shadowOpacity, float s
     
 }
 
-void CCLabelTTF::disableShadow()
+void CCLabelTTF::disableShadow(bool updateTexture)
 {
     #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     
         if (m_shadowEnabled)
         {
             m_shadowEnabled = false;
-            this->updateTexture();
+    
+            if (updateTexture)
+                this->updateTexture();
+            
         }
     
     #else
@@ -406,7 +380,7 @@ void CCLabelTTF::disableShadow()
     #endif
 }
 
-void CCLabelTTF::enableStroke(const ccColor3B &strokeColor, float strokeSize)
+void CCLabelTTF::enableStroke(const ccColor3B &strokeColor, float strokeSize, bool updateTexture)
 {
     #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     
@@ -430,7 +404,7 @@ void CCLabelTTF::enableStroke(const ccColor3B &strokeColor, float strokeSize)
             valueChanged = true;
         }
         
-        if (valueChanged)
+        if ( valueChanged && updateTexture )
         {
             this->updateTexture();
         }
@@ -441,14 +415,16 @@ void CCLabelTTF::enableStroke(const ccColor3B &strokeColor, float strokeSize)
     
 }
 
-void CCLabelTTF::disableStroke()
+void CCLabelTTF::disableStroke(bool updateTexture)
 {
     #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     
         if (m_strokeEnabled)
         {
             m_strokeEnabled = false;
-            this->updateTexture();
+            
+            if (updateTexture)
+                this->updateTexture();
         }
     
     #else
@@ -457,18 +433,105 @@ void CCLabelTTF::disableStroke()
     
 }
 
-void CCLabelTTF::setFontFillColor(const ccColor3B &tintColor)
+void CCLabelTTF::setFontFillColor(const ccColor3B &tintColor, bool updateTexture)
 {
     #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
         if (m_textTintColor.r != tintColor.r || m_textTintColor.g != tintColor.g || m_textTintColor.b != tintColor.b)
         {
             m_textTintColor = tintColor;
-            this->updateTexture();
+            
+            if (updateTexture)
+                this->updateTexture();
         }
     #else
         CCAssert(false, "Currently only supported on iOS and Android!");
     #endif
 }
 
+void CCLabelTTF::setTextDefinition(ccTextDefinition *theDefinition)
+{
+    if (theDefinition)
+    {
+        _updateWithTextDefinition(*theDefinition, true);
+    }
+}
+
+ccTextDefinition *CCLabelTTF::getTextDefinition()
+{
+    ccTextDefinition *tempDefinition = new ccTextDefinition;
+    *tempDefinition = _prepareTextDefinition();
+    return tempDefinition;
+}
+
+void CCLabelTTF::_updateWithTextDefinition(ccTextDefinition & textDefinition, bool mustUpdateTexture)
+{
+    m_tDimensions = CCSizeMake(textDefinition.m_dimensions.width, textDefinition.m_dimensions.height);
+    m_hAlignment  = textDefinition.m_alignment;
+    m_vAlignment  = textDefinition.m_vertAlignment;
+    
+    m_pFontName   = new std::string(textDefinition.m_fontName);
+    m_fFontSize   = textDefinition.m_fontSize;
+    
+    
+    // shadow
+    if ( textDefinition.m_shadow.m_shadowEnabled )
+    {
+        enableShadow(textDefinition.m_shadow.m_shadowOffset, textDefinition.m_shadow.m_shadowOpacity, textDefinition.m_shadow.m_shadowBlur, false);
+    }
+    
+    // stroke
+    if ( textDefinition.m_stroke.m_strokeEnabled )
+    {
+        enableStroke(textDefinition.m_stroke.m_strokeColor, textDefinition.m_stroke.m_strokeSize, false);
+    }
+    
+    // fill color
+    if ( textDefinition.m_fontTint.m_tintEnabled )
+    {
+        setFontFillColor(textDefinition.m_fontTint.m_tintColor, false);
+    }
+    
+    if (mustUpdateTexture)
+        updateTexture();
+}
+
+ccTextDefinition CCLabelTTF::_prepareTextDefinition()
+{
+    ccTextDefinition texDef;
+    
+    texDef.m_fontSize       =  m_fFontSize * CC_CONTENT_SCALE_FACTOR();
+    texDef.m_fontName       = *m_pFontName;
+    texDef.m_alignment      =  m_hAlignment;
+    texDef.m_vertAlignment  =  m_vAlignment;
+    texDef.m_dimensions     =  CC_SIZE_POINTS_TO_PIXELS(m_tDimensions);
+    
+    if ( m_strokeEnabled )
+    {
+        texDef.m_stroke.m_strokeEnabled = true;
+        texDef.m_stroke.m_strokeSize    = m_strokeSize;
+        texDef.m_stroke.m_strokeColor   = m_strokeColor;
+    }
+    else
+    {
+        texDef.m_stroke.m_strokeEnabled = false;
+    }
+    
+    if ( m_shadowEnabled )
+    {
+        texDef.m_shadow.m_shadowEnabled = true;
+        texDef.m_shadow.m_shadowOffset  = m_shadowOffset;
+        texDef.m_shadow.m_shadowBlur    = m_shadowBlur;
+        texDef.m_shadow.m_shadowOpacity = m_shadowOpacity;
+    }
+    else
+    {
+        texDef.m_shadow.m_shadowEnabled = false;
+    }
+    
+    // text tint
+    texDef.m_fontTint.m_tintColor = m_textTintColor;
+    
+    return texDef;
+}
 
 NS_CC_END
