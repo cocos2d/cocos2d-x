@@ -63,9 +63,11 @@ enum {
     TMXPropertyNone,
     TMXPropertyMap,
     TMXPropertyLayer,
+    TMXPropertyImageLayer,
     TMXPropertyObjectGroup,
     TMXPropertyObject,
-    TMXPropertyTile
+    TMXPropertyTile,
+    TMXPropertyTileSet
 };
 
 typedef enum ccTMXTileFlags_ {
@@ -102,6 +104,26 @@ public:
 public:
     CCTMXLayerInfo();
     virtual ~CCTMXLayerInfo();
+};
+
+/** @brief CCTMXImageLayerInfo contains the information about the layer of image like:
+- ImageLayer name
+- Image size
+- Image used for the ImageLayer
+
+This information is obtained from the TMX file. 
+*/
+class CC_DLL CCTMXImageLayerInfo : public CCObject
+{
+    CC_PROPERTY( CCDictionary*, m_pProperties, Properties );
+public:
+    std::string     m_sName;
+    CCSize          m_tSize;
+    std::string     m_sSourceImage;
+    bool            m_bVisible;
+public:
+    CCTMXImageLayerInfo();
+    virtual ~CCTMXImageLayerInfo();
 };
 
 /** @brief CCTMXTilesetInfo contains the information about the tilesets like:
@@ -156,6 +178,8 @@ public:
     CC_SYNTHESIZE_PASS_BY_REF(CCSize, m_tTileSize, TileSize);
     /// Layers
     CC_PROPERTY(CCArray*, m_pLayers, Layers);
+    /// ImageLayers
+    CC_PROPERTY(CCArray*, m_pImageLayers, ImageLayers);
     /// tilesets
     CC_PROPERTY(CCArray*, m_pTilesets, Tilesets);
     /// ObjectGroups

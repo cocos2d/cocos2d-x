@@ -64,6 +64,8 @@ static const char* valueForKey(const char *key, std::map<std::string, std::strin
     }
     return "";
 }
+
+
 // implementation CCTMXLayerInfo
 CCTMXLayerInfo::CCTMXLayerInfo()
 : m_sName("")
@@ -97,6 +99,37 @@ void CCTMXLayerInfo::setProperties(CCDictionary* var)
     m_pProperties = var;
 }
 
+
+// implementation CCTMXImageLayerInfo
+
+CCTMXImageLayerInfo::CCTMXImageLayerInfo()
+: m_sName( "" )
+, m_tSize( CCSizeZero )
+, m_sSourceImage( "" )
+, m_bVisible( true )
+{
+    m_pProperties= new CCDictionary();;
+}
+
+CCTMXImageLayerInfo::~CCTMXImageLayerInfo()
+{
+    CCLOGINFO( "cocos2d: deallocing." );
+    CC_SAFE_RELEASE( m_pProperties );
+}
+
+CCDictionary* CCTMXImageLayerInfo::getProperties()
+{
+    return m_pProperties;
+}
+
+void CCTMXImageLayerInfo::setProperties( CCDictionary* var )
+{
+    CC_SAFE_RETAIN( var );
+    CC_SAFE_RELEASE( m_pProperties );
+    m_pProperties = var;
+}
+
+
 // implementation CCTMXTilesetInfo
 CCTMXTilesetInfo::CCTMXTilesetInfo()
     :m_uFirstGid(0)
@@ -106,10 +139,12 @@ CCTMXTilesetInfo::CCTMXTilesetInfo()
     ,m_tImageSize(CCSizeZero)
 {
 }
+
 CCTMXTilesetInfo::~CCTMXTilesetInfo()
 {
     CCLOGINFO("cocos2d: deallocing.");
 }
+
 CCRect CCTMXTilesetInfo::rectForGID(unsigned int gid)
 {
     CCRect rect;
@@ -123,8 +158,8 @@ CCRect CCTMXTilesetInfo::rectForGID(unsigned int gid)
     return rect;
 }
 
-// implementation CCTMXMapInfo
 
+// implementation CCTMXMapInfo
 CCTMXMapInfo * CCTMXMapInfo::formatWithTMXFile(const char *tmxFile)
 {
     CCTMXMapInfo *pRet = new CCTMXMapInfo();
@@ -156,6 +191,9 @@ void CCTMXMapInfo::internalInit(const char* tmxFileName, const char* resourcePat
 
     m_pLayers = CCArray::create();
     m_pLayers->retain();
+
+    m_pImageLayers = CCArray::create();
+    m_pImageLayers->retain();
 
     if (tmxFileName != NULL)
     {
@@ -196,6 +234,7 @@ CCTMXMapInfo::CCTMXMapInfo()
 : m_tMapSize(CCSizeZero)    
 , m_tTileSize(CCSizeZero)
 , m_pLayers(NULL)
+, m_pImageLayers(NULL)
 , m_pTilesets(NULL)
 , m_pObjectGroups(NULL)
 , m_nLayerAttribs(0)
@@ -211,6 +250,7 @@ CCTMXMapInfo::~CCTMXMapInfo()
     CCLOGINFO("cocos2d: deallocing.");
     CC_SAFE_RELEASE(m_pTilesets);
     CC_SAFE_RELEASE(m_pLayers);
+    CC_SAFE_RELEASE(m_pImageLayers);
     CC_SAFE_RELEASE(m_pProperties);
     CC_SAFE_RELEASE(m_pTileProperties);
     CC_SAFE_RELEASE(m_pObjectGroups);
@@ -226,6 +266,18 @@ void CCTMXMapInfo::setLayers(CCArray* var)
     CC_SAFE_RETAIN(var);
     CC_SAFE_RELEASE(m_pLayers);
     m_pLayers = var;
+}
+
+CCArray* CCTMXMapInfo::getImageLayers()
+{
+    return m_pImageLayers;
+}
+
+void CCTMXMapInfo::setImageLayers( CCArray* var )
+{
+    CC_SAFE_RETAIN( var );
+    CC_SAFE_RELEASE( m_pImageLayers );
+    m_pImageLayers = var;
 }
 
 CCArray* CCTMXMapInfo::getTilesets()
@@ -307,7 +359,9 @@ bool CCTMXMapInfo::parseXMLFile(const char *xmlFilename)
     
     parser.setDelegator(this);
 
-    return parser.parse(CCFileUtils::sharedFileUtils()->fullPathForFilename(xmlFilename).c_str());
+    const std::string path =
+        CCFileUtils::sharedFileUtils()->fullPathForFilename( xmlFilename );
+    return parser.parse( path.c_str() );
 }
 
 
@@ -401,6 +455,8 @@ void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
             pTMXMapInfo->getTilesets()->addObject(tileset);
             tileset->release();
         }
+
+        pTMXMapInfo->setParentElement(TMXPropertyTileSet);
     }
     else if (elementName == "tile")
     {
@@ -447,6 +503,27 @@ void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         pTMXMapInfo->setParentElement(TMXPropertyLayer);
 
     } 
+    else if (elementName == "imagelayer")
+    {
+        CCTMXImageLayerInfo* imageLayer = new CCTMXImageLayerInfo();
+        imageLayer->m_sName = valueForKey( "name", attributeDict );
+
+        const CCSize size(
+            (float)atof( valueForKey( "width",  attributeDict ) ),
+            (float)atof( valueForKey( "height", attributeDict ) )
+        );
+        imageLayer->m_tSize = size;
+
+        const std::string visible = valueForKey( "visible", attributeDict );
+        imageLayer->m_bVisible = !(visible == "0");
+
+        pTMXMapInfo->getImageLayers()->addObject( imageLayer );
+        imageLayer->release();
+
+        // The parent element is now "imagelayer"
+        pTMXMapInfo->setParentElement( TMXPropertyImageLayer );
+
+    } 
     else if (elementName == "objectgroup")
     {
         CCTMXObjectGroup *objectGroup = new CCTMXObjectGroup();
@@ -465,21 +542,50 @@ void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
     }
     else if (elementName == "image")
     {
-        CCTMXTilesetInfo* tileset = (CCTMXTilesetInfo*)pTMXMapInfo->getTilesets()->lastObject();
-
-        // build full path
-        std::string imagename = valueForKey("source", attributeDict);
-
-        if (m_sTMXFileName.find_last_of("/") != string::npos)
+        const auto parent = pTMXMapInfo->getParentElement();
+        if ( pTMXMapInfo->getParentElement() == TMXPropertyTileSet )
         {
-            string dir = m_sTMXFileName.substr(0, m_sTMXFileName.find_last_of("/") + 1);
-            tileset->m_sSourceImage = dir + imagename;
+            // The parent element is the tileset
+            CCTMXTilesetInfo* tileset = (CCTMXTilesetInfo*)pTMXMapInfo->getTilesets()->lastObject();
+            // build full path
+            std::string imagename = valueForKey("source", attributeDict);
+            if (m_sTMXFileName.find_last_of("/") != string::npos)
+            {
+                string dir = m_sTMXFileName.substr(0, m_sTMXFileName.find_last_of("/") + 1);
+                tileset->m_sSourceImage = dir + imagename;
+            }
+            else 
+            {
+                tileset->m_sSourceImage = m_sResources + (m_sResources.size() ? "/" : "") + imagename;
+            }
         }
-        else 
+        else if ( pTMXMapInfo->getParentElement() == TMXPropertyImageLayer )
         {
-            tileset->m_sSourceImage = m_sResources + (m_sResources.size() ? "/" : "") + imagename;
+            // The parent element is the imagelayer
+            CCTMXImageLayerInfo* imageLayer =
+                (CCTMXImageLayerInfo*)pTMXMapInfo->getImageLayers()->lastObject();
+            // build full path
+            const std::string imageName = valueForKey( "source", attributeDict );
+            if (m_sTMXFileName.find_last_of( "/" ) != string::npos)
+            {
+                const std::string dir =
+                    m_sTMXFileName.substr( 0,  m_sTMXFileName.find_last_of( "/" ) + 1 );
+                imageLayer->m_sSourceImage = dir + imageName;
+            }
+            else 
+            {
+                imageLayer->m_sSourceImage =
+                    m_sResources + (m_sResources.size() ? "/" : "") + imageName;
+            }
         }
-    } 
+        else
+        {
+            CCLOG( "TMX tile map: Parent element is unsupported."
+                " Cannot add property named '%s' with value '%s'",
+                valueForKey( "name",  attributeDict ),
+                valueForKey( "value", attributeDict ) );
+        }
+    }
     else if (elementName == "data")
     {
         std::string encoding = valueForKey("encoding", attributeDict);
@@ -750,6 +856,11 @@ void CCTMXMapInfo::endElement(void *ctx, const char *name)
     else if (elementName == "layer")
     {
         // The layer element has ended
+        pTMXMapInfo->setParentElement(TMXPropertyNone);
+    }
+    else if (elementName == "imagelayer")
+    {
+        // The imagelayer element has ended
         pTMXMapInfo->setParentElement(TMXPropertyNone);
     }
     else if (elementName == "objectgroup")

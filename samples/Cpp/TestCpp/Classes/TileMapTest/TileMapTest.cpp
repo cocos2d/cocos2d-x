@@ -1355,7 +1355,7 @@ enum
 
 static int sceneIdx = -1; 
 
-#define MAX_LAYER    28
+#define MAX_LAYER    30
 
 CCLayer* createTileMapLayer(int nIndex)
 {
@@ -1389,6 +1389,8 @@ CCLayer* createTileMapLayer(int nIndex)
         case 25: return new TMXBug987();
         case 26: return new TMXBug787();
         case 27: return new TMXGIDObjectsTest();
+        case 28: return new TMXOrthoBackgroundOnlyTest();
+        case 29: return new TMXOrthoBackgroundWithSpritesTest();
     }
 
     return NULL;
@@ -1592,4 +1594,65 @@ string TMXGIDObjectsTest::title()
 string TMXGIDObjectsTest::subtitle()
 {
     return "Tiles are created from an object group";
+}
+
+//------------------------------------------------------------------
+//
+// TMXOrthoBackgroundOnlyTest
+//
+//------------------------------------------------------------------
+TMXOrthoBackgroundOnlyTest::TMXOrthoBackgroundOnlyTest()
+{
+    const std::string resources = "TileMaps";
+    const std::string file = resources + "/ortho-bg-only-test.tmx";
+
+    CCTMXTiledMap* map = CCTMXTiledMap::create( file.c_str() );
+    CCAssert( map, "Unable to open map" );
+    addChild( map, 0, kTagTileMap );
+
+    const CCSize CC_UNUSED s = map->getContentSize();
+    CCLog( "ContentSize: %f, %f", s.width, s.height );
+
+    map->setScale( 0.5f );
+}
+
+std::string TMXOrthoBackgroundOnlyTest::title()
+{
+    return "TMX background only test";
+}
+
+std::string TMXOrthoBackgroundOnlyTest::subtitle()
+{
+    return "You should see a color image only";
+}
+
+//------------------------------------------------------------------
+//
+// TMXOrthoBackgroundWithSpritesTest
+//
+//------------------------------------------------------------------
+TMXOrthoBackgroundWithSpritesTest::TMXOrthoBackgroundWithSpritesTest()
+{
+    const std::string resources = "TileMaps";
+    const std::string file = resources + "/ortho-bg-with-sprite-test.tmx";
+
+    CCTMXTiledMap* map = CCTMXTiledMap::create( file.c_str() );
+    CCAssert( map, "Unable to open map" );
+    addChild( map, 0, kTagTileMap );
+
+    const CCSize CC_UNUSED s = map->getContentSize();
+    CCLog( "ContentSize: %f, %f", s.width, s.height );
+
+    CCScaleBy* action = CCScaleBy::create( 2, 0.5f );
+    map->runAction( action );
+}
+
+std::string TMXOrthoBackgroundWithSpritesTest::title()
+{
+    return "TMX background with sprites test";
+}
+
+std::string TMXOrthoBackgroundWithSpritesTest::subtitle()
+{
+    return "You should see a color image,\n sprites in the corners and two in the center";
 }

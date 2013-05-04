@@ -461,7 +461,9 @@
     <ClCompile Include="..\cocoa\CCDataVisitor.cpp">
       <Filter>cocoa</Filter>
     </ClCompile>
-  </ItemGroup>
+    <ClCompile Include="..\tilemap_parallax_nodes\CCTMXImageLayer.cpp">
+      <Filter>tilemap_parallax_nodes</Filter>
+    </ClCompile>  </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\base_nodes\CCAtlasNode.h">
       <Filter>base_nodes</Filter>
@@ -928,6 +930,9 @@
     </ClInclude>
     <ClInclude Include="..\cocoa\CCFloat.h">
       <Filter>cocoa</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tilemap_parallax_nodes\CCTMXImageLayer.h">
+      <Filter>tilemap_parallax_nodes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
