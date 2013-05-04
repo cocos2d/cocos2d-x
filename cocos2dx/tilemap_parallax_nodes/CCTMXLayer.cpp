@@ -60,6 +60,7 @@ bool CCTMXLayer::initWithTilesetInfo(CCTMXTilesetInfo *tilesetInfo, CCTMXLayerIn
     if( tilesetInfo )
     {
         texture = CCTextureCache::sharedTextureCache()->addImage(tilesetInfo->m_sSourceImage.c_str());
+        CCAssert( texture, "Texture for tileset is not loaded." );
     }
 
     if (CCSpriteBatchNode::initWithTexture(texture, (unsigned int)capacity))
@@ -92,7 +93,7 @@ bool CCTMXLayer::initWithTilesetInfo(CCTMXTilesetInfo *tilesetInfo, CCTMXLayerIn
 
         m_bUseAutomaticVertexZ = false;
         m_nVertexZvalue = 0;
-        
+
         return true;
     }
     return false;
@@ -244,7 +245,7 @@ void CCTMXLayer::setupTileSprite(CCSprite* sprite, CCPoint pos, unsigned int gid
 
     //issue 1264, flip can be undone as well
     sprite->setFlipX(false);
-    sprite->setFlipY(false);
+    sprite->setFlipX(false);
     sprite->setRotation(0.0f);
     sprite->setAnchorPoint(ccp(0,0));
 
