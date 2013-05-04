@@ -34,6 +34,8 @@ NS_CC_BEGIN
 class CCTMXObjectGroup;
 class CCTMXLayer;
 class CCTMXLayerInfo;
+class CCTMXImageLayer;
+class CCTMXImageLayerInfo;
 class CCTMXTilesetInfo;
 class CCTMXMapInfo;
 
@@ -137,6 +139,9 @@ public:
     /** return the TMXLayer for the specific layer */
     CCTMXLayer* layerNamed(const char *layerName);
 
+    /** return the TMXImageLayer for the specific layer */
+    CCTMXImageLayer* imageLayerNamed(const char *imageLayerName);
+
     /** return the TMXObjectGroup for the specific group */
     CCTMXObjectGroup* objectGroupNamed(const char *groupName);
 
@@ -147,9 +152,11 @@ public:
     CCDictionary* propertiesForGID(int GID);
 
 private:
-    CCTMXLayer * parseLayer(CCTMXLayerInfo *layerInfo, CCTMXMapInfo *mapInfo);
-    CCTMXTilesetInfo * tilesetForLayer(CCTMXLayerInfo *layerInfo, CCTMXMapInfo *mapInfo);
-    void buildWithMapInfo(CCTMXMapInfo* mapInfo);
+    CCTMXLayer* parseLayer(CCTMXLayerInfo*, CCTMXMapInfo*);
+    CCTMXImageLayer* parseImageLayer(CCTMXImageLayerInfo*, CCTMXMapInfo*);
+    CCTMXTilesetInfo* tilesetForLayer(CCTMXLayerInfo*, CCTMXMapInfo*);
+    void buildWithMapInfo(CCTMXMapInfo*);
+
 protected:
     //! tile properties
     CCDictionary* m_pTileProperties;

@@ -458,6 +458,9 @@
     <ClCompile Include="..\support\tinyxml2\tinyxml2.cpp">
       <Filter>support\tinyxml2</Filter>
     </ClCompile>
+    <ClCompile Include="..\tilemap_parallax_nodes\CCTMXImageLayer.cpp">
+      <Filter>tilemap_parallax_nodes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\base_nodes\CCAtlasNode.h">
@@ -913,6 +916,9 @@
     </ClInclude>
     <ClInclude Include="..\support\tinyxml2\tinyxml2.h">
       <Filter>support\tinyxml2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tilemap_parallax_nodes\CCTMXImageLayer.h">
+      <Filter>tilemap_parallax_nodes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
