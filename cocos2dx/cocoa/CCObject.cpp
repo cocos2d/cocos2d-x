@@ -100,12 +100,12 @@ CCObject* CCObject::autorelease(void)
     return this;
 }
 
-bool CCObject::isSingleReference(void)
+bool CCObject::isSingleReference(void) const
 {
     return m_uReference == 1;
 }
 
-unsigned int CCObject::retainCount(void)
+unsigned int CCObject::retainCount(void) const
 {
     return m_uReference;
 }
