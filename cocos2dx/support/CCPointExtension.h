@@ -136,7 +136,7 @@ ccpCross(const CCPoint& v1, const CCPoint& v2)
 static inline CCPoint
 ccpPerp(const CCPoint& v)
 {
-    return v.perp();
+    return v.getPerp();
 }
 
 /** Calculates perpendicular of v, rotated 90 degrees clockwise -- cross(v, rperp(v)) <= 0
@@ -146,7 +146,7 @@ ccpPerp(const CCPoint& v)
 static inline CCPoint
 ccpRPerp(const CCPoint& v)
 {
-    return v.rPerp();
+    return v.getRPerp();
 }
 
 /** Calculates the projection of v1 over v2.
@@ -186,7 +186,7 @@ ccpUnrotate(const CCPoint& v1, const CCPoint& v2)
 static inline float
 ccpLengthSQ(const CCPoint& v)
 {
-    return v.lengthSq();
+    return v.getLengthSq();
 }
 
 
@@ -197,7 +197,7 @@ ccpLengthSQ(const CCPoint& v)
 static inline float
 ccpDistanceSQ(const CCPoint p1, const CCPoint p2)
 {
-    return (p1 - p2).lengthSq();
+    return (p1 - p2).getLengthSq();
 }
 
 

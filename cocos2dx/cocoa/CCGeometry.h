@@ -61,19 +61,27 @@ public:
     bool equals(const CCPoint& target) const;
     bool fuzzyEquals(const CCPoint& target, float variance) const;
 
-    inline float length() const {
+    inline float getLength() const {
         return sqrtf(x*x + y*y);
     };
 
-    inline float lengthSq() const {
+    inline float getLengthSq() const {
         return dot(*this); //x*x + y*y;
     };
 
-    inline float angle() const {
+    inline float getAngle() const {
         return atan2f(y, x);
     };
 
-    float angle(const CCPoint& other) const;
+    inline float getDistanceSq(const CCPoint& other) const {
+        return (*this - other).getLengthSq();
+    };
+
+    inline float getDistance(const CCPoint& other) const {
+        return (*this - other).getLength();
+    };
+
+    float getAngle(const CCPoint& other) const;
 
     inline float dot(const CCPoint& other) const {
         return x*other.x + y*other.y;
@@ -83,16 +91,16 @@ public:
         return x*other.y - y*other.x;
     };
 
-    inline CCPoint perp() const {
+    inline CCPoint getPerp() const {
         return CCPoint(-y, x);
     };
 
-    inline CCPoint rPerp() const {
+    inline CCPoint getRPerp() const {
         return CCPoint(y, -x);
     };
 
     inline CCPoint project(const CCPoint& other) const {
-        return other * dot(other)/other.dot(other);
+        return other * (dot(other)/other.dot(other));
     };
 
     inline CCPoint rotate(const CCPoint& other) const {
@@ -104,7 +112,7 @@ public:
     };
 
     inline CCPoint normalize() const {
-        return *this / length();
+        return *this / getLength();
     };
 
     inline CCPoint lerp(const CCPoint& other, float alpha) const {
