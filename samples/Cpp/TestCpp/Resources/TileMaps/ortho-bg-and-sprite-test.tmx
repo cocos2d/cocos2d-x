@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="40" height="30" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="iso-test" tilewidth="64" tileheight="64" spacing="2" margin="2">
+  <image source="iso-test.png" width="512" height="256"/>
+ </tileset>
+ <imagelayer name="bg" width="40" height="30">
+  <image source="uv-1280x960.jpg"/>
+ </imagelayer>
+ <layer name="tile" width="40" height="30">
+  <data encoding="base64" compression="zlib">
+   eJzt17ERACAMQtEUWsX957VKmbt0oPffBHRAhLetDtBY6gBDRx2gkeoAAPCJ6iPXvnRXfeTalwAAYM71p7+y01x/eu20C4glAGE=
+  </data>
+ </layer>
+</map>

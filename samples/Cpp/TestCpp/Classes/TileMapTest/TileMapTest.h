@@ -290,4 +290,20 @@ public:
     virtual void runThisTest();
 };
 
+class TMXOrthoBackgroundOnlyTest : public TileDemo 
+{
+public:
+    TMXOrthoBackgroundOnlyTest();
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
+class TMXOrthoBackgroundWithSpritesTest : public TileDemo 
+{
+public:
+    TMXOrthoBackgroundWithSpritesTest();
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
 #endif
