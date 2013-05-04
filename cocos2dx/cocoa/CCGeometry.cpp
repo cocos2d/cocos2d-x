@@ -95,13 +95,13 @@ bool CCPoint::equals(const CCPoint& target) const
 
 bool CCPoint::fuzzyEquals(const CCPoint& b, float var) const
 {
-    if(x - var <= x && b.x <= x + var)
+    if(x - var <= b.x && b.x <= x + var)
         if(y - var <= b.y && b.y <= y + var)
             return true;
     return false;
 }
 
-float CCPoint::angle(const CCPoint& other) const
+float CCPoint::getAngle(const CCPoint& other) const
 {
     CCPoint a2 = normalize();
     CCPoint b2 = other.normalize();
@@ -112,9 +112,7 @@ float CCPoint::angle(const CCPoint& other) const
 
 CCPoint CCPoint::rotateByAngle(const CCPoint& pivot, float angle) const
 {
-    CCPoint r = *this - pivot;
-    CCPoint a = CCPoint::forAngle(angle);
-    return pivot + CCPoint(r.x*a.x - r.y*a.y, r.x*a.y + r.y*a.x);
+    return pivot + (*this - pivot).rotate(CCPoint::forAngle(angle));
 }
 
 // implementation of CCSize

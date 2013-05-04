@@ -35,13 +35,13 @@ NS_CC_BEGIN
 float
 ccpLength(const CCPoint& v)
 {
-    return v.length();
+    return v.getLength();
 }
 
 float
 ccpDistance(const CCPoint& v1, const CCPoint& v2)
 {
-    return (v1 - v2).length();
+    return (v1 - v2).getLength();
 }
 
 CCPoint
@@ -59,7 +59,7 @@ ccpForAngle(const float a)
 float
 ccpToAngle(const CCPoint& v)
 {
-    return v.angle();
+    return v.getAngle();
 }
 
 CCPoint ccpLerp(const CCPoint& a, const CCPoint& b, float alpha)
@@ -102,7 +102,7 @@ CCPoint ccpCompMult(const CCPoint& a, const CCPoint& b)
 
 float ccpAngleSigned(const CCPoint& a, const CCPoint& b)
 {
-	return a.angle(b);
+	return a.getAngle(b);
 }
 
 CCPoint ccpRotateByAngle(const CCPoint& v, const CCPoint& pivot, float angle)
