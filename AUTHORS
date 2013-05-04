@@ -23,6 +23,7 @@ Developers:
 
     mchinen
         fix emulator issue for OpenGL ES 2.0 on Android
+        Fix missing protocol method warning for iOS 6.0 addition
 
     DenizPiri
         use CCLOG to implement print() function in LUA
