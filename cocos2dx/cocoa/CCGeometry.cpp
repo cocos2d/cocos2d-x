@@ -66,6 +66,11 @@ CCPoint CCPoint::operator-(const CCPoint& right) const
     return CCPoint(this->x - right.x, this->y - right.y);
 }
 
+CCPoint CCPoint::operator-() const
+{
+	return CCPoint(-x, -y);
+}
+
 CCPoint CCPoint::operator*(float a) const
 {
     return CCPoint(this->x * a, this->y * a);
@@ -86,6 +91,30 @@ bool CCPoint::equals(const CCPoint& target) const
 {
     return (fabs(this->x - target.x) < FLT_EPSILON)
         && (fabs(this->y - target.y) < FLT_EPSILON);
+}
+
+bool CCPoint::fuzzyEquals(const CCPoint& b, float var) const
+{
+    if(x - var <= x && b.x <= x + var)
+        if(y - var <= b.y && b.y <= y + var)
+            return true;
+    return false;
+}
+
+float CCPoint::angle(const CCPoint& other) const
+{
+    CCPoint a2 = normalize();
+    CCPoint b2 = other.normalize();
+    float angle = atan2f(a2.cross(b2), a2.dot(b2));
+    if( fabs(angle) < FLT_EPSILON ) return 0.f;
+    return angle;
+}
+
+CCPoint CCPoint::rotateByAngle(const CCPoint& pivot, float angle) const
+{
+    CCPoint r = *this - pivot;
+    CCPoint a = CCPoint::forAngle(angle);
+    return pivot + CCPoint(r.x*a.x - r.y*a.y, r.x*a.y + r.y*a.x);
 }
 
 // implementation of CCSize

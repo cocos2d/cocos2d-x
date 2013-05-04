@@ -27,6 +27,7 @@ THE SOFTWARE.
 
 #include "platform/CCPlatformMacros.h"
 #include "CCObject.h"
+#include <math.h>
 
 NS_CC_BEGIN
 
@@ -35,7 +36,7 @@ NS_CC_BEGIN
  * @{
  */
 
-// for CCPoint assignement operator
+// for CCPoint assignement operator and copy constructor
 class CC_DLL CCSize;
 
 class CC_DLL CCPoint
@@ -53,10 +54,69 @@ public:
     CCPoint& operator= (const CCSize& size);
     CCPoint operator+(const CCPoint& right) const;
     CCPoint operator-(const CCPoint& right) const;
+    CCPoint operator-() const;
     CCPoint operator*(float a) const;
     CCPoint operator/(float a) const;
     void setPoint(float x, float y);
     bool equals(const CCPoint& target) const;
+    bool fuzzyEquals(const CCPoint& target, float variance) const;
+
+    inline float length() const {
+        return sqrtf(x*x + y*y);
+    };
+
+    inline float lengthSq() const {
+        return dot(*this); //x*x + y*y;
+    };
+
+    inline float angle() const {
+        return atan2f(y, x);
+    };
+
+    float angle(const CCPoint& other) const;
+
+    inline float dot(const CCPoint& other) const {
+        return x*other.x + y*other.y;
+    };
+
+    inline float cross(const CCPoint& other) const {
+        return x*other.y - y*other.x;
+    };
+
+    inline CCPoint perp() const {
+        return CCPoint(-y, x);
+    };
+
+    inline CCPoint rPerp() const {
+        return CCPoint(y, -x);
+    };
+
+    inline CCPoint project(const CCPoint& other) const {
+        return other * dot(other)/other.dot(other);
+    };
+
+    inline CCPoint rotate(const CCPoint& other) const {
+        return CCPoint(x*other.x - y*other.y, x*other.y + y*other.x);
+    };
+
+    inline CCPoint unrotate(const CCPoint& other) const {
+        return CCPoint(x*other.x + y*other.y, y*other.x - x*other.y);
+    };
+
+    inline CCPoint normalize() const {
+        return *this / length();
+    };
+
+    inline CCPoint lerp(const CCPoint& other, float alpha) const {
+        return *this * (1.f - alpha) + other * alpha;
+    };
+
+    CCPoint rotateByAngle(const CCPoint& pivot, float angle) const;
+
+    static inline CCPoint forAngle(const float a)
+    {
+    	return CCPoint(cosf(a), sinf(a));
+    }
 };
 
 class CC_DLL CCSize
