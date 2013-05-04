@@ -12,6 +12,9 @@ Developers:
     Rolando Abarca
         Javascript Binding and testjs
 
+    rodrigogolive
+        Fix broke linux build
+
     kdejongh
         Fix for spaces at the beginning of wrapped lines on Android
 
@@ -38,6 +41,7 @@ Developers:
         fix for loading custom fonts on iOS when referenced from a CCB file
         Fix CCUserDefault.cpp compiling on Android.
         Fixing CCFileUtils 'createXXXXWithContentsOfFile' path lookup issue.
+        Add CCDirector::popToSceneStackLevel(int level).
 
     Waiter
         fix an error that OpenSLEngine can't load resources from SD card
@@ -90,6 +94,7 @@ Developers:
          Touch priority can't be set to the value specified by a call to CCMenu::setTouchPriority(int).
          CCTableView crashes if a CCTableViewDelegate is not provided.
          Fixing a bug that _realOpacity isn't assigned in CCLayerColor::initWithColor.
+         CCScrollView TouchPriority Fix
 
     Weeds (Andre Rudlaff)
         Used fontconfig to enhance font rendering on linux.
@@ -101,6 +106,7 @@ Developers:
         Fixed potential crash in CCScheduler::removeHashElement.
         Fixed potential crash in CCSaxParser.
         Added kResolutionFixedHeight and kResolutionFixedWidth resolution policy.
+        Use pthread mutex and condition variable instead of pthred semaphore to load image asynchronizely.
 
     Nat Weiss (iphonegamekit.com)
         author of Mac port
@@ -127,6 +133,7 @@ Developers:
         fixed CCDirector to use CCLabelBMFont instead of CCLabelTTF
         added CCBReader (CCBI format)
         Added cleanup and reset methods to ScriptingCore.
+        Fixed a bug in ScriptingCore::evalString not setting the outval.
 
     Rohan Kuruvilla (rohankuruvilla, Zynga)
         Improvements to JS Bindings.

@@ -91,7 +91,7 @@
 		<link>
 			<name>cocos2dx_support</name>
 			<type>2</type>
-			<locationURI>PARENT-4-PROJECT_LOC/scripting/lua/cocos2dx_support</locationURI>
+			<locationURI>PARENT-3-PROJECT_LOC/scripting/lua/cocos2dx_support</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>

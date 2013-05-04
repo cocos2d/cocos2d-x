@@ -1,3 +1,26 @@
+/****************************************************************************
+Copyright (c) 2012-2013 cocos2d-x.org
+
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
 #include "HelloWorldScene.h"
 #include "PluginManager.h"
 #include "AnalyticsFlurry.h"
@@ -84,7 +107,7 @@ bool HelloWorld::init()
         CCLabelTTF* label = CCLabelTTF::create(s_EventMenuItem[i].id.c_str(), "Arial", 24);
         CCMenuItemLabel* pMenuItem = CCMenuItemLabel::create(label, this, menu_selector(HelloWorld::eventMenuCallback));
         pMenu->addChild(pMenuItem, 0, s_EventMenuItem[i].tag);
-        yPos = size.height - 50*i - 100;
+        yPos = size.height - 35*i - 100;
         pMenuItem->setPosition( ccp(size.width / 2, yPos));
     }
 
@@ -92,8 +115,8 @@ bool HelloWorld::init()
     std::string strVer = g_pAnalytics->getPluginVersion();
     char ret[256] = { 0 };
     sprintf(ret, "Plugin : %s, Ver : %s", strName.c_str(), strVer.c_str());
-    CCLabelTTF* pLabel = CCLabelTTF::create(ret, "Arial", 24, CCSizeMake(size.width, 0), kCCTextAlignmentCenter);
-    pLabel->setPosition(ccp(size.width / 2, yPos - 100));
+    CCLabelTTF* pLabel = CCLabelTTF::create(ret, "Arial", 18, CCSizeMake(size.width, 0), kCCTextAlignmentCenter);
+    pLabel->setPosition(ccp(size.width / 2, yPos - 80));
     addChild(pLabel);
 
     CCLabelTTF* label = CCLabelTTF::create("reload all plugins", "Arial", 24);
@@ -213,6 +236,7 @@ void HelloWorld::menuCloseCallback(CCObject* pSender)
     if (g_pAnalytics)
         g_pAnalytics->stopSession();
 
+    PluginManager::end();
     CCDirector::sharedDirector()->end();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     exit(0);

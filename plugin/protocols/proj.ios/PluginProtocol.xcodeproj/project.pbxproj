@@ -38,6 +38,7 @@
 		FA09A33C168ADC1F008C1C7B /* PluginManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PluginManager.cpp; path = ../PluginManager.cpp; sourceTree = "<group>"; };
 		FA09A33D168ADC1F008C1C7B /* RegisterPlugin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RegisterPlugin.cpp; path = ../RegisterPlugin.cpp; sourceTree = "<group>"; };
 		FA0CB8B6168D3CC200E36B11 /* ProtocolAnalytics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ProtocolAnalytics.cpp; sourceTree = "<group>"; };
+		FA4E3033172BD02800A3E673 /* ProtocolSocial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProtocolSocial.h; sourceTree = "<group>"; };
 		FA7C6C971724E4DD008A0ECC /* ProtocolAds.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProtocolAds.h; sourceTree = "<group>"; };
 		FA7C6C991724E51C008A0ECC /* ProtocolAds.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ProtocolAds.cpp; sourceTree = "<group>"; };
 		FA7C6C9A1724E51C008A0ECC /* ProtocolIAP.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ProtocolIAP.cpp; sourceTree = "<group>"; };
@@ -86,6 +87,7 @@
 		FA09A336168ADC05008C1C7B /* include */ = {
 			isa = PBXGroup;
 			children = (
+				FA4E3033172BD02800A3E673 /* ProtocolSocial.h */,
 				FA7C6C971724E4DD008A0ECC /* ProtocolAds.h */,
 				FA09A337168ADC05008C1C7B /* PluginManager.h */,
 				FA09A338168ADC05008C1C7B /* PluginProtocol.h */,
