@@ -163,9 +163,9 @@
 									<listOptionValue builtIn="false" value="cares"/>
 									<listOptionValue builtIn="false" value="idn"/>
 									<listOptionValue builtIn="false" value="box2d"/>
-									<listOptionValue builtIn="false" value="chipmunk"/>
 									<listOptionValue builtIn="false" value="extensions"/>
 									<listOptionValue builtIn="false" value="cocosdenshion"/>
+									<listOptionValue builtIn="false" value="chipmunk"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.409827423" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
