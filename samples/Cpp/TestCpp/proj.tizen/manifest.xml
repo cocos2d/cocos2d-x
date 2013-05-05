@@ -3,14 +3,16 @@
     <Id>k1gyBVhF9L</Id>
     <Version>1.0.0</Version>
     <Type>C++App</Type>
+    <Author/>
     <Descriptions/>
+    <Url/>
     <Requirements>
         <Feature Name="http://tizen.org/feature/platform.core.cpu.arch.x86">true</Feature>
     </Requirements>
     <Apps>
         <ApiVersion>2.0</ApiVersion>
         <Privileges/>
-        <UiApp Main="True" MenuIconVisible="True" Name="proj.tizen">
+        <UiApp Main="True" MenuIconVisible="True" Name="TestCpp">
             <UiScalability BaseScreenSize="Normal" CoordinateSystem="Logical" LogicalCoordinate="720"/>
             <UiTheme SystemTheme="White"/>
             <DisplayNames>
