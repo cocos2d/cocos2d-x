@@ -3,6 +3,13 @@
 
 #include "../testBasic.h"
 
+#ifndef ifDynamicCast
+#define ifDynamicCast(__type__,__var__,__varName__) \
+    __type__ __varName__ = dynamic_cast<__type__>(__var__); \
+    if( __varName__ )
+#endif
+
+
 class TileDemo : public CCLayer
 {
 protected:
@@ -304,6 +311,15 @@ public:
     TMXOrthoBackgroundWithSpritesTest();
     virtual std::string title();
     virtual std::string subtitle();
+};
+
+class TMXReadSameNamePropertiesTest : public TileDemo 
+{
+public:
+    TMXReadSameNamePropertiesTest();
+    virtual std::string title();
+    virtual std::string subtitle();
+    static std::string out( CCTMXObjectGroup*,  size_t n = 0 );
 };
 
 #endif
