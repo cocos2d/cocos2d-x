@@ -112,6 +112,7 @@ bool
 CCOspApplication::OnAppInitialized(void)
 {
     sm_pApplicationInitialized();
+    return true;
 }
 
 bool
