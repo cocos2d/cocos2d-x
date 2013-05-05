@@ -38,10 +38,8 @@
 									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/kazmath/include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/platform/tizen&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/platform/third_party/tizen/prebuilt/zlib/include&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/platform/third_party/tizen/prebuilt/libjpeg/include&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/platform/third_party/tizen/prebuilt/libpng/include&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/platform/third_party/tizen/prebuilt/libtiff/include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/platform/third_party/tizen/rootstraps/tizen-emulator-2.0.cpp/usr/include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/platform/third_party/tizen/rootstraps/tizen-emulator-2.0.cpp/usr/include/freetype2&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/platform/third_party/tizen/prebuilt/libwebp/include&quot;"/>
 								</option>
 								<option id="sbi.gnu.cpp.compiler.option.frameworks.cpp.394899403" name="Tizen-Frameworks" superClass="sbi.gnu.cpp.compiler.option.frameworks.cpp" valueType="userObjs">
@@ -106,10 +104,8 @@
 							<tool command="clang++.exe" id="org.tizen.nativecpp.tool.sbi.gnu.cpp.linker.1117400778" name="C++ Linker" superClass="org.tizen.nativecpp.tool.sbi.gnu.cpp.linker">
 								<option id="gnu.cpp.link.option.paths.1869893869" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/lib}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/platform/third_party/tizen/prebuilt/zlib/libs/x86&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/platform/third_party/tizen/prebuilt/libjpeg/libs/x86&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/platform/third_party/tizen/prebuilt/libpng/libs/x86&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/platform/third_party/tizen/prebuilt/libtiff/libs/x86&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/platform/third_party/tizen/rootstraps/tizen-emulator-2.0.cpp/lib&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/platform/third_party/tizen/rootstraps/tizen-emulator-2.0.cpp/usr/lib&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/platform/third_party/tizen/prebuilt/libwebp/libs/x86&quot;"/>
 								</option>
 								<option id="sbi.gnu.cpp.linker.option.frameworks_lflags.cpp.231803493" name="Tizen-Frameworks-Other-Lflags" superClass="sbi.gnu.cpp.linker.option.frameworks_lflags.cpp" valueType="stringList">
@@ -152,6 +148,9 @@
 									<listOptionValue builtIn="false" value="png"/>
 									<listOptionValue builtIn="false" value="tiff"/>
 									<listOptionValue builtIn="false" value="webp"/>
+									<listOptionValue builtIn="false" value="freetype"/>
+									<listOptionValue builtIn="false" value="fontconfig"/>
+									<listOptionValue builtIn="false" value="expat"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.409827423" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
