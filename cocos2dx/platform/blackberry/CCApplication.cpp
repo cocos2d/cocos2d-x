@@ -1,5 +1,5 @@
 #include "CCApplication.h"
-
+#include "platform/CCFileUtils.h"
 #include "CCDirector.h"
 #include "CCEGLView.h"
 #include <stdio.h>
@@ -14,7 +14,6 @@ NS_CC_BEGIN;
 // sharedApplication pointer
 CCApplication * CCApplication::sm_pSharedApplication = 0;
 long CCApplication::m_animationInterval = 1000;
-static std::string s_strRootResPath = "";
 
 // convert the timespec into milliseconds
 static long time2millis(struct timespec *times)
@@ -76,26 +75,22 @@ void CCApplication::setAnimationInterval(double interval)
 	m_animationInterval = (long)(interval * 1000);
 }
 
-CCApplication::Orientation CCApplication::setOrientation(Orientation orientation)
+void CCApplication::setResourceRootPath(const std::string& rootResDir)
 {
-    return orientation;
+    m_resourceRootPath = rootResDir;
+    if (m_resourceRootPath[m_resourceRootPath.length() - 1] != '/')
+    {
+        m_resourceRootPath += '/';
+    }
+    CCFileUtils* pFileUtils = CCFileUtils::sharedFileUtils();
+    std::vector<std::string> searchPaths = pFileUtils->getSearchPaths();
+    searchPaths.insert(searchPaths.begin(), m_resourceRootPath);
+    pFileUtils->setSearchPaths(searchPaths);
 }
 
-void CCApplication::setResourceRootPath(const char *pszRootResDir)
+const std::string& CCApplication::getResourceRootPath(void)
 {
-	if (pszRootResDir)
-	{
-		s_strRootResPath = pszRootResDir;
-		if (s_strRootResPath[s_strRootResPath.length() - 1] != '/')
-		{
-			s_strRootResPath += '/';
-		}
-	}
-}
-
-const char *CCApplication::getResourceRootPath(void)
-{
-    return s_strRootResPath.c_str();
+    return m_resourceRootPath;
 }
 
 TargetPlatform CCApplication::getTargetPlatform()
@@ -159,6 +154,14 @@ ccLanguageType CCApplication::getCurrentLanguage()
 	{
 		ret_language = kLanguageHungarian;
 	}
+    else if (strcmp(language, "pt") == 0)
+    {
+        ret_language = kLanguagePortuguese;
+    }
+    else if (strcmp(language, "ar") == 0)
+    {
+        ret_language = kLanguageArabic;
+    }
 
 	free(language);
 	free(country);

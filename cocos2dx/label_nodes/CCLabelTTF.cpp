@@ -53,11 +53,6 @@ CCLabelTTF::~CCLabelTTF()
     CC_SAFE_DELETE(m_pFontName);
 }
 
-CCLabelTTF * CCLabelTTF::node()
-{
-    return CCLabelTTF::create();
-}
-
 CCLabelTTF * CCLabelTTF::create()
 {
     CCLabelTTF * pRet = new CCLabelTTF();
@@ -264,17 +259,17 @@ bool CCLabelTTF::updateTexture()
     // let system compute label's width or height when its value is 0
     // refer to cocos2d-x issue #1430
     tex = new CCTexture2D();
+    if (!tex)
+    {
+		return false;
+    }
+    
     tex->initWithString( m_string.c_str(),
                         m_pFontName->c_str(),
                         m_fFontSize * CC_CONTENT_SCALE_FACTOR(),
                         CC_SIZE_POINTS_TO_PIXELS(m_tDimensions), 
                         m_hAlignment,
                         m_vAlignment);
-    
-    if (! tex)
-    {
-        return false;
-    }
 	
     this->setTexture(tex);
     tex->release();
@@ -282,7 +277,7 @@ bool CCLabelTTF::updateTexture()
 	CCRect rect = CCRectZero;
     rect.size = m_pobTexture->getContentSize();
     this->setTextureRect(rect);
-    
+
     return true;
 }
 

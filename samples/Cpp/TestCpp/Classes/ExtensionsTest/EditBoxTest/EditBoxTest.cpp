@@ -38,8 +38,15 @@ EditBoxTest::EditBoxTest()
     // top
     m_pEditName = CCEditBox::create(editBoxSize, CCScale9Sprite::create("extensions/green_edit.png"));
     m_pEditName->setPosition(ccp(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height*3/4));
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    m_pEditName->setFontName("Paint Boy");
+#else
+	m_pEditName->setFontName("fonts/Paint Boy.ttf");
+#endif
+    m_pEditName->setFontSize(25);
     m_pEditName->setFontColor(ccRED);
     m_pEditName->setPlaceHolder("Name:");
+    m_pEditName->setPlaceholderFontColor(ccWHITE);
     m_pEditName->setMaxLength(8);
     m_pEditName->setReturnType(kKeyboardReturnTypeDone);
     m_pEditName->setDelegate(this);
@@ -48,6 +55,11 @@ EditBoxTest::EditBoxTest()
     // middle
     m_pEditPassword = CCEditBox::create(editBoxSize, CCScale9Sprite::create("extensions/orange_edit.png"));
     m_pEditPassword->setPosition(ccp(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/2));
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+	m_pEditPassword->setFont("American Typewriter", 30);
+#else
+	m_pEditPassword->setFont("fonts/American Typewriter.ttf", 30);
+#endif
     m_pEditPassword->setFontColor(ccGREEN);
     m_pEditPassword->setPlaceHolder("Password:");
     m_pEditPassword->setMaxLength(6);
@@ -59,10 +71,13 @@ EditBoxTest::EditBoxTest()
     // bottom
     m_pEditEmail = CCEditBox::create(CCSizeMake(editBoxSize.width, editBoxSize.height), CCScale9Sprite::create("extensions/yellow_edit.png"));
     m_pEditEmail->setPosition(ccp(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/4));
+    m_pEditEmail->setAnchorPoint(ccp(0.5, 1.0f));
     m_pEditEmail->setPlaceHolder("Email:");
     m_pEditEmail->setInputMode(kEditBoxInputModeEmailAddr);
     m_pEditEmail->setDelegate(this);
     addChild(m_pEditEmail);
+    
+    this->setPosition(ccp(10, 20));
 }
 
 EditBoxTest::~EditBoxTest()

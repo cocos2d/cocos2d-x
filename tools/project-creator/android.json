@@ -1,0 +1,16 @@
+{
+    "rename":               ["src/PACKAGE_PATH/PROJECT_NAME.java"],
+    "remove":               ["assets",
+                             "bin",
+						 	 "libs",
+						 	 "gen",
+						 	 "obj"],
+    "replace_package_name": ["AndroidManifest.xml",
+							 "src/PACKAGE_PATH/PROJECT_NAME.java"],
+    "replace_project_name": [".project",
+							 "AndroidManifest.xml",
+						     "build.xml",
+						     "build_native.sh",
+						     "res/values/strings.xml",
+						     "src/PACKAGE_PATH/PROJECT_NAME.java"]
+}

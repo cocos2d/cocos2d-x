@@ -29,8 +29,6 @@
 #include "js/Vector.h"
 #endif
 
-JS_BEGIN_EXTERN_C
-
 /*
  * Convenience constants.
  */
@@ -96,8 +94,6 @@ class RegExpStatics;
 class MatchPairs;
 class PropertyName;
 
-namespace detail { class RegExpCode; }
-
 enum RegExpFlag
 {
     IgnoreCaseFlag  = 0x01,
@@ -107,12 +103,6 @@ enum RegExpFlag
 
     NoFlags         = 0x00,
     AllFlags        = 0x0f
-};
-
-enum RegExpExecType
-{
-    RegExpExec,
-    RegExpTest
 };
 
 class ExecuteArgsGuard;
@@ -129,7 +119,7 @@ class ScriptFrameIter;
 
 class Proxy;
 class JS_FRIEND_API(BaseProxyHandler);
-class JS_FRIEND_API(DirectWrapper);
+class JS_FRIEND_API(Wrapper);
 class JS_FRIEND_API(CrossCompartmentWrapper);
 
 class TempAllocPolicy;
@@ -144,15 +134,7 @@ class InlineMap;
 
 class LifoAlloc;
 
-class BaseShape;
-class UnownedBaseShape;
-struct Shape;
-struct EmptyShape;
-class ShapeKindArray;
-class Bindings;
-
-struct StackBaseShape;
-struct StackShape;
+class Shape;
 
 class Breakpoint;
 class BreakpointSite;
@@ -209,7 +191,6 @@ struct TypeCompartment;
 } /* namespace types */
 
 typedef JS::Handle<Shape*>             HandleShape;
-typedef JS::Handle<BaseShape*>         HandleBaseShape;
 typedef JS::Handle<types::TypeObject*> HandleTypeObject;
 typedef JS::Handle<JSAtom*>            HandleAtom;
 typedef JS::Handle<PropertyName*>      HandlePropertyName;
@@ -220,7 +201,6 @@ typedef JS::MutableHandle<JSAtom*>     MutableHandleAtom;
 typedef JSAtom *                       RawAtom;
 
 typedef js::Rooted<Shape*>             RootedShape;
-typedef js::Rooted<BaseShape*>         RootedBaseShape;
 typedef js::Rooted<types::TypeObject*> RootedTypeObject;
 typedef js::Rooted<JSAtom*>            RootedAtom;
 typedef js::Rooted<PropertyName*>      RootedPropertyName;
@@ -290,7 +270,7 @@ typedef JSBool
 typedef void
 (* JSNewScriptHook)(JSContext  *cx,
                     const char *filename,  /* URL of script */
-                    unsigned      lineno,     /* first line */
+                    unsigned   lineno,     /* first line */
                     JSScript   *script,
                     JSFunction *fun,
                     void       *callerdata);
@@ -298,8 +278,8 @@ typedef void
 /* called just before script destruction */
 typedef void
 (* JSDestroyScriptHook)(JSFreeOp *fop,
-                        JSRawScript script,
-                        void      *callerdata);
+                        JSScript *script,
+                        void     *callerdata);
 
 typedef void
 (* JSSourceHandler)(const char *filename, unsigned lineno, const jschar *str,
@@ -379,16 +359,5 @@ typedef JSObject *
 typedef JSObject *
 (* JSIteratorOp)(JSContext *cx, JSHandleObject obj, JSBool keysonly);
 
-/*
- * The following determines whether JS_EncodeCharacters and JS_DecodeBytes
- * treat char[] as utf-8 or simply as bytes that need to be inflated/deflated.
- */
-#ifdef JS_C_STRINGS_ARE_UTF8
-# define js_CStringsAreUTF8 JS_TRUE
-#else
-extern JSBool js_CStringsAreUTF8;
-#endif
-
-JS_END_EXTERN_C
 
 #endif /* jsprvtd_h___ */

@@ -30,7 +30,7 @@ bool TableViewTestLayer::init()
     this->addChild(tableView);
     tableView->reloadData();
 
-	tableView = CCTableView::create(this, CCSizeMake(60, 280));
+	tableView = CCTableView::create(this, CCSizeMake(60, 250));
 	tableView->setDirection(kCCScrollViewDirectionVertical);
 	tableView->setPosition(ccp(winSize.width-150,winSize.height/2-120));
 	tableView->setDelegate(this);
@@ -60,8 +60,11 @@ void TableViewTestLayer::tableCellTouched(CCTableView* table, CCTableViewCell* c
     CCLOG("cell touched at index: %i", cell->getIdx());
 }
 
-CCSize TableViewTestLayer::cellSizeForTable(CCTableView *table)
+CCSize TableViewTestLayer::tableCellSizeForIndex(CCTableView *table, unsigned int idx)
 {
+    if (idx == 2) {
+        return CCSizeMake(100, 100);
+    }
     return CCSizeMake(60, 60);
 }
 

@@ -16,10 +16,10 @@ subprojects
 {
 	zlib
 	libpng
-	libxml2
 	freetype
 	libjpeg
 	libtiff
+	libwebp
 }
 includepaths
 {
@@ -46,9 +46,11 @@ includepaths
 	"../script_support"
 	"../sprite_nodes"
 	"../support"
+  "../support/tinyxml2"
+  "../support/user_default/"
 	"../text_input_node"
 	"../textures"
-    "../tileMap_parallax_nodes"
+       "../tileMap_parallax_nodes"
 	"../touch_dispatcher"
 }
 
@@ -155,32 +157,34 @@ files
 	[sprite_nodes]
 	"*.h"
 	"*.cpp"
-	
-	("../support")
-	[support]
-	"base64.cpp"
-	"base64.h"
-#	"CCArray.cpp"
-	"CCPointExtension.cpp"
-	"CCProfiling.cpp"
-	"CCProfiling.h"
-	"CCUserDefault.cpp"
-	"ccUtils.cpp"
-	"ccUtils.h"
-	"TransformUtils.cpp"
-	"TransformUtils.h"
 
 	("../support")
 	[support]
 	"*.h"
 	"*.cpp"
+
 	("../support/data_support")
+	[support/data_support]
 	"*.cpp"			# MH: Many ccCArray linker errors without ccCArray.cpp
 	"*.h"
+
     ("../support/image_support")
+    [support/image_support]
 	"*.h"
 	"*.cpp"
+
+    ("../support/tinyxml2")
+    [support/tinyxml2]
+    "*.h"
+    "*.cpp"
+    
+    ("../support/user_default")
+    [support/user_default]
+    "*.h"
+    "*.cpp"
+
 	("../support/zip_support")
+	[support/zip_support]
 	"*.h"
 	"*.cpp"
 	

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?fileVersion 4.0.0?><cproject storage_type_id="org.eclipse.cdt.core.XmlProjectDescriptionStorage">
+<?fileVersion 4.0.0?>
+
+<cproject storage_type_id="org.eclipse.cdt.core.XmlProjectDescriptionStorage">
 	<storageModule moduleId="org.eclipse.cdt.core.settings">
 		<cconfiguration id="cdt.managedbuild.config.gnu.exe.debug.1378309016">
 			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="cdt.managedbuild.config.gnu.exe.debug.1378309016" moduleId="org.eclipse.cdt.core.settings" name="Debug">
@@ -31,7 +33,6 @@
 									<listOptionValue builtIn="false" value="../../../../../cocos2dx/kazmath/include"/>
 									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/linux"/>
 									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/linux"/>
-									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/include"/>
 									<listOptionValue builtIn="false" value="../../../../../CocosDenshion/include"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.preprocessor.def.753894218" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
@@ -113,7 +114,6 @@
 									<listOptionValue builtIn="false" value="../../../../../cocos2dx/kazmath/include"/>
 									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/linux"/>
 									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/linux"/>
-									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/include"/>
 									<listOptionValue builtIn="false" value="../../../../../CocosDenshion/include"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.preprocessor.def.1649765609" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
@@ -192,7 +192,6 @@
 									<listOptionValue builtIn="false" value="../../../../../cocos2dx/kazmath/include"/>
 									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/linux"/>
 									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/linux"/>
-									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/include"/>
 									<listOptionValue builtIn="false" value="../../../../../CocosDenshion/include"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.preprocessor.def.1548854529" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
@@ -220,7 +219,6 @@
 								</option>
 								<option id="gnu.cpp.link.option.paths.1945345543" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="../../../../../cocos2dx/proj.linux/${ConfigName}"/>
-									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib"/>
 									<listOptionValue builtIn="false" value="../../../../../CocosDenshion/proj.linux/${ConfigName}"/>
 									<listOptionValue builtIn="false" value="../../../../../CocosDenshion/third_party/fmod/lib64/api/lib"/>
 								</option>
@@ -274,7 +272,6 @@
 									<listOptionValue builtIn="false" value="../../../../../cocos2dx/kazmath/include"/>
 									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/linux"/>
 									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/linux"/>
-									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/include"/>
 									<listOptionValue builtIn="false" value="../../../../../CocosDenshion/include"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.preprocessor.def.126458805" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">

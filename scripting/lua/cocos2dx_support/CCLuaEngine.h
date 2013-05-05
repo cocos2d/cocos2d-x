@@ -35,122 +35,37 @@ extern "C" {
 #include "cocoa/CCSet.h"
 #include "base_nodes/CCNode.h"
 #include "script_support/CCScriptSupport.h"
-
-void cc_lua_assert(bool cond, const char *msg);
+#include "CCLuaStack.h"
+#include "CCLuaValue.h"
 
 NS_CC_BEGIN
-
-typedef int LUA_FUNCTION;
-typedef int LUA_TABLE;
-typedef int LUA_STRING;
-
-class CCLuaValue;
-
-typedef std::map<std::string, CCLuaValue>   CCLuaValueDict;
-typedef CCLuaValueDict::const_iterator      CCLuaValueDictIterator;
-typedef std::list<CCLuaValue>               CCLuaValueArray;
-typedef CCLuaValueArray::const_iterator     CCLuaValueArrayIterator;
-
-typedef enum {
-    CCLuaValueTypeInt,
-    CCLuaValueTypeFloat,
-    CCLuaValueTypeBoolean,
-    CCLuaValueTypeString,
-    CCLuaValueTypeDict,
-    CCLuaValueTypeArray,
-    CCLuaValueTypeCCObject
-} CCLuaValueType;
-
-typedef union {
-    int                 intValue;
-    float               floatValue;
-    bool                booleanValue;
-    std::string*        stringValue;
-    CCLuaValueDict*     dictValue;
-    CCLuaValueArray*    arrayValue;
-    CCObject*           ccobjectValue;
-} CCLuaValueField;
-
-class CCLuaValue
-{
-public:
-    static const CCLuaValue intValue(const int intValue);
-    static const CCLuaValue floatValue(const float floatValue);
-    static const CCLuaValue booleanValue(const bool booleanValue);
-    static const CCLuaValue stringValue(const char* stringValue);
-    static const CCLuaValue stringValue(const std::string& stringValue);
-    static const CCLuaValue dictValue(const CCLuaValueDict& dictValue);
-    static const CCLuaValue arrayValue(const CCLuaValueArray& arrayValue);
-    static const CCLuaValue ccobjectValue(CCObject* ccobjectValue, const char* objectTypename);
-    static const CCLuaValue ccobjectValue(CCObject* ccobjectValue, const std::string& objectTypename);
-
-    CCLuaValue(void)
-        : m_type(CCLuaValueTypeInt)
-        , m_ccobjectType(NULL)
-    {
-        memset(&m_field, 0, sizeof(m_field));
-    }
-    CCLuaValue(const CCLuaValue& rhs);
-    CCLuaValue& operator=(const CCLuaValue& rhs);
-    ~CCLuaValue(void);
-
-    const CCLuaValueType getType(void) const {
-        return m_type;
-    }
-
-    const std::string& getCCObjectTypename(void) const {
-        return *m_ccobjectType;
-    }
-
-    int intValue(void) const {
-        return m_field.intValue;
-    }
-
-    float floatValue(void) const {
-        return m_field.floatValue;
-    }
-
-    bool booleanValue(void) const {
-        return m_field.booleanValue;
-    }
-
-    const std::string& stringValue(void) const {
-        return *m_field.stringValue;
-    }
-
-    const CCLuaValueDict& dictValue(void) const {
-        return *m_field.dictValue;
-    }
-
-    const CCLuaValueArray& arrayValue(void) const {
-        return *m_field.arrayValue;
-    }
-
-    CCObject* ccobjectValue(void) const {
-        return m_field.ccobjectValue;
-    }
-
-private:
-    CCLuaValueField m_field;
-    CCLuaValueType  m_type;
-    std::string*    m_ccobjectType;
-
-    void copy(const CCLuaValue& rhs);
-};
-
 
 // Lua support for cocos2d-x
 class CCLuaEngine : public CCScriptEngineProtocol
 {
 public:
     static CCLuaEngine* defaultEngine(void);    
-    static CCLuaEngine* create(void);
     virtual ~CCLuaEngine(void);
     
     virtual ccScriptType getScriptType() {
         return kScriptTypeLua;
     };
 
+    CCLuaStack *getLuaStack(void) {
+        return m_stack;
+    }
+    
+    /**
+     @brief Add a path to find lua files in
+     @param path to be added to the Lua path
+     */
+    virtual void addSearchPath(const char* path);
+    
+    /**
+     @brief Add lua loader, now it is used on android
+     */
+    virtual void addLuaLoader(lua_CFunction func);
+    
     /**
      @brief Remove CCObject from lua state
      @param object to remove
@@ -161,12 +76,6 @@ public:
      @brief Remove Lua function reference
      */
     virtual void removeScriptHandler(int nHandler);
-    
-    /**
-     @brief Add a path to find lua files in
-     @param path to be added to the Lua path
-     */
-    virtual void addSearchPath(const char* path);
     
     /**
      @brief Execute script code contained in the given string.
@@ -200,45 +109,19 @@ public:
     virtual int executeLayerKeypadEvent(CCLayer* pLayer, int eventType);
     /** execute a accelerometer event */
     virtual int executeAccelerometerEvent(CCLayer* pLayer, CCAcceleration* pAccelerationValue);
+    virtual int executeEvent(int nHandler, const char* pEventName, CCObject* pEventSource = NULL, const char* pEventSourceClassName = NULL);
     virtual bool executeAssert(bool cond, const char *msg = NULL);
-    /**
-     @brief Method used to get a pointer to the lua_State that the script module is attached to.
-     @return A pointer to the lua_State that the script module is attached to.
-     */
-    lua_State* getLuaState(void) {
-        return m_state;
-    }
-
-    int pushInt(int data);
-    int pushFloat(float data);
-    int pushBoolean(bool data);
-    int pushString(const char* data);
-    int pushString(const char* data, int length);
-    int pushNil(void);
-    int pushCCObject(CCObject* pObject, const char* typeName);
-    int pushCCLuaValue(const CCLuaValue& value);
-    int pushCCLuaValueDict(const CCLuaValueDict& dict);
-    int pushCCLuaValueArray(const CCLuaValueArray& array);
-    int executeFunctionByHandler(int nHandler, int numArgs);
-    void cleanStack(void);
-    
-    // Add lua loader, now it is used on android
-    void addLuaLoader(lua_CFunction func);
     
 private:
     CCLuaEngine(void)
-    : m_state(NULL)
-    , m_callFromLua(0)
+    : m_stack(NULL)
     {
     }
     
     bool init(void);
-    bool pushFunction(int nHandler);
-    
-    lua_State* m_state;
-    int m_callFromLua;
     
     static CCLuaEngine* m_defaultEngine;
+    CCLuaStack *m_stack;
 };
 
 NS_CC_END

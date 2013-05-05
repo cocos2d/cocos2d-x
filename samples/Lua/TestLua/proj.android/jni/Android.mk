@@ -7,11 +7,8 @@ LOCAL_MODULE := testlua_shared
 LOCAL_MODULE_FILENAME := libtestlua
 
 LOCAL_SRC_FILES := testlua/main.cpp \
-                   ../../Classes/AppDelegate.cpp \
-                   ../../../../scripting/lua/cocos2dx_support/CCLuaEngine.cpp \
-                   ../../../../scripting/lua/cocos2dx_support/Cocos2dxLuaLoader.cpp \
-                   ../../../../scripting/lua/cocos2dx_support/LuaCocos2d.cpp \
-                   ../../../../scripting/lua/cocos2dx_support/tolua_fix.c
+                   ../../Classes/AppDelegate.cpp
+
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes
 
@@ -28,7 +25,7 @@ include $(BUILD_SHARED_LIBRARY)
 
 $(call import-module,cocos2dx)
 $(call import-module,CocosDenshion/android)
-$(call import-module,scripting/lua/proj.android/jni)
+$(call import-module,scripting/lua/proj.android)
 $(call import-module,cocos2dx/platform/third_party/android/prebuilt/libcurl)
 $(call import-module,extensions)
 $(call import-module,external/Box2D)

@@ -81,7 +81,7 @@ Basically,it's only enabled in android
 It's new in cocos2d-x since v0.99.5
 */
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    #define CC_ENABLE_CACHE_TEXTURE_DATA       1
+    #define CC_ENABLE_CACHE_TEXTURE_DATA       0
 #else
     #define CC_ENABLE_CACHE_TEXTURE_DATA       0
 #endif
@@ -243,5 +243,11 @@ public: virtual void set##funName(varType var)   \
 #else
     #define CC_DEPRECATED_ATTRIBUTE
 #endif 
+
+#ifdef __GNUC__
+#define CC_UNUSED __attribute__ ((unused))
+#else
+#define CC_UNUSED
+#endif
 
 #endif // __CC_PLATFORM_MACROS_H__

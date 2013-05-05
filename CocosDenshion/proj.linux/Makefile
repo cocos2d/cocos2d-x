@@ -1,57 +1,43 @@
-CC      = gcc
-CXX     = g++
-TARGET	= libcocosdenshion.so
-CCFLAGS = -Wall -fPIC
-CXXFLAGS = -Wall -fPIC
-VISIBILITY = 
+TARGET = libcocosdenshion.so
 
-LBITS := $(shell getconf LONG_BIT)
-ifeq ($(LBITS),64)
-INCLUDES = -I.. \
-		-I../include \
-		-I../third_party/fmod/lib64/api/inc 
+INCLUDES += -I.. -I../include
+
+##Using OpenAL
+ifeq ($(OPENAL),1)
+SOURCES = ../linux/SimpleAudioEngineOpenAL.cpp 
+SHAREDLIBS += -lopenal -lalut
+
+ifneq ($(NOVORBIS),1)
+SHAREDLIBS += -logg -lvorbis -lvorbisfile
 else
-INCLUDES = -I.. \
-		-I../include \
-		-I../third_party/fmod/api/inc 
+DEFINES += -DDISABLE_VORBIS
 endif
 
-
-DEFINES = -DLINUX
-
-OBJECTS =   ../linux/FmodAudioPlayer.o \
-            ../linux/SimpleAudioEngine.o \
-
-STATICLIBS = 
-
-ifeq ($(LBITS),64)
-SHAREDLIBS_DIR = ../third_party/fmod/lib64/api/lib
-SHAREDLIBS = -L$(SHAREDLIBS_DIR) -lfmodex64
+##Using FMOD
 else
-SHAREDLIBS_DIR = ../third_party/fmod/api/lib
-SHAREDLIBS = -L$(SHAREDLIBS_DIR) -lfmodex
+SOURCES = \
+  ../linux/SimpleAudioEngineFMOD.cpp \
+  ../linux/FmodAudioPlayer.cpp   
+  
+ifeq ($(LBITS),64)
+INCLUDES += -I../third_party/fmod/lib64/api/inc
+else
+INCLUDES += -I../third_party/fmod/api/inc
+endif
+    
 endif
 
-debug: CCFLAGS += -g3 -O0
-debug: CXXFLAGS += -g3 -O0
-debug: DEFINES += -DDEBUG
-debug: $(TARGET)
+COCOS_ROOT = ../..
+include $(COCOS_ROOT)/cocos2dx/proj.linux/cocos2dx.mk
 
-release: CCFLAGS += -O3
-release: CXXFLAGS += -O3
-release: DEFINES += -DNDEBUG
-release: $(TARGET)
+TARGET := $(LIB_DIR)/$(TARGET)
 
-####### Build rules
-$(TARGET): $(OBJECTS) 
-	$(CXX) $(CXXFLAGS) $(INCLUDES) $(DEFINES) $(OBJECTS) -shared -o $(TARGET) $(SHAREDLIBS) $(STATICLIBS)
+all: $(TARGET)
 
-####### Compile
-%.o: %.cpp
-	$(CXX) $(CXXFLAGS) $(INCLUDES) $(DEFINES) $(VISIBILITY) -c $< -o $@
+$(TARGET): $(OBJECTS) $(CORE_MAKEFILE_LIST)
+	@mkdir -p $(@D)
+	$(LOG_LINK)$(CXX) $(CXXFLAGS) $(OBJECTS) -shared -o $(TARGET) $(SHAREDLIBS) $(STATICLIBS)
 
-%.o: %.c
-	$(CC) $(CCFLAGS) $(INCLUDES) $(DEFINES) $(VISIBILITY) -c $< -o $@
-
-clean: 
-	rm -f $(OBJECTS) $(TARGET) core
+$(OBJ_DIR)/%.o: ../%.cpp $(CORE_MAKEFILE_LIST)
+	@mkdir -p $(@D)
+	$(LOG_CXX)$(CXX) $(CXXFLAGS) $(INCLUDES) $(DEFINES) $(VISIBILITY) -c $< -o $@

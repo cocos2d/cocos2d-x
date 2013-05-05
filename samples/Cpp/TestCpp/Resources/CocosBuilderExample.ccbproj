@@ -45,13 +45,13 @@
 	<key>publishResolutionHTML5_width</key>
 	<integer>960</integer>
 	<key>publishResolution_</key>
-	<false/>
+	<true/>
 	<key>publishResolution_hd</key>
-	<false/>
+	<true/>
 	<key>publishResolution_ipad</key>
-	<false/>
+	<true/>
 	<key>publishResolution_ipadhd</key>
-	<false/>
+	<true/>
 	<key>publishResolution_large</key>
 	<false/>
 	<key>publishResolution_medium</key>

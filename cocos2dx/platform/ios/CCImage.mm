@@ -23,6 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 #import "CCImage.h"
 #import "CCFileUtils.h"
+#import "CCCommon.h"
 #import <string>
 
 #import <Foundation/Foundation.h>
@@ -139,34 +140,6 @@ static bool _initWithData(void * pBuffer, int length, tImageInfo *pImageinfo)
     return ret;
 }
 
-static bool _isValidFontName(const char *fontName)
-{
-    bool ret = false;
-    
-    NSString *fontNameNS = [NSString stringWithUTF8String:fontName];
-    
-    for (NSString *familiName in [UIFont familyNames]) 
-    {
-        if ([familiName isEqualToString:fontNameNS]) 
-        {
-            ret = true;
-            goto out;
-        }
-        
-        for(NSString *font in [UIFont fontNamesForFamilyName: familiName])
-        {
-            if ([font isEqualToString: fontNameNS])
-            {
-                ret = true;
-                goto out;
-            }
-        }
-    }
-    
-    out:
-    return ret;
-}
-
 static CGSize _calculateStringSize(NSString *str, id font, CGSize *constrainSize)
 {
     NSArray *listItems = [str componentsSeparatedByString: @"\n"];
@@ -211,19 +184,23 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
         constrainSize.width = pInfo->width;
         constrainSize.height = pInfo->height;
         
+        // On iOS custom fonts must be listed beforehand in the App info.plist (in order to be usable) and referenced only the by the font family name itself when
+        // calling [UIFont fontWithName]. Therefore even if the developer adds 'SomeFont.ttf' or 'fonts/SomeFont.ttf' to the App .plist, the font must
+        // be referenced as 'SomeFont' when calling [UIFont fontWithName]. Hence we strip out the folder path components and the extension here in order to get just
+        // the font family name itself. This stripping step is required especially for references to user fonts stored in CCB files; CCB files appear to store
+        // the '.ttf' extensions when referring to custom fonts.
+        fntName = [[fntName lastPathComponent] stringByDeletingPathExtension];
+        
         // create the font   
-        id font;
-        font = [UIFont fontWithName:fntName size:nSize];  
+        id font = [UIFont fontWithName:fntName size:nSize];
+        
         if (font)
         {
             dim = _calculateStringSize(str, font, &constrainSize);
-        }      
+        }
         else
         {
-            fntName = _isValidFontName(pFontName) ? fntName : @"MarkerFelt-Wide";
-            font = [UIFont fontWithName:fntName size:nSize];
-                
-            if (! font) 
+            if (!font)
             {
                 font = [UIFont systemFontOfSize:nSize];
             }
@@ -231,7 +208,7 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
             if (font)
             {
                 dim = _calculateStringSize(str, font, &constrainSize);
-            }  
+            }
         }
 
         CC_BREAK_IF(! font);
@@ -264,7 +241,7 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
         if (constrainSize.height > 0 && constrainSize.height > dim.height)
         {
             dim.height = constrainSize.height;
-        }         
+        }
         
         unsigned char* data = new unsigned char[(int)(dim.width * dim.height * 4)];
         memset(data, 0, (int)(dim.width * dim.height * 4));
@@ -344,7 +321,7 @@ bool CCImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = e
 	bool bRet = false;
     unsigned long nSize = 0;
     unsigned char* pBuffer = CCFileUtils::sharedFileUtils()->getFileData(
-				CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(strPath),
+				CCFileUtils::sharedFileUtils()->fullPathForFilename(strPath).c_str(),
 				"rb",
 				&nSize);
 				
@@ -387,6 +364,10 @@ bool CCImage::initWithImageData(void * pData,
         if (eFmt == kFmtRawData)
         {
             bRet = _initWithRawData(pData, nDataLen, nWidth, nHeight, nBitsPerComponent);
+        }
+        else if (eFmt == kFmtWebp)
+        {
+            bRet = _initWithWebpData(pData, nDataLen);
         }
         else // init with png or jpg file data
         {

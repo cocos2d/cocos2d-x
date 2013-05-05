@@ -133,7 +133,7 @@ static bool _initPremultipliedATextureWithImage(CGImageRef image, NSUInteger POT
         case kCCTexture2DPixelFormat_RGB5A1:
             colorSpace = CGColorSpaceCreateDeviceRGB();
             data = new unsigned char[POTHigh * POTWide * 4];
-            info = hasAlpha ? kCGImageAlphaPremultipliedLast : kCGImageAlphaNoneSkipLast; 
+            info = hasAlpha ? kCGImageAlphaPremultipliedLast : kCGImageAlphaNoneSkipLast;
             context = CGBitmapContextCreate(data, POTWide, POTHigh, 8, 4 * POTWide, colorSpace, info | kCGBitmapByteOrder32Big);                
             CGColorSpaceRelease(colorSpace);
             break;
@@ -147,7 +147,7 @@ static bool _initPremultipliedATextureWithImage(CGImageRef image, NSUInteger POT
             break;
         case kCCTexture2DPixelFormat_A8:
             data = new unsigned char[POTHigh * POTWide];
-            info = kCGImageAlphaOnly; 
+            info = kCGImageAlphaOnly;
             context = CGBitmapContextCreate(data, POTWide, POTHigh, 8, POTWide, NULL, info);
             break;            
         default:
@@ -177,7 +177,7 @@ static bool _initPremultipliedATextureWithImage(CGImageRef image, NSUInteger POT
             *outPixel16++ = ((((*inPixel32 >> 0) & 0xFF) >> 3) << 11) | ((((*inPixel32 >> 8) & 0xFF) >> 2) << 5) | ((((*inPixel32 >> 16) & 0xFF) >> 3) << 0);
         }
 
-        delete[] data;
+        delete []data;
         data = tempData;
         
     }
@@ -196,7 +196,7 @@ static bool _initPremultipliedATextureWithImage(CGImageRef image, NSUInteger POT
             ((((*inPixel32 >> 24) & 0xFF) >> 4) << 0); // A
         }       
         
-        delete[] data;
+        delete []data;
         data = tempData;
         
     }
@@ -215,7 +215,7 @@ static bool _initPremultipliedATextureWithImage(CGImageRef image, NSUInteger POT
             ((((*inPixel32 >> 24) & 0xFF) >> 7) << 0); // A
         }
                 
-        delete[] data;
+        delete []data;
         data = tempData;
     }
     
@@ -450,7 +450,11 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
 		[[NSGraphicsContext currentContext] setShouldAntialias:NO];	
 		
 		NSImage *image = [[NSImage alloc] initWithSize:NSMakeSize(POTWide, POTHigh)];
-		[image lockFocus];	
+        
+		[image lockFocus];
+        
+        // patch for mac retina display and lableTTF
+        [[NSAffineTransform transform] set];
 		
 		//[stringWithAttributes drawAtPoint:NSMakePoint(xPadding, offsetY)]; // draw at offset position	
 		[stringWithAttributes drawInRect:textRect];
@@ -564,7 +568,7 @@ CCImage::~CCImage()
 
 bool CCImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = eFmtPng*/)
 {
- 	std::string strTemp = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(strPath);
+    std::string strTemp = CCFileUtils::sharedFileUtils()->fullPathForFilename(strPath);
 	if (m_bEnabledScale)
 	{
 		if (!isFileExists(strTemp.c_str()))
@@ -601,7 +605,7 @@ bool CCImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = e
 	unsigned long fileSize = 0;
 	unsigned char* pFileData = CCFileUtils::sharedFileUtils()->getFileData(strTemp.c_str(), "rb", &fileSize);
 	bool ret = initWithImageData(pFileData, fileSize, eImgFmt);
-	free(pFileData);
+	delete []pFileData;
 	return ret;
 }
 
@@ -816,26 +820,34 @@ bool CCImage::initWithImageData(void * pData,
     do 
     {
         CC_BREAK_IF(! pData || nDataLen <= 0);
-        bRet = _initWithData(pData, nDataLen, &info, 1.0f, 1.0f);//m_dScaleX, m_dScaleY);
+        
+        if (eFmt == CCImage::kFmtWebp)
+        {
+            bRet = _initWithWebpData(pData, nDataLen);
+        }
+        else
+        {
+            bRet = _initWithData(pData, nDataLen, &info, 1.0f, 1.0f);//m_dScaleX, m_dScaleY);
+            if (bRet)
+            {
+                m_nHeight = (short)info.height;
+                m_nWidth = (short)info.width;
+                m_nBitsPerComponent = info.bitsPerComponent;
+                if (eFmt == kFmtJpg)
+                {
+                    m_bHasAlpha = true;
+                    m_bPreMulti = false;
+                }
+                else
+                {
+                    m_bHasAlpha = info.hasAlpha;
+                    m_bPreMulti = info.isPremultipliedAlpha;
+                }
+                m_pData = info.data;
+            }
+        }
     } while (0);
 	
-    if (bRet)
-    {
-        m_nHeight = (short)info.height;
-        m_nWidth = (short)info.width;
-        m_nBitsPerComponent = info.bitsPerComponent;
-		if (eFmt == kFmtJpg)
-		{
-			m_bHasAlpha = true;
-			m_bPreMulti = false;
-		}
-		else
-		{
-			m_bHasAlpha = info.hasAlpha;
-			m_bPreMulti = info.isPremultipliedAlpha;
-		}
-        m_pData = info.data;
-    }
     return bRet;
 }
 

@@ -196,6 +196,8 @@ protected:
         float radialAccel;
         /** radial acceleration variance of each particle. Only available in 'Gravity' mode. */
         float radialAccelVar;
+        /** set the rotation of each particle to its direction Only available in 'Gravity' mode. */
+        bool rotationIsDir;
     } modeA;
 
     //! Mode B: circular movement (gravity, radial accel and tangential accel don't are not used in this mode)
@@ -277,6 +279,8 @@ public:
     virtual void setRadialAccel(float t);
     virtual float getRadialAccelVar();
     virtual void setRadialAccelVar(float t);
+    virtual bool getRotationIsDir();
+    virtual void setRotationIsDir(bool t);
     // mode B
     virtual float getStartRadius();
     virtual void setStartRadius(float startRadius);
@@ -375,7 +379,7 @@ public:
     */
     static CCParticleSystem * create(const char *plistFile);
 
-	//! create a system with a fixed number of particles
+    //! create a system with a fixed number of particles
     static CCParticleSystem* createWithTotalParticles(unsigned int numberOfParticles);
 
     /** initializes a CCParticleSystem*/

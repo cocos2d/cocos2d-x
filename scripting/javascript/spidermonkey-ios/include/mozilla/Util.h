@@ -19,64 +19,6 @@
 
 namespace mozilla {
 
-/**
- * DebugOnly contains a value of type T, but only in debug builds.  In release
- * builds, it does not contain a value.  This helper is intended to be used with
- * MOZ_ASSERT()-style macros, allowing one to write:
- *
- *   DebugOnly<bool> check = func();
- *   MOZ_ASSERT(check);
- *
- * more concisely than declaring |check| conditional on #ifdef DEBUG, but also
- * without allocating storage space for |check| in release builds.
- *
- * DebugOnly instances can only be coerced to T in debug builds.  In release
- * builds they don't have a value, so type coercion is not well defined.
- */
-template<typename T>
-struct DebugOnly
-{
-#ifdef DEBUG
-    T value;
-
-    DebugOnly() { }
-    DebugOnly(const T& other) : value(other) { }
-    DebugOnly(const DebugOnly& other) : value(other.value) { }
-    DebugOnly& operator=(const T& rhs) {
-      value = rhs;
-      return *this;
-    }
-    void operator++(int) {
-      value++;
-    }
-    void operator--(int) {
-      value--;
-    }
-
-    T *operator&() { return &value; }
-
-    operator T&() { return value; }
-    operator const T&() const { return value; }
-
-    T& operator->() { return value; }
-
-#else
-    DebugOnly() { }
-    DebugOnly(const T&) { }
-    DebugOnly(const DebugOnly&) { }
-    DebugOnly& operator=(const T&) { return *this; }
-    void operator++(int) { }
-    void operator--(int) { }
-#endif
-
-    /*
-     * DebugOnly must always have a destructor or else it will
-     * generate "unused variable" warnings, exactly what it's intended
-     * to avoid!
-     */
-    ~DebugOnly() {}
-};
-
 /*
  * This class, and the corresponding macro MOZ_ALIGNOF, figure out how many 
  * bytes of alignment a given type needs.
@@ -222,35 +164,35 @@ class Maybe
 
     void construct() {
       MOZ_ASSERT(!constructed);
-      new (storage.addr()) T();
+      ::new (storage.addr()) T();
       constructed = true;
     }
 
     template<class T1>
     void construct(const T1& t1) {
       MOZ_ASSERT(!constructed);
-      new (storage.addr()) T(t1);
+      ::new (storage.addr()) T(t1);
       constructed = true;
     }
 
     template<class T1, class T2>
     void construct(const T1& t1, const T2& t2) {
       MOZ_ASSERT(!constructed);
-      new (storage.addr()) T(t1, t2);
+      ::new (storage.addr()) T(t1, t2);
       constructed = true;
     }
 
     template<class T1, class T2, class T3>
     void construct(const T1& t1, const T2& t2, const T3& t3) {
       MOZ_ASSERT(!constructed);
-      new (storage.addr()) T(t1, t2, t3);
+      ::new (storage.addr()) T(t1, t2, t3);
       constructed = true;
     }
 
     template<class T1, class T2, class T3, class T4>
     void construct(const T1& t1, const T2& t2, const T3& t3, const T4& t4) {
       MOZ_ASSERT(!constructed);
-      new (storage.addr()) T(t1, t2, t3, t4);
+      ::new (storage.addr()) T(t1, t2, t3, t4);
       constructed = true;
     }
 

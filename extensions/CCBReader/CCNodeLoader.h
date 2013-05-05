@@ -4,14 +4,18 @@
 #include "../GUI/CCControlExtension/CCInvocation.h"
 #include "cocos2d.h"
 #include "CCBReader.h"
+#include "CCBValue.h"
 
 NS_CC_EXT_BEGIN
 
 #define PROPERTY_POSITION "position"
 #define PROPERTY_CONTENTSIZE "contentSize"
+#define PROPERTY_SKEW "skew"
 #define PROPERTY_ANCHORPOINT "anchorPoint"
 #define PROPERTY_SCALE "scale"
 #define PROPERTY_ROTATION "rotation"
+#define PROPERTY_ROTATIONX "rotationX"
+#define PROPERTY_ROTATIONY "rotationY"
 #define PROPERTY_TAG "tag"
 #define PROPERTY_IGNOREANCHORPOINTFORPOSITION "ignoreAnchorPointForPosition"
 #define PROPERTY_VISIBLE "visible"
@@ -41,12 +45,14 @@ class CCBReader;
 
 class CCNodeLoader : public CCObject {
     public:
-        virtual ~CCNodeLoader() {};
+        CCNodeLoader();
+        virtual ~CCNodeLoader();
         CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(CCNodeLoader, loader);
 
         virtual CCNode * loadCCNode(CCNode *, CCBReader * pCCBReader);
         virtual void parseProperties(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader);
-
+        virtual CCDictionary* getCustomProperties();
+    
     protected:
         CCB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(CCNode);
 
@@ -77,6 +83,7 @@ class CCNodeLoader : public CCObject {
         virtual BlockData * parsePropTypeBlock(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader);
         virtual BlockCCControlData * parsePropTypeBlockCCControl(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader);
         virtual CCNode * parsePropTypeCCBFile(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader);
+        virtual float * parsePropTypeFloatXY(CCNode * pNode, CCNode * pParent, CCBReader * pCCBReader);
 
 
         virtual void onHandlePropTypePosition(CCNode * pNode, CCNode * pParent, const char* pPropertyName, CCPoint pPosition, CCBReader * pCCBReader);
@@ -90,6 +97,8 @@ class CCNodeLoader : public CCObject {
         virtual void onHandlePropTypeInteger(CCNode * pNode, CCNode * pParent, const char* pPropertyName, int pInteger, CCBReader * pCCBReader);
         virtual void onHandlePropTypeIntegerLabeled(CCNode * pNode, CCNode * pParent, const char* pPropertyName, int pIntegerLabeled, CCBReader * pCCBReader);
         virtual void onHandlePropTypeFloatVar(CCNode * pNode, CCNode * pParent, const char* pPropertyName, float * pFoatVar, CCBReader * pCCBReader);
+        virtual void onHandlePropTypeFloatXY(CCNode * pNode, CCNode * pParent, const char* pPropertyName, float * pFoatVar, CCBReader * pCCBReader);
+
         virtual void onHandlePropTypeCheck(CCNode * pNode, CCNode * pParent, const char* pPropertyName, bool pCheck, CCBReader * pCCBReader);
         virtual void onHandlePropTypeSpriteFrame(CCNode * pNode, CCNode * pParent, const char* pPropertyName, CCSpriteFrame * pCCSpriteFrame, CCBReader * pCCBReader);
         virtual void onHandlePropTypeAnimation(CCNode * pNode, CCNode * pParent, const char* pPropertyName, CCAnimation * pCCAnimation, CCBReader * pCCBReader);
@@ -106,6 +115,9 @@ class CCNodeLoader : public CCObject {
         virtual void onHandlePropTypeBlock(CCNode * pNode, CCNode * pParent, const char* pPropertyName, BlockData * pBlockData, CCBReader * pCCBReader);
         virtual void onHandlePropTypeBlockCCControl(CCNode * pNode, CCNode * pParent, const char* pPropertyName, BlockCCControlData * pBlockCCControlData, CCBReader * pCCBReader);
         virtual void onHandlePropTypeCCBFile(CCNode * pNode, CCNode * pParent, const char* pPropertyName, CCNode * pCCBFileNode, CCBReader * pCCBReader);
+
+protected:
+        CCDictionary* m_pCustomProperties;
 };
 
 NS_CC_EXT_END

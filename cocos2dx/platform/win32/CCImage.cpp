@@ -111,7 +111,7 @@ public:
                 int nFindTTF = fontName.find(".TTF");
                 if (nFindttf >= 0 || nFindTTF >= 0)
                 {
-                    fontPath = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(fontName.c_str());
+                    fontPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(fontName.c_str());
                     int nFindPos = fontName.rfind("/");
                     fontName = &fontName[nFindPos+1];
                     nFindPos = fontName.rfind(".");
@@ -375,7 +375,6 @@ bool CCImage::initWithString(
                                int             nSize/* = 0*/)
 {
     bool bRet = false;
-    unsigned char * pImageData = 0;
     do 
     {
         CC_BREAK_IF(! pText);       
@@ -391,8 +390,8 @@ bool CCImage::initWithString(
         SIZE size = {nWidth, nHeight};
         CC_BREAK_IF(! dc.drawText(pText, size, eAlignMask));
 
-        pImageData = new unsigned char[size.cx * size.cy * 4];
-        CC_BREAK_IF(! pImageData);
+        m_pData = new unsigned char[size.cx * size.cy * 4];
+        CC_BREAK_IF(! m_pData);
 
         struct
         {
@@ -407,8 +406,6 @@ bool CCImage::initWithString(
         m_nHeight   = (short)size.cy;
         m_bHasAlpha = true;
         m_bPreMulti = false;
-        m_pData     = pImageData;
-        pImageData  = 0;
         m_nBitsPerComponent = 8;
         // copy pixed data
         bi.bmiHeader.biHeight = (bi.bmiHeader.biHeight > 0)

@@ -47,37 +47,38 @@ CCScale9Sprite::CCScale9Sprite()
 , m_insetTop(0)
 , m_insetRight(0)
 , m_insetBottom(0)
-, m_cOpacity(0)
 , m_bSpritesGenerated(false)
 , m_bSpriteFrameRotated(false)
 , m_positionsAreDirty(false)
-, scale9Image(NULL)
-, topLeft(NULL)
-, top(NULL)
-, topRight(NULL)
-, left(NULL)
-, centre(NULL)
-, right(NULL)
-, bottomLeft(NULL)
-, bottom(NULL)
-, bottomRight(NULL)
-, m_bIsOpacityModifyRGB(false)
+, _scale9Image(NULL)
+, _topLeft(NULL)
+, _top(NULL)
+, _topRight(NULL)
+, _left(NULL)
+, _centre(NULL)
+, _right(NULL)
+, _bottomLeft(NULL)
+, _bottom(NULL)
+, _bottomRight(NULL)
+, _opacityModifyRGB(false)
+, _opacity(255)
+, _color(ccWHITE)
 {
 
 }
 
 CCScale9Sprite::~CCScale9Sprite()
 {
-    CC_SAFE_RELEASE(topLeft);
-    CC_SAFE_RELEASE(top);
-    CC_SAFE_RELEASE(topRight);
-    CC_SAFE_RELEASE(left);
-    CC_SAFE_RELEASE(centre);
-    CC_SAFE_RELEASE(right);
-    CC_SAFE_RELEASE(bottomLeft);
-    CC_SAFE_RELEASE(bottom);
-    CC_SAFE_RELEASE(bottomRight);
-    CC_SAFE_RELEASE(scale9Image);
+    CC_SAFE_RELEASE(_topLeft);
+    CC_SAFE_RELEASE(_top);
+    CC_SAFE_RELEASE(_topRight);
+    CC_SAFE_RELEASE(_left);
+    CC_SAFE_RELEASE(_centre);
+    CC_SAFE_RELEASE(_right);
+    CC_SAFE_RELEASE(_bottomLeft);
+    CC_SAFE_RELEASE(_bottom);
+    CC_SAFE_RELEASE(_bottomRight);
+    CC_SAFE_RELEASE(_scale9Image);
 }
 
 bool CCScale9Sprite::init()
@@ -102,33 +103,39 @@ bool CCScale9Sprite::initWithBatchNode(CCSpriteBatchNode* batchnode, CCRect rect
     return true;
 }
 
+#define    TRANSLATE_X(x, y, xtranslate) \
+    x+=xtranslate;                       \
+
+#define    TRANSLATE_Y(x, y, ytranslate) \
+    y+=ytranslate;                       \
+
 bool CCScale9Sprite::updateWithBatchNode(CCSpriteBatchNode* batchnode, CCRect rect, bool rotated, CCRect capInsets)
 {
-    GLubyte opacity = m_cOpacity;
-    ccColor3B color = m_tColor;
+    GLubyte opacity = getOpacity();
+    ccColor3B color = getColor();
 
     // Release old sprites
     this->removeAllChildrenWithCleanup(true);
 
-    CC_SAFE_RELEASE(this->centre);
-    CC_SAFE_RELEASE(this->top);
-    CC_SAFE_RELEASE(this->topLeft);
-    CC_SAFE_RELEASE(this->topRight);
-    CC_SAFE_RELEASE(this->left);
-    CC_SAFE_RELEASE(this->right);
-    CC_SAFE_RELEASE(this->bottomLeft);
-    CC_SAFE_RELEASE(this->bottom);
-    CC_SAFE_RELEASE(this->bottomRight);
+    CC_SAFE_RELEASE(this->_centre);
+    CC_SAFE_RELEASE(this->_top);
+    CC_SAFE_RELEASE(this->_topLeft);
+    CC_SAFE_RELEASE(this->_topRight);
+    CC_SAFE_RELEASE(this->_left);
+    CC_SAFE_RELEASE(this->_right);
+    CC_SAFE_RELEASE(this->_bottomLeft);
+    CC_SAFE_RELEASE(this->_bottom);
+    CC_SAFE_RELEASE(this->_bottomRight);
 
     
-    if(this->scale9Image != batchnode)
+    if(this->_scale9Image != batchnode)
     {
-        CC_SAFE_RELEASE(this->scale9Image);
-        scale9Image = batchnode;
-        CC_SAFE_RETAIN(scale9Image);
+        CC_SAFE_RELEASE(this->_scale9Image);
+        _scale9Image = batchnode;
+        CC_SAFE_RETAIN(_scale9Image);
     }
 
-    scale9Image->removeAllChildrenWithCleanup(true);
+    _scale9Image->removeAllChildrenWithCleanup(true);
 
     m_capInsets = capInsets;
     
@@ -136,8 +143,8 @@ bool CCScale9Sprite::updateWithBatchNode(CCSpriteBatchNode* batchnode, CCRect re
     if ( rect.equals(CCRectZero) )
     {
         // Get the texture size as original
-        CCSize textureSize = scale9Image->getTextureAtlas()->getTexture()->getContentSize();
-        
+        CCSize textureSize = _scale9Image->getTextureAtlas()->getTexture()->getContentSize();
+    
         rect = CCRectMake(0, 0, textureSize.width, textureSize.height);
     }
     
@@ -147,217 +154,239 @@ bool CCScale9Sprite::updateWithBatchNode(CCSpriteBatchNode* batchnode, CCRect re
     m_preferredSize = m_originalSize;
     m_capInsetsInternal = capInsets;
     
-    // Get the image edges
-    float l = rect.origin.x;
-    float t = rect.origin.y;
-    float h = rect.size.height;
     float w = rect.size.width;
+    float h = rect.size.height;
 
     // If there is no specified center region
     if ( m_capInsetsInternal.equals(CCRectZero) )
     {
-        // Apply the 3x3 grid format
-        if (rotated)
-        {
-            m_capInsetsInternal = CCRectMake(l+h/3, t+w/3, w/3, h/3);
-        }
-        else
-        {
-            m_capInsetsInternal = CCRectMake(l+w/3, t+h/3, w/3, h/3);
-        }
+        // CCLog("... cap insets not specified : using default cap insets ...");
+        m_capInsetsInternal = CCRectMake(w/3, h/3, w/3, h/3);
     }
 
-    //
-    // Set up the image
-    //
-    if (rotated)
-    {
-        // Sprite frame is rotated
+    float left_w = m_capInsetsInternal.origin.x;
+    float center_w = m_capInsetsInternal.size.width;
+    float right_w = rect.size.width - (left_w + center_w);
+
+    float top_h = m_capInsetsInternal.origin.y;
+    float center_h = m_capInsetsInternal.size.height;
+    float bottom_h = rect.size.height - (top_h + center_h);
+
+    // calculate rects
+
+    // ... top row
+    float x = 0.0;
+    float y = 0.0;
+
+    // top left
+    CCRect lefttopbounds = CCRectMake(x, y,
+                                      left_w, top_h);
+
+    // top center
+    TRANSLATE_X(x, y, left_w);
+    CCRect centertopbounds = CCRectMake(x, y,
+                                        center_w, top_h);
+        
+    // top right
+    TRANSLATE_X(x, y, center_w);
+    CCRect righttopbounds = CCRectMake(x, y,
+                                       right_w, top_h);
+
+    // ... center row
+    x = 0.0;
+    y = 0.0;
+    TRANSLATE_Y(x, y, top_h);
+
+    // center left
+    CCRect leftcenterbounds = CCRectMake(x, y,
+                                         left_w, center_h);
+
+    // center center
+    TRANSLATE_X(x, y, left_w);
+    CCRect centerbounds = CCRectMake(x, y,
+                                     center_w, center_h);
+
+    // center right
+    TRANSLATE_X(x, y, center_w);
+    CCRect rightcenterbounds = CCRectMake(x, y,
+                                          right_w, center_h);
+
+    // ... bottom row
+    x = 0.0;
+    y = 0.0;
+    TRANSLATE_Y(x, y, top_h);
+    TRANSLATE_Y(x, y, center_h);
+
+    // bottom left
+    CCRect leftbottombounds = CCRectMake(x, y,
+                                         left_w, bottom_h);
+
+    // bottom center
+    TRANSLATE_X(x, y, left_w);
+    CCRect centerbottombounds = CCRectMake(x, y,
+                                           center_w, bottom_h);
+
+    // bottom right
+    TRANSLATE_X(x, y, center_w);
+    CCRect rightbottombounds = CCRectMake(x, y,
+                                          right_w, bottom_h);
+
+    if (!rotated) {
+        // CCLog("!rotated");
+
+        CCAffineTransform t = CCAffineTransformMakeIdentity();
+        t = CCAffineTransformTranslate(t, rect.origin.x, rect.origin.y);
+
+        centerbounds = CCRectApplyAffineTransform(centerbounds, t);
+        rightbottombounds = CCRectApplyAffineTransform(rightbottombounds, t);
+        leftbottombounds = CCRectApplyAffineTransform(leftbottombounds, t);
+        righttopbounds = CCRectApplyAffineTransform(righttopbounds, t);
+        lefttopbounds = CCRectApplyAffineTransform(lefttopbounds, t);
+        rightcenterbounds = CCRectApplyAffineTransform(rightcenterbounds, t);
+        leftcenterbounds = CCRectApplyAffineTransform(leftcenterbounds, t);
+        centerbottombounds = CCRectApplyAffineTransform(centerbottombounds, t);
+        centertopbounds = CCRectApplyAffineTransform(centertopbounds, t);
 
         // Centre
-        centre      = new CCSprite();
-        centre->initWithTexture(scale9Image->getTexture(), m_capInsetsInternal, true);
-        scale9Image->addChild(centre, 0, pCentre);
-
-        // Bottom
-        bottom         =  new CCSprite();
-        bottom->initWithTexture(scale9Image->getTexture(), CCRectMake(l,
-                                                            m_capInsetsInternal.origin.y,
-                                                            m_capInsetsInternal.size.width,
-                                                            m_capInsetsInternal.origin.x - l),
-                                                            rotated
-                                                            );
-        scale9Image->addChild(bottom, 1, pBottom);
-
+        _centre = new CCSprite();
+        _centre->initWithTexture(_scale9Image->getTexture(), centerbounds);
+        _scale9Image->addChild(_centre, 0, pCentre);
+        
         // Top
-        top      = new CCSprite();
-        top->initWithTexture(scale9Image->getTexture(),CCRectMake(m_capInsetsInternal.origin.x + m_capInsetsInternal.size.height,
-                                                             m_capInsetsInternal.origin.y,
-                                                             m_capInsetsInternal.size.width,
-                                                             h - m_capInsetsInternal.size.height - (m_capInsetsInternal.origin.x - l)),
-                                                                rotated
-                                                                );
-        scale9Image->addChild(top, 1, pTop);
-
-        // Right
-        right        = new CCSprite();
-        right->initWithTexture(scale9Image->getTexture(), CCRectMake(m_capInsetsInternal.origin.x,
-                                     m_capInsetsInternal.origin.y+m_capInsetsInternal.size.width,
-                                     w - (m_capInsetsInternal.origin.y-t)-m_capInsetsInternal.size.width,
-                                     m_capInsetsInternal.size.height),
-                                    rotated
-                                    );
-        scale9Image->addChild(right, 1, pRight);
-
+        _top = new CCSprite();
+        _top->initWithTexture(_scale9Image->getTexture(), centertopbounds);
+        _scale9Image->addChild(_top, 1, pTop);
+        
+        // Bottom
+        _bottom = new CCSprite();
+        _bottom->initWithTexture(_scale9Image->getTexture(), centerbottombounds);
+        _scale9Image->addChild(_bottom, 1, pBottom);
+        
         // Left
-        left       = new CCSprite();
-        left->initWithTexture(scale9Image->getTexture(), CCRectMake(m_capInsetsInternal.origin.x,
-                                                                     t,
-                                                                     m_capInsetsInternal.origin.y - t,
-                                                                     m_capInsetsInternal.size.height),
-                                                                    rotated
-                                                                );
-        scale9Image->addChild(left ,1, pLeft);
-
-        // Top right
-        topRight     = new CCSprite();
-        topRight->initWithTexture(scale9Image->getTexture(), CCRectMake(m_capInsetsInternal.origin.x + m_capInsetsInternal.size.height,
-                                                                         m_capInsetsInternal.origin.y + m_capInsetsInternal.size.width,
-                                                                         w - (m_capInsetsInternal.origin.y-t)-m_capInsetsInternal.size.width,
-                                                                         h - m_capInsetsInternal.size.height - (m_capInsetsInternal.origin.x - l)),
-                                                                        rotated
-                                                                        );
-        scale9Image->addChild(topRight ,2 ,pTopRight);
-
+        _left = new CCSprite();
+        _left->initWithTexture(_scale9Image->getTexture(), leftcenterbounds);
+        _scale9Image->addChild(_left, 1, pLeft);
+        
+        // Right
+        _right = new CCSprite();
+        _right->initWithTexture(_scale9Image->getTexture(), rightcenterbounds);
+        _scale9Image->addChild(_right, 1, pRight);
+        
         // Top left
-        topLeft    = new CCSprite();
-        topLeft->initWithTexture(scale9Image->getTexture(), CCRectMake(m_capInsetsInternal.origin.x + m_capInsetsInternal.size.height,
-                                                                         t,
-                                                                         m_capInsetsInternal.origin.y - t,
-                                                                         h - m_capInsetsInternal.size.height - (m_capInsetsInternal.origin.x - l)),
-                                                                        rotated
-                                                                        );
-        scale9Image->addChild(topLeft, 2, pTopLeft);
-
-        // Bottom right
-        bottomRight  = new CCSprite();
-        bottomRight->initWithTexture(scale9Image->getTexture(),CCRectMake(l,
-                                             m_capInsetsInternal.origin.y + m_capInsetsInternal.size.width,
-                                             w - (m_capInsetsInternal.origin.y-t)-m_capInsetsInternal.size.width,
-                                             m_capInsetsInternal.origin.x - l),
-                                            rotated
-                                            );
-        scale9Image->addChild(bottomRight, 2, pBottomRight);
-
+        _topLeft = new CCSprite();
+        _topLeft->initWithTexture(_scale9Image->getTexture(), lefttopbounds);
+        _scale9Image->addChild(_topLeft, 2, pTopLeft);
+        
+        // Top right
+        _topRight = new CCSprite();
+        _topRight->initWithTexture(_scale9Image->getTexture(), righttopbounds);
+        _scale9Image->addChild(_topRight, 2, pTopRight);
+        
         // Bottom left
-        bottomLeft     = new CCSprite();
-        bottomLeft->initWithTexture(scale9Image->getTexture(), CCRectMake(l,
-                                                                 t,
-                                                                 m_capInsetsInternal.origin.y - t,
-                                                                 m_capInsetsInternal.origin.x - l),
-                                                                    rotated
-                                                                );
-        scale9Image->addChild(bottomLeft, 2, pBottomLeft);
-    }
-    else
-    {
-        // Sprite frame is not rotated
+        _bottomLeft = new CCSprite();
+        _bottomLeft->initWithTexture(_scale9Image->getTexture(), leftbottombounds);
+        _scale9Image->addChild(_bottomLeft, 2, pBottomLeft);
+        
+        // Bottom right
+        _bottomRight = new CCSprite();
+        _bottomRight->initWithTexture(_scale9Image->getTexture(), rightbottombounds);
+        _scale9Image->addChild(_bottomRight, 2, pBottomRight);
+    } else {
+        // set up transformation of coordinates
+        // to handle the case where the sprite is stored rotated
+        // in the spritesheet
+        // CCLog("rotated");
+
+        CCAffineTransform t = CCAffineTransformMakeIdentity();
+
+        CCRect rotatedcenterbounds = centerbounds;
+        CCRect rotatedrightbottombounds = rightbottombounds;
+        CCRect rotatedleftbottombounds = leftbottombounds;
+        CCRect rotatedrighttopbounds = righttopbounds;
+        CCRect rotatedlefttopbounds = lefttopbounds;
+        CCRect rotatedrightcenterbounds = rightcenterbounds;
+        CCRect rotatedleftcenterbounds = leftcenterbounds;
+        CCRect rotatedcenterbottombounds = centerbottombounds;
+        CCRect rotatedcentertopbounds = centertopbounds;
+        
+        t = CCAffineTransformTranslate(t, rect.size.height+rect.origin.x, rect.origin.y);
+        t = CCAffineTransformRotate(t, 1.57079633f);
+        
+        centerbounds = CCRectApplyAffineTransform(centerbounds, t);
+        rightbottombounds = CCRectApplyAffineTransform(rightbottombounds, t);
+        leftbottombounds = CCRectApplyAffineTransform(leftbottombounds, t);
+        righttopbounds = CCRectApplyAffineTransform(righttopbounds, t);
+        lefttopbounds = CCRectApplyAffineTransform(lefttopbounds, t);
+        rightcenterbounds = CCRectApplyAffineTransform(rightcenterbounds, t);
+        leftcenterbounds = CCRectApplyAffineTransform(leftcenterbounds, t);
+        centerbottombounds = CCRectApplyAffineTransform(centerbottombounds, t);
+        centertopbounds = CCRectApplyAffineTransform(centertopbounds, t);
+
+        rotatedcenterbounds.origin = centerbounds.origin;
+        rotatedrightbottombounds.origin = rightbottombounds.origin;
+        rotatedleftbottombounds.origin = leftbottombounds.origin;
+        rotatedrighttopbounds.origin = righttopbounds.origin;
+        rotatedlefttopbounds.origin = lefttopbounds.origin;
+        rotatedrightcenterbounds.origin = rightcenterbounds.origin;
+        rotatedleftcenterbounds.origin = leftcenterbounds.origin;
+        rotatedcenterbottombounds.origin = centerbottombounds.origin;
+        rotatedcentertopbounds.origin = centertopbounds.origin;
+
         // Centre
-        centre = new CCSprite();
-        centre->initWithTexture(scale9Image->getTexture(), m_capInsetsInternal, rotated);
-        scale9Image->addChild(centre, 0, pCentre);
+        _centre = new CCSprite();
+        _centre->initWithTexture(_scale9Image->getTexture(), rotatedcenterbounds, true);
+        _scale9Image->addChild(_centre, 0, pCentre);
         
         // Top
-        top = new CCSprite();
-        top->initWithTexture(scale9Image->getTexture(), CCRectMake(m_capInsetsInternal.origin.x,
-                                                                    t,
-                                                                    m_capInsetsInternal.size.width,
-                                                                    m_capInsetsInternal.origin.y - t),
-                                                                    rotated
-                                                                   );
-        scale9Image->addChild(top, 1, pTop);
+        _top = new CCSprite();
+        _top->initWithTexture(_scale9Image->getTexture(), rotatedcentertopbounds, true);
+        _scale9Image->addChild(_top, 1, pTop);
         
         // Bottom
-        bottom = new CCSprite();
-        bottom->initWithTexture(scale9Image->getTexture(), CCRectMake( m_capInsetsInternal.origin.x,
-                                                                       m_capInsetsInternal.origin.y + m_capInsetsInternal.size.height,
-                                                                       m_capInsetsInternal.size.width,
-                                                                       h - (m_capInsetsInternal.origin.y - t + m_capInsetsInternal.size.height)),
-                                                                        rotated);
-        scale9Image->addChild(bottom, 1, pBottom);
+        _bottom = new CCSprite();
+        _bottom->initWithTexture(_scale9Image->getTexture(), rotatedcenterbottombounds, true);
+        _scale9Image->addChild(_bottom, 1, pBottom);
         
         // Left
-        left = new CCSprite();
-        left->initWithTexture(scale9Image->getTexture(), CCRectMake(
-                                                                     l,
-                                                                     m_capInsetsInternal.origin.y,
-                                                                     m_capInsetsInternal.origin.x - l,
-                                                                     m_capInsetsInternal.size.height),
-                                                                     rotated);
-        scale9Image->addChild(left, 1, pLeft);
+        _left = new CCSprite();
+        _left->initWithTexture(_scale9Image->getTexture(), rotatedleftcenterbounds, true);
+        _scale9Image->addChild(_left, 1, pLeft);
         
         // Right
-        right = new CCSprite();
-        right->initWithTexture(scale9Image->getTexture(), CCRectMake(
-                                                                      m_capInsetsInternal.origin.x + m_capInsetsInternal.size.width,
-                                                                      m_capInsetsInternal.origin.y,
-                                                                      w - (m_capInsetsInternal.origin.x - l + m_capInsetsInternal.size.width),
-                                                                      m_capInsetsInternal.size.height),
-                                                                      rotated);
-        scale9Image->addChild(right, 1, pRight);
+        _right = new CCSprite();
+        _right->initWithTexture(_scale9Image->getTexture(), rotatedrightcenterbounds, true);
+        _scale9Image->addChild(_right, 1, pRight);
         
         // Top left
-        topLeft = new CCSprite();
-        topLeft->initWithTexture(scale9Image->getTexture(), CCRectMake(
-                                                                        l,
-                                                                        t,
-                                                                        m_capInsetsInternal.origin.x - l,
-                                                                        m_capInsetsInternal.origin.y - t),
-                                                                        rotated);
-
-        scale9Image->addChild(topLeft, 2, pTopLeft);
+        _topLeft = new CCSprite();
+        _topLeft->initWithTexture(_scale9Image->getTexture(), rotatedlefttopbounds, true);
+        _scale9Image->addChild(_topLeft, 2, pTopLeft);
         
         // Top right
-        topRight = new CCSprite();
-        topRight->initWithTexture(scale9Image->getTexture(), CCRectMake(
-                                                                         m_capInsetsInternal.origin.x + m_capInsetsInternal.size.width,
-                                                                         t,
-                                                                         w - (m_capInsetsInternal.origin.x - l + m_capInsetsInternal.size.width),
-                                                                         m_capInsetsInternal.origin.y - t),
-                                                                         rotated);
-        
-        scale9Image->addChild(topRight, 2, pTopRight);
+        _topRight = new CCSprite();
+        _topRight->initWithTexture(_scale9Image->getTexture(), rotatedrighttopbounds, true);
+        _scale9Image->addChild(_topRight, 2, pTopRight);
         
         // Bottom left
-        bottomLeft = new CCSprite();
-        bottomLeft->initWithTexture(scale9Image->getTexture(), CCRectMake(
-                                                                           l,
-                                                                           m_capInsetsInternal.origin.y + m_capInsetsInternal.size.height,
-                                                                           m_capInsetsInternal.origin.x - l,
-                                                                           h - (m_capInsetsInternal.origin.y - t + m_capInsetsInternal.size.height)),
-                                                                           rotated);
-        scale9Image->addChild(bottomLeft, 2, pBottomLeft);
+        _bottomLeft = new CCSprite();
+        _bottomLeft->initWithTexture(_scale9Image->getTexture(), rotatedleftbottombounds, true);
+        _scale9Image->addChild(_bottomLeft, 2, pBottomLeft);
         
         // Bottom right
-        bottomRight = new CCSprite();
-        bottomRight->initWithTexture(scale9Image->getTexture(), CCRectMake(
-                                                                            m_capInsetsInternal.origin.x + m_capInsetsInternal.size.width,
-                                                                            m_capInsetsInternal.origin.y + m_capInsetsInternal.size.height,
-                                                                            w - (m_capInsetsInternal.origin.x - l + m_capInsetsInternal.size.width),
-                                                                            h - (m_capInsetsInternal.origin.y - t + m_capInsetsInternal.size.height)),
-                                                                            rotated);
-        scale9Image->addChild(bottomRight, 2, pBottomRight);
+        _bottomRight = new CCSprite();
+        _bottomRight->initWithTexture(_scale9Image->getTexture(), rotatedrightbottombounds, true);
+        _scale9Image->addChild(_bottomRight, 2, pBottomRight);
     }
-    
+
     this->setContentSize(rect.size);
-    this->addChild(scale9Image);
+    this->addChild(_scale9Image);
     
     if (m_bSpritesGenerated)
-    {
-        // Restore color and opacity
-        this->setOpacity(opacity);
-        this->setColor(color);
-    }
+        {
+            // Restore color and opacity
+            this->setOpacity(opacity);
+            this->setColor(color);
+        }
     m_bSpritesGenerated = true;
 
     return true;
@@ -371,51 +400,61 @@ void CCScale9Sprite::setContentSize(const CCSize &size)
 
 void CCScale9Sprite::updatePositions()
 {
+    // Check that instances are non-NULL
+    if(!((_topLeft) &&
+         (_topRight) &&
+         (_bottomRight) &&
+         (_bottomLeft) &&
+         (_centre))) {
+        // if any of the above sprites are NULL, return
+        return;
+    }
+
     CCSize size = this->m_obContentSize;
 
-    float sizableWidth = size.width - topLeft->getContentSize().width - topRight->getContentSize().width;
-    float sizableHeight = size.height - topLeft->getContentSize().height - bottomRight->getContentSize().height;
+    float sizableWidth = size.width - _topLeft->getContentSize().width - _topRight->getContentSize().width;
+    float sizableHeight = size.height - _topLeft->getContentSize().height - _bottomRight->getContentSize().height;
     
-    float horizontalScale = sizableWidth/centre->getContentSize().width;
-    float verticalScale = sizableHeight/centre->getContentSize().height;
+    float horizontalScale = sizableWidth/_centre->getContentSize().width;
+    float verticalScale = sizableHeight/_centre->getContentSize().height;
 
-    centre->setScaleX(horizontalScale);
-    centre->setScaleY(verticalScale);
+    _centre->setScaleX(horizontalScale);
+    _centre->setScaleY(verticalScale);
 
-    float rescaledWidth = centre->getContentSize().width * horizontalScale;
-    float rescaledHeight = centre->getContentSize().height * verticalScale;
+    float rescaledWidth = _centre->getContentSize().width * horizontalScale;
+    float rescaledHeight = _centre->getContentSize().height * verticalScale;
 
-    float leftWidth = bottomLeft->getContentSize().width;
-    float bottomHeight = bottomLeft->getContentSize().height;
+    float leftWidth = _bottomLeft->getContentSize().width;
+    float bottomHeight = _bottomLeft->getContentSize().height;
 
-    bottomLeft->setAnchorPoint(ccp(0,0));
-    bottomRight->setAnchorPoint(ccp(0,0));
-    topLeft->setAnchorPoint(ccp(0,0));
-    topRight->setAnchorPoint(ccp(0,0));
-    left->setAnchorPoint(ccp(0,0));
-    right->setAnchorPoint(ccp(0,0));
-    top->setAnchorPoint(ccp(0,0));
-    bottom->setAnchorPoint(ccp(0,0));
-    centre->setAnchorPoint(ccp(0,0));
+    _bottomLeft->setAnchorPoint(ccp(0,0));
+    _bottomRight->setAnchorPoint(ccp(0,0));
+    _topLeft->setAnchorPoint(ccp(0,0));
+    _topRight->setAnchorPoint(ccp(0,0));
+    _left->setAnchorPoint(ccp(0,0));
+    _right->setAnchorPoint(ccp(0,0));
+    _top->setAnchorPoint(ccp(0,0));
+    _bottom->setAnchorPoint(ccp(0,0));
+    _centre->setAnchorPoint(ccp(0,0));
 
     // Position corners
-    bottomLeft->setPosition(ccp(0,0));
-    bottomRight->setPosition(ccp(leftWidth+rescaledWidth,0));
-    topLeft->setPosition(ccp(0, bottomHeight+rescaledHeight));
-    topRight->setPosition(ccp(leftWidth+rescaledWidth, bottomHeight+rescaledHeight));
+    _bottomLeft->setPosition(ccp(0,0));
+    _bottomRight->setPosition(ccp(leftWidth+rescaledWidth,0));
+    _topLeft->setPosition(ccp(0, bottomHeight+rescaledHeight));
+    _topRight->setPosition(ccp(leftWidth+rescaledWidth, bottomHeight+rescaledHeight));
 
     // Scale and position borders
-    left->setPosition(ccp(0, bottomHeight));
-    left->setScaleY(verticalScale);
-    right->setPosition(ccp(leftWidth+rescaledWidth,bottomHeight));
-    right->setScaleY(verticalScale);
-    bottom->setPosition(ccp(leftWidth,0));
-    bottom->setScaleX(horizontalScale);
-    top->setPosition(ccp(leftWidth,bottomHeight+rescaledHeight));
-    top->setScaleX(horizontalScale);
+    _left->setPosition(ccp(0, bottomHeight));
+    _left->setScaleY(verticalScale);
+    _right->setPosition(ccp(leftWidth+rescaledWidth,bottomHeight));
+    _right->setScaleY(verticalScale);
+    _bottom->setPosition(ccp(leftWidth,0));
+    _bottom->setScaleX(horizontalScale);
+    _top->setPosition(ccp(leftWidth,bottomHeight+rescaledHeight));
+    _top->setScaleX(horizontalScale);
 
     // Position centre
-    centre->setPosition(ccp(leftWidth, bottomHeight));
+    _centre->setPosition(ccp(leftWidth, bottomHeight));
 }
 
 bool CCScale9Sprite::initWithFile(const char* file, CCRect rect,  CCRect capInsets)
@@ -468,7 +507,7 @@ bool CCScale9Sprite::initWithFile(CCRect capInsets, const char* file)
 CCScale9Sprite* CCScale9Sprite::create(CCRect capInsets, const char* file)
 {
     CCScale9Sprite* pReturn = new CCScale9Sprite();
-    if ( pReturn && pReturn->initWithFile(file, capInsets) )
+    if ( pReturn && pReturn->initWithFile(capInsets, file) )
     {
         pReturn->autorelease();
         return pReturn;
@@ -498,9 +537,12 @@ CCScale9Sprite* CCScale9Sprite::create(const char* file)
 
 bool CCScale9Sprite::initWithSpriteFrame(CCSpriteFrame* spriteFrame, CCRect capInsets)
 {
-    CCAssert(spriteFrame != NULL, "Sprite frame must be not nil");
+    CCTexture2D* texture = spriteFrame->getTexture();
+    CCAssert(texture != NULL, "CCTexture must be not nil");
 
-    CCSpriteBatchNode *batchnode = CCSpriteBatchNode::createWithTexture(spriteFrame->getTexture(), 9);
+    CCSpriteBatchNode *batchnode = CCSpriteBatchNode::createWithTexture(texture, 9);
+    CCAssert(batchnode != NULL, "CCSpriteBatchNode must be not nil");
+
     bool pReturn = this->initWithBatchNode(batchnode, spriteFrame->getRect(), spriteFrame->isRotated(), capInsets);
     return pReturn;
 }
@@ -537,9 +579,13 @@ CCScale9Sprite* CCScale9Sprite::createWithSpriteFrame(CCSpriteFrame* spriteFrame
 
 bool CCScale9Sprite::initWithSpriteFrameName(const char* spriteFrameName, CCRect capInsets)
 {
-    CCAssert(spriteFrameName != NULL, "Invalid spriteFrameName for sprite");
+    CCAssert((CCSpriteFrameCache::sharedSpriteFrameCache()) != NULL, "sharedSpriteFrameCache must be non-NULL");
 
     CCSpriteFrame *frame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(spriteFrameName);
+    CCAssert(frame != NULL, "CCSpriteFrame must be non-NULL");
+
+    if (NULL == frame) return false;
+
     bool pReturn = this->initWithSpriteFrame(frame, capInsets);
     return pReturn;
 }
@@ -564,6 +610,8 @@ bool CCScale9Sprite::initWithSpriteFrameName(const char* spriteFrameName)
 
 CCScale9Sprite* CCScale9Sprite::createWithSpriteFrameName(const char* spriteFrameName)
 {
+    CCAssert(spriteFrameName != NULL, "spriteFrameName must be non-NULL");
+
     CCScale9Sprite* pReturn = new CCScale9Sprite();
     if ( pReturn && pReturn->initWithSpriteFrameName(spriteFrameName) )
     {
@@ -571,6 +619,8 @@ CCScale9Sprite* CCScale9Sprite::createWithSpriteFrameName(const char* spriteFram
         return pReturn;
     }
     CC_SAFE_DELETE(pReturn);
+
+    CCLog("Could not allocate CCScale9Sprite()");
     return NULL;
     
 }
@@ -578,7 +628,7 @@ CCScale9Sprite* CCScale9Sprite::createWithSpriteFrameName(const char* spriteFram
 CCScale9Sprite* CCScale9Sprite::resizableSpriteWithCapInsets(CCRect capInsets)
 {
     CCScale9Sprite* pReturn = new CCScale9Sprite();
-    if ( pReturn && pReturn->initWithBatchNode(scale9Image, m_spriteRect, capInsets) )
+    if ( pReturn && pReturn->initWithBatchNode(_scale9Image, m_spriteRect, capInsets) )
     {
         pReturn->autorelease();
         return pReturn;
@@ -590,7 +640,7 @@ CCScale9Sprite* CCScale9Sprite::resizableSpriteWithCapInsets(CCRect capInsets)
 CCScale9Sprite* CCScale9Sprite::create()
 { 
     CCScale9Sprite *pReturn = new CCScale9Sprite();
-    if (pReturn)
+    if (pReturn && pReturn->init())
     { 
         pReturn->autorelease();   
         return pReturn;
@@ -599,56 +649,10 @@ CCScale9Sprite* CCScale9Sprite::create()
     return NULL;
 }
 
-
-//LabelBMFont - CCRGBAProtocol protocol
-void CCScale9Sprite::setColor(const ccColor3B& color3)
-{
-    m_tColor = color3;
-    if (scale9Image->getChildren() && scale9Image->getChildren()->count() != 0)
-    {
-        CCObject* child;
-        CCARRAY_FOREACH(scale9Image->getChildren(), child)
-        {
-            CCRGBAProtocol* pNode = dynamic_cast<CCRGBAProtocol*>(child);        
-            if (pNode)
-            {
-                pNode->setColor(m_tColor);
-            }
-        }
-    }
-}
-
-const ccColor3B& CCScale9Sprite::getColor(void)
-{
-    return m_tColor;
-}
-
-void CCScale9Sprite::setOpacity(GLubyte var)
-{
-    m_cOpacity = var;
-
-    if (scale9Image->getChildren() && scale9Image->getChildren()->count() != 0)
-    {
-        CCObject* child;
-        CCARRAY_FOREACH(scale9Image->getChildren(), child)
-        {
-            CCRGBAProtocol* pNode = dynamic_cast<CCRGBAProtocol*>(child);
-            if (pNode)
-            {
-                pNode->setOpacity(m_cOpacity);
-            }
-        }
-    }
-}
-
 /** sets the opacity.
  @warning If the the texture has premultiplied alpha then, the R, G and B channels will be modifed.
  Values goes from 0 to 255, where 255 means fully opaque.
  */
-GLubyte CCScale9Sprite::getOpacity()
-{
-    return m_cOpacity;
-}
 
 void CCScale9Sprite::setPreferredSize(CCSize preferedSize)
 {
@@ -664,7 +668,7 @@ CCSize CCScale9Sprite::getPreferredSize()
 void CCScale9Sprite::setCapInsets(CCRect capInsets)
 {
     CCSize contentSize = this->m_obContentSize;
-    this->updateWithBatchNode(this->scale9Image, this->m_spriteRect, m_bSpriteFrameRotated, capInsets);
+    this->updateWithBatchNode(this->_scale9Image, this->m_spriteRect, m_bSpriteFrameRotated, capInsets);
     this->setContentSize(contentSize);
 }
 
@@ -684,15 +688,15 @@ void CCScale9Sprite::updateCapInset()
     {
         if (m_bSpriteFrameRotated)
         {
-            insets = CCRectMake(m_spriteRect.origin.x + m_insetBottom,
-                m_spriteRect.origin.y + m_insetLeft,
+            insets = CCRectMake(m_insetBottom,
+                m_insetLeft,
                 m_spriteRect.size.width-m_insetRight-m_insetLeft,
                 m_spriteRect.size.height-m_insetTop-m_insetBottom);
         }
         else
         {
-            insets = CCRectMake(m_spriteRect.origin.x + m_insetLeft,
-                m_spriteRect.origin.y + m_insetTop,
+            insets = CCRectMake(m_insetLeft,
+                m_insetTop,
                 m_spriteRect.size.width-m_insetLeft-m_insetRight,
                 m_spriteRect.size.height-m_insetTop-m_insetBottom);
         }
@@ -702,23 +706,21 @@ void CCScale9Sprite::updateCapInset()
 
 void CCScale9Sprite::setOpacityModifyRGB(bool var)
 {
-    m_bIsOpacityModifyRGB = var;
-    if (scale9Image->getChildren() && scale9Image->getChildren()->count() != 0)
+    _opacityModifyRGB = var;
+    CCObject* child;
+    CCArray* children = _scale9Image->getChildren();
+    CCARRAY_FOREACH(children, child)
     {
-        CCObject* child;
-        CCARRAY_FOREACH(scale9Image->getChildren(), child)
+        CCRGBAProtocol* pNode = dynamic_cast<CCRGBAProtocol*>(child);
+        if (pNode)
         {
-            CCRGBAProtocol* pNode = dynamic_cast<CCRGBAProtocol*>(child);
-            if (pNode)
-            {
-                pNode->setOpacityModifyRGB(m_bIsOpacityModifyRGB);
-            }
+            pNode->setOpacityModifyRGB(_opacityModifyRGB);
         }
     }
 }
 bool CCScale9Sprite::isOpacityModifyRGB()
 {
-    return m_bIsOpacityModifyRGB;
+    return _opacityModifyRGB;
 }
 
 void CCScale9Sprite::setSpriteFrame(CCSpriteFrame * spriteFrame)
@@ -785,6 +787,38 @@ void CCScale9Sprite::visit()
         this->m_positionsAreDirty = false;
     }
     CCNode::visit();
+}
+
+void CCScale9Sprite::setColor(const ccColor3B& color)
+{
+    _color = color;
+
+    CCObject* child;
+    CCArray* children = _scale9Image->getChildren();
+    CCARRAY_FOREACH(children, child)
+    {
+        CCRGBAProtocol* pNode = dynamic_cast<CCRGBAProtocol*>(child);
+        if (pNode)
+        {
+            pNode->setColor(color);
+        }
+    }
+}
+
+void CCScale9Sprite::setOpacity(GLubyte opacity)
+{
+    _opacity = opacity;
+
+    CCObject* child;
+    CCArray* children = _scale9Image->getChildren();
+    CCARRAY_FOREACH(children, child)
+    {
+        CCRGBAProtocol* pNode = dynamic_cast<CCRGBAProtocol*>(child);
+        if (pNode)
+        {
+            pNode->setOpacity(opacity);
+        }
+    }
 }
 
 NS_CC_EXT_END

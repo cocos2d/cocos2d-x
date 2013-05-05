@@ -43,7 +43,7 @@ THE SOFTWARE.
 #if CC_NODE_RENDER_SUBPIXEL
 #define RENDER_IN_SUBPIXEL
 #else
-#define RENDER_IN_SUBPIXEL (__ARGS__) (ceil(__ARGS__))
+#define RENDER_IN_SUBPIXEL(__ARGS__) (ceil(__ARGS__))
 #endif
 
 NS_CC_BEGIN
@@ -52,40 +52,42 @@ NS_CC_BEGIN
 static int s_globalOrderOfArrival = 1;
 
 CCNode::CCNode(void)
-: m_nZOrder(0)
-, m_fVertexZ(0.0f)
-, m_fRotationX(0.0f)
+: m_fRotationX(0.0f)
 , m_fRotationY(0.0f)
 , m_fScaleX(1.0f)
 , m_fScaleY(1.0f)
+, m_fVertexZ(0.0f)
 , m_obPosition(CCPointZero)
 , m_fSkewX(0.0f)
 , m_fSkewY(0.0f)
-// children (lazy allocs)
-, m_pChildren(NULL)
-// lazy alloc
-, m_pCamera(NULL)
-, m_pGrid(NULL)
-, m_bVisible(true)
-, m_obAnchorPoint(CCPointZero)
 , m_obAnchorPointInPoints(CCPointZero)
+, m_obAnchorPoint(CCPointZero)
 , m_obContentSize(CCSizeZero)
-, m_bRunning(false)
+, m_sAdditionalTransform(CCAffineTransformMakeIdentity())
+, m_pCamera(NULL)
+// children (lazy allocs)
+// lazy alloc
+, m_pGrid(NULL)
+, m_nZOrder(0)
+, m_pChildren(NULL)
 , m_pParent(NULL)
 // "whole screen" objects. like Scenes and Layers, should set m_bIgnoreAnchorPointForPosition to false
-, m_bIgnoreAnchorPointForPosition(false)
 , m_nTag(kCCNodeTagInvalid)
 // userData is always inited as nil
 , m_pUserData(NULL)
 , m_pUserObject(NULL)
+, m_pShaderProgram(NULL)
+, m_eGLServerState(ccGLServerState(0))
+, m_uOrderOfArrival(0)
+, m_bRunning(false)
 , m_bTransformDirty(true)
 , m_bInverseDirty(true)
+, m_bAdditionalTransformDirty(false)
+, m_bVisible(true)
+, m_bIgnoreAnchorPointForPosition(false)
+, m_bReorderChildDirty(false)
 , m_nScriptHandler(0)
 , m_nUpdateScriptHandler(0)
-, m_pShaderProgram(NULL)
-, m_uOrderOfArrival(0)
-, m_eGLServerState(ccGLServerState(0))
-, m_bReorderChildDirty(false)
 {
     // set default scheduler and actionManager
     CCDirector *director = CCDirector::sharedDirector();
@@ -132,6 +134,11 @@ CCNode::~CCNode(void)
 
     // children
     CC_SAFE_RELEASE(m_pChildren);
+}
+
+bool CCNode::init()
+{
+    return true;
 }
 
 float CCNode::getSkewX()
@@ -282,15 +289,15 @@ void CCNode::setPosition(const CCPoint& newPosition)
     m_bTransformDirty = m_bInverseDirty = true;
 }
 
-const CCPoint& CCNode::getPositionLua(void)
-{
-    return m_obPosition;
-}
-
 void CCNode::getPosition(float* x, float* y)
 {
     *x = m_obPosition.x;
     *y = m_obPosition.y;
+}
+
+void CCNode::setPosition(float x, float y)
+{
+    setPosition(ccp(x, y));
 }
 
 float CCNode::getPositionX(void)
@@ -311,11 +318,6 @@ void CCNode::setPositionX(float x)
 void CCNode::setPositionY(float y)
 {
     setPosition(ccp(m_obPosition.x, y));
-}
-
-void CCNode::setPosition(float x, float y)
-{
-    setPosition(ccp(x, y));
 }
 
 /// children getter
@@ -515,7 +517,14 @@ CCRect CCNode::boundingBox()
 CCNode * CCNode::create(void)
 {
 	CCNode * pRet = new CCNode();
-	pRet->autorelease();
+    if (pRet && pRet->init())
+    {
+        pRet->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(pRet);
+    }
 	return pRet;
 }
 
@@ -653,7 +662,7 @@ void CCNode::removeChildByTag(int tag, bool cleanup)
 
     if (child == NULL)
     {
-        CCLOG("cocos2d: removeChildByTag: child not found!");
+        CCLOG("cocos2d: removeChildByTag(tag = %d): child not found!", tag);
     }
     else
     {
@@ -929,9 +938,7 @@ void CCNode::onExit()
         CCScriptEngineManager::sharedManager()->getScriptEngine()->executeNodeEvent(this, kCCNodeOnExit);
     }
 
-    arrayMakeObjectsPerformSelector(m_pChildren, onExit, CCNode*);
-
-    
+    arrayMakeObjectsPerformSelector(m_pChildren, onExit, CCNode*);    
 }
 
 void CCNode::registerScriptHandler(int nHandler)
@@ -949,13 +956,6 @@ void CCNode::unregisterScriptHandler(void)
         LUALOG("[LUA] Remove CCNode event handler: %d", m_nScriptHandler);
         m_nScriptHandler = 0;
     }
-}
-
-void CCNode::scheduleUpdateWithPriorityLua(int nHandler, int priority)
-{
-    unscheduleUpdate();
-    m_nUpdateScriptHandler = nHandler;
-    m_pScheduler->scheduleUpdateForTarget(this, priority, !m_bRunning);
 }
 
 void CCNode::setActionManager(CCActionManager* actionManager)
@@ -1034,6 +1034,13 @@ void CCNode::scheduleUpdateWithPriority(int priority)
     m_pScheduler->scheduleUpdateForTarget(this, priority, !m_bRunning);
 }
 
+void CCNode::scheduleUpdateWithPriorityLua(int nHandler, int priority)
+{
+    unscheduleUpdate();
+    m_nUpdateScriptHandler = nHandler;
+    m_pScheduler->scheduleUpdateForTarget(this, priority, !m_bRunning);
+}
+
 void CCNode::unscheduleUpdate()
 {
     m_pScheduler->unscheduleUpdateForTarget(this);
@@ -1098,7 +1105,7 @@ void CCNode::update(float fDelta)
 {
     if (m_nUpdateScriptHandler)
     {
-        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeSchedule(m_nUpdateScriptHandler, fDelta);
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeSchedule(m_nUpdateScriptHandler, fDelta, this);
     }
 }
 
@@ -1165,11 +1172,24 @@ CCAffineTransform CCNode::nodeToParentTransform(void)
                 m_sTransform = CCAffineTransformTranslate(m_sTransform, -m_obAnchorPointInPoints.x, -m_obAnchorPointInPoints.y);
             }
         }
+        
+        if (m_bAdditionalTransformDirty)
+        {
+            m_sTransform = CCAffineTransformConcat(m_sTransform, m_sAdditionalTransform);
+            m_bAdditionalTransformDirty = false;
+        }
 
         m_bTransformDirty = false;
     }
 
     return m_sTransform;
+}
+
+void CCNode::setAdditionalTransform(const CCAffineTransform& additionalTransform)
+{
+    m_sAdditionalTransform = additionalTransform;
+    m_bTransformDirty = true;
+    m_bAdditionalTransformDirty = true;
 }
 
 CCAffineTransform CCNode::parentToNodeTransform(void)
@@ -1239,11 +1259,145 @@ CCPoint CCNode::convertTouchToNodeSpaceAR(CCTouch *touch)
     return this->convertToNodeSpaceAR(point);
 }
 
-// MARMALADE ADDED
 void CCNode::updateTransform()
 {
     // Recursively iterate over children
     arrayMakeObjectsPerformSelector(m_pChildren, updateTransform, CCNode*);
+}
+
+// CCNodeRGBA
+CCNodeRGBA::CCNodeRGBA()
+: _displayedOpacity(255)
+, _realOpacity(255)
+, _displayedColor(ccWHITE)
+, _realColor(ccWHITE)
+, _cascadeColorEnabled(false)
+, _cascadeOpacityEnabled(false)
+{}
+
+CCNodeRGBA::~CCNodeRGBA() {}
+
+bool CCNodeRGBA::init()
+{
+    if (CCNode::init())
+    {
+        _displayedOpacity = _realOpacity = 255;
+        _displayedColor = _realColor = ccWHITE;
+        _cascadeOpacityEnabled = _cascadeColorEnabled = false;
+        return true;
+    }
+    return false;
+}
+
+GLubyte CCNodeRGBA::getOpacity(void)
+{
+	return _realOpacity;
+}
+
+GLubyte CCNodeRGBA::getDisplayedOpacity(void)
+{
+	return _displayedOpacity;
+}
+
+void CCNodeRGBA::setOpacity(GLubyte opacity)
+{
+    _displayedOpacity = _realOpacity = opacity;
+    
+	if (_cascadeOpacityEnabled)
+    {
+		GLubyte parentOpacity = 255;
+        CCRGBAProtocol* pParent = dynamic_cast<CCRGBAProtocol*>(m_pParent);
+        if (pParent && pParent->isCascadeOpacityEnabled())
+        {
+            parentOpacity = pParent->getDisplayedOpacity();
+        }
+        this->updateDisplayedOpacity(parentOpacity);
+	}
+}
+
+void CCNodeRGBA::updateDisplayedOpacity(GLubyte parentOpacity)
+{
+	_displayedOpacity = _realOpacity * parentOpacity/255.0;
+	
+    if (_cascadeOpacityEnabled)
+    {
+        CCObject* pObj;
+        CCARRAY_FOREACH(m_pChildren, pObj)
+        {
+            CCRGBAProtocol* item = dynamic_cast<CCRGBAProtocol*>(pObj);
+            if (item)
+            {
+                item->updateDisplayedOpacity(_displayedOpacity);
+            }
+        }
+    }
+}
+
+bool CCNodeRGBA::isCascadeOpacityEnabled(void)
+{
+    return _cascadeOpacityEnabled;
+}
+
+void CCNodeRGBA::setCascadeOpacityEnabled(bool cascadeOpacityEnabled)
+{
+    _cascadeOpacityEnabled = cascadeOpacityEnabled;
+}
+
+const ccColor3B& CCNodeRGBA::getColor(void)
+{
+	return _realColor;
+}
+
+const ccColor3B& CCNodeRGBA::getDisplayedColor()
+{
+	return _displayedColor;
+}
+
+void CCNodeRGBA::setColor(const ccColor3B& color)
+{
+	_displayedColor = _realColor = color;
+	
+	if (_cascadeColorEnabled)
+    {
+		ccColor3B parentColor = ccWHITE;
+        CCRGBAProtocol *parent = dynamic_cast<CCRGBAProtocol*>(m_pParent);
+		if (parent && parent->isCascadeColorEnabled())
+        {
+            parentColor = parent->getDisplayedColor(); 
+        }
+        
+        updateDisplayedColor(parentColor);
+	}
+}
+
+void CCNodeRGBA::updateDisplayedColor(const ccColor3B& parentColor)
+{
+	_displayedColor.r = _realColor.r * parentColor.r/255.0;
+	_displayedColor.g = _realColor.g * parentColor.g/255.0;
+	_displayedColor.b = _realColor.b * parentColor.b/255.0;
+    
+    if (_cascadeColorEnabled)
+    {
+        CCObject *obj = NULL;
+        CCARRAY_FOREACH(m_pChildren, obj)
+        {
+            CCRGBAProtocol *item = dynamic_cast<CCRGBAProtocol*>(obj);
+            if (item)
+            {
+                item->updateDisplayedColor(_displayedColor);
+            }
+        }
+    }
+}
+
+bool CCNodeRGBA::isCascadeColorEnabled(void)
+{
+    return _cascadeColorEnabled;
+}
+
+void CCNodeRGBA::setCascadeColorEnabled(bool cascadeColorEnabled)
+{
+    _cascadeColorEnabled = cascadeColorEnabled;
 }
 
 NS_CC_END

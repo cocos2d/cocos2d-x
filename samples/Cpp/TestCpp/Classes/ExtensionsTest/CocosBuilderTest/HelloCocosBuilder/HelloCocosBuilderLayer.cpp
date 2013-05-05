@@ -8,6 +8,7 @@
 #include "../ParticleSystemTest/ParticleSystemTestLayerLoader.h"
 #include "../ScrollViewTest/ScrollViewTestLayerLoader.h"
 #include "../AnimationsTest/AnimationsLayerLoader.h"
+#include "../TimelineCallbackTest/TimelineCallbackLayerLoader.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
@@ -55,7 +56,7 @@ void HelloCocosBuilderLayer::openTest(const char * pCCBFileName, const char * pC
     transitionColor.r = 0;
     transitionColor.g = 0;
     transitionColor.b = 0;
-    
+
     CCDirector::sharedDirector()->pushScene(CCTransitionFade::create(0.5f, scene, transitionColor));
 }
 
@@ -68,7 +69,7 @@ void HelloCocosBuilderLayer::onNodeLoaded(cocos2d::CCNode * pNode,  cocos2d::ext
 
 
 SEL_MenuHandler HelloCocosBuilderLayer::onResolveCCBCCMenuItemSelector(CCObject * pTarget, const char * pSelectorName) {
-    return NULL;    
+    return NULL;
 }
 
 SEL_CCControlHandler HelloCocosBuilderLayer::onResolveCCBCCControlSelector(CCObject * pTarget, const char * pSelectorName) {
@@ -79,7 +80,7 @@ SEL_CCControlHandler HelloCocosBuilderLayer::onResolveCCBCCControlSelector(CCObj
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onParticleSystemTestClicked", HelloCocosBuilderLayer::onParticleSystemTestClicked);
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onScrollViewTestClicked", HelloCocosBuilderLayer::onScrollViewTestClicked);
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onMenuScrollClicked", HelloCocosBuilderLayer::onMenuScrollClicked);
-
+    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onTimelineCallbackSoundClicked", HelloCocosBuilderLayer::onTimelineCallbackSoundClicked);
     return NULL;
 }
 
@@ -90,6 +91,40 @@ bool HelloCocosBuilderLayer::onAssignCCBMemberVariable(CCObject * pTarget, const
     return false;
 }
 
+bool HelloCocosBuilderLayer::onAssignCCBCustomProperty(CCObject* pTarget, const char* pMemberVariableName, cocos2d::extension::CCBValue* pCCBValue)
+{
+    bool bRet = false;
+    if (pTarget == this)
+    {
+        if (0 == strcmp(pMemberVariableName, "mCustomPropertyInt"))
+        {
+            this->mCustomPropertyInt = pCCBValue->getIntValue();
+            CCLog("mCustomPropertyInt = %d", mCustomPropertyInt);
+            bRet = true;
+        }
+        else if ( 0 == strcmp(pMemberVariableName, "mCustomPropertyFloat"))
+        {
+            this->mCustomPropertyFloat = pCCBValue->getFloatValue();
+            CCLog("mCustomPropertyFloat = %f", mCustomPropertyFloat);
+            bRet = true;
+        }
+        else if ( 0  == strcmp(pMemberVariableName, "mCustomPropertyBoolean"))
+        {
+            this->mCustomPropertyBoolean = pCCBValue->getBoolValue();
+            CCLog("mCustomPropertyBoolean = %d", mCustomPropertyBoolean);
+            bRet = true;
+        }
+        else if ( 0  == strcmp(pMemberVariableName, "mCustomPropertyString"))
+        {
+            this->mCustomPropertyString = pCCBValue->getStringValue();
+            CCLog("mCustomPropertyString = %s", mCustomPropertyString.c_str());
+            bRet = true;
+        }
+
+    }
+
+    return bRet;
+}
 
 void HelloCocosBuilderLayer::onMenuTestClicked(CCObject * pSender, cocos2d::extension::CCControlEvent pCCControlEvent) {
     this->openTest("ccb/ccb/TestMenus.ccbi", "TestMenusLayer", MenuTestLayerLoader::loader());
@@ -107,15 +142,15 @@ void HelloCocosBuilderLayer::onAnimationsTestClicked(CCObject * pSender, cocos2d
 
     /* Create an autorelease CCNodeLoaderLibrary. */
     CCNodeLoaderLibrary * ccNodeLoaderLibrary = CCNodeLoaderLibrary::newDefaultCCNodeLoaderLibrary();
-    
+
     ccNodeLoaderLibrary->registerCCNodeLoader("TestHeaderLayer", TestHeaderLayerLoader::loader());
     ccNodeLoaderLibrary->registerCCNodeLoader("TestAnimationsLayer", AnimationsTestLayerLoader::loader());
 
-    
+
     /* Create an autorelease CCBReader. */
     cocos2d::extension::CCBReader * ccbReader = new cocos2d::extension::CCBReader(ccNodeLoaderLibrary);
     ccbReader->autorelease();
-    
+
     /* Read a ccbi file. */
     // Load the scene from the ccbi-file, setting this class as
     // the owner will cause lblTestTitle to be set by the CCBReader.
@@ -124,23 +159,23 @@ void HelloCocosBuilderLayer::onAnimationsTestClicked(CCObject * pSender, cocos2d
     CCNode *animationsTest = ccbReader->readNodeGraphFromFile("ccb/ccb/TestAnimations.ccbi", this);
     // Load node graph (TestAnimations is a sub class of CCLayer) and retrieve the ccb action manager
     ((AnimationsTestLayer*)animationsTest)->setAnimationManager(ccbReader->getAnimationManager());
-    
+
     this->mTestTitleLabelTTF->setString("TestAnimations.ccbi");
-    
+
     CCScene * scene = CCScene::create();
     if(animationsTest != NULL) {
         scene->addChild(animationsTest);
     }
-    
+
     /* Push the new scene with a fancy transition. */
     ccColor3B transitionColor;
     transitionColor.r = 0;
     transitionColor.g = 0;
     transitionColor.b = 0;
-    
+
     CCDirector::sharedDirector()->pushScene(CCTransitionFade::create(0.5f, scene, transitionColor));
-    
-    
+
+
     //this->openTest("TestAnimations.ccbi", "TestAnimationsLayer", AnimationsTestLayerLoader::loader());
 }
 
@@ -156,4 +191,9 @@ void HelloCocosBuilderLayer::onScrollViewTestClicked(CCObject * pSender, cocos2d
 void HelloCocosBuilderLayer::onMenuScrollClicked(CCObject * pSender, cocos2d::extension::CCControlEvent pCCControlEvent)
 {
     this->openTest("ccb/ccb/TestScrollViewWithMenu.ccbi", "TestScrollViewWithMenu", nil);
+}
+
+void HelloCocosBuilderLayer::onTimelineCallbackSoundClicked(CCObject * pSender, cocos2d::extension::CCControlEvent pCCControlEvent)
+{
+    this->openTest("ccb/ccb/TestTimelineCallback.ccbi", "TimelineCallbackTestLayer", TimelineCallbackTestLayerLoader::loader());
 }

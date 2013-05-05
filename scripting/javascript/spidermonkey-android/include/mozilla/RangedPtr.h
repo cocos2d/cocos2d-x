@@ -128,13 +128,13 @@ class RangedPtr
 
     RangedPtr<T> operator+(size_t inc) {
       MOZ_ASSERT(inc <= size_t(-1) / sizeof(T));
-      MOZ_ASSERT(ptr + inc > ptr);
+      MOZ_ASSERT(ptr + inc >= ptr);
       return create(ptr + inc);
     }
 
     RangedPtr<T> operator-(size_t dec) {
       MOZ_ASSERT(dec <= size_t(-1) / sizeof(T));
-      MOZ_ASSERT(ptr - dec < ptr);
+      MOZ_ASSERT(ptr - dec <= ptr);
       return create(ptr - dec);
     }
 

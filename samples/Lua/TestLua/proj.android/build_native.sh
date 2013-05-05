@@ -28,11 +28,25 @@ exit 0
 esac
 done
 
+# read local.properties
+
+_LOCALPROPERTIES_FILE=$(dirname "$0")"/local.properties"
+if [ -f "$_LOCALPROPERTIES_FILE" ]
+then
+    [ -r "$_LOCALPROPERTIES_FILE" ] || die "Fatal Error: $_LOCALPROPERTIES_FILE exists but is unreadable"
+
+    # strip out entries with a "." because Bash cannot process variables with a "."
+    _PROPERTIES=`sed '/\./d' "$_LOCALPROPERTIES_FILE"`
+    for line in "$_PROPERTIES"; do
+        declare "$line";
+    done
+fi
+
 # paths
 
-if [ -z "${NDK_ROOT+aaa}" ]; then
-# ... if NDK_ROOT is not set, use "$HOME/bin/android-ndk"
-    NDK_ROOT="$HOME/bin/android-ndk"
+if [ -z "${NDK_ROOT+aaa}" ];then
+echo "NDK_ROOT not defined. Please define NDK_ROOT in your environment or in local.properties"
+exit 1
 fi
 
 if [ -z "${COCOS2DX_ROOT+aaa}" ]; then
@@ -44,8 +58,8 @@ if [ -z "${COCOS2DX_ROOT+aaa}" ]; then
     APP_ROOT="$DIR/.."
     APP_ANDROID_ROOT="$DIR"
 else
-    APP_ROOT="$COCOS2DX_ROOT"/samples/"$APPNAME"
-    APP_ANDROID_ROOT="$COCOS2DX_ROOT"/samples/"$APPNAME"/proj.android
+    APP_ROOT="$COCOS2DX_ROOT"/samples/Lua/"$APPNAME"
+    APP_ANDROID_ROOT="$COCOS2DX_ROOT"/samples/Lua/"$APPNAME"/proj.android
 fi
 
 echo "NDK_ROOT = $NDK_ROOT"
@@ -61,7 +75,7 @@ fi
 mkdir "$APP_ANDROID_ROOT"/assets
 
 # copy resources
-for file in "$APP_ROOT"/../TestCpp/Resources/*
+for file in "$APP_ROOT"/../../Cpp/TestCpp/Resources/*
 do
 if [ -d "$file" ]; then
     cp -rf "$file" "$APP_ANDROID_ROOT"/assets

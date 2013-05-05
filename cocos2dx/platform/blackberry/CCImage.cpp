@@ -28,7 +28,7 @@
 #include <vector>
 #include <string>
 #include <sstream>
-
+#include <algorithm>
 #include "platform/CCImage.h"
 #include "platform/CCFileUtils.h"
 #include "platform/CCCommon.h"
@@ -259,12 +259,12 @@ public:
 			return false;
 		}
 		do {
-			//CCLog("\n\n ---- FT_New_Face with pFontName = %s\n", pFontName);
+			//CCLog(" ---- FT_New_Face with pFontName = %s", pFontName);
 			iError = FT_New_Face( library, pFontName, 0, &face );
             
 			if (iError) {
 				//no valid font found use default
-				//CCLog("\n\n ---- no valid font, use default %s\n", pFontName);
+				//CCLog(" ---- no valid font, use default %s", pFontName);
 				iError = FT_New_Face( library, "/usr/fonts/font_repository/monotype/arial.ttf", 0, &face );
 			}
 			CC_BREAK_IF(iError);
@@ -408,11 +408,17 @@ bool CCImage::initWithString(
         CC_BREAK_IF(! pText);
         BitmapDC &dc = sharedBitmapDC();
 
-		const char* pFullFontName = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(pFontName);
-        //CCLog("-----pText=%s and Font File is %s nWidth= %d,nHeight=%d",pText,pFullFontName,nWidth,nHeight);
+		std::string fullFontName = pFontName;
+    	std::string lowerCasePath = fullFontName;
+    	std::transform(lowerCasePath.begin(), lowerCasePath.end(), lowerCasePath.begin(), ::tolower);
+
+    	if ( lowerCasePath.find(".ttf") != std::string::npos ) {
+    		fullFontName = CCFileUtils::sharedFileUtils()->fullPathForFilename(pFontName);
+    	}
+        //CCLog("-----pText=%s and Font File is %s nWidth= %d,nHeight=%d",pText,fullFontName.c_str(),nWidth,nHeight);
         
-        CC_BREAK_IF(! dc.getBitmap(pText, nWidth, nHeight, eAlignMask, pFullFontName, nSize));
-        //CCLog("---- dc.getBitmap is Succesfull... \n");
+        CC_BREAK_IF(! dc.getBitmap(pText, nWidth, nHeight, eAlignMask, fullFontName.c_str(), nSize));
+        //CCLog("---- dc.getBitmap is Succesfull...");
         
         // assign the dc.m_pData to m_pData in order to save time
         m_pData = dc.m_pData;

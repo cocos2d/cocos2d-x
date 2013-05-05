@@ -92,8 +92,6 @@ void PerformBasicLayer::onEnter()
 {
     CCLayer::onEnter();
 
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
-
     CCMenuItemFont::setFontName("Arial");
     CCMenuItemFont::setFontSize(24);
     CCMenuItemFont* pMainItem = CCMenuItemFont::create("Back", this,

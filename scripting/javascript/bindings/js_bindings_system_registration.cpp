@@ -54,7 +54,7 @@ void jsb_register_system( JSContext *_cx, JSObject *object)
 	// Init DB with full path
 	//NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
 	//NSString *fullpath = [path stringByAppendingPathComponent:@"jsb.sqlite"];
-    std::string strFilePath = cocos2d::CCFileUtils::sharedFileUtils()->getWriteablePath();
+    std::string strFilePath = cocos2d::CCFileUtils::sharedFileUtils()->getWritablePath();
     strFilePath += "/jsb.sqlite";
 	localStorageInit(strFilePath.c_str());
 	

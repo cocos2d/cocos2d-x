@@ -114,7 +114,7 @@ public:
 
     void Step(Settings* settings)
     {
-        bool sleeping = true;
+        //bool sleeping = true;
         for (b2Body* b = m_world->GetBodyList(); b; b = b->GetNext())
         {
             if (b->GetType() != b2_dynamicBody)
@@ -122,10 +122,10 @@ public:
                 continue;
             }
 
-            if (b->IsAwake())
-            {
-                sleeping = false;
-            }
+            //if (b->IsAwake())
+            //{
+            //    sleeping = false;
+            //}
         }
 
         if (m_stepCount == 180)

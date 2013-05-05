@@ -30,13 +30,13 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 CCGrabber::CCGrabber(void)
-    : m_fbo(0)
+    : m_FBO(0)
     , m_oldFBO(0)
 {
     memset(m_oldClearColor, 0, sizeof(m_oldClearColor));
 
     // generate FBO
-    glGenFramebuffers(1, &m_fbo);
+    glGenFramebuffers(1, &m_FBO);
 }
 
 void CCGrabber::grab(CCTexture2D *pTexture)
@@ -44,7 +44,7 @@ void CCGrabber::grab(CCTexture2D *pTexture)
     glGetIntegerv(GL_FRAMEBUFFER_BINDING, &m_oldFBO);
 
     // bind
-    glBindFramebuffer(GL_FRAMEBUFFER, m_fbo);
+    glBindFramebuffer(GL_FRAMEBUFFER, m_FBO);
 
     // associate texture with FBO
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, pTexture->getName(), 0);
@@ -64,7 +64,7 @@ void CCGrabber::beforeRender(CCTexture2D *pTexture)
     CC_UNUSED_PARAM(pTexture);
 
     glGetIntegerv(GL_FRAMEBUFFER_BINDING, &m_oldFBO);
-    glBindFramebuffer(GL_FRAMEBUFFER, m_fbo);
+    glBindFramebuffer(GL_FRAMEBUFFER, m_FBO);
     
     // save clear color
     glGetFloatv(GL_COLOR_CLEAR_VALUE, m_oldClearColor);
@@ -95,7 +95,7 @@ void CCGrabber::afterRender(cocos2d::CCTexture2D *pTexture)
 CCGrabber::~CCGrabber()
 {
     CCLOGINFO("cocos2d: deallocing %p", this);
-    glDeleteFramebuffers(1, &m_fbo);
+    glDeleteFramebuffers(1, &m_FBO);
 }
 
 NS_CC_END

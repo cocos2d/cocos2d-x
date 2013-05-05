@@ -175,15 +175,15 @@ void Box2DTestLayer::addNewSpriteAtPosition(CCPoint p)
     fixtureDef.shape = &dynamicBox;    
     fixtureDef.density = 1.0f;
     fixtureDef.friction = 0.3f;
-    body->CreateFixture(&fixtureDef);
-
+    body->CreateFixture(&fixtureDef);    
+    
+#if CC_ENABLE_BOX2D_INTEGRATION
     CCNode *parent = this->getChildByTag(kTagParentNode);
-
+    
     //We have a 64x64 sprite sheet with 4 different 32x32 images.  The following code is
     //just randomly picking one of the images
     int idx = (CCRANDOM_0_1() > .5 ? 0:1);
     int idy = (CCRANDOM_0_1() > .5 ? 0:1);
-#if CC_ENABLE_BOX2D_INTEGRATION
     CCPhysicsSprite *sprite = CCPhysicsSprite::createWithTexture(m_pSpriteTexture,CCRectMake(32 * idx,32 * idy,32,32));
     parent->addChild(sprite);
     sprite->setB2Body(body);
