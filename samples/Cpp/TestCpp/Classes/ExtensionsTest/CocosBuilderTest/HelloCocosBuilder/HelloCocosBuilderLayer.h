@@ -7,7 +7,7 @@
 /*
  * Note: for some pretty hard fucked up reason, the order of inheritance is important!
  * When CCLayer is the 'first' inherited object:
- * During runtime the method call to the (pure virtual) 'interfaces' fails jumping into a bogus method or just doing nothing: 
+ * During runtime the method call to the (pure virtual) 'interfaces' fails jumping into a bogus method or just doing nothing:
  *  #0    0x000cf840 in non-virtual thunk to HelloCocos....
  *  #1    ....
  *
@@ -40,12 +40,13 @@ class HelloCocosBuilderLayer
         void onAnimationsTestClicked(cocos2d::CCObject * pSender, cocos2d::extension::CCControlEvent pCCControlEvent);
         void onParticleSystemTestClicked(cocos2d::CCObject * pSender, cocos2d::extension::CCControlEvent pCCControlEvent);
         void onScrollViewTestClicked(cocos2d::CCObject * pSender, cocos2d::extension::CCControlEvent pCCControlEvent);
+        void onMenuScrollClicked(cocos2d::CCObject * pSender, cocos2d::extension::CCControlEvent pCCControlEvent);
         void onTimelineCallbackSoundClicked(cocos2d::CCObject * pSender, cocos2d::extension::CCControlEvent pCCControlEvent);
 
     private:
         cocos2d::CCSprite * mBurstSprite;
         cocos2d::CCLabelTTF * mTestTitleLabelTTF;
-    
+
         int mCustomPropertyInt;
         float mCustomPropertyFloat;
         bool mCustomPropertyBoolean;

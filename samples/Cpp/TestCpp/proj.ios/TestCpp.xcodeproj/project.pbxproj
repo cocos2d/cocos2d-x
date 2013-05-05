@@ -256,6 +256,8 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
+		60A1940C16E1FC4D000D062F /* CCScrollMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 60A1940816E1FC4D000D062F /* CCScrollMenu.cpp */; };
+		60A1940D16E1FC4D000D062F /* CCScrollViewWithMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 60A1940A16E1FC4D000D062F /* CCScrollViewWithMenu.cpp */; };
 		7855E0E1153FEF240059DD9A /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 7855E0DF153FEF240059DD9A /* Default.png */; };
 		789B560D15197BE00038CD1E /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 789B560C15197BE00038CD1E /* animations */; };
 		789B560F15197BF30038CD1E /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 789B560E15197BF30038CD1E /* fonts */; };
@@ -862,6 +864,10 @@
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ../main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* iphone_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iphone_Prefix.pch; path = ../iphone_Prefix.pch; sourceTree = "<group>"; };
+		60A1940816E1FC4D000D062F /* CCScrollMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCScrollMenu.cpp; sourceTree = "<group>"; };
+		60A1940916E1FC4D000D062F /* CCScrollMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCScrollMenu.h; sourceTree = "<group>"; };
+		60A1940A16E1FC4D000D062F /* CCScrollViewWithMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCScrollViewWithMenu.cpp; sourceTree = "<group>"; };
+		60A1940B16E1FC4D000D062F /* CCScrollViewWithMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCScrollViewWithMenu.h; sourceTree = "<group>"; };
 		7855E0DF153FEF240059DD9A /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = SOURCE_ROOT; };
 		789B560C15197BE00038CD1E /* animations */ = {isa = PBXFileReference; lastKnownFileType = folder; path = animations; sourceTree = "<group>"; };
 		789B560E15197BF30038CD1E /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
@@ -1366,6 +1372,10 @@
 		15A3DA111682F826002FB0C5 /* CCScrollView */ = {
 			isa = PBXGroup;
 			children = (
+				60A1940816E1FC4D000D062F /* CCScrollMenu.cpp */,
+				60A1940916E1FC4D000D062F /* CCScrollMenu.h */,
+				60A1940A16E1FC4D000D062F /* CCScrollViewWithMenu.cpp */,
+				60A1940B16E1FC4D000D062F /* CCScrollViewWithMenu.h */,
 				15A3DA121682F826002FB0C5 /* CCScrollView.cpp */,
 				15A3DA131682F826002FB0C5 /* CCScrollView.h */,
 				15A3DA141682F826002FB0C5 /* CCSorting.cpp */,
@@ -2674,6 +2684,8 @@
 				15A3DAEE1682F8A6002FB0C5 /* SimpleAudioEngine.mm in Sources */,
 				15A3DAEF1682F8A6002FB0C5 /* SimpleAudioEngine_objc.m in Sources */,
 				1A27573F1697CF2B00504026 /* CCEditBoxImplAndroid.cpp in Sources */,
+				60A1940C16E1FC4D000D062F /* CCScrollMenu.cpp in Sources */,
+				60A1940D16E1FC4D000D062F /* CCScrollViewWithMenu.cpp in Sources */,
 				1AB2D71716B649C200D72C48 /* FileUtilsTest.cpp in Sources */,
 				1A75E95A16F84FDD00BA80BD /* TimelineCallbackTestLayer.cpp in Sources */,
 				1A9FE96B17277E9D00B21905 /* Animation.cpp in Sources */,

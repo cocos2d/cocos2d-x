@@ -14,6 +14,8 @@
 #include "CCControlButtonLoader.h"
 #include "CCParticleSystemQuadLoader.h"
 #include "CCScrollViewLoader.h"
+#include "CCScrollViewWithMenu.h"
+#include "CCScrollMenu.h"
 
 
 
@@ -42,6 +44,9 @@ void CCNodeLoaderLibrary::registerDefaultCCNodeLoaders() {
     this->registerCCNodeLoader("CCMenuItemImage", CCMenuItemImageLoader::loader());
     this->registerCCNodeLoader("CCControlButton", CCControlButtonLoader::loader());
     this->registerCCNodeLoader("CCParticleSystemQuad", CCParticleSystemQuadLoader::loader());
+    
+    this->registerCCNodeLoader("CCScrollViewWithMenu", CCScrollViewWithMenuLoader::loader());
+    this->registerCCNodeLoader("CCScrollMenu", CCScrollMenuLoader::loader());
 }
 
 void CCNodeLoaderLibrary::registerCCNodeLoader(const char * pClassName, CCNodeLoader * pCCNodeLoader) {
