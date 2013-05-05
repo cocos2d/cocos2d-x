@@ -62,8 +62,8 @@
 								<option id="gnu.cpp.compiler.option.preprocessor.def.67860287" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="_DEBUG"/>
 									<listOptionValue builtIn="false" value="TIZEN"/>
-									<listOptionValue builtIn="false" value="CC_ENABLE_CHIPMUNK_INTEGRATION=0"/>
-									<listOptionValue builtIn="false" value="CC_ENABLE_BOX2D_INTEGRATION=1"/>
+									<listOptionValue builtIn="false" value="CC_ENABLE_CHIPMUNK_INTEGRATION=1"/>
+									<listOptionValue builtIn="false" value="CC_ENABLE_BOX2D_INTEGRATION=0"/>
 								</option>
 								<inputType id="sbi.gnu.cpp.compiler.tizen.inputType.2085750802" superClass="sbi.gnu.cpp.compiler.tizen.inputType"/>
 							</tool>
