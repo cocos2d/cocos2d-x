@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="134" height="90" tilewidth="5" tileheight="5">
+ <imagelayer name="background" width="134" height="90">
+  <image source="fantasy-world.png"/>
+ </imagelayer>
+ <objectgroup name="territory" width="134" height="90">
+  <object name="Arland" type="Country" x="360" y="185">
+   <properties>
+    <property name="name" value="Stone Breath"/>
+   </properties>
+   <polygon points="0,0 0,-10 15,-20 15,-25 20,-30 25,-30 45,-35 60,-30 65,-35 70,-30 70,-25 70,-15 80,-10 85,-5 85,5 90,5 95,0 95,-5 100,-10 105,-10 110,-5 120,0 120,10 125,15 125,25 115,35 115,40 95,40 85,35 75,35 70,40 60,30 50,30 35,25 15,25 10,20 15,15 10,5 5,5"/>
+  </object>
+  <object name="Kattar" type="Country" x="430" y="155">
+   <polygon points="0,0 0,15 10,20 15,25 15,35 20,35 25,30 25,25 30,20 35,20 40,25 50,30 50,35 65,35 75,30 90,25 100,20 115,5 100,-5 85,-10 75,-10 75,-15 60,-20 45,-20 35,-10"/>
+  </object>
+  <object name="Pollux" type="Lake" x="195" y="170">
+   <polygon points="0,0 -5,10 5,15 10,15 15,5 20,0 20,-10 15,-10 5,-5"/>
+  </object>
+  <object name="Kolvinia" type="Country" x="230" y="195">
+   <polygon points="0,0 -5,-5 0,-15 0,-20 -10,-25 -10,-30 -5,-35 -5,-45 -10,-50 10,-75 10,-85 20,-85 20,-95 10,-105 20,-110 25,-120 30,-125 45,-125 60,-145 65,-145 80,-165 100,-160 105,-155 120,-155 130,-150 140,-150 155,-155 165,-160 170,-165 190,-165 195,-160 200,-150 200,-140 195,-135 185,-130 170,-125 170,-120 180,-115 190,-115 190,-105 180,-100 170,-100 160,-85 150,-85 140,-75 130,-75 120,-70 100,-70 85,-60 90,-55 85,-50 85,-45 95,-40 95,-30 110,-20 95,-20 85,-25 80,-20 75,-10 65,-10 65,0 55,-5 40,-10 30,-20 20,-20 5,-10 5,0"/>
+  </object>
+  <object name="Istr" type="City" x="255" y="85" width="20" height="35">
+   <properties>
+    <property name="name" value="Истр"/>
+    <property name="population" value="100000"/>
+   </properties>
+  </object>
+  <object name="Istrior" type="SourceRiver" x="280" y="95" width="5" height="5">
+   <properties>
+    <property name="flow" value="70"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object name="Istrior" type="River" x="280" y="100">
+   <properties>
+    <property name="name" value="Истриор"/>
+   </properties>
+   <polyline points="0,0 -5,5 -15,0 -25,5 -35,5 -40,10 -45,10 -55,0 -65,0 -75,0 -80,-5 -100,-5 -110,-10 -115,-20 -130,-20 -135,-25 -150,-35"/>
+  </object>
+  <object name="Smi" type="Sea" x="80" y="145">
+   <polygon points="0,0 0,10 -10,15 -5,20 0,20 10,10 15,10 15,20 0,25 20,25 40,25 35,15 40,10 45,10 40,5 35,0 30,0 30,-5 30,-10 30,-15 25,-15 20,-10 15,-20 15,-25 20,-30 20,-40 5,-30 -10,-30 -20,-20 -25,-5 -20,0"/>
+  </object>
+  <object name="Abriyskie" type="Mountain" x="395" y="230">
+   <polygon points="0,0 0,-10 15,-25 40,-20 50,-15 75,-5 90,0 105,0 110,-5 120,0 130,10 160,20 165,30 170,30 175,35 180,35 185,40 185,50 180,65 175,60 175,50 170,40 155,35 150,30 145,30 130,25 120,20 115,20 110,15 95,15 70,10 60,10 50,5 45,5 40,10 25,0 20,0 0,15 -5,15 5,5 0,5"/>
+  </object>
+  <object name="Kas-Tolmi" type="Island" x="375" y="295">
+   <polygon points="0,0 -5,-10 -5,-20 0,-25 5,-25 10,-20 10,-15 5,-15 0,-10 5,-5"/>
+  </object>
+  <object name="Kas-Tolmi" type="Island" x="390" y="280">
+   <polygon points="0,0 10,0 20,10 20,15 15,15 10,5"/>
+  </object>
+  <object name="Kas-Tolmi" type="Island" x="400" y="295">
+   <polygon points="0,0 10,10 10,15 5,15 0,10 -5,5"/>
+  </object>
+ </objectgroup>
+</map>

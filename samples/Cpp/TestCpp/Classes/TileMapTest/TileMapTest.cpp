@@ -1355,7 +1355,7 @@ enum
 
 static int sceneIdx = -1; 
 
-#define MAX_LAYER    30
+#define MAX_LAYER  31
 
 CCLayer* createTileMapLayer(int nIndex)
 {
@@ -1391,6 +1391,7 @@ CCLayer* createTileMapLayer(int nIndex)
         case 27: return new TMXGIDObjectsTest();
         case 28: return new TMXOrthoBackgroundOnlyTest();
         case 29: return new TMXOrthoBackgroundWithSpritesTest();
+        case 30: return new TMXReadSameNamePropertiesTest();
     }
 
     return NULL;
@@ -1655,4 +1656,92 @@ std::string TMXOrthoBackgroundWithSpritesTest::title()
 std::string TMXOrthoBackgroundWithSpritesTest::subtitle()
 {
     return "You should see a color image,\n sprites in the corners and two in the center";
+}
+
+//------------------------------------------------------------------
+//
+// TMXReadSameNamePropertiesTest
+//
+//------------------------------------------------------------------
+TMXReadSameNamePropertiesTest::TMXReadSameNamePropertiesTest()
+{
+    const std::string resources = "TileMaps";
+    const std::string file = resources + "/fantasy-world.tmx";
+
+    CCTMXTiledMap* map = CCTMXTiledMap::create( file.c_str() );
+    CCAssert( map, "Unable to open map" );
+    addChild( map, 0, kTagTileMap );
+
+    std::ostringstream  ss;
+    CCArray* og = map->getObjectGroups();
+    for (size_t i = 0; i < og->count(); ++i) {
+        CCObject* o = og->objectAtIndex( i );
+        ifDynamicCast( CCTMXObjectGroup*, o, group ) {
+            // only 1 object intresting for us
+            ss << out( group, 1 ) << "\n";
+            break;
+        }
+    }
+    // @see Comments in subtitle()
+    CCLog( "%s", ss.str().c_str() );
+}
+
+std::string TMXReadSameNamePropertiesTest::title()
+{
+    return "TMX read same name properties";
+}
+
+std::string TMXReadSameNamePropertiesTest::subtitle()
+{
+    // The tag <properties> of tmx-object with <property> 'name' are removed
+    // the attributes in <object> which same names.
+    // @todo Add warning to log in this case?
+    return "You should see in *console*\n"
+        "\".name = Stone Breath\" instead of \".name = Arland\"";
+}
+
+
+std::string TMXReadSameNamePropertiesTest::out(
+    cocos2d::CCTMXObjectGroup*  group,
+    size_t  n
+) {
+    using namespace cocos2d;
+
+    std::ostringstream  r;
+
+    const char* sGroup = group->getGroupName();
+    size_t count = 0;
+
+    CCArray* o = group->getObjects();
+    for (size_t j = 0;  (j < o->count()) && ((n == 0) || (count < n));  ++j, ++count) {
+        CCObject* oi = o->objectAtIndex( j );
+        ifDynamicCast( CCDictionary*, oi, props ) {
+            CCObject* t = props->objectForKey( "type" );
+            ifDynamicCast( CCString*, t, type ) {
+                const char* sType = type->getCString();
+                CCArray* allKeys = props->allKeys();
+                for (size_t k = 0; k < allKeys->count(); ++k) {
+                    CCObject* obj = allKeys->data->arr[ k ];
+                    ifDynamicCast( CCString*, obj, field ) {
+                        const char* sField = field->getCString();
+                        CCObject* p = props->objectForKey( sField );
+                        ifDynamicCast( CCString*, p, value ) {
+                            const char* sValue = value->getCString();
+                            if (strlen( sValue ) != 0) {
+                                r << sGroup << "." << sType << "." <<
+                                    sField << " = '" << sValue << "'\n";
+                            }
+                        }
+
+                    } // ifDynamicCast( const CCString*, obj, field )
+
+                } // for (size_t k = 0; ...
+
+            } // ifDynamicCast( CCDictionary*, t, type )
+
+        } // ifDynamicCast( CCDictionary*, oi, props )
+
+    } // for (size_t j = 0; ...
+
+    return r.str();
 }
