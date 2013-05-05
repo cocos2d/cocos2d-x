@@ -37,6 +37,9 @@
 #include "GUI/CCScrollView/CCTableView.h"
 #include "GUI/CCEditBox/CCEditBox.h"
 
+#include "GUI/CCScrollView/CCScrollMenu.h"
+#include "GUI/CCScrollView/CCScrollViewWithMenu.h"
+
 #include "network/HttpRequest.h"
 #include "network/HttpResponse.h"
 #include "network/HttpClient.h"

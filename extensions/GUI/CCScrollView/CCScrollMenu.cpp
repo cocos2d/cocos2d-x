@@ -1,20 +1,26 @@
 #include "CCScrollMenu.h"
+
 USING_NS_CC;
+
+NS_CC_EXT_BEGIN
 
 CCScrollMenu::CCScrollMenu()
 {
-
 }
 
-CCScrollMenu::~CCScrollMenu() {
+CCScrollMenu::~CCScrollMenu()
+{
 }
 
 void CCScrollMenu::registerWithTouchDispatcher()
 {
-    CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, kCCMenuHandlerPriority, false);
+    CCDirector::sharedDirector()
+        ->getTouchDispatcher()
+        ->addTargetedDelegate(this, kCCMenuHandlerPriority, false);
 }
 
-void CCScrollMenu::ccTouchMoved(CCTouch* touch, CCEvent* event) {
+void CCScrollMenu::ccTouchMoved(CCTouch* touch, CCEvent* event)
+{
     CC_UNUSED_PARAM(event);
     this->ccTouchCancelled(touch, event);
 }
@@ -31,3 +37,4 @@ void CCScrollMenu::ccTouchCancelled(CCTouch *touch, CCEvent* event)
     CCMenu::ccTouchCancelled(touch, event);
 }
 
+NS_CC_EXT_END
