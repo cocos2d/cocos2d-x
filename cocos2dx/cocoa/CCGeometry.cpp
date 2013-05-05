@@ -147,22 +147,22 @@ CCSize& CCSize::operator= (const CCPoint& point)
 
 CCSize CCSize::operator+(const CCSize& right) const
 {
-    return CCSize(this->height + right.height, this->width + right.width);
+    return CCSize(this->width + right.width, this->height + right.height);
 }
 
 CCSize CCSize::operator-(const CCSize& right) const
 {
-    return CCSize(this->height - right.height, this->width - right.width);
+    return CCSize(this->width - right.width, this->height - right.height);
 }
 
 CCSize CCSize::operator*(float a) const
 {
-    return CCSize(this->height * a, this->width * a);
+    return CCSize(this->width * a, this->height * a);
 }
 
 CCSize CCSize::operator/(float a) const
 {
-    return CCSize(this->height / a, this->width / a);
+    return CCSize(this->width / a, this->height / a);
 }
 
 void CCSize::setSize(float width, float height)
