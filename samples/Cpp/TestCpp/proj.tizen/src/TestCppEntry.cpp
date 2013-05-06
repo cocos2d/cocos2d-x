@@ -55,20 +55,20 @@ ApplicationInitialized(void)
 _EXPORT_ int
 OspMain(int argc, char *pArgv[])
 {
-	AppLog("Application started.");
-	ArrayList args(SingleObjectDeleter);
-	args.Construct();
-	for (int i = 0; i < argc; i++)
-	{
-		args.Add(new (std::nothrow) String(pArgv[i]));
-	}
+    AppLog("Application started.");
+    ArrayList args(SingleObjectDeleter);
+    args.Construct();
+    for (int i = 0; i < argc; i++)
+    {
+        args.Add(new (std::nothrow) String(pArgv[i]));
+    }
 
-	CCOspApplication::SetApplicationInitializedCallback(ApplicationInitialized);
-	result r = Tizen::App::Application::Execute(CCOspApplication::CreateInstance, &args);
-	TryLog(r == E_SUCCESS, "[%s] Application execution failed", GetErrorMessage(r));
-	AppLog("Application finished.");
+    CCOspApplication::SetApplicationInitializedCallback(ApplicationInitialized);
+    result r = Tizen::App::Application::Execute(CCOspApplication::CreateInstance, &args);
+    TryLog(r == E_SUCCESS, "[%s] Application execution failed", GetErrorMessage(r));
+    AppLog("Application finished.");
 
-	return static_cast<int>(r);
+    return static_cast<int>(r);
 }
 #ifdef __cplusplus
 }
