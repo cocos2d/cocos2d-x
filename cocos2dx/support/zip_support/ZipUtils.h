@@ -28,42 +28,22 @@ THE SOFTWARE.
 
 namespace cocos2d
 {
-    /**
-     * Set the TexturePacker encryption key
-     *
-     * If your key used to encrypt the pvr.ccz file is
-     * aaaaaaaabbbbbbbbccccccccdddddddd
-     * you have to call this function 4 times:
-     * caw_setkey_part(0, 0xaaaaaaaa);
-     * caw_setkey_part(1, 0xbbbbbbbb);
-     * caw_setkey_part(2, 0xcccccccc);
-     * caw_setkey_part(3, 0xdddddddd);
-     *
-     * Distribute the call accross some files but make sure
-     * to call all of the parts *before* loading the first
-     * spritesheet.
-     *
-     * @param index part of the key [0..3]
-     * @param value value of the key part
-     */
-    void caw_setkey_part(int index, uint32_t value);
-
     /* XXX: pragma pack ??? */
     /** @struct CCZHeader
     */
     struct CCZHeader {
-        unsigned char            sig[4];                // signature. Should be 'CCZ!' 4 bytes
-        unsigned short            compression_type;    // should 0
-        unsigned short            version;            // should be 2 (although version type==1 is also supported)
-        unsigned int             reserved;            // Reserved for users.
-        unsigned int            len;                // size of the uncompressed file
+        unsigned char   sig[4];             // signature. Should be 'CCZ!' 4 bytes
+        unsigned short  compression_type;   // should 0
+        unsigned short  version;            // should be 2 (although version type==1 is also supported)
+        unsigned int    reserved;           // Reserved for users.
+        unsigned int    len;                // size of the uncompressed file
     };
 
     enum {
-        CCZ_COMPRESSION_ZLIB,                // zlib format.
-        CCZ_COMPRESSION_BZIP2,                // bzip2 format (not supported yet)
-        CCZ_COMPRESSION_GZIP,                // gzip format (not supported yet)
-        CCZ_COMPRESSION_NONE,                // plain (not supported yet)
+        CCZ_COMPRESSION_ZLIB,               // zlib format.
+        CCZ_COMPRESSION_BZIP2,              // bzip2 format (not supported yet)
+        CCZ_COMPRESSION_GZIP,               // gzip format (not supported yet)
+        CCZ_COMPRESSION_NONE,               // plain (not supported yet)
     };
 
     class ZipUtils
@@ -108,9 +88,38 @@ namespace cocos2d
         */
         static int ccInflateCCZFile(const char *filename, unsigned char **out);
 
+        /**
+        * Set the pvr.ccz encryption key
+        *
+        * If your key used to encrypt the pvr.ccz file is
+        * aaaaaaaabbbbbbbbccccccccdddddddd
+        * you have to call this function 4 times:
+        * ZipUtils::caw_setkey_part(0, 0xaaaaaaaa);
+        * ZipUtils::caw_setkey_part(1, 0xbbbbbbbb);
+        * ZipUtils::caw_setkey_part(2, 0xcccccccc);
+        * ZipUtils::caw_setkey_part(3, 0xdddddddd);
+        *
+        * Distribute the call across some files but make sure
+        * to call all of the parts *before* loading the first
+        * spritesheet.
+        *
+        * Note that encrpytion is *never* 100% secure and the key code
+        * can be cracked by knowledgable persons.
+        *
+        * @param index part of the key [0..3]
+        * @param value value of the key part
+        */
+        static void ccSetPvrEncryptionKeyPart(int index, unsigned int value);
+
     private:
         static int ccInflateMemoryWithHint(unsigned char *in, unsigned int inLength, unsigned char **out, unsigned int *outLength, 
-            unsigned int outLenghtHint);
+                                           unsigned int outLenghtHint);
+        static inline void ccDecodeEncodedPvr (unsigned int *data, int len);
+        static inline unsigned int ccChecksumPvr(const unsigned int *data, int len);
+
+        static unsigned int s_uEncryptedPvrKeyParts[4];
+        static unsigned int s_uEncryptionKey[1024];
+        static bool s_bEncryptionKeyIsValid;
     };
 
     // forward declaration
