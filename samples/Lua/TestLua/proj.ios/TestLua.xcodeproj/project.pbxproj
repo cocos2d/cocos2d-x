@@ -1503,6 +1503,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1530,6 +1531,8 @@
 					"$(SRCROOT)/../../../cocos2dx/include",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -1538,6 +1541,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1563,6 +1567,8 @@
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 			};
 			name = Release;
@@ -1571,7 +1577,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = TestLua_Prefix.pch;
@@ -1590,6 +1599,7 @@
 					"\"$(SRCROOT)/../../../../external/lua/tolua\"",
 					"\"$(SRCROOT)/../../../../external/lua/src\"",
 					"$(SRCROOT)/../../../../external/lua/cocos2dx_support",
+					"$(SRCROOT)/../../../../extensions",
 					"$(SRCROOT)/../../../../cocos2dx/platform/ios",
 					"$(SRCROOT)/../../../../cocos2dx/include",
 					"$(SRCROOT)/../../../../CocosDenshion/include",
@@ -1600,17 +1610,16 @@
 					"\"$(SRCROOT)/../../../../cocos2dx/platform/ios/Simulation\"",
 				);
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../../../../cocos2dx/platform/third_party/ios/libraries",
 					"\"$(SRCROOT)/../../../../scripting/lua/luajit/ios\"",
 				);
-				OTHER_LDFLAGS = (
-					"-lxml2",
-					"-lz",
-				);
+				OTHER_LDFLAGS = "-lz";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1620,7 +1629,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = TestLua_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1637,6 +1649,7 @@
 					"\"$(SRCROOT)/../../../../external/lua/tolua\"",
 					"\"$(SRCROOT)/../../../../external/lua/src\"",
 					"$(SRCROOT)/../../../../external/lua/cocos2dx_support",
+					"$(SRCROOT)/../../../../extensions",
 					"$(SRCROOT)/../../../../cocos2dx/platform/ios",
 					"$(SRCROOT)/../../../../cocos2dx/include",
 					"$(SRCROOT)/../../../../CocosDenshion/include",
@@ -1647,17 +1660,16 @@
 					"\"$(SRCROOT)/../../../../cocos2dx/platform/ios/Simulation\"",
 				);
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../../../../cocos2dx/platform/third_party/ios/libraries",
 					"\"$(SRCROOT)/../../../../scripting/lua/luajit/ios\"",
 				);
-				OTHER_LDFLAGS = (
-					"-lxml2",
-					"-lz",
-				);
+				OTHER_LDFLAGS = "-lz";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;

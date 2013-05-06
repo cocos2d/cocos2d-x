@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PLUGIN_NAME=("alipay" "flurry" "nd91" "umeng")
+PLUGIN_NAME=("alipay" "flurry" "nd91" "umeng" "admob" "twitter")
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # ... use paths relative to current directory

@@ -2240,8 +2240,8 @@ JSBool js_cocos2dx_CCTMXLayer_getTiles(JSContext *cx, uint32_t argc, jsval *vp)
         int count = size.width * size.height;
         JSObject* array = JS_NewUint32Array(cx, count);
         if (NULL == array) {
-            JS_ReportError(cx, "Can't allocate enough memory.", argc, 0);
-            return FALSE;
+            JS_ReportError(cx, "Can't allocate enough memory.");
+            return JS_FALSE;
         }
         uint32_t* bufdata = (uint32_t*)JS_GetArrayBufferViewData(array);
         memcpy(bufdata, ret, count*sizeof(uint32_t));

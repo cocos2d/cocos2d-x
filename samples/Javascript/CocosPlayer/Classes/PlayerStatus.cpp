@@ -3,17 +3,21 @@
 #include "PlayerStatusLoader.h"
 #include "MainSceneHelper.h"
 #include "AppDelegate.h"
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include "GUI/CCEditBox/CCEditBox.h"
 #include "jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
-
+#endif
 
 USING_NS_CC;
 USING_NS_CC_EXT;
 
-PlayerStatus::PlayerStatus(): mBtnRun(NULL), mBtnReset(NULL), mBtnPair(NULL), 
-			      mLblStatus(NULL), mLblInstructions(NULL), mLblPair(NULL)
+std::string PlayerStatus::pairingLabel = "";
+
+
+PlayerStatus::PlayerStatus(): mBtnRun(NULL), mBtnReset(NULL), mBtnPair(NULL),
+			      mLblStatus(NULL), mLblInstructions(NULL), mLblPair(NULL), editBox(NULL)
 {
-  
+    this->scheduleUpdate();
 }
 
 PlayerStatus::~PlayerStatus()
@@ -46,90 +50,80 @@ SEL_MenuHandler PlayerStatus::onResolveCCBCCMenuItemSelector(CCObject * pTarget,
   return NULL;    
 }
 
+
 void PlayerStatus::setDeviceResolution(std::string res) {
   setDeviceResolutionJNI(res.c_str());
 }
+
+void updatePairing(const char *pairing);
 
 void editBoxCallbackFunc(const char* pText, void* ctx)
 {
   PlayerStatus *thiz = (PlayerStatus *)ctx;
   std::string text(pText);
   if(text == "" || text == " ") {
-    thiz->mLblPair->setString("Auto");
-    setPairingCodeJNI(-1);
+      PlayerStatus::pairingLabel = "";
+    updatePairing("Auto");
   } else {
-    thiz->mLblPair->setString(pText);
-    setPairingCodeJNI(atoi(pText));
+    PlayerStatus::pairingLabel = pText;
+    updatePairing(pText);
   }
 }
 
 void PlayerStatus::pressedPair(CCObject * pSender, cocos2d::extension::CCControlEvent pCCControlEvent) {
-    showEditTextDialogJNI("Enter pairing code", "", kEditBoxInputModeNumeric, kEditBoxInputFlagInitialCapsWord, 
-			  kKeyboardReturnTypeDone, 4, editBoxCallbackFunc, (void*)this);
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    showEditTextDialogJNI("Enter pairing code", "", kEditBoxInputModeNumeric, kEditBoxInputFlagInitialCapsWord,
+                                        kKeyboardReturnTypeDone, 4, editBoxCallbackFunc, (void*)this);
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    openEditBox();
+#endif
 }
+
 
 void PlayerStatus::pressedReset(CCObject * pSender, cocos2d::extension::CCControlEvent pCCControlEvent) {
     cleanCacheDirJNI();
-    this->mBtnRun->setEnabled(false);
-    this->mBtnReset->setEnabled(false);
+    CCBHelper::checkIsMainJSPresent();
 }
 
-
 void PlayerStatus::pressedRun(CCObject * pSender, cocos2d::extension::CCControlEvent pCCControlEvent) {
-    handle_ccb_run();
+    runJSApp();
 }
 
 
 bool PlayerStatus::onAssignCCBMemberVariable(CCObject * pTarget, const char * pMemberVariableName, CCNode * pNode) {
 
+
   CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "btnRun", CCMenuItemImage *, this->mBtnRun);
-  if(strcmp(pMemberVariableName, "btnRun")) {
-    if(this->mBtnRun  == NULL) {
-      this->mBtnRun = CCMenuItemImage::create();
-    }
-    if(CCBHelper::isMainJSPresent()) {
-      this->mBtnRun->setEnabled(true);
-    } else {
-      this->mBtnRun->setEnabled(false);
-    }
-  }
-  
-
   CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "btnReset", CCMenuItemImage *, this->mBtnReset);
-  
-  if(strcmp(pMemberVariableName, "btnReset")) {
-    if(this->mBtnReset  == NULL) {
-      this->mBtnReset = CCMenuItemImage::create();
-    }
-    if(CCBHelper::isMainJSPresent()) {
-      this->mBtnReset->setEnabled(true);
-    } else {
-      this->mBtnReset->setEnabled(false);
-    }
-  }
-  
   CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "btnPair", CCMenuItemImage *, this->mBtnPair);
-
   CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "lblStatus", CCLabelTTF *, this->mLblStatus);
-  if(strcmp(pMemberVariableName, "lblStatus") && this->mLblStatus != NULL) {
-    CCBHelper::setStatusObject(this->mLblStatus);
-  }
-
   CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "lblPair", CCLabelTTF *, this->mLblPair);
-  if(strcmp(pMemberVariableName, "lblPair") && this->mLblPair != NULL) {
-    CCBHelper::setPairObject(this->mLblPair);
-  }
-    
   CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "lblInstructions", CCLabelTTF *, this->mLblInstructions);
-  if(strcmp(pMemberVariableName, "lblInstructions") && this->mLblInstructions != NULL) {
-    CCBHelper::setInstructionsObject(this->mLblInstructions);
-  }
- 
   return false;
 }
 
+void PlayerStatus::update(float dt) {
+    if(this->mLblInstructions != NULL && CCBHelper::mLblInstructions_str != "") {
+        this->mLblInstructions->setString(CCBHelper::mLblInstructions_str.c_str());
+    }
+    if(this->mLblStatus != NULL && CCBHelper::mLblStatus_str != "") {
+        this->mLblStatus->setString(CCBHelper::mLblStatus_str.c_str());
+    }
+    if(CCBHelper::isMainJSPresent() && this->mBtnRun != NULL && this->mBtnReset != NULL) {
+        this->mBtnRun->setEnabled(true);
+        this->mBtnReset->setEnabled(true);
+    } else if(this->mBtnRun != NULL && this->mBtnReset != NULL) {
+        this->mBtnRun->setEnabled(false);
+        this->mBtnReset->setEnabled(false);
+    }
+    if(pairingLabel != "") {
+        this->mLblPair->setString(pairingLabel.c_str());
+    } else {
+        this->mLblPair->setString("Auto");
+    }
+}
 
-void PlayerStatus::loadMainScene(const char *pCCBFileName) {
+cocos2d::CCScene* PlayerStatus::loadMainScene(const char *pCCBFileName) {
     CCNodeLoaderLibrary * ccNodeLoaderLibrary = CCNodeLoaderLibrary::newDefaultCCNodeLoaderLibrary();
 
     ccNodeLoaderLibrary->registerCCNodeLoader("PlayerStatusLayer", PlayerStatusLoader::loader());
@@ -149,12 +143,7 @@ void PlayerStatus::loadMainScene(const char *pCCBFileName) {
     if(node != NULL) {
       scene->addChild(node);
     }
-    
-    /* Push the new scene with a fancy transition. */
-    ccColor3B transitionColor;
-    transitionColor.r = 0;
-    transitionColor.g = 0;
-    transitionColor.b = 0;
-    
-    CCDirector::sharedDirector()->runWithScene(CCTransitionFade::create(0.5f, scene, transitionColor));
-}
+    CCBHelper::checkIsMainJSPresent();
+    return scene;
+
+  }

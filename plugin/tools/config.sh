@@ -1,6 +1,8 @@
 #define plugins array 
 export ALL_PLUGINS=("flurry" "umeng" \
-"alipay" "nd91")
+"alipay" "nd91" \
+"admob" \
+"twitter")
 
 # define the plugin root directory & publish target directory
 export TARGET_DIR_NAME="publish"

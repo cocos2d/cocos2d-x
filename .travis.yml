@@ -1,0 +1,17 @@
+language: cpp
+script:
+ - export NACL_SDK_ROOT=$PWD/nacl_sdk/pepper_canary
+ - export PATH=$PATH:$NACL_SDK_ROOT/toolchain/linux_x86_newlib/bin
+ - make -j4
+install:
+ - "if [ \"$PLATFORM\" != nacl ]; then ./install-deps-linux.sh; fi"
+ - "if [ \"$PLATFORM\" = nacl ]; then sudo apt-get update; fi"
+ - "if [ \"$PLATFORM\" = nacl ]; then sudo apt-get install libc6:i386; fi"
+ - "if [ \"$PLATFORM\" = nacl ]; then wget http://storage.googleapis.com/nativeclient-mirror/nacl/nacl_sdk/nacl_sdk.zip; fi"
+ - "if [ \"$PLATFORM\" = nacl ]; then unzip nacl_sdk.zip; fi"
+ - "if [ \"$PLATFORM\" = nacl ]; then nacl_sdk/naclsdk update --force pepper_canary; fi"
+env:
+ - PLATFORM=nacl DEBUG=1
+ - PLATFORM=nacl DEBUG=0
+ - PLATFORM=linux DEBUG=1
+ - PLATFORM=linux DEBUG=0

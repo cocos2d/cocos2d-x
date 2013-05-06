@@ -6,6 +6,8 @@
 	<string>美好的一天</string>
 	<key>japanese</key>
 	<string>良い一日を</string>
+	<key>russian</key>
+	<string>Хорошего дня</string>
 	<key>spanish</key>
 	<string>Buen día</string>
 </dict>
