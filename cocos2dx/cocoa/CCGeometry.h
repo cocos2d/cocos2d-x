@@ -166,12 +166,13 @@ public:
     };
 
     /** Returns point multiplied to a length of 1.
+     * If the point is 0, it returns (1, 0)
      @return CCPoint
      @since v2.1.4
      */
     inline CCPoint normalize() const {
         float length = getLength();
-        if(length == 0.) return CCPoint(*this);
+        if(length == 0.) return CCPoint(1.f, 0);
         return *this / getLength();
     };
 
