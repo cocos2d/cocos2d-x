@@ -12,6 +12,9 @@ Developers:
     Rolando Abarca
         Javascript Binding and testjs
 
+    savdalion 
+        Added example for russian language in TestCpp
+
     rodrigogolive
         Fix broke linux build
 
