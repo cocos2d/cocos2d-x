@@ -33,23 +33,13 @@
 
 NS_CC_BEGIN
 
-static unsigned int caw_key[4] = {0,0,0,0};
-static unsigned int caw_longKey[1024];
-static bool caw_longKeyValid = false;
+unsigned int ZipUtils::s_uEncryptedPvrKeyParts[4] = {0,0,0,0};
+unsigned int ZipUtils::s_uEncryptionKey[1024];
+bool ZipUtils::s_bEncryptionKeyIsValid = false;
 
-void caw_setkey_part(int index, unsigned int value)
-{
-    CCAssert(index >= 0, "Cocos2d: key part index cannot be less than 0");
-    CCAssert(index <= 3, "Cocos2d: key part index cannot be greater than 3");
-    
-    if(caw_key[index] != value)
-    {
-        caw_key[index] = value;
-        caw_longKeyValid = false;
-    }
-}
+// --------------------- ZipUtils ---------------------
 
-static inline void caw_encdec (unsigned int *data, int len)
+inline void ZipUtils::ccDecodeEncodedPvr(unsigned int *data, int len)
 {
     const int enclen = 1024;
     const int securelen = 512;
@@ -57,39 +47,39 @@ static inline void caw_encdec (unsigned int *data, int len)
     
     // check if key was set
     // make sure to call caw_setkey_part() for all 4 key parts
-    CCAssert(caw_key[0] != 0, "Cocos2D: CCZ file is encrypted but key part 0 is not set. Did you call caw_setkey_part(...)?");
-    CCAssert(caw_key[1] != 0, "Cocos2D: CCZ file is encrypted but key part 1 is not set. Did you call caw_setkey_part(...)?");
-    CCAssert(caw_key[2] != 0, "Cocos2D: CCZ file is encrypted but key part 2 is not set. Did you call caw_setkey_part(...)?");
-    CCAssert(caw_key[3] != 0, "Cocos2D: CCZ file is encrypted but key part 3 is not set. Did you call caw_setkey_part(...)?");
+    CCAssert(s_uEncryptedPvrKeyParts[0] != 0, "Cocos2D: CCZ file is encrypted but key part 0 is not set. Did you call ZipUtils::ccSetPvrEncryptionKeyPart(...)?");
+    CCAssert(s_uEncryptedPvrKeyParts[1] != 0, "Cocos2D: CCZ file is encrypted but key part 1 is not set. Did you call ZipUtils::ccSetPvrEncryptionKeyPart(...)?");
+    CCAssert(s_uEncryptedPvrKeyParts[2] != 0, "Cocos2D: CCZ file is encrypted but key part 2 is not set. Did you call ZipUtils::ccSetPvrEncryptionKeyPart(...)?");
+    CCAssert(s_uEncryptedPvrKeyParts[3] != 0, "Cocos2D: CCZ file is encrypted but key part 3 is not set. Did you call ZipUtils::ccSetPvrEncryptionKeyPart(...)?");
     
     // create long key
-    if(!caw_longKeyValid)
+    if(!s_bEncryptionKeyIsValid)
     {
         unsigned int y, p, e;
         unsigned int rounds = 6;
         unsigned int sum = 0;
-        unsigned int z = caw_longKey[enclen-1];
+        unsigned int z = s_uEncryptionKey[enclen-1];
         
         do
         {
 #define DELTA 0x9e3779b9
-#define MX (((z>>5^y<<2) + (y>>3^z<<4)) ^ ((sum^y) + (caw_key[(p&3)^e] ^ z)))
+#define MX (((z>>5^y<<2) + (y>>3^z<<4)) ^ ((sum^y) + (s_uEncryptedPvrKeyParts[(p&3)^e] ^ z)))
             
             sum += DELTA;
             e = (sum >> 2) & 3;
             
             for (p = 0; p < enclen - 1; p++)
             {
-                y = caw_longKey[p + 1];
-                z = caw_longKey[p] += MX;
+                y = s_uEncryptionKey[p + 1];
+                z = s_uEncryptionKey[p] += MX;
             }
             
-            y = caw_longKey[0];
-            z = caw_longKey[enclen - 1] += MX;
+            y = s_uEncryptionKey[0];
+            z = s_uEncryptionKey[enclen - 1] += MX;
             
         } while (--rounds);
         
-        caw_longKeyValid = true;
+        s_bEncryptionKeyIsValid = true;
     }
     
     int b = 0;
@@ -98,7 +88,7 @@ static inline void caw_encdec (unsigned int *data, int len)
     // encrypt first part completely
     for(; i < len && i < securelen; i++)
     {
-        data[i] ^= caw_longKey[b++];
+        data[i] ^= s_uEncryptionKey[b++];
         
         if(b >= enclen)
         {
@@ -109,7 +99,7 @@ static inline void caw_encdec (unsigned int *data, int len)
     // encrypt second section partially
     for(; i < len; i += distance)
     {
-        data[i] ^= caw_longKey[b++];
+        data[i] ^= s_uEncryptionKey[b++];
         
         if(b >= enclen)
         {
@@ -118,7 +108,7 @@ static inline void caw_encdec (unsigned int *data, int len)
     }
 }
 
-static inline unsigned int caw_checksum(const unsigned int *data, int len)
+inline unsigned int ZipUtils::ccChecksumPvr(const unsigned int *data, int len)
 {
     unsigned int cs = 0;
     const int cslen = 128;
@@ -132,8 +122,6 @@ static inline unsigned int caw_checksum(const unsigned int *data, int len)
     
     return cs;
 }
-
-// --------------------- ZipUtils ---------------------
 
 // memory in iPhone is precious
 // Should buffer factor be 1.5 instead of 2 ?
@@ -377,16 +365,16 @@ int ZipUtils::ccInflateCCZFile(const char *path, unsigned char **out)
         unsigned int* ints = (unsigned int*)(compressed+12);
         int enclen = (fileLen-12)/4;
         
-        caw_encdec(ints, enclen);
+        ccDecodeEncodedPvr(ints, enclen);
                 
 #if COCOS2D_DEBUG > 0
         // verify checksum in debug mode
-        unsigned int calculated = caw_checksum(ints, enclen);
+        unsigned int calculated = ccChecksumPvr(ints, enclen);
         unsigned int required = CC_SWAP_INT32_BIG_TO_HOST( header->reserved );
         
         if(calculated != required)
         {
-            CCLOG("cocos2d: Can't decrypt image file: Invalid decryption key");
+            CCLOG("cocos2d: Can't decrypt image file. Is the decryption key valid?");
             delete [] compressed;
             return -1;
         }
@@ -424,6 +412,18 @@ int ZipUtils::ccInflateCCZFile(const char *path, unsigned char **out)
     }
     
     return len;
+}
+
+void ZipUtils::ccSetPvrEncryptionKeyPart(int index, unsigned int value)
+{
+    CCAssert(index >= 0, "Cocos2d: key part index cannot be less than 0");
+    CCAssert(index <= 3, "Cocos2d: key part index cannot be greater than 3");
+    
+    if(s_uEncryptedPvrKeyParts[index] != value)
+    {
+        s_uEncryptedPvrKeyParts[index] = value;
+        s_bEncryptionKeyIsValid = false;
+    }
 }
 
 // --------------------- ZipFile ---------------------

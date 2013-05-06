@@ -44,10 +44,10 @@ void TextureAtlasEncryptionDemo::onEnter()
     
     // Load the encrypted atlas
     // 1) Set the encryption keys or step 2 will fail
-    caw_setkey_part(0, 0xaaaaaaaa);
-    caw_setkey_part(1, 0xbbbbbbbb);
-    caw_setkey_part(2, 0xcccccccc);
-    caw_setkey_part(3, 0xdddddddd);
+    ZipUtils::ccSetPvrEncryptionKeyPart(0, 0xaaaaaaaa);
+    ZipUtils::ccSetPvrEncryptionKeyPart(1, 0xbbbbbbbb);
+    ZipUtils::ccSetPvrEncryptionKeyPart(2, 0xcccccccc);
+    ZipUtils::ccSetPvrEncryptionKeyPart(3, 0xdddddddd);
     
     // 2) Load the encrypted atlas
     CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("Images/encryptedAtlas.plist", "Images/encryptedAtlas.pvr.ccz");
