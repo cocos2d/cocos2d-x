@@ -57,6 +57,13 @@ static bool _initWithImage(CGImageRef cgImage, tImageInfo *pImageinfo)
                             || (info == kCGImageAlphaLast) 
                             || (info == kCGImageAlphaFirst);
     
+    // If OS version < 5.x, add condition to support jpg
+    float systemVersion = [[[UIDevice currentDevice] systemVersion] floatValue];
+    if(systemVersion < 5.0f)
+    {
+        pImageinfo->hasAlpha = (pImageinfo->hasAlpha || (info == kCGImageAlphaNoneSkipLast));
+    }
+    
     CGColorSpaceRef colorSpace = CGImageGetColorSpace(cgImage);
     if (colorSpace)
     {
