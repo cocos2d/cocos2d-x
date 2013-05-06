@@ -47,10 +47,8 @@ CCLabelTTF::CCLabelTTF()
 , m_string("")
 , m_shadowEnabled(false)
 , m_strokeEnabled(false)
+, m_textFillColor(ccWHITE)
 {
-    m_textTintColor.r = 255;
-    m_textTintColor.g = 255;
-    m_textTintColor.b = 255;
 }
 
 CCLabelTTF::~CCLabelTTF()
@@ -138,7 +136,7 @@ bool CCLabelTTF::initWithString(const char *string, const char *fontName, float 
     return false;
 }
 
-bool CCLabelTTF::initWithStringAndTextDefinition(const char *string, CCTextDefinition * textDefinition)
+bool CCLabelTTF::initWithStringAndTextDefinition(const char *string, ccFontDefinition * textDefinition)
 {
     if (CCSprite::init())
     {
@@ -291,7 +289,7 @@ bool CCLabelTTF::updateTexture()
     
     #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     
-        CCTextDefinition texDef = _prepareTextDefinition();
+        ccFontDefinition texDef = _prepareTextDefinition();
         tex->initWithStringShadowStroke( m_string.c_str(), &texDef );
     
     #else
@@ -435,9 +433,9 @@ void CCLabelTTF::disableStroke(bool updateTexture)
 void CCLabelTTF::setFontFillColor(const ccColor3B &tintColor, bool updateTexture)
 {
     #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-        if (m_textTintColor.r != tintColor.r || m_textTintColor.g != tintColor.g || m_textTintColor.b != tintColor.b)
+        if (m_textFillColor.r != tintColor.r || m_textFillColor.g != tintColor.g || m_textFillColor.b != tintColor.b)
         {
-            m_textTintColor = tintColor;
+            m_textFillColor = tintColor;
             
             if (updateTexture)
                 this->updateTexture();
@@ -447,7 +445,7 @@ void CCLabelTTF::setFontFillColor(const ccColor3B &tintColor, bool updateTexture
     #endif
 }
 
-void CCLabelTTF::setTextDefinition(CCTextDefinition *theDefinition)
+void CCLabelTTF::setTextDefinition(ccFontDefinition *theDefinition)
 {
     if (theDefinition)
     {
@@ -455,14 +453,14 @@ void CCLabelTTF::setTextDefinition(CCTextDefinition *theDefinition)
     }
 }
 
-CCTextDefinition *CCLabelTTF::getTextDefinition()
+ccFontDefinition *CCLabelTTF::getTextDefinition()
 {
-    CCTextDefinition *tempDefinition = new CCTextDefinition;
+    ccFontDefinition *tempDefinition = new ccFontDefinition;
     *tempDefinition = _prepareTextDefinition();
     return tempDefinition;
 }
 
-void CCLabelTTF::_updateWithTextDefinition(CCTextDefinition & textDefinition, bool mustUpdateTexture)
+void CCLabelTTF::_updateWithTextDefinition(ccFontDefinition & textDefinition, bool mustUpdateTexture)
 {
     m_tDimensions = CCSizeMake(textDefinition.m_dimensions.width, textDefinition.m_dimensions.height);
     m_hAlignment  = textDefinition.m_alignment;
@@ -485,18 +483,15 @@ void CCLabelTTF::_updateWithTextDefinition(CCTextDefinition & textDefinition, bo
     }
     
     // fill color
-    if ( textDefinition.m_fontTint.m_tintEnabled )
-    {
-        setFontFillColor(textDefinition.m_fontTint.m_tintColor, false);
-    }
+    setFontFillColor(textDefinition.m_fontFillColor, false);
     
     if (mustUpdateTexture)
         updateTexture();
 }
 
-CCTextDefinition CCLabelTTF::_prepareTextDefinition()
+ccFontDefinition CCLabelTTF::_prepareTextDefinition()
 {
-    CCTextDefinition texDef;
+    ccFontDefinition texDef;
     
     texDef.m_fontSize       =  m_fFontSize * CC_CONTENT_SCALE_FACTOR();
     texDef.m_fontName       = *m_pFontName;
@@ -528,7 +523,7 @@ CCTextDefinition CCLabelTTF::_prepareTextDefinition()
     }
     
     // text tint
-    texDef.m_fontTint.m_tintColor = m_textTintColor;
+    texDef.m_fontFillColor = m_textFillColor;
     
     return texDef;
 }

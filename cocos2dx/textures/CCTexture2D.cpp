@@ -430,22 +430,19 @@ bool CCTexture2D::initWithString(const char *text, const char *fontName, float f
 {
     #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     
-        CCTextDefinition tempDef;
+        ccFontDefinition tempDef;
         
         tempDef.m_shadow.m_shadowEnabled = false;
         tempDef.m_stroke.m_strokeEnabled = false;
-        tempDef.m_fontTint.m_tintEnabled = false;
+       
         
         tempDef.m_fontName      = std::string(fontName);
         tempDef.m_fontSize      = fontSize;
         tempDef.m_dimensions    = dimensions;
         tempDef.m_alignment     = hAlignment;
         tempDef.m_vertAlignment = vAlignment;
-        
-        tempDef.m_fontTint.m_tintColor.r = 255;
-        tempDef.m_fontTint.m_tintColor.g = 255;
-        tempDef.m_fontTint.m_tintColor.b = 255;
-
+        tempDef.m_fontFillColor = ccWHITE;
+    
         return initWithStringShadowStroke(text, &tempDef);
     
     
@@ -499,7 +496,7 @@ bool CCTexture2D::initWithString(const char *text, const char *fontName, float f
     
 }
 
-bool CCTexture2D::initWithStringShadowStroke(const char *text, CCTextDefinition *textDefinition)
+bool CCTexture2D::initWithStringShadowStroke(const char *text, ccFontDefinition *textDefinition)
 {
     #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     
@@ -575,9 +572,9 @@ bool CCTexture2D::initWithStringShadowStroke(const char *text, CCTextDefinition 
                                                       eAlign,
                                                       textDefinition->m_fontName.c_str(),
                                                       textDefinition->m_fontSize,
-                                                      textDefinition->m_fontTint.m_tintColor.r / 255,
-                                                      textDefinition->m_fontTint.m_tintColor.g / 255,
-                                                      textDefinition->m_fontTint.m_tintColor.b / 255,
+                                                      textDefinition->m_fontFillColor.r / 255,
+                                                      textDefinition->m_fontFillColor.g / 255,
+                                                      textDefinition->m_fontFillColor.b / 255,
                                                       shadowEnabled,
                                                       shadowDX,
                                                       shadowDY,
