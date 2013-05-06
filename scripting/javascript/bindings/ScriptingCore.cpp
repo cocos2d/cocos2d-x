@@ -497,8 +497,6 @@ JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* c
     if (!script) {
         std::string byteCodeFilePath = TransFilePath(RemoveFileExt(std::string(path)) + BYTE_CODE_FILE_EXT);
         unsigned long length = 0;
-        // Removed in SpiderMonkey 19.0
-        //JSScript* script = JS_CompileUTF8File(cx, global, rpath.c_str());
         void *data = futil->getFileData(byteCodeFilePath.c_str(), "rb", &length);
         if (data) {
             script = JS_DecodeScript(cx, data, length, NULL, NULL);
