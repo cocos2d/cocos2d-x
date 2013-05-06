@@ -446,7 +446,7 @@ void ScriptingCore::createGlobalContext() {
     }
 }
 
-std::string RemoveFileExt(const std::string& filePath) {
+static std::string RemoveFileExt(const std::string& filePath) {
     size_t pos = filePath.rfind('.');
     if (0 < pos) {
         return filePath.substr(0, pos);
@@ -462,6 +462,7 @@ JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* c
         return false;
     }
     cocos2d::CCFileUtils *futil = cocos2d::CCFileUtils::sharedFileUtils();
+    std::string fullPath = futil->fullPathForFilename(path);
     if (global == NULL) {
         global = global_;
     }
@@ -471,7 +472,7 @@ JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* c
     JSScript *script = NULL;    
     js::RootedObject obj(cx, global);
 	JS::CompileOptions options(cx);
-	options.setUTF8(true).setFileAndLine(path, 1);
+	options.setUTF8(true).setFileAndLine(fullPath.c_str(), 1);
     
     // a) check js file first
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
@@ -482,7 +483,7 @@ JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* c
         script = JS::Compile(cx, obj, options, (char*)content, strlen((char*)content));
     }
 #else
-    script = JS::Compile(cx, obj, options, path);
+    script = JS::Compile(cx, obj, options, fullPath.c_str());
 #endif
     // b) no js file, check jsc file
     if (!script) {
