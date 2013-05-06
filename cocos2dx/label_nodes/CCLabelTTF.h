@@ -83,16 +83,13 @@ public:
                         CCVerticalTextAlignment vAlignment);
     
     /** initializes the CCLabelTTF with a font name, alignment, dimension and font size */
-    bool initWithStringAndTextDefinition(const char *string, CCTextDefinition * textDefinition);
-    
-    
+    bool initWithStringAndTextDefinition(const char *string, ccFontDefinition * textDefinition);
     
     /** set the text definition used by this label */
-    void setTextDefinition(CCTextDefinition *theDefinition);
+    void setTextDefinition(ccFontDefinition *theDefinition);
     
     /** get the text definition used by this label */
-    CCTextDefinition * getTextDefinition();
-    
+    ccFontDefinition * getTextDefinition();
     
     
     
@@ -146,8 +143,8 @@ private:
 protected:
     
     /** set the text definition for this label */
-    void                _updateWithTextDefinition(CCTextDefinition & textDefinition, bool mustUpdateTexture = true);
-    CCTextDefinition    _prepareTextDefinition();
+    void                _updateWithTextDefinition(ccFontDefinition & textDefinition, bool mustUpdateTexture = true);
+    ccFontDefinition    _prepareTextDefinition();
     
     /** Dimensions of the label in Points */
     CCSize m_tDimensions;
@@ -172,7 +169,7 @@ protected:
     float       m_strokeSize;
         
     /** font tint */
-    ccColor3B   m_textTintColor;
+    ccColor3B   m_textFillColor;
 
     std::string m_string;
 };

@@ -27,8 +27,10 @@ THE SOFTWARE.
 #ifndef __CCTYPES_H__
 #define __CCTYPES_H__
 
+#include <string>
 #include "cocoa/CCGeometry.h"
 #include "CCGL.h"
+
 
 NS_CC_BEGIN
 
@@ -357,6 +359,78 @@ typedef struct
     float delay;
     CCSize size; 
 } ccAnimationFrameData;
+
+
+
+/**
+ types used for defining fonts properties (i.e. font name, size, stroke or shadow)
+ */
+
+// shadow attributes
+typedef struct _ccFontShadow
+{
+public:
+    
+    // shadow is not enabled by default
+    _ccFontShadow(): m_shadowEnabled(false) {}
+    
+    // true if shadow enabled
+    bool   m_shadowEnabled;
+    // shadow x and y offset
+	CCSize m_shadowOffset;
+    // shadow blurrines
+	float  m_shadowBlur;
+    // shadow opacity
+	float  m_shadowOpacity;
+    
+} ccFontShadow;
+
+// stroke attributes
+typedef struct _ccFontStroke
+{
+public:
+    
+    // stroke is disabled by default
+    _ccFontStroke(): m_strokeEnabled(false) {}
+    
+    // true if stroke enabled
+    bool        m_strokeEnabled;
+    // stroke color
+	ccColor3B   m_strokeColor;
+    // stroke size
+    float       m_strokeSize;
+    
+} ccFontStroke;
+
+// font attributes
+typedef struct _ccFontDefinition
+{
+public:
+    
+    _ccFontDefinition():  m_alignment(kCCTextAlignmentCenter),
+    m_vertAlignment(kCCVerticalTextAlignmentTop),
+    m_fontFillColor(ccWHITE)
+    { m_dimensions = CCSizeMake(0,0); }
+    
+    // font name
+    std::string             m_fontName;
+    // font size
+    int                     m_fontSize;
+    // horizontal alignment
+    CCTextAlignment         m_alignment;
+    // vertical alignment
+    CCVerticalTextAlignment m_vertAlignment;
+    // renering box
+    CCSize                  m_dimensions;
+    // font color
+    ccColor3B               m_fontFillColor;
+    // font shadow
+    ccFontShadow            m_shadow;
+    // font stroke
+    ccFontStroke            m_stroke;
+    
+} ccFontDefinition;
+
 
 NS_CC_END
 

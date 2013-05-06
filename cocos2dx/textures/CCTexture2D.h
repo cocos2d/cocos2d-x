@@ -98,70 +98,6 @@ typedef struct _ccTexParams {
     GLuint    wrapT;
 } ccTexParams;
 
-/**
-Extension used for requesting text with stroke or shadow
-*/
-
-// text shadow attributes 
-typedef class _ccTextShadow
-{
-public:
-    
-    _ccTextShadow(): m_shadowEnabled(false) {}
-    
-    bool   m_shadowEnabled;
-	CCSize m_shadowOffset;
-	float  m_shadowBlur;
-	float  m_shadowOpacity;
-
-} ccTextShadow;
-
-// text stroke attributes 
-typedef class _ccTextStroke
-{
-public:
-    
-    _ccTextStroke(): m_strokeEnabled(false) {}
-    
-    bool        m_strokeEnabled;
-	ccColor3B   m_strokeColor;
-    float       m_strokeSize;
-
-} ccTextStroke;
-
-// text tinting attributes
-typedef class _ccTextTint
-{
-public:
-    
-    _ccTextTint(): m_tintEnabled(false) {}
-    
-    bool        m_tintEnabled;
-    ccColor3B   m_tintColor;
-    
-} ccTextTint;
-
-// text attributes
-class CCTextDefinition : public CCObject
-{
-public:
-
-    CCTextDefinition():  m_alignment(kCCTextAlignmentCenter),
-                         m_vertAlignment(kCCVerticalTextAlignmentTop)
-                         { m_dimensions = CCSizeMake(0,0); }
-    
-    std::string             m_fontName;
-    int                     m_fontSize;
-    CCTextAlignment         m_alignment;
-    CCVerticalTextAlignment m_vertAlignment;
-    CCSize                  m_dimensions;
-    ccTextTint              m_fontTint;
-    ccTextShadow            m_shadow;
-    ccTextStroke            m_stroke;
-    
-} ;
-
-
 //CLASS INTERFACES:
 
 /** @brief CCTexture2D class.
@@ -210,7 +146,7 @@ public:
     /** Initializes a texture from a string with font name and font size */
     bool initWithString(const char *text, const char *fontName, float fontSize);
     /** Initializes a texture from a string with dimensions, alignment, font name and font size shadow and stroke*/
-    bool initWithStringShadowStroke(const char *text, CCTextDefinition *textDefinition);
+    bool initWithStringShadowStroke(const char *text, ccFontDefinition *textDefinition);
     
     /** Initializes a texture from a PVR file */
     bool initWithPVRFile(const char* file);
