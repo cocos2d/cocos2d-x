@@ -462,7 +462,6 @@ JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* c
         return false;
     }
     cocos2d::CCFileUtils *futil = cocos2d::CCFileUtils::sharedFileUtils();
-    std::string rpath = futil->fullPathForFilename(path);
     if (global == NULL) {
         global = global_;
     }
@@ -472,24 +471,24 @@ JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* c
     JSScript *script = NULL;    
     js::RootedObject obj(cx, global);
 	JS::CompileOptions options(cx);
-	options.setUTF8(true).setFileAndLine(rpath.c_str(), 1);
+	options.setUTF8(true).setFileAndLine(path, 1);
     
     // a) check js file first
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    unsigned char *content = (unsigned char*)CCString::createWithContentsOfFile(rpath.c_str())->getCString();
+    unsigned char *content = (unsigned char*)CCString::createWithContentsOfFile(path)->getCString();
     if (content) {
         // Not supported in SpiderMonkey 19.0
         //JSScript* script = JS_CompileScript(cx, global, (char*)content, contentSize, path, 1);
         script = JS::Compile(cx, obj, options, (char*)content, strlen((char*)content));
     }
 #else
-    script = JS::Compile(cx, obj, options, rpath.c_str());
+    script = JS::Compile(cx, obj, options, path);
 #endif
     // b) no js file, check jsc file
     if (!script) {
         std::string byteCodePath = RemoveFileExt(std::string(path)) + BYTE_CODE_FILE_EXT;
         unsigned long length = 0;
-        void *data = futil->getFileData(futil->fullPathForFilename(byteCodePath.c_str()).c_str(),
+        void *data = futil->getFileData(byteCodePath.c_str(),
                                         "rb",
                                         &length);
         if (data) {
