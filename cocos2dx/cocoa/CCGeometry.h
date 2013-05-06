@@ -59,66 +59,137 @@ public:
     CCPoint operator/(float a) const;
     void setPoint(float x, float y);
     bool equals(const CCPoint& target) const;
+    
+    /** @returns if points have fuzzy equality which means equal with some degree of variance.
+     @since v2.1.4
+     */
     bool fuzzyEquals(const CCPoint& target, float variance) const;
 
+    /** Calculates distance between point an origin
+     @return float
+     @since v2.1.4
+     */
     inline float getLength() const {
         return sqrtf(x*x + y*y);
     };
 
+    /** Calculates the square length of a CCPoint (not calling sqrt() )
+     @return float
+     @since v2.1.4
+     */
     inline float getLengthSq() const {
         return dot(*this); //x*x + y*y;
     };
 
-    inline float getAngle() const {
-        return atan2f(y, x);
-    };
-
+    /** Calculates the square distance between two points (not calling sqrt() )
+     @return float
+     @since v2.1.4
+    */
     inline float getDistanceSq(const CCPoint& other) const {
         return (*this - other).getLengthSq();
     };
 
+    /** Calculates the distance between two points
+     @return float
+     @since v2.1.4
+     */
     inline float getDistance(const CCPoint& other) const {
         return (*this - other).getLength();
     };
 
+    /** @returns the angle in radians between this vector and the x axis
+     @since v2.1.4
+    */
+    inline float getAngle() const {
+        return atan2f(y, x);
+    };
+
+    /** @returns the angle in radians between two vector directions
+     @since v2.1.4
+    */
     float getAngle(const CCPoint& other) const;
 
+    /** Calculates dot product of two points.
+     @return float
+     @since v2.1.4
+     */
     inline float dot(const CCPoint& other) const {
         return x*other.x + y*other.y;
     };
 
+    /** Calculates cross product of two points.
+     @return float
+     @since v2.1.4
+     */
     inline float cross(const CCPoint& other) const {
         return x*other.y - y*other.x;
     };
 
+    /** Calculates perpendicular of v, rotated 90 degrees counter-clockwise -- cross(v, perp(v)) >= 0
+     @return CCPoint
+     @since v2.1.4
+     */
     inline CCPoint getPerp() const {
         return CCPoint(-y, x);
     };
 
+    /** Calculates perpendicular of v, rotated 90 degrees clockwise -- cross(v, rperp(v)) <= 0
+     @return CCPoint
+     @since v2.1.4
+     */
     inline CCPoint getRPerp() const {
         return CCPoint(y, -x);
     };
 
+    /** Calculates the projection of this over other.
+     @return CCPoint
+     @since v2.1.4
+     */
     inline CCPoint project(const CCPoint& other) const {
         return other * (dot(other)/other.dot(other));
     };
 
+    /** Rotates two points.
+     @return CCPoint
+     @since v2.1.4
+     */
     inline CCPoint rotate(const CCPoint& other) const {
         return CCPoint(x*other.x - y*other.y, x*other.y + y*other.x);
     };
 
+    /** Unrotates two points.
+     @return CCPoint
+     @since v2.1.4
+     */
     inline CCPoint unrotate(const CCPoint& other) const {
         return CCPoint(x*other.x + y*other.y, y*other.x - x*other.y);
     };
 
+    /** Returns point multiplied to a length of 1.
+     @return CCPoint
+     @since v2.1.4
+     */
     inline CCPoint normalize() const {
         return *this / getLength();
     };
 
+    /** Linear Interpolation between two points a and b
+     @returns
+        alpha == 0 ? a
+        alpha == 1 ? b
+        otherwise a value between a..b
+     @since v2.1.4
+     */
     inline CCPoint lerp(const CCPoint& other, float alpha) const {
         return *this * (1.f - alpha) + other * alpha;
     };
 
+    /** Rotates a point counter clockwise by the angle around a pivot
+     @param pivot is the pivot, naturally
+     @param angle is the angle of rotation ccw in radians
+     @returns the rotated point
+     @since v2.1.4
+     */
     CCPoint rotateByAngle(const CCPoint& pivot, float angle) const;
 
     static inline CCPoint forAngle(const float a)
