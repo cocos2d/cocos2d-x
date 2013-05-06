@@ -16,7 +16,8 @@
 #include "jsapi.h"
 
 const char *USAGE = "Usage: jsbcc input_js_file [byte_code_file]\n"\
-                    "       Pipe supported";
+                    "       Or\n"\
+                    "       ls *.js | jsbcc -p";
 const char *BYTE_CODE_FILE_EXT = ".jsc";
 
 enum ErrorCode {
@@ -113,31 +114,34 @@ Exit:
 int main(int argc, const char * argv[])
 {
     std::string inputFilePath, outputFilePath;
-    if (1 == argc) { // no argument or pipe mode
-        fd_set fds;
-        struct timeval tv;
-        tv.tv_sec = 0;
-        tv.tv_usec = 500; // wait pipe data timeout
-        FD_ZERO (&fds);
-        FD_SET (STDIN_FILENO, &fds);
-        int result = select (STDIN_FILENO + 1, &fds, NULL, NULL, &tv);
-        if (result) { // STDIN ready to read
-            std::string line;
-            while (std::getline(std::cin, line)) {
-                if (!line.empty()) {
-                    CompileFile(line, "");
-                }
-            }
-            return EC_OK;
-        }
-        else {
-            std::cerr << USAGE << std::endl;
-            return EC_ERROR;
-        }
+    if (1 == argc) {
+        std::cerr << USAGE << std::endl;
+        return EC_ERROR;
     }
     else {
-        if (1 < argc) {
-            inputFilePath = argv[1];
+        if (1 < argc) {            
+            if (std::string(argv[1]) == "-p") { // pipe mode
+                fd_set fds;
+                FD_ZERO (&fds);
+                FD_SET (STDIN_FILENO, &fds);
+                int result = select (STDIN_FILENO + 1, &fds, NULL, NULL, NULL); // infinite wait
+                if (result) { // STDIN ready to read
+                    std::string line;
+                    while (std::getline(std::cin, line)) {
+                        if (!line.empty()) {
+                            CompileFile(line, "");
+                        }
+                    }
+                    return EC_OK;
+                }
+                else {
+                    std::cerr << "Failed to read from pipe" << std::endl;
+                    return EC_ERROR;
+                }
+            }
+            else {
+                inputFilePath = argv[1];
+            }
         }
         if (2 < argc) {
             outputFilePath = argv[2];
