@@ -446,15 +446,6 @@ void ScriptingCore::createGlobalContext() {
     }
 }
 
-std::string TransFilePath(const std::string& filePath) {
-    if (filePath.c_str()[0] == '/') {
-        return filePath;
-    }
-    else {
-        return cocos2d::CCFileUtils::sharedFileUtils()->fullPathForFilename(filePath.c_str());
-    }
-}
-
 std::string RemoveFileExt(const std::string& filePath) {
     size_t pos = filePath.rfind('.');
     if (0 < pos) {
@@ -471,7 +462,7 @@ JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* c
         return false;
     }
     cocos2d::CCFileUtils *futil = cocos2d::CCFileUtils::sharedFileUtils();
-    std::string rpath = TransFilePath(path);
+    std::string rpath = futil->fullPathForFilename(path);
     if (global == NULL) {
         global = global_;
     }
@@ -496,9 +487,11 @@ JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* c
 #endif
     // b) no js file, check jsc file
     if (!script) {
-        std::string byteCodeFilePath = TransFilePath(RemoveFileExt(std::string(path)) + BYTE_CODE_FILE_EXT);
+        std::string byteCodePath = RemoveFileExt(std::string(path)) + BYTE_CODE_FILE_EXT;
         unsigned long length = 0;
-        void *data = futil->getFileData(byteCodeFilePath.c_str(), "rb", &length);
+        void *data = futil->getFileData(futil->fullPathForFilename(byteCodePath.c_str()).c_str(),
+                                        "rb",
+                                        &length);
         if (data) {
             script = JS_DecodeScript(cx, data, length, NULL, NULL);
         }
