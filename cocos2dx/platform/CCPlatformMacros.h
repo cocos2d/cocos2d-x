@@ -233,6 +233,19 @@ public: virtual void set##funName(varType var)   \
 #define LUALOG(format, ...)     cocos2d::CCLog(format, ##__VA_ARGS__)
 #endif // Lua engine debug
 
+#if defined(__GNUC__) && ((__GNUC__ >= 5) || ((__GNUG__ == 4) && (__GNUC_MINOR__ >= 4))) \
+    || (defined(__clang__) && (__clang_major__ >= 3))
+#define CC_DISABLE_COPY(Class) \
+private: \
+    Class(const Class &) = delete; \
+    Class &operator =(const Class &) = delete;
+#else
+#define CC_DISABLE_COPY(Class) \
+private: \
+    Class(const Class &); \
+    Class &operator =(const Class &);
+#endif
+
 /*
  * only certain compilers support __attribute__((deprecated))
  */
