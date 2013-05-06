@@ -42,8 +42,8 @@
 									<listOptionValue builtIn="false" value="&quot;${COCOS_ROOT}/CocosDenshion/include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${COCOS_ROOT}/external/chipmunk/include/chipmunk&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${COCOS_ROOT}/external&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/platform/third_party/tizen\rootstraps/tizen-emulator-2.0.cpp/usr/include&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/platform/third_party/tizen\rootstraps/tizen-emulator-2.0.cpp/usr/include/freetype2&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/platform/third_party/tizen/rootstraps/tizen-emulator-2.0.cpp/usr/include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/platform/third_party/tizen/rootstraps/tizen-emulator-2.0.cpp/usr/include/freetype2&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/platform/third_party/tizen/prebuilt/libwebp/include&quot;"/>
 								</option>
 								<option id="sbi.gnu.cpp.compiler.option.frameworks.cpp.394899403" name="Tizen-Frameworks" superClass="sbi.gnu.cpp.compiler.option.frameworks.cpp" valueType="userObjs">
@@ -110,8 +110,8 @@
 							<tool command="clang++.exe" id="org.tizen.nativecpp.tool.sbi.gnu.cpp.linker.1117400778" name="C++ Linker" superClass="org.tizen.nativecpp.tool.sbi.gnu.cpp.linker">
 								<option id="gnu.cpp.link.option.paths.1869893869" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/lib}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/platform/third_party/tizen\rootstraps/tizen-emulator-2.0.cpp/lib&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/platform/third_party/tizen\rootstraps/tizen-emulator-2.0.cpp/usr/lib&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/platform/third_party/tizen/rootstraps/tizen-emulator-2.0.cpp/lib&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/platform/third_party/tizen/rootstraps/tizen-emulator-2.0.cpp/usr/lib&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/platform/third_party/tizen/prebuilt/libwebp/libs/x86&quot;"/>
 								</option>
 								<option id="sbi.gnu.cpp.linker.option.frameworks_lflags.cpp.231803493" name="Tizen-Frameworks-Other-Lflags" superClass="sbi.gnu.cpp.linker.option.frameworks_lflags.cpp" valueType="stringList">
