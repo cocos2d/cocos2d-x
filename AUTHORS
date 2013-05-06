@@ -281,6 +281,7 @@ Developers:
         Stripping newlines from log message and fixing linux library location.
         Fixing a bug that CCPhysicsSprite was overriding only some of the getPosition methods.
         Adding a macro USE_BOX2D to check whether to enable Box2D for linux and nacl port.
+        Adding Travis build support for linux and NaCl.
 
     Peter Young (young40)
         Implements setVisible() for CCEditBox
