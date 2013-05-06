@@ -12,6 +12,9 @@ Developers:
     Rolando Abarca
         Javascript Binding and testjs
 
+    sergey-shambir
+        Added CC_DISABLE_COPY macro
+
     savdalion 
         Added example for russian language in TestCpp
         Added const modifier for classes CCArray, CCObject
