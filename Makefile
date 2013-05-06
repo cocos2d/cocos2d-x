@@ -1,4 +1,4 @@
-PLATFORM = linux
+PLATFORM ?= linux
 
 define MAKE_TARGET
 	+$(MAKE) -C external/chipmunk/proj.$(PLATFORM) $@
