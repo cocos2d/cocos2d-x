@@ -41,8 +41,7 @@
 									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/kazmath/include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/platform/tizen&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/platform/third_party/tizen/prebuilt/libcurl/include&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/platform/third_party/tizen\rootstraps/tizen-emulator-2.0.cpp/usr/include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/platform/third_party/tizen/rootstraps/tizen-emulator-2.0.cpp/usr/include&quot;"/>
 								</option>
 								<option id="sbi.gnu.cpp.compiler.option.frameworks.cpp.140749819" name="Tizen-Frameworks" superClass="sbi.gnu.cpp.compiler.option.frameworks.cpp" valueType="userObjs">
 									<listOptionValue builtIn="false" value="osp-static"/>
