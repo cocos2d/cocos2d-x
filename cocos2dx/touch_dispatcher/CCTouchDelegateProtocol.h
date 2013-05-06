@@ -45,7 +45,7 @@ class CC_DLL CCTouchDelegate
 {
 public:
 
-    CCTouchDelegate() {}
+    CCTouchDelegate() : m_bPaused(false) {}
 
     virtual ~CCTouchDelegate()
     {
@@ -64,6 +64,13 @@ public:
      virtual void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent) {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
      virtual void ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent) {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
 
+public:
+    virtual bool isTouchPaused() const { return m_bPaused; }
+    virtual void ccTouchPause() { m_bPaused = true; }
+    virtual void ccTouchResume() { m_bPaused = false; }
+    
+private:
+    bool m_bPaused;
 };
 /**
  @brief
