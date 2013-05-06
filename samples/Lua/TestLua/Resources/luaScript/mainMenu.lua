@@ -31,6 +31,7 @@ require "luaScript/CocosDenshionTest/CocosDenshionTest"
 require "luaScript/EffectsAdvancedTest/EffectsAdvancedTest"
 require "luaScript/UserDefaultTest/UserDefaultTest"
 require "luaScript/CurrentLanguageTest/CurrentLanguageTest"
+require "luaScript/BugsTest/BugsTest"
 ------------------------
 
 
@@ -78,7 +79,7 @@ local _allTests = {
     { isSupported = true,  name = "ZwoptexTest"            , create_func   =               ZwoptexTestMain  },
     { isSupported = false,  name = "CurlTest"               , create_func=                  CurlTestMain  },
     { isSupported = true,  name = "UserDefaultTest"        , create_func=           UserDefaultTestMain  },
-    { isSupported = false,  name = "BugsTest"               , create_func=              BugsTestMain      },
+    { isSupported = true,  name = "BugsTest"               , create_func=              BugsTestMain      },
     { isSupported = true,  name = "FontTest"               , create_func   =              FontTestMain      },
     { isSupported = true,  name = "CurrentLanguageTest"    , create_func=   CurrentLanguageTestMain      },
     { isSupported = false,  name = "TextureCacheTest"       , create_func=      TextureCacheTestMain      },
