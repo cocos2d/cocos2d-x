@@ -151,11 +151,11 @@ public:
     // Querying an Array
 
     /** Returns element count of the array */
-    unsigned int count();
+    unsigned int count() const;
     /** Returns capacity of the array */
-    unsigned int capacity();
+    unsigned int capacity() const;
     /** Returns index of a certain object, return UINT_MAX if doesn't contain the object */
-    unsigned int indexOfObject(CCObject* object);
+    unsigned int indexOfObject(CCObject* object) const;
     /** Returns an element with a certain index */
     CCObject* objectAtIndex(unsigned int index);
     /** Returns last element */
@@ -163,7 +163,7 @@ public:
     /** Returns a random element */
     CCObject* randomObject();
     /** Returns a Boolean value that indicates whether object is present in array. */
-    bool containsObject(CCObject* object);
+    bool containsObject(CCObject* object) const;
     /** @since 1.1 */
     bool isEqualToArray(CCArray* pOtherArray);
     // Adding Objects
