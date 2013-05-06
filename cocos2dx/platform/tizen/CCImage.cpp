@@ -322,7 +322,7 @@ public:
 		std::string fontfile = getFontFile(pFontName);
 		if ( FT_New_Face(library, fontfile.c_str(), 0, &face) ) {
 			//no valid font found use default
-			if ( FT_New_Face(library, "/usr/share/fonts/truetype/freefont/FreeSerif.ttf", 0, &face) ) {
+			if ( FT_New_Face(library, "/usr/share/fonts/TizenSansRegular.ttf", 0, &face) ) {
 				return false;
 			}
 		}
