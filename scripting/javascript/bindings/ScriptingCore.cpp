@@ -354,7 +354,6 @@ void ScriptingCore::string_report(jsval val) {
 
 JSBool ScriptingCore::evalString(const char *string, jsval *outVal, const char *filename, JSContext* cx, JSObject* global)
 {
-    jsval rval;
     if (cx == NULL)
         cx = cx_;
     if (global == NULL)
@@ -363,7 +362,7 @@ JSBool ScriptingCore::evalString(const char *string, jsval *outVal, const char *
     if (script) {
         // JSAutoCompartment ac(cx, global);
         JSAutoCompartment ac(cx, global);
-        JSBool evaluatedOK = JS_ExecuteScript(cx, global, script, &rval);
+        JSBool evaluatedOK = JS_ExecuteScript(cx, global, script, outVal);
         if (JS_FALSE == evaluatedOK) {
             fprintf(stderr, "(evaluatedOK == JS_FALSE)\n");
         }

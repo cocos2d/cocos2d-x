@@ -23,6 +23,7 @@ Developers:
 
     mchinen
         fix emulator issue for OpenGL ES 2.0 on Android
+        Fix missing protocol method warning for iOS 6.0 addition
 
     DenizPiri
         use CCLOG to implement print() function in LUA
@@ -41,6 +42,7 @@ Developers:
         fix for loading custom fonts on iOS when referenced from a CCB file
         Fix CCUserDefault.cpp compiling on Android.
         Fixing CCFileUtils 'createXXXXWithContentsOfFile' path lookup issue.
+        Add CCDirector::popToSceneStackLevel(int level).
 
     Waiter
         fix an error that OpenSLEngine can't load resources from SD card
@@ -132,6 +134,7 @@ Developers:
         fixed CCDirector to use CCLabelBMFont instead of CCLabelTTF
         added CCBReader (CCBI format)
         Added cleanup and reset methods to ScriptingCore.
+        Fixed a bug in ScriptingCore::evalString not setting the outval.
 
     Rohan Kuruvilla (rohankuruvilla, Zynga)
         Improvements to JS Bindings.
