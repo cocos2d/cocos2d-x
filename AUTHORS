@@ -305,6 +305,7 @@ Developers:
 
     rtissera (Romain TISSERAND)
         Adding missing JNIEXPORT / JNICALL declarations.
+        Fix iOS 4.3 JPEG loading issue.
 
     Yodesoft
         Improving font rendering performance for linux platform.
