@@ -30,11 +30,13 @@ THE SOFTWARE.
 USING_NS_CC;
 using namespace Tizen::App;
 using namespace Tizen::System;
+using namespace Tizen::Ui;
 using namespace Tizen::Ui::Controls;
 using namespace Tizen::Base::Runtime;
 
 CCOspApplication * CCOspApplication::sm_pSharedCCOspApplication = 0;
 CCOspApplicationInitialized CCOspApplication::sm_pApplicationInitialized = 0;
+Orientation CCOspApplication::sm_eScreenOrientation = ORIENTATION_NONE;
 
 CCOspApplication::CCOspApplication()
     : __pForm(null)
@@ -62,6 +64,12 @@ CCOspApplication::SetApplicationInitializedCallback(CCOspApplicationInitialized 
     sm_pApplicationInitialized = p;
 }
 
+void
+CCOspApplication::SetScreenOrientation(Orientation orientation)
+{
+	sm_eScreenOrientation = orientation;
+}
+
 CCOspApplication*
 CCOspApplication::GetInstance(void)
 {
@@ -82,13 +90,13 @@ CCOspApplication::OnAppInitializing(AppRegistry& appRegistry)
 
     result r = E_SUCCESS;
 
-    Frame* pAppFrame = new (std::nothrow) Frame();
-    TryReturn(pAppFrame != null, E_FAILURE, "[CCOspApplication] Generating a frame failed.");
+    __pFrame = new (std::nothrow) Frame();
+    TryReturn(__pFrame != null, E_FAILURE, "[CCOspApplication] Generating a frame failed.");
 
-    r = pAppFrame->Construct();
+    r = __pFrame->Construct();
     TryReturn(!IsFailed(r), E_FAILURE, "[CCOspApplication] pAppFrame->Construct() failed.");
 
-    this->AddFrame(*pAppFrame);
+    this->AddFrame(*__pFrame);
 
     __pForm = new (std::nothrow) CCOspForm;
     TryCatch(__pForm != null, , "[CCOspApplication] Allocation of CCOspForm failed.");
@@ -112,6 +120,7 @@ bool
 CCOspApplication::OnAppInitialized(void)
 {
     sm_pApplicationInitialized();
+    __pFrame->SetOrientation(sm_eScreenOrientation);
     return true;
 }
 

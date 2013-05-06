@@ -41,6 +41,7 @@ public:
     static Tizen::App::Application* CreateInstance(void);
     static CCOspApplication* GetInstance(void);
     static void SetApplicationInitializedCallback(CCOspApplicationInitialized p);
+    static void SetScreenOrientation(Tizen::Ui::Orientation orientation);
 
 public:
     CCOspApplication();
@@ -61,8 +62,10 @@ public:
 protected:
     static CCOspApplication* sm_pSharedCCOspApplication;
     static CCOspApplicationInitialized sm_pApplicationInitialized;
+    static Tizen::Ui::Orientation sm_eScreenOrientation;
 
 private:
+    Tizen::Ui::Controls::Frame* __pFrame;
     Tizen::Ui::Controls::Form* __pForm;
 };
 
