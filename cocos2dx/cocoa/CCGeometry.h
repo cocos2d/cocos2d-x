@@ -170,6 +170,8 @@ public:
      @since v2.1.4
      */
     inline CCPoint normalize() const {
+        float length = getLength();
+        if(length == 0.) return CCPoint(*this);
         return *this / getLength();
     };
 
