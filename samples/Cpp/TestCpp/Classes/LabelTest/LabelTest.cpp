@@ -1402,24 +1402,30 @@ std::string BMFontOneAtlas::subtitle()
 BMFontUnicode::BMFontUnicode()
 {
     CCDictionary *strings = CCDictionary::createWithContentsOfFile("fonts/strings.xml");
-    const char *chinese = ((CCString*)strings->objectForKey("chinese1"))->m_sString.c_str();
+
+    const char *chinese  = ((CCString*)strings->objectForKey("chinese1"))->m_sString.c_str();
     const char *japanese = ((CCString*)strings->objectForKey("japanese"))->m_sString.c_str();
-    const char *spanish = ((CCString*)strings->objectForKey("spanish"))->m_sString.c_str();
+    const char *russian  = ((CCString*)strings->objectForKey("russian"))->m_sString.c_str();
+    const char *spanish  = ((CCString*)strings->objectForKey("spanish"))->m_sString.c_str();
 
 
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
     CCLabelBMFont *label1 = CCLabelBMFont::create(spanish, "fonts/arial-unicode-26.fnt", 200, kCCTextAlignmentLeft);
     addChild(label1);
-    label1->setPosition(ccp(s.width/2, s.height/4*3));
+    label1->setPosition(ccp(s.width/2, s.height/5*4));
 
     CCLabelBMFont *label2 = CCLabelBMFont::create(chinese, "fonts/arial-unicode-26.fnt");
     addChild(label2);
-    label2->setPosition(ccp(s.width/2, s.height/4*2));
+    label2->setPosition(ccp(s.width/2, s.height/5*3));
 
-    CCLabelBMFont *label3 = CCLabelBMFont::create(japanese, "fonts/arial-unicode-26.fnt");
+    CCLabelBMFont *label3 = CCLabelBMFont::create(russian, "fonts/arial-26-en-ru.fnt");
     addChild(label3);
-    label3->setPosition(ccp(s.width/2, s.height/4*1));
+    label3->setPosition(ccp(s.width/2, s.height/5*2));
+
+    CCLabelBMFont *label4 = CCLabelBMFont::create(japanese, "fonts/arial-unicode-26.fnt");
+    addChild(label4);
+    label4->setPosition(ccp(s.width/2, s.height/5*1));
 }
 
 std::string BMFontUnicode::title()
@@ -1429,7 +1435,7 @@ std::string BMFontUnicode::title()
 
 std::string BMFontUnicode::subtitle()
 {
-    return "You should see 3 differnt labels: In Spanish, Chinese and Korean";
+    return "You should see 4 differnt labels:\nIn Spanish, Chinese, Russian and Korean";
 }
 
 // BMFontInit
