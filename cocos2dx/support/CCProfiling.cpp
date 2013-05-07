@@ -85,7 +85,7 @@ void CCProfiler::displayTimers()
     CCDICT_FOREACH(m_pActiveTimers, pElement)
     {
         CCProfilingTimer* timer = (CCProfilingTimer*)pElement->getObject();
-        CCLog(timer->description());
+        CCLog("%s", timer->description());
     }
 }
 
