@@ -662,10 +662,17 @@ void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
 
         // Add the object to the objectGroup
         objectGroup->getObjects()->addObject(dict);
+
+        // # Default form for object is 'box'. See 'ellipse', 'polyline', ...
+        //   See if-else below.
+        CCString* form = new CCString( "box" );
+        dict->setObject( form, "form" );
+        form->release();
+
         dict->release();
 
-         // The parent element is now "object"
-         pTMXMapInfo->setParentElement(TMXPropertyObject);
+        // The parent element is now "object"
+        pTMXMapInfo->setParentElement(TMXPropertyObject);
 
     } 
     else if (elementName == "property")
@@ -725,12 +732,29 @@ void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
             dict->setObject(propertyValue, propertyName);
             propertyValue->release();
         }
+
+    }
+    else if (elementName == "ellipse")
+    {
+        // find parent object's dict and add ellipse-form to it
+        CCTMXObjectGroup* objectGroup = (CCTMXObjectGroup*)m_pObjectGroups->lastObject();
+        CCDictionary* dict = (CCDictionary*)objectGroup->getObjects()->lastObject();
+
+        CCString* form = new CCString( "ellipse" );
+        objectGroup->getProperties()->setObject( form, "form" );
+        dict->setObject( form, "form" );
+        form->release();
+
     }
     else if (elementName == "polygon") 
     {
-        // find parent object's dict and add polygon-points to it
+        // find parent object's dict and add polygon-form to it
         CCTMXObjectGroup* objectGroup = (CCTMXObjectGroup*)m_pObjectGroups->lastObject();
         CCDictionary* dict = (CCDictionary*)objectGroup->getObjects()->lastObject();
+
+        CCString* form = new CCString( "polygon" );
+        dict->setObject( form, "form" );
+        form->release();
 
         // get points value string
         const char* value = valueForKey("points", attributeDict);
@@ -778,13 +802,66 @@ void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
             dict->setObject(pPointsArray, "points");
             pPointsArray->release();
         }
+
     } 
     else if (elementName == "polyline")
     {
         // find parent object's dict and add polyline-points to it
-        // CCTMXObjectGroup* objectGroup = (CCTMXObjectGroup*)m_pObjectGroups->lastObject();
-        // CCDictionary* dict = (CCDictionary*)objectGroup->getObjects()->lastObject();
-        // TODO: dict->setObject:[attributeDict objectForKey:@"points"] forKey:@"polylinePoints"];
+        CCTMXObjectGroup* objectGroup = (CCTMXObjectGroup*)m_pObjectGroups->lastObject();
+        CCDictionary* dict = (CCDictionary*)objectGroup->getObjects()->lastObject();
+
+        CCString* form = new CCString( "polyline" );
+        dict->setObject( form, "form" );
+        form->release();
+
+        // get points value string
+        const char* value = valueForKey( "points", attributeDict );
+        if ( value )
+        {
+            CCArray* pPointsArray = new CCArray;
+
+            // parse points string into a space-separated set of points
+            stringstream  pointsStream( value );
+            string  pointPair;
+            while ( std::getline( pointsStream, pointPair, ' ' ) )
+            {
+                // parse each point combo into a comma-separated x,y point
+                stringstream pointStream( pointPair );
+                string  xStr;
+                string  yStr;
+                char buffer[ 32 ] = { 0 };
+                
+                CCDictionary* pPointDict = new CCDictionary;
+
+                // set x
+                if ( std::getline( pointStream, xStr, ',' ) )
+                {
+                    int x = atoi( xStr.c_str() ) + (int)objectGroup->getPositionOffset().x;
+                    sprintf( buffer, "%d", x );
+                    CCString* pStr = new CCString( buffer );
+                    pStr->autorelease();
+                    pPointDict->setObject( pStr, "x" );
+                }
+
+                // set y
+                if( std::getline( pointStream, yStr, ',' ) )
+                {
+                    int y = atoi( yStr.c_str() ) + (int)objectGroup->getPositionOffset().y;
+                    sprintf( buffer, "%d", y );
+                    CCString* pStr = new CCString( buffer );
+                    pStr->autorelease();
+                    pPointDict->setObject( pStr, "y" );
+                }
+                
+                // add to points array
+                pPointsArray->addObject(pPointDict);
+                pPointDict->release();
+            }
+            
+            dict->setObject(pPointsArray, "points");
+            pPointsArray->release();
+
+        } // while ( std::getline ...
     }
 
     if (attributeDict)

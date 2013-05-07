@@ -147,6 +147,39 @@ public:
     virtual std::string subtitle();
 };
 
+
+
+class TMXOrthoObjectsTest2 : public TileDemo
+{
+public:
+    TMXOrthoObjectsTest2();
+    virtual std::string title();
+    virtual std::string subtitle();
+
+    void draw();
+    // @todo commit fine Add const-qualificators in methods.
+    void draw( CCTMXObjectGroup& group );
+    void draw( CCObject& object );
+    void drawBox(      const CCPoint&, size_t width, size_t height );
+    void drawEllipse(  const CCPoint&, size_t rx, size_t ry );
+    void drawEllipse(
+        const CCPoint&,
+        float rx, float ry,
+        float angle,
+        unsigned int segments,
+        bool drawLineToCenter,
+        float scaleX = 1.0f, float scaleY = 1.0f
+    );
+    // @todo commit fine Add const-qualificators in CCArray.
+    void drawPolygon(  const CCPoint&, CCArray& );
+    void drawPolyline( const CCPoint&, CCArray& );
+
+private:
+    void updateLineWidth( float dt );
+};
+
+
+
 class TMXIsoObjectsTest : public TileDemo
 {
 public:
