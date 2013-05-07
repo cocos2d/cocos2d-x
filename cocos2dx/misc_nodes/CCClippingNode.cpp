@@ -177,9 +177,9 @@ void CCClippingNode::visit()
         static bool once = true;
         if (once)
         {
-            char warning[200];
-            snprintf(warning, 50, "Nesting more than %d stencils is not supported. Everything will be drawn without stencil for this node and its childs.", g_sStencilBits);
-            CCLOG(warning);
+            char warning[200] = {0};
+            snprintf(warning, sizeof(warning), "Nesting more than %d stencils is not supported. Everything will be drawn without stencil for this node and its childs.", g_sStencilBits);
+            CCLOG("%s", warning);
             
             once = false;
         }
