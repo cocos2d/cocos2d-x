@@ -12,6 +12,9 @@ Developers:
     Rolando Abarca
         Javascript Binding and testjs
 
+    wagaf-d
+        Move ccpX functions to CCPoint methods and operators
+
     sergey-shambir
         Added CC_DISABLE_COPY macro
         Added __attribute__(__format__()) for CCLog and CCString
@@ -255,6 +258,7 @@ Developers:
         Fixing a crash for call runAnimation() in CCBAnimationManagerDelegate::completedAnimationSequenceNamed.
         Fixing a bug that CCControl's touch priority is not set correctly; m_nDefaultTouchPriority is never used.
         Fixing a syntax error for RENDER_IN_SUBPIXEL macro.
+        Implement CCDictionary::writeToFile().
 
     xyhl515
         Fixed a bug that CCControlSwitch::setOn(isOn,false) doesn't work.
