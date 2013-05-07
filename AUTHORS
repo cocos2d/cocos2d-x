@@ -370,6 +370,9 @@ Developers:
     James Gregory (j4m3z0r, Zynga)
         Initial Emscripten port.
 
+    coolengineer (Hojin Choi)
+        Refactoring callback selector for HttpResponse.
+
 Retired Core Developers:
     WenSheng Yang
         Author of windows port, CCTextField,
