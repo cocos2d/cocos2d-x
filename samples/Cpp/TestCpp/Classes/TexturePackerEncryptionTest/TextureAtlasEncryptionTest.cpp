@@ -44,11 +44,19 @@ void TextureAtlasEncryptionDemo::onEnter()
     
     // Load the encrypted atlas
     // 1) Set the encryption keys or step 2 will fail
+    // In this case the encryption key 0xaaaaaaaabbbbbbbbccccccccdddddddd is
+    // split into four parts. See the header docs for more information.
     ZipUtils::ccSetPvrEncryptionKeyPart(0, 0xaaaaaaaa);
     ZipUtils::ccSetPvrEncryptionKeyPart(1, 0xbbbbbbbb);
     ZipUtils::ccSetPvrEncryptionKeyPart(2, 0xcccccccc);
     ZipUtils::ccSetPvrEncryptionKeyPart(3, 0xdddddddd);
     
+    // Alternatively, you can call the function that accepts the key in a single
+    // function call.
+    // This is slightly less secure because the entire key is more easily
+    // found in the compiled source. See the header docs for more information.
+    // ZipUtils::ccSetPvrEncryptionKey(0xaaaaaaaa, 0xbbbbbbbb, 0xcccccccc, 0xdddddddd);
+
     // 2) Load the encrypted atlas
     CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("Images/encryptedAtlas.plist", "Images/encryptedAtlas.pvr.ccz");
     

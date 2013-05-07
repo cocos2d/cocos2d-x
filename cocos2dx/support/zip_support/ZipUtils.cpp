@@ -426,6 +426,14 @@ void ZipUtils::ccSetPvrEncryptionKeyPart(int index, unsigned int value)
     }
 }
 
+void ZipUtils::ccSetPvrEncryptionKey(unsigned int keyPart1, unsigned int keyPart2, unsigned int keyPart3, unsigned int keyPart4)
+{
+    ccSetPvrEncryptionKeyPart(0, keyPart1);
+    ccSetPvrEncryptionKeyPart(1, keyPart2);
+    ccSetPvrEncryptionKeyPart(2, keyPart3);
+    ccSetPvrEncryptionKeyPart(3, keyPart4);
+}
+
 // --------------------- ZipFile ---------------------
 // from unzip.cpp
 #define UNZ_MAXFILENAMEINZIP 256
