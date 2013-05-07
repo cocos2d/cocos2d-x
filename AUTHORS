@@ -364,6 +364,9 @@ Developers:
     sunzhuoshi
         Adding support for javascript bytecode.
 
+    ptekchand (Pranav Tekchand)
+        Supporting negative node scales for CCScrollView.
+
 Retired Core Developers:
     WenSheng Yang
         Author of windows port, CCTextField,
