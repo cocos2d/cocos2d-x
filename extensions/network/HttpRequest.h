@@ -49,6 +49,8 @@ public:
     {
         kHttpGet,
         kHttpPost,
+        kHttpPut,
+        kHttpDelete,
         kHttpUnkown,
     } HttpRequestType;
     
