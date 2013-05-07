@@ -71,7 +71,7 @@ void HttpClientTest::onMenuGetTestClicked(cocos2d::CCObject *sender)
     {
         CCHttpRequest* request = new CCHttpRequest();
         // required fields
-        request->setUrl("http://www.httpbin.org/ip");
+        request->setUrl("http://httpbin.org/ip");
         request->setRequestType(CCHttpRequest::kHttpGet);
         request->setResponseCallback(this, httpresponse_selector(HttpClientTest::onHttpRequestCompleted));
         // optional fields                            
@@ -86,7 +86,7 @@ void HttpClientTest::onMenuGetTestClicked(cocos2d::CCObject *sender)
     // test 3   
     {
         CCHttpRequest* request = new CCHttpRequest();
-        request->setUrl("http://www.httpbin.org/get");
+        request->setUrl("http://httpbin.org/get");
         request->setRequestType(CCHttpRequest::kHttpGet);
         request->setResponseCallback(this, httpresponse_selector(HttpClientTest::onHttpRequestCompleted));
         request->setTag("GET test3");
@@ -104,7 +104,7 @@ void HttpClientTest::onMenuPostTestClicked(cocos2d::CCObject *sender)
     // test 1
     {
         CCHttpRequest* request = new CCHttpRequest();
-        request->setUrl("http://www.httpbin.org/post");
+        request->setUrl("http://httpbin.org/post");
         request->setRequestType(CCHttpRequest::kHttpPost);
         request->setResponseCallback(this, httpresponse_selector(HttpClientTest::onHttpRequestCompleted));
         
@@ -120,7 +120,7 @@ void HttpClientTest::onMenuPostTestClicked(cocos2d::CCObject *sender)
     // test 2: set Content-Type
     {
         CCHttpRequest* request = new CCHttpRequest();
-        request->setUrl("http://www.httpbin.org/post");
+        request->setUrl("http://httpbin.org/post");
         request->setRequestType(CCHttpRequest::kHttpPost);
         std::vector<std::string> headers;
         headers.push_back("Content-Type: application/json; charset=utf-8");
@@ -143,7 +143,7 @@ void HttpClientTest::onMenuPostTestClicked(cocos2d::CCObject *sender)
 void HttpClientTest::onMenuPostBinaryTestClicked(cocos2d::CCObject *sender)
 {
     CCHttpRequest* request = new CCHttpRequest();
-    request->setUrl("http://www.httpbin.org/post");
+    request->setUrl("http://httpbin.org/post");
     request->setRequestType(CCHttpRequest::kHttpPost);
     request->setResponseCallback(this, httpresponse_selector(HttpClientTest::onHttpRequestCompleted));
     
