@@ -309,6 +309,7 @@ Developers:
 
     Zecken (gelldur)
         Fixing a profiling compilation error in CCParticleBatchNode.
+        Fixing linking errors for TestCPP with libcurl on linux.
 
     flamingo (flaming0)
         Null pointer check in order to prevent crashes.
