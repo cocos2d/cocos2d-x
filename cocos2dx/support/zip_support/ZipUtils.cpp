@@ -312,10 +312,13 @@ ZipFile::ZipFile(const std::string &zipFile, const std::string &filter)
     {
         setFilter(filter);
     }
+
+    pthread_mutex_init(&m_zipFileMutex, NULL);
 }
 
 ZipFile::~ZipFile()
 {
+    pthread_mutex_destroy(&m_zipFileMutex);
     if (m_data && m_data->zipFile)
     {
         unzClose(m_data->zipFile);
@@ -390,6 +393,8 @@ unsigned char *ZipFile::getFileData(const std::string &fileName, unsigned long *
         *pSize = 0;
     }
 
+
+    pthread_mutex_lock(&m_zipFileMutex);
     do
     {
         CC_BREAK_IF(!m_data->zipFile);
@@ -416,7 +421,8 @@ unsigned char *ZipFile::getFileData(const std::string &fileName, unsigned long *
         }
         unzCloseCurrentFile(m_data->zipFile);
     } while (0);
-
+    pthread_mutex_unlock(&m_zipFileMutex);
+    
     return pBuffer;
 }
 
