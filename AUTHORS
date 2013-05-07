@@ -370,6 +370,8 @@ Developers:
 
     brawsome
         Adding new macro CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK to CCBMemberVariableAssigner.h.
+        Adding CCLOG before original path is returned in CCFileUtils::fullPathForFileName to aid in debugging.
+        Optmization to ccArrayGetIndexOfObject.
 
     sunzhuoshi
         Adding support for javascript bytecode.
