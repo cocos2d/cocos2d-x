@@ -264,12 +264,14 @@ bool CCLabelTTF::updateTexture()
 		return false;
     }
     
-    tex->initWithString( m_string.c_str(),
-                        m_pFontName->c_str(),
-                        m_fFontSize * CC_CONTENT_SCALE_FACTOR(),
-                        CC_SIZE_POINTS_TO_PIXELS(m_tDimensions), 
-                        m_hAlignment,
-                        m_vAlignment);
+    if (!tex->initWithString( m_string.c_str(),
+                                m_pFontName->c_str(),
+                                m_fFontSize * CC_CONTENT_SCALE_FACTOR(),
+                                CC_SIZE_POINTS_TO_PIXELS(m_tDimensions), 
+                                m_hAlignment,
+                                m_vAlignment)) {
+        return false;
+    }
 	
     this->setTexture(tex);
     tex->release();
