@@ -80,8 +80,11 @@ bool CompileFile(const std::string &inputFilePath, const std::string &outputFile
 	JSObject* global = JS_NewGlobalObject(context, &GlobalClass, NULL);
     JS_SetErrorReporter(context, &ReportError);
 	if (JS_InitStandardClasses(context, global)) {
+
         JS::CompileOptions options(context);
+        options.setUTF8(true);
         options.setSourcePolicy(JS::CompileOptions::NO_SOURCE);
+        
         js::RootedObject rootedObject(context, global);
         std::cout << "Compiling ..." << std::endl;
         JSScript *script = JS::Compile(context, rootedObject, options, inputFilePath.c_str());

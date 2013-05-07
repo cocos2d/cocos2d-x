@@ -35,36 +35,36 @@ NS_CC_BEGIN
 float
 ccpLength(const CCPoint& v)
 {
-    return sqrtf(ccpLengthSQ(v));
+    return v.getLength();
 }
 
 float
 ccpDistance(const CCPoint& v1, const CCPoint& v2)
 {
-    return ccpLength(ccpSub(v1, v2));
+    return (v1 - v2).getLength();
 }
 
 CCPoint
 ccpNormalize(const CCPoint& v)
 {
-    return ccpMult(v, 1.0f/ccpLength(v));
+    return v.normalize();
 }
 
 CCPoint
 ccpForAngle(const float a)
 {
-    return ccp(cosf(a), sinf(a));
+    return CCPoint::forAngle(a);
 }
 
 float
 ccpToAngle(const CCPoint& v)
 {
-    return atan2f(v.y, v.x);
+    return v.getAngle();
 }
 
 CCPoint ccpLerp(const CCPoint& a, const CCPoint& b, float alpha)
 {
-    return ccpAdd(ccpMult(a, 1.f - alpha), ccpMult(b, alpha));
+    return a.lerp(b, alpha);
 }
 
 float clampf(float value, float min_inclusive, float max_inclusive)
@@ -82,7 +82,7 @@ CCPoint ccpClamp(const CCPoint& p, const CCPoint& min_inclusive, const CCPoint& 
 
 CCPoint ccpFromSize(const CCSize& s)
 {
-    return ccp(s.width, s.height);
+    return CCPoint(s);
 }
 
 CCPoint ccpCompOp(const CCPoint& p, float (*opFunc)(float))
@@ -92,10 +92,7 @@ CCPoint ccpCompOp(const CCPoint& p, float (*opFunc)(float))
 
 bool ccpFuzzyEqual(const CCPoint& a, const CCPoint& b, float var)
 {
-    if(a.x - var <= b.x && b.x <= a.x + var)
-        if(a.y - var <= b.y && b.y <= a.y + var)
-            return true;
-    return false;
+	return a.fuzzyEquals(b, var);
 }
 
 CCPoint ccpCompMult(const CCPoint& a, const CCPoint& b)
@@ -105,21 +102,12 @@ CCPoint ccpCompMult(const CCPoint& a, const CCPoint& b)
 
 float ccpAngleSigned(const CCPoint& a, const CCPoint& b)
 {
-    CCPoint a2 = ccpNormalize(a);
-    CCPoint b2 = ccpNormalize(b);
-    float angle = atan2f(a2.x * b2.y - a2.y * b2.x, ccpDot(a2, b2));
-    if( fabs(angle) < kCCPointEpsilon ) return 0.f;
-    return angle;
+	return a.getAngle(b);
 }
 
 CCPoint ccpRotateByAngle(const CCPoint& v, const CCPoint& pivot, float angle)
 {
-    CCPoint r = ccpSub(v, pivot);
-    float cosa = cosf(angle), sina = sinf(angle);
-    float t = r.x;
-    r.x = t*cosa - r.y*sina + pivot.x;
-    r.y = t*sina + r.y*cosa + pivot.y;
-    return r;
+	return v.rotateByAngle(pivot, angle);
 }
 
 

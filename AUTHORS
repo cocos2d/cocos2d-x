@@ -364,8 +364,14 @@ Developers:
     sunzhuoshi
         Adding support for javascript bytecode.
 
+    ptekchand (Pranav Tekchand)
+        Supporting negative node scales for CCScrollView.
+
     James Gregory (j4m3z0r, Zynga)
         Initial Emscripten port.
+
+    coolengineer (Hojin Choi)
+        Refactoring callback selector for HttpResponse.
 
 Retired Core Developers:
     WenSheng Yang
