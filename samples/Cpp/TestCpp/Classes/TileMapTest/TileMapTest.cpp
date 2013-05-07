@@ -1610,14 +1610,10 @@ enum
 
 static int sceneIdx = -1; 
 
-#define MAX_LAYER  31
+#define MAX_LAYER  32
 
 CCLayer* createTileMapLayer(int nIndex)
 {
-    // @temp
-    return new TMXOrthoObjectsTest2();
-    //return new TMXReadSameNamePropertiesTest();
-
     switch(nIndex)
     {
         case 0: return new TMXIsoZorder();
@@ -1636,21 +1632,22 @@ CCLayer* createTileMapLayer(int nIndex)
         case 13: return new TMXReadWriteTest();
         case 14: return new TMXTilesetTest();
         case 15: return new TMXOrthoObjectsTest();
-        case 16: return new TMXIsoObjectsTest();
-        case 17: return new TMXResizeTest();
-        case 18: return new TMXIsoMoveLayer();
-        case 19: return new TMXOrthoMoveLayer();
-        case 20: return new TMXOrthoFlipTest();
-        case 21: return new TMXOrthoFlipRunTimeTest();
-        case 22: return new TMXOrthoFromXMLTest();
-        case 23: return new TileMapTest();
-        case 24: return new TileMapEditTest();
-        case 25: return new TMXBug987();
-        case 26: return new TMXBug787();
-        case 27: return new TMXGIDObjectsTest();
-        case 28: return new TMXOrthoBackgroundOnlyTest();
-        case 29: return new TMXOrthoBackgroundWithSpritesTest();
-        case 30: return new TMXReadSameNamePropertiesTest();
+        case 16: return new TMXOrthoObjectsTest2();
+        case 17: return new TMXIsoObjectsTest();
+        case 18: return new TMXResizeTest();
+        case 19: return new TMXIsoMoveLayer();
+        case 20: return new TMXOrthoMoveLayer();
+        case 21: return new TMXOrthoFlipTest();
+        case 22: return new TMXOrthoFlipRunTimeTest();
+        case 23: return new TMXOrthoFromXMLTest();
+        case 24: return new TileMapTest();
+        case 25: return new TileMapEditTest();
+        case 26: return new TMXBug987();
+        case 27: return new TMXBug787();
+        case 28: return new TMXGIDObjectsTest();
+        case 29: return new TMXOrthoBackgroundOnlyTest();
+        case 30: return new TMXOrthoBackgroundWithSpritesTest();
+        case 31: return new TMXReadSameNamePropertiesTest();
     }
 
     return NULL;
