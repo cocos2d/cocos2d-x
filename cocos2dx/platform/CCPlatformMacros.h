@@ -257,6 +257,27 @@ private: \
     #define CC_DEPRECATED_ATTRIBUTE
 #endif 
 
+/*
+ * only certain compiler support __attribute__((format))
+ * formatPos - 1-based position of format string argument
+ * argPos - 1-based position of first format-dependent argument
+ */
+#if defined(__GNUC__) && (__GNUC__ >= 4)
+#define CC_FORMAT_PRINTF(formatPos, argPos) __attribute__((__format__(printf, formatPos, argPos)))
+#elif defined(__has_attribute)
+  #if __has_attribute(format)
+  #define CC_FORMAT_PRINTF(formatPos, argPos) __attribute__((__format__(printf, formatPos, argPos)))
+  #endif // __has_attribute(format)
+#else
+#define CC_FORMAT_PRINTF(formatPos, argPos)
+#endif
+
+#if defined(_MSC_VER)
+#define CC_FORMAT_PRINTF_SIZE_T "%08lX"
+#else
+#define CC_FORMAT_PRINTF_SIZE_T "%08zX"
+#endif
+
 #ifdef __GNUC__
 #define CC_UNUSED __attribute__ ((unused))
 #else
