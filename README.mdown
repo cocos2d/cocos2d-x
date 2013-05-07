@@ -24,6 +24,8 @@ Supported Platforms
    * Windows: stable, well tested on WinXP/Vista/Win7. Please upgrde the drive
      of your video card if you meet problems on OpenGL functions
    * Linux: support but not very stable.
+   * Emscripten: Alpha-level. Most features implemented. Needs testing.
+     Contributed by Zynga staff.
 
 You can visit our continuous integration system http://ci.cocos2d-x.org to
 check the stability on edge version.
