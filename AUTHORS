@@ -12,6 +12,9 @@ Developers:
     Rolando Abarca
         Javascript Binding and testjs
 
+    CodeSnooker
+        Added Method to create a CCMenuItemToggle from a CCArray with a target selector
+
     wagaf-d
         Move ccpX functions to CCPoint methods and operators
 
