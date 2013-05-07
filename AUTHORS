@@ -360,6 +360,9 @@ Developers:
     brawsome
         Adding new macro CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK to CCBMemberVariableAssigner.h.
 
+    sunzhuoshi
+        Adding support for javascript bytecode.
+
 Retired Core Developers:
     WenSheng Yang
         Author of windows port, CCTextField,
