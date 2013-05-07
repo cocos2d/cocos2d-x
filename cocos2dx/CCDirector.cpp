@@ -959,7 +959,9 @@ void CCDisplayLinkDirector::startAnimation(void)
     }
 
     m_bInvalid = false;
+#ifndef EMSCRIPTEN
     CCApplication::sharedApplication()->setAnimationInterval(m_dAnimationInterval);
+#endif // EMSCRIPTEN
 }
 
 void CCDisplayLinkDirector::mainLoop(void)
