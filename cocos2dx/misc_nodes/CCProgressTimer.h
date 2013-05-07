@@ -76,8 +76,15 @@ public:
     virtual void draw(void);
     void setAnchorPoint(CCPoint anchorPoint);
 
+    /// @{
+    /// @name Functions inherited from CCNodeRGBA
+    virtual void setOpacity(GLubyte opacity);
+    virtual void setColor(const ccColor3B& color3);
+    virtual void updateDisplayedColor(const ccColor3B& parentColor);
+    virtual void updateDisplayedOpacity(GLubyte parentOpacity);
     virtual void setOpacityModifyRGB(bool bValue);
     virtual bool isOpacityModifyRGB(void);
+    /// @}
     
     inline bool isReverseDirection() { return m_bReverseDirection; };
     inline void setReverseDirection(bool value) { m_bReverseDirection = value; };
