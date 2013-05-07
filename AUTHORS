@@ -21,6 +21,8 @@ Developers:
     sergey-shambir
         Added CC_DISABLE_COPY macro
         Added __attribute__(__format__()) for CCLog and CCString
+        Refactoring network extension and fixing unlikely memory leaks.
+        Adding PUT/DELETE methods for CCHttpRequest.
 
     savdalion 
         Added example for russian language in TestCpp
