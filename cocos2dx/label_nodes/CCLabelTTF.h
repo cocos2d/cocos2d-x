@@ -83,7 +83,7 @@ public:
                         CCVerticalTextAlignment vAlignment);
     
     /** initializes the CCLabelTTF with a font name, alignment, dimension and font size */
-    bool initWithStringAndTextDefinition(const char *string, ccFontDefinition * textDefinition);
+    bool initWithStringAndTextDefinition(const char *string, ccFontDefinition &textDefinition);
     
     /** set the text definition used by this label */
     void setTextDefinition(ccFontDefinition *theDefinition);
