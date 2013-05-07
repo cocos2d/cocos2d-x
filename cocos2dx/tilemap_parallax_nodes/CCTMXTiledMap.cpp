@@ -217,8 +217,8 @@ void CCTMXTiledMap::buildWithMapInfo(CCTMXMapInfo* mapInfo)
     CCArray* imageLayers = mapInfo->getImageLayers();
     if ( imageLayers && (imageLayers->count() > 0) )
     {
-        CCTMXImageLayerInfo* imageLayerInfo = nullptr;
-        CCObject* pObj = nullptr;
+        CCTMXImageLayerInfo* imageLayerInfo = NULL;
+        CCObject* pObj = NULL;
         CCARRAY_FOREACH( imageLayers, pObj )
         {
             imageLayerInfo = (CCTMXImageLayerInfo*)pObj;
@@ -290,7 +290,7 @@ CCTMXLayer * CCTMXTiledMap::layerNamed(const char *layerName)
 CCTMXImageLayer* CCTMXTiledMap::imageLayerNamed( const char* imageLayerName )
 {
     CCAssert( imageLayerName && (strlen( imageLayerName ) > 0), "Invalid imagelayer name!" );
-    CCObject* pObj = nullptr;
+    CCObject* pObj = NULL;
     CCARRAY_FOREACH( m_pChildren, pObj ) 
     {
         CCTMXImageLayer* imageLayer = dynamic_cast< CCTMXImageLayer* >( pObj );
@@ -304,7 +304,7 @@ CCTMXImageLayer* CCTMXTiledMap::imageLayerNamed( const char* imageLayerName )
     }
 
     // imagelayer not found
-    return nullptr;
+    return NULL;
 }
 
 CCTMXObjectGroup * CCTMXTiledMap::objectGroupNamed(const char *groupName)
