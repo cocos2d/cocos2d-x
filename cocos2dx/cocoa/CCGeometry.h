@@ -149,8 +149,9 @@ public:
         return other * (dot(other)/other.dot(other));
     };
 
-    /** Rotates two points.
-     @return CCPoint
+    /** Complex multiplication of two points ("rotates" two points).
+     @return CCPoint vector with an angle of this.getAngle() + other.getAngle(),
+     and a length of this.getLength() * other.getLength().
      @since v2.1.4
      */
     inline CCPoint rotate(const CCPoint& other) const {
@@ -158,7 +159,8 @@ public:
     };
 
     /** Unrotates two points.
-     @return CCPoint
+     @return CCPoint vector with an angle of this.getAngle() - other.getAngle(),
+     and a length of this.getLength() * other.getLength().
      @since v2.1.4
      */
     inline CCPoint unrotate(const CCPoint& other) const {
