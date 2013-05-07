@@ -37,7 +37,7 @@ CCTMXImageLayer* CCTMXImageLayer::create( CCTMXImageLayerInfo* imageLayerInfo, C
         pRet->autorelease();
         return pRet;
     }
-    return nullptr;
+    return NULL;
 }
 
 
@@ -45,8 +45,8 @@ bool CCTMXImageLayer::init( CCTMXImageLayerInfo* imageLayerInfo, CCTMXMapInfo* m
 {   
     CCAssert( !imageLayerInfo->m_sSourceImage.empty(), "Background file is absent." );
 
-    CCSprite*     sprite  = nullptr;
-    CCTexture2D*  texture = nullptr;
+    CCSprite*     sprite  = NULL;
+    CCTexture2D*  texture = NULL;
     if ( imageLayerInfo )
     {
         sprite = CCSprite::create( imageLayerInfo->m_sSourceImage.c_str() );
@@ -85,7 +85,7 @@ bool CCTMXImageLayer::init( CCTMXImageLayerInfo* imageLayerInfo, CCTMXMapInfo* m
 CCTMXImageLayer::CCTMXImageLayer():
       m_tSize( CCSizeZero )
     , m_tMapTileSize( CCSizeZero )
-    , m_pProperties( nullptr )
+    , m_pProperties( NULL )
     , m_sName( "" )
 {}
 

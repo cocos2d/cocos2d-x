@@ -542,8 +542,8 @@ void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
     }
     else if (elementName == "image")
     {
-        const auto parent = pTMXMapInfo->getParentElement();
-        if ( pTMXMapInfo->getParentElement() == TMXPropertyTileSet )
+        const int parent = pTMXMapInfo->getParentElement();
+        if (parent == TMXPropertyTileSet)
         {
             // The parent element is the tileset
             CCTMXTilesetInfo* tileset = (CCTMXTilesetInfo*)pTMXMapInfo->getTilesets()->lastObject();
@@ -559,7 +559,7 @@ void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
                 tileset->m_sSourceImage = m_sResources + (m_sResources.size() ? "/" : "") + imagename;
             }
         }
-        else if ( pTMXMapInfo->getParentElement() == TMXPropertyImageLayer )
+        else if (parent == TMXPropertyImageLayer)
         {
             // The parent element is the imagelayer
             CCTMXImageLayerInfo* imageLayer =
