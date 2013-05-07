@@ -45,6 +45,7 @@ LOCAL_C_INCLUDES := \$(LOCAL_PATH)/../../Classes
 $LOCAL_STATIC_LIBRARIES
             
 include \$(BUILD_SHARED_LIBRARY)
+$(call import-add-path,$(LOCAL_PATH)/../../..)
 
 $MODULES_TO_CALL
 EOF

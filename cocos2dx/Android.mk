@@ -167,6 +167,7 @@ LOCAL_EXPORT_CFLAGS := -Wno-psabi -DUSE_FILE32API
 
 include $(BUILD_STATIC_LIBRARY)
 
+$(call import-add-path,$(LOCAL_PATH)/platform/third_party/android/prebuilt)
 $(call import-module,libjpeg)
 $(call import-module,libpng)
 $(call import-module,libtiff)
