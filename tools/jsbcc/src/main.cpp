@@ -81,7 +81,8 @@ bool CompileFile(const std::string &inputFilePath, const std::string &outputFile
     JS_SetErrorReporter(context, &ReportError);
 	if (JS_InitStandardClasses(context, global)) {
         JS::CompileOptions options(context);
-        options.setSourcePolicy(JS::CompileOptions::NO_SOURCE);
+        options.setSourcePolicy(JS::CompileOptions::NO_SOURCE); // No source needed when compiling
+        options.setUTF8(true); // MUST be the same as engine
         js::RootedObject rootedObject(context, global);
         std::cout << "Compiling ..." << std::endl;
         JSScript *script = JS::Compile(context, rootedObject, options, inputFilePath.c_str());
