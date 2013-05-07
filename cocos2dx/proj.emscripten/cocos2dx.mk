@@ -11,10 +11,11 @@ endif
 COCOS_SRC = $(COCOS_ROOT)/cocos2dx
 OBJ_DIR ?= obj
 
-PACKAGER := $(realpath $(COCOS_ROOT)/external/emscripten/tools/file_packager.py)
-CC := EMSCRIPTEN=$(realpath $(COCOS_ROOT)/external/emscripten) $(COCOS_ROOT)/external/emscripten/emcc
-CXX := EMSCRIPTEN=$(realpath $(COCOS_ROOT)/external/emscripten) $(COCOS_ROOT)/external/emscripten/em++
-AR := EMSCRIPTEN=$(realpath $(COCOS_ROOT)/external/emscripten) $(COCOS_ROOT)/external/emscripten/emar
+EMSCRIPTEN_ROOT := $(realpath $(COCOS_ROOT)/external/emscripten)
+PACKAGER := $(EMSCRIPTEN_ROOT)/tools/file_packager.py
+CC := EMSCRIPTEN=$(EMSCRIPTEN_ROOT) $(COCOS_ROOT)/external/emscripten/emcc
+CXX := EMSCRIPTEN=$(EMSCRIPTEN_ROOT) $(COCOS_ROOT)/external/emscripten/em++
+AR := EMSCRIPTEN=$(EMSCRIPTEN_ROOT) $(COCOS_ROOT)/external/emscripten/emar
 CCFLAGS += -MMD -Wall -fPIC -Qunused-arguments -Wno-overloaded-virtual -Qunused-variable -s TOTAL_MEMORY=268435456 -s VERBOSE=1
 CXXFLAGS += -MMD -Wall -fPIC -Qunused-arguments -Wno-overloaded-virtual -Qunused-variable -s TOTAL_MEMORY=268435456 -s VERBOSE=1
 ARFLAGS = cr
@@ -23,6 +24,7 @@ LIB_DIR = $(COCOS_SRC)/lib/emscripten
 BIN_DIR = bin
 
 INCLUDES +=  \
+    -I$(EMSCRIPTEN_ROOT)/system/include \
     -I$(COCOS_ROOT)/external/emscripten/system/include \
     -I$(COCOS_SRC) \
     -I$(COCOS_SRC)/cocoa \
@@ -79,10 +81,6 @@ STATICLIBS = $(STATICLIBS_DIR)/libfreetype.a \
     $(STATICLIBS_DIR)/libjpeg.a \
     $(STATICLIBS_DIR)/libwebp.a
 
-FMOD_LIBDIR = $(COCOS_ROOT)/CocosDenshion/third_party/fmod/api/lib
-SHAREDLIBS += -lfmodex
-
-SHAREDLIBS += -L$(FMOD_LIBDIR) -Wl,-rpath,$(RPATH_REL)/$(FMOD_LIBDIR)
 SHAREDLIBS += -L$(LIB_DIR) -Wl,-rpath,$(RPATH_REL)/$(LIB_DIR)
 LIBS = -lrt -lz
 
