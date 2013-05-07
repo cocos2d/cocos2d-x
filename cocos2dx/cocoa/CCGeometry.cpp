@@ -78,6 +78,7 @@ CCPoint CCPoint::operator*(float a) const
 
 CCPoint CCPoint::operator/(float a) const
 {
+	CCAssert(a, "CCPoint division by 0.");
     return CCPoint(this->x / a, this->y / a);
 }
 
@@ -162,6 +163,7 @@ CCSize CCSize::operator*(float a) const
 
 CCSize CCSize::operator/(float a) const
 {
+	CCAssert(a, "CCSize division by 0.");
     return CCSize(this->width / a, this->height / a);
 }
 
