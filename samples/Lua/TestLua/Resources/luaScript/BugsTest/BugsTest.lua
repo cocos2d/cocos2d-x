@@ -22,9 +22,7 @@ local function CreateBugsTestBackMenuItem(pLayer)
     local pMenuItemFont = CCMenuItemFont:create("Back");
     pMenuItemFont:setPosition(ccp(VisibleRect:rightBottom().x - 50, VisibleRect:rightBottom().y + 25))
     local function menuCallback()
-        print("BackMenuItem")
         local pScene = BugsTestMain()
-        print("BackMenuItem2")
         if pScene ~= nil then
             CCDirector:sharedDirector():replaceScene(pScene)
         end
