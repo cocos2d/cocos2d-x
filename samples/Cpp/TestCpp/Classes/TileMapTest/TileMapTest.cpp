@@ -681,6 +681,261 @@ std::string TMXOrthoObjectsTest::subtitle()
 
 //------------------------------------------------------------------
 //
+// TMXOrthoObjectsTest2
+//
+//------------------------------------------------------------------
+TMXOrthoObjectsTest2::TMXOrthoObjectsTest2()
+{
+    CCTMXTiledMap* map = CCTMXTiledMap::create( "TileMaps/fantasy-world.tmx" );
+    addChild( map, -1, kTagTileMap );
+
+    // for visualization
+    schedule( schedule_selector( TMXOrthoObjectsTest2::updateLineWidth ),  1.0f);
+}
+
+std::string TMXOrthoObjectsTest2::title()
+{
+    return "TMX Ortho object test 2";
+}
+
+std::string TMXOrthoObjectsTest2::subtitle()
+{
+    return "You should see a white polygons, boxes, lines, ellipses\n"
+        " on the fantasy map";
+}
+
+void TMXOrthoObjectsTest2::draw()
+{
+    CCTMXTiledMap* map =
+        static_cast< CCTMXTiledMap* >( getChildByTag( kTagTileMap ) );
+    {
+        CCTMXObjectGroup* group = map->objectGroupNamed( "territory" );
+        if ( group ) { draw( *group ); }
+    }
+    {
+        CCTMXObjectGroup* group = map->objectGroupNamed( "zone" );
+        if ( group ) { draw( *group ); }
+    }
+}
+
+void TMXOrthoObjectsTest2::draw( CCTMXObjectGroup& group )
+{
+    CCArray* o = group.getObjects();
+    for (size_t j = 0; j < o->count(); ++j) {
+        CCObject* oj = o->objectAtIndex( j );
+        draw( *oj );
+    }
+}
+
+void TMXOrthoObjectsTest2::draw( CCObject& object )
+{
+    // get form
+    std::string  form   = "";
+    CCArray*     points = nullptr;
+    CCPoint      coord = CCPointZero;
+    size_t       width  = 0;
+    size_t       height = 0;
+
+    ifDynamicCast( CCDictionary*, &object, props ) {
+        CCObject* tt = props->objectForKey( "type" );
+        ifDynamicCast( CCString*, tt, type ) {
+            const char* sType = type->getCString();
+            CCArray* allKeys = props->allKeys();
+            for (size_t k = 0; k < allKeys->count(); ++k) {
+                CCObject* obj = allKeys->data->arr[ k ];
+                ifDynamicCast( CCString*, obj, field ) {
+                    const char* sField = field->getCString();
+                    CCObject* p = props->objectForKey( sField );
+
+                    if (strcmp( sField, "form" ) == 0) {
+                        ifDynamicCast( CCString*, p, stringValue ) {
+                            const char* sValue = stringValue->getCString();
+                            CCAssert( strlen( sValue ) != 0,  "Undefined form." );
+                            form = sValue;
+                            continue;
+                        }
+                    }
+
+                    if (strcmp( sField, "points" ) == 0) {
+                        ifDynamicCast( CCArray*, p, arrayValue ) {
+                            points = arrayValue;
+                            continue;
+                        }
+                    }
+
+                    if (strcmp( sField, "x" ) == 0) {
+                        ifDynamicCast( CCString*, p, stringValue ) {
+                            coord.x = stringValue->intValue();
+                            continue;
+                        }
+                    }
+
+                    if (strcmp( sField, "y" ) == 0) {
+                        ifDynamicCast( CCString*, p, stringValue ) {
+                            coord.y = stringValue->intValue();
+                            continue;
+                        }
+                    }
+
+                    if (strcmp( sField, "width" ) == 0) {
+                        ifDynamicCast( CCString*, p, stringValue ) {
+                            width = stringValue->intValue();
+                            continue;
+                        }
+                    }
+
+                    if (strcmp( sField, "height" ) == 0) {
+                        ifDynamicCast( CCString*, p, stringValue ) {
+                            height = stringValue->intValue();
+                            continue;
+                        }
+                    }
+
+                } // ifDynamicCast( CCString*, obj, field )
+
+            } // for (size_t k = 0; ...
+
+        } // ifDynamicCast( CCDictionary*, tt, type )
+
+    } // ifDynamicCast( CCDictionary*, &object, props )
+
+    // draw forms on the map precisely
+    // @todo commit Add const-qualifiers to CCNode.
+    CCNode* nodeMap = getChildByTag( kTagTileMap );
+    const CCPoint currentPosMap = nodeMap->getPosition();
+    coord.x += currentPosMap.x;
+    coord.y += currentPosMap.y;
+
+    if (form == "box") {
+        CCAssert( (width > 0) && (height > 0),  "Undefined configure for box-form." );
+        drawBox( coord, width, height );
+
+    } else if (form == "ellipse") {
+        CCAssert( (width > 0) && (height > 0),  "Undefined configure for ellipse-form." );
+        drawEllipse( coord,  width / 2.0f,  height / 2.0f );
+
+    } else if (form == "polygon") {
+        CCAssert( points && (points->count() > 0),  "Undefined configure for polygon-form." );
+        drawPolygon( coord, *points );
+
+    } else if (form == "polyline") {
+        CCAssert( points && (points->count() > 0),  "Undefined configure for polyline-form." );
+        drawPolyline( coord, *points );
+    }
+}
+
+void TMXOrthoObjectsTest2::drawBox( const CCPoint& coord, size_t width, size_t height )
+{
+    ccDrawRect( coord,  ccp( coord.x + width, coord.y + height ) );
+}
+
+void TMXOrthoObjectsTest2::drawEllipse( const CCPoint& coord, size_t rx, size_t ry )
+{
+    const float angle = 0.0f;
+    const unsigned int segments =
+        static_cast< float >( M_PI ) * (rx + ry) + 1.0f;
+    const CCPoint  center( coord.x + rx, coord.y + ry );
+    drawEllipse( center, rx, ry, angle, segments, false );
+}
+
+// @todo Commit to ccDrawingPrimitives.h
+void TMXOrthoObjectsTest2::drawEllipse(
+    const CCPoint& center,
+    float rx, float ry,
+    float angle,
+    unsigned int segments,
+    bool drawLineToCenter,
+    float scaleX, float scaleY
+) {
+    const int additionalSegment = drawLineToCenter ? 2 : 1;
+    const float coef = 2.0f * (float)M_PI/segments;
+    GLfloat* vertices = new GLfloat[ 2 * (segments + 2) ];
+    if ( !vertices ) { return; }
+
+    for (unsigned int i = 0; i <= segments; ++i) {
+        const float rads = i * coef;
+        const GLfloat j = rx * cosf( rads + angle ) * scaleX + center.x;
+        const GLfloat k = ry * sinf( rads + angle ) * scaleY + center.y;
+        vertices[ i * 2 ]     = j;
+        vertices[ i * 2 + 1 ] = k;
+    }
+    vertices[ (segments + 1 ) * 2 ]     = center.x;
+    vertices[ (segments + 1 ) * 2 + 1 ] = center.y;
+
+    ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
+
+    glVertexAttribPointer( kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices );
+    glDrawArrays( GL_LINE_STRIP,  0,  static_cast< GLsizei >( segments + additionalSegment ) );
+
+    delete[] vertices;
+}
+
+void TMXOrthoObjectsTest2::drawPolygon( const CCPoint& coord, CCArray& v )
+{
+    CCAssert( v.count() > 0,  "Absent points for polygon." );
+
+    CCPoint* vertices = new CCPoint[ v.count() ];
+    for (size_t i = 0; i < v.count(); ++i) {
+        CCObject* oi = v.objectAtIndex( i );
+        CCPoint cp = CCPointZero;
+        ifDynamicCast( CCDictionary*, oi, c ) {
+            CCObject* tx = c->objectForKey( "x" );
+            ifDynamicCast( CCString*, tx, x ) {
+                cp.x = x->intValue() + coord.x;
+            }
+            CCObject* ty = c->objectForKey( "y" );
+            ifDynamicCast( CCString*, ty, y ) {
+                cp.y = -y->intValue() + coord.y;
+            }
+        } // ifDynamicCast( CCDictionary*, oi, c )
+
+        vertices[ i ] = cp;
+
+    } // for (size_t i = 0; i < v.count(); ++i)
+
+    ccDrawPoly( vertices, v.count(), true );
+
+    delete[] vertices;
+}
+
+void TMXOrthoObjectsTest2::drawPolyline( const CCPoint& coord, CCArray& v )
+{
+    CCAssert( v.count() > 0,  "Absent points for polyline." );
+
+    CCPoint* vertices = new CCPoint[ v.count() ];
+    for (size_t i = 0; i < v.count(); ++i) {
+        CCObject* oi = v.objectAtIndex( i );
+        CCPoint cp = CCPointZero;
+        ifDynamicCast( CCDictionary*, oi, c ) {
+            CCObject* tx = c->objectForKey( "x" );
+            ifDynamicCast( CCString*, tx, x ) {
+                cp.x = x->intValue() + coord.x;
+            }
+            CCObject* ty = c->objectForKey( "y" );
+            ifDynamicCast( CCString*, ty, y ) {
+                cp.y = -y->intValue() + coord.y;
+            }
+        } // ifDynamicCast( CCDictionary*, oi, c )
+
+        vertices[ i ] = cp;
+
+    } // for (size_t i = 0; i < v.count(); ++i)
+
+    // @todo commit fine Add method ccDrawPath() == ccDrawPoly( , , false ).
+    ccDrawPoly( vertices, v.count(), false );
+
+    delete[] vertices;
+}
+
+void TMXOrthoObjectsTest2::updateLineWidth( float ) {
+    static bool pulse = true;
+    glLineWidth( pulse ? 4 : 1 );
+    pulse = !pulse;
+}
+
+
+//------------------------------------------------------------------
+//
 // TMXIsoObjectsTest
 //
 //------------------------------------------------------------------
@@ -1359,6 +1614,10 @@ static int sceneIdx = -1;
 
 CCLayer* createTileMapLayer(int nIndex)
 {
+    // @temp
+    return new TMXOrthoObjectsTest2();
+    //return new TMXReadSameNamePropertiesTest();
+
     switch(nIndex)
     {
         case 0: return new TMXIsoZorder();
@@ -1710,28 +1969,58 @@ std::string TMXReadSameNamePropertiesTest::out(
     std::ostringstream  r;
 
     const char* sGroup = group->getGroupName();
+    r << "{" << sGroup << "}\n";
     size_t count = 0;
 
     CCArray* o = group->getObjects();
     for (size_t j = 0;  (j < o->count()) && ((n == 0) || (count < n));  ++j, ++count) {
-        CCObject* oi = o->objectAtIndex( j );
-        ifDynamicCast( CCDictionary*, oi, props ) {
-            CCObject* t = props->objectForKey( "type" );
-            ifDynamicCast( CCString*, t, type ) {
+        CCObject* oj = o->objectAtIndex( j );
+        ifDynamicCast( CCDictionary*, oj, props ) {
+            CCObject* tt = props->objectForKey( "type" );
+            ifDynamicCast( CCString*, tt, type ) {
                 const char* sType = type->getCString();
+                r << "(" << sType << ") ";
                 CCArray* allKeys = props->allKeys();
                 for (size_t k = 0; k < allKeys->count(); ++k) {
                     CCObject* obj = allKeys->data->arr[ k ];
                     ifDynamicCast( CCString*, obj, field ) {
                         const char* sField = field->getCString();
+                        r << "[" << sField << "] ";
                         CCObject* p = props->objectForKey( sField );
-                        ifDynamicCast( CCString*, p, value ) {
-                            const char* sValue = value->getCString();
+
+                        ifDynamicCast( CCString*, p, stringValue ) {
+                            const char* sValue = stringValue->getCString();
                             if (strlen( sValue ) != 0) {
                                 r << sGroup << "." << sType << "." <<
-                                    sField << " = '" << sValue << "'\n";
+                                    sField << " = '" << sValue << "'";
                             }
-                        }
+                            r << "\n";
+                            continue;
+
+                        } // ifDynamicCast( CCString*, p, stringValue )
+
+                        ifDynamicCast( CCArray*, p, arrayValue ) {
+                            for (size_t u = 0; u < arrayValue->count(); ++u) {
+                                CCObject* ou = arrayValue->objectAtIndex( u );
+                                ifDynamicCast( CCDictionary*, ou, props ) {
+                                    CCObject* tx = props->objectForKey( "x" );
+                                    ifDynamicCast( CCString*, tx, x ) {
+                                        const char* sX = x->getCString();
+                                        r << "(x) = '" << sX << "' ";
+                                    }
+                                    CCObject* ty = props->objectForKey( "y" );
+                                    ifDynamicCast( CCString*, ty, y ) {
+                                        const char* sY = y->getCString();
+                                        r << "(y) = '" << sY << "' ";
+                                    }
+
+                                } // ifDynamicCast( CCDictionary*, ou, props )
+
+                            } // for (size_t u = 0; u < allKeys->count(); ++u)
+
+                            continue;
+
+                        } // ifDynamicCast( CCArray*, p, arrayValue )
 
                     } // ifDynamicCast( const CCString*, obj, field )
 
@@ -1739,7 +2028,7 @@ std::string TMXReadSameNamePropertiesTest::out(
 
             } // ifDynamicCast( CCDictionary*, t, type )
 
-        } // ifDynamicCast( CCDictionary*, oi, props )
+        } // ifDynamicCast( CCDictionary*, oj, props )
 
     } // for (size_t j = 0; ...
 

@@ -52,5 +52,13 @@
   <object name="Kas-Tolmi" type="Island" x="400" y="295">
    <polygon points="0,0 10,10 10,15 5,15 0,10 -5,5"/>
   </object>
+  <object name="Eo" type="Sea" x="580" y="105">
+   <polygon points="0,0 10,-15 15,-15 30,-25 35,-35 60,0 45,0 35,-5 25,5 5,5 0,5"/>
+  </object>
+ </objectgroup>
+ <objectgroup name="zone" width="134" height="90">
+  <object type="Evil" x="445" y="290" width="60" height="40">
+   <ellipse/>
+  </object>
  </objectgroup>
 </map>
