@@ -136,7 +136,7 @@ bool CCLabelTTF::initWithString(const char *string, const char *fontName, float 
     return false;
 }
 
-bool CCLabelTTF::initWithStringAndTextDefinition(const char *string, ccFontDefinition * textDefinition)
+bool CCLabelTTF::initWithStringAndTextDefinition(const char *string, ccFontDefinition &textDefinition)
 {
     if (CCSprite::init())
     {
@@ -144,7 +144,7 @@ bool CCLabelTTF::initWithStringAndTextDefinition(const char *string, ccFontDefin
         this->setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(SHADER_PROGRAM));
         
         // prepare everythin needed to render the label
-        _updateWithTextDefinition(*textDefinition, false);
+        _updateWithTextDefinition(textDefinition, false);
         
         // set the string
         this->setString(string);
