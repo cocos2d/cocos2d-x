@@ -35,7 +35,7 @@ INCLUDES +=  \
     -I$(COCOS_SRC)/platform/third_party/emscripten/libz \
     -I$(COCOS_SRC)/platform/third_party/emscripten/libfreetype2 \
     -I$(COCOS_SRC)/platform/third_party/emscripten/libtiff/include \
-    -I$(COCOS_SRC)/platform/third_party/linux/libjpeg \
+    -I$(COCOS_SRC)/platform/third_party/emscripten/libjpeg \
     -I$(COCOS_SRC)/platform/third_party/linux/libwebp
 
 LBITS := $(shell getconf LONG_BIT)
@@ -77,8 +77,8 @@ STATICLIBS_DIR = $(COCOS_SRC)/platform/third_party/emscripten/libraries
 STATICLIBS = $(STATICLIBS_DIR)/libfreetype.a \
     $(STATICLIBS_DIR)/libpng.a \
     $(STATICLIBS_DIR)/zlib.a \
-    $(STATICLIBS_DIR)/libtiff.a #\
-    $(STATICLIBS_DIR)/libjpeg.a \
+    $(STATICLIBS_DIR)/libtiff.a \
+    $(STATICLIBS_DIR)/libjpeg.a #\
     $(STATICLIBS_DIR)/libwebp.a
 
 SHAREDLIBS += -L$(LIB_DIR) -Wl,-rpath,$(RPATH_REL)/$(LIB_DIR)
