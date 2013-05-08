@@ -323,7 +323,21 @@ void CCGrid3D::blit(void)
     //
     // Attributes
     //
+#ifdef EMSCRIPTEN
+    // Size calculations from calculateVertexPoints().
+    unsigned int numOfPoints = (m_sGridSize.width+1) * (m_sGridSize.height+1);
 
+    // position
+    setGLBufferData(m_pVertices, numOfPoints * sizeof(ccVertex3F), 0);
+    glVertexAttribPointer(kCCVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, 0, 0);
+
+    // texCoords
+    setGLBufferData(m_pTexCoordinates, numOfPoints * sizeof(ccVertex2F), 1);
+    glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, 0, 0);
+
+    setGLIndexData(m_pIndices, n * 12, 0);
+    glDrawElements(GL_TRIANGLES, (GLsizei) n*6, GL_UNSIGNED_SHORT, 0);
+#else
     // position
     glVertexAttribPointer(kCCVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, 0, m_pVertices);
 
@@ -331,6 +345,7 @@ void CCGrid3D::blit(void)
     glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, 0, m_pTexCoordinates);
 
     glDrawElements(GL_TRIANGLES, (GLsizei) n*6, GL_UNSIGNED_SHORT, m_pIndices);
+#endif // EMSCRIPTEN
     CC_INCREMENT_GL_DRAWS(1);
 }
 
@@ -524,6 +539,20 @@ void CCTiledGrid3D::blit(void)
     // Attributes
     //
     ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_TexCoords );
+#ifdef EMSCRIPTEN
+    int numQuads = m_sGridSize.width * m_sGridSize.height;
+
+    // position
+    setGLBufferData(m_pVertices, (numQuads*4*sizeof(ccVertex3F)), 0);
+    glVertexAttribPointer(kCCVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, 0, 0);
+
+    // texCoords
+    setGLBufferData(m_pTexCoordinates, (numQuads*4*sizeof(ccVertex2F)), 1);
+    glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, 0, 0);
+
+    setGLIndexData(m_pIndices, n * 12, 0);
+    glDrawElements(GL_TRIANGLES, (GLsizei) n*6, GL_UNSIGNED_SHORT, 0);
+#else
     // position
     glVertexAttribPointer(kCCVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, 0, m_pVertices);
 
@@ -531,6 +560,8 @@ void CCTiledGrid3D::blit(void)
     glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, 0, m_pTexCoordinates);
 
     glDrawElements(GL_TRIANGLES, (GLsizei)n*6, GL_UNSIGNED_SHORT, m_pIndices);
+#endif // EMSCRIPTEN
+
 
     CC_INCREMENT_GL_DRAWS(1);
 }

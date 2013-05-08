@@ -354,7 +354,6 @@ void ScriptingCore::string_report(jsval val) {
 
 JSBool ScriptingCore::evalString(const char *string, jsval *outVal, const char *filename, JSContext* cx, JSObject* global)
 {
-    jsval rval;
     if (cx == NULL)
         cx = cx_;
     if (global == NULL)
@@ -363,7 +362,7 @@ JSBool ScriptingCore::evalString(const char *string, jsval *outVal, const char *
     if (script) {
         // JSAutoCompartment ac(cx, global);
         JSAutoCompartment ac(cx, global);
-        JSBool evaluatedOK = JS_ExecuteScript(cx, global, script, &rval);
+        JSBool evaluatedOK = JS_ExecuteScript(cx, global, script, outVal);
         if (JS_FALSE == evaluatedOK) {
             fprintf(stderr, "(evaluatedOK == JS_FALSE)\n");
         }
@@ -476,11 +475,12 @@ JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* c
     
     // a) check js file first
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    unsigned char *content = (unsigned char*)CCString::createWithContentsOfFile(path)->getCString();
+    CCString* content = CCString::createWithContentsOfFile(path);
     if (content) {
         // Not supported in SpiderMonkey 19.0
         //JSScript* script = JS_CompileScript(cx, global, (char*)content, contentSize, path, 1);
-        script = JS::Compile(cx, obj, options, (char*)content, strlen((char*)content));
+        const char* contentCStr = content->getCString();
+        script = JS::Compile(cx, obj, options, contentCStr, strlen(contentCStr));
     }
 #else
     script = JS::Compile(cx, obj, options, fullPath.c_str());

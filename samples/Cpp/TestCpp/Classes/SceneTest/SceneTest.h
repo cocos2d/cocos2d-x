@@ -44,6 +44,7 @@ public:
     void item0Clicked(CCObject* pSender);
     void item1Clicked(CCObject* pSender);
     void item2Clicked(CCObject* pSender);
+    void item3Clicked(CCObject* pSender);
     CREATE_FUNC(SceneTestLayer3)
 } ;
 
