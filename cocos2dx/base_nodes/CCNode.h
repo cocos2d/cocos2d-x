@@ -412,7 +412,7 @@ public:
      *
      * @return The untransformed size of the node.
      */
-    virtual const CCSize& getContentSize();
+    virtual const CCSize& getContentSize() const;
 
     
     /**
@@ -757,7 +757,7 @@ public:
      *
      * @return A interger that identifies the node.
      */
-    virtual int getTag();
+    virtual int getTag() const;
     /**
      * Changes the tag that is used to identify the node easily.
      *

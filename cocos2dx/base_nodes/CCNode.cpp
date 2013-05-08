@@ -392,7 +392,7 @@ void CCNode::setAnchorPoint(const CCPoint& point)
 }
 
 /// contentSize getter
-const CCSize& CCNode::getContentSize()
+const CCSize& CCNode::getContentSize() const
 {
     return m_obContentSize;
 }
@@ -441,7 +441,7 @@ void CCNode::ignoreAnchorPointForPosition(bool newValue)
 }
 
 /// tag getter
-int CCNode::getTag()
+int CCNode::getTag() const
 {
     return m_nTag;
 }
