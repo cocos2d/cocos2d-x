@@ -157,6 +157,8 @@ Developers:
         Improvements to JS Bindings.
         Synchronizing CCBReader to version 5.
         Adding OpenGL Bindings to Javascript.
+        Fixing a bug that nested ccb-files are not positioned correctly.
+        Fixing a bug that crash when loading valid project.
 
     Jianfeng Zou (NetDragon Inc)
         contributes CCListView and CCTextureWatcher.
