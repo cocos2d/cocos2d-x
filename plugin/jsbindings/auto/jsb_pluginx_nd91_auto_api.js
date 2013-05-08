@@ -9,6 +9,12 @@ var plugin = plugin || {};
 plugin.IAPNd91 = {
 
 /**
+ * @method configDeveloperInfo
+ * @param {TIAPDeveloperInfo}
+ */
+configDeveloperInfo : function () {},
+
+/**
  * @method getPluginName
  * @return A value converted from C/C++ "const char*"
  */
@@ -25,12 +31,6 @@ getPluginVersion : function () {},
  * @return A value converted from C/C++ "bool"
  */
 init : function () {},
-
-/**
- * @method initDeveloperInfo
- * @param {TDeveloperInfo}
- */
-initDeveloperInfo : function () {},
 
 /**
  * @method payForProduct

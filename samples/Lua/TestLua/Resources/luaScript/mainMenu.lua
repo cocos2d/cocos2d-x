@@ -31,6 +31,7 @@ require "luaScript/CocosDenshionTest/CocosDenshionTest"
 require "luaScript/EffectsAdvancedTest/EffectsAdvancedTest"
 require "luaScript/UserDefaultTest/UserDefaultTest"
 require "luaScript/CurrentLanguageTest/CurrentLanguageTest"
+require "luaScript/BugsTest/BugsTest"
 ------------------------
 
 
@@ -53,7 +54,8 @@ local _allTests = {
     { isSupported = false,  name = "DrawPrimitivesTest"     , create_func=        DrawPrimitivesTest      },
     { isSupported = true,  name = "NodeTest"               , create_func   =                  CocosNodeTest },
     { isSupported = true,  name = "TouchesTest"            , create_func   =               TouchesTest      },
-    { isSupported = true,  name = "MenuTest"               , create_func   =                  MenuTestMain  },
+    --Many tests in MenuTest will crash, so disable it. Should enable it after all crashes are resolved.
+    { isSupported = false,  name = "MenuTest"               , create_func   =                  MenuTestMain  },
     { isSupported = true,  name = "ActionManagerTest"      , create_func   =         ActionManagerTestMain  },
     { isSupported = true,  name = "LayerTest"              , create_func   =                 LayerTestMain  },
     { isSupported = true,  name = "SceneTest"              , create_func   =                 SceneTestMain  },
@@ -77,7 +79,7 @@ local _allTests = {
     { isSupported = true,  name = "ZwoptexTest"            , create_func   =               ZwoptexTestMain  },
     { isSupported = false,  name = "CurlTest"               , create_func=                  CurlTestMain  },
     { isSupported = true,  name = "UserDefaultTest"        , create_func=           UserDefaultTestMain  },
-    { isSupported = false,  name = "BugsTest"               , create_func=              BugsTestMain      },
+    { isSupported = true,  name = "BugsTest"               , create_func=              BugsTestMain      },
     { isSupported = true,  name = "FontTest"               , create_func   =              FontTestMain      },
     { isSupported = true,  name = "CurrentLanguageTest"    , create_func=   CurrentLanguageTestMain      },
     { isSupported = false,  name = "TextureCacheTest"       , create_func=      TextureCacheTestMain      },

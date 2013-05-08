@@ -32,10 +32,12 @@
 #include "PerformanceTest/PerformanceTest.h"
 #include "ZwoptexTest/ZwoptexTest.h"
 #include "CocosDenshionTest/CocosDenshionTest.h"
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_EMSCRIPEN)
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
 // bada don't support libcurl
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA)
 #include "CurlTest/CurlTest.h"
+#endif
 #endif
 #endif
 #include "UserDefaultTest/UserDefaultTest.h"
@@ -153,9 +155,11 @@ const std::string g_aTestNames[TESTS_COUNT] = {
     "CocosDenshionTest",
     "PerformanceTest",
     "ZwoptexTest",
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_EMSCRIPTEN)
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA)
     "CurlTest",
+#endif
 #endif
 #endif
     "UserDefaultTest",

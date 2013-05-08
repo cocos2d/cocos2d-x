@@ -5,8 +5,8 @@ TXTCOLOR_RED="\033[0;31m"
 TXTCOLOR_GREEN="\033[0;32m"
 
 COCOS2DX20_TRUNK=`pwd`/../../..
-OUTPUT_DEBUG=$COCOS2DX20_TRUNK/lib/linux/Debug/
-OUTPUT_RELEASE=$COCOS2DX20_TRUNK/lib/linux/Release/
+OUTPUT_DEBUG=$COCOS2DX20_TRUNK/lib/linux/debug/
+OUTPUT_RELEASE=$COCOS2DX20_TRUNK/lib/linux/release/
 
 check_make_result()
 {
@@ -40,25 +40,20 @@ done
 mkdir -p $OUTPUT_DEBUG
 mkdir -p $OUTPUT_RELEASE
 
-make -C $COCOS2DX20_TRUNK/external/Box2D/proj.linux debug
+make -C $COCOS2DX20_TRUNK/external/Box2D/proj.linux DEBUG=1
 check_make_result
-cp $COCOS2DX20_TRUNK/external/Box2D/proj.linux/libbox2d.a $OUTPUT_DEBUG
 
-make -C $COCOS2DX20_TRUNK/external/chipmunk/proj.linux debug
+make -C $COCOS2DX20_TRUNK/external/chipmunk/proj.linux DEBUG=1
 check_make_result
-cp $COCOS2DX20_TRUNK/external/chipmunk/proj.linux/libchipmunk.a $OUTPUT_DEBUG
 
-make -C $COCOS2DX20_TRUNK/cocos2dx/proj.linux debug
+make -C $COCOS2DX20_TRUNK/cocos2dx/proj.linux DEBUG=1
 check_make_result
-cp $COCOS2DX20_TRUNK/cocos2dx/proj.linux/libcocos2d.so $OUTPUT_DEBUG
 
-make -C $COCOS2DX20_TRUNK/CocosDenshion/proj.linux debug
+make -C $COCOS2DX20_TRUNK/CocosDenshion/proj.linux DEBUG=1
 check_make_result
-cp $COCOS2DX20_TRUNK/CocosDenshion/proj.linux/libcocosdenshion.so $OUTPUT_DEBUG
 
-make -C $COCOS2DX20_TRUNK/extensions/proj.linux debug
+make -C $COCOS2DX20_TRUNK/extensions/proj.linux DEBUG=1
 check_make_result
-cp $COCOS2DX20_TRUNK/extensions/proj.linux/libextension.a $OUTPUT_DEBUG
 
-make
+make DEBUG=1
 check_make_result

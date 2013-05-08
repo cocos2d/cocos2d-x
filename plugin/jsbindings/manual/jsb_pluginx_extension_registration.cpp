@@ -9,6 +9,10 @@ static jsval anonEvaluate(JSContext *cx, JSObject *thisObj, const char* string) 
     return JSVAL_VOID;
 }
 
+extern JSObject *jsb_ProtocolIAP_prototype;
+extern JSObject *jsb_ProtocolAds_prototype;
+extern JSObject *jsb_ProtocolSocial_prototype;
+
 void register_pluginx_js_extensions(JSContext* cx, JSObject* global)
 {
     // first, try to get the ns
@@ -23,12 +27,7 @@ void register_pluginx_js_extensions(JSContext* cx, JSObject* global)
         JS_ValueToObject(cx, nsval, &ns);
     }
 
-    JSObject *tmpObj;
-
-    tmpObj = JSVAL_TO_OBJECT(anonEvaluate(cx, global, "(function () { return plugin.ProtocolIAP; })()"));
-    JS_DefineFunction(cx, tmpObj, "setResultListener", js_pluginx_ProtocolIAP_setResultListener, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-
-    tmpObj = JSVAL_TO_OBJECT(anonEvaluate(cx, global, "(function () { return plugin.ProtocolIAPOnLine; })()"));
-    JS_DefineFunction(cx, tmpObj, "setLocalResultListener", js_pluginx_ProtocolIAPOnLine_setLocalResultListener, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-
+    JS_DefineFunction(cx, jsb_ProtocolIAP_prototype, "setResultListener", js_pluginx_ProtocolIAP_setResultListener, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, jsb_ProtocolAds_prototype, "setAdsListener", js_pluginx_ProtocolAds_setAdsListener, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, jsb_ProtocolSocial_prototype, "setResultListener", js_pluginx_ProtocolSocial_setResultListener, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 }

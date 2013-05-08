@@ -1,3 +1,26 @@
+/****************************************************************************
+Copyright (c) 2012-2013 cocos2d-x.org
+
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
 #include "HelloWorldScene.h"
 #include "PluginManager.h"
 
@@ -5,10 +28,16 @@ USING_NS_CC;
 using namespace cocos2d::plugin;
 
 const std::string s_aTestCases[] = {
-	"Test: Admob",
+	"Admob",
+};
+
+const std::string s_aTestTypes[] = {
+	"Banner",
+	"Full Screen",
 };
 
 const std::string s_aTestPoses[] = {
+	"Pos: Center",
 	"Pos: Top",
 	"Pos: TopLeft",
 	"Pos: TopRight",
@@ -43,11 +72,11 @@ bool HelloWorld::init()
     }
     
     m_pAdmob = dynamic_cast<AdsAdmob*>(PluginManager::getInstance()->loadPlugin("AdsAdmob"));
-    TAppInfo appInfo;
-    appInfo["AdmobID"] = "a1516fb6b16b12f";
-    m_pAdmob->initAppInfo(appInfo);
-    m_pListener = new MyAdListener();
-    ProtocolAds::setAdListener(m_pListener);
+    TAdsDeveloperInfo devInfo;
+    devInfo["AdmobID"] = "a1516fb6b16b12f";
+    m_pAdmob->configDeveloperInfo(devInfo);
+    m_pListener = new MyAdsListener();
+    m_pAdmob->setAdsListener(m_pListener);
     m_pAdmob->setDebugMode(true);
 
     CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
@@ -72,19 +101,20 @@ bool HelloWorld::init()
     CCMenu* pMenu = CCMenu::create(pCloseItem, NULL);
     pMenu->setPosition(CCPointZero);
 
-	CCLabelTTF* label1 = CCLabelTTF::create("ShowAdView", "Arial", 24);
+	CCLabelTTF* label1 = CCLabelTTF::create("ShowAds", "Arial", 24);
 	CCMenuItemLabel* pItemShow = CCMenuItemLabel::create(label1, this, menu_selector(HelloWorld::testShow));
 	pItemShow->setAnchorPoint(ccp(0.5f, 0));
 	pMenu->addChild(pItemShow, 0);
-	pItemShow->setPosition(ccpAdd(posMid, ccp(-100, -50)));
+	pItemShow->setPosition(ccpAdd(posMid, ccp(-100, -120)));
 
-	CCLabelTTF* label2 = CCLabelTTF::create("HideAdView", "Arial", 24);
+	CCLabelTTF* label2 = CCLabelTTF::create("HideAds", "Arial", 24);
 	CCMenuItemLabel* pItemHide = CCMenuItemLabel::create(label2, this, menu_selector(HelloWorld::testHide));
 	pItemHide->setAnchorPoint(ccp(0.5f, 0));
 	pMenu->addChild(pItemHide, 0);
-	pItemHide->setPosition(ccpAdd(posMid, ccp(100, -50)));
+	pItemHide->setPosition(ccpAdd(posMid, ccp(100, -120)));
 
 	// create optional menu
+	// cases item
 	m_pCaseItem = CCMenuItemToggle::createWithTarget(this,
 												menu_selector(HelloWorld::caseChanged),
 												CCMenuItemFont::create( s_aTestCases[0].c_str() ),
@@ -94,9 +124,23 @@ bool HelloWorld::init()
 	{
 		m_pCaseItem->getSubItems()->addObject( CCMenuItemFont::create( s_aTestCases[i].c_str() ) );
 	}
-	m_pCaseItem->setPosition(ccpAdd(posMid, ccp(-150, 50)));
+	m_pCaseItem->setPosition(ccpAdd(posMid, ccp(-200, 120)));
 	pMenu->addChild(m_pCaseItem);
 
+	// type item
+	m_pTypeItem = CCMenuItemToggle::createWithTarget(this,
+												menu_selector(HelloWorld::typeChanged),
+												CCMenuItemFont::create( s_aTestTypes[0].c_str() ),
+												NULL );
+	int typeLen = sizeof(s_aTestTypes) / sizeof(std::string);
+	for (int i = 1; i < typeLen; ++i)
+	{
+		m_pTypeItem->getSubItems()->addObject( CCMenuItemFont::create( s_aTestTypes[i].c_str() ) );
+	}
+	m_pTypeItem->setPosition(ccpAdd(posMid, ccp(0, 120)));
+	pMenu->addChild(m_pTypeItem);
+
+	// poses item
 	m_pPosItem = CCMenuItemToggle::createWithTarget(this,
 												menu_selector(HelloWorld::posChanged),
 												CCMenuItemFont::create( s_aTestPoses[0].c_str() ),
@@ -106,12 +150,13 @@ bool HelloWorld::init()
 	{
 		m_pPosItem->getSubItems()->addObject( CCMenuItemFont::create( s_aTestPoses[i].c_str() ) );
 	}
-	m_pPosItem->setPosition(ccpAdd(posMid, ccp(150, 50)));
+	m_pPosItem->setPosition(ccpAdd(posMid, ccp(200, 120)));
 	pMenu->addChild(m_pPosItem);
 
 	// init options
 	m_pAds = m_pAdmob;
-	m_ePos = ProtocolAds::ePosTop;
+	m_ePos = ProtocolAds::kPosCenter;
+	m_eType = ProtocolAds::kBannerAd;
 
     this->addChild(pMenu, 1);
 
@@ -120,15 +165,21 @@ bool HelloWorld::init()
 
 void HelloWorld::testShow(CCObject* pSender)
 {
+    int nSize = 0;
 	if (m_pAds == m_pAdmob)
 	{
-		m_pAds->showBannerAd(m_ePos, AdsAdmob::eSizeBanner);
+	    nSize = AdsAdmob::kSizeBanner;
+	}
+
+    if (m_pAds)
+	{
+        m_pAds->showAds(m_eType, nSize, m_ePos);
 	}
 }
 
 void HelloWorld::testHide(CCObject* pSender)
 {
-	m_pAds->hideBannerAd();
+	m_pAds->hideAds(m_eType);
 }
 
 void HelloWorld::menuCloseCallback(CCObject* pSender)
@@ -147,6 +198,7 @@ void HelloWorld::menuCloseCallback(CCObject* pSender)
     	m_pListener = NULL;
     }
 
+    PluginManager::end();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     exit(0);
 #endif
@@ -167,52 +219,33 @@ void HelloWorld::caseChanged(CCObject* pSender)
 	CCLog("case selected change to : %s", strLog.c_str());
 }
 
+void HelloWorld::typeChanged(CCObject* pSender)
+{
+	int selectIndex = m_pTypeItem->getSelectedIndex();
+	m_eType = (ProtocolAds::AdsType) selectIndex;
+	CCLog("type selected change to : %d", m_eType);
+}
+
 void HelloWorld::posChanged(CCObject* pSender)
 {
-	switch (m_pPosItem->getSelectedIndex())
-	{
-	case 0:
-		m_ePos = ProtocolAds::ePosTop;
-		break;
-	case 1:
-		m_ePos = ProtocolAds::ePosTopLeft;
-		break;
-	case 2:
-		m_ePos = ProtocolAds::ePosTopRight;
-		break;
-	case 3:
-		m_ePos = ProtocolAds::ePosBottom;
-		break;
-	case 4:
-		m_ePos = ProtocolAds::ePosBottomLeft;
-		break;
-	case 5:
-		m_ePos = ProtocolAds::ePosBottomRight;
-		break;
-	default:
-		break;
-	}
+	int selectIndex = m_pPosItem->getSelectedIndex();
+	m_ePos = (ProtocolAds::AdsPos) selectIndex;
 	CCLog("pos selected change to : %d", m_ePos);
 }
 
-void MyAdListener::onReceiveAd()
+void MyAdsListener::onAdsResult(AdsResultCode code, const char* msg)
 {
-	CCLog("My listener onReceiveAd");
+	CCLog("OnAdsResult, code : %d, msg : %s", code, msg);
 }
 
-void MyAdListener::onPresentScreen()
+void MyAdsListener::onPlayerGetPoints(cocos2d::plugin::ProtocolAds* pAdsPlugin, int points)
 {
-	CCLog("My listener onPresentScreen");
-}
+	CCLog("Player get points : %d", points);
 
-void MyAdListener::onFailedToReceiveAd(EAdErrorCode code, const char* msg)
-{
-	char logStr[128] = {0};
-	sprintf(logStr, "My listener onFailedToReceiveAd, error code : %d, message : %s", code, msg);
-	CCLog(logStr);
-}
+	// @warning should add code to give game-money to player here
 
-void MyAdListener::onDismissScreen()
-{
-	CCLog("My listener onDismissScreen");
+	// spend the points of player
+	if (pAdsPlugin != NULL) {
+		pAdsPlugin->spendPoints(points);
+	}
 }

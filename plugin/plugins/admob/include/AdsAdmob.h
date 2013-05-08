@@ -1,3 +1,26 @@
+/****************************************************************************
+Copyright (c) 2012-2013 cocos2d-x.org
+
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
 #ifndef __CCX_ADS_ADMOB_H__
 #define __CCX_ADS_ADMOB_H__
 
@@ -13,11 +36,11 @@ class AdsAdmob : public ProtocolAds
 public:
 
 	typedef enum {
-		eSizeBanner = 0,
-		eSizeIABMRect,
-		eSizeIABBanner,
-		eSizeIABLeaderboard,
-	} ESizeAdmobBanner;
+		kSizeBanner = 0,
+		kSizeIABMRect,
+		kSizeIABBanner,
+		kSizeIABLeaderboard,
+	} AdmobBannerSize;
 
     /**
     @brief plugin initialization
@@ -25,25 +48,30 @@ public:
     virtual bool init();
 
     /**
-	@brief initialize the application info
-	@param appInfo This parameter is the info of application, must contains:
+	@brief config the application info
+	@param devInfo This parameter is the info of application, must contains:
 					AdmobID		The publisher ID of admob.
 	@warning Must invoke this interface before other interfaces.
 			 And invoked only once.
 	*/
-    virtual void initAppInfo(TAppInfo appInfo);
+    virtual void configDeveloperInfo(TAdsDeveloperInfo devInfo);
+
+    /**
+	@brief show adview
+	@param type The adview type need to show.
+	@param sizeEnum The size of the banner view.
+				(only used when type is kBannerAd)
+				Use the enum number in AdmobBannerSize.
+	@param pos The position where the adview be shown.
+			   (only used when type is kBannerAd)
+	*/
+	virtual void showAds(AdsType type, int sizeEnum = 0, AdsPos pos = kPosCenter);
 
 	/**
-	@brief show banner ads at specified position
-	@param pos The position where the banner view be shown
-	@param sizeEnum The size of the banner view. Use the value in ESizeAdmobBanner
+	@brief Hide the adview
+	@param type The adview type need to hide.
 	*/
-	virtual void showBannerAd(EBannerPos pos, int sizeEnum);
-
-	/**
-	@brief hide the banner ads view
-	*/
-	virtual void hideBannerAd();
+	virtual void hideAds(AdsType type);
 
     /**
 	 @brief Set whether needs to output logs to console.

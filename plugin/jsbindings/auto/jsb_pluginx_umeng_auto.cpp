@@ -621,7 +621,7 @@ void js_register_pluginx_umeng_AnalyticsUmeng(JSContext *cx, JSObject *global) {
 		JS_FN("logTimedEventEnd", js_pluginx_umeng_AnalyticsUmeng_logTimedEventEnd, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("logEventWithLabel", js_pluginx_umeng_AnalyticsUmeng_logEventWithLabel, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("setDebugMode", js_pluginx_umeng_AnalyticsUmeng_setDebugMode, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FS_END
+        JS_FS_END
 	};
 
 	JSFunctionSpec *st_funcs = NULL;

@@ -30,6 +30,9 @@ THE SOFTWARE.
 #include "cocoa/CCObject.h"
 #include "cocoa/CCGeometry.h"
 #include "ccTypes.h"
+#ifdef EMSCRIPTEN
+#include "base_nodes/CCGLBufferedNode.h"
+#endif // EMSCRIPTEN
 
 NS_CC_BEGIN
 
@@ -103,6 +106,9 @@ typedef struct _ccTexParams {
 * Be aware that the content of the generated textures will be upside-down!
 */
 class CC_DLL CCTexture2D : public CCObject
+#ifdef EMSCRIPTEN
+, public CCGLBufferedNode
+#endif // EMSCRIPTEN
 {
 public:
     CCTexture2D();

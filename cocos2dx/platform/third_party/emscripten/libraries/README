@@ -1,0 +1,4 @@
+libfreetype.a from Emscripten test-suite
+libpng.a from https://github.com/hachque-Emscripten/libpng-1.2.49.git
+libz.a from https://github.com/hachque-Emscripten/zlib-1.2.5.git
+libxml2.z from https://github.com/kripken/xml.js -- configure flags: emconfigure ./configure --with-http=no --with-ftp=no --prefix=/tmp/lx --with-python=no --with-threads=no
