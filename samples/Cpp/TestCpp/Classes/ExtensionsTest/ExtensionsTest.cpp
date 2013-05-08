@@ -3,7 +3,9 @@
 #include "NotificationCenterTest/NotificationCenterTest.h"
 #include "ControlExtensionTest/CCControlSceneManager.h"
 #include "CocosBuilderTest/CocosBuilderTest.h"
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_EMSCRIPTEN)
 #include "NetworkTest/HttpClientTest.h"
+#endif
 #include "TableViewTest/TableViewTestScene.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
@@ -34,7 +36,9 @@ static const std::string testsName[TEST_MAX_COUNT] =
     "NotificationCenterTest",
     "CCControlButtonTest",
     "CocosBuilderTest",
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_EMSCRIPTEN)
     "HttpClientTest",
+#endif
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     "EditBoxTest",
 #endif
@@ -98,7 +102,7 @@ void ExtensionsMainLayer::menuCallback(CCObject* pSender)
             }
         }
         break;
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE && CC_TARGET_PLATFORM != CC_PLATFORM_NACL)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE && CC_TARGET_PLATFORM != CC_PLATFORM_NACL && CC_TARGET_PLATFORM != CC_PLATFORM_EMSCRIPTEN)
     case TEST_HTTPCLIENT:
         {
             runHttpClientTest();
