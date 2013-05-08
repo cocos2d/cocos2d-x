@@ -9,15 +9,25 @@
 #include <iostream>
 #include <sstream>
 
-#include <sys/select.h>
 #include <stdio.h>
+
+#ifdef WIN32
+#include <Winsock2.h>
+#define STDIN_FILENO 0
+#else
 #include <unistd.h>
+#include <sys/select.h>
+#endif
 
 #include "jsapi.h"
 
+#ifdef WIN32
+const char *USAGE = "Usage: jsbcc input_js_file [byte_code_file]";
+#else
 const char *USAGE = "Usage: jsbcc input_js_file [byte_code_file]\n"\
                     "       Or\n"\
                     "       ls *.js | jsbcc -p";
+#endif
 const char *BYTE_CODE_FILE_EXT = ".jsc";
 
 enum ErrorCode {
@@ -99,7 +109,6 @@ bool CompileFile(const std::string &inputFilePath, const std::string &outputFile
         }
         
     }
-Exit:
     if (context) {
         JS_DestroyContext(context);
         context = NULL;
