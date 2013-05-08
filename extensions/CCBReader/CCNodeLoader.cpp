@@ -566,8 +566,10 @@ CCSpriteFrame * CCNodeLoader::parsePropTypeSpriteFrame(CCNode * pNode, CCNode * 
         {
             spriteFile = pCCBReader->getCCBRootPath() + spriteFile;
             CCTexture2D * texture = CCTextureCache::sharedTextureCache()->addImage(spriteFile.c_str());
-            CCRect bounds = CCRectMake(0, 0, texture->getContentSize().width, texture->getContentSize().height);
-            spriteFrame = CCSpriteFrame::createWithTexture(texture, bounds);
+            if(texture != NULL) {
+                CCRect bounds = CCRectMake(0, 0, texture->getContentSize().width, texture->getContentSize().height);
+                spriteFrame = CCSpriteFrame::createWithTexture(texture, bounds);
+            }
         }
         else 
         {
