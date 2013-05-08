@@ -1509,7 +1509,7 @@ TTFFontShadowAndStroke::TTFFontShadowAndStroke()
     // create the label shadow only
     CCLabelTTF* fontShadow = new CCLabelTTF();
     
-    CCTextDefinition shadowTextDef;
+    ccFontDefinition shadowTextDef;
     shadowTextDef.m_fontSize = 20;
     shadowTextDef.m_fontName = std::string("Marker Felt");
     
@@ -1517,11 +1517,9 @@ TTFFontShadowAndStroke::TTFFontShadowAndStroke()
     shadowTextDef.m_shadow.m_shadowOffset  = shadowOffset;
     shadowTextDef.m_shadow.m_shadowOpacity = 1.0;
     shadowTextDef.m_shadow.m_shadowBlur    = 1.0;
+    shadowTextDef.m_fontFillColor   = tintColorRed;
     
-    shadowTextDef.m_fontTint.m_tintEnabled = true;
-    shadowTextDef.m_fontTint.m_tintColor   = tintColorRed;
-    
-    fontShadow->initWithStringAndTextDefinition("Shadow Only Red Text", &shadowTextDef);
+    fontShadow->initWithStringAndTextDefinition("Shadow Only Red Text", shadowTextDef);
     
     // add label to the scene
     this->addChild(fontShadow);
@@ -1532,7 +1530,7 @@ TTFFontShadowAndStroke::TTFFontShadowAndStroke()
     // create the label stroke only
     CCLabelTTF* fontStroke = new CCLabelTTF();
         
-    CCTextDefinition strokeTextDef;
+    ccFontDefinition strokeTextDef;
     strokeTextDef.m_fontSize = 20;
     strokeTextDef.m_fontName = std::string("Marker Felt");
     
@@ -1540,10 +1538,9 @@ TTFFontShadowAndStroke::TTFFontShadowAndStroke()
     strokeTextDef.m_stroke.m_strokeColor   = strokeColor;
     strokeTextDef.m_stroke.m_strokeSize    = 1.5;
     
-    strokeTextDef.m_fontTint.m_tintEnabled = true;
-    strokeTextDef.m_fontTint.m_tintColor   = tintColorYellow;
+    strokeTextDef.m_fontFillColor   = tintColorYellow;
     
-    fontStroke->initWithStringAndTextDefinition("Stroke Only Yellow Text", &strokeTextDef);
+    fontStroke->initWithStringAndTextDefinition("Stroke Only Yellow Text", strokeTextDef);
     
     // add label to the scene
     this->addChild(fontStroke);
@@ -1554,7 +1551,7 @@ TTFFontShadowAndStroke::TTFFontShadowAndStroke()
     // create the label stroke and shadow
     CCLabelTTF* fontStrokeAndShadow = new CCLabelTTF();
 
-    CCTextDefinition strokeShaodwTextDef;
+    ccFontDefinition strokeShaodwTextDef;
     strokeShaodwTextDef.m_fontSize = 20;
     strokeShaodwTextDef.m_fontName = std::string("Marker Felt");
     
@@ -1567,10 +1564,10 @@ TTFFontShadowAndStroke::TTFFontShadowAndStroke()
     strokeShaodwTextDef.m_shadow.m_shadowOpacity = 1.0;
     strokeShaodwTextDef.m_shadow.m_shadowBlur    = 1.0;
     
-    strokeShaodwTextDef.m_fontTint.m_tintEnabled = true;
-    strokeShaodwTextDef.m_fontTint.m_tintColor   = tintColorBlue;
+    
+    strokeShaodwTextDef.m_fontFillColor   = tintColorBlue;
 
-    fontStrokeAndShadow->initWithStringAndTextDefinition("Stroke & Shadow Blue Text", &strokeShaodwTextDef);
+    fontStrokeAndShadow->initWithStringAndTextDefinition("Stroke & Shadow Blue Text", strokeShaodwTextDef);
     
     // add label to the scene
     this->addChild(fontStrokeAndShadow);
