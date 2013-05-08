@@ -75,6 +75,7 @@ SOURCES = ../Classes/AccelerometerTest/AccelerometerTest.cpp \
 	../Classes/SpriteTest/SpriteTest.cpp \
 	../Classes/TextInputTest/TextInputTest.cpp \
 	../Classes/Texture2dTest/Texture2dTest.cpp \
+	../Classes/TexturePackerEncryptionTest/TextureAtlasEncryptionTest.cpp \
 	../Classes/TextureCacheTest/TextureCacheTest.cpp \
 	../Classes/TileMapTest/TileMapTest.cpp \
 	../Classes/TouchesTest/Ball.cpp \

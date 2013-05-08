@@ -25,6 +25,7 @@ THE SOFTWARE.
 #define __SUPPORT_ZIPUTILS_H__
 
 #include <string>
+#include "CCPlatformDefine.h"
 
 namespace cocos2d
 {
@@ -46,7 +47,7 @@ namespace cocos2d
         CCZ_COMPRESSION_NONE,               // plain (not supported yet)
     };
 
-    class ZipUtils
+    class CC_DLL ZipUtils
     {
     public:
         /** 
