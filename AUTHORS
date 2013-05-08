@@ -115,6 +115,7 @@ Developers:
          CCTableView crashes if a CCTableViewDelegate is not provided.
          Fixing a bug that _realOpacity isn't assigned in CCLayerColor::initWithColor.
          CCScrollView TouchPriority Fix
+         Add encrypted PVR.CCZ support to ZipUtils + Tests
 
     Weeds (Andre Rudlaff)
         Used fontconfig to enhance font rendering on linux.
