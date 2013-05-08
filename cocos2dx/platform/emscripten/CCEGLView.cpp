@@ -167,8 +167,6 @@ void CCEGLView::release()
         m_eglDisplay = EGL_NO_DISPLAY;
     }
 
-	eglReleaseThread();
-
 	m_isGLInitialized = false;
 
 	exit(0);
