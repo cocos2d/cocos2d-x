@@ -12,6 +12,9 @@ Developers:
     Rolando Abarca
         Javascript Binding and testjs
 
+    ggggamer
+        fixed memory leak of preloadEffect on windows
+
     CodeSnooker
         Added Method to create a CCMenuItemToggle from a CCArray with a target selector
 
