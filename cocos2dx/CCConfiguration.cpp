@@ -32,6 +32,11 @@ using namespace std;
 
 NS_CC_BEGIN
 
+struct map_element {
+	ccConfigurationType m_type;
+	CCString m_string;
+};
+
 CCConfiguration* CCConfiguration::s_gSharedConfiguration = NULL;
 
 CCConfiguration::CCConfiguration(void)
@@ -127,5 +132,29 @@ bool CCConfiguration::checkForGLExtension(const string &searchName)
     
     return bRet;
 }
+
+/** returns the value of a given key as a string */
+CCString CCConfiguration::getString( const CCString& key )
+{
+	return std::string("");
+}
+
+/** returns the value of a given key as a boolean */
+bool CCConfiguration::getBool( const CCString &key )
+{
+	return false;
+}
+
+/** returns the value of a given key as a double */
+double CCConfiguration::getNumber( const CCString &key )
+{
+	return 0.0;
+}
+
+ccConfigurationType CCConfiguration::getType( const CCString &key )
+{
+	return ConfigurationError;
+}
+
 
 NS_CC_END

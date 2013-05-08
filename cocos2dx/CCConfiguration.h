@@ -28,9 +28,23 @@ THE SOFTWARE.
 
 #include "cocoa/CCObject.h"
 #include "CCGL.h"
+#include "Cocoa/CCString.h"
 #include <string>
+#include <map>
+
 
 NS_CC_BEGIN
+
+typedef enum _ccConfigurationType {
+    ConfigurationError,
+    ConfigurationString,
+    ConfigurationInt,
+    ConfigurationDouble,
+    ConfigurationBoolean
+} ccConfigurationType;
+
+typedef std::map<CCString, CCString> cc
+
 
 /**
  * @addtogroup global
@@ -114,6 +128,18 @@ public:
 
     bool init(void);
 
+	/** returns the value of a given key as a string */
+	CCString getString( const CCString& key );
+
+	/** returns the value of a given key as a boolean */
+	bool getBool( const CCString &key );
+
+	/** returns the value of a given key as a double */
+	double getNumber( const CCString &key );
+
+	/** returns the type of a given key */
+	ccConfigurationType getType( const CCString &key );
+
 private:
     CCConfiguration(void);
     static CCConfiguration *s_gSharedConfiguration;
@@ -129,6 +155,7 @@ protected:
     GLint           m_nMaxSamplesAllowed;
     GLint           m_nMaxTextureUnits;
     char *          m_pGlExtensions;
+
 };
 
 // end of global group
