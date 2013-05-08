@@ -2,9 +2,8 @@
 
 namespace cocos2d { namespace plugin {
 
-AdListener* ProtocolAds::m_pListener = NULL;
-
 ProtocolAds::ProtocolAds()
+: m_pListener(NULL)
 {
 }
 
@@ -12,81 +11,50 @@ ProtocolAds::~ProtocolAds()
 {
 }
 
-/**
- @brief plugin initialization
- */
 bool ProtocolAds::init()
 {
     return true;
 }
 
-/**
- @brief initialize the application info
- @param appInfo This parameter is the info of aplication,
- different plugin have different format
- @warning Must invoke this interface before other interfaces.
- And invoked only once.
- */
-void ProtocolAds::initAppInfo(TAppInfo appInfo)
+void ProtocolAds::configDeveloperInfo(TAdsDeveloperInfo devInfo)
 {
 }
 
-/**
- @brief show banner ads at specified position
- @param pos The position where the banner view be shown
- @param sizeEnum The size of the banner view.
- In different plugin, it's have different mean.
- Pay attention to the subclass definition
- */
-void ProtocolAds::showBannerAd(EBannerPos pos, int sizeEnum)
+void ProtocolAds::showAds(AdsType type, int sizeEnum, AdsPos pos)
 {
 }
 
-/**
- @brief hide the banner ads view
- */
-void ProtocolAds::hideBannerAd()
+void ProtocolAds::hideAds(AdsType type)
 {
 }
 
-/**
- @brief Set whether needs to output logs to console.
- @param debug If true debug mode enabled, or debug mode disabled.
- */
+void ProtocolAds::spendPoints(int points)
+{
+}
+
 void ProtocolAds::setDebugMode(bool debug)
 {
 }
 
 // For the callbak methods
-void ProtocolAds::receiveAd()
+void ProtocolAds::setAdsListener(AdsListener* pListener)
+{
+    m_pListener = pListener;
+}
+
+void ProtocolAds::onAdsResult(AdsResultCode code, const char* msg)
 {
     if (m_pListener != NULL)
     {
-        m_pListener->onReceiveAd();
+        m_pListener->onAdsResult(code, msg);
     }
 }
 
-void ProtocolAds::presentScreen()
+void ProtocolAds::onPlayerGetPoints(int points)
 {
     if (m_pListener != NULL)
     {
-        m_pListener->onPresentScreen();
-    }
-}
-
-void ProtocolAds::failedToReceiveAd(AdListener::EAdErrorCode code, const char* msg)
-{
-    if (m_pListener != NULL)
-    {
-        m_pListener->onFailedToReceiveAd(code, msg);
-    }
-}
-
-void ProtocolAds::dismissScreen()
-{
-    if (m_pListener != NULL)
-    {
-        m_pListener->onDismissScreen();
+        m_pListener->onPlayerGetPoints(this, points);
     }
 }
 

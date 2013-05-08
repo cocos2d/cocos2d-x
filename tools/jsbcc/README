@@ -1,0 +1,7 @@
+jsbcc stands for JavasSript Byte Code Compiler. 
+it compiles javascript files to SpiderMonkey byte code files 
+Usage:
+	jsbcc input_js_file [byte_code_file]
+
+Note: it also supports pipeline, so you can use it like this:
+	ls *.js | jsbcc

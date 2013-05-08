@@ -1931,7 +1931,7 @@ void Issue1398::onEnter()
 void Issue1398::incrementIntegerCallback(CCNode* pSender, void* data)
 {
     this->incrementInteger();
-    CCLog((char*)data);
+    CCLog("%s", (char*)data);
 }
 
 std::string Issue1398::subtitle()

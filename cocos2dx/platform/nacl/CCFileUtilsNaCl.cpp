@@ -48,6 +48,11 @@ std::string CCFileUtilsNaCl::getWritablePath()
 
 bool CCFileUtilsNaCl::isFileExist(const std::string& strFilePath)
 {
+    if (0 == strFilePath.length())
+    {
+        return false;
+    }
+
     std::string strPath = strFilePath;
     if (!isAbsolutePath(strPath))
     { // Not absolute path, add the default root path at the beginning.

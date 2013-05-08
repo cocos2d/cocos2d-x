@@ -25,6 +25,7 @@
 
 #include <spine/Skin.h>
 #include <spine/extension.h>
+#include <stdio.h>
 
 namespace cocos2d { namespace extension {
 
@@ -74,7 +75,7 @@ void Skin_dispose (Skin* self) {
 	FREE(self->name);
 	FREE(self);
 }
-#include <stdio.h>
+
 void Skin_addAttachment (Skin* self, int slotIndex, const char* name, Attachment* attachment) {
 	_Entry* newEntry = _Entry_create(slotIndex, name, attachment);
 	newEntry->next = SUB_CAST(_Internal, self)->entries;

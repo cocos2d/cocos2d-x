@@ -523,7 +523,7 @@ void js_register_pluginx_flurry_AnalyticsFlurry(JSContext *cx, JSObject *global)
 		JS_FN("logTimedEventEnd", js_pluginx_flurry_AnalyticsFlurry_logTimedEventEnd, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getSDKVersion", js_pluginx_flurry_AnalyticsFlurry_getSDKVersion, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("setDebugMode", js_pluginx_flurry_AnalyticsFlurry_setDebugMode, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FS_END
+        JS_FS_END
 	};
 
 	JSFunctionSpec *st_funcs = NULL;
