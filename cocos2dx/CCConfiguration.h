@@ -30,6 +30,8 @@ THE SOFTWARE.
 #include "CCGL.h"
 #include "cocoa/CCString.h"
 #include <string>
+#include <map>
+
 
 
 NS_CC_BEGIN

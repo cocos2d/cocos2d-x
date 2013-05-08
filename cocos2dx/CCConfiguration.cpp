@@ -39,6 +39,11 @@ using namespace std;
 
 NS_CC_BEGIN
 
+struct map_element {
+	ccConfigurationType m_type;
+	CCString m_string;
+};
+
 CCConfiguration* CCConfiguration::s_gSharedConfiguration = NULL;
 
 CCConfiguration::CCConfiguration(void)
