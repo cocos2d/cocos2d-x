@@ -101,12 +101,12 @@ void ccArrayShrink(ccArray *arr)
 unsigned int ccArrayGetIndexOfObject(ccArray *arr, CCObject* object)
 {
     const unsigned int arrNum = arr->num;
-    const CCObject* ptr = arr->arr[0];
+    CCObject** ptr = arr->arr;
 	for(unsigned int i = 0; i < arrNum; ++i, ++ptr)
     {
-		if( ptr == object ) return i;
+		if( *ptr == object ) return i;
     }
-
+    
 	return CC_INVALID_INDEX;
 }
 
