@@ -49,8 +49,8 @@ OBJ_DIR := $(OBJ_DIR)/debug
 LIB_DIR := $(LIB_DIR)/debug
 BIN_DIR := $(BIN_DIR)/debug
 else
-CCFLAGS += -O2 --jcache -s GL_UNSAFE_OPTS=0
-CXXFLAGS += -O2 --jcache -s GL_UNSAFE_OPTS=0
+CCFLAGS += -O2 --jcache -s GL_UNSAFE_OPTS=0 -s ASM_JS=1
+CXXFLAGS += -O2 --jcache -s GL_UNSAFE_OPTS=0 -s ASM_JS=1
 DEFINES += -DNDEBUG -DCP_USE_DOUBLES=0
 OBJ_DIR := $(OBJ_DIR)/release
 LIB_DIR := $(LIB_DIR)/release
