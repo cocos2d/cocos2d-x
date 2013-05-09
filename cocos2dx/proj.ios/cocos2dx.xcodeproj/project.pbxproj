@@ -307,6 +307,7 @@
 		4EF8999916E207E70040A527 /* CCTMXTiledMap.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EF8998D16E207E70040A527 /* CCTMXTiledMap.h */; };
 		4EF8999A16E207E70040A527 /* CCTMXXMLParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4EF8998E16E207E70040A527 /* CCTMXXMLParser.cpp */; };
 		4EF8999B16E207E70040A527 /* CCTMXXMLParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EF8998F16E207E70040A527 /* CCTMXXMLParser.h */; };
+		A0CD6AA0173B283D006C1DFB /* shared_ptr.h in Headers */ = {isa = PBXBuildFile; fileRef = A0CD6A9F173B283D006C1DFB /* shared_ptr.h */; };
 		D43F7F8A15C7D8BA00D713FC /* CCTouch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D43F7F8915C7D8BA00D713FC /* CCTouch.cpp */; };
 /* End PBXBuildFile section */
 
@@ -614,6 +615,7 @@
 		4EF8998D16E207E70040A527 /* CCTMXTiledMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTMXTiledMap.h; sourceTree = "<group>"; };
 		4EF8998E16E207E70040A527 /* CCTMXXMLParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTMXXMLParser.cpp; sourceTree = "<group>"; };
 		4EF8998F16E207E70040A527 /* CCTMXXMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTMXXMLParser.h; sourceTree = "<group>"; };
+		A0CD6A9F173B283D006C1DFB /* shared_ptr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shared_ptr.h; sourceTree = "<group>"; };
 		D43F7F8915C7D8BA00D713FC /* CCTouch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTouch.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -662,6 +664,7 @@
 			children = (
 				1551A354158F2ADE00E66CFE /* actions */,
 				1551A370158F2ADE00E66CFE /* base_nodes */,
+				A0CD6A9F173B283D006C1DFB /* shared_ptr.h */,
 				1551A375158F2ADE00E66CFE /* CCCamera.cpp */,
 				1551A376158F2ADE00E66CFE /* CCCamera.h */,
 				1551A377158F2ADE00E66CFE /* CCConfiguration.cpp */,
@@ -1437,6 +1440,7 @@
 				1A5B48EA16F084CC008568FC /* CCBool.h in Headers */,
 				1A5B48EB16F084CC008568FC /* CCDouble.h in Headers */,
 				1A5B48EC16F084CC008568FC /* CCFloat.h in Headers */,
+				A0CD6AA0173B283D006C1DFB /* shared_ptr.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
