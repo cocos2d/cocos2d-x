@@ -35,6 +35,17 @@ NS_CC_BEGIN
 
 class CCDictionary;
 class CCArray;
+
+////////////////////
+///////Vincent added///////
+////////////////////
+class CCFilePathFinder
+{
+public:
+    virtual const char* findFilePath(const char* file) = 0;
+    
+};
+
 /**
  * @addtogroup platform
  * @{
@@ -293,8 +304,17 @@ public:
      */
     virtual void setPopupNotify(bool bNotify);
     virtual bool isPopupNotify();
+    
+    ////////////////////
+    ///////Vincent added interface///////
+    ////////////////////
+    void setFileFinder(CCFilePathFinder* f) { finder = f; }
 
 protected:
+    ////////////////////
+    ///////Vincent added///////
+    ////////////////////
+    CCFilePathFinder* finder;
     /**
      *  The default constructor.
      */

@@ -478,7 +478,23 @@ std::string CCFileUtils::fullPathForFilename(const char* pszFileName)
 {
     CCAssert(pszFileName != NULL, "CCFileUtils: Invalid path");
     
-    std::string strFileName = pszFileName;
+#pragma mark - vincent modify
+    const char* updatePath = NULL;
+    if (finder) {
+        //不处理绝对路径
+        if (strlen(pszFileName) > 0 && pszFileName[0] != '/') {
+            updatePath = finder->findFilePath(pszFileName);
+        }
+    }
+    
+    if (!updatePath) {
+        updatePath = pszFileName;
+    }
+    
+//    std::string strFileName = pszFileName;
+    std::string strFileName = updatePath;
+#pragma mark - modify end
+    
     if (isAbsolutePath(pszFileName))
     {
         //CCLOG("Return absolute path( %s ) directly.", pszFileName);
