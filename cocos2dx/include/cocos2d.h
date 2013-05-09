@@ -264,6 +264,8 @@ THE SOFTWARE.
 #include "CCDirector.h"
 #include "CCScheduler.h"
 
+#include "shared_ptr.h"
+
 NS_CC_BEGIN
 
 CC_DLL const char* cocos2dVersion();
