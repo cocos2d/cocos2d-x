@@ -242,6 +242,20 @@ void CCSpriteFrameCache::addSpriteFramesWithFile(const char *pszPlist)
         {
             // try to read  texture file name from meta data
             texturePath = metadataDict->valueForKey("textureFileName")->getCString();
+            
+            // Zwoptex hack: if we want to use a PVR texture it won't load because texturePath
+            // is empty, and cocos2dx will try to load the texture as PNG (which doesn't exists)
+            // It seems Zwoptex stores the texture file name and extension in "target".
+            if (texturePath.empty())
+            {
+                CCDictionary* targetDict = (CCDictionary*)metadataDict->objectForKey("target");
+                if (targetDict)
+                {
+                    // try to read texture file name from meta data
+                    texturePath = targetDict->valueForKey("textureFileName")->getCString();
+                    texturePath += targetDict->valueForKey("textureFileExtension")->getCString();
+                }
+            }
         }
 
         if (! texturePath.empty())
