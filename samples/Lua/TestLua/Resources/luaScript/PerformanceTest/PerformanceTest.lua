@@ -426,11 +426,129 @@ local ParticleTestParam =
     kNodesIncrease = 500,
 }
 
-local function runParticleTest()
-	local   lastRenderedCount
-    local   quantityParticles
-    local   subtestNumber
+----------------------------------
+--PerformanceTextureTest
+----------------------------------
+local TextureTestParam = 
+{
+	TEST_COUNT = 1,
+}
+
+local function runTextureTest()
+	
+	local function GetTitle()
+		return "Texture Performance Test"
+	end
+	
+	local function GetSubtitle()
+		return "See console for results"
+	end
+	
+	local nTexCurCase = 0	
+	local pNewscene = CCScene:create()
+	local pLayer    = CCLayer:create()
+	local s 		= CCDirector:sharedDirector():getWinSize()
+	
+	local function PerformTestsPNG(strFileName)
+		  local time
+		  local pTexture = nil
+    	  local pCache = CCTextureCache:sharedTextureCache()
+    	  print("RGBA 8888")
+    	  CCTexture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA8888)
+    	  pTexture = pCache:addImage(strFileName) 		  
+    	  if nil ~= pTexture then
+    	  	--os.time()--get secs,not micr sec
+    		print("add sucess")
+    	  else
+    		print(" ERROR")
+          end
+    	  pCache:removeTexture(pTexture)
+    	  
+    	  print("RGBA 4444");
+    	  CCTexture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA4444)
+    	  --gettimeofday(&now, NULL);
+    	  pTexture = pCache:addImage(strFileName);
+    	  if nil ~= pTexture then 
+            print("add sucess")
+    	  else
+        	print(" ERROR")
+          end
+    	  pCache:removeTexture(pTexture)
+    	  
+    	  print("RGBA 5551");
+    	  CCTexture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGB5A1);
+    	  --gettimeofday(&now, NULL);
+    	  pTexture = pCache:addImage(strFileName);
+    	  if nil ~= pTexture then
+        	 print("add sucess")
+    	  else
+        	 print(" ERROR")
+          end
+    	  pCache:removeTexture(pTexture);
+    	  
+    	  print("RGB 565");
+   		  CCTexture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGB565);
+   		 -- gettimeofday(&now, NULL);    
+    	 pTexture = pCache:addImage(strFileName);
+    	 if nil ~= pTexture then
+        	--CCLog("  ms:%f", calculateDeltaTime(&now) );
+        	print("add sucess")
+    	 else
+       	    print(" ERROR");
+       	 end
+    	 pCache:removeTexture(pTexture);   	  
+	end
+	local function PerformTests()
+		  print("--------")
+    	  print("--- PNG 128x128 ---")
+    	  PerformTestsPNG("Images/test_image.png")
+    	  
+    	  print("--- PNG 512x512 ---")
+    	  PerformTestsPNG("Images/texture512x512.png")
+    	  
+    	  print("EMPTY IMAGE")
+    	  print("--- PNG 1024x1024 ---")
+    	  PerformTestsPNG("Images/texture1024x1024.png")
+    	  
+    	  print("SPRITESHEET IMAGE");
+    	  print("--- PNG 1024x1024 ---");
+   		  PerformTestsPNG("Images/PlanetCute-1024x1024.png");
+   		  
+   		  print("LANDSCAPE IMAGE");
+	      print("--- PNG 1024x1024 ---");
+    	  PerformTestsPNG("Images/landscape-1024x1024.png");
+	end
+	
+	local function InitTextureMenuLayer()
+		if nil == pLayer then
+			return
+		end
+		
+		--Title
+    	local pLabel = CCLabelTTF:create(GetTitle(), "Arial", 40)
+    	pLayer:addChild(pLabel, 1)
+    	pLabel:setPosition(ccp(s.width/2, s.height-32))
+    	pLabel:setColor(ccc3(255,255,40))
+
+    	--Subtitle
+        local pSubLabel = CCLabelTTF:create(GetSubtitle(), "Thonburi", 16)
+        pLayer:addChild(pSubLabel, 1)
+        pSubLabel:setPosition(ccp(s.width/2, s.height-80))
+        
+        --menu
+        local pMenu = CCMenu:create()
+        CreatePerfomBasicLayerMenu(pMenu)
+        pMenu:setPosition(ccp(0, 0))
+        pLayer:addChild(pMenu)
+        
+        PerformTests()
+	end
+	
+	InitTextureMenuLayer()
+	pNewscene:addChild(pLayer)
+	return pNewscene
 end
+
 local CreatePerformancesTestTable = 
 {
 	runNodeChildrenTest,
@@ -451,23 +569,6 @@ local function menuCallback(tag, pMenuItem)
     if nil ~= PerformanceTestScene then
          CCDirector:sharedDirector():replaceScene(PerformanceTestScene)
     end
-    
-    --[[	
-	if tag == "enter" then
-		scene = PerformanceSpriteTest()
-	elseif tag == 1 then
-
-	elseif tag == 2 then
-
-	elseif tag == 3 then
-
-	elseif tag == 4 then
-
-	end
-	if scene ~= nil then
-		CCDirector:sharedDirector():replaceScene(scene)
-	end
-	]]--
 end
 
 local function PerformanceMainLayer()
