@@ -30,6 +30,9 @@ THE SOFTWARE.
 #include "support/tinyxml2/tinyxml2.h"
 #include "support/zip_support/unzip.h"
 #include <stack>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
 
 using namespace std;
 
@@ -493,12 +496,17 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
     {
         // read the file from hardware
         std::string fullPath = fullPathForFilename(pszFileName);
+
+        // Is it a regular file?
+        struct stat st;
+        CC_BREAK_IF(stat(fullPath.c_str(), &st) == -1);
+        CC_BREAK_IF(!S_ISREG(st.st_mode));
+        
+        *pSize = st.st_size;
+
         FILE *fp = fopen(fullPath.c_str(), pszMode);
         CC_BREAK_IF(!fp);
         
-        fseek(fp,0,SEEK_END);
-        *pSize = ftell(fp);
-        fseek(fp,0,SEEK_SET);
         pBuffer = new unsigned char[*pSize];
         *pSize = fread(pBuffer,sizeof(unsigned char), *pSize,fp);
         fclose(fp);
