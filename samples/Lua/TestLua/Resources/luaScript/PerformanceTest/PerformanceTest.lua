@@ -64,9 +64,6 @@ local function runNodeChildrenTest()
     
     local pNewscene = CCScene:create()
     
-    local function ShowCurrentTest()
-    end
-    
     local function GetTitle()
     	if 0 == nCurCase then
     		return "B - Iterate SpriteSheet"
@@ -174,15 +171,109 @@ local function runNodeChildrenTest()
     		end
     end
     
+    local function AddSpriteSheetUpdate(t)
+    	if nil == pBatchNode then
+    		return
+    	end
+    	
+    	--15 percent
+    	local nTotalToAdd = nCurrentQuantityOfNodes * 0.15
+    	local zs = {}
+    	if nTotalToAdd > 0 then
+    		local pSprites = CCArray:createWithCapacity(nTotalToAdd);
+    		local i = 0
+    		for i = 0 , nTotalToAdd - 1 do
+    			local pSprite = CCSprite:createWithTexture(pBatchNode:getTexture(), CCRectMake(0,0,32,32))
+            	pSprites:addObject(pSprite)
+            	zs[i]    = math.random(-1,1) * 50
+    		end
+    		
+    		for i = 0 , nTotalToAdd - 1 do
+    			local pChild = tolua.cast(pSprites:objectAtIndex(i),"CCNode")
+    			pBatchNode:addChild(pChild, zs[i], NodeChildrenTestParam.kTagBase + i);
+    		end
+    		
+    		pBatchNode:sortAllChildren()
+    		
+    		for i = 0 , nTotalToAdd - 1 do
+    			pBatchNode:removeChildByTag( NodeChildrenTestParam.kTagBase + i, true);
+    		end
+    	end
+    end
+    
+    local function RemoveSpriteSheetUpdate(t)
+    	if nil == pBatchNode then
+    		return
+    	end
+     	local nTotalToAdd = nCurrentQuantityOfNodes * 0.15
+		if  nTotalToAdd > 0 then
+			 local pSprites = CCArray:createWithCapacity(nTotalToAdd);
+
+        	-- Don't include the sprite creation time as part of the profiling
+        	local i = 0
+        	for i = 0, nTotalToAdd - 1 do
+        		 local pSprite = CCSprite:createWithTexture(pBatchNode:getTexture(), CCRectMake(0,0,32,32));
+            	 pSprites:addObject(pSprite);
+        	end
+       		-- add them with random Z (very important!)
+        	for i=0, nTotalToAdd - 1  do
+        		local pChild = tolua.cast(pSprites:objectAtIndex(i),"CCNode")
+        		pBatchNode:addChild(pChild, math.random(-1,1) * 50, NodeChildrenTestParam.kTagBase + i)
+            end
+                    
+        	for i = 0, nTotalToAdd - 1  do
+        		pBatchNode:removeChildByTag( NodeChildrenTestParam.kTagBase + i, true);
+        	end
+        end  
+    end
+    
+    local function ReorderSpriteSheetUpdate(t)
+    	if nil == pBatchNode then
+    		return
+    	end
+        -- 15 percent
+    	local nTotalToAdd = nCurrentQuantityOfNodes * 0.15;
+
+    	if nTotalToAdd > 0 then  
+        	local pSprites = CCArray:createWithCapacity(nTotalToAdd);
+
+        	-- Don't include the sprite creation time as part of the profiling
+        	local i = 0
+        	for i = 0,nTotalToAdd - 1 do       
+            	local pSprite = CCSprite:createWithTexture(pBatchNode:getTexture(), CCRectMake(0,0,32,32));
+            	pSprites:addObject(pSprite);
+        	end
+
+        	--dd them with random Z (very important!)
+        	for i = 0, nTotalToAdd - 1 do 
+        		local pChild = tolua.cast(pSprites:objectAtIndex(i),"CCNode")
+        		pBatchNode:addChild(pChild, math.random(-1,1) * 50, NodeChildrenTestParam.kTagBase + i)         	
+       		end
+
+        	pBatchNode:sortAllChildren();
+
+        	-- reorder them
+      		for i = 0, nTotalToAdd - 1 do    	
+        		local pNode =  tolua.cast(pBatchNode:getChildren():objectAtIndex(i),"CCNode")
+            	pBatchNode:reorderChild(pNode,  math.random(-1,1) * 50);
+        	end	      
+        	pBatchNode:sortAllChildren();
+        	--remove them
+        	for i = 0, nTotalToAdd - 1 do   
+				pBatchNode:removeChildByTag( NodeChildrenTestParam.kTagBase+i, true);
+        	end
+        end
+    end
+    
     local function NodeChildrenScheduleUpdate()
     	if 0 == nCurCase then
 	   		pNewscene:scheduleUpdateWithPriorityLua(IterateSpriteSheetCArrayUpdate,0)
     	elseif 1 == nCurCase then
-    		
+    		pNewscene:scheduleUpdateWithPriorityLua(AddSpriteSheetUpdate,0)
     	elseif 2 == nCurCase then
-    		
+    		pNewscene:scheduleUpdateWithPriorityLua(RemoveSpriteSheetUpdate,0)   		
     	elseif 3 == nCurCase then
-			
+			pNewscene:scheduleUpdateWithPriorityLua(ReorderSpriteSheetUpdate,0)  
 		end
     end
     
@@ -296,10 +387,27 @@ local function runNodeChildrenTest()
 		updateQuantityOfNodes()	
 		
     end
+	
+	function ShowCurrentTest()
+		if nil ~= pNewscene then
+			pNewscene:unscheduleUpdate()
+		end
+		
+		pNewscene = CCScene:create()
+    	if nil ~= pNewscene then
+    		SpecialInitWithQuantityOfNodes()
+			MainSceneInitWithQuantityOfNodes(nQuantityOfNodes)
+--			pNewscene:registerScriptHandler(onNodeEvent)
+			NodeChildrenScheduleUpdate()
+			CCDirector:sharedDirector():replaceScene(pNewscene)
+    	end	
+    end
     
 	SpecialInitWithQuantityOfNodes()
 	MainSceneInitWithQuantityOfNodes(NodeChildrenTestParam.kNodesIncrease)
+--	pNewscene:registerScriptHandler(onNodeEvent)
 	NodeChildrenScheduleUpdate()
+	
 	return pNewscene
 end
 ----------------------------------
