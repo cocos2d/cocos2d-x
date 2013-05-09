@@ -35,8 +35,8 @@ INCLUDES +=  \
     -I$(COCOS_SRC)/platform/third_party/emscripten/libz \
     -I$(COCOS_SRC)/platform/third_party/emscripten/libfreetype2 \
     -I$(COCOS_SRC)/platform/third_party/emscripten/libtiff/include \
-    -I$(COCOS_SRC)/platform/third_party/linux/libjpeg \
-    -I$(COCOS_SRC)/platform/third_party/linux/libwebp
+    -I$(COCOS_SRC)/platform/third_party/emscripten/libjpeg \
+    -I$(COCOS_SRC)/platform/third_party/emscripten/libwebp
 
 LBITS := $(shell getconf LONG_BIT)
 INCLUDES += -I$(COCOS_SRC)/platform/third_party/linux
@@ -49,8 +49,8 @@ OBJ_DIR := $(OBJ_DIR)/debug
 LIB_DIR := $(LIB_DIR)/debug
 BIN_DIR := $(BIN_DIR)/debug
 else
-CCFLAGS += -O2 --jcache -s GL_UNSAFE_OPTS=0
-CXXFLAGS += -O2 --jcache -s GL_UNSAFE_OPTS=0
+CCFLAGS += -O2 --jcache -s GL_UNSAFE_OPTS=0 -s ASM_JS=1
+CXXFLAGS += -O2 --jcache -s GL_UNSAFE_OPTS=0 -s ASM_JS=1
 DEFINES += -DNDEBUG -DCP_USE_DOUBLES=0
 OBJ_DIR := $(OBJ_DIR)/release
 LIB_DIR := $(LIB_DIR)/release
@@ -77,7 +77,7 @@ STATICLIBS_DIR = $(COCOS_SRC)/platform/third_party/emscripten/libraries
 STATICLIBS = $(STATICLIBS_DIR)/libfreetype.a \
     $(STATICLIBS_DIR)/libpng.a \
     $(STATICLIBS_DIR)/zlib.a \
-    $(STATICLIBS_DIR)/libtiff.a #\
+    $(STATICLIBS_DIR)/libtiff.a \
     $(STATICLIBS_DIR)/libjpeg.a \
     $(STATICLIBS_DIR)/libwebp.a
 
