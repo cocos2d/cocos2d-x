@@ -393,6 +393,9 @@ Developers:
     coolengineer (Hojin Choi)
         Refactoring callback selector for HttpResponse.
 
+    djh-
+        Fixing a bug that displayed color of CCDrawNode is incorrect when VAO is disabled.
+
 Retired Core Developers:
     WenSheng Yang
         Author of windows port, CCTextField,
