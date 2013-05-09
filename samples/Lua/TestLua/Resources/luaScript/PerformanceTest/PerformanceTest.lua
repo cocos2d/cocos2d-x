@@ -324,13 +324,15 @@ local function runNodeChildrenTest()
     
     
     local function SpecialInitWithQuantityOfNodes()
-    	if 0 == nCurCase then
+    --	if 0 == nCurCase then
     		pBatchNode = CCSpriteBatchNode:create("Images/spritesheet1.png")
     		pNewscene:addChild(pBatchNode)
+    	--[[
     	else
     		pBatchNode = CCSpriteBatchNode:create("Images/spritesheet1.png");
     		pNewscene:addChild(pBatchNode);
     	end 
+    	]]--
     end
     
     local function MainSceneInitWithQuantityOfNodes(nNodes)
@@ -548,7 +550,204 @@ local function runTextureTest()
 	pNewscene:addChild(pLayer)
 	return pNewscene
 end
+----------------------------------
+--PerformanceTouchesTest
+----------------------------------
+local TouchesTestParam = 
+{
+	TEST_COUNT = 2,
+}
+local function runTouchesTest()
+	local nTouchCurCase = 0
+	--PerformBasicLayer param
+	local  bControlMenuVisible = false
+    local  nMaxCases = 0
+    local  nCurCase = 0
+    --TouchesMainScene param
+    local  pClassLabel = nil
+    local  nNumberOfTouchesB  = 0
+    local  nNumberOfTouchesM  = 0
+    local  nNumberOfTouchesE  = 0
+    local  nNumberOfTouchesC  = 0
+    local  fElapsedTime       = 0.0
+    
+    local  s = CCDirector:sharedDirector():getWinSize()
+   	local  pNewscene = CCScene:create()
+	local  pLayer    = CCLayer:create()
+	
+    local  function GetTitle()
+    	if 0 == nCurCase then
+    		return "Targeted touches"
+    	elseif 1 == nCurCase then
+    		return "Standard touches"
+    	end
+    end
+	
+    local function CreateBasicLayerMenuItem(pMenu,bMenuVisible,nMaxCasesNum,nCurCaseIndex)
+    	if nil ~= pMenu then
+    		bControlMenuVisible = bMenuVisible
+    		nMaxCases           = nMaxCasesNum
+    		nCurCase            = nCurCaseIndex
+    		if true == bControlMenuVisible then
+    			local function backCallback()
+    				nCurCase = nCurCase - 1
+    				if nCurCase < 0 then
+    					nCurCase = nCurCase + nMaxCases
+    				end
+    				ShowCurrentTest()
+    			end
+    
+    			local function restartCallback()
+    				ShowCurrentTest()
+    			end
+    
+    			local function nextCallback()
+    				nCurCase = nCurCase + 1
+    				--No check nMaxCases
+    				nCurCase = nCurCase % nMaxCases
+    				ShowCurrentTest()
+   				end
+   				
+    			local size = CCDirector:sharedDirector():getWinSize()
+    			local item1 = CCMenuItemImage:create(s_pPathB1, s_pPathB2)
+    			item1:registerScriptTapHandler(backCallback)
+    			pMenu:addChild(item1,kItemTagBasic)
+    			local item2 = CCMenuItemImage:create(s_pPathR1, s_pPathR2)
+    			item2:registerScriptTapHandler(restartCallback)
+    			pMenu:addChild(item2,kItemTagBasic)
+    			local item3 = CCMenuItemImage:create(s_pPathF1, s_pPathF2)
+    			pMenu:addChild(item3,kItemTagBasic) 
+    			item3:registerScriptTapHandler(nextCallback)
+    			
+    			local size = CCDirector:sharedDirector():getWinSize()
+    			item1:setPosition(CCPointMake(size.width / 2 - item2:getContentSize().width * 2, item2:getContentSize().height / 2))
+    			item2:setPosition(CCPointMake(size.width / 2, item2:getContentSize().height / 2))
+    			item3:setPosition(CCPointMake(size.width / 2 + item2:getContentSize().width * 2, item2:getContentSize().height / 2))
+    		end 
+    	end
+    end
+    
+    local function update(fTime)
+    	  fElapsedTime = fElapsedTime + fTime
 
+    	  if  fElapsedTime > 1.0 then
+    	  	  local fFrameRateB = nNumberOfTouchesB / fElapsedTime
+        	  local fFrameRateM = nNumberOfTouchesM / fElapsedTime
+        	  local fFrameRateE = nNumberOfTouchesE / fElapsedTime
+        	  local fFrameRateC = nNumberOfTouchesC / fElapsedTime
+        	  fElapsedTime = 0;
+        	  nNumberOfTouchesB = 0
+        	  nNumberOfTouchesM = 0
+        	  nNumberOfTouchesE = 0
+        	  nNumberOfTouchesC = 0
+        	  
+       		  local strInfo = string.format("%.1f %.1f %.1f %.1f",fFrameRateB, fFrameRateM, fFrameRateE, fFrameRateC)
+       		  if nil ~= pClassLabel then
+       		  	pClassLabel:setString(strInfo); 
+       		  end
+    	  end
+  
+    end
+    
+    -- handling touch events   
+    local function onTouchBegan(tableArray)
+		if 0 == nCurCase then
+			nNumberOfTouchesB = nNumberOfTouchesB + 1
+		elseif 1 == nCurCase then
+			nNumberOfTouchesB  = nNumberOfTouchesB + table.getn(tableArray)
+		end
+    end
+    
+    local function onTouchMoved(tableArray)			
+		if 0 == nCurCase then
+			nNumberOfTouchesM = nNumberOfTouchesM + 1
+		elseif 1 == nCurCase then
+			nNumberOfTouchesM  = nNumberOfTouchesM + table.getn(tableArray)
+		end
+    end
+    
+    local function onTouchEnded(tableArray)			
+		if 0 == nCurCase then
+			nNumberOfTouchesE = nNumberOfTouchesE + 1
+		elseif 1 == nCurCase then
+			nNumberOfTouchesE  = nNumberOfTouchesE + table.getn(tableArray)
+		end
+    end
+    
+    local function onTouchCancelled(tableArray)			
+		if 0 == nCurCase then
+			nNumberOfTouchesC = nNumberOfTouchesC + 1
+		elseif 1 == nCurCase then
+			nNumberOfTouchesC  = nNumberOfTouchesC + table.getn(tableArray)
+		end
+    end
+
+   	local function onTouch(eventType,tableArray)
+        if eventType == "began" then
+            return onTouchBegan(tableArray)
+        elseif eventType == "moved" then
+            return onTouchMoved(tableArray)
+        elseif eventType == "ended" then
+        	return onTouchEnded(tableArray)	
+        elseif eventType == "cancelled" then
+        	return onTouchCancelled(tableArray)	
+        end
+    end
+    
+    local function InitLayer()
+     	--menu
+     	local pTouchesTestMenu     = CCMenu:create()
+    	CreatePerfomBasicLayerMenu(pTouchesTestMenu)
+		CreateBasicLayerMenuItem(pTouchesTestMenu,true,TouchesTestParam.TEST_COUNT,nCurCase)
+		pTouchesTestMenu:setPosition(ccp(0, 0))
+		pLayer:addChild(pTouchesTestMenu)
+		
+     	--Title
+   	    local pLabel = CCLabelTTF:create(GetTitle(), "Arial", 40)
+    	pLayer:addChild(pLabel, 1)
+   		pLabel:setPosition(ccp(s.width/2, s.height-32))
+	   	pLabel:setColor(ccc3(255,255,40)) 
+    	
+    	pLayer:scheduleUpdateWithPriorityLua(update,0)	
+    
+    	pClassLabel = CCLabelBMFont:create("00.0", "fonts/arial16.fnt");
+    	pClassLabel:setPosition(ccp(s.width/2, s.height/2));
+    	pLayer:addChild(pClassLabel); 
+    
+    	fElapsedTime = 0.0
+    	nNumberOfTouchesB = 0
+    	nNumberOfTouchesM = 0
+    	nNumberOfTouchesE = 0
+    	nNumberOfTouchesC = 0   
+    	pLayer:setTouchEnabled(true)
+    	
+    	pLayer:registerScriptTouchHandler(onTouch,true) 
+    end
+    
+    function ShowCurrentTest()
+    	if nil ~= pLayer then
+			pLayer:unscheduleUpdate()
+		end
+		
+		pNewscene = CCScene:create()
+		
+    	if nil ~= pNewscene then
+    		pLayer = CCLayer:create()
+    		InitLayer()
+			pNewscene:addChild(pLayer)
+			CCDirector:sharedDirector():replaceScene(pNewscene)
+    	end	
+    end
+
+	InitLayer()
+	pNewscene:addChild(pLayer)
+	return pNewscene
+end
+
+
+------------------------
+--
+------------------------
 local CreatePerformancesTestTable = 
 {
 	runNodeChildrenTest,
