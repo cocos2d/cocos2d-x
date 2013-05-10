@@ -270,35 +270,43 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
         }
         
         
+        // compute the padding needed by shadow and stroke
         float shadowStrokePaddingX = 0.0f;
         float shadowStrokePaddingY = 0.0f;
         
         if ( pInfo->hasStroke )
         {
-            shadowStrokePaddingX = pInfo->strokeSize * 4.0;
-            shadowStrokePaddingY = pInfo->strokeSize * 4.0;
+            shadowStrokePaddingX = pInfo->strokeSize;
+            shadowStrokePaddingY = pInfo->strokeSize;
         }
         
         if ( pInfo->hasShadow )
         {
-            shadowStrokePaddingX = std::max(shadowStrokePaddingX, ((float)abs(pInfo->shadowOffset.width)  * 4));
-            shadowStrokePaddingY = std::max(shadowStrokePaddingY, ((float)abs(pInfo->shadowOffset.height) * 4));
+            shadowStrokePaddingX = std::max(shadowStrokePaddingX, (float)abs(pInfo->shadowOffset.width));
+            shadowStrokePaddingY = std::max(shadowStrokePaddingY, (float)abs(pInfo->shadowOffset.height));
         }
         
-        
-        // add the padding if needed
-        //dim.width  += shadowStrokePaddingX;
+        // add the padding (this could be 0 if no shadow and no stroke)
+        dim.width  += shadowStrokePaddingX;
         dim.height += shadowStrokePaddingY;
+        
         
         unsigned char* data = new unsigned char[(int)(dim.width * dim.height * 4)];
         memset(data, 0, (int)(dim.width * dim.height * 4));
         
         // draw text
-        CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();    
-        CGContextRef context = CGBitmapContextCreate(data, dim.width, dim.height, 8, dim.width * 4, colorSpace, kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
+        CGColorSpaceRef colorSpace  = CGColorSpaceCreateDeviceRGB();
+        CGContextRef context        = CGBitmapContextCreate(data,
+                                                            dim.width,
+                                                            dim.height,
+                                                            8,
+                                                            dim.width * 4,
+                                                            colorSpace,
+                                                            kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
+        
         CGColorSpaceRelease(colorSpace);
         
-        if ( ! context )
+        if (!context)
         {
             delete[] data;
             break;
@@ -306,9 +314,11 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
 
         // text color
         CGContextSetRGBFillColor(context, pInfo->tintColorR, pInfo->tintColorG, pInfo->tintColorB, 1);
-        
-        CGContextTranslateCTM(context, 0.0f, dim.height);
+        // move Y rendering to the top of the image
+        CGContextTranslateCTM(context, 0.0f, (dim.height - shadowStrokePaddingY) );
         CGContextScaleCTM(context, 1.0f, -1.0f); //NOTE: NSString draws in UIKit referential i.e. renders upside-down compared to CGBitmapContext referential
+        
+        // store the current context
         UIGraphicsPushContext(context);
         
         // measure text size with specified font and determine the rectangle to draw text in
@@ -317,7 +327,6 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
                                 : (3 == uHoriFlag) ? UITextAlignmentCenter
                                 : UITextAlignmentLeft);
 
-        
         
         // take care of stroke if needed
         if ( pInfo->hasStroke )
@@ -336,8 +345,9 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
             CGContextSetShadow(context, offset, pInfo->shadowBlur);
         }
         
+        
+        
         // normal fonts
-     
         //if( [font isKindOfClass:[UIFont class] ] )
         //{
         //    [str drawInRect:CGRectMake(0, startH, dim.width, dim.height) withFont:font lineBreakMode:(UILineBreakMode)UILineBreakModeWordWrap alignment:align];
@@ -348,8 +358,39 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
         ////alignment:align];
         //}
     
-        // draw the text
-        [str drawInRect:CGRectMake(0, startH + (shadowStrokePaddingY), dim.width, dim.height) withFont:font lineBreakMode:(UILineBreakMode)UILineBreakModeWordWrap alignment:align];
+        
+        
+        // compute the rect used for rendering the text
+        // based on wether shadows or stroke are enabled
+        
+        float textOriginX  = 0.0;
+        float textOrigingY = 0.0;
+        
+        float textWidth    = dim.width  - shadowStrokePaddingX;
+        float textHeight   = dim.height - shadowStrokePaddingY;
+        
+        
+        if ( pInfo->shadowOffset.width < 0 )
+        {
+            textOriginX = shadowStrokePaddingX;
+        }
+        else
+        {
+            textOriginX = 0.0;
+        }
+        
+        if (pInfo->shadowOffset.height > 0)
+        {
+            textOrigingY = startH;
+        }
+        else
+        {
+            textOrigingY = startH - shadowStrokePaddingY;
+        }
+        
+        
+        // actually draw the text in the context
+        [str drawInRect:CGRectMake(textOriginX, textOrigingY, textWidth, textHeight) withFont:font lineBreakMode:(UILineBreakMode)UILineBreakModeWordWrap alignment:align];
         
         // pop the context
         UIGraphicsPopContext();
@@ -358,13 +399,13 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
         CGContextRelease(context);
                
         // output params
-        pInfo->data = data;
-        pInfo->hasAlpha = true;
+        pInfo->data                 = data;
+        pInfo->hasAlpha             = true;
         pInfo->isPremultipliedAlpha = true;
-        pInfo->bitsPerComponent = 8;
-        pInfo->width = dim.width;
-        pInfo->height = dim.height;
-        bRet = true;
+        pInfo->bitsPerComponent     = 8;
+        pInfo->width                = dim.width;
+        pInfo->height               = dim.height;
+        bRet                        = true;
         
     } while (0);
 

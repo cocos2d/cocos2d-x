@@ -289,7 +289,7 @@ bool CCLabelTTF::updateTexture()
     
     #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     
-        ccFontDefinition texDef = _prepareTextDefinition();
+        ccFontDefinition texDef = _prepareTextDefinition(true);
         tex->initWithStringShadowStroke( m_string.c_str(), &texDef );
     
     #else
@@ -331,7 +331,9 @@ void CCLabelTTF::enableShadow(CCSize &shadowOffset, float shadowOpacity, float s
         
         if ( (m_shadowOffset.width != shadowOffset.width) || (m_shadowOffset.height!=shadowOffset.height) )
         {
-            m_shadowOffset = shadowOffset;
+            m_shadowOffset.width  = shadowOffset.width;
+            m_shadowOffset.height = shadowOffset.height;
+            
             valueChanged = true;
         }
         
@@ -456,7 +458,7 @@ void CCLabelTTF::setTextDefinition(ccFontDefinition *theDefinition)
 ccFontDefinition *CCLabelTTF::getTextDefinition()
 {
     ccFontDefinition *tempDefinition = new ccFontDefinition;
-    *tempDefinition = _prepareTextDefinition();
+    *tempDefinition = _prepareTextDefinition(false);
     return tempDefinition;
 }
 
@@ -489,33 +491,56 @@ void CCLabelTTF::_updateWithTextDefinition(ccFontDefinition & textDefinition, bo
         updateTexture();
 }
 
-ccFontDefinition CCLabelTTF::_prepareTextDefinition()
+ccFontDefinition CCLabelTTF::_prepareTextDefinition(bool adjustForResolution)
 {
     ccFontDefinition texDef;
     
-    texDef.m_fontSize       =  m_fFontSize * CC_CONTENT_SCALE_FACTOR();
+    if (adjustForResolution)
+        texDef.m_fontSize       =  m_fFontSize * CC_CONTENT_SCALE_FACTOR();
+    else
+        texDef.m_fontSize       =  m_fFontSize;
+    
     texDef.m_fontName       = *m_pFontName;
     texDef.m_alignment      =  m_hAlignment;
     texDef.m_vertAlignment  =  m_vAlignment;
-    texDef.m_dimensions     =  CC_SIZE_POINTS_TO_PIXELS(m_tDimensions);
     
+    
+    if (adjustForResolution)
+        texDef.m_dimensions     =  CC_SIZE_POINTS_TO_PIXELS(m_tDimensions);
+    else
+        texDef.m_dimensions     =  m_tDimensions;
+    
+    
+    // stroke
     if ( m_strokeEnabled )
     {
         texDef.m_stroke.m_strokeEnabled = true;
-        texDef.m_stroke.m_strokeSize    = m_strokeSize;
         texDef.m_stroke.m_strokeColor   = m_strokeColor;
+        
+        if (adjustForResolution)
+            texDef.m_stroke.m_strokeSize = m_strokeSize * CC_CONTENT_SCALE_FACTOR();
+        else
+            texDef.m_stroke.m_strokeSize = m_strokeSize;
+        
+        
     }
     else
     {
         texDef.m_stroke.m_strokeEnabled = false;
     }
     
+    
+    // shadow
     if ( m_shadowEnabled )
     {
-        texDef.m_shadow.m_shadowEnabled = true;
-        texDef.m_shadow.m_shadowOffset  = m_shadowOffset;
-        texDef.m_shadow.m_shadowBlur    = m_shadowBlur;
-        texDef.m_shadow.m_shadowOpacity = m_shadowOpacity;
+        texDef.m_shadow.m_shadowEnabled         = true;
+        texDef.m_shadow.m_shadowBlur            = m_shadowBlur;
+        texDef.m_shadow.m_shadowOpacity         = m_shadowOpacity;
+        
+        if (adjustForResolution)
+            texDef.m_shadow.m_shadowOffset = CC_SIZE_POINTS_TO_PIXELS(m_shadowOffset);
+        else
+            texDef.m_shadow.m_shadowOffset = m_shadowOffset;
     }
     else
     {
