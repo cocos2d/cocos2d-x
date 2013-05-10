@@ -32,7 +32,10 @@
 #include <spine/Atlas.h>
 #include <spine/Animation.h>
 
+#ifdef __cplusplus
 namespace cocos2d { namespace extension {
+extern "C" {
+#endif
 
 typedef struct {
 	float scale;
@@ -47,6 +50,9 @@ void SkeletonJson_dispose (SkeletonJson* self);
 SkeletonData* SkeletonJson_readSkeletonData (SkeletonJson* self, const char* json);
 SkeletonData* SkeletonJson_readSkeletonDataFile (SkeletonJson* self, const char* path);
 
-}} // namespace cocos2d { namespace extension {
+#ifdef __cplusplus
+}
+} }
+#endif
 
 #endif /* SPINE_SKELETONJSON_H_ */

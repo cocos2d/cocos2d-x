@@ -26,19 +26,29 @@
 #include <spine/AtlasAttachmentLoader.h>
 #include <spine/extension.h>
 
+#ifdef __cplusplus
 namespace cocos2d { namespace extension {
+#endif
 
 Attachment* _AtlasAttachmentLoader_newAttachment (AttachmentLoader* loader, Skin* skin, AttachmentType type, const char* name) {
 	AtlasAttachmentLoader* self = SUB_CAST(AtlasAttachmentLoader, loader);
 	switch (type) {
 	case ATTACHMENT_REGION: {
+		RegionAttachment* attachment;
 		AtlasRegion* region = Atlas_findRegion(self->atlas, name);
 		if (!region) {
 			_AttachmentLoader_setError(loader, "Region not found: ", name);
 			return 0;
 		}
-		RegionAttachment* attachment = RegionAttachment_create(name);
-		attachment->region = region;
+		attachment = RegionAttachment_create(name);
+		attachment->rendererObject = region;
+		RegionAttachment_setUVs(attachment, region->u, region->v, region->u2, region->v2, region->rotate);
+		attachment->regionOffsetX = region->offsetX;
+		attachment->regionOffsetY = region->offsetY;
+		attachment->regionWidth = region->width;
+		attachment->regionHeight = region->height;
+		attachment->regionOriginalWidth = region->originalWidth;
+		attachment->regionOriginalHeight = region->originalHeight;
 		return SUPER(attachment);
 	}
 	default:
@@ -54,4 +64,6 @@ AtlasAttachmentLoader* AtlasAttachmentLoader_create (Atlas* atlas) {
 	return self;
 }
 
-}} // namespace cocos2d { namespace extension {
+#ifdef __cplusplus
+} }
+#endif

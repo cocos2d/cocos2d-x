@@ -23,33 +23,27 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  ******************************************************************************/
 
-#include <spine/Attachment.h>
+#include <spine/BoneData.h>
 #include <spine/extension.h>
-#include <spine/Slot.h>
 
+#ifdef __cplusplus
 namespace cocos2d { namespace extension {
+#endif
 
-typedef struct _AttachmentVtable {
-	void (*dispose) (Attachment* self);
-} _AttachmentVtable;
-
-void _Attachment_init (Attachment* self, const char* name, AttachmentType type, //
-		void (*dispose) (Attachment* self)) {
-
-	CONST_CAST(void*, self->vtable) = NEW(_AttachmentVtable);
-	VTABLE(Attachment, self) ->dispose = dispose;
-
+BoneData* BoneData_create (const char* name, BoneData* parent) {
+	BoneData* self = NEW(BoneData);
 	MALLOC_STR(self->name, name);
-	self->type = type;
+	CONST_CAST(BoneData*, self->parent) = parent;
+	self->scaleX = 1;
+	self->scaleY = 1;
+	return self;
 }
 
-void _Attachment_deinit (Attachment* self) {
-	FREE(self->vtable);
+void BoneData_dispose (BoneData* self) {
 	FREE(self->name);
+	FREE(self);
 }
 
-void Attachment_dispose (Attachment* self) {
-	VTABLE(Attachment, self) ->dispose(self);
-}
-
-}} // namespace cocos2d { namespace extension {
+#ifdef __cplusplus
+} }
+#endif

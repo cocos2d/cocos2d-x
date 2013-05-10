@@ -27,17 +27,19 @@
 #include <stdio.h>
 #include <spine/extension.h>
 
+#ifdef __cplusplus
 namespace cocos2d { namespace extension {
+#endif
 
 typedef struct _AttachmentLoaderVtable {
 	Attachment* (*newAttachment) (AttachmentLoader* self, Skin* skin, AttachmentType type, const char* name);
 	void (*dispose) (AttachmentLoader* self);
 } _AttachmentLoaderVtable;
 
-void _AttachmentLoader_init (AttachmentLoader* self, //
-		void (*dispose) (AttachmentLoader* self), //
+void _AttachmentLoader_init (AttachmentLoader* self, /**/
+		void (*dispose) (AttachmentLoader* self), /**/
 		Attachment* (*newAttachment) (AttachmentLoader* self, Skin* skin, AttachmentType type, const char* name)) {
-	CONST_CAST(void*, self->vtable) = NEW(_AttachmentLoaderVtable);
+	CONST_CAST(_AttachmentLoaderVtable*, self->vtable) = NEW(_AttachmentLoaderVtable);
 	VTABLE(AttachmentLoader, self) ->dispose = dispose;
 	VTABLE(AttachmentLoader, self) ->newAttachment = newAttachment;
 }
@@ -50,6 +52,7 @@ void _AttachmentLoader_deinit (AttachmentLoader* self) {
 
 void AttachmentLoader_dispose (AttachmentLoader* self) {
 	VTABLE(AttachmentLoader, self) ->dispose(self);
+	FREE(self);
 }
 
 Attachment* AttachmentLoader_newAttachment (AttachmentLoader* self, Skin* skin, AttachmentType type, const char* name) {
@@ -73,4 +76,6 @@ void _AttachmentLoader_setUnknownTypeError (AttachmentLoader* self, AttachmentTy
 	_AttachmentLoader_setError(self, "Unknown attachment type: ", buffer);
 }
 
-}} // namespace cocos2d { namespace extension {
+#ifdef __cplusplus
+} }
+#endif

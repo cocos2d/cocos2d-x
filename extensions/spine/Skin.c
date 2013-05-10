@@ -25,9 +25,10 @@
 
 #include <spine/Skin.h>
 #include <spine/extension.h>
-#include <stdio.h>
 
+#ifdef __cplusplus
 namespace cocos2d { namespace extension {
+#endif
 
 typedef struct _Entry _Entry;
 struct _Entry {
@@ -65,21 +66,21 @@ Skin* Skin_create (const char* name) {
 }
 
 void Skin_dispose (Skin* self) {
-	_Entry* entry = SUB_CAST(_Internal, self)->entries;
+	_Entry* entry = SUB_CAST(_Internal, self) ->entries;
 	while (entry) {
-		_Entry* nextEtry = entry->next;
+		_Entry* nextEntry = entry->next;
 		_Entry_dispose(entry);
-		entry = nextEtry;
+		entry = nextEntry;
 	}
 
 	FREE(self->name);
 	FREE(self);
 }
-
+#include <stdio.h>
 void Skin_addAttachment (Skin* self, int slotIndex, const char* name, Attachment* attachment) {
 	_Entry* newEntry = _Entry_create(slotIndex, name, attachment);
-	newEntry->next = SUB_CAST(_Internal, self)->entries;
-	SUB_CAST(_Internal, self)->entries = newEntry;
+	newEntry->next = SUB_CAST(_Internal, self) ->entries;
+	SUB_CAST(_Internal, self) ->entries = newEntry;
 }
 
 Attachment* Skin_getAttachment (const Skin* self, int slotIndex, const char* name) {
@@ -103,4 +104,6 @@ void Skin_attachAll (const Skin* self, Skeleton* skeleton, const Skin* oldSkin) 
 	}
 }
 
-}} // namespace cocos2d { namespace extension {
+#ifdef __cplusplus
+} }
+#endif

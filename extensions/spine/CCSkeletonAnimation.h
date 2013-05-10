@@ -23,29 +23,51 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  ******************************************************************************/
 
-#ifndef _SPINETEST_H_
-#define _SPINETEST_H_
+#ifndef SPINE_CCSKELETONANIMATION_H_
+#define SPINE_CCSKELETONANIMATION_H_
 
+#include <spine/spine.h>
+#include <spine/CCSkeleton.h>
 #include "cocos2d.h"
-#include "../testBasic.h"
-#include <spine/spine-cocos2dx.h>
 
-class SpineTestScene : public TestScene
-{
+namespace cocos2d { namespace extension {
+
+/**
+Draws an animated skeleton, providing a simple API for applying one or more animations and queuing animations to be played later.
+*/
+class CCSkeletonAnimation: public CCSkeleton {
 public:
-    virtual void runThisTest();
-};
+	std::vector<AnimationState*> states;
 
-class SpineTestLayer: public cocos2d::CCLayer {
-private:
-	cocos2d::extension::CCSkeletonAnimation* skeletonNode;
+	static CCSkeletonAnimation* createWithData (SkeletonData* skeletonData);
+	static CCSkeletonAnimation* createWithFile (const char* skeletonDataFile, Atlas* atlas, float scale = 1);
+	static CCSkeletonAnimation* createWithFile (const char* skeletonDataFile, const char* atlasFile, float scale = 1);
 
-public:
+	CCSkeletonAnimation (SkeletonData* skeletonData);
+	CCSkeletonAnimation (const char* skeletonDataFile, Atlas* atlas, float scale = 1);
+	CCSkeletonAnimation (const char* skeletonDataFile, const char* atlasFile, float scale = 1);
 
-	virtual bool init ();
+	virtual ~CCSkeletonAnimation ();
+
 	virtual void update (float deltaTime);
 
-	CREATE_FUNC (SpineTestLayer);
+	void addAnimationState (AnimationStateData* stateData = 0);
+	void setAnimationStateData (AnimationStateData* stateData, int stateIndex = 0);
+	void setMix (char* fromAnimation, char* toAnimation, float duration, int stateIndex = 0);
+	void setAnimation (char* name, bool loop, int stateIndex = 0);
+	void addAnimation (char* name, bool loop, float delay = 0, int stateIndex = 0);
+	void clearAnimation (int stateIndex = 0);
+
+protected:
+	CCSkeletonAnimation ();
+
+private:
+	typedef CCSkeleton super;
+	std::vector<AnimationStateData*> stateDatas;
+
+	void initialize ();
 };
 
-#endif // _EXAMPLELAYER_H_
+} }
+
+#endif /* SPINE_CCSKELETONANIMATION_H_ */

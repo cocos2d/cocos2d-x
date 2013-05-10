@@ -27,7 +27,9 @@
 #include <string.h>
 #include <spine/extension.h>
 
+#ifdef __cplusplus
 namespace cocos2d { namespace extension {
+#endif
 
 SkeletonData* SkeletonData_create () {
 	return NEW(SkeletonData);
@@ -96,4 +98,6 @@ Animation* SkeletonData_findAnimation (const SkeletonData* self, const char* ani
 	return 0;
 }
 
-}} // namespace cocos2d { namespace extension {
+#ifdef __cplusplus
+} }
+#endif

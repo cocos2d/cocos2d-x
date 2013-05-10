@@ -29,7 +29,9 @@
 #include <ctype.h>
 #include <spine/extension.h>
 
+#ifdef __cplusplus
 namespace cocos2d { namespace extension {
+#endif
 
 static const char* ep;
 
@@ -90,7 +92,7 @@ static const char* parse_number (Json *item, const char* num) {
 			subscale = (subscale * 10) + (*num++ - '0'); /* Number? */
 	}
 
-	n = sign * n * pow(10.0f, (scale + subscale * signsubscale)); /* number = +/- number.fraction * 10^+/- exponent */
+	n = sign * n * (float)pow(10.0f, (scale + subscale * signsubscale)); /* number = +/- number.fraction * 10^+/- exponent */
 
 	item->valuefloat = n;
 	item->valueint = (int)n;
@@ -372,4 +374,6 @@ int Json_getInt (Json* value, const char* name, int defaultValue) {
 	return value ? (int)value->valuefloat : defaultValue;
 }
 
-}} // namespace cocos2d { namespace extension {
+#ifdef __cplusplus
+} }
+#endif

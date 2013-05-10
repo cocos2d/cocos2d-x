@@ -25,7 +25,10 @@
 #ifndef SPINE_JSON_H_
 #define SPINE_JSON_H_
 
+#ifdef __cplusplus
 namespace cocos2d { namespace extension {
+extern "C" {
+#endif
 
 /* Json Types: */
 #define Json_False 0
@@ -72,6 +75,9 @@ int Json_getInt (Json* json, const char* name, int defaultValue);
 /* For analysing failed parses. This returns a pointer to the parse error. You'll probably need to look a few chars back to make sense of it. Defined when Json_create() returns 0. 0 when Json_create() succeeds. */
 const char* Json_getError (void);
 
-}} // namespace cocos2d { namespace extension {
+#ifdef __cplusplus
+}
+} }
+#endif
 
 #endif /* SPINE_JSON_H_ */

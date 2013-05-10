@@ -26,7 +26,10 @@
 #ifndef SPINE_ATLAS_H_
 #define SPINE_ATLAS_H_
 
+#ifdef __cplusplus
 namespace cocos2d { namespace extension {
+extern "C" {
+#endif
 
 typedef enum {
 	ATLAS_ALPHA, ATLAS_INTENSITY, ATLAS_LUMINANCE_ALPHA, ATLAS_RGB565, ATLAS_RGBA4444, ATLAS_RGB888, ATLAS_RGBA8888
@@ -53,7 +56,7 @@ struct AtlasPage {
 	AtlasFilter minFilter, magFilter;
 	AtlasWrap uWrap, vWrap;
 
-	void* texture;
+	void* rendererObject;
 	int width, height;
 
 	AtlasPage* next;
@@ -69,7 +72,7 @@ struct AtlasRegion {
 	const char* name;
 	int x, y, width, height;
 	float u, v, u2, v2;
-	float offsetX, offsetY;
+	int offsetX, offsetY;
 	int originalWidth, originalHeight;
 	int index;
 	int/*bool*/rotate;
@@ -101,6 +104,9 @@ void Atlas_dispose (Atlas* atlas);
 /* Returns 0 if the region was not found. */
 AtlasRegion* Atlas_findRegion (const Atlas* self, const char* name);
 
-}} // namespace cocos2d { namespace extension {
+#ifdef __cplusplus
+}
+} }
+#endif
 
 #endif /* SPINE_ATLAS_H_ */

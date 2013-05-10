@@ -26,7 +26,10 @@
 #ifndef SPINE_BONEDATA_H_
 #define SPINE_BONEDATA_H_
 
+#ifdef __cplusplus
 namespace cocos2d { namespace extension {
+extern "C" {
+#endif
 
 typedef struct BoneData BoneData;
 struct BoneData {
@@ -41,6 +44,9 @@ struct BoneData {
 BoneData* BoneData_create (const char* name, BoneData* parent);
 void BoneData_dispose (BoneData* self);
 
-}} // namespace cocos2d { namespace extension {
+#ifdef __cplusplus
+}
+} }
+#endif
 
 #endif /* SPINE_BONEDATA_H_ */

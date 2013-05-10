@@ -23,34 +23,38 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  ******************************************************************************/
 
-#include <spine/SlotData.h>
+#include <spine/Attachment.h>
 #include <spine/extension.h>
+#include <spine/Slot.h>
 
+#ifdef __cplusplus
 namespace cocos2d { namespace extension {
+#endif
 
-SlotData* SlotData_create (const char* name, BoneData* boneData) {
-	SlotData* self = NEW(SlotData);
+typedef struct _AttachmentVtable {
+	void (*dispose) (Attachment* self);
+} _AttachmentVtable;
+
+void _Attachment_init (Attachment* self, const char* name, AttachmentType type, /**/
+		void (*dispose) (Attachment* self)) {
+
+	CONST_CAST(_AttachmentVtable*, self->vtable) = NEW(_AttachmentVtable);
+	VTABLE(Attachment, self) ->dispose = dispose;
+
 	MALLOC_STR(self->name, name);
-	CONST_CAST(BoneData*, self->boneData) = boneData;
-	self->r = 1;
-	self->g = 1;
-	self->b = 1;
-	self->a = 1;
-	return self;
+	self->type = type;
 }
 
-void SlotData_dispose (SlotData* self) {
+void _Attachment_deinit (Attachment* self) {
+	FREE(self->vtable);
 	FREE(self->name);
-	FREE(self->attachmentName);
+}
+
+void Attachment_dispose (Attachment* self) {
+	VTABLE(Attachment, self) ->dispose(self);
 	FREE(self);
 }
 
-void SlotData_setAttachmentName (SlotData* self, const char* attachmentName) {
-	FREE(self->attachmentName);
-	if (attachmentName)
-		MALLOC_STR(self->attachmentName, attachmentName);
-	else
-		CONST_CAST(char*, self->attachmentName) = 0;
-}
-
-}} // namespace cocos2d { namespace extension {
+#ifdef __cplusplus
+} }
+#endif
