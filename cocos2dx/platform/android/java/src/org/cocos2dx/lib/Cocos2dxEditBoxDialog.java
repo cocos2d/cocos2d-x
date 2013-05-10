@@ -286,6 +286,115 @@ public class Cocos2dxEditBoxDialog extends Dialog {
 		});
 	}
 
+		//创建输入框
+	static EditText createEditText(final Context pContext, 
+			final String pMessage, final int pInputMode, 
+			final int pInputFlag, final int pReturnType, 
+			final int pMaxLength)
+	{
+		final EditText input = new EditText(pContext);
+		
+		input.setText(pMessage);
+
+		int oldImeOptions = input.getImeOptions();
+		input.setImeOptions(oldImeOptions | EditorInfo.IME_FLAG_NO_EXTRACT_UI);
+		oldImeOptions = input.getImeOptions();
+
+		int inputModeContraints = 0;
+		int inputFlagConstraints = 0;
+		switch (pInputMode) {
+			case 0:
+				inputModeContraints = InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_MULTI_LINE;
+				break;
+			case 1:
+				inputModeContraints = InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS;
+				break;
+			case 2:
+				inputModeContraints = InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED;
+				break;
+			case 3:
+				inputModeContraints = InputType.TYPE_CLASS_PHONE;
+				break;
+			case 4:
+				inputModeContraints = InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_URI;
+				break;
+			case 5:
+				inputModeContraints = InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL | InputType.TYPE_NUMBER_FLAG_SIGNED;
+				break;
+			case 6:
+				inputModeContraints = InputType.TYPE_CLASS_TEXT;
+				break;
+			default:
+
+				break;
+		}
+
+//		if (this.mIsMultiline) {
+//			inputModeContraints |= InputType.TYPE_TEXT_FLAG_MULTI_LINE;
+//		}
+
+		input.setInputType(inputModeContraints | inputFlagConstraints);
+
+		switch (pInputFlag) {
+			case 0:
+				inputFlagConstraints = InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD;
+				break;
+			case 1:
+				inputFlagConstraints = InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS;
+				break;
+			case 2:
+				inputFlagConstraints = InputType.TYPE_TEXT_FLAG_CAP_WORDS;
+				break;
+			case 3:
+				inputFlagConstraints = InputType.TYPE_TEXT_FLAG_CAP_SENTENCES;
+				break;
+			case 4:
+				inputFlagConstraints = InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS;
+				break;
+			default:
+				break;
+		}
+
+		input.setInputType(inputFlagConstraints | inputModeContraints);
+
+		switch (pReturnType) {
+			case 0:
+				input.setImeOptions(oldImeOptions | EditorInfo.IME_ACTION_NONE);
+				break;
+			case 1:
+				input.setImeOptions(oldImeOptions | EditorInfo.IME_ACTION_DONE);
+				break;
+			case 2:
+				input.setImeOptions(oldImeOptions | EditorInfo.IME_ACTION_SEND);
+				break;
+			case 3:
+				input.setImeOptions(oldImeOptions | EditorInfo.IME_ACTION_SEARCH);
+				break;
+			case 4:
+				input.setImeOptions(oldImeOptions | EditorInfo.IME_ACTION_GO);
+				break;
+			default:
+				input.setImeOptions(oldImeOptions | EditorInfo.IME_ACTION_NONE);
+				break;
+		}
+
+		if (pMaxLength > 0) {
+			input.setFilters(new InputFilter[] { new InputFilter.LengthFilter(pMaxLength) });
+		}
+		
+		final Handler initHandler = new Handler();
+		initHandler.postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				input.requestFocus();
+				final InputMethodManager imm = (InputMethodManager) pContext.getSystemService(Context.INPUT_METHOD_SERVICE);
+				imm.showSoftInput(input, 0);
+			}
+		}, 200);
+		
+		return input;
+	}
+
 
 	// ===========================================================
 	// Getter & Setter

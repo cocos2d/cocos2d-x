@@ -30,6 +30,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Handler;
 import android.os.Message;
+import android.view.View;
+import android.widget.EditText;
 
 public class Cocos2dxHandler extends Handler {
 	// ===========================================================
@@ -91,14 +93,42 @@ public class Cocos2dxHandler extends Handler {
 	}
 	
 	private void showEditBoxDialog(Message msg) {
+		Cocos2dxActivity theActivity = this.mActivity.get();
 		EditBoxMessage editBoxMessage = (EditBoxMessage)msg.obj;
-		new Cocos2dxEditBoxDialog(this.mActivity.get(),
-				editBoxMessage.title,
-				editBoxMessage.content,
-				editBoxMessage.inputMode,
-				editBoxMessage.inputFlag,
-				editBoxMessage.returnType,
-				editBoxMessage.maxLength).show();
+		
+    	final EditText textEntryView = Cocos2dxEditBoxDialog.createEditText (
+    					theActivity,
+    					editBoxMessage.content,
+    					editBoxMessage.inputMode,
+    					editBoxMessage.inputFlag,
+    					editBoxMessage.returnType,
+    					editBoxMessage.maxLength
+    					);
+    	
+    	new AlertDialog.Builder(theActivity)
+          .setTitle("请输入：")
+          .setView(textEntryView)
+          .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+              public void onClick(DialogInterface dialog, int whichButton) {
+                  /* User clicked OK so do some stuff */
+            	  Cocos2dxHelper.setEditTextDialogResult(textEntryView.getText().toString());
+              }
+          })
+          .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+              public void onClick(DialogInterface dialog, int whichButton) {
+
+                  /* User clicked cancel so do some stuff */
+              }
+          })
+          .create().show();
+      
+//		new Cocos2dxEditBoxDialog(this.mActivity.get(),
+//				editBoxMessage.title,
+//				editBoxMessage.content,
+//				editBoxMessage.inputMode,
+//				editBoxMessage.inputFlag,
+//				editBoxMessage.returnType,
+//				editBoxMessage.maxLength).show();
 	}
 	
 	// ===========================================================
