@@ -144,6 +144,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\cocoa\CCAffineTransform.cpp" />
     <ClCompile Include="..\cocoa\CCArray.cpp" />
     <ClCompile Include="..\cocoa\CCAutoreleasePool.cpp" />
+    <ClCompile Include="..\cocoa\CCDataVisitor.cpp" />
     <ClCompile Include="..\cocoa\CCDictionary.cpp" />
     <ClCompile Include="..\cocoa\CCGeometry.cpp" />
     <ClCompile Include="..\cocoa\CCNS.cpp" />
@@ -268,7 +269,11 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\cocoa\CCAffineTransform.h" />
     <ClInclude Include="..\cocoa\CCArray.h" />
     <ClInclude Include="..\cocoa\CCAutoreleasePool.h" />
+    <ClInclude Include="..\cocoa\CCBool.h" />
+    <ClInclude Include="..\cocoa\CCDataVisitor.h" />
     <ClInclude Include="..\cocoa\CCDictionary.h" />
+    <ClInclude Include="..\cocoa\CCDouble.h" />
+    <ClInclude Include="..\cocoa\CCFloat.h" />
     <ClInclude Include="..\cocoa\CCGeometry.h" />
     <ClInclude Include="..\cocoa\CCInteger.h" />
     <ClInclude Include="..\cocoa\CCNS.h" />
