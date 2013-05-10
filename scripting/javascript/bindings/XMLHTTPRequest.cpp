@@ -28,13 +28,18 @@
 
 #include "XMLHTTPRequest.h"
 #include <string>
-#include "pthread.h"
 
 using namespace std;
 
 #pragma mark - MinXmlHttpRequest
 
 JSContext *cx;
+
+struct thread_args
+{
+    MinXmlHttpRequest *obj;
+    JSContext *cx;
+};
 
 /**
  *  gotHeader - Callback for curl request to retrieve header
@@ -185,20 +190,36 @@ void MinXmlHttpRequest::_setCurlRequestHeader() {
     
 }
 
-/**
- * _sendCurlRequest - Send out request and fire callback when done.
- *
- */
-void MinXmlHttpRequest::_sendCurlRequest(JSContext *cx) {
-    
-    long http_code = 0;
-    
-    CURLcode curl_code = curl_easy_perform(curlHandle);
+void MinXmlHttpRequest::handle_requestResponse(MinXmlHttpRequest *sender, cocos2d::extension::CCHttpResponse *response) {
 
-    curl_easy_getinfo(curlHandle, CURLINFO_RESPONSE_CODE, &http_code);
-
-    // Set States and Status, then invoke Callback for State-change.
-    if (http_code == 200 && curl_code != CURLE_ABORTED_BY_CALLBACK)
+    if (0 != strlen(response->getHttpRequest()->getTag()))
+    {
+        CCLog("%s completed", response->getHttpRequest()->getTag());
+    }
+    
+    int statusCode = response->getResponseCode();
+    char statusString[64] = {};
+    sprintf(statusString, "HTTP Status Code: %d, tag = %s", statusCode, response->getHttpRequest()->getTag());
+    CCLog("response code: %d", statusCode);
+    
+    if (!response->isSucceed())
+    {
+        CCLog("response failed");
+        CCLog("error buffer: %s", response->getErrorBuffer());
+        return;
+    }
+    
+    // store data
+    std::vector<char> *buffer = response->getResponseData();
+    char* concatenated = (char*) malloc(buffer->size() + 1);
+    std::string s2(buffer->begin(), buffer->end());
+    
+    strcpy(concatenated, s2.c_str());
+    
+    CCLog("===");
+    CCLog(concatenated);
+    
+    if (statusCode == 200)
     {
         //Succeeded
         status = 200;
@@ -209,8 +230,34 @@ void MinXmlHttpRequest::_sendCurlRequest(JSContext *cx) {
         //Failed
         status = 0;
     }
+    
+    js_proxy_t * p;
+    void* ptr = (void*)this;
+    JS_GET_PROXY(p, ptr);
+    
+    if(p){
+        JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
+       
+        if (onreadystateCallback) {
+            //JS_IsExceptionPending(cx) && JS_ReportPendingException(cx);
+            jsval fval = OBJECT_TO_JSVAL(onreadystateCallback);
+            jsval out;
+            JS_CallFunctionValue(cx, NULL, fval, 0, NULL, &out);
+        }
+     
+    }
 
-    // State has been changed. Run the callback function!
+}
+/**
+ * _sendCurlRequest - Send out request and fire callback when done.
+ *
+ */
+void MinXmlHttpRequest::_sendRequest(JSContext *cx) {
+    
+    cc_request->setResponseCallback(this, cocos2d::extension::SEL_HttpResponse(&MinXmlHttpRequest::handle_requestResponse));
+    cocos2d::extension::CCHttpClient::getInstance()->send(cc_request);
+    cc_request->release();
+        // State has been changed. Run the callback function!
     if (onreadystateCallback) {
         JS_IsExceptionPending(cx) && JS_ReportPendingException(cx);
         jsval fval = OBJECT_TO_JSVAL(onreadystateCallback);
@@ -218,7 +265,7 @@ void MinXmlHttpRequest::_sendCurlRequest(JSContext *cx) {
         JS_CallFunctionValue(cx, NULL, fval, 0, NULL, &out);
     }
     
-    curl_easy_cleanup(curlHandle);
+    //curl_easy_cleanup(curlHandle);
     
 }
 
@@ -231,14 +278,16 @@ MinXmlHttpRequest::MinXmlHttpRequest() : onreadystateCallback(cx, NULL), isNetwo
     http_header.clear();
     request_header.clear();
     headers = NULL;
-    curlHandle = curl_easy_init();
     
-	curl_easy_setopt(curlHandle, CURLOPT_WRITEFUNCTION, MinXmlHttpRequest::gotData);
+    // curlHandle = curl_easy_init();
+    cc_request = new cocos2d::extension::CCHttpRequest();
+    
+	/*curl_easy_setopt(curlHandle, CURLOPT_WRITEFUNCTION, MinXmlHttpRequest::gotData);
 	curl_easy_setopt(curlHandle, CURLOPT_WRITEDATA, this);
 	curl_easy_setopt(curlHandle, CURLOPT_HEADERFUNCTION, MinXmlHttpRequest::gotHeader);
 	curl_easy_setopt(curlHandle, CURLOPT_WRITEHEADER, this);
     curl_easy_setopt(curlHandle, CURLOPT_SSL_VERIFYPEER, 0L);
-    curl_easy_setopt(curlHandle, CURLOPT_SSL_VERIFYHOST, 0L);
+    curl_easy_setopt(curlHandle, CURLOPT_SSL_VERIFYHOST, 0L);*/
     
 }
 
@@ -250,9 +299,13 @@ MinXmlHttpRequest::~MinXmlHttpRequest() {
 
     http_header.clear();
     request_header.clear();
-    if (curlHandle) {
+
+    if (cc_request) {
+        cc_request->release();
+    }
+    /*if (curlHandle) {
 		curl_easy_cleanup(curlHandle);
-	}
+	}*/
 }
 
 /**
@@ -268,9 +321,21 @@ JS_BINDED_CLASS_GLUE_IMPL(MinXmlHttpRequest);
 JS_BINDED_CONSTRUCTOR_IMPL(MinXmlHttpRequest)
 {
     MinXmlHttpRequest* req = new MinXmlHttpRequest();
+    js_proxy_t *p;
     jsval out;
-    JS_WRAP_OBJECT_IN_VAL(MinXmlHttpRequest, req, out);
+    
+    JSObject *obj = JS_NewObject(cx, &MinXmlHttpRequest::js_class, MinXmlHttpRequest::js_proto, MinXmlHttpRequest::js_parent);
+    
+    if (obj) {
+        JS_SetPrivate(obj, req);
+        out = OBJECT_TO_JSVAL(obj);
+    }
+
     JS_SET_RVAL(cx, vp, out);
+    JS_NEW_PROXY(p, req, obj);
+    
+    JS_AddNamedObjectRoot(cx, &p->obj, "XMLHttpRequest");
+    
     return JS_TRUE;
 }
 
@@ -562,15 +627,20 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, open)
         {*/
         
         if (meth.compare("post") == 0 || meth.compare("POST") == 0) {
-            curl_easy_setopt(curlHandle, CURLOPT_POST, 1);            
+            cc_request->setRequestType(cocos2d::extension::CCHttpRequest::kHttpPost);
+            //curl_easy_setopt(curlHandle, CURLOPT_POST, 1);
         }
         else {
-            curl_easy_setopt(curlHandle, CURLOPT_POST, 0);
+            cc_request->setRequestType(cocos2d::extension::CCHttpRequest::kHttpGet);
+            //curl_easy_setopt(curlHandle, CURLOPT_POST, 0);
         }
-        curl_easy_setopt(curlHandle, CURLOPT_URL, url.c_str());
+        
+        cc_request->setUrl(url.c_str());
+        //curl_easy_setopt(curlHandle, CURLOPT_URL, url.c_str());
+        
         isNetwork = true;
         readyState = OPENED;
-        //}
+        
         return JS_TRUE;
     }
     
@@ -589,6 +659,9 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, send)
     JSString *str;
     pthread_t thread;
     int iret;
+    struct thread_args *thread_arguments;//(struct Node *)malloc(sizeof(struct Node))
+    
+    thread_arguments = (struct thread_args *)malloc(sizeof(struct thread_args));
     
     // Clean up header map. New request, new headers!
     http_header.clear();
@@ -598,17 +671,17 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, send)
     };
         
     if (meth.compare("post") == 0 || meth.compare("POST") == 0) {
-        char *data = JS_EncodeString(cx, str);
-        size_t length = JS_GetStringEncodingLength(cx, str);
         
-        curl_easy_setopt(curlHandle, CURLOPT_POSTFIELDS, data);
-        curl_easy_setopt(curlHandle, CURLOPT_POSTFIELDSIZE, length);
+        char *data = JS_EncodeString(cx, str);
+        cc_request->setRequestData(data, strlen(data));
+        //curl_easy_setopt(curlHandle, CURLOPT_POSTFIELDS, data);
+
         
     }
     
     // Set Headers if needed.
-    _setCurlRequestHeader();
-    _sendCurlRequest(cx);
+    //_setCurlRequestHeader();
+    _sendRequest(cx);
         
     return JS_TRUE;
 }

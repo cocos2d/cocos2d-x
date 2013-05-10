@@ -30,6 +30,8 @@
 #define __FAKE_XMLHTTPREQUEST_H__
 
 #include "network/HttpClient.h"
+#include "network/HttpRequest.h"
+#include "network/HttpResponse.h"
 #include "js_bindings_config.h"
 #include "ScriptingCore.h"
 #include "jstypes.h"
@@ -53,9 +55,10 @@ const unsigned short HEADERS_RECEIVED = 2;
 const unsigned short LOADING = 3;
 const unsigned short DONE = 4;
 
-class MinXmlHttpRequest : public JSBindedObject
+class MinXmlHttpRequest : public cocos2d::CCLayer
 {
     std::string url;
+    JSContext *cx;
     std::string meth;
 	std::string type;
 	std::stringstream data;
@@ -68,6 +71,8 @@ class MinXmlHttpRequest : public JSBindedObject
     unsigned timeout;
 	bool isAsync;
     CURL* curlHandle;
+    cocos2d::extension::CCHttpRequest* cc_request;
+    
 	bool isNetwork;
     bool withCredentialsValue = false;
     map<string, string> http_header;
@@ -78,7 +83,7 @@ class MinXmlHttpRequest : public JSBindedObject
 	void _gotData(char* ptr, size_t len);
     void _setRequestHeader(const char* field, const char* value);
     void _setCurlRequestHeader();
-    void _sendCurlRequest(JSContext *cx);
+    void _sendRequest(JSContext *cx);
     
 public:
     MinXmlHttpRequest();
@@ -102,6 +107,8 @@ public:
     JS_BINDED_FUNC(MinXmlHttpRequest, getResponseHeader);
     JS_BINDED_FUNC(MinXmlHttpRequest, setRequestHeader);
     JS_BINDED_FUNC(MinXmlHttpRequest, overrideMimeType);
+    
+    void handle_requestResponse(MinXmlHttpRequest *sender, cocos2d::extension::CCHttpResponse *response);
     
     static size_t gotHeader(void *ptr, size_t size, size_t nmemb, void *userdata);
     static size_t gotData(char *ptr, size_t size, size_t nmemb, void *userdata);
