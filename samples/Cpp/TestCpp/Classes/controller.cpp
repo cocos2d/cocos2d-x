@@ -131,6 +131,9 @@ static TestScene* CreateTestScene(int nIdx)
 	case TEST_CONFIGURATION:
 		pScene = new ConfigurationTestScene();
 		break;
+    case TEST_COCOASERIALIZATION:
+        pScene = new CocoaSerializationTestScene();
+		break;
 	default:
         break;
     }

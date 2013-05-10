@@ -274,6 +274,9 @@
 		1AB2D72816B6804D00D72C48 /* FileUtilsTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AB2D72616B6804D00D72C48 /* FileUtilsTest.cpp */; };
 		1AB2D72A16B681F900D72C48 /* Misc in Resources */ = {isa = PBXBuildFile; fileRef = 1AB2D72916B681F900D72C48 /* Misc */; };
 		1ABA2873174DAF67007A6C10 /* ConfigurationTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1ABA2871174DAF67007A6C10 /* ConfigurationTest.cpp */; };
+                A059B9AD174D9B8E0078F841 /* CocoaSerializationTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A059B9AB174D9B8E0078F841 /* CocoaSerializationTest.cpp */; };
+                A059B9AD174D9B8E0078F842 /* CocoaSingleTestRunner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A059B9AB174D9B8E0078F842 /* CocoaSingleTestRunner.cpp */; };
+                A059B9AD174D9B8E0078F843 /* CocoaDataEqualityChecker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A059B9AB174D9B8E0078F843 /* CocoaDataEqualityChecker.cpp */; };
 		41BC70E415BF81A5006A0A6C /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 41BC70DA15BF81A5006A0A6C /* AppController.mm */; };
 		41BC70E515BF81A5006A0A6C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 41BC70DC15BF81A5006A0A6C /* InfoPlist.strings */; };
 		41BC70E615BF81A5006A0A6C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41BC70DE15BF81A5006A0A6C /* MainMenu.xib */; };
@@ -872,6 +875,12 @@
 		1AB2D72916B681F900D72C48 /* Misc */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Misc; sourceTree = "<group>"; };
 		1ABA2871174DAF67007A6C10 /* ConfigurationTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConfigurationTest.cpp; sourceTree = "<group>"; };
 		1ABA2872174DAF67007A6C10 /* ConfigurationTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigurationTest.h; sourceTree = "<group>"; };
+		A059B9AB174D9B8E0078F841 /* CocoaSerializationTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CocoaSerializationTest.cpp; sourceTree = "<group>"; };
+		A059B9AC174D9B8E0078F841 /* CocoaSerializationTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaSerializationTest.h; sourceTree = "<group>"; };
+		A059B9AB174D9B8E0078F842 /* CocoaSingleTestRunner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CocoaSingleTestRunner.cpp; sourceTree = "<group>"; };
+		A059B9AC174D9B8E0078F842 /* CocoaSingleTestRunner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaSingleTestRunner.h; sourceTree = "<group>"; };
+		A059B9AB174D9B8E0078F843 /* CocoaDataEqualityChecker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CocoaDataEqualityChecker.cpp; sourceTree = "<group>"; };
+		A059B9AC174D9B8E0078F843 /* CocoaDataEqualityChecker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaDataEqualityChecker.h; sourceTree = "<group>"; };
 		1D6058910D05DD3D006BFB54 /* TestCpp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestCpp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		41BC70D915BF81A5006A0A6C /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = SOURCE_ROOT; };
 		41BC70DA15BF81A5006A0A6C /* AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppController.mm; sourceTree = SOURCE_ROOT; };
@@ -945,6 +954,7 @@
 				15C647E9165F2B39007D4F18 /* ClippingNodeTest */,
 				15AA9CA715B7EC460033D6C2 /* CocosDenshionTest */,
 				1ABA2870174DAF67007A6C10 /* ConfigurationTest */,
+				A059B9AA174D9B8D0078F841 /* CocoaSerializationTest */,
 				15AA9CAA15B7EC460033D6C2 /* controller.cpp */,
 				15AA9CAB15B7EC460033D6C2 /* controller.h */,
 				15AA9CAC15B7EC460033D6C2 /* CurlTest */,
@@ -2255,6 +2265,20 @@
 			);
 			name = ConfigurationTest;
 			path = ../Classes/ConfigurationTest;
+			sourceTree = "<group>";
+		};
+                A059B9AA174D9B8D0078F841 /* CocoaSerializationTest */ = {
+			isa = PBXGroup;
+			children = (
+				A059B9AB174D9B8E0078F841 /* CocoaSerializationTest.cpp */,
+				A059B9AC174D9B8E0078F841 /* CocoaSerializationTest.h */,
+				A059B9AB174D9B8E0078F842 /* CocoaSingleTestRunner.cpp */,
+				A059B9AC174D9B8E0078F842 /* CocoaSingleTestRunner.h */,
+				A059B9AB174D9B8E0078F843 /* CocoaDataEqualityChecker.cpp */,
+				A059B9AC174D9B8E0078F843 /* CocoaDataEqualityChecker.h */,
+			);
+			name = CocoaSerializationTest;
+			path = ../Classes/CocoaSerializationTest;
 			sourceTree = "<group>";
 		};
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {

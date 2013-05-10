@@ -59,6 +59,7 @@
 #include "TexturePackerEncryptionTest/TextureAtlasEncryptionTest.h"
 #include "DataVisitorTest/DataVisitorTest.h"
 #include "ConfigurationTest/ConfigurationTest.h"
+#include "CocoaSerializationTest/CocoaSerializationTest.h"
 enum
 {
     TEST_ACTIONS = 0,
@@ -118,6 +119,7 @@ enum
     TEST_TEXTUREPACKER_ENCRYPTION,
     TEST_DATAVISTOR,
 	TEST_CONFIGURATION,
+    TEST_COCOASERIALIZATION,
 
 	// last one
 	TESTS_COUNT,
@@ -182,7 +184,8 @@ const std::string g_aTestNames[TESTS_COUNT] = {
     "SpineTest",
     "TexturePackerEncryption",
     "DataVistorTest",
-	"ConfigurationTest"
+	"ConfigurationTest",
+    "CocoaSerializationTest"
 };
 
 #endif

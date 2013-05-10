@@ -85,6 +85,9 @@ SOURCES = ../Classes/AccelerometerTest/AccelerometerTest.cpp \
 	../Classes/FileUtilsTest/FileUtilsTest.cpp \
 	../Classes/DataVisitorTest/DataVisitorTest.cpp \
 	../Classes/ConfigurationTest/ConfigurationTest.cpp \
+        ../Classes/CocoaSerializationTest/CocoaSerializationTest.cpp \
+        ../Classes/CocoaSerializationTest/CocoaSingleTestRunner.cpp \
+        ../Classes/CocoaSerializationTest/CocoaDataEqualityChecker.cpp \
 	../Classes/controller.cpp \
 	../Classes/testBasic.cpp \
 	../Classes/AppDelegate.cpp \

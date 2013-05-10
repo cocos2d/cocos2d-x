@@ -485,6 +485,15 @@ files
 	(../Classes/ConfigurationTest)
 	ConfigurationTest.cpp
 	ConfigurationTest.h
+
+	[Test/CocoaSerializationTest]
+	(../Classes/CocoaSerializationTest)
+	CocoaSerializationTest.cpp
+	CocoaSerializationTest.h
+        CocoaSingleTestRunner.cpp
+        CocoaSingleTestRunner.h
+        CocoaDataEqualityChecker.cpp
+        CocoaDataEqualityChecker.h
 }
 
 
