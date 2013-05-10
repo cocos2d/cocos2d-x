@@ -475,6 +475,11 @@ files
 	(../Classes/SpineTest)
 	SpineTest.cpp
 	SpineTest.h
+
+	[Test/DataVisitorTest]
+	(../Classes/DataVisitorTest)
+	DataVisitorTest.cpp
+	DataVisitorTest.h
 }
 
 

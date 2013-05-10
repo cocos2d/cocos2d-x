@@ -210,6 +210,9 @@ public:
     /* override functions */
     virtual CCObject* copyWithZone(CCZone* pZone);
 
+    /* override functions */
+    virtual void acceptVisitor(CCDataVisitor &visitor);
+
 public:
     ccArray* data;
     CCArray();
