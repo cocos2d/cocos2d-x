@@ -1,17 +1,34 @@
 language: cpp
 script:
- - export NACL_SDK_ROOT=$PWD/nacl_sdk/pepper_canary
- - export PATH=$PATH:$NACL_SDK_ROOT/toolchain/linux_x86_newlib/bin
- - make -j4
-install:
- - "if [ \"$PLATFORM\" != nacl ]; then ./install-deps-linux.sh; fi"
- - "if [ \"$PLATFORM\" = nacl ]; then sudo apt-get update; fi"
- - "if [ \"$PLATFORM\" = nacl ]; then sudo apt-get install libc6:i386; fi"
- - "if [ \"$PLATFORM\" = nacl ]; then wget http://storage.googleapis.com/nativeclient-mirror/nacl/nacl_sdk/nacl_sdk.zip; fi"
- - "if [ \"$PLATFORM\" = nacl ]; then unzip nacl_sdk.zip; fi"
- - "if [ \"$PLATFORM\" = nacl ]; then nacl_sdk/naclsdk update --force pepper_canary; fi"
+ - if [ $PLATFORM = android ]; then export NDK_ROOT=$PWD/android-ndk; fi
+ - if [ $PLATFORM = android ]; then cd samples/$SAMPLE_LANG/$APPNAME/proj.android; fi
+ - if [ $PLATFORM = android ]; then ./build_native.sh; fi
+ - if [ $PLATFORM != android ]; then export NACL_SDK_ROOT=$PWD/nacl_sdk/pepper_canary; fi
+ - if [ $PLATFORM != android ]; then export PATH=$PATH:$NACL_SDK_ROOT/toolchain/linux_x86_newlib/bin; fi
+ - if [ $PLATFORM != android ]; then make -j4; fi
+before_install:
+ - if [ $PLATFORM = linux ]; then ./install-deps-linux.sh; fi
+ - if [ $PLATFORM = nacl ]; then sudo apt-get update; fi
+ - if [ $PLATFORM = nacl ]; then sudo apt-get install libc6:i386; fi
+ - if [ $PLATFORM = nacl ]; then wget http://storage.googleapis.com/nativeclient-mirror/nacl/nacl_sdk/nacl_sdk.zip; fi
+ - if [ $PLATFORM = nacl ]; then unzip nacl_sdk.zip; fi
+ - if [ $PLATFORM = nacl ]; then nacl_sdk/naclsdk update --force pepper_canary; fi
+ - if [ $PLATFORM = android ]; then curl -O http://dl.google.com/android/ndk/android-ndk-r8e-linux-x86_64.tar.bz2; fi
+ - if [ $PLATFORM = android ]; then tar xjf android-ndk-r8e-linux-x86_64.tar.bz2; fi
+ - if [ $PLATFORM = android ]; then mv android-ndk-r8e android-ndk; fi
 env:
  - PLATFORM=nacl DEBUG=1
  - PLATFORM=nacl DEBUG=0
  - PLATFORM=linux DEBUG=1
  - PLATFORM=linux DEBUG=0
+ - PLATFORM=android SAMPLE_LANG=Cpp APPNAME=HelloCpp
+ - PLATFORM=android SAMPLE_LANG=Cpp APPNAME=TestCpp
+ - PLATFORM=android SAMPLE_LANG=Cpp APPNAME=SimpleGame
+ - PLATFORM=android SAMPLE_LANG=Cpp APPNAME=AssetsManagerTest
+ - PLATFORM=android SAMPLE_LANG=Javascript APPNAME=CocosDragonJS
+ - PLATFORM=android SAMPLE_LANG=Javascript APPNAME=CrystalCraze
+ - PLATFORM=android SAMPLE_LANG=Javascript APPNAME=MoonWarriors
+ - PLATFORM=android SAMPLE_LANG=Javascript APPNAME=TestJavascript
+ - PLATFORM=android SAMPLE_LANG=Javascript APPNAME=WatermelonWithMe
+ - PLATFORM=android SAMPLE_LANG=Lua APPNAME=HelloLua
+ - PLATFORM=android SAMPLE_LANG=Lua APPNAME=TestLua
