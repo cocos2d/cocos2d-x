@@ -131,6 +131,7 @@
     <ClCompile Include="..\Classes\ExtensionsTest\TableViewTest\TableViewTestScene.cpp" />
     <ClCompile Include="..\Classes\FileUtilsTest\FileUtilsTest.cpp" />
     <ClCompile Include="..\Classes\SpineTest\SpineTest.cpp" />
+    <ClCompile Include="..\Classes\TexturePackerEncryptionTest\TextureAtlasEncryptionTest.cpp" />
     <ClCompile Include="..\Classes\VisibleRect.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
@@ -226,6 +227,7 @@
     <ClInclude Include="..\Classes\ExtensionsTest\TableViewTest\TableViewTestScene.h" />
     <ClInclude Include="..\Classes\FileUtilsTest\FileUtilsTest.h" />
     <ClInclude Include="..\Classes\SpineTest\SpineTest.h" />
+    <ClInclude Include="..\Classes\TexturePackerEncryptionTest\TextureAtlasEncryptionTest.h" />
     <ClInclude Include="..\Classes\VisibleRect.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="..\Classes\AppDelegate.h" />

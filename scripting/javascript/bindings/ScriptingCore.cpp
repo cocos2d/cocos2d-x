@@ -45,7 +45,7 @@
 
 #include "js_bindings_config.h"
 
-
+#define BYTE_CODE_FILE_EXT ".jsc"
 
 pthread_t debugThread;
 string inData;
@@ -445,45 +445,57 @@ void ScriptingCore::createGlobalContext() {
     }
 }
 
+static std::string RemoveFileExt(const std::string& filePath) {
+    size_t pos = filePath.rfind('.');
+    if (0 < pos) {
+        return filePath.substr(0, pos);
+    }
+    else {
+        return filePath;
+    }
+}
+
 JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* cx)
 {
     if (!path) {
         return false;
     }
     cocos2d::CCFileUtils *futil = cocos2d::CCFileUtils::sharedFileUtils();
-    std::string rpath;
-    if (path[0] == '/') {
-        rpath = path;
-    } else {
-        rpath = futil->fullPathForFilename(path);
-    }
+    std::string fullPath = futil->fullPathForFilename(path);
     if (global == NULL) {
         global = global_;
     }
     if (cx == NULL) {
         cx = cx_;
     }
-
+    JSScript *script = NULL;    
     js::RootedObject obj(cx, global);
 	JS::CompileOptions options(cx);
-	options.setUTF8(true).setFileAndLine(rpath.c_str(), 1);
+	options.setUTF8(true).setFileAndLine(fullPath.c_str(), 1);
     
-    // this will always compile the script, we can actually check if the script
-    // was compiled before, because it can be in the global map
+    // a) check js file first
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    unsigned char *content = NULL;
-    unsigned long contentSize = 0;
-
-    content = (unsigned char*)CCString::createWithContentsOfFile(rpath.c_str())->getCString();
-    contentSize = strlen((char*)content);
-    // Not supported in SpiderMonkey 19.0
-    //JSScript* script = JS_CompileScript(cx, global, (char*)content, contentSize, path, 1);
-    JSScript *script = JS::Compile(cx, obj, options, (char*)content, contentSize);
+    CCString* content = CCString::createWithContentsOfFile(path);
+    if (content) {
+        // Not supported in SpiderMonkey 19.0
+        //JSScript* script = JS_CompileScript(cx, global, (char*)content, contentSize, path, 1);
+        const char* contentCStr = content->getCString();
+        script = JS::Compile(cx, obj, options, contentCStr, strlen(contentCStr));
+    }
 #else
-    // Removed in SpiderMonkey 19.0
-    //JSScript* script = JS_CompileUTF8File(cx, global, rpath.c_str());
-	JSScript *script = JS::Compile(cx, obj, options, rpath.c_str());
+    script = JS::Compile(cx, obj, options, fullPath.c_str());
 #endif
+    // b) no js file, check jsc file
+    if (!script) {
+        std::string byteCodePath = RemoveFileExt(std::string(path)) + BYTE_CODE_FILE_EXT;
+        unsigned long length = 0;
+        void *data = futil->getFileData(byteCodePath.c_str(),
+                                        "rb",
+                                        &length);
+        if (data) {
+            script = JS_DecodeScript(cx, data, length, NULL, NULL);
+        }
+    }
     JSBool evaluatedOK = false;
     if (script) {
         jsval rval;

@@ -714,6 +714,24 @@ CCArray* CCMenuItemToggle::getSubItems()
     return m_pSubItems;
 }
 
+CCMenuItemToggle * CCMenuItemToggle::createWithTarget(CCObject* target, SEL_MenuHandler selector, CCArray* menuItems)
+{
+    CCMenuItemToggle *pRet = new CCMenuItemToggle();
+    pRet->CCMenuItem::initWithTarget(target, selector);
+    pRet->m_pSubItems = CCArray::create();
+    pRet->m_pSubItems->retain();
+    
+    for (unsigned int z=0; z < menuItems->count(); z++)
+    {
+        CCMenuItem* menuItem = (CCMenuItem*)menuItems->objectAtIndex(z);
+        pRet->m_pSubItems->addObject(menuItem);
+    }
+    
+    pRet->m_uSelectedIndex = UINT_MAX;
+    pRet->setSelectedIndex(0);
+    return pRet;
+}
+
 CCMenuItemToggle * CCMenuItemToggle::createWithTarget(CCObject* target, SEL_MenuHandler selector, CCMenuItem* item, ...)
 {
     va_list args;

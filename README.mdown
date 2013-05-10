@@ -1,6 +1,8 @@
 cocos2d-x
 =========
 
+[![Build Status](https://travis-ci.org/sbc100/cocos2d-x.png?branch=travis)](https://travis-ci.org/sbc100/cocos2d-x)
+
 [cocos2d-x][1] is a multi-platform 2D game framework in C++, branched on
 [cocos2d-iphone][2] and licensed under MIT.  The master branch on github uses
 OpenGL ES 2.0 rendering, while the old gles11 branch uses OpenGL ES 1.1
@@ -22,6 +24,8 @@ Supported Platforms
    * Windows: stable, well tested on WinXP/Vista/Win7. Please upgrde the drive
      of your video card if you meet problems on OpenGL functions
    * Linux: support but not very stable.
+   * Emscripten: Alpha-level. Most features implemented. Needs testing.
+     Contributed by Zynga staff.
 
 You can visit our continuous integration system http://ci.cocos2d-x.org to
 check the stability on edge version.

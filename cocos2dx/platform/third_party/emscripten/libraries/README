@@ -1,0 +1,6 @@
+libfreetype.a from Emscripten test-suite
+libpng.a from https://github.com/hachque-Emscripten/libpng-1.2.49.git
+libz.a from https://github.com/hachque-Emscripten/zlib-1.2.5.git
+libxml2.a from https://github.com/kripken/xml.js -- configure flags: emconfigure ./configure --with-http=no --with-ftp=no --prefix=/tmp/lx --with-python=no --with-threads=no
+libwebp.a from https://code.google.com/p/webp/downloads/detail?name=libwebp-0.3.0.tar.gz -- configure with ./configure --disable-threading --prefix=/tmp/libwebp
+
