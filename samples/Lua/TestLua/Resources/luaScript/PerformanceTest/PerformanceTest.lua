@@ -28,8 +28,8 @@ function CreatePerfomBasicLayerMenu(pMenu)
     end	
     --Create BackMneu
     CCMenuItemFont:setFontName("Arial")
-    CCMenuItemFont:setFontSize(24);
-   	local pMenuItemFont = CCMenuItemFont:create("Back");
+    CCMenuItemFont:setFontSize(24)
+   	local pMenuItemFont = CCMenuItemFont:create("Back")
     pMenuItemFont:setPosition(ccp(VisibleRect:rightBottom().x - 50, VisibleRect:rightBottom().y + 25))
     pMenuItemFont:registerScriptTapHandler(toMainLayer)
     pMenu:addChild(pMenuItemFont)
@@ -180,7 +180,7 @@ local function runNodeChildrenTest()
     	local nTotalToAdd = nCurrentQuantityOfNodes * 0.15
     	local zs = {}
     	if nTotalToAdd > 0 then
-    		local pSprites = CCArray:createWithCapacity(nTotalToAdd);
+    		local pSprites = CCArray:createWithCapacity(nTotalToAdd)
     		local i = 0
     		for i = 0 , nTotalToAdd - 1 do
     			local pSprite = CCSprite:createWithTexture(pBatchNode:getTexture(), CCRectMake(0,0,32,32))
@@ -190,13 +190,13 @@ local function runNodeChildrenTest()
     		
     		for i = 0 , nTotalToAdd - 1 do
     			local pChild = tolua.cast(pSprites:objectAtIndex(i),"CCNode")
-    			pBatchNode:addChild(pChild, zs[i], NodeChildrenTestParam.kTagBase + i);
+    			pBatchNode:addChild(pChild, zs[i], NodeChildrenTestParam.kTagBase + i)
     		end
     		
     		pBatchNode:sortAllChildren()
     		
     		for i = 0 , nTotalToAdd - 1 do
-    			pBatchNode:removeChildByTag( NodeChildrenTestParam.kTagBase + i, true);
+    			pBatchNode:removeChildByTag( NodeChildrenTestParam.kTagBase + i, true)
     		end
     	end
     end
@@ -207,13 +207,13 @@ local function runNodeChildrenTest()
     	end
      	local nTotalToAdd = nCurrentQuantityOfNodes * 0.15
 		if  nTotalToAdd > 0 then
-			 local pSprites = CCArray:createWithCapacity(nTotalToAdd);
+			 local pSprites = CCArray:createWithCapacity(nTotalToAdd)
 
         	-- Don't include the sprite creation time as part of the profiling
         	local i = 0
         	for i = 0, nTotalToAdd - 1 do
-        		 local pSprite = CCSprite:createWithTexture(pBatchNode:getTexture(), CCRectMake(0,0,32,32));
-            	 pSprites:addObject(pSprite);
+        		 local pSprite = CCSprite:createWithTexture(pBatchNode:getTexture(), CCRectMake(0,0,32,32))
+            	 pSprites:addObject(pSprite)
         	end
        		-- add them with random Z (very important!)
         	for i=0, nTotalToAdd - 1  do
@@ -222,7 +222,7 @@ local function runNodeChildrenTest()
             end
                     
         	for i = 0, nTotalToAdd - 1  do
-        		pBatchNode:removeChildByTag( NodeChildrenTestParam.kTagBase + i, true);
+        		pBatchNode:removeChildByTag( NodeChildrenTestParam.kTagBase + i, true)
         	end
         end  
     end
@@ -232,16 +232,16 @@ local function runNodeChildrenTest()
     		return
     	end
         -- 15 percent
-    	local nTotalToAdd = nCurrentQuantityOfNodes * 0.15;
+    	local nTotalToAdd = nCurrentQuantityOfNodes * 0.15
 
     	if nTotalToAdd > 0 then  
-        	local pSprites = CCArray:createWithCapacity(nTotalToAdd);
+        	local pSprites = CCArray:createWithCapacity(nTotalToAdd)
 
         	-- Don't include the sprite creation time as part of the profiling
         	local i = 0
         	for i = 0,nTotalToAdd - 1 do       
-            	local pSprite = CCSprite:createWithTexture(pBatchNode:getTexture(), CCRectMake(0,0,32,32));
-            	pSprites:addObject(pSprite);
+            	local pSprite = CCSprite:createWithTexture(pBatchNode:getTexture(), CCRectMake(0,0,32,32))
+            	pSprites:addObject(pSprite)
         	end
 
         	--dd them with random Z (very important!)
@@ -250,17 +250,17 @@ local function runNodeChildrenTest()
         		pBatchNode:addChild(pChild, math.random(-1,1) * 50, NodeChildrenTestParam.kTagBase + i)         	
        		end
 
-        	pBatchNode:sortAllChildren();
+        	pBatchNode:sortAllChildren()
 
         	-- reorder them
       		for i = 0, nTotalToAdd - 1 do    	
         		local pNode =  tolua.cast(pBatchNode:getChildren():objectAtIndex(i),"CCNode")
-            	pBatchNode:reorderChild(pNode,  math.random(-1,1) * 50);
+            	pBatchNode:reorderChild(pNode,  math.random(-1,1) * 50)
         	end	      
-        	pBatchNode:sortAllChildren();
+        	pBatchNode:sortAllChildren()
         	--remove them
         	for i = 0, nTotalToAdd - 1 do   
-				pBatchNode:removeChildByTag( NodeChildrenTestParam.kTagBase+i, true);
+				pBatchNode:removeChildByTag( NodeChildrenTestParam.kTagBase+i, true)
         	end
         end
     end
@@ -329,8 +329,8 @@ local function runNodeChildrenTest()
     		pNewscene:addChild(pBatchNode)
     	--[[
     	else
-    		pBatchNode = CCSpriteBatchNode:create("Images/spritesheet1.png");
-    		pNewscene:addChild(pBatchNode);
+    		pBatchNode = CCSpriteBatchNode:create("Images/spritesheet1.png")
+    		pNewscene:addChild(pBatchNode)
     	end 
     	]]--
     end
@@ -345,8 +345,8 @@ local function runNodeChildrenTest()
     	pLabel:setColor(ccc3(255,255,40))  	
     	
    		if (nil ~= GetSubTitle()) and ("" ~= GetSubTitle()) then
-        	local pSubLabel = CCLabelTTF:create(GetSubTitle(), "Thonburi", 16);
-        	pNewscene:addChild(pSubLabel, 1);
+        	local pSubLabel = CCLabelTTF:create(GetSubTitle(), "Thonburi", 16)
+        	pNewscene:addChild(pSubLabel, 1)
         	pSubLabel:setPosition(ccp(s.width/2, s.height-80))
         end
         
@@ -355,26 +355,26 @@ local function runNodeChildrenTest()
     	nQuantityOfNodes = nNodes
     	
     	--"+"¡¢"-" Menu
-		CCMenuItemFont:setFontSize(65);
+		CCMenuItemFont:setFontSize(65)
     	local pDecrease = CCMenuItemFont:create(" - ")
     	pDecrease:registerScriptTapHandler(onDecrease)
-    	pDecrease:setColor(ccc3(0,200,20));
+    	pDecrease:setColor(ccc3(0,200,20))
     	local pIncrease = CCMenuItemFont:create(" + ")
     	pIncrease:registerScriptTapHandler(onIncrease)
-   		pIncrease:setColor(ccc3(0,200,20));
+   		pIncrease:setColor(ccc3(0,200,20))
     	
     	local pMenuAddOrSub = CCMenu:create()
     	pMenuAddOrSub:addChild(pDecrease)
     	pMenuAddOrSub:addChild(pIncrease)
-    	pMenuAddOrSub:alignItemsHorizontally();
-    	pMenuAddOrSub:setPosition(ccp(s.width/2, s.height/2+15));
+    	pMenuAddOrSub:alignItemsHorizontally()
+    	pMenuAddOrSub:setPosition(ccp(s.width/2, s.height/2+15))
    		pNewscene:addChild(pMenuAddOrSub,1)
    		
    		--InfoLayer
-   		local pInfoLabel = CCLabelTTF:create("0 nodes", "Marker Felt", 30);
-    	pInfoLabel:setColor(ccc3(0,200,20));
-    	pInfoLabel:setPosition(ccp(s.width/2, s.height/2-15));
-    	pNewscene:addChild(pInfoLabel, 1, NodeChildrenTestParam.kTagInfoLayer);
+   		local pInfoLabel = CCLabelTTF:create("0 nodes", "Marker Felt", 30)
+    	pInfoLabel:setColor(ccc3(0,200,20))
+    	pInfoLabel:setPosition(ccp(s.width/2, s.height/2-15))
+    	pNewscene:addChild(pInfoLabel, 1, NodeChildrenTestParam.kTagInfoLayer)
     	
     	--NodeChildrenMenuLayer
     	local pNodeChildrenMenuLayer 	= CCLayer:create()
@@ -426,7 +426,468 @@ local ParticleTestParam =
     TEST_COUNT = 4,
     kMaxParticles = 14000,
     kNodesIncrease = 500,
+    
+    kSubMenuBasicZOrder = 10
 }
+
+local function runParticleTest()
+	--PerformanceParticle param
+    local nLastRenderedCount = 0
+    local nQuantityParticles = 0
+    local nSubtestNumber     = 0
+    --BasiceLayer param
+    local bControlMenuVisible = false
+    local nMaxCases = 0
+    local nCurCase  = 0
+    
+    local ScheduleSelector = nil
+    
+    local pNewScene = CCScene:create()
+    
+    local function GetTitle()
+    	local strTitle = nil
+    	if 0 == nCurCase then
+    		strTitle = string.format("A (%d) size=4",nSubtestNumber)
+    	elseif 1 == nCurCase then
+    		strTitle = string.format("B (%d) size=8",nSubtestNumber)
+    	elseif 2 == nCurCase then
+    		strTitle = string.format("C (%d) size=32",nSubtestNumber)
+    	elseif 3 == nCurCase then
+    		strTitle = string.format("D (%d) size=64",nSubtestNumber)
+    	end
+    	return strTitle
+    end
+    
+    local function CreateBasicLayerMenuItem(pMenu,bMenuVisible,nMaxCasesNum,nCurCaseIndex)
+    	if nil ~= pMenu then
+    		bControlMenuVisible = bMenuVisible
+    		nMaxCases           = nMaxCasesNum
+    		nCurCase            = nCurCaseIndex
+    		if true == bControlMenuVisible then
+    			local function backCallback()
+    				nCurCase = nCurCase - 1
+    				if nCurCase < 0 then
+    					nCurCase = nCurCase + nMaxCases
+    				end
+    				ShowCurrentTest()
+    			end
+    
+    			local function restartCallback()
+    				ShowCurrentTest()
+    			end
+    
+    			local function nextCallback()
+    				nCurCase = nCurCase + 1
+    				--No check nMaxCases
+    				nCurCase = nCurCase % nMaxCases
+    				ShowCurrentTest()
+   				end
+   				
+    			local size = CCDirector:sharedDirector():getWinSize()
+    			local item1 = CCMenuItemImage:create(s_pPathB1, s_pPathB2)
+    			item1:registerScriptTapHandler(backCallback)
+    			pMenu:addChild(item1,kItemTagBasic)
+    			local item2 = CCMenuItemImage:create(s_pPathR1, s_pPathR2)
+    			item2:registerScriptTapHandler(restartCallback)
+    			pMenu:addChild(item2,kItemTagBasic)
+    			local item3 = CCMenuItemImage:create(s_pPathF1, s_pPathF2)
+    			pMenu:addChild(item3,kItemTagBasic) 
+    			item3:registerScriptTapHandler(nextCallback)
+    			
+    			local size = CCDirector:sharedDirector():getWinSize()
+    			item1:setPosition(CCPointMake(size.width / 2 - item2:getContentSize().width * 2, item2:getContentSize().height / 2))
+    			item2:setPosition(CCPointMake(size.width / 2, item2:getContentSize().height / 2))
+    			item3:setPosition(CCPointMake(size.width / 2 + item2:getContentSize().width * 2, item2:getContentSize().height / 2))
+    		end 
+    	end
+    end
+    
+    local function TestNCallback(tag,pMenuItem)
+		local nIndex = pMenuItem:getZOrder() - ParticleTestParam.kSubMenuBasicZOrder
+		nSubtestNumber = nIndex
+		ShowCurrentTest()
+    end
+    
+    local function UpdateQuantityLabel()
+    	if nQuantityParticles ~= nLastRenderedCount then
+    		local  pInfoLabel = tolua.cast(pNewScene:getChildByTag(ParticleTestParam.kTagInfoLayer), "CCLabelTTF")
+    		local  strInfo    = string.format("%u particles", nQuantityParticles)
+    		pInfoLabel:setString(strInfo)
+    		
+    		nLastRenderedCount = nQuantityParticles
+    	end
+    end
+    
+    local function doTest()
+   		local s = CCDirector:sharedDirector():getWinSize()
+   		local pParticleSystem = tolua.cast(pNewScene:getChildByTag(ParticleTestParam.kTagParticleSystem),"CCParticleSystem")
+   		if nil == pParticleSystem then
+   			return
+   		end
+   		if 0 == nCurCase then  		
+    		   --duration
+    		   pParticleSystem:setDuration(-1)
+
+    		  --gravity
+    		  pParticleSystem:setGravity(ccp(0,-90))
+
+    	      --angle
+    		  pParticleSystem:setAngle(90)
+    		  pParticleSystem:setAngleVar(0)
+
+    		  --radial
+    		  pParticleSystem:setRadialAccel(0)
+    		  pParticleSystem:setRadialAccelVar(0)
+
+    		  -- speed of particles
+              pParticleSystem:setSpeed(180)
+    		  pParticleSystem:setSpeedVar(50)
+    		  
+    		  -- emitter position
+    		  pParticleSystem:setPosition(ccp(s.width/2, 100))
+   			  pParticleSystem:setPosVar(ccp(s.width/2,0))
+
+    		  -- life of particles
+   			  pParticleSystem:setLife(2.0)
+    		  pParticleSystem:setLifeVar(1)
+
+    		  --emits per frame
+    		  pParticleSystem:setEmissionRate(pParticleSystem:getTotalParticles() / pParticleSystem:getLife())
+    		  
+    		  --color of particles
+    		  pParticleSystem:setStartColor(ccc4f(0.5, 0.5, 0.5, 1.0))
+
+    		  pParticleSystem:setStartColorVar( ccc4f(0.5, 0.5, 0.5, 1.0))
+
+    		  pParticleSystem:setEndColor(ccc4f(0.1, 0.1, 0.1, 0.2))
+   
+    		  pParticleSystem:setEndColorVar(ccc4f(0.1, 0.1, 0.1, 0.2))
+
+    		  -- size, in pixels
+    		  pParticleSystem:setEndSize(4.0)
+    		  pParticleSystem:setStartSize(4.0)
+    		  pParticleSystem:setEndSizeVar(0)
+    		  pParticleSystem:setStartSizeVar(0)
+
+    		  -- additive
+    		  pParticleSystem:setBlendAdditive(false)
+    				
+    	elseif 1 == nCurCase then
+    		  --duration
+    		  pParticleSystem:setDuration(-1)
+
+    		  --gravity
+    		  pParticleSystem:setGravity(ccp(0,-90))
+
+    	      --angle
+    		  pParticleSystem:setAngle(90)
+    		  pParticleSystem:setAngleVar(0)
+
+    		  --radial
+    		  pParticleSystem:setRadialAccel(0)
+    		  pParticleSystem:setRadialAccelVar(0)
+    		  
+    		      		  -- speed of particles
+              pParticleSystem:setSpeed(180)
+    		  pParticleSystem:setSpeedVar(50)
+    		  
+    		  -- emitter position
+    		  pParticleSystem:setPosition(ccp(s.width/2, 100))
+   			  pParticleSystem:setPosVar(ccp(s.width/2,0))
+
+    		  -- life of particles
+   			  pParticleSystem:setLife(2.0)
+    		  pParticleSystem:setLifeVar(1)
+
+    		  --emits per frame
+    		  pParticleSystem:setEmissionRate(pParticleSystem:getTotalParticles() / pParticleSystem:getLife())
+    		  
+    		  --color of particles
+    		  pParticleSystem:setStartColor(ccc4f(0.5, 0.5, 0.5, 1.0))
+
+    		  pParticleSystem:setStartColorVar( ccc4f(0.5, 0.5, 0.5, 1.0))
+
+    		  pParticleSystem:setEndColor(ccc4f(0.1, 0.1, 0.1, 0.2))
+   
+    		  pParticleSystem:setEndColorVar(ccc4f(0.1, 0.1, 0.1, 0.2))
+
+    		  -- size, in pixels
+    		  pParticleSystem:setEndSize(8.0)
+    		  pParticleSystem:setStartSize(8.0)
+    		  pParticleSystem:setEndSizeVar(0)
+    		  pParticleSystem:setStartSizeVar(0)  
+    		  
+    		  -- additive
+    		  pParticleSystem:setBlendAdditive(false)		
+    	elseif 2 == nCurCase then
+    	   	  --duration
+    		  pParticleSystem:setDuration(-1)
+
+    		  --gravity
+    		  pParticleSystem:setGravity(ccp(0,-90))
+
+    	      --angle
+    		  pParticleSystem:setAngle(90)
+    		  pParticleSystem:setAngleVar(0)
+
+    		  --radial
+    		  pParticleSystem:setRadialAccel(0)
+    		  pParticleSystem:setRadialAccelVar(0)
+    		  
+    		      		  -- speed of particles
+              pParticleSystem:setSpeed(180)
+    		  pParticleSystem:setSpeedVar(50)
+    		  
+    		  -- emitter position
+    		  pParticleSystem:setPosition(ccp(s.width/2, 100))
+   			  pParticleSystem:setPosVar(ccp(s.width/2,0))
+
+    		  -- life of particles
+   			  pParticleSystem:setLife(2.0)
+    		  pParticleSystem:setLifeVar(1)
+
+    		  --emits per frame
+    		  pParticleSystem:setEmissionRate(pParticleSystem:getTotalParticles() / pParticleSystem:getLife())
+    		  
+    		  --color of particles
+    		  pParticleSystem:setStartColor(ccc4f(0.5, 0.5, 0.5, 1.0))
+
+    		  pParticleSystem:setStartColorVar( ccc4f(0.5, 0.5, 0.5, 1.0))
+
+    		  pParticleSystem:setEndColor(ccc4f(0.1, 0.1, 0.1, 0.2))
+   
+    		  pParticleSystem:setEndColorVar(ccc4f(0.1, 0.1, 0.1, 0.2))
+
+    		  -- size, in pixels
+    		  pParticleSystem:setEndSize(32.0)
+    		  pParticleSystem:setStartSize(32.0)
+    		  pParticleSystem:setEndSizeVar(0)
+    		  pParticleSystem:setStartSizeVar(0)
+    		
+    		  -- additive
+    		  pParticleSystem:setBlendAdditive(false)	
+    	elseif 3 == nCurCase then
+    	   	  --duration
+    		  pParticleSystem:setDuration(-1)
+
+    		  --gravity
+    		  pParticleSystem:setGravity(ccp(0,-90))
+
+    	      --angle
+    		  pParticleSystem:setAngle(90)
+    		  pParticleSystem:setAngleVar(0)
+
+    		  --radial
+    		  pParticleSystem:setRadialAccel(0)
+    		  pParticleSystem:setRadialAccelVar(0)
+    		  
+    		  -- speed of particles
+              pParticleSystem:setSpeed(180)
+    		  pParticleSystem:setSpeedVar(50)
+    		  
+    		  -- emitter position
+    		  pParticleSystem:setPosition(ccp(s.width/2, 100))
+   			  pParticleSystem:setPosVar(ccp(s.width/2,0))
+
+    		  -- life of particles
+   			  pParticleSystem:setLife(2.0)
+    		  pParticleSystem:setLifeVar(1)
+
+    		  --emits per frame
+    		  pParticleSystem:setEmissionRate(pParticleSystem:getTotalParticles() / pParticleSystem:getLife())
+    		  
+    		  --color of particles
+    		  pParticleSystem:setStartColor(ccc4f(0.5, 0.5, 0.5, 1.0))
+
+    		  pParticleSystem:setStartColorVar( ccc4f(0.5, 0.5, 0.5, 1.0))
+
+    		  pParticleSystem:setEndColor(ccc4f(0.1, 0.1, 0.1, 0.2))
+   
+    		  pParticleSystem:setEndColorVar(ccc4f(0.1, 0.1, 0.1, 0.2))
+
+    		  -- size, in pixels
+    		  pParticleSystem:setEndSize(64.0)
+    		  pParticleSystem:setStartSize(64.0)
+    		  pParticleSystem:setEndSizeVar(0)
+    		  pParticleSystem:setStartSizeVar(0)
+    		
+    		  -- additive
+    		  pParticleSystem:setBlendAdditive(false)	   		
+    	end
+    end
+    
+    local function CreateParticleSystem()
+   			local pParticleSystem = nil
+   			--[[
+    		* Tests:
+   		    * 1: Point Particle System using 32-bit textures (PNG)
+   		    * 2: Point Particle System using 16-bit textures (PNG)
+    		* 3: Point Particle System using 8-bit textures (PNG)
+    		* 4: Point Particle System using 4-bit textures (PVRTC)
+
+    		* 5: Quad Particle System using 32-bit textures (PNG)
+    		* 6: Quad Particle System using 16-bit textures (PNG)
+    		* 7: Quad Particle System using 8-bit textures (PNG)
+    		* 8: Quad Particle System using 4-bit textures (PVRTC)
+    		]]--
+    		pNewScene:removeChildByTag(ParticleTestParam.kTagParticleSystem, true)
+    		
+    		--remove the "fire.png" from the TextureCache cache. 
+    		local pTexture = CCTextureCache:sharedTextureCache():addImage("Images/fire.png")
+    		CCTextureCache:sharedTextureCache():removeTexture(pTexture)
+    		local pParticleSystem = CCParticleSystemQuad:new()
+    		if 1 == nSubtestNumber then
+    		    CCTexture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA8888)
+    		elseif 2 == nSubtestNumber then
+    			CCTexture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA4444)
+    		elseif 3 == nSubtestNumber then
+    		    CCTexture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_A8)
+    		elseif 4 == nSubtestNumber then 
+    			CCTexture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA8888)
+    		elseif 5 == nSubtestNumber then 
+    		    CCTexture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA4444)
+    		elseif 6 == nSubtestNumber then 
+    			CCTexture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_A8)
+    		else
+    			pParticleSystem = nil
+    			print("Shall not happen!")
+    		end
+    		
+    		if nil ~= pParticleSystem then
+    			pParticleSystem:initWithTotalParticles(nQuantityParticles)
+        		pParticleSystem:setTexture(CCTextureCache:sharedTextureCache():addImage("Images/fire.png"))
+    		end
+    		
+    		pNewScene:addChild(pParticleSystem, 0, ParticleTestParam.kTagParticleSystem)
+    		
+    		doTest()
+    		--restore the default pixel format
+    		CCTexture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA8888)  
+	end
+	
+	local function step(t)
+		  local pAtlas = tolua.cast(pNewScene:getChildByTag(ParticleTestParam.kTagLabelAtlas),"CCLabelAtlas")
+    	  local pEmitter = tolua.cast(pNewScene:getChildByTag(ParticleTestParam.kTagParticleSystem),"CCParticleSystem")
+    	  local strInfo = string.format("%4d",pEmitter:getParticleCount())
+    	  pAtlas:setString(strInfo)
+	end
+	
+	local function ScheduleFuncion()
+		 local function OnEnterOrExit(tag)
+    		  local scheduler = CCDirector:sharedDirector():getScheduler()
+			    if tag == "enter" then
+					ScheduleSelector = scheduler:scheduleScriptFunc(step,0,false)
+				elseif tag == "exit" then
+					scheduler:unscheduleScriptEntry(ScheduleSelector)
+				end
+    	end 
+    	pNewScene:registerScriptHandler(OnEnterOrExit)
+	end
+    
+        local function onDecrease()
+		nQuantityParticles = nQuantityParticles - ParticleTestParam.kNodesIncrease
+    	if nQuantityParticles  < 0 then
+        	nQuantityParticles = 0
+        end
+
+    	UpdateQuantityLabel()
+    	CreateParticleSystem()
+    end
+    
+    local function onIncrease()
+		nQuantityParticles = nQuantityParticles + ParticleTestParam.kNodesIncrease
+    	if nQuantityParticles > ParticleTestParam.kMaxParticles then
+        	nQuantityParticles = ParticleTestParam.kMaxParticles
+        end
+
+    	UpdateQuantityLabel()
+    	CreateParticleSystem()
+    end
+    
+    local function InitWithSubTest(nSubtest,nParticles)
+    	nSubtestNumber = nSubtest
+    	local s = CCDirector:sharedDirector():getWinSize()
+    	
+    	nLastRenderedCount = 0
+    	nQuantityParticles = nParticles
+    	
+    	--"+"¡¢"-" Menu
+		CCMenuItemFont:setFontSize(65)
+    	local pDecrease = CCMenuItemFont:create(" - ")
+    	pDecrease:registerScriptTapHandler(onDecrease)
+    	pDecrease:setColor(ccc3(0,200,20))
+    	local pIncrease = CCMenuItemFont:create(" + ")
+    	pIncrease:registerScriptTapHandler(onIncrease)
+   		pIncrease:setColor(ccc3(0,200,20))
+   		
+   		local pMenuAddOrSub = CCMenu:create()
+    	pMenuAddOrSub:addChild(pDecrease)
+    	pMenuAddOrSub:addChild(pIncrease)
+    	pMenuAddOrSub:alignItemsHorizontally()
+    	pMenuAddOrSub:setPosition(ccp(s.width/2, s.height/2+15))
+   		pNewScene:addChild(pMenuAddOrSub,1)
+   		
+   		local pInfoLabel = CCLabelTTF:create("0 nodes", "Marker Felt", 30)
+        pInfoLabel:setColor(ccc3(0,200,20))
+    	pInfoLabel:setPosition(ccp(s.width/2, s.height - 90))
+    	pNewScene:addChild(pInfoLabel, 1, ParticleTestParam.kTagInfoLayer)
+    	
+    	--particles on stage
+    	local pLabelAtlas = CCLabelAtlas:create("0000", "fps_images.png", 12, 32, string.byte('.'))
+    	pNewScene:addChild(pLabelAtlas, 0, ParticleTestParam.kTagLabelAtlas)
+    	pLabelAtlas:setPosition(ccp(s.width-66,50))
+    	
+    	--ParticleTestMenuLayer
+    	local pParticleMenuLayer 	= CCLayer:create()
+    	local pParticleMenu         = CCMenu:create()
+    	CreatePerfomBasicLayerMenu(pParticleMenu)
+		CreateBasicLayerMenuItem(pParticleMenu,true,ParticleTestParam.TEST_COUNT,nCurCase)
+		pParticleMenu:setPosition(ccp(0, 0))
+		pParticleMenuLayer:addChild(pParticleMenu)
+		pNewScene:addChild(pParticleMenuLayer) 
+		
+		--Sub Tests
+		CCMenuItemFont:setFontSize(40)
+    	local pSubMenu = CCMenu:create()
+    	local i = 1
+    	for  i = 1, 6 do
+  			local strNum = string.format("%d ",i)
+        	local pItemFont = CCMenuItemFont:create(strNum)
+        	pItemFont:registerScriptTapHandler(TestNCallback)     	
+        	pSubMenu:addChild(pItemFont, i + ParticleTestParam.kSubMenuBasicZOrder)
+        	if i <= 3 then
+            	pItemFont:setColor(ccc3(200,20,20))
+        	else
+            	pItemFont:setColor(ccc3(0,200,20))
+        	end
+   		end
+    	pSubMenu:alignItemsHorizontally()
+    	pSubMenu:setPosition(ccp(s.width/2, 80))
+    	pNewScene:addChild(pSubMenu, 2)
+    	
+    	local pLabel = CCLabelTTF:create(GetTitle(), "Arial", 40)
+    	pNewScene:addChild(pLabel, 1)
+    	pLabel:setPosition(ccp(s.width/2, s.height-32))
+    	pLabel:setColor(ccc3(255,255,40))
+    	
+    	UpdateQuantityLabel()  	
+    	CreateParticleSystem()
+    	ScheduleFuncion()
+    end
+    
+    function ShowCurrentTest()
+    	if nil ~= pNewScene then
+    		CCDirector:sharedDirector():getScheduler():unscheduleScriptEntry(ScheduleSelector)
+    	end  	
+		pNewScene = CCScene:create()
+		InitWithSubTest(nSubtestNumber,nQuantityParticles)
+		CCDirector:sharedDirector():replaceScene(pNewScene)	   	
+    end
+    
+	
+	InitWithSubTest(1,ParticleTestParam.kNodesIncrease)
+	return pNewScene
+end
 
 ----------------------------------
 --PerformanceTextureTest
@@ -466,10 +927,10 @@ local function runTextureTest()
           end
     	  pCache:removeTexture(pTexture)
     	  
-    	  print("RGBA 4444");
+    	  print("RGBA 4444")
     	  CCTexture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA4444)
-    	  --gettimeofday(&now, NULL);
-    	  pTexture = pCache:addImage(strFileName);
+    	  --gettimeofday(&now, NULL)
+    	  pTexture = pCache:addImage(strFileName)
     	  if nil ~= pTexture then 
             print("add sucess")
     	  else
@@ -477,28 +938,28 @@ local function runTextureTest()
           end
     	  pCache:removeTexture(pTexture)
     	  
-    	  print("RGBA 5551");
-    	  CCTexture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGB5A1);
-    	  --gettimeofday(&now, NULL);
-    	  pTexture = pCache:addImage(strFileName);
+    	  print("RGBA 5551")
+    	  CCTexture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGB5A1)
+    	  --gettimeofday(&now, NULL)
+    	  pTexture = pCache:addImage(strFileName)
     	  if nil ~= pTexture then
         	 print("add sucess")
     	  else
         	 print(" ERROR")
           end
-    	  pCache:removeTexture(pTexture);
+    	  pCache:removeTexture(pTexture)
     	  
-    	  print("RGB 565");
-   		  CCTexture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGB565);
-   		 -- gettimeofday(&now, NULL);    
-    	 pTexture = pCache:addImage(strFileName);
+    	  print("RGB 565")
+   		  CCTexture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGB565)
+   		 -- gettimeofday(&now, NULL)    
+    	 pTexture = pCache:addImage(strFileName)
     	 if nil ~= pTexture then
-        	--CCLog("  ms:%f", calculateDeltaTime(&now) );
+        	--CCLog("  ms:%f", calculateDeltaTime(&now) )
         	print("add sucess")
     	 else
-       	    print(" ERROR");
+       	    print(" ERROR")
        	 end
-    	 pCache:removeTexture(pTexture);   	  
+    	 pCache:removeTexture(pTexture)   	  
 	end
 	local function PerformTests()
 		  print("--------")
@@ -512,13 +973,13 @@ local function runTextureTest()
     	  print("--- PNG 1024x1024 ---")
     	  PerformTestsPNG("Images/texture1024x1024.png")
     	  
-    	  print("SPRITESHEET IMAGE");
-    	  print("--- PNG 1024x1024 ---");
-   		  PerformTestsPNG("Images/PlanetCute-1024x1024.png");
+    	  print("SPRITESHEET IMAGE")
+    	  print("--- PNG 1024x1024 ---")
+   		  PerformTestsPNG("Images/PlanetCute-1024x1024.png")
    		  
-   		  print("LANDSCAPE IMAGE");
-	      print("--- PNG 1024x1024 ---");
-    	  PerformTestsPNG("Images/landscape-1024x1024.png");
+   		  print("LANDSCAPE IMAGE")
+	      print("--- PNG 1024x1024 ---")
+    	  PerformTestsPNG("Images/landscape-1024x1024.png")
 	end
 	
 	local function InitTextureMenuLayer()
@@ -635,7 +1096,7 @@ local function runTouchesTest()
         	  local fFrameRateM = nNumberOfTouchesM / fElapsedTime
         	  local fFrameRateE = nNumberOfTouchesE / fElapsedTime
         	  local fFrameRateC = nNumberOfTouchesC / fElapsedTime
-        	  fElapsedTime = 0;
+        	  fElapsedTime = 0
         	  nNumberOfTouchesB = 0
         	  nNumberOfTouchesM = 0
         	  nNumberOfTouchesE = 0
@@ -643,7 +1104,7 @@ local function runTouchesTest()
         	  
        		  local strInfo = string.format("%.1f %.1f %.1f %.1f",fFrameRateB, fFrameRateM, fFrameRateE, fFrameRateC)
        		  if nil ~= pClassLabel then
-       		  	pClassLabel:setString(strInfo); 
+       		  	pClassLabel:setString(strInfo) 
        		  end
     	  end
   
@@ -710,9 +1171,9 @@ local function runTouchesTest()
     	
     	pLayer:scheduleUpdateWithPriorityLua(update,0)	
     
-    	pClassLabel = CCLabelBMFont:create("00.0", "fonts/arial16.fnt");
-    	pClassLabel:setPosition(ccp(s.width/2, s.height/2));
-    	pLayer:addChild(pClassLabel); 
+    	pClassLabel = CCLabelBMFont:create("00.0", "fonts/arial16.fnt")
+    	pClassLabel:setPosition(ccp(s.width/2, s.height/2))
+    	pLayer:addChild(pClassLabel) 
     
     	fElapsedTime = 0.0
     	nNumberOfTouchesB = 0
