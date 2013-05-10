@@ -53,6 +53,9 @@ bool AppDelegate::applicationDidFinishLaunching()
 #ifdef JS_OBFUSCATED
     ScriptingCore::getInstance()->runScript("game.js");
 #else
+#if JSB_ENABLE_DEBUGGER
+    ScriptingCore::getInstance()->enableDebugger();
+#endif // JSB_ENABLE_DEBUGGER
     ScriptingCore::getInstance()->runScript("tests-boot-jsb.js");
 #endif
     return true;
