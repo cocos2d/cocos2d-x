@@ -1,0 +1,11 @@
+jsbcc stands for JavasSript Byte Code Compiler. 
+It compiles javascript files to SpiderMonkey byte code files. It supports Mac and win32 now.
+Usage:
+	jsbcc input_js_file [byte_code_file]
+Note: it also supports pipeline on Mac, so you can use it like this:
+	ls *.js | jsbcc
+
+Furthermore, 2 scripts supplied to help: "jsbcc.sh" on Mac and "jsbcc.bat" on win32
+	jsbcc.sh/jsbcc.bat js_root_dir
+js_root_dir is the root directory of js source files. The scripts search and compile js source files recrusively.
+	

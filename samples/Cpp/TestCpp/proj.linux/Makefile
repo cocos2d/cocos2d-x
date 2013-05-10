@@ -75,6 +75,7 @@ SOURCES = ../Classes/AccelerometerTest/AccelerometerTest.cpp \
 	../Classes/SpriteTest/SpriteTest.cpp \
 	../Classes/TextInputTest/TextInputTest.cpp \
 	../Classes/Texture2dTest/Texture2dTest.cpp \
+	../Classes/TexturePackerEncryptionTest/TextureAtlasEncryptionTest.cpp \
 	../Classes/TextureCacheTest/TextureCacheTest.cpp \
 	../Classes/TileMapTest/TileMapTest.cpp \
 	../Classes/TouchesTest/Ball.cpp \
@@ -91,7 +92,7 @@ SOURCES = ../Classes/AccelerometerTest/AccelerometerTest.cpp \
 	../Classes/VisibleRect.cpp \
 	main.cpp
 
-SHAREDLIBS = -lcocos2d -lcocosdenshion
+SHAREDLIBS = -lcocos2d -lcocosdenshion -lcurl
 COCOS_LIBS = $(LIB_DIR)/libcocos2d.so $(LIB_DIR)/libcocosdenshion.so
 
 include ../../../../cocos2dx/proj.linux/cocos2dx.mk

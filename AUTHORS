@@ -12,6 +12,25 @@ Developers:
     Rolando Abarca
         Javascript Binding and testjs
 
+    ggggamer
+        fixed memory leak of preloadEffect on windows
+
+    CodeSnooker
+        Added Method to create a CCMenuItemToggle from a CCArray with a target selector
+
+    wagaf-d
+        Move ccpX functions to CCPoint methods and operators
+
+    sergey-shambir
+        Added CC_DISABLE_COPY macro
+        Added __attribute__(__format__()) for CCLog and CCString
+        Refactoring network extension and fixing unlikely memory leaks.
+        Adding PUT/DELETE methods for CCHttpRequest.
+
+    savdalion 
+        Added example for russian language in TestCpp
+        Added const modifier for classes CCArray, CCObject
+
     rodrigogolive
         Fix broke linux build
 
@@ -96,6 +115,8 @@ Developers:
          CCTableView crashes if a CCTableViewDelegate is not provided.
          Fixing a bug that _realOpacity isn't assigned in CCLayerColor::initWithColor.
          CCScrollView TouchPriority Fix
+         Add encrypted PVR.CCZ support to ZipUtils + Tests
+         Fix for broken of ccArrayGetIndexOfObject after merging this commit(076f38c).
 
     Weeds (Andre Rudlaff)
         Used fontconfig to enhance font rendering on linux.
@@ -108,6 +129,7 @@ Developers:
         Fixed potential crash in CCSaxParser.
         Added kResolutionFixedHeight and kResolutionFixedWidth resolution policy.
         Use pthread mutex and condition variable instead of pthred semaphore to load image asynchronizely.
+        Fixed crash in HttpClient request on 64Bit.
 
     Nat Weiss (iphonegamekit.com)
         author of Mac port
@@ -140,6 +162,8 @@ Developers:
         Improvements to JS Bindings.
         Synchronizing CCBReader to version 5.
         Adding OpenGL Bindings to Javascript.
+        Fixing a bug that nested ccb-files are not positioned correctly.
+        Fixing a bug that crash when loading valid project.
 
     Jianfeng Zou (NetDragon Inc)
         contributes CCListView and CCTextureWatcher.
@@ -246,6 +270,7 @@ Developers:
         Fixing a crash for call runAnimation() in CCBAnimationManagerDelegate::completedAnimationSequenceNamed.
         Fixing a bug that CCControl's touch priority is not set correctly; m_nDefaultTouchPriority is never used.
         Fixing a syntax error for RENDER_IN_SUBPIXEL macro.
+        Implement CCDictionary::writeToFile().
 
     xyhl515
         Fixed a bug that CCControlSwitch::setOn(isOn,false) doesn't work.
@@ -281,6 +306,7 @@ Developers:
         Stripping newlines from log message and fixing linux library location.
         Fixing a bug that CCPhysicsSprite was overriding only some of the getPosition methods.
         Adding a macro USE_BOX2D to check whether to enable Box2D for linux and nacl port.
+        Adding Travis build support for linux and NaCl.
 
     Peter Young (young40)
         Implements setVisible() for CCEditBox
@@ -299,12 +325,14 @@ Developers:
 
     Zecken (gelldur)
         Fixing a profiling compilation error in CCParticleBatchNode.
+        Fixing linking errors for TestCPP with libcurl on linux.
 
     flamingo (flaming0)
         Null pointer check in order to prevent crashes.
 
     rtissera (Romain TISSERAND)
         Adding missing JNIEXPORT / JNICALL declarations.
+        Fix iOS 4.3 JPEG loading issue.
 
     Yodesoft
         Improving font rendering performance for linux platform.
@@ -343,12 +371,30 @@ Developers:
 
     jotel (Jaroslaw Lewandowski)
         Fixing a bug that wrong type of argument signature is used in setAccelerometerIntervalJNI function.
+        Fix for broken of ccArrayGetIndexOfObject after merging this commit(076f38c).
 
     MarcelBloemendaal
         Adding secureTextEntry property to CCTextFieldTTF.
 
     brawsome
         Adding new macro CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK to CCBMemberVariableAssigner.h.
+        Adding CCLOG before original path is returned in CCFileUtils::fullPathForFileName to aid in debugging.
+        Optmization to ccArrayGetIndexOfObject.
+
+    sunzhuoshi
+        Adding support for javascript bytecode.
+
+    ptekchand (Pranav Tekchand)
+        Supporting negative node scales for CCScrollView.
+
+    James Gregory (j4m3z0r, Zynga)
+        Initial Emscripten port.
+
+    coolengineer (Hojin Choi)
+        Refactoring callback selector for HttpResponse.
+
+    djh-
+        Fixing a bug that displayed color of CCDrawNode is incorrect when VAO is disabled.
 
 Retired Core Developers:
     WenSheng Yang
