@@ -144,7 +144,7 @@ protected:
     
     /** set the text definition for this label */
     void                _updateWithTextDefinition(ccFontDefinition & textDefinition, bool mustUpdateTexture = true);
-    ccFontDefinition    _prepareTextDefinition();
+    ccFontDefinition    _prepareTextDefinition(bool adjustForResolution = false);
     
     /** Dimensions of the label in Points */
     CCSize m_tDimensions;
