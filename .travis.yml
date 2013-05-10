@@ -32,3 +32,6 @@ env:
  - PLATFORM=android SAMPLE_LANG=Javascript APPNAME=WatermelonWithMe
  - PLATFORM=android SAMPLE_LANG=Lua APPNAME=HelloLua
  - PLATFORM=android SAMPLE_LANG=Lua APPNAME=TestLua
+branches:
+  only:
+    - master
