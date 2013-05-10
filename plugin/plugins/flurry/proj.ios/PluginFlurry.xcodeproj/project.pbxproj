@@ -10,6 +10,7 @@
 		FA09A376168AFD41008C1C7B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA09A375168AFD41008C1C7B /* Foundation.framework */; };
 		FA09A394168B00D4008C1C7B /* AnalyticsFlurry.mm in Sources */ = {isa = PBXBuildFile; fileRef = FA09A393168B00D4008C1C7B /* AnalyticsFlurry.mm */; };
 		FA866509168BE0980073E055 /* libFlurry.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FA866508168BE0980073E055 /* libFlurry.a */; };
+		FA8CC2241739EFF200464206 /* FlurryWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = FA8CC2231739EFF200464206 /* FlurryWrapper.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -32,6 +33,8 @@
 		FA866507168BE0980073E055 /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
 		FA866508168BE0980073E055 /* libFlurry.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry.a; sourceTree = "<group>"; };
 		FA86650E168BE22D0073E055 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		FA8CC2221739EFF200464206 /* FlurryWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlurryWrapper.h; sourceTree = "<group>"; };
+		FA8CC2231739EFF200464206 /* FlurryWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlurryWrapper.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +89,8 @@
 		FA09A392168AFD96008C1C7B /* ios */ = {
 			isa = PBXGroup;
 			children = (
+				FA8CC2221739EFF200464206 /* FlurryWrapper.h */,
+				FA8CC2231739EFF200464206 /* FlurryWrapper.m */,
 				FA866507168BE0980073E055 /* Flurry.h */,
 				FA866508168BE0980073E055 /* libFlurry.a */,
 				FA09A393168B00D4008C1C7B /* AnalyticsFlurry.mm */,
@@ -146,6 +151,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA09A394168B00D4008C1C7B /* AnalyticsFlurry.mm in Sources */,
+				FA8CC2241739EFF200464206 /* FlurryWrapper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -202,7 +208,10 @@
 				DSTROOT = /tmp/libPluginFlurry.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PluginFlurry-Prefix.pch";
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../protocols/include";
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/../../../protocols/include",
+					"$(SRCROOT)/../../../protocols/platform/ios",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../platform/ios\"",
@@ -219,7 +228,10 @@
 				DSTROOT = /tmp/libPluginFlurry.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PluginFlurry-Prefix.pch";
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../protocols/include";
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/../../../protocols/include",
+					"$(SRCROOT)/../../../protocols/platform/ios",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../platform/ios\"",
