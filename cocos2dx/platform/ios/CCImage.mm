@@ -276,8 +276,8 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
         
         if ( pInfo->hasStroke )
         {
-            shadowStrokePaddingX = pInfo->strokeSize;
-            shadowStrokePaddingY = pInfo->strokeSize;
+            shadowStrokePaddingX = ceilf(pInfo->strokeSize);
+            shadowStrokePaddingY = ceilf(pInfo->strokeSize);
         }
         
         if ( pInfo->hasShadow )
