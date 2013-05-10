@@ -270,6 +270,7 @@
 		1A40DFDB1727AE7E006D4861 /* spine-cocos2dx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A40DFC61727AE7E006D4861 /* spine-cocos2dx.cpp */; };
 		1A40DFDF1727AF48006D4861 /* SpineTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A40DFDD1727AF48006D4861 /* SpineTest.cpp */; };
 		1A40DFE11727AFBF006D4861 /* spine in Resources */ = {isa = PBXBuildFile; fileRef = 1A40DFE01727AFBF006D4861 /* spine */; };
+		1A60BF64173CD9E80054773B /* DataVisitorTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A60BF62173CD9E80054773B /* DataVisitorTest.cpp */; };
 		1A75E96016F85FDB00BA80BD /* TimelineCallbackTestLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A75E95E16F85FDB00BA80BD /* TimelineCallbackTestLayer.cpp */; };
 		1AB2D72816B6804D00D72C48 /* FileUtilsTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AB2D72616B6804D00D72C48 /* FileUtilsTest.cpp */; };
 		1AB2D72A16B681F900D72C48 /* Misc in Resources */ = {isa = PBXBuildFile; fileRef = 1AB2D72916B681F900D72C48 /* Misc */; };
@@ -863,6 +864,8 @@
 		1A40DFDD1727AF48006D4861 /* SpineTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpineTest.cpp; sourceTree = "<group>"; };
 		1A40DFDE1727AF48006D4861 /* SpineTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpineTest.h; sourceTree = "<group>"; };
 		1A40DFE01727AFBF006D4861 /* spine */ = {isa = PBXFileReference; lastKnownFileType = folder; path = spine; sourceTree = "<group>"; };
+		1A60BF62173CD9E80054773B /* DataVisitorTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DataVisitorTest.cpp; sourceTree = "<group>"; };
+		1A60BF63173CD9E80054773B /* DataVisitorTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataVisitorTest.h; sourceTree = "<group>"; };
 		1A75E95D16F85FDB00BA80BD /* TimelineCallbackLayerLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimelineCallbackLayerLoader.h; sourceTree = "<group>"; };
 		1A75E95E16F85FDB00BA80BD /* TimelineCallbackTestLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TimelineCallbackTestLayer.cpp; sourceTree = "<group>"; };
 		1A75E95F16F85FDB00BA80BD /* TimelineCallbackTestLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimelineCallbackTestLayer.h; sourceTree = "<group>"; };
@@ -927,21 +930,13 @@
 		15AA9C4015B7EC450033D6C2 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				15AA9F3A15B7EF960033D6C2 /* AppDelegate.cpp */,
-				15AA9CAA15B7EC460033D6C2 /* controller.cpp */,
-				15AA9D3115B7EC460033D6C2 /* testBasic.cpp */,
-				15A048CE163784C700F7CC0A /* VisibleRect.cpp */,
-				15AA9F3B15B7EF960033D6C2 /* AppDelegate.h */,
-				15AA9CAB15B7EC460033D6C2 /* controller.h */,
-				15AA9D3215B7EC460033D6C2 /* testBasic.h */,
-				15AA9D3315B7EC460033D6C2 /* testResource.h */,
-				15AA9D3415B7EC460033D6C2 /* tests.h */,
-				15A048CF163784C700F7CC0A /* VisibleRect.h */,
 				15AA9C4115B7EC450033D6C2 /* AccelerometerTest */,
 				15AA9C4415B7EC450033D6C2 /* ActionManagerTest */,
 				15AA9C4715B7EC450033D6C2 /* ActionsEaseTest */,
 				15AA9C4A15B7EC450033D6C2 /* ActionsProgressTest */,
 				15AA9C4D15B7EC450033D6C2 /* ActionsTest */,
+				15AA9F3A15B7EF960033D6C2 /* AppDelegate.cpp */,
+				15AA9F3B15B7EF960033D6C2 /* AppDelegate.h */,
 				15AA9C5015B7EC450033D6C2 /* Box2DTest */,
 				15AA9C5315B7EC450033D6C2 /* Box2DTestBed */,
 				15AA9C8915B7EC460033D6C2 /* BugsTest */,
@@ -949,8 +944,11 @@
 				15AA9CA415B7EC460033D6C2 /* ClickAndMoveTest */,
 				15C647E9165F2B39007D4F18 /* ClippingNodeTest */,
 				15AA9CA715B7EC460033D6C2 /* CocosDenshionTest */,
+				15AA9CAA15B7EC460033D6C2 /* controller.cpp */,
+				15AA9CAB15B7EC460033D6C2 /* controller.h */,
 				15AA9CAC15B7EC460033D6C2 /* CurlTest */,
 				15AA9CAF15B7EC460033D6C2 /* CurrentLanguageTest */,
+				1A60BF61173CD9E80054773B /* DataVisitorTest */,
 				15AA9CB215B7EC460033D6C2 /* DrawPrimitivesTest */,
 				15AA9CB515B7EC460033D6C2 /* EffectsAdvancedTest */,
 				15AA9CB815B7EC460033D6C2 /* EffectsTest */,
@@ -975,6 +973,10 @@
 				15AA9D2B15B7EC460033D6C2 /* ShaderTest */,
 				1A40DFDC1727AF48006D4861 /* SpineTest */,
 				15AA9D2E15B7EC460033D6C2 /* SpriteTest */,
+				15AA9D3115B7EC460033D6C2 /* testBasic.cpp */,
+				15AA9D3215B7EC460033D6C2 /* testBasic.h */,
+				15AA9D3315B7EC460033D6C2 /* testResource.h */,
+				15AA9D3415B7EC460033D6C2 /* tests.h */,
 				15AA9D3515B7EC460033D6C2 /* TextInputTest */,
 				15AA9D3815B7EC460033D6C2 /* Texture2dTest */,
 				15AA9D3B15B7EC460033D6C2 /* TextureCacheTest */,
@@ -983,6 +985,8 @@
 				15AA9D4115B7EC460033D6C2 /* TouchesTest */,
 				15AA9D4815B7EC460033D6C2 /* TransitionsTest */,
 				15AA9D4B15B7EC460033D6C2 /* UserDefaultTest */,
+				15A048CE163784C700F7CC0A /* VisibleRect.cpp */,
+				15A048CF163784C700F7CC0A /* VisibleRect.h */,
 				15AA9D4E15B7EC460033D6C2 /* ZwoptexTest */,
 			);
 			name = Classes;
@@ -2213,6 +2217,16 @@
 			path = ../Classes/SpineTest;
 			sourceTree = "<group>";
 		};
+		1A60BF61173CD9E80054773B /* DataVisitorTest */ = {
+			isa = PBXGroup;
+			children = (
+				1A60BF62173CD9E80054773B /* DataVisitorTest.cpp */,
+				1A60BF63173CD9E80054773B /* DataVisitorTest.h */,
+			);
+			name = DataVisitorTest;
+			path = ../Classes/DataVisitorTest;
+			sourceTree = "<group>";
+		};
 		1A75E95C16F85FDB00BA80BD /* TimelineCallbackTest */ = {
 			isa = PBXGroup;
 			children = (
@@ -2708,6 +2722,7 @@
 				1A40DFDB1727AE7E006D4861 /* spine-cocos2dx.cpp in Sources */,
 				1A40DFDF1727AF48006D4861 /* SpineTest.cpp in Sources */,
 				467373111739F4270034BF94 /* TextureAtlasEncryptionTest.cpp in Sources */,
+				1A60BF64173CD9E80054773B /* DataVisitorTest.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
