@@ -39,10 +39,6 @@ using namespace std;
 
 NS_CC_BEGIN
 
-struct map_element {
-	ccConfigurationType m_type;
-	CCString m_string;
-};
 
 CCConfiguration* CCConfiguration::s_gSharedConfiguration = NULL;
 
@@ -189,9 +185,7 @@ int CCConfiguration::getMaxTextureUnits(void) const
 
 bool CCConfiguration::supportsNPOT(void) const
 {
-	CCObject *ret = m_pDefaults->objectForKey("gl.supports_NPOT");
-	CCBool *b = dynamic_cast<CCBool*>(ret);
-	return b->getValue();
+	return m_bSupportsNPOT;
 }
 
 bool CCConfiguration::supportsPVRTC(void) const
