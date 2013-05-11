@@ -52,7 +52,7 @@ ccc3(const GLubyte r, const GLubyte g, const GLubyte b)
     return c;
 }
 
-/** returns YES if both ccColor3B are equal. Otherwise it returns NO.
+/** returns true if both ccColor3B are equal. Otherwise it returns false.
  */
 static inline bool ccc3BEqual(const ccColor3B &col1, const ccColor3B &col2)
 {
