@@ -52,7 +52,7 @@ SOURCES = ../CCBReader/CCBFileLoader.cpp \
 ../GUI/CCControlExtension/CCControlStepper.cpp \
 ../network/HttpClient.cpp \
 ../physics_nodes/CCPhysicsDebugNode.cpp \
-../physics_nodes/CCPhysicsSprite.cpp 
+../physics_nodes/CCPhysicsSprite.cpp \
 ../spine/Animation.c \
 ../spine/AnimationState.c \
 ../spine/AnimationStateData.c \
