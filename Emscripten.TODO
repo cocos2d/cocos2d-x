@@ -2,8 +2,6 @@
 
 * Touch handler screwed up after TouchesTest? MenuTest? (TestCpp sample)
 
-* Add linkage to libjpeg to get RenderTexture test to work.
-
 * TTF Font rendering is slow and seems to wrap around by a few pixels
   horizontally. Need to investigate here, but I suspect the right answer is to
   offload font rendering to an offscreen canvas and let the browser handle it.
@@ -57,4 +55,6 @@ DONE:
     Aborting due to Chipmunk error: Moment of Inertia must be positive and non-zero.
         Failed condition: moment > 0.0f
         Source:../src/cpBody.c:151
+
+* Add linkage to libjpeg to get RenderTexture test to work.
 

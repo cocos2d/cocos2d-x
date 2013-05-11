@@ -288,7 +288,12 @@ bool CCImage::_initWithJpgData(void * data, int nSize)
         jpeg_mem_src( &cinfo, (unsigned char *) data, nSize );
 
         /* reading the image header which contains image information */
+#if (JPEG_LIB_VERSION >= 90)
+        // libjpeg 0.9 adds stricter types.
+        jpeg_read_header( &cinfo, TRUE );
+#else
         jpeg_read_header( &cinfo, true );
+#endif
 
         // we only support RGB or grayscale
         if (cinfo.jpeg_color_space != JCS_RGB)
