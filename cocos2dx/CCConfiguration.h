@@ -28,9 +28,8 @@ THE SOFTWARE.
 
 #include "cocoa/CCObject.h"
 #include "CCGL.h"
-#include "Cocoa/CCString.h"
+#include "cocoa/CCString.h"
 #include <string>
-#include <map>
 
 
 NS_CC_BEGIN
@@ -42,8 +41,6 @@ typedef enum _ccConfigurationType {
     ConfigurationDouble,
     ConfigurationBoolean
 } ccConfigurationType;
-
-typedef std::map<CCString, CCString> cc
 
 
 /**
@@ -62,83 +59,70 @@ public:
     /** purge the shared instance of CCConfiguration */
     static void purgeConfiguration(void);
 public:    
-    
+
+	virtual ~CCConfiguration(void);
+
     /** OpenGL Max texture size. */
-    inline int getMaxTextureSize(void)
-    {
-        return m_nMaxTextureSize;
-    }
-    
+	int getMaxTextureSize(void) const;
+
     /** OpenGL Max Modelview Stack Depth. */
-    inline int getMaxModelviewStackDepth(void)
-    {
-        return m_nMaxModelviewStackDepth;
-    }
+	int getMaxModelviewStackDepth(void) const;
 
     /** returns the maximum texture units
      @since v2.0.0
      */
-    inline int getMaxTextureUnits(void)
-    {
-        return m_nMaxTextureUnits;
-    }
+	int getMaxTextureUnits(void) const;
 
     /** Whether or not the GPU supports NPOT (Non Power Of Two) textures.
      OpenGL ES 2.0 already supports NPOT (iOS).
      
      @since v0.99.2
      */
-    inline bool supportsNPOT(void)
-    {
-        return m_bSupportsNPOT;
-    }
+	bool supportsNPOT(void) const;
 
     /** Whether or not PVR Texture Compressed is supported */
-    inline bool supportsPVRTC(void)
-    {
-        return m_bSupportsPVRTC;
-    }
+	bool supportsPVRTC(void) const;
 
     /** Whether or not BGRA8888 textures are supported.
      @since v0.99.2
      */
-    inline bool supportsBGRA8888(void)
-    {
-        return m_bSupportsBGRA8888;
-    }
+	bool supportsBGRA8888(void) const;
 
     /** Whether or not glDiscardFramebufferEXT is supported
      @since v0.99.2
      */
-    inline bool supportsDiscardFramebuffer(void)
-    {
-        return m_bSupportsDiscardFramebuffer;
-    }
+	bool supportsDiscardFramebuffer(void) const;
 
     /** Whether or not shareable VAOs are supported.
      @since v2.0.0
      */
-    inline bool supportsShareableVAO(void)
-    {
-        return m_bSupportsShareableVAO;
-    }
+	bool supportsShareableVAO(void) const;
 
     /** returns whether or not an OpenGL is supported */
-    bool checkForGLExtension(const std::string &searchName);
+    bool checkForGLExtension(const std::string &searchName) const;
 
     bool init(void);
 
 	/** returns the value of a given key as a string */
-	CCString getString( const CCString& key );
+	const char* getCString( const char *key ) const;
 
 	/** returns the value of a given key as a boolean */
-	bool getBool( const CCString &key );
+	bool getBool( const char *key ) const;
 
 	/** returns the value of a given key as a double */
-	double getNumber( const CCString &key );
+	double getNumber( const char *key ) const;
 
 	/** returns the type of a given key */
-	ccConfigurationType getType( const CCString &key );
+	ccConfigurationType getType( const char *key ) const;
+
+	/** dumps the current configuration on the console */
+	void dumpInfo(void) const;
+
+	/** loads JSON config file in the configuration */
+	void loadConfigFile( char *filename );
+
+	/** gathers OpenGL / GPU information */
+	void gatherGPUInfo( void );
 
 private:
     CCConfiguration(void);
@@ -155,7 +139,7 @@ protected:
     GLint           m_nMaxSamplesAllowed;
     GLint           m_nMaxTextureUnits;
     char *          m_pGlExtensions;
-
+	CCDictionary	*m_pDefaults;
 };
 
 // end of global group

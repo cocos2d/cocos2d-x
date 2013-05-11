@@ -156,20 +156,6 @@ std::string ActionsDemo::subtitle()
 
 void ActionsDemo::onEnter()
 {
-
-	// creates a normal sprite
-	CCSprite *sprite = CCSprite::create("grossini.png");
-
-	// creates a 'CC' shared pointer (internally it uses the ref counting of CCObject)
-	cc::shared_ptr<CCObject*> shared_sprite(sprite);
-
-	// creates a map
-	std::map<std::string, cc:shared_ptr<CCObject*> > map;
-
-	// adds the shared_sprite in the map
-	map.insert ( std::pair<std::string>, cc:shared_ptr<CCObject*> >( std::string("sprite"),shared_sprite) );
-
-
     CCLayer::onEnter();
 
     // Or you can create an sprite using a filename. only PNG is supported now. Probably TIFF too

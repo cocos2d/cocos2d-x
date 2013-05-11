@@ -99,8 +99,6 @@ CCDirector::CCDirector(void)
 
 bool CCDirector::init(void)
 {
-    CCLOG("cocos2d: %s", cocos2dVersion());
-    
     // scenes
     m_pRunningScene = NULL;
     m_pNextScene = NULL;
@@ -322,6 +320,13 @@ void CCDirector::setOpenGLView(CCEGLView *pobOpenGLView)
 
         m_pobOpenGLView->setTouchDelegate(m_pTouchDispatcher);
         m_pTouchDispatcher->setDispatchEvents(true);
+
+		// XXX: This method should not be called explicity.
+		// XXX: instead cocos2d should emitt an "gl view set", and CCConfiguration should listen to that event
+		CCConfiguration::sharedConfiguration()->gatherGPUInfo();
+
+		// dump config data once OpenGL was initialized.
+		CCConfiguration::sharedConfiguration()->dumpInfo();
     }
 }
 

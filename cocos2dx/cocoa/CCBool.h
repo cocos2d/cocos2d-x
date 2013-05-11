@@ -26,6 +26,7 @@
 #define __CCBOOL_H__
 
 #include "CCObject.h"
+#include "CCString.h"
 
 NS_CC_BEGIN
 
@@ -50,6 +51,13 @@ public:
         }
         return pRet;
     }
+
+	/** returns 'true' or 'false' in a CCString */
+	virtual CCString* getDescription() const {
+		if( m_bValue )
+			return CCString::create("true");
+		return CCString::create("false");
+	}
 
     /* override functions */
     virtual void acceptVisitor(CCDataVisitor &visitor) { visitor.visit(this); }

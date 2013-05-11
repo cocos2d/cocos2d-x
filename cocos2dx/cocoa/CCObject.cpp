@@ -24,6 +24,7 @@ THE SOFTWARE.
 
 
 #include "CCObject.h"
+#include "CCString.h"
 #include "CCAutoreleasePool.h"
 #include "ccMacros.h"
 #include "script_support/CCScriptSupport.h"
@@ -118,6 +119,11 @@ bool CCObject::isEqual(const CCObject *pObject)
 void CCObject::acceptVisitor(CCDataVisitor &visitor)
 {
     visitor.visitObject(this);
+}
+
+CCString *CCObject::getDescription() const
+{
+    return CCString::createWithFormat("object = < %p >", this);
 }
 
 NS_CC_END

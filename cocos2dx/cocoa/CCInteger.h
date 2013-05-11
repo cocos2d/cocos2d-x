@@ -2,6 +2,7 @@
 #define __CCINTEGER_H__
 
 #include "CCObject.h"
+#include "CCString.h"
 
 NS_CC_BEGIN
 
@@ -23,6 +24,12 @@ public:
         pRet->autorelease();
         return pRet;
     }
+
+	/** returns the integer in a CCString representation */
+	virtual CCString* getDescription() const {
+		return CCString::createWithFormat("%d", m_nValue);
+	}
+
 private:
     int m_nValue;
 };

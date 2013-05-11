@@ -27,15 +27,17 @@ THE SOFTWARE.
 #include "ccMacros.h"
 #include "ccConfig.h"
 #include <string.h>
+#include "cocoa/CCDictionary.h"
+#include "cocoa/CCInteger.h"
+#include "cocoa/CCBool.h"
+#include "cocos2d.h"
 
 using namespace std;
 
-NS_CC_BEGIN
+//static const char *_configuration_GL_NPOT = "gl.suports_NPOT";
+//static const char *_configuration_GL_BGRA8888 = "gl.supports_BGRA8888";
 
-struct map_element {
-	ccConfigurationType m_type;
-	CCString m_string;
-};
+NS_CC_BEGIN
 
 CCConfiguration* CCConfiguration::s_gSharedConfiguration = NULL;
 
@@ -50,39 +52,27 @@ CCConfiguration::CCConfiguration(void)
 , m_nMaxSamplesAllowed(0)
 , m_nMaxTextureUnits(0)
 , m_pGlExtensions(NULL)
+, m_pDefaults(NULL)
 {
 }
 
 bool CCConfiguration::init(void)
 {
-    CCLOG("cocos2d: GL_VENDOR:     %s", glGetString(GL_VENDOR));
-    CCLOG("cocos2d: GL_RENDERER:   %s", glGetString(GL_RENDERER));
-    CCLOG("cocos2d: GL_VERSION:    %s", glGetString(GL_VERSION));
+	m_pDefaults = CCDictionary::create();
 
-    m_pGlExtensions = (char *)glGetString(GL_EXTENSIONS);
+	m_pDefaults->setObject( CCString::create( cocos2dVersion() ), "cocos2d.version");
 
-    glGetIntegerv(GL_MAX_TEXTURE_SIZE, &m_nMaxTextureSize);
-    glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS, &m_nMaxTextureUnits);
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    glGetIntegerv(GL_MAX_SAMPLES_APPLE, &m_nMaxSamplesAllowed);
-#endif
+	return true;
+}
 
-    m_bSupportsPVRTC = checkForGLExtension("GL_IMG_texture_compression_pvrtc");
-    m_bSupportsNPOT = true;
-    m_bSupportsBGRA8888 = checkForGLExtension("GL_IMG_texture_format_BGRA888");
-    m_bSupportsDiscardFramebuffer = checkForGLExtension("GL_EXT_discard_framebuffer");
+CCConfiguration::~CCConfiguration(void)
+{
+	m_pDefaults->release();
+}
 
-    m_bSupportsShareableVAO = checkForGLExtension("vertex_array_object");
-
-    CCLOG("cocos2d: GL_MAX_TEXTURE_SIZE: %d", m_nMaxTextureSize);
-    CCLOG("cocos2d: GL_MAX_TEXTURE_UNITS: %d",m_nMaxTextureUnits);
-    CCLOG("cocos2d: GL supports PVRTC: %s", (m_bSupportsPVRTC ? "YES" : "NO"));
-    CCLOG("cocos2d: GL supports BGRA8888 textures: %s", (m_bSupportsBGRA8888 ? "YES" : "NO"));
-    CCLOG("cocos2d: GL supports NPOT textures: %s", (m_bSupportsNPOT ? "YES" : "NO"));
-    CCLOG("cocos2d: GL supports discard_framebuffer: %s", (m_bSupportsDiscardFramebuffer ? "YES" : "NO"));
-    CCLOG("cocos2d: GL supports shareable VAO: %s", (m_bSupportsShareableVAO ? "YES" : "NO") );
-
-    bool CC_UNUSED bEnableProfilers = false;
+void CCConfiguration::dumpInfo(void) const
+{
+	bool CC_UNUSED bEnableProfilers = false;
 
 #if CC_ENABLE_PROFILERS
     bEnableProfilers = true;
@@ -90,17 +80,60 @@ bool CCConfiguration::init(void)
     bEnableProfilers = false;
 #endif
     CCLOG("cocos2d: compiled with Profiling Support: %s",
-        bEnableProfilers ? "YES - *** Disable it when you finish profiling ***" : "NO");
-    
+		  bEnableProfilers ? "YES - *** Disable it when you finish profiling ***" : "NO");
+
 #if CC_ENABLE_GL_STATE_CACHE == 0
     CCLOG("");
     CCLOG("cocos2d: **** WARNING **** CC_ENABLE_GL_STATE_CACHE is disabled. To improve performance, enable it by editing ccConfig.h");
     printf("\n");
 #endif
+
+	CCDictElement* pElement = NULL;
+    CCDICT_FOREACH(m_pDefaults, pElement)
+    {
+        CCObject *obj = pElement->getObject();
+		const char *key = pElement->getStrKey();
+
+		printf("%s = %s\n", key, obj->getDescription()->getCString() );
+
+    }
+}
+
+void CCConfiguration::gatherGPUInfo()
+{
+	m_pDefaults->setObject( new CCString( (const char*)glGetString(GL_VENDOR)), "gl.vendor");
+	m_pDefaults->setObject( new CCString( (const char*)glGetString(GL_RENDERER)), "gl.renderer");
+	m_pDefaults->setObject( new CCString( (const char*)glGetString(GL_VERSION)), "gl.version");
+
+    m_pGlExtensions = (char *)glGetString(GL_EXTENSIONS);
+
+    glGetIntegerv(GL_MAX_TEXTURE_SIZE, &m_nMaxTextureSize);
+	m_pDefaults->setObject( new CCInteger((int)m_nMaxTextureSize), "gl.max_texture_size");
+
+    glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS, &m_nMaxTextureUnits);
+	m_pDefaults->setObject( new CCInteger((int)m_nMaxTextureUnits), "gl.max_texture_units");
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    glGetIntegerv(GL_MAX_SAMPLES_APPLE, &m_nMaxSamplesAllowed);
+	m_pDefaults->setObject( new CCInteger((int)m_nMaxSamplesAllowed), "gl.max_samples_allowed");
+#endif
+
+    m_bSupportsPVRTC = checkForGLExtension("GL_IMG_texture_compression_pvrtc");
+	m_pDefaults->setObject( new CCBool(m_bSupportsPVRTC), "gl.supports_PVRTC");
+
+    m_bSupportsNPOT = true;
+	m_pDefaults->setObject( new CCBool(m_bSupportsNPOT), "gl.supports_NPOT");
+	
+    m_bSupportsBGRA8888 = checkForGLExtension("GL_IMG_texture_format_BGRA888");
+	m_pDefaults->setObject( new CCBool(m_bSupportsBGRA8888), "gl.supports_BGRA8888");
+
+    m_bSupportsDiscardFramebuffer = checkForGLExtension("GL_EXT_discard_framebuffer");
+	m_pDefaults->setObject( new CCBool(m_bSupportsDiscardFramebuffer), "gl.supports_discard_framebuffer");
+
+    m_bSupportsShareableVAO = checkForGLExtension("vertex_array_object");
+	m_pDefaults->setObject( new CCBool(m_bSupportsShareableVAO), "gl.supports_vertex_array_object");
     
     CHECK_GL_ERROR_DEBUG();
-
-    return true;
 }
 
 CCConfiguration* CCConfiguration::sharedConfiguration(void)
@@ -119,7 +152,7 @@ void CCConfiguration::purgeConfiguration(void)
     CC_SAFE_RELEASE_NULL(s_gSharedConfiguration);
 }
 
-bool CCConfiguration::checkForGLExtension(const string &searchName)
+bool CCConfiguration::checkForGLExtension(const string &searchName) const
 {
     bool bRet = false;
     const char *kSearchName = searchName.c_str();
@@ -133,28 +166,86 @@ bool CCConfiguration::checkForGLExtension(const string &searchName)
     return bRet;
 }
 
-/** returns the value of a given key as a string */
-CCString CCConfiguration::getString( const CCString& key )
+/* getters for specific variables */
+int CCConfiguration::getMaxTextureSize(void) const
 {
-	return std::string("");
+	return m_nMaxTextureSize;
+}
+
+int CCConfiguration::getMaxModelviewStackDepth(void) const
+{
+	return m_nMaxModelviewStackDepth;
+}
+
+int CCConfiguration::getMaxTextureUnits(void) const
+{
+	return m_nMaxTextureUnits;
+}
+
+bool CCConfiguration::supportsNPOT(void) const
+{
+	CCObject *ret = m_pDefaults->objectForKey("gl.supports_NPOT");
+	CCBool *b = dynamic_cast<CCBool*>(ret);
+	return b->getValue();
+}
+
+bool CCConfiguration::supportsPVRTC(void) const
+{
+	return m_bSupportsPVRTC;
+}
+
+bool CCConfiguration::supportsBGRA8888(void) const
+{
+	return m_bSupportsBGRA8888;
+}
+
+bool CCConfiguration::supportsDiscardFramebuffer(void) const
+{
+	return m_bSupportsDiscardFramebuffer;
+}
+
+bool CCConfiguration::supportsShareableVAO(void) const
+{
+	return m_bSupportsShareableVAO;
+}
+
+const char *CCConfiguration::getCString( const char *key ) const
+{
+	CCObject *ret = m_pDefaults->objectForKey(key);
+	if( ret )
+		if( CCString *str=dynamic_cast<CCString*>(ret) )
+			return str->getCString();
+   return NULL;
 }
 
 /** returns the value of a given key as a boolean */
-bool CCConfiguration::getBool( const CCString &key )
+bool CCConfiguration::getBool( const char *key ) const
 {
-	return false;
+	CCObject *ret = m_pDefaults->objectForKey(key);
+	if( ret )
+		if( CCBool *obj=dynamic_cast<CCBool*>(ret) )
+			return obj->getValue();
+	return NULL;
 }
 
 /** returns the value of a given key as a double */
-double CCConfiguration::getNumber( const CCString &key )
+double CCConfiguration::getNumber( const char *key ) const
 {
-	return 0.0;
+	CCObject *ret = m_pDefaults->objectForKey(key);
+	if( ret ) {
+		if( CCDouble *obj=dynamic_cast<CCDouble*>(ret) )
+			return obj->getValue();
+
+		if( CCInteger *obj=dynamic_cast<CCInteger*>(ret) )
+			return obj->getValue();
+	}
+
+	return NULL;
 }
 
-ccConfigurationType CCConfiguration::getType( const CCString &key )
+ccConfigurationType CCConfiguration::getType( const char *key ) const
 {
 	return ConfigurationError;
 }
-
 
 NS_CC_END
