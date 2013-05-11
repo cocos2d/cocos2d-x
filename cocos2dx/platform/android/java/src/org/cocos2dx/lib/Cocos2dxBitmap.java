@@ -149,17 +149,28 @@ public class Cocos2dxBitmap {
 				: pHeight);
 		
 		// padding needed when using shadows
-		float bitmapPaddingX = 0.0f;
-		float bitmapPaddingY = 0.0f;
+		float bitmapPaddingX   = 0.0f;
+		float bitmapPaddingY   = 0.0f;
+		float renderTextDeltaX = 0.0f;
+		float renderTextDeltaY = 0.0f;
 		
 		if ( shadow ) {
 
 			int shadowColor = 0xff7d7d7d;
 			paint.setShadowLayer(shadowBlur, shadowDX, shadowDY, shadowColor);
 	
-			bitmapPaddingX = Math.abs(shadowDX) * 4;
-			bitmapPaddingY = Math.abs(shadowDY) * 4;
-
+			bitmapPaddingX = Math.abs(shadowDX);
+			bitmapPaddingY = Math.abs(shadowDY);
+					
+			if ( shadowDX < 0.0 )
+			{
+				renderTextDeltaX = bitmapPaddingX;
+			}
+			
+			if ( shadowDY < 0.0 )
+			{
+				renderTextDeltaY = 	bitmapPaddingY;
+			}
 		}
 		
 		final Bitmap bitmap = Bitmap.createBitmap(textProperty.mMaxWidth + (int)bitmapPaddingX,
@@ -171,14 +182,15 @@ public class Cocos2dxBitmap {
 		final FontMetricsInt fontMetricsInt = paint.getFontMetricsInt();
 		
 		int x = 0;
-		int y = Cocos2dxBitmap.computeY(fontMetricsInt, pHeight,
-				textProperty.mTotalHeight, verticalAlignment);
+		int y = Cocos2dxBitmap.computeY(fontMetricsInt, pHeight, textProperty.mTotalHeight, verticalAlignment);
 		
 		final String[] lines = textProperty.mLines;
 		for (final String line : lines) {
+			
 			x = Cocos2dxBitmap.computeX(line, textProperty.mMaxWidth, horizontalAlignment);
-			canvas.drawText(line, x + (bitmapPaddingX/2) , y + (bitmapPaddingY/2)  , paint);
+			canvas.drawText(line, x + renderTextDeltaX, y + renderTextDeltaY, paint);
 			y += textProperty.mHeightPerLine;
+			
 		}
 		 
 		// draw again with stroke on if needed 
@@ -186,18 +198,19 @@ public class Cocos2dxBitmap {
 			
 			final Paint paintStroke = Cocos2dxBitmap.newPaint(pFontName, pFontSize, horizontalAlignment);
 			paintStroke.setStyle(Paint.Style.STROKE);
-			paintStroke.setStrokeWidth(strokeSize);
+			paintStroke.setStrokeWidth(strokeSize * 0.5f);
 			paintStroke.setARGB(255, (int)strokeR * 255, (int)strokeG * 255, (int)strokeB * 255);
 			
 			x = 0;
-			y = Cocos2dxBitmap.computeY(fontMetricsInt, pHeight,
-					textProperty.mTotalHeight, verticalAlignment);
+			y = Cocos2dxBitmap.computeY(fontMetricsInt, pHeight, textProperty.mTotalHeight, verticalAlignment);
 			final String[] lines2 = textProperty.mLines;
 			
 			for (final String line : lines2) {
+				
 				x = Cocos2dxBitmap.computeX(line, textProperty.mMaxWidth, horizontalAlignment);
-				canvas.drawText(line, x + (bitmapPaddingX/2), y + (bitmapPaddingY/2) , paintStroke);
+				canvas.drawText(line, x + renderTextDeltaX, y + renderTextDeltaY, paintStroke);
 				y += textProperty.mHeightPerLine;
+				
 			}
 			
 		}
