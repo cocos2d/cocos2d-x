@@ -24,27 +24,34 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "SimpleAudioEngine.h"
-
+#include "OspPlayer.h"
 #include "cocos2d.h"
+#include <map>
 
 USING_NS_CC;
+using namespace std;
 
 namespace CocosDenshion {
 
-static std::string getFullPathWithoutAssetsPrefix(const char* pszFilename)
+typedef map<unsigned int, OspPlayer *> EffectList;
+typedef pair<unsigned int, OspPlayer *> Effect;
+
+static std::string _FullPath(const char * szPath);
+static unsigned int _Hash(const char *key);
+
+#define BREAK_IF(cond) if (cond) break;
+
+static EffectList& sharedList()
 {
-    // Changing file path to full path
-    std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszFilename);
-    // Removing `assets` since it isn't needed for the API of playing sound.
-    size_t pos = fullPath.find("assets/");
-    if (pos == 0)
-    {
-        fullPath = fullPath.substr(strlen("assets/"));
-    }
-    return fullPath;
+    static EffectList s_List;
+    return s_List;
 }
 
-static SimpleAudioEngine *s_pEngine = 0;
+static OspPlayer& sharedMusic()
+{
+    static OspPlayer s_Music;
+    return s_Music;
+}
 
 SimpleAudioEngine::SimpleAudioEngine()
 {
@@ -56,16 +63,22 @@ SimpleAudioEngine::~SimpleAudioEngine()
 
 SimpleAudioEngine* SimpleAudioEngine::sharedEngine()
 {
-    if (!s_pEngine)
-    {
-        s_pEngine = new SimpleAudioEngine();
-    }
-    
-    return s_pEngine;
+    static SimpleAudioEngine s_SharedEngine;
+    return &s_SharedEngine;
 }
 
 void SimpleAudioEngine::end()
 {
+    sharedMusic().Close();
+
+    EffectList::iterator p = sharedList().begin();
+    while (p != sharedList().end())
+    {
+        delete p->second;
+        p->second = NULL;
+        p++;
+    }
+    sharedList().clear();
 }
 
 void SimpleAudioEngine::preloadBackgroundMusic(const char* pszFilePath)
@@ -74,87 +87,207 @@ void SimpleAudioEngine::preloadBackgroundMusic(const char* pszFilePath)
 
 void SimpleAudioEngine::playBackgroundMusic(const char* pszFilePath, bool bLoop)
 {
+    if (!pszFilePath)
+    {
+        return;
+    }
+
+    sharedMusic().Open(_FullPath(pszFilePath).c_str(), _Hash(pszFilePath));
+    sharedMusic().Play(bLoop);
 }
 
 void SimpleAudioEngine::stopBackgroundMusic(bool bReleaseData)
 {
+    if (bReleaseData)
+    {
+        sharedMusic().Close();
+    }
+    else
+    {
+        sharedMusic().Stop();
+    }
 }
 
 void SimpleAudioEngine::pauseBackgroundMusic()
 {
+    sharedMusic().Pause();
 }
 
 void SimpleAudioEngine::resumeBackgroundMusic()
 {
+    sharedMusic().Resume();
 } 
 
 void SimpleAudioEngine::rewindBackgroundMusic()
 {
+    sharedMusic().Rewind();
 }
 
 bool SimpleAudioEngine::willPlayBackgroundMusic()
 {
-    return true;
+    return false;
 }
 
 bool SimpleAudioEngine::isBackgroundMusicPlaying()
 {
-    return true;
+    return sharedMusic().IsPlaying();
 }
 
 float SimpleAudioEngine::getBackgroundMusicVolume()
 {
-    return true;
+    return float(sharedMusic().GetVolume()) / 100.f;
 }
 
 void SimpleAudioEngine::setBackgroundMusicVolume(float volume)
 {
+    sharedMusic().SetVolume(int(volume * 100));
 }
 
 float SimpleAudioEngine::getEffectsVolume()
 {
-    return 0;
+    EffectList::iterator iter;
+    iter = sharedList().begin();
+    if (iter != sharedList().end())
+    {
+        return float(iter->second->GetVolume()) / 100.f;
+    }
 }
 
 void SimpleAudioEngine::setEffectsVolume(float volume)
 {
+    EffectList::iterator iter;
+    for (iter = sharedList().begin(); iter != sharedList().end(); iter++)
+    {
+        iter->second->SetVolume(int(volume * 100));
+    }
 }
 
 unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop)
 {
-    return 1;
+    unsigned int nRet = _Hash(pszFilePath);
+
+    preloadEffect(pszFilePath);
+
+    EffectList::iterator p = sharedList().find(nRet);
+    if (p != sharedList().end())
+    {
+        p->second->Play(bLoop);
+    }
+
+    return nRet;
 }
 
 void SimpleAudioEngine::stopEffect(unsigned int nSoundId)
 {
+    EffectList::iterator p = sharedList().find(nSoundId);
+    if (p != sharedList().end())
+    {
+        p->second->Stop();
+    }
 }
 
 void SimpleAudioEngine::preloadEffect(const char* pszFilePath)
 {
+    int nRet = 0;
+    do
+    {
+        BREAK_IF(! pszFilePath);
+
+        nRet = _Hash(pszFilePath);
+
+        BREAK_IF(sharedList().end() != sharedList().find(nRet));
+
+        sharedList().insert(Effect(nRet, new (std::nothrow) OspPlayer()));
+        OspPlayer * pPlayer = sharedList()[nRet];
+        pPlayer->Open(_FullPath(pszFilePath).c_str(), nRet);
+
+        BREAK_IF(nRet == pPlayer->GetSoundID());
+
+        sharedList().erase(nRet);
+        nRet = 0;
+    }
+    while (0);
 }
 
 void SimpleAudioEngine::unloadEffect(const char* pszFilePath)
 {
+    unsigned nId = _Hash(pszFilePath);
+
+    EffectList::iterator p = sharedList().find(nId);
+    if (p != sharedList().end())
+    {
+        delete p->second;
+        p->second = NULL;
+        sharedList().erase(nId);
+    }
 }
 
 void SimpleAudioEngine::pauseEffect(unsigned int nSoundId)
 {
+    EffectList::iterator p = sharedList().find(nSoundId);
+    if (p != sharedList().end())
+    {
+        p->second->Pause();
+    }
 }
 
 void SimpleAudioEngine::pauseAllEffects()
 {
+    EffectList::iterator iter;
+    for (iter = sharedList().begin(); iter != sharedList().end(); iter++)
+    {
+        iter->second->Pause();
+    }
 }
 
 void SimpleAudioEngine::resumeEffect(unsigned int nSoundId)
 {
+    EffectList::iterator p = sharedList().find(nSoundId);
+    if (p != sharedList().end())
+    {
+        p->second->Resume();
+    }
 }
 
 void SimpleAudioEngine::resumeAllEffects()
 {
+    EffectList::iterator iter;
+    for (iter = sharedList().begin(); iter != sharedList().end(); iter++)
+    {
+        iter->second->Resume();
+    }
 }
 
 void SimpleAudioEngine::stopAllEffects()
 {
+    EffectList::iterator iter;
+    for (iter = sharedList().begin(); iter != sharedList().end(); iter++)
+    {
+        iter->second->Stop();
+    }
+}
+
+//////////////////////////////////////////////////////////////////////////
+// static function
+//////////////////////////////////////////////////////////////////////////
+
+static std::string _FullPath(const char * szPath)
+{
+    return CCFileUtils::sharedFileUtils()->fullPathForFilename(szPath);
+}
+
+unsigned int _Hash(const char *key)
+{
+    unsigned int len = strlen(key);
+    const char *end=key+len;
+    unsigned int hash;
+
+    for (hash = 0; key < end; key++)
+    {
+        hash *= 16777619;
+        hash ^= (unsigned int) (unsigned char) toupper(*key);
+    }
+    return (hash);
 }
 
 }
