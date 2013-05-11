@@ -443,7 +443,7 @@ bool CCTexturePVR::unpackPVRv3Data(unsigned char* dataPointer, unsigned int data
 	// unsupported / bad pixel format
 	if (! infoValid)
     {
-		CCLOG("cocos2d: WARNING: unsupported pvr pixelformat: %lx", pixelFormat );
+		CCLOG("cocos2d: WARNING: unsupported pvr pixelformat: %lx", (unsigned long)pixelFormat );
 		return false;
 	}
     

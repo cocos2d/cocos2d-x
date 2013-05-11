@@ -220,6 +220,9 @@
     <Filter Include="Classes\TexturePackerEncryptionTest">
       <UniqueIdentifier>{4031c3bb-97f8-4b43-91e5-48dd94ca2d24}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\DataVisitorTest">
+      <UniqueIdentifier>{8049d378-12f7-46ba-ba96-091f3c0a4600}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -497,6 +500,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\TexturePackerEncryptionTest\TextureAtlasEncryptionTest.cpp">
       <Filter>Classes\TexturePackerEncryptionTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\DataVisitorTest\DataVisitorTest.cpp">
+      <Filter>Classes\DataVisitorTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -955,6 +961,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\TexturePackerEncryptionTest\TextureAtlasEncryptionTest.h">
       <Filter>Classes\TexturePackerEncryptionTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\DataVisitorTest\DataVisitorTest.h">
+      <Filter>Classes\DataVisitorTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

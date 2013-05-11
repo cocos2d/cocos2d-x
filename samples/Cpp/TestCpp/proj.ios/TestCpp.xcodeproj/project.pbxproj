@@ -228,6 +228,7 @@
 		1A27573F1697CF2B00504026 /* CCEditBoxImplAndroid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A27573D1697CF2B00504026 /* CCEditBoxImplAndroid.cpp */; };
 		1A4D4A2615FD7E2200F61EEB /* CustomTableViewCell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A4D4A2215FD7E2200F61EEB /* CustomTableViewCell.cpp */; };
 		1A4D4A2715FD7E2200F61EEB /* TableViewTestScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A4D4A2415FD7E2200F61EEB /* TableViewTestScene.cpp */; };
+		1A60BF54173CCCF80054773B /* DataVisitorTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A60BF52173CCCF80054773B /* DataVisitorTest.cpp */; };
 		1A75E95A16F84FDD00BA80BD /* TimelineCallbackTestLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A75E95816F84FDD00BA80BD /* TimelineCallbackTestLayer.cpp */; };
 		1A9FE96B17277E9D00B21905 /* Animation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A9FE94417277E9D00B21905 /* Animation.cpp */; };
 		1A9FE96C17277E9D00B21905 /* AnimationState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A9FE94617277E9D00B21905 /* AnimationState.cpp */; };
@@ -809,6 +810,8 @@
 		1A4D4A2315FD7E2200F61EEB /* CustomTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTableViewCell.h; sourceTree = "<group>"; };
 		1A4D4A2415FD7E2200F61EEB /* TableViewTestScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TableViewTestScene.cpp; sourceTree = "<group>"; };
 		1A4D4A2515FD7E2200F61EEB /* TableViewTestScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewTestScene.h; sourceTree = "<group>"; };
+		1A60BF52173CCCF80054773B /* DataVisitorTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DataVisitorTest.cpp; sourceTree = "<group>"; };
+		1A60BF53173CCCF80054773B /* DataVisitorTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataVisitorTest.h; sourceTree = "<group>"; };
 		1A75E95716F84FDD00BA80BD /* TimelineCallbackLayerLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimelineCallbackLayerLoader.h; sourceTree = "<group>"; };
 		1A75E95816F84FDD00BA80BD /* TimelineCallbackTestLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TimelineCallbackTestLayer.cpp; sourceTree = "<group>"; };
 		1A75E95916F84FDD00BA80BD /* TimelineCallbackTestLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimelineCallbackTestLayer.h; sourceTree = "<group>"; };
@@ -1460,6 +1463,7 @@
 				15AA9CAB15B7EC460033D6C2 /* controller.h */,
 				15AA9CAC15B7EC460033D6C2 /* CurlTest */,
 				15AA9CAF15B7EC460033D6C2 /* CurrentLanguageTest */,
+				1A60BF51173CCCF80054773B /* DataVisitorTest */,
 				15AA9CB215B7EC460033D6C2 /* DrawPrimitivesTest */,
 				15AA9CB515B7EC460033D6C2 /* EffectsAdvancedTest */,
 				15AA9CB815B7EC460033D6C2 /* EffectsTest */,
@@ -2205,6 +2209,16 @@
 			path = ../../Classes/ExtensionsTest/TableViewTest;
 			sourceTree = "<group>";
 		};
+		1A60BF51173CCCF80054773B /* DataVisitorTest */ = {
+			isa = PBXGroup;
+			children = (
+				1A60BF52173CCCF80054773B /* DataVisitorTest.cpp */,
+				1A60BF53173CCCF80054773B /* DataVisitorTest.h */,
+			);
+			name = DataVisitorTest;
+			path = ../Classes/DataVisitorTest;
+			sourceTree = "<group>";
+		};
 		1A75E95616F84FDD00BA80BD /* TimelineCallbackTest */ = {
 			isa = PBXGroup;
 			children = (
@@ -2711,6 +2725,7 @@
 				1A9FE97D17277E9D00B21905 /* spine-cocos2dx.cpp in Sources */,
 				1A144289172788AF0096438B /* SpineTest.cpp in Sources */,
 				6442E66D17297DB40008499D /* TextureAtlasEncryptionTest.cpp in Sources */,
+				1A60BF54173CCCF80054773B /* DataVisitorTest.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
