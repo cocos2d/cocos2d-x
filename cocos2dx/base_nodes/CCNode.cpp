@@ -326,7 +326,7 @@ CCArray* CCNode::getChildren()
     return m_pChildren;
 }
 
-unsigned int CCNode::getChildrenCount(void)
+unsigned int CCNode::getChildrenCount(void) const
 {
     return m_pChildren ? m_pChildren->count() : 0;
 }

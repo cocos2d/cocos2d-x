@@ -608,7 +608,7 @@ public:
      *
      * @return The amount of children.
      */
-    unsigned int getChildrenCount(void);
+    unsigned int getChildrenCount(void) const;
     
     /**
      * Sets the parent node
