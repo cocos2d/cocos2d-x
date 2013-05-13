@@ -12,6 +12,9 @@ Developers:
     Rolando Abarca
         Javascript Binding and testjs
 
+    FlagellumDei
+        Center the window correctly on windows
+
     ggggamer
         fixed memory leak of preloadEffect on windows
 
