@@ -75,7 +75,7 @@ local _allTests = {
     { isSupported = false,  name = "Accelerometer"          , create_func=             AccelerometerMain  },
     { isSupported = false,  name = "KeypadTest"             , create_func=                KeypadTestMain  },
     { isSupported = true,  name = "CocosDenshionTest"      , create_func   =         CocosDenshionTestMain  },
-    { isSupported = false,  name = "PerformanceTest"        , create_func=           PerformanceTestMain  },
+    { isSupported = true,  name = "PerformanceTest"        , create_func=           PerformanceTestMain  },
     { isSupported = true,  name = "ZwoptexTest"            , create_func   =               ZwoptexTestMain  },
     { isSupported = false,  name = "CurlTest"               , create_func=                  CurlTestMain  },
     { isSupported = true,  name = "UserDefaultTest"        , create_func=           UserDefaultTestMain  },
