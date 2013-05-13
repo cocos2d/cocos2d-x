@@ -308,9 +308,9 @@ public:
      */
     virtual bool isOpacityModifyRGB(void);
     virtual void setOpacity(GLubyte opacity);
-	virtual GLubyte CCScale9Sprite::getOpacity();
+	virtual GLubyte getOpacity();
     virtual void setColor(const ccColor3B& color);
-	virtual const ccColor3B& CCScale9Sprite::getColor();
+	virtual const ccColor3B& getColor();
 
     virtual bool updateWithBatchNode(CCSpriteBatchNode* batchnode, CCRect rect, bool rotated, CCRect capInsets);
 
