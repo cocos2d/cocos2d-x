@@ -71,12 +71,26 @@ size_t writeData(void *ptr, size_t size, size_t nmemb, void *stream)
     return sizes;
 }
 
+// Callback function used by libcurl for collect header data
+size_t writeHeaderData(void *ptr, size_t size, size_t nmemb, void *stream)
+{
+    std::vector<char> *recvBuffer = (std::vector<char>*)stream;
+    size_t sizes = size * nmemb;
+    
+    // add data to the end of recvBuffer
+    // write data maybe called more than once in a single request
+    recvBuffer->insert(recvBuffer->end(), (char*)ptr, (char*)ptr+sizes);
+    
+    return sizes;
+}
+
+
 // Prototypes
 bool configureCURL(CURL *handle);
-int processGetTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *errorCode);
-int processPostTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *errorCode);
-int processPutTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *errorCode);
-int processDeleteTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *errorCode);
+int processGetTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *errorCode, write_callback headerCallback, void *headerStream);
+int processPostTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *errorCode, write_callback headerCallback, void *headerStream);
+int processPutTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *errorCode, write_callback headerCallback, void *headerStream);
+int processDeleteTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *errorCode, write_callback headerCallback, void *headerStream);
 // int processDownloadTask(HttpRequest *task, write_callback callback, void *stream, int32_t *errorCode);
 
 
@@ -127,31 +141,39 @@ static void* networkThread(void *data)
         switch (request->getRequestType())
         {
             case CCHttpRequest::kHttpGet: // HTTP GET
-                retValue = processGetTask(request, 
+                retValue = processGetTask(request,
                                           writeData, 
                                           response->getResponseData(), 
-                                          &responseCode);
+                                          &responseCode,
+                                          writeHeaderData,
+                                          response->getResponseHeader());
                 break;
             
             case CCHttpRequest::kHttpPost: // HTTP POST
-                retValue = processPostTask(request, 
+                retValue = processPostTask(request,
                                            writeData, 
                                            response->getResponseData(), 
-                                           &responseCode);
+                                           &responseCode,
+                                           writeHeaderData,
+                                           response->getResponseHeader());
                 break;
 
             case CCHttpRequest::kHttpPut:
                 retValue = processPutTask(request,
                                           writeData,
                                           response->getResponseData(),
-                                          &responseCode);
+                                          &responseCode,
+                                          writeHeaderData,
+                                          response->getResponseHeader());
                 break;
 
             case CCHttpRequest::kHttpDelete:
                 retValue = processDeleteTask(request,
                                              writeData,
                                              response->getResponseData(),
-                                             &responseCode);
+                                             &responseCode,
+                                             writeHeaderData,
+                                             response->getResponseHeader());
                 break;
             
             default:
@@ -227,7 +249,9 @@ bool configureCURL(CURL *handle)
     if (code != CURLE_OK) {
         return false;
     }
-    
+    curl_easy_setopt(handle, CURLOPT_SSL_VERIFYPEER, 0L);
+    curl_easy_setopt(handle, CURLOPT_SSL_VERIFYHOST, 0L);
+
     return true;
 }
 
@@ -265,7 +289,7 @@ public:
      * @param callback Response write callback
      * @param stream Response write stream
      */
-    bool init(CCHttpRequest *request, write_callback callback, void *stream)
+    bool init(CCHttpRequest *request, write_callback callback, void *stream, write_callback headerCallback, void *headerStream)
     {
         if (!m_curl)
             return false;
@@ -286,7 +310,10 @@ public:
 
         return setOption(CURLOPT_URL, request->getUrl())
                 && setOption(CURLOPT_WRITEFUNCTION, callback)
-                && setOption(CURLOPT_WRITEDATA, stream);
+                && setOption(CURLOPT_WRITEDATA, stream)
+                && setOption(CURLOPT_HEADERFUNCTION, headerCallback)
+                && setOption(CURLOPT_HEADERDATA, headerStream);
+        
     }
 
     /// @param responseCode Null not allowed
@@ -297,25 +324,28 @@ public:
         CURLcode code = curl_easy_getinfo(m_curl, CURLINFO_RESPONSE_CODE, responseCode);
         if (code != CURLE_OK || *responseCode != 200)
             return false;
+        
+        // Get some mor data.
+        
         return true;
     }
 };
 
 //Process Get Request
-int processGetTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *responseCode)
+int processGetTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *responseCode, write_callback headerCallback, void *headerStream)
 {
     CURLRaii curl;
-    bool ok = curl.init(request, callback, stream)
+    bool ok = curl.init(request, callback, stream, headerCallback, headerStream)
             && curl.setOption(CURLOPT_FOLLOWLOCATION, true)
             && curl.perform(responseCode);
     return ok ? 0 : 1;
 }
 
 //Process POST Request
-int processPostTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *responseCode)
+int processPostTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *responseCode, write_callback headerCallback, void *headerStream)
 {
     CURLRaii curl;
-    bool ok = curl.init(request, callback, stream)
+    bool ok = curl.init(request, callback, stream, headerCallback, headerStream)
             && curl.setOption(CURLOPT_POST, 1)
             && curl.setOption(CURLOPT_POSTFIELDS, request->getRequestData())
             && curl.setOption(CURLOPT_POSTFIELDSIZE, request->getRequestDataSize())
@@ -324,10 +354,10 @@ int processPostTask(CCHttpRequest *request, write_callback callback, void *strea
 }
 
 //Process PUT Request
-int processPutTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *responseCode)
+int processPutTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *responseCode, write_callback headerCallback, void *headerStream)
 {
     CURLRaii curl;
-    bool ok = curl.init(request, callback, stream)
+    bool ok = curl.init(request, callback, stream, headerCallback, headerStream)
             && curl.setOption(CURLOPT_CUSTOMREQUEST, "PUT")
             && curl.setOption(CURLOPT_POSTFIELDS, request->getRequestData())
             && curl.setOption(CURLOPT_POSTFIELDSIZE, request->getRequestDataSize())
@@ -336,10 +366,10 @@ int processPutTask(CCHttpRequest *request, write_callback callback, void *stream
 }
 
 //Process DELETE Request
-int processDeleteTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *responseCode)
+int processDeleteTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *responseCode, write_callback headerCallback, void *headerStream)
 {
     CURLRaii curl;
-    bool ok = curl.init(request, callback, stream)
+    bool ok = curl.init(request, callback, stream, headerCallback, headerStream)
             && curl.setOption(CURLOPT_CUSTOMREQUEST, "DELETE")
             && curl.setOption(CURLOPT_FOLLOWLOCATION, true)
             && curl.perform(responseCode);
