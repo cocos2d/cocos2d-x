@@ -145,8 +145,8 @@ public:
     bool initWithString(const char *text,  const char *fontName, float fontSize, const CCSize& dimensions, CCTextAlignment hAlignment, CCVerticalTextAlignment vAlignment);
     /** Initializes a texture from a string with font name and font size */
     bool initWithString(const char *text, const char *fontName, float fontSize);
-    /** Initializes a texture from a string with dimensions, alignment, font name and font size shadow and stroke*/
-    bool initWithStringShadowStroke(const char *text, ccFontDefinition *textDefinition);
+    /** Initializes a texture from a string using a text definition*/
+    bool initWithString(const char *text, ccFontDefinition *textDefinition);
     
     /** Initializes a texture from a PVR file */
     bool initWithPVRFile(const char* file);

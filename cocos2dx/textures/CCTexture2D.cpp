@@ -443,7 +443,7 @@ bool CCTexture2D::initWithString(const char *text, const char *fontName, float f
         tempDef.m_vertAlignment = vAlignment;
         tempDef.m_fontFillColor = ccWHITE;
     
-        return initWithStringShadowStroke(text, &tempDef);
+        return initWithString(text, &tempDef);
     
     
     #else
@@ -496,7 +496,7 @@ bool CCTexture2D::initWithString(const char *text, const char *fontName, float f
     
 }
 
-bool CCTexture2D::initWithStringShadowStroke(const char *text, ccFontDefinition *textDefinition)
+bool CCTexture2D::initWithString(const char *text, ccFontDefinition *textDefinition)
 {
     #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     
