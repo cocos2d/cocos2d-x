@@ -156,12 +156,15 @@ protected:
     std::string * m_pFontName;
     /** Font size of the label */
     float m_fFontSize;
+    /** label's string */
+    std::string m_string;
     
     /** font shadow */
     bool    m_shadowEnabled;
     CCSize  m_shadowOffset;
     float   m_shadowOpacity;
     float   m_shadowBlur;
+    
     
     /** font stroke */
     bool        m_strokeEnabled;
@@ -171,7 +174,7 @@ protected:
     /** font tint */
     ccColor3B   m_textFillColor;
 
-    std::string m_string;
+    
 };
 
 
