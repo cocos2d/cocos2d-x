@@ -405,6 +405,9 @@ Developers:
     acai (beingstudio)
         Fix of null pointer access in CCBAnimationManager::getRunningSequenceName.
 
+    metalgit92
+        Adding const qualification to some CCNode's getters
+
 Retired Core Developers:
     WenSheng Yang
         Author of windows port, CCTextField,
