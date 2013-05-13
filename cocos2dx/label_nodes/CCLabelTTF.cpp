@@ -283,14 +283,13 @@ bool CCLabelTTF::updateTexture()
     CCTexture2D *tex;
     tex = new CCTexture2D();
     
-    assert(tex);
     if (!tex)
         return false;
     
     #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     
         ccFontDefinition texDef = _prepareTextDefinition(true);
-        tex->initWithStringShadowStroke( m_string.c_str(), &texDef );
+        tex->initWithString( m_string.c_str(), &texDef );
     
     #else
     
