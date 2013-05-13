@@ -42,35 +42,6 @@ struct thread_args
 };
 
 /**
- *  gotHeader - Callback for curl request to retrieve header
- *
- */
-size_t MinXmlHttpRequest::gotHeader(void* ptr, size_t size, size_t nmemb, void *userdata) {
-	MinXmlHttpRequest* req = (MinXmlHttpRequest*)userdata;
-	string header((const char*)ptr, size * nmemb);
-	req->_gotHeader(header);
-	return size * nmemb;
-}
-
-/**
- *  gotData - Callback for curl request to retrieve data
- *
- */
-size_t MinXmlHttpRequest::gotData(char* ptr, size_t size, size_t nmemb, void *userdata) {
-	MinXmlHttpRequest* req = (MinXmlHttpRequest*)userdata;
-	req->_gotData(ptr, size * nmemb);
-	return size * nmemb;
-}
-
-/**
- *  _gotData - Implementation for data retrieving.
- *
- */
-void MinXmlHttpRequest::_gotData(char* ptr, size_t len) {
-	data.write(ptr, len);
-}
-
-/**
  *  _gotHeader - Implementation for header retrieving.
  *
  */
@@ -78,7 +49,7 @@ void MinXmlHttpRequest::_gotHeader(string header) {
 	// Get Header and Set StatusText
     // Split String into Tokens
     char * cstr = new char [header.length()+1];
-
+    
     // check for colon.
     unsigned found_header_field = header.find_first_of(":");
     
@@ -185,11 +156,16 @@ void MinXmlHttpRequest::_setCurlRequestHeader() {
     }
     
     if (header != NULL) {
-        curl_easy_setopt(curlHandle, CURLOPT_HTTPHEADER, headers);
+        //curl_easy_setopt(curlHandle, CURLOPT_HTTPHEADER, headers);
     }
     
 }
 
+/**
+ *  handle_requestResponse - Callback for HTTPRequest. Handles the response and invokes Callback.
+ *
+ *
+ */
 void MinXmlHttpRequest::handle_requestResponse(MinXmlHttpRequest *sender, cocos2d::extension::CCHttpResponse *response) {
 
     if (0 != strlen(response->getHttpRequest()->getTag()))
@@ -200,7 +176,6 @@ void MinXmlHttpRequest::handle_requestResponse(MinXmlHttpRequest *sender, cocos2
     int statusCode = response->getResponseCode();
     char statusString[64] = {};
     sprintf(statusString, "HTTP Status Code: %d, tag = %s", statusCode, response->getHttpRequest()->getTag());
-    CCLog("response code: %d", statusCode);
     
     if (!response->isSucceed())
     {
@@ -209,25 +184,36 @@ void MinXmlHttpRequest::handle_requestResponse(MinXmlHttpRequest *sender, cocos2
         return;
     }
     
-    // store data
+    // set header
+    std::vector<char> *headers = response->getResponseHeader();
+    
+    char* concatHeader = (char*) malloc(headers->size() + 1);
+    std::string header(headers->begin(), headers->end());
+    strcpy(concatHeader, header.c_str());
+    
+    std::istringstream stream(concatHeader);
+    std::string line;
+    while(std::getline(stream, line)) {
+        _gotHeader(line);
+    }
+    
+    /** get the response data **/
     std::vector<char> *buffer = response->getResponseData();
     char* concatenated = (char*) malloc(buffer->size() + 1);
     std::string s2(buffer->begin(), buffer->end());
     
     strcpy(concatenated, s2.c_str());
     
-    CCLog("===");
-    CCLog(concatenated);
-    
     if (statusCode == 200)
     {
         //Succeeded
         status = 200;
         readyState = DONE;
+        data << concatenated;
+        
     }
     else
     {
-        //Failed
         status = 0;
     }
     
@@ -257,16 +243,7 @@ void MinXmlHttpRequest::_sendRequest(JSContext *cx) {
     cc_request->setResponseCallback(this, cocos2d::extension::SEL_HttpResponse(&MinXmlHttpRequest::handle_requestResponse));
     cocos2d::extension::CCHttpClient::getInstance()->send(cc_request);
     cc_request->release();
-        // State has been changed. Run the callback function!
-    if (onreadystateCallback) {
-        JS_IsExceptionPending(cx) && JS_ReportPendingException(cx);
-        jsval fval = OBJECT_TO_JSVAL(onreadystateCallback);
-        jsval out;
-        JS_CallFunctionValue(cx, NULL, fval, 0, NULL, &out);
-    }
-    
-    //curl_easy_cleanup(curlHandle);
-    
+
 }
 
 /**
@@ -277,18 +254,10 @@ MinXmlHttpRequest::MinXmlHttpRequest() : onreadystateCallback(cx, NULL), isNetwo
     
     http_header.clear();
     request_header.clear();
-    headers = NULL;
     
-    // curlHandle = curl_easy_init();
     cc_request = new cocos2d::extension::CCHttpRequest();
     
-	/*curl_easy_setopt(curlHandle, CURLOPT_WRITEFUNCTION, MinXmlHttpRequest::gotData);
-	curl_easy_setopt(curlHandle, CURLOPT_WRITEDATA, this);
-	curl_easy_setopt(curlHandle, CURLOPT_HEADERFUNCTION, MinXmlHttpRequest::gotHeader);
-	curl_easy_setopt(curlHandle, CURLOPT_WRITEHEADER, this);
-    curl_easy_setopt(curlHandle, CURLOPT_SSL_VERIFYPEER, 0L);
-    curl_easy_setopt(curlHandle, CURLOPT_SSL_VERIFYHOST, 0L);*/
-    
+        
 }
 
 /**
@@ -303,9 +272,7 @@ MinXmlHttpRequest::~MinXmlHttpRequest() {
     if (cc_request) {
         cc_request->release();
     }
-    /*if (curlHandle) {
-		curl_easy_cleanup(curlHandle);
-	}*/
+
 }
 
 /**
@@ -418,7 +385,7 @@ JS_BINDED_PROP_SET_IMPL(MinXmlHttpRequest, timeout)
     jsval timeout_ms = vp.get();
     
     timeout = JSVAL_TO_INT(timeout_ms);
-    curl_easy_setopt(curlHandle, CURLOPT_CONNECTTIMEOUT_MS, timeout);
+    //curl_easy_setopt(curlHandle, CURLOPT_CONNECTTIMEOUT_MS, timeout);
     return JS_TRUE;
     
 }
@@ -606,9 +573,11 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, open)
         JSBool async = true;
         JSString* jsMethod = JS_ValueToString(cx, argv[0]);
         JSString* jsURL = JS_ValueToString(cx, argv[1]);
+        
         if (argc > 2) {
             JS_ValueToBoolean(cx, argv[2], &async);
         }
+        
         JSStringWrapper w1(jsMethod);
         JSStringWrapper w2(jsURL);
         method = w1;
@@ -622,21 +591,15 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, open)
         if (url.length() > 5 && url.compare(url.length() - 5, 5, ".json") == 0) {
             responseType = kRequestResponseTypeJSON;
         }
-        /*if ((url.length() > 7 && url.compare(0, 7, "http://") == 0) ||
-            (url.length() > 8 && url.compare(0, 8, "https://") == 0))
-        {*/
-        
+
         if (meth.compare("post") == 0 || meth.compare("POST") == 0) {
             cc_request->setRequestType(cocos2d::extension::CCHttpRequest::kHttpPost);
-            //curl_easy_setopt(curlHandle, CURLOPT_POST, 1);
         }
         else {
             cc_request->setRequestType(cocos2d::extension::CCHttpRequest::kHttpGet);
-            //curl_easy_setopt(curlHandle, CURLOPT_POST, 0);
         }
         
         cc_request->setUrl(url.c_str());
-        //curl_easy_setopt(curlHandle, CURLOPT_URL, url.c_str());
         
         isNetwork = true;
         readyState = OPENED;
@@ -657,11 +620,6 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, send)
 {
 
     JSString *str;
-    pthread_t thread;
-    int iret;
-    struct thread_args *thread_arguments;//(struct Node *)malloc(sizeof(struct Node))
-    
-    thread_arguments = (struct thread_args *)malloc(sizeof(struct thread_args));
     
     // Clean up header map. New request, new headers!
     http_header.clear();
@@ -674,12 +632,9 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, send)
         
         char *data = JS_EncodeString(cx, str);
         cc_request->setRequestData(data, strlen(data));
-        //curl_easy_setopt(curlHandle, CURLOPT_POSTFIELDS, data);
 
-        
     }
-    
-    // Set Headers if needed.
+
     //_setCurlRequestHeader();
     _sendRequest(cx);
         
