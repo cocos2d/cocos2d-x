@@ -174,14 +174,23 @@ bool CCTexture2D::hasPremultipliedAlpha()
 
 bool CCTexture2D::initWithData(const void *data, CCTexture2DPixelFormat pixelFormat, unsigned int pixelsWide, unsigned int pixelsHigh, const CCSize& contentSize)
 {
-    // XXX: 32 bits or POT textures uses UNPACK of 4 (is this correct ??? )
-    if( pixelFormat == kCCTexture2DPixelFormat_RGBA8888 || ( ccNextPOT(pixelsWide)==pixelsWide && ccNextPOT(pixelsHigh)==pixelsHigh) )
+    unsigned int bytesPerRow = pixelsWide * bitsPerPixelForFormat(pixelFormat) / 8;
+
+    if(bytesPerRow % 8 == 0)
     {
-        glPixelStorei(GL_UNPACK_ALIGNMENT,4);
+        glPixelStorei(GL_UNPACK_ALIGNMENT, 8);
+    }
+    else if(bytesPerRow % 4 == 0)
+    {
+        glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
+    }
+    else if(bytesPerRow % 2 == 0)
+    {
+        glPixelStorei(GL_UNPACK_ALIGNMENT, 2);
     }
     else
     {
-        glPixelStorei(GL_UNPACK_ALIGNMENT,1);
+        glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     }
 
     glGenTextures(1, &m_uName);
