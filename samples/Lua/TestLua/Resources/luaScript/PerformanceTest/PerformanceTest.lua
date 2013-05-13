@@ -354,7 +354,7 @@ local function runNodeChildrenTest()
     	nCurrentQuantityOfNodes = 0
     	nQuantityOfNodes = nNodes
     	
-    	--"+"¡¢"-" Menu
+    	--"+","-" Menu
 		CCMenuItemFont:setFontSize(65)
     	local pDecrease = CCMenuItemFont:create(" - ")
     	pDecrease:registerScriptTapHandler(onDecrease)
@@ -811,7 +811,7 @@ local function runParticleTest()
     	nLastRenderedCount = 0
     	nQuantityParticles = nParticles
     	
-    	--"+"¡¢"-" Menu
+    	--"+","-" Menu
 		CCMenuItemFont:setFontSize(65)
     	local pDecrease = CCMenuItemFont:create(" - ")
     	pDecrease:registerScriptTapHandler(onDecrease)
@@ -1264,7 +1264,7 @@ local function runSpriteTest()
     	nLastRenderedCount = 0
     	nQuantityNodes    = 0
     	
-    	--"+"¡¢"-" Menu
+    	--"+","-" Menu
 		CCMenuItemFont:setFontSize(65)
     	local pDecrease = CCMenuItemFont:create(" - ")
    		pDecrease:registerScriptTapHandler(onDecrease)
