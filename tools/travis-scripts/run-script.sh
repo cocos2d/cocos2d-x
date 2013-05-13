@@ -13,9 +13,16 @@ if [ "$GEN_JSB"x = "YES"x ]; then
     ./generate-jsbindings.sh
 fi
 
-if [ "$PLATFORM"x = "android"x ]; then 
-    cd $COCOS2DX_ROOT/samples/$SAMPLE_LANG/$APPNAME/proj.android
+build_android()
+{
+    cd $COCOS2DX_ROOT/samples/$1/$2/proj.android
     ./build_native.sh
+}
+
+if [ "$PLATFORM"x = "android"x ]; then 
+    build_android Cpp HelloCpp
+    build_android Javascript TestJavascript
+    build_android Lua TestLua
 fi
 
 if [ "$PLATFORM"x = "nacl"x ]; then
