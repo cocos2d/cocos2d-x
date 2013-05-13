@@ -411,6 +411,9 @@ Developers:
     Clarinexus
         Fixing a bug that setColor and setOpacity of CCControlButton and CCScale9Sprite are broken.
 
+    Xander84
+        Fixing a bug in CCBValue::getByteValue.
+
 Retired Core Developers:
     WenSheng Yang
         Author of windows port, CCTextField,
