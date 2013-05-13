@@ -70,17 +70,15 @@ class MinXmlHttpRequest : public cocos2d::CCLayer
 	int responseType;
     unsigned timeout;
 	bool isAsync;
-    CURL* curlHandle;
     cocos2d::extension::CCHttpRequest* cc_request;
     
 	bool isNetwork;
     bool withCredentialsValue = false;
     map<string, string> http_header;
     map<string, string> request_header;
-    struct curl_slist *headers = NULL;
     
 	void _gotHeader(std::string header);
-	void _gotData(char* ptr, size_t len);
+
     void _setRequestHeader(const char* field, const char* value);
     void _setCurlRequestHeader();
     void _sendRequest(JSContext *cx);
@@ -109,9 +107,7 @@ public:
     JS_BINDED_FUNC(MinXmlHttpRequest, overrideMimeType);
     
     void handle_requestResponse(MinXmlHttpRequest *sender, cocos2d::extension::CCHttpResponse *response);
-    
-    static size_t gotHeader(void *ptr, size_t size, size_t nmemb, void *userdata);
-    static size_t gotData(char *ptr, size_t size, size_t nmemb, void *userdata);
+
 };
 /*void my_finalize(JSFreeOp *fop, JSObject *obj);
 JSBool JS_foo(JSContext *cx, uint32_t argc, jsval *vpn);
