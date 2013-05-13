@@ -122,6 +122,12 @@ static TestScene* CreateTestScene(int nIdx)
     case TEST_SPINE:
         pScene = new SpineTestScene();
         break;
+    case TEST_TEXTUREPACKER_ENCRYPTION:
+        pScene = new TextureAtlasEncryptionTestScene();
+        break;
+    case TEST_DATAVISTOR:
+        pScene = new DataVisitorTestScene();
+        break;
     default:
         break;
     }
