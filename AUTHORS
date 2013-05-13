@@ -68,6 +68,7 @@ Developers:
         Fix CCUserDefault.cpp compiling on Android.
         Fixing CCFileUtils 'createXXXXWithContentsOfFile' path lookup issue.
         Add CCDirector::popToSceneStackLevel(int level).
+        Fixing a bug that custom font can't be loaded correctly if using full path of filename on android.
 
     Waiter
         fix an error that OpenSLEngine can't load resources from SD card
