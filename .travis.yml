@@ -14,9 +14,7 @@ env:
   # - GEN_JSB=YES
   - PLATFORM=linux DEBUG=1
   - PLATFORM=nacl DEBUG=1
-  - PLATFORM=android SAMPLE_LANG=Cpp APPNAME=HelloCpp
-  - PLATFORM=android SAMPLE_LANG=Javascript APPNAME=TestJavascript
-  - PLATFORM=android SAMPLE_LANG=Lua APPNAME=TestLua
+  - PLATFORM=android
 branches:
   only:
     - master
