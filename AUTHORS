@@ -12,6 +12,9 @@ Developers:
     Rolando Abarca
         Javascript Binding and testjs
 
+    silverscania
+        Pass correct parameter to glPixelStorei when creating a texture
+
     FlagellumDei
         Center the window correctly on windows
 
