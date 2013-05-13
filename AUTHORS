@@ -408,6 +408,9 @@ Developers:
     metalgit92
         Adding const qualification to some CCNode's getters
 
+    Clarinexus
+        Fixing a bug that setColor and setOpacity of CCControlButton and CCScale9Sprite are broken.
+
 Retired Core Developers:
     WenSheng Yang
         Author of windows port, CCTextField,
