@@ -5,7 +5,7 @@
 /*    Basic Type 1/Type 2 tables definitions and interface (specification  */
 /*    only).                                                               */
 /*                                                                         */
-/*  Copyright 1996-2001, 2002, 2003, 2004, 2006, 2008, 2009 by             */
+/*  Copyright 1996-2004, 2006, 2008, 2009, 2011 by                         */
 /*  David Turner, Robert Wilhelm, and Werner Lemberg.                      */
 /*                                                                         */
 /*  This file is part of the FreeType project, and may only be used,       */
@@ -493,8 +493,166 @@ FT_BEGIN_HEADER
   FT_Get_PS_Font_Private( FT_Face     face,
                           PS_Private  afont_private );
 
-  /* */
 
+  /*************************************************************************/
+  /*                                                                       */
+  /* <Enum>                                                                */
+  /*    T1_EncodingType                                                    */
+  /*                                                                       */
+  /* <Description>                                                         */
+  /*    An enumeration describing the `Encoding' entry in a Type 1         */
+  /*    dictionary.                                                        */
+  /*                                                                       */
+  typedef enum  T1_EncodingType_
+  {
+    T1_ENCODING_TYPE_NONE = 0,
+    T1_ENCODING_TYPE_ARRAY,
+    T1_ENCODING_TYPE_STANDARD,
+    T1_ENCODING_TYPE_ISOLATIN1,
+    T1_ENCODING_TYPE_EXPERT
+
+  } T1_EncodingType;
+
+
+  /*************************************************************************/
+  /*                                                                       */
+  /* <Enum>                                                                */
+  /*    PS_Dict_Keys                                                       */
+  /*                                                                       */
+  /* <Description>                                                         */
+  /*    An enumeration used in calls to @FT_Get_PS_Font_Value to identify  */
+  /*    the Type~1 dictionary entry to retrieve.                           */
+  /*                                                                       */
+  typedef enum  PS_Dict_Keys_
+  {
+    /* conventionally in the font dictionary */
+    PS_DICT_FONT_TYPE,              /* FT_Byte         */
+    PS_DICT_FONT_MATRIX,            /* FT_Fixed        */
+    PS_DICT_FONT_BBOX,              /* FT_Fixed        */
+    PS_DICT_PAINT_TYPE,             /* FT_Byte         */
+    PS_DICT_FONT_NAME,              /* FT_String*      */
+    PS_DICT_UNIQUE_ID,              /* FT_Int          */
+    PS_DICT_NUM_CHAR_STRINGS,       /* FT_Int          */
+    PS_DICT_CHAR_STRING_KEY,        /* FT_String*      */
+    PS_DICT_CHAR_STRING,            /* FT_String*      */
+    PS_DICT_ENCODING_TYPE,          /* T1_EncodingType */
+    PS_DICT_ENCODING_ENTRY,         /* FT_String*      */
+
+    /* conventionally in the font Private dictionary */
+    PS_DICT_NUM_SUBRS,              /* FT_Int     */
+    PS_DICT_SUBR,                   /* FT_String* */
+    PS_DICT_STD_HW,                 /* FT_UShort  */
+    PS_DICT_STD_VW,                 /* FT_UShort  */
+    PS_DICT_NUM_BLUE_VALUES,        /* FT_Byte    */
+    PS_DICT_BLUE_VALUE,             /* FT_Short   */
+    PS_DICT_BLUE_FUZZ,              /* FT_Int     */
+    PS_DICT_NUM_OTHER_BLUES,        /* FT_Byte    */
+    PS_DICT_OTHER_BLUE,             /* FT_Short   */
+    PS_DICT_NUM_FAMILY_BLUES,       /* FT_Byte    */
+    PS_DICT_FAMILY_BLUE,            /* FT_Short   */
+    PS_DICT_NUM_FAMILY_OTHER_BLUES, /* FT_Byte    */
+    PS_DICT_FAMILY_OTHER_BLUE,      /* FT_Short   */
+    PS_DICT_BLUE_SCALE,             /* FT_Fixed   */
+    PS_DICT_BLUE_SHIFT,             /* FT_Int     */
+    PS_DICT_NUM_STEM_SNAP_H,        /* FT_Byte    */
+    PS_DICT_STEM_SNAP_H,            /* FT_Short   */
+    PS_DICT_NUM_STEM_SNAP_V,        /* FT_Byte    */
+    PS_DICT_STEM_SNAP_V,            /* FT_Short   */
+    PS_DICT_FORCE_BOLD,             /* FT_Bool    */
+    PS_DICT_RND_STEM_UP,            /* FT_Bool    */
+    PS_DICT_MIN_FEATURE,            /* FT_Short   */
+    PS_DICT_LEN_IV,                 /* FT_Int     */
+    PS_DICT_PASSWORD,               /* FT_Long    */
+    PS_DICT_LANGUAGE_GROUP,         /* FT_Long    */
+
+    /* conventionally in the font FontInfo dictionary */
+    PS_DICT_VERSION,                /* FT_String* */
+    PS_DICT_NOTICE,                 /* FT_String* */
+    PS_DICT_FULL_NAME,              /* FT_String* */
+    PS_DICT_FAMILY_NAME,            /* FT_String* */
+    PS_DICT_WEIGHT,                 /* FT_String* */
+    PS_DICT_IS_FIXED_PITCH,         /* FT_Bool    */
+    PS_DICT_UNDERLINE_POSITION,     /* FT_Short   */
+    PS_DICT_UNDERLINE_THICKNESS,    /* FT_UShort  */
+    PS_DICT_FS_TYPE,                /* FT_UShort  */
+    PS_DICT_ITALIC_ANGLE,           /* FT_Long    */
+
+    PS_DICT_MAX = PS_DICT_ITALIC_ANGLE
+
+  } PS_Dict_Keys;
+
+
+  /************************************************************************
+   *
+   * @function:
+   *    FT_Get_PS_Font_Value
+   *
+   * @description:
+   *    Retrieve the value for the supplied key from a PostScript font.
+   *
+   * @input:
+   *    face ::
+   *       PostScript face handle.
+   *
+   *    key ::
+   *       An enumeration value representing the dictionary key to retrieve.
+   *
+   *    idx ::
+   *       For array values, this specifies the index to be returned.
+   *
+   *    value ::
+   *       A pointer to memory into which to write the value.
+   *
+   *    valen_len ::
+   *       The size, in bytes, of the memory supplied for the value.
+   *
+   * @output:
+   *    value ::
+   *       The value matching the above key, if it exists.
+   *
+   * @return:
+   *    The amount of memory (in bytes) required to hold the requested
+   *    value (if it exists, -1 otherwise).
+   *
+   * @note:
+   *    The values returned are not pointers into the internal structures of
+   *    the face, but are `fresh' copies, so that the memory containing them
+   *    belongs to the calling application.  This also enforces the
+   *    `read-only' nature of these values, i.e., this function cannot be
+   *    used to manipulate the face.
+   *
+   *    `value' is a void pointer because the values returned can be of
+   *    various types.
+   *
+   *    If either `value' is NULL or `value_len' is too small, just the
+   *    required memory size for the requested entry is returned.
+   *
+   *    The `idx' parameter is used, not only to retrieve elements of, for
+   *    example, the FontMatrix or FontBBox, but also to retrieve name keys
+   *    from the CharStrings dictionary, and the charstrings themselves.  It
+   *    is ignored for atomic values.
+   *
+   *    PS_DICT_BLUE_SCALE returns a value that is scaled up by 1000.  To
+   *    get the value as in the font stream, you need to divide by
+   *    65536000.0 (to remove the FT_Fixed scale, and the x1000 scale).
+   *
+   *    IMPORTANT: Only key/value pairs read by the FreeType interpreter can
+   *    be retrieved.  So, for example, PostScript procedures such as NP,
+   *    ND, and RD are not available.  Arbitrary keys are, obviously, not be
+   *    available either.
+   *
+   *    If the font's format is not PostScript-based, this function returns
+   *    the `FT_Err_Invalid_Argument' error code.
+   *
+   */
+  FT_EXPORT( FT_Long )
+  FT_Get_PS_Font_Value( FT_Face       face,
+                        PS_Dict_Keys  key,
+                        FT_UInt       idx,
+                        void         *value,
+                        FT_Long       value_len );
+
+  /* */
 
 FT_END_HEADER
 

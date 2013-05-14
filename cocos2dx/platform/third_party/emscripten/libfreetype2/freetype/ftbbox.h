@@ -4,7 +4,7 @@
 /*                                                                         */
 /*    FreeType exact bbox computation (specification).                     */
 /*                                                                         */
-/*  Copyright 1996-2001, 2003, 2007 by                                     */
+/*  Copyright 1996-2001, 2003, 2007, 2011 by                               */
 /*  David Turner, Robert Wilhelm, and Werner Lemberg.                      */
 /*                                                                         */
 /*  This file is part of the FreeType project, and may only be used,       */
@@ -72,6 +72,14 @@ FT_BEGIN_HEADER
   /*                                                                       */
   /* <Return>                                                              */
   /*    FreeType error code.  0~means success.                             */
+  /*                                                                       */
+  /* <Note>                                                                */
+  /*    If the font is tricky and the glyph has been loaded with           */
+  /*    @FT_LOAD_NO_SCALE, the resulting BBox is meaningless.  To get      */
+  /*    reasonable values for the BBox it is necessary to load the glyph   */
+  /*    at a large ppem value (so that the hinting instructions can        */
+  /*    properly shift and scale the subglyphs), then extracting the BBox  */
+  /*    which can be eventually converted back to font units.              */
   /*                                                                       */
   FT_EXPORT( FT_Error )
   FT_Outline_Get_BBox( FT_Outline*  outline,

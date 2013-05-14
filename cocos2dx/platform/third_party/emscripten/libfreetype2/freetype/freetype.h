@@ -4,8 +4,7 @@
 /*                                                                         */
 /*    FreeType high-level API and common types (specification only).       */
 /*                                                                         */
-/*  Copyright 1996-2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009,   */
-/*            2010 by                                                      */
+/*  Copyright 1996-2013 by                                                 */
 /*  David Turner, Robert Wilhelm, and Werner Lemberg.                      */
 /*                                                                         */
 /*  This file is part of the FreeType project, and may only be used,       */
@@ -17,6 +16,10 @@
 /***************************************************************************/
 
 
+#ifndef __FREETYPE_H__
+#define __FREETYPE_H__
+
+
 #ifndef FT_FREETYPE_H
 #error "`ft2build.h' hasn't been included yet!"
 #error "Please always use macros to include FreeType header files."
@@ -26,14 +29,10 @@
 #endif
 
 
-#ifndef __FREETYPE_H__
-#define __FREETYPE_H__
-
-
 #include <ft2build.h>
 #include FT_CONFIG_CONFIG_H
-#include FT_ERRORS_H
 #include FT_TYPES_H
+#include FT_ERRORS_H
 
 
 FT_BEGIN_HEADER
@@ -227,14 +226,20 @@ FT_BEGIN_HEADER
   /*      Left side bearing for vertical layout.                           */
   /*                                                                       */
   /*    vertBearingY ::                                                    */
-  /*      Top side bearing for vertical layout.                            */
+  /*      Top side bearing for vertical layout.  Larger positive values    */
+  /*      mean further below the vertical glyph origin.                    */
   /*                                                                       */
   /*    vertAdvance ::                                                     */
-  /*      Advance height for vertical layout.                              */
+  /*      Advance height for vertical layout.  Positive values mean the    */
+  /*      glyph has a positive advance downward.                           */
   /*                                                                       */
   /* <Note>                                                                */
   /*    If not disabled with @FT_LOAD_NO_HINTING, the values represent     */
   /*    dimensions of the hinted glyph (in case hinting is applicable).    */
+  /*                                                                       */
+  /*    Stroking a glyph with an outside border does not increase          */
+  /*    `horiAdvance' or `vertAdvance'; you have to manually adjust these  */
+  /*    values to account for the added width and height.                  */
   /*                                                                       */
   typedef struct  FT_Glyph_Metrics_
   {
@@ -843,8 +848,8 @@ FT_BEGIN_HEADER
   /*                           expressed in font units (see                */
   /*                           `units_per_EM').  The box is large enough   */
   /*                           to contain any glyph from the font.  Thus,  */
-  /*                           `bbox.yMax' can be seen as the `maximal     */
-  /*                           ascender', and `bbox.yMin' as the `minimal  */
+  /*                           `bbox.yMax' can be seen as the `maximum     */
+  /*                           ascender', and `bbox.yMin' as the `minimum  */
   /*                           descender'.  Only relevant for scalable     */
   /*                           formats.                                    */
   /*                                                                       */
@@ -870,19 +875,22 @@ FT_BEGIN_HEADER
   /*                           usually negative.  Only relevant for        */
   /*                           scalable formats.                           */
   /*                                                                       */
-  /*    height              :: The height is the vertical distance         */
+  /*    height              :: This value is the vertical distance         */
   /*                           between two consecutive baselines,          */
   /*                           expressed in font units.  It is always      */
   /*                           positive.  Only relevant for scalable       */
   /*                           formats.                                    */
   /*                                                                       */
-  /*    max_advance_width   :: The maximal advance width, in font units,   */
+  /*                           If you want the global glyph height, use    */
+  /*                           `ascender - descender'.                     */
+  /*                                                                       */
+  /*    max_advance_width   :: The maximum advance width, in font units,   */
   /*                           for all glyphs in this face.  This can be   */
   /*                           used to make word wrapping computations     */
   /*                           faster.  Only relevant for scalable         */
   /*                           formats.                                    */
   /*                                                                       */
-  /*    max_advance_height  :: The maximal advance height, in font units,  */
+  /*    max_advance_height  :: The maximum advance height, in font units,  */
   /*                           for all glyphs in this face.  This is only  */
   /*                           relevant for vertical layouts, and is set   */
   /*                           to `height' for fonts that do not provide   */
@@ -957,8 +965,8 @@ FT_BEGIN_HEADER
 
     FT_ListRec        sizes_list;
 
-    FT_Generic        autohint;
-    void*             extensions;
+    FT_Generic        autohint;   /* face-specific auto-hinter data */
+    void*             extensions; /* unused                         */
 
     FT_Face_Internal  internal;
 
@@ -1058,12 +1066,12 @@ FT_BEGIN_HEADER
   /*                                                                       */
   /*      It is not possible to autohint such fonts using                  */
   /*      @FT_LOAD_FORCE_AUTOHINT; it will also ignore                     */
-  /*      @FT_LOAD_NO_HINTING.  You have to set both FT_LOAD_NO_HINTING    */
+  /*      @FT_LOAD_NO_HINTING.  You have to set both @FT_LOAD_NO_HINTING   */
   /*      and @FT_LOAD_NO_AUTOHINT to really disable hinting; however, you */
   /*      probably never want this except for demonstration purposes.      */
   /*                                                                       */
-  /*      Currently, there are six TrueType fonts in the list of tricky    */
-  /*      fonts; they are hard-coded in file `ttobjs.c'.                   */
+  /*      Currently, there are about a dozen TrueType fonts in the list of */
+  /*      tricky fonts; they are hard-coded in file `ttobjs.c'.            */
   /*                                                                       */
 #define FT_FACE_FLAG_SCALABLE          ( 1L <<  0 )
 #define FT_FACE_FLAG_FIXED_SIZES       ( 1L <<  1 )
@@ -1104,8 +1112,8 @@ FT_BEGIN_HEADER
    *   FT_HAS_VERTICAL( face )
    *
    * @description:
-   *   A macro that returns true whenever a face object contains vertical
-   *   metrics.
+   *   A macro that returns true whenever a face object contains real
+   *   vertical metrics (and not only synthesized ones).
    *
    */
 #define FT_HAS_VERTICAL( face ) \
@@ -1337,7 +1345,7 @@ FT_BEGIN_HEADER
   /*    height       :: The height in 26.6 fractional pixels.  See         */
   /*                    @FT_FaceRec for the details.                       */
   /*                                                                       */
-  /*    max_advance  :: The maximal advance width in 26.6 fractional       */
+  /*    max_advance  :: The maximum advance width in 26.6 fractional       */
   /*                    pixels.  See @FT_FaceRec for the details.          */
   /*                                                                       */
   /* <Note>                                                                */
@@ -1667,6 +1675,9 @@ FT_BEGIN_HEADER
   /*    use @FT_New_Library instead, followed by a call to                 */
   /*    @FT_Add_Default_Modules (or a series of calls to @FT_Add_Module).  */
   /*                                                                       */
+  /*    For multi-threading applications each thread should have its own   */
+  /*    FT_Library object.                                                 */
+  /*                                                                       */
   FT_EXPORT( FT_Error )
   FT_Init_FreeType( FT_Library  *alibrary );
 
@@ -1952,6 +1963,10 @@ FT_BEGIN_HEADER
   /*    Each new face object created with this function also owns a        */
   /*    default @FT_Size object, accessible as `face->size'.               */
   /*                                                                       */
+  /*    One @FT_Library instance can have multiple face objects, this is,  */
+  /*    @FT_Open_Face and its siblings can be called multiple times using  */
+  /*    the same `library' argument.                                       */
+  /*                                                                       */
   /*    See the discussion of reference counters in the description of     */
   /*    @FT_Reference_Face.                                                */
   /*                                                                       */
@@ -2106,8 +2121,8 @@ FT_BEGIN_HEADER
   /*      used to determine both scaling values.                           */
   /*                                                                       */
   /*    FT_SIZE_REQUEST_TYPE_REAL_DIM ::                                   */
-  /*      The real dimension.  The sum of the the `Ascender' and (minus    */
-  /*      of) the `Descender' fields of @FT_FaceRec are used to determine  */
+  /*      The real dimension.  The sum of the the `ascender' and (minus    */
+  /*      of) the `descender' fields of @FT_FaceRec are used to determine  */
   /*      both scaling values.                                             */
   /*                                                                       */
   /*    FT_SIZE_REQUEST_TYPE_BBOX ::                                       */
@@ -2219,6 +2234,12 @@ FT_BEGIN_HEADER
   /*    particular bitmap strike.  Use @FT_Select_Size instead in that     */
   /*    case.                                                              */
   /*                                                                       */
+  /*    The relation between the requested size and the resulting glyph    */
+  /*    size is dependent entirely on how the size is defined in the       */
+  /*    source face.  The font designer chooses the final size of each     */
+  /*    glyph relative to this size.  For more information refer to        */
+  /*    `http://www.freetype.org/freetype2/docs/glyphs/glyphs-2.html'      */
+  /*                                                                       */
   FT_EXPORT( FT_Error )
   FT_Request_Size( FT_Face          face,
                    FT_Size_Request  req );
@@ -2287,6 +2308,11 @@ FT_BEGIN_HEADER
   /*                                                                       */
   /* <Return>                                                              */
   /*    FreeType error code.  0~means success.                             */
+  /*                                                                       */
+  /* <Note>                                                                */
+  /*    You should not rely on the resulting glyphs matching, or being     */
+  /*    constrained, to this pixel size.  Refer to @FT_Request_Size to     */
+  /*    understand how requested sizes relate to actual sizes.             */
   /*                                                                       */
   FT_EXPORT( FT_Error )
   FT_Set_Pixel_Sizes( FT_Face  face,
@@ -2401,14 +2427,20 @@ FT_BEGIN_HEADER
    *     behaviour to more specific and useful cases.
    *
    *   FT_LOAD_NO_SCALE ::
-   *     Don't scale the outline glyph loaded, but keep it in font units.
+   *     Don't scale the loaded outline glyph but keep it in font units.
    *
    *     This flag implies @FT_LOAD_NO_HINTING and @FT_LOAD_NO_BITMAP, and
    *     unsets @FT_LOAD_RENDER.
    *
+   *     If the font is `tricky' (see @FT_FACE_FLAG_TRICKY for more), using
+   *     FT_LOAD_NO_SCALE usually yields meaningless outlines because the
+   *     subglyphs must be scaled and positioned with hinting instructions.
+   *     This can be solved by loading the font without FT_LOAD_NO_SCALE and
+   *     setting the character size to `font->units_per_EM'.
+   *
    *   FT_LOAD_NO_HINTING ::
-   *     Disable hinting.  This generally generates `blurrier' bitmap glyph
-   *     when the glyph is rendered in any of the anti-aliased modes.  See
+   *     Disable hinting.  This generally generates `blurrier' bitmap glyphs
+   *     when the glyph are rendered in any of the anti-aliased modes.  See
    *     also the note below.
    *
    *     This flag is implied by @FT_LOAD_NO_SCALE.
@@ -2427,8 +2459,14 @@ FT_BEGIN_HEADER
    *     @FT_LOAD_NO_SCALE always sets this flag.
    *
    *   FT_LOAD_VERTICAL_LAYOUT ::
-   *     Load the glyph for vertical text layout.  _Don't_ use it as it is
-   *     problematic currently.
+   *     Load the glyph for vertical text layout.  In particular, the
+   *     `advance' value in the @FT_GlyphSlotRec structure is set to the
+   *     `vertAdvance' value of the `metrics' field.
+   *
+   *     In case @FT_HAS_VERTICAL doesn't return true, you shouldn't use
+   *     this flag currently.  Reason is that in this case vertical metrics
+   *     get synthesized, and those values are not always consistent across
+   *     various font formats.
    *
    *   FT_LOAD_FORCE_AUTOHINT ::
    *     Indicates that the auto-hinter is preferred over the font's native
@@ -2444,14 +2482,13 @@ FT_BEGIN_HEADER
    *     during glyph loading.  This is mostly used to detect broken glyphs
    *     in fonts.  By default, FreeType tries to handle broken fonts also.
    *
-   *   FT_LOAD_IGNORE_GLOBAL_ADVANCE_WIDTH ::
-   *     Indicates that the font driver should ignore the global advance
-   *     width defined in the font.  By default, that value is used as the
-   *     advance width for all glyphs when the face has
-   *     @FT_FACE_FLAG_FIXED_WIDTH set.
+   *     In particular, errors from the TrueType bytecode engine are not
+   *     passed to the application if this flag is not set; this might
+   *     result in partially hinted or distorted glyphs in case a glyph's
+   *     bytecode is buggy.
    *
-   *     This flag exists for historical reasons (to support buggy CJK
-   *     fonts).
+   *   FT_LOAD_IGNORE_GLOBAL_ADVANCE_WIDTH ::
+   *     Ignored.  Deprecated.
    *
    *   FT_LOAD_NO_RECURSE ::
    *     This flag is only used internally.  It merely indicates that the
@@ -2500,28 +2537,35 @@ FT_BEGIN_HEADER
    *   Besides deciding which hinter to use, you can also decide which
    *   hinting algorithm to use.  See @FT_LOAD_TARGET_XXX for details.
    *
+   *   Note that the auto-hinter needs a valid Unicode cmap (either a native
+   *   one or synthesized by FreeType) for producing correct results.  If a
+   *   font provides an incorrect mapping (for example, assigning the
+   *   character code U+005A, LATIN CAPITAL LETTER Z, to a glyph depicting a
+   *   mathematical integral sign), the auto-hinter might produce useless
+   *   results.
+   *
    */
 #define FT_LOAD_DEFAULT                      0x0
-#define FT_LOAD_NO_SCALE                     0x1
-#define FT_LOAD_NO_HINTING                   0x2
-#define FT_LOAD_RENDER                       0x4
-#define FT_LOAD_NO_BITMAP                    0x8
-#define FT_LOAD_VERTICAL_LAYOUT              0x10
-#define FT_LOAD_FORCE_AUTOHINT               0x20
-#define FT_LOAD_CROP_BITMAP                  0x40
-#define FT_LOAD_PEDANTIC                     0x80
-#define FT_LOAD_IGNORE_GLOBAL_ADVANCE_WIDTH  0x200
-#define FT_LOAD_NO_RECURSE                   0x400
-#define FT_LOAD_IGNORE_TRANSFORM             0x800
-#define FT_LOAD_MONOCHROME                   0x1000
-#define FT_LOAD_LINEAR_DESIGN                0x2000
-#define FT_LOAD_NO_AUTOHINT                  0x8000U
+#define FT_LOAD_NO_SCALE                     ( 1L << 0 )
+#define FT_LOAD_NO_HINTING                   ( 1L << 1 )
+#define FT_LOAD_RENDER                       ( 1L << 2 )
+#define FT_LOAD_NO_BITMAP                    ( 1L << 3 )
+#define FT_LOAD_VERTICAL_LAYOUT              ( 1L << 4 )
+#define FT_LOAD_FORCE_AUTOHINT               ( 1L << 5 )
+#define FT_LOAD_CROP_BITMAP                  ( 1L << 6 )
+#define FT_LOAD_PEDANTIC                     ( 1L << 7 )
+#define FT_LOAD_IGNORE_GLOBAL_ADVANCE_WIDTH  ( 1L << 9 )
+#define FT_LOAD_NO_RECURSE                   ( 1L << 10 )
+#define FT_LOAD_IGNORE_TRANSFORM             ( 1L << 11 )
+#define FT_LOAD_MONOCHROME                   ( 1L << 12 )
+#define FT_LOAD_LINEAR_DESIGN                ( 1L << 13 )
+#define FT_LOAD_NO_AUTOHINT                  ( 1L << 15 )
 
   /* */
 
   /* used internally only by certain font drivers! */
-#define FT_LOAD_ADVANCE_ONLY                 0x100
-#define FT_LOAD_SBITS_ONLY                   0x4000
+#define FT_LOAD_ADVANCE_ONLY                 ( 1L << 8 )
+#define FT_LOAD_SBITS_ONLY                   ( 1L << 14 )
 
 
   /**************************************************************************
@@ -2573,7 +2617,8 @@ FT_BEGIN_HEADER
    *
    *   If @FT_LOAD_RENDER is also set, the glyph is rendered in the
    *   corresponding mode (i.e., the mode which matches the used algorithm
-   *   best) unless @FT_LOAD_MONOCHROME is set.
+   *   best).  An exeption is FT_LOAD_TARGET_MONO since it implies
+   *   @FT_LOAD_MONOCHROME.
    *
    *   You can use a hinting algorithm that doesn't correspond to the same
    *   rendering mode.  As an example, it is possible to use the `light'
@@ -2874,13 +2919,25 @@ FT_BEGIN_HEADER
   /*                                                                       */
   /*    point_size :: The point size in 16.16 fractional points.           */
   /*                                                                       */
-  /*    degree     :: The degree of tightness.                             */
+  /*    degree     :: The degree of tightness.  Increasingly negative      */
+  /*                  values represent tighter track kerning, while        */
+  /*                  increasingly positive values represent looser track  */
+  /*                  kerning.  Value zero means no track kerning.         */
   /*                                                                       */
   /* <Output>                                                              */
-  /*    akerning   :: The kerning in 16.16 fractional points.              */
+  /*    akerning   :: The kerning in 16.16 fractional points, to be        */
+  /*                  uniformly applied between all glyphs.                */
   /*                                                                       */
   /* <Return>                                                              */
   /*    FreeType error code.  0~means success.                             */
+  /*                                                                       */
+  /* <Note>                                                                */
+  /*    Currently, only the Type~1 font driver supports track kerning,     */
+  /*    using data from AFM files (if attached with @FT_Attach_File or     */
+  /*    @FT_Attach_Stream).                                                */
+  /*                                                                       */
+  /*    Only very few AFM files come with track kerning data; please refer */
+  /*    to the Adobe's AFM specification for more details.                 */
   /*                                                                       */
   FT_EXPORT( FT_Error )
   FT_Get_Track_Kerning( FT_Face    face,
@@ -2903,7 +2960,7 @@ FT_BEGIN_HEADER
   /*                                                                       */
   /*    glyph_index :: The glyph index.                                    */
   /*                                                                       */
-  /*    buffer_max  :: The maximal number of bytes available in the        */
+  /*    buffer_max  :: The maximum number of bytes available in the        */
   /*                   buffer.                                             */
   /*                                                                       */
   /* <Output>                                                              */
@@ -2920,6 +2977,10 @@ FT_BEGIN_HEADER
   /*                                                                       */
   /*    The glyph name is truncated to fit within the buffer if it is too  */
   /*    long.  The returned string is always zero-terminated.              */
+  /*                                                                       */
+  /*    Be aware that FreeType reorders glyph indices internally so that   */
+  /*    glyph index~0 always corresponds to the `missing glyph' (called    */
+  /*    `.notdef').                                                        */
   /*                                                                       */
   /*    This function is not compiled within the library if the config     */
   /*    macro `FT_CONFIG_OPTION_NO_GLYPH_NAMES' is defined in              */
@@ -3058,9 +3119,15 @@ FT_BEGIN_HEADER
   /* <Note>                                                                */
   /*    If you use FreeType to manipulate the contents of font files       */
   /*    directly, be aware that the glyph index returned by this function  */
-  /*    doesn't always correspond to the internal indices used within      */
-  /*    the file.  This is done to ensure that value~0 always corresponds  */
-  /*    to the `missing glyph'.                                            */
+  /*    doesn't always correspond to the internal indices used within the  */
+  /*    file.  This is done to ensure that value~0 always corresponds to   */
+  /*    the `missing glyph'.  If the first glyph is not named `.notdef',   */
+  /*    then for Type~1 and Type~42 fonts, `.notdef' will be moved into    */
+  /*    the glyph ID~0 position, and whatever was there will be moved to   */
+  /*    the position `.notdef' had.  For Type~1 fonts, if there is no      */
+  /*    `.notdef' glyph at all, then one will be created at index~0 and    */
+  /*    whatever was there will be moved to the last index -- Type~42      */
+  /*    fonts are considered invalid under this condition.                 */
   /*                                                                       */
   FT_EXPORT( FT_UInt )
   FT_Get_Char_Index( FT_Face   face,
@@ -3331,6 +3398,9 @@ FT_BEGIN_HEADER
   /*    in the @PS_FontInfoRec structure which is only guaranteed to       */
   /*    return the correct results for Type~1 fonts.                       */
   /*                                                                       */
+  /* <Since>                                                               */
+  /*    2.3.8                                                              */
+  /*                                                                       */
   FT_EXPORT( FT_UShort )
   FT_Get_FSType_Flags( FT_Face  face );
 
@@ -3357,9 +3427,13 @@ FT_BEGIN_HEADER
   /*    code range for CJK characters.                                     */
   /*                                                                       */
   /*    An IVS is registered and unique; for further details please refer  */
-  /*    to Unicode Technical Report #37, the Ideographic Variation         */
-  /*    Database.  To date (October 2007), the character with the most     */
-  /*    variants is U+908A, having 8~such IVS.                             */
+  /*    to Unicode Technical Standard #37, the Ideographic Variation       */
+  /*    Database:                                                          */
+  /*                                                                       */
+  /*      http://www.unicode.org/reports/tr37/                             */
+  /*                                                                       */
+  /*    To date (November 2012), the character with the most variants is   */
+  /*    U+9089, having 31 such IVS.                                        */
   /*                                                                       */
   /*    Adobe and MS decided to support IVS with a new cmap subtable       */
   /*    (format~14).  It is an odd subtable because it is not a mapping of */
@@ -3588,7 +3662,7 @@ FT_BEGIN_HEADER
   /*                                                                       */
   /* <Description>                                                         */
   /*    A very simple function used to perform the computation `(a*b)/c'   */
-  /*    with maximal accuracy (it uses a 64-bit intermediate integer       */
+  /*    with maximum accuracy (it uses a 64-bit intermediate integer       */
   /*    whenever necessary).                                               */
   /*                                                                       */
   /*    This function isn't necessarily as fast as some processor specific */
@@ -3623,8 +3697,8 @@ FT_BEGIN_HEADER
   /*                                                                       */
   /* <Description>                                                         */
   /*    A very simple function used to perform the computation             */
-  /*    `(a*b)/0x10000' with maximal accuracy.  Most of the time this is   */
-  /*    used to multiply a given value by a 16.16 fixed float factor.      */
+  /*    `(a*b)/0x10000' with maximum accuracy.  Most of the time this is   */
+  /*    used to multiply a given value by a 16.16 fixed-point factor.      */
   /*                                                                       */
   /* <Input>                                                               */
   /*    a :: The first multiplier.                                         */
@@ -3668,8 +3742,8 @@ FT_BEGIN_HEADER
   /*                                                                       */
   /* <Description>                                                         */
   /*    A very simple function used to perform the computation             */
-  /*    `(a*0x10000)/b' with maximal accuracy.  Most of the time, this is  */
-  /*    used to divide a given value by a 16.16 fixed float factor.        */
+  /*    `(a*0x10000)/b' with maximum accuracy.  Most of the time, this is  */
+  /*    used to divide a given value by a 16.16 fixed-point factor.        */
   /*                                                                       */
   /* <Input>                                                               */
   /*    a :: The first multiplier.                                         */
@@ -3808,7 +3882,7 @@ FT_BEGIN_HEADER
    */
 #define FREETYPE_MAJOR  2
 #define FREETYPE_MINOR  4
-#define FREETYPE_PATCH  4
+#define FREETYPE_PATCH  12
 
 
   /*************************************************************************/

@@ -53,6 +53,44 @@ FT_BEGIN_HEADER
    *   *not* implemented in default builds of the library.  You need to
    *   #define FT_CONFIG_OPTION_SUBPIXEL_RENDERING in your `ftoption.h' file
    *   in order to activate it.
+   *
+   *   FreeType generates alpha coverage maps, which are linear by nature.
+   *   For instance, the value 0x80 in bitmap representation means that
+   *   (within numerical precision) 0x80/0xff fraction of that pixel is
+   *   covered by the glyph's outline.  The blending function for placing
+   *   text over a background is
+   *
+   *   {
+   *     dst = alpha * src + (1 - alpha) * dst    ,
+   *   }
+   *
+   *   which is known as OVER.  However, when calculating the output of the
+   *   OVER operator, the source colors should first be transformed to a
+   *   linear color space, then alpha blended in that space, and transformed
+   *   back to the output color space.
+   *
+   *   When linear light blending is used, the default FIR5 filtering
+   *   weights (as given by FT_LCD_FILTER_DEFAULT) are no longer optimal, as
+   *   they have been designed for black on white rendering while lacking
+   *   gamma correction.  To preserve color neutrality, weights for a FIR5
+   *   filter should be chosen according to two free parameters `a' and `c',
+   *   and the FIR weights should be
+   *
+   *   {
+   *     [a - c, a + c, 2 * a, a + c, a - c]    .
+   *   }
+   *
+   *   This formula generates equal weights for all the color primaries
+   *   across the filter kernel, which makes it colorless.  One suggested
+   *   set of weights is
+   *
+   *   {
+   *     [0x10, 0x50, 0x60, 0x50, 0x10]    ,
+   *   }
+   *
+   *   where `a' has value 0x30 and `b' value 0x20.  The weights in filter
+   *   may have a sum larger than 0x100, which increases coloration slightly
+   *   but also improves contrast.
    */
 
 

@@ -4,8 +4,7 @@
 /*                                                                         */
 /*    User-selectable configuration macros (specification only).           */
 /*                                                                         */
-/*  Copyright 1996-2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009,   */
-/*            2010 by                                                      */
+/*  Copyright 1996-2013 by                                                 */
 /*  David Turner, Robert Wilhelm, and Werner Lemberg.                      */
 /*                                                                         */
 /*  This file is part of the FreeType project, and may only be used,       */
@@ -190,6 +189,33 @@ FT_BEGIN_HEADER
 
   /*************************************************************************/
   /*                                                                       */
+  /* Bzip2-compressed file support.                                        */
+  /*                                                                       */
+  /*   FreeType now handles font files that have been compressed with the  */
+  /*   `bzip2' program.  This is mostly used to parse many of the PCF      */
+  /*   files that come with XFree86.  The implementation uses `libbz2' to  */
+  /*   partially uncompress the file on the fly (see src/bzip2/ftbzip2.c). */
+  /*   Contrary to gzip, bzip2 currently is not included and need to use   */
+  /*   the system available bzip2 implementation.                          */
+  /*                                                                       */
+  /*   Define this macro if you want to enable this `feature'.             */
+  /*                                                                       */
+/* #define FT_CONFIG_OPTION_USE_BZIP2 */
+
+
+  /*************************************************************************/
+  /*                                                                       */
+  /* Define to disable the use of file stream functions and types, FILE,   */
+  /* fopen() etc.  Enables the use of smaller system libraries on embedded */
+  /* systems that have multiple system libraries, some with or without     */
+  /* file stream support, in the cases where file stream support is not    */
+  /* necessary such as memory loading of font files.                       */
+  /*                                                                       */
+/* #define FT_CONFIG_OPTION_DISABLE_STREAM_SUPPORT */
+
+
+  /*************************************************************************/
+  /*                                                                       */
   /* DLL export compilation                                                */
   /*                                                                       */
   /*   When compiling FreeType as a DLL, some systems/compilers need a     */
@@ -365,6 +391,39 @@ FT_BEGIN_HEADER
 
   /*************************************************************************/
   /*                                                                       */
+  /* Autofitter debugging                                                  */
+  /*                                                                       */
+  /*   If FT_DEBUG_AUTOFIT is defined, FreeType provides some means to     */
+  /*   control the autofitter behaviour for debugging purposes with global */
+  /*   boolean variables (consequently, you should *never* enable this     */
+  /*   while compiling in `release' mode):                                 */
+  /*                                                                       */
+  /*     _af_debug_disable_horz_hints                                      */
+  /*     _af_debug_disable_vert_hints                                      */
+  /*     _af_debug_disable_blue_hints                                      */
+  /*                                                                       */
+  /*   Additionally, the following functions provide dumps of various      */
+  /*   internal autofit structures to stdout (using `printf'):             */
+  /*                                                                       */
+  /*     af_glyph_hints_dump_points                                        */
+  /*     af_glyph_hints_dump_segments                                      */
+  /*     af_glyph_hints_dump_edges                                         */
+  /*                                                                       */
+  /*   As an argument, they use another global variable:                   */
+  /*                                                                       */
+  /*     _af_debug_hints                                                   */
+  /*                                                                       */
+  /*   Please have a look at the `ftgrid' demo program to see how those    */
+  /*   variables and macros should be used.                                */
+  /*                                                                       */
+  /*   Do not #undef these macros here since the build system might define */
+  /*   them for certain configurations only.                               */
+  /*                                                                       */
+/* #define FT_DEBUG_AUTOFIT */
+
+
+  /*************************************************************************/
+  /*                                                                       */
   /* Memory Debugging                                                      */
   /*                                                                       */
   /*   FreeType now comes with an integrated memory debugger that is       */
@@ -501,6 +560,28 @@ FT_BEGIN_HEADER
 
   /*************************************************************************/
   /*                                                                       */
+  /* Define TT_CONFIG_OPTION_SUBPIXEL_HINTING if you want to compile       */
+  /* EXPERIMENTAL subpixel hinting support into the TrueType driver.  This */
+  /* replaces the native TrueType hinting mechanism when anything but      */
+  /* FT_RENDER_MODE_MONO is requested.                                     */
+  /*                                                                       */
+  /* Enabling this causes the TrueType driver to ignore instructions under */
+  /* certain conditions.  This is done in accordance with the guide here,  */
+  /* with some minor differences:                                          */
+  /*                                                                       */
+  /*  http://www.microsoft.com/typography/cleartype/truetypecleartype.aspx */
+  /*                                                                       */
+  /* By undefining this, you only compile the code necessary to hint       */
+  /* TrueType glyphs with native TT hinting.                               */
+  /*                                                                       */
+  /*   This option requires TT_CONFIG_OPTION_BYTECODE_INTERPRETER to be    */
+  /*   defined.                                                            */
+  /*                                                                       */
+/* #define TT_CONFIG_OPTION_SUBPIXEL_HINTING */
+
+
+  /*************************************************************************/
+  /*                                                                       */
   /* If you define TT_CONFIG_OPTION_UNPATENTED_HINTING, a special version  */
   /* of the TrueType bytecode interpreter is used that doesn't implement   */
   /* any of the patented opcodes and algorithms.  The patents related to   */
@@ -575,7 +656,7 @@ FT_BEGIN_HEADER
   /* composite flags array which can be used to disambiguate, but old      */
   /* fonts will not have them.                                             */
   /*                                                                       */
-  /*   http://partners.adobe.com/asn/developer/opentype/glyf.html          */
+  /*   http://www.microsoft.com/typography/otspec/glyf.htm                 */
   /*   http://fonts.apple.com/TTRefMan/RM06/Chap6glyf.html                 */
   /*                                                                       */
 #undef TT_CONFIG_OPTION_COMPONENT_OFFSET_SCALED
@@ -610,7 +691,7 @@ FT_BEGIN_HEADER
 
   /*************************************************************************/
   /*                                                                       */
-  /* T1_MAX_DICT_DEPTH is the maximal depth of nest dictionaries and       */
+  /* T1_MAX_DICT_DEPTH is the maximum depth of nest dictionaries and       */
   /* arrays in the Type 1 stream (see t1load.c).  A minimum of 4 is        */
   /* required.                                                             */
   /*                                                                       */
@@ -676,6 +757,19 @@ FT_BEGIN_HEADER
   /*                                                                       */
 #define AF_CONFIG_OPTION_INDIC
 
+  /*************************************************************************/
+  /*                                                                       */
+  /* Compile autofit module with warp hinting.  The idea of the warping    */
+  /* code is to slightly scale and shift a glyph within a single dimension */
+  /* so that as much of its segments are aligned (more or less) on the     */
+  /* grid.  To find out the optimal scaling and shifting value, various    */
+  /* parameter combinations are tried and scored.                          */
+  /*                                                                       */
+  /* This experimental option is only active if the render mode is         */
+  /* FT_RENDER_MODE_LIGHT.                                                 */
+  /*                                                                       */
+/* #define AF_CONFIG_OPTION_USE_WARPER */
+
   /* */
 
 
@@ -689,7 +783,7 @@ FT_BEGIN_HEADER
    * is recommended to disable the macro since it reduces the library's code
    * size and activates a few memory-saving optimizations as well.
    */
-#define FT_CONFIG_OPTION_OLD_INTERNALS
+/* #define FT_CONFIG_OPTION_OLD_INTERNALS */
 
 
   /*
