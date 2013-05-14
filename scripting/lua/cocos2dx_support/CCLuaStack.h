@@ -108,7 +108,8 @@ public:
     virtual int executeFunction(int numArgs);
     
     virtual int executeFunctionByHandler(int nHandler, int numArgs);
-    virtual bool executeAssert(bool cond, const char *msg);
+
+    virtual bool handleAssert(const char *msg);
     
 protected:
     CCLuaStack(void)
