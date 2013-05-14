@@ -21,35 +21,34 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#include "SocialTwitter.h"
+#include "SocialWeibo.h"
 #include "PluginUtils.h"
 
 namespace cocos2d { namespace plugin {
 
-PLUGIN_REGISTER_IMPL(SocialTwitter)
+PLUGIN_REGISTER_IMPL(SocialWeibo)
 
-SocialTwitter::~SocialTwitter()
+SocialWeibo::~SocialWeibo()
 {
 }
 
 /**
 @brief plugin initialization
 */
-bool SocialTwitter::init()
+bool SocialWeibo::init()
 {
-	return PluginUtils::initJavaPlugin(this, "org.cocos2dx.plugin.SocialTwitter");
+	return PluginUtils::initJavaPlugin(this, "org.cocos2dx.plugin.SocialWeibo");
 }
 
 /**
 @brief config the developer info
 @param devInfo This parameter is the info of developer, must contains key:
-		TwitterKey			The consumerkey of twitter account
-		TwitterSecret		The consumersecret of twitter account
-		More: https://dev.twitter.com
+		WeiboAppKey			The app key of weibo account
+		WeiboRedirectUrl	The redirect url of weibo account
 @warning Must invoke this interface before other interfaces.
 		 And invoked only once.
 */
-void SocialTwitter::configDeveloperInfo(TSocialDeveloperInfo devInfo)
+void SocialWeibo::configDeveloperInfo(TSocialDeveloperInfo devInfo)
 {
 	ProtocolSocial::configDeveloperInfo(devInfo);
 }
@@ -60,17 +59,17 @@ void SocialTwitter::configDeveloperInfo(TSocialDeveloperInfo devInfo)
 		SharedText			The text need to share
 		SharedImagePath		The full path of image file need to share (optinal)
 */
-void SocialTwitter::share(TShareInfo info)
+void SocialWeibo::share(TShareInfo info)
 {
     ProtocolSocial::share(info);
 }
 
-const char* SocialTwitter::getSDKVersion()
+const char* SocialWeibo::getSDKVersion()
 {
 	return ProtocolSocial::getSDKVersion();
 }
 
-void SocialTwitter::setDebugMode(bool debug)
+void SocialWeibo::setDebugMode(bool debug)
 {
 	ProtocolSocial::setDebugMode(debug);
 }

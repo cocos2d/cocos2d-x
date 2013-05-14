@@ -1,8 +1,8 @@
-#include "jsb_pluginx_alipay_auto.hpp"
+#include "jsb_pluginx_weibo_auto.hpp"
 #include "jsb_pluginx_spidermonkey_specifics.h"
 #include "jsb_pluginx_basic_conversions.h"
 using namespace pluginx;
-#include "IAPAlipay.h"
+#include "SocialWeibo.h"
 
 template<class T>
 static JSBool dummy_constructor(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -25,34 +25,14 @@ static JSBool empty_constructor(JSContext *cx, uint32_t argc, jsval *vp) {
 }
 
 
-JSClass  *jsb_IAPAlipay_class;
-JSObject *jsb_IAPAlipay_prototype;
+JSClass  *jsb_SocialWeibo_class;
+JSObject *jsb_SocialWeibo_prototype;
 
-JSBool js_pluginx_alipay_IAPAlipay_configDeveloperInfo(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	jsval *argv = JS_ARGV(cx, vp);
-	JSBool ok = JS_TRUE;
-	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
-	cocos2d::plugin::IAPAlipay* cobj = (cocos2d::plugin::IAPAlipay *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
-	if (argc == 1) {
-		TIAPDeveloperInfo arg0;
-		ok &= jsval_to_TIAPDeveloperInfo(cx, argv[0], &arg0);
-		JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
-		cobj->configDeveloperInfo(arg0);
-		JS_SET_RVAL(cx, vp, JSVAL_VOID);
-		return JS_TRUE;
-	}
-
-	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
-	return JS_FALSE;
-}
-JSBool js_pluginx_alipay_IAPAlipay_getPluginName(JSContext *cx, uint32_t argc, jsval *vp)
+JSBool js_pluginx_weibo_SocialWeibo_getPluginName(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
 	js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
-	cocos2d::plugin::IAPAlipay* cobj = (cocos2d::plugin::IAPAlipay *)(proxy ? proxy->ptr : NULL);
+	cocos2d::plugin::SocialWeibo* cobj = (cocos2d::plugin::SocialWeibo *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
 	if (argc == 0) {
 		const char* ret = cobj->getPluginName();
@@ -65,11 +45,11 @@ JSBool js_pluginx_alipay_IAPAlipay_getPluginName(JSContext *cx, uint32_t argc, j
 	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 0);
 	return JS_FALSE;
 }
-JSBool js_pluginx_alipay_IAPAlipay_getPluginVersion(JSContext *cx, uint32_t argc, jsval *vp)
+JSBool js_pluginx_weibo_SocialWeibo_getPluginVersion(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
 	js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
-	cocos2d::plugin::IAPAlipay* cobj = (cocos2d::plugin::IAPAlipay *)(proxy ? proxy->ptr : NULL);
+	cocos2d::plugin::SocialWeibo* cobj = (cocos2d::plugin::SocialWeibo *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
 	if (argc == 0) {
 		const char* ret = cobj->getPluginVersion();
@@ -82,11 +62,31 @@ JSBool js_pluginx_alipay_IAPAlipay_getPluginVersion(JSContext *cx, uint32_t argc
 	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 0);
 	return JS_FALSE;
 }
-JSBool js_pluginx_alipay_IAPAlipay_init(JSContext *cx, uint32_t argc, jsval *vp)
+JSBool js_pluginx_weibo_SocialWeibo_share(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	JSBool ok = JS_TRUE;
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
+	cocos2d::plugin::SocialWeibo* cobj = (cocos2d::plugin::SocialWeibo *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
+	if (argc == 1) {
+		TShareInfo arg0;
+		ok &= jsval_to_TShareInfo(cx, argv[0], &arg0);
+		JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+		cobj->share(arg0);
+		JS_SET_RVAL(cx, vp, JSVAL_VOID);
+		return JS_TRUE;
+	}
+
+	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
+	return JS_FALSE;
+}
+JSBool js_pluginx_weibo_SocialWeibo_init(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
 	js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
-	cocos2d::plugin::IAPAlipay* cobj = (cocos2d::plugin::IAPAlipay *)(proxy ? proxy->ptr : NULL);
+	cocos2d::plugin::SocialWeibo* cobj = (cocos2d::plugin::SocialWeibo *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
 	if (argc == 0) {
 		bool ret = cobj->init();
@@ -99,19 +99,19 @@ JSBool js_pluginx_alipay_IAPAlipay_init(JSContext *cx, uint32_t argc, jsval *vp)
 	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 0);
 	return JS_FALSE;
 }
-JSBool js_pluginx_alipay_IAPAlipay_payForProduct(JSContext *cx, uint32_t argc, jsval *vp)
+JSBool js_pluginx_weibo_SocialWeibo_configDeveloperInfo(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	JSBool ok = JS_TRUE;
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
 	js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
-	cocos2d::plugin::IAPAlipay* cobj = (cocos2d::plugin::IAPAlipay *)(proxy ? proxy->ptr : NULL);
+	cocos2d::plugin::SocialWeibo* cobj = (cocos2d::plugin::SocialWeibo *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
 	if (argc == 1) {
-		TProductInfo arg0;
-		ok &= jsval_to_TProductInfo(cx, argv[0], &arg0);
+		TSocialDeveloperInfo arg0;
+		ok &= jsval_to_TSocialDeveloperInfo(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
-		cobj->payForProduct(arg0);
+		cobj->configDeveloperInfo(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
 		return JS_TRUE;
 	}
@@ -119,11 +119,11 @@ JSBool js_pluginx_alipay_IAPAlipay_payForProduct(JSContext *cx, uint32_t argc, j
 	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
 	return JS_FALSE;
 }
-JSBool js_pluginx_alipay_IAPAlipay_getSDKVersion(JSContext *cx, uint32_t argc, jsval *vp)
+JSBool js_pluginx_weibo_SocialWeibo_getSDKVersion(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
 	js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
-	cocos2d::plugin::IAPAlipay* cobj = (cocos2d::plugin::IAPAlipay *)(proxy ? proxy->ptr : NULL);
+	cocos2d::plugin::SocialWeibo* cobj = (cocos2d::plugin::SocialWeibo *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
 	if (argc == 0) {
 		const char* ret = cobj->getSDKVersion();
@@ -136,13 +136,13 @@ JSBool js_pluginx_alipay_IAPAlipay_getSDKVersion(JSContext *cx, uint32_t argc, j
 	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 0);
 	return JS_FALSE;
 }
-JSBool js_pluginx_alipay_IAPAlipay_setDebugMode(JSContext *cx, uint32_t argc, jsval *vp)
+JSBool js_pluginx_weibo_SocialWeibo_setDebugMode(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	JSBool ok = JS_TRUE;
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
 	js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
-	cocos2d::plugin::IAPAlipay* cobj = (cocos2d::plugin::IAPAlipay *)(proxy ? proxy->ptr : NULL);
+	cocos2d::plugin::SocialWeibo* cobj = (cocos2d::plugin::SocialWeibo *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
 	if (argc == 1) {
 		JSBool arg0;
@@ -158,17 +158,17 @@ JSBool js_pluginx_alipay_IAPAlipay_setDebugMode(JSContext *cx, uint32_t argc, js
 }
 
 
-extern JSObject *jsb_ProtocolIAP_prototype;
+extern JSObject *jsb_ProtocolSocial_prototype;
 
-void js_pluginx_alipay_IAPAlipay_finalize(JSFreeOp *fop, JSObject *obj) {
-    CCLOGINFO("jsbindings: finalizing JS object %p (IAPAlipay)", obj);
+void js_pluginx_weibo_SocialWeibo_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOGINFO("jsbindings: finalizing JS object %p (SocialWeibo)", obj);
     js_proxy_t* nproxy;
     js_proxy_t* jsproxy;
     JS_GET_NATIVE_PROXY(jsproxy, obj);
     if (jsproxy) {
         JS_GET_PROXY(nproxy, jsproxy->ptr);
 
-//        cocos2d::plugin::IAPAlipay *nobj = static_cast<cocos2d::plugin::IAPAlipay *>(nproxy->ptr);
+//        cocos2d::plugin::SocialWeibo *nobj = static_cast<cocos2d::plugin::SocialWeibo *>(nproxy->ptr);
 //        if (nobj)
 //            delete nobj;
         
@@ -176,38 +176,38 @@ void js_pluginx_alipay_IAPAlipay_finalize(JSFreeOp *fop, JSObject *obj) {
     }
 }
 
-void js_register_pluginx_alipay_IAPAlipay(JSContext *cx, JSObject *global) {
-	jsb_IAPAlipay_class = (JSClass *)calloc(1, sizeof(JSClass));
-	jsb_IAPAlipay_class->name = "IAPAlipay";
-	jsb_IAPAlipay_class->addProperty = JS_PropertyStub;
-	jsb_IAPAlipay_class->delProperty = JS_PropertyStub;
-	jsb_IAPAlipay_class->getProperty = JS_PropertyStub;
-	jsb_IAPAlipay_class->setProperty = JS_StrictPropertyStub;
-	jsb_IAPAlipay_class->enumerate = JS_EnumerateStub;
-	jsb_IAPAlipay_class->resolve = JS_ResolveStub;
-	jsb_IAPAlipay_class->convert = JS_ConvertStub;
-	jsb_IAPAlipay_class->finalize = js_pluginx_alipay_IAPAlipay_finalize;
-	jsb_IAPAlipay_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+void js_register_pluginx_weibo_SocialWeibo(JSContext *cx, JSObject *global) {
+	jsb_SocialWeibo_class = (JSClass *)calloc(1, sizeof(JSClass));
+	jsb_SocialWeibo_class->name = "SocialWeibo";
+	jsb_SocialWeibo_class->addProperty = JS_PropertyStub;
+	jsb_SocialWeibo_class->delProperty = JS_PropertyStub;
+	jsb_SocialWeibo_class->getProperty = JS_PropertyStub;
+	jsb_SocialWeibo_class->setProperty = JS_StrictPropertyStub;
+	jsb_SocialWeibo_class->enumerate = JS_EnumerateStub;
+	jsb_SocialWeibo_class->resolve = JS_ResolveStub;
+	jsb_SocialWeibo_class->convert = JS_ConvertStub;
+	jsb_SocialWeibo_class->finalize = js_pluginx_weibo_SocialWeibo_finalize;
+	jsb_SocialWeibo_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
 	JSPropertySpec *properties = NULL;
 
 	static JSFunctionSpec funcs[] = {
-		JS_FN("configDeveloperInfo", js_pluginx_alipay_IAPAlipay_configDeveloperInfo, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("getPluginName", js_pluginx_alipay_IAPAlipay_getPluginName, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("getPluginVersion", js_pluginx_alipay_IAPAlipay_getPluginVersion, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("init", js_pluginx_alipay_IAPAlipay_init, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("payForProduct", js_pluginx_alipay_IAPAlipay_payForProduct, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("getSDKVersion", js_pluginx_alipay_IAPAlipay_getSDKVersion, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("setDebugMode", js_pluginx_alipay_IAPAlipay_setDebugMode, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("getPluginName", js_pluginx_weibo_SocialWeibo_getPluginName, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("getPluginVersion", js_pluginx_weibo_SocialWeibo_getPluginVersion, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("share", js_pluginx_weibo_SocialWeibo_share, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("init", js_pluginx_weibo_SocialWeibo_init, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("configDeveloperInfo", js_pluginx_weibo_SocialWeibo_configDeveloperInfo, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("getSDKVersion", js_pluginx_weibo_SocialWeibo_getSDKVersion, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("setDebugMode", js_pluginx_weibo_SocialWeibo_setDebugMode, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
 	};
 
 	JSFunctionSpec *st_funcs = NULL;
 
-	jsb_IAPAlipay_prototype = JS_InitClass(
+	jsb_SocialWeibo_prototype = JS_InitClass(
 		cx, global,
-		jsb_ProtocolIAP_prototype,
-		jsb_IAPAlipay_class,
+		jsb_ProtocolSocial_prototype,
+		jsb_SocialWeibo_class,
 		empty_constructor, 0,
 		properties,
 		funcs,
@@ -215,24 +215,24 @@ void js_register_pluginx_alipay_IAPAlipay(JSContext *cx, JSObject *global) {
 		st_funcs);
 	// make the class enumerable in the registered namespace
 	JSBool found;
-	JS_SetPropertyAttributes(cx, global, "IAPAlipay", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+	JS_SetPropertyAttributes(cx, global, "SocialWeibo", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
 
 	// add the proto and JSClass to the type->js info hash table
-	TypeTest<cocos2d::plugin::IAPAlipay> t;
+	TypeTest<cocos2d::plugin::SocialWeibo> t;
 	js_type_class_t *p;
 	uint32_t typeId = t.s_id();
 	HASH_FIND_INT(_js_global_type_ht, &typeId, p);
 	if (!p) {
 		p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
 		p->type = typeId;
-		p->jsclass = jsb_IAPAlipay_class;
-		p->proto = jsb_IAPAlipay_prototype;
-		p->parentProto = jsb_ProtocolIAP_prototype;
+		p->jsclass = jsb_SocialWeibo_class;
+		p->proto = jsb_SocialWeibo_prototype;
+		p->parentProto = jsb_ProtocolSocial_prototype;
 		HASH_ADD_INT(_js_global_type_ht, type, p);
 	}
 }
 
-void register_all_pluginx_alipay(JSContext* cx, JSObject* obj) {
+void register_all_pluginx_weibo(JSContext* cx, JSObject* obj) {
 	// first, try to get the ns
 	jsval nsval;
 	JSObject *ns;
@@ -246,6 +246,6 @@ void register_all_pluginx_alipay(JSContext* cx, JSObject* obj) {
 	}
 	obj = ns;
 
-	js_register_pluginx_alipay_IAPAlipay(cx, obj);
+	js_register_pluginx_weibo_SocialWeibo(cx, obj);
 }
 
