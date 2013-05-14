@@ -115,4 +115,9 @@ bool CCObject::isEqual(const CCObject *pObject)
     return this == pObject;
 }
 
+void CCObject::acceptVisitor(CCDataVisitor &visitor)
+{
+    visitor.visitObject(this);
+}
+
 NS_CC_END
