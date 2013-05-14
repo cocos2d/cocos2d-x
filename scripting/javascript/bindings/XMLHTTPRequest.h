@@ -2,7 +2,7 @@
 //  XMLHTTPRequest.h
 //  XMLHttpRequest
 //
-//  Created by Zynga on May, 6th.
+//  Created by Zynga 2013
 //
 //  Heaviliy based on: https://github.com/funkaster/FakeWebGL/blob/master/FakeWebGL/WebGL/XMLHTTPRequest.h
 //  Copyright (c) 2012 Rolando Abarca. All rights reserved.
@@ -38,7 +38,6 @@
 #include "jsapi.h"
 #include "jsfriendapi.h"
 #include "XMLHTTPHelper.h"
-#include "curl/curl.h"
 
 enum MinXmlHttpRequestResponseType {
     kRequestResponseTypeString,
@@ -80,7 +79,7 @@ class MinXmlHttpRequest : public cocos2d::CCLayer
 	void _gotHeader(std::string header);
 
     void _setRequestHeader(const char* field, const char* value);
-    void _setCurlRequestHeader();
+    void _setHttpRequestHeader();
     void _sendRequest(JSContext *cx);
     
 public:
@@ -101,6 +100,7 @@ public:
     JS_BINDED_PROP_GET(MinXmlHttpRequest, responseXML);
     JS_BINDED_FUNC(MinXmlHttpRequest, open);
     JS_BINDED_FUNC(MinXmlHttpRequest, send);
+    JS_BINDED_FUNC(MinXmlHttpRequest, abort);
     JS_BINDED_FUNC(MinXmlHttpRequest, getAllResponseHeaders);
     JS_BINDED_FUNC(MinXmlHttpRequest, getResponseHeader);
     JS_BINDED_FUNC(MinXmlHttpRequest, setRequestHeader);
@@ -109,9 +109,5 @@ public:
     void handle_requestResponse(MinXmlHttpRequest *sender, cocos2d::extension::CCHttpResponse *response);
 
 };
-/*void my_finalize(JSFreeOp *fop, JSObject *obj);
-JSBool JS_foo(JSContext *cx, uint32_t argc, jsval *vpn);
-JSBool min_xml_http_request_ctor(JSContext *cx, uint32_t argc, jsval *vp);
-void jsb_register_xmlhttprequest(JSContext *_cx, JSObject *object);
-*/
+
 #endif
