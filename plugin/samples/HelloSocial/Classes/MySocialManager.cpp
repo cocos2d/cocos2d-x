@@ -96,8 +96,16 @@ void MySocialManager::loadSocialPlugin()
 	{
 		s_pWeibo = dynamic_cast<SocialWeibo*>(PluginManager::getInstance()->loadPlugin("SocialWeibo"));
 		TSocialDeveloperInfo pWeiboInfo;
-		pWeiboInfo["WeiboAppKey"] = "3778583875";
-		pWeiboInfo["WeiboRedirectUrl"] = "http://weibo.com/u/2200744030?topnav=1&wvr=5";
+		// pWeiboInfo["WeiboAppKey"] = "your app key";
+		// pWeiboInfo["WeiboRedirectUrl"] = "your redirect url";
+
+		if (pWeiboInfo.empty())
+		{
+			char msg[256] = { 0 };
+			sprintf(msg, "Developer info is empty. PLZ fill your weibo info in %s(nearby line %d)", __FILE__, __LINE__);
+			CCMessageBox(msg, "Weibo Warning");
+		}
+
 		s_pWeibo->setDebugMode(true);
 		s_pWeibo->configDeveloperInfo(pWeiboInfo);
 		s_pWeibo->setResultListener(s_pRetListener);
