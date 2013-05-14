@@ -138,7 +138,7 @@
  Set this to 1 to enable the debugger
  */
 #ifndef JSB_ENABLE_DEBUGGER
-#define JSB_ENABLE_DEBUGGER 1
+#define JSB_ENABLE_DEBUGGER 0
 #endif // JSB_ENABLE_DEBUGGER
 
 #if JSB_ENABLE_DEBUGGER
@@ -168,8 +168,8 @@ JSAutoCompartment ac(cx, obj)
 #define JSB_INCLUDE_OPENGL 1
 #endif // JSB_INCLUDE_OPENGL
 
-/** @def JSB_INCLUDE_OPENGL
- Whether or not it should include bindings for WebGL / OpenGL ES 2.0
+/** @def JSB_INCLUDE_XMLHTTP
+ Whether or not it should include bindings for XmlHttpRequest
  */
 #ifndef JSB_INCLUDE_XMLHTTP
 #define JSB_INCLUDE_XMLHTTP 1
