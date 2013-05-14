@@ -33,13 +33,11 @@ import com.weibo.sdk.android.Weibo;
 import com.weibo.sdk.android.WeiboAuthListener;
 import com.weibo.sdk.android.WeiboDialogError;
 import com.weibo.sdk.android.WeiboException;
-import com.weibo.sdk.android.api.FriendshipsAPI;
 import com.weibo.sdk.android.api.StatusesAPI;
 import com.weibo.sdk.android.net.RequestListener;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -54,7 +52,6 @@ public class SocialWeibo implements ShareAdapter {
 
 	private String APP_KEY = "";
 	private String REDIRECT_URL = "";
-	private String SCOPE = "";
 
 	private boolean isInitialized = false;
 	private Hashtable<String, String> mShareInfo = null;
@@ -87,11 +84,9 @@ public class SocialWeibo implements ShareAdapter {
 		try {
 			mSocialAdapter.APP_KEY = cpInfo.get("WeiboAppKey");
 			mSocialAdapter.REDIRECT_URL = cpInfo.get("WeiboRedirectUrl");
-			mSocialAdapter.SCOPE = cpInfo.get("WeiboScope");
 
 			LogD("app key : " + mSocialAdapter.APP_KEY);
 			LogD("redirect url : " + mSocialAdapter.REDIRECT_URL);
-			LogD("scope : " + mSocialAdapter.SCOPE);
 			if(isInitialized){
 				return;
 			}
