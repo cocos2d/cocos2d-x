@@ -2,7 +2,7 @@
 //  XMLHTTPRequest.cpp
 //  XMLHttpRequest
 //
-//  Created by Zynga on May, 6th.
+//  Created by Zynga 2013
 //
 //  Heaviliy based on: https://github.com/funkaster/FakeWebGL/blob/master/FakeWebGL/WebGL/XMLHTTPRequest.cpp
 //  Copyright (c) 2012 Rolando Abarca. All rights reserved.
@@ -34,12 +34,6 @@ using namespace std;
 #pragma mark - MinXmlHttpRequest
 
 JSContext *cx;
-
-struct thread_args
-{
-    MinXmlHttpRequest *obj;
-    JSContext *cx;
-};
 
 /**
  *  _gotHeader - Implementation for header retrieving.
@@ -121,6 +115,7 @@ void MinXmlHttpRequest::_setRequestHeader(const char* field, const char* value) 
     
     map<string, string>::iterator iter = request_header.find(field);
     
+    // Concatenate values when header exists.
     if (iter != request_header.end() ) {
         
         value_s << iter->second << "," << value;
@@ -139,9 +134,9 @@ void MinXmlHttpRequest::_setRequestHeader(const char* field, const char* value) 
  * _setCurlRequestHeader - If headers has been set, pass them to curl.
  *
  */
-void MinXmlHttpRequest::_setCurlRequestHeader() {
+void MinXmlHttpRequest::_setHttpRequestHeader() {
     
-    struct curl_slist *header = NULL;
+    std::vector<string> header;
 
     for (std::map<string,string>::iterator it = request_header.begin(); it != request_header.end(); ++it) {
         
@@ -150,13 +145,13 @@ void MinXmlHttpRequest::_setCurlRequestHeader() {
         
         value_s << it->first << ": " << it->second;
         value = value_s.str().c_str();
+        header.push_back(value);
         
-        curl_slist_append(header, value);
-        
+                
     }
     
-    if (header != NULL) {
-        //curl_easy_setopt(curlHandle, CURLOPT_HTTPHEADER, headers);
+    if (!header.empty()) {
+        cc_request->setHeaders(header);
     }
     
 }
@@ -635,9 +630,18 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, send)
 
     }
 
-    //_setCurlRequestHeader();
+    _setHttpRequestHeader();
     _sendRequest(cx);
-        
+
+    return JS_TRUE;
+}
+
+/**
+ *  abort - Placeholder!
+ *
+ */
+JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, abort)
+{
     return JS_TRUE;
 }
 
@@ -796,6 +800,7 @@ void MinXmlHttpRequest::_js_register(JSContext *cx, JSObject *global) {
     
     static JSFunctionSpec funcs[] = {
         JS_BINDED_FUNC_FOR_DEF(MinXmlHttpRequest, open),
+        JS_BINDED_FUNC_FOR_DEF(MinXmlHttpRequest, abort),
         JS_BINDED_FUNC_FOR_DEF(MinXmlHttpRequest, send),
         JS_BINDED_FUNC_FOR_DEF(MinXmlHttpRequest, setRequestHeader),
         JS_BINDED_FUNC_FOR_DEF(MinXmlHttpRequest, getAllResponseHeaders),
