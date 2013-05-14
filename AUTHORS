@@ -12,6 +12,12 @@ Developers:
     Rolando Abarca
         Javascript Binding and testjs
 
+    silverscania
+        Pass correct parameter to glPixelStorei when creating a texture
+
+    FlagellumDei
+        Center the window correctly on windows
+
     ggggamer
         fixed memory leak of preloadEffect on windows
 
@@ -62,6 +68,7 @@ Developers:
         Fix CCUserDefault.cpp compiling on Android.
         Fixing CCFileUtils 'createXXXXWithContentsOfFile' path lookup issue.
         Add CCDirector::popToSceneStackLevel(int level).
+        Fixing a bug that custom font can't be loaded correctly if using full path of filename on android.
 
     Waiter
         fix an error that OpenSLEngine can't load resources from SD card
@@ -307,6 +314,8 @@ Developers:
         Fixing a bug that CCPhysicsSprite was overriding only some of the getPosition methods.
         Adding a macro USE_BOX2D to check whether to enable Box2D for linux and nacl port.
         Adding Travis build support for linux and NaCl.
+        Logging assert messages to the console.
+        Renaming CCScriptSupport::executeAssert to CCScriptSupport::handleAssert.
 
     Peter Young (young40)
         Implements setVisible() for CCEditBox
@@ -395,6 +404,18 @@ Developers:
 
     djh-
         Fixing a bug that displayed color of CCDrawNode is incorrect when VAO is disabled.
+
+    acai (beingstudio)
+        Fix of null pointer access in CCBAnimationManager::getRunningSequenceName.
+
+    metalgit92
+        Adding const qualification to some CCNode's getters
+
+    Clarinexus
+        Fixing a bug that setColor and setOpacity of CCControlButton and CCScale9Sprite are broken.
+
+    Xander84
+        Fixing a bug in CCBValue::getByteValue.
 
 Retired Core Developers:
     WenSheng Yang
