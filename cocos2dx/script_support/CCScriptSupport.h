@@ -225,8 +225,11 @@ public:
 
     /** function for common event */
     virtual int executeEvent(int nHandler, const char* pEventName, CCObject* pEventSource = NULL, const char* pEventSourceClassName = NULL) = 0;
-    /** function for assert test */
-    virtual bool executeAssert(bool cond, const char *msg = NULL) = 0;
+
+    /** called by CCAssert to allow scripting engine to handle failed assertions
+     * @return true if the assert was handled by the script engine, false otherwise.
+     */
+    virtual bool handleAssert(const char *msg) = 0;
 };
 
 /**
