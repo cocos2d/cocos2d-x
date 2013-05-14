@@ -4,7 +4,7 @@
 //
 //  Created by Zynga 2013
 //
-//  Heaviliy based on: https://github.com/funkaster/FakeWebGL/blob/master/FakeWebGL/WebGL/XMLHTTPRequest.h
+//  Heavy based on: https://github.com/funkaster/FakeWebGL/blob/master/FakeWebGL/WebGL/XMLHTTPRequest.h
 //  Copyright (c) 2012 Rolando Abarca. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy

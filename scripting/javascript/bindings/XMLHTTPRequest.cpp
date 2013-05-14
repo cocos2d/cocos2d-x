@@ -4,7 +4,7 @@
 //
 //  Created by Zynga 2013
 //
-//  Heaviliy based on: https://github.com/funkaster/FakeWebGL/blob/master/FakeWebGL/WebGL/XMLHTTPRequest.cpp
+//  Heavy based on: https://github.com/funkaster/FakeWebGL/blob/master/FakeWebGL/WebGL/XMLHTTPRequest.cpp
 //  Copyright (c) 2012 Rolando Abarca. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -794,6 +794,7 @@ void MinXmlHttpRequest::_js_register(JSContext *cx, JSObject *global) {
         JS_BINDED_PROP_DEF_GETTER(MinXmlHttpRequest, status),
         JS_BINDED_PROP_DEF_GETTER(MinXmlHttpRequest, statusText),
         JS_BINDED_PROP_DEF_GETTER(MinXmlHttpRequest, responseText),
+        JS_BINDED_PROP_DEF_GETTER(MinXmlHttpRequest, responseXML),
         JS_BINDED_PROP_DEF_GETTER(MinXmlHttpRequest, response),
         {0, 0, 0, 0, 0}
     };
