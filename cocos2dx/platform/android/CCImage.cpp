@@ -165,17 +165,5 @@ extern "C"
         bitmapDC.m_nHeight = height;
         bitmapDC.m_pData = new unsigned char[size];
         env->GetByteArrayRegion(pixels, 0, size, (jbyte*)bitmapDC.m_pData);
-
-        // swap data
-        unsigned int *tempPtr = (unsigned int*)bitmapDC.m_pData;
-        unsigned int tempdata = 0;
-        for (int i = 0; i < height; ++i)
-        {
-            for (int j = 0; j < width; ++j)
-            {
-                tempdata = *tempPtr;
-                *tempPtr++ = bitmapDC.swapAlpha(tempdata);
-            }
-        }
     }
 };
