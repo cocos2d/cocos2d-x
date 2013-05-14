@@ -1874,6 +1874,14 @@ JSBool JSBDebug_BufferRead(JSContext* cx, unsigned argc, jsval* vp)
     return JS_TRUE;
 }
 
+static void _clientSocketWriteAndClearString(std::string& s) {
+#if JSB_DEBUGGER_OUTPUT_STDOUT
+    write(STDOUT_FILENO, s.c_str(), s.length());
+#endif
+    write(clientSocket, s.c_str(), s.length());
+    s.clear();
+}
+
 JSBool JSBDebug_BufferWrite(JSContext* cx, unsigned argc, jsval* vp)
 {
     if (argc == 1) {
@@ -1881,6 +1889,7 @@ JSBool JSBDebug_BufferWrite(JSContext* cx, unsigned argc, jsval* vp)
         JSStringWrapper strWrapper(argv[0]);
         // this is safe because we're already inside a lock (from clearBuffers)
         outData.append(strWrapper.get());
+        _clientSocketWriteAndClearString(outData);
     }
     return JS_TRUE;
 }
@@ -1936,8 +1945,7 @@ void clearBuffers() {
             inData.clear();
         }
         if (outData.length() > 0) {
-            write(clientSocket, outData.c_str(), outData.length());
-            outData.clear();
+            _clientSocketWriteAndClearString(outData);
         }
     }
     pthread_mutex_unlock(&g_rwMutex);
