@@ -33,6 +33,7 @@ MySocialManager* MySocialManager::s_pManager = NULL;
 MySocialManager::MySocialManager()
 : s_pRetListener(NULL)
 , s_pTwitter(NULL)
+, s_pWeibo(NULL)
 {
 
 }
@@ -91,6 +92,16 @@ void MySocialManager::loadSocialPlugin()
 		s_pTwitter->configDeveloperInfo(pTwitterInfo);
 		s_pTwitter->setResultListener(s_pRetListener);
 	}
+
+	{
+		s_pWeibo = dynamic_cast<SocialWeibo*>(PluginManager::getInstance()->loadPlugin("SocialWeibo"));
+		TSocialDeveloperInfo pWeiboInfo;
+		pWeiboInfo["WeiboAppKey"] = "3778583875";
+		pWeiboInfo["WeiboRedirectUrl"] = "http://weibo.com/u/2200744030?topnav=1&wvr=5";
+		s_pWeibo->setDebugMode(true);
+		s_pWeibo->configDeveloperInfo(pWeiboInfo);
+		s_pWeibo->setResultListener(s_pRetListener);
+	}
 }
 
 void MySocialManager::unloadSocialPlugin()
@@ -99,6 +110,12 @@ void MySocialManager::unloadSocialPlugin()
 	{
 		PluginManager::getInstance()->unloadPlugin("SocialTwitter");
 		s_pTwitter = NULL;
+	}
+
+	if (s_pWeibo)
+	{
+		PluginManager::getInstance()->unloadPlugin("SocialWeibo");
+		s_pWeibo = NULL;
 	}
 }
 
@@ -109,6 +126,9 @@ void MySocialManager::shareByMode(TShareInfo info, MyShareMode mode)
 	{
 	case eTwitter:
 		pShare = s_pTwitter;
+		break;
+	case eWeibo:
+		pShare = s_pWeibo;
 		break;
 	default:
 		break;
