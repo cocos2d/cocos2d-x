@@ -68,22 +68,22 @@ class MinXmlHttpRequest : public cocos2d::CCLayer
     unsigned timeout;
 	bool isAsync;
     cocos2d::extension::CCHttpRequest* cc_request;
-    
+
 	bool isNetwork;
-    bool withCredentialsValue = false;
+    bool withCredentialsValue;
     map<string, string> http_header;
     map<string, string> request_header;
-    
+
 	void _gotHeader(std::string header);
 
     void _setRequestHeader(const char* field, const char* value);
     void _setHttpRequestHeader();
     void _sendRequest(JSContext *cx);
-    
+
 public:
     MinXmlHttpRequest();
     ~MinXmlHttpRequest();
-    JS_BINDED_CLASS_GLUE(MinXmlHttpRequest);  
+    JS_BINDED_CLASS_GLUE(MinXmlHttpRequest);
     JS_BINDED_CONSTRUCTOR(MinXmlHttpRequest);
     JS_BINDED_PROP_ACCESSOR(MinXmlHttpRequest, onreadystatechange);
     JS_BINDED_PROP_ACCESSOR(MinXmlHttpRequest, responseType);
@@ -103,7 +103,7 @@ public:
     JS_BINDED_FUNC(MinXmlHttpRequest, getResponseHeader);
     JS_BINDED_FUNC(MinXmlHttpRequest, setRequestHeader);
     JS_BINDED_FUNC(MinXmlHttpRequest, overrideMimeType);
-    
+
     void handle_requestResponse(MinXmlHttpRequest *sender, cocos2d::extension::CCHttpResponse *response);
 
 };
