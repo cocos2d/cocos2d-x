@@ -4,7 +4,7 @@
 /*                                                                         */
 /*    Access of TrueType's `gasp' table (specification).                   */
 /*                                                                         */
-/*  Copyright 2007, 2008 by                                                */
+/*  Copyright 2007, 2008, 2011 by                                          */
 /*  David Turner, Robert Wilhelm, and Werner Lemberg.                      */
 /*                                                                         */
 /*  This file is part of the FreeType project, and may only be used,       */
@@ -63,18 +63,26 @@
    *
    *   FT_GASP_DO_GRIDFIT ::
    *     Grid-fitting and hinting should be performed at the specified ppem.
-   *     This *really* means TrueType bytecode interpretation.
+   *     This *really* means TrueType bytecode interpretation.  If this bit
+   *     is not set, no hinting gets applied.
    *
    *   FT_GASP_DO_GRAY ::
    *     Anti-aliased rendering should be performed at the specified ppem.
+   *     If not set, do monochrome rendering.
    *
    *   FT_GASP_SYMMETRIC_SMOOTHING ::
-   *     Smoothing along multiple axes must be used with ClearType.
+   *     If set, smoothing along multiple axes must be used with ClearType.
    *
    *   FT_GASP_SYMMETRIC_GRIDFIT ::
    *     Grid-fitting must be used with ClearType's symmetric smoothing.
    *
    * @note:
+   *   The bit-flags `FT_GASP_DO_GRIDFIT' and `FT_GASP_DO_GRAY' are to be
+   *   used for standard font rasterization only.  Independently of that,
+   *   `FT_GASP_SYMMETRIC_SMOOTHING' and `FT_GASP_SYMMETRIC_GRIDFIT' are to
+   *   be used if ClearType is enabled (and `FT_GASP_DO_GRIDFIT' and
+   *   `FT_GASP_DO_GRAY' are consequently ignored).
+   *
    *   `ClearType' is Microsoft's implementation of LCD rendering, partly
    *   protected by patents.
    *

@@ -5,7 +5,7 @@
 /*    FreeType synthesizing code for emboldening and slanting              */
 /*    (specification).                                                     */
 /*                                                                         */
-/*  Copyright 2000-2001, 2003, 2006, 2008 by                               */
+/*  Copyright 2000-2001, 2003, 2006, 2008, 2012 by                         */
 /*  David Turner, Robert Wilhelm, and Werner Lemberg.                      */
 /*                                                                         */
 /*  This file is part of the FreeType project, and may only be used,       */
@@ -61,8 +61,9 @@ FT_BEGIN_HEADER
   /* taste).  This function is actually a convenience function, providing  */
   /* a wrapper for @FT_Outline_Embolden and @FT_Bitmap_Embolden.           */
   /*                                                                       */
-  /* For emboldened outlines the metrics are estimates only; if you need   */
-  /* precise values you should call @FT_Outline_Get_CBox.                  */
+  /* For emboldened outlines the height, width, and advance metrics are    */
+  /* increased by the strength of the emboldening.  You can also call      */
+  /* @FT_Outline_Get_CBox to get precise values.                           */
   FT_EXPORT( void )
   FT_GlyphSlot_Embolden( FT_GlyphSlot  slot );
 

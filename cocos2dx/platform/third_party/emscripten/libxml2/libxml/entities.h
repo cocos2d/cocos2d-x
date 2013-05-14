@@ -58,7 +58,8 @@ struct _xmlEntity {
     int                    owner;	/* does the entity own the childrens */
     int			 checked;	/* was the entity content checked */
 					/* this is also used to count entites
-					 * references done from that entity */
+					 * references done from that entity
+					 * and if it contains '<' */
 };
 
 /*

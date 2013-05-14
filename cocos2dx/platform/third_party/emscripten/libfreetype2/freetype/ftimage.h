@@ -54,7 +54,7 @@ FT_BEGIN_HEADER
   /* <Description>                                                         */
   /*    The type FT_Pos is used to store vectorial coordinates.  Depending */
   /*    on the context, these can represent distances in integer font      */
-  /*    units, or 16.16, or 26.6 fixed float pixel coordinates.            */
+  /*    units, or 16.16, or 26.6 fixed-point pixel coordinates.            */
   /*                                                                       */
   typedef signed long  FT_Pos;
 

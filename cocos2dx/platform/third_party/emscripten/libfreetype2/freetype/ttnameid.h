@@ -4,7 +4,7 @@
 /*                                                                         */
 /*    TrueType name ID definitions (specification only).                   */
 /*                                                                         */
-/*  Copyright 1996-2002, 2003, 2004, 2006, 2007, 2008 by                   */
+/*  Copyright 1996-2004, 2006-2008, 2012 by                                */
 /*  David Turner, Robert Wilhelm, and Werner Lemberg.                      */
 /*                                                                         */
 /*  This file is part of the FreeType project, and may only be used,       */
@@ -316,11 +316,12 @@ FT_BEGIN_HEADER
   /*                                                                       */
   /* Possible values of the language identifier field in the name records  */
   /* of the TTF `name' table if the `platform' identifier code is          */
-  /* TT_PLATFORM_MACINTOSH.                                                */
+  /* TT_PLATFORM_MACINTOSH.  These values are also used as return values   */
+  /* for function @FT_Get_CMap_Language_ID.                                */
   /*                                                                       */
   /* The canonical source for the Apple assigned Language ID's is at       */
   /*                                                                       */
-  /*   http://fonts.apple.com/TTRefMan/RM06/Chap6name.html                 */
+  /*   https://developer.apple.com/fonts/TTRefMan/RM06/Chap6name.html      */
   /*                                                                       */
 #define TT_MAC_LANGID_ENGLISH                       0
 #define TT_MAC_LANGID_FRENCH                        1
@@ -461,21 +462,10 @@ FT_BEGIN_HEADER
   /* of the TTF `name' table if the `platform' identifier code is          */
   /* TT_PLATFORM_MICROSOFT.                                                */
   /*                                                                       */
-  /* The canonical source for the MS assigned LCID's (seems to) be at      */
+  /* The canonical source for the MS assigned LCIDs is                     */
   /*                                                                       */
   /*   http://www.microsoft.com/globaldev/reference/lcid-all.mspx          */
   /*                                                                       */
-  /* It used to be at various places, among them                           */
-  /*                                                                       */
-  /*   http://www.microsoft.com/typography/OTSPEC/lcid-cp.txt              */
-  /*   http://www.microsoft.com/globaldev/reference/loclanghome.asp        */
-  /*   http://support.microsoft.com/support/kb/articles/Q224/8/04.ASP      */
-  /*   http://msdn.microsoft.com/library/en-us/passport25/                 */
-  /*           NET_Passport_VBScript_Documentation/Single_Sign_In/         */
-  /*           Advanced_Single_Sign_In/Localization_and_LCIDs.asp          */
-  /*                                                                       */
-  /* Hopefully, it seems now that the Globaldev site prevails...           */
-  /*                                   (updated by Antoine, 2004-02-17)    */
 
 #define TT_MS_LANGID_ARABIC_GENERAL                    0x0001
 #define TT_MS_LANGID_ARABIC_SAUDI_ARABIA               0x0401

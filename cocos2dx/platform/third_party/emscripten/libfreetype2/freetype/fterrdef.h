@@ -4,7 +4,7 @@
 /*                                                                         */
 /*    FreeType error codes (specification).                                */
 /*                                                                         */
-/*  Copyright 2002, 2004, 2006, 2007, 2010 by                              */
+/*  Copyright 2002, 2004, 2006, 2007, 2010-2013 by                         */
 /*  David Turner, Robert Wilhelm, and Werner Lemberg.                      */
 /*                                                                         */
 /*  This file is part of the FreeType project, and may only be used,       */
@@ -54,6 +54,10 @@
                 "broken offset within table" )
   FT_ERRORDEF_( Array_Too_Large,                             0x0A, \
                 "array allocation size too large" )
+  FT_ERRORDEF_( Missing_Module,                              0x0B, \
+                "missing module" )
+  FT_ERRORDEF_( Missing_Property,                            0x0C, \
+                "missing property" )
 
   /* glyph/character errors */
 
@@ -213,7 +217,8 @@
                 "ignore" )
   FT_ERRORDEF_( No_Unicode_Glyph_Name,                       0xA3, \
                 "no Unicode glyph name found" )
-
+  FT_ERRORDEF_( Glyph_Too_Big,                               0xA4, \
+                "glyph to big for hinting" )
 
   /* BDF errors */
 
