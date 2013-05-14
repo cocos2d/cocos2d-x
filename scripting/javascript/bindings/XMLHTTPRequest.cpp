@@ -57,7 +57,9 @@ void MinXmlHttpRequest::_gotHeader(string header) {
         http_value = header.substr(found_header_field+1, header.length());
         
         // Get rid of all \n
-        http_value.erase(std::remove(http_value.begin(), http_value.end(), '\n'), http_value.end());
+        if (!http_value.empty() && http_value[http_value.size() - 1] == '\n') {
+        	http_value.erase(http_value.size() - 1);
+        }
         
         http_header[http_field] = http_value;
         
