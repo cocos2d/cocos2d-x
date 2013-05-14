@@ -30,8 +30,6 @@
 #define __FAKE_XMLHTTPREQUEST_H__
 
 #include "network/HttpClient.h"
-#include "network/HttpRequest.h"
-#include "network/HttpResponse.h"
 #include "js_bindings_config.h"
 #include "ScriptingCore.h"
 #include "jstypes.h"

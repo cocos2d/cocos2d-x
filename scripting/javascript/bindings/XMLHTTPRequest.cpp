@@ -36,8 +36,8 @@ using namespace std;
 JSContext *cx;
 
 /**
- *  _gotHeader - Implementation for header retrieving.
- *
+ *  @brief Implementation for header retrieving.
+ *  @param header 
  */
 void MinXmlHttpRequest::_gotHeader(string header) {
 	// Get Header and Set StatusText
@@ -103,9 +103,9 @@ void MinXmlHttpRequest::_gotHeader(string header) {
 }
 
 /**
- *  _setRequestHeader - Set Request header for next call.
- *
- *
+ *  @brief Set Request header for next call.
+ *  @param field  Name of the Header to be set.
+ *  @param value  Value of the Headerfield
  */
 void MinXmlHttpRequest::_setRequestHeader(const char* field, const char* value) {
     
@@ -131,8 +131,8 @@ void MinXmlHttpRequest::_setRequestHeader(const char* field, const char* value) 
 }
 
 /**
- * _setCurlRequestHeader - If headers has been set, pass them to curl.
- *
+ * @brief  If headers has been set, pass them to curl.
+ * 
  */
 void MinXmlHttpRequest::_setHttpRequestHeader() {
     
@@ -157,9 +157,9 @@ void MinXmlHttpRequest::_setHttpRequestHeader() {
 }
 
 /**
- *  handle_requestResponse - Callback for HTTPRequest. Handles the response and invokes Callback.
- *
- *
+ *  @brief Callback for HTTPRequest. Handles the response and invokes Callback.
+ *  @param sender   Object which initialized callback
+ *  @param respone  Response object
  */
 void MinXmlHttpRequest::handle_requestResponse(MinXmlHttpRequest *sender, cocos2d::extension::CCHttpResponse *response) {
 
@@ -230,8 +230,8 @@ void MinXmlHttpRequest::handle_requestResponse(MinXmlHttpRequest *sender, cocos2
 
 }
 /**
- * _sendCurlRequest - Send out request and fire callback when done.
- *
+ * @brief   Send out request and fire callback when done.
+ * @param cx    Javascript context
  */
 void MinXmlHttpRequest::_sendRequest(JSContext *cx) {
     
@@ -242,7 +242,7 @@ void MinXmlHttpRequest::_sendRequest(JSContext *cx) {
 }
 
 /**
- * MinXmlHttpRequest - Constructor initializes curl and stuff
+ * @brief  Constructor initializes cchttprequest and stuff
  *
  */
 MinXmlHttpRequest::MinXmlHttpRequest() : onreadystateCallback(cx, NULL), isNetwork(true) {
@@ -256,7 +256,7 @@ MinXmlHttpRequest::MinXmlHttpRequest() : onreadystateCallback(cx, NULL), isNetwo
 }
 
 /**
- * MinXmlHttpRequest - Destructor cleans up curl and stuff
+ * @brief Destructor cleans up cc_request and stuff
  *
  */
 MinXmlHttpRequest::~MinXmlHttpRequest() {
@@ -271,13 +271,13 @@ MinXmlHttpRequest::~MinXmlHttpRequest() {
 }
 
 /**
- *  Initialize Object and needed properties.
+ *  @brief Initialize Object and needed properties.
  *
  */
 JS_BINDED_CLASS_GLUE_IMPL(MinXmlHttpRequest);
 
 /**
- *  Implementation for the Javascript Constructor
+ *  @brief Implementation for the Javascript Constructor
  *
  */
 JS_BINDED_CONSTRUCTOR_IMPL(MinXmlHttpRequest)
@@ -302,9 +302,8 @@ JS_BINDED_CONSTRUCTOR_IMPL(MinXmlHttpRequest)
 }
 
 /**
- *  onreadystatechange - get Callback function for Javascript
- *
- *
+ *  @brief  get Callback function for Javascript
+ * 
  */
 JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, onreadystatechange)
 {
@@ -324,7 +323,7 @@ JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, onreadystatechange)
 }
 
 /**
- *  onreadystatechange - Set Callback function coming from Javascript
+ *  @brief Set Callback function coming from Javascript
  *
  *
  */
@@ -338,9 +337,9 @@ JS_BINDED_PROP_SET_IMPL(MinXmlHttpRequest, onreadystatechange)
 }
 
 /**
- *  upload - TODO
+ *  @brief upload getter - TODO
  *
- *  Placeholder for further implementations
+ *  Placeholder for further implementations!!
  */
 JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, upload)
 {
@@ -349,7 +348,7 @@ JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, upload)
 }
 
 /**
- *  upload - TODO
+ *  @brief upload setter - TODO
  *
  *  Placeholder for further implementations
  */
@@ -360,7 +359,7 @@ JS_BINDED_PROP_SET_IMPL(MinXmlHttpRequest, upload)
 }
 
 /**
- *  timeout - TODO
+ *  @brief timeout getter - TODO
  *
  *  Placeholder for further implementations
  */
@@ -371,7 +370,7 @@ JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, timeout)
 }
 
 /**
- *  timeout - TODO
+ *  @brief timeout setter - TODO
  *
  *  Placeholder for further implementations
  */
@@ -386,7 +385,7 @@ JS_BINDED_PROP_SET_IMPL(MinXmlHttpRequest, timeout)
 }
 
 /**
- *  responseType - get response type for actual XHR
+ *  @brief  get response type for actual XHR
  *
  *
  */
@@ -398,7 +397,7 @@ JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, responseType)
 }
 
 /**
- *  responseXML - TODO
+ *  @brief  responseXML getter - TODO
  *
  *  Placeholder for further implementation.
  */
@@ -409,7 +408,7 @@ JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, responseXML)
 }
 
 /**
- *  responseType - set response type for actual XHR
+ *  @brief  set response type for actual XHR
  *
  *
  */
@@ -442,7 +441,7 @@ JS_BINDED_PROP_SET_IMPL(MinXmlHttpRequest, responseType)
 }
 
 /**
- *  readyState - get readyState for actual XHR
+ * @brief get readyState for actual XHR
  *
  *
  */
@@ -453,7 +452,7 @@ JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, readyState)
 }
 
 /**
- *  status - get status for actual XHR
+ *  @brief get status for actual XHR
  *
  *
  */
@@ -464,7 +463,7 @@ JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, status)
 }
 
 /**
- *  statusText - get statusText for actual XHR
+ *  @brief get statusText for actual XHR
  *
  *
  */
@@ -484,7 +483,7 @@ JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, statusText)
 }
 
 /**
- *  withCredentials - get value of withCredentials property.
+ *  @brief  get value of withCredentials property.
  *
  */
 JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, withCredentials)
@@ -508,7 +507,7 @@ JS_BINDED_PROP_SET_IMPL(MinXmlHttpRequest, withCredentials)
 }
 
 /**
- *  responseText - get (raw) responseText
+ *  @brief  get (raw) responseText
  *
  */
 JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, responseText)
@@ -526,7 +525,7 @@ JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, responseText)
 }
 
 /**
- *  response - get response of latest XHR
+ *  @brief get response of latest XHR
  *
  */
 JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, response)
@@ -555,7 +554,7 @@ JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, response)
 }
 
 /**
- *  open - initialize new xhr.
+ *  @brief initialize new xhr.
  *
  */
 JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, open)
@@ -608,7 +607,7 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, open)
 }
 
 /**
- *  send - send xhr
+ *  @brief  send xhr
  *
  */
 JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, send)
@@ -637,7 +636,7 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, send)
 }
 
 /**
- *  abort - Placeholder!
+ *  @brief abort function Placeholder!
  *
  */
 JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, abort)
@@ -646,7 +645,7 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, abort)
 }
 
 /**
- *  getAllResponseHeaders - Get all response headers as a string
+ *  @brief Get all response headers as a string
  *
  */
 JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, getAllResponseHeaders)
@@ -674,7 +673,7 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, getAllResponseHeaders)
 }
 
 /**
- *  getResponseHeader - Get all response headers as a string
+ *  @brief Get all response headers as a string
  *
  */
 JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, getResponseHeader)
@@ -710,7 +709,7 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, getResponseHeader)
 }
 
 /**
- *  setRequestHeader - Set the given Fields to request Header.
+ *  @brief Set the given Fields to request Header.
  *
  *
  */
@@ -741,7 +740,7 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, setRequestHeader)
 }
 
 /**
- * overrideMimeType - TODO!
+ * @brief overrideMimeType function - TODO!
  *
  * Just a placeholder for further implementations.
  */
@@ -753,7 +752,7 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, overrideMimeType)
 }
 
 /**
- *  destructor for Javascript
+ *  @brief destructor for Javascript
  *
  */
 void basic_object_finalize(JSFreeOp *freeOp, JSObject *obj) {
@@ -765,16 +764,17 @@ void basic_object_finalize(JSFreeOp *freeOp, JSObject *obj) {
 }
 
 /**
- *  getGlobalContext - retrieve the global Javascript Context object.
- *
+ * @brief- retrieve the global Javascript Context object.
+ * @returns JSCOntext cx
  */
 JSContext* getGlobalContext() {
 	return cx;
 }
 
 /**
- *  _js_register - Register XMLHttpRequest to be usable in JS and add properties and Mehtods.
- *
+ *  @brief Register XMLHttpRequest to be usable in JS and add properties and Mehtods.
+ *  @param cx   Global Spidermonkey JS Context.
+ *  @param global   Global Spidermonkey Javascript object.
  */
 void MinXmlHttpRequest::_js_register(JSContext *cx, JSObject *global) {
     
