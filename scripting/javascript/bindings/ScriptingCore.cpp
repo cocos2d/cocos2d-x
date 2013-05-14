@@ -1978,9 +1978,18 @@ void* serverEntryPoint(void*)
         int optval = 1;
         if ((setsockopt(s, SOL_SOCKET, SO_REUSEADDR, (char*)&optval, sizeof(optval))) < 0) {
             close(s);
-			TRACE_DEBUGGER_SERVER("debug server : error setting socket options");
+			TRACE_DEBUGGER_SERVER("debug server : error setting socket option SO_REUSEADDR");
             return NULL;
         }
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+		if ((setsockopt(s, SOL_SOCKET, SO_NOSIGPIPE, &optval, sizeof(optval))) < 0) {
+			close(s);
+			TRACE_DEBUGGER_SERVER("debug server : error setting socket option SO_NOSIGPIPE");
+			return NULL;
+		}
+#endif //(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+
         if ((::bind(s, rp->ai_addr, rp->ai_addrlen)) == 0) {
             break;
         }
