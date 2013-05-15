@@ -34,6 +34,9 @@ THE SOFTWARE.
 #include "CCAccelerometer.h"
 #include "CCApplication.h"
 
+#include <SDL/SDL.h>
+#include <SDL/SDL_ttf.h>
+
 #include <ctype.h>
 
 #include <stdlib.h>
@@ -68,7 +71,6 @@ enum Orientation
 static Orientation orientation = LANDSCAPE;
 
 #define MAX_TOUCHES         4
-static CCTouch *s_pTouches[MAX_TOUCHES] = { NULL };
 static CCEGLView* s_pInstance = NULL;
 
 static bool buttonDepressed = false;
@@ -120,6 +122,10 @@ CCEGLView::CCEGLView()
     if (m_isGLInitialized)
     	initEGLFunctions();
 
+    // Initialize SDL: used for font rendering.
+    SDL_Init(SDL_INIT_VIDEO);
+    TTF_Init();
+/*
     char *arg1 = (char*)malloc(1);
     char **dummyArgv = (char**)malloc(sizeof(char*));
     dummyArgv[0] = arg1;
@@ -130,7 +136,7 @@ CCEGLView::CCEGLView()
     glutMouseFunc(&mouseCB);
     glutMotionFunc(&motionCB);
     glutPassiveMotionFunc(&motionCB);
-
+*/
 }
 
 CCEGLView::~CCEGLView()
@@ -272,15 +278,6 @@ static EGLenum checkErrorEGL(const char* msg)
 
 bool CCEGLView::initGL()
 {
-    int rc = 0;
-    int angle = 0;
-
-    // Hard-coded to (0,0).
-    int windowPosition[] =
-    {
-        0, 0
-    };
-
     EGLint eglConfigCount;
     EGLConfig config;
 
