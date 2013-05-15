@@ -73,7 +73,7 @@ local ControlExtensionsTestArray =
 local function runCCControlTest()
 	local nMaxCases = ControlExtensionsTestEnum.kCCControlTestMax
 	--kCCControlSliderTest
-    local nCurCase  = ControlExtensionsTestEnum.kCCControlButtonTest_HelloVariableSize
+    local nCurCase  = ControlExtensionsTestEnum.kCCControlButtonTest_Styling
     local pSceneTitleLabel = nil
     
     local function GetSceneTitleLabel()
@@ -184,6 +184,10 @@ local function runCCControlTest()
 	end
 	
 	local function InitHelloVariableSize(pLayer)
+		if nil == pLayer then
+			return
+		end
+		
 		local screenSize = CCDirector:sharedDirector():getWinSize()
 		local strArray   = CCArray:create()
 		strArray:addObject(CCString:create("Hello"))
@@ -222,6 +226,67 @@ local function runCCControlTest()
         pLayer:addChild(pBackground)
 	end
 	
+	local function StylingStandardButtonWithTitle(pStrTitle)
+    	local pBackgroundButton = CCScale9Sprite:create("extensions/button.png")
+    	pBackgroundButton:setPreferredSize(CCSizeMake(45, 45)) 
+    	local pBackgroundHighlightedButton = CCScale9Sprite:create("extensions/buttonHighlighted.png")
+    	pBackgroundHighlightedButton:setPreferredSize(CCSizeMake(45, 45)) 
+    
+        local pTitleButton = CCLabelTTF:create(pStrTitle, "Marker Felt", 30)
+
+    	pTitleButton:setColor(ccc3(159, 168, 176))
+    
+    	local pButton = CCControlButton:create(pTitleButton, pBackgroundButton)
+        pButton:setBackgroundSpriteForState(pBackgroundHighlightedButton, CCControlStateHighlighted)
+    	pButton:setTitleColorForState(ccc3(255,255,255), CCControlStateHighlighted)
+    
+        return pButton
+	end
+	
+	local function InitStyling(pLayer)
+		if nil == pLayer then
+			return
+		end
+		
+		local screenSize = CCDirector:sharedDirector():getWinSize()
+
+        local pNode = CCNode:create()
+        pLayer:addChild(pNode, 1)
+        
+        local nSpace = 10 
+        
+        local nMax_w = 0
+        local nMax_h = 0
+        local i = 0
+        local j = 0
+        for i = 0, 2 do
+          for j = 0, 2 do
+          	    --Add the buttons
+          	    local strFmt = string.format("%d",math.random(0,32767) % 30)
+                local pButton = StylingStandardButtonWithTitle(CCString:create(strFmt):getCString())
+                pButton:setAdjustBackgroundImage(false)                                                  
+                pButton:setPosition(ccp (pButton:getContentSize().width / 2 + (pButton:getContentSize().width + nSpace) * i,
+                                         pButton:getContentSize().height / 2 + (pButton:getContentSize().height + nSpace) * j))
+                
+                pNode:addChild(pButton)
+                
+                nMax_w = math.max(pButton:getContentSize().width * (i + 1) + nSpace  * i, nMax_w)
+                nMax_h = math.max(pButton:getContentSize().height * (j + 1) + nSpace * j, nMax_h)
+          end
+        end
+
+        
+        pNode:setAnchorPoint(ccp (0.5, 0.5))
+        pNode:setContentSize(CCSizeMake(nMax_w, nMax_h))
+        pNode:setPosition(ccp(screenSize.width / 2.0, screenSize.height / 2.0))
+        
+        --Add the black background
+        local pBackgroundButton = CCScale9Sprite:create("extensions/buttonBackground.png")
+        pBackgroundButton:setContentSize(CCSizeMake(nMax_w + 14, nMax_h + 14))
+        pBackgroundButton:setPosition(ccp(screenSize.width / 2.0, screenSize.height / 2.0))
+        pLayer:addChild(pBackgroundButton)
+	end
+	
 	local function InitSpecialSceneLayer(pLayer)
 		if ControlExtensionsTestEnum.kCCControlSliderTest == nCurCase then
     	elseif ControlExtensionsTestEnum.kCCControlColourPickerTest == nCurCase then
@@ -230,6 +295,7 @@ local function runCCControlTest()
     		   InitHelloVariableSize(pLayer)
     	elseif ControlExtensionsTestEnum.kCCControlButtonTest_Event == nCurCase then
     	elseif ControlExtensionsTestEnum.kCCControlButtonTest_Styling == nCurCase then
+    		   InitStyling(pLayer)
     	elseif ControlExtensionsTestEnum.kCCControlPotentiometerTest == nCurCase then
     	elseif ControlExtensionsTestEnum.kCCControlStepperTest == nCurCase then
     	end

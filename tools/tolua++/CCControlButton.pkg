@@ -13,6 +13,32 @@ class CCControlButton : public CCControl
     virtual void setSelected(bool enabled);
     virtual void setHighlighted(bool enabled);
 
+    virtual CCString* getCurrentTitle();
+    virtual const ccColor3B& getCurrentTitleColor() const;
+
+    bool doesAdjustBackgroundImage();
+    void setAdjustBackgroundImage(bool adjustBackgroundImage);
+
+    virtual CCNode* getTitleLabel();
+    virtual void setTitleLabel(CCNode* var);
+
+    virtual CCScale9Sprite* getBackgroundSprite();
+    virtual void setBackgroundSprite(CCScale9Sprite* var);
+
+    virtual CCSize getPreferredSize();
+    virtual void   setPreferredSize(CCSize var);
+
+    virtual bool   getZoomOnTouchDown();
+    virtual void   setZoomOnTouchDown(bool  var);
+
+    virtual CCPoint   getLabelAnchorPoint();
+    virtual void      setLabelAnchorPoint(CCPoint var);
+
+    virtual GLubyte getOpacity(void);
+    virtual void    setOpacity(GLubyte var);
+
+    bool isPushed();
+
     virtual CCDictionary* getTitleDispatchTable();
     virtual void setTitleDispatchTable(CCDictionary* var);
 

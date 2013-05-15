@@ -24,7 +24,9 @@ enum CCControlState
 typedef unsigned int CCControlState;
 
 class CCControl:public CCLayerRGBA
-{    
+{  
+    virtual CCControlState getState() const; 
+  
     virtual void setEnabled(bool bEnabled);
     virtual bool isEnabled();
     
