@@ -213,6 +213,9 @@ void MinXmlHttpRequest::handle_requestResponse(MinXmlHttpRequest *sender, cocos2
     {
         status = 0;
     }
+    // Free Memory.
+    free((void*) concatHeader);
+    free((void*) concatenated);
     
     js_proxy_t * p;
     void* ptr = (void*)this;
@@ -626,6 +629,7 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, send)
         };
         data = JS_EncodeString(cx, str);
     }
+
 
     if (meth.compare("post") == 0 || meth.compare("POST") == 0) {
         cc_request->setRequestData(data, strlen(data));
