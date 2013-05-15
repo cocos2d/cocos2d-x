@@ -11,6 +11,8 @@ enum CCControlEvent
     CCControlEventValueChanged        = 1 << 8     
 };
 
+typedef unsigned int CCControlEvent;
+
 enum CCControlState
 {
     CCControlStateNormal       = 1 << 0,
@@ -19,7 +21,9 @@ enum CCControlState
     CCControlStateSelected     = 1 << 3
 };
 
-class CCControl:public CCLayerCCLayerRGBA
+typedef unsigned int CCControlState;
+
+class CCControl:public CCLayerRGBA
 {    
     virtual void setEnabled(bool bEnabled);
     virtual bool isEnabled();
