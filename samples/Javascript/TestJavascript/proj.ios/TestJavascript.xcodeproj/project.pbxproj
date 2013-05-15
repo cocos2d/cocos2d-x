@@ -176,6 +176,9 @@
 		263034B717041277004A749B /* jsb_opengl_functions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 263034AF17041277004A749B /* jsb_opengl_functions.cpp */; };
 		263034B817041277004A749B /* jsb_opengl_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 263034B017041277004A749B /* jsb_opengl_manual.cpp */; };
 		263034B917041277004A749B /* jsb_opengl_registration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 263034B217041277004A749B /* jsb_opengl_registration.cpp */; };
+		A218F7DA1743D96400F65883 /* XHRTest in Resources */ = {isa = PBXBuildFile; fileRef = A218F7D91743D96400F65883 /* XHRTest */; };
+		A218F7DC1743D97E00F65883 /* XHRTest in Resources */ = {isa = PBXBuildFile; fileRef = A218F7DB1743D97E00F65883 /* XHRTest */; };
+		A22656EF1743DCBB00598A2C /* ClippingNodeTest in Resources */ = {isa = PBXBuildFile; fileRef = A22656EE1743DCBB00598A2C /* ClippingNodeTest */; };
 		A2278C5017438CFB001FC8E0 /* XMLHTTPRequest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A2278C4E17438CFB001FC8E0 /* XMLHTTPRequest.cpp */; };
 		A2278C5117438CFB001FC8E0 /* XMLHTTPRequest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A2278C4E17438CFB001FC8E0 /* XMLHTTPRequest.cpp */; };
 		A2278C5717438D38001FC8E0 /* HttpClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A2278C5317438D38001FC8E0 /* HttpClient.cpp */; };
@@ -620,6 +623,9 @@
 		263034B317041277004A749B /* jsb_opengl_functions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsb_opengl_functions.h; sourceTree = "<group>"; };
 		263034B417041277004A749B /* jsb_opengl_registration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsb_opengl_registration.h; sourceTree = "<group>"; };
 		263034B517041277004A749B /* jsb_opengl_manual.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsb_opengl_manual.h; sourceTree = "<group>"; };
+		A218F7D91743D96400F65883 /* XHRTest */ = {isa = PBXFileReference; lastKnownFileType = folder; name = XHRTest; path = ../../Shared/tests/XHRTest; sourceTree = "<group>"; };
+		A218F7DB1743D97E00F65883 /* XHRTest */ = {isa = PBXFileReference; lastKnownFileType = folder; name = XHRTest; path = ../../Shared/tests/XHRTest; sourceTree = "<group>"; };
+		A22656EE1743DCBB00598A2C /* ClippingNodeTest */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ClippingNodeTest; path = ../../Shared/tests/ClippingNodeTest; sourceTree = "<group>"; };
 		A2278C4D17438CFB001FC8E0 /* XMLHTTPHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLHTTPHelper.h; sourceTree = "<group>"; };
 		A2278C4E17438CFB001FC8E0 /* XMLHTTPRequest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XMLHTTPRequest.cpp; sourceTree = "<group>"; };
 		A2278C4F17438CFB001FC8E0 /* XMLHTTPRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLHTTPRequest.h; sourceTree = "<group>"; };
@@ -1129,6 +1135,7 @@
 		A92275321517C094001B78AA = {
 			isa = PBXGroup;
 			children = (
+				A218F7D91743D96400F65883 /* XHRTest */,
 				A2278C5A17438DC5001FC8E0 /* libcurl.a */,
 				15A3D2EC1682F076002FB0C5 /* cocos2dx.xcodeproj */,
 				15A3D2F81682F0A0002FB0C5 /* bindings */,
@@ -1175,6 +1182,8 @@
 		D401B5FC16FB169100F2529D /* js_src_raw */ = {
 			isa = PBXGroup;
 			children = (
+				A22656EE1743DCBB00598A2C /* ClippingNodeTest */,
+				A218F7DB1743D97E00F65883 /* XHRTest */,
 				1AA51A7816F708FA000FDF05 /* ActionManagerTest */,
 				1AA51A7916F708FA000FDF05 /* ActionsTest */,
 				1AA51A7A16F708FA000FDF05 /* BaseTestLayer */,
@@ -1404,8 +1413,11 @@
 				D401B60016FB19A000F2529D /* Icon-114.png in Resources */,
 				D401B60216FB19A600F2529D /* Icon-72.png in Resources */,
 				D401B60416FB19A900F2529D /* Icon-144.png in Resources */,
+				A218F7DA1743D96400F65883 /* XHRTest in Resources */,
 				1A80332A1728DECD00240CC3 /* EffectsAdvancedTest in Resources */,
 				1A80332C1728F1FB00240CC3 /* res in Resources */,
+				A218F7DC1743D97E00F65883 /* XHRTest in Resources */,
+				A22656EF1743DCBB00598A2C /* ClippingNodeTest in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
