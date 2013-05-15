@@ -76,3 +76,9 @@ $pfile "CCTouch.pkg"
 $pfile "CCSet.pkg"
 
 $pfile "SimpleAudioEngine.pkg"
+
+$pfile "CCScale9Sprite.pkg"
+
+$pfile "CCControl.pkg"
+
+$pfile "CCControlButton.pkg"
