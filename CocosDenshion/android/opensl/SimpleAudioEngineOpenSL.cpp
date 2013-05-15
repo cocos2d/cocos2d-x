@@ -88,24 +88,25 @@ void SimpleAudioEngineOpenSL::setEffectsVolume(float volume)
 
 unsigned int SimpleAudioEngineOpenSL::playEffect(const char* pszFilePath, bool bLoop)
 {
-	unsigned int soundID;
-	do 
-	{
-		soundID = s_pOpenSL->preloadEffect(pszFilePath);
-		if (soundID != FILE_NOT_FOUND)
-		{
-			if (s_pOpenSL->getEffectState(soundID) == PLAYSTATE_PLAYING)
-			{
-				// recreate an effect player
-				s_pOpenSL->recreatePlayer(pszFilePath);
-				break;
-			}
-			s_pOpenSL->setEffectState(soundID, PLAYSTATE_STOPPED);
-			s_pOpenSL->setEffectState(soundID, PLAYSTATE_PLAYING);
-		}
-	} while (0);
-	s_pOpenSL->setEffectLooping(soundID, bLoop);
-	return soundID;
+    unsigned int soundID = s_pOpenSL->preloadEffect(pszFilePath);
+
+    if (soundID != FILE_NOT_FOUND)
+    {
+        if (s_pOpenSL->getEffectState(soundID) == PLAYSTATE_PLAYING)
+        {
+            // recreate an effect player
+            s_pOpenSL->recreatePlayer(pszFilePath);
+        }
+        else
+        {
+            s_pOpenSL->setEffectState(soundID, PLAYSTATE_STOPPED);
+            s_pOpenSL->setEffectState(soundID, PLAYSTATE_PLAYING);
+        }
+
+        s_pOpenSL->setEffectLooping(soundID, bLoop);
+    }
+
+    return soundID;
 }
 
 void SimpleAudioEngineOpenSL::pauseEffect(unsigned int nSoundId)
