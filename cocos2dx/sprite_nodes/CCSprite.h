@@ -412,6 +412,21 @@ public:
      */
     inline ccV3F_C4B_T2F_Quad getQuad(void) { return m_sQuad; }
 
+    /** whether or not the colors attribute of Quad has been updated */
+    inline virtual bool isQuadColorsDirty(void) { return m_bQuadColorsDirty; }
+    /** specify if the colors attribute of Quad has been updated */
+    inline virtual void setQuadColorsDirty(bool bDirty) { m_bQuadColorsDirty = bDirty; }
+
+    /** whether or not the verticles attribute of Quad has been updated */
+    inline virtual bool isQuadVerticlesDirty(void) { return m_bQuadVerticlesDirty; }
+    /** specify if the verticles attribute of Quad has been updated */
+    inline virtual void setQuadVerticlesDirty(bool bDirty) { m_bQuadVerticlesDirty = bDirty; }
+
+    /** whether or not the texCoords attribute of Quad has been updated */
+    inline virtual bool isQuadTexCoordsDirty(void) { return m_bQuadTexCoordsDirty; }
+    /** specify if the texCoords attribute of Quad has been updated */
+    inline virtual void setQuadTexCoordsDirty(bool bDirty) { m_bQuadTexCoordsDirty = bDirty; }
+
     /** 
      * Returns whether or not the texture rectangle is rotated.
      */
@@ -527,6 +542,11 @@ protected:
 
     // vertex coords, texture coords and color info
     ccV3F_C4B_T2F_Quad m_sQuad;
+
+    //flag to indicate if there is a change on the elements
+    bool m_bQuadColorsDirty;
+    bool m_bQuadVerticlesDirty;
+    bool m_bQuadTexCoordsDirty;
 
     // opacity and RGB protocol
     bool m_bOpacityModifyRGB;
