@@ -731,7 +731,7 @@ void TMXOrthoObjectsTest2::draw( CCObject& object )
 {
     // get form
     std::string  form   = "";
-    CCArray*     points = nullptr;
+    CCArray*     points = NULL;
     CCPoint      coord = CCPointZero;
     size_t       width  = 0;
     size_t       height = 0;
@@ -739,7 +739,6 @@ void TMXOrthoObjectsTest2::draw( CCObject& object )
     ifDynamicCast( CCDictionary*, &object, props ) {
         CCObject* tt = props->objectForKey( "type" );
         ifDynamicCast( CCString*, tt, type ) {
-            const char* sType = type->getCString();
             CCArray* allKeys = props->allKeys();
             for (size_t k = 0; k < allKeys->count(); ++k) {
                 CCObject* obj = allKeys->data->arr[ k ];
