@@ -4072,9 +4072,9 @@ JSBool JSB_cpSpacePointQueryFirst(JSContext *cx, uint32_t argc, jsval *vp) {
 	if(ret_val) {
 		ret_jsval = opaque_to_jsval( cx, ret_val );
 		JS_SET_RVAL(cx, vp, ret_jsval);
-    } else {
+	} else {
 		JS_SET_RVAL(cx, vp, JSVAL_NULL);
-    }
+	}
 	return JS_TRUE;
 }
 
