@@ -2106,7 +2106,7 @@ JSBool jsval_to_ccfontdefinition( JSContext *cx, jsval vp, ccFontDefinition *out
         JS_GetProperty(cx, jsobj, "fontAlignmentH", &jsr);
         double fontAlign = 0.0;
         JS_ValueToNumber(cx, jsr, &fontAlign);
-        out->m_alignment = (CCTextAlignment)fontAlign;
+        out->m_alignment = (CCTextAlignment)(int)fontAlign;
     }
     else
     {
@@ -2120,7 +2120,7 @@ JSBool jsval_to_ccfontdefinition( JSContext *cx, jsval vp, ccFontDefinition *out
         JS_GetProperty(cx, jsobj, "fontAlignmentV", &jsr);
         double fontAlign = 0.0;
         JS_ValueToNumber(cx, jsr, &fontAlign);
-        out->m_vertAlignment = (CCVerticalTextAlignment)fontAlign;
+        out->m_vertAlignment = (CCVerticalTextAlignment)(int)fontAlign;
     }
     else
     {
