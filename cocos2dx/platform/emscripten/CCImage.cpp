@@ -36,6 +36,7 @@
 #include <map>
 #include <SDL/SDL.h>
 #include <SDL/SDL_ttf.h>
+#include <net/arpa/inet.h>
 
 #define szFont_kenning 2
 
@@ -180,10 +181,6 @@ public:
 	bool getBitmap(const char *text, int nWidth, int nHeight, CCImage::ETextAlign eAlignMask, const char * pFontName, float fontSize) {
 		const char* pText = text;
         // No need to release m_pData here as it is destroyed by CCImage.
-        
-        unsigned char cTemp ;
-        int iY, iX, iTemp ;
-        uint32 offset, rowOffset ;
 
 		int iCurXCursor;
 
@@ -204,11 +201,15 @@ public:
         //compute the final line height
         iMaxLineHeight = MAX(iMaxLineHeight, nHeight);
 
-        uint bitmapSize = iMaxLineWidth * iMaxLineHeight*4 ;
+        uint bitmapSize = iMaxLineWidth * iMaxLineHeight * 4;
 
         m_pData = new unsigned char[bitmapSize];
         memset(m_pData, 0, bitmapSize);
 
+        // XXX: Can this be optimized by inserting newlines into the string and
+        // making a single TTF_RenderText_Solid call? Could conceivably just
+        // pass back SDL's buffer then, though would need additional logic to
+        // call SDL_FreeSurface appropriately.
         for (size_t l = 0; l < vLines.size(); l++) {
             pText = vLines[l].sLineStr.c_str();
             //initialize the origin cursor
@@ -222,6 +223,7 @@ public:
             // We treat pixels as 32-bit words, since both source and target
             // are rendered as such.
             int *pixels = (int*) tSurf->pixels;
+            int *out = (int*)m_pData;
 
             for(int i = 0; i < tSurf->h; ++i)
             {
@@ -229,7 +231,8 @@ public:
                 {
                     int targetOffset = (l * iMaxLineHeight + i) * iMaxLineWidth + j;
                     int sourceOffset = i * tSurf->w + j;
-                    *(int*) &m_pData[targetOffset] = pixels[sourceOffset];
+                    // XXX: need to check byte-ordering of src and dest.
+                    out[targetOffset] = pixels[sourceOffset];
                 }
             }
             SDL_FreeSurface(tSurf);
@@ -276,13 +279,7 @@ bool CCImage::initWithString(
     	std::string lowerCasePath = fullFontName;
     	std::transform(lowerCasePath.begin(), lowerCasePath.end(), lowerCasePath.begin(), ::tolower);
 
-    	if ( lowerCasePath.find(".ttf") != std::string::npos ) {
-    		fullFontName = CCFileUtils::sharedFileUtils()->fullPathForFilename(pFontName);
-    	}
-        //CCLog("-----pText=%s and Font File is %s nWidth= %d,nHeight=%d",pText,fullFontName.c_str(),nWidth,nHeight);
-        
-        CC_BREAK_IF(! dc.getBitmap(pText, nWidth, nHeight, eAlignMask, fullFontName.c_str(), nSize * 3));
-        //CCLog("---- dc.getBitmap is Succesfull... \n");
+        CC_BREAK_IF(! dc.getBitmap(pText, nWidth, nHeight, eAlignMask, fullFontName.c_str(), nSize));
         
         // assign the dc.m_pData to m_pData in order to save time
         m_pData = dc.m_pData;
