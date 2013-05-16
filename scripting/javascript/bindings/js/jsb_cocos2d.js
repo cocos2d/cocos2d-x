@@ -383,6 +383,48 @@ cc.LabelAtlas.create = function( a,b,c,d,e ) {
 
 cc.LayerMultiplex.create = cc.LayerMultiplex.createWithArray;
 
+/** 
+ * NotificationCenter
+ * A pure js object, not associate with native CCNotificationCenter, but a parallel one;
+ * When native CCNotificationCenter post a notification, observers in it will be notified too;
+ * However, posting notification from it, observers in native CCNotificationCenter will not be notified;
+ */
+cc.NotificationCenter = {
+    _observers:{},
+    
+	postNotification : function(name, data) {
+		cc.log("postNotification: " + name);
+		listeners = this._observers[name];
+		if (listeners) {
+			//cc.log(listeners.length);
+			for (var i = 0; i < listeners.length; i++) {
+				listeners[i].execute(data);
+			}
+		}
+	},
+    
+	addObserver : function(observer, name, execute) {
+		//cc.log("addObserver name:"+name);
+		//cc.log(execute);
+		observer.name = name
+		observer.execute = execute;
+		if (this._observers[name])
+			this._observers[name].push(observer);
+		else
+			this._observers[name] = [observer];
+	},
+    
+	removeObserver : function(observer, name) {
+		//cc.log("removeObserver");
+		if (this._observers[name]) {
+			var index = this._observers[name].indexOf(observer);
+			//cc.log("observer found index: " + index);
+			if (index != -1)
+				this._observers[name].splice(index,1);
+		}
+	},
+};
+
 
 /**
  * Associates a base class with a native superclass

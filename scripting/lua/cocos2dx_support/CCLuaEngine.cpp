@@ -142,7 +142,7 @@ int CCLuaEngine::executeMenuItemEvent(CCMenuItem* pMenuItem)
     return ret;
 }
 
-int CCLuaEngine::executeNotificationEvent(CCNotificationCenter* pNotificationCenter, const char* pszName)
+int CCLuaEngine::executeNotificationEvent(CCNotificationCenter* pNotificationCenter, const char* pszName, CCObject *object)
 {
     int nHandler = pNotificationCenter->getScriptHandler();
     if (!nHandler) return 0;
