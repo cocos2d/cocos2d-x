@@ -4058,7 +4058,7 @@ JSBool JSB_cpSpacePointQueryFirst(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION2( argc == 4, cx, JS_FALSE, "Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	JSBool ok = JS_TRUE;
-	cpSpace* arg0; cpVect arg1; uint32_t arg2; cpGroup arg3; 
+	cpSpace* arg0; cpVect arg1; uint32_t arg2; cpGroup arg3; jsval ret_jsval;
 
 	ok &= jsval_to_opaque( cx, *argvp++, (void**)&arg0 );
 	ok &= jsval_to_cpVect( cx, *argvp++, (cpVect*) &arg1 );
@@ -4069,9 +4069,12 @@ JSBool JSB_cpSpacePointQueryFirst(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = cpSpacePointQueryFirst((cpSpace*)arg0 , (cpVect)arg1 , (cpLayers)arg2 , (cpGroup)arg3  );
 
-	jsval ret_jsval = opaque_to_jsval( cx, ret_val );
-	JS_SET_RVAL(cx, vp, ret_jsval);
-    
+	if(ret_val) {
+		ret_jsval = opaque_to_jsval( cx, ret_val );
+		JS_SET_RVAL(cx, vp, ret_jsval);
+    } else {
+		JS_SET_RVAL(cx, vp, JSVAL_NULL);
+    }
 	return JS_TRUE;
 }
 
