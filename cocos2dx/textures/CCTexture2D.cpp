@@ -498,6 +498,8 @@ bool CCTexture2D::initWithString(const char *text, const char *fontName, float f
 
 bool CCTexture2D::initWithString(const char *text, ccFontDefinition *textDefinition)
 {
+    bool bRet = false;
+
     #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     
     #if CC_ENABLE_CACHE_TEXTURE_DATA
@@ -505,7 +507,6 @@ bool CCTexture2D::initWithString(const char *text, ccFontDefinition *textDefinit
         VolatileTexture::addStringTexture(this, text, dimensions, hAlignment, vAlignment, fontName, fontSize);
     #endif
         
-        bool bRet = false;
         CCImage::ETextAlign eAlign;
         
         if (kCCVerticalTextAlignmentTop == textDefinition->m_vertAlignment)
@@ -593,15 +594,14 @@ bool CCTexture2D::initWithString(const char *text, ccFontDefinition *textDefinit
         } while (0);
         
         CC_SAFE_RELEASE(pImage);
-        
-        return bRet;
-    
-    
+            
     #else
     
         CCAssert(false, "Currently only supported on iOS and Android!");
     
     #endif
+
+    return bRet;
 }
 
 

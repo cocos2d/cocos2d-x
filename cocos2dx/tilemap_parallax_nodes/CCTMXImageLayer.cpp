@@ -49,6 +49,7 @@ bool CCTMXImageLayer::init( CCTMXImageLayerInfo* imageLayerInfo, CCTMXMapInfo* m
     CCTexture2D*  texture = NULL;
     if ( imageLayerInfo )
     {
+        // @todo ? 24-bit and indexed PNG-palletes are unsupported.
         sprite = CCSprite::create( imageLayerInfo->m_sSourceImage.c_str() );
         CCAssert( sprite, "Background file is not loaded." );
         sprite->setAnchorPoint( CCPointZero );
