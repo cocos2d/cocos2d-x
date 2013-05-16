@@ -125,7 +125,7 @@ CCEGLView::CCEGLView()
     // Initialize SDL: used for font rendering.
     SDL_Init(SDL_INIT_VIDEO);
     TTF_Init();
-/*
+
     char *arg1 = (char*)malloc(1);
     char **dummyArgv = (char**)malloc(sizeof(char*));
     dummyArgv[0] = arg1;
@@ -136,7 +136,7 @@ CCEGLView::CCEGLView()
     glutMouseFunc(&mouseCB);
     glutMotionFunc(&motionCB);
     glutPassiveMotionFunc(&motionCB);
-*/
+
 }
 
 CCEGLView::~CCEGLView()
