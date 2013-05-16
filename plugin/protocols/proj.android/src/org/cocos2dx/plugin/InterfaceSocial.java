@@ -45,9 +45,11 @@ public class InterfaceSocial {
 		PluginWrapper.runOnGLThread(new Runnable() {
 			@Override
 			public void run() {
-				nativeOnShareResult(curAdapter, curRet, curMsg);
+				String name = curAdapter.getClass().getName();
+				name = name.replace('.', '/');
+				nativeOnShareResult(name, curRet, curMsg);
 			}
 		});
 	}
-	private static native void nativeOnShareResult(Object obj, int ret, String msg);
+	private static native void nativeOnShareResult(String className, int ret, String msg);
 }

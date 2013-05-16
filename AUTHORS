@@ -12,6 +12,9 @@ Developers:
     Rolando Abarca
         Javascript Binding and testjs
         
+    carlomorgantinizynga
+        CCLabelTTF supports for shadow and stroke
+        
     DarraghCoy
         Fix a potential crash SimpleAudioEngineOpenSL::playEffect
 
@@ -48,6 +51,7 @@ Developers:
 
     martell
         use tinyxml2 to replace libxml2
+        Added Mingw-crt Support without breaking VS SDK
 
     mchinen
         fix emulator issue for OpenGL ES 2.0 on Android
@@ -325,6 +329,7 @@ Developers:
 
     csy1988525
         Fixing a bug about display result is wrong when invoking CCControlButton:: setHighlighted.
+        fixed a bug when button's parent is hided, the button still can responce to clicked event.
 
     Asad ur Rehman (AsadR)
         Adding CCNotificationCenter::removeAllObservers(CCObject *target).
