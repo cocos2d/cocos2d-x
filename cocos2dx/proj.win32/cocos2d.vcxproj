@@ -232,6 +232,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\textures\CCTexturePVR.cpp" />
     <ClCompile Include="..\tileMap_parallax_nodes\CCParallaxNode.cpp" />
     <ClCompile Include="..\tileMap_parallax_nodes\CCTileMapAtlas.cpp" />
+    <ClCompile Include="..\tilemap_parallax_nodes\CCTMXImageLayer.cpp" />
     <ClCompile Include="..\tileMap_parallax_nodes\CCTMXLayer.cpp" />
     <ClCompile Include="..\tileMap_parallax_nodes\CCTMXObjectGroup.cpp" />
     <ClCompile Include="..\tileMap_parallax_nodes\CCTMXTiledMap.cpp" />
@@ -390,6 +391,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\textures\CCTexturePVR.h" />
     <ClInclude Include="..\tileMap_parallax_nodes\CCParallaxNode.h" />
     <ClInclude Include="..\tileMap_parallax_nodes\CCTileMapAtlas.h" />
+    <ClInclude Include="..\tilemap_parallax_nodes\CCTMXImageLayer.h" />
     <ClInclude Include="..\tileMap_parallax_nodes\CCTMXLayer.h" />
     <ClInclude Include="..\tileMap_parallax_nodes\CCTMXObjectGroup.h" />
     <ClInclude Include="..\tileMap_parallax_nodes\CCTMXTiledMap.h" />

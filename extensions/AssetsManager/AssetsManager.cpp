@@ -78,10 +78,12 @@ AssetsManager::AssetsManager(const char* packageUrl/* =NULL */, const char* vers
 , _versionFileUrl(versionFileUrl)
 , _downloadedVersion("")
 , _curl(NULL)
-, _tid(0)
 , _connectionTimeout(0)
 , _delegate(NULL)
 {
+    static const pthread_t EMPTY_TID = {};
+    _tid = EMPTY_TID;
+
     checkStoragePath();
     _schedule = new Helper();
 }
@@ -186,14 +188,14 @@ void* assetsManagerDownloadAndUncompress(void *data)
         self->_schedule->sendMessage(msg2);
     } while (0);
     
-    self->_tid = 0;
+    self->_tid.p = NULL;
     
     return NULL;
 }
 
 void AssetsManager::update()
 {
-    if (_tid) return;
+    if (_tid.p) return;
     
     // 1. Urls of package and version should be valid;
     // 2. Package should be a zip file.

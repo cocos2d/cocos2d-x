@@ -26,6 +26,7 @@ THE SOFTWARE.
 #include "CCTMXTiledMap.h"
 #include "CCTMXXMLParser.h"
 #include "CCTMXLayer.h"
+#include "CCTMXImageLayer.h"
 #include "sprite_nodes/CCSprite.h"
 #include "support/CCPointExtension.h"
 
@@ -69,7 +70,9 @@ bool CCTMXTiledMap::initWithTMXFile(const char *tmxFile)
     {
         return false;
     }
+    /* - Correct: TMX-file with the background (imagelayer) only.
     CCAssert( mapInfo->getTilesets()->count() != 0, "TMXTiledMap: Map not found. Please check the filename.");
+    */
     buildWithMapInfo(mapInfo);
 
     return true;
@@ -139,6 +142,13 @@ CCTMXLayer * CCTMXTiledMap::parseLayer(CCTMXLayerInfo *layerInfo, CCTMXMapInfo *
     return layer;
 }
 
+CCTMXImageLayer * CCTMXTiledMap::parseImageLayer(
+    CCTMXImageLayerInfo* imageLayerInfo,
+    CCTMXMapInfo* mapInfo
+) {
+    return CCTMXImageLayer::create( imageLayerInfo, mapInfo );
+}
+
 CCTMXTilesetInfo * CCTMXTiledMap::tilesetForLayer(CCTMXLayerInfo *layerInfo, CCTMXMapInfo *mapInfo)
 {
     CCSize size = layerInfo->m_tLayerSize;
@@ -204,6 +214,32 @@ void CCTMXTiledMap::buildWithMapInfo(CCTMXMapInfo* mapInfo)
 
     int idx=0;
 
+    CCArray* imageLayers = mapInfo->getImageLayers();
+    if ( imageLayers && (imageLayers->count() > 0) )
+    {
+        CCTMXImageLayerInfo* imageLayerInfo = NULL;
+        CCObject* pObj = NULL;
+        CCARRAY_FOREACH( imageLayers, pObj )
+        {
+            imageLayerInfo = (CCTMXImageLayerInfo*)pObj;
+            if ( imageLayerInfo && imageLayerInfo->m_bVisible )
+            {
+                CCTMXImageLayer* child = parseImageLayer( imageLayerInfo, mapInfo );
+                addChild( (CCNode*)child, idx, idx );
+
+                // update content size with the max size
+                const CCSize& childSize = child->getContentSize();
+                CCSize currentSize = getContentSize();
+                currentSize.width  = MAX( currentSize.width,  childSize.width );
+                currentSize.height = MAX( currentSize.height, childSize.height );
+                setContentSize( currentSize );
+
+                idx++;
+            }
+        }
+    }
+
+
     CCArray* layers = mapInfo->getLayers();
     if (layers && layers->count()>0)
     {
@@ -248,6 +284,26 @@ CCTMXLayer * CCTMXTiledMap::layerNamed(const char *layerName)
     }
 
     // layer not found
+    return NULL;
+}
+
+CCTMXImageLayer* CCTMXTiledMap::imageLayerNamed( const char* imageLayerName )
+{
+    CCAssert( imageLayerName && (strlen( imageLayerName ) > 0), "Invalid imagelayer name!" );
+    CCObject* pObj = NULL;
+    CCARRAY_FOREACH( m_pChildren, pObj ) 
+    {
+        CCTMXImageLayer* imageLayer = dynamic_cast< CCTMXImageLayer* >( pObj );
+        if ( imageLayer )
+        {
+            if (0 == strcmp( imageLayer->getImageLayerName(), imageLayerName ))
+            {
+                return imageLayer;
+            }
+        }
+    }
+
+    // imagelayer not found
     return NULL;
 }
 

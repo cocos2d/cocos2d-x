@@ -336,6 +336,9 @@
     <ClCompile Include="..\tileMap_parallax_nodes\CCTileMapAtlas.cpp">
       <Filter>tilemap_parallax_nodes</Filter>
     </ClCompile>
+    <ClCompile Include="..\tilemap_parallax_nodes\CCTMXImageLayer.cpp">
+      <Filter>tilemap_parallax_nodes</Filter>
+    </ClCompile>
     <ClCompile Include="..\tileMap_parallax_nodes\CCTMXLayer.cpp">
       <Filter>tilemap_parallax_nodes</Filter>
     </ClCompile>
@@ -746,6 +749,9 @@
       <Filter>tilemap_parallax_nodes</Filter>
     </ClInclude>
     <ClInclude Include="..\tileMap_parallax_nodes\CCTileMapAtlas.h">
+      <Filter>tilemap_parallax_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tilemap_parallax_nodes\CCTMXImageLayer.h">
       <Filter>tilemap_parallax_nodes</Filter>
     </ClInclude>
     <ClInclude Include="..\tileMap_parallax_nodes\CCTMXLayer.h">

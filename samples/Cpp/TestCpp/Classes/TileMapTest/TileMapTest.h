@@ -3,6 +3,13 @@
 
 #include "../testBasic.h"
 
+#ifndef ifDynamicCast
+#define ifDynamicCast(__type__,__var__,__varName__) \
+    __type__ __varName__ = dynamic_cast<__type__>(__var__); \
+    if( __varName__ )
+#endif
+
+
 class TileDemo : public CCLayer
 {
 protected:
@@ -139,6 +146,39 @@ public:
     virtual void draw();
     virtual std::string subtitle();
 };
+
+
+
+class TMXOrthoObjectsTest2 : public TileDemo
+{
+public:
+    TMXOrthoObjectsTest2();
+    virtual std::string title();
+    virtual std::string subtitle();
+
+    void draw();
+    // @todo commit fine Add const-qualificators in methods.
+    void draw( CCTMXObjectGroup& group );
+    void draw( CCObject& object );
+    void drawBox(      const CCPoint&, size_t width, size_t height );
+    void drawEllipse(  const CCPoint&, size_t rx, size_t ry );
+    void drawEllipse(
+        const CCPoint&,
+        float rx, float ry,
+        float angle,
+        unsigned int segments,
+        bool drawLineToCenter,
+        float scaleX = 1.0f, float scaleY = 1.0f
+    );
+    // @todo commit fine Add const-qualificators in CCArray.
+    void drawPolygon(  const CCPoint&, CCArray& );
+    void drawPolyline( const CCPoint&, CCArray& );
+
+private:
+    void updateLineWidth( float dt );
+};
+
+
 
 class TMXIsoObjectsTest : public TileDemo
 {
@@ -288,6 +328,31 @@ class TileMapTestScene : public TestScene
 {
 public:
     virtual void runThisTest();
+};
+
+class TMXOrthoBackgroundOnlyTest : public TileDemo 
+{
+public:
+    TMXOrthoBackgroundOnlyTest();
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
+class TMXOrthoBackgroundWithSpritesTest : public TileDemo 
+{
+public:
+    TMXOrthoBackgroundWithSpritesTest();
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
+class TMXReadSameNamePropertiesTest : public TileDemo 
+{
+public:
+    TMXReadSameNamePropertiesTest();
+    virtual std::string title();
+    virtual std::string subtitle();
+    static std::string out( CCTMXObjectGroup*,  size_t n = 0 );
 };
 
 #endif
