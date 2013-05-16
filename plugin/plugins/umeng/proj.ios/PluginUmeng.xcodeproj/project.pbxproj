@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		FA09A305168ADAEC008C1C7B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA09A304168ADAEC008C1C7B /* Foundation.framework */; };
 		FA09A352168ADCA6008C1C7B /* AnalyticsUmeng.mm in Sources */ = {isa = PBXBuildFile; fileRef = FA09A350168ADCA6008C1C7B /* AnalyticsUmeng.mm */; };
+		FA42959E173A4B6500462EF7 /* UmengWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = FA42959D173A4B6500462EF7 /* UmengWrapper.m */; };
 		FA866506168BE06A0073E055 /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FA866505168BE06A0073E055 /* libMobClickLibrary.a */; };
 /* End PBXBuildFile section */
 
@@ -30,6 +31,8 @@
 		FA09A34E168ADC97008C1C7B /* AnalyticsUmeng.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnalyticsUmeng.h; sourceTree = "<group>"; };
 		FA09A350168ADCA6008C1C7B /* AnalyticsUmeng.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AnalyticsUmeng.mm; sourceTree = "<group>"; };
 		FA09A351168ADCA6008C1C7B /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClick.h; sourceTree = "<group>"; };
+		FA42959C173A4B6500462EF7 /* UmengWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UmengWrapper.h; sourceTree = "<group>"; };
+		FA42959D173A4B6500462EF7 /* UmengWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UmengWrapper.m; sourceTree = "<group>"; };
 		FA866505168BE06A0073E055 /* libMobClickLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMobClickLibrary.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -84,6 +87,8 @@
 		FA09A34F168ADCA6008C1C7B /* ios */ = {
 			isa = PBXGroup;
 			children = (
+				FA42959C173A4B6500462EF7 /* UmengWrapper.h */,
+				FA42959D173A4B6500462EF7 /* UmengWrapper.m */,
 				FA866505168BE06A0073E055 /* libMobClickLibrary.a */,
 				FA09A350168ADCA6008C1C7B /* AnalyticsUmeng.mm */,
 				FA09A351168ADCA6008C1C7B /* MobClick.h */,
@@ -144,6 +149,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA09A352168ADCA6008C1C7B /* AnalyticsUmeng.mm in Sources */,
+				FA42959E173A4B6500462EF7 /* UmengWrapper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -200,7 +206,10 @@
 				DSTROOT = /tmp/libPluginUmeng.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PluginUmeng-Prefix.pch";
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../protocols/include";
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/../../../protocols/include",
+					"$(SRCROOT)/../../../protocols/platform/ios",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -218,7 +227,10 @@
 				DSTROOT = /tmp/libPluginUmeng.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PluginUmeng-Prefix.pch";
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../protocols/include";
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/../../../protocols/include",
+					"$(SRCROOT)/../../../protocols/platform/ios",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",

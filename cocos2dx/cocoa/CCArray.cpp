@@ -205,17 +205,17 @@ bool CCArray::initWithArray(CCArray* otherArray)
     return bRet;
 }
 
-unsigned int CCArray::count()
+unsigned int CCArray::count() const
 {
     return data->num;
 }
 
-unsigned int CCArray::capacity()
+unsigned int CCArray::capacity() const
 {
     return data->max;
 }
 
-unsigned int CCArray::indexOfObject(CCObject* object)
+unsigned int CCArray::indexOfObject(CCObject* object) const
 {
     return ccArrayGetIndexOfObject(data, object);
 }
@@ -252,7 +252,7 @@ CCObject* CCArray::randomObject()
     return data->arr[(int)(data->num * r)];
 }
 
-bool CCArray::containsObject(CCObject* object)
+bool CCArray::containsObject(CCObject* object) const
 {
     return ccArrayContainsObject(data, object);
 }
@@ -389,6 +389,11 @@ CCObject* CCArray::copyWithZone(CCZone* pZone)
         pTmpObj->release();
     }
     return pArray;
+}
+
+void CCArray::acceptVisitor(CCDataVisitor &visitor)
+{
+    visitor.visit(this);
 }
 
 NS_CC_END

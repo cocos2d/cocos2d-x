@@ -46,17 +46,35 @@ bool CCControlButtonTest_HelloVariableSize::init()
         
         // For each title in the array
         CCObject* pObj = NULL;
+        int i = 0;
         CCARRAY_FOREACH(stringArray, pObj)
         {
             CCString* title = (CCString*)pObj;
             // Creates a button with this string as title
             CCControlButton *button = standardButtonWithTitle(title->getCString());
+            if (i == 0)
+            {
+                button->setOpacity(50);
+                button->setColor(ccc3(0, 255, 0));
+            }
+            else if (i == 1)
+            {
+                button->setOpacity(200);
+                button->setColor(ccc3(0, 255, 0));
+            }
+            else if (i == 2)
+            {
+                button->setOpacity(100);
+                button->setColor(ccc3(0, 0, 255));
+            }
+            
             button->setPosition(ccp (total_width + button->getContentSize().width / 2, button->getContentSize().height / 2));
             layer->addChild(button);
             
             // Compute the size of the layer
             height = button->getContentSize().height;
             total_width += button->getContentSize().width;
+            i++;
         }
 
         layer->setAnchorPoint(ccp (0.5, 0.5));
@@ -86,7 +104,7 @@ CCControlButton *CCControlButtonTest_HelloVariableSize::standardButtonWithTitle(
     CCControlButton *button = CCControlButton::create(titleButton, backgroundButton);
     button->setBackgroundSpriteForState(backgroundHighlightedButton, CCControlStateHighlighted);
     button->setTitleColorForState(ccWHITE, CCControlStateHighlighted);
-    
+
     return button;
 }
 

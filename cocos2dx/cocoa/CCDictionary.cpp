@@ -408,11 +408,22 @@ CCDictionary* CCDictionary::createWithContentsOfFileThreadSafe(const char *pFile
     return CCFileUtils::sharedFileUtils()->createCCDictionaryWithContentsOfFile(pFileName);
 }
 
+void CCDictionary::acceptVisitor(CCDataVisitor &visitor)
+{
+    return visitor.visit(this);
+}
+
 CCDictionary* CCDictionary::createWithContentsOfFile(const char *pFileName)
 {
     CCDictionary* pRet = createWithContentsOfFileThreadSafe(pFileName);
     pRet->autorelease();
     return pRet;
 }
+
+bool CCDictionary::writeToFile(const char *fullPath)
+{
+    return CCFileUtils::sharedFileUtils()->writeToFile(this, fullPath);
+}
+
 
 NS_CC_END

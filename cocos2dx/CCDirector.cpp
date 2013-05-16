@@ -579,32 +579,43 @@ void CCDirector::popScene(void)
 
 void CCDirector::popToRootScene(void)
 {
+    popToSceneStackLevel(1);
+}
+
+void CCDirector::popToSceneStackLevel(int level)
+{
     CCAssert(m_pRunningScene != NULL, "A running Scene is needed");
-    unsigned int c = m_pobScenesStack->count();
+    int c = (int)m_pobScenesStack->count();
 
-    if (c == 1) 
+    // level 0? -> end
+    if (level == 0)
     {
-        m_pobScenesStack->removeLastObject();
-        this->end();
-    } 
-    else 
-    {
-        while (c > 1) 
-        {
-            CCScene *current = (CCScene*)m_pobScenesStack->lastObject();
-            if( current->isRunning() )
-            {
-                current->onExitTransitionDidStart();
-                current->onExit();
-            }
-            current->cleanup();
-
-            m_pobScenesStack->removeLastObject();
-            c--;
-        }
-        m_pNextScene = (CCScene*)m_pobScenesStack->lastObject();
-        m_bSendCleanupToScene = false;
+        end();
+        return;
     }
+
+    // current level or lower -> nothing
+    if (level >= c)
+        return;
+
+	// pop stack until reaching desired level
+	while (c > level)
+    {
+		CCScene *current = (CCScene*)m_pobScenesStack->lastObject();
+
+		if (current->isRunning())
+        {
+            current->onExitTransitionDidStart();
+            current->onExit();
+		}
+
+        current->cleanup();
+        m_pobScenesStack->removeLastObject();
+		c--;
+	}
+
+	m_pNextScene = (CCScene*)m_pobScenesStack->lastObject();
+	m_bSendCleanupToScene = false;
 }
 
 void CCDirector::end()
@@ -948,7 +959,9 @@ void CCDisplayLinkDirector::startAnimation(void)
     }
 
     m_bInvalid = false;
+#ifndef EMSCRIPTEN
     CCApplication::sharedApplication()->setAnimationInterval(m_dAnimationInterval);
+#endif // EMSCRIPTEN
 }
 
 void CCDisplayLinkDirector::mainLoop(void)

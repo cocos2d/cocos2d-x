@@ -119,10 +119,10 @@ JNIEnv* PluginUtils::getEnv()
 }
 
 std::map<PluginProtocol*, PluginJavaData*> s_PluginObjMap;
-std::map<jobject, PluginProtocol*> s_JObjPluginMap;
+std::map<std::string, PluginProtocol*> s_JObjPluginMap;
 
 typedef std::map<PluginProtocol*, PluginJavaData*>::iterator ObjMapIter;
-typedef std::map<jobject, PluginProtocol*>::iterator JObjPluginMapIter;
+typedef std::map<std::string, PluginProtocol*>::iterator JObjPluginMapIter;
 
 PluginJavaData* PluginUtils::getPluginJavaData(PluginProtocol* pKeyObj)
 {
@@ -135,10 +135,10 @@ PluginJavaData* PluginUtils::getPluginJavaData(PluginProtocol* pKeyObj)
     return ret;
 }
 
-PluginProtocol* PluginUtils::getPluginPtr(jobject jobj)
+PluginProtocol* PluginUtils::getPluginPtr(std::string className)
 {
 	PluginProtocol* ret = NULL;
-	JObjPluginMapIter it = s_JObjPluginMap.find(jobj);
+	JObjPluginMapIter it = s_JObjPluginMap.find(className);
 	if (it != s_JObjPluginMap.end()) {
 		ret = it->second;
 	}
@@ -150,7 +150,7 @@ void PluginUtils::setPluginJavaData(PluginProtocol* pKeyObj, PluginJavaData* pDa
 {
     erasePluginJavaData(pKeyObj);
     s_PluginObjMap.insert(std::pair<PluginProtocol*, PluginJavaData*>(pKeyObj, pData));
-    s_JObjPluginMap.insert(std::pair<jobject, PluginProtocol*>(pData->jobj, pKeyObj));
+    s_JObjPluginMap.insert(std::pair<std::string, PluginProtocol*>(pData->jclassName, pKeyObj));
 }
 
 void PluginUtils::erasePluginJavaData(PluginProtocol* pKeyObj)
@@ -162,7 +162,7 @@ void PluginUtils::erasePluginJavaData(PluginProtocol* pKeyObj)
         {
             jobject jobj = pData->jobj;
 
-            JObjPluginMapIter pluginIt = s_JObjPluginMap.find(jobj);
+            JObjPluginMapIter pluginIt = s_JObjPluginMap.find(pData->jclassName);
             if (pluginIt != s_JObjPluginMap.end())
             {
             	s_JObjPluginMap.erase(pluginIt);
