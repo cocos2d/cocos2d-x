@@ -600,6 +600,7 @@ bool CCTexture2D::initWithString(const char *text, ccFontDefinition *textDefinit
     #else
     
         CCAssert(false, "Currently only supported on iOS and Android!");
+        return false;
     
     #endif
 }
