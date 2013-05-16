@@ -12,6 +12,9 @@ Developers:
     Rolando Abarca
         Javascript Binding and testjs
         
+    carlomorgantinizynga
+        CCLabelTTF supports for shadow and stroke
+        
     DarraghCoy
         Fix a potential crash SimpleAudioEngineOpenSL::playEffect
 
