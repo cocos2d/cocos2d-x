@@ -458,12 +458,19 @@
     <ClCompile Include="..\support\tinyxml2\tinyxml2.cpp">
       <Filter>support\tinyxml2</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="..\cocoa\CCDataVisitor.cpp">
       <Filter>cocoa</Filter>
     </ClCompile>
     <ClCompile Include="..\tilemap_parallax_nodes\CCTMXImageLayer.cpp">
       <Filter>tilemap_parallax_nodes</Filter>
     </ClCompile>  </ItemGroup>
+=======
+    <ClCompile Include="..\tilemap_parallax_nodes\CCTMXImageLayer.cpp">
+      <Filter>tilemap_parallax_nodes</Filter>
+    </ClCompile>
+  </ItemGroup>
+>>>>>>> 3f12b6026188223690631fc2253fc40ceab6821d
   <ItemGroup>
     <ClInclude Include="..\base_nodes\CCAtlasNode.h">
       <Filter>base_nodes</Filter>
@@ -919,6 +926,7 @@
     <ClInclude Include="..\support\tinyxml2\tinyxml2.h">
       <Filter>support\tinyxml2</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="..\cocoa\CCDataVisitor.h">
       <Filter>cocoa</Filter>
     </ClInclude>
@@ -931,6 +939,8 @@
     <ClInclude Include="..\cocoa\CCFloat.h">
       <Filter>cocoa</Filter>
     </ClInclude>
+=======
+>>>>>>> 3f12b6026188223690631fc2253fc40ceab6821d
     <ClInclude Include="..\tilemap_parallax_nodes\CCTMXImageLayer.h">
       <Filter>tilemap_parallax_nodes</Filter>
     </ClInclude>
