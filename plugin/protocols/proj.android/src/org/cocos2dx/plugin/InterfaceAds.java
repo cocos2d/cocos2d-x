@@ -101,11 +101,13 @@ public class InterfaceAds {
 		PluginWrapper.runOnGLThread(new Runnable(){
 			@Override
 			public void run() {
-				InterfaceAds.nativeOnAdsResult(curObj, curCode, curMsg);
+				String name = curObj.getClass().getName();
+				name = name.replace('.', '/');
+				InterfaceAds.nativeOnAdsResult(name, curCode, curMsg);
 			}
 		});
 	}
-	private native static void nativeOnAdsResult(Object obj, int code, String msg);
+	private native static void nativeOnAdsResult(String className, int code, String msg);
 
 	public static void onPlayerGetPoints(AdsAdapter adapter, int points) {
 		final int curPoints = points;
@@ -113,9 +115,11 @@ public class InterfaceAds {
 		PluginWrapper.runOnGLThread(new Runnable(){
 			@Override
 			public void run() {
-				InterfaceAds.nativeOnPlayerGetPoints(curAdapter, curPoints);
+				String name = curAdapter.getClass().getName();
+				name = name.replace('.', '/');
+				InterfaceAds.nativeOnPlayerGetPoints(name, curPoints);
 			}
 		});
 	}
-	private native static void nativeOnPlayerGetPoints(Object obj, int points);
+	private native static void nativeOnPlayerGetPoints(String className, int points);
 }

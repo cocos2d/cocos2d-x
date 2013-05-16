@@ -161,6 +161,7 @@ JSBool js_pluginx_alipay_IAPAlipay_setDebugMode(JSContext *cx, uint32_t argc, js
 extern JSObject *jsb_ProtocolIAP_prototype;
 
 void js_pluginx_alipay_IAPAlipay_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOGINFO("jsbindings: finalizing JS object %p (IAPAlipay)", obj);
     js_proxy_t* nproxy;
     js_proxy_t* jsproxy;
     JS_GET_NATIVE_PROXY(jsproxy, obj);

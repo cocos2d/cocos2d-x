@@ -10,5 +10,7 @@
 	<classpathentry exported="true" kind="lib" path="plugin-x/plugins/twitter/android/signpost-jetty6-1.2.1.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="plugin-x/plugins/twitter/android/twitter4j-core-android-3.0.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="plugin-x/protocols/android/libPluginProtocol.jar"/>
+	<classpathentry exported="true" kind="lib" path="plugin-x/plugins/weibo/android/libPluginSocialWeibo.jar"/>
+	<classpathentry exported="true" kind="lib" path="plugin-x/plugins/weibo/android/weibosdk.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
