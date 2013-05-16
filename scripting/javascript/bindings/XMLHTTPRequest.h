@@ -52,7 +52,7 @@ const unsigned short HEADERS_RECEIVED = 2;
 const unsigned short LOADING = 3;
 const unsigned short DONE = 4;
 
-class MinXmlHttpRequest : public cocos2d::CCLayer
+class MinXmlHttpRequest : public cocos2d::CCObject
 {
     std::string url;
     JSContext *cx;
