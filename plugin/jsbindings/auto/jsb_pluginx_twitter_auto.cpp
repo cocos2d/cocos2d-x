@@ -161,6 +161,7 @@ JSBool js_pluginx_twitter_SocialTwitter_setDebugMode(JSContext *cx, uint32_t arg
 extern JSObject *jsb_ProtocolSocial_prototype;
 
 void js_pluginx_twitter_SocialTwitter_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOGINFO("jsbindings: finalizing JS object %p (SocialTwitter)", obj);
     js_proxy_t* nproxy;
     js_proxy_t* jsproxy;
     JS_GET_NATIVE_PROXY(jsproxy, obj);
