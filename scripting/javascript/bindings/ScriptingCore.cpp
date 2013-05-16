@@ -1236,7 +1236,7 @@ JSBool jsval_to_cccolor3b(JSContext *cx, jsval v, ccColor3B* ret) {
     ret->r = r;
     ret->g = g;
     ret->b = b;
-    return JS_TRUE;
+    return JS_TRUE;	
 }
 
 JSBool jsval_to_ccarray_of_CCPoint(JSContext* cx, jsval v, CCPoint **points, int *numPoints) {
@@ -2002,4 +2002,242 @@ void* serverEntryPoint(void*)
     pthread_mutex_destroy(&g_rwMutex);
     pthread_mutex_destroy(&g_qMutex);
     return NULL;
+}
+
+ccColor3B getColorFromJSObject(JSContext *cx, JSObject *colorObject)
+{
+    jsval jsr;
+    ccColor3B out;
+    JS_GetProperty(cx, colorObject, "r", &jsr);
+    double fontR = 0.0;
+    JS_ValueToNumber(cx, jsr, &fontR);
+    
+    JS_GetProperty(cx, colorObject, "g", &jsr);
+    double fontG = 0.0;
+    JS_ValueToNumber(cx, jsr, &fontG);
+    
+    JS_GetProperty(cx, colorObject, "b", &jsr);
+    double fontB = 0.0;
+    JS_ValueToNumber(cx, jsr, &fontB);
+    
+    // the out
+    out.r = (unsigned char)fontR;
+    out.g = (unsigned char)fontG;
+    out.b = (unsigned char)fontB;
+    
+    return out;
+}
+
+CCSize getSizeFromJSObject(JSContext *cx, JSObject *sizeObject)
+{
+    jsval jsr;
+    CCSize out;
+    JS_GetProperty(cx, sizeObject, "width", &jsr);
+    double width = 0.0;
+    JS_ValueToNumber(cx, jsr, &width);
+    
+    JS_GetProperty(cx, sizeObject, "height", &jsr);
+    double height = 0.0;
+    JS_ValueToNumber(cx, jsr, &height);
+    
+    
+    // the out
+    out.width  = width;
+    out.height = height;
+    
+    return out;
+}
+
+JSBool jsval_to_ccfontdefinition( JSContext *cx, jsval vp, ccFontDefinition *out )
+{
+    JSObject *jsobj;
+    
+	if( ! JS_ValueToObject( cx, vp, &jsobj ) )
+		return JS_FALSE;
+	
+	JSB_PRECONDITION( jsobj, "Not a valid JS object");
+    
+    // defaul values
+    const char *            defautlFontName         = "Arial";
+    const int               defaultFontSize         = 32;
+    CCTextAlignment         defaultTextAlignment    = kCCTextAlignmentLeft;
+    CCVerticalTextAlignment defaultTextVAlignment   = kCCVerticalTextAlignmentTop;
+    
+    // by default shadow and stroke are off
+    out->m_shadow.m_shadowEnabled = false;
+    out->m_stroke.m_strokeEnabled = false;
+    
+    // white text by default
+    out->m_fontFillColor = ccWHITE;
+    
+    // font name
+    jsval jsr;
+    JS_GetProperty(cx, jsobj, "fontName", &jsr);
+    JS_ValueToString(cx, jsr);
+    JSStringWrapper wrapper(jsr);
+    if ( wrapper )
+    {
+        out->m_fontName  = (char*)wrapper;
+    }
+    else
+    {
+        out->m_fontName  = defautlFontName;
+    }
+    
+    // font size
+    JSBool hasProperty;
+    JS_HasProperty(cx, jsobj, "fontSize", &hasProperty);
+    if ( hasProperty )
+    {
+        JS_GetProperty(cx, jsobj, "fontSize", &jsr);
+        double fontSize = 0.0;
+        JS_ValueToNumber(cx, jsr, &fontSize);
+        out->m_fontSize  = fontSize;
+    }
+    else
+    {
+        out->m_fontSize  = defaultFontSize;
+    }
+    
+    // font alignment horizontal
+    JS_HasProperty(cx, jsobj, "fontAlignmentH", &hasProperty);
+    if ( hasProperty )
+    {
+        JS_GetProperty(cx, jsobj, "fontAlignmentH", &jsr);
+        double fontAlign = 0.0;
+        JS_ValueToNumber(cx, jsr, &fontAlign);
+        out->m_alignment = (CCTextAlignment)fontAlign;
+    }
+    else
+    {
+        out->m_alignment  = defaultTextAlignment;
+    }
+    
+    // font alignment vertical
+    JS_HasProperty(cx, jsobj, "fontAlignmentV", &hasProperty);
+    if ( hasProperty )
+    {
+        JS_GetProperty(cx, jsobj, "fontAlignmentV", &jsr);
+        double fontAlign = 0.0;
+        JS_ValueToNumber(cx, jsr, &fontAlign);
+        out->m_vertAlignment = (CCVerticalTextAlignment)fontAlign;
+    }
+    else
+    {
+        out->m_vertAlignment  = defaultTextVAlignment;
+    }
+    
+    // font fill color
+    JS_HasProperty(cx, jsobj, "fontFillColor", &hasProperty);
+    if ( hasProperty )
+    {
+        JS_GetProperty(cx, jsobj, "fontFillColor", &jsr);
+        
+        JSObject *jsobjColor;
+        if( ! JS_ValueToObject( cx, jsr, &jsobjColor ) )
+            return JS_FALSE;
+        
+        out->m_fontFillColor = getColorFromJSObject(cx, jsobjColor);
+    }
+    
+    // font rendering box dimensions
+    JS_HasProperty(cx, jsobj, "fontDimensions", &hasProperty);
+    if ( hasProperty )
+    {
+        JS_GetProperty(cx, jsobj, "fontDimensions", &jsr);
+        
+        JSObject *jsobjSize;
+        if( ! JS_ValueToObject( cx, jsr, &jsobjSize ) )
+            return JS_FALSE;
+        
+        out->m_dimensions = getSizeFromJSObject(cx, jsobjSize);
+    }
+    
+    // shadow
+    JS_HasProperty(cx, jsobj, "shadowEnabled", &hasProperty);
+    if ( hasProperty )
+    {
+        JS_GetProperty(cx, jsobj, "shadowEnabled", &jsr);
+        out->m_shadow.m_shadowEnabled  = ToBoolean(jsr);
+        
+        if( out->m_shadow.m_shadowEnabled )
+        {
+            // default shadow values
+            out->m_shadow.m_shadowOffset  = CCSize(5, 5);
+            out->m_shadow.m_shadowBlur    = 1;
+            out->m_shadow.m_shadowOpacity = 1;
+            
+            // shado offset
+            JS_HasProperty(cx, jsobj, "shadowOffset", &hasProperty);
+            if ( hasProperty )
+            {
+                JS_GetProperty(cx, jsobj, "shadowOffset", &jsr);
+                
+                JSObject *jsobjShadowOffset;
+                if( ! JS_ValueToObject( cx, jsr, &jsobjShadowOffset ) )
+                    return JS_FALSE;
+                out->m_shadow.m_shadowOffset = getSizeFromJSObject(cx, jsobjShadowOffset);
+            }
+            
+            // shadow blur
+            JS_HasProperty(cx, jsobj, "shadowBlur", &hasProperty);
+            if ( hasProperty )
+            {
+                JS_GetProperty(cx, jsobj, "shadowBlur", &jsr);
+                double shadowBlur = 0.0;
+                JS_ValueToNumber(cx, jsr, &shadowBlur);
+                out->m_shadow.m_shadowBlur = shadowBlur;
+            }
+            
+            // shadow intensity
+            JS_HasProperty(cx, jsobj, "shadowOpacity", &hasProperty);
+            if ( hasProperty )
+            {
+                JS_GetProperty(cx, jsobj, "shadowOpacity", &jsr);
+                double shadowOpacity = 0.0;
+                JS_ValueToNumber(cx, jsr, &shadowOpacity);
+                out->m_shadow.m_shadowOpacity = shadowOpacity;
+            }
+        }
+    }
+    
+    // stroke
+    JS_HasProperty(cx, jsobj, "strokeEnabled", &hasProperty);
+    if ( hasProperty )
+    {
+        JS_GetProperty(cx, jsobj, "strokeEnabled", &jsr);
+        out->m_stroke.m_strokeEnabled  = ToBoolean(jsr);
+        
+        if( out->m_stroke.m_strokeEnabled )
+        {
+            // default stroke values
+            out->m_stroke.m_strokeSize  = 1;
+            out->m_stroke.m_strokeColor = ccBLUE;
+            
+            // stroke color
+            JS_HasProperty(cx, jsobj, "strokeColor", &hasProperty);
+            if ( hasProperty )
+            {
+                JS_GetProperty(cx, jsobj, "strokeColor", &jsr);
+                
+                JSObject *jsobjStrokeColor;
+                if( ! JS_ValueToObject( cx, jsr, &jsobjStrokeColor ) )
+                    return JS_FALSE;
+                out->m_stroke.m_strokeColor = getColorFromJSObject(cx, jsobjStrokeColor);
+            }
+            
+            // stroke size
+            JS_HasProperty(cx, jsobj, "strokeSize", &hasProperty);
+            if ( hasProperty )
+            {
+                JS_GetProperty(cx, jsobj, "strokeSize", &jsr);
+                double strokeSize = 0.0;
+                JS_ValueToNumber(cx, jsr, &strokeSize);
+                out->m_stroke.m_strokeSize = strokeSize;
+            }
+        }
+    }
+    
+    // we are done here
+	return JS_TRUE;
 }
