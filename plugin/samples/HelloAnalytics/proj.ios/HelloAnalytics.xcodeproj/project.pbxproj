@@ -465,6 +465,7 @@
 					"\"$(SRCROOT)/../../../plugins/flurry/platform/ios\"",
 					"\"$(SRCROOT)/../../../plugins/umeng/platform/ios\"",
 				);
+				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_NAME = HelloAnalytics;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
@@ -508,6 +509,7 @@
 					"\"$(SRCROOT)/../../../plugins/flurry/platform/ios\"",
 					"\"$(SRCROOT)/../../../plugins/umeng/platform/ios\"",
 				);
+				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_NAME = HelloAnalytics;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;

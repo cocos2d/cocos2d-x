@@ -46,7 +46,7 @@ public:
     static void setPluginJavaData(PluginProtocol* pKeyObj, PluginJavaData* pData);
     static void erasePluginJavaData(PluginProtocol* pKeyObj);
 
-    static PluginProtocol* getPluginPtr(jobject jobj);
+    static PluginProtocol* getPluginPtr(std::string className);
 
     template <typename T>
     static void callJavaFunctionWithName_oneBaseType(PluginProtocol* thiz, const char* funcName, const char* paramCode, T param)

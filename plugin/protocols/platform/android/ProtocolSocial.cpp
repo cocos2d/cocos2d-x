@@ -37,10 +37,11 @@ THE SOFTWARE.
 namespace cocos2d { namespace plugin {
 
 extern "C" {
-	JNIEXPORT void JNICALL Java_org_cocos2dx_plugin_InterfaceSocial_nativeOnShareResult(JNIEnv*  env, jobject thiz, jobject obj, jint ret, jstring msg)
+	JNIEXPORT void JNICALL Java_org_cocos2dx_plugin_InterfaceSocial_nativeOnShareResult(JNIEnv*  env, jobject thiz, jstring className, jint ret, jstring msg)
 	{
 		std::string strMsg = PluginJniHelper::jstring2string(msg);
-		PluginProtocol* pPlugin = PluginUtils::getPluginPtr(obj);
+		std::string strClassName = PluginJniHelper::jstring2string(className);
+		PluginProtocol* pPlugin = PluginUtils::getPluginPtr(strClassName);
 		LOGD("nativeOnShareResult(), Get plugin ptr : %p", pPlugin);
 		if (pPlugin != NULL)
 		{
