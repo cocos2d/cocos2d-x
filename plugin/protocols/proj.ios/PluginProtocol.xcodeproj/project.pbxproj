@@ -10,9 +10,11 @@
 		FA09A325168ADBC2008C1C7B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA09A324168ADBC2008C1C7B /* Foundation.framework */; };
 		FA09A33E168ADC1F008C1C7B /* PluginManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA09A33C168ADC1F008C1C7B /* PluginManager.cpp */; };
 		FA09A33F168ADC1F008C1C7B /* RegisterPlugin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA09A33D168ADC1F008C1C7B /* RegisterPlugin.cpp */; };
-		FA0CB8B7168D3CC200E36B11 /* ProtocolAnalytics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA0CB8B6168D3CC200E36B11 /* ProtocolAnalytics.cpp */; };
-		FA7C6C9B1724E51C008A0ECC /* ProtocolAds.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA7C6C991724E51C008A0ECC /* ProtocolAds.cpp */; };
-		FA7C6C9C1724E51C008A0ECC /* ProtocolIAP.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA7C6C9A1724E51C008A0ECC /* ProtocolIAP.cpp */; };
+		FA8CC1E6173754CF00464206 /* PluginUtilsIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = FA8CC1E5173754CF00464206 /* PluginUtilsIOS.mm */; };
+		FA8CC2041737A3CE00464206 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA8CC2031737A3CE00464206 /* CoreFoundation.framework */; };
+		FA8CC208173894F000464206 /* ProtocolAds.mm in Sources */ = {isa = PBXBuildFile; fileRef = FA8CC205173894F000464206 /* ProtocolAds.mm */; };
+		FA8CC209173894F000464206 /* ProtocolAnalytics.mm in Sources */ = {isa = PBXBuildFile; fileRef = FA8CC206173894F000464206 /* ProtocolAnalytics.mm */; };
+		FA8CC20A173894F000464206 /* ProtocolIAP.mm in Sources */ = {isa = PBXBuildFile; fileRef = FA8CC207173894F000464206 /* ProtocolIAP.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -37,11 +39,18 @@
 		FA09A33B168ADC05008C1C7B /* RegisterPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterPlugin.h; sourceTree = "<group>"; };
 		FA09A33C168ADC1F008C1C7B /* PluginManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PluginManager.cpp; path = ../PluginManager.cpp; sourceTree = "<group>"; };
 		FA09A33D168ADC1F008C1C7B /* RegisterPlugin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RegisterPlugin.cpp; path = ../RegisterPlugin.cpp; sourceTree = "<group>"; };
-		FA0CB8B6168D3CC200E36B11 /* ProtocolAnalytics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ProtocolAnalytics.cpp; sourceTree = "<group>"; };
 		FA4E3033172BD02800A3E673 /* ProtocolSocial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProtocolSocial.h; sourceTree = "<group>"; };
 		FA7C6C971724E4DD008A0ECC /* ProtocolAds.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProtocolAds.h; sourceTree = "<group>"; };
-		FA7C6C991724E51C008A0ECC /* ProtocolAds.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ProtocolAds.cpp; sourceTree = "<group>"; };
-		FA7C6C9A1724E51C008A0ECC /* ProtocolIAP.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ProtocolIAP.cpp; sourceTree = "<group>"; };
+		FA8CC1E4173754CF00464206 /* PluginUtilsIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PluginUtilsIOS.h; sourceTree = "<group>"; };
+		FA8CC1E5173754CF00464206 /* PluginUtilsIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PluginUtilsIOS.mm; sourceTree = "<group>"; };
+		FA8CC2031737A3CE00464206 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		FA8CC205173894F000464206 /* ProtocolAds.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ProtocolAds.mm; sourceTree = "<group>"; };
+		FA8CC206173894F000464206 /* ProtocolAnalytics.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ProtocolAnalytics.mm; sourceTree = "<group>"; };
+		FA8CC207173894F000464206 /* ProtocolIAP.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ProtocolIAP.mm; sourceTree = "<group>"; };
+		FA8CC21B1739E86E00464206 /* InterfaceAds.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InterfaceAds.h; sourceTree = "<group>"; };
+		FA8CC21C1739E86E00464206 /* InterfaceAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InterfaceAnalytics.h; sourceTree = "<group>"; };
+		FA8CC21D1739E86E00464206 /* InterfaceIAP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InterfaceIAP.h; sourceTree = "<group>"; };
+		FA8CC21E1739E86E00464206 /* InterfaceSocial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InterfaceSocial.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,6 +58,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA8CC2041737A3CE00464206 /* CoreFoundation.framework in Frameworks */,
 				FA09A325168ADBC2008C1C7B /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -59,6 +69,7 @@
 		FA09A316168ADBC2008C1C7B = {
 			isa = PBXGroup;
 			children = (
+				FA8CC2031737A3CE00464206 /* CoreFoundation.framework */,
 				FA0CB8B5168D3CC200E36B11 /* ios */,
 				FA09A33C168ADC1F008C1C7B /* PluginManager.cpp */,
 				FA09A33D168ADC1F008C1C7B /* RegisterPlugin.cpp */,
@@ -102,9 +113,15 @@
 		FA0CB8B5168D3CC200E36B11 /* ios */ = {
 			isa = PBXGroup;
 			children = (
-				FA7C6C991724E51C008A0ECC /* ProtocolAds.cpp */,
-				FA7C6C9A1724E51C008A0ECC /* ProtocolIAP.cpp */,
-				FA0CB8B6168D3CC200E36B11 /* ProtocolAnalytics.cpp */,
+				FA8CC21B1739E86E00464206 /* InterfaceAds.h */,
+				FA8CC21C1739E86E00464206 /* InterfaceAnalytics.h */,
+				FA8CC21D1739E86E00464206 /* InterfaceIAP.h */,
+				FA8CC21E1739E86E00464206 /* InterfaceSocial.h */,
+				FA8CC205173894F000464206 /* ProtocolAds.mm */,
+				FA8CC206173894F000464206 /* ProtocolAnalytics.mm */,
+				FA8CC207173894F000464206 /* ProtocolIAP.mm */,
+				FA8CC1E4173754CF00464206 /* PluginUtilsIOS.h */,
+				FA8CC1E5173754CF00464206 /* PluginUtilsIOS.mm */,
 			);
 			name = ios;
 			path = ../platform/ios;
@@ -163,9 +180,10 @@
 			files = (
 				FA09A33E168ADC1F008C1C7B /* PluginManager.cpp in Sources */,
 				FA09A33F168ADC1F008C1C7B /* RegisterPlugin.cpp in Sources */,
-				FA0CB8B7168D3CC200E36B11 /* ProtocolAnalytics.cpp in Sources */,
-				FA7C6C9B1724E51C008A0ECC /* ProtocolAds.cpp in Sources */,
-				FA7C6C9C1724E51C008A0ECC /* ProtocolIAP.cpp in Sources */,
+				FA8CC1E6173754CF00464206 /* PluginUtilsIOS.mm in Sources */,
+				FA8CC208173894F000464206 /* ProtocolAds.mm in Sources */,
+				FA8CC209173894F000464206 /* ProtocolAnalytics.mm in Sources */,
+				FA8CC20A173894F000464206 /* ProtocolIAP.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

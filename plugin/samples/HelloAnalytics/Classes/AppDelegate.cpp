@@ -86,6 +86,10 @@ bool AppDelegate::applicationDidFinishLaunching()
     g_pAnalytics->setDebugMode(true);
     g_pAnalytics->startSession(s_strAppKey.c_str());
     g_pAnalytics->setCaptureUncaughtException(true);
+    g_pAnalytics->setSessionContinueMillis(10000);
+
+    const char* sdkVer = g_pAnalytics->getSDKVersion();
+    CCLog("SDK version : %s", sdkVer);
 
     AnalyticsUmeng* pUmeng = dynamic_cast<AnalyticsUmeng*>(g_pAnalytics);
     AnalyticsFlurry* pFlurry = dynamic_cast<AnalyticsFlurry*>(g_pAnalytics);

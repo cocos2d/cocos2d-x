@@ -45,9 +45,11 @@ public class InterfaceIAP {
 		PluginWrapper.runOnGLThread(new Runnable() {
 			@Override
 			public void run() {
-				nativeOnPayResult(curObj, curRet, curMsg);
+				String name = curObj.getClass().getName();
+				name = name.replace('.', '/');
+				nativeOnPayResult(name, curRet, curMsg);
 			}
 		});
 	}
-	private static native void nativeOnPayResult(Object obj, int ret, String msg);
+	private static native void nativeOnPayResult(String className, int ret, String msg);
 }
