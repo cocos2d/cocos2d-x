@@ -67,7 +67,7 @@ CCOspApplication::SetApplicationInitializedCallback(CCOspApplicationInitialized 
 void
 CCOspApplication::SetScreenOrientation(Orientation orientation)
 {
-	sm_eScreenOrientation = orientation;
+    sm_eScreenOrientation = orientation;
 }
 
 CCOspApplication*
