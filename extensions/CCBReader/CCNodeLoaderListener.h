@@ -2,6 +2,7 @@
 #define _CCB_CCNODELOADERLISTENER_H_
 
 #include "cocos2d.h"
+#include "CCNodeLoader.h"
 
 NS_CC_EXT_BEGIN
 

@@ -7,6 +7,7 @@
 #include "CCBReader/CCBMemberVariableAssigner.h"
 #include "CCBReader/CCBReader.h"
 #include "CCBReader/CCBSelectorResolver.h"
+#include "CCBReader/CCBNodeWrapper.h"
 #include "CCBReader/CCControlButtonLoader.h"
 #include "CCBReader/CCControlLoader.h"
 #include "CCBReader/CCLabelBMFontLoader.h"

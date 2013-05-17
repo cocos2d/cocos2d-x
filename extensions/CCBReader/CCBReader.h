@@ -139,24 +139,11 @@ NS_CC_EXT_BEGIN
  * @{
  */
 
-class CCBFile : public CCNode
-{
-private:
-    CCNode *mCCBFileNode;
-    
-public:
-    CCBFile();
-    
-    static CCBFile* create();
-    
-    CCNode* getCCBFileNode();
-    void setCCBFileNode(CCNode *pNode); // retain
-};
-
 /* Forward declaration. */
 class CCNodeLoader;
 class CCNodeLoaderLibrary;
 class CCNodeLoaderListener;
+class CCBNodeWrapper;
 class CCBMemberVariableAssigner;
 class CCBSelectorResolver;
 class CCBAnimationManager;
