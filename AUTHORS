@@ -406,6 +406,7 @@ Developers:
 
     James Gregory (j4m3z0r, Zynga)
         Initial Emscripten port.
+        Use browser font rendering instead of FreeType.
 
     coolengineer (Hojin Choi)
         Refactoring callback selector for HttpResponse.
