@@ -543,7 +543,7 @@ void CCEditBoxImplIOS::visit(void)
 
 void CCEditBoxImplIOS::onEnter(void)
 {
-    adjustTextFieldPosition();
+    // adjustTextFieldPosition(); not need 
     const char* pText = getText();
     if (pText) {
         setInactiveText(pText);
@@ -562,6 +562,7 @@ void CCEditBoxImplIOS::adjustTextFieldPosition()
 
 void CCEditBoxImplIOS::openKeyboard()
 {
+	adjustTextFieldPosition();
 	m_pLabel->setVisible(false);
 	m_pLabelPlaceHolder->setVisible(false);
 
