@@ -38,7 +38,6 @@ void CCNodeLoader::parseProperties(CCNode * pNode, CCNode * pParent, CCBReader *
     int propertyCount = numRegularProps + numExturaProps;
 
     for(int i = 0; i < propertyCount; i++) {
-        bool isExtraProp = (i >= numRegularProps);
         int type = pCCBReader->readInt(false);
         std::string propertyName = pCCBReader->readCachedString();
 

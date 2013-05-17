@@ -125,6 +125,9 @@ public:
     virtual void updateDisplayedOpacity(GLubyte opacity) = 0;
 };
 
+void updateDisplayedColorChildren(CCNode *parent, const ccColor3B &parentColor);
+void updateDisplayedOpacityChildren(CCNode *parent, GLubyte parentOpacity);
+
 /**
  * Specify the blending function according glBlendFunc
  * Please refer to glBlendFunc in OpenGL ES Manual

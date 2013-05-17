@@ -577,15 +577,7 @@ void CCLayerRGBA::updateDisplayedOpacity(GLubyte parentOpacity)
     
     if (_cascadeOpacityEnabled)
     {
-        CCObject *obj = NULL;
-        CCARRAY_FOREACH(m_pChildren, obj)
-        {
-            CCRGBAProtocol *item = dynamic_cast<CCRGBAProtocol*>(obj);
-            if (item)
-            {
-                item->updateDisplayedOpacity(_displayedOpacity);
-            }
-        }
+        updateDisplayedOpacityChildren(this, _displayedOpacity);
     }
 }
 
@@ -597,15 +589,7 @@ void CCLayerRGBA::updateDisplayedColor(const ccColor3B& parentColor)
     
     if (_cascadeColorEnabled)
     {
-        CCObject *obj = NULL;
-        CCARRAY_FOREACH(m_pChildren, obj)
-        {
-            CCRGBAProtocol *item = dynamic_cast<CCRGBAProtocol*>(obj);
-            if (item)
-            {
-                item->updateDisplayedColor(_displayedColor);
-            }
-        }
+        updateDisplayedColorChildren(this, _displayedColor);
     }
 }
 
