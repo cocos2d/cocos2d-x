@@ -78,7 +78,9 @@ bool CCControl::init()
         this->setTouchPriority(1);
         // Initialise the tables
         m_pDispatchTable = new CCDictionary(); 
-
+        // Initialise the mapHandleOfControlEvents
+        m_mapHandleOfControlEvents.clear();
+        
         return true;
     }
     else
@@ -124,6 +126,14 @@ void CCControl::sendActionsForControlEvents(CCControlEvent controlEvents)
             {
                 CCInvocation* invocation = (CCInvocation*)pObj;
                 invocation->invoke(this);
+            }
+            //Call ScriptFunc
+            if (kScriptTypeNone != m_eScriptType)
+            {
+                int nHandler = this->getHandleOfControlEvents(controlEvents);
+                if (-1 != nHandler) {
+                    CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEvent(nHandler,"",this);
+                }
             }
         }
     }
@@ -326,4 +336,29 @@ bool CCControl::hasVisibleParents()
     return true;
 }
 
+void CCControl::addHandleOfControlEvents(int nFunID,CCControlEvent controlEvents)
+{
+    m_mapHandleOfControlEvents[controlEvents] = nFunID;
+}
+
+void CCControl::removeHandleOfControlEvents(CCControlEvent controlEvents)
+{
+    std::map<int,int>::iterator Iter = m_mapHandleOfControlEvents.find(controlEvents);
+    
+    if (m_mapHandleOfControlEvents.end() != Iter)
+    {
+        m_mapHandleOfControlEvents.erase(Iter);
+    }
+    
+}
+
+int  CCControl::getHandleOfControlEvents(CCControlEvent controlEvents)
+{
+    std::map<int,int>::iterator Iter = m_mapHandleOfControlEvents.find(controlEvents);
+    
+    if (m_mapHandleOfControlEvents.end() != Iter)
+        return Iter->second;
+    
+    return -1;
+}
 NS_CC_EXT_END

@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.92 on Thu May 16 14:21:47 2013.
+** Generated automatically by tolua++-1.0.92 on Fri May 17 11:45:42 2013.
 */
 
 /****************************************************************************
@@ -54755,7 +54755,9 @@ static int tolua_Cocos2d_CCScale9Sprite_new00(lua_State* tolua_S)
  {
   {
    CCScale9Sprite* tolua_ret = (CCScale9Sprite*)  Mtolua_new((CCScale9Sprite)());
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCScale9Sprite");
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCScale9Sprite");
   }
  }
  return 1;
@@ -54783,7 +54785,9 @@ static int tolua_Cocos2d_CCScale9Sprite_new00_local(lua_State* tolua_S)
  {
   {
    CCScale9Sprite* tolua_ret = (CCScale9Sprite*)  Mtolua_new((CCScale9Sprite)());
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCScale9Sprite");
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCScale9Sprite");
     tolua_register_gc(tolua_S,lua_gettop(tolua_S));
   }
  }
@@ -55506,7 +55510,9 @@ static int tolua_Cocos2d_CCScale9Sprite_create00(lua_State* tolua_S)
   CCRect capInsets = *((CCRect*)  tolua_tousertype(tolua_S,4,0));
   {
    CCScale9Sprite* tolua_ret = (CCScale9Sprite*)  CCScale9Sprite::create(file,rect,capInsets);
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCScale9Sprite");
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCScale9Sprite");
   }
  }
  return 1;
@@ -55567,7 +55573,9 @@ static int tolua_Cocos2d_CCScale9Sprite_create01(lua_State* tolua_S)
   CCRect rect = *((CCRect*)  tolua_tousertype(tolua_S,3,0));
   {
    CCScale9Sprite* tolua_ret = (CCScale9Sprite*)  CCScale9Sprite::create(file,rect);
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCScale9Sprite");
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCScale9Sprite");
   }
  }
  return 1;
@@ -55625,7 +55633,9 @@ static int tolua_Cocos2d_CCScale9Sprite_create02(lua_State* tolua_S)
   const char* file = ((const char*)  tolua_tostring(tolua_S,3,0));
   {
    CCScale9Sprite* tolua_ret = (CCScale9Sprite*)  CCScale9Sprite::create(capInsets,file);
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCScale9Sprite");
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCScale9Sprite");
   }
  }
  return 1;
@@ -55679,7 +55689,9 @@ static int tolua_Cocos2d_CCScale9Sprite_create03(lua_State* tolua_S)
   const char* file = ((const char*)  tolua_tostring(tolua_S,2,0));
   {
    CCScale9Sprite* tolua_ret = (CCScale9Sprite*)  CCScale9Sprite::create(file);
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCScale9Sprite");
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCScale9Sprite");
   }
  }
  return 1;
@@ -55744,7 +55756,9 @@ static int tolua_Cocos2d_CCScale9Sprite_createWithSpriteFrame00(lua_State* tolua
   CCRect capInsets = *((CCRect*)  tolua_tousertype(tolua_S,3,0));
   {
    CCScale9Sprite* tolua_ret = (CCScale9Sprite*)  CCScale9Sprite::createWithSpriteFrame(spriteFrame,capInsets);
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCScale9Sprite");
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCScale9Sprite");
   }
  }
  return 1;
@@ -55801,7 +55815,9 @@ static int tolua_Cocos2d_CCScale9Sprite_createWithSpriteFrame01(lua_State* tolua
   CCSpriteFrame* spriteFrame = ((CCSpriteFrame*)  tolua_tousertype(tolua_S,2,0));
   {
    CCScale9Sprite* tolua_ret = (CCScale9Sprite*)  CCScale9Sprite::createWithSpriteFrame(spriteFrame);
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCScale9Sprite");
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCScale9Sprite");
   }
  }
  return 1;
@@ -55866,7 +55882,9 @@ static int tolua_Cocos2d_CCScale9Sprite_createWithSpriteFrameName00(lua_State* t
   CCRect capInsets = *((CCRect*)  tolua_tousertype(tolua_S,3,0));
   {
    CCScale9Sprite* tolua_ret = (CCScale9Sprite*)  CCScale9Sprite::createWithSpriteFrameName(spriteFrameName,capInsets);
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCScale9Sprite");
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCScale9Sprite");
   }
  }
  return 1;
@@ -55923,7 +55941,9 @@ static int tolua_Cocos2d_CCScale9Sprite_createWithSpriteFrameName01(lua_State* t
   const char* spriteFrameName = ((const char*)  tolua_tostring(tolua_S,2,0));
   {
    CCScale9Sprite* tolua_ret = (CCScale9Sprite*)  CCScale9Sprite::createWithSpriteFrameName(spriteFrameName);
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCScale9Sprite");
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCScale9Sprite");
   }
  }
  return 1;
@@ -55954,7 +55974,9 @@ static int tolua_Cocos2d_CCScale9Sprite_resizableSpriteWithCapInsets00(lua_State
 #endif
   {
    CCScale9Sprite* tolua_ret = (CCScale9Sprite*)  self->resizableSpriteWithCapInsets(capInsets);
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCScale9Sprite");
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCScale9Sprite");
   }
  }
  return 1;
@@ -55980,7 +56002,9 @@ static int tolua_Cocos2d_CCScale9Sprite_create04(lua_State* tolua_S)
  {
   {
    CCScale9Sprite* tolua_ret = (CCScale9Sprite*)  CCScale9Sprite::create();
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCScale9Sprite");
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCScale9Sprite");
   }
  }
  return 1;
@@ -56564,7 +56588,9 @@ static int tolua_Cocos2d_CCControl_new00(lua_State* tolua_S)
  {
   {
    CCControl* tolua_ret = (CCControl*)  Mtolua_new((CCControl)());
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCControl");
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCControl");
   }
  }
  return 1;
@@ -56592,7 +56618,9 @@ static int tolua_Cocos2d_CCControl_new00_local(lua_State* tolua_S)
  {
   {
    CCControl* tolua_ret = (CCControl*)  Mtolua_new((CCControl)());
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCControl");
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCControl");
     tolua_register_gc(tolua_S,lua_gettop(tolua_S));
   }
  }
@@ -56944,6 +56972,74 @@ static int tolua_Cocos2d_CCControl_isTouchInside00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: addHandleOfControlEvents of class  CCControl */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCControl_addHandleOfControlEvents00
+static int tolua_Cocos2d_CCControl_addHandleOfControlEvents00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCControl",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !toluafix_isfunction(tolua_S,2,"LUA_FUNCTION",0,&tolua_err)) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCControl* self = (CCControl*)  tolua_tousertype(tolua_S,1,0);
+  LUA_FUNCTION nFunID = (  toluafix_ref_function(tolua_S,2,0));
+  CCControlEvent controlEvents = ((CCControlEvent) (int)  tolua_tonumber(tolua_S,3,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'addHandleOfControlEvents'", NULL);
+#endif
+  {
+   self->addHandleOfControlEvents(nFunID,controlEvents);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'addHandleOfControlEvents'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: removeHandleOfControlEvents of class  CCControl */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCControl_removeHandleOfControlEvents00
+static int tolua_Cocos2d_CCControl_removeHandleOfControlEvents00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCControl",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCControl* self = (CCControl*)  tolua_tousertype(tolua_S,1,0);
+  CCControlEvent controlEvents = ((CCControlEvent) (int)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'removeHandleOfControlEvents'", NULL);
+#endif
+  {
+   self->removeHandleOfControlEvents(controlEvents);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'removeHandleOfControlEvents'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: new of class  CCControlButton */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCControlButton_new00
 static int tolua_Cocos2d_CCControlButton_new00(lua_State* tolua_S)
@@ -56960,7 +57056,9 @@ static int tolua_Cocos2d_CCControlButton_new00(lua_State* tolua_S)
  {
   {
    CCControlButton* tolua_ret = (CCControlButton*)  Mtolua_new((CCControlButton)());
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCControlButton");
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCControlButton");
   }
  }
  return 1;
@@ -56988,7 +57086,9 @@ static int tolua_Cocos2d_CCControlButton_new00_local(lua_State* tolua_S)
  {
   {
    CCControlButton* tolua_ret = (CCControlButton*)  Mtolua_new((CCControlButton)());
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCControlButton");
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCControlButton");
     tolua_register_gc(tolua_S,lua_gettop(tolua_S));
   }
  }
@@ -57378,7 +57478,9 @@ static int tolua_Cocos2d_CCControlButton_getBackgroundSprite00(lua_State* tolua_
 #endif
   {
    CCScale9Sprite* tolua_ret = (CCScale9Sprite*)  self->getBackgroundSprite();
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCScale9Sprite");
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCScale9Sprite");
   }
  }
  return 1;
@@ -58190,7 +58292,9 @@ static int tolua_Cocos2d_CCControlButton_create00(lua_State* tolua_S)
   CCScale9Sprite* backgroundSprite = ((CCScale9Sprite*)  tolua_tousertype(tolua_S,3,0));
   {
    CCControlButton* tolua_ret = (CCControlButton*)  CCControlButton::create(label,backgroundSprite);
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCControlButton");
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCControlButton");
   }
  }
  return 1;
@@ -58260,7 +58364,9 @@ static int tolua_Cocos2d_CCControlButton_create01(lua_State* tolua_S)
   float fontSize = ((float)  tolua_tonumber(tolua_S,4,0));
   {
    CCControlButton* tolua_ret = (CCControlButton*)  CCControlButton::create(title,fontName,fontSize);
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCControlButton");
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCControlButton");
   }
  }
  return 1;
@@ -58319,7 +58425,9 @@ static int tolua_Cocos2d_CCControlButton_create02(lua_State* tolua_S)
   CCScale9Sprite* sprite = ((CCScale9Sprite*)  tolua_tousertype(tolua_S,2,0));
   {
    CCControlButton* tolua_ret = (CCControlButton*)  CCControlButton::create(sprite);
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCControlButton");
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCControlButton");
   }
  }
  return 1;
@@ -58919,7 +59027,9 @@ static int tolua_Cocos2d_CCControlButton_getBackgroundSpriteForState00(lua_State
 #endif
   {
    CCScale9Sprite* tolua_ret = (CCScale9Sprite*)  self->getBackgroundSpriteForState(state);
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCScale9Sprite");
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCScale9Sprite");
   }
  }
  return 1;
@@ -59015,7 +59125,9 @@ static int tolua_Cocos2d_CCControlButton_create03(lua_State* tolua_S)
  {
   {
    CCControlButton* tolua_ret = (CCControlButton*)  CCControlButton::create();
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCControlButton");
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCControlButton");
   }
  }
  return 1;
@@ -59705,7 +59817,9 @@ static int tolua_Cocos2d_CCControlSlider_new00(lua_State* tolua_S)
  {
   {
    CCControlSlider* tolua_ret = (CCControlSlider*)  Mtolua_new((CCControlSlider)());
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCControlSlider");
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCControlSlider");
   }
  }
  return 1;
@@ -59733,7 +59847,9 @@ static int tolua_Cocos2d_CCControlSlider_new00_local(lua_State* tolua_S)
  {
   {
    CCControlSlider* tolua_ret = (CCControlSlider*)  Mtolua_new((CCControlSlider)());
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCControlSlider");
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCControlSlider");
     tolua_register_gc(tolua_S,lua_gettop(tolua_S));
   }
  }
@@ -59835,7 +59951,9 @@ static int tolua_Cocos2d_CCControlSlider_create00(lua_State* tolua_S)
   const char* thumbFile = ((const char*)  tolua_tostring(tolua_S,4,0));
   {
    CCControlSlider* tolua_ret = (CCControlSlider*)  CCControlSlider::create(bgFile,progressFile,thumbFile);
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCControlSlider");
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCControlSlider");
   }
  }
  return 1;
@@ -59867,7 +59985,9 @@ static int tolua_Cocos2d_CCControlSlider_create01(lua_State* tolua_S)
   CCSprite* thumbSprite = ((CCSprite*)  tolua_tousertype(tolua_S,4,0));
   {
    CCControlSlider* tolua_ret = (CCControlSlider*)  CCControlSlider::create(backgroundSprite,pogressSprite,thumbSprite);
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCControlSlider");
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCControlSlider");
   }
  }
  return 1;
@@ -59923,7 +60043,9 @@ static int tolua_Cocos2d_CCControlColourPicker_new00(lua_State* tolua_S)
  {
   {
    CCControlColourPicker* tolua_ret = (CCControlColourPicker*)  Mtolua_new((CCControlColourPicker)());
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCControlColourPicker");
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCControlColourPicker");
   }
  }
  return 1;
@@ -59951,7 +60073,9 @@ static int tolua_Cocos2d_CCControlColourPicker_new00_local(lua_State* tolua_S)
  {
   {
    CCControlColourPicker* tolua_ret = (CCControlColourPicker*)  Mtolua_new((CCControlColourPicker)());
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCControlColourPicker");
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCControlColourPicker");
     tolua_register_gc(tolua_S,lua_gettop(tolua_S));
   }
  }
@@ -60272,7 +60396,9 @@ static int tolua_Cocos2d_CCControlColourPicker_create00(lua_State* tolua_S)
  {
   {
    CCControlColourPicker* tolua_ret = (CCControlColourPicker*)  CCControlColourPicker::create();
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCControlColourPicker");
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCControlColourPicker");
   }
  }
  return 1;
@@ -60402,7 +60528,9 @@ static int tolua_Cocos2d_CCControlSwitch_new00(lua_State* tolua_S)
  {
   {
    CCControlSwitch* tolua_ret = (CCControlSwitch*)  Mtolua_new((CCControlSwitch)());
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCControlSwitch");
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCControlSwitch");
   }
  }
  return 1;
@@ -60430,7 +60558,9 @@ static int tolua_Cocos2d_CCControlSwitch_new00_local(lua_State* tolua_S)
  {
   {
    CCControlSwitch* tolua_ret = (CCControlSwitch*)  Mtolua_new((CCControlSwitch)());
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCControlSwitch");
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCControlSwitch");
     tolua_register_gc(tolua_S,lua_gettop(tolua_S));
   }
  }
@@ -60536,7 +60666,9 @@ static int tolua_Cocos2d_CCControlSwitch_create00(lua_State* tolua_S)
   CCSprite* thumbSprite = ((CCSprite*)  tolua_tousertype(tolua_S,5,0));
   {
    CCControlSwitch* tolua_ret = (CCControlSwitch*)  CCControlSwitch::create(maskSprite,onSprite,offSprite,thumbSprite);
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCControlSwitch");
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCControlSwitch");
   }
  }
  return 1;
@@ -60613,7 +60745,9 @@ static int tolua_Cocos2d_CCControlSwitch_create01(lua_State* tolua_S)
   CCLabelTTF* offLabel = ((CCLabelTTF*)  tolua_tousertype(tolua_S,7,0));
   {
    CCControlSwitch* tolua_ret = (CCControlSwitch*)  CCControlSwitch::create(maskSprite,onSprite,offSprite,thumbSprite,onLabel,offLabel);
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCControlSwitch");
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCControlSwitch");
   }
  }
  return 1;
@@ -60983,7 +61117,9 @@ static int tolua_Cocos2d_CCControlPotentiometer_new00(lua_State* tolua_S)
  {
   {
    CCControlPotentiometer* tolua_ret = (CCControlPotentiometer*)  Mtolua_new((CCControlPotentiometer)());
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCControlPotentiometer");
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCControlPotentiometer");
   }
  }
  return 1;
@@ -61011,7 +61147,9 @@ static int tolua_Cocos2d_CCControlPotentiometer_new00_local(lua_State* tolua_S)
  {
   {
    CCControlPotentiometer* tolua_ret = (CCControlPotentiometer*)  Mtolua_new((CCControlPotentiometer)());
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCControlPotentiometer");
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCControlPotentiometer");
     tolua_register_gc(tolua_S,lua_gettop(tolua_S));
   }
  }
@@ -61075,7 +61213,9 @@ static int tolua_Cocos2d_CCControlPotentiometer_create00(lua_State* tolua_S)
   const char* thumbFile = ((const char*)  tolua_tostring(tolua_S,4,0));
   {
    CCControlPotentiometer* tolua_ret = (CCControlPotentiometer*)  CCControlPotentiometer::create(backgroundFile,progressFile,thumbFile);
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCControlPotentiometer");
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCControlPotentiometer");
   }
  }
  return 1;
@@ -61893,7 +62033,9 @@ static int tolua_Cocos2d_CCControlStepper_new00(lua_State* tolua_S)
  {
   {
    CCControlStepper* tolua_ret = (CCControlStepper*)  Mtolua_new((CCControlStepper)());
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCControlStepper");
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCControlStepper");
   }
  }
  return 1;
@@ -61921,7 +62063,9 @@ static int tolua_Cocos2d_CCControlStepper_new00_local(lua_State* tolua_S)
  {
   {
    CCControlStepper* tolua_ret = (CCControlStepper*)  Mtolua_new((CCControlStepper)());
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCControlStepper");
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCControlStepper");
     tolua_register_gc(tolua_S,lua_gettop(tolua_S));
   }
  }
@@ -62019,7 +62163,9 @@ static int tolua_Cocos2d_CCControlStepper_create00(lua_State* tolua_S)
   CCSprite* plusSprite = ((CCSprite*)  tolua_tousertype(tolua_S,3,0));
   {
    CCControlStepper* tolua_ret = (CCControlStepper*)  CCControlStepper::create(minusSprite,plusSprite);
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCControlStepper");
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCControlStepper");
   }
  }
  return 1;
@@ -65845,6 +65991,8 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"removeTargetWithActionForControlEvents",tolua_Cocos2d_CCControl_removeTargetWithActionForControlEvents00);
    tolua_function(tolua_S,"getTouchLocation",tolua_Cocos2d_CCControl_getTouchLocation00);
    tolua_function(tolua_S,"isTouchInside",tolua_Cocos2d_CCControl_isTouchInside00);
+   tolua_function(tolua_S,"addHandleOfControlEvents",tolua_Cocos2d_CCControl_addHandleOfControlEvents00);
+   tolua_function(tolua_S,"removeHandleOfControlEvents",tolua_Cocos2d_CCControl_removeHandleOfControlEvents00);
   tolua_endmodule(tolua_S);
   tolua_constant(tolua_S,"CCControlButtonMarginLR",CCControlButtonMarginLR);
   tolua_constant(tolua_S,"CCControlButtonMarginTB",CCControlButtonMarginTB);

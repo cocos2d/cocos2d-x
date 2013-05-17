@@ -178,6 +178,22 @@ local function runCCControlTest()
         pDisplayValueLabel:setPosition(ccp(screenSize.width / 1.7, screenSize.height / 2.0))
         pLayer:addChild(pDisplayValueLabel)
         
+        local function valueChanged(strEventName,pSender)
+        	if nil == pSender or nil == pDisplayValueLabel then
+        		return
+        	end       	
+        	local pControl = tolua.cast(pSender,"CCControlSlider")
+        	local strFmt = nil
+        	if pControl:getTag() == 1 then
+        		strFmt = string.format("Upper slider value = %.02f",pControl:getValue())
+        	elseif pControl:getTag() == 2 then
+        		strFmt = string.format("Lower slider value = %.02f",pControl:getValue())
+        	end
+        	
+        	if nil ~= strFmt then
+        		pDisplayValueLabel:setString(CCString:create(strFmt):getCString())
+        	end       	
+        end
         --Add the slider
         local pSlider = CCControlSlider:create("extensions/sliderTrack.png","extensions/sliderProgress.png" ,"extensions/sliderThumb.png")
         pSlider:setAnchorPoint(ccp(0.5, 1.0))
@@ -187,7 +203,7 @@ local function runCCControlTest()
 		pSlider:setTag(1)
         
         --When the value of the slider will change, the given selector will be call
-        --slider:addTargetWithActionForControlEvents(pLayer, cccontrol_selector(CCControlSliderTest:valueChanged), CCControlEventValueChanged)
+        pSlider:addHandleOfControlEvents(valueChanged, CCControlEventValueChanged)
 		
 		local pRestrictSlider = CCControlSlider:create("extensions/sliderTrack.png","extensions/sliderProgress.png" ,"extensions/sliderThumb.png")
         pRestrictSlider:setAnchorPoint(ccp(0.5, 1.0))
@@ -197,10 +213,9 @@ local function runCCControlTest()
 		pRestrictSlider:setMinimumAllowedValue(1.5)
 		pRestrictSlider:setValue(3.0)
         pRestrictSlider:setPosition(ccp(screenSize.width / 2.0, screenSize.height / 2.0 - 24))
-		pRestrictSlider:setTag(2)
-		
+		pRestrictSlider:setTag(2)		
 		--same with restricted
-		--restrictSlider:addTargetWithActionForControlEvents(pLayer, cccontrol_selector(CCControlSliderTest:valueChanged), CCControlEventValueChanged)
+		pRestrictSlider:addHandleOfControlEvents(valueChanged, CCControlEventValueChanged)
 	    pLayer:addChild(pSlider)    
 		pLayer:addChild(pRestrictSlider)
 	end
@@ -211,6 +226,7 @@ local function runCCControlTest()
 			return
 		end
 		local screenSize = CCDirector:sharedDirector():getWinSize()
+		local pColorLabel = nil
 
         local pNode  = CCNode:create()
         pNode:setPosition(ccp (screenSize.width / 2, screenSize.height / 2))
@@ -218,14 +234,21 @@ local function runCCControlTest()
         
         local dLayer_width = 0
 
-        --Create the colour picker
+        --Create the colour picker,pStrEventName not use
+        local function colourValueChanged(pStrEventName,pSender)
+        	if nil == pSender or nil == pColorLabel then
+        		return
+        	end
+        	
+        	local pPicker = tolua.cast(pSender,"CCControlColourPicker")
+        	local strFmt  = string.format("#%02X%02X%02X",pPicker:getColor().r, pPicker:getColor().g, pPicker:getColor().b)
+        	pColorLabel:setString(CCString:create(strFmt):getCString())       	
+        end
         local pColourPicker = CCControlColourPicker:create()
         pColourPicker:setColor(ccc3(37, 46, 252))
         pColourPicker:setPosition(ccp (pColourPicker:getContentSize().width / 2, 0))
-        pNode:addChild(pColourPicker)
-        
-        --Add the target-action pair
-        --colourPicker:addTargetWithActionForControlEvents(pLayer, cccontrol_selector(CCControlColourPickerTest:colourValueChanged), CCControlEventValueChanged)
+        pColourPicker:addHandleOfControlEvents(colourValueChanged, CCControlEventValueChanged)
+        pNode:addChild(pColourPicker)     
 	
 	    dLayer_width = dLayer_width + pColourPicker:getContentSize().width
 	    
@@ -236,7 +259,7 @@ local function runCCControlTest()
         pNode:addChild(pBackground)
         dLayer_width = dLayer_width + pBackground:getContentSize().width
         
-        local pColorLabel = CCLabelTTF:create("#color", "Marker Felt", 30)
+        pColorLabel = CCLabelTTF:create("#color", "Marker Felt", 30)
         pColorLabel:retain()
 		pColorLabel:setPosition(pBackground:getPosition())
         pNode:addChild(pColorLabel)
@@ -246,7 +269,7 @@ local function runCCControlTest()
         pNode:setAnchorPoint(ccp (0.5, 0.5))
 
         --Update the color text
---      colourValueChanged(pColourPicker, CCControlEventValueChanged)
+	    colourValueChanged("", pColourPicker)
 	end
 	
 	--SwitchTest
@@ -277,6 +300,18 @@ local function runCCControlTest()
         pNode:addChild(pDisplayValueLabel)
         
         --Create the switch
+        local function valueChanged(strEventName,pSender)
+        	if nil == pDisplayValueLabel or nil == pSender then
+        		return
+        	end
+        	
+        	local pControl = tolua.cast(pSender,"CCControlSwitch")
+        	if pControl:isOn() then
+        		pDisplayValueLabel:setString("On");
+        	else
+        		pDisplayValueLabel:setString("Off");
+        	end
+        end
         local pSwitchControl = CCControlSwitch:create(
                 CCSprite:create("extensions/switch-mask.png"),
                 CCSprite:create("extensions/switch-on.png"),
@@ -287,15 +322,14 @@ local function runCCControlTest()
             )
         pSwitchControl:setPosition(ccp (dLayer_width + 10 + pSwitchControl:getContentSize().width / 2, 0))
         pNode:addChild(pSwitchControl)
-
- --     pSwitchControl:addTargetWithActionForControlEvents(pLayer, cccontrol_selector(CCControlSwitchTest:valueChanged), CCControlEventValueChanged)
+        pSwitchControl:addHandleOfControlEvents(valueChanged, CCControlEventValueChanged)
         
         --Set the layer size
         pNode:setContentSize(CCSizeMake(dLayer_width, 0))
         pNode:setAnchorPoint(ccp (0.5, 0.5))
         
         --Update the value label
-        --valueChanged(switchControl, CCControlEventValueChanged)
+        valueChanged("", pSwitchControl)
 	end
 	
 	--Hvs:HelloVariableSize
@@ -441,11 +475,76 @@ local function runCCControlTest()
         pTitleButtonLabel:setColor(ccc3(159, 168, 176))
         
         local pControlButton = CCControlButton:create(pTitleButtonLabel, pBackgroundButton)
+        local function touchDownAction()
+        	if nil == pDisplayValueLabel then
+        		return
+        	end       	
+        	pDisplayValueLabel:setString(CCString:create("Touch Down"):getCString())
+        end
+        
+        local function touchDragInsideAction()
+        	if nil == pDisplayValueLabel then
+        		return
+        	end 
+        	pDisplayValueLabel:setString(CCString:create("Drag Inside"):getCString());
+        end
+        
+        local function touchDragOutsideAction()
+        	if nil == pDisplayValueLabel then
+        		return
+        	end 
+        	pDisplayValueLabel:setString(CCString:create("Drag Outside"):getCString());
+        end
+        
+        local function touchDragEnterAction()
+        	if nil == pDisplayValueLabel then
+        		return
+        	end 
+        	pDisplayValueLabel:setString(CCString:create("Drag Enter"):getCString());
+        end
+        
+        local function touchDragExitAction()
+        	if nil == pDisplayValueLabel then
+        		return
+        	end 
+        	pDisplayValueLabel:setString(CCString:create("Drag Exit"):getCString());
+        end
+        
+        local function touchUpInsideAction()
+        	if nil == pDisplayValueLabel then
+        		return
+        	end 
+        	pDisplayValueLabel:setString(CCString:create("Touch Up Inside."):getCString());
+        end
+        
+        local function touchUpOutsideAction()
+        	if nil == pDisplayValueLabel then
+        		return
+        	end 
+        	pDisplayValueLabel:setString(CCString:create("Touch Up Outside."):getCString());
+        end
+        
+        local function touchCancelAction()
+        	if nil == pDisplayValueLabel then
+        		return
+        	end 
+        	pDisplayValueLabel:setString(CCString:create("Touch Cancel"):getCString());
+        end
+        
+        
+        
         pControlButton:setBackgroundSpriteForState(pBackgroundHighlightedButton, CCControlStateHighlighted)
         pControlButton:setTitleColorForState(ccc3(255, 255, 255), CCControlStateHighlighted)
-        
         pControlButton:setAnchorPoint(ccp(0.5, 1))
         pControlButton:setPosition(ccp(screenSize.width / 2.0, screenSize.height / 2.0))
+        pControlButton:addHandleOfControlEvents(touchDownAction,CCControlEventTouchDown)
+        pControlButton:addHandleOfControlEvents(touchDragInsideAction,CCControlEventTouchDragInside)
+        pControlButton:addHandleOfControlEvents(touchDragOutsideAction,CCControlEventTouchDragOutside)
+        pControlButton:addHandleOfControlEvents(touchDragEnterAction,CCControlEventTouchDragEnter)
+        pControlButton:addHandleOfControlEvents(touchDragExitAction,CCControlEventTouchDragExit)
+        pControlButton:addHandleOfControlEvents(touchUpInsideAction,CCControlEventTouchUpInside)
+        pControlButton:addHandleOfControlEvents(touchUpOutsideAction,CCControlEventTouchUpOutside)
+        pControlButton:addHandleOfControlEvents(touchCancelAction,CCControlEventTouchCancel)
         pLayer:addChild(pControlButton, 1)
 		
 		--Add the black background
@@ -481,12 +580,21 @@ local function runCCControlTest()
         pNode:addChild(pDisplayValueLabel)
 		
         -- Add the slider
+        local function valueChanged(strEventName,pSender)
+        	if nil == pSender then
+        		return
+        	end
+        	
+        	local pControl = tolua.cast(pSender,"CCControlPotentiometer")
+        	local strFmt = string.format("%0.2f",pControl:getValue())
+        	pDisplayValueLabel:setString(CCString:create(strFmt):getCString())
+        end
         local pPotentiometer = CCControlPotentiometer:create("extensions/potentiometerTrack.png","extensions/potentiometerProgress.png"
                                                                                ,"extensions/potentiometerButton.png")
         pPotentiometer:setPosition(ccp (dLayer_width + 10 + pPotentiometer:getContentSize().width / 2, 0))
 
         -- When the value of the slider will change, the given selector will be call
---        pPotentiometer:addTargetWithActionForControlEvents(pLayer, cccontrol_selector(CCControlPotentiometerTest:valueChanged), CCControlEventValueChanged)
+        pPotentiometer:addHandleOfControlEvents(valueChanged, CCControlEventValueChanged)
         
 		pNode:addChild(pPotentiometer)
         
@@ -497,7 +605,7 @@ local function runCCControlTest()
         pNode:setAnchorPoint(ccp (0.5, 0.5))
         
         -- Update the value label
-        --pLayer:valueChanged(potentiometer, CCControlEventValueChanged)
+        valueChanged("", pPotentiometer)
 	end
 	
 	local function InitStepperTest(pLayer)
@@ -529,9 +637,18 @@ local function runCCControlTest()
         local minusSprite       = CCSprite:create("extensions/stepper-minus.png")
     	local plusSprite        = CCSprite:create("extensions/stepper-plus.png")
     
+    	local function valueChanged(strEventName,pSender)
+    		if nil == pDisplayValueLabel or nil == pSender then
+    			return
+    		end
+    		
+    		local pControl = tolua.cast(pSender,"CCControlStepper")
+    		local strFmt   = string.format("%0.02f",pControl:getValue() )
+    		pDisplayValueLabel:setString(CCString:create(strFmt):getCString())
+    	end
         local stepper   = CCControlStepper:create(minusSprite, plusSprite)
         stepper:setPosition(ccp (layer_width + 10 + stepper:getContentSize().width / 2, 0))
---        stepper:addTargetWithActionForControlEvents(pLayer, cccontrol_selector(CCControlStepperTest:valueChanged), CCControlEventValueChanged)
+        stepper:addHandleOfControlEvents(valueChanged, CCControlEventValueChanged)
         pNode:addChild(stepper)
         
         layer_width  = layer_width + stepper:getContentSize().width
@@ -541,7 +658,7 @@ local function runCCControlTest()
         pNode:setAnchorPoint(ccp (0.5, 0.5))
         
         -- Update the value label
---      pLayer:valueChanged(stepper, CCControlEventValueChanged)
+        valueChanged("", stepper)
 	end
 	
 	local function InitSpecialSceneLayer(pLayer)
