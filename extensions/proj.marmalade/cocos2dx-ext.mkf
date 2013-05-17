@@ -42,13 +42,19 @@ files
     "*.h"
     "*.cpp"
 
-    ["PhysicsNodes"]
-    ("../physics_nodes")
-    "*.h"
-    "*.cpp"
-
     ["spine"]
     ("../spine")
     "*.h"
     "*.cpp"
+}
+
+if {{ defined CC_ENABLE_CHIPMUNK_INTEGRATION or defined CC_ENABLE_BOX2D_INTEGRATION }}
+{
+	files
+	{
+		["PhysicsNodes"]
+			("../physics_nodes")
+			"*.h"
+			"*.cpp"
+	}
 }
