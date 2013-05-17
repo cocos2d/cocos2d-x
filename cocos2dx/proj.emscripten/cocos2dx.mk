@@ -33,7 +33,6 @@ INCLUDES +=  \
     -I$(COCOS_SRC)/platform/emscripten \
     -I$(COCOS_SRC)/platform/third_party/emscripten/libpng \
     -I$(COCOS_SRC)/platform/third_party/emscripten/libz \
-    -I$(COCOS_SRC)/platform/third_party/emscripten/libfreetype2 \
     -I$(COCOS_SRC)/platform/third_party/emscripten/libtiff/include \
     -I$(COCOS_SRC)/platform/third_party/emscripten/libjpeg \
     -I$(COCOS_SRC)/platform/third_party/emscripten/libwebp
@@ -74,7 +73,7 @@ CORE_MAKEFILE_LIST := $(MAKEFILE_LIST)
 -include $(DEPS)
 
 STATICLIBS_DIR = $(COCOS_SRC)/platform/third_party/emscripten/libraries
-STATICLIBS = $(STATICLIBS_DIR)/libfreetype.a \
+STATICLIBS = \
     $(STATICLIBS_DIR)/libpng.a \
     $(STATICLIBS_DIR)/libz.a \
     $(STATICLIBS_DIR)/libtiff.a \
