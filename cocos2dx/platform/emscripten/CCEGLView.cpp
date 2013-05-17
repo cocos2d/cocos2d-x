@@ -41,9 +41,6 @@ THE SOFTWARE.
 
 #include <stdlib.h>
 
-// XXX: For sleep -- remove.
-#include <unistd.h>
-
 extern "C" {
 void glutInit(int *argcp, char **argv);
 void glutMouseFunc(void (*func)(int button, int state, int x, int y));
@@ -136,7 +133,6 @@ CCEGLView::CCEGLView()
     glutMouseFunc(&mouseCB);
     glutMotionFunc(&motionCB);
     glutPassiveMotionFunc(&motionCB);
-
 }
 
 CCEGLView::~CCEGLView()
@@ -186,7 +182,6 @@ void CCEGLView::initEGLFunctions()
 
 bool CCEGLView::isOpenGLReady()
 {
-//	return (m_isGLInitialized && m_screenWidth != 0 && m_screenHeight != 0);
 	return (m_isGLInitialized && m_obScreenSize.height != 0 && m_obScreenSize.width != 0);
 }
 
@@ -307,8 +302,6 @@ bool CCEGLView::initGL()
         EGL_NONE
     };
 
-
-
     // Get the EGL display and initialize.
     m_eglDisplay = eglGetDisplay(EGL_DEFAULT_DISPLAY);
     if (m_eglDisplay == EGL_NO_DISPLAY)
@@ -316,8 +309,6 @@ bool CCEGLView::initGL()
         perror("eglGetDisplay");
         return false;
     }
-
-    sleep(1);
 
     if (eglInitialize(m_eglDisplay, NULL, NULL) != EGL_TRUE)
     {
@@ -352,27 +343,24 @@ bool CCEGLView::initGL()
     }
 
     // FIXME: Get the actual canvas size somehow.
-    EGLint width = 800;
-    EGLint height = 500;
-#warning Assuming screen size is 800X500. Mouse cursor will be offset if a different sized canvas is used.
+    EGLint width;
+    EGLint height;
 
     if ((m_eglDisplay == EGL_NO_DISPLAY) || (m_eglSurface == EGL_NO_SURFACE) )
     	return EXIT_FAILURE;
 
-    /*
 	eglQuerySurface(m_eglDisplay, m_eglSurface, EGL_WIDTH, &width);
     eglQuerySurface(m_eglDisplay, m_eglSurface, EGL_HEIGHT, &height);
-    */
 
     m_obScreenSize.width = width;
     m_obScreenSize.height = height;
 
-    printf("width, height = %d, %d\n", width, height);
-
     glViewport(0, 0, width, height);
 
-    // Set vsync.
-//    eglSwapInterval(m_eglDisplay, screenSwapInterval);
+    // Default the frame size to be the whole canvas. In general we want to be
+    // setting the size of the viewport by adjusting the canvas size (so
+    // there's no weird letterboxing).
+    setFrameSize(width, height);
 
     return true;
 }
