@@ -100,7 +100,7 @@ public:
     
     
     /**
-     * Change SSL verify peer flag
+     * Get SSL verify peer flag
      * @return bool
      */
     inline bool isSSLVerifyPeer(){return _sslVerifyPeer;}
