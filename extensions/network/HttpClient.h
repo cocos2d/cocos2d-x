@@ -89,7 +89,23 @@ public:
      * @return int
      */
     inline int getTimeoutForRead() {return _timeoutForRead;};
-        
+    
+    
+    /**
+     * Change SSL verify peer flag
+     * @param sslVerifyPeer
+     * @return NULL
+     */
+    inline void setSSLVerifyPeer(bool sslVerifyPeer){_sslVerifyPeer = sslVerifyPeer;}
+    
+    
+    /**
+     * Get SSL verify peer flag
+     * @return bool
+     */
+    inline bool isSSLVerifyPeer(){return _sslVerifyPeer;}
+
+    
 private:
     CCHttpClient();
     virtual ~CCHttpClient();
@@ -106,6 +122,7 @@ private:
 private:
     int _timeoutForConnect;
     int _timeoutForRead;
+    bool _sslVerifyPeer;
     
     // std::string reqId;
 };
