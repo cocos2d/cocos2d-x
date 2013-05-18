@@ -132,7 +132,6 @@ static void* networkThread(void *data)
                 retValue = processGetTask(request, 
                                           writeData, 
                                           response->getResponseData(),
-                                          response->getResponseHeaders(),
                                           &responseCode);
                 break;
             
@@ -140,7 +139,6 @@ static void* networkThread(void *data)
                 retValue = processPostTask(request, 
                                            writeData, 
                                            response->getResponseData(),
-                                           response->getResponseHeaders(),
                                            &responseCode);
                 break;
 
@@ -318,7 +316,7 @@ int processGetTask(CCHttpRequest *request, write_callback callback, void *stream
 }
 
 //Process POST Request
-int processPostTask(CCHttpRequest *request, write_callback callback, void *stream, void *headerStream, int32_t *responseCode)
+int processPostTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *responseCode)
 {
     CURLRaii curl;
     bool ok = curl.init(request, callback, stream)
