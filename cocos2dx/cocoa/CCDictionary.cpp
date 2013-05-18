@@ -26,6 +26,7 @@
 #include "CCString.h"
 #include "CCInteger.h"
 #include "platform/CCFileUtils.h"
+#include "CCDataVisitor.h"
 
 using namespace std;
 
@@ -190,16 +191,22 @@ CCObject* CCDictionary::objectForKey(intptr_t key)
 const CCString* CCDictionary::valueForKey(const std::string& key)
 {
 	CCObject *value = objectForKey(key);
-	if( value )
-		return value->getDescription();
+	if( value ) {
+		CCPrettyPrinter visitor(0);
+		value->acceptVisitor(visitor);
+		return CCString::create( visitor.getResult() );
+	}
 	return CCString::create("");
 }
 
 const CCString* CCDictionary::valueForKey(intptr_t key)
 {
 	CCObject *value = objectForKey(key);
-	if( value )
-		return value->getDescription();
+	if( value ) {
+		CCPrettyPrinter visitor(0);
+		value->acceptVisitor(visitor);
+		return CCString::create( visitor.getResult() );
+	}
 	return CCString::create("");
 }
 

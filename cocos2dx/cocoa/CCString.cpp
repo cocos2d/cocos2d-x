@@ -200,15 +200,6 @@ CCString* CCString::createWithContentsOfFile(const char* pszFileName)
     return pRet;
 }
 
-CCString* CCString::getDescription() const
-{
-	// returns a new copy because is const ???
-//	return CCString::create(m_sString);
-
-	// XXX faster
-	return const_cast<CCString*>(this);
-}
-
 
 void CCString::acceptVisitor(CCDataVisitor &visitor)
 {

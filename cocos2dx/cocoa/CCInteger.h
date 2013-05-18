@@ -25,10 +25,8 @@ public:
         return pRet;
     }
 
-	/** returns the integer in a CCString representation */
-	virtual CCString* getDescription() const {
-		return CCString::createWithFormat("%d", m_nValue);
-	}
+	/* override functions */
+    virtual void acceptVisitor(CCDataVisitor &visitor) { visitor.visit(this); }
 
 private:
     int m_nValue;

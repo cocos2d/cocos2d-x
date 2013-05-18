@@ -76,9 +76,6 @@ public:
     virtual void acceptVisitor(CCDataVisitor &visitor);
 
     virtual void update(float dt) {CC_UNUSED_PARAM(dt);};
-
-	/** returns an string that describes the object */
-	virtual CCString *getDescription() const;
     
     friend class CCAutoreleasePool;
 };

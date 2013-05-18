@@ -51,11 +51,6 @@ public:
         return pRet;
     }
 
-	/** returns the double in a CCString representation */
-	virtual CCString* getDescription() const {
-		return CCString::createWithFormat("%f", m_dValue);
-	}
-
     /* override functions */
     virtual void acceptVisitor(CCDataVisitor &visitor) { visitor.visit(this); }
 

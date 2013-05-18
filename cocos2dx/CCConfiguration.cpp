@@ -89,15 +89,20 @@ void CCConfiguration::dumpInfo(void) const
     printf("\n");
 #endif
 
-	CCDictElement* pElement = NULL;
-    CCDICT_FOREACH(m_pDefaults, pElement)
-    {
-        CCObject *obj = pElement->getObject();
-		const char *key = pElement->getStrKey();
+//	CCDictElement* pElement = NULL;
+//    CCDICT_FOREACH(m_pDefaults, pElement)
+//    {
+//        CCObject *obj = pElement->getObject();
+//		const char *key = pElement->getStrKey();
+//
+//		printf("%s = %s\n", key, obj->getDescription()->getCString() );
+//
+//    }
 
-		printf("%s = %s\n", key, obj->getDescription()->getCString() );
+	CCPrettyPrinter visitor(0);
+	m_pDefaults->acceptVisitor(visitor);
+	cout << visitor.getResult();
 
-    }
 }
 
 void CCConfiguration::gatherGPUInfo()

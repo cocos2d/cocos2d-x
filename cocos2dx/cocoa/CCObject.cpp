@@ -121,9 +121,4 @@ void CCObject::acceptVisitor(CCDataVisitor &visitor)
     visitor.visitObject(this);
 }
 
-CCString *CCObject::getDescription() const
-{
-    return CCString::createWithFormat("object = < %p >", this);
-}
-
 NS_CC_END
