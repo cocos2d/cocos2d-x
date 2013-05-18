@@ -43,12 +43,6 @@ THE SOFTWARE.
 #include <list>
 #include <pthread.h>
 
-//#define USE_SDL
-#ifdef USE_SDL
-#include <SDL/SDL.h>
-#include <SDL/SDL_image.h>
-#endif // USE_SDL
-
 using namespace std;
 
 NS_CC_BEGIN
@@ -427,31 +421,10 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
                 
                 pImage = new CCImage();
                 CC_BREAK_IF(NULL == pImage);
-#ifdef USE_SDL
-                SDL_Surface *iSurf = IMG_Load(fullpath.c_str());
 
-                int size = 4 * (iSurf->w * iSurf->h);
-                bool bRet = pImage->initWithImageData((void*)iSurf->pixels, size, CCImage::kFmtRawData, iSurf->w, iSurf->h, 8);
-                int onPixels = 0;
-                for(int i = 0; i < size; i++)
-                {
-                    unsigned char p = ((unsigned char*)iSurf->pixels)[i];
-                    if(p)
-                    {
-                        onPixels++;
-                    }
-                }
-                printf("Using fast image loading code for %s. %d pixels set\n", fullpath.c_str(), onPixels);
-                SDL_FreeSurface(iSurf);
+                bool bRet = pImage->initWithImageFile(fullpath.c_str(), eImageFormat);
                 CC_BREAK_IF(!bRet);
-#else
-                unsigned long nSize = 0;
-                unsigned char* pBuffer = CCFileUtils::sharedFileUtils()->getFileData(fullpath.c_str(), "rb", &nSize);
-                
-                bool bRet = pImage->initWithImageData((void*)pBuffer, nSize, eImageFormat);
-                CC_SAFE_DELETE_ARRAY(pBuffer);
-                CC_BREAK_IF(!bRet);
-#endif // USE_SDL
+
                 texture = new CCTexture2D();
                 
                 if( texture &&
