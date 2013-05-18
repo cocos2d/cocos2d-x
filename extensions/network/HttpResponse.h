@@ -99,11 +99,6 @@ public:
         return &_responseData;
     }
     
-    inline std::vector<char> *getResponseHeaders()
-    {
-        return &_responseHeaders;
-    }
-
     /** Get the http response errorCode
      *  I know that you want to see http 200 :)
      */
@@ -164,7 +159,6 @@ protected:
     CCHttpRequest*        _pHttpRequest;  /// the corresponding HttpRequest pointer who leads to this response 
     bool                _succeed;       /// to indecate if the http reqeust is successful simply
     std::vector<char>   _responseData;  /// the returned raw data. You can also dump it as a string
-    std::vector<char>   _responseHeaders;
     int                 _responseCode;    /// the status code returned from libcurl, e.g. 200, 404
     std::string         _errorBuffer;   /// if _responseCode != 200, please read _errorBuffer to find the reason 
     
