@@ -231,8 +231,10 @@ public:
                 {
                     int targetOffset = (l * iMaxLineHeight + i) * iMaxLineWidth + j;
                     int sourceOffset = i * tSurf->w + j;
-                    // XXX: need to check byte-ordering of src and dest.
-                    out[targetOffset] = pixels[sourceOffset];
+
+                    // HTML5 canvas is non-pre-alpha-multiplied, so alpha-multiply here.
+                    unsigned char *p = (unsigned char*) &pixels[sourceOffset];
+                    out[targetOffset] = CC_RGB_PREMULTIPLY_ALPHA( p[0], p[1], p[2], p[3] );
                 }
             }
             SDL_FreeSurface(tSurf);
