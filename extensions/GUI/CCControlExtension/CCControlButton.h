@@ -100,6 +100,7 @@ protected:
 protected:
     bool m_isPushed;
     bool m_bParentInited;
+    float m_originalScale;
 public:
     bool isPushed() { return m_isPushed; }
 
@@ -116,6 +117,8 @@ public:
     CC_SYNTHESIZE_READONLY(int, m_marginV, VerticalMargin);
     /* Define the button margin for Left/Right edge */
     CC_SYNTHESIZE_READONLY(int, m_marginH, HorizontalOrigin);
+    // Override setScale so we can track what our un-zoomed scale should be.
+    virtual void setScale(float scale);
     //set the margins at once (so we only have to do one call of needsLayout)
     virtual void setMargins(int marginH, int marginV);
 

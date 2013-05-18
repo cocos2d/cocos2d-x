@@ -57,6 +57,7 @@ CCControlButton::CCControlButton()
 , m_backgroundSpriteDispatchTable(NULL)
 , m_marginV(CCControlButtonMarginTB)
 , m_marginH(CCControlButtonMarginLR)
+, m_originalScale(1.0)
 {
 
 }
@@ -181,6 +182,12 @@ CCControlButton* CCControlButton::create(CCScale9Sprite* sprite)
     return pRet;
 }
 
+void CCControlButton::setScale(float scale)
+{
+    CCControl::setScale(scale);
+    
+    m_originalScale = scale;
+}
 
 void CCControlButton::setMargins(int marginH, int marginV)
 {
@@ -222,7 +229,7 @@ void CCControlButton::setHighlighted(bool enabled)
     needsLayout();
     if( m_zoomOnTouchDown )
     {
-        float scaleValue = (isHighlighted() && isEnabled() && !isSelected()) ? 1.1f : 1.0f;
+        float scaleValue = (isHighlighted() && isEnabled() && !isSelected()) ? m_originalScale * 1.1f : m_originalScale;
         CCAction *zoomAction = CCScaleTo::create(0.05f, scaleValue);
         zoomAction->setTag(kZoomActionTag);
         runAction(zoomAction);
