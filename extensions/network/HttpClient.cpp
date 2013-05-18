@@ -288,9 +288,9 @@ public:
 
         return setOption(CURLOPT_URL, request->getUrl())
                 && setOption(CURLOPT_WRITEFUNCTION, callback)
-                && setOption(CURLOPT_WRITEDATA, stream);
+                && setOption(CURLOPT_WRITEDATA, stream)
                 && setOption(CURLOPT_COOKIEFILE, cookieFilename)
-                && setOption(CURLOPT_COOKIEJAR, cookieFilename)
+                && setOption(CURLOPT_COOKIEJAR, cookieFilename);
     }
 
     /// @param responseCode Null not allowed
