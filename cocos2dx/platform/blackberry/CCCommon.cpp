@@ -30,11 +30,11 @@ NS_CC_BEGIN
 
 void CCLog(const char * pszFormat, ...)
 {
-    char buf[MAX_LEN];
+    char szBuf[MAX_LEN];
 
     va_list args;
     va_start(args, pszFormat);
-    vsnprintf(buf, MAX_LEN, pszFormat, args);
+    vsnprintf(szBuf, MAX_LEN, pszFormat, args);
     va_end(args);
 
     // Strip any trailing newlines from log message.
@@ -45,13 +45,13 @@ void CCLog(const char * pszFormat, ...)
       len--;
     }
 
-    fprintf(stderr, "cocos2d-x debug info %s\n",  buf);
+    fprintf(stderr, "cocos2d-x debug info %s\n",  szBuf);
 }
 
 void CCMessageBox(const char * pszMsg, const char * pszTitle)
 {
     //MessageBoxA(NULL, pszMsg, pszTitle, MB_OK);
-    CCLog(pszMsg);
+    CCLog("%s", pszMsg);
 }
 
 void CCLuaLog(const char * pszFormat)

@@ -110,6 +110,8 @@
 		1A2757C41697FBE500504026 /* jsb.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A2757B61697FAAD00504026 /* jsb.js */; };
 		1A2758051698032000504026 /* js_bindings_system_functions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2758011698032000504026 /* js_bindings_system_functions.cpp */; };
 		1A2758061698032000504026 /* js_bindings_system_registration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2758031698032000504026 /* js_bindings_system_registration.cpp */; };
+		1A80332A1728DECD00240CC3 /* EffectsAdvancedTest in Resources */ = {isa = PBXBuildFile; fileRef = 1A8033291728DECD00240CC3 /* EffectsAdvancedTest */; };
+		1A80332C1728F1FB00240CC3 /* res in Resources */ = {isa = PBXBuildFile; fileRef = 1A80332B1728F1FB00240CC3 /* res */; };
 		1A82F5F8169AC91400C4B13A /* LocalStorage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A82F5F5169AC91400C4B13A /* LocalStorage.cpp */; };
 		1A82F5F9169AC91400C4B13A /* LocalStorageAndroid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A82F5F7169AC91400C4B13A /* LocalStorageAndroid.cpp */; };
 		1A82F5FB169AC92500C4B13A /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A82F5FA169AC92500C4B13A /* libsqlite3.dylib */; };
@@ -140,7 +142,6 @@
 		1AA51AB716F708FA000FDF05 /* Presentation in Resources */ = {isa = PBXBuildFile; fileRef = 1AA51A9016F708FA000FDF05 /* Presentation */; };
 		1AA51AB816F708FA000FDF05 /* ProgressActionsTest in Resources */ = {isa = PBXBuildFile; fileRef = 1AA51A9116F708FA000FDF05 /* ProgressActionsTest */; };
 		1AA51AB916F708FA000FDF05 /* RenderTextureTest in Resources */ = {isa = PBXBuildFile; fileRef = 1AA51A9216F708FA000FDF05 /* RenderTextureTest */; };
-		1AA51ABA16F708FA000FDF05 /* res in Resources */ = {isa = PBXBuildFile; fileRef = 1AA51A9316F708FA000FDF05 /* res */; };
 		1AA51ABB16F708FA000FDF05 /* RotateWorldTest in Resources */ = {isa = PBXBuildFile; fileRef = 1AA51A9416F708FA000FDF05 /* RotateWorldTest */; };
 		1AA51ABC16F708FA000FDF05 /* SceneTest in Resources */ = {isa = PBXBuildFile; fileRef = 1AA51A9516F708FA000FDF05 /* SceneTest */; };
 		1AA51ABD16F708FA000FDF05 /* SchedulerTest in Resources */ = {isa = PBXBuildFile; fileRef = 1AA51A9616F708FA000FDF05 /* SchedulerTest */; };
@@ -303,7 +304,6 @@
 		D401B69716FB637400F2529D /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D446FDA616102D86000ADA7B /* Default-568h@2x.png */; };
 		D401B69816FB637400F2529D /* README in Resources */ = {isa = PBXBuildFile; fileRef = 15A3D3021682F0A0002FB0C5 /* README */; };
 		D401B69916FB637400F2529D /* CMakeLists.txt in Resources */ = {isa = PBXBuildFile; fileRef = 15A3D3601682F0B5002FB0C5 /* CMakeLists.txt */; };
-		D401B6B516FB637400F2529D /* res in Resources */ = {isa = PBXBuildFile; fileRef = 1AA51A9316F708FA000FDF05 /* res */; };
 		D401B6C116FB637400F2529D /* Icon-57.png in Resources */ = {isa = PBXBuildFile; fileRef = D401B5FD16FB199B00F2529D /* Icon-57.png */; };
 		D401B6C216FB637400F2529D /* Icon-114.png in Resources */ = {isa = PBXBuildFile; fileRef = D401B5FF16FB19A000F2529D /* Icon-114.png */; };
 		D401B6C316FB637400F2529D /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = D401B60116FB19A600F2529D /* Icon-72.png */; };
@@ -372,7 +372,6 @@
 		15A3D31A1682F0A0002FB0C5 /* ScriptingCore.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ScriptingCore.cpp; sourceTree = "<group>"; };
 		15A3D31B1682F0A0002FB0C5 /* ScriptingCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptingCore.h; sourceTree = "<group>"; };
 		15A3D31C1682F0A0002FB0C5 /* spidermonkey_specifics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = spidermonkey_specifics.h; sourceTree = "<group>"; };
-		15A3D31D1682F0A0002FB0C5 /* uthash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uthash.h; sourceTree = "<group>"; };
 		15A3D3371682F0B5002FB0C5 /* chipmunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk.h; sourceTree = "<group>"; };
 		15A3D3381682F0B5002FB0C5 /* chipmunk_ffi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk_ffi.h; sourceTree = "<group>"; };
 		15A3D3391682F0B5002FB0C5 /* chipmunk_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk_private.h; sourceTree = "<group>"; };
@@ -552,6 +551,8 @@
 		1A2758021698032000504026 /* js_bindings_system_functions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_system_functions.h; sourceTree = "<group>"; };
 		1A2758031698032000504026 /* js_bindings_system_registration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = js_bindings_system_registration.cpp; sourceTree = "<group>"; };
 		1A2758041698032000504026 /* js_bindings_system_registration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_system_registration.h; sourceTree = "<group>"; };
+		1A8033291728DECD00240CC3 /* EffectsAdvancedTest */ = {isa = PBXFileReference; lastKnownFileType = folder; name = EffectsAdvancedTest; path = ../../Shared/tests/EffectsAdvancedTest; sourceTree = "<group>"; };
+		1A80332B1728F1FB00240CC3 /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; name = res; path = ../../Shared/tests/res; sourceTree = "<group>"; };
 		1A82F5F5169AC91400C4B13A /* LocalStorage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LocalStorage.cpp; sourceTree = "<group>"; };
 		1A82F5F6169AC91400C4B13A /* LocalStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalStorage.h; sourceTree = "<group>"; };
 		1A82F5F7169AC91400C4B13A /* LocalStorageAndroid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LocalStorageAndroid.cpp; sourceTree = "<group>"; };
@@ -583,7 +584,6 @@
 		1AA51A9016F708FA000FDF05 /* Presentation */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Presentation; path = ../../Shared/tests/Presentation; sourceTree = "<group>"; };
 		1AA51A9116F708FA000FDF05 /* ProgressActionsTest */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ProgressActionsTest; path = ../../Shared/tests/ProgressActionsTest; sourceTree = "<group>"; };
 		1AA51A9216F708FA000FDF05 /* RenderTextureTest */ = {isa = PBXFileReference; lastKnownFileType = folder; name = RenderTextureTest; path = ../../Shared/tests/RenderTextureTest; sourceTree = "<group>"; };
-		1AA51A9316F708FA000FDF05 /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; name = res; path = ../../Shared/tests/res; sourceTree = "<group>"; };
 		1AA51A9416F708FA000FDF05 /* RotateWorldTest */ = {isa = PBXFileReference; lastKnownFileType = folder; name = RotateWorldTest; path = ../../Shared/tests/RotateWorldTest; sourceTree = "<group>"; };
 		1AA51A9516F708FA000FDF05 /* SceneTest */ = {isa = PBXFileReference; lastKnownFileType = folder; name = SceneTest; path = ../../Shared/tests/SceneTest; sourceTree = "<group>"; };
 		1AA51A9616F708FA000FDF05 /* SchedulerTest */ = {isa = PBXFileReference; lastKnownFileType = folder; name = SchedulerTest; path = ../../Shared/tests/SchedulerTest; sourceTree = "<group>"; };
@@ -693,7 +693,7 @@
 		15628F5B15F0F5C2000CF24B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				1AA51A9316F708FA000FDF05 /* res */,
+				1A80332B1728F1FB00240CC3 /* res */,
 				D446FDA616102D86000ADA7B /* Default-568h@2x.png */,
 				D446FDA216102D7D000ADA7B /* Default.png */,
 				D446FDA416102D82000ADA7B /* Default@2x.png */,
@@ -757,7 +757,6 @@
 				15A3D31A1682F0A0002FB0C5 /* ScriptingCore.cpp */,
 				15A3D31B1682F0A0002FB0C5 /* ScriptingCore.h */,
 				15A3D31C1682F0A0002FB0C5 /* spidermonkey_specifics.h */,
-				15A3D31D1682F0A0002FB0C5 /* uthash.h */,
 			);
 			name = bindings;
 			path = ../../../../scripting/javascript/bindings;
@@ -1146,10 +1145,6 @@
 		D401B5FC16FB169100F2529D /* js_src_raw */ = {
 			isa = PBXGroup;
 			children = (
-				D401B6DE16FC071100F2529D /* tests-boot-jsb.js */,
-				15A3D4621682F14C002FB0C5 /* main.js */,
-				15A3D4741682F14C002FB0C5 /* tests-main.js */,
-				15A3D4711682F14C002FB0C5 /* tests_resources-jsb.js */,
 				1AA51A7816F708FA000FDF05 /* ActionManagerTest */,
 				1AA51A7916F708FA000FDF05 /* ActionsTest */,
 				1AA51A7A16F708FA000FDF05 /* BaseTestLayer */,
@@ -1161,6 +1156,7 @@
 				1AA51A8016F708FA000FDF05 /* CurrentLanguageTest */,
 				1AA51A8116F708FA000FDF05 /* DrawPrimitivesTest */,
 				1AA51A8216F708FA000FDF05 /* EaseActionsTest */,
+				1A8033291728DECD00240CC3 /* EffectsAdvancedTest */,
 				1AA51A8316F708FA000FDF05 /* EffectsTest */,
 				1AA51A8416F708FA000FDF05 /* EventTest */,
 				1AA51A8516F708FA000FDF05 /* ExtensionsTest */,
@@ -1188,6 +1184,10 @@
 				1AA51A9C16F708FA000FDF05 /* TouchesTest */,
 				1AA51A9D16F708FA000FDF05 /* TransitionsTest */,
 				1AA51A9E16F708FA000FDF05 /* UnitTest */,
+				15A3D4621682F14C002FB0C5 /* main.js */,
+				D401B6DE16FC071100F2529D /* tests-boot-jsb.js */,
+				15A3D4741682F14C002FB0C5 /* tests-main.js */,
+				15A3D4711682F14C002FB0C5 /* tests_resources-jsb.js */,
 			);
 			name = js_src_raw;
 			sourceTree = "<group>";
@@ -1359,7 +1359,6 @@
 				1AA51AB716F708FA000FDF05 /* Presentation in Resources */,
 				1AA51AB816F708FA000FDF05 /* ProgressActionsTest in Resources */,
 				1AA51AB916F708FA000FDF05 /* RenderTextureTest in Resources */,
-				1AA51ABA16F708FA000FDF05 /* res in Resources */,
 				1AA51ABB16F708FA000FDF05 /* RotateWorldTest in Resources */,
 				1AA51ABC16F708FA000FDF05 /* SceneTest in Resources */,
 				1AA51ABD16F708FA000FDF05 /* SchedulerTest in Resources */,
@@ -1375,6 +1374,8 @@
 				D401B60016FB19A000F2529D /* Icon-114.png in Resources */,
 				D401B60216FB19A600F2529D /* Icon-72.png in Resources */,
 				D401B60416FB19A900F2529D /* Icon-144.png in Resources */,
+				1A80332A1728DECD00240CC3 /* EffectsAdvancedTest in Resources */,
+				1A80332C1728F1FB00240CC3 /* res in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1388,7 +1389,6 @@
 				D401B69716FB637400F2529D /* Default-568h@2x.png in Resources */,
 				D401B69816FB637400F2529D /* README in Resources */,
 				D401B69916FB637400F2529D /* CMakeLists.txt in Resources */,
-				D401B6B516FB637400F2529D /* res in Resources */,
 				D401B6C116FB637400F2529D /* Icon-57.png in Resources */,
 				D401B6C216FB637400F2529D /* Icon-114.png in Resources */,
 				D401B6C316FB637400F2529D /* Icon-72.png in Resources */,
@@ -1734,9 +1734,9 @@
 					"\"$(SRCROOT)/../../../../cocos2dx\"",
 					"\"$(SRCROOT)/../../../../cocos2dx/kazmath/include\"",
 					"\"$(SRCROOT)/../../../../CocosDenshion/include\"",
-					"\"$(SDKROOT)/usr/include/libxml2\"",
 					"$(SRCROOT)/../../../../cocos2dx/include",
 					"$(SRCROOT)/../../../../cocos2dx/platform/ios",
+					"$(SRCROOT)/../../../../extensions",
 					"$(SRCROOT)/../../../../external/chipmunk/include/chipmunk",
 					"$(SRCROOT)/../../../../scripting/javascript/spidermonkey-ios/include",
 					"$(SRCROOT)/../../../../scripting/javascript/bindings",
@@ -1775,9 +1775,9 @@
 					"\"$(SRCROOT)/../../../../cocos2dx\"",
 					"\"$(SRCROOT)/../../../../cocos2dx/kazmath/include\"",
 					"\"$(SRCROOT)/../../../../CocosDenshion/include\"",
-					"\"$(SDKROOT)/usr/include/libxml2\"",
 					"$(SRCROOT)/../../../../cocos2dx/include",
 					"$(SRCROOT)/../../../../cocos2dx/platform/ios",
+					"$(SRCROOT)/../../../../extensions",
 					"$(SRCROOT)/../../../../external/chipmunk/include/chipmunk",
 					"$(SRCROOT)/../../../../scripting/javascript/spidermonkey-ios/include",
 					"$(SRCROOT)/../../../../scripting/javascript/bindings",

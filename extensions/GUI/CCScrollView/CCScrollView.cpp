@@ -132,7 +132,7 @@ bool CCScrollView::init()
 
 void CCScrollView::registerWithTouchDispatcher()
 {
-    CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, 0, false);
+    CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, CCLayer::getTouchPriority(), false);
 }
 
 bool CCScrollView::isNodeVisible(CCNode* node)
@@ -436,7 +436,7 @@ void CCScrollView::performedAnimatedScroll(float dt)
 }
 
 
-const CCSize& CCScrollView::getContentSize()
+const CCSize& CCScrollView::getContentSize() const
 {
 	return m_pContainer->getContentSize();
 }
@@ -764,7 +764,19 @@ CCRect CCScrollView::getViewRect()
         scaleX *= p->getScaleX();
         scaleY *= p->getScaleY();
     }
-    
+
+    // Support negative scaling. Not doing so causes intersectsRect calls
+    // (eg: to check if the touch was within the bounds) to return false.
+    // Note, CCNode::getScale will assert if X and Y scales are different.
+    if(scaleX<0.f) {
+        screenPos.x += m_tViewSize.width*scaleX;
+        scaleX = -scaleX;
+    }
+    if(scaleY<0.f) {
+        screenPos.y += m_tViewSize.height*scaleY;
+        scaleY = -scaleY;
+    }
+
     return CCRectMake(screenPos.x, screenPos.y, m_tViewSize.width*scaleX, m_tViewSize.height*scaleY);
 }
 

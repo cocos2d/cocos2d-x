@@ -76,17 +76,17 @@ CC_DEPRECATED_ATTRIBUTE static __TYPE__* node() \
 
 /** @def CC_ENABLE_CACHE_TEXTURE_DATA
 Enable it if you want to cache the texture data.
-Basically,it's only enabled in android
+Basically, it's only enabled for Emscripten.
 
 It's new in cocos2d-x since v0.99.5
 */
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_EMSCRIPTEN)
     #define CC_ENABLE_CACHE_TEXTURE_DATA       1
 #else
     #define CC_ENABLE_CACHE_TEXTURE_DATA       0
 #endif
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_EMSCRIPTEN)
     /* Application will crash in glDrawElements function on some win32 computers and some android devices.
        Indices should be bound again while drawing to avoid this bug.
      */
@@ -233,6 +233,19 @@ public: virtual void set##funName(varType var)   \
 #define LUALOG(format, ...)     cocos2d::CCLog(format, ##__VA_ARGS__)
 #endif // Lua engine debug
 
+#if defined(__GNUC__) && ((__GNUC__ >= 5) || ((__GNUG__ == 4) && (__GNUC_MINOR__ >= 4))) \
+    || (defined(__clang__) && (__clang_major__ >= 3))
+#define CC_DISABLE_COPY(Class) \
+private: \
+    Class(const Class &) = delete; \
+    Class &operator =(const Class &) = delete;
+#else
+#define CC_DISABLE_COPY(Class) \
+private: \
+    Class(const Class &); \
+    Class &operator =(const Class &);
+#endif
+
 /*
  * only certain compilers support __attribute__((deprecated))
  */
@@ -243,6 +256,27 @@ public: virtual void set##funName(varType var)   \
 #else
     #define CC_DEPRECATED_ATTRIBUTE
 #endif 
+
+/*
+ * only certain compiler support __attribute__((format))
+ * formatPos - 1-based position of format string argument
+ * argPos - 1-based position of first format-dependent argument
+ */
+#if defined(__GNUC__) && (__GNUC__ >= 4)
+#define CC_FORMAT_PRINTF(formatPos, argPos) __attribute__((__format__(printf, formatPos, argPos)))
+#elif defined(__has_attribute)
+  #if __has_attribute(format)
+  #define CC_FORMAT_PRINTF(formatPos, argPos) __attribute__((__format__(printf, formatPos, argPos)))
+  #endif // __has_attribute(format)
+#else
+#define CC_FORMAT_PRINTF(formatPos, argPos)
+#endif
+
+#if defined(_MSC_VER)
+#define CC_FORMAT_PRINTF_SIZE_T "%08lX"
+#else
+#define CC_FORMAT_PRINTF_SIZE_T "%08zX"
+#endif
 
 #ifdef __GNUC__
 #define CC_UNUSED __attribute__ ((unused))

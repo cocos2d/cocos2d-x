@@ -47,13 +47,6 @@
 		15A3D2DE1682EF08002FB0C5 /* libcocos2dx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15A3D0C71682EDB7002FB0C5 /* libcocos2dx.a */; };
 		15A3D2E41682EF31002FB0C5 /* main.js in Resources */ = {isa = PBXBuildFile; fileRef = 15A3D2D81682EEEA002FB0C5 /* main.js */; };
 		15A3D2E51682EF31002FB0C5 /* MoonWarriors-jsb.js in Resources */ = {isa = PBXBuildFile; fileRef = 15A3D2D91682EEEA002FB0C5 /* MoonWarriors-jsb.js */; };
-		1A177EB71698261C00C9AC27 /* jsb_chipmunk.js in Sources */ = {isa = PBXBuildFile; fileRef = 1A177EB01698261C00C9AC27 /* jsb_chipmunk.js */; };
-		1A177EB81698261C00C9AC27 /* jsb_cocos2d.js in Sources */ = {isa = PBXBuildFile; fileRef = 1A177EB11698261C00C9AC27 /* jsb_cocos2d.js */; };
-		1A177EB91698261C00C9AC27 /* jsb_cocosbuilder.js in Sources */ = {isa = PBXBuildFile; fileRef = 1A177EB21698261C00C9AC27 /* jsb_cocosbuilder.js */; };
-		1A177EBA1698261C00C9AC27 /* jsb_debugger.js in Sources */ = {isa = PBXBuildFile; fileRef = 1A177EB31698261C00C9AC27 /* jsb_debugger.js */; };
-		1A177EBB1698261C00C9AC27 /* jsb_opengl.js in Sources */ = {isa = PBXBuildFile; fileRef = 1A177EB41698261C00C9AC27 /* jsb_opengl.js */; };
-		1A177EBC1698261C00C9AC27 /* jsb_sys.js in Sources */ = {isa = PBXBuildFile; fileRef = 1A177EB51698261C00C9AC27 /* jsb_sys.js */; };
-		1A177EBD1698261C00C9AC27 /* jsb.js in Sources */ = {isa = PBXBuildFile; fileRef = 1A177EB61698261C00C9AC27 /* jsb.js */; };
 		1A177EBE1698262E00C9AC27 /* jsb_chipmunk.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A177EB01698261C00C9AC27 /* jsb_chipmunk.js */; };
 		1A177EBF1698262E00C9AC27 /* jsb_cocos2d.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A177EB11698261C00C9AC27 /* jsb_cocos2d.js */; };
 		1A177EC01698262E00C9AC27 /* jsb_cocosbuilder.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A177EB21698261C00C9AC27 /* jsb_cocosbuilder.js */; };
@@ -63,16 +56,12 @@
 		1A177EC41698262E00C9AC27 /* jsb.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A177EB61698261C00C9AC27 /* jsb.js */; };
 		1A177ECA1698271700C9AC27 /* js_bindings_system_functions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A177EC61698271700C9AC27 /* js_bindings_system_functions.cpp */; };
 		1A177ECB1698271700C9AC27 /* js_bindings_system_registration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A177EC81698271700C9AC27 /* js_bindings_system_registration.cpp */; };
-		1A3F8833170A7FD2000159E1 /* jsb_opengl_constants.js in Sources */ = {isa = PBXBuildFile; fileRef = 1A3F8832170A7FD2000159E1 /* jsb_opengl_constants.js */; };
 		1A3F8834170A7FDB000159E1 /* jsb_opengl_constants.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A3F8832170A7FD2000159E1 /* jsb_opengl_constants.js */; };
 		1A82F5E7169AC86100C4B13A /* LocalStorage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A82F5E4169AC86100C4B13A /* LocalStorage.cpp */; };
 		1A82F5E8169AC86100C4B13A /* LocalStorageAndroid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A82F5E6169AC86100C4B13A /* LocalStorageAndroid.cpp */; };
 		1A82F5EA169AC8DD00C4B13A /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A82F5E9169AC8DD00C4B13A /* libsqlite3.dylib */; };
-		1AA51AD916F71492000FDF05 /* jsb_cocos2d_constants.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AA51AD816F71492000FDF05 /* jsb_cocos2d_constants.js */; };
 		1AA51ADA16F7149D000FDF05 /* jsb_cocos2d_constants.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AA51AD816F71492000FDF05 /* jsb_cocos2d_constants.js */; };
-		1AAC795F16EDC7C000B97F83 /* jsb_cocos2dx_auto_api.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AAC795C16EDC7C000B97F83 /* jsb_cocos2dx_auto_api.js */; };
 		1AAC796016EDC7C000B97F83 /* jsb_cocos2dx_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AAC795D16EDC7C000B97F83 /* jsb_cocos2dx_auto.cpp */; };
-		A9706D8416A0C1FA0090A01D /* main.debug.js in Sources */ = {isa = PBXBuildFile; fileRef = A9706D8316A0C1FA0090A01D /* main.debug.js */; };
 		A9706D8516A0C3830090A01D /* main.debug.js in Resources */ = {isa = PBXBuildFile; fileRef = A9706D8316A0C1FA0090A01D /* main.debug.js */; };
 /* End PBXBuildFile section */
 
@@ -150,7 +139,6 @@
 		15A3D2BD1682EE81002FB0C5 /* ScriptingCore.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ScriptingCore.cpp; sourceTree = "<group>"; };
 		15A3D2BE1682EE81002FB0C5 /* ScriptingCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptingCore.h; sourceTree = "<group>"; };
 		15A3D2BF1682EE81002FB0C5 /* spidermonkey_specifics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = spidermonkey_specifics.h; sourceTree = "<group>"; };
-		15A3D2C01682EE81002FB0C5 /* uthash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uthash.h; sourceTree = "<group>"; };
 		15A3D2D41682EEC8002FB0C5 /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; name = res; path = ../../Shared/games/MoonWarriors/res; sourceTree = "<group>"; };
 		15A3D2D51682EEC8002FB0C5 /* src */ = {isa = PBXFileReference; lastKnownFileType = folder; name = src; path = ../../Shared/games/MoonWarriors/src; sourceTree = "<group>"; };
 		15A3D2D81682EEEA002FB0C5 /* main.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = main.js; path = ../../Shared/games/MoonWarriors/main.js; sourceTree = "<group>"; };
@@ -364,7 +352,6 @@
 				15A3D2BD1682EE81002FB0C5 /* ScriptingCore.cpp */,
 				15A3D2BE1682EE81002FB0C5 /* ScriptingCore.h */,
 				15A3D2BF1682EE81002FB0C5 /* spidermonkey_specifics.h */,
-				15A3D2C01682EE81002FB0C5 /* uthash.h */,
 			);
 			name = bindings;
 			path = ../../../../scripting/javascript/bindings;
@@ -523,22 +510,11 @@
 				15A3D2D11682EE81002FB0C5 /* js_bindings_core.cpp in Sources */,
 				15A3D2D21682EE81002FB0C5 /* js_manual_conversions.cpp in Sources */,
 				15A3D2D31682EE81002FB0C5 /* ScriptingCore.cpp in Sources */,
-				1A177EB71698261C00C9AC27 /* jsb_chipmunk.js in Sources */,
-				1A177EB81698261C00C9AC27 /* jsb_cocos2d.js in Sources */,
-				1A177EB91698261C00C9AC27 /* jsb_cocosbuilder.js in Sources */,
-				1A177EBA1698261C00C9AC27 /* jsb_debugger.js in Sources */,
-				1A177EBB1698261C00C9AC27 /* jsb_opengl.js in Sources */,
-				1A177EBC1698261C00C9AC27 /* jsb_sys.js in Sources */,
-				1A177EBD1698261C00C9AC27 /* jsb.js in Sources */,
 				1A177ECA1698271700C9AC27 /* js_bindings_system_functions.cpp in Sources */,
 				1A177ECB1698271700C9AC27 /* js_bindings_system_registration.cpp in Sources */,
 				1A82F5E7169AC86100C4B13A /* LocalStorage.cpp in Sources */,
 				1A82F5E8169AC86100C4B13A /* LocalStorageAndroid.cpp in Sources */,
-				A9706D8416A0C1FA0090A01D /* main.debug.js in Sources */,
-				1AAC795F16EDC7C000B97F83 /* jsb_cocos2dx_auto_api.js in Sources */,
 				1AAC796016EDC7C000B97F83 /* jsb_cocos2dx_auto.cpp in Sources */,
-				1AA51AD916F71492000FDF05 /* jsb_cocos2d_constants.js in Sources */,
-				1A3F8833170A7FD2000159E1 /* jsb_opengl_constants.js in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -636,8 +612,8 @@
 					"\"$(SRCROOT)/../../../../cocos2dx/kazmath/include\"",
 					"\"$(SRCROOT)/../../../../cocos2dx\"",
 					"\"$(SRCROOT)/../../../../CocosDenshion/include\"",
-					"\"$(SRCROOT)/usr/include/libxml2\"",
 					"\"$(SRCROOT)/../../../../cocos2dx/include\"",
+					"\"$(SRCROOT)/../../../../extensions\"",
 					"\"$(SRCROOT)/../../../../cocos2dx/platform/third_party/ios\"",
 					"\"$(SRCROOT)/../../../../cocos2dx/platform/ios\"",
 					"$(SRCROOT)/../../../../scripting/javascript/spidermonkey-ios/include",
@@ -680,8 +656,8 @@
 					"\"$(SRCROOT)/../../../../cocos2dx/kazmath/include\"",
 					"\"$(SRCROOT)/../../../../cocos2dx\"",
 					"\"$(SRCROOT)/../../../../CocosDenshion/include\"",
-					"\"$(SRCROOT)/usr/include/libxml2\"",
 					"\"$(SRCROOT)/../../../../cocos2dx/include\"",
+					"\"$(SRCROOT)/../../../../extensions\"",
 					"\"$(SRCROOT)/../../../../cocos2dx/platform/third_party/ios\"",
 					"\"$(SRCROOT)/../../../../cocos2dx/platform/ios\"",
 					"$(SRCROOT)/../../../../scripting/javascript/spidermonkey-ios/include",

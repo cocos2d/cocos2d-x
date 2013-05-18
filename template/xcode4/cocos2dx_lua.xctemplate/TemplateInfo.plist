@@ -9,6 +9,7 @@
 		<string>org.cocos2d-x.libcocos2dx</string>
 		<string>org.cocos2d-x.libcocosdenshion</string>
 		<string>org.cocos2d-x.libextensions</string>
+		<string>org.cocos2d-x.libchipmunk</string>
 		<string>org.cocos2d-x.liblua</string>
 	</array>
 	<key>Concrete</key>
@@ -150,6 +151,18 @@
 					<key>Definitions</key>
 					<dict/>
 				</dict>
+			</dict>
+		</dict>
+	</array>
+	<key>Targets</key>
+	<array>
+		<dict>
+			<key>SharedSettings</key>
+			<dict>
+				<key>ALWAYS_SEARCH_USER_PATHS</key>
+				<string>YES</string>
+				<key>USER_HEADER_SEARCH_PATHS</key>
+				<string>&quot;___PACKAGENAME___/libs/Chipmunk/include/chipmunk&quot;</string>
 			</dict>
 		</dict>
 	</array>

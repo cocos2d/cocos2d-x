@@ -473,6 +473,7 @@ JSBool js_pluginx_flurry_AnalyticsFlurry_setDebugMode(JSContext *cx, uint32_t ar
 extern JSObject *jsb_ProtocolAnalytics_prototype;
 
 void js_pluginx_flurry_AnalyticsFlurry_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOGINFO("jsbindings: finalizing JS object %p (AnalyticsFlurry)", obj);
     js_proxy_t* nproxy;
     js_proxy_t* jsproxy;
     JS_GET_NATIVE_PROXY(jsproxy, obj);
@@ -523,7 +524,7 @@ void js_register_pluginx_flurry_AnalyticsFlurry(JSContext *cx, JSObject *global)
 		JS_FN("logTimedEventEnd", js_pluginx_flurry_AnalyticsFlurry_logTimedEventEnd, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getSDKVersion", js_pluginx_flurry_AnalyticsFlurry_getSDKVersion, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("setDebugMode", js_pluginx_flurry_AnalyticsFlurry_setDebugMode, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FS_END
+        JS_FS_END
 	};
 
 	JSFunctionSpec *st_funcs = NULL;

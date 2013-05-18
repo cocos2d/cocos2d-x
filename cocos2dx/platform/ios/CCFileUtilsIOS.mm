@@ -39,6 +39,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 static void addValueToCCDict(id key, id value, CCDictionary* pDict);
+static void addCCObjectToNSDict(const char*key, CCObject* object, NSMutableDictionary *dict);
 
 static void addItemToCCArray(id item, CCArray *pArray)
 {
@@ -84,6 +85,40 @@ static void addItemToCCArray(id item, CCArray *pArray)
         pArrayItem->release();
         return;
     }
+}
+
+static void addCCObjectToNSArray(CCObject *object, NSMutableArray *array)
+{
+    // add string into array
+    if (CCString *ccString = dynamic_cast<CCString *>(object)) {
+        NSString *strElement = [NSString stringWithCString:ccString->getCString() encoding:NSUTF8StringEncoding];
+        [array addObject:strElement];
+        return;
+    }
+    
+    // add array into array
+    if (CCArray *ccArray = dynamic_cast<CCArray *>(object)) {
+        NSMutableArray *arrElement = [NSMutableArray array];
+        CCObject *element = NULL;
+        CCARRAY_FOREACH(ccArray, element)
+        {
+            addCCObjectToNSArray(element, arrElement);
+        }
+        [array addObject:arrElement];
+        return;
+    }
+    
+    // add dictionary value into array
+    if (CCDictionary *ccDict = dynamic_cast<CCDictionary *>(object)) {
+        NSMutableDictionary *dictElement = [NSMutableDictionary dictionary];
+        CCDictElement *element = NULL;
+        CCDICT_FOREACH(ccDict, element)
+        {
+            addCCObjectToNSDict(element->getStrKey(), element->getObject(), dictElement);
+        }
+        [array addObject:dictElement];
+    }
+
 }
 
 static void addValueToCCDict(id key, id value, CCDictionary* pDict)
@@ -136,6 +171,43 @@ static void addValueToCCDict(id key, id value, CCDictionary* pDict)
     }
 }
 
+static void addCCObjectToNSDict(const char * key, CCObject* object, NSMutableDictionary *dict)
+{
+    NSString *NSkey = [NSString stringWithCString:key encoding:NSUTF8StringEncoding];
+    
+    // the object is a CCDictionary
+    if (CCDictionary *ccDict = dynamic_cast<CCDictionary *>(object)) {
+        NSMutableDictionary *dictElement = [NSMutableDictionary dictionary];
+        CCDictElement *element = NULL;
+        CCDICT_FOREACH(ccDict, element)
+        {
+            addCCObjectToNSDict(element->getStrKey(), element->getObject(), dictElement);
+        }
+        
+        [dict setObject:dictElement forKey:NSkey];
+        return;
+    }
+    
+    // the object is a CCString
+    if (CCString *element = dynamic_cast<CCString *>(object)) {
+        NSString *strElement = [NSString stringWithCString:element->getCString() encoding:NSUTF8StringEncoding];
+        [dict setObject:strElement forKey:NSkey];
+        return;
+    }
+    
+    // the object is a CCArray
+    if (CCArray *ccArray = dynamic_cast<CCArray *>(object)) {
+        NSMutableArray *arrElement = [NSMutableArray array];
+        CCObject *element = NULL;
+        CCARRAY_FOREACH(ccArray, element)
+        {
+            addCCObjectToNSArray(element, arrElement);
+        }
+        [dict setObject:arrElement forKey:NSkey];
+        return;
+    }
+}
+
 CCFileUtils* CCFileUtils::sharedFileUtils()
 {
     if (s_sharedFileUtils == NULL)
@@ -161,23 +233,33 @@ std::string CCFileUtilsIOS::getWritablePath()
 
 bool CCFileUtilsIOS::isFileExist(const std::string& strFilePath)
 {
+    if (0 == strFilePath.length())
+    {
+        return false;
+    }
+
     bool bRet = false;
     
     if (strFilePath[0] != '/')
     {
-        std::string path = strFilePath;
+        std::string path;
         std::string file;
-        size_t pos = path.find_last_of("/");
+        size_t pos = strFilePath.find_last_of("/");
         if (pos != std::string::npos)
         {
-            file = path.substr(pos+1);
-            path = path.substr(0, pos+1);
-            NSString* fullpath = [[NSBundle mainBundle] pathForResource:[NSString stringWithUTF8String:file.c_str()]
-                                                                 ofType:nil
-                                                            inDirectory:[NSString stringWithUTF8String:path.c_str()]];
-            if (fullpath != nil) {
-                bRet = true;
-            }
+            file = strFilePath.substr(pos+1);
+            path = strFilePath.substr(0, pos+1);
+        }
+        else
+        {
+            file = strFilePath;
+        }
+        
+        NSString* fullpath = [[NSBundle mainBundle] pathForResource:[NSString stringWithUTF8String:file.c_str()]
+                                                             ofType:nil
+                                                        inDirectory:[NSString stringWithUTF8String:path.c_str()]];
+        if (fullpath != nil) {
+            bRet = true;
         }
     }
     else
@@ -232,6 +314,24 @@ CCDictionary* CCFileUtilsIOS::createCCDictionaryWithContentsOfFile(const std::st
     }
     
     return pRet;
+}
+
+bool CCFileUtilsIOS::writeToFile(CCDictionary *dict, const std::string &fullPath)
+{
+    //CCLOG("iOS||Mac CCDictionary %d write to file %s", dict->m_uID, fullPath.c_str());
+    NSMutableDictionary *nsDict = [NSMutableDictionary dictionary];
+    
+    CCDictElement *element = NULL;
+    CCDICT_FOREACH(dict, element)
+    {
+        addCCObjectToNSDict(element->getStrKey(), element->getObject(), nsDict);
+    }
+    
+    NSString *file = [NSString stringWithUTF8String:fullPath.c_str()];
+    // do it atomically
+    [nsDict writeToFile:file atomically:YES];
+    
+    return true;
 }
 
 CCArray* CCFileUtilsIOS::createCCArrayWithContentsOfFile(const std::string& filename)

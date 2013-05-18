@@ -52,6 +52,7 @@
 								<option id="com.qnx.qcc.option.compiler.security.1291922980" name="Enhanced Security (-fstack-protector-strong)" superClass="com.qnx.qcc.option.compiler.security" value="false" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.compiler.defines.1492222929" name="Defines (-D)" superClass="com.qnx.qcc.option.compiler.defines" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="_FORTIFY_SOURCE=2"/>
+									<listOptionValue builtIn="false" value="COCOS2D_DEBUG=1"/>
 									<listOptionValue builtIn="false" value="CC_ENABLE_CHIPMUNK_INTEGRATION=1"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.compiler.417359789" superClass="com.qnx.qcc.inputType.compiler"/>
@@ -84,6 +85,7 @@
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="GUI"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="network"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="physics_nodes"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="spine"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -125,7 +127,7 @@
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/usr/include/freetype2"/>
 								</option>
-								<option id="com.qnx.qcc.option.compiler.security.803735203" name="Enhanced Security (-fstack-protector-strong)" superClass="com.qnx.qcc.option.compiler.security" value="true" valueType="boolean"/>
+								<option id="com.qnx.qcc.option.compiler.security.803735203" name="Enhanced Security (-fstack-protector-strong)" superClass="com.qnx.qcc.option.compiler.security" value="false" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.compiler.defines.361044144" name="Defines (-D)" superClass="com.qnx.qcc.option.compiler.defines" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="_FORTIFY_SOURCE=2"/>
 									<listOptionValue builtIn="false" value="CC_ENABLE_CHIPMUNK_INTEGRATION=1"/>
@@ -203,7 +205,7 @@
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/usr/include/freetype2"/>
 								</option>
-								<option id="com.qnx.qcc.option.compiler.security.310444700" name="Enhanced Security (-fstack-protector-strong)" superClass="com.qnx.qcc.option.compiler.security" value="true" valueType="boolean"/>
+								<option id="com.qnx.qcc.option.compiler.security.310444700" name="Enhanced Security (-fstack-protector-strong)" superClass="com.qnx.qcc.option.compiler.security" value="false" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.compiler.defines.41889260" name="Defines (-D)" superClass="com.qnx.qcc.option.compiler.defines" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="_FORTIFY_SOURCE=2"/>
 									<listOptionValue builtIn="false" value="CC_ENABLE_CHIPMUNK_INTEGRATION=1"/>
@@ -279,7 +281,7 @@
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/usr/include/freetype2"/>
 								</option>
-								<option id="com.qnx.qcc.option.compiler.security.1187262169" name="Enhanced Security (-fstack-protector-strong)" superClass="com.qnx.qcc.option.compiler.security" value="true" valueType="boolean"/>
+								<option id="com.qnx.qcc.option.compiler.security.1187262169" name="Enhanced Security (-fstack-protector-strong)" superClass="com.qnx.qcc.option.compiler.security" value="false" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.compiler.defines.670664466" name="Defines (-D)" superClass="com.qnx.qcc.option.compiler.defines" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="_FORTIFY_SOURCE=2"/>
 									<listOptionValue builtIn="false" value="CC_ENABLE_CHIPMUNK_INTEGRATION=1"/>
@@ -428,7 +430,7 @@
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/usr/include/freetype2"/>
 								</option>
-								<option id="com.qnx.qcc.option.compiler.security.1681239974" name="Enhanced Security (-fstack-protector-strong)" superClass="com.qnx.qcc.option.compiler.security" value="true" valueType="boolean"/>
+								<option id="com.qnx.qcc.option.compiler.security.1681239974" name="Enhanced Security (-fstack-protector-strong)" superClass="com.qnx.qcc.option.compiler.security" value="false" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.compiler.defines.1641753022" name="Defines (-D)" superClass="com.qnx.qcc.option.compiler.defines" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="_FORTIFY_SOURCE=2"/>
 									<listOptionValue builtIn="false" value="CC_ENABLE_CHIPMUNK_INTEGRATION=1"/>
@@ -503,7 +505,7 @@
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/usr/include/freetype2"/>
 								</option>
-								<option id="com.qnx.qcc.option.compiler.security.309955164" name="Enhanced Security (-fstack-protector-strong)" superClass="com.qnx.qcc.option.compiler.security" value="true" valueType="boolean"/>
+								<option id="com.qnx.qcc.option.compiler.security.309955164" name="Enhanced Security (-fstack-protector-strong)" superClass="com.qnx.qcc.option.compiler.security" value="false" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.compiler.defines.919408513" name="Defines (-D)" superClass="com.qnx.qcc.option.compiler.defines" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="_FORTIFY_SOURCE=2"/>
 									<listOptionValue builtIn="false" value="CC_ENABLE_CHIPMUNK_INTEGRATION=1"/>

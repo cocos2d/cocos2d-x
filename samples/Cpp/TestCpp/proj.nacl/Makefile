@@ -1,7 +1,7 @@
 COCOS_ROOT = ../../../..
 COCOS2DX_PATH = $(COCOS_ROOT)/cocos2dx
 
-INCLUDES =  -I.. -I../Classes \
+INCLUDES =	-I.. -I../Classes \
 	-I$(COCOS_ROOT)/CocosDenshion/include \
 	-I$(COCOS_ROOT)/extensions \
 	-I$(COCOS_ROOT)/external \
@@ -82,6 +82,7 @@ SOURCES = ../Classes/AccelerometerTest/AccelerometerTest.cpp \
 	../Classes/TextInputTest/TextInputTest.cpp \
 	../Classes/Texture2dTest/Texture2dTest.cpp \
 	../Classes/TextureCacheTest/TextureCacheTest.cpp \
+	../Classes/TexturePackerEncryptionTest/TextureAtlasEncryptionTest.cpp \
 	../Classes/TileMapTest/TileMapTest.cpp \
 	../Classes/TouchesTest/Ball.cpp \
 	../Classes/TouchesTest/Paddle.cpp \
@@ -89,6 +90,8 @@ SOURCES = ../Classes/AccelerometerTest/AccelerometerTest.cpp \
 	../Classes/TransitionsTest/TransitionsTest.cpp \
 	../Classes/UserDefaultTest/UserDefaultTest.cpp \
 	../Classes/ZwoptexTest/ZwoptexTest.cpp \
+	../Classes/SpineTest/SpineTest.cpp \
+	../Classes/DataVisitorTest/DataVisitorTest.cpp \
 	../Classes/controller.cpp \
 	../Classes/testBasic.cpp \
 	../Classes/AppDelegate.cpp \

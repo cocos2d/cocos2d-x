@@ -87,7 +87,7 @@ static TestScene* CreateTestScene(int nIdx)
     case TEST_ZWOPTEX:
         pScene = new ZwoptexTestScene(); break;
 // bada don't support libcurl
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA && CC_TARGET_PLATFORM != CC_PLATFORM_NACL && CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA && CC_TARGET_PLATFORM != CC_PLATFORM_NACL && CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE && CC_TARGET_PLATFORM != CC_PLATFORM_EMSCRIPTEN)
     case TEST_CURL:
         pScene = new CurlTestScene(); break;
 #endif
@@ -118,6 +118,15 @@ static TestScene* CreateTestScene(int nIdx)
 #endif
     case TEST_FILEUTILS:
         pScene = new FileUtilsTestScene();
+        break;
+    case TEST_SPINE:
+        pScene = new SpineTestScene();
+        break;
+    case TEST_TEXTUREPACKER_ENCRYPTION:
+        pScene = new TextureAtlasEncryptionTestScene();
+        break;
+    case TEST_DATAVISTOR:
+        pScene = new DataVisitorTestScene();
         break;
     default:
         break;

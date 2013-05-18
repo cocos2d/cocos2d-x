@@ -412,7 +412,7 @@ public:
      *
      * @return The untransformed size of the node.
      */
-    virtual const CCSize& getContentSize();
+    virtual const CCSize& getContentSize() const;
 
     
     /**
@@ -608,7 +608,7 @@ public:
      *
      * @return The amount of children.
      */
-    unsigned int getChildrenCount(void);
+    unsigned int getChildrenCount(void) const;
     
     /**
      * Sets the parent node
@@ -757,7 +757,7 @@ public:
      *
      * @return A interger that identifies the node.
      */
-    virtual int getTag();
+    virtual int getTag() const;
     /**
      * Changes the tag that is used to identify the node easily.
      *
@@ -1376,6 +1376,7 @@ protected:
     int m_nScriptHandler;               ///< script handler for onEnter() & onExit(), used in Javascript binding and Lua binding.
     int m_nUpdateScriptHandler;         ///< script handler for update() callback per frame, which is invoked from lua & javascript.
     ccScriptType m_eScriptType;         ///< type of script binding, lua or javascript
+
 };
 
 //#pragma mark - CCNodeRGBA

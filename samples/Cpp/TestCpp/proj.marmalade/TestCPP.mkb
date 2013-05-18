@@ -432,6 +432,11 @@ files
 	TextureCacheTest.cpp
 	TextureCacheTest.h
 
+    [Test/TexturePackerEncryptionTest]
+	[../Classes/TexturePackerEncryptionTest]
+	TexturePackerEncryptionTest.cpp
+	TexturePackerEncryptionTest.h
+
 	[Test/TileMapTest]
 	(../Classes/TileMapTest)
 	TileMapTest.cpp
@@ -465,6 +470,16 @@ files
 	(../Classes/FileUtilsTest)
 	FileUtilsTest.cpp
 	FileUtilsTest.h
+
+	[Test/SpineTest]
+	(../Classes/SpineTest)
+	SpineTest.cpp
+	SpineTest.h
+
+	[Test/DataVisitorTest]
+	(../Classes/DataVisitorTest)
+	DataVisitorTest.cpp
+	DataVisitorTest.h
 }
 
 

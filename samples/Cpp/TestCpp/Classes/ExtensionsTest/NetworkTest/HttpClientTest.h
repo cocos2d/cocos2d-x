@@ -15,9 +15,11 @@ public:
     void onMenuGetTestClicked(cocos2d::CCObject *sender);
     void onMenuPostTestClicked(cocos2d::CCObject *sender);
     void onMenuPostBinaryTestClicked(cocos2d::CCObject *sender);
+    void onMenuPutTestClicked(cocos2d::CCObject *sender);
+    void onMenuDeleteTestClicked(cocos2d::CCObject *sender);
     
     //Http Response Callback
-    void onHttpRequestCompleted(cocos2d::CCNode *sender, void *data);
+    void onHttpRequestCompleted(cocos2d::extension::CCHttpClient *sender, cocos2d::extension::CCHttpResponse *response);
 
 private:
     cocos2d::CCLabelTTF* m_labelStatusCode;

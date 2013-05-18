@@ -568,6 +568,7 @@ JSBool js_pluginx_umeng_AnalyticsUmeng_setDebugMode(JSContext *cx, uint32_t argc
 extern JSObject *jsb_ProtocolAnalytics_prototype;
 
 void js_pluginx_umeng_AnalyticsUmeng_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOGINFO("jsbindings: finalizing JS object %p (AnalyticsUmeng)", obj);
     js_proxy_t* nproxy;
     js_proxy_t* jsproxy;
     JS_GET_NATIVE_PROXY(jsproxy, obj);
@@ -621,7 +622,7 @@ void js_register_pluginx_umeng_AnalyticsUmeng(JSContext *cx, JSObject *global) {
 		JS_FN("logTimedEventEnd", js_pluginx_umeng_AnalyticsUmeng_logTimedEventEnd, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("logEventWithLabel", js_pluginx_umeng_AnalyticsUmeng_logEventWithLabel, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("setDebugMode", js_pluginx_umeng_AnalyticsUmeng_setDebugMode, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FS_END
+        JS_FS_END
 	};
 
 	JSFunctionSpec *st_funcs = NULL;

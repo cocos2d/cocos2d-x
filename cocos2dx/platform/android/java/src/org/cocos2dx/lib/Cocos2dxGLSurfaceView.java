@@ -176,7 +176,7 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 			}
 		});
 
-		super.onPause();
+		//super.onPause();
 	}
 
 	@Override

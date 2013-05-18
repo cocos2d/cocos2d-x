@@ -138,6 +138,25 @@
     <ClCompile Include="..\network\HttpClient.cpp" />
     <ClCompile Include="..\physics_nodes\CCPhysicsDebugNode.cpp" />
     <ClCompile Include="..\physics_nodes\CCPhysicsSprite.cpp" />
+    <ClCompile Include="..\spine\Animation.cpp" />
+    <ClCompile Include="..\spine\AnimationState.cpp" />
+    <ClCompile Include="..\spine\AnimationStateData.cpp" />
+    <ClCompile Include="..\spine\Atlas.cpp" />
+    <ClCompile Include="..\spine\AtlasAttachmentLoader.cpp" />
+    <ClCompile Include="..\spine\Attachment.cpp" />
+    <ClCompile Include="..\spine\AttachmentLoader.cpp" />
+    <ClCompile Include="..\spine\Bone.cpp" />
+    <ClCompile Include="..\spine\BoneData.cpp" />
+    <ClCompile Include="..\spine\extension.cpp" />
+    <ClCompile Include="..\spine\Json.cpp" />
+    <ClCompile Include="..\spine\RegionAttachment.cpp" />
+    <ClCompile Include="..\spine\Skeleton.cpp" />
+    <ClCompile Include="..\spine\SkeletonData.cpp" />
+    <ClCompile Include="..\spine\SkeletonJson.cpp" />
+    <ClCompile Include="..\spine\Skin.cpp" />
+    <ClCompile Include="..\spine\Slot.cpp" />
+    <ClCompile Include="..\spine\SlotData.cpp" />
+    <ClCompile Include="..\spine\spine-cocos2dx.cpp" />
     <ClCompile Include="Win32InputBox.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -198,6 +217,26 @@
     <ClInclude Include="..\network\HttpResponse.h" />
     <ClInclude Include="..\physics_nodes\CCPhysicsDebugNode.h" />
     <ClInclude Include="..\physics_nodes\CCPhysicsSprite.h" />
+    <ClInclude Include="..\spine\Animation.h" />
+    <ClInclude Include="..\spine\AnimationState.h" />
+    <ClInclude Include="..\spine\AnimationStateData.h" />
+    <ClInclude Include="..\spine\Atlas.h" />
+    <ClInclude Include="..\spine\AtlasAttachmentLoader.h" />
+    <ClInclude Include="..\spine\Attachment.h" />
+    <ClInclude Include="..\spine\AttachmentLoader.h" />
+    <ClInclude Include="..\spine\Bone.h" />
+    <ClInclude Include="..\spine\BoneData.h" />
+    <ClInclude Include="..\spine\extension.h" />
+    <ClInclude Include="..\spine\Json.h" />
+    <ClInclude Include="..\spine\RegionAttachment.h" />
+    <ClInclude Include="..\spine\Skeleton.h" />
+    <ClInclude Include="..\spine\SkeletonData.h" />
+    <ClInclude Include="..\spine\SkeletonJson.h" />
+    <ClInclude Include="..\spine\Skin.h" />
+    <ClInclude Include="..\spine\Slot.h" />
+    <ClInclude Include="..\spine\SlotData.h" />
+    <ClInclude Include="..\spine\spine-cocos2dx.h" />
+    <ClInclude Include="..\spine\spine.h" />
     <ClInclude Include="Win32InputBox.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

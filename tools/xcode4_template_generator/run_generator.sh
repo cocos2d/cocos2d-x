@@ -11,7 +11,7 @@ python ./tools/xcode4_template_generator/template_generator.py --directory Cocos
 echo "generating libbox2d"
 mkdir -p template/xcode4/lib_box2d.xctemplate
 pushd external
-python ../tools/xcode4_template_generator/template_generator.py --directory Box2D --identifier libbox2d --prefix libs --exclude "proj.android proj.win32 proj.nacl proj.blackberry proj.linux proj.marmalade Android.mk" > ../template/xcode4/lib_box2d.xctemplate/TemplateInfo.plist
+python ../tools/xcode4_template_generator/template_generator.py --directory Box2D --identifier libbox2d --prefix libs --append ../tools/xcode4_template_generator/template_box2d_patch.txt --exclude "proj.android proj.win32 proj.nacl proj.blackberry proj.linux proj.marmalade Android.mk" > ../template/xcode4/lib_box2d.xctemplate/TemplateInfo.plist
 popd
 
 echo "generating libchipmunk"
@@ -23,7 +23,7 @@ popd
 echo "generating liblua"
 mkdir -p template/xcode4/lib_lua.xctemplate
 pushd scripting
-python ../tools/xcode4_template_generator/template_generator.py --directory lua --identifier liblua --prefix libs --append ../tools/xcode4_template_generator/template_lua_patch.txt --exclude "proj.android proj.win32 proj.blackberry proj.linux proj.nacl proj.marmalade Makefile CMakeFiles" > ../template/xcode4/lib_lua.xctemplate/TemplateInfo.plist
+python ../tools/xcode4_template_generator/template_generator.py --directory lua --identifier liblua --prefix libs --append ../tools/xcode4_template_generator/template_lua_patch.txt --exclude "lua/lua/ Android.mk android build_android.sh build_ios.sh build_mac.sh LuaJIT-2.0.1 win32 proj.android proj.win32 proj.blackberry proj.linux proj.nacl proj.marmalade Makefile CMakeFiles" > ../template/xcode4/lib_lua.xctemplate/TemplateInfo.plist
 popd
 
 
@@ -41,7 +41,7 @@ popd
 
 
 echo "generating libextensions"
-python ./tools/xcode4_template_generator/template_generator.py --directory extensions --identifier libextensions --prefix libs --exclude "proj.win32 proj.nacl proj.blackberry proj.linux Android.mk CCEditBoxImplAndroid.cpp CCEditBoxImplAndroid.h" > ./template/xcode4/lib_extensions.xctemplate/TemplateInfo.plist
+python ./tools/xcode4_template_generator/template_generator.py --directory extensions --identifier libextensions --prefix libs --exclude "proj.marmalade proj.win32 proj.nacl proj.blackberry proj.linux Android.mk CCEditBoxImplAndroid.cpp CCEditBoxImplAndroid.h" > ./template/xcode4/lib_extensions.xctemplate/TemplateInfo.plist
 
 echo "done"
 

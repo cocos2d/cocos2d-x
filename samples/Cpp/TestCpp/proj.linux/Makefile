@@ -75,6 +75,7 @@ SOURCES = ../Classes/AccelerometerTest/AccelerometerTest.cpp \
 	../Classes/SpriteTest/SpriteTest.cpp \
 	../Classes/TextInputTest/TextInputTest.cpp \
 	../Classes/Texture2dTest/Texture2dTest.cpp \
+	../Classes/TexturePackerEncryptionTest/TextureAtlasEncryptionTest.cpp \
 	../Classes/TextureCacheTest/TextureCacheTest.cpp \
 	../Classes/TileMapTest/TileMapTest.cpp \
 	../Classes/TouchesTest/Ball.cpp \
@@ -84,31 +85,33 @@ SOURCES = ../Classes/AccelerometerTest/AccelerometerTest.cpp \
 	../Classes/UserDefaultTest/UserDefaultTest.cpp \
 	../Classes/ZwoptexTest/ZwoptexTest.cpp \
 	../Classes/FileUtilsTest/FileUtilsTest.cpp \
+	../Classes/SpineTest/SpineTest.cpp \
+	../Classes/DataVisitorTest/DataVisitorTest.cpp \
 	../Classes/controller.cpp \
 	../Classes/testBasic.cpp \
 	../Classes/AppDelegate.cpp \
 	../Classes/VisibleRect.cpp \
 	main.cpp
 
-SHAREDLIBS = -lcocos2d -lcocosdenshion
+SHAREDLIBS = -lcocos2d -lcocosdenshion -lcurl
 COCOS_LIBS = $(LIB_DIR)/libcocos2d.so $(LIB_DIR)/libcocosdenshion.so
 
 include ../../../../cocos2dx/proj.linux/cocos2dx.mk
 
 
-INCLUDES +=  -I../ \
-    -I../../ \
-    -I../Classes \
-    -I$(COCOS_ROOT)/CocosDenshion/include \
-    -I$(COCOS_ROOT)/extensions/ \
-    -I$(COCOS_ROOT)/external/ \
-    -I$(COCOS_ROOT)/external/chipmunk/include/chipmunk
+INCLUDES +=	 -I../ \
+	-I../../ \
+	-I../Classes \
+	-I$(COCOS_ROOT)/CocosDenshion/include \
+	-I$(COCOS_ROOT)/extensions/ \
+	-I$(COCOS_ROOT)/external/ \
+	-I$(COCOS_ROOT)/external/chipmunk/include/chipmunk
 
 STATICLIBS += \
-    $(STATICLIBS_DIR)/libcurl.a \
-    $(LIB_DIR)/libextension.a \
-    $(LIB_DIR)/libbox2d.a \
-    $(LIB_DIR)/libchipmunk.a
+	$(STATICLIBS_DIR)/libcurl.a \
+	$(LIB_DIR)/libextension.a \
+	$(LIB_DIR)/libbox2d.a \
+	$(LIB_DIR)/libchipmunk.a
 
 ####### Build rules
 $(TARGET): $(OBJECTS) $(STATICLIBS) $(COCOS_LIBS) $(CORE_MAKEFILE_LIST)
