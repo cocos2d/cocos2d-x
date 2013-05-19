@@ -4068,9 +4068,12 @@ JSBool JSB_cpSpacePointQueryFirst(JSContext *cx, uint32_t argc, jsval *vp) {
 	cpShape* ret_val;
 
 	ret_val = cpSpacePointQueryFirst((cpSpace*)arg0 , (cpVect)arg1 , (cpLayers)arg2 , (cpGroup)arg3  );
-
-	jsval ret_jsval = opaque_to_jsval( cx, ret_val );
-	JS_SET_RVAL(cx, vp, ret_jsval);
+	if(ret_val) {
+		jsval ret_jsval = opaque_to_jsval( cx, ret_val );
+		JS_SET_RVAL(cx, vp, ret_jsval);
+	} else {
+		JS_SET_RVAL(cx, vp, JSVAL_NULL);
+	}
     
 	return JS_TRUE;
 }
