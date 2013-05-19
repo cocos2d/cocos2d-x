@@ -175,16 +175,17 @@ bool CCTexture2D::hasPremultipliedAlpha()
 bool CCTexture2D::initWithData(const void *data, CCTexture2DPixelFormat pixelFormat, unsigned int pixelsWide, unsigned int pixelsHigh, const CCSize& contentSize)
 {
     unsigned int bytesPerRow = pixelsWide * bitsPerPixelForFormat(pixelFormat) / 8;
+    bool powerOf2 = ccNextPOT(pixelsWide) == pixelsWide;
 
-    if(bytesPerRow % 8 == 0)
+    if(bytesPerRow % 8 == 0 && powerOf2)
     {
         glPixelStorei(GL_UNPACK_ALIGNMENT, 8);
     }
-    else if(bytesPerRow % 4 == 0)
+    else if(bytesPerRow % 4 == 0 && powerOf2)
     {
         glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
     }
-    else if(bytesPerRow % 2 == 0)
+    else if(bytesPerRow % 2 == 0 && powerOf2)
     {
         glPixelStorei(GL_UNPACK_ALIGNMENT, 2);
     }
@@ -192,6 +193,7 @@ bool CCTexture2D::initWithData(const void *data, CCTexture2DPixelFormat pixelFor
     {
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     }
+
 
     glGenTextures(1, &m_uName);
     ccGLBindTexture2D(m_uName);
