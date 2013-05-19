@@ -1,14 +1,6 @@
-print("hello lua!")
-
 -- cclog
-if _ccLog then
-	cclog = function(...)
-		_ccLog(string.format(...))
-	end
-else
-	cclog = function(...)
-		print(string.format(...))
-	end
+cclog = function(...)
+    print(string.format(...))
 end
 
 -- for CCLuaEngine traceback
