@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.92 on 04/12/13 14:08:59.
+** Generated automatically by tolua++-1.0.92 on Sun May 19 19:30:28 2013.
 */
 
 /****************************************************************************
@@ -4101,10 +4101,13 @@ static int tolua_Cocos2d_CCObject_retain00(lua_State* tolua_S)
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'retain'", NULL);
 #endif
   {
-   self->retain();
+   CCObject* tolua_ret = (CCObject*)  self->retain();
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
   }
  }
- return 0;
+ return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'retain'.",&tolua_err);
@@ -54672,29 +54675,6 @@ static int tolua_Cocos2d_SimpleAudioEngine_stopAllEffects00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-static int tolua_Cocos2d__ccLog(lua_State* tolua_S)
-{
-	lua_State* L = tolua_S;
-	int n = lua_gettop(L);  /* number of arguments */
-	int i;
-	lua_getglobal(L, "tostring");
-	for (i=1; i<=n; i++) {
-		const char *s;
-		size_t l;
-		lua_pushvalue(L, -1);  /* function to be called */
-		lua_pushvalue(L, i);   /* value to print */
-		lua_call(L, 1, 1);
-		s = lua_tolstring(L, -1, &l);  /* get result */
-		if (s == NULL)
-		return luaL_error(L, LUA_QL("tostring") " must return a string to " LUA_QL("_ccLog"));
-		if (i>1) std::cout << "\t";
-		std::cout << s;
-		lua_pop(L, 1);  /* pop result */
-	}
-	std::cout << std::endl;
-	return 0;
-}
-
 /* Open function */
 TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
 {
@@ -54702,9 +54682,6 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
  tolua_reg_types(tolua_S);
  tolua_module(tolua_S,NULL,0);
  tolua_beginmodule(tolua_S,NULL);
-  
- tolua_function(tolua_S,"_ccLog",tolua_Cocos2d__ccLog);
-
   tolua_cclass(tolua_S,"kmMat4","kmMat4","",NULL);
   tolua_beginmodule(tolua_S,"kmMat4");
    tolua_array(tolua_S,"mat",tolua_get_Cocos2d_kmMat4_mat,tolua_set_Cocos2d_kmMat4_mat);

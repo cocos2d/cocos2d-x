@@ -66,7 +66,7 @@ public:
     virtual ~CCObject(void);
     
     void release(void);
-    void retain(void);
+    CCObject* retain(void);
     CCObject* autorelease(void);
     CCObject* copy(void);
     bool isSingleReference(void) const;
