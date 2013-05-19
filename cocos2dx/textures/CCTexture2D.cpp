@@ -176,9 +176,17 @@ bool CCTexture2D::initWithData(const void *data, CCTexture2DPixelFormat pixelFor
 {
     unsigned int bytesPerRow = pixelsWide * bitsPerPixelForFormat(pixelFormat) / 8;
 
-    if(bytesPerRow % 4 == 0)
+    if(bytesPerRow % 8 == 0)
+    {
+        glPixelStorei(GL_UNPACK_ALIGNMENT, 8);
+    }
+    else if(bytesPerRow % 4 == 0)
     {
         glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
+    }
+    else if(bytesPerRow % 2 == 0)
+    {
+        glPixelStorei(GL_UNPACK_ALIGNMENT, 2);
     }
     else
     {
