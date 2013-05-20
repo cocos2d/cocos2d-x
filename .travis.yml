@@ -8,8 +8,8 @@ before_install:
  - ./tools/travis-scripts/before-install.sh
 env:
  global:
-  - secure: "XvKfZu6ePLYH6nWwF6YrDMQLCfABOtyzac0JDwgYr7m1f5WH1nYQ7Hgv+pjq\nnJs+A5wdXJ6f6jRvgrgQ1T9UvY0ckR9HIXYmGtg2bd+IjJmDh0gwZMz+OFq4\nQ+Wsj9wxu9LsEAt/CosQvk3r2AoMpIY98a864b0EquZH+zzdzgA="
-  - secure: "iEFKwSz4IlQ9EfAL8c/1MwU6Ti1IrNtG0YUi3TWdf6sCMglXaRICSJTCY9Hz\nXLYYvp5lPo5FQsqxpMBhkm2Zpitd4zZq+r62P9e2b4P9svAxapOQdYRh9Cjc\nN3eUyQTslMVPE9zsWIJmQbIlDk18X246Izo353UI7mmJ8WRAoNE="
+  - secure: "21rODZvNQ5098ri8Wdw1AE6Z3i7N0bPekrUo2IqsVaPtvfMMYPNk4XATHNkF\n4jGIOB8wf8sf2kvuvNXLkDVRmSfm0Wg/g3gkh2s1MHOsfBiygFdC6fKAAqwG\nbU52FSG2iaeNgQb3UOi/uMnIJ0uvQoRDpLPyr2Doirb9WiZUZ6Q="
+  - secure: "TviXga8biMJJepz0X/fd8nxQ6ONii/gcE5UXcGqVOXHlSskIHDacMnY3/PZc\nFzvE60FnaRUjtqTqoA7jySo73xBlBAM5cJyOOEnxHTv4pF88Ka0JLeYTfZA6\n0CuraiSagV6tshBruKmNegYxfU1RjvEHAHCquy/WyyuAaMt3GXs="
  matrix:
   # - GEN_JSB=YES
   - PLATFORM=linux DEBUG=1
