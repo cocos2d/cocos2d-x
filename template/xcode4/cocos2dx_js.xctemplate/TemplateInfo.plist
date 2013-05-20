@@ -493,7 +493,7 @@
 				<key>USER_HEADER_SEARCH_PATHS</key>
 				<string>&quot;___PACKAGENAME___/libs/Chipmunk/include/chipmunk&quot; &quot;___PACKAGENAME___/libs/javascript/spidermonkey-ios/include&quot;</string>
 				<key>OTHER_LDFLAGS</key>
-				<string>-lxml2 -lsqlite3 -lz -ljs_static</string>
+				<string>-lxml2 -lsqlite3 -lz -ljs_static -lcurl</string>
 			</dict>
 		</dict>
 	</array>
