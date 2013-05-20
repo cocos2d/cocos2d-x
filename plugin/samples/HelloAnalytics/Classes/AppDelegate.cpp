@@ -86,6 +86,10 @@ bool AppDelegate::applicationDidFinishLaunching()
     g_pAnalytics->setDebugMode(true);
     g_pAnalytics->startSession(s_strAppKey.c_str());
     g_pAnalytics->setCaptureUncaughtException(true);
+    g_pAnalytics->setSessionContinueMillis(10000);
+
+    const char* sdkVer = g_pAnalytics->getSDKVersion();
+    CCLog("SDK version : %s", sdkVer);
 
     AnalyticsUmeng* pUmeng = dynamic_cast<AnalyticsUmeng*>(g_pAnalytics);
     AnalyticsFlurry* pFlurry = dynamic_cast<AnalyticsFlurry*>(g_pAnalytics);
@@ -112,7 +116,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     pDirector->setOpenGLView(CCEGLView::sharedOpenGLView());
 
     // turn on display FPS
-    pDirector->setDisplayStats(true);
+    //pDirector->setDisplayStats(true);
 
     // set FPS. the default value is 1.0/60 if you don't call this
     pDirector->setAnimationInterval(1.0 / 60);

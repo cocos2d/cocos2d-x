@@ -568,6 +568,7 @@ JSBool js_pluginx_umeng_AnalyticsUmeng_setDebugMode(JSContext *cx, uint32_t argc
 extern JSObject *jsb_ProtocolAnalytics_prototype;
 
 void js_pluginx_umeng_AnalyticsUmeng_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOGINFO("jsbindings: finalizing JS object %p (AnalyticsUmeng)", obj);
     js_proxy_t* nproxy;
     js_proxy_t* jsproxy;
     JS_GET_NATIVE_PROXY(jsproxy, obj);

@@ -283,6 +283,16 @@ public:
     virtual std::string subtitle();
 };
 
+class TTFFontShadowAndStroke : public AtlasDemo
+{
+public:
+    TTFFontShadowAndStroke();
+    
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
+
 class Issue1343 : public AtlasDemo
 {
 public:

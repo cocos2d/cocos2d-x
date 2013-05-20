@@ -31,10 +31,10 @@ require "luaScript/CocosDenshionTest/CocosDenshionTest"
 require "luaScript/EffectsAdvancedTest/EffectsAdvancedTest"
 require "luaScript/UserDefaultTest/UserDefaultTest"
 require "luaScript/CurrentLanguageTest/CurrentLanguageTest"
+require "luaScript/BugsTest/BugsTest"
 require "luaScript/ExtensionTest/ExtensionTest"
 require "luaScript/AccelerometerTest/AccelerometerTest"
 require "luaScript/KeypadTest/KeypadTest"
-------------------------
 
 
 local LINE_SPACE = 40
@@ -77,11 +77,11 @@ local _allTests = {
     { isSupported = true,  name = "Accelerometer"          , create_func=             AccelerometerMain  },
     { isSupported = true,  name = "KeypadTest"             , create_func=                KeypadTestMain  },
     { isSupported = true,  name = "CocosDenshionTest"      , create_func   =         CocosDenshionTestMain  },
-    { isSupported = false,  name = "PerformanceTest"        , create_func=           PerformanceTestMain  },
+    { isSupported = true,  name = "PerformanceTest"        , create_func=           PerformanceTestMain  },
     { isSupported = true,  name = "ZwoptexTest"            , create_func   =               ZwoptexTestMain  },
     { isSupported = false,  name = "CurlTest"               , create_func=                  CurlTestMain  },
     { isSupported = true,  name = "UserDefaultTest"        , create_func=           UserDefaultTestMain  },
-    { isSupported = false,  name = "BugsTest"               , create_func=              BugsTestMain      },
+    { isSupported = true,  name = "BugsTest"               , create_func=              BugsTestMain      },
     { isSupported = true,  name = "FontTest"               , create_func   =              FontTestMain      },
     { isSupported = true,  name = "CurrentLanguageTest"    , create_func=   CurrentLanguageTestMain      },
     { isSupported = false,  name = "TextureCacheTest"       , create_func=      TextureCacheTestMain      },
