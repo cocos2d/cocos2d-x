@@ -425,6 +425,9 @@ Developers:
 
     Xander84
         Fixing a bug in CCBValue::getByteValue.
+        
+    smshuja
+        Fixing a bug that pointQueryFirst returns invalid Shape when a shape is not found in JSB.
 
 Retired Core Developers:
     WenSheng Yang
