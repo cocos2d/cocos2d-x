@@ -219,7 +219,9 @@ const char *CCConfiguration::getCString( const char *key ) const
 	if( ret )
 		if( CCString *str=dynamic_cast<CCString*>(ret) )
 			return str->getCString();
-   return NULL;
+
+	// XXX: Should it throw an exception ?
+	return NULL;
 }
 
 /** returns the value of a given key as a boolean */
@@ -229,7 +231,9 @@ bool CCConfiguration::getBool( const char *key ) const
 	if( ret )
 		if( CCBool *obj=dynamic_cast<CCBool*>(ret) )
 			return obj->getValue();
-	return NULL;
+
+	// XXX: Should it throw an exception ?
+	return false;
 }
 
 /** returns the value of a given key as a double */
@@ -244,7 +248,8 @@ double CCConfiguration::getNumber( const char *key ) const
 			return obj->getValue();
 	}
 
-	return NULL;
+	// XXX: Should it throw an exception ?
+	return 0.0;
 }
 
 ccConfigurationType CCConfiguration::getType( const char *key ) const
