@@ -142,6 +142,9 @@
 		1A82F5F8169AC91400C4B13A /* LocalStorage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A82F5F5169AC91400C4B13A /* LocalStorage.cpp */; };
 		1A82F5F9169AC91400C4B13A /* LocalStorageAndroid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A82F5F7169AC91400C4B13A /* LocalStorageAndroid.cpp */; };
 		1A82F5FB169AC92500C4B13A /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A82F5FA169AC92500C4B13A /* libsqlite3.dylib */; };
+		1A96A4EB174A32C5008653A9 /* XMLHTTPRequest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A96A4E9174A32C5008653A9 /* XMLHTTPRequest.cpp */; };
+		1A96A4F1174A3369008653A9 /* HttpClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A96A4ED174A3369008653A9 /* HttpClient.cpp */; };
+		1A96A4F3174A3432008653A9 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A96A4F2174A3432008653A9 /* libcurl.a */; };
 		1AA51AE816F71BA3000FDF05 /* jsb_chipmunk_constants.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AA51AE516F71BA3000FDF05 /* jsb_chipmunk_constants.js */; };
 		1AA51AE916F71BA3000FDF05 /* jsb_cocos2d_constants.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AA51AE616F71BA3000FDF05 /* jsb_cocos2d_constants.js */; };
 		1AA51AEA16F71BA3000FDF05 /* jsb_opengl_constants.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AA51AE716F71BA3000FDF05 /* jsb_opengl_constants.js */; };
@@ -452,6 +455,14 @@
 		1A82F5F6169AC91400C4B13A /* LocalStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalStorage.h; sourceTree = "<group>"; };
 		1A82F5F7169AC91400C4B13A /* LocalStorageAndroid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LocalStorageAndroid.cpp; sourceTree = "<group>"; };
 		1A82F5FA169AC92500C4B13A /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		1A96A4E8174A32C5008653A9 /* XMLHTTPHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLHTTPHelper.h; sourceTree = "<group>"; };
+		1A96A4E9174A32C5008653A9 /* XMLHTTPRequest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XMLHTTPRequest.cpp; sourceTree = "<group>"; };
+		1A96A4EA174A32C5008653A9 /* XMLHTTPRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLHTTPRequest.h; sourceTree = "<group>"; };
+		1A96A4ED174A3369008653A9 /* HttpClient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HttpClient.cpp; sourceTree = "<group>"; };
+		1A96A4EE174A3369008653A9 /* HttpClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpClient.h; sourceTree = "<group>"; };
+		1A96A4EF174A3369008653A9 /* HttpRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpRequest.h; sourceTree = "<group>"; };
+		1A96A4F0174A3369008653A9 /* HttpResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpResponse.h; sourceTree = "<group>"; };
+		1A96A4F2174A3432008653A9 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../../../cocos2dx/platform/third_party/ios/libraries/libcurl.a; sourceTree = "<group>"; };
 		1AA51AE516F71BA3000FDF05 /* jsb_chipmunk_constants.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_chipmunk_constants.js; sourceTree = "<group>"; };
 		1AA51AE616F71BA3000FDF05 /* jsb_cocos2d_constants.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_cocos2d_constants.js; sourceTree = "<group>"; };
 		1AA51AE716F71BA3000FDF05 /* jsb_opengl_constants.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_opengl_constants.js; sourceTree = "<group>"; };
@@ -500,6 +511,7 @@
 				A922754C1517C094001B78AA /* UIKit.framework in Frameworks */,
 				A922754E1517C094001B78AA /* Foundation.framework in Frameworks */,
 				A92275501517C094001B78AA /* CoreGraphics.framework in Frameworks */,
+				1A96A4F3174A3432008653A9 /* libcurl.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -571,6 +583,9 @@
 				15A3D31A1682F0A0002FB0C5 /* ScriptingCore.cpp */,
 				15A3D31B1682F0A0002FB0C5 /* ScriptingCore.h */,
 				15A3D31C1682F0A0002FB0C5 /* spidermonkey_specifics.h */,
+				1A96A4E8174A32C5008653A9 /* XMLHTTPHelper.h */,
+				1A96A4E9174A32C5008653A9 /* XMLHTTPRequest.cpp */,
+				1A96A4EA174A32C5008653A9 /* XMLHTTPRequest.h */,
 			);
 			name = bindings;
 			path = ../../../scripting/javascript/bindings;
@@ -752,11 +767,12 @@
 		15A3D4A91682F1A4002FB0C5 /* extensions */ = {
 			isa = PBXGroup;
 			children = (
+				15A3D4AB1682F1A4002FB0C5 /* CCBReader */,
 				15A3D4E01682F1A4002FB0C5 /* cocos-ext.h */,
 				15A3D4E11682F1A4002FB0C5 /* ExtensionMacros.h */,
-				15A3D4AB1682F1A4002FB0C5 /* CCBReader */,
 				15A3D4E21682F1A4002FB0C5 /* GUI */,
 				1A82F5F4169AC91400C4B13A /* LocalStorage */,
+				1A96A4EC174A3369008653A9 /* network */,
 				15A3D5151682F1A4002FB0C5 /* physics_nodes */,
 				1A40E76F1727C102006D4861 /* spine */,
 			);
@@ -959,6 +975,17 @@
 			path = LocalStorage;
 			sourceTree = "<group>";
 		};
+		1A96A4EC174A3369008653A9 /* network */ = {
+			isa = PBXGroup;
+			children = (
+				1A96A4ED174A3369008653A9 /* HttpClient.cpp */,
+				1A96A4EE174A3369008653A9 /* HttpClient.h */,
+				1A96A4EF174A3369008653A9 /* HttpRequest.h */,
+				1A96A4F0174A3369008653A9 /* HttpResponse.h */,
+			);
+			path = network;
+			sourceTree = "<group>";
+		};
 		A92275321517C094001B78AA = {
 			isa = PBXGroup;
 			children = (
@@ -986,6 +1013,7 @@
 		A92275401517C094001B78AA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1A96A4F2174A3432008653A9 /* libcurl.a */,
 				1A82F5FA169AC92500C4B13A /* libsqlite3.dylib */,
 				D454520B156E22BD00887EB5 /* libz.dylib */,
 				D4545209156E22B400887EB5 /* libxml2.dylib */,
@@ -1252,6 +1280,8 @@
 				1A40E7B11727C3DB006D4861 /* jsb_opengl_manual.cpp in Sources */,
 				1A40E7B21727C3DB006D4861 /* jsb_opengl_registration.cpp in Sources */,
 				1A40E7B51727C427006D4861 /* js_bindings_opengl.cpp in Sources */,
+				1A96A4EB174A32C5008653A9 /* XMLHTTPRequest.cpp in Sources */,
+				1A96A4F1174A3369008653A9 /* HttpClient.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1340,6 +1370,7 @@
 				HEADER_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../../cocos2dx\"",
 					"\"$(SRCROOT)/../../../cocos2dx/kazmath/include\"",
+					"$(SRCROOT)/../../../cocos2dx/platform/third_party/ios",
 					"\"$(SRCROOT)/../../../CocosDenshion/include\"",
 					"$(SRCROOT)/../../../cocos2dx/include",
 					"$(SRCROOT)/../../../cocos2dx/platform/ios",
@@ -1350,7 +1381,10 @@
 				);
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
-				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../../scripting/javascript/spidermonkey-ios/lib\"";
+				LIBRARY_SEARCH_PATHS = (
+					"\"$(SRCROOT)/../../../scripting/javascript/spidermonkey-ios/lib\"",
+					"\"$(SRCROOT)/../../../cocos2dx/platform/third_party/ios/libraries\"",
+				);
 				OTHER_LDFLAGS = (
 					"-lxml2",
 					"-lz",
@@ -1381,6 +1415,7 @@
 				HEADER_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../../cocos2dx\"",
 					"\"$(SRCROOT)/../../../cocos2dx/kazmath/include\"",
+					"$(SRCROOT)/../../../cocos2dx/platform/third_party/ios",
 					"\"$(SRCROOT)/../../../CocosDenshion/include\"",
 					"$(SRCROOT)/../../../cocos2dx/include",
 					"$(SRCROOT)/../../../cocos2dx/platform/ios",
@@ -1391,7 +1426,10 @@
 				);
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
-				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../../scripting/javascript/spidermonkey-ios/lib\"";
+				LIBRARY_SEARCH_PATHS = (
+					"\"$(SRCROOT)/../../../scripting/javascript/spidermonkey-ios/lib\"",
+					"\"$(SRCROOT)/../../../cocos2dx/platform/third_party/ios/libraries\"",
+				);
 				OTHER_LDFLAGS = (
 					"-lxml2",
 					"-lz",
