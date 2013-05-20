@@ -10,6 +10,3 @@
 [submodule "external/emscripten"]
 	path = external/emscripten
 	url = https://github.com/kripken/emscripten.git
-[submodule "external/parson"]
-	path = external/parson
-	url = git://github.com/kgabis/parson.git
