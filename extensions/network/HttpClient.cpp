@@ -59,7 +59,7 @@ static char s_errorBuffer[CURL_ERROR_SIZE];
 typedef size_t (*write_callback)(void *ptr, size_t size, size_t nmemb, void *stream);
 
 // Callback function used by libcurl for collect response data
-size_t writeData(void *ptr, size_t size, size_t nmemb, void *stream)
+static size_t writeData(void *ptr, size_t size, size_t nmemb, void *stream)
 {
     std::vector<char> *recvBuffer = (std::vector<char>*)stream;
     size_t sizes = size * nmemb;
@@ -72,7 +72,7 @@ size_t writeData(void *ptr, size_t size, size_t nmemb, void *stream)
 }
 
 // Callback function used by libcurl for collect header data
-size_t writeHeaderData(void *ptr, size_t size, size_t nmemb, void *stream)
+static size_t writeHeaderData(void *ptr, size_t size, size_t nmemb, void *stream)
 {
     std::vector<char> *recvBuffer = (std::vector<char>*)stream;
     size_t sizes = size * nmemb;
@@ -85,12 +85,10 @@ size_t writeHeaderData(void *ptr, size_t size, size_t nmemb, void *stream)
 }
 
 
-// Prototypes
-bool configureCURL(CURL *handle);
-int processGetTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *errorCode, write_callback headerCallback, void *headerStream);
-int processPostTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *errorCode, write_callback headerCallback, void *headerStream);
-int processPutTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *errorCode, write_callback headerCallback, void *headerStream);
-int processDeleteTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *errorCode, write_callback headerCallback, void *headerStream);
+static int processGetTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *errorCode, write_callback headerCallback, void *headerStream);
+static int processPostTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *errorCode, write_callback headerCallback, void *headerStream);
+static int processPutTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *errorCode, write_callback headerCallback, void *headerStream);
+static int processDeleteTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *errorCode, write_callback headerCallback, void *headerStream);
 // int processDownloadTask(HttpRequest *task, write_callback callback, void *stream, int32_t *errorCode);
 
 
@@ -230,7 +228,7 @@ static void* networkThread(void *data)
 }
 
 //Configure curl's timeout property
-bool configureCURL(CURL *handle)
+static bool configureCURL(CURL *handle)
 {
     if (!handle) {
         return false;
@@ -332,7 +330,7 @@ public:
 };
 
 //Process Get Request
-int processGetTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *responseCode, write_callback headerCallback, void *headerStream)
+static int processGetTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *responseCode, write_callback headerCallback, void *headerStream)
 {
     CURLRaii curl;
     bool ok = curl.init(request, callback, stream, headerCallback, headerStream)
@@ -342,7 +340,7 @@ int processGetTask(CCHttpRequest *request, write_callback callback, void *stream
 }
 
 //Process POST Request
-int processPostTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *responseCode, write_callback headerCallback, void *headerStream)
+static int processPostTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *responseCode, write_callback headerCallback, void *headerStream)
 {
     CURLRaii curl;
     bool ok = curl.init(request, callback, stream, headerCallback, headerStream)
@@ -354,7 +352,7 @@ int processPostTask(CCHttpRequest *request, write_callback callback, void *strea
 }
 
 //Process PUT Request
-int processPutTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *responseCode, write_callback headerCallback, void *headerStream)
+static int processPutTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *responseCode, write_callback headerCallback, void *headerStream)
 {
     CURLRaii curl;
     bool ok = curl.init(request, callback, stream, headerCallback, headerStream)
@@ -366,7 +364,7 @@ int processPutTask(CCHttpRequest *request, write_callback callback, void *stream
 }
 
 //Process DELETE Request
-int processDeleteTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *responseCode, write_callback headerCallback, void *headerStream)
+static int processDeleteTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *responseCode, write_callback headerCallback, void *headerStream)
 {
     CURLRaii curl;
     bool ok = curl.init(request, callback, stream, headerCallback, headerStream)
