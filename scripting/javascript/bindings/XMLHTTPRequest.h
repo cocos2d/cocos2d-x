@@ -60,7 +60,7 @@ class MinXmlHttpRequest : public cocos2d::CCObject
 	std::string type;
 	std::stringstream data;
 	size_t dataSize;
-	js::RootedObject onreadystateCallback;
+	JSObject* onreadystateCallback;
 	int readyState;
 	int status;
     std::string statusText;
@@ -104,7 +104,7 @@ public:
     JS_BINDED_FUNC(MinXmlHttpRequest, setRequestHeader);
     JS_BINDED_FUNC(MinXmlHttpRequest, overrideMimeType);
 
-    void handle_requestResponse(MinXmlHttpRequest *sender, cocos2d::extension::CCHttpResponse *response);
+    void handle_requestResponse(cocos2d::extension::CCHttpClient *sender, cocos2d::extension::CCHttpResponse *response);
 
 };
 

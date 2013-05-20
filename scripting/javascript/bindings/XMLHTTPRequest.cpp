@@ -31,9 +31,7 @@
 
 using namespace std;
 
-#pragma mark - MinXmlHttpRequest
-
-JSContext *cx;
+//#pragma mark - MinXmlHttpRequest
 
 /**
  *  @brief Implementation for header retrieving.
@@ -163,11 +161,11 @@ void MinXmlHttpRequest::_setHttpRequestHeader() {
  *  @param sender   Object which initialized callback
  *  @param respone  Response object
  */
-void MinXmlHttpRequest::handle_requestResponse(MinXmlHttpRequest *sender, cocos2d::extension::CCHttpResponse *response) {
+void MinXmlHttpRequest::handle_requestResponse(cocos2d::extension::CCHttpClient *sender, cocos2d::extension::CCHttpResponse *response) {
 
     if (0 != strlen(response->getHttpRequest()->getTag()))
     {
-        CCLog("%s completed", response->getHttpRequest()->getTag());
+        CCLOG("%s completed", response->getHttpRequest()->getTag());
     }
     
     int statusCode = response->getResponseCode();
@@ -176,8 +174,8 @@ void MinXmlHttpRequest::handle_requestResponse(MinXmlHttpRequest *sender, cocos2
     
     if (!response->isSucceed())
     {
-        CCLog("response failed");
-        CCLog("error buffer: %s", response->getErrorBuffer());
+        CCLOG("response failed");
+        CCLOG("error buffer: %s", response->getErrorBuffer());
         return;
     }
     
@@ -240,7 +238,7 @@ void MinXmlHttpRequest::handle_requestResponse(MinXmlHttpRequest *sender, cocos2
  */
 void MinXmlHttpRequest::_sendRequest(JSContext *cx) {
     
-    cc_request->setResponseCallback(this, cocos2d::extension::SEL_HttpResponse(&MinXmlHttpRequest::handle_requestResponse));
+    cc_request->setResponseCallback(this, httpresponse_selector(MinXmlHttpRequest::handle_requestResponse));
     cocos2d::extension::CCHttpClient::getInstance()->send(cc_request);
     cc_request->release();
 
@@ -250,14 +248,12 @@ void MinXmlHttpRequest::_sendRequest(JSContext *cx) {
  * @brief  Constructor initializes cchttprequest and stuff
  *
  */
-MinXmlHttpRequest::MinXmlHttpRequest() : onreadystateCallback(cx, NULL), isNetwork(true) {
+MinXmlHttpRequest::MinXmlHttpRequest() : onreadystateCallback(NULL), isNetwork(true) {
     
     http_header.clear();
     request_header.clear();
-    
+    cx = ScriptingCore::getInstance()->getGlobalContext();
     cc_request = new cocos2d::extension::CCHttpRequest();
-    
-        
 }
 
 /**
@@ -269,8 +265,14 @@ MinXmlHttpRequest::~MinXmlHttpRequest() {
     http_header.clear();
     request_header.clear();
 
+    if (onreadystateCallback != NULL)
+    {
+        JS_RemoveObjectRoot(cx, &onreadystateCallback);
+    }
+    
     if (cc_request) {
-        cc_request->release();
+        // We don't need to release cc_request here since it will be released in the http callback.
+//        cc_request->release();
     }
 
 }
@@ -288,6 +290,8 @@ JS_BINDED_CLASS_GLUE_IMPL(MinXmlHttpRequest);
 JS_BINDED_CONSTRUCTOR_IMPL(MinXmlHttpRequest)
 {
     MinXmlHttpRequest* req = new MinXmlHttpRequest();
+    req->autorelease();
+    
     js_proxy_t *p;
     jsval out;
     
@@ -302,7 +306,6 @@ JS_BINDED_CONSTRUCTOR_IMPL(MinXmlHttpRequest)
     JS_NEW_PROXY(p, req, obj);
     
     JS_AddNamedObjectRoot(cx, &p->obj, "XMLHttpRequest");
-    
     return JS_TRUE;
 }
 
@@ -337,6 +340,7 @@ JS_BINDED_PROP_SET_IMPL(MinXmlHttpRequest, onreadystatechange)
     jsval callback = vp.get();
     if (callback != JSVAL_NULL) {
         onreadystateCallback = JSVAL_TO_OBJECT(callback);
+        JS_AddNamedObjectRoot(cx, &onreadystateCallback, "onreadystateCallback");
     }
     return JS_TRUE;
 }
@@ -474,7 +478,6 @@ JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, status)
  */
 JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, statusText)
 {
-    
     JSString* str = JS_NewStringCopyZ(cx, statusText.c_str());//, dataSize);
     
     if (str) {
@@ -484,7 +487,6 @@ JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, statusText)
         JS_ReportError(cx, "Error trying to create JSString from data");
         return JS_FALSE;
     }
-    
 }
 
 /**
@@ -752,29 +754,15 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, setRequestHeader)
  */
 JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, overrideMimeType)
 {
-    
     return JS_TRUE;
-    
 }
 
 /**
  *  @brief destructor for Javascript
  *
  */
-void basic_object_finalize(JSFreeOp *freeOp, JSObject *obj) {
-    JSBindedObject* native = dynamic_cast<JSBindedObject*>((JSBindedObject*)JS_GetPrivate(obj));
-	if (native) {
-		delete native;
-	}
-    return;
-}
-
-/**
- * @brief- retrieve the global Javascript Context object.
- * @returns JSCOntext cx
- */
-JSContext* getGlobalContext() {
-	return cx;
+static void basic_object_finalize(JSFreeOp *freeOp, JSObject *obj) {
+    CCLOG("basic_object_finalize %p ...", obj);
 }
 
 /**
