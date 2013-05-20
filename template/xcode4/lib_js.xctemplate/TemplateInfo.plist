@@ -759,6 +759,43 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
+		<key>libs/javascript/bindings/XMLHTTPHelper.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>javascript</string>
+				<string>bindings</string>
+			</array>
+			<key>Path</key>
+			<string>libs/javascript/bindings/XMLHTTPHelper.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/javascript/bindings/XMLHTTPRequest.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>javascript</string>
+				<string>bindings</string>
+			</array>
+			<key>Path</key>
+			<string>libs/javascript/bindings/XMLHTTPRequest.cpp</string>
+		</dict>
+		<key>libs/javascript/bindings/XMLHTTPRequest.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>javascript</string>
+				<string>bindings</string>
+			</array>
+			<key>Path</key>
+			<string>libs/javascript/bindings/XMLHTTPRequest.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
 	</dict>
 	<key>Nodes</key>
 	<array>
@@ -822,6 +859,9 @@
 		<string>libs/javascript/bindings/ScriptingCore.cpp</string>
 		<string>libs/javascript/bindings/ScriptingCore.h</string>
 		<string>libs/javascript/bindings/spidermonkey_specifics.h</string>
+		<string>libs/javascript/bindings/XMLHTTPHelper.h</string>
+		<string>libs/javascript/bindings/XMLHTTPRequest.cpp</string>
+		<string>libs/javascript/bindings/XMLHTTPRequest.h</string>
 	</array>
 </dict>
 </plist>
