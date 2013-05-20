@@ -78,7 +78,7 @@ AssetsManager::AssetsManager(const char* packageUrl/* =NULL */, const char* vers
 , _versionFileUrl(versionFileUrl)
 , _downloadedVersion("")
 , _curl(NULL)
-, _tid(0)
+, _tid(NULL)
 , _connectionTimeout(0)
 , _delegate(NULL)
 {
@@ -186,7 +186,11 @@ void* assetsManagerDownloadAndUncompress(void *data)
         self->_schedule->sendMessage(msg2);
     } while (0);
     
-    self->_tid = 0;
+    if (self->_tid)
+    {
+        delete self->_tid;
+        self->_tid = NULL;
+    }
     
     return NULL;
 }
@@ -211,7 +215,8 @@ void AssetsManager::update()
     // Is package already downloaded?
     _downloadedVersion = CCUserDefault::sharedUserDefault()->getStringForKey(KEY_OF_DOWNLOADED_VERSION);
     
-    pthread_create(&_tid, NULL, assetsManagerDownloadAndUncompress, this);
+    _tid = new pthread_t();
+    pthread_create(&(*_tid), NULL, assetsManagerDownloadAndUncompress, this);
 }
 
 bool AssetsManager::uncompress()
