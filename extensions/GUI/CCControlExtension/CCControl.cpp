@@ -79,7 +79,7 @@ bool CCControl::init()
         // Initialise the tables
         m_pDispatchTable = new CCDictionary(); 
         // Initialise the mapHandleOfControlEvents
-        m_mapHandleOfControlEvents.clear();
+        m_mapHandleOfControlEvent.clear();
         
         return true;
     }
@@ -130,7 +130,7 @@ void CCControl::sendActionsForControlEvents(CCControlEvent controlEvents)
             //Call ScriptFunc
             if (kScriptTypeNone != m_eScriptType)
             {
-                int nHandler = this->getHandleOfControlEvents(controlEvents);
+                int nHandler = this->getHandleOfControlEvent(controlEvents);
                 if (-1 != nHandler) {
                     CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEvent(nHandler,"",this);
                 }
@@ -336,27 +336,27 @@ bool CCControl::hasVisibleParents()
     return true;
 }
 
-void CCControl::addHandleOfControlEvents(int nFunID,CCControlEvent controlEvents)
+void CCControl::addHandleOfControlEvent(int nFunID,CCControlEvent controlEvent)
 {
-    m_mapHandleOfControlEvents[controlEvents] = nFunID;
+    m_mapHandleOfControlEvent[controlEvent] = nFunID;
 }
 
-void CCControl::removeHandleOfControlEvents(CCControlEvent controlEvents)
+void CCControl::removeHandleOfControlEvent(CCControlEvent controlEvent)
 {
-    std::map<int,int>::iterator Iter = m_mapHandleOfControlEvents.find(controlEvents);
+    std::map<int,int>::iterator Iter = m_mapHandleOfControlEvent.find(controlEvent);
     
-    if (m_mapHandleOfControlEvents.end() != Iter)
+    if (m_mapHandleOfControlEvent.end() != Iter)
     {
-        m_mapHandleOfControlEvents.erase(Iter);
+        m_mapHandleOfControlEvent.erase(Iter);
     }
     
 }
 
-int  CCControl::getHandleOfControlEvents(CCControlEvent controlEvents)
+int  CCControl::getHandleOfControlEvent(CCControlEvent controlEvent)
 {
-    std::map<int,int>::iterator Iter = m_mapHandleOfControlEvents.find(controlEvents);
+    std::map<int,int>::iterator Iter = m_mapHandleOfControlEvent.find(controlEvent);
     
-    if (m_mapHandleOfControlEvents.end() != Iter)
+    if (m_mapHandleOfControlEvent.end() != Iter)
         return Iter->second;
     
     return -1;

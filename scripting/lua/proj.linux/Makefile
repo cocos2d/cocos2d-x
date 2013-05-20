@@ -1,7 +1,7 @@
 TARGET = liblua.so
 
 INCLUDES += -I.. -I../lua -I../tolua \
-        -I../Classes -I../../../CocosDenshion/include
+        -I../Classes -I../../../CocosDenshion/include -I../../../extensions
 
 SOURCES = ../lua/lapi.o \
           ../lua/lauxlib.c \

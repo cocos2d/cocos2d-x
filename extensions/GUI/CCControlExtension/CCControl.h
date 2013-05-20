@@ -255,12 +255,12 @@ protected:
 
     static CCControl* create();
 public:
-    void addHandleOfControlEvents(int nFunID,CCControlEvent controlEvents);
-    void removeHandleOfControlEvents(CCControlEvent controlEvents);
+    void addHandleOfControlEvent(int nFunID,CCControlEvent controlEvent);
+    void removeHandleOfControlEvent(CCControlEvent controlEvent);
 private:
-    int  getHandleOfControlEvents(CCControlEvent controlEvents);
+    int  getHandleOfControlEvent(CCControlEvent controlEvent);
 private:
-    std::map<int,int> m_mapHandleOfControlEvents;
+    std::map<int,int> m_mapHandleOfControlEvent;
 };
 
 // end of GUI group

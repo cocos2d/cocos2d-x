@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.92 on Fri May 17 11:45:42 2013.
+** Generated automatically by tolua++-1.0.92 on Mon May 20 10:46:46 2013.
 */
 
 /****************************************************************************
@@ -56972,9 +56972,9 @@ static int tolua_Cocos2d_CCControl_isTouchInside00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: addHandleOfControlEvents of class  CCControl */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCControl_addHandleOfControlEvents00
-static int tolua_Cocos2d_CCControl_addHandleOfControlEvents00(lua_State* tolua_S)
+/* method: addHandleOfControlEvent of class  CCControl */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCControl_addHandleOfControlEvent00
+static int tolua_Cocos2d_CCControl_addHandleOfControlEvent00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -56992,24 +56992,24 @@ static int tolua_Cocos2d_CCControl_addHandleOfControlEvents00(lua_State* tolua_S
   LUA_FUNCTION nFunID = (  toluafix_ref_function(tolua_S,2,0));
   CCControlEvent controlEvents = ((CCControlEvent) (int)  tolua_tonumber(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'addHandleOfControlEvents'", NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'addHandleOfControlEvent'", NULL);
 #endif
   {
-   self->addHandleOfControlEvents(nFunID,controlEvents);
+   self->addHandleOfControlEvent(nFunID,controlEvents);
   }
  }
  return 0;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'addHandleOfControlEvents'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'addHandleOfControlEvent'.",&tolua_err);
  return 0;
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: removeHandleOfControlEvents of class  CCControl */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCControl_removeHandleOfControlEvents00
-static int tolua_Cocos2d_CCControl_removeHandleOfControlEvents00(lua_State* tolua_S)
+/* method: removeHandleOfControlEvent of class  CCControl */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCControl_removeHandleOfControlEvent00
+static int tolua_Cocos2d_CCControl_removeHandleOfControlEvent00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -57025,16 +57025,16 @@ static int tolua_Cocos2d_CCControl_removeHandleOfControlEvents00(lua_State* tolu
   CCControl* self = (CCControl*)  tolua_tousertype(tolua_S,1,0);
   CCControlEvent controlEvents = ((CCControlEvent) (int)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'removeHandleOfControlEvents'", NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'removeHandleOfControlEvent'", NULL);
 #endif
   {
-   self->removeHandleOfControlEvents(controlEvents);
+   self->removeHandleOfControlEvent(controlEvents);
   }
  }
  return 0;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'removeHandleOfControlEvents'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'removeHandleOfControlEvent'.",&tolua_err);
  return 0;
 #endif
 }
@@ -65991,8 +65991,8 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"removeTargetWithActionForControlEvents",tolua_Cocos2d_CCControl_removeTargetWithActionForControlEvents00);
    tolua_function(tolua_S,"getTouchLocation",tolua_Cocos2d_CCControl_getTouchLocation00);
    tolua_function(tolua_S,"isTouchInside",tolua_Cocos2d_CCControl_isTouchInside00);
-   tolua_function(tolua_S,"addHandleOfControlEvents",tolua_Cocos2d_CCControl_addHandleOfControlEvents00);
-   tolua_function(tolua_S,"removeHandleOfControlEvents",tolua_Cocos2d_CCControl_removeHandleOfControlEvents00);
+   tolua_function(tolua_S,"addHandleOfControlEvent",tolua_Cocos2d_CCControl_addHandleOfControlEvent00);
+   tolua_function(tolua_S,"removeHandleOfControlEvent",tolua_Cocos2d_CCControl_removeHandleOfControlEvent00);
   tolua_endmodule(tolua_S);
   tolua_constant(tolua_S,"CCControlButtonMarginLR",CCControlButtonMarginLR);
   tolua_constant(tolua_S,"CCControlButtonMarginTB",CCControlButtonMarginTB);

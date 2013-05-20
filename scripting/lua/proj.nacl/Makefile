@@ -1,4 +1,4 @@
-INCLUDES = -I.. -I../lua
+INCLUDES = -I.. -I../lua -I../../../extensions
 
 SOURCES = ../lua/lapi.c \
           ../lua/lauxlib.c \
