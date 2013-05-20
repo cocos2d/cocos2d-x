@@ -22,10 +22,16 @@ SEL_CCControlHandler TimelineCallbackTestLayer::onResolveCCBCCControlSelector(CC
     return NULL;
 }
 
-SEL_CallFuncN TimelineCallbackTestLayer::onResolveCCBCCCallFuncSelector(CCObject * pTarget, const char* pSelectorName)
+CCCallFunc* TimelineCallbackTestLayer::onResolveCCBCCCallFuncSelector(CCObject * pTarget, const char* pSelectorName)
 {
-    CCB_SELECTORRESOLVER_CALLFUNC_GLUE(this, "onCallback1", TimelineCallbackTestLayer::onCallback1);
-    CCB_SELECTORRESOLVER_CALLFUNC_GLUE(this, "onCallback2", TimelineCallbackTestLayer::onCallback2);
+    if(pTarget == this && strcmp(pSelectorName, "onCallback1") == 0)
+    { 
+        return CCCallFuncN::create(pTarget, (SEL_CallFuncN)&TimelineCallbackTestLayer::onCallback1);
+    }
+    if(pTarget == this && strcmp(pSelectorName, "onCallback2") == 0)
+    { 
+        return CCCallFuncN::create(pTarget, (SEL_CallFuncN)&TimelineCallbackTestLayer::onCallback2);
+    }
     return NULL;
 }
 
