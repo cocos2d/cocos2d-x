@@ -3,30 +3,7 @@
 #include <memory>
 #include "jsapi.h"
 
-using namespace std;
-
-void basic_object_finalize(JSFreeOp *freeOp, JSObject *obj);
-JSBool jsNewGlobal(JSContext* cx, unsigned argc, jsval* vp);
-
-typedef JSBool(*js_function)(JSContext* cx, unsigned argc, jsval* vp);
-
-JSContext* getGlobalContext();
-
-void createJSEnvironment();
-void maybeGC();
-
-JSObject* getGlobalObject();
-
-bool runScript(const char *path, JSObject* glob = NULL, JSContext* cx = NULL);
-bool evalString(const char *string, jsval *outVal, const char *filename);
-void addDeferredCallback(JSObject* obj, jsval fval, unsigned argc, jsval* args);
-void executePendingCallbacks();
-
-class JSBindedObject
-{
-};
-
-#pragma mark - Helpful Macros
+//#pragma mark - Helpful Macros
 
 #define JS_BINDED_CLASS_GLUE(klass) \
 static JSClass js_class; \
