@@ -168,6 +168,13 @@ JSAutoCompartment ac(cx, obj)
 #define JSB_INCLUDE_OPENGL 1
 #endif // JSB_INCLUDE_OPENGL
 
+/** @def JSB_INCLUDE_XMLHTTP
+ Whether or not it should include bindings for XmlHttpRequest
+ */
+#ifndef JSB_INCLUDE_XMLHTTP
+#define JSB_INCLUDE_XMLHTTP 1
+#endif // JSB_INCLUDE_XMLHTTP
+
 #ifndef JSB_MAX_STACK_QUOTA
 #define JSB_MAX_STACK_QUOTA 500000
 #endif // JSB_MAX_STACK_QUOTA
