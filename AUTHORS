@@ -428,6 +428,9 @@ Developers:
         
     smshuja
         Fixing a bug that pointQueryFirst returns invalid Shape when a shape is not found in JSB.
+        
+    Carsten Sandtner (casarock)
+        Adding XMLHttpRequest support for JSB.
 
 Retired Core Developers:
     WenSheng Yang
