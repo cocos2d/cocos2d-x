@@ -38,6 +38,24 @@ NS_CC_BEGIN
 class CC_DLL CCRGBAProtocol
 {
 public:
+    /**
+     * Looks through node's children and updates the color. Passes through nodes which don't
+     * implement CCRGBAProtocol
+     *
+     * @param parent The node whose children we want to visit
+     * @param parentColor The displayed color of the parent
+     */
+    static void updateDisplayedColorChildren(CCNode *parent, const ccColor3B &parentColor);
+
+    /**
+     * Looks through node's children and updates the opacity. Passes through nodes which don't
+     * implement CCRGBAProtocol
+     *
+     * @param parent The node whose children we want to visit
+     * @param parentColor The displayed opacity of the parent
+     */
+    static void updateDisplayedOpacityChildren(CCNode *parent, GLubyte parentOpacity);
+
     /** 
      * Changes the color with R,G,B bytes
      *
@@ -124,9 +142,6 @@ public:
      */
     virtual void updateDisplayedOpacity(GLubyte opacity) = 0;
 };
-
-void updateDisplayedColorChildren(CCNode *parent, const ccColor3B &parentColor);
-void updateDisplayedOpacityChildren(CCNode *parent, GLubyte parentOpacity);
 
 /**
  * Specify the blending function according glBlendFunc

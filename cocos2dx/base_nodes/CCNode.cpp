@@ -1315,7 +1315,7 @@ void CCNodeRGBA::setOpacity(GLubyte opacity)
 	}
 }
 
-void updateDisplayedOpacityChildren(CCNode* parent, GLubyte parentOpacity)
+void CCRGBAProtocol::updateDisplayedOpacityChildren(CCNode* parent, GLubyte parentOpacity)
 {
     CCArray *children = parent->getChildren();
     CCObject *obj = NULL;
@@ -1329,7 +1329,7 @@ void updateDisplayedOpacityChildren(CCNode* parent, GLubyte parentOpacity)
         }
         else
         {
-            updateDisplayedOpacityChildren(node, parentOpacity);
+            CCRGBAProtocol::updateDisplayedOpacityChildren(node, parentOpacity);
         }
     }
 }
@@ -1340,7 +1340,7 @@ void CCNodeRGBA::updateDisplayedOpacity(GLubyte parentOpacity)
 	
     if (_cascadeOpacityEnabled)
     {
-        updateDisplayedOpacityChildren(this, _displayedOpacity);
+        CCRGBAProtocol::updateDisplayedOpacityChildren(this, _displayedOpacity);
     }
 }
 
@@ -1381,7 +1381,7 @@ void CCNodeRGBA::setColor(const ccColor3B& color)
 	}
 }
 
-void updateDisplayedColorChildren(CCNode* parent, const ccColor3B& parentColor)
+void CCRGBAProtocol::updateDisplayedColorChildren(CCNode* parent, const ccColor3B& parentColor)
 {
     CCArray *children = parent->getChildren();
     CCObject *obj = NULL;
@@ -1395,7 +1395,7 @@ void updateDisplayedColorChildren(CCNode* parent, const ccColor3B& parentColor)
         }
         else
         {
-            updateDisplayedColorChildren(node, parentColor);
+            CCRGBAProtocol::updateDisplayedColorChildren(node, parentColor);
         }
     }
 }
@@ -1408,7 +1408,7 @@ void CCNodeRGBA::updateDisplayedColor(const ccColor3B& parentColor)
     
     if (_cascadeColorEnabled)
     {
-        updateDisplayedColorChildren(this, _displayedColor);
+        CCRGBAProtocol::updateDisplayedColorChildren(this, _displayedColor);
     }
 }
 
