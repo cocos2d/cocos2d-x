@@ -11,7 +11,7 @@ env:
   - secure: "21rODZvNQ5098ri8Wdw1AE6Z3i7N0bPekrUo2IqsVaPtvfMMYPNk4XATHNkF\n4jGIOB8wf8sf2kvuvNXLkDVRmSfm0Wg/g3gkh2s1MHOsfBiygFdC6fKAAqwG\nbU52FSG2iaeNgQb3UOi/uMnIJ0uvQoRDpLPyr2Doirb9WiZUZ6Q="
   - secure: "TviXga8biMJJepz0X/fd8nxQ6ONii/gcE5UXcGqVOXHlSskIHDacMnY3/PZc\nFzvE60FnaRUjtqTqoA7jySo73xBlBAM5cJyOOEnxHTv4pF88Ka0JLeYTfZA6\n0CuraiSagV6tshBruKmNegYxfU1RjvEHAHCquy/WyyuAaMt3GXs="
  matrix:
-  # - GEN_JSB=YES
+  - GEN_JSB=YES
   - PLATFORM=linux DEBUG=1
   - PLATFORM=nacl DEBUG=1
   - PLATFORM=android
