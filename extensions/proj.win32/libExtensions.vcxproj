@@ -96,6 +96,7 @@
     <ClCompile Include="..\CCBReader\CCBFileLoader.cpp" />
     <ClCompile Include="..\CCBReader\CCBKeyframe.cpp" />
     <ClCompile Include="..\CCBReader\CCBReader.cpp" />
+	<ClCompile Include="..\CCBReader\CCBFile.cpp" />
     <ClCompile Include="..\CCBReader\CCBSequence.cpp" />
     <ClCompile Include="..\CCBReader\CCBSequenceProperty.cpp" />
     <ClCompile Include="..\CCBReader\CCBValue.cpp" />
@@ -165,7 +166,9 @@
     <ClInclude Include="..\CCBReader\CCBFileLoader.h" />
     <ClInclude Include="..\CCBReader\CCBKeyframe.h" />
     <ClInclude Include="..\CCBReader\CCBMemberVariableAssigner.h" />
+	<ClInclude Include="..\CCBReader\CCBNodeWrapper.h" />
     <ClInclude Include="..\CCBReader\CCBReader.h" />
+	<ClInclude Include="..\CCBReader\CCBFile.h" />
     <ClInclude Include="..\CCBReader\CCBSelectorResolver.h" />
     <ClInclude Include="..\CCBReader\CCBSequence.h" />
     <ClInclude Include="..\CCBReader\CCBSequenceProperty.h" />

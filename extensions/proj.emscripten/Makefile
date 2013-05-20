@@ -16,6 +16,7 @@ DEFINES += -D__CC_PLATFORM_IMAGE_CPP__
 SOURCES = ../CCBReader/CCBFileLoader.cpp \
 ../CCBReader/CCMenuItemImageLoader.cpp \
 ../CCBReader/CCBReader.cpp \
+../CCBReader/CCBFile.cpp \
 ../CCBReader/CCMenuItemLoader.cpp \
 ../CCBReader/CCControlButtonLoader.cpp \
 ../CCBReader/CCNodeLoader.cpp \

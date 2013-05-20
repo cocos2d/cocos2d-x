@@ -1,6 +1,7 @@
 EXTENSIONS_SOURCES = ../CCBReader/CCBFileLoader.cpp \
 ../CCBReader/CCMenuItemImageLoader.cpp \
 ../CCBReader/CCBReader.cpp \
+../CCBReader/CCBFile.cpp \
 ../CCBReader/CCMenuItemLoader.cpp \
 ../CCBReader/CCControlButtonLoader.cpp \
 ../CCBReader/CCNodeLoader.cpp \
