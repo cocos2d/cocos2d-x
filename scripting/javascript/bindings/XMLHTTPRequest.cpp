@@ -620,12 +620,12 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, open)
 JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, send)
 {
 
-    JSString *str;
-    char *data;
+    JSString *str = NULL;
+    char *data = NULL;
     
     // Clean up header map. New request, new headers!
     http_header.clear();
-    if (argc == 2) {
+    if (argc == 1) {
         if (!JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "S", &str)) {
             return JS_FALSE;
         };
@@ -633,7 +633,7 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, send)
     }
 
 
-    if (meth.compare("post") == 0 || meth.compare("POST") == 0) {
+    if (data != NULL && meth.compare("post") == 0 || meth.compare("POST") == 0) {
         cc_request->setRequestData(data, strlen(data));
     }
 
