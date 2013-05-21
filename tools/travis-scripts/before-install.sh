@@ -13,10 +13,10 @@ pushd $HOME/bin
 install_android_ndk()
 {
     # Download android ndk
-    if [ "$PLATFORM"x = "android"x ]; then
-        HOST_NAME="linux"
-    elif [ "$PLATFORM"x = "ios"x ]; then
+    if [ "$PLATFORM"x = "ios"x ]; then
         HOST_NAME="darwin"
+    else
+        HOST_NAME="linux"
     fi
     echo "Download android-ndk-r8e-${HOST_NAME}-x86_64.tar.bz2 ..."
     curl -O http://dl.google.com/android/ndk/android-ndk-r8e-${HOST_NAME}-x86_64.tar.bz2
@@ -28,10 +28,10 @@ install_android_ndk()
 
 install_llvm()
 {
-    if [ "$PLATFORM"x = "android"x ]; then
-        HOST_NAME="linux-ubuntu_12.04"
-    elif [ "$PLATFORM"x = "ios"x ]; then
+    if [ "$PLATFORM"x = "ios"x ]; then
         HOST_NAME="apple-darwin11"
+    else
+        HOST_NAME="linux-ubuntu_12.04"
     fi
     # Download llvm3.1
     echo "Download clang+llvm-3.1-x86_64-${HOST_NAME}.tar.gz"
