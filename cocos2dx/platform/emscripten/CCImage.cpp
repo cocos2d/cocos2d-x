@@ -33,9 +33,10 @@
 #include "platform/CCFileUtils.h"
 #include "platform/CCCommon.h"
 #include "CCStdC.h"
-#include "ft2build.h"
-#include FT_FREETYPE_H
 #include <map>
+#include <SDL/SDL.h>
+#include <SDL/SDL_ttf.h>
+#include <net/arpa/inet.h>
 
 #define szFont_kenning 2
 
@@ -55,7 +56,6 @@ class BitmapDC
 public:
     BitmapDC()
     {
-    	libError = FT_Init_FreeType( &library );
 		iInterval = szFont_kenning;
 		m_pData = NULL;
 		reset();
@@ -63,7 +63,6 @@ public:
     
     ~BitmapDC(void)
     {
-    	FT_Done_FreeType(library);
     }
     
     void reset() {
@@ -72,55 +71,16 @@ public:
 		vLines.clear();
 	}
     
-
-    int utf8(char **p)
-    {
-        if ((**p & 0x80) == 0x00)
-        {
-            int a = *((*p)++);
-
-            return a;
-        }
-        if ((**p & 0xE0) == 0xC0)
-        {
-            int a = *((*p)++) & 0x1F;
-            int b = *((*p)++) & 0x3F;
-
-            return (a << 6) | b;
-        }
-        if ((**p & 0xF0) == 0xE0)
-        {
-            int a = *((*p)++) & 0x0F;
-            int b = *((*p)++) & 0x3F;
-            int c = *((*p)++) & 0x3F;
-
-            return (a << 12) | (b << 6) | c;
-        }
-        if ((**p & 0xF8) == 0xF0)
-        {
-            int a = *((*p)++) & 0x07;
-            int b = *((*p)++) & 0x3F;
-            int c = *((*p)++) & 0x3F;
-            int d = *((*p)++) & 0x3F;
-
-            return (a << 18) | (b << 12) | (c << 8) | d;
-        }
-        return 0;
-    }
-
-    void buildLine(std::stringstream& ss, FT_Face face, int iCurXCursor, char cLastChar )
+    void buildLine(std::stringstream& ss, TTF_Font *face)
     {
         TextLine oTempLine;
         ss << '\0';
         oTempLine.sLineStr = ss.str();
-        //get last glyph
-        FT_Load_Glyph(face, FT_Get_Char_Index(face, cLastChar), FT_LOAD_DEFAULT);
 
-        oTempLine.iLineWidth =
-            iCurXCursor - 
-            RSHIFT6( face->glyph->metrics.horiAdvance +
-            face->glyph->metrics.horiBearingX
-            - face->glyph->metrics.width)/*-iInterval*/;	//TODO interval
+        int w, h;
+        TTF_SizeText(face, oTempLine.sLineStr.c_str(), &w, &h);
+
+        oTempLine.iLineWidth = w;
 
         iMaxLineWidth = MAX(iMaxLineWidth, oTempLine.iLineWidth);
         ss.clear();
@@ -128,60 +88,37 @@ public:
         vLines.push_back(oTempLine);
 	}
 
-	bool divideString(FT_Face face, const char* sText, int iMaxWidth, int iMaxHeight) {
+	bool divideString(TTF_Font *face, const char* sText, int iMaxWidth, int iMaxHeight) {
         const char* pText = sText;
-        int iError = 0;
-        int iCurXCursor;
-        iError = FT_Load_Glyph(face, FT_Get_Char_Index(face, *pText), FT_LOAD_DEFAULT);
-        if (iError) {
-            return false;
-        }
-        iCurXCursor = -RSHIFT6(face->glyph->metrics.horiBearingX);
+
         //init stringstream
         std::stringstream ss;
-
-        int cLastCh = 0;
+        int w, h;
 
         while (*pText != '\0') {
             if (*pText == '\n') {
-                buildLine(ss, face, iCurXCursor, cLastCh);
+                buildLine(ss, face);
 
                 pText++;
-                iError = FT_Load_Glyph(face, FT_Get_Char_Index(face, *pText), FT_LOAD_DEFAULT);
-                if (iError) {
-                    return false;
-                }
-                iCurXCursor = -RSHIFT6(face->glyph->metrics.horiBearingX);
                 continue;
             }
-
-            iError = FT_Load_Glyph(face, FT_Get_Char_Index(face, *pText), FT_LOAD_DEFAULT);
-
-            if (iError) {
-                return false;
-                //break;
-            }
+     
             //check its width
             //divide it when exceeding
-            if ((iMaxWidth > 0 && iCurXCursor + RSHIFT6(face->glyph->metrics.width) > iMaxWidth)) {
-                buildLine(ss, face , iCurXCursor, cLastCh);
+            std::string s = ss.str();
+            s.push_back(*pText);
+            TTF_SizeText(face, s.c_str(), &w, &h);
 
-                iCurXCursor = -RSHIFT6(face->glyph->metrics.horiBearingX);
-
+            if (iMaxWidth > 0 && (w > iMaxWidth)) {
+                buildLine(ss, face);
             }
 
-            cLastCh = *pText;
             ss << *pText;
-            iCurXCursor += RSHIFT6(face->glyph->metrics.horiAdvance) + iInterval;
             pText++;
 
         }
 
-        if (iError) {
-            return false;
-        }
-
-        buildLine(ss,face, iCurXCursor, cLastCh);
+        buildLine(ss, face);
 
         return true;
 	}
@@ -193,8 +130,10 @@ public:
 	 * while -1 means fail
 	 *
 	 */
-	int computeLineStart(FT_Face face, CCImage::ETextAlign eAlignMask, char cText,
+	int computeLineStart(TTF_Font *face, CCImage::ETextAlign eAlignMask, char cText,
                          int iLineIndex) {
+        return 0;
+        /*
 		int iRet;
 		int iError = FT_Load_Glyph(face, FT_Get_Char_Index(face, cText),
                                    FT_LOAD_DEFAULT);
@@ -214,9 +153,12 @@ public:
 			iRet = -RSHIFT6(face->glyph->metrics.horiBearingX );
 		}
 		return iRet;
+        */
 	}
 		
-	int computeLineStartY( FT_Face face, CCImage::ETextAlign eAlignMask, int txtHeight, int borderHeight ){
+	int computeLineStartY( TTF_Font *face, CCImage::ETextAlign eAlignMask, int txtHeight, int borderHeight ){
+        return 0;
+        /*
 		int iRet;
 		if (eAlignMask == CCImage::kAlignCenter || eAlignMask == CCImage::kAlignLeft ||
 			eAlignMask == CCImage::kAlignRight ) {
@@ -233,166 +175,86 @@ public:
 			iRet = RSHIFT6(face->size->metrics.ascender);
 		}
 		return iRet;
+        */
 	}
     
 	bool getBitmap(const char *text, int nWidth, int nHeight, CCImage::ETextAlign eAlignMask, const char * pFontName, float fontSize) {
-		FT_Face face;
-		FT_Error iError;
-        
 		const char* pText = text;
-		//data will be deleted by CCImage
-        //		if (m_pData) {
-        //			delete m_pData;
-        //		}
-        
-        unsigned char cTemp ;
-        int iY, iX, iTemp ;
-        uint32 offset, rowOffset ;
+        // No need to release m_pData here as it is destroyed by CCImage.
 
-		int iCurXCursor, iCurYCursor;
-		bool bRet = false;
-		if (libError) {
-			return false;
-		}
-		do {
-            std::string fontPath = pFontName;
-            if(m_fontCache.count(fontPath))
+		int iCurXCursor;
+
+        TTF_Font *face = TTF_OpenFont(pFontName, fontSize);
+        if(!face)
+        {
+            return false;
+        }
+
+        divideString(face, text, nWidth, nHeight);
+
+        //compute the final line width
+        iMaxLineWidth = MAX(iMaxLineWidth, nWidth);
+
+        iMaxLineHeight = (int)fontSize;
+        iMaxLineHeight *= vLines.size();
+
+        //compute the final line height
+        iMaxLineHeight = MAX(iMaxLineHeight, nHeight);
+
+        uint bitmapSize = iMaxLineWidth * iMaxLineHeight * 4;
+
+        m_pData = new unsigned char[bitmapSize];
+        memset(m_pData, 0, bitmapSize);
+
+        // XXX: Can this be optimized by inserting newlines into the string and
+        // making a single TTF_RenderText_Solid call? Could conceivably just
+        // pass back SDL's buffer then, though would need additional logic to
+        // call SDL_FreeSurface appropriately.
+        for (size_t l = 0; l < vLines.size(); l++) {
+            pText = vLines[l].sLineStr.c_str();
+            //initialize the origin cursor
+            iCurXCursor = computeLineStart(face, eAlignMask, *pText, l);
+
+            SDL_Color color = { 0xff, 0xff, 0xff, 0xff };
+            SDL_Surface *tSurf = TTF_RenderText_Solid(face, pText, color);
+            SDL_LockSurface(tSurf);
+            SDL_UnlockSurface(tSurf);
+
+            // We treat pixels as 32-bit words, since both source and target
+            // are rendered as such.
+            int *pixels = (int*) tSurf->pixels;
+            int *out = (int*)m_pData;
+
+            for(int i = 0; i < tSurf->h; ++i)
             {
-                face = m_fontCache[fontPath];
-            }
-            else
-            {
-                //CCLog("\n\n ---- FT_New_Face with pFontName = %s\n", pFontName);
-                iError = FT_New_Face( library, pFontName, 0, &face );
+                for(int j = 0; j < tSurf->w; ++j)
+                {
+                    int targetOffset = (l * iMaxLineHeight + i) * iMaxLineWidth + j;
+                    int sourceOffset = i * tSurf->w + j;
 
-                if (iError) {
-                    int len = strlen(pFontName) + 11; // 11 = strlen('fonts/.ttf\0')
-                    char *fullPath = (char*)malloc(len);
-                    snprintf(fullPath, len, "fonts/%s.ttf", pFontName);
-                    iError = FT_New_Face( library, fullPath, 0, &face );
-                    free(fullPath);
+                    // HTML5 canvas is non-pre-alpha-multiplied, so alpha-multiply here.
+                    unsigned char *p = (unsigned char*) &pixels[sourceOffset];
+                    out[targetOffset] = CC_RGB_PREMULTIPLY_ALPHA( p[0], p[1], p[2], p[3] );
                 }
-
-                if (iError) {
-                    //no valid font found use default
-                    //CCLog("\n\n ---- no valid font, use default %s\n", pFontName);
-                    iError = FT_New_Face( library, "fonts/arial.ttf", 0, &face );
-                }
-
-                CC_BREAK_IF(iError);
-                m_fontCache[fontPath] = face;
             }
-            
-			//select utf8 charmap
-			iError = FT_Select_Charmap(face,FT_ENCODING_UNICODE);
-			CC_BREAK_IF(iError);
-            
-			iError = FT_Set_Pixel_Sizes(face, fontSize,fontSize);
-			CC_BREAK_IF(iError);
-            
-            iError = divideString(face, text, nWidth, nHeight) ? 0 : 1 ;
+            SDL_FreeSurface(tSurf);
+        }
 
-            //compute the final line width
-            iMaxLineWidth = MAX(iMaxLineWidth, nWidth);
+        //clear all lines
+        vLines.clear();
 
-            FT_Pos ascenderPixels = RSHIFT6(face->size->metrics.ascender) ;
-            FT_Pos descenderPixels = RSHIFT6(face->size->metrics.descender) ;
+        TTF_CloseFont(face);
 
-            iMaxLineHeight = ascenderPixels - descenderPixels;
-            iMaxLineHeight *= vLines.size();
-
-            //compute the final line height
-            iMaxLineHeight = MAX(iMaxLineHeight, nHeight);
-
-            uint bitmapSize = iMaxLineWidth * iMaxLineHeight*4 ;
-
-            m_pData = new unsigned char[bitmapSize];
-            memset(m_pData,0, bitmapSize);
-
-            const char* pText = text;
-            iCurYCursor = ascenderPixels;
-
-            for (size_t i = 0; i < vLines.size(); i++) {
-                pText = vLines[i].sLineStr.c_str();
-                //initialize the origin cursor
-                iCurXCursor = computeLineStart(face, eAlignMask, *pText, i);
-
-                while (*pText != 0) {
-                    int iError = FT_Load_Glyph(face, FT_Get_Char_Index(face, *pText), FT_LOAD_RENDER);
-                    if (iError) {
-                        break;
-                    }
-
-                    //  convert glyph to bitmap with 256 gray
-                    //  and get the bitmap
-                    FT_Bitmap & bitmap = face->glyph->bitmap;
-
-                    FT_Pos horiBearingYPixels = RSHIFT6(face->glyph->metrics.horiBearingY) ;
-                    FT_Pos horiBearingXPixels = RSHIFT6(face->glyph->metrics.horiBearingX) ;
-                    FT_Pos horiAdvancePixels = RSHIFT6(face->glyph->metrics.horiAdvance) ;
-
-                    for (int i = 0; i < bitmap.rows; ++i) {
-
-                        iY = iCurYCursor + i - horiBearingYPixels;
-                        if (iY < 0 || iY>=iMaxLineHeight) {
-                            //exceed the height truncate
-                            continue;
-                        }
-
-                        rowOffset = iY * iMaxLineWidth ;
-
-                        // if it has gray>0 we set show it as 1, otherwise 0 
-                        char cbuf[1024];
-                        for (int j = 0; j < bitmap.width; ++j) {
-                            cTemp = bitmap.buffer[i	* bitmap.width + j];
-                            cbuf[j] = cTemp > 64 ? '*' : ' ';
-                            cbuf[j+1] = 0;
-
-                            if( cTemp )
-                            {
-                                iX = iCurXCursor + j + horiBearingXPixels;
-
-                                offset = (rowOffset + iX) * 4 ;
-
-                                assert( (offset + 3) < bitmapSize ) ;
-
-                                iTemp = cTemp << 24 | cTemp << 16 | cTemp << 8 | cTemp;
-                                *(int*) &m_pData[ offset ] = iTemp ;	// ARGB
-                            }
-                        }
-
-                    }
-
-                    //step to next glyph
-                    iCurXCursor += horiAdvancePixels + iInterval;
-                    pText++;
-                }
-                iCurYCursor += ascenderPixels - descenderPixels ;
-            }
-
-            //clear all lines
-            vLines.clear();
-
-            //success;
-            if (iError) {
-                bRet = false;
-            } else {
-                bRet = true;
-            }
-        }while(0);
-
-        return bRet;
+        return true;
     }
 
 public:
-	FT_Library library;
 	unsigned char *m_pData;
 	int libError;
 	vector<TextLine> vLines;
 	int iInterval;
 	int iMaxLineWidth;
 	int iMaxLineHeight;
-    map<string, FT_Face> m_fontCache;
 };
 
 static BitmapDC& sharedBitmapDC()
@@ -419,13 +281,7 @@ bool CCImage::initWithString(
     	std::string lowerCasePath = fullFontName;
     	std::transform(lowerCasePath.begin(), lowerCasePath.end(), lowerCasePath.begin(), ::tolower);
 
-    	if ( lowerCasePath.find(".ttf") != std::string::npos ) {
-    		fullFontName = CCFileUtils::sharedFileUtils()->fullPathForFilename(pFontName);
-    	}
-        //CCLog("-----pText=%s and Font File is %s nWidth= %d,nHeight=%d",pText,fullFontName.c_str(),nWidth,nHeight);
-        
         CC_BREAK_IF(! dc.getBitmap(pText, nWidth, nHeight, eAlignMask, fullFontName.c_str(), nSize));
-        //CCLog("---- dc.getBitmap is Succesfull... \n");
         
         // assign the dc.m_pData to m_pData in order to save time
         m_pData = dc.m_pData;

@@ -422,11 +422,7 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
                 pImage = new CCImage();
                 CC_BREAK_IF(NULL == pImage);
 
-                unsigned long nSize = 0;
-                unsigned char* pBuffer = CCFileUtils::sharedFileUtils()->getFileData(fullpath.c_str(), "rb", &nSize);
-                
-                bool bRet = pImage->initWithImageData((void*)pBuffer, nSize, eImageFormat);
-                CC_SAFE_DELETE_ARRAY(pBuffer);
+                bool bRet = pImage->initWithImageFile(fullpath.c_str(), eImageFormat);
                 CC_BREAK_IF(!bRet);
 
                 texture = new CCTexture2D();
