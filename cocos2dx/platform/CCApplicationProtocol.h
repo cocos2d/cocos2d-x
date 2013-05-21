@@ -13,7 +13,8 @@ enum TargetPlatform
     kTargetIpad,
     kTargetBlackBerry,
     kTargetNaCl,
-    kTargetEmscripten
+    kTargetEmscripten,
+    kTargetTizen
 };
 
 /**
