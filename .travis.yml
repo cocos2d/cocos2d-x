@@ -1,6 +1,5 @@
 --- 
-before_install: 
-- ./tools/travis-scripts/before-install.sh
+language: cpp
 env: 
   matrix: 
   - PLATFORM=linux DEBUG=1
@@ -8,19 +7,22 @@ env:
   - PLATFORM=android
   global: 
   - secure: |-
-      AOVGNRaX0SEQSKkVb5A7dklSJ6Oviqu/Vs1AExTKnZKP/A39Mge9RdNwYcui
-      sUrHoO1iJuw+ml+5K/JlgIvbqIy8QP1WlHt0WPOcJ+vrGChRJNa3Ysovyfil
-      N0EXZmG6tz24V0INMFC9BKxKzoimeh7ZJURsoO/C+nLbpO+aLHk=
+      cHXOjAda+t2tmBVuVAiQfvhDN+unToO6hX1rc3dJeGDOk4rlQnylJacjA7o/
+      enkWeHagbW2Ja4h7BxQz4h7dada8zEbIbEMK4VEHx6AWwQM+GIEqkJPv5g8k
+      4P20MLpX4XyUwm/16btpnqgXlyd8Q3Zjh3Vui/5/VzwPnxUQEho=
   - secure: |-
-      Gt+0DcsqXB9YSV3PZjHIIQ2U1qSLvEHbRl7i3eYV0q6reLil94kMzGWljd3A
-      3KC6TJqFPdcEXdIf+agz3TArfWUpNLDZvVIqljsAAbNYwz1c17jgXFxG4PU9
-      y1X8FFTicHy40yoz5Ljy9YZRUNltsui6WmSp+6uBBBlpgvQbkRQ=
-language: cpp
+      U/JsyiSR9q+8wX1arfciy3BdbMQaKmgt48/9tiU7P2RQJ/FR2AHGq85sNGI/
+      ZUxN4JPLGALEvkFMo4NYyJDUcsdRHZX3vbp5xbSSRaBigqJIj3HDxtlPVf2m
+      /W2GzcfNNX1ACO18hSWH0d2yFlF263ZmvudzQIfqTESfjGQBzwA=
 script: 
 - export NACL_SDK_ROOT=$HOME/bin/nacl_sdk/pepper_canary
 - export PATH=$PATH:$NACL_SDK_ROOT/toolchain/linux_x86_newlib/bin
 - export NDK_ROOT=$HOME/bin/android-ndk
 - ./tools/travis-scripts/run-script.sh
+
+before_install: 
+- ./tools/travis-scripts/before-install.sh
+
 branches: 
   only: 
   - master
